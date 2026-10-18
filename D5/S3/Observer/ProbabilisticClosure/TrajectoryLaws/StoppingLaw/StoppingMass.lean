@@ -44,12 +44,6 @@ theorem π_sum (β : Bias) : β.π false + β.π true = 1 := by simp [π]
 
 theorem T_one (β : Bias) : β.T 1 = 1 := by simp [T]
 
-theorem T_pos (β : Bias) (n : ℕ) : 0 < β.T n := by
-  unfold T
-  have := β.pos
-  have : 0 < 1 - β.p := by linarith [β.lt_one]
-  positivity
-
 theorem d_formula (β : Bias) (n : ℕ) :
     β.d n = (1 - β.p)^n * β.p + β.p^n * (1 - β.p) := by
   simp only [d, T, pow_succ]
@@ -68,17 +62,6 @@ theorem T_succ_lt (β : Bias) (n : ℕ) : β.T (n + 1) < β.T n := by
 
 theorem T_antitone (β : Bias) : Antitone β.T := by
   exact (strictAnti_nat_of_succ_lt β.T_succ_lt).antitone
-
-theorem tail_telescope (β : Bias) (r n : ℕ) :
-    (∑ i ∈ Finset.range n, β.d (r + i + 1)) + β.T (r + n + 1) = β.T (r + 1) := by
-  induction n with
-  | zero => simp
-  | succ n ih =>
-    rw [Finset.sum_range_succ]
-    have he : r + (n + 1) + 1 = (r + n + 1) + 1 := by omega
-    rw [he]
-    simp only [d] at ih ⊢
-    linarith
 
 theorem unequal_powers (β : Bias) {n : ℕ} (hn : 0 < n) :
     (1 - β.p)^n ≠ β.p^n := by
