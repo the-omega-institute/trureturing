@@ -51,7 +51,7 @@ internal sealed class UniformIntegralsDocument : IScribeDocumentDefinition
         Formula a = F.Id("a"), b = F.Id("b");
         Formula kernel = Sub(Rat(D(1), Add(T, a)), Rat(D(1), Add(T, b)));
         return All("a", Real, All("b", Real, ImpliesFormula(And(Less(D(0), a), Le(a, b)),
-            And(Integrable(kernel), Equal(Integral(kernel), Sub(Call("log", b), Call("log", a))))));
+            And(Integrable(kernel), Equal(Integral(kernel), Sub(Call("log", b), Call("log", a)))))));
     }
     private static Formula PowerStatement()
     {
