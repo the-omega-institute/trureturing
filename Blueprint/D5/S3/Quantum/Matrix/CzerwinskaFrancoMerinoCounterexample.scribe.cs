@@ -36,6 +36,23 @@ internal sealed class CzerwinskaFrancoMerinoCounterexampleDocument : IScribeDocu
                     + "Loewner monotonicity on all positive definite pairs. The function is represented on "
                     + "the real line; the positive-definite spectrum restricts its relevant values to (0,∞)."))),
                 DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("finite-certificate"),
+                DeclarationHandle.Create(Module + ".finite_certificate"),
+                H("Opposite signs on an ordered positive pair"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Both endpoints are positive definite and A≤B. Their difference is "
+                    + "(2/75)ww* for w=(2,3,6). The increment has quadratic form −2/111549375 at "
+                    + "v=(−35,48,−15) and a strictly positive (0,0) entry. Its six inverses are verified "
+                    + "by exact matrix multiplication. This excludes both monotonicity directions on the same pair."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("not-matrix-monotone"),
+                DeclarationHandle.Create(Module + ".not_matrix_monotone"),
+                H("Neither direction of matrix monotonicity"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Continuous functional calculus identifies the scalar and matrix rational "
+                    + "expressions. The finite certificate contradicts positivity in the increasing direction "
+                    + "and diagonal positivity in the decreasing direction, as allowed by Definition 2.15."))),
+                DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("cfm-radial-convexity-result"),
                 DeclarationHandle.Create(Module + ".result"),

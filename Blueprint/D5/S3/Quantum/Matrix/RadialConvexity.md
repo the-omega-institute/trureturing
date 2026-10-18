@@ -50,7 +50,7 @@ Lean statement: `D5/S3/Quantum/Matrix/RadialConvexity.MatrixMonotoneDegree`
 
 *Commentary.*
 
-On all positive definite complex n×n matrices, the functional calculus either preserves every Loewner comparison or reverses every Loewner comparison. This includes both directions allowed by Definition 1.1 of the source.
+On all positive definite complex n×n matrices, the functional calculus either preserves every Loewner comparison or reverses every Loewner comparison. This includes both directions allowed by Definition 2.15 of the source.
 
 **Definition 1.5 (The endpoint positivity property).**
 

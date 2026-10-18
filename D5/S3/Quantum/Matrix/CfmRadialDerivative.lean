@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Quantum/Matrix/CfmRadialDerivative
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: []
+   anchors: [mathlib/module/Mathlib.Analysis.Calculus.FDeriv.Mul]
    utility: none
    digest: Resolvent derivatives turn endpoint positivity into Frobenius radial inequalities. -/
 

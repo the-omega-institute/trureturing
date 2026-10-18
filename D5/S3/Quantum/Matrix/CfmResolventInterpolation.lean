@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Quantum/Matrix/CfmResolventInterpolation
    mirror-E: none(waiver:open-problem-resolution)
-   anchors: [mathlib/module/Mathlib.Analysis.Matrix.Order]
+   anchors: [mathlib/module/Mathlib.Analysis.Matrix.Order, mathlib/module/Mathlib.Analysis.InnerProductSpace.Basic]
    utility: none
    digest: Three spectral nodes control the two mixed resolvent products. -/
 

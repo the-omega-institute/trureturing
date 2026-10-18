@@ -9,8 +9,8 @@ internal sealed class CfmMonotonicityCertificateDocument : IScribeDocumentDefini
     private const string Prefix = "D5/S3/Quantum/Matrix/CfmMonotonicityCertificate.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Exact rational matrix certificates exclude both monotonicity directions.",
-        H("A finite certificate for failure of matrix monotonicity"),
+        "A scalar rational function agrees with its matrix expression under functional calculus.",
+        H("The rational functional-calculus expression"),
         Blocks(
             Entry("scalar-function", "scalarFunction", "The scalar rational counterexample",
                 Disp(Eq(Call("scalarFunction", V("t")),
@@ -41,21 +41,11 @@ internal sealed class CfmMonotonicityCertificateDocument : IScribeDocumentDefini
                 Disp(Eq(Call("quadraticReadout", V("X")),
                     Call("Re", Mul(Call("adjoint", V("testVector")), Mul(V("X"), V("testVector")))))),
                 "quadraticReadout X is the real part of the conjugate-transpose quadratic form testVector adjoint times X times testVector. It is defined on every complex 3 by 3 matrix.", true),
-            Entry("finite-certificate", "finite_certificate", "Opposite signs on an ordered positive pair",
-                Disp(And(Call("PosDef", V("lowerMatrix")),
-                    And(Call("PosDef", V("upperMatrix")),
-                        And(Leq(V("lowerMatrix"), V("upperMatrix")),
-                            And(Eq(Call("quadraticReadout", Delta()), Negate(Frac(Num(2), Num(111549375)))),
-                                Lt(Num(0), Call("Re", Call("entry", Delta(), Num(0), Num(0))))))))),
-                "Both endpoints are positive definite, and lowerMatrix is at most upperMatrix in Loewner order. Their difference is (2/75) w w adjoint for w=(2,3,6). The rational-function increment has quadraticReadout exactly -2/111549375, while its (0,0) entry has strictly positive real part. Thus the increment is neither positive semidefinite nor negative semidefinite. Each of its six inverses is verified by exact matrix multiplication. This certificate handles both monotonicity directions on the same ordered pair.", false),
             Entry("cfc-rational-function", "cfc_rationalFunction", "Functional calculus of the rational function",
                 Disp(All("n", V("Nat"), All("A", Call("ComplexSquareMatrix", V("n")),
                     Imp(Call("PosDef", V("A")),
                         Eq(Call("cfc", V("scalarFunction"), V("A")), Call("rationalFunction", V("A"))))))),
-                "For every natural number n and every positive definite complex n by n matrix A, cfc scalarFunction A equals rationalFunction A. The spectrum is finite, so all scalar functions are continuous there. Its nonnegative spectrum makes all three affine denominators strictly positive. cfc_map_div, cfc_add_const and cfc_const_mul_id identify each rational term with its matrix counterpart; Matrix.nonsing_inv_eq_ringInverse identifies the two inverse conventions.", false),
-            Entry("not-matrix-monotone", "not_matrix_monotone", "Neither direction of matrix monotonicity",
-                Disp(Seq(Neg, Sp, Call("MatrixMonotoneDegree", Num(3), V("scalarFunction")))),
-                "The scalar function is not matrix monotone of degree three in the paper's convention allowing either direction. For every positive definite matrix A, continuous functional calculus identifies scalarFunction(A) with rationalFunction(A): affine denominators are positive on the spectrum, and cfc_map_div identifies the inverse with the nonsingular matrix inverse. The exact finite certificate then contradicts positivity for the increasing direction and diagonal positivity for the decreasing direction.", false))));
+                "For every natural number n and every positive definite complex n by n matrix A, cfc scalarFunction A equals rationalFunction A. The spectrum is finite, so all scalar functions are continuous there. Its nonnegative spectrum makes all three affine denominators strictly positive. cfc_map_div, cfc_add_const and cfc_const_mul_id identify each rational term with its matrix counterpart; Matrix.nonsing_inv_eq_ringInverse identifies the two inverse conventions.", false))));
 
     private static DocumentBlock Entry(string id, string name, string title, Formula formula,
         string prose, bool definition) =>
@@ -63,12 +53,9 @@ internal sealed class CfmMonotonicityCertificateDocument : IScribeDocumentDefini
             StatementSource.FromAuthor(formula), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(prose))), definition ? DescribeRole.Definition : DescribeRole.Theorem);
 
-    private static Formula Delta() => Sub(Call("rationalFunction", V("upperMatrix")), Call("rationalFunction", V("lowerMatrix")));
     private static Formula V(string name) => F.Id(name);
     private static Formula Inv(Formula x) => new Formula.Power(x, Negate(Num(1)));
     private static Formula Eq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
-    private static Formula Leq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
-    private static Formula Lt(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
     private static Formula Frac(Formula a, Formula b) => new Formula.Fraction(a, b);
     private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
     private static Formula Sub(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
@@ -80,5 +67,4 @@ internal sealed class CfmMonotonicityCertificateDocument : IScribeDocumentDefini
     private static Formula All(string name, Formula type, Formula body) =>
         Seq(Forall, Sp, Open, V(name), Colon, Sp, type, Close, Comma, Sp, body);
     private static Formula Imp(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Implies, b);
-    private static Formula And(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.And, b);
 }

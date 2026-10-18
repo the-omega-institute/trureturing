@@ -24,7 +24,31 @@ Lean statement: `D5/S3/Quantum/Matrix/CzerwinskaFrancoMerinoCounterexample.conje
 
 For each natural n≥1 and each real scalar function, the conjecture equates the two Frobenius endpoint inequalities on all ordered positive definite complex Hermitian triples with either uniformly increasing or uniformly decreasing Loewner monotonicity on all positive definite pairs. The function is represented on the real line; the positive-definite spectrum restricts its relevant values to (0,∞).
 
-**Theorem 1.2 (Conjecture 4.10 is false in degree three).**
+**Theorem 1.2 (Opposite signs on an ordered positive pair).**
+
+Lean statement: `D5/S3/Quantum/Matrix/CzerwinskaFrancoMerinoCounterexample.finite_certificate`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Matrix/CzerwinskaFrancoMerinoCounterexample.finite_certificate` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Both endpoints are positive definite and A≤B. Their difference is (2/75)ww* for w=(2,3,6). The increment has quadratic form −2/111549375 at v=(−35,48,−15) and a strictly positive (0,0) entry. Its six inverses are verified by exact matrix multiplication. This excludes both monotonicity directions on the same pair.
+
+**Theorem 1.3 (Neither direction of matrix monotonicity).**
+
+Lean statement: `D5/S3/Quantum/Matrix/CzerwinskaFrancoMerinoCounterexample.not_matrix_monotone`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Matrix/CzerwinskaFrancoMerinoCounterexample.not_matrix_monotone` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Continuous functional calculus identifies the scalar and matrix rational expressions. The finite certificate contradicts positivity in the increasing direction and diagonal positivity in the decreasing direction, as allowed by Definition 2.15.
+
+**Theorem 1.4 (Conjecture 4.10 is false in degree three).**
 
 Lean statement: `D5/S3/Quantum/Matrix/CzerwinskaFrancoMerinoCounterexample.result`
 
@@ -51,6 +75,8 @@ The paper's order-two differentiable theorem is unaffected. Direct sums extend t
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Matrix/CzerwinskaFrancoMerinoCounterexample.conjecture`
+- Truth anchor: `D5/S3/Quantum/Matrix/CzerwinskaFrancoMerinoCounterexample.finite_certificate`
+- Truth anchor: `D5/S3/Quantum/Matrix/CzerwinskaFrancoMerinoCounterexample.not_matrix_monotone`
 - Truth anchor: `D5/S3/Quantum/Matrix/CzerwinskaFrancoMerinoCounterexample.result`
 - Dependency: [D5/S3/Quantum/Matrix/CfmEndpointPositivity](CfmEndpointPositivity.md)
 - Dependency: [D5/S3/Quantum/Matrix/CfmMonotonicityCertificate](CfmMonotonicityCertificate.md)

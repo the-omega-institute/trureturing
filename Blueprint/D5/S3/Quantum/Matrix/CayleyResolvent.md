@@ -26,7 +26,7 @@ Lean statement: `D5/S3/Quantum/Matrix/CayleyResolvent.endpoint_resolvent_factors
 
 *Commentary.*
 
-For every dimension, let s≥2, U≤V, and suppose I+U, I−U and I−V are positive definite. Put H=V−U. There is Z_U with R_s(V)−R_s(U)=R_s(U) Z_U R_s(U) and H≤Z_U≤3H. There is Z_V with R_s(V)−R_s(U)=R_s(V) Z_V R_s(V) and H/3≤Z_V≤H. The factors may differ. The first is H+H R_s(V) H. The second is H^(1/2)(I+H^(1/2) R_s(V) H^(1/2)) inverse H^(1/2). Woodbury multiplication establishes the second factorization without assuming H invertible. Both bounds use positive matrix order and include singular increments.
+For every dimension, let s≥2, U≤V, and suppose I+U, I−U and I−V are positive definite. Put H=V−U. There is Z_U with R_s(V)−R_s(U)=R_s(U) Z_U R_s(U) and H≤Z_U≤3H. There is Z_V with R_s(V)−R_s(U)=R_s(V) Z_V R_s(V) and H/3≤Z_V≤H. The factors may differ. The first is H+H R_s(V) H. The second is H^(1/2)(I+H^(1/2) R_s(V) H^(1/2)) inverse H^(1/2). Mathlib's Woodbury identity establishes the second factorization without assuming H invertible. Both bounds use positive matrix order and include singular increments.
 
 **Definition 1.3 (Cayley map).**
 

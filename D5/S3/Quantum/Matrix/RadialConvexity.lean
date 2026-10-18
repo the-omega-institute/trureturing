@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Quantum/Matrix/RadialConvexity
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: []
+   anchors: [mathlib/module/Mathlib.Analysis.Matrix.Order, mathlib/module/Mathlib.Analysis.InnerProductSpace.Calculus, mathlib/module/Mathlib.Analysis.Calculus.Deriv.MeanValue]
    utility: none
    digest: Endpoint derivative positivity controls both distances on ordered segments. -/
 

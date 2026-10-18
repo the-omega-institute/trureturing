@@ -35,7 +35,7 @@ internal sealed class RadialConvexityDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("On all positive definite complex n×n matrices, the functional calculus "
                     + "either preserves every Loewner comparison or reverses every Loewner comparison. "
-                    + "This includes both directions allowed by Definition 1.1 of the source."))), DescribeRole.Definition),
+                    + "This includes both directions allowed by Definition 2.15 of the source."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("radial-convexity-endpoint-derivative-positive"),
                 DeclarationHandle.Create(Module + ".EndpointDerivativePositive"),
                 H("The endpoint positivity property"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),

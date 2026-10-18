@@ -1,8 +1,8 @@
-# A finite certificate for failure of matrix monotonicity
+# The rational functional-calculus expression
 
 ## Abstract
 
-Exact rational matrix certificates exclude both monotonicity directions.
+A scalar rational function agrees with its matrix expression under functional calculus.
 
 **Definition 1.1 (The scalar rational counterexample).**
 
@@ -76,19 +76,7 @@ $$quadraticReadout\left(X\right) = Re\left(adjoint\left(testVector\right) \cdot 
 
 quadraticReadout X is the real part of the conjugate-transpose quadratic form testVector adjoint times X times testVector. It is defined on every complex 3 by 3 matrix.
 
-**Theorem 1.7 (Opposite signs on an ordered positive pair).**
-
-$$PosDef\left(lowerMatrix\right) \land \left(PosDef\left(upperMatrix\right) \land \left(lowerMatrix \le upperMatrix \land \left(quadraticReadout\left(rationalFunction\left(upperMatrix\right) - rationalFunction\left(lowerMatrix\right)\right) = -\frac{2}{111549375} \land 0 < Re\left(entry\left(rationalFunction\left(upperMatrix\right) - rationalFunction\left(lowerMatrix\right), 0, 0\right)\right)\right)\right)\right)$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Matrix/CfmMonotonicityCertificate.finite_certificate` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Both endpoints are positive definite, and lowerMatrix is at most upperMatrix in Loewner order. Their difference is (2/75) w w adjoint for w=(2,3,6). The rational-function increment has quadraticReadout exactly -2/111549375, while its (0,0) entry has strictly positive real part. Thus the increment is neither positive semidefinite nor negative semidefinite. Each of its six inverses is verified by exact matrix multiplication. This certificate handles both monotonicity directions on the same ordered pair.
-
-**Theorem 1.8 (Functional calculus of the rational function).**
+**Theorem 1.7 (Functional calculus of the rational function).**
 
 $$\forall (n: Nat), \forall (A: ComplexSquareMatrix\left(n\right)), PosDef\left(A\right) \Rightarrow cfc\left(scalarFunction, A\right) = rationalFunction\left(A\right)$$
 
@@ -100,24 +88,10 @@ $$\forall (n: Nat), \forall (A: ComplexSquareMatrix\left(n\right)), PosDef\left(
 
 For every natural number n and every positive definite complex n by n matrix A, cfc scalarFunction A equals rationalFunction A. The spectrum is finite, so all scalar functions are continuous there. Its nonnegative spectrum makes all three affine denominators strictly positive. cfc_map_div, cfc_add_const and cfc_const_mul_id identify each rational term with its matrix counterpart; Matrix.nonsing_inv_eq_ringInverse identifies the two inverse conventions.
 
-**Theorem 1.9 (Neither direction of matrix monotonicity).**
-
-$$\neg MatrixMonotoneDegree\left(3, scalarFunction\right)$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Matrix/CfmMonotonicityCertificate.not_matrix_monotone` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The scalar function is not matrix monotone of degree three in the paper's convention allowing either direction. For every positive definite matrix A, continuous functional calculus identifies scalarFunction(A) with rationalFunction(A): affine denominators are positive on the spectrum, and cfc_map_div identifies the inverse with the nonsingular matrix inverse. The exact finite certificate then contradicts positivity for the increasing direction and diagonal positivity for the decreasing direction.
-
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Matrix/CfmMonotonicityCertificate.cfc_rationalFunction`
-- Truth anchor: `D5/S3/Quantum/Matrix/CfmMonotonicityCertificate.finite_certificate`
 - Truth anchor: `D5/S3/Quantum/Matrix/CfmMonotonicityCertificate.lowerMatrix`
-- Truth anchor: `D5/S3/Quantum/Matrix/CfmMonotonicityCertificate.not_matrix_monotone`
 - Truth anchor: `D5/S3/Quantum/Matrix/CfmMonotonicityCertificate.quadraticReadout`
 - Truth anchor: `D5/S3/Quantum/Matrix/CfmMonotonicityCertificate.rationalFunction`
 - Truth anchor: `D5/S3/Quantum/Matrix/CfmMonotonicityCertificate.scalarFunction`

@@ -19,7 +19,7 @@ internal sealed class CayleyResolventDocument : IScribeDocumentDefinition
             + "There is Z_V with R_s(V)−R_s(U)=R_s(V) Z_V R_s(V) and H/3≤Z_V≤H. "
             + "The factors may differ. The first is H+H R_s(V) H. The second is "
             + "H^(1/2)(I+H^(1/2) R_s(V) H^(1/2)) inverse H^(1/2). "
-            + "Woodbury multiplication establishes the second factorization without assuming H invertible. "
+            + "Mathlib's Woodbury identity establishes the second factorization without assuming H invertible. "
             + "Both bounds use positive matrix order and include singular increments."),
         Item("cayley", "Cayley map",
             "Define h(A)=I−2(A+I) inverse on finite complex square matrices. "
