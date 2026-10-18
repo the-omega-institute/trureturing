@@ -262,7 +262,8 @@ class NativeScopedContracts(NativeDependencyTestSupport, unittest.TestCase):
         self.assertEqual(len(inspections), 1, '[FAIL] selected_modules_share_one_native_inspection_batch')
         cold_work = json.loads((self.logs / 'work.json').read_text())
         self.assertEqual(cold_work['extracted_module_names'], ['D5.A', 'D5.B'])
-        self.assertEqual(cold_work['compiled_module_names'], ['D5.A', 'D5.B'])
+        self.assertEqual(cold_work['compiled_module_names'],
+                         ['D5.A', 'D5.B', 'LeanInformationAudit.Contract.InputDiscovery'])
         self.assertFalse((self.root / '.lake/build/lean-inspector/modules/D5.Alone.zip').exists(),
                          '[FAIL] unrelated_module_is_never_extracted')
         self.assertEqual(before, [path.read_bytes() for path in protected],
