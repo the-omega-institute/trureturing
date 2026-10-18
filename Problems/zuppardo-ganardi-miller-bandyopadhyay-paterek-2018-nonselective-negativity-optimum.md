@@ -28,7 +28,7 @@ An unread measurement can create entanglement. Its optimum quantifies the larges
 
 Issue #18399 records the literature check before any Lean:
 - arXiv v1, the only version, leaves the optimality open, as does the published version;
-- the two works citing it do not settle it;
+- the two citing works listed by Semantic Scholar, arXiv:2201.07969 and the 2024 review DOI 10.33102/mjosht.v10i2.408, cite it only for background and do not address the optimality (both read in full; the readings are in a comment on #18399);
 - the repository had no record of the paper.
 
 `not-found-in-searched-scope`.
@@ -39,7 +39,10 @@ Let ρ = ψψ† and σ = Σ_j p_j P_j with p_j = ⟨e_j, ρ e_j⟩ for an ortho
 1. **The reflection identity.** Tr σ² = Σ p_j² = Tr(σρ), so X = 2σ − ρ satisfies Tr X² = 1.
 2. **The Frobenius bound.** Partial transposition permutes entries, so ‖X^Γ‖_F = 1, and in dimension 4, ‖X^Γ‖₁ ≤ 2‖X^Γ‖_F = 2.
 3. **The bound.** 2σ^Γ = ρ^Γ + X^Γ and the triangle inequality give ‖σ^Γ‖₁ ≤ (‖ρ^Γ‖₁ + 2)/2, that is N(σ) ≤ N(ρ)/2 + 1/4.
-4. **Attainment.** After the Schmidt rotation, a basis containing (ψ₀ ± Φ)/√(2 ± 2c), with Φ the Bell state, produces σ₀ = (ρ₀ + ΦΦ†)/2 with N(σ₀) = N(ρ₀)/2 + 1/4.
+4. **Attainment.** Local unitaries rotate ψ to ψ₀ = a|00⟩ + b|11⟩ with a, b ≥ 0. Let Φ = (|00⟩ + |11⟩)/√2 and c = ⟨ψ₀, Φ⟩ = (a + b)/√2.
+   - For c < 1, the basis (ψ₀ + Φ)/√(2 + 2c), (ψ₀ − Φ)/√(2 − 2c), |01⟩, |10⟩ produces σ₀ = (ρ₀ + ΦΦ†)/2 with N(σ₀) = N(ρ₀)/2 + 1/4.
+   - For c = 1, ψ₀ = Φ is maximally entangled and any basis containing Φ gives σ₀ = ρ₀, with N(σ₀) = 1/2 = N(ρ₀)/2 + 1/4.
+   - The Lean proof uses one real orthogonal change of basis of the span of |00⟩ and |11⟩, with parameters defined for all a, b ≥ 0, so it covers both cases.
 
 ## Falsifier
 
@@ -90,9 +93,9 @@ Every declaration is bind-only. The bind-only form is admitted under the open-pr
 - *Mechanism.* On pure states, 2D_B − id is a Hilbert–Schmidt reflection: the measured change X has unit Frobenius norm whatever the basis. The bound is the equality case of ‖X^Γ‖₁ ≤ 2‖X^Γ‖_F in dimension 4 together with the triangle inequality, and the half-pure, half-Bell output attains both.
 - *Scope.*
   - For a mixed input, Tr(σρ) = Tr σ² still holds, so Tr X² = Tr ρ². The same steps give N(σ) ≤ N(ρ)/2 + (2√(Tr ρ²) − 1)/4. This bound is not formalized, and its attainment is not settled.
-  - For d × d systems the factor 2 becomes d, which gives N(σ) ≤ N(ρ)/2 + (d − 1)/4. Its tightness is open.
+  - For d × d systems the factor 2 becomes d, which gives N(σ) ≤ N(ρ)/2 + (d − 1)/4. The source's Theorem 3, Eqs. (15)–(17), measures a non-maximally entangled input φ in a basis containing (φ ± Φ)/√(2 ± 2⟨φ, Φ⟩) and obtains the output (φφ† + ΦΦ†)/2 with negativity N(φ)/2 + (d − 1)/4, so the d × d bound is attained. Neither the d × d bound nor its attainment is formalized.
 
-**Effect on the paper.** The numerically supported optimum of Section II.E holds for every measurement basis. The free-lunch discussion (negativity gain only for non-maximally entangled inputs) follows from the formula.
+**Effect on the paper.** The numerically supported optimum of Section I.E holds for every measurement basis. The free-lunch discussion (negativity gain only for non-maximally entangled inputs) follows from the formula.
 
 ## ASSUMED-UNVERIFIED
 

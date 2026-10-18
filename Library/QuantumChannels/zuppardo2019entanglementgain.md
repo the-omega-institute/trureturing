@@ -22,7 +22,7 @@ DOI: 10.1103/PhysRevA.99.042319
 
 Source: https://arxiv.org/abs/1806.05465v1; the text was read from the PDF.
 - page 3: Theorems 2 and 3 with the post-measurement state;
-- pages 4–5: Section II.E, Eqs. (28)–(33), and the open optimality question.
+- pages 4–5: Section I.E, Eqs. (28)–(33), and the open optimality question.
 
 ## Source statements
 
@@ -30,7 +30,7 @@ Theorem 2: "ρ′ = Σ_{j=0}^{D−1} |⟨ψ_j|φ⟩|² |ψ_j⟩⟨ψ_j|".
 
 Eq. (33): "N^max_f − N_i = 1/4 − N_i/2".
 
-Section II.E: "Finally, we address the issue whether results just presented are globally optimal. In order to derive them we assumed the measurement basis of the form (28). Although we were not able to provide a proof that this is indeed the optimal choice among all possible measurement bases, we have conducted numerical check which supports optimality."
+Section I.E: "Finally, we address the issue whether results just presented are globally optimal. In order to derive them we assumed the measurement basis of the form (28). Although we were not able to provide a proof that this is indeed the optimal choice among all possible measurement bases, we have conducted numerical check which supports optimality."
 
 ## Reading used by the repository
 
