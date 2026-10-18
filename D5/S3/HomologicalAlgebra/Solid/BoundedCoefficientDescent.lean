@@ -172,7 +172,7 @@ theorem boundedMeasureCoefficient_on_family (S : LightProfinite)
     funext j
     dsimp only [boundedIntegerCoordinates, boundedFamilySection]
     rw [freeSectionEquiv_coordinate]
-    simp only [familyToIntegerMeasures, Pi.lift_π, AddEquiv.apply_symm_apply]
+    simp only [familyToIntegerMeasures, Pi.lift_comp_π, AddEquiv.apply_symm_apply]
   dsimp only [boundedIntegerCoefficient]
   rw [hc]
   apply boundedCoefficientMap_range_independent

@@ -421,7 +421,10 @@ theorem result :
 
   have transitive_delete_pivot {k : Nat} {x : Fin (k + 2)}
       (hx : x ≠ Fin.last (k + 1)) :
-      Transitive (deleteRel (deleteRel (windmill (k + 1)) x) (Fin.last k)) := by
+      ∀ ⦃a b c⦄,
+        deleteRel (deleteRel (windmill (k + 1)) x) (Fin.last k) a b →
+        deleteRel (deleteRel (windmill (k + 1)) x) (Fin.last k) b c →
+        deleteRel (deleteRel (windmill (k + 1)) x) (Fin.last k) a c := by
     intro a b c hab hbc
     change windmill (k + 1)
       (x.succAbove ((Fin.last k).succAbove a))
@@ -446,7 +449,10 @@ theorem result :
   have not_transitive_delete_nonpivot {k : Nat} (hk : 5 ≤ k)
       {x : Fin (k + 2)} (hx : x ≠ Fin.last (k + 1))
       {q : Fin (k + 1)} (hq : q ≠ Fin.last k) :
-      ¬ Transitive (deleteRel (deleteRel (windmill (k + 1)) x) q) := by
+      ¬ (∀ ⦃a b c⦄,
+        deleteRel (deleteRel (windmill (k + 1)) x) q a b →
+        deleteRel (deleteRel (windmill (k + 1)) x) q b c →
+        deleteRel (deleteRel (windmill (k + 1)) x) q a c) := by
     let z : Fin (k + 2) := x.succAbove q
     have hz : z ≠ Fin.last (k + 1) := Fin.succAbove_ne_last hx hq
     obtain ⟨a, b, haeven, hbnext, hb_lt, hax, hbx, haz, hbz⟩ :=
@@ -551,7 +557,8 @@ theorem result :
 
   have transitive_of_relIso {V W : Type}
       {R : V → V → Prop} {S : W → W → Prop}
-      (f : R ≃r S) (h : Transitive R) : Transitive S := by
+      (f : R ≃r S) (h : ∀ ⦃a b c⦄, R a b → R b c → R a c) :
+      ∀ ⦃a b c⦄, S a b → S b c → S a c := by
     intro a b c hab hbc
     have hrab : R (f.symm a) (f.symm b) := (f.symm.map_rel_iff).2 hab
     have hrbc : R (f.symm b) (f.symm c) := (f.symm.map_rel_iff).2 hbc
@@ -688,13 +695,17 @@ theorem result :
       rcases Nat.mod_two_eq_zero_or_one dy.val with he | ho <;> omega
 
   have transitive_delete_of_transitive {n : Nat}
-      {R : Fin (n + 1) → Fin (n + 1) → Prop} (h : Transitive R)
-      (q : Fin (n + 1)) : Transitive (deleteRel R q) := by
+      {R : Fin (n + 1) → Fin (n + 1) → Prop} (h : ∀ ⦃a b c⦄, R a b → R b c → R a c)
+      (q : Fin (n + 1)) :
+      ∀ ⦃a b c⦄, deleteRel R q a b → deleteRel R q b c → deleteRel R q a c := by
     intro a b c hab hbc
     exact h hab hbc
 
   have transitive_pivot_card (k : Nat) :
-      Transitive (deleteRel (windmill (k + 1)) (Fin.last (k + 1))) := by
+      ∀ ⦃a b c⦄,
+        deleteRel (windmill (k + 1)) (Fin.last (k + 1)) a b →
+        deleteRel (windmill (k + 1)) (Fin.last (k + 1)) b c →
+        deleteRel (windmill (k + 1)) (Fin.last (k + 1)) a c := by
     intro a b c hab hbc
     change windmill (k + 1) ((Fin.last (k + 1)).succAbove a)
       ((Fin.last (k + 1)).succAbove b) at hab
@@ -709,7 +720,10 @@ theorem result :
 
   have not_transitive_chain_card {k : Nat} (hk : 5 ≤ k)
       {x : Fin (k + 2)} (hx : x ≠ Fin.last (k + 1)) :
-      ¬ Transitive (deleteRel (windmill (k + 1)) x) := by
+      ¬ (∀ ⦃a b c⦄,
+        deleteRel (windmill (k + 1)) x a b →
+        deleteRel (windmill (k + 1)) x b c →
+        deleteRel (windmill (k + 1)) x a c) := by
     intro h
     have hzero : (0 : Fin (k + 1)) ≠ Fin.last k := by
       intro hz

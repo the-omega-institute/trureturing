@@ -88,7 +88,7 @@ theorem coherent_compression_trace_transfer
       rw [pow_two, ← CStarRing.norm_self_mul_star, star_mul, hsstar, hQstar]
       rw [mul_assoc, ← mul_assoc (S), hSS, ← mul_assoc]
     have hqs : ‖Q * S‖ ≤ α := by
-      have hh := CStarAlgebra.norm_le_norm_of_nonneg_of_le hqpos hqle
+      have hh := CStarAlgebra.norm_le_norm_of_le_of_nonneg hqle hqpos
       have ha2 : α ^ 2 = ‖Q * T P * Q‖ := Real.sq_sqrt (norm_nonneg _)
       apply (sq_le_sq₀ (norm_nonneg (Q * S)) hα).mp
       rw [hqsquare, ha2]

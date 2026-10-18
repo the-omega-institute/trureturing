@@ -5,6 +5,7 @@
    anchors: []
    utility: none
    digest: Actual six-cut paths and five whole words identify the sixth J2 component. -/
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2SurvivingEdges
 import D5.S3.Combinatorics.Graph.Walks.EdgeSlicingCutEndpoints
 import Mathlib.Data.List.Nodup

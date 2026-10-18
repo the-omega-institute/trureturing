@@ -39,6 +39,10 @@ on:
         description: 'Explicitly regenerate all report artifacts, retaining compiled Lean/dependencies'
         type: boolean
         default: false
+      runner_diagnostics:
+        description: 'PR only: observe Linux Worker signal provenance and cgroup memory'
+        type: boolean
+        default: false
       pr_source:
         description: 'PR only: immutable event PR/head/merge/base/run/attempt/target identity'
         type: string
@@ -148,6 +152,7 @@ jobs:
       - name: Dispatch the single long build and report its exact run ID
         env:
           GH_TOKEN: ${{ github.token }}
+          STRATALINT_RUNNER_DIAGNOSTICS: ${{ contains(github.event.pull_request.labels.*.name, 'lean-cache-diagnostics') }}
         run: python3 tools/scripts/worktree/lean_pr_cache.py dispatch --repository "$GITHUB_WORKSPACE"
 
   pr-producer:
@@ -163,7 +168,9 @@ jobs:
       group: lean-cache-pr-${{ fromJSON(inputs.pr_source).pr }}
       cancel-in-progress: true
     env:
+      LEAN_NUM_THREADS: '1'
       STRATALINT_CACHE_WRITES: 'true'
+      STRATALINT_RUNNER_DIAGNOSTICS: ${{ inputs.runner_diagnostics }}
       PR_SOURCE: ${{ inputs.pr_source }}
       SOURCE_REF: ${{ inputs.source_ref }}
       SOURCE_SHA: ${{ inputs.source_sha }}

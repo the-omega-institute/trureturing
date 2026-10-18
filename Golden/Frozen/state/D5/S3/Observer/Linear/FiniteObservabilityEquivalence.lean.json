@@ -1,1 +1,1 @@
-{"statement_id":"sha256:8c309e3a31ef326f573646e52ce0f8aa6dca22d52a8e4f0b50e5ea8200affef7","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),8:Observer),6:Linear),30:FiniteObservabilityEquivalence),32:finite_observability_equivalence)","kind":"theorem"}]}
+{"statement_id":"sha256:5cb9e1ee607fbc8750d6e74da7658e283552e2916cf93ad02548ee712de5db9a","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),8:Observer),6:Linear),30:FiniteObservabilityEquivalence),32:finite_observability_equivalence)","kind":"theorem"}]}

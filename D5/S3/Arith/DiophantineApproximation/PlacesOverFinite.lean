@@ -243,8 +243,6 @@ theorem exists_finitePlace_rpow_inv_eq_of_liesOver (v : FinitePlace K) (w : Abso
       WithZeroMulInt.toNNReal_neg_apply _ (by simpa),
       WithZeroMulInt.toNNReal_neg_apply _ (by simpa),
       ← Ideal.absNorm_pow_inertiaDeg v.maximalIdeal.1 P.1]
-    rw [Ideal.ramificationIdx'_eq_ramificationIdx v.maximalIdeal.asIdeal P.asIdeal
-      v.maximalIdeal.ne_bot]
     simp only [Nat.cast_pow, Nat.cast_mul, NNReal.coe_zpow, ← zpow_natCast, ← zpow_mul]
     congr 1
     ring

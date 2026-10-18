@@ -6,6 +6,7 @@
    utility: none
    digest: Complete cyclic correction and two-row source-energy stability. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Fourier.FullBispectrumStability
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Inverse

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:4406aa5c31dba66bb2950e05fddfbaeee2155a5c4c2d3a9d9813eb229c44f926
+  normalized_sha256: sha256:4406aa5c31dba66bb2950e05fddfbaeee2155a5c4c2d3a9d9813eb229c44f926
+cas_ref: sha256:4406aa5c31dba66bb2950e05fddfbaeee2155a5c4c2d3a9d9813eb229c44f926
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OriginalScheduledWitnessTables.view_congr
+    target_statement_id: sha256:2610bc35360c028189f75e7a212929b7a81b274e0b44c3b5b1bc53016d6c814b
+receipts:
+  unresolved_subitems: []

@@ -6,7 +6,7 @@ Constructive Option contracts cover fixed parameters and all-coordinate solving.
 
 BF(m,n) is the native finite-context bounded formula type, and NatTuple(r)=Fin r->Nat. test decides satisfaction for a complete free/bound valuation. solveBounded fixes the free valuation and returns Option(NatTuple(n)); solveAll returns Option(NatTuple(m+n)). Every statement below keeps the original native Realize semantics.
 
-Existential closure, relabeling and witness extraction reuse the supplied native exs, relabel and Encodable.chooseX implementations. There is no new custom tuple enumeration or quantifier-elimination procedure. The search predicate is the executable Bool test. Proof-only classical reasoning does not replace the computational decision path.
+Existential closure, relabeling and witness extraction reuse the supplied native exs, relabel and Encodable.choose implementations. There is no new custom tuple enumeration or quantifier-elimination procedure. The search predicate is the executable Bool test. Proof-only classical reasoning does not replace the computational decision path.
 
 These interfaces are useful for extracting finite natural assignments and for deciding formulas with arbitrary alternation and nested negation. They establish executable Lean definitions and exact semantic contracts. They do not establish a recursion-theoretic Computable theorem, a complexity estimate, or a uniform practical runtime bound. Encodable search cost depends on the tuple encoding; semantic correctness alone is not a measurement of runtime completion.
 
@@ -36,7 +36,7 @@ $$\forall m \in Nat,\; \forall n \in Nat,\; \forall p \in \operatorname{BF}\left
 
 *Commentary.*
 
-solveBounded first tests native existential closure p.exs at the empty bound valuation, using the supplied realize_exs equivalence. Only in the positive branch does Encodable.chooseX select a finite tuple satisfying test=true; test_correct proves its original native satisfaction.
+solveBounded first tests native existential closure p.exs at the empty bound valuation, using the supplied realize_exs equivalence. Only in the positive branch does Encodable.choose select a finite tuple satisfying test=true; test_correct proves its original native satisfaction.
 
 **Theorem 1.3 (Returning some is equivalent to existence).**
 

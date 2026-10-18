@@ -64,8 +64,8 @@ private theorem translated_native_degree (D : LatticeData) (charge : Charge D)
   apply Polynomial.natDegree_sum_le_of_forall_le
   intro exponent hexponent
   apply Polynomial.natDegree_mul_le.trans
-  rw [show (algebraMap ℂ (Polynomial (Oscillator D))) (MvPolynomial.coeff exponent polynomial) =
-    Polynomial.C ((algebraMap ℂ (Oscillator D)) (MvPolynomial.coeff exponent polynomial)) by rfl,
+  rw [show (algebraMap ℂ (Polynomial (Oscillator D))) (polynomial.coeff exponent) =
+    Polynomial.C ((algebraMap ℂ (Oscillator D)) (polynomial.coeff exponent)) by rfl,
     Polynomial.natDegree_C, zero_add]
   apply (Polynomial.natDegree_prod_le _ _).trans
   apply le_trans _ (MvPolynomial.le_weightedTotalDegree (omega D) hexponent)
@@ -239,7 +239,7 @@ theorem charged_ground_leading (D : LatticeData) (hu : IsUnit D.G.det)
   rw [TensorProduct.equivFinsuppOfBasisLeft_apply_tmul_apply] at coordinate
   have one_coordinate : (MvPolynomial.basisMonomials (Index D) ℂ).repr
       (1 : Oscillator D) 0 = 1 := by
-    change MvPolynomial.coeff 0 (1 : Oscillator D) = 1
+    change (1 : Oscillator D).coeff 0 = 1
     simp
   simp only [one_coordinate, one_smul, map_zero, Finsupp.zero_apply] at coordinate
   apply nonzero

@@ -5,6 +5,7 @@
    anchors: []
    utility: none
    digest: Every actual permutation lies in a complete frame layer with three residual labels. -/
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeRecursiveSupply
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeStarGrafting
 import D5.S3.Combinatorics.Graph.PrefixReversal.InsertionLayerPartition

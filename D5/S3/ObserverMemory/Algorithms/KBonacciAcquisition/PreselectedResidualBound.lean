@@ -216,7 +216,7 @@ private theorem cap_chain_lower (L : ℕ) (hL : 3 ≤ L) (a : ℕ → ℝ)
   let E : Set (Fin (L+1)) := {r | chainEvent L t.val r.val}
   let law := w.toMeasure.map (fun f => f.val b)
   have hlaw : IsProbabilityMeasure law :=
-    Measure.isProbabilityMeasure_map (measurable_of_countable _).aemeasurable
+    inferInstance
   have event : (finiteTarget L a b E).toReal ≤ eps + (law E).toReal := by
     have h := (le_iSup (fun E : {E : Set (Fin (L+1)) // MeasurableSet E} =>
       max (law E.1 - finiteTarget L a b E.1) (finiteTarget L a b E.1 - law E.1))

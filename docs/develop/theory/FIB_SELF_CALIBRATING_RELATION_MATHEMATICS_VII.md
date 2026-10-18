@@ -1604,3 +1604,530 @@ neither an original-root lower-bound tree nor an unrestricted
 eight-reading decoder.
 
 ## 追加锚（本行以下为增补区）
+
+## 12. JMMJ 整个根六父类的实际有限子纤维
+
+**定义 12.1（根六承诺与逐时钟的 J 延续）。** Retain the complete
+worlds, original clocks and deterministic policies of Definition 1.1.
+For arbitrary $D_0,Y\in\mathbb R$ and $\lambda\ne0$, write the
+literal parent of Definition 1.2 as
+
+$$
+H_p=H_J(Y)
+=(D_0,J,D_0+24\lambda,M,D_0+48\lambda,M,D_0+312\lambda/5,J,Y).
+\tag{12.1}
+$$
+
+Put $f=g/\lambda$, $d=(\delta-D_0)/\lambda$ and
+$y=(Y-D_0)/\lambda$, as in (1.4). The entire promised class is
+
+$$
+\mathcal C_6(H_p)=\{(P,g,\delta)\in\mathcal F(H_p):f(6)=0\}.
+\tag{12.2}
+$$
+
+A known subset $K\subseteq\mathcal C_6(H_p)$ may have any
+cardinality and may contain different drifts. Membership in (12.2)
+is an input premise; it is not an observation obtained from $H_p$.
+In particular neither $d=0$ nor $f(7)\ne0$ is imposed.
+
+Use the source coordinates
+
+$$
+\begin{gathered}
+P=\begin{pmatrix}r&u\\v&1-r\end{pmatrix},\qquad
+\ell=1+u>1,\qquad k=\frac{u+v}{\ell}>0,\\
+u=\ell-1,\qquad v=(k-1)\ell+1>0,\qquad
+0<r<1,\qquad uv=r(1-r).
+\end{gathered}
+\tag{12.3}
+$$
+
+These conditions are equivalent to strict entrywise positivity,
+rank one and trace one; no equality between $u$ and $v$ is required.
+The matrices $L,C,Q$ are those of (1.5). After the actual fifth $J$
+and sixth $J$, the cumulative matrices and their trace factors are
+
+$$
+\begin{array}{c|c|c}
+\text{clock}&A_i&\operatorname{tr}(A_iP)\\ \hline
+0&I&1\\
+1&J&k\ell\\
+2&L&\ell\\
+3&J+L&(k+1)\ell\\
+4&C&1+r+k\ell\\
+5&J+L&(k+1)\ell\\
+6&C&1+r+k\ell\\
+7\text{ after }J&J+L&(k+1)\ell\\
+7\text{ after }M&Q&(k+2)\ell-r.
+\end{array}
+\tag{12.4}
+$$
+
+Indeed $JC=J+L$ and $J(J+L)=C$. In particular $Q$ here is the
+seventh-$M$ state of the word $JMMJJJM$; no fifth-$M$ response is
+part of this continuation. Every displayed trace is positive.
+Write $x=(z_5-D_0)/\lambda$ and $w=(z_6-D_0)/\lambda$ for the
+normalized readings actually acquired at clocks five and six.
+For arbitrary worlds on this history,
+
+$$
+x=d+f(5)(k+1)\ell,\qquad
+w=d+f(6)(1+r+k\ell).
+\tag{12.5}
+$$
+
+On (12.2) the actual sixth reading is therefore $z_6=\delta$ and
+$w=d$. For each $x,d\in\mathbb R$, let
+
+$$
+\mathcal C_{x,d}
+=\mathcal C_6(H_p)\cap
+\mathcal F(H_p,J,D_0+\lambda x,J,D_0+\lambda d).
+\tag{12.6}
+$$
+
+This definition retains all five parent readings and both subsequent
+actual readings on the same worlds. Its second subscript is both an
+acquired normalized response and, within this promised class, the
+normalized target drift.
+
+**定义 12.2（完整插值与根六系数）。** For the coordinates (12.3), the
+first four normalized readings give the gain samples
+
+$$
+(\alpha_0,\alpha_1,\alpha_2,\alpha_3)
+=\left(-d,\frac{24-d}{k\ell},\frac{48-d}{\ell},
+                      \frac{312/5-d}{(k+1)\ell}\right).
+\tag{12.7}
+$$
+
+The gain is the unique polynomial of degree at most three with these
+values at $0,1,2,3$: $f(T)=\sum_{i=0}^3\alpha_i\ell_i(T)$, with
+the basis (8.4). This is standard Lagrange interpolation, as in
+[NIST DLMF, §3.3(i), equation (3.3.1)](https://dlmf.nist.gov/3.3.E1),
+with $n=3$, nodes $z_i=i$ and sample values $\alpha_i$. It is used
+inside the following deductions, not asserted as a new result.
+All denominators in (12.7) are positive. The interpolant cannot be
+zero, since the normalized readings at zero and one are different.
+
+Set $D=\ell k(k+1)>0$, and define
+
+$$
+\begin{aligned}
+N&=(2160-45d)k^2+(48+11d)k+36d-864,\\
+p_4&=\frac32(d-48)k^2+\frac{624-9d}{10}k+\frac{48-2d}{5},\\
+p_5&=2(d-48)k^2+\frac{216-3d}{5}k+\frac{72-3d}{5},\\
+p_7&=6(48-d)k^2+(d-72)k+2d-48.
+\end{aligned}
+\tag{12.8}
+$$
+
+**引理 12.3（每个实际第五 J、第六 J 子纤维至多两个完整世界）。**
+For every $x,d\in\mathbb R$,
+
+$$
+|\mathcal C_{x,d}|\le2.
+\tag{12.9}
+$$
+
+This counts complete triples $(P,g,\delta)$, including every source
+asymmetry, gain sign, sampled or multiple root and degree drop.
+
+Proof. Evaluation of the interpolant (12.7) gives
+
+$$
+\begin{pmatrix}f(4)\\f(5)\\f(6)\\f(7)\end{pmatrix}
+=\begin{pmatrix}
+-1&4&-6&4\\
+-4&15&-20&10\\
+-10&36&-45&20\\
+-20&70&-84&35
+\end{pmatrix}
+\begin{pmatrix}\alpha_0\\\alpha_1\\\alpha_2\\\alpha_3\end{pmatrix}.
+\tag{12.10}
+$$
+
+Multiplying by $D$ and subtracting $1/10,2/5,2$ times the sixth
+row from the fourth, fifth and seventh rows respectively gives the
+identities
+
+$$
+Df(6)=10dD-N,\qquad
+D\bigl(f(i)-a_i f(6)\bigr)=p_i,
+\quad (i,a_i)=(4,1/10),(5,2/5),(7,2).
+\tag{12.11}
+$$
+
+Consequently every promised world satisfies
+
+$$
+10d\ell k(k+1)=N,\qquad
+f(i)=\frac{p_i}{\ell k(k+1)}\ (i=4,5,7),\qquad
+x=d+\frac{p_5}{k}.
+\tag{12.12}
+$$
+
+The fourth reading is still the actual equation
+
+$$
+y-d=f(4)(1+r+k\ell).
+\tag{12.13}
+$$
+
+First suppose $d\ne0$ and $y\ne d$. Put $e=x-d$. Equation
+(12.12) requires $p_5-ek=0$, a polynomial of degree at most two
+in $k$. Its quadratic coefficient is $2(d-48)$ and its constant
+coefficient is $-3(d-24)/5$. They cannot both vanish, so the
+polynomial is not identically zero. It has at most two positive
+roots. This includes $d=48$, where $p_5=(72/5)(k-1)$ and the
+constraint remains nonzero. Each candidate $k$ uniquely fixes
+
+$$
+\ell=\frac{N}{10d k(k+1)}.
+\tag{12.14}
+$$
+
+In a legal world $y\ne d$ and the positive trace in (12.13) imply
+$f(4)\ne0$. Thus
+
+$$
+r=\frac{y-d}{f(4)}-1-k\ell
+\tag{12.15}
+$$
+
+is uniquely fixed. Equations (12.3) and (12.7) then fix the source
+and every gain coefficient. There are at most two complete worlds.
+
+Next suppose $d\ne0$ and $y=d$. The same positive trace forces
+$f(4)=0$, hence $p_4=0$. Directly from (12.8),
+
+$$
+4p_4-3p_5=\frac{(600-9d)k+d-24}{5}.
+\tag{12.16}
+$$
+
+Since $p_5=ek$, this gives
+
+$$
+(600-9d+15e)k+d-24=0.
+\tag{12.17}
+$$
+
+If $d\ne24$, its nonzero constant permits at most one $k$;
+a zero linear coefficient gives no solution. If $d=24$, instead
+use $p_4=k(-36k+204/5)$, whose only positive root is $17/15$.
+Thus at most one $k$ occurs in either case. It fixes $\ell$ by
+(12.14). The remaining rank equation
+
+$$
+r(1-r)=(\ell-1)((k-1)\ell+1)
+\tag{12.18}
+$$
+
+is a nonzero quadratic in $r$, with at most two roots. Each fixes
+one complete world by (12.3) and (12.7).
+
+Finally suppose $d=0$. Equation (12.12) becomes
+
+$$
+45k^2+k-18=0.
+\tag{12.19}
+$$
+
+This polynomial is strictly increasing for $k>0$, negative at $3/5$
+and positive at $2/3$. It has one positive root $\kappa$, with
+$3/5<\kappa<2/3$. Reduction of (12.8) by (12.19) gives
+
+$$
+p_4(\kappa,0)=64\kappa-96/5>0,\qquad
+p_7(\kappa,0)=(336-392\kappa)/5>0.
+\tag{12.20}
+$$
+
+Define the positive constants
+$c_i=p_i(\kappa,0)/[\kappa(\kappa+1)]$ for $i=4,7$.
+Then $f(4)=c_4/\ell$. Set $b=y/c_4-\kappa$; the actual fourth
+reading (12.13) gives $r=b\ell-1$. Substituting into (12.18)
+gives exactly
+
+$$
+(b^2+\kappa-1)\ell^2+(2-\kappa-3b)\ell+1=0.
+\tag{12.21}
+$$
+
+Its constant is one, so it has at most two real roots, including
+all linear or constant degeneracies and repeated roots. Every legal
+$\ell$ fixes $r,u,v$ and the entire interpolated gain. Thus there
+are at most two worlds even before imposing the fifth reading.
+
+These three cases exhaust $d,y$. In each case retain only candidates
+satisfying all positivity and rank conditions and all actual history
+equations; filtering cannot increase the count. A polynomial root
+alone has not been asserted to give a legal world. No division by
+$f(5)$, $x-d$, a leading coefficient or a discriminant occurs.
+Interpolation is on the whole cubic-or-lower space and uses no
+root-simplicity assumption. ∎
+
+## 13. 末端根层上的分离与八总读完整逆
+
+**引理 13.1（整个实际子纤维上的末端预测对单射）。** On each
+$\mathcal C_{x,d}$, the two normalized seventh predictions
+
+$$
+R=d+f(7)(k+1)\ell=d+\frac{p_7}{k},\qquad
+S=d+f(7)((k+2)\ell-r)
+\tag{13.1}
+$$
+
+jointly determine the complete world. They are respectively the
+seventh-$J$ and seventh-$M$ predictions after the actual fifth and
+sixth $J$ readings. No nonzero-terminal-gain premise is required.
+
+Proof. First exclude a world on $H_p$ with
+$f(4)=f(6)=f(7)=0$. A nonzero polynomial of degree at most three
+with these three distinct roots must be
+
+$$
+f(T)=a(T-4)(T-6)(T-7),\qquad a=d/168\ne0,
+\tag{13.2}
+$$
+
+where the initial reading gives the value of $a$. Put $j=u+v=k\ell$.
+The first three noninitial readings in (12.1) imply
+
+$$
+j=\frac{28(d-24)}{15d},\qquad
+\ell=\frac{21(d-48)}{5d},\qquad
+j+\ell=\frac{14(d-312/5)}{d}.
+\tag{13.3}
+$$
+
+Adding the first two and comparing with the third forces
+$d=1344/17$, then $j=13/10$ and $\ell=33/20$. Thus
+$u=\ell-1=13/20$ and $v=j-u=13/20$. But
+$uv=169/400>1/4$, whereas $r(1-r)\le1/4$, contradicting
+(12.18). Lower degrees cannot evade this argument because three
+distinct roots already force degree three. Hence the root set
+$\{4,6,7\}$ is impossible on this parent.
+
+Consider two worlds in the same $\mathcal C_{x,d}$ with equal
+$R,S$. Put $e=x-d$ and $h=R-d$. Another coefficient identity is
+
+$$
+3p_5+p_7=\frac{4(72-d)k+d-24}{5}.
+\tag{13.4}
+$$
+
+By $p_5=ek$ and $p_7=hk$ it gives
+
+$$
+3e+h=\frac{4(72-d)}5+\frac{d-24}{5k}.
+\tag{13.5}
+$$
+
+If $d\ne24$, equality of $x,R,d$ fixes $k$ uniquely, because
+$k>0$ and $d-24\ne0$. If $d=24$, the fifth equation alone is
+$e=-48k+144/5$, again fixing $k$ without a singular division.
+
+Suppose $d\ne0$. Equation (12.14) now fixes the same $\ell$,
+and (12.7) gives the same entire gain for both worlds. If
+$f(7)\ne0$, equality of $S$ in (13.1) fixes $r$. If $f(7)=0$,
+the preceding exclusion implies $f(4)\ne0$, so the common actual
+fourth reading fixes $r$ by (12.15). In either case the complete
+worlds agree. This includes the stratum where both terminal
+predictions themselves equal $d$.
+
+Suppose instead $d=0$. Lemma 12.3 gives $k=\kappa$,
+$r=b\ell-1$ and $f(7)=c_7/\ell$ with $c_7>0$. Consequently
+
+$$
+S=c_7\left(\kappa+2-b+\frac1\ell\right).
+\tag{13.6}
+$$
+
+This is injective in $\ell>1$; for distinct positive
+$\ell_1,\ell_2$, the response difference is
+$c_7(\ell_2-\ell_1)/(\ell_1\ell_2)\ne0$. Equal $S$ therefore
+fixes $\ell$, then $r$ and all of the target. Thus in this case
+even $S$ alone is injective. All cases prove the assertion. ∎
+
+**定理 13.2（已知整个根六类的任意子集均有八总读解码）。** For every
+$D_0,Y\in\mathbb R$, every $\lambda\ne0$ and every known set
+$K\subseteq\mathcal C_6(H_p)$, there is one deterministic policy
+recovering the complete target $(P,g,\delta)$ for every member of
+$K$ within eight total original-clock readings. The set $K$ has
+no cardinality bound and needs neither common drift, symmetric
+source, gain-sign restriction nor a nonzero sample at seven.
+The policy uses fifth $J$, sixth $J$, and at most one final
+seventh action, with singleton early stops permitted.
+
+Proof. The acquired parent already contains the five readings at
+clocks $0,1,2,3,4$. Its constants $D_0=z_0$ and
+$\lambda=(z_1-z_0)/24$ are available. If the known retained set is
+a singleton, return its complete target. Otherwise execute fifth
+$J$ and immediately read $z_5$, giving $x$. Stop if its entire
+retained child is a singleton. Otherwise execute sixth $J$ and
+immediately read $z_6$. The membership premise $f(6)=0$ makes
+this actual read $\delta$, so $d=(z_6-D_0)/\lambda$ is now
+acquired even when the fifth child had different drifts.
+
+The whole retained set is $K\cap\mathcal C_{x,d}$ and has at
+most two complete worlds by Lemma 12.3. Actual membership makes
+it nonempty. Return the target if it is a singleton. If it has
+two members, evaluate their predictions (13.1) as functions of
+these known candidates. Choose seventh $J$ when their $R$ values
+differ, and choose seventh $M$ otherwise. In the latter case
+Lemma 13.1 guarantees different $S$ values. Thus the chosen one
+coordinate is injective on the entire retained set. Execute only
+that one atom, immediately read it at clock seven, and return the
+unique retained world matching the normalized actual response.
+The two alternative predictions are never two acquired readings.
+
+For an explicit inverse description, form the candidates in the
+three cases of Lemma 12.3, filter by the full known set and history,
+and select the unique candidate matching the last chosen response.
+For its $r,k,\ell,d$, return
+
+$$
+P=\begin{pmatrix}r&\ell-1\\(k-1)\ell+1&1-r\end{pmatrix},\qquad
+g(T)=\lambda\sum_{i=0}^3\alpha_i\ell_i(T),\qquad
+\delta=D_0+\lambda d,
+\tag{13.7}
+$$
+
+where the $\alpha_i$ are (12.7). The rank and positivity filters
+and interpolation identify the complete target, not just a source,
+gain ray or root label. Existence of an inverse value follows from
+the actual legal world; uniqueness is on its entire retained set.
+
+This rule defines one policy for every reachable real response of
+the same known $K$, even if $K$ is infinite. Empty children are
+unreachable. Actions and inverse functions may be arbitrary
+deterministic functions under Definition 1.1; no computability,
+efficiency or noise-stability property is asserted. Normalization
+and (13.7) are mutually inverse for both signs of $\lambda$.
+Every added atom is immediately read on the one unresettable
+trajectory. The maximum budget is $5+1+1+1=8$, with clocks exactly
+$0,\ldots,7$ and no extra acquisition. ∎
+
+The root-six whole-child bound and its terminal injection are
+`repo-derived`. Their mathematical interfaces with preceding results
+are the following; standard interpolation and finite-child action
+selection are reused inside the proof.
+
+| Mathematical source | Parameter correspondence and scope |
+| --- | --- |
+| Definitions 1.1–1.2 and (8.3)–(8.5) | The same full target and literal $H_J(Y)$, with $f=g/\lambda$, $d=(\delta-D_0)/\lambda$; the interpolation trace parameters of (8.2) are $u_{8}=k\ell$, $v_{8}=\ell$, $a_{8}=r$. The special fourth and fifth readings of $H_*$ are not imposed. |
+| Theorem 5.1 | Its final finite-candidate action selection is reused. It assumes at most two targets in every actual fifth-$M$ fiber. Here the fifth action is $J$, the sixth $J$ acquires drift under (12.2), and Lemma 12.3 proves the bound on each entire resulting child rather than assuming it. |
+| Theorem 6.2 | Its common-response, root-six application belongs to the different literal $MMJM$ history (6.1), with additional known $m,j,b,d_6$ conditions. None of those common-response premises is transported to (12.1). |
+| [V, Definition 5.1 and Theorem 5.2](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_V.md) | The parent $H_J(Y)$ and $D_0,\lambda,Y$ agree exactly. V assumes $\delta=D_0$ and $g(7)=0$ and uses fifth and sixth $M$. Here only $g(6)=0$ is promised, arbitrary drifts and terminal roots are retained, and fifth and sixth $J$ are actually read. |
+
+## 14. 整个承诺类的排除与不受限原根桥梁
+
+**推论 14.1（整族非 L3 及失败 J 子纤维的非根六成员）。** For every
+known $K\subseteq\mathcal C_6(H_p)$,
+
+$$
+\neg L_3(K,H_p),\qquad
+\neg L_2(K_x,(H_p,J,D_0+\lambda x))\quad\text{for every }x,
+\tag{14.1}
+$$
+
+where $K_x$ is the entire actual fifth-$J$ response child of $K$.
+These conclusions have no finite-cardinality hypothesis.
+
+More generally, let $K\subseteq\mathcal F(H_p)$ be unrestricted
+and known. Define its actual children
+
+$$
+\begin{aligned}
+H_x&=(H_p,J,D_0+\lambda x),&
+K_x&=K\cap\mathcal F(H_x),\\
+H_{x,w}&=(H_x,J,D_0+\lambda w),&
+K_{x,w}&=K\cap\mathcal F(H_{x,w}).
+\end{aligned}
+\tag{14.2}
+$$
+
+Whenever $L_2(K_x,H_x)$, some actual sixth-$J$ response $w$ has
+$L_1(K_{x,w},H_{x,w})$, and every such losing sixth child contains
+a world with $f(6)\ne0$. For that world $d\ne w$. In particular
+$L_3(K,H_p)$ necessarily supplies such a fifth-$J$ child and such
+a non-sixth-root member in its losing sixth-$J$ child.
+
+Proof. On a root-six fifth-$J$ child the continuation of Theorem 13.2
+uses at most two further readings. Each actual sixth-$J$ response
+acquires $d$, after which Lemmas 12.3 and 13.1 give either a
+singleton or a pair separated by one chosen last atom. Thus every
+whole fifth child is not $L_2$, and the parent is not $L_3$ by
+(1.2). This works directly on the entire known set; no triple is
+extracted from a larger or infinite losing family.
+
+For unrestricted $K$, recursion (1.2) applied to $L_2(K_x,H_x)$
+supplies a losing actual sixth-$J$ response child. If all of its
+worlds had $f(6)=0$, (12.5) would give $d=w$ on that whole child,
+placing it inside $\mathcal C_{x,w}$. Lemmas 12.3 and 13.1 would
+then give a one-read decoder on it, contradicting $L_1$. Hence
+it contains a non-sixth-root world. Its positive trace factor in
+(12.5) gives $w-d=f(6)(1+r+k\ell)\ne0$. Finally $L_3(K,H_p)$
+supplies a losing fifth-$J$ child by the same recursion.
+
+Consequently a losing certificate on the fifth-$M$ arm supported
+entirely on sixth-root worlds, even an exact three-world certificate,
+cannot by itself be joined into a losing parent consisting only of
+sixth-root worlds. The necessary alternate-arm nonroot member need
+not be one of those three worlds, and its sixth child need not
+contain any sixth-root world. All witnesses must still share the
+literal parent (12.1). This conclusion neither realizes nor excludes
+a fifth-$M$ losing triple. ∎
+
+**定义 14.2（不受限延伸与原根的未决命题）。** On the unrestricted
+parent fiber define
+
+$$
+\mathcal U_{x,w}=\mathcal F(H_{x,w}),\qquad
+R(W)=d+f(7)(k+1)\ell,\qquad
+S(W)=d+f(7)((k+2)\ell-r).
+\tag{14.3}
+$$
+
+The actual fifth and sixth readings are still (12.5). A sufficient
+remaining assertion for the fixed fifth-$J$, sixth-$J$ continuation
+is that, for every nonempty $\mathcal U_{x,w}$, at least one of
+$R,S$ is injective on that entire fiber. Its last-action obstruction
+is one and the same $\mathcal U_{x,w}$ with both
+
+$$
+\begin{gathered}
+W_1\ne W_2,\quad R(W_1)=R(W_2),\\
+W_3\ne W_4,\quad S(W_3)=S(W_4),\qquad
+W_1,W_2,W_3,W_4\in\mathcal U_{x,w}.
+\end{gathered}
+\tag{14.4}
+$$
+
+The two pairs may differ or be disjoint. Thus injectivity of a
+two-coordinate prediction map, without the proved two-world bound,
+would not supply a single lawful last action. Lemmas 12.3 and 13.1
+settle this requirement on each known root-six restriction, not on
+the unrestricted $\mathcal U_{x,w}$. Constructing or excluding
+these mixed-root actual children remains unresolved here. In
+particular $H_p$ has not been proved to certify root-six membership,
+and a sixth reading on an unrestricted input has not been proved to
+reveal its drift. The sixth-root equality is a premise of the decoder.
+
+A result on this unrestricted fixed continuation would still be a
+local parent result. The original problem also requires the other
+parent actions, other literal histories and every earlier actual
+response. A lower-bound tree must supply losing children for both
+actions at every required earlier node, consistently retaining the
+same complete worlds and ancestors and accounting for early stops.
+An original-root decoder must specify lawful actions and complete
+answers on all reachable histories. Neither bridge is supplied by
+the root-six theorem. The unresolved full-domain alternative is
+$n_{\mathrm{det}}(3,0)\ge9$ versus complete-target recovery on all
+of $\mathcal W_3$ in at most eight total original-clock readings.
+No nine-reading upper bound follows from the conditional decoder.
+
+## 追加锚（本行以下为增补区）

@@ -55,19 +55,32 @@ def spectralRecoveryAction (E : s → Matrix n d ℂ) (v : d) (X : Matrix n n �
   (∑ a, (E a)ᴴ * W * X * W * E a) +
     Matrix.trace ((1 - spectralSupport Q) * X) • Matrix.single v v 1
 
-/-- Existence of any actual finite Kraus inverse makes the computed spectral candidate exact. -/
-theorem computed_recovery_of_kraus_left_inverse (E : s → Matrix n d ℂ)
-    (hTP : (∑ a, (E a)ᴴ * E a) = 1)
+/-- The actual observable and spectral identities used by the computed recovery
+and by the pointwise tensor geometry. The proof is shared in its original owner. -/
+theorem kraus_left_inverse_spectral_relations (E : s → Matrix n d ℂ)
     (A : t → Matrix d n ℂ) (hA : (∑ b, (A b)ᴴ * A b) = 1)
     (hleft : ∀ X : Matrix d d ℂ,
       (∑ b, A b * (∑ a, E a * X * (E a)ᴴ) * (A b)ᴴ) = X)
-    (v : d) (X : Matrix d d ℂ) :
-    spectralRecoveryAction E v (∑ a, E a * X * (E a)ᴴ) = X := by
+    (v : d) :
+    let Q := ∑ a, E a * (E a)ᴴ
+    let P := spectralSupport Q
+    let W := spectralInverseSqrt Q
+    let Y := fun T : Matrix d d ℂ => leftInverseObservable A T
+    let NX := fun T : Matrix d d ℂ => ∑ a, E a * T * (E a)ᴴ
+    (∀ (T : Matrix d d ℂ) (a : s), Y T * E a = E a * T) ∧
+    (∀ (T : Matrix d d ℂ) (a : s), (E a)ᴴ * Y T = T * (E a)ᴴ) ∧
+    (∀ T : Matrix d d ℂ, Q * Y T = NX T) ∧
+    (∀ T : Matrix d d ℂ, Y T * Q = NX T) ∧
+    (∀ T : Matrix d d ℂ, W * Y T = Y T * W) ∧
+    W * Q * W = P ∧
+    (∀ T : Matrix d d ℂ, W * NX T * W = P * Y T) ∧
+    (∀ a : s, P * E a = E a) ∧
+    (∀ T : Matrix d d ℂ, P * NX T = NX T) := by
   let Q := ∑ a, E a * (E a)ᴴ
   let P := spectralSupport Q
   let W := spectralInverseSqrt Q
-  let Y := leftInverseObservable A X
-  let NX := ∑ a, E a * X * (E a)ᴴ
+  let Y := fun T : Matrix d d ℂ => leftInverseObservable A T
+  let NX := fun T : Matrix d d ℂ => ∑ a, E a * T * (E a)ᴴ
   have hQ : Q.PosSemidef := Matrix.nonneg_iff_posSemidef.mp
     (Finset.sum_nonneg fun a _ => (Matrix.posSemidef_self_mul_conjTranspose (E a)).nonneg)
   have hIntertwines (T : Matrix d d ℂ) (a : s) :
@@ -91,20 +104,20 @@ theorem computed_recovery_of_kraus_left_inverse (E : s → Matrix n d ℂ)
       _ = (∑ b, (A b)ᴴ * A b) * E a * T := by
         simp only [Matrix.sum_mul, Matrix.mul_assoc]
       _ = E a * T := by rw [hA, Matrix.one_mul]
-  have hYE (a : s) : Y * E a = E a * X := hIntertwines X a
-  have hEY (a : s) : (E a)ᴴ * Y = X * (E a)ᴴ := by
+  have hYE (T : Matrix d d ℂ) (a : s) : (Y T) * E a = E a * T := hIntertwines T a
+  have hEY (T : Matrix d d ℂ) (a : s) : (E a)ᴴ * (Y T) = T * (E a)ᴴ := by
     have h := congrArg Matrix.conjTranspose
-      (hIntertwines Xᴴ a)
+      (hIntertwines Tᴴ a)
     simpa only [Y, leftInverseObservable, Matrix.conjTranspose_mul,
       Matrix.conjTranspose_sum, Matrix.conjTranspose_conjTranspose,
       Matrix.mul_assoc] using h
-  have hQY : Q * Y = NX := by
-    simp only [Q, NX, Matrix.sum_mul, Matrix.mul_assoc, hEY]
-  have hYQ : Y * Q = NX := by
-    simp only [Q, NX, Matrix.mul_sum, ← Matrix.mul_assoc, hYE]
-  have hcomm : Commute Q Y := hQY.trans hYQ.symm
-  have hWY : W * Y = Y * W :=
-    (hcomm.cfc_real (fun q : ℝ => (Real.sqrt q)⁻¹)).eq
+  have hQY (T : Matrix d d ℂ) : Q * (Y T) = (NX T) := by
+    simp only [Q, NX, Matrix.sum_mul, Matrix.mul_assoc, (hEY T)]
+  have hYQ (T : Matrix d d ℂ) : (Y T) * Q = (NX T) := by
+    simp only [Q, NX, Matrix.mul_sum, ← Matrix.mul_assoc, (hYE T)]
+  have hcomm (T : Matrix d d ℂ) : Commute Q (Y T) := (hQY T).trans (hYQ T).symm
+  have hWY (T : Matrix d d ℂ) : W * (Y T) = (Y T) * W :=
+    ((hcomm T).cfc_real (fun q : ℝ => (Real.sqrt q)⁻¹)).eq
   have hSandwich : W * Q * W = P := by
     change spectralInverseSqrt Q * Q * spectralInverseSqrt Q = spectralSupport Q
     have hcont (f : ℝ → ℝ) : ContinuousOn f (spectrum ℝ Q) := by
@@ -135,28 +148,45 @@ theorem computed_recovery_of_kraus_left_inverse (E : s → Matrix n d ℂ)
             (if hQ.isHermitian.eigenvalues i = 0 then 0 else 1)
           rw [if_neg h]
           field_simp [hs] <;> nlinarith [Real.sq_sqrt hx]
-  have hWN : W * NX * W = P * Y := by
+  have hWN (T : Matrix d d ℂ) : W * (NX T) * W = P * (Y T) := by
     calc
-      _ = W * (Q * Y) * W := by rw [hQY]
-      _ = (W * Q) * (Y * W) := by simp only [Matrix.mul_assoc]
-      _ = (W * Q) * (W * Y) := by rw [← hWY]
-      _ = (W * Q * W) * Y := by simp only [Matrix.mul_assoc]
-      _ = P * Y := by rw [hSandwich]
+      _ = W * (Q * (Y T)) * W := by rw [(hQY T)]
+      _ = (W * Q) * ((Y T) * W) := by simp only [Matrix.mul_assoc]
+      _ = (W * Q) * (W * (Y T)) := by rw [← (hWY T)]
+      _ = (W * Q * W) * (Y T) := by simp only [Matrix.mul_assoc]
+      _ = P * (Y T) := by rw [hSandwich]
   have hPE (a : s) : P * E a = E a := spectral_support_on_kraus E a
-  have hPN : P * NX = NX := by
+  have hPN (T : Matrix d d ℂ) : P * (NX T) = (NX T) := by
     simp only [NX, Matrix.mul_sum, ← Matrix.mul_assoc, hPE]
-  have hz : (1 - P) * NX = 0 := by
-    rw [Matrix.sub_mul, Matrix.one_mul, hPN, sub_self]
-  have hterm (a : s) : (E a)ᴴ * W * NX * W * E a = ((E a)ᴴ * E a) * X := by
+  exact ⟨hYE, hEY, hQY, hYQ, hWY, hSandwich, hWN, hPE, hPN⟩
+
+/-- Existence of any actual finite Kraus inverse makes the computed spectral candidate exact. -/
+theorem computed_recovery_of_kraus_left_inverse (E : s → Matrix n d ℂ)
+    (hTP : (∑ a, (E a)ᴴ * E a) = 1)
+    (A : t → Matrix d n ℂ) (hA : (∑ b, (A b)ᴴ * A b) = 1)
+    (hleft : ∀ X : Matrix d d ℂ,
+      (∑ b, A b * (∑ a, E a * X * (E a)ᴴ) * (A b)ᴴ) = X)
+    (v : d) (X : Matrix d d ℂ) :
+    spectralRecoveryAction E v (∑ a, E a * X * (E a)ᴴ) = X := by
+  let Q := ∑ a, E a * (E a)ᴴ
+  let P := spectralSupport Q
+  let W := spectralInverseSqrt Q
+  let Y := fun T : Matrix d d ℂ => leftInverseObservable A T
+  let NX := fun T : Matrix d d ℂ => ∑ a, E a * T * (E a)ᴴ
+  obtain ⟨hYE, hEY, hQY, hYQ, hWY, hSandwich, hWN, hPE, hPN⟩ :=
+    kraus_left_inverse_spectral_relations E A hA hleft v
+  have hz (T : Matrix d d ℂ) : (1 - P) * (NX T) = 0 := by
+    rw [Matrix.sub_mul, Matrix.one_mul, (hPN T), sub_self]
+  have hterm (a : s) : (E a)ᴴ * W * (NX X) * W * E a = ((E a)ᴴ * E a) * X := by
     calc
-      _ = (E a)ᴴ * (W * NX * W) * E a := by simp only [Matrix.mul_assoc]
-      _ = (E a)ᴴ * (P * Y) * E a := by rw [hWN]
-      _ = (E a)ᴴ * P * (Y * E a) := by simp only [Matrix.mul_assoc]
-      _ = (E a)ᴴ * (P * E a) * X := by rw [hYE]; simp only [Matrix.mul_assoc]
+      _ = (E a)ᴴ * (W * (NX X) * W) * E a := by simp only [Matrix.mul_assoc]
+      _ = (E a)ᴴ * (P * (Y X)) * E a := by rw [(hWN X)]
+      _ = (E a)ᴴ * P * ((Y X) * E a) := by simp only [Matrix.mul_assoc]
+      _ = (E a)ᴴ * (P * E a) * X := by rw [(hYE X)]; simp only [Matrix.mul_assoc]
       _ = ((E a)ᴴ * E a) * X := by rw [hPE]
-  change (∑ a, (E a)ᴴ * W * NX * W * E a) +
-    Matrix.trace ((1 - P) * NX) • Matrix.single v v 1 = X
-  rw [hz, Matrix.trace_zero, zero_smul, add_zero]
+  change (∑ a, (E a)ᴴ * W * (NX X) * W * E a) +
+    Matrix.trace ((1 - P) * (NX X)) • Matrix.single v v 1 = X
+  rw [(hz X), Matrix.trace_zero, zero_smul, add_zero]
   simp_rw [hterm]
   rw [← Matrix.sum_mul, hTP, Matrix.one_mul]
 

@@ -177,7 +177,7 @@ theorem beneficial_marker_deflection (alpha : unitInterval)
       dsimp [B]
       calc
         _ ≤ |δ q| * 1 := mul_le_mul
-          (mul_le_of_le_one_left (abs_nonneg _) (unitInterval.one_minus_le_one q)) hp
+          (mul_le_of_le_one_left (abs_nonneg _) (sub_le_self 1 (unitInterval.nonneg q))) hp
           (pow_nonneg (unitInterval.nonneg q) n) (abs_nonneg _)
         _ = |δ q| := by ring
         _ ≤ C := hδ q
@@ -320,7 +320,7 @@ theorem beneficial_marker_deflection (alpha : unitInterval)
       intro q
       rw [Real.norm_eq_abs, abs_of_nonneg (mul_nonneg (unitInterval.one_minus_nonneg q)
         (pow_nonneg (unitInterval.nonneg q) n))]
-      exact mul_le_one₀ (unitInterval.one_minus_le_one q) (pow_nonneg (unitInterval.nonneg q) n)
+      exact mul_le_one₀ (sub_le_self 1 (unitInterval.nonneg q)) (pow_nonneg (unitInterval.nonneg q) n)
         (pow_le_one₀ (n := n) (unitInterval.nonneg q) (unitInterval.le_one q))
     have hpos {f : unitInterval → ℝ} (hfi : Integrable f μ) (hp : ∀ᵐ q ∂μ, 0 < f q) :
         0 < ∫ q, f q ∂μ := by
@@ -693,7 +693,7 @@ theorem beneficial_marker_deflection (alpha : unitInterval)
       have haR1 : (alpha : ℝ) * replayWeight policy ν q ≤ (alpha : ℝ) :=
         mul_le_of_le_one_right ha.1.le hR1
       have hinv : 1 ≤ 1 / (1 - (q : ℝ)) :=
-        (le_div_iff₀ (sub_pos.mpr hq)).mpr (by simpa using unitInterval.one_minus_le_one q)
+        (le_div_iff₀ (sub_pos.mpr hq)).mpr (by simpa using sub_le_self 1 (unitInterval.nonneg q))
       have hadiv : (1 - (alpha : ℝ)) ≤ (1 - (alpha : ℝ)) * (1 / (1 - (q : ℝ))) :=
         le_mul_of_one_le_right ha0.le hinv
       dsimp [E]

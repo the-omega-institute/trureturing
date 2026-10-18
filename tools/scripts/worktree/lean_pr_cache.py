@@ -119,10 +119,12 @@ def receipt(status, identity, **fields):
 def dispatch(root):
     identity = source_identity(root)
     validate_remote(identity, require_opt_in=True)
+    inputs = dict(operation="pr", source_ref=identity["target_ref"], source_sha=identity["merge"],
+                  pr_source=json.dumps(identity, separators=(",", ":")))
+    if os.environ.get("STRATALINT_RUNNER_DIAGNOSTICS") == "true":
+        inputs["runner_diagnostics"] = "true"
     response = api(identity["repository"], "actions/workflows/" + WORKFLOW + "/dispatches", dict(
-        ref=identity["target_ref"], return_run_details=True, inputs=dict(operation="pr",
-        source_ref=identity["target_ref"], source_sha=identity["merge"],
-        pr_source=json.dumps(identity, separators=(",", ":")))))
+        ref=identity["target_ref"], return_run_details=True, inputs=inputs))
     run = response.get("workflow_run_id")
     require(type(run) is int and run > 0, "dispatch returned no exact producer run id")
     actions.output({"producer_run": run})

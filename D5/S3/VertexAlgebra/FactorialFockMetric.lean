@@ -156,7 +156,7 @@ theorem diagonal_monomial (d : Occupation σ) (a : ℂ) :
   simp [smul_smul, MvPolynomial.smul_monomial, smul_eq_mul, mul_comm]
 
 theorem diagonal_coeff (p : Polynomial σ) (d : Occupation σ) :
-    MvPolynomial.coeff d (diagonal σ p) = scale d * MvPolynomial.coeff d p := by
+    (diagonal σ p).coeff d = scale d * p.coeff d := by
   classical
   induction p using MvPolynomial.induction_on' with
   | monomial e a =>
@@ -193,7 +193,7 @@ theorem coefficientEmbedding_monomial (d : Occupation σ) (a : ℂ) :
   rw [h, map_smul, coefficientEmbedding_basis]
 
 theorem coefficientEmbedding_coeff (p : Polynomial σ) (d : Occupation σ) :
-    coefficientEmbedding σ p d = MvPolynomial.coeff d p := by
+    coefficientEmbedding σ p d = p.coeff d := by
   change (hilbertBasis σ).repr (coefficientEmbedding σ p) d = _
   rw [(hilbertBasis σ).repr_apply_apply]
   exact (hilbertBasis σ).orthonormal.inner_right_finsupp
@@ -207,7 +207,7 @@ theorem embedding_injective : Function.Injective (embedding σ) :=
   coefficientEmbedding_injective.comp (diagonal σ).injective
 
 theorem embedding_coeff (p : Polynomial σ) (d : Occupation σ) :
-    embedding σ p d = scale d * MvPolynomial.coeff d p := by
+    embedding σ p d = scale d * p.coeff d := by
   change coefficientEmbedding σ (diagonal σ p) d = _
   rw [coefficientEmbedding_coeff, diagonal_coeff]
 
@@ -242,7 +242,7 @@ theorem inner_add_first (p q r : Polynomial σ) :
 /-- The factorial pairing of one monomial with an ARBITRARY polynomial. -/
 theorem inner_monomial_left (d : Occupation σ) (a : ℂ) (q : Polynomial σ) :
     inner (MvPolynomial.monomial d a) q =
-      (weight d : ℂ) * conj a * MvPolynomial.coeff d q := by
+      (weight d : ℂ) * conj a * q.coeff d := by
   classical
   unfold inner
   rw [embedding_monomial, inner_smul_left]
@@ -251,8 +251,8 @@ theorem inner_monomial_left (d : Occupation σ) (a : ℂ) (q : Polynomial σ) :
   rw [hb, lp.inner_single_left, RCLike.inner_apply, map_one, mul_one, embedding_coeff,
     map_mul, conj_scale]
   calc
-    scale d * conj a * (scale d * MvPolynomial.coeff d q) =
-        (scale d * scale d) * conj a * MvPolynomial.coeff d q := by ring
+    scale d * conj a * (scale d * q.coeff d) =
+        (scale d * scale d) * conj a * q.coeff d := by ring
     _ = _ := by rw [scale_mul_self]
 
 /-- Creation and partial differentiation are formal adjoints on ALL polynomials.

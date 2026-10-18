@@ -20,6 +20,14 @@ internal sealed class StructuralConeDocument : IScribeDocumentDefinition
 For all natural N at least 67, natural j from 6 to N-10, and arbitrary real x on sixteen slots with x nonnegative and all three actual A rows nonnegative, the synthesized spectrum has Euclidean norm at most sqrt(target N) times its mass. The positions are 1,2,3,4,5,j,N-9 through N. The target uses the natural integer t=(3*N+4)/8. There is no additional cone or certificate success assumption.
 """
 ))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("appt-quadbit-quadratic-interval"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/StructuralCone.quadratic_interval_le_fun"),
+                H("Quadratic endpoint control"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For any real function f and real a,b,c,l,r,x,M, assume f(y)=a y^2+b y+c for every real y, a is nonnegative, l≤x≤r, and f(l)≤M and f(r)≤M. Then f(x)≤M. This original helper applies Mathlib convex interval control to the quadratic and is consumed by the structural cone estimates and the actual-PSD moment proof."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("appt-quadbit-ordered-block-energy"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/StructuralCone.ordered_block_energy"),
+                H("Energy of two ordered blocks"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For arbitrary finite types ι and κ, real upper:ι→R and lower:κ→R, and real m≥0, assume every upper coordinate is at least m and every lower coordinate lies in [0,m]. If k=card(ι)≥1 and card(κ)≤k(k-1), then sum upper_i^2+sum lower_i^2≤(sum upper_i)^2. Empty lower blocks and arbitrary finite upper types remain in scope. The proof decomposes upper coordinates as m plus nonnegative excess and uses the cardinality budget for the lower block. Both the original structural estimates and the actual-PSD tail envelope consume this helper."))), DescribeRole.Theorem),
             new DocumentBlock.Section(H("1. Target and compression reduction"), Blocks(
             Paragraph(Text(
 """
