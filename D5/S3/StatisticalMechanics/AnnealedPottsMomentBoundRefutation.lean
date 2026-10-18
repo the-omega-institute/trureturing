@@ -4,7 +4,7 @@
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/StatisticalMechanics/AnnealedPottsMomentBoundRefutation.claim; result=D5.S3.StatisticalMechanics.AnnealedPottsMomentBoundRefutation.result; claim=D5.S3.StatisticalMechanics.AnnealedPottsMomentBoundRefutation.claim
-   digest: A two-block density tests the general annealed Potts moment lower bound. -/
+   digest: A two-block density refutes the general annealed Potts moment lower bound. -/
 
 import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 import Mathlib.Analysis.Calculus.ParametricIntegral
@@ -176,11 +176,6 @@ private lemma g2_deriv (x : ℝ) : HasDerivAt g2 (g3 x) x := by
   dsimp [g3]
   field_simp
   ring
-
-private lemma g2_positive {x : ℝ} (hx : x < Real.log 2) : 0 < g2 x := by
-  have he : Real.exp x < 2 := (Real.lt_log_iff_exp_lt (by norm_num)).1 hx
-  exact div_pos (mul_pos (mul_pos (by norm_num) (Real.exp_pos _)) (sub_pos.mpr he))
-    (by positivity)
 
 private lemma g2_negative {x : ℝ} (hx : Real.log 2 < x) : g2 x < 0 := by
   have he : 2 < Real.exp x := (Real.log_lt_iff_lt_exp (by norm_num)).1 hx
@@ -669,6 +664,73 @@ private lemma scalarKp_deriv (x : ℝ) : HasDerivAt scalarKp (scalarKpp x) x := 
   apply (((g_deriv x).sub ((hasDerivAt_id x).mul (g1_deriv x))).div_const 3).congr_deriv
   dsimp [scalarKpp]; ring
 
+private lemma K_scalar (t : ℝ) :
+    K density 3 t = (∫ w, scalarK (t * w) * density w) / moment density 1 := by
+  have hlc : Continuous logKernel :=
+    continuous_iff_continuousAt.2 fun x => (logKernel_deriv x).continuousAt
+  have hl := weighted_density_integrable (fun w => logKernel (t * w)) (by fun_prop)
+  have hg := weighted_density_integrable (fun w => w * g (t * w)) (by fun_prop)
+  have hw := weighted_density_integrable (fun w : ℝ => w) continuous_id
+  have heq : (fun w => scalarK (t * w) * density w) = fun w =>
+      logKernel (t * w) * density w - (t / 3) * (w * g (t * w) * density w) -
+        (t / 3) * (w * density w) := by ext w; unfold scalarK; ring
+  rw [heq, integral_sub
+      (f := fun w => logKernel (t * w) * density w - (t / 3) * (w * g (t * w) * density w))
+      (g := fun w => (t / 3) * (w * density w)) (hl.sub (hg.const_mul _)) (hw.const_mul _),
+    integral_sub (f := fun w => logKernel (t * w) * density w)
+      (g := fun w => (t / 3) * (w * g (t * w) * density w)) hl (hg.const_mul _),
+    integral_const_mul, integral_const_mul]
+  unfold K
+  simp only [show ∀ x : ℝ, Real.exp x + 3 - 1 = Real.exp x + 2 from fun x => by ring]
+  rw [F0_eq]
+  simp only [averaged, pow_one, logKernel]
+  have hm : (∫ w, w * density w) = moment density 1 := by simp [moment]
+  rw [hm, density_moments.1]
+  ring
+
+private def scalarLower (q l u : ℚ) : ℚ :=
+  logLower ((l + 2) / 3) - q / 3 * ((u - 1) / (u + 2)) - q / 3
+
+private lemma scalar_lower (q l u : ℚ) (hq : 0 ≤ q) (hl : 1 ≤ l)
+    (he : (l : ℝ) ≤ Real.exp (q : ℝ) ∧ Real.exp (q : ℝ) ≤ (u : ℝ)) :
+    (scalarLower q l u : ℝ) ≤ scalarK (q : ℝ) := by
+  have hl' : 1 ≤ (l : ℝ) := by exact_mod_cast hl
+  have hq' : 0 ≤ (q : ℝ) := by exact_mod_cast hq
+  have hu' : 1 ≤ (u : ℝ) := hl'.trans (he.1.trans he.2)
+  have hlog := log_rational_lower ((l + 2) / 3) (by linarith)
+  push_cast at hlog
+  have hlog' : Real.log (((l : ℝ) + 2) / 3) ≤ logKernel (q : ℝ) :=
+    Real.log_le_log (by positivity) (by linarith)
+  have hg : g (q : ℝ) ≤ ((u : ℝ) - 1) / (u + 2) := by
+    unfold g
+    apply (div_le_div_iff₀ (by positivity) (by positivity)).2
+    nlinarith [he.2]
+  have hprod := mul_le_mul_of_nonneg_left hg (div_nonneg hq' (by norm_num : (0 : ℝ) ≤ 3))
+  unfold scalarLower
+  push_cast
+  unfold scalarK
+  linarith
+
+private lemma scalar_pair_positive :
+    (3 / 20000000 : ℝ) ≤
+      1331 / 1340 * scalarK (6931 / 50000) + 9 / 1340 * scalarK (76241 / 50000) := by
+  have h1 := exp_rational_bounds (6931 / 50000) (1148687515801 / 10 ^ 12)
+    (1148687515803 / 10 ^ 12) (by norm_num) (by norm_num [expPoly, Finset.sum_range_succ])
+    (by norm_num [expPoly, expError, Finset.sum_range_succ])
+  have h11 := exp_rational_bounds (76241 / 50000) (4594316517901 / 10 ^ 12)
+    (4594316517904 / 10 ^ 12) (by norm_num) (by norm_num [expPoly, Finset.sum_range_succ])
+    (by norm_num [expPoly, expError, Finset.sum_range_succ])
+  have hb1 := scalar_lower _ _ _ (by norm_num) (by norm_num) h1
+  have hb11 := scalar_lower _ _ _ (by norm_num) (by norm_num) h11
+  have hc : (3 / 20000000 : ℚ) ≤
+      1331 / 1340 * scalarLower (6931 / 50000) (1148687515801 / 10 ^ 12) (1148687515803 / 10 ^ 12) +
+      9 / 1340 * scalarLower (76241 / 50000) (4594316517901 / 10 ^ 12) (4594316517904 / 10 ^ 12) := by
+    norm_num [scalarLower, logLower, Finset.sum_range_succ]
+  have hc' := (Rat.cast_le (K := ℝ)).mpr hc
+  push_cast at hc'
+  norm_num at hb1 hb11 hc'
+  linarith
+
 private lemma g2_abs_le_one (x : ℝ) : |g2 x| ≤ 1 := by
   have he := Real.exp_pos x
   have hab : |2 - Real.exp x| ≤ Real.exp x + 2 := abs_le.2 ⟨by linarith, by linarith⟩
@@ -730,7 +792,44 @@ private lemma symmetric_integral_lower (h hp hpp : ℝ → ℝ) (a e M : ℝ)
   rwa [hlin] at hi
 
 private lemma K_positive_test : 0 < K density 3 (6931 / 50000) := by
-  sorry
+  let T : ℝ := 6931 / 50000
+  have hd (w : ℝ) : HasDerivAt (fun x => scalarK (T * x)) (T * scalarKp (T * w)) w := by
+    apply ((scalarK_deriv (T * w)).comp w ((hasDerivAt_id w).const_mul T)).congr_deriv
+    ring
+  have hdp (w : ℝ) :
+      HasDerivAt (fun x => T * scalarKp (T * x)) (T ^ 2 * scalarKpp (T * w)) w := by
+    apply (((scalarKp_deriv (T * w)).comp w
+      ((hasDerivAt_id w).const_mul T)).const_mul T).congr_deriv
+    ring
+  have hmean (a : ℝ) (ha : a = 1 ∨ a = 11) :
+      scalarK (T * a) - 1 / 10000000 ≤
+        500 * ∫ w in (a - 1 / 1000)..(a + 1 / 1000), scalarK (T * w) := by
+    have hb (w : ℝ) (hw : w ∈ Icc (a - 1 / 1000) (a + 1 / 1000)) :
+        |T ^ 2 * scalarKpp (T * w)| ≤ 1 / 10 := by
+      have hw0 : 0 ≤ w := by rcases ha with rfl | rfl <;> linarith [hw.1]
+      have hw12 : w ≤ 12 := by rcases ha with rfl | rfl <;> linarith [hw.2]
+      have hx : |T * w| ≤ 2 := by rw [abs_of_nonneg (by positivity)]; dsimp [T]; linarith
+      unfold scalarKpp
+      rw [abs_mul, abs_pow, abs_of_nonneg (by norm_num [T] : 0 ≤ T),
+        abs_mul, abs_div, abs_of_pos (by norm_num : (0 : ℝ) < 3), abs_neg]
+      have hg2 := g2_abs_le_one (T * w)
+      calc
+        _ ≤ T ^ 2 * (2 / 3 * 1) := by gcongr
+        _ ≤ _ := by norm_num [T]
+    have hi := symmetric_integral_lower (fun w => scalarK (T * w))
+      (fun w => T * scalarKp (T * w)) (fun w => T ^ 2 * scalarKpp (T * w))
+      a (1 / 1000) (1 / 10) (by norm_num) (by norm_num) hd hdp hb
+    nlinarith
+  have h1 := hmean 1 (Or.inl rfl)
+  have h11 := hmean 11 (Or.inr rfl)
+  have hc : Continuous (fun w => scalarK (T * w)) :=
+    continuous_iff_continuousAt.2 fun w => (hd w).continuousAt
+  rw [K_scalar]
+  apply div_pos ?_ (by rw [density_moments.1]; norm_num)
+  change 0 < ∫ w, scalarK (T * w) * density w
+  rw [integral_weighted_density _ hc]
+  norm_num [T] at h1 h11 ⊢
+  linarith [scalar_pair_positive]
 
 private lemma test_below_bound :
     (6931 / 50000 : ℝ) < 2 * (moment density 3 / moment density 4) * Real.log (3 - 1) := by
