@@ -2026,3 +2026,265 @@ For leaking original channels, complete their Grams by the fibre deficits. An in
 The finite representation decomposition and maximally entangled product overlap are standard intermediate facts, with the exact instances needed here proved above. For finite-group channel context and the explicit quaternion representation and character table, see Mozrzymas, Studziński and Datta, *Structure of irreducibly covariant quantum channels for finite groups*, [arXiv:1610.05657v2](https://arxiv.org/abs/1610.05657v2), §§4 and 8.2, and the [source note](../../../Library/QuantumChannels/mozrzymas2017irreduciblycovariant.md). Their channels are covariant under an irreducible representation, rather than the original regular eight-coordinate product setting here; no differently normalized channel-norm theorem is imported. The spectral-majorant attribution in §107.2 also applies.
 
 In $D_8$, a noncentral reflection can define original coset fibres preserved by left translations, but the parity decomposition used in (108.17) then fails: the two-dimensional representation can itself admit orthogonal partner records. That case is not covered by Theorem 108.2. Neither theorem in this section reduces arbitrary original pairs to a translation-invariant class. The unrestricted residual rank alternatives and the global quarter optimum remain open.
+
+## 109. Noncentral reflection fibres: an original-channel gap and exact subhalf examples
+
+### 109.1. The noncentral action and the lower bound
+
+Let $D_8=\langle r,s\mid r^4=s^2=e,\ srs=r^{-1}\rangle$ label the original eight input coordinates, with original fibres $\{x,xs\}=x\langle s\rangle$. These are left cosets, or equivalently orbits of right multiplication by the noncentral reflection $s$. Keep the original local $\mathbb C^8\to\mathbb C^4$ channels, correlated encoding and unhalved arbitrary-reference diamond error $\delta$.
+
+**Theorem 109.1.** If either correct-output Gram is invariant under all eight left translations, then
+
+$$
+\delta\geq\sqrt2-1>\frac14. \tag{109.1}
+$$
+
+The other channel may be nonsymmetric, and either channel may leak. The conclusion also holds after an original fibre-preserving coordinate relabeling and reciprocal diagonal unitary phases. No rank or real-phase hypothesis is imposed. Sharpness for this particular action is not asserted.
+
+First suppose both Grams are calibrated and invariant. Use the real representation and sign characters
+
+$$
+U(r)=\begin{pmatrix}0&-1\\1&0\end{pmatrix},\qquad
+U(s)=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\qquad
+\chi_{\epsilon,\eta}(r^as^b)=\epsilon^a\eta^b.
+\tag{109.2}
+$$
+
+The orthogonality calculation in §108 gives the unique expansions
+
+$$
+\begin{aligned}
+g(x)&=\sum_\chi a_\chi\chi(x)+\operatorname{Tr}(MU(x)),
+& M&=\begin{pmatrix}p/2&z\\\overline z&q/2\end{pmatrix},\\
+b(x)&=\sum_\chi b_\chi\chi(x)+\operatorname{Tr}(NU(x)),
+& N&=\begin{pmatrix}p'/2&w\\\overline w&q'/2\end{pmatrix}.
+\end{aligned}\tag{109.3}
+$$
+
+Here $G_{xy}=g(x^{-1}y)$ and $H_{xy}=b(x^{-1}y)$. Their regular blocks are $8a_\chi,4M^{\mathsf T},4M^{\mathsf T}$ and their second-party counterparts. Thus the scalar coefficients are nonnegative and $M,N\succeq0$. Calibration at $e,s$ gives
+
+$$
+\begin{aligned}
+\sum_\epsilon a_{\epsilon,+}&=\frac{1-p}{2},&
+\sum_\epsilon a_{\epsilon,-}&=\frac{1-q}{2},&
+|z|^2&\leq\frac{pq}{4},\\
+\sum_\epsilon b_{\epsilon,+}&=\frac{1-p'}{2},&
+\sum_\epsilon b_{\epsilon,-}&=\frac{1-q'}{2},&
+|w|^2&\leq\frac{p'q'}{4}.
+\end{aligned}\tag{109.4}
+$$
+
+In particular $p,q,p',q'\in[0,1]$; the complex phases of $z,w$ remain arbitrary.
+
+Write the product coefficient $k(x)=g(x)b(x)$ as $\sum_\chi c_\chi\chi(x)+\operatorname{Tr}(SU(x))$, where $c_\chi\geq0$ and $S\succeq0$. Put $c_0=c_{+,+}$ and $c_-=c_{+,-}+c_{-,-}$. The invariant vector of $U\otimes U$ is $(|00\rangle+|11\rangle)/\sqrt2$, so
+
+$$
+c_0=\sum_\chi a_\chi b_\chi+\frac{pp'+qq'}8+\operatorname{Re}(zw).
+\tag{109.5}
+$$
+
+The tensor contribution is $\tfrac12\operatorname{Tr}(MN^{\mathsf T})$, so no conjugate is inserted into $zw$. Matching nonnegative products within each $\eta$ sector are bounded by the product of the sector masses. Moreover,
+
+$$
+\operatorname{Re}(zw)\leq|zw|\leq\frac{\sqrt{pq p'q'}}4
+\leq\frac{pp'+qq'}8.
+\tag{109.6}
+$$
+
+For $c_-$ the scalar characters contribute opposite-$\eta$ products. The sum of the two $\eta=-1$ projectors in $U\otimes U$ is the projector onto $\operatorname{span}\{|01\rangle,|10\rangle\}$, contributing $(pq'+qp')/4$. Consequently, with $P=1-2p$, $Q=1-2q$, $P'=1-2p'$ and $Q'=1-2q'$, all in $[-1,1]$,
+
+$$
+\begin{aligned}
+c_0&\leq\frac{(1-p)(1-p')+(1-q)(1-q')+pp'+qq'}4
+      =\frac14+\frac{PP'+QQ'}8,\\
+c_-&=\frac{(1-p)(1-q')+(1-q)(1-p')+pq'+qp'}4
+      =\frac14+\frac{PQ'+QP'}8.
+\end{aligned}\tag{109.7}
+$$
+
+### 109.2. Two original coherent inputs
+
+Let $R_s|x\rangle=|xs\rangle$ and $P_\pm=(I\pm R_s)/2$. The original target is $T=(J_{\rm all}+I-R_s)/2$; in the character order $(++),(-+),(+-),(--)$ its coefficients are $(1/2,0,1/8,1/8)$ and its two-dimensional coefficient is $\operatorname{diag}(0,1/4)$. For $L=T-G\odot H$, the original block-diagonal densities $\rho_\pm=P_\pm/4$ have trace one. RT III §91 gives
+
+$$
+F(G,H)\geq E_\pm:=\frac14\|P_\pm L P_\pm\|_1.
+\tag{109.8}
+$$
+
+No commutation of $L$ with $R_s$ is required. In the regular decomposition, $R_s$ acts by the character signs $\eta$ and the two copies of $U(s)^{\mathsf T}$. The compressions remove the off-diagonal entries of the two-dimensional coefficient. The scalar eigenvalues have multiplicity one and factor eight; the two two-dimensional copies have factor four. Hence
+
+$$
+\begin{aligned}
+E_+&=2\bigl(|1/2-c_0|+c_{-,+}+S_{11}\bigr),\\
+E_-&=2\bigl(|1/8-c_{+,-}|+|1/8-c_{-,-}|+|1/4-S_{22}|\bigr).
+\end{aligned}\tag{109.9}
+$$
+
+The product calibration gives $c_0+c_{-,+}+S_{11}=1/2$ and $c_-+S_{22}=1/2$. Thus $c_0\leq1/2$, and (109.7) yields
+
+$$
+E_+=2-4c_0\geq1-\frac{PP'+QQ'}2,\qquad
+E_-\geq4|c_--1/4|=\frac{|PQ'+QP'|}{2}.
+\tag{109.10}
+$$
+
+Put $e=|PQ'+QP'|/2\in[0,1]$. The exact identity
+
+$$
+\begin{split}
+(PQ'+QP')^2+4(1-PP'-QQ')
+&=(PQ'-QP')^2+4(1-PP')(1-QQ')\\
+&\geq0
+\end{split}\tag{109.11}
+$$
+
+implies $PP'+QQ'\leq1+e^2$. Therefore
+
+$$
+F(G,H)\geq\max\left\{e,\frac{1-e^2}{2}\right\}\geq\sqrt2-1.
+\tag{109.12}
+$$
+
+Indeed $d=\sqrt2-1$ satisfies $(1-d^2)/2=d$; use the first term when $e\geq d$ and the second otherwise. This proof includes all endpoints and singular coefficient matrices without division.
+
+### 109.3. One invariant side and original leakage
+
+For calibrated Grams, fix the invariant $G$ and average only $H$ over the eight original left translations. These permutations preserve the original fibre partition and target. The full original norm $F$ is simultaneously permutation invariant and convex in $H$ with $G$ fixed. Consequently $F(G,H)\geq F(G,\overline H)$, and the two-sided result applies to the invariant calibrated average $\overline H$. Interchanging the channels covers the other fixed side.
+
+For leaking channels form the actual calibrated completions
+
+$$
+\widetilde G=G+\bigoplus_f(I_2-G_{ff}),\qquad
+\widetilde H=H+\bigoplus_f(I_2-H_{ff}).
+\tag{109.13}
+$$
+
+The correct-output blocks satisfy $0\preceq G_{ff},H_{ff}\preceq I_2$. The completions are positive semidefinite, physically realizable, and retain every cross-fibre entry. If $G$ is invariant, write $g(e)=d_0$ and $g(s)=c\in\mathbb R$. Its completion increment is $(1-d_0)I-cR_s$, which commutes with every left translation. Thus the fixed side remains invariant.
+
+Set $L=T-G\odot H$ and $\widetilde L=T-\widetilde G\odot\widetilde H$. Their difference is supported on original fibre blocks and satisfies
+
+$$
+(L-\widetilde L)_{ff}=I_2-G_{ff}\odot H_{ff}\succeq0,
+\qquad G_{ff}\odot H_{ff}\preceq\operatorname{diag}(H_{ff})\preceq I_2.
+\tag{109.14}
+$$
+
+The tagged-reference consumer of RT III §91, with the same positive witness domain, now gives
+
+$$
+\delta\geq\mathcal B(L)\geq\mathcal B(\widetilde L)
+ =F(\widetilde G,\widetilde H)\geq\sqrt2-1.
+\tag{109.15}
+$$
+
+Reciprocal diagonal unitary phases cancel in every original product coefficient. Fibre-preserving relabelings simultaneously reindex that coefficient, the target and the full witness domain. The physical covariance argument of §107 therefore proves the stated gauge extension. This completes Theorem 109.1. Any reflection $r^ks$ can replace $s$ as presentation generator, so the theorem covers every noncentral involution of $D_8$.
+
+### 109.4. An exact family below one half
+
+**Proposition 109.2.** The central half bound of §108 cannot be extended to these noncentral reflection fibres. There are calibrated invariant rank-$(4,4)$ physical pairs with exact original error $23/49<1/2$. An explicit family has minimum $2\sqrt3-3$ within that family. There are also exact-rank-$(7,4)$ and $(7,5)$ examples below one half, with a unique full-support first kernel.
+
+For $0\leq q\leq1$ and real $\theta$, set
+
+$$
+(a_{+,+},a_{-,+},a_{+,-},a_{-,-})
+ =\left(0,0,\frac{1-q}{4},\frac{1-q}{4}\right),\qquad
+M=\frac12\begin{pmatrix}1&\sqrt q e^{i\theta}\\\sqrt q e^{-i\theta}&q\end{pmatrix},
+\quad N=\overline M.
+\tag{109.16}
+$$
+
+Use the same scalar coefficients for $H$. Explicit first-party unit records are
+
+$$
+\mathbf a_x=\left(\sqrt{\frac{1-q}{4}}\chi_{+,-}(x),\
+\sqrt{\frac{1-q}{4}}\chi_{-,-}(x),\
+\frac{U(x)v}{\sqrt2}\right),\qquad
+v=\begin{pmatrix}1\\\sqrt q e^{-i\theta}\end{pmatrix},
+\tag{109.17}
+$$
+
+and second-party records are their complex conjugates. Their partner overlap is $-(1-q)/2+(1-q)/2=0$. Therefore $|x\rangle\mapsto|x\langle s\rangle\rangle\otimes\mathbf a_x$ and the conjugate-record analogue are original Stinespring isometries. For $0<q<1$, two positive scalar blocks and a rank-one two-dimensional coefficient with multiplicity two give both local Kraus ranks four.
+
+Direct multiplication gives
+
+$$
+\begin{aligned}
+c_{+,+}&=\frac{1+q^2}{4},&c_{-,+}&=\frac{(1-q)^2}{4},\\
+c_{+,-}&=\frac{q\sin^2\theta}{2},&c_{-,-}&=\frac{q\cos^2\theta}{2},\\
+S&=\operatorname{diag}\left(\frac{q(1-q)}2,\frac{1-q}2\right).
+\end{aligned}\tag{109.18}
+$$
+
+The error coefficient is diagonal in the parity decomposition, so $L$ commutes with $R_s$. Formula (109.9) becomes
+
+$$
+\begin{aligned}
+E_+&=1-q^2,\\
+E_-&=2\left(\left|\frac18-\frac{q\sin^2\theta}{2}\right|
+ +\left|\frac18-\frac{q\cos^2\theta}{2}\right|
+ +\left|\frac{2q-1}{4}\right|\right).
+\end{aligned}\tag{109.19}
+$$
+
+These two values give the exact full norm. For the upper bound take $Z=|L|$. Its original fibre blocks are $\left(\begin{smallmatrix}d_1&c_1\\c_1&d_1\end{smallmatrix}\right)$ with $d_1=\operatorname{Tr}|L|/8$ and $c_1=\operatorname{Tr}(R_s|L|)/8\in\mathbb R$. Their eigenvalues are $E_+,E_-$. Thus $Z\succeq\pm L$ and $Z_{ff}\preceq\max(E_+,E_-)I_2$. The full original majorant from RT III §91, together with (109.8), proves
+
+$$
+\delta=\max(E_+,E_-).
+\tag{109.20}
+$$
+
+At $\theta=\pi/4$ this is $\max(1-q^2,|2q-1|)$. On $[0,1/2]$ the first term dominates and is at least $3/4$. On $[1/2,1]$ the decreasing first term and increasing second term meet at $q=\sqrt3-1$, giving the stated family minimum $2\sqrt3-3$.
+
+For rational Gaussian Gram entries choose
+
+$$
+q=\frac{36}{49},\qquad e^{i\theta}=\frac{3+4i}{5},\qquad
+M=\begin{pmatrix}1/2&(9+12i)/35\\(9-12i)/35&18/49\end{pmatrix}.
+\tag{109.21}
+$$
+
+Here $c_{+,-}=288/1225$ and $c_{-,-}=162/1225$ both exceed $1/8$, so
+
+$$
+E_+=\frac{1105}{2401}<E_-=\frac{23}{49}<\frac12.
+\tag{109.22}
+$$
+
+### 109.5. Full-support rank-seven examples and scope
+
+Keep the rational fixture. Define calibrated auxiliary coefficients
+
+$$
+\begin{aligned}
+a^{\rm aux}&=(1/4,0,1/8,1/8),&M^{\rm aux}&=I_2/4,\\
+b^{\rm aux}&=\left(1/4,0,\frac{1-q/2}{4},\frac{1-q/2}{4}\right),
+&N^{\rm aux}&=N/2.
+\end{aligned}\tag{109.23}
+$$
+
+The corresponding Grams have ranks seven and five. Their diagonals equal one and partner entries vanish. With $\varepsilon=1/1000$, mix each separately with its original Gram to obtain $G_\varepsilon,H_\varepsilon$. The first has rank seven and unique kernel $\chi_{-,+}$, all of whose entries are nonzero; the second has rank five. Keeping $H$ instead gives rank pair $(7,4)$.
+
+Every calibrated Gram lies between $0$ and $8I$. Schur multiplication by a correlation Gram contracts the operator norm on Hermitian matrices. A calibrated product-coefficient difference $D$ has zero original fibre blocks and original complete norm at most $\|D\|_{\rm op}$, using the majorant $\|D\|_{\rm op}I$. The triangle inequality and the actual two-Gram product expansion therefore give
+
+$$
+\delta(G_\varepsilon,H)\leq\frac{23}{49}+8\varepsilon<\frac12,
+\qquad
+\delta(G_\varepsilon,H_\varepsilon)\leq\frac{23}{49}+16\varepsilon<\frac12.
+\tag{109.24}
+$$
+
+For the latter bound use $(G_\varepsilon-G)\odot H_\varepsilon+G\odot(H_\varepsilon-H)$. These are separately realized original physical Grams, without shared randomness between the local channels. Theorem 109.1 also bounds their errors below by $\sqrt2-1>1/4$.
+
+Theorem 109.1 supplies a common lower bound for the noncentral action, while Proposition 109.2 proves that the sharper central conclusion needs its central-partner hypothesis. The interval between $\sqrt2-1$ and $2\sqrt3-3$ is not closed here. None of the examples is asserted to be a local minimum or a common-stress solution. The finite representation and spectral intermediates retain the primary attribution of §§107–108; the original input normalizations are proved above. No unrestricted global-quarter conclusion follows.
+
+### 109.6. A regular-symmetry consumer
+
+**Corollary 109.3.** Suppose a group of eight coordinate permutations acts freely and transitively on the original inputs, preserves the four original fibres, and leaves either correct-output Gram invariant. Then the original unhalved error satisfies $\delta\geq\sqrt2-1$. The same conclusion holds after the physical reciprocal phases and fibre-preserving relabelings already specified.
+
+Identify the eight inputs with the acting group $\Gamma$ by choosing one input as identity. The fibre $B$ containing the identity has size two. If $h$ is its other element, then $hB$ and $B$ intersect, so they are the same block of the preserved partition. Thus $h^2=e$ and $B=\{e,h\}$. All fibres are the left cosets $x\langle h\rangle$, exactly the original group-coordinate setting of §§108–109.
+
+For completeness, an abelian group of order eight has type $C_8$, $C_4\times C_2$ or $C_2^3$. Indeed an element of order eight gives the first type; if the exponent is two it is a three-dimensional vector space over the two-element field; otherwise an element $r$ of order four generates an index-two subgroup. For an outside element $t$, one has $t^2=e$ or $t^2=r^2$; in the latter case $tr^{-1}$ is an outside involution. This yields the second type. These are covered by §108.
+
+If $\Gamma$ is nonabelian, some element $r$ has order four, since a group whose elements all square to the identity is abelian. Its cyclic subgroup has index two and is normal. Every outside element conjugates $r$ to $r^{-1}$, for otherwise it and $r$ generate an abelian group. For an outside element $s$, its square lies in $\langle r\rangle$ and is fixed by inversion, so $s^2=e$ or $s^2=r^2$. These are respectively the presentations of $D_8$ and $Q_8$. In $Q_8$ the only involution is central; in $D_8$ the involutions are the central $r^2$ and the four reflections. The central cases are covered by §108 and the reflection cases by Theorem 109.1. This proves the corollary.
+
+The regular action is a substantive hypothesis. No assertion that an arbitrary transitive symmetry group contains such a subgroup, and no averaging of an arbitrary pair into a regular-symmetric pair, is needed or inferred.
