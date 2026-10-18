@@ -61,6 +61,7 @@ internal sealed class TangZhangRealOrderDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(
+                    Disp(Inequality),
                     Paragraph(Text(
                         "The first conjunct asserts the displayed bound for every natural "
                         + "n at least one, every nonzero complex family z, and every real p "

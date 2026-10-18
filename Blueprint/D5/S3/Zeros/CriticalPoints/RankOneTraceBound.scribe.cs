@@ -12,7 +12,7 @@ internal sealed class RankOneTraceBoundDocument : IScribeDocumentDefinition
         Blocks(
             Describe.Lean(
                 DescribeId.Create("rank-one-trace-bound"),
-                DeclarationHandle.Create(Prefix + "Matrix.norm_trace_rank_one_sum_le"),
+                DeclarationHandle.Create(Prefix + "norm_trace_rank_one_sum_le"),
                 H("The unitary trace estimate"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
@@ -21,7 +21,7 @@ internal sealed class RankOneTraceBoundDocument : IScribeDocumentDefinition
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("rank-one-trace-phase-rigidity"),
-                DeclarationHandle.Create(Prefix + "Matrix.phases_eq_of_norm_trace_rank_one_sum_eq"),
+                DeclarationHandle.Create(Prefix + "phases_eq_of_norm_trace_rank_one_sum_eq"),
                 H("Equality forces a common phase"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
