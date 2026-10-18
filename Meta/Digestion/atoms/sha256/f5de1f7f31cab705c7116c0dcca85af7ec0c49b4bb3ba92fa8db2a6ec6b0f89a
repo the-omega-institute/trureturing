@@ -1,0 +1,30 @@
+## 7. Mode language and the leakage--return bridge
+
+A free real scalar field in a finite periodic box gives the usual oscillator
+language after a finite mode truncation. If $e_a$ are real orthonormal
+Laplacian eigenmodes and $\phi=\sum_a q_a e_a$, then
+
+$$
+L=\frac12\sum_a\left(\dot q_a^2-\omega_a^2q_a^2\right),
+\qquad
+\omega_a^2=c^2\kappa_a^2+\omega_0^2.
+$$
+
+For one mode, $p=\dot q$ and
+
+$$
+\alpha=\frac1{\sqrt2}\left(\sqrt\omega\,q
+       +i\frac p{\sqrt\omega}\right)
+$$
+
+satisfy $\dot\alpha=-i\omega\alpha$ and hence
+$\alpha(t)=e^{-i\omega t}\alpha(0)$. The circle is in the $(q,p)$ phase
+plane; it is not by itself a pair of spatial directions. Quantization adds
+the canonical commutation relations. In particular, the five-dimensional
+space $V$ above is an encoded or truncated sector: it cannot carry exact
+$[a,a^\dagger]=I$ for a nonzero finite identity, since taking traces would
+give $0=\dim V$. The mode construction therefore supplies an interpretation
+of the oscillator terminology, not a derivation of the particular Hamiltonian
+in Assumption 1.2. A standard free-field construction is given, for example,
+in Tong, [*Quantum Field Theory*, §2](https://www.damtp.cam.ac.uk/user/tong/qft/qfthtml/S2.html).
+

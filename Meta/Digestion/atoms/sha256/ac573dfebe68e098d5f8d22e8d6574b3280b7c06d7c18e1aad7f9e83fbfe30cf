@@ -1,0 +1,60 @@
+**Theorem 6.1 (Uniform near-return stability with fixed supplied corrections).**
+For every $t\geq0$ let $m$ be a nearest nonnegative integer to
+$\Delta t/(2\pi\hbar)$. Then
+
+$$
+\begin{aligned}
+|t-t_m|&\leq\frac{\pi\hbar}{4r}\sqrt{\epsilon(t)},\\
+\|U(t)|_W-U(t_m)|_W\|
+ &\leq\frac{\pi(\Delta+|J|)}{8r}\sqrt{\epsilon(t)}.
+\end{aligned}
+$$
+
+Consequently permitting endpoint sequences with leakage tending uniformly
+to zero over all $V$ densities leaves unchanged every endpoint and complete
+channel limit obtainable at exact returns, with no corrections or with
+one-sided or two-sided corrections from the fixed supplied $G_{\mathbb R}$.
+This includes limits considered up to a common scalar. At nonreturns the
+comparison is between the isometries $V\to W$ and their channels, with $V$
+embedded in $W$. Their unnormalized compressed CP maps have the same limits;
+no conditional normalization is used.
+
+Proof. Put $\delta=\operatorname{dist}(\tau(t),\pi\mathbb Z)$, so
+$0\leq\delta\leq\pi/2$ and
+$\sin\delta\geq2\delta/\pi$ by concavity of sine. Then
+
+$$
+|t-t_m|=\frac{2\hbar\delta}{\Delta}
+ \leq\frac{\pi\hbar}{\Delta}|\sin\tau|
+ =\frac{\pi\hbar}{4r}\sqrt{\epsilon(t)}.
+$$
+
+Integrating the derivative of the unitary group on the finite-dimensional
+reducing $W$, and using Proposition 2.1, gives
+
+$$
+\|U(t)|_W-U(s)|_W\|
+ \leq\frac{\|H|_W\|}{\hbar}|t-s|
+ =\frac{\Delta+|J|}{2\hbar}|t-s|.
+$$
+
+Combining these proves the second estimate. Restriction and compression
+cannot increase the norm. A right correction on $V$ preserves the input
+norm and the uniform leakage; extend a left correction to $W$ by identity
+on $V^\perp\cap W$ to compare the isometries. This extension is a norm
+comparison, not an additionally permitted physical operation.
+The same correction matrices can be used for the nearby exact return.
+Thus the difference tends to zero for any chosen correction sequence.
+Expanding the conjugation products as in Theorem 4.2 gives convergence of
+complete channels as well, including ancillas; the estimate is unaffected
+by scalar representatives.
+
+Conversely exact-return sequences already have uniformly zero leakage.
+Allowing the nearest index $m=0$ adds no quarter-phase limit: at zero the
+endpoint is identity, and a limit of products of supplied real corrections
+remains in the compact real group, which has no projective representative
+of $S$ by Theorem 3.1. Per-input zero leakage at $\kappa=0$ would not give
+any estimate on $t-t_m$; the hypothesis here is uniform leakage.
+These estimates compare nearby times and do not bound the waiting time
+needed for a nontrivial synchronous approximation. $\square$
+

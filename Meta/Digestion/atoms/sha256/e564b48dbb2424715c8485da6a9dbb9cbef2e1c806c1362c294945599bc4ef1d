@@ -1,0 +1,18 @@
+**Definition 1.4 (Path permission and the meaning of a channel).**
+The native no-excursion requirement is preservation of the legal space for
+every allowed input at every intermediate time. Its operator form here is
+$QU(s)P=0$ throughout the pulse interval. This uses the support criterion
+(41.1) and the throughout-pulse legality in Assumption 55.2 of
+[Static Compatibility–Fiber Theory](AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md).
+The original fixed waiting/complete-read/Stop menu of its Definition 1.4
+and Assumption 44.1 is distinct from its independently enlarged menus.
+Neither $H$ nor Assumption 1.3 is inferred to belong to the original menu.
+
+Unless a number or parity restriction is explicitly imposed, a density on
+$V$ means any complex positive semidefinite trace-one matrix supported in
+$V$, including coherences between different occupation sectors. Equality
+of five-state channels means equality on every such density, or equivalently
+on $M_5(\mathbb C)$. Projective unitary equality means equality up to one
+scalar of modulus one, common to all five states. Superselection-restricted
+observations are considered separately in Proposition 6.3.
+
