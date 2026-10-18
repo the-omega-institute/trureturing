@@ -48,6 +48,10 @@ $$\forall n \in \mathbb{N},\; 1 \le n \Rightarrow \left(\exists q \in \mathbb{N}
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/SGVFlatSpectrum.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/schoute-grinko-subasi-volkoff-2024-flat-spectrum` (proved) by `D5/S3/Quantum/Measurement/SGVFlatSpectrum.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"schoute-grinko-subasi-volkoff-2024-flat-spectrum","declaration_gid":"D5/S3/Quantum/Measurement/SGVFlatSpectrum.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Eddie Schoute, Dmitry Grinko, Yiğit Subaşı, Tyler Volkoff (2024). *Quantum Programmable Reflections*. DOI: [10.48550/arXiv.2411.03648](https://doi.org/10.48550/arXiv.2411.03648). URL: <https://arxiv.org/abs/2411.03648v2>.

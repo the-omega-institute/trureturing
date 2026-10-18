@@ -8,7 +8,7 @@ internal sealed class SGVFlatSpectrumDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Quantum/Measurement/SGVFlatSpectrum.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/QuantumChannels/schoutegrinkosubasivolkoff2024reflections");
+        LibraryNoteRef.Create("D5/L/LieTheory/schoutegrinkosubasivolkoff2024reflections");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Explicit positive probabilities solve the flat-spectrum system for every copy number.",
@@ -32,7 +32,9 @@ internal sealed class SGVFlatSpectrumDocument : IScribeDocumentDefinition
         AssessedProvenance provenance, Formula formula, string prose) => Describe.Lean(
             DescribeId.Create(name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role,
-            null);
+            name == "result" ? new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("schoute-grinko-subasi-volkoff-2024-flat-spectrum"),
+                ResolutionKind.Proved) : null);
 
     private static Formula SumDefinition()
     {
