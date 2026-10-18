@@ -2453,3 +2453,840 @@ The calibrated cyclic attainer in Theorem 107.1 has ranks $(3,3)$, belongs to th
 The assumption that one original Gram has a transitive fibre-preserving symmetry is substantive. No averaging of a generic pair into this class, no common-stress or local-minimum property of the approximation families, and no unrestricted global-quarter conclusion follows. This completes the proof.
 
 ## 追加锚（本行以下为增补区）
+
+## 111. Spectral parity in the original monomial-symmetry obstruction
+
+### 111.1. Original channels and monomial symmetry
+
+Retain the original channels, four two-coordinate fibres, correct-output forward Grams $G,H$, fixed correlated encodings and unhalved arbitrary-reference diamond error $\delta(A,B)$ of §110.1. For a permutation $\pi$ of the eight coordinates, use $P_\pi e_j=e_{\pi(j)}$. A monomial unitary has the form
+
+$$
+Ue_j=u_j e_{\pi(j)},\qquad |u_j|=1.
+\tag{111.1}
+$$
+
+It preserves the original fibres when $\pi$ preserves their partition. A group $\mathcal U$ of such matrices is a monomial symmetry group of a Hermitian matrix $M$ when $`U^*MU=M`$ for every $U\in\mathcal U$. Its permutation image is finite even if $\mathcal U$ is infinite.
+
+**Theorem 111.1.** Suppose that one of the actual correct-output Grams $M\in\{G,H\}$ has a fibre-preserving monomial symmetry group with transitive permutation image. If any eigenvalue of $M$ has odd multiplicity, then
+
+$$
+\delta(A,B)\geq\sqrt2-1>\frac14.
+\tag{111.2}
+$$
+
+In particular, the conclusion holds if $\operatorname{rank}M$ is odd, or if $M$ has a simple eigenvalue. The other original channel is arbitrary, and either channel may leak. With leakage, $\operatorname{rank}M$ denotes the rank of the actual correct-output Gram and need not equal the channel's local Kraus rank.
+
+The constant is sharp in this class. It is attained by a calibrated rank-$(3,3)$ pair, and it is the infimum in the calibrated exact-rank classes $(7,4)$ and $(7,5)$ described in §107. Thus a pair in the stated monomial-symmetry class with error below $\sqrt2-1$ must have even multiplicity for every eigenvalue of $M$, including zero.
+
+### 111.2. Connected support and a finite central extension
+
+**Proof of Theorem 111.1.** It suffices to rule out $\delta<\sqrt2-1$. For original coordinates $j,k$ in different fibres, the matrix unit $|j\rangle\langle k|$ has trace norm one. Compressing its full output error to the correct-output entry gives
+
+$$
+\left|\frac12-G_{jk}H_{jk}\right|\leq\delta.
+\tag{111.3}
+$$
+
+The physical coefficient is the conjugate of the forward product, which leaves this modulus unchanged. All wrong-output components remain in the full channel before compression; no calibration is used. Because $\sqrt2-1<1/2$, every cross-fibre entry of $G$ and $H$ is nonzero under the supposed strict inequality. In particular the support graph of $M$, with an edge whenever $j\ne k$ and $M_{jk}\ne0$, is connected.
+
+For a diagonal unitary $Z=\operatorname{diag}(z_j)$ preserving $M$, the entrywise equation $`Z^*MZ=M`$ gives $\overline{z_j}z_k=1$ on every support edge. Connectedness therefore makes $Z$ scalar. This argument permits arbitrary complex entries and uses no positive or real gauge.
+
+Let $F$ be the transitive permutation image of $\mathcal U$, and let $P$ be a Sylow two-subgroup of $F$. For a coordinate $x$, orbit-stabilizer gives
+
+$$
+|P\cdot x|
+ =\frac{|P|}{|P\cap F_x|}
+ \geq\frac{|F|_2}{|F_x|_2}=8,
+\tag{111.4}
+$$
+
+where $|K|_2$ is the largest power of two dividing $|K|$. The orbit has at most eight elements, so $P$ is transitive. Every element still preserves the original fibres.
+
+Define $E$ to be the group of all monomial unitary symmetries of $M$ whose permutation lies in $P$ and whose determinant is one. This uses the full matrix stabilizer; scalar multiples of the originally supplied lifts are allowed. Every $\pi\in P$ has a lift, and multiplication by a unit scalar can make its determinant one. Two lifts of the same permutation differ by a diagonal symmetry, hence by a scalar. Exactly eight scalar multiples of a fixed lift have determinant one. Consequently
+
+$$
+|E|=8|P|,\qquad
+\ker(E\longrightarrow P)=\{\zeta I_8:\zeta^8=1\}.
+\tag{111.5}
+$$
+
+Thus $E$ is a finite two-group. No compatible section of the permutation map, splitting of a projective extension, or finiteness of the original group $\mathcal U$ was assumed.
+
+### 111.3. An odd eigenspace contains a common line
+
+The needed representation-theoretic step is the standard fact that an odd-dimensional complex unitary representation of a finite two-group contains an invariant line. It is a special case of the classical irreducible-degree divisibility theorem; see [Teleman, Theorem 13.6](../../../Library/FiniteGroups/teleman2005representation.md). The following elementary argument supplies the exact step within this proof.
+
+Induct on group order to show that an odd-dimensional irreducible unitary representation has dimension one. The trivial group is immediate. A nontrivial finite two-group has a normal subgroup $N$ of index two. This elementary maximal-subgroup property also follows by induction through a central subgroup of order two. Restrict an odd-dimensional irreducible representation $V$ to $N$ and decompose it orthogonally into $N$-isotypic components. An element $g$ outside $N$ permutes these components. Since $g^2\in N$, its orbits have size one or two. The sum over each orbit is invariant under $N$ and $g$, hence under the whole group. Irreducibility leaves exactly one orbit. A two-element orbit would consist of equal-dimensional components and make $\dim V$ even. Thus $V$ is a single $N$-isotypic component, a sum of copies of an irreducible $N$-module $W$.
+
+Since $\dim V$ is odd, $\dim W$ is odd. Induction gives $\dim W=1$, so $N$ acts by scalars on $V$. Any eigenvector of the unitary representing $g$ then spans a line invariant under $N$ and $g$. Irreducibility forces $\dim V=1$. Finally, an arbitrary odd-dimensional unitary representation decomposes into irreducible orthogonal summands; at least one has odd dimension and is therefore a line. This proves the required step without a classification of the two-group.
+
+Let $\lambda$ be an eigenvalue of $M$ with odd multiplicity. Every element of $E$ commutes with $M$, so its $\lambda$ eigenspace is an odd-dimensional unitary representation of $E$. Choose a nonzero vector $a$ on a common invariant line. For every $U\in E$ there is a unit scalar $\chi(U)$ with
+
+$$
+Ua=\chi(U)a,\qquad
+u_j a_j=\chi(U)a_{\pi(j)},
+\quad Ue_j=u_j e_{\pi(j)}.
+\tag{111.6}
+$$
+
+Transitivity of $P$ forces all coordinate moduli to equal a single $r>0$. In particular, none is zero. Set
+
+$$
+D=\operatorname{diag}(a_j/r).
+\tag{111.7}
+$$
+
+This is one diagonal unitary, independent of the lift or permutation. Equation (111.6) yields
+
+$$
+D^*UD=\chi(U)P_\pi,\qquad
+P_\pi^*(D^*MD)P_\pi=D^*MD.
+\tag{111.8}
+$$
+
+Thus the gauged matrix has a transitive pure-permutation symmetry group preserving the original fibres. Only the subgroup with image $P$ is asserted to have this common gauge; it need not remove the phases of every element of $\mathcal U$.
+
+When the eigenvalue is simple, the same argument is shorter and works for the entire supplied group: every $U\in\mathcal U$ preserves its unique eigenline, so (111.6)–(111.8) hold directly for all of $\mathcal U$. In particular, rank seven gives a unique kernel line, and transitivity forces that kernel vector to have equal nonzero coordinate moduli. Full kernel support is then a conclusion, rather than an additional hypothesis.
+
+### 111.4. The complete physical gauge and sharpness
+
+Assume first that $M=G$. Precompose the original channels by reciprocal diagonal phases:
+
+$$
+A'=A\circ\operatorname{Ad}_D,\qquad
+B'=B\circ\operatorname{Ad}_{\overline D},\qquad
+G'=D^*GD,\qquad H'=D^T H\overline D.
+\tag{111.9}
+$$
+
+Every Stinespring column is phased, including every wrong-output component. On each logical matrix unit $|j\rangle\langle k|$, the complete local outputs acquire factors $d_j\overline{d_k}$ and $\overline{d_j}d_k$, whose product is one. Equivalently,
+
+$$
+(D\otimes\overline D)V_{\rm in}=V_{\rm in}.
+\tag{111.10}
+$$
+
+The entire encoded physical product channel, and hence its arbitrary-reference diamond error, is unchanged. If $M=H$, exchange the two phase assignments. Theorem 110.1 now applies to the gauged pair and gives (111.2), contradicting the supposed smaller error. If $\operatorname{rank}M$ is odd, the sum of the multiplicities of its nonzero eigenvalues is odd, so at least one such multiplicity is odd. This proves the rank assertion.
+
+For sharpness, the cyclic attainer of §107.4 has first-Gram Fourier weights $1/2,m/2,(1-m)/2$, where $m=1/\sqrt2$, on modes $0,1,3$. Its three positive eigenvalues are
+
+$$
+4,\qquad 2\sqrt2,\qquad 4-2\sqrt2,
+\tag{111.11}
+$$
+
+all simple, and its original error is $\sqrt2-1$. Its pure-permutation symmetry is a special case of monomial symmetry. The calibrated approximating families of §107.5 have exact first rank seven, unique full-support Fourier kernel and exact opposite ranks four or five. Their errors converge to the same constant. This establishes the claimed sharp value and rank-class infima, without asserting attainment or local minimality for those approximating families. $\square$
+
+### 111.5. An exact even-multiplicity boundary at quarter error
+
+**Proposition 111.2.** There are original calibrated channels of local Kraus ranks $(4,2)$ and exact error $1/4$ for which the second Gram has a transitive fibre-preserving monomial symmetry group. That Gram has spectrum $4$ with multiplicity two and $0$ with multiplicity six. Consequently the odd-multiplicity condition in Theorem 111.1 cannot be discarded.
+
+**Proof.** Let $X,Y,Z$ be the Pauli matrices and set
+
+$$
+\begin{aligned}
+n_0&=(1,1,1)/\sqrt3,&n_1&=(1,-1,-1)/\sqrt3,\\
+n_2&=(-1,1,-1)/\sqrt3,&n_3&=(-1,-1,1)/\sqrt3.
+\end{aligned}\tag{111.12}
+$$
+
+Choose an orthonormal qubit basis $(b_{f0},b_{f1})$ whose rank-one projectors are
+
+$$
+|b_{fi}\rangle\langle b_{fi}|
+ =\frac{I_2+(-1)^i n_f\cdot(X,Y,Z)}2.
+\tag{111.13}
+$$
+
+Use the tetrahedral marker construction of [RT II §82](ARITHMETIC_HOLOGRAPHIC_RT_II.md#82-quarter-error-rigidity-minimal-kraus-product-and-the-complete-rank-two-party-family):
+
+$$
+m_i=\sqrt{\frac78}e_0+(-1)^i\sqrt{\frac18}e_1,
+\qquad a_{fi}=\overline{b_{fi}}\otimes m_i,
+\qquad\langle m_0,m_1\rangle=\frac34.
+\tag{111.14}
+$$
+
+The assignments $|f,i\rangle\mapsto|f\rangle\otimes a_{fi}$ and $|f,i\rangle\mapsto|f\rangle\otimes b_{fi}$ are full original Stinespring isometries. The second record span has dimension two. The two marker vectors are independent, and for either fixed bit the four qubit vectors span $\mathbb C^2$. Their tensor subspaces with $m_0$ and $m_1$ are independent, so the first record span has dimension four. These are the stated local Kraus ranks.
+
+If $B_0$ is the $2\times8$ matrix of second-party records, then
+
+$$
+B_0B_0^*=\sum_{f,i}|b_{fi}\rangle\langle b_{fi}|=4I_2.
+\tag{111.15}
+$$
+
+Thus its Gram $`H=B_0^*B_0`$ has exactly the asserted repeated spectrum.
+
+To retain the original complete-norm normalization, put $R_{fg}=n_f\cdot n_g$. Its Klein-character eigenvalues are $0,4/3,4/3,4/3$. The product coefficients are
+
+$$
+K_{fi,gj}=|\langle b_{fi},b_{gj}\rangle|^2\langle m_i,m_j\rangle.
+\tag{111.16}
+$$
+
+The product-minus-target difference in the logical plus/minus bit sectors has the two real Schur kernels
+
+$$
+D_+=\frac{R-J_4}{8},\qquad
+D_-=\frac{J_4+7R}{8}-I_4,
+\tag{111.17}
+$$
+
+and zero cross-sector terms. Each kernel has eigenvalues $-1/2,1/6,1/6,1/6$. For a Hermitian Klein-circulant kernel $D$, expansion in its real characters gives a signed sum of diagonal unitary conjugations and hence the arbitrary-reference upper bound $\|\operatorname{Schur}_D\|_\diamond\leq\|D\|_1/4$. The uniform pure input attains equality. The two positive input principal blocks have traces summing to one, so the full original norm is the larger sector norm. Therefore
+
+$$
+\delta(A,B)=\max\left\{\frac{\|D_+\|_1}{4},
+                             \frac{\|D_-\|_1}{4}\right\}
+             =\frac14.
+\tag{111.18}
+$$
+
+It remains to verify the monomial symmetry, rather than infer it from the eigenvalue multiplicities. The Pauli $X,Z$ and the Hadamard $Q=(X+Z)/\sqrt2$ act on Bloch vectors respectively by
+
+$$
+(x,y,z)\mapsto(x,-y,-z),\quad
+(x,y,z)\mapsto(-x,-y,z),\quad
+(x,y,z)\mapsto(z,-y,x).
+\tag{111.19}
+$$
+
+These transformations permute the eight cube vertices $\{(-1)^i n_f\}$ and preserve their original antipodal pairs. The first two act transitively on each sign-product class, and the last exchanges the two classes. The generated permutation group is therefore transitive on all eight original coordinates.
+
+For every word $V$ in these qubit unitaries, distinctness of the eight record rays gives a permutation $\pi$ and unit scalars $\zeta_j$ such that $Vb_j=\zeta_jb_{\pi(j)}$. Define $U_Ve_j=\zeta_je_{\pi(j)}$. Then
+
+$$
+B_0U_V=VB_0,\qquad U_V^*HU_V=H.
+\tag{111.20}
+$$
+
+Composition of words gives composition of these monomial matrices, so they form the required group. Changing the individual record phases only diagonally conjugates it. Thus the same actual quarter-error product has transitive monomial symmetry and only even spectral multiplicities. By Theorem 110.1, this $H$ cannot have any diagonal gauge with transitive fibre-preserving pure-permutation symmetry. $\square$
+
+Theorem 111.1 constrains a symmetry class of actual original Grams. It does not assert such symmetry for arbitrary channels or calibrated minima, and Proposition 111.2 is not a subquarter example. The unrestricted global quarter optimum remains open.
+
+## 追加锚（本行以下为增补区）
+
+## 112. Full-kernel curvature exclusions beyond the symmetry classes
+
+### 112.1. Original local minima and one fixed quadratic
+
+Use the original eight logical coordinates, four two-coordinate fibres, local channels from $\mathbb C^8$ to $\mathbb C^4$, and fixed correlated encoding. In this section the channels are calibrated, and their forward Grams belong to
+
+$$
+\mathcal E=\{M=M^*\succeq0:M_{ff}=I_2\text{ for every original fibre }f\}.
+\tag{112.1}
+$$
+
+The target has $T_{ff}=I_2$ and $T_{fg}=J_2/2$ for $f\ne g$. The exact unhalved error, including arbitrary reference inputs, is the block-density norm of [RT III §91](ARITHMETIC_HOLOGRAPHIC_RT_III.md#91-adaptive-original-channel-witnesses-and-an-obstruction-to-all-two-fibre-tests):
+
+$$
+\begin{aligned}
+F(G,H)&=\max 2\operatorname{Tr}[(T-G\odot H)W],\\
+\rho&=\bigoplus_f\rho_f\succeq0,\qquad
+\operatorname{Tr}\rho=1,\qquad0\preceq W\preceq\rho.
+\end{aligned}
+\tag{112.2}
+$$
+
+Local minimality always means the full domain $\mathcal E\times\mathcal E$, including nearby competitors of different ranks. Suppose $\operatorname{rank}G=7$, $\ker G=\mathbb Ca$ with every $a_i\ne0$, and $0<F(G,H)<1/2$. The common-stress and full-kernel results of RT III §§92 and 95.3 give
+
+$$
+\begin{aligned}
+P_A&=\alpha aa^*,&
+P&=\alpha\operatorname{diag}(a)R\operatorname{diag}(\bar a),\\
+\alpha&>0,&R&\succeq0,\quad R_{ii}=1,\\
+G&=H\odot\bar R,&PH&=0.
+\end{aligned}
+\tag{112.3}
+$$
+
+Every cross-fibre entry of $G,H,R,P$ is nonzero. Indeed the original matrix-unit bound $|1/2-G_{ij}H_{ij}|\leq F<1/2$ first gives this for $G,H$, and (112.3) gives it for $R,P$. Also $P_{ii}=\alpha|a_i|^2>0$.
+
+Let $U$ have full row rank and $`\operatorname{range}U^*=\ker H`$. Define
+
+$$
+\mathcal V_H=\{D=D^*:D_{ff}=0\text{ for all }f,\ DU^*=0\}.
+\tag{112.4}
+$$
+
+The necessary quadratic on this entire-kernel face is
+
+$$
+Q_P(D)=-\sum_{\substack{i,j\text{ in distinct}\\\text{original fibres}}}
+ \frac{\overline{P_{ij}}}{H_{ij}}D_{ij}^{2}\geq0
+ \qquad(D\in\mathcal V_H).
+\tag{112.5}
+$$
+
+The sum is over ordered pairs, and the square is a complex entrywise square. To retain the exact scope of the delivered argument, the paired direction is $D_G=-\bar R\odot D$. It has zero entire fibre blocks, annihilates $a$, and satisfies $D_G\odot H+G\odot D=0$. Both fixed-kernel face paths are feasible for sufficiently small real parameters of either sign. Their coefficient expansion is
+
+$$
+T-(G+sD_G)\odot(H+sD)
+ =T-G\odot H+s^2\bar R\odot D\odot D.
+\tag{112.6}
+$$
+
+For each fixed direction, the common-witness drift argument supplies a nonnegative quadratic value. All common witnesses at these same $G,H,a$ give positive scalar multiples of the same form, because their cross-fibre $R$ entries are fixed. Thus one obtains (112.5) for all directions with the same chosen $P$. No exchange of a quadratic direction variable with a witness maximum is used. Annihilating only the complementary-stress range instead of the entire $\ker H$ would not justify these face paths.
+
+### 112.2. Two rank-one full-kernel projections are impossible
+
+**Theorem 112.1.** Under the local-minimum hypotheses of §112.1, at most one original fibre can satisfy $\operatorname{rank}U_f=1$. There is no restriction on the opposite rank beyond the original Gram constraints.
+
+**Proof.** Suppose two distinct fibres $f,g$ have rank-one blocks, and let $C$ be their four-coordinate complement. Every column of $U$ is nonzero, because $P_{ii}>0$ and $`\operatorname{range}P\subseteq\operatorname{range}U^*`$. Choose nonzero vectors $n,m$, supported on $f,g$ respectively, with $Un=Um=0$. Both original coordinates of each are nonzero.
+
+First suppose $\operatorname{rank}U_C=\operatorname{rank}U$. For $v\in\ker U$ with $v_f=0$ and $z\in\mathbb C$, the matrix
+
+$$
+S_f(z,v)=znv^*+\bar z vn^*
+\tag{112.7}
+$$
+
+belongs to $\mathcal V_H$. Substitution in (112.5) gives $Q_P(S_f(z,v))=-2\operatorname{Re}(z^2A(v))$ for a fixed complex number $A(v)$. All phases of $z$ force $A(v)=0$. A zero vector of a nonnegative real quadratic lies in its radical: applying the quadratic to $S+uD$ for both signs of real $u$ makes its linear term vanish. Consequently all stars (112.7), and their counterparts at $g$, are radical vectors.
+
+For arbitrary vectors $p$ on $f$ and $r$ on $g$, surjectivity of $U_C$ supplies $v,w\in\ker U$ with $v_f=0,v_g=r,w_g=0,w_f=p$. The two stars share only the block $f\times g$ and its adjoint. Their zero polarization gives
+
+$$
+\operatorname{Re}\left[
+ z\bar y\sum_{i\in f,j\in g}
+ \frac{\overline{P_{ij}}}{H_{ij}}
+ n_i p_i\bar r_j\bar m_j\right]=0
+ \qquad(z,y\in\mathbb C).
+\tag{112.8}
+$$
+
+Varying the phase and taking $p,r$ to be individual coordinate vectors contradicts the nonzero entries of $P,n,m$.
+
+It remains to treat $\operatorname{rank}U_C<\operatorname{rank}U$. Choose a nonzero $\ell$ orthogonal to the columns of $U_C$. Then
+
+$$
+w=U^*\ell\ne0,\qquad w_C=0,\qquad Hw=0.
+\tag{112.9}
+$$
+
+Choose unit vectors $m_f,m_g$ spanning $`\operatorname{range}U_f^*,\operatorname{range}U_g^*`$, and unit orthogonal vectors $n_f,n_g$ in their original fibres. The latter lie in $\operatorname{range}H$. Write $w_f=\eta_fm_f,w_g=\eta_gm_g$. Both coefficients are nonzero: a kernel vector supported in just one fibre would contradict $H_{ff}=I_2$. The two block rows of $Hw=0$ give
+
+$$
+H_{fg}m_g=-\frac{\eta_f}{\eta_g}m_f,
+\qquad
+H_{fg}^*m_f=-\frac{\eta_g}{\eta_f}m_g.
+\tag{112.10}
+$$
+
+Taking their adjoint scalar pairings shows $|\eta_f/\eta_g|=1$. Hence this is a singular pair of singular value one. The mixed entries in these orthonormal bases vanish, so
+
+$$
+H_{fg}=b\,n_fn_g^*+\lambda m_fm_g^*,
+\qquad |\lambda|=1,\quad |b|\leq1.
+\tag{112.11}
+$$
+
+In fact $|b|<1$. If $|b|=1$, $H_{fg}$ is unitary and the four-coordinate principal block with diagonal blocks $I_2$ has a two-dimensional kernel whose projection onto $f$ spans $\mathbb C^2$. Every principal null vector of a positive matrix extends by zero to a full null vector: its full quadratic value is zero, so the positive square root annihilates it. This would give a two-dimensional projection of $\ker H$ onto $f$, contradicting $\operatorname{rank}U_f=1$.
+
+Absorb $\lambda$ into the choice of $m_g$. Since $P$ is supported on the full kernel, its cross block is
+
+$$
+H_{fg}=b\,n_fn_g^*+m_fm_g^*,\qquad
+P_{fg}=\zeta m_fm_g^*,\qquad
+|b|<1,\quad\zeta\ne0.
+\tag{112.12}
+$$
+
+Both coordinates of $m_f,m_g$ are nonzero by the positive diagonal of $P$. Simultaneous diagonal unitary congruence $`H\mapsto E^*HE`$, $`P\mapsto E^*PE`$, $`D\mapsto E^*DE`$ preserves each summand in (112.5). The reciprocal first-Gram transformation $`G\mapsto EGE^*`$ preserves every entry of $G\odot H$ and all original identity fibre blocks, so these phases also preserve the original physical objective. Use them to write
+
+$$
+m_f=(c,s)^{\mathsf T},\quad n_f=(-s,c)^{\mathsf T},\qquad
+m_g=(d,e)^{\mathsf T},\quad n_g=(-e,d)^{\mathsf T},
+\tag{112.13}
+$$
+
+where $c,s,d,e>0$, $c^2+s^2=d^2+e^2=1$. The phases of the orthogonal vectors are analytical choices, absorbed into the possibly complex coefficient $b$. No arbitrary fibre-unitary symmetry of the physical encoding, or real gauge for the Grams, is assumed.
+
+The star $`D(z)=zn_fn_g^*+\bar z n_gn_f^*`$ lies in $\mathcal V_H$. Put $t=s/c>0,u=e/d>0$. Direct substitution gives
+
+$$
+\begin{aligned}
+Q_P(D(z))&=-2\operatorname{Re}\bigl(z^2\bar\zeta\,K(b;t,u)\bigr),\\
+K(b;t,u)&=\sum_{i,j=0}^1
+\frac{(m_f)_i(m_g)_j(n_f)_i^2(n_g)_j^2}
+ {b(n_f)_i(n_g)_j+(m_f)_i(m_g)_j}\\
+&=\frac{t^2u^2(b^2-1)}
+ {(b+tu)(bt-u)(t-bu)(btu+1)}.
+\end{aligned}
+\tag{112.14}
+$$
+
+For the last identity, the ratios $n_i/m_i$ are $(-t,1/t)$ and $(-u,1/u)$, with weights $n_i^2=(t^2,1)/(1+t^2)$ and $(u^2,1)/(1+u^2)$. Taking the common denominator of their four terms proves the identity for arbitrary complex $b$. The opposite ordered block supplies the conjugate term, so no conjugation is inserted into $b$ itself.
+
+All four denominator factors are nonzero because they are the four actual cross entries of $H_{fg}$ divided by nonzero factors. The numerator is nonzero since $|b|<1$ and $t,u>0$. All phases of $z$ in (112.14) therefore contradict (112.5) and $\zeta\ne0$. This completes both branches. ∎
+
+### 112.3. A partition-radical criterion at opposite rank five
+
+Assume now that $H\in\mathcal E$ has rank five and all cross-fibre entries nonzero. Take $U$ with three rows and $`\operatorname{range}U^*=\ker H`$. Fix the two unions of original fibres
+
+$$
+A=\{0,1,2,3\},\qquad B=\{4,5,6,7\}.
+\tag{112.15}
+$$
+
+Suppose $U_A,U_B$ have rank three. Choose nonzero supported vectors $n,m$ with $n_B=m_A=0$ and $Un=Um=0$. Define $`S(z)=znm^*+\bar z mn^*`$. These matrices lie in $\mathcal V_H$, because their only edges join distinct sets of original fibres.
+
+For any Hermitian $P$ supported on $\ker H$, define $Q_P$ by the expression in (112.5), without assuming its positivity, and let
+
+$$
+\mathcal B_P(D,E)=-\operatorname{Re}\sum_{\mathrm{cross}}
+ \frac{\overline{P_{ij}}}{H_{ij}}D_{ij}E_{ij}.
+\tag{112.16}
+$$
+
+Its restriction to the star plane is
+
+$$
+Q_P(S(z))=-2\operatorname{Re}\left[
+ z^2\sum_{i\in A,j\in B}
+ \frac{\overline{P_{ij}}}{H_{ij}}n_i^2\bar m_j^{2}\right].
+\tag{112.17}
+$$
+
+Thus, if $Q_P$ is nonnegative on $\mathcal V_H$, both $S(1)$ and $S(i)$ belong to its radical. Every such $P$ is uniquely $`P=U^*XU`$ with $X\in\operatorname{Herm}(3)$. Introduce the real linear map
+
+$$
+\begin{aligned}
+\mathcal L_H:\operatorname{Herm}(3)&\longrightarrow
+ \mathcal V_H^*\oplus\mathcal V_H^*,\\
+X&\longmapsto
+ \bigl(\mathcal B_{U^*XU}(S(1),\cdot),
+       \mathcal B_{U^*XU}(S(i),\cdot)\bigr).
+\end{aligned}
+\tag{112.18}
+$$
+
+Injectivity does not depend on the basis $U$, on the nonzero choices of $n,m$, or on a real basis of $\mathcal V_H$. Changing $U$ gives an invertible congruence on $X$. Rescaling $n,m$ gives an invertible real change of the two star generators.
+
+**Proposition 112.2.** If $\mathcal L_H$ is injective, $H$ cannot occur as the opposite Gram of a local minimum satisfying §112.1.
+
+**Proof.** Its nonzero common stress $`P=U^*XU`$ would satisfy (112.5). Equation (112.17) puts both star generators in its radical, giving $\mathcal L_H(X)=0$. Injectivity forces $P=0$, contradicting its positive diagonal. The same fixed quadratic is used in both equations. ∎
+
+### 112.4. A rational rank-nine certificate
+
+**Proposition 112.3.** There is a rational calibrated rank-five Gram $H_0$ with nonzero cross-fibre entries, all four $U_f$ of rank two, $\dim_{\mathbb R}\mathcal V_{H_0}=9$, and injective $\mathcal L_{H_0}$. It also admits a calibrated rank-seven partner $G_0$ with a full-support kernel and a rank-two correlation quotient $R_0$ satisfying $G_0=H_0\odot R_0$.
+
+**Proof.** The following construction gives all these properties. For a nonzero real five-vector set $Q(v)=I_5-2vv^{\mathsf T}/(v^{\mathsf T}v)$, and take
+
+$$
+\begin{aligned}
+v_0&=(1,2,3,1,2)^{\mathsf T},&
+v_1&=(2,1,1,3,-1)^{\mathsf T},\\
+v_2&=(1,3,-2,1,2)^{\mathsf T},&
+v_3&=(3,-1,2,2,1)^{\mathsf T}.
+\end{aligned}
+\tag{112.19}
+$$
+
+Form the real $5\times8$ matrix $B_0$ from columns $(0,1)$ of $Q(v_0)$, $(1,2)$ of $Q(v_1)$, $(2,3)$ of $Q(v_2)$ and $(3,4)$ of $Q(v_3)$, in that order. Each original pair is orthonormal. Hence $H_0=B_0^{\mathsf T}B_0\in\mathcal E$. Every cross-fibre entry is nonzero, and
+
+$$
+\det(H_0)_{\{0,1,2,3,4\}}=\frac{5929}{130321}>0.
+\tag{112.20}
+$$
+
+It has rank five. A full kernel matrix is
+
+$$
+U=\begin{bmatrix}
+\dfrac57&-\dfrac{771}{616}&\dfrac{1327}{616}&\dfrac{81}{616}&-\dfrac{661}{616}&1&0&0\\[4pt]
+\dfrac{135}{133}&-\dfrac{10975}{11704}&\dfrac{11595}{11704}&\dfrac{6709}{11704}&-\dfrac{243}{616}&0&1&0\\[4pt]
+\dfrac{39}{133}&\dfrac{2979}{1064}&-\dfrac{2823}{1064}&\dfrac{1223}{1064}&\dfrac{71}{56}&0&0&1
+\end{bmatrix}.
+\tag{112.21}
+$$
+
+Direct multiplication gives $UH_0=0$. Every original $U_f$ has rank two, while $U_A,U_B$ have rank three. Choose the supported vectors by
+
+$$
+n_A=\left(-\frac{2824}{3249},-\frac{1256}{5415},\frac{79}{855},1\right)^{\mathsf T},
+\qquad
+m_B=\left(-\frac{56}{71},-\frac{661}{781},-\frac{243}{781},1\right)^{\mathsf T}.
+\tag{112.22}
+$$
+
+The following conventions specify the entire finite rational certificate. For $\operatorname{Herm}(k)$ use, in order, the diagonal matrix units, then $E_{ij}+E_{ji}$ for $i<j$ in lexicographic order, then $i(E_{ij}-E_{ji})$ in the same order. For $k=5$ call these $25$ matrices $A_\ell$ and put $D_\ell=B_0^{\mathsf T}A_\ell B_0$. Build the real $16\times25$ constraint matrix $C$ by first evaluating, for $f=0,1,2,3$ in order,
+
+$$
+\operatorname{Re}D_{2f,2f},\quad
+\operatorname{Re}D_{2f+1,2f+1},\quad
+\operatorname{Re}D_{2f,2f+1},
+\tag{112.23}
+$$
+
+and then $\operatorname{Im}D_{2f,2f+1}$ for the four fibres. Its reduced-row-echelon pivot columns, starting from zero, are
+
+$$
+(0,1,2,3,4,5,6,7,8,9,10,11,15,16,17,18).
+\tag{112.24}
+$$
+
+For each free column in increasing order, set that free coordinate to one and all other free coordinates to zero, solve $Cx=0$, and form $\sum_\ell x_\ell D_\ell$. This gives an ordered basis $D^{(0)},\ldots,D^{(8)}$ of the entire $\mathcal V_{H_0}$; its real dimension is nine. Let $X_t$ be the ordered basis of $\operatorname{Herm}(3)$ specified above, and set
+
+$$
+L_{9b+j,t}=\mathcal B_{U^*X_tU}(S(z_b),D^{(j)}),
+\qquad z_0=1,\ z_1=i,\quad0\leq j\leq8.
+\tag{112.25}
+$$
+
+Select rows $(0,1,2,3,4,5,12,13,14)$, in that order, to obtain a rational $9\times9$ matrix $M$. Its denominators are nonzero modulo the prime $1009$, and its reduction is
+
+$$
+\begin{bmatrix}
+363&544&663&131&866&321&0&0&0\\
+167&5&413&16&578&245&0&0&0\\
+780&81&103&116&751&976&0&0&0\\
+0&0&0&0&0&0&383&17&773\\
+0&0&0&0&0&0&576&983&167\\
+0&0&0&0&0&0&902&167&785\\
+360&972&495&857&423&769&0&0&0\\
+603&856&757&474&813&43&0&0&0\\
+633&253&1000&387&611&963&0&0&0
+\end{bmatrix},
+\qquad \det M\equiv71\pmod{1009}.
+\tag{112.26}
+$$
+
+Thus $\det M\ne0$ over the rationals and $\mathcal L_{H_0}$ is injective. Equations (112.19)–(112.26) specify every rational entry and operation in this certificate, and the modular determinant proves nonvanishing over the rationals.
+
+The same $H_0$ is compatible with actual full-support rank-$(7,5)$ quotient data. Put
+
+$$
+\begin{aligned}
+V&=\begin{bmatrix}1&1&2\\3&5&8\end{bmatrix}U,&P_0&=V^{\mathsf T}V,&
+A_0&=\operatorname{diag}\sqrt{(P_0)_{ii}},\\
+R_0&=A_0^{-1}P_0A_0^{-1},&&
+G_0&=A_0^{-1}(H_0\odot P_0)A_0^{-1}.
+\end{aligned}
+\tag{112.27}
+$$
+
+Every diagonal $(P_0)_{ii}$ is positive and every cross-fibre $(P_0)_{ij}$ is nonzero, $P_0H_0=0$, $\operatorname{rank}P_0=2$, and $H_0\odot P_0$ annihilates $\mathbf1$. Its leading seven-coordinate principal minor is
+
+$$
+\det(H_0\odot P_0)_{\{0,\ldots,6\}}
+ =\frac{7112294794815105630926273211887500169505}
+ {2088963297980603103510407339950336}>0.
+\tag{112.28}
+$$
+
+Thus $\operatorname{rank}(H_0\odot P_0)=7$, and $G_0,R_0$ are correlation Grams, $(G_0)_{ff}=I_2$, $G_0=H_0\odot R_0$, and $\ker G_0=\mathbb C A_0\mathbf1$ has full support. Tensoring the $H_0$ records with conjugated $R_0$ records gives the original calibrated Stinespring realization. This establishes geometric nonvacuity; no small-error or local-minimum property is asserted for this example. ∎
+
+### 112.5. Open density on the complete complex rank-five stratum
+
+Let $\mathcal M=V_2(\mathbb C^5)^4$ be the product of four complex Stiefel manifolds of ordered orthonormal two-frames, viewed as $5\times8$ record matrices. It is a connected real-analytic manifold: each factor is $U(5)/U(3)$. Let $\mathcal M_5$ be its open full-row-rank subset. The Gram map is onto
+
+$$
+\mathcal E_5=\{H\in\mathcal E:\operatorname{rank}H=5\}.
+\tag{112.29}
+$$
+
+The fibres of this map are the free left $U(5)$ orbits. The compact group action is proper, so $\mathcal E_5$ is the corresponding real-analytic quotient. Its topology is the usual Gram-matrix topology: where a five-coordinate principal block $H_{JJ}$ is positive definite, the local section $B(H)=H_{JJ}^{-1/2}H_{J,:}$ is real analytic and satisfies $`B(H)^*B(H)=H`$ by the rank-five Schur complement. Its original two-frame constraints follow from $H_{ff}=I_2$.
+
+**Theorem 112.4.** There is an open dense subset $\Omega\subseteq\mathcal E_5$ such that no $H\in\Omega$ can be the opposite Gram of a full-domain calibrated local minimum with $\operatorname{rank}G=7$, full-support $\ker G$, and $0<F(G,H)<1/2$. One may take $\Omega$ to consist of the Grams with nonzero cross-fibre entries, $\operatorname{rank}U_A=\operatorname{rank}U_B=3$, $\dim_{\mathbb R}\mathcal V_H=9$, and injective $\mathcal L_H$.
+
+**Proof.** All four conditions are open. Maximal-rank minors persist, and, on those open sets, continuous kernel and face bases make injectivity a full-column-rank condition. Their meanings are independent of the bases.
+
+For density work on the connected ambient manifold $\mathcal M$, rather than assuming that its open full-rank subset is connected. Near $B_0$, use its first five columns as the invertible pivot block when solving $`BU^*=0`$. Solve $U_An_A=0$ and $U_Bm_B=0$ with the last coordinate of each vector equal to one. Use the same $16$ pivot columns (112.24) to define the face directions, now with $`D_\ell=B^*A_\ell B`$. The selected determinant in (112.25) is a rational function of the real and imaginary entries of $B$. All its denominators and the chosen pivot determinants are nonzero at $B_0$.
+
+Complex divisions, including division by actual $H_{ij}$, can be rationalized using squared moduli. Clear the finitely many denominators and include all pivot and cross-entry nonvanishing factors in a real polynomial $p$ in $\operatorname{Re}B,\operatorname{Im}B$. By (112.26), $p(B_0)\ne0$. Its restriction to the connected real-analytic manifold $\mathcal M$ is therefore not identically zero. Such a function cannot vanish on a nonempty open set: the power-series identity theorem proves this in a coordinate ball, and overlapping balls continue the identity along paths. Hence $\{p\ne0\}$ is dense in $\mathcal M$ and in every open subset $\mathcal M_5$. Every point with $p\ne0$ has the specified admissible charts and injective determinant, so its Gram lies in $\Omega$.
+
+If a nonempty open subset of $\mathcal E_5$ were disjoint from $\Omega$, its open, nonempty inverse image in $\mathcal M_5$ would be disjoint from $\{p\ne0\}$, a contradiction. Thus $\Omega$ is dense. Proposition 112.2 gives the exclusion on it. The density argument takes place on the complete complex frame manifold, not just the real-record slice containing $B_0$. ∎
+
+### 112.6. Remaining local and global boundary
+
+Theorem 112.1 leaves at most one rank-one full-kernel fibre projection at a positive subhalf rank-seven minimum. Theorem 112.4 additionally confines every remaining full-support rank-$(7,5)$ minimum to an exceptional locus whose lift is contained in the zero set of a nontrivial real polynomial. A minimum may lie on that locus. Density does not allow perturbing a minimum while retaining minimality, and gives no uniform quantitative gap.
+
+These are restrictions on calibrated full-domain local minima with a full-support rank-seven kernel. The calibrated representative reduction of [RT II §72](ARITHMETIC_HOLOGRAPHIC_RT_II.md#72-exact-physical-calibration-reduction-for-collapsed-fibre-channels) preserves the unrestricted optimum, not arbitrary leaking ranks or local-minimum hypotheses. The residual opposite-rank-four cases, exceptional rank-five cases, both-ranks-at-most-six representatives and the global quarter-optimum question remain open.
+
+## 追加锚（本行以下为增补区）
+
+## 113. Curved radicals exclude a single rank-one fibre and the full rank-(7,5) class
+
+### 113.1. The original domain and the full curved quadratic
+
+Retain the eight original coordinates, their four two-coordinate fibres, the local channels from $\mathbb C^8$ to $\mathbb C^4$, and the fixed correlated encoding. For calibrated channels let
+
+$$
+\mathcal E=\{M=M^*\succeq0:M_{ff}=I_2\text{ for every original fibre }f\}.
+\tag{113.1}
+$$
+
+Write $T_{ff}=I_2$ and $T_{fg}=J_2/2$ for $f\ne g$. The exact unhalved arbitrary-reference error is
+
+$$
+\begin{aligned}
+F(G,H)&=\max 2\operatorname{Tr}[(T-G\odot H)W],\\
+\rho&=\bigoplus_f\rho_f\succeq0,\qquad
+\operatorname{Tr}\rho=1,\qquad0\preceq W\preceq\rho.
+\end{aligned}
+\tag{113.2}
+$$
+
+Throughout the exclusion arguments, assume that $(G,H)$ is a local minimum on the full domain $\mathcal E\times\mathcal E$, including nearby competitors of different ranks. Also assume
+
+$$
+\operatorname{rank}G=7,\qquad
+\ker G=\mathbb Ca,\quad a_i\ne0\text{ for every }i,\qquad
+0<F(G,H)<\frac12.
+\tag{113.3}
+$$
+
+The common-stress and quotient results of RT III §§92 and 95.3 give a fixed common complementary stress
+
+$$
+\begin{aligned}
+P_A&=\alpha aa^*,&
+P&=\alpha\operatorname{diag}(a)R\operatorname{diag}(\bar a),\\
+\alpha&>0,& R&\succeq0,\quad R_{ii}=1,\\
+G&=H\odot\bar R,&PH&=0.
+\end{aligned}
+\tag{113.4}
+$$
+
+Every cross-fibre entry of $G,H,R,P$ is nonzero: the original matrix-unit bound $|1/2-G_{ij}H_{ij}|\leq F<1/2$ gives this first for $G,H$, and (113.4) gives it for $R,P$. Also $P_{ii}=\alpha|a_i|^2>0$.
+
+Let $N$ be the orthogonal projection onto the entire $\ker H$, and let $U$ have full row rank with $`\operatorname{range}U^*=\ker H`$. The complete curved tangent space and its paired first-Gram direction are
+
+$$
+\begin{aligned}
+\mathcal T_H&=\{D=D^*:D_{ff}=0\text{ for every }f,\ NDN=0\},\\
+D_A&=-\bar R\odot D.
+\end{aligned}
+\tag{113.5}
+$$
+
+The zero fibre blocks make the definition of $D_A$ independent of the unused within-fibre ratios. By [RT III §98](ARITHMETIC_HOLOGRAPHIC_RT_III.md#98-curved-common-stress-tests-and-finite-principal-quotients), this gives an admissible paired tangent with zero full original product derivative. For the same fixed $G,H,a,P$, its necessary real quadratic is
+
+$$
+\begin{aligned}
+Q_{\mathrm{curv}}(D)
+ &=Q_P(D)+\alpha a^*D_AG^+D_Aa
+        +\operatorname{Tr}(PDH^+D)\geq0,\\
+Q_P(D)&=-\sum_{\substack{i,j\text{ in distinct}\\\text{original fibres}}}
+ \frac{\overline{P_{ij}}}{H_{ij}}D_{ij}^{2}.
+\end{aligned}
+\tag{113.6}
+$$
+
+The sum is ordered, the squares are complex entrywise squares, and the pseudoinverses are those of the full original Grams. The delivered curved theorem selects a common normer for each fixed direction and then proves that the whole form, including both costs, is a positive scalar multiple of one fixed normalized form. Thus (113.6) holds on all of $\mathcal T_H$ with the same $P$. No exchange of quadratic direction and witness maxima is used.
+
+### 113.2. Entire-kernel stars are radicals on the whole curved domain
+
+**Lemma 113.1.** Under (113.3), let nonzero $n,m\in\operatorname{range}H$ be supported on disjoint unions of original fibres. For every $z\in\mathbb C$, put
+
+$$
+S(z)=z\,nm^*+\bar z\,mn^*.
+\tag{113.7}
+$$
+
+Then the Hermitian matrix
+
+$$
+\mathcal A(S)_{ij}=
+ \frac{P_{ij}\overline{S_{ij}}}{\overline{H_{ij}}}
+ \quad\text{on cross-fibre entries},\qquad
+\mathcal A(S)_{ff}=0
+\tag{113.8}
+$$
+
+belongs to the real Hilbert–Schmidt annihilator of $\mathcal T_H$. Consequently, for each $z$ there are Hermitian matrices $\Lambda_z,Y_z$, with $\Lambda_z$ original-fibre-block diagonal, such that
+
+$$
+\mathcal A(S(z))=\Lambda_z+U^*Y_zU.
+\tag{113.9}
+$$
+
+**Proof.** Each star has zero entire original fibre blocks and annihilates $\ker H$. For any Hermitian $S$ with these two properties, $SP=PS=0$ and
+
+$$
+(D_A(S)a)_i
+ =-\frac{\sum_j\overline{P_{ij}}S_{ij}}{\alpha\bar a_i}
+ =-\frac{(SP)_{ii}}{\alpha\bar a_i}=0.
+\tag{113.10}
+$$
+
+The sum may include all $j$, since the original fibre-block entries of $S$ vanish. Both positive curvature costs in (113.6) are squared norms of real-linear maps. These maps vanish at $S$, so both costs and both their polarizations against every $D\in\mathcal T_H$ vanish.
+
+For the stars (113.7), $Q_P(S(z))=-2\operatorname{Re}(z^2c)$ for a fixed complex number $c$. Nonnegativity for all phases of $z$ forces $c=0$. A zero vector $S$ of a nonnegative real quadratic lies in its radical: applying the quadratic to $S+tD$ for both signs of real $t$ forces its polarization to vanish. Removing the two cost polarizations therefore gives
+
+$$
+B_P(S,D)
+ =-\operatorname{Re}\sum_{\substack{i,j\text{ in distinct}\\\text{original fibres}}}
+ \frac{\overline{P_{ij}}S_{ij}D_{ij}}{H_{ij}}
+ =-\operatorname{Tr}(\mathcal A(S)D)=0
+ \quad(D\in\mathcal T_H).
+\tag{113.11}
+$$
+
+The annihilator of the intersection of two finite-dimensional real linear kernels is the sum of the adjoint ranges. Applying this to the maps taking original fibre blocks and the compression $NDN$ gives
+
+$$
+\mathcal T_H^\perp
+ =\{\Lambda+Z:\Lambda=\Lambda^*\text{ original-fibre-block diagonal},\quad
+ Z=Z^*=NZN\}.
+\tag{113.12}
+$$
+
+Every Hermitian $Z$ supported on $\ker H$ is $`U^*YU`$ for a Hermitian $Y$. This proves (113.9). No independence of the constraints or uniqueness of the decomposition is required. The same $P$ is retained for every star. ∎
+
+### 113.3. One rank-one full-kernel fibre already gives a contradiction
+
+**Theorem 113.2.** Under (113.3), every original two-column block $U_f$ has rank two, for every opposite rank $\operatorname{rank}H$.
+
+**Proof.** Since $P$ is supported on $\ker H$ and $P_{ii}>0$, no $U_f$ has rank zero. Suppose $\operatorname{rank}U_f=1$. Choose unit vectors $m,n\in\mathbb C^2$ with $`\operatorname{range}U_f^*=\mathbb Cm`$ and $n\perp m$. Embedded on $f$, the vector $n$ satisfies $Un=0$ and therefore belongs to $\operatorname{range}H$. Both coordinates of $m$ are nonzero, because both diagonal entries of $P_{ff}$ are positive.
+
+Diagonal reciprocal phases allow the normalization
+
+$$
+m=(c,s)^T,\qquad n=(-s,c)^T,\qquad
+c,s>0,\quad c^2+s^2=1.
+\tag{113.13}
+$$
+
+Explicitly, for a diagonal unitary $E$ the transformations are $`H'=E^*HE`$, $`P'=E^*PE`$, $`G'=EGE^*`$, and $`a'=Ea`$. They preserve the full original product, identity fibre blocks, norm and quadratic summands. The irrelevant phase of $n$ is then chosen as in (113.13). No arbitrary unitary change inside a physical fibre is used.
+
+Let $C=f^c$. There is a vector $p$ on $C$ such that
+
+$$
+P_{fC}=mp^*,\qquad p_j\ne0\quad(j\in C).
+\tag{113.14}
+$$
+
+Indeed the range of the $f$ rows of the kernel-supported $P$ lies in $\mathbb Cm$, and its cross entries are nonzero. Set $x=H_{Cf}m$ and $y=H_{Cf}n$. Label the two coordinates of $f$ by $0,1$. Then
+
+$$
+H_{0j}=c\bar x_j-s\bar y_j,\qquad
+H_{1j}=s\bar x_j+c\bar y_j
+\quad(j\in C).
+\tag{113.15}
+$$
+
+For every $v\in\operatorname{range}H$ with $v_f=0$, use the star $`S=nv^*+vn^*`$. By Lemma 113.1, $\mathcal A(S)=\Lambda+Z$ with $Z=NZN$. Since $n\in\operatorname{range}H$, $Zn=0$, while $\Lambda n$ is supported on $f$. Thus $(\mathcal A(S)n)_j=0$ outside $f$. Directly from (113.8), this equation is
+
+$$
+0=\bar v_jp_j\sum_{i\in f}\frac{m_i n_i^2}{H_{ij}}
+ =\bar v_jp_j\frac{cs\bar x_j}{H_{0j}H_{1j}}.
+\tag{113.16}
+$$
+
+The identity used here is
+
+$$
+\frac{cs^2}{cX-sY}+\frac{sc^2}{sX+cY}
+ =\frac{csX}{(cX-sY)(sX+cY)}
+ \qquad(c^2+s^2=1),
+\tag{113.17}
+$$
+
+valid for arbitrary complex $X,Y$ with nonzero denominators. Those denominators and $p_j$ are nonzero here. Consequently,
+
+$$
+\exists v\in\operatorname{range}H:\ v_f=0,\ v_j\ne0
+ \quad\Longrightarrow\quad x_j=0.
+\tag{113.18}
+$$
+
+Take a full-row-rank record factor $`H=B^*B`$, with unit columns $h_j$. Let $\mathcal F=\operatorname{span}(h_0,h_1)$ and $\mathcal W=\operatorname{span}\{h_j:j\in C\}$. The projection of $\ker B$ onto the $f$ coordinates is precisely
+
+$$
+\{w\in\mathbb C^2:B_fw\in\mathcal W\}.
+\tag{113.19}
+$$
+
+Since $B_f$ is an isometry and that projection is $\mathbb Cm$, one obtains
+
+$$
+\mathcal F\cap\mathcal W=\mathbb Cu,\qquad
+u=B_fm,\quad\|u\|=1,\quad u\in\mathcal W.
+\tag{113.20}
+$$
+
+Every vector in $\operatorname{range}H$ is $`v=B^*w`$, and $v_f=0$ exactly when $w\perp\mathcal F$. Hence an outside record $h_j$ admits no such $v$ with $v_j\ne0$ exactly when $h_j\in\mathcal F$. Since $h_j\in\mathcal W$, this is equivalent to $h_j\in\mathbb Cu$. Otherwise (113.18) gives $`x_j=h_j^*u=0`$. Thus every outside record satisfies
+
+$$
+h_j\in\mathbb Cu\quad\text{or}\quad h_j\perp u.
+\tag{113.21}
+$$
+
+They cannot all be orthogonal to $u$, since their span contains $u$. Choose an outside record $h_j$ parallel to $u$, in a fibre $g\ne f$. A third original fibre $k\ne f,g$ has both records with nonzero inner product with $h_j$. By (113.21), both records of $k$ must therefore be parallel to $u$. This contradicts their original orthonormality $H_{kk}=I_2$. Hence rank one is impossible, and every $U_f$ has rank two. ∎
+
+### 113.4. Opposite orientations force a full kernel-normal matrix to vanish
+
+**Lemma 113.3.** Under (113.3), let $k=\dim\ker H<4$. Suppose a partition $A,B$ into two pairs of original fibres satisfies $\operatorname{rank}U_A=\operatorname{rank}U_B=k$. Then no such local minimum exists.
+
+**Proof.** Each $k\times4$ block has a nonzero null vector. Choose $n,m$ supported on $A,B$ respectively with $Un=Um=0$. They belong to $\operatorname{range}H$, so Lemma 113.1 applies. Combine its two equations for $z=1,i$:
+
+$$
+\begin{aligned}
+Z&=\mathcal A(S(1))+i\mathcal A(S(i))
+   =\Lambda+U^*YU,\\
+\Lambda&=\Lambda_1+i\Lambda_i,\qquad Y=Y_1+iY_i.
+\end{aligned}
+\tag{113.22}
+$$
+
+Here $Y$ need not be Hermitian. Conjugation in (113.8) gives exactly
+
+$$
+Z_{AB}=2C,\qquad Z_{BA}=0,\qquad
+C_{ij}=\frac{P_{ij}\bar n_i m_j}{\overline{H_{ij}}}
+\quad(i\in A,j\in B).
+\tag{113.23}
+$$
+
+All blocks inside $A\times A$ and $B\times B$ also vanish. Since $\Lambda$ is original-fibre-block diagonal, the reverse block of (113.22) yields $`U_B^*YU_A=0`$. Choose right inverses $R_A,R_B$ of the full-row-rank blocks. Then
+
+$$
+Y=R_B^*(U_B^*YU_A)R_A=0.
+\tag{113.24}
+$$
+
+Thus $Z=\Lambda$ has zero $A\times B$ block. But $n,m$ are nonzero, and every $P_{ij},H_{ij}$ across that partition is nonzero, so at least one entry of $C$ in (113.23) is nonzero. This is a contradiction.
+
+The two normal decompositions may differ, but both come from the same fixed $P$ and the same nonnegative curved quadratic. No independently selected witnesses are combined, and no positivity is asserted for the non-Hermitian $Y$. ∎
+
+### 113.5. Complete exclusion of the full-support rank-(7,5) local class
+
+**Theorem 113.4.** There is no local minimum of (113.2) on the full calibrated domain satisfying (113.3) and $\operatorname{rank}H=5$.
+
+**Proof.** Now $U$ has three rows. By Theorem 113.2, each $L_f=\operatorname{range}U_f$ is a two-dimensional complex plane in $\mathbb C^3$.
+
+Deleting any one original fibre leaves a full-row-rank kernel block:
+
+$$
+\operatorname{rank}U_{f^c}=3\qquad\text{for every }f.
+\tag{113.25}
+$$
+
+Otherwise there is a nonzero $w$ with $`U_{f^c}^*w=0`$. Since $`U^*`$ is injective, $`x=U^*w`$ is a nonzero kernel vector of $H$ supported on $f$. But
+
+$$
+x^*Hx=x_f^*H_{ff}x_f=\|x_f\|^2>0,
+\tag{113.26}
+$$
+
+contradicting $Hx=0$.
+
+Two distinct planes in $\mathbb C^3$ span the whole space. Thus a pair of fibre blocks has rank three exactly when its two planes differ. The four planes can be paired into two unequal pairs unless one plane occurs at least three times. Indeed the other equality-multiplicity patterns are $(1,1,1,1)$, $(2,1,1)$ and $(2,2)$. For four distinct planes take any pairing; for $(2,1,1)$ pair each copy of the repeated plane with a singleton; for $(2,2)$ pair across the two classes.
+
+Three equal planes contradict (113.25) on deleting the fourth fibre. Four equal planes contradict the full row rank of $U$. Hence one of the three admissible patterns applies and yields a partition $A,B$ with both ranks three. Lemma 113.3, with $k=3<4$, gives the contradiction. ∎
+
+Theorem 113.4 includes the exceptional locus left by Theorem 112.4 through a direct kernel-plane argument. It does not infer exclusion from density or perturb a minimum while assuming its minimality survives. The conclusion concerns positive subhalf local minima, not a half lower bound for arbitrary rank-$(7,5)$ competitors.
+
+### 113.6. A sharper attained-global-representative alternative
+
+**Corollary 113.5.** For the original unrestricted one-product channel problem, with the fixed correlated encoding and unhalved arbitrary-reference error, a hypothetical optimum below $1/4$ has a calibrated minimizing representative in at least one of these two classes:
+
+1. Both full Gram ranks are at most six.
+2. One full Gram has rank seven and an everywhere-nonzero spanning kernel vector, while the opposite full rank is at most four.
+
+**Proof.** The exact physical calibration reduction of [RT II §72](ARITHMETIC_HOLOGRAPHIC_RT_II.md#72-exact-physical-calibration-reduction-for-collapsed-fibre-channels), as applied in Corollary 106.6, identifies the unrestricted physical infimum with the attained calibrated minimum. The established lower bound $\sqrt3-3/2>0$ makes the hypothetical subquarter value positive. Theorem 106.5 supplies a minimizing representative with both ranks at most six, or with one full-support rank-seven Gram and opposite rank at most five. In the latter case the global minimizer is also a full-domain local minimum, and its value lies in $(0,1/2)$. Theorem 113.4 excludes opposite rank five, proving the stated alternative. ∎
+
+Theorem 113.2 applies to every opposite rank but leaves the all-rank-two projection cases at other ranks unresolved. Neither class of Corollary 113.5 is excluded here. The representative conclusion does not preserve the ranks or local minimality of an arbitrary given leaking optimizer; it is an existence assertion after the exact physical reduction and rank descent. The unrestricted global interval remains $[\sqrt3-3/2,1/4]$, and the quarter-optimum question remains open.
+
+## 追加锚（本行以下为增补区）
