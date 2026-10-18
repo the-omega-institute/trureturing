@@ -391,7 +391,7 @@ private theorem gammaKernel_antitone {w : ℝ} (hw : 0 < w) :
   unfold gammaKernel
   exact div_le_div_of_nonneg_left hw.le
     (add_pos_of_pos_of_nonneg (sq_pos_of_pos hw) (sq_nonneg x))
-    (add_le_add_left (pow_le_pow_left₀ hx hxy 2) (w ^ 2))
+    (add_le_add le_rfl (pow_le_pow_left₀ hx hxy 2))
 
 /-- The missing quarter correction is the area on [0,1/2], not a
 monotonicity assertion about the actual Gamma mass. -/
@@ -407,7 +407,7 @@ private theorem gammaKernel_initial_area {w : ℝ} (hw : 0 < w) :
       intro x hx
       exact gammaKernel_antitone hw (le_of_lt hx.1) (by norm_num) (le_of_lt hx.2)
     _ = _ := by
-      simp only [gammaKernel, intervalIntegral.integral_div_sq_add_sq,
+      simp only [gammaKernel, _root_.integral_div_sq_add_sq,
         zero_div, Real.arctan_zero, sub_zero]
 
 /-- Finite integral comparison on the genuine half-shifted Gamma lattice.
@@ -447,7 +447,7 @@ private theorem majorant_partial_quarter {w : ℝ} (hw : 0 < w) (M : ℕ) :
           Real.arctan ((2 * (M : ℝ) + 1 / 2) / w) -
             Real.arctan ((1 / 2) / w) := by
         simpa only [g, mul_zero, zero_add, gammaKernel,
-          intervalIntegral.integral_div_sq_add_sq] using hsubst
+          _root_.integral_div_sq_add_sq] using hsubst
       have hlow := gammaKernel_initial_area hw
       have hhigh := (Real.arctan_lt_pi_div_two ((2 * (M : ℝ) + 1 / 2) / w)).le
       have hz : gammaMajorant w 0 = gammaKernel w (1 / 2) := by
@@ -466,7 +466,7 @@ private theorem majorant_partial_refined {w : ℝ} (hw : 0 < w) (M : ℕ) :
     _ ≤ Real.pi / 4 + (3 / 4 : ℝ) * gammaKernel w (1 / 2) :=
       majorant_partial_quarter hw M
     _ ≤ Real.pi / 4 + (3 / 4 : ℝ) * (1 / w) :=
-      add_le_add_left (mul_le_mul_of_nonneg_left hz (by norm_num)) _
+      add_le_add le_rfl (mul_le_mul_of_nonneg_left hz (by norm_num))
     _ = _ := by ring
 
 private theorem gamma_positive_refined {L w : ℝ} (hL : 0 ≤ L) (hw : 0 < w) :
@@ -492,7 +492,7 @@ private theorem weighted_kernel_antitone {a B r x y : ℝ}
   have hp : (a * x) ^ 2 ≤ (a * y) ^ 2 :=
     pow_le_pow_left₀ (by positivity) (mul_le_mul_of_nonneg_left hxy ha.le) 2
   have hd : x * (r + (a * x) ^ 2) ≤ y * (r + (a * y) ^ 2) :=
-    mul_le_mul hxy (add_le_add_left hp r) (by positivity) hy.le
+    mul_le_mul hxy (add_le_add le_rfl hp) (by positivity) hy.le
   exact div_le_div_of_nonneg_left hB (by positivity) hd
 
 private theorem gamma_weight_eq {c m : ℕ} (hc : 2 ≤ c) (hm : 0 < m) (j : ℕ) :
@@ -608,10 +608,12 @@ theorem smooth_weight_envelope {c n m : ℕ} (hc : 2 ≤ c)
     exact le_min (by positivity) (by positivity)
   · unfold smoothEnvelope
     apply le_min
-    · exact h2.trans (add_le_add_left
-        (div_le_div_of_nonneg_left hU hnR hnmR) 2)
-    · exact h1.trans (add_le_add_left
-        (div_le_div_of_nonneg_left (by positivity) hnR hnmR) (Real.pi / 4))
+    · exact h2.trans (add_le_add le_rfl
+        (div_le_div_of_nonneg_left hU hnR hnmR))
+    · exact h1.trans (add_le_add le_rfl
+        (div_le_div_of_nonneg_left
+          (show 0 ≤ poleCoefficient c + 3 / (4 * modeScale c) from
+            add_nonneg hU (by positivity)) hnR hnmR))
 
 /-- Exact A=H-S split using only owner definitions. The downstream module
 identifies this finite sum with T2.primeSymbol without creating an import cycle. -/

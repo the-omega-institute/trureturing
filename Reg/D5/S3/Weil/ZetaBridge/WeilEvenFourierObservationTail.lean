@@ -13,7 +13,7 @@ noncomputable section
 namespace Reg.D5.S3.Weil.ZetaBridge.WeilEvenFourierObservationTail
 open scoped BigOperators
 open D5.S3.ConceptDynamics.InformationEscape.DependentFamily
-open D5.S3.Weil.ZetaBridge.WeilEvenFourierObservationTail
+open _root_.D5.S3.Weil.ZetaBridge.WeilEvenFourierObservationTail
 open LeanInformationAudit
 
 abbrev inverseSignature : Signature where
@@ -92,7 +92,8 @@ noncomputable def registration_1 : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,
     owner := `D5.S3.Weil.ZetaBridge.WeilEvenFourierObservationTail
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "body", "body", "fn", "arg", "arg", "body", "fn"]
+    readouts := #[{
+      path := #["body", "body", "body", "fn", "arg", "arg", "body", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none

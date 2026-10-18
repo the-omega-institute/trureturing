@@ -64,7 +64,10 @@ def family : Registration arena
     · intro i
       refine ⟨rejected, ?_, rfl, rejected_law⟩
       intro j hji
-      exact (hji (Subsingleton.elim j i)).elim
+      have hrole : j = i := by
+        change Unit at j i
+        exact Subsingleton.elim j i
+      exact (hji hrole).elim
     · intro e
       exact nomatch e
   dependence := actual_dependence
