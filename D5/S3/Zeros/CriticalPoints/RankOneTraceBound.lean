@@ -6,6 +6,7 @@
    utility: none
    digest: Unitary rank-one trace bounds and scalar three-lines equality certificates. -/
 
+import Mathlib.Analysis.CStarAlgebra.Matrix
 import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.Analysis.InnerProductSpace.LinearMap
 import Mathlib.LinearAlgebra.Matrix.Trace
@@ -104,13 +105,8 @@ private noncomputable def unitary_isometry (V : Matrix n n ℂ)
     (hV : V ∈ Matrix.unitaryGroup n ℂ) :
     EuclideanSpace ℂ n →ₗᵢ[ℂ] EuclideanSpace ℂ n :=
   V.toEuclideanLin.isometryOfInner fun x y => by
-    have hVV : Vᴴ * V = 1 := by
-      simpa only [Matrix.star_eq_conjTranspose] using Matrix.mem_unitaryGroup_iff'.mp hV
-    rw [EuclideanSpace.inner_eq_star_dotProduct, EuclideanSpace.inner_eq_star_dotProduct]
-    change (V *ᵥ y.ofLp) ⬝ᵥ star (V *ᵥ x.ofLp) = y.ofLp ⬝ᵥ star x.ofLp
-    rw [dotProduct_comm, Matrix.star_mulVec, ← Matrix.dotProduct_mulVec,
-      Matrix.mulVec_mulVec, hVV, Matrix.one_mulVec,
-      dotProduct_comm]
+    exact ContinuousLinearMap.inner_map_map_of_mem_unitary
+      (Unitary.map_mem (Matrix.toEuclideanCLM (n := n) (𝕜 := ℂ)) hV) x y
 
 private theorem trace_rank_one_sum (r : ι → EuclideanSpace ℂ n) (a : ι → ℝ)
     (γ : ι → ℂ) (V : Matrix n n ℂ) :

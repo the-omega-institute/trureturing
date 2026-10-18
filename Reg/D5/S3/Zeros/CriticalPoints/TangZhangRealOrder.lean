@@ -33,9 +33,7 @@ def arena : Arena where
     (∀ (n : ℕ) (hn : 1 ≤ n) (z : Fin n → ℂ), (∀ j, z j ≠ 0) → ∀ p : ℝ, 1 < p →
        (((Polynomial.derivative (P z)).roots.map (fun w => ‖w‖ ^ (-p))).sum =
          c n p * ∑ j, ‖z j‖ ^ (-p) ↔ ∀ i j, z i = z j)) ∧
-    ¬ (∀ (n : ℕ) (z : Fin n → ℂ), (∀ j, z j ≠ 0) →
-       (((Polynomial.derivative (P z)).roots.map (fun w => ‖w‖ ^ (-(1 : ℝ)))).sum =
-         c n 1 * ∑ j, ‖z j‖ ^ (-(1 : ℝ)) ↔ ∀ i j, z i = z j))
+    ¬ conjecture
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h

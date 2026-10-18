@@ -75,6 +75,22 @@ private theorem constant_roots_moment (n : ℕ) (hn : 1 ≤ n) (a : ℂ) (ha : a
 
 end D5.S3.Zeros.CriticalPoints.TangZhangConstantRoots
 
+namespace D5.S3.Zeros.CriticalPoints.TangZhangRealOrder
+
+open TangZhangOrderMinusTwo (P)
+
+def c (n : ℕ) (p : ℝ) : ℝ := (((n : ℝ) + 1) ^ p + n - 1) / n
+
+/-- Conjecture 1.13, including its proposed equality criterion at every real order. -/
+def conjecture : Prop :=
+    ∀ (n : ℕ) (hn : 1 ≤ n) (z : Fin n → ℂ), (∀ j, z j ≠ 0) → ∀ p : ℝ, 1 ≤ p →
+      (((Polynomial.derivative (P z)).roots.map (fun w => ‖w‖ ^ (-p))).sum ≤
+        c n p * ∑ j, ‖z j‖ ^ (-p)) ∧
+      ((((Polynomial.derivative (P z)).roots.map (fun w => ‖w‖ ^ (-p))).sum =
+        c n p * ∑ j, ‖z j‖ ^ (-p)) ↔ ∀ i j, z i = z j)
+
+end D5.S3.Zeros.CriticalPoints.TangZhangRealOrder
+
 namespace D5.S3.Zeros.CriticalPoints.TangZhangRealOrderCounterexample
 
 open Polynomial
@@ -123,11 +139,7 @@ private theorem explicit_sum :
   nlinarith
 
 /-- The proposed equality characterization at real order one fails. -/
-private theorem counterexample :
-    ¬ (∀ (n : ℕ) (z : Fin n → ℂ), (∀ j, z j ≠ 0) →
-       (((derivative (P z)).roots.map (fun w => ‖w‖ ^ (-(1 : ℝ)))).sum =
-         ((((n : ℝ) + 1) ^ (1 : ℝ) + n - 1) / n) *
-           ∑ j, ‖z j‖ ^ (-(1 : ℝ)) ↔ ∀ i j, z i = z j)) := by
+private theorem counterexample : ¬ TangZhangRealOrder.conjecture := by
   intro h
   have hz : ∀ j : Fin 2, ![(1 : ℂ), 2] j ≠ 0 := by
     intro j
@@ -138,7 +150,8 @@ private theorem counterexample :
         ∑ j : Fin 2, ‖![(1 : ℂ), 2] j‖ ^ (-(1 : ℝ)) := by
     rw [explicit_sum]
     norm_num [Fin.sum_univ_two, Real.rpow_neg_one]
-  have hc := (h 2 ![(1 : ℂ), 2] hz).mp he (0 : Fin 2) (1 : Fin 2)
+  have hc := (h 2 (by omega) ![(1 : ℂ), 2] hz 1 le_rfl).2.mp
+    (show _ from he) (0 : Fin 2) (1 : Fin 2)
   norm_num at hc
 
 end D5.S3.Zeros.CriticalPoints.TangZhangRealOrderCounterexample
@@ -147,8 +160,6 @@ namespace D5.S3.Zeros.CriticalPoints.TangZhangRealOrder
 
 open TangZhangOrderMinusTwo (P)
 
-def c (n : ℕ) (p : ℝ) : ℝ := (((n : ℝ) + 1) ^ p + n - 1) / n
-
 def claim : Prop :=
     (∀ (n : ℕ) (hn : 1 ≤ n) (z : Fin n → ℂ), (∀ j, z j ≠ 0) → ∀ p : ℝ, 1 ≤ p →
        ((Polynomial.derivative (P z)).roots.map (fun w => ‖w‖ ^ (-p))).sum ≤
@@ -156,9 +167,7 @@ def claim : Prop :=
     (∀ (n : ℕ) (hn : 1 ≤ n) (z : Fin n → ℂ), (∀ j, z j ≠ 0) → ∀ p : ℝ, 1 < p →
        (((Polynomial.derivative (P z)).roots.map (fun w => ‖w‖ ^ (-p))).sum =
          c n p * ∑ j, ‖z j‖ ^ (-p) ↔ ∀ i j, z i = z j)) ∧
-    ¬ (∀ (n : ℕ) (z : Fin n → ℂ), (∀ j, z j ≠ 0) →
-       (((Polynomial.derivative (P z)).roots.map (fun w => ‖w‖ ^ (-(1 : ℝ)))).sum =
-         c n 1 * ∑ j, ‖z j‖ ^ (-(1 : ℝ)) ↔ ∀ i j, z i = z j))
+    ¬ conjecture
 
 /-- The real-order inequality, its strict-order equality criterion, and the endpoint refutation. -/
 theorem result : claim := by

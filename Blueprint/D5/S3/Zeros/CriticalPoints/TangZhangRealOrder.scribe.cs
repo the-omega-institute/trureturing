@@ -34,10 +34,9 @@ internal sealed class TangZhangRealOrderDocument : IScribeDocumentDefinition
         H("Tang–Zhang's real-order reciprocal critical-point inequality"),
         Blocks(
             Paragraph(Text(
-                "The source is Q. Tang and T. Zhang, Sharp Schoenberg type inequalities "
-                + "and the de Bruin–Sharma problem, arXiv:2508.10341v3, Conjecture 1.13. "
-                + "Its locator and mathematical statement are supplied by the task brief. "
-                + "No independent current literature search or priority claim is asserted.")),
+                "Q. Tang and T. Zhang, Sharp Schoenberg type inequalities "
+                + "and the de Bruin–Sharma problem, arXiv:2508.10341v3, §1.3, Conjecture 1.13.")),
+            Paragraph(Text(@"Conjecture 1.13. Let P(z) = z ∏_{j=1}^n (z − z_j), z_j ∈ C \ {0}, and let w_1, …, w_n be the zeros of P′(z). Then for every real number p ≥ 1 we have Σ_{k=1}^n 1/|w_k|^p ≤ ((n+1)^p + n − 1)/n · Σ_{j=1}^n 1/|z_j|^p. Moreover, equality holds if and only if z_1 = ⋯ = z_n.")),
             Paragraph(Text(
                 "Let n be at least one, let z_j be nonzero complex numbers, and set "
                 + "P(z)=z times the product of z−z_j. Let w_k be the n roots of P′, "
@@ -55,6 +54,17 @@ internal sealed class TangZhangRealOrderDocument : IScribeDocumentDefinition
                     + "the theorem uses n at least one. Real powers are Real.rpow."))),
                 DescribeRole.Definition),
             Describe.Lean(
+                DescribeId.Create("tang-zhang-real-order-conjecture"),
+                DeclarationHandle.Create(Module + ".conjecture"),
+                H("Conjecture 1.13 as stated"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(Source),
+                Blocks(Paragraph(Text(
+                    "For every n≥1 and every nonzero complex family z, the conjecture "
+                    + "asserts both the sharp moment inequality and equality if and only "
+                    + "if all z_j coincide, for every real p≥1."))),
+                DescribeRole.Definition),
+            Describe.Lean(
                 DescribeId.Create("tang-zhang-real-order-claim"),
                 DeclarationHandle.Create(Module + ".claim"),
                 H("The inequality and its equality boundary"),
@@ -69,8 +79,8 @@ internal sealed class TangZhangRealOrderDocument : IScribeDocumentDefinition
                         + "every such family and every real p greater than one.")),
                     Paragraph(Math(Disp(EqualityCriterion))),
                     Paragraph(Text(
-                        "The third conjunct negates the universal equality equivalence at "
-                        + "p=1. It is witnessed by n=2 and z=(1,2), whose critical points "
+                        "The third conjunct is the literal negation of Conjecture 1.13, "
+                        + "including both assertions for every real p≥1. Its refutation is witnessed by n=2 and z=(1,2), whose critical points "
                         + "are 1−sqrt(3)/3 and 1+sqrt(3)/3. Their reciprocal norm sum is "
                         + "3, equal to 2 times (1+1/2), although the nonzero roots differ. "
                         + "This refutes the source's endpoint equality clause while retaining "
@@ -79,10 +89,11 @@ internal sealed class TangZhangRealOrderDocument : IScribeDocumentDefinition
             Describe.Lean(
                 DescribeId.Create("tang-zhang-real-order-result"),
                 DeclarationHandle.Create(Module + ".result"),
-                H("The sharp bound with the corrected equality range"),
+                H("Conjecture 1.13 is false; the sharp bound and strict-order equality case hold"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(
+                    Paragraph(Text("The result refutes Conjecture 1.13 as stated and proves, in the same conjunction, the sharp inequality for every real p≥1 and the equality equivalence for every real p>1.")),
                     Paragraph(Text("For every n≥1, nonzero complex a and real p, the sum of norm(w)^(−p) over roots of the derivative of P(Z)=Z(Z−a)^n equals c(n,p) times the sum of norm(a)^(−p) over Fin n, where c(n,p)=((n+1)^p+n−1)/n. The derivative has the root a with multiplicity n−1 and the root a/(n+1), including the case n=1.")),
                     Paragraph(Text("It is false that for every natural n and every nonzero complex family z, equality in the reciprocal-norm moment bound at p=1 is equivalent to all z_j being equal. For n=2 and z=(1,2), P′(Z)=3Z²−6Z+2 has roots 1−sqrt(3)/3 and 1+sqrt(3)/3. Both roots are positive, their reciprocal norm sum is 3, and c(2,1) times (1+1/2) is also 3, while 1 and 2 differ.")),
                     Paragraph(Text(
@@ -110,5 +121,5 @@ internal sealed class TangZhangRealOrderDocument : IScribeDocumentDefinition
                 DescribeRole.Theorem,
                 openProblemResolutionClaim: new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("tang-zhang-2025-real-order-schoenberg"),
-                    ResolutionKind.Proved)))));
+                    ResolutionKind.Refuted)))));
 }

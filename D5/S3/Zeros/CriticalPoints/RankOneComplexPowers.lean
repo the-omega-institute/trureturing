@@ -8,6 +8,7 @@
 
 import D5.S3.Zeros.CriticalPoints.TangZhangOrderMinusTwo
 import D5.S3.Zeros.CriticalPoints.RankOneTraceBound
+import Mathlib.Analysis.CStarAlgebra.Matrix
 import Mathlib.Analysis.Complex.Exponential
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.LinearAlgebra.Matrix.Trace
@@ -124,12 +125,9 @@ private def column (n : ℕ) (p : ℝ) (j : Fin n) : EuclideanSpace ℂ (Fin n) 
 
 private theorem column_inner (n : ℕ) (hn : 0 < n) (p : ℝ) (i j : Fin n) :
     inner ℂ (column n p i) (column n p j) = H n (p : ℂ) i j := by
-  rw [EuclideanSpace.inner_eq_star_dotProduct, ← H_gram n hn p]
-  simp only [Matrix.mul_apply, Matrix.conjTranspose_apply, dotProduct, column,
-    WithLp.ofLp_toLp, Pi.star_apply, Complex.star_def]
-  apply Finset.sum_congr rfl
-  intro k _
-  ring
+  change inner ℂ (WithLp.toLp 2 ((H n ((p / 2 : ℝ) : ℂ))ᵀ i))
+    (WithLp.toLp 2 ((H n ((p / 2 : ℝ) : ℂ))ᵀ j)) = _
+  rw [inner_matrix_col_col, H_gram n hn p]
 
 private theorem column_norm_sq (n : ℕ) (hn : 0 < n) (p : ℝ) (j : Fin n) :
     ‖column n p j‖ ^ 2 = (((n : ℝ) + 1) ^ p + n - 1) / n := by
@@ -330,13 +328,11 @@ private theorem f_strip (n : ℕ) (Q : Matrix (Fin n) (Fin n) ℂ) (u v : Fin n 
 
 private theorem diagonal_unitary (n : ℕ) (d : Fin n → ℂ) (hd : ∀ i, ‖d i‖ = 1) :
     diagonal d ∈ Matrix.unitaryGroup (Fin n) ℂ := by
-  apply Matrix.mem_unitaryGroup_iff.mpr
-  change diagonal d * (diagonal d)ᴴ = 1
-  rw [diagonal_conjTranspose, diagonal_mul_diagonal, diagonal_eq_one]
-  funext i
-  change d i * conj (d i) = 1
-  rw [Complex.mul_conj', hd]
-  norm_num
+  apply Matrix.diagonal_mem_unitary.mpr
+  rw [Pi.mem_unitary_iff]
+  intro i
+  apply Unitary.mem_iff.mpr
+  simp [Complex.star_def, Complex.mul_conj', Complex.conj_mul', hd]
 
 private theorem F_unitary_left (n : ℕ) (hn : 0 < n) (u : Fin n → ℂ)
     (hu : ∀ i, ‖u i‖ = 1) (t : Fin n → ℝ) (p y : ℝ) :
@@ -371,16 +367,7 @@ private theorem K_unitary_right (n : ℕ) (Q : Matrix (Fin n) (Fin n) ℂ)
 
 private theorem unitary_diag_norm_le_one (n : ℕ) (V : Matrix (Fin n) (Fin n) ℂ)
     (hV : V ∈ Matrix.unitaryGroup (Fin n) ℂ) (i : Fin n) : ‖V i i‖ ≤ 1 := by
-  have hVV : V * Vᴴ = 1 := by
-    simpa only [Matrix.star_eq_conjTranspose] using Matrix.mem_unitaryGroup_iff.mp hV
-  have hs := congrArg (fun A : Matrix (Fin n) (Fin n) ℂ => (A i i).re) hVV
-  simp only [Matrix.mul_apply, Matrix.conjTranspose_apply, Complex.star_def, Complex.mul_conj',
-    ← Complex.ofReal_pow, Complex.re_sum, Complex.ofReal_re, Matrix.one_apply_eq,
-    Complex.one_re] at hs
-  have hle := Finset.single_le_sum (fun k (_ : k ∈ Finset.univ) =>
-    sq_nonneg ‖V i k‖) (Finset.mem_univ i)
-  rw [hs] at hle
-  nlinarith [norm_nonneg (V i i)]
+  exact entry_norm_bound_of_unitary hV i i
 
 private theorem left_bound (n : ℕ) (hn : 0 < n) (Q : Matrix (Fin n) (Fin n) ℂ)
     (hQ : Q ∈ Matrix.unitaryGroup (Fin n) ℂ) (u v : Fin n → ℂ)
