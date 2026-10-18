@@ -335,3 +335,40 @@ def register_pendant_cactus : Contract.Registration (@pendant_cactus)
   options := #[]
 end
 end Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalCactusSharpness.Topology
+
+open
+  Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalCactusSharpness
+in
+/-- info: 'Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalCactusSharpness.register_pendant_law' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms register_pendant_law
+open
+  Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalCactusSharpness
+in
+/-- info: 'Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalCactusSharpness.register_pendant_determinant' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms register_pendant_determinant
+open
+  Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalCactusSharpness
+in
+/-- info: 'Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalCactusSharpness.register_pendant_bound' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms register_pendant_bound
+open
+  Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalCactusSharpness
+in
+/-- info: 'Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalCactusSharpness.register_pendant_sharp_formula' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms register_pendant_sharp_formula
+open
+  Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalCactusSharpness.Sharpness
+in
+/-- info: 'Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalCactusSharpness.Sharpness.register_pendant_sharpness' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms register_pendant_sharpness
+open
+  Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalCactusSharpness.Topology
+in
+/-- info: 'Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalCactusSharpness.Topology.register_pendant_cactus' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms register_pendant_cactus

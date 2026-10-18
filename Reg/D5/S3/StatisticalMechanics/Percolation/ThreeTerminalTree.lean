@@ -343,3 +343,28 @@ def register_bondLaw_sum : Contract.Registration (@bondLaw_sum.{u})
   options := #[]
 end
 end Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalTree.Normalization
+
+open
+  Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalTree
+in
+/-- info: 'Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalTree.register_tree_law' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms register_tree_law
+open
+  Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalTree
+in
+/-- info: 'Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalTree.register_tree_bound' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms register_tree_bound
+open
+  Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalTree.Path
+in
+/-- info: 'Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalTree.Path.register_path_edge_symmDiff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms register_path_edge_symmDiff
+open
+  Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalTree.Normalization
+in
+/-- info: 'Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalTree.Normalization.register_bondLaw_sum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms register_bondLaw_sum

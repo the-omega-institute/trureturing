@@ -202,9 +202,9 @@ def lawAnalysisSource : Analysis.Source (@star_law) :=
       stateOperand := none
       booleanPredicate := false }] }
 
-/-- The probability-mass operation is the source observation. Its real parameter
-family has no finite acquisition here. The native Fibonacci continuation adapter
-requires additional reader and reply evidence. -/
+/-- The probability-mass operation is the source observation. No finite
+presentation or raw binding is acquired here. The native Fibonacci continuation
+adapter requires additional reader and reply evidence. -/
 def lawAnalysis : AuricFib.Contract.Application (@star_law) where
   evidence := .typed {
     source := lawAnalysisSource
@@ -413,3 +413,40 @@ def register_sum_cube_succ : Contract.Registration (@sum_cube_succ)
   options := #[]
 end
 end Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.Cube
+
+open
+  Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond
+in
+/-- info: 'Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.register_star_law' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms register_star_law
+open
+  Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond
+in
+/-- info: 'Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.register_star_determinant' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms register_star_determinant
+open
+  Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond
+in
+/-- info: 'Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.register_star_bound' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms register_star_bound
+open
+  Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.Sharpness
+in
+/-- info: 'Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.Sharpness.register_star_sharpness' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms register_star_sharpness
+open
+  Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.WeightSum
+in
+/-- info: 'Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.WeightSum.register_weight_sum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms register_weight_sum
+open
+  Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.Cube
+in
+/-- info: 'Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.Cube.register_sum_cube_succ' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms register_sum_cube_succ

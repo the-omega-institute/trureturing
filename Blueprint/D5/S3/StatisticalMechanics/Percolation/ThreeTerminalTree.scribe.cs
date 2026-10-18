@@ -42,7 +42,7 @@ internal sealed class ThreeTerminalTreeDocument : IScribeDocumentDefinition
                     + "The five disjoint partition events exhaust all configurations. "
                     + "Rates in [0,1] are additionally needed for nonnegative masses."),
             Node("pathSupport", "Path edges as source indices", DescribeRole.Definition,
-                "For every finite-edge graph G and path p, pathSupport p is the finite "
+                "For every finite-edge graph G and walk p, pathSupport p is the finite "
                     + "set of indices e:G.edgeSet whose underlying undirected edge occurs in p."),
             Node("tree_law", "Full law preservation by three arms", DescribeRole.Theorem,
                 "For every simple tree G with finite edge type, all vertices a,b,c, "

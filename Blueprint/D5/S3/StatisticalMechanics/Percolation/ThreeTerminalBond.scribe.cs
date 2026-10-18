@@ -18,6 +18,9 @@ internal sealed class ThreeTerminalBondDocument : IScribeDocumentDefinition
                     + "Mode.all means abc; Mode.ac means ac|b. The five coordinates in that "
                     + "order correspond to null, low, high, both endpoints and middle. "
                     + "Here Z is the mass of Mode.ac, not the mass of Mode.all.")),
+            Node("Mode", "The five actual partitions", DescribeRole.Definition,
+                "Mode is the finite type with constructors separate, ab, bc, all and ac. "
+                    + "These stand for a|b|c, ab|c, a|bc, abc and ac|b respectively."),
             Node("openGraph", "Open graph", DescribeRole.Definition,
                 "For endpoint data ends:E -> V x V and a configuration omega:E -> Bool, "
                     + "two distinct vertices are adjacent when an open indexed edge has "

@@ -132,3 +132,16 @@ end Pendant
 
 end
 end Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalCompletion
+
+open
+  Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalCompletion.Tree
+in
+/-- info: 'Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalCompletion.Tree.register_tree_pyramid' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms register_tree_pyramid
+open
+  Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalCompletion.Pendant
+in
+/-- info: 'Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalCompletion.Pendant.register_pendant_pyramid' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms register_pendant_pyramid
