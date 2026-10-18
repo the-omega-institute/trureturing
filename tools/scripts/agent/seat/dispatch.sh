@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# dispatch.sh — 派一个 codex-cli 席位:解析 sshx runner → 过负载门 → 单次直调 → 落哨兵。
+# dispatch.sh — 派一个 codex-cli 席位:解析 sshx runner → 过派席门(席位上限;CPU 空闲与报告数阈值为可选输入,默认不设) → 单次直调 → 落哨兵。
 # usage: dispatch.sh FLIGHT_ID ATTEMPT BRIEF WORKTREE STAGE [STAGGER_SECONDS] [MAX_CODEX]
 #        dispatch.sh --selftest
 # STAGE ∈ thinking|implementation|review|termination。哨兵:RUNNER_EXIT=<n>
@@ -176,6 +176,23 @@ PS
   else
     echo "  FAIL gate timeout: rc=$rc out=$(cat "$tmp/o")"; fails=$((fails + 1))
   fi
+  # The idle threshold is wired: an unreachable DISPATCH_MIN_IDLE must time the gate out (exit 4)
+  # even with a seat limit that would otherwise pass.
+  DISPATCH_MIN_IDLE=101 hermetic "$tmp" f 1 "$tmp/brief.md" "$tmp/wt" review 0 8 >"$tmp/o" 2>&1
+  rc=$?
+  if [ "$rc" -eq 4 ] && grep -q 'GATE_TIMEOUT' "$tmp/o"; then
+    echo "  ok   an unreachable DISPATCH_MIN_IDLE times the gate out (exit 4)"
+  else
+    echo "  FAIL idle threshold: rc=$rc out=$(cat "$tmp/o")"; fails=$((fails + 1))
+  fi
+  # A malformed threshold is an input error (exit 3), not a silent default.
+  DISPATCH_MIN_IDLE=abc hermetic "$tmp" f 1 "$tmp/brief.md" "$tmp/wt" review 0 8 >"$tmp/o" 2>&1
+  rc=$?
+  if [ "$rc" -eq 3 ] && grep -q 'bad DISPATCH_MIN_IDLE' "$tmp/o"; then
+    echo "  ok   a malformed DISPATCH_MIN_IDLE exits 3"
+  else
+    echo "  FAIL malformed threshold: rc=$rc out=$(cat "$tmp/o")"; fails=$((fails + 1))
+  fi
   # 在飞守卫:构造一个命令行里带 --work-target 的假进程,派发必须以 5 拒绝
   ( exec -a "fake-runner --work-target $tmp/wt" sleep 8 ) &
   fake=$!
@@ -232,12 +249,18 @@ echo "RUNNER $RUNNER"
 
 # 负载门。等的是宿主负载,没有自带同步原语,故轮询合法(第 8.7 条辨析);
 # 但按该条要求:间隔与被等事件节奏对齐、有上限、每轮带读数,且**判据写在开跑之前**。
+# Thresholds are inputs. CPU idle (DISPATCH_MIN_IDLE, percent) and the number of running Lean report
+# supervisors (DISPATCH_MAX_REPORTS) do not gate by default: Lean builds are serialized by the shared
+# build lock, so codex seats are limited only by MAX_CODEX and the in-flight guard.
+MIN_IDLE="${DISPATCH_MIN_IDLE:-0}"; MAX_REPORTS="${DISPATCH_MAX_REPORTS:-}"
+case "$MIN_IDLE" in ''|*[!0-9.]*) echo "DISPATCH_FAIL bad DISPATCH_MIN_IDLE '$MIN_IDLE'"; exit 3 ;; esac
+case "$MAX_REPORTS" in *[!0-9]*) echo "DISPATCH_FAIL bad DISPATCH_MAX_REPORTS '$MAX_REPORTS'"; exit 3 ;; esac
 GATE_ROUNDS="${DISPATCH_GATE_ROUNDS:-240}"; gate_ok=0
 for _ in $(seq 1 "$GATE_ROUNDS"); do
   idle=$(top -l 2 -s 2 -n 0 | grep 'CPU usage' | tail -1 | grep -o '[0-9.]*% idle' | tr -d '% idle')
   lean=$(pgrep -f '^(/bin/)?bash [^ ]*report-supervisor\.sh' | wc -l | tr -d ' ')
   cdx=$(seat_count)
-  if python3 -c "import sys; sys.exit(0 if float('${idle:-0}')>=20 and $lean<=4 and $cdx<$MAXC else 1)" 2>/dev/null; then
+  if python3 -c "import sys; sys.exit(0 if float('${idle:-0}')>=float('$MIN_IDLE') and ('$MAX_REPORTS'=='' or $lean<=int('${MAX_REPORTS:-0}')) and $cdx<$MAXC else 1)" 2>/dev/null; then
     echo "GATE_PASS idle=$idle lean=$lean seats=$cdx brief=$BRIEF"; gate_ok=1; break
   fi
   sleep "${DISPATCH_GATE_SLEEP:-30}"

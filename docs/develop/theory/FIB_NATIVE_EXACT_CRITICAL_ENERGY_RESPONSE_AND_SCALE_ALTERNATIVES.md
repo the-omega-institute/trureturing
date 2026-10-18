@@ -3902,3 +3902,792 @@ Thus the right side of (44.3) is nonnegative for every such complex $f$. Taking 
 **Definition 44.2 (scope of the zero-stratum estimate).** Theorem 44.1 is conditional on the original analytic applicability conditions of Definition 32.1 and its three vanishing coefficients. It neither asserts nor excludes occurrence of such a datum. It gives no sign evaluation, exact energy asymptotic or actual scale/profile selection on that stratum. The original unitary, shear, rational source, two Dirichlet faces, raw source measure, full real-frequency set and entire complex domains remain unchanged. The constants are for each separately fixed original datum; no uniform source-to-face or pole-margin limit is asserted. The only substitutions $\delta=s^{1/4}$ and $\epsilon=s^{4/7}$ were made in the uniform inequalities (40.2), (41.6). The final $H_0$ is one finite fixed spectral constant, with no $H(s)$ or $M(s)$. Physical dimension, state preparation and operational resource clocks require additional correspondences beyond these inequalities.
 
 ## 追加锚（本行以下为增补区）
+
+## 45. Global early geometry and the moving positive mode
+
+**Definition 45.1 (fixed analytic data and the two spatial scales).** Fix one original datum $d$ satisfying exactly the analytic applicability conditions of Definition 32.1: the jointly realized rational vector (32.2), the larger-interval positive-probability, pole and bracket margins of L Definition 35.1, L Lemma 41.2, P §§76, 87–88, 97 and 104–107, and E Theorem 3.1. The equalities (32.1) are not assumptions in §§45–49. General geometric admission without these analytic antecedents is insufficient. Retain the unit raw $dk\,dq$ source, $j_0$, both original Dirichlet faces, all real phases, the $B$-clock independent of $a$, and the full complex form and operator domains (1.5). Use the sheared chart $Y_s=\Xi_s\circ\mathscr L_s$ and zero extensions in (32.4), with $T=s^{-2}$. All constants below may depend on this separately fixed datum.
+
+Use the positive unit early vector and the exact split of Theorem 35.1, writing
+
+$$
+\begin{aligned}
+H_sF_su_s&=\ell_su_s,&u_s&\ge0,&\|u_s\|_2&=1,\\
+x_s&=F_su_s,&y_s&=J_su_s,&m_s&=\int F_su_s^2,\\
+\delta_s&=\int J_su_s^2,&n_s&=m_s+\delta_s,&
+z_s&=U_s^{1/2}u_s/\sqrt{n_s}.
+\end{aligned}
+\tag{45.1}
+$$
+
+Thus $x_s\to Vp$ in $L^1\cap L^2$, $u_s\to p$ in $L^2$, $m_s\to\mu$, and $\ell_s\to C_*$. The vector $u_s$ is an auxiliary early eigenvector, not an actual ground state of the native Hamiltonian. Write $\rho(\xi)=d_E(0,\xi)$ for the ambient Engel distance, whose balls have volume $v_E R^7$. Physical phase radius will instead mean
+
+$$
+\mathsf M=\int_I\phi(k)^2c_\kappa(k)c_\kappa(k)^{\mathsf T}dk,
+\qquad \Delta=\det\mathsf M>0,
+\qquad \mathfrak r(q)=(q^{\mathsf T}\mathsf M^{-1}q)^{1/2}.
+\tag{45.2}
+$$
+
+These are the original tensor and raw density of L Theorem 36.1. Put $\phi_0=\phi(k_0)$, $I_3=\int_I\phi^3dk$, and $A_p=\int Vp>0$ as in (32.6). A finite spectral probe constant $M$ is distinct from $\mathsf M$.
+
+**Lemma 45.2 (one-sided global distance comparison and early heat).** For every pair of endpoints in the complete $\Omega_s$, and $0<t\le T$,
+
+$$
+\begin{gathered}
+d_E(\eta,\xi)\le C s^{-1}d_{\rm nat}(Y_s\eta,Y_s\xi),\\
+0\le q_s(t;\eta,\xi)\le Ct^{-7/2}
+ \exp[-c d_E(\eta,\xi)^2/t],\\
+0\le F_s(\xi)\le C(1+\rho(\xi))^{-5},\qquad
+0\le H_s(\eta,\xi)\le C d_E(\eta,\xi)^{-5}\quad(\eta\ne\xi).
+\end{gathered}
+\tag{45.3}
+$$
+
+Here $d_{\rm nat}$ is the control distance of the original two fields with paths inside the original height interval. The same kernel upper bounds hold after zero extension.
+
+Proof. By the exact rational shear (2.3), or P (97.2), the microscopic fields are $X$ and $a_s(r)Y$, where $a_s(r)=(1+\nu sr)^{-1}$. On the entire actual height interval,
+
+$$
+1+\nu sr=\frac{k-\alpha_\kappa}{k_0-\alpha_\kappa},
+\qquad 0<c\le1+\nu sr\le C<\infty.
+\tag{45.4}
+$$
+
+A path with controls $(v,w)$ for $X,a_sY$ has controls $(v,a_sw)$ for $X,Y$ and ambient Engel length at most a fixed multiple of its microscopic native length. The original controls scale by $s$, by the exact chart and form identity. Taking infima over native paths proves the first inequality. The ambient infimum may use more paths, so no reverse comparison or removal of either face is required.
+
+P Lemma 82.2 supplies the original all-endpoint bound $p_t^B\le Ct^{-7/2}\exp(-c d_{\rm nat}^2/t)$. Its Coulhon–Sikora Theorem 4.1 hypotheses are checked there: the nonnegative selfadjoint killed $B$, continuous kernel, all-time diagonal bound and native Davies–Gaffney estimate. Using $q_s=j_0s^7e^{\lambda s^2t}p_{s^2t}^B\circ(Y_s,Y_s)$ and $e^{\lambda s^2t}\le e^\lambda$ for $t\le T$ proves the second line. The polynomial factor in that Gaussian theorem is absorbed by reducing its exponential constant. Integrating from $1$ to $T$ gives the field bound; integrating from $0$ to $T$ gives the off-diagonal return bound. The substitution $v=d_E(\eta,\xi)^2/t$ gives the power $-5$. All comparisons keep the killed kernel itself. $\square$
+
+**Theorem 45.3 (uniform full-spatial moving-mode envelope).** Uniformly on the common space,
+
+$$
+0\le u_s(\xi)\le C(1+\rho(\xi))^{-5},\qquad
+0\le x_s(\xi)\le C(1+\rho(\xi))^{-10}.
+\tag{45.5}
+$$
+
+In particular $\sup_s\|u_s\|_p<\infty$ for each fixed $p>7/5$, including $p=\infty$. There is no uniform $L^1$ assertion here.
+
+Proof. The Gaussian (45.3), Haar-ball volume and symmetry imply, by integration in either endpoint and interpolation,
+
+$$
+\|Q_s(t)\|_{p\to q}\le
+ C t^{-\frac72(1/p-1/q)},\qquad
+1\le p\le q\le\infty,\quad0<t\le T.
+\tag{45.6}
+$$
+
+The constants for $p=q$ are bounded on this finite early interval; sub-Markovianity is only used for the unshifted killed heat. From (35.5), $\|x_s\|_1+\|x_s\|_2\le C$ and $\ell_s\ge c>0$. In $u_s=\ell_s^{-1}H_sx_s$, use $2\to4$ on $(0,1)$ and $1\to4$ on $(1,T)$. The powers are $t^{-7/8}$ and $t^{-21/8}$, respectively, both integrable at the relevant ends. Thus $\|u_s\|_4\le C$, and bounded $F_s$ gives $\|x_s\|_4\le C$. Now use $4\to\infty$ on $(0,1)$ and $1\to\infty$ on $(1,T)$; their powers are $t^{-7/8}$ and $t^{-7/2}$. This proves $\|u_s\|_\infty\le C$.
+
+For completeness apply the convolution split of E Theorem 3.1 to the actual two-endpoint upper kernel in (45.3). If $R=\rho(\xi)\ge2$, split input into
+
+$$
+\rho(\eta)\le R/2;\qquad
+\rho(\eta)>R/2,\ d_E(\eta,\xi)\le R/2;\qquad
+\rho(\eta)>R/2,\ d_E(\eta,\xi)>R/2.
+\tag{45.7}
+$$
+
+On the first and third regions the kernel is at most $CR^{-5}$, so their sum is at most $CR^{-5}\|x_s\|_1$. Initially $x_s\le C(1+\rho)^{-5}$ by bounded $u_s$ and (45.3). On the middle region its supremum is $CR^{-5}$ and the kernel integral is at most $CR^2$, giving $CR^{-3}$. Hence $u_s\le C(1+\rho)^{-3}$ and $x_s\le C(1+\rho)^{-8}$. Repeating the same split makes the middle contribution $CR^{-6}$; the other contributions remain $CR^{-5}$. This proves (45.5). Local kernel integrability follows from dimension seven, since $\int_{d_E(\eta,\xi)<R}d_E(\eta,\xi)^{-5}d\eta=CR^2$. Finally integrate $(1+\rho)^{-5p}$ in homogeneous polar shells. This uses the existing convolution method on a new globally controlled moving input, without a radial assumption on the native mode. $\square$
+
+## 46. Moving mass and matching full cross and self estimates
+
+**Theorem 46.1 (mass and fixed-probe orders).** There are positive fixed-data constants such that, eventually,
+
+$$
+\|u_s\|_1\asymp_d s^{-2},\qquad
+\|y_s\|_1\asymp_d s^3,\qquad \|y_s\|_2\le Cs^5.
+\tag{46.1}
+$$
+
+Fix any finite $M\ge M_{0,d}$ from Theorem 35.1, separately from $s$, and put
+
+$$
+h=Ms^8,\qquad b=h/s^2=Ms^6,\qquad
+R=R_s(h),\quad L=L^h,\quad D=H_s-H^h.
+\tag{46.2}
+$$
+
+For this fixed $M$, with a small-$s$ threshold allowed to depend on $M$,
+
+$$
+\begin{aligned}
+c_ds^8&\le\langle x_s,Ly_s\rangle\le C_ds^8,\\
+c_ds^{10}&\le\langle y_s,Ry_s\rangle\le C_ds^{10}.
+\end{aligned}
+\tag{46.3}
+$$
+
+The quantities are nonnegative. Constants may be enlarged for the fixed datum; no $M(s)$ or joint source-to-face limit is asserted.
+
+Proof. Integrating the positive equation for $u_s$ and using the raw killed mass gives
+
+$$
+\|u_s\|_1\le\ell_s^{-1}\int_0^T
+ e^{\lambda s^2t}\|x_s\|_1dt\le CT=Cs^{-2}.
+\tag{46.4}
+$$
+
+This is valid by Tonelli even before finiteness is known. For a matching lower bound, choose a microscopic compact set $A$ with $\int_A Vp>0$. Equation (35.5) gives $\int_Ax_s\ge c>0$. Choose a physical compact set $K$ with positive volume, contained in the height interior, and an interval $[t_0,t_1]\Subset(0,1)$. Strict positivity and continuity of the original native heat, uniformly for input $Y_s\eta\to o$ with $\eta\in A$, give
+
+$$
+u_s(Y_s^{-1}Y)\ge c s^5\quad(Y\in K),
+\qquad |Y_s^{-1}K|=|K|/(j_0s^7).
+\tag{46.5}
+$$
+
+Indeed the kernel of the restricted time interval in $H_s$ is $j_0s^5\int_{t_0}^{t_1}K_d(t;Y_s\eta,Y)dt$, and $H_sx_s=\ell_su_s$. Integrating (46.5) proves the lower $s^{-2}$ mass. Since $W_1$ is bounded and strictly positive on $K$, multiplication by $J_s=s^5W_1\circ Y_s$ gives both $L^1$ bounds for $y_s$; its $L^2$ bound follows from $\|u_s\|_2=1$.
+
+The bounded late kernel (35.9) now gives
+
+$$
+\langle x_s,Ly_s\rangle\le Cs^5\|x_s\|_1\|y_s\|_1\le Cs^8,
+\qquad
+\langle y_s,Ly_s\rangle\le Cs^{11}.
+\tag{46.6}
+$$
+
+Also $y_s\le Cs^5(1+\rho)^{-5}$ by (45.5). The integral of $d_E(\eta,\xi)^{-5}(1+\rho(\eta))^{-5}$ is bounded by $C(1+\rho(\xi))^{-3}$. To see this, use (45.7): its first region costs $CR^{-5}R^2$, its second $CR^{-5}R^2$, and its third outside a ball of radius $2R$ costs $C\int_R^\infty r^{6-10}dr=CR^{-3}$; the remaining annulus has the same bound. Therefore
+
+$$
+H_sy_s\le Cs^5(1+\rho)^{-3},\qquad
+\langle y_s,H_sy_s\rangle\le
+ Cs^{10}\int(1+\rho)^{-8}d\xi\le Cs^{10}.
+\tag{46.7}
+$$
+
+As $0\le H^h\le H_s$ at the positive-kernel level, (46.6)–(46.7) prove the self upper bound.
+
+For the cross lower bound use $x_s$ on $A$ and $y_s$ on $Y_s^{-1}K$. In the physical late time integral restrict to a fixed interval inside $(1,\infty)$. Its positive kernel is bounded below on these compact endpoint sets, and $e^{-bt}\to1$ at fixed $M$. The kernel scaling supplies $cs^5$, while their respective input masses are at least $c$ and $cs^3$. This gives $cs^8$.
+
+For the self lower bound choose a fixed microscopic compact set where $\int u_s\ge c$. Such a set follows from $u_s\to p$ in $L^2$ and positivity. On it $W_1(Y_s\xi)\ge c$, hence $\int y_s\ge cs^5$. The original microscopic heat on a fixed positive time interval converges locally to the positive canonical heat, by the inherited local heat convergence and the smooth exact fields. Its integral is bounded below on a fixed compact product; $e^{-ht}\to1$. Restricting both self inputs to that product gives $cs^{10}$. These lower bounds concern the actual moving $u_s$, not a replacement trial vector. $\square$
+
+## 47. A global weighted late kernel and its logarithmic coefficient
+
+**Lemma 47.1 (global domination and compact-input asymptotic).** For physical endpoints $A,B,Y\in\mathcal C$, define
+
+$$
+\begin{aligned}
+\mathcal K_b(A,Y)&=\int_1^\infty e^{-bt}K_d(t;A,Y)dt,\\
+\mathcal I_b(A,B)&=\int_{\mathcal C}W_1(Y)
+             \mathcal K_b(A,Y)\mathcal K_b(B,Y)dY,\qquad 0<b<1.
+\end{aligned}
+\tag{47.1}
+$$
+
+On the entire two-input space,
+
+$$
+0\le\mathcal I_b(A,B)\le C(1+\log(1/b)).
+\tag{47.2}
+$$
+
+Uniformly for $A=(k_A,q_A),B=(k_B,q_B)$ in any fixed physical compact subset of the height interior,
+
+$$
+\mathcal I_b(A,B)=
+ \frac{\phi_0\phi(k_A)\phi(k_B)I_3}{32\pi^2\Delta}
+ \log(1/b)+O(1).
+\tag{47.3}
+$$
+
+Proof. Integrating the large-time Gaussian of L Lemma 41.2 gives
+
+$$
+\begin{aligned}
+\mathcal K_b(A,(k,q))&\le
+ C\phi(k_A)\phi(k)
+ \frac{e^{-c\sqrt b|q-q_A|}}{1+|q-q_A|},\\
+W_1(k,q)&\le C\phi(k)(1+|q|)^{-1}.
+\end{aligned}
+\tag{47.4}
+$$
+
+The first estimate follows by splitting its time integral at $|q-q_A|^2$ and using $bt+c|q-q_A|^2/t\ge c'\sqrt b|q-q_A|$; bounded displacements use integrability of $t^{-3/2}$ from one. Heights have bounded factors. To bound the square at any input, the two radial decreasing functions $(1+|q|)^{-1}$ and $e^{-2c\sqrt b|q|}(1+|q|)^{-2}$ have convolution maximized at coincident centers. Explicitly their layer-cake superlevel sets are balls, and the intersection of two balls has volume at most the smaller ball's volume, attained for common centers. Tonelli reduces the assertion to that observation. At the common center the radial integral is bounded by
+
+$$
+C\int_0^\infty\frac{r^2e^{-2c\sqrt b r}}{(1+r)^3}dr
+ \le C(1+\log(1/b)).
+\tag{47.5}
+$$
+
+Split at $1$ and $b^{-1/2}$ to obtain the last bound. Cauchy–Schwarz in the positive measure $W_1(Y)dY$ then proves (47.2) for different inputs. This proves a bound on all inputs, including heights near either face and arbitrarily remote phase inputs.
+
+For the coefficient use L Theorem 42.1, keeping its polynomial error. Outside a fixed phase ball containing $q_A,q_B$, uniformly for compact inputs,
+
+$$
+\begin{aligned}
+W_1(k,q)&=\frac{\phi_0\phi(k)}{4\pi\sqrt\Delta\,\mathfrak r(q)}
+                    +O(\phi(k)|q|^{-3}),\\
+\mathcal K_b(A,(k,q))&=
+ \frac{\phi(k_A)\phi(k)e^{-\sqrt b\mathfrak r(q-q_A)}}
+      {4\pi\sqrt\Delta\,\mathfrak r(q-q_A)}
+                    +O(\phi(k)|q|^{-3}).
+\end{aligned}
+\tag{47.6}
+$$
+
+The subtracted time interval $(0,1)$ in each expression is exponentially small at remote output, by L (41.2); it is included in the displayed polynomial errors. Translation by bounded $q_A$ changes the leading Yukawa factor to its centered value with error $C\phi(k)|q|^{-2}$, uniformly in $b$, since $(1+\sqrt b r)e^{-\sqrt b r}$ is bounded. All product errors, integrated against $dq\,dk$, are $O(1)$: a leading triple product has degree $-3$, and replacing a Yukawa factor by its translation error adds one inverse power, while native errors add at least two. The errors are integrated as polynomial bounds, without assigning exponential decay to them. The inner region is uniformly bounded by (47.4).
+
+In raw phase measure the change $q=\mathsf M^{1/2}(r\omega)$ gives $dq=\sqrt\Delta\,r^2dr\,d\omega$, with sphere area $4\pi$. Thus the leading outer integral is
+
+$$
+\frac{\phi_0\phi(k_A)\phi(k_B)I_3}{16\pi^2\Delta}
+ \int_{R_0}^\infty e^{-2\sqrt b r}\frac{dr}{r}.
+\tag{47.7}
+$$
+
+For any fixed $R_0>0$ the radial integral is $\tfrac12\log(1/b)+O(1)$: subtract the integral of $1/r$ on $[R_0,b^{-1/2}]$, then substitute $v=\sqrt b r$ in both remaining integrals; $(e^{-2v}-1)/v$ is integrable at zero and $e^{-2v}/v$ at infinity. This proves (47.3), including its raw-density constant. $\square$
+
+**Theorem 47.2 (both full moving inputs).** At every separately fixed probe (46.2),
+
+$$
+\begin{aligned}
+\|J_s^{1/2}Lx_s\|_2^2
+ &=B_{\log}s^8\log(1/b)+o_{d,M}(s^8\log(1/b)),\\
+B_{\log}&=\frac{j_0A_p^2\phi_0^3 I_3}{32\pi^2\Delta}>0.
+\end{aligned}
+\tag{47.8}
+$$
+
+Proof. The exact late scaling (35.9) and the full output change $Y=Y_s\xi$ give, by Tonelli,
+
+$$
+\|J_s^{1/2}Lx_s\|_2^2
+ =j_0s^8\iint x_s(\eta)x_s(\eta')
+ \mathcal I_b(Y_s\eta,Y_s\eta')d\eta\,d\eta'.
+\tag{47.9}
+$$
+
+Indeed the three factors are $s^5$ from $J_s$, $(j_0s^5)^2$ from the two late kernels, and $(j_0s^7)^{-1}$ from output volume. Each input retains its complete microscopic measure; neither is restricted to an annulus or compact set.
+
+Divide the bilinear kernel by $\log(1/b)$. Lemma 47.1 bounds it uniformly on the entire two-input space for small $s$. Since $x_s\to Vp$ in $L^1$, replacing either input by $Vp$ costs at most
+
+$$
+C\|x_s-Vp\|_1(\|x_s\|_1+\|Vp\|_1)=o(1).
+\tag{47.10}
+$$
+
+For each fixed $\eta,\eta'$, the physical inputs $Y_s\eta,Y_s\eta'$ tend to $o$, so (47.3) gives the limit $\phi_0^3I_3/(32\pi^2\Delta)$. Dominated convergence against $(Vp)(\eta)(Vp)(\eta')$ is legitimate by the same global bound. Their two masses give $A_p^2$, proving (47.8). At $b=Ms^6$, the upper physical radius is $b^{-1/2}=M^{-1/2}s^{-3}$ and
+
+$$
+\log(1/b)=6\log(1/s)-\log M.
+\tag{47.11}
+$$
+
+Consequently the coefficient with $\log(1/s)$ is six times the coefficient displayed with $\log(1/b)$. $\square$
+
+## 48. The complete weighted residual
+
+**Theorem 48.1 (full residual variance).** Keep the exact full quotient $\mathcal Q_s=\langle z_s,\mathscr K_s(h)z_s\rangle$ of (35.13), at a separately fixed probe (46.2). Then
+
+$$
+\|(\mathscr K_s(h)-\mathcal Q_s)z_s\|_2^2
+ =\frac{B_{\log}}{\mu}s^8\log(1/b)
+       +o_{d,M}(s^8\log(1/b)).
+\tag{48.1}
+$$
+
+In addition the complete component estimates are
+
+$$
+\begin{aligned}
+\|U_s^{1/2}Dx_s\|_2^2&\le Ch^2s^{-1},\\
+\|F_s^{1/2}Lx_s\|_2^2&\le Cs^8,\\
+\|U_s^{1/2}R y_s\|_2^2&\le Cs^{10}.
+\end{aligned}
+\tag{48.2}
+$$
+
+Proof. Use the exact original-domain residual (35.15), with no omitted term,
+
+$$
+e_s=-Dx_s+Lx_s+Ry_s,\qquad
+(\mathscr K_s(h)-\ell_s)z_s=U_s^{1/2}e_s/\sqrt{n_s}.
+\tag{48.3}
+$$
+
+The first bound of (48.2) is (35.11) and bounded $U_s$. The uniform late kernel gives $\|Lx_s\|_\infty\le Cs^5$, and raw killed mass gives $\int F_s\le CT=Cs^{-2}$, proving its second bound. The last uses (35.17), bounded $k_d(h)$ from Theorem 35.1, and the full self estimate (46.3):
+
+$$
+\|U_s^{1/2}Ry_s\|_2^2\le k_d(h)\langle y_s,Ry_s\rangle\le Cs^{10}.
+\tag{48.4}
+$$
+
+As $U_s=F_s+J_s$, the square of the middle term is exactly the sum of its two weighted squares. The $J_s$ square is (47.8), while the $F_s$ square is $O(s^8)=o(s^8\log(1/b))$. The other two full weighted squares are $O(M^2s^{15})$ and $O(s^{10})$, respectively. Cauchy–Schwarz shows that every cross term among the three vectors in (48.3) is $o(s^8\log(1/b))$. This accounts for both multiplier pieces also in the mixed terms, since their sum is the full $U_s$ norm. Thus
+
+$$
+\|U_s^{1/2}e_s\|_2^2
+ =B_{\log}s^8\log(1/b)+o_{d,M}(s^8\log(1/b)).
+\tag{48.5}
+$$
+
+The exact quotient (35.13), (35.11), (43.3) and (46.3) give $\mathcal Q_s-\ell_s=O_{d,M}(s^5)$. For a unit vector, subtracting its exact quotient satisfies the identity
+
+$$
+\|(\mathscr K_s(h)-\mathcal Q_s)z_s\|_2^2
+ =n_s^{-1}\|U_s^{1/2}e_s\|_2^2-(\mathcal Q_s-\ell_s)^2.
+\tag{48.6}
+$$
+
+The subtracted square is $O(s^{10})$ and $n_s\to\mu$, proving (48.1). This is a full variance asymptotic, not a first-Born or restricted-annulus lower bound. $\square$
+
+## 49. Positive uplift above an exact baseline and the fixed-probe consequence
+
+**Definition 49.1 (exact baseline).** At (46.2) define the real scalar
+
+$$
+\mathcal B_s(h)=\ell_s+
+ \frac{\ell_s\delta_s+\langle x_s,L^hx_s\rangle
+                        -\langle x_s,Dx_s\rangle}{n_s}.
+\tag{49.1}
+$$
+
+It retains the actual early scalar, moving mass and damped late quadratic, rather than assigning them evaluated coefficients.
+
+**Theorem 49.2 (full principal uplift and enclosure).** For each separately fixed finite $M\ge M_{0,d}$,
+
+$$
+\begin{gathered}
+\mathcal Q_s-\mathcal B_s(h)=O_{d,M}(s^8),\\
+0<\frac{B_{\log}}{\mu C_*}
+\le\liminf_{s\downarrow0}
+ \frac{k_d(Ms^8)-\mathcal B_s(Ms^8)}{s^8\log(1/(Ms^6))}\\
+\le\limsup_{s\downarrow0}
+ \frac{k_d(Ms^8)-\mathcal B_s(Ms^8)}{s^8\log(1/(Ms^6))}<\infty.
+\end{gathered}
+\tag{49.2}
+$$
+
+In particular this difference is positive and of order $s^8\log(1/(Ms^6))$. Also, with exactly $\mathscr A$ from (32.6),
+
+$$
+\begin{aligned}
+k_d(Ms^8)&=\ell_s+\mathscr A W_{1,d}(o)s^5+O_{d,M}(s^6),\\
+s^{-5}\{k_d(Ms^8)-\ell_s-\mathscr A W_{1,d}(o)s^5\}&\longrightarrow0.
+\end{aligned}
+\tag{49.3}
+$$
+
+Proof. Subtract (49.1) from (35.13) exactly:
+
+$$
+\mathcal Q_s-\mathcal B_s(h)
+ =\frac{-2\operatorname{Re}\langle y_s,Dx_s\rangle
+       +2\operatorname{Re}\langle x_s,L^hy_s\rangle
+       +\langle y_s,Ry_s\rangle}{n_s}.
+\tag{49.4}
+$$
+
+The last two terms have orders $s^8,s^{10}$ by (46.3), and the remaining term has magnitude at most $Cs^5hs^{-1/2}=CMs^{25/2}$ by (35.11) and $\|y_s\|_2\le Cs^5$. This proves the first line of (49.2).
+
+Write $v_s=\|(\mathscr K_s(h)-\mathcal Q_s)z_s\|_2^2$ and $k=k_d(h)$. Spectral positivity of the full selfadjoint compact operator gives $t^2\le kt$ for every point of its spectrum, hence
+
+$$
+v_s\le\mathcal Q_s(k-\mathcal Q_s).
+\tag{49.5}
+$$
+
+The fixed compact spectral separation of Theorem 35.1 gives $k_2\le C_*-3\zeta$ and $\mathcal Q_s\to C_*$; its upper variance inequality (35.19) is
+
+$$
+0\le k-\mathcal Q_s\le v_s/(\mathcal Q_s-k_2).
+\tag{49.6}
+$$
+
+Since $v_s\to0$, this also proves $k\to C_*$ at each fixed $M$, without asserting norm convergence of the reconstruction at fixed $M$. Divide (49.5)–(49.6) by $s^8\log(1/b)$ and use (48.1). The lower limit is at least $B_{\log}/(\mu C_*)$, and the upper limit is finite since $\mathcal Q_s-k_2$ stays positive. Equation (49.4) has zero normalized limit, proving the full enclosure. The two spectral inequalities do not identify an exact uplift coefficient.
+
+For (49.3), reuse the endpoint and input estimates (43.3), which require no vanishing coefficient, and the $O(s)$ early-vector estimate in the proof of (35.5). In particular $m_s=\mu+O(s)$, $\delta_s=W_1(o)s^5+O(s^6)$, and $\ell_s=C_*+O(s)$; the last follows also from (24.13) and its isolated Riesz projection. At $b=Ms^6$,
+
+$$
+\langle x_s,L^hx_s\rangle
+ =j_0A_p^2W_1(o)s^5+O_d(s^6)+O_{d,M}(s^8).
+\tag{49.7}
+$$
+
+The damping scalar is $O(h)=O_M(s^8)$. The cross and self scalars have the improved orders (46.3), and (49.6) bounds the quotient-to-principal difference by $O_{d,M}(s^8\log(1/b))=o_{d,M}(s^6)$. Inserting these facts in (35.13) gives (49.3), because $(C_*+j_0A_p^2)/\mu=\mathscr A$. Every finite $M$ was fixed before its $s$ limit; no hidden uniform limit in $M$ is used. $\square$
+
+## 50. The larger unsigned baseline and the actual-state implication
+
+**Proposition 50.1 (remaining complete comparison).** The exact baseline has the enclosure
+
+$$
+\mathcal B_s(h)=\ell_s+
+ \frac{\ell_s\delta_s+\langle x_s,L^0x_s\rangle}{n_s}
+ +O_{d,M}(s^8),\qquad h=Ms^8.
+\tag{50.1}
+$$
+
+Under the additional conditional identities $C_{\rm resp}=C_4=\mathfrak m_d=0$, the conclusions above and Theorem 42.2 give only
+
+$$
+k_d(Ms^8)-C_*=O_{d,M}(s^{41/8}).
+\tag{50.2}
+$$
+
+The positive uplift in (49.2) therefore does not evaluate the sign of this complete difference.
+
+Proof. The damping difference of the late quadratic is $O(s^5\sqrt b)=O_M(s^8)$ by (43.5), while $\langle x_s,Dx_s\rangle=O(h)=O_M(s^8)$. This proves (50.1). On the stated zero stratum, $Z_d+W_1(o)=0$ by the zero-stratum assumption and (32.8). Insert $\ell_s=C_*+\mathscr A Z_ds^5+O(s^{41/8})$ from (42.7) into (49.3). The two fifth-order terms cancel, giving (50.2). Neither $O(s^{41/8})$ nor the remaining $O(s^6)$ endpoint/input enclosure is $o(s^8\log(1/s))$. In particular the unresolved early scalar
+
+$$
+\ell_s-C_*=
+ \frac{\langle E_s^{\rm row},u_s\rangle}{\langle G_s,u_s\rangle}
+\tag{50.3}
+$$
+
+from (24.42), together with $\ell_s\delta_s/n_s$ and the full undamped late quadratic in (50.1), remains a signed joint obligation. $\square$
+
+**Corollary 50.2 (conditional every-choice consumer).** If, in addition, eventual $k_d(Ms^8)>C_*$ is proved for every arbitrarily large separately fixed finite $M$, the original actual scale satisfies $r_s\to\infty$. Every sequence $s_n\downarrow0$ and every normalized complex actual ground-state choice on it then converges under the original unsheared observation $\mathcal U_{s_n}$ to the phase orbit of $p$, as in P Theorem 105.1.
+
+Proof. The exact original Birman–Schwinger correspondence at positive probe compares the actual microscopic bottom of $aC_s-\chi_cU_s$ with $-ah$. The strict inequality $k_d(h)>a/\chi_c=C_*$ gives $\epsilon_c(s)<-ah$, hence $r_s>aM$. Arbitrarily large separately fixed $M$ force $r_s\to\infty$. P Theorem 105.1 then supplies the every-choice phase-orbit convergence with the original observation. The shear used in the intermediate estimates does not replace that observation. $\square$
+
+**Definition 50.3 (mathematical scope and attribution).** The estimates in §§45–49 use no coefficient-zero identity; Proposition 50.1's final estimate additionally assumes all three vanishing coefficients, without asserting their occurrence. Corollary 50.2 has an additional strict complete-principal premise that (49.2) does not supply. No exact uplift coefficient, complete $C_*$ selecting sign, realized bounded-$r$ branch, physical spatial dimension or analytic-state preparation follows. The ambient Engel homogeneous dimension seven controls early estimates; the native three-phase tensor controls the physical late radius. These are different structures. All statements fix the original datum and each finite probe separately before $s\downarrow0$.
+
+The Gaussian method is Coulhon–Sikora, *Gaussian heat kernel upper bounds via Phragmén–Lindelöf theorem*, [Theorem 4.1](https://arxiv.org/abs/math/0609429), with its native hypotheses already matched in P Lemma 82.2. The convolution split is E Theorem 3.1; native Gaussian and Yukawa asymptotics with both height factors are L Lemma 41.2 and Theorem 42.1. The exact quotient, bounded-product factorization, spectral variance inequality, endpoint replacement and actual-state consumer are respectively Theorem 35.1, Lemma 43.1 and P Theorem 105.1. The positive Coulomb-annulus mechanism is the same radial $dr/r$ mechanism retained in the earlier annular estimates; it is an intermediate ingredient of the full moving-input and full-residual statements here. These source-specific deductions carry no claim of worldwide novelty or new generic spectral or convolution theorem.
+
+## 追加锚（本行以下为增补区）
+
+## 51. Fixed physical coordinates and the moving early input
+
+**Definition 51.1 (applicability and physical kernels).** Throughout §§51–55 fix one original datum satisfying exactly Definition 45.1. In particular retain Definition 32.1's jointly realized rational vector (32.2), the larger-interval positive-probability, coefficient, pole and bracket margins of L Definition 35.1, L Lemma 41.2, P §§76, 87–88, 97, 104–107 and E Theorem 3.1. No equality $C_{\rm resp}=0$, $C_4=0$ or $\mathfrak m_d=0$ is assumed. General geometric admission alone is insufficient. Every cutoff below is separately fixed, and every finite $M\ge M_{0,d}$ is separately fixed before $s\downarrow0$.
+
+All physical kernels use raw $dY=dk\,dq$ on $\mathcal C=I\times\mathbb R^3$, both original Dirichlet faces and the original clock
+
+$$
+K(t;A,Y)=e^{\lambda t}p_t^B(A,Y),\qquad
+G(A,Y)=\int_0^1K(t;A,Y)dt,\qquad
+\Lambda(A,Y)=\int_1^\infty K(t;A,Y)dt,\quad f(Y)=\Lambda(o,Y)=W_1(Y).
+\tag{51.1}
+$$
+
+The kinetic coefficient $a$ does not enter this clock. Let $\delta_s^E$ be the Engel dilation with coordinate weights $(1,1,2,3)$, and define the fixed algebraic chart
+
+$$
+\Phi=\Xi_1\circ\mathscr L_1,\qquad
+\mathcal D=\Phi^{-1}\mathcal C,\qquad
+r(Y)=d_E(0,\Phi^{-1}Y),\qquad
+Y_s=\Phi\circ\delta_s^E.
+\tag{51.2}
+$$
+
+Here $\Xi_1,\mathscr L_1$ mean the algebraic maps (2.1)–(2.2), without any requirement that $s=1$ be in the asymptotic regime. Indeed $L_1\operatorname{diag}(s,s^2,s^3)=\operatorname{diag}(s,s^2,s^3)L_s$; hence (51.2) is exactly the original sheared chart. Its absolute Jacobian is $j_0s^7$, $|\det D\Phi|=j_0$, and $r(Y_s\xi)=s\rho(\xi)$. Physical volume is $j_0$ times Engel Haar volume in this fixed chart. Restricting that volume to $\mathcal D$ only decreases upper bounds from full Engel balls.
+
+Use the exact transported dictionary (32.4), with restriction to $\Omega_s$ and zero extension:
+
+$$
+\begin{aligned}
+C_s&=s^2(\mathcal T_s\mathcal U_s)S(\mathcal T_s\mathcal U_s)^{-1},&
+Q_s(t)&=e^{-tC_s},&T&=s^{-2},\\
+q_s(t;\eta,\xi)&=j_0s^7K(s^2t;Y_s\eta,Y_s\xi),\\
+F_s(\xi)&=j_0^{-1}\int_1^Tq_s(t;0,\xi)dt,&
+H_s&=\int_0^TQ_s(t)dt,\\
+J_s(\xi)&=s^5f(Y_s\xi),&U_s&=F_s+J_s.
+\end{aligned}
+\tag{51.2a}
+$$
+
+Take $u_s,x_s,\ell_s,\delta_s,n_s$ exactly from (45.1). In particular $H_sF_su_s=\ell_su_s$, $x_s=F_su_s$, $u_s\ge0$ and $\|u_s\|_2=1$. Here $U_s$ is a multiplier, distinct from the unsheared unitary $\mathcal U_s$. Define
+
+$$
+A_s=\int x_s(\xi)d\xi,\quad A_p=\int Vp>0,\quad
+w_s(Y)=s^{-5}u_s(Y_s^{-1}Y),\quad
+v_s(Y)=\frac{x_s(Y_s^{-1}Y)}{j_0s^7},\quad d\nu_s(Y)=v_s(Y)dY.
+\tag{51.3}
+$$
+
+Thus $\nu_s$ is the complete physical pushforward of $x_s(\xi)d\xi$, not a probability measure. Regard it also as a measure on $\mathbb R^4$ by zero extension outside $\mathcal C$. Pointwise statements use the representative $u_s=\ell_s^{-1}H_sx_s$ defined by the heat-kernel integral and $x_s=F_su_s$ with that representative; the integral is finite at every interior output by (45.3), (45.5) and local kernel integrability.
+
+**Lemma 51.2 (global physical domination).** For interior distinct endpoints,
+
+$$
+G(A,Y)\le C d_E(\Phi^{-1}A,\Phi^{-1}Y)^{-5}.
+\tag{51.4}
+$$
+
+The kernel is continuous off the diagonal. On the whole physical output space, for $Y\ne o$,
+
+$$
+0\le w_s(Y)\le Cr(Y)^{-5},\qquad
+0\le v_s(Y)\le Cs^{-7}(1+r(Y)/s)^{-10}\le Cs^3r(Y)^{-10}.
+\tag{51.5}
+$$
+
+Proof. The rational denominator margins used in (45.4) compare the native control length with the ambient Engel length in the fixed chart (51.2). P Lemma 82.2 and the proof of Lemma 45.2 give the original killed Gaussian bound for $0<t\le1$, including the harmless bounded factor $e^{\lambda t}$. Integrating $Ct^{-7/2}\exp(-cd_E^2/t)$ gives (51.4), by $v=d_E^2/t$. Positive-time continuity and the same Gaussian small-time majorant give off-diagonal continuity: on a compact product away from the diagonal, the integral over $(0,\epsilon)$ tends uniformly to zero. Theorem 45.3 gives (51.5) directly after (51.2)–(51.3); for the first inequality use $s^{-5}(1+r/s)^{-5}\le r^{-5}$. The second uses the full input envelope of degree ten, not an unweighted error estimate. All kernels remain the original killed kernels. $\square$
+
+**Theorem 51.3 (physical moving-vector and full-input limits).** For every fixed interior $Y\ne o$,
+
+$$
+w_s(Y)\longrightarrow\frac{j_0A_p}{C_*}G(o,Y),\qquad
+\frac{v_s(Y)}{s^3}\longrightarrow\frac{A_p}{C_*}G(o,Y)^2.
+\tag{51.6}
+$$
+
+These are pointwise limits, with global domination (51.5); they concern the auxiliary early eigenvector only.
+
+Proof. By (35.5), $A_s\to A_p$ and $x_s\to Vp$ in $L^1$. For any bounded continuous test $g$ on the ambient physical $\mathbb R^4$, replace $x_s$ by $Vp$ in $\int g(Y_s\xi)x_s(\xi)d\xi$ with error at most $\|g\|_\infty\|x_s-Vp\|_1$. Dominated convergence on the remaining fixed input gives $A_pg(o)$. Thus $\nu_s\rightharpoonup A_p\delta_o$, with total masses converging. Exact heat scaling and the early eigen-equation give
+
+$$
+\frac{F_s(Y_s^{-1}Y)}{s^5}=\int_{s^2}^1K(t;o,Y)dt,\qquad
+w_s(Y)=\frac{j_0}{\ell_s}\int_{\mathcal C}G(A,Y)d\nu_s(A).
+\tag{51.7}
+$$
+
+The first identity includes the field-only $j_0^{-1}$ in the microscopic definition of $F_s$; the return kernel in the second has the factor $j_0s^5$. For fixed $Y\ne o$, the first integral tends to $G(o,Y)$ and is at most $Cr(Y)^{-5}$.
+
+Choose $0<\epsilon<r(Y)/2$ sufficiently small that the ball about $o$ is interior. On $r(A)<\epsilon$, off-diagonal continuity gives
+
+$$
+\left|\int_{r(A)<\epsilon}[G(A,Y)-G(o,Y)]d\nu_s(A)\right|
+\le A_s\sup_{r(A)<\epsilon}|G(A,Y)-G(o,Y)|.
+\tag{51.8}
+$$
+
+The mass of its complement is $O_\epsilon(s^3)$ by (51.5). More strongly its whole kernel contribution is $O_{\epsilon,Y}(s^3)$, since
+
+$$
+\int_{r(A)\ge\epsilon}G(A,Y)d\nu_s(A)
+\le Cs^3\int_{r(A)\ge\epsilon}r(A)^{-10}
+ d_E(\Phi^{-1}A,\Phi^{-1}Y)^{-5}dA<\infty\cdot s^3.
+\tag{51.9}
+$$
+
+For $r(A)>2r(Y)$ the triangle inequality gives $d_E(\Phi^{-1}A,\Phi^{-1}Y)\ge r(A)/2$. The integral is finite near $A=Y$ because the degree $-5$ singularity is locally integrable in homogeneous dimension seven; away from that point there is no singularity, and at infinity the integrand is bounded by $Cr(A)^{-15}$. First let $s\downarrow0$ and then $\epsilon\downarrow0$ in (51.7)–(51.9), using $\ell_s\to C_*$. This proves the first limit. Finally the exact identity
+
+$$
+\frac{v_s(Y)}{s^3}=\frac1{j_0}
+ \frac{F_s(Y_s^{-1}Y)}{s^5}w_s(Y)
+\tag{51.10}
+$$
+
+proves the second. The faces have raw measure zero, while all dominating bounds include their killed realization and every real phase. $\square$
+
+## 52. One common weighted Taylor subtraction
+
+**Definition 52.1 (joint polynomial and retained core).** Choose one real $\chi\in C_c^\infty(\mathcal C)$ equal to one near $o$, supported in a sufficiently small fixed interior source neighborhood. Pull smooth functions back by $\Phi$ and Taylor expand at zero. For a multi-index $\alpha$ put $|\alpha|_E=\alpha_1+\alpha_2+2\alpha_3+3\alpha_4$. Let $\mathcal T_3 f$ contain exactly the Taylor monomials with $|\alpha|_E\le3$. For $\Lambda$, retain exactly the two-endpoint monomials with $|\alpha|_E+|\gamma|_E\le3$. Set
+
+$$
+\begin{aligned}
+P_\chi(Y)&=\chi(Y)\mathcal T_3f(Y),\\
+\Pi_\chi(A,Y)&=\chi(A)\chi(Y)\mathcal T_3\Lambda(A,Y),\\
+R_\chi(Y)&=f(Y)-P_\chi(Y),&
+\mathcal R_\chi(A,Y)&=\Lambda(A,Y)-\Pi_\chi(A,Y),\\
+I_\chi&=\int_{\mathcal C}R_\chi(Y)G(o,Y)^2dY,\\
+\delta_{\chi,s}&=s^5\int P_\chi(Y_s\xi)u_s(\xi)^2d\xi,\\
+Q_{\chi,s}&=j_0s^5\iint\Pi_\chi(Y_s\eta,Y_s\xi)x_s(\eta)x_s(\xi)d\eta d\xi,\\
+\mathcal C_{\chi,s}&=\ell_s+\frac{\ell_s\delta_{\chi,s}+Q_{\chi,s}}{n_s}.
+\end{aligned}
+\tag{52.1}
+$$
+
+The two endpoint degrees are summed before truncation. In particular this is not a separate degree-three truncation at each endpoint. These signed retained scalars do not change any native operator or multiplier.
+
+**Lemma 52.2 (remainders and absolute convergence).** The kernels in (52.1) satisfy
+
+$$
+\Pi_\chi(o,Y)=\Pi_\chi(Y,o)=P_\chi(Y),\quad
+R_\chi(Y)=O(r(Y)^4),\quad
+\mathcal R_\chi(A,Y)=O((r(A)+r(Y))^4)
+\tag{52.2}
+$$
+
+near the source and source pair respectively, and $\mathcal R_\chi$ is globally bounded. The integral defining $I_\chi$ is absolutely convergent.
+
+Proof. Lemma 43.1 gives boundedness of $\Lambda$ and joint smoothness near $(o,o)$. Its symmetry gives both endpoint restrictions in (52.2), since setting one endpoint to zero in the joint polynomial leaves exactly $\mathcal T_3f$. Ordinary Taylor through Euclidean degree three has remainder bounded by the fourth power of the Euclidean distance. In a small Engel ball, each coordinate of weight $j$ is $O(r^j)$. Every discarded monomial has weighted degree at least four, and the ordinary remainder is also $O(r^4)$. Apply the same argument in the endpoint product, with radius $r(A)+r(Y)$. The cutoffs are one there and the polynomial-cutoff products are compactly supported and bounded, proving the other assertions. Near $o$, (51.4) bounds the absolute integrand of $I_\chi$ by $Cr^{-6}$; outside a fixed source ball it is bounded by $Cr^{-10}$, using bounded $f,P_\chi$. The respective radial upper integrals are $C\int_0^\epsilon 1\,dr$ and $C\int_\epsilon^\infty r^{-4}dr$. These include the complete output and all remote phases. $\square$
+
+**Theorem 52.3 (joint moving mass and both undamped inputs).** Let $L^0$ denote the undamped late kernel (35.9) at $h=0$, used in its finite quadratic pairing against $x_s\in L^1$. Its kernel is bounded by $Cj_0s^5$ by L Lemma 41.2; no bounded inverse on all of $L^2$ is asserted. Then
+
+$$
+\begin{aligned}
+s^{-8}(\delta_s-\delta_{\chi,s})
+ &\longrightarrow\frac{j_0A_p^2}{C_*^2}I_\chi,\\
+s^{-8}(\langle x_s,L^0x_s\rangle-Q_{\chi,s})
+ &\longrightarrow\frac{2j_0A_p^2}{C_*}I_\chi,\\
+\frac{\ell_s(\delta_s-\delta_{\chi,s})+
+ \langle x_s,L^0x_s\rangle-Q_{\chi,s}}{n_s}
+ &=c_\chi s^8+o_{d,\chi}(s^8),\qquad
+c_\chi=\frac{3j_0A_p^2}{\mu C_*}I_\chi.
+\end{aligned}
+\tag{52.3}
+$$
+
+Proof. Change the complete output variable in the mass scalar. The exact equality is
+
+$$
+s^{-8}(\delta_s-\delta_{\chi,s})
+ =j_0^{-1}\int_{\mathcal C}R_\chi(Y)w_s(Y)^2dY.
+\tag{52.4}
+$$
+
+The global majorant $C|R_\chi|r^{-10}$ is integrable by the proof of Lemma 52.2. Theorem 51.3 and dominated convergence prove the first line of (52.3).
+
+For the late scalar use its exact full-product kernel scaling:
+
+$$
+\langle x_s,L^0x_s\rangle-Q_{\chi,s}
+ =j_0s^5\iint_{\mathcal C^2}\mathcal R_\chi(A,Y)d\nu_s(A)d\nu_s(Y).
+\tag{52.5}
+$$
+
+Fix a small $\epsilon>0$ and split each endpoint into $r<\epsilon$ and $r\ge\epsilon$. The two-outer piece is $O_\epsilon(s^6)$, since the kernel is bounded and each exterior mass is $O_\epsilon(s^3)$. On the $A$-outer, $Y$-inner piece, for each fixed exterior $A$,
+
+$$
+\int_{r(Y)<\epsilon}\mathcal R_\chi(A,Y)d\nu_s(Y)
+ \longrightarrow A_p\mathcal R_\chi(A,o)=A_pR_\chi(A).
+\tag{52.6}
+$$
+
+Continuity at $Y=o$ follows from positive-time heat continuity and the integrable large-time bound of L Lemma 41.2; the compact cutoff adds no difficulty. Concentration gives (52.6) by first restricting to an arbitrarily small ball about $o$; the intervening annulus has $O(s^3)$ mass. The integrand after division by $s^3$ is dominated on the exterior by $Cr(A)^{-10}$, uniformly in its inner integral. Therefore (51.6) and dominated convergence make this piece divided by $s^3$ tend to
+
+$$
+\frac{A_p^2}{C_*}\int_{r(A)\ge\epsilon}R_\chi(A)G(o,A)^2dA.
+\tag{52.7}
+$$
+
+The other single-outer piece gives the identical limit by symmetry. The two-inner piece is bounded, using (52.2), by a constant times $A_s\int_{r<\epsilon}r^4d\nu_s$. Homogeneous ball integration and (51.5) give the quantitative bound
+
+$$
+\begin{aligned}
+\int_{r<\epsilon}r^4d\nu_s
+ &\le Cs^{-7}\int_0^\epsilon r^{10}(1+r/s)^{-10}dr
+ \le Cs^3\epsilon,\\
+ s^{-3}\left|\iint_{r(A),r(Y)<\epsilon}\mathcal R_\chi(A,Y)d\nu_s(A)d\nu_s(Y)\right|
+ &\le C\epsilon.
+\end{aligned}
+\tag{52.8}
+$$
+
+This bound follows also shell by shell and requires no finite fourth absolute moment of $x_s$. The omitted inner portion of the integral in (52.7) is $O(\epsilon)$ by Lemma 52.2. Let $s\downarrow0$ at fixed $\epsilon$ and then $\epsilon\downarrow0$. Equations (52.5)–(52.8) prove the second line of (52.3). Finally $\ell_s\to C_*$ and $n_s\to\mu>0$; the mass contribution supplies one copy and the two moving late endpoints supply two copies of the same finite integral. This proves the factor three. $\square$
+
+## 53. Exact separately fixed spectral-probe costs
+
+**Theorem 53.1 (early damping and the late square-root coefficient).** Fix any finite $M\ge M_{0,d}$ and put $h=Ms^8$, $b=h/s^2=Ms^6$, $D=H_s-H^h$. Distinguish $M$ from the original positive phase tensor $\mathsf M=\int_I\phi(k)^2c_\kappa(k)c_\kappa(k)^{\mathsf T}dk$. Then
+
+$$
+\begin{aligned}
+\langle x_s,Dx_s\rangle&=C_*^2Ms^8+o_{d,M}(s^8),\\
+\langle x_s,(L^0-L^h)x_s\rangle
+ &=\frac{j_0A_p^2\phi(k_0)^2}{4\pi\sqrt{\det\mathsf M}}\sqrt M\,s^8+o_{d,M}(s^8).
+\end{aligned}
+\tag{53.1}
+$$
+
+Proof. Reuse the input-specific damping argument (36.4)–(36.6). Its hypotheses are (35.5), strong fixed-time heat convergence, and the early Gaussian bounds, all available at Definition 45.1 scope without the vanishing identities used for Theorem 36.1's other conclusions. In particular
+
+$$
+\frac{\langle x_s,Dx_s\rangle}{h}
+ =\int_0^{s^{-2}}\frac{1-e^{-ht}}h\langle x_s,Q_s(t)x_s\rangle dt
+ \longrightarrow\int_0^\infty t\langle Vp,P_tVp\rangle dt=C_*^2.
+\tag{53.2}
+$$
+
+The integrand, zero extended in time, is dominated by $Ct$ below one and $Ct^{-5/2}$ above one. The spectral-calculus equality is $\|G_0(Vp)\|_2^2=C_*^2$, since $G_0(Vp)=C_*p$ and $\|p\|_2=1$. This is the existing early damping coefficient on its existing input, applied at the present fixed probe.
+
+For the late difference define
+
+$$
+J_b(A,Y)=\int_1^\infty(1-e^{-bt})K(t;A,Y)dt.
+\tag{53.3}
+$$
+
+L Lemma 41.2 gives $0\le J_b\le C\sqrt b$ globally. Its integrable band error contributes at most $C\int_1^\infty\min(bt,1)t^{-5/2}dt=O(b)$. Uniformly on fixed compact endpoint sets, replacing the Gaussian phase displacement by zero costs the same $O(b)$, since $|e^{-|q_A-q_Y|_{\mathsf M}^2/(4t)}-1|\le C/t$. The remaining time integral is
+
+$$
+\begin{aligned}
+\frac1{\sqrt b}\int_1^\infty(1-e^{-bt})t^{-3/2}dt
+ &\longrightarrow\int_0^\infty(1-e^{-v})v^{-3/2}dv\\
+ &=2\int_0^\infty e^{-v}v^{-1/2}dv=2\sqrt\pi.
+\end{aligned}
+\tag{53.4}
+$$
+
+The equality follows by integration by parts, whose two boundary terms vanish, and the Gaussian integral. Consequently
+
+$$
+\frac{J_b(A,Y)}{\sqrt b}\longrightarrow
+ \frac{\phi(k_A)\phi(k_Y)}{4\pi\sqrt{\det\mathsf M}}
+\tag{53.5}
+$$
+
+uniformly on fixed compact endpoint sets. This evaluates the constant in the square-root order already supplied by Lemma 43.1.
+
+The exact late difference in microscopic variables is
+
+$$
+\langle x_s,(L^0-L^h)x_s\rangle
+ =j_0s^5\iint J_b(Y_s\eta,Y_s\xi)x_s(\eta)x_s(\xi)d\eta d\xi.
+\tag{53.6}
+$$
+
+After division by $j_0s^5\sqrt b$, the global bound above permits replacement of both inputs by $Vp$ with error bounded by $C\|x_s-Vp\|_1(\|x_s\|_1+\|Vp\|_1)=o(1)$. For each fixed microscopic pair, its physical endpoints tend to $(o,o)$ and lie in one fixed interior compact set. Thus (53.5) applies with limiting height factor $\phi(k_0)^2$. Full-product dominated convergence against $(Vp)(\eta)(Vp)(\xi)$ gives the coefficient in (53.1), since $s^5\sqrt b=\sqrt M\,s^8$. Neither endpoint has been held fixed while discarding the other moving input. $\square$
+
+## 54. Complete subtracted baseline and cutoff compensation
+
+**Theorem 54.1 (exact fixed-$M$ baseline expansion).** Set
+
+$$
+\beta=\frac{C_*^2}{\mu},\qquad
+c_{\rm tail}=\frac{j_0A_p^2\phi(k_0)^2}{4\pi\mu\sqrt{\det\mathsf M}}.
+\tag{54.1}
+$$
+
+For every separately fixed finite $M\ge M_{0,d}$, the exact baseline (49.1) satisfies
+
+$$
+\mathcal B_s(Ms^8)=\mathcal C_{\chi,s}
+ +s^8\bigl(c_\chi-\beta M-c_{\rm tail}\sqrt M\bigr)
+ +o_{d,M,\chi}(s^8).
+\tag{54.2}
+$$
+
+Proof. The baseline definition, with no discarded term, is
+
+$$
+\mathcal B_s(h)=\ell_s+
+ \frac{\ell_s\delta_s+\langle x_s,L^hx_s\rangle-\langle x_s,Dx_s\rangle}{n_s}.
+\tag{54.3}
+$$
+
+Subtract $\mathcal C_{\chi,s}$, insert $L^h=L^0-(L^0-L^h)$, and apply (52.3) and (53.1), with $n_s\to\mu$. This proves (54.2). Every probe constant and cutoff was fixed first; the remainder is not asserted uniform for $M\to\infty$, a varying $M(s)$, moving faces or varying cutoffs. $\square$
+
+**Proposition 54.2 (compensating cutoff dependence).** For any two allowed fixed cutoffs,
+
+$$
+\mathcal C_{\chi_2,s}-\mathcal C_{\chi_1,s}
+ =-\frac{3j_0A_p^2}{\mu C_*}(I_{\chi_2}-I_{\chi_1})s^8+o_{d,\chi_1,\chi_2}(s^8).
+\tag{54.4}
+$$
+
+There are allowed cutoffs with $I_{\chi_2}<I_{\chi_1}$; hence the isolated $I_\chi$ has cutoff dependence and is not a source-invariant selecting coefficient.
+
+Proof. Subtract the two expansions of the same undamped quantity
+$\ell_s+(\ell_s\delta_s+\langle x_s,L^0x_s\rangle)/n_s$ supplied by (52.3). This gives (54.4) directly, without any probe remainder. Since $f(o)>0$, continuity makes $\mathcal T_3f>0$ in a sufficiently small source ball. Choose $\chi_1$ supported in that ball and equal to one on a smaller ball, and choose a nonzero nonnegative smooth bump $\eta$ supported off $o$ in a still smaller interior annulus. Put $\chi_2=\chi_1+\eta$, also supported in the first ball. Both are allowed, and
+
+$$
+I_{\chi_2}-I_{\chi_1}
+ =-\int_{\mathcal C}\eta(Y)\mathcal T_3f(Y)G(o,Y)^2dY<0.
+\tag{54.5}
+$$
+
+Strict positivity of the original killed heat makes $G(o,Y)>0$ on this annulus. The integral is finite because its support avoids $o$. The opposite core change in (54.4) compensates this change exactly to the displayed order in the full baseline. $\square$
+
+## 55. Applicability, retained core and existing actual-state consumer
+
+**Definition 55.1 (full complex domains and the unsigned core).** The generators underlying the heat and return kernels above are the original Friedrichs realizations. Their complex form fibres are $H_0^1(I)$ with underlying raw $L^2$ membership and the full finite frequency integral
+
+$$
+\int_{\mathbb R^3}\int_I
+ \bigl(\varepsilon^2|\partial_k\widehat\psi|^2+
+ |\eta\cdot c_\kappa|^2|\widehat\psi|^2\bigr)dk\,d\eta<\infty.
+\tag{55.1}
+$$
+
+Their operator fibres are $H^2(I)\cap H_0^1(I)$ with
+$\int_{\mathbb R^3}\|B_\eta\widehat\psi(\cdot,\eta)\|_2^2d\eta<\infty$.
+These are exactly (1.5), transported by $\mathcal T_s\mathcal U_s$ for intermediate sheared calculations. No reality, parity, ordinary phase-$H^1$, or finite-rank condition is imposed on actual states. Positivity is used for heat and the auxiliary $u_s$; (51.6) is not an actual ground-state profile theorem. The observation for every normalized complex actual choice remains the original unsheared $\mathcal U_s$.
+
+Equation (54.2) evaluates a complete nonlocal part of the baseline while retaining $\mathcal C_{\chi,s}$ exactly. It is neither an expansion of $\mathcal C_{\chi,s}-C_*$ nor of $k_d(Ms^8)-C_*$. In particular (50.3)'s early-row projection and the moving local moments in (52.1) remain unsigned jointly. Even on the additional conditional stratum $C_{\rm resp}=C_4=\mathfrak m_d=0$, the owned $O(s^{41/8})$ enclosure (50.2) is larger than $s^8\log(1/s)$. Thus the positive full-residual uplift of Theorem 49.2 does not acquire a complete selecting sign from (54.2). No occurrence or exclusion of that stratum is asserted.
+
+The existing sufficient route is the exact baseline (49.1), the full principal uplift (49.2), and Corollary 50.2/P Theorem 105.1. A further eventual strict FULL inequality $k_d(Ms^8)>C_*$ for arbitrarily large separately fixed finite $M$ would force $r_s\to\infty$ and the stated every-choice phase-orbit convergence. This is a sufficient implication, not a necessary condition or an inequality supplied by §§51–54. No actual branch classification, exact principal uplift coefficient, physical spatial dimension or analytic-state preparation follows here.
+
+**Definition 55.2 (mathematical attribution).** The convergence of the early mode and its input is (35.5); the early damping coefficient is (36.4)–(36.6); late smoothness and square-root order are Lemma 43.1; full spatial envelopes are Theorem 45.3. Their uses above retain their original hypotheses. The physical convolution/concentration split follows the method of E Theorem 3.1, with the complete moving output and both moving inputs kept in (51.9) and (52.5)–(52.8). The Gaussian bound is Coulhon–Sikora, *Gaussian heat kernel upper bounds via Phragmén–Lindelöf theorem*, [Theorem 4.1](https://arxiv.org/abs/math/0609429), through the native hypothesis correspondence in P Lemma 82.2 and Lemma 45.2. L Lemma 41.2 and Theorem 42.1 supply the original band error, Gaussian and Yukawa normalization with both height factors. Sections 46–49 supply the already established mass/cross/self orders and full logarithmic residual uplift; §§51–54 retain the physical density limits, common joint subtraction, its factor three and evaluated fixed-probe constant. The actual-state implication is the existing Corollary 50.2/P Theorem 105.1. These are source-specific deductions by Taylor subtraction and dominated convergence, with no new generic theorem or worldwide novelty claim.
+
+## 追加锚（本行以下为增补区）

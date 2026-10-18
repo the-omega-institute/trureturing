@@ -50,6 +50,7 @@ D5/S3/Quantum/FiniteDimensional.qubitZ
   sha256:381a2bec567456715f58fe6c0c413d59d37882b8499fc81a486c49e7c081d78c
 -/
 
+import D5.S3.Quantum.Measurement.OccupationPartialTransposeSpectral
 import D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import D5.S3.Quantum.PureState.PureStateHandshake
@@ -381,17 +382,8 @@ private theorem PauliProductProjector_vector {ψ : (Fin 2 × Fin 2 → ℂ)} (hn
   exact ⟨z • eigenVector p (if ep then 1 else 0),eigenVector q (if eq then 1 else 0),
     by rw [tensor_smul_left];exact hz⟩
 private theorem quadratic_projector {n : Type*} [Fintype n] (z ψ : n → ℂ) : star z ⬝ᵥ (rankOneDensity ψ *ᵥ z) = (Complex.normSq (star z ⬝ᵥ ψ) : ℂ) := by
-  simp only [rankOneDensity,Matrix.mulVec,dotProduct,Matrix.vecMulVec_apply,Pi.star_apply]
-  rw [← Complex.mul_conj]
-  simp only [map_sum,map_mul]
-  rw [Finset.sum_mul]
-  apply Finset.sum_congr rfl
-  intro i hi
-  rw [Finset.mul_sum, Finset.mul_sum]
-  apply Finset.sum_congr rfl
-  intro j hj
-  simp only [← Complex.star_def, star_star]
-  ring
+  simpa only [rankOneDensity] using
+    D5.S3.Quantum.Measurement.OccupationPartialTransposeSpectral.BlockSpectral.rankOneQuadratic z ψ
 theorem ensemble_kernel {n ι : Type*} [Fintype n] [Fintype ι] (ψ : ι → n → ℂ) (w : ι → ℝ) (hw : ∀ i,0 ≤ w i) (z : n → ℂ) (hzero : star z ⬝ᵥ ((∑ i,w i • rankOneDensity (ψ i)) *ᵥ z)=0) : ∀ i,0 < w i → star z ⬝ᵥ ψ i = 0 := by
   have he : ∑ i,w i*Complex.normSq (star z ⬝ᵥ ψ i)=0 := by
     have hC : ((∑ i,w i*Complex.normSq (star z ⬝ᵥ ψ i) : ℝ) : ℂ)=0 := by
