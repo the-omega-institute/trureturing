@@ -25,7 +25,7 @@ open TangZhangOrderMinusTwo (J J_sq J_conjTranspose)
 def positivePower (x : ℝ) (s : ℂ) : ℂ := exp (s * (Real.log x : ℂ))
 
 /-- The projection onto the constant vectors. -/
-def E (n : ℕ) : Matrix (Fin n) (Fin n) ℂ := (n : ℂ)⁻¹ • J n
+private def E (n : ℕ) : Matrix (Fin n) (Fin n) ℂ := (n : ℂ)⁻¹ • J n
 
 /-- Explicit powers of `I + J`; only positive dimensions are used. -/
 def H (n : ℕ) (s : ℂ) : Matrix (Fin n) (Fin n) ℂ :=
@@ -35,13 +35,13 @@ theorem positivePower_add (x : ℝ) (s t : ℂ) :
     positivePower x (s + t) = positivePower x s * positivePower x t := by
   simp [positivePower, add_mul, Complex.exp_add]
 
-theorem positivePower_zero (x : ℝ) : positivePower x 0 = 1 := by
+private theorem positivePower_zero (x : ℝ) : positivePower x 0 = 1 := by
   simp [positivePower]
 
 theorem positivePower_one {x : ℝ} (hx : 0 < x) : positivePower x 1 = x := by
   simp [positivePower, ← Complex.ofReal_exp, Real.exp_log hx]
 
-theorem positivePower_star (x : ℝ) (s : ℂ) :
+private theorem positivePower_star (x : ℝ) (s : ℂ) :
     conj (positivePower x s) = positivePower x (conj s) := by
   simp [positivePower, ← Complex.exp_conj]
 
@@ -56,13 +56,13 @@ theorem norm_positivePower (x : ℝ) (s : ℂ) :
     ‖positivePower x s‖ = Real.exp (s.re * Real.log x) := by
   simp [positivePower, Complex.norm_exp, Complex.mul_re]
 
-theorem E_mul (n : ℕ) (hn : 0 < n) : E n * E n = E n := by
+private theorem E_mul (n : ℕ) (hn : 0 < n) : E n * E n = E n := by
   have hn0 : (n : ℂ) ≠ 0 := Nat.cast_ne_zero.mpr (Nat.ne_of_gt hn)
   rw [E, Matrix.smul_mul, Matrix.mul_smul, J_sq, smul_smul, smul_smul]
   congr 1
   field_simp
 
-theorem E_star (n : ℕ) : (E n)ᴴ = E n := by
+private theorem E_star (n : ℕ) : (E n)ᴴ = E n := by
   simp [E, Matrix.conjTranspose_smul, J_conjTranspose]
 
 theorem H_add (n : ℕ) (hn : 0 < n) (s t : ℂ) : H n s * H n t = H n (s + t) := by
@@ -79,7 +79,7 @@ theorem H_one (n : ℕ) (hn : 0 < n) : H n 1 = 1 + J n := by
   push_cast
   simp [hn0]
 
-theorem H_star (n : ℕ) (s : ℂ) : (H n s)ᴴ = H n (conj s) := by
+private theorem H_star (n : ℕ) (s : ℂ) : (H n s)ᴴ = H n (conj s) := by
   simp [H, Matrix.conjTranspose_smul, E_star, positivePower_star]
 
 theorem H_unitary (n : ℕ) (hn : 0 < n) (y : ℝ) :
@@ -97,14 +97,14 @@ theorem H_apply (n : ℕ) (s : ℂ) (i j : Fin n) :
       (positivePower ((n : ℝ) + 1) s - 1) / n := by
   simp [H, E, TangZhangOrderMinusTwo.J, Matrix.one_apply, div_eq_mul_inv]
 
-theorem H_real_apply (n : ℕ) (s : ℝ) (i j : Fin n) :
+private theorem H_real_apply (n : ℕ) (s : ℝ) (i j : Fin n) :
     H n (s : ℂ) i j =
       (((if i = j then 1 else 0 : ℝ) + (((n : ℝ) + 1) ^ s - 1) / n : ℝ) : ℂ) := by
   rw [H_apply, positivePower_ofReal (by positivity)]
   push_cast
   split_ifs <;> rfl
 
-theorem H_gram (n : ℕ) (hn : 0 < n) (p : ℝ) :
+private theorem H_gram (n : ℕ) (hn : 0 < n) (p : ℝ) :
     (H n ((p / 2 : ℝ) : ℂ))ᴴ * H n ((p / 2 : ℝ) : ℂ) = H n (p : ℂ) := by
   rw [H_star]
   simp only [Complex.conj_ofReal]
@@ -117,7 +117,7 @@ theorem H_gram (n : ℕ) (hn : 0 < n) (p : ℝ) :
 def column (n : ℕ) (p : ℝ) (j : Fin n) : EuclideanSpace ℂ (Fin n) :=
   WithLp.toLp 2 (fun i => H n ((p / 2 : ℝ) : ℂ) i j)
 
-theorem column_inner (n : ℕ) (hn : 0 < n) (p : ℝ) (i j : Fin n) :
+private theorem column_inner (n : ℕ) (hn : 0 < n) (p : ℝ) (i j : Fin n) :
     inner ℂ (column n p i) (column n p j) = H n (p : ℂ) i j := by
   rw [EuclideanSpace.inner_eq_star_dotProduct, ← H_gram n hn p]
   simp only [Matrix.mul_apply, Matrix.conjTranspose_apply, dotProduct, column,

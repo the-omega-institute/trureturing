@@ -58,7 +58,7 @@ private theorem matrix_mul_strip {n : ℕ}
   exact StripData.sum Finset.univ (fun k ζ => A ζ i k * B ζ k j)
     (fun k _ => (hA i k).mul (hB k j))
 
-theorem F_strip (n : ℕ) (u : Fin n → ℂ) (t : Fin n → ℝ) (p : ℝ)
+private theorem F_strip (n : ℕ) (u : Fin n → ℂ) (t : Fin n → ℝ) (p : ℝ)
     (i j : Fin n) : StripData (fun ζ => F n u t p ζ i j) := by
   have hH : ∀ i j : Fin n, StripData (fun ζ => H n ((p : ℂ) * ζ / 2) i j) := by
     intro i j
@@ -80,7 +80,7 @@ theorem F_strip (n : ℕ) (u : Fin n → ℂ) (t : Fin n → ℝ) (p : ℝ)
       exact StripData.const 0
   exact matrix_mul_strip (fun i j => matrix_mul_strip hH hD i j) hH i j
 
-theorem K_strip (n : ℕ) (Q : Matrix (Fin n) (Fin n) ℂ) (v : Fin n → ℂ)
+private theorem K_strip (n : ℕ) (Q : Matrix (Fin n) (Fin n) ℂ) (v : Fin n → ℂ)
     (ρ : Fin n → ℝ) (p : ℝ) (i j : Fin n) :
     StripData (fun ζ => K n Q v ρ p ζ i j) := by
   have hD : ∀ i j : Fin n, StripData (fun ζ =>
@@ -117,7 +117,7 @@ private theorem diagonal_unitary (n : ℕ) (d : Fin n → ℂ) (hd : ∀ i, ‖d
   rw [Complex.mul_conj', hd]
   norm_num
 
-theorem F_unitary_left (n : ℕ) (hn : 0 < n) (u : Fin n → ℂ)
+private theorem F_unitary_left (n : ℕ) (hn : 0 < n) (u : Fin n → ℂ)
     (hu : ∀ i, ‖u i‖ = 1) (t : Fin n → ℝ) (p y : ℝ) :
     F n u t p ((y : ℂ) * I) ∈ Matrix.unitaryGroup (Fin n) ℂ := by
   have hH : H n ((p : ℂ) * ((y : ℂ) * I) / 2) ∈ Matrix.unitaryGroup (Fin n) ℂ := by
