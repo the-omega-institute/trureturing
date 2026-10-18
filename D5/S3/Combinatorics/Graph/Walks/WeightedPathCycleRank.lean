@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Graph/Walks/WeightedPathCycleRank
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Combinatorics/Graph/Walks/NoEvenCycleRank, D5/S3/Combinatorics/Graph/Walks/WeightedCycleKernel]
+   anchors: []
    utility: none
    digest: Arbitrarily labelled weighted paths and cycles have ranks determined by parity and the two alternating matching products. -/
 import D5.S3.Combinatorics.Graph.Walks.NoEvenCycleRank

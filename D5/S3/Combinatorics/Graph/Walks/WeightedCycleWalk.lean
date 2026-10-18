@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Graph/Walks/WeightedCycleWalk
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Combinatorics/Graph/Walks/WeightedPathCycleRank, D5/S3/Combinatorics/Graph/Walks/WeightedVertexProducts]
+   anchors: []
    utility: none
    digest: Cyclic parity coordinates identify the actual alternating walk product with the quotient of the two matching products. -/
 import D5.S3.Combinatorics.Graph.Walks.WeightedPathCycleRank
