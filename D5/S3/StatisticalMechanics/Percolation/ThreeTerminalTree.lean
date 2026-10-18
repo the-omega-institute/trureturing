@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Unique tree paths identify precisely which independent bonds control three-terminal connectivity. -/
+   digest: Unique tree paths reduce the entire independent three-terminal law to a star law. -/
 
 import D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond
 
@@ -104,7 +104,7 @@ def bondGraph (G : SimpleGraph V) (ω : G.edgeSet → Bool) : SimpleGraph V :=
 private lemma bondGraph_edges (ω : G.edgeSet → Bool) (e : G.edgeSet) :
     e.val ∈ (bondGraph G ω).edgeSet ↔ ω e = true := by
   classical
-  simp only [bondGraph, edgeSet_fromEdgeSet, Set.mem_diff, Set.mem_setOf_eq]
+  simp only [bondGraph, edgeSet_fromEdgeSet, Set.mem_sdiff, Set.mem_ofPred_eq]
   constructor
   · rintro ⟨⟨f,hf,hω⟩,_⟩
     have : f = e := Subtype.ext hf
@@ -115,7 +115,7 @@ private lemma bondGraph_edges (ω : G.edgeSet → Bool) (e : G.edgeSet) :
 private lemma bondGraph_le (ω : G.edgeSet → Bool) : bondGraph G ω ≤ G := by
   rw [← edgeSet_subset_edgeSet]
   intro e he
-  simp only [bondGraph, edgeSet_fromEdgeSet, Set.mem_diff, Set.mem_setOf_eq] at he
+  simp only [bondGraph, edgeSet_fromEdgeSet, Set.mem_sdiff, Set.mem_ofPred_eq] at he
   rcases he.1 with ⟨f,rfl,_⟩
   exact f.property
 
@@ -327,11 +327,19 @@ theorem tree_bound [Fintype G.edgeSet] (hG : G.IsTree) (a b c : V)
   rw [hp]
   exact star_bound A B C hA hB hC
 
-#print axioms path_edge_symmDiff
-#print axioms tree_law
-#print axioms tree_bound
-#print axioms path_edge_symmDiff
 
 end
+
+/-- info: 'D5.S3.StatisticalMechanics.Percolation.ThreeTerminalTree.path_edge_symmDiff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms path_edge_symmDiff
+
+/-- info: 'D5.S3.StatisticalMechanics.Percolation.ThreeTerminalTree.tree_law' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms tree_law
+
+/-- info: 'D5.S3.StatisticalMechanics.Percolation.ThreeTerminalTree.tree_bound' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms tree_bound
 
 end D5.S3.StatisticalMechanics.Percolation.ThreeTerminalTree

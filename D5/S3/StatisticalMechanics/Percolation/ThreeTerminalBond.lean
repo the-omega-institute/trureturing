@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Actual independent bond configurations on a three-terminal star, their five connectivity masses, determinant bound and sharpness. -/
+   digest: Independent star bond laws, a determinant bound and strictly interior sharpness. -/
 
 import Mathlib.Combinatorics.SimpleGraph.Acyclic
 import Mathlib.Combinatorics.SimpleGraph.Star
@@ -83,9 +83,9 @@ private lemma law_probability {V E : Type*} [Fintype V] [DecidableEq V]
     rw [Finset.sum_comm]
     simpa using weight_sum θ
 
-private lemma sum_cube_succ (n : ℕ) (f : (Fin (n+1) → Bool) → ℝ) :
+private lemma sum_cube_succ (n : ℕ) (f : (Fin (n + 1) → Bool) → ℝ) :
     (∑ ω, f ω) = ∑ x : Bool, ∑ ω : Fin n → Bool, f (Fin.cons x ω) := by
-  rw [← (Fin.consEquiv (fun _ : Fin (n+1) => Bool)).sum_comp]
+  rw [← (Fin.consEquiv (fun _ : Fin (n + 1) => Bool)).sum_comp]
   exact Fintype.sum_prod_type _
 
 private lemma cons_three_last (x : Bool) (ω : Fin 2 → Bool) :
@@ -191,9 +191,25 @@ theorem star_sharpness (ε : ℝ) (hε : 0 < ε) :
     have ht3 : 0 ≤ t*(t*t) := by positivity
     nlinarith
 
+
+/-- info: 'D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.weight_sum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms weight_sum
+
+/-- info: 'D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.star_law' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
 #print axioms star_law
+
+/-- info: 'D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.star_determinant' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
 #print axioms star_determinant
+
+/-- info: 'D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.star_bound' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
 #print axioms star_bound
+
+/-- info: 'D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.star_sharpness' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
 #print axioms star_sharpness
 
 end D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond

@@ -73,11 +73,11 @@ internal sealed class ThreeTerminalBondDocument : IScribeDocumentDefinition
                     + "Set t=min(epsilon/4,1/4), A=C=t and B=1-t. Then Z=t^3 and "
                     + "delta/Z=(1-t)(1-t^2)>1-epsilon."),
             Paragraph(Text(
-                "The bound above concerns the three-edge star. Applying it to an arbitrary "
-                    + "tree requires a proof that three disjoint path arms preserve the full "
-                    + "five-partition law under independent edge opening. Bounds for arbitrary "
-                    + "trees, cactus graphs and graphs of bounded block cycle rank require "
-                    + "their respective graph reductions."))),
+                "ThreeTerminalTree.tree_law preserves the complete five-partition law of "
+                    + "every finite-edge tree through three disjoint path edge sets; "
+                    + "ThreeTerminalTree.tree_bound therefore extends the constant-one bound "
+                    + "to all such trees. Cactus graphs and bounded block cycle rank still "
+                    + "require their respective graph reductions."))),
         []));
 
     private static DocumentBlock Node(string name, string title, DescribeRole role, string text) =>
