@@ -131,7 +131,7 @@ private def propositionType (type : Expr) : MetaM Bool := do
 def factIndex : MetaM FactIndex := do
   let mut index : LazyDiscrTree.PreDiscrTree Fact := {}
   let mut statements : Std.HashMap UInt64 (Array Name) := {}
-  let names := (← getEnv).constants.toList.toArray.qsort (fun a b => Name.lt a.1 b.1)
+  let names := (← getEnv).constants.toList.toArray.qsort (fun a b => Name.quickLt a.1 b.1)
   for (name, info) in names do
     if info.isUnsafe then continue
     if name.isInternalDetail && !isPrivateName name then continue
@@ -310,6 +310,7 @@ def search (env : Environment) (levels : List Name) (type : Expr)
           return false
         return gs.isEmpty
       leafRows := leafRows.push row
+      if row.proof?.isSome then break
     let leafRun := combine leafRows
     if let some success := leafRows.find? (fun row => row.proof?.isSome) then
       proofs := proofs.push success.proof?.get!

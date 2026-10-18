@@ -98,7 +98,7 @@ resource fault into a negative certificate. -/
   | `(tactic| reference_baseline $target:ident at $sha:str baseline [$bs:ident,*]
       from [$owners:ident,*]) =>
     let source ← importModules (owners.getElems.map fun n => {module := n.getId})
-      options 0 (leakEnv := true)
+      options 0 (leakEnv := true) (loadExts := false)
     let result ← run source {
       target := target.getId, «baseline» := bs.getElems.map (fun x => x.getId),
       baselineCommit := sha.getString }
@@ -119,7 +119,7 @@ syntax (name := searchReductionProbeCmd) "#search_reduction_probe " ident " at "
   | `(#search_reduction_probe $target:ident at $sha:str baseline [$bs:ident,*]
       using [$ss:ident,*] from [$owners:ident,*] as $name:ident) =>
     let source ← importModules (owners.getElems.map fun n => {module := n.getId})
-      options 0 (leakEnv := true)
+      options 0 (leakEnv := true) (loadExts := false)
     let result ← run source {
       target := target.getId, «baseline» := bs.getElems.map (fun x => x.getId),
       additions := ss.getElems.map (fun x => x.getId), baselineCommit := sha.getString}
@@ -197,7 +197,8 @@ indexes. Only compiled Lean declarations are read back; JSON is print-only. -/
     let oldPath ← searchPathRef.get
     searchPathRef.set (directory :: oldPath)
     let projected ← try
-      importModules #[{module := moduleName.toName}] options 0 (leakEnv := true)
+      importModules #[{module := moduleName.toName}] options 0
+        (leakEnv := true) (loadExts := false)
     finally searchPathRef.set oldPath
     liftTermElabM do
       for n in #[name.getId ++ `baseline, name.getId ++ `paired, name.getId ++ `reason, name.getId,

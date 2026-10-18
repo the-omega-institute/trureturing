@@ -55,6 +55,13 @@ open LeanInformationAudit.Tests.SearchReduction
   using [] as specializationResult
 #guard specializationResult = Verdict.bindOnly
 
+#search_reduction LeanInformationAudit.Tests.SearchReduction.Candidates.intermediate
+  at "b530df86e6e9c4709edecd3009bb96c3d4ebc8be"
+  baseline [LeanInformationAuditRegTests.SearchReduction.Baseline]
+  using [] as intermediateResult
+#guard intermediateResult.baseline = Run.exhausted
+#guard intermediateResult = Verdict.insufficient
+
 #search_reduction LeanInformationAudit.Tests.SearchReduction.Candidates.content
   at "b530df86e6e9c4709edecd3009bb96c3d4ebc8be"
   baseline [LeanInformationAuditRegTests.SearchReduction.Baseline]

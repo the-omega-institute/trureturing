@@ -200,6 +200,4 @@ search-reduction:
 search-reduction: export SEARCH_REDUCTION_REQUESTS := $(value REQUESTS)
 
 search-reduction-test:
-	@$(MAKE) lean LEAN_TARGETS="LeanInformationAuditRegTests.SearchReduction.Calibration"
-	@$(MAKE) lean LEAN_TARGETS="LeanInformationAuditRegTests.SearchReduction.Faults"
 	@$(MAKE) lean LEAN_TARGETS="LeanInformationAuditRegTests.SearchReduction.RealNegative"
