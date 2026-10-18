@@ -46,6 +46,10 @@ $$\neg (\forall n \in \mathbb{N},\; \forall q \in \mathbb{N},\; [\operatorname{N
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/MultiEntropyPositivityRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/gadde-jain-krishna-kulkarni-sharma-2023-multi-entropy-positivity` (refuted) by `D5/S3/Quantum/Information/MultiEntropyPositivityRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"gadde-jain-krishna-kulkarni-sharma-2023-multi-entropy-positivity","declaration_gid":"D5/S3/Quantum/Information/MultiEntropyPositivityRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* A. Gadde, S. Jain, V. Krishna, H. Kulkarni, and T. Sharma (2024). *Monotonicity conjecture for multi-party entanglement. Part I*. DOI: [10.1007/JHEP02(2024)025](https://doi.org/10.1007/JHEP02(2024)025). URL: <https://arxiv.org/abs/2308.16247v1>.

@@ -26,13 +26,16 @@ internal sealed class MultiEntropyPositivityRefutationDocument : IScribeDocument
                 AssessedProvenance.FromLiterature(Source), DescribeRole.Definition),
             Node("result", "A negative fourth replica invariant", new Formula.Not(Parenthesized(ClaimBody())),
                 "At n = 4 and q = 3 take L(a) = Fin 3 and the totally antisymmetric state with coefficients epsilon(i,j,k)/sqrt(6). The determinant of the matrix whose rows select i, j and k gives epsilon. Its six nonzero coefficients have squared modulus 1/6. Summing the unshifted third party gives the two-party kernel (I - F)/6, where F exchanges the two qutrits. Reindexing the replica lattice turns the contraction into the trace of the fourth power of its row transfer, divided by 6^16. The integer trace is -1680, giving E(4,3,psi) = -35/58773123072. This contradicts the positive-real-part conclusion. The coarse-graining inequalities formulated directly for E retain their separate statements.",
-                AssessedProvenance.FromRepo(Source), DescribeRole.Theorem)), []));
+                AssessedProvenance.FromRepo(Source), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("gadde-jain-krishna-kulkarni-sharma-2023-multi-entropy-positivity"),
+                    ResolutionKind.Refuted))), []));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        AssessedProvenance provenance, DescribeRole role) => Describe.Lean(
+        AssessedProvenance provenance, DescribeRole role, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("gjk-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(Disp(formula)), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Named(string name) => Seq(Operatorname, Grp(name.Split('.').SelectMany((part, index) =>
