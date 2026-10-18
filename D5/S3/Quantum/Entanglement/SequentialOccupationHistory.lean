@@ -143,7 +143,7 @@ private theorem conditional_amplitude {r : Multiset α} {n : ℕ}
   simp only [historyAmplitude, Complex.ofReal_div]
   field_simp
 
-private theorem sector_head {r : Multiset α} {n : ℕ} (h : r.card = n + 1)
+theorem sector_head {r : Multiset α} {n : ℕ} (h : r.card = n + 1)
     (w : Word α (n + 1)) :
     sectorVector (n + 1) r w = if w 0 ∈ r then
       (Real.sqrt ((r.count (w 0) : ℝ) / (n + 1 : ℕ)) : ℂ) *
