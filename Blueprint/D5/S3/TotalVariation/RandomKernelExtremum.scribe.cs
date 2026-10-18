@@ -75,5 +75,56 @@ internal sealed class RandomKernelExtremumDocument : IScribeDocumentDefinition
                     + "is at most rho(d). For r>0, normalization of the active table "
                     + "gives the stronger bound r*rho(d). When r=0 every active entry "
                     + "is zero and both output laws coincide at the blocking vertex."))),
+                DescribeRole.Theorem),
+            Paragraph(Text(
+                "For a fixed output-first matrix K, worstError(K) is the real supremum "
+                + "of TV(K*p,completion(p)) over all nonnegative normalized source laws.")),
+            Describe.Lean(
+                DescribeId.Create("optimal-kernel-attains"),
+                DeclarationHandle.Create(
+                    "D5/S3/TotalVariation/RandomKernelExtremum.optimal_kernel_attains"),
+                H("Deterministic sources attain the upper bound"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every d>=2 and every i,j in Fin d, the point source at the "
+                    + "active pair (i,j) has error exactly rho(d). Consequently "
+                    + "worstError(optimalKernel(d))=rho(d). This conclusion concerns "
+                    + "the displayed kernel; it does not assert minimization over all kernels."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("uniform-kernel-lower-bound"),
+                DeclarationHandle.Create(
+                    "D5/S3/TotalVariation/RandomKernelExtremum.uniform_kernel_lower_bound"),
+                H("A general obstruction from full diagonal matching"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every d>=2, every real matrix K on the full source space, "
+                    + "and every real e, if TV(K*p,completion(p))<=e for every "
+                    + "nonnegative normalized source p, then (d-1)/(2d)<=e. "
+                    + "K need not be stochastic. The uniform full diagonal matching "
+                    + "has completion gap 1-1/d. Linearity and the point-source "
+                    + "constraints bound its distance from its K-image by e; the "
+                    + "triangle inequality then bounds its completion gap by 2e."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("rho-tendsto-one"),
+                DeclarationHandle.Create(
+                    "D5/S3/TotalVariation/RandomKernelExtremum.rho_tendsto_one"),
+                H("Limit over increasing dimensions"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "As the natural dimension d tends to infinity, rho(d) tends to one. "
+                    + "For each integer k>=2 and d>=k*k, the candidate of support size k "
+                    + "gives 1-2/k<=rho(d)<=1. Choosing k large proves the limit."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("rho-values"),
+                DeclarationHandle.Create(
+                    "D5/S3/TotalVariation/RandomKernelExtremum.rho_values"),
+                H("Small-dimensional radii"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The finite maxima give rho(2)=1/4, rho(3)=1/3, "
+                    + "rho(4)=2/5, and rho(5)=4/9, in the half-L1 convention."))),
                 DescribeRole.Theorem))));
 }

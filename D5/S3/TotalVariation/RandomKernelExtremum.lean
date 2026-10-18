@@ -536,4 +536,264 @@ theorem optimal_kernel_upper_bound {d : ℕ} (hd : 2 ≤ d) :
 
 #print axioms optimal_kernel_upper_bound
 
+
+private theorem completion_point {d : ℕ} (i j : Fin d) :
+    completion (Pi.single (some (i,j)) 1 : Option (Fin d × Fin d) → ℝ) =
+      Pi.single (some (i,j)) 1 := by
+  classical
+  let p : Option (Fin d × Fin d) → ℝ := Pi.single (some (i,j)) 1
+  have hrow (x : Fin d) : (∑ y, p (some (x,y))) = if x = i then 1 else 0 := by
+    by_cases h : x = i
+    · subst x; simp [p, Pi.single_apply]
+    · simp [p, Pi.single_apply, Prod.mk.injEq, h, Ne.symm h]
+  have hcol (y : Fin d) : (∑ x, p (some (x,y))) = if y = j then 1 else 0 := by
+    by_cases h : y = j
+    · subst y; simp [p, Pi.single_apply]
+    · simp [p, Pi.single_apply, Prod.mk.injEq, h, Ne.symm h]
+  change completion p = p
+  funext z
+  cases z with
+  | none => rfl
+  | some z =>
+    rcases z with ⟨x,y⟩
+    have hpnone : p none = 0 := by simp [p, Pi.single_apply]
+    simp only [completion, hpnone, sub_zero, zero_lt_one, ↓reduceIte, hrow, hcol, div_one]
+    by_cases h1 : x = i <;> by_cases h2 : y = j
+    all_goals simp [p, Pi.single_apply, Prod.mk.injEq, h1, h2] <;> aesop
+
+private theorem tv_point {X : Type*} [Fintype X] [DecidableEq X]
+    (q : X → ℝ) (hq : ∀ z, 0 ≤ q z) (hm : ∑ z, q z = 1) (x : X) :
+    totalVariation q (Pi.single x 1) = 1 - q x := by
+  rw [tv_overlap _ _ hm (by simp)]
+  congr 1
+  have hqx : q x ≤ 1 := by
+    rw [← hm]
+    exact Finset.single_le_sum (fun z _ => hq z) (Finset.mem_univ x)
+  rw [Finset.sum_eq_single x]
+  · simp [Pi.single_apply, min_eq_left hqx]
+  · intro y _ hne
+    simp [Pi.single_apply, hne, Ne.symm hne, min_eq_right (hq y)]
+  · simp
+
+/-- Every deterministic active source attains rho, and the supremum error of the
+explicit fixed stochastic kernel is exactly rho. -/
+theorem optimal_kernel_attains {d : ℕ} (hd : 2 ≤ d) :
+    (∀ i j : Fin d, totalVariation
+      (kernelOutput (optimalKernel d) (Pi.single (some (i,j)) 1))
+      (completion (Pi.single (some (i,j)) 1)) = rho d) ∧
+    worstError (optimalKernel d) = rho d := by
+  classical
+  obtain ⟨hstoch, hupper⟩ := optimal_kernel_upper_bound hd
+  have hpoint (i j : Fin d) : totalVariation
+      (kernelOutput (optimalKernel d) (Pi.single (some (i,j)) 1))
+      (completion (Pi.single (some (i,j)) 1)) = rho d := by
+    rw [completion_point]
+    have hout : kernelOutput (optimalKernel d) (Pi.single (some (i,j)) 1) =
+        fun z => optimalKernel d z (some (i,j)) := by
+      funext z
+      simp [kernelOutput, Pi.single_apply, mul_ite]
+    rw [hout, tv_point _ (fun z => hstoch.1 z _) (hstoch.2 _) ]
+    simp [optimalKernel, replacement]
+  refine ⟨hpoint, ?_⟩
+  let i : Fin d := ⟨0, by omega⟩
+  let p : Option (Fin d × Fin d) → ℝ := Pi.single (some (i,i)) 1
+  have hp : ∀ z, 0 ≤ p z := by intro z; simp [p, Pi.single_apply]; positivity
+  have hm : ∑ z, p z = 1 := by simp [p]
+  have hne : {e : ℝ | ∃ p : Option (Fin d × Fin d) → ℝ,
+      (∀ z, 0 ≤ p z) ∧ (∑ z, p z = 1) ∧
+      e = totalVariation (kernelOutput (optimalKernel d) p) (completion p)}.Nonempty := by
+    exact ⟨_, p, hp, hm, rfl⟩
+  have hbdd : BddAbove {e : ℝ | ∃ p : Option (Fin d × Fin d) → ℝ,
+      (∀ z, 0 ≤ p z) ∧ (∑ z, p z = 1) ∧
+      e = totalVariation (kernelOutput (optimalKernel d) p) (completion p)} := by
+    refine ⟨rho d, ?_⟩
+    rintro e ⟨p, hp, hm, rfl⟩
+    exact hupper p hp hm
+  apply le_antisymm
+  · apply csSup_le hne
+    rintro e ⟨q, hq, hqm, rfl⟩
+    exact hupper q hq hqm
+  · rw [← hpoint i i]
+    exact le_csSup hbdd ⟨p, hp, hm, rfl⟩
+
+#print axioms optimal_kernel_attains
+
+
+/-- A uniform full diagonal matching, with no blocking mass. -/
+def diagonalLaw (d : ℕ) : Option (Fin d × Fin d) → ℝ
+  | none => 0
+  | some z => if z.1 = z.2 then 1 / (d : ℝ) else 0
+
+private theorem diagonal_probability {d : ℕ} (hd : 0 < d) :
+    (∀ z, 0 ≤ diagonalLaw d z) ∧ ∑ z, diagonalLaw d z = 1 := by
+  classical
+  have hdR : (0 : ℝ) < d := by exact_mod_cast hd
+  constructor
+  · intro z; cases z <;> simp only [diagonalLaw] <;> positivity
+  · simp [diagonalLaw, Fintype.sum_option, Fintype.sum_prod_type, hdR.ne']
+
+private theorem diagonal_completion {d : ℕ} (hd : 0 < d) :
+    completion (diagonalLaw d) = fun z => match z with
+      | none => 0 | some _ => 1 / (d : ℝ)^2 := by
+  classical
+  have hdR : (0 : ℝ) < d := by exact_mod_cast hd
+  funext z
+  cases z <;> simp [completion, diagonalLaw, Fintype.sum_prod_type, one_div, pow_two]
+
+private theorem diagonal_gap {d : ℕ} (hd : 0 < d) :
+    totalVariation (diagonalLaw d) (completion (diagonalLaw d)) = 1 - 1 / (d : ℝ) := by
+  classical
+  have hdR : (0 : ℝ) < d := by exact_mod_cast hd
+  have hd1 : (1 : ℝ) ≤ d := by exact_mod_cast hd
+  rw [diagonal_completion hd]
+  have hmass : (∑ z : Option (Fin d × Fin d),
+      (match z with | none => (0 : ℝ) | some _ => 1 / (d : ℝ)^2)) = 1 := by
+    simp [Fintype.sum_option, Fintype.sum_prod_type]
+    field_simp
+  rw [tv_overlap _ _ (diagonal_probability hd).2 hmass]
+  congr 1
+  have hcmp : 1 / (d : ℝ)^2 ≤ 1 / (d : ℝ) := by
+    apply (div_le_div_iff₀ (sq_pos_of_pos hdR) hdR).mpr
+    nlinarith
+  have hmin (x y : Fin d) : min (if x = y then 1 / (d : ℝ) else 0)
+      (1 / (d : ℝ)^2) = if x = y then 1 / (d : ℝ)^2 else 0 := by
+    by_cases h : x = y
+    · simp only [if_pos h]
+      exact min_eq_right hcmp
+    · simp only [if_neg h]
+      exact min_eq_left (by positivity)
+  simp only [Fintype.sum_option, Fintype.sum_prod_type, diagonalLaw, min_self, zero_add]
+  simp_rw [hmin]
+  simp
+  field_simp
+
+private theorem tv_sum_le {I X : Type*} [Fintype I] [Fintype X]
+    (f g : I → X → ℝ) :
+    totalVariation (fun x => ∑ i, f i x) (fun x => ∑ i, g i x) ≤
+      ∑ i, totalVariation (f i) (g i) := by
+  simp only [totalVariation, ← Finset.sum_sub_distrib]
+  calc
+    _ ≤ (1 / 2 : ℝ) * ∑ x, ∑ i, |f i x - g i x| := by
+      apply mul_le_mul_of_nonneg_left _ (by norm_num)
+      exact Finset.sum_le_sum fun x _ => Finset.abs_sum_le_sum_abs _ _
+    _ = _ := by rw [Finset.sum_comm, Finset.mul_sum]
+
+private theorem kernel_mixture {d : ℕ}
+    (K : Option (Fin d × Fin d) → Option (Fin d × Fin d) → ℝ) :
+    kernelOutput K (diagonalLaw d) =
+      fun z => (1 / (d : ℝ)) * ∑ i : Fin d, K z (some (i,i)) := by
+  classical
+  funext z
+  simp [kernelOutput, diagonalLaw, Fintype.sum_option, Fintype.sum_prod_type,
+    mul_ite, ← Finset.sum_mul, Finset.mul_sum, mul_comm]
+
+/-- Every fixed linear kernel has a uniform approximation error at least
+(d-1)/(2d). Stochasticity is unnecessary for this obstruction. -/
+theorem uniform_kernel_lower_bound {d : ℕ} (hd : 2 ≤ d)
+    (K : Option (Fin d × Fin d) → Option (Fin d × Fin d) → ℝ) (e : ℝ)
+    (he : ∀ p : Option (Fin d × Fin d) → ℝ,
+      (∀ z, 0 ≤ p z) → (∑ z, p z = 1) →
+      totalVariation (kernelOutput K p) (completion p) ≤ e) :
+    ((d : ℝ) - 1) / (2 * d) ≤ e := by
+  classical
+  have hd0 : 0 < d := by omega
+  have hdR : (0 : ℝ) < d := by exact_mod_cast hd0
+  have hdet (i : Fin d) : totalVariation (fun z => K z (some (i,i)))
+      (Pi.single (some (i,i)) 1) ≤ e := by
+    have h := he (Pi.single (some (i,i)) 1)
+      (fun z => by simp [Pi.single_apply]; positivity) (by simp)
+    rw [completion_point] at h
+    have hout : kernelOutput K (Pi.single (some (i,i)) 1) =
+        fun z => K z (some (i,i)) := by
+      funext z
+      simp [kernelOutput, Pi.single_apply, mul_ite]
+    rw [hout] at h
+    exact h
+  have hdiag : diagonalLaw d = fun z => (1 / (d : ℝ)) *
+      ∑ i : Fin d, (Pi.single (some (i,i)) 1 : Option (Fin d × Fin d) → ℝ) z := by
+    funext z
+    cases z with
+    | none => simp [diagonalLaw]
+    | some z =>
+      rcases z with ⟨x,y⟩
+      by_cases h : x = y
+      · subst y; simp [diagonalLaw, Pi.single_apply]
+      · simp [diagonalLaw, Pi.single_apply, Prod.mk.injEq, h, Ne.symm h]
+  have hmix : totalVariation (kernelOutput K (diagonalLaw d)) (diagonalLaw d) ≤ e := by
+    rw [kernel_mixture, hdiag, tv_scale _ (by positivity)]
+    calc
+      _ ≤ (1 / (d : ℝ)) * ∑ i : Fin d,
+          totalVariation (fun z => K z (some (i,i))) (Pi.single (some (i,i)) 1) :=
+        mul_le_mul_of_nonneg_left (tv_sum_le _ _) (by positivity)
+      _ ≤ (1 / (d : ℝ)) * ∑ _i : Fin d, e :=
+        mul_le_mul_of_nonneg_left (Finset.sum_le_sum fun i _ => hdet i) (by positivity)
+      _ = e := by simp [hdR.ne']
+  have htest := he (diagonalLaw d) (diagonal_probability hd0).1 (diagonal_probability hd0).2
+  have htri := total_variation_triangle (diagonalLaw d)
+    (kernelOutput K (diagonalLaw d)) (completion (diagonalLaw d))
+  rw [diagonal_gap hd0, total_variation_comm (diagonalLaw d) (kernelOutput K (diagonalLaw d))] at htri
+  apply (div_le_iff₀ (by positivity : (0 : ℝ) < 2 * d)).mpr
+  have h := (mul_le_mul_iff_right₀ hdR).mpr (show 1 - 1 / (d : ℝ) ≤ 2 * e by linarith)
+  field_simp at h
+  nlinarith only [h]
+
+#print axioms uniform_kernel_lower_bound
+
+
+private theorem rho_le_one {d : ℕ} (hd : 2 ≤ d) : rho d ≤ 1 := by
+  have hdR : (2 : ℝ) ≤ d := by exact_mod_cast hd
+  have hb := (le_div_iff₀ (by linarith : (0 : ℝ) < d)).mp (beta_le_inv hd)
+  have hb0 := beta_nonneg d
+  dsimp [rho]
+  nlinarith only [hb, hb0]
+
+private theorem rho_approach {d k : ℕ} (hk : 2 ≤ k) (hd : k * k ≤ d) :
+    1 - 2 / (k : ℝ) ≤ rho d := by
+  have hkR : (2 : ℝ) ≤ k := by exact_mod_cast hk
+  have hk0 : (0 : ℝ) < k := by linarith
+  have hkd : k ≤ d := by nlinarith
+  have hdR : (k : ℝ) * k ≤ d := by exact_mod_cast hd
+  have hd2 : (2 : ℝ) ≤ d := by nlinarith only [hdR, hkR]
+  have ht : (0 : ℝ) < (d : ℝ) + k - 2 := by linarith
+  have hden : (0 : ℝ) < (k : ℝ) * ((d : ℝ) + k - 2) := mul_pos hk0 ht
+  have hb : (k : ℝ) - 1 ≤ beta d * ((k : ℝ) * ((d : ℝ) + k - 2)) :=
+    (div_le_iff₀ hden).mp (coefficient_le_beta hkd)
+  have hm := mul_le_mul_of_nonneg_left hb (by linarith : (0 : ℝ) ≤ d - 1)
+  have hpoly : ((k : ℝ) - 2) * ((d : ℝ) + k - 2) ≤ ((d : ℝ) - 1) * (k - 1) := by
+    nlinarith only [hdR, hkR]
+  have hmul : (k : ℝ) - 2 ≤ ((d : ℝ) - 1) * beta d * k := by
+    apply (mul_le_mul_iff_right₀ ht).mp
+    nlinarith only [hm, hpoly]
+  have hdiv := (div_le_iff₀ hk0).mpr hmul
+  dsimp [rho]
+  calc
+    1 - 2 / (k : ℝ) = ((k : ℝ) - 2) / k := by field_simp <;> ring
+    _ ≤ _ := hdiv
+
+/-- The sharp candidate radii approach one over unbounded finite dimensions. -/
+theorem rho_tendsto_one : Filter.Tendsto rho Filter.atTop (nhds 1) := by
+  apply Metric.tendsto_atTop.mpr
+  intro ε hε
+  obtain ⟨k, hk⟩ := exists_nat_gt (max 2 (2 / ε))
+  have hk2 : 2 ≤ k := by have := (le_max_left (2 : ℝ) (2 / ε)).trans hk.le; exact_mod_cast this
+  have hk0 : (0 : ℝ) < k := lt_of_le_of_lt (by positivity : (0 : ℝ) ≤ 2) ((le_max_left _ _).trans_lt hk)
+  have hfrac : 2 / (k : ℝ) < ε := by
+    apply (div_lt_iff₀ hk0).mpr
+    have hh := (div_lt_iff₀ hε).mp ((le_max_right _ _).trans_lt hk)
+    nlinarith only [hh]
+  refine ⟨k*k, fun d hd => ?_⟩
+  have hd2 : 2 ≤ d := by nlinarith
+  have hupper := rho_le_one hd2
+  have hlower := rho_approach hk2 hd
+  rw [Real.dist_eq, abs_of_nonpos (sub_nonpos.mpr hupper)]
+  linarith only [hlower, hfrac]
+
+/-- The exact small-dimensional radii in the given normalization. -/
+theorem rho_values : rho 2 = 1/4 ∧ rho 3 = 1/3 ∧ rho 4 = 2/5 ∧ rho 5 = 4/9 := by
+  norm_num [rho, beta, coefficient, Finset.range_add_one, Finset.sup'_insert,
+    Finset.sup'_singleton]
+
+#print axioms rho_tendsto_one
+#print axioms rho_values
+
 end D5.S3.TotalVariation.RandomKernelExtremum
