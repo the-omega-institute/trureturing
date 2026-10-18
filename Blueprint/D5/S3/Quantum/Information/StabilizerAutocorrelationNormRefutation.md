@@ -194,4 +194,5 @@ The squared Frobenius norm of A(ψ)*A(ψ) is (2961 + 19√5)/1600. The operator 
 - Truth anchor: `D5/S3/Quantum/Information/StabilizerAutocorrelationNormRefutation.shift`
 - Truth anchor: `D5/S3/Quantum/Information/StabilizerAutocorrelationNormRefutation.tau`
 - Dependency: [D5/S3/Arith/Lattices/Klartag/Walk/StepInputs2](../../Arith/Lattices/Klartag/Walk/StepInputs2.md)
-- Dependency: [D5/S3/Quantum/Algebra/WeylPhaseArithmetic](../Algebra/WeylPhaseArithmetic.md)
+- Dependency: [D5/S3/Quantum/Magic/CepollaroPowerOfTwoZeroMagicGap](../Magic/CepollaroPowerOfTwoZeroMagicGap.md)
+- Dependency: [D5/S3/Quantum/Measurement/FourierLDOILOCCRefutation](../Measurement/FourierLDOILOCCRefutation.md)
