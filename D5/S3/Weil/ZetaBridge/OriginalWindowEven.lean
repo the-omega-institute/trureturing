@@ -50,11 +50,11 @@ def zeroIsometry (a : ℝ) : WindowL2 a →ₗᵢ[ℂ] LineL2 where
   toFun := zeroClass a
   map_add' u v := by
     apply Lp.ext
-    have hadd_restrict :
-        ((u + v : WindowL2 a) : ℝ → ℂ) =ᵐ[volume.restrict (Ioc (-a) a)]
-          (u : ℝ → ℂ) + (v : ℝ → ℂ) := by
-      simpa only [windowMeasure, window] using Lp.coeFn_add u v
-    have h := (ae_eq_restrict_iff_indicator_ae_eq measurableSet_Ioc).mp hadd_restrict
+    have hwindow : MeasurableSet (window a) := by
+      simpa only [window] using (measurableSet_Ioc : MeasurableSet (Ioc (-a) a))
+    have h := (ae_eq_restrict_iff_indicator_ae_eq
+      (s := window a) (μ := (volume : Measure ℝ)) hwindow).mp
+        (Lp.coeFn_add u v)
     filter_upwards [zeroClass_ae a (u + v), zeroClass_ae a u, zeroClass_ae a v,
       Lp.coeFn_add (zeroClass a u) (zeroClass a v), h] with x huv hu hv hadd hi
     rw [huv, hadd, Pi.add_apply, hu, hv]
@@ -63,11 +63,11 @@ def zeroIsometry (a : ℝ) : WindowL2 a →ₗᵢ[ℂ] LineL2 where
     · simp only [zeroExtension, window, Set.indicator_of_notMem hx, add_zero]
   map_smul' c u := by
     apply Lp.ext
-    have hsmul_restrict :
-        ((c • u : WindowL2 a) : ℝ → ℂ) =ᵐ[volume.restrict (Ioc (-a) a)]
-          c • (u : ℝ → ℂ) := by
-      simpa only [windowMeasure, window] using Lp.coeFn_smul c u
-    have h := (ae_eq_restrict_iff_indicator_ae_eq measurableSet_Ioc).mp hsmul_restrict
+    have hwindow : MeasurableSet (window a) := by
+      simpa only [window] using (measurableSet_Ioc : MeasurableSet (Ioc (-a) a))
+    have h := (ae_eq_restrict_iff_indicator_ae_eq
+      (s := window a) (μ := (volume : Measure ℝ)) hwindow).mp
+        (Lp.coeFn_smul c u)
     filter_upwards [zeroClass_ae a (c • u), zeroClass_ae a u,
       Lp.coeFn_smul c (zeroClass a u), h] with x hcu hu hsm hi
     simp only [RingHom.id_apply]
