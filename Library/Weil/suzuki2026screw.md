@@ -821,3 +821,246 @@ coupling to all omitted positions remain uncontrolled. Thus (W22)
 neither supplies full $K_0$ positivity nor the signed Robin upper
 estimate, and does not prove RH. The Jacobi orbit equations and the
 second-level theorem are not claimed to pay those remaining estimates.
+
+## Uniform confluence pays all sufficiently large two-position minors
+
+The gap restriction in (W22) can be removed for **two-position** minors
+by controlling the actual normalized kernel through second derivatives.
+The threshold below is existential; no numerical value is asserted.
+Reuse (W12)--(W22), including global concavity of $g=\log\Phi$ and the
+actual hazard bounds (W19). The complete physical kernel and its
+normalization are unchanged. This is a paper application, without a
+literature-priority or Lean/kernel-verification claim.
+
+First retain the finite-order information needed for differentiation.
+The exact factorization and relative theta series in Planat--Solé,
+Section 4, equations (4.2), (4.6), give, with $y=\pi e^{2u}$,
+
+$$
+\begin{aligned}
+\Phi(u)&=4\pi^2e^{9u/2-y}(1-3/(2y))(1+\varepsilon),\\
+\varepsilon&=\sum_{m\ge2}
+ m^2\frac{2m^2y-3}{2y-3}e^{-(m^2-1)y}.
+\end{aligned}
+$$
+
+For each fixed $0\le k\le6$, applying $(2y\,d/dy)^k$ to a summand
+bounds its absolute value by
+$C_k(1+y)^km^{4+2k}e^{-(m^2-1)y}$ for $u\ge1$.
+The reciprocal denominator has bounded differentiated factors there;
+each exponential differentiation adds at most
+$C_km^2(1+y)$. The remaining sum is bounded by
+
+$$
+\sum_{m\ge2}m^{4+2k}e^{-(m^2-4)y}
+\le\sum_{m\ge2}m^{4+2k}e^{-(m^2-4)}<\infty.
+$$
+
+These summable bounds also justify termwise differentiation. Taking the
+logarithm, and extending the bounds over any remaining compact interval
+by positivity and smoothness, yields
+
+$$
+\boxed{\begin{aligned}
+g(u)&=\log(4\pi^2)+\tfrac92u-\pi e^{2u}+v(u),\\
+|v^{(k)}(u)|&\le C_ke^{-2u}
+ &&(u\ge1,\ 0\le k\le6),\\
+|g^{(k)}(u)|&\le C_ke^{2|u|}
+ &&(u\in\mathbb R,\ 1\le k\le6).
+\end{aligned}}
+\tag{W23}
+$$
+
+For the last line use evenness and compact derivative maxima.
+This derives fixed-order growth bounds from the actual full series;
+it does not extend the source's finite sign claims to an all-order
+Laguerre or derivative-Hankel hierarchy.
+
+Fix $D>0$, put $a=x+d$, $b=x-d$, $E=e^{-2x}$ and $|d|\le D$.
+For $x>D+1$ define the exact scaled difference
+
+$$
+T(x,d)=\frac{e^{2x}L_0(x+d,x-d)}
+ {x\Phi(x+d)\Phi(x-d)},
+\qquad q_\infty(d)=\frac1{8\pi\cosh(2d)}.
+$$
+
+The source-specific differentiable limit is
+
+$$
+\boxed{\max_{m+n\le2}\sup_{|d|\le D}
+\left|\partial_x^m\partial_d^nT(x,d)
+-\mathbf1_{\{m=0\}}q_\infty^{(n)}(d)\right|
+\longrightarrow0\qquad(x\to\infty).}
+\tag{W24}
+$$
+
+Both complete integrals are needed to prove it. For the direct term,
+$y=x+Et$ gives exactly
+
+$$
+\begin{aligned}
+Q(x,d)&=\frac{e^{2x}K_0(a,b)}{x\Phi(a)\Phi(b)}
+=\frac12\int_0^\infty(1+Et/x)e^{F(x,d,t)}\,dt,\\
+F(x,d,t)&=\sum_{s\in\{-1,1\}}
+ [g(x+sd+Et)-g(x+sd)].
+\end{aligned}
+$$
+
+By (W19), $F\le-c_Dt$ with $c_D=2e^{-2D}>0$.
+Writing each difference as
+$Et\int_0^1g'(x+sd+vEt)\,dv$ and using $E_x=-2E$
+bounds every mixed derivative of $F$ of total order at most two by
+$C_Dt(1+t)^2e^{2Et}$. Here at most $g'''$ is needed, and every term
+retains a factor $Et$, cancelling the $e^{2x}$ in (W23).
+For all sufficiently large $x$ the direct integrand and these derivatives
+are therefore bounded on the whole half-line by
+
+$$
+C_D(1+t)^7e^{-c_Dt/2}.
+$$
+
+This follows by choosing $4E\le c_D/2$ after applying the chain rule
+to $e^F$. For fixed $t$, (W23) gives
+
+$$
+F=9Et-2\pi\cosh(2d)\frac{e^{2Et}-1}{E}
+ +\sum_{s\in\{-1,1\}}[v(x+sd+Et)-v(x+sd)].
+$$
+
+The fraction extends smoothly to $E=0$, with value $2t$;
+its first two $x$ derivatives tend to zero since
+$\partial_x=-2E\partial_E$ on that factor. The remainder and its
+first two derivatives vanish by (W23). Thus dominated convergence gives
+$Q\to q_\infty$, uniformly with all mixed derivatives of total order
+at most two, with zero limits for derivatives involving $x$.
+
+For the reflected term put
+
+$$
+\mathscr H(x,z)=g(x+\sqrt z)+g(x-\sqrt z)\qquad(z\ge0).
+$$
+
+Its even square-root expression has continuous derivatives at $z=0$.
+The integral divided-difference formula, for $j=1,2,3$, is
+
+$$
+\partial_z^j\mathscr H(x,z)
+=\frac1{2^{2j-1}(j-1)!}
+\int_{-1}^1(1-s^2)^{j-1}g^{(2j)}(x+s\sqrt z)\,ds.
+$$
+
+The case $j=1$ is the fundamental theorem of calculus;
+differentiation and integration by parts give $j=2,3$ and their
+endpoint limits. Differentiating also in $x$, (W23) gives
+
+$$
+|\partial_x^k\partial_z^j\mathscr H(x,z)|
+\le C E^{-1}e^{2\sqrt z}
+\qquad(2j+k\le6,\ x\ge1).
+$$
+
+There is a global favorable sign. For $z>0$,
+
+$$
+\mathscr H_z(x,z)
+=\frac{g'(x+\sqrt z)-g'(x-\sqrt z)}{2\sqrt z}
+\le-\frac12e^{2x}.
+$$
+
+Indeed global concavity bounds the integral of $g''$ from
+$x-\sqrt z$ to $x$ by zero, and (W19) bounds its integral from
+$x$ to $x+\sqrt z$ by $-e^{2x}\sqrt z$. Continuity handles $z=0$.
+In particular this sign does not require $x-\sqrt z\ge0$.
+
+Changing $y^2=d^2+Et$ in the original reflected integral gives exactly
+
+$$
+\begin{aligned}
+B(x,d)&=\frac{e^{2x}K_0(a,-b)}{\Phi(a)\Phi(b)}
+=\frac14\int_0^\infty e^{G(x,d,t)}\,dt,\\
+G(x,d,t)&=\mathscr H(x,d^2+Et)-\mathscr H(x,d^2)\le-t/2.
+\end{aligned}
+$$
+
+Write $G=Et\int_0^1\mathscr H_z(x,d^2+vEt)\,dv$.
+Up to two mixed $x,d$ derivatives use only
+$(j,k)=(1,0),(1,1),(1,2),(2,0),(2,1),(3,0)$ above.
+Each term retains $Et$, with at most two additional such factors;
+$d$ derivatives contribute bounded factors $2d$ and $2$.
+Since $\sqrt{d^2+vEt}\le D+\sqrt t$, these derivatives of $G$ are bounded by
+$C_Dt(1+t)^2e^{2\sqrt t}$. Thus the reflected integrand and its
+first two mixed derivatives have the integrable majorant
+
+$$
+C_D(1+t)^6e^{4\sqrt t-t/2}.
+$$
+
+Consequently $B$ and those derivatives are uniformly bounded, and
+$B/x$ is $O_D(1/x)$ with all the required mixed derivatives.
+This controls the full reflected exterior, including
+$x-\sqrt{d^2+Et}<0$; no cutoff is introduced there.
+The exact identity $T=Q-B/x$ now proves (W24).
+
+Normalize by the actual diagonal, not a leading approximation:
+
+$$
+\begin{aligned}
+r_x(d)&=\frac{L_0(x+d,x-d)}{\sqrt{J(x+d)J(x-d)}}\\
+&=\frac{x}{\sqrt{x^2-d^2}}
+\frac{T(x,d)}{\sqrt{T(x+d,0)T(x-d,0)}}.
+\end{aligned}
+$$
+
+The mixed $x$ derivatives in (W24) control these shifted diagonal
+factors. Since $T(u,0)\to1/(8\pi)>0$ and its first two $u$
+derivatives tend to zero, it follows that
+
+$$
+\boxed{r_x\longrightarrow\operatorname{sech}(2d)
+\quad\text{in }C^2([-D,D]),\qquad
+r_x(0)=1,\quad r_x'(0)=0.}
+\tag{W25}
+$$
+
+The last two equalities are exact, from normalization and symmetry.
+They prevent an error independent of $d$ from obscuring the vanishing
+near-diagonal margin.
+
+Take $D=4$. Since $(\operatorname{sech}(2d))''|_{d=0}=-4$,
+choose one $r\in(0,1)$ on which this derivative is at most $-2$.
+For all sufficiently large $x$, (W25) then gives $r_x''\le-1$
+on $[-r,r]$, whence
+
+$$
+0<r_x(d)\le1-d^2/2\qquad(|d|\le r).
+$$
+
+On $r\le|d|\le4$, uniform convergence gives
+$0<r_x(d)\le(1+\operatorname{sech}(2r))/2<1$ after enlarging
+the same threshold. Positivity here is (W12), reused.
+For $|a-b|\ge8$, apply the already-owned two-position consumer of (W22).
+Together these estimates supply one fixed $A\ge256$ such that
+
+$$
+\boxed{\begin{aligned}
+\Delta(a,b)&:=J(a)J(b)-L_0(a,b)^2>0
+&&\text{for all distinct }a,b\ge A,\\
+\Delta(a,b)&\ge\frac{(a-b)^2}{8}J(a)J(b)
+&&\text{if }a,b\ge A,\ |a-b|\le2r.
+\end{aligned}}
+\tag{W26}
+$$
+
+For the second line use
+$1-r_x(d)^2\ge d^2-d^4/4\ge d^2/2$ with $a-b=2d$.
+At $a=b$ the determinant is exactly zero. Neither $A$ nor $r$ is
+numerically certified here.
+
+This pays the high-position two-point estimate uniformly through
+confluence. It does not prove positivity of dense higher-order Gram
+matrices or arbitrary signed smooth profiles, and it supplies no
+coupling to compact or omitted positions. The all-size result (W22)
+retains its spacing restriction. Full physical positivity, the signed
+Robin upper and RH remain unproved. No Jacobi-orbit or finite-curvature
+identity alone is claimed to settle these outstanding estimates.
