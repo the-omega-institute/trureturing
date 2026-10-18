@@ -17,27 +17,18 @@ open D5.S3.Geometry.AlphaGeometry.PositiveSimplexGeometryAndMixing (moreMixed de
 
 private lemma desc_affine {M : ℕ} (a b : ℝ) (hb : 0 < b) (c : Fin M → ℝ) :
     desc (fun i => a + b * c i) = (desc c).map (fun x => a + b * x) := by
-  apply List.Perm.eq_of_pairwise' (r := fun x y : ℝ => y ≤ x)
-  · exact List.pairwise_mergeSort' (fun x y : ℝ => y ≤ x) _
-  · apply List.Pairwise.map
-    · intro x y hxy
-      exact add_le_add le_rfl (mul_le_mul_of_nonneg_left hxy hb.le)
-    · exact List.pairwise_mergeSort' (fun x y : ℝ => y ≤ x) _
-  · exact (List.mergeSort_perm _ _).trans
-      (by simpa [List.map_ofFn, desc, Function.comp_def] using
-        ((List.mergeSort_perm (List.ofFn c) (fun x y : ℝ => decide (y ≤ x))).symm.map
-          (fun x => a + b * x)))
+  simpa only [desc, List.map_ofFn, Function.comp_def] using
+    (List.map_mergeSort (l := List.ofFn c)
+      (r := fun x y : ℝ => decide (y ≤ x))
+      (s := fun x y : ℝ => decide (y ≤ x)) (f := fun x => a + b * x)
+      (by intro x _ y _; simp only [add_le_add_iff_left, mul_le_mul_iff_right₀ hb])).symm
 
 private lemma prefix_affine (xs : List ℝ) (a b : ℝ) (k : ℕ) :
     prefixSum (xs.map (fun x => a + b * x)) k =
       ((xs.take k).length : ℝ) * a + b * prefixSum xs k := by
-  have hs (ys : List ℝ) : (ys.map (fun x => a + b * x)).sum =
-      (ys.length : ℝ) * a + b * ys.sum := by
-    induction ys with
-    | nil => simp
-    | cons y ys ih => simp only [List.map_cons, List.sum_cons, List.length_cons,
-        Nat.cast_add, Nat.cast_one, ih]; ring
-  simpa only [prefixSum, ← List.map_take] using hs (xs.take k)
+  simp [prefixSum, ← List.map_take, List.sum_map_add,
+    List.sum_replicate, nsmul_eq_mul]
+  simpa using List.sum_map_mul_left (xs.take k) id b
 
 private lemma moreMixed_affine {M : ℕ} {c d : Fin M → ℝ} (hm : moreMixed d c)
     (a b : ℝ) (hb : 0 < b) :

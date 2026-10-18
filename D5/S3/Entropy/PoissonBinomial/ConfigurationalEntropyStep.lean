@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Entropy monotonicity for a pair of Bernoulli coordinates. -/
+   digest: Entropy monotonicity for a transfer of Bernoulli coordinates. -/
 
 import D5.S3.Entropy.PoissonBinomial.PoissonBinomialStructure
 import D5.S3.Entropy.PoissonBinomial.EntropyDirectionBounds
@@ -15,6 +15,7 @@ noncomputable section
 namespace D5.S3.Entropy.PoissonBinomial.MonkmanSirkerConfigurationalEntropy
 open scoped BigOperators Topology
 open D5.S3.Entropy.PoissonBinomial.EntropyDirectionBounds
+open D5.S3.Geometry.AlphaGeometry.MajorizationTransfer.FiniteVector (transfer)
 
 private lemma pbRest_tail {M : ℕ} (x : Fin M → ℝ) {i j : Fin M}
     (hij : i ≠ j) {k : ℕ} (hk : M < k + 2) : pbRest x i j k = 0 := by
@@ -107,11 +108,8 @@ private lemma threePointMass_rest {n : ℕ} (x : Fin (n + 2) → ℝ)
   unfold F
   fun_prop
 
-private def pair {M : ℕ} (x : Fin M → ℝ) (i j : Fin M) (t : ℝ) : Fin M → ℝ :=
-  Function.update (Function.update x i (x i - t)) j (x j + t)
-
 private lemma pbRest_pair {M : ℕ} (x : Fin M → ℝ) (i j : Fin M) (t : ℝ) :
-    pbRest (pair x i j t) i j = pbRest x i j := by
+    pbRest (transfer x i j t) i j = pbRest x i j := by
   classical
   unfold pbRest
   apply congrArg pb
@@ -120,7 +118,7 @@ private lemma pbRest_pair {M : ℕ} (x : Fin M → ℝ) (i j : Fin M) (t : ℝ) 
   · subst l; simp
   · by_cases hli : l = i
     · subst l; simp [hlj]
-    · simp [pair, hlj, hli]
+    · simp [transfer, hlj, hli]
 
 private lemma sum_pair {M : ℕ} (f : Fin M → ℝ) {i j : Fin M} (hij : i ≠ j) :
     ∑ l, f l = f i + f j + ∑ l ∈ (Finset.univ.erase i).erase j, f l := by
@@ -131,16 +129,16 @@ private lemma sum_pair {M : ℕ} (f : Fin M → ℝ) {i j : Fin M} (hij : i ≠ 
 
 private lemma pair_entropy_hasDerivAt {M : ℕ} (x : Fin M → ℝ)
     {i j : Fin M} (hij : i ≠ j) (hx : ∀ l, x l ∈ Set.Ioo 0 1) :
-    HasDerivAt (fun t => ∑ l, Real.binEntropy (pair x i j t l))
+    HasDerivAt (fun t => ∑ l, Real.binEntropy (transfer x i j t l))
       (Real.log (1 - x j) - Real.log (x j) -
         (Real.log (1 - x i) - Real.log (x i))) 0 := by
   classical
-  have he : (fun t => ∑ l, Real.binEntropy (pair x i j t l)) =
+  have he : (fun t => ∑ l, Real.binEntropy (transfer x i j t l)) =
       fun t => Real.binEntropy (x i - t) + Real.binEntropy (x j + t) +
         ∑ l ∈ (Finset.univ.erase i).erase j, Real.binEntropy (x l) := by
     ext t
     rw [sum_pair _ hij]
-    simp only [pair, Function.update_self, Function.update_of_ne hij]
+    simp only [transfer, Function.update_self, Function.update_of_ne hij]
     congr 1
     apply Finset.sum_congr rfl
     intro l hl
@@ -162,7 +160,7 @@ private lemma pair_entropy_hasDerivAt {M : ℕ} (x : Fin M → ℝ)
 private lemma pair_hasDerivAt_nonneg {n : ℕ} (x : Fin (n + 2) → ℝ)
     {i j : Fin (n + 2)} (hij : i ≠ j) (hx : ∀ l, x l ∈ Set.Ioo 0 1)
     (hpq : x j ≤ x i) :
-    ∃ D, HasDerivAt (fun t => F (pair x i j t)) D 0 ∧ 0 ≤ D := by
+    ∃ D, HasDerivAt (fun t => F (transfer x i j t)) D 0 ∧ 0 ≤ D := by
   classical
   let p := x i
   let q := x j
@@ -194,18 +192,18 @@ private lemma pair_hasDerivAt_nonneg {n : ℕ} (x : Fin (n + 2) → ℝ)
       ((hasDerivAt_id (0 : ℝ)).const_add q)).sub_const (p * q) using 1 <;>
       simp [τ] <;> ring
   have he (t : ℝ) (k : Fin (n + 3)) :
-      pb (pair x i j t) k = threePointMass r v0 v1 v2 (τ t) k := by
+      pb (transfer x i j t) k = threePointMass r v0 v1 v2 (τ t) k := by
     rw [pb_remove_two _ hij, pbRest_pair]
     rw [show r = fun l : Fin (n + 1) => pbRest x i j l from rfl,
       threePointMass_rest x hij]
-    simp only [pair, Function.update_self, Function.update_of_ne hij]
+    simp only [transfer, Function.update_self, Function.update_of_ne hij]
     dsimp [v0, v1, v2, τ, p, q]
     ring
   have hD : HasDerivAt (fun u => ∑ k, Real.negMulLog (threePointMass r v0 v1 v2 u k))
       d (τ 0) := by simpa [τ] using hdir.1
   have hH := hD.comp 0 ht
   have hH' : HasDerivAt
-      (fun t => ∑ k ∈ Finset.range (n + 2 + 1), Real.negMulLog (pb (pair x i j t) k))
+      (fun t => ∑ k ∈ Finset.range (n + 2 + 1), Real.negMulLog (pb (transfer x i j t) k))
       (d * (p - q)) 0 := by
     convert hH using 1
     ext t
@@ -245,29 +243,29 @@ private lemma pair_hasDerivAt_nonneg {n : ℕ} (x : Fin (n + 2) → ℝ)
 private lemma pair_interior {M : ℕ} (x : Fin M → ℝ) {i j : Fin M}
     (hij : i ≠ j) (hx : ∀ l, x l ∈ Set.Ioo 0 1) {s : ℝ}
     (hs : s ∈ Set.Icc 0 ((x i - x j) / 2)) :
-    ∀ l, pair x i j s l ∈ Set.Ioo 0 1 := by
+    ∀ l, transfer x i j s l ∈ Set.Ioo 0 1 := by
   intro l
   by_cases hlj : l = j
   · subst l
-    simp only [pair, Function.update_self]
+    simp only [transfer, Function.update_self]
     constructor <;> nlinarith [(hx i).1, (hx i).2, (hx j).1, (hx j).2, hs.1, hs.2]
   · by_cases hli : l = i
     · subst l
-      simp only [pair, Function.update_of_ne hij, Function.update_self]
+      simp only [transfer, Function.update_of_ne hij, Function.update_self]
       constructor <;> nlinarith [(hx i).1, (hx i).2, (hx j).1, (hx j).2, hs.1, hs.2]
-    · simpa [pair, Function.update_of_ne hlj, Function.update_of_ne hli] using hx l
+    · simpa [transfer, Function.update_of_ne hlj, Function.update_of_ne hli] using hx l
 
 private lemma pair_add {M : ℕ} (x : Fin M → ℝ) {i j : Fin M}
     (hij : i ≠ j) (s t : ℝ) :
-    pair (pair x i j s) i j t = pair x i j (s + t) := by
+    transfer (transfer x i j s) i j t = transfer x i j (s + t) := by
   classical
   ext l
   by_cases hlj : l = j <;> by_cases hli : l = i <;>
-    simp [pair, hlj, hli, hij] <;> ring
+    simp [transfer, hlj, hli, hij] <;> ring
 
 private lemma pair_monotone {M : ℕ} (x : Fin M → ℝ) {i j : Fin M}
     (hij : i ≠ j) (hx : ∀ l, x l ∈ Set.Ioo 0 1) :
-    MonotoneOn (fun s => F (pair x i j s)) (Set.Icc 0 ((x i - x j) / 2)) := by
+    MonotoneOn (fun s => F (transfer x i j s)) (Set.Icc 0 ((x i - x j) / 2)) := by
   classical
   have hdim : 2 ≤ M := by
     have hh := Finset.card_le_univ ({i, j} : Finset (Fin M))
@@ -277,23 +275,23 @@ private lemma pair_monotone {M : ℕ} (x : Fin M → ℝ) {i j : Fin M}
   clear hn
   subst M
   have hd (s : ℝ) (hs : s ∈ Set.Icc 0 ((x i - x j) / 2)) :
-      ∃ D, HasDerivAt (fun t => F (pair x i j t)) D s ∧ 0 ≤ D := by
-    have horder : pair x i j s j ≤ pair x i j s i := by
-      simp only [pair, Function.update_self, Function.update_of_ne hij]
+      ∃ D, HasDerivAt (fun t => F (transfer x i j t)) D s ∧ 0 ≤ D := by
+    have horder : transfer x i j s j ≤ transfer x i j s i := by
+      simp only [transfer, Function.update_self, Function.update_of_ne hij]
       linarith [hs.2]
-    obtain ⟨D, hD, hDn⟩ := pair_hasDerivAt_nonneg (n := n) (pair x i j s) (i := i) (j := j) hij
+    obtain ⟨D, hD, hDn⟩ := pair_hasDerivAt_nonneg (n := n) (transfer x i j s) (i := i) (j := j) hij
       (pair_interior x hij hx hs) horder
-    have hD' : HasDerivAt (fun t => F (pair (pair x i j s) i j t)) D (s - s) := by
+    have hD' : HasDerivAt (fun t => F (transfer (transfer x i j s) i j t)) D (s - s) := by
       simpa only [sub_self] using hD
     have hh := hD'.comp s (h := fun t : ℝ => t - s) ((hasDerivAt_id s).sub_const s)
     refine ⟨D, ?_, hDn⟩
-    have he (t : ℝ) : pair (pair x i j s) i j (t - s) = pair x i j t := by
+    have he (t : ℝ) : transfer (transfer x i j s) i j (t - s) = transfer x i j t := by
       rw [pair_add x hij]
       congr 1
       ring
     simpa only [Function.comp_def, mul_one, he] using hh
   apply monotoneOn_of_deriv_nonneg (convex_Icc _ _)
-  · exact (continuous_F.comp (by unfold pair; fun_prop)).continuousOn
+  · exact (continuous_F.comp (by unfold transfer; fun_prop)).continuousOn
   · intro s hs
     have hs' : s ∈ Set.Icc 0 ((x i - x j) / 2) := interior_subset hs
     exact (hd s hs').choose_spec.1.differentiableAt.differentiableWithinAt
@@ -310,24 +308,24 @@ private lemma F_perm {M : ℕ} (x : Fin M → ℝ) (σ : Equiv.Perm (Fin M)) :
 
 private lemma pair_reflect {M : ℕ} (x : Fin M → ℝ) {i j : Fin M}
     (hij : i ≠ j) (s : ℝ) :
-    pair x i j (x i - x j - s) = pair x i j s ∘ Equiv.swap i j := by
+    transfer x i j (x i - x j - s) = transfer x i j s ∘ Equiv.swap i j := by
   classical
   ext l
   by_cases hli : l = i
   · subst l
-    simp [pair, hij]
+    simp [transfer, hij]
     ring
   · by_cases hlj : l = j
     · subst l
-      simp [pair, hij, hij.symm]
+      simp [transfer, hij, hij.symm]
       ring
-    · simp [pair, Equiv.swap_apply_of_ne_of_ne hli hlj, hli, hlj]
+    · simp [transfer, Equiv.swap_apply_of_ne_of_ne hli hlj, hli, hlj]
 
 private lemma pair_le {M : ℕ} (x : Fin M → ℝ) {i j : Fin M}
     (hij : i ≠ j) (hx : ∀ l, x l ∈ Set.Ioo 0 1) {s : ℝ}
-    (hs : s ∈ Set.Icc 0 (x i - x j)) : F x ≤ F (pair x i j s) := by
-  have hzero : pair x i j 0 = x := by
-    simp [pair]
+    (hs : s ∈ Set.Icc 0 (x i - x j)) : F x ≤ F (transfer x i j s) := by
+  have hzero : transfer x i j 0 = x := by
+    simp [transfer]
   by_cases hhalf : s ≤ (x i - x j) / 2
   · simpa only [hzero] using
       pair_monotone x hij hx ⟨le_rfl, by linarith [hs.1, hs.2]⟩ ⟨hs.1, hhalf⟩ hs.1
@@ -347,20 +345,18 @@ theorem F_le_interiorT {M : ℕ} (x y : Fin M → ℝ) (ht : InteriorT x y) :
   by_cases hij : i = j
   · subst j
     have he : (1 - t) • x + t • (x ∘ Equiv.swap i i) = x := by
-      ext l
-      simp
-      ring
+      simp [← add_smul]
     rw [he]
   · have aux (a b : Fin M) (hab : a ≠ b) (horder : x b ≤ x a) :
         F x ≤ F ((1 - t) • x + t • (x ∘ Equiv.swap a b)) := by
       have he : (1 - t) • x + t • (x ∘ Equiv.swap a b) =
-          pair x a b (t * (x a - x b)) := by
+          transfer x a b (t * (x a - x b)) := by
         ext l
         by_cases hla : l = a
-        · subst l; simp [pair, hab]; ring
+        · subst l; simp [transfer, hab]; ring
         · by_cases hlb : l = b
-          · subst l; simp [pair, hab, hab.symm]; ring
-          · simp [pair, Equiv.swap_apply_of_ne_of_ne hla hlb, hla, hlb]
+          · subst l; simp [transfer, hab, hab.symm]; ring
+          · simp [transfer, Equiv.swap_apply_of_ne_of_ne hla hlb, hla, hlb]
             ring
       rw [he]
       exact pair_le x hab hx ⟨mul_nonneg ht0 (sub_nonneg.mpr horder),

@@ -98,25 +98,12 @@ private noncomputable def pushMass (r : ι → ℝ) (a : ι → κ) (k : κ) : �
   ∑ j, if k = a j then r j else 0
 
 omit [Fintype κ] in
-private lemma pushMass_nonneg (r : ι → ℝ) (hr : ∀ j, 0 ≤ r j) (a : ι → κ) (k : κ) :
-    0 ≤ pushMass r a k := by
-  unfold pushMass
-  apply Finset.sum_nonneg
-  intro j _
-  split_ifs
-  · exact hr j
-  · exact le_rfl
-
-omit [Fintype κ] in
 private lemma le_pushMass (r : ι → ℝ) (hr : ∀ j, 0 ≤ r j) (a : ι → κ) (j : ι) :
     r j ≤ pushMass r a (a j) := by
   classical
   simpa only [pushMass, ite_eq_left] using
     (Finset.single_le_sum (fun i (_ : i ∈ Finset.univ) =>
-      show 0 ≤ (if a j = a i then r i else 0) by
-        split_ifs
-        · exact hr i
-        · exact le_rfl)
+      show 0 ≤ (if a j = a i then r i else 0) from ite_nonneg (hr i) le_rfl)
       (Finset.mem_univ j))
 
 private lemma sum_pushMass_mul (r : ι → ℝ) (a : ι → κ) (f : κ → ℝ) :
@@ -142,9 +129,10 @@ private lemma mixMass_nonneg (r : ι → ℝ) (hr : ∀ j, 0 ≤ r j) (a b c : �
     (v0 v1 v2 : ℝ) (h0 : 0 ≤ v0) (h1 : 0 ≤ v1) (h2 : 0 ≤ v2) (k : κ) :
     0 ≤ mixMass r a b c v0 v1 v2 0 k := by
   simp only [mixMass, add_zero, mul_zero, sub_zero]
-  exact add_nonneg (add_nonneg (mul_nonneg h0 (pushMass_nonneg r hr a k))
-    (mul_nonneg h1 (pushMass_nonneg r hr b k)))
-    (mul_nonneg h2 (pushMass_nonneg r hr c k))
+  exact add_nonneg (add_nonneg
+    (mul_nonneg h0 (Finset.sum_nonneg fun j _ => ite_nonneg (hr j) le_rfl))
+    (mul_nonneg h1 (Finset.sum_nonneg fun j _ => ite_nonneg (hr j) le_rfl)))
+    (mul_nonneg h2 (Finset.sum_nonneg fun j _ => ite_nonneg (hr j) le_rfl))
 
 omit [Fintype κ] in
 private lemma mixMass_lower (r : ι → ℝ) (hr : ∀ j, 0 ≤ r j) (a b c : ι → κ)
@@ -155,9 +143,9 @@ private lemma mixMass_lower (r : ι → ℝ) (hr : ∀ j, 0 ≤ r j) (a b c : ι
   have ha := mul_le_mul_of_nonneg_left (le_pushMass r hr a j) h0
   have hb := mul_le_mul_of_nonneg_left (le_pushMass r hr b j) h1
   have hc := mul_le_mul_of_nonneg_left (le_pushMass r hr c j) h2
-  have hn (k : κ) := (⟨mul_nonneg h0 (pushMass_nonneg r hr a k),
-    mul_nonneg h1 (pushMass_nonneg r hr b k),
-    mul_nonneg h2 (pushMass_nonneg r hr c k)⟩ :
+  have hn (k : κ) := (⟨mul_nonneg h0 (Finset.sum_nonneg fun j _ => ite_nonneg (hr j) le_rfl),
+    mul_nonneg h1 (Finset.sum_nonneg fun j _ => ite_nonneg (hr j) le_rfl),
+    mul_nonneg h2 (Finset.sum_nonneg fun j _ => ite_nonneg (hr j) le_rfl)⟩ :
     0 ≤ v0 * pushMass r a k ∧ 0 ≤ v1 * pushMass r b k ∧ 0 ≤ v2 * pushMass r c k)
   simp only [mixMass, add_zero, mul_zero, sub_zero]
   exact ⟨by linarith [(hn (a j)).2.1, (hn (a j)).2.2],
@@ -244,9 +232,12 @@ private lemma mixMass_entropy_hasDerivAt (r : ι → ℝ) (hr : ∀ j, 0 ≤ r j
       HasDerivAt (fun t => Real.negMulLog (mixMass r a b c v0 v1 v2 t k))
         ((-Real.log (Q k) - 1) * D k) 0 := by
     by_cases hz : Q k = 0
-    · have hpa := pushMass_nonneg r hr a k
-      have hpb := pushMass_nonneg r hr b k
-      have hpc := pushMass_nonneg r hr c k
+    · have hpa : 0 ≤ pushMass r a k :=
+        Finset.sum_nonneg fun j _ => ite_nonneg (hr j) le_rfl
+      have hpb : 0 ≤ pushMass r b k :=
+        Finset.sum_nonneg fun j _ => ite_nonneg (hr j) le_rfl
+      have hpc : 0 ≤ pushMass r c k :=
+        Finset.sum_nonneg fun j _ => ite_nonneg (hr j) le_rfl
       have heq : v0 * pushMass r a k + v1 * pushMass r b k +
           v2 * pushMass r c k = 0 := by simpa [Q, mixMass] using hz
       have hza : pushMass r a k = 0 := by
@@ -309,9 +300,8 @@ theorem three_point_entropy_direction_bound {n : ℕ} (r : Fin n → ℝ)
   constructor
   · exact mixMass_entropy_hasDerivAt r hr (fun j => j.castAdd 2)
       (fun j => (j.castAdd 1).succ) (fun j => j.succ.succ) v0 v1 v2 h0 h1 h2
-  · have hb : Function.Injective (fun j : Fin n => (j.castAdd 1).succ) := by
-      intro i j hij
-      exact Fin.ext (by simpa using congrArg Fin.val hij)
+  · have hb : Function.Injective (fun j : Fin n => (j.castAdd 1).succ) :=
+      (Fin.succ_injective (n + 1)).comp (Fin.castAdd_injective n 1)
     exact finite_direction_bound r hr hs _
       (mixMass_nonneg r hr _ _ _ v0 v1 v2 h0.le h1.le h2.le)
       (mixMass_sum r hs _ _ _ v0 v1 v2 hv) _ _ _ hb v0 v1 v2 h0 h1 h2
