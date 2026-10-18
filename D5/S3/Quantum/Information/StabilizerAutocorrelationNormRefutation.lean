@@ -253,8 +253,8 @@ private lemma fourier_clifford : IsClifford fourier := by
       push_cast
       rw [hi, hj]
       ring
-    simp only [W, D5.S3.Quantum.QuantumChannels.TomiyamaDiagonalKPositivity.fourierRows,
-      Fin.castLE_refl, Matrix.smul_apply, smul_eq_mul, he, ZMod.stdAddChar_coe,
+    unfold W D5.S3.Quantum.QuantumChannels.TomiyamaDiagonalKPositivity.fourierRows
+    simp only [Fin.castLE_refl, Matrix.smul_apply, smul_eq_mul, he, ZMod.stdAddChar_coe,
       fourier, D5.S3.Quantum.Measurement.FourierLDOILOCCRefutation.fourier]
     push_cast
     rw [div_eq_mul_inv, mul_comm]
