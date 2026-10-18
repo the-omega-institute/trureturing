@@ -2288,3 +2288,168 @@ For completeness, an abelian group of order eight has type $C_8$, $C_4\times C_2
 If $\Gamma$ is nonabelian, some element $r$ has order four, since a group whose elements all square to the identity is abelian. Its cyclic subgroup has index two and is normal. Every outside element conjugates $r$ to $r^{-1}$, for otherwise it and $r$ generate an abelian group. For an outside element $s$, its square lies in $\langle r\rangle$ and is fixed by inversion, so $s^2=e$ or $s^2=r^2$. These are respectively the presentations of $D_8$ and $Q_8$. In $Q_8$ the only involution is central; in $D_8$ the involutions are the central $r^2$ and the four reflections. The central cases are covered by §108 and the reflection cases by Theorem 109.1. This proves the corollary.
 
 The regular action is a substantive hypothesis. No assertion that an arbitrary transitive symmetry group contains such a subgroup, and no averaging of an arbitrary pair into a regular-symmetric pair, is needed or inferred.
+
+## 110. A sharp obstruction from transitive symmetry of one original Gram
+
+### 110.1. Original hypotheses and the matrix symmetry
+
+Let $\Omega$ be the original eight-coordinate set, partitioned into the four two-element fibres $\Omega_f$. Keep the original local CPTP maps $A,B:\mathbb C^8\to\mathbb C^4$, the fixed correlated input and output encodings, and the target of §107.1. For Stinespring isometries $V_A,V_B$, define the correct-output records and their forward Grams by
+
+$$
+\begin{aligned}
+a_j&=(\langle f|\otimes I)V_A|j\rangle,&
+G_{jk}&=\langle a_j,a_k\rangle,\\
+b_j&=(\langle f|\otimes I)V_B|j\rangle,&
+H_{jk}&=\langle b_j,b_k\rangle,
+\qquad j\in\Omega_f.
+\end{aligned}\tag{110.1}
+$$
+
+Inner products are conjugate-linear in the first argument. These Grams satisfy $0\preceq G_{ff},H_{ff}\preceq I_2$ even with original output leakage. Write
+
+$$
+\delta(A,B)=\|(A\otimes B)\circ J_{\rm in}
+                   -J_{\rm out}\circ\mathcal F\|_\diamond
+\tag{110.2}
+$$
+
+for the unhalved diamond error, with arbitrary reference systems. For any complex matrix $M$ indexed by $\Omega$, define its fibre-preserving permutation symmetry group by
+
+$$
+\operatorname{Aut}_{\rm fib}(M)
+ =\{\pi\in\operatorname{Sym}(\Omega):
+       \pi\text{ preserves the fibre partition},\quad
+       M_{\pi(j),\pi(k)}=M_{jk}\text{ for all }j,k\}.
+\tag{110.3}
+$$
+
+**Theorem 110.1.** If $\operatorname{Aut}_{\rm fib}(G)$ or $\operatorname{Aut}_{\rm fib}(H)$ acts transitively on $\Omega$, then
+
+$$
+\delta(A,B)\geq\sqrt2-1>\frac14.
+\tag{110.4}
+$$
+
+The opposite channel may be arbitrary and both channels may leak. The bound is sharp in this transitive-symmetry class, attained by a calibrated pair of local Kraus ranks $(3,3)$. Its infimum in each calibrated exact-rank class $(7,4)$ and $(7,5)$ with a unique full-support first kernel is also $\sqrt2-1$. The conclusion continues to hold if the stated symmetry appears after an original fibre-preserving relabeling and reciprocal diagonal unitary phases.
+
+The proof will produce a regular subgroup of the same matrix's full fibre-preserving symmetry group. It does not require a regular subgroup of an initially specified transitive subgroup. No positivity or Hermiticity will be needed for this finite matrix step.
+
+### 110.2. The two-group and its four-fibre action
+
+**Proof of Theorem 110.1.** Let $M$ be a complex matrix invariant under a transitive fibre-preserving permutation group $\mathcal A$. Since $\Omega$ is finite, $\mathcal A$ is finite. Choose a Sylow two-subgroup $P\leq\mathcal A$. If $|\mathcal A|=2^v m$ with $m$ odd, the point stabilizer has order $2^{v-3}m$. Thus, for every $x\in\Omega$,
+
+$$
+|P\cap\mathcal A_x|\leq 2^{v-3},\qquad
+|P\cdot x|=\frac{|P|}{|P\cap\mathcal A_x|}\geq8.
+\tag{110.5}
+$$
+
+The orbit has exactly eight elements, so $P$ is transitive. This uses the standard Sylow and orbit-stabilizer theorems, without imposing a condition on which Sylow subgroup is chosen.
+
+Label a coordinate by $(f,b)\in\{0,1,2,3\}\times\mathbb F_2$. Every fibre-preserving permutation has the form
+
+$$
+(f,b)\longmapsto(\pi(f),b+k_f).
+\tag{110.6}
+$$
+
+Let $F$ be the image of $P$ on the four fibres and $K$ the kernel. Then $F$ is a transitive two-subgroup of $S_4$, while $K$ is a linear subspace of $\mathbb F_2^4$, acting by within-fibre flips. Conjugation induces the ordinary permutation of the four flip coordinates. The order of $F$ is four or eight. At order four its action is regular and its group is $C_4$ or $C_2^2$. At order eight it is a Sylow two-subgroup of $S_4$, hence conjugate to the square-dihedral group. In particular, $F$ contains a regular subgroup $F_0$ of order four; unless $F=C_2^2$, it contains a four-cycle.
+
+Suppose $K\ne0$. For each fibre let $\ell_f:K\to\mathbb F_2$ be its coordinate functional. Every $\ell_f$ is nonzero: otherwise transitivity of $F$ would make all of them zero and force $K=0$. Equality of two such functionals defines an $F$-invariant equivalence relation on the four fibres. All its classes have the same size, so the number of distinct functionals is one, two or four. The functionals span the dual space $`K^*`$ because the coordinate inclusion of $K$ in $\mathbb F_2^4$ is injective.
+
+Write $c=(1,1,1,1)$ for the global flip. It is central in the entire fibre-preserving permutation group.
+
+### 110.3. Kernels of dimension at most two
+
+If $K=0$, then $|P|=|F|\leq8$. Transitivity forces $|P|=8$, so $P$ itself is regular.
+
+If $\dim K=1$, the four nonzero functionals coincide, so $K=\langle c\rangle$. The inverse image of a regular $F_0\leq F$ has order eight. Its image is transitive on fibres and $c$ interchanges the two coordinates in each fibre. It is therefore transitive and regular on $\Omega$.
+
+Suppose $\dim K=2$. There are only three nonzero functionals on $K$. The number of distinct coordinate functionals can neither be four nor be one, since they span $`K^*`$. Hence two distinct functionals occur, each on two fibres. Call these two fibre pairs $A_0,A_1$. Distinct nonzero functionals over $\mathbb F_2$ are independent. Consequently $K$ consists exactly of the independent simultaneous flips $k_0,k_1$ on $A_0,A_1$, and $c=k_0k_1\in K$. The image $F$ permutes the two pairs transitively.
+
+If $F$ contains a four-cycle, choose a lift $g\in P$. It interchanges $A_0,A_1$, so conjugation by $g$ interchanges $k_0,k_1$. Since $g^4\in K$ commutes with $g$,
+
+$$
+g^4\in\{e,c\}.
+\tag{110.7}
+$$
+
+If $g^4=c$, then $g$ has order eight. Its projected cycle visits all four fibres, and its fourth power flips each fibre, so $\langle g\rangle$ is transitive and regular. If $g^4=e$, then $g$ has order four and $c\notin\langle g\rangle$, since each nonidentity power of $g$ has nonidentity projection. Thus $\langle g,c\rangle$ has order eight and is transitive, hence regular.
+
+It remains to treat $F=C_2^2$. Its nonidentity element $u$ preserving both $A_0,A_1$ swaps the two fibres within each pair. Choose $v\in F$ interchanging the pairs, and choose arbitrary lifts $U,V\in P$. Then $U$ centralizes $K$, while $V$ interchanges $k_0,k_1$. Denote this interchange automorphism of $K$ by $\sigma$.
+
+Both $U^2$ and $V^2$ lie in $K$. Since $V^2$ commutes with $V$, it is fixed by $\sigma$ and lies in $\langle c\rangle$. The abelian quotient gives $VUV^{-1}=Uk$ for some $k\in K$. Squaring and using that $U$ centralizes the exponent-two group $K$ gives
+
+$$
+VU^2V^{-1}=(Uk)^2=U^2.
+\tag{110.8}
+$$
+
+Hence $U^2$ is also fixed by $\sigma$ and lies in $\langle c\rangle$. As $V^2$ is central, conjugation twice yields
+
+$$
+U=V^2UV^{-2}=Uk\sigma(k).
+\tag{110.9}
+$$
+
+Therefore $k=\sigma(k)\in\langle c\rangle$. The squares of $U,V$ and their commutator all belong to the central group $\langle c\rangle$. Every element of $R=\langle U,V,c\rangle$ consequently has a normal form
+
+$$
+c^aU^bV^d,\qquad a,b,d\in\{0,1\}.
+\tag{110.10}
+$$
+
+Thus $|R|\leq8$. Its image in $F$ has order four and its kernel contains the nontrivial $c$, giving $|R|\geq8$. Its image is transitive on the fibres and $c$ flips every fibre, so $R$ is regular. In all cases of this subsection the constructed subgroup is already contained in $P$ and preserves $M$.
+
+### 110.4. Larger kernels and the same matrix's enlarged symmetry
+
+Suppose $\dim K\geq3$. The coordinate functionals span $`K^*`$, so the number of distinct functionals cannot be one or two. All four are distinct. Any two distinct nonzero functionals over $\mathbb F_2$ are independent, and therefore for different fibres $f,g$ the map
+
+$$
+K\longrightarrow\mathbb F_2^2,\qquad
+k\longmapsto(k_f,k_g)
+\tag{110.11}
+$$
+
+is onto. Invariance of $M$ under $K$ forces the four entries in every cross-fibre block $M_{fg}$ to be equal: the row and column coordinate can be flipped independently. Each diagonal fibre block is invariant under its within-fibre flip because $\ell_f\ne0$. These diagonal blocks all coincide, by transitivity on the fibres; transporting a flip-invariant block is unaffected by the within-fibre swap in the chosen lift.
+
+It follows that every independent within-fibre flip preserves $M$. Moreover, every pure fibre permutation from $F$, with all flip bits zero, preserves $M$. Indeed choose a lift in $P$ and remove its within-fibre flips, which have just been shown to preserve the same matrix. Equivalently, constant cross-fibre blocks and equal flip-invariant diagonal blocks make this removal immediate. These statements apply to directed complex entries and do not insert any conjugation.
+
+Choose a regular $F_0\leq F$ of order four. Its pure fibre action, together with the global flip, gives
+
+$$
+R=F_0\times\langle c\rangle
+       \leq\operatorname{Aut}_{\rm fib}(M),\qquad |R|=8.
+\tag{110.12}
+$$
+
+This group is transitive on the fibres and on both coordinates in each fibre. Hence it acts freely and transitively on $\Omega$. This proves in every case that the full fibre-preserving symmetry of the original matrix contains a regular order-eight subgroup. The construction in (110.12) need not stay inside the originally given $P$ or $\mathcal A$; the invariant matrix itself has not changed.
+
+### 110.5. The original complete norm and sharpness
+
+Apply the finite matrix argument to the transitive correct-output Gram in Theorem 110.1. It supplies a regular order-eight symmetry of that same Gram and of the same original four-fibre partition. Corollary 109.3 now gives (110.4).
+
+In particular, the argument does not replace the original channels by an averaged pair. The calibrated one-party consumer fixes the invariant Gram, and only its opposite is averaged when estimating the convex arbitrary-reference objective. For leaking original channels the completion from §§107–109 is
+
+$$
+\mathcal C(G)=G+\bigoplus_f(I_2-G_{ff}),\qquad
+\mathcal C(H)=H+\bigoplus_f(I_2-H_{ff}).
+\tag{110.13}
+$$
+
+This completion preserves every fibre-preserving permutation symmetry of its argument. The tagged-reference lower bound and positive Schur order give the original inequality
+
+$$
+\delta(A,B)\geq \mathcal B(T-G\odot H)
+                \geq F(\mathcal C(G),\mathcal C(H))
+                \geq\sqrt2-1,
+\tag{110.14}
+$$
+
+with the definitions and original normalization of RT III §91. No rank-preservation assertion about this completion is used. Reciprocal diagonal unitary phases leave the physical product coefficients unchanged, and fibre-preserving relabelings simultaneously reindex the target and product. Thus the stated sufficient gauge condition inherits the same conclusion; it does not assert that arbitrary monomial symmetry actions admit such a gauge.
+
+The calibrated cyclic attainer in Theorem 107.1 has ranks $(3,3)$, belongs to this transitive-symmetry class and attains $\sqrt2-1$. The exact-rank cyclic approximation families in that theorem have ranks $(7,4)$ and $(7,5)$, a unique full-support first kernel, and errors tending to $\sqrt2-1$. They give the upper infima in these subclasses, while (110.4) gives the matching lower bound. These are infima in the union of transitive symmetry classes; they do not assert sharpness of the noncentral dihedral subclass alone.
+
+The assumption that one original Gram has a transitive fibre-preserving symmetry is substantive. No averaging of a generic pair into this class, no common-stress or local-minimum property of the approximation families, and no unrestricted global-quarter conclusion follows. This completes the proof.
+
+## 追加锚（本行以下为增补区）
