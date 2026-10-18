@@ -2424,3 +2424,317 @@ gaps need not be uniform as $m\to\infty$, and the families are not dense
 in the unrestricted physical test space. Positivity on one fixed window
 at all orders, the complete compact signed form, the strict all-integer
 Robin upper and RH remain unproved.
+
+
+## A linearly growing sign count has a paid actual positive margin
+
+Reuse the complete actual complex remainder (W46), rather than deriving
+another fixed-order limit. The following source-specific paper
+application pays that remainder relative to the positive hyperbolic
+kernel on profiles whose sign count may grow linearly with the
+center. Polynomial division, Cauchy coefficients and the scalar Hardy
+moment identity are classical tools. No standalone generic identity,
+literature priority or Lean verification is asserted.
+
+### Put the actual remainder in the exact hyperbolic coordinate
+
+Keep $M_A=\mathcal P_A/A=D_A L_0D_A$ and the constants $r,C,A_0$ of
+(W46). Shrink that offset neighborhood once as in (W56), then choose one
+$0<R<1/2$ so small that the principal map
+$u=\operatorname{arctanh}z$ sends a neighborhood of $|z|\le R$
+inside $|u|<r$. Put $h=R/4$, $q=2/R$, and
+
+$$
+\begin{aligned}
+\mathcal K_A(z,w)
+ &=\cosh(u)\cosh(v)M_A(u,v),\\
+H(z,w)&=\frac1{1-zw},\qquad
+\mathcal E_A=\mathcal K_A-H,
+\qquad v=\operatorname{arctanh}w.
+\end{aligned}
+$$
+
+The identity $\cosh(u)\cosh(v)\operatorname{sech}(u-v)
+=1/(1-\tanh u\tanh v)$ is exact. Thus (W46) gives a holomorphic
+remainder bounded by $C_1/A$ on $|z|,|w|\le R$, with
+$C_1=C/(1-R^2)$. All constants are independent of sign count.
+For a real finite signed Borel measure $\nu$ on $[-h,h]$, write
+
+$$
+a_k=\int z^k\,d\nu(z),\qquad
+Q_H(\nu)=\sum_{k\ge0}a_k^2.
+$$
+
+Uniform convergence of the geometric series identifies this with the
+$H$ form. Cauchy coefficients and Cauchy--Schwarz give
+
+$$
+|Q_{\mathcal E_A}(\nu)|
+\le\frac{C_1}{A}\left(\sum_{k\ge0}R^{-k}|a_k|\right)^2
+\le\frac{4C_1}{3A}\sum_{k\ge0}q^{2k}a_k^2.
+$$
+
+This still has a different moment radius from $Q_H$. The sign condition
+below supplies the missing comparison; it is not an unrestricted
+comparison of the two positive kernels.
+
+### Pay the moment-radius change using the actual sign separators
+
+Suppose $p(z)=\prod_{j=1}^m(z-s_j)=\sum_{j=0}^mp_jz^j$ is monic,
+all $s_j\in[-h,h]$, repetitions allowed, and $\epsilon p\nu\ge0$
+for some $\epsilon\in\{-1,1\}$. Include $m=0$, with $p=1$.
+Set $U^2=\sum_{k=0}^ma_k^2\le Q_H(\nu)$ and define, for
+$|\zeta|\le q$,
+
+$$
+F(\zeta)=\int\frac{d\nu(z)}{1-\zeta z},\qquad
+N(\zeta)=\int\frac{p(z)}{1-\zeta z}\,d\nu(z),\qquad
+P(\zeta)=\prod_{j=1}^m(1-s_j\zeta).
+$$
+
+Here $qh=1/2$. The sign condition gives the equality
+$\int|p|d|\nu|=|\int p\,d\nu|$, even when atoms lie at repeated
+separator roots. Since $\sum_j|p_j|\le(1+h)^m$, it follows that
+
+$$
+|N(\zeta)|\le2(1+h)^mU\qquad(|\zeta|\le q).
+$$
+
+Finite polynomial division gives the exact identity
+
+$$
+P(\zeta)F(\zeta)=\zeta^mN(\zeta)
+ +\sum_{j=1}^mp_j\sum_{k=0}^{j-1}a_k\zeta^{m-j+k}.
+$$
+
+For $|\zeta|=q$, the double sum is bounded by
+$q^m(1+h)^mU/(q-1)$, while $|P(\zeta)|\ge(1-qh)^m=2^{-m}$.
+Since $q>2$, including $m=0$ with an empty double sum gives
+
+$$
+\sup_{|\zeta|=q}|F(\zeta)|
+ \le3[2q(1+h)]^mU.
+$$
+
+The uniformly convergent moment series for $F$ and the scalar Parseval
+identity therefore yield
+
+$$
+\sum_{k\ge0}q^{2k}a_k^2
+\le9[2q(1+h)]^{2m}Q_H(\nu).
+$$
+
+In particular, with constants specified independently of $m$ by
+
+$$
+\Lambda=[2q(1+h)]^2=(1+4/R)^2>1,\qquad
+K=\max(1,12C_1),
+$$
+
+the complete actual relative estimate is
+
+$$
+\boxed{|Q_{\mathcal K_A-H}(\nu)|
+ \le\frac{K\Lambda^m}{A}Q_H(\nu).}
+\tag{W55}
+$$
+
+It holds for every $m\ge0$, every $A\ge A_0$, and every real finite
+measure with the displayed polynomial-sign condition. The constants
+have no hidden dependence on total sample count, density, separator
+gaps, coefficient sizes or $m$. They depend on the one chosen complex
+neighborhood in (W46).
+
+### The complete first-core remainder has an exponential complex rate
+
+The first correction in (W27) is
+$$
+C(u,v)=\frac{u+v}{2}S(u,v)-T(u-v),\qquad
+T(t)=\frac{t}{2\sinh t},\quad T(0)=\tfrac12.
+$$
+On a smaller fixed complex polydisc, the same actual integrals used in
+(W46) give the stronger rate
+$$
+\boxed{M_A=S+\frac CA+\mathcal Z_A,\qquad
+ \sup|\mathcal Z_A|\le C_2e^{-2A}.}
+\tag{W56}
+$$
+Here and below the constants are independent of $m$.
+
+For the direct integral, reuse (W46)'s already established bound
+$\mathcal P_A^{\rm direct}=xS+O(A\varepsilon)$, where
+$\varepsilon=e^{-2A}$, $x=A+(u+v)/2$, $d=(u-v)/2$.
+For the reflected integral retain its exact whole-half-line formula
+$$
+\mathcal P_A^{\rm ref}=2\pi e^{u+v}\int_0^\infty e^{G_A(s)}ds,
+\qquad
+G_A(s)=\mathscr H(x,d^2+\varepsilon s)-\mathscr H(x,d^2).
+$$
+The global estimate $\Re G_A(s)\le-cs$ is exactly the complete
+reflected estimate in (W46); it includes the exterior with
+$\Re(x-\sqrt{d^2+\varepsilon s})<0$.
+
+Put $h_0(z)=\cosh(2\sqrt z)$, entire in $z$, and
+$$
+G_0(s)=-2\pi e^{u+v}h_0'(d^2)s .
+$$
+Since $h_0'(0)=2$, shrink the complex offsets once until
+$\Re[2\pi e^{u+v}h_0'(d^2)]\ge c_0>0$.
+On $0\le s\le\varepsilon^{-1/2}$, every square root and every
+segment used in $\mathscr H_z$ stays bounded relative to $x$, so all
+arguments are in the right tail. Use (W47)'s logarithmic remainder
+$v$, including $|v''|\le C e^{-2A}$, on this bounded-offset region.
+The linear term in $g$ cancels in the symmetric difference. Taylor's
+remainder for the entire $h_0$ gives
+$$
+|G_A(s)-G_0(s)|\le C\varepsilon(s+s^2).
+$$
+In detail its leading part is
+$-2\pi e^{u+v}\varepsilon^{-1}
+ [h_0(d^2+\varepsilon s)-h_0(d^2)]$;
+the logarithmic remainder difference is $O(\varepsilon^2s)$.
+The two negative-real-part bounds and the exponential interpolation
+identity used in (W46) therefore give
+$$
+|e^{G_A(s)}-e^{G_0(s)}|
+ \le C\varepsilon(s+s^2)e^{-c_1s}
+ \quad(0\le s\le\varepsilon^{-1/2}).
+$$
+On the remaining half-line both integrals are bounded by
+$Ce^{-c_1\varepsilon^{-1/2}}=O(\varepsilon)$.
+Thus no reflected exterior is removed, and
+$$
+\mathcal P_A^{\rm ref}
+ =\frac1{h_0'(d^2)}+O(\varepsilon)
+ =\frac d{\sinh(2d)}+O(\varepsilon).
+$$
+All removable values are included. Together with the direct bound,
+this proves (W56) as a uniform complex estimate. No bound uniform in
+all derivative orders is inferred without paying its Cauchy factors.
+
+### The first correction costs only a logarithm of the sign count
+
+Return to the measure and separators above. The radius comparison
+already proved before (W55) says
+$$
+\sum_{k\ge0}q^{2k}a_k^2\le9\Lambda^mQ_H(\nu).
+$$
+Put $b_k=\int z^k\operatorname{arctanh}z\,d\nu(z)$.
+Absolute convergence on the support gives
+$$
+b_k=\sum_{j\ge0}\frac{a_{k+2j+1}}{2j+1}.
+$$
+For the right shift $B(a)_k=a_{k+1}$, the same radius comparison gives
+$$
+\|B^\ell a\|_2\le
+ \min(1,3\Lambda^{m/2}q^{-\ell})\|a\|_2 .
+$$
+Choose
+$J=\lceil (m+1)[1+\log\Lambda/(4\log q)]\rceil$.
+For $j<J$ use the first bound; its odd harmonic sum is
+$O(\log(m+2))$. For $j\ge J$ use the second bound;
+$\Lambda^{m/2}q^{-2J}\le q^{-2}$, and the remaining sum is uniformly
+geometric. Consequently one fixed $C_3$ gives
+$$
+\|b\|_2\le C_3\log(m+2)\|a\|_2.
+$$
+The $(u+v)S/2$ part of the transported correction has form
+$\sum_k a_kb_k$, so its absolute value is bounded by
+$C_3\log(m+2)Q_H(\nu)$.
+
+For the remaining term reuse the classical positive stationary kernel
+$S(t)=\operatorname{sech}t$ and its Cauchy Gram representation, already
+used in (W28)--(W29). The elementary convolution formula is
+$T=(S*S)/4$; it follows by integrating
+$\tanh x-\tanh(x-t)=\sinh t/[\cosh x\cosh(x-t)]$, including $t=0$.
+For every finite real measure $\eta$, stationarity and
+Cauchy--Schwarz in this Gram space give
+$$
+\left|\iint S(u-v-x)\,d\eta(u)d\eta(v)\right|\le Q_S(\eta).
+$$
+Indeed simultaneous translation is a unitary operator in this
+stationary Gram space. Integrating against $S(x)/4$, and using
+$\int_{\mathbb R}S(x)dx\le4$, yields
+$$
+|Q_T(\eta)|\le Q_S(\eta).
+$$
+For the transported correction take
+$d\eta(u)=\cosh(u)\,d\nu(\tanh u)$; its $S$ form is exactly
+$Q_H(\nu)$. Thus the complete correction, on this sign-restricted
+family, satisfies
+$$
+|Q_{\widetilde C}(\nu)|
+ \le[C_3\log(m+2)+1]Q_H(\nu),
+$$
+where $\widetilde C(z,w)=\cosh(u)\cosh(v)C(u,v)$.
+This does not contradict (W29)'s failure of an unrestricted bound.
+
+### Spend both actual allowances at a linearly growing sign count
+
+After the same positive change of variables, (W56) has a remainder
+bounded by $C_4e^{-2A}$ on $|z|,|w|\le R$.
+Apply the already established Cauchy-coefficient and radius comparison
+to this remainder. With $K_2=\max(1,12C_4)$, the full actual estimate is
+$$
+\boxed{
+|Q_{\mathcal K_A-H}(\nu)|
+\le
+\left[
+ \frac{C_3\log(m+2)+1}{A}
+ +K_2e^{-2A}\Lambda^m
+\right]Q_H(\nu).}
+\tag{W57}
+$$
+It retains both parts of the first correction and the complete actual
+error; neither allowance is replaced by a separately favorable sign.
+
+For all sufficiently large $A$, choose
+$$
+m_{\rm lin}(A)=\left\lfloor\frac A{\log\Lambda}\right\rfloor.
+$$
+Uniformly for $0\le m\le m_{\rm lin}(A)$, the last allowance is at most
+$K_2e^{-A}$, and the first tends to zero like $O(\log A/A)$.
+One start $A_1$, independent of $m$, therefore gives
+$$
+\boxed{Q_{\mathcal K_A}(\nu)\ge\tfrac12Q_H(\nu)>0
+ \quad(A\ge A_1,\ 0\le m\le m_{\rm lin}(A),\ \nu\ne0).}
+\tag{W58}
+$$
+Strictness uses ordinary uniqueness of finite compactly supported
+measures from all polynomial moments. The explicit contract is
+$\epsilon p\nu\ge0$ for a displayed monic separator polynomial of
+degree at most $m_{\rm lin}(A)$. Roots may repeat; no lower separator
+gap or upper sample-density bound is imposed.
+
+To state the estimate for the original physical kernel, let
+$u=\operatorname{arctanh}z$ and $d_A(u)=\cosh(u)D_A(u)>0$.
+For a finite real physical measure $\mu$ supported in
+$[A-\operatorname{arctanh}h,A+\operatorname{arctanh}h]$, transport
+$d\mu(A+u)/d_A(u)$ by $z=\tanh u$ to obtain $\nu$.
+The congruence is exact:
+$Q_{L_0}(\mu)=Q_{\mathcal K_A}(\nu)$.
+Hence (W58) applies whenever the transported measure satisfies the
+explicit polynomial-sign contract. In particular this includes
+nonzero real finite sampled measures and real smooth densities with
+at most $m_{\rm lin}(A)$ sign changes, with arbitrary sample count
+and density.
+
+For arbitrary complex finite samples at
+$n\le m_{\rm lin}(A)+1$ distinct physical sites in the same physical
+interval, each real and imaginary coefficient measure has at most
+$n-1$ sign changes. Apply the real estimates separately; reality and
+symmetry make their quadratic forms add. This pays the full complex
+sampled form as well, without an internal node-gap restriction.
+The transported Hardy moment form is the metric, not an unweighted
+coefficient norm.
+
+The linearly growing sign count strengthens the logarithmic consequence
+of (W55) alone. Its additional inputs are the actual complete exponential
+first-core remainder (W56) and the paid sign-restricted correction,
+not a diagonal selection of fixed-order thresholds.
+The interval width is one fixed small value. At any fixed $A$, the
+allowed count remains finite. No unrestricted all-order positivity
+on one fixed window, unrestricted complex-measure result, unconditional
+premise for (W40), strict all-integer Robin inequality or RH proof is
+supplied. These are repository-derived paper estimates, without a
+literature-priority or Lean-verification claim.
