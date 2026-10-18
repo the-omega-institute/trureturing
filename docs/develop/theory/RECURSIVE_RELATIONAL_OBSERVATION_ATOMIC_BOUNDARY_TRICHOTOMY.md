@@ -2477,3 +2477,393 @@ GENERAL14–15 的 entry/source-only 结果、GENERAL16–17 的 malformed/equal
 或从两个符号无前提推出动作、权限及物理规律。
 
 ## 追加锚（本行以下为增补区）
+
+## 21. 紧 Rho 守卫下的形状与接受响应恢复
+
+**定义 21.1（形状的饱和标签与原始体入口）。** 保留定义 18.1 的同一
+$G_{\mathrm{gc}}$、第一个真实 Ready $P$、准备发生 $\xi$、原始动作和
+约定 18.2 的规范调用。另记 $\mathcal I_1=\rho[\mathcal T]$。
+对一个非空有限有序满二叉形状 $\sigma$，令 $n(\sigma)$ 为叶数，
+$c(\sigma)$ 为两个孩子都是叶的节点数，称这些节点为 terminal cherries。
+令 $\mathsf L_\sigma$ 在每个 terminal cherry 的右叶放 alpha，其余叶
+全部放 beta。不同 terminal cherries 的叶不交，故该定义无冲突。
+它保留完整根、左右次序和括号，不是只给出一个叶词。
+
+本节的比较切口 $z$ 是已实际供给 Rho 帧 `0010`、封口、解析、取得
+原始服务 admission 并完成 ReadState 后，尚未开始源模板生成的原始体入口。
+有效逻辑源为 $t$，其当前实际守卫及 reserve 满足
+$\lambda(t)\le h\le K$。断言 $t\in\mathcal I_1$ 是关于这个当前源的
+前提，不由累计 epoch 的奇偶性代替。$h$ 是 ReadState 读出的当前值，
+不是在 busy 切口另设的新守卫。
+
+**定理 21.2（紧原始 Rho 的接受恢复律）。** 在定义 21.1 的实际入口，若
+$t\in\mathcal I_1$，置 $\sigma=\operatorname{sh}(t)$、
+$n=n(\sigma)$、$c=c(\sigma)$，并假定当前实际守卫为
+
+$$
+h=2n-c,
+\tag{ABT.71}
+$$
+
+则完成这个已 admission 的原始 Rho 至其响应承诺时，
+
+$$
+\mathrm{accept}\quad\Longleftrightarrow\quad t=\mathsf L_\sigma.
+\tag{ABT.72}
+$$
+
+因此在接受分支，完整擦除形状与这个原来已包括的响应确定整个请求前带标签
+源，以及接受后的源 $\rho(\mathsf L_\sigma)$。若再有
+$\sigma\in\operatorname{sh}(\mathcal I_2)$，则同一响应还满足
+
+$$
+\mathrm{accept}\quad\Longleftrightarrow\quad t\in\mathcal I_2;
+\tag{ABT.73}
+$$
+
+此时接受分支的唯一两步祖先是定理 12.1 的 $D(\sigma)$。
+这里额外的形状像域正是该定理的 $\mathcal G$，不省略它。
+
+证明。复用 ActualTreeReadoutAcquisition 的 source_foundation 中一阶
+alphaValid 条件：$\mathcal I_1$ 中每个 alpha 都是某个终端
+$\langle\beta,\alpha\rangle$ 的右叶。于是每个 terminal cherry 至多
+贡献一个 alpha，其余叶不能是 alpha，故
+
+$$
+a(t)\le c,\qquad
+a(t)=c\quad\Longleftrightarrow\quad t=\mathsf L_\sigma.
+\tag{ABT.74}
+$$
+
+饱和标签本身也属于 $\mathcal I_1$：复用 IntrinsicSubstitutionCoordinates
+的 pair_image 语法，单叶 beta 有原像 alpha，终端
+$\langle\beta,\alpha\rangle$ 有原像 beta；其余配对的两个子树按同一
+规则分别有原像，再作有序配对即可。这是沿形状的有限结构归纳。
+
+原替换的组成恒等式给出整个下一候选的叶数
+
+$$
+\lambda(\rho t)=a(t)+2b(t)=2n-a(t).
+\tag{ABT.75}
+$$
+
+CAP 定理 4.5 用整个候选与实际 $h$ 比较。在 (ABT.71) 下，接受等价于
+$a(t)\ge c$；与 (ABT.74) 合并便得 (ABT.72)。这使用完成原始请求释放的
+accept/reject，拒绝也执行原始工作，不是无权或未执行的 none。
+
+若 $\sigma\in\operatorname{sh}(\mathcal I_2)$，取 $s\in\mathcal I_2$ 使
+$\operatorname{sh}(s)=\sigma$。$s\in\mathcal I_1$，且 source_foundation 的二步
+cherryValid 条件使它的每个 terminal cherry 恰为
+$\langle\beta,\alpha\rangle$；其他叶由 alphaValid 为 beta。因此
+$s=\mathsf L_\sigma$，证明该饱和标签确在 $\mathcal I_2$。任何同形状
+的两步像都必须是这个标签，遂得 (ABT.73)。定理 12.1 已供应
+$\rho^2D(\sigma)=\mathsf L_\sigma$ 和唯一性；这里直接使用其逆，不另造
+祖先解码器。证毕。
+
+**命题 21.3（紧条件在同一实际源上的达到）。** 取偶数 $E\ge2$、整数
+$r\ge1$，固定一个有 $r$ 个叶位置的有序满二叉骨架 $\Pi$。记
+$\Pi[u_1,\ldots,u_r]$ 为按其固定叶位置填入这些整树。置
+
+$$
+\begin{aligned}
+A&=\rho^{E-1}\beta,&D_0&=\lambda(\rho^2A),&H&=D_0+3r,\\
+u_0&=\beta,&u_1&=\langle\alpha,\alpha\rangle,&
+v_x&=\Pi[u_{x_1},\ldots,u_{x_r}],\qquad x\in\{0,1\}^r.
+\end{aligned}
+\tag{ABT.76}
+$$
+
+从共同 $P$ 各自完整返回于 Reserve($H$)、Raise($H$)、$E-1$ 次 Rho、
+Right($v_x$)、Rho，再供给下一 Rho 帧，取定义 21.1 的体入口 $z_x$。
+这些替代有限延长都实际存在。其当前源为
+
+$$
+t_x=\left\langle\rho A,\Pi[w_{x_1},\ldots,w_{x_r}]\right\rangle,
+\qquad
+w_0=\langle\beta,\alpha\rangle,\quad
+w_1=\langle\beta,\beta\rangle.
+\tag{ABT.77}
+$$
+
+它们满足定理 21.2 的全部前提，包括同一
+$\sigma\in\operatorname{sh}(\mathcal I_2)$ 和实际 $h=K=2n-c=H$。
+其下一原始 Rho 接受恰当 $x=0^r$。这是紧条件的达到与适用例，不以
+族大小、完整历史逆或增加响应个数另作恢复结论。
+
+证明。Reserve/Raise 用 CAP 的同源维护路径得到 $h=K=H$，源仍为 beta。
+由 $\lambda(\rho s)\ge\lambda(s)$，前 $E-1$ 次 Rho 的候选至多有
+$\lambda(A)\le D_0$ 叶；整个 Right 候选至多有 $\lambda(A)+2r\le H$
+叶。最后准备的 Rho 候选恰为 (ABT.77)，有
+$n=\lambda(\rho A)+2r\le H$ 叶，故所有准备修改均接受。全部实际帧有限
+且规范，CAP 引理 4.7、6.7 与 GENERAL 引理 8.1 在各自完整后继处供应
+交付、检查、ACK、source-token 返回、InnerReturn、CaptureCAP 和真实
+Ready；下一次 admission 只在这个返回之后发生。没有拼接独立源见证。
+
+所有 $w_i$ 有同一二叶形状，故所有 $t_x$ 的完整形状和地址存在位相同。
+最后一次准备 Rho 直接证明 $t_x\in\mathcal I_1$。由于
+$\rho A\in\mathcal I_2$，它的 alpha 数等于其 terminal cherry 数
+$c_L$，并有 $D_0=2\lambda(\rho A)-c_L$。骨架中新填的子树根都是
+branch，不会在两个填入块之间另生 terminal cherry；最外配对的左子树也
+是 branch。因此共同 $c=c_L+r$，得到 $2n-c=D_0+3r=H$。又有
+
+$$
+t_{0^r}=\rho^2\left\langle
+\rho^{E-1}\alpha,\Pi[\alpha,\ldots,\alpha]\right\rangle,
+\qquad
+\lambda(\rho t_x)=H+|x|_1.
+\tag{ABT.78}
+$$
+
+前式证明共同形状确在所需像域；后式也直接验证接受恰在全零处。非零 $x$
+留下至少一个终端 $\langle\beta,\beta\rangle$，与二步必要条件不合。
+例如 $E=r=2$、$\Pi=\langle\cdot,\cdot\rangle$ 时，$D_0=5$，
+$n=7,c=3,H=11$，四个下一候选的叶数为 $11,12,12,13$。
+
+在这些切口，实际 $e=E$，相对 $P$ 的有效语义增量为
+$\Delta(q,g,e,j,m)=(E+1,E+1,E,E+1,E+3)$；当前待承诺请求不再计一次。
+这些不是原生行数。不同 $v_x$ 的完整输入和收到的依赖副本照常保留，
+不主张共同完整 acquired material、物理视图或账单相等。
+
+对每个固定 $E,r,\Pi$，上述切口有限多个。约定 18.2 的协议仅按实际公开
+phase 和响应释放完成这个已 admission 请求，止于原始响应承诺。各分支有限，
+取有限多个完成长度的最大值即得这一固定族上共同合法的有限原始实验。
+SOURCECALL 引理 2.3 保留每个执行行的实际标签和完整原始后继；实验止于
+changed idle CTL 以前。全零与非零成员在既有释放响应上不同，因而其完整
+原始响应不同；不由相同 reject 推出其他分量相同。这不是全体入口上统一的
+停止界。证毕。
+
+**命题 21.4（形状像域前提不能由紧接受删去）。** 在同一个 $P$ 之后完整
+返回于 Reserve(5)、Raise(5)、Left(alpha)、Rho，再取下一 Rho 的上述
+体入口，则
+
+$$
+t=\langle\beta,\langle\beta,\alpha\rangle\rangle\in\mathcal I_1,
+\qquad n=3,\quad c=1,\quad h=5=2n-c.
+\tag{ABT.79}
+$$
+
+下一 Rho 接受，但 $t\notin\mathcal I_2$。
+
+证明。Left 的整候选 $\langle\alpha,\beta\rangle$ 有两叶，随后 Rho
+得到显示的三叶源，下一 Rho 有五叶；这些都在实际守卫 5 内。CAP 的完整
+返回路径与命题 21.3 相同。两步像若来自叶 alpha，其根有两个叶孩子；若来自
+叶 beta，其根左为 branch、右为叶；若来自配对，其两个孩子都是 branch。
+显示的源根左为叶、右为 branch，不属这三种情况。因此紧接受恢复它的
+饱和标签，却不能在任意形状上认证二步祖先。证毕。
+
+## 22. 整 Left/Right 直接运输的精确标量守卫区间
+
+**定义 22.1（已到达入口与固定守卫的源分量要求）。** 固定同一安装中任一
+实际到达、具有 ARC 定义 5.1 入口关系及 CAP 有效源不变量的规范 Ready
+$p$；不执行 outer00。令其源为 $t$，实际守卫及 reserve 为 $h,K$，并置
+
+$$
+\ell=\lambda(t),\qquad d=h-\ell\ge0.
+$$
+
+取偶数 $N\ge2$，复用定义 19.1 的直接运输和 (ABT.64)、(ABT.66)：
+
+$$
+\widehat t=\mathsf C_Nt,\qquad
+A_N=F_{N+1},\quad B_N=F_{N+2},\qquad
+w=\lambda(\widehat t)=A_Na(t)+B_Nb(t).
+\tag{ABT.80}
+$$
+
+编码端实际守卫 $H$ 在选上下文之前固定，$H\ge\max(h,w)$，其 reserve
+至少为 $H$。每个 Left($v$)、Right($v$) 分别映到同方向的一个完整
+Left($\mathsf C_Nv$)、Right($\mathsf C_Nv$)，$v$ 遍历全部非空有限
+有序带标签树。要求保留的是原始释放的 accept/reject 以及源后继关系
+$\widehat t'=\mathsf C_N(t')$。这两项是原始响应的必要分量；不把它们
+命名为一个替代 $Q$，也不要求或推出完整原始响应相等。
+
+**定理 22.2（整菜单的必要且充分守卫区间）。** 在定义 22.1 的每个入口，
+同一个 $H$ 对全部 Left/Right 请求满足该源分量要求，当且仅当
+
+$$
+\boxed{\quad w+B_Nd\ \le H\ \le w+A_N(d+1)-1.\quad}
+\tag{ABT.81}
+$$
+
+这样的整数守卫存在恰当 $d\in\{0,1\}$；其全部可行值分别为
+
+$$
+\begin{array}{c|c}
+d&\text{全部可行的 }H\\\hline
+0&[w,w+A_N-1]\cap\mathbb N\\
+1&[w+B_N,w+2A_N-1]\cap\mathbb N.
+\end{array}
+\tag{ABT.82}
+$$
+
+证明。对一个 $m\ge1$ 叶的整上下文，复用权重式 (ABT.66) 得
+
+$$
+A_Nm\le\lambda(\mathsf C_Nv)\le B_Nm.
+\tag{ABT.83}
+$$
+
+在固定任意一个 $m$ 叶有序骨架上，全 alpha 与全 beta 标签分别达到两端。
+每个这样的整树都有合法有限原始上下文帧，不因会拒绝而退出请求域。
+原端接受恰当 $\ell+m\le h$，即 $m\le d$；编码端接受恰当
+$w+\lambda(\mathsf C_Nv)\le H$。
+
+若 $d\ge1$，接受全部旧接受请求要求接受全 beta 的 $d$ 叶上下文，故
+$H\ge w+B_Nd$；拒绝全部旧拒绝请求要求拒绝全 alpha 的 $d+1$ 叶上下文，
+故 $H<w+A_N(d+1)$。这给出 (ABT.81) 的必要性。反之，对 $m\le d$
+用 (ABT.83) 上界，对 $m\ge d+1$ 用其下界，便分别强制接受和拒绝。
+若 $d=0$，旧端没有接受上下文；最轻的编码上下文是单叶 alpha，权重
+$A_N$，故必要且充分条件为 $w\le H<w+A_N$，仍是 (ABT.81)。
+接受时 (ABT.68) 供应同方向的源后继关系；拒绝时两边各保留原源，关系
+也保留。因此守卫条件对所述两个源分量同时必要且充分。
+
+令 $\delta=B_N-A_N=F_N$。$N\ge2$ 时
+
+$$
+\delta<A_N=F_N+F_{N-1}\le2\delta.
+\tag{ABT.84}
+$$
+
+整数区间非空等价于 $\delta d<A_N$，由此恰为 $d=0$ 或 $d=1$。
+其下端还满足 $w+B_Nd\ge\ell+d=h$，且不小于 $w$，所以没有额外的
+$H\ge h$ 障碍。代入便得 (ABT.82)。以上只比较完整候选的语义叶数，
+没有以其中一个行数或费用分量控制完整实际账单。证毕。
+
+**定理 22.3（实际编码入口和固定守卫的有限 graft 续延）。** 给定
+定义 22.1 的实际 $p$ 与满足 (ABT.81) 的 $H$，从 $p$ 完整返回于
+
+$$
+\operatorname{Reserve}(\max(K,H)),\quad\operatorname{Raise}(H),\quad
+\underbrace{\operatorname{Rho},\ldots,\operatorname{Rho}}_{N}
+\tag{ABT.85}
+$$
+
+实际到达同一源发生上的 Ready $\widehat p$，其源为 $\mathsf C_Nt$，
+守卫为 $H$，reserve 为 $\max(K,H)$。包括等值维护的真实 unchanged
+分支在内，这条准备路径都有完整返回。
+
+分别从 $p,\widehat p$ 比较任意有限 Left/Right 请求字及其逐项同态编码字，
+各端保持其守卫 $h,H$，不插入 Rho、Reserve/Raise 或其他动作。每个字都
+有实际有限返回序列；每次释放的接受/拒绝相同，每次源后继仍满足
+$\widehat t_i=\mathsf C_Nt_i$。若 $d=0$，所有请求拒绝；若 $d=1$，至多
+一个请求接受，且恰为字中第一个单叶上下文请求，若不存在则全部拒绝。
+
+证明。$H\ge h$ 且 $\max(K,H)\ge K,H$，所以 CAP 定义 5.1 的 greater
+或 equal 维护分支给出所述新参数，均保持当前源。每次准备 Rho 的整个
+候选叶数不超过最终的 $w\le H$，故 $N$ 次都接受。CAP 引理 6.7 与
+GENERAL 引理 8.1 给出所有源行、交付、检查、ACK、token 返回及外层捕获，
+从而建立真实 $\widehat p$。它不是在旧切口调用历史 token 或恢复旧快照。
+
+当 $d=0$ 时，编码端剩余 $H-w<A_N$，而每个映入的非空上下文至少有
+$A_N$ 叶；双方所有 graft 都拒绝，关系保持。当 $d=1$ 时，在第一次接受
+前两源都不变，定理 22.2 使双方恰接受单叶上下文。该次接受后，原端余量
+为零；编码端新叶数为 $w'=w+A_N$ 或 $w+B_N$。下界保证 $w'\le H$，
+上界保证
+
+$$
+0\le H-w'\le A_N-1.
+\tag{ABT.86}
+$$
+
+所以此后每个编码非空上下文也都拒绝。接受处用 (ABT.68)，拒绝处各自
+保持旧源，按字长归纳即得断言。每个完整上下文帧及其执行拒绝都由 CAP
+引理 6.7 返回；有限字在各自实际返回后逐次进入。两个被比较的路径是同一
+初始化的替代延长，不授予 reset、clone 或同时持有两个可调用源的权限。
+这里的归纳只保持显示的源分量，不把外层返回或两边整个调用解释为一个
+完整原始响应相等的实验。证毕。
+
+**命题 22.4（同时含接受和拒绝的实际正例）。** 从共同 $P$ 完整返回于
+Reserve(2)、Raise(2)，得 $t=\beta,h=K=2$ 的入口 $p$。取 $N=2$，
+则 $A_2=2,B_2=3,w=3,d=1$，唯一可行编码守卫为 $H=6$。从 $p$ 走
+Reserve(6)、Raise(6)、Rho、Rho 到达定理 22.3 的实际编码入口。
+在各自显示的入口，两端对每个单叶上下文都接受，对每个至少二叶上下文都执行拒绝；固定守卫
+下任意有限 graft 字都保持该定理的响应分支和源关系。
+
+证明。原端整个 graft 有 $1+m$ 叶，接受恰为 $m=1$。编码端源有三叶，
+单叶上下文映成二叶或三叶，整个候选有五叶或六叶；至少二叶上下文映成
+至少四叶，整个候选至少七叶。守卫 6 正好保持两种分支。显示的准备全在
+原有维护和 Rho 路径内，有限返回及后续关系由定理 22.3 给出。证毕。
+
+## 23. 两项正条件的原任务对应与恢复范围
+
+**约定 23.1（原始响应与当前权限）。** 定理 21.2 选取的是定义 21.1
+切口上完成已 admission Rho 的原始释放响应。其 admission 前所有有限
+请求材料都经原始 13 的规范入口实际供给、保留和解析；producer 当前持有
+source16、工作资源及 busy service token。完成实验只走其规定的原始非 IN
+行，保留每条实际标签、释放输出和完整原始联合后继，未越过 changed idle
+CTL。各准备调用还实际走完原始行/依赖交付、检查、ACK、source TOK、
+InnerReturn、CaptureCAP 和 Ready。后者是准备历史中的真实付费路径，
+不因存在就全成为原始 $Q$ 的动作。
+
+定理 22.2–22.3 的每个原/编码请求也分别在其当前真实入口供给完整帧，
+包括实际 unary 长度和全部上下文；过大请求保留为规范的执行拒绝。响应
+承诺以前的原始行对应仍用 SOURCECALL 引理 2.3。不同上下文、编码材料、
+头、latch、scratch、目录、counter、记录、收据、receiver 和控制都保留
+各自实际值；证明既不从相同源分量推出完整响应相等，也不消去其中的费用。
+不存在凭 74 端口列表或 complete 一词补出的 annex 可见性规则。
+
+两项结论保持 AIF 定义 2.6 的原任务：合法 Supply、规定启用的 Advance、
+语义协议的真实 admission、完整原始后继和吸收终端输出均不变。启用但
+非规范的 Supply 属任务未定义，禁用/无权尝试是未执行 none，执行拒绝
+是另一种结果。这里使用已包括输出作不等判断，未给这些结果改类型。
+
+**约定 23.2（同次运行的材料与费用）。** 每条实际前缀 $z$ 的账目沿用
+GENERAL 定义 8.5 与 (ABT.70)。为区别叶数及 $A_N$，记原生行数为
+$\nu_{\rm phys}(z)$，非 meter 构造 cell 数为 $A_{\rm phys}(z)$，则
+
+$$
+\operatorname{Bill}(z)=\bigl(\nu_{\rm phys}(z),\ 2\nu_{\rm phys}(z),
+S_{\rm irreducible}+b_{\rm ctl}(z)+8A_{\rm phys}(z)+8\nu_{\rm phys}(z)\bigr).
+\tag{ABT.87}
+$$
+
+实际连接的两切口之间逐坐标取差；原生行、收据和非 meter 材料均包括
+准备、输入、Base、Resolve、代码/门生成、guard/MUX、已执行拒绝、
+counter/fence/封口、行和依赖副本、检查、ACK、token、捕获及返回。
+Reserve 的 backing 和退役材料也一直在实际存储中。编码入口的两次维护及
+$N$ 次完整 Rho，即使维护 unchanged，仍须支付各自实际工作。
+这些计价约定不从语义 counter、候选叶数或同形状推出跨路径的行数、完整
+收据、总费用或物理视图相等。没有由区间非空推出取得/编码/执行的免费性。
+
+**约定 23.3（恢复目标及数学供应）。** 这里两项源特定推导为
+`repo-derived`：紧守卫的既有原始接受响应在 $\mathcal I_1$ 上迫使唯一
+饱和标签，并在另给的 $\operatorname{sh}(\mathcal I_2)$ 域认证祖先；
+直接同态整 graft 在任一所述入口的全部标量解由 (ABT.81) 给出，且其
+正类在固定守卫下恰容许上述有限续延。其余供应保持原来的范围：
+
+| 供应 | 在本节群中的作用 |
+| --- | --- |
+| source_foundation 的 alphaValid/cherryValid，及其拥有的 Scribe；IntrinsicSubstitutionCoordinates 的 pair_image | 一步 alpha 位置必要条件、二步终端标签必要条件及一步像语法，支撑 (ABT.74) 与饱和标签的存在；不移用第三步正成员任务或全源读取权。 |
+| 本卷定理 12.1 与 NESK 的 two_step_prefix_kernel | 在真实两步像形状上直接使用已有祖先逆与唯一性；不是重新证明形状核。 |
+| 本卷 (ABT.64)、(ABT.66)、(ABT.68)，GenealogicalFiberTransport 及其拥有的 Scribe | 逐叶权重与配对同态支撑整个上下文的两个权重极值及接受后的源关系；不是全响应仿真。 |
+| 钉版 mathlib 的 FreeMagma、lift、lift_of，见 §20.3 的精确版本引文 | 只用自由有序非结合树及替换的代数接口，不引入新的物理操作、权限或费用恒等式。 |
+| CAP 定理 4.5、5.2–5.3、引理 4.7、6.7；ARC 定义 4.1、5.1–5.5；GENERAL 引理 8.1 | 同一 source16/$\phi_K$、规范整帧、当前 admission、真实服务返回和已占位原客户端/验证器/INITIAL consumer 的保持。 |
+
+命题 21.3 仅给恢复条件的实际达到，不把 ABT18 的扩大族或 GENERAL15
+已经覆盖的 source-only 完整响应/历史逆再算作新结果。定理 22.2 保留
+定理 19.3 的反例：它的 $\ell=1,h=A_N+1$ 给 $d=A_N\ge2$，落在空区间。
+正余量一的完整分类没有将那个反例推广为所有入口都失败。GENERAL17–20、
+UAS5、TARGET_CURRENT3–4 和 ORIGINAL_INTERFACE9–11 的响应、历史及费用
+结论仍按其原域使用。没有额外外部定理负责上述实际源对应，也不主张全球
+新颖性、穷尽检索或所有表示的最小性。
+
+**定义 23.4（保留的恢复义务）。** 定理 21.2 是在完整形状、一步像及
+紧当前守卫前提下的数学恢复条件。它未供应形状或像域证据的实际取得，也未
+使 $\mathsf L_\sigma$、$D$ 成为当前可调用的消费者；定理 22.3 也未使
+上下文编码或 $H$ 的数学选取成为已安装控制器。原始客户端保持停放，所有
+历史 owner/token 数据仍只作历史材料。若要运行这些数学映射，仍须由实际
+已取得操作数、当前有权的既有入口及完整付费返回建立对应。
+
+逻辑源的 $\sigma$ 和地址存在位不是物理支撑 $S$ 或终端边界 $B$；
+恢复当前带标签源不是恢复任意原生发生史 $T$、联合 $M_J$ 或 actor 的
+callable memory。被拒绝分支、非紧守卫及未认证形状不在 (ABT.72) 的
+接受逆内。固定守卫 graft 正类至多接受一次，不能据此得到持续增长的
+四视图恢复策略。
+
+完整原始 $Q$ 的后继/续延对应、全部同时合法域和自适应实验，ReadE/TagRead/
+Rho 与维护的混合运输、成功混合中间切口及独立增长、equal-weight full-$Q$、
+raw/bootstrap/预取得/未完成/fault/annex/changed-return 切口、任意旧目标、
+final00 无后来 Ready 及吸收 terminal 比较，仍保留 §§10、18–20 与各供应
+的原有义务。两项源分量正条件既没有安装全域桥，也没有否定其他恢复路线。
+
+## 追加锚（本行以下为增补区）

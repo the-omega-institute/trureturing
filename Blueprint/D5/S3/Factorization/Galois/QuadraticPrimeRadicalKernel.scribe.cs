@@ -70,24 +70,117 @@ internal sealed class QuadraticPrimeRadicalKernelDocument : IScribeDocumentDefin
                     + "proved field-range equivalence transports the quadratic rank and the "
                     + "tower formula multiplies the degrees."))),
                 DescribeRole.Theorem),
-            new DocumentBlock.Section(H("Original GPC5 application and remaining boundary"), Blocks(
-            Paragraph(Text(
-                "The original application takes B(i) from GoldenCubicBlockKummerTower.block, "
-                + "forms A(j) as the product of rad(B(i)) over every 1 <= i < j, and takes S "
-                + "to be the prime factors of A(j). This includes the earlier primes from even "
-                + "depths. The square kernel gives fresh-prime nonsquareness in this field, "
-                + "which supplies the p=2 instance of X_pow_sub_C_irreducible_of_prime.")),
-            Paragraph(Text(
-                "Arithmetic Frobenius, inertia, unramifiedness, total reality, full sign "
-                + "coordinates and the product of Frobenius powers with unrestricted exponents "
-                + "remain separate obligations. The original GPC7 comparison set and exact "
-                + "density are not proved by this module. This does not settle the full parent "
-                + "problem or assert a Wall-Sun-Sun prime consequence.")),
-            Paragraph(Text(
-                "These are classical multiquadratic and Kummer facts; no mathematical novelty "
-                + "is claimed. The accompanying library note records the precise classical "
-                + "source and the narrower scope of this implementation. The displayed formulas "
-                + "are author-written descriptions of the linked Lean declarations.")))))));
+            new DocumentBlock.Section(H("Original GPC5 application"), Blocks(
+                Paragraph(Text(
+                    "The original application takes B(i) from GoldenCubicBlockKummerTower.block, forms A(j) as the "
+                    + "product of rad(B(i)) over every 1 <= i < j, and takes S to be the prime factors of A(j). This "
+                    + "includes the earlier primes from even depths. The square kernel gives fresh-prime nonsquareness "
+                    + "in this field, which supplies the p=2 instance of X_pow_sub_C_irreducible_of_prime.")))),
+            new DocumentBlock.Section(H("Arithmetic application: the actual field and its signs"), Blocks(
+                Paragraph(Text(
+                    "The displayed Lean declarations retain their square-kernel and degree statements. The "
+                    + "application below composes those results with the existing normality, ring-of-integers, "
+                    + "inertia, residue-Frobenius and ideal-factorization interfaces; it describes their mathematical "
+                    + "consequences, rather than an additional public theorem exported by this module. No square-class "
+                    + "independence assumption is added.")),
+                Paragraph(Text(
+                    "Let S be any finite set of genuine rational primes, including the empty set and sets containing "
+                    + "2. Use the same actual intermediate field E(S) inside C. For p in S let beta_p be its positive "
+                    + "real square root, viewed in E(S), and let b_p be the integral representative in O(E(S)) with "
+                    + "underlying element beta_p. Both square to p and are nonzero. The beta_p generate E(S) over Q, "
+                    + "and prime_radical_degree gives [E(S):Q] = 2^|S|. Each singleton adjoin is quadratic and normal; "
+                    + "their compositum is normal, characteristic zero supplies separability, and finite degree "
+                    + "supplies the number-field structure. Thus E(S)/Q is Galois.")),
+                Paragraph(Text(
+                    "Every embedding phi:E(S)->C sends each beta_p to beta_p or -beta_p, since it preserves its "
+                    + "square p. These images are real, and generation makes every phi(x) real; hence E(S) is totally "
+                    + "real. For G = Gal(E(S)/Q), define sign_p(sigma) in the integer units {1,-1} by sigma(beta_p) = "
+                    + "sign_p(sigma)*beta_p. The resulting homomorphism G -> (S -> Z-units) is faithful by generation. "
+                    + "The Galois automorphism count and the degree theorem give both groups cardinality 2^|S|, so the "
+                    + "sign homomorphism is also surjective. Consequently G is commutative and every sigma satisfies "
+                    + "sigma^2 = 1. When S is empty these statements give Q, degree one and the trivial sign group.")))),
+            new DocumentBlock.Section(H("Odd primes: actual residues, inertia and arithmetic Frobenius"), Blocks(
+                Paragraph(Text(
+                    "For every odd rational prime q outside S, write R = O(Q), A = O(E(S)) and e:R->Z for the actual "
+                    + "ring equivalence Rat.ringOfIntegersEquiv. Define q_0 = comap(e,(q)) in R, with (q) in Z the "
+                    + "principal ideal generated by q. This is a nonzero prime ideal, and the quotient equivalence "
+                    + "R/q_0 = ZMod(q) gives cardinality q. For every actual prime ideal P of A lying over q_0, the "
+                    + "induced quotient map R/q_0 -> A/P is injective. The upper residue field A/P is finite and has "
+                    + "characteristic q; these are the actual quotients of the actual rings of integers.")),
+                Paragraph(Text(
+                    "An inertia element acts on beta_p by one of its two signs. If it acted negatively, its residue "
+                    + "identity on b_p would give 2*b_p in P. Primality puts either 2 or b_p in P; squaring b_p and "
+                    + "contracting to Z would then give q dividing 2 or p. The assumptions q odd and q outside S "
+                    + "exclude both cases. Thus inertia fixes every radical and, by generation, is trivial. The "
+                    + "existing inertia-cardinality and ramification-index identities give ramification index one at "
+                    + "every P, hence Algebra.IsUnramifiedAt R P and unramifiedness over q_0.")),
+                Paragraph(Text(
+                    "Let F_P(q) be the actual arithmetic Frobenius at P, with residue action x -> x^q. Its residue "
+                    + "equation on b_p, together with beta_p^2 = p and Euler's criterion, gives the residue of "
+                    + "(p/q)*b_p, where (p/q) is the Legendre symbol. Since q does not divide p, this symbol is 1 or "
+                    + "-1. Comparing it with the two possible signs of F_P(q)(beta_p), a mismatched sign would give 2 "
+                    + "times the residue of b_p equal to zero. Odd characteristic and q outside S exclude this. "
+                    + "Therefore F_P(q)(beta_p) = (p/q)*beta_p for every p in S. These values determine the "
+                    + "automorphism on its generators, so F_P(q) is independent of the upper prime P. Write this "
+                    + "common actual automorphism as F(q); its sign_p coordinate is the integer Legendre symbol (p/q).")))),
+            new DocumentBlock.Section(H("Complete splitting as an exhaustive product of actual ideals"), Blocks(
+                Paragraph(Text(
+                    "For every such q, F(q) = 1 is equivalent to the following literal splitting statement. There "
+                    + "exists a finite set U of ideals of A with |U| = 2^|S|, whose membership is exactly P in U iff P "
+                    + "is prime and lies over q_0. Thus U lists all upper primes, without repetition. Every P in U has "
+                    + "|A/P| = q. All three ideal equalities hold: map(R->A,q_0) = product(P in U,P); map(Z->A,(q)) = "
+                    + "product(P in U,P); and the principal ideal (q) in A = product(P in U,P). Here map denotes ideal "
+                    + "extension along the indicated algebra map, and the product is the ideal product.")),
+                Paragraph(Text(
+                    "To derive the forward direction, use the existing Frobenius-order/residue-degree identity "
+                    + "underlying Chebotarev.frobenius_order_stabilizer: trivial Frobenius gives residue degree one. "
+                    + "Unramifiedness gives ramification index one, and the Galois e*f*g formula with "
+                    + "prime_radical_degree gives exactly 2^|S| primes above q_0. The existing primesOverFinset "
+                    + "supplies the exhaustive finite set and its membership characterization. The ideal-factorization "
+                    + "formula has exponent one at each member, while the residue norm formula gives each quotient "
+                    + "cardinality q. Transport through e and preservation of principal ideals identify the extensions "
+                    + "of q_0 and of the integer ideal (q) with the principal ideal (q) in A, proving all three "
+                    + "equalities.")),
+                Paragraph(Text(
+                    "Conversely, the stipulated quotient cardinality q at any upper prime, together with the "
+                    + "injective map from the base residue field of cardinality q, makes that map bijective. Its "
+                    + "linear equivalence gives residue degree one; the same Frobenius-order identity then gives F(q) "
+                    + "= 1. Upper-prime independence transfers this conclusion to every upper prime. Faithfulness of "
+                    + "signs also identifies F(q) = 1 with (p/q) = 1 for every p in S.")))),
+            new DocumentBlock.Section(H("The original weighted Lucas-block Frobenius application"), Blocks(
+                Paragraph(Text(
+                    "Fix j >= 2. Set B_i = abs(L_(3^i)^2 + 3), with L the same goldenLucas sequence, and let S be "
+                    + "the union of the prime supports of B_i over every 1 <= i < j. This is the full earlier support "
+                    + "used above, including primes at even depths. Let T be the finite subtype of prime factors of "
+                    + "B_j, and take F(q) in the same Galois group Gal(E(S)/Q) to be the actual "
+                    + "upper-prime-independent Frobenius just constructed, for each q in T. The later support T is "
+                    + "nonempty. The existing block prime-data proof at GoldenCubicBlockNativePowerPeriods gives q > 5 "
+                    + "and the exact equality e(q) = v_q(Fib(fibonacciRank(q))) = v_q(B_j) > 0. The pairwise block "
+                    + "coprimality in cubic_block_native_power_periods gives q outside S. These are the genuine "
+                    + "positive Fibonacci depths, with no depth-one substitution.")),
+                Paragraph(Text(
+                    "Keep the primewise condition D as an external hypothesis: for every p in S, product(q in "
+                    + "T,(p/q)^e(q)) = 1 in the integers. For these identical S, T, F and e, the Frobenius calculation "
+                    + "gives sign_p(F(q)) = (p/q). Substitute this integer equality separately under each power and "
+                    + "use product congruence. Since signs form a homomorphism, D makes every sign coordinate of "
+                    + "product(q in T,F(q)^e(q)) equal to one. Faithfulness then gives the weighted Galois equality "
+                    + "product(q in T,F(q)^e(q)) = 1.")),
+                Paragraph(Text(
+                    "If Q in T has odd depth e(Q) and every other q in T has even depth, exponent two makes "
+                    + "F(q)^e(q) = 1 for q different from Q and F(Q)^e(Q) = F(Q). The identical weighted product "
+                    + "therefore reduces to F(Q), so D implies F(Q) = 1. The full splitting equivalence above applies "
+                    + "to Q in this same field E(S): it gives the exhaustive set of 2^|S| distinct actual upper "
+                    + "ideals, quotient cardinality Q at every member, and all three ideal product equalities. This "
+                    + "implication retains its external D and its unique-odd-depth hypotheses.")))),
+            new DocumentBlock.Section(H("Scope and applicability limits"), Blocks(
+                Paragraph(Text(
+                    "The derivation does not obtain D from Jacobi symbols or block coprimality, replace the depths "
+                    + "by ones, assert existence of a Wall-Sun-Sun prime, or prove unconditional GPC9. The original "
+                    + "GPC7 comparison set, exact density, DCE and scalar conclusions are outside this application. No "
+                    + "full parent-problem completion is asserted. These are applications of existing multiquadratic, "
+                    + "residue and ideal interfaces, with no mathematical novelty claimed; the linked library note "
+                    + "records the classical source for the displayed kernel and degree results. Their displayed "
+                    + "formulas remain author-written descriptions of the linked Lean declarations.")))))));
 
     private static Formula Call(string name, params Formula[] args)
     {
