@@ -3585,3 +3585,483 @@ Thus the stated geometric class is nonempty and is excluded by the common curved
 Theorem 114.2 excludes a singular original stress-fibre block for every opposite rank greater than two. Theorem 114.3 and Corollary 114.4 impose additional two-fibre restrictions at opposite rank four. They leave the class with all six two-fibre $H$ principal Grams positive definite unresolved, and the rank count alone does not exclude stress rank three with two complementary rank-three $H$ blocks. The existential global-rank alternative in Corollary 113.5 is therefore not reduced to a lower maximum rank by this section. No arbitrary leaking optimizer is asserted to preserve its ranks under calibration, and the unrestricted quarter optimum remains open.
 
 ## 追加锚（本行以下为增补区）
+
+## 115. Quantitative quotient coherence and the common-line rank-four exclusion
+
+### 115.1. A rational two-fibre comparison
+
+Use the original fixed correlated input and output encodings, the original channels $A,B:\mathcal L(\mathbb C^8)\to\mathcal L(\mathbb C^4)$, and their unhalved arbitrary-reference diamond error $\delta$. Their actual correct-output forward Grams are denoted by $G,H$, including when the channels leak outside the correct output fibre. Put $K=G\odot H$ and let $T$ have blocks $T_{ff}=I_2$ and $T_{fg}=J_2/2$ for $f\ne g$. The original tagged-reference argument in [RT III §91.5](ARITHMETIC_HOLOGRAPHIC_RT_III.md#915-uniform-reference-and-complete-two-fibre-tests) gives
+
+$$
+ \delta\ge\|T_{fg}-K_{fg}\|_{\rm op}\qquad(f\ne g).
+ \tag{115.1}
+$$
+
+Each correct-output record map on an original fibre is a contraction. In particular $H_{fg}$ is a $2\times2$ contraction. These statements use the actual correct-output Grams and retain output leakage.
+
+**Lemma 115.1 (rational entrywise-power comparison).** Let $C$ be a complex $2\times2$ matrix, and suppose $0\le d\le51/200$ and $\|J_2/2-C\|_{\rm op}\le d$. Then
+
+$$
+ \sum_{i,j=1}^2|C_{ij}|^{2/3}
+   >\frac{12}{7}(1-d)+\frac{181}{250}.
+ \tag{115.2}
+$$
+
+Consequently $\sum|C_{ij}|^{2/3}\le2$ implies $\|J_2/2-C\|_{\rm op}>51/200$.
+
+**Proof.** Every $x_{ij}=|C_{ij}|$ belongs to $[49/200,151/200]$. With $\mathbf1=(1,1)^T$, the operator-norm bound also gives
+
+$$
+ \sum_{i,j}x_{ij}\ge|\mathbf1^*C\mathbf1|
+ \ge2-2d.
+ \tag{115.3}
+$$
+
+The concavity of $x^{2/3}$ and the following exact positive endpoint differences prove a strict affine lower bound throughout this closed interval:
+
+$$
+ \begin{aligned}
+ \left(\frac{49}{200}\right)^2
+  -\left(\frac{391}{1000}\right)^3
+   &=\frac{248529}{1000000000}>0,\\
+ \left(\frac{151}{200}\right)^2
+  -\left(\frac{5797}{7000}\right)^3
+   &=\frac{709178427}{343000000000}>0,\\
+ x^{2/3}&>\frac67x+\frac{181}{1000}
+   \quad\left(\frac{49}{200}\le x\le\frac{151}{200}\right).
+ \end{aligned}
+ \tag{115.4}
+$$
+
+Indeed the affine function has endpoint values $391/1000$ and $5797/7000$. Its graph lies strictly below the chord of $x^{2/3}$, which lies below the concave graph. Summing (115.4) and applying (115.3) proves (115.2). At $d=51/200$, its right side is $1751/875>2$, proving the last assertion. ∎
+
+### 115.2. An actual quotient must have coherent fibre blocks
+
+**Theorem 115.2 (quantitative quotient-fibre obstruction).** Suppose the actual correct-output Grams of the original channels satisfy
+
+$$
+ G=H\odot\bar R,\qquad R\ge0,\qquad R_{ii}=1.
+ \tag{115.5}
+$$
+
+Write $r_f=|R_{f0,f1}|\in[0,1]$. If $\delta\le51/200$, then for every pair of distinct original fibres,
+
+$$
+ r_fr_g>
+ \left[\frac67(1-\delta)+\frac{181}{500}\right]^3-1>0.
+ \tag{115.6}
+$$
+
+In particular a single block $R_{ff}=I_2$ forces $\delta>51/200$. If $\delta\le1/4$, then
+
+$$
+ r_fr_g>\kappa,\qquad r_f>\kappa,\qquad
+ \kappa=\left(\frac{3517}{3500}\right)^3-1
+       =\frac{627789413}{42875000000}.
+ \tag{115.7}
+$$
+
+**Proof.** Factor $R$ by unit records, and let $F_f$ consist of its two columns on fibre $f$. The frame operator $`A_f=F_fF_f^*`$ has possibly nonzero eigenvalues $1+r_f$ and $1-r_f$. If $u_f$ is a top unit eigenvector, write
+
+$$
+ A_f=(1-r_f)\Pi_f+2r_fu_fu_f^*.
+ \tag{115.8}
+$$
+
+For $r_f<1$, $\Pi_f$ is the orthogonal projection onto its two-dimensional range. For $r_f=1$, that term vanishes and any projection containing the range suffices. Thus the singular endpoint requires no inverse. Since $\operatorname{Tr}A_g=2$ and $\|A_g\|_{\rm op}=1+r_g$,
+
+$$
+ \begin{aligned}
+ \|R_{fg}\|_F^2
+ &=\operatorname{Tr}(A_fA_g)\\
+ &\le(1-r_f)\operatorname{Tr}A_g
+      +2r_f\|A_g\|_{\rm op}
+ =2(1+r_fr_g).
+ \end{aligned}
+ \tag{115.9}
+$$
+
+The case $r_f=0$ is included, with $A_f=\Pi_f$. The actual block $H_{fg}$ is a contraction, so $\|H_{fg}\|_F^2\le2$. On this cross block, (115.5) gives $K_{ij}=H_{ij}^2\bar R_{ij}$. Hölder's inequality, with exponents $3/2$ and $3$, gives
+
+$$
+ \begin{aligned}
+ \sum_{i\in f,j\in g}|K_{ij}|^{2/3}
+ &=\sum_{i\in f,j\in g}
+    (|H_{ij}|^2)^{2/3}(|R_{ij}|^2)^{1/3}\\
+ &\le\left(\sum|H_{ij}|^2\right)^{2/3}
+       \left(\sum|R_{ij}|^2\right)^{1/3}
+ \le2(1+r_fr_g)^{1/3}.
+ \end{aligned}
+ \tag{115.10}
+$$
+
+Zero entries cause no difficulty. Applying Lemma 115.1 with $C=K_{fg}$ and $d=\delta$, justified by (115.1), proves
+
+$$
+ 2(1+r_fr_g)^{1/3}
+ >\frac{12}{7}(1-\delta)+\frac{181}{250}.
+ \tag{115.11}
+$$
+
+Divide by two and cube positive quantities. This yields (115.6); its right side is positive because the bracket is at least $1751/1750>1$. If $r_f=0$, (115.6) is impossible for any other fibre. At $\delta\le1/4$, the bracket is at least $3517/3500$, proving the product bound in (115.7). Since $r_g\le1$, it also gives $r_f>\kappa$. ∎
+
+The theorem is a lower bound for original leaking channels through the exact identity (115.5). It does not replace their diamond norm by a calibrated upper formula, nor assert that an arbitrary Gram representative preserves a leaking channel.
+
+**Corollary 115.3 (phased-cube obstruction).** Suppose, on one pair of distinct original fibres,
+
+$$
+ K_{fg}=D_1(H_{fg}\odot H_{fg}\odot H_{fg})D_2,
+ \tag{115.12}
+$$
+
+where $D_1,D_2$ are diagonal unitaries. Then $\delta>51/200$. In particular this holds if $`G=E^*(H\odot H)E`$ for a diagonal unitary $E$.
+
+**Proof.** For the block $C$ in (115.12), phases do not change entry magnitudes, so
+
+$$
+ \sum|C_{ij}|^{2/3}=\|H_{fg}\|_F^2\le2.
+ \tag{115.13}
+$$
+
+Lemma 115.1 and (115.1) prove the bound. The displayed global identity implies (115.12) with $`D_1=E_f^*`$ and $D_2=E_g$. The argument retains arbitrary phases and output leakage. ∎
+
+### 115.3. All singular two-fibre blocks determine the full stress
+
+For this subsection assume explicitly that $(G,H)$ is a local minimum on the full calibrated domain $\mathcal E\times\mathcal E$, including different-rank competitors, and
+
+$$
+ \operatorname{rank}G=7,\qquad\ker G=\mathbb Ca,\qquad
+ a_i\ne0\ \text{for every }i,\qquad
+ \operatorname{rank}H=4,\qquad 0<F(G,H)<\tfrac12.
+ \tag{115.14}
+$$
+
+Fix the same common normalized stress from (114.4),
+
+$$
+ P=\alpha\operatorname{diag}(a)R\operatorname{diag}(\bar a),\qquad
+ \alpha>0,\quad R\ge0,\quad R_{ii}=1,\quad
+ G=H\odot\bar R,\quad PH=0.
+ \tag{115.15}
+$$
+
+Every original cross-fibre entry of $H,P$ is nonzero. Theorem 114.2 gives $P_{ff}>0$. Lemma 114.1 supplies its oriented normal matrix for every partition star, with this same $P$ throughout.
+
+**Theorem 115.4 (common-line stress and quantitative exclusion).** Under (115.14), suppose every principal block of $H$ on two original fibres is singular. Then there are an invertible diagonal $D$ and a diagonal unitary $E$ such that
+
+$$
+ \begin{aligned}
+ P&=D\bar H D^*,&\operatorname{rank}P&=\operatorname{rank}R=4,\\
+ P_{ff}&\text{ is diagonal},&R_{ff}&=I_2\quad\text{for every }f,\\
+ R&=E\bar H E^*,&G&=E^*(H\odot H)E.
+ \end{aligned}
+ \tag{115.16}
+$$
+
+Moreover $F(G,H)>51/200$. In particular no subquarter local minimum in (115.14) has all six two-fibre $H$ blocks singular.
+
+**Proof.** Factor $`H=B_0^*B_0`$ with a full-row-rank $4\times8$ record matrix. Its original fibre ranges $L_f\subset\mathbb C^4$ are two-planes, span $\mathbb C^4$, and meet pairwise because every two-fibre block is singular. They have a common line. To see this including repeated planes, choose distinct $L_0,L_1$, put $\ell=L_0\cap L_1$ and $M=L_0+L_1$. If a third plane $L_2$ does not contain $\ell$, its distinct intersection lines with $L_0,L_1$ span it inside $M$. Any remaining plane outside $M$ meets $M$ in one line, which would have to belong to $L_0\cap L_1\cap L_2=0$. This is impossible. Then every plane would lie in the three-space $M$, contradicting total rank four. Thus all planes contain $\ell$.
+
+Choose a unit vector $e\in\ell$ and unit vectors $v_f\in\ell^\perp$ with $L_f=\operatorname{span}(e,v_f)$. Using algebraic coordinates in each fibre, not a physical within-fibre symmetry, and ordering the common-line coordinates first, gives
+
+$$
+ \widetilde H=J_4\oplus Z,\qquad
+ Z_{fg}=\langle v_f,v_g\rangle,\qquad
+ Z_{ff}=1,\quad\operatorname{rank}Z=3,\quad\ker Z=\mathbb Ck.
+ \tag{115.17}
+$$
+
+The full kernel is $\mathbf1^\perp\oplus\mathbb Ck$. If $k_f=0$, the projection of this kernel to fibre $f$ has dimension one. Since $\operatorname{range}P\subset\ker H$, this would imply $\operatorname{rank}P_{ff}\le1$, contrary to $P_{ff}>0$. Thus every $k_f\ne0$. Every proper principal Gram of $Z$ is consequently positive definite: a null vector on a proper subset would extend by zero to a kernel vector of $Z$, contradicting full support of $k$. All six two-fibre $H$ blocks therefore have rank exactly three.
+
+Write the actual physical records on fibre $f$ as $b_{fi}=u_{fi}e+w_{fi}v_f$. The coefficient vectors $u_f,w_f$ form an orthonormal basis of $\mathbb C^2$. Reciprocal diagonal physical phases can make $u_f=(c_f,s_f)$ real and nonnegative; a phase choice of $v_f$ then gives $w_f=(-s_f,c_f)$. Initially $c_f$ or $s_f$ may vanish. The actual reciprocal transformation is
+
+$$
+ H'=E_0^*HE_0,\quad P'=E_0^*PE_0,\quad
+ G'=E_0GE_0^*,\quad a'=E_0a,\qquad
+ G'\odot H'=G\odot H.
+ \tag{115.18}
+$$
+
+It preserves the original norm and full-domain local-minimum hypothesis. No arbitrary $U(2)$ transformation inside an original physical fibre is used.
+
+For any complementary two-fibre partition $A=\{f,g\}$, $B=\{h,l\}$, the kernel supported on $A$ is spanned by $x_A=(u_f,-u_g)$. The range vectors supported on $A$ have zero common-line coordinates and the form
+
+$$
+ n_f=\nu_fw_f,\qquad n_g=\nu_gw_g,\qquad
+ \bar k_f\nu_f+\bar k_g\nu_g=0.
+ \tag{115.19}
+$$
+
+Choose such an $n\ne0$ and, analogously, an $m\ne0$ supported on $B$. Every one of their four fibre coefficients is nonzero. Both vectors belong to $\operatorname{range}H\subset\ker P$. Lemma 114.1 gives an oriented matrix, here denoted by $\mathcal Z$ to distinguish it from (115.17), with
+
+$$
+ \mathcal Z_{ij}=P_{ij}\bar n_i m_j/\bar H_{ij}
+ \quad(i\in A,j\in B),\qquad
+ \mathcal Z=\lambda x_Ay_B^*,\quad
+ y_B=(u_h,-u_l).
+ \tag{115.20}
+$$
+
+Its scalar $\lambda$ is nonzero, since some $n_i,m_j$ are nonzero and every cross ratio is nonzero. Entrywise multiplication by these ratios preserves the row and column supports of $\bar n m^T$. Thus $\operatorname{supp}x_A=\operatorname{supp}n$ and $\operatorname{supp}y_B=\operatorname{supp}m$. On each fibre $u_f,w_f$ have the same support. Two orthogonal unit vectors in $\mathbb C^2$ can have the same support only if both coordinates are nonzero. Hence $c_f,s_f>0$ for every $f$, before any division below.
+
+Define
+
+$$
+ \eta_f=\frac{s_f^2-c_f^2}{c_fs_f},\qquad
+ T_f=\operatorname{diag}(u_{fi}/w_{fi}).
+ \tag{115.21}
+$$
+
+Every pair of distinct fibres is separated by some two-half partition. Equation (115.20), including its one-dimensional supported kernel spaces, therefore gives scalars $c_{fg}\ne0$ with
+
+$$
+ \begin{aligned}
+ P_{fg}&=c_{fg}T_f\bar H_{fg}T_g,\qquad c_{gf}=\bar c_{fg},\\
+ H_{fg}&=u_fu_g^T+Z_{fg}w_fw_g^T,\\
+ T_fw_f&=u_f,\qquad T_fu_f=w_f+\eta_fu_f.
+ \end{aligned}
+ \tag{115.22}
+$$
+
+In the algebraic orthonormal bases $(u_f,w_f)$, the cross block is consequently
+
+$$
+ c_{fg}\begin{bmatrix}
+ \eta_f\eta_g+\bar Z_{fg}&\eta_f\\
+ \eta_g&1
+ \end{bmatrix}.
+ \tag{115.23}
+$$
+
+Reorder all common-line coordinates first and write
+
+$$
+ \widetilde P=\begin{bmatrix}A&C\\C^*&D_0\end{bmatrix}.
+ \tag{115.24}
+$$
+
+Complementarity with (115.17) gives $A\mathbf1=0$, $`C^*\mathbf1=0`$, $CZ=0$ and $D_0Z=0$. Positivity gives $`D_0=\beta kk^*`$ for $\beta\ge0$, and $P_{ff}>0$ forces $\beta>0$. The bottom-right cross entries in (115.23) give $c_{fg}=\beta k_f\bar k_g$. Also $CZ=0$ gives $`C=\gamma k^*`$. Its cross entries determine $\gamma_f=\beta\eta_fk_f$, including the diagonal of $C$. With $d=\operatorname{diag}(\eta)k$, it follows that
+
+$$
+ C=\beta dk^*,\qquad\sum_f\eta_fk_f=0.
+ \tag{115.25}
+$$
+
+Put $`A_0=A-\beta dd^*`$. Its off-diagonal entries are $\beta k_f\bar k_g\bar Z_{fg}$, and $A_0\mathbf1=0$. The relation $\bar Z\bar k=0$ fixes its diagonal as well, so
+
+$$
+ \begin{aligned}
+ A_0&=\beta\operatorname{diag}(k)\bar Z\operatorname{diag}(\bar k),\\
+ \widetilde P
+ &=\begin{bmatrix}A_0&0\\0&0\end{bmatrix}
+   +\beta\begin{bmatrix}d\\k\end{bmatrix}
+          \begin{bmatrix}d\\k\end{bmatrix}^*.
+ \end{aligned}
+ \tag{115.26}
+$$
+
+The first summand is positive semidefinite of rank three, and the added vector has a nonzero bottom component outside its range. Thus $\operatorname{rank}P=4$. Returning to the physical coordinates using (115.22) gives
+
+$$
+ \begin{aligned}
+ P&=D\bar H D^*,\qquad
+ D_{fi}=\sqrt\beta\,k_f\frac{u_{fi}}{w_{fi}},\\
+ P_{ff}&=\beta|k_f|^2
+  \operatorname{diag}\left(\frac{c_f^2}{s_f^2},
+                           \frac{s_f^2}{c_f^2}\right).
+ \end{aligned}
+ \tag{115.27}
+$$
+
+Undoing (115.18) preserves the diagonal property and changes $D$ to another invertible diagonal matrix. In the original coordinates, $P_{ii}=\alpha|a_i|^2$ and $H_{ii}=1$ imply that $E_i=D_i/(\sqrt\alpha a_i)$ has modulus one. Substitution in (115.15) gives all identities in (115.16), including $R_{ff}=I_2$. Theorem 115.2, or alternatively Corollary 115.3, now yields $F(G,H)>51/200$. This proves the quantitative exclusion for the entire stated class. ∎
+
+### 115.4. Original stress coherence and the remaining rank-four configurations
+
+**Corollary 115.5 (subquarter necessary geometry).** At a full-domain calibrated local minimum with a full-support rank-seven first Gram and $0<F(G,H)\le1/4$, the same common normalized stress satisfies
+
+$$
+ r_f=\frac{|P_{f0,f1}|}
+ {\sqrt{P_{f0,f0}P_{f1,f1}}},\qquad
+ r_fr_g>\kappa\quad(f\ne g),\qquad r_f>\kappa,
+ \tag{115.28}
+$$
+
+where $\kappa$ is the exact constant in (115.7), regardless of the opposite rank. If the opposite rank is four, at least one two-fibre principal block of $H$ is positive definite. If in addition $\operatorname{rank}P=3$, some partition into two complementary pairs of original fibres has both $H$ blocks positive definite.
+
+**Proof.** The common-stress identities give $P_{ii}=\alpha|a_i|^2>0$, so the normalized quantity in (115.28) equals $|R_{f0,f1}|$. Theorem 115.2 proves its bounds. At opposite rank four, Theorem 115.4 excludes all six two-fibre blocks being singular. Choose a positive-definite one, on $A$, and let $B$ be its complementary pair. If $\operatorname{rank}P=3$ and $H_{BB}$ were singular, Theorem 114.3 would give $\operatorname{rank}P_{BB}=\operatorname{rank}H_{AA}=4$, impossible. Thus the complement is positive definite as well. ∎
+
+The rank-four conclusion excludes the common-line record geometry, including its full-rank stress boundary. It does not exclude the all-six-positive-definite configuration or every mixed-rank partition. The fully coherent common-stress class, smaller first ranks and the unrestricted global quarter optimum remain open. The calibrated local-minimum statements do not assert rank preservation for an arbitrary given leaking optimizer.
+
+## 追加锚（本行以下为增补区）
+
+## 116. Three-fibre quotient products require an intrinsic complex phase
+
+### 116.1. The original-channel principal quotient
+
+Retain the four prescribed two-coordinate fibres of $\mathbb C^8$, and write $f(i)$ for the fibre of coordinate $i$. The target channel $\mathcal F:\mathcal L(\mathbb C^8)\to\mathcal L(\mathbb C^4)$ and its forward coefficient matrix $T$ are
+
+$$
+ \mathcal F(|i\rangle\langle j|)
+   =T_{ij}|f(i)\rangle\langle f(j)|,\qquad
+ T_{ff}=I_2,\qquad T_{fg}=\tfrac12J_2\quad(f\ne g).
+ \tag{116.1}
+$$
+
+For arbitrary original CPTP maps $A,B:\mathcal L(\mathbb C^8)\to\mathcal L(\mathbb C^4)$, use the fixed isometries $V_{\rm in}|i\rangle=|i,i\rangle$ and $V_{\rm out}|f\rangle=|f,f\rangle$, with their encoding channels $\mathcal J_{\rm in},\mathcal J_{\rm out}$. The error is the unhalved arbitrary-reference diamond norm
+
+$$
+ \delta=\|(A\otimes B)\circ\mathcal J_{\rm in}
+                  -\mathcal J_{\rm out}\circ\mathcal F\|_\diamond.
+ \tag{116.2}
+$$
+
+For Stinespring isometries $V_A,V_B$, define the actual correct-output records $u_i=(\langle f(i)|\otimes I)V_A|i\rangle$ and $v_i=(\langle f(i)|\otimes I)V_B|i\rangle$. Their forward Grams are $G_{ij}=\langle u_i,u_j\rangle$ and $H_{ij}=\langle v_i,v_j\rangle$, with inner products conjugate-linear in the first argument. Thus
+
+$$
+ G,H\ge0,\qquad G_{ff},H_{ff}\le I_2,\qquad K=G\odot H.
+ \tag{116.3}
+$$
+
+The fibre inequalities follow because each correct-output projection of a Stinespring isometry is a contraction. They retain arbitrary output leakage.
+
+Let $S$ be the union of any three complete original fibres. A principal correlation quotient means a matrix $R$ defined only on $S$ such that
+
+$$
+ R\ge0,\qquad R_{ii}=1\ (i\in S),\qquad
+ G_S=H_S\odot\bar R.
+ \tag{116.4}
+$$
+
+This is an assumption on the actual physical Grams. It imposes no quotient outside $S$, no rank bound, and no reality assumption on $G$ or $R$.
+
+**Theorem 116.1 (intrinsic phase obstruction).** Under (116.4), if $\delta<1/4$, then at least one of the eight triangles obtained by taking one coordinate from each of the three fibres in $S$ satisfies
+
+$$
+ \operatorname{Im}(H_{ij}H_{jk}H_{ki})\ne0.
+ \tag{116.5}
+$$
+
+Consequently, if $H_S$ is real after a diagonal unitary conjugation, then $\delta\ge1/4$. Both conclusions also hold after an original-fibre-preserving relabeling.
+
+**Proof.** The original matrix-unit witness has the exact normalization
+
+$$
+ \delta\ge\left|\tfrac12-K_{ij}\right|
+ \qquad(f(i)\ne f(j)).
+ \tag{116.6}
+$$
+
+Indeed the logical input $|i\rangle\langle j|$ has trace norm one. The actual composite output entry from $|f(i),f(i)\rangle$ to $|f(j),f(j)\rangle$ is $\bar K_{ij}$, whereas the target entry is $1/2$. An output trace norm bounds the absolute value of any entry, and the diamond norm bounds the no-reference induced trace norm. This proves (116.6) directly for the original channels, without discarding leakage or halving the norm. It is also the matrix-unit specialization of [RT III §91](ARITHMETIC_HOLOGRAPHIC_RT_III.md#91-adaptive-original-channel-witnesses-and-an-obstruction-to-all-two-fibre-tests).
+
+Positivity and unit diagonal of $R$ give $|R_{ij}|\le1$, including singular $R$. Hence on $S$,
+
+$$
+ |K_{ij}|=|H_{ij}|^2|R_{ij}|\le|H_{ij}|^2.
+ \tag{116.7}
+$$
+
+If $\delta<1/4$, every cross-fibre entry used below is therefore nonzero and obeys
+
+$$
+ |H_{ij}|^2\ge|K_{ij}|\ge\tfrac12-\delta>\tfrac14.
+ \tag{116.8}
+$$
+
+Complete the actual second Gram by adding only its positive fibre defects:
+
+$$
+ \widehat H=H+\bigoplus_{f=1}^4(I_2-H_{ff})\ge0,
+ \qquad \widehat H_{ff}=I_2.
+ \tag{116.9}
+$$
+
+All cross-fibre entries are unchanged. This is a PSD comparison, with no assertion of rank preservation or local-minimum transfer for a leaking pair. Its two-fibre principal matrices give
+
+$$
+ \begin{bmatrix}I_2&H_{fg}\\H_{gf}&I_2\end{bmatrix}\ge0,
+ \qquad \|H_{fg}\|_{\rm op}\le1.
+ \tag{116.10}
+$$
+
+Its three-coordinate principal matrices, one coordinate from each selected fibre, are correlation matrices. Suppose, contrary to (116.5), that all eight cyclic products are real. Their moduli are positive by (116.8). A negative cyclic product, with edge magnitudes $x,y,z>1/2$, would make the corresponding principal determinant
+
+$$
+ 1-x^2-y^2-z^2-2xyz
+   <1-\tfrac34-\tfrac14=0,
+ \tag{116.11}
+$$
+
+contradicting positivity. Thus all eight products are positive real.
+
+Fix a coordinate $k$ in the third fibre. For $i$ in the first fibre and $j$ in the second, write $H_{ik}=r_i e^{\mathrm i\theta_i}$ and $H_{kj}=s_j e^{\mathrm i\phi_j}$ with $r_i,s_j>0$. Since $H_{jk}=\bar H_{kj}$ and $H_{ki}=\bar H_{ik}$, positivity of the cyclic product gives
+
+$$
+ \arg H_{ij}=\theta_i+\phi_j\pmod{2\pi}.
+ \tag{116.12}
+$$
+
+Separate diagonal unitary changes on the rows and columns of the $2\times2$ block $H_{fg}$ turn that entire block into its entrywise absolute value, without changing its operator norm. With $w=(1,1)^T/\sqrt2$, (116.8) then gives
+
+$$
+ \|H_{fg}\|_{\rm op}
+   =\|(|H_{ij}|)_{i\in f,j\in g}\|_{\rm op}
+   \ge w^T(|H_{ij}|)_{i\in f,j\in g}w
+   =\tfrac12\sum_{i\in f,j\in g}|H_{ij}|>1.
+ \tag{116.13}
+$$
+
+This contradicts (116.10), proving (116.5). Each cyclic product is unchanged by a diagonal unitary conjugation of $H_S$. If that conjugation makes $H_S$ real, every such product is real, so the already proved implication forces $\delta\ge1/4$.
+
+For completeness, these magnitude and cycle arguments do not require changing the physical pair. If a reciprocal diagonal gauge is used, let $E_S$ extend by arbitrary unit diagonal phases outside $S$ to a full eight-coordinate diagonal unitary $E$. The exact transformations are
+
+$$
+ \begin{aligned}
+ H'&=E^*HE,&G'&=EGE^*,&R'&=(E_S^*)^2R E_S^2,\\
+ (G')_S&=(H')_S\odot\overline{R'},&&
+ G'\odot H'=G\odot H.
+ \end{aligned}
+ \tag{116.14}
+$$
+
+Here $R'$ is still defined only on $S$ and remains a correlation matrix. Opposite input phases on the two original channels implement the transformations of $G,H$; they cancel under $V_{\rm in}$, preserving the full original composite channel and its error. In particular the labelled coefficients $K_{ij}$, the target $1/2$, and (116.6) are unchanged. A common fibre-preserving permutation instead reindexes both $K$ and the target, preserving the same problem. This proves the relabeling statement as well. ∎
+
+### 116.2. The full-support rank-seven local-minimum consumer
+
+Define the full calibrated Gram domain and its exact original complete-norm objective by
+
+$$
+ \begin{aligned}
+ \mathcal E&=\{M\in\operatorname{Herm}(8):M\ge0,\ M_{ff}=I_2\},\\
+ F(G,H)&=\max_{\substack{\rho=\bigoplus_f\rho_f\ge0\\
+                               \operatorname{Tr}\rho=1}}
+     \|\sqrt\rho\,(T-G\odot H)\sqrt\rho\|_1.
+ \end{aligned}
+ \tag{116.15}
+$$
+
+For Gram records of any pair in $\mathcal E\times\mathcal E$, the maps $|i\rangle\mapsto|f(i)\rangle\otimes u_i$ and $|i\rangle\mapsto|f(i)\rangle\otimes v_i$ are isometries because the records within each fibre are orthonormal. They give calibrated original channels. By [RT III Theorem 91.1](ARITHMETIC_HOLOGRAPHIC_RT_III.md#911-original-channels-forward-grams-and-the-adaptive-theorem), $F$ is their unhalved diamond error. Local minimality below is on this entire domain, allowing arbitrary nearby ranks.
+
+**Corollary 116.2 (a nonreal triangle on every fibre triple).** Suppose $(G,H)$ is a local minimum on $\mathcal E\times\mathcal E$ and
+
+$$
+ \operatorname{rank}G=7,\qquad \ker G=\mathbb C a,
+ \qquad a_i\ne0\ (1\le i\le8),\qquad
+ 0<F(G,H)<\tfrac14.
+ \tag{116.16}
+$$
+
+For each of the four choices of three original fibres, some triangle using one coordinate from each has $\operatorname{Im}(H_{ij}H_{jk}H_{ki})\ne0$. In particular no diagonal unitary can make any of these three-fibre principal Grams real. There is no assumption on the rank of $H$.
+
+**Proof.** The full-domain same-common-witness quotient in [RT III Lemma 95.2](ARITHMETIC_HOLOGRAPHIC_RT_III.md#952-one-rank-seven-side-gives-a-supported-psd-quotient) applies because $0<F<1/2$. It supplies a scalar $\alpha>0$, a complementary second stress $P\ge0$, and a correlation matrix $R$ on the support of $a$. Since that support is all eight coordinates, its identities are
+
+$$
+ P=\alpha\operatorname{diag}(a)R\operatorname{diag}(\bar a),
+ \qquad PH=0,\qquad G=H\odot\bar R.
+ \tag{116.17}
+$$
+
+In particular the same global correlation quotient restricts to (116.4) on every selected triple. Apply Theorem 116.1 to any calibrated realization of this pair and use $\delta=F(G,H)$. This proves every assertion. The quotient comes from one common norming witness for the original complete-norm problem; no independently selected one-party witnesses are combined. ∎
+
+The strict inequality in (116.16) is used to obtain (116.8). At equality $F=1/4$ the strict determinant and contraction contradictions need not hold. The conclusions provide neither a uniform positive lower bound on the imaginary part as the error approaches $1/4$ nor an exclusion of all genuinely complex configurations. The principal identity (116.4) is not asserted for arbitrary physical channel pairs, and reality of the first Gram alone is not a hypothesis of this result. The calibrated local-minimum consumer does not assert rank preservation for an arbitrary given leaking optimizer. The remaining complex rank classes and the unrestricted global quarter optimum remain open.
+
+## 追加锚（本行以下为增补区）

@@ -26,18 +26,18 @@ def elasticity (b s : ℝ) : ℝ :=
   b * Real.sinh s * Real.cosh s ^ 2 /
     (Real.sinh (b * s) * Real.cosh ((b + 1) * s))
 
-private def f (s r : ℝ) : ℝ := r * Real.cosh (r * s) / Real.sinh (r * s)
+def f (s r : ℝ) : ℝ := r * Real.cosh (r * s) / Real.sinh (r * s)
 private def g (s r : ℝ) : ℝ := r * Real.sinh (r * s) / Real.cosh (r * s)
 private def L (b s : ℝ) : ℝ :=
   Real.cosh s / Real.sinh s + 2 * Real.sinh s / Real.cosh s - f s b - g s (b + 1)
 
-private lemma sinh_cosh_sub_pos {z : ℝ} (hz : 0 < z) :
+lemma sinh_cosh_sub_pos {z : ℝ} (hz : 0 < z) :
     0 < Real.sinh z * Real.cosh z - z := by
   have h := Real.self_lt_sinh_iff.mpr (show 0 < 2 * z by linarith)
   rw [Real.sinh_two_mul] at h
   linarith
 
-private lemma f_hasDerivAt {s r : ℝ} (hs : 0 < s) (hr : 0 < r) :
+lemma f_hasDerivAt {s r : ℝ} (hs : 0 < s) (hr : 0 < r) :
     HasDerivAt (f s)
       ((Real.sinh (r * s) * Real.cosh (r * s) - r * s) /
         Real.sinh (r * s) ^ 2) r := by
