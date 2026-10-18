@@ -9399,3 +9399,142 @@ are not added as independent reserves. This is a paper application of
 existing general density and source inequalities, with no new density
 theorem, literature-priority claim, Lean verification, all-integer Robin
 inequality or RH proof.
+
+
+## The original height pays the complete lower real-part head
+
+Keep JM1--JM7's original conditional source, fixed
+$\Theta\in(1/2,1]$, $1-\Theta<\eta<1/2$, $d>0$ and the original
+$0<a<5\kappa/8$. Keep every full window, maximizing tie, positive
+outgoing weight, actual zero multiplicity and legal individual upper
+height. No stronger restriction on the supplied $\eta$ is imposed.
+Put
+
+$$
+\mu=\frac12-\eta>0,\qquad
+\sigma_0=1-\eta=\frac12+\mu,\qquad
+\sigma_* =\frac12+\frac\mu2.
+$$
+
+At the original upper height, define the entire inclusive lower
+real-part contribution, without a lower frequency cut:
+
+$$
+\begin{aligned}
+r_X^{\rm low}(B,\tau)
+&=2\!\sum_{\substack{0<\gamma\le\tau\\\beta\le1-\eta}}
+ m_\rho|c_{B,a}(\rho)|,\\
+\mathcal R_X^{\rm low}
+&=\sum_{i<m}\delta_i r_X^{\rm low}(B_i,\tau_i),\qquad
+c_{B,a}(\rho)=s_BF_B(\rho)-aB^{\rho-1/2}/\rho.
+\end{aligned}
+$$
+
+This includes all actual zeros in the stated region, including low
+frequencies and the boundary $\beta=1-\eta$. It uses neither
+half-isolation nor an upper clock ceiling.
+
+### Reuse reciprocal-height summability away from the critical line
+
+Reuse the general fixed-parameter Ingham input already recorded in
+IH1--IH4, [Chourasiya--Simonič, Corollary 1 and Table 1](https://arxiv.org/html/2507.15184v2).
+Since $\sigma_*>1/2$, its density exponent
+$d_I(\sigma_*)=3(1-\sigma_*)/(2-\sigma_*)$ is strictly less than
+one. DH3's existing reciprocal-height consequence, with a fixed
+positive loss smaller than $1-d_I(\sigma_*)$, therefore supplies
+
+$$
+\sum_{\substack{\gamma>0\\\beta\ge\sigma_*}}
+\frac{m_\rho}{|\rho|}<\infty.
+$$
+
+Bounded initial ordinates are included in the constant. This is the
+standard density summation already used in DH3 and IH3, not a new
+summation theorem. SR1 also already uses the complete sums
+$\sum_{\gamma>0}m_\rho/\gamma^2<\infty$ and
+$\sum_{0<\gamma\le\tau}m_\rho/|\rho|\ll1+\log^2(2+\tau)$,
+with actual multiplicities.
+
+Apply these existing bounds to the two parts
+$\beta<\sigma_*$ and $\sigma_*\le\beta\le\sigma_0$.
+SR1's original degree-two and degree-one coefficient bounds give,
+uniformly at every original $\tau\asymp\sqrt B$,
+
+$$
+\begin{aligned}
+r_X^{\rm low}(B,\tau)
+&\ll_{a,\eta}
+ B^{\mu/2}(1+\log^2 B)+B^\mu\\
+&\ll_{a,\eta} B^\mu
+\quad\text{beyond one fixed core start}.
+\end{aligned}
+\tag{LHA1}
+$$
+
+The first term is absorbed because $\mu>0$ is fixed. The original
+subtraction remains inside each coefficient. No infinite
+reciprocal-height sum over the critical-line zeros is asserted.
+
+### Pay the inclusive endpoint with the same source height
+
+Keep $M_X=X^\mu\log X$ and the original
+$h_X(B)=(d/2)X^{-\eta}\sqrt B\log B$ from HIA2.
+For $B\le X$, LHA1 gives
+$r_X^{\rm low}(B,\tau)/M_X\ll1/\log X$. For $B>X$, it gives
+
+$$
+\frac{r_X^{\rm low}(B,\tau)}{h_X(B)}
+\ll_{a,\eta,d}\frac{X^\eta B^{-\eta}}{\log B}
+\le\frac{C_{a,\eta,d}}{\log X}.
+$$
+
+Here $\eta>0$. Both parts of the original source remain; the split
+is used only in the estimate. All original core clocks escape to
+infinity uniformly, so LHA1's core start can be included in one common
+source start. Summing the unchanged positive outgoing weights gives
+
+$$
+\boxed{
+\mathcal R_X^{\rm low}
+\le\frac{C_{a,\eta,d}}{\log X}
+ [M_XL_X+\mathscr H_X],\qquad
+\frac{\mathcal R_X^{\rm low}}{\mathcal G_X}
+=O_{a,\eta,d}\!\left(\frac1{\log X}\right)\longrightarrow0.}
+\tag{LHA2}
+$$
+
+The second statement reuses HIA3's
+$\mathscr H_X\le\mathcal G_X+O_a(L_X)$ and JM7's
+$\mathcal G_X\ge(R_\eta/2)M_XL_X$ eventually. The height is spent
+only inside that same complete response. No assumption
+$\mathscr H_X=O(M_XL_X)$ or absolute $o(M_XL_X)$ conclusion is made.
+
+Let $S_X^{\rm rem,low}(\boldsymbol\tau)$ be the original head after
+deleting precisely the real contribution of this entire lower
+real-part class. HC2 and the already used HIA4--HIA5 comparison apply
+with LHA2's allowance. Thus, for every fixed $\varepsilon>0$,
+
+$$
+\boxed{S_X^{\rm rem,low}(\boldsymbol\tau)
+\ge(R_\eta-\varepsilon)M_XL_X\quad\text{eventually}.}
+\tag{LHA3}
+$$
+
+This holds on every original qualifying full window, for every
+maximizing-tie assignment and every admissible individual height
+assignment, throughout the original parameter range including
+$\Theta=1$. It pays a full fixed-width lower real-part head, including
+its low frequencies, beyond SR3's ceiling-dependent cut and CP3's
+shrinking band. The earlier absolute and source-relative estimates
+remain valid under their own hypotheses; overlapping contributions
+are not counted twice.
+
+The original source still has $1-\eta<\Theta$. In particular MB3's
+fixed-zero obstruction is not removed: its cut satisfies
+$\beta_c-(1-\eta)=\mu(\Theta+\eta-1)/(1-\eta)>0$.
+The exact remaining head has $\beta>1-\eta$ and its original upper
+masks and complete coefficients. No sufficient signed upper bound
+for that head, favorable cofinal full window, all-integer Robin
+inequality or RH proof is supplied. This is a paper source application
+of existing density, coefficient and joint-height estimates, with no
+new density theorem, literature-priority claim or Lean verification.
