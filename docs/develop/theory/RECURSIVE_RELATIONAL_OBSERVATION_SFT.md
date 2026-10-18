@@ -1954,3 +1954,12 @@ $$
 `verify_fixed_c2_closure.py` 针对第 33 节原样的 2→3→2 链，检查四个因子乘积、四个滞后二乘积以及两条清分母后的有理一步等式；实际基边数为 16、28、16。对两条长兼容方程分别穷尽 1024 个输入，另验证 512 个三角形正逆恒等式。对两端每侧全部实际五边词及两个起始群坐标，分别完成 131072 次正逆恢复与 131072 次逆正恢复。一步障碍的辅助枚举检查 18 组可能的增广参数及 108 个必要奇偶标准形；排除全部整数因子的依据仍是第 33.3 条的普遍整除证明，不是这项有界枚举。该脚本无随机抽样，哨兵为 `FIXED_C2_TWO_STEP_CLOSURE_CHECKS_PASSED`。
 
 **证明范围。** 上述有限核验不证明第 29–35 节的全称论断；这些论断的证明地位以本文书面推导和相应 Lean 声明分别判定。
+
+
+## 实验材料入口
+
+正文中的程序名与结果文件路径对应以下固定版本；有限核验数据不代替普遍证明或 Lean 证书。
+
+- [README.md](https://github.com/the-omega-institute/trureturing-experiments/blob/d96621ce210b8853b202a287ecb538bd7a6ae273/experiments/theory/rro-sft-29-35/README.md)
+- [verify_closure.py](https://github.com/the-omega-institute/trureturing-experiments/blob/d96621ce210b8853b202a287ecb538bd7a6ae273/experiments/theory/rro-sft-profile-closure/verify_closure.py)
+- [verification-summary.json](https://github.com/the-omega-institute/trureturing-experiments/blob/d96621ce210b8853b202a287ecb538bd7a6ae273/experiments/theory/rro-sft-profile-closure/verification-summary.json)

@@ -15,6 +15,37 @@ CLAUDE.md 5⁵(开放问题线三档律)的操作面。所有脚本以宿主后�
 9. **三席评审**(`gen_review.py`:tests/quality 走 codex,一席 nyxid 由 `od -An -N2 -tu2 /dev/urandom` 取 raw%2 抽签);正文冻结后再派复审;非阻断即 `op-sync-dev.sh`(合 dev、推、等三门)+ `gh pr merge --auto --merge`。
 10. **重做**:冻结后任何镜像/产地/import 修补都是全新 deposit(cover 收据绑定 Scribe 哈希);同一 lane 第三次非数学重做即停(第 20⁗ 条)。
 
+## Pipeline runtime
+
+`pipeline/` 提供跨会话运行器，支持 macOS `/bin/bash` 3.2、Python 3.9+、Git、系统 POSIX 工具及仓库已有的 make 入口。GPT Pro 搜题还需 `gh`；实际派席使用 `seat/dispatch.sh` 及其 `seat/sshx-runner-lib.sh`，broker 使用 `nyx/nyx.py ask`。依赖通过系统包管理器安装并放入 `PATH`；sshx 安装根由现有 `SSHX_PLUGIN_ROOT` 配置，Nyx 使用现有 `NYX_CLI`、`NYX_POOL` 配置。所有项目路径从脚本位置定位；主 checkout 取 `git worktree list --porcelain` 第一项，并验证其为非 bare checkout。任意工作目录（包括带空格的路径）均可调用。
+
+公共输入为 `OP_STATE`（默认 `${XDG_STATE_HOME:-$HOME/.local/state}/trureturing-op`）、`OP_SCRATCH`（需要 scratch 的工具必填）、`SSHX_HOME`（默认 `$HOME/.sshx`）及 `OP_NAME_PREFIX`（默认空）。`OP_STATE` 保留 `spool/NAME.job`、`running/NAME.job`、`joblogs/NAME.log`、`jobs-seen.txt` 和 `spool/STOP`；生产者写 `.job.tmp` 后原子改名。`OP_SCRATCH` 保留 `briefs/`、`results/`、`logs/`、`preset/NAME`、`flights.txt`、`max-seats` 和 mkdir 锁 `gate.lock`。preset 一行为 `DONE RESULT_PATH` 或 `WAIT FLIGHT`；flight 是 24 位十六进制串，`flights.txt` 的完成记录为 `NAME `。附加的 `waiters/NAME.json` 记录等待者 PID、flight、worktree 和开始时刻，用进程表验证存活；不替代 flight 账。`gptpro.lock` 在 `OP_STATE` 中串行化 GPT Pro 请求，`gptpro-queue.lock` 在 scratch 中串行化队列消费者。
+
+| 工具 | 输入 | 结果与哨兵 |
+| --- | --- | --- |
+| `pipeline/supervisor.sh` | 无参数；`OP_STATE`；在持久终端运行 | 每个 `.job` 一个直属子任务，工作目录为主 checkout；日志最后一行 `JOB_EXIT=RC`。STOP、INT、TERM 均先收拢子任务，输出 `SUPERVISOR_WAIT`、`SUPERVISOR_END`。 |
+| `pipeline/watch-jobs.sh` | 无参数；`OP_WATCH_MAX_SECONDS` 默认 6600 | 遇到未见的末行 `JOB_EXIT=RC` 即打印名称与日志尾部并返回；总等待到期输出 `WATCH_TIMEOUT`。 |
+| `pipeline/seat-wait.sh` | `NAME BRIEF WORKTREE STAGE [STAGGER]`；scratch 中 `briefs/process-safety-block.md` | preset 优先；否则等 worktree 空闲、席位容量和优先级后调用本仓 `seat/dispatch.sh`。替换 safety block 的 `__FLIGHT__`，最终输出 `DISPATCH_EXIT=RC`，并传递退出码；读到 `RUNNER_EXIT=RC` 时保留 runner 的失败码。 |
+| `pipeline/sweep-ghost-flights.sh` | 无参数；`OP_SCRATCH`、`SSHX_HOME` | flight 目录存在且成功读取的进程表中无对应 runner 时，追加 `NAME ` 并打印 `TOMBSTONE NAME FLIGHT`。进程表读取失败不结算。 |
+| `pipeline/refresh-if-stale.sh` | `TREE`；`REFRESH_LAG_SECONDS` 默认 10800；`OP_REFRESH_LOCK` 默认 `$OP_STATE/main-lean.lock` | 主 build 的 `.main-built-at` 为 `SHA ISO_TIME`。仅在 tree 无在飞席位且 D5 相对 origin/dev 无改动时，按 stamp 年龄或已有 report semantic version 刷新；更新 `.main-cloned-at`，输出 `CACHE_REFRESH skip…` 或 `CACHE_REFRESH done… rc=0`。主 build 的写入者须使用同一锁。macOS 使用 clonefile，其他系统使用普通复制。 |
+| `pipeline/prep-lane-tree.sh` | `WORKTREE` | fetch 后 fast-forward 无自有提交的 lane，或 merge 干净的分歧 lane；拒绝带自有提交的 dirty 分歧 lane；调用 `make lean-cache-ensure`，输出 `PREP=RC`。 |
+| `pipeline/probe-queue.sh` | `[KEY…]`；必填 `OP_PENDING` 目录、`OP_LANES`（空格分隔 `KEY:SUFFIX`）、`OP_WORKTREE_PATTERN`（含 `{suffix}`；相对路径以主 checkout 为基准） | 读取 scratch 的 `briefs/probe-KEY-r1.md`，创建缺失 worktree，确保 cache，通过 seat waiter 派 thinking 席；`PQ_WAITERS` 默认 16，`PQ_FIRST` 为优先 KEY 列表；所有子任务结束后 `PROBE_QUEUE=RC`。`pq-dispatched.txt` 记录已派 KEY。SUFFIX 为 `-` 时跳过。 |
+| `pipeline/resume-after-restart.sh` | `[--dry-run]`；`OP_STATE`、`OP_SCRATCH` | 对无 `JOB_EXIT` 的 running job 建 preset 后原子重排 spool；`respool-after-recovery.txt` 可逐行点名重跑已退出的 job。直接 waiter 命令可自动取 STEP；复合 chain 的 STEP 顺序由 `running/NAME.steps` 每行提供一个无 prefix 名称。输出 `RESUME_DONE`。 |
+| `pipeline/migrate-chain.sh` | `[--dry-run] PROCESS_PATTERN STEP…`；必填 `JOB`、`CMD` | 为顺序 STEP 建 preset，只向唯一匹配且经再次验证的 chain shell 发 TERM，随后原子提交 CMD。codex、runner、dispatch 及其子树不被遍历或停止。输出 `MIGRATED JOB chain=PID dry_run=N`。 |
+| `pipeline/gptpro-search.sh` | `ID deep` 或 `ID quick [WINDOW]`；`OP_SEARCH_SELECTION`、`OP_SEARCH_EXCLUSIONS` 默认 scratch 下的 `briefs/search-selection-block.md`、`briefs/search-exclusions-compact.md` | 调用仓库 `render-search-brief.sh`，追加现成 selection 与 exclusions，串行调用 broker。保留一次空流 EOF 重试及最多六次 quota 重试（间隔 600 秒）；输出 `NYX_OK` 或 `NYX_FAIL`，返回 broker 退出码。 |
+| `pipeline/gptpro-queue.sh` | 无参数；`OP_GPTPRO_QUEUE` 默认 scratch 的 `gptpro-queue.txt`，每行 `LANE ROLE ROUND PR` | 默认读 `briefs/review-LANE-ROLE.md`；可用可执行的 `OP_REVIEW_PREPARE LANE ROLE ROUND PR OUT` 生成含 PR 正文的 brief。串行 broker 调用完成后出队，失败保留首行；输出 `QUEUE_RUN`、`QUEUE_DONE… rc=RC`、`NYX_SEAT_OK`、`QUEUE_EMPTY`。 |
+| `pipeline/common.sh`、`pipeline/selftest.sh` | 前者供 source；后者 `--selftest` | 共用输入验证、锁、进程解析、恢复与 broker 调用；后者运行全部工具的隔离测试。 |
+
+席位 gate 每次读取 `max-seats`；文件不存在时取 `OP_MAX_SEATS`，默认 16，并把同一值作为 `MAX_CODEX` 参数交给 dispatch。移除 `OP_NAME_PREFIX` 后，`review-`、`implb-`、`rework-`、`hotfix-` 优先级为 0；`mirror-`、`impla-`、`fixa-`、`fixb-`、`fix-` 为 1；其他为 2。更高优先级的存活等待者只有在其 worktree 空闲且尚无 runner 时阻挡低优先级者。优先级 2 等满 14400 秒且同类运行席少于两个时可越过优先级等待；`OP_WAIT_SINCE`（兼容 `DWF_WAIT_SINCE`）传入原始 epoch 起点。进程表读取失败为具名错误。WAIT preset 只在三次连续成功读取的进程表均无 runner 后结束；结果取数字最大的 `attempt-N/result.json`。结束时只清理命令包含该 flight attempt 路径且可执行文件名为 Lean、Lake 或 Python 的遗留子任务。
+
+pipeline 的容量判据只有席位 cap 和 worktree 占用，不读取 CPU 负载或 Lean 进程数。`seat/dispatch.sh` 是独立依赖，其自身门策略由该入口负责；调用方须使用满足运行要求的 dispatch 版本。`OP_POLL_SECONDS` 默认 30，`OP_LOCK_ROUNDS` 默认 120，`OP_GATE_ROUNDS` 默认 1440，`OP_RUNNER_POLL_SECONDS` 默认 5，`OP_REFRESH_LOCK_ROUNDS` 默认 480。锁等待有界，未取得锁不会继续执行；锁由取得者释放。等待或停止期间的子任务由同一脚本 wait 收拢。
+
+启动验证使用具名 `PIPELINE_*` 诊断：10 用法错误，11 必需输入缺失，12 工具缺失或版本不符，13 输入值无效，14 已有 job 或身份冲突，15 锁或 gate 到期，16 I/O、Git 或进程读取失败。prep 的 3–6 保留 fetch、fast-forward、merge conflict 和 dirty 分歧状态；实际子命令的失败码由对应入口传出。
+
+运行每个脚本的 `--selftest` 可隔离验证其判断与状态逻辑；每例打印 `ok`/`FAIL`，末行 `SELFTEST_FAILS=N`，失败返回非零。测试使用临时 state、scratch、checkout 和命令存根，不启动真实 runner 或 broker，不读取宿主进程，也不作长等待。
+
+selection/exclusion 生成器、lane 映射和复合 chain 的 STEP 元数据属于调用方输入；运行器不加载 `restore.sh`、`mk-exclusions-compact.py` 或 `nyx-seat.sh`。review brief 的生成与 PR 正文插入通过现成 brief 或显式 `OP_REVIEW_PREPARE` 提供。
+
 ## 脚本
 - `op-resume-seat.sh FLIGHT ATTEMPT BRIEF WORKTREE STAGE [STAGGER] [MAX_CODEX]`:fail-closed 负载门(idle ≥ 20% ∧ lean ≤ 4 ∧ codex 进程 ≤ MAX,300 轮 × 60 s,超时不启动)+ sshx runner。
 - `gen_stage_briefs.py SCRATCH LANE WORKTREE BRANCH MODULE`:切 Stage A / Stage B / mirror-check 三份 brief。唯一从 SCRATCH 读的输入是 `briefs/impl-op-w1-<lane>.md`;基底 brief 与 mirror-check 模板取本目录 tracked 的 `templates/`,scratchpad 被清空不影响它(案号 #6220,与 `gen_review.py` 同形)。缺任一输入即打印路径并 exit 1。

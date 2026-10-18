@@ -8,6 +8,9 @@ url: https://arxiv.org/abs/2609.27906v1
 claim: "Theorem 1: the Bloch data (A, c) of an entanglement-breaking channel on M_d satisfy ‖A‖_*² + (d(d−1)/2)|c|² ≤ (d−1)²; open question 3 asks whether the coefficient d(d−1)/2 is optimal."
 strata_touched:
   - D5/S3/Quantum/QuantumChannels/EntanglementBreakingNormCoefficient
+  - D5/S3/QuadraticForms/WeightedGramContraction
+  - D5/S3/Quantum/QuantumChannels/NuclearNormAdditivity
+  - D5/S3/Quantum/QuantumChannels/EntanglementBreakingOverlapPurity
 license: citation-only
 triage: anchor
 ---
@@ -42,3 +45,36 @@ Section 8, item 3: "Is the coefficient $d(d-1)/2$ optimal? It combines two separ
 ## Scope
 
 In the basis $\{\lambda_i\}$ the Bloch data of a channel are $A_{ij}=\tfrac12\mathrm{Tr}[\lambda_i\Phi(\lambda_j)]$ and $c_i=\mathrm{Tr}[\lambda_i\Phi(I/d)]$, and $\|A\|_*$ is the nuclear (trace) norm. The paper proves Theorem 1 from the Holevo form, shows equality for the completely dephasing channel in every dimension and for a family with $c\neq0$ at $d=2$, and relates the inequality to the covariance-matrix separability criterion.
+
+## Supplied v2 additions (17 October 2026 correspondence)
+
+The author supplied `EB_note_v2_additions_external.pdf` in the correspondence on
+17 October 2026. This is a separate source from the public v1 cited above.
+Lemma 4 states that, for finite nonzero real vector families and strictly
+positive weights, the nuclear norm of their weighted outer-product sum equals
+the sum of the weighted products of their lengths exactly when the normalized
+Gram matrices agree. Its proof passes through a common contraction attaining
+each pairing, then constructs the converse contraction by extending the span
+isometry by zero on the orthogonal complement.
+
+The supplied PDF has SHA-256
+`15c81e5f680bfd8a2822e6bae33eb2daade462ebdeffe7f57f2821e57f8fa1d1`.
+Lemma 4 appears on page 2 and Theorem 5 on page 3.
+
+`D5/S3/QuadraticForms/WeightedGramContraction` formalizes the geometric
+common-contraction step. `D5/S3/Quantum/QuantumChannels/NuclearNormAdditivity`
+proves real rectangular polar contraction and duality for the actual CFC trace
+norm, and then the full Lemma 4 equivalence. These are formalizations of the
+supplied result, with no claim of mathematical novelty.
+
+`D5/S3/Quantum/QuantumChannels/EntanglementBreakingOverlapPurity` proves the
+matrix-purity and centered-Gram portion of Theorem 5: for a fixed complete
+rank-one POVM and pure outputs, the off-diagonal equation (7) forces
+`rho = Phi(I/d)`, every output expectation to equal `P`, `Tr(rho²) = P`,
+`1/d ≤ P < 1` for a nonconstant channel, and the centered Hilbert–Schmidt
+pairing formula. The rank-one and pure-output assumptions are explicit here.
+The full Theorem 5 remains unformalized: this result does not derive those
+assumptions from saturation of Theorem 1, establish the saturation iff (7), or
+identify the two Bloch norm values. Those require the general bound's equality
+chain and the Bloch/Hilbert–Schmidt normalization bridges, beyond the existing
+constant-channel coefficient proof.
