@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1b514129ef5c66b666f7cf871ae7aa4346baf7718fa6d8ab72b15186e33eed32
+  normalized_sha256: sha256:1b514129ef5c66b666f7cf871ae7aa4346baf7718fa6d8ab72b15186e33eed32
+cas_ref: sha256:1b514129ef5c66b666f7cf871ae7aa4346baf7718fa6d8ab72b15186e33eed32
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 全部命题子句由 lake-manifest.json 钉版 Mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679 的既有声明经实例化、投影及规范化闭合；仓内无可用冻结 GID。所用上游全限定声明：Matrix.PosDef.inv, Matrix.PosDef.add_posSemidef, Matrix.posSemidef_sum, Matrix.PosSemidef.conjTranspose_mul_mul_same, Matrix.PosDef.isUnit, Matrix.inv_inv_of_invertible, Matrix.mul_inv_of_invertible。同一潜在Z、固定读取安排和独立噪声为模型前提；实际 Ht=Ct*A^t、可变输出维数、J/eta 精确有限和；所有增量PSD、J及逆PD、可逆和n=0返回先验均已编译。 非作者编译探针 flight 6ad4ff7ae1b609a473a53dae：定向 make lean exit 0，标准公理闭包；未新增或冻结 Lean 声明。
+    previous_atom_id: e1620e7d00d00526bc1eb5524d4e701102c9bf391edf81aa077a3c65b5d3731b
+    next_atom_id: 30650bd48ae6e6460b04638f8ede92867bd63aa90e7d035aad6bc1e22d2def35
