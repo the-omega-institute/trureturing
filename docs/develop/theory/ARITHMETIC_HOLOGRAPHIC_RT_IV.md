@@ -1272,3 +1272,222 @@ For the first equality, multiply the numerator of \(e_-\) by \(\overline v/c-\si
 The negative common-stress factor in \(c_-\) gives the first line of (105.19). The second line is precisely \(\sigma+hz=\sigma|r|^2\), from (105.14). Every final factor is nonzero by (105.4), (105.7) and (105.9), for both values of \(\sigma\) and both signs of \(q\). Yet (105.17), diagonalized in the parity basis, requires \(e_-\overline{c_-}\) to be real. This contradiction proves Theorem 105.1. \(\square\)
 
 The conclusion is restricted to the stated full-domain local-minimum rank and support class. It gives neither a uniform gap nor a quarter bound for every nonstationary complementary-polar pair. Together with Theorem 104.1 it excludes equal and complementary polar angles in that class; general unequal, noncomplementary polar angles and the other remaining rank/support classes are unresolved. The calibration reduction in [RT II §72](ARITHMETIC_HOLOGRAPHIC_RT_II.md) does not preserve the ranks or local-minimum property used here, so it does not extend this exclusion to arbitrary leaking channels. The unrestricted global optimum remains between \(\sqrt3-3/2\) and \(1/4\).
+
+## 106. Exact product-preserving rank saturation and global rank descent
+
+### 106.1. Original domain and a kernel-support path
+
+Retain the original calibrated \(\mathbb C^8\to\mathbb C^4\) channels, the four two-coordinate fibres, fixed correlated encoding and unhalved arbitrary-reference error \(F\) of (104.1). Thus
+\[
+\mathcal E=\{G\in\operatorname{Herm}(8):G\succeq0,\ G_{ff}=I_2\},
+\qquad
+F(G,H)=\max_{(\rho,W)\in\mathcal C}
+                 2\operatorname{Tr}[(T-G\odot H)W],
+\tag{106.1}
+\]
+where \(\mathcal C\) is the original fibre-block density and witness domain. Local minimality always refers to the full domain \(\mathcal E^2\). No external rank constraint is imposed.
+
+For a coordinate set \(S\subseteq\{1,\ldots,8\}\), put \(O=S^c\), \(n=|S|\) and \(o=|O|\). Vectors in \(\mathbb C^S\) are extended by zero on \(O\). Suppose \(G,H\in\mathcal E\) and
+\[
+\ker G\subseteq\mathbb C^S,
+\qquad h=\operatorname{rank}H_S.
+\tag{106.2}
+\]
+The inclusion concerns the entire kernel, including when it has dimension greater than one. In the \(S,O\) partition define
+\[
+B_H=\begin{pmatrix}H_S&0\\0&I_O\end{pmatrix},\qquad
+D_{ij}=\begin{cases}
+G_{ij},&i\ne j\text{ and }\{i,j\}\cap O\ne\varnothing,\\
+0,&\text{otherwise},
+\end{cases}
+\tag{106.3}
+\]
+and, for \(\tau\ge0\), set
+\[
+G_\tau=G+\tau D,\qquad
+H_\tau=\frac{H+\tau B_H}{1+\tau}.
+\tag{106.4}
+\]
+
+**Theorem 106.1.** Under (106.2), every sufficiently small \(\tau>0\) gives \(G_\tau,H_\tau\in\mathcal E\) with
+\[
+\begin{aligned}
+(G_\tau)_S&=G_S,&(H_\tau)_S&=H_S,\\
+G_\tau\odot H_\tau&=G\odot H,&
+\ker G_\tau&=\ker G,\\
+\operatorname{rank}H_\tau&=h+o.&
+\end{aligned}
+\tag{106.5}
+\]
+The pair converges to \((G,H)\) as \(\tau\downarrow0\). If \((G,H)\) is a full-domain local minimum, every sufficiently small such pair is a full-domain local minimum of exactly the same value.
+
+**Proof.** The matrix \(B_H\) is positive semidefinite. Its original fibre blocks are identities even if a fibre is split between \(S\) and \(O\): the cross entry is zero, as required. Thus \(H_\tau\in\mathcal E\) for every \(\tau\ge0\). The Hermitian matrix \(D\) has zero entire original fibre blocks.
+
+For \(x\in\ker G\), condition (106.2) gives \(x_O=0\). Its \(S\) coordinates in \(Dx\) vanish because \(D_{SS}=0\); on \(O\),
+\[
+(Dx)_i=\sum_{j\in S}G_{ij}x_j=(Gx)_i=0.
+\tag{106.6}
+\]
+Consequently \(D\ker G=0\). Hermiticity makes \(K=(\ker G)^\perp\) invariant under both \(G\) and \(D\). Let \(\eta>0\) be the smallest eigenvalue of \(G|_K\). If \(D\ne0\), then
+\[
+0\le\tau<\frac{\eta}{\|D\|_{\rm op}}
+\quad\Longrightarrow\quad
+G_\tau|_K\succ0,
+\qquad \ker G_\tau=\ker G.
+\tag{106.7}
+\]
+If \(D=0\), the same conclusion holds for every \(\tau\ge0\). This proves feasibility and the first-kernel assertion near zero.
+
+For positive semidefinite matrices, the kernel of a positive linear combination is the intersection of the kernels, since a zero quadratic form makes each nonnegative summand vanish. Any vector in \(\ker H_S\), extended by zero, lies in \(\ker H\) by the same zero-quadratic-form argument. Therefore for every \(\tau>0\),
+\[
+\ker H_\tau=\ker H\cap\ker B_H
+           =\ker H_S\oplus\{0\}_O,
+\qquad
+\operatorname{rank}H_\tau=h+o.
+\tag{106.8}
+\]
+No invertibility assumption on \(H_{OO}\) or on a principal Gram is needed.
+
+Both principal blocks on \(S\) and every diagonal entry are unchanged. For \(i\ne j\) with an endpoint in \(O\),
+\[
+(G_\tau)_{ij}=(1+\tau)G_{ij},\qquad
+(H_\tau)_{ij}=\frac{H_{ij}}{1+\tau}.
+\tag{106.9}
+\]
+Their product is unchanged, including original partner zeros. Hence the entire eight-coordinate coefficient \(T-G\odot H\), every complete-norm witness objective and the exact error are unchanged. This is stronger than equality of a principal or uniform-input bound.
+
+The paths (106.4) are continuous at zero. If \((G,H)\) is a local minimum of value \(t\), choose a relatively open neighbourhood \(U\subseteq\mathcal E^2\) on which \(F\ge t\). Every sufficiently small constructed pair lies in \(U\) and has value \(t\). A relatively open neighbourhood of that pair contained in \(U\) witnesses its own full-domain local minimality. This proves the theorem. \(\square\)
+
+### 106.2. The same complete common-witness subset
+
+Suppose now that \((G,H)\) is a full-domain local minimum, \(\operatorname{rank}G=7\), \(0<t=F(G,H)<1/2\), and \(S\) is exactly the support of a fixed vector \(a\) spanning \(\ker G\). Let \(\mathcal A(G,H)\) be the norming pairs in (106.1), and define the complete canonical common-witness subset by
+\[
+\begin{aligned}
+\mathcal A_0(G,H)
+ &=\{(\rho,W)\in\mathcal A(G,H):
+             b_{G,H}(W;Q,R)\ge0\text{ for every }Q,R\in\mathcal E\},\\
+b_{G,H}(W;Q,R)
+ &=-2\operatorname{Tr}
+       [((Q-G)\odot H+G\odot(R-H))W].
+\end{aligned}
+\tag{106.10}
+\]
+[RT III §§92,95](ARITHMETIC_HOLOGRAPHIC_RT_III.md) make this a nonempty compact convex subset. Its definition retains one and the same norming pair for both first-order inequalities.
+
+**Corollary 106.2.** For every sufficiently small \(\tau>0\) in Theorem 106.1,
+\[
+\mathcal A_0(G_\tau,H_\tau)=\mathcal A_0(G,H).
+\tag{106.11}
+\]
+For each such common pair, its first stress \(\alpha aa^*\), \(\alpha>0\), and supported positive correlation quotient from RT III §95 can be retained unchanged.
+
+**Proof.** RT III Lemma 96.1 says that every canonical common density and witness is supported on \(S\). For such a witness the unchanged principal blocks give
+\[
+\overline{H_\tau}\odot W=\overline H\odot W,
+\qquad
+\overline{G_\tau}\odot W=\overline G\odot W.
+\tag{106.12}
+\]
+In (106.10), the terms depending on \(Q,R\) are consequently unchanged, and the constant term is unchanged by the full product identity. Thus \(b_{G_\tau,H_\tau}=b_{G,H}\) for this witness and every original feasible \(Q,R\). The full norming sets \(\mathcal A\) are identical because their complete coefficients agree. This proves one inclusion in (106.11).
+
+The new pair is itself a full-domain local minimum, with the same rank-seven kernel and value. Lemma 96.1 therefore supports all its common pairs on the same \(S\). Reversing the preceding argument proves the other inclusion.
+
+For completeness, the complementary stresses associated with one fixed common pair have the form
+\[
+\begin{aligned}
+P_A&=\operatorname{blockdiag}(\Lambda_A)-2\overline H\odot W
+      =\alpha aa^*,\qquad P_AG=0,\\
+P_B&=\operatorname{blockdiag}(\Lambda_B)-2\overline G\odot W
+      \succeq0,\qquad P_BH=0.
+\end{aligned}
+\tag{106.13}
+\]
+Both are supported on \(S\), by RT III §95. Equations (106.12) leave their displayed matrices unchanged with the same multipliers. The first still annihilates \(G_\tau\) by equality of kernels. The second annihilates both \(H\) and \(B_H\): support on \(S\) reduces the latter assertion to \((P_B)_{SS}H_S=0\). It therefore annihilates \(H_\tau\). The same supported diagonal congruence defining the quotient retains that quotient and \(\alpha\). \(\square\)
+
+### 106.3. Removing the opposite full-rank restriction on four-coordinate obstructions
+
+**Corollary 106.3.** Suppose \((G,H)\) is a full-domain calibrated local minimum with \(\operatorname{rank}G=7\), \(0<F(G,H)<1/4\), and kernel support occupancy \((2,1,1,0)\). Impose no assumption on the full rank of \(H\). Then
+\[
+\operatorname{rank}H_S=\operatorname{rank}\mathsf R=2,
+\tag{106.14}
+\]
+and arbitrarily close full-domain local minima have ranks exactly \((7,6)\), with the same principal Grams, kernel vector, complete error coefficient and canonical common-witness subset. In particular this class has no member for which either principal Gram admits the real diagonal gauge of RT III §101, both supported singleton \(H\) records are unbiased as in RT III §102, the equal-polar hypothesis (104.3) holds, or the complementary-polar hypothesis (105.2) holds.
+
+**Proof.** Put \(h=\operatorname{rank}H_S\) and \(r=\operatorname{rank}\mathsf R\). The whole original fibre in \(S\) gives \(h\ge2\). RT III Lemma 95.2 gives
+\[
+\operatorname{rank}G_S=3,
+\qquad h+r\le4,
+\qquad 3\le hr.
+\tag{106.15}
+\]
+The only positive integer possibilities are \((h,r)=(2,2)\) and \((3,1)\). RT III Theorem 97.3 excludes the rank-one quotient for this support, so (106.14) follows. Here \(o=4\); Theorem 106.1 gives opposite rank \(h+o=6\) while retaining first rank seven. Corollary 106.2 retains exactly the same common pairs and quotient.
+
+Each additional condition in the statement depends only on the unchanged supported data. Apply the corresponding rank-\((7,6)\) obstruction, respectively RT III §§101–102 or Theorems 104.1 and 105.1, to any sufficiently close constructed pair. This contradicts its full-domain local minimality. The argument constructs a point satisfying the original rank assumptions of those theorems; it does not read their statements with weakened assumptions. \(\square\)
+
+### 106.4. A finite endpoint with strictly smaller first rank
+
+**Theorem 106.4.** Under (106.2), suppose \(D\ne0\). There is a finite \(\tau_*>0\) such that \(G_\tau\succeq0\) exactly for \(0\le\tau\le\tau_*\). At the endpoint the original full calibrated Grams satisfy
+\[
+\begin{aligned}
+G_{\tau_*}\odot H_{\tau_*}&=G\odot H,\\
+\operatorname{rank}G_{\tau_*}&<\operatorname{rank}G,\\
+\operatorname{rank}H_{\tau_*}&=h+o.
+\end{aligned}
+\tag{106.16}
+\]
+If the original pair is a global minimum, so is the endpoint. No endpoint local-minimum assertion is made for an arbitrary local minimum.
+
+**Proof.** Theorem 106.1 gives a positive interval of feasible \(\tau\) and \(D\ker G=0\). The feasible set of \(\tau\ge0\) is closed and convex. Since \(D\) is Hermitian, nonzero and has trace zero, it has a negative eigenvalue. A corresponding eigenvector \(x\) lies in \(K=(\ker G)^\perp\), because \(D\) annihilates \(\ker G\). Hence
+\[
+x^*(G+\tau D)x=x^*Gx+\tau x^*Dx<0
+\quad\text{for every sufficiently large }\tau.
+\tag{106.17}
+\]
+The feasible interval is bounded and has a positive finite maximum \(\tau_*\).
+
+If \((G+\tau_*D)|_K\) were positive definite, its positive least eigenvalue would permit a further increase of \(\tau\), contradicting maximality. Thus a new vector of \(K\) enters the kernel. The old kernel is still annihilated, proving the strict rank decrease. Equations (106.8)–(106.9) hold for every finite positive feasible \(\tau\), so they prove the other assertions in (106.16). Since the complete objective is unchanged, a global minimum stays global at the endpoint. The near-zero neighbourhood argument of Theorem 106.1 is not invoked at this distant point. \(\square\)
+
+If \(O\ne\varnothing\) and \(F(G,H)<1/2\), then the hypothesis \(D\ne0\) is automatic. Indeed choose \(i\in O\) and \(j\) in any different original fibre. If \(D=0\), then \(G_{ij}=0\), whereas the original matrix-unit test gives
+\[
+\frac12=|T_{ij}-G_{ij}H_{ij}|\le F(G,H)<\frac12,
+\tag{106.18}
+\]
+a contradiction. This uses an actual original-channel matrix unit and involves no entrywise division.
+
+### 106.5. Residual ranks for a hypothetical subquarter global optimum
+
+**Theorem 106.5.** Suppose the minimum of \(F\) on \(\mathcal E^2\) has value \(0<t_*<1/4\). It has a minimizer in at least one of the following classes:
+
+1. Both full Gram ranks are at most six.
+2. One full Gram has rank seven and an everywhere-nonzero spanning kernel vector, while the opposite full rank is at most five.
+
+More precisely, every rank-seven global minimizer whose kernel has a proper coordinate support has an equal-value competitor with both ranks at most six and exactly the same complete product.
+
+**Proof.** The domain is compact: its matrices are positive semidefinite with trace eight and fixed fibre blocks. The objective (106.1) is continuous. Thus the minimum is attained. Every global minimum is a full-domain local minimum. At a positive-subhalf local minimum, RT III Theorem 92.1 gives nonzero positive complementary stresses on both sides. A positive definite Gram would force its complementary stress to vanish, so both Gram ranks are at most seven.
+
+Suppose one rank is seven and interchange the parties if necessary so that it is \(G\). Let \(S\) be the exact support of its kernel vector, and put \(n=|S|\), \(h=\operatorname{rank}H_S\). For any canonical common witness, RT III §§95,97 give a supported quotient of rank \(r\) with
+\[
+h+r\le n,\qquad
+r\le8-\operatorname{rank}H,\qquad r\ge2.
+\tag{106.19}
+\]
+The last assertion uses the complete rank-one-quotient exclusion: RT III Theorem 97.3 allows only a three-singleton support in that case and forces its error strictly above \(1/4\).
+
+If \(S\) is proper, (106.18) makes \(D\ne0\). The endpoint of Theorem 106.4 has the same full coefficient and global value, while
+\[
+\operatorname{rank}G_{\tau_*}\le6,
+\qquad
+\operatorname{rank}H_{\tau_*}=h+8-n\le6.
+\tag{106.20}
+\]
+This proves the precise assertion and gives the first alternative.
+
+If \(S\) is all eight coordinates, (106.19) gives \(\operatorname{rank}H\le6\). RT III Theorem 95.1 excludes opposite rank six for such a positive-subhalf full-domain local minimum. Hence \(\operatorname{rank}H\le5\), giving the second alternative. If neither Gram initially had rank seven, the first alternative already held. \(\square\)
+
+This is an existence alternative for a minimizer of the hypothetical value. Another minimizer with proper-support rank seven can coexist with its reduced-rank endpoint. The proof uses an explicit constant-product feasible path, not an assertion that a convex-norm minimizer must be an extreme Gram point.
+
+**Corollary 106.6.** For the original unrestricted one-product channel problem with the fixed correlated encoding and unhalved diamond error, a hypothetical optimum below \(1/4\) has a calibrated representative in one of the two classes of Theorem 106.5.
+
+**Proof.** The exact physical calibration theorem in [RT II §72](ARITHMETIC_HOLOGRAPHIC_RT_II.md#72-exact-physical-calibration-reduction-for-collapsed-fibre-channels) applies to the present target \(T\) with four fibres of size two and one shared branch of weight one. It replaces arbitrary local CPTP maps, including population leakage, by calibrated maps without increasing the full arbitrary-reference error or adding a shared branch. Conversely every \(G,H\in\mathcal E\) realizes calibrated local channels. Hence the unrestricted physical infimum equals the attained minimum (106.1). The established lower bound \(\sqrt3-3/2>0\) makes a hypothetical subquarter value positive, and Theorem 106.5 supplies the stated representative. \(\square\)
+
+The representative conclusion does not preserve the ranks or local minimality of a given leaking pair. The local transfer in Corollary 106.3 takes place wholly inside the calibrated domain. Neither residual class in Theorem 106.5 is excluded here, and the unrestricted global interval remains \([\sqrt3-3/2,1/4]\). General unequal noncomplementary polar angles and the remaining rank/support cases are unresolved.
