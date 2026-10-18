@@ -62,12 +62,12 @@ internal sealed class SettingNumberDocument : IScribeDocumentDefinition
         OpenBracket, C("Fintype", V("V")), CloseBracket, Comma,
         OpenBracket, C("DecidableEq", V("V")), CloseBracket, Comma,
         V("G"), Colon, C("SimpleGraph", V("V")), Comma,
-        C("Connected", V("G")), Rightarrow,
-        Forall, Sp, V("c"), Colon, Seq(V("V"), Rightarrow, C("Bool")), Comma,
+        C("Connected", V("G")), Rightarrow, Sp,
+        Forall, Sp, V("c"), Colon, Seq(V("V"), Rightarrow, Sp, C("Bool")), Comma,
         Open, Forall, Sp, V("u"), Comma, V("v"), Colon, V("V"), Comma,
-        C("Adj", V("G"), V("u"), V("v")), Rightarrow,
-        C("c", V("u")), Neq, C("c", V("v")), Close, Rightarrow,
-        C("Nonempty", C("feasibleSettingCounts", V("G"))), Land,
-        C("settingNumber", V("G")), Eq,
+        C("Adj", V("G"), V("u"), V("v")), Rightarrow, Sp,
+        C("c", V("u")), Neq, Sp, C("c", V("v")), Close, Rightarrow, Sp,
+        C("Nonempty", C("feasibleSettingCounts", V("G"))), Land, Sp,
+        C("settingNumber", V("G")), Eq, Sp,
         C("min", D(2), C("card", C("nonlinearNeighborhoods", V("G")))), Dot));
 }

@@ -133,17 +133,38 @@ private theorem fixture_mass :
     simp [fixtureDensity, Matrix.diagonal_apply, hS]
   · simp
 
+private def fixtureCenter : Configuration fixtureGraph.{u} := ⟨{⟨1⟩}, by simp⟩
+
+private def centerDensity : Matrix (Configuration fixtureGraph.{u})
+    (Configuration fixtureGraph.{u}) ℂ :=
+  Matrix.diagonal (fun S => if S = fixtureCenter then 1 else 0)
+
+private theorem center_density_and_mass : centerDensity.{u}.PosSemidef ∧
+    Matrix.trace centerDensity.{u} = 1 ∧
+    actual.readout () fixtureParameters.{u} centerDensity 0 = 0 := by
+  refine ⟨?_, ?_, ?_⟩
+  · apply Matrix.PosSemidef.diagonal
+    intro S
+    change (0 : ℂ) ≤ if S = fixtureCenter then 1 else 0
+    split_ifs <;> norm_num
+  · simp [centerDensity, Matrix.trace]
+  · change (∑ S, if localMode fixtureGraph ⟨0⟩ ⟨1⟩ ⟨2⟩ S = 0 then
+      (centerDensity S S).re else 0) = 0
+    apply Finset.sum_eq_zero
+    intro S _
+    by_cases hS : S = fixtureCenter
+    · subst S
+      norm_num [centerDensity, Matrix.diagonal_apply, localMode, fixtureCenter]
+    · simp [centerDensity, Matrix.diagonal_apply, hS]
+
 private theorem actual_dependence : ObservationalDependence signature.{u} actual := by
   intro i
   cases i
-  refine ⟨fixtureParameters, fixtureDensity, 0, ?_⟩
+  obtain ⟨_, _, hm⟩ := center_density_and_mass.{u}
+  refine ⟨fixtureParameters, fixtureDensity, centerDensity, ?_⟩
   intro h
   have hh := congrFun h 0
-  have hz : actual.readout () fixtureParameters.{u} 0 0 = 0 := by
-    change (∑ S, if localMode fixtureGraph ⟨0⟩ ⟨1⟩ ⟨2⟩ S = 0 then
-      (0 : ℂ).re else 0) = 0
-    simp
-  rw [fixture_mass, hz] at hh
+  rw [fixture_mass, hm] at hh
   norm_num at hh
 
 /-- Whole-family variation and dependence concern the actual Born-law operand. -/

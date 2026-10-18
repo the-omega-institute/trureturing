@@ -28,7 +28,7 @@ internal sealed class NeighborhoodIndependenceDocument : IScribeDocumentDefiniti
                     + "combination of the single-site occupations on every independent S.")),
                 Paragraph(Text(
                     "The separating calculation uses all subsets S of a chosen independent "
-                    + "set N, with coefficient minus one to the cardinality of S. Its sum "
+                    + "set N, with coefficient (-1) raised to the cardinality of S. Its sum "
                     + "against a blocking function for M is one when N is contained in M "
                     + "and zero otherwise. The same signed sum kills the constant and every "
                     + "single occupation because N has at least two elements. Choosing N "
