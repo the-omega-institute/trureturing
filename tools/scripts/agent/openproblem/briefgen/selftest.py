@@ -22,6 +22,16 @@ def assert_scoped_builds(text, *, binding=False, all_commands=False):
     if binding:
         assert text.count(BUILD_SCOPE) == 1, 'missing or repeated Build-scope block'
         text = text.replace(BUILD_SCOPE, '', 1)
+    # Exempt only the command mention, never the rest of its line: prohibitions,
+    # disclosure of an already-run gate, diagnostic descriptions and serialization.
+    for reference in (
+        r'(?:Do not|Never) run `make (?:lean|lean-report|test|gate)`',
+        r'- the exact command `make gate BASE=<40-hex>`;',
+        r'`make gate` reports `(?:describe red code=incomplete-library-locator|blueprint-namespace)`',
+        r'Do not paste the `make gate` JSON',
+        r'one `lake env lean`, `lake build` or `make lean …` invocation, never several in parallel',
+    ):
+        text = re.sub(reference, '', text)
     commands = r'lean(?:-report(?:-scoped)?)?'
     if all_commands:
         commands += r'|test|gate'
@@ -47,16 +57,43 @@ def build_scope_regressions():
             pass
         else:
             raise AssertionError('unsafe build instruction accepted: ' + text)
-    template = (TOOLS / 'templates/impl-base-brief.md').read_text()
-    assert_scoped_builds(template, all_commands=True)
-    for command in ('lean', 'lean-report', 'test', 'gate'):
+    references = (
+        *(prefix + ' `make ' + command + '`.'
+          for prefix in ('Do not run', 'Never run')
+          for command in ('lean', 'lean-report', 'test', 'gate')),
+        '- the exact command `make gate BASE=<40-hex>`;',
+        '`make gate` reports `describe red code=incomplete-library-locator`.',
+        '`make gate` reports `blueprint-namespace` if it is missing or different.',
+        'Do not paste the `make gate` JSON or its inventories into the body.',
+        'one `lake env lean`, `lake build` or `make lean …` invocation, never several in parallel',
+    )
+    for reference in references:
+        assert_scoped_builds(reference, all_commands=True)
+        for command in ('lean', 'lean-report', 'test', 'gate'):
+            try:
+                assert_scoped_builds(reference + ' Then run `make ' + command + '`.',
+                                     all_commands=True)
+            except AssertionError:
+                pass
+            else:
+                raise AssertionError('reference hid unsafe instruction: ' + reference)
+    blocks = sorted(path for path in (TOOLS / 'templates/blocks').rglob('*') if path.is_file())
+    assert blocks, 'missing implementation/rework/continuation blocks'
+    for path in [TOOLS / 'templates/impl-base-brief.md', *blocks]:
+        template = path.read_text()
         try:
-            assert_scoped_builds(template + '\n`make ' + command + '`', all_commands=True)
-        except AssertionError:
-            pass
-        else:
-            raise AssertionError('template regression accepted: ' + command)
-    print('BUILD_SCOPE_REGRESSIONS template=targeted negative_controls=passed')
+            assert_scoped_builds(template, all_commands=True)
+        except AssertionError as exc:
+            raise AssertionError(str(path.relative_to(TOOLS)) + ': ' + str(exc)) from exc
+        for command in ('lean', 'lean-report', 'test', 'gate'):
+            try:
+                assert_scoped_builds(template + '\n`make ' + command + '`', all_commands=True)
+            except AssertionError:
+                pass
+            else:
+                raise AssertionError('template regression accepted: ' + str(path) + ': ' + command)
+    print('BUILD_SCOPE_REGRESSIONS template=targeted blocks=' + str(len(blocks)) +
+          ' negative_controls=passed')
 
 
 def head_generality_regressions(tool):
