@@ -318,7 +318,7 @@ private noncomputable def heightEquiv (ℓ : ℕ) (hℓ : 1 ≤ ℓ) :
     apply Subtype.ext
     funext v
     change lift ℓ h.property.1.1.toFinset v = h.val v
-    simp only [lift, Set.Finite.mem_toFinset, Set.mem_ofPred_eq]
+    simp only [lift.eq_1, Set.Finite.mem_toFinset, Set.mem_ofPred_eq]
     split_ifs with hv <;>
       rcases height_binary ℓ hℓ h h.property.1 h.property.2 v with hb | hb <;> omega
   right_inv I := by
