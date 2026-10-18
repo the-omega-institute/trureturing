@@ -19,7 +19,10 @@ triage: anchor
 
 D. Monkman and J. Sirker, *Symmetry-resolved entanglement: general considerations, calculation from correlation functions, and bounds for symmetry-protected topological phases*, Journal of Physics A: Mathematical and Theoretical **56** (2023), 495001; arXiv:2307.05820. The identifier above is the arXiv DOI; the journal DOI is not independently confirmed here.
 
-## Source locator
+## Locator
+
+DOI: 10.48550/arXiv.2307.05820
+Source: https://arxiv.org/abs/2307.05820
 
 Section 3.3, “A conjecture on the concavity of Sc”, arXiv:2307.05820. The quotation is the source text supplied for this problem; no particular arXiv version or page number is asserted.
 

@@ -8,6 +8,7 @@
 -/
 
 import Mathlib.Analysis.SpecialFunctions.Log.NegMulLog
+import D5.S3.Quantum.Schatten.PowerMajorization
 
 /-! Estimates for real logarithms and finite mixtures; no probability infrastructure is required. -/
 
@@ -188,12 +189,7 @@ private lemma finite_direction_bound (r : ι → ℝ) (hr : ∀ j, 0 ≤ r j)
     rcases (hr j).eq_or_lt with hz | hp
     · simp [← hz, hQ]
     have hqp : 0 < Q (b j) := (mul_pos h1 hp).trans_le (hlo j).2.1
-    have hl := Real.log_le_sub_one_of_pos (div_pos hqp hp)
-    rw [Real.log_div hqp.ne' hp.ne'] at hl
-    have hh := mul_le_mul_of_nonneg_left hl hp.le
-    have he : r j * (Q (b j) / r j - 1) = Q (b j) - r j := by
-      field_simp
-    exact hh.trans_eq he
+    simpa only [Real.log_div hqp.ne' hp.ne'] using (sub_ge_mul_log_div hp hqp)
   have hmid : (∑ j, r j * (Real.log (Q (b j)) - Real.log (r j))) ≤ 0 := by
     have hh := Finset.sum_le_sum (fun j (_ : j ∈ Finset.univ) => hterm j)
     rw [Finset.sum_sub_distrib, hs] at hh

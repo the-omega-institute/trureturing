@@ -58,3 +58,4 @@ Assume r is nonnegative with total mass one, v₀,v₁,v₂ are positive and sum
 - Truth anchor: `D5/S3/Entropy/PoissonBinomial/EntropyDirectionBounds.neg_log_product_lt_div`
 - Truth anchor: `D5/S3/Entropy/PoissonBinomial/EntropyDirectionBounds.threePointMass`
 - Truth anchor: `D5/S3/Entropy/PoissonBinomial/EntropyDirectionBounds.three_point_entropy_direction_bound`
+- Dependency: [D5/S3/Quantum/Schatten/PowerMajorization](../../Quantum/Schatten/PowerMajorization.md)
