@@ -27,9 +27,6 @@ def extend (V : Finset ℤ) (σ : V → Bool) : Spins :=
 def prob (β : Bias) (V : Finset ℤ) (E : Set Spins) : ℝ :=
   FiniteSpinLaw.mass β {σ | extend V σ ∈ E}
 
-theorem prob_nonneg (β : Bias) (V : Finset ℤ) (E : Set Spins) : 0 ≤ prob β V E :=
-  FiniteSpinLaw.mass_nonneg β _
-
 @[simp] theorem prob_univ (β : Bias) (V : Finset ℤ) : prob β V Set.univ = 1 :=
   FiniteSpinLaw.mass_univ β
 
@@ -44,9 +41,6 @@ theorem prob_union (β : Bias) (V : Finset ℤ) {E F : Set Spins} (h : Disjoint 
 theorem prob_diff (β : Bias) (V : Finset ℤ) {E F : Set Spins} (h : F ⊆ E) :
     prob β V (E \ F) = prob β V E - prob β V F :=
   FiniteSpinLaw.mass_diff β (fun _ hh => h hh)
-
-theorem prob_mono (β : Bias) (V : Finset ℤ) {E F : Set Spins} (h : E ⊆ F) :
-    prob β V E ≤ prob β V F := FiniteSpinLaw.mass_mono β (fun _ hh => h hh)
 
 theorem prob_pos_iff (β : Bias) (V : Finset ℤ) (E : Set Spins) :
     0 < prob β V E ↔ ∃ σ : V → Bool, extend V σ ∈ E :=
