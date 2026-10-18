@@ -640,7 +640,7 @@ private lemma polarization_diagonal (U : Matrix (Fin 4) (Fin 4) ℂ)
     D5.S3.Quantum.Entanglement.PrecessionSpinOneSeparableBound.Jy.eq_1,
     D5.S3.Quantum.Entanglement.PrecessionSpinOneSeparableBound.Jz.eq_1]
   fin_cases a <;>
-    simp [polarization, spinMatrix, Matrix.mul_apply, Matrix.mulVec, dotProduct,
+    simp [Matrix.mul_apply, Matrix.mulVec, dotProduct,
       Fin.sum_univ_succ] <;> ring
 
 private lemma spin_trace (a : Fin 3) : (spinMatrix a).trace = 0 := by
