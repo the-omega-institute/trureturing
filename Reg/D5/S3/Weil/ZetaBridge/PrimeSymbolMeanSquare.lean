@@ -37,7 +37,7 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some (ℕ)
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare,
     definition := none,
@@ -73,7 +73,7 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some (ℕ)
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare,
     definition := none,
@@ -109,7 +109,7 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some (ℕ)
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare,
     definition := none,
@@ -145,7 +145,7 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some (ℂ)
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare,
     definition := none,
@@ -181,7 +181,7 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some (ℕ)
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare,
     definition := none,
@@ -217,7 +217,7 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some (ℕ)
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare,
     definition := none,
@@ -253,7 +253,7 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some (ℂ)
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare,
     definition := none,
@@ -289,7 +289,7 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some (ℂ)
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare,
     definition := none,
@@ -325,7 +325,7 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some (ℝ)
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare,
     definition := none,
@@ -361,7 +361,7 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some (ℝ)
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare,
     definition := none,
@@ -397,7 +397,7 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some (ℝ)
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare,
     definition := none,
@@ -433,7 +433,7 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some (ℂ)
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare,
     definition := none,
@@ -469,7 +469,7 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some (ℂ)
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare,
     definition := none,
@@ -505,7 +505,7 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some (ℂ)
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare,
     definition := none,
@@ -541,7 +541,7 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some (ℕ)
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare,
     definition := none,
@@ -577,7 +577,7 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some (ℂ)
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare,
     definition := none,
@@ -613,7 +613,7 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some (ℂ)
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare,
     definition := none,
@@ -649,7 +649,7 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some (ℂ)
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare,
     definition := none,
@@ -685,7 +685,7 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some (ℝ)
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare,
     definition := none,

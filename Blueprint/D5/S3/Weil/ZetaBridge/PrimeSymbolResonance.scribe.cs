@@ -38,7 +38,7 @@ internal sealed class PrimeSymbolResonanceDocument : IScribeDocumentDefinition
             Blocks(
                 Paragraph(Text("All entries accompany the canonical-path T3 source candidate; every surviving signature, definition and proof, including private tail_partial, preserves the pinned bytes. SOURCE_ONLY_UNCOMPILED: Lean elaboration, kernel acceptance, sorry and axiom-closure checks, scoped reports, Scribe emission, Reg, required CI and delivery remain unverified. Utility:none describes parameterized finite-sum definitions, resonance and convolution/support classification, geometric estimates and convergent tails, including private helpers; none delivers a bounded enumeration, checker/reflection infrastructure, numerical-certificate reduction or certified fixed instance. Other utility fields are not-applicable(kind=none). Write I(c)=[2,c), a(q)=primeWeight(q)=Lambda(q)/sqrt(q), z(c,q)=T2.primePhase(c,q), S(c,m)=T2.primeSymbol(c,m), D(c)=T2.primeSquareMass(c), Cdiff(c)=T2.primeCross(c), R(c)=resonantMass(c), Csum(c)=sumCross(c), mu(c)=mean(c), O(c)=offset(c), B3(c,N)=tailBudget(c,N). LambdaConvolution(c) means the actual ArithmeticFunction Dirichlet product (Lambda*Lambda)(c). These are display abbreviations, not additional Lean declarations. The finite sums retain every prime power; ordered pairs and resonant self-pairs are counted exactly. Exact source signatures below fix all hypotheses and casts.")),
                 Describe.Lean(
-                    DescribeId.Create("resonantMass"),
+                    DescribeId.Create("resonant-mass"),
                     DeclarationHandle.Create(Owner + "resonantMass"),
                     H("Ordered sum-resonant mass, including self-pairs"),
                     StatementSource.FromAuthor(Disp(Seq(Call("R", c), Eq, Call("OrderedResonantWeightSum", c)))),
@@ -48,7 +48,7 @@ internal sealed class PrimeSymbolResonanceDocument : IScribeDocumentDefinition
                         Paragraph(Text("Exact pinned definition (source only): def resonantMass (c : ℕ) : ℝ :=\n  ∑ p ∈ primeIndices c, ∑ q ∈ primeIndices c,\n    if p * q = c then primeWeight p * primeWeight q else 0"))),
                     DescribeRole.Definition),
                 Describe.Lean(
-                    DescribeId.Create("sumCross"),
+                    DescribeId.Create("sum-cross"),
                     DeclarationHandle.Create(Owner + "sumCross"),
                     H("The full nonresonant sum-angle error"),
                     StatementSource.FromAuthor(Disp(Seq(Call("Csum", c), Eq, Call("OrderedNonresonantSumChannel", c)))),
@@ -78,7 +78,7 @@ internal sealed class PrimeSymbolResonanceDocument : IScribeDocumentDefinition
                         Paragraph(Text("Exact pinned definition (source only): def offset (c : ℕ) : ℝ := (primeCross c + sumCross c) / 2"))),
                     DescribeRole.Definition),
                 Describe.Lean(
-                    DescribeId.Create("tailBudget"),
+                    DescribeId.Create("tail-budget"),
                     DeclarationHandle.Create(Owner + "tailBudget"),
                     H("The refined infinite-tail budget"),
                     StatementSource.FromAuthor(Disp(Seq(Call("B3", c, N), Eq, Call("div", Call("mu", c), N), Plus, Call("div", Call("O", c), Call("square", Seq(N, Plus, D(1))))))),
@@ -88,7 +88,7 @@ internal sealed class PrimeSymbolResonanceDocument : IScribeDocumentDefinition
                         Paragraph(Text("Exact pinned definition (source only): def tailBudget (c N : ℕ) : ℝ :=\n  mean c / (N : ℝ) + offset c / ((N : ℝ) + 1) ^ 2"))),
                     DescribeRole.Definition),
                 Describe.Lean(
-                    DescribeId.Create("difference_resonance"),
+                    DescribeId.Create("difference-resonance"),
                     DeclarationHandle.Create(Owner + "difference_resonance"),
                     H("Difference resonance occurs exactly on the diagonal"),
                     StatementSource.FromAuthor(Disp(Seq(Call("AtLeastTwo", c), Land, Call("Member", p, Call("I", c)), Land, Call("Member", q, Call("I", c)), Rightarrow, Call("Equivalent", Seq(Call("z", c, p), Sp, Call("conj", Call("z", c, q)), Eq, D(1)), Seq(p, Eq, q))))),
@@ -98,7 +98,7 @@ internal sealed class PrimeSymbolResonanceDocument : IScribeDocumentDefinition
                         Paragraph(Text("Exact pinned declaration signature (source only): theorem difference_resonance {c p q : ℕ} (hc : 2 ≤ c)\n    (hp : p ∈ primeIndices c) (hq : q ∈ primeIndices c) :\n    primePhase c p * conj (primePhase c q) = 1 ↔ p = q"))),
                     DescribeRole.Theorem),
                 Describe.Lean(
-                    DescribeId.Create("sum_resonance"),
+                    DescribeId.Create("sum-resonance"),
                     DeclarationHandle.Create(Owner + "sum_resonance"),
                     H("Sum resonance occurs exactly when the product is the cutoff"),
                     StatementSource.FromAuthor(Disp(Seq(Call("AtLeastTwo", c), Land, Call("Member", p, Call("I", c)), Land, Call("Member", q, Call("I", c)), Rightarrow, Call("Equivalent", Seq(Call("z", c, p), Sp, Call("z", c, q), Eq, D(1)), Seq(p, Sp, q, Eq, c))))),
@@ -108,7 +108,7 @@ internal sealed class PrimeSymbolResonanceDocument : IScribeDocumentDefinition
                         Paragraph(Text("Exact pinned declaration signature (source only): theorem sum_resonance {c p q : ℕ} (hc : 2 ≤ c)\n    (hp : p ∈ primeIndices c) (hq : q ∈ primeIndices c) :\n    primePhase c p * primePhase c q = 1 ↔ p * q = c"))),
                     DescribeRole.Theorem),
                 Describe.Lean(
-                    DescribeId.Create("prime_symbol_exact_block"),
+                    DescribeId.Create("prime-symbol-exact-block"),
                     DeclarationHandle.Create(Owner + "prime_symbol_exact_block"),
                     H("Every finite block has the exact corrected mean"),
                     StatementSource.FromAuthor(Disp(Seq(Call("AtLeastTwo", c), Rightarrow, Call("abs", Seq(Call("SquareBlock", c, M, K), Minus, K, Sp, Call("mu", c))), Leq, Call("O", c)))),
@@ -118,7 +118,7 @@ internal sealed class PrimeSymbolResonanceDocument : IScribeDocumentDefinition
                         Paragraph(Text("Exact pinned declaration signature (source only): theorem prime_symbol_exact_block {c : ℕ} (hc : 2 ≤ c) (M : ℤ) (K : ℕ) :\n    |(∑ j ∈ Finset.range K, primeSymbol c (M + (j : ℤ)) ^ 2) -\n      (K : ℝ) * mean c| ≤ offset c"))),
                     DescribeRole.Theorem),
                 Describe.Lean(
-                    DescribeId.Create("offset_nonneg"),
+                    DescribeId.Create("offset-nonneg"),
                     DeclarationHandle.Create(Owner + "offset_nonneg"),
                     H("Nonnegative offset at every cutoff"),
                     StatementSource.FromAuthor(Disp(Seq(D(0), Leq, Call("O", c)))),
@@ -128,7 +128,7 @@ internal sealed class PrimeSymbolResonanceDocument : IScribeDocumentDefinition
                         Paragraph(Text("Exact pinned declaration signature (source only): theorem offset_nonneg (c : ℕ) : 0 ≤ offset c"))),
                     DescribeRole.Theorem),
                 Describe.Lean(
-                    DescribeId.Create("mean_nonneg"),
+                    DescribeId.Create("mean-nonneg"),
                     DeclarationHandle.Create(Owner + "mean_nonneg"),
                     H("Nonnegative mean derived from finite blocks"),
                     StatementSource.FromAuthor(Disp(Seq(Call("AtLeastTwo", c), Rightarrow, D(0), Leq, Call("mu", c)))),
@@ -138,7 +138,7 @@ internal sealed class PrimeSymbolResonanceDocument : IScribeDocumentDefinition
                         Paragraph(Text("Exact pinned declaration signature (source only): theorem mean_nonneg {c : ℕ} (hc : 2 ≤ c) : 0 ≤ mean c"))),
                     DescribeRole.Theorem),
                 Describe.Lean(
-                    DescribeId.Create("resonantMass_eq_convolution"),
+                    DescribeId.Create("resonant-mass-eq-convolution"),
                     DeclarationHandle.Create(Owner + "resonantMass_eq_convolution"),
                     H("The actual von Mangoldt Dirichlet convolution"),
                     StatementSource.FromAuthor(Disp(Seq(Call("AtLeastTwo", c), Rightarrow, Call("R", c), Eq, Call("div", Call("LambdaConvolution", c), Call("sqrt", c))))),
@@ -148,7 +148,7 @@ internal sealed class PrimeSymbolResonanceDocument : IScribeDocumentDefinition
                         Paragraph(Text("Exact pinned declaration signature (source only): theorem resonantMass_eq_convolution {c : ℕ} (hc : 2 ≤ c) :\n    resonantMass c =\n      ((ArithmeticFunction.vonMangoldt * ArithmeticFunction.vonMangoldt) c) /\n        Real.sqrt (c : ℝ)"))),
                     DescribeRole.Theorem),
                 Describe.Lean(
-                    DescribeId.Create("mean_eq_convolution"),
+                    DescribeId.Create("mean-eq-convolution"),
                     DeclarationHandle.Create(Owner + "mean_eq_convolution"),
                     H("The exact mean in convolution form"),
                     StatementSource.FromAuthor(Disp(Seq(Call("AtLeastTwo", c), Rightarrow, Call("mu", c), Eq, Call("div", Seq(Call("D", c), Minus, Call("div", Call("LambdaConvolution", c), Call("sqrt", c))), D(2))))),
@@ -158,7 +158,7 @@ internal sealed class PrimeSymbolResonanceDocument : IScribeDocumentDefinition
                         Paragraph(Text("Exact pinned declaration signature (source only): theorem mean_eq_convolution {c : ℕ} (hc : 2 ≤ c) :\n    mean c = (primeSquareMass c -\n      (ArithmeticFunction.vonMangoldt * ArithmeticFunction.vonMangoldt) c /\n        Real.sqrt (c : ℝ)) / 2"))),
                     DescribeRole.Theorem),
                 Describe.Lean(
-                    DescribeId.Create("convolution_zero_of_three_primeFactors"),
+                    DescribeId.Create("convolution-zero-of-three-prime-factors"),
                     DeclarationHandle.Create(Owner + "convolution_zero_of_three_primeFactors"),
                     H("Three distinct prime factors annihilate the convolution"),
                     StatementSource.FromAuthor(Disp(Seq(Call("AtLeastThreeDistinctPrimeFactors", c), Rightarrow, Call("LambdaConvolution", c), Eq, D(0)))),
@@ -168,7 +168,7 @@ internal sealed class PrimeSymbolResonanceDocument : IScribeDocumentDefinition
                         Paragraph(Text("Exact pinned declaration signature (source only): theorem convolution_zero_of_three_primeFactors {c : ℕ}\n    (hcard : 3 ≤ c.primeFactors.card) :\n    (ArithmeticFunction.vonMangoldt * ArithmeticFunction.vonMangoldt) c = 0"))),
                     DescribeRole.Theorem),
                 Describe.Lean(
-                    DescribeId.Create("mean_of_three_primeFactors"),
+                    DescribeId.Create("mean-of-three-prime-factors"),
                     DeclarationHandle.Create(Owner + "mean_of_three_primeFactors"),
                     H("The half-diagonal mean on the distinct-prime class"),
                     StatementSource.FromAuthor(Disp(Seq(Call("AtLeastTwo", c), Land, Call("AtLeastThreeDistinctPrimeFactors", c), Rightarrow, Call("mu", c), Eq, Call("div", Call("D", c), D(2))))),
@@ -178,7 +178,7 @@ internal sealed class PrimeSymbolResonanceDocument : IScribeDocumentDefinition
                         Paragraph(Text("Exact pinned declaration signature (source only): theorem mean_of_three_primeFactors {c : ℕ} (hc : 2 ≤ c)\n    (hcard : 3 ≤ c.primeFactors.card) : mean c = primeSquareMass c / 2"))),
                     DescribeRole.Theorem),
                 Describe.Lean(
-                    DescribeId.Create("prime_symbol_square_tail"),
+                    DescribeId.Create("prime-symbol-square-tail"),
                     DeclarationHandle.Create(Owner + "prime_symbol_square_tail"),
                     H("The actual convergent tail with the refined mean"),
                     StatementSource.FromAuthor(Disp(Seq(Call("AtLeastTwo", c), Land, Call("Positive", N), Rightarrow, Call("Summable", Call("PrimeEnergySequence", c, N)), Land, Call("PrimeEnergyTsum", c, N), Leq, Call("B3", c, N)))),
@@ -188,7 +188,7 @@ internal sealed class PrimeSymbolResonanceDocument : IScribeDocumentDefinition
                         Paragraph(Text("Exact pinned declaration signature (source only): theorem prime_symbol_square_tail {c N : ℕ} (hc : 2 ≤ c) (hN : 0 < N) :\n    Summable (fun j : ℕ =>\n      primeSymbol c ((N + j + 1 : ℕ) : ℤ) ^ 2 * inverseSquareWeight N j) ∧\n    (∑' j : ℕ, primeSymbol c ((N + j + 1 : ℕ) : ℤ) ^ 2 * inverseSquareWeight N j) ≤\n      tailBudget c N"))),
                     DescribeRole.Theorem),
                 Describe.Lean(
-                    DescribeId.Create("complex_prime_tail"),
+                    DescribeId.Create("complex-prime-tail"),
                     DeclarationHandle.Create(Owner + "complex_prime_tail"),
                     H("The refined tail retains arbitrary complex coefficients"),
                     StatementSource.FromAuthor(Disp(Seq(Call("AtLeastTwo", c), Land, Call("Positive", N), Rightarrow, Call("Summable", Call("ComplexPrimeEnergySequence", c, N, beta)), Land, Call("ComplexPrimeEnergyTsum", c, N, beta), Leq, Call("normSq", beta), Sp, Call("B3", c, N)))),
@@ -202,7 +202,7 @@ internal sealed class PrimeSymbolResonanceDocument : IScribeDocumentDefinition
                         Paragraph(Text("Exact pinned declaration signature (source only): theorem complex_prime_tail {c N : ℕ} (hc : 2 ≤ c) (hN : 0 < N) (β : ℂ) :\n    Summable (fun j : ℕ =>\n      ‖β * (primeSymbol c ((N + j + 1 : ℕ) : ℤ) : ℂ) / ((N + j + 1 : ℕ) : ℂ)‖ ^ 2) ∧\n    (∑' j : ℕ,\n      ‖β * (primeSymbol c ((N + j + 1 : ℕ) : ℤ) : ℂ) / ((N + j + 1 : ℕ) : ℂ)‖ ^ 2) ≤\n        ‖β‖ ^ 2 * tailBudget c N"))),
                     DescribeRole.Theorem),
                 Describe.Lean(
-                    DescribeId.Create("prime_symbol_mean_lower_bound"),
+                    DescribeId.Create("prime-symbol-mean-lower-bound"),
                     DeclarationHandle.Create("D5/S3/Weil/ZetaBridge/PrimeSymbolResonance.prime_symbol_mean_lower_bound"),
                     H("The exact universal positive mean bound"),
                     StatementSource.FromAuthor(Disp(Seq(

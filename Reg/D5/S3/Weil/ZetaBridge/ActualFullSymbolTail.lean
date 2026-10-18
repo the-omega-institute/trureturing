@@ -120,7 +120,7 @@ noncomputable def registration_1 : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some ℝ
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Weil.ZetaBridge.ActualFullSymbolTail
     definition := none
@@ -190,7 +190,7 @@ noncomputable def registration_2 : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some ℝ
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Weil.ZetaBridge.ActualFullSymbolTail
     definition := none
@@ -264,7 +264,7 @@ noncomputable def registration_3 : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some ℝ
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Weil.ZetaBridge.ActualFullSymbolTail
     definition := none
@@ -335,7 +335,7 @@ noncomputable def registration_4 : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some ℂ
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Weil.ZetaBridge.ActualFullSymbolTail
     definition := none
@@ -418,7 +418,7 @@ noncomputable def registration_5 : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some ℂ
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Weil.ZetaBridge.ActualFullSymbolTail
     definition := none
@@ -490,7 +490,7 @@ noncomputable def registration_6 : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some ℂ
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Weil.ZetaBridge.ActualFullSymbolTail
     definition := none
@@ -568,7 +568,7 @@ noncomputable def registration_7 : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some ℂ
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Weil.ZetaBridge.ActualFullSymbolTail
     definition := none
@@ -643,7 +643,7 @@ noncomputable def registration_8 : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some ℂ
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Weil.ZetaBridge.ActualFullSymbolTail
     definition := none

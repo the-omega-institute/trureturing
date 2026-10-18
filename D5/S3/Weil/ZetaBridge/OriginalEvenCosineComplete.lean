@@ -8,9 +8,6 @@ import Mathlib.Analysis.Fourier.AddCircle
 import Mathlib.MeasureTheory.Integral.Bochner.Set
 import Mathlib.Tactic
 
-set_option autoImplicit false
-set_option relaxedAutoImplicit false
-
 noncomputable section
 namespace OriginalEvenCosineComplete
 
@@ -31,7 +28,9 @@ private lemma moment_eq_window (a : ℝ) (u : WindowL2 a) (k : ℤ) :
       (window a).indicator (fun x => character a (-k) x * u x) := by
     funext x
     by_cases hx : x ∈ window a <;> simp [zeroExtension, hx]
-  rw [moment, h, integral_indicator measurableSet_Ioc]
+  have hwindow : MeasurableSet (window a) := by
+    simpa only [window] using (measurableSet_Ioc : MeasurableSet (Ioc (-a) a))
+  rw [moment, h, integral_indicator hwindow]
 
 private lemma character_neg_x (a : ℝ) (k : ℤ) (x : ℝ) :
     character a k (-x) = character a (-k) x := by
@@ -40,13 +39,22 @@ private lemma character_neg_x (a : ℝ) (k : ℤ) (x : ℝ) :
 private lemma moment_integrable (a : ℝ) (ha : 0 < a) (u : WindowL2 a) (k : ℤ) :
     Integrable (fun x => character a (-k) x * zeroExtension a u x) := by
   letI : Fact (0 < 2 * a) := ⟨by linarith⟩
+  letI : IsFiniteMeasure (windowMeasure a) := by
+    change IsFiniteMeasure (volume.restrict (Ioc (-a) a))
+    infer_instance
+  have hwindow : MeasurableSet (window a) := by
+    simpa only [window] using (measurableSet_Ioc : MeasurableSet (Ioc (-a) a))
   have hu : Integrable (u : ℝ → ℂ) (windowMeasure a) :=
     MemLp.integrable (by norm_num) (Lp.memLp u)
-  have hz : Integrable (zeroExtension a u) (volume : Measure ℝ) :=
-    (integrable_indicator_iff measurableSet_Ioc).mpr hu
+  have hz : Integrable (zeroExtension a u) (volume : Measure ℝ) := by
+    change Integrable ((window a).indicator (u : ℝ → ℂ)) volume
+    exact (integrable_indicator_iff hwindow).mpr hu
   apply hz.bdd_mul (c := 1)
   · exact (show Continuous (character a (-k)) by unfold character; fun_prop).aestronglyMeasurable
-  · exact Eventually.of_forall fun x => by simp [character, fourier_apply, Circle.norm_coe]
+  · exact Eventually.of_forall fun x => by
+      change ‖@fourier (2 * a) (-k) (x : AddCircle (2 * a))‖ ≤ 1
+      have hn : ‖@fourier (2 * a) (-k) (x : AddCircle (2 * a))‖ = 1 := Circle.norm_coe _
+      exact hn.le
 
 /-- No conjugation of u is involved: even complex functions have equal moments at k and -k. -/
 private lemma moment_neg (a : ℝ) (u : WindowL2 a) (hu : u ∈ originalEven a) (k : ℤ) :
@@ -70,15 +78,15 @@ private lemma character_pair (a : ℝ) (n : ℕ) (x : ℝ) :
     simp only [omega, Complex.ofReal_mul, Complex.ofReal_div, Complex.ofReal_ofNat,
       Complex.ofReal_natCast]
     ring
-  have hm : (2 * (Real.pi : ℂ) * Complex.I * (-(n : ℤ) : ℂ) * (x : ℂ) /
+  have hm : (2 * (Real.pi : ℂ) * Complex.I * -(n : ℂ) * (x : ℂ) /
       (2 * (a : ℂ))) = -((omega a n * x : ℝ) : ℂ) * Complex.I := by
-    push_cast
     rw [show 2 * (Real.pi : ℂ) * Complex.I * -(n : ℂ) * (x : ℂ) /
       (2 * (a : ℂ)) = -(2 * (Real.pi : ℂ) * Complex.I * (n : ℂ) * (x : ℂ) /
       (2 * (a : ℂ))) by ring, hp]
     ring
-  simp only [character, fourier_coe_apply, Int.cast_natCast, hp, hm]
-  rw [← Complex.two_cos]
+  simp only [character, fourier_coe_apply, Int.cast_neg, Int.cast_natCast,
+    Complex.ofReal_mul, Complex.ofReal_ofNat]
+  rw [hp, hm, ← Complex.two_cos]
   simp
 
 /-- The original physical cosine inner product; its normalization is unchanged. -/
@@ -87,6 +95,7 @@ private lemma mode_inner_integral (a : ℝ) (u : WindowL2 a) (n : ℕ) :
   rw [L2.inner_def]
   apply integral_congr_ae
   filter_upwards [(mode_memLp a n).coeFn_toLp] with x hx
+  change modeL2 a n x = (mode a n x : ℂ) at hx
   rw [hx]
   simp [RCLike.inner_apply']
 
@@ -103,7 +112,9 @@ private lemma mode_inner_pair (a : ℝ) (ha : 0 < a) (u : WindowL2 a) (n : ℕ) 
       funext x
       rw [neg_neg, ← add_mul, add_comm (character a (-(n : ℤ)) x), character_pair]
       by_cases hx : x ∈ window a <;> simp [zeroExtension, hx]
-    rw [hfun, integral_indicator measurableSet_Ioc]
+    have hwindow : MeasurableSet (window a) := by
+      simpa only [window] using (measurableSet_Ioc : MeasurableSet (Ioc (-a) a))
+    rw [hfun, integral_indicator hwindow]
   rw [mode_inner_integral, hpair]
   simp only [mode, Complex.ofReal_mul]
   simp_rw [mul_assoc, integral_const_mul]
@@ -126,9 +137,11 @@ measure silently substituted for physical Lebesgue measure. -/
 lemma fourierCoeffOn_eq_moment (a : ℝ) (ha : 0 < a) (u : WindowL2 a) (k : ℤ) :
     fourierCoeffOn (show -a < a by linarith) (u : ℝ → ℂ) k =
       ((2 * a)⁻¹ : ℂ) * moment a u k := by
-  rw [fourierCoeffOn_eq_integral, show a - -a = 2 * a by ring,
+  rw [fourierCoeffOn_eq_integral (u : ℝ → ℂ) k (show -a < a by linarith),
+    show a - -a = 2 * a by ring,
     intervalIntegral.integral_of_le (show -a ≤ a by linarith), moment_eq_window]
-  simp only [window, character, smul_eq_mul, one_div, Complex.ofReal_inv]
+  simp only [window, character, smul_eq_mul, Complex.real_smul, one_div,
+    Complex.ofReal_inv, Complex.ofReal_mul, Complex.ofReal_ofNat]
 
 /-- The normalized Haar L2 lift, multiplied by the mandatory sqrt(2a). -/
 def circleTransport (a : ℝ) (ha : 0 < a) (u : WindowL2 a) :
@@ -143,7 +156,7 @@ private lemma l2_energy {α : Type*} [MeasurableSpace α] (μ : Measure α) (u :
   rw [@norm_sq_eq_re_inner ℂ, L2.inner_def,
     ← integral_re (L2.integrable_inner u u)]
   apply integral_congr_ae
-  exact Eventually.of_forall fun x => by simp [inner_self_eq_norm_sq_to_K]
+  exact Eventually.of_forall fun x => by simp only [← norm_sq_eq_re_inner]
 
 /-- The square-root transport pays the full dx/Haar mass ratio. -/
 theorem circleTransport_norm_sq (a : ℝ) (ha : 0 < a) (u : WindowL2 a) :
@@ -165,8 +178,13 @@ theorem circleTransport_norm_sq (a : ℝ) (ha : 0 < a) (u : WindowL2 a) :
         rw [AddCircle.integral_haarAddCircle]
         simp only [smul_eq_mul]
         congr 1
-        rw [← AddCircle.liftIoc_comp_apply,
-          AddCircle.integral_liftIoc_eq_intervalIntegral]
+        calc
+          _ = ∫ z : AddCircle (2 * a), AddCircle.liftIoc (2 * a) (-a)
+              ((fun w : ℂ => ‖w‖ ^ 2) ∘ (u : ℝ → ℂ)) z := by
+            apply integral_congr_ae
+            exact Eventually.of_forall fun z => by
+              rw [AddCircle.liftIoc_comp_apply]
+          _ = _ := by rw [AddCircle.integral_liftIoc_eq_intervalIntegral]
       _ = (2 * a)⁻¹ * ‖u‖ ^ 2 := by
         rw [show -a + 2 * a = a by ring,
           intervalIntegral.integral_of_le (show -a ≤ a by linarith), l2_energy]
@@ -180,6 +198,7 @@ theorem circleTransport_norm_sq (a : ℝ) (ha : 0 < a) (u : WindowL2 a) :
 /-- Physical exponential coefficients are sqrt(2a) times normalized Haar
 coefficients of the unscaled lift. This identity fixes the coefficient scale. -/
 theorem circleTransport_fourierCoeff (a : ℝ) (ha : 0 < a) (u : WindowL2 a) (k : ℤ) :
+    letI : Fact (0 < 2 * a) := ⟨by linarith⟩
     fourierCoeff (circleTransport a ha u) k =
       (Real.sqrt (2 * a) : ℂ) *
         fourierCoeffOn (show -a < a by linarith) (u : ℝ → ℂ) k := by

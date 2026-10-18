@@ -29,7 +29,7 @@ internal sealed class ActualFullSymbolTailDocument : IScribeDocumentDefinition
             Blocks(
                 Paragraph(Text("All new Lean bodies, imported T2/T3 attempts, this Scribe DSL, and Reg registrations await actual caller-owned verification.")),
                 Describe.Lean(
-                    DescribeId.Create("primeFirstMoment"),
+                    DescribeId.Create("prime-first-moment"),
                     DeclarationHandle.Create(Owner + "primeFirstMoment"),
                     H("The actual finite first-moment constant"),
                     StatementSource.FromAuthor(Disp(Seq(Call("K", c), Eq, Call("PhaseDenominatorSum", c)))),
@@ -37,7 +37,7 @@ internal sealed class ActualFullSymbolTailDocument : IScribeDocumentDefinition
                     Blocks(Paragraph(Text("K(c)=sum_{q in Ico(2,c)} 2*abs(primeWeight(q))/norm(1-primePhase(c,q)). Every integer in the range is present, hence all prime powers; no phase-spacing premise is supplied. For c=2 this is the empty sum."))),
                     DescribeRole.Definition),
                 Describe.Lean(
-                    DescribeId.Create("fullSymbolTailBudget"),
+                    DescribeId.Create("full-symbol-tail-budget"),
                     DeclarationHandle.Create(Owner + "fullSymbolTailBudget"),
                     H("The refined full-symbol budget"),
                     StatementSource.FromAuthor(Disp(Seq(Call("B", c, N), Eq, Call("T3tailBudget", c, N), Plus, Call("div", Call("square", Call("E", c, N)), N), Plus, Call("div", Seq(D(2), Sp, Call("K", c), Sp, Call("E", c, Seq(N, Plus, D(1)))), Call("square", Seq(N, Plus, D(1))))))),

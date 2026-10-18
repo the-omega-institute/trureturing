@@ -152,7 +152,7 @@ noncomputable def registration_1 : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some ℕ
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Weil.ZetaBridge.WeilArithmeticCouplingJet
     definition := none
@@ -320,7 +320,7 @@ noncomputable def registration_1 : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some ℕ
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Weil.ZetaBridge.WeilArithmeticCouplingJet
     definition := none
@@ -434,7 +434,7 @@ noncomputable def registration_1 : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some ℕ
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Weil.ZetaBridge.WeilArithmeticCouplingJet
     definition := none
@@ -541,7 +541,7 @@ noncomputable def registration_1 : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some ℕ
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Weil.ZetaBridge.WeilArithmeticCouplingJet
     definition := none
