@@ -258,13 +258,6 @@ def encoding {n m L : ℕ} {A : GroupMat H n n}
     FlatOut A T U d i w ≃ Word A (L+d) i w :=
   (pairRecord psi d i w).trans (concatEquiv A L d i w)
 
-theorem exact_fixed_cut {n m L d : ℕ} {A : GroupMat H n n}
-    {T : GroupMat H n m} {U : GroupMat H m n}
-    (psi : ∀ i w, Pair T U i w ≃ Word A L i w) (i w : Fin n)
-    (p : FlatOut A T U d i w) : (encoding psi d i w).symm (encoding psi d i w p) = p :=
-  (encoding psi d i w).symm_apply_apply p
-
-
 -- This partial computational view is defined only on legal endpoint matches.
 -- None is failure of a match, never a replacement edge or boundary.
 private abbrev Boundary {n m : ℕ} (T : GroupMat H n m) (U : GroupMat H m n) :=
@@ -604,17 +597,6 @@ def actualV (n t : ℕ) : GroupMat H n n := Matrix.of fun i j =>
 def actualAt (n t : ℕ) : GroupMat H n n := Matrix.of fun i j =>
   toNat ((Fintype.card H^3*n) • uniform H + (Fintype.card H*T n t i j) •
     (Fintype.card H • (1 : MonoidAlgebra ℤ H)-uniform H))
-theorem factorPositive [Nontrivial H] (n t : ℕ) :
-    (∀ i j g, 0 < (actualU (H:=H) n t i j).coeff g) ∧
-      (∀ i j g, 0 < (actualV (H:=H) n t i j).coeff g) := by
-  classical
-  have hD (i j : Fin n) : D n t i j ≤ 1 := by rw [D_entry]; split_ifs <;> omega
-  have hT (i j : Fin n) : T n t i j ≤ 1 := by simp only [T,Matrix.of_apply]; split_ifs <;> omega
-  constructor
-  · intro i j g
-    exact Int.pos_iff_toNat_pos.mp (uniform_perturbation_positive H _ (hD i j) g)
-  · intro i j g
-    exact Int.pos_iff_toNat_pos.mp (uniform_perturbation_positive H _ (hT i j) g)
 theorem prescribedProducts [Nontrivial H] (n t : ℕ) :
     actualU (H:=H) n t * actualV n t = actualAt n t ∧
       actualV (H:=H) n t * actualU n t = actualAt n (t-1) := by
@@ -696,32 +678,6 @@ def prescribedChain [Nontrivial H] (n t r : ℕ) :
   · have h' : r≤t := by omega
     have c := down (H:=H) n r (t-r)
     simpa only [Nat.add_sub_of_le h',Nat.dist,Nat.sub_eq_zero_of_le h',Nat.add_zero] using c
-private theorem dependent_app_heq {α : Sort u} {β : α → Sort _}
-    (f : ∀ x, β x) {a b : α} (h : a=b) : HEq (f a) (f b) := by cases h; rfl
-theorem prescribedSelf [Nontrivial H] (n t : ℕ) :
-    HEq (prescribedChain (H:=H) n t t) (Chain.nil (actualAt (H:=H) n t)) := by
-  simp [prescribedChain,Nat.dist]
-  exact dependent_app_heq (up (H:=H) n t) (Nat.sub_self t)
-
-theorem actualLoops (n : ℕ) (hn : 0<n) (t : ℕ) (i : Fin n) :
-    Nonempty (At (actualAt (H:=H) n t) i i) := by
-  classical
-  have hT : T n t i i = 0 := by
-    simp only [T,Matrix.of_apply]
-    split_ifs with h
-    · omega
-    · rfl
-  refine ⟨⟨1,⟨0,?_⟩⟩⟩
-  change 0 < (((Fintype.card H^3*n) • uniform H + (Fintype.card H*T n t i i) •
-    (Fintype.card H • (1 : MonoidAlgebra ℤ H)-uniform H)).coeff (1:H)).toNat
-  rw [hT,Nat.mul_zero,zero_smul,add_zero]
-  have huc : (uniform H).coeff (1:H) = 1 := by
-    simp [uniform,basis,MonoidAlgebra.coeff_sum]
-  apply Int.pos_iff_toNat_pos.mp
-  rw [MonoidAlgebra.coeff_smul_apply,huc]
-  simp only [nsmul_eq_mul,mul_one]
-  exact_mod_cast Nat.mul_pos (pow_pos (show 0 < Fintype.card H from Fintype.card_pos) 3) hn
-
 /-- Coefficients of the literal original endpoint, before any factorization. -/
 theorem actualAt_coefficient (n t : ℕ) (i j : Fin n) (g : H) :
     (actualAt (H:=H) n t i j).coeff g =
@@ -741,38 +697,6 @@ theorem actualAt_coefficient (n t : ℕ) (i j : Fin n) (g : H) :
   simp only [MonoidAlgebra.coeff_add,Finsupp.add_apply,hsm,MonoidAlgebra.coeff_sub,
     Finsupp.sub_apply,huc,MonoidAlgebra.one_def,MonoidAlgebra.coeff_single,
     Finsupp.single_apply,mul_one]
-/-- Every coordinate and every H-labelled copy fibre is positive. -/
-theorem actualAt_positive [Nontrivial H] (n t : ℕ) (hn : 2≤n) :
-    ∀ i j g, 0 < (actualAt (H:=H) n t i j).coeff g := by
-  classical
-  intro i j g
-  rw [actualAt_coefficient]
-  apply Int.pos_iff_toNat_pos.mp
-  let q := Fintype.card H
-  have hq : 2≤q := Fintype.one_lt_card
-  have hp : 0<q^3 := pow_pos (show 0<q by omega) 3
-  have hle : q≤q^3 := by
-    have hh : 1≤q*q := by nlinarith
-    have h := Nat.mul_le_mul_left q hh
-    simpa only [Nat.mul_one,show q*(q*q)=q^3 by ring] using h
-  have hmul : q^3<q^3*n := by
-    simpa only [Nat.mul_one] using Nat.mul_lt_mul_of_pos_left (show 1<n by omega) hp
-  have hc : (q : ℤ) < ((q^3*n : ℕ) : ℤ) := by exact_mod_cast (lt_of_le_of_lt hle hmul)
-  have hqi : (2 : ℤ)≤q := by exact_mod_cast hq
-  have hT : T n t i j = 0 ∨ T n t i j = 1 := by
-    simp only [T,Matrix.of_apply]; split_ifs <;> simp
-  change 0 < ((q^3*n : ℕ) : ℤ) + ((q*T n t i j : ℕ) : ℤ) *
-    ((q : ℤ) * (if (1:H)=g then 1 else 0) - 1)
-  by_cases hg : (1:H)=g
-  · rw [if_pos hg]
-    rcases hT with hz | ho
-    · rw [hz]; simp only [Nat.mul_zero,Nat.cast_zero,zero_mul,add_zero]; omega
-    · rw [ho]; simp only [Nat.mul_one,mul_one]; nlinarith
-  · rw [if_neg hg]
-    rcases hT with hz | ho
-    · rw [hz]; simp only [Nat.mul_zero,Nat.cast_zero,zero_mul,add_zero]; omega
-    · rw [ho]; simp only [Nat.mul_one,mul_zero,zero_sub,mul_neg,mul_one]; omega
-
 open InertGroupBlockConjugacy
 private def suppressAugmentation : (ℚ × Reduced H) →ₙ+* (ℚ × Reduced H) where
   toFun x := (0,x.2)
@@ -784,27 +708,6 @@ def rationalComplement (H : Type u) [Group H] [Fintype H] :
     MonoidAlgebra ℚ H →ₙ+* MonoidAlgebra ℚ H :=
   (augmentationSplit H).symm.toRingHom.toNonUnitalRingHom.comp
     (suppressAugmentation.comp (augmentationSplit H).toRingHom.toNonUnitalRingHom)
-private theorem rationalComplement_split (x : MonoidAlgebra ℚ H) :
-    augmentationSplit H (rationalComplement H x) = (0,(augmentationSplit H x).2) := by
-  change augmentationSplit H ((augmentationSplit H).symm (0,(augmentationSplit H x).2)) = _
-  exact (augmentationSplit H).apply_symm_apply _
-/-- This identifies the nonunital homomorphism with the original complement formula. -/
-theorem rationalComplement_apply (x : MonoidAlgebra ℚ H) :
-    rationalComplement H x = x - rationalAugmentation x • average H := by
-  apply (augmentationSplit H).injective
-  rw [rationalComplement_split]
-  apply Prod.ext
-  · change 0 = rationalAugmentation (x - rationalAugmentation x • average H)
-    rw [map_sub,map_smul,augmentation_average,smul_eq_mul,mul_one,sub_self]
-  · change Ideal.Quotient.mk (uniformIdeal H) x =
-      Ideal.Quotient.mk (uniformIdeal H) (x - rationalAugmentation x • average H)
-    rw [map_sub]
-    have hz : Ideal.Quotient.mk (uniformIdeal H) (rationalAugmentation x • average H) = 0 := by
-      apply Ideal.Quotient.eq_zero_iff_mem.mpr
-      intro g
-      rw [MonoidAlgebra.coeff_smul_apply,MonoidAlgebra.coeff_smul_apply,
-        average_coeff,average_coeff]
-    rw [hz,sub_zero]
 
 end
 end D5.S3.ConceptDynamics.Coding.CountedGroupChainPaths.FixedCutCoherence
