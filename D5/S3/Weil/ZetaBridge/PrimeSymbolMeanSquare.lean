@@ -53,11 +53,11 @@ def orderedCross (s : Finset ℕ) (a : ℕ → ℝ) (z : ℕ → ℂ) : ℝ :=
 
 def primeCross (c : ℕ) : ℝ := orderedCross (primeIndices c) primeWeight (primePhase c)
 
-private theorem logLength_pos {c : ℕ} (hc : 2 ≤ c) : 0 < logLength c := by
+theorem logLength_pos {c : ℕ} (hc : 2 ≤ c) : 0 < logLength c := by
   apply Real.log_pos
   exact_mod_cast (show 1 < c by lia)
 
-private theorem phase_geometry {c q : ℕ} (hc : 2 ≤ c) (hq : q ∈ primeIndices c) :
+theorem phase_geometry {c q : ℕ} (hc : 2 ≤ c) (hq : q ∈ primeIndices c) :
     0 < theta c q ∧ theta c q < 1 := by
   obtain ⟨hq2, hqc⟩ := Finset.mem_Ico.mp hq
   have hqR : (1 : ℝ) < q := by exact_mod_cast (show 1 < q by lia)
@@ -82,11 +82,11 @@ private theorem actual_log_gap {c p q : ℕ} (hc : 2 ≤ c)
   have hqHi : Real.log (q : ℝ) < logLength c := (div_lt_one hL).mp hq1
   exact abs_lt.mpr ⟨by linarith, by linarith⟩
 
-private theorem primePhase_norm (c q : ℕ) : ‖primePhase c q‖ = 1 := by
+theorem primePhase_norm (c q : ℕ) : ‖primePhase c q‖ = 1 := by
   simp [primePhase]
 
 /-- Noncollision is proved from the actual logarithms, without a spacing premise. -/
-private theorem primePhase_noncollision {c p q : ℕ} (hc : 2 ≤ c)
+theorem primePhase_noncollision {c p q : ℕ} (hc : 2 ≤ c)
     (hp : p ∈ primeIndices c) (hq : q ∈ primeIndices c) (hpq : p ≠ q) :
     primePhase c p * conj (primePhase c q) ≠ 1 := by
   intro h
@@ -186,7 +186,7 @@ private theorem phase_power_im (c q : ℕ) (m : ℤ) :
   congr 1
   ring
 
-private theorem primeSymbol_is_im (c : ℕ) (m : ℤ) :
+theorem primeSymbol_is_im (c : ℕ) (m : ℤ) :
     primeSymbol c m =
       (∑ q ∈ primeIndices c, (primeWeight q : ℂ) * primePhase c q ^ m).im := by
   rw [complex_im_sum]
@@ -206,7 +206,7 @@ private theorem primeSymbol_square_le (c : ℕ) (m : ℤ) :
     (∑ q ∈ primeIndices c, (primeWeight q : ℂ) * primePhase c q ^ m).re]
 
 /-- The only geometric-series estimate. It invokes the existing finite sum formula. -/
-private theorem geometric_block_norm {z : ℂ} (hz : ‖z‖ = 1) (hz1 : z ≠ 1)
+theorem geometric_block_norm {z : ℂ} (hz : ‖z‖ = 1) (hz1 : z ≠ 1)
     (M : ℤ) (K : ℕ) :
     ‖∑ j ∈ Finset.range K, z ^ (M + (j : ℤ))‖ ≤ 2 / ‖1 - z‖ := by
   have hz0 : z ≠ 0 := by
@@ -227,7 +227,7 @@ private theorem geometric_block_norm {z : ℂ} (hz : ‖z‖ = 1) (hz1 : z ≠ 1
       simpa only [norm_pow, hz, one_pow, norm_one, one_add_one_eq_two] using norm_sub_le (z ^ K) 1
     _ = 2 / ‖1 - z‖ := by rw [norm_sub_rev]
 
-private theorem norm_square_expansion (s : Finset ℕ) (a : ℕ → ℝ) (z : ℕ → ℂ) (m : ℤ) :
+theorem norm_square_expansion (s : Finset ℕ) (a : ℕ → ℝ) (z : ℕ → ℂ) (m : ℤ) :
     ‖∑ p ∈ s, (a p : ℂ) * z p ^ m‖ ^ 2 =
       ∑ p ∈ s, ∑ q ∈ s, (((a p * a q : ℝ) : ℂ) * (z p * conj (z q)) ^ m).re := by
   have hterm (p q : ℕ) :
@@ -341,7 +341,7 @@ private theorem abel_affine_identity (w : ℕ → ℝ) (D C : ℝ) (K : ℕ) :
       linear_combination ih
 
 /-- Discrete Abel majorization, using Mathlib's actual summation-by-parts theorem. -/
-private theorem finite_abel_majorant (x w : ℕ → ℝ) (D C : ℝ)
+theorem finite_abel_majorant (x w : ℕ → ℝ) (D C : ℝ)
     (hC : 0 ≤ C) (hw : ∀ i, 0 ≤ w i) (hanti : ∀ i, w (i + 1) ≤ w i)
     (hA : ∀ K, (∑ i ∈ Finset.range K, x i) ≤ (K : ℝ) * D + C) (K : ℕ) :
     (∑ i ∈ Finset.range K, x i * w i) ≤
@@ -377,7 +377,7 @@ def inverseSquareWeight (M j : ℕ) : ℝ := (((M : ℝ) + (j : ℝ) + 1)⁻¹) 
 def primeTailBudget (c M : ℕ) : ℝ :=
   primeSquareMass c / (M : ℝ) + primeCross c / ((M : ℝ) + 1) ^ 2
 
-private theorem inverseSquareWeight_antitone {M : ℕ} (hM : 0 < M) (i : ℕ) :
+theorem inverseSquareWeight_antitone {M : ℕ} (hM : 0 < M) (i : ℕ) :
     inverseSquareWeight M (i + 1) ≤ inverseSquareWeight M i := by
   have hMR : (0 : ℝ) < M := by exact_mod_cast hM
   unfold inverseSquareWeight
@@ -421,7 +421,7 @@ theorem prime_symbol_square_tail {c M : ℕ} (hc : 2 ≤ c) (hM : 0 < M) :
   exact ⟨summable_of_sum_range_le hnon (prime_tail_partial hc hM),
     Real.tsum_le_of_sum_range_le hnon (prime_tail_partial hc hM)⟩
 
-private theorem complex_prime_energy (c M j : ℕ) (β : ℂ) :
+theorem complex_prime_energy (c M j : ℕ) (β : ℂ) :
     ‖β * (primeSymbol c ((M + j + 1 : ℕ) : ℤ) : ℂ) / ((M + j + 1 : ℕ) : ℂ)‖ ^ 2 =
       ‖β‖ ^ 2 * (primeSymbol c ((M + j + 1 : ℕ) : ℤ) ^ 2 * inverseSquareWeight M j) := by
   have hm : ‖((M + j + 1 : ℕ) : ℂ)‖ = (M : ℝ) + (j : ℝ) + 1 := by simp
