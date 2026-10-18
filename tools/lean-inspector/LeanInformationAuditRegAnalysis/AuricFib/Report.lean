@@ -1,5 +1,6 @@
 import LeanInformationAuditRegAnalysis.AuricFib.Macro
 import LeanInformationAuditRegAnalysis.AuricFib.Generic
+import LeanInformationAuditRegAnalysis.AuricFib.Law
 
 namespace LeanInformationAudit.AuricFib
 open Lean
@@ -64,6 +65,8 @@ def unavailableReport (status reason arenaKind : String) : Json := Json.mkObj [
           then "not-applicable" else "unavailable")), ("reason", toJson reason)]))) ]))]
 
 def analyze (request : Json) : Except String Json := do
+  if (request.getObjValAs? String "arena").toOption == some "law-family" then
+    return ← Law.analyze request
   if (request.getObjValAs? String "arena").toOption == some "typed-source" then
     return ← Generic.analyze request
   requireKeys request ["source_contract", "law", "archive", "initial_readouts", "layers", "arena", "binding", "law_acquisition"]

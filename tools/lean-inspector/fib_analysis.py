@@ -89,6 +89,46 @@ def _qualify_compiled(request, reading):
     readings = disposition["readings"]
     def evidence(field, kind, reason):
         readings[field] = dict(kind=kind, reason=reason)
+    if request.get("arena") == "law-family":
+        source = reading["source_contract"]
+        source.pop("supplied_binding")
+        source.update(kind="law-family", binding=request["binding"])
+        disposition["reason"] = "compiled mass-valued law family; ordinary audit obligations remain independent"
+        for field in ("arena", "source_contract", "atom_readout", "kernel"):
+            evidence(field, "available", "full source binding, atom bijection and actual mass readout equality")
+        for field in ("seam_readout", "guard", "reply", "R_guard", "native_continuation", "conditional_reply_law"):
+            evidence(field, "not-applicable", "law family declares no native Window execution")
+        kind = request["acquisition"]["kind"]
+        for field in ("escape_pairs", "escape_rate", "unique_capture"):
+            evidence(field, "not-applicable" if kind == "infinite" else "unavailable",
+                     request["acquisition"]["reason"])
+        evidence("layered_spectrum", "available", "qualitative family capture; finite counts acquired separately")
+        facts = request["facts"]
+        capture_status = ("strict" if any(f["kind"] == "separated" for f in facts) else
+                          "collapsed" if any(f["kind"] == "identifiable" for f in facts) else "unknown")
+        capture = dict(status=capture_status, simplex_width_implies_strict=False,
+                       inheritance="simplex-inherited" if capture_status == "strict" and
+                                   request["law_family"]["simplex_coverage"] is not None else "unassessed",
+                       reason="compiled family witness" if capture_status != "unknown" else
+                              "no family separation or identifiability witness supplied")
+        reading["association_coordinate"]["family_capture"] = capture
+        reading["layered_spectrum"]["family_capture"] = copy.deepcopy(capture)
+        evidence("family_capture", "available" if capture_status != "unknown" else "unknown", capture["reason"])
+        point = request["point"]
+        for field in ("pyramid_coordinates", "association_coordinate", "residuals"):
+            evidence(field, "available" if point is not None else
+                     "unavailable" if request["point_unavailable_reason"] else "unknown",
+                     "exact rational point with domain membership and pointwise source-law equality" if point is not None else
+                     request["point_unavailable_reason"] or "law defined; no certified rational point supplied")
+        if request["task"] is not None:
+            evidence("continuation_target", "available", "explicit rational atom task; no native continuation")
+            task = reading["continuation_target"]
+            from fractions import Fraction
+            values = [Fraction(x) for x in request["task"]]
+            jf = values[3] - values[1] - values[2] + values[0]
+            task["family_capture"] = "collapsed" if jf == 0 or capture_status == "collapsed" else capture_status
+            task["uses_delta"] = jf != 0
+        return reading
     if request.get("arena", "native-single-window") == "native-single-window":
         source = reading["source_contract"]
         source.pop("supplied_binding")
