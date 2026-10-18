@@ -21,7 +21,7 @@ internal sealed class LogNegativityCapacityResourceDependenceDocument : IScribeD
                 "Section I, Eq. (2), p. 2, verbatim: “However, when prior entanglement is available, the maximum increase of entanglement is:” The formula is Eᴰ(Λ) = sup{E(Λ(σ)) − E(σ)|σ ∈ D}. Both logarithms have base two. No restriction to positive partial transpose is imposed on these inputs.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Campbell)),
             Node("claim", "The all-CPTP resource-independence question", ClaimFormula(),
                 "Section VII, p. 7, verbatim: “The most obvious open question is whether log-negativity EC is resource independent for all unitaries, or indeed all CPTP maps, or whether this is a singular feature of 2-qubit gates.” The assertion here is its all-CPTP clause. The dimensions dA and dB and the finite Kraus count r range over natural numbers. Completeness of the Kraus family states trace preservation. The two capacities include every finite local ancillary system.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Campbell)),
-            Node("result", "A CPTP separation", Seq(Neg, Sp, V("claim")),
+            Node("result", "A CPTP separation", Seq(Neg, Sp, Parenthesized(ClaimBody())),
                 "The Tiles complementary projector Q is positive under partial transpose. The input Q/4 therefore has zero log-negativity and gives output partial-transpose trace norm two. For a separable input with arbitrary finite local ancillas, the conditional ancillary matrices are positive under partial transpose; a rational product-overlap estimate bounds the output norm by 2 minus 1/6561. The assisted capacity is at least one, whereas the separable-input capacity is at most log base two of 2 minus 1/6561, strictly less than one. This does not decide the question for unitary channels.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Campbell, Tiles)))));
     private static DocumentBlock Node(string n, string title, Formula f, string prose, DescribeRole role, AssessedProvenance provenance,
         OpenProblemResolutionClaim? resolution = null) =>
@@ -79,10 +79,11 @@ internal sealed class LogNegativityCapacityResourceDependenceDocument : IScribeD
         return ChannelInputs(All("a", N, All("b", N, All("rho", Sq(InputType),
             Eq(Call("extend", k, rho), At(At(owner, family, family), rho))))));
     }
-    private static Formula ClaimFormula()
+    private static Formula ClaimFormula() => IffOf(V("claim"), ClaimBody());
+    private static Formula ClaimBody()
     {
         Formula k = V("K");
         Formula complete = Eq(SumOver("k", Fin(V("r")), Mul(Adj(At(k, V("k"))), At(k, V("k")))), Cast(D(1), Sq(BaseType)));
-        return IffOf(V("claim"), ChannelInputs(Imp(complete, Eq(Call("capAssisted", k), Call("capSep", k)))));
+        return ChannelInputs(Imp(complete, Eq(Call("capAssisted", k), Call("capSep", k))));
     }
 }
