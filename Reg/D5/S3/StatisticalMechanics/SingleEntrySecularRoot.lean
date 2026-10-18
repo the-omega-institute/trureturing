@@ -9,7 +9,7 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option backward.isDefEq.respectTransparency false
 noncomputable section
-universe u
+universe u_1
 
 namespace Reg.D5.S3.StatisticalMechanics.SingleEntrySecularRoot
 open _root_.D5.S3.StatisticalMechanics.SingleEntrySecularRoot
@@ -18,10 +18,10 @@ open LeanInformationAudit
 
 /-- The original site type and two actual rate functions. Dictionaries and
 positivity premises remain in the full law without becoming coordinates. -/
-abbrev Parameters := Σ Sites : Type u, Σ _ : Sites → ℝ, Sites → ℝ
+abbrev Parameters := Σ Sites : Type u_1, Σ _ : Sites → ℝ, Sites → ℝ
 
 abbrev signature : Signature where
-  Params := Parameters.{u}
+  Params := Parameters.{u_1}
   State p := p.1
   Role := Unit
   finiteRole := inferInstance
@@ -30,23 +30,23 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actualReadout : ∀ role p, (signature.{u}).State p → (signature.{u}).Output role p :=
+def actualReadout : ∀ role p, (signature.{u_1}).State p → (signature.{u_1}).Output role p :=
   fun _ p x => siteRate p.2.1 p.2.2 x
 
-def actualAnchor : ∀ (_ : (signature.{u}).Anchor) p, (signature.{u}).State p :=
+def actualAnchor : ∀ (_ : (signature.{u_1}).Anchor) p, (signature.{u_1}).State p :=
   fun e => nomatch e
 
-def actual : Realization signature.{u} :=
+def actual : Realization signature.{u_1} :=
   realize signature actualReadout actualAnchor
 
-def rejected : Realization signature.{u} :=
+def rejected : Realization signature.{u_1} :=
   realize signature (fun _ _ _ => 0) (fun e => nomatch e)
 
 /-- The selected observation is the actual free-site rate in the upper bound.
 The secular function and every original dictionary and premise stay in scope. -/
 abbrev arena : Arena where
-  signature := signature.{u}
-  Law R := ∀ {ι : Type u} [fi : Fintype ι] [de : DecidableEq ι] [ne : Nonempty ι]
+  signature := signature.{u_1}
+  Law R := ∀ {ι : Type u_1} [fi : Fintype ι] [de : DecidableEq ι] [ne : Nonempty ι]
     (a b : ι → ℝ) (η θ : ℝ),
     (∀ i, 0 < a i) → (∀ i, 0 < b i) → 0 < η → 0 < θ →
     (∃! x : ℝ, 0 < x ∧ (∀ i, x < R.readout () ⟨ι, a, b⟩ i) ∧
@@ -55,24 +55,24 @@ abbrev arena : Arena where
       HasDerivAt (secular a b η θ) (secularSlope a b η x) x ∧
       secularSlope a b η x < 0
 
-private theorem rejected_law : ¬ arena.{u}.Law rejected := by
+private theorem rejected_law : ¬ arena.{u_1}.Law rejected := by
   intro h
-  obtain ⟨x, hx, _⟩ := (h (ι := ULift.{u} Unit) (fun _ => 1) (fun _ => 1) 1 1
+  obtain ⟨x, hx, _⟩ := (h (ι := ULift.{u_1} Unit) (fun _ => 1) (fun _ => 1) 1 1
     (by intro i; norm_num) (by intro i; norm_num) (by norm_num) (by norm_num)).1
   have hh := hx.2.1 (ULift.up ())
   norm_num [rejected, realize] at hh
   linarith [hx.1]
 
-private theorem dependence : ObservationalDependence signature.{u} actual := by
+private theorem dependence : ObservationalDependence signature.{u_1} actual := by
   intro role
-  let a : ULift.{u} (Fin 2) → ℝ := fun i => if i.down = 0 then 1 else 2
-  refine ⟨⟨ULift.{u} (Fin 2), a, fun _ => 1⟩, ULift.up 0, ULift.up 1, ?_⟩
+  let a : ULift.{u_1} (Fin 2) → ℝ := fun i => if i.down = 0 then 1 else 2
+  refine ⟨⟨ULift.{u_1} (Fin 2), a, fun _ => 1⟩, ULift.up 0, ULift.up 1, ?_⟩
   norm_num [actual, actualReadout, realize, siteRate, a]
 
-def family : Registration arena.{u} (arena.Law actual) where
+def family : Registration arena.{u_1} (arena.Law actual) where
   actual := realize signature actualReadout actualAnchor
   bridge := Iff.rfl
-  variation := ⟨@secular_unique_root.{u}, rejected, rejected_law⟩
+  variation := ⟨@secular_unique_root.{u_1}, rejected, rejected_law⟩
   sensitivity := by
     constructor
     · intro i
@@ -99,7 +99,7 @@ def selection : Contract.SourceSelection where
     booleanPredicate := false }]
 
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@secular_unique_root.{u}) (Realization signature.{u}) Unit Unit where
+    (@secular_unique_root.{u_1}) (Realization signature.{u_1}) Unit Unit where
   unitName := `Reg.D5.S3.StatisticalMechanics.SingleEntrySecularRoot.unit
   realizationName := `Reg.D5.S3.StatisticalMechanics.SingleEntrySecularRoot.family
   realizationSource := none
@@ -122,11 +122,11 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   options := #[]
 
 /-- The complete original telescope is reconstructed definitionally. -/
-def analysisSource : Analysis.Source (@secular_unique_root.{u}) :=
+def analysisSource : Analysis.Source (@secular_unique_root.{u_1}) :=
   Analysis.Source.ofRegistration _ family .exact selection
 
 /-- The scalar equation supplies no trajectory law or five-mode pushforward. -/
-def analysis : AuricFib.Contract.Application (@secular_unique_root.{u}) where
+def analysis : AuricFib.Contract.Application (@secular_unique_root.{u_1}) where
   evidence := .typed {
     source := analysisSource
     plan := { task := (), initial := [], additions := [[()]] }

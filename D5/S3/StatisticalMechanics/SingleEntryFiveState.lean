@@ -26,7 +26,7 @@ set_option backward.isDefEq.respectTransparency false
 
 noncomputable section
 open scoped BigOperators ComplexOrder
-open Set Matrix
+open Set Matrix Filter
 namespace D5.S3.StatisticalMechanics.SingleEntryFiveState
 
 private theorem constant_on_nonneg (f : ℝ → ℝ)
@@ -83,7 +83,9 @@ private theorem symmetric_return_data {V : Type*} [Fintype V] [DecidableEq V]
       (∀ j, 0 ≤ lam j ∧ 0 ≤ c j) ∧ (∑ j, c j) = 1 ∧
       (∃ j, 0 < lam j * c j) ∧
       (∀ t, 0 ≤ t → y t o = ∑ j, c j * Real.exp (-lam j * t)) ∧
-      ∀ t, 0 ≤ t → deriv (fun u => y u o) t < 0 := by
+      (∀ t, 0 ≤ t → deriv (fun u => y u o) t < 0) ∧
+      ∃ l : V → ℝ, (∀ i, Tendsto (fun t => y t i) atTop (nhds (l i))) ∧
+        A *ᵥ l = 0 := by
   let U : Matrix V V ℝ := hA.1.eigenvectorUnitary
   let lam := hA.1.eigenvalues
   let c := fun t j => ∑ i, U i j * y t i
@@ -123,14 +125,14 @@ private theorem symmetric_return_data {V : Type*} [Fintype V] [DecidableEq V]
     simpa only [U, Unitary.coe_star, star_eq_conjTranspose,
       conjTranspose_eq_transpose_of_trivial] using
       Unitary.coe_mul_star_self hA.1.eigenvectorUnitary
-  have reconstruct (t : ℝ) : y t o = ∑ j, U o j * c t j := by
-    have hh := congrFun (mulVec_mulVec (y t) U U.transpose) o
+  have reconstruct (t : ℝ) (i : V) : y t i = ∑ j, U i j * c t j := by
+    have hh := congrFun (mulVec_mulVec (y t) U U.transpose) i
     rw [hU, one_mulVec] at hh
     exact hh.symm
   have hreturn : ∀ t, 0 ≤ t →
       y t o = ∑ j, U o j ^ 2 * Real.exp (-lam j * t) := by
     intro t ht
-    rw [reconstruct t]
+    rw [reconstruct t o]
     apply Finset.sum_congr rfl
     intro j _
     rw [hct t ht j]
@@ -173,8 +175,41 @@ private theorem symmetric_return_data {V : Type*} [Fintype V] [DecidableEq V]
         Filter.eventually_of_mem (Ioi_mem_nhds htpos) (fun u hu => hreturn u hu.le)
       rw [heq.deriv_eq, hder.deriv, Finset.sum_neg_distrib]
       exact neg_neg_of_pos hpos
+  let b : V → ℝ := fun j => if lam j = 0 then U o j else 0
+  let l : V → ℝ := fun i => ∑ j, U i j * b j
+  have hclim (j : V) : Tendsto (fun t => c t j) atTop (nhds (b j)) := by
+    have he : (fun t => c t j) =ᶠ[atTop]
+        (fun t => U o j * Real.exp (-lam j * t)) :=
+      (eventually_ge_atTop 0).mono (fun t ht => hct t ht j)
+    apply Tendsto.congr' he.symm
+    by_cases hz : lam j = 0
+    · simpa [b, hz] using (tendsto_const_nhds : Tendsto (fun _ : ℝ => U o j) atTop (nhds (U o j)))
+    · have hl : 0 < lam j := lt_of_le_of_ne (hA.eigenvalues_nonneg j) (Ne.symm hz)
+      have hlim := Real.tendsto_exp_neg_atTop_nhds_zero.comp
+        (tendsto_id.const_mul_atTop hl)
+      simpa [b, hz, neg_mul] using hlim.const_mul (U o j)
+  have hlim (i : V) : Tendsto (fun t => y t i) atTop (nhds (l i)) := by
+    simp_rw [reconstruct]
+    exact tendsto_finsetSum _ (fun j _ => (hclim j).const_mul (U i j))
+  have hstat : A *ᵥ l = 0 := by
+    ext i
+    change (∑ k, A i k * (∑ j, U k j * b j)) = 0
+    simp only [Finset.mul_sum]
+    rw [Finset.sum_comm]
+    apply Finset.sum_eq_zero
+    intro j _
+    rw [show (∑ k, A i k * (U k j * b j)) =
+        (∑ k, A i k * U k j) * b j by
+      rw [Finset.sum_mul]
+      apply Finset.sum_congr rfl
+      intro k _
+      ring]
+    rw [heig]
+    dsimp [b]
+    split_ifs with hz <;> simp [hz]
   refine ⟨lam, (fun j => U o j ^ 2),
-    (fun j => ⟨hA.eigenvalues_nonneg j, sq_nonneg _⟩), ?_, hex, hreturn, hdecr⟩
+    (fun j => ⟨hA.eigenvalues_nonneg j, sq_nonneg _⟩), ?_, hex, hreturn, hdecr,
+    l, hlim, hstat⟩
   simpa [y0] using (hreturn 0 le_rfl).symm
 
 /-- Six independent positive transition rates. The letters `a,b` refer to site 1
@@ -269,7 +304,9 @@ private theorem return_spectral_data (k : Rates) (p : ℝ → Fin 5 → ℝ)
       (∀ j, 0 ≤ lam j ∧ 0 ≤ c j) ∧ (∑ j, c j) = 1 ∧
       (∃ j, 0 < lam j * c j) ∧
       (∀ t, 0 ≤ t → p t 0 = ∑ j, c j * Real.exp (-lam j * t)) ∧
-      ∀ t, 0 ≤ t → 0 < k.theta * p t 0 - k.eta * p t 1 := by
+      (∀ t, 0 ≤ t → 0 < k.theta * p t 0 - k.eta * p t 1) ∧
+      ∃ l : Fin 5 → ℝ, (∀ i, Tendsto (fun t => p t i) atTop (nhds (l i))) ∧
+        generator k *ᵥ l = 0 := by
   let y := fun u i => scale k 0 / scale k i * p u i
   have hscale (i : Fin 5) : scale k i ≠ 0 := ne_of_gt (scale_pos k i)
   have hA : (gram k).PosSemidef := by
@@ -294,12 +331,12 @@ private theorem return_spectral_data (k : Rates) (p : ℝ → Fin 5 → ℝ)
     field_simp [hscale]
     nlinarith [congrArg (fun z : ℝ => z * p u j) hs]
   have hdiag : 0 < gram k 0 0 := by simpa [gram_entries] using k.theta_pos
-  obtain ⟨lam, c, hn, hsum, hmode, hrep, hdecr⟩ :=
+  obtain ⟨lam, c, hn, hsum, hmode, hrep, hdecr, l, hlim, hstat⟩ :=
     symmetric_return_data (gram k) hA 0 hdiag y hy0 hy
   have hreturn : (fun u => y u 0) = (fun u => p u 0) := by
     funext u
     simp [y, hscale]
-  refine ⟨lam, c, hn, hsum, hmode, ?_, ?_⟩
+  refine ⟨lam, c, hn, hsum, hmode, ?_, ?_, ?_⟩
   · intro t ht
     change (fun u => p u 0) t = _
     rw [← hreturn]
@@ -309,12 +346,34 @@ private theorem return_spectral_data (k : Rates) (p : ℝ → Fin 5 → ℝ)
     rw [hreturn, (hp.2 t ht 0).deriv] at hneg
     simp [generator, mulVec, dotProduct, Fin.sum_univ_five] at hneg
     linarith
+  · let L : Fin 5 → ℝ := fun i => scale k i / scale k 0 * l i
+    refine ⟨L, ?_, ?_⟩
+    · intro i
+      have he : (fun t => p t i) = (fun t => scale k i / scale k 0 * y t i) := by
+        funext t
+        dsimp [y]
+        field_simp [hscale]
+      rw [he]
+      exact (hlim i).const_mul _
+    · ext i
+      have he := congrFun hstat i
+      change (generator k *ᵥ L) i = 0
+      have hid : (generator k *ᵥ L) i = -(scale k i / scale k 0 * (gram k *ᵥ l) i) := by
+        dsimp [mulVec, dotProduct, L]
+        rw [Finset.mul_sum, ← Finset.sum_neg_distrib]
+        apply Finset.sum_congr rfl
+        intro j _
+        have hs := similarity k i j
+        field_simp [hscale]
+        nlinarith [congrArg (fun z : ℝ => z * l j) hs]
+      rw [hid, he]
+      simp
 
 private theorem net_input_pos (k : Rates) (p : ℝ → Fin 5 → ℝ)
     (hp : ForwardSolution k p) (t : ℝ) (ht : 0 ≤ t) :
     0 < k.theta * p t 0 - k.eta * p t 1 := by
   obtain ⟨_, _, _, _, _, _, hi⟩ := return_spectral_data k p hp
-  exact hi t ht
+  exact hi.1 t ht
 
 /-- Total mass outside R. -/
 def activeMass (p : ℝ → Fin 5 → ℝ) (t : ℝ) : ℝ := 1 - p t 0
@@ -644,6 +703,76 @@ def equilibriumLaw (k : Rates) : Fin 5 → ℝ :=
   ![k.eta * k.b * k.d / C, k.theta * k.b * k.d / C,
     k.theta * k.a * k.d / C, k.theta * k.b * k.c / C, k.theta * k.a * k.c / C]
 
+private theorem stationary_unique (k : Rates) (l : Fin 5 → ℝ)
+    (hs : generator k *ᵥ l = 0) (hm : ∑ i, l i = 1) : l = equilibriumLaw k := by
+  have h0 := congrFun hs 0
+  have h2 := congrFun hs 2
+  have h3 := congrFun hs 3
+  have h4 := congrFun hs 4
+  simp [generator, mulVec, dotProduct, Fin.sum_univ_five] at h0 h2 h3 h4
+  simp only [Fin.sum_univ_five] at hm
+  let H := (k.a + k.b) * (k.c + k.d)
+  let C := k.theta * H + k.eta * k.b * k.d
+  have hH : 0 < H := mul_pos (add_pos k.a_pos k.b_pos) (add_pos k.c_pos k.d_pos)
+  have hC : 0 < C := add_pos (mul_pos k.theta_pos hH)
+    (mul_pos (mul_pos k.eta_pos k.b_pos) k.d_pos)
+  have hX : (k.a + k.b) * (l 2 + l 4) = k.a * (1 - l 0) := by
+    linear_combination -h2 - h4 + k.a * hm
+  have hY : (k.c + k.d) * (l 3 + l 4) = k.c * (1 - l 0) := by
+    linear_combination -h3 - h4 + k.c * hm
+  have hK : (k.a + k.b + k.c + k.d) * l 4 =
+      k.c * (l 2 + l 4) + k.a * (l 3 + l 4) := by
+    linear_combination -h4
+  have hKraw : (k.a + k.b + k.c + k.d) *
+      (H * l 4 - k.a * k.c * (1 - l 0)) = 0 := by
+    dsimp [H]
+    linear_combination (k.a + k.b) * (k.c + k.d) * hK +
+      k.c * (k.c + k.d) * hX + k.a * (k.a + k.b) * hY
+  have hsum : 0 < k.a + k.b + k.c + k.d := by
+    linarith [k.a_pos, k.b_pos, k.c_pos, k.d_pos]
+  have hKprod : H * l 4 = k.a * k.c * (1 - l 0) :=
+    sub_eq_zero.mp ((mul_eq_zero.mp hKraw).resolve_left (ne_of_gt hsum))
+  have hXprod : H * l 2 = k.a * k.d * (1 - l 0) := by
+    dsimp [H] at *
+    linear_combination (k.c + k.d) * hX - hKprod
+  have hYprod : H * l 3 = k.b * k.c * (1 - l 0) := by
+    dsimp [H] at *
+    linear_combination (k.a + k.b) * hY - hKprod
+  have hEprod : H * l 1 = k.b * k.d * (1 - l 0) := by
+    dsimp [H] at *
+    linear_combination (k.a + k.b) * (k.c + k.d) * hm -
+      hXprod - hYprod - hKprod
+  have hR : C * l 0 = k.eta * k.b * k.d := by
+    dsimp [C]
+    linear_combination -H * h0 + k.eta * hEprod
+  have solve (z v : ℝ) (hz : H * z = v * (1 - l 0)) : z * C = k.theta * v := by
+    have he : H * (z * C - k.theta * v) = 0 := by
+      dsimp [C] at *
+      linear_combination (k.theta * H + k.eta * k.b * k.d) * hz - v * hR
+    exact sub_eq_zero.mp ((mul_eq_zero.mp he).resolve_left (ne_of_gt hH))
+  have hden : k.theta * (k.a + k.b) * (k.c + k.d) + k.eta * k.b * k.d = C := by
+    dsimp [C, H]
+    ring
+  ext i
+  fin_cases i <;> simp [equilibriumLaw, hden] <;> rw [eq_div_iff (ne_of_gt hC)]
+  · linear_combination hR
+  · linear_combination (solve (l 1) (k.b * k.d) hEprod)
+  · linear_combination (solve (l 2) (k.a * k.d) hXprod)
+  · linear_combination (solve (l 3) (k.b * k.c) hYprod)
+  · linear_combination (solve (l 4) (k.a * k.c) hKprod)
+
+private theorem forward_limit (k : Rates) (p : ℝ → Fin 5 → ℝ)
+    (hp : ForwardSolution k p) :
+    ∀ i, Tendsto (fun t => p t i) atTop (nhds (equilibriumLaw k i)) := by
+  obtain ⟨_, _, _, _, _, _, _, l, hlim, hstat⟩ := return_spectral_data k p hp
+  have hmass : (∑ i, l i) = 1 := by
+    have hl := tendsto_finsetSum Finset.univ (fun i _ => hlim i)
+    have he : (fun t => ∑ i, p t i) =ᶠ[atTop] (fun _ => (1 : ℝ)) :=
+      (eventually_ge_atTop 0).mono (fun t ht => mass_conservation k p hp t ht)
+    exact tendsto_nhds_unique hl (tendsto_const_nhds.congr' he.symm)
+  rw [stationary_unique k l hstat hmass] at hlim
+  exact hlim
+
 private theorem equilibrium_properties (k : Rates) :
     (∀ i, 0 < equilibriumLaw k i) ∧ (∑ i, equilibriumLaw k i) = 1 ∧
       generator k *ᵥ equilibriumLaw k = 0 ∧
@@ -703,6 +832,23 @@ private theorem equilibrium_properties (k : Rates) :
     dsimp [C]
     ring
 
+private theorem observables_limit (k : Rates) (p : ℝ → Fin 5 → ℝ)
+    (hp : ForwardSolution k p) :
+    Tendsto (association p) atTop (nhds 0) ∧
+    Tendsto (activeMass p) atTop (nhds
+      (k.theta / (k.theta + k.eta * (k.b / (k.a + k.b) * (k.d / (k.c + k.d)))))) := by
+  have h := forward_limit k p hp
+  have hr : Tendsto (activeMass p) atTop
+      (nhds (activeMass (fun _ => equilibriumLaw k) 0)) :=
+    tendsto_const_nhds.sub (h 0)
+  have hD : Tendsto (association p) atTop
+      (nhds (association (fun _ => equilibriumLaw k) 0)) :=
+    (hr.mul (h 4)).sub (((h 2).add (h 4)).mul ((h 3).add (h 4)))
+  have he := equilibrium_properties k
+  rw [he.2.2.2.1] at hD
+  rw [he.2.2.2.2.2] at hr
+  exact ⟨hD, hr⟩
+
 /-- A probability-valued solution exists in the interior of the actual five-mode
 pyramid at every positive time. Every solution from R has strict association;
 the independent-completion task error is exact and has the interaction's sign. -/
@@ -728,6 +874,10 @@ theorem five_state_strict_association (k : Rates) :
           (∀ j, 0 ≤ lam j ∧ 0 ≤ c j) ∧ (∑ j, c j) = 1 ∧
           (∃ j, 0 < lam j * c j) ∧
           ∀ u, 0 ≤ u → p u 0 = ∑ j, c j * Real.exp (-lam j * u)) ∧
+        (∀ i, Tendsto (fun u => p u i) atTop (nhds (equilibriumLaw k i))) ∧
+        Tendsto (association p) atTop (nhds 0) ∧
+        Tendsto (activeMass p) atTop (nhds
+          (k.theta / (k.theta + k.eta * (k.b / (k.a + k.b) * (k.d / (k.c + k.d)))))) ∧
         ∀ f : Fin 5 → ℝ,
           taskError p f t = taskContrast f * association p t / activeMass p t ∧
           (taskContrast f ≠ 0 → 0 < taskContrast f * taskError p f t)) := by
@@ -753,7 +903,9 @@ theorem five_state_strict_association (k : Rates) :
   · intro p hp t ht
     obtain ⟨hr, hw, hD, hdet, hf⟩ := strict_for_every_forward_solution k p hp t ht
     obtain ⟨lam, c, hn, hsum, hmode, hrep, _⟩ := return_spectral_data k p hp
-    refine ⟨hr, hw, hD, hdet, hf, ⟨lam, c, hn, hsum, hmode, hrep⟩, ?_⟩
+    refine ⟨hr, hw, hD, hdet, hf, ⟨lam, c, hn, hsum, hmode, hrep⟩,
+      forward_limit k p hp, (observables_limit k p hp).1,
+      (observables_limit k p hp).2, ?_⟩
     intro f
     have he := task_error_identity k p hp t ht f
     refine ⟨he, ?_⟩

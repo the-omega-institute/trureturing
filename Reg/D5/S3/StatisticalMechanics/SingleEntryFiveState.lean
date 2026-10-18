@@ -15,7 +15,7 @@ open _root_.D5.S3.StatisticalMechanics.SingleEntryFiveState
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 open scoped BigOperators
-open Matrix
+open Matrix Filter
 
 abbrev signature : Signature := Reg.Support.SingleDependentReadout.signature
   (Σ _ : Rates, ℝ → Fin 5 → ℝ) (fun _ => ℝ) (fun _ => ℝ)
@@ -58,6 +58,10 @@ abbrev arena : Arena where
           (∀ j, 0 ≤ lam j ∧ 0 ≤ c j) ∧ (∑ j, c j) = 1 ∧
           (∃ j, 0 < lam j * c j) ∧
           ∀ u, 0 ≤ u → p u 0 = ∑ j, c j * Real.exp (-lam j * u)) ∧
+        (∀ i, Tendsto (fun u => p u i) atTop (nhds (equilibriumLaw k i))) ∧
+        Tendsto (association p) atTop (nhds 0) ∧
+        Tendsto (activeMass p) atTop (nhds
+          (k.theta / (k.theta + k.eta * (k.b / (k.a + k.b) * (k.d / (k.c + k.d)))))) ∧
         ∀ f : Fin 5 → ℝ,
           taskError p f t = taskContrast f * association p t / activeMass p t ∧
           (taskContrast f ≠ 0 → 0 < taskContrast f * taskError p f t))
