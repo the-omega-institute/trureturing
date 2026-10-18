@@ -82,7 +82,10 @@ internal sealed class SpinThreeHalvesClassicalBasisDocument : IScribeDocumentDef
                         + "(-2/3,-2sqrt(3)/3,sqrt(2)/3), and (0,0,-sqrt(2)). "
                         + "Their squared lengths are 2 and their pairwise inner products are -2/3, so they are the vertices of a regular tetrahedron. "
                         + "Thus S = 8 and B_1 = 1/9. This proves the minimum asserted in Conjecture 1."))),
-            DescribeRole.Theorem);
+            DescribeRole.Theorem,
+            new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("rudzinski-burchardt-zyczkowski-2024-spin-three-halves-classical-basis"),
+                ResolutionKind.Proved));
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Call(string name, params Formula[] arguments) =>
