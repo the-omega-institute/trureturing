@@ -2543,3 +2543,127 @@ Sections 68–75 and their fixed-input sufficient routes (S.154)–(S.155) retai
 The actual conclusion is exactly the unchanged original-domain lower target: all original-real CPTP $M_3(\mathbb C)\to M_5(\mathbb C)$ with the stated spectrum, every $0<\beta\leq1/2$, all admissible third columns, actual minimal Kraus rank at most nine, all complex whole-output CPTP recoveries, all finite complex references, and the unhalved diamond norm, conditional on Definition 80.1. The analytic projection theorem has the larger finite-center-rank scope stated in Theorem 76.2. Neither result asserts a new matching construction, physical realization, kernel verification, exhaustive novelty or completion of the continuing research programme.
 
 ## 追加锚（本行以下为增补区）
+
+## 83. Conditional closure of the encoder-dependent witness route
+
+**Definition 83.1 (the scalar premise and inherited scope).** Keep the actual original-real channel class, the phase spectrum, all admissible third columns, and every complex whole-output CPTP recovery from Definition 80.1. For a fixed actual channel $N$, write
+
+$$
+T_\beta=\frac{1+\sqrt{1-\beta}}2,
+\qquad
+p_N(\rho)=\max_{R\ {\rm CPTP}}F_e(\rho,RN),
+\qquad
+h_N(\rho)=p_N(\rho).
+\tag{S.190}
+$$
+
+The existing fixed-input and channel minimax interfaces identify
+
+$$
+ g_N^2=\min_{\rho\in\mathsf D(\mathbb C^3)}h_N(\rho),
+\qquad
+ h_N(\rho)=
+ \min_{Y=Y^\dagger}
+ \left\{\operatorname{Tr}Y:
+ I_3\otimes Y\succeq C_{\rho,N}\right\},
+\tag{S.191}
+$$
+
+with both minima attained, including singular input densities and singular dual optima. Equation (S.191) is the previously established result of Sections 7 and 53 transported in the conventions of (S.153); it is not a new minimax theorem here.
+
+**Proposition 83.2 (conditional S.155 certificate).** Under the inherited interfaces of Definition 80.1, suppose for one fixed actual $N$ that
+
+$$
+ g_N^2\leq T_\beta.
+\tag{S.192}
+$$
+
+Then there are a density $\rho_N$ and a Hermitian positive semidefinite $Y_N$ such that
+
+$$
+ C_{\rho_N,N}\preceq I_3\otimes Y_N,
+\qquad
+ \operatorname{Tr}Y_N=g_N^2\leq T_\beta.
+\tag{S.193}
+$$
+
+If the channel and its Kraus frame are real in the original frame, the pair may be chosen with $\rho_N=\overline{\rho_N}=\rho_N^T$ and $Y_N=\overline{Y_N}=Y_N^T$. The selected pair is fixed before the recovery is chosen and therefore constrains every complex CPTP recovery on the whole five-dimensional output.
+
+Proof. Choose an attaining minimizer $\rho_N$ in the first equality of (S.191), then choose an attaining dual minimizer $Y_N$ in the second equality. This gives (S.193) and (S.192). For original-real data, simultaneous conjugation sends $(\rho,Y)$ to $(\bar\rho,\bar Y)$ and preserves feasibility and trace. The convexity of the squared fixed-input fidelity in the input density gives the standard conjugation average without restricting the recovery set; hence the minimizing pair can be taken real symmetric. This is exactly the previously established real-pair interface, applied at the selected $N$.
+
+For any complex recovery $R$, weak duality in the fixed-input SDP gives
+
+$$
+F_e(\rho_N,RN)\leq\operatorname{Tr}Y_N=g_N^2.
+\tag{S.194}
+$$
+
+Purify $\rho_N$ in a finite complex reference and apply the pure-target trace-distance inequality. Taking the infimum over all recoveries gives
+
+$$
+\delta_N
+\geq2(1-g_N^2)
+\geq2(1-T_\beta)
+=1-\sqrt{1-\beta}.
+\tag{S.195}
+$$
+
+This is a one-sided unhalved diamond lower bound. It does not identify the diamond optimum with a fidelity optimum. $\square$
+
+**Corollary 83.3 (what the all-beta projection theorem supplies).** Theorem 80.2 supplies (S.192), still under every actual phase, support, projection, rectangular-contraction, fixed-center minimax, unrestricted recovery/complement, and pure-target interface listed in Definition 80.1. Consequently, within exactly those inherited premises, Proposition 83.2 conditionally closes the encoder-dependent existential route (S.155) for every $0<\beta\leq1/2$ and every admissible third column.
+
+The quantifiers are
+
+$$
+\forall N\quad
+\bigl[\text{Definition 80.1 premises}\ \wedge\ g_N^2\leq T_\beta\bigr]
+\Longrightarrow
+\exists(\rho_N,Y_N)\quad
+\forall R.
+\tag{S.196}
+$$
+
+The witness depends on $N$ and is selected before $R$. The direction-dependent witnesses in (S.187) are not reused as a common input, and no exchange of the center maximum with an input minimum is made.
+
+The earlier Section 74 sentence that recorded (S.155) as unproved described the proof boundary before this conditional composition. It remains correct for an unconditional proof of (S.155) over arbitrary actual channels: that proof still requires the scalar premise and all Definition 80.1 interfaces. The composition here does not close the fixed-input route (S.154), because $\rho_N$ need not equal $\rho_\star$.
+
+**Proposition 83.4 (support boundary for the selected dual).** For any fixed density $\rho$ and any trace-optimal dual $Y$ in (S.191), including singular cases,
+
+$$
+\operatorname{ran}Y
+=\operatorname{ran}\!\left(\mathcal N(\rho^2)^T\right)
+=\operatorname{ran}\!\left(\mathcal N(\rho)^T\right).
+\tag{S.197}
+$$
+
+Consequently,
+
+$$
+\operatorname{rank}Y
+=\dim\operatorname{span}_\alpha K_\alpha\operatorname{ran}\rho.
+\tag{S.198}
+$$
+
+Proof. The row-vectorization convention gives
+
+$$
+\operatorname{Tr}_3 C_{\rho,N}=\mathcal N(\rho^2)^T=:B.
+\tag{S.199}
+$$
+
+Every feasible dual satisfies $3Y\succeq B$. Let $\Pi$ be the support projection of $B$. Positivity of $C_{\rho,N}$ and the vanishing partial trace on $\ker B$ imply $C_{\rho,N}=(I_3\otimes\Pi)C_{\rho,N}(I_3\otimes\Pi)$. Compressing $Y$ to $\Pi$ preserves feasibility and cannot increase its trace. At optimum, positivity removes the exterior and cross blocks, so $\operatorname{ran}Y=\operatorname{ran}B$. Since $\rho$ and $\rho^2$ have the same support, $\mathcal N(\rho)$ and $\mathcal N(\rho^2)$ have the same output support, proving (S.197)–(S.198). $\square$
+
+**Definition 83.5 (the strict-positive dual boundary).** Let $u=h_N(\rho)$. A positive-definite dual with trace at most $T_\beta$ exists exactly when
+
+$$
+ u<T_\beta
+ \quad\text{or}\quad
+ \bigl[u=T_\beta\ \text{and}\ \mathcal N(\rho)\succ0\bigr].
+\tag{S.200}
+$$
+
+A strict trace gap permits adding a sufficiently small positive multiple of $I_5$ to an optimal dual. At equality, (S.197) prevents such a perturbation when the channel output has deficient support. Therefore (S.200) is a boundary condition for an SPD version of a fixed-input certificate, not a proof of (S.154). In particular, for $\rho_\star=\operatorname{diag}(1/4,1/4,1/2)$, the missing requirement remains the actual estimate $h_N(\rho_\star)\leq T_\beta$, together with the full-output support condition at equality.
+
+**Definition 83.6 (scope and remaining gap).** Proposition 83.2 and Corollary 83.3 are a conditional reuse composition, not a new generic minimax, SDP, or real-symmetry theorem. They do not construct an explicit closed formula for $(\rho_N,Y_N)$, prove S.154, justify code/third pinching, provide a relaxed-data-to-actual converse, or establish a fidelity–diamond equality. The original all-class target remains conditional on Definition 80.1, and the fixed-$\rho_\star$ and $\sqrt a<\lambda<1$ witness programmes remain open.
+
+## 追加锚（本行以下为增补区）
