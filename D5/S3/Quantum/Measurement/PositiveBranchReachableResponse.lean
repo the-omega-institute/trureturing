@@ -89,7 +89,7 @@ def survivalEffect (K : α → Matrix n n ℂ) (c : α → ℝ) (N : ℕ) : Matr
   (weightedDual K c)^[N] 1
 
 omit [DecidableEq n] in
-private theorem weightedCP_psd (K : α → Matrix n n ℂ) (c : α → ℝ)
+theorem weightedCP_psd (K : α → Matrix n n ℂ) (c : α → ℝ)
     (hc : ∀ a, 0 ≤ c a) {X : Matrix n n ℂ} (hX : X.PosSemidef) :
     (weightedCP K c X).PosSemidef := by
   exact Matrix.posSemidef_sum _ fun a _ =>
@@ -326,7 +326,7 @@ theorem finite_reachable_faithful_sum (K : α → Matrix n n ℂ) (c : α → �
   obtain ⟨μ, hμ, hbound⟩ := psd_support_lower_bound (orbitSum K c ρ L)
     (orbitSum_psd K c (fun a => (hc a).le) hρ L)
   exact ⟨L, μ, hμ, hs, fun v hv => hbound v (hs.symm ▸ hv)⟩
-private theorem matrixSupport_eq_range {A : Matrix n n ℂ} (hA : A.IsHermitian) :
+theorem matrixSupport_eq_range {A : Matrix n n ℂ} (hA : A.IsHermitian) :
     matrixSupport A = LinearMap.range A.toEuclideanLin := by
   rw [matrixSupport, LinearMap.orthogonal_ker,
     ← Matrix.toEuclideanLin_conjTranspose_eq_adjoint, hA.eq]
@@ -542,7 +542,7 @@ private theorem reachable_kraus_invariant (K : α → Matrix n n ℂ)
     simp only [krausWord, Matrix.toEuclideanLin, Matrix.toLpLin_mul_same,
       LinearMap.comp_apply]
   exact fun v hv => hle hv
-private theorem weightedCP_reachable_support (K : α → Matrix n n ℂ)
+theorem weightedCP_reachable_support (K : α → Matrix n n ℂ)
     (c : α → ℝ) (hc : ∀ a, 0 ≤ c a) (ρ σ : Matrix n n ℂ)
     (hσ : σ.PosSemidef) (hs : matrixSupport σ ≤ reachableSpace K ρ) :
     matrixSupport (weightedCP K c σ) ≤ reachableSpace K ρ := by
