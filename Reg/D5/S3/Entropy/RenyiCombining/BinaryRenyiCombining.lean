@@ -1,11 +1,11 @@
 import LeanInformationAuditInterface.Contract.Registration
-import D5.S3.Quantum.Information.RenyiInformationCombiningOrderThree
+import D5.S3.Entropy.RenyiCombining.BinaryRenyiCombining
 import Reg.Support.SingleDependentReadout
 
 /-! Source-bound registration of the binary-convolution bias identity. -/
 
-namespace Reg.D5.S3.Quantum.Information.RenyiInformationCombiningOrderThree
-open _root_.D5.S3.Quantum.Information.RenyiInformationCombiningOrderThree
+namespace Reg.D5.S3.Entropy.RenyiCombining.BinaryRenyiCombining
+open _root_.D5.S3.Entropy.RenyiCombining.BinaryRenyiCombining
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
 set_option autoImplicit false
@@ -46,10 +46,10 @@ def source_registration : Registration arena sourceScope where
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@_root_.D5.S3.Quantum.Information.RenyiInformationCombiningOrderThree.bconv_bias)
+      (@_root_.D5.S3.Entropy.RenyiCombining.BinaryRenyiCombining.bconv_bias)
       (Realization signature) Unit Unit := {
-  unitName := `Reg.D5.S3.Quantum.Information.RenyiInformationCombiningOrderThree.unit
-  realizationName := `Reg.D5.S3.Quantum.Information.RenyiInformationCombiningOrderThree.source_registration
+  unitName := `Reg.D5.S3.Entropy.RenyiCombining.BinaryRenyiCombining.unit
+  realizationName := `Reg.D5.S3.Entropy.RenyiCombining.BinaryRenyiCombining.source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -65,7 +65,7 @@ def registration :
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Quantum.Information.RenyiInformationCombiningOrderThree
+    owner := `D5.S3.Entropy.RenyiCombining.BinaryRenyiCombining
     definition := none
     coordinates := #[0]
     readouts := #[{
@@ -82,4 +82,4 @@ def registration :
 #print axioms registration
 
 end
-end Reg.D5.S3.Quantum.Information.RenyiInformationCombiningOrderThree
+end Reg.D5.S3.Entropy.RenyiCombining.BinaryRenyiCombining

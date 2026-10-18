@@ -16,7 +16,7 @@ import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Convert
 import D5.S3.Entropy.RenyiCombining.CachinElasticityMonotone
 import D5.S3.Entropy.RenyiCombining.CachinConvexBranch
-import D5.S3.Quantum.Information.RenyiInformationCombiningOrderThree
+import D5.S3.Entropy.RenyiCombining.BinaryRenyiCombining
 import Mathlib.Analysis.SpecialFunctions.Pow.Deriv
 import Mathlib.Analysis.SpecialFunctions.Log.Deriv
 import Mathlib.Analysis.Convex.Deriv
@@ -125,18 +125,18 @@ namespace D5.S3.Entropy.RenyiCombining.HircheCachinCombiningConcavity
 
 noncomputable def h (α p : ℝ) : ℝ :=
   if α = 1 then Real.binEntropy p else
-    D5.S3.Quantum.Information.RenyiInformationCombiningOrderThree.hRenyi α p
+    D5.S3.Entropy.RenyiCombining.BinaryRenyiCombining.hRenyi α p
 
 noncomputable def hInv (α : ℝ) : ℝ → ℝ :=
   Function.invFunOn (h α) (Icc 0 (1 / 2))
 
 noncomputable def star (a b : ℝ) : ℝ :=
-  D5.S3.Quantum.Information.RenyiInformationCombiningOrderThree.bconv a b
+  D5.S3.Entropy.RenyiCombining.BinaryRenyiCombining.bconv a b
 
 private lemma h_eq (α : ℝ) : h α = fun p =>
     if α = 1 then Real.binEntropy p else Real.log (p ^ α + (1 - p) ^ α) / (1 - α) := by
   funext p
-  simp only [h, D5.S3.Quantum.Information.RenyiInformationCombiningOrderThree.hRenyi,
+  simp only [h, D5.S3.Entropy.RenyiCombining.BinaryRenyiCombining.hRenyi,
     div_eq_inv_mul, mul_one]
 
 noncomputable def G (α x y : ℝ) : ℝ := h α (star (hInv α x) (hInv α y))
@@ -513,7 +513,7 @@ private lemma bias_combining (α x y : ℝ) :
   unfold G psi inverseBias
   unfold star
   congr 1
-  have hb := D5.S3.Quantum.Information.RenyiInformationCombiningOrderThree.bconv_bias
+  have hb := D5.S3.Entropy.RenyiCombining.BinaryRenyiCombining.bconv_bias
     (hInv α x) (hInv α y)
   nlinarith [hb]
 
