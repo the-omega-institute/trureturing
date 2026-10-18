@@ -35,7 +35,10 @@ def fullLaw (r : Realization signature) : Prop :=
     (∃ s ∈ Icc (0 : ℝ) 1, s^3 = 1-3*X ∧
       s^3/45*(1-s)*(1+s+7*s^2-3*s^3-3*s^4) ≤ D+X/15 ∧
       0 ≤ s^3/45*(1-s)*(1+s+7*s^2-3*s^3-3*s^4)) ∧
-    (0 < X → X < 1/3 → -X/15 < D)
+    (0 < X → X < 1/3 → -X/15 < D) ∧
+    (∀ c : ℝ, 3*X+(μ.real {c})^3 ≤ 1 ∧
+      (μ.real {c})^3/45 ≤ D+1/45 ∧
+      (0 < μ.real {c} → -1/45 < D))
 
 abbrev arena : Arena where
   signature := signature

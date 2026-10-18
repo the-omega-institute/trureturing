@@ -175,10 +175,11 @@ private theorem finite_integral {A : Type*} [Fintype A] [LinearOrder A]
 
 private theorem quantized_is_finite (μ : Measure ℝ) [IsProbabilityMeasure μ] (n : ℕ) :
     ∃ p : Fin (n+1) → ℝ, (∀ a, 0 ≤ p a) ∧ (∑ a, p a = 1) ∧
-      ∀ s, quantizedMass μ n s = modeLaw p s := by
+      (∀ s, quantizedMass μ n s = modeLaw p s) ∧
+      ∀ c : ℝ, μ.real {c} ≤ p (quantize n c) := by
   let ν := μ.map (quantize n)
   have hν : IsProbabilityMeasure ν := by dsimp [ν]; infer_instance
-  refine ⟨fun a => ν.real {a},fun _ => measureReal_nonneg,?_,?_⟩
+  refine ⟨fun a => ν.real {a},fun _ => measureReal_nonneg,?_,?_,?_⟩
   · have ht := integral_fintype (μ := ν) (integrable_const (1 : ℝ))
     simpa using ht.symm
   · intro s
@@ -193,6 +194,15 @@ private theorem quantized_is_finite (μ : Measure ℝ) [IsProbabilityMeasure μ]
     have ht := integral_map (μ := source μ) hmeas.aemeasurable hm.aestronglyMeasurable
     rw [hmap,finite_integral] at ht
     exact ht.symm
+  · intro c
+    have hsub : {c} ⊆ (quantize n) ⁻¹' {quantize n c} := by
+      intro x hx
+      have he : x = c := mem_singleton_iff.mp hx
+      subst x
+      exact rfl
+    have hm := measureReal_mono (μ := μ) hsub
+    simpa only [ν,measureReal_def,Measure.map_apply (measurable_quantize n)
+      (measurableSet_singleton (quantize n c))] using hm
 
 private theorem quantized_facts (μ : Measure ℝ) [IsProbabilityMeasure μ] (n : ℕ) :
     (∀ s, 0 ≤ quantizedMass μ n s) ∧ (∑ s, quantizedMass μ n s) = 1 ∧
@@ -202,11 +212,106 @@ private theorem quantized_facts (μ : Measure ℝ) [IsProbabilityMeasure μ] (n 
     quantizedMass μ n 1+quantizedMass μ n 3 ≤ 1/3 ∧
     -(quantizedMass μ n 1+quantizedMass μ n 3)/15 ≤
       quantizedMass μ n 0*quantizedMass μ n 3-quantizedMass μ n 1*quantizedMass μ n 2 := by
-  obtain ⟨p,hp,hs,he⟩ := quantized_is_finite μ n
+  obtain ⟨p,hp,hs,he,_⟩ := quantized_is_finite μ n
   simp_rw [he]
   obtain ⟨_,hn,hm,hx,hy,hz,_,_,_⟩ := iid_peak_source p hp hs
   have hb := finite_iid_lower_surface p hp hs
   exact ⟨hn,hm,hy.trans hx.symm,hz.trans hx.symm,hb.1,hb.2.1.le,hb.2.2.2.2.1⟩
+
+private theorem finite_atom_deficit {A : Type*} [Fintype A] [LinearOrder A]
+    (p : A → ℝ) (hp : ∀ a, 0 ≤ p a) (hs : ∑ a, p a = 1) (d : A) :
+    3*(∑ b, p b*lowerMass p b^2)+(p d)^3 ≤ 1 := by
+  let w := fun a b c => p a*p b*p c
+  let T := fun (f : A → A → A → ℝ) => ∑ a, ∑ b, ∑ c, f a b c
+  have hpoint (a b c : A) :
+      (if peak a b c then w a b c else 0)+
+      (if peak b a c then w a b c else 0)+
+      (if peak a c b then w a b c else 0)+
+      (if a=d ∧ b=d ∧ c=d then w a b c else 0) ≤ w a b c := by
+    have hw : 0 ≤ w a b c := mul_nonneg (mul_nonneg (hp a) (hp b)) (hp c)
+    by_cases hd : a=d ∧ b=d ∧ c=d
+    · obtain ⟨rfl,rfl,rfl⟩ := hd
+      simp [peak]
+    · rw [if_neg hd,add_zero]
+      by_cases h1 : peak a b c
+      · have h2 : ¬ peak b a c := fun h => lt_asymm h1.1 h.1
+        have h3 : ¬ peak a c b := fun h => lt_asymm h1.2 h.2
+        simp [h1,h2,h3]
+      · by_cases h2 : peak b a c
+        · have h3 : ¬ peak a c b := fun h => lt_asymm h2.2 h.1
+          simp [h1,h2,h3]
+        · by_cases h3 : peak a c b <;> simp [h1,h2,h3,hw]
+  have hm : T (fun a b c => if peak a b c then w a b c else 0) =
+      ∑ b, p b*lowerMass p b^2 := by
+    dsimp [T,w]
+    rw [Finset.sum_comm]
+    apply Finset.sum_congr rfl
+    intro b _
+    simp only [peak,lowerMass,pow_two,Finset.mul_sum,Finset.sum_mul]
+    apply Finset.sum_congr rfl
+    intro a _
+    apply Finset.sum_congr rfl
+    intro c _
+    by_cases ha : a<b <;> by_cases hc : c<b <;> simp [ha,hc] <;> ring
+  have hm2 : T (fun a b c => if peak b a c then w a b c else 0) =
+      ∑ b, p b*lowerMass p b^2 := by
+    rw [← hm]
+    dsimp [T,w]
+    rw [Finset.sum_comm]
+    congr 1
+    funext a
+    congr 1
+    funext b
+    apply Finset.sum_congr rfl
+    intro c _
+    split_ifs <;> ring
+  have hm3 : T (fun a b c => if peak a c b then w a b c else 0) =
+      ∑ b, p b*lowerMass p b^2 := by
+    rw [← hm]
+    dsimp [T,w]
+    apply Finset.sum_congr rfl
+    intro a _
+    rw [Finset.sum_comm]
+    apply Finset.sum_congr rfl
+    intro b _
+    apply Finset.sum_congr rfl
+    intro c _
+    split_ifs <;> ring
+  have hd : T (fun a b c => if a=d ∧ b=d ∧ c=d then w a b c else 0) = (p d)^3 := by
+    dsimp [T,w]
+    simp only [ite_and]
+    simp
+    ring
+  have ht : T w = 1 := by
+    dsimp [T,w]
+    simp [← Finset.mul_sum,hs]
+  have hle : T (fun a b c =>
+      (if peak a b c then w a b c else 0)+(if peak b a c then w a b c else 0)+
+      (if peak a c b then w a b c else 0)+
+      (if a=d ∧ b=d ∧ c=d then w a b c else 0)) ≤ T w := by
+    exact Finset.sum_le_sum fun a _ => Finset.sum_le_sum fun b _ =>
+      Finset.sum_le_sum fun c _ => hpoint a b c
+  change _ ≤ _ at hle
+  simp only [T,Finset.sum_add_distrib] at hle
+  change T _+T _+T _+T _ ≤ T w at hle
+  rw [hm,hm2,hm3,hd,ht] at hle
+  linarith
+
+private theorem quantized_atom_deficit (μ : Measure ℝ) [IsProbabilityMeasure μ]
+    (n : ℕ) (c : ℝ) :
+    3*(quantizedMass μ n 1+quantizedMass μ n 3)+(μ.real {c})^3 ≤ 1 := by
+  obtain ⟨p,hp,hs,he,hmono⟩ := quantized_is_finite μ n
+  rw [he 1,he 3,(iid_peak_source p hp hs).2.2.2.1]
+  have hm := finite_atom_deficit p hp hs (quantize n c)
+  have hp3 : (μ.real {c})^3 ≤ (p (quantize n c))^3 :=
+    pow_le_pow_left₀ measureReal_nonneg (hmono c) 3
+  linarith
+
+private theorem borel_atom_deficit (μ : Measure ℝ) [IsProbabilityMeasure μ] (c : ℝ) :
+    3*(modeMass μ 1+modeMass μ 3)+(μ.real {c})^3 ≤ 1 := by
+  exact le_of_tendsto
+    ((((quantized_tendsto μ 1).add (quantized_tendsto μ 3)).const_mul 3).add_const _)
+    (Eventually.of_forall fun n => quantized_atom_deficit μ n c)
 
 private theorem quantized_correction (μ : Measure ℝ) [IsProbabilityMeasure μ] (n : ℕ) :
     ∃ s ∈ Icc (0 : ℝ) 1, s^3 = 1-3*(quantizedMass μ n 1+quantizedMass μ n 3) ∧
@@ -214,7 +319,7 @@ private theorem quantized_correction (μ : Measure ℝ) [IsProbabilityMeasure μ
         quantizedMass μ n 0*quantizedMass μ n 3-quantizedMass μ n 1*quantizedMass μ n 2+
           (quantizedMass μ n 1+quantizedMass μ n 3)/15 ∧
       0 ≤ s^3/45*(1-s)*(1+s+7*s^2-3*s^3-3*s^4) := by
-  obtain ⟨p,hp,hs,he⟩ := quantized_is_finite μ n
+  obtain ⟨p,hp,hs,he,_⟩ := quantized_is_finite μ n
   simp_rw [he]
   exact (finite_iid_lower_surface p hp hs).2.2.2.1
 
@@ -266,7 +371,10 @@ theorem borel_iid_lower_surface (μ : Measure ℝ) [IsProbabilityMeasure μ] :
     (∃ s ∈ Icc (0 : ℝ) 1, s^3 = 1-3*X ∧
       s^3/45*(1-s)*(1+s+7*s^2-3*s^3-3*s^4) ≤ D+X/15 ∧
       0 ≤ s^3/45*(1-s)*(1+s+7*s^2-3*s^3-3*s^4)) ∧
-    (0 < X → X < 1/3 → -X/15 < D) := by
+    (0 < X → X < 1/3 → -X/15 < D) ∧
+    (∀ c : ℝ, 3*X+(μ.real {c})^3 ≤ 1 ∧
+      (μ.real {c})^3/45 ≤ D+1/45 ∧
+      (0 < μ.real {c} → -1/45 < D)) := by
   dsimp only
   have ht := quantized_tendsto μ
   have hx := (ht 1).add (ht 3)
@@ -300,28 +408,34 @@ theorem borel_iid_lower_surface (μ : Measure ℝ) [IsProbabilityMeasure μ] :
     exact le_of_tendsto_of_tendsto (hx.neg.div_const 15) hd
       (Eventually.of_forall fun n => (quantized_facts μ n).2.2.2.2.2.2)
   have hcor := borel_correction μ
-  refine ⟨ht,hn,hm,hy,hz,hx0,hx1,hl,by linarith,hcor,?_⟩
-  intro hXpos hXlt
-  obtain ⟨s,hs,hs3,hcorr,_⟩ := hcor
-  have hs0 : 0 < s := by
-    by_contra h
-    have he : s = 0 := le_antisymm (not_lt.mp h) hs.1
-    rw [he] at hs3
-    norm_num at hs3
+  refine ⟨ht,hn,hm,hy,hz,hx0,hx1,hl,by linarith,hcor,?_,?_⟩
+  · intro hXpos hXlt
+    obtain ⟨s,hs,hs3,hcorr,_⟩ := hcor
+    have hs0 : 0 < s := by
+      by_contra h
+      have he : s = 0 := le_antisymm (not_lt.mp h) hs.1
+      rw [he] at hs3
+      norm_num at hs3
+      linarith
+    have hs1 : s < 1 := by
+      by_contra h
+      have he : s = 1 := le_antisymm hs.2 (not_lt.mp h)
+      rw [he] at hs3
+      norm_num at hs3
+      linarith
+    have hs2 : s^2 ≤ 1 := by nlinarith [sq_nonneg (1-s)]
+    have h3 : s^3 ≤ s^2 := by nlinarith [mul_nonneg (sq_nonneg s) (sub_nonneg.mpr hs.2)]
+    have h4 : s^4 ≤ s^2 := by nlinarith [mul_nonneg (sq_nonneg s) (sub_nonneg.mpr hs2)]
+    have hpoly : 0 < 1+s+7*s^2-3*s^3-3*s^4 := by nlinarith [sq_nonneg s,hs.1]
+    have hpos := mul_pos (mul_pos (div_pos (pow_pos hs0 3) (by norm_num : (0 : ℝ) < 45))
+      (sub_pos.mpr hs1)) hpoly
     linarith
-  have hs1 : s < 1 := by
-    by_contra h
-    have he : s = 1 := le_antisymm hs.2 (not_lt.mp h)
-    rw [he] at hs3
-    norm_num at hs3
+  · intro c
+    have hdef := borel_atom_deficit μ c
+    refine ⟨hdef,by linarith,?_⟩
+    intro hc
+    have hp3 : 0 < (μ.real {c})^3 := pow_pos hc 3
     linarith
-  have hs2 : s^2 ≤ 1 := by nlinarith [sq_nonneg (1-s)]
-  have h3 : s^3 ≤ s^2 := by nlinarith [mul_nonneg (sq_nonneg s) (sub_nonneg.mpr hs.2)]
-  have h4 : s^4 ≤ s^2 := by nlinarith [mul_nonneg (sq_nonneg s) (sub_nonneg.mpr hs2)]
-  have hpoly : 0 < 1+s+7*s^2-3*s^3-3*s^4 := by nlinarith [sq_nonneg s,hs.1]
-  have hpos := mul_pos (mul_pos (div_pos (pow_pos hs0 3) (by norm_num : (0 : ℝ) < 45))
-    (sub_pos.mpr hs1)) hpoly
-  linarith
 
 #print axioms borel_iid_lower_surface
 
