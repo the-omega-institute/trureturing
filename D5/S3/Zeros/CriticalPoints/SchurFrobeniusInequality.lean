@@ -14,6 +14,9 @@ import Mathlib.Analysis.Normed.Module.Normalize
 import Mathlib.LinearAlgebra.Eigenspace.Triangularizable
 import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
 import Mathlib.LinearAlgebra.Matrix.Trace
+import Mathlib.LinearAlgebra.Matrix.IsDiag
+import Mathlib.Data.Matrix.Block
+import Mathlib.Algebra.Star.UnitaryStarAlgAut
 import Mathlib.Tactic.Linarith
 
 /-! Unitary reduction and the sum of squared moduli of the characteristic roots. -/
@@ -37,52 +40,38 @@ private theorem first_column {n : ℕ} (A : Matrix (Fin (n + 1)) (Fin (n + 1)) �
   have hfu : f u = μ • u := by
     dsimp [u, NormedSpace.normalize]
     rw [LinearMap.map_smul_of_tower, hv.apply_eq_smul, smul_comm]
-  have hon : Orthonormal ℂ (({0} : Set (Fin (n + 1))).domRestrict (fun _ => u)) := by
-    rw [orthonormal_subsingleton_iff]
-    intro i
-    exact hu
-  obtain ⟨b, hb⟩ := hon.exists_orthonormalBasis_extension_of_card_eq
-    (by simp : Module.finrank ℂ (EuclideanSpace ℂ (Fin (n + 1))) =
-      Fintype.card (Fin (n + 1)))
-  have hb0 : b 0 = u := hb 0 (by simp)
-  let e := EuclideanSpace.basisFun (Fin (n + 1)) ℂ
-  let U := e.toBasis.toMatrix b
-  have hU : Uᴴ * U = 1 := e.toMatrix_orthonormalBasis_conjTranspose_mul_self b
-  refine ⟨U, hU, e.toMatrix_orthonormalBasis_self_mul_conjTranspose b, ?_⟩
+  obtain ⟨uU, huU⟩ :=
+    D5.S3.Quantum.Matrix.CommutatorGap.exists_unitary_first_column u hu
+  let U : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ := uU
+  obtain ⟨hU, hU'⟩ := Unitary.mem_iff.mp uU.prop
+  refine ⟨U, hU, hU', ?_⟩
   have hcol : ∀ i, (A * U) i 0 = μ * U i 0 := by
     have hf := congrArg (fun x : EuclideanSpace ℂ (Fin (n + 1)) => x.ofLp) hfu
-    simpa [f, Matrix.toEuclideanLin, Matrix.toLpLin_apply, U, e, Module.Basis.toMatrix_apply,
-      OrthonormalBasis.coe_toBasis_repr_apply, EuclideanSpace.basisFun_repr, hb0,
-      Matrix.mul_apply, Matrix.mulVec, dotProduct] using
-      congrFun hf
+    simpa [f, Matrix.toEuclideanLin, Matrix.toLpLin_apply, Matrix.mul_apply,
+      Matrix.mulVec, dotProduct, U, huU] using congrFun hf
   intro i
   rw [Matrix.mul_assoc, Matrix.mul_apply]
   simp_rw [hcol, ← mul_assoc, mul_comm _ μ, mul_assoc, ← Finset.mul_sum]
   have hi := congrArg (fun M : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ => M i.succ 0) hU
   simpa [Matrix.mul_apply] using congrArg (μ * ·) hi
 
+private def liftIndex (n : ℕ) : Fin (n + 1) ≃ PUnit.{1} ⊕ Fin n :=
+  (finSuccEquiv n).trans ((Equiv.optionEquivSumPUnit (Fin n)).trans (Equiv.sumComm _ _))
+
 private def lift {n : ℕ} (V : Matrix (Fin n) (Fin n) ℂ) :
-    Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ := fun i j =>
-  Fin.cases (Fin.cases 1 (fun _ => 0) j)
-    (fun i => Fin.cases 0 (fun j => V i j) j) i
+    Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ :=
+  (Matrix.fromBlocks (1 : Matrix PUnit.{1} PUnit.{1} ℂ) 0 0 V).submatrix (liftIndex n) (liftIndex n)
 
 private theorem lift_mul {n : ℕ} (V W : Matrix (Fin n) (Fin n) ℂ) :
     lift V * lift W = lift (V * W) := by
-  ext i j
-  refine Fin.cases ?_ (fun i => ?_) i <;>
-    refine Fin.cases ?_ (fun j => ?_) j <;>
-    simp [lift, Matrix.mul_apply, Fin.sum_univ_succ]
+  simp [lift, Matrix.submatrix_mul_equiv, Matrix.fromBlocks_multiply]
 
 private theorem lift_one (n : ℕ) : lift (1 : Matrix (Fin n) (Fin n) ℂ) = 1 := by
-  ext i j
-  refine Fin.cases ?_ (fun i => ?_) i <;>
-    refine Fin.cases ?_ (fun j => ?_) j <;> simp [lift, Matrix.one_apply, eq_comm]
+  rw [lift, Matrix.fromBlocks_one, Matrix.submatrix_one_equiv]
 
 private theorem lift_conjTranspose {n : ℕ} (V : Matrix (Fin n) (Fin n) ℂ) :
     (lift V)ᴴ = lift Vᴴ := by
-  ext i j
-  refine Fin.cases ?_ (fun i => ?_) i <;>
-    refine Fin.cases ?_ (fun j => ?_) j <;> simp [lift, Matrix.conjTranspose_apply]
+  simp [lift, Matrix.conjTranspose_submatrix, Matrix.fromBlocks_conjTranspose]
 
 private theorem lift_triangular {n : ℕ}
     (C : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ)
@@ -96,9 +85,9 @@ private theorem lift_triangular {n : ℕ}
     exact (Fin.not_lt_zero j h).elim
   · refine Fin.cases ?_ (fun j => ?_) j
     · intro _
-      simp [Matrix.mul_apply, Fin.sum_univ_succ, lift, hc]
+      simp [Matrix.mul_apply, Fin.sum_univ_succ, lift, liftIndex, hc]
     · intro h
-      simpa [Matrix.mul_apply, Fin.sum_univ_succ, lift, Matrix.submatrix_apply] using
+      simpa [Matrix.mul_apply, Fin.sum_univ_succ, lift, liftIndex, Matrix.submatrix_apply] using
         ht (Fin.succ_lt_succ_iff.mp h)
 
 private theorem triangularize (n : ℕ) (A : Matrix (Fin n) (Fin n) ℂ) :
@@ -113,21 +102,17 @@ private theorem triangularize (n : ℕ) (A : Matrix (Fin n) (Fin n) ℂ) :
     obtain ⟨U, hU, hU', hc⟩ := first_column A
     let C := Uᴴ * A * U
     obtain ⟨V, hV, hV', ht⟩ := ih (C.submatrix Fin.succ Fin.succ)
-    have hL : (lift V)ᴴ * lift V = 1 := by
-      rw [lift_conjTranspose, lift_mul, hV, lift_one]
-    have hL' : lift V * (lift V)ᴴ = 1 := by
-      rw [lift_conjTranspose, lift_mul, hV', lift_one]
-    refine ⟨U * lift V, ?_, ?_, ?_⟩
-    · calc
-        (U * lift V)ᴴ * (U * lift V) = (lift V)ᴴ * (Uᴴ * U) * lift V := by
-          simp only [Matrix.conjTranspose_mul, Matrix.mul_assoc]
-        _ = 1 := by rw [hU, Matrix.mul_one, hL]
-    · calc
-        (U * lift V) * (U * lift V)ᴴ = U * (lift V * (lift V)ᴴ) * Uᴴ := by
-          simp only [Matrix.conjTranspose_mul, Matrix.mul_assoc]
-        _ = 1 := by rw [hL', Matrix.mul_one, hU']
-    · have hh := lift_triangular C hc V ht
-      simpa only [C, Matrix.conjTranspose_mul, lift_conjTranspose, Matrix.mul_assoc] using hh
+    have hL : lift V ∈ Matrix.unitaryGroup (Fin (n + 1)) ℂ :=
+      Unitary.mem_iff.mpr ⟨by
+        change (lift V)ᴴ * lift V = 1
+        rw [lift_conjTranspose, lift_mul, hV, lift_one], by
+        change lift V * (lift V)ᴴ = 1
+        rw [lift_conjTranspose, lift_mul, hV', lift_one]⟩
+    have hprod := Unitary.mem_iff.mp
+      (mul_mem (Unitary.mem_iff.mpr ⟨hU, hU'⟩) hL)
+    refine ⟨U * lift V, hprod.1, hprod.2, ?_⟩
+    have hh := lift_triangular C hc V ht
+    simpa only [C, Matrix.conjTranspose_mul, lift_conjTranspose, Matrix.mul_assoc] using hh
 
 private theorem frobenius_conjugate {n : ℕ} (A U : Matrix (Fin n) (Fin n) ℂ)
     (hu : Uᴴ * U = 1) (hu' : U * Uᴴ = 1) :
@@ -146,18 +131,13 @@ private theorem normal_conjugate {n : ℕ} (A U : Matrix (Fin n) (Fin n) ℂ)
     (hu : Uᴴ * U = 1) (hu' : U * Uᴴ = 1) :
     (Uᴴ * A * U) * (Uᴴ * A * U)ᴴ = (Uᴴ * A * U)ᴴ * (Uᴴ * A * U) ↔
       A * Aᴴ = Aᴴ * A := by
-  have he (B C : Matrix (Fin n) (Fin n) ℂ) :
-      (Uᴴ * B * U) * (Uᴴ * C * U) = Uᴴ * (B * C) * U := by
-    simp only [Matrix.mul_assoc]
-    rw [← Matrix.mul_assoc U Uᴴ, hu', Matrix.one_mul]
-  have hs : (Uᴴ * A * U)ᴴ = Uᴴ * Aᴴ * U := by
-    simp only [Matrix.conjTranspose_mul, Matrix.conjTranspose_conjTranspose, Matrix.mul_assoc]
-  rw [hs, he, he]
-  constructor
-  · intro h
-    exact (Matrix.mul_right_injective_of_inv U Uᴴ hu')
-      ((Matrix.mul_left_injective_of_inv U Uᴴ hu') h)
-  · exact congrArg (fun M => Uᴴ * M * U)
+  let u : Matrix.unitaryGroup (Fin n) ℂ := ⟨U, Unitary.mem_iff.mpr ⟨hu, hu'⟩⟩
+  let e := Unitary.conjStarAlgAut ℂ _ (star u)
+  simpa only [map_mul, map_star, e, Unitary.conjStarAlgAut_star_apply,
+    Unitary.coe_star, Matrix.star_eq_conjTranspose, Matrix.conjTranspose_mul,
+    Matrix.conjTranspose_conjTranspose, Matrix.mul_assoc] using
+    (show e (A * star A) = e (star A * A) ↔ A * star A = star A * A from
+      e.injective.eq_iff)
 
 private theorem triangular_roots {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ)
     (ht : A.IsUpperTriangular) :
@@ -188,7 +168,7 @@ private theorem normal_triangular_diagonal (n : ℕ) (T : Matrix (Fin n) (Fin n)
         (fun (i : Fin n) _ => sq_nonneg ‖T 0 i.succ‖)).mp hsum j (Finset.mem_univ j)
       exact norm_eq_zero.mp (sq_eq_zero_iff.mp hh)
     have ht' : (T.submatrix Fin.succ Fin.succ).IsUpperTriangular :=
-      fun _ _ h => ht (Fin.succ_lt_succ_iff.mpr h)
+      fun _ _ h => ht.submatrix (Fin.succ_lt_succ_iff.mpr h)
     have hn' : (T.submatrix Fin.succ Fin.succ) * (T.submatrix Fin.succ Fin.succ)ᴴ =
         (T.submatrix Fin.succ Fin.succ)ᴴ * (T.submatrix Fin.succ Fin.succ) := by
       ext i j
@@ -217,10 +197,10 @@ private theorem diagonal_sum (n : ℕ) (A : Matrix (Fin n) (Fin n) ℂ) :
     intro i _
     exact Finset.add_sum_erase (Finset.univ : Finset (Fin n))
       (fun j => ‖A i j‖ ^ 2) (Finset.mem_univ i)
-  refine ⟨by linarith, ?_⟩
+  refine ⟨by rw [← hsplit]; exact le_add_of_nonneg_right he, ?_⟩
   constructor
   · intro h i j hij
-    have he0 : e = 0 := by linarith
+    have he0 : e = 0 := add_eq_left.mp (hsplit.trans h.symm)
     have hi := (Finset.sum_eq_zero_iff_of_nonneg
       (fun i _ => Finset.sum_nonneg fun j _ => sq_nonneg ‖A i j‖)).mp he0 i
       (Finset.mem_univ i)
@@ -234,7 +214,7 @@ private theorem diagonal_sum (n : ℕ) (A : Matrix (Fin n) (Fin n) ℂ) :
       apply Finset.sum_eq_zero
       intro j hj
       simp [h i j (Ne.symm (Finset.ne_of_mem_erase hj))]
-    linarith
+    simpa only [he0, add_zero] using hsplit
 
 /-- Schur–Frobenius inequality; equality characterizes normal complex matrices. -/
 theorem schur_frobenius (n : ℕ) (A : Matrix (Fin n) (Fin n) ℂ) :
@@ -260,16 +240,11 @@ theorem schur_frobenius (n : ℕ) (A : Matrix (Fin n) (Fin n) ℂ) :
     constructor
     · intro h
       have hT : T = Matrix.diagonal (fun i => T i i) := by
-        ext i j
-        by_cases hij : i = j
-        · subst j; simp
-        · simp [Matrix.diagonal_apply, hij, h i j hij]
+        exact (Matrix.IsDiag.diagonal_diag h).symm
       change T * Tᴴ = Tᴴ * T
       rw [hT]
-      simp only [Matrix.diagonal_conjTranspose, Matrix.diagonal_mul_diagonal]
-      congr 1
-      funext i
-      exact mul_comm _ _
+      rw [Matrix.diagonal_conjTranspose]
+      exact (Matrix.commute_diagonal _ _).eq
     · exact normal_triangular_diagonal n T ht
 
 end D5.S3.Zeros.CriticalPoints.SchurFrobeniusInequality

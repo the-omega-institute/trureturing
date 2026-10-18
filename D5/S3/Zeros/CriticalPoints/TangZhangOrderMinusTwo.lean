@@ -14,7 +14,6 @@ import Mathlib.LinearAlgebra.Matrix.SchurComplement
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
-import Mathlib.Tactic.Abel
 import Mathlib.Tactic.LinearCombination
 
 /-! Polynomial, matrix and collinearity identities for the inverse-square conjecture. -/
@@ -41,12 +40,19 @@ def claim : Prop := ∀ (n : ℕ) (hn : 1 ≤ n) (z : Fin n → ℂ), (∀ j, z 
 private def J (n : ℕ) : Matrix (Fin n) (Fin n) ℂ := fun _ _ => 1
 
 private theorem J_sq (n : ℕ) : J n * J n = (n : ℂ) • J n := by
-  ext i j
-  simp [J, Matrix.mul_apply]
+  rw [show J n = Matrix.vecMulVec (1 : Fin n → ℂ) (1 : Fin n → ℂ) by
+    ext i j
+    simp [J, Matrix.vecMulVec]]
+  rw [Matrix.vecMulVec_mul_vecMulVec, Matrix.vecMulVec_smul]
+  congr 1
+  simp [dotProduct]
 
 private theorem J_conjTranspose (n : ℕ) : (J n)ᴴ = J n := by
-  ext i j
-  simp [J, Matrix.conjTranspose_apply]
+  rw [show J n = Matrix.vecMulVec (1 : Fin n → ℂ) (1 : Fin n → ℂ) by
+    ext i j
+    simp [J, Matrix.vecMulVec]]
+  rw [Matrix.conjTranspose_vecMulVec]
+  simp
 
 private theorem square_root_matrix (n : ℕ) (c : ℂ) (hc : 2 * c + (n : ℂ) * c ^ 2 = 1) :
     (1 + c • J n) * (1 + c • J n) = 1 + J n := by
@@ -59,7 +65,7 @@ private theorem square_root_matrix (n : ℕ) (c : ℂ) (hc : 2 * c + (n : ℂ) *
     linear_combination hc
   calc
     1 + c • J n + (c • J n + (c * c * n) • J n) =
-        1 + (c • J n + (c • J n + (c * c * n) • J n)) := by abel
+        1 + (c • J n + (c • J n + (c * c * n) • J n)) := add_assoc _ _ _
     _ = 1 + J n := by rw [he]
 
 private theorem inverse_matrix (n : ℕ) (c d : ℂ) (hcd : c + d + (n : ℂ) * c * d = 0) :
@@ -73,7 +79,7 @@ private theorem inverse_matrix (n : ℕ) (c d : ℂ) (hcd : c + d + (n : ℂ) * 
     linear_combination hcd
   calc
     1 + d • J n + (c • J n + (c * d * n) • J n) =
-        1 + (d • J n + (c • J n + (c * d * n) • J n)) := by abel
+        1 + (d • J n + (c • J n + (c * d * n) • J n)) := add_assoc _ _ _
     _ = 1 := by rw [he, add_zero]
 
 private theorem real_line_iff {n : ℕ} (v : Fin n → ℂ) (i₀ : Fin n) (hv : v i₀ ≠ 0) :
@@ -111,10 +117,8 @@ private theorem core_normal_iff (n : ℕ) (b : Fin n → ℂ) :
   have hd : (diagonal b)ᴴ = diagonal (fun i => conj (b i)) := by
     simp [Matrix.diagonal_conjTranspose, Complex.star_def]
   have hcomm : (diagonal b)ᴴ * diagonal b = diagonal b * (diagonal b)ᴴ := by
-    rw [hd, Matrix.diagonal_mul_diagonal, Matrix.diagonal_mul_diagonal]
-    congr 1
-    funext i
-    exact mul_comm _ _
+    rw [hd]
+    exact (Matrix.commute_diagonal _ _).eq
   simp only [mul_add, add_mul, Matrix.mul_one, hcomm, add_left_cancel_iff]
   rw [hd]
   constructor
@@ -134,14 +138,16 @@ private theorem core_trace (n : ℕ) (b : Fin n → ℂ) :
     simp [← Complex.normSq_eq_conj_mul_self, Complex.normSq_eq_norm_sq, Complex.ofReal_sum]
   have hnorm' : (∑ j, conj (b j)) * (∑ j, b j) = ((‖∑ j, b j‖ ^ 2 : ℝ) : ℂ) := by
     rw [← map_sum, ← Complex.normSq_eq_conj_mul_self, Complex.normSq_eq_norm_sq]
+  rw [show J n = Matrix.vecMulVec (1 : Fin n → ℂ) (1 : Fin n → ℂ) by
+    ext i j
+    simp [J, Matrix.vecMulVec]]
   simp only [mul_add, add_mul, Matrix.mul_one, Matrix.one_mul, Matrix.trace_add, hd]
-  simp only [Matrix.diagonal_mul_diagonal]
-  simp only [Matrix.trace, Matrix.diag_apply, Matrix.diagonal_apply_eq, Matrix.diagonal_mul,
-    Matrix.mul_diagonal, Matrix.of_apply, J, mul_one, one_mul, Matrix.mul_apply]
-  simp only [Matrix.diagonal_apply, mul_ite, ite_mul, mul_zero, zero_mul,
-    Finset.sum_ite_eq, Finset.sum_ite_eq', Finset.mem_univ, ite_true]
-  simp_rw [← Finset.mul_sum, ← Finset.sum_mul]
-  rw [hnorm, hnorm']
+  simp only [Matrix.diagonal_mul_diagonal, Matrix.mul_vecMulVec, Matrix.vecMulVec_mul,
+    Matrix.trace_diagonal, Matrix.trace_vecMulVec]
+  simp only [Matrix.vecMulVec_mulVec, Pi.smul_apply, MulOpposite.smul_eq_mul_unop,
+    MulOpposite.unop_op, dotProduct, Matrix.mulVec_diagonal, Matrix.vecMul_diagonal,
+    Pi.one_apply, mul_one, one_mul, Pi.mul_apply, Finset.sum_mul]
+  rw [← Finset.sum_mul, hnorm, hnorm']
   push_cast
   ring
 
@@ -167,20 +173,18 @@ private theorem eval_charpoly_B {n : ℕ} (b : Fin n → ℂ) (t : ℂ)
   rw [Matrix.eval_charpoly, hm,
     Matrix.det_add_replicateCol_mul_replicateRow hdet, Matrix.det_diagonal]
   have hinv : (diagonal a)⁻¹ = diagonal (fun i => (a i)⁻¹) := by
-    apply Matrix.inv_eq_left_inv
-    rw [Matrix.diagonal_mul_diagonal]
-    ext i j
-    by_cases hij : i = j
-    · subst j
-      simp [ha]
-    · simp [Matrix.diagonal_apply, hij]
+    rw [Matrix.inv_diagonal]
+    congr 1
+    have hau : IsUnit a := Pi.isUnit_iff.mpr (fun i => (ha i).isUnit)
+    funext i
+    exact (hau.map_ringInverse (Pi.evalMonoidHom _ i)).trans (Ring.inverse_eq_inv _)
   rw [hinv]
   have hsmall : (1 + Matrix.replicateRow Unit (fun _ : Fin n => (1 : ℂ)) *
       diagonal (fun i => (a i)⁻¹) * Matrix.replicateCol Unit (fun i => -b i)).det =
       1 - ∑ i, b i / a i := by
-    simp [Matrix.det_unique, Matrix.mul_apply, Matrix.diagonal_apply,
-      Matrix.replicateCol, Matrix.replicateRow, div_eq_mul_inv, Finset.sum_neg_distrib,
-      mul_comm, sub_eq_add_neg]
+    rw [← Matrix.replicateRow_vecMul, Matrix.replicateRow_mul_replicateCol]
+    simp [Matrix.det_unique, Matrix.vecMul_diagonal, dotProduct, div_eq_mul_inv,
+      Finset.sum_neg_distrib, mul_comm, sub_eq_add_neg]
   rw [hsmall, mul_sub, mul_one, Finset.mul_sum]
   congr 1
   apply Finset.sum_congr rfl
@@ -196,34 +200,36 @@ private theorem reverse_linear (w : ℂ) :
 
 private theorem roots_reverse (q : ℂ[X]) (hq0 : q.eval 0 ≠ 0) :
     q.reverse.roots = q.roots.map (fun w => w⁻¹) := by
-  have hq : q ≠ 0 := by intro h; simp [h] at hq0
   have hw (w : ℂ) (hw : w ∈ q.roots) : w ≠ 0 := by
     intro h
-    have hh := (Polynomial.mem_roots hq).mp hw
+    have hh := Polynomial.isRoot_of_mem_roots hw
     subst w
     exact hq0 hh
   have hrevprod (s : Multiset ℂ) :
       ((s.map (fun w => X - C w : ℂ → ℂ[X])).prod).reverse =
         (s.map (fun w => (X - C w : ℂ[X]).reverse)).prod := by
-    induction s using Multiset.induction_on with
-    | empty => simp [Polynomial.reverse]
-    | @cons w s ih => simp [Polynomial.reverse_mul_of_domain, ih]
+    let rev : ℂ[X] →* ℂ[X] :=
+      { toFun := Polynomial.reverse
+        map_one' := by simp [Polynomial.reverse]
+        map_mul' := Polynomial.reverse_mul_of_domain }
+    exact (s.prod_hom' rev (fun w => X - C w)).symm
   conv_lhs => rw [(IsAlgClosed.splits q).eq_prod_roots]
   rw [Polynomial.reverse_mul_of_domain, Polynomial.reverse_C, hrevprod,
-    Polynomial.roots_C_mul _ (Polynomial.leadingCoeff_ne_zero.mpr hq)]
+    Polynomial.roots_C_mul _ (Polynomial.leadingCoeff_ne_zero.mpr
+      (by intro h; simp [h] at hq0))]
   have hnonzero : (0 : ℂ[X]) ∉ q.roots.map (fun w => (X - C w : ℂ[X]).reverse) := by
     simp only [Multiset.mem_map, not_exists, not_and]
     intro w _ he
-    have h := congrArg (fun p : ℂ[X] => p.eval 0) he
-    simp [reverse_linear] at h
+    exact (Polynomial.X_sub_C_ne_zero w)
+      (Polynomial.reverse_eq_zero.mp he)
   rw [Polynomial.roots_multiset_prod _ hnonzero, Multiset.bind_map]
   have hl (w : ℂ) (hw' : w ∈ q.roots) :
       (X - C w : ℂ[X]).reverse.roots = {w⁻¹} := by
-    have he : (X - C w : ℂ[X]).reverse = C (-w) * (X - C w⁻¹) := by
-      rw [reverse_linear, mul_sub, ← C_mul]
-      simp [hw w hw', neg_mul, mul_inv_cancel₀] <;> ring
-    rw [he, Polynomial.roots_C_mul _ (neg_ne_zero.mpr (hw w hw')),
-      Polynomial.roots_X_sub_C]
+    rw [reverse_linear]
+    rw [show (1 - C w * X : ℂ[X]) = C (-w) * X + C 1 by simp; ring]
+    simpa using
+      (Polynomial.roots_C_mul_X_add_C_of_IsUnit (1 : ℂ)
+        (Units.mk0 (-w) (neg_ne_zero.mpr (hw w hw'))))
   rw [Multiset.bind_congr hl]
   simp
 
@@ -307,9 +313,10 @@ private theorem reversed_derivative {n : ℕ} (z : Fin n → ℂ) (hz : ∀ j, z
   congr 1
   have hsum (s : Finset (Fin n)) (p : Fin n → ℂ[X]) :
       Polynomial.reflect n (∑ i ∈ s, p i) = ∑ i ∈ s, Polynomial.reflect n (p i) := by
-    induction s using Finset.induction_on with
-    | empty => simp
-    | @insert i s hi ih => simp [Finset.sum_insert hi, Polynomial.reflect_add, ih]
+    exact map_sum (show ℂ[X] →+ ℂ[X] from
+      { toFun := Polynomial.reflect n
+        map_zero' := Polynomial.reflect_zero
+        map_add' := fun f g => Polynomial.reflect_add f g n }) p s
   rw [hsum]
   congr 1
   apply Finset.sum_congr rfl
@@ -367,11 +374,8 @@ private theorem sandwich_reduction {n : ℕ} (b : Fin n → ℂ)
     rw [hm, hm]
     have hcancel (E F : Matrix (Fin n) (Fin n) ℂ) :
         R * E * R = R * F * R ↔ E = F := by
-      constructor
-      · intro h
-        exact (Matrix.mul_right_injective_of_inv S R hSR)
-          ((Matrix.mul_left_injective_of_inv R S hRS) h)
-      · exact congrArg (fun E => R * E * R)
+      have hRu : IsUnit R := ⟨⟨R, S, hRS, hSR⟩, rfl⟩
+      rw [hRu.mul_left_inj, hRu.mul_right_inj]
     rw [hcancel, eq_comm, core_normal_iff]
   have h := SchurFrobeniusInequality.schur_frobenius n A
   rw [hp, hf, hn] at h
@@ -387,7 +391,7 @@ private theorem spectral_inequality (n : ℕ) (b : Fin n → ℂ) :
   have hs : s ^ 2 = (n : ℝ) + 1 := Real.sq_sqrt (by positivity)
   have hspos : 0 < s := Real.sqrt_pos.mpr (by positivity)
   have hs0 : s ≠ 0 := ne_of_gt hspos
-  have hs1 : s + 1 ≠ 0 := by linarith
+  have hs1 : s + 1 ≠ 0 := ne_of_gt (add_pos hspos zero_lt_one)
   let c : ℂ := ((s + 1)⁻¹ : ℝ)
   let d : ℂ := (-(s * (s + 1))⁻¹ : ℝ)
   have hcr : 2 * (s + 1)⁻¹ + (n : ℝ) * ((s + 1)⁻¹) ^ 2 = 1 := by
