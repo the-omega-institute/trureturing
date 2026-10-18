@@ -113,8 +113,9 @@ One valid tripartite density state with strictly positive displayed gap
 refutes the universal assertion. The Bell-pair product state above is the
 specified witness. Failure of any claimed marginal identity, spectral
 invariance, exact integral value or identification with the paper's
-subentropy would invalidate the refutation. The formal proof establishes those identities
-for the stated witness.
+subentropy would invalidate the refutation. Lean establishes the witness
+identities and exact integral values; the identification with the paper's
+continuous extension additionally uses the elementary prose argument below.
 
 ## Evidence
 
@@ -138,8 +139,22 @@ positive pairwise distinct probabilities.
 [`DensityKernel`](../D5/S3/Quantum/Subentropy/DensityKernel.lean) proves the
 uniform kernel domination, absolute integrability on density matrices and
 `continuousOn_matrixSubentropy` on the full positive trace-one domain.
-Together the spectral formula and continuity provide the stated continuous
-extension at repeated and zero spectra.
+The remaining density and uniqueness bridge is an elementary prose proof,
+not a separate compiled theorem. For a probability vector $p$ on a nonempty
+finite index set, choose a strictly positive probability vector $r$ with
+pairwise distinct entries, and put $p^{\varepsilon}=(1-\varepsilon)p+
+\varepsilon r$ for $0<\varepsilon<1$. These vectors have positive entries
+and total mass one. For each pair of distinct indices, the difference
+$p_i^{\varepsilon}-p_j^{\varepsilon}$ is an affine function of
+$\varepsilon$ that is nonzero at $\varepsilon=1$, so it has at most one
+zero. Avoiding the finitely many collision parameters while taking
+$\varepsilon\to0^+$ proves density of positive simple spectra, including
+at repeated and zero entries. Continuity therefore identifies the
+determinant integral with the unique continuous extension of the finite
+formula. For matrices, conjugating these diagonal approximations by the
+same eigenbasis supplies the corresponding density-matrix approximations.
+This prose bridge identifies the compiled integral-defined refutation with
+the paper's subentropy convention.
 
 ## Triage
 
