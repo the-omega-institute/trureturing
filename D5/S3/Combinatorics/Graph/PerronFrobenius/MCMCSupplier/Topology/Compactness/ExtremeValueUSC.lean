@@ -6,7 +6,7 @@
    utility: none
    digest: Selected MCMC finite Perron proof supporting actual weighted graphs. -/
 /- Transplanted from or4nge19/MCMC@b901242fd04b6eff425a177e5c9bc6c56257bc62.
-Copyright and attribution notices below retained; full license: D5/S3/Combinatorics/Graph/PerronFrobenius/MCMCSupplier/LICENSE.
+Copyright and attribution notices below retained; full license: D5/S3/Combinatorics/Graph/PerronFrobenius/MCMCSupplier/Auxiliary.lean.
 Changes: module imports relocated; comment formatting, placement and blank lines adapted for the canonical weighted-graph consumer.
 Matteo Cipollina. Changes: unused declarations and branches removed; retained live proof steps preserved; unused local proof terms removed. -/
 import Mathlib.Algebra.Order.Ring.Star
