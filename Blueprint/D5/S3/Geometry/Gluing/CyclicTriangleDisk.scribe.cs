@@ -86,6 +86,19 @@ internal sealed class CyclicTriangleDiskDocument : IScribeDocumentDefinition
                 "This is the existing radius identity, now public with its statement and proof unchanged. "
                 + "The actual affine-link strict chart consumes it to identify the preimage of the open unit disk with a+b<1. "
                 + "This API exposure is not a new mathematical theorem."),
+            Describe.Lean(DescribeId.Create("cyclic-triangle-positive-circle-angle"),
+                DeclarationHandle.Create(Prefix + "positive_circle_angle"), H("A polar angle in a half-open period"),
+                StatementSource.FromAuthor(F.Disp(All("z", F.Seq(F.Mathbb, F.Grp(F.Id("C"))),
+                    new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create("theta"),
+                        F.Seq(F.Mathbb, F.Grp(F.Id("R"))),
+                        And(In(F.Id("theta"), new Formula.Apply(F.Seq(F.Operatorname, F.Grp(F.Id("Set")), F.Dot,
+                                F.Operatorname, F.Grp(F.Id("Ico"))),
+                            [F.D(0), Multiply(F.D(2), F.Seq(F.Operatorname, F.Grp(F.Id("Real")), F.Dot,
+                                F.Operatorname, F.Grp(F.Id("pi"))))])),
+                            Eq(Call("circleMap", F.D(0), new Formula.Norm(F.Id("z")), F.Id("theta")), F.Id("z"))))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Every complex number has a polar angle in [0, 2π), including zero."))),
+                DescribeRole.Theorem),
             Theorem("radial_eq_iff_related", "Exact fibers of the radial map", Positive(XY(
                 Iff(Eq(Call("radial", F.Id("x")), Call("radial", F.Id("y"))),
                     Call("Related", F.Id("x"), F.Id("y"))))),

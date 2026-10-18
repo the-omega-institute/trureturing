@@ -357,7 +357,7 @@ abbrev Disk := {z : ℂ // ‖z‖ ≤ 1}
 def diskRadial {n : ℕ} [NeZero n] (x : Point n) : Disk :=
   ⟨radial x, by rw [radial_norm]; exact x.2.property.2.2⟩
 
-private theorem positive_circle_angle {z : ℂ} :
+theorem positive_circle_angle {z : ℂ} :
     ∃ θ ∈ Set.Ico (0 : ℝ) (2 * Real.pi), circleMap 0 ‖z‖ θ = z := by
   have hz : z ∈ Metric.sphere (0 : ℂ) |‖z‖| := by simp
   rw [← image_circleMap_Ioc (0 : ℂ) ‖z‖] at hz
