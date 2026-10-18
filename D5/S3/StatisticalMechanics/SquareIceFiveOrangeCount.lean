@@ -863,9 +863,73 @@ private theorem ray4Downset_injective (ℓ : ℕ) (hℓ : 3 ≤ ℓ) :
   apply ray4_injective ℓ hℓ
   exact congrArg (fun J => J.val.val.val) he
 
-private noncomputable def remainingPatternEquiv (ℓ : ℕ) (hℓ : 3 ≤ ℓ) :
+private theorem ray4_geodesic (ℓ : ℕ) (hℓ : 3 ≤ ℓ) (d : Fin 4) (k : ℕ) (hk : k < 5) :
+    ground ℓ (rayPoint ℓ d k) + |(rayPoint ℓ d k).1 - (rayPoint ℓ d 4).1| +
+      |(rayPoint ℓ d k).2 - (rayPoint ℓ d 4).2| = ground ℓ (rayPoint ℓ d 4) := by
+  unfold rayPoint ground
+  fin_cases d <;> norm_num <;> (try split_ifs) <;> simp only [abs_eq_max_neg] <;> omega
+private theorem ray4_exhaustion (ℓ : ℕ) (hℓ : 3 ≤ ℓ) (I : Finset (ℤ × ℤ))
+    (hI : IsDownset ℓ I) (hcard : I.card = 5) (v : ℤ × ℤ) (hv : v ∈ I)
+    (hg : ground ℓ v = 4) : ∃ d : Fin 4, I = ray4 ℓ d := by
+  have hc := (vertex_classification ℓ hℓ I hI hcard v hv).resolve_left (by omega)
+  have hcoord : v = (-4, 0) ∨ v = (0, 4) ∨
+      v = ((ℓ : ℤ) + 3, 1 - (ℓ : ℤ)) ∨ v = ((ℓ : ℤ) - 1, -(ℓ : ℤ) - 3) := by
+    unfold EndVertex at hc
+    unfold ground at hg
+    split_ifs at hg <;> simp only [abs_eq_max_neg, Prod.ext_iff] at hc hg ⊢ <;> omega
+  have htip : ∃ d : Fin 4, v = rayPoint ℓ d 4 := by
+    rcases hcoord with rfl | rfl | rfl | rfl
+    · exact ⟨0, rfl⟩
+    · exact ⟨1, rfl⟩
+    · refine ⟨2, ?_⟩
+      unfold rayPoint
+      norm_num
+      omega
+    · refine ⟨3, ?_⟩
+      unfold rayPoint
+      norm_num
+      omega
+  obtain ⟨d, rfl⟩ := htip
+  have hs : ray4 ℓ d ⊆ I := by
+    intro u hu
+    unfold ray4 at hu
+    obtain ⟨k, hk, rfl⟩ := Finset.mem_image.mp hu
+    exact geodesic_mem ℓ (by omega) I hI _ _
+      (ray4_geodesic ℓ hℓ d k (Finset.mem_range.mp hk)) hv
+  refine ⟨d, (Finset.eq_of_subset_of_card_le hs ?_).symm⟩
+  rw [hcard, ray4_card]
+
+private abbrev RemainingDownsets (ℓ : ℕ) :=
+  {J : FiniteDownsets ℓ // ¬zeroOnly ℓ J ∧ ∀ v ∈ J.val.val, ground ℓ v ≤ 3}
+private noncomputable def remainingEquiv (ℓ : ℕ) (hℓ : 3 ≤ ℓ) :
     {J : {J : FiniteDownsets ℓ // ¬zeroOnly ℓ J} //
-      J ∉ Set.range (ray4Downset ℓ hℓ)} ≃ RemainingPatterns ℓ := by
+      J ∉ Set.range (ray4Downset ℓ hℓ)} ≃ RemainingDownsets ℓ where
+  toFun J := ⟨J.val.val, J.val.property, by
+    intro v hv
+    have hr := rank_bound ℓ (by omega) _ J.val.val.property v hv
+    have hc := (Finset.mem_powersetCard.mp J.val.val.val.property).2
+    by_contra hbad
+    have hg : ground ℓ v = 4 := by omega
+    obtain ⟨d, hd⟩ := ray4_exhaustion ℓ hℓ _ J.val.val.property hc v hv hg
+    apply J.property
+    refine ⟨d, ?_⟩
+    apply Subtype.ext
+    apply Subtype.ext
+    apply Subtype.ext
+    exact hd.symm⟩
+  invFun J := ⟨⟨J.val, J.property.1⟩, by
+    rintro ⟨d, hd⟩
+    have he := congrArg (fun K => K.val.val.val) hd
+    change ray4 ℓ d = J.val.val.val at he
+    have hm := (ray4_tip ℓ hℓ d).1
+    rw [he] at hm
+    have hb := J.property.2 _ hm
+    have ht := (ray4_tip ℓ hℓ d).2
+    omega⟩
+  left_inv J := by apply Subtype.ext; apply Subtype.ext; rfl
+  right_inv J := by apply Subtype.ext; rfl
+private noncomputable def remainingPatternEquiv (ℓ : ℕ) (hℓ : 3 ≤ ℓ) :
+    RemainingDownsets ℓ ≃ RemainingPatterns ℓ := by
   sorry
 
 private noncomputable def nonzeroPatternEquiv (ℓ : ℕ) (hℓ : 3 ≤ ℓ) :
@@ -873,7 +937,7 @@ private noncomputable def nonzeroPatternEquiv (ℓ : ℕ) (hℓ : 3 ≤ ℓ) :
   classical
   exact (Equiv.sumCompl (fun J => J ∈ Set.range (ray4Downset ℓ hℓ))).symm.trans
     (Equiv.sumCongr (Equiv.ofInjective _ (ray4Downset_injective ℓ hℓ)).symm
-      (remainingPatternEquiv ℓ hℓ))
+      ((remainingEquiv ℓ hℓ).trans (remainingPatternEquiv ℓ hℓ)))
 
 private noncomputable def patternEquiv (ℓ : ℕ) (hℓ : 3 ≤ ℓ) :
     FiniteDownsets ℓ ≃ Patterns ℓ := by
