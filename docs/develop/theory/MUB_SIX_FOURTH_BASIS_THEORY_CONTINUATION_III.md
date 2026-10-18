@@ -2545,3 +2545,82 @@ noncanonical orthogonal triple on this domain must contain a ray with
 three distinct entries in at least one channel. It does not exclude
 those remaining triples or imply whole-branch basis uniqueness or a
 whole-branch no-quartet theorem.
+
+## 86. No arbitrary third ray above a noncanonical aligned Theta pair
+
+### 86.1. Exact completion statement
+
+Continue with the actual common-flat input convention and
+\(0<|b|<1\). Inputs have unit-modulus entries and norm \(\sqrt6\).
+
+**Theorem 86.1.** Let \(w\) be an aligned common-flat ray. If a
+common-flat ray \(q\) is orthogonal to both \(w\) and \(\Theta w\),
+then \(w\) is one of the two constant canonical rays, and \(q\) is
+one of the four nonzero-Fourier canonical rays. Conversely each of those
+four rays is orthogonal to the constant canonical \(\Theta\) pair.
+
+Thus a noncanonical aligned \(\Theta\) pair has no common-flat
+third ray orthogonal to both, even when the third ray has three distinct
+entries in a channel. In conjunction with Theorem 84.1, this excludes
+an arbitrary third ray above any noncanonical aligned orthogonal pair
+with the same singleton position. All aligned poles are included.
+
+### 86.2. A universal original-coordinate reflection identity
+
+Choose the repeated positions as \(1,2\), and group the channels
+into three two-component spinors. Write
+\[
+ w=(a,a,c),\qquad q=(u,v,z).                              \tag{86.1}
+\]
+This notation groups the entries by position: the original channel-first
+six-vector lists the first components of the three spinors, followed by
+their second components. Every entry of \(a,c,u,v,z\) has modulus
+one, so each of these spinors has squared norm two. Put
+\(\mathcal J(x_0,x_1)=(-\bar x_1,\bar x_0)\).
+Orthogonality to both \(w\) and \(\Theta w\) is exactly
+\[
+ \langle a,u+v\rangle+\langle c,z\rangle=0,\qquad
+ \langle\mathcal Ja,u+v\rangle+\langle\mathcal Jc,z\rangle=0.
+                                                               \tag{86.2}
+\]
+For arbitrary spinors \(x,y\), the two-component identity (85.11) is
+\[
+ |\langle x,y\rangle|^2+|\langle\mathcal Jx,y\rangle|^2
+                           =\|x\|^2\|y\|^2.
+\]
+Apply it to both equations in (86.2). This gives
+\[
+ \|a\|^2\|u+v\|^2=\|c\|^2\|z\|^2,
+ \qquad\text{hence}\qquad \|u+v\|^2=2.                 \tag{86.3}
+\]
+Let \(R\) synchronously exchange positions \(1,2\) and fix
+position \(3\). Original input flatness now gives
+\[
+\begin{aligned}
+ \langle q,Rq\rangle
+ &=\langle u,v\rangle+\langle v,u\rangle+\|z\|^2\\
+ &=\|u+v\|^2-\|u\|^2-\|v\|^2+\|z\|^2=0.
+\end{aligned}                                                    \tag{86.4}
+\]
+Only a nonzero numerical constant was divided by. No phase coordinate,
+channel mean or difference, or parameter polynomial was inverted.
+Consequently constants, all aligned phase poles, arbitrary common phases,
+and every synchronous permutation are covered by this identity.
+
+### 86.3. Canonical classification and the remaining mixed cases
+
+Since \(q\) is common-flat, (86.4) and Theorem 81.1 identify it with
+one of the four nonzero-Fourier canonical rays. Proposition 60.1 then
+identifies the common-flat ray \(w\), which is orthogonal to \(q\),
+as canonical too. The four nonzero-Fourier canonical rays have three
+distinct entries in each channel and cannot be aligned. Thus \(w\)
+is one of the two constant canonical rays. The operation \(\Theta\)
+exchanges those two rays; the four other canonical rays are orthogonal
+to both. This proves the theorem and its converse.
+
+The reflection identity itself is independent of \(b\), but its
+rigidity consumer here uses the stated punctured domain. No conclusion
+at the center or endpoints is imported from this proof. A noncanonical
+orthogonal triple containing two aligned rays must therefore place those
+two rays at different singleton positions. The latter case, and triples
+with fewer aligned rays, remain unresolved by this result.
