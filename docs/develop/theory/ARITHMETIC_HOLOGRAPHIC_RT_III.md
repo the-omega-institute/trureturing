@@ -3377,3 +3377,262 @@ Consequently \(q_{\mathrm{eff}}\) is a real quadratic form on this quotient. For
 These are dimensions of the domain quotients; the forms may have further radical. In any real basis they give finite symmetric matrices that must be PSD at a hypothetical subquarter minimum. No determinant sign, negative direction or exclusion for any of the seven forms is established here.
 
 The curved construction applies on the full calibrated domain and retains the original fibre identities, complex phases, full kernels and common witness. It gives no rank-preserving calibration reduction and transfers no local minimality from leaking channels. Higher quotient ranks, unequal lower-rank cases, the seven listed supports and the unrestricted quarter optimum remain open; the global interval is still \([\sqrt3-\tfrac32,\tfrac14]\).
+
+## 99. Unique principal normers and an intrinsic missing-partner bound
+
+The three-dimensional quotient form for occupancy \((2,1,1,0)\) in §98 retains full outside dependence. This section obtains additional restrictions from the complete norm SDP itself: uniqueness of the principal normer, a positive definite dual metric, and two quantitative inequalities that eliminate the actual missing-partner rows. These inequalities are necessary conditions. Their comparison with \(1/16\), and hence exclusion of this support below quarter error, remains open.
+
+### 99.1. Original domain and the supported common pair
+
+Retain the original local CPTP maps \(\mathbb C^8\to\mathbb C^4\), four two-coordinate fibres, fixed correlated encodings, arbitrary reference, and unhalved diamond normalization. On the full calibrated domain,
+\[
+\begin{aligned}
+\mathcal E&=\{G\succeq0:G_{ff}=I_2\},\qquad L=T-G\odot H,\\
+F(G,H)&=\max_{(\rho,W)\in\mathcal C}2\operatorname{Tr}(LW),\\
+\mathcal C&=\{(\rho,W):\rho\succeq0,\ \rho\text{ fibre-block diagonal},
+\ \operatorname{Tr}\rho=1,\ 0\preceq W\preceq\rho\},\\
+T_{ff}&=I_2,\qquad T_{fg}=\tfrac12J_2\quad(f\ne g).
+\end{aligned}\tag{1}
+\]
+Throughout this section assume \((G,H)\) is a local minimum on the **full** domain \(\mathcal E^2\), with ranks \((7,6)\), and \(0<t=F(G,H)<1/4\). Fix a nonzero \(a\) spanning \(\ker G\), and assume \(S=\operatorname{supp}a\) has occupancy \((2,1,1,0)\). Label its coordinates as a whole original fibre \(F=\{1,2\}\) and singleton coordinates \(3,4\) from two other fibres; put \(\mathcal J=\{3,4\}\).
+
+The exact norm and common-stress theory of §§91–95 supply a nonempty canonical set of common normers, satisfying both simultaneous first-order best-response inequalities. For each such normer,
+\[
+W_{ij}=-\frac{\alpha a_i\overline{a_j}}
+ {2\overline{H_{ij}}},\qquad \alpha>0
+\quad(i,j\text{ in different original fibres}).\tag{2}
+\]
+Every cross-fibre entry of \(G,H\) is nonzero by
+\(|1/2-G_{ij}H_{ij}|\le t<1/2\). Lemma 96.1 says that every common pair is supported on \(S\), and its principal complete norm equals \(t\). The frontier in §97 gives \(\operatorname{rank}H_S=2\).
+
+These facts do not assume that a full-domain local minimum projects to a joint local minimum of the principal Gram pair.
+
+### 99.2. Independence forced by an original missing partner
+
+Factor \(H_S\) as the Gram of unit records \(u_1,u_2,\psi,\phi\) in their two-dimensional span. The first two records are orthonormal, so use them as a basis.
+
+**Lemma 99.1.** The singleton records \(\psi,\phi\) are linearly independent.
+
+**Proof.** Let \(o\notin S\) be the actual original fibre partner of coordinate 3 in a full Gram realization of \(H\). Its record is orthogonal to \(\psi\), because \(H_{o3}=0\). If \(\phi\) were collinear with \(\psi\), then \(H_{o4}=0\) too. Coordinates \(o,4\) are in different original fibres, so the matrix-unit bound would give \(t\ge1/2\), a contradiction. No new completion or unit-length projection is used. \(\square\)
+
+For any common pair write
+\[
+\rho_S=\operatorname{diag}(\rho_F,p_3,p_4),\qquad
+W_S=\begin{pmatrix}A&C\\C^*&D\end{pmatrix},\qquad
+L_S=\begin{pmatrix}0&E\\E^*&L_{\mathcal J}\end{pmatrix}.\tag{3}
+\]
+Here \(L_{\mathcal J}\) has zero diagonal. Every entry of \(H_{F\mathcal J}=[\psi\ \phi]\) is nonzero, and for a \(2\times2\) matrix with nonzero entries,
+\[
+\det\bigl((1/\overline{M_{ij}})_{ij}\bigr)
+=-\frac{\overline{\det M}}{\prod_{i,j}\overline{M_{ij}}}.\tag{4}
+\]
+Lemma 99.1 and (2) therefore make \(C\) invertible, with no restriction on complex phases.
+
+### 99.3. Complete-norm complementarity and strict ranks
+
+The exact restricted norm on the original intersections \((2,1,1)\) has dual
+\[
+t=\min_{\tau,Z}
+\{\tau: Z\succeq0,\ Z\succeq2L_S,\ Z_{ff}\preceq\tau I_f\}.\tag{5}
+\]
+Indeed a multiplier \(Z\succeq0\) for \(W\preceq\rho\) requires \(Z\succeq2L_S\) when maximizing over \(W\succeq0\). Maximizing over trace-one block-diagonal \(\rho\) then gives \(\max_f\lambda_{\max}(Z_{ff})\). Both sides are strictly feasible: take \(\rho=I_4/4,W=\rho/2\), and take \(Z=\mu I_4,\tau>\mu>2\|L_S\|_{\mathrm{op}}\). The primal is compact, and dual sublevel sets are bounded because PSD matrices with bounded diagonal blocks have bounded entries. Finite-dimensional semidefinite strong duality and attainment apply.
+
+For every optimal primal pair and optimal dual \(Z\), the complementary products are
+\[
+(Z-2L_S)W_S=0,\qquad Z(\rho_S-W_S)=0,\qquad
+(tI_f-Z_{ff})(\rho_S)_{ff}=0.\tag{6}
+\]
+Their trace gaps are nonnegative and sum to zero; zero trace product of two PSD matrices gives zero matrix product. Thus
+\[
+Z\rho_S=2L_SW_S,\qquad
+t(\rho_S)_{ff}=2(L_SW_S)_{ff},\qquad
+EC^*=\tfrac t2\rho_F.\tag{7}
+\]
+
+**Theorem 99.2.** For every common normer, \(\rho_S\succ0\), \(W_S\) and \(\rho_S-W_S\) both have rank two, and \(L_S\) has inertia \((2,2)\). In (3), \(C,E\) are invertible and \(EC^*=(t/2)\rho_F\succ0\).
+
+**Proof.** PSD block matrices give
+\(\operatorname{range}C\subseteq\operatorname{range}A
+\subseteq\operatorname{range}\rho_F\).
+Invertibility of \(C\) makes \(A,\rho_F\) positive definite. Applying the same argument to \(\rho_S-W_S\), whose cross block is \(-C\), gives
+\[
+B:=\rho_F-A\succ0.\tag{8}
+\]
+The nonzero columns of \(C\) also force \(p_3,p_4>0\), so \(\rho_S\succ0\). Equation (7) makes \(E\) invertible.
+
+An invertible congruence reduces \(\begin{pmatrix}0&E\\E^*&L_{\mathcal J}\end{pmatrix}\) first to cross block \(I_2\), then removes \(L_{\mathcal J}\) by replacing its first variable \(u\) with \(u-\tfrac12L_{\mathcal J}v\). The resulting form \(2\operatorname{Re}(u^*v)\) has inertia \((2,2)\).
+
+Put \(M=\rho_S^{1/2}L_S\rho_S^{1/2}\). It is nonsingular of the same inertia. The unique maximizer of \(2\operatorname{Tr}(MX)\) over \(0\preceq X\preceq I\) is \(P_+(M)\). In an eigenbasis the strict signs force diagonal entries 1 or 0, and positivity of \(X,I-X\) then forces the corresponding off-diagonal entries. Every normer maximizes at its own fixed density, hence
+\[
+W_S=\rho_S^{1/2}P_+(M)\rho_S^{1/2},\qquad
+\operatorname{rank}W_S=\operatorname{rank}(\rho_S-W_S)=2.\tag{9}
+\]
+\(\square\)
+
+The rank-two Schur complements and fixed-density spectral formula give the additional identities
+\[
+\begin{aligned}
+D&=C^*A^{-1}C,\\
+\operatorname{diag}(p_3,p_4)-D&=C^*B^{-1}C,\\
+W_SL_S(\rho_S-W_S)&=0.
+\end{aligned}\tag{10}
+\]
+The last line follows from \(P_+(M)M(I-P_+(M))=0\); it does not assert \(W_S(\rho_S-W_S)=0\).
+
+Factoring the two rank-two PSD matrices in (10), canceling their full-rank factors, and multiplying on the left by \(A\) and right by \(B\), gives
+\[
+-AEC^*+CE^*B-CL_{\mathcal J}C^*=0.
+\]
+Equation (7) and its adjoint therefore yield
+\[
+CL_{\mathcal J}C^*=\tfrac t2(B^2-A^2).\tag{11}
+\]
+No commutativity is used: the ordered terms \(-AB\) and \(+AB\) cancel.
+
+### 99.4. Uniqueness of every principal normer
+
+Fix one common pair and any principal optimal dual \(Z\), and define
+\[
+J=L_S^{-1}(Z-L_S)=2W_S\rho_S^{-1}-I.\tag{12}
+\]
+The singleton entry \(W_{34}\ne0\) by (2).
+
+**Theorem 99.3.** Every norming density/witness pair for the complete restricted principal norm equals this pair, even without either first-order best-response condition.
+
+**Proof.** Let \((\rho',W')\) be any principal normer, allowing singular density. It is complementary to the same optimal dual, so
+\[
+Z\rho'=2L_SW',\qquad W'=\tfrac12(I+J)\rho',
+\qquad J\rho'=\rho'J^*.\tag{13}
+\]
+Write \(\rho'=\operatorname{diag}(\rho_F',p_3',p_4')\). Equation (12) gives \(J_{34}=2W_{34}/p_4\) and \(\overline{J_{43}}=2W_{34}/p_3\). The \(34\) entry in (13) forces
+\[
+p_3'/p_3=p_4'/p_4=\lambda\ge0.\tag{14}
+\]
+Comparing the \(F,\mathcal J\) block with that of the original pair gives
+\[
+J_{F\mathcal J}\lambda\operatorname{diag}(p_3,p_4)
+=\rho_F'J_{\mathcal JF}^*,\qquad
+J_{F\mathcal J}\operatorname{diag}(p_3,p_4)=\rho_FJ_{\mathcal JF}^*.
+\]
+Since \(J_{\mathcal JF}^*=2\rho_F^{-1}C\) is invertible, \(\rho_F'=\lambda\rho_F\). Trace one gives \(\lambda=1\), and (13) gives \(W'=W_S\). \(\square\)
+
+In particular the canonical common-normer set is a singleton. An alternative reconstruction of its cross scale is useful: let \(W^0\) have the cross-fibre entries in (2) with \(\alpha=1\), and zero fibre blocks. Because \(L_S\) has zero fibre blocks,
+\[
+\chi:=2\operatorname{Tr}(L_SW^0)>0,\qquad
+t=\alpha\chi,\qquad \alpha=t/\chi.\tag{15}
+\]
+Existence of a common pair and \(\alpha,t>0\) establish the strict inequality. Equation (7) then fixes the entire density from the fixed cross entries, and (9) fixes \(W_S\).
+
+The restricted norm has directional derivative \(2\operatorname{Tr}(\dot L W_S)\), by the compact-maximum derivative formula and uniqueness. No second derivative is asserted. Theorem 99.3 does not exclude additional normers of the original eight-coordinate objective with outside density support.
+
+### 99.5. The full dual controls the actual outside rows
+
+Now choose an optimal dual \(Z\) for the **full eight-coordinate** norm, with its original four blocks. The same strict-feasibility and complementarity argument gives
+\[
+Z\succeq0,\qquad Z-2L\succeq0,\qquad Z_{ff}\preceq tI_2,
+\qquad Z\rho=2LW.\tag{16}
+\]
+Put \(N=Z-L\succeq0\). Its supported block is independent of the chosen full dual:
+\[
+\begin{aligned}
+N_S&=L_S(2W_S\rho_S^{-1}-I)
+ =\rho_S^{-1/2}|M|\rho_S^{-1/2}\succ0,\\
+\widehat K&=N_S/t,\qquad
+\widehat K_{FF}=I_2,\qquad
+\widehat K_{33}=\widehat K_{44}=1.
+\end{aligned}\tag{17}
+\]
+The last line follows from (6) on the positive definite supported density blocks and \(L_{ff}=0\).
+
+The matrix \(J\) in (12) also satisfies
+\[
+J=N_S^{-1}L_S,\qquad J^2=I,\qquad
+L_SN_S^{-1}L_S=N_S,\qquad
+JN_S^{-1}J^*=N_S^{-1}.\tag{18}
+\]
+These follow by conjugating to \(M\) and \(|M|\). They do not make \(J\) Hermitian or unitary in the ordinary Euclidean metric.
+
+For any outside coordinate \(o\notin S\), write \(\ell=L_{oS}\) as a complex row. Equation (16) gives
+\[
+Z_{oS}=2\ell W_S\rho_S^{-1},\qquad N_{oS}=\ell J.\tag{19}
+\]
+The PSD Schur complement of \(N\) on \(S\cup\{o\}\), (18), and \(N_{oo}=Z_{oo}\le t\) yield
+\[
+\ell N_S^{-1}\ell^*
+=N_{oS}N_S^{-1}N_{So}\le N_{oo}\le t,
+\qquad
+\ell\widehat K^{-1}\ell^*\le t^2.\tag{20}
+\]
+
+If \(o\) is the original missing partner of singleton \(j\), its fibre density is \(\operatorname{diag}(p_j,0)\), with \(p_j>0\). Complementarity of \(tI_2-Z_{ff}\succeq0\) forces \(Z_{jj}=t,Z_{oj}=0\). Also \(L_{oj}=0\), by the original fibre identities. Consequently
+\[
+\ell_j=0,\qquad
+(\ell W_S)_j=0,\qquad
+\sum_{i\in S\setminus\{j\}}
+\frac{a_i}{\overline{H_{ij}}}\ell_i=0.\tag{21}
+\]
+The final equality uses the same common witness (2). It is a full-dual condition on the actual outside row, rather than a new independently chosen witness.
+
+### 99.6. An intrinsic quantitative partner inequality
+
+Take \(j=3\), and express the two singleton \(H\)-records in the orthonormal complete-fibre basis:
+\[
+\psi=(x,y)^T,\qquad \phi=(z,w)^T,\qquad
+|x|^2+|y|^2=|z|^2+|w|^2=1,\qquad
+\Delta=xw-yz\ne0.\tag{22}
+\]
+All four entries are nonzero, as is \(H_{34}=\overline xz+\overline yw\). Set \(I=(1,2,4)\). The projection of the actual missing-partner record onto this two-dimensional span is orthogonal to \(\psi\), so
+\[
+H_{oI}=\beta(-y,x,\Delta),\qquad \beta\ne0.\tag{23}
+\]
+Its orthogonal component is unrestricted. Nonzero cross entries \(H_{o1},H_{o2}\) force \(\beta\ne0\).
+
+Put \(g_i=G_{oi}\). Since \(a\) is the full kernel vector, supported on \(S\), and \(G_{o3}=0\),
+\[
+\sum_{i\in I}g_i a_i=0,\qquad
+\ell_i=\tfrac12-g_iH_{oi}\quad(i\in I).\tag{24}
+\]
+Substitution cancels the unknown \(\beta\). Define columns
+\[
+r=\begin{pmatrix}-a_1/y\\a_2/x\\a_4/\Delta\end{pmatrix},
+\qquad
+q=\begin{pmatrix}a_1/\overline x\\a_2/\overline y\\a_4/H_{34}\end{pmatrix},
+\qquad b=\tfrac12(r_1+r_2+r_3).\tag{25}
+\]
+Equations (21), (23) and (24) give the two bilinear constraints
+\[
+r^T\ell_I^T=b,\qquad q^T\ell_I^T=0.\tag{26}
+\]
+The columns \(r,q\) are independent: equality of their first-two-entry ratios would say \(-\overline x/y=\overline y/x\), and hence \(-|x|^2=|y|^2\).
+
+Set
+\[
+\begin{aligned}
+P&=\bigl[(\widehat K^{-1})_{II}\bigr]^{-1}
+ =\widehat K_{II}-\widehat K_{I3}\widehat K_{3I}\succ0,\\
+\gamma&=r^*Pr-\frac{|r^*Pq|^2}{q^*Pq}>0.
+\end{aligned}\tag{27}
+\]
+The Schur formula uses \(\widehat K_{33}=1\). Strict positivity of \(\gamma\) follows from strict Cauchy--Schwarz for the already independent \(r,q\) in the positive definite \(P\)-metric.
+
+**Theorem 99.4.** The principal data satisfy
+\[
+t^2\ge
+\frac{\bigl|\tfrac12(r_1+r_2+r_3)\bigr|^2}
+ {r^*Pr-|r^*Pq|^2/(q^*Pq)}.\tag{28}
+\]
+The analogous inequality holds after interchanging the singleton coordinates and using the other original missing partner.
+
+**Proof.** Put \(u=\ell_I^*\). Then (26) becomes \(r^*u=\overline b,q^*u=0\), while (20) and \(\ell_3=0\) give \(u^*P^{-1}u\le t^2\). Let \(\mathcal A\) have rows \(r^*,q^*\) and let \(c=(\overline b,0)^T\). Its row rank is two. The exact constrained minimum is
+\[
+\min_{\mathcal Au=c}u^*P^{-1}u
+=c^*(\mathcal AP\mathcal A^*)^{-1}c
+=\frac{|b|^2}{\gamma}.\tag{29}
+\]
+Indeed it is attained at \(u_0=P\mathcal A^*(\mathcal AP\mathcal A^*)^{-1}c\); every other feasible \(u_0+v\), with \(\mathcal Av=0\), adds \(v^*P^{-1}v\) to its cost. The final equality follows by inverting the \(2\times2\) positive matrix. The actual row is feasible, proving (28). Interchanging the singleton coordinates merely relabels the two original fibres and their actual partners. \(\square\)
+
+There is no omitted zero denominator: \(q\ne0\), \(P\succ0\), and independence precede every division by \(\gamma\). Abstractly, if independence were dropped while \(q\ne0\), then \(\gamma=0\) would mean \(r=\lambda q\). The constraints would be incompatible for \(b\ne0\), and would have minimum zero for \(b=0\). In the present nondegenerate problem \(b\) itself may still vanish, correctly giving the zero bound in (28).
+
+Both partner expressions in (28) depend only on supported principal data and their unique normer. Every hypothetical subquarter minimum must make both strictly less than \(1/16\). The inequalities retain necessary outside feasibility and full-dual costs, but are not sufficient for a physical extension or full dual completion. They do not replace §98's coupled curvature costs by independently minimized principal costs.
+
+No argument here proves that one of these expressions is always at least \(1/16\). The occupancy \((2,1,1,0)\), all seven rank-\((7,6)\) patterns listed in §98, other lower-rank cases and the unrestricted global quarter problem remain open. The global interval stays \([\sqrt3-\tfrac32,\tfrac14]\). The results concern local minima on the full calibrated domain; global calibration may enlarge ranks and does not transfer local minimality from arbitrary leaking channels.
