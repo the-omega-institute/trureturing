@@ -123,11 +123,10 @@ syntax (name := searchReductionProbeCmd) "#search_reduction_probe " ident " at "
     let result ← run source {
       target := target.getId, «baseline» := bs.getElems.map (fun x => x.getId),
       additions := ss.getElems.map (fun x => x.getId), baselineCommit := sha.getString}
-    liftTermElabM do
+    liftTermElabM <| withTheReader Core.Context (fun ctx => {ctx with maxHeartbeats := 0}) do
       if result.verdict == .nonBindOnly then
         let guardType := mkConst ``True
-        let guardProof ← withTheReader Core.Context (fun ctx => {ctx with maxHeartbeats := 0}) <|
-          synthesizeUsingTactic' (u := .zero) guardType (← `(tactic|
+        let guardProof ← synthesizeUsingTactic' (u := .zero) guardType (← `(tactic|
             (fail_if_success (reference_baseline $target at $sha baseline [$bs,*]
               from [$owners,*]))
             <;> exact True.intro))

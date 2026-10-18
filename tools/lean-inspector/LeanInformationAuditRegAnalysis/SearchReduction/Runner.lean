@@ -161,8 +161,9 @@ private def factExpr (fact : Fact) : MetaM Expr := do
   let mut e ← mkConstWithFreshMVarLevels fact.1
   for projection in fact.2 do
     let value := e
-    e ← forallTelescopeReducing (← inferType value) fun xs _ =>
-      mkLambdaFVars xs (← mkAppM projection #[mkAppN value xs])
+    e ← forallTelescopeReducing (← inferType value) fun xs _ => do
+      let projected ← mkAppM projection #[mkAppN value xs]
+      mkLambdaFVars xs projected
   return e
 
 partial def structural (goal : MVarId) (extra : Array Name) :
@@ -171,12 +172,12 @@ partial def structural (goal : MVarId) (extra : Array Name) :
   let type ← withTransparency .reducible <| whnf original
   for key in #[original.hash, type.hash] do
     for name in (← get).statements[key]?.getD #[] do
-      let before ← saveState
+      let before ← (saveState : MetaM Meta.SavedState)
       let value ← mkConstWithFreshMVarLevels name
       if ← isDefEq (← inferType value) original then
         goal.assign value
         return #[]
-      before.restore
+      (before.restore : MetaM Unit)
   let mut facts := #[]
   for decl in ← getLCtx do
     unless decl.isImplementationDetail do
