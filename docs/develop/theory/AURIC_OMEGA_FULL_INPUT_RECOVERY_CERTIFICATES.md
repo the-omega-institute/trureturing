@@ -2908,3 +2908,203 @@ General normalized rank-three and rank-four pairs of (R.108) remain in G. The no
 The original whole-domain alternative remains Definition 22.2: prove $\delta_N\geq1-\sqrt{1-\beta}$ for every actual original real-Kraus encoder and every complex CPTP recovery on the whole output with all finite complex references, or supply an actual original-class encoder and one such recovery with a rigorous strictly smaller full-reference diamond upper bound. Neither alternative is established by the selected-plane failure, its two-parameter continuation or the sufficient common-space formulation. The larger complex encoder class remains separate. The common transformations are mathematical coordinate correspondences; physical application still requires the actual encoder, supplied inputs, common source fiber, finite-history transport and native-word joint legality of the phase-gain volume. They supply no native operation, state preparation, encoder/decoder apparatus or hardware resource.
 
 ## 追加锚（本行以下为增补区）
+## 36. The full-beta marginal image and the corrected interface
+
+**Definition 36.1 (the crossblock family and two different centers).** Retain Definition 1.1, the actual encoder (R.38), the root convention, and the unrestricted complex recovery and finite-reference domains. Write
+
+$$
+A_z:=\begin{pmatrix}a&\sqrt{a\beta}\,z\\
+\sqrt{a\beta}\,\bar z&\beta\end{pmatrix},\qquad |z|\leq\tfrac12 .
+\tag{R.170}
+$$
+
+The coordinate $z$ is the input coherence $\rho_{12}$, so the off-diagonal output radius is $\sqrt{a\beta}/2$. The complete marginal image of (R.38) is exactly $\{A_z:|z|\leq1/2\}$. Let
+
+$$
+F_{\rm marg}:=\max_{\omega\in\mathsf D(\mathbb C^2)}\min_{|z|\leq1/2}f(A_z,\omega).
+\tag{R.171}
+$$
+
+This has one common environment center before the input minimum. It is a marginal quantity and is not the full-reference value $g_N$ in (R.27).
+
+**Proposition 36.2 (the one-way partial-trace comparison).** For every input density $\rho$, put $q=\rho^T$ as required by (R.27). For every environment density $\omega$,
+
+$$
+\Phi(q,\omega)=f(A_q,q\otimes\omega)
+\leq f(\Gamma(\rho),\omega).
+\tag{R.172}
+$$
+
+Consequently
+
+$$
+ g_N\leq F_{\rm marg}.
+\tag{R.173}
+$$
+
+**Proof.** The two states in (R.27) live on reference $\otimes$ environment. Partial trace over the reference sends $A_q$ to $\Gamma(q^T)=\Gamma(\rho)$ and sends $q\otimes\omega$ to $\omega$. Root-fidelity monotonicity under this CPTP map gives (R.172). The transpose is a bijection on density matrices, so taking the inner minimum and then the common-center maximum gives (R.173). No equality is inferred. At $\beta=1/2$, the input $q=\operatorname{diag}(0,1/2,1/2)$ and $\omega=I_2/2$ have marginal fidelity one, whereas (R.27) gives $\Phi=(2+\sqrt2)/4$; (R.40) also gives the strict global inequality $g_N<F_{\rm marg}$ at that endpoint.$\quad\square$
+
+**Theorem 36.3 (exact marginal center for every beta).** For $0\leq\beta\leq1/2$, with $a=1-\beta$,
+
+$$
+F_{\rm marg}^{\,2}=\frac{1+\sqrt{1-a\beta}}2,
+\qquad
+ t_{\rm marg}=\frac12\left(1+\frac{a-\beta}{\sqrt{1-a\beta}}\right).
+\tag{R.174}
+$$
+
+An optimal center is $\omega_{t_{\rm marg}}=\operatorname{diag}(t_{\rm marg},1-t_{\rm marg})$. Every complex $z$ in (R.170) is reachable: take the input density supported on $|1\rangle,|2\rangle$ with diagonal entries $1/2$ and off-diagonal entry $z$. Singular input marginals and singular centers at $\beta=0$ are included.
+
+**Proof.** The standard two-by-two identity
+$f(A,B)^2=\operatorname{Tr}(AB)+2\sqrt{\det A\det B}$, valid for arbitrary positive semidefinite two-by-two operands, gives for $\omega=\left(\begin{smallmatrix}t&c\\\bar c&1-t\end{smallmatrix}\right)$
+
+$$
+ f(A_z,\omega)^2=at+\beta(1-t)+2\sqrt{a\beta}\,\Re(\bar zc)
+ +2\sqrt{a\beta(1-|z|^2)}\sqrt{t(1-t)-|c|^2}.
+\tag{R.175}
+$$
+
+This identity is the two-dimensional specialization of the root-fidelity formulas attributed in Section 10 to Watrous, Chapter 3; it is used here also at singular operands by continuity. For fixed $\omega$, the minimum over the disk takes $|z|=1/2$ and the phase opposite to $c$ (with arbitrary phase when $c=0$): both the linear term and the square-root term then decrease. The pointwise minimum of the jointly concave fidelity is concave in $\omega$, and the disk is covariant under $\operatorname{diag}(e^{i\phi},1)$. Twirling therefore cannot lower the minimum, so an optimal center is diagonal. This argument includes every complex marginal and every center, rather than a real slice.
+
+For a diagonal center, (R.175) becomes
+
+$$
+\min_{|z|\leq1/2}f(A_z,\omega_t)^2
+ =at+\beta(1-t)+\sqrt{3a\beta\,t(1-t)}.
+\tag{R.176}
+$$
+
+Maximizing the right side on $[0,1]$ gives (R.174), since
+$(a-\beta)^2+3a\beta=1-a\beta$; the displayed $t_{\rm marg}$ is feasible. At $\beta=0$, it is $t=1$ and the image is the single state $|0\rangle\langle0|$. At $\beta=1/2$, it is $t=1/2$.$\quad\square$
+
+## 37. Full-reference reduction on the actual crossblock channel
+
+**Theorem 37.1 (whole-algebra phase and diagonal reductions).** For (R.38), the full input diagonal torus has a matching relative environment phase and output phases, hence acts by a Stinespring covariance on the entire matrix algebra. In (R.27), an optimal common center can therefore be chosen diagonal, and at a fixed diagonal center the inner minimum can be taken over diagonal $q$.
+
+**Proof.** If the input phases are $u_0,u_1,u_2$, choose environment phases $w_0=1$, $w_1=u_2/u_1$ and output phases on $e_0,e_1,e_2,e_3,e_4$ respectively as $u_0,u_1,u_2,u_0/w_1,u_1/w_1$. Then the Stinespring isometry intertwines the input torus with these output and environment unitaries. Thus the complementary channel is covariant on all matrix units, including the $0$--$Q$ blocks. Uhlmann's purification/contraction formula makes the fixed-center root fidelity convex in the full input density: it is a maximum of affine functions of that density. Averaging an input over the torus consequently does not increase the minimum, and gives diagonal $q$ (equivalently diagonal $\rho=q^T$). For a fixed $q$, fidelity is concave in the center; taking the minimum over $q$ preserves concavity, and torus twirling gives a diagonal common center. No restriction to an arbitrarily selected input plane is used.$\quad\square$
+
+**Theorem 37.2 (exact one-variable full-reference benchmark).** Put
+
+$$
+ A=\sqrt{at},\qquad B=\sqrt{\beta(1-t)}.
+$$
+For a diagonal center $\omega_t$ and $q=\operatorname{diag}(p_0,p_1,p_2)$, the full-reference quantity in (R.27) is
+
+$$
+ \Phi(q,\omega_t)=p_0(A+B)+p_1B+p_2A
+       +\sqrt{A^2p_1^2+B^2p_2^2}.
+\tag{R.177}
+$$
+
+Its inner minimum has $p_0=0$. If $AB>0$, writing $x=p_1$ and $p_2=1-x$ gives
+
+$$
+ x=\frac{B^2+(A-B)\sqrt{AB/2}}{A^2+B^2},
+\qquad
+ h_\beta(t)=\frac{A^3+B^3+\sqrt2\,(AB)^{3/2}}{A^2+B^2}.
+\tag{R.178}
+$$
+
+At $A=B=0$ set $h_\beta(t)=0$; if $AB=0$ and $A^2+B^2>0$, set $h_\beta(t)=\sqrt{A^2+B^2}$. Then
+
+$$
+ g_N=\max_{0\leq t\leq1}h_\beta(t).
+\tag{R.179}
+$$
+
+This is an exact one-variable reduction for the actual full-reference benchmark, not a claim of a closed-form outer optimization or of an exact diamond optimum.
+
+**Proof.** A convenient factor of the R38 complementary Choi matrix has columns
+
+$$
+\sqrt a\,|0,0_E\rangle,\quad \sqrt\beta\,|0,1_E\rangle,\quad
+\sqrt a\,|1,0_E\rangle+\sqrt\beta\,|2,1_E\rangle,\quad
+\sqrt\beta\,|1,1_E\rangle,\quad \sqrt a\,|2,0_E\rangle .
+$$
+
+For diagonal $q$ and $\omega_t$, the Gram matrix
+$B^\dagger(q^2\otimes\omega_t)B$ is diagonal up to zero rows, with nonzero eigenvalues
+$\{p_0^2A^2,p_0^2B^2,p_1^2B^2,p_2^2A^2,A^2p_1^2+B^2p_2^2\}$. Taking its square-root trace gives (R.177). This is a calculation on the full purification, so the $q^T$ input convention remains the one in Theorem 6.1.
+
+For $s=p_1+p_2>0$ and $x=p_1/s$, (R.177) is
+
+$$
+ (1-s)(A+B)+s\left[Bx+A(1-x)+\sqrt{A^2x^2+B^2(1-x)^2}\right].
+$$
+The bracket equals $A+B$ at $x=0$ and at $x=1$, so some minimizer has $s=1$, proving $p_0=0$. For $AB>0$, differentiating the remaining strictly convex one-variable expression gives the unique stationary point in (R.178). It is feasible: if $A\geq B$, its numerator is nonnegative and $A^2-(A-B)\sqrt{AB/2}\geq0$; if $A<B$, the corresponding two inequalities follow after interchanging $A,B$. Substitution gives the displayed $h_\beta$. When one of $A,B$ vanishes the objective is constant at $\sqrt{A^2+B^2}$, and when both vanish it is zero.$\quad\square$
+
+## 38. A uniform full-reference certificate and the proxy gap
+
+**Proposition 38.1 (the half-supported source bound).** Let $q_{1/2}=\operatorname{diag}(0,1/2,1/2)$. For every diagonal center, (R.177) gives
+
+$$
+ \Phi(q_{1/2},\omega_t)=\frac{A+B+\sqrt{A^2+B^2}}2
+ \leq\frac{1+\sqrt a}{2}.
+\tag{R.180}
+$$
+
+Hence, by (R.27) and (R.35),
+
+$$
+ g_N\leq\frac{1+\sqrt a}{2},\qquad
+ \delta_N\geq1+\frac\beta2-\sqrt a
+ =\beta+\frac{(1-\sqrt a)^2}{2}.
+\tag{R.181}
+$$
+
+**Proof.** Cauchy--Schwarz gives $A+B\leq\sqrt{a+\beta}=1$, while $A^2+B^2=at+\beta(1-t)\leq a$. Apply (R.177), then maximize the fixed-input upper bound over the common center. The norm bound (R.35) gives the second statement. At $\beta=1/2$, (R.181) is exactly (R.40); this is the same endpoint certificate, not a new endpoint proof. At $\beta=0$ it is zero. For every positive beta it is strictly stronger than the specified-family lower bound $\delta_N\geq\beta$ from Theorem 9.1, but it does not determine the exact $\delta_N$.$\quad\square$
+
+**Proposition 38.2 (strict quantitative separation from the marginal proxy).** Define
+
+$$
+ T_\beta:=\frac{1+\sqrt a}{2}.
+$$
+For every $\beta>0$,
+
+$$
+ g_N^2\leq T_\beta^2<T_\beta<F_{\rm marg}^{\,2}.
+\tag{R.182}
+$$
+
+Indeed $0<T_\beta<1$ and
+$F_{\rm marg}^{\,2}>T_\beta$ is equivalent to
+$1-a\beta>a$, whose difference is $1-a-a\beta=\beta^2$. Both $T_\beta$ and $F_{\rm marg}^{\,2}$ tend to one as $\beta\downarrow0$, so there is no positive beta-uniform gap. Thus replacing the full-reference quantity by $F_{\rm marg}$ cannot establish the target threshold $g_N^2\leq T_\beta$ uniformly, even on this actual family. This does not rule out the original all-class statement or other uses of marginal tomography; the full linear map $\Gamma$ still determines its Choi matrix.
+
+**Proposition 38.3 (a pointwise marginal fidelity one versus reference loss).** At the center $\omega=\operatorname{diag}(a,\beta)$ and input $q_{1/2}$,
+
+$$
+ f(\Gamma(q_{1/2}^T),\omega)=1,\qquad
+ \Phi(q_{1/2},\omega)=\frac{1+\sqrt{a^2+\beta^2}}2<1
+ \quad(\beta>0).
+\tag{R.183}
+$$
+
+The first equality is equality of the two diagonal marginal states. The second is the reference-bearing value from (R.177), and the strict inequality is $\sqrt{a^2+\beta^2}<a+\beta=1$. It is a pointwise interface gap, not a claim that marginal tomography is informationally incomplete.
+
+## 39. Pair packing and the remaining all-class boundary
+
+**Theorem 39.1 (exact pair fidelity in the marginal image).** For two image points $A_z,A_w$ in (R.170),
+
+$$
+ f(A_z,A_w)^2=a^2+\beta^2+2a\beta\Re(\bar zw)
+ +2a\beta\sqrt{(1-|z|^2)(1-|w|^2)}.
+\tag{R.184}
+$$
+
+Therefore
+
+$$
+ \min_{|z|,|w|\leq1/2}f(A_z,A_w)=\sqrt{1-a\beta},
+\tag{R.185}
+$$
+
+attained at $z=-w$ with $|z|=|w|=1/2$. In particular every pair has fidelity strictly larger than $\sqrt a$ for $\beta>0$.
+
+**Proof.** Apply the same two-by-two identity as in (R.175). Since $\Re(\bar zw)\geq-|z||w|\geq-1/4$ and the square-root factor is at least $3/4$, the right side of (R.184) is at least $a^2+\beta^2+a\beta=1-a\beta$. The stated antipodal boundary pair attains both inequalities. Since $1-a\beta-a=\beta^2>0$, the final strict comparison follows.$\quad\square$
+
+**Definition 39.2 (packing-method scope and attribution).** A proposed whole-class pair-packing premise requiring a marginal pair with fidelity at most $\sqrt a$ fails for the actual R38 family by (R.185); the stronger proposed threshold $q_a=\sqrt a-\beta/2$ fails as well. The standard two-state Bures-angle argument, combined with the pure-target certificate (R.35), makes that premise sufficient when it holds, not necessary for the original target. Thus its failure does not refute the target, and it does not make every marginal-tomography route impossible. The exact pair identity and the two-by-two fidelity identity are source-specific calculations using the standard tools attributed in Section 10, not new general fidelity or packing theorems.
+
+**Definition 39.3 (unchanged sharp problem).** The original requirement remains: for every actual all-real-Kraus encoder from $M_3$ to $M_5$, every complex CPTP recovery on the whole output, and every finite complex reference, either prove
+$\delta_N\geq1-\sqrt{1-\beta}$ with the unhalved diamond norm, or give an actual improving encoder and a rigorous full-reference recovery upper certificate. Sections 36--39 provide the full-beta R38 benchmark, the corrected marginal/reference interface, and the precise limitation of the marginal-packing route. They provide no general rank-two, rank-three or rank-four solution, physical preparation, apparatus, or global novelty claim.$\quad\square$
+
+## 追加锚（本行以下为增补区）
