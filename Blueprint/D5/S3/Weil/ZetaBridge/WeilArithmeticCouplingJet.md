@@ -170,7 +170,23 @@ Fix the actual L=logLength(c)>0 and w=omega(c,m)>=1. Put eta=1-exp(-L/2)>0 and N
 
 The source-level new content is a lower bound obtained by a block whose length depends on the actual frequency; it is not a binding wrapper around an existing floor theorem. At c=2 this supplies the positive smooth mass needed by the beta-only lower-tail route, where the separate finite-prime sine sum vanishes. No separate c=2 or eventual specialization is added. For larger c, possible cancellation with S is not controlled by this theorem. No pi/4 asymptotics, full-symbol pointwise lower bound, operator positivity, Robin statement, RH statement or five-mode identification is claimed. Lean elaboration, kernel checking, registration binding, Scribe emission and official required checks remain unperformed.
 
-**Theorem 1.14 (The exact native smooth and prime split).**
+**Theorem 1.14 (The actual smooth mass has a pi/4 asymptotic with an explicit rate).**
+
+$$\forall c\in\mathbb{N}, 2\le c\Rightarrow \exists K\in\mathbb{R}, 0<K\land \forall m\in\mathbb{N}, 0<m\Rightarrow \lvert m^{2}\cdot\operatorname{smoothWeight}(c, m)-\frac{\pi}{4}\rvert\le\frac{K}{m}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/ZetaBridge/WeilArithmeticCouplingJet.smooth_weight_actual_asymptotic` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural c with hc:2<=c there exists one real K>0, depending only on c, such that for every natural m>0, abs(m^2*smoothWeight(c,m)-pi/4)<=K/m. The selected declaration retains the actual poleSine and the genuinely convergent gammaSineTerm series in their original owner. It has no frequency threshold and includes m=1.
+
+Write L=log(c)>0, a=2*pi/L>0, w=a*m, C=exp(-L/2)/(1-exp(-2*L)), and U=2*(cosh(L/2)-1)/a. The proof chooses K=U+(1+C)/a before introducing m. The half-shifted Cauchy majorant has sum at least pi/4-1/(4*w), by left-endpoint integral comparison, the exact finite arctan substitution and its pi/2 endpoint limit. Mathlib's arctan_le_self bounds the initial shift error. The removed nonnegative exponential correction is truly summable and at most exp(-L/2)/(w*(1-exp(-2*L))), by a positive geometric majorant. Subtraction uses both summability hypotheses. Combining that lower bound with the existing smooth_mass_bounds upper estimate proves the absolute bound.
+
+Native Lean4.35 validation accepted the exact theorem with only Classical.choice, Quot.sound and propext. The D5 and full-law Reg builds exited 0, and the combined scoped report records declared_validated with no diagnostic for this binding. The owning Reg retains the complete existential/forall law and uses the existing private actual weight-dependence helper. The current producer accepted SourceSelection and its scoped coordinates under the existential; the candidate's linked issue #18940 is not a remaining gap for this binding in this report. Native validation and canonical delivery/CI acceptance are separate evidence boundaries. This fixed-c asymptotic establishes no uniform tail or RH theorem.
+
+**Theorem 1.15 (The exact native smooth and prime split).**
 
 $$\operatorname{Positive}(m)\Rightarrow\operatorname{A}(c, m)=-\operatorname{square}(m) \operatorname{w}(c, m)-\operatorname{OwnerPrimeRangeSum}(c, m)$$
 
@@ -194,6 +210,7 @@ For every natural c and positive natural m, A(c,m)=-m^2*w(c,m)-sum_{q<c} primeWe
 - Truth anchor: `D5/S3/Weil/ZetaBridge/WeilArithmeticCouplingJet.smoothEnvelope`
 - Truth anchor: `D5/S3/Weil/ZetaBridge/WeilArithmeticCouplingJet.smoothFloor`
 - Truth anchor: `D5/S3/Weil/ZetaBridge/WeilArithmeticCouplingJet.smoothWeight`
+- Truth anchor: `D5/S3/Weil/ZetaBridge/WeilArithmeticCouplingJet.smooth_weight_actual_asymptotic`
 - Truth anchor: `D5/S3/Weil/ZetaBridge/WeilArithmeticCouplingJet.smooth_weight_antitone`
 - Truth anchor: `D5/S3/Weil/ZetaBridge/WeilArithmeticCouplingJet.smooth_weight_envelope`
 - Truth anchor: `D5/S3/Weil/ZetaBridge/WeilArithmeticCouplingJet.smooth_weight_floor`

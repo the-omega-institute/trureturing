@@ -253,6 +253,56 @@ internal sealed class WeilArithmeticCouplingJetDocument : IScribeDocumentDefinit
                             + "emission and official required checks remain unperformed."))),
                     DescribeRole.Theorem),
                 Describe.Lean(
+                    DescribeId.Create("smooth-weight-actual-asymptotic"),
+                    DeclarationHandle.Create(Owner + "smooth_weight_actual_asymptotic"),
+                    H("The actual smooth mass has a pi/4 asymptotic with an explicit rate"),
+                    StatementSource.FromAuthor(Disp(Seq(
+                        Forall, Sp, c, InMacro, Mathbb, Grp(F.Id("N")), Comma, Sp,
+                        D(2), Le, Sp, c, Rightarrow, Sp,
+                        Exists, Sp, F.Id("K"), InMacro, Mathbb, Grp(F.Id("R")), Comma, Sp,
+                        D(0), Lt, F.Id("K"), Land, Sp,
+                        Forall, Sp, m, InMacro, Mathbb, Grp(F.Id("N")), Comma, Sp,
+                        D(0), Lt, m, Rightarrow, Sp,
+                        Lvert, Sp, m, Caret, Grp(D(2)), Cdot, Call("smoothWeight", c, m),
+                        Minus, Frac, Grp(Pi), Grp(D(4)), Rvert, Le,
+                        Frac, Grp(F.Id("K")), Grp(m)))),
+                    AssessedProvenance.FromRepo(),
+                    Blocks(
+                        Paragraph(Text(
+                            "For every natural c with hc:2<=c there exists one real K>0, "
+                            + "depending only on c, such that for every natural m>0, "
+                            + "abs(m^2*smoothWeight(c,m)-pi/4)<=K/m. The selected declaration "
+                            + "retains the actual poleSine and the genuinely convergent "
+                            + "gammaSineTerm series in their original owner. It has no "
+                            + "frequency threshold and includes m=1.")),
+                        Paragraph(Text(
+                            "Write L=log(c)>0, a=2*pi/L>0, w=a*m, "
+                            + "C=exp(-L/2)/(1-exp(-2*L)), and U=2*(cosh(L/2)-1)/a. "
+                            + "The proof chooses K=U+(1+C)/a before introducing m. "
+                            + "The half-shifted Cauchy majorant has sum at least "
+                            + "pi/4-1/(4*w), by left-endpoint integral comparison, the "
+                            + "exact finite arctan substitution and its pi/2 endpoint limit. "
+                            + "Mathlib's arctan_le_self bounds the initial shift error. "
+                            + "The removed nonnegative exponential correction is truly "
+                            + "summable and at most exp(-L/2)/(w*(1-exp(-2*L))), by a "
+                            + "positive geometric majorant. Subtraction uses both summability "
+                            + "hypotheses. Combining that lower bound with the existing "
+                            + "smooth_mass_bounds upper estimate proves the absolute bound.")),
+                        Paragraph(Text(
+                            "Native Lean4.35 validation accepted the exact theorem with "
+                            + "only Classical.choice, Quot.sound and propext. The D5 and "
+                            + "full-law Reg builds exited 0, and the combined scoped report "
+                            + "records declared_validated with no diagnostic for this binding. "
+                            + "The owning Reg retains the complete existential/forall law "
+                            + "and uses the existing private actual weight-dependence helper. "
+                            + "The current producer accepted SourceSelection and its scoped "
+                            + "coordinates under the existential; the candidate's linked "
+                            + "issue #18940 is not a remaining gap for this binding in this "
+                            + "report. Native validation and canonical delivery/CI acceptance "
+                            + "are separate evidence boundaries. This fixed-c asymptotic establishes no uniform "
+                            + "tail or RH theorem."))),
+                    DescribeRole.Theorem),
+                Describe.Lean(
                     DescribeId.Create("arithmetic-symbol-smooth-split"),
                     DeclarationHandle.Create(Owner + "arithmetic_symbol_smooth_split"),
                     H("The exact native smooth and prime split"),
