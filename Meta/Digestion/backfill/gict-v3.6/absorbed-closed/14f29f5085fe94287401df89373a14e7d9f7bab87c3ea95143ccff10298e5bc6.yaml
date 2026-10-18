@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:14f29f5085fe94287401df89373a14e7d9f7bab87c3ea95143ccff10298e5bc6
-  normalized_sha256: sha256:14f29f5085fe94287401df89373a14e7d9f7bab87c3ea95143ccff10298e5bc6
-cas_ref: sha256:14f29f5085fe94287401df89373a14e7d9f7bab87c3ea95143ccff10298e5bc6
-coverage_gids:
-  - gid: D5/S3/QuantumChannels/ContractionGeometry/PauliTopBoundary.pauli_top_boundary_volume_zero
-    target_statement_id: sha256:5c714d8141f0c7df346dbbf240adcccb38778711de30cea06ac123f887f13d48
-receipts:
-  unresolved_subitems: []

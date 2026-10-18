@@ -6,6 +6,7 @@
    utility: none
    digest: Private leading-block transport for the actual positive-composition branch. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.AnalyticClosure.Polylogarithm.CompositionBanksIntegralControl
 import D5.S3.AnalyticClosure.Polylogarithm.CompositionBanksSourceInduction
 import D5.S3.AnalyticClosure.Polylogarithm.CompositionSlit

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:c153ebb7e2f3ba1b6cf553588ef5f6c2010dd065763fd34edb3fade88bc537a4
+  normalized_sha256: sha256:c153ebb7e2f3ba1b6cf553588ef5f6c2010dd065763fd34edb3fade88bc537a4
+cas_ref: sha256:c153ebb7e2f3ba1b6cf553588ef5f6c2010dd065763fd34edb3fade88bc537a4
+coverage_gids:
+  - gid: D5/S3/Analytic/AnchoredTelescopingSquares.exists_anchored_telescoping_squares
+    target_statement_id: sha256:0bf3b130cc5d4bb919639bacaaa9581cf4bc31fce767de8933aafad7540a640c
+receipts:
+  unresolved_subitems: []

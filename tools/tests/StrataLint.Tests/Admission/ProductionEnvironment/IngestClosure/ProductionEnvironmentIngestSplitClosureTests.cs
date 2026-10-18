@@ -16,12 +16,11 @@ public sealed partial class ProductionEnvironmentTests
             + "\n**(i)** first clause。\n"
             + "\n**(ii)** second clause。\n";
         var fixture = new RuleFixture();
-        var oldAtom = Assert.Single(PzgAtomizer.Atomize(
-            Encoding.UTF8.GetBytes(oldText),
-            DigestionTestSupport.Rules).Claims);
+        var oldAtom = Assert.Single(GenericAtomizer.Atomize(
+            Encoding.UTF8.GetBytes(oldText)).Claims);
         fixture.Files[RuleFixture.FixtureDigestionSourcePath] = currentText;
         fixture.Baseline[RuleFixture.FixtureDigestionSourcePath] = oldText;
-        InstallProjectedLedger(fixture, IngestLedger(AtomizerRegistry.PzgId, oldAtom), oldAtom);
+        InstallProjectedLedger(fixture, IngestLedger(AtomizerRegistry.GenericId, oldAtom), oldAtom);
         using var temporary = new TemporaryDirectory();
         WriteDirectoryLedger(temporary.Path, fixture.Files);
         var reportSource = new FakeLeanReportSource(report: null);
@@ -77,13 +76,11 @@ public sealed partial class ProductionEnvironmentTests
         const string currentText = oldText + "**定理 1.2(B)**。new。\n";
         var fixture = new RuleFixture();
         var oldAtom = Assert.Single(AtomizerRegistry.Atomize(
-            SyntheticNumberedAtomizer.Id,
-            Encoding.UTF8.GetBytes(oldText),
-            DigestionTestSupport.Rules).Claims);
+            AtomizerRegistry.GenericId,
+            Encoding.UTF8.GetBytes(oldText)).Claims);
         var currentOldAtom = Assert.Single(AtomizerRegistry.Atomize(
-            SyntheticNumberedAtomizer.Id,
-            Encoding.UTF8.GetBytes(currentText),
-            DigestionTestSupport.Rules).Claims,
+            AtomizerRegistry.GenericId,
+            Encoding.UTF8.GetBytes(currentText)).Claims,
             atom => atom.Fingerprints.RawSha256 == oldAtom.Fingerprints.RawSha256);
         Assert.Equal(oldAtom.Fingerprints.RawSha256, currentOldAtom.Fingerprints.RawSha256);
         Assert.Equal(oldAtom.StartByte, currentOldAtom.StartByte);
@@ -94,7 +91,7 @@ public sealed partial class ProductionEnvironmentTests
         fixture.Baseline[RuleFixture.FixtureDigestionSourcePath] = oldText;
         InstallProjectedLedger(
             fixture,
-            IngestLedger(SyntheticNumberedAtomizer.Id, oldAtom),
+            IngestLedger(AtomizerRegistry.GenericId, oldAtom),
             oldAtom);
         var coveredPath = DirectoryAtomPath(AtomId(oldAtom), "residual-open");
         foreach (var files in new[] { fixture.Files, fixture.Baseline })
@@ -147,13 +144,11 @@ public sealed partial class ProductionEnvironmentTests
             + " appended context。\n\n**定理 1.3(C)**。new。\n";
         var fixture = new RuleFixture();
         var oldAtoms = AtomizerRegistry.Atomize(
-            SyntheticNumberedAtomizer.Id,
-            Encoding.UTF8.GetBytes(oldText),
-            DigestionTestSupport.Rules).Claims;
+            AtomizerRegistry.GenericId,
+            Encoding.UTF8.GetBytes(oldText)).Claims;
         var currentAtoms = AtomizerRegistry.Atomize(
-            SyntheticNumberedAtomizer.Id,
-            Encoding.UTF8.GetBytes(currentText),
-            DigestionTestSupport.Rules).Claims;
+            AtomizerRegistry.GenericId,
+            Encoding.UTF8.GetBytes(currentText)).Claims;
         Assert.Equal(2, oldAtoms.Length);
         Assert.Equal(3, currentAtoms.Length);
         var coveredAtom = oldAtoms[0];
@@ -165,19 +160,19 @@ public sealed partial class ProductionEnvironmentTests
         fixture.Files[RuleFixture.FixtureDigestionSourcePath] = currentText;
         fixture.Baseline[RuleFixture.FixtureDigestionSourcePath] = oldText;
         var ledger = DigestionTestSupport.Document(
-            SyntheticNumberedAtomizer.Id,
+            AtomizerRegistry.GenericId,
             [
                 DigestionTestSupport.Entry(
                     coveredAtom,
                     AtomId(coveredAtom),
-                    SyntheticNumberedAtomizer.Id,
+                    AtomizerRegistry.GenericId,
                     coverageGids: [coverageGid],
                     sourceId: "fixture-source",
                     sourcePath: RuleFixture.FixtureDigestionSourcePath),
                 DigestionTestSupport.Entry(
                     staleAtom,
                     AtomId(staleAtom),
-                    SyntheticNumberedAtomizer.Id,
+                    AtomizerRegistry.GenericId,
                     sourceId: "fixture-source",
                     sourcePath: RuleFixture.FixtureDigestionSourcePath),
             ],
@@ -233,7 +228,6 @@ public sealed partial class ProductionEnvironmentTests
     [Theory]
     [InlineData("entry")]
     [InlineData("source-metadata")]
-    [InlineData("atomizer-data")]
     [InlineData("cas")]
     [InlineData("tail")]
     [InlineData("coverage-gid")]
@@ -244,7 +238,6 @@ public sealed partial class ProductionEnvironmentTests
         {
             "entry" => DirectoryAtomPath(entry.AtomId, "residual-open"),
             "source-metadata" => DirectorySourceMetadataPath(),
-            "atomizer-data" => TheoryAtomizerDataLoader.DataPath,
             "cas" => DigestionCasStore.RootPath + entry.CasRef["sha256:".Length..],
             "tail" => entry.Receipts.TailAuthorization!.Path,
             "coverage-gid" => "D5/S0/Carrier/Ring.lean",
@@ -381,13 +374,12 @@ public sealed partial class ProductionEnvironmentTests
         const string coverageGid = "D5/S0/Carrier/Ring.goldenRing";
         const string text = "# Synthetic\n\n**定理 1.1(A)**。old。\n";
         var atom = Assert.Single(AtomizerRegistry.Atomize(
-            SyntheticNumberedAtomizer.Id,
-            Encoding.UTF8.GetBytes(text),
-            DigestionTestSupport.Rules).Claims);
+            AtomizerRegistry.GenericId,
+            Encoding.UTF8.GetBytes(text)).Claims);
         return DigestionTestSupport.Entry(
             atom,
             "closure-entry",
-            SyntheticNumberedAtomizer.Id,
+            AtomizerRegistry.GenericId,
             coverageGids: [coverageGid],
             receipts: new DigestionReceipts([],
                 [],

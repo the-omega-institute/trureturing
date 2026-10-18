@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:82361f666ecca7b5ac74f2746e2ddf6db2d7e92eb1c560031e639e8d91edda50
-  normalized_sha256: sha256:82361f666ecca7b5ac74f2746e2ddf6db2d7e92eb1c560031e639e8d91edda50
-cas_ref: sha256:82361f666ecca7b5ac74f2746e2ddf6db2d7e92eb1c560031e639e8d91edda50
-coverage_gids:
-  - gid: D5/S3/DivergenceSupport/LandauerBound.landauer_bound_of_balance
-    target_statement_id: sha256:e4c1b9123fa382f1fb3911b27020bad6d289877529a0a5388160b6de29fb8da9
-receipts:
-  unresolved_subitems: []

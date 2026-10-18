@@ -86,7 +86,7 @@ public sealed class CoverageStatementReceiptTests
         var entry = new DigestionLedgerEntry(
             "source",
             "docs/source.md",
-            AtomizerRegistry.NoAtomizerId,
+            AtomizerRegistry.GenericId,
             new string('a', 64),
             fingerprints,
             [
@@ -96,7 +96,7 @@ public sealed class CoverageStatementReceiptTests
             new DigestionReceipts([], [], null),
             new DigestionStatus(DigestionMigrationState.Partial, DigestionTruthState.Closed),
             fingerprints.RawSha256);
-        var document = Document(AtomizerRegistry.NoAtomizerId, [entry]);
+        var document = Document(AtomizerRegistry.GenericId, [entry]);
         var source = Assert.Single(document.RequireDigestionSources());
         var files = new Dictionary<string, string>(StringComparer.Ordinal)
         {
@@ -115,7 +115,7 @@ public sealed class CoverageStatementReceiptTests
         var raw = RawRepositorySnapshot.Create(files.Select(static item =>
             RawRepositoryEntry.FromText(item.Key, item.Value)));
         var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
-            SnapshotDecoder.Decode(raw)).Snapshot;
+            SnapshotDecoder.Decode(DigestionTestSupport.WithSourcePolicy(raw))).Snapshot;
         var frozenStatements = FrozenStatementReceiptTestData.Index(snapshot, report);
         var mismatches = BackfillInventoryLoader.Load(snapshot)
             .RequireDigestionEntries()
@@ -420,7 +420,7 @@ public sealed class CoverageStatementReceiptTests
         var entry = Entry(
             atom,
             "statement-receipt",
-            AtomizerRegistry.NoAtomizerId,
+            AtomizerRegistry.GenericId,
             DigestionMigrationState.Absorbed,
             DigestionTruthState.Closed,
             [],
@@ -428,7 +428,7 @@ public sealed class CoverageStatementReceiptTests
         {
             Coverage = [receipt],
         };
-        var document = Document(AtomizerRegistry.NoAtomizerId, [entry]);
+        var document = Document(AtomizerRegistry.GenericId, [entry]);
         var files = new Dictionary<string, string>(StringComparer.Ordinal)
         {
             ["docs/source.md"] = Encoding.UTF8.GetString(sourceBytes),

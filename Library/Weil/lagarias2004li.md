@@ -449,8 +449,13 @@ zero point mass because their source position is integrated against $dx$.
 This is a conditional paper application of the classical equality
 mechanism to the original theta family. It excludes neither a better
 actual norm estimate than the absolute certificate nor products above
-one approaching one, controlled approximate reconstruction, measure
-kernels, or a transfer defined only on $\mathcal R$.
+one approaching one, controlled approximate reconstruction, distribution
+kernels or a transfer defined only on $\mathcal R$. The
+[measure-kernel continuation](../Fourier/teschl2009mathematical.md#marginal-schur-certificates-also-exclude-singular-raw-edge-kernels)
+also excludes phased measure kernels with the displayed weighted marginal
+Schur product at most one, using an actual radial-invariant set with
+$K_+(Z)=0<K_-(Z)$. It does not exclude measure kernels outside that
+certificate class.
 
 The same mixed nullity removes the closed critical edge images jointly:
 for $e_\pm=(I-P_\pm)C_\pm$, where $P_\pm$ project onto
@@ -520,6 +525,16 @@ $$\|n_h-n_h^{(m)}\|\le\frac{(1-2c)^{m+1}}{c}\|P_NBh\|\le\frac{(1-2c)^{m+1}}{2c}\
 Because its source error lies in $N$, each edge error is at most $\|n_h-n_h^{(m)}\|/\sqrt2$. Mixed nullity also keeps $q(h-n_h^{(m)})=q(h)$ exactly. Thus the two errors are paired through one source, not independently optimized.
 
 What is still missing: explicit acquisition or approximation of $P_N$ itself, a transfer between the actual projected increments, and its joint reconstruction/norm estimate. The anchors' positive mass can be very small and no useful numerical conditioning is claimed. The inverse series is an operator identity involving the exact $P_N$, not a finite algorithm or a spectral certificate for the original remainder. G1 bounds K_- only, not D, and does not prove RH, Robin, the half-bound or the cofinal comparison.
+
+The [direct Mellin/Sonine interface (BM1)–(BM5)](burnol2002sonine.md#the-direct-theta-to-sonine-identification-changes-domain-or-norm)
+retains this same common correction. Its literal physical Mellin input
+has trivial intersection with every fixed Sonine $L_a$. Relabelling the
+raw Fourier values as Gamma-completed values instead gives an unbounded
+map even from the original form norm or the joint projected-edge norm:
+actual real-zero duals have polynomial form-norm growth and fixed-width
+Fourier peaks, against an exponential inverse-Gamma weight. This excludes
+those exact direct identifications, not a different transformed or
+spectrally restricted interface, and determines no signed half-slack.
 
 
 ### Even geometry gives a stronger negative-edge inverse constant
@@ -617,7 +632,7 @@ minorant, so that estimate fails on the original core. This is a
 conditional paper obstruction to that sufficient gradient route,
 without a diffusion-curvature equivalence or new Lean certification.
 It does not determine the sign of the integrated half-slack on
-$\mathcal R$, or invalidate the existing conditional $0.41$ bound.
+$\mathcal R$, or invalidate the [existing conditional $921/2000=0.4605$ bound](https://github.com/the-omega-institute/trureturing-experiments/blob/e5c5d8bf2b157e5c94af05ba724e18f4131b4c88/docs/reports/theta-mixed-matrix/target-correction.md#reuse-the-positive-blocks-when-a-requested-gap-test-fails).
 The full half-bound, Robin and RH remain unresolved.
 
 ### Positive radial derivative transport needs a different interface
@@ -636,3 +651,150 @@ order-two determinant obstruction. It does not exclude ordinary Markov
 positivity, signed or vector derivative transports, other orders or
 fixed-time estimates. No new Lean certification or all-input half-bound
 is supplied; actual cofinal signs, full Robin and RH remain unresolved.
+
+## A fixed verified head cannot absorb the absolute smoothed remainder
+
+This conditional paper application retains the original even minimal
+form, its reducing remainder $\mathcal R$, every prime power, and the
+[unwindowed map (UG1)–(UG3)](fukushima2011dirichlet.md#a-fixed-unwindowed-transfer-to-the-original-variance-gap).
+It reuses the actual zero duals already used in the
+[common-source residual](https://github.com/the-omega-institute/trureturing-experiments/blob/9188d87ac0c5bf1f36e248f2cb3c835af6f05c9e/docs/reports/theta-mixed-matrix/theta-common-residual-bounds.md),
+[classical critical-line infinitude](nist2026criticalzeros.md), finite
+cosine independence and finite Gram projection. The additional interface
+is exact head-annihilating inputs in the original remainder, including
+after the specified smoothing. It supplies no new generic interpolation
+theorem, zero computation, numerical Gram, priority claim or Lean
+certification.
+
+### Use actual form inputs and a fixed head
+
+Put $s^2=\Phi/(2\cosh(x/2))$. For a real critical-line zero ordinate
+$\gamma$, recall the dual vector and its evaluation:
+
+$$
+e_\gamma(x)=\frac{\cos(\gamma x)}{2\cosh(x/2)},\qquad
+\ell_\gamma(h)=\widehat{\Phi h}(\gamma)
+             =\langle e_\gamma,h\rangle_\nu.
+$$
+
+Here the Hilbert product is antilinear in its first slot. The original
+theta bounds on $s,s'$ give $Ue_\gamma=s\cos(\gamma x)\in H^1$;
+(WF2) therefore places $e_\gamma$ in the actual minimal form domain
+$\mathcal F$. The existing integration-by-parts calculation gives
+$\ell_\gamma(1)=\Xi(\gamma)=0$ and
+$\ell_\gamma(v_k)=((-1)^k\gamma^{2k}-4^{-k})\Xi(\gamma)=0$.
+Thus these reused duals lie in $\mathcal F\cap\mathcal R$.
+
+Fix the already verified height $H$ and its distinct positive real zero
+ordinates $\gamma_1,\ldots,\gamma_M$, with multiplicities $m_j$.
+Critical-line infinitude supplies a real $\gamma_*>H$; its numerical
+value need not be acquired. The corresponding $e$-vectors are linearly
+independent. Indeed, multiplication by $2\cosh(x/2)$ reduces a relation
+to an everywhere identity between distinct cosines; the even derivatives
+at zero give the classical Vandermonde system in the distinct
+$\gamma^2$.
+
+Let $E=\operatorname{span}\{e_{\gamma_j}:1\le j\le M\}$ and
+$b=(I-\Pi_E)e_{\gamma_*}$, using the ambient Hilbert orthogonal
+projection onto this finite space. Then
+
+$$
+b\in\mathcal F\cap\mathcal R,\qquad b\ne0,\qquad
+\ell_{\gamma_j}(b)=0,\qquad
+\ell_{\gamma_*}(b)=\|b\|_\nu^2>0.
+\tag{FH1}
+$$
+
+This uses a finite combination of actual zero duals. It assumes neither
+completeness of the zero family nor acquisition of $P_N$.
+
+### Keep the actual smoothing and the remainder projection distinct
+
+Retain $W_N=U^{-1}p(\mathsf D/N)U$ from (UG1)–(UG3), with its real
+even cutoff $0\le p\le1$, equal to one near zero. It is self-adjoint,
+converges strongly to the identity, and maps ambient inputs into
+$\mathcal F$. Let $\Pi_{\mathcal R}$ be the existing reducing projection.
+For each of the fixed head ordinates and for $\gamma_*$ set
+
+$$
+\begin{aligned}
+a_{N,j}&=\Pi_{\mathcal R}W_Ne_{\gamma_j},&
+a_{N,*}&=\Pi_{\mathcal R}W_Ne_{\gamma_*},\\
+E_N&=\operatorname{span}\{a_{N,j}:1\le j\le M\},&
+b_N&=(I-\Pi_{E_N})a_{N,*}.
+\end{aligned}
+$$
+
+All these vectors lie in $\mathcal F\cap\mathcal R$, because the
+reducing projection preserves the actual form domain. The $a$-vectors
+converge to their respective $e$-vectors. Finite Gram continuity and
+independence make the head Gram invertible for all sufficiently large
+$N$ and give $b_N\to b\ne0$. Consequently
+$r_N=b_N/\|b_N\|_\nu$ is defined there, and self-adjointness gives
+
+$$
+\|r_N\|_\nu=1,\qquad
+\ell_{\gamma_j}(W_Nr_N)=0,\qquad
+|\ell_{\gamma_*}(W_Nr_N)|=\|b_N\|_\nu.
+\tag{FH2}
+$$
+
+No commutation of $W_N$ and $\Pi_{\mathcal R}$ is used.
+$W_Nr_N$ need not itself belong to $\mathcal R$; it belongs to the exact
+image admitted by (UG1)–(UG2).
+
+### An absolute-tail obstruction that does not use frequency separation
+
+For the specified physical image $f=\Phi W_Nr$, write its nonnegative
+verified head and its complete absolute paired tail as
+
+$$
+\begin{aligned}
+\mathcal H_H(f)&=2\sum_{j=1}^M m_j|\widehat f(\gamma_j)|^2,\\
+\mathcal A_H(f)&=\sum_{|\Re z_\rho|>H}m_\rho
+ \left|\widehat f(z_\rho)
+             \overline{\widehat f(\overline{z_\rho})}\right|.
+\end{aligned}
+$$
+
+The absolute convergence here is supplied by the existing strip and
+cutoff passage for (UG2), not a zero formula asserted on every raw form
+input. Actual off-line partners, both ordinate signs, every height and
+multiplicity are retained. A single real tail ordinate $\gamma_*$ of
+multiplicity $m_*>0$ gives
+
+$$
+\begin{aligned}
+\mathcal H_H(\Phi W_Nr_N)&=0,\\
+\mathcal A_H(\Phi W_Nr_N)&\ge m_*\|b_N\|_\nu^2,\\
+\liminf_{N\to\infty}\mathcal A_H(\Phi W_Nr_N)
+ &\ge m_*\|b\|_\nu^2>0.
+\end{aligned}
+\tag{FH3}
+$$
+
+It follows that no finite nonnegative coefficients $C_N$ and errors
+$\eta_N\ge0$ with $\eta_N\to0$ can make
+
+$$
+\mathcal A_H(\Phi W_Nr)
+\le C_N\mathcal H_H(\Phi W_Nr)+\eta_N\|r\|_\nu^2
+\quad\text{for every }r\in\mathcal F\cap\mathcal R
+\tag{FH4}
+$$
+
+hold at all sufficiently large smoothing scales. The coefficients
+$C_N$ may grow arbitrarily: the chosen head response vanishes exactly.
+This obstruction does not use the shifted-tail condition $H>2N$.
+It already uses real critical-line zeros and persists under RH.
+
+Condition (FH4) is stronger than Weil positivity requires. No sign of
+the complete signed tail or of $q(r_N)$ follows; positive omitted real-zero
+terms are harmless for positivity. The $r_N$ have not been placed in the
+strict-subhalf spectral input class used by (UG9), so that class remains
+a separate joint spectral/evaluation obligation. Signed cancellation,
+estimates restricted to that actual class, and a growing independently
+verified head remain available. The construction evaluates no finite
+Gram and is not an algorithm for the full projection. The paid $15/32$
+bound, all-input half-bound, joint projected comparison, Robin and RH
+are unchanged.

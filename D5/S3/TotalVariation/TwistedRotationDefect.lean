@@ -116,13 +116,11 @@ theorem parry_window_lower_bound (k : ℕ) (hk : 2 ≤ k)
         · calc
             _ = w (Fin.last b) := by
               convert (hsnoc (a+b) s (w (Fin.last b)) (Fin.append v (Fin.init w))).1 using 1
-              congr 1
             _ = _ := (hsnoc b (endpoint a s v) (w (Fin.last b)) (Fin.init w)).1.symm
         · calc
             _ = pathWeight k p (a+b) s (Fin.append v (Fin.init w)) *
                 Q (endpoint (a+b) s (Fin.append v (Fin.init w))) (w (Fin.last b)) := by
               convert (hsnoc (a+b) s (w (Fin.last b)) (Fin.append v (Fin.init w))).2 using 1
-              congr 1
             _ = _ := by
               rw [(hsnoc b (endpoint a s v) (w (Fin.last b)) (Fin.init w)).2,he,hw,mul_assoc]
     have hcycle (v : Fin (m + 1) → State k) :

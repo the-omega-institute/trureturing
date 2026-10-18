@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:fdcf211a6b92f12a2e59571b9f41f391b9c34753a99e8453665705566cdf3181
-  normalized_sha256: sha256:fdcf211a6b92f12a2e59571b9f41f391b9c34753a99e8453665705566cdf3181
-cas_ref: sha256:fdcf211a6b92f12a2e59571b9f41f391b9c34753a99e8453665705566cdf3181
-coverage_gids:
-  - gid: D5/S3/Analytic/Displacement/GoldenDisplacementComplexEulerProduct.complex_displacement_euler_product
-    target_statement_id: sha256:356e6d701f196afa5b674a7818a6e63ec0374cb05cc4ea7d29bcde712f304c7f
-receipts:
-  unresolved_subitems: []

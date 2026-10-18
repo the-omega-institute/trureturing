@@ -453,14 +453,12 @@ private theorem cutOrder_closed_chain {m : ℕ} (hm : 4 ≤ m) :
       (fun j : Fin (m - 2) =>
         (Sum.inl ⟨j.val, by have hj := j.isLt; omega⟩ : Fin m ⊕ Fin (m - 2)))).2
     convert h using 1
-    congr 2
   have huphead : up.head? = some (.inr ⟨0, by omega⟩) :=
     (ofFn_endpoints (by omega : 0 < m - 2) _).1
   have huptail : up.getLast? = some (.inr ⟨m - 3, by omega⟩) := by
     have h := (ofFn_endpoints (by omega : 0 < m - 2)
       (fun j : Fin (m - 2) => (Sum.inr j : Fin m ⊕ Fin (m - 2)))).2
     convert h using 1
-    congr 2
   have hflo : ([first] ++ lo).IsChain cutNext := by
     apply List.IsChain.append (List.IsChain.singleton _) hlo
     simp only [List.getLast?_singleton, hlohead, Option.mem_some_iff]

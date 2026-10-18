@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:eb9c8099bc267719c21629280dc68ed7ea9879ac9dd344fa2385066080d4f188
-  normalized_sha256: sha256:eb9c8099bc267719c21629280dc68ed7ea9879ac9dd344fa2385066080d4f188
-cas_ref: sha256:eb9c8099bc267719c21629280dc68ed7ea9879ac9dd344fa2385066080d4f188
-coverage_gids:
-  - gid: D5/S3/ObserverMemory/Refinement/CanonicalMapIdentityComposition.canonical_map_identity_and_composition
-    target_statement_id: sha256:070bbefdad19da170553829d1d7e5a088b8a5995cd69af4bf1a1e40e882184c0
-receipts:
-  unresolved_subitems: []

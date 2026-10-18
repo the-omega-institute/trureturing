@@ -46,13 +46,13 @@ theorem perfect_effect_discrimination_orthogonal
         simp [Matrix.sub_mulVec, Matrix.one_mulVec, dotProduct_sub]
       _ = 0 := by rw [hPsiNormalized, hAccept, sub_self]
   have hComplementPsi : (1 - effect) *ᵥ psi = 0 :=
-    (hComplement.dotProduct_mulVec_zero_iff psi).mp hComplementValue
+    (hComplement.dotProduct_mulVec_zero_iff (x := psi)).mp hComplementValue
   have hEffectPsi : effect *ᵥ psi = psi := by
     have hDifference : psi - effect *ᵥ psi = 0 := by
       simpa [Matrix.sub_mulVec, Matrix.one_mulVec] using hComplementPsi
     exact (sub_eq_zero.mp hDifference).symm
   have hEffectPhi : effect *ᵥ phi = 0 :=
-    (hEffect.dotProduct_mulVec_zero_iff phi).mp hReject
+    (hEffect.dotProduct_mulVec_zero_iff (x := phi)).mp hReject
   calc
     star phi ⬝ᵥ psi = star phi ⬝ᵥ (effect *ᵥ psi) := by rw [hEffectPsi]
     _ = (star phi ᵥ* effect) ⬝ᵥ psi := by rw [Matrix.dotProduct_mulVec]

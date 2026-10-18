@@ -28,3 +28,8 @@ The second-order projection and pseudospin interpretation are reused established
 ## Related primary sources
 
 H. Tsunetsugu, *Antiferromagnetic Quantum Spins on the Pyrochlore Lattice*, [arXiv:cond-mat/0103231](https://arxiv.org/abs/cond-mat/0103231), gives earlier chiral tetrahedral doublets and geometry-dependent effective interactions. S. Bravyi, D. P. DiVincenzo and D. Loss, *Schrieffer-Wolff transformation for quantum many-body systems*, [arXiv:1105.0675](https://arxiv.org/abs/1105.0675), gives the general effective-Hamiltonian and linked-cluster framework. The present finite Schur-complement estimate is explicitly derived in the chapter and is not represented as a size-uniform theorem imported from that source.
+
+## Verified locator
+
+- DOI: https://doi.org/10.1103/PhysRevB.81.184416
+- Source: https://arxiv.org/abs/1001.0266v2

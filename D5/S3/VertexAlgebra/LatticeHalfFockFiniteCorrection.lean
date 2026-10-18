@@ -579,8 +579,8 @@ private theorem correctionPolynomial_shift_bound (D : LatticeData) (charge : Cha
   rw [map_sum]
   apply Polynomial.natDegree_sum_le_of_forall_le
   intro exponent member
-  have monomial : MvPolynomial.monomial exponent (MvPolynomial.coeff exponent polynomial) =
-      MvPolynomial.coeff exponent polynomial • MvPolynomial.monomial exponent 1 := by
+  have monomial : MvPolynomial.monomial exponent (polynomial.coeff exponent) =
+      polynomial.coeff exponent • MvPolynomial.monomial exponent 1 := by
     rw [smul_monomial, smul_eq_mul, mul_one]
   rw [monomial, map_smul]
   apply (Polynomial.natDegree_smul_le _ _).trans

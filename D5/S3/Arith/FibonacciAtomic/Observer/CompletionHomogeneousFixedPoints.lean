@@ -43,7 +43,7 @@ def rho (X : CompletionTree) : CompletionTree :=
 private theorem corec_leaf (b : Bool) : PFunctor.M.corec rhoStep (.inr b) = leaf b := by
   rw [PFunctor.M.corec_def]
   apply congrArg PFunctor.M.mk
-  apply Sigma.ext (by simp [rhoStep, PFunctor.map])
+  apply Sigma.ext (by simp [rhoStep, PFunctor.map, PFunctor.Obj.mk, PFunctor.Obj.fst, PFunctor.Obj.snd])
   apply heq_of_eq
   funext e
   exact e.elim
@@ -52,7 +52,7 @@ private theorem corec_leaf (b : Bool) : PFunctor.M.corec rhoStep (.inr b) = leaf
   unfold rho
   rw [PFunctor.M.corec_def]
   apply congrArg PFunctor.M.mk
-  apply Sigma.ext (by simp [rhoStep, leaf, PFunctor.map])
+  apply Sigma.ext (by simp [rhoStep, leaf, PFunctor.map, PFunctor.Obj.mk, PFunctor.Obj.fst, PFunctor.Obj.snd])
   apply heq_of_eq
   funext e
   exact e.elim
@@ -105,7 +105,7 @@ theorem readout_ext {X Y : CompletionTree}
       have root := same []
       have bc : b = c := by cases b <;> cases c <;> simp_all [completionReadout, leaf]
       subst c
-      exact ⟨.inl b, Empty.elim, Empty.elim, by simp [leaf], by simp [leaf], fun i => i.elim⟩
+      exact ⟨.inl b, Empty.elim, Empty.elim, by simp [leaf, PFunctor.Obj.mk], by simp [leaf, PFunctor.Obj.mk], fun i => i.elim⟩
     | node_case l r =>
       have root := same []
       cases b <;> simp [completionReadout, leaf, node] at root
@@ -116,7 +116,7 @@ theorem readout_ext {X Y : CompletionTree}
       cases b <;> simp [completionReadout, leaf, node] at root
     | node_case s t =>
       refine ⟨.inr (), (fun b : Bool => if b then r else l),
-        (fun b : Bool => if b then t else s), by simp [node], by simp [node], ?_⟩
+        (fun b : Bool => if b then t else s), by simp [node, PFunctor.Obj.mk], by simp [node, PFunctor.Obj.mk], ?_⟩
       intro b p
       exact same (b :: p)
 

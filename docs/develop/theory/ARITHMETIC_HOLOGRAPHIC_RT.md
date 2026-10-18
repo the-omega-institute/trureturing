@@ -4937,3 +4937,56 @@ $$
 **范围。** 定理 50.2 只对固定 Fourier 二维证书族、append-only 前缀和每批有限菜单给出可行性与累计追加界；(50.2) 只比较固定残余上的集合覆盖最优值，不是任意 LOSR/CPTP、完整钻石范数或物理资源的单调性或下界。若 $X_t=T_{\varepsilon_t}$ 采用阈值语义，则本式只覆盖降阈值 $\varepsilon_t\le\varepsilon_{t-1}$ 的递增链；升阈值是删除角色的 deletion-only 更新，不套用本定理，除非另行重建递增链。若业务要求菜单收缩时历史层也必须属于新菜单，则需另定义迁移/重优化问题，本定理不覆盖。
 
 ## 追加锚（本行以下为增补区）
+
+## 51. Exact mixed-qubit conversion error on a population interval
+
+### 51.1 Theorem (exact mixed-to-mixed conversion error)
+On C²⊗C² define
+ρ(r,c)=r|00⟩⟨00|+(1−r)|11⟩⟨11|+c|00⟩⟨11|+conj(c)|11⟩⟨00|,
+where 0≤r≤1 and |c|²≤r(1−r). Let τ=ρ(p,d) be another state in this family, and assume
+p∈[min(r,1−r),max(r,1−r)].
+Then the minimum over finite LOSR channels Λ:M₄→M₄ is
+minΛ ‖Λ(ρ(r,c))−ρ(p,d)‖₁ = 2 max{0,|d|−|c|}.
+The norm is the unhalved Schatten trace norm. The same minimum holds over the larger class of CPTP maps Λ for which Γ∘Λ∘Γ is CPTP, where Γ is partial transpose on Bob in the displayed basis. This class is defined by the stated condition; merely preserving the set of PPT states is not substituted for that condition.
+An optimizer is a mixture of at most two product CPTP maps. No communication, postselection, catalyst, or entangled ancillary state is used.
+
+**Proof.**
+Write z=|c| and w=|d|. Independent input and output local diagonal unitary conjugations reduce the optimization to real nonnegative c=z and d=w: the free classes are closed under these conjugations and the trace norm is unitarily invariant. A diagonal unitary diag(exp(iθ),1) on Alice multiplies the |00⟩⟨11| coefficient by exp(iθ), so both phase adjustments are available, including arbitrary phase choices when a coefficient is zero.
+For a Hermitian trace-one operator X write X=X₊−X₋ for its Jordan decomposition. Its negative mass is Tr X₋=(‖X‖₁−1)/2. Define N(σ)=Tr(σ^Γ)₋. Every map in the larger class satisfies
+‖Λ(σ)^Γ‖₁=‖(ΓΛΓ)(σ^Γ)‖₁≤‖σ^Γ‖₁,
+because positive trace-preserving maps contract the trace norm of Hermitian inputs: apply positivity and trace preservation separately to X₊ and X₋ and then the triangle inequality. Consequently N(Λ(σ))≤N(σ). In particular LOSR belongs to the class: if A,B are local CPTP maps, Γ(A⊗B)Γ=A⊗(TBT), and the latter Bob map has the complex-conjugated Kraus operators of B and is CPTP; convex mixtures retain this property.
+The eigenvalues of ρ(r,z)^Γ are r,1−r,z,−z, hence N(ρ(r,z))=z. Put
+P₋=(|01⟩−|10⟩)(⟨01|−⟨10|)/2,
+W=−2P₋^Γ=|00⟩⟨11|+|11⟩⟨00|−|01⟩⟨01|−|10⟩⟨10|.
+Its eigenvalues are 1,−1,−1,−1, so ‖W‖∞=1. For every output state σ, positivity of (σ^Γ)₊ and 0≤P₋≤I give
+Tr Wσ=−2Tr P₋σ^Γ≤2Tr(σ^Γ)₋=2N(σ).
+Also Tr Wρ(p,w)=2w. Trace-norm duality therefore yields, for every allowed Λ,
+‖ρ(p,w)−Λ(ρ(r,z))‖₁≥Tr W[ρ(p,w)−Λ(ρ(r,z))]≥2(w−z).
+Combining with nonnegativity proves the claimed lower bound even for the larger class, without assuming its output is maximally correlated.
+For attainment, if r≠1/2 set t=(p−(1−r))/(2r−1). The interval hypothesis is exactly t∈[0,1]. The two-branch LOSR map
+M_t=t id+(1−t)Ad(X⊗X), where X is the Pauli bit flip and Ad(U)(Y)=UYU†,
+sends ρ(r,z) to ρ(p,z): simultaneous bit flips exchange the diagonal entries and conjugate the off-diagonal coefficient, which is already real. If r=1/2 then the interval forces p=1/2 and identity suffices. The intermediate state is valid either by complete positivity or by z²≤r(1−r)≤p(1−p).
+If w≥z, this intermediate output already attains the lower bound. Its difference from the target is (w−z)(|00⟩⟨11|+|11⟩⟨00|), with nonzero eigenvalues ±(w−z), hence norm 2(w−z).
+If 0≤w<z, apply on Alice the local dephasing channel
+D_s=(1+s)id/2+(1−s)Ad(Z)/2,  s=w/z∈[0,1], where Z=diag(1,−1).
+It preserves the populations and multiplies the coherence by s, producing the target exactly. If z=w=0, no dephasing is needed. Final phase restoration gives d. Since local pre- and postprocessing can be absorbed into each product channel in M_t, the shared mixture still uses at most two product CPTP branches. This proves attainment and equality for both operation classes. □
+
+### 51.2 Theorem (pure-target specialization)
+By Theorem 51.1, for |ψ_p⟩=√p|00⟩+√(1−p)|11⟩, take d=√(p(1−p)). Under the same population interval,
+δ=2(√(p(1−p))−|c|).
+For example r=9/10, c=1/10 and p=3/4 give a genuinely mixed entangled source, a nonflat pure target, and exact error √3/2−1/5. The shared identity probability is t=13/16. The lower bound covers all outputs of the larger operation class, not only the displayed two-branch construction.
+
+### 51.3 Theorem (domain obstruction and preparation-channel distance)
+This closes an explicit mixed-source, nonflat-target slice of the state-conversion problem excluded by the pure-source/flat-target theorems in the current RT volume. Within the population interval it also characterizes exact mixed-to-mixed convertibility: it holds exactly when |d|≤|c|. Population matching alone creates no additional approximation cost there. This is not an arbitrary mixed-state conversion theorem, and no equality is asserted outside the interval.
+The interval cannot simply be dropped, as the following obstruction shows. For a Bell source r=c=1/2 and a nonflat entangled pure target 0<p<1, p≠1/2, the displayed right-hand side would be zero. Nevertheless, no LOSR channel converts the source exactly to that target. Indeed, if a convex mixture has a pure output, every positive-weight branch has that same pure output. Dilating both local channels in one product branch to a local isometry gives a global pure vector that must factor as the pure target times a pure environment vector. Across Alice plus her environment versus Bob plus his environment, the Schmidt rank remains two. The target has rank two, so the environment has rank one; the target Schmidt weights would then have to be the Bell weights (1/2,1/2), a contradiction. The product-CPTP channel set is compact in finite dimensions, and its convex hull is compact, so the attained LOSR minimum is strictly positive. This obstruction does not assert a numerical lower bound outside the stated interval.
+For scalar-input preparation channels P_σ:C→M₄, P_σ(x)=xσ, the same value is the exact diamond distance: for every ancilla and operator X the amplified difference sends X to (σ−τ)⊗X, whose trace norm is ‖σ−τ‖₁‖X‖₁. This observation does not supply coherent multisector, logical-reference, tensor-network, or gravitational claims. 
+
+### 51.4 Mathematical sources
+Negativity monotonicity is standard: Vidal–Werner, A computable measure of entanglement, Phys. Rev. A 65,032314 (2002), Section II and Proposition3: https://arxiv.org/pdf/quant-ph/0102117 . The proof above includes the precise contraction argument required here.
+The maximally correlated negativity formula is standard: Khasin–Kosloff–Steinitz, Negativity as a distance from a separable state, Phys. Rev. A 75,052325 (2007), Theorem1: https://arxiv.org/pdf/quant-ph/0701005 . Their distance uses the entrywise sum of absolute matrix entries, not general Schatten trace distance. The present draft does not claim novelty for negativity, its witness, or distance from a separable diagonal state.
+George–Chitambar, Revisiting pure state transformations with zero communication, Phys. Rev. A 109,062418 (2024), https://link.aps.org/accepted/10.1103/PhysRevA.109.062418 , treats the prior pure-state/fidelity optimization. The present statement supplies a self-contained mixed-input conversion-error equality and finite LOSR attainer on the stated population domain. Broader literature priority remains unclaimed.
+Adjacent mixed-qubit conversion theory is also established: Wu et al., Quantum coherence and state conversion: theory and experiment, npj Quantum Information 6,22 (2020), Theorem3, https://www.nature.com/articles/s41534-020-0250-z , characterizes stochastic IO/SIO reachability. Its free operations are single-system incoherent operations, rather than bipartite LOSR channels. No absence of prior mixed-qubit conversion theory is asserted here.
+
+Closer reachability predecessors are Shi et al., Coherence transformations in single qubit systems, Scientific Reports 7,14806 (2017), Eqs.(31)–(32) and Fig.3, https://www.nature.com/articles/s41598-017-13687-4 , and Chitambar–Gour, Comparison of incoherent operations and measures of coherence, Phys. Rev. A 94,052336 (2016), discussion after Proposition3, https://link.aps.org/accepted/10.1103/PhysRevA.94.052336 . The former gives the qubit PIO reachable hexagon; the latter maps PIO transformations to zero-communication transformations of maximally correlated extensions. The attainment construction on the population interval follows the central strip of that reachable region after this lift. The present statement packages the construction with an unrestricted-output negativity witness to obtain the exact trace-norm value, including for the explicitly defined ΓΛΓ-CPTP class. No originality is claimed for the mixed-qubit reachability construction or for the ingredients of this combination.
+
+The Bell-source conversion problem outside the population interval of §51 is treated in [Theorem 52.1 of the continuation](ARITHMETIC_HOLOGRAPHIC_RT_II.md#521-theorem-exact-trace-norm-optimum).

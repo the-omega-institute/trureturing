@@ -10,6 +10,9 @@
 admission_basis: escape-witness
 Direct frozen dependencies: none; mathematical owners are pinned Mathlib.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/17570.
+Escape audit unfinished for the public kernel_cross_identity interface:
+https://github.com/the-omega-institute/trureturing/issues/17856.
+Its whole-commutative-ring-family observation and source binding remain missing.
 The box and total are literal expressions; sequence length uses Finsupp.degree in proofs.
 The public length set retains the specified sum expression.
 IsMinimalZeroSum: proof_shape: bind-only; escape_witness: none; consumers: lengths, lengths_upper_bound, primitive_cofactor_admissible, sequence_cofactor_length, lengths_nonempty, fromWeights_minimal_to_vector, lengths_finite, sequence_cofactor_multiplicities, finite_minimal_on_finset.
@@ -21,7 +24,7 @@ cofactor: proof_shape: bind-only; escape_witness: none; consumers: lengths_upper
 cofactor_eq_adjugate: proof_shape: bind-only; escape_witness: none; consumers: _simp_1_1, _simp_1_1, det_replace_column_e0.
 cofactor_mulVec_eq_zero: proof_shape: bind-only; escape_witness: none; consumers: primitive_cofactor_admissible, interiorSimplex_positive_kernel, cofactor_length_identity.
 sum_cofactor_eq_det: proof_shape: bind-only; escape_witness: none; consumers: sequence_cofactor_length, augmented_det_ne_zero_of_oriented_cofactors, interiorSimplex_positive_kernel, cofactor_length_identity.
-kernel_cross_identity: proof_shape: bind-only; escape_witness: none; consumers: kernel_pair_cross, kernel_det_ne_zero_of_positive, sequence_cofactor_multiplicities, positive_kernel_orientation.
+kernel_cross_identity: proof_shape: bind-only; escape_witness: none; consumers: kernel_pair_cross, kernel_det_ne_zero_of_positive, sequence_cofactor_multiplicities, positive_kernel_orientation, D5.S3.Quantum.Entanglement.AbsolutePPT.NonnegativeKernelCofactor.circuit_cofactor_complete.
 kernel_pair_cross: proof_shape: bind-only; escape_witness: none; consumers: primitive_kernel_span.
 primitive_kernel_span: proof_shape: content; escape_witness: _private.D5.S3.Arith.Lattices.CofactorKernel.0.D5.S3.Arith.Lattices.CofactorKernel.primitive_kernel_span; consumers: primitive_kernel_nonneg_span, cofactor_length_identity.
 primitive_kernel_nonneg_span: proof_shape: content; escape_witness: _private.D5.S3.Arith.Lattices.CofactorKernel.0.D5.S3.Arith.Lattices.CofactorKernel.primitive_kernel_span; consumers: fromWeights_minimal_of_primitive.
@@ -118,7 +121,7 @@ theorem sum_cofactor_eq_det {R : Type*} [CommRing R] {d : ℕ}
   simpa [cofactor, Matrix.submatrix, augment_zero, augment_succ] using
     (Matrix.det_succ_row_zero (augment M)).symm
 
-private theorem kernel_cross_identity {R : Type*} [CommRing R] {d : ℕ}
+theorem kernel_cross_identity {R : Type*} [CommRing R] {d : ℕ}
     (M : Matrix (Fin d) (Fin (d + 1)) R) (x : Fin (d + 1) → R)
     (hx : M *ᵥ x = 0) (i : Fin (d + 1)) :
     (augment M).det * x i = (∑ j, x j) * cofactor M i := by

@@ -42,7 +42,7 @@ theorem one_step_closure_fivefold_equivalence
       depthOneKernel q F < depthZeroKernel q) := by
   constructor
   · tfae_have 1 ↔ 2 :=
-      (deterministic_interface_sixfold_equivalence q F).out 5 1
+      (deterministic_interface_sixfold_equivalence q F).out 6 2
     tfae_have 2 ↔ 3 := by
       constructor
       · intro congruence
@@ -65,9 +65,9 @@ theorem one_step_closure_fivefold_equivalence
         simpa [completeItinerary, Function.iterate_succ_apply'] using
           congrFun sameItinerary 1
     tfae_have 2 ↔ 4 :=
-      (deterministic_interface_sixfold_equivalence q F).out 1 0
+      (deterministic_interface_sixfold_equivalence q F).out 2 1
     tfae_have 2 ↔ 5 :=
-      (deterministic_interface_sixfold_equivalence q F).out 1 2
+      (deterministic_interface_sixfold_equivalence q F).out 2 3
     tfae_finish
   · constructor
     · rintro ⟨x, y, carry⟩

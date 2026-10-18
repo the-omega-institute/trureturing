@@ -40,7 +40,21 @@ $$claim \Leftrightarrow (\operatorname{IsLeast}\left(\ \{\frac{\operatorname{vol
 
 One half is the least value of vol L_Sep(A) / vol L(A) over Hermitian two-qubit matrices A with vol L(A) not zero, where vol is Lebesgue measure on the real line, L(A) is the numerical range over all two-qubit density matrices (IsDensity: positive semidefinite with trace 1) and L_Sep(A) the numerical range over separable states. For scalar A both ranges are points, so the ratio is defined exactly when A is not scalar. The least value is attained, so it is the minimum of the paper's Definition 2 for n = 2, d = 2 and k = 1.
 
-**Theorem 1.4 (The minimal ratio is one half).**
+**Theorem 1.4 (Zero determinant gives a product vector).**
+
+$$\forall u : (\operatorname{Fin}\left(2\right)\times\operatorname{Fin}\left(2\right)) \to \mathbb{C}, \operatorname{u}\left((0,0)\right) \operatorname{u}\left((1,1)\right) = \operatorname{u}\left((0,1)\right) \operatorname{u}\left((1,0)\right) \Rightarrow \exists a : \operatorname{Fin}\left(2\right) \to \mathbb{C}, \exists b : \operatorname{Fin}\left(2\right) \to \mathbb{C}, \forall i : \operatorname{Fin}\left(2\right), \forall j : \operatorname{Fin}\left(2\right), \operatorname{u}\left((i,j)\right) = \operatorname{a}\left(i\right) \operatorname{b}\left(j\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/SeparableNumericalRangeRatio.zero_determinant_factorization` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Timo Simnacher; Jakub Czartowski; Konrad Szymański; Karol Życzkowski (2021). *Confident entanglement detection via the separable numerical range*. DOI: [10.1103/PhysRevA.104.042420](https://doi.org/10.1103/PhysRevA.104.042420). URL: <https://arxiv.org/abs/2107.04365v1>.
+
+*Commentary.*
+
+For any complex two-qubit coefficient array u, the equality u(0,0) u(1,1) = u(0,1) u(1,0) implies that u(i,j) = a(i) b(j) for two complex vectors a and b. The factorization includes zero arrays and all zero-pivot cases. Consequently, the outer product of u with its conjugate is a Kronecker product of two positive semidefinite outer products.
+
+**Theorem 1.5 (The minimal ratio is one half).**
 
 $$claim$$
 
@@ -64,4 +78,5 @@ In the magic basis a two-qubit vector u is a product vector exactly when the sum
 - Truth anchor: `D5/S3/Quantum/Entanglement/SeparableNumericalRangeRatio.numericalRange`
 - Truth anchor: `D5/S3/Quantum/Entanglement/SeparableNumericalRangeRatio.result`
 - Truth anchor: `D5/S3/Quantum/Entanglement/SeparableNumericalRangeRatio.separableStates`
+- Truth anchor: `D5/S3/Quantum/Entanglement/SeparableNumericalRangeRatio.zero_determinant_factorization`
 - Dependency: [D5/S3/Quantum/Entanglement/StructuredNegativityCoincidenceRefutation](StructuredNegativityCoincidenceRefutation.md)

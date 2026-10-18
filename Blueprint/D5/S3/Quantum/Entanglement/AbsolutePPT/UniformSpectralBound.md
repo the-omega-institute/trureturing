@@ -16,6 +16,8 @@ $$\forall (k:\mathbb{N}), (8\leq k)\Rightarrow \forall (l:Fin\left(3\cdot (3+k)\
 
 Here n=3+k with k at least 8. An antitone nonnegative real spectrum of mass one is bounded using K1 alone. The argument extracts two boundary inequalities, reconstructs the spectrum from gaps, transfers a 33-ray cone certificate, and bounds every middle-coordinate mixture. The sum 3+k is formed in the natural numbers before its coercion to the reals; the quotient is real division.
 
+The norm, step-synthesis, gap reconstruction and convex mixture lemmas have their unique source and typed descriptions in HalfspaceConeTransfer. This original qutrit proof and the three-row scalar proof both consume that common dependency; the original declaration names are preserved.
+
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSpectralBound.uniform_spectral_bound`

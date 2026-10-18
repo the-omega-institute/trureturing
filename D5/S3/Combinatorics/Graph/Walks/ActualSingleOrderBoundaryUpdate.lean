@@ -5,6 +5,7 @@
    anchors: []
    utility: none
    digest: Literal replacement of the old joint path constructs complete single-order boundaries with exact actual inventories and endpoint updates. -/
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Graph.Walks.ActualJointPartitionUpdate
 import D5.S3.Combinatorics.Graph.Walks.ActualJointEndpointPairs
 

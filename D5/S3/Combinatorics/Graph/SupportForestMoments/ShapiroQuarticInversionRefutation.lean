@@ -117,6 +117,7 @@ Information-escape registration is paused under CLAUDE.md §3.9.
 
 import D5.S3.Combinatorics.Graph.SupportForestMoments.SupportAndEdgeWordReflection
 import Mathlib.Combinatorics.SimpleGraph.Acyclic
+import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
 open D5.S3.Combinatorics.Graph.SupportForestMoments.SupportAndEdgeWordReflection
 namespace D5.S3.Combinatorics.Graph.SupportForestMoments.ShapiroQuarticInversionRefutation
 open scoped BigOperators

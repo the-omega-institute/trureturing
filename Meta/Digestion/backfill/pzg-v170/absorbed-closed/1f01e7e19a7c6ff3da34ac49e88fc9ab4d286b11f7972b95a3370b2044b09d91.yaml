@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:1f01e7e19a7c6ff3da34ac49e88fc9ab4d286b11f7972b95a3370b2044b09d91
-  normalized_sha256: sha256:1f01e7e19a7c6ff3da34ac49e88fc9ab4d286b11f7972b95a3370b2044b09d91
-cas_ref: sha256:1f01e7e19a7c6ff3da34ac49e88fc9ab4d286b11f7972b95a3370b2044b09d91
-coverage_gids:
-  - gid: D5/S3/Constants/Transcription/ConjugatePolynomialCertificate.conjugate_quadratic_product
-    target_statement_id: sha256:d72b24ce7c1bfbf838c905b42ab7c7a663f5273dd5f7f4355ba0c7d90b556126
-receipts:
-  unresolved_subitems: []

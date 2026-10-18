@@ -1,0 +1,1 @@
+{"statement_id":"sha256:d771812703913af8acd038a373f35761adab91cebe9d60e3b4feddb28e912836","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),8:Geometry),10:Hyperideal),13:ZeroTraceHull),15:zero_trace_hull)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),8:Geometry),10:Hyperideal),13:ZeroTraceHull),1:V)","kind":"def"}]}

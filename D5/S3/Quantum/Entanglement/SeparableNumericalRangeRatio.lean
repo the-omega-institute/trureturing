@@ -68,6 +68,27 @@ private noncomputable def P (v : Fin 2 × Fin 2 → ℂ) : Matrix (Fin 2 × Fin 
 private noncomputable def mg (z : Fin 4 → ℂ) : Fin 2 × Fin 2 → ℂ := fun ij =>
   (!![z 0 + I * z 1, I * z 2 + z 3; I * z 2 - z 3, z 0 - I * z 1] ij.1 ij.2) / (Real.sqrt 2 : ℂ)
 
+/-- A two-qubit coefficient array with zero determinant is a product vector. -/
+theorem zero_determinant_factorization :
+    ∀ u : Fin 2 × Fin 2 → ℂ, u (0, 0) * u (1, 1) = u (0, 1) * u (1, 0) →
+      ∃ a b : Fin 2 → ℂ, ∀ i j, u (i, j) = a i * b j := by
+  intro u hu
+  by_cases h00 : u (0, 0) = 0
+  · by_cases h01 : u (0, 1) = 0
+    · refine ⟨![0, 1], ![u (1, 0), u (1, 1)], fun i j => ?_⟩
+      fin_cases i <;> fin_cases j <;> simp [h00, h01]
+    · refine ⟨![1, u (1, 1) / u (0, 1)], ![u (0, 0), u (0, 1)], fun i j => ?_⟩
+      have h10 : u (1, 0) = 0 := by
+        rw [h00, zero_mul] at hu
+        exact (mul_eq_zero.mp hu.symm).resolve_left h01
+      fin_cases i <;> fin_cases j <;> simp [h00, h10]
+      field_simp
+  · refine ⟨![1, u (1, 0) / u (0, 0)], ![u (0, 0), u (0, 1)], fun i j => ?_⟩
+    fin_cases i <;> fin_cases j <;> simp
+    · field_simp
+    · field_simp
+      linear_combination hu
+
 /-- Two pure states differ by a positive multiple, at most `2`, of a difference of two separable
 states: both receive the same separable noise. -/
 private theorem pure_pair (u v : Fin 2 × Fin 2 → ℂ) (hu : ∑ i, normSq (u i) = 1)
@@ -83,23 +104,7 @@ private theorem pure_pair (u v : Fin 2 × Fin 2 → ℂ) (hu : ∑ i, normSq (u 
   have cone_prod : ∀ u : Fin 2 × Fin 2 → ℂ, u (0, 0) * u (1, 1) = u (0, 1) * u (1, 0) →
       separableCone (P u) := by
     intro u hu
-    have hab : ∃ a b : Fin 2 → ℂ, ∀ i j, u (i, j) = a i * b j := by
-      by_cases h00 : u (0, 0) = 0
-      · by_cases h01 : u (0, 1) = 0
-        · refine ⟨![0, 1], ![u (1, 0), u (1, 1)], fun i j => ?_⟩
-          fin_cases i <;> fin_cases j <;> simp [h00, h01]
-        · refine ⟨![1, u (1, 1) / u (0, 1)], ![u (0, 0), u (0, 1)], fun i j => ?_⟩
-          have h10 : u (1, 0) = 0 := by
-            rw [h00, zero_mul] at hu
-            exact (mul_eq_zero.mp hu.symm).resolve_left h01
-          fin_cases i <;> fin_cases j <;> simp [h00, h10]
-          field_simp
-      · refine ⟨![1, u (1, 0) / u (0, 0)], ![u (0, 0), u (0, 1)], fun i j => ?_⟩
-        fin_cases i <;> fin_cases j <;> simp
-        · field_simp
-        · field_simp
-          linear_combination hu
-    obtain ⟨a, b, hab⟩ := hab
+    obtain ⟨a, b, hab⟩ := zero_determinant_factorization u hu
     have hu' : u = fun ij : Fin 2 × Fin 2 => a ij.1 * b ij.2 := funext fun ij => hab ij.1 ij.2
     refine ⟨1, fun _ => vecMulVec a (star a), fun _ => vecMulVec b (star b),
       fun _ => ⟨posSemidef_vecMulVec_self_star a, posSemidef_vecMulVec_self_star b⟩, ?_⟩

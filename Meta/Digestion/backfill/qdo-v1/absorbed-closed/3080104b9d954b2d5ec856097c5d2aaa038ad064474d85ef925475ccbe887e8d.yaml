@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:3080104b9d954b2d5ec856097c5d2aaa038ad064474d85ef925475ccbe887e8d
-  normalized_sha256: sha256:3080104b9d954b2d5ec856097c5d2aaa038ad064474d85ef925475ccbe887e8d
-cas_ref: sha256:3080104b9d954b2d5ec856097c5d2aaa038ad064474d85ef925475ccbe887e8d
-coverage_gids:
-  - gid: D5/S3/Entropy/Observation/CompletionInformationChainDecompositionCanonical.completion_information_chain_decomposition_canonical
-    target_statement_id: sha256:86a95743c8e2107ffbcb59d9af81e6391c1be2369c1d9cf0bfb8b794b753f5cd
-receipts:
-  unresolved_subitems: []
