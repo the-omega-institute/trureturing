@@ -73,7 +73,7 @@ A tier 1 suggestion of a 2025 paper, preregistered in issue #18836 before any Le
 | `moment`, `F0`, `K`, `claim` and the density | bind-only | none | definitions used by `claim` |
 | private helpers | bind-only (consumed on the proof path of `result`) | none | consumed helpers |
 
-The preregistration proposed the certified sign changes as non-bind-only content. The pre-freeze judgement-form seat judged them bind-only, and every declaration is labelled bind-only here. The bind-only form is admitted under the open-problem-resolution basis of CLAUDE.md §3.2.
+Every declaration is bind-only: the certified sign changes instantiate Mathlib's exponential bounds and interval-integral identities, followed by rational normalization. The bind-only form is admitted under the open-problem-resolution basis of CLAUDE.md §3.2.
 
 Utility: `kind=certified-instance; basis=refutes`. There is no digestion atom.
 
