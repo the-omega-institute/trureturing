@@ -5,10 +5,242 @@
    anchors: []
    utility: none
    digest: Measurable next-event rules admit unpadded normalization preserving every capped execution. -/
-import D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.StoppingLaw.ReadTree
+import Mathlib.Data.Int.Basic
+import Mathlib.Data.Fintype.Basic
+import Mathlib.Tactic.FinCases
+import Mathlib.Tactic
+import Mathlib.Data.Finset.Lattice.Fold
+import Mathlib.Data.List.TakeDrop
 import Mathlib.MeasureTheory.Measure.Prod
 import Mathlib.MeasureTheory.Constructions.BorelSpace.Real
 import Mathlib.Data.ENat.Lattice
+
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+
+namespace D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.StoppingLaw
+
+abbrev Spins := ℤ → Bool
+
+inductive Hidden where
+  | a (spin : Bool)
+  | b (spin : Bool)
+  deriving DecidableEq, Fintype
+
+/-- Both phases use the original integer read clock. -/
+def visible (φ : Bool) (S : Spins) (t : ℤ) : Bool :=
+  if (t - φ.toInt) % 2 = 0 then
+    Bool.xor (S ((t - φ.toInt) / 2)) (S ((t - φ.toInt) / 2 + 1))
+  else false
+
+def hidden (φ : Bool) (S : Spins) (t : ℤ) : Hidden :=
+  if (t - φ.toInt) % 2 = 0 then .a (S ((t - φ.toInt) / 2))
+  else .b (S ((t - φ.toInt) / 2 + 1))
+
+/-- The target spin index at endpoint zero or one, in either phase. -/
+def targetIndex (j φ : Bool) : ℤ := if φ then 0 else j.toInt
+
+def targetClass (j φ : Bool) (s : Bool) : Hidden :=
+  if j = φ then .a s else .b s
+
+theorem active_visible (φ : Bool) (S : Spins) (e : ℤ) :
+    visible φ S (2 * e + φ.toInt) = Bool.xor (S e) (S (e + 1)) := by
+  have hd : (2 * e + φ.toInt - φ.toInt) / 2 = e := by omega
+  have hm : (2 * e + φ.toInt - φ.toInt) % 2 = 0 := by omega
+  simp [visible, hm, hd]
+
+theorem separator_visible (φ : Bool) (S : Spins) (e : ℤ) :
+    visible φ S (2 * e + φ.toInt + 1) = false := by
+  have hm : (2 * e + φ.toInt + 1 - φ.toInt) % 2 ≠ 0 := by omega
+  simp [visible, hm]
+
+theorem active_hidden (φ : Bool) (S : Spins) (e : ℤ) :
+    hidden φ S (2 * e + φ.toInt) = .a (S e) := by
+  have hd : (2 * e + φ.toInt - φ.toInt) / 2 = e := by omega
+  have hm : (2 * e + φ.toInt - φ.toInt) % 2 = 0 := by omega
+  simp [hidden, hm, hd]
+
+theorem separator_hidden (φ : Bool) (S : Spins) (e : ℤ) :
+    hidden φ S (2 * e + φ.toInt + 1) = .b (S (e + 1)) := by
+  have hd : (2 * e + φ.toInt + 1 - φ.toInt) / 2 = e := by omega
+  have hm : (2 * e + φ.toInt + 1 - φ.toInt) % 2 ≠ 0 := by omega
+  simp [hidden, hm, hd]
+
+theorem negative_seam (S : Spins) : hidden true S 0 = .b (S 0) := by
+  simpa using separator_hidden true S (-1)
+
+theorem actual_endpoint (j φ : Bool) (S : Spins) :
+    hidden φ S j.toInt = targetClass j φ (S (targetIndex j φ)) := by
+  cases j <;> cases φ
+  · simpa [targetClass, targetIndex] using active_hidden false S 0
+  · simpa [targetClass, targetIndex] using negative_seam S
+  · simpa [targetClass, targetIndex] using separator_hidden false S 0
+  · simpa [targetClass, targetIndex] using active_hidden true S 0
+
+theorem opposite_phase_visible (φ : Bool) (S : Spins) (t : ℤ)
+    (h : (t - φ.toInt) % 2 = 0) : visible (!φ) S t = false := by
+  have ht : 2 * ((t - (!φ).toInt - 1) / 2) + (!φ).toInt + 1 = t := by
+    cases φ <;> simp only [Bool.not_false, Bool.not_true, Bool.toInt_false,
+      Bool.toInt_true] at * <;> omega
+  simpa only [ht] using separator_visible (!φ) S ((t - (!φ).toInt - 1) / 2)
+
+theorem constant_visible (φ s : Bool) (t : ℤ) : visible φ (fun _ => s) t = false := by
+  simp [visible]
+
+end D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.StoppingLaw
+
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+
+namespace D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.StoppingLaw
+
+/-- A none leaf means permanent internal continuation after the reads already made. -/
+inductive ReadTree where
+  | leaf (output : Option Hidden)
+  | read (address : ℤ) (zero one : ReadTree)
+  deriving DecidableEq
+
+abbrev Record := List (ℤ × Bool)
+
+structure Execution where
+  output : Option Hidden
+  record : Record
+  deriving DecidableEq
+
+namespace Execution
+
+def paid (v : Execution) : ℕ := v.record.length
+
+def returned (v : Execution) : Bool := v.output.isSome
+
+def prepend (t : ℤ) (b : Bool) (v : Execution) : Execution :=
+  ⟨v.output, (t,b) :: v.record⟩
+
+@[simp] theorem paid_prepend (t : ℤ) (b : Bool) (v : Execution) :
+    (v.prepend t b).paid = v.paid + 1 := by simp [paid, prepend]
+
+@[simp] theorem output_prepend (t : ℤ) (b : Bool) (v : Execution) :
+    (v.prepend t b).output = v.output := rfl
+
+end Execution
+
+namespace ReadTree
+
+def height : ReadTree → ℕ
+  | .leaf _ => 0
+  | .read _ z o => max z.height o.height + 1
+
+/-- Repeated and separator reads are recorded and charged separately. -/
+def run : ReadTree → (ℤ → Bool) → Execution
+  | .leaf a, _ => ⟨a, []⟩
+  | .read t z o, x => (if x t then o.run x else z.run x).prepend t (x t)
+
+/-- Every potential queried address, including nodes not visited in this execution. -/
+def addresses : ReadTree → Finset ℤ
+  | .leaf _ => ∅
+  | .read t z o => insert t (z.addresses ∪ o.addresses)
+
+/-- Every spin coordinate used by a potential read in either source phase. -/
+def support : ReadTree → Finset ℤ
+  | .leaf _ => ∅
+  | .read t z o => {t / 2, t / 2 + 1, (t - 1) / 2, (t - 1) / 2 + 1} ∪
+      (z.support ∪ o.support)
+
+@[simp] theorem run_leaf (a : Option Hidden) (x : ℤ → Bool) :
+    (leaf a).run x = ⟨a, []⟩ := rfl
+
+@[simp] theorem height_leaf (a : Option Hidden) : (leaf a).height = 0 := rfl
+
+@[simp] theorem paid_leaf (a : Option Hidden) (x : ℤ → Bool) :
+    ((leaf a).run x).paid = 0 := rfl
+
+theorem paid_le_height (T : ReadTree) (x : ℤ → Bool) : (T.run x).paid ≤ T.height := by
+  induction T with
+  | leaf a => exact le_rfl
+  | read t z o hz ho =>
+    simp only [run, height]
+    split
+    · simpa using Nat.add_le_add_right (ho.trans (le_max_right _ _)) 1
+    · simpa using Nat.add_le_add_right (hz.trans (le_max_left _ _)) 1
+
+theorem paid_cap (T : ReadTree) {k : ℕ} (h : T.height ≤ k) (x : ℤ → Bool) :
+    (T.run x).paid ≤ k := (T.paid_le_height x).trans h
+
+theorem record_addresses (T : ReadTree) (x : ℤ → Bool) :
+    ∀ a ∈ (T.run x).record, a.1 ∈ T.addresses := by
+  induction T with
+  | leaf a => simp [run]
+  | read t z o hz ho =>
+    simp only [run, Execution.prepend, addresses]
+    split <;> intro a ha
+    · rcases List.mem_cons.mp ha with rfl | ha
+      · exact Finset.mem_insert_self _ _
+      · exact Finset.mem_insert_of_mem (Finset.mem_union_right _ (ho a ha))
+    · rcases List.mem_cons.mp ha with rfl | ha
+      · exact Finset.mem_insert_self _ _
+      · exact Finset.mem_insert_of_mem (Finset.mem_union_left _ (hz a ha))
+
+theorem run_eq_of_agree (T : ReadTree) (x y : ℤ → Bool)
+    (h : ∀ t ∈ T.addresses, x t = y t) : T.run x = T.run y := by
+  induction T with
+  | leaf a => rfl
+  | read t z o hz ho =>
+    have ht := h t (Finset.mem_insert_self _ _)
+    have hz' : z.run x = z.run y := hz fun a ha =>
+      h a (Finset.mem_insert_of_mem (Finset.mem_union_left _ ha))
+    have ho' : o.run x = o.run y := ho fun a ha =>
+      h a (Finset.mem_insert_of_mem (Finset.mem_union_right _ ha))
+    simp only [run, ht, hz', ho']
+
+theorem source_run_eq_of_agree (T : ReadTree) (φ : Bool) (S R : Spins)
+    (h : ∀ i ∈ T.support, S i = R i) :
+    T.run (visible φ S) = T.run (visible φ R) := by
+  induction T with
+  | leaf a => rfl
+  | read t z o hz ho =>
+    have ht : visible φ S t = visible φ R t := by
+      have hs (i : ℤ) (hi : i ∈ ({t / 2, t / 2 + 1,
+          (t - 1) / 2, (t - 1) / 2 + 1} : Finset ℤ)) : S i = R i :=
+        h i (Finset.mem_union_left _ hi)
+      cases φ <;> simp only [visible, Bool.toInt_false, Bool.toInt_true, sub_zero]
+      · rw [hs _ (by simp), hs _ (by simp)]
+      · rw [hs _ (by simp), hs _ (by simp)]
+    have hz' := hz (fun i hi => h i (Finset.mem_union_right _
+      (Finset.mem_union_left _ hi)))
+    have ho' := ho (fun i hi => h i (Finset.mem_union_right _
+      (Finset.mem_union_right _ hi)))
+    simp only [run, ht, hz', ho']
+
+/-- A zero paid count forces an actual leaf, including for a nonreturning execution. -/
+theorem leaf_of_paid_zero (T : ReadTree) (x : ℤ → Bool) (h : (T.run x).paid = 0) :
+    T = .leaf (T.run x).output := by
+  cases T with
+  | leaf a => rfl
+  | read t z o =>
+    simp only [run] at h
+    split at h <;> simp at h
+
+def stopComb : List ℤ → ReadTree
+  | [] => .leaf (some (.a false))
+  | t :: ts => .read t (stopComb ts) (.leaf (some (.a true)))
+
+@[simp] theorem height_stopComb (ts : List ℤ) : (stopComb ts).height = ts.length := by
+  induction ts with
+  | nil => rfl
+  | cons t ts ih => simp [stopComb, height, ih]
+
+theorem stopComb_all_zero (ts : List ℤ) (x : ℤ → Bool)
+    (h : ∀ t ∈ ts, x t = false) :
+    (stopComb ts).run x = ⟨some (.a false), ts.map (fun t => (t, false))⟩ := by
+  induction ts with
+  | nil => rfl
+  | cons t ts ih =>
+    simp only [stopComb, run, h t (by simp), Bool.false_eq_true, ↓reduceIte]
+    rw [ih (fun a ha => h a (by simp [ha]))]
+    rfl
+
+end ReadTree
+end D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.StoppingLaw
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -53,8 +285,18 @@ structure Lawful (Q : RawRule U) : Prop where
 
 /-- Completion-measurable versions on the unchanged seed probability space. -/
 structure CompletionLawful (Q : RawRule U) (ν : Measure U) : Prop where
-  aemeasurable_next : ∀ r, AEMeasurable (fun u => Q.next u r) ν
-  aemeasurable_wait : ∀ r, AEMeasurable (fun u => Q.wait u r) ν
+  measurable_next : ∀ r, @Measurable (NullMeasurableSpace U ν) EventKind inferInstance _
+    (fun u => Q.next u r)
+  measurable_wait : ∀ r, @Measurable (NullMeasurableSpace U ν) ℝ≥0 inferInstance _
+    (fun u => Q.wait u r)
+
+theorem CompletionLawful.aemeasurable_next {Q : RawRule U} {ν : Measure U}
+    (hQ : Q.CompletionLawful ν) (r : Record) : AEMeasurable (fun u => Q.next u r) ν :=
+  (show NullMeasurable (fun u => Q.next u r) ν from hQ.measurable_next r).aemeasurable
+
+theorem CompletionLawful.aemeasurable_wait {Q : RawRule U} {ν : Measure U}
+    (hQ : Q.CompletionLawful ν) (r : Record) : AEMeasurable (fun u => Q.wait u r) ν :=
+  (show NullMeasurable (fun u => Q.wait u r) ν from hQ.measurable_wait r).aemeasurable
 
 /-- The record after exactly n actual reads, absent if a terminal event preceded it. -/
 def readPrefix (Q : RawRule U) (u : U) (x : ℤ → Bool) : ℕ → Option Record
@@ -219,6 +461,43 @@ theorem unfold_correct (Q : RawRule U) (u : U) (x : ℤ → Bool) (k n : ℕ) (r
         simpa [unfold, he, ReadTree.run, hx, Execution.prepend, Execution.paid,
           List.append_assoc, Nat.add_assoc, Nat.add_comm, Nat.add_left_comm] using hh
 
+/-- Every earlier acquired record is a literal prefix of every later one. -/
+theorem readPrefix_extension (Q : RawRule U) (u : U) (x : ℤ → Bool)
+    {n m : ℕ} {r s : Record} (hr : Q.readPrefix u x n = some r)
+    (hs : Q.readPrefix u x m = some s) (hnm : n ≤ m) : ∃ tail, s = r ++ tail := by
+  induction m generalizing s with
+  | zero =>
+    have hn : n = 0 := by omega
+    rw [hn, readPrefix] at hr
+    simp only [readPrefix, Option.some.injEq] at hs
+    simp only [Option.some.injEq] at hr
+    subst r; subst s; exact ⟨[], rfl⟩
+  | succ m ih =>
+    by_cases hnm' : n ≤ m
+    · simp only [readPrefix] at hs
+      cases hp : Q.readPrefix u x m with
+      | none => simp [hp] at hs
+      | some q =>
+        cases he : Q.next u q with
+        | terminal a => simp [hp, he] at hs
+        | read t =>
+          simp only [hp, Option.bind_some, he, Option.some.injEq] at hs
+          obtain ⟨tail, htail⟩ := ih hp hnm'
+          exact ⟨tail ++ [(t, x t)], by rw [← List.append_assoc, ← htail]; exact hs.symm⟩
+    · have hn : n = m + 1 := by omega
+      have he : r = s := Option.some.inj (hr.symm.trans (hn ▸ hs))
+      exact ⟨[], by simp [he]⟩
+
+/-- A finite terminal record contains every read actually made by the raw rule. -/
+theorem completes_record_subset (Q : RawRule U) (u : U) (x : ℤ → Bool)
+    {v : Execution} (hv : Q.Completes u x v) {n : ℕ} {r : Record}
+    (hr : Q.readPrefix u x n = some r) : ∀ a ∈ r, a ∈ v.record := by
+  have hn := Q.terminal_readPrefix_bound u x hv.1 hv.2 hr
+  obtain ⟨tail, ht⟩ := Q.readPrefix_extension u x hr hv.1 hn
+  intro a ha
+  rw [ht]
+  exact List.mem_append_left _ ha
+
 /-- Pointwise normalization on every original source/seed path, including nonreturns. -/
 theorem normalization_pointwise (Q : RawRule U) (k : ℕ) (hc : Q.TotalCap k)
     (φ : Bool) (S : Spins) (u : U) :
@@ -233,12 +512,6 @@ theorem normalization_pointwise (Q : RawRule U) (k : ℕ) (hc : Q.TotalCap k)
   have hv : Q.Completes u (visible φ S) ((Q.normalize k u).run (visible φ S)) := by
     simpa [normalize, Completes] using h
   exact ⟨hv, Q.completes_observables u (visible φ S) hv⟩
-
-/-- Countability permits evaluation at a measurable, varying acquired record. -/
-theorem measurable_next_record (Q : RawRule U) (hQ : Q.Lawful) {r : U → Record} (hr : Measurable r) :
-    Measurable (fun u => Q.next u (r u)) :=
-  (measurable_from_prod_countable_left (f := fun p : U × Record => Q.next p.1 p.2)
-    hQ.measurable_next).comp (measurable_id.prodMk hr)
 
 theorem measurable_unfold (Q : RawRule U) (hQ : Q.Lawful) (k : ℕ) :
     ∀ r : Record, Measurable (fun u => Q.unfold k u r) := by
@@ -454,3 +727,5 @@ theorem normalize_realize (T : U → ReadTree) (k : ℕ) (u : U)
 
 end RawRule
 end D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.StoppingLaw
+
+end
