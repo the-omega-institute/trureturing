@@ -297,7 +297,7 @@ section AddGroup
 variable {𝕜g : Type*} [AddCommGroup 𝕜g]
 
 
-private theorem walkWeight_sub_const (weight : E → 𝕜g) (lam : 𝕜g) {start finish : V}
+theorem walkWeight_sub_const (weight : E → 𝕜g) (lam : 𝕜g) {start finish : V}
     (walk : G.Walk start finish) :
     walkWeight (fun e => weight e - lam) walk
       = walkWeight weight walk - walk.length • lam := by
@@ -339,7 +339,7 @@ section OrderedMonoid
 variable {𝕜o : Type*} [AddCommMonoid 𝕜o] [Preorder 𝕜o] [IsOrderedAddMonoid 𝕜o]
 
 
-private theorem IsPotential.walkWeight_add_le {weight : E → 𝕜o} {φ : V → 𝕜o}
+theorem IsPotential.walkWeight_add_le {weight : E → 𝕜o} {φ : V → 𝕜o}
     (hφ : IsPotential G weight φ) {start finish : V} (walk : G.Walk start finish) :
     walkWeight weight walk + φ start ≤ φ finish := by
   induction walk with

@@ -126,7 +126,17 @@ theorem growth_sandwich (m M : ℝ) (hm : 0 < m) (hM : 0 < M)
   let lam := (G.perron c τ).root
   have hn := Matrix.pow_apply_nonneg (G.W_nonneg c τ) n
   have he : ∑ j, (G.W c τ ^ n) i j * r j = lam ^ n * r i := by
-    simpa [Matrix.mulVec,dotProduct,r,lam] using congrFun (Matrix.mulVec_pow_eq_smul_pow_of_mulVec_smul (G.perron c τ).eigen n) i
+    have hr_ne : r ≠ 0 := by
+      obtain ⟨i₀, _, _⟩ := G.hasEdge
+      intro hz
+      have hzero := congrFun hz i₀
+      exact (ne_of_gt ((G.perron c τ).right_pos i₀)) hzero
+    have hev : Module.End.HasEigenvector (G.W c τ).toLin' lam r :=
+      ⟨Module.End.mem_eigenspace_iff.mpr (G.perron c τ).eigen, hr_ne⟩
+    have hpow : (G.W c τ ^ n) *ᵥ r = lam ^ n • r := by
+      simpa only [← Matrix.toLin'_pow, Matrix.toLin'_apply] using
+        Module.End.HasEigenvector.pow_apply hev n
+    simpa [Matrix.mulVec,dotProduct,r,lam] using congrFun hpow i
   have hlow : m * ((G.W c τ ^ n) *ᵥ (fun _ => 1)) i ≤ lam ^ n * r i := by
     rw [← he]
     simp only [Matrix.mulVec,dotProduct,mul_one,Finset.mul_sum]

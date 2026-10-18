@@ -146,22 +146,6 @@ theorem IsPrimitive.of_irreducible_pos_diagonal [Fintype n] [Nonempty n] [Decida
     refine ⟨⟨(Path.replicate (k - p_ij.length) p_loop).comp p_ij, ?_⟩⟩
     rw [Path.length_comp, Path.length_replicate, hp_loop_len, mul_one,
       Nat.sub_add_cancel hp_len_le_k]
-section MulVecPow
-variable {R : Type*} [CommSemiring R] {n : Type*} [Fintype n] [DecidableEq n]
-  {A : Matrix n n R} {r : R} {v : n → R}
-lemma mulVec_pow_eq_smul_pow_of_mulVec_smul (h : A *ᵥ v = r • v) (m : ℕ) :
-    (A ^ m) *ᵥ v = (r ^ m) • v := by
-  induction m with
-  | zero => simp
-  | succ m ih =>
-    calc
-      (A ^ m.succ) *ᵥ v = (A ^ m * A) *ᵥ v := by simp [pow_succ]
-      _ = A ^ m *ᵥ (A *ᵥ v) := by rw [Matrix.mulVec_mulVec]
-      _ = A ^ m *ᵥ (r • v) := by rw [h]
-      _ = r • (A ^ m *ᵥ v) := by rw [mulVec_smul]
-      _ = r • (r ^ m • v) := by rw [ih]
-      _ = r ^ (m + 1) • v := by simp [pow_succ', smul_smul]
-end MulVecPow
 section MulVecPowMap
 variable {R : Type*} [CommSemiring R] {S : Type*} [CommSemiring S] {n : Type*} [Fintype n]
   [DecidableEq n] (f : R →+* S) {A : Matrix n n R} {μ : S} {v : n → S}

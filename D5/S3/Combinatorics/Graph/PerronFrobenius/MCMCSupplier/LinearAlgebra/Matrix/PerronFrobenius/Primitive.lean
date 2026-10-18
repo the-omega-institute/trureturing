@@ -92,8 +92,11 @@ lemma eigenvector_of_primitive_is_positive {r : ℝ} (hA_prim : IsPrimitive A) (
     {v : n → ℝ} (h_eigen : A *ᵥ v = r • v) (hv_nonneg : ∀ i, 0 ≤ v i) (hv_ne_zero : v ≠ 0) :
     ∀ i, 0 < v i := by
   obtain ⟨_, k, hk_gt_zero, hk_pos⟩ := hA_prim
-  have h_Ak_v : (A ^ k) *ᵥ v = (r ^ k) • v :=
-    mulVec_pow_eq_smul_pow_of_mulVec_smul h_eigen k
+  have h_Ak_v : (A ^ k) *ᵥ v = (r ^ k) • v := by
+    have hev : Module.End.HasEigenvector A.toLin' r v :=
+      ⟨Module.End.mem_eigenspace_iff.mpr h_eigen, hv_ne_zero⟩
+    simpa only [← Matrix.toLin'_pow, Matrix.toLin'_apply] using
+      Module.End.HasEigenvector.pow_apply hev k
   have h_Ak_v_pos : ∀ i, 0 < ((A ^ k) *ᵥ v) i :=
     positive_mul_vec_of_nonneg_vec hk_pos hv_nonneg hv_ne_zero
   intro i

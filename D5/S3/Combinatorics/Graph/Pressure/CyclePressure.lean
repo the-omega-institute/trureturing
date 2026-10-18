@@ -158,35 +158,70 @@ private theorem perron_edge_le (c : X → X → ℝ) (τ : ℝ) (i j : X) (hij :
   simpa [Matrix.mulVec,dotProduct,W,hij] using h.trans_eq he
 
 /-- Multiply actual Perron row inequalities along an unrestricted support walk. -/
-private theorem perron_walk_le (c : X → X → ℝ) (τ : ℝ) {x y : X}
+private theorem perron_walk_le (c : X → X → ℝ) (τ : ℝ) (hτ : 0 < τ) {x y : X}
     (w : G.supportGraph.Walk x y) :
     Real.exp (-walkWeight (G.edgeCost c) w / τ) * (G.perron c τ).right y ≤
       (G.perron c τ).root ^ w.length * (G.perron c τ).right x := by
-  induction w with
-  | nil => simp [walkWeight,EdgeGraph.Walk.edges]
-  | @concat y w e legal ih =>
+  let lam := (G.perron c τ).root
+  let r := (G.perron c τ).right
+  let weight : G.SupportEdge → ℝ :=
+    fun e => -G.edgeCost c e - τ * Real.log lam
+  let potential : X → ℝ := fun i => -τ * Real.log (r i)
+  have hpotential : Maths.MaxPlusPotential.IsPotential G.supportGraph weight potential := by
+    intro e
     have he := G.perron_edge_le c τ e.1.1 e.1.2 e.2
-    have hlegal : e.1.1 = y := legal
-    have he' : Real.exp (-G.edgeCost c e / τ) * (G.perron c τ).right e.1.2 ≤
-        (G.perron c τ).root * (G.perron c τ).right y := by
-      simpa only [edgeCost, hlegal] using he
-    calc
-      _ = Real.exp (-walkWeight (G.edgeCost c) w / τ) *
-          (Real.exp (-G.edgeCost c e / τ) * (G.perron c τ).right e.1.2) := by
-        rw [walkWeight_concat]
-        rw [show -(walkWeight (G.edgeCost c) w + G.edgeCost c e) / τ =
-          -walkWeight (G.edgeCost c) w / τ + -G.edgeCost c e / τ by ring, Real.exp_add]
-        simp only [supportGraph]
-        ring
-      _ ≤ Real.exp (-walkWeight (G.edgeCost c) w / τ) *
-          ((G.perron c τ).root * (G.perron c τ).right y) := by
-        exact mul_le_mul_of_nonneg_left he' (Real.exp_pos _).le
-      _ = (G.perron c τ).root *
-          (Real.exp (-walkWeight (G.edgeCost c) w / τ) * (G.perron c τ).right y) := by ring
-      _ ≤ (G.perron c τ).root * ((G.perron c τ).root ^ w.length * (G.perron c τ).right x) :=
-        mul_le_mul_of_nonneg_left ih (G.perron c τ).root_pos.le
-      _ = _ := by simp [pow_succ, mul_assoc, mul_comm, mul_left_comm]
-
+    have hlog := Real.log_le_log
+      (mul_pos (Real.exp_pos _) ((G.perron c τ).right_pos e.1.2)) he
+    rw [Real.log_mul (ne_of_gt (Real.exp_pos _))
+          (ne_of_gt ((G.perron c τ).right_pos e.1.2)),
+      Real.log_mul (ne_of_gt ((G.perron c τ).root_pos))
+          (ne_of_gt ((G.perron c τ).right_pos e.1.1)),
+      Real.log_exp] at hlog
+    dsimp [weight, potential]
+    have hlog'' : -c e.1.1 e.1.2 / τ ≤
+        Real.log (G.perron c τ).root +
+          Real.log ((G.perron c τ).right e.1.1) -
+          Real.log ((G.perron c τ).right e.1.2) := by
+      linarith [hlog]
+    have hlog' : -G.edgeCost c e / τ ≤
+        Real.log lam + Real.log (r e.1.1) - Real.log (r e.1.2) := by
+      simpa [lam, r, edgeCost] using hlog''
+    have hmul := (div_le_iff₀ hτ).mp hlog'
+    change -τ * Real.log (r e.1.1) +
+      (-G.edgeCost c e - τ * Real.log lam) ≤ -τ * Real.log (r e.1.2)
+    nlinarith
+  have hwalk := Maths.MaxPlusPotential.IsPotential.walkWeight_add_le hpotential w
+  have hsum := Maths.MaxPlusPotential.walkWeight_sub_const
+    (G := G.supportGraph) (fun e => -G.edgeCost c e) (τ * Real.log lam) w
+  have hn : walkWeight (fun e => -G.edgeCost c e) w =
+      -walkWeight (G.edgeCost c) w := by
+    simpa only [Maths.MaxPlusPotential.walkWeight, List.map_map, Function.comp_def] using
+      (List.sum_neg (w.edges.map (G.edgeCost c))).symm
+  dsimp [weight, potential] at hwalk
+  rw [hsum, hn] at hwalk
+  simp only [nsmul_eq_mul] at hwalk
+  have hlog' :
+      -walkWeight (G.edgeCost c) w / τ ≤
+        (w.length : ℝ) * Real.log lam + Real.log (r x) - Real.log (r y) := by
+    apply (div_le_iff₀ hτ).2
+    nlinarith
+  have hlog :
+      -walkWeight (G.edgeCost c) w / τ + Real.log (r y) ≤
+        (w.length : ℝ) * Real.log lam + Real.log (r x) := by
+    linarith
+  have hexp := Real.exp_le_exp.mpr hlog
+  calc
+    Real.exp (-walkWeight (G.edgeCost c) w / τ) * (G.perron c τ).right y =
+        Real.exp (-walkWeight (G.edgeCost c) w / τ + Real.log (r y)) := by
+          rw [Real.exp_add, Real.exp_log ((G.perron c τ).right_pos y)]
+    _ ≤ Real.exp ((w.length : ℝ) * Real.log lam + Real.log (r x)) := hexp
+    _ = lam ^ w.length * r x := by
+      have hlogpow : Real.log (lam ^ w.length * r x) =
+          (w.length : ℝ) * Real.log lam + Real.log (r x) := by
+        rw [Real.log_mul (ne_of_gt (pow_pos ((G.perron c τ).root_pos) w.length))
+          (ne_of_gt ((G.perron c τ).right_pos x)), Real.log_pow]
+      rw [← hlogpow, Real.exp_log]
+      exact mul_pos (pow_pos ((G.perron c τ).root_pos) w.length) ((G.perron c τ).right_pos x)
 set_option maxHeartbeats 3000000 in
 /-- The original-support cycle minimum and actual successor maximum give the exact bracket. -/
 private theorem pressure_bracket (c : X → X → ℝ) (τ : ℝ) (hτ : 0 < τ) :
@@ -259,7 +294,7 @@ private theorem pressure_bracket (c : X → X → ℝ) (τ : ℝ) (hτ : 0 < τ)
   let C := G.minimumCycle c
   have hC : 0 < C.walk.length := C.simple.1
   have hCR : (0 : ℝ) < C.walk.length := by exact_mod_cast hC
-  have hw := G.perron_walk_le c τ C.walk
+  have hw := G.perron_walk_le c τ hτ C.walk
   have hc : Real.exp (-walkWeight (G.edgeCost c) C.walk / τ) ≤ lam ^ C.walk.length :=
     (mul_le_mul_iff_left₀ ((G.perron c τ).right_pos C.base)).mp hw
   have hlogL := Real.log_le_log (Real.exp_pos _) hc
