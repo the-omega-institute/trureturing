@@ -15,13 +15,14 @@ def stabilityArena : Arena where
   Law R := ∀ (h : ℝ), 0 < h → TwoCrossings h →
     ∃ U : Set (Fin 7 → ℝ), IsOpen U ∧ baseRates h ∈ U ∧
       (∀ r ∈ U, ∀ i, 0 < r i) ∧
+      (∀ r ∈ U, ∃ p : ℝ → Fin 5 → ℝ, GeneralForwardLaw r p) ∧
       ∀ r ∈ U, ∀ p : ℝ → Fin 5 → ℝ, GeneralForwardLaw r p →
         TwoSimpleCrossings (fun t => R.readout () p t)
 
 private theorem rejected : ¬ stabilityArena.Law determinantRejected := by
   intro hl
   obtain ⟨hc, τc, hhc, _, _, _, _, _, low, _, _⟩ := unique_fold_classification
-  obtain ⟨U, _, hr, _, hall⟩ := hl 1 (by norm_num) (low 1 (by norm_num) hhc.1)
+  obtain ⟨U, _, hr, _, _, hall⟩ := hl 1 (by norm_num) (low 1 (by norm_num) hhc.1)
   have hz := hall (baseRates 1) hr (explicit 1) unitGeneral
   obtain ⟨a, b, _, _, _, _, hda, _⟩ := hz
   simpa [determinantRejected, realize] using hda
@@ -39,7 +40,7 @@ def stabilitySelection : Contract.SourceSelection where
   definition := none
   coordinates := #[6]
   readouts := #[{
-    path := #["body", "body", "body", "arg", "body", "arg", "arg", "arg",
+    path := #["body", "body", "body", "arg", "body", "arg", "arg", "arg", "arg",
       "body", "body", "body", "body", "arg", "body"]
     stateBinder := 8
     functionOperand := false

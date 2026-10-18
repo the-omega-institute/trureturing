@@ -110,8 +110,8 @@ internal sealed class ThreeLabelCoalescentDocument : IScribeDocumentDefinition
                     + "with a stationary zero. Strict convexity of G bounds the number of roots, "
                     + "forces two simple crossings below the threshold, and makes the critical "
                     + "second derivative strictly positive. Parameter monotonicity gives strict "
-                    + "positivity above the threshold. This theorem concerns the specified one-parameter "
-                    + "family; stability under arbitrary perturbation of seven rates is not asserted."))),
+                    + "positivity above the threshold. The separate ThreeLabelCoalescentPerturbation "
+                    + "theorem proves open stability of both simple crossings in the seven-rate space."))),
                 DescribeRole.Theorem),
             Paragraph(Text("For seven rates r=(alpha,beta,gamma,zeta,d,e,f), let "
                 + "L=alpha+beta+gamma+zeta. GeneralForwardLaw requires an initially N, normalized "
@@ -132,8 +132,8 @@ internal sealed class ThreeLabelCoalescentDocument : IScribeDocumentDefinition
                     + "bound for pB. Multiplication and division by pN give the global ratio bound. "
                     + "The forward equations at zero give the association derivative zeta. "
                     + "The original family is a probability trajectory of this generator and has M=1/4. "
-                    + "These are endpoint certificates; a uniform neighborhood with exactly two roots "
-                    + "has not been established."))),
+                    + "These endpoint certificates feed the uniform estimates in ThreeLabelCoalescentTail "
+                    + "and the complete open-neighborhood theorem in ThreeLabelCoalescentPerturbation."))),
                 DescribeRole.Theorem)
         )));
 

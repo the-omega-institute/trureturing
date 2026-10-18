@@ -284,6 +284,76 @@ private lemma compact_root_stability
       (ne_of_gt hz) hzero
 
 
+private lemma model_probability (r : Fin 7 → ℝ) (hr : ∀ i, 0 < r i) :
+    GeneralForwardLaw r (model r) := by
+  have hd (t : ℝ) := hasDerivAt_pi.mp (model_derivative r t)
+  have hn (s : ℝ) : HasDerivAt
+      (fun t => Real.exp (outgoing r * t) * model r t 0) 0 s := by
+    convert (((hasDerivAt_id s).const_mul (outgoing r)).exp).mul (hd s 0) using 1
+    · ext t; rfl
+    · simp only [generalForward, Matrix.cons_val_zero]; ring
+  have hnconst := is_const_of_deriv_eq_zero
+    (fun t => (hn t).differentiableAt) (fun t => (hn t).deriv)
+  have hN (t : ℝ) : 0 < model r t 0 := by
+    have he := hnconst t 0
+    simp only [mul_zero, Real.exp_zero, model_start, initial, Matrix.cons_val_zero, one_mul] at he
+    apply (mul_pos_iff_of_pos_left (Real.exp_pos (outgoing r * t))).mp
+    rw [he]; norm_num
+  have branch (i : Fin 5) (a d : ℝ) (ha : 0 ≤ a) (hi : initial i = 0)
+      (he : ∀ t, generalForward r (model r t) i = a * model r t 0 - d * model r t i)
+      (t : ℝ) (ht : 0 ≤ t) : 0 ≤ model r t i := by
+    have hw (s : ℝ) : HasDerivAt (fun u => Real.exp (d*u) * model r u i)
+        (a * Real.exp (d*s) * model r s 0) s := by
+      convert (((hasDerivAt_id s).const_mul d).exp).mul (hd s i) using 1
+      · ext u; rfl
+      · rw [he s]; simp only [id_eq]; ring
+    have hm : MonotoneOn (fun s => Real.exp (d*s) * model r s i) (Ici 0) := by
+      apply monotoneOn_of_deriv_nonneg (convex_Ici 0)
+      · intro s _; exact (hw s).continuousAt.continuousWithinAt
+      · intro s _; exact (hw s).differentiableAt.differentiableWithinAt
+      · intro s _; rw [(hw s).deriv]; exact mul_nonneg (mul_nonneg ha (Real.exp_pos _).le) (hN s).le
+    have he := hm (show (0 : ℝ) ∈ Ici 0 by simp) ht ht
+    simp only [mul_zero, Real.exp_zero, model_start, hi, mul_zero] at he
+    exact (mul_nonneg_iff_of_pos_left (Real.exp_pos _)).mp he
+  have hA (t : ℝ) (ht : 0 ≤ t) : 0 ≤ model r t 1 :=
+    branch 1 (r 0) (r 4) (hr 0).le (by norm_num [initial])
+      (fun _ => by simp [generalForward]) t ht
+  have hB (t : ℝ) (ht : 0 ≤ t) : 0 ≤ model r t 2 :=
+    branch 2 (r 1) (r 5) (hr 1).le (by norm_num [initial])
+      (fun _ => by simp [generalForward]) t ht
+  have hC (t : ℝ) (ht : 0 ≤ t) : 0 ≤ model r t 4 :=
+    branch 4 (r 2) (r 6) (hr 2).le (by norm_num [initial])
+      (fun _ => by simp [generalForward]) t ht
+  have hT : MonotoneOn (fun t => model r t 3) (Ici 0) := by
+    apply monotoneOn_of_deriv_nonneg (convex_Ici 0)
+    · intro t _; exact (hd t 3).continuousAt.continuousWithinAt
+    · intro t _; exact (hd t 3).differentiableAt.differentiableWithinAt
+    · intro t ht
+      rw [(hd t 3).deriv]
+      have ht0 : 0 ≤ t := interior_subset ht
+      change 0 ≤ r 3 * model r t 0 + r 4 * model r t 1 +
+        r 5 * model r t 2 + r 6 * model r t 4
+      exact add_nonneg (add_nonneg (add_nonneg
+        (mul_nonneg (hr 3).le (hN t).le) (mul_nonneg (hr 4).le (hA t ht0)))
+        (mul_nonneg (hr 5).le (hB t ht0))) (mul_nonneg (hr 6).le (hC t ht0))
+  have hsum (t : ℝ) : HasDerivAt (fun s => ∑ i, model r s i) 0 t := by
+    convert ((((hd t 0).add (hd t 1)).add (hd t 2)).add (hd t 3)).add (hd t 4) using 1
+    · ext s; simp [Fin.sum_univ_five] <;> ring
+    · norm_num [generalForward, outgoing]; ring
+  have hsumconst := is_const_of_deriv_eq_zero
+    (fun t => (hsum t).differentiableAt) (fun t => (hsum t).deriv)
+  refine ⟨model_start r, fun t _ => hd t, ?_, ?_⟩
+  · intro t ht i
+    fin_cases i
+    · exact (hN t).le
+    · exact hA t ht
+    · exact hB t ht
+    · have he := hT (show (0 : ℝ) ∈ Ici 0 by simp) ht ht
+      simpa [model_start, initial] using he
+    · exact hC t ht
+  · intro t _
+    simpa [model_start, initial, Fin.sum_univ_five] using hsumconst t 0
+
 private lemma base_general (h : ℝ) (hh : 0 < h) :
     GeneralForwardLaw (baseRates h) (explicit h) := by
   have hp := (positive_probability_solution h hh).1
@@ -337,6 +407,7 @@ private lemma base_crossings (h : ℝ) (hh : 0 < h) (hc : TwoCrossings h) :
 theorem seven_rate_two_crossings_stable (h : ℝ) (hh : 0 < h) (hc : TwoCrossings h) :
     ∃ U : Set (Fin 7 → ℝ), IsOpen U ∧ baseRates h ∈ U ∧
       (∀ r ∈ U, ∀ i, 0 < r i) ∧
+      (∀ r ∈ U, ∃ p : ℝ → Fin 5 → ℝ, GeneralForwardLaw r p) ∧
       ∀ r ∈ U, ∀ p : ℝ → Fin 5 → ℝ, GeneralForwardLaw r p →
         TwoSimpleCrossings (fun t => delta (p t)) := by
   obtain ⟨Ue, hUe, hre, ε, hε, he⟩ :=
@@ -359,7 +430,8 @@ theorem seven_rate_two_crossings_stable (h : ℝ) (hh : 0 < h) (hc : TwoCrossing
       (fun i : Fin 7 => isOpen_lt continuous_const (continuous_apply i))
   have hrP : baseRates h ∈ P := by
     intro i; fin_cases i <;> norm_num [baseRates, ell] <;> linarith
-  refine ⟨U ∩ P, hU.inter hP, ⟨hrU,hrP⟩, fun _ hr => hr.2, ?_⟩
+  refine ⟨U ∩ P, hU.inter hP, ⟨hrU,hrP⟩, fun _ hr => hr.2,
+    (fun r hr => ⟨model r, model_probability r hr.2⟩), ?_⟩
   intro r hr p hp
   obtain ⟨a,b,ha,hab,hza,hzb,hda,hdb,hpos,hneg,hlate⟩ :=
     hstable r hr.1 ⟨p,hp⟩

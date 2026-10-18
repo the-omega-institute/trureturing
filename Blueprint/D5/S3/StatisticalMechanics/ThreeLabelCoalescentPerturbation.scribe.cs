@@ -46,7 +46,11 @@ internal sealed class ThreeLabelCoalescentPerturbationDocument : IScribeDocument
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The finite forward operator is a continuous linear map "
                     + "depending linearly on the seven rates. Its exponential applied to the initial "
-                    + "vector solves the equations. Gronwall uniqueness identifies every supplied "
+                    + "vector solves the equations. An integrating factor proves the N mass positive "
+                    + "and the three intermediate masses nonnegative. Incoming flow makes T "
+                    + "nonnegative, while the forward equations make the total mass constant at one. "
+                    + "Thus a probability solution exists for every positive rate vector. "
+                    + "Gronwall uniqueness identifies every supplied "
                     + "probability solution with this model on nonnegative time. Analyticity of the "
                     + "operator exponential makes the model and its association derivative jointly "
                     + "continuous in rates and time.")),
@@ -62,8 +66,8 @@ internal sealed class ThreeLabelCoalescentPerturbationDocument : IScribeDocument
                     Paragraph(Text("The unique_fold_classification theorem supplies TwoCrossings(h) "
                     + "for every 0<h<hc. This proves the stated seven-rate stability throughout that "
                     + "range. No stability of the double zero at hc is asserted. The theorem applies "
-                    + "to every probability solution of the perturbed generator; the auxiliary "
-                    + "operator model is not assumed to be a probability law."))),
+                    + "to every probability solution of the perturbed generator and explicitly "
+                    + "provides existence at every rate in the neighborhood."))),
                 DescribeRole.Theorem)
         )));
 
@@ -80,9 +84,12 @@ internal sealed class ThreeLabelCoalescentPerturbationDocument : IScribeDocument
             Seq(Open, t, Colon, R, Sp, Mapsto, Sp, Call("delta", Seq(p, Open, t, Close)), Close));
         Formula stable = All("r", rates, Imp(Member(r, u), All("p", trajectory,
             Imp(Call("GeneralForwardLaw", r, p), crossings))));
+        Formula existence = All("r", rates, Imp(Member(r, u),
+            new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create("p"), trajectory,
+                Call("GeneralForwardLaw", r, p))));
         Formula neighborhood = new Formula.Bind(FormulaQuantifier.Exists,
             FormulaIdentifier.Create("U"), Call("Set", rates),
-            And(Call("IsOpen", u), And(Member(Call("baseRates", h), u), And(positive, stable))));
+            And(Call("IsOpen", u), And(Member(Call("baseRates", h), u), And(positive, And(existence, stable)))));
         return All("h", R, Imp(Lt(D(0), h), Imp(Call("TwoCrossings", h), neighborhood)));
     }
 }

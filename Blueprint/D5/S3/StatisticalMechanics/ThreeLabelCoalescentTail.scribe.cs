@@ -63,9 +63,9 @@ internal sealed class ThreeLabelCoalescentTailDocument : IScribeDocumentDefiniti
                     + "is at least at/2, and both pA and pB are at most Rt. Thus "
                     + "delta is at least at/4-R squared t squared and is strictly positive. "
                     + "Together with the tail theorem, this controls both unbounded ends of time. "
-                    + "The remaining root-stability obligation is uniform continuity of the solution "
-                    + "and its association derivative in the seven rates on a compact time interval, "
-                    + "followed by persistence and uniqueness near the two simple base roots."))),
+                    + "ThreeLabelCoalescentPerturbation combines these endpoint bounds with joint "
+                    + "continuity of the solution and its association derivative, compact sign "
+                    + "preservation and Rolle uniqueness to prove full open-neighborhood stability."))),
                 DescribeRole.Theorem)
         )));
 
