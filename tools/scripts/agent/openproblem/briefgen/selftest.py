@@ -6,6 +6,7 @@ import io
 import json
 import os
 from pathlib import Path
+import re
 import shutil
 import subprocess
 import sys
@@ -14,6 +15,77 @@ import tempfile
 HERE = Path(__file__).resolve().parent
 TOOLS = HERE.parent
 DATA = HERE / 'testdata'
+
+
+def assert_scoped_builds(text, *, binding=False, all_commands=False):
+    from common import BUILD_SCOPE
+    if binding:
+        assert text.count(BUILD_SCOPE) == 1, 'missing or repeated Build-scope block'
+        text = text.replace(BUILD_SCOPE, '', 1)
+    commands = r'lean(?:-report(?:-scoped)?)?'
+    if all_commands:
+        commands += r'|test|gate'
+    for match in re.finditer(r'\bmake\s+(' + commands + r')(?![\w-])', text):
+        tail = text[match.end():].split('`', 1)[0].split('\n', 1)[0]
+        assert match[1] != 'lean-report', 'whole-library Lean report instruction'
+        assert re.match(r'''\s+LEAN_TARGETS=(?:"[^"\n]+"|'[^'\n]+'|[^\s`"']+)''', tail), \
+            'untargeted build instruction: ' + match[0] + tail
+
+
+def build_scope_regressions():
+    from common import BUILD_SCOPE
+    assert_scoped_builds(BUILD_SCOPE, binding=True, all_commands=True)
+    for text in ('', BUILD_SCOPE.replace('binding;', 'optional;'),
+                 *(BUILD_SCOPE + '\n' + command for command in (
+                     '`make lean`', '`make lean-report`', '`make test`',
+                     '`make gate BASE=abc`', '`make lean LEAN_TARGETS=""`',
+                     '`make lean-report-scoped`',
+                     '`make lean-report LEAN_TARGETS="D5.Sample"`'))):
+        try:
+            assert_scoped_builds(text, binding=True, all_commands=True)
+        except AssertionError:
+            pass
+        else:
+            raise AssertionError('unsafe build instruction accepted: ' + text)
+    template = (TOOLS / 'templates/impl-base-brief.md').read_text()
+    assert_scoped_builds(template, all_commands=True)
+    for command in ('lean', 'lean-report', 'test', 'gate'):
+        try:
+            assert_scoped_builds(template + '\n`make ' + command + '`', all_commands=True)
+        except AssertionError:
+            pass
+        else:
+            raise AssertionError('template regression accepted: ' + command)
+    print('BUILD_SCOPE_REGRESSIONS template=targeted negative_controls=passed')
+
+
+def head_generality_regressions(tool):
+    with tempfile.TemporaryDirectory(prefix='header fixtures __tokens__ ') as tmp:
+        root = Path(tmp); env = prepare(root)
+        spec_path = root / 'scratch/lanes/sample.json'
+        spec = json.loads(spec_path.read_text())
+        spec['target_md'] = spec['target_md'].replace('generality: I', 'generality: G')
+        spec_path.write_text(json.dumps(spec))
+        source = root / 'tree' / (spec['module'] + '.lean')
+        source.parent.mkdir(parents=True)
+
+        def check(expected):
+            result = subprocess.run(command(tool, root), cwd=root, env=env,
+                                    capture_output=True, text=True)
+            assert result.returncode == 0, (result.stdout, result.stderr)
+            text = (root / 'scratch/briefs/implb-sample-r1.head.md').read_text()
+            assert '`generality: ' + expected + '`' in text, text
+            assert_scoped_builds(text, binding=True)
+
+        for value in ('I', 'E', 'G'):
+            source.write_text('/-\n  generality: ' + value + ' \t\n-/\n')
+            check(value)
+        source.unlink()
+        check('G')
+        spec['target_md'] = spec['target_md'].replace('`generality: G`', '')
+        spec_path.write_text(json.dumps(spec))
+        check('I')
+    print('HEAD_GENERALITY_REGRESSIONS header=GIE fallback=target,default')
 
 
 def stub(kind, args):
@@ -149,6 +221,18 @@ def case(tool, variant=None):
         result=subprocess.run(command(tool,root,variant),cwd=root,env=env,capture_output=True,text=True)
         assert result.returncode==0,(tool,result.returncode,result.stdout[-1200:],result.stderr[-3000:])
         assert 'SyntaxWarning' not in result.stderr,(tool,result.stderr)
+        if tool.stem in ('implb_head', 'rework_brief', 'gen_stage_briefs', 'stages'):
+            path = ('implb-sample-r1.head.md' if tool.stem == 'implb_head' else
+                    'rework-sample.md' if tool.stem == 'rework_brief' else
+                    'impl-op-w1-sample.stageB.md')
+            text = (root / 'scratch/briefs' / path).read_text()
+            assert_scoped_builds(text, binding=True)
+            if tool.stem in ('gen_stage_briefs', 'stages'):
+                stage_a = (root / 'scratch/briefs/impl-op-w1-sample.stageA.md').read_text()
+                assert_scoped_builds(stage_a)
+            if tool.stem == 'implb_head':
+                from common import BUILD_SCOPE
+                assert BUILD_SCOPE + '\n\n- **SDK host.**' in text
         if variant == 'defaults':
             print('BRIEF_DEFAULTS tool='+tool.name+' exit='+str(result.returncode))
         outputs=collect(root,before)
@@ -158,6 +242,10 @@ def case(tool, variant=None):
 
 def run(tool):
     tool=tool.resolve()
+    if tool.stem in ('common', 'implb_head', 'lane_brief', 'rework_brief', 'gen_stage_briefs', 'stages'):
+        build_scope_regressions()
+    if tool.stem == 'implb_head':
+        head_generality_regressions(tool)
     if tool.stem == 'common':
         from common import Context, BriefError, entry, name
         for error in (AssertionError(), ValueError(' '), KeyError(), IndexError(), TypeError(), AttributeError(), ValueError('invalid field')):
