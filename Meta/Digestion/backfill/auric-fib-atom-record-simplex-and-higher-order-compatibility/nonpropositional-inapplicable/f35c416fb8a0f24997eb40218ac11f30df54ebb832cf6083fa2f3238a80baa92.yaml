@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f35c416fb8a0f24997eb40218ac11f30df54ebb832cf6083fa2f3238a80baa92
+  normalized_sha256: sha256:f35c416fb8a0f24997eb40218ac11f30df54ebb832cf6083fa2f3238a80baa92
+cas_ref: sha256:f35c416fb8a0f24997eb40218ac11f30df54ebb832cf6083fa2f3238a80baa92
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 钉版 Mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679 的既有声明闭合本项。源逐位成功似然为 1/4 或 3/4，结果以 Option (Fin d) 表示首次成功或全失败。Finset.prod_one_sub_ordered 使全部似然和为一；Fintype.prod_sum、Finset.prod_mul_distrib、Finset.prod_pos 与 mul_div_cancel_left₀ 给出正结果概率及逐位乘积后验。div_lt_div_iff₀ 比较第 j 位成功和全失败后的不同均值；包含 d=0，未声称额外几何体积子项。 本完整子句仓内无可用冻结 GID；仅使用纯上游结算路线，零新增 Lean 声明。
+    previous_atom_id: ecf6c4b40255764a969c4ca7ec8e1f24208c969a9c855a01a5183fd373624741
+    next_atom_id: 62a58f98c9b4b3fadaff9d555516b2ac9cec0d822de76d3faaa6d796420b4fda
