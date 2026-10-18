@@ -1789,3 +1789,132 @@ This is the contrapositive of (W40) combined with (W36), not a located
 negative theta sample or a new positivity estimate. The unpaid target
 is all-order positivity of the complete actual odd kernel on one fixed
 open interval, or the original same-source signed Robin upper.
+
+
+## Sufficiently large theta cutoffs fail as direct PSD references
+
+Every sufficiently large finite theta cutoff fails to supply an all-order
+positive direct reference for the shifted-theta frame, even when it keeps
+every center correction. This obstruction is distinct from truncating the large-center
+expansion in (W27). It concerns the finite-sum direct kernel itself;
+compensated truncations and the full direct-minus-reflected estimate
+remain separate possibilities.
+
+Use the original normalization $\Phi(x)=2K(x/2)$ and define
+
+$$
+\begin{aligned}
+\Phi_N(x)&=\sum_{n=1}^N2\pi n^2(2\pi n^2e^{2x}-3)
+ e^{5x/2-\pi n^2e^{2x}},\\
+D_N(a,b)&=\frac12\int_0^\infty
+ \left(t+\frac{a+b}{2}\right)\Phi_N(t+a)\Phi_N(t+b)\,dt.
+\end{aligned}
+\tag{W41}
+$$
+
+The finite sum is not even; no evenization is made. For positive real
+$a,b$, substituting $y=t+(a+b)/2$ shows that $D_N$ is exactly the
+direct kernel (W2) with $v=0$ and $\Phi$ replaced by $\Phi_N$.
+For $a,b\in D_\eta$, $0<\eta<\pi/4$, the same formula defines a
+symmetric jointly holomorphic kernel: its positive-real tail is locally
+uniformly integrable since $\cos(2\eta)>0$. Thus
+$D_N(z,\overline w)$ is Hermitian and sesquiholomorphic. At negative
+positions this forward integral need not agree with the finite-sum
+$|p|$-cutoff formula; it is the analytic continuation used below.
+
+Let
+
+$$
+C_+=\int_0^\infty x\Phi(x)^2\,dx<\infty,
+\qquad c_* =\frac{4\pi}{3e^6}>0.
+$$
+
+On $x\ge0$ every theta summand is positive, so
+$0<\Phi_N(x)\le\Phi(x)$. On the interval
+$x=-\log N-h$, $1\le h\le2$, all the first $N$ summands are negative:
+$n^2e^{2x}\le e^{-2}$, $2\pi e^{-2}<1$ and $\pi e^{-2}<1$.
+Consequently
+
+$$
+\begin{aligned}
+-\Phi_N(-\log N-h)
+&\ge\frac{4\pi}{e}N^{-5/2}e^{-5h/2}\sum_{n=1}^Nn^2\\
+&\ge\frac{4\pi}{3e}\sqrt N\,e^{-5h/2}
+ \ge c_*\sqrt N.
+\end{aligned}
+\tag{W42}
+$$
+
+For each finite $N$, the negative tail is $O_N(e^{5x/2})$ and the
+positive tail is superexponential. The signed first moment exists and
+satisfies
+
+$$
+\boxed{m_N:=\int_{\mathbb R}x\Phi_N(x)^2\,dx
+ \le C_+-c_*^2N(\log N+1)\longrightarrow-\infty.}
+\tag{W43}
+$$
+
+Indeed the positive half-line contributes at most $C_+$; the
+length-one interval in (W42) contributes at most
+$-c_*^2N(\log N+1)$, and the remaining negative half-line contributes
+nonpositively. In particular $m_N<0$ for every sufficiently large
+$N$; no assertion for every small cutoff is needed.
+
+The analytically continued diagonal obeys
+
+$$
+D_N(a,a)=\frac12\int_a^\infty y\Phi_N(y)^2\,dy
+ \longrightarrow\frac{m_N}{2}\qquad(a\to-\infty).
+$$
+
+For every $N$ with $m_N<0$, some finite negative $a$ therefore has
+$D_N(a,a)<0$. If $D_N$ were positive semidefinite on all finite samples
+in any nonempty positive open interval, the already cited
+Danciger--Rubinstein-Salzedo Theorem 4, with the strip, compact disk and
+real uniqueness interval used above, would propagate this property to
+the whole real axis. The negative diagonal is a contradiction. Hence
+
+$$
+\boxed{\begin{gathered}
+\text{For every sufficiently large finite }N\text{ and every nonempty}\\
+I\subset(0,\infty)\text{ open, some finite real sample in }I\\
+\text{has a strictly negative }D_N\text{ quadratic direction.}
+\end{gathered}}
+\tag{W44}
+$$
+
+Repeated nodes can be merged, and the real symmetric matrix supplies
+real coefficients. This is an existential statement; no witness size,
+location or cutoff threshold is claimed. The general propagation
+theorem is reused directly, without a new criterion or priority claim.
+
+Nevertheless $D_N\to K_0$ on every fixed compact real square with
+every fixed finite derivative order. Normal convergence of the theta
+series and the common complex-shift tail bound give locally uniform
+convergence of the integrals; Cauchy estimates give these derivatives.
+For complete even $\Phi$, the forward integral agrees with $K_0$
+also at negative positions, since its integrand in $y$ is odd and its
+primitive is even. Evenness also gives
+$\int_{\mathbb R}y\Phi(y)^2\,dy=0$. Thus the iterated diagonal
+limits differ:
+
+$$
+\lim_{N\to\infty}\lim_{a\to-\infty}D_N(a,a)=-\infty,
+\qquad
+\lim_{a\to-\infty}\lim_{N\to\infty}D_N(a,a)=0.
+\tag{W45}
+$$
+
+The finite sums carry square mass toward $-\log N$, contributing
+negatively to the signed first moment.
+Local accuracy of the full finite-cutoff direct integral therefore does
+not make that integral a positive reference at all orders, even on a
+high positive window. This rules out certifying $D_N$ itself as such a
+reference for sufficiently large cutoffs; it does not rule out using a
+truncation with rigorously paid compensating terms. No negative sample
+of the complete actual $K_0$, the actual odd $L_0$, or a truncated odd
+difference is inferred. The joint omitted-theta and reflected estimate,
+local all-order odd positivity, the signed Robin upper and RH remain
+unproved. These are paper-level source applications, without Lean
+verification or a literature-priority claim.
