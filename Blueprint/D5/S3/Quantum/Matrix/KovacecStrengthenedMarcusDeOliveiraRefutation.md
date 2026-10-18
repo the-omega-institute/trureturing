@@ -82,6 +82,10 @@ $$\neg (\forall (n: \mathbb{N}), \forall (a: \operatorname{Fin}\left(n\right) \t
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Matrix/KovacecStrengthenedMarcusDeOliveiraRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/kovacec-2026-strengthened-marcus-de-oliveira` (refuted) by `D5/S3/Quantum/Matrix/KovacecStrengthenedMarcusDeOliveiraRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"kovacec-2026-strengthened-marcus-de-oliveira","declaration_gid":"D5/S3/Quantum/Matrix/KovacecStrengthenedMarcusDeOliveiraRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* A. Kovačec (2026). *A conjecture more precise and stronger than the one by Marcus and de Oliveira*. URL: <https://www.mat.uc.pt/preprints/ps/p2611.pdf>.
