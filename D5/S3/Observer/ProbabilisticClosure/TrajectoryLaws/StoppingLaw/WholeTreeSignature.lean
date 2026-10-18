@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Observer/ProbabilisticClosure/TrajectoryLaws/StoppingLaw/WholeTreeSignature
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/StoppingLaw/FiniteCore]
+   anchors: []
    utility: none
    digest: Oriented whole-tree slot signatures transport paid execution and the original source law. -/
 

@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Observer/ProbabilisticClosure/TrajectoryLaws/StoppingLaw/SignatureSharpness
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/StoppingLaw/SignatureCompression]
+   anchors: []
    utility: none
    digest: Whole signatures force an exponential-radius potential path despite a radius-zero law representative. -/
 

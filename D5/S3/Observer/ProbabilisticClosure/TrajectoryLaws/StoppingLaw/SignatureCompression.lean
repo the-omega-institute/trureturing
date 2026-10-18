@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Observer/ProbabilisticClosure/TrajectoryLaws/StoppingLaw/SignatureCompression
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/StoppingLaw/WholeTreeSignature, D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/StoppingLaw/SeedLaw]
+   anchors: []
    utility: none
    digest: A single bias-independent tree relabeling preserves both phase signatures within a uniform window. -/
 
