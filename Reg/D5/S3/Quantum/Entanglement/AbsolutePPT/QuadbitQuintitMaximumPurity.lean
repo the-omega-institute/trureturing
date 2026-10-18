@@ -311,17 +311,21 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   let e : (Fin 3 × Fin 3) ≃ Fin (3*3) := finProdFinEquiv
   have ha : APPT (diagonal (fun p => ((0 : Fin (3*3) → ℝ) (e p) : ℂ))) := by
     intro U
-    simpa [partialTranspose] using
+    have hzero :
+        partialTranspose (0 : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ) = 0 := by
+      ext p q
+      rfl
+    simpa [hzero, Pi.zero_apply] using
       (Matrix.PosSemidef.zero : (0 : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ).PosSemidef)
   have hb := h (by decide : 3 ≤ 3) (by decide : 3 ≤ 3) e 0 ha
   have hp : (0 : ℝ) ≤ (-(1 : Matrix (Fin 3) (Fin 3) ℝ)) 0 0 := hb.1.diag_nonneg
   norm_num at hp
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨(), 0, (fun q => if q = 8 then 1 else 0), ?_⟩
+  refine ⟨(), (fun _ => 0), (fun q => if q = 8 then 1 else 0), ?_⟩
   intro heq
   have he := congrFun (congrFun heq 0) 0
-  norm_num [actual, realize, K1] at he
+  norm_num [actual, realize, K1, Pi.zero_apply] at he
 def family : Registration arena (type_of% (@_root_.D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitQuintitMaximumPurity.diagonal_necessary_both)) where
   actual := actual
   bridge := Iff.rfl

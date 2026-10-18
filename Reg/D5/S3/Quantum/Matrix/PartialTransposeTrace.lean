@@ -6,7 +6,7 @@ import D5.S3.Quantum.Matrix.PartialTransposeTrace
 namespace Reg.D5.S3.Quantum.Matrix.PartialTransposeTrace.TraceDuality
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation (partialTranspose)
-open LeanInformationAudit Matrix
+open LeanInformationAudit _root_.Matrix
 noncomputable section
 
 /-- Types are genuine coordinates in Type 1; no Fintype dictionary is a coordinate. -/
@@ -29,8 +29,8 @@ abbrev arena : Arena where
   signature := signature
   Law O := ∀ {A B : Type} [Fintype A] [Fintype B]
     (M : Matrix (A × B) (A × B) ℂ) (v : A × B → ℂ),
-    star v ⬝ᵥ (O.readout () ⟨A,B⟩ M *ᵥ v) =
-      (M * partialTranspose (vecMulVec v (star v))).trace
+    _root_.dotProduct (star v) (_root_.Matrix.mulVec (O.readout () ⟨A,B⟩ M) v) =
+      (M * partialTranspose (_root_.Matrix.vecMulVec v (star v))).trace
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have he := h (A := Fin 1) (B := Fin 1) (fun _ _ => 1) (fun _ => 1)

@@ -31,14 +31,18 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   let e : (Fin 4 × Fin 4) ≃ Fin (4*4) := finProdFinEquiv
   have ha : APPT (diagonal (fun p => ((0 : Fin (4*4) → ℝ) (e p) : ℂ))) := by
     intro U
-    simpa [partialTranspose] using
+    have hzero :
+        partialTranspose (0 : Matrix (Fin 4 × Fin 4) (Fin 4 × Fin 4) ℂ) = 0 := by
+      ext p q
+      rfl
+    simpa [hzero, Pi.zero_apply] using
       (Matrix.PosSemidef.zero : (0 : Matrix (Fin 4 × Fin 4) (Fin 4 × Fin 4) ℂ).PosSemidef)
   have hb := h (by decide : 4 ≤ 4) (by decide : 4 ≤ 4) e 0 ha
   norm_num [rejected, realize, sumLast] at hb
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨⟨4,4⟩, 0, (fun _ => 1), ?_⟩
-  norm_num [actual, realize, sumFirst, Fin.sum_univ_succ]
+  refine ⟨⟨4,4⟩, (fun _ => 0), (fun _ => 1), ?_⟩
+  norm_num [actual, realize, sumFirst, Fin.sum_univ_succ, Pi.zero_apply]
 def family : Registration arena (type_of% (@_root_.D5.S3.Quantum.Entanglement.AbsolutePPT.UniformRankFourNecessary.uniform_rank_four_necessary)) where
   actual := actual
   bridge := Iff.rfl
