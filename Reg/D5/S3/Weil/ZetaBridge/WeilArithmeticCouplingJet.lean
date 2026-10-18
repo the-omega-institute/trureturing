@@ -10,6 +10,7 @@ import LeanInformationAuditInterface.Contract.Analysis.Source
 import D5.S3.Weil.ZetaBridge.WeilArithmeticCouplingJet
 import Reg.Support.DependentFamily
 import Mathlib.Analysis.Real.Pi.Bounds
+import Mathlib.Analysis.SpecialFunctions.Log.Basic
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -559,5 +560,140 @@ noncomputable def registration_1 : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,
 #print axioms familyRegistration
 #print axioms registration_1
 end Split
+
+/- SOURCE_ONLY_UNCOMPILED.
+Splice inside the existing mirrored Reg namespace, after end Split and before
+the final namespace end. Retain its current imports, opens and noncomputable
+section; explicitly import Mathlib.Analysis.SpecialFunctions.Log.Basic in its
+header. In particular retain Reg.Support.DependentFamily and Pi.Bounds.
+This physical source owner can resolve WeightDependence's existing private
+modes_differ theorem; moving this to another imported file cannot do so.
+SourceSelection path, parameter/state binding and enrollment: UNVERIFIED.
+-/
+
+namespace Floor
+
+abbrev signature : Signature where
+  Params := ℕ
+  State _ := ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ c m => smoothWeight c m) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => (-1 : ℝ)) (fun e => nomatch e)
+
+/-- The whole original telescope and positivity conjunct are retained.
+Only the one smoothWeight occurrence in the inequality conclusion varies. -/
+def arena : Arena where
+  signature := signature
+  Law r := ∀ {c m : ℕ} (hc : 2 ≤ c) (hm : 0 < m)
+    (hw : 1 ≤ frequency c (m : ℤ)),
+    0 < smoothFloor c ∧ smoothFloor c ≤ (m : ℝ) ^ 2 * r.readout () c m
+
+private theorem source_reconstruction :
+    (type_of% (@smooth_weight_floor)) ↔ arena.Law actual := Iff.rfl
+
+private theorem actual_law : arena.Law actual := by
+  intro c m hc hm hw
+  exact smooth_weight_floor hc hm hw
+
+/-- A proved threshold, rather than an additional assumption on the witness. -/
+private theorem witness_frequency : 1 ≤ frequency 2 (1 : ℤ) := by
+  have hlog : 0 < logLength 2 := Real.log_pos (by norm_num)
+  have hlog_upper : logLength 2 ≤ 1 := by
+    change Real.log (2 : ℝ) ≤ 1
+    have h := Real.log_le_sub_one_of_pos (by norm_num : (0 : ℝ) < 2)
+    linarith
+  unfold frequency
+  norm_num only [Int.cast_one, mul_one]
+  apply (le_div_iff₀ hlog).mpr
+  linarith [Real.pi_gt_three]
+
+/-- This instance refutes the full quantified law, which is never replaced
+by a single-instance law. The frequency and floor remain the actual ones. -/
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro hall
+  have hbad := (hall (c := 2) (m := 1)
+    (by decide) (by decide) witness_frequency).2
+  change smoothFloor 2 ≤ (1 : ℝ) ^ 2 * (-1) at hbad
+  have hpositive := (smooth_weight_floor (c := 2) (m := 1)
+    (by decide) (by decide) witness_frequency).1
+  norm_num only [one_pow, one_mul] at hbad
+  linarith
+
+/-- Actual dependence compares two states of the same actual weight family;
+it does not infer dependence from the rejected constant realization. -/
+private theorem actual_dependence : ObservationalDependence signature actual := by
+  intro i
+  cases i
+  exact ⟨2, 0, 1, WeightDependence.modes_differ⟩
+
+def familyRegistration : Registration arena (type_of% (@smooth_weight_floor)) where
+  actual := actual
+  bridge := source_reconstruction
+  variation := ⟨actual_law, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      cases i
+      cases j
+      exact (hj rfl).elim
+    · intro e
+      exact nomatch e
+  dependence := actual_dependence
+
+/- The single role is the complete application smoothWeight c m.
+Proposed expression route: five original forall bodies, And's right argument,
+the inequality's right argument, then the product's right argument. The last
+application argument is the original natural state m. Parameter coordinate
+0 is c, following the pinned mirror convention. These are source proposals,
+NOT producer/judge evidence: path/binding/enrollment remain UNVERIFIED.
+The exact reconstruction bridge above does not certify SourceSelection.
+Variation, whole-family sensitivity and actual observational dependence are
+carried by the enrolled dependent-family source realization, as in the pinned
+registration pattern; the outer .absent fields follow that pattern.
+-/
+noncomputable def registration_1 : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@smooth_weight_floor) (type_of% actual) Type Unit := {
+  unitName := `Reg.D5.S3.Weil.ZetaBridge.WeilArithmeticCouplingJet.Floor.smooth_weight_floor.__information_unit
+  realizationName := `Reg.D5.S3.Weil.ZetaBridge.WeilArithmeticCouplingJet.Floor.familyRegistration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨familyRegistration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ c m => smoothWeight c m) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Weil.ZetaBridge.WeilArithmeticCouplingJet
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "arg", "arg", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+end Floor
 
 end Reg.D5.S3.Weil.ZetaBridge.WeilArithmeticCouplingJet

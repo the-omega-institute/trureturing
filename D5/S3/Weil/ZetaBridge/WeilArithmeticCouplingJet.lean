@@ -17,6 +17,8 @@ import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Positivity
 import Mathlib.Tactic.Ring
+import Mathlib.Algebra.Order.Floor.Semiring
+import Mathlib.Algebra.Order.Archimedean.Real.Basic
 
 /-!
 # The arithmetic boundary symbol controls the infinite coupling tail
@@ -624,6 +626,114 @@ theorem arithmetic_symbol_smooth_split (c : ℕ) {m : ℕ} (hm : 0 < m) :
   unfold arithmeticBoundarySymbol smoothWeight
   field_simp [hmR.ne']
   <;> ring
+
+/- SOURCE_ONLY_UNCOMPILED.
+Splice inside the existing Jet namespace and noncomputable section, after
+arithmetic_symbol_smooth_split and before the final two ends. Header additions:
+  import Mathlib.Algebra.Order.Floor.Semiring
+  import Mathlib.Algebra.Order.Archimedean.Real.Basic
+All private operands remain in their original physical source owner.
+
+Sign convention here: H_m = m^2 * smoothWeight c m is the POSITIVE smooth
+mass, and the actual arithmetic symbol is A_m = -H_m - S_m. Some older owner
+comments use the negative H convention; no such convention is used below.
+-/
+
+/-- An explicit positive finite-block floor for the actual smooth mass. -/
+def smoothFloor (c : ℕ) : ℝ := (1 - Real.exp (-logLength c / 2)) / 10
+
+private theorem gamma_finite_block_floor {c m : ℕ} (hc : 2 ≤ c)
+    (hw : 1 ≤ frequency c (m : ℤ)) :
+    0 < smoothFloor c ∧
+      smoothFloor c ≤
+        ∑' j : ℕ, gammaSineTerm (logLength c) (frequency c (m : ℤ)) j := by
+  let L : ℝ := logLength c
+  let w : ℝ := frequency c (m : ℤ)
+  let eta : ℝ := 1 - Real.exp (-L / 2)
+  let N : ℕ := Nat.ceil w
+  have hL : 0 < L := owner_log_pos hc
+  have hw1 : 1 ≤ w := hw
+  have hw0 : 0 < w := by linarith
+  have heta : 0 < eta := by
+    dsimp [eta]
+    exact sub_pos.mpr (Real.exp_lt_one_iff.mpr (by linarith))
+  have hsmall : 0 ≤ eta / (10 * w) :=
+    (div_pos heta (mul_pos (by norm_num) hw0)).le
+  have hterm (j : ℕ) (hj : j ∈ Finset.range N) :
+      eta / (10 * w) ≤ gammaSineTerm L w j := by
+    have hjw : (j : ℝ) < w :=
+      Nat.lt_ceil.mp (show j < Nat.ceil w from Finset.mem_range.mp hj)
+    have hg : 0 < gammaRate j := gammaRate_pos j
+    have hhalf : (1 / 2 : ℝ) ≤ gammaRate j := by
+      unfold gammaRate
+      linarith [Nat.cast_nonneg j]
+    have hg3 : gammaRate j ≤ 3 * w := by
+      unfold gammaRate
+      linarith
+    have hden : 0 < gammaRate j ^ 2 + w ^ 2 := by positivity
+    have hdenle : gammaRate j ^ 2 + w ^ 2 ≤ 10 * w ^ 2 := by
+      have hsquare := pow_le_pow_left₀ hg.le hg3 2
+      nlinarith only [hsquare]
+    have hfactor : eta ≤ 1 - Real.exp (-gammaRate j * L) := by
+      have hproduct := mul_le_mul_of_nonneg_right hhalf hL.le
+      have harg : -gammaRate j * L ≤ -L / 2 := by
+        nlinarith only [hproduct]
+      dsimp [eta]
+      exact sub_le_sub_left (Real.exp_le_exp.mpr harg) 1
+    -- Two separate division comparisons: first denominators, then numerators.
+    calc
+      eta / (10 * w) = w * eta / (10 * w ^ 2) := by
+        field_simp [hw0.ne'] <;> ring
+      _ ≤ w * eta / (gammaRate j ^ 2 + w ^ 2) :=
+        div_le_div_of_nonneg_left (mul_nonneg hw0.le heta.le) hden hdenle
+      _ ≤ gammaSineTerm L w j := by
+        unfold gammaSineTerm
+        exact div_le_div_of_nonneg_right
+          (mul_le_mul_of_nonneg_left hfactor hw0.le) hden.le
+  have hwN : w ≤ (N : ℝ) := Nat.le_ceil w
+  have hblock : eta / 10 ≤ ∑ j ∈ Finset.range N, gammaSineTerm L w j := by
+    calc
+      eta / 10 = w * (eta / (10 * w)) := by
+        field_simp [hw0.ne'] <;> ring
+      _ ≤ (N : ℝ) * (eta / (10 * w)) :=
+        mul_le_mul_of_nonneg_right hwN hsmall
+      _ = ∑ _j ∈ Finset.range N, eta / (10 * w) := by
+        simp only [Finset.sum_const, Finset.card_range, nsmul_eq_mul]
+      _ ≤ ∑ j ∈ Finset.range N, gammaSineTerm L w j :=
+        Finset.sum_le_sum hterm
+  -- This is the genuine convergent owner series, after the finite-block bound.
+  have hinfinite :
+      (∑ j ∈ Finset.range N, gammaSineTerm L w j) ≤
+        ∑' j : ℕ, gammaSineTerm L w j :=
+    Summable.sum_le_tsum (Finset.range N)
+      (fun j _ => gamma_positive_nonneg hc m j)
+      (gamma_positive_summable hc m)
+  change 0 < eta / 10 ∧ eta / 10 ≤ ∑' j : ℕ, gammaSineTerm L w j
+  exact ⟨div_pos heta (by norm_num), hblock.trans hinfinite⟩
+
+/-- For every c>=2 and positive natural mode with frequency at least one,
+the actual positive mass H_m=m^2*smoothWeight(c,m) has the explicit floor.
+The proof retains the native pole and genuinely summable Gamma series. -/
+theorem smooth_weight_floor {c m : ℕ} (hc : 2 ≤ c) (hm : 0 < m)
+    (hw : 1 ≤ frequency c (m : ℤ)) :
+    0 < smoothFloor c ∧ smoothFloor c ≤ (m : ℝ) ^ 2 * smoothWeight c m := by
+  obtain ⟨hpositive, hgamma⟩ := gamma_finite_block_floor hc hw
+  have hw0 : 0 ≤ frequency c (m : ℤ) := le_trans (by norm_num) hw
+  have hpole : 0 ≤ poleSine (logLength c) (frequency c (m : ℤ)) := by
+    unfold poleSine
+    exact div_nonneg
+      (mul_nonneg (mul_nonneg (by norm_num) hw0)
+        (sub_nonneg.mpr (Real.one_le_cosh _))) (by positivity)
+  have hmR : (0 : ℝ) < m := by exact_mod_cast hm
+  -- The same cancellation pattern as the existing smooth_mass_bounds.
+  have heq : (m : ℝ) ^ 2 * smoothWeight c m =
+      poleSine (logLength c) (frequency c (m : ℤ)) +
+      ∑' j : ℕ, gammaSineTerm (logLength c) (frequency c (m : ℤ)) j := by
+    unfold smoothWeight
+    field_simp [hmR.ne']
+  refine ⟨hpositive, ?_⟩
+  rw [heq]
+  linarith
 
 end
 end D5.S3.Weil.ZetaBridge.WeilArithmeticCouplingJet

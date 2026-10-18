@@ -33,15 +33,19 @@ positivity, physical operator identification, RH or Robin conclusion is claimed.
 import D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare
 import D5.S3.Weil.ZetaBridge.PrimeSymbolResonance
 import D5.S3.Weil.ZetaBridge.WeilArithmeticCouplingParityGram
-import D5.S3.Weil.ZetaBridge.WeilEvenFourierObservationTail
+import D5.S3.Weil.ZetaBridge.ActualColumnRemainder
 import Mathlib.Analysis.Real.Sqrt
+import Mathlib.Topology.Algebra.Order.Field
+import Mathlib.Algebra.Order.Field.Basic
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
 noncomputable section
 namespace D5.S3.Weil.ZetaBridge.ActualFullSymbolTail
-open scoped BigOperators
+open scoped BigOperators Topology
+open Filter
+open D5.S3.Weil.ZetaBridge.ActualColumnRemainder
 open D5.S3.Weil.ZetaBridge.WeilArithmeticCouplingJet
 open D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare
 open D5.S3.Weil.ZetaBridge.WeilInfiniteComplementLeakage
@@ -211,6 +215,61 @@ private theorem inverse_weights_tsum {N : ℕ} (hN : 0 < N) :
   simpa only [inverseSquareWeight, one_div] using Real.tsum_le_of_sum_range_le
     (fun j => sq_nonneg (((N : ℝ) + (j : ℝ) + 1)⁻¹)) (inverse_square_partial_le hNR)
 
+private theorem inverse_step_lower_candidate {x : ℝ} (hx : 0 < x) :
+    x⁻¹ - (x + 1)⁻¹ ≤ (x⁻¹) ^ 2 := by
+  have hx1 : 0 < x + 1 := by linarith
+  have heq : x⁻¹ - (x + 1)⁻¹ = (x * (x + 1))⁻¹ := by
+    field_simp [ne_of_gt hx, ne_of_gt hx1]
+    <;> ring
+  -- Normalize the equality on both sides, rather than reversing inv_pow
+  -- against an expression that may not match that rewrite direction.
+  have hpow : (x⁻¹) ^ 2 = (x ^ 2)⁻¹ := by
+    simp only [inv_pow]
+  rw [heq, hpow]
+  exact (inv_le_inv₀ (mul_pos hx hx1) (by positivity : 0 < x ^ 2)).2
+    (by nlinarith)
+
+private theorem inverse_square_partial_lower_candidate {d : ℝ} (hd : 0 < d)
+    (K : ℕ) :
+    (d + 1)⁻¹ - (d + (K : ℝ) + 1)⁻¹ ≤
+      ∑ j ∈ Finset.range K, ((d + (j : ℝ) + 1)⁻¹) ^ 2 := by
+  induction K with
+  | zero => simp
+  | succ K ih =>
+      rw [Finset.sum_range_succ]
+      have hstep := inverse_step_lower_candidate
+        (show 0 < d + (K : ℝ) + 1 by positivity)
+      simp only [Nat.cast_succ, add_assoc]
+      simp only [add_assoc] at hstep ih
+      linarith
+
+private theorem inverse_square_tsum_lower_candidate {d : ℝ} (hd : 0 < d) :
+    (d + 1)⁻¹ ≤ ∑' j : ℕ, ((d + (j : ℝ) + 1)⁻¹) ^ 2 := by
+  have hs : Summable (fun j : ℕ => ((d + (j : ℝ) + 1)⁻¹) ^ 2) :=
+    WeilInfiniteComplementLeakage.inverse_square_summable hd
+  have hnat : Tendsto (fun K : ℕ => d + (K : ℝ) + 1) atTop atTop := by
+    apply tendsto_atTop.2
+    intro b
+    have hK : ∀ᶠ K : ℕ in atTop, b - d - 1 ≤ (K : ℝ) :=
+      (tendsto_natCast_atTop_atTop :
+        Tendsto (fun K : ℕ => (K : ℝ)) atTop atTop).eventually_ge_atTop (b - d - 1)
+    filter_upwards [hK] with K hK
+    linarith
+  have hzero : Tendsto (fun K : ℕ => (d + (K : ℝ) + 1)⁻¹) atTop (𝓝 0) :=
+    (tendsto_inv_atTop_zero :
+      Tendsto (fun y : ℝ => y⁻¹) atTop (𝓝 0)).comp hnat
+  have hconst : Tendsto (fun _ : ℕ => (d + 1)⁻¹) atTop (𝓝 ((d + 1)⁻¹)) :=
+    tendsto_const_nhds
+  have hlim : Tendsto
+      (fun K : ℕ => (d + 1)⁻¹ - (d + (K : ℝ) + 1)⁻¹) atTop
+      (𝓝 ((d + 1)⁻¹)) := by
+    simpa only [sub_zero] using hconst.sub hzero
+  apply le_of_tendsto hlim
+  apply Filter.Eventually.of_forall
+  intro K
+  exact (inverse_square_partial_lower_candidate hd K).trans
+    (Summable.sum_le_tsum (Finset.range K) (fun _ _ => sq_nonneg _) hs)
+
 private theorem weight_tail_dom {c N : ℕ} (hc : 2 ≤ c) (hN : 0 < N) (j : ℕ) :
     smoothWeight c (N + j + 1) ≤ smoothEnvelope c N * inverseSquareWeight N j := by
   rw [inverse_weight_eq]
@@ -320,6 +379,115 @@ private theorem full_real_tail {c N : ℕ} (hc : 2 ≤ c) (hN : 0 < N) :
           ((N + 1 : ℕ) : ℝ) ^ 2) := by
       linarith only [hpb, hhb, hlo]
     _ = _ := by ring
+
+/- SOURCE_ONLY_UNCOMPILED. Splice after full_real_tail, before full_complex_energy,
+inside the original ActualFullSymbolTail namespace/noncomputable section.
+Requires input02 in its original Jet owner; no additional imports. -/
+
+private theorem actual_full_real_tail_lower {c M : ℕ} (hc : 2 ≤ c) (hM : 0 < M)
+    (hw : 1 ≤ frequency c ((M + 1 : ℕ) : ℤ)) :
+    smoothFloor c ^ 2 * (∑' j : ℕ, inverseSquareWeight M j) -
+        2 * primeFirstMoment c * smoothEnvelope c (M + 1) / ((M + 1 : ℕ) : ℝ) ^ 2 ≤
+      ∑' j : ℕ, arithmeticBoundarySymbol c ((M + j + 1 : ℕ) : ℤ) ^ 2 *
+        inverseSquareWeight M j := by
+  obtain ⟨hf, _⟩ := full_real_tail hc hM
+  obtain ⟨hp, _⟩ := PrimeSymbolResonance.prime_symbol_square_tail hc hM
+  obtain ⟨hh, _⟩ := smooth_square_tail hc hM
+  obtain ⟨hma, hmb⟩ := signed_mixed_tail hc hM
+  have hm : Summable (fun j : ℕ => mixedTerm c (M + j + 1)) := by
+    apply Summable.of_norm
+    simpa only [mixedTerm, Real.norm_eq_abs] using hma
+  have hi := (inverse_weights_summable hM).mul_left (smoothFloor c ^ 2)
+  have hL : 0 < logLength c := by
+    apply Real.log_pos
+    exact_mod_cast (lt_of_lt_of_le (by decide : 1 < 2) hc)
+  have hfreq (j : ℕ) : 1 ≤ frequency c ((M + j + 1 : ℕ) : ℤ) := by
+    refine hw.trans ?_
+    unfold frequency
+    apply div_le_div_of_nonneg_right ?_ hL.le
+    apply mul_le_mul_of_nonneg_left ?_ (by positivity : 0 ≤ 2 * Real.pi)
+    exact_mod_cast (show M + 1 ≤ M + j + 1 by omega)
+  have hpoint (j : ℕ) :
+      smoothFloor c ^ 2 * inverseSquareWeight M j ≤ smoothSquare c M j := by
+    obtain ⟨hd, hH⟩ := smooth_weight_floor hc (by omega) (hfreq j)
+    have he : arithmeticBoundarySymbol c ((M + j + 1 : ℕ) : ℤ) +
+        primeSymbol c ((M + j + 1 : ℕ) : ℤ) =
+        -(((M + j + 1 : ℕ) : ℝ) ^ 2 * smoothWeight c (M + j + 1)) := by
+      rw [actual_smooth_split c (by omega)]
+      ring
+    unfold smoothSquare
+    rw [he, neg_sq]
+    exact mul_le_mul_of_nonneg_right (pow_le_pow_left₀ hd.le hH 2) (sq_nonneg _)
+  have hfloor : smoothFloor c ^ 2 * (∑' j : ℕ, inverseSquareWeight M j) ≤
+      ∑' j : ℕ, smoothSquare c M j := by
+    calc
+      _ = ∑' j : ℕ, smoothFloor c ^ 2 * inverseSquareWeight M j := tsum_mul_left.symm
+      _ ≤ _ := hi.tsum_le_tsum hpoint hh
+  have hid (j : ℕ) :
+      arithmeticBoundarySymbol c ((M + j + 1 : ℕ) : ℤ) ^ 2 * inverseSquareWeight M j =
+        primeSymbol c ((M + j + 1 : ℕ) : ℤ) ^ 2 * inverseSquareWeight M j +
+          smoothSquare c M j - 2 * mixedTerm c (M + j + 1) := by
+    unfold smoothSquare mixedTerm
+    rw [inverse_weight_eq]
+    ring
+  have heq :
+      (∑' j : ℕ, arithmeticBoundarySymbol c ((M + j + 1 : ℕ) : ℤ) ^ 2 *
+        inverseSquareWeight M j) =
+        (∑' j : ℕ, primeSymbol c ((M + j + 1 : ℕ) : ℤ) ^ 2 * inverseSquareWeight M j) +
+        (∑' j : ℕ, smoothSquare c M j) - 2 * (∑' j : ℕ, mixedTerm c (M + j + 1)) := by
+    exact hf.hasSum.unique
+      (((hp.hasSum.add hh.hasSum).sub (hm.hasSum.mul_left 2)).congr_fun hid)
+  have hp0 : 0 ≤ (∑' j : ℕ, primeSymbol c ((M + j + 1 : ℕ) : ℤ) ^ 2 *
+      inverseSquareWeight M j) :=
+    tsum_nonneg (fun _ => mul_nonneg (sq_nonneg _) (sq_nonneg _))
+  have hupper := (abs_le.mp hmb).2
+  change (∑' j : ℕ, mixedTerm c (M + j + 1)) ≤
+    primeFirstMoment c * smoothEnvelope c (M + 1) / ((M + 1 : ℕ) : ℝ) ^ 2 at hupper
+  rw [heq]
+  calc
+    _ = smoothFloor c ^ 2 * (∑' j : ℕ, inverseSquareWeight M j) -
+        2 * (primeFirstMoment c * smoothEnvelope c (M + 1) /
+          ((M + 1 : ℕ) : ℝ) ^ 2) := by ring
+    _ ≤ _ := by linarith only [hfloor, hp0, hupper]
+
+private theorem actual_full_real_tail_lower_coarse {c M : ℕ} (hc : 2 ≤ c) (hM : 0 < M)
+    (hw : 1 ≤ frequency c ((M + 1 : ℕ) : ℤ)) :
+    let U : ℝ := 2 * (Real.cosh (logLength c / 2) - 1) / (2 * Real.pi / logLength c)
+    let D0 : ℝ := 2 * primeFirstMoment c * (2 + U)
+    smoothFloor c ^ 2 * (∑' j : ℕ, inverseSquareWeight M j) -
+        D0 / ((M + 1 : ℕ) : ℝ) ^ 2 ≤
+      ∑' j : ℕ, arithmeticBoundarySymbol c ((M + j + 1 : ℕ) : ℤ) ^ 2 *
+        inverseSquareWeight M j := by
+  let a : ℝ := 2 * Real.pi / logLength c
+  let U : ℝ := 2 * (Real.cosh (logLength c / 2) - 1) / (2 * Real.pi / logLength c)
+  let D0 : ℝ := 2 * primeFirstMoment c * (2 + U)
+  change smoothFloor c ^ 2 * (∑' j : ℕ, inverseSquareWeight M j) -
+    D0 / ((M + 1 : ℕ) : ℝ) ^ 2 ≤ _
+  have hL : 0 < logLength c := by
+    apply Real.log_pos
+    exact_mod_cast (lt_of_lt_of_le (by decide : 1 < 2) hc)
+  have ha : 0 < a := div_pos (by positivity) hL
+  have hU : 0 ≤ U := div_nonneg
+    (mul_nonneg (by norm_num) (sub_nonneg.mpr (Real.one_le_cosh _))) ha.le
+  have ht : (1 : ℝ) ≤ ((M + 1 : ℕ) : ℝ) := by
+    exact_mod_cast (show 1 ≤ M + 1 by omega)
+  have henv : smoothEnvelope c (M + 1) ≤ 2 + U := by
+    calc
+      _ ≤ 2 + U / ((M + 1 : ℕ) : ℝ) := by
+        unfold smoothEnvelope
+        with_unfolding_all
+          change min (2 + U / ((M + 1 : ℕ) : ℝ))
+            (Real.pi / 4 + (U + 3 / (4 * a)) / ((M + 1 : ℕ) : ℝ)) ≤
+              2 + U / ((M + 1 : ℕ) : ℝ)
+        exact min_le_left _ _
+      _ ≤ 2 + U := add_le_add_left (div_le_self hU ht) 2
+  have herr :
+      2 * primeFirstMoment c * smoothEnvelope c (M + 1) / ((M + 1 : ℕ) : ℝ) ^ 2 ≤
+        D0 / ((M + 1 : ℕ) : ℝ) ^ 2 :=
+    div_le_div_of_nonneg_right
+      (mul_le_mul_of_nonneg_left henv (mul_nonneg (by norm_num) (firstMoment_nonneg c)))
+      (sq_nonneg _)
+  exact (sub_le_sub_left herr _).trans (actual_full_real_tail_lower hc hM hw)
 
 private theorem full_complex_energy (c N j : ℕ) (β : ℂ) :
     ‖β * (arithmeticBoundarySymbol c ((N + j + 1 : ℕ) : ℤ) : ℂ) /
@@ -437,182 +605,11 @@ actual symbol and |n|, including n=0. The finite Cauchy--Schwarz argument below
 passes to the genuine infinite sum with the same square-root budget.
 -/
 
-/-- The actual absolute first moment of the finite complex head. -/
-def weightedHeadMass (S : Finset ℤ) (v : ℤ → ℂ) : ℝ :=
-  ∑ n ∈ S, |(n : ℝ)| * ‖v n‖
-
 /-- Exactly the old paired first-jet budget, with both complex moments. -/
 def pairedJetBudget (c M : ℕ) (S : Finset ℤ) (v : ℤ → ℂ) : ℝ :=
   (2 / Real.pi ^ 2) *
     (‖∑ n ∈ S, (arithmeticBoundarySymbol c n : ℂ) * v n‖ ^ 2 / (M : ℝ) +
       ‖∑ n ∈ S, v n‖ ^ 2 * fullSymbolTailBudget c M)
-
-/-- Exact paired remainder budget; no replacement of W by A times head mass. -/
-def pairedRemainderBudget (c M : ℕ) (A : ℝ) (S : Finset ℤ) (v : ℤ → ℂ) : ℝ :=
-  8 * arithmeticBoundaryBudget c ^ 2 * weightedHeadMass S v ^ 2 * ((M : ℝ) + 1) ^ 2 /
-    (3 * Real.pi ^ 2 * (M : ℝ) ^ 3 * ((M : ℝ) + 1 - A) ^ 2)
-
-/-- Weighted pointwise error at every actual separated integer exterior mode.
-The owner theorem is applied with the individual singleton radius |n|. -/
-theorem weighted_coupling_first_jet_error {c : ℕ} (hc : 2 ≤ c)
-    (S : Finset ℤ) (v : ℤ → ℂ) {A : ℝ} (hA : 0 ≤ A)
-    (hS : ∀ n ∈ S, |(n : ℝ)| ≤ A) {m : ℤ} (hm : A < |(m : ℝ)|) :
-    ‖couplingColumn c S v m - couplingFirstJet c S v m‖ ≤
-      2 * arithmeticBoundaryBudget c * weightedHeadMass S v /
-        (Real.pi * |(m : ℝ)| * (|(m : ℝ)| - A)) := by
-  classical
-  have hB : 0 ≤ arithmeticBoundaryBudget c :=
-    (abs_nonneg _).trans (arithmetic_boundary_symbol_bound hc 0).2
-  have hm0 : 0 < |(m : ℝ)| := lt_of_le_of_lt hA hm
-  have hgap : 0 < |(m : ℝ)| - A := sub_pos.mpr hm
-  have hsingle (n : ℤ) (hn : n ∈ S) :
-      ‖couplingColumn c {n} v m - couplingFirstJet c {n} v m‖ ≤
-        (2 * arithmeticBoundaryBudget c * |(n : ℝ)| /
-          (Real.pi * |(m : ℝ)| * (|(m : ℝ)| - A))) * ‖v n‖ := by
-    have hlocal := arithmetic_coupling_first_jet_error hc ({n} : Finset ℤ) v
-      (abs_nonneg (n : ℝ)) (by
-        intro l hl
-        simpa only [Finset.mem_singleton.mp hl] using (le_refl |(n : ℝ)|))
-      (lt_of_le_of_lt (hS n hn) hm)
-    simp only [Finset.sum_singleton] at hlocal
-    have hd : Real.pi * |(m : ℝ)| * (|(m : ℝ)| - A) ≤
-        Real.pi * |(m : ℝ)| * (|(m : ℝ)| - |(n : ℝ)|) :=
-      mul_le_mul_of_nonneg_left (by linarith [hS n hn]) (by positivity)
-    exact hlocal.trans (mul_le_mul_of_nonneg_right
-      (div_le_div_of_nonneg_left (by positivity) (by positivity) hd) (norm_nonneg _))
-  have hid : couplingColumn c S v m - couplingFirstJet c S v m =
-      ∑ n ∈ S, (couplingColumn c {n} v m - couplingFirstJet c {n} v m) := by
-    simp only [couplingColumn, couplingFirstJet, Finset.sum_singleton,
-      Finset.sum_sub_distrib]
-  rw [hid]
-  calc
-    _ ≤ ∑ n ∈ S, ‖couplingColumn c {n} v m - couplingFirstJet c {n} v m‖ :=
-      norm_sum_le _ _
-    _ ≤ ∑ n ∈ S, (2 * arithmeticBoundaryBudget c * |(n : ℝ)| /
-        (Real.pi * |(m : ℝ)| * (|(m : ℝ)| - A))) * ‖v n‖ :=
-      Finset.sum_le_sum hsingle
-    _ = (2 * arithmeticBoundaryBudget c /
-        (Real.pi * |(m : ℝ)| * (|(m : ℝ)| - A))) * weightedHeadMass S v := by
-      rw [weightedHeadMass, Finset.mul_sum]
-      apply Finset.sum_congr rfl
-      intro n _
-      ring
-    _ = _ := by ring
-
-private theorem weighted_mass_nonneg (S : Finset ℤ) (v : ℤ → ℂ) :
-    0 ≤ weightedHeadMass S v :=
-  Finset.sum_nonneg (fun _ _ => mul_nonneg (abs_nonneg _) (norm_nonneg _))
-
-private def remainderConstant (c M : ℕ) (A : ℝ) (S : Finset ℤ) (v : ℤ → ℂ) : ℝ :=
-  2 * arithmeticBoundaryBudget c * weightedHeadMass S v * ((M : ℝ) + 1) /
-    (Real.pi * ((M : ℝ) + 1 - A))
-
-private theorem remainder_square_majorant {c M : ℕ} (hc : 2 ≤ c)
-    (S : Finset ℤ) (v : ℤ → ℂ) {A : ℝ} (hA : 0 ≤ A)
-    (hS : ∀ n ∈ S, |(n : ℝ)| ≤ A) (hsep : A < (M : ℝ) + 1)
-    (j : ℕ) (m : ℤ) (hm : |(m : ℝ)| = ((M + j + 1 : ℕ) : ℝ)) :
-    ‖couplingColumn c S v m - couplingFirstJet c S v m‖ ^ 2 ≤
-      remainderConstant c M A S v ^ 2 / ((M + j + 1 : ℕ) : ℝ) ^ 4 := by
-  let t : ℝ := ((M + j + 1 : ℕ) : ℝ)
-  have ht : (M : ℝ) + 1 ≤ t := by
-    dsimp [t]
-    push_cast
-    linarith [Nat.cast_nonneg (α := ℝ) j]
-  have hgap : 0 < t - A := by linarith
-  have hd : 0 < (M : ℝ) + 1 - A := sub_pos.mpr hsep
-  have ht0 : 0 < t := by linarith
-  have hB : 0 ≤ arithmeticBoundaryBudget c :=
-    (abs_nonneg _).trans (arithmetic_boundary_symbol_bound hc 0).2
-  have hW := weighted_mass_nonneg S v
-  have herr := weighted_coupling_first_jet_error hc S v hA hS
-    (m := m) (by rw [hm]; exact lt_of_lt_of_le hsep ht)
-  rw [hm] at herr
-  have hratio : t / (t - A) ≤ ((M : ℝ) + 1) / ((M : ℝ) + 1 - A) := by
-    apply (div_le_div_iff₀ hgap hd).mpr
-    nlinarith [mul_nonneg hA (sub_nonneg.mpr ht)]
-  have hnorm : ‖couplingColumn c S v m - couplingFirstJet c S v m‖ ≤
-      remainderConstant c M A S v / t ^ 2 := by
-    calc
-      _ ≤ 2 * arithmeticBoundaryBudget c * weightedHeadMass S v /
-          (Real.pi * t * (t - A)) := herr
-      _ = (2 * arithmeticBoundaryBudget c * weightedHeadMass S v / (Real.pi * t ^ 2)) *
-          (t / (t - A)) := by
-        field_simp [Real.pi_ne_zero, ht0.ne', hgap.ne']
-        <;> ring
-      _ ≤ (2 * arithmeticBoundaryBudget c * weightedHeadMass S v / (Real.pi * t ^ 2)) *
-          (((M : ℝ) + 1) / ((M : ℝ) + 1 - A)) :=
-        mul_le_mul_of_nonneg_left hratio (by positivity)
-      _ = _ := by
-        unfold remainderConstant
-        field_simp [Real.pi_ne_zero, ht0.ne', hd.ne']
-        <;> ring
-  calc
-    _ ≤ (remainderConstant c M A S v / t ^ 2) ^ 2 :=
-      pow_le_pow_left₀ (norm_nonneg _) hnorm 2
-    _ = _ := by dsimp [t]; simp only [div_pow, ← pow_mul]
-
-private theorem remainder_budget_eq {c M : ℕ} {A : ℝ}
-    (hM : 0 < M) (hsep : A < (M : ℝ) + 1) (S : Finset ℤ) (v : ℤ → ℂ) :
-    2 * remainderConstant c M A S v ^ 2 / (3 * (M : ℝ) ^ 3) =
-      pairedRemainderBudget c M A S v := by
-  have hMR : (0 : ℝ) < M := by exact_mod_cast hM
-  have hd : (M : ℝ) + 1 - A ≠ 0 := (sub_pos.mpr hsep).ne'
-  unfold remainderConstant pairedRemainderBudget
-  field_simp [Real.pi_ne_zero, hMR.ne', hd]
-  <;> ring
-
-/-- Both signs of the actual weighted first-jet remainder, summed to infinity.
-Every separated cutoff A<M+1 is admitted; M>0 pays the inverse-fourth tail. -/
-theorem paired_first_jet_remainder_tail {c M : ℕ} (hc : 2 ≤ c) (hM : 0 < M)
-    (S : Finset ℤ) (v : ℤ → ℂ) {A : ℝ} (hA : 0 ≤ A)
-    (hS : ∀ n ∈ S, |(n : ℝ)| ≤ A) (hsep : A < (M : ℝ) + 1) :
-    Summable (fun j : ℕ =>
-      ‖couplingColumn c S v ((M + j + 1 : ℕ) : ℤ) -
-        couplingFirstJet c S v ((M + j + 1 : ℕ) : ℤ)‖ ^ 2 +
-      ‖couplingColumn c S v (-((M + j + 1 : ℕ) : ℤ)) -
-        couplingFirstJet c S v (-((M + j + 1 : ℕ) : ℤ))‖ ^ 2) ∧
-    (∑' j : ℕ,
-      (‖couplingColumn c S v ((M + j + 1 : ℕ) : ℤ) -
-        couplingFirstJet c S v ((M + j + 1 : ℕ) : ℤ)‖ ^ 2 +
-        ‖couplingColumn c S v (-((M + j + 1 : ℕ) : ℤ)) -
-          couplingFirstJet c S v (-((M + j + 1 : ℕ) : ℤ))‖ ^ 2)) ≤
-      pairedRemainderBudget c M A S v := by
-  let e : ℕ → ℝ := fun j =>
-    ‖couplingColumn c S v ((M + j + 1 : ℕ) : ℤ) -
-      couplingFirstJet c S v ((M + j + 1 : ℕ) : ℤ)‖ ^ 2 +
-    ‖couplingColumn c S v (-((M + j + 1 : ℕ) : ℤ)) -
-      couplingFirstJet c S v (-((M + j + 1 : ℕ) : ℤ))‖ ^ 2
-  have he (j : ℕ) : e j ≤
-      (2 * remainderConstant c M A S v ^ 2) *
-        (1 / ((M : ℝ) + (j : ℝ) + 1) ^ 4) := by
-    have hcast : (0 : ℝ) ≤ ((M + j + 1 : ℕ) : ℝ) := Nat.cast_nonneg _
-    have hp := remainder_square_majorant hc S v hA hS hsep j
-      ((M + j + 1 : ℕ) : ℤ) (by
-        simpa only [Int.cast_natCast] using abs_of_nonneg hcast)
-    have hn := remainder_square_majorant hc S v hA hS hsep j
-      (-((M + j + 1 : ℕ) : ℤ)) (by
-        simpa only [Int.cast_neg, abs_neg, Int.cast_natCast] using abs_of_nonneg hcast)
-    calc
-      e j ≤ remainderConstant c M A S v ^ 2 / ((M + j + 1 : ℕ) : ℝ) ^ 4 +
-          remainderConstant c M A S v ^ 2 / ((M + j + 1 : ℕ) : ℝ) ^ 4 := add_le_add hp hn
-      _ = _ := by push_cast; ring
-  have hpartial (k : ℕ) : (∑ j ∈ Finset.range k, e j) ≤ pairedRemainderBudget c M A S v := by
-    have hfourth := WeilEvenFourierObservationTail.inverse_fourth_partial_le hM k
-    have hterminal : 0 ≤ 1 / (3 * ((M : ℝ) + (k : ℝ)) ^ 3) := by positivity
-    have hfourth' : (∑ j ∈ Finset.range k, 1 / ((M : ℝ) + (j : ℝ) + 1) ^ 4) ≤
-        1 / (3 * (M : ℝ) ^ 3) := by linarith
-    calc
-      _ ≤ ∑ j ∈ Finset.range k, (2 * remainderConstant c M A S v ^ 2) *
-          (1 / ((M : ℝ) + (j : ℝ) + 1) ^ 4) := Finset.sum_le_sum (fun j _ => he j)
-      _ = (2 * remainderConstant c M A S v ^ 2) *
-          (∑ j ∈ Finset.range k, 1 / ((M : ℝ) + (j : ℝ) + 1) ^ 4) := (Finset.mul_sum _ _ _).symm
-      _ ≤ (2 * remainderConstant c M A S v ^ 2) * (1 / (3 * (M : ℝ) ^ 3)) :=
-        mul_le_mul_of_nonneg_left hfourth' (by positivity)
-      _ = pairedRemainderBudget c M A S v := by
-        simpa only [div_eq_mul_inv, one_mul] using remainder_budget_eq (c := c) hM hsep S v
-  have hnon (j : ℕ) : 0 ≤ e j := add_nonneg (sq_nonneg _) (sq_nonneg _)
-  exact ⟨summable_of_sum_range_le hnon hpartial,
-    Real.tsum_le_of_sum_range_le hnon hpartial⟩
 
 -- Consumed finite Cauchy--Schwarz, with the exact square-root sum budget.
 -- This private analytic calculation makes no new public framework or claim.
@@ -688,5 +685,279 @@ theorem paired_coupling_column_tail {c M : ℕ} (hc : 2 ≤ c) (hM : 0 < M)
   have hnon (j : ℕ) : 0 ≤ q j := add_nonneg (sq_nonneg _) (sq_nonneg _)
   exact ⟨summable_of_sum_range_le hnon hpartial,
     Real.tsum_le_of_sum_range_le hnon hpartial⟩
+
+private def jetEnergyAlpha (c : ℕ) (S : Finset ℤ) (v : ℤ → ℂ) : ℂ :=
+  ∑ n ∈ S, (arithmeticBoundarySymbol c n : ℂ) * v n
+
+private def jetEnergyBeta (S : Finset ℤ) (v : ℤ → ℂ) : ℂ :=
+  ∑ n ∈ S, v n
+
+private def pairedJetEnergyTerm (c M : ℕ) (S : Finset ℤ) (v : ℤ → ℂ)
+    (j : ℕ) : ℝ :=
+  ‖couplingFirstJet c S v ((M + j + 1 : ℕ) : ℤ)‖ ^ 2 +
+    ‖couplingFirstJet c S v (-((M + j + 1 : ℕ) : ℤ))‖ ^ 2
+
+private def pairedColumnEnergyTerm (c M : ℕ) (S : Finset ℤ) (v : ℤ → ℂ)
+    (j : ℕ) : ℝ :=
+  ‖couplingColumn c S v ((M + j + 1 : ℕ) : ℤ)‖ ^ 2 +
+    ‖couplingColumn c S v (-((M + j + 1 : ℕ) : ℤ))‖ ^ 2
+
+private def pairedJetRemainderEnergyTerm (c M : ℕ) (S : Finset ℤ)
+    (v : ℤ → ℂ) (j : ℕ) : ℝ :=
+  ‖couplingColumn c S v ((M + j + 1 : ℕ) : ℤ) -
+    couplingFirstJet c S v ((M + j + 1 : ℕ) : ℤ)‖ ^ 2 +
+    ‖couplingColumn c S v (-((M + j + 1 : ℕ) : ℤ)) -
+      couplingFirstJet c S v (-((M + j + 1 : ℕ) : ℤ))‖ ^ 2
+
+-- The two component series are summable before any tsum identity is used.
+-- No equality is inferred from the existing upper first-jet budget.
+private theorem paired_first_jet_energy_exact {c M : ℕ}
+    (hc : 2 ≤ c) (hM : 0 < M) (S : Finset ℤ) (v : ℤ → ℂ) :
+    Summable (pairedJetEnergyTerm c M S v) ∧
+    (∑' j : ℕ, pairedJetEnergyTerm c M S v j) =
+      (2 / Real.pi ^ 2) *
+        (‖jetEnergyAlpha c S v‖ ^ 2 * (∑' j : ℕ, inverseSquareWeight M j) +
+          ‖jetEnergyBeta S v‖ ^ 2 *
+            (∑' j : ℕ, arithmeticBoundarySymbol c ((M + j + 1 : ℕ) : ℤ) ^ 2 *
+              inverseSquareWeight M j)) := by
+  have hw : Summable (inverseSquareWeight M) := inverse_weights_summable hM
+  have ht : Summable (fun j : ℕ =>
+      arithmeticBoundarySymbol c ((M + j + 1 : ℕ) : ℤ) ^ 2 *
+        inverseSquareWeight M j) := (full_real_tail hc hM).1
+  have ha : Summable (fun j : ℕ =>
+      ‖jetEnergyAlpha c S v‖ ^ 2 * inverseSquareWeight M j) :=
+    hw.mul_left (‖jetEnergyAlpha c S v‖ ^ 2)
+  have hb : Summable (fun j : ℕ =>
+      ‖jetEnergyBeta S v‖ ^ 2 *
+        (arithmeticBoundarySymbol c ((M + j + 1 : ℕ) : ℤ) ^ 2 *
+          inverseSquareWeight M j)) :=
+    ht.mul_left (‖jetEnergyBeta S v‖ ^ 2)
+  have hpair (j : ℕ) : pairedJetEnergyTerm c M S v j =
+      (2 / Real.pi ^ 2) *
+        (‖jetEnergyAlpha c S v‖ ^ 2 * inverseSquareWeight M j +
+          ‖jetEnergyBeta S v‖ ^ 2 *
+            (arithmeticBoundarySymbol c ((M + j + 1 : ℕ) : ℤ) ^ 2 *
+              inverseSquareWeight M j)) := by
+    simpa only [pairedJetEnergyTerm, jetEnergyAlpha, jetEnergyBeta,
+      full_complex_energy] using (first_jet_pair c M j S v)
+  have hj : Summable (pairedJetEnergyTerm c M S v) :=
+    ((ha.add hb).mul_left (2 / Real.pi ^ 2)).congr (fun j => (hpair j).symm)
+  refine ⟨hj, ?_⟩
+  calc
+    (∑' j : ℕ, pairedJetEnergyTerm c M S v j) =
+        ∑' j : ℕ, (2 / Real.pi ^ 2) *
+          (‖jetEnergyAlpha c S v‖ ^ 2 * inverseSquareWeight M j +
+            ‖jetEnergyBeta S v‖ ^ 2 *
+              (arithmeticBoundarySymbol c ((M + j + 1 : ℕ) : ℤ) ^ 2 *
+                inverseSquareWeight M j)) := tsum_congr hpair
+    _ = (2 / Real.pi ^ 2) *
+        (∑' j : ℕ, ‖jetEnergyAlpha c S v‖ ^ 2 * inverseSquareWeight M j +
+          ‖jetEnergyBeta S v‖ ^ 2 *
+            (arithmeticBoundarySymbol c ((M + j + 1 : ℕ) : ℤ) ^ 2 *
+              inverseSquareWeight M j)) := (ha.add hb).tsum_mul_left _
+    _ = (2 / Real.pi ^ 2) *
+        ((∑' j : ℕ, ‖jetEnergyAlpha c S v‖ ^ 2 * inverseSquareWeight M j) +
+          (∑' j : ℕ, ‖jetEnergyBeta S v‖ ^ 2 *
+            (arithmeticBoundarySymbol c ((M + j + 1 : ℕ) : ℤ) ^ 2 *
+              inverseSquareWeight M j))) := by rw [ha.tsum_add hb]
+    _ = (2 / Real.pi ^ 2) *
+        (‖jetEnergyAlpha c S v‖ ^ 2 * (∑' j : ℕ, inverseSquareWeight M j) +
+          ‖jetEnergyBeta S v‖ ^ 2 *
+            (∑' j : ℕ, arithmeticBoundarySymbol c ((M + j + 1 : ℕ) : ℤ) ^ 2 *
+              inverseSquareWeight M j)) := by
+      rw [hw.tsum_mul_left (‖jetEnergyAlpha c S v‖ ^ 2),
+        ht.tsum_mul_left (‖jetEnergyBeta S v‖ ^ 2)]
+
+-- Valid for every actual integer mode; the next consumer uses m and -m.
+private theorem actual_first_jet_reverse_pointwise (c : ℕ)
+    (S : Finset ℤ) (v : ℤ → ℂ) (m : ℤ) :
+    ‖couplingFirstJet c S v m‖ ^ 2 ≤
+      2 * ‖couplingColumn c S v m‖ ^ 2 +
+        2 * ‖couplingColumn c S v m - couplingFirstJet c S v m‖ ^ 2 := by
+  have htriangle : ‖couplingFirstJet c S v m‖ ≤
+      ‖couplingColumn c S v m‖ +
+        ‖couplingColumn c S v m - couplingFirstJet c S v m‖ := by
+    calc
+      ‖couplingFirstJet c S v m‖ =
+          ‖couplingColumn c S v m -
+            (couplingColumn c S v m - couplingFirstJet c S v m)‖ := by
+        congr 1
+        ring
+      _ ≤ _ := norm_sub_le _ _
+  have hsquare := pow_le_pow_left₀ (norm_nonneg _) htriangle 2
+  nlinarith [sq_nonneg (‖couplingColumn c S v m‖ -
+    ‖couplingColumn c S v m - couplingFirstJet c S v m‖)]
+
+-- Direct tsum comparison, after obtaining ALL three actual summability proofs.
+private theorem paired_actual_reverse_energy {c M : ℕ}
+    (hc : 2 ≤ c) (hM : 0 < M) (S : Finset ℤ) (v : ℤ → ℂ)
+    {A : ℝ} (hA : 0 ≤ A) (hS : ∀ n ∈ S, |(n : ℝ)| ≤ A)
+    (hsep : A < (M : ℝ) + 1) :
+    Summable (pairedColumnEnergyTerm c M S v) ∧
+    Summable (pairedJetEnergyTerm c M S v) ∧
+    Summable (pairedJetRemainderEnergyTerm c M S v) ∧
+    (∑' j : ℕ, pairedJetEnergyTerm c M S v j) ≤
+      2 * (∑' j : ℕ, pairedColumnEnergyTerm c M S v j) +
+        2 * (∑' j : ℕ, pairedJetRemainderEnergyTerm c M S v j) ∧
+    (∑' j : ℕ, pairedJetRemainderEnergyTerm c M S v j) ≤
+      pairedRemainderBudget c M A S v := by
+  have hcolumn : Summable (pairedColumnEnergyTerm c M S v) :=
+    (paired_coupling_column_tail hc hM S v hA hS hsep).1
+  have hjet : Summable (pairedJetEnergyTerm c M S v) :=
+    (paired_first_jet_tail hc hM S v).1
+  obtain ⟨hrem0, hremb0⟩ := paired_first_jet_remainder_tail hc hM S v hA hS hsep
+  have hrem : Summable (pairedJetRemainderEnergyTerm c M S v) := hrem0
+  have hremb : (∑' j : ℕ, pairedJetRemainderEnergyTerm c M S v j) ≤
+      pairedRemainderBudget c M A S v := hremb0
+  have hcolumn2 : Summable (fun j : ℕ => 2 * pairedColumnEnergyTerm c M S v j) :=
+    hcolumn.mul_left 2
+  have hrem2 : Summable (fun j : ℕ => 2 * pairedJetRemainderEnergyTerm c M S v j) :=
+    hrem.mul_left 2
+  have hpoint (j : ℕ) : pairedJetEnergyTerm c M S v j ≤
+      2 * pairedColumnEnergyTerm c M S v j +
+        2 * pairedJetRemainderEnergyTerm c M S v j := by
+    have hp := actual_first_jet_reverse_pointwise c S v ((M + j + 1 : ℕ) : ℤ)
+    have hn := actual_first_jet_reverse_pointwise c S v (-((M + j + 1 : ℕ) : ℤ))
+    dsimp only [pairedJetEnergyTerm, pairedColumnEnergyTerm,
+      pairedJetRemainderEnergyTerm]
+    linarith only [hp, hn]
+  have hreverse : (∑' j : ℕ, pairedJetEnergyTerm c M S v j) ≤
+      2 * (∑' j : ℕ, pairedColumnEnergyTerm c M S v j) +
+        2 * (∑' j : ℕ, pairedJetRemainderEnergyTerm c M S v j) := by
+    calc
+      (∑' j : ℕ, pairedJetEnergyTerm c M S v j) ≤
+          ∑' j : ℕ, (2 * pairedColumnEnergyTerm c M S v j +
+            2 * pairedJetRemainderEnergyTerm c M S v j) :=
+        hjet.tsum_le_tsum hpoint (hcolumn2.add hrem2)
+      _ = (∑' j : ℕ, 2 * pairedColumnEnergyTerm c M S v j) +
+          (∑' j : ℕ, 2 * pairedJetRemainderEnergyTerm c M S v j) :=
+        hcolumn2.tsum_add hrem2
+      _ = 2 * (∑' j : ℕ, pairedColumnEnergyTerm c M S v j) +
+          2 * (∑' j : ℕ, pairedJetRemainderEnergyTerm c M S v j) := by
+        rw [hcolumn.tsum_mul_left 2, hrem.tsum_mul_left 2]
+  exact ⟨hcolumn, hjet, hrem, hreverse, hremb⟩
+
+/- SOURCE_ONLY_UNCOMPILED. Splice inside the original Full owner, after input03's
+paired_actual_reverse_energy (omit its optional final packaging bridge), input04's
+three private declarations and input10's two private declarations. Input02 belongs
+in Jet. Full must import/open ActualColumnRemainder after the genuine input06
+migration; retain paired_coupling_column_tail in Full. No new imports here. -/
+
+private theorem column_lower_remainder_scalar {m t A q K : ℝ}
+    (hm : 0 < m) (ht : 0 < t) (htm : t ≤ 2 * m) (hgap : 2 * A ≤ t)
+    (hq : 0 < q) (hK : 0 ≤ K) (hcut : 256 * K / (3 * q) ≤ m ^ 2) :
+    8 * K * t ^ 2 / (3 * Real.pi ^ 2 * m ^ 3 * (t - A) ^ 2) ≤
+      q / (4 * Real.pi ^ 2 * t) := by
+  have hg : 0 < t - A := by linarith
+  have hg2 : t ^ 2 ≤ 4 * (t - A) ^ 2 := by
+    have hs := pow_le_pow_left₀ (by positivity : 0 ≤ t / 2)
+      (show t / 2 ≤ t - A by linarith) 2
+    nlinarith only [hs]
+  have hcoarse :
+      8 * K * t ^ 2 / (3 * Real.pi ^ 2 * m ^ 3 * (t - A) ^ 2) ≤
+        32 * K / (3 * Real.pi ^ 2 * m ^ 3) := by
+    apply (div_le_div_iff₀ (by positivity) (by positivity)).2
+    have hh := mul_le_mul_of_nonneg_left hg2
+      (show 0 ≤ 8 * K * (3 * Real.pi ^ 2 * m ^ 3) by positivity)
+    nlinarith only [hh]
+  have hc : 256 * K ≤ m ^ 2 * (3 * q) :=
+    (div_le_iff₀ (by positivity)).1 hcut
+  have hscale : 128 * K * t ≤ 3 * q * m ^ 3 := by
+    have hleft := mul_le_mul_of_nonneg_left htm hK
+    have hright := mul_le_mul_of_nonneg_right hc hm.le
+    nlinarith only [hleft, hright]
+  refine hcoarse.trans ?_
+  apply (div_le_div_iff₀ (by positivity) (by positivity)).2
+  have hp := mul_le_mul_of_nonneg_left hscale (sq_nonneg Real.pi)
+  nlinarith only [hp]
+
+/-- Actual paired column energy has an inverse-linear lower tail when its two
+actual head moments give positive q and the explicit full cutoffs hold. -/
+theorem paired_coupling_column_tail_lower {c M : ℕ} (hc : 2 ≤ c) (hM : 0 < M)
+    (S : Finset ℤ) (v : ℤ → ℂ) {A : ℝ} (hA : 0 ≤ A)
+    (hS : ∀ n ∈ S, |(n : ℝ)| ≤ A) :
+    let alpha : ℂ := ∑ n ∈ S, (arithmeticBoundarySymbol c n : ℂ) * v n
+    let beta : ℂ := ∑ n ∈ S, v n
+    let q : ℝ := ‖alpha‖ ^ 2 + smoothFloor c ^ 2 * ‖beta‖ ^ 2
+    let U : ℝ := 2 * (Real.cosh (logLength c / 2) - 1) / (2 * Real.pi / logLength c)
+    let D0 : ℝ := 2 * primeFirstMoment c * (2 + U)
+    1 ≤ frequency c ((M + 1 : ℕ) : ℤ) →
+    2 * A ≤ (M : ℝ) + 1 →
+    0 < q →
+    2 * ‖beta‖ ^ 2 * D0 / q ≤ (M : ℝ) + 1 →
+    256 * arithmeticBoundaryBudget c ^ 2 * weightedHeadMass S v ^ 2 / (3 * q) ≤
+      (M : ℝ) ^ 2 →
+    Summable (fun j : ℕ =>
+      ‖couplingColumn c S v ((M + j + 1 : ℕ) : ℤ)‖ ^ 2 +
+        ‖couplingColumn c S v (-((M + j + 1 : ℕ) : ℤ))‖ ^ 2) ∧
+    q / (4 * Real.pi ^ 2 * ((M : ℝ) + 1)) ≤
+      ∑' j : ℕ, (‖couplingColumn c S v ((M + j + 1 : ℕ) : ℤ)‖ ^ 2 +
+        ‖couplingColumn c S v (-((M + j + 1 : ℕ) : ℤ))‖ ^ 2) := by
+  dsimp only
+  intro hw hgap hq hmix hcut
+  let t : ℝ := (M : ℝ) + 1
+  let a : ℝ := ‖jetEnergyAlpha c S v‖ ^ 2
+  let b : ℝ := ‖jetEnergyBeta S v‖ ^ 2
+  let q : ℝ := a + smoothFloor c ^ 2 * b
+  let U : ℝ := 2 * (Real.cosh (logLength c / 2) - 1) / (2 * Real.pi / logLength c)
+  let D0 : ℝ := 2 * primeFirstMoment c * (2 + U)
+  let W : ℝ := ∑' j : ℕ, inverseSquareWeight M j
+  let T : ℝ := ∑' j : ℕ,
+    arithmeticBoundarySymbol c ((M + j + 1 : ℕ) : ℤ) ^ 2 * inverseSquareWeight M j
+  change 0 < q at hq
+  change 2 * b * D0 / q ≤ t at hmix
+  have hm : 0 < (M : ℝ) := by exact_mod_cast hM
+  have hm1 : (1 : ℝ) ≤ M := by exact_mod_cast (show 1 ≤ M by omega)
+  have ht : 0 < t := by dsimp [t]; positivity
+  have hsep : A < (M : ℝ) + 1 := by dsimp [t] at ht; linarith
+  obtain ⟨hcol, hjet, hrem, hreverse, hremb⟩ :=
+    paired_actual_reverse_energy hc hM S v hA hS hsep
+  have hid : (∑' j : ℕ, pairedJetEnergyTerm c M S v j) =
+      (2 / Real.pi ^ 2) * (a * W + b * T) :=
+    (paired_first_jet_energy_exact hc hM S v).2
+  have hW : 1 / t ≤ W := by
+    simpa only [t, W, inverseSquareWeight, one_div] using
+      (inverse_square_tsum_lower_candidate hm)
+  have hT : smoothFloor c ^ 2 * W - D0 / t ^ 2 ≤ T := by
+    simpa only [Nat.cast_add, Nat.cast_one] using
+      (actual_full_real_tail_lower_coarse hc hM hw)
+  have hweighted := mul_le_mul_of_nonneg_left hT (show 0 ≤ b by dsimp [b]; positivity)
+  have hWq := mul_le_mul_of_nonneg_left hW hq.le
+  have hmain : q / t - b * D0 / t ^ 2 ≤ a * W + b * T := by
+    calc
+      _ = q * (1 / t) - b * D0 / t ^ 2 := by ring
+      _ ≤ q * W - b * D0 / t ^ 2 := sub_le_sub_right hWq _
+      _ ≤ _ := by dsimp only [q]; nlinarith only [hweighted]
+  have hmix' : 2 * b * D0 ≤ t * q := (div_le_iff₀ hq).1 hmix
+  have herr : b * D0 / t ^ 2 ≤ q / (2 * t) := by
+    apply (div_le_div_iff₀ (by positivity) (by positivity)).2
+    nlinarith only [mul_le_mul_of_nonneg_right hmix' ht.le]
+  have hbase : q / (2 * t) ≤ a * W + b * T := by
+    have he : q / t = 2 * (q / (2 * t)) := by
+      field_simp [ht.ne'] <;> ring
+    linarith only [hmain, herr, he]
+  have hjlow : q / (Real.pi ^ 2 * t) ≤
+      ∑' j : ℕ, pairedJetEnergyTerm c M S v j := by
+    calc
+      _ = (2 / Real.pi ^ 2) * (q / (2 * t)) := by
+        field_simp [Real.pi_pos.ne', ht.ne'] <;> ring
+      _ ≤ (2 / Real.pi ^ 2) * (a * W + b * T) :=
+        mul_le_mul_of_nonneg_left hbase (by positivity)
+      _ = _ := hid.symm
+  let K : ℝ := arithmeticBoundaryBudget c ^ 2 * weightedHeadMass S v ^ 2
+  have hcut' : 256 * K / (3 * q) ≤ (M : ℝ) ^ 2 := by
+    simpa only [K, q, a, b, jetEnergyAlpha, jetEnergyBeta, mul_assoc] using hcut
+  have hrbudget : pairedRemainderBudget c M A S v ≤ q / (4 * Real.pi ^ 2 * t) := by
+    have hb := column_lower_remainder_scalar hm ht
+      (show t ≤ 2 * (M : ℝ) by dsimp [t]; linarith) hgap hq
+      (show 0 ≤ K by dsimp [K]; positivity) hcut'
+    simpa only [pairedRemainderBudget, K, t, mul_assoc] using hb
+  have hrsmall := hremb.trans hrbudget
+  refine ⟨hcol, ?_⟩
+  change q / (4 * Real.pi ^ 2 * t) ≤ ∑' j : ℕ, pairedColumnEnergyTerm c M S v j
+  have hfour : q / (Real.pi ^ 2 * t) =
+      4 * (q / (4 * Real.pi ^ 2 * t)) := by
+    field_simp [Real.pi_pos.ne', ht.ne'] <;> ring
+  linarith only [hjlow, hreverse, hrsmall, hfour]
 
 end D5.S3.Weil.ZetaBridge.ActualFullSymbolTail

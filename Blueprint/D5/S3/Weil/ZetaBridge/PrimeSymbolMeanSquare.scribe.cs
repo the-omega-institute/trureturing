@@ -78,7 +78,7 @@ internal sealed class PrimeSymbolMeanSquareDocument : IScribeDocumentDefinition
                     AssessedProvenance.FromRepo(),
                     Blocks(
                         Paragraph(Text("For natural c and integer m, WeightedSineSum(c,m)=sum_{q in I(c)} a(q)*sin(2*pi*m*theta(c,q)). This is primeSymbol, with the positive sine sign; the owner arithmeticBoundarySymbol contains its negative. Every prime power below c is retained.")),
-                        Paragraph(Text("Exact pinned definition (source only): def primeSymbol (c : ℕ) (m : ℤ) : ℝ :=\n  ∑ q ∈ primeIndices c, primeWeight q * Real.sin (2 * Real.pi * (m : ℝ) * theta c q)"))),
+                        Paragraph(Text("Exact pinned definition (source only): def primeSymbol (c : ℕ) (m : ℤ) : ℝ :=   ∑ q ∈ primeIndices c, primeWeight q * Real.sin (2 * Real.pi * (m : ℝ) * theta c q)"))),
                     DescribeRole.Definition),
                 Describe.Lean(
                     DescribeId.Create("prime-square-mass"),
@@ -98,7 +98,7 @@ internal sealed class PrimeSymbolMeanSquareDocument : IScribeDocumentDefinition
                     AssessedProvenance.FromRepo(),
                     Blocks(
                         Paragraph(Text("For any finite natural set s, real a:N->R and complex z:N->C, this is sum_{p in s} sum_{q in s} (if p=q then 0 else 2*abs(a(p)*a(q))/norm(1-z(p)*conj(z(q)))). Each unordered unequal pair occurs twice, and the factor 2 is paid for each ordered pair. This definition itself assumes neither unit norms nor noncollision.")),
-                        Paragraph(Text("Exact pinned definition (source only): def orderedCross (s : Finset ℕ) (a : ℕ → ℝ) (z : ℕ → ℂ) : ℝ :=\n  ∑ p ∈ s, ∑ q ∈ s,\n    if p = q then 0 else 2 * |a p * a q| / ‖1 - z p * conj (z q)‖"))),
+                        Paragraph(Text("Exact pinned definition (source only): def orderedCross (s : Finset ℕ) (a : ℕ → ℝ) (z : ℕ → ℂ) : ℝ :=   ∑ p ∈ s, ∑ q ∈ s,     if p = q then 0 else 2 * |a p * a q| / ‖1 - z p * conj (z q)‖"))),
                     DescribeRole.Definition),
                 Describe.Lean(
                     DescribeId.Create("prime-cross"),
@@ -128,7 +128,7 @@ internal sealed class PrimeSymbolMeanSquareDocument : IScribeDocumentDefinition
                     AssessedProvenance.FromRepo(),
                     Blocks(
                         Paragraph(Text("For c>=2 and q in I(c), 0<theta(c,q)<1, since 2<=q<c and logarithm is strictly increasing on positive reals. At c=2 the membership hypothesis is empty.")),
-                        Paragraph(Text("Exact pinned declaration signature (source only): theorem phase_geometry {c q : ℕ} (hc : 2 ≤ c) (hq : q ∈ primeIndices c) :\n    0 < theta c q ∧ theta c q < 1"))),
+                        Paragraph(Text("Exact pinned declaration signature (source only): theorem phase_geometry {c q : ℕ} (hc : 2 ≤ c) (hq : q ∈ primeIndices c) :     0 < theta c q ∧ theta c q < 1"))),
                     DescribeRole.Theorem),
                 Describe.Lean(
                     DescribeId.Create("prime-phase-norm"),
@@ -148,7 +148,7 @@ internal sealed class PrimeSymbolMeanSquareDocument : IScribeDocumentDefinition
                     AssessedProvenance.FromRepo(),
                     Blocks(
                         Paragraph(Text("For c>=2, p,q in I(c) and p!=q, z(c,p)*conj(z(c,q))!=1. The proof bounds the logarithmic difference strictly inside one period, then uses injectivity of log on positive reals. It requires no separate spacing, irrationality or equidistribution premise.")),
-                        Paragraph(Text("Exact pinned declaration signature (source only): theorem primePhase_noncollision {c p q : ℕ} (hc : 2 ≤ c)\n    (hp : p ∈ primeIndices c) (hq : q ∈ primeIndices c) (hpq : p ≠ q) :\n    primePhase c p * conj (primePhase c q) ≠ 1"))),
+                        Paragraph(Text("Exact pinned declaration signature (source only): theorem primePhase_noncollision {c p q : ℕ} (hc : 2 ≤ c)     (hp : p ∈ primeIndices c) (hq : q ∈ primeIndices c) (hpq : p ≠ q) :     primePhase c p * conj (primePhase c q) ≠ 1"))),
                     DescribeRole.Theorem),
                 Describe.Lean(
                     DescribeId.Create("owner-term-cutoff"),
@@ -158,7 +158,7 @@ internal sealed class PrimeSymbolMeanSquareDocument : IScribeDocumentDefinition
                     AssessedProvenance.FromRepo(),
                     Blocks(
                         Paragraph(Text("For c>=2 and any integer m, a(c)*sin(frequency(c,m)*log(c))=0, because the angle is 2*pi*m. This permits the inclusive endpoint without deleting a nonzero contribution.")),
-                        Paragraph(Text("Exact pinned declaration signature (source only): theorem owner_term_cutoff {c : ℕ} (hc : 2 ≤ c) (m : ℤ) :\n    primeWeight c * Real.sin (frequency c m * Real.log (c : ℝ)) = 0"))),
+                        Paragraph(Text("Exact pinned declaration signature (source only): theorem owner_term_cutoff {c : ℕ} (hc : 2 ≤ c) (m : ℤ) :     primeWeight c * Real.sin (frequency c m * Real.log (c : ℝ)) = 0"))),
                     DescribeRole.Theorem),
                 Describe.Lean(
                     DescribeId.Create("owner-prime-sum-eq"),
@@ -168,7 +168,7 @@ internal sealed class PrimeSymbolMeanSquareDocument : IScribeDocumentDefinition
                     AssessedProvenance.FromRepo(),
                     Blocks(
                         Paragraph(Text("For every natural c and integer m, sum_{q in Finset.range c} a(q)*sin(frequency(c,m)*log(q))=S(c,m). The q=0 and q=1 terms vanish; frequency(c,m)*log(q)=2*pi*m*theta(c,q). This identity has no c>=2 premise and identifies the owner prime component with its exact sign.")),
-                        Paragraph(Text("Exact pinned declaration signature (source only): theorem owner_prime_sum_eq (c : ℕ) (m : ℤ) :\n    (∑ q ∈ Finset.range c, primeWeight q * Real.sin (frequency c m * Real.log (q : ℝ))) =\n      primeSymbol c m"))),
+                        Paragraph(Text("Exact pinned declaration signature (source only): theorem owner_prime_sum_eq (c : ℕ) (m : ℤ) :     (∑ q ∈ Finset.range c, primeWeight q * Real.sin (frequency c m * Real.log (q : ℝ))) =       primeSymbol c m"))),
                     DescribeRole.Theorem),
                 Describe.Lean(
                     DescribeId.Create("owner-prime-sum-inclusive"),
@@ -178,7 +178,7 @@ internal sealed class PrimeSymbolMeanSquareDocument : IScribeDocumentDefinition
                     AssessedProvenance.FromRepo(),
                     Blocks(
                         Paragraph(Text("For c>=2 and any integer m, sum_{q in range(c+1)} a(q)*sin(frequency(c,m)*log(q))=S(c,m). It consumes owner_term_cutoff and owner_prime_sum_eq, with the upper term explicitly accounted for.")),
-                        Paragraph(Text("Exact pinned declaration signature (source only): theorem owner_prime_sum_inclusive {c : ℕ} (hc : 2 ≤ c) (m : ℤ) :\n    (∑ q ∈ Finset.range (c + 1), primeWeight q * Real.sin (frequency c m * Real.log (q : ℝ))) =\n      primeSymbol c m"))),
+                        Paragraph(Text("Exact pinned declaration signature (source only): theorem owner_prime_sum_inclusive {c : ℕ} (hc : 2 ≤ c) (m : ℤ) :     (∑ q ∈ Finset.range (c + 1), primeWeight q * Real.sin (frequency c m * Real.log (q : ℝ))) =       primeSymbol c m"))),
                     DescribeRole.Theorem),
                 Describe.Lean(
                     DescribeId.Create("prime-symbol-is-im"),
@@ -188,7 +188,7 @@ internal sealed class PrimeSymbolMeanSquareDocument : IScribeDocumentDefinition
                     AssessedProvenance.FromRepo(),
                     Blocks(
                         Paragraph(Text("For all natural c and integer m, E(c,m)=sum_{q in I(c)} (a(q):C)*z(c,q)^m and S(c,m)=Im(E(c,m)). The exponent is an integer, so negative and zero modes are retained.")),
-                        Paragraph(Text("Exact pinned declaration signature (source only): theorem primeSymbol_is_im (c : ℕ) (m : ℤ) :\n    primeSymbol c m =\n      (∑ q ∈ primeIndices c, (primeWeight q : ℂ) * primePhase c q ^ m).im"))),
+                        Paragraph(Text("Exact pinned declaration signature (source only): theorem primeSymbol_is_im (c : ℕ) (m : ℤ) :     primeSymbol c m =       (∑ q ∈ primeIndices c, (primeWeight q : ℂ) * primePhase c q ^ m).im"))),
                     DescribeRole.Theorem),
                 Describe.Lean(
                     DescribeId.Create("geometric-block-norm"),
@@ -198,7 +198,7 @@ internal sealed class PrimeSymbolMeanSquareDocument : IScribeDocumentDefinition
                     AssessedProvenance.FromRepo(),
                     Blocks(
                         Paragraph(Text("For arbitrary complex z with norm(z)=1 and z!=1, integer M and natural K, norm(sum_{j<K} z^(M+j))<=2/norm(1-z). This includes K=0 and every signed start. It uses the existing finite geometric-sum formula, with no asymptotic averaging argument.")),
-                        Paragraph(Text("Exact pinned declaration signature (source only): theorem geometric_block_norm {z : ℂ} (hz : ‖z‖ = 1) (hz1 : z ≠ 1)\n    (M : ℤ) (K : ℕ) :\n    ‖∑ j ∈ Finset.range K, z ^ (M + (j : ℤ))‖ ≤ 2 / ‖1 - z‖"))),
+                        Paragraph(Text("Exact pinned declaration signature (source only): theorem geometric_block_norm {z : ℂ} (hz : ‖z‖ = 1) (hz1 : z ≠ 1)     (M : ℤ) (K : ℕ) :     ‖∑ j ∈ Finset.range K, z ^ (M + (j : ℤ))‖ ≤ 2 / ‖1 - z‖"))),
                     DescribeRole.Theorem),
                 Describe.Lean(
                     DescribeId.Create("norm-square-expansion"),
@@ -208,7 +208,7 @@ internal sealed class PrimeSymbolMeanSquareDocument : IScribeDocumentDefinition
                     AssessedProvenance.FromRepo(),
                     Blocks(
                         Paragraph(Text("For any finite natural s, real coefficients a, arbitrary complex phases z and integer m, E(s,a,z,m)=sum_{p in s}(a(p):C)*z(p)^m. Its squared norm equals sum_{p in s}sum_{q in s} Re(((a(p)*a(q):R):C)*(z(p)*conj(z(q)))^m). Unit norm and noncollision are not hypotheses of this algebraic identity; the ordered complex summands are not assumed symmetric.")),
-                        Paragraph(Text("Exact pinned declaration signature (source only): theorem norm_square_expansion (s : Finset ℕ) (a : ℕ → ℝ) (z : ℕ → ℂ) (m : ℤ) :\n    ‖∑ p ∈ s, (a p : ℂ) * z p ^ m‖ ^ 2 =\n      ∑ p ∈ s, ∑ q ∈ s, (((a p * a q : ℝ) : ℂ) * (z p * conj (z q)) ^ m).re"))),
+                        Paragraph(Text("Exact pinned declaration signature (source only): theorem norm_square_expansion (s : Finset ℕ) (a : ℕ → ℝ) (z : ℕ → ℂ) (m : ℤ) :     ‖∑ p ∈ s, (a p : ℂ) * z p ^ m‖ ^ 2 =       ∑ p ∈ s, ∑ q ∈ s, (((a p * a q : ℝ) : ℂ) * (z p * conj (z q)) ^ m).re"))),
                     DescribeRole.Theorem),
                 Describe.Lean(
                     DescribeId.Create("prime-symbol-block"),
@@ -218,7 +218,7 @@ internal sealed class PrimeSymbolMeanSquareDocument : IScribeDocumentDefinition
                     AssessedProvenance.FromRepo(),
                     Blocks(
                         Paragraph(Text("For c>=2, any integer M and any natural K, SquareBlock(c,M,K)=sum_{j<K} S(c,M+j)^2 <= K*D(c)+C(c). The proof bounds the imaginary square by the complex norm square and applies geometric_block_norm to ordered unequal pairs. K=0 and negative block starts are admitted.")),
-                        Paragraph(Text("Exact pinned declaration signature (source only): theorem prime_symbol_block {c : ℕ} (hc : 2 ≤ c) (M : ℤ) (K : ℕ) :\n    (∑ j ∈ Finset.range K, primeSymbol c (M + (j : ℤ)) ^ 2) ≤\n      (K : ℝ) * primeSquareMass c + primeCross c"))),
+                        Paragraph(Text("Exact pinned declaration signature (source only): theorem prime_symbol_block {c : ℕ} (hc : 2 ≤ c) (M : ℤ) (K : ℕ) :     (∑ j ∈ Finset.range K, primeSymbol c (M + (j : ℤ)) ^ 2) ≤       (K : ℝ) * primeSquareMass c + primeCross c"))),
                     DescribeRole.Theorem),
                 Describe.Lean(
                     DescribeId.Create("finite-abel-majorant"),
@@ -228,7 +228,7 @@ internal sealed class PrimeSymbolMeanSquareDocument : IScribeDocumentDefinition
                     AssessedProvenance.FromRepo(),
                     Blocks(
                         Paragraph(Text("For x,w:N->R and D,C:R, assume 0<=C, every w(i)>=0, w(i+1)<=w(i), and for every natural k, sum_{i<k}x(i)<=k*D+C. Then for every natural K, sum_{i<K}x(i)*w(i)<=D*sum_{i<K}w(i)+C*w(0). No sign hypothesis is imposed on x or D. The proof uses Mathlib finite summation by parts and retains its finite boundary contribution, including K=0.")),
-                        Paragraph(Text("Exact pinned declaration signature (source only): theorem finite_abel_majorant (x w : ℕ → ℝ) (D C : ℝ)\n    (hC : 0 ≤ C) (hw : ∀ i, 0 ≤ w i) (hanti : ∀ i, w (i + 1) ≤ w i)\n    (hA : ∀ K, (∑ i ∈ Finset.range K, x i) ≤ (K : ℝ) * D + C) (K : ℕ) :\n    (∑ i ∈ Finset.range K, x i * w i) ≤\n      D * (∑ i ∈ Finset.range K, w i) + C * w 0"))),
+                        Paragraph(Text("Exact pinned declaration signature (source only): theorem finite_abel_majorant (x w : ℕ → ℝ) (D C : ℝ)     (hC : 0 ≤ C) (hw : ∀ i, 0 ≤ w i) (hanti : ∀ i, w (i + 1) ≤ w i)     (hA : ∀ K, (∑ i ∈ Finset.range K, x i) ≤ (K : ℝ) * D + C) (K : ℕ) :     (∑ i ∈ Finset.range K, x i * w i) ≤       D * (∑ i ∈ Finset.range K, w i) + C * w 0"))),
                     DescribeRole.Theorem),
                 Describe.Lean(
                     DescribeId.Create("inverse-square-weight"),
@@ -248,7 +248,7 @@ internal sealed class PrimeSymbolMeanSquareDocument : IScribeDocumentDefinition
                     AssessedProvenance.FromRepo(),
                     Blocks(
                         Paragraph(Text("For natural c,M, B(c,M)=D(c)/M+C(c)/(M+1)^2. This is primeTailBudget; the convergent-tail estimates below require c>=2 and M>0. The first term uses the inverse-square partial-sum bound 1/M.")),
-                        Paragraph(Text("Exact pinned definition (source only): def primeTailBudget (c M : ℕ) : ℝ :=\n  primeSquareMass c / (M : ℝ) + primeCross c / ((M : ℝ) + 1) ^ 2"))),
+                        Paragraph(Text("Exact pinned definition (source only): def primeTailBudget (c M : ℕ) : ℝ :=   primeSquareMass c / (M : ℝ) + primeCross c / ((M : ℝ) + 1) ^ 2"))),
                     DescribeRole.Definition),
                 Describe.Lean(
                     DescribeId.Create("inverse-square-weight-antitone"),
@@ -258,7 +258,7 @@ internal sealed class PrimeSymbolMeanSquareDocument : IScribeDocumentDefinition
                     AssessedProvenance.FromRepo(),
                     Blocks(
                         Paragraph(Text("For natural M>0 and every natural j, inverseSquareWeight(M,j+1)<=inverseSquareWeight(M,j). This is the exact weight monotonicity supplied to finite_abel_majorant.")),
-                        Paragraph(Text("Exact pinned declaration signature (source only): theorem inverseSquareWeight_antitone {M : ℕ} (hM : 0 < M) (i : ℕ) :\n    inverseSquareWeight M (i + 1) ≤ inverseSquareWeight M i"))),
+                        Paragraph(Text("Exact pinned declaration signature (source only): theorem inverseSquareWeight_antitone {M : ℕ} (hM : 0 < M) (i : ℕ) :     inverseSquareWeight M (i + 1) ≤ inverseSquareWeight M i"))),
                     DescribeRole.Theorem),
                 Describe.Lean(
                     DescribeId.Create("prime-symbol-square-tail"),
@@ -268,7 +268,7 @@ internal sealed class PrimeSymbolMeanSquareDocument : IScribeDocumentDefinition
                     AssessedProvenance.FromRepo(),
                     Blocks(
                         Paragraph(Text("For c>=2 and M>0, the nonnegative sequence j |-> S(c,M+j+1)^2*W(M,j) is summable, and its actual tsum is <=B(c,M). Uniformly bounded partial sums establish summability first; a totalized divergent tsum is not used. Every m>M is present.")),
-                        Paragraph(Text("Exact pinned declaration signature (source only): theorem prime_symbol_square_tail {c M : ℕ} (hc : 2 ≤ c) (hM : 0 < M) :\n    Summable (fun j : ℕ =>\n      primeSymbol c ((M + j + 1 : ℕ) : ℤ) ^ 2 * inverseSquareWeight M j) ∧\n    (∑' j : ℕ, primeSymbol c ((M + j + 1 : ℕ) : ℤ) ^ 2 * inverseSquareWeight M j) ≤\n      primeTailBudget c M"))),
+                        Paragraph(Text("Exact pinned declaration signature (source only): theorem prime_symbol_square_tail {c M : ℕ} (hc : 2 ≤ c) (hM : 0 < M) :     Summable (fun j : ℕ =>       primeSymbol c ((M + j + 1 : ℕ) : ℤ) ^ 2 * inverseSquareWeight M j) ∧     (∑' j : ℕ, primeSymbol c ((M + j + 1 : ℕ) : ℤ) ^ 2 * inverseSquareWeight M j) ≤       primeTailBudget c M"))),
                     DescribeRole.Theorem),
                 Describe.Lean(
                     DescribeId.Create("complex-prime-energy"),
@@ -278,7 +278,7 @@ internal sealed class PrimeSymbolMeanSquareDocument : IScribeDocumentDefinition
                     AssessedProvenance.FromRepo(),
                     Blocks(
                         Paragraph(Text("For all natural c,M,j and arbitrary complex beta, norm(beta*(S(c,M+j+1):C)/(M+j+1:C))^2=norm(beta)^2*(S(c,M+j+1)^2*W(M,j)). There are no c>=2, M>0, reality or cancellation premises for this exact identity.")),
-                        Paragraph(Text("Exact pinned declaration signature (source only): theorem complex_prime_energy (c M j : ℕ) (β : ℂ) :\n    ‖β * (primeSymbol c ((M + j + 1 : ℕ) : ℤ) : ℂ) / ((M + j + 1 : ℕ) : ℂ)‖ ^ 2 =\n      ‖β‖ ^ 2 * (primeSymbol c ((M + j + 1 : ℕ) : ℤ) ^ 2 * inverseSquareWeight M j)"))),
+                        Paragraph(Text("Exact pinned declaration signature (source only): theorem complex_prime_energy (c M j : ℕ) (β : ℂ) :     ‖β * (primeSymbol c ((M + j + 1 : ℕ) : ℤ) : ℂ) / ((M + j + 1 : ℕ) : ℂ)‖ ^ 2 =       ‖β‖ ^ 2 * (primeSymbol c ((M + j + 1 : ℕ) : ℤ) ^ 2 * inverseSquareWeight M j)"))),
                     DescribeRole.Theorem),
                 Describe.Lean(
                     DescribeId.Create("complex-prime-tail"),
@@ -288,7 +288,7 @@ internal sealed class PrimeSymbolMeanSquareDocument : IScribeDocumentDefinition
                     AssessedProvenance.FromRepo(),
                     Blocks(
                         Paragraph(Text("For c>=2, M>0 and any beta:C, j |-> norm(beta*S(c,M+j+1)/(M+j+1))^2 is summable and its tsum is <=norm(beta)^2*(D(c)/M+C(c)/(M+1)^2). The coefficient remains arbitrary complex and its exact squared norm is retained.")),
-                        Paragraph(Text("Exact pinned declaration signature (source only): theorem complex_prime_tail {c M : ℕ} (hc : 2 ≤ c) (hM : 0 < M) (β : ℂ) :\n    Summable (fun j : ℕ =>\n      ‖β * (primeSymbol c ((M + j + 1 : ℕ) : ℤ) : ℂ) / ((M + j + 1 : ℕ) : ℂ)‖ ^ 2) ∧\n    (∑' j : ℕ,\n      ‖β * (primeSymbol c ((M + j + 1 : ℕ) : ℤ) : ℂ) / ((M + j + 1 : ℕ) : ℂ)‖ ^ 2) ≤\n        ‖β‖ ^ 2 * (primeSquareMass c / (M : ℝ) + primeCross c / ((M : ℝ) + 1) ^ 2)"))),
+                        Paragraph(Text("Exact pinned declaration signature (source only): theorem complex_prime_tail {c M : ℕ} (hc : 2 ≤ c) (hM : 0 < M) (β : ℂ) :     Summable (fun j : ℕ =>       ‖β * (primeSymbol c ((M + j + 1 : ℕ) : ℤ) : ℂ) / ((M + j + 1 : ℕ) : ℂ)‖ ^ 2) ∧     (∑' j : ℕ,       ‖β * (primeSymbol c ((M + j + 1 : ℕ) : ℤ) : ℂ) / ((M + j + 1 : ℕ) : ℂ)‖ ^ 2) ≤         ‖β‖ ^ 2 * (primeSquareMass c / (M : ℝ) + primeCross c / ((M : ℝ) + 1) ^ 2)"))),
                     DescribeRole.Theorem),
                 Describe.Lean(
                     DescribeId.Create("retained-boundary-moment"),
@@ -298,7 +298,7 @@ internal sealed class PrimeSymbolMeanSquareDocument : IScribeDocumentDefinition
                     AssessedProvenance.FromRepo(),
                     Blocks(
                         Paragraph(Text("For natural c,j, finite S subset N, A:N->R and v:N->C, Moment(c,S,A,v,j)=sum_{n in S}(-1)^n*(A(n):C)*v(n)*(frequency(c,(n:Z)):C)^(2*j). The amplitudes, phases, arbitrary complex coefficients and owner frequency are all retained.")),
-                        Paragraph(Text("Exact pinned definition (source only): def retainedBoundaryMoment (c : ℕ) (S : Finset ℕ) (A : ℕ → ℝ)\n    (v : ℕ → ℂ) (j : ℕ) : ℂ :=\n  ∑ n ∈ S, (-1 : ℂ) ^ n * (A n : ℂ) * v n *\n    (frequency c (n : ℤ) : ℂ) ^ (2 * j)"))),
+                        Paragraph(Text("Exact pinned definition (source only): def retainedBoundaryMoment (c : ℕ) (S : Finset ℕ) (A : ℕ → ℝ)     (v : ℕ → ℂ) (j : ℕ) : ℂ :=   ∑ n ∈ S, (-1 : ℂ) ^ n * (A n : ℂ) * v n *     (frequency c (n : ℤ) : ℂ) ^ (2 * j)"))),
                     DescribeRole.Definition),
                 Describe.Lean(
                     DescribeId.Create("retained-arithmetic-column"),
@@ -308,7 +308,7 @@ internal sealed class PrimeSymbolMeanSquareDocument : IScribeDocumentDefinition
                     AssessedProvenance.FromRepo(),
                     Blocks(
                         Paragraph(Text("For natural c,j,m, finite S subset N, real A, complex v and arbitrary kappa:C, the column is sum_{n in S} kappa*((-1)^n*(A(n):C)*v(n)*(frequency(c,n):C)^(2*j))*(S(c,m):C)/(m:C). Here S(c,m) denotes the prime sine symbol, while the set S is the finite index set. Kappa is explicit normalization supplied by the caller.")),
-                        Paragraph(Text("Exact pinned definition (source only): def retainedArithmeticColumn (c : ℕ) (S : Finset ℕ) (A : ℕ → ℝ)\n    (v : ℕ → ℂ) (j : ℕ) (κ : ℂ) (m : ℕ) : ℂ :=\n  ∑ n ∈ S, κ * ((-1 : ℂ) ^ n * (A n : ℂ) * v n *\n    (frequency c (n : ℤ) : ℂ) ^ (2 * j)) * (primeSymbol c (m : ℤ) : ℂ) / (m : ℂ)"))),
+                        Paragraph(Text("Exact pinned definition (source only): def retainedArithmeticColumn (c : ℕ) (S : Finset ℕ) (A : ℕ → ℝ)     (v : ℕ → ℂ) (j : ℕ) (κ : ℂ) (m : ℕ) : ℂ :=   ∑ n ∈ S, κ * ((-1 : ℂ) ^ n * (A n : ℂ) * v n *     (frequency c (n : ℤ) : ℂ) ^ (2 * j)) * (primeSymbol c (m : ℤ) : ℂ) / (m : ℂ)"))),
                     DescribeRole.Definition),
                 Describe.Lean(
                     DescribeId.Create("retained-arithmetic-tail"),
@@ -318,7 +318,7 @@ internal sealed class PrimeSymbolMeanSquareDocument : IScribeDocumentDefinition
                     AssessedProvenance.FromRepo(),
                     Blocks(
                         Paragraph(Text("For c>=2, M>0 and every finite S subset N, A:N->R, v:N->C, natural j and kappa:C, the column energy at m=M+k+1 is summable in k. Its tsum is <=norm(kappa)^2*norm(Moment(c,S,A,v,j))^2*B(c,M). The finite sum is collected algebraically before applying complex_prime_tail. No moment is set to zero and no reality assumption is imposed on v or kappa.")),
-                        Paragraph(Text("Exact pinned declaration signature (source only): theorem retained_arithmetic_tail {c M : ℕ} (hc : 2 ≤ c) (hM : 0 < M)\n    (S : Finset ℕ) (A : ℕ → ℝ) (v : ℕ → ℂ) (j : ℕ) (κ : ℂ) :\n    Summable (fun k : ℕ => ‖retainedArithmeticColumn c S A v j κ (M + k + 1)‖ ^ 2) ∧\n    (∑' k : ℕ, ‖retainedArithmeticColumn c S A v j κ (M + k + 1)‖ ^ 2) ≤\n      ‖κ‖ ^ 2 * ‖retainedBoundaryMoment c S A v j‖ ^ 2 *\n        (primeSquareMass c / (M : ℝ) + primeCross c / ((M : ℝ) + 1) ^ 2)"))),
+                        Paragraph(Text("Exact pinned declaration signature (source only): theorem retained_arithmetic_tail {c M : ℕ} (hc : 2 ≤ c) (hM : 0 < M)     (S : Finset ℕ) (A : ℕ → ℝ) (v : ℕ → ℂ) (j : ℕ) (κ : ℂ) :     Summable (fun k : ℕ => ‖retainedArithmeticColumn c S A v j κ (M + k + 1)‖ ^ 2) ∧     (∑' k : ℕ, ‖retainedArithmeticColumn c S A v j κ (M + k + 1)‖ ^ 2) ≤       ‖κ‖ ^ 2 * ‖retainedBoundaryMoment c S A v j‖ ^ 2 *         (primeSquareMass c / (M : ℝ) + primeCross c / ((M : ℝ) + 1) ^ 2)"))),
                     DescribeRole.Theorem),
                 Describe.Lean(
                     DescribeId.Create("canonical-prime-first-jet-far"),
@@ -328,7 +328,7 @@ internal sealed class PrimeSymbolMeanSquareDocument : IScribeDocumentDefinition
                     AssessedProvenance.FromRepo(),
                     Blocks(
                         Paragraph(Text("For natural c, finite S subset Z, v:Z->C and any integer m, PrimeFar(c,S,v,m)=(primeSymbol(c,m):C)*sum_{n in S}v(n)/((pi:C)*(m:C)). The positive sign follows from subtracting the exterior arithmetic symbol, whose prime component is negative. The exact pi normalization is preserved.")),
-                        Paragraph(Text("Exact pinned definition (source only): def canonicalPrimeFirstJetFar (c : ℕ) (S : Finset ℤ) (v : ℤ → ℂ) (m : ℤ) : ℂ :=\n  (primeSymbol c m : ℂ) * (∑ n ∈ S, v n) / ((Real.pi : ℂ) * (m : ℂ))"))),
+                        Paragraph(Text("Exact pinned definition (source only): def canonicalPrimeFirstJetFar (c : ℕ) (S : Finset ℤ) (v : ℤ → ℂ) (m : ℤ) : ℂ :=   (primeSymbol c m : ℂ) * (∑ n ∈ S, v n) / ((Real.pi : ℂ) * (m : ℂ))"))),
                     DescribeRole.Definition),
                 Describe.Lean(
                     DescribeId.Create("canonical-first-jet-split"),
@@ -338,7 +338,7 @@ internal sealed class PrimeSymbolMeanSquareDocument : IScribeDocumentDefinition
                     AssessedProvenance.FromRepo(),
                     Blocks(
                         Paragraph(Text("For every natural c, finite integer S, arbitrary complex v and integer m, Jet(c,S,v,m)=alpha/(pi*m)-(arithmeticBoundarySymbol(c,m)+primeSymbol(c,m))*beta/(pi*m)+PrimeFar(c,S,v,m), where alpha=sum_{n in S}(arithmeticBoundarySymbol(c,n):C)*v(n) and beta=sum_{n in S}v(n). All real symbols are cast to C. This is an exact totalized-division identity, with no exterior or nonzero-mode hypothesis. The interior full symbol and exterior nonprime component remain present; it does not assert the separate full-symbol physical bridge.")),
-                        Paragraph(Text("Exact pinned declaration signature (source only): theorem canonical_first_jet_split (c : ℕ) (S : Finset ℤ) (v : ℤ → ℂ) (m : ℤ) :\n    couplingFirstJet c S v m =\n      (∑ n ∈ S, (arithmeticBoundarySymbol c n : ℂ) * v n) /\n        ((Real.pi : ℂ) * (m : ℂ)) -\n      ((arithmeticBoundarySymbol c m + primeSymbol c m : ℝ) : ℂ) *\n        (∑ n ∈ S, v n) / ((Real.pi : ℂ) * (m : ℂ)) +\n      canonicalPrimeFirstJetFar c S v m"))),
+                        Paragraph(Text("Exact pinned declaration signature (source only): theorem canonical_first_jet_split (c : ℕ) (S : Finset ℤ) (v : ℤ → ℂ) (m : ℤ) :     couplingFirstJet c S v m =       (∑ n ∈ S, (arithmeticBoundarySymbol c n : ℂ) * v n) /         ((Real.pi : ℂ) * (m : ℂ)) -       ((arithmeticBoundarySymbol c m + primeSymbol c m : ℝ) : ℂ) *         (∑ n ∈ S, v n) / ((Real.pi : ℂ) * (m : ℂ)) +       canonicalPrimeFirstJetFar c S v m"))),
                     DescribeRole.Theorem),
                 Describe.Lean(
                     DescribeId.Create("canonical-first-jet-prime-tail"),
@@ -348,7 +348,7 @@ internal sealed class PrimeSymbolMeanSquareDocument : IScribeDocumentDefinition
                     AssessedProvenance.FromRepo(),
                     Blocks(
                         Paragraph(Text("For c>=2, M>0, every finite S subset Z and arbitrary complex v, j |-> norm(PrimeFar(c,S,v,M+j+1))^2 is summable. Its tsum is <=(norm(sum_{n in S}v(n))^2/pi^2)*(D(c)/M+C(c)/(M+1)^2). This is the actual existing first-jet prime term with its pi^(-2) factor; the nonprime component and column remainder remain separate.")),
-                        Paragraph(Text("Exact pinned declaration signature (source only): theorem canonical_first_jet_prime_tail {c M : ℕ} (hc : 2 ≤ c) (hM : 0 < M)\n    (S : Finset ℤ) (v : ℤ → ℂ) :\n    Summable (fun k : ℕ => ‖canonicalPrimeFirstJetFar c S v ((M + k + 1 : ℕ) : ℤ)‖ ^ 2) ∧\n    (∑' k : ℕ, ‖canonicalPrimeFirstJetFar c S v ((M + k + 1 : ℕ) : ℤ)‖ ^ 2) ≤\n      (‖∑ n ∈ S, v n‖ ^ 2 / Real.pi ^ 2) *\n        (primeSquareMass c / (M : ℝ) + primeCross c / ((M : ℝ) + 1) ^ 2)"))),
+                        Paragraph(Text("Exact pinned declaration signature (source only): theorem canonical_first_jet_prime_tail {c M : ℕ} (hc : 2 ≤ c) (hM : 0 < M)     (S : Finset ℤ) (v : ℤ → ℂ) :     Summable (fun k : ℕ => ‖canonicalPrimeFirstJetFar c S v ((M + k + 1 : ℕ) : ℤ)‖ ^ 2) ∧     (∑' k : ℕ, ‖canonicalPrimeFirstJetFar c S v ((M + k + 1 : ℕ) : ℤ)‖ ^ 2) ≤       (‖∑ n ∈ S, v n‖ ^ 2 / Real.pi ^ 2) *         (primeSquareMass c / (M : ℝ) + primeCross c / ((M : ℝ) + 1) ^ 2)"))),
                     DescribeRole.Theorem))));
     }
 }

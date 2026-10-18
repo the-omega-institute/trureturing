@@ -45,7 +45,7 @@ internal sealed class PrimeSymbolResonanceDocument : IScribeDocumentDefinition
                     AssessedProvenance.FromRepo(),
                     Blocks(
                         Paragraph(Text("For natural c, R(c)=sum_{p in I(c)}sum_{q in I(c)} (if p*q=c then a(p)*a(q) else 0). Pairs are ordered, so p!=q appears in both orders; p=q is retained when p^2=c. The indices p,q are integers in [2,c), not necessarily primes: von Mangoldt supports every prime power. For example c=4 retains (2,2), while c=12 retains the supported ordered pairs (3,4) and (4,3).")),
-                        Paragraph(Text("Exact pinned definition (source only): def resonantMass (c : ℕ) : ℝ :=\n  ∑ p ∈ primeIndices c, ∑ q ∈ primeIndices c,\n    if p * q = c then primeWeight p * primeWeight q else 0"))),
+                        Paragraph(Text("Exact pinned definition (source only): def resonantMass (c : ℕ) : ℝ :=   ∑ p ∈ primeIndices c, ∑ q ∈ primeIndices c,     if p * q = c then primeWeight p * primeWeight q else 0"))),
                     DescribeRole.Definition),
                 Describe.Lean(
                     DescribeId.Create("sum-cross"),
@@ -55,7 +55,7 @@ internal sealed class PrimeSymbolResonanceDocument : IScribeDocumentDefinition
                     AssessedProvenance.FromRepo(),
                     Blocks(
                         Paragraph(Text("For natural c, Csum(c)=sum_{p in I(c)}sum_{q in I(c)} (if p*q=c then 0 else 2*abs(a(p)*a(q))/norm(1-z(c,p)*z(c,q))). This is the unconjugated phase product. The factor 2 is per ordered pair, and a diagonal p=q remains whenever p^2!=c. Only genuinely resonant products p*q=c are excluded from these geometric denominators.")),
-                        Paragraph(Text("Exact pinned definition (source only): def sumCross (c : ℕ) : ℝ :=\n  ∑ p ∈ primeIndices c, ∑ q ∈ primeIndices c,\n    if p * q = c then 0 else\n      2 * |primeWeight p * primeWeight q| / ‖1 - primePhase c p * primePhase c q‖"))),
+                        Paragraph(Text("Exact pinned definition (source only): def sumCross (c : ℕ) : ℝ :=   ∑ p ∈ primeIndices c, ∑ q ∈ primeIndices c,     if p * q = c then 0 else       2 * |primeWeight p * primeWeight q| / ‖1 - primePhase c p * primePhase c q‖"))),
                     DescribeRole.Definition),
                 Describe.Lean(
                     DescribeId.Create("mean"),
@@ -85,7 +85,7 @@ internal sealed class PrimeSymbolResonanceDocument : IScribeDocumentDefinition
                     AssessedProvenance.FromRepo(),
                     Blocks(
                         Paragraph(Text("For natural c,N, B3(c,N)=mu(c)/N+O(c)/(N+1)^2. This is exactly tailBudget. Tail theorems below use c>=2 and N>0, preserving both denominators and the resonance-corrected leading constant.")),
-                        Paragraph(Text("Exact pinned definition (source only): def tailBudget (c N : ℕ) : ℝ :=\n  mean c / (N : ℝ) + offset c / ((N : ℝ) + 1) ^ 2"))),
+                        Paragraph(Text("Exact pinned definition (source only): def tailBudget (c N : ℕ) : ℝ :=   mean c / (N : ℝ) + offset c / ((N : ℝ) + 1) ^ 2"))),
                     DescribeRole.Definition),
                 Describe.Lean(
                     DescribeId.Create("difference-resonance"),
@@ -95,7 +95,7 @@ internal sealed class PrimeSymbolResonanceDocument : IScribeDocumentDefinition
                     AssessedProvenance.FromRepo(),
                     Blocks(
                         Paragraph(Text("For c>=2 and p,q in I(c), z(c,p)*conj(z(c,q))=1 iff p=q. The forward implication consumes T2 actual-log noncollision, and the reverse implication uses unit norm. This is the conjugated difference channel, without any added phase-spacing hypothesis.")),
-                        Paragraph(Text("Exact pinned declaration signature (source only): theorem difference_resonance {c p q : ℕ} (hc : 2 ≤ c)\n    (hp : p ∈ primeIndices c) (hq : q ∈ primeIndices c) :\n    primePhase c p * conj (primePhase c q) = 1 ↔ p = q"))),
+                        Paragraph(Text("Exact pinned declaration signature (source only): theorem difference_resonance {c p q : ℕ} (hc : 2 ≤ c)     (hp : p ∈ primeIndices c) (hq : q ∈ primeIndices c) :     primePhase c p * conj (primePhase c q) = 1 ↔ p = q"))),
                     DescribeRole.Theorem),
                 Describe.Lean(
                     DescribeId.Create("sum-resonance"),
@@ -105,7 +105,7 @@ internal sealed class PrimeSymbolResonanceDocument : IScribeDocumentDefinition
                     AssessedProvenance.FromRepo(),
                     Blocks(
                         Paragraph(Text("For c>=2 and p,q in I(c), z(c,p)*z(c,q)=1 iff p*q=c. Each theta lies in (0,1), so the sum angle is in (0,4*pi); its only circle identity occurs at 2*pi. Thus log(p)+log(q)=log(c), and positivity plus log injectivity gives p*q=c. Both orders and the p=q possibility are kept. No irrationality, generic position or equidistribution premise occurs.")),
-                        Paragraph(Text("Exact pinned declaration signature (source only): theorem sum_resonance {c p q : ℕ} (hc : 2 ≤ c)\n    (hp : p ∈ primeIndices c) (hq : q ∈ primeIndices c) :\n    primePhase c p * primePhase c q = 1 ↔ p * q = c"))),
+                        Paragraph(Text("Exact pinned declaration signature (source only): theorem sum_resonance {c p q : ℕ} (hc : 2 ≤ c)     (hp : p ∈ primeIndices c) (hq : q ∈ primeIndices c) :     primePhase c p * primePhase c q = 1 ↔ p * q = c"))),
                     DescribeRole.Theorem),
                 Describe.Lean(
                     DescribeId.Create("prime-symbol-exact-block"),
@@ -115,7 +115,7 @@ internal sealed class PrimeSymbolResonanceDocument : IScribeDocumentDefinition
                     AssessedProvenance.FromRepo(),
                     Blocks(
                         Paragraph(Text("For c>=2, any integer M and natural K, abs(sum_{j<K}S(c,M+j)^2-K*mu(c))<=O(c). The source combines the norm-square and unconjugated-square expansions via 2*(Im E)^2=norm(E)^2-Re(E^2). The two exact resonance classifications supply D and R; the centered geometric estimates supply Cdiff and Csum. K=0, negative starts, all prime powers and resonant self-pairs are included.")),
-                        Paragraph(Text("Exact pinned declaration signature (source only): theorem prime_symbol_exact_block {c : ℕ} (hc : 2 ≤ c) (M : ℤ) (K : ℕ) :\n    |(∑ j ∈ Finset.range K, primeSymbol c (M + (j : ℤ)) ^ 2) -\n      (K : ℝ) * mean c| ≤ offset c"))),
+                        Paragraph(Text("Exact pinned declaration signature (source only): theorem prime_symbol_exact_block {c : ℕ} (hc : 2 ≤ c) (M : ℤ) (K : ℕ) :     |(∑ j ∈ Finset.range K, primeSymbol c (M + (j : ℤ)) ^ 2) -       (K : ℝ) * mean c| ≤ offset c"))),
                     DescribeRole.Theorem),
                 Describe.Lean(
                     DescribeId.Create("offset-nonneg"),
@@ -145,7 +145,7 @@ internal sealed class PrimeSymbolResonanceDocument : IScribeDocumentDefinition
                     AssessedProvenance.FromRepo(),
                     Blocks(
                         Paragraph(Text("For c>=2, R(c)=((ArithmeticFunction.vonMangoldt*ArithmeticFunction.vonMangoldt)(c))/sqrt(c). The product here is Dirichlet convolution, equivalently the ordered divisor-antidiagonal sum of Lambda(p)*Lambda(q) with p*q=c. The endpoints with a factor 1 vanish because Lambda(1)=0. The weight identity uses sqrt(p*q)=sqrt(p)*sqrt(q), not multiplicativity of Lambda. Prime powers and ordered self-pairs are retained.")),
-                        Paragraph(Text("Exact pinned declaration signature (source only): theorem resonantMass_eq_convolution {c : ℕ} (hc : 2 ≤ c) :\n    resonantMass c =\n      ((ArithmeticFunction.vonMangoldt * ArithmeticFunction.vonMangoldt) c) /\n        Real.sqrt (c : ℝ)"))),
+                        Paragraph(Text("Exact pinned declaration signature (source only): theorem resonantMass_eq_convolution {c : ℕ} (hc : 2 ≤ c) :     resonantMass c =       ((ArithmeticFunction.vonMangoldt * ArithmeticFunction.vonMangoldt) c) /         Real.sqrt (c : ℝ)"))),
                     DescribeRole.Theorem),
                 Describe.Lean(
                     DescribeId.Create("mean-eq-convolution"),
@@ -155,7 +155,7 @@ internal sealed class PrimeSymbolResonanceDocument : IScribeDocumentDefinition
                     AssessedProvenance.FromRepo(),
                     Blocks(
                         Paragraph(Text("For c>=2, mean(c)=(primeSquareMass(c)-(Lambda*Lambda)(c)/sqrt(c))/2. This consumes the actual resonantMass_eq_convolution identity. The square-root normalization and outer factor 1/2 remain unchanged.")),
-                        Paragraph(Text("Exact pinned declaration signature (source only): theorem mean_eq_convolution {c : ℕ} (hc : 2 ≤ c) :\n    mean c = (primeSquareMass c -\n      (ArithmeticFunction.vonMangoldt * ArithmeticFunction.vonMangoldt) c /\n        Real.sqrt (c : ℝ)) / 2"))),
+                        Paragraph(Text("Exact pinned declaration signature (source only): theorem mean_eq_convolution {c : ℕ} (hc : 2 ≤ c) :     mean c = (primeSquareMass c -       (ArithmeticFunction.vonMangoldt * ArithmeticFunction.vonMangoldt) c /         Real.sqrt (c : ℝ)) / 2"))),
                     DescribeRole.Theorem),
                 Describe.Lean(
                     DescribeId.Create("convolution-zero-of-three-prime-factors"),
@@ -165,7 +165,7 @@ internal sealed class PrimeSymbolResonanceDocument : IScribeDocumentDefinition
                     AssessedProvenance.FromRepo(),
                     Blocks(
                         Paragraph(Text("For natural c, assume 3<=c.primeFactors.card, where primeFactors is a finset of DISTINCT prime divisors, not prime factors counted with multiplicity. Then (Lambda*Lambda)(c)=0. A nonzero Lambda factor is supported on a prime power, hence has exactly one distinct prime divisor; two such factors can supply at most two distinct primes. The declaration has only the cardinality hypothesis. It does not discard higher powers or classify by the total number of prime factors with multiplicity.")),
-                        Paragraph(Text("Exact pinned declaration signature (source only): theorem convolution_zero_of_three_primeFactors {c : ℕ}\n    (hcard : 3 ≤ c.primeFactors.card) :\n    (ArithmeticFunction.vonMangoldt * ArithmeticFunction.vonMangoldt) c = 0"))),
+                        Paragraph(Text("Exact pinned declaration signature (source only): theorem convolution_zero_of_three_primeFactors {c : ℕ}     (hcard : 3 ≤ c.primeFactors.card) :     (ArithmeticFunction.vonMangoldt * ArithmeticFunction.vonMangoldt) c = 0"))),
                     DescribeRole.Theorem),
                 Describe.Lean(
                     DescribeId.Create("mean-of-three-prime-factors"),
@@ -175,7 +175,7 @@ internal sealed class PrimeSymbolResonanceDocument : IScribeDocumentDefinition
                     AssessedProvenance.FromRepo(),
                     Blocks(
                         Paragraph(Text("For c>=2 with 3<=c.primeFactors.card, mean(c)=primeSquareMass(c)/2. This consumes the convolution-zero theorem and the exact mean identity; it is not an assumption or a change to the general mean definition.")),
-                        Paragraph(Text("Exact pinned declaration signature (source only): theorem mean_of_three_primeFactors {c : ℕ} (hc : 2 ≤ c)\n    (hcard : 3 ≤ c.primeFactors.card) : mean c = primeSquareMass c / 2"))),
+                        Paragraph(Text("Exact pinned declaration signature (source only): theorem mean_of_three_primeFactors {c : ℕ} (hc : 2 ≤ c)     (hcard : 3 ≤ c.primeFactors.card) : mean c = primeSquareMass c / 2"))),
                     DescribeRole.Theorem),
                 Describe.Lean(
                     DescribeId.Create("prime-symbol-square-tail"),
@@ -185,7 +185,7 @@ internal sealed class PrimeSymbolResonanceDocument : IScribeDocumentDefinition
                     AssessedProvenance.FromRepo(),
                     Blocks(
                         Paragraph(Text("For c>=2 and N>0, the nonnegative sequence j |-> S(c,N+j+1)^2*W(N,j) is summable and its actual tsum is <=tailBudget(c,N). Here W(N,j)=((N:R)+(j:R)+1)^(-2), and j enumerates every integer m>N exactly once. The source reuses T2 finite_abel_majorant and the inverse-square partial-sum comparison. Summability follows from bounded nonnegative partial sums before using the tsum estimate. The private tail_partial proof and this public signature preserve the pinned source bytes; actual elaboration and kernel acceptance remain pending.")),
-                        Paragraph(Text("Exact pinned declaration signature (source only): theorem prime_symbol_square_tail {c N : ℕ} (hc : 2 ≤ c) (hN : 0 < N) :\n    Summable (fun j : ℕ =>\n      primeSymbol c ((N + j + 1 : ℕ) : ℤ) ^ 2 * inverseSquareWeight N j) ∧\n    (∑' j : ℕ, primeSymbol c ((N + j + 1 : ℕ) : ℤ) ^ 2 * inverseSquareWeight N j) ≤\n      tailBudget c N"))),
+                        Paragraph(Text("Exact pinned declaration signature (source only): theorem prime_symbol_square_tail {c N : ℕ} (hc : 2 ≤ c) (hN : 0 < N) :     Summable (fun j : ℕ =>       primeSymbol c ((N + j + 1 : ℕ) : ℤ) ^ 2 * inverseSquareWeight N j) ∧     (∑' j : ℕ, primeSymbol c ((N + j + 1 : ℕ) : ℤ) ^ 2 * inverseSquareWeight N j) ≤       tailBudget c N"))),
                     DescribeRole.Theorem),
                 Describe.Lean(
                     DescribeId.Create("complex-prime-tail"),
@@ -199,7 +199,7 @@ internal sealed class PrimeSymbolResonanceDocument : IScribeDocumentDefinition
                         Paragraph(Text("Apply this existing complex_prime_tail at c=5040*k with hc:2<=5040*k, hN:0<N and the same arbitrary beta, then unfold tailBudget and substitute that mean identity. The exact consequence is Summable (j |-> norm(beta*(primeSymbol(5040*k,((N+j+1:Nat):Int)):C)/((N+j+1:Nat):C))^2), together with sum_{j:Nat} norm(beta*(primeSymbol(5040*k,((N+j+1:Nat):Int)):C)/((N+j+1:Nat):C))^2 <= norm(beta)^2*(primeSquareMass(5040*k)/2/(N:R)+offset(5040*k)/((N:R)+1)^2), where the sum is the actual tsum and j enumerates every m>N once. The norm(beta)^2 factor, the half-diagonal leading constant and the full offset are retained exactly. In particular offset(c)=(primeCross(c)+sumCross(c))/2, with factor 2 per ordered pair in each channel, including nonresonant diagonal pairs in sumCross. Every higher prime power remains in I(c); beta is not assumed real or zero. This is exposition of an existing result application, not a new mathematical declaration or Describe node.")),
                         Paragraph(Text("Endpoint exposition and candidates for later transient exact checks: at c=2 the interval Ico(2,2) is empty, so primeSymbol(2) is the zero function on the integers and primeSquareMass(2)=resonantMass(2)=mean(2)=offset(2)=0. For every natural c the zero lattice mode has primeSymbol(c,0)=0. These endpoint checks are not retained Lean declarations or examples, and no actual transient check has been run.")),
                         Paragraph(Text("The pinned downstream source relationship is ActualFullSymbolTail -> T3.prime_symbol_square_tail. PhysicalPrimeTwoCutoff and PhysicalCompressedCosineMatrix do not consume T3 or this 5040 application. No RH, Robin inequality, signed-form positivity or physical operator identification/positivity is established. Lean/kernel/axiom checks, Scribe emission, Reg, required CI and delivery remain pending.")),
-                        Paragraph(Text("Exact pinned declaration signature (source only): theorem complex_prime_tail {c N : ℕ} (hc : 2 ≤ c) (hN : 0 < N) (β : ℂ) :\n    Summable (fun j : ℕ =>\n      ‖β * (primeSymbol c ((N + j + 1 : ℕ) : ℤ) : ℂ) / ((N + j + 1 : ℕ) : ℂ)‖ ^ 2) ∧\n    (∑' j : ℕ,\n      ‖β * (primeSymbol c ((N + j + 1 : ℕ) : ℤ) : ℂ) / ((N + j + 1 : ℕ) : ℂ)‖ ^ 2) ≤\n        ‖β‖ ^ 2 * tailBudget c N"))),
+                        Paragraph(Text("Exact pinned declaration signature (source only): theorem complex_prime_tail {c N : ℕ} (hc : 2 ≤ c) (hN : 0 < N) (β : ℂ) :     Summable (fun j : ℕ =>       ‖β * (primeSymbol c ((N + j + 1 : ℕ) : ℤ) : ℂ) / ((N + j + 1 : ℕ) : ℂ)‖ ^ 2) ∧     (∑' j : ℕ,       ‖β * (primeSymbol c ((N + j + 1 : ℕ) : ℤ) : ℂ) / ((N + j + 1 : ℕ) : ℂ)‖ ^ 2) ≤         ‖β‖ ^ 2 * tailBudget c N"))),
                     DescribeRole.Theorem),
                 Describe.Lean(
                     DescribeId.Create("prime-symbol-mean-lower-bound"),

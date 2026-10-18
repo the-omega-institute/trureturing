@@ -142,7 +142,7 @@ internal sealed class WeilArithmeticCouplingJetDocument : IScribeDocumentDefinit
                     + "These source statements and their Scribe emission/Reg registration "
                     + "still await caller-owned compilation and required checks.")),
                 Describe.Lean(
-                    DescribeId.Create("smoothEnvelope"),
+                    DescribeId.Create("smooth-envelope"),
                     DeclarationHandle.Create(Owner + "smoothEnvelope"),
                     H("The two actual Gamma bounds in one minimum"),
                     StatementSource.FromAuthor(Disp(Seq(Call("E", c, m), Eq,
@@ -154,7 +154,7 @@ internal sealed class WeilArithmeticCouplingJetDocument : IScribeDocumentDefinit
                     Blocks(Paragraph(Text("For natural c,m this is exactly min(2+U(c)/m,pi/4+(U(c)+3/(4*a(c)))/m). Here L=log(c), a=2*pi/L and U=2*(cosh(L/2)-1)/a. Lean division is total; the estimates below use positive modes and c>=2. This is a finite envelope at every positive mode. Its fixed-c limit pi/4 and the corresponding square coefficient pi^2/16 are asymptotic interpretations still requiring real scoped verification; they are not new Lean limit theorems."))),
                     DescribeRole.Definition),
                 Describe.Lean(
-                    DescribeId.Create("smoothWeight"),
+                    DescribeId.Create("smooth-weight"),
                     DeclarationHandle.Create(Owner + "smoothWeight"),
                     H("The actual nonnegative smooth weight"),
                     StatementSource.FromAuthor(Disp(Seq(Call("w", c, m), Eq, Call("div", Seq(Call("P", c, m), Plus, Call("G", c, m)), Call("square", m))))),
@@ -184,6 +184,73 @@ internal sealed class WeilArithmeticCouplingJetDocument : IScribeDocumentDefinit
                     StatementSource.FromAuthor(Disp(Seq(Call("AtLeastTwo", c), Land, Call("Positive", n), Land, n, Leq, m, Rightarrow, Call("Nonnegative", Call("E", c, n)), Land, Call("square", m), Sp, Call("w", c, m), Leq, Call("E", c, n)))),
                     AssessedProvenance.FromRepo(),
                     Blocks(Paragraph(Text("For natural c>=2 and 0<n<=m, 0<=E(c,n) and m^2*w(c,m)<=E(c,n). The old Gamma <=2 and the new Gamma <=pi/4+3/(4*a*m) bounds are both consumed, at positive frequency omega=a*m. The new private proof uses f(x)=omega/(omega^2+x^2) and g(t)=f(2*t+1/2). Pinned AntitoneOn.sum_le_integral compares each finite shifted lattice sum with its interval integral. Pinned intervalIntegral.mul_integral_comp_mul_add and integral_div_sq_add_sq give twice that integral as arctan((2*M+1/2)/omega)-arctan((1/2)/omega). Antitonicity of f gives arctan((1/2)/omega)>=f(1/2)/2, so the complete partial sum is <=pi/4+3*f(1/2)/4<=pi/4+3/(4*omega). The original summability and actual sine-factor majorization pass this to the genuine Gamma tsum for log(c)>=0. No monotonicity of Gamma mass is used, and no cutoff restriction is added. This complete source attempt remains SOURCE_ONLY_UNCOMPILED."))),
+                    DescribeRole.Theorem),
+                // SOURCE_ONLY_UNCOMPILED. Insert these Blocks arguments immediately before
+                // the existing arithmetic-symbol-smooth-split Describe.Lean in Create().
+                // Reuse the pinned canonical Owner, Call, c, m, F and DefinitionDsl bindings.
+                Paragraph(Text(
+                    "SOURCE_ONLY_UNCOMPILED finite-block addition. Here H(c,m)=m^2*smoothWeight(c,m) "
+                    + "is the POSITIVE smooth mass and the actual symbol is A=-H-S, where S is "
+                    + "the existing finite-prime sine sum. This fixes the sign convention for "
+                    + "these descriptions relative to older negative-H comments.")),
+                Describe.Lean(
+                    DescribeId.Create("smooth-floor"),
+                    DeclarationHandle.Create(Owner + "smoothFloor"),
+                    H("An explicit smooth-mass floor"),
+                    StatementSource.FromAuthor(Disp(Seq(
+                        Call("smoothFloor", c), Eq,
+                        Call("div", Seq(D(1), Minus,
+                            Call("exp", Call("div", Seq(Minus, Call("logLength", c)), D(2)))), D(10))))),
+                    AssessedProvenance.FromRepo(),
+                    Blocks(Paragraph(Text(
+                        "For natural c, smoothFloor(c)=(1-exp(-logLength(c)/2))/10, with "
+                        + "logLength(c)=log(c). It is strictly positive under c>=2. This is an "
+                        + "explicit finite-block lower constant; no sharp asymptotic value is asserted."))),
+                    DescribeRole.Definition),
+                Describe.Lean(
+                    DescribeId.Create("smooth-weight-floor"),
+                    DeclarationHandle.Create(Owner + "smooth_weight_floor"),
+                    H("A positive floor for the actual pole plus Gamma mass"),
+                    StatementSource.FromAuthor(Disp(Seq(
+                        Call("AtLeastTwo", c), Land, Sp, Call("Positive", m), Land, Sp,
+                        D(1), Leq, Sp, Call("omega", c, m), Rightarrow, Sp,
+                        Call("Positive", Call("smoothFloor", c)), Land, Sp,
+                        Call("smoothFloor", c), Leq, Sp,
+                        Call("square", m), Sp, Call("smoothWeight", c, m)))),
+                    AssessedProvenance.FromRepo(),
+                    Blocks(
+                        Paragraph(Text(
+                            "The exact telescope is {c m : Nat}, hc:2<=c, hm:0<m, "
+                            + "hw:1<=frequency(c,(m:Int)). Here omega(c,m) denotes exactly that "
+                            + "frequency. The conclusion retains both 0<smoothFloor(c) and "
+                            + "smoothFloor(c)<=m^2*smoothWeight(c,m), for every such c and m. "
+                            + "The weight is the original poleSine plus the actual convergent "
+                            + "gammaSineTerm series, divided by m^2.")),
+                        Paragraph(Text(
+                            "Fix the actual L=logLength(c)>0 and w=omega(c,m)>=1. Put "
+                            + "eta=1-exp(-L/2)>0 and N=Nat.ceil(w). For each j<N, Nat.lt_ceil "
+                            + "gives j<w, so 1/2<=gammaRate(j)<=3*w and "
+                            + "gammaRate(j)^2+w^2<=10*w^2. Exponential monotonicity gives "
+                            + "1-exp(-gammaRate(j)*L)>=eta. Two positive division comparisons, "
+                            + "one for the denominator and one for the numerator, give "
+                            + "gammaSineTerm(L,w,j)>=eta/(10*w). Nat.le_ceil gives "
+                            + "w<=N, so this finite block has sum at least eta/10. Only then "
+                            + "Summable.sum_le_tsum, using gamma_positive_summable and "
+                            + "gamma_positive_nonneg, passes to the genuine owner Gamma sum. "
+                            + "The pole is nonnegative by cosh(L/2)>=1 and w>=1; cancellation "
+                            + "of the positive mode square follows the existing smooth_mass_bounds pattern.")),
+                        Paragraph(Text(
+                            "The source-level new content is a lower bound obtained by a block "
+                            + "whose length depends on the actual frequency; it is not a binding "
+                            + "wrapper around an existing floor theorem. At c=2 this supplies "
+                            + "the positive smooth mass needed by the beta-only lower-tail route, "
+                            + "where the separate finite-prime sine sum vanishes. No separate "
+                            + "c=2 or eventual specialization is added. For larger c, possible "
+                            + "cancellation with S is not controlled by this theorem. No pi/4 "
+                            + "asymptotics, full-symbol pointwise lower bound, operator positivity, "
+                            + "Robin statement, RH statement or five-mode identification is claimed. "
+                            + "Lean elaboration, kernel checking, registration binding, Scribe "
+                            + "emission and official required checks remain unperformed."))),
                     DescribeRole.Theorem),
                 Describe.Lean(
                     DescribeId.Create("arithmetic-symbol-smooth-split"),

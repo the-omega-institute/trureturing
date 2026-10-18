@@ -8,6 +8,9 @@ import Mathlib.Analysis.Fourier.AddCircle
 import Mathlib.MeasureTheory.Integral.Bochner.Set
 import Mathlib.Tactic
 
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+
 noncomputable section
 namespace OriginalEvenCosineComplete
 
@@ -97,7 +100,7 @@ private lemma mode_inner_integral (a : ℝ) (u : WindowL2 a) (n : ℕ) :
   filter_upwards [(mode_memLp a n).coeFn_toLp] with x hx
   change modeL2 a n x = (mode a n x : ℂ) at hx
   rw [hx]
-  simp [RCLike.inner_apply']
+  simp [RCLike.inner_apply', mul_comm]
 
 private lemma mode_inner_pair (a : ℝ) (ha : 0 < a) (u : WindowL2 a) (n : ℕ) :
     2 * inner ℂ (modeL2 a n) u =
@@ -184,7 +187,9 @@ theorem circleTransport_norm_sq (a : ℝ) (ha : 0 < a) (u : WindowL2 a) :
             apply integral_congr_ae
             exact Eventually.of_forall fun z => by
               rw [AddCircle.liftIoc_comp_apply]
-          _ = _ := by rw [AddCircle.integral_liftIoc_eq_intervalIntegral]
+          _ = _ := by
+            rw [AddCircle.integral_liftIoc_eq_intervalIntegral]
+            simp only [Function.comp_apply]
       _ = (2 * a)⁻¹ * ‖u‖ ^ 2 := by
         rw [show -a + 2 * a = a by ring,
           intervalIntegral.integral_of_le (show -a ≤ a by linarith), l2_energy]
