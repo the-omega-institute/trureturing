@@ -2901,3 +2901,194 @@ fixed-window all-order positivity, original strict Robin upper or RH
 proof follows. The positive metric is the exact transported Hardy
 moment form; the fixed small width and intervening gaps remain part
 of the hypotheses.
+
+
+## Any prescribed positive gap between bounded theta clusters
+
+Keep the complete actual $L_0$, its diagonal $J$ and the normalized
+kernel $R$ of (W52)--(W54). Fix $W>0$, an integer $m\ge1$ and now
+**any prescribed $\delta>0$**. There are $A_*,\sigma>0$, depending
+only on $(W,m,\delta)$, for which the conclusion below holds for every
+finite ordered family of clusters above $A_*$, each with at most $m$
+distinct nodes, hull width at most $W$ and consecutive hull gaps at
+least $\delta$. No positive lower bound on internal node gaps or upper bound on total
+cluster count is required. The improvement over (W54) is the prescribed gap in place of
+its sufficiently large $D_{W,m}$.
+
+This is a `repo-derived` paper application of (W33), (W34) and (W52),
+using a classical Hardy model-space theorem for the reference kernel.
+It asserts neither literature priority nor Lean verification.
+
+### Verify the classical reference theorem's angle hypothesis
+
+The external input is Vasyunin's theorem as stated in
+[Treil, arXiv:math/9601211v1](https://arxiv.org/pdf/math/9601211v1),
+Theorem 8.4, printed p.19. Uniformly minimal scalar Hardy model spaces
+$E_j=H^2\ominus B_jH^2$ form a Riesz basis in their closed span.
+Uniform minimality has the precise meaning in equation (1.3), printed
+p.4:
+
+$$
+\inf_j\inf_{f\in E_j,\ \|f\|=1}
+ \operatorname{dist}\!\left(f,
+ \overline{\operatorname{span}}\{E_k:k\ne j\}\right)>0.
+$$
+
+Equation (8.1), printed p.18, then bounds
+$\|\sum_jf_j\|^2$ below by a positive constant times
+$\sum_j\|f_j\|^2$. A Cayley map transports this theorem unitarily
+from the disk to the right half-plane. The following argument checks
+its actual hypothesis directly; no complementary-product corona
+criterion or scalar separated-node theorem replaces it.
+
+For a physical node $a$, put $x=e^{2a}>0$. In the half-plane Hardy
+norm with boundary measure $dt/(2\pi)$ the normalized kernel is
+$k_x(z)=\sqrt{2x}/(z+x)$, and
+
+$$
+\langle k_x,k_y\rangle=\frac{2\sqrt{xy}}{x+y}
+ =\operatorname{sech}(a-b)=:S(a,b).
+$$
+
+Let $B_j$ have the $n_j\le m$ zeros $x_{j,l}=e^{2a_{j,l}}$ and put
+$E_j=K_{B_j}=\operatorname{span}\{k_{x_{j,l}}\}_l$. Normalize
+Blaschke factors unimodularly when taking infinite products. Define
+
+$$
+\eta=\prod_{n\ge1}\tanh(n\delta)^{2m}>0.
+$$
+
+The product is positive since $1-\tanh(n\delta)$ is summable. At
+any node of cluster $j$, every node in the $n$th other cluster on
+either side has physical distance at least $n\delta$. Thus, with
+$B_{\ne j}=\prod_{k\ne j}B_k$,
+
+$$
+|B_{\ne j}(x_{j,l})|\ge\eta.
+$$
+
+These products also exist for a countable ordered family above a fixed
+start: cluster starts increase by at least $\delta$, so
+$\sum_x x/(1+x^2)<\infty$. This is the half-plane Blaschke condition.
+
+The adjoint Hardy multiplier
+$A_j=M_{B_{\ne j}}^*|_{E_j}$ is a contraction preserving $E_j$,
+because $M_h^*k_x=\overline{h(x)}k_x$. The distinct kernels form
+an eigenbasis, giving
+
+$$
+|\det A_j|=\prod_l|B_{\ne j}(x_{j,l})|
+ \ge\eta^{n_j}\ge\eta^m.
+$$
+
+All its singular values are at most one, so its smallest singular
+value is at least $\eta^m$. This does not estimate the conditioning
+of that eigenbasis. The same adjoint multiplier annihilates every
+other $E_k$. For $f\in E_j$ and $g$ in their closed span,
+
+$$
+\|f-g\|\ge\|M_{B_{\ne j}}^*(f-g)\|
+ =\|A_jf\|\ge\eta^m\|f\|.
+$$
+
+This verifies uniform minimality with lower bound $\eta^m$, without
+dividing by an internal node gap. Apply the cited model-space theorem.
+
+### The reference budget is uniform over finite cluster families
+
+Use exactly the Newton maps $T_j$ of (W54). The exact Cauchy
+determinant quotients in (W34), applied to $S$ itself, give local
+prefix determinants at least $e^{-2m^2W}$. Fixed-order derivatives
+of $S$ and the same divided-difference integral formula bound all
+entries of $H_j^S=T_jS_jT_j^*$ uniformly. The determinant/norm
+argument of (W53) therefore gives
+$H_j^S\succeq s_{W,m}I$ for one $s_{W,m}>0$.
+
+There is consequently one $\sigma_S(W,m,\delta)>0$ such that every
+finite admissible reference family satisfies
+$\widehat S\succeq\sigma_S I$, where hats denote the full block
+Newton congruence. To justify uniformity using even the qualitative
+model-space theorem, suppose these finite lower bounds had infimum
+zero. Concatenate translated bad finite families, with gaps at least
+$\delta$, into one countable family above a fixed start. Both $S$
+and the physical Newton maps are invariant under common translation.
+The resulting family satisfies the Blaschke condition and the same
+uniform-minimality bound just proved, so its model spaces have one
+Riesz lower bound $b>0$.
+
+For $f_j=\sum_l(T_j^*y_j)_lk_{x_{j,l}}$ this bound gives
+
+$$
+y^*\widehat S y=\left\|\sum_jf_j\right\|^2
+ \ge b\sum_j\|f_j\|^2
+ =b\sum_jy_j^*H_j^S y_j
+ \ge bs_{W,m}\sum_j\|y_j\|^2.
+$$
+
+It applies to every bad block inside that one family, a contradiction.
+Thus a uniform $\sigma_S$ exists without requiring a formula for the
+model-space theorem's constants. This is the classical reference
+supplier for the actual estimate, rather than a replacement of $L_0$.
+
+### Pay nearby and distant actual blocks in the same metric
+
+Put $r=2m-2$. For hull distance $d\ge H\ge8$, (W52), the
+fixed-order derivatives of $S$ and the divided-difference formula give
+
+$$
+\| (\widehat R-\widehat S)_{ij}\|_{\rm op}
+ \le mC_r(1+d)e^{-d}.
+$$
+
+In a fixed block row enumerate only the hulls with distance greater
+than $H$, separately on each side. Their distances are at least
+$H+k\delta$, $k\ge0$. Since $(1+d)e^{-d}$ decreases, the entire
+distant-block row sum is at most
+
+$$
+2mC_re^{-H}\left[\frac{1+H}{1-q}
+ +\frac{\delta q}{(1-q)^2}\right],\qquad q=e^{-\delta}.
+$$
+
+Choose $H$ so this is at most $\sigma_S/4$. Each remaining pair of
+hulls lies in one physical interval of length $H+2W$. By (W33), above
+one height its actual-minus-reference error in total $C^r$ norm is at
+most $\varepsilon$. Newton interpolation bounds each such block by
+$m\varepsilon$ in operator norm. There are at most
+$3+2H/\delta$ nearby blocks per row, including the diagonal. Choose
+$\varepsilon$ with
+$m(3+2H/\delta)\varepsilon\le\sigma_S/4$, and choose $A_*$ to
+cover the corresponding (W33) start, (W52)'s order-$r$ start and
+positivity of $J$.
+
+The same Hermitian block row-sum estimate as in (W54) gives
+
+$$
+\|\widehat R-\widehat S\|_{\rm op}\le\sigma_S/2,
+\qquad \widehat R\succeq\sigma_S I/2.
+$$
+
+For the original arbitrary complex coefficients $c_j$, use (W54)'s
+exact $y_j=T_j^{-*}\operatorname{diag}(\sqrt{J(a_{j,l})})c_j$.
+The full physical form therefore satisfies
+
+$$
+\boxed{Q_{L_0}(c)\ge\frac{\sigma_S}{2}
+ \sum_j\left\|T_j^{-*}
+ \operatorname{diag}(\sqrt{J(a_{j,l})})c_j\right\|_2^2.}
+\tag{W61}
+$$
+
+All interactions are included. The nearby/distant split uses the
+complete normalized kernel; its direct and reflected infinite
+integrals remain those already controlled in (W33) and (W52).
+The constants are independent of total cluster count, coefficient
+sizes and internal node gaps. Repeated physical nodes are first merged,
+as in (W54).
+
+The local node cap $m$, positive hull gap $\delta$ and bounded width
+$W$ remain hypotheses. Neither uniformity as $\delta\downarrow0$ or
+$m\to\infty$, nor a raw coefficient-norm lower bound, is asserted.
+The arbitrary-density real-profile class of (W60) still has its own
+sufficiently large gap. Fixed-window all-order positivity, the original
+strict all-integer Robin upper and RH remain unproved.
