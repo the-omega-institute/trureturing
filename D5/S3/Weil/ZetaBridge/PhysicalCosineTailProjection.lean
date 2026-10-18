@@ -64,7 +64,7 @@ private lemma matrixEntry_zero_diagonal (a : ℝ) (ha : 0 < a) (n : ℕ) :
     have hd : (Real.sqrt (2 * a)) ^ 2 = 2 * a := Real.sq_sqrt (by positivity)
     have hdne : Real.sqrt (2 * a) ≠ 0 := ne_of_gt (Real.sqrt_pos.mpr (by positivity))
     simp only [omega, Nat.cast_zero, mul_zero, zero_div, zero_add, S_zero,
-      amplitude, if_pos rfl]
+      amplitude, ite_true]
     field_simp [hdne]
     nlinarith
   · have hn0 : 0 < (n : ℝ) := by exact_mod_cast Nat.pos_of_ne_zero hn
@@ -110,7 +110,7 @@ private lemma modeL2_inner (a : ℝ) (n m : ℕ) :
       change modeL2 a n x = (mode a n x : ℂ) at hn
       change modeL2 a m x = (mode a m x : ℂ) at hm
       rw [hn, hm]
-      simp [RCLike.inner_apply']
+      simp [RCLike.inner_apply', mul_comm]
     _ = _ := by
       rw [← pairing_zero_eq_window, pairing_ofReal]
       rfl
@@ -197,7 +197,7 @@ private lemma shiftHeadL2_coefficient (a : ℝ) (N : ℕ) (v : ℕ → ℂ)
       change shiftHeadL2 a N v s x =
         compression a s (profile a (Finset.range (N + 1)) v) x at hs
       rw [hm, hs]
-      simp [RCLike.inner_apply']
+      simp [RCLike.inner_apply', mul_comm]
     _ = _ := (compressed_pairing_eq_window a s _ _).symm
 
 /-- Both physical shifts are retained in the actual L2 finite prime action. -/
@@ -254,7 +254,7 @@ private lemma primeHeadL2_coefficient (a : ℝ) (N : ℕ) (v : ℕ → ℂ) (m :
         with x hm hp
       change modeL2 a m x = (mode a m x : ℂ) at hm
       rw [hm, hp]
-      simp [RCLike.inner_apply']
+      simp [RCLike.inner_apply', mul_comm]
     _ = _ := by
       have he : (fun x => (mode a m x : ℂ) *
           primeAction a (primeCutoff a) (profile a (Finset.range (N + 1)) v) x) =
@@ -347,7 +347,10 @@ private lemma exteriorProjection_parseval (a : ℝ) (ha : 0 < a)
   intro j
   rw [b.repr_apply_apply]
   change ‖inner ℂ (exteriorBasis a ha M j) (exteriorProjection a M F)‖ ^ 2 = _
-  rw [exteriorBasis_apply, Submodule.inner_orthogonalProjectionOnto_eq_of_mem_left]
+  rw [exteriorBasis_apply]
+  change ‖inner ℂ (exteriorMode a M j)
+    ((exteriorSpace a M).orthogonalProjectionOnto F)‖ ^ 2 = _
+  rw [Submodule.inner_orthogonalProjectionOnto_eq_of_mem_left]
   rfl
 
 /-- An actual L2 exterior projection estimate. It remains a closed-cosine-span

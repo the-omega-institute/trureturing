@@ -16,10 +16,10 @@ set_option relaxedAutoImplicit false
 noncomputable section
 namespace Reg.D5.S3.Weil.ZetaBridge.ActualFullSymbolTail
 open scoped BigOperators
-open D5.S3.ConceptDynamics.InformationEscape.DependentFamily
-open D5.S3.Weil.ZetaBridge.ActualFullSymbolTail
-open D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare
-open D5.S3.Weil.ZetaBridge.WeilArithmeticCouplingJet
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open _root_.D5.S3.Weil.ZetaBridge.ActualFullSymbolTail
+open _root_.D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare
+open _root_.D5.S3.Weil.ZetaBridge.WeilArithmeticCouplingJet
 open LeanInformationAudit
 
 abbrev absSignature : Signature where
@@ -125,11 +125,13 @@ noncomputable def registration_1 : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,
     owner := `D5.S3.Weil.ZetaBridge.ActualFullSymbolTail
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "body", "body", "body", "fn", "arg", "fn"]
-      stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false }] }
+    readouts := #[{
+      path := #["body", "body", "body", "body", "fn", "arg", "fn"],
+      stateBinder := 0,
+      functionOperand := true,
+      stateOperand := none,
+      booleanPredicate := false
+    }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }
@@ -193,11 +195,13 @@ noncomputable def registration_2 : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,
     owner := `D5.S3.Weil.ZetaBridge.ActualFullSymbolTail
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "body", "body", "body", "fn", "arg", "fn"]
-      stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false }] }
+    readouts := #[{
+      path := #["body", "body", "body", "body", "fn", "arg", "fn"],
+      stateBinder := 0,
+      functionOperand := true,
+      stateOperand := none,
+      booleanPredicate := false
+    }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }
@@ -265,11 +269,13 @@ noncomputable def registration_3 : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,
     owner := `D5.S3.Weil.ZetaBridge.ActualFullSymbolTail
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "body", "body", "body", "fn", "arg", "arg", "body", "fn"]
-      stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false }] }
+    readouts := #[{
+      path := #["body", "body", "body", "body", "fn", "arg", "arg", "body", "fn"],
+      stateBinder := 0,
+      functionOperand := true,
+      stateOperand := none,
+      booleanPredicate := false
+    }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }
@@ -334,11 +340,13 @@ noncomputable def registration_4 : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,
     owner := `D5.S3.Weil.ZetaBridge.ActualFullSymbolTail
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "fn", "arg", "arg", "body", "fn", "arg", "fn"]
-      stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false }] }
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "fn", "arg", "arg", "body", "fn", "arg", "fn"],
+      stateBinder := 0,
+      functionOperand := true,
+      stateOperand := none,
+      booleanPredicate := false
+    }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }
@@ -352,8 +360,8 @@ def paired_first_jet_tail_arena : Arena where
       r.readout () () (couplingFirstJet c S v ((N + j + 1 : ℕ) : ℤ)) ^ 2 +
       ‖couplingFirstJet c S v (-((N + j + 1 : ℕ) : ℤ))‖ ^ 2) ∧
     (∑' j : ℕ,
-      ‖couplingFirstJet c S v ((N + j + 1 : ℕ) : ℤ)‖ ^ 2 +
-      ‖couplingFirstJet c S v (-((N + j + 1 : ℕ) : ℤ))‖ ^ 2) ≤
+      (‖couplingFirstJet c S v ((N + j + 1 : ℕ) : ℤ)‖ ^ 2 +
+        ‖couplingFirstJet c S v (-((N + j + 1 : ℕ) : ℤ))‖ ^ 2)) ≤
       (2 / Real.pi ^ 2) *
         (‖∑ n ∈ S, (arithmeticBoundarySymbol c n : ℂ) * v n‖ ^ 2 / (N : ℝ) +
           ‖∑ n ∈ S, v n‖ ^ 2 * fullSymbolTailBudget c N)
@@ -415,11 +423,13 @@ noncomputable def registration_5 : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,
     owner := `D5.S3.Weil.ZetaBridge.ActualFullSymbolTail
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "fn", "arg", "arg", "body", "fn", "arg", "fn", "arg", "fn"]
-      stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false }] }
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "fn", "arg", "arg", "body", "fn", "arg", "fn", "arg", "fn"],
+      stateBinder := 0,
+      functionOperand := true,
+      stateOperand := none,
+      booleanPredicate := false
+    }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }
@@ -485,11 +495,13 @@ noncomputable def registration_6 : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,
     owner := `D5.S3.Weil.ZetaBridge.ActualFullSymbolTail
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "fn"]
-      stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false }] }
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "fn"],
+      stateBinder := 0,
+      functionOperand := true,
+      stateOperand := none,
+      booleanPredicate := false
+    }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }
@@ -505,10 +517,10 @@ def paired_first_jet_remainder_tail_arena : Arena where
       ‖couplingColumn c S v (-((M + j + 1 : ℕ) : ℤ)) -
         couplingFirstJet c S v (-((M + j + 1 : ℕ) : ℤ))‖ ^ 2) ∧
     (∑' j : ℕ,
-      ‖couplingColumn c S v ((M + j + 1 : ℕ) : ℤ) -
+      (‖couplingColumn c S v ((M + j + 1 : ℕ) : ℤ) -
         couplingFirstJet c S v ((M + j + 1 : ℕ) : ℤ)‖ ^ 2 +
-      ‖couplingColumn c S v (-((M + j + 1 : ℕ) : ℤ)) -
-        couplingFirstJet c S v (-((M + j + 1 : ℕ) : ℤ))‖ ^ 2) ≤
+        ‖couplingColumn c S v (-((M + j + 1 : ℕ) : ℤ)) -
+          couplingFirstJet c S v (-((M + j + 1 : ℕ) : ℤ))‖ ^ 2)) ≤
       pairedRemainderBudget c M A S v
 
 private theorem paired_first_jet_remainder_tail_actual_law : paired_first_jet_remainder_tail_arena.Law normActual := by
@@ -561,11 +573,13 @@ noncomputable def registration_7 : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,
     owner := `D5.S3.Weil.ZetaBridge.ActualFullSymbolTail
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "arg", "body", "fn", "arg", "fn", "arg", "fn"]
-      stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false }] }
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "arg", "body", "fn", "arg", "fn", "arg", "fn"],
+      stateBinder := 0,
+      functionOperand := true,
+      stateOperand := none,
+      booleanPredicate := false
+    }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }
@@ -579,8 +593,8 @@ def paired_coupling_column_tail_arena : Arena where
       r.readout () () (couplingColumn c S v ((M + j + 1 : ℕ) : ℤ)) ^ 2 +
       ‖couplingColumn c S v (-((M + j + 1 : ℕ) : ℤ))‖ ^ 2) ∧
     (∑' j : ℕ,
-      ‖couplingColumn c S v ((M + j + 1 : ℕ) : ℤ)‖ ^ 2 +
-      ‖couplingColumn c S v (-((M + j + 1 : ℕ) : ℤ))‖ ^ 2) ≤
+      (‖couplingColumn c S v ((M + j + 1 : ℕ) : ℤ)‖ ^ 2 +
+        ‖couplingColumn c S v (-((M + j + 1 : ℕ) : ℤ))‖ ^ 2)) ≤
       (Real.sqrt (pairedJetBudget c M S v) +
         Real.sqrt (pairedRemainderBudget c M A S v)) ^ 2
 
@@ -634,11 +648,13 @@ noncomputable def registration_8 : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,
     owner := `D5.S3.Weil.ZetaBridge.ActualFullSymbolTail
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "arg", "body", "fn", "arg", "fn", "arg", "fn"]
-      stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false }] }
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "arg", "body", "fn", "arg", "fn", "arg", "fn"],
+      stateBinder := 0,
+      functionOperand := true,
+      stateOperand := none,
+      booleanPredicate := false
+    }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }

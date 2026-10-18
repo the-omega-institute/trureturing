@@ -107,8 +107,8 @@ def familyRegistration : Registration arena (type_of% (@smooth_weight_envelope))
           (if j = i then (-1 : ℝ) else smoothEnvelope c n)
         cases i <;> cases j
         · exact (hj rfl).elim
-        · rfl
-        · rfl
+        · simp
+        · simp
         · exact (hj rfl).elim
       · intro hall
         have h := hall (c := 2) (n := 1) (m := 1)
@@ -228,7 +228,9 @@ private theorem positive_mode : 0 < smoothWeight 2 1 := by
         (1 - Real.exp (-(2 * (j : ℝ) + 1 / 2) * logLength 2)) /
         ((2 * (j : ℝ) + 1 / 2) ^ 2 + frequency 2 (1 : ℤ) ^ 2)) /
       (1 : ℝ) ^ 2 := by
-    rfl'
+    unfold smoothWeight
+    simp only [Nat.cast_one, Int.cast_natCast, Int.cast_one, Nat.cast_zero,
+      zero_add, add_zero] <;> rfl'
   rw [hweight]
   norm_num only [one_pow, div_one]
   exact add_pos_of_pos_of_nonneg hp hgamma
@@ -406,14 +408,10 @@ def familyRegistration : Registration arena (type_of% (@smooth_weight_antitone))
       refine ⟨intervention i, ?_, rfl, intervention_rejects i⟩
       intro j hj
       funext c m
-      change smoothWeight c m =
-        (if j = i then
-          (if i then smoothWeight c m - 1 else smoothWeight c m + 1)
-          else smoothWeight c m)
       cases i <;> cases j
       · exact (hj rfl).elim
-      · rfl
-      · rfl
+      · simp [actual, intervention, realize]
+      · simp [actual, intervention, realize]
       · exact (hj rfl).elim
     · intro e
       exact nomatch e
