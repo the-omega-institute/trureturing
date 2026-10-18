@@ -658,6 +658,9 @@ private noncomputable def vertices (ℓ : ℕ) : Finset (ℤ × ℤ) := by
   exact ((Finset.Icc (-4 : ℤ) ((ℓ : ℤ) + 3)).product
     (Finset.Icc (-(ℓ : ℤ) - 3) 4)).filter (fun v => ground ℓ v ≤ 1 ∨ EndVertex ℓ v)
 
+private abbrev FiniteDownsets (ℓ : ℕ) :=
+  {J : ↥((vertices ℓ).powersetCard 5) // IsDownset ℓ J.val}
+
 private noncomputable def finiteEquiv (ℓ : ℕ) (hℓ : 3 ≤ ℓ) :
     {I : Finset (ℤ × ℤ) // I.card = 5 ∧ IsDownset ℓ I} ≃
       {J : ↥((vertices ℓ).powersetCard 5) // IsDownset ℓ J.val} where
@@ -679,8 +682,7 @@ private noncomputable def finiteEquiv (ℓ : ℕ) (hℓ : 3 ≤ ℓ) :
   right_inv J := by apply Subtype.ext; apply Subtype.ext; rfl
 
 private abbrev Choices (n k : ℕ) := ↥((Finset.univ : Finset (Fin n)).powersetCard k)
-private abbrev Patterns (ℓ : ℕ) :=
-  Choices ℓ 5 ⊕
+private abbrev OtherPatterns (ℓ : ℕ) :=
   (Fin (ℓ - 1) × Fin 2 × Choices (ℓ - 2) 2) ⊕
   (Fin 4 × Choices (ℓ - 1) 3) ⊕
   (Fin 2 × Choices (ℓ - 1) 2) ⊕
@@ -692,6 +694,7 @@ private abbrev Patterns (ℓ : ℕ) :=
   Fin 12 ⊕ Fin 4 ⊕ (Fin 2 × Fin (ℓ + 1)) ⊕ Fin 4 ⊕
   (Fin 4 × Fin ℓ) ⊕ Fin 2 ⊕ (Fin 4 × Choices (ℓ - 1) 2) ⊕
   (Fin 4 × Fin (ℓ + 3))
+private abbrev Patterns (ℓ : ℕ) := Choices ℓ 5 ⊕ OtherPatterns ℓ
 private theorem patterns_card (ℓ : ℕ) (hℓ : 3 ≤ ℓ) :
     (Nat.card (Patterns ℓ) : ℤ) =
       (ℓ.choose 5 : ℤ) + 10 * ℓ.choose 3 - 2 * ℓ.choose 2 + 36 * ℓ - 14 := by
@@ -718,7 +721,7 @@ private theorem patterns_card (ℓ : ℕ) (hℓ : 3 ≤ ℓ) :
     exact_mod_cast hd
   have hs1 : ((ℓ - 1 : ℕ) : ℤ) = (ℓ : ℤ) - 1 := by omega
   have hs2 : ((ℓ - 2 : ℕ) : ℤ) = (ℓ : ℤ) - 2 := by omega
-  unfold Patterns Choices
+  unfold Patterns OtherPatterns Choices
   simp only [Nat.card_eq_fintype_card, Fintype.card_sum, Fintype.card_prod,
     Fintype.card_fin, Fintype.card_coe, Finset.card_powersetCard, Finset.card_univ,
     Nat.cast_add, Nat.cast_mul, Nat.cast_ofNat, Nat.cast_one]
@@ -726,9 +729,75 @@ private theorem patterns_card (ℓ : ℕ) (hℓ : 3 ≤ ℓ) :
   rw [hs1] at haZ hbZ hdZ
   rw [hs2] at hbZ
   nlinarith
-private noncomputable def patternEquiv (ℓ : ℕ) (hℓ : 3 ≤ ℓ) :
-    {J : ↥((vertices ℓ).powersetCard 5) // IsDownset ℓ J.val} ≃ Patterns ℓ := by
+private theorem ground_zero (ℓ : ℕ) (v : ℤ × ℤ) :
+    ground ℓ v = 0 ↔ 0 ≤ v.1 ∧ v.1 < ℓ ∧ v.2 = -v.1 := by
+  unfold ground
+  split_ifs <;> simp only [abs_eq_max_neg] <;> omega
+private def zeroEquiv (ℓ : ℕ) : {v // ground ℓ v = 0} ≃ Fin ℓ where
+  toFun v := ⟨v.val.1.toNat, by
+    have hz := (ground_zero ℓ v.val).mp v.property
+    omega⟩
+  invFun i := ⟨((i.val : ℤ), -(i.val : ℤ)), (ground_zero ℓ _).mpr
+    ⟨by dsimp only; omega, by dsimp only; exact_mod_cast i.isLt, rfl⟩⟩
+  left_inv v := by
+    apply Subtype.ext
+    have hz := (ground_zero ℓ v.val).mp v.property
+    apply Prod.ext <;> dsimp only <;> omega
+  right_inv i := by apply Fin.ext; dsimp only; omega
+private def zeroFinsetsEquiv (ℓ : ℕ) :
+    {I : Finset (ℤ × ℤ) // ∀ v ∈ I, ground ℓ v = 0} ≃ Finset (Fin ℓ) :=
+  (Equiv.finsetSubtypeComm (fun v => ground ℓ v = 0)).symm.trans
+    (Equiv.finsetCongr (zeroEquiv ℓ))
+private theorem zeroFinsets_card (ℓ : ℕ)
+    (I : {I : Finset (ℤ × ℤ) // ∀ v ∈ I, ground ℓ v = 0}) :
+    (zeroFinsetsEquiv ℓ I).card = I.val.card := by
+  unfold zeroFinsetsEquiv
+  simp only [Equiv.trans_apply, Equiv.finsetCongr_apply, Finset.card_map,
+    Equiv.finsetSubtypeComm_symm_apply, Finset.card_attach]
+private def zeroOnly (ℓ : ℕ) (J : FiniteDownsets ℓ) : Prop :=
+  ∀ v ∈ J.val.val, ground ℓ v = 0
+
+private noncomputable def lowEquiv (ℓ : ℕ) (hℓ : 3 ≤ ℓ) :
+    {J : FiniteDownsets ℓ // zeroOnly ℓ J} ≃ Choices ℓ 5 where
+  toFun J := ⟨zeroFinsetsEquiv ℓ ⟨J.val.val.val, J.property⟩,
+    Finset.mem_powersetCard.mpr ⟨Finset.subset_univ _, by
+      rw [zeroFinsets_card]
+      exact (Finset.mem_powersetCard.mp J.val.val.property).2⟩⟩
+  invFun S := by
+    let T := (zeroFinsetsEquiv ℓ).symm S.val
+    have hc : T.val.card = 5 := by
+      have hz := zeroFinsets_card ℓ T
+      have he : zeroFinsetsEquiv ℓ T = S.val := Equiv.apply_symm_apply _ _
+      rw [he] at hz
+      have hs := (Finset.mem_powersetCard.mp S.property).2
+      omega
+    have hd : IsDownset ℓ T.val := by
+      intro u v _ he hv
+      have hgv := T.property v hv
+      have hgu : 0 ≤ ground ℓ u := by unfold ground; split_ifs <;> positivity
+      omega
+    exact ⟨finiteEquiv ℓ hℓ ⟨T.val, hc, hd⟩, T.property⟩
+  left_inv J := by
+    apply Subtype.ext
+    apply Subtype.ext
+    apply Subtype.ext
+    change ((zeroFinsetsEquiv ℓ).symm
+      (zeroFinsetsEquiv ℓ ⟨J.val.val.val, J.property⟩)).val = J.val.val.val
+    rw [Equiv.symm_apply_apply]
+  right_inv S := by
+    apply Subtype.ext
+    change zeroFinsetsEquiv ℓ ((zeroFinsetsEquiv ℓ).symm S.val) = S.val
+    exact Equiv.apply_symm_apply _ _
+
+private noncomputable def nonzeroPatternEquiv (ℓ : ℕ) (hℓ : 3 ≤ ℓ) :
+    {J : FiniteDownsets ℓ // ¬zeroOnly ℓ J} ≃ OtherPatterns ℓ := by
   sorry
+
+private noncomputable def patternEquiv (ℓ : ℕ) (hℓ : 3 ≤ ℓ) :
+    FiniteDownsets ℓ ≃ Patterns ℓ := by
+  classical
+  exact (Equiv.sumCompl (zeroOnly ℓ)).symm.trans
+    (Equiv.sumCongr (lowEquiv ℓ hℓ) (nonzeroPatternEquiv ℓ hℓ))
 
 private theorem finite_count (ℓ : ℕ) (hℓ : 3 ≤ ℓ) :
     (Nat.card {J : ↥((vertices ℓ).powersetCard 5) // IsDownset ℓ J.val} : ℤ) =
