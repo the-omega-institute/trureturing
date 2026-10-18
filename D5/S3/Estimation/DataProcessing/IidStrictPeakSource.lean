@@ -87,21 +87,23 @@ private theorem peak_average (p : A → ℝ) :
       if peak a b c then 1 else 0)) = ∑ b, p b * lowerMass p b ^ 2 := by
   classical
   rw [avg_swap]
-  apply Finset.sum_congr rfl
-  intro b _
-  congr 1
-  have inner (a : A) :
-      average p (fun c => if peak a b c then (1 : ℝ) else 0) =
-        (if a < b then lowerMass p b else 0) := by
-    by_cases h : a < b
-    · simp [average, peak, h, lowerMass]
-    · simp [average, peak, h]
-  simp only [inner, average]
-  simp_rw [mul_ite, mul_zero]
-  rw [show (∑ a, if a < b then p a * lowerMass p b else 0) =
-      (∑ a, if a < b then p a else 0) * lowerMass p b by
-    rw [Finset.sum_mul]; apply Finset.sum_congr rfl; intro a _; split_ifs <;> simp]
-  simp [lowerMass, pow_two]
+  have whole (b : A) :
+      average p (fun a => average p fun c => if peak a b c then (1 : ℝ) else 0) =
+        lowerMass p b ^ 2 := by
+    have inner (a : A) :
+        average p (fun c => if peak a b c then (1 : ℝ) else 0) =
+          (if a < b then lowerMass p b else 0) := by
+      by_cases h : a < b
+      · simp [average, peak, h, lowerMass]
+      · simp [average, peak, h]
+    simp_rw [inner]
+    simp only [average, mul_ite, mul_zero]
+    rw [show (∑ a, if a < b then p a * lowerMass p b else 0) =
+        (∑ a, if a < b then p a else 0) * lowerMass p b by
+      rw [Finset.sum_mul]; apply Finset.sum_congr rfl; intro a _; split_ifs <;> simp]
+    simp [lowerMass, pow_two]
+  simp_rw [whole]
+  rfl
 
 private theorem wing_average (p : A → ℝ) (c : A) :
     average p (fun a => average p fun b => if peak a b c then (1 : ℝ) else 0) =
@@ -177,7 +179,6 @@ theorem iid_peak_source (p : A → ℝ) (hp : ∀ a, 0 ≤ p a) (hs : ∑ a, p a
   have hz : modeLaw p 4 = ∑ b, p b * lowerMass p b ^ 2 := by
     simp only [modeLaw, (codes _ _ _ _ _).2.2.1, productAverage, avg_const p hs]
     rw [peak_average p]
-    exact avg_const p hs _
   have hj : modeLaw p 3 = ∑ c, p c * wingMass p c ^ 2 := by
     simp only [modeLaw, (codes _ _ _ _ _).2.2.2, productAverage]
     rw [avg_rotate]
@@ -187,8 +188,12 @@ theorem iid_peak_source (p : A → ℝ) (hp : ∀ a, 0 ≤ p a) (hs : ∑ a, p a
     simp_rw [avg_scale]
     have hr : average p (fun d => average p fun e =>
         if peak c d e then (1 : ℝ) else 0) = wingMass p c := by
+      have hrev (a b : A) : peak c b a = peak a b c := by
+        unfold peak
+        exact propext and_comm
       rw [avg_swap]
-      simpa only [peak, and_comm] using wing_average p c
+      simp_rw [hrev]
+      exact wing_average p c
     rw [hr]
     simp_rw [avg_right]
     rw [wing_average]
@@ -196,7 +201,8 @@ theorem iid_peak_source (p : A → ℝ) (hp : ∀ a, 0 ≤ p a) (hs : ∑ a, p a
   have hm : (∑ c, p c * wingMass p c) = ∑ b, p b * lowerMass p b ^ 2 := by
     rw [← peak_average p]
     change average p (wingMass p) = _
-    simp_rw [← wing_average]
+    change average p (fun c => wingMass p c) = _
+    conv_lhs => arg 2; ext c; rw [← wing_average]
     rw [avg_swap]
     congr 1
     funext a
@@ -204,12 +210,25 @@ theorem iid_peak_source (p : A → ℝ) (hp : ∀ a, 0 ≤ p a) (hs : ∑ a, p a
   refine ⟨excl, ?_, hmass, hx, hy, hz, hj, hm, ?_⟩
   · intro s
     unfold modeLaw productAverage
-    repeat' apply avg_nonneg p hp
+    apply avg_nonneg p hp
+    intro a
+    apply avg_nonneg p hp
+    intro b
+    apply avg_nonneg p hp
+    intro c
+    apply avg_nonneg p hp
+    intro d
+    apply avg_nonneg p hp
     intro e
+    dsimp only
     split_ifs <;> norm_num
   · rw [Fin.sum_univ_five] at hmass
     rw [← hx, ← hj]
-    nlinarith [hmass, hy, hz]
+    have hy' : modeLaw p 2 = modeLaw p 1 := by linarith [hy, hx]
+    have h0 : modeLaw p 0 = 1-3*modeLaw p 1-2*modeLaw p 3 := by
+      linarith [hy, hx, hz]
+    rw [hy',h0]
+    ring
 
 #print axioms iid_peak_source
 end
