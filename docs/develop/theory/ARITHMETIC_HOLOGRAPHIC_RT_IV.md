@@ -4333,3 +4333,279 @@ If the first pair of inequalities in (117.21) failed, choose subquarter pairs wi
 The limit proof does not assume that the strict subquarter set is closed. The quantitative inequalities, the exact quarter-boundary classification and the nonconstructive positive separation have distinct content. None removes all possible genuinely complex or lower-rank competitors. The unrestricted global quarter-optimum problem remains open.
 
 ## 追加锚（本行以下为增补区）
+
+## 118. Feasible-chord polarization and full-rank opposite stresses
+
+### 118.1. Original domain and common-stress hypotheses
+
+Keep the original local channels $\mathbb C^8\to\mathbb C^4$, their four prescribed two-coordinate fibres, the fixed correlated encoding, an arbitrary reference, and the unhalved diamond error. On the full calibrated domain this error is
+
+$$
+\begin{aligned}
+\mathcal E&=\{K=K^*\succeq0:K_{ff}=I_2\},\\
+F(G,H)&=\max_{(\rho,W)\in\mathcal C}
+                 2\operatorname{Tr}[(T-G\odot H)W],\\
+\mathcal C&=\{(\rho,W):\rho\succeq0,\ \rho\text{ is fibre-block diagonal},
+                  \ \operatorname{Tr}\rho=1,\ 0\preceq W\preceq\rho\},\\
+T_{ff}&=I_2,\qquad T_{fg}=\tfrac12J_2\quad(f\ne g).
+\end{aligned}
+\tag{118.1}
+$$
+
+Throughout the exclusion arguments, assume that $(G,H)$ is a local minimum on the entire $\mathcal E^2$, including nearby competitors of different ranks, and that
+
+$$
+\operatorname{rank}G=7,\qquad
+\ker G=\mathbb C a,\qquad a_i\ne0\ (1\le i\le8),
+\qquad 0<F(G,H)<\tfrac12.
+\tag{118.2}
+$$
+
+The original common-stress and quotient results of [RT III §§95 and 98](ARITHMETIC_HOLOGRAPHIC_RT_III.md#98-curved-common-stress-tests-and-finite-principal-quotients) give
+
+$$
+\begin{aligned}
+P&=\alpha\operatorname{diag}(a)R\operatorname{diag}(\bar a)\succeq0,
+       &\alpha&>0,\\
+R&\succeq0,\qquad R_{ii}=1,
+       &G&=H\odot\bar R,\qquad PH=0.
+\end{aligned}
+\tag{118.3}
+$$
+
+All cross-fibre entries of $H$ and $P$ are nonzero. Fix $a$ and one normalization $(\alpha,P)$ in (118.3). Every canonical common normer has first stress $`\alpha_Waa^*`$ and second stress $(\alpha_W/\alpha)P$, with $\alpha_W>0$. The canonical subset is the complete set of normers whose original first-order drift is nonnegative against every feasible pair. These statements concern the original full-domain minimum, rather than an independently chosen witness for each block.
+
+For a positive semidefinite $K$, let $N_K$ be the orthogonal projection onto $\ker K$ and $K^+$ its Moore–Penrose inverse. Set
+
+$$
+\begin{aligned}
+\mathcal T_H&=\{D=D^*:D_{ff}=0,\ N_HDN_H=0\},\\
+E(D)&=-\bar R\odot D,\\
+m(D)&=-\sum_{\substack{i,j\\f(i)\ne f(j)}}
+                  \frac{\overline{P_{ij}}}{H_{ij}}D_{ij}^{\,2},\\
+Q(D)&=m(D)+\alpha a^*E(D)G^+E(D)a
+                      +\operatorname{Tr}(PDH^+D).
+\end{aligned}
+\tag{118.4}
+$$
+
+The sum is ordered and uses complex squares. It is real for Hermitian $D$. The formula for $m$ is also defined on zero-fibre Hermitian matrices outside $\mathcal T_H$. The full curved criterion gives $Q(D)\ge0$ for every $D\in\mathcal T_H$, with the same fixed $P$.
+
+### 118.2. Exact curved paths and a feasible chord
+
+**Lemma 118.1 (full-domain chord polarization).** Under (118.1)–(118.4), let $`D_0=D_0^*`$ have zero original fibre blocks, $D_0P=0$, and $m(D_0)=0$. Suppose $H+sD_0\in\mathcal E$ for all sufficiently small $s\ge0$. Then the real polarization $B_m(D_0,D)$ of $m$ vanishes for every $D\in\mathcal T_H$. Equivalently, the Hermitian matrix
+
+$$
+A(D_0)_{ij}=
+\frac{P_{ij}\overline{(D_0)_{ij}}}{\overline{H_{ij}}}
+\quad(f(i)\ne f(j)),\qquad A(D_0)_{ff}=0
+\tag{118.5}
+$$
+
+annihilates the whole $\mathcal T_H$ for the real trace pairing.
+
+**Proof.** Put $E_0=-\bar R\odot D_0$. The original stress identity gives, coordinate by coordinate,
+
+$$
+(E_0a)_i=-\frac{(D_0P)_{ii}}{\alpha\bar a_i}=0.
+\tag{118.6}
+$$
+
+Therefore $G+sE_0$ is feasible for both signs near zero: it preserves the entire kernel $\mathbb C a$, and its positive restriction to the orthogonal complement remains positive. Choose fixed $c_G,c_H>0$ large enough that
+
+$$
+G_1=G+E_0/c_G\in\mathcal E,
+\qquad H_1=H+D_0/c_H\in\mathcal E.
+\tag{118.7}
+$$
+
+Fix any $D\in\mathcal T_H$. Corollary 98.3 gives $N_GE(D)N_G=0$ and complete first-order product cancellation. The exact curved realization of Lemma 98.1 supplies smooth two-sided feasible paths
+
+$$
+\begin{aligned}
+g_D(t)&=G+tE(D)+t^2C_G+O(t^3),\\
+h_D(t)&=H+tD+t^2C_H+O(t^3),
+\end{aligned}
+\qquad (C_G)_{ff}=(C_H)_{ff}=0,
+\tag{118.8}
+$$
+
+whose second coefficients satisfy
+
+$$
+\alpha\operatorname{Tr}(aa^*C_G)
+ =\alpha a^*E(D)G^+E(D)a,
+\qquad
+\operatorname{Tr}(PC_H)=\operatorname{Tr}(PDH^+D).
+\tag{118.9}
+$$
+
+These paths retain the original fibre constraints and may move the kernels. Explicitly, for $`K=V^*V`$ and a tangent $D_K$, the construction is
+
+$$
+\begin{aligned}
+X&=VK^+D_K\bigl((I-N_K)/2+N_K\bigr),\\
+V_f(t)&=(V_f+tX_f)(I_2+t^2X_f^*X_f)^{-1/2},\\
+C_K&=X^*X-\tfrac12(MK+KM),
+\qquad M=\operatorname{blockdiag}_f(X_f^*X_f).
+\end{aligned}
+\tag{118.10}
+$$
+
+The fibre columns are orthonormal for both signs of $t$. For every complementary stress $ZK=0$, the $M$ terms disappear under the trace and $\operatorname{Tr}(ZC_K)=\operatorname{Tr}(ZD_KK^+D_K)$, proving (118.9).
+
+Fix any real $\varepsilon$. For sufficiently small positive $s$ form the exact convex mixtures
+
+$$
+\begin{aligned}
+G_s&=(1-c_Gs)g_D\!\left(\frac{\varepsilon s}{1-c_Gs}\right)+c_GsG_1,\\
+H_s&=(1-c_Hs)h_D\!\left(\frac{\varepsilon s}{1-c_Hs}\right)+c_HsH_1.
+\end{aligned}
+\tag{118.11}
+$$
+
+Both matrices are feasible. Negative $\varepsilon$ is allowed because (118.8) is two-sided; the weights remain nonnegative for small positive $s$. The constants $c_G,c_H$ need not be equal. Expansion gives
+
+$$
+\begin{aligned}
+G_s&=G+s(E_0+\varepsilon E(D))+\varepsilon^2s^2C_G+O(s^3),\\
+H_s&=H+s(D_0+\varepsilon D)+\varepsilon^2s^2C_H+O(s^3).
+\end{aligned}
+\tag{118.12}
+$$
+
+Indeed the weight cancels the denominator in every linear term, while the quadratic coefficient is $\varepsilon^2s^2/(1-c_Ks)=\varepsilon^2s^2+O(s^3)$. With $L=T-G\odot H$, full original first-order cancellation therefore yields
+
+$$
+\begin{aligned}
+T-G_s\odot H_s&=L+s^2K_\varepsilon+O(s^3),\\
+K_\varepsilon&=\bar R\odot(D_0+\varepsilon D)\odot(D_0+\varepsilon D)
+ -\varepsilon^2(C_G\odot H+G\odot C_H).
+\end{aligned}
+\tag{118.13}
+$$
+
+For completeness, common-witness selection applies at this fixed $D,\varepsilon$. Let $\mathcal A$ be the full compact convex set of normers at $L$ and let $\mathcal A_0$ be its complete canonical common subset. For any $M>0$, mix the feasible paths (118.11) with arbitrary $G',H'\in\mathcal E$ at weight $Ms^2$. The compact maximum derivative formula and local minimality imply
+
+$$
+\begin{aligned}
+\max_{(\rho,W)\in\mathcal A}
+ \{2\operatorname{Tr}(K_\varepsilon W)+Mb(W;G',H')\}&\ge0,\\
+b(W;G',H')&=-2\operatorname{Tr}
+ [((G'-G)\odot H+G\odot(H'-H))W].
+\end{aligned}
+\tag{118.14}
+$$
+
+For each fixed $M$, finite affine separation gives one normer satisfying all inequalities inside this maximum simultaneously. Otherwise compactness gives a finite inconsistent family, and nonnegative separating weights produce an averaged feasible drift contradicting (118.14). The zero drift gives $2\operatorname{Tr}(K_\varepsilon W)\ge0$. A convergent subsequence as $M\to\infty$ lies in the complete $\mathcal A_0$ and retains this inequality.
+
+The common stress trace identities, (118.9), and the positive factor $\alpha_W/\alpha$ turn the last inequality into
+
+$$
+m(D_0+\varepsilon D)+\varepsilon^2
+ \bigl[\alpha a^*E(D)G^+E(D)a+\operatorname{Tr}(PDH^+D)\bigr]\ge0.
+\tag{118.15}
+$$
+
+Witness selection was made only for the fixed $D,\varepsilon$; proportionality of all common stresses gives the same scalar form. Since $m(D_0)=0$, (118.15) is
+
+$$
+2\varepsilon B_m(D_0,D)+\varepsilon^2Q(D)\ge0
+\qquad(\varepsilon\in\mathbb R).
+\tag{118.16}
+$$
+
+Both signs of arbitrarily small $\varepsilon$ force $B_m(D_0,D)=0$. Reversing trace indices gives $B_m(D_0,D)=-\operatorname{Tr}(A(D_0)D)$, proving the lemma. Each fixed $\varepsilon$ uses its own sufficiently small positive $s$; no uniform interval over unbounded $\varepsilon$ is required. ∎
+
+### 118.3. Rank-raising half stars
+
+**Theorem 118.2 (deficient stress excludes two full halves).** Under (118.1)–(118.4), suppose $\operatorname{rank}H=4$ and $\operatorname{rank}P\le3$. No partition $A,B$ into two unions of two original fibres can have both $H_{AA}\succ0$ and $H_{BB}\succ0$.
+
+**Proof.** Factor $`H=B_\circ^*B_\circ`$ with $B_\circ$ a full-row-rank $4\times8$ matrix, and $`P=V^*V`$ with $V$ having at most three rows. Complementarity gives $`VB_\circ^*=0`$. The square restrictions $B_A,B_B$ are invertible. Choose nonzero $m_B\in\ker V_B$ and put
+
+$$
+\begin{aligned}
+m_A&=0,\qquad n_B=0,\qquad
+n_A=-B_A^*(B_B^*)^{-1}m_B,\\
+w&=n-m=B_\circ^*\eta,\qquad
+\eta=-(B_B^*)^{-1}m_B.
+\end{aligned}
+\tag{118.17}
+$$
+
+Then $Pn=Pm=0$, because $V_An_A=V_Bm_B=0$. Both vectors are nonzero. With $N=N_H$, one has $Nn=Nm=u\ne0$: otherwise $m\in\operatorname{range}H$ supported on $B$ would force $`B_A^*\eta'=0`$ for its representing vector $\eta'$, and hence $m=0$.
+
+For real $y$ define
+
+$$
+\begin{aligned}
+D_y&=(1+iy)nm^*+(1-iy)mn^*,\\
+v_y&=\tfrac12(n+m+iy(n-m)),\\
+D_y&=2v_yv_y^*-\tfrac12(1+y^2)ww^*.
+\end{aligned}
+\tag{118.18}
+$$
+
+Since $w\in\operatorname{range}H$, the last identity proves $H+sD_y\succeq0$ for sufficiently small $s\ge0$. For example it suffices that $`s(1+y^2)w^*H^+w/2\le1`$. The fibre blocks remain $I_2$, and $D_yP=0$. The paired direction $-\bar R\odot D_y$ annihilates $a$ by (118.6), so its $G$ line is feasible for both signs near zero. The entire original first-order coefficient cancels.
+
+The fixed-direction common-normer selection used in (118.14), applied to these two affine paths with positive $s$, gives $m(D_y)\ge0$ for every real $y$. Here
+
+$$
+\begin{aligned}
+m(D_y)&=-2\operatorname{Re}((1+iy)^2c),\\
+c&=\sum_{i\in A,j\in B}
+       \frac{\overline{P_{ij}}}{H_{ij}}n_i^2\bar m_j^{\,2}.
+\end{aligned}
+\tag{118.19}
+$$
+
+The constant and quadratic coefficients have opposite signs, so $\operatorname{Re}c=0$; the remaining linear coefficient then gives $\operatorname{Im}c=0$. Consequently
+
+$$
+D_0=nm^*+mn^*,\qquad D_i=i(nm^*-mn^*),
+\qquad m(D_0)=m(D_i)=0.
+\tag{118.20}
+$$
+
+Lemma 118.1 shows that $A(D_0)$ annihilates all of $\mathcal T_H$. Also $D_i\in\mathcal T_H$, since $Nn=Nm$. Its two curvature costs vanish because $D_iP=0$ and $E(D_i)a=0$. Thus $Q(D_i)=0$, and nonnegativity of $Q$ on the entire $\mathcal T_H$ makes $D_i$ a radical vector there. The cost polarizations vanish as well, so $A(D_i)$ annihilates the same whole space.
+
+The normal space of $\mathcal T_H$ is the sum of the original fibre-block-diagonal matrices and the matrices supported on $\ker H$. If $`\operatorname{range}U^*=\ker H`$, this gives
+
+$$
+A(D_0)=\Lambda_0+U^*Y_0U,
+\qquad A(D_i)=\Lambda_i+U^*Y_iU,
+\tag{118.21}
+$$
+
+with Hermitian $\Lambda_0,\Lambda_i$ fibre-block diagonal and Hermitian $Y_0,Y_i$. This is the finite-dimensional orthogonal-complement identity for an intersection of two real linear spaces. Half the first identity plus $i/2$ times the second produces a matrix $Z$ supported only on $A\times B$:
+
+$$
+\begin{aligned}
+Z_{ij}&=\frac{P_{ij}\bar n_i m_j}{\overline{H_{ij}}}
+       \quad(i\in A,j\in B),\\
+Z&=\Lambda+U^*YU,
+\qquad HZ=H\Lambda,\qquad ZH=\Lambda H.
+\end{aligned}
+\tag{118.22}
+$$
+
+The combined multipliers need not be Hermitian. For each original fibre $f\subset A$, the $f$ columns of $Z$ vanish, so $(HZ)_{ff}=0$ and $H_{ff}=I_2$ force $\Lambda_{ff}=0$. For $g\subset B$, the $g$ rows vanish, and $(ZH)_{gg}=0$ similarly gives $\Lambda_{gg}=0$. Hence $\Lambda=0$ and $HZ=ZH=0$.
+
+Every column of $Z$ belongs to $\ker H$ and is supported on $A$. Since $H_{AA}\succ0$, each column is zero. This contradicts (118.22): some $n_i,m_j$ are nonzero, and every cross-fibre coefficient $P_{ij}/H_{ij}$ is nonzero. ∎
+
+### 118.4. Subquarter strict complementarity
+
+**Corollary 118.3 (full opposite stress at rank four).** Under (118.1)–(118.4), if $\operatorname{rank}H=4$ and $F(G,H)<1/4$, then
+
+$$
+\operatorname{rank}P=\operatorname{rank}R=4,
+\qquad \operatorname{range}P=\ker H,
+\qquad P|_{\ker H}\succ0.
+\tag{118.23}
+$$
+
+**Proof.** Complementarity gives $\operatorname{rank}P\le4$. Suppose it is at most three. Theorem 114.3 forbids a complementary pair of two-fibre principal Grams from having exactly one positive-definite member. Theorem 118.2 forbids two positive-definite members. Therefore all six two-fibre principal Grams are singular, contrary to the subquarter exclusion in §115. Thus $\operatorname{rank}P=4$. The nonsingular diagonal congruence in (118.3) gives $\operatorname{rank}R=4$. A rank-four positive semidefinite matrix with range contained in the four-dimensional $\ker H$ has exactly that range and is positive definite there. ∎
+
+The corollary is a necessary restriction on the remaining full-support rank-$(7,4)$ calibrated local minima. It does not exclude the full-rank-stress class, the lower opposite ranks, or the global representative classes retained in Corollary 113.5. The unrestricted quarter optimum remains open. The original-channel reduction does not assert that an arbitrary leaking local minimum preserves these ranks or hypotheses under calibration.
+
+## 追加锚（本行以下为增补区）
