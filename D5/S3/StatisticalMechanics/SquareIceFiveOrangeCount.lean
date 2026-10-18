@@ -470,6 +470,74 @@ private theorem rank_bound (ℓ : ℕ) (hℓ : 1 ≤ ℓ) (I : Finset (ℤ × �
   have hy := abs_nonneg (v.2 + i)
   nlinarith [mul_nonneg hx hy]
 
+private theorem positive_triangle (ℓ : ℕ) (hℓ : 1 ≤ ℓ) (I : Finset (ℤ × ℤ))
+    (hI : IsDownset ℓ I) (hcard : I.card = 5) (v : ℤ × ℤ) (hv : v ∈ I)
+    (i : ℤ) (hi : 0 ≤ i) (hil : i + 2 < ℓ) : ¬(i + 2 ≤ v.1 ∧ -i ≤ v.2) := by
+  intro hpos
+  have hgv : ground ℓ v = v.1 + v.2 := by
+    unfold ground
+    split_ifs <;> simp only [abs_eq_max_neg] <;> omega
+  let t : Finset (ℤ × ℤ) := {(i, -i), (i+1, -i-1), (i+2, -i-2), (i+1, -i), (i+2, -i-1), (i+2, -i)}
+  have hs : t ⊆ I := by
+    intro u hu
+    simp only [t, Finset.mem_insert, Finset.mem_singleton] at hu
+    rcases hu with rfl | rfl | rfl | rfl | rfl | rfl
+    all_goals
+      apply geodesic_mem ℓ hℓ I hI _ v ?_ hv
+      rw [hgv]
+      unfold ground
+      dsimp only
+      split_ifs <;> simp only [abs_eq_max_neg] <;> omega
+  have hc : t.card = 6 := by
+    have inj : Function.Injective (fun p : ℤ × ℤ => (p.1 + i, p.2 - i)) := by
+      intro p q hpq
+      apply Prod.ext <;> have h1 := congrArg Prod.fst hpq <;>
+        have h2 := congrArg Prod.snd hpq <;> dsimp only at h1 h2 <;> omega
+    have hm : t = ({(0,0), (1,-1), (2,-2), (1,0), (2,-1), (2,0)} :
+        Finset (ℤ × ℤ)).image (fun p => (p.1 + i, p.2 - i)) := by
+      simp only [Finset.image_insert, Finset.image_singleton, t]
+      ext p
+      simp only [Finset.mem_insert, Finset.mem_singleton, Prod.ext_iff]
+      omega
+    rw [hm, Finset.card_image_of_injective _ inj]
+    decide
+  have hn := Finset.card_le_card hs
+  omega
+
+private theorem negative_triangle (ℓ : ℕ) (hℓ : 1 ≤ ℓ) (I : Finset (ℤ × ℤ))
+    (hI : IsDownset ℓ I) (hcard : I.card = 5) (v : ℤ × ℤ) (hv : v ∈ I)
+    (i : ℤ) (hi : 0 ≤ i) (hil : i + 2 < ℓ) : ¬(v.1 ≤ i ∧ v.2 ≤ -i - 2) := by
+  intro hpos
+  have hgv : ground ℓ v = -v.1 - v.2 := by
+    unfold ground
+    split_ifs <;> simp only [abs_eq_max_neg] <;> omega
+  let t : Finset (ℤ × ℤ) := {(i, -i), (i+1, -i-1), (i+2, -i-2), (i, -i-1), (i+1, -i-2), (i, -i-2)}
+  have hs : t ⊆ I := by
+    intro u hu
+    simp only [t, Finset.mem_insert, Finset.mem_singleton] at hu
+    rcases hu with rfl | rfl | rfl | rfl | rfl | rfl
+    all_goals
+      apply geodesic_mem ℓ hℓ I hI _ v ?_ hv
+      rw [hgv]
+      unfold ground
+      dsimp only
+      split_ifs <;> simp only [abs_eq_max_neg] <;> omega
+  have hc : t.card = 6 := by
+    have inj : Function.Injective (fun p : ℤ × ℤ => (p.1 + i, p.2 - i)) := by
+      intro p q hpq
+      apply Prod.ext <;> have h1 := congrArg Prod.fst hpq <;>
+        have h2 := congrArg Prod.snd hpq <;> dsimp only at h1 h2 <;> omega
+    have hm : t = ({(0,0), (1,-1), (2,-2), (0,-1), (1,-2), (0,-2)} :
+        Finset (ℤ × ℤ)).image (fun p => (p.1 + i, p.2 - i)) := by
+      simp only [Finset.image_insert, Finset.image_singleton, t]
+      ext p
+      simp only [Finset.mem_insert, Finset.mem_singleton, Prod.ext_iff]
+      omega
+    rw [hm, Finset.card_image_of_injective _ inj]
+    decide
+  have hn := Finset.card_le_card hs
+  omega
+
 private theorem downset_count (ℓ : ℕ) (hℓ : 3 ≤ ℓ) :
     (Nat.card {I : Finset (ℤ × ℤ) // I.card = 5 ∧ IsDownset ℓ I} : ℤ) =
       (ℓ.choose 5 : ℤ) + 10 * ℓ.choose 3 - 2 * ℓ.choose 2 + 36 * ℓ - 14 := by
