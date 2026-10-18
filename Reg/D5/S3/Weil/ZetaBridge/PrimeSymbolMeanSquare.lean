@@ -151,7 +151,7 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     definition := none,
     coordinates := #[],
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "fn", "arg", "arg", "body", "fn", "arg", "fn"],
+      path := #["body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "arg", "body", "fn", "arg", "fn"],
       stateBinder := 0,
       functionOperand := true,
       stateOperand := none,
@@ -295,10 +295,10 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     definition := none,
     coordinates := #[],
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "fn", "arg", "arg", "fn"],
+      path := #["body", "body", "body", "body", "body", "body", "body", "fn", "arg", "arg"],
       stateBinder := 0,
-      functionOperand := true,
-      stateOperand := none,
+      functionOperand := false,
+      stateOperand := some #["arg"],
       booleanPredicate := false
     }]
   }
@@ -619,7 +619,7 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     definition := none,
     coordinates := #[],
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "fn", "arg", "arg", "body", "fn", "arg", "fn"],
+      path := #["body", "body", "body", "body", "body", "fn", "arg", "fn", "arg", "body", "fn", "arg", "fn"],
       stateBinder := 0,
       functionOperand := true,
       stateOperand := none,
@@ -655,7 +655,7 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     definition := none,
     coordinates := #[],
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "arg", "body", "fn", "arg", "fn"],
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "arg", "body", "fn", "arg", "fn"],
       stateBinder := 0,
       functionOperand := true,
       stateOperand := none,

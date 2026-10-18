@@ -273,7 +273,7 @@ noncomputable def registration_3 : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "fn", "arg", "arg", "body", "fn"],
+      path := #["body", "body", "body", "body", "fn", "arg", "fn", "arg", "body", "fn"],
       stateBinder := 0,
       functionOperand := true,
       stateOperand := none,
@@ -344,7 +344,7 @@ noncomputable def registration_4 : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "fn", "arg", "arg", "body", "fn", "arg", "fn"],
+      path := #["body", "body", "body", "body", "body", "fn", "arg", "fn", "arg", "body", "fn", "arg", "fn"],
       stateBinder := 0,
       functionOperand := true,
       stateOperand := none,
@@ -427,7 +427,7 @@ noncomputable def registration_5 : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "fn", "arg", "arg", "body", "fn", "arg", "fn", "arg", "fn"],
+      path := #["body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "arg", "body", "fn", "arg", "fn", "arg", "fn"],
       stateBinder := 0,
       functionOperand := true,
       stateOperand := none,
@@ -507,7 +507,7 @@ noncomputable def registration_8 : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "arg", "body", "fn", "arg", "fn", "arg", "fn"],
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "arg", "body", "fn", "arg", "fn", "arg", "fn"],
       stateBinder := 0,
       functionOperand := true,
       stateOperand := none,
@@ -643,13 +643,13 @@ noncomputable def registration_9 : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "arg", "body", "fn", "arg", "fn", "arg", "fn"],
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "arg", "body", "fn", "arg", "fn", "arg", "fn"],
       stateBinder := 0,
       functionOperand := true,
       stateOperand := none,
       booleanPredicate := false
     }, {
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg", "arg", "body", "fn", "arg", "fn", "arg", "fn"],
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg", "fn", "arg", "body", "fn", "arg", "fn", "arg", "fn"],
       stateBinder := 0,
       functionOperand := true,
       stateOperand := none,

@@ -308,10 +308,10 @@ def selection : Contract.SourceSelection := {
   definition := none
   coordinates := #[]
   readouts := #[{
-    path := #["body", "body", "body", "body", "body", "body", "body", "fn", "arg", "arg", "fn"]
+    path := #["body", "body", "body", "body", "body", "body", "body", "fn", "arg", "arg"]
     stateBinder := 0
-    functionOperand := true
-    stateOperand := none
+    functionOperand := false
+    stateOperand := some #["arg"]
     booleanPredicate := false }] }
 def sourceModel : Analysis.Source (@primePhase_noncollision) :=
   Analysis.Source.ofRegistration (@primePhase_noncollision) family source_reconstruction selection
