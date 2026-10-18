@@ -19,11 +19,12 @@ internal sealed class GaussianMatrixDocument : IScribeDocumentDefinition
                 DescribeRole.Theorem))));
     private static Formula Statement()
     {
-        Formula value = new Formula.Binary(Call("E", Call("eta", F.Id("a_A"))),
+        Formula quadratic = Call("a", F.Id("A"));
+        Formula value = new Formula.Binary(Call("E", Call("eta", quadratic)),
             FormulaBinaryOperator.Subtract, Call("E", Call("eta", Call("X", F.Id("i0")))));
         Formula identity = new Formula.Relation(Call("Q", F.Id("A")),
             FormulaRelationOperator.Equal, value);
-        return new Formula.Logic(Call("Integrable", Call("eta", F.Id("a_A")), F.Id("gamma")),
+        return new Formula.Logic(Call("Integrable", Call("eta", quadratic), F.Id("gamma")),
             FormulaLogicOperator.And, identity);
     }
     private static Formula Call(string name, params Formula[] args) =>
