@@ -4065,3 +4065,271 @@ In particular the same global correlation quotient restricts to (116.4) on every
 The strict inequality in (116.16) is used to obtain (116.8). At equality $F=1/4$ the strict determinant and contraction contradictions need not hold. The conclusions provide neither a uniform positive lower bound on the imaginary part as the error approaches $1/4$ nor an exclusion of all genuinely complex configurations. The principal identity (116.4) is not asserted for arbitrary physical channel pairs, and reality of the first Gram alone is not a hypothesis of this result. The calibrated local-minimum consumer does not assert rank preservation for an arbitrary given leaking optimizer. The remaining complex rank classes and the unrestricted global quarter optimum remain open.
 
 ## 追加锚（本行以下为增补区）
+
+## 117. Coherent spectral concentration and the exact quarter boundary
+
+### 117.1. Original channels and a tagged pure target
+
+Retain the four prescribed two-coordinate fibres of $`\mathbb C^8`$, the target $`\mathcal F`$ and the fixed correlated encodings. Explicitly, with $`f(i)`$ the fibre of coordinate $`i`$,
+
+$$
+ \mathcal F(|i\rangle\langle j|)
+   =T_{ij}|f(i)\rangle\langle f(j)|,\qquad
+ T_{ff}=I_2,\qquad T_{fg}=\tfrac12J_2\quad(f\ne g).
+ \tag{117.1}
+$$
+
+For arbitrary original CPTP maps $`A,B:\mathcal L(\mathbb C^8)\to\mathcal L(\mathbb C^4)`$, let $`V_{\rm in}|i\rangle=|i,i\rangle`$ and $`V_{\rm out}|f\rangle=|f,f\rangle`$, with encoding channels $`\mathcal J_{\rm in},\mathcal J_{\rm out}`$. Define
+
+$$
+ \delta=\|(A\otimes B)\circ\mathcal J_{\rm in}
+                  -\mathcal J_{\rm out}\circ\mathcal F\|_\diamond.
+ \tag{117.2}
+$$
+
+The diamond norm is unhalved and permits arbitrary references. For Stinespring isometries, let $`a_i,b_i`$ be the actual correct-output environment records, and use forward Grams $`G_{ij}=\langle a_i,a_j\rangle`$, $`H_{ij}=\langle b_i,b_j\rangle`$, with inner products conjugate-linear in the first argument. Thus
+
+$$
+ G,H\ge0,\qquad G_{ff},H_{ff}\le I_2,\qquad K=G\odot H.
+ \tag{117.3}
+$$
+
+These are actual correct-output Grams, without a calibrated replacement. Their ranks need not equal the channels' Kraus ranks when leakage is present. For a PSD matrix $`X`$ of size at least two, let $`\lambda_1(X)\ge\lambda_2(X)\ge\cdots`$ be its ordered eigenvalues and put $`\kappa_2(X)=\lambda_1(X)+\lambda_2(X)`$.
+
+**Theorem 117.1 (coherent spectral lower bounds).** Let $`S`$ be the union of any nonempty collection of $`m`$ complete original fibres. For either ordering of the two parties,
+
+$$
+ \begin{aligned}
+ \delta&\ge 2-\frac{\boldsymbol1^*K_S\boldsymbol1}{m^2},\\
+ \delta&\ge 2-\frac{\lambda_1(G_S)\operatorname{Tr}H_S}{m^2}
+          \ge 2-\frac{2\lambda_1(G_S)}m,\\
+ \delta&\ge 2-\frac{\kappa_2(G_S)}m.
+ \end{aligned}
+ \tag{117.4}
+$$
+
+Consequently, $`\delta<1/4`$ implies $`\kappa_2(G_S),\kappa_2(H_S)>7m/4`$ and $`\lambda_1(G_S),\lambda_1(H_S)>7m/8`$. In particular,
+
+$$
+ \delta\ge 2-\tfrac14\min\{\kappa_2(G),\kappa_2(H)\},
+ \qquad
+ \delta<\tfrac14\ \Longrightarrow\
+ \kappa_2(G),\kappa_2(H)>7.
+ \tag{117.5}
+$$
+
+**Proof.** In the sums below, $`f\in S`$ means that the whole fibre $`f`$ belongs to $`S`$. Use the normalized logical/reference input and target vector
+
+$$
+ \begin{aligned}
+ |\Psi_S\rangle
+   &=\frac1{\sqrt m}\sum_{f\in S}|f\rangle_R\otimes|f,+\rangle,
+ &|f,+\rangle&=\frac{|f,0\rangle+|f,1\rangle}{\sqrt2},\\
+ |\Omega_S\rangle
+   &=\frac1{\sqrt m}\sum_{f\in S}|f\rangle_R\otimes|f,f\rangle.
+ \end{aligned}
+ \tag{117.6}
+$$
+
+Since $`\mathcal F(|f,+\rangle\langle g,+|)=|f\rangle\langle g|`$ for equal and unequal fibres, the target output is the pure state $`|\Omega_S\rangle\langle\Omega_S|`$. Let $`\sigma_S`$ be the full physical product output. It is positive of trace one. The reference tags force the entries contributing to its overlap with $`\Omega_S`$ to be the actual correct-output entries of the corresponding input fibres. The compression $`C`$ onto the span of $`|f\rangle_R\otimes|f,f\rangle`$ therefore satisfies
+
+$$
+ C_{fg}=\frac1{2m}\sum_{i,j=0}^1\overline{K_{fi,gj}},
+ \qquad
+ \langle\Omega_S|\sigma_S|\Omega_S\rangle
+     =\frac{\boldsymbol1^*K_S\boldsymbol1}{2m^2}.
+ \tag{117.7}
+$$
+
+The sum is real because $`K_S`$ is Hermitian. The conjugation in the first formula follows from the forward-Gram convention and disappears only in this scalar sum. The full-output observable $`2|\Omega_S\rangle\langle\Omega_S|-I`$ is a Hermitian contraction. Hence trace-norm duality gives
+
+$$
+ \delta\ge
+ \||\Omega_S\rangle\langle\Omega_S|-\sigma_S\|_1
+ \ge 2\bigl(1-\langle\Omega_S|\sigma_S|\Omega_S\rangle\bigr).
+ \tag{117.8}
+$$
+
+This proves the first line of (117.4), including the entire output leakage. An untagged input cannot replace (117.6) in this argument: wrong-output records from different input fibres could then enter the overlap.
+
+Each correct-output record block is a contraction. Its environment-frame operator is at most the identity. Summing the $`m`$ blocks, and using equality of the nonzero Gram and frame spectra, proves
+
+$$
+ 0\le G_S,H_S\le mI,\qquad
+ \operatorname{Tr}G_S,\operatorname{Tr}H_S\le2m.
+ \tag{117.9}
+$$
+
+The PSD Schur-product order $`(\lambda_1(G_S)I-G_S)\odot H_S\ge0`$ implies $`\boldsymbol1^*K_S\boldsymbol1\le\lambda_1(G_S)\operatorname{Tr}H_S`$, proving the second line of (117.4).
+
+For the stronger top-two bound, diagonalize $`G_S`$, with eigenvalues $`\lambda_i`$, and let $`h_i`$ be the diagonal entries of $`\overline{H_S}`$ in that eigenbasis. Equation (117.9) gives $`0\le h_i\le m`$ and $`\sum_i h_i\le2m`$. Thus
+
+$$
+ \begin{aligned}
+ \boldsymbol1^*K_S\boldsymbol1
+  &=\operatorname{Tr}(G_S\overline{H_S})
+    =\sum_i\lambda_i h_i\\
+  &\le\lambda_1h_1+\lambda_2\sum_{i\ge2}h_i
+   \le2m\lambda_2+(\lambda_1-\lambda_2)h_1
+   \le m(\lambda_1+\lambda_2).
+ \end{aligned}
+ \tag{117.10}
+$$
+
+The trace identity uses Hermiticity: $`\operatorname{Tr}(G_S\overline{H_S})=\sum_{i,j}(G_S)_{ij}(H_S)_{ij}`$. These inequalities include zero eigenvalues and all multiplicities. Substitution in (117.8), and exchange of $`G,H`$, proves the theorem. Trace-norm duality and PSD spectral order are standard; the channel-norm conventions are as in [Watrous, Chapters 1--3](https://cs.uwaterloo.ca/~watrous/TQI/). The different transversal input in [RT II §83](ARITHMETIC_HOLOGRAPHIC_RT_II.md#83-transversal-frame-certificates-and-bilateral-stability-at-quarter-error) uses the same full-output witness principle but does not have this pure coherent target. $`\square`$
+
+For a calibrated party, the two-fibre matrix is $`\bigl[\begin{smallmatrix}I_2&G_{fg}\\G_{gf}&I_2\end{smallmatrix}\bigr]`$, whose top-two eigenvalue sum is $`2+\|G_{fg}\|_1`$ by singular-value decomposition. Thus subquarter error requires $`\|G_{fg}\|_1>3/2`$ for every pair of fibres on each calibrated side.
+
+### 117.2. Exact rigidity at the spectral quarter boundary
+
+**Theorem 117.2 (spectral boundary classification).** Suppose the original product satisfies $`\delta=1/4`$. Then the following conditions are equivalent:
+
+1. At least one party has minimal Kraus rank two.
+2. At least one actual correct-output Gram has top-two eigenvalue sum seven.
+3. At least one actual correct-output Gram has largest eigenvalue $`7/2`$.
+
+These pairs are exactly the classified marker family of [RT II §82](ARITHMETIC_HOLOGRAPHIC_RT_II.md#82-quarter-error-rigidity-minimal-kraus-product-and-the-complete-rank-two-party-family), including its permitted disphenoids. Both channels are calibrated, and their ranks are $`(4,2)`$ or $`(2,4)`$.
+
+**Proof.** Suppose $`\kappa_2(G)=7`$. Equality holds throughout the relevant bounds (117.8)--(117.10), so $`\operatorname{Tr}(G\bar H)=28`$. Also
+
+$$
+ \lambda_1(G)\le4,\qquad
+ \lambda_2(G)\ge3,\qquad
+ \lambda_3(G)\le1.
+ \tag{117.11}
+$$
+
+The top-two eigenspace is uniquely defined. In the eigenbasis used in (117.10), the exact deficit identity is
+
+$$
+ \begin{split}
+ 4(\lambda_1+\lambda_2)-\sum_i\lambda_i h_i
+  ={}&\lambda_2\left(8-\sum_i h_i\right)
+       +(\lambda_1-\lambda_2)(4-h_1)\\
+    &+\sum_{i\ge3}(\lambda_2-\lambda_i)h_i.
+ \end{split}
+ \tag{117.12}
+$$
+
+All terms are nonnegative, and the left side is zero. Equation (117.11) makes $`\lambda_2>0`$ and every $`\lambda_2-\lambda_i>0`$ for $`i\ge3`$. Hence $`\operatorname{Tr}H=8`$ and all $`h_i=0`$ for $`i\ge3`$. Since $`h_1,h_2\le4`$, both equal four. Positivity of $`\bar H`$ eliminates the rows outside the top-two space, and positivity of $`4I-\bar H`$ eliminates off-diagonal entries in the two remaining rows. If $`\Pi`$ denotes the top-two spectral projection of $`G`$, this proves
+
+$$
+ \bar H=4\Pi.
+ \tag{117.13}
+$$
+
+The positive defects $`I_2-H_{ff}`$ have total trace zero, so every $`H_{ff}=I_2`$. Each original basis input has correct-output record of norm one; all its wrong-output Stinespring components vanish. Thus the actual $`B`$ is calibrated. Only now may its minimal Kraus rank be identified with $`\operatorname{rank}H=2`$. The original-channel theorem of RT II §82 applies without a rank or leakage assumption on $`A`$, and proves its calibration, rank four and the complete family. Exchanging the parties covers the other case of condition 2.
+
+After the environment isometries and simultaneous within-fibre bit swaps of that classification, the family has
+
+$$
+ a_{fi}=\overline{b_{fi}}\otimes m_i,\qquad
+ m_i=\sqrt{\tfrac78}\,e_0+(-1)^i\sqrt{\tfrac18}\,e_1.
+ \tag{117.14}
+$$
+
+Each pair $`(b_{f0},b_{f1})`$ is an orthonormal qubit basis. Its four Bloch axes are balanced and have the Gram of
+
+$$
+ \begin{gathered}
+ (x,y,z),\ (x,-y,-z),\ (-x,y,-z),\ (-x,-y,z),\\
+ x^2+y^2+z^2=1,\quad x^2,y^2,z^2\ge\tfrac27.
+ \end{gathered}
+ \tag{117.15}
+$$
+
+The full arbitrary-reference norm of this family is exactly $`1/4`$ by RT II §82.11. Balance implies $`\sum_f|b_{fi}\rangle\langle b_{fi}|=2I_2`$ for each $`i`$. The environment-frame operators are consequently
+
+$$
+ \sum_{f,i}|b_{fi}\rangle\langle b_{fi}|=4I_2,\qquad
+ \sum_{f,i}|a_{fi}\rangle\langle a_{fi}|
+     =I_2\otimes\operatorname{diag}(\tfrac72,\tfrac12).
+ \tag{117.16}
+$$
+
+Their nonzero eigenvalues are the nonzero Gram eigenvalues. Thus every classified pair has, in one party ordering,
+
+$$
+ \operatorname{spec}G=(\tfrac72,\tfrac72,\tfrac12,\tfrac12,0,0,0,0),
+ \qquad
+ \operatorname{spec}H=(4,4,0,0,0,0,0,0).
+ \tag{117.17}
+$$
+
+This proves that condition 1 implies both 2 and 3, and proves sharpness at quarter error. Finally condition 3 implies $`\kappa_2\le7`$, whereas (117.5) at $`\delta=1/4`$ gives $`\kappa_2\ge7`$. Hence condition 3 implies 2. $`\square`$
+
+### 117.3. Dominant two-dimensional record spaces
+
+**Proposition 117.3 (full-record concentration and a calibrated polar chart).** If $`\delta<1/4`$, each party's actual correct-output record-frame operator has a unique top-two environment subspace $`E`$. For the first party, write its correct-output record blocks as $`A_f`$, and let $`\Pi_E`$ project onto $`E`$. Then
+
+$$
+ \lambda_2(G)>3,\qquad \lambda_3(G)<1,\qquad
+ d_A:=\sum_f\bigl(2-\operatorname{Tr}(A_f^*\Pi_E A_f)\bigr)
+       =8-\kappa_2(G)\le4\delta<1,
+ \tag{117.18}
+$$
+
+and
+
+$$
+ A_f^*\Pi_E A_f\ge(1-d_A)I_2>0
+ \quad\hbox{for every original fibre }f.
+ \tag{117.19}
+$$
+
+Here $`d_A`$ is the total squared norm of all original wrong-output records together with that of correct-output records perpendicular to $`E`$. The same statements hold for $`B`$.
+
+If the party is calibrated, in environment coordinates $`E\oplus E^\perp`$ its exact record blocks can be written
+
+$$
+ \begin{aligned}
+ A_f&=\begin{bmatrix}C_f\\R_f\end{bmatrix},&
+ C_f&=U_f\sqrt{I_2-R_f^*R_f},\qquad U_f\in U(2),\\
+ \sum_f\|R_f\|_F^2&=d_A<1,&
+ \sum_f C_fR_f^*&=0.
+ \end{aligned}
+ \tag{117.20}
+$$
+
+This representation retains the full extra environment and the same original channel.
+
+**Proof.** Theorem 117.1 gives $`\kappa_2(G)\ge8-4\delta>7`$. Together with $`\lambda_1(G)\le4`$ and $`\operatorname{Tr}G\le8`$, this gives the first two inequalities in (117.18), and hence a strict top-two frame gap. Tracing that frame operator on $`E`$ proves the formula for $`d_A`$. The full Stinespring isometry has total squared norm eight on the eight input basis states. Splitting this sum into the three indicated record parts proves the physical interpretation of $`d_A`$.
+
+Each defect $`I_2-A_f^*\Pi_E A_f`$ is PSD and has trace at most $`d_A`$. Its largest eigenvalue is at most its trace, proving (117.19). Under calibration, $`C_f^*C_f+R_f^*R_f=I_2`$, and (117.19) makes $`C_f`$ invertible. Its right polar decomposition gives $`U_f`$. The last equation of (117.20) expresses the fact that the spectral subspace $`E`$ reduces the environment-frame operator. No projection followed by renormalization of the physical channel has been performed. $`\square`$
+
+### 117.4. A uniform but nonnumerical separation
+
+**Theorem 117.4 (uniform spectral separation).** There exists $`\varepsilon>0`$, depending only on the fixed target and the fixed finite channel spaces, such that every original product with $`\delta<1/4`$ satisfies
+
+$$
+ \kappa_2(G),\kappa_2(H)\ge7+\varepsilon,\qquad
+ \lambda_1(G),\lambda_1(H)\ge\tfrac72+\tfrac\varepsilon2.
+ \tag{117.21}
+$$
+
+Thus the dominant-plane projections of Proposition 117.3 have uniform bounds $`d_A,d_B\le1-\varepsilon`$ and $`A_f^*\Pi_EA_f\ge\varepsilon I_2`$, and similarly for $`B`$. No value of $`\varepsilon`$ is specified; the assertion is vacuous if no subquarter product exists.
+
+**Proof.** The original CPTP space is compact in its Choi representation: $`J\ge0`$, $`\operatorname{Tr}_{\rm out}J=I_8`$, and $`\operatorname{Tr}J=8`$. The product of the two fixed channel spaces is compact. With $`J_A=\sum_{i,j}|i\rangle\langle j|\otimes A(|i\rangle\langle j|)`$ and the fixed isometry $`Q|i\rangle=|i\rangle\otimes|f(i)\rangle`$,
+
+$$
+ G(A)=\overline{Q^*J_AQ}.
+ \tag{117.22}
+$$
+
+This proves representation-independent continuity of the actual Gram, including at Kraus-rank changes. Ordered eigenvalues and their top-two sum are continuous. The original error is also continuous, since
+
+$$
+ |\delta(A,B)-\delta(A',B')|
+    \le\|A-A'\|_\diamond+\|B-B'\|_\diamond.
+ \tag{117.23}
+$$
+
+This follows from the tensor-product triangle inequality and the diamond norm one of channels and encoding channels.
+
+If the first pair of inequalities in (117.21) failed, choose subquarter pairs with the smaller top-two sum tending to seven. Compactness gives a convergent subsequence. At its limit, one actual Gram has top-two sum seven, and continuity gives $`\delta\le1/4`$. Theorem 117.1 forces $`\delta\ge1/4`$, so equality holds. Theorem 117.2 identifies the limit as an actual section-82 marker center.
+
+[RT III §89](ARITHMETIC_HOLOGRAPHIC_RT_III.md#89-an-unrestricted-local-quarter-minimum-from-analytic-descent-at-the-scalar-cone) provides a neighborhood of every such center in the full original channel space on which $`\delta\ge1/4`$. Its statement includes arbitrary ranks and leakage, exchanged parties and all boundary disphenoids. Its original-channel topology is justified there by continuous canonical Choi-square-root lifts, not by a fixed-rank or calibrated restriction. The convergent subsequence eventually lies in that neighborhood, contradicting its strict subquarter errors. This proves the first pair in (117.21). The largest-eigenvalue bounds follow from $`\kappa_2\le2\lambda_1`$, and the remaining bounds follow from Proposition 117.3. $`\square`$
+
+The limit proof does not assume that the strict subquarter set is closed. The quantitative inequalities, the exact quarter-boundary classification and the nonconstructive positive separation have distinct content. None removes all possible genuinely complex or lower-rank competitors. The unrestricted global quarter-optimum problem remains open.
+
+## 追加锚（本行以下为增补区）
