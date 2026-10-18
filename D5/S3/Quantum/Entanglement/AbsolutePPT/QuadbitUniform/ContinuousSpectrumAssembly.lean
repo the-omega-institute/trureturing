@@ -60,10 +60,20 @@ private theorem threshold_formula (n w : ℝ) (hn : 56 ≤ n) :
   have hden : 4*commonEnvelope n = (64*(15*n-8))/(15*n-4)^2 := by
     unfold commonEnvelope
     ring
+  have h64 : (64 : ℝ) ≠ 0 := by norm_num
+  have h4 : (4 : ℝ) ≠ 0 := by norm_num
+  have h64den : 64*(15*n-8) ≠ 0 := mul_ne_zero h64 h0
+  have h4den : 4*(15*n-8) ≠ 0 := mul_ne_zero h4 h0
+  have hscale64 (a : ℝ) : a/64*(64*(15*n-8)) = a*(15*n-8) := by
+    rw [← mul_assoc, div_mul_cancel₀ _ h64]
+  have hscale4 (a : ℝ) : a/(4*(15*n-8))*(64*(15*n-8)) = 16*a := by
+    rw [show 64*(15*n-8) = (4*(15*n-8))*16 by ring,
+      ← mul_assoc, div_mul_cancel₀ _ h4den, mul_comm]
   unfold threshold
   rw [hden, div_div_eq_mul_div]
-  field_simp [h0]
-  <;> ring
+  apply mul_right_cancel₀ h64den
+  rw [sub_mul, div_mul_cancel₀ _ h64den, sub_mul, hscale64, hscale4]
+  ring
 
 private theorem threshold_mono (n w : ℝ) (hn : 56 ≤ n)
     (hw : 1/4 ≤ w) (hw1 : w ≤ 1/2) : threshold 56 w ≤ threshold n w := by
@@ -175,7 +185,8 @@ private theorem synth_value (N j : ℕ) (x : Fin 16 → ℝ) (k : Fin N) :
 
 private theorem synth_head_value (N j : ℕ) (hN : 56 ≤ N)
     (hj : 6 ≤ j) (hj' : j ≤ N-10) (x : Fin 16 → ℝ) (i : Fin 5) :
-    synth (positions N j) x ⟨i.val, by omega⟩ = low x+x 5+head x i := by
+    synth (d := N) (positions N j) x (⟨i.val, by omega⟩ : Fin N) =
+      low x+x 5+head x i := by
   have hi := i.isLt
   have hm : i.val < j := by omega
   have ht (r : ℕ) (hr : r ≤ 9) : i.val < N-r := by omega
@@ -190,7 +201,8 @@ private theorem synth_head_value (N j : ℕ) (hN : 56 ≤ N)
 
 private theorem synth_tail_value (N j : ℕ) (hN : 56 ≤ N)
     (hj : 6 ≤ j) (hj' : j ≤ N-10) (x : Fin 16 → ℝ) (i : Fin 9) :
-    synth (positions N j) x ⟨N-(9-i.val), by omega⟩ = low x-tail x i := by
+    synth (d := N) (positions N j) x (⟨N-(9-i.val), by omega⟩ : Fin N) =
+      low x-tail x i := by
   have hi := i.isLt
   have hm : ¬ N-(9-i.val) < j := by omega
   have hh (r : ℕ) (hr : r ≤ 5) : ¬ N-(9-i.val) < r := by omega
@@ -209,20 +221,38 @@ private theorem synth_tail_value (N j : ℕ) (hN : 56 ≤ N)
 private theorem spectrumK_synth (N j : ℕ) (hN : 56 ≤ N)
     (hj : 6 ≤ j) (hj' : j ≤ N-10) (x : Fin 16 → ℝ) :
     spectrumK N hN (synth (positions N j) x) = defectK (low x) (x 5) (head x) (tail x) := by
-  have hh0 := synth_head_value N j hN hj hj' x (0 : Fin 5)
-  have hh1 := synth_head_value N j hN hj hj' x (1 : Fin 5)
-  have hh2 := synth_head_value N j hN hj hj' x (2 : Fin 5)
-  have ht8 := synth_tail_value N j hN hj hj' x (8 : Fin 9)
-  have ht7 := synth_tail_value N j hN hj hj' x (7 : Fin 9)
-  have ht6 := synth_tail_value N j hN hj hj' x (6 : Fin 9)
-  have ht5 := synth_tail_value N j hN hj hj' x (5 : Fin 9)
-  have ht4 := synth_tail_value N j hN hj hj' x (4 : Fin 9)
-  have ht3 := synth_tail_value N j hN hj hj' x (3 : Fin 9)
-  simp only [spectrumK, LinearMap.coe_mk, AddHom.coe_mk,
-    hh0, hh1, hh2, ht8, ht7, ht6, ht5, ht4, ht3]
+  have hh0 : synth (d := N) (positions N j) x ⟨0, by omega⟩ =
+      low x+x 5+head x 0 :=
+    synth_head_value N j hN hj hj' x (0 : Fin 5)
+  have hh1 : synth (d := N) (positions N j) x ⟨1, by omega⟩ =
+      low x+x 5+head x 1 :=
+    synth_head_value N j hN hj hj' x (1 : Fin 5)
+  have hh2 : synth (d := N) (positions N j) x ⟨2, by omega⟩ =
+      low x+x 5+head x 2 :=
+    synth_head_value N j hN hj hj' x (2 : Fin 5)
+  have ht8 : synth (d := N) (positions N j) x ⟨N-1, by omega⟩ =
+      low x-tail x 8 :=
+    synth_tail_value N j hN hj hj' x (8 : Fin 9)
+  have ht7 : synth (d := N) (positions N j) x ⟨N-2, by omega⟩ =
+      low x-tail x 7 :=
+    synth_tail_value N j hN hj hj' x (7 : Fin 9)
+  have ht6 : synth (d := N) (positions N j) x ⟨N-3, by omega⟩ =
+      low x-tail x 6 :=
+    synth_tail_value N j hN hj hj' x (6 : Fin 9)
+  have ht5 : synth (d := N) (positions N j) x ⟨N-4, by omega⟩ =
+      low x-tail x 5 :=
+    synth_tail_value N j hN hj hj' x (5 : Fin 9)
+  have ht4 : synth (d := N) (positions N j) x ⟨N-5, by omega⟩ =
+      low x-tail x 4 :=
+    synth_tail_value N j hN hj hj' x (4 : Fin 9)
+  have ht3 : synth (d := N) (positions N j) x ⟨N-6, by omega⟩ =
+      low x-tail x 3 :=
+    synth_tail_value N j hN hj hj' x (3 : Fin 9)
   ext a b
   fin_cases a <;> fin_cases b <;>
-    simp only [defectK, Matrix.cons_val, Fin.reduceFinMk, Fin.reduceSucc] <;> ring
+    simp only [spectrumK, LinearMap.coe_mk, AddHom.coe_mk, defectK,
+      Matrix.of_apply, Matrix.cons_val, Fin.reduceFinMk, Fin.reduceSucc] <;>
+    simp only [hh0, hh1, hh2, ht8, ht7, ht6, ht5, ht4, ht3] <;> ring
 
 private theorem normalized_small_good (N j : ℕ) (hN : 56 ≤ N)
     (hj : 6 ≤ j) (hj' : j ≤ N-10) (x : Fin 16 → ℝ)
@@ -323,7 +353,7 @@ private theorem half_jump_good (N j : ℕ) (hN : 56 ≤ N) (hj : 6 ≤ j) (hj' :
     change (2*u+x 5)*S-u*(u+x 5)*(N:ℝ)+E (x 5) (head x) (tail x) ≤ _
     calc
       (2*u+x 5)*S-u*(u+x 5)*(N:ℝ)+E (x 5) (head x) (tail x) ≤
-          (2*u+x 5)*S-u*(u+x 5)*(N:ℝ)+(3/2)*u^2 := add_le_add_left he' _
+          (2*u+x 5)*S-u*(u+x 5)*(N:ℝ)+(3/2)*u^2 := add_le_add le_rfl he'
       _ = (5/2)*u*S-(3/2)*u^2*((N:ℝ)-1) := by rw [hv']; ring
       _ ≤ commonEnvelope (N:ℝ)*S^2 := hb
   have hmono := mul_le_mul_of_nonneg_right (common_target_56 N hN) (sq_nonneg S)
