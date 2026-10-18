@@ -12,14 +12,17 @@ internal sealed class HircheCachinCombiningConcavityDocument : IScribeDocumentDe
         LibraryNoteRef.Create("D5/L/Entropy/hirche2020renyibounds");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Binary Renyi information combining is concave in each entropy coordinate at every real order at least two.",
-        H("Hirche's Binary Renyi Combining Concavity for Orders at Least Two"),
+        "Hirche Conjecture IV.18 holds with threshold five quarters, including the Shannon order and all entropy endpoints.",
+        H("Hirche's Binary Renyi Information Combining Conjecture"),
         Blocks(
-            Paragraph(Text("The source assertion is the alpha-at-least-two concavity clause of C. Hirche, "
+            Paragraph(Text("The source assertion is the whole of Conjecture IV.18 of C. Hirche, "
                 + "Renyi Bounds on Information Combining, ISIT 2020, arXiv:2004.14408v1, Conjecture IV.18. "
                 + "The logarithm is natural, so the entropy interval is [0,log 2]. "
                 + "The parameter alpha is real; it is not restricted to integers. The formal claim fixes any second entropy coordinate "
-                + "in the entire closed interval and proves concavity in the first coordinate.")),
+                + "in the entire closed interval and proves convexity for 0 < alpha < 5/4 and concavity for alpha >= 2. "
+                + "The threshold witness is alphaHat = 5/4.")),
+            Paragraph(Text("Conjecture IV.18 states: There exists a value 1 < α̂ < 1.3863, such that "
+                + "hα(hα⁻¹(x) ∗ hα⁻¹(y)) is convex for 0 < α < α̂ and concave for α ≥ 2.")),
             Node("h", "Binary Renyi entropy", AllReal("alpha", AllReal("p",
                 Equal(Call("h", N("alpha"), N("p")), Call("ite", Equal(N("alpha"), D(1)),
                     Call("binEntropy", N("p")), new Formula.Fraction(
@@ -46,10 +49,11 @@ internal sealed class HircheCachinCombiningConcavityDocument : IScribeDocumentDe
                     Call("star", Call("hInv", N("alpha"), N("x")),
                         Call("hInv", N("alpha"), N("y")))))))), DescribeRole.Definition,
                 "G evaluates the binary entropy after convolving the two specified inverse-branch probabilities."),
-            Node("claim", "The alpha-at-least-two concavity clause", Equal(N("claim"), ClaimBody()),
+            Node("claim", "The complete threshold conjecture", Equal(N("claim"), ClaimBody()),
                 DescribeRole.Definition,
-                "The quantifiers range over every real alpha >= 2 and every y in the closed entropy interval. "
-                + "ConcaveOn is Mathlib's full two-point concavity inequality on the closed convex set, including both x endpoints."),
+                "The existential threshold is strictly between one and 13863/10000. The convex clause quantifies over "
+                + "all positive real orders below it, and the concave clause over all real orders at least two. "
+                + "Both clauses use Mathlib's full two-point inequality on the closed entropy interval, including both endpoints."),
             Node("convexOn_G_of_le_one", "Convexity through the Shannon order",
                 AllReal("alpha", Imp(Rel(D(0), FormulaRelationOperator.LessThan, N("alpha")),
                     Imp(Rel(N("alpha"), FormulaRelationOperator.LessThanOrEqual, D(1)), AllReal("y",
@@ -62,12 +66,13 @@ internal sealed class HircheCachinCombiningConcavityDocument : IScribeDocumentDe
                 + "and uses -psi'(t)=artanh(t). In both cases the slope ratio decreases with t, so its composition with "
                 + "the decreasing inverse bias is monotone in the entropy coordinate. Continuity and the constant/identity "
                 + "boundary cases give ConvexOn on the full closed interval."),
-            Node("result", "Concavity for every real alpha at least two", ClaimBody(), DescribeRole.Theorem,
-                "For every real alpha >= 2 and y in [0,log 2], the function x maps to G(alpha,x,y) is concave on [0,log 2]. "
+            Node("result", "Hirche Conjecture IV.18 with threshold five quarters", ClaimBody(), DescribeRole.Theorem,
+                "The witness 5/4 lies strictly between 1 and 1.3863. For every y in [0,log 2], x maps to G(alpha,x,y) "
+                + "is convex for every 0 < alpha < 5/4 and concave for every alpha >= 2. "
                 + "Symmetry of binary convolution also gives the corresponding second-coordinate statement as a mathematical consequence; "
                 + "the Lean result has exactly the displayed first-coordinate claim.",
                 new OpenProblemResolutionClaim(
-                    ProblemSlugRef.Create("hirche-2020-cachin-renyi-concavity-alpha-ge-two"), ResolutionKind.Proved)),
+                    ProblemSlugRef.Create("hirche-2020-cachin-renyi-information-combining-convexity"), ResolutionKind.Proved)),
             Paragraph(Text("Set psi(t)=h(alpha,(1-t)/2) and f(t)=-psi'(t) for 0<t<1. "
                 + "The function f is positive, and psi decreases continuously from log 2 to zero on [0,1]. "
                 + "The inverse bias is t(x)=1-2hInv(alpha,x), so psi(t(x))=x. "
@@ -83,7 +88,13 @@ internal sealed class HircheCachinCombiningConcavityDocument : IScribeDocumentDe
                 + "Only interior inverse derivatives are used.")),
             Paragraph(Text("At v=0 the transported function is constant, and at v=1 it is the identity. "
                 + "These two cases include the endpoint values of y. The proof therefore covers both closed-coordinate boundaries "
-                + "without endpoint inverse derivatives. The assertion does not include the other order ranges in Conjecture IV.18.")))));
+                + "without endpoint inverse derivatives. For 0 < alpha < 1 the negative-n certificate gives the opposite "
+                + "elasticity sign. At alpha = 1 the binary Shannon entropy derivative is minus artanh(t), with strictly "
+                + "increasing elasticity t/((1-t^2)artanh(t)). For 1 < alpha <= 5/4, put n=alpha-1 and "
+                + "C(z)=n sqrt(z) coth(n artanh(sqrt(z))), D(z)=C(z)+nz. The desingularized even analytic quotient "
+                + "supplies the initial first and second derivative signs. The Riccati identity and its differentiated "
+                + "equation preclude a first zero of C'', and imply D'<0. Thus "
+                + "1-2zD'/D is strictly increasing. This reverses the slope-ratio sign and yields closed-interval convexity.")))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, DescribeRole role, string prose,
         OpenProblemResolutionClaim? resolution = null) =>
@@ -104,9 +115,23 @@ internal sealed class HircheCachinCombiningConcavityDocument : IScribeDocumentDe
     private static Formula Pow(Formula value, Formula exponent) => new Formula.Power(Par(value), exponent);
     private static Formula Interval(string name, Formula left, Formula right) => Call(name, left, right);
     private static Formula EntropyInterval() => Interval("Icc", D(0), Call("log", D(2)));
-    private static Formula ClaimBody() => AllReal("alpha",
+    private static Formula ConcaveBody() => AllReal("alpha",
         Imp(Rel(D(2), FormulaRelationOperator.LessThanOrEqual, N("alpha")), AllReal("y",
             Imp(Rel(N("y"), FormulaRelationOperator.MemberOf, EntropyInterval()),
                 Call("ConcaveOn", RealType(), EntropyInterval(),
                     Par(Seq(N("x"), Sp, Mapsto, Sp, Call("G", N("alpha"), N("x"), N("y")))))))));
+    private static Formula And(Formula left, Formula right) =>
+        new Formula.Logic(left, FormulaLogicOperator.And, right);
+    private static Formula ConvexBody() => AllReal("alpha",
+        Imp(Rel(D(0), FormulaRelationOperator.LessThan, N("alpha")),
+            Imp(Rel(N("alpha"), FormulaRelationOperator.LessThan, N("alphaHat")), AllReal("y",
+                Imp(Rel(N("y"), FormulaRelationOperator.MemberOf, EntropyInterval()),
+                    Call("ConvexOn", RealType(), EntropyInterval(),
+                        Par(Seq(N("x"), Sp, Mapsto, Sp, Call("G", N("alpha"), N("x"), N("y"))))))))));
+    private static Formula ClaimBody() => Seq(Exists, Sp,
+        Par(Seq(N("alphaHat"), Colon, Sp, RealType())), Comma, Sp,
+        And(Rel(D(1), FormulaRelationOperator.LessThan, N("alphaHat")),
+            And(Rel(N("alphaHat"), FormulaRelationOperator.LessThan,
+                new Formula.Fraction(D(1,3,8,6,3), D(1,0,0,0,0))), And(ConvexBody(), ConcaveBody()))));
+
 }

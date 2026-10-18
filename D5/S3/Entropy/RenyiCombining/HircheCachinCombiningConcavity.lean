@@ -4,11 +4,12 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Binary Renyi information combining is concave at every real order at least two. -/
+   digest: Hirche binary Renyi combining conjecture with threshold five quarters. -/
 
 import D5.S3.Entropy.RenyiCombining.CachinElasticityMonotone
 import D5.S3.Entropy.RenyiCombining.CachinShannonBranch
 import D5.S3.Entropy.RenyiCombining.CachinNegativeBranch
+import D5.S3.Entropy.RenyiCombining.CachinConvexCertificate
 import Mathlib.Analysis.SpecialFunctions.BinaryEntropy
 import Mathlib.Analysis.SpecialFunctions.Artanh
 import Mathlib.Analysis.SpecialFunctions.Pow.Deriv
@@ -18,7 +19,7 @@ import Mathlib.Analysis.Calculus.Deriv.Inverse
 import Mathlib.Topology.Order.IntermediateValue
 import Mathlib.Topology.Homeomorph.Lemmas
 
-/-! Concavity of binary Renyi information combining at real orders at least two. -/
+/-! Separate convexity below five quarters and concavity at real orders at least two. -/
 
 noncomputable section
 
@@ -37,8 +38,11 @@ def star (a b : ℝ) : ℝ := a + b - 2 * a * b
 
 noncomputable def G (α x y : ℝ) : ℝ := h α (star (hInv α x) (hInv α y))
 
-def claim : Prop := ∀ α : ℝ, 2 ≤ α → ∀ y ∈ Icc 0 (Real.log 2),
-  ConcaveOn ℝ (Icc 0 (Real.log 2)) (fun x => G α x y)
+def claim : Prop := ∃ αhat : ℝ, 1 < αhat ∧ αhat < (13863 : ℝ) / 10000 ∧
+  (∀ α : ℝ, 0 < α → α < αhat → ∀ y ∈ Icc 0 (Real.log 2),
+    ConvexOn ℝ (Icc 0 (Real.log 2)) (fun x => G α x y)) ∧
+  (∀ α : ℝ, 2 ≤ α → ∀ y ∈ Icc 0 (Real.log 2),
+    ConcaveOn ℝ (Icc 0 (Real.log 2)) (fun x => G α x y))
 
 private def psi (α t : ℝ) : ℝ := h α ((1 - t) / 2)
 private def inverseBias (α x : ℝ) : ℝ := 1 - 2 * hInv α x
@@ -496,9 +500,23 @@ lemma convexOn_G_of_le_one {α : ℝ} (hα : 0 < α) (ha : α ≤ 1)
   simpa only [bias_combining] using
     transported_convexOn hα (inverseBias_spec hα hy).1 hR
 
-theorem result : claim := by
-  intro α hα y hy
+private lemma convexOn_G {α : ℝ} (hα : 0 < α) (ha : α ≤ 5 / 4)
+    {y : ℝ} (hy : y ∈ Icc 0 (Real.log 2)) :
+    ConvexOn ℝ (Icc 0 (Real.log 2)) (fun x => G α x y) := by
+  by_cases hle : α ≤ 1
+  · exact convexOn_G_of_le_one hα hle hy
+  have hF := CachinConvexCertificate.antitoneOn_F (α - 1)
+    (by linarith : 0 < α - 1) (by linarith : α - 1 ≤ 1 / 4)
   simpa only [bias_combining] using
-    transported_concaveOn hα (inverseBias_spec (by linarith : 0 < α) hy).1
+    transported_convexOn hα (inverseBias_spec hα hy).1
+      (fun v hv => slope_ratio_antitone hα (by linarith) hF hv)
+
+theorem result : claim := by
+  refine ⟨5 / 4, by norm_num, by norm_num, ?_, ?_⟩
+  · intro α hα ha y hy
+    exact convexOn_G hα ha.le hy
+  · intro α hα y hy
+    simpa only [bias_combining] using
+      transported_concaveOn hα (inverseBias_spec (by linarith : 0 < α) hy).1
 
 end D5.S3.Entropy.RenyiCombining.HircheCachinCombiningConcavity
