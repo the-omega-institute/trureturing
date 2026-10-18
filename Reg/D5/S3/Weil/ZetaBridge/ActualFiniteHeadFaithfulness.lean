@@ -165,4 +165,163 @@ noncomputable def registration_1 : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0
   familyRecord := none
   options := #[] }
 
+/-!
+Quantitative registration attempt, source only. The original registration_1
+above is unchanged; its pinned acceptance record is declared_validated.
+Nothing in that record accepts this new registration_2.
+
+The selected function is the actual norm at the first positive-column branch
+under Summable in actual_finite_head_polynomial_tail_lower. Its input is the
+original complex column value and its output is real. The square remains a
+separate original operation. There is no invented composite norm-square
+operand. Only this occurrence is replaced in Law; the negative-branch norm
+and both norms in the actual tsum bound retain their original meanings.
+
+The four family slots are bridge, variation, sensitivity and dependence.
+The actual Law consumes the full new theorem, including its existential
+constants and eventual cutoff. Constant-one rejection uses the full telescope
+at c=2, S={0}, v=1. At the claimed eventual cutoff, every rejected summand
+is 1 plus a nonnegative squared norm. Its finite sums exceed its purported
+tsum by Archimedean choice, contradicting summability. This does not rely on
+replacing the existential conclusion by a pointwise or fixed-cutoff law.
+
+Source selection is a proposal, not a compiled-source binding. Five initial
+forall bodies are followed by the k/C/N0 existential predicates, N and its
+cutoff proof, the left conjunct, the function argument of Summable (before
+its explicit default summation filter), the j lambda, the positive addend,
+the base of its square, and the norm function before its complex argument.
+No original telescope coordinate is used by this norm function: coordinates
+is empty, the proposed packed parameter is Unit, and the fresh state is ℂ.
+functionOperand=true and stateBinder=0 follow the already enrolled template's
+function-operand mode. The source selector must check the raw Expr path,
+empty packing, implicit norm instance, universes and fresh-state transport.
+The compiler, axiom closure, four-slot proofs, descriptor equality, source
+binding, enrollment, Scribe and required CI are all caller-owned and pending.
+-/
+
+open scoped BigOperators
+
+abbrev quantitativeNormSignature : Signature.{0, 0, 0, 0, 0} where
+  Params := Unit
+  State _ := ℂ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def quantitativeNormActual : Realization quantitativeNormSignature :=
+  realize quantitativeNormSignature (fun _ _ z => ‖z‖) (fun e => nomatch e)
+
+def quantitativeNormRejected : Realization quantitativeNormSignature :=
+  realize quantitativeNormSignature (fun _ _ _ => (1 : ℝ)) (fun e => nomatch e)
+
+private theorem quantitativeNormDependence :
+    ObservationalDependence quantitativeNormSignature quantitativeNormActual := by
+  intro i
+  refine ⟨(), (0 : ℂ), (1 : ℂ), ?_⟩
+  norm_num [quantitativeNormActual, realize]
+
+def actual_finite_head_polynomial_tail_lower_arena : Arena where
+  signature := quantitativeNormSignature
+  Law r := ∀ {c : ℕ} (hc : 2 ≤ c)
+    (S : Finset ℤ) (v : ℤ → ℂ) (hnonzero : ∃ n ∈ S, v n ≠ 0),
+    ∃ k : ℕ, k < S.card ∧ ∃ C : ℝ, 0 < C ∧ ∃ N0 : ℕ,
+      ∀ N : ℕ, N0 ≤ N →
+        Summable (fun j : ℕ =>
+          (r.readout () () (couplingColumn c S v ((N + j + 1 : ℕ) : ℤ))) ^ 2 +
+            ‖couplingColumn c S v (-((N + j + 1 : ℕ) : ℤ))‖ ^ 2) ∧
+        C / ((N : ℝ) + 1) ^ (2 * k + 1) ≤
+          ∑' j : ℕ, (‖couplingColumn c S v ((N + j + 1 : ℕ) : ℤ)‖ ^ 2 +
+            ‖couplingColumn c S v (-((N + j + 1 : ℕ) : ℤ))‖ ^ 2)
+
+private theorem actual_finite_head_polynomial_tail_lower_actual_law :
+    actual_finite_head_polynomial_tail_lower_arena.Law quantitativeNormActual := by
+  exact @_root_.D5.S3.Weil.ZetaBridge.ActualFiniteHeadFaithfulness.actual_finite_head_polynomial_tail_lower
+
+private theorem actual_finite_head_polynomial_tail_lower_rejected_law :
+    ¬ actual_finite_head_polynomial_tail_lower_arena.Law quantitativeNormRejected := by
+  intro hall
+  have hn : ∃ n ∈ ({0} : Finset ℤ), (fun _ : ℤ => (1 : ℂ)) n ≠ 0 :=
+    ⟨0, by simp, one_ne_zero⟩
+  obtain ⟨k, hk, C, hC, N0, hN⟩ :=
+    hall (c := 2) (by decide) ({0} : Finset ℤ) (fun _ => (1 : ℂ)) hn
+  let f : ℕ → ℝ := fun j => (1 : ℝ) ^ 2 +
+    ‖couplingColumn 2 ({0} : Finset ℤ) (fun _ => (1 : ℂ))
+      (-((N0 + j + 1 : ℕ) : ℤ))‖ ^ 2
+  have hs : Summable f := (hN N0 le_rfl).1
+  have hnonneg (j : ℕ) : 0 ≤ f j := by dsimp [f]; positivity
+  have hone (j : ℕ) : (1 : ℝ) ≤ f j := by
+    dsimp only [f]
+    nlinarith only [sq_nonneg
+      ‖couplingColumn 2 ({0} : Finset ℤ) (fun _ => (1 : ℂ))
+        (-((N0 + j + 1 : ℕ) : ℤ))‖]
+  obtain ⟨r, hr⟩ := exists_nat_gt (∑' j : ℕ, f j)
+  have hlower : (r : ℝ) ≤ ∑ j ∈ Finset.range r, f j := by
+    calc
+      (r : ℝ) = ∑ _j ∈ Finset.range r, (1 : ℝ) := by simp
+      _ ≤ _ := Finset.sum_le_sum (fun j _ => hone j)
+  have hupper : (∑ j ∈ Finset.range r, f j) ≤ ∑' j : ℕ, f j :=
+    Summable.sum_le_tsum (Finset.range r) (fun j _ => hnonneg j) hs
+  exact (not_le_of_gt hr) (hlower.trans hupper)
+
+def actual_finite_head_polynomial_tail_lower_family :
+    Registration actual_finite_head_polynomial_tail_lower_arena
+      (type_of% (@_root_.D5.S3.Weil.ZetaBridge.ActualFiniteHeadFaithfulness.actual_finite_head_polynomial_tail_lower)) where
+  actual := quantitativeNormActual
+  bridge := Iff.rfl
+  variation := ⟨actual_finite_head_polynomial_tail_lower_actual_law, quantitativeNormRejected,
+    actual_finite_head_polynomial_tail_lower_rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨quantitativeNormRejected, ?_, rfl,
+        actual_finite_head_polynomial_tail_lower_rejected_law⟩
+      intro j hj
+      cases i
+      cases j
+      exact (hj rfl).elim
+    · intro e
+      exact nomatch e
+  dependence := quantitativeNormDependence
+
+noncomputable def registration_2 : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    (@_root_.D5.S3.Weil.ZetaBridge.ActualFiniteHeadFaithfulness.actual_finite_head_polynomial_tail_lower)
+    (type_of% quantitativeNormActual) Type Unit := {
+  unitName := `Reg.D5.S3.Weil.ZetaBridge.ActualFiniteHeadFaithfulness.actual_finite_head_polynomial_tail_lower.__information_unit
+  realizationName := `Reg.D5.S3.Weil.ZetaBridge.ActualFiniteHeadFaithfulness.actual_finite_head_polynomial_tail_lower_family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨actual_finite_head_polynomial_tail_lower_arena⟩
+  objectArena := .source ⟨actual_finite_head_polynomial_tail_lower_arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source actual_finite_head_polynomial_tail_lower_arena
+    ⟨actual_finite_head_polynomial_tail_lower_family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize quantitativeNormSignature (fun _ _ z => ‖z‖) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Weil.ZetaBridge.ActualFiniteHeadFaithfulness
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body",
+        "arg", "body", "arg", "arg", "body", "arg", "arg", "body",
+        "body", "body", "fn", "arg", "fn", "arg", "body",
+        "fn", "arg", "fn", "arg", "fn"],
+      stateBinder := 0,
+      functionOperand := true,
+      stateOperand := none,
+      booleanPredicate := false
+    }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
 end Reg.D5.S3.Weil.ZetaBridge.ActualFiniteHeadFaithfulness
