@@ -4605,3 +4605,172 @@ The recovery/complement and fixed-input identities are the literature-attested i
 For centers of rank at least three, the total weight outside a leading eigenvector cannot be substituted for the smallest eigenvalue in $b^\dagger\omega b$. The closure (R.287) needs the same two weights with $s+t=1$ and $b^\dagger\omega b\geq t(1-\operatorname{Tr}G)$. Higher-dimensional kernels supply more missing directions but do not alone supply the necessary joint weighted estimate on their third-input components. A sufficient remaining bridge is $\lambda_{\min}\operatorname{Herm}A_{\omega,U}\leq\sqrt{T_\beta}$ for every remaining actual encoder, rank-at-least-three center and contraction in its correctly dimensioned Uhlmann interface. Such a uniform estimate would imply the desired norm lower bound by the pure-target estimate (R.293). No such uniform estimate, actual improving encoder/recovery pair, or strict full-reference unhalved diamond upper certificate below $1-\sqrt{1-\beta}$ is supplied here.
 
 ## 追加锚（本行以下为增补区）
+
+## 56. Shared recovery columns for an actual three-weight family
+
+**Definition 56.1 (family, input and norm conventions).** Retain the original real frames and complex-linear channel convention of Definition 1.1. Let $a=1-\beta$, $0<\beta\leq1/2$, and let $w,u,v\geq0$ satisfy $w+u+v=1$. In a real orthonormal output frame $(b_1,g_1,b_2,g_2,h)$ define
+
+$$
+\begin{aligned}
+K_1&=[\sqrt a\,b_1,\sqrt a\,g_1,\sqrt w\,h],\\
+K_2&=[\sqrt\beta\,b_2,\sqrt\beta\,g_2,\sqrt u\,b_1],\\
+K_3&=[0,0,\sqrt v\,b_2],\qquad
+N(X)=\sum_{\alpha=1}^3K_\alpha X K_\alpha^\dagger.
+\end{aligned}
+\tag{R.298}
+$$
+
+Every recovery $R:M_5(\mathbb C)\to M_3(\mathbb C)$ below is complex CPTP on the whole output. The unhalved norm in $\delta_N=\inf_R\|RN-\mathrm{id}_3\|_\diamond$ takes the supremum over every finite complex reference $\mathbb C^m$ and every complex $X\in M_m\otimes M_3$ with $\|X\|_1=1$. Fix, independently of $R$ and of the weights,
+
+$$
+\rho=\tfrac12(|0\rangle\langle0|+|2\rangle\langle2|),\qquad
+|\Phi\rangle=\frac{|r_0\rangle|0\rangle+|r_1\rangle|2\rangle}{\sqrt2},
+\qquad \Pi_\Phi=|\Phi\rangle\langle\Phi|,
+\tag{R.299}
+$$
+
+where $(r_0,r_1)$ is an orthonormal reference basis. Write $F_e(\rho,RN)=\langle\Phi|(\mathrm{id}_2\otimes RN)(\Pi_\Phi)|\Phi\rangle$ for squared entanglement fidelity.
+
+**Proposition 56.2 (actual realization, spectrum and minimal rank).** The family (R.298) belongs to the actual original-real class of Definition 1.1 at every simplex boundary. Its actual minimal Kraus rank is three if $v>0$, and two if $v=0$. Its phase-output difference has spectrum $(a,\beta,0,-\beta,-a)$.
+
+**Proof.** The columns within each $K_\alpha$ are orthogonal, and their summed squared norms are $(a+\beta,a+\beta,w+u+v)=(1,1,1)$. Thus $\sum_\alpha K_\alpha^\dagger K_\alpha=I_3$. With $\chi_\pm=(|0\rangle\pm i|1\rangle)/\sqrt2$ and $f_j^\pm=(b_j\pm ig_j)/\sqrt2$,
+
+$$
+N(|\chi_\pm\rangle\langle\chi_\pm|)
+=a|f_1^\pm\rangle\langle f_1^\pm|
++\beta|f_2^\pm\rangle\langle f_2^\pm|.
+\tag{R.300}
+$$
+
+These four vectors are orthonormal, including when $a=\beta$, proving the spectrum and the membership conditions of Theorem 1.3. For the complement in this Kraus frame, $\tau=\bar\tau=\operatorname{diag}(a,\beta,0)$, with the zero direction omitted in a minimal list when $v=0$.
+
+In a complex relation $c_1K_1+c_2K_2+c_3K_3=0$, the first column forces $c_1=c_2=0$ because $a,\beta>0$ and $b_1\perp b_2$. If $v>0$, the third column then forces $c_3=0$; if $v=0$, $K_3=0$ and $K_1,K_2$ remain independent. The Choi matrix $\sum_\alpha|\operatorname{vec}K_\alpha\rangle\langle\operatorname{vec}K_\alpha|$ therefore has rank three or two respectively. Its rank equals the minimal Kraus number by the standard finite-dimensional Kraus–Choi characterization [Watrous, *The Theory of Quantum Information*, Theorem 2.22 and Corollary 2.27](https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf). $\square$
+
+**Theorem 56.3 (one recovery supplies all column budgets).** Put $x_+=\max(x,0)$ and
+
+$$
+S=(a-u)_++(\beta-v)_+,\quad q=aw+\beta u,\quad
+d=\min(a,u)+\min(\beta,v),\quad T_\beta=\frac{1+\sqrt a}{2}.
+\tag{R.301}
+$$
+
+For every recovery in Definition 56.1, the single input (R.299) satisfies
+
+$$
+\begin{aligned}
+F_e(\rho,RN)&\leq\frac{1+S+2\sqrt q}{4}
+=T_\beta-\frac d4-\frac{\sqrt a-\sqrt q}{2},\\
+\delta_N&\geq L:=\frac{3-S-2\sqrt q}{2}
+=1-\sqrt a+\frac d2+\sqrt a-\sqrt q\geq1-\sqrt a.
+\end{aligned}
+\tag{R.302}
+$$
+
+The comparison $L>1-\sqrt a$ is strict whenever $u+v>0$, in particular for every actual rank-three member. Equality of this certificate with the benchmark occurs only at $(w,u,v)=(1,0,0)$.
+
+**Proof.** Choose any finite complex Kraus representation $R(Y)=\sum_kR_kYR_k^\dagger$, $\sum_kR_k^\dagger R_k=I_5$; the same finite-dimensional characterization cited above covers every complex CPTP recovery. In its complex Kraus-index Hilbert space define
+
+$$
+z(e)=(\langle0|R_ke\rangle)_k,\quad
+y(e)=(\langle2|R_ke\rangle)_k,\qquad
+A=\|z(b_1)\|^2,\quad B=\|z(b_2)\|^2.
+\tag{R.303}
+$$
+
+The pure-target overlap is $\langle\Phi|(I\otimes R_kK_\alpha)|\Phi\rangle=\operatorname{Tr}(\rho R_kK_\alpha)$. Summing its squared modulus over $k,\alpha$ is the Kraus formula for entanglement fidelity [B. Schumacher, *Sending entanglement through noisy quantum channels*, (10)](https://arxiv.org/pdf/quant-ph/9604023). For these actual columns it gives exactly
+
+$$
+4F_e=\|\sqrt a\,z(b_1)+\sqrt w\,y(h)\|^2
++\|\sqrt\beta\,z(b_2)+\sqrt u\,y(b_1)\|^2
++v\|y(b_2)\|^2.
+\tag{R.304}
+$$
+
+For every unit output vector $e$, trace preservation says $\sum_{j=0}^2\sum_k|\langle j|R_ke\rangle|^2=1$. Hence this same recovery obeys all of
+
+$$
+0\leq A,B\leq1,\qquad \|y(h)\|^2\leq1,\qquad
+\|y(b_1)\|^2\leq1-A,\qquad \|y(b_2)\|^2\leq1-B.
+\tag{R.305}
+$$
+
+Triangle inequalities in the complex Kraus-index space, followed by these shared budgets, yield
+
+$$
+\begin{aligned}
+4F_e&\leq(\sqrt{aA}+\sqrt w)^2
+ +(\sqrt{\beta B}+\sqrt{u(1-A)})^2+v(1-B)\\
+&=1+(a-u)A+(\beta-v)B
+ +2\sqrt{awA}+2\sqrt{\beta uB(1-A)}.
+\end{aligned}
+\tag{R.306}
+$$
+
+For $A,B\in[0,1]$, the two linear terms are at most $S$. Using $B\leq1$ and Cauchy–Schwarz on $(\sqrt A,\sqrt{1-A})$ gives
+
+$$
+\sqrt{awA}+\sqrt{\beta uB(1-A)}
+\leq\sqrt{aw}\sqrt A+\sqrt{\beta u}\sqrt{1-A}
+\leq\sqrt{aw+\beta u}=\sqrt q.
+\tag{R.307}
+$$
+
+Thus $4F_e\leq1+S+2\sqrt q$. Moreover $S=1-d$ and $q\leq a(w+u)\leq a$, since $\beta\leq a$. These identities prove the first line of (R.302). Positivity of $a,\beta$ makes $d>0$ exactly when $u+v>0$; when $u=v=0$, $w=1$, $d=0$ and $q=a$. This proves the stated strictness, including zero weights, without division or a parameter-uniform positive gap as $\beta\downarrow0$.
+
+Let $\sigma_R=(\mathrm{id}_2\otimes RN)(\Pi_\Phi)$, a normalized density. The binary pure-target measurement has the standard trace-distance bound [Watrous, Chapter 3, Theorem 3.4, Holevo–Helstrom](https://cs.uwaterloo.ca/~watrous/TQI/TQI.3.pdf). Directly, $\|I-2\Pi_\Phi\|_{\rm op}=1$, so trace-norm duality gives
+
+$$
+\|\sigma_R-\Pi_\Phi\|_1
+\geq\operatorname{Tr}[(I-2\Pi_\Phi)(\sigma_R-\Pi_\Phi)]
+=2(1-F_e)\geq L.
+\tag{R.308}
+$$
+
+This single reference-two state is included in the full diamond supremum for each $R$. The number $L$ is independent of $R$, so the recovery infimum preserves it and its strict gap. No assertion that every input attains this bound is required. $\square$
+
+**Corollary 56.4 (an explicit strict actual rank-three consumer).** At $\beta=a=1/2$, $(w,u,v)=(3/4,1/5,1/20)$, the actual channel (R.298) has minimal Kraus rank three and
+
+$$
+\delta_N\geq\frac98-\sqrt{\frac{19}{40}}>1-\frac1{\sqrt2}.
+\tag{R.309}
+$$
+
+**Proof.** Here $S=3/10+9/20=3/4$ and $q=3/8+1/10=19/40$. Substitute into (R.302). Since $19/40<1/2$, the lower bound exceeds $9/8-1/\sqrt2>1-1/\sqrt2$. Minimal rank follows from $v>0$ and Proposition 56.2. $\square$
+
+**Definition 56.5 (existing endpoint and the general-third-column boundary).** At $(w,u,v)=(1,0,0)$ identify $(b_1,g_1,b_2,g_2,h)=(e_0,e_1,e_2,e_3,e_4)$. Then $(K_1,K_2)$ are precisely $(K_0,K_1)$ of (P.11), whose amplitude parameters are $u_{P}=\sqrt a$, $v_{P}=\sqrt\beta$, not the squared weights $u,v$ here. The whole-output recovery (P.14) and its all-matrix composition (P.15) give $\delta_N=1-\sqrt a$; Theorem 8.1 gives the matching fixed-input fidelity $T_\beta$. These are the existing sharpness results. On the edge $v=0$, $w=1-u$, $0<u\leq a$, the same frame identification gives (R.195); its certificate (R.216) remains available.
+
+For comparison, define the normalized extension by $K_\alpha=(x_\alpha,Jx_\alpha,t_\alpha)$, where $Jb_j=g_j$, $Jg_j=-b_j$, $x_1=\sqrt a\,b_1$, $x_2=\sqrt\beta\,b_2$, $x_\alpha=0$ for $\alpha\geq3$, and the finite real list satisfies
+
+$$
+\sum_\alpha\|t_\alpha\|^2=1,\qquad
+\sqrt a\,\langle b_1,t_1\rangle+\sqrt\beta\,\langle b_2,t_2\rangle=0,
+\qquad
+\sqrt a\,\langle g_1,t_1\rangle+\sqrt\beta\,\langle g_2,t_2\rangle=0.
+\tag{R.310}
+$$
+
+Theorem 1.3 realizes every such list. Its complementary phase state is $\tau=\bar\tau=\operatorname{diag}(a,\beta,0,\ldots)$, so $\lambda:=f(\tau,\bar\tau)=1$ in the root convention of Definition 1.1. At the same fixed input (R.299), the exact expression becomes
+
+$$
+4F_e=\|\sqrt a\,z(b_1)+y(t_1)\|^2
++\|\sqrt\beta\,z(b_2)+y(t_2)\|^2
++\sum_{\alpha\geq3}\|y(t_\alpha)\|^2.
+\tag{R.311}
+$$
+
+The charges in (R.305) enter (R.306) through the particular choices $t_1=\sqrt w\,h$, $t_2=\sqrt u\,b_1$, $t_3=\sqrt v\,b_2$. The summed orthogonality conditions (R.310) do not furnish these same charges for arbitrary $t_\alpha$.
+
+The existing crossblock channel (R.38), Theorem 9.1, gives an exact obstruction to extending this fixed witness: use $(b_1,g_1,b_2,g_2,h)=(e_0,e_1,e_3,e_4,e_2)$ and relabel its $(K_0,K_1)$ as $(K_1,K_2)$. Its columns are precisely $t_1=\sqrt a\,h$, $t_2=\sqrt\beta\,g_1$, with all other $t_\alpha=0$. Both cross conditions in (R.310) vanish termwise and the total squared norm is $a+\beta=1$. For this same already realized channel take
+
+$$
+M_0=|0\rangle\langle b_1|+|2\rangle\langle h|,\quad
+M_1=|0\rangle\langle b_2|+|2\rangle\langle g_1|,\quad
+M_2=|1\rangle\langle g_2|.
+\tag{R.312}
+$$
+
+Their adjoint products sum to $I_5$. On $\operatorname{span}(|0\rangle,|2\rangle)$ the only nonzero composite restrictions are $M_0K_1=\sqrt a\,I$ and $M_1K_2=\sqrt\beta\,I$. Thus this whole-output recovery fixes that subspace exactly and has $F_e(\rho,RN)=1>T_\beta$. This uses the existing crossblock example, rather than a new counterexample family; its worst-case diamond bound from Theorem 9.1 is compatible with this perfect fixed-input recovery.
+
+For the full normalized extension (R.310), a threshold input may therefore have to depend on the actual column list while preceding the choice of recovery; the missing assertion is $\forall(t_\alpha)\ \exists\rho_t\ \forall R:\ F_e(\rho_t,RN)\leq T_\beta$, or another argument giving the original diamond lower bound. No reduction of every $\lambda=1$ channel to the three-weight family (R.298) follows. The arbitrary-rank target (R.243), including remaining channels with $\sqrt a<\lambda<1$, is unchanged. The shared-column composition (R.304)–(R.308) is repo-derived from the stated standard intermediates; it supplies neither this general-third-column bridge nor a global-novelty assertion.
+
+## 追加锚（本行以下为增补区）
