@@ -2865,3 +2865,966 @@ objective. All original open interfaces listed in Definitions 12.6 and
 Open problem 8.1 remain in their stated scopes.
 
 ## 追加锚（本行以下为增补区）
+
+## 16. Directed acquired-leaf transitions and their actual operands
+
+**Definition 16.1 (directed refinement domain and literal tiles).** Retain
+$\mathcal T,\rho,E=\rho^2,j,F_w,P_p,D_p$ and the acquisition and command
+interfaces of §§9–12. The model in §§16–19 is denoted by $\mu$.
+Its seeds are all finite $u\in\mathcal T$. Its continuing domain starts
+at the actual first Ready, admits every finite lawful supplied bit prefix
+of (ER.47), and includes every intervening transition cut. Only the
+nonterminal Edit row of Definition 11.3 is replaced. Every other row,
+including its source Read, suffix construction, preparation, graft,
+refresh, Copy, Bind, lookup and output coeffects, retains its stated
+atomic boundary. The additional transitions are those of Definition 16.5.
+
+Write $x=F_w(j(u))$ at the start of a continuing transaction, where $w$
+counts finished transactions. In a U transaction $p$ ranges over the
+entire *original* leaf list of the actually acquired $\mathsf A(x)$;
+$\ell=x|_p$ is its acquired old label. No newly born leaf joins that list.
+For a nonterminal original leaf let $p^+$ be its next original leaf, or
+$\top$. Put
+
+$$
+ C_\alpha=A,\qquad C_\beta=B,\qquad
+ D_\alpha=B,\qquad D_\beta=\langle B,A\rangle.
+\tag{ER.68}
+$$
+
+Thus $C_\ell=E(\ell)$ and $D_\ell=E(\rho\ell)$. The following finite
+lists give *all* positions and tags of these tiles, in preorder; a listed
+branch has both listed children, and a listed leaf has neither child.
+
+| Tile | Positions in order | Tags in the same order |
+| --- | --- | --- |
+| $C_\alpha$ | $\varepsilon,L,R$ | $\mathsf{branch},\beta,\alpha$ |
+| $C_\beta=D_\alpha$ | $\varepsilon,L,LL,LR,R$ | $\mathsf{branch},\mathsf{branch},\beta,\alpha,\beta$ |
+| $D_\beta$ | $\varepsilon,L,LL,LLL,LLR,LR,R,RL,RR$ | $\mathsf{branch},\mathsf{branch},\mathsf{branch},\beta,\alpha,\beta,\mathsf{branch},\beta,\alpha$ |
+
+Write $n_\ell=|\operatorname{Pos}(C_\ell)|$, $m_\ell=|\operatorname{Pos}(D_\ell)|$
+and $g_\ell=\sum_{v\in\operatorname{Pos}(C_\ell)}|v|$. Their respective
+alpha/beta values are $3/5$, $5/9$ and $2/6$. Each $x$ is compound:
+$j(u)$ is compound and each of U, L and R preserves that property.
+Consequently every selected $p$ is nonempty. Publication below uses an
+actual parent child field; no root-leaf publication rule is presupposed.
+
+**Assumption 16.2 (one owned directed carrier and the operation basis).**
+Fix the source, root reference, orientation and sole owner as in
+Assumption 11.1 before selecting the finite seed or any future input.
+An occurrence has fields $(\mathsf{tag},L,R)$ and no stored parent field.
+A child field is either null or an actual occurrence reference. The
+active source is the component reachable from the distinguished root.
+Detached components and all earlier material remain allocated.
+Installation of the seed is a canonical occurrence tree; allocation
+uses the next unused name in one fixed typed allocation order. Names
+are not additional selected receipt values.
+
+The same owner has static authority over this source, its acquired rows,
+local reference cells, word cells, fresh staging and retired material.
+It has the following mathematical operations on actually held references:
+read one indicated field; follow a nonnull child field; assign one
+indicated owned child field; and allocate one fresh occurrence with a
+literal tag and two null children, returning its reference. It may read
+one indicated acquired row/list/word field, allocate one bounded local
+cell from held values, copy or clear indicated bank values, and take a
+finite control edge. Each row of Definition 16.5 is one such operation
+with its explicitly indicated bounded local coeffects and the event
+coeffect of Definition 16.4. No row constructs an unbounded word, scans a
+table, decodes an unknown subtree or returns a successful whole-tile test.
+
+The owner capability is an additional premise of $\mu$, distinct from
+permission for the old atomic patch. Dispatch first consults the actual
+finite control. In particular postpublication maintenance does not test
+the former whole-tile admission condition again. There is no competing
+writer, independent request, interruption, revocation, name choice or
+independent scheduling choice during Busy. No input or output occurs
+inside the new fragment. Source traversal during refresh is stationary.
+All authority fields and allocation rules are fixed comparison fields
+or their deterministic consequences, not advice about $u$ or a history.
+
+The primitive boundary includes one-node initialization and the bounded
+local/event coeffects. It does not expose their internal assignments.
+A source-node allocation together with an event allocation therefore has
+more than one total cell birth. This is a directed mathematical operation
+basis, with no asserted reciprocal-parent, native-tape or physical
+realization and no fixed-width or unit-time reference convention.
+
+**Definition 16.3 (address backing, bank and initialization).** Choose the
+following one backing convention for the backed words of §11. A nonempty
+address cell has fields $(\mathsf{prev},\mathsf{last})$ and denotes
+$\operatorname{word}(\mathsf{prev})\mathsf{last}$. The empty address has
+a fixed distinguished reference. Thus inherited address extension creates
+one snoc cell, and inherited row transfer shares its actual reference.
+A forward word cell instead has fields $(\mathsf{letter},\mathsf{next})$,
+with a different distinguished empty reference. These are material
+representations of words, not numerical root-to-position access ports.
+
+A leaf-list cell $c$ has fields $\mathsf{row}$ and $\mathsf{next}$; its
+row has the actually acquired address and label fields. This makes explicit
+the original leaf-row references of Definition 11.2. Appending a leaf-list
+link, including the fixed tail-link assignment, remains its inherited
+bounded local coeffect. A list is not copied to supply its next link.
+The last cell's next field is $\top$, and the current administrative
+cursor is an actual $c$, or $\top$.
+
+There are twenty reference bank slots
+
+$$
+ r,p,I,q,v,t,\mathit{cur},\mathit{par},\mathit{old},g,\mathit{nxt},
+ N_0,\ldots,N_8
+$$
+
+and three finite latch slots $\ell,b,\mathit{side}$. Each slot has a
+null value as well as its indicated typed values. The cleanup order is
+
+$$
+r,p,q,v,t,\mathit{cur},\mathit{par},\mathit{old},g,\mathit{nxt},
+N_0,\ldots,N_8,\ell,b,\mathit{side},
+$$
+
+with $I$ omitted. Here $I$ holds an
+invocation cell with seven fields
+
+$$
+(c,r,p,\ell,\mathsf{old},\mathsf{new},\mathsf{next}).
+\tag{ER.69}
+$$
+
+The first four fields are fixed on creation. The last three start null
+and are filled once, respectively at Locate, the first Birth, and Next.
+They retain the actual returned handles through cleanup. The invocation
+is selected as active exactly while the bank slot $I$ is nonnull.
+The retirement head and completion head are additional owner-local
+reference roots, initially empty; both have append-only retained chains.
+
+After the actual initialization to $E(j(u))$ and before the initial
+logical acquisition, add a fixed finite sequence: create one holder with
+23 null slot fields and two empty head fields, then create its 23
+one-value slot cells in the displayed order, installing each returned
+reference in its designated holder field. The holder is attached to the
+owner's fixed local root. These 24 bounded transitions, their 24 events,
+all holder/slot field initializations and root attachments are charged.
+The two head references reside in that holder; the inherited finite
+control carries the added finite tags. All bank slots are initially
+null. The holder and slot layout is independent of $u$ and future input.
+The raw initial traversal, known startup preparation, actual source
+initialization and logical acquisition are still performed. The first
+Ready is reached only after that acquisition and the inherited startup
+lookup/output. No source-dependent table or handle is inserted as advice.
+
+**Definition 16.4 (actual records and bounded coeffects).** Every executed
+row appends exactly one fine event to the actual chronological chain.
+An event contains its predecessor reference, row opcode, actual operand
+references, acquired reply or literal emitted token when any, and the
+bounded local assignments of that row. Each tuple has a fixed finite
+arity for that opcode; null padding gives one common finite bound since
+there are finitely many row shapes. Tuple fields are part of this
+abstract cell's payload, not free auxiliary cells. Every event field
+initialization, read of the old tail and assignment of the new tail is
+included in the resource account. An event contains no unrestricted
+snapshot or arbitrarily chosen historical payload. Only actual execution
+at the actual tail creates it. The initial truthful acquisition record
+and all inherited continuing events are retained as well.
+
+A retirement cell contains $(\mathsf{oldroot},\mathsf{previous},I)$.
+CellDone additionally creates one completion cell containing the coarse
+Edit opcode and the seven actual values in (ER.69), together with its
+previous-completion reference. These values are read from $I$ in that
+bounded row, before clearing the bank's invocation reference. This
+completion cell and CellDone's fine event are distinct births. Earlier
+rows have fine events but no completed Edit cell. Retained references
+and events keep cleared referents allocated; clearing never deletes a
+word, node, row, invocation or record.
+
+A successful field-test row acquires the indicated actual field value,
+checks only its stated null/tag/reference predicate, records that value,
+and takes the indicated edge. A false predicate has no executing edge,
+no fine event and no successor. An action not enabled at the present
+control likewise returns $\mathsf{none}$ without execution. These are
+partial transition rules, not an assumption that the tests succeed.
+Theorem 17.1 proves their success on the entire admitted domain.
+
+**Definition 16.5 (complete replacement of the nonterminal Edit row).**
+All row labels below are distinct finite control positions. Indices over
+tile positions, their path letters, fields and bank slots range over the
+fixed lists of Definitions 16.1 and 16.3. They are finite tags, not
+unbounded counters. At Edit($p$), $p\ne\top$, call the entry position
+$E_0$ and retain the actual administrative leaf cursor $c$.
+The following table gives every edge of the fragment. A stated register
+assignment is a bounded coeffect of that row; unmentioned fields persist.
+Every edge also has exactly Definition 16.4's fine event coeffect.
+
+| Position | Operation, bounded local effect and next position |
+| --- | --- |
+| $E_0$ | Read $c.\mathsf{row}$ into $r$; go to $E_1$. |
+| $E_1$ | Read $r.\mathsf{address}$ into $p$; go to $E_2$. |
+| $E_2$ | Read $r.\mathsf{label}$ into $\ell$; go to $E_3$. |
+| $E_3$ | Create $I=(c,r,p,\ell,\varnothing,\varnothing,\varnothing)$, set $q=p$ and $v$ to the empty forward word; go to RevTest. |
+| RevTest | Test the held $q$ against the empty snoc reference. If empty go to SeekInit; otherwise go to RevLast. |
+| RevLast | Read $q.\mathsf{last}$ into $b$; go to RevPrev. |
+| RevPrev | Read $q.\mathsf{prev}$ into $t$; go to RevPush. |
+| RevPush | Create the forward cell $(b,v)$ and put its returned reference in $v$; set $q=t$, clear $t,b$, and go to RevTest. |
+| SeekInit | Set $\mathit{cur}$ to the actual retained source-root reference and $q=v$; go to SeekTest. |
+| SeekTest | Test $q$ against the empty forward reference. If empty go to Locate; otherwise go to SeekLetter. |
+| SeekLetter | Read $q.\mathsf{letter}$ into $b$; go to SeekNext. |
+| SeekNext | Read $q.\mathsf{next}$ into $t$; go to SeekFollow. |
+| SeekFollow | Follow $\mathit{cur}.b$, requiring nonnull. Save the old $\mathit{cur}$ in $\mathit{par}$ and $b$ in $\mathit{side}$; put the returned child in $\mathit{cur}$, set $q=t$, clear $t,b$, and go to SeekTest. |
+| Locate | Copy $\mathit{cur}$ into $\mathit{old}$ and $I.\mathsf{old}$; go to the first GuardReset. |
+| GuardReset$(i)$ | Set $g=\mathit{old}$; go to the first GuardFollow for the old tile's $i$th position, or its GuardTag if that position is empty. |
+| GuardFollow$(i,j)$ | Follow the $j$th literal letter of that fixed position from $g$, requiring nonnull, and replace $g$ by the child; go to its next letter, or GuardTag$(i)$. |
+| GuardTag$(i)$ | Probe $g.\mathsf{tag}$, requiring the $i$th literal old tag; go to GuardL$(i)$. |
+| GuardL$(i)$ | Probe $g.L$, requiring nonnull at a listed branch and null at a listed leaf; go to GuardR$(i)$. |
+| GuardR$(i)$ | Probe $g.R$ with the same branch/leaf requirement; go to the next GuardReset, or the first Birth after the last old position. |
+| Birth$(i)$ | Allocate the $i$th target node with its literal tag and null children into $N_i$. For $i=0$ also set $I.\mathsf{new}=N_0$. Go to the next Birth, or the first LinkCheck after the last birth. |
+| LinkCheck$(i)$, $i>0$ | Probe the designated child field of the bank-held parent of target position $i$, requiring null; go to LinkWrite$(i)$. |
+| LinkWrite$(i)$, $i>0$ | Assign that one staging child field the held $N_i$. Go to LinkCheck for the next nonroot target position, or AttachCheck after the last. |
+| AttachCheck | Probe $\mathit{par}.\mathit{side}$, requiring equality to $\mathit{old}$; go to Publish. |
+| Publish | Assign that one source child field $N_0$; go to Retire. |
+| Retire | Create $(\mathit{old},\mathsf{retirementhead},I)$, install its returned reference as retirement head, and go to Next. |
+| Next | Read $I.c.\mathsf{next}$ into $\mathit{nxt}$ and $I.\mathsf{next}$; go to Handoff. |
+| Handoff | Set the administrative leaf cursor to $\mathit{nxt}$; go to the first Clean. |
+| Clean$(j)$ | Clear the $j$th bank slot in the fixed order of all 22 slots other than $I$; go to the next Clean or CellDone after the last. |
+| CellDone | Read the seven invocation fields, create and link the completion cell of Definition 16.4, clear bank slot $I$, and enter inherited Edit at that invocation's $\mathsf{next}$. |
+
+The target parent in a link is the literal immediate-prefix position in
+Definition 16.1; its bank index is fixed by the finite list. Every
+nonroot target position occurs exactly once in the link list. The
+nonempty target lists make the indicated first/last edges unambiguous.
+Next uses the retained invocation's original $c$, even after Handoff
+changes the administrative cursor. Reading that retained reference and
+its one next field, like reading a designated bank slot, is a bounded
+reference coeffect. The seven-field inspection in CellDone is explicitly
+part of its atomic local row, with seven charged field reads.
+
+Before $E_3$, the initiating cursor is still the original $c$. Afterwards
+it is retained in $I$. In particular cleanup never clears $I$ or its
+contents. Its old/new/next references are obtained only by the displayed
+walk, birth and list read. No event archive is consulted by any row.
+After CellDone the next nonterminal Edit starts at $E_0$ with null bank
+slots; Edit($\top$) has exactly the inherited completion/refresh row.
+There is no extra looping or idle row. All other controls, inputs and
+outputs are precisely those of Definition 11.3 with this replacement.
+
+**Definition 16.6 (receipt, complete state and independent fine task).**
+Outside the replacement fragment let $f_\mu$ be Definition 11.4's
+receipt. Inside it let $f_\mu$ contain the actual finite position of
+Definition 16.5, the initiating backed word $p$, the acquired $\ell$
+when latched, and the actual word value of $q$ only in RevTest through
+RevPush or SeekTest through SeekFollow. Include the finite $b$ latch
+only between its letter read and use. At the entry positions $p$ is the
+word bound to the still-original cursor; after $E_3$ it is the word bound
+to $I.p$. The label is absent until $E_2$ executes, then is retained
+through $I.\ell$, including after its separate bank latch is cleared.
+The finite position distinguishes snoc-prefix from forward-suffix $q$.
+No other bank reference identity, allocation number, seed, finished word,
+transaction count, event ordinal or archive key is observed. Word values
+and anchor equality use the extensional binding convention of Definition
+11.4. Their material acquisition or serialization remains charged.
+
+Let $\mathcal H_\mu$ be all pairs consisting of a finite installed seed
+and a finite lawful executed prefix from its actual first Ready in this
+relation. The empty prefix, unfinished leading input 1, every entry and
+exit of the displayed rows, partial address preparation, every guard and
+link, postpublication maintenance, partial refresh, Copy, Bind, lookup,
+output and Finish all belong. There is no requirement to supply future
+bits or Advances before stopping a finite prefix.
+
+Let $J_\mu$ be the complete actual joint state: active source and root,
+all allocated detached and retired occurrences, source/table/address/
+reference bindings, acquired anchors and their roles, partial work and
+replacement lists, holder/bank/invocation/retirement/completion material,
+allocation state, finite control and latches, input record, chronological
+records, output buffers/frames and all ownership and rights fields.
+The common canonical initialization and every listed coeffect are included.
+
+Define $Q_\mu$ independently of any geometric view. Its present readout
+is the actual authorized acquired anchor, its live/held role and
+$f_\mu$. Its actions are Supply(0), Supply(1) and Advance. Supply is
+legal exactly at inherited Ready and Tail; there both bits are legal.
+At other attained controls only the prescribed Advance is legal.
+A disabled trial has value $\mathsf{none}$ and causes no executing
+successor, record append or output. A successful response is
+
+$$
+\bigl(a,\mathsf{legal},\mathsf{ok},\mathsf{opcode},
+ \mathsf{actual\ reply/token},\Delta\Gamma_\mu,
+ \Delta\mathsf{Out},J'_\mu\bigr).
+\tag{ER.70}
+$$
+
+The completion-cell append, when present, belongs to $J'_\mu$ and is
+referenced in the actual event. The successor in (ER.70) includes every
+component just listed; it is a mathematical response coordinate, not
+an extra transmitted snapshot. Finite response maps compose these partial
+rules and include the empty experiment's present readout. Equality of
+$Q_\mu$ profiles means equality of present readouts, lawful domains,
+all such complete responses and disabled behavior. This task declares
+responses at the new controls; it is not an extension theorem for the
+unchanged original prediction task (ER.3).
+
+## 17. Source framing and recovery at every attained fine cut
+
+**Theorem 17.1 (actual enablement, finite completion and source relation).**
+Under Assumption 16.2 and Definitions 16.1–16.5, for every finite seed,
+every lawful finite continuing input prefix, every U transaction and
+every selected original old leaf $p$, all displayed operands are actually
+acquired, all attained field tests succeed, and the fragment completes
+in finitely many prescribed Advances. Its only active-source assignment
+is Publish. If $x=F_w(j(u))$ is the held logical predecessor, then at
+every fragment cut the actual source $r$ satisfies
+
+$$
+\begin{aligned}
+ r&=E(P_p(x)) &&\text{before Publish executes},\\
+ r&=E\bigl(P_p(x)[p:=\rho\ell]\bigr)
+    =E(P_{p^+}(x)) &&\text{after Publish, through CellDone's entrance}.
+\end{aligned}
+\tag{ER.71}
+$$
+
+The anchor remains the authentic held $\mathsf A(x)$ throughout. The
+fragment retires the actual old tile, advances the original leaf cursor
+once and creates exactly one completed Edit cell. Its exit has the
+inherited Edit($p^+$) source/frontier/anchor postcondition and null bank
+slots. Composing these fragments with the inherited rows gives finite
+completion of every continuing transaction whenever its prescribed
+Advances and input bits are supplied.
+
+Proof. Use the actual acquisition induction of Theorem 11.5, with the
+same two-query replies and the backing convention of Definition 16.3.
+It supplies the old list, addresses and labels from the same actual
+$E(x)$, rather than a proof-side list of unknown leaves. Distinct
+original leaves are prefix-incomparable. Induct on that list: completed
+earlier fragments replace only their own tiles, so every unprocessed
+old tile at $p$ is still $C_\ell$, with every proper-prefix attachment
+unchanged. No selected $p$ is empty by Definition 16.1.
+
+The entry reads follow the held list and acquired row and hence obtain
+that actual $p,\ell$. After $k$ RevPush occurrences, the snoc cursor
+represents the prefix of $p$ of length $|p|-k$, and $v$ spells its removed
+suffix in forward order. This holds initially with empty $v$; reading
+the last letter and preceding reference, then prepending that letter,
+proves the inductive step. All word operands are actual retained cells.
+There are exactly $|p|$ pushes. At SeekInit, $v$ therefore spells $p$.
+After $k$ SeekFollow occurrences, $\mathit{cur}$ is the actual source
+node at the length-$k$ prefix of $p$, and $q$ is the remaining forward
+suffix. Every proper prefix is a branch of the unchanged context.
+Thus every required child exists. Since $|p|>0$, the final saved
+$\mathit{par},\mathit{side}$ is the actual attachment of the reached
+old tile, not a guessed numerical address.
+
+Reset and literal relative follows now reach each specified old node.
+The tile is $C_\ell$, so its tag and both child-status probes give
+exactly the listed replies. This proves the successful guards from the
+frame invariant; success is not an extra initial bit. Every fresh target
+handle comes from its own Birth, with the stipulated literal tag and
+null fields. The target list has one parent for every nonroot position,
+parents preceding children, and uses each designated field once. Hence
+each LinkCheck finds null, and the separate writes produce exactly
+$D_\ell$ without a cycle or sharing. These nodes are disjoint from the
+active source and old tile. All work so far changes only local or
+fresh detached material, proving the first line of (ER.71).
+
+The saved parent is outside both tiles. Exclusive ownership preserves
+its slot between AttachCheck and Publish, and that check therefore
+reads the held old root. Publish writes just the fresh completed root
+into that one field. Pairing preservation of $E$ and (ER.68) give its
+second line. The identity
+$P_p(x)[p:=\rho\ell]=P_{p^+}(x)$ follows directly from the definition:
+it substitutes exactly one additional original leaf. Retirement, Next,
+Handoff and Clean change no active-source field, so the same equation
+holds even after the administrative cursor has moved.
+
+Locate retains the old root before overwrite; Retire links it before
+any scratch clear. The invocation also retains old and new roots and
+the actual next cursor. Thus CellDone reads actual acquired/born operands
+after cleanup. Every edge is authorized by the stated static capability,
+including postpublication edges whose former tile shape is no longer
+at $p$. This proves continuing permission for this declared model,
+without deriving a right from its inverse. Exactly one edge creates the
+completion cell. Its successor leaves CellDone, clears $I$ and moves
+to a different original leaf or $\top$. No second completion for that
+invocation is reachable. All other bank slots have already been cleared.
+
+The two word loops decrease finite lengths; every other index follows
+a fixed finite acyclic list. The fragment therefore terminates. Induction
+over all original leaves, including the last, yields $E(\rho x)$ at
+Edit($\top$). No new leaf has been inserted into that old list.
+The unchanged refresh, replacement, lookup and output proof of Theorem
+11.5 then applies to the actual resulting source. The oriented graft
+transactions retain their own unchanged finite proof. This establishes
+the assertion uniformly over every finite seed and continuing command
+prefix. A finite prefix may stop at any intermediate cut; completion
+is conditional only on supplying its prescribed further actions. $\square$
+
+**Definition 17.2 (four independently specified observations).** On
+$\mathcal H_\mu$ define
+
+$$
+\begin{aligned}
+ S_\mu(h)&=(\operatorname{Pos}(r(h)),f_\mu(h)),\\
+ B_\mu(h)&=(\operatorname{LeafPos}(r(h)),f_\mu(h)),\\
+ M_\mu(h)&=(A_*(h),\operatorname{role}(A_*(h)),f_\mu(h)),\\
+ T_\mu(h)&=\Gamma_\mu(h).
+\end{aligned}
+\tag{ER.72}
+$$
+
+Space observes actual ordered child reachability in the active source,
+with colours erased. Boundary observes the actual terminal addresses of
+that source. Both additionally observe exactly the declared local receipt,
+and neither includes staging, retirement geometry, table payload or an
+event archive. Memory observes the one genuinely acquired owner-local
+anchor, with its actual role and control receipt. Its rows supply the
+operands in Definition 16.5 and are used again by the inherited lookup/
+output after refresh. It does not include the old-table archive or
+chronology as another payload. Time observes the retained order of actual
+occurrences, including truthful startup replies and the fixed bank
+initialization, without an appended endpoint snapshot. It is not a
+physical duration. These definitions select actual material, incidence
+and occurrence order before constructing any inverse. Mathematical
+observation does not grant another principal access to that material.
+
+**Lemma 17.3 (unique actual local position).** Every attained cut of
+$\mu$ has a unique form $(u,w,f_\mu)$, where $w$ is the finished
+transaction word. That form determines the entire executed continuing
+prefix and complete $J_\mu$. Within a fragment the two observed words
+have total length at most $2|p|$; all other receipt components range over
+one fixed finite set independent of seed and history.
+
+Proof. Fix $u,w$ and the indicated current pending command or ingress
+prefix. The common initialization, completed transactions and all
+inherited rows have their deterministic rules. In a U transaction the
+held anchor fixes the original finite leaf list. Its addresses are
+visited once, so the initiating $p$ identifies one invocation.
+Each entry, guard-path/probe, birth, link, publication, retirement,
+handoff and cleanup tag occurs at most once in that invocation.
+The finite indices are part of the actual position, including each
+separate reset and field probe.
+
+For a repeated reversal tag the observed $q$ is a proper shorter prefix
+after each push; distinct lengths give distinct word values. RevLast,
+RevPrev and RevPush distinguish the separate reads and creation while
+that prefix remains fixed. For a repeated seek tag, $q$ is a proper
+shorter suffix after each follow. SeekLetter, SeekNext and SeekFollow
+distinguish the letter/next acquisition from the source follow. The
+empty tests also have their own positions. Hence no fixed
+$(p,\mathsf{position},q)$ recurs. A pending finite letter is an actual
+latched value, determined by the appropriate read. In the remaining
+positions there is no repeated loop at all. The initiating $p$ survives
+Handoff through $I$, so these cuts cannot be mistaken for work on the
+next cursor. CellDone then changes to the next inherited Edit receipt.
+
+Outside the fragment the unique-position argument of Theorem 11.5
+applies: its node/row/output cursors and subphases still occur once.
+Inserting the deterministic complete fragments before a later inherited
+position introduces no choice. Ready and Tail determine respectively
+no pending input and the one acquired leading 1; every other control
+fixes its pending command. Thus $(u,w,f_\mu)$ identifies one finite
+executed prefix when attained. Executing that determined prefix on the
+recovered finite description gives every actual identity, partial word
+chain, detached component, table, event, output and rights field under
+canonical naming. This use of deterministic execution follows the
+position proof; it is not a supplied history index. Finally $q$ is always
+a prefix or suffix of $p$ when observed. The stated bound follows from
+the finite tag/latch lists. $\square$
+
+**Theorem 17.4 (four separate exact attained-image inverses).** Each
+individual observation in (ER.72) has a finite effective inverse on its
+actual image to the same $h\in\mathcal H_\mu$ and complete $J_\mu(h)$.
+For each $V\in\{S_\mu,B_\mu,M_\mu,T_\mu\}$, its decoder $d_V$ satisfies
+
+$$
+ d_V(V(h))=h,\qquad V(d_V(v))=v\quad(v\in\operatorname{im}V).
+\tag{ER.73}
+$$
+
+These inverses cover entry, address preparation and positioning,
+construction, publication, retirement, cursor lag, cleanup and completion,
+as well as every inherited live/held phase.
+
+Proof. First consider source support at a fragment cut. Theorem 17.1
+proves that the actual active source stays a full $E$ image. Reuse ABT
+Theorem 12.1 to decode its erased support to a labelled logical tree $z$.
+Before Publish, $z=P_p(x)$, so Theorem 10.2 gives $x=D_p(z)$; this also
+recovers $\ell=x|_p$ at entry before its row read has latched it.
+After Publish and until CellDone, check $z|_p=\rho\ell$ and put
+
+$$
+ z_0=z[p:=\ell],\qquad x=D_p(z_0).
+\tag{ER.74}
+$$
+
+Theorem 17.1 proves $z_0=P_p(x)$, so (ER.74) is justified on every
+such cut, including after Handoff and after scratch clearing. At
+CellDone's successor use the inherited next-frontier inverse. Equivalently,
+at every fragment cut where the label is latched, the source-specific
+normalization is
+
+$$
+ \bigl(S\setminus p\{L,R\}^{<\omega}\bigr)
+       \cup p\operatorname{Pos}(C_\ell)
+   =\operatorname{Pos}(E(P_p(x))).
+\tag{ER.75}
+$$
+
+The equality follows from the proved exterior frame and the actual old
+or new focus in (ER.71). It is a descriptive normalization, not an
+operation that restores or copies the unknown source.
+
+Apply Theorems 9.3 and 9.5 to this recovered $x$ to obtain the unique
+$u,w$. Lemma 17.3 now supplies the exact fine prefix and full state.
+Outside fragments the source cases of Theorem 11.5 are unchanged:
+Ready/Tail/Select/Graft decode $x$; inherited Edit($\top$) uses
+$D_\top$; Read0 through Finish decode $y=F_{wa}(j(u))$, whose ancestry
+word loses the pending last letter to give $w$. This proves the source
+inverse without observing off-source geometry or a table archive.
+
+For its actual-image direction, the finite tests are explicit. Check
+finite ordered support and ABT grammar, the phase-dependent focus
+condition and $D_p$ domain (or the inherited case), and the decidable
+$j$-ancestry image. Check the acquired old-leaf and label condition.
+Execute the recovered completed word and the indicated current prefix,
+using the decreasing word cursors or inherited finite cursors to locate
+it. Reject if the prescribed position is not attained, or if the
+reconstructed support and receipt differ. All searches here are bounded
+by those finite transactions and the finite indicated current transaction;
+there is no search over future inputs or arbitrary histories. Every
+accepted candidate re-observes to the supplied datum, and every attained
+datum passes by (ER.71) and Lemma 17.3. This proves both identities for
+$S_\mu$.
+
+For boundary, each active source is a finite full rooted tree at every
+cut, regardless of detached allocations. Every source position extends
+an actual terminal position. Therefore its support is the prefix closure
+of its terminal antichain, and the antichain is the set of maximal
+support positions. Apply the source decoder to this independently
+recovered support. Re-taking maximal positions proves the observation
+identity as well, giving (ER.73) for $B_\mu$ separately.
+
+For memory, the actual held anchor is $\mathsf A(x)$ inside every
+fragment. Its addressed rows reconstruct $x$ directly; ancestry and
+Lemma 17.3 give $u,w$ and the unique fine cut. The inherited phases
+before Bind likewise retain $x$; after Bind they have the actually
+acquired $\mathsf A(y)$, and the pending command removes the last
+ancestry letter. Ready and Tail use the live $x$ case. These are all
+roles of Definition 11.4, including the interval when the replacement
+is partial or complete but not yet bound. Execution reconstructs the
+same actual anchor contents, role and receipt. Finite replay/re-observation
+as above tests its image and proves (ER.73) for $M_\mu$ without adding
+retired tables or chronology to that observation.
+
+For time, the actual initial addressed truthful replies determine the
+finite installed $u$. The added 24 initialization opcodes have one fixed
+order and no independent inputs. Thereafter the recorded input bits and
+every actual row opcode/reply/operand record specify precisely a finite
+prefix of the declared deterministic transition relation. Execute that
+prefix and check each record against its actual operands and reply.
+It reconstructs $w,f_\mu,J_\mu$ and re-observes the same chronology.
+Conversely recording that reconstruction gives exactly the supplied
+actual occurrence chain. No endpoint snapshot is needed. This proves
+(ER.73) for $T_\mu$. All four reconstruct the same actual history,
+including every retained record and reference identity. $\square$
+
+## 18. Complete fine behavior, completed comparison and one-run charges
+
+**Theorem 18.1 (individual task kernels and lawful recovery routes).**
+For each individual $V\in\{S_\mu,B_\mu,M_\mu,T_\mu\}$ and all
+$h,k\in\mathcal H_\mu$,
+
+$$
+ V(h)=V(k)\quad\Longleftrightarrow\quad h=k
+       \quad\Longleftrightarrow\quad h\sim_{Q_\mu}k.
+\tag{ER.76}
+$$
+
+All twelve recoveries between actual view images have opposite inverses,
+agree along every route and preserve lawful/disabled domains, actual
+readouts, the full responses (ER.70), complete successors and every
+finite lawful adaptive continuation.
+
+Proof. Theorem 17.4 proves each individual diagonal history kernel.
+For clarity check both task inclusions separately. Equal source views
+give the same history by the source inverse, hence identical present
+readout, domains, complete responses and successors. Conversely equal
+$Q_\mu$ profiles include equal actual acquired anchor, role and receipt;
+the proved memory inverse gives the same history and thus the same
+source support and receipt. Equal boundary views give the same history
+by prefix closure and the separate boundary inverse, hence identical
+responses; equal task profiles give the same memory-decoded history
+and consequently the same terminal boundary and receipt. Equal temporal
+views reconstruct the same initialized execution, so give identical
+responses; equal task profiles again fix the same history and its unique
+actual chronology, giving equal temporal views. Equal memory views give
+the same history by the independent memory inverse and hence the same
+responses; the reverse inclusion is immediate from the task's present
+readout. None of these reverse inclusions uses the hidden full-successor
+coordinate to separate histories, and no intersection of kernels replaces
+an individual equality.
+
+Let $R_{VW}=W\circ d_V$. On the actual images (ER.73) gives
+
+$$
+ R_{WV}R_{VW}=\operatorname{id},\qquad
+ R_{WZ}R_{VW}=R_{VZ}.
+\tag{ER.77}
+$$
+
+For action $a$, its view-domain is exactly the image of controls where
+Definition 16.6 enables it. Decode a view, take that same actual action
+with its actual owner/operand/reply, then observe its successor. Theorem
+17.1 and the inherited acquisition proof ensure that successor is attained.
+Every route therefore uses the identical row, event/completion/output
+append and full $J'_\mu$. Thus, with equality of domains,
+
+$$
+ R_{VW}A_a^V=A_a^W R_{VW},\qquad
+ \operatorname{Resp}_a^W R_{VW}=\operatorname{Resp}_a^V.
+\tag{ER.78}
+$$
+
+Disabled trials on either route return the same none without execution.
+Induction proves compatibility of finite continuations. In an adaptive
+experiment the identical acquired response selects the same next branch,
+so the same induction applies. These are finite mathematical algorithms
+on actual view descriptions; the equations confer no new access right
+or installed historical conversion service. $\square$
+
+**Definition 18.2 (completed comparison and identity correspondence).**
+Call a continuing cut a comparison cut when it is outside the interior
+of a replacement fragment: inherited cuts and the entry/exit Edit cuts
+are included. Contract each entire $E_0$-to-CellDone fragment to its one
+Edit step and leave inherited rows unchanged. For a comparison prefix
+$h$ denote this contracted ER11 prefix by $c(h)$.
+
+Fix a coarse occurrence realization of Assumption 11.1 that allocates
+each replacement tile in the preorder of Definition 16.1, retains the
+old tile, and uses the same snoc backing for inherited words. The
+coarse Edit event carries its acquired row/address/label and old/new/next
+operand binding; this is the bounded event convention of Definition
+11.3, with the binding made explicit. A coarse Edit performs its
+positioning and guard work inside its old atomic boundary. It has no
+forward-reversal cells or fine bank. Numerical fresh names need not
+agree between the two realizations.
+
+The identity correspondence $\iota_h$ maps initial source occurrences
+by initial position, inherited new occurrences/rows/words by their
+creation roles, and every replacement node by (its U transaction,
+original leaf, literal target position). Old tile occurrences keep their
+previous correspondence when retired. Each inherited event corresponds
+to that same row's actual event; each coarse Edit event corresponds to
+the one CellDone completion cell. Row/address references in those events
+are transported by their creation-role correspondence, not by equality
+of numerical allocation names. Field projections of that completion cell
+give precisely the stated operand binding. Only event payloads have this
+common-field correspondence: a coarse chronology predecessor is the
+preceding contracted event, whereas a fine chronology predecessor is the
+preceding actual fine event. Completion-chain predecessors form a third
+specified chain. Their different link fields are retained explicitly in
+the residual; no equality of these three predecessor fields is asserted.
+The coarse chain is reconstructed from the contracted occurrence order.
+This is a correspondence of
+actual occurrences and fields, not an assertion of literal whole-state
+equality.
+
+The fine residual $\mathcal R_h$ retains the following complementary
+actual data: the bank holder, slot cells, all slot/head values and extended
+control; all invocation and retirement cells and their fields; every
+forward word cell; every extra fine event with its actual references;
+the exact fine chronological chain, including initialization and every
+CellDone event; all completion-chain links; all fields of shared objects
+not in the coarse projection; and the fine allocation order/names and
+reference correspondence $\iota_h$. Every inherited retained object,
+including old tables, input/output backing and retired occurrences,
+belongs to the common projection or is explicitly retained in this
+residual with its actual fields. Null fields, retired roles, both local
+head values and the cleared bank values are included. The residual is a
+typed partition of actual material and its remaining fields, not a new
+state supplied to the running owner. Its mathematical use changes no
+retention or cost.
+
+**Proposition 18.3 (residual-preserving completed comparison).** At every
+comparison cut $h$, contraction gives an attained coarse prefix $c(h)$.
+The active labelled source, held/live anchor, original leaf frontier,
+inherited acquired replies, output frames and one completed Edit binding
+per finished fragment agree under $\iota_h$. The augmented comparison
+
+$$
+ J_\mu(h)\longmapsto
+       \bigl(J_\partial(c(h)),\iota_h,\mathcal R_h\bigr)
+\tag{ER.79}
+$$
+
+preserves every actual fine material/record/reference component and has
+an inverse on its actual image. It claims neither literal equality
+$J_\mu=J_\partial$ nor an original-Q action at an interior fine cut.
+
+Proof. At the first Ready the actual sources and acquired anchor values
+agree; the extra initialization and bank are retained in $\mathcal R_h$.
+An inherited row has the same acquired operands, replies, source/table
+values and outputs, with references transported by creation role.
+For a fragment, Theorem 17.1 gives exactly the coarse tile replacement,
+retained old tile and once-advanced original cursor. CellDone alone
+provides its completed operand binding. The literal target positions
+establish a bijection of the new tile nodes. Thus induction over contracted
+rows proves the assertion and all role correspondences, including later
+retirement of previously created nodes and anchor replacement.
+
+For the inverse in (ER.79), instantiate common objects using their
+$\iota_h$ names and common fields, restore their residual fields, insert
+each complementary typed object with its retained actual fields, and
+restore the fine root/head/slot/control values, exact chronology and
+allocation order. Every fine object and field is in one of these specified
+parts, so their disjoint typed union is exactly $J_\mu(h)$. Conversely
+partitioning that union gives the same triple on the actual image.
+In particular no fine record, address copy, invocation or cleared referent
+is discarded. A coarse event chain is a selected comparison coordinate;
+it is not substituted for the actual fine chain or its charges. A fine
+probe, reversal or birth has its own successor and event and is not one
+old Advance. This proof therefore supplies only the stated completed
+comparison, consistent with the different interior task domains. $\square$
+
+**Proposition 18.4 (same-fragment and same-run resource coordinates).**
+Use exactly the atomic and backing convention of §§16–17. For a completed
+fragment at an old leaf of depth $d$, let $n=n_\ell$, $m=m_\ell$ and
+$g=g_\ell$. Its exact number of executed fine rows and fine events is
+
+$$
+ e(d,\ell)=8d+4n+g+3m+34
+   =\begin{cases}8d+63,&\ell=\alpha,\\8d+87,&\ell=\beta.\end{cases}
+\tag{ER.80}
+$$
+
+Its source/word coordinates include exactly $4d$ word-field reads,
+$d$ forward-word births with $2d$ initialized payload fields, $d$ source
+positioning follows, $g$ relative guard follows, $3n$ old-node field
+probes, $m-1$ staging vacancy probes, one attachment probe, $m$ template
+births with $3m$ initialized fields, $m-1$ staging child writes and one
+source publication. It retains all $n$ old tile nodes and all $m$ new
+ones. In addition to inherited material, its total abstract cell births
+are exactly
+
+$$
+ m+d+e(d,\ell)+3:
+\tag{ER.81}
+$$
+
+one invocation, one retirement cell and one completion cell, besides
+its template/word/event births. All bank, control, row/next/invocation
+reads and assignments, record-tail access/retargeting, payload field
+initializations and output/serialization costs remain included as their
+actual separate coordinates; (ER.81) is a cell count, not a total fee.
+
+Proof. The four entry rows contribute 4. Reversal has $d+1$ tests and
+three other rows per letter, contributing $4d+1$; SeekInit contributes
+1, seek has the same $4d+1$ form, and Locate contributes 1. Old-tile
+guarding contributes $4n+g$ from resets, paths and three field probes.
+Birth contributes $m$, the separate check/write links contribute
+$2(m-1)$, and AttachCheck/Publish contribute 2. Retire/Next/Handoff
+contribute 3, the 22 separate cleans contribute 22, and CellDone
+contributes 1. Their sum is (ER.80).
+
+Reversal reads last and previous separately, and seek reads letter and
+next separately, giving $4d$ actual word-field reads. Their constructor
+and source-follow counts are the stated ones. Every other source-field
+coordinate follows directly from its fixed literal list. Source-node
+initialization writes one tag and two child fields; later only the listed
+links and publication change child fields. Each executed row creates
+one fine record, and only the three indicated rows create the other
+three descriptors. There are no other births inside this fragment in
+the declared abstract basis, proving (ER.81). The invocation's three
+later field assignments, seven CellDone field reads, actual entry/list
+reads, 22 clears, all bounded reference/control updates and each event's
+own fields/tail coeffects are separate work, regardless of cell count.
+
+More explicitly, for any prefix define its resource vector by summing,
+over its actual rows, the numbers of source/word/local field reads,
+source/word/local field assignments, typed births, event/descriptor
+initializations and reference/control changes specified by those rows.
+Include holder/slot/head creation and inherited atomic coeffects as
+well. Each summand refers to this same initialized run. A tariff may
+weight these coordinates only after it is declared; there is no
+cross-basis scalar total implicit in (ER.80)–(ER.81). $\square$
+
+**Corollary 18.5 (whole-transaction coordinates and their scope).** For one
+actual U from $x$ with alpha/beta old-leaf counts $a,b$, the template
+births are $5a+9b$, retained old-tile nodes are $3a+5b$, and forward-word
+births are $\sum_{p\in\operatorname{LeafPos}(x)}|p|$. The fragment event
+sum is
+
+$$
+ \sum_p e(|p|,x|_p)=8\sum_p|p|+63a+87b.
+\tag{ER.82}
+$$
+
+The continuing-primitive count (ER.54) for that transaction becomes
+
+$$
+ |\operatorname{code}(\mathsf U)|+9+4N(\rho x)+\ell(\rho x)
+       +\sum_p e(|p|,x|_p).
+\tag{ER.83}
+$$
+
+Graft transactions retain (ER.54). The initial bank adds its separately
+specified 24 transitions and 24 events before first Ready. Literal Read
+and submitted-letter totals (ER.53) remain unchanged: the extra field
+probes are not literal Read opcodes. Local old-plus-new tile coexistence
+is $n+m=8$ or $14$, in addition to the source exterior, anchors, all
+previous retained material, words, descriptors, bank and records.
+No total-cost improvement, bounded total memory, minimum receipt,
+minimal generator basis or Pareto dominance over another carrier follows.
+
+Proof. Sum the exact per-leaf lists, using every old leaf once by
+Theorem 17.1. Replace the $\lambda(x)$ old Edit occurrences in (ER.54)
+by their actual fragment lengths; all other rows are identical, proving
+(ER.83). The extra rows issue no literal Reads and alter no logical
+refresh schedule, proving the unchanged (ER.53). Retention and fresh
+disjointness give the coexistence count. Finally $f_\mu$ has at most
+two words of length $|p|$ and finite tags, but those words, reference
+widths and event count have no uniform bound over this domain. Neither
+the count nor a finite control description bounds total backing. These
+are coordinates of the chosen relation, without an order comparison
+against differently endowed reciprocal or tape operations. $\square$
+
+## 19. Mathematical dependence and exact remaining domains
+
+**Definition 19.1 (source-specific increment and supplier correspondence).**
+Repository references used in §§16–19 designate their source text at
+$\texttt{540144ad9f007216b8dbf033784728d379dd013a}$.
+The new mathematical content is the directed acquired-old-leaf relation
+(ER.71), its actual word/field/invocation schedule and unique attained
+position through delayed handoff/completion, and the resulting four
+separate source-only/boundary/acquired-memory/chronology inverses for
+that relation. This is repo-derived synthesis. Single-node construction,
+ordered context replacement, prefix closure, persistence, replay and
+abstract kernel/route algebra are intermediate suppliers, not additional
+new general theorems.
+
+Theorems 9.3/9.5 supply unique attained entrance and command ancestry;
+Theorem 10.2 supplies the exact marked inverse $D_p$; Theorem 11.5
+supplies actual initial and logical acquisition, the held old leaf list,
+and the unchanged phases. Theorem 12.2 supplies the individual-kernel
+proof pattern and its explicit atomicity limit in Definition 12.6.
+Sections 13–15 retain their exact old source fibres, information bounds
+and stationary-interface limits; adding $f_\mu$ does not change their
+claims about forgetting the old frontier. ABT Theorem 12.1 supplies
+erased-$E$ decoding and its two-query acquisition law. Those inverse,
+acquisition and route results are used within the new relation rather
+than asserted again as its mathematical novelty.
+
+The [Intrinsic Substitution Coordinates declarations][ERISC], including
+`no_alpha`, `pair_image` and private `substitution_injective`, with
+[their owning Scribe][ERISCB], supply the existing substitution grammar
+and injectivity. [Native Full Source Producer][ERPROD], including private
+`traverse`, `production_reads`, `stationary` and its [owning Scribe][ERPRODB],
+supplies the actual initial stationary traversal with unbounded finite
+workspace. Its proof-side unknown-subtree parameters are not runtime
+operands. [NativeSerialMachine][ERNSM] supplies its local/Read/substitution
+chronology and replay; [NativeSerialEffective][ERMUEFF] and its
+[owning Scribe][ERMUEFFB] require an actual code realization equation
+and preserve their stated trace erasure. They supply no directed field
+operation or current maintenance right.
+[TypedFiniteViewKernel][ERMUKERNEL] and its [owning Scribe][ERMUKERNELB]
+start from independently specified readouts and partial labelled steps;
+that abstract kernel result is not the construction of Definition 16.5.
+At the current mathlib manifest pin
+$\texttt{56a005855ea17e0b0958f73ec801ae140b0a1679}$,
+[StateTransition, `Respects`, `tr_reaches`, `tr_eval`][ERMUSTATE]
+requires related starts, positive matching fragments and its halt
+condition. Its refinement machinery alone gives no cut inverse,
+authority or resource equality here.
+
+[SSA §13][ERSSA] supplies a positioned fixed-occurrence reciprocal
+relocation and explicitly leaves operand acquisition, continuing permits,
+control and records as separate premises. Its three-slot fixed-occurrence
+lower bound excludes fresh directed carriers. [Open-row completion,
+§§4–7][ERMUOR] supplies phase-first ownership, before-image binding and
+conditional exactly-once completion; Theorem 17.1 establishes actual
+enablement for these two ER tiles under the stated static owner, rather
+than assuming the all-row native premises of that supplier.
+[Single-vertex construction, §§2–7][ERMUSV] already supplies singleton
+construction, local partial-tree inverses, a whole-carrier one-fragment
+history theorem and conditional retained-record birth bounds. Its strong
+history inverse observes whole storage/joint retained memory and does
+not supply this ER source-only publication/frontier/completion join.
+Its production bound remains applicable with its own disjoint-receipt
+premises; (ER.81) counts event births as well as template births.
+[Source-call recovery, §§7–8][ERMUSC] separates a completed comparison
+from original interior task equality. Its rooted parent-first 49-cut
+argument is not applied to detached staging; its complete-record
+restriction is retained in (ER.79).
+
+PR57's whole-array writeback keeps its source unavailable during that
+writeback. The growing unary and paid-view atlases retain their
+whole-storage observations, atomic row/patch and service/authority
+premises. Their actual paid traversal/copy/record results remain
+suppliers in those domains. No whole-storage observation, acquired seed
+plus ordinal, or historical delivery service is substituted for the
+selected observations (ER.72). This bounded synthesis makes no claim
+of global absence or worldwide priority and uses no transfer from
+unrelated arithmetic or rational-fibre results.
+
+**Definition 19.2 (literature-attested intermediate constructions).**
+Hassan, Mackie and Sato, *An Implementation Model for Interaction Nets*,
+[primary text, §4 and Figure 4][ERMUNETS], gives explicit allocation
+returning a held node reference and assignments to its ports. Its finite
+right-hand-side construction is a literature-attested intermediate
+analogue of detached known-template birth/link. Its freeing convention,
+interaction ports and supplied interface do not give this model's
+retention, acquired ER leaf, source inverse or owner capability.
+Bennett, *Logical Reversibility of Computation*, [Introduction and
+history/copy/reverse construction][Bennett], is the literature-attested
+supplier for retained history as paid extra storage and work. No
+thermodynamic conclusion, free record, automatic historical service or
+reverse operation on this source is inferred. The context interpretation
+of Huet's *The Zipper*, cited in Convention 12.5, likewise retains its
+focus/sibling/path premises; it does not supply (ER.74)'s old-source
+recovery. These classical constructions are credited intermediate uses,
+not new numbered results or claims of a new general pointer calculus.
+
+**Definition 19.3 (remaining mathematical scope).** The model $\mu$ changes
+only the occurrence representation, its explicitly endowed directed
+field authority, fixed paid bank, address preparation and the refined
+Edit/receipt/record relation. It retains all finite seeds, actual raw
+acquisition and $E(j(u))$ initialization, all lawful continuing bit
+prefixes, every selected original old leaf, same source/owner/orientation,
+held/live acquisition and complete retained material. It does not supply
+a successful old-tile guard as an oracle; that guard is proved in
+Theorem 17.1. It supplies finite internal selection and continued local
+anchor use, not a new unknown-input disclosure.
+
+The four-kernel domain begins at first Ready. Finer cuts inside initial
+acquisition/initialization, one-node initialization, event/descriptor/
+reference coeffects, literal Read suffix construction, known preparation/
+graft and Bind remain outside it. Reciprocal parent maintenance,
+individually split reciprocal endpoints, native installation and current
+native maintenance admission/return remain separate models and
+obligations. There is no result for concurrent writers, changing rights,
+independent Busy requests or arbitrary owner services. Mathematical
+source/boundary decoding does not install acquisition, serialization,
+authenticated named-historical selection, cross-owner handoff, callable
+conversion or returned delivery of arbitrary fine views.
+
+The completed comparison preserves all fine residual material and its
+actual identities; it does not identify an interior Advance with an old
+Advance or provide original-Q interior transport. Every prior fixed-
+$G_{gc}$, original-$Q$, parked-consumer, unchanged-initialization and
+original-authority claim keeps its exact scope. Open problem 8.1,
+the original prediction task (ER.3), its $M_1(D)$ and sharp/effective
+certification questions remain as stated. Coherent infinite realization,
+general generator/resource minima, universal alpha/beta reduction,
+physical space/time interpretation and the full four-expression objective
+are not consequences of this finite directed theorem.
+
+[ERMUEFF]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeSerialEffective.lean
+[ERMUEFFB]: ../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeSerialEffective.scribe.cs
+[ERMUKERNEL]: ../../../D5/S3/ObserverMemory/RefinementClosure/TypedFiniteViewKernel.lean
+[ERMUKERNELB]: ../../../Blueprint/D5/S3/ObserverMemory/RefinementClosure/TypedFiniteViewKernel.scribe.cs
+[ERMUSTATE]: https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Computability/StateTransition.lean
+[ERMUOR]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_OPEN_ROW_COMPLETION_AND_AUTHORITY.md
+[ERMUSV]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SINGLE_VERTEX_CONSTRUCTION.md
+[ERMUSC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SOURCE_CALL_TASK_RECOVERY.md
+[ERMUNETS]: https://arxiv.org/html/1505.07164v1
+
+## 追加锚（本行以下为增补区）
