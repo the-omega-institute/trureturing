@@ -1,13 +1,34 @@
-/-
-SOURCE-ONLY / UNCOMPILED. This is proposed source, not a delivered library theorem.
-Requires owner-exports.patch. No owner source was modified by this worker.
-The finite-block and tail proofs below are attempts; no elaboration or kernel
-check has been performed. See api-map.md and source-audit.json.
+/- GID: D5/S3/Weil/ZetaBridge/PrimeSymbolMeanSquare
+   generality: I
+   mirror-B: D5/B/S3/Weil/ZetaBridge/PrimeSymbolMeanSquare
+   mirror-E: none(waiver:general-analytic-identity-and-tail-estimate)
+   anchors: []
+   utility: none
+   digest: Finite prime-symbol block estimates, discrete Abel majorization and complex arithmetic tails. -/
 
-The cutoff includes every integer in [2,c), hence every prime power there.
-The geometric estimate uses ordered unequal pairs. NumberTheory.AbelSummation
-is imported; its discrete summation-by-parts backend is used directly, avoiding
-an unnecessary differentiability/integral bridge for discrete weights.
+/-
+SOURCE_ONLY_UNCOMPILED. Canonical-path source candidate from the pinned integrated
+T2 snapshot. Lean elaboration, kernel acceptance, sorry and axiom-closure checks,
+scoped reports, Scribe emission, Reg, required CI and delivery remain unverified.
+Every retained signature, definition and proof below preserves the pinned bytes.
+
+The cutoff retains every integer in [2,c), including all higher prime powers.
+The geometric estimate uses ordered unequal pairs, with factor 2 per ordered
+pair. Discrete summation by parts uses the imported AbelSummation backend.
+Complex coefficients, boundary moments and exact pi normalization are retained;
+physical operator identification and signed-form positivity are not established.
+
+Utility classification: none. Every declaration is a parameterized definition,
+identity, phase-geometry argument, geometric block estimate, discrete Abel
+estimate or convergent-tail argument, including the private proof helpers and
+symbolic arithmetic first-jet applications. Finite sums have arbitrary cutoff
+or finite-set inputs; they are not a delivered bounded enumeration or a fixed
+certified instance. No declaration supplies a checker/reflection algorithm or
+a reduction whose conclusion awaits a numerical certificate. Thus all retained
+declarations fall outside bounded-enumeration, checker, numeric-reduction and
+certified-instance. Other utility fields are not-applicable(kind=none).
+Generality I records the arithmetic prime-symbol specialization, independently
+of this computational-content classification.
 -/
 import D5.S3.Weil.ZetaBridge.WeilArithmeticCouplingJet
 import D5.S3.Weil.ZetaBridge.WeilInfiniteComplementLeakage
@@ -161,8 +182,8 @@ theorem owner_prime_sum_eq (c : ℕ) (m : ℤ) :
         exact hqs (Finset.mem_Ico.mpr ⟨by lia, hqc⟩)
       have heq : q = 0 ∨ q = 1 := by lia
       rcases heq with rfl | rfl
-      · exact owner_term_zero c m
-      · exact owner_term_one c m
+      · simpa only [Nat.cast_zero] using owner_term_zero c m
+      · simpa only [Nat.cast_one] using owner_term_one c m
     _ = primeSymbol c m := by simp only [primeSymbol, lattice_angle]
 
 /-- Including q=c also gives the same finite symbol. -/
@@ -239,11 +260,12 @@ theorem norm_square_expansion (s : Finset ℕ) (a : ℕ → ℝ) (z : ℕ → �
     _ = ((∑ p ∈ s, (a p : ℂ) * z p ^ m) *
         conj (∑ q ∈ s, (a q : ℂ) * z q ^ m)).re := by
       rw [Complex.mul_conj']
-      simp only [Complex.ofReal_re]
+      simp only [← Complex.ofReal_pow, Complex.ofReal_re]
     _ = (∑ p ∈ s, ∑ q ∈ s,
         ((a p * a q : ℝ) : ℂ) * (z p * conj (z q)) ^ m).re := by
       congr 1
       simp only [map_sum, Finset.sum_mul, Finset.mul_sum, hterm]
+      exact Finset.sum_comm
     _ = _ := by simp_rw [complex_re_sum]
 
 private theorem exponential_block_bound (s : Finset ℕ) (a : ℕ → ℝ) (z : ℕ → ℂ)
@@ -319,6 +341,7 @@ private theorem primeSquareMass_nonneg (c : ℕ) : 0 ≤ primeSquareMass c :=
   Finset.sum_nonneg (fun _ _ => sq_nonneg _)
 
 private theorem primeCross_nonneg (c : ℕ) : 0 ≤ primeCross c := by
+  unfold primeCross orderedCross
   apply Finset.sum_nonneg
   intro p _
   apply Finset.sum_nonneg
@@ -404,7 +427,8 @@ private theorem prime_tail_partial {c M : ℕ} (hc : 2 ≤ c) (hM : 0 < M) (K : 
     _ ≤ primeSquareMass c * (∑ j ∈ Finset.range K, inverseSquareWeight M j) +
         primeCross c * inverseSquareWeight M 0 := hab
     _ ≤ primeSquareMass c * (M : ℝ)⁻¹ + primeCross c * inverseSquareWeight M 0 :=
-      add_le_add_right (mul_le_mul_of_nonneg_left hweights (primeSquareMass_nonneg c)) _
+      add_le_add (mul_le_mul_of_nonneg_left hweights (primeSquareMass_nonneg c))
+        (le_refl (primeCross c * inverseSquareWeight M 0))
     _ = _ := by simp [primeTailBudget, inverseSquareWeight, div_eq_mul_inv, inv_pow]
 
 /-- The genuine infinite tail, indexed bijectively by m=M+j+1, j : Nat.
@@ -424,7 +448,9 @@ theorem prime_symbol_square_tail {c M : ℕ} (hc : 2 ≤ c) (hM : 0 < M) :
 theorem complex_prime_energy (c M j : ℕ) (β : ℂ) :
     ‖β * (primeSymbol c ((M + j + 1 : ℕ) : ℤ) : ℂ) / ((M + j + 1 : ℕ) : ℂ)‖ ^ 2 =
       ‖β‖ ^ 2 * (primeSymbol c ((M + j + 1 : ℕ) : ℤ) ^ 2 * inverseSquareWeight M j) := by
-  have hm : ‖((M + j + 1 : ℕ) : ℂ)‖ = (M : ℝ) + (j : ℝ) + 1 := by simp
+  have hm : ‖((M + j + 1 : ℕ) : ℂ)‖ = (M : ℝ) + (j : ℝ) + 1 := by
+    simpa only [Nat.cast_add, Nat.cast_one] using
+      (Complex.norm_natCast (M + j + 1))
   rw [norm_div, norm_mul, div_pow, mul_pow, hm, Complex.norm_real, Real.norm_eq_abs, sq_abs]
   simp only [inverseSquareWeight, div_eq_mul_inv, inv_pow]
   ring

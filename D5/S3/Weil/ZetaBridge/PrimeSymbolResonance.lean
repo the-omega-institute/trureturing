@@ -1,8 +1,41 @@
+/- GID: D5/S3/Weil/ZetaBridge/PrimeSymbolResonance
+   generality: I
+   mirror-B: D5/B/S3/Weil/ZetaBridge/PrimeSymbolResonance
+   mirror-E: none(waiver:general-analytic-identity-and-tail-estimate)
+   anchors: []
+   utility: none
+   digest: Exact prime-symbol resonance, von Mangoldt convolution classification and refined complex tails. -/
+
 /-
-SOURCE_ONLY_UNCOMPILED. Full proof attempts, with no elaboration/kernel claim.
-Install at D5/S3/Weil/ZetaBridge/PrimeSymbolResonance.lean only in a later,
-authorized integration. Requires the proposed T2 and owner visibility patches.
-The imported T2 source is itself UNCOMPILED. No physical chain is imported.
+SOURCE_ONLY_UNCOMPILED. Canonical-path source candidate from the pinned integrated
+T3 snapshot and its T2 import. Lean elaboration, kernel acceptance, sorry and
+axiom-closure checks, scoped reports, Scribe emission, Reg, required CI and
+delivery remain unverified. Every retained signature, definition and proof below
+preserves the pinned bytes; the private tail_partial proof is unchanged.
+
+All prime powers, ordered pairs, resonant self-pairs and arbitrary complex beta
+are retained. The generic resonance and Dirichlet-convolution classification
+uses primeFactors.card for the number of distinct prime divisors. The 5040*k
+application and endpoint-check candidates are exposition in the existing
+complex_prime_tail Describe narrative, without named specialization declarations
+or retained Lean examples.
+
+In the pinned sources, ActualFullSymbolTail calls prime_symbol_square_tail.
+PhysicalPrimeTwoCutoff and PhysicalCompressedCosineMatrix do not consume T3.
+These are source-reference observations, not validated downstream acceptance;
+no RH, Robin inequality or physical-positivity conclusion is established.
+
+Utility classification: none. Every surviving declaration is a parameterized
+finite-sum definition, exact resonance identity, centered geometric estimate,
+Dirichlet-convolution/support classification or convergent-tail argument,
+including all private proof helpers. Cutoffs, blocks and complex coefficients
+remain arbitrary. The three-distinct-prime condition is a generic support
+classification, not an enumerated fixed instance. No declaration delivers a
+bounded enumeration, checker/reflection infrastructure, a numerical-certificate
+reduction or a certified fixed instance. Thus all retained declarations fall
+outside bounded-enumeration, checker, numeric-reduction and certified-instance.
+Other utility fields are not-applicable(kind=none). Generality I records the
+arithmetic prime-symbol specialization independently of this classification.
 -/
 import D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare
 import Mathlib.Data.Nat.Factorization.PrimePow
@@ -429,7 +462,8 @@ private theorem tail_partial {c N : ℕ} (hc : 2 ≤ c) (hN : 0 < N) (K : ℕ) :
     _ ≤ mean c * (∑ j ∈ Finset.range K, inverseSquareWeight N j) +
         offset c * inverseSquareWeight N 0 := hab
     _ ≤ mean c * (N : ℝ)⁻¹ + offset c * inverseSquareWeight N 0 :=
-      add_le_add_right (mul_le_mul_of_nonneg_left hw (mean_nonneg hc)) _
+      add_le_add (mul_le_mul_of_nonneg_left hw (mean_nonneg hc))
+        (le_refl (offset c * inverseSquareWeight N 0))
     _ = _ := by simp [tailBudget, inverseSquareWeight, div_eq_mul_inv, inv_pow]
 
 /-- Actual convergent tail: j ↦ N+j+1 enumerates every m>N exactly once. -/
@@ -457,56 +491,5 @@ theorem complex_prime_tail {c N : ℕ} (hc : 2 ≤ c) (hN : 0 < N) (β : ℂ) :
   · simp_rw [complex_prime_energy]
     rw [tsum_mul_left]
     exact mul_le_mul_of_nonneg_left hb (sq_nonneg _)
-
-/-- Live sine-tail specialization, consumed again by the physical module. -/
-theorem complex_prime_tail_three_primeFactors {c N : ℕ} (hc : 2 ≤ c) (hN : 0 < N)
-    (hcard : 3 ≤ c.primeFactors.card) (β : ℂ) :
-    Summable (fun j : ℕ =>
-      ‖β * (primeSymbol c ((N + j + 1 : ℕ) : ℤ) : ℂ) / ((N + j + 1 : ℕ) : ℂ)‖ ^ 2) ∧
-    (∑' j : ℕ,
-      ‖β * (primeSymbol c ((N + j + 1 : ℕ) : ℤ) : ℂ) / ((N + j + 1 : ℕ) : ℂ)‖ ^ 2) ≤
-        ‖β‖ ^ 2 * (primeSquareMass c / 2 / (N : ℝ) + offset c / ((N : ℝ) + 1) ^ 2) := by
-  simpa only [tailBudget, mean_of_three_primeFactors hc hcard] using complex_prime_tail hc hN β
-
-/-- Positive multiples inherit the generic class; no all-Robin-input assertion. -/
-theorem three_primeFactors_of_multiple {d c : ℕ} (hd : 3 ≤ d.primeFactors.card)
-    (hdc : d ∣ c) (hc0 : c ≠ 0) : 3 ≤ c.primeFactors.card :=
-  hd.trans (Finset.card_le_card (Nat.primeFactors_mono hdc hc0))
-
-/-- A small divisibility certificate, subsequently consumed by a genuine tail. -/
-private theorem card_5040 : 3 ≤ (5040 : ℕ).primeFactors.card := by
-  have hsub : ({2, 3, 5} : Finset ℕ) ⊆ (5040 : ℕ).primeFactors := by
-    intro p hp
-    simp only [Finset.mem_insert, Finset.mem_singleton] at hp
-    rcases hp with rfl | rfl | rfl <;>
-      exact Nat.mem_primeFactors.mpr ⟨by norm_num, by norm_num, by norm_num⟩
-  have h := Finset.card_le_card hsub
-  have hs : ({2, 3, 5} : Finset ℕ).card = 3 := by decide
-  rwa [hs] at h
-
-/-- Actual complex sine tail at every positive multiple of the 5040 scale. -/
-theorem complex_prime_tail_multiple_5040 {k N : ℕ} (hk : 0 < k) (hN : 0 < N) (β : ℂ) :
-    Summable (fun j : ℕ =>
-      ‖β * (primeSymbol (5040 * k) ((N + j + 1 : ℕ) : ℤ) : ℂ) /
-        ((N + j + 1 : ℕ) : ℂ)‖ ^ 2) ∧
-    (∑' j : ℕ,
-      ‖β * (primeSymbol (5040 * k) ((N + j + 1 : ℕ) : ℤ) : ℂ) /
-        ((N + j + 1 : ℕ) : ℂ)‖ ^ 2) ≤
-      ‖β‖ ^ 2 * (primeSquareMass (5040 * k) / 2 / (N : ℝ) +
-        offset (5040 * k) / ((N : ℝ) + 1) ^ 2) := by
-  have hc : 2 ≤ 5040 * k := by nlinarith
-  exact complex_prime_tail_three_primeFactors hc hN
-    (three_primeFactors_of_multiple card_5040 (show 5040 ∣ 5040 * k from ⟨k, rfl⟩)
-      (Nat.mul_ne_zero (by norm_num) (Nat.ne_of_gt hk))) β
-
-/-- Empty endpoint scale, including all constants in the exact theorem. -/
-theorem cutoff_two : primeSymbol 2 = 0 ∧ primeSquareMass 2 = 0 ∧
-    resonantMass 2 = 0 ∧ mean 2 = 0 ∧ offset 2 = 0 := by
-  simp [primeSymbol, primeIndices, primeSquareMass, resonantMass, mean, offset,
-    primeCross, orderedCross, sumCross]
-
-/-- The zero interior lattice mode is retained and contributes zero sine. -/
-theorem primeSymbol_zero (c : ℕ) : primeSymbol c 0 = 0 := by
-  simp [primeSymbol]
 
 end D5.S3.Weil.ZetaBridge.PrimeSymbolResonance
