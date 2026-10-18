@@ -1343,3 +1343,530 @@ no-quartet corollary on (80.1).
 No numerical radius is asserted, and these intervals have not been shown
 to join the central neighborhood of §§67–69. The entire nonzero open branch
 and the general dimension-six fourth-MUB problem remain outside this result.
+
+
+## 81. Reflection-edge rigidity throughout the punctured branch
+
+### 81.1. Statement in the original input convention
+
+Use the actual family
+\[
+ h=\sqrt{\frac{3-b^2}{1+b^2}},\qquad
+ P=\frac{bh-3+i(h+b)}2,\qquad Q=\frac{-bh-3+i(h-b)}2,
+\]
+\[
+ H_0(b)=\frac1{\sqrt6}
+ \begin{pmatrix}J_3+PI_3&J_3+QI_3\\
+ J_3+\bar QI_3&-J_3-\bar PI_3\end{pmatrix}.                \tag{81.1}
+\]
+A common-flat input ray has a representative \(w=(x,y)\) whose six
+entries and the six entries of \(H_0(b)w\) all have modulus one.
+Its normalized vector is \(w/\sqrt6\). Let \(R_0\) swap positions
+\(0,1\) in both three-coordinate channels.
+
+**Theorem 81.1.** For \(0<|b|<1\), the common-flat rays satisfying
+\(w^*R_0w=0\) are exactly
+\[
+ w=\left(f_m,\frac{\epsilon(b+i)}{\sqrt{1+b^2}}f_m\right),
+ \quad f_m=(1,\omega^m,\omega^{2m}),\quad
+ \omega=\frac{-1+i\sqrt3}{2},\quad
+ m\in\{1,2\},\quad\epsilon\in\{1,-1\}.                 \tag{81.2}
+\]
+The same statement holds for either other synchronous transposition.
+In particular, a noncanonical common-flat ray has no orthogonal
+transposition image anywhere on this punctured branch.
+
+The proof extends the half-parameter obstruction of
+[§74](MUB_SIX_FOURTH_BASIS_THEORY_CONTINUATION_II.md#74-reflection-edge-rigidity-at-the-two-half-parameters)
+to every stated parameter. It uses the original necessary-and-sufficient
+quaternion reduction (74.3)–(74.15), followed by the polynomial identities
+printed below. No finite ray census is assumed. The center and endpoints
+are excluded from the theorem, and no assertion about edges between
+unrelated symmetry orbits is made.
+
+### 81.2. Complete chart boundary
+
+We recall precisely the uniform part of §74 needed here. Regard vectors in
+\(\mathbb R^3\) as imaginary quaternions, and put \(e=(1,0,0)\).
+The original reflection and individual input/output flatness equations give
+unit quaternions/vectors \(F,v,n\), with
+\[
+ |\boldsymbol K|^2=3,\qquad e\cdot\boldsymbol K=-b,
+ \qquad \Im F\perp\boldsymbol K,v.
+\]
+The real poles \(F=1,-1\) were handled before any coordinate division in
+§74.3: \(F=1\) gives exactly (81.2), whereas \(F=-1\) has the nonzero
+third input imbalance \(-h(b^2+3)/6\). For nonreal \(F\), the axis
+\(v=\pm e\) is impossible on \(|b|<1\): at \(b=0\) its linear
+conditions are inconsistent, and otherwise its unit condition forces
+\((b^2-1)(b^2+3)=0\). The full \(v\parallel\boldsymbol K\) stratum
+is impossible on \(|b|\le1\), since its output sum is
+\[
+ \frac{2(3-b^2)}{b^2+3}
+ [(3-b^2)(a+2bq)^2+3(1+b^2)]>0.                           \tag{81.3}
+\]
+Here \(a=\Re F\) and \(q\) is the real coordinate in that parallel chart.
+These are original-equation exclusions, not genericity assumptions.
+
+Consequently every remaining solution has
+\[
+ F=a+t(\boldsymbol K\times v),\quad t\ne0,\qquad
+ c=e\cdot v,\quad d=\boldsymbol K\cdot v,\quad
+ \delta=e\cdot(\boldsymbol K\times v),\quad |c|<1,
+\]
+\[
+ \delta^2=3-b^2-3c^2-d^2-2bcd,\qquad
+ a^2+t^2(3-d^2)=1,
+ \qquad \rho=\frac{3b}{b^2+3}.                            \tag{81.4}
+\]
+The four scalar equations are exactly \(I=D_f=S_f=O_f=0\) in
+(74.14), with its \(\Delta\) renamed \(\delta\). In particular,
+\[
+ D_f=2\delta[ca-t\{\rho(1+c^2)+cd\}].                  \tag{81.5}
+\]
+We retain both \(\delta=0\) and \(\delta\ne0\). The scalar
+\(K\) introduced later is distinct from the vector \(\boldsymbol K\).
+
+### 81.3. Plane chart: finite quadratic seeds
+
+Rotate about \(e\) so that \(\boldsymbol K=(-b,k,0)\), where
+\(k=\sqrt{3-b^2}>0\). In the plane chart write
+\[
+ v=(x,ky,0),\quad F=a+(0,0,kt_p),\quad
+ x^2+k^2y^2=a^2+k^2t_p^2=1.
+\]
+The excluded axis is exactly \(y=0\). Set \(p=x/y\), so
+\(y^2=1/(p^2+k^2)\), without choosing the sign of \(y\).
+The vector from (74.10) satisfies
+\[
+ N(v)=ky^3N_0,\qquad N_0=(3kp,k^2-2p^2,0),\qquad
+ N_0\cdot v=k/y.
+\]
+The Cayley coordinates
+\[
+ a=\frac{1-k^2r^2}{1+k^2r^2},\qquad
+ t_p=\frac{2r}{1+k^2r^2},\qquad r\in\mathbb R               \tag{81.6}
+\]
+omit only \(F=-1\), already excluded. All their denominators are positive.
+Define
+\[
+ Q_0=\frac{1+3F^*+\boldsymbol K(F^*-1)}4,\qquad
+ G_0=\frac{3+F^*+\boldsymbol K(F^*-1)}4,\qquad
+ d_0=\boldsymbol K+2\rho e.
+\]
+Three necessary original equations are \(E_0=E_1=E_2=0\), where
+\[
+\begin{aligned}
+ E_0&=N_0\cdot Q_0^*eQ_0,\\
+ E_1&=N_0\cdot(Fd_0F^*-3d_0)+6k[(-b+2\rho)p+k^2],\\
+ E_2&=N_0\cdot G_0^*d_0G_0.
+\end{aligned}                                                    \tag{81.7}
+\]
+The fourth equation is automatic on this chart. Put \(B=b^2+3\) and
+\(W_r=(b^2-3)r^2-1\). The three quadratic polynomials
+\(P_i=M_{i0}+M_{i1}p+M_{i2}p^2\) below satisfy the exact identities
+\[
+ E_0=\frac{kP_0}{2W_r^2},\qquad
+ E_1=\frac{4kP_1}{BW_r^2},\qquad
+ E_2=\frac{kP_2}{BW_r^2}.                                \tag{81.8}
+\]
+In all polynomial blocks, `*` denotes multiplication and `^` a
+nonnegative integer power. The entries of \(M\) are:
+
+```text
+M00 = r*(b^2 - 3)*(b^5*r^3 - 2*b^4*r^2 - 6*b^3*r^3 + b^3*r + 6*b^2*r^2 + 9*b*r^3 - 3*b*r - 6)
+M01 = 3*(b^6*r^4 - 2*b^5*r^3 - 7*b^4*r^4 + b^4*r^2 + 12*b^3*r^3 + 15*b^2*r^4 + 2*b^2*r^2 - 18*b*r^3 - 9*r^4 - 15*r^2 + 2)
+M02 = 2*r*(b^5*r^3 - 2*b^4*r^2 - 6*b^3*r^3 + b^3*r + 6*b^2*r^2 + 9*b*r^3 - 3*b*r - 6)
+M10 = -(b^2 - 3)*(b^6*r^4 - b^5*r^3 - 3*b^4*r^4 + 6*b^3*r^3 - b^3*r - 9*b^2*r^4 + b^2 - 9*b*r^3 + 3*b*r + 27*r^4 + 3)
+M11 = 3*r*(b^2 - 3)*(b^4*r^2 - 2*b^3*r + b^2 + 6*b*r - 9*r^2 + 3)
+M12 = b^6*r^4 + 2*b^5*r^3 - 3*b^4*r^4 - 6*b^4*r^2 - 12*b^3*r^3 + 2*b^3*r - 9*b^2*r^4 + b^2 + 18*b*r^3 - 6*b*r + 27*r^4 + 54*r^2 + 3
+M20 = (b^2 - 3)*(2*b^6*r^4 - 5*b^5*r^3 - 15*b^4*r^4 + 3*b^4*r^2 + 30*b^3*r^3 + b^3*r + 36*b^2*r^4 - 9*b^2*r^2 - b^2 - 45*b*r^3 - 3*b*r - 27*r^4 - 3)
+M21 = 3*(b^2 - 3)*(b^2*r^2 - 2*b*r - 3*r^2 + 1)*(2*b^3*r^2 - b^2*r - 6*b*r^2 - b + 3*r)
+M22 = 2*(2*b^6*r^4 - 5*b^5*r^3 - 15*b^4*r^4 + 3*b^4*r^2 + 30*b^3*r^3 + b^3*r + 36*b^2*r^4 - 9*b^2*r^2 - b^2 - 45*b*r^3 - 3*b*r - 27*r^4 - 3)
+```
+
+Thus the following elimination starts from completely specified original
+necessary equations, clearing only nonzero quantities.
+
+### 81.4. Plane determinant and rank-deficient cases
+
+Define the quartic
+\[
+ D=(b^2-3)^2Br^4+8b(b^2-3)^2r^3
+       -3(b^2-3)Br^2-4b(b^2-3)r-2B.
+\]
+Direct determinant expansion gives
+\[
+ \det M=9(b^2-3)B W_r^4D.                                \tag{81.9}
+\]
+A common root \(p\) gives \(D=0\). Let
+\(V=M_{0,\cdot}\times M_{1,\cdot}\). At such a root,
+\(V_1^2-V_0V_2=0\): for independent rows, \(V\) is proportional to
+\((1,p,p^2)\); for dependent rows it is zero. No rank stratum is divided
+away.
+
+Let \(L\) be the numerator in lowest terms of
+\(\operatorname{rem}_r(V_1^2-V_0V_2,D)\) over \(\mathbb Q(b)\).
+The leading coefficient \((b^2-3)^2B\) of \(D\) is nonzero, and the
+remainder denominator has only factors \(b^2-3,B\). The exact Sylvester
+resultant is, up to a nonzero rational scalar,
+\[
+ \operatorname{Res}_r(D,L)\doteq
+ (b^2-3)^{10}(b^2-2)^2(b^2+1)^8B^{41}
+                  (7b^4-12b^2+9).                       \tag{81.10}
+\]
+Here and below \(\doteq\) means equality up to a nonzero rational
+constant, so it preserves every parameter zero. A numerator normalization
+with the coefficients of the printed seeds gives the constant
+\(383808888404050968576\) in (81.10). The last factor is
+\(7(b^2-6/7)^2+27/7>0\); all other factors are nonzero on \(|b|\le1\).
+This excludes the entire plane chart, including its rank deficiencies.
+
+### 81.5. Nonplane chart and seven rational coefficients
+
+First take \(0<b<1\). Since \(\delta t\rho\ne0\), (81.5) makes
+\(c=0\) impossible. Put
+\[
+ U=c^2,\quad R=cd,\quad K=c\delta,\quad T=t/c,\quad B=b^2+3.
+\]
+Then
+\[
+ 0<U<1,\quad K\ne0,\quad
+ a=T[\rho(1+U)+R],\quad K^2=G,\quad T^2H=1,
+\]
+\[
+\begin{aligned}
+ G&=(3-b^2)U-3U^2-R^2-2bUR>0,\\
+ H&=\rho^2(1+U)^2+2\rho R(1+U)+3U=3D_0/B^2>0,\\
+ D_0&=2RbB(U+1)+3U^2b^2+Ub^4+12Ub^2+9U+3b^2.
+\end{aligned}                                                    \tag{81.11}
+\]
+Divide (74.14)'s \(I,S_f,O_f\) by \(c\), substitute these relations,
+and reduce \(K^2=G,T^2=1/H\). The sum becomes
+\[
+ \frac{S_f}{c}=\frac{6(U+1)S_0}{UD_0}=0,
+\]
+\[
+\begin{aligned}
+ S_0={}&bB(U+1)R^2
+ +2[3b^2U^2+(b^4+4b^2+3)U+b^2]R\\
+ &+bU[(9b^2+3)U+b^2+3].
+\end{aligned}                                                    \tag{81.12}
+\]
+Its leading \(R\)-coefficient \(bB(U+1)\) is positive. Reduce the
+numerators of the remaining rational coefficients modulo \(S_0\) in
+\(R\), retaining their denominators. With \(\mathcal I\) denoting
+this reduction of \(I/c\), and \(\mathcal J\) that of
+\((O_f-6bI/B)/c\), the result is
+\[
+ \mathcal I=I_{00}+I_{01}T+I_{10}K+I_{11}KT,\qquad
+ \mathcal J=J_{00}+J_{10}K+J_{11}KT.                      \tag{81.13}
+\]
+All seven coefficients are printed here; their long expanded denominator factor
+is exactly \(D_0\) from (81.11):
+
+```text
+I00 = -4*b*(3*U^2 + 2*U*b^2 - 1)*(2*R*U*b^2 - 3*R*U - R*b^2 + 3*U^2*b + U*b^3 - 6*U*b)/(U*(2*R*U*b^3 + 6*R*U*b + 2*R*b^3 + 6*R*b + 3*U^2*b^2 + U*b^4 + 12*U*b^2 + 9*U + 3*b^2))
+I01 = -12*(3*R*U^2*b^2 - 6*R*U - R*b^2 + 9*U^3*b - 6*U^2*b + 2*U*b^3 - 9*U*b)/(U*(b^2 + 3))
+I10 = 4*(3*R*U^2*b^3 + 9*R*U^2*b + 2*R*U*b^3 + 6*R*U*b - R*b^3 - 3*R*b - 9*U^3*b^2 + 6*U^2*b^4 + 3*U^2*b^2 + 4*U*b^4 + 3*U*b^2 - 18*U + 3*b^2)/(U*(2*R*U*b^3 + 6*R*U*b + 2*R*b^3 + 6*R*b + 3*U^2*b^2 + U*b^4 + 12*U*b^2 + 9*U + 3*b^2))
+I11 = -12*b*(-3*U^2 + 2*U*b^2 + 4*U + 1)/(U*(b^2 + 3))
+J00 = 48*(b - 1)*(b + 1)*(2*R*U*b^2 - 3*R*U - R*b^2 + 3*U^2*b + U*b^3 - 6*U*b)/(2*R*U*b^3 + 6*R*U*b + 2*R*b^3 + 6*R*b + 3*U^2*b^2 + U*b^4 + 12*U*b^2 + 9*U + 3*b^2)
+J10 = -48*b*(-3*R*U^2*b^3 - 9*R*U^2*b - 2*R*U*b^3 - 6*R*U*b + R*b^3 + 3*R*b - 9*U^3*b^2 - 21*U^2*b^2 - 18*U^2 + 2*U*b^4 + 3*U*b^2 + 3*b^2)/(U*(b^2 + 3)*(2*R*U*b^3 + 6*R*U*b + 2*R*b^3 + 6*R*b + 3*U^2*b^2 + U*b^4 + 12*U*b^2 + 9*U + 3*b^2))
+J11 = 144*(-3*U^2*b^2 + U*b^4 + 2*U*b^2 + 3*U + b^2)/(U*(b^2 + 3)^2)
+```
+
+These identities are obtained by ordinary rational substitution in (74.14).
+Their only denominator factors are \(U,B,D_0\), together with the
+nonzero leading coefficient \(bB(U+1)\) used for the reduction.
+Most importantly,
+\[
+ J_{11}=\frac{144[-3U^2b^2+Ub^4+2Ub^2+3U+b^2]}{UB^2}>0,
+\]
+because the bracket is \(b^2(1-U)(1+3U)+U(b^4+3)>0\). Therefore
+\[
+ T=-\frac{J_{00}+KJ_{10}}{KJ_{11}}                       \tag{81.14}
+\]
+is legitimate on the entire nonplane chart, including every parameter
+fiber and every possible zero of the other coefficients.
+
+### 81.6. Division-free elimination and reconstructible resultants
+
+The following finite operations specify the remaining certificate without
+requiring large expanded coefficient lists. For a rational expression \(f\),
+let \(\mathcal N(f)\) mean: cancel common numerator/denominator factors,
+take the numerator, take its remainder modulo \(S_0\) in \(R\), and
+again take the canceled numerator. Coefficients are rational functions of
+the other displayed variables. Numerator signs and nonzero rational
+contents do not matter. No parameter-dependent factor may be dropped
+unless explicitly specified below. The only new denominators in this
+remainder operation divide powers of \(bB(U+1)\).
+
+Define
+\[
+\begin{aligned}
+ E&=\mathcal N\!\left(\operatorname{rem}_K
+ [-(I_{01}+KI_{11})(J_{00}+KJ_{10})
+             +KJ_{11}(I_{00}+KI_{10}),\ K^2-G]\right),\\
+ F_0&=\mathcal N\!\left(\operatorname{rem}_K
+ [H(J_{00}+KJ_{10})^2-GJ_{11}^2,\ K^2-G]\right).
+\end{aligned}                                                    \tag{81.15}
+\]
+Both are linear in \(K\); write \(E=e_0+Ke_1\),
+\(F_0=f_0+Kf_1\). Each original solution necessarily satisfies
+\[
+ \widehat C=\mathcal N(e_0f_1-f_0e_1)=0,\qquad
+ \widehat N_E=\mathcal N(e_0^2-Ge_1^2)=0,\qquad
+ \widehat N_F=\mathcal N(f_0^2-Gf_1^2)=0.                 \tag{81.16}
+\]
+In particular \(e_1=0\), \(f_1=0\), and dependent equations have not
+been excluded. Remove only the factor \(UbB\) from \(\widehat C\),
+and take the primitive integer parts of the resulting three polynomials
+in \((R,U,b)\), denoting them by \(C,N_E,N_F\). This removes only
+nonzero rational constants from \(\widehat N_E,\widehat N_F\).
+All three are \(R\)-linear. The removed integer contents in one
+normalization are respectively \(15925248,1327104,191102976\);
+the factor \(UbB\) is nonzero on the physical domain.
+
+Put
+\[
+ A_*=(U-1)^2U^2b^3(U+1)^3(b^2-3)^2B^3,
+ \quad V_*=Ub^2+1,\quad W_*=b^2-3U,
+\]
+and print the small factor
+\[
+ P_4(U,q)=9U^4q-12U^3q+4U^2q^2-10U^2q-12U^2+4Uq+q.
+\]
+The following table defines four further primitive integer polynomials
+by **exact polynomial division**. In the last row the quotient defines
+\(P_8\); the other rows define \(A_{15},B_{15},C_{19}\).
+Replace every even power \(b^{2j}\) in each primitive quotient by \(q^j\).
+The resulting degrees in \(U\) are the indicated subscripts.
+
+| Sylvester resultant in \(R\) | Exact divisor, up to rational constant | Quotient |
+| --- | --- | --- |
+| \(\operatorname{Res}(C,N_E)\) | \(A_*V_*^2W_*^6\) | \(A_{15}(U,q)\) |
+| \(\operatorname{Res}(C,N_F)\) | \(A_*V_*^3W_*^7\) | \(B_{15}(U,q)\) |
+| \(\operatorname{Res}(N_E,N_F)\) | \(UA_*V_*^2W_*^6\) | \(C_{19}(U,q)\) |
+| \(\operatorname{Res}(C,S_0)\) | \((b^2-1)A_*V_*^3W_*^7P_4(U,b^2)\) | \(P_8(U,q)\) |
+
+For the primitive normalization used above, the four rational multipliers
+can be taken as \(9,27,18,-27\), with signs depending only on primitive
+sign choices. Each division has zero remainder, and each quotient has
+only even powers of \(b\). These facts, (81.9)–(81.10), and the gcds
+below are exact polynomial identities specified entirely by the printed
+seeds and finite rational operations. A resultant is the determinant of
+the usual Sylvester matrix; the gcd below is the Euclidean gcd in
+\(\mathbb Q[q]\). No specialization or numerical factor selection is
+part of these definitions.
+
+All displayed divisor factors except \(W_*\) and \(P_4\) are nonzero
+for \(0<U<1,0<b<1\). If \(U\ne b^2/3\), every surviving solution
+therefore has
+\[
+ A_{15}=B_{15}=C_{19}=0,\qquad P_4P_8=0.                 \tag{81.17}
+\]
+This inference uses the product factorization in the last table row;
+it does not divide by \(P_4\) at a solution.
+
+### 81.7. All exceptional parameter fibers
+
+For \(j=4,8\), define the polynomial
+\[
+ g_j(q)=\gcd_{\mathbb Q[q]}\bigl(
+ \operatorname{Res}_U(P_j,A_{15}),
+ \operatorname{Res}_U(P_j,B_{15}),
+ \operatorname{Res}_U(P_j,C_{19})\bigr).
+\]
+The exact Euclidean calculations from the preceding definitions give
+\[
+\begin{aligned}
+ g_4&\doteq q^{12}(q-3)^2(q-1)^6(q+1)^4(q+3)^5L_4^2,\\
+ g_8&\doteq q^{32}(q-3)^6(q-1)^{14}(q+1)^{12}
+                         L_2^3L_4^2L_{10}^2,
+\end{aligned}                                                    \tag{81.18}
+\]
+where
+\[
+\begin{aligned}
+ L_2&=5q^2-24q-9,\\
+ L_4&=q^4-8q^3+22q^2+24q+9,\\
+ L_{10}&=4q^{10}+20q^9+105q^8+74q^7+202q^6+450q^5\\
+       &\hspace{12mm}+3276q^4+6318q^3+6642q^2+1458q+2187.
+\end{aligned}
+\]
+The constants for unscaled primitive inputs may be chosen as
+\(76527504\) and \(3158920892214411264\), respectively; they have
+no effect on the zero sets. A common zero of all three resultants is
+also a zero of their gcd, because that gcd is a polynomial linear
+combination over \(\mathbb Q[q]\). This uses a polynomial identity,
+so it retains special parameter values where intermediate leading
+coefficients of an elimination might vanish.
+
+Neither gcd has a zero in \(0<q<1\). Indeed,
+\[
+ L_2<5q-24q-9<0,\qquad
+ L_4=q^2(q-4)^2+6q^2+24q+9>0,
+\]
+and every coefficient of \(L_{10}\) is positive. Thus (81.17) is
+impossible throughout the interval, not merely at generic parameters.
+
+It remains to handle \(U=b^2/3\), which has never been divided away.
+Direct substitution gives
+\[
+ S_0=\frac b3(R+b)[RB^2+b(3b^4+2b^2+3)],\qquad
+ H=2b(R+b).                                               \tag{81.19}
+\]
+The root \(R=-b\) contradicts \(H>0\). At the other root,
+\[
+ R=-\frac{b(3b^4+2b^2+3)}{B^2},
+\]
+the numerator \(E\) from (81.15) is, up to a nonzero rational constant,
+\[
+ E\doteq b^7(b^2-1)(b^2-3)^3(b^2+1)^2
+                        [KB-6b^2-6].                    \tag{81.20}
+\]
+One numerator normalization gives the multiplier \(512/9\).
+Every prefactor is nonzero. Hence \(K=6(b^2+1)/B>2\), whereas
+\[
+ K^2=G=(3-b^2)U(1-U)-(R+bU)^2<3U=b^2<1.
+\]
+This contradiction excludes the full nonplane chart.
+
+Finally direct substitution in (81.1) gives
+\[
+ H_0(-b)=(Z\otimes I_3)H_0(b)(X\otimes I_3),\qquad
+ Z=\operatorname{diag}(1,-1),\quad
+ X=\begin{pmatrix}0&1\\1&0\end{pmatrix}.                  \tag{81.21}
+\]
+Both factors are monomial and the input channel swap commutes with
+\(R_0\). It transports the result to \(-1<b<0\), including the four
+witnesses up to projective phase. Fourier substitution verifies every
+original modulus and \(w^*R_0w=0\) in (81.2). Synchronous permutations
+commute with \(H_0\), giving the other two transpositions and completing
+the proof of Theorem 81.1.
+
+## 82. Exact graphs on individual symmetry unions
+
+### 82.1. Two graph types and their scope
+
+Continue with \(0<|b|<1\), and define
+\[
+ \Theta(x,y)=(-\bar y,\bar x),\qquad
+ S(x_0,x_1,x_2)=(x_1,x_2,x_0).
+\]
+The synchronous \(S_3\) action and \(\Theta\) preserve common-flat
+rays. For a noncanonical ray \(w\), let \(\Gamma(w)\) be the
+orthogonality graph induced on
+\(S_3w\cup S_3\Theta w\), with projective duplicates identified.
+
+**Theorem 82.1.** Exactly one of the following holds.
+
+1. Both channels have at most two distinct entries. Then \(w\) is aligned,
+   the two disjoint \(S_3\) orbits have three rays each, and
+   \(\Gamma(w)=K_{3,3}\).
+2. At least one channel has three distinct entries. Then the two disjoint
+   \(S_3\) orbits have six rays each, and \(\Gamma(w)\) is four-regular
+   bipartite. Its vertices \(Pw,Q\Theta w\), for \(P,Q\in S_3\), are
+   adjacent exactly when \(P^{-1}Q\) is the identity or a transposition.
+
+In particular there is no orthogonal triple within any such symmetry union.
+The theorem does not classify edges between different unions. Arbitrary
+noncanonical triples and whole-branch canonical-basis uniqueness are not
+consequences of this statement.
+
+### 82.2. Cross-three-cycle overlaps and complete channel coverage
+
+For \(w=(x,y)\), put
+\[
+ \Delta_w=\det\begin{pmatrix}
+ 1&1&1\\x_0&x_1&x_2\\y_0&y_1&y_2
+ \end{pmatrix}.
+\]
+Expansion of the two overlaps gives
+\[
+ w^*S\Theta w=-\overline{\Delta_w},\qquad
+ w^*S^2\Theta w=\overline{\Delta_w}.                     \tag{82.1}
+\]
+A common phase multiplies \(\Delta_w\) by its square, a synchronous
+permutation multiplies it by its sign, and \(\Theta\) sends it to its
+complex conjugate. Its vanishing is therefore a projective invariant of
+the whole symmetry union.
+
+If a channel has three distinct entries, optionally apply \(\Theta\)
+to make it \(x\). The complete punctured-branch chart theorem in §75
+makes its mean nonzero for a noncanonical ray and gives
+\[
+ y=A\mathbf1+c x+d\bar x,\qquad d\ne0.                  \tag{82.2}
+\]
+Here the coefficient \(d\) is the channel-reconstruction coefficient,
+not the scalar \(\boldsymbol K\cdot v\) of §81. Unit moduli give
+\[
+\begin{aligned}
+ (x_0x_1x_2)\det\begin{pmatrix}1&1&1\\x_0&x_1&x_2\\
+                    \bar x_0&\bar x_1&\bar x_2\end{pmatrix}
+ &=\det\begin{pmatrix}1&1&1\\x_0&x_1&x_2\\x_0^2&x_1^2&x_2^2\end{pmatrix}\\
+ &=(x_1-x_0)(x_2-x_0)(x_2-x_1)\ne0.
+\end{aligned}                                                    \tag{82.3}
+\]
+Multiplying columns by \(x_j\) and cyclically permuting rows proves
+the first equality. Thus \(\Delta_w=d\det[\mathbf1,x,\bar x]\ne0\).
+This proof allows the other channel to have collisions. It uses the
+selected-channel coefficient \(d\ne0\), and no invertibility
+assumption for the map between the two channels.
+
+If neither channel has three distinct entries, the unaligned exclusion
+and complete finite/pole coverage of §75 give, after phase and permutation,
+\[
+ w=(1,1,z;g,g,gr).
+\]
+A constant channel is allowed here; both channels constant would be
+canonical. The first two columns defining \(\Delta_w\) coincide,
+so \(\Delta_w=0\). These alternatives exhaust the noncanonical rays
+on the stated punctured branch, including every aligned pole stratum.
+
+### 82.3. Stabilizers, disjointness, and all edges
+
+A transposition fixing a unit-entry ray fixes it literally: its fixed
+coordinate is nonzero and forces projective multiplier one. Hence it
+stabilizes the ray exactly when both channels repeat in the swapped pair.
+A projectively fixing three-cycle makes both channels proportional to the
+same Fourier vector. The complete common-flat classification of this
+stratum in §49 makes the ray canonical. Therefore a ray with a
+three-distinct channel has trivial \(S_3\) stabilizer; an aligned
+noncanonical ray has exactly the order-two stabilizer of its repeated pair.
+Two different transposition stabilizers would generate a three-cycle.
+The orbit sizes are consequently six and three, respectively.
+
+The two \(S_3\) orbits are always disjoint. Otherwise \(w\) would
+be a projective fixed point of \(A=R\Theta\) for some \(R\in S_3\).
+Because \(R\) is real and synchronous, it commutes with \(\Theta\).
+For a transposition, \(A^2=-I\); for an element of odd order \(m=1,3\),
+\(A^{2m}=-I\). But an antiunitary projective fixed point
+\(Aw=\lambda w\), \(|\lambda|=1\), has \(A^2w=w\). Either
+power identity is a contradiction.
+
+Write \(\Theta w=J\bar w\), with
+\[
+ J=\begin{pmatrix}0&-I_3\\I_3&0\end{pmatrix}.
+\]
+For a real symmetric synchronous permutation \(R\), the matrix \(RJ\)
+is skew-symmetric. Thus
+\[
+ w^*R\Theta w=\bar w^{\mathsf T}(RJ)\bar w=0.             \tag{82.4}
+\]
+The identity and the three transpositions are exactly the symmetric
+elements of \(S_3\). These give four universal opposite-orbit edges
+before projective duplicates are identified. Theorem 81.1 excludes
+noncanonical same-orbit transposition edges; §57 excludes same-orbit
+three-cycle edges. Applying \(\Theta\) gives the same exclusions in
+the other orbit. Hence the two parts are independent sets.
+
+For a six-element orbit, the six opposite vertices are distinct.
+Equations (82.1)–(82.3) exclude exactly the two remaining relative
+permutations, proving the four-regular graph. For an aligned orbit,
+let \(H=\{1,\tau\}\) be its stabilizer. Identity and \(\tau\)
+represent the same opposite coset; the other two transpositions represent
+the two remaining cosets, since their quotient is a three-cycle outside
+\(H\). Equation (82.4) therefore reaches all three opposite vertices.
+This proves \(K_{3,3}\) and completes the graph classification within
+one symmetry union.
