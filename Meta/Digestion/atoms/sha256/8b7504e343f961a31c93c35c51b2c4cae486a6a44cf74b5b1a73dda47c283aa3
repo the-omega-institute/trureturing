@@ -1,0 +1,43 @@
+**Corollary 7.2 (the obstruction occurs inside the supplied stable binding
+family).** Fix $r,I,o$ as above and choose $\gamma$ satisfying (3.8).
+Let the independent periodic binding data of [G, Theorem 6.2] be
+
+$$
+\phi_1(k)=\sqrt{2/d}\sin\frac{\pi(k-l)}d,
+\qquad
+M_o=\int_I G_I(k_o,k)|\phi_1(k)|^2dk>0.
+\tag{7.2}
+$$
+
+For every positive $\varepsilon$ satisfying
+
+$$
+\varepsilon^2<\frac{\gamma M_od^2}{4\pi^4},
+\qquad g=\gamma\varepsilon^2,
+\tag{7.3}
+$$
+
+the full and the restricted same-field forms have finite attained negative
+ground energies. All the positive harmonic, unequal-energy and compressed
+response results above hold for each such fixed parameter. There is no
+conflict between those obstructions and strict stability.
+
+Proof. The full statement is [G, Theorems 5.1 and 6.2], whose distinct
+hypotheses (3.8) and (7.3) are both imposed. For the restricted form use the
+same normalized full test $\phi_1/(2\pi)=J(\phi_1/\sqrt{2\pi})$.
+Equations (3.4) and (3.6) give its unchanged Rayleigh value
+
+$$
+\varepsilon^2\pi^2/d^2-\gamma M_o/(4\pi^2)<0.
+\tag{7.4}
+$$
+
+The restricted closed form has compact resolvent by Definition 3.2, so its
+infimum is also finite and attained. Variational inclusion gives only
+$\inf q_g\le\inf\overline q_g$ on the respective unit spheres; no strict
+ground-energy gap is inferred from leakage or from the two trial energies.
+The interval of positive $\varepsilon$ in (7.3) is nonempty. For each
+such fixed choice one can choose the compact test interval of Definition
+5.1, so the obstructions coexist with the two attained-negative results.
+No exchange with a limit $\varepsilon\downarrow0$ is used. $\square$
+

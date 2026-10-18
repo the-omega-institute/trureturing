@@ -1,0 +1,50 @@
+**Definition 251.2 (Full scores and conic coordinates).** A score
+$y=(A_w,C_w,P_w;T)$ has independently nonnegative coordinates and
+reward
+
+$$
+g_y(w,r)=A_w[r=0]+C_w[r=n]+P_w[r\in\{0,n\}]
+\quad(w\in\Omega_n),\qquad g_y(w^+,r)=T[r=0].
+\tag{251.3}
+$$
+
+Brackets denote indicators. Let $z_D$ be the complete event vector
+of a table, $R=O(1,2;1,2,0)$,
+$\alpha=(1,1,0,\ldots,0;0)$ and $\mathbf r=z_R=d(\alpha)$.
+Here $d(b,e)$ is the vector of every demand in (251.1).
+Set
+
+$$
+\begin{gathered}
+G_C=(z_D-\mathbf r)_{D\in\mathcal D_C},\qquad
+h(b,e)=d(b,e)-\mathbf r,\\
+W_y=y\cdot\mathbf r,\quad B_C(y)=\max_{D\in\mathcal D_C}y\cdot z_D,
+\quad\Delta_C(y)=B_C(y)-W_y\ge0,\\
+\beta_n(y)=\sum_{w\in\Omega_n}(C_w-A_w),\qquad
+K_y=\sum_{w\ne w^+}(A_w+C_w+P_w)+T,\\
+Q(y)=(\beta_1,\ldots,\beta_L;K_y),\qquad
+F_q(b,e)=\sum_n\beta_n(b_n-\alpha_n)-Ke.
+\end{gathered}
+\tag{251.4}
+$$
+
+Thus $F_{Q(y)}=y\cdot h$; abbreviate it to $F_y$.
+The auxiliary closed domain is
+
+$$
+\begin{split}
+H_L=\{(b,e):\;&1\ge b_1\ge\cdots\ge b_L\ge e\ge0,\quad b_2=b_3,\\
+&0\le E:=\sum_{n=3}^Lb_n-(L+1)e\le1-b_1\}.
+\end{split}
+\tag{251.5}
+$$
+
+Write $\sigma_H(q)=\max_{H_L}F_q$ and
+$H_N=\{b\in H_L:\exists\lambda\ge0,\ G_N\lambda\ge h(b)\}$.
+A conic vector $\lambda$ has mass $M=\sum_D\lambda_D$; it is not
+an acquisition probability distribution unless $M=1$.
+All matrices here contain every event row and every terminal label.
+These are the complete-score coordinates of
+[Sections 198–199](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_VI.md#198-完整目录得分约化符号凸包与混合预算缺口)
+and [Definitions 207.1–207.3](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_IX.md#207-joint-realizability-retained-early-credit-and-equal-cylinder-comparison).
+

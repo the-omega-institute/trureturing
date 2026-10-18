@@ -1,0 +1,56 @@
+**Definition 13.1 (positioned component, operation and task).** Fix an
+already constructed bit component of Definition 4.1, its actual root $r$
+and retained occurrences $r,f,t,v_0,v_1$. Write $0=\mathsf L$ and
+$1=\mathsf R$. The actual stored relations are reciprocal child and
+$\mathsf P$ incidences. The external attachment of $r$ is fixed; the other
+four port types on these bit occurrences are empty. Throughout,
+
+$$
+f.0=v_0,\qquad f.1=v_1.
+\tag{SSA.15}
+$$
+
+At a canonical entrance of value $x$, $r.x=f$ and $r.(1-x)=t$; all
+other child slots are empty. Intermediate vertices may be unary. The
+carrier is this actual occurrence tree, with no second bit payload,
+version selector, saved byte or detached retained component.
+
+A strict relocation has an occupied source slot $p.a=v$, a distinct
+vacant destination slot $q.c$, and $q$ outside the current subtree of
+$v$. Its single atomic data effect is
+
+$$
+p.a:=\varnothing,\qquad q.c:=v,\qquad v.\mathsf P:=(q,c).
+\tag{SSA.16}
+$$
+
+These three distinct endpoint slots change coherently, without internal
+observable cuts. No control transition, operand acquisition, access-link
+retargeting, allocation or receipt is implicit. For the paths below, guards
+are established from bounded five-occurrence patterns; no unbounded
+ancestry test is supplied.
+
+Fix the supplied row-scoped authorization interface as an external
+boundary parameter. The local structural task takes a specified relocation
+command on reached roles, retains SSA.15, tests its geometric guards and
+that interface's permission, and on success has its actual complete local
+incidence successor as mathematical observation. A disabled command has no
+executing successor. Continuations are finite command sequences. This
+observation grants no client read or graph serialization.
+The assignment below is a three-command path in that relation. It is not
+an autonomous assignment controller or the original task $Q$.
+
+The root must actually be reached under the original designated field's
+write authority. Maintenance inspection stays within that row's permitted
+footprint. The target $b$ is an original rule immediate or an actual
+authorized acquired operand, available throughout the path. A latched
+operand is distinct read-only material. Merely supplying a mathematical
+parameter, private value or address does not acquire it. For a prescribed stage, a fixed finite
+private selector may inspect this component and the available operand to
+choose one relocation; supplying and retaining the stage is external to
+this data contract. It may not bundle a whole native-row patch or an
+unbounded transaction. Its apparatus, reads, positioning and persistent
+control remain explicit additional resources. A permit surviving the
+inserted phases is a premise of an application, not a protocol constructed
+by this definition.
+

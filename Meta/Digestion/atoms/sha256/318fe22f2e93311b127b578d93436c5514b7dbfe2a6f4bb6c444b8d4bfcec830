@@ -1,0 +1,25 @@
+**Definition 7.1 (four different comparison contracts).**
+Fix an original source and a reference ready configuration. The
+comparison with a recovered configuration can require any of the
+following, with the observation interface specified in each case.
+Scalar attempt-law recovery is equality of the four probabilities in
+(6.1). Full future-law recovery is equality of the joint laws of all
+declared future records, outputs, legality and failure labels, stopping
+types and charges for each allowed continuation. Same-tape transport
+requires equality of those actual future executions for every common
+tape in the declared comparison domain, rather than only equality in
+law. Literal restoration requires an actual legal operation ending in
+the specified original configuration, including its declared source,
+permissions, control and memory fields.
+
+Literal restoration of only a projected state label is weaker than
+literal restoration of a complete configuration. An append-only archive
+cannot be erased merely by calling an operation a reset. When only an
+attempt-local working component is restored, the retained older archive
+and cumulative charges stay in the complete state and must be accounted
+for in the selected comparison. A complete-state restoration together
+with the original conditional future transition law and independent
+fresh randomness suffices for full future-law recovery. The conditional
+law assumption includes any environment or hidden mechanism capable
+of changing that future.
+

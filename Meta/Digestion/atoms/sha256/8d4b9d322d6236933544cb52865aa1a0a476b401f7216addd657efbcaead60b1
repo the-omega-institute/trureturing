@@ -1,0 +1,58 @@
+**Proposition 5.3 (credited exact maximal plateau and endpoint ranks).**
+The maximal initial plateau is $E_s(\rho)=F$ on $0\leq s\leq s_*$.
+Its upper construction uses fourteen actual labels below $s_*$ and
+twelve at $s_*$. The physical high Kraus matrices remain rank THREE
+at the endpoint. The high coefficient projector has rank one.
+The complete low coefficient block has rank three below the endpoint
+and rank two at it; every physical low Kraus matrix has rank two.
+
+Proof of the needed geometry. Let
+
+$$
+u_L=\frac{\beta+\sqrt{\beta^2+4\alpha s_*^2}}2,\qquad
+v_L=\frac{-\beta+\sqrt{\beta^2+4\alpha s_*^2}}{2\alpha}.
+\tag{QO.30}
+$$
+
+They are positive, $u_L-\alpha v_L=\beta$, $u_Lv_L=s_*^2$.
+The identities of Lemma 5.2 show
+$I-H_*=R_{\theta_0}\operatorname{diag}(u_L,v_L,1)R_{\theta_0}^\dagger$:
+the imaginary entry is $ir_0$, the diagonal difference is $\beta c_0$,
+and the positive diagonal sum is fixed by the determinant and difference.
+For $s\leq s_*$ take
+$H_r=H_*/2$, $L_r=(I-H_*+r sX_c)/2$.
+The inverse congruence of $L_r$ is
+$\frac12\left(\begin{smallmatrix}u_L&r s&0\\r s&v_L&0\\0&0&1\end{smallmatrix}\right)$,
+real PSD with zero $B_0$ trace. Its DT determinant is
+$(s_*^2-s^2)/4$. Lemma 5.2 supplies three null columns below the
+endpoint and two at it. After $R_{\theta_0}$ their first coefficients
+have nonzero real part, and (QO.17) makes every physical product rank
+two. At the endpoint the explicit low vectors are
+$R_{\theta_0}(\sqrt{u_L},r\sqrt{v_L},\pm1)^T/2$.
+Use fixed range encoders, isometric full decoders, two supported scalar
+failure rows and one scalar complement map at each report as specified
+in §10. Their coefficient sum is $I$ and failure effect is $M/2$ per
+report; the normalization and complete identities proved there apply
+also here. Their only high vectors are $h/\sqrt2$ and their cost is $F$.
+This gives counts $2(1+3+2+1)=14$ and $2(1+2+2+1)=12$.
+
+For these high vectors, $v/u=i\sqrt{q/p}=ir_0/p$, so
+$u^2-\alpha v^2=u^2(1+\alpha r_0^2/p^2)>0$.
+Their physical $K$ matrices are invertible, including at $s=s_*$.
+No physical high rank loss occurs.
+
+At equality the certificate forces $H=H_*$. Positive report components
+of this rank-one aggregate have real DT entry zero. The low aggregate
+DT block is
+$A_L=\left(\begin{smallmatrix}1-p&ir_0\\-ir_0&1-q\end{smallmatrix}\right)$.
+For $0\preceq W\preceq A_L$, maximize
+$2\operatorname{Re}W_{DT}$ using the positive spectral part of
+$A_L^{1/2}X_{01}A_L^{1/2}$. Its eigenvalues are $\pm s_*$,
+so the maximum is $s_*$. The record condition therefore requires
+$s\leq s_*$. A limiting equality above the endpoint is excluded by
+the compact localization argument in §8, applied at fixed later
+strength. Thus the plateau is maximal. Its evaluated value, maximality,
+quantitative quartic later lower bound, affine later upper bound and
+same-strength scalar-trace separation are inherited NP results;
+only the geometry needed for the onset is reconstructed here. $\square$
+

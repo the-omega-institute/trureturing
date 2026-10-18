@@ -1,0 +1,27 @@
+**Theorem 7.1 (finite sign cells, including their faces).** For fixed
+$n,k$, the exact minimum is constant on every sign cell of the finite
+arrangement
+
+$$
+(v-\mathbf1)\cdot c=0,
+\qquad v\in\mathbb Z_{\ge0}^n,\quad\sum_i v_i\le n,
+\quad v\ne\mathbf1,
+\tag{TC.14}
+$$
+
+intersected with the admissible original integer costs. There are at
+most $\binom{2n}{n}-1$ listed nonzero forms. A sign cell records
+each sign as negative, zero or positive, so equality faces are included.
+
+Proof. The actual run and visit vector of any fixed
+$P\in\mathcal T_{n,k}$ do not depend on its costs. Its weighted
+feasibility tests precisely whether the form for each of its actual
+visit vectors is nonpositive. Identical sign patterns in (TC.14)
+therefore give identical feasible tables, and hence identical minima.
+There are $\binom{2n}{n}$ nonnegative integer vectors with total
+at most $n$, by adding a slack coordinate and counting compositions
+of $n$ into $n+1$ parts. Only $v=\mathbf1$ gives the zero
+normal, and deleting it gives the stated upper bound. Repeated or
+proportional forms may reduce the number of hyperplanes further.
+$\square$
+

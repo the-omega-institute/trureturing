@@ -1,0 +1,25 @@
+**Definition 4.3 (Compact gap and exact constants).** Set
+
+$$
+m=\eta\min\{T,\ T-\tau,\ f(x_*)v(x_*)\},\qquad
+K=\{x\in[0,1]:W(x)\ge-m\}.
+$$
+
+Once the compact maximum below is justified, define
+
+$$
+d=T-\max_{x\in K}F_0(x),\qquad
+C_0=2T+\sqrt T,\qquad M=28T+2\sqrt T,
+$$
+
+$$
+\varepsilon=
+\min\left\{\frac12,\frac{m}{2M},\frac{d}{2(C_0+M)}\right\},\qquad
+\mu=\min\left\{\frac{m\varepsilon}{2},\frac d2\right\}.
+$$
+
+Here $M$ is a remainder constant, not the source $\mathcal M$ or the
+supplier label [M]. All the choices are exact scalar definitions. They
+involve one unique root, one unique contact, and one specified compact
+maximum, with no unspecified sufficiently small coefficient.
+

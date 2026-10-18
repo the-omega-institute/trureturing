@@ -1,0 +1,41 @@
+#### 情形五：信息仍在环境中，但环境不可访问
+
+全局演化可以近似写成等距映射：
+
+```math
+V:\mathcal H_S
+\to
+\mathcal H_{S'}\otimes\mathcal H_R\otimes\mathcal H_E.
+```
+
+观察者只看到
+
+```math
+\mathcal N_A(\rho)
+=
+\operatorname{Tr}_{B}
+\bigl(V\rho V^\dagger\bigr),
+```
+
+其中 $`B`$ 包含射线和不可访问环境。
+
+如果
+
+```math
+\mathcal N_A(\rho_0)=\mathcal N_A(\rho_1),
+```
+
+那么任何局部操作 $`\Lambda_A`$ 都有：
+
+```math
+\Lambda_A\mathcal N_A(\rho_0)
+=
+\Lambda_A\mathcal N_A(\rho_1).
+```
+
+因此，局部操作无法恢复两种状态的差异。
+
+量子 no-hiding 结果所表达的正是这一点：当系统局部信息消失时，它通常是转移到了环境或相关系统，而不是凭空从全局幺正演化中删除。[arxiv.org](https://arxiv.org/abs/1004.5073?utm_source=chatgpt.com)
+
+---
+

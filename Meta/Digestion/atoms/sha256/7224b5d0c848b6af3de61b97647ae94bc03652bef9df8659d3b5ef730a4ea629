@@ -1,0 +1,28 @@
+**Definition 1.4 (Normalized scalar family).** Put
+
+$$
+\tau=\frac Z{4H}=\frac Z{2(1-Z)},\quad
+Z=\frac{2\tau}{1+2\tau},\quad
+H=\frac1{2(1+2\tau)},\quad s(x)=\sqrt{x(1-x)}.
+$$
+
+The scalar variable is $x=k/H$, so $0<x<1$ on the source. Let $\mathcal E_2$ contain
+
+$$
+R(x)=c_1e^{\lambda_1x}+c_2e^{\lambda_2x},
+\qquad
+R(x)=(c_0+c_1x)e^{\lambda x},
+$$
+
+with arbitrary complex coefficients and exponents, including zero,
+one-mode, vanishing-coefficient, collision, and confluent cases. Define
+
+$$
+J_\tau(R)=\max_{0\le x\le1}
+\left(|R(x)-s(x)|^2+\tau x\right),\qquad
+T_4(\tau)=\min_{R\in\mathcal E_2}J_\tau(R).
+$$
+
+The closed scalar maximum is equal to the open-source supremum by continuity
+and interior limits; no endpoint source ray is introduced.
+

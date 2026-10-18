@@ -1,0 +1,56 @@
+## 2. The finite commuting calculation
+
+The following table evaluates the actual source transitions needed for the three accepted prefixes. `unset` means that the third-marker bookmark has not yet latched.
+
+| old prefix $u$ | old $p(u)$ | event | new prefix | $Q(\delta_e u)$ | $Z(\delta_e u)$ | bookmark |
+| --- | --- | --- | --- | --- | ---: | --- |
+| $\varepsilon$ | $(0,0)$ | $0$ | $0$ | $(a,\varnothing)$ | $0$ | unset |
+| $\varepsilon$ | $(0,0)$ | $1$ | $1$ | $(\varnothing,b)$ | $1$ | unset |
+| $0$ | $(1,0)$ | $1$ | $01$ | $(a,b)$ | $0$ | unset |
+| $1$ | $(1,1)$ | $0$ | $10$ | $(a,b)$ | $1$ | unset |
+| $0$ | $(1,0)$ | $0$ | $00$ | $(ac,c)$ | $0$ | unset |
+| $01$ | $(2,1)$ | $0$ | $010$ | $(ac,bc)$ | $0$ | $B_0$ |
+| $10$ | $(2,1)$ | $0$ | $100$ | $(ac,bc)$ | $1$ | $B_0$ |
+| $00$ | $(2,0)$ | $1$ | $001$ | $(ac,cb)$ | $0$ | $B_0$ |
+
+Here
+
+$$
+B_0=(\rho,\ell,t,\beta,h)=(1,2,3,1,1),
+$$
+
+as in the preceding volume. The first five rows are the pre-bookmark source states. In the last three rows, the third completed marker has already updated the local records and $Z$ before the bookmark latches $B_0$.
+
+For every row in the table, direct substitution gives the bundled commuting identity
+
+$$
+\mathsf b(\delta_e u)=\overline F_e(\mathsf b(u)),
+$$
+
+whose $Q$ and $Z$ components are the two identities
+
+$$
+Q(\delta_e u)=U_e(p(u),Q(u)),
+\qquad
+Z(\delta_e u)=V_e(p(u),Z(u)).
+$$
+
+For a hold event the bundled identity is $\mathsf b(\delta_\mathtt{hold}u)=\overline F_\mathtt{hold}(\mathsf b(u))$; its new relation components read
+
+$$
+Q(\delta_\mathtt{hold}u)=Q(u),
+\qquad
+Z(\delta_\mathtt{hold}u)=Z(u).
+$$
+
+Thus the relevant part of the source run factors through the parser-augmented boundary state $\mathsf b=(p,Q,Z)$:
+
+```text
+actual source prefix u  -- delta_e -->  actual source prefix delta_e(u)
+          | (p,Q,Z)                                 | (p,Q,Z)
+          v                                         v
+boundary state         -- Fbar_e -->                boundary state
+```
+
+The diagram is asserted only for the displayed completed-marker transitions and for the declared hold class. It does not identify distinct raw events inside that class or claim that their histories can be recovered from $(p,Q,Z)$.
+

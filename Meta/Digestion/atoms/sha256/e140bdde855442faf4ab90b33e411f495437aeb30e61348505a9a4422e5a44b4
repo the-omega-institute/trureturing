@@ -1,0 +1,17 @@
+**Definition 55.1 (full complex domains and the unsigned core).** The generators underlying the heat and return kernels above are the original Friedrichs realizations. Their complex form fibres are $H_0^1(I)$ with underlying raw $L^2$ membership and the full finite frequency integral
+
+$$
+\int_{\mathbb R^3}\int_I
+ \bigl(\varepsilon^2|\partial_k\widehat\psi|^2+
+ |\eta\cdot c_\kappa|^2|\widehat\psi|^2\bigr)dk\,d\eta<\infty.
+\tag{55.1}
+$$
+
+Their operator fibres are $H^2(I)\cap H_0^1(I)$ with
+$\int_{\mathbb R^3}\|B_\eta\widehat\psi(\cdot,\eta)\|_2^2d\eta<\infty$.
+These are exactly (1.5), transported by $\mathcal T_s\mathcal U_s$ for intermediate sheared calculations. No reality, parity, ordinary phase-$H^1$, or finite-rank condition is imposed on actual states. Positivity is used for heat and the auxiliary $u_s$; (51.6) is not an actual ground-state profile theorem. The observation for every normalized complex actual choice remains the original unsheared $\mathcal U_s$.
+
+Equation (54.2) evaluates a complete nonlocal part of the baseline while retaining $\mathcal C_{\chi,s}$ exactly. It is neither an expansion of $\mathcal C_{\chi,s}-C_*$ nor of $k_d(Ms^8)-C_*$. In particular (50.3)'s early-row projection and the moving local moments in (52.1) remain unsigned jointly. Even on the additional conditional stratum $C_{\rm resp}=C_4=\mathfrak m_d=0$, the owned $O(s^{41/8})$ enclosure (50.2) is larger than $s^8\log(1/s)$. Thus the positive full-residual uplift of Theorem 49.2 does not acquire a complete selecting sign from (54.2). No occurrence or exclusion of that stratum is asserted.
+
+The existing sufficient route is the exact baseline (49.1), the full principal uplift (49.2), and Corollary 50.2/P Theorem 105.1. A further eventual strict FULL inequality $k_d(Ms^8)>C_*$ for arbitrarily large separately fixed finite $M$ would force $r_s\to\infty$ and the stated every-choice phase-orbit convergence. This is a sufficient implication, not a necessary condition or an inequality supplied by §§51–54. No actual branch classification, exact principal uplift coefficient, physical spatial dimension or analytic-state preparation follows here.
+

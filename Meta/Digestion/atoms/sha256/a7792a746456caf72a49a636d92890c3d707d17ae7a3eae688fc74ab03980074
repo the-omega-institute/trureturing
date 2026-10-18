@@ -1,0 +1,33 @@
+**Proposition 5.2 (extra cost of this active alignment trace).** For
+the active choice (5.1), every actual refinement transmits at least
+
+$$
+A_{\rm align}=(U+1)B_0/2
+\tag{5.3}
+$$
+
+letters to its final receiver just for the original alignment polls.
+On the permitted lag-zero all-$\alpha$ left comb with rightmost leaf
+at depth one, for even $h\ge2$, $\kappa(u)=2$ and hence
+
+$$
+U=B_0-2,\qquad A_{\rm align}=(B_0-1)B_0/2.
+\tag{5.4}
+$$
+
+The two-copy refinement's corresponding core occurrences are exactly
+$8A_{\rm align}+4(U+1)$. Thus for fixed even $h$, this particular
+alignment trace has $\Omega(T^2)$ literal/serial work. This is not a
+universal parity-algorithm lower bound.
+
+Proof. SLHC Construction 11.4 polls the same literal $R^{B_0/2}$ exactly
+$U+1$ times. Each failed poll is followed by its genuine Update; all
+intervening root routing Reads contribute zero address letters, but
+remain real calls. Erasure preserves the full sequence, so each poll
+needs a newly completed payload under the present frame contract.
+The indicated original comb has $h$ leaves and rightmost leaf $\alpha$
+at depth one, giving $\kappa=2$. Substitution into the supplier's exact
+Update count gives (5.4). The linear-in-$T$ same-run bound (2.1) and
+this quadratic trace-specific bill have different quantifiers. A
+static or cell-search macro controller need not execute these polls. ∎
+

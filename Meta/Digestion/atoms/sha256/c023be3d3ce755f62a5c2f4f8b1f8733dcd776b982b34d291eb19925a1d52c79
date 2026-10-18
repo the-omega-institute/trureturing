@@ -1,0 +1,19 @@
+**Definition 5.1 (received cover and selection arithmetic).** Recover
+retains $\sigma$ and freezes the predecessor M of Definition 1.5. It
+executes Boundary, creates the list-cardinality number $c$, appends the
+immutable actual cover on71 and in its persistent list, and publishes
+CoverRef through ARC §7's channel. ClientCover clears its internal cover
+number, imports/checks the sealed received73 CoverRef, and retains that
+received $c$ before transferring its live invocation slot to Bind.
+Bind resolves this acquired number against its immutable cover backing;
+it does not consult a latest-cover pointer.
+
+For AcquisitionOffset, parse actual retained $t$ by Definition 3.2.
+Copy $a,b,t$ into distinct cursors. Cancel $1^a$ from $1^b$ to construct
+$D=b-a$, rejecting a failed order. Require $t\le D$ by cancellation.
+Construct $1^k=\operatorname{Cat}(1^a,1^t)$ and emit $U(k)$ separately.
+Set start=$a$, end=$b$, anchor-kind=0. Its anchor is the actual acquired
+service/capture/seed binding in this cover's manifest. The numeric operand
+$t$ comes only from the later acquired selector, not from a scan of a
+moving meter or an unspecified intention.
+

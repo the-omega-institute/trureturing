@@ -1,0 +1,94 @@
+**proposition 11.1 (The inherited equality geometries and costs).** In
+the literal complete-controller model, the minimum installed costs
+for attaining the unrestricted $S_1$ under $q_1=1$, and $S_2$ under
+$q_2=1$, are respectively three and six. For every positive
+initialization cell, their equality geometries and labels are
+exactly the following.
+
+For $S_1$, the first active edge in its parity must be exterior
+to that phase's actual target. Both successors halt, with
+$h_\beta(\sigma)$ on zero and $h_\alpha(\sigma)$ on one.
+
+For $S_2$, the root edge $e$ contains $v_\alpha$. The zero-branch
+second call has parity $\alpha$ and an edge $f$ vertex-disjoint
+from $e$. The one-branch second call has parity $\alpha$ and an
+edge $g$ sharing one vertex with $e$. The unique maximizing labels
+are
+
+$$
+\begin{array}{c|c}
+00&h_\beta(\sigma)\\
+01&h_\alpha(\sigma)\\
+10&h_\alpha(s_0)\\
+11&h_\alpha(s_1)
+\end{array}
+\qquad
+(s_0,s_1)=
+\begin{cases}
+(\sigma,1-\sigma),&v_\alpha\in e\cap g,\\
+(1-\sigma,\sigma),&v_\alpha\in e\setminus g.
+\end{cases}
+\tag{11.1}
+$$
+
+These are inherited from Endpoint, Propositions 8.3–8.4 and
+Theorem 8.5.
+
+Proof. For a deterministic $q_1=1$ start, an initial halt is below
+$S_1$. Both first replies have positive mass, so both successors
+must halt. The zero leaf has unique maximizing label
+$h_\beta(\sigma)$: its mass $a/2$ exceeds the other same-phase
+spin mass $b/2$ and the phase-$\alpha$ masses bounded by
+$a^2/2$ or $ac/2$. The one leaf has maximum $\eta/2$ for an
+incident target, strictly below $a\eta$. For an exterior target
+the unique maximum is $a\eta$ with label $h_\alpha(\sigma)$.
+This proves the one-read characterization, forcing one read row
+and two distinct halt labels.
+
+For $S_2$, the zero branch cannot halt, since then total correctness
+is at most $S_1<S_2$. Equality in Proposition 5.3 forces equality
+in both branch bounds and every positive leaf maximum. Opposite
+parity on the zero branch loses the positive quantity in (5.6).
+For the same parity, the $01$ maxima in Lemma 5.2 are strictly
+below $a^2\eta$ except for a disjoint second edge with target in
+$e$: a repeat contributes zero, adjacency contributes
+$a\eta/2<a^2\eta$, a target in the disjoint new edge gives
+$c\eta/2<a^2\eta$, and a target outside both gives
+$ac\eta<a^2\eta$. Thus the first edge is incident to the target
+and the zero second edge is disjoint at the same parity.
+
+With that incident first edge, an early first-one halt, separator,
+repeat, or disjoint second edge gives only $\eta/2<a\eta$.
+Lemma 5.1 forces an adjacent active second edge. The four leaf
+source masses are then, in order $00,01,10,11$,
+
+$$
+\frac{1+c^2}{2},\qquad c\eta,\qquad
+\frac\eta2,\qquad\frac\eta2,
+\tag{11.2}
+$$
+
+all positive. On $00$ the phase-$\beta$ majority mass $a/2$
+strictly exceeds $b/2$ and the phase-$\alpha$ maximum
+$a^2c/2$. On $01$ the two phase-$\alpha$ target masses are
+$a^2\eta,b^2\eta$. These give the first two unique labels
+in (11.1). On $10$, the two spins of the zero second edge are
+majority in the larger mixed triple, and the remaining vertex
+is minority. On $11$, the shared vertex is minority and the two
+outer vertices are majority. The target belongs to $e$, so these
+give exactly the two label alternatives in (11.1), uniquely
+because $a^2b>ab^2$. Conversely these geometries and labels give
+correct masses $a/2,a^2\eta,a\eta/2,a\eta/2$ and attain $S_2$.
+
+The three required edge addresses are distinct, so they require
+three distinct fixed Read rows. The outputs include
+$h_\beta(\sigma),h_\alpha(\sigma),h_\alpha(1-\sigma)$,
+requiring three distinct Halt rows, separate from the Read rows.
+All are reached on positive sections. At an attaining randomized
+initialization, (3.3) and the uniform unrestricted bound force
+every positive cell to attain the same bound, so the necessity
+persists under any seed law. For $q_1$ the identical averaging
+argument uses its one-read coordinates. Propositions 9.1 and 9.3
+give the matching installed costs. This recovers the inherited
+three/six-row minima with their original hypotheses. $\square$
+

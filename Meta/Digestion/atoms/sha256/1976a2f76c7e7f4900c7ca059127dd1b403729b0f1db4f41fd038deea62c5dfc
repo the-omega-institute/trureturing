@@ -1,0 +1,103 @@
+**Proposition 36.3 (All root sectors in degrees five, six and seven).**
+For $k=3,b=2$ the root-resolved entries of (36.4) are the following.
+Here $B=B_3(m,t)$, $E=E_3(m,t)$, $I=I_3(m,t)$; the last three
+columns count global interior monomials, ordinary translates and
+surviving quotient monomials in that root sector.
+
+| $m=5$, $t$ | $B$ | $E$ | $I=B+E$ | $I^2$ | $B^2$ | $I^2-B^2$ |
+| ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 1 | 157 | 0 | 157 | 24649 | 24649 | 0 |
+| 2 | 100 | 1 | 101 | 10201 | 10000 | 201 |
+| 3 | 31 | 0 | 31 | 961 | 961 | 0 |
+| 4 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 5 | 0 | 0 | 0 | 0 | 0 | 0 |
+| Total | 288 | 1 | 289 | 35811 | 35610 | 201 |
+
+| $m=6$, $t$ | $B$ | $E$ | $I=B+E$ | $I^2$ | $B^2$ | $I^2-B^2$ |
+| ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 1 | 707 | 0 | 707 | 499849 | 499849 | 0 |
+| 2 | 543 | 4 | 547 | 299209 | 294849 | 4360 |
+| 3 | 298 | 3 | 301 | 90601 | 88804 | 1797 |
+| 4 | 85 | 0 | 85 | 7225 | 7225 | 0 |
+| 5 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 6 | 0 | 0 | 0 | 0 | 0 | 0 |
+| Total | 1633 | 7 | 1640 | 896884 | 890727 | 6157 |
+
+| $m=7$, $t$ | $B$ | $E$ | $I=B+E$ | $I^2$ | $B^2$ | $I^2-B^2$ |
+| ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 1 | 2353 | 0 | 2353 | 5536609 | 5536609 | 0 |
+| 2 | 1978 | 10 | 1988 | 3952144 | 3912484 | 39660 |
+| 3 | 1359 | 12 | 1371 | 1879641 | 1846881 | 32760 |
+| 4 | 695 | 6 | 701 | 491401 | 483025 | 8376 |
+| 5 | 190 | 0 | 190 | 36100 | 36100 | 0 |
+| 6 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 7 | 0 | 0 | 0 | 0 | 0 | 0 |
+| Total | 6575 | 28 | 6603 | 11895895 | 11815099 | 80796 |
+
+Proof. There is only the local layer $j=2$ for seven positions.
+Formula (36.2) becomes
+
+$$
+E_3(m,t)=\binom{t}{2}\binom{m-t}{3}
+\quad\text{if }t\ge2,\ m-t\ge3,
+\tag{36.8}
+$$
+
+and is zero otherwise. This gives the $E$ columns directly: in degree
+five only $t=2$ contributes one; in degree six the values at $t=2,3$
+are four and three; in degree seven those at $t=2,3,4$ are ten,
+twelve and six.
+
+For a complete finite recurrence determining the $B$ columns, fix a
+local degree $q$ and root $u\in\{0,\ldots,q\}$. Let
+$H_r(v,h)$ count choices of the first $r$ path coordinates
+$c_1,\ldots,c_r$, with $c_r=v$ and $h=u+\sum_{i=1}^r c_i$,
+respecting all edges encountered from the root. Start with
+$H_0(u,u)=1$, all other values zero, and for $0\le r<2k$ use
+
+$$
+H_{r+1}(w,h+w)=\sum_{\substack{v\ge0\\v+w\le q}}H_r(v,h).
+\tag{36.9}
+$$
+
+Only $0\le w\le q$ is needed. Closure and the total constraint give
+
+$$
+L_k(q,u)=\sum_{\substack{v+u\le q\\h\le kq}}H_{2k}(v,h).
+\tag{36.10}
+$$
+
+Each admissible vector has one unique sequence of intermediate states,
+so (36.9)–(36.10) count it once. For $k=3$, their evaluations at
+$q=2,3,4$, with root columns in increasing order, are
+
+$$
+\begin{aligned}
+(L_3(2,u))_{u=0}^2&=(157,100,31),\\
+(L_3(3,u))_{u=0}^3&=(707,543,298,85),\\
+(L_3(4,u))_{u=0}^4&=(2353,1978,1359,695,190).
+\end{aligned}
+\tag{36.11}
+$$
+
+Inserting $q=m-3,u=t-1$ gives every $B$ entry. Adding (36.8)
+gives $I$, squaring at each common root gives the next two columns,
+and subtraction gives the last. Their sums are the stated totals.
+For instance the degree-six difference is
+$2\cdot543\cdot4+4^2+2\cdot298\cdot3+3^2=6157$;
+the degree-seven difference is $39660+32760+8376=80796$.
+The sums of the first three numerical columns are local counts;
+they are not to be squared to obtain the last three totals.
+
+At degree five every surviving quotient monomial is one of the $201$
+additional minimal canonical generators in Proposition 35.6, since
+there is no quotient in smaller degree. The numbers $6157$ and $80796$
+are entire degree pieces of the quotient, including positive-degree
+multiples. They count no new minimal canonical generators in degrees
+six or seven: Theorem 35.5 places all such generators for $k=3$ in
+degrees three and five, with the unique degree-three generator removed
+in $C_{3,2}$. $\square$
+

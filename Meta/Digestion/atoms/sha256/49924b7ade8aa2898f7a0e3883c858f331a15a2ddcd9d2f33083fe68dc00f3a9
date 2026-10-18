@@ -1,0 +1,23 @@
+**Theorem 64.3 (the actual H3 joint defect).** For the common table choose
+$(x,y)=(LL,R)$. Then $(w,u,v)=(1,1/4,1/2)$, and (64.1) gives
+\[
+\epsilon_{\rm c}\ge\frac17,\qquad
+\delta_{\rm c}\ge\frac{5-\sqrt{19}}{24}.
+\tag{64.3}
+\]
+For the killed table the same source triple has
+$(w,u,v)=(21/26,1/7,1/3)$, and therefore
+\[
+\epsilon_{\rm k}\ge\frac{11}{31},\qquad
+\delta_{\rm k}\ge\frac{9-4\sqrt3}{78}.
+\tag{64.4}
+\]
+The three entries $(o,LL),(o,R),(LL,R)$ are one joint defect: they are not three
+independently fitted sector marginals. The other seven entries in Definition64.1 remain
+part of the same source-qualified target.
+
+Proof. In the common case $(A,B,C)=(1/4,1/2,1/8)$, and in the killed case
+$(A,B,C)=(3/26,7/26,1/26)$. Substitution in (64.2) gives (64.3) and (64.4);
+the relative forms follow from (64.1). The source, calibration and pair law are held
+fixed across all three channels. $\square$
+

@@ -1,0 +1,38 @@
+## 219. Exhaustion of a single-high transverse M owner
+
+Its frame can be written (r,M,B,o,M,B), with B=C or D, because the
+transverse pair is distinct and Z,U do not occur. Neither axis can
+be M: that would still contain no second distinct high label, so this
+possibility must be checked separately rather than discarded.
+For an axial M and transverse pair {M,B}, the individual M response
+has positive parameters whose sum is
+ 2*sqrt(m^2-1)/(m+b)*sqrt((m-1)/(m+1))
+ =2*(m-1)/(m+b)>1.
+Thus theta_M+2*beta_M>pi, contradicting the total M budget. This
+excludes either axis equal to M, including two such axes.
+Both axes consequently are C,D, or special.
+
+The two transverse M angles are equal and their sum is at most pi.
+Hence beta_M<=pi/2, and its cosine numerator must be nonnegative:
+ N=b*(r+o)+m*(r*o+b^2-m^2+1)>=0.
+This expression is strictly increasing separately in b,r,o>1.
+
+If either axis is special, its value is less than 5/4 by Section 218.
+The other is at most max(m-2,5/4), while b<m-2. If m>=13/4,
+monotonicity bounds N strictly above by its value at
+b=m-2 and axes (m-2,5/4), which is
+ -(m+1)*(7*m-6)/4<0.
+If 3<m<13/4, use axes (5/4,5/4) instead. At b=m-2 this gives
+ -(64*m^2-145*m+80)/16<0.
+The quadratic is positive for m>=3: its value at 3 is 221 and its
+derivative 128*m-145 is positive there and thereafter. Thus special
+axes are impossible in either range.
+
+Both axes are now C or D. Let A be the member of {C,D} different
+from B, with value a. If an axis equals A, fix it as r=a. The other
+axis o<m-2<1+m+b. At o0=1+m+b, direct substitution yields
+ N(a,o0)=[b+m*(1+m+b)]*(1+a+b-m)<0,
+by m>1+a+b. Strict monotonicity in o gives N<0, a contradiction.
+Therefore both axes equal B. Every such owner has precisely the
+symmetric frame (B,M,B,B,M,B).
+

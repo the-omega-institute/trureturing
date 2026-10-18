@@ -1,0 +1,38 @@
+**Proposition 8.8 (exact root minimum three for the earlier bit).** For
+the different bit $\sigma$ of (NRE.12), held pointwise fixed, the least
+worst-case root-only call count at installed budget nine is exactly
+three. The five Halts are again exactly those of Theorem 8.4; the four
+Reads and faithful entries are
+
+| Read state | Actual literal | On $\alpha$ | On $\beta$ | On $\mathsf{branch}$ | On $\mathsf{absent}$ |
+| --- | --- | --- | --- | --- | --- |
+| $P_1$ | $LLR$ | $H_1$ | $P_2$ | $P_2$ | $P_2$ |
+| $P_2$ | $LRR$ | $H_2$ | $P_3$ | $P_3$ | $P_3$ |
+| $P_3$ | $RLR$ | $H_3$ | $H_0$ | $H_0$ | $H_0$ |
+| $P_4$ | $RRR$ | $H_4$ | $P_3$ | $P_3$ | $P_3$ |
+
+Initialization is $\iota_R(0)=P_1$, $\iota_R(1)=P_4$.
+
+**Proof.** By (NRE.12), a code-zero source can have only targets
+$0,1,2,3$. Entry $P_1$ tests $1,2,3$ successively, returning the
+unique corresponding positive row on alpha and $R_0$ if all tests
+are non-alpha. A code-one source can have only targets $0,3,4$;
+entry $P_4$ tests $4$ and then $3$, returning $R_0$ if neither is
+alpha. The inherited identity (NRE.13) makes these tests correct on
+every actual origin, including every allowed code variation inside a
+root fiber and all zero-target beta placements. Every native reply
+successor is specified, and all Halts contain the entire repaired row.
+
+The entries are distinct, so the complete bit is recoverable there.
+The actual source $v_0$ of Theorem 5.1 has $h=0$, code zero and
+$x_{b_2}=T_3\notin\{\beta,E\}$. Its path
+$P_1,P_2,P_3,H_0$ attains three calls. The positive cases $h=1,2$
+reach $H_1,H_2$ from $P_1$; the actual $v_3$ of that theorem reaches
+$H_3$ from $P_1$; any positive $h=4$ has code one and reaches
+$P_4,H_4$. Hence all four Reads and five Halts are genuinely reached,
+and their total is nine. Theorem 5.1 already excludes every two-call
+root reader for this same old bit at every finite installed budget,
+including other partner representatives. Reusing that complete lower
+bound gives the exact minimum three, without repeating its inherited
+four-witness proof. $\square$
+

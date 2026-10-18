@@ -1,0 +1,17 @@
+**Proposition 8.2 (Bulk reward and derivative nondegeneracy).** For $s=2L$,
+
+$$
+c=\psi(s)=(1-\sqrt s)^2=c_\star>\frac19,
+\qquad \sqrt s<\frac23.
+\tag{8.8}
+$$
+
+**Proof.** In (6.4), fix a large integer $J$ so that $v_j$ is uniformly close to $L$ for all $j\ge J$. For $J\le j\le n-J$ both arguments are close to $L$, so continuity of $\psi$ makes each bulk summand uniformly close to $\psi(2L)$. At most $2J$ end terms remain; they are bounded because their arguments lie in $[1/4,9/16]$. Divide by $n$, let $n\to\infty$ with $J$ fixed, then let the closeness tend to zero. The number of summands is $n-3$ for $n\ge4$, so
+
+$$
+\frac{V(n)}n\longrightarrow\psi(2L).
+\tag{8.9}
+$$
+
+Since $V(n)+2v_n=cn$ and $v_n$ is bounded, the limit is also $c$. Proposition 6.4 and (2.1) give $c=c_\star\ge1800/12559>1/9$. As $0<\sqrt s<1$, the inequality $(1-\sqrt s)^2>1/9$ implies $\sqrt s<2/3$. This exact inequality will justify a division by a second derivative in §10. $\square$
+

@@ -1,0 +1,41 @@
+**Corollary 6.3 (Optional dyadic $q$-input accuracy).** With the same
+fixed-$J$ interpretation, it suffices that
+
+$$
+|\widehat q-q|\le q\rho/2.
+\tag{6.11}
+$$
+
+Then $0<\widehat q<1$ and $\widehat s=-\log\widehat q$ meets
+Theorem 6.2. In particular a certified dyadic input with absolute
+error at most $2^{-P}$ suffices when
+
+$$
+P\ge\left\lceil\log_2\frac2{q\rho}\right\rceil.
+\tag{6.12}
+$$
+
+The displayed sufficient input precision is
+$(r+1)\log_2(1/s)-\log_2J+O(1)$ at full cap, and
+$\log_2(1/s)+O(1)$ for fixed $J$. It is separate from $B$ and $Q$.
+
+Proof. Since $\rho\le s/2$ and $s<1$, (6.11) gives
+$\widehat q\ge q/2>0$. Also
+$1-q=q(e^s-1)\ge qs>q\rho/2$, so the input cannot cross one.
+The derivative of $\log$ on the interval between $q$ and $\widehat q$
+has magnitude at most $2/q$. Thus
+
+$$
+|-\log\widehat q-s|\le2|\widehat q-q|/q\le\rho.
+\tag{6.13}
+$$
+
+Condition (6.12) ensures (6.11). For fixed $J$, (6.5) makes $\rho$
+a fixed positive multiple of $s$, up to its minimum with $s/2$.
+At full cap $L^r$ is within fixed positive factors of $s^{-r}$ and
+$J\asymp\log(1/s)$, so the second branch eventually determines $\rho$
+and $\rho\asymp s^{r+1}J$. Since $q=e^{-s}$ stays bounded away from
+zero, the two orders follow. These are deterministic sufficient input
+bounds with exact fixed $c$, not an unknown-$q$ testing or estimation
+result. $\square$
+

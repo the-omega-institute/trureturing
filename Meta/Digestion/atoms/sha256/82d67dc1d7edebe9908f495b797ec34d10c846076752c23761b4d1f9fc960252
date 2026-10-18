@@ -1,0 +1,17 @@
+**Definition 8.1 (Zero-seed measurement populations).** Retain the same
+fixed positive form. Let $\mathcal Z_{\mathfrak d}$ contain all
+pairs $(p,b)$ with $p\in\Delta_2$, $b$ a real unit vector in
+$V_{\rm rad}$ or $V_{\rm tan}$, and
+$\mathcal B_{\mathfrak d}(a(p))b=0$. Define
+
+$$
+q(b)=(\|R_0b\|^2,\|R_+b\|^2,\|R_-b\|^2),\qquad
+\mathcal Q_{\mathfrak d}
+=\{q(b):(p,b)\in\mathcal Z_{\mathfrak d}\},\qquad
+q_{\rm TP}=\frac15(1,2,2).
+\tag{8.1}
+$$
+
+The convex hull of the empty set is empty. Both radial and tangent
+seeds, and all boundary populations, occur in this definition.
+

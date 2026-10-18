@@ -1,0 +1,76 @@
+**Theorem 41.3 (exact support-charge optimization, including singular inputs).** For the family (R.195), let $A_q$ be (R.186) and put $Q_q=q\otimes\omega$. With $\Pi_{\ker A_q}$ the orthogonal projection onto the entire kernel, every complex environment density $\omega$ obeys
+
+$$
+ \sup_{q\in\mathsf D(\mathbb C^3)}
+ \operatorname{Tr}(Q_q\Pi_{\ker A_q})
+ =\frac{u\,\omega_{00}+a\,\omega_{11}}{(\sqrt a+\sqrt u)^2}.
+\tag{R.199}
+$$
+
+The maximum is attained by the legitimate rank-two reference density
+
+$$
+ q_*:=\operatorname{diag}\left(
+ \frac{\sqrt u}{\sqrt a+\sqrt u},\ 0,\
+ \frac{\sqrt a}{\sqrt a+\sqrt u}\right).
+\tag{R.200}
+$$
+
+The supremum restricted to positive definite $q$ has the same value, approached by $q_\varepsilon=(1-\varepsilon)q_*+\varepsilon I_3/3$ as $\varepsilon\downarrow0$.
+
+**Proof.** For (R.197), its two reduced densities and normalization are
+
+$$
+ D_R=\frac{\operatorname{diag}(u,0,a)}{a+u},\qquad
+ D_E=\frac{\operatorname{diag}(u,a)}{a+u},\qquad
+ \ell^2=\frac{(\sqrt a+\sqrt u)^2}{a+u}.
+\tag{R.201}
+$$
+
+For $q\succ0$, the kernel of $A_q$ is spanned by $(q^{-1/2}\otimes I_E)\xi$. Its squared norm is $\operatorname{Tr}(D_Rq^{-1})$. Sandwiching $Q_q$ between the unnormalized kernel vector cancels $q^{-1/2}qq^{-1/2}$, so the entire kernel charge equals
+
+$$
+ \operatorname{Tr}(Q_q\Pi_{\ker A_q})
+ =\frac{\operatorname{Tr}(\omega D_E)}{\operatorname{Tr}(D_Rq^{-1})}.
+\tag{R.202}
+$$
+
+To cover every singular complex $q$, set $P=\operatorname{supp}q$ and $W=\operatorname{span}\{|0\rangle_R,|2\rangle_R\}$. The operator $A_q$ is zero on $P^\perp\otimes E$ and has no coupling between that space and $P\otimes E$. Its kernel splits orthogonally into this external space and its kernel within $P\otimes E$. The external part has zero $Q_q$ mass. Within $P\otimes E$, positivity gives
+
+$$
+ y\in\ker A_q
+ \quad\Longleftrightarrow\quad
+ (\sqrt q\otimes I_E)y\in\ker J_0.
+$$
+
+The map $\sqrt q$ is invertible on $P$. The unique vector (R.197) lies in $P\otimes E$ exactly when $W\subseteq\operatorname{ran}q$, because its two nonzero Schmidt reference directions span $W$. Hence the internal kernel is zero if this containment fails. When it holds, that kernel is spanned by $((\sqrt q)^+\otimes I_E)\xi$ and the same calculation as (R.202) gives
+
+$$
+ \operatorname{Tr}(Q_q\Pi_{\ker A_q})
+ =\begin{cases}
+ \displaystyle\frac{\operatorname{Tr}(\omega D_E)}{\operatorname{Tr}(D_Rq^+)},
+ &W\subseteq\operatorname{ran}q,\\[6pt]
+ 0,&W\not\subseteq\operatorname{ran}q.
+ \end{cases}
+\tag{R.203}
+$$
+
+A pseudoinverse expression without its support-containment test would be invalid.
+
+On any containing support, Hilbert–Schmidt Cauchy–Schwarz gives
+
+$$
+ \begin{aligned}
+ (\operatorname{Tr}\sqrt{D_R})^2
+ &=\left|\operatorname{Tr}\bigl(\sqrt q\,(\sqrt q)^+\sqrt{D_R}\bigr)\right|^2\\
+ &\leq\operatorname{Tr}q\;
+ \operatorname{Tr}\bigl(\sqrt{D_R}\,q^+\sqrt{D_R}\bigr)
+ =\operatorname{Tr}(D_Rq^+).
+ \end{aligned}
+\tag{R.204}
+$$
+
+This uses $P\sqrt{D_R}=\sqrt{D_R}$ and $\operatorname{Tr}q=1$, not reality or diagonality of $q$. Equality is attained by $q_* =\sqrt{D_R}/\ell$ on $W$, as in the already established construction (R.28). Equations (R.201)–(R.204) now prove (R.199) for all complex $q$ and $\omega$, including non-diagonal and singular ones. Off-diagonal entries of $\omega$ disappear here because this particular $D_E$ is diagonal.
+
+Finally $q_\varepsilon\succ0$ for $0<\varepsilon<1$. Its inverse restricted to $W$ converges to $q_*^+$ there, while $D_R$ is zero on $W^\perp$. Thus (R.202) converges to the value attained by (R.200). This proves the full-rank approximation claim without discarding any singular input from the optimization. $\square$
+

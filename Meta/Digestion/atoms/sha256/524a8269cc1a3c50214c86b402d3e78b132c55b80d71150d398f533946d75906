@@ -1,0 +1,23 @@
+**Definition 366.1 (Stochastic input averaging within an entire fiber).** Put
+
+$$
+\tau(w)=\begin{cases}\min\{i:w_i=0\},&w\ne1^7,\\8,&w=1^7.\end{cases}
+\tag{366.1}
+$$
+
+For a kernel $P:B_7\to\operatorname{Prob}(J_7)$, define
+
+$$
+\mathcal K(P)=\left\{k:\ k_w=\sum_{v:\tau(v)=\tau(w)}A(w,v)P_v,
+\quad A(w,v)\ge0,\quad
+\sum_{v:\tau(v)=\tau(w)}A(w,v)=1\right\}.
+\tag{366.2}
+$$
+
+For each row $w$, the same coefficients $A(w,v)$ multiply every output label. The coefficients may depend on $P$ and the entire profile. No uniformity, deterministic choice or common averaging measure between distinct rows is required. Every suffix in the fiber is allowed. This is an algebraic set of kernels, not a procedure which acquires a free new source or executes the averaging. For arbitrary kernels put
+
+$$
+d_\infty(k,q)=\max_{w\in B_7}\operatorname{TV}(k_w,q_w).
+\tag{366.3}
+$$
+

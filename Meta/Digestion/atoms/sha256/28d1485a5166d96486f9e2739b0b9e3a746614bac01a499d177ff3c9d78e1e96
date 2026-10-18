@@ -1,0 +1,35 @@
+**Theorem 4.2 (necessary acquired alphabet and fresh-Read tradeoff).**
+Let $m=|E_A[\mathcal F_D]|$. If a recovery procedure of Assumption
+4.1 uses at most $q$ new Reads on every source, then
+
+$$
+m4^q\ge3^{2^{D-2}},\qquad
+q\ge\max\left(0,
+\left\lceil\frac{2^{D-2}\log_2 3-\log_2 m}{2}\right\rceil\right).
+\tag{NPH.11}
+$$
+
+More generally, if an additional accessible retained field has at most
+$K$ possibilities for each export value, then necessarily
+
+$$
+mK4^q\ge3^{2^{D-2}}.
+\tag{NPH.12}
+$$
+
+These are necessary conditions, not sufficiency claims or total
+observer-memory estimates.
+
+Proof. For each entry name, the new actual executions form a
+decision tree of depth at most $q$ and branching at most four.
+Even with early stopping it has at most $4^q$ terminal leaves.
+Addresses, stopping, internal control and the final output are
+functions of the entry, the acquired replies and public inputs; they
+provide no additional independent distinctions. One terminal leaf
+cannot correctly output two different earlier preparation transcripts.
+Summing over all $m$ entries and applying Theorem 3.3 proves the
+first inequality. Taking logarithms gives the second. With the
+supplemental field the actual joint entry image has size at most
+$mK$, whether or not its fields are correlated, giving (NPH.12).
+$\square$
+

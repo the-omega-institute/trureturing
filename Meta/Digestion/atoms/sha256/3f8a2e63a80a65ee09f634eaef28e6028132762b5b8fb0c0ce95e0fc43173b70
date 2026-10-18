@@ -1,0 +1,11 @@
+**Proposition 8.7 (exact boundary of the comparison).** The appendix
+refutes the two universal claims in Theorem 8.6. It does not refute
+favorable representative selection, a theorem restricted to minimum or
+strict-subgrid graphs, another installed compensation scheme, or
+$D\le E+\nu$. All examples satisfy $m_B>G$. The same state $J$ is
+live at another actual history, so it belongs to $Q_{\rm live}$ rather
+than automatically to $\nu$. Theorems 3.3--5.1 count all incidences of
+one graph and do not require separator packs; the appendix is compatible
+with them. Neither an unrestricted intermediate lower bound nor a correct
+strict-subgrid graph is established here. $\square$
+

@@ -1,0 +1,21 @@
+**References 9.3 (formal-source comparison and limits).** The following
+public and private declaration contracts were inspected as source
+evidence; no current compiled application is claimed.
+
+| Declaration source | Exact mismatch with this task |
+| --- | --- |
+| [SourceTransportCentralizer, `source_transport_centralizer`][D5-CENTRAL] | Classifies pairing-preserving maps commuting with substitution and their injectivity/image inverse. It does not decide coupled acquired fibers or optimize actual serial read words. |
+| [ActualTreeReadoutAcquisition, `readout`, `Policy`, `paid`, `source_foundation`][D5-READ] | Actual four-valued fixed-source readout and source rigidity; its `paid` counts distinct addresses and its strategy target is fixed-source membership. It is not the raw-call/update/full-row resource contract here. |
+| [ActualExactTraceCompiler, `strategy_exact_run`, `strategy_admissible`, private `exact_actual_prefix_replay`, `execute_suffix`][D5-TRACE] | Supplied coarse-factorizing strategies, allowed-source bounds and replay hypotheses; exact fixed-source traces do not supply common-word synthesis on (CRF.2). |
+| [FirstWindowBoundaryAdaptive, `original_first_window_adaptive_price`, private `fiber_lower`][D5-WINDOW] | Requires $m\ge5$, prescribed finite phase sets, binary branch targets and allowed block histories. It concerns those window records, not arbitrary free-tree signed fibers. |
+| [FiniteCommonMarginalSupermodular, `common_marginal_supermodular_le_diagonal`, private `clipped_increment_le`][D5-MARGINAL] | Finite linearly ordered coordinates, a probability mass with four equal marginals, and a supermodular test. It supplies no deterministic source/action correspondence here. |
+| [Pinned mathlib `Computability/DFA.lean`][MATHLIB-DFA] | `DFA`, `eval`, `accepts` and the finite-state pumping interface concern ordinary word automata. They do not themselves supply the finite-tree/marker/native observation translation proved above. |
+
+The mathlib source comparison uses revision
+`db584cd6d46c92f209a44c0f1c829460d327499d`.
+These are scoped source comparisons, not exhaustive library absence
+claims. Adjacent stochastic restart or scan-runtime statements
+require their external-stream and law hypotheses; no iid stream,
+external producer or finite scanner-runtime promise is inserted
+into this deterministic finite-tree problem.
+

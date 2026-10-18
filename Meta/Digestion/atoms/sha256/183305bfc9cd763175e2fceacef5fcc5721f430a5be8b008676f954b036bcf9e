@@ -1,0 +1,17 @@
+**Definition 2.2 (Both actual one-sided erasures).** For $j\ge0$ define precisely the fields of [Direct][D], Definition 1.3:
+
+$$
+\begin{aligned}
+\mathcal L_j&=\sigma(X_{-j},\ldots,X_{-1},X_1,X_2,\ldots),&
+p_j^L&=\mathbb E_P[X_0\mid\mathcal L_j],\\
+\mathcal R_j&=\sigma(\ldots,X_{-2},X_{-1},X_1,\ldots,X_j),&
+p_j^R&=\mathbb E_P[X_0\mid\mathcal R_j],\\
+e_L(j)&=\mathbb E_P(q_0-p_j^L)^2,&
+e_R(j)&=\mathbb E_P(q_0-p_j^R)^2,\\
+A_P&=\sum_{j\ge0}\bigl(\sqrt{e_L(j)}+\sqrt{e_R(j)}\bigr).
+\end{aligned}
+\tag{2.5}
+$$
+
+At $j=0$ the finite retained side is empty and the entire opposite half-line remains. Both zero-offset terms are included.
+

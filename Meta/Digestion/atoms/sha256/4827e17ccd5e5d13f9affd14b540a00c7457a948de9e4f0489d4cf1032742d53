@@ -1,0 +1,6 @@
+## 87. Exact anisotropic quartic coercivity at every disphenoid equality pair
+
+This is a sequel to the local Choi-tail bound in section 86, not a modification of that result. We compute the complete minimized probability-quadratic coefficient of the rank-two Ky Fan witness, including all original-channel comparison tangents. We then give a separate physical C²-amplitude-path consequence. The result excludes negative fourth-order coefficients along those paths; it does not prove a local minimum, exclude higher-order escape, or settle the unrestricted product optimum.
+
+All environments in the path statement are fixed and finite. A path with new Kraus probability proportional to its parameter generally has amplitude proportional to the square root of that parameter and is not a C² amplitude path at zero.
+

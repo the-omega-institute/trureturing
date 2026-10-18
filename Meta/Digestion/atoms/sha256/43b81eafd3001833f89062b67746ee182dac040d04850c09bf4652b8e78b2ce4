@@ -1,0 +1,6 @@
+**Corollary 5.4 (a finite family of genuine whole-fiber services).** When GB holds, the finitely many services $A_v$ are cofinal for coordinatewise finite worst budgets: every allowed finite-budget comparator is weakly dominated in those budgets by one of them. Taking the union of their finite epoch/address menus gives a finite menu that realizes the whole Pareto basis.
+
+Proof. Apply (JRF.5.3) to $b(A)$ and use $b(A_v)=v$. Menu union preserves each included service. The menu is obtained only after comparison with all permitted strategies in Theorems 3.1, 4.3, and 5.3. It is not a restriction assumed in the lower bound. $\square$
+
+The finite family does not replicate every original sourcewise profile, every original trace, or every timing record. Theorem 3.1 gives sourcewise dominance by an effective transformation depending on the comparator. Theorem 5.3 gives a comparator-independent finite basis only after taking coordinate suprema. Nor does (JRF.5.3) assert that every upper triple can be attained with three independently adjustable exact costs: literal lengths, reads, and updates remain coupled by actual actions.
+

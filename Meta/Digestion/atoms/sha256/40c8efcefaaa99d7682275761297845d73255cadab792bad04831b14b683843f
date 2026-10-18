@@ -1,0 +1,52 @@
+**Definition 1.1 (fixed data and complete domains).** Fix any one original admitted signed $\kappa\ne0$, $H$, $I=(l,u)$, $k_0\in I$ and $a,\varepsilon>0$. Every original probability, interval and denominator restriction is retained. In particular $k-\alpha_\kappa$ has a positive margin on $\overline I$. Set
+
+$$
+\begin{aligned}
+\alpha_\kappa&=\kappa+\kappa^2/H,&d_0&=k_0-\alpha_\kappa>0,&\nu&=\varepsilon/d_0,\\
+L_I&=u-l,&\lambda&=\varepsilon^2\pi^2/L_I^2,&
+\phi(k)&=(2/L_I)^{1/2}\sin\bigl(\pi(k-l)/L_I\bigr),\\
+c_j&=c_\kappa^{(j)}(k_0)\quad(j=0,1,2),&
+j_0&=\varepsilon^4|\det(c_0,c_1,c_2)|>0.
+\end{aligned}
+\tag{1.1}
+$$
+
+The entire original rational vector $c_\kappa=(A_\kappa,B_\kappa,b_\kappa)$ satisfies, exactly on $I$,
+
+$$
+\begin{aligned}
+c_\kappa(k_0+h)&=c_0+h c_1+\frac{h^2}{2(1+h/d_0)}c_2,\\
+(A_\kappa(k),B_\kappa(k))
+ &=\frac{k-2\kappa}{2H(k-\alpha_\kappa)}(H+\kappa-k,-k),\\
+\det(c_\kappa,c_\kappa',c_\kappa'')(k)
+ &=-\frac{H^2-\kappa^2}{2H^3(k-\alpha_\kappa)^3}\ne0.
+\end{aligned}
+\tag{1.2}
+$$
+
+The third component is retained in the vector identity, with its original jets. None of the jets is independently variable. On the all-real cover $\mathcal C=I\times\mathbb R^3$, $q=(\theta,v,x)$, use raw measure $dY=dk\,dq$ and the complex Hilbert space $L^2(dY)$. Both height faces are Dirichlet. Put
+
+$$
+B=-\varepsilon^2\partial_k^2-(c_\kappa(k)\cdot\partial_q)^2,
+\qquad S=B-\lambda\ge0.
+\tag{1.3}
+$$
+
+With phase Fourier factor $(2\pi)^{-3/2}$ and $B_\eta=-\varepsilon^2\partial_k^2+|\eta\cdot c_\kappa(k)|^2$, the entire domains, including underlying $L^2$ membership, are
+
+$$
+\begin{aligned}
+\mathcal Q
+ &=\left\{\psi:\widehat\psi(\cdot,\eta)\in H_0^1(I)\text{ a.e.},\quad
+ \int_{\mathbb R^3}\!\int_I
+ (\varepsilon^2|\partial_k\widehat\psi|^2+
+ |\eta\cdot c_\kappa|^2|\widehat\psi|^2)dk\,d\eta<\infty\right\},\\
+D(S)=D(B)
+ &=\left\{\psi:\widehat\psi(\cdot,\eta)\in H^2(I)\cap H_0^1(I)\text{ a.e.},\quad
+ \int_{\mathbb R^3}\|B_\eta\widehat\psi(\cdot,\eta)\|_2^2d\eta<\infty\right\}.
+\end{aligned}
+\tag{1.4}
+$$
+
+Here $\mathcal Q=D(S^{1/2})=D(B^{1/2})$. Every real phase frequency and every complex competitor in these domains is allowed; there is no ordinary phase $H^1$, reality, parity or product-state restriction.
+

@@ -1,0 +1,44 @@
+**theorem 5.2 (Algebraic fixed-port realization and actual attainment).**
+Every feasible algebraic tuple in (4.4) has an effective algebraic
+realization in the original coordinates by one fixed encoder and whole-block
+CPTP decoders. For that stationary channel its exact worst-case error is
+attained by wait zero, a full five-outcome read and Stop, on a suitable
+complex algebraic pure input.
+
+Proof. For each $C_i$, compute an algebraic orthonormal basis of its range
+and extend it to $q$ orthonormal columns in $\mathbb C^5$, obtaining an
+isometry $V_i$ with $V_iV_i^\dagger C_i=C_i$. Exact Gaussian elimination
+detects the rank. Gram–Schmidt on independent columns followed by standard
+basis vectors uses algebraic arithmetic, conjugation and positive square
+roots; every required comparison or zero test is decidable for algebraic
+numbers. A zero $C_i$ can be dropped, or given any fixed algebraic isometry.
+Set
+
+$$
+\begin{aligned}
+B_i&=V_i^\dagger C_iD^\dagger, &R_i&=DV_i,\\
+\operatorname{Enc}_i(X)&=B_iXB_i^\dagger,
+&\operatorname{Dec}_i(Y)&=R_iYR_i^\dagger.
+\end{aligned}
+\tag{5.2}
+$$
+
+Then $\sum_iB_i^\dagger B_i=I_5$ and $R_i^\dagger R_i=I_q$.
+Thus the total direct-sum encoder is CPTP and each decoder is CPTP on the
+entire $M_q$. Their composite has Kraus matrices
+$R_iB_i=DC_iD^\dagger$, giving exactly the original-coordinate channel.
+There are at most $625$ fixed flags, consumed during decoding. Nothing is
+retained outside the declared port or exposed to the future policy.
+
+The finitely many Hermitian residuals $H_J(C)$ have algebraic entries.
+Exact eigenvalue isolation and algebraic linear algebra select one with
+maximal absolute eigenvalue and an algebraic unit eigenvector. Theorem 3.3
+then realizes its error with the actual wait $t=0$. This is an actual
+finite-time worst case, not only a limiting torus point. $\square$
+
+The coefficient descriptions, flag count, CPTP design and this exact
+attainment statement are distinct from physical coefficient synthesis,
+finite-precision robustness, clocks and storage duration. No practical
+runtime bound is inferred from termination; the finite system has $31,251$
+real variables before any elimination auxiliaries.
+

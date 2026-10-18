@@ -1,0 +1,73 @@
+**Lemma 9.2 (Three distinct Halt rows).** The same pattern forces
+three distinct installed Halt rows, separate from all Read rows.
+
+Proof. Positive $000$ and $001$ sections require respectively
+$h_\beta(\sigma)$ and $h_\alpha(\sigma)$. If $T\in E$,
+the required join on $10$ has opposite unique target labels;
+if $T\in F$, use instead the required join on $01$.
+Both replies are positive, so a Halt with
+$h_\alpha(1-\sigma)$ is also required. The three actual
+four-state labels differ. A fixed Halt row has one label and
+cannot supply two of them; a Read row cannot be a Halt row.
+This counts three rows of the original $\mathcal K$, without discarding
+duplicate or unvisited rows. $\square$
+
+**Proof of Theorem 3.2.** For any deterministic eligible start in
+a table with at most eight rows, assume its correctness exceeded
+$S_3-\rho$. Proposition 8.1 would force the pattern whose
+actual-row closure is proved in Lemmas 9.1–9.2. That pattern
+requires $|\mathcal K|\ge6+3=9$, a contradiction. Thus every such start
+satisfies $C(r)\le S_3-\rho$.
+
+For the original measurable initialization, Lemma 2.3 gives the
+same $q(r)=1$ condition on every positive cell, and hence
+
+$$
+q_3-L_3=\sum_rw_rC(r)
+\le\sum_rw_r(S_3-\rho)=S_3-\rho.
+\tag{9.1}
+$$
+
+The constant is the same for every deterministic start. There is
+no atomic-seed conditioning, new coin or changed initialization
+law. Zero-weight cells contribute zero, while their installed rows
+are still counted. The contradiction uses only positive actual
+sections and fixed successors; it neither removes null cycles nor
+imposes an all-input cap. Taking the supremum over all original
+tables with $|\mathcal K|\le m\le8$ preserves the explicit constant,
+proving the first inequality of (3.4) without needing attainment.
+
+For the simpler bound put $L=d^2b^7/2$. From
+$a\ge1/2$, $c\ge1/2$ and $\eta\ge b/2$,
+
+$$
+g_1\ge\frac{db^2}{4},\quad
+g_2\ge\frac{b^3}{4},\quad
+g_3\ge\frac{db}{16},\quad
+g_4\ge\frac{d^2b}{16},\quad
+g_5=a^2cb^2d\ge\frac{db^2}{8}.
+\tag{9.2}
+$$
+
+The respective ratios of these five lower bounds to $L$ are
+
+$$
+\frac1{2db^5},\quad \frac1{2d^2b^4},\quad
+\frac1{8db^6},\quad \frac1{8b^6},\quad
+\frac1{4db^5}.
+\tag{9.3}
+$$
+
+Each exceeds one because $0<d<1$ and $0<b<1/2$.
+For the remaining terms,
+
+$$
+\frac{g_6}{L}=\frac1{db}>1,\qquad
+\frac{g_7}{L}=\frac1{d^2}>1.
+\tag{9.4}
+$$
+
+Every term therefore dominates $L>0$, so does their minimum.
+This proves the whole theorem. Strict positivity is asserted for
+each fixed allowed parameter only. $\square$
+

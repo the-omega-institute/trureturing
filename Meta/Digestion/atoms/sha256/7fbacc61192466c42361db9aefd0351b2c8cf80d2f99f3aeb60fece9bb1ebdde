@@ -1,0 +1,47 @@
+**定义 1.1（原子采集域）。** Let $\mathcal W_3$ be the set of triples
+$W=(P,g,\delta)$ with $P$ a strictly entrywise positive real $2\times2$
+matrix of rank one and trace one, $0\ne g\in\mathbb R[t]$ of degree at most
+three, and $\delta\in\mathbb R$. Set
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+A_0=I,\quad A_i=E_iA_{i-1},\quad E_i\in\{M,J\}.
+$$
+
+The original-clock reading is
+
+$$
+z_i(W)=g(i)\operatorname{tr}(A_iP)+\delta.                 \tag{1.1}
+$$
+
+The initial reading counts. Each atom is followed immediately by its reading;
+eight total readings use exactly clocks $0,\ldots,7$. There is one
+unresettable, uncopyable trajectory. Skipped readings, unread compound
+actions, empty-action readings, clock renumbering and additional observation
+ports are excluded. A protocol's actions, stopping and returned complete
+target may be arbitrary deterministic functions of its entire actual
+history. There is no continuity, measurability, computability or finite
+description requirement. All gain signs, lower actual degrees, sampled
+roots, repeated roots and constant drifts are retained.
+
+For a literal history $H$, let $\mathcal F(H)$ consist of all compatible
+complete targets, retaining every action and reading. For known
+$K\subseteq\mathcal F(H)$ use [II, Definition 56.1](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_II.md):
+
+$$
+\begin{aligned}
+L_0(K,H)&\Longleftrightarrow |K|\ge2,\\
+L_{s+1}(K,H)&\Longleftrightarrow |K|\ge2\ \land\
+\bigwedge_{E\in\{M,J\}}\exists z\in\mathbb R:
+L_s(K\cap\mathcal F(H,E,z),(H,E,z)).
+\end{aligned}                                                   \tag{1.2}
+$$
+
+The horizon never exceeds the remaining original clocks. These predicates
+include early stopping. Their negations mean that one strategy recovers
+every member of the known family within the remaining horizon. Every child
+is an actual response fiber of the same fixed worlds. Predictions for an
+unchosen action are mathematical functions of a world, not additional
+physical readings.
+

@@ -1,0 +1,48 @@
+**Definition 115.1 (all originals, all nodes and the source boundary).**
+Use the full finite ordered algebra $\mathcal T$, actual $\rho$, occurrence
+addresses and closed unit-edge counting Laplacian of IV Definitions
+112.1--112.2. For every $u\in\mathcal T$ and $n\ge0$, write
+
+$$
+\begin{aligned}
+s_n&=\rho^n u,& V_n&=V_{s_n},& N_n&=|V_n|,& L_n&=L_{s_n},\\
+\mu_n&=N_n^{-1}\sum_{x\in V_n}\delta_x,&
+\mathscr E_n&=\ell^2(E_{s_n})\subset\mathscr H,
+&\mathscr H&=\ell^2(\{L,R\}^{+}).
+\end{aligned}
+\tag{115.1}
+$$
+
+An edge is indexed by its child address, oriented away from the root.
+Let $Q_n$ project onto the actual edges. The path sum $J_n$ and its
+centered covariance are those of IV Definition 98.1, with this actual
+source and counting probability:
+
+$$
+(J_nz)(x)=\sum_{\varepsilon\ne p\preceq x}z_p,
+\qquad \Sigma_n=J_n^*J_n-(J_n^*\mathbf1)\otimes(J_n^*\mathbf1).
+\tag{115.2}
+$$
+
+Every actual root, internal node and terminal has mass $1/N_n$.
+Equal subtree values at different addresses remain different occurrences.
+Write $W(u)=a(u)+\varphi b(u)$, $\varphi=(1+\sqrt5)/2$, as in IV
+Definition 113.1. Retain exactly its boundary measure $\nu_u$:
+
+$$
+\nu_u=\sum_{q\in\mathcal L(u)}\frac{\varphi^{j(q)}}{W(u)}
+              (\omega\mapsto q\omega)_*M,
+\quad M([p])=\varphi^{-\#_L(p)-2\#_R(p)},
+\quad j(q)=\begin{cases}0,&u|_q=\alpha,\\1,&u|_q=\beta.\end{cases}
+\tag{115.3}
+$$
+
+This is a measure value, not extra retained leaf syntax. IV Theorems
+113.2 and 113.4 give its exact cylinders and
+$\nu_{s_n}=\nu_u$, $W(s_n)=\varphi^nW(u)$. Put
+$J_u z(\omega)=\sum_{p\preceq\omega}z_p$ initially for finite support,
+$C_u z=J_u z-\int J_u z\,d\nu_u$, and $\Sigma_u=C_u^*C_u$.
+The two subscripts have different roles: $\Sigma_n$ is finite counting
+covariance, whereas $\Sigma_u$ uses the unchanged original boundary law.
+The initial source $u$ may be chosen anew at every $n$.
+

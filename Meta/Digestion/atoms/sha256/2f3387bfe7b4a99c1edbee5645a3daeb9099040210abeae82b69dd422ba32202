@@ -1,0 +1,65 @@
+**Convention 9.2 (finite-interface suppliers do not supply the missing
+operation).** The inspected `result` in [FixedTreeCommonExtension][FTCE]
+assumes a fixed finite full tree with disjoint sibling coordinate sets,
+finite nonempty leaf alphabets and nonempty promise; its local tables
+receive leaf values and complete child-message tuples. Its owning
+[Scribe narrative][FTCES] describes common total extensions and equal
+upward resource closures. A root decoder in that interface is not
+a paid original-root literal. No transfer from that result is used.
+
+The inspected `NativeLiteralFeasible`, `RootLiteralFeasible` and
+`finite_literal_synthesis` in [NativeLiteralMoore][NLM], with its
+[owning narrative][NLMS], concern a fixed prefix-free cut and current
+row, supplied `ImageValues` on a complete predecessor fiber, and
+simultaneous finite export/state/Read/literal budgets. They do not
+acquire that supplied table or supply the original public-late-target
+all-count pressure interface. `join_covers` in [FiniteNaturalJoin][FNJ]
+requires both cover premises on the same full assignment. It supplies
+no global existence or all-size weighted upper here. These source
+inspections are not current compilation or Lean certification.
+
+**Open problem 9.3 (unchanged effective and operational gap).** The
+remaining objective is a total sound verifier for every complete native
+template at every length, with accepted endpoints cofinal in the same
+$\sigma_d$, or a uniform effective length error yielding two-sided
+approximation of the original $\lambda$. Arbitrary correlations,
+incidences, guards, shared equality references, compatibility zeros and
+full joint weights once remain in that quantifier. No assertion that
+$a_d=b_d=\min_\mu\beta_d(\mu)$ is established or refuted here.
+
+Sections 4–5 rule out uniformly sublinear per-template loss only for
+their defined mechanisms. Section 7 additionally excludes the stronger
+pointwise cap-completeness premise for its specified constructor rule
+at a full-support fixed law. An optimizer-relevant restriction, a joint
+scope operation or an additional sound global inequality would need
+its own proved relation to every retained native competitor. Finer cuts,
+global recoloring, richer existing calculi, effective approximation and
+computability are not ruled out by these examples. Finite evaluation or
+finite verification of a gauge is not such an all-size cofinal theorem.
+
+The actual recovery furnished by §8 is precisely the requested temporal
+factor, equivalently its full authentic-count trajectory, from the
+complete acquired name and at most one actual reply. It is not full-source,
+hidden-age, history or physical space/time recovery. General exact
+$M_1(D)$, sharp original $\lambda$ and the wider space/time/boundary/memory
+mutual-recovery programme remain open. No original quantitative endpoint
+is changed by these certificate-method boundaries.
+
+[NPC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PRODUCT_PRESSURE_COMPLETENESS.md
+[CBN]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CONSTRUCTOR_BOUNDARY_NETWORKS.md
+[RRN]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_REPRESENTATIVE_REPLY_NORMAL_FORM.md
+[NCM]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CORRELATED_MEMORY_LOWER.md
+[SRP]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SINGLE_RESIDUAL_PRESSURE.md
+[JPL]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_JOINT_POTENTIAL_LIMITS.md
+[GCB]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_GRAPH_COVER_BETHE_BOUNDARIES.md
+[GDB]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_GLOBAL_DEPENDENCE_BOUNDARIES.md
+[OCB]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_OVERLAP_CLOSURE_BOUNDARIES.md
+[D5N]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeDepthPatterns.lean
+[FTCE]: ../../../D5/S3/Observer/Separation/FixedTreeCommonExtension.lean
+[FTCES]: ../../../Blueprint/D5/S3/Observer/Separation/FixedTreeCommonExtension.scribe.cs
+[NLM]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeLiteralMoore.lean
+[NLMS]: ../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeLiteralMoore.scribe.cs
+[FNJ]: ../../../D5/S0/Certificates/FiniteNaturalJoin.lean
+[SSSZ]: https://arxiv.org/src/1809.09462v3
+[LZ]: https://arxiv.org/src/1210.7013v2
+

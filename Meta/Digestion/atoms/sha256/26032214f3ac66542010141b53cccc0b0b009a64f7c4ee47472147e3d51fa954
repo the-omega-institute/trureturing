@@ -1,0 +1,68 @@
+**Theorem 160.1 (Complete closed six-coordinate equality).** For every
+real parameter profile in $Q_6$,
+
+$$
+\Pi_N\cap Q_6=P=\Pi_O\cap Q_6.
+\tag{160.1}
+$$
+
+There is a continuous piecewise affine choice of the full 406-coordinate
+stopped allocation on all of $P$, with all word laws and all cap rows
+satisfied simultaneously and $p_{1^6}(0)=1-e$.
+It includes zero cap, zero amplitudes, all ties, $a_6=e$ and zero schedule
+weights. In the coefficient notation of Sections 108--110, it supplies
+$\mathcal F_N(a,e)\cap\mathscr C_6\ne\varnothing$ throughout $P$.
+
+**Proof.** A bounded polytope is the convex hull of its vertices.
+For this particular finite intersection an elementary argument suffices:
+if a point is not a vertex, split it along a chord of its minimal face,
+whose endpoints belong to proper faces; induction on face dimension
+expresses it as a convex combination of vertices. Take
+$x=\sum_v\lambda_vv$, $\lambda_v\ge0$, $\sum_v\lambda_v=1$ and mix
+entire endpoint tables by $T(x)=\sum_v\lambda_vT(v)$.
+Every mass equation, word law and TV row in $(x,T)$ is affine.
+Their nonnegativity and inequalities therefore survive this single
+mixture. The all-positive base identity becomes
+$\sum_v\lambda_v(1-e_v)=1-e$. Thus $P\subseteq\Pi_O$.
+Completion gives $\Pi_O\subseteq\Pi_N$, and Proposition 157.2 gives the
+other inclusion in (160.1). Theorem 109.1 identifies the stopped kernel
+with $\mathscr C_6$. This is a convex-hull proof for arbitrary real
+parameters; no rational approximation or limiting acquisition is used.
+
+For the continuous choice use the pulling triangulation with the global
+vertex order of Theorem 158.2. Recursively on each face, choose its least
+vertex and cone it over the already triangulated facets that do not
+contain that vertex. Induction on face dimension proves both coverage
+and compatibility of the induced triangulations on shared faces: the
+same ordering is used on every face. Equivalently, intersecting cones
+have their common subdivided boundary faces. Thus this finite collection
+is a triangulation of $P$ whose vertices are the original vertices.
+Assign each vertex its one table from Definition 159.1. On a simplex
+interpolate those tables by its barycentric coordinates. On an
+intersection, coordinates of vertices outside the common face vanish,
+and the remaining affine coordinates coincide. The tables agree there,
+so the finite piecewise affine section is continuous. Feasibility and
+the base identity follow from the preceding affine argument.
+
+Here is a joint measurable one-seed realization, including zero schedule
+masses. Order schedules and labels as above. Let
+$q_S(x)=\sum_{S'<S}w_{S'}(x)$ and use the half-open schedule interval
+$[q_S,q_S+w_S)\subset[0,1)$. In each counterfactual cell $c$, emit $r$
+when
+
+$$
+q_S+\sum_{r'<r}T_{S,c,r'}\le U
+ <q_S+\sum_{r'\le r}T_{S,c,r'}.
+\tag{160.2}
+$$
+
+Every cell partitions the same schedule interval. Its absolute cutpoints
+are continuous in $x$; the events are jointly Borel. Empty intervals
+select nothing, so no division by zero is required. Before acquisition
+$U$ fixes the schedule and its entire table. Execute that schedule until
+its first queried zero or exhaustion and output its selected label.
+There are at most two actual requests. Completing it in $N$ uses the
+same $U$ and counts every remaining request. The allocation is continuous;
+individual emitted labels need not be continuous in $x$ or $U$.
+This section is on $P$ only. $\square$
+

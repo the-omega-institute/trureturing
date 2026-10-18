@@ -1,0 +1,16 @@
+**Corollary 8.2 (the six-coordinate boundary specialization).** For
+$m=2$, Theorem 8.1 gives $n=6,k=3$ and $H=20+r$, whereas the
+original grid has $16+r$ states. Its shared live histories attain
+$\Delta=b+1$ in (PE.31).
+
+Proof. Here $I=\{1,2\}$, $x=3$, $y=4$ and $U=\{5,6\}$.
+The retained grid has $(2+1)(2+2)-1=11$ selected states. The five
+new selected states are $V(a_5),Z_2(a_6),B_X(a_3),B_Y(a_4),J(a_1)$.
+The one edge at $B_Y$ enters the retained $R_{2,3}(a_6)$, whose
+zero and one successors are $L_0,L_1$. The total is therefore
+$11+5+2+2+r=20+r$, compared with $12+4+r=16+r$ for the grid.
+The simultaneous-attainment route is $1,2,3,5,4,6$ after $D$.
+At $V$ the hits are $h=0,g=2$, and $a=b=1,u=2$, so
+$\Delta=2=b+1$. These are symbolic substitutions in Theorem 8.1,
+not an executed instance or an optimum assertion. $\square$
+

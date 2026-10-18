@@ -1,0 +1,33 @@
+**Definition 11.2 (one residual sort).** A shape is a finite full ordered
+$c/f$ tree. Fix a finite nonempty set $V$ of block names sharing one
+unknown shape $K$. A block $U_v$ assigns a natural rank to every leaf
+of $K$. Supply finitely many pointwise equations and whole-block negatives
+
+$$
+U_u=U_v+a(\mathbf z),\qquad
+U_u\ne U_v+b(\mathbf z),
+\tag{NCE.25}
+$$
+
+with specified integer-affine $a,b$. An equation holds at every leaf;
+a negative means that at least one leaf has the indicated rank mismatch.
+Integer offsets are differences, not backward native operations.
+Let $D$ index the negatives, retaining repeated demands. Also prescribe
+one root state $s_v\in Q$ for the native expansion of every block.
+Every block must be a normal code: at every sibling-leaf pair its left
+rank minus its right rank is different from $1$.
+
+For a state vector $\sigma\in Q^V$ and a mask $M\subseteq D$, let
+$P_{\sigma,M}(\mathbf r,\mathbf z)$ assert that $\mathbf r\in\mathbb N^V$
+satisfies all pointwise equations of (NCE.25), that $q_{r_v}=\sigma_v$
+for every $v$, and that each negative $d=(u,v,b)$ has exactly the truth
+specified by its bit:
+
+$$
+d\in M\quad\Longleftrightarrow\quad r_u-r_v\ne b(\mathbf z).
+\tag{NCE.26}
+$$
+
+This is a Presburger formula by Lemma 11.1. A mask records an actual
+mismatch, not distinct automaton states or universal pointwise inequality.
+

@@ -1,0 +1,61 @@
+**Theorem 8.3 (an actual full-family code consuming the cycle relation).**
+Let $n=2^H\ge4$, $d\ge3$, and $D=d+H$. Put the cycle tuples of
+Definition 7.1 at the public frontier of a perfect height-$H$ scaffold.
+There is a correct preparation/reader on the entire variable-shape
+$\mathcal F_D$, merging precisely these $2^n$ canonical right subtrees
+into one name and naming every other canonical state separately. Its
+complete attained alphabet and preparation resources are
+
+$$
+|S_D|-2^n+1,\qquad
+T_{\rm prep}=2^D-1,\qquad Q_{\rm prep}\le D,\qquad
+A_{\rm prep}=(D-1)2^D+1.
+\tag{OOA.36}
+$$
+
+Every late request uses zero Reads or one actual literal of length at
+most $H+2\le D$, before any authentic count. On the analytical
+product-$\mu$ scaffold slice the merged name has exact mass
+$(3^n+1)/6^n$, with the strict bound (OOA.29). This is a nonoptimal
+native code and a quantitative application of the joint rule.
+
+Proof. Ordered scaffold parsing is injective, so the $2^n$ actual
+tuples give that many canonical states of $S_D$. Use the credited
+[OCB, Theorem 3.4][OCB] and [FMR, §2][FMR] construction: before any
+request, actually Read every $Rq$, $q\in W_D$, on the one stationary
+source, including absent replies. These acquire its canonical
+$\pi_D(v)$. A common finite membership table assigns the merged name
+or the singleton canonical name. Every name is attained on an actual
+canonical source. There are $2^D-1$ calls, maximum length $D$, and
+
+$$
+\sum_{l=0}^{D-1}(l+1)2^l=(D-1)2^D+1
+$$
+
+letters. The preparation is deterministic, source-blind initially and
+terminating on every original shape; it actually acquires the
+information used to select its name.
+
+For a singleton name all factors are fixed, so use zero Reads. For
+the merged name, a target strictly above the cut is branch. Write
+each remaining target as $Ra_iq$. If $q=\varepsilon$ it is branch.
+If $q=Lr$, submit the one original literal $Ra_iL$ to obtain the
+actual $s_i$; if $q=Rr$, submit $Ra_{i+1}L$ to obtain $s_{i+1}$.
+Both have length $H+2$. The public request selects the donor before
+its reply and count; the installed table gives $\Gamma_r$ of that
+leaf, including initially absent suffixes. Formula (OOA.5) answers
+every subsequent authentic $k$ without Reads.
+
+All these occurrences are actually present. Pairing homomorphism gives
+$r_{\rho^kt}(Ra_iq)=r_{\rho^k(t|_{Ra_i})}(q)$ there, exactly the
+presence premise of `original_present_transport` in
+[NativeDepthPatterns][Depth]. This mathematical subtree identity
+adds no subtree port. On every original source with the same name,
+canonicalization preserves the queried boundary replies and requested
+factors, so the construction covers all permitted original targets and
+variable shapes. It exports only the fixed-width complete name; the
+paid isolation service removes access to the scan, membership workspace,
+selectors and transcripts. The codebook, scaffold and donor selection
+tables are source-independent. The full joint mass and its bound now
+follow from Theorem 7.2 on precisely this attained fiber. $\square$
+

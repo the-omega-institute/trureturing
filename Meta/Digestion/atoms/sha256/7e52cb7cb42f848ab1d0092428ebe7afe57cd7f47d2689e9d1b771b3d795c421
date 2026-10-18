@@ -1,0 +1,115 @@
+**Theorem 22.1 (normalized native witnesses and matching ground-energy
+order).** In (20.1)--(20.5) there are $C_\tau<\infty$, $c_\tau>0$,
+$C_F<\infty$ and a single $\kappa_1>0$ such that, for every
+$0<|\kappa|\le\kappa_1$ and every $g>0$,
+
+$$
+\lambda_D-\frac{gC_\tau}{|\kappa|}
+ \le E_{\kappa,\tau}(g)
+ \le C_F-\frac{gc_\tau}{|\kappa|}.
+\tag{22.1}
+$$
+
+The lower inequality holds for every normalized state in the completed
+original full form domain. The upper inequality is realized as an
+inequality on explicit normalized smooth native full-domain states whose
+free energies are bounded by $C_F$. In particular, for each fixed $g>0$,
+through both signs,
+
+$$
+E_{\kappa,\tau}(g)\longrightarrow-\infty,
+\qquad
+\frac{gc_\tau}{2|\kappa|}
+ \le -E_{\kappa,\tau}(g)
+ \le\frac{gC_\tau}{|\kappa|}
+\quad\hbox{for all sufficiently small }|\kappa|.
+\tag{22.2}
+$$
+
+Thus no fixed nonempty strict positive coupling window has a finite
+full-state lower bound independent of nonzero $\kappa$ on any two-sided
+neighbourhood of zero. The matching order concerns the full ground
+energy, not only the value of a selected trial sequence.
+
+Proof. An explicit fixed bump is available. Put
+$r_k=\tfrac12\min(k_0-l,u-k_0)$, $r_\theta=\pi/4$, and
+
+$$
+\eta(s)=
+\begin{cases}e^{-1/(1-s^2)},&|s|<1,\\0,&|s|\ge1,\end{cases}
+\qquad J_\eta=\int_{-1}^1\eta(s)^2ds>0.
+\tag{22.2a}
+$$
+
+In the actual visible phase representatives $(-\pi,\pi)$ take
+
+$$
+F(k,\theta,v,x)=
+\frac{\eta((k-k_0)/r_k)\eta(\theta/r_\theta)
+      \eta(v/r_\theta)\eta(x)}
+ {\sqrt{r_kr_\theta^2J_\eta^4}},
+\tag{22.2b}
+$$
+
+with smooth zero extension and periodic continuation in $\theta,v$.
+Then $F\in C_c^\infty(I\times\mathbb T^2\times\mathbb R)$ and
+$\int|F|^2d\nu=1$ exactly. Write $K=\operatorname{supp}F$ and take
+$R=2$, so $K\subset\{|x|<R\}$. At every sufficiently small nonzero parameter,
+using the representative $D\in(-\pi,\pi)$, set
+
+$$
+f_\kappa(k,\theta,v,D)=
+ |\kappa|^{-1/2}F(k,\theta,v,D/\kappa),
+\tag{22.3}
+$$
+
+and extend by zero outside this image of the support. Require
+$|\kappa|R<\pi$. The function vanishes near the circle seam and the
+height faces, so it is a genuine member of
+$C_c^\infty(\Omega_\kappa)\subset\mathcal F_\kappa$, with the actual
+periods and unchanged boundary conditions. For negative $\kappa$ the
+orientation reverses but the measure Jacobian is still $|\kappa|$.
+Consequently
+
+$$
+\begin{aligned}
+\|f_\kappa\|_{L^2(\mu)}^2&=\int|F|^2d\nu=1,\\
+T_\kappa[f_\kappa]&=
+ \int\left(\varepsilon^2|\partial_kF|^2+
+ |A_\kappa\partial_\theta F+B_\kappa\partial_vF+
+                  b_\kappa\partial_xF|^2\right)d\nu\le C_F.
+\end{aligned}
+\tag{22.4}
+$$
+
+Here $C_F$ is the supremum of the displayed finite expression over a
+compact two-sided parameter interval. In particular it is independent
+of $g$ and of small nonzero $\kappa$. The cancellation
+$(\kappa b_\kappa)\partial_D=b_\kappa\partial_x$ verifies the energy
+in the original two controls; no isotropic kinetic surrogate is used.
+By Theorem 21.2 on $K$ and the same exact normalization,
+
+$$
+\int V_{\kappa,\tau}|f_\kappa|^2d\mu
+ =\int V_{\kappa,\tau}(k,\theta,v,\kappa x)|F|^2d\nu
+ \ge c_{\tau,K}/|\kappa|.
+\tag{22.5}
+$$
+
+Set $c_\tau=c_{\tau,K}$ and shrink $\kappa_1$ to satisfy all previous
+bounds. This proves the upper inequality in (22.1). Conversely,
+(21.5) and (20.9), now applied to every member of the completed domain,
+give its lower inequality. These two statements compare admissible
+full-state energies of the identical regularized field.
+
+Since $C_F>0$, further imposing
+$|\kappa|\le gc_\tau/(2C_F)$ proves (22.2). If a fixed interval of
+couplings is bounded away from zero, the same parameter restriction
+can use its positive lower endpoint, and the divergence is uniform on
+that interval. More generally any nonempty positive window contains a
+fixed $g>0$, for which (22.2) already contradicts a proposed common finite
+lower bound. The conclusion is a counterexample with actual normalized
+states, not an inference from a failed estimate or the change of rank.
+No parameter-dependent small-coupling window is used to settle it.
+$\square$
+

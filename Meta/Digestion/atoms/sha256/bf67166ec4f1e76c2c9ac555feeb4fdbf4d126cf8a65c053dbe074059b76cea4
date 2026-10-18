@@ -1,0 +1,19 @@
+**Convention 11.2 (mathematical provenance and literature scope).** The
+proofs of Theorems 5.2, 7.3, 8.1, 9.1 and 9.2 and the scalar
+comparison in §6 are repo-derived deductions under Assumption 1.2.
+The common constructor specializes the published FA/RC constructor
+to the same laws; it is not a new source or minimax certificate.
+Elementary finite convex-hull representation, continuity of bounded
+concave functions at relative interior points and compactness are used
+at their stated finite-dimensional interfaces.
+
+| Literature | Interface and unproved transfer |
+| --- | --- |
+| P. J. di Dio and K. Schmuedgen, *The multidimensional truncated Moment Problem: The Moment Cone*, [arXiv:1809.00584, §5 Theorem 19 and §7 Theorem 52](https://arxiv.org/abs/1809.00584) | Contextual finite moment-atom representation and its connected-component refinement. The full lift $(\Gamma,\lvert u\rvert,g_t)$ has at most ten coordinates and two circle components, consistent with nine low atoms. An exposed equality subset need not preserve connectedness, so this gives no seven-low theorem. The exact served HTML revision is not authenticated as a version-exact premise here. |
+| H. Dette and V. B. Melas, *A note on the de la Garza phenomenon for locally optimal designs*, [arXiv:1105.3575v1, §3 Theorem 1](https://arxiv.org/abs/1105.3575v1), journal/PDF Theorem 3.1 | The ordinary Chebyshev-system and distinguished information-entry hypotheses are required. On eight pure-sheet points the last three columns of $\Gamma$ vanish, so the needed full determinant condition is unavailable. Information-matrix Loewner dominance has not been shown to preserve this absolute-height objective and joint physical covariance. |
+| ST Convention 9.2 and RC whole-circle contact results | Their Fejér–Riesz, moment-duality and continuation interfaces retain their own hypotheses; none selects a complete global optimal contact inventory here. |
+
+These literature interfaces are contextual, not additional
+load-bearing source assumptions. There is no exhaustive literature
+search, worldwide novelty or nonexistence claim.
+

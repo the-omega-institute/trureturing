@@ -1,0 +1,71 @@
+## 12. Integration without a support or phase restriction
+
+**Proof of Theorem 9.2, arbitrary Borel measures.** Fix any $\omega\in\mathcal P(S)$ and $r\in I_0$, and write $e=\Psi(\omega,r)$. The two endpoint triangle inequalities in either phase imply $e\ge0$; all six expected distances in (9.3) are at most the corresponding $\rho_s+e$.
+
+The endpoint event inequalities give
+
+$$
+\left|\int G_p(E_p)\,d\omega-C_p\right|\le e,\qquad
+\left|\int G_\beta(E_\beta)\,d\omega-C_\beta\right|\le e.
+\tag{12.1}
+$$
+
+For example the endpoint 1 distance is at least $P_{s,t_1}(E_s)-G_s(E_s)$ and the endpoint 2 distance at least $G_s(E_s)-P_{s,t_2}(E_s)$; integrate both and use (9.5). Since $(P_{s,t_1}(E_s)-C_s)/d_s=1/2$, the constant terms cancel in $D$, and
+
+$$
+\int D\,d\omega\le(1/d_p+1/d_\beta)e\le26e.
+\tag{12.2}
+$$
+
+In the full p triangle slack (9.6), $h_2$ and $h_3$ are upper-box violations at the distinct complete words $w_{2,1}$ and $w_{3,1}$. Their endpoint upper masses are, respectively,
+
+$$
+\max_iP_{p,t_i}(w_{2,1})=16/729,
+\qquad
+\max_iP_{p,t_i}(w_{3,1})=1944/390625.
+$$
+
+Thus $H$ is bounded by that complete nonnegative slack. Tonelli's theorem for its countable sum and the two endpoint expected distances yield $\int H\,d\omega\le2e$. Integrating (10.2), without restricting the support of $\omega$, gives
+
+$$
+m:=\int d(u,v)\,d\omega
+\le112(26+2\cdot13000)e=2914912e.
+\tag{12.3}
+$$
+
+The functions $D,H,d$ are bounded continuous functions on the compact rectangle; all denominator bounds were retained. TV as a countable sum of continuous coordinate terms is Borel, and the uniform geometric tails make it continuous jointly in $(u,v,t)$. Hence all displayed integrals are well defined for every Borel probability, not just for discrete mixtures.
+
+**Proof of Theorem 9.2, endpoint selector and complete-law recurrence.** Assign each $(u,v)$ to the nearest endpoint pair $(t_i,t_i)$ in $\ell^1$ distance, with ties assigned to endpoint 1. The two distance functions are continuous, so this is a Borel selector. Let $\lambda$ be the probability assigned to endpoint 1.
+
+For the entire p law, including the infinite outcome,
+
+$$
+\operatorname{TV}(G_p^{u,v},P_{p,t_i})
+\le2(|u-t_i|+|v-t_i|).
+\tag{12.4}
+$$
+
+To verify this without truncating a tail, put $x=|u-t_i|,y=|v-t_i|$ and let $q_p,q_\beta$ be the distances of the two complete phase laws to their endpoint laws. Split each complete law by its first emission. Inserting a law with matched first-emission weights, then using triangle inequalities and the injective prefix maps, gives
+
+$$
+q_p\le x+(1-u)q_\beta,\qquad
+q_\beta\le y+vq_p.
+$$
+
+These are normalized residual laws; the infinite word is in the residual carrier too. Rearrangement and $a=(1-u)v\le4/15$ give
+
+$$
+q_p\le\frac{x+(1-u)y}{1-a}
+\le\frac{15}{11}(x+y)\le2(x+y).
+\tag{12.5}
+$$
+
+Thus the expected p distance to the selected endpoint law is at most $2m$. Applied to $E_p$, this and (12.1) give
+
+$$
+d_p|\lambda-1/2|\le e+2m.
+\tag{12.6}
+$$
+
+Indeed the selected endpoint event average is $\lambda P_{p,t_1}(E_p)+(1-\lambda)P_{p,t_2}(E_p)$, whose difference from $C_p$ is exactly $d_p(\lambda-1/2)$.
+

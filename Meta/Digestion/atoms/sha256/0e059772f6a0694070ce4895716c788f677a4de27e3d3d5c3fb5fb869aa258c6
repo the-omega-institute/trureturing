@@ -1,0 +1,157 @@
+**Theorem 216.9 (Common-budget exact minima on a capacity domain).**
+Let $L\ge m>n\ge3$, $I=\{n+1,\ldots,m-1\}$, $s_i\ge0$,
+and S=$\sum_I s_i$. Write $s_{[1]}\ge s_{[2]}$ for the largest
+two masses, padded with zeros. Let $g,h,B\ge0$ satisfy
+
+$$
+S\ge\frac g{n-2},\qquad
+h\le\min\{S-s_{[1]},\ g+S-s_{[1]}-s_{[2]}\}.
+\tag{216.15}
+$$
+
+Prescribe $\beta_n=g,\beta_m=h,\beta_i=-s_i$ on I and zero elsewhere,
+with K=$g+h+S+B$. The unrestricted full exact-Q minima are
+
+$$
+\min\Delta_N=\min\Delta_O=d:=\left(g-\frac{n-2}{n-1}B\right)_+,
+\tag{216.16}
+$$
+
+attained simultaneously. These capacities are hypotheses of this
+theorem, not necessary conditions for unrestricted certificate existence.
+
+**Proof.** For any full competitor, (216.2) gives
+
+$$
+B=2\sum_j\min(A_j,C_j)+P_{\rm tot}+T,\qquad
+R_{<n}:=\sum_{n(w)<n}(A_w+P_w)\le B.
+$$
+
+The earlier beta vanish, and W equals the constant-zero reward because
+$\beta_1=\beta_2=0$. For each $j<n$ the stopped table
+$D_j=(j,n;0,n,0)$ gains exactly g relative to constant zero on class n.
+It loses $A_w+P_w$ only at earlier-first-zero words with $w_j=1,w_n=0$.
+Every such word has at least one zero among the first $n-1$ bits,
+so at most $n-2$ of the $n-1$ tables incur that loss. Later classes
+have $w_n=1$ and incur none. Averaging these whole tables proves
+$\Delta_O\ge g-(n-2)R_{<n}/(n-1)\ge g-(n-2)B/(n-1)$.
+The anchor and N containment give the full lower bound, including all
+independent P rows and all suffixes.
+
+For S>0 define $V_0$ by
+
+$$
+A_{w(\{i,m\})}=s_i,\quad
+C_{w(\{n,i,m\})}=g s_i/S\ (i\in I),\quad
+C_{w(\{m\})}=h,
+$$
+
+with every other coefficient zero. Its anchor is S. An auxiliary
+calculation, valid for S>0 even without (216.15), gives
+
+$$
+\Delta_N(V_0)=\Delta_O(V_0)
+ =\max\{g,\ g+h-S+s_{[1]},\ h-S+s_{[1]}+s_{[2]}\}.
+\tag{216.17}
+$$
+
+To verify this calculation put $c_i=gs_i/S$. Query n and output n
+on zero, zero on one, to obtain g. The stopped table
+$(n,i;n,0,m)$ gives $g+(h-S+s_i)_+$ after optimizing its final
+label. Two gap queries with outputs $0,0,m$ give
+$h-S+s_i+s_j$; when there is only one gap, query that gap then m,
+obtaining h, the same expression with the padded second mass zero.
+The full N excess on two gap addresses is
+
+$$
+(c_i-s_i)_++(c_j-s_j)_+
+ +\max\{0,g-c_i-c_j-(S-s_i-s_j),h-(S-s_i-s_j)\}.
+$$
+
+For $g\le S$ it equals $(h-S+s_i+s_j)_+$.
+For $g\ge S$ it equals
+$\max(g-S,h-S+g(s_i+s_j)/S)$.
+If $u=s_i+s_j\le S$, its second term is at most
+$g+h-S+s_{[1]}$ when $g u/S\le g+s_{[1]}$, which holds since
+$u\le S$. Its first term is at most g. Thus (216.17) bounds it.
+Pairs n,i have excess $g+(h-S+s_i)_+$; pairs i,m have excess
+$\max(s_i,c_i)+\max(S-s_i,g-c_i,h)-S$.
+For $g\le S$ the latter is at most $(h-S+s_i)_+$; for $g\ge S$
+it is at most $\max(g-S,g+h-S+s_i)$, again covered.
+Pair n,m has excess $g+(h-S)_+$. Queries outside the active
+coordinates are constant one; shorter schedules coarsen these pairs.
+Only labels 0,n,m earn reward. This proves the full upper bound,
+retaining unqueried n in both split gap cells, and proves (216.17).
+Under (216.15) all three terms are at most g, so the cost is g.
+
+If S=0 under (216.15), necessarily $g=h=0$; define $V_0=0$.
+There is no assertion of (216.17) for S=0,g>0, where its proportional
+constructor is undefined.
+
+For g>0 put $r_0=g/(n-2)$ and $B_*=(n-1)r_0$. Define $V_*$ by
+
+$$
+\begin{gathered}
+P_{w(\{j,n,m\})}=r_0\quad(1\le j<n),\qquad
+C_{w(\{n,m\})}=g,\\
+A_{w(\{i,m\})}=s_i\quad(i\in I),\qquad
+C_{w(\{m\})}=h,\qquad T=0.
+\end{gathered}
+\tag{216.18}
+$$
+
+It has W=$S+B_*$. Prefix labels earn P subsets dominated by zero;
+only n,m need additional comparison. Write $E=\{1,\ldots,n-1\}$.
+For a pair in $E\times E$ the isolated P masses are $r_0,r_0$;
+the remaining base is $S+(n-3)r_0$, at least g and h by (216.15).
+For $E\times\{n\}$ the remaining two nonzero base masses are g,S,
+covering g,h. For $E\times I$ the relevant base masses are
+$r_0,s_i,S-s_i+g$; for $E\times\{m\}$ they are $r_0,S+g$.
+For $\{n\}\times I$ they are $B_*,s_i,S-s_i$, and for n,m they
+are $B_*,S$. These dominate the corresponding correct rewards because
+$B_*\ge g$ and $S-s_i\ge h$.
+For two gap coordinates the remaining base is
+$S-s_i-s_j+B_*$, at least g and h, since
+$h\le g+S-s_{[1]}-s_{[2]}$ and $B_*\ge g$.
+For $I\times\{m\}$ the base masses are $s_i,S-s_i+B_*$.
+These exhaust all active pairs, and every inactive query coarsens them.
+Zero therefore maximizes every full cell and both costs of $V_*$ are zero.
+For n>3 its prefix stock deliberately includes late P at $3,\ldots,n-1$.
+
+For $0\le B\le B_*$ take the one whole score
+$V=(1-B/B_*)V_0+(B/B_*)V_*$.
+Both endpoints contain the same negative masses $s_i$; interpolation
+retains them once. Q is the prescribed quotient, W=$S+B$, and support
+subadditivity gives cost at most $g-(n-2)B/(n-1)$.
+The full lower bound forces equality in both catalogs. For $B>B_*$
+add $B-B_*$ to T in $V_*$; every table gains at most the anchor gain,
+so the cost stays zero. For g=0 use $V_0$ with T=B; the capacities
+and (216.17) give zero cost. All capacities, zero masses and stock
+boundaries are closed. $\square$
+
+For $L=m=8,n=4,g=4,h=6$, $s_5=s_6=s_7=4$, B=$9/2$, one
+attainer has P=$3/2$ at each $\{j,4,8\}$, $j=1,2,3$;
+C=3 at $\{4,8\}$; C=$1/3$ at each $\{4,i,8\}$ and A=4 at
+$\{i,8\}$, $i=5,6,7$; C=6 at $\{8\}$; T=0.
+Its K=$53/2$, W=$33/2$, and both supports $35/2$ give cost one.
+At the inherited hull vertex $u_4$ its quotient has $F_q(u_4)=4/3$.
+Thus V=0 with a residual alone cannot fund it. This does not assert
+$u_4\in H_N$; the displayed V already is a unit certificate.
+
+There is also a precise independent-budget failure. For $z>0$ and
+$z<h\le2z$, take $n=3,m=7,g=z$, $s_4=s_5=s_6=z$, B=$2z$.
+The theorem gives a nonzero zero-cost core. Suppose one splits only
+this B and these negative coefficients, without cross-cancellations,
+into separately charged one-positive-late components of total cost zero.
+The n=3 components require total $B_g\ge2z$ by the same detector
+lower bound. Thus $B_h=0$. In the h components querying the two largest
+of the three negative slots gives total cost at least
+$h-S_h+s_{h,[1]}+s_{h,[2]}\ge h-S_h/3\ge h-z>0$,
+since $S_h\le3z$. Summing this inequality over components uses the
+same total negative stock. This contradicts zero charge in that stated
+decomposition class, not arbitrary signed certificates or joint support.
+
+For an actual full unit-O input in (216.15), the unrestricted minimum d
+is at most one and the constructed exact-Q score gives (216.1) with
+$\theta=0$. No separate allowance is added for either positive pivot.
+

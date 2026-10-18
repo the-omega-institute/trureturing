@@ -1,0 +1,50 @@
+**Lemma 3.4 (simultaneous free-rank ray).** For every feasible branch
+there are fixed shape markers, effectively chosen initial scalar and
+constant-block ranks, and a computable $k_0\ge0$ with the following
+property. For every integer $k\ge k_0$, retain every anchored scalar
+rank, add $k$ to every free scalar rank and add $k$ to every
+constant-block rank. This gives a complete original solution of that
+same branch. All free scalar and block leaf ranks in it are at least
+$k$.
+
+Proof. Choose NSF's witness of Lemma 2.2, retaining its scalar ranks,
+constant block ranks and nonleaf shape markers. These initial ranks
+are all natural. Every scalar equation joins ranks in the same
+component, so both its sides are shifted together or neither is.
+Constant equations lie in the anchored component and stay true. Every
+whole-block equation has both sides shifted by $k$, so also stays true.
+Nonnegativity is preserved.
+
+Consider scalar disequations, including explicit cherry normality.
+When both ranks are free or both anchored, their difference is
+unchanged. When one rank is free and the other anchored, failure can
+occur at at most one integer $k$. The offending value is obtained by
+solving that one offset equality using the initial ranks. Choose $k_0$
+strictly larger than every nonnegative offending value, taking $k_0=0$
+if there are none. The list is finite and effectively computable. All
+scalar disequations then hold for every $k\ge k_0$.
+
+Every block leaf rank is shifted, regardless of its block component,
+so every selected whole-block offset disequation is unchanged. There
+are no scalar/block or cross-sort positive or negative offset tests in
+these identical-shape disjuncts. Syntactically different-shape negatives
+are preserved by the unchanged separating markers.
+
+Inside each inserted marker all leaf ranks remain equal. No cherry
+there can have left rank one more than right rank. Its root is still
+nonleaf, so no primitive cherry crosses an insertion boundary. All
+remaining cherries are the explicit scalar cherries already checked.
+Thus every whole named code is normal for every $k\ge k_0$.
+
+The equations, negative witnesses and normality reassemble every
+native subexpression as in Lemma 2.2. Expansion yields all original
+variable values jointly. Each initial free scalar or block rank was
+nonnegative, so its shifted value is at least $k$. The entire
+construction is finite for each $k$ and does not evaluate an unknown
+actual source. $\square$
+
+The common shift in Lemma 3.4 is essential to its stated simultaneous
+claim: pumping one output while leaving another anchored would not
+make (NLC.3) unbounded. The witness ray is not an assertion that all
+solutions have fixed residual shapes or constant block ranks.
+

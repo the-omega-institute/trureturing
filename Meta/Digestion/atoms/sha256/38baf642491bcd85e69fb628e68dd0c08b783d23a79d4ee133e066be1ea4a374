@@ -1,0 +1,11 @@
+## 234. Joint consequences and remaining scope
+
+The already proved joint budget for a four-owner core gives at most one
+single-high transverse owner, at most eight actual owners containing any
+high label, and total degree(M)+degree(Z)+degree(U)<=28. Each high label
+occurs in at least two of the four core owners by Section 232.
+The proof excludes the entire three-core incidence pattern using the
+actual face pairing and complete links; its applicability relies on the
+previous angle-derived core bounds. Four-core patterns and the external
+low-only region remain, so five-reservoir realization is not proved.
+

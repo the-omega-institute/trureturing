@@ -1,0 +1,47 @@
+**Definition 1.2 (the exact-cover hypothesis).** Fix a complete acquired
+input $I$ in the language of [NIC, Definition 4.1][NIC] and a finite set
+$B$ of distinct attained complete target rows, with $|B|\ge2$. For each
+$r\in B$, let $D_r$ be its entire original-source stratum. Use the finite
+cover of [NIC, Theorems 3.2, 3.3 and 4.3][NIC]:
+
+$$
+\begin{aligned}
+C_{r,b}(n,z)&:=P_{r,b}(n)\land\Delta_{r,b}(n,z),\\
+D_r&=\bigcup_{b\in\mathcal B_r}
+ \{U_{r,b}(n,z):n\in\mathbb N^{k_{r,b}},\ z\in\mathcal T^{m_{r,b}},
+                         \ C_{r,b}(n,z)\}.
+\end{aligned}
+\tag{NAC.1}
+$$
+
+Here $P$ is an effectively presented Presburger formula, and $\Delta$ is
+the entire retained finite conjunction of native disequalities. Every
+source map and every side of a disequality is a finite mixed template
+
+$$
+A::=g\mid T_{n_j+c}\mid\rho^a z_i\mid\langle A,A\rangle,
+\qquad a,c\in\mathbb N,
+\tag{NAC.2}
+$$
+
+where $g$ is a fixed finite native tree. Before the negatives the residual
+domain is the full Cartesian product $\mathcal T^m$. Declared unused
+coordinates remain in that product. Accidental equalities between distinct
+names are allowed; repetitions of a name are shared.
+
+Both directions of (NAC.1) are essential hypotheses. Every parameter tuple
+satisfying $C_{r,b}$ reconstructs an actual member of $D_r$. Every member
+of $D_r$ has a preimage reconstructing that same original source. Thus the
+cover retains the old reached cut, its complete exterior and equality
+partition, every actual-epoch literal, both reached guards for either sign,
+every off-task relation, every image/rank condition in the input language,
+and the complete target row. These conditions are enforced on finite
+originals through the exact cover. They are not newly inferred at a limit.
+
+NIC3.2 supplies the Cartesian positive images, NIC3.3 keeps native negatives
+after expansion, and NIC4.3 supplies the entire acquired-source directions.
+The warnings in [SLP, Sections 1 and 7][SLP] about a residual domain with
+uneliminated positive constraints do not remove this explicitly supplied
+exact-cover hypothesis. An additional predicate outside the NIC language
+requires an exact normalization into (NAC.1); it is not silently admitted.
+

@@ -1,0 +1,43 @@
+**Definition 1.3 (the boxed class and the unchanged objective).** Denote
+by $\mathfrak C_{\rm box}$ the pairs in $\mathfrak C$ satisfying both
+full endpoint boxes:
+
+$$
+\min\{P_{s,a}(e),P_{s,b}(e)\}
+\le D_s(e)\le
+\max\{P_{s,a}(e),P_{s,b}(e)\}
+\quad\text{for every complete atom }e,\quad \nu_s\text{-a.s.}
+\tag{1.7}
+$$
+
+Here $D_p=Q$ and $D_\beta=W$. The original three-depth objective remains
+
+$$
+\begin{aligned}
+\mathcal J(\Gamma_B,\Gamma_A)
+ &=\max_{s\in\{p,\beta\},\,k\in\{1,2,3\}}
+       \left\{\int\operatorname{TV}(D_s,P_{s,r_k})\,d\nu_s-\rho_s\right\},\\
+\rho_p&=\frac{1116529}{22781250},\qquad
+\rho_\beta=\frac{239}{6750},\qquad
+j_c=\min_{\mathfrak C}\mathcal J.
+\end{aligned}
+\tag{1.8}
+$$
+
+TV is inside the configuration integral. Zero $\mathcal J$ means zero
+excess over these nonzero phase benchmarks, not zero raw prediction error.
+[PAIR, Section 11.8] supplies (1.7) at zero excess and the two means
+
+$$
+\begin{aligned}
+E_p&=\{w_{0,1},w_{1,1},w_{2,1}\},&
+\int Q(E_p)\,d\nu_p&=\frac{11758471}{22781250},\\
+E_\beta&=\{\beta,\alpha w_{0,1}\},&
+\int W(E_\beta)\,d\nu_\beta&=\frac{5261}{6750}.
+\end{aligned}
+\tag{1.9}
+$$
+
+Both depth-3 losses in (1.8) remain required. The results below do not
+replace that unrestricted minimum by a minimum over a recurrence class.
+

@@ -1,0 +1,37 @@
+**Theorem 12.8 (strict compression of a valid public ray table).**
+For $P=\{R\}$ the single ray $R^\infty$ satisfies Theorem 11.4.
+On $\mathcal F_D$ its attained raw scores are exactly
+
+$$
+ \{2,3,\ldots,2D+3\},\qquad N_{\{R^\infty\}}=2D+2.
+\tag{AAR.71}
+$$
+
+Their prediction classes are exactly the three cells
+$\{2\},\{3\},\{4,\ldots,2D+3\}$. They can be retained as three
+names, although losslessly retaining the whole ray score requires
+$2D+2$ names.
+
+Proof. The score is $2+c(v)$ for $t=\langle\alpha,v\rangle$.
+If the rightmost leaf of $v$ has depth $d\le D$ and label bit $e$,
+then $c(v)=2d+e$. Every $d\in\{0,\ldots,D\}$ and $e\in\{0,1\}$
+is attained by a right comb of depth $d$ with alpha side leaves and
+that terminal label. These are actual height-bounded right subtrees,
+so the scores are exactly the consecutive integers in (AAR.71).
+Equation (AAR.63) at $p=R$ reads $b=\max(0,4-x)$: score two
+means an initial alpha, three a beta, and every larger score a
+branch. These give three different trajectories, proving the stated
+compression. At $D=1$ the raw count is already four while the task
+count is three, although both happen to have two-bit fixed-width
+names. A smaller label alphabet need not even lower the rounded
+binary width in every instance. $\square$
+
+Corollary 11.6 minimizes the number of fixed public ray coordinates,
+not their attained joint alphabet. Equations (AAR.66)–(AAR.68)
+minimize an arbitrary complete retained alphabet for the declared
+prediction task. A ray chosen using the source has its identity in
+that alphabet unless it is already a function of the exported label.
+Its actual operand and acquisition still have their own prices. Thus
+(AAR.71) neither invalidates the ray theorem nor provides a free
+source-dependent sampling procedure.
+

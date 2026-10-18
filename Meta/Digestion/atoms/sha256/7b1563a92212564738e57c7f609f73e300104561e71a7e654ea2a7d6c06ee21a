@@ -1,0 +1,11 @@
+**Proposition 2.4 (row-determined omission).** If the retained exterior's
+leftmost descent reaches a concrete leaf rather than a hole, the stamp
+in Theorem 2.2 may be omitted and reconstructed from that row. The
+presence rule depends only on the row. This includes every empty cut
+and any blocked cut leaving that leaf exposed.
+
+Proof. The literal path and label give exactly $d+e$. If the walk reaches
+a hole this argument gives no hidden leaf information, and the specified
+protocol retains the stamp. The decoder can make the same presence
+decision from its actual row, without an extra mode channel. $\square$
+

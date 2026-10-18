@@ -1,0 +1,33 @@
+**Theorem 10.10 (A separate factor for each irrational common turn).**
+For every $c\in\mathbb T$ with $c/(2\pi)$ irrational modulo
+integers, there exists a factor $E_\sigma$ from Proposition
+10.8 that distinguishes $x$ from $C_cx$ for every source
+state $x$. It also satisfies Proposition 10.9.
+
+**Proof.** Choose a real representative $\xi=c/(2\pi)$.
+If $\xi$ is transcendental, substitution
+$\xi\mapsto\xi+1$ gives an isomorphism
+$\mathbb Q(\xi)\to\mathbb Q(\xi+1)$.
+These fields are countable, and Lemma 10.7 extends this
+isomorphism to $\sigma$ on $\mathbb C$.
+Then $f(\xi)=1$.
+
+If $\xi$ is algebraic irrational, let its irreducible polynomial
+over $\mathbb Q$ have degree $d>1$. Its roots are distinct
+in characteristic zero and their sum is rational.
+They cannot all have real part $\xi$: otherwise the real
+part of their sum would be $d\xi\in\mathbb Q$, contradicting
+irrationality. Choose a root $\zeta$ with
+$\operatorname{Re}\zeta\ne\xi$. The quotient construction by
+the same irreducible polynomial gives an isomorphism
+$\mathbb Q(\xi)\to\mathbb Q(\zeta)$ carrying $\xi$ to
+$\zeta$. Extend it by Lemma 10.7. Then
+$f(\xi)=\operatorname{Re}\zeta-\xi\ne0$.
+
+In either case the common-turn identity of Proposition 10.8
+proves distinction at every $x$. Changing the representative
+$\xi$ by an integer does not change $f(\xi)$.
+The quantifiers are “for each irrational turn, some factor.”
+They do not exhibit one finite factor that distinguishes all
+irrational common-turn cosets simultaneously. $\square$
+

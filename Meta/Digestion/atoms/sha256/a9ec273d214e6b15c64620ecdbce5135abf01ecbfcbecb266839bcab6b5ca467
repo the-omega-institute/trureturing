@@ -1,0 +1,52 @@
+**Mathematical citation 101.2 (Attribution and unresolved range).** The
+finite randomized decision-tree model retains the attribution in 83.4:
+Buhrman and de Wolf, [*Complexity Measures and Decision Tree Complexity:
+A Survey*, Sections 3.1--3.2](https://homepages.cwi.nl/~rdewolf/publ/qc/dectree.pdf).
+It supplies executable trees and worst-path query depth, not the
+source-specific analytic boundary. Convex combinations, conic hulls
+and polyhedral descriptions are mature background; see Boyd and
+Vandenberghe, [*Convex Optimization*, Sections 2.1.4 and 2.2.4,
+pp. 24 and 31--34](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf).
+The sufficiency here is established by the explicit triangle and fiber
+identities (99.7)--(99.17), rather than an imported assertion that these
+particular kernels span the required region.
+
+Actual finite-pattern realization is Boundaries, Theorem 35.2; whole
+finite-execution transport is Source-Correlated Laws, Lemma 45.3;
+the common finite-request forest is (70.3)--(70.4) and (74.4).
+Full-carrier projection, exact TV rows and actual-tail error are
+(83.8)--(83.9) and (84.2). The unrestricted mean and late-mark bounds
+are Theorems 79.2 and 85.1, the restricted five-event bound is
+Theorem 91.1, and $P_{3,2},P_{4,2},C$ are the already supplied
+constructions of Theorems 87.1 and 92.1. The common budget-zero/one
+and near-full-depth results are Proposition 93.1. Their reuse adds no
+new generic feasibility system, separation theorem or plateau result.
+The two scores (97.1), (97.5), five additional kernels (98.4), explicit
+real-parameter coverage and ensuing analytic classification are
+`repo-derived` ordinary mathematical deductions. No literature-priority
+or Lean/kernel-verification claim is made.
+
+The equality of $\mathcal N$ and $\mathcal O$ in (96.2) is feasibility
+at hard two and the specified cap in the active-four regime. Equation
+(96.3) yields equality of their attained error optima only under its
+stated tail condition. It supplies no general law-preserving
+$\mathcal N$-to-$\mathcal O$ normalization. All $M\le4$ statements
+refer to these attainers; none restricts lower-bound competitors or
+identifies an optimal address resource. Means, maximum addresses,
+finite precision, arithmetic work, processing transitions and physical
+time remain separate coordinates. Real categorical intervals give
+measurable existence, not an effective finite-precision sampler or
+efficient parameter synthesis guarantee.
+
+The non-strict inequalities include all cap-equality boundaries, zero
+component weights, the $H=0$ interface and tail equalities. Auxiliary
+zero amplitudes and the zero-gap error-only ray are confined to the
+finite construction. The original infinite sequence stays strictly
+positive; its zero-error finite-hard-count impossibility and the unit-cap
+endpoint remain Proposition 89.1. The full finite-tree criterion of
+Sections 83--84 remains available for arbitrary active lengths and hard
+budgets. Their general analytic classification, the larger-tail optima
+not settled by (96.3), and acquisition for the unchanged original
+nonatomic targets remain unresolved. The four-coordinate theorem is a
+finite addition to that programme.
+

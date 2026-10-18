@@ -1,0 +1,20 @@
+**Definition 32.1 (Interior correction and local trace excess).**
+Keep $n=2k+1$, $k\ge3$, and write
+$L_n(m)=L_n^{\mathrm{cyc}}(m)$ for $m\ge0$, with $L_n(m)=0$ for
+negative integer $m$. Let $L_n^\circ(m)$ count the interior lattice
+points of $mQ_n$ for $m>0$, and set $L_n^\circ(0)=0$.
+Define
+
+$$
+C_k(m)=\dim_{\mathbb C}(\mathcal C_k)_m,\qquad
+E_k(q)=\operatorname{Tr}(T_q^n)-L_n(q)\quad(q\ge0),
+\tag{32.1}
+$$
+
+and set $C_k(m)=0$ and $E_k(q)=0$ for negative integer arguments.
+Here $T_q(a,b)=\mathbf1_{a+b\le q}$ for $0\le a,b\le q$, exactly
+as in (28.4). In particular $E_k(q)$ is $E_{2k+1}(q)$ in the
+notation of Proposition 28.3. The trace counts position-labelled
+local tuples, without identifying rotations. It does not already
+enforce the global common-copy constraint.
+

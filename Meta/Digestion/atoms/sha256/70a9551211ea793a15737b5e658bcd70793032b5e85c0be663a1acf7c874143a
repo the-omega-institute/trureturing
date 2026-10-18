@@ -1,0 +1,18 @@
+### Corollary 5.2. Explicit per-pulse calibration and detectable signal
+
+If every actual pulse differs in operator norm by at most delta from its ideal unitary on a common full physical carrier, telescoping and measurement contraction give epsilon_1<=min(1,7delta) and epsilon_2<=min(1,28delta). Any preparation or detector error must be included separately. Consequently bar epsilon<=min(1,35delta/2).
+
+For the fixed calibrated family C-120.1 with bottom weight r and real coherence gamma, the ideal score mean is r gamma. Its corrected mean is at least
+
+$$\mu=r\gamma-4\bar\epsilon.$$
+
+In particular delta<r gamma/70 is a sufficient, conservative gate-error condition for a positive corrected mean when the pulse errors are the only implementation errors. Delta here is a unitary operator-norm error, not average gate infidelity, and this inequality is not a fault-tolerance threshold or a measured hardware specification.
+
+For completeness, suppose constant error bounds and an alternative source/implementation guarantee E[Z_n|F_(n-1)]>=mu>0 at every round. Set B=3+4 bar epsilon and lambda=mu/(2B^2). For tau the first crossing of 1/alpha,
+
+$$\boxed{\mathbb E\tau\le\frac{4B^2}{\mu^2}\,[\log(1/\alpha)+\log(1+\lambda)].} \tag{5.2}$$
+
+Indeed |lambda Z_n|<=1/2 and log(1+x)>=x-x^2 on that interval, so the conditional log-growth is at least mu^2/(4B^2). The stopped log process is pathwise at most log(1/alpha)+log(1+lambda). Summing conditional drifts up to tau wedge N bounds E[tau wedge N]; monotone convergence proves (5.2) and finite stopping. Because each fresh setting is uniform given the past, Tonelli and conditioning give expected total native pulse count (35/2)E tau. This cost bound concerns the stated positive-drift alternative and excludes preparation/readout overhead.
+
+The sequential witness tests conditional separability of the supplied source, not an arbitrary fixed initial marginal of a correlated stream. C-116's common-label example retains its full force. The new native implementation and calibration correction do not certify source independence.
+

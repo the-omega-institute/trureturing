@@ -1,0 +1,5 @@
+**Machine contract.** This reference volume uses `generic-v1`; locators are
+> computed from its bytes. Merged text is immutable. Corrections and extensions
+> belong after the final append anchor, under new numbered headings. The volume
+> supplies ordinary mathematics and does not certify Lean declarations.
+

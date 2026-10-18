@@ -1,0 +1,42 @@
+**Theorem 9.3 (Finite actual tests for the restricted obstruction).**
+For any rational $0<\epsilon<1$, set
+
+$$
+h=\epsilon/48,\qquad
+n=\left\lceil153600/\epsilon^2\right\rceil,\qquad
+H=nh,\qquad \mathcal W_\epsilon=\{jh:0\le j\le n\}.
+\tag{9.10}
+$$
+
+For every channel of Definition 9.1 some test with
+$s\in\{N,2,3,5\}$ and $t\in\mathcal W_\epsilon$, input
+$DQ_s(t)D^\dagger$, actual wait $t$, a full mode read and Stop,
+has TV strictly greater than $11/20+c_{\rm pop}-\epsilon$.
+There are $4(n+1)$ alternatives, and
+$3200/\epsilon\le H\le3200/\epsilon+\epsilon/48$.
+In particular $\epsilon=c_{\rm pop}$ gives a finite family
+witnessing TV strictly above $11/20$.
+
+Proof. Apply the finite-Fourier and derivative estimates in QEC
+Theorem 2.6 to the improved mean-survival inequality (9.9).
+Those estimates hold for every complex CPTP channel: its normalized
+weighted survival has at most $40$ nonconstant Fourier frequencies,
+each with coefficient modulus at most one; their nonzero actual
+frequencies have modulus greater than $1/10$. Its finite forward
+mean differs from its limiting mean by less than $800/H$, and
+each mode survival has derivative modulus less than $12$.
+With (9.10) the mean error is less than $\epsilon/4$.
+Some positive-weight mode at a time in $[0,H]$ therefore has
+failure at least $11/20+c_{\rm pop}-\epsilon/4$.
+Moving to a grid point within $h$ loses at most $\epsilon/4$.
+The resulting TV is at least
+$11/20+c_{\rm pop}-\epsilon/2$, proving the strict stated
+threshold. The time bounds follow from the ceiling.
+
+This is a finite family of permitted alternative tests. It does
+not add independent torus controls or an input probability oracle,
+and does not bound physical preparation, clock precision or sample
+cost. The finite Fourier estimates are the credited QEC ingredient;
+their use here transports the restricted-class mean obstruction
+to finite original-menu waits. $\square$
+

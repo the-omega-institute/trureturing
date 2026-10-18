@@ -1,0 +1,23 @@
+**Corollary 9.4 (resource consequences and continuum scope).** Under the
+unassisted endpoint factorization,
+
+$$
+D=\sum_\alpha d_\alpha\geq3N,
+\qquad
+N\leq2^{b_c}\lfloor d/3\rfloor
+\quad\text{if }n\leq2^{b_c},\ d_\alpha\leq d.
+\tag{QC.56}
+$$
+
+With qutrit blocks at least $N$ blocks are needed; with a single quantum
+block its dimension must be at least $3N$. Total dimension alone is not
+sufficient for a prescribed block profile. No fixed finite algebra solves
+the exact continuum command task $C\in(0,1)$ with a later wait/execute
+choice, even though all these tails have the same height margin, duration
+and bounded phase speed/variation.
+
+Proof. Apply (QC.51), bound each floor by $d_\alpha/3$ for the first
+inequality and by $\lfloor d/3\rfloor$ for the second. Every finite
+catalogue lies in the same bounded tail class, so unbounded $N$ excludes
+a fixed finite algebra. $\square$
+

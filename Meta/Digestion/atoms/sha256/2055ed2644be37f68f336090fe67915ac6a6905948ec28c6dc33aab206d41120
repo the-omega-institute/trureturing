@@ -1,0 +1,19 @@
+**Definition 18.1 (fixed model and the restricted method).** Retain Definition 1.1 and the [phase-gain volume, Definitions 1.1–1.4](AURIC_OMEGA_PHASE_GAIN_AND_QUTRIT_RECOVERY.md#1-actual-channels-physical-coordinates-and-the-native-contract). Thus the passive input and output are $\mathbb C^3$ and the entire $\mathbb C^5$, with fixed real bases $|0\rangle,|1\rangle,|2\rangle$ and $e_0,\ldots,e_4$. For the family below set
+
+$$
+a=1-\beta,\qquad 0<\beta\leq\tfrac12,\qquad
+0<t<\sqrt{a\beta},\qquad
+r_\beta=\sqrt{\beta/a},\qquad
+s_t=\sqrt{1-(2+\beta/a)t^2}.
+$$
+
+Here $s_t$ is a family parameter, distinct from the abbreviation $s=\sqrt a$ in Sections 11–17. In particular $s_t^2>a^2>0$. For a complex unit $u\in\operatorname{span}(|0\rangle,|1\rangle)$ and $\varphi\in\mathbb R$, use exactly the restricted inputs of (R.74):
+
+$$
+X(u,\varphi)=e^{-i\varphi}|u\rangle\langle2|
+             +e^{i\varphi}|2\rangle\langle u|,\qquad
+\mu_N(u,\varphi)=\tfrac12\|N(X(u,\varphi))\|_1.
+$$
+
+Their preimages are the orthogonal pure states $(e^{-i\varphi}u\pm|2\rangle)/\sqrt2$. The stronger proposed method would require, for every original-class encoder, some such pair with $\mu_N\leq\sqrt a$. This requirement is separate from Theorem 17.1: (R.74) gives a necessary condition for improvement and asserts no sufficiency.
+

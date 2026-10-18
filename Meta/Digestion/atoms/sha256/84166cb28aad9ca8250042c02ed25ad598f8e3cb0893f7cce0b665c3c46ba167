@@ -1,0 +1,14 @@
+**Definition 10.3 (Unresolved exact-frontier problem).** The exact-frontier
+problem is to determine each of
+$\varepsilon_1,\varepsilon_2,\varepsilon_3,\varepsilon_4$. Each value remains
+unevaluated. No isolating polynomial or minimizing Kraus tuple is provided.
+The original gap separates an achieved error of one real-projection channel
+from necessary survival bounds. The former has no proved minimax equality
+for this smaller actual orbit. The latter use scalar relaxations: the
+rank-one proof uses $2AB\le A^2+B^2$ and an affine fourth-moment majorant;
+the older bound uses a spectral envelope and rank/trace inequality whose
+simultaneous equality is excluded in §8. An auxiliary moment maximum,
+stationary design, or optimizer-existence theorem does not close these
+inequalities. The complete system (4.4) preserves the intervening problem
+and gives an effective way to determine it.
+

@@ -1,0 +1,11 @@
+## Logical boundary
+
+M27 constrains the actual valuation vector in the split Lucas rank
+channel. It sharpens TBN.5's mod-3 balance and can be combined with the
+existing parity, reciprocity, and class-field constraints. It does not
+imply that any \(h_p=1\), and therefore does not imply the existence of a
+non-WSS prime or resolve the Wall--Sun--Sun question. The result is
+unconditional relative to the TBN.2--TBN.3 rank/valuation identities; no
+abc, Pell-height, equidistribution, or Chebotarev hypothesis is used.
+
+

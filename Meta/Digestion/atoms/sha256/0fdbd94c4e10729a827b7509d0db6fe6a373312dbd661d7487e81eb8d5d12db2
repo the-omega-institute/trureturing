@@ -1,0 +1,32 @@
+**Lemma 4.2 (boundedness and exact new local effect).** The compiler is
+finite and independent of $H,u$, frame lengths, tape lengths and elapsed
+ordinal. It covers every executing native row of $P$ at its actual
+granularity. A fresh finite-bit row adds exactly its bit, finite native
+successor and one receipt, without enabling partially written code.
+
+Proof. SSA Proposition 5.3 already bounds ordinary rows by three old cell
+roles, at most two cell appends, and fixed root/head/neighbor routes.
+The new finite component has at most $6q-1$ vertices. Its whole inspection,
+and every root-to-socket walk, consequently have fixed finite bounds.
+For example $24+\lceil\log_2(q+1)\rceil$ bounds the required neighborhood
+radius. Allowing 100 new vertices per patch bounds $48e+4s$ with
+$e\le2,s\le1$; native constructor variants actually separate the
+two-ordinary-cell case from the fresh-control-bit case.
+
+At an absent socket all old root child slots are empty. Definition 3.3
+creates the four missing switch occurrences with mutually consistent
+inverse slots and leaves the root parent untouched. There is no orphan,
+duplicate child or alteration to another socket. Exactly the intended
+native location becomes constructed with the latched value. NEXT inspects
+its actual finite end condition; INPUT changes its actual input latch;
+WRITE constructs its selected bit; ADVANCE changes the finite cursor;
+DONE uses the actual completion/active-version rule. These are distinct
+rows, each with its receipt, not an atomic installation macro.
+
+All finite patterns and aliases in this fixed footprint can be enumerated.
+The table therefore terminates and contains the stipulated local effects.
+Its actual mode/row guards preserve unavailability of the source dispatcher
+during installation and of the new main table before DONE. The fact that
+the apparatus has finitely many entries for later rows adds no enabling
+token, code value or source input. ∎
+

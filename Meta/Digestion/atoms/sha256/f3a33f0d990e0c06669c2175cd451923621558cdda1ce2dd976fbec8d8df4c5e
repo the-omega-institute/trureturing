@@ -1,0 +1,29 @@
+**Theorem 3.2 (exact exclusion threshold and endpoint boundary).** For positive beta define
+
+$$
+w_c(\beta)=\frac12\left[(1-\beta)^{1/4}-
+\frac{\sqrt\beta}{1+\sqrt{1-\beta}}\right]^2.
+\tag{R.16}
+$$
+
+Then $0<w_c<1/2$, and $w\leq w_c$ implies $\delta_N\geq1-\sqrt{1-\beta}$; $w<w_c$ gives the strict inequality. Equality at the threshold concerns the derived bounds, not necessarily the actual optimum.
+
+**Proof.** $e_\beta$ is continuous and strictly decreasing in $w\in[0,1]$. Set $c=\sqrt{1-\beta}\in[1/\sqrt2,1)$. At zero $2e_\beta(0)=2\beta/(\beta+2)>1-c$, since after cancelling $1-c>0$ this is $c^2+2c-1>0$. At one the bound is zero. There is exactly one equality point. With $y=\sqrt w$ the equation $2e_\beta(w)=1-c$ becomes
+
+$$
+2(1+c)y^2+2\sqrt{2\beta}y-(c^2+2c-1)=0,
+\qquad
+\left(y+\frac{\sqrt\beta}{\sqrt2(1+c)}\right)^2=c/2.
+$$
+
+Its nonnegative root is $y_c=(\sqrt c-\sqrt\beta/(1+c))/\sqrt2$, which yields (R.16). Positivity of the bracket follows from $c(1+c)^2-\beta=(1+c)(c^2+2c-1)>0$, and $y_c^2<1/2$. Strict monotonicity proves both claims.
+
+At $\beta=1/2$,
+
+$$
+\delta_N\geq\frac{2(1-w)}{5+4\sqrt w},\qquad
+w_c=\tfrac12[2^{-1/4}-(\sqrt2-1)]^2,
+$$
+
+so $w=0$ gives $\delta_N\geq2/5$. As a scalar limit at fixed numerical $w$, $e_\beta(w)/\beta\to(1-w)/2$ and $w_c(\beta)\to1/2$ as $\beta\downarrow0$. This is not continuity of an actual support projection across a rank change. At zero $\Pi$ has rank two, (R.10) still holds with rank $S\leq3$, and the displayed algebraic $e_0(w)=0$ gives only $\delta_N\geq0$ and $g_N^2\leq1$. There is no division by beta or strict exclusion at that endpoint. $\square$
+

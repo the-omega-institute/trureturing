@@ -1,0 +1,34 @@
+**Theorem 5.3 (well-posed homogeneous response).** There is a unique $\Psi\in\dot{\mathcal H}_-$ with $h(\Psi,u)=\ell(u)$ for every $u$ in that real Hilbert space. Put
+
+$$
+\begin{aligned}
+D_{\rm resp}&=h[\Psi]
+ =\sup_{0\ne u\in C_c^\infty,\ u\circ\sigma=-u}\frac{\ell(u)^2}{h[u]},\\
+C_{\rm resp}&=\nu^2(K_{\rm base}-D_{\rm resp})-\lambda D_{\rm clock}.
+\end{aligned}
+\tag{5.4}
+$$
+
+The supremum is zero when $\ell=0$, and
+
+$$
+0\le D_{\rm resp}
+ \le\frac{(2a\sqrt A+\chi\sqrt{C_*S_1})^2}{a\theta}<\infty.
+\tag{5.5}
+$$
+
+No $L^2$ or native operator-domain membership of $\Psi$ is asserted.
+
+Proof. Cauchy–Schwarz, (4.5) and $\int V|u|^2\le C_*b[u]$ give
+$|\ell(u)|\le(2a\sqrt A+\chi\sqrt{C_*S_1})\sqrt{b[u]}$. On the odd core, (5.1) and nonnegativity of $V$ give $a\theta b\le h\le a b$. Thus the two completions agree, and Riesz representation gives the unique element and (5.4)–(5.5). Odd core density is obtained by parity averaging canonical core approximants. In particular $rp$ belongs to this completion by (2.10).
+
+For a complex $v$ with $b(p,v)=0$, its even and odd parts are $h$-orthogonal, $h$ on the even part is nonnegative, and $\ell$ vanishes there by parity. Completing the Riesz square on the real and imaginary odd parts proves, for every $c\in\mathbb C$ and real $\beta$,
+
+$$
+h[v]-2\beta\operatorname{Re}(\overline c\,\ell(v))
+ \ge-\beta^2|c|^2D_{\rm resp}.
+\tag{5.6}
+$$
+
+This is the inequality for arbitrary complex complements needed below. It imposes no oddness or reality on native competitors. $\square$
+

@@ -1,0 +1,39 @@
+**约定 220.25（One seed and a hard count of actual requests）。**
+One source-independent uniform $U\in[0,1)$ chooses the whole finite
+table and schedule before any reply, using fixed intervals of the
+normalized weights. $N$ obtains its complete preselected schedule.
+$O$ follows its increasing preselected schedule and stops at the first
+queried zero or exhaustion. Each output is the indicated original mark,
+followed by the unchanged consumer. A common refinement of two interval
+partitions permits two laws on the same $U$; it is not another seed.
+Every finite rule has measurable finite handoff at every source and seed.
+The hard bound is two actual requests, including ignored or repeated
+requests. Zero advice, arbitrary addresses, sourcewise almost-sure
+finite handoff and uniform all-source/all-Borel TV remain in force.
+No runtime, mean count, query depth proxy, source index, prior, restart
+or adaptive second-address replacement supplies this contract.
+
+The nine tables of 220.21 are actual $N$ pairs. The four gates are
+actual singleton $O$ tables. The thirteen tables of 220.22 are actual
+increasing stopped pairs. The padded mass-one laws are therefore
+realized directly with the same source-independent seed. The request
+deletion in the mask proof compares legal finite tables and never
+provides an uncounted probe on a source.
+
+A cone allocation of mass $M$ has affine vector
+$(1-M)e_R+\sum\lambda_De_D$, which can be signed when $M>1$.
+It cannot then be executed as a probability law. Reuse the radial
+filling of VI 196.1: execute weights $\tau\lambda_D$ and anchor
+mass $1-\tau M$ only for
+
+$$
+ 0\le\tau\le1/\max(1,M).
+$$
+
+The identity is $r+\tau G\lambda\ge r+\tau h$
+with amplitudes $\alpha+\tau(b-\alpha)$ and cap $\tau e$.
+Transport to a positive vanishing sequence additionally requires all
+its amplitude, order and actual-tail conditions; this affine identity
+alone supplies no such sequence. The concrete family 220.23 already
+has one padded mass-one law and needs no extra funding.
+

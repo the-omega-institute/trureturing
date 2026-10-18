@@ -1,0 +1,166 @@
+**Definition 257.2 (The two complete endpoint laws).** The following
+tables give unnormalized label counts on stopped cells $0,10,11$.
+In each row the three cell totals agree, giving the schedule mass
+after division by its displayed denominator. The sum of those
+schedule masses is one. An entry $c e_r$ means count $c$ at label
+$r$, and every omitted entry or schedule is zero.
+
+At $t=1/2$, divide all counts by $1032$.
+
+| schedule | $0$ cell | $10$ cell | $11$ cell |
+|---|---|---|---|
+| $(1,2)$ | $120e_{1}$ | $120e_{2}$ | $68e_{0}+36e_{3}+16e_{8}$ |
+| $(1,3)$ | $84e_{0}$ | $84e_{3}$ | $68e_{0}+16e_{7}$ |
+| $(1,4)$ | $68e_{1}$ | $68e_{4}$ | $68e_{0}$ |
+| $(1,5)$ | $51e_{1}$ | $51e_{5}$ | $51e_{0}$ |
+| $(1,6)$ | $25e_{0}$ | $25e_{6}$ | $25e_{0}$ |
+| $(2,3)$ | $25e_{0}+59e_{2}$ | $84e_{3}$ | $68e_{0}+16e_{7}$ |
+| $(2,4)$ | $68e_{0}$ | $68e_{4}$ | $68e_{0}$ |
+| $(2,5)$ | $51e_{0}$ | $51e_{5}$ | $51e_{0}$ |
+| $(2,6)$ | $25e_{2}$ | $25e_{6}$ | $25e_{0}$ |
+| $(3,4)$ | $68e_{0}$ | $68e_{4}$ | $68e_{0}$ |
+| $(3,5)$ | $51e_{0}$ | $51e_{5}$ | $51e_{0}$ |
+| $(3,6)$ | $25e_{0}$ | $25e_{6}$ | $25e_{0}$ |
+| $(4,5)$ | $51e_{0}$ | $51e_{5}$ | $51e_{0}$ |
+| $(4,6)$ | $25e_{0}$ | $25e_{6}$ | $25e_{0}$ |
+| $(4,7)$ | $68e_{0}$ | $68e_{7}$ | $68e_{8}$ |
+| $(5,6)$ | $104e_{0}$ | $104e_{6}$ | $8e_{0}+40e_{7}+56e_{8}$ |
+| $(5,7)$ | $6e_{0}$ | $6e_{7}$ | $6e_{8}$ |
+| $(6,7)$ | $58e_{0}$ | $58e_{7}$ | $58e_{8}$ |
+
+At $t=3/5$, divide all counts by $1290$.
+
+| schedule | $0$ cell | $10$ cell | $11$ cell |
+|---|---|---|---|
+| $(1,2)$ | $135e_{1}$ | $135e_{2}$ | $64e_{0}+71e_{8}$ |
+| $(1,3)$ | $70e_{0}$ | $70e_{3}$ | $64e_{0}+6e_{5}$ |
+| $(1,4)$ | $102e_{1}$ | $102e_{4}$ | $64e_{0}+38e_{7}$ |
+| $(1,5)$ | $81e_{1}$ | $81e_{5}$ | $64e_{0}+17e_{7}$ |
+| $(1,6)$ | $34e_{1}$ | $34e_{6}$ | $34e_{0}$ |
+| $(2,3)$ | $95e_{2}$ | $95e_{3}$ | $64e_{0}+15e_{5}+16e_{7}$ |
+| $(2,4)$ | $64e_{0}$ | $64e_{4}$ | $64e_{0}$ |
+| $(2,5)$ | $64e_{0}$ | $64e_{5}$ | $64e_{0}$ |
+| $(2,6)$ | $64e_{2}$ | $64e_{6}$ | $34e_{0}+30e_{7}$ |
+| $(3,4)$ | $128e_{0}$ | $128e_{4}$ | $64e_{0}+64e_{7}$ |
+| $(3,5)$ | $64e_{3}$ | $64e_{5}$ | $64e_{0}$ |
+| $(3,6)$ | $34e_{3}$ | $34e_{6}$ | $34e_{0}$ |
+| $(3,7)$ | $31e_{3}$ | $31e_{7}$ | $31e_{8}$ |
+| $(4,5)$ | $64e_{0}$ | $64e_{5}$ | $64e_{0}$ |
+| $(4,6)$ | $34e_{0}$ | $34e_{6}$ | $34e_{0}$ |
+| $(4,7)$ | $30e_{0}$ | $30e_{7}$ | $30e_{8}$ |
+| $(5,6)$ | $128e_{0}$ | $128e_{6}$ | $34e_{0}+94e_{8}$ |
+| $(6,7)$ | $68e_{0}$ | $68e_{7}$ | $68e_{8}$ |
+
+
+These tables specify full probability laws. Explicitly, for a row
+with positive common count $m$ and cell count vectors $c^0,c^{10},c^{11}$,
+give whole table $O(i,j;r,s,u)$ probability
+
+$$
+\frac{c^0(r)c^{10}(s)c^{11}(u)}{D_0m^2},
+\tag{257.3}
+$$
+
+where $D_0$ is that endpoint's denominator. Summing over two
+labels recovers each count divided by $D_0$, and the row's total
+probability is $m/D_0$. A zero row would be omitted. This finite
+coupling fixes all terminal choices before replies, using one seed.
+It imposes no independence requirement on the acquisition model.
+
+**Proof of Theorem 257.1.** Denote the endpoint laws by $q^-$ at
+$t=1/2$ and $q^+$ at $t=3/5$. Their denominators are 1032 and
+1290. Every table count is nonnegative; the common row totals sum
+to these denominators. All numerical exhaustion labels are later
+than both queried indices. A numerical triple emits its contained
+first-zero label regardless of subsequent zeros, and the listed
+zero-first transfers depend only on their first queried index.
+Thus direct summation of these same cell counts gives constant
+correct probabilities on every first-zero class, with numerator
+vectors
+
+$$
+(239,204,204,204,204,204,204,204),\qquad
+(352,294,294,294,294,294,294,294).
+\tag{257.4}
+$$
+
+This verifies all multiple-zero suffixes at once, rather than
+inferring their probabilities from sole-zero values.
+
+For the base rows put $k=w_1+w_2+w_3+w_4$, $u=w_5$ and
+$v=w_6$. The base polynomials of these very same laws are
+
+$$
+\begin{split}
+1032q^-_w(0)={}&709-144k+35w_1+34k(k-1)\\
+ &+(-110+51k)u+(-58+25k)v+8uv,\\
+1290q^+_w(0)={}&650-128k+58w_1+32k(k-1)\\
+ &+(-128+64k)u+(-68+34k)v+34uv.
+\end{split}
+\tag{257.5}
+$$
+
+Bits seven and eight do not occur in the base polynomials.
+These expressions follow by summing, for each row, its first base
+count times $1-w_i$, its middle base count times $w_i(1-w_j)$,
+and its exhaustion base count times $w_iw_j$.
+For each first-zero class, the exact minimum base numerators are
+
+$$
+\begin{array}{c|rrrrrrrr}
+n&1&2&3&4&5&6&7&8\\\hline
+q^-&481&516&516&516&576&670&720&720\\
+q^+&458&516&516&516&580&708&810&810.
+\end{array}
+\tag{257.6}
+$$
+
+Here is an exhaustive finite derivation of these minima from (257.5).
+For class one, $w_1=0$ and $k=0,1,2,3$; for class two,
+$w_1=1$ and $k=1,2,3$; for class three, $w_1=1$ and $k=2,3$;
+for class four, $w_1=1,k=3$. In all these cases minimize over
+the four pairs $(u,v)\in\{0,1\}^2$. For class five,
+$w_1=1,k=4,u=0$ and minimize over $v$; for class six,
+$w_1=1,k=4,u=1,v=0$; for classes seven and eight,
+$w_1=1,k=4,u=v=1$. Substitution gives exactly (257.6), with
+each permitted combination attainable in its class. These finitely
+specified polynomial minima prove the bounds for every word.
+
+For $n\ge2$, (257.4) equals $t-e_*$ at both endpoints, while
+(257.6) is at least $1-t$. Therefore the correct row holds with
+equality and the union row has probability at least $1-e_*$.
+The base singleton demand $1-t-e_*$ also holds. The positive
+base values are $720/1032$ and $810/1290$, respectively, equal
+to $1-e_*$ at $e_*=13/43,16/43$.
+
+At class one define the endpoint correct excesses
+$\gamma^-=35/1032$ and $\gamma^+=29/645$.
+Their correct probabilities are $t-e_*+\gamma^\pm$ and
+their exact minimum base probabilities are $1-t-\gamma^\pm$.
+Both excesses lie strictly above $1/100$ and below $e_*$.
+For $h=t+d$, $0\le d\le1/100$, correctness is at least
+$h-e_*$, and base is at least $1-h-e_*$ because
+$\gamma^\pm\le e_*+d$. Their sum is at least $1-e_*$
+independently of $h$. Thus all three rows hold for the full
+closed head interval at each endpoint.
+
+For general $t$ mix the whole endpoint laws with weight
+$\tau=10(t-1/2)$ on $q^+$ and $1-\tau$ on $q^-$.
+For any fixed $d\in[0,1/100]$, each target coordinate, each
+demand, and $e_*(t)$ is the same affine mixture of its endpoint
+values. Hence this one common law satisfies every row on the
+entire closed rectangle (257.1), not just at sampled parameters.
+Its correct probability at each class $n\ge2$ is exactly $t-e_*$,
+and its positive base is exactly $1-e_*$. Proposition 251.4
+realizes it and its counted $N$ completion with one common seed.
+Every actual tail has error $\max\{e_*,a_n\}=e_*$.
+Since $t>e_*>0$, its active length is eight.
+
+The all-horizon lower cut (256.3) reduces on this profile to
+$43e_a(A)\ge30t-2$, for every original $N$ competitor and
+hence every $O$ competitor. It matches the constructed $e_*$,
+so both infima are attained there. At any larger positive cap the
+same original law is feasible, regardless of its new active length;
+at a smaller cap the lower cut excludes feasibility. All tail and
+parameter equalities are included. $\square$
+

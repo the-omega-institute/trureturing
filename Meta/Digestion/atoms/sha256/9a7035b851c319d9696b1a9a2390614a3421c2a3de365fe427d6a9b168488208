@@ -1,0 +1,10 @@
+**Definition 3.2 (a sufficient small-error range).** Define the explicit model-dependent number
+
+$$
+\kappa=\min\left\{
+c,p,q,a,\frac{cs}{s+r},\frac{ap}{s},\frac{aq}{s},\frac1{25}
+\right\}>0.
+$$
+
+The small-error range used for exact minima is $0<2\epsilon<\kappa$. It is a sufficient separation range; no assertion about the exact crossover at larger errors is included in this definition.
+

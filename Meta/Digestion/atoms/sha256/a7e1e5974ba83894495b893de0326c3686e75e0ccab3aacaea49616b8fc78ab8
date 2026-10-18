@@ -1,0 +1,22 @@
+**Definition 1.4 (actual acquisition class).** An actual generated acquisition label $j$ has a CP encoder $\mathcal E_j$ and full-output TP decoder. Its fibre contains jointly every subsequently accessible input-bearing specimen, memory, controller, environment or entanglement share. A discarded Kraus index is not an actual label. A low fibre has dimension at most two; a high fibre has dimension at least three. The cost $\mathsf W$ is the maximum, over the twelve original histories, of the probability of acquiring a high fibre, including mass that later fails. It is not expected dimension or postselected cost.
+
+On each entire fibre a positive absorbing first-event rate $R_j(a)$ has integrable operator norm. Controls on not-yet-failed survivors are TP; terminal processing on survivors is TP. Trace balance is
+
+$$
+-\frac{d}{da}\operatorname{tr}\mathcal S_{j,a}(X)
+=\operatorname{tr}(R_j(a)\mathcal S_{j,a}(X)),\quad
+\mathcal S_{j,0}=\mathrm{id}.
+$$
+
+The uniform activity is $\mathsf A=\max_j\int_0^1\|R_j(a)\|\,da$, using supremum or essential supremum in the stipulated extensions. It is neither expected activity nor the integral of the cross-label maximum. Finite activity requires positive terminal survival on every nonzero positive decoder input. First failure is actual FIRST at absolute time $6+a$; there is no forced terminal absorption, singular first-event atom or subsequent positive-carrier action.
+
+The domain is finite/countable instruments and only CG Convention 21.3's expressly stipulated measurable finite-dimensional-fibre, measurable-Kraus, integrable-effect/live-Choi extension, with full-output TP decoders almost everywhere. No general disintegration or infinite-dimensional coding theorem is assumed. Let $F$ be the supported plus-report effect and $\kappa=h_0a+h_1b$. Define $\mathsf V(F)=2|\operatorname{Re}F_{01}|/\kappa$. The original class $\mathfrak F_{s,A}$ imposes $E(\Phi)=E_*$, the inequality $\mathsf V(F)\ge s$, $\mathsf W=\mathsf C(s)$ and $\mathsf A\le A$. Its weak acquired-record height frontier is
+
+$$
+\mathcal T_A(s)=\sup_{\Phi\in\mathfrak F_{s,A}}
+\frac12\sum_{j\ \mathrm{actual}}
+\left|\Pr_\Phi(j\mid27,+,+)-\Pr_\Phi(j\mid5,+,+)\right|.
+$$
+
+For integral labels the last expression is the corresponding total variation integral. Empty classes have no claimed optimum.
+

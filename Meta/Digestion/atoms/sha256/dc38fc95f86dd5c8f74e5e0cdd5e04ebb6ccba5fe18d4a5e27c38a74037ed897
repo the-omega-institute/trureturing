@@ -1,0 +1,71 @@
+**Theorem 8.2 (complete Pareto and same-source weighted optima).** For an
+exact finite nonempty fiber produced by Theorem 7.1 and any $Q$, the set
+
+$$
+\mathcal F_D=
+\{b\in\mathbb N^3:\exists A\ \forall u\in D,\ c_A(u)\le b\}
+\tag{NPL.21}
+$$
+
+has an effectively computable finite minimal basis, with an attaining
+actual service for each basis vector. Its upward closure is exactly
+$\mathcal F_D$. Every rational nonnegative weight tuple has a computable
+attained minimum of $W_\lambda$ over **all** legal adaptive comparators,
+including every zero-weight case. Bounded $(q,a)$ feasibility with
+unbounded word lengths, and arbitrary $(q,a,\ell)$ feasibility, are
+therefore decidable on this entire finite fiber.
+
+Proof. Compute $c_B(u_i)$ for every $B\in\mathcal A_D$ and every source.
+For a reached terminal path with $k$ reads, last read epoch $n$ and words
+$p_1,\ldots,p_k$, its exact vector is
+
+$$
+(k,n-N,\textstyle\sum_{j=1}^k|p_j|),
+\tag{NPL.22}
+$$
+
+taking $(0,0,0)$ for a root halt. Actual epoch differences telescope and
+there are no terminal updates. A source is followed through its own
+reply path; absent replies and repeated class values are included in the
+table. Compute the exact coordinate maxima to obtain $b(B)$, and retain
+the coordinatewise minimal vectors among this finite list. Each has its
+actual realizing service. Their upward closure is feasible because each
+service meets every larger upper bound.
+
+Conversely any feasible comparator is sourcewise dominated by a listed
+service by Theorem 8.1, hence is dominated in worst-coordinate budgets.
+This proves the other inclusion in (NPL.21) and exactness of the minimal
+basis. For a requested $(K,A)$ bound, test whether any listed service
+has its first two maxima at most those bounds; Theorem 8.1 covers the
+arbitrarily long words of all other comparators. The third bound can be
+included in the same finite comparison when supplied.
+
+For weights compute instead
+
+$$
+\min_{B\in\mathcal A_D}\ \max_{1\le i\le d}\lambda\cdot c_B(u_i).
+\tag{NPL.23}
+$$
+
+The dominating inequality (NPL.18) holds on every same source, so it
+preserves the inequality after nonnegative weighting and then taking
+the maximum. Conversely each candidate is an allowed service. These
+two inequalities prove equality with the unrestricted infimum and give
+an attaining candidate. No division by a weight is used; zero coordinates
+and the all-zero tuple require no exception. Store a source attaining
+each reported maximum if desired. Different coordinate maxima may have
+different witnesses, and (NPL.23) is not replaced by a weighted sum of
+those separate maxima.
+
+Termination follows from the explicit finite menus, finite depth and
+finite epoch interval in Theorem 8.1, followed by finite exact arithmetic.
+It does not follow merely from Dickson finiteness or from finding one
+successful budget. $\square$
+
+The finite reply table is computed only after $D$ itself has been proved
+finite and enumerated exactly. A finite list of possible **rows**, a
+finite collection of feasibility witnesses or a finite cover by infinite
+cells does not meet this hypothesis. Substituting any such list for $D$
+would invalidate the removal of constant replies and the cardinality
+decrease used in Theorem 8.1.
+

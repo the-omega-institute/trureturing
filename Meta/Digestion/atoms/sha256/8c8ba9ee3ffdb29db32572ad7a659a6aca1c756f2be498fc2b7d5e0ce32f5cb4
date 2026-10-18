@@ -1,0 +1,84 @@
+**Theorem 51.4 (the four-slack dual and the singular endpoint).** Put
+
+$$
+C={|0\rangle\langle1|+|1\rangle\langle0|\over2},\qquad \tau=s/s_0.
+$$
+
+For $s<s_0$, the normalized dual is
+
+$$
+\boxed{
+J_s=\min_{\substack{\lambda\ge0,\ Y=Y^T\\
+\nu_{r,\epsilon}\in\mathbb R}}
+\left\{\operatorname{tr}Y-\lambda\tau:
+Y-\epsilon G-\lambda rC+\nu_{r,\epsilon}Q\succeq0
+\right\}.}
+\tag{JR.126}
+$$
+
+**Proof.** Here $\lambda$ is the nonnegative contrast multiplier and is distinct
+from $\lambda_{\rm sp}$ in (JR.100). To prove finite dual attainment,
+let $X^{(1)}$ be any endpoint feasible tuple with contrast one and let
+$X^{(0)}_{r,\epsilon}=I/4$. For $0<\eta<1$,
+$X^{(\eta)}=(1-\eta)X^{(0)}+\eta X^{(1)}$ is positive definite in
+all four slots and has contrast $\eta$. Given $\tau<1$, choose
+$\eta\in(\tau,1)$. This is a genuinely strict feasible tuple for the
+primal SDP, so finite-dimensional Slater duality gives equality in
+(JR.126) and a finite dual minimizer.
+
+On $\bar s<s<s_0$, every finite optimal contrast multiplier satisfies
+$\lambda>0$. If $\lambda=0$, (JR.126) is the unconstrained spectral
+problem and its value is the plateau value in (JR.113), contradicting
+(JR.125). Complementary slackness therefore forces
+$\sum_{r,\epsilon}r(X_{r,\epsilon})_{01}=\tau$, so the original contrast
+inequality is saturated throughout the residual interval. On the constant
+interval, the certificate (JR.103)--(JR.104) is the branch
+$\lambda=0$, $`Y=Y_*`$, $\nu_{r,\epsilon}=-\epsilon\lambda_{\rm sp}$.
+
+At $s=s_0$, the endpoint primal is finitely attained, but the dual has
+an infimum and no finite minimizer. For the four endpoint null atoms
+$d_{\sigma,t}=(1,\sigma,t)^T/2$, $\sigma,t=\pm1$, complementary
+slackness for a putative finite dual minimizer first gives
+
+$$
+\begin{gathered}
+A_{+,+}=\alpha(1,-1,0)^T(1,-1,0),\qquad
+\alpha=\lambda/2,\\
+\nu_{-,+}=\nu_{+,+},\qquad
+Y_{01}=x,\quad Y_{02}=y,\quad Y_{12}=z,\\
+Y_{00}=g_0-\nu_{+,+}+\lambda/2,\\
+Y_{11}=g_1+(1-\chi)\nu_{+,+}+\lambda/2,\qquad
+Y_{22}=g_2+\chi\nu_{+,+}.
+\end{gathered}
+\tag{JR.127}
+$$
+
+The negative atom $d_{-,-}$ then requires
+$\nu_{-,-}-\nu_{+,+}=2(x+y-g_0)$. Substitution into the two remaining
+complementary diagonal equations requires both residues
+
+$$
+R_1=x-g_1-z+(1-\chi)(x+y-g_0)=0,\qquad
+R_2=y-z-g_2+\chi(x+y-g_0)=0.
+\tag{JR.128}
+$$
+
+Evaluation of (JR.128) on $\mathcal B_{\rm CG}$ gives the directed intervals
+
+$$
+\frac{2454521998719936}{10^{18}}<R_1<
+\frac{2454521998719937}{10^{18}},\qquad
+\frac{1037144557584923}{10^{18}}<R_2<
+\frac{1037144557584924}{10^{18}}.
+\tag{JR.129}
+$$
+
+Both are strictly positive, contradicting (JR.128). Thus no finite dual
+minimum exists at $s_0$. The endpoint dual infimum nevertheless equals
+$J_{s_0}$: compactness and nested feasible sets give
+$J_s\to J_{s_0}$ as $s\uparrow s_0$, while every dual feasible point
+for an interior $\tau$ remains feasible at $\tau=1$ with objective
+lowered by $\lambda(1-\tau)$. Weak duality at the endpoint sandwiches
+its dual infimum between $J_{s_0}$ and this convergent sequence. No
+multiplier-divergence rate or other endpoint asymptotic is asserted.
+

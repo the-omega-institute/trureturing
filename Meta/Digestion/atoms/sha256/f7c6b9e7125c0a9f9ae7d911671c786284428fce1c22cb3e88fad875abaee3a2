@@ -1,0 +1,52 @@
+**Theorem 99.1 (energy onset and actual native phase-orbit selection).**
+For every prescribed pair of positive sequences $s_n\downarrow0$ and
+$\delta_n\downarrow0$ satisfying
+
+$$
+s_n^{2/3}=o(\delta_n),\qquad
+\tau_n=s_n^2,\qquad g_n=(\chi_c+\delta_n)s_n^3,
+\tag{99.1}
+$$
+
+one has, on the unchanged native problem,
+
+$$
+\tau_n E_{\tau_n}(g_n)=-\mu_c\delta_n+o(\delta_n).
+\tag{99.2}
+$$
+
+For every normalized complex $\psi_n\in\mathcal Q$ satisfying
+
+$$
+\tau_n\bigl(\mathfrak e_{g_n,\tau_n}[\psi_n]
+                         -E_{\tau_n}(g_n)\bigr)=o(\delta_n),
+\tag{99.3}
+$$
+
+there are constant phases $\theta_n$ such that
+
+$$
+\|\mathcal U_{s_n}\psi_n-e^{i\theta_n}\Phi_c\|_2\longrightarrow0.
+\tag{99.4}
+$$
+
+This includes every choice of actual normalized native ground states.
+There is no translation or variable phase adjustment. The explicit
+nonempty sufficient window can equivalently be written
+$\tau_n^{1/3}=o(\delta_n)$. Examples prescribed before any core
+approximation are $\delta(s)=s^p$ for every fixed $0<p<2/3$, or
+$\delta(\tau)=\tau^q$ for every fixed $0<q<1/3$, with the indicated
+$g=(\chi_c+\delta)\tau^{3/2}$.
+
+Proof. Theorem 98.1 verifies exactly (91.2) with
+$\alpha_n=Cs_n^{2/3}$ and $U_n=Z_{s_n}$:
+$\alpha_n=o(\delta_n)$, $q_n^c[U_n]=o(\delta_n)$ and
+$v_n[U_n]\to\mu_c$. The exact conjugacy (81.4) makes (99.3)
+precisely (91.3). Proposition 91.1 therefore gives (99.2) and
+(99.4) directly; its selection argument is not a new hypothesis
+here. Existence of a normalized native ground state at each pair
+is Proposition 75.2, and its excess is zero. Finally each stated
+power satisfies (99.1), and $g_n\to0$, so these are original allowed
+coupled families, with no diagonal slowing of $s_n$ or $\delta_n$.
+$\square$
+

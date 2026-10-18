@@ -1,0 +1,55 @@
+**Proposition 22.2 (actual reports and the isolated strong comparison).**
+On the platform the unique aggregate supported law has available
+contrast $s_c(t)$. A maximum-contrast report attains that value; a
+general optimizing report need only lie between the request and
+$s_c(t)$. On the active interval $s>s_c(t)$ every optimizer has
+available contrast and actual report contrast both equal to $s$.
+For this budget strip, every feasible larger request in the separate
+strong component also has value strictly less than $T_c(t)$.
+
+Proof. For $0\le s<s_c$, let $\gamma=s/s_c$. Independently
+flipping the maximum report with probability $(1-\gamma)/2$ gives
+$F_+^{(\gamma)}=\gamma F_+ +(1-\gamma)I_5/2$ and actual contrast
+$s$. Retaining the original acquisition record preserves its TV,
+cost, decoder and activity. If a report coin is retained as an extra
+actual outcome, it is counted as a split outcome; it is not a free
+hidden Kraus control. Maximum reports already attain the platform
+minimum alphabet because the original constraint is an inequality.
+Thus no claim that every platform optimizer reports $s_c$ is needed.
+
+On the active side $\lambda>0$. Equality in AC.110 forces
+$k_u=s/C_s$, and $s\le\mathsf V(F)\le C_sk_u$ forces actual
+equality. This is also the global platform argument of Theorem 8.1.
+
+For the remaining feasible requests reuse FA71.1: at finite activity
+the only feasible contrast in $[s_0,1]$ is $s^\dagger$; in particular
+$s_0$ and $1$ are infeasible. Let
+$v^\dagger=m_2d_{\rm src}^2h_1^2/(m_1b_{\rm src}^2h_2^2)$,
+$u^\dagger=\theta v^\dagger+\omega$ and
+$K_{\sigma\tau}=\sqrt{u^\dagger}D+
+\sigma\sqrt{v^\dagger}T+\tau S$ as in that supplier.
+Its two high differences are positive. With
+$H=(1-u^\dagger)N_{00}+(1-v^\dagger)N_{11}$, the supplied
+four-ray law and triangle inequality bound every such strong value by
+
+$$
+\frac12\left[H+\frac14\sum_{\sigma,\tau=\pm1}
+ |\operatorname{tr}(K_{\sigma\tau}\Delta K_{\sigma\tau}^\dagger)|
+ +d_f\right]
+<0.08569449380880800673445923202444725
+<0.10278797993678910558710493681877579<T_c(t).
+\tag{AC.123}
+$$
+
+The first strict rational comparison is substitution of the complete
+positive-pivot source box in the displayed expression; its four terms
+are $u^\dagger N_{00}+v^\dagger N_{11}+N_{22}
++2\sigma\sqrt{u^\dagger v^\dagger}N_{01}
++2\tau\sqrt{u^\dagger}N_{02}+2\sigma\tau\sqrt{v^\dagger}N_{12}$.
+The last lower bound is the whole-strip zero-multiplier value
+enclosure from FA's matching data. FA71.2 only subtracts further
+nonnegative capacity losses. This comparison uses the existing strong
+theorem at its scope; it transfers no weak alphabet count to that
+component. Requests above one are infeasible by the original sharp
+contrast law. $\square$
+

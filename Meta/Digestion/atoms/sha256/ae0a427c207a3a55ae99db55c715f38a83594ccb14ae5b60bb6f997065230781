@@ -1,0 +1,17 @@
+**Proposition 8.4 (disjoint-cut ambiguity and richer resolution).**
+Let $T_a=\rho^a\alpha$, $P_0=\{R\}$, $P_1=\{L\}$,
+$X=\langle T_2,T_6\rangle$ and $Y=\langle T_2,T_5\rangle$.
+The authentic families $(X,\rho^2X)$ and $(Y,\rho^3Y)$ have the same
+complete row input at these cuts, with lags two and three respectively.
+Retained certified trees recover those different lags.
+
+**Proof.** Reuse the attained collision of [NAR, Proposition 12.7][NAR].
+First exteriors are both $\langle T_2,\square_R\rangle$; second exteriors
+are both $\langle\square_L,T_8\rangle$. Reached sets are the indicated
+singleton cuts with singleton partitions, so no guard or disequality
+difference is omitted. Stationary successful calls separated by the
+actual two or three updates acquire these families.
+Equation (CNA.15) on the full trees returns the different lags.
+This illustrates the interface boundary; the row collision itself
+retains its existing supplier. $\square$
+

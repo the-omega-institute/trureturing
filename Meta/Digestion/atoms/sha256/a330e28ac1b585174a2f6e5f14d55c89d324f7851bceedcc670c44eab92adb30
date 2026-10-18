@@ -1,0 +1,6 @@
+## 6. Gauge quotient and topology scope
+
+A vertex-gauge switch reverses its cyclic order and toggles each incident edge sign. For a switch vector q:V→{0,1}, the flag bijection (v,w,s)↦(v,w,s xor q(v)) conjugates the corner involution to that for the reversed local orders and sends t(vw) to t(vw) xor q(v) xor q(w). It leaves the underlying directed graph traversals unchanged. Thus it is a coordinate change of the same ribbon embedding and preserves every edge type. For cubic graphs the group of all vertex switches acts freely on signed rotation systems: a nonempty switch subset reverses at least one nontrivial cyclic order. Every orbit has exactly one representative with a chosen fixed rotation system, obtained by switching precisely the reversed vertices. Thus the notebook law descends to uniform measure on the $2^{|E|}$ labelled gauge classes. For K4 it is uniform on 64 classes; the refutation and exact means persist on that quotient.
+
+Quotienting further by graph automorphisms is different: orbit sizes need not be equal, so a uniform law on unlabelled maps is not the notebook law. No such uniform law is assumed in Theorem 4.1. Nor is any conditioning on orientability, genus, or a fixed face count assumed.
+

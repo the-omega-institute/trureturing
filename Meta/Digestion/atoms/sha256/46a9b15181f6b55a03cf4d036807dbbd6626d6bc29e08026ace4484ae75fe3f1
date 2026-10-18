@@ -1,0 +1,84 @@
+**Definition 2.1 (the conditional algebraic point).** The following fixes
+the coefficients exactly. Let
+$\mathbf x=(\lambda,\alpha_1,\alpha_2,\beta_1,\beta_2,z)$,
+$\eta=(\eta_0,\eta_1,\eta_2)$ and define
+
+$$
+\begin{aligned}
+v_5&=(\alpha_1,\alpha_2,-1)^T,&v_{27}&=(\beta_1,\beta_2,1)^T,\\
+R_y&=v_yv_y^T/(v_y^Tv_y),& A_5&=\lambda R_5,\quad A_{27}=(1-\lambda)R_{27},\\
+\zeta&=(z,59\lambda/128,\lambda/2),&
+N^{\rm src}&=\sum_{y=5,27}A_y\odot(a_ya_y^T),\\
+S_0^{\rm src}&=\operatorname{diag}\zeta-N^{\rm src},&
+S_{ij}^{\rm src}&=\begin{pmatrix}
+\zeta_j-\sum_{y=5,27}(A_y)_{ii}p_{yj}&-N^{\rm src}_{ij}\\
+-N^{\rm src}_{ij}&\zeta_i-\sum_{y=5,27}(A_y)_{jj}p_{yi}
+\end{pmatrix},\\
+F^{\rm src}&=\sum_{y=5,27}\operatorname{tr}(A_yB_y)-\sum_i\zeta_i+6\lambda/11,&
+\mathbf g&=(1000\det S_0^{\rm src},\det S_{01}^{\rm src},\det S_{02}^{\rm src}),\\
+\Psi(\mathbf x,\eta)&=
+ (\nabla_{\mathbf x}(F^{\rm src}+\eta\cdot\mathbf g),\mathbf g).
+\end{aligned}
+\tag{CA.7}
+$$
+
+Here $i<j$ and $\odot$ is entrywise product. The premise from CG
+Proposition 13.2 is a unique zero $u_*$ in the product of radius
+$10^{-24}$ intervals centred at the following exact rational decimals,
+in coordinate order $(\mathbf x,\eta)$:
+
+| Coordinate | Centre |
+| --- | --- |
+| $\lambda$ | $0.479508042205945691075728241615$ |
+| $\alpha_1$ | $1.412018697539825943102823246594$ |
+| $\alpha_2$ | $1.185897402486986028204155873343$ |
+| $\beta_1$ | $0.413330945620125544606320492846$ |
+| $\beta_2$ | $0.809647491041060318009094562763$ |
+| $z$ | $0.066998926272600209516864472757$ |
+| $\eta_0$ | $0.279795267654829218213193898783$ |
+| $\eta_1$ | $0.199570407911600478528148253443$ |
+| $\eta_2$ | $0.091392615490799158339482855657$ |
+
+At this point set
+
+$$
+\begin{aligned}
+H^{\rm src}&=1000\eta_0\operatorname{adj}S_0^{\rm src},&
+Q^{01}&=\eta_1\operatorname{adj}S_{01}^{\rm src},&
+Q^{02}&=\eta_2\operatorname{adj}S_{02}^{\rm src},\\
+h&=H^{\rm src}e_0/\sqrt{H^{\rm src}_{00}},&
+(a,b)^T&=Q^{01}e_0/\sqrt{Q^{01}_{00}},&
+(c,d)^T&=Q^{02}e_0/\sqrt{Q^{02}_{00}},\\
+m_1&=1-H^{\rm src}_{11}-Q^{01}_{00},&
+m_2&=1-H^{\rm src}_{22}-Q^{02}_{00},\\
+D&=\operatorname{diag}(h_0,h_1,h_2),&
+T&=a|0\rangle\langle1|+b|1\rangle\langle0|,&
+S&=c|0\rangle\langle2|+d|2\rangle\langle0|,\\
+M&=\operatorname{diag}(0,m_1,m_2),&\kappa&=h_0a+h_1b.
+\end{aligned}
+\tag{CA.8}
+$$
+
+The first-coordinate vectors in the factor definitions have the relevant
+matrix size. CG's ranks, strict enclosures and exact normalization,
+together with JR Proposition 34.2, supply
+
+$$
+\begin{gathered}
+h_0,h_1,h_2,a,b,c,d,m_1,m_2>0,\quad 0<\kappa<1/4,\\
+D^\dagger D+T^\dagger T+S^\dagger S+M=I_3,\\
+\alpha=\frac{ab}{h_0h_1}>0,\quad
+\beta=\frac{cd}{h_0h_2}>0,\quad \ell=\alpha+\beta<1,\quad k=1-\ell>0.
+\end{gathered}
+\tag{CA.9}
+$$
+
+These $\alpha,\beta$ are neither acquisition labels, history phases nor
+root-chart coordinates. The coefficient $d$ is not $d_{\rm ramp}$ or a
+fibre dimension. Positivity of $d$, already proved in current JR, can also
+be read from RE's symbolic bounds $N^{\rm src}_{02}>243/80000>0$ and
+$cd=\eta_2N^{\rm src}_{02}$. The bounds
+$ab,cd<18/1000$, $h_0h_1>695/1000$, $h_0h_2>796/1000$ give the stated
+$\ell<1$. These are reused conditional consequences, not fresh enclosure
+calculations.
+

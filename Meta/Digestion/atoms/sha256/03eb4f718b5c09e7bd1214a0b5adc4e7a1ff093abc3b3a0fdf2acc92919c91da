@@ -1,0 +1,30 @@
+**推论 21.3.2（持续选择的精确后验容量）。** 设终端读出核 $K(y\mid u)$ 在选择后验上运行，定义两种输入序列之间的最坏可见距离
+
+$$
+\mathcal C_{1:n}
+=\sup_{\pi,K}
+\operatorname{TV}\left(
+K B_{x_{1:n}}^{z_{1:n}}\pi,
+K B_{a_{1:n}}^{z_{1:n}}\pi
+\right).
+$$
+
+则
+
+$$
+\boxed{
+\mathcal C_{1:n}
+=\tanh\!\left(\frac{\Delta_{1:n}}4\right)
+\le
+\tanh\!\left(\frac{\sum_t\Delta_t}4\right).
+}
+$$
+
+在每一轮相同且极值对齐时，精确得到
+
+$$
+\boxed{\mathcal C_n=\tanh\!\left(\frac{n\Delta_1}4\right).}
+$$
+
+**证明。** 把基线后验当作参考测度，目标与基线后验之比正比于 $R(u)$。第 20 章的投影容量定理（定理 20.5.1）给出总变差上确界为 $\tanh(\Delta_{1:n}/4)$，并可由两点潜变量先验与二值 Hahn 读出达到。第一条不等式由定理 21.3.1 及双曲正切单调性得到。证毕。
+

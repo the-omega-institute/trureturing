@@ -1,0 +1,40 @@
+## 9. Quantitative correspondence and limits
+
+**Mathematical citation 9.1 (scope of reuse).** The source-specific
+addition is the positive-slack implication (6.9), followed on the same
+flows by the full-law estimates (6.13)--(6.15) and the consumer (7.1).
+Theorem 2.1 supplies only the zero-slack classification. [NATIVE,
+Theorem 3.1] supplies Borel rigidity under an exact eventual recurrence;
+[PAIR, Theorem 18.2] additionally assumes finite p support. Neither
+recurrence is assumed here. [PAIR, Theorem 20.2] characterizes existence
+of full compatible flows for prescribed entire marginals by all finite
+convex-order tests; it supplies no positive-slack modulus. The full-word
+recursion and stationary positive-kernel comparisons in Section 2 and
+[NATIVE, (2.3)--(2.5)] are reused directly. Endpoint TV decomposition,
+positivity, marginal transport and finite telescoping are mature tools,
+not separate new general theorems. Corollary 7.1 and substitution 7.2
+are applications of (6.2), not additional independent mathematical
+content.
+
+Proposition 8.1 reuses the supplied endpoint flows, endpoint-tag mixture
+and depth-three witness as controls; it introduces no new generator.
+
+The primary comparisons of Citation 5.1 retain their exact boundaries:
+[Li--Schneider, Theorem 2.1(a)][LS] assumes a finite irreducible
+nonnegative matrix, and its Theorem 2.3 assumes primitivity;
+[Leskelä--Vihola, Theorems 1.2(i) and 1.3(i)][LV] concerns
+finite-first-moment vectors and measurable families of martingale
+couplings. Bounded word projections satisfy the first-moment
+condition, but those results supply neither (6.9) on these two
+stationary full-law flows nor the all-coordinate TV conversion.
+This is a repo-derived ordinary deduction relative to the named
+suppliers, with no global originality claim or Lean certification.
+
+The deterministic whole-fiber read/update/address budget classification
+in [SERIAL-JOINT] has a different source and operation contract.
+The iid unused-suffix and adaptive serial execution results in
+[FreshServiceRestart][RESTART] and [RarePriorSerialExecution][SERIAL]
+likewise do not supply the boxed Borel positive-slack estimate or a
+global COMPLETE/full-transcript/minimax closure. Reusing their local
+results would require their own source and operation correspondence.
+

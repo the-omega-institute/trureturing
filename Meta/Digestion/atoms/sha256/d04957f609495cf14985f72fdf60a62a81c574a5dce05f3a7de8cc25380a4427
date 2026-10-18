@@ -1,0 +1,15 @@
+**定义 6.1（因果锚点和连续观察者）。** 在事件偏序上令
+
+$$
+J^-(p)=\{e:e\preceq p\},\qquad J^+(p)=\{e:p\preceq e\}.
+$$
+
+反对称性给 $J^-(p)\cap J^+(p)=\{p\}$，传递性给
+
+$$
+p\preceq q\Longrightarrow
+J^-(p)\subseteq J^-(q),\quad J^+(q)\subseteq J^+(p).
+$$
+
+交点是一事件，不是整个观察者。一般偏序不预设洛伦兹光锥。若另给洛伦兹流形，连续观察者为曲线 $\gamma:I\to M$，未来类时切向满足 $\dot\gamma(\tau)\in\operatorname{Int}C^+_{\gamma(\tau)}$，记录事件为 $p_k=\gamma(\tau_k)$。任意 $\tau_0<\tau_1$ 间还有中点，故记录的下一项不等于连续时空的最小后继点。度量、类时与类光约定参见 David Tong, [General Relativity，第 3 节](https://www.damtp.cam.ac.uk/user/tong/gr/grhtml/S3.html)。
+

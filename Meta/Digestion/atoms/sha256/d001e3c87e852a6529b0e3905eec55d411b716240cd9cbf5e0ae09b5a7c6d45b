@@ -1,0 +1,47 @@
+**Proposition 25.6 (The index distinguishes neither gaps nor individual
+kernel dimensions under arbitrary fixed-symbol deformation).**
+For the real family $f_s=sf$ and the associated total elliptic operators,
+
+$$
+\begin{array}{c|cc}
+&\dim\ker D_s^+&\dim\ker D_s^-\\\hline
+s\ne0&N_m&0\\
+s=0&\binom{m+4}{4}&\binom{m+2}{4}
+\end{array}
+\tag{25.10}
+$$
+
+and the index is $N_m$ throughout. On the finite Bargmann carrier,
+$H_{m,s}=s^2H_m$ for real $s$; for complex $s$ the coefficient is $|s|^2$.
+For $\epsilon>0$, $H_m+\epsilon I$ has no zero modes and is a different
+operator problem. For the unshifted finite pair one has, for every $t>0$,
+
+$$
+\operatorname{Tr}_{\mathcal P_m}e^{-tA_m^\dagger A_m}
+-\operatorname{Tr}_{\mathcal P_{m-2}}e^{-tA_mA_m^\dagger}=N_m.
+\tag{25.11}
+$$
+
+Proof. When $s\ne0$, multiplication has the same image and kernel as
+before. When $s=0$, the total cohomology is the direct sum of
+$H^0(\mathcal O(m))$ in even degree zero and
+$H^0(\mathcal O(m-2))$ in odd degree minus one. Higher cohomology still
+vanishes, giving (25.10). More generally the index of a continuous
+elliptic family with fixed symbol is constant by the classical Fredholm
+index theorem ([Freed §3.2][FR25]); compactness of the base and continuity as $H^1\to L^2$
+maps are the hypotheses in use. This guarantees only the difference of
+kernel dimensions. The scalar family already shows why gaps and kernel
+sizes need not be invariant, and says nothing about preparation cost.
+
+Taking finite adjoints proves the real and complex scaling formulas.
+If $\lambda>0$ and $A_m^\dagger A_m v=\lambda v$, then $A_mv\ne0$ and
+$A_mA_m^\dagger(A_mv)=\lambda A_mv$; the inverse on that eigenspace is
+$A_m^\dagger/\lambda$. Thus the two positive spectra, with multiplicity,
+pair and cancel in (25.11). Only the zero-space difference remains.
+This is the finite instance of classical supersymmetric spectral pairing
+and heat supertrace ([Freed §6.1][FR25]), used here for the specified
+relation operator.
+Strict positivity of $H_m+\epsilon I$ follows from
+$\langle(H_m+\epsilon I)v,v\rangle\ge\epsilon\|v\|^2$.
+No invariance assertion for that shift follows from (25.10). $\square$
+

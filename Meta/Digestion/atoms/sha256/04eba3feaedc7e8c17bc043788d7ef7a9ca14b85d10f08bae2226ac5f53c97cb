@@ -1,0 +1,31 @@
+**Proposition 255.4 (Finite lower boundary with positive-law preservation).**
+On $B_3$, let $p=N(1,2;0,1,2,2)$. Among finite $O$ kernels
+$q$ satisfying the additional restriction $q_{111}=p_{111}=e_2$,
+
+$$
+\inf_q\sup_{w\in B_3}\operatorname{TV}(p_w,q_w)=1/2.
+\tag{255.5}
+$$
+
+**Proof.** In any deterministic decomposition of such a $q$,
+every positive-weight table emits two at $111$. A table emitting
+one at $011$ must query coordinate one: otherwise it has the
+same transcript there as at $111$. On the zero at coordinate one
+it stops, and therefore emits one also at $001$.
+Consequently, after integrating,
+
+$$
+q_{001}(0)+q_{011}(1)\le1.
+$$
+
+The original laws at these two words are $e_0,e_1$, respectively.
+If the uniform radius is $r$, both displayed probabilities are at
+least $1-r$, so $2(1-r)\le1$ and $r\ge1/2$.
+The midpoint law has radius at most $\mu/2=1/2$ on the whole
+cube and preserves $p_{111}=e_2$, attaining the bound.
+This is a finite approximation boundary under the named
+positive-law-preservation condition. It is neither a lower bound
+over unrestricted replacement laws nor an arbitrary-address original
+$N/O$ separator. The original problem imposes no such preservation
+condition on its competing stopped law. $\square$
+

@@ -1,0 +1,95 @@
+## 6. Canonical support, head symmetry, and exact word identities
+
+After these replacements the support has the following form. The prefix $(1,2)$ has first output $0$ or $1$, second output $2$, and exhaustion in $\{0,3,4,5,6\}$. For $h=1,2$ and $j=3,4,5,6$, schedule $(h,j)$ has first output $0$ or $h$, second output $j$, and exhaustion $0$. The remaining schedules are
+
+$$
+(3,4),(3,5),(3,6),(4,5),(4,6),(5,6),(6,7),(6,8),
+$$
+
+with first output $0$, second output the second queried address, and exhaustion sets
+
+$$
+\{0,5,6\},\{0,6\},\{0\},\{0,6\},\{0\},\{0,7,8\},\{0,8\},\{0\}.
+$$
+
+Let $t_j^{(h)}$ be the mass on $(h,j)$ and $v_j=t_j^{(2)}-t_j^{(1)}$ for $j=3,4,5,6$. The four scored differences
+
+$$
+\begin{aligned}
+(01001010,10001010)&:v_3+v_4+v_6,\\
+(01010010,10010010)&:v_3+v_5+v_6,\\
+(01010100,10010100)&:v_3+v_5,\\
+(01101000,10101000)&:v_4+v_6
+\end{aligned}
+$$
+
+have absolute value at most $2\varepsilon_2$. Subtraction gives
+
+$$
+|v_6|,|v_3|\le4\varepsilon_2,
+\qquad |v_4|,|v_5|\le6\varepsilon_2,
+\qquad \sum_{j=3}^6|v_j|\le20\varepsilon_2.
+$$
+
+Average the two head masses at each $j$ and set both first outputs to $0$. Late correct stocks and the positive nonbase mass are preserved. The change in every needed head union deficit is at most $10\varepsilon_2$, and head symmetry identifies the relevant first-zero-$1$ and first-zero-$2$ deficits. Therefore, with
+
+$$
+\varepsilon=11\varepsilon_2=1386\eta,
+$$
+
+all late correct stocks differ from $b_n-e$ by at most $\varepsilon$, and the positive nonbase mass differs from $e$ by at most $\varepsilon$. The relevant scored union deficits on first-zero-$2$ words and first-zero-$1$ words with $w_2=1$ differ from $e$ by at most $\varepsilon$; every first-zero-$2$ union deficit, including an unscored one, is at most $e+\varepsilon$. No two-sided estimate for an unscored deficit is asserted, and no unchanged-deficit assertion for first-zero-$1$ words with $w_2=0$ is used.
+
+Let $T$ be the total nonprefix schedule mass and $h_+$ the positive nonbase mass. Every nonprefix second cell contributes its schedule mass once to the six late correct stocks, and every nonzero exhaustion contributes once more to that stock sum and once to $h_+$. Hence, for this one allocation,
+
+$$
+\sum_{n=3}^8c_n=T+h_+.
+$$
+
+Write the masses of $(1,3),(1,4),(1,5),(1,6)$ (after symmetrization, equal to their $(2,j)$ partners) as $A,B,C_h,D_h$, and write the masses of $(3,4),(3,5),(3,6),(4,5),(4,6),(5,6),(6,7),(6,8)$ as $E,F,G,H,I,J,K,M$. Let $E_+,F_+,H_+,J_+,K_+$ denote their nonzero exhaustion masses. For a first-zero-$2$ suffix $(s,t,u,v,z,b)=(w_3,w_4,w_5,w_6,w_7,w_8)$, the actual union deficit is
+
+$$
+\begin{aligned}
+D_2(w)={}&A(1-s)+B(1-t)+C_h(1-u)+D_h(1-v)\\
+&+Es(1-t)+E_+st+Fs(1-u)+F_+su+Gs(1-v)\\
+&+Ht(1-u)+H_+tu+It(1-v)\\
+&+Ju(1-v)+J_+uv+Kv(1-z)+K_+vz+Mv(1-b).
+\end{aligned}
+$$
+
+This is a table-by-table identity, including every exhaustion contribution. At the five relevant rows put
+
+$$
+\begin{aligned}
+r_1&=D_2(10001000)=A+B+D_h+J,\\
+r_2&=D_2(10010010)=A+C_h+D_h+H+I,\\
+r_3&=D_2(10010100)=A+C_h+H+K+M,\\
+r_5&=D_2(10100001)=B+C_h+D_h+E+F+G,\\
+r_6&=D_2(10100100)=B+C_h+E+F+K+M.
+\end{aligned}
+$$
+
+The first four are scored $P$ rows and $r_6=D_1(01100100)$ by head symmetry, so $|r_i-e|\le\varepsilon$ for $i=1,2,3,5,6$. Counting schedule masses gives
+
+$$
+T=G+r_1+r_2+r_6,
+\qquad I-G=(r_2-r_3)-(r_5-r_6),
+$$
+
+and therefore $I\ge G-4\varepsilon$. The independent, generally unscored row $w_*=10001100$ has
+
+$$
+r_* =D_2(w_*)=A+B+J_++K+M\le e+\varepsilon.
+$$
+
+Since
+
+$$
+r_*-r_1=J_++G-(r_5-r_6)-J,
+$$
+
+we obtain $J\ge G+J_+-4\varepsilon\ge G-4\varepsilon$. The correct stock at label $6$ contains $G,I,J$ and only additional nonnegative stocks, so
+
+$$
+c_6\ge G+I+J\ge3G-8\varepsilon.
+$$
+

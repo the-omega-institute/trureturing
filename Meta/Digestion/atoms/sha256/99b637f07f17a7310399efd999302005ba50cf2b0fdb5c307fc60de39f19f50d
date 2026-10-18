@@ -1,0 +1,66 @@
+**Definition 27.3 (target descriptions in a cylinder).** If
+$Q=\{\varepsilon\}$, its full row is the constant single root-hole row;
+this case needs no hole comparison. Otherwise every cut is nonroot.
+For each $t\in\mathcal L$, form the normalized source template
+
+$$
+F_t=\langle\rho(t),t\rangle
+\tag{ARH.27.5}
+$$
+
+by distributing $\rho$ through explicit pairs and evaluating its
+concrete leaves. Residual occurrences are $x$ or $\rho(x)$ and have
+original source depth $d+1$, greater than every cut length. Navigate the
+original $Q$, retaining absent cuts as absent, and mask the reached
+subtrees in their original lexicographic order. This computes the
+reached set $J_t$, a normalized exterior $E_t$ with numbered hole
+symbols, and every entire hole value.
+
+Each hole value has one of two descriptions: a known ground tree $g$,
+or a tag $(a,s)$ denoting
+
+$$
+\rho^a(y|_s),\qquad a\in\{0,1\},
+\tag{ARH.27.6}
+$$
+
+where $s$ is reached in every $y\in\mathcal C(t)$. For a cut $Rs$, use
+$a=0$; for a cut $Ls$ with $s$ originally reached in $y$, use $a=1$.
+A ground subpattern is evaluated and described as ground. If navigation
+in the left copy passes an original leaf of $y$, the rest is navigation
+in that leaf's known one-step image: it either yields a ground hole
+value or makes the cut absent. Such a reached position is an original
+position of $u=F(y)$, even though it was created in forming the left
+copy from $y$. It is never confused with a position born after the
+physical entry epoch.
+
+These descriptions are exhaustive because $\rho$ preserves pairing and
+acts only on leaves. No navigation can encounter an unresolved
+depth-$d$ variable before a cut ends. Thus throughout this cylinder,
+
+$$
+\begin{aligned}
+I_Q(F(y))&=J_t,&
+C_Q(F(t[v]))&=E_t[v],\\
+q\sim r&\Longleftrightarrow
+        \text{the two described whole hole values are equal}.
+\end{aligned}
+\tag{ARH.27.7}
+$$
+
+Let $O_t$ be the set of frontier variables actually occurring in $E_t$,
+including decorated occurrences. The supplied template injectivity of
+Lemma 19.2, with the fixed numbered holes treated as constants, gives
+
+$$
+E_t[v]=E_t[w]\quad\Longleftrightarrow\quad
+v(x)=w(x)\quad\text{for every }x\in O_t.
+\tag{ARH.27.8}
+$$
+
+Consequently two full rows in one cylinder differ exactly when an
+exterior coordinate in (ARH.27.8) differs or one unordered pair of
+reached holes changes equality status. This is the entire-row
+disagreement equivalence used below. A chosen pair is only a witness
+of disagreement, not a replacement target.
+

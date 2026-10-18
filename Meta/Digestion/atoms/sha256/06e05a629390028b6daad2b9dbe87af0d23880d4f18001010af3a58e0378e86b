@@ -1,0 +1,31 @@
+**Convention 1.2 (double-wall specialization and credited identities).** The
+acquisition theorems use the specific source class
+
+$$
+X=Y=r/2,\quad 0<Z<1,\quad 0<k_0<r/2,
+\qquad e_+=(1,0,0,0,1),\quad b_0=(1,1,0,1,1).
+$$
+
+Thus $J(b)=(0,r/2)$ and
+
+$$
+p(k)=(k,r/2-k,Z,r/2-k,k),\qquad
+w(k)=\tfrac12e_+-\frac{k}{r}b_0.
+\tag{1.2}
+$$
+
+For every original based loop, including every signed integer winding,
+
+$$
+A(H)=\int_0^T k(t)\chi'(t)\,dt,\qquad
+h(H)=\pi m e_+-\frac{A(H)}r b_0,\qquad
+\beta(H)=h_0=\pi m-A(H)/r.
+\tag{1.3}
+$$
+
+Equations (1.2)--(1.3), actual rectangle synthesis, fixed-preparation lifts,
+reachable character domains and the coherence decoder are credited to
+`FiniteRectangleTransport` and its owning Blueprint, not new classifications
+in this volume. In particular, normalizing four reciprocal probabilities
+without the signs in $d$ would give the wrong law.
+

@@ -1,0 +1,18 @@
+**Definition 1.1 (Complete open-path word graphs).** For every integer $n\ge1$, let
+
+$$
+B_n=\{b\in\{0,1\}^n:b_jb_{j+1}=0\text{ for }1\le j<n\}.
+$$
+
+The graph $\Gamma_n$ has all of $B_n$ as vertices and all legal Hamming-distance-one pairs as edges. There is no constraint between the first and last coordinates. Write $b_0=b_{n+1}=0$ when testing whether an insertion is legal. Thus every all-zero word and every legal word with a $1$ at either endpoint is retained. Set
+
+$$
+h(s,t)=
+\begin{cases}st/(s+t),&s+t>0,\\0,&s=t=0,\end{cases}
+\qquad
+\Phi_n(\mu)=\sum_{\{b,c\}\in E(\Gamma_n)}h(\mu(b),\mu(c))
+\tag{1.1}
+$$
+
+for every probability vector $\mu$ on the whole of $B_n$. Zero masses do not change the vertex or edge sets.
+

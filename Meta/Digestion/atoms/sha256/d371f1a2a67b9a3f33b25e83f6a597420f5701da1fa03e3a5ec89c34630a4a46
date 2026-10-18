@@ -1,0 +1,23 @@
+**Definition 5.1 (one source, one common scaffold).** Set $H=2$ and install
+the actual seed $u=\alpha$. Acquire it by Definition 2.1. Perform two real
+guarded Rho calls, completing the ordinary journal/delivery service each
+time. Their actual sources are
+
+$$
+\alpha\longrightarrow\beta\longrightarrow
+t_*=\langle\beta,\alpha\rangle.
+\tag{AIF.7}
+$$
+
+Both candidates fit capacity 2, so the actual accepted-Rho epoch is 2.
+Fix any public $d\ge2$, supplied in the common unary header of Definition
+3.2. Use its TagRead tag and its full paid setup. The accessible input actor
+chooses the $d$ address bits independently. Before any source commitment,
+write $h^{\mathrm b}_{d,r,x}$ for the cut after $r$ complete payload
+iterations, with $x\in\{L,R\}^r$, $0\le r\le d$. Write
+$h^{\mathrm l}_{d,r,x}$ for the cut immediately after the $r$th IN, before
+its WR, $1\le r\le d$. In the latter the first $r-1$ letters are stored
+and the last occupies the actual input latch. All these histories share
+the same actual preparation, acquired seed and paid preamble, not merely
+equal numerical source labels.
+

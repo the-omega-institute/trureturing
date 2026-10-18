@@ -1,0 +1,16 @@
+**Corollary 257.3 (The regional same-profile full-score relation).**
+Each point (257.1) lies in $H_8$ and has a full mass-one $O$
+vector $\lambda^O$ satisfying $G_O\lambda^O\ge h$. For every
+full $y\ge0$, $F_y(b,e_*)\le\Delta_O(y)$. Consequently no
+unit-$O$ score and full feasible $N$ vector of mass $M\ge1$
+at that same point can have $F_y>M$.
+
+**Proof.** Order, $b_2=b_3$ and $b_8>e_*$ hold. Also
+$E=6t-9e_*=(18-12t)/43\ge0$ and
+$h+E\le(31t+18)/43+1/100<1$ on the closed range.
+Theorem 257.1 supplies all full rows for one mass-one law.
+Weak duality gives $F_y\le y\cdot G_O\lambda^O\le\Delta_O(y)$.
+For a unit input the latter is at most one, hence at most $M$.
+This relation is pointwise on this family; it supplies no uniform
+$\sigma_H$ payer for arbitrary profiles. $\square$
+

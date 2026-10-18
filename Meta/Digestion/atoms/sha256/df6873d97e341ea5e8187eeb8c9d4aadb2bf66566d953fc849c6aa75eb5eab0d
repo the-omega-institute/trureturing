@@ -1,0 +1,193 @@
+**Theorem 5.1 (an infinite full-domain family of actual live sharing).**
+Let $m\ge1$, $n=2m+5$, $k=m+3$ and $r\ge0$. Partition the original
+coordinate indices as
+
+$$
+[n]=I\sqcup X\sqcup Y\sqcup U,\qquad
+|I|=m+1,\quad X=\{x,x^\prime\},\quad
+Y=\{y,y^\prime\},\quad |U|=m.
+$$
+
+Choose $t\in I$, put $d=c_t$, and suppose the original costs satisfy
+
+$$
+\begin{aligned}
+d&\le c_{x^\prime},& d&\le c_{y^\prime},\\
+c_x+d&\le c_y+c_{y^\prime},&
+c_y+d&\le c_x+c_{x^\prime}.
+\end{aligned}                                       \tag{PE.16}
+$$
+
+There is an original-contract preparer on the entire $\mathcal U_*$
+with the exact whole-table count and attained execution maxima
+
+$$
+H=2^n-2^{m+3}+2m+9+r,\qquad
+p=n+1,\qquad \ell=3+W.                              \tag{PE.17}
+$$
+
+Two actual live cube histories at one selected state have exposed data
+
+$$
+I=0^{m+1},\quad x=1,\ x^\prime=0,
+\qquad\text{and}\qquad
+I=1^{m+1},\quad y=0,\ y^\prime=1.                   \tag{PE.18}
+$$
+
+Their residuals are respectively AND on $Y\cup U$ and OR on $X\cup U$.
+Both private polarity conditions of Theorem 3.1 fail. No equality of
+private sizes and costs is asserted for a general merger.
+
+Proof. Every selected state constructed below queries its one fixed
+absolute literal $a_i=LLL L^{s_i}R$. In each Boolean successor table,
+zero means three separately installed identical successors for alpha,
+beta and absent; one means the branch successor. Thus the tables specify
+all four native replies. Write $L_0=\widehat e_0,L_1=\widehat e_1$.
+
+First form a complete binary decision tree of depth $n$, with a distinct
+selected running state at every internal vertex and the two original
+entry latches at its leaves according to the threshold of the whole
+Boolean vector. Every path queries all coordinates once. At its first
+$m+1$ levels use a fixed ordering of $I$. After an all-zero $I$ prefix,
+query $x,x^\prime$ next; after an all-one $I$ prefix, query
+$y,y^\prime$ next. After any other $I$ prefix use any fixed ordering
+of the other coordinates. Finish every path by a fixed ordering of
+its remaining coordinates. These choices specify literals at distinct
+installed vertices; they do not compute addresses during a run.
+
+There are $2^n-1$ selected running states in this full tree: level
+$j$ has $2^j$ distinct states, $0\le j<n$. Delete the two disjoint
+complete subtrees whose incoming histories are exactly (PE.18), each
+at depth $m+3$. Each has $m+2$ levels of queries and
+$2^{m+2}-1$ selected states. Replace both incoming edges by the start
+of one common suffix, now specified in full.
+
+Fix an order $u_1,\ldots,u_m$ of $U$. Install a state $V$ querying
+$u_1$. For $1\le j<m$ install distinct states $Z_j,O_j$, each querying
+$u_{j+1}$. Define their fixed successors by
+
+| State | Zero successor | One successor |
+| --- | --- | --- |
+| $V$, $m=1$ | $B_X$ | $B_Y$ |
+| $V$, $m>1$ | $Z_1$ | $O_1$ |
+| $Z_j$, $j<m-1$ | $Z_{j+1}$ | $J$ |
+| $O_j$, $j<m-1$ | $J$ | $O_{j+1}$ |
+| $Z_{m-1}$, $m>1$ | $B_X$ | $J$ |
+| $O_{m-1}$, $m>1$ | $J$ | $B_Y$ |
+
+These are $2m-1$ states. The scan reaches $B_X$ if every $U$ bit is
+zero, reaches $B_Y$ if every $U$ bit is one, and reaches $J$ as soon
+as both values have been seen. No scan state contains a runtime count.
+Install five more states, disjoint from all preceding states:
+
+| State | Queried coordinate | Zero successor | One successor |
+| --- | --- | --- | --- |
+| $B_X$ | $x$ | $B_{x^\prime}$ | $J$ |
+| $B_{x^\prime}$ | $x^\prime$ | $L_0$ | $L_1$ |
+| $B_Y$ | $y$ | $J$ | $B_{y^\prime}$ |
+| $B_{y^\prime}$ | $y^\prime$ | $L_0$ | $L_1$ |
+| $J$ | $t$ | $L_0$ | $L_1$ |
+
+This suffix has exactly $2m+4$ selected states. State $J$ is an
+ordinary paid query at the old coordinate $t$, with charge $d$;
+it is not a hidden selector, stored phase bit or silent transition.
+Both histories in (PE.18) enter $V$.
+
+Verify the Boolean task first, for every vector in $\{0,1\}^n$.
+Outside the two replaced subtrees the complete tree returns its exact
+threshold. In the first history of (PE.18) there is one old hit, so
+$k=m+3$ requires all $m+2$ unread bits in $Y\cup U$. In the second
+there are $m+2$ old hits, so one unread hit in $X\cup U$ suffices.
+The first history has $t=0$ and the second has $t=1$.
+
+If $U$ contains both values, the first residual is zero and the second
+is one; $J$ returns exactly these values. If all $U$ bits are zero,
+the first history reaches $B_X$ with old $x=1$, hence goes to $J$ and
+returns zero. On the second history, $t=1$, and $B_X$ computes
+$x\lor x^\prime$: a hit at $x$ goes through $J$ to one, while a miss
+reads $x^\prime$. If all $U$ bits are one, the first history with
+$t=0$ obtains $y\land y^\prime$ from $B_Y$: a miss at $y$ goes
+through $J$ to zero, while a hit reads $y^\prime$. The second history
+has old $y=0$, hence goes through $J$ to one. These cases exhaust
+all Boolean vectors, including $m=1$ when a mixed $U$ is impossible.
+
+The proof gives the exact original full-domain preparer by adding the
+following two distinct profile states, starting at $D$:
+
+| State | Absolute literal | alpha | beta | branch | absent |
+| --- | --- | --- | --- | --- | --- |
+| $D$ | $RLR$ | $L_1$ | full-tree root | $T$ | $L_0$ |
+| $T$ | $RRR$ | $L_1$ | $L_0$ | $L_0$ | $L_0$ |
+
+On $Z_{b_3}$, the beta reply at $D$ enters the selected table. For
+any branch image $x_a$, of arbitrary finite shape and depth, its
+selected replies define a Boolean vector exactly as in Definition 1.2.
+The identity (PE.3) makes every selected invocation the corresponding
+native bit. The preceding all-vector proof therefore applies, including
+alpha and absent selected replies. Outside $Z_{b_3}$, the full profile
+partition of Definition 1.1 proves the profile table: alpha at $D$ is
+$\Pi_3$, and, when $D$ returns branch, only $\Pi_4$ can still require
+one, detected by alpha at $T$. Every other profile there requires zero.
+All root-absence edges are installed. No address is removed from the
+original legal address universe. The resulting latch is the exact
+original entry for that identical source, and its fixed reader returns
+the entire original canonical predecessor row.
+
+For the execution bounds, a path that avoids the common suffix reads
+all $n$ selected coordinates once and pays exactly $W$ selected letters.
+A shared path has $m+3$ selected calls before $V$, at most $m$ in its
+$U$ scan, and at most two after that scan. Its selected count is
+therefore at most $2m+5=n$. It remains to charge every possible repeat
+in absolute letters.
+
+The two prefixes pay $C_I+C_X$ and $C_I+C_Y$, respectively. The scan
+pays at most $C_U$. In the all-zero exit, the first prefix follows
+$x,J$ and pays $c_x+d\le C_Y$ by (PE.16); the second prefix pays at
+most $\max(C_X,c_x+d)=C_X$, since $d\le c_{x^\prime}$. In the
+all-one exit, the first prefix pays at most
+$\max(C_Y,c_y+d)=C_Y$, since $d\le c_{y^\prime}$; the second follows
+$y,J$ and pays $c_y+d\le C_X$. In a mixed exit, the final charge is
+$d\le C_X,C_Y$, again by (PE.16). Thus every shared path pays at
+most
+
+$$
+C_I+C_X+C_Y+C_U=W                                  \tag{PE.19}
+$$
+
+selected letters on either history. A repeated $x$, $y$ or $t$ is
+paid at its actual installed word; an omitted coordinate provides the
+budget slack, without an uncharged observation or address operation.
+
+Adding $D$ gives $q_P\le n+1$ and $\ell_P\le3+W$ on every selected
+route. The other profile route has at most two calls and six letters,
+which these bounds dominate. Both maxima are attained: because
+$|I|=m+1\ge2$, choose a mixed $I$ vector. Its actual cube origin avoids
+both deleted subtrees, and takes $D$ followed by all $n$ selected
+queries. It pays $n+1$ calls and $3+W$ letters on that one source.
+
+The exact selected-state count is
+
+$$
+(2^n-1)-2(2^{m+2}-1)+(2m+4)
+             =2^n-2^{m+3}+2m+5.                     \tag{PE.20}
+$$
+
+Adding $D,T$, the two original-entry latches and all $r$ mandated
+latches gives (PE.17). All states, including those not needed for early
+certificates, are counted. Every specified graph is finite and acyclic,
+so every run terminates; no acyclicity was imposed on competitors.
+The full-tree path labels and scan subscripts name installed states,
+not accessible work registers. The reader remains its separate fixed
+eight-state apparatus with every complete whole-row output.
+
+Finally each history (PE.18) has $m+3$ exposed coordinates, and its
+unread AND or OR is nonconstant. Lemma 24.1 of PCA supplies actual
+finite cube origins for every completion, proving actual liveness at
+$V$. Their old private values are $(1,0)$ and $(0,1)$, and their hit
+counts are $1<m+2$. The state $V$ is genuinely shared before
+certification. The count (PE.17) exceeds $k(n-k+1)+4+r$: here the grid
+has $(m+3)^2$ selected states, while (PE.20) exceeds that number.
+For example, $2^{m+3}\ge(m+3)^2$ for $m\ge1$ by induction, and
+$2^{2m+5}-2^{m+3}\ge7\,2^{m+3}$. Thus this construction supplies a
+scope boundary, not a smaller installed table. $\square$
+

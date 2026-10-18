@@ -1,0 +1,11 @@
+**Convention 4.3 (operational limits of this consumer).** The supplier's
+`Implementation` receives each leaf coordinate and the full tuple of
+child messages at a merger. Its final `read` is a decoder. These
+mathematical inputs are not free literal observations on the original
+source. Its `canonical` uses representative choice; its attained
+capacity statement does not price source acquisition or installed
+controller states. Theorem 3.3 is the separate same-code native
+consumer: it preserves the single actual source, all original targets,
+one selected literal, and the complete export. Theorem 4.2 does not
+identify fixed-tree width or its root message with $M_1(D)$.
+

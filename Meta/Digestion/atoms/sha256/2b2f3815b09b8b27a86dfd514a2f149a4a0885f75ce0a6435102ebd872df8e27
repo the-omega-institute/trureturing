@@ -1,0 +1,63 @@
+**Theorem 3.1 (three zero-first hit bands).** All the states
+
+$$
+\{v_Z(h,z):0\le h\le2,\ 0\le z\le n-k\}
+\tag{CP.8}
+$$
+
+are pairwise distinct in the original installed table.
+
+Proof. Reuse the following ordinary supplier statements at the exact
+scope (CP.6). [WTF, Theorem 9.1][WTF] says that two live histories
+with different hit/zero pairs at the same selected state must admit
+the orientation
+
+$$
+h<g,\qquad g-h\ge2,\qquad z-w\ge2.
+\tag{CP.9}
+$$
+
+Furthermore, [PE, Lemma 4.1][PE] excludes properly nested supports,
+and [PCA, Theorem 35.1][PCA] excludes equal supports with unequal
+hits. For incomparable supports $S,T$ with $h<g$, [PE, Theorem
+3.1][PE] gives the implication
+
+$$
+\left.
+\begin{array}{l}
+S\setminus T\text{ is all zero on the }S\text{ history},\\
+T\setminus S\text{ is all one on the }T\text{ history}
+\end{array}
+\right\}
+\Longrightarrow
+\begin{cases}
+|S\setminus T|=|T\setminus S|,\\
+C_{S\setminus T}=C_{T\setminus S}.
+\end{cases}
+\tag{CP.10}
+$$
+
+No agreement on the old intersection assignment is required by that
+supplier. Both polarity premises in (CP.10) must hold on this one
+oriented pair.
+
+Suppose two different witnesses in (CP.8) share a state. By (CP.9)
+they must be $Z(0,z)$ and $Z(2,w)$, with $z\ge w+2$. Let $S,T$
+be their supports in that order. The support exclusions imply that
+they are incomparable. Put $X=S\setminus T$ and $Y=T\setminus S$;
+both are nonempty.
+
+The first history is entirely zero, so $X$ is all zero. By Lemma
+2.2, the second history's entire initial $w$-zero support is contained
+in the first history's longer zero spine. Thus every bit in $Y$ is
+one on the second history. Equation (CP.10) applies.
+
+Immediately after the common $w$-zero history, the two histories
+query the same next coordinate. The first gives it zero and the
+second gives it its first one. That coordinate belongs to $S\cap T$.
+The second history has only two ones, so its nonempty private set
+$Y$, all of whose bits are one, has size at most one. Equation
+(CP.10) consequently makes $X$ and $Y$ disjoint singletons with
+equal cost. This contradicts the distinct individual costs in (CP.3).
+Every possible collision in (CP.8) has been excluded. $\square$
+

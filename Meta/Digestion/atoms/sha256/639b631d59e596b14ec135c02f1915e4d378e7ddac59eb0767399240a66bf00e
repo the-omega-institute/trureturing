@@ -1,0 +1,8 @@
+**定义 11.1（Robin 的对数平面边界）。** 在 $x>\log5040$ 的域上，令
+
+$$
+f(x)=\gamma+\log\log x.
+$$
+
+对 $x_n=\log n$，有 $e^{f(x_n)}=e^\gamma\log\log n$，故 $n>5040$ 的 Robin 比较恰为 $y_n<f(x_n)$。
+

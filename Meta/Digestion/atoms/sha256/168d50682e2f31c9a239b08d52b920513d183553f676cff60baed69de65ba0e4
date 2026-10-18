@@ -1,0 +1,45 @@
+**Definition 1.1 (Original objective and producer).** For $n\ge1$, retain
+the entire legal open-path word set $B_n$ and configuration space
+
+$$
+B_n=\{w\in\{0,1\}^n:w_jw_{j+1}=0\ (1\le j<n)\},\qquad
+\mathsf X=\{x\in\{0,1\}^{\mathbb Z}:x_ix_{i+1}=0\ (i\in\mathbb Z)\}.
+$$
+
+The graph $\Gamma_n$ has every legal Hamming-one edge. Endpoint insertions
+use $w_0=w_{n+1}=0$, without joining the endpoints. On the whole simplex,
+
+$$
+h(s,t)=\begin{cases}st/(s+t),&s+t>0,\\0,&s=t=0,\end{cases}\quad
+\Phi_n(\mu)=\sum_{\{w,z\}\in E(\Gamma_n)}h(\mu_w,\mu_z),\quad
+\kappa_n=\max_{\mu\in\mathcal P(B_n)}\Phi_n(\mu),\quad
+c_\star=\lim_n\kappa_n/n.
+$$
+
+Zero masses do not remove vertices or edges. For each finite $N\ge1$ use
+[Universal, Definition 4.1 and Proposition 4.2][U]'s entire domain
+
+$$
+\Theta_N=\{(\lambda,M_0,M_1):\lambda\ge0,\ \lambda\mathbf1=1,
+\ M_0,M_1\ge0,\ A=M_0+M_1,\ A\mathbf1=\mathbf1,
+\ \lambda A=\lambda,\ \lambda M_1^2\mathbf1=0\}.
+\tag{1.1}
+$$
+
+Here $\lambda$ is a row and $M_0,M_1$ are $N\times N$ exact-real matrices.
+The fixed parameter $\theta$ supplies one actual stationary joint law
+
+$$
+J_\theta(H_a=h_a,\ldots,H_{b+1}=h_{b+1},X_a=x_a,\ldots,X_b=x_b)
+=\lambda_{h_a}\prod_{i=a}^bM_{x_i}(h_i,h_{i+1}),\qquad
+P([w]_a)=\lambda M_w\mathbf1,
+\tag{1.2}
+$$
+
+where $P=P_\theta$ is its visible marginal, $M_w$ is the ordered product,
+and the empty product is $I$. All coordinates are original emitted bits.
+Structural zeros, zero stationary masses, reducibility, periodicity and
+noncontractive presentations remain allowed. Scalar stationary legality
+in (1.1) is not replaced by entrywise $M_1^2=0$. A seam $uv$ always has
+mass $\lambda M_uM_v\mathbf1$, with no independence assumption.
+

@@ -1,0 +1,50 @@
+**Proposition 44.6 (Limit-one tails and a bounded-anchor counterexample).** Suppose $B=1$, $h>0$, and a design attains the unrestricted zero radius. All its source laws and reference then equal one law $\nu$. For every $m\ge1$, there is an actual source $y$ whose proposal event has positive mass outside its own length/menu/output cutoff $A_{y,m}$, defined by (44.13) with $y$ replacing $x_*$. This does not in general imply positive mass outside every anchor proposal cutoff.
+
+More explicitly, choose $n\ge m$ with $\nu(A_n)>0$ at the anchor, and one source $y$ matching that anchor record with $k=\Omega(y)>n$. Then
+
+$$
+\nu(H_y\setminus A_{y,m})\ge\nu(S_y)
+\ge(1-b(k))\nu(A_n)>0.
+\tag{44.24}
+$$
+
+At the anchor itself the general event argument yields only
+
+$$
+\nu(H_{x_*}\setminus A_m)\ge[h-b(k_m)]_+
+\tag{44.25}
+$$
+
+for a matching source of target $k_m>m$. In particular it does give positive anchor tails when $h=1$. A strict profile can nevertheless have an exact zero-radius optimizer with $h=1/4$, $d=3/4$, $z=0$, and with all its anchor proposals on one immediate-output tape.
+
+**Proof.** Radius zero identifies all measures. The anchor cutoffs increase to $H_{x_*}$ of mass $h>0$, so the stated $n$ exists. The one matching source gives $A_n\subseteq F_y\subseteq H_y$. Conditional error at that actual source implies $\nu(S_y)\ge(1-b(k))\nu(H_y)\ge(1-b(k))\nu(A_n)$. Every correct proposal at $y$ is at least $k>n\ge m$, and is therefore outside $A_{y,m}$. This proves (44.24), using the same source for the entire event. Also $\nu(A_m)\le\nu(F_{y_m})\le b(k_m)\nu(H_{y_m})\le b(k_m)$, which proves (44.25). No saturation equality analogous to (44.12) follows from the limit-one envelope.
+
+For the counterexample prescribe
+
+$$
+b(k)=1-2^{-(k-1)}\quad(k\ge1).
+\tag{44.26}
+$$
+
+This is a nondecreasing strict profile with $B=1$, including $b(1)=0$. Use tapes $a$ and $t_j$ for $j\ge1$ on a countable power-set carrier. Tape $a$ immediately proposes $1$. Tape $t_j$ queries the primes other than $3$ in increasing order, and at its first positive answer proposes the integer $j$. If there is no positive answer it makes infinitely many queries and literally diverges. This is one deterministic rule for all sources and supplied advice zero.
+
+Choose the common source law and reference to have masses
+
+$$
+\nu(a)=\frac14,\qquad \nu(t_1)=\frac14,\qquad
+\nu(t_j)=2^{-j}\quad(j\ge2),\qquad \mu_y=\nu\quad(y\in X).
+\tag{44.27}
+$$
+
+The geometric sum makes the total mass one. At every source of numerical value $27$ the $t_j$ searches all diverge, since $27$ has only prime divisor $3$. The anchor row is therefore exactly $(1/4,3/4,0)$, and its only proposal tape is $a$, with output $1$. Its proposal tail outside (44.13) is zero once that immediate run is included.
+
+For any actual source of target $k\ge2$, some prime divisor differs from $3$. Every $t_j$ search therefore terminates after finitely many prime queries, and every tape proposes. Its false mass is
+
+$$
+e_y=\frac14+\nu(\{t_j:j<k\})
+=1-2^{-(k-1)}=b(k),\qquad h_y=1.
+\tag{44.28}
+$$
+
+At target one all finite proposals are at least one and are correct; if the unique prime divisor is $3$, the searches diverge, and otherwise they terminate. Thus $e_y=0$ at every target-one source, whether or not its numerical value is $27$. The entire actual source family satisfies (44.2), duplicate labels receive identical laws, and radius zero is exact. All finite-record and output events are measurable on the declared carrier. The common law is infinitely supported; bounded anchor proposal records do not make the anchor law finitely supported, because its divergent tapes carry the remaining mass. This separates the false universal anchor-tail assertion at $B=1$ from the valid finite-support obstruction in Theorem 44.4. $\square$
+

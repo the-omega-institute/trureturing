@@ -1,0 +1,36 @@
+**推论 32.4（受限完整共同核上的整个守卫恒零）。** 对任意固定的全部严格来源赋值，把同一个完整共同核同时限制到每块属于上述一个 V；至少一个整个增益守卫或适用的同源终叶整个差守卫在该交空间恒零。
+
+**exact contract and counts.**
+
+Keep all 256 slots q=(w,epsilon), w in {J,M}^7, epsilon in {0,1}, with one strict source at every slot and four entire gain coefficients per slot. There are 254 nonempty chronological prefixes. At depth i there are 2^i prefixes, each with 2^(8-i) descendant slots; comparing all but one representative gives 2^i(2^(8-i)-1)=256-2^i rows. For i=1,...,7 the layers are exactly 254,252,248,240,224,192,128, totaling 1538 rows; the 256 four-component blocks give 1024 columns. These are symbolic count checks, not executed enumeration, arithmetic, rank, or matrix calculations.
+
+**actual row identity.**
+
+With initial read normalized to zero, each block x_q defines one gain g_q(t)=sum from j=0 to 3 of x_qj t^j and drift d_q=-x_q0. At a prefix v of length i, its actual response is -x_q0+t_v(P_q)g_q(i)=ell_v(P_q)x_q, with ell_v=(t_v-1,i t_v,i^2 t_v,i^3 t_v). Thus the SAME full matrix B compares every descendant to its fixed representative at each prefix while preserving every ancestor. No row, prefix, action arm, component, source legality condition, or preceding equation can be dropped.
+
+**whole guards and deduplication.**
+
+On ONE simultaneous vector retain every entire gain guard G_q x=x_q nonzero and every applicable same-source terminal difference guard D_w x=x_(w,0)-x_(w,1) nonzero, each a full four-component map. Different sources already distinguish terminal worlds. Repeated slots are merged only when their ENTIRE triples (P,g,d) agree, including drift; separate gain coefficients or path witnesses cannot be combined into a world.
+
+**precise restricted space.**
+
+For any fixed full strict source assignment P and any one V satisfying the theorem, let U_V=ker B(P) intersect {x: every whole four-coefficient block lies in V}. The asserted entire-map identity is only on this SAME intersection. It may depend on all the sources and on V.
+
+**independent no all guard vector proof.**
+
+If one x in U_V satisfied all whole guards, fix every slot's one complete world as above. Each gain is a nonzero member of V and its initial read is zero. All descendants at each prefix share its actual response and every preceding ancestor, by the same matrix rows. Each terminal pair is distinct by source inequality or its applicable full coefficient-difference guard, and gives L0. At an internal node, each of its two action children has its fixed descendant support within the parent's FULL actual response slice; upward monotonicity preserves the child's failure in that slice. A distinct leaf pair below that node also prevents premature stopping there. Induction from depth seven to zero constructs L7 on the fixed union of complete worlds. This contradicts the whole-plane result. Thus the same U_V has no single vector satisfying every guard simultaneously.
+
+**independent finite avoidance proof.**
+
+If U_V is zero, every gain map already vanishes identically. Otherwise suppose that none of the finitely many entire G_q or applicable entire D_w vanishes identically. For each map select a coordinate linear functional whose restriction to this same U_V is nonzero. In basis coordinates of U_V these are finitely many nonzero real linear polynomials. Their product is nonzero because a real polynomial ring is an integral domain. A nonzero real polynomial has a real point where it does not vanish: for zero variables it is a nonzero constant; inductively view it as a polynomial in its last variable, use the induction hypothesis to make a nonzero coefficient polynomial nonzero on the preceding coordinates, and choose the last coordinate outside the finitely many roots of the resulting nonzero univariate polynomial. At that one point all selected coordinates and hence all original entire guard maps are nonzero, contradicting the preceding paragraph. Therefore at least one entire guard map is identically zero on U_V. This argument selects coordinates only for avoidance, without weakening the full vector guards.
+
+**special case and boundaries.**
+
+If no terminal pair shares a source, the list contains only gain guards, so some entire G_q is identically zero on U_V. Neither case proves that any map is identically zero on the unrestricted ker B, or that the same map works for every V or every source assignment. No smaller matrix, separate arm kernel, individual guard witness, or partial coefficient constraint supplies this conclusion.
+
+**arbitrary initial translation.**
+
+The bijection (P,g,d) -> (P,g,d-a0) subtracts a0 from every actual response while preserving the source, whole gain, complete-target distinctions, action choices, all ancestor equalities, full compatible slices and stops. Its inverse adds a0 back to the drift. Thus the zero-initial kernel consumer and the plane theorem have the required arbitrary-initial scope. Initial zero does not imply zero drift or an initial gain root.
+
+这些结论仅在声明的外部已知平面内成立。V_bad 同时违反 Delta24 与 Delta15；它不证明单独 Delta24 的必要性，也不分类 V_bad 的其他记录。一般已知二维平面仍未解决。初读对任意合法增益都可令 d=a0-g(0) 达到，因而不检测平面、方向、根或漂移。
+

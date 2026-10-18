@@ -1,0 +1,51 @@
+**Theorem 87.2 (attached finite-$A$ parameterization).** In the weak range
+$0\le s<s_0$, index by $j$ exactly the actual low labels that are nonzero on
+supported inputs. In the original all-complex, multi-Kraus equality class,
+each such label has one normalized direction $h_j\in\mathscr C$ and numbers
+$p_j>0$, $0\le b_j\le t\mathfrak c(h_j)$, where $t=e^A-1$, such that
+
+$$
+K_j=\sqrt{p_j}K_{h_j},\qquad
+N_j=p_jb_jn_{h_j}n_{h_j}^T,
+\tag{FA.91}
+$$
+
+$$
+\sum_jp_jh_jh_j^T=I_3,\qquad
+\sum_jp_jb_jn_{h_j}n_{h_j}^T=M.
+\tag{FA.92}
+$$
+The actual contrast and full-label record TV are respectively bounded by
+
+$$
+\mathsf V\le s_0\sum_jp_j|z_j|,
+\qquad
+T_{\mathrm{actual}}=\frac12\left[H_0+
+ \sum_jp_j|\ell(h_j)+b_jf(h_j)|\right].
+\tag{FA.93}
+$$
+The contrast bound is attained by the deterministic report
+$\operatorname{sgn}(z_j)$, with an arbitrary report at $z_j=0$.
+Here $K_j,N_j$ are supported data. A nonzero full-$M_5$ CP acquisition map
+can vanish on all supported inputs: the complementary qubit with encoder
+$W^\dagger$, rate zero and live decoder $EJ_0$ in Theorem 75.1 is such
+a label. It is absent from the indexed sums and contributes zero to supported
+contrast and TV, but remains an actual label in the total alphabet; its entire
+fibre still obeys the activity bound. Thus nonzero on the full input algebra
+is distinct from nonzero on supported inputs. At $t=0$ the class is empty
+when $M\ne0$.
+
+**Proof.** Proposition 87.1 supplies a nonzero supported live product in every
+indexed label, since its supported encoder is nonzero. The supplied equality
+face makes that product a rank-two real-null product. Its common-image and
+common-kernel rigidity forces all nonzero supported live Kraus products in
+that label onto one normalized direction. Pulling a supported failure effect
+through the same factor gives a rank-one effect on $\mathbb Rn_{h_j}$;
+the Schur complement of the positive $00$ pivot is exactly
+$N_j\preceq tK_j^\dagger K_j$, which is (FA.91). Summing the complete live Gram
+and failure covariance gives (FA.92). The report inequality is
+$|\sum_jp_jm_jz_j|\le\sum_jp_j|z_j|$ for $|m_j|\le1$, and the stated signs
+attain it. If $t=0$, (FA.91) forces every $N_j=0$, contradicting $M\ne0$.
+No prescribed noncommuting time law is inferred from these endpoint moments.
+$\square$
+

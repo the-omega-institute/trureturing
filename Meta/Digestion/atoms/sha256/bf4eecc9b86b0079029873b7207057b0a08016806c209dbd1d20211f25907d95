@@ -1,0 +1,23 @@
+**Definition 2.3 (arbitrary complete retained state).** At a specified
+initial capture the actual source is $t\in\mathcal F_D$. A deterministic
+encoder retains $m(t)$ before the future count is supplied. Every other
+accessible source-dependent distinction is a fixed function of $m(t)$
+and public $D,P$ and program data. This condition includes control,
+prior outputs, reply latches, query histories, descriptors, pointers,
+region identities, readable lengths, capacities and allocation metadata.
+It is a condition on the entire handoff, not on one named variable.
+
+A passive deterministic decoder receives that state and an exact
+$k\in\mathbb N$ with the authentic same-root, same-register promise
+$U_w=\rho^k t$. It has no fresh source access and must return
+
+$$
+V_P(U_w)=\bigl(\operatorname{val}(p,U_w)\bigr)_{p\in P}
+\tag{FM.4}
+$$
+
+for every initial source and every nonnegative count. The minimized
+quantity is the number of reachable initial retained states, or the
+width of a fixed binary name for them. The supplied count is separate.
+The code does not authenticate the history promise.
+

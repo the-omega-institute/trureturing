@@ -1,0 +1,67 @@
+**Proposition 11.8 (scope, suppliers and the unchanged strict-subgrid
+question).** The preceding obstruction concerns first separators of
+fixed histories and external packs for arbitrary fixed representatives
+over all cap-feasible whole tables. It does not refute a theorem
+restricted to minimum or subgrid tables, favorable joint selection of
+representatives, a count using other installed states, or a global
+compensation or no-larger replacement theorem. The original question
+for general $n\ge6$, $3\le k\le n-2$ remains whether
+
+$$
+\exists\, B:\quad
+m_B<k(n-k+1),\qquad
+q_B(\theta)\le n,\qquad L_B(\theta)\le W
+\quad\text{for every }\theta\in\{0,1\}^n,
+\tag{WTF.45}
+$$
+
+with correctness and termination on every input, or whether every
+such table instead has $m_B\ge k(n-k+1)$. By Theorem 4.1 these
+are the unchanged original full-fiber alternatives at
+$H<k(n-k+1)+4+r$, $p\le n+1$, $\ell\le3+W$.
+Neither alternative is resolved by Theorems 11.3–11.7.
+
+Proof. The example is strictly above the grid, and PCA Theorem 26.1
+already supplies a smaller table at both caps. It therefore cannot
+witness (WTF.45) or obstruct a restriction to installed-state minima.
+Proposition 11.5 supplies favorable representatives on this same
+example. Theorem 11.7 excludes exactly its two displayed universal
+witness-selection principles, not compensation by other vertices or
+replacement of an entire table. These establish the stated logical
+boundaries.
+
+The reused mathematics is PE Theorem 5.1's paid mixed-private AND/OR
+motif and inequalities, Theorem 7.1's certificate construction, and
+Theorem 4.1's exact native transport. PCA Lemma 24.1 and the NBP/TMC
+suppliers of §2 provide actual origins, all-address interpretation,
+complete rows and the original reader. The further deduction is the
+unbounded all-completion first-separator obstruction for the specified
+cell-disjoint histories, its fixed-representative external-pack consumer
+and the explicit favorable-choice contrast. The qualitative warning
+in §9, elementary tree counts, positional uniqueness and generic
+Boolean path facts are suppliers, rather than additional claims of
+new general mathematics.
+
+The primary comparison remains exactly Comparison 10.2. Wegener,
+[Chapter 14 §4, printed pp. 423–425][WBP], proves synchronous
+symmetric normalization for BP1; printed p. 424 restricts its graph-path
+realization assertion to BP1. Sinha, [§2.1.3, printed p. 17][SINHA],
+allows union cycles without semantic cycles and describes leveling
+with $(l+1)s$ states. Neither supplies a cardinality-preserving BP1
+replacement under the present paid-repeat hypotheses. These comparisons
+support the restrictions stated here and do not establish worldwide
+novelty of the specified obstruction.
+
+Theorems 55.2, 59.1 and 63.1–66.1 of
+[Native long-time phase diffusion](FIB_NATIVE_LONG_TIME_PHASE_DIFFUSION.md)
+concern the stationary Q height law, supplied continuous wrapped phase
+records, finite-sample Bayes risks or calibration recovery. Those
+sources, observations and targets differ from $\mathcal U_*$,
+fixed absolute native queries and literal complete entries here.
+No map identifying their stochastic path resources with all installed
+states and both original uniform caps is a premise above. Thus those
+results do not replace either alternative in (WTF.45); no phase record,
+conditioning, sensor or calibration service is imported into $B_M$.
+Assumption 1.5's separate service and physical-price boundaries remain
+in force throughout. $\square$
+

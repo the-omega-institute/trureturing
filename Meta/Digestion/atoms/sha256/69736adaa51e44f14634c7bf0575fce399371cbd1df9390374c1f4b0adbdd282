@@ -1,0 +1,152 @@
+**Theorem 219.3 (Gapped unequal positives and four conversion capacities).**
+Choose addresses
+$1,2,3,i,m,j,\ell\in\{1,\ldots,L\}$ with
+$3<i<m<j<\ell\le L$. Let $a,b,c\ge0$ and put
+
+$$
+\begin{aligned}
+g&=2a+b+c,& h&=a+2b+c,& k&=a+b+2c,\\
+G&=g+h+k,& B_0&=2g+h+k=6a+5b+5c,\\
+s&=2a+\tfrac32b+\tfrac32c,& t&=a+b+c.
+\end{aligned}
+\tag{219.8}
+$$
+
+Equivalently, $g,h,k\ge0$ satisfy
+$3g\ge h+k$, $3h\ge g+k$, $3k\ge g+h$,
+with $a=(3g-h-k)/4$ and cyclic formulas for $b,c$.
+Unless all vanish, all three are positive.
+Prescribe $\beta_3=g$, $\beta_m=h$, $\beta_\ell=k$ and
+$\beta_r=-\xi_r\le0$ at every other address. Set
+
+$$
+D=\sum_{r\notin\{3,m,\ell\}}\xi_r,\quad E=\xi_1+\xi_2,
+\quad K=G+D+B,\quad B\ge0,
+\quad J_0=\min(\xi_1,s)+\min(\xi_2,s)+\min(\xi_i,t)+\min(\xi_j,t).
+\tag{219.9}
+$$
+
+If $B\ge B_0-J_0$, one full score with $T=0$ attains both
+unrestricted exact-$Q$ minima, and both minima equal $E$.
+Every full competitor at this $Q$ satisfies
+
+$$
+\Delta_N\ge\Delta_O\ge
+ E+\max\{0,(B_0-B-D)/3\}.
+\tag{219.10}
+$$
+
+If the debts are supported on $\{1,2,i,j\}$ and bounded there by
+$(s,s,t,t)$, a cost-$E$ representative exists in either catalog
+if and only if $B\ge B_0-D$. In particular, with no debt, zero cost
+is attainable exactly when $B\ge B_0$.
+No formula for the entire positive-cost minimum below this face is asserted.
+
+**Proof.** First construct three rational cores $U_1,U_2,U_3$.
+In the following table words use skeleton order $(1,2,3,i,m,j,\ell)$;
+every other bit is one. An early entry is a $P$ atom and includes
+its $01\leftrightarrow10$ swap in the first two bits, with equal mass
+and the same five-bit suffix. A late entry is one $P$ atom; a correct
+entry is one $C$ atom. Each core has $A=T=0$.
+
+| Core | Early $P$ entries, before the swap | Late $P$ entries | Correct $C$ entries |
+| --- | --- | --- | --- |
+| $U_1$ | $0100100:1/2$; $0100111:1/6$; $0101001:1/3$; $0101010:2/3$; $0101111:1/3$ | $1110010:2/3$; $1110011:1/3$; $1111100:2/3$; $1111101:1/3$ | $1101010:2$; $1111001:2/3$; $1111010:1/3$; $1111110:1$ |
+| $U_2$ | $0100110:1/4$; $0101001:1/4$; $0101010:1/4$; $0101111:1/4$; $0111010:1/4$; $0111011:1/4$ | $1110001:1$; $1111100:1$ | $1101010:1$; $1111001:3/2$; $1111010:1/2$; $1111110:1$ |
+| $U_3$ | $0101001:1/2$; $0101110:1/2$; $0111111:1/2$ | $1110010:1$; $1111100:1$ | $1101010:1$; $1111001:1$; $1111110:2$ |
+
+Their correct-class totals at skeleton positions $(3,5,7)$ are
+$(2,1,1)$, $(1,2,1)$, $(1,1,2)$, and their $P$ totals are $6,5,5$.
+Thus $U=aU_1+bU_2+cU_3$ has correct totals $(g,h,k)$,
+$P$ total $B_0$ and $P$ first-zero totals $(s,s,t,t)$ at
+actual addresses $(1,2,i,j)$. No pivot class has $P$ mass.
+
+Every nonpivot numerical-label reward is a pointwise subset of the
+zero-label $P$ reward. For pivot labels it suffices to check
+$P(H)\ge\max(C_3(H),C_m(H),C_\ell(H))$ in each cell $H$.
+Here are these exact margins for each core; tuples use N cell order
+$00,01,10,11$ and pair indices are skeleton positions.
+
+| Pair | $U_1$ margins | $U_2$ margins | $U_3$ margins |
+| --- | --- | --- | --- |
+| $(1,2)$ | $(0,2,2,0)$ | $(0,3/2,3/2,0)$ | $(0,3/2,3/2,0)$ |
+| $(1,3)$ | $(2,0,0,1)$ | $(1,1/2,0,1/2)$ | $(1,1/2,0,1/2)$ |
+| $(1,4)$ | $(2/3,4/3,5/3,1/3)$ | $(1/4,5/4,5/4,1/4)$ | $(0,3/2,1,1/2)$ |
+| $(1,5)$ | $(1,1,0,1)$ | $(1,1/2,0,1/2)$ | $(1/2,1,1/2,0)$ |
+| $(1,6)$ | $(5/6,7/6,7/6,1/6)$ | $(1/4,5/4,3/4,1/4)$ | $(1/2,1,1/2,0)$ |
+| $(1,7)$ | $(7/6,5/6,1/2,5/6)$ | $(3/4,3/4,3/4,1/4)$ | $(1/2,1,1/2,0)$ |
+| $(3,4)$ | $(4/3,2/3,1,0)$ | $(1/2,1/2,1,0)$ | $(0,1,1,0)$ |
+| $(3,5)$ | $(0,2,0,0)$ | $(0,1,0,0)$ | $(0,1,0,0)$ |
+| $(3,6)$ | $(5/3,1/3,1/3,0)$ | $(1/2,1/2,1/2,0)$ | $(1,0,0,0)$ |
+| $(3,7)$ | $(1/3,5/3,1/3,0)$ | $(0,1,1/2,0)$ | $(0,1,0,0)$ |
+| $(4,5)$ | $(1,4/3,0,2/3)$ | $(1,1/2,0,1/2)$ | $(1,0,0,1)$ |
+| $(4,6)$ | $(1,4/3,1,0)$ | $(1,1/2,0,1)$ | $(0,1,1,0)$ |
+| $(4,7)$ | $(5/3,2/3,0,1)$ | $(1/2,1,1,0)$ | $(1,0,0,1)$ |
+| $(5,6)$ | $(0,1/3,2,0)$ | $(0,1/2,1,0)$ | $(0,0,1,0)$ |
+| $(5,7)$ | $(0,1/3,2/3,4/3)$ | $(0,1/2,1/2,1/2)$ | $(0,0,0,1)$ |
+| $(6,7)$ | $(5/3,1/3,0,4/3)$ | $(1,0,1/2,1)$ | $(1,0,0,1)$ |
+
+The pairs $(2,r)$ for $r\ge3$ have the $(1,r)$ margins by the swap
+symmetry. These rows exhaust all skeleton pairs. Separate inequalities
+$P(H)\ge C_v(H)$ are linear, so nonnegative combinations preserve them.
+Inactive queries are constant one on the support; their partitions,
+singletons and the empty schedule are coarser than covered pairs.
+Summing the separate inequalities preserves dominance under coarsening,
+including the stopped merge. Thus $B_N(U)=B_O(U)=B_0$.
+The table is an exact finite base calculation, followed by a proof for
+all nonnegative parameters and all order-preserving skeleton embeddings.
+
+For $r=1,2,i,j$ let $\kappa_r=s,s,t,t$ and
+$\eta_r=\min(\xi_r,\kappa_r)$. Convert the fraction
+$\eta_r/\kappa_r$ of every core $P$ atom in class $r$ to $A$ at
+the same word. If $\kappa_r=0$, then $\eta_r=0$ and no division occurs.
+For every nonpivot $r$, add $\xi_r-\eta_r$ of $A$ at $w(\{r\})$,
+taking $\eta_r=0$ off the four conversion classes.
+Finally add $B-(B_0-J_0)$ of $P$ at $w(\{1\})$.
+
+Conversion preserves zero reward and decreases only that class's
+numerical reward. An added $A$ increases only zero reward; added $P$
+increases zero and its own numerical label equally.
+All cellwise inequalities therefore persist. The resulting single score
+has totals $A=D$, $C=G$, $P=B$, $T=0$ and hence
+$Q=(\beta,K)$, $Z=B+D$, $W=Z-E$ and $B_N=B_O=Z$.
+Both costs equal $E$. This includes exhausted capacities and equality
+$B=B_0-J_0$.
+
+For the unrestricted lower bound, use three legal O tables
+
+$$
+S_1=(1,3;0,3,0),\quad S_2=(2,3;0,3,0),\quad
+J=(3,m;0,m,\ell).
+\tag{219.11}
+$$
+
+On first-zero class 3 their outputs are two 3s and one 0;
+on classes $m,\ell$ the correct label occurs once and zero twice.
+On every other first-zero class at most one of the three outputs is
+nonzero. For class 1 or 2, if bit 3 is zero then $J$ outputs zero
+and at most the other early table outputs 3; if bit 3 is one, both
+early tables output zero. At every class beyond 3 both early tables
+output zero. The positive word also has only one nonzero output.
+These cases include every suffix, intermediate class and multiple zero.
+The exhaustion label $\ell$ in $J$ is a legal unqueried output.
+
+Let $I_+=\{3,m,\ell\}$. Subtracting $3Z$ from the three rewards gives
+pivot contribution $2\beta_3+\beta_m+\beta_\ell=B_0$;
+their $P$ contributions cancel. Off $I_+$ the contribution is at least
+$-A_w-P_w$, and at $w_+$ it is $-T$.
+Consequently $3(\Delta_O-E)\ge B_0-(A_{\rm out}+P_{\rm out}+T)$.
+For an arbitrary full competitor the class identities imply
+
+$$
+A_{\rm out}+P_{\rm out}+T
+ =B+D-2A_{I_+}-(A_{\rm out}-D)-P_{I_+}\le B+D,
+\tag{219.12}
+$$
+
+because $A_{\rm out}-D=C_{\rm out}\ge0$.
+Constant zero separately gives $\Delta_O\ge E$.
+Together with $\Delta_N\ge\Delta_O$ this proves (219.10).
+On the capped four-debt subface $J_0=D$, construction and lower bound
+match exactly at $B_0-D$ and exclude cost $E$ below it. ∎
+

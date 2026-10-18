@@ -1,0 +1,119 @@
+**Convention 25.1 (primary attribution and exact transfer limits).**
+Conditional Gibbs variational identities, relative entropy,
+chain-rule conditioning, data processing, total correlation,
+finite entropy continuity and forest mutual-information
+inequalities are mature machinery. The repo-derived relations
+here are their guard-preserving native conditional-section
+application (COK.87), the sharp all-network population maximum
+(COK.90), its fixed-law completion error (COK.92), and the
+reciprocal-unit and reciprocal-depleted-cover consequences
+(COK.99), (COK.111) and (COK.114), with their original consumer.
+No worldwide-originality or independent-review claim is attached.
+
+| Primary supplier | Precise correspondence and boundary |
+| --- | --- |
+| P. O. Vontobel, *Counting in Graph Covers: A Combinatorial Characterization of the Bethe Entropy Function*, arXiv:1012.0065v2, Theorems 25, 30 and 33 [primary text][VontobelCOK] | Rational local laws are finite-cover lift-realizable; Bethe entropy and partition values describe averaged-cover exponents. The exact native whole-group and private-configuration correspondence is already Convention 17.1. It gives neither a prescribed Gibbs law on the base nor vanishing $\Delta$. The relative permutation $h$ retains actual shared-coordinate matching; it is not an independent copy of each occurrence. |
+| N. Ruozzi, *The Bethe Partition Function of Log-supermodular Graphical Models*, arXiv:1202.6035v2, Theorem 4.1 and Corollary 4.2 [primary text][COKRuozziJoint] | A binary log-supermodular factorization gives $Z(\text{cover})\le Z(\text{base})^k$ and a Bethe lower bound. Arbitrary native compatibility zeros and joint weights do not supply this hypothesis. No per-cover upper or unrestricted native cap is transferred here. |
+| A. Atserias and P. G. Kolaitis, *Consistency, Acyclicity, and Positive Semirings*, arXiv:2009.09488v1, Lemma 12 and Theorems 4–5 [primary text][COKAkJoint] | The local-to-global result assumes an acyclic/running-intersection hypergraph and matching overlap data. The forest inequality in Lemma 20.2 is proved directly for an already existing common law, without assuming native acyclicity or Markov structure. The cyclic cover family even has explicit compatible completion; its obstruction concerns loss. |
+
+The pinned COK §§12–17 own finite-cover completion, exact
+multinomial averaging, the cover-pressure direction, the
+information identity and the full-family scan. They are used
+with their stated directions and are not redelivered as new.
+RRN owns the exact two-way guarded seed language and paid
+normal form; CBN owns constructor reconstruction, repeated
+coordinate equality and once-owned weights; NPC/FMR own
+pressure, stability, all-competitor scaffold transport and
+paid canonical acquisition. NWO owns exact finite-envelope
+optimization, algebraic comparison and the actual sixteen-state
+witness in §19. OOA owns positive full-row order laws and its
+zero-affinity criterion, binary kernels and cyclic transfer
+matrix; (COK.99) instead characterizes the chain loss of
+already-existing laws with arbitrary actual support. OCC owns
+component-normalizer freedom and its conditional-ratio charge;
+none is inferred away by the existence of a common law here.
+
+SIR's effective incidence error is between semantic quantities,
+without an evaluation cutoff. OCB's owner-only and same-law
+entropy boundaries, GDB's specified raw analytic/neighborhood/
+bounded-pinning obstructions, SCP's additive pressure bounds
+and precisely failed relative gate, and the credited JTC/RCE/JPL
+grammar boundaries retain their scopes. The present results
+neither remove their support/stability rules nor assert a
+stronger impossibility for their unrestricted extensions.
+
+The exact `FiniteNaturalJoin.join_covers` premises require both
+`Covers` assertions on the same full assignment and supply no
+completion. The exact `original_present_transport` premise
+requires an actually present subtree; Propositions 23.2–23.3
+use that presence through original-root literals. The finite
+predecessor-row minimax/effective-root and finite-reader-synthesis
+sources concern other targets and acquisition/handoff contracts.
+No theorem from those contracts is transferred into an all-length
+native cap or a free preparer, and no formal compilation is
+claimed.
+
+**Open problem 25.2 (optimizer relevance and genuine global loss).**
+At general depth the missing equality remains
+
+$$
+a_d=\min_{\mu\in\Delta(S_d)}\Omega_d(\mu)
+\quad\stackrel{?}{=}\quad
+b_d=\min_{\mu\in\Delta(S_d)}\beta_d(\mu)=2^{-\sigma_d}.
+\tag{COK.122}
+$$
+
+NWO settles the real/rational finite-envelope approximation,
+attainment and strict rational caps at $a_d$. Theorem 18.5
+settles the entire matching-population maximum as
+$\log_2\ell_d(w)$, so the raw Corollary 15.3 route has the
+exact fixed-law floor (COK.92). In particular unbounded cover
+population search alone cannot supply a stronger lower witness
+by this functional. Equality $\Omega_d(w)=\ell_d(w)$ at one
+law gives equality with $\beta_d(w)$ there, by (COK.84), but
+does not exclude a smaller $\beta_d$ at another law. Even
+such an equality at an $\Omega$-minimizer does not prove
+(COK.122).
+
+Theorem 20.3 controls genuine common-law dependence only in
+the one-incoming-owner class. No cardinality-preserving theorem
+reduces every original competitor to this class. The next
+completion requirement must keep the actual joint owner
+matching: in §22, compatible, locally envelope-optimal laws
+cannot have small loss on reciprocal-depleted covers, even
+with full-support whole-block weights and incidence two.
+A general positive route must retain that structure or prove
+a multi-owner replacement/loss theorem, and must separately
+control the actual Gibbs and component-normalizer requirements.
+Neither requirement is supplied by local marginal matching.
+
+No total sound optimizer-cofinal verifier of NPC Definition 8.1,
+uniform effective native length-error modulus, sharp original
+$\lambda$, general exact $M_1(D)$, preparation optimum or
+full minimal-relations/internal-observer/mutual-recovery theorem
+is proved or disproved here. The full goal continues to range
+over arbitrary native sizes, guards, shared seeds, cycles,
+support zeros and complete joint weights. Numerical inequalities
+such as [NCE, Theorem 10.1][COKNceJoint]'s credited
+$\lambda\ge\log_2(6407/2499)/8$ and [D3][D3]'s
+$\lambda<3/16$ and $M_1(3)=4$ remain valid within their
+proved scopes; these sections give no new endpoint and make
+no assertion that a supplied older lower endpoint is best.
+
+Under the paid services, operational recovery remains exactly
+the requested full temporal factor from a complete acquired
+name and at most one actual same-source reply, followed by
+every authentic-count trajectory value via (COK.5). The
+trajectory conversely determines that factor by its first
+branch count and alpha-stage flag. It does not recover an
+arbitrary whole hidden source, unobserved history or age,
+physical space and time, or the access services themselves.
+
+[COKNwoJoint]: https://github.com/the-omega-institute/trureturing/blob/ce2fe4a685b5a195b8b0a380616daf0151f576cb/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_WEIGHT_OPTIMIZATION.md
+[COKRrnJoint]: https://github.com/the-omega-institute/trureturing/blob/ce2fe4a685b5a195b8b0a380616daf0151f576cb/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_REPRESENTATIVE_REPLY_NORMAL_FORM.md
+[COKNpcJoint]: https://github.com/the-omega-institute/trureturing/blob/ce2fe4a685b5a195b8b0a380616daf0151f576cb/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PRODUCT_PRESSURE_COMPLETENESS.md
+[COKOoaJoint]: https://github.com/the-omega-institute/trureturing/blob/ce2fe4a685b5a195b8b0a380616daf0151f576cb/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_OWNER_ORDER_AFFINITY.md
+[COKNceJoint]: https://github.com/the-omega-institute/trureturing/blob/ce2fe4a685b5a195b8b0a380616daf0151f576cb/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CYCLIC_ENTROPY_LOWER.md
+[COKRuozziJoint]: https://arxiv.org/html/1202.6035v2
+[COKAkJoint]: https://arxiv.org/html/2009.09488v1
+

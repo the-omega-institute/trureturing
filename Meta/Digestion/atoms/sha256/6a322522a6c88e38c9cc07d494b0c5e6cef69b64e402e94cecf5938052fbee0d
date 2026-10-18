@@ -1,0 +1,28 @@
+**结论。** 粗历史继承的是似然比的条件平均，而不是对数似然的条件平均。若在每个活动轮有可预测界
+
+$$
+a_t\le\log r_t\le b_t,
+$$
+
+并令 $A_T=\sum_{t\le T}a_t$、$B_T=\sum_{t\le T}b_t$，则
+
+$$
+\boxed{
+\mathbb E_0[e^{A_T}\mid Z=z]
+\le
+\frac{\Pr_1(Z=z)}{\Pr_0(Z=z)}
+\le
+\mathbb E_0[e^{B_T}\mid Z=z].
+}
+$$
+
+因此粗历史的投影扩张由条件指数矩控制；一般不能以 $\mathbb E_0[B_T]$ 代替 $\log\mathbb E_0[e^{B_T}]$。Jensen 不等式给出
+
+$$
+\log\mathbb E_0[e^{B_T}\mid Z=z]
+\ge
+\mathbb E_0[B_T\mid Z=z].
+$$
+
+<a id="section-22-11"></a>
+

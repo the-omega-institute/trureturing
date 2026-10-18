@@ -1,0 +1,14 @@
+**Proposition 28.14 (Source conventions and boundaries).** The uniform count projection used in (28.1) is the $U(1)$ twirl $\int_0^{2\pi}d\varphi\,U(\varphi)\rho U(\varphi)^*/(2\pi)$, which projects onto equal-charge blocks as in Bartlett–Rudolph–Spekkens, quant-ph/0610030v3, §II.B, Eqs. (7)–(10). Marvian–Spekkens, arXiv:1312.0680v2, Eq. (16), gives tensor-mode convolution; Eq. (17) writes a weighted twirl $\sigma=\int d\theta\,p(\theta)U(\theta)\rho U(\theta)^\dagger$; Eq. (18) gives $\sigma^{(k)}=p_{-k}\rho^{(k)}$ with $p_k=\int d\theta\,p(\theta)e^{-ik\theta}$. The displayed entrywise integral extends its probability-density formula to arbitrary probability measures and gives the signs and conjugation in (28.1). Fuchs–van de Graaf, “Cryptographic distinguishability measures for quantum-mechanical states,” arXiv:quant-ph/9712042v2, Theorem 1, Eq. (46), is used only with root fidelity and $T=\tfrac12\|\rho-\sigma\|_1$; it supplies the displayed fidelity/trace conversion, not a chi-square, relative-entropy or concentration estimate. Its Proposition 1, Eq. (17), states the equal-prior testing formula with attribution to Helstrom, *Quantum Detection and Estimation Theory*, pp. 106–108.
+
+The fixed source §§23–27 supplies the coherent reset, actual serial product, affine character lattice, global-count blocks and quadrature pointers consumed in the proofs above. The primary weighted-twirl and reference-frame passages do not state the present two-window nuisance model or its minimax rates.
+
+The inverse at $d_2=0$ is nonregular and is handled by the balanced threshold in Theorem 28.10. The nuisance phase law may differ between compared points, and the minimax family is Cartesian in $(\theta,\pi)$. Unknown $p$, unknown $v$, noisy correlated repeats beyond the iid law, adaptive phase feedback, beta records used as side information, longer windows, intermediate interventions, memory readout and native continuous paths are outside this theorem. Mixed-state capacities and stationary continuous-path rates have different carriers, measurements and resources. No assertion here transfers their sample orders. A pointwise SLD upper bound is a different interface and is not used to infer the global nuisance rates.
+
+If the nonzero complex $\mu$ is calibrated and supplied, full support instead has the direct inverse
+
+$$
+u_2=\overline{\frac{Z/(\mu|d_1|^2)-1}{\eta}}.
+$$
+
+The finite-setting score error $O_p(v\varepsilon)$ now gives $O(\varepsilon)$ character error uniformly also at balance, followed by the same projected $C_3$ reconstruction. Thus $O_p(v^{-2}\varepsilon^{-2}\log(1/\delta))$ pairs suffice for this larger information class. Knowing only $|\mu|$, even when it equals one, does not remove the two unknown-phase nuisance branches in the balanced lower bound. This explains precisely which added calibration changes the fourth-order obstruction; it supplies no calibration procedure or cost. $\square$
+

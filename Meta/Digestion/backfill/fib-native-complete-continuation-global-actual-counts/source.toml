@@ -1,0 +1,5 @@
+source_id = "fib-native-complete-continuation-global-actual-counts"
+path = "docs/develop/theory/FIB_NATIVE_COMPLETE_CONTINUATION_GLOBAL_ACTUAL_COUNTS.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

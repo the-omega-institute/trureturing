@@ -1,0 +1,5 @@
+source_id = "fib-atom-first-stop-restoration-spectrum"
+path = "docs/develop/theory/FIB_ATOM_FIRST_STOP_RESTORATION_SPECTRUM.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

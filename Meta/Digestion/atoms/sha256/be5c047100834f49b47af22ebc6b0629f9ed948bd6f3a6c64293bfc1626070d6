@@ -1,0 +1,58 @@
+**Lemma 7.3 (Cluster subgroup and pointwise removal).** Suppose a
+profile of form (7.3) or (7.4) satisfies the corridor (5.1).
+Removing every summand with a discontinuous height character
+preserves that corridor. In the confluent case discontinuity
+removes the entire profile.
+
+Proof. For the diagonal case form the joint cluster set at zero
+
+$$
+K=\bigcap_{\delta>0}
+\overline{\{(\chi_1(h),\chi_2(h)):|h|<\delta\}}
+\subseteq(S^1)^2.
+$$
+
+The closures are nested nonempty compact sets, and $K$ is compact
+and nonempty. Each point of $K$ can be obtained along a sequence
+$h_n\to0$: choose an image point within $1/n$ of it with
+$|h_n|<1/n$. If two such sequences have limits $a,b$, their sums
+give limit $ab$, and their negatives give inverses. Thus $K$ is
+a compact subgroup. Its $j$th coordinate projection is trivial
+exactly when $\chi_j$ is continuous at zero. Continuity proves
+one implication. If continuity fails, a sequence tending to zero
+has that coordinate bounded away from one; compactness of the
+joint torus supplies a subsequential limit in $K$ with nontrivial
+$j$th coordinate. A character continuous at zero is continuous
+everywhere.
+
+For $b=(b_1,b_2)\in K$ choose a realizing sequence $h_n\to0$.
+Fix one interior height $k$. Eventually $k+h_n$ is interior, and
+the corridor there passes to the limit, since its center $A(k)$
+and radius $r_\epsilon(k)$ are continuous. Multiplicativity of
+the characters gives
+
+$$
+\left|\sum_{j=1}^2a_je^{\gamma_jk}\chi_j(k)b_j-A(k)\right|
+\le r_\epsilon(k).
+\tag{7.5}
+$$
+
+Each coordinate $b\mapsto b_j$ is a unitary character of the
+abstract abelian group $K$. Apply Lemma 5.2 to its nontrivial
+coordinate characters. Positive finite averages of (7.5) remain
+in the same closed disk. Their limit kills exactly the coordinates
+whose projection on $K$ is nontrivial, and leaves every trivial
+coordinate unchanged. This proves the claimed corridor after
+removing exactly the discontinuous summands.
+
+This reasoning is pointwise in $k$. The group and finite averages
+can be fixed before choosing $k$, but neither uniform convergence
+of $\chi_j(k+h_n)$ in height nor any integration of those
+characters is used. The conclusion holds for each interior
+height because $k$ was arbitrary.
+
+For (7.4), use the one-coordinate cluster group of $\chi$.
+The polynomial factor at $k+h_n$ tends to $a_0+a_1k$. The same
+argument therefore averages the whole summand to zero if $\chi$
+is discontinuous. $\square$
+

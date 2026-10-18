@@ -1,0 +1,56 @@
+## 448. Tenenbaum--Wang 的大 friable 成分计数
+
+Gérald Tenenbaum 与 Xiangyu Wang 的 [*On integers whose friable component is large*](../../../Library/Scale/tenenbaumwang2026largefriablecomponent.md)，arXiv:2609.37507v2（2026 年 10 月 11 日），给出一个与当前稀疏候选计数相邻、但量词不同的最新输入。令 $n_y$ 为 $n$ 的最大 $y$-光滑因子，
+
+$$
+\Theta(x,y,z)=\#\{n\le x:n_y>z\},
+\qquad \nu=\frac{\log z}{\log y}.
+$$
+
+其定理 1 在
+
+$$
+\max\{2,\log z\}\le y\le z\le x/2
+$$
+
+上一致给出
+
+$$
+\Theta(x,y,z)
+=x\exp\!\left(-\nu\log\!\bigl(\nu\log(3\nu)\bigr)+O(\nu)\right).
+$$
+
+这条估计可以直接接到当前的同一候选。对
+
+$$
+N=uv=1+F_rg,
+\qquad v\mid C,
+\qquad Cu\equiv v\pmod {F_r},
+\qquad E=\log(uv),
+$$
+
+令 $g_0=\gcd(N,C)=C/v$。若 $C$ 的所有素因子不超过 $y$，则 $g_0$ 是 $N$ 的 $y$-光滑因子，因此
+
+$$
+N_y\ge g_0=\frac Cv,
+\qquad E\le L\Longrightarrow N_y\ge Ce^{-L}.
+$$
+
+所以在
+
+$$
+\max\{2,\log(Ce^{-L})\}\le y\le Ce^{-L}\le x/2
+$$
+
+等参数条件成立时，原始窗口内的同一候选满足
+
+$$
+\#\{N\text{ in the window}:E\le L\}
+\le
+\min\left\{\tau(C),\Theta\left(x,y,Ce^{-L}\right)\right\}.
+$$
+
+左侧仍保留移动 Fibonacci 同余；这里没有把不同候选分别优化后拼接。这是本来源对当前稀疏层的真实新增接口。
+
+它仍只控制候选数量，不估计同一 $N$ 的完整 prime-power 权重、$D^*(a)$ 或 signed Robin tail $H_a$。因此它缩小了异常集合的计数问题，但没有关闭 Robin 的联合预算，也不构成 Robin 不等式或 RH 证明。
+

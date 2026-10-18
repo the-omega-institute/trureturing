@@ -1,0 +1,53 @@
+**Proposition 68.4 (all-input cuts, complete decoding and the dynamic boundary).**
+$U_j$ is an isometry on every Hilbert input, preserves the form intersections and
+exactly the shared number-form norm. Its adjoint and exact cut energy are
+
+$$
+\begin{aligned}
+U_j^*(b,z,\mathbf r)&=(V_j^*b+z,\mathbf r),&U_j^*U_j&=I,\\
+\boldsymbol q_{j+1}[U_j(x,\mathbf r)]
+ &=\boldsymbol q_j[x,\mathbf r]+q_{j+1}[V_jx]-q_j[P_jx].
+\end{aligned}
+\tag{68.7}
+$$
+
+With $`\Pi_j=V_jV_j^*`$ the full decoder
+$`(b,z,\mathbf r)\mapsto((V_j^*b+z,\mathbf r),(I-\Pi_j)b)`$ is unitary onto
+$Y_j\oplus(I-\Pi_j)X_{j+1}$, with inverse
+$((x,\mathbf r),c)\mapsto(V_jx+c,Q_jx,\mathbf r)$. The new complement is retained.
+
+Proof. $`V_j^*V_j=P_j`$ and $P_j+Q_j=I$ prove norm equality and the adjoint formula.
+The decoder inverse follows from orthogonality of $\Pi_j$ and its complement.
+Lemma68.2 also applies to $`\Pi_j=W_{j+1}\iota_j\iota_j^*W_{j+1}^*`$, so both decoder
+directions preserve the corresponding form domains. Substitution proves the energy
+identity. Tensor identities prove number-form norm equality even with correlations.
+Composing these maps gives coherent finite cut ingress and image recovery.
+
+This does not make the cut image dynamically invariant. In the legal $H=2$,
+INITIAL $\alpha$, Left$(\alpha)$ cut, take old $W_0e_o$ and the shared vacuum,
+with $0<g<a\lambda$. Its image $v=(W_1e_R,0)$ is in the represented one-cut
+operator domain. Its active derivative is the nonzero purely atomic vector
+$T_1W_1e_R=J_1(aL_{D_1}-g\Phi_{D_1})S_1e_R$, since the discrete matrix is positive.
+In the one-particle space $\operatorname{Ran}J_1\cap\operatorname{Ran}W_1=\{0\}$:
+a harmonic vector with all affine cable components zero has every port value zero.
+Thus this derivative has a component outside $\operatorname{Ran}V_0$. If $M$ is
+the represented one-cut generator, differentiability at zero gives
+
+$$
+\|U_0^*e^{-itM}v\|^2
+=1-t^2\|(I-U_0U_0^*)Mv\|^2+o(t^2)<1
+\quad\text{for sufficiently small nonzero }t.
+\tag{68.8}
+$$
+
+Right uses $e_L$ identically. Nor are old/new field dynamics equal: on the same
+reference branch the bank one-boson vector $(e_L-e_R)/\sqrt2$ has old spectator
+eigenvalue one, new common eigenvalue two and new killed eigenvalue three. The
+old/new full reference outputs differ by norm two at $t=\pi/\Omega$ common or
+$t=\pi/(2\Omega)$ killed. These are the actual matrices (67.2)–(67.3).
+Consequently image left-inversion supplies neither recovery of arbitrary evolved
+vectors by $`U^*`$ alone nor dynamic intertwining. The complete decoder retains the
+complement; no native reverse operation, original Read/Stop adapter or execution
+certificate follows. Proposition66.8's literal active-space retention obstruction
+remains intact. $\square$
+

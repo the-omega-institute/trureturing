@@ -1,0 +1,20 @@
+### 65.3 Signed partial matchings give finite physical sufficiency
+
+Let W∈S and put P_ij=|W_ij|. This is a rectangular doubly substochastic matrix. To see its finite partial-permutation decomposition directly from Birkhoff's theorem, let r_i=1−Σ_jP_ij and c_j=1−Σ_iP_ij. The square matrix
+
+    [[P,diag(r)],[diag(c),P^T]]
+
+of size m+n is nonnegative with every row and column sum one. Decompose it into a convex combination of permutation matrices. Their upper-left blocks are m×n partial permutation matrices, proving P=Σ_t w_t P_t. By Carathéodory in R^(mn), at most mn+1 such blocks are needed, including a zero block if necessary.
+
+Choose phases θ_ij with W_ij=P_ij exp(iθ_ij), arbitrarily when P_ij=0. Give every selected entry of P_t this phase to obtain a signed partial matching Q_t. Then W=Σ_t w_t Q_t.
+
+Each Q_t has an exact product-channel implementation. For each matching choose orthonormal environment records for all A-fibre labels and all B-fibre labels, identifying the record for a_i with the record for b_j precisely when (i,j) is matched. All unmatched records and records of distinct matching pairs are mutually orthogonal. Within each fibre the records are therefore orthonormal. On the first party multiply the b_j record of a matched pair by exp(−iθ_ij); on the second party use the unphased records. Define local isometries by
+
+    |a_i>→|0>e_i,    |b_j>→|1>f_j,
+
+using those phased or unphased records on the respective party. Cross-fibre input orthogonality is enforced by the output0/1 labels. The product of the two local cross-record overlaps is exactly (Q_t)_ij; same-fibre off-diagonal units vanish. Thus the product channel implements E_(Q_t) on all encoded matrix units. Both environments can be chosen of dimension at most m+n.
+
+Mixing these product channels with weights w_t implements E_W. This supplies one common finite channel, not a separate choice for each matrix entry. Equality of the full linear maps implies equality after all passive reference extensions. It also proves finite attainment once an optimizing W is chosen.
+
+The partial-permutation convex-hull theorem and its branch decomposition are classical Birkhoff-type facts, not new matrix-combinatorics claims.
+

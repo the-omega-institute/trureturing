@@ -1,0 +1,1 @@
+- [HRMS20] S. R. Howard, A. Ramdas, J. McAuliffe and J. Sekhon, *Time-uniform Chernoff bounds via nonnegative supermartingales*, Probability Surveys 17 (2020), 257-317, arXiv:1808.03204. Standard Ville/supermartingale tool, already attributed by dev C-121. The score correction, actual PVM compiler and pulse-to-statistics correspondence are derived here.

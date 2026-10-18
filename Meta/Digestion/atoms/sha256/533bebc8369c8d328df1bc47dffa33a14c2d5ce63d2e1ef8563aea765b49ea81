@@ -1,0 +1,32 @@
+**Lemma 25.3 (actual repetition and source-independent internal paths).**
+In any successful installation of Assumption 25.1, a running word is
+visited at most once on each actual first-halt path. Sources that enter
+one common word follow the same internal path until the next query or
+halt. If no further Read is allowed on those sources, their common
+word determines one complete eventual output. Consequently
+
+$$
+r+u\le |Q|+|I|,\qquad b_Q=r,\qquad b_I=u
+\tag{NARC.25.2}
+$$
+
+on every successful actual path, with initialization excluded.
+
+**Proof.** Fix the actual source. A query's fixed literal has one
+fixed actual reply on this stationary source. Together with the fixed
+rows, this defines a deterministic next-word function on running
+words. A repeated running word repeats its entire future; the segment
+between repetitions becomes periodic and cannot later reach a first
+halt. In particular no actual same-word update can terminate later.
+Each successful transition therefore changes one bit, and distinct
+running visits give all three counts in (NARC.25.2).
+
+An internal row has the same successor for every source. Induction
+along internal rows gives a common path until a query or halt. This
+path is finite on a nonempty actual arriving support because every
+member first halts. If no further query may execute, the path ends
+at one fixed-output halt. Two different required outputs cannot merge
+at a common word after their respective last Reads. None of these
+claims restricts unsupported source-word pairs or cycles assembled
+from different actual sources. $\square$
+

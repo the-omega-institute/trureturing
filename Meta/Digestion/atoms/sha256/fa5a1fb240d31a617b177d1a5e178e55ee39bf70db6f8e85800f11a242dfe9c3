@@ -1,0 +1,60 @@
+### 83.2. Original norm quadratics, including both projective poles
+
+Write \(\kappa g=p+it\), so \(p^2+t^2=\rho\), and use
+\[
+ \eta=\frac zr=\frac{1+ik}{1-ik},\qquad
+ r=\frac{1+iv}{1-iv},\qquad z=\eta r,
+ \qquad k,v\in\mathbb R\cup\{\infty\}.                \tag{83.3}
+\]
+The value \(\infty\) gives the phase \(-1\). The repeated and
+singleton upper and lower output numerators, before division by
+\(\sqrt6\), are
+\[
+\begin{aligned}
+ A_0&=2+z+P+g(2+r+Q),&
+ A_2&=2+(1+P)z+g[2+(1+Q)r],\\
+ C_0&=2+z+\bar Q-g(2+r+\bar P),&
+ C_2&=2+(1+\bar Q)z-g[2+(1+\bar P)r].
+\end{aligned}                                                    \tag{83.4}
+\]
+Put \(N_j=|A_j|^2-6\), \(L_j=|C_j|^2-6\).
+Define three quadratics \(T_i(k,v)=\sum_{n=0}^2M_{in}v^n\)
+by the following complete polynomial block. The symbols `*` and `^`
+mean multiplication and nonnegative integer powers.
+
+```text
+M00 = -k*(b + k*p - k - t)
+M01 = 2*(b*k^2 - k*p + k + t)
+M02 = b*k + k^2*p + k^2 - k*t + 2
+M10 = -b^3*k^2 - b^2*k^2*t + b^2*k*p + b^2*k - 2*b^2*t + b*k^2*p + 3*b*k^2 - 4*b*k*t - 3*b*p - 3*k*p - 3*k + 3*t
+M11 = -2*(b^3*k + b^2*k^2*p - b^2*k*t - b^2 - 2*b*k^2*t - 2*b*k*p - 3*b*k - k^2*p + k*t + 3)
+M12 = (b*k - 1)*(b^2*k - b*k*t - b*p + k*p - 3*k - t)
+M20 = -2*b^3*k^2 + 2*b^2*k*p - 2*b^2*k - 2*b^2*t - 5*b*k^2*p + 6*b*k^2 + 2*b*k*t - 3*b*p + 3*k^2*t + 6*k + 3*t
+M21 = -4*(b^3*k + b^2*k^2*p - b^2*k*t + b^2 - 3*b*k + k^2*p - k*t - 3)
+M22 = 2*b^3*k^2 - 2*b^2*k*p + 2*b^2*k + 2*b^2*t - 5*b*k^2*p - 6*b*k^2 + 2*b*k*t - 3*b*p + 3*k^2*t - 4*k*p - 6*k + 7*t
+```
+
+Direct expansion of (83.4), using \(h^2=\rho/(1+b^2)\) and
+\(p^2+t^2=\rho\), gives
+\[
+\begin{aligned}
+ N_0+L_0&=\frac{-4T_0}{(1+k^2)(1+v^2)},\\
+ (1+b^2)h(N_0-L_0)&=\frac{-4T_1}{(1+k^2)(1+v^2)},\\
+ (1+b^2)h(N_2-L_2)&=\frac{-4T_2}{(1+k^2)(1+v^2)}.
+\end{aligned}                                                    \tag{83.5}
+\]
+Unitarity also gives \(2(N_0+L_0)+(N_2+L_2)=0\).
+All denominators displayed in (83.5) are positive. Homogenize each
+\(T_i\) separately to degree two in \(k\) and in \(v\).
+The denominators become
+\((k_0^2+k_1^2)(v_0^2+v_1^2)\), so the identities extend to
+both projective poles, including simultaneous poles. Thus the original
+flatness conditions are equivalent to the three homogeneous equations
+\(T_i=0\), together with \(p^2+t^2=\rho\).
+
+Two distinct projective \(v\)-values at fixed \(k,p,t\) would be
+common roots of all three binary quadratics. Every nonzero quadratic
+would then be a multiple of the same product of two linear factors.
+Consequently the coefficient matrix \(M\) would have rank at most one.
+This argument allows identically zero rows and roots at infinity.
+

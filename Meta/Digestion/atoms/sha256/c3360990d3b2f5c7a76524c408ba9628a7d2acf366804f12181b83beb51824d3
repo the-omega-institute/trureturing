@@ -1,0 +1,36 @@
+**定理 12.1（同色余量在同一真实终端上的强化下界）。** 对每个上述原参数、每个 $h\ge H$（含 $\infty$），令
+
+$$
+\begin{aligned}
+q&=\min\left\{a,b,\left\lfloor\frac n4\right\rfloor\right\},\\
+\max\{q,4q-b\}&\le t\le\min\{3q,a\},\qquad t\in\mathbb Z,\\
+m_\alpha&=a-t,\qquad m_\beta=b-4q+t,\\
+g(m)&=\max\{m-2,0\},\qquad
+L=3q+g(m_\alpha)+g(m_\beta).
+\end{aligned}
+$$
+
+$t$ 的整数区间非空，可取 $t=\max\{q,4q-b\}$。对这个区间中的每个 $t$ 及每个原合法确定策略 $\pi$，存在一棵固定有限正源 $V\in\mathcal P$，使同一完整真实终端同时满足
+
+$$
+\left|\{u\in Q(T_\pi(V)):r_V(u)\ne\alpha\}\right|\ge L,
+\qquad |Q(T_\pi(V))|\ge A+L.
+$$
+
+因此，对每个可行整数 $t$，
+
+$$
+D_h(a,b;d)\ge A+3q+g(a-t)+g(b-4q+t).
+$$
+
+该断言不要求不同策略共用同一见证 $V$，但一条见证运行始终查询同一实际源。旧定理 7.2–7.3 的上界与全负域正确取得策略直接复用，故
+
+$$
+A+3q+g(a-t)+g(b-4q+t)
+\le D_h(a,b;d)\le A+n-2+c_d(a,b),
+\qquad
+c_d(a,b)=\begin{cases}a,&d=3,\\\min(a,b),&d\ge6.\end{cases}
+$$
+
+至少一个余量 $m_\alpha,m_\beta\ge3$ 时，左端严格强于定理 10.2 的 $A+3q$；两余量均至多二时只得到原下界。证明见 12.2–12.4；不主张一般准确值或达到左端的策略。
+

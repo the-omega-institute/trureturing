@@ -1,0 +1,67 @@
+**Theorem 4.4 (The active cubic and the exact event maximum).** Define
+
+$$
+p(z)=z^3+\frac{-2873+21r}{11424}z^2
++\frac{-13393+981r}{68544}z
++\frac{-171581+24645r}{9321984}.
+\tag{4.3}
+$$
+
+There is exactly one positive root $\xi$, with
+
+$$
+\frac{37}{70}<\xi<\frac{529}{1000},\qquad
+\max_{1\le|J|\le2}\|H_J\|_{\rm op}=\xi.
+\tag{4.4}
+$$
+
+The maximum is attained by the singletons $2$ and $5$.
+
+Proof. The remaining containing blocks from Proposition 4.1 are
+
+$$
+\begin{aligned}
+C_N&=\frac1{1904}\begin{pmatrix}959+7r&62+14r\\62+14r&-160\end{pmatrix},\\
+C_3&=\frac1{22848}\begin{pmatrix}
+-2656+168r&-1116+84r&-752-168r\\
+-1116+84r&12996-252r&-1116+84r\\
+-752-168r&-1116+84r&-2656+168r
+\end{pmatrix},\\
+C_2&=\frac1{22848}\begin{pmatrix}
+13721-441r&558-294r&1345+63r\\
+558-294r&-2656+168r&558+154r\\
+1345+63r&558+154r&-5319+231r
+\end{pmatrix}.
+\end{aligned}
+\tag{4.5}
+$$
+
+Here $C_N$ is on $L$; $C_2,C_3$ are on $V$.
+The next table states exact identities
+$\det(cI-C_s)=(a+br)/D$ and sign bounds.
+
+| $s$ | $c$ | $a$ | $b$ | $D$ | Bound on determinant |
+| --- | --- | --- | --- | --- | --- |
+| $N$ | $37/70$ | $2211$ | $-455$ | $166600$ | $>2673/1332800>0$ |
+| $3$ | $37/70$ | $-26090291$ | $6532155$ | $1189524000$ | $>2055469/2973810000>0$ |
+| $2$ | $37/70$ | $-120370013$ | $29152805$ | $2718912000$ | $<-131077/3107328000<0$ |
+| $2$ | $529/1000$ | $-1070804918761$ | $260462029625$ | $24276000000000$ | $>1149321647/12138000000000>0$ |
+
+Expand using (2.14), its two-dimensional version and $r^2=17$.
+For signs, rational squaring gives $103/25<r<33/8$;
+substituting the appropriate endpoint into the affine numerator gives
+exactly the last column. Lemma 4.3 proves
+$\|H_{\{N\}}\|,\|H_{\{3\}}\|<37/70$.
+It also proves that $C_2$ has a unique positive eigenvalue between
+$37/70$ and $529/1000$. Direct determinant expansion gives
+$\det(zI-C_2)=p(z)$, including all three nonleading coefficients in
+(4.3). Therefore this eigenvalue is $\xi$ and is the only positive root.
+By Lemma 4.3 the full singleton-$2$ norm is $\xi$, including its
+negative eigenvalues and its other coordinate block.
+Exchanging modes $2$ and $5$ leaves $R_\pm$ invariant and sends
+$d$ to $-d$. Formula (3.6), or the full table (4.1), therefore conjugates
+$H_{\{2\}}$ to $H_{\{5\}}$ by this permutation.
+Lemma 4.2 covers all remaining events. This proves (4.4) for the same
+single channel simultaneously, without a restricted-family optimum claim.
+$\square$
+

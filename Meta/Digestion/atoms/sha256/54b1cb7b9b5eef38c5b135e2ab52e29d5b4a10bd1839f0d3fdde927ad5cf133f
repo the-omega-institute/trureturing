@@ -1,0 +1,209 @@
+**Theorem 4.1 (One-read risk and exact seed-event availability).** Retain
+the full protocol class and write $q=q_1$, $L=L_1$. Put
+
+$$
+z=1-\eta,\qquad
+\rho=1-\frac{a}{2z},\qquad
+f(q)=bq+\frac{ac}{2z}(q-\eta)_+.
+\tag{4.1}
+$$
+
+Every admissible protocol under every unchanged independent auxiliary
+law satisfies
+
+$$
+L\ge f(q)
+=\begin{cases}
+bq,&0\le q\le\eta,\\
+b\eta+\rho(q-\eta),&\eta\le q\le1.
+\end{cases}
+\tag{4.2}
+$$
+
+The slope difference is $\rho-b=ac/(2z)>0$, so this is strictly stronger
+than the one-read count-only bound when $q>\eta$.
+
+For a specified unchanged auxiliary space, there exists an admissible
+protocol with $\mathbb P_p(E_1)=q$ and $L_1=f(q)$ if and only if that
+space has a measurable event $G$ of measure
+
+$$
+\nu(G)=
+\begin{cases}
+q/\eta,&0\le q\le\eta,\\
+(q-\eta)/(1-\eta),&\eta<q\le1.
+\end{cases}
+\tag{4.3}
+$$
+
+At $q=\eta$ the lower formula asks for an event of measure one, while the
+upper construction may equivalently use an empty event. In particular
+$q=0,\eta,1$ are equality points under every auxiliary law, without
+using its randomness. Across auxiliary spaces the entire curve is
+attained; an atomless uniform auxiliary variable supplies every gate in
+(4.3). For a fixed atomic law, neither attainability of every $q$ nor
+equality at every attainable $q$ is asserted.
+
+Among all almost-surely returning protocols with $N\le1$ almost surely,
+the exact minimum unconditional classification error, for either
+original endpoint and every auxiliary law, is
+
+$$
+f(1)=1-a/2-a^2b.
+\tag{4.4}
+$$
+
+A deterministic protocol using exactly one paid read attains it.
+
+Proof. In Theorem 3.1, $z_1=(1+c)/2=z$, $e_1=b$, and $d_1=ac/2$.
+Consequently its lower bound is (4.2). To obtain necessity of the gate,
+we also give the branchwise lower argument.
+
+For any one original address $t$, exactly one phase is active there, so
+the one reply has mass $\eta=(1/2)2ab$. In that phase its active edge
+either is disjoint from the endpoint spin or touches it. In the disjoint
+case the target keeps its original Bernoulli law independently of the
+edge, and the largest joint mass of a state and that reply is $a\eta$.
+In the touching case the two assignments on an XOR-one edge each have
+conditional spin mass $ab$. Their joint masses including the phase are
+$ab/2=\eta/2\le a\eta$. The other phase cannot produce the one reply.
+Thus every output has joint error at least $b\eta$ on the one branch.
+The distinction between touching and disjoint edges covers every
+integer address, including negative and arbitrarily distant ones.
+
+The zero reply has mass $z$. Its joint mass with any particular endpoint
+state is bounded by that state's prior, hence by $a/2$. Every output
+therefore has joint error at least $z-a/2=\rho z$ on the zero branch.
+This bound is attained by the majority-spin state of the phase in which
+the address is a separator. A zero-read return has error at least
+$e_0=1-a/2$.
+
+At a fixed seed, before reading, the first finite event is either a
+return or a read at an address determined by that seed; internal
+nonreturn is the remaining possibility. After a first read, whether a
+reply branch lies in $E_1$ depends only on the seed and that reply.
+Making a second read excludes the branch from $E_1$, as does internal
+nonreturn, without any restriction on later returns. Define measurable
+seed events $G_1,G_0,G_I$ by, respectively, first making a read and
+returning within one call on its one branch, doing so on its zero
+branch, and returning before reading. The events $G_1,G_0$ may overlap,
+but each is disjoint from $G_I$. Measurability follows from the next-event
+rule, or from the countable union over possible first integer addresses
+and terminal records. Write
+
+$$
+\alpha=\nu(G_1),\qquad \lambda=\nu(G_0),\qquad
+\gamma=\nu(G_I).
+\tag{4.5}
+$$
+
+Every original address has the same one/zero reply masses $\eta,z$.
+Independence of the source and seed, and the branch estimates just
+proved, give
+
+$$
+\begin{aligned}
+q&=\eta\alpha+z\lambda+\gamma,\\
+L&\ge b\eta\alpha+\rho z\lambda+e_0\gamma.
+\end{aligned}
+\tag{4.6}
+$$
+
+Let $d=ac/2=(\rho-b)z$. Subtract $bq$ and use $e_0-b=a/2$:
+
+$$
+L-bq\ge d\lambda+\frac a2\gamma.
+\tag{4.7}
+$$
+
+Also $\alpha\le1-\gamma$, because $G_1$ and $G_I$ are disjoint. Thus
+
+$$
+q\le\eta+z(\lambda+\gamma).
+\tag{4.8}
+$$
+
+Since $0<c<1$, we have $0<d<a/2$. If $q\ge\eta$, (4.7)--(4.8) yield
+
+$$
+L-bq\ge d\lambda+\frac a2\gamma
+\ge d(\lambda+\gamma)
+\ge\frac d z(q-\eta).
+\tag{4.9}
+$$
+
+If $q\le\eta$, the nonnegative right side of (4.7) gives $L\ge bq$.
+This proves the lower envelope directly and retains zero-read returns,
+finite-read internal nonreturn, and all later-return paths.
+
+For attainability, let $\sigma=1$ if $p>1/2$ and $\sigma=0$ otherwise.
+Use the one predetermined original even address
+
+$$
+t=2(j+1).
+\tag{4.10}
+$$
+
+In phase zero it gives $S_{j+1}\oplus S_{j+2}$, whose spin pair is
+disjoint from the target $S_j$. In phase one it is a separator. On a one
+reply return $a_\sigma$ for $j=0$, or $b_\sigma$ for $j=1$. This is the
+majority-spin phase-zero state; the branch has mass $\eta$ and
+conditional error $b$. On a zero reply return $b_\sigma$ for $j=0$, or
+$a_\sigma$ for $j=1$, if that branch is to return. This is the
+majority-spin phase-one state. Its correct joint mass on the zero branch
+is $a/2$, since that reply is automatic in phase one. The branch has
+mass $z$ and conditional error $\rho$.
+
+For $0\le q\le\eta$, make this paid read on every path. Return only on
+the one reply with $u\in G$, where the already existing event $G$ has
+measure $q/\eta$. On every other record continue internally forever
+without more reads. The return mass is $q$, and its joint error is
+$bq$. For $\eta<q\le1$, always return on the one reply, and return on
+the zero reply exactly when $u\in G$, where
+$\nu(G)=(q-\eta)/z$. Continue internally forever on the remaining zero
+records. These choices give
+
+$$
+\mathbb P_p(T)=\eta+z\nu(G)=q,
+\qquad
+\mathbb P_p(A\ne H_j,T)=b\eta+\rho z\nu(G)=f(q).
+\tag{4.11}
+$$
+
+Each construction keeps $\nu$ unchanged and has $N=1$ on every path;
+nonreturn is internal. At $q=0$ never return, at $q=\eta$ return only on
+one, and at $q=1$ return on both replies. These three choices ignore the
+seed. The point $q=\eta$ is the existing $n=1$ selective point in (2.4).
+The additional zero-branch rule supplies the continuation to larger
+return mass. Always returning gives
+
+$$
+b\eta+\rho z=b\eta+z-a/2
+=1-a/2-a\eta=1-a/2-a^2b.
+\tag{4.12}
+$$
+
+For an almost-sure return with $N\le1$, $E_1$ has probability one, so
+the universal lower bound and this deterministic protocol prove (4.4).
+
+Finally suppose an arbitrary admissible protocol attains $L=f(q)$.
+If $q\le\eta$, (4.7) forces $\lambda=\gamma=0$, since both coefficients
+are positive. Equation (4.6) then implies
+$\alpha=q/\eta$; the measurable seed event $G_1$ supplies the required
+gate. This includes $q=\eta$ and $q=0$. If $q>\eta$, equality in (4.9)
+forces $\gamma=0$ because $a/2>d$, and forces
+$\lambda=(q-\eta)/z$. The event $G_0$ is then the required gate
+(and (4.6) also gives $\alpha=1$). These are events of the original
+auxiliary space, not added randomness. Necessity together with the
+explicit gated constructions proves (4.3) in both directions.
+$\square$
+
+For $q>0$, the same theorem gives conditional error at least $f(q)/q$.
+There is no conditional-risk assertion at $q=0$. Equality on the lower
+curve and the optimum above that curve are distinct questions for a
+specified atomic $\nu$; the absence of a gate does not determine the
+latter. The one-read mass constraint, equality condition, and
+almost-sure-return optimum are repo-derived relative to the source's
+count-only theorem, using elementary likelihood comparison and convex
+branch accounting, without an external priority claim.
+

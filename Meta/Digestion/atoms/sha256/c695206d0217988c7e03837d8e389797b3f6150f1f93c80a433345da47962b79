@@ -1,0 +1,24 @@
+**Definition 6.1 (concrete joint carrier).** An endpoint carries the installed
+root occurrence and model identity; phase/type; all actual tape contents,
+marked heads, PC, latches and constructed counter versions; archive intervals
+and partial copies; actual descriptors and predecessor/copy references;
+owner/availability tokens; meter and last primitive label. Its logical
+source/generation tags are decoded from the source at available cuts and from
+the committed/pending phase data elsewhere, as specified in §4. Full actual
+histories additionally determine $E(h)$, $A_P(h)$ and $P(h)$.
+
+Define $\mathsf{Compat}$ by the following simultaneous conditions on this
+carrier: descriptors name actual constructed intervals of their declared
+owner; initialized/sealed flags match the actual interval; writable and readable
+tokens follow the serial phases; every completed row has its actual predecessor,
+port type, counter transitions and preparation identity; readable copies equal
+their designated sender prefix; the source is decoded only in available phases;
+and the pending/busy fields satisfy Theorem 5.3 and the corresponding code cursor
+in the retained finite routine. Its values are taken from one history $h$, not
+from independently selected possible sources, archives, references or permissions.
+
+Let $\mathsf J_H$ be the compatible endpoint image of actual histories from valid
+boot. References and permissions have their concrete encoded interval/token types,
+including unavailable types. Boot-busy, invalid-preparation and terminal-service
+states form separately tagged components when those histories are considered.
+

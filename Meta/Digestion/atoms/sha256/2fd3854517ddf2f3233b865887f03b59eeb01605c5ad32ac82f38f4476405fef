@@ -1,0 +1,21 @@
+**Lemma 5.2 (exactness on every actual point).** For every
+$u\in\mathcal U_\eta$,
+
+$$
+G_\eta=
+\{z:T\text{ from }e_z\text{ on stationary }t_u
+       \text{ returns the whole }F(u)\text{ within }L\text{ calls}\}.
+\tag{FCS.21}
+$$
+
+Proof. Equation (FCS.2) and the definition of $b$ fix the reply of
+every installed Read on every member of the cell. Proposition 2.2 fixes
+its entire target. Induction from either identical entry makes the
+bounded and actual paths have identical states, one paid invocation at
+each Read, and identical outputs at a Halt. The last successor is
+inspected in both contracts, so a Halt just after the last call succeeds
+and a still-running state does not. Initial Halts and wrong early
+outputs are likewise identical. A cycle or a longer unfinished run
+simply fails that entry's bounded test. No termination or correctness
+condition on the other entry was used. $\square$
+

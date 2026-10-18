@@ -1,0 +1,26 @@
+**Corollary 6.2 (A strictly narrower unrestricted interval).** Under
+Assumption 1.1 and the original fixed-port contract,
+
+$$
+\boxed{\frac{12993}{25000}\le\varepsilon_1\le\theta},\qquad
+\theta-\frac{12993}{25000}
+=0.004552337746606724475420251080046976\ldots .
+\tag{6.3}
+$$
+
+Proof. Theorem 2.4 covers every original legal competitor; Theorems 3.2
+and 6.1 provide one original legal attaining upper construction.
+Relative to QEC's endpoints,
+
+$$
+\frac{12993}{25000}-\frac{5197}{10000}=\frac1{50000}>0,
+\qquad
+\theta<\frac{13107}{25000}<\frac{37}{70}<\xi.
+\tag{6.4}
+$$
+
+The last inequality is QEC Theorem 4.4 for its exact cubic root
+$\xi$; the preceding rational comparison is direct cross multiplication.
+The older endpoints retain their stated domains as weaker bounds.
+$\square$
+

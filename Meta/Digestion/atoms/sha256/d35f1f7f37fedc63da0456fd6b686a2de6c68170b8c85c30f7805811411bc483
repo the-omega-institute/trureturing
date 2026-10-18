@@ -1,0 +1,8 @@
+**定义 9.3（尚未决定的包含关系）。** 单模式 $d=1$ 属于有限循环类，循环类属实际从零完整有限相容类；定理6.1仅在风险上区域意义证明后两者相等。所有实际相容观察者的共同极限律满足五切面必要约束，但五切面投影的可行性不保证任意长条件续接相容，更不保证从第一笔 Read 前的完整有限实现。任意全历史相容律也可能需要无界记忆；未证明它均有有限循环代表。
+
+因此，有限循环类是否可由 $d=1$ 全部支配、精确联合 Pareto 前沿、$J_\mu$ 的精确值及达到性仍未决定。(8.1)的参数只是合法已达到比较，不是周期、状态数或总资源最小值。定理7.1给运输两个单独最优预测边界时的额外兼容价格，定理6.1给有限相位模式的风险表示，二者均不恢复被遗忘的取得历史，不把时间、空间、边界与记忆认作无条件可互逆的对象，也不主张物理时空或持续研究目标的全局完成。
+
+[SC]: https://github.com/the-omega-institute/trureturing/blob/2fb672d85b9efe8f1b4e7bd135a14474aea3b258/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_SIMULTANEOUS_PHASE_COHERENCE_OBSTRUCTION.md
+[PG]: https://github.com/the-omega-institute/trureturing/blob/0402a2bdc2eb5ce76542bc6738a41b6ddddd76e5/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md
+[MC]: https://www.statslab.cam.ac.uk/~rrw1/markov/M.pdf
+

@@ -1,0 +1,16 @@
+**Assumption 6.1 (a supplied successful finite witness).** In addition to
+Assumption 1.1, supply either a finite physical skeleton correct on all
+$D$, or a supplied $h$ for which
+
+$$
+\forall u,v\in D,\quad
+[\forall |p|\le h,\ r_u(p)=r_v(p)]\Longrightarrow R_Q(u)=R_Q(v).
+\tag{NFO.16}
+$$
+
+Both inputs can be checked by NSF. A YES witness from Theorem 4.2,
+Corollary 4.3, or a positive-observation case of Theorem 5.2 also qualifies.
+An arbitrary program with no finite witness or proved bound is not this
+input. No algorithm extracting such a witness from arbitrary source-total
+code is assumed.
+

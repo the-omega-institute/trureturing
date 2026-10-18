@@ -1,0 +1,35 @@
+**Lemma 6.1 (first-loss density comparison).** Let $g,\widetilde g$ be
+nonnegative integrable rates on $[0,T]$, let
+$u(t)=\exp(-\int_0^t g)$ and $\widetilde u$ be defined likewise, and set
+$e=\|g-\widetilde g\|_{L^1}$. Then
+
+$$
+\|gu-\widetilde g\widetilde u\|_{L^1}\leq2e,\qquad
+|\sqrt{u(T)}-\sqrt{\widetilde u(T)}|\leq e/2.
+\tag{SC.18}
+$$
+
+Proof. For $z=u-\widetilde u$, variation of constants in the absolutely
+continuous scalar equation gives
+
+$$
+z(t)=-\int_0^t
+ e^{-\int_s^t\widetilde g}(g(s)-\widetilde g(s))u(s)\,ds.
+$$
+
+Multiply the absolute-value bound by $\widetilde g(t)$ and integrate.
+Tonelli and the scalar fundamental theorem give
+
+$$
+\begin{aligned}
+\int_0^T\widetilde g(t)|z(t)|\,dt
+&\leq\int_0^T|g-\widetilde g|(s)u(s)
+ \left(1-e^{-\int_s^T\widetilde g}\right)\,ds\leq e.
+\end{aligned}
+$$
+
+Adding $\int|g-\widetilde g|u\leq e$ proves the first claim. The function
+$x\mapsto e^{-x/2}$ is $1/2$-Lipschitz for $x\geq0$; its arguments differ
+by at most $e$, proving the second claim. No lower survival bound is used.
+$\square$
+

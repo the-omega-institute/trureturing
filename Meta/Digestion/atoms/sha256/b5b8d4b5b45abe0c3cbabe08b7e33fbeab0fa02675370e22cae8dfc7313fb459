@@ -1,0 +1,98 @@
+**Proposition 4.1 (application of the common original constructor).** Every
+finite law in (QS.8) has the finite original realization of [GC, Proposition
+10.1][GC], with exactly its occupied low atoms and one coherent high label.
+It satisfies (QS.5), (QS.10), all five separate failure Borel maps, and the
+original passive-reference conditional identities. Consequently
+
+$$
+\mathcal T(s,t)=\frac{H_{\rm high}+R_t(r)}2
+\tag{QS.16}
+$$
+
+whenever the law supremum is attained by a finite law, in particular for
+the contact law in §5.
+
+Proof. Proposition 2.3 and $0\le b_j\le tc(h_j)$ give exactly the complete
+same-law premises of the cited constructor. The following specialization
+records which outputs and resources that existing result supplies; it is
+not a new source or minimax proof. Omit zero weights and set
+$K_j=\sqrt{p_j}K_{h_j}$, $N_j=p_jb_jn_{h_j}n_{h_j}^T$. For an isometry
+$J_j:\mathbb C^2\to\operatorname{ran}K_j^\dagger$, use
+
+$$
+\begin{gathered}
+Q_j=J_j^\dagger(K_j^\dagger K_j+N_j)J_j\succ0,\quad
+C_j=Q_j^{1/2}J_j^\dagger E^\dagger,\\
+B_j=K_jJ_jQ_j^{-1/2},\qquad
+F_j=Q_j^{-1/2}J_j^\dagger N_jJ_jQ_j^{-1/2},\qquad
+B_j^\dagger B_j+F_j=I_2.
+\end{gathered}
+\tag{QS.17}
+$$
+
+The sole possible nonzero failure eigenvalue has odds $b_j/c(h_j)$;
+rank two and these expressions remain valid on both axes. The common
+relative-time functions supplied by that constructor are
+
+$$
+\begin{gathered}
+g(a)=2/(1+a)^2,\quad G_{\rm time}(a)=2a/(1+a),\\
+Z_j(a)=\sqrt{I-G_{\rm time}(a)F_j},\quad
+R_j(a)=g(a)F_j[I-G_{\rm time}(a)F_j]^{-1},\\
+\int_0^1\|R_j(a)\|\,da=\log(1+b_j/c(h_j))\le A.
+\end{gathered}
+\tag{QS.18}
+$$
+
+Their cumulative jump effect plus survivor effect is $I$ at every cut;
+$I-F_j\succeq e^{-A}I$ on the entire qubit. Only terminal survivors
+receive the isometry $EB_j(I-F_j)^{-1/2}$. FIRST is $6+a$ and failed
+carriers receive no later action. This choice of $g$ realizes the laws;
+it does not restrict the time laws in Theorem 3.1.
+
+The single high encoder stacks $\sqrt{1-\delta}DE^\dagger$ with an
+isometry from the complementary input subspace into a second summand.
+Its counted joint fibre has dimension five, rate zero and two discarded
+terminal Kraus indices. Root TP makes its effect plus all low effects
+$I_5$. On every complex supported matrix the complete live Gram gives
+exactly $\Lambda_*$, and the complete failure covariance gives, for every
+Borel $\mathcal B\subseteq[0,1]$, the separate maps
+
+$$
+\Phi^f_\ell(\mathcal B)(X)=w_\ell\left(\int_{\mathcal B}g(a)\,da\right)
+                    \operatorname{tr}(EME^\dagger X)P_f.
+\tag{QS.19}
+$$
+
+For a passive reference $R$ the corresponding conditional output is
+
+$$
+w_\ell\left(\int_{\mathcal B}g(a)\,da\right)P_f\otimes
+ \operatorname{Tr}_5[(EME^\dagger\otimes I_R)X],
+\tag{QS.20}
+$$
+
+and every live Kraus matrix is tensored with $I_R$. Thus coherences and
+conditional operators, including both zero failure components, are
+preserved. The credited complete stopped-cq HALF errors are
+
+$$
+e_y=\frac12\left[\|\Lambda_*(a_ya_y^T)-\xi_y\xi_y^T\|_1+
+ \sum_\ell w_\ell\int_0^1
+ \left|\operatorname{tr}(Ma_ya_y^T)g(a)-\frac{6y}{(y+6a)^2}\right|da
+ \right].
+\tag{QS.21}
+$$
+
+The inherited CG minimax premise gives $e_5=e_{27}=E_*$ and
+$e_{16}<71/484<37/250<E_*$, with the same error for all four sign pairs.
+This reuses all twelve errors; it does not assert that all twelve are
+equal. The inherited JR cost premise gives the sharp worst-history high
+probability $\mathsf C(s)$, with the complementary input having zero
+probability on the histories. Deterministic low reports $\operatorname{sgn}z_j$
+give $\mathsf V=s_0\bar k/\sqrt\alpha\ge s$, with either fixed report at
+$z_j=0$. The actual height is (QS.10). Thus a finite law is a genuine
+conditional original attainer at its own request. Conversely Theorem 3.1
+bounds every original competitor by the common-law supremum. If a finite
+law attains that supremum the two bounds give (QS.16). $\square$
+

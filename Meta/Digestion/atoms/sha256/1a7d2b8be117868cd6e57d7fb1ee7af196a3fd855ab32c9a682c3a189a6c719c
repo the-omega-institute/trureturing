@@ -1,0 +1,56 @@
+**Definition 4.1 (Threshold, states and every input row).** Fix once
+
+$$
+\lambda=\min\{1,g/(\mathrm e v)\},\qquad
+A=\frac{\log(1/\alpha)}\lambda.
+\tag{4.1}
+$$
+
+At a selected allowed $s,L$, use $N,\delta,a,b_k$ from Theorem 3.2
+and put $H=\lceil AN\rceil$. The full state set is
+
+$$
+\{w,d_0,d_1\}\cup
+\{(j,z):j\in\mathbb Z,\ -H<j<H,\quad
+z\in\{0,1,\ldots,L,\mathsf{overflow}\}\}.
+\tag{4.2}
+$$
+
+Initialize deterministically in $w$ under both source laws. Every
+nonlabel configuration undertakes the next actual read. Entry into
+$d_i$ emits $D=i$ and stops. For every integer $u$ define the immutable
+successor map
+
+$$
+\Gamma(u)=
+\begin{cases}
+d_1,&u\ge H,\\
+d_0,&u\le-H,\\
+(u,0),&-H<u<H.
+\end{cases}
+\qquad
+n_z=
+\begin{cases}
+b_z-a,&1\le z\le L,\\
+0,&z=0\text{ or }z=\mathsf{overflow}.
+\end{cases}
+\tag{4.3}
+$$
+
+The complete rows are as follows. Each listed successor has probability
+one; every other entry has probability zero.
+
+| Configuration and just-read bit | Successor |
+| --- | --- |
+| $w$, zero | $w$ |
+| $w$, one | $(0,0)$ |
+| $(j,z)$, zero, $0\le z<L$ | $(j,z+1)$ |
+| $(j,L)$, zero | $(j,\mathsf{overflow})$ |
+| $(j,\mathsf{overflow})$, zero | $(j,\mathsf{overflow})$ |
+| $(j,z)$, one, every $z\in\{0,\ldots,L,\mathsf{overflow}\}$ | $\Gamma(j+n_z)$ |
+| $d_0$, either unused future bit | $d_0$ |
+| $d_1$, either unused future bit | $d_1$ |
+
+The formulas for $\Gamma$ and $n_z$ select installed destinations.
+A read applies its row directly and has no pending arithmetic step.
+

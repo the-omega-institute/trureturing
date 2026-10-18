@@ -1,0 +1,40 @@
+**Proposition 14.2 (bounded exact corroboration).** Direct recursive
+actual-substitution readout on the combs gives the following finite
+checks of Lemma 10.1. All listed target words have length at most
+$d-1$, and counts range from zero through $2d$, inclusive.
+
+| $m$ | $d$ | Target/count tables | Nonconstant tables | Actual readout/factor comparisons |
+| --- | --- | --- | --- | --- |
+| $1$ | $4$ | $135$ | $59$ | $405$ |
+| $2$ | $10$ | $21483$ | $4583$ | $128898$ |
+
+Every table factors through the specified zero-Read constant or one
+literal $L^a$, $0\le a<d$. At $d=10$, the deepest-target factors
+in increasing comb height are exactly
+
+$$
+(11,0),(9,0),(7,0),(5,0),(3,0),(0,0).
+\tag{LTR.40}
+$$
+
+For $m=2,h=1,D=11$, all $36$ actual two-comb rows and all
+$2047$ original targets give $73656$ factor comparisons at targets
+entering a frontier block. The original triple-code reader's factor
+agrees with direct (LTR.3) evaluation in every case; the remaining
+$36$ root-location cases have constant factor $(0,0)$. Separately,
+the pointwise reader at counts $0,1,2,5,22$ gives $368280$ output
+comparisons, all agreeing with actual original-root substitution
+readout.
+
+**Verification scope.** The actual readout computation recursively
+replaces an alpha by beta and a beta by $\langle\beta,\alpha\rangle$
+when a positive substitution count reaches a leaf, and otherwise
+traverses the original ordered branch. It does not use the factor
+formula to compute the actual reply. Separately compute (LTR.3) and
+(LTR.4), and check equality and the selected literal's reply partition
+on each finite list above. The scaffold checks use the actual wrapper
+and full root-prefixed literal addresses. These are bounded exact
+checks only; the universal assertions for every $m,h,q,k$ and every
+competing fiber rest on the ordinary proofs, not extrapolation or an
+empirical convergence claim.
+

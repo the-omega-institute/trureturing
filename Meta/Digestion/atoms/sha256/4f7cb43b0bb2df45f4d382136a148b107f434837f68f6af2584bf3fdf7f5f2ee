@@ -1,0 +1,22 @@
+### 78.4. Exhausting every exceptional stratum
+
+The finite rational traces in §78.B establish the following identities:
+\[
+\begin{aligned}
+1&\in(a,E_r,E_i,P_Y,P_D,w\beta_0-1),\\
+(a\beta_0 f_4)^2&\in(F_8,L,K),\\
+(a\beta_0 L)^3&\in(F_8,H_Y,H_D),
+\end{aligned}                                                    \tag{78.11}
+\]
+where
+\[
+f_4=3382096y^4+12165296y^3+23734128y^2+33454564y+40319015.
+\]
+Its signed primitive Sturm chain has no real root.
+The first identity excludes \(a=0\) when \(\beta_0\ne0\).
+For \(a\ne0,F_8=0\), if \(L=0\), the equation \(Q=0\) also forces \(K=0\),
+and the second identity is impossible over the reals. If \(L\ne0\), then
+\(v=-K/L\); the divided norms force \(H_Y=H_D=0\), contradicting the third
+identity. Thus every physical point lies on \(a\beta_0F_8\ne0\). This split
+retains both the substitution pole and every degree-drop case of \(Q\).
+

@@ -1,0 +1,266 @@
+**Theorem 25.2 (Actual-history separator, uniform horizon and finite measurement).** Under Definition 25.1, the following conclusions hold.
+
+1. For every nonzero $z\in L_K$, define $z_k^\pm=\max\{\pm z_k,0\}$ and put
+
+$$
+z=z^+-z^-,\qquad
+m_z=\sum_kz_k^+=\sum_kz_k^-,\qquad
+s_z=\sum_k k z_k^+=\sum_k k z_k^-,\qquad
+\ell_z=s_z+m_z.
+\tag{25.5}
+$$
+
+Concatenate $z_k^+$ copies of the actual block $0^k1$ in increasing $k$ order to obtain $u_z$, and do the same with $z_k^-$ to obtain $v_z$. Then these are distinct words of length $\ell_z$ and count $m_z$, and
+
+$$
+\boxed{\langle u_z|T_{\ell_z}(\theta)|v_z\rangle
+=A_z e^{i z\cdot\theta},\qquad
+A_z=\prod_{k\in K}p_k^{|z_k|/2}>0.}
+\tag{25.6}
+$$
+
+Thus every integer relation has an explicit accessible coherence with a nonzero coefficient and no sum of different characters. No trailing zero block is required. Appending $0^H$ to both words instead gives the coefficient $p_H A_z$ at horizon $\ell_z+H$.
+
+2. Let $\mathcal Z$ be any finite generating family of the abelian group $L_K$, with its zero elements omitted, and put $N_{\mathcal Z}=\max_{z\in\mathcal Z}\ell_z$, taking this maximum to be zero if the family is empty. For every $N\ge N_{\mathcal Z}$ and every pair of phases $\theta,\theta'$,
+
+$$
+\boxed{
+T_N(\theta)=T_N(\theta')
+\quad\Longleftrightarrow\quad
+\theta'-\theta\in\Gamma_K
+\quad\Longleftrightarrow\quad
+T_n(\theta)=T_n(\theta')\ \text{for every }n\ge0.}
+\tag{25.7}
+$$
+
+Within this supplied shift/reset family, these conditions are also equivalent to memory-unitary equivalence of the averaged channels and to outcome-labeled instrument equivalence, with the meanings in Definition 24.1. The general-$H$ argument (24.7)–(24.9) supplies this connection under the hypotheses verified below. The generating family must generate the full integer kernel; a basis of its real span alone is insufficient.
+
+3. An explicit finite generating family and a uniform horizon are available. Write $r=|K|\ge3$ and
+
+$$
+K=\{k_0<k_1<\cdots<k_{r-2}<k_{r-1}=H\},\quad
+D=H-k_0,\quad
+g=\gcd\{k-k_0:k\in K\},\quad d=D/g.
+\tag{25.8}
+$$
+
+For every vector $y\in\mathbb N^{r-2}$ satisfying
+
+$$
+1\le |y|:=\sum_i y_i\le d,\qquad
+\sum_{i=1}^{r-2}(k_i-k_0)y_i\equiv0\pmod D,
+\tag{25.9}
+$$
+
+put $q(y)=D^{-1}\sum_i(k_i-k_0)y_i$ and define
+
+$$
+R(y)_{k_i}=y_i,\qquad R(y)_{k_0}=q(y)-|y|,\qquad R(y)_H=-q(y).
+\tag{25.10}
+$$
+
+The finite set $\mathcal Z_*:=\{R(y):y\text{ satisfies these conditions}\}$ generates $L_K$. Its corresponding histories satisfy
+
+$$
+\ell_{R(y)}=\sum_{i=1}^{r-2}(k_i+1)y_i\le Hd,
+\qquad
+|\mathcal Z_*|\le {d+r-2\choose r-2}-1.
+\tag{25.11}
+$$
+
+Consequently the single horizon
+
+$$
+\boxed{N=H(H-\min K)/g\le H(H-1)}
+\tag{25.12}
+$$
+
+always suffices. One may use the smaller computable value $N_{\mathcal Z_*}$ instead. For $r\le2$, $L_K=0$, all phases lie in one affine orbit, every $T_n$ is phase independent, and $N=0$ suffices.
+
+4. If $M=|\mathcal Z|>0$, two fixed three-outcome projective measurements for each $z\in\mathcal Z$, all made only at terminal time $N\ge N_{\mathcal Z}$, give one distribution with $6M$ labeled outcomes whose equality is equivalent to (25.7). The labels retain the measurement setting. The construction requires no observation of the final memory. A lattice basis gives $M=r-2$ relation settings, each with two quadrature choices, when $r\ge3$, with the computable horizon $N_{\mathcal Z}$; thus there are $2(r-2)$ projective settings and $6(r-2)$ labeled outcomes. The explicit uniform bound (25.12) instead uses $\mathcal Z_*$ and its stated cardinality bound. Neither construction asserts a generally optimal horizon.
+
+From an arbitrary initial memory density in this family, measuring the classical output until its first tick prepares the required memory in at most $H+1$ instrument uses almost surely. Hence each trial needs at most $H+1+N$ uses, of which $N$ are coherent. This is a bound on logical uses, with the memory, retained flags, settings, and records accounted for below, rather than an optimization over physical hardware.
+
+Proof. *All actual histories, including unfinished gaps.* A chronological word with $m$ ticks has a unique decomposition
+
+$$
+w=0^{a_1}1\cdots0^{a_m}1\,0^t.
+\tag{25.13}
+$$
+
+Set $c_a=0$ for nonnegative $a$ outside $K$, including $a=0$. Since $e_H^*S^a x_\theta=c_a$,
+
+$$
+J_\theta S^a x_\theta=c_a x_\theta,\qquad
+K_wx_\theta=\left(\prod_{j=1}^m c_{a_j}\right)S^t x_\theta.
+\tag{25.14}
+$$
+
+This includes the no-tick case with empty product. Words with a completed gap outside $K$ have zero amplitude; a tail exceeding $H$ also has zero amplitude.
+
+For two nonzero words $w,v$ of the same length and count $m$, let $a,b\in\mathbb N^K$ be their completed-gap multiplicity vectors and let their tails be $t,u$. Then
+
+$$
+\begin{aligned}
+n&=m+\sum_kka_k+t=m+\sum_kkb_k+u,\\
+\langle w|T_n(\theta)|v\rangle
+&=c^a\overline{c^b}
+\sum_{\substack{k,l\in K\\ k\ge t,\ l\ge u\\ k-t=l-u}}
+c_k\overline{c_l},
+\qquad c^a=\prod_kc_k^{a_k}.
+\end{aligned}
+\tag{25.15}
+$$
+
+The equality $k-t=l-u$ is exactly equality of the final memory basis coordinate $H-(k-t)$. Each summand is a positive coefficient depending only on $p$ times the character whose exponent vector is
+
+$$
+z=a+\mathbf e_k-b-\mathbf e_l\in L_K:
+\quad\sum_jz_j=0,\quad
+\sum_jjz_j=(u-t)+(k-l)=0.
+\tag{25.16}
+$$
+
+The completed-gap equality gives $\sum_j j(a_j-b_j)=u-t$, while final-coordinate equality gives $k-l=t-u$, so the weighted sum in (25.16) is zero. Entries between different count sectors vanish. Formula (25.15) specifies the entire density, including incomplete terminal gaps; it does not restrict attention to a chosen pair of words.
+
+*A pure character in actual completed-tick histories.* The constraints defining $L_K$ are the homogenized exponent relations for the column configuration $(1,k)_{k\in K}$. The corresponding binomials are the standard ones in [Sottile, *Toric ideals, real toric varieties, and the algebraic moment map*, arXiv:math/0212044v3, Theorem 2.2 and Corollary 2.3](https://arxiv.org/html/math/0212044v3): the two nonnegative exponents have equal images under the homogenized integer matrix. That algebraic relation alone supplies no permitted output coherence. Here the first equality of sums gives equal tick counts, the second gives equal zero counts, and (25.14) supplies their actual memory amplitudes. For the words $u_z,v_z$, both tails are zero and (25.14) leaves the same normalized vector $x_\theta$ in the memory. In particular, $K_{u_z}x_\theta=(\prod_kc_k^{z_k^+})x_\theta$ and $K_{v_z}x_\theta=(\prod_kc_k^{z_k^-})x_\theta$, both nonzero. Tracing the memory gives
+
+$$
+\left(\prod_kc_k^{z_k^+}\right)
+\overline{\left(\prod_kc_k^{z_k^-}\right)}\|x_\theta\|^2
+=A_z e^{iz\cdot\theta},
+\tag{25.17}
+$$
+
+which proves (25.6). The terminal factor in (25.15) is here $\sum_kp_k=1$, so it introduces no other character. The two histories have different gap multiplicities but equal count and duration. Merely permuting one multiset would give $z=0$ and no phase contrast. If the common tail is $H$, the identity $S^Hx_\theta=c_He_H$ instead contributes $p_H$, proving the appended-word assertion. No projection onto that memory vector is performed.
+
+*One common horizon without an intermediate observation.* The marginal identity needed to use a single horizon is
+
+$$
+\operatorname{Tr}_{n+1,\ldots,N}T_N(\theta)=T_n(\theta)
+\qquad(0\le n\le N).
+\tag{25.18}
+$$
+
+Indeed later isometries act only on the memory and new flags. Tracing those systems is trace preserving, even on a memory entangled with the earlier flags, so $\operatorname{Tr}_{n+1,\ldots,N}\Omega_N=\Omega_n$. Also $Q_N=Q_n\otimes I+I\otimes Q_{N-n}$, and for every operator $B$ on the flags,
+
+$$
+\operatorname{Tr}_{n+1,\ldots,N}\mathcal D_N(B)
+=\mathcal D_n\!\left(\operatorname{Tr}_{n+1,\ldots,N}B\right).
+\tag{25.19}
+$$
+
+To see this, split each exponential into the two tensor factors in the defining integral; the suffix conjugation disappears under its partial trace. Thus (25.18) uses no independence assumption on the flags. It is a terminal marginal, not an intermediate measurement.
+
+*The full integer kernel and the compact affine torus.* The distinction between lattice generation and real spanning is the Laurent-character distinction in [Eisenbud–Sturmfels, *Binomial Ideals*, arXiv:alg-geom/9401001v1, Theorem 2.1(b)–(d)](https://arxiv.org/html/alg-geom/9401001v1). Part (b) uses an integer lattice basis to generate the Laurent binomial ideal; part (c) identifies saturated lattices with prime such ideals over an algebraically closed field; part (d) gives distinct character extensions across a finite-index enlargement when the index is coprime to the field characteristic, in particular over $\mathbb C$. Positivity of all $p_k$ keeps the amplitude coordinates nonzero. The following direct circle calculation determines the compact annihilator needed by these actual histories; it does not infer compact-circle conclusions merely from real nullspaces or complex algebraic closures.
+
+Let $\delta\in\mathbb T^K$ annihilate $L_K$, meaning $z\cdot\delta=0$ in $\mathbb T$ for every $z\in L_K$. For $r\ge2$ choose $k_0=\min K$, put $d_i=k_i-k_0$ for every other index, and let $g=\gcd_i d_i>0$. Select integers $t_i$ with $\sum_i t_i d_i=g$. Put
+
+$$
+\eta_i=\delta_{k_i}-\delta_{k_0},\qquad
+\beta=\sum_i t_i\eta_i\in\mathbb T.
+\tag{25.20}
+$$
+
+Every integer vector $n$ with $\sum_i d_i n_i=0$ corresponds to the relation $z_{k_i}=n_i$, $z_{k_0}=-\sum_i n_i$. Apply the annihilation hypothesis to $n=\mathbf e_i-(d_i/g)t$. It gives $\eta_i=(d_i/g)\beta$. Choose $b\in\mathbb T$ with $gb=\beta$, which is possible because multiplication by $g$ on a circle is onto, and put $a=\delta_{k_0}-bk_0$. Then $\delta_k=a+bk$ for every $k\in K$. The converse follows by the two defining equations of $L_K$. For $r=1$ one has $K=\{H\}$ and the same conclusion follows by taking $a=\delta_H$, $b=0$. The case $r=0$ is excluded by $H\in K$. Therefore
+
+$$
+\{\delta:z\cdot\delta=0\ \forall z\in L_K\}=\Gamma_K.
+\tag{25.21}
+$$
+
+The kernel $L_K$ is saturated: if $tz\in L_K$ for an integer $t\ne0$, its two integer defining sums force $z\in L_K$. When $r\ge2$, the map $(a,b)\mapsto(a+bk)_k$ has a stabilizer of order $g$, namely $gb=0$ and $a=-bk_0$. Indeed all $(k-k_0)b$ vanish exactly when $gb=0$, by the same integer greatest-common-divisor identity. For $r=1$ the stabilizer is instead the circle $a=-Hb$; the affine image is still the whole phase circle. These stabilizers do not add undetected points to (25.21). For $r\ge2$ the quotient $\mathbb T^K/\Gamma_K$ has character group $L_K$, a free group of rank $r-2$; it has no additional discrete ambiguity. In particular, this argument does not replace integer relations by a real nullspace.
+
+Equality of $T_N$ for $N\ge N_{\mathcal Z}$ now gives equality of every coherence (25.6) by (25.18). Division by the known positive $A_z$ yields $e^{iz\cdot(\theta'-\theta)}=1$ for the generators, hence for all of $L_K$. Equation (25.21) gives affine equivalence.
+
+For the converse, (25.15)–(25.16) show directly that every entry of every $T_n$ is invariant under affine phase changes. One can also keep track of the post-herald preparation phase explicitly. If $\theta'_k=\theta_k+a+bk$ and $D_be_j=e^{-ibj}e_j$, then
+
+$$
+\begin{aligned}
+x_{\theta'}&=e^{i(a+bH)}D_bx_\theta,\\
+S&=e^{ib}D_bSD_b^*,\qquad
+J_{\theta'}=e^{ia}D_bJ_\theta D_b^*,\\
+K'_w x_{\theta'}
+&=e^{i[a(m+1)+b(n-m+H)]}D_bK_wx_\theta
+\quad (|w|=n,\ |w|_1=m).
+\end{aligned}
+\tag{25.22}
+$$
+
+After tracing the memory, the remaining transformation of $\Omega_n$ is conjugation by $e^{i(a-b)Q_n}$; the global factor has canceled. Its count twirl is unchanged. This establishes (25.7) with the actual phase-dependent preparation included. It also proves the $r\le2$ assertion, since the corresponding integer kernel is zero and (25.21) gives one orbit. For two distinct labels the two integer equations have rank two; for one label the first equation alone forces $z=0$. Thus there are no omitted phase invariants in either edge case.
+
+*Application to the existing channel and labeled-instrument orbits.* Apply the general-$H$ argument in the proof of Theorem 24.2, equations (24.7)–(24.9), to Definition 23.1 with the present $H,K,p$. Its endpoint hypothesis is exactly $c_H=\sqrt{p_H}e^{i\theta_H}\ne0$. Its shift is the same single nilpotent block on $\mathbb C^{H+1}$ and its reset has norm-one range vector $x_\theta$. The two Kraus operators are independent because the first $H$ columns of $S$ are nonzero and those of $J_\theta$ are zero. Formula (24.7) therefore has the same two singular projective lines, with ranks $H$ and one; $H\ge2$ makes them distinct even when the support is sparse. Exact channel equivalence gives the Choi identity $FF^*=GG^*$ for the two full-column-rank Kraus vectorizations in that proof. Its left-inverse step forces the Kraus mixing matrix to be unitary, and the distinct singular ranks force it to be diagonal. The resulting shift-normalizer identity (24.8) fixes $Ue_j=e^{i\gamma}e^{ijt}e_j$, so its reset coefficients give (24.9) on precisely the nonzero indices $k\in K$. None of those steps requires a positive coefficient at a missing interior index. Conversely the diagonal unitary already specified after (24.9) realizes every affine difference for each labeled CP branch. Hence the channel and labeled-instrument orbits supplied there are exactly $\Gamma_K$ here, and (25.7) identifies them from the present finite output laws. This application classifies this specified family only, without a claim about all minimum-dimensional CP realizations of its classical process.
+
+*Integral generation with a uniform horizon.* For the explicit generating family, suppose $r\ge3$. The residues $k_i-k_0$ for the interior indices generate, together with the zero residue of $D$, a subgroup of $\mathbb Z/D\mathbb Z$ of order $d=D/g$. Every $R(y)$ in (25.10) lies in $L_K$. Because $0<k_i-k_0<D$ and $y\ne0$, one has $0<q(y)<|y|$: its positive part consists precisely of the interior entries $y_i$, and its negative part is supported at $k_0,H$. Its length and the stated length bound follow immediately, since $k_i+1\le H$.
+
+It remains essential to prove integral generation. For each interior $i$, let
+
+$$
+h_i=\frac{D}{\gcd(D,k_i-k_0)}\le d.
+\tag{25.23}
+$$
+
+Then $R(h_i\mathbf e_i)\in\mathcal Z_*$. Given any $z\in L_K$, add nonnegative integer multiples of these relations until every interior coordinate is nonnegative. Call the resulting interior vector $y$. The two equations defining $L_K$ force its endpoint coordinates to be exactly those of $R(y)$, and $\sum_i(k_i-k_0)y_i\equiv0\pmod D$.
+
+If $y\ne0$, view its entries as a multiset of residues with sum zero. Partition it into minimal nonempty zero-sum submultisets. Each such submultiset has at most $d$ terms: in any ordering of a minimal submultiset of length $h$, the partial sums at positions $0,\ldots,h-1$ are distinct, since a repeated partial sum would give a proper nonempty zero-sum submultiset. There are only $d$ possible sums in the subgroup. Consequently each piece is a permitted vector in (25.10), and additivity of $R$ writes $R(y)$ as a sum of elements of $\mathcal Z_*$. Subtract the relations previously added to recover $z$. This proves generation of the entire lattice, not just a finite-index subgroup. Counting all nonzero nonnegative vectors with coordinate sum at most $d$ gives the displayed bound on $|\mathcal Z_*|$. This proves (25.12).
+
+For a basis with fewer relation settings, integer column operations give a constructive alternative: for the row $(k_i-k_0)_{i=1}^{r-1}$ the Euclidean algorithm produces a unimodular integer matrix $U$ taking it to $(g,0,\ldots,0)$. The last $r-2$ columns of $U$ give a basis of its integer kernel: for any integer vector in that kernel, its coordinates under $U^{-1}$ are integers and its first coordinate is zero because $g>0$; the other coordinates are unconstrained. Appending the coordinate minus the column sum at $k_0$ gives a basis of $L_K$. The formula $N_{\mathcal Z}=\max_z\sum_k(k+1)z_k^+$ is an explicit computable bound for that basis. No bound on its horizon is inferred merely from being a real basis.
+
+*Finite terminal measurement.* For the measurements, abbreviate $u=u_z$, $v=v_z$ and define the unit vectors
+
+$$
+|R_\pm\rangle=\frac{|u\rangle\pm|v\rangle}{\sqrt2},\qquad
+|I_\pm\rangle=\frac{|u\rangle\mp i|v\rangle}{\sqrt2}.
+\tag{25.24}
+$$
+
+For $B\in\{R,I\}$ let $P^B_\pm=|B_\pm\rangle\langle B_\pm|$ and $P^B_0=I-P^B_+-P^B_-$. These form projective measurements on $\ell_z$ flags. Each projector commutes with $Q_{\ell_z}$ because $u,v$ have the same count. At terminal time $N$, use $\widetilde P^{B,z}_o=P^B_o\otimes I_{N-\ell_z}$. These are still projectors and commute with $Q_N$. By (25.6) and (25.18), their conditional probability differences are
+
+$$
+\begin{aligned}
+\Pr(+\mid z,R)-\Pr(-\mid z,R)&=2A_z\cos(z\cdot\theta),\\
+\Pr(+\mid z,I)-\Pr(-\mid z,I)&=2A_z\sin(z\cdot\theta).
+\end{aligned}
+\tag{25.25}
+$$
+
+Choose $(z,B)$ uniformly among the $2M$ settings and retain that setting in the output. Equivalently use the single POVM
+
+$$
+F_{z,B,o}=\frac1{2M}\widetilde P^{B,z}_o,
+\qquad z\in\mathcal Z,\ B\in\{R,I\},\ o\in\{+,-,0\}.
+\tag{25.26}
+$$
+
+Its effects sum to $I$ and commute with $Q_N$. Equality of its joint distribution gives both components of every character in (25.25), hence (25.7). Conversely, affine-equivalent phases give the same $T_N$ by (25.7) and therefore the same probabilities for all these effects. For $M=0$, a single deterministic outcome suffices. The equality statement concerns exact probability laws. For $r\ge3$ the affine quotient has positive dimension, whereas a fixed finite number of outcomes from this finite alphabet has only finitely many possible records. Such a record cannot determine every point of the continuous quotient with zero error. The separator is therefore not finite-sample exact phase recovery; repetitions estimate its probabilities. No perfect discrimination statement for arbitrary stronger access is being made.
+
+*Actual herald and separately counted resources.* For any initial density $\sigma$, the probability that the first tick follows $a$ zeros is, by the same calculation as (24.17),
+
+$$
+\Pr_\sigma(0^a1)
+=\operatorname{Tr}\bigl(J_\theta S^a\sigma(S^*)^aJ_\theta^*\bigr)
+=\sigma_{H-a,H-a}\quad(0\le a\le H),
+\qquad
+\Pr_\sigma(0^{H+1})=0.
+\tag{25.27}
+$$
+
+The first $H+1$ mutually exclusive probabilities sum to one, since $S^{H+1}=0$ and $\operatorname{Tr}\sigma=1$. At the first tick the nonzero branch output is a positive scalar times $x_\theta x_\theta^*$, by (23.3). Monitoring until that tick therefore prepares the required memory in at most $H+1$ uses almost surely. Stop monitoring future flags then and retain the next $N$ outputs coherently. Reherald before each trial, including after a terminal measurement has changed the memory: the reset identity holds for every conditional input density. The fixed stable device and independent setting choice then give the same post-herald distribution on each trial. These conclusions require neither stationary initialization nor a memory readout.
+
+For $M>0$, a sufficient logical apparatus has source memory $\mathbb C^{H+1}$, $N$ stored two-dimensional output registers of joint dimension $2^N$, a reusable two-level herald detector, a $2M$-valued setting register and a three-level outcome pointer. A controller may use the $N+3$ states $\mathrm{wait},\mathrm{captured}_0,\ldots,\mathrm{captured}_N,\mathrm{done}$. These are separate resources. Retaining the waiting time adds a classical record with $H+1$ possible values; retaining the selected setting and outcome adds a $6M$-valued record per trial, or a processor that accumulates the corresponding frequencies. Neither the source memory nor the controller absorbs these records for free. For $M=0,N=0$, the setting and pointer may be replaced by a deterministic outcome; the herald remains a sufficient preparation if one is required.
+
+For the selected projective measurement at time $N$, its effects $\widetilde P_o$ admit a pointer coupling
+
+$$
+W=\sum_{o\in\{+,-,0\}}\widetilde P_o\otimes R_o,
+\qquad
+R_o|\mathrm{ready}\rangle=|o\rangle,
+\qquad
+[W,Q_N\otimes I]=0,
+\tag{25.28}
+$$
+
+where each $R_o$ is a unitary on the three-level pointer. Orthogonality and completeness of the projectors make $W$ unitary, and their count commutators give the displayed conservation. This is a logical realization of the permitted terminal measurement, with no intermediate observation. The bound $H+1+N$ counts uses of the supplied instrument or isometry, including the herald; it is not an optimum for hardware dimension, elapsed time, control complexity or energy.
+
+The phase-enhanced classical-process precedent remains the Liu–Elliott–Binder–Di Franco–Gu construction cited in the proof of Theorem 23.2. Here (25.14)–(25.16) provide the actual finite-history consumer of the integer relations. The conditioned five-mode pure amplitudes and total occupation measurements in [Hidden Relations continuation, C-76.1–C-78.3 and C-83.2](AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS_CONTINUATION.md) have a different domain and charge action: their supplied two-copy tensor factors and occupation labels do not identify chronological renewal flags or provide this $V_\theta$. No such identification is used. The real choice $\theta=0$ remains in the same classical-law family by Theorem 23.2; separating phase orbits gives no complex-over-real generation advantage and supplies no native AURIC quantum-field implementation. $\square$
+

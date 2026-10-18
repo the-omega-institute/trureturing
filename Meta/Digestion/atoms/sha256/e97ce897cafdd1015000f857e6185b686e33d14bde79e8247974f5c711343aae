@@ -1,0 +1,17 @@
+**Corollary 3.6 (A fixed zero/one leaf).** With no further query, a
+specified active zero edge and active one edge have maximal full-law
+state mass at most $a^2\eta$.
+
+Proof. A repeated edge with opposite labels is contradictory. Adjacent
+edges give $a\eta/2\le a^2\eta$ by Lemma 3.3. For disjoint edges,
+the masses according as the target is in the zero pair, in the one pair,
+or outside both are
+
+$$
+a^2\eta,\qquad \frac{c\eta}{2},\qquad ac\eta.
+\tag{3.4}
+$$
+
+They follow directly from the component products. The last two are at
+most $a^2\eta$ by $c\le2a^2$ and $c\le a$. $\square$
+

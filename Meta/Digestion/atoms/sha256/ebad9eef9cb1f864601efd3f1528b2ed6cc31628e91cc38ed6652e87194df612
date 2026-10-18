@@ -1,0 +1,6 @@
+### 76.5 Attribution and boundary
+
+The Gram spectral and dimension arguments use standard positive-matrix variational principles, closely related to the frame-rank inequalities behind Welch bounds; see [Datta, Howard and Cochran, Geometry of the Welch Bounds, §2](https://arxiv.org/abs/0909.0206). Stinespring representations, trace-distance tests and the diamond norm follow [Watrous, The Theory of Quantum Information, §§2.2 and 3.3](https://cs.uwaterloo.ca/~watrous/TQI/). Section 72 supplies the already established exact common-product calibration comparison. The new support-transfer estimate and the two-input argument provide the stated explicit obstruction for this uniform collapsed-fibre family.
+
+The comparison is against one common physical product acting on every coherent input. Separate optimizers for the plus and minus tests are not allowed. Finite LOSR mixtures can implement the target exactly, so (1) is neither a lower bound for arbitrary shared randomness nor a linear separation from its convex feasible set. The result permits arbitrary local environments and physical leakage, and establishes bounds rather than an exact unrestricted optimum or a general RT recovery theorem.
+

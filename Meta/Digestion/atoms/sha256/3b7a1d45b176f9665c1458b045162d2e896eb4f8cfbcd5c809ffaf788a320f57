@@ -1,0 +1,15 @@
+# FIB-ATOM 原子边界演算：差分、约数体与有限误差证书
+
+本卷把“用原子化边界推体”具体化为一个有指定读出任务的恢复方法：先给内部的局部生成规律，再用方向差分消去重复贡献，最后连同起始条件、接缝与尾部误差恢复目标。贯穿全文的对应为
+
+$$
+\text{线段前后差}
+\longleftrightarrow\text{方格四角差}
+\longleftrightarrow\text{立方体八角差}
+\longleftrightarrow\text{约数格 Möbius 反演}.
+$$
+
+对应的是累计与反演之间的操作关系，既不把这些对象的物理维数等同，也不把经典数值响应自动提升为完整量子来源。本卷是普通数学参考输入；以下证明及精确有理证书不具有本卷新增的 Lean kernel 验证身份。
+
+供应基准固定为项目快照 [`c201d1da8b79b8462ec873accfd3f9983796d655`](https://github.com/the-omega-institute/trureturing/tree/c201d1da8b79b8462ec873accfd3f9983796d655)：[Fibonacci 原子关系生成理论](https://github.com/the-omega-institute/trureturing/blob/c201d1da8b79b8462ec873accfd3f9983796d655/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md) 的 §§3、57、104 提供替换、窗口方向与 guard 条件；[Zeckendorf—Euler—5040](https://github.com/the-omega-institute/trureturing/blob/c201d1da8b79b8462ec873accfd3f9983796d655/docs/develop/theory/ZECKENDORF_EULER_5040.md) 已有以“奇偶交互，其实是一个 Möbius 反演”为题的 Boolean 子集格—平方自由约数对应。这里消费这些对应，区分顶端原子与外支撑端点两种任务，再运输到可复现的有限符号证书；不将既有对应重新认作发现。
+

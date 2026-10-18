@@ -1,0 +1,36 @@
+**定理 51.5（完整 $V_3$ 单圈与实际闭合边）。** 对 $r=3,\ldots,h-1$，其非特殊块只有一条 $R_r\xrightarrow bL_r$ 被删。记 $P_r$ 为该块中从 $R_r$ 到 $L_r$ 的完整实际补路径，即 $W(C_r)$ 删除该 $b$ 后的实际子字，边数 $M-1$，包含全部 $M$ 个块顶点。
+
+外部实际 $c$ 与这些补路径组成完整链
+
+$$
+L_2\xrightarrow cR_3\xrightarrow{P_3}L_3\xrightarrow cR_4
+\xrightarrow{P_4}\cdots\xrightarrow{P_{h-1}}L_{h-1}\xrightarrow cR_0.
+$$
+
+它包含全部非特殊块顶点，除此之外不接触特殊块。结合引理 51.4，端点的完整圈轨迹为
+
+$$
+R_0\xrightarrow\beta L_1\xrightarrow cR_2\xrightarrow\beta R_1
+\xrightarrow cL_0\xrightarrow\beta L_2\xrightarrow{\text{外部完整链}}R_0.
+$$
+
+六个特殊端口恰各用一次，每条非特殊完整补路径恰用一次。全部块的真实删边分解已被穷尽，因此展开后没有额外分量或隐藏原生圈，得到覆盖全部 $2nK$ 顶点的简单圈。
+
+一个完全确定的原始生成元圈字为
+
+$$
+\begin{split}
+&[a(cH)^{n-3}ca]\,c\,[W(C_*)\text{ 中 }R_2\to R_1\text{ 的实际子字}]\,c\\
+&\quad[U_{n-2}cU_{n-3}cba]\,c
+\prod_{r=3}^{h-1}[W(C_r)\text{ 中 }R_r\to L_r\text{ 的实际子字}\,c].
+\end{split}
+$$
+
+乘积中每个子字后各接一个 $c$，所有括号均由引理 51.2 的有限原生字替换规则确定。最后一字母是 $L_{h-1}\xrightarrow cR_0$，$R_0=(p,q,A,x)$，所以真实闭合边已核验。总边数为
+
+$$
+(M-3)+(n-4)(M-1)+(n-1)=(n-3)M=2nK.
+$$
+
+旋转 $A$ 后同一证明给出它每个间隙上的一个可用外部供应，$p,q$ 保持上述方向；全参数结论来自实际路径论证，有限运行只作旁证。
+

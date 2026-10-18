@@ -1,0 +1,82 @@
+### theorem 6.1: 定理 4：精确预测记忆的最小商定理
+
+一个记忆映射
+
+$$
+\mu:\mathcal P\to\mathcal M
+$$
+
+能够精确预测所有未来输出，当且仅当
+
+$$
+\mu(p)=\mu(q)
+\quad\Longrightarrow\quad
+p\sim_{\mathcal M}q.
+$$
+
+因此，$\mathcal Q_{\mathcal M}$ 是所有精确预测记忆的最小商。
+
+#### 证明
+
+若 $\mu(p)=\mu(q)$ 而 $p\not\sim_{\mathcal M}q$，则存在某个未来词 $\omega$，使
+
+$$
+pM_\omega1\neq qM_\omega1.
+$$
+
+相同记忆无法同时给出两个不同的未来概率，因此 $\mu$ 不可能精确预测。
+
+反过来，如果
+
+$$
+\mu(p)=\mu(q)
+\Rightarrow
+p\sim_{\mathcal M}q,
+$$
+
+则未来 law 在每个记忆纤维上恒定，因此可以定义为该记忆的函数。
+
+证毕。
+
+---
+
+在五态固定三均值纤维中：
+
+$$
+p_\kappa=p_*+\kappa d.
+$$
+
+若 instrument 的所有未来记录都满足
+
+$$
+dM_\omega1=0,
+$$
+
+则只保留
+
+$$
+(X,Y,Z)
+$$
+
+就足够。
+
+如果存在某个 $\omega$ 使
+
+$$
+dM_\omega1\neq0,
+$$
+
+则精确预测至少需要保留
+
+$$
+\kappa.
+$$
+
+所以这里的“生命式选择性遗忘”可以被严格定义为：
+
+> 记忆系统保留未来观察商 $\mathcal Q_{\mathcal M}$ 所需要的坐标，同时丢弃对允许未来记录完全不起作用的方向。
+
+在静态线性读出中，$\kappa$ 可以被遗忘；在输出分支能产生 $xy$ 的动态系统中，$\kappa$ 不能被遗忘。
+
+---
+

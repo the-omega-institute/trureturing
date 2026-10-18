@@ -1,0 +1,5 @@
+source_id = "kbonacci-target-acquisition-cost"
+path = "docs/develop/theory/KBONACCI_TARGET_ACQUISITION_COST.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

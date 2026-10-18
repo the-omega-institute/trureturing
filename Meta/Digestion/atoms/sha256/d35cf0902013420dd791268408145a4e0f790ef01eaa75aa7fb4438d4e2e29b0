@@ -1,0 +1,26 @@
+**Theorem 5.3 (guard and old-domain preservation).** At a fixed guard $h$,
+arbitrary finite interleavings of Reserve with original calls have exactly
+the $F_h$ source-event responses and source successors, on the same initial
+occurrence. Raise preserves the current tree and original occurrence but
+changes the future task to the explicitly announced $F_J$. It cannot in
+general be projected away from historical guard meaning.
+
+Proof. Theorem 5.2 preserves the relation $\lambda(t)\le h\le K$ and source
+value across Reserve. Theorem 4.5 supplies exactly each next $F_h$ call and
+successor, including every rejected attempt. Induction on the interleaving
+proves the first assertion. Raise writes no source cell, and $J\ge h$
+preserves the source-domain condition. Its sealed entry changes the parameter
+subsequently read by ReadState and hence the whole-candidate guard.
+
+The exact common-action criterion and its nonintertwining boundary are already
+TMC30 subsection 30.4's distinction: reads depend on the same $t$, while a
+candidate in $(h,J]$ changes reject to accept. This volume uses that supplied
+fact; it does not count a new wrapper proof. For the actual continuing
+instrument, start at beta with $h=K=1$, execute and retain a rejected Rho,
+Reserve(2), Raise(2), then Rho. The first event remains a reject on beta; the
+last accepts $\langle\beta,\alpha\rangle$. Both are reached lawful calls of
+this installed graph. A verifier using the newest guard for both calls would
+change the first event. The typed guard history in §6 prevents precisely that
+change. Once a source exceeds an old guard, truncating its packet is not a
+total restriction back to that old source domain. $\square$
+

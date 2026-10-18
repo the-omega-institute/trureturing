@@ -1,0 +1,19 @@
+**假设 33.1（明示的离散块状态）。** 完整来源为全部有限实直和 $H=U\oplus H_{\rm hid}$，总线性更新为
+
+$$
+u_{n+1}=A_{11}u_n+A_{12}h_n,\qquad
+h_{n+1}=A_{21}u_n+A_{22}h_n.
+$$
+
+原始输出为 $u_n$，全部 $h_0$ 允许；不预设矩阵对称或稳定。标准记忆消元作为中间步骤直接复用 [观察者相对时空定义 19.2](OBSERVER_RELATIVE_SPACETIME_CAUSAL_COMPATIBILITY_RECOVERY.md)，令 $K_k=A_{12}A_{22}^kA_{21}$，有
+
+$$
+\begin{aligned}
+h_n&=A_{22}^nh_0+\sum_{j=0}^{n-1}A_{22}^{n-1-j}A_{21}u_j,\\
+u_{n+1}&=A_{11}u_n+A_{12}A_{22}^nh_0+
+\sum_{j=0}^{n-1}K_{n-1-j}u_j.
+\end{aligned}
+$$
+
+$n=0$ 的和为空；连续机制的引用范围见 [Mori–Zwanzig 文献注](../../../Library/Dynamics/gouasmiparishduraisamy2017memory.md)。
+

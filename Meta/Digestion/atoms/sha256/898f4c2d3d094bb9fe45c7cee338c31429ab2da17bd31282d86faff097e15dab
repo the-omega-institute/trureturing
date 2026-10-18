@@ -1,0 +1,35 @@
+**Corollary 3.5 (complete lag fibers and individual relative counts).**
+For two records the lag fiber is exactly an effectively computed
+subset of $\{0,\ldots,B-1\}$, optionally together with
+$\{B,B+1,\ldots\}$. It is finite or cofinite. This conclusion
+holds on the full native source domain of Definition 1.1.
+
+For arbitrary $m$, $E$ is finite exactly when no accepted representative
+has a coordinate equal to $B$; in that case $|E|=|K|$. On nonempty
+input the whole epoch tuple is unique exactly when $K$ consists of
+one representative and that representative has no capped coordinate.
+For fixed $0\le a<b<m$, the exact possible values of $n_b-n_a$ are
+also effectively a finite set, optionally together with one terminal
+integer interval.
+Every capped coordinate of an accepted representative belongs to a
+ray-covering cut, and is consequently an isolated vertex of the NAR
+overlap graph.
+
+Proof. The first assertions follow from (NUE.12). For the relative-count
+assertion, on an
+uncapped region the difference is $c_b-c_a$. On a region with first
+capped index $k>b$, both coordinates are fixed and the same is true.
+If $k\le b$, the coefficient of a generator $v_j$ in this difference
+is one precisely when $a<j\le b$, and zero otherwise. At least one
+such $j$ lies in $\{k,\ldots,m-1\}$, namely
+$\max(k,a+1)$. Its coefficient can be any natural. Thus the image
+of that region is exactly $\{c_b-c_a,c_b-c_a+1,\ldots\}$. Take
+the finite union over $K$. These particular difference projections
+need no unproved claim about arbitrary arithmetic projections.
+Finally, a row with a concrete leaf is impossible at epoch $B$ by
+the first case of Theorem 2.2. Thus an accepted capped coordinate has
+only holes in its exterior, and the second case proves that its cut
+covers every ray. Its visible-cell set is empty. The cap therefore
+does not alter any clock difference on an overlap edge.
+$\square$
+

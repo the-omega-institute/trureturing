@@ -1,0 +1,21 @@
+**Definition 11.2 (separate equalities).** Keep original AIF/ARC response
+map $Q$, the extended response map $Q_{G_\circ}$, raw equality $W(h)=W(h')$,
+full history equality, and A's currently available observations separately
+typed. On $\mathcal C_\circ$ the supplied extraction plus §7 gives, separately
+for each natural view, history equality exactly when that view is equal.
+These are conditional semantic kernels and actual serialized conversions
+on the acquired target domain. They do not identify an original experiment
+or original complete-successor coordinate on every added phase.
+
+The original typed finite-view theorem
+[`typed_finite_view_kernel`](../../../D5/S3/ObserverMemory/RefinementClosure/TypedFiniteViewKernel.lean)
+and its
+[Scribe](../../../Blueprint/D5/S3/ObserverMemory/RefinementClosure/TypedFiniteViewKernel.scribe.cs)
+require independently supplied edges, legality, labels and readouts.
+[`predictive_memory_minimal_quotient`](../../../D5/S3/ObserverMemory/RefinementClosure/PredictiveMemoryMinimalQuotient.lean)
+and its
+[Scribe](../../../Blueprint/D5/S3/ObserverMemory/RefinementClosure/PredictiveMemoryMinimalQuotient.scribe.cs)
+require both readout and update factorization. They provide no current
+token, initialized converter or originalQ instance. Their statements are
+used as scope checks here, not claimed compiled applications.
+

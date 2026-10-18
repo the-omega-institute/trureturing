@@ -1,0 +1,230 @@
+## 99. 相干承诺下的有限平均认证成本
+
+**假设 C-99.1（固定 iid 来源与最低相干承诺）。** 固定 C-96 家族的一份状态、
+固定 $r,X,Y$ 及其基，每轮提供实际独立相同的两份 $\rho_\gamma$，
+跨轮完整测量结果独立同分布。给定 $0<\gamma_0<1$，承诺
+$\gamma\in[\gamma_0,1]$，在观察数据前选择
+$\lambda=\gamma_0^2$、$0<\alpha<1$，并沿用 C-98 的固定对照和停止规则。
+以下所有 $\log$ 均为自然对数。
+
+**定理 C-99.2（付费试验的有限平均值及超越界上限）。** 令
+
+$$
+h=w(r-w)>0,\qquad A=\log(1/\alpha)>0,
+$$
+
+$$
+d(\lambda)=\frac{1+\lambda}{2}\log(1+\lambda)
++\frac{1-\lambda}{2}\log(1-\lambda).
+\tag{C99.1}
+$$
+
+则 $d(\lambda)>0$、$\mathbb E\tau<\infty$，并有
+
+$$
+\mathbb E\tau\le
+\frac{\log(1/\alpha)+\log(1+\lambda)}{w(r-w)d(\lambda)}.
+\tag{C99.2}
+$$
+
+$\tau$ 为全部双副本试验次数，平均制备份数为 $2\mathbb E\tau$。
+
+证明。式 (C96.3) 给每轮完整三值分布
+
+$$
+\Pr(V=1)=\tfrac h2(1+\gamma^2),\quad
+\Pr(V=-1)=\tfrac h2(1-\gamma^2),\quad
+\Pr(V=0)=1-h.
+\tag{C99.3}
+$$
+
+因此 $\Pr(V\ne0)=h$，条件于保留的两种符号，正号概率为
+$(1+\gamma^2)/2\ge(1+\lambda)/2$。
+记 $Y_n=\log(1+\lambda V_n)$、$S_N=\sum_{n=1}^NY_n=\log E_N$，
+则增量 iid，并且
+
+$$
+\log(1-\lambda)\le Y_n\le\log(1+\lambda).
+\tag{C99.4}
+$$
+
+它们的均值为
+
+$$
+\begin{aligned}
+\mu&=\frac h2\bigl[(1+\gamma^2)\log(1+\lambda)
+ +(1-\gamma^2)\log(1-\lambda)\bigr]\\
+&=h\left[d(\lambda)+\frac{\gamma^2-\lambda}{2}
+\log\frac{1+\lambda}{1-\lambda}\right]\ge h d(\lambda)>0.
+\end{aligned}
+\tag{C99.5}
+$$
+
+最后的严格正性可直接微分：$d(0)=0$，
+$d'(\lambda)=\tfrac12\log((1+\lambda)/(1-\lambda))>0$ 对 $0<\lambda<1$ 成立。
+
+先证明有限平均停止，之后才使用无界停止和恒等式。
+由有界性，函数 $c(t)=\mathbb E e^{-tY_1}$ 在零邻域可微，
+$c(0)=1$、$c'(0)=-\mu<0$。
+具体在三值分布上它就是
+
+$$
+c(t)=1-h+\tfrac h2(1+\gamma^2)(1+\lambda)^{-t}
++\tfrac h2(1-\gamma^2)(1-\lambda)^{-t}.
+\tag{C99.6}
+$$
+
+故存在固定 $t_*>0$ 使 $0<c(t_*)<1$。
+若 $\tau>N$，前 $N$ 轮从未达到 $A$，特别有 $S_N<A$。
+对非负变量 $e^{-t_*S_N}$ 用 Markov 不等式，再用跨轮独立性，得到实际尾界
+
+$$
+\Pr(\tau>N)\le\Pr(S_N<A)
+\le e^{t_*A}\mathbb E e^{-t_*S_N}
+=e^{t_*A}c(t_*)^N\qquad(N\ge0).
+\tag{C99.7}
+$$
+
+$\tau>0$ 的尾和等式由指标函数的单调收敛给出，即使事先允许无穷期望也成立。
+因此
+
+$$
+\mathbb E\tau=\sum_{N\ge0}\Pr(\tau>N)
+\le\frac{e^{t_*A}}{1-c(t_*)}<\infty.
+\tag{C99.8}
+$$
+
+这也推出 $\Pr(\tau<\infty)=1$；有限均值没有以 Wald 恒等式作为前提。
+这里使用的是指数矩与 Markov 的经典 Chernoff 方法，所需 iid、有界性、
+正漂移以及实际几何尾上界均已明确给出，不从“有正漂移”直接省略可积性。
+
+现在固定有限整数 $m$。路径上
+
+$$
+S_{\tau\wedge m}=\sum_{k=1}^mY_k\mathbf1_{\{\tau\ge k\}}.
+\tag{C99.9}
+$$
+
+事件 $\{\tau\ge k\}$ 只由前 $k-1$ 轮决定，和 $Y_k$ 独立。
+有限求和取期望所以得到
+
+$$
+\mathbb E S_{\tau\wedge m}
+=\mu\sum_{k=1}^m\Pr(\tau\ge k)=\mu\mathbb E(\tau\wedge m).
+\tag{C99.10}
+$$
+
+设 $B=\max\{-\log(1-\lambda),\log(1+\lambda)\}$。
+由 $\tau$ 可积及增量有界，$|S_{\tau\wedge m}|\le B\tau$ 是可积支配，
+且 $S_{\tau\wedge m}\to S_\tau$ 几乎必然。
+支配收敛和右侧单调收敛使式 (C99.10) 成为
+
+$$
+\mathbb E S_\tau=\mu\mathbb E\tau.
+\tag{C99.11}
+$$
+
+这是在此实际假设下证明的 Wald 停止和恒等式。
+首越界前有 $S_{\tau-1}<A$，末次增量至多 $b=\log(1+\lambda)$，故
+
+$$
+A\le S_\tau<A+b,\qquad
+\mu\mathbb E\tau=\mathbb E S_\tau\le A+b.
+\tag{C99.12}
+$$
+
+代入式 (C99.5) 即得所需上界。
+每轮确实使用两份，路径上制备数等于 $2\tau$，故平均数亦乘二。证毕。
+
+**命题 C-99.3（小相干尺度与明确的渐近范围）。** 当 $\gamma_0\downarrow0$，
+
+$$
+d(\gamma_0^2)=\frac{\gamma_0^4}{2}+O(\gamma_0^8),
+\tag{C99.13}
+$$
+
+因此固定 $\alpha\in(0,1)$ 时，这个已构造规则满足
+
+$$
+\mathbb E\tau=O\!\left(\frac{\log(1/\alpha)}{w(r-w)\gamma_0^4}\right).
+\tag{C99.14}
+$$
+
+更一般，该上界对 $0<\alpha\le\alpha_*<1$ 一致成立，常数可依 $\alpha_*$；
+不声明对无限制的 $\alpha\uparrow1$ 一致。
+
+证明。由几何级数在任意紧子区间上的一致收敛，
+积分 $d'(\lambda)=\operatorname{artanh}\lambda$ 得
+
+$$
+d(\lambda)=\sum_{k\ge1}\frac{\lambda^{2k}}{(2k)(2k-1)}
+=\frac{\lambda^2}{2}+\frac{\lambda^4}{12}+O(\lambda^6).
+\tag{C99.15}
+$$
+
+例如 $0\le\lambda\le\lambda_*<1$ 时，首项以后的和至多
+$\lambda^4/[12(1-\lambda_*^2)]$，足以给式 (C99.13)。
+又 $d(\lambda)\ge\lambda^2/2$、$\log(1+\lambda)\le\lambda$。
+固定 $A=\log(1/\alpha)>0$ 时，$A+\lambda=O(A)$；
+若 $\alpha\le\alpha_*<1$，则 $A\ge\log(1/\alpha_*)>0$，同一估计一致成立。
+代入式 (C99.2) 得所述范围。
+若允许 $\alpha=\exp(-\gamma_0^6)$，则 $A=\gamma_0^6$，
+而 $\log(1+\gamma_0^2)$ 为 $\gamma_0^2$ 阶，不能吸收到统一常数乘 $A$ 中。
+事实上固定 $h>0$ 时式 (C99.14) 右侧尺度趋零而 $\tau\ge1$，
+所以这种不加限制的一致大 $O$ 断言确实错误。证毕。
+
+**命题 C-99.4（两个数值成本的有理界）。** 在
+$r=4/5$、$w=2/5$、$\alpha=1/100$ 下，式 (C99.2) 给
+
+| 最低相干量 $\gamma_0$ | $\lambda$ | 平均全部双副本试验次数 | 平均制备份数 |
+| ---: | ---: | ---: | ---: |
+| $1/2$ | $1/4$ | 小于 $956$ | 小于 $1912$ |
+| $1/4$ | $1/16$ | 小于 $14921$ | 小于 $29842$ |
+
+证明。此时 $h=4/25$，式 (C99.15) 的前两项给
+
+$$
+d(1/4)\ge\frac{97}{3072},\qquad
+d(1/16)\ge\frac{1537}{786432}.
+\tag{C99.16}
+$$
+
+为保留对数界的精确依据，对 $0<z<1$ 使用
+
+$$
+\log\frac{1+z}{1-z}
+=2\sum_{j=0}^{m-1}\frac{z^{2j+1}}{2j+1}+R_m(z),\qquad
+0<R_m(z)\le\frac{2z^{2m+1}}{(2m+1)(1-z^2)}.
+\tag{C99.17}
+$$
+
+该式由 $2/(1-z^2)$ 的几何级数积分得到；尾项分母至少为 $2m+1$，
+求几何和即得界。
+令 $U_m(z)$ 为右侧有限和加显示的尾上界，则有理数比较给
+
+$$
+\begin{aligned}
+\log125&=6\log2+\log(125/64)
+<6U_{12}(1/3)+U_{12}(61/189)<\frac{4829}{1000},\\
+\log(425/4)&=6\log2+\log(425/256)
+<6U_{12}(1/3)+U_{12}(169/681)<\frac{23329}{5000}.
+\end{aligned}
+\tag{C99.18}
+$$
+
+两处 $z$ 由 $(v-1)/(v+1)$ 得到，故都是式 (C99.17) 的合法有理输入。
+再作精确交叉相乘：
+
+$$
+\frac{4829}{1000}<956\,\frac4{25}\,\frac{97}{3072},\qquad
+\frac{23329}{5000}<14921\,\frac4{25}\,\frac{1537}{786432}.
+\tag{C99.19}
+$$
+
+式 (C99.2) 的分子分别为 $\log125$ 与 $\log(425/4)$；
+式 (C99.16)–(C99.19) 因此给表中的严格上界，制备数乘二。证毕。
+
+这里的 $\gamma_0^{-4}$ 是区分可分离背景与微弱相干增量的该规则上界。
+C-92 的首次事件等待只要求一次成功，经典混合也可能成功；两种任务不同。
+本章未给所有测量策略的最优下界，也未把双副本实验的次数转成原生逐位读取复杂度。
+

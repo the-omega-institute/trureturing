@@ -1,0 +1,66 @@
+**Theorem 6.2 (the exact common-offset ray).** For fixed positive
+integer gaps $g$, the same table $P$ belongs to $\mathcal F_{c,k}$
+exactly when
+
+$$
+B_Pg\le0,\qquad b\ge b_P(g),
+\tag{TC.9}
+$$
+
+where
+
+$$
+b_P(g)=\max\left(
+5,\ \max_{x:t(x)<n}
+\left\lceil\frac{a(x)\cdot g}{n-t(x)}\right\rceil
+\right).
+\tag{TC.10}
+$$
+
+An empty inner maximum imposes no condition. If $B_Pg\not\le0$
+the ray is empty; otherwise its admissible integer offsets are
+precisely $b_P(g),b_P(g)+1,\ldots$. Moreover
+
+$$
+b_P(g)\le b_0(g):=
+\max\{5,(n-1)R-S_p\}.
+\tag{TC.11}
+$$
+
+Proof. Expand $c_i=b+\sum_{j<i}g_j$ and interchange finite sums:
+
+$$
+\begin{aligned}
+J_c(x)-W
+ &=\sum_i(v_i(x)-1)c_i\\
+ &=(t(x)-n)b+\sum_{j=1}^{n-1}g_j a_j(x).
+\end{aligned}
+\tag{TC.12}
+$$
+
+For $t(x)=n$ this is the corresponding row of $B_Pg$,
+independent of $b$. For $t(x)<n$ it is nonpositive exactly at
+the ceiling in (TC.10). The intersection of all actual input
+constraints proves (TC.9) and the exact ray.
+
+For a shorter run of length $t$, put $r_x=a(x)\cdot g$.
+Since $0\le p_i\le R$,
+
+$$
+r_x=\sum_i v_i(x)p_i-S_p\le tR-S_p.
+$$
+
+Set $A_0=(n-1)R-S_p$. Because $p_1=0$ and the other
+$n-1$ offsets are at most $R$, we have $A_0\ge0$. For
+$t\le n-1$,
+
+$$
+(n-t)A_0-(tR-S_p)
+  =(n-1-t)(nR-S_p)\ge0.
+$$
+
+It follows that $r_x/(n-t)\le A_0$. The number $A_0$ is an
+integer, so its ceiling has the same bound. Taking the maximum with
+five proves (TC.11). This argument retains the multiplicity of every
+visit on every complete run. $\square$
+

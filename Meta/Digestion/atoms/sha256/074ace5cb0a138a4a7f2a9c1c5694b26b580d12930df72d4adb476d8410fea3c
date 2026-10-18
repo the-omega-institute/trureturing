@@ -1,0 +1,12 @@
+### 463.8 收敛到原 A 的严格递增下界
+
+定义完整递归下界
+
+$$
+\boxed{\quad
+L_n=\mathcal J(B_n)+\mathcal F(r_n,m_n)
+=-\int\log v\,B_n(v)\,dv+r_n\log(r_n/m_n).
+\quad}
+\tag{RVF.32}
+$$
+

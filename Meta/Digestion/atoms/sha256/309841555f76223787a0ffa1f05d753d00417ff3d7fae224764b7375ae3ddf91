@@ -1,0 +1,40 @@
+**Definition 5.1 (explicit local premises).** Fix one enabled actual
+original row $r$ at $W_-$. The following are additional operational
+premises for its proposed fine fragment, rather than consequences of
+two tree leaves or of a finite truth table.
+
+There is actual retained finite Ready/Busy/Halt phase material and
+a bounded row/operand before-image, acquired by authorized bounded
+reads before the corresponding overwrites. Its next-stage selection,
+every phase update and each guard check have an explicitly declared
+execution mechanism. A continuing core permission as in Definition
+4.1 is acquired at admission and survives exactly until Finish.
+Current staged native PC/token/seal/halt encodings neither dispatch
+another original row nor grant a callback.
+
+The row has a fixed finite remaining stage list. For every reached
+stage its designated operand is reachable through its actual current
+links, all constructor parents and vacancies exist, and the declared
+limited write/birth/handoff operation is enabled by the continuing
+permission. The list computes the actual original core and finite
+effects in written order, combines physical aliases correctly, preserves
+both head lanes, and prepares exactly the original successor and one
+receipt. Its bound output operand, if any, is the actual public bit
+authorized by the original OUT at admission. A later raw finite effect
+on that latch cannot silently replace it.
+
+These premises can be supplied as priced strong operational atoms.
+They are not a statement that the current native basis has installed
+them. In particular bounded guard matching can still have the whole
+original read footprint, even when each data mutation is smaller.
+Under §7's stipulated atom convention, a setter, one-vertex birth,
+head retarget and first activation have respectively 6, 11, 6 and 5
+designated endpoint assignments including their phase update. Each
+creates respectively 0, 1, 0 and 0 vertices. Admission and marker-only
+Finish each have three phase assignments; FinishOUT additionally
+releases one bound bit. This measures the decreased mutation scope.
+It does not decrease the admitted guard's read scope or turn a finite
+case table into an installed evaluator. Any implementation which
+performs separate checking work must expose and price those cuts,
+including refusal, as in Proposition 2.3.
+

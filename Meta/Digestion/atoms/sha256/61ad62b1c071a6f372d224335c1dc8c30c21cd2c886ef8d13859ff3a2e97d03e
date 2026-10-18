@@ -1,0 +1,26 @@
+**Definition 16.1 (credited curvature and the cubic profile).** SC.21–22
+and TC's exact final branch give
+
+$$
+\gamma_f-\Phi(C_{\rm sat}-h)=\mathsf b h^2+O(h^3),\qquad
+\mathsf b=K_{\rm sat}=
+\frac{L_f^3}{4b_{\rm off}^2 C'(p_s)^2}>0.
+\tag{JS.78}
+$$
+
+Indeed $D_{\rm sat}=2u_fC'(p_s)/(1+u_f^2)
+=2b_{\rm off}C'(p_s)/L_f$, so this is exactly the supplied
+$L_f/D_{\rm sat}^2$, with its uniform cubic remainder.
+For $\mathsf a>0$ and real $\xi$ let $r_\xi$ be the unique root
+
+$$
+r_\xi^3-\xi r_\xi=\mathsf a/(4\mathsf b),\qquad
+r_\xi>\sqrt{\max\{\xi,0\}},\qquad
+\mathcal V_{\rm sp}(\xi)=\mathsf a r_\xi-
+\mathsf b(r_\xi^2-\xi)^2.
+\tag{JS.79}
+$$
+
+For $\mathsf a=0$ define instead
+$\mathcal V_{\rm sp}(\xi)=-\mathsf b\max\{-\xi,0\}^2$.
+

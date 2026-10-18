@@ -1,0 +1,25 @@
+**定理 77.3（附加无区分投影的有限维 Zeno 极限）。** 另行允许二结果 Lüders 测量 $\{P,Q\}$，它只区分块，不读取块内基标签。固定有限 $\tau$，每次等待 $\tau/N$ 后测量，保留全部结果。全成功历史的 Kraus 算子为
+
+$$
+W_N(\tau)=\left(Pe^{-i\tau K/N}P\right)^N.
+$$
+
+对任意有限维 Hermitian $K$，它在算子范数下趋于 $e^{-i\tau PKP}P$。对本例 $PKP=0$，极限就是 $P$；初态支撑于 $P$ 时全成功概率趋于一，成功后的局部态趋于原态。
+
+证明（77.3）。在 $P\mathcal H$ 上把 $P$ 当作单位，记 $H_P=PKP|_{P\mathcal H}$。指数尾界给
+
+$$
+Pe^{-i\tau K/N}P\big|_{P\mathcal H}
+=I_P-i\tau H_P/N+O(N^{-2}).
+$$
+
+与 $e^{-i\tau H_P/N}$ 的差为 $O(N^{-2})$，其中常数可对有界 $\tau$ 区间统一选取。前者为酉压缩，范数不超过一；后者酉。恒等式
+
+$$
+S^N-R^N=\sum_{j=0}^{N-1}S^{N-1-j}(S-R)R^j
+$$
+
+因而把 $N$ 步差控制为 $NO(N^{-2})=O(N^{-1})$，而 $R^N=e^{-i\tau H_P}$。延拓到全载体时两者在 $Q$ 上都为零，给范数收敛。本例 $H_P=0$，每压缩步为 $I_P+O(N^{-2})$，故全成功算子趋于 $P$。对支撑于 $P$ 的 $\varrho$，未归一化成功输出 $W_N\varrho W_N^\dagger\to\varrho$，迹趋于一，正概率处的归一化遂有同一极限。$\square$
+
+Facchi–Pascazio，[*Quantum Zeno dynamics: mathematical and physical aspects*, arXiv:0903.3297v1，§3、§5 的有界 Hamiltonian 乘积公式](https://arxiv.org/pdf/0903.3297v1)，给相同的有限维或有界算子背景。一般 Zeno 有效生成元 $PKP$ 可以非零，保持子空间并不意味着冻结态；本例冻结来自具体的 $PKP=0$。有限 $N$ 的失败分支并未删除，每次投影都是新增操作许可。极限不提供无限快测量的免费实现或费用保证。若要得到持续而非冻结的非平凡局部循环，仍须额外指定块内生成元、纠错或保护机制。
+

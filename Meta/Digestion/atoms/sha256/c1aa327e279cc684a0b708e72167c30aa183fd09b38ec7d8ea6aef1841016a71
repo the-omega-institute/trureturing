@@ -1,0 +1,14 @@
+**Lemma 3.3 (anchored bound on every original solution).** If
+$A_b\ne\varnothing$, every original solution choosing branch $b$
+satisfies $m_{\mathbf t}(\mathbf x)\le C_b$.
+
+Proof. Use the first direction of Lemma 2.2, before making any marker
+replacement. For every $e\in A_b$ the original output code has that
+explicit primitive at the same displayed constructor address $p_e$.
+The scalar equation path to $o=0$ forces its value to be $r_e$ on this
+original solution. Arbitrary actual residual shapes and decorations do
+not alter this occurrence. Lemma 3.1 supplies a native leaf at the depth
+in (NLC.10) in that output. Taking the minimum over all outputs and all
+such occurrences proves the bound. It does not bound each output, the
+maximum depth of any output, or any source's size. $\square$
+

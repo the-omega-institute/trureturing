@@ -1,0 +1,108 @@
+**Theorem 9.3 (sharp joint programming capacity).** Encoders and decoders
+as in Definition 9.2 exist if and only if
+
+$$
+N\leq\sum_\alpha\left\lfloor\frac{d_\alpha}{3}\right\rfloor.
+\tag{QC.51}
+$$
+
+In every feasible code, the occupied ranges for distinct commands are
+orthogonal inside each block. A fixed projective read on the retained
+code can therefore recover $j$ perfectly while leaving every valid
+encoded specimen/reference state unchanged.
+
+Proof: actual-source bridge. Use the four reachable endpoints (QC.23)
+at the parameters of Proposition 4.3. Their $(\beta,m)$ values are
+$(0,0),(\pi,0),(\pi/2,1),(3\pi/2,1)$. They come from the same
+positive preparation by the five-unit controls already supplied in §4,
+with common height waveform, support margin $1/16$, rectangle heights
+$0,8\pi,0,8\pi$, and common canonical live probability $1/3$.
+Their nonzero-overlap graph is connected and they span the active qutrit
+by (QC.27)–(QC.28); their Gram matrix is (QC.34). Earlier failed
+histories remain stopped. The generator record is not an encoder input.
+The source allows every signed sector; four of its actual histories
+suffice as the lower certificate.
+
+The credited implication (QC.29)–(QC.31) says that any channel fixing
+these four pure densities is the identity on all $M_3$. Apply it to
+$\mathcal D_0\mathcal E_j$ and to
+$\operatorname{Ad}_{U_j^\dagger}\mathcal D_1\mathcal E_j$.
+The actual-source requirements (QC.50) force the complete channel identities
+
+$$
+\mathcal D_0\mathcal E_j=\operatorname{id}_{M_3},\qquad
+\mathcal D_1\mathcal E_j=\operatorname{Ad}_{U_j}.
+\tag{QC.52}
+$$
+
+This uses one linear channel on four actual inputs; it assumes neither
+free preparation of arbitrary qutrits nor extra copies or tomography.
+
+Proof: orthogonal occupied ranges. Write encoder branch Kraus operators
+$E_{j,\alpha,a}:\mathbb C^3\to\mathbb C^{d_\alpha}$.
+Each branch is CP, generally not TP. The restriction of each decoder to
+a single input block is TP. Let its Kraus operators be $A_{\alpha,s}$
+for $\mathcal D_0$ and $B_{\alpha,t}$ for $\mathcal D_1$.
+The Choi matrices of identity and a unitary channel have rank one.
+The positive-summand argument in (QC.33) therefore gives, for all indices,
+
+$$
+A_{\alpha,s}E_{j,\alpha,a}=a_{j,\alpha,a,s}I_3,
+\qquad
+B_{\alpha,t}E_{j,\alpha,a}=b_{j,\alpha,a,t}U_j.
+\tag{QC.53}
+$$
+
+Choose encoder Kraus operators $E=E_{j,\alpha,a}$ and
+$F=E_{l,\alpha,a'}$ in the same block. Decoder trace preservation gives
+two expressions for the same operator:
+
+$$
+\begin{aligned}
+E^\dagger F
+ &=\sum_s(A_{\alpha,s}E)^\dagger(A_{\alpha,s}F)=\lambda I_3,\\
+E^\dagger F
+ &=\sum_t(B_{\alpha,t}E)^\dagger(B_{\alpha,t}F)
+   =\nu U_j^\dagger U_l.
+\end{aligned}
+\tag{QC.54}
+$$
+
+For $j\ne l$, $U_j^\dagger U_l$ is not scalar: its middle-reference
+entry is one, while $0<|C_j-C_l|<1$ excludes unity of both other
+characters. Hence $\lambda=\nu=0$, and $E^\dagger F=0$.
+All occupied ranges of different commands in this block are orthogonal.
+For a nonzero $E$, the first line with $F=E$ gives
+$E^\dagger E=qI_3$ with $q>0$, so $\operatorname{rank}E=3$.
+Every command active in block $\alpha$ therefore occupies at least three
+dimensions, disjoint from every other command active there. At most
+$\lfloor d_\alpha/3\rfloor$ commands are active in that block.
+Every command is active in at least one block since its encoder is TP.
+Summing these incidences proves necessity of (QC.51).
+
+Let $S_{j,\alpha}$ be the span of all command-$j$ Kraus ranges in block
+$\alpha$. Their mutually orthogonal projectors, and the unused
+complement, define a fixed projective read. Every valid command-$j$
+encoded state is supported on $\bigoplus_\alpha S_{j,\alpha}$.
+The same support statement holds with an untouched reference, by applying
+the encoder Kraus operators tensored with identity. The read returns $j$
+with probability one and leaves that entire joint state unchanged.
+
+Proof: sufficiency. Under (QC.51), assign each command an orthogonal
+three-dimensional slot in one block. Let $V_j$ be its isometric embedding
+and encode $\rho$ as $V_j\rho V_j^\dagger$ in that block.
+Let $P_\perp$ be the unused-slot complement in $\mathcal H_B$ and
+fix any normalized qutrit density $\tau$. On a block-diagonal input $X$,
+use the two whole-domain maps
+
+$$
+\mathcal D_b(X)=\sum_{j=1}^N U_j^bV_j^\dagger X V_j(U_j^b)^\dagger
+             +\operatorname{tr}(P_\perp X)\tau,
+\qquad b=0,1.
+\tag{QC.55}
+$$
+
+Each summand is CP, and the slot projectors plus $P_\perp$ sum to
+identity, proving TP. These maps satisfy (QC.52), also tensor identity
+on every reference. This proves sufficiency and the theorem. $\square$
+

@@ -1,0 +1,37 @@
+**each** counterfactual vector has that row's mass; three such
+vectors are never added as three schedule masses. For the changed row,
+
+$$
+17s+(4s+\delta)+(53s-\delta)=74s,
+\qquad 53s-\delta\ge0.
+\tag{325.2}
+$$
+
+Every entry is nonnegative. The deterministic $P^\star$ counts sum
+to 1374 and its mixed counts to 1698, so the schedule masses of the
+entire construction sum once to
+
+$$
+(1-24\tau)+24(\tau-t)+(1374+1698)s=1.
+\tag{325.3}
+$$
+
+This is one normalized probability law before any source is inspected.
+
+For a row of positive mass $m$, partition $[0,1)$ separately in
+each of its three cells into increasing-label half-open intervals
+$I_0(u),I_{10}(v),I_{11}(z)$ of lengths equal to that cell's
+label masses divided by $m$. Give the full deterministic table
+$O(i,j;u,v,z)$ weight
+
+$$
+m\,|I_0(u)\cap I_{10}(v)\cap I_{11}(z)|.
+\tag{325.4}
+$$
+
+The intersections form a partition and reproduce all three marginals
+with total weight $m$. This supplies all counterfactual labels from
+the same local seed coordinate before replies. Zero-mass rows are
+omitted; no division or limit sampler is needed there. It is the
+coupling already used in 320.2, applied to the stated new vector.
+

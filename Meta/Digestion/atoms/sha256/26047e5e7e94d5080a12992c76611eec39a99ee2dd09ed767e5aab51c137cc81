@@ -1,0 +1,60 @@
+**Proposition 7.3 (Exact operations and all finite prefixes).** The
+maps (7.10)–(7.11) intertwine $P_s,Q_t$ exactly on their full lawful
+source domains. On $\mathscr S_m$ their guards are exactly
+
+$$
+0<K+s<H\quad\hbox{for }\mathcal U_s,
+\qquad \mathscr S_m\quad\hbox{for }\mathcal V_t.
+$$
+
+From exact initialization, every finite lawful command history stays
+exactly encoded at every prefix and every intermediate point of each
+leg. The same error bound (7.9) holds there, independently of the
+history's length.
+
+**Proof.** Substituting (7.6) in (7.10) gives, by the finite binomial
+theorem,
+
+$$
+f_j'=(k+s)^jU(\alpha),
+$$
+
+while (7.11) gives $f_j'=k^jU(\alpha+t/2)$. These are exactly
+$E_m(P_sx)$ and $E_m(Q_tx)$. Translation preserves polynomial degree,
+so there is no truncation error. The change in $\beta$ under $Q_t$
+is still present in the actual state and is omitted only by this
+particular permitted encoder.
+
+For a point of (7.8), the stored height is its actual height. The
+straight probability segment is lawful throughout precisely when its
+endpoint satisfies $0<K+s<H$, and every fixed-height phase command
+is lawful. Thus the guards are exact. All rays in any encoder fiber
+agree on these guards, since they have the same height; this is the
+meaning of saturated guards here. The substitution identities also prove
+preservation of (7.8) on the guards. Both signs and every real command
+are covered; $|s|\ge H$ has empty probability domain. Off-image
+vectors are not asserted to encode native states.
+
+Let $x_0$ be any actual current ray and initialize $z_0=E_m(x_0)$.
+If $z_i=E_m(x_i)$ and the next command is lawful, the just-proved
+identity gives $z_{i+1}=E_m(x_{i+1})$. Induction proves the claim
+for every finite list. On a probability leg use $P_{\tau s}$ and on
+a phase leg use $Q_{\tau t}$, with $0\le\tau\le1$, from the
+exact preceding encoding. These give the exact intermediate encodings.
+The pointwise bound (7.9) can then be applied at each current state.
+An approximate output is never fed back as the latent state, so no
+readout error is accumulated. The proof also covers a sequence of
+state-selected commands once their actual successive guards hold.
+$\square$
+
+The quotient does not make the native controls commute. For example,
+the chronological rectangle $P_s,Q_t,P_{-s},Q_{-t}$ changes the true
+$\beta$ coordinate by $-st/r$ whenever its probability legs are
+lawful, while fixing $k,\alpha$. This follows by subtracting the two
+phase rates $c(k+s)t-c(k)t$. The resulting ray changes precisely when
+$st/r$ is not an integer multiple of $2\pi$, by the ray identification
+in §1.
+The displayed encoding forgets that circle, so its rectangle action is
+the identity. Equal encoded actions do not identify the original real
+commands or enlarge their source domains.
+

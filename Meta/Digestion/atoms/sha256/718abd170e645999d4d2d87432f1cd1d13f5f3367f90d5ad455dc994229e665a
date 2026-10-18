@@ -1,0 +1,96 @@
+**Definition 2.1 (conditional algebraic source).** Use source variables
+$\mathbf x=(\lambda_{\rm src},\alpha_1,\alpha_2,\beta_1,\beta_2,z_{\rm src})$
+and $\eta=(\eta_0,\eta_1,\eta_2)$. These chart coordinates are unrelated
+to history phases and to $\alpha,\beta$ below. Put
+
+$$
+\begin{aligned}
+v_5&=(\alpha_1,\alpha_2,-1)^T,&v_{27}&=(\beta_1,\beta_2,1)^T,\\
+R_y&=v_yv_y^T/\|v_y\|^2,& A_5^{\rm src}&=\lambda_{\rm src}R_5,\\
+A_{27}^{\rm src}&=(1-\lambda_{\rm src})R_{27},&
+\zeta&=(z_{\rm src},59\lambda_{\rm src}/128,\lambda_{\rm src}/2),\\
+N^{\rm src}&=\sum_{y=5,27}A_y^{\rm src}\odot a_ya_y^T,&
+S_0^{\rm src}&=\operatorname{diag}\zeta-N^{\rm src},\\
+S_{ij}^{\rm src}&=\begin{pmatrix}
+\zeta_j-\sum_{y=5,27}(A_y^{\rm src})_{ii}p_{yj}&-N_{ij}^{\rm src}\\
+-N_{ij}^{\rm src}&\zeta_i-\sum_{y=5,27}(A_y^{\rm src})_{jj}p_{yi}
+\end{pmatrix}\quad(i<j),\\
+F^{\rm src}&=\sum_{y=5,27}\operatorname{tr}(A_y^{\rm src}B_y^{\rm tar})
+                   -\sum_i\zeta_i+6\lambda_{\rm src}/11,\\
+g^{\rm src}&=(1000\det S_0^{\rm src},\det S_{01}^{\rm src},
+                                      \det S_{02}^{\rm src}),\\
+\Psi(\mathbf x,\eta)&=(\nabla_{\mathbf x}(F^{\rm src}+\eta\cdot g^{\rm src}),
+                                                        g^{\rm src}).
+\end{aligned}
+\tag{NP.7}
+$$
+
+The inherited premise selects the unique zero of $\Psi$ in the
+radius-$10^{-24}$ product box about the following EXACT rational centres.
+
+| Coordinate | Centre |
+| --- | --- |
+| $\lambda_{\rm src}$ | $0.479508042205945691075728241615$ |
+| $\alpha_1$ | $1.412018697539825943102823246594$ |
+| $\alpha_2$ | $1.185897402486986028204155873343$ |
+| $\beta_1$ | $0.413330945620125544606320492846$ |
+| $\beta_2$ | $0.809647491041060318009094562763$ |
+| $z_{\rm src}$ | $0.066998926272600209516864472757$ |
+| $\eta_0$ | $0.279795267654829218213193898783$ |
+| $\eta_1$ | $0.199570407911600478528148253443$ |
+| $\eta_2$ | $0.091392615490799158339482855657$ |
+
+Evaluate all following source quantities there, rather than at the centres:
+
+$$
+\begin{aligned}
+H^{\rm src}&=1000\eta_0\operatorname{adj}S_0^{\rm src},&
+Q^{01}&=\eta_1\operatorname{adj}S_{01}^{\rm src},&
+Q^{02}&=\eta_2\operatorname{adj}S_{02}^{\rm src},\\
+(h_0,h_1,h_2)^T&=H^{\rm src}e_0/\sqrt{H^{\rm src}_{00}},&
+(a,b)^T&=Q^{01}e_0/\sqrt{Q^{01}_{00}},&
+(c,d)^T&=Q^{02}e_0/\sqrt{Q^{02}_{00}},\\
+m_1&=1-H^{\rm src}_{11}-Q^{01}_{00},&
+m_2&=1-H^{\rm src}_{22}-Q^{02}_{00},\\
+D&=\operatorname{diag}(h_0,h_1,h_2),&
+T&=a|0\rangle\langle1|+b|1\rangle\langle0|,&
+S&=c|0\rangle\langle2|+d|2\rangle\langle0|,\\
+M&=\operatorname{diag}(0,m_1,m_2),&\kappa&=h_0a+h_1b.
+\end{aligned}
+\tag{NP.8}
+$$
+
+The adjugate is the transposed cofactor matrix; first-coordinate vectors
+have the relevant matrix size. CG §§13–16,22, current JR Proposition
+34.2 and the real-Gram source supply the conditional rank-one positive
+factors and identities
+
+$$
+\begin{gathered}
+h_i,a,b,c,d,m_1,m_2>0,\quad 0<\kappa<1/4,\qquad
+D^\dagger D+T^\dagger T+S^\dagger S+M=I_3,\\
+968/1000<h_0^2<970/1000,\quad498/1000<h_1^2<500/1000,\quad
+655/1000<h_2^2<656/1000,\\
+h_0h_1>695/1000,\quad h_0h_2>796/1000,\quad
+ a^2+b^2+c^2+d^2<36/1000,\\
+(S_{01}^{\rm src})_{00},(S_{02}^{\rm src})_{00}>1/10.
+\end{gathered}
+\tag{NP.9}
+$$
+
+In particular $h_0^2+b^2+d^2=1$, $h_1^2+a^2+m_1=1$ and
+$h_2^2+c^2+m_2=1$. Define
+
+$$
+\alpha=\frac{ab}{h_0h_1}>0,\qquad
+\beta=\frac{cd}{h_0h_2}>0,\qquad \ell=\alpha+\beta,
+\qquad k=1-\ell.
+\tag{NP.10}
+$$
+
+AM–GM gives $ab+cd<(18/1000)$, and the two product margins imply
+$0<\ell<18/695<1/36$. This uses the combined sum-of-squares margin,
+not two separate loose estimates. Thus $0<\alpha,\beta<1$ and $k>0$.
+The isolation, enclosure, bordered Jacobian, ranks and minimax premises
+are not reauthenticated by these symbolic implications.
+

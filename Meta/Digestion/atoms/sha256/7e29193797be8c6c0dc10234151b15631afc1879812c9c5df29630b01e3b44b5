@@ -1,0 +1,4 @@
+**命题 63.1（旧余额在全部谱点为零）。** 对每个 $S\subseteq E_b$，$h_{n,S}$ 的 JM54 余额 $m_0$ 与 JM58 余额 $L_n$ 都为零。
+
+证明。$P_n=E_a\sqcup\{pL:p\in E_b\}$。在 $X$ 块，$pLR\in H_X$；在 hidden $Y$ 块，$pLL\in H_1$ 且 $pRR\in H_2\cap H_3$；在 visible $Y$ 块，$pLLR\in H_1\cap H_3$ 且 $pRR\in H_2\cap H_3$。所以每个 $X$ 位置都命中其支持，每个 $Y$ 位置的三个 $H_i$ 都至少命中一次。这正是 $m_0=0$ 与 $d_X=d_Y=0$ 的定义条件。$\square$
+

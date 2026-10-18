@@ -1,0 +1,13 @@
+**Proposition 5.2 (The specified frozen prefix preserves its complete prefix law).** Replace the first read of $V_j$ by $j+3$ and its second read on root zero by $j-3$. The resulting two-read prefix has exactly the same joint law of the actual target and its two potential replies as the original first two addresses. It consequently preserves the stopped prefix consisting of the target, first reply, whether the second read occurs, and its reply when acquired. Literal address names are excluded from this prefix statistic. These are precisely the placements from Theorem 3.2 for this two-edge prefix.
+
+Proof. In phase $\psi$ the new pair of edges is
+
+$$
+E=\{q+1,q+2\},\qquad F=\{q-2,q-1\}.
+\tag{5.4}
+$$
+
+They are disjoint from each other and from $q$, just as the first two edges in (5.2). Conditional on either target value $S_q=s$, both the old and new potential-reply pairs are independent pair XORs, each with probabilities $c,2d$ for zero and one. In the opposite phase all four addresses are separators, so both pairs are deterministically zero. The same actual endpoint table and the phase weights $1/2,1/2$ give equality of the complete target/potential-reply-pair laws. Applying the rule that omits the second reply on root one gives the stopped-prefix identity, and independence supplies every seed rectangle.
+
+The old root edge $\{q+3,q+4\}$ excludes $q$, so (3.1) places it at left endpoint $q+1$, actual address $B+2=j+3$. Its old second edge is disjoint from the root and excludes $q$, so the last row of Lemma 3.1 places that child at left endpoint $q-2$, actual address $B-4=j-3$. This applies the two-edge placement to the prefix; it makes no claim that the height-three tree itself lies in the height-two theorem's domain. $\square$
+

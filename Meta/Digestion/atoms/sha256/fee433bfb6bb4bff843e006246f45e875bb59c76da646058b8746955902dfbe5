@@ -1,0 +1,17 @@
+**Definition 7.1 (Exact rational threshold rule).** Fix $m\ge2$ and a rational $0<\alpha<1/2$, and set $b=2/\alpha>1$. Wait for the first actual tick. Partition all subsequent complete gaps into consecutive nonoverlapping blocks of exactly $m$, with no rejection of a block. Let $K_{j,r}=K_{(j-1)m+r}$ and $T_j=\sum_{r=1}^mK_{j,r}$. At the closing tick of block $j$ compute
+
+$$
+R_j=\frac{\prod_{r=1}^mH(K_{j,r})\,C_{0,m}(T_j)}
+{\prod_{r=1}^mK_{j,r}^9\,C_{1,m}(T_j)}
+=\frac{G_{1,m,T_j}(K_{j,1},\ldots,K_{j,m})}
+{G_{0,m,T_j}(K_{j,1},\ldots,K_{j,m})}.
+$$
+
+Let $M_0=1$, $M_j=\prod_{v=1}^jR_v$, and
+
+$$
+J=\inf\{j\ge1:M_j\ge b\text{ or }M_j\le b^{-1}\}.
+$$
+
+At the upper boundary emit label one; at the lower boundary emit label zero. Equalities belong to their respective boundaries, which are disjoint. If no boundary is reached, continue reading. The products and thresholds are rational; the logarithms in the proof need not be computed. All full-family probability assertions concern the stated legal source histories.
+

@@ -1,0 +1,105 @@
+**Theorem 6.2 (exact horizontal dimension for arbitrary joint inputs).**
+Fix one horizontal request, an integer $M\geq1$, and $M$ distinct heights
+in $(0,c-d)$.
+Under §4, exact correctness on one selected actual nuisance history at
+each height requires
+
+$$
+R\geq M.
+\tag{FH.18}
+$$
+
+Thus no fixed finite handoff realizes this one complete request at every
+height of a nondegenerate interval. If correctness is required for every
+phase and signed winding at those heights, the stronger necessary bound is
+
+$$
+R\geq M+5.
+\tag{FH.19}
+$$
+
+Eight actual nuisance histories per height suffice for (FH.19):
+$\beta\in\{0,\pi/2,\pi,3\pi/2\}$ and $m\in\{0,1\}$.
+Indeed their ideal complete reduced outputs have real linear span of
+dimension exactly $M+5$, which is also the span dimension for the full
+nuisance family at these heights. Neither bound assumes any independence
+of the incoming archives from phase or winding.
+
+Proof. The output projection retaining just the requested operation's
+live and new-failure sectors induces one real linear map
+$\Psi:\mathcal B_{\rm sa}\to\mathcal O_{\rm sa}$ on the live input.
+Absorbing acquisition inputs cannot produce these new executed sectors.
+Exactness says $\Psi(L_h)=\Omega_h$ there; it also forces zero
+unmatched acquisition/abort mass. In particular, any real relation among
+$M$ live inputs gives the same relation among their ideal failure CDFs.
+Lemma 6.1 forces all coefficients to vanish. The $M$ inputs are therefore
+independent in a real space of dimension $R$, proving (FH.18).
+
+For the stronger assertion write $z=e^{-i\beta}\in\{1,-i,-1,i\}$,
+$\eta=(-1)^m\in\{1,-1\}$ and, at height $x_j$, set
+
+$$
+A_j=\sqrt{2(x_j+d)},\quad B_j=\sqrt{2(c-x_j-d)},\quad C_0=\sqrt Z.
+$$
+
+All three are nonzero. The live vector is
+$C_0|2\rangle+z(A_j|+\rangle+\eta B_j|-\rangle)$, with live
+weight $s_j>0$. Its failure blocks do not depend on $z,\eta$.
+Let $T_{j,z,\eta}$ denote the complete stopped ideal output after forgetting
+other archive/reference fields for this necessary test, and let $\mu_j$
+be its average over these eight nuisances. Its live block is
+$s_j(A_j^2P_++B_j^2P_-+ZP_2)$ and its failure CDF is $G_{x_j}$.
+The $\mu_j$ are independent by Lemma 6.1.
+
+Define the following five Hermitian matrices, supported only in the
+terminal live block:
+
+$$
+\begin{aligned}
+X_{+-}&=|+\rangle\langle-|+|-\rangle\langle+|,\\
+X_{+2}&=|+\rangle\langle2|+|2\rangle\langle+|,
+&Y_{+2}&=i(|+\rangle\langle2|-|2\rangle\langle+|),\\
+X_{-2}&=|-\rangle\langle2|+|2\rangle\langle-|,
+&Y_{-2}&=i(|-\rangle\langle2|-|2\rangle\langle-|).
+\end{aligned}
+\tag{FH.20}
+$$
+
+They are independent by inspecting their disjoint offdiagonal entries and
+real/imaginary parts. At any one fixed height they belong to the output
+span. To see this explicitly, put
+$A_z=(T_{j,z,+}+T_{j,z,-})/2$ and
+$B_z=(T_{j,z,+}-T_{j,z,-})/2$. Expanding the projector gives
+
+$$
+\begin{aligned}
+\tfrac14\sum_z B_z&=s_jA_jB_jX_{+-},\\
+A_1-A_{-1}&=2s_jA_jC_0X_{+2},\qquad
+A_i-A_{-i}=2s_jA_jC_0Y_{+2},\\
+B_1-B_{-1}&=2s_jB_jC_0X_{-2},\qquad
+B_i-B_{-i}=2s_jB_jC_0Y_{-2}.
+\end{aligned}
+\tag{FH.21}
+$$
+
+Each expression has zero failure block. No additional states are prepared
+by forming these real linear combinations; this is span analysis of
+actual-source outputs. A combination $\sum_j a_j\mu_j$ with zero
+failure CDF has every $a_j=0$. Thus its span has zero intersection with
+the five-dimensional space (FH.20), proving a lower span dimension $M+5$.
+Conversely every $T_{j,z,\eta}-\mu_j$ is a combination of exactly these
+five directions. The plus/minus coherence is always real, including for
+arbitrary $\beta,m$, while the other two coherences are complex. All
+diagonal and failure blocks are those of $\mu_j$. This proves the matching
+upper span dimension, for both the eight-point and full nuisance families.
+A real linear image of $\mathcal B_{\rm sa}$ has dimension at most $R$,
+which proves (FH.19). $\square$
+
+These are operator-space bounds, not sharp Hilbert-dimension minima.
+For example a live $M_3$ input has $R=9$, so five heights with the eight
+nuisances already violate (FH.19). If the full accessible assistance is
+$\bigoplus_y M_{h_y}$ alongside an unreduced qutrit, the jointly counted
+algebra is $\bigoplus_y M_{3h_y}$ and $R=9\sum_yh_y^2$.
+This differs from the rank-sum bound of [IB][IB] §§24–27, whose stronger
+support conclusion has a phase/winding-independence premise.
+

@@ -1,0 +1,108 @@
+**引理 2.1（JMMJM 固定漂移双末根注入性）。** In any normalized entire
+history (1.8), at each fixed $d\in\mathbb R$ there is at most one complete
+target with $f(6)=f(7)=0$.
+
+Proof. In the trace-one normalization write
+
+$$
+f_i(T)=(T-6)(T-7)(a+b_iT),\qquad a=-d/42.                    \tag{2.1}
+$$
+
+The common $a$ follows from the initial reading. This factorization
+includes every permitted lower degree and further root multiplicity.
+If $a=0$, a nonzero gain has $b_i\ne0$. Clocks one, two and three then
+give, for even a single target,
+
+$$
+\operatorname{tr}(JP)=\frac4{5b_i},\quad
+\operatorname{tr}(LP)=\frac6{5b_i},\quad
+\operatorname{tr}((J+L)P)=\frac{26}{15b_i}.
+$$
+
+The first two traces sum to $2/b_i$, contradicting the third. Hence
+$a\ne0$.
+
+If $b_1=b_2$, the common nonzero polynomial has at most one zero among
+clocks $0,\ldots,5$, since six and seven are already distinct roots.
+Every five of the six matrices in (1.5) span $\operatorname{Mat}_2(\mathbb R)$:
+$I,J,L,C$ are a basis, $J+L$ replaces either missing $J$ or missing $L$,
+and $Q=I+2J+2L-C$ replaces either missing $I$ or missing $C$.
+For the basis assertion, the diagonal difference in
+$a_0I+a_1J+a_2L+a_3C=0$ first gives $a_3=0$; the off-diagonal
+difference gives $a_2=0$, and then $a_0=a_1=0$.
+The shared readings at the nonzero samples therefore force $P_1=P_2$.
+
+Suppose instead $A=b_1-b_2\ne0$, and put
+
+$$
+U=a(P_1-P_2),\qquad V=b_1P_1-b_2P_2,\qquad B=\operatorname{tr}(JV).
+                                                               \tag{2.2}
+$$
+
+The six common readings, after division only by the nonzero integers
+$(i-6)(i-7)$, say $\operatorname{tr}(A_i(U+iV))=0$.
+Also $\operatorname{tr}U=0$ and $\operatorname{tr}V=A$.
+The equations at one and two give
+$\operatorname{tr}(JU)=-B$ and
+$\operatorname{tr}(LU)=-2\operatorname{tr}(LV)$.
+The equation at three then gives $\operatorname{tr}(LV)=-2B$.
+The last two equations, using the expression for $Q$ in (1.5), give
+$\operatorname{tr}(CV)=5A-4B$ and
+$\operatorname{tr}(CU)=-20A+16B$. Solving these basis traces yields
+
+$$
+U=\begin{pmatrix}-20A+17B&4B\\-5B&20A-17B\end{pmatrix},\qquad
+V=\begin{pmatrix}4A-5B&-A-2B\\A+3B&-3A+5B\end{pmatrix}.
+                                                               \tag{2.3}
+$$
+
+Let $\rho=B/A$ and $\mu_i=b_i/a$. Since
+$P_1=(V-\mu_2U)/A$ and $P_2=(V-\mu_1U)/A$, positivity gives
+
+$$
+\operatorname{tr}(JP_i)=\rho(1+\mu_{3-i})>0,\qquad
+\operatorname{tr}(LP_i)=-2\rho(1+2\mu_{3-i})>0.                \tag{2.4}
+$$
+
+If $\rho=0$, the first inequality fails. If $\rho<0$, the two inequalities
+require simultaneously $\mu_{3-i}<-1$ and $\mu_{3-i}>-1/2$.
+Consequently
+
+$$
+\rho>0,\qquad -1<\mu_1,\mu_2<-1/2.                          \tag{2.5}
+$$
+
+The samples $f_i(1)$ and $f_i(2)$ have opposite signs. Their positive
+trace factors and the actual readings force $24<d<48$.
+Define the auxiliary quadratic
+$\Phi(T)=\rho(1+\mu_1T)(1+\mu_2T)$. Equations (2.4), together with
+$\operatorname{tr}((J+L)P_i)=-\rho(1+3\mu_{3-i})$, give
+
+$$
+\Phi(1)=\frac{24-d}{30a},\quad
+\Phi(2)=-\frac{48-d}{40a},\quad
+\Phi(3)=-\frac{312/5-d}{12a}.
+$$
+
+Quadratic interpolation at zero now gives
+
+$$
+\rho=3\Phi(1)-3\Phi(2)+\Phi(3)
+=\frac{77d-672}{20d}>\frac{49}{20}>2.                         \tag{2.6}
+$$
+
+For either positive matrix $P_i$, eliminate $\mu_{3-i}$ between its
+$(1,1)$ and $(1,2)$ entries in (2.3):
+
+$$
+(P_i)_{11}=\frac{17\rho-20}{4\rho}(P_i)_{12}
+             +\frac{14\rho^2-7\rho-20}{4\rho}.                \tag{2.7}
+$$
+
+For $\rho>2$ the first coefficient is positive and the constant is
+greater than one. The latter inequality is
+$14\rho^2-11\rho-20>0$, since its value at two is $14$ and its
+derivative is positive thereafter. Thus $(P_i)_{11}>1$, contradicting
+strict positivity and trace one. This excludes unequal $b_i$ and
+proves uniqueness. No gain sample or discriminant was divided out. ∎
+

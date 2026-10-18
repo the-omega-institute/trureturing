@@ -1,0 +1,33 @@
+**Lemma 2.4 (All first-one leaves).** Given a first reply one, the
+complete leaf table for the second address is as follows. The two
+reply symbols refer to the order of calls.
+
+| Second call and target placement | Leaf | $W$ | $M$ |
+| --- | --- | --- | --- |
+| Repeat or a phase-$\alpha$ separator; type $I$ | Only possible leaf | $\eta$ | $\eta/2$ |
+| Repeat or a phase-$\alpha$ separator; type $D$ | Only possible leaf | $\eta$ | $a\eta$ |
+| Same-parity adjacent edge; either type | $10$ | $\eta/2$ | $a\eta/2$ |
+| Same-parity adjacent edge; either type | $11$ | $\eta/2$ | $a\eta/2$ |
+| Disjoint edge; type $I$ | $10$ | $\eta c$ | $\eta c/2$ |
+| Disjoint edge; type $I$ | $11$ | $2\eta^2$ | $\eta^2$ |
+| Disjoint edge meeting the target; type $D$ | $10$ | $\eta c$ | $a^2\eta$ |
+| Disjoint edge meeting the target; type $D$ | $11$ | $2\eta^2$ | $\eta^2$ |
+| Disjoint edge avoiding the target; type $D$ | $10$ | $\eta c$ | $a\eta c$ |
+| Disjoint edge avoiding the target; type $D$ | $11$ | $2\eta^2$ | $2a\eta^2$ |
+
+Proof. A first one excludes phase $\beta$. Repetition or a separator
+does not split its source mass; the one-edge table of Lemma 2.3 gives
+the first two rows. Adjacency gives the next two rows by its triple
+calculation. For disjoint edges, the first-one probability $2\eta$
+multiplies the second-zero probability $c$ or the second-one
+probability $2\eta$, followed by the phase factor.
+
+For type $I$, the target is in the first one edge, with equal
+target masses, and is independent of the second edge. For type $D$
+with target in the second edge, its zero and one target masses are
+$a^2$ and $\eta$, multiplied by the independent first-one factor
+$2\eta$ and by $1/2$. If the target avoids both, multiply each
+leaf probability by $a$. This proves every entry. A second address
+of the opposite parity is precisely a separator in the certified
+phase, so no address case is missing. $\square$
+

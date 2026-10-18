@@ -1,0 +1,28 @@
+## 186. A saturated fifth reservoir would have degree at most four
+
+Suppose U has no genuine occurrence. Its original 2*pi equation implies
+p_U=2. In particular u<=m. All its occurrences are flat.
+
+A flat transverse selection of any label other than U is impossible:
+all four other H labels occur in the genuine tau, and two flat pi slots
+would exhaust that label's 2*pi budget despite its positive genuine angle.
+
+If there is a flat owner F selecting U transversely, its two U pi slots
+already exhaust p_U=2. It is the unique such owner. By Section 185, every
+transverse U occurrence belongs to F. Any axial U occurrence outside F
+cannot be pi, since the entire pi budget is spent in F. If it were zero,
+its flat owner would have to select a transverse reservoir pair. That
+selected label must be U, by the preceding paragraph, so this owner
+would again be F. Consequently every U slot lies in F. A paired owner
+with distinct reservoir labels has exactly two transverse U slots and
+at most two axial U slots, so degree(U)<=4, contrary to degree(U)>=6.
+
+If there is no flat owner selecting U transversely, Section 185 excludes
+all transverse U occurrences. An axial zero U occurrence would again
+force a transverse-selected label, which must be U, contrary to this
+case. Hence all U occurrences are axial pi slots. There are exactly
+p_U=2 of them, giving degree(U)=2, also impossible.
+
+Both possibilities contradict the original minimum degree. U therefore
+has a genuine occurrence.
+

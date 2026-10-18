@@ -1,0 +1,11 @@
+#### 84.4.1. Both constant-bit transversal norms are strictly above two
+
+The new axes have sum n_4(t)-n_4, which is nonzero. Explicitly the phase in D(t) rotates about the z axis, and
+
+    ||sum_f n_f(t)||
+      =2sqrt(2/3)t/sqrt(1+t^2)>0.
+
+For a fixed bit, the marker is the same unit vector in every fibre. The corresponding Gram has the same nonzero eigenvalues as the qubit frame operator. Hence, on each party and for both constant-bit transversals,
+
+    L(t)=2+(1/2)||sum_f n_f(t)||>2.                 (13)
+

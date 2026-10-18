@@ -1,0 +1,35 @@
+**Lemma 75.9 (the full original potentials and complete form convergence).** For each of the three prescriptions, every bounded shifted-energy hard sequence has a strongly identified subsequence whose limit lies in $\mathcal Q^{\rm hc}$ and satisfies the target form lower bound. Every member of $\mathcal Q^{\rm hc}$ has recovery for the entire corresponding form, with its original one-body field and complete pair coefficients.
+
+**Proof.** Extend $U_\diamond$ to $\mathcal H^{\rm fr}$ by keeping the additive one-body value $-2g\phi(p)$ at $(p,p)$ and putting no pair term there. Denote this bounded multiplier by $\widehat U_\diamond$, and put $\widehat U_0=0$. Then direct comparison on every product piece in(75.7) gives the exact Hilbert-space identities
+
+$$
+W_{\varepsilon,C}J=J\widehat U_C,\qquad
+\widehat U_CE=EU_C,\qquad
+W_{\varepsilon,C}L_\varepsilon=L_\varepsilon U_C.
+\tag{75.35}
+$$
+
+On a mixed stratum this identity retains the one atomic one-body value; on cells both one-body values and the pair term are zero. On a distinct atomic pair it retains both one-body values and exactly that pair coefficient. On a double atom the free extension has its specified additive value, which is immaterial after $E$. On ground half-chamber pieces the lift is zero. These cases verify the identity on all Hilbert data, without assuming that multiplication preserves form trace equalities.
+
+If $u_\varepsilon-JF\to0$ in physical norm and the norms are bounded, boundedness of $W$ and(75.35) imply
+
+$$
+\langle u_\varepsilon,W_{\varepsilon,C}u_\varepsilon\rangle
+ \longrightarrow\langle F,\widehat U_CF\rangle.
+\tag{75.36}
+$$
+
+For example the absolute difference from the quadratic term of $JF$ is at most $M\|u_\varepsilon-JF\|(\|u_\varepsilon\|+\|F\|)$, and the term of $JF$ equals the target extension exactly. Set $b=M+1$. Both the physical and target shifted forms obey
+
+$$
+\begin{aligned}
+h_{\varepsilon,C}[v]+b\|v\|^2
+ &\ge q_{0,\varepsilon}[\iota_\varepsilon v]+\|v\|^2,\\
+q_C[f]+b\|f\|^2&\ge a k_{\delta,2}[f]+\|f\|^2,
+\qquad q_C=a k_{\delta,2}+\langle\,\cdot,U_C\,\cdot\rangle.
+\end{aligned}
+\tag{75.37}
+$$
+
+Thus a bounded shifted-energy sequence has the free compactness of75.5, the exact hard lower domain of75.6 and, by(75.36), the complete lower bound $q_C[f]\le\liminf h_{\varepsilon,C}[v_\varepsilon]$ whenever $\iota_\varepsilon v_\varepsilon-L_\varepsilon f\to0$. If the energy lower limit is finite, select a subsequence attaining it and apply those lemmas; if it is infinite the inequality is automatic. The recovery of75.8 and(75.36) give $h_{\varepsilon,C}[v_\varepsilon]\to q_C[f]$ for every $f\in\mathcal Q^{\rm hc}$. These are the lower and recovery assertions on the entire target domain for each actual law, with no restricted test class. $\square$
+

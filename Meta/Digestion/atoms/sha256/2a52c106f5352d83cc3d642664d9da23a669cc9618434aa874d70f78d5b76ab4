@@ -1,0 +1,10 @@
+**定义 13.7.1（局域效果响应）。** 设输出仪器效果 $0\preceq E_B\preceq I$ 的支撑落在 $B$，输入态为 $\rho=P_A\rho P_A$。定义
+
+$$
+r_E(t)=\operatorname{Tr}\bigl(E_BT_t\rho T_t^\dagger\bigr).
+$$
+
+若仪器还有一族效果 $\{E_\alpha\}$，则把它们全部加入接口；单个效果没有分离状态的能力时，零响应只能说明该接口不可见。
+
+<a id="claim-13-7-2"></a>
+

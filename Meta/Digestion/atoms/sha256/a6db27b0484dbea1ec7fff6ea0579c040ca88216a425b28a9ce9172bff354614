@@ -1,0 +1,47 @@
+**引理 47.2（完整邻域安置）。** 每个 $\mathcal P$ 供应与种子域恰有一个接触，且
+
+$$
+\begin{aligned}
+N(P_0)\cap\mathcal D_*&=\{[p,\overline U,x,q,V]\},\\
+N(P^U_r)\cap\mathcal D_*&=\{[p,u_4,\ldots,u_{r+1},x,u_r,\ldots,u_1,q,V]\},\\
+N(P^V_t)\cap\mathcal D_*&=\{[p,\overline U,q,v_1,\ldots,v_t,x,v_{t+1},\ldots,v_\ell]\},\\
+N(P_*)\cap\mathcal D_*&=\{[p,x,\overline U,v_1,q,v_2,\ldots,v_\ell]\}.
+\end{aligned}
+$$
+
+记 $\mathcal D_1=N(\mathcal S_*\cup\mathcal P)$。两项 $q$ 准备供应与种子域不交，并有
+
+$$
+\begin{aligned}
+N(Q_L)\cap\mathcal D_1&=\{[p,x,q,V,\overline U]\},\\
+N(Q_R)\cap\mathcal D_1&=\{[p,v_1,q,v_2,\ldots,v_\ell,x,\overline U]\}.
+\end{aligned}
+$$
+
+每个 $B_t$ 与 $\mathcal D^-$ 恰有以下两个旧邻居，其旧原生指标为 $0,1$：
+
+$$
+\begin{aligned}
+D_t^-&=[p,v_1,\ldots,v_t,x,v_{t+1},\ldots,v_\ell,\overline U,q],\\
+D_t^+&=[p,q,v_1,\ldots,v_t,x,v_{t+1},\ldots,v_\ell,\overline U].
+\end{aligned}
+$$
+
+其余指标 $2,\ldots,m-1$ 都新。不同 $B_t$ 的完整邻域互不相交。
+
+**证明。** 对遗漏不同标签 $s,t$ 的两个供应，先双删这两个标签；残余圆序不同则没有共同邻居，相同则比较两个指定插入间隙：不同间隙给一个共同圆序，同一间隙给两种相邻顺序。这里双删后至少有三个标签，方向比较无退化。
+
+沿用定义 26.1 的投影供应，并记为 $\widehat E_i$ 以免与本节 $A$ 混淆。定理 26.2 给出 $\widehat E_1,\ldots,\widehat E_{d-1}$ 的完整负种子及 $\widehat E_d$ 的全部旧交点 $H_0,H_{d-2},H_*$。$P_0,P^U_r,P^V_t$ 都在 $\widehat E_5$ 的邻域中。因 $5\le d-3$，它只可能与投影种子中的 $\widehat E_4,\widehat E_6$ 再次接触，两个强制 $x$ 间隙分别为 $(q,v_1)$、$(v_\ell,u_4)$；其余投影供应不交，$\widehat E_d$ 也不交。所列准备纤维避开这两个间隙，亦避开双重 $p$ 影子。由定理 26.3 的完整分类，它们恰各有一个原种子接触。
+
+$P_*$ 属于 $\widehat E_6$ 的邻域，其 $v_1$ 处于锚在 $q$ 后的终端间隙，也避开两个相邻核心接触及双重影子。$d\ge9$ 时复用同一投影种子比较；唯一端点 $d=8$ 时，其锚定代表为 $(q,v_2,v_3,x,\overline U,v_1)$，与定理 26.2 中 $H_0,H_6,H_*$ 逐项不同，故仍没有附加接触。这证明全部 $p$ 准备供应的一接触结论。相同遗漏标签的互异供应邻域不交，故它们加入后不改变彼此接触数。
+
+对 $Q_L,Q_R,B_t$ 与原种子的比较，再删 $q,z_i$。若 $i<d$，种子残余中 $p$ 的一个邻居必为 $v_\ell$；候选残余中 $p$ 的邻居只可能来自 $x,v_1,v_2,u_1,u_2$，不含 $v_\ell$。删除 $v_1$ 且 $t=1$ 时，$B_t$ 的首邻居改为 $x$，仍不同。若 $i=d$，种子残余的 $p$ 邻居为 $\{v_{\ell-1},u_1\}$，$Q_L$ 给 $\{x,u_1\}$，$Q_R,B_t$ 给 $\{v_1,u_1\}$，因 $\ell\ge3$ 仍不同。因此这些 $q$ 供应均无种子接触。
+
+删除 $p,q$ 后，$\mathcal P$ 的残余正是在 $[\overline U,V]$ 的互异间隙插入 $x$：
+
+$$
+(u_1,v_1),\quad(u_{r+1},u_r),\quad(v_t,v_{t+1}),\quad(v_\ell,u_4).
+$$
+
+基础圆序至少含七个标签，其方向固定这些间隙。因此 $Q_L$ 仅可碰 $P_0$，$Q_R$ 仅可碰 $P_*$，$B_t$ 仅可碰 $P^V_t$。前两对的 $p,q$ 插入间隙分别为 $(u_1,x),(x,v_1)$ 和 $(u_1,v_1),(v_1,v_2)$，互异，给所述唯一共同邻居。最后一对的 $p,q$ 间隙同为 $(u_1,v_1)$，给所述两种顺序。原生 $B_t$ 代表中，这两项恰为指标 $0,1$。$Q_L,Q_R,B_t$ 都遗漏 $q$ 且互异，完整邻域互不相交，因而没有更多旧接触。
+

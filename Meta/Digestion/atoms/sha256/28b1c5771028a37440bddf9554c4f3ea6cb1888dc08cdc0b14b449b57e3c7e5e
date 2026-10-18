@@ -1,0 +1,81 @@
+### 108.6. Representation coefficients and a coherent original-input bound
+
+**Proof.** First assume both Grams are calibrated and invariant. Use the following faithful two-dimensional unitary representation $U$. For $Q_8$, take the eight matrices $\{\pm I,\pm iX,\pm iY,\pm iZ\}$, with $X,Y,Z$ the Pauli matrices. For $D_8$, use
+
+$$
+ U(r)=\begin{pmatrix}0&-1\\1&0\end{pmatrix},
+ \qquad U(s)=\begin{pmatrix}1&0\\0&-1\end{pmatrix},
+ \qquad r^4=s^2=e,\quad srs=r^{-1}.
+ \tag{108.14}
+$$
+
+In both cases $U(z)=-I$. The four one-dimensional characters are the real sign characters of $\Gamma/\{e,z\}\cong(\mathbb Z/2\mathbb Z)^2$; denote their set by $E$. Directly from the eight displayed matrices,
+
+$$
+ \sum_{x\in\Gamma}\overline{\chi(x)}\psi(x)=8\delta_{\chi\psi},
+ \qquad
+ \sum_{x\in\Gamma}\overline{U(x)_{ij}}U(x)_{kl}
+       =4\delta_{ik}\delta_{jl}.
+ \tag{108.15}
+$$
+
+Mixed character/matrix-entry sums vanish: the characters are even under $x\mapsto xz$, and the matrix entries are odd. These eight orthogonal functions span all functions on $\Gamma$, giving the regular representation's decomposition into the four characters and two copies of $U$.
+
+Every invariant positive semidefinite Gram consequently has
+
+$$
+ g(x)=\sum_{\chi\in E}a_\chi\chi(x)+\operatorname{Tr}(MU(x)),
+ \qquad a_\chi\ge0,\quad M\succeq0.
+ \tag{108.16}
+$$
+
+Here is a direct positivity justification. Choose records $v_x=G^{1/2}|x\rangle$. Invariance makes left translation unitary on their span and sends $v_e$ to $v_x$. Resolve $v_e$ into the four character spaces and the $U$-multiplicity space from (108.15). The squared norms in the character spaces give $a_\chi$. The partial trace of the odd vector's positive outer product over the multiplicity space is $M$, whose matrix coefficient is the last term of (108.16). Conversely every such expression is a sum of Gram kernels. Equivalently, the normalized character and matrix-entry basis puts $G$ into blocks $8a_\chi$ and two copies of $4M^{\mathsf T}$. Thus
+
+$$
+ \operatorname{rank}G=|\{\chi:a_\chi>0\}|+2\operatorname{rank}M,
+ \qquad
+ \sum_{\chi\in E}a_\chi=\operatorname{Tr}M=\tfrac12.
+ \tag{108.17}
+$$
+
+The last two equalities are exactly $g(e)=1$, $g(z)=0$. Write the second Gram function as $b(x)=\sum_\chi b_\chi\chi(x)+\operatorname{Tr}(NU(x))$, with the same nonnegativity and half-mass constraints.
+
+The original product coefficient function is $k(x)=g(x)b(x)$. Its trivial-character coefficient is
+
+$$
+ c_0=\tfrac18\sum_xg(x)b(x)
+     =\sum_\chi a_\chi b_\chi+
+           \operatorname{Tr}[(M\otimes N)\Pi],
+ \qquad \Pi=\tfrac18\sum_xU(x)\otimes U(x).
+ \tag{108.18}
+$$
+
+The mixed even/odd terms vanish. The four characters are real and self-inverse, so their pairing in (108.18) has exactly the displayed indices. The tensor term is the ordinary trace identity for the actual Hadamard product.
+
+The group average $\Pi$ is the orthogonal projection onto the invariant vectors of $U\otimes U$. Its trace is one: $\operatorname{Tr}U(x)$ is zero except at $e,z$, where it is $2,-2$, and therefore $\operatorname{Tr}\Pi=(4+4)/8=1$. For $D_8$ its invariant unit vector is $(|00\rangle+|11\rangle)/\sqrt2$, since $U$ is real orthogonal. For $Q_8$ it is $(|01\rangle-|10\rangle)/\sqrt2$, since $U$ is special unitary. Both are maximally entangled.
+
+For any two density matrices $\tau,\sigma$, the expectation of $\Pi$ in $\tau\otimes\sigma$ is at most $1/2$. For pure product vectors this is Cauchy–Schwarz applied to either displayed invariant vector; decomposing the two densities into pure states proves the general case by linearity. Apply this with $\tau=2M$, $\sigma=2N$. Equation (108.18) gives
+
+$$
+ c_0\le\Bigl(\sum_\chi a_\chi\Bigr)
+             \Bigl(\sum_\chi b_\chi\Bigr)+\tfrac18
+       =\tfrac38.
+ \tag{108.19}
+$$
+
+Let $C_0$ be the all-ones matrix, and let $R_z|x\rangle=|xz\rangle$. The row sums of $K$ and $T$ are $8c_0$ and four, so the uniform vector is an eigenvector of $L=T-K$ with eigenvalue $\lambda_0=4-8c_0\ge1$. The original fibre-block density and witness
+
+$$
+ \rho=(I+R_z)/8,\qquad W=C_0/32
+ \tag{108.20}
+$$
+
+satisfy $\operatorname{Tr}\rho=1$ and $0\le W\le\rho$: $\rho$ has eigenvalue $1/4$ on the $z$-even space, containing the uniform vector. Formula (107.7) now gives
+
+$$
+ F(G,H)\ge2\operatorname{Tr}(LW)=\lambda_0/2\ge\tfrac12.
+ \tag{108.21}
+$$
+
+This has the original unhalved normalization. The density is realized by the no-reference uniform coherent input; the feasible witness extracts a lower bound from that output. No norm formula for a differently normalized irreducibly covariant channel is used.
+

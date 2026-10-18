@@ -1,0 +1,53 @@
+### 92.5. Fixed-direction second-order selection
+
+Work in the gauge (19). Let a span the common full kernel, with support S. In addition to the active face 𝒜 from (5), define the nonempty compact convex common-witness subset
+
+\[
+ \mathcal A_0=\{(\rho,W)\in\mathcal A:
+                b(W;G',H')\ge0\text{ for all }G',H'\in\mathcal E\}.
+                                                                  \tag{20}
+\]
+
+No face property of 𝒜₀ is required. For every point of 𝒜₀, its first stress equals αaa* for some α>0. Positivity of α follows exactly as in Theorem 92.1; α=0 would force the norming value to vanish. Hence, on cross-fibre coordinates of S,
+
+\[
+ W_{xy}=-\frac{\alpha a_x\overline{a_y}}
+                         {2\overline{G_{xy}}}.                 \tag{21}
+\]
+
+The gauge and kernel vector here are fixed, independently of the witness.
+
+For a Hermitian D supported on S with D_ff=0 and Da=0, both G+sD and H−sD are positive for sufficiently small real s: they preserve the kernels and the Grams are positive definite on the orthogonal kernel complements. The first-order product change vanishes because G_S=H_S. A necessary second-order condition is
+
+\[
+ \text{for each fixed }D,\quad
+ \exists(\rho,W)\in\mathcal A_0:
+                Q_W(D):=2\operatorname{Tr}[(D\odot D)W]\ge0.    \tag{22}
+\]
+
+Here is the selection proof, including the quantifier order. Fix D and R>0. For arbitrary G′,H′∈ℰ put U=R(G′−G), V=R(H′−H). The paths
+
+\[
+ G_s=G+sD+s^2U,\qquad H_s=H-sD+s^2V                            \tag{23}
+\]
+
+are feasible for sufficiently small s. For example G_s=(1−Rs²)[G+sD/(1−Rs²)]+Rs²G′ is a convex combination of feasible Grams. Their coefficient difference expands as
+
+\[
+ T-G_s\odot H_s
+   =L+s^2(D\odot D-U\odot H-G\odot V)+O(s^3).                 \tag{24}
+\]
+
+The compact-max argument of (7), now at scale s², and local minimality give
+
+\[
+ \max_{(\rho,W)\in\mathcal A}
+       [Q_W(D)+R b(W;G',H')]\ge0
+                         \quad\text{for every }G',H'\in\mathcal E.
+                                                                  \tag{25}
+\]
+
+The same finite separation argument used after (7) applies only to the affine variables G′,H′ and the active witnesses. It supplies a point (ρ_R,W_R)∈𝒜 satisfying Q_(W_R)(D)+R b(W_R;G′,H′)≥0 for all feasible pairs. Choosing the base pair shows Q_(W_R)(D)≥0. Compactness bounds this quadratic value uniformly. Along a convergent subsequence as R tends to infinity, the inequalities give b(W_*;G′,H′)≥0 for every fixed pair and Q_(W_*)(D)≥0. The limiting pair belongs to 𝒜₀, proving (22).
+
+The direction D is fixed throughout this minimax step. Equation (22) does not assert one witness whose quadratic form is nonnegative for every direction. Nor does negativity for one arbitrarily chosen active witness imply descent of F. The next argument uses the stronger proportionality of all the forms indexed by 𝒜₀.
+

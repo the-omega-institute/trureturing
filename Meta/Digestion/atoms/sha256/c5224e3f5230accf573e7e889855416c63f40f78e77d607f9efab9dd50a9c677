@@ -1,0 +1,2 @@
+**Convention 2.2 (minimax hypothesis).** CG14–16 supply the complete HALF stopped-cq minimax value $E_*$ and its attainer with supported live map $\Lambda_*(X)=DXD^\dagger+TXT^\dagger+SXS^\dagger$, failure effect $M$ and witness density $g(a)=2/(1+a)^2$. On all sign copies, $e_{5,e,n}=e_{27,e,n}=E_*$ and $e_{16,e,n}<E_*$. CG17 supplies exactly its averaged-live and preaveraged support/effect consequences. It supplies neither the sharp joint cost nor the unaveraged real equality face. The ideal density remains $f_y$, distinct from $g$.
+

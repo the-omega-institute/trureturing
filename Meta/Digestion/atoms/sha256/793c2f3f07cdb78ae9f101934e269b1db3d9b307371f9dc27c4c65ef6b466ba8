@@ -1,0 +1,43 @@
+**Theorem 358.2 (One allocation with the same schedule masses).** For every $L,M$ and data (357.3), suppose one family $g$ satisfies both (357.6) and Definition 358.1. There is one complete stopped allocation of mass $M$ whose entire law is
+
+$$
+q(w)=c+\sum_iD_iw_i+\sum_{i<j}(Q_{ij}+g_{ij})w_iw_j.
+\tag{358.2}
+$$
+
+For every zero word with first zero $n$,
+
+$$
+q_w(0)\ge p_w(0),\qquad q_w(n)\ge p_w(n),\qquad
+q_w(0)+q_w(n)\ge p_w(0)+p_w(n),
+\tag{358.3}
+$$
+
+and $q_{1^L}=p_{1^L}$ as a whole vector. Each schedule keeps the mass of the complete $N$ allocation supplied by XIX 341.2. If an actual complete allocation with this $g$ is supplied instead, each of its schedule masses can be kept. The statement does not require preservation of an arbitrary different representation of $p$.
+
+*Proof.* Apply XIX 341.2 once, with the same $g$ and both budgets. Keep its empty and singleton cells. For each pair replace its four cells $(a,b,d,e)$ by the stopped cells $(a,d,e)$. The retained vectors are nonnegative, each has the old owning schedule mass, and the sum of schedule masses is still $M$. Thus one complete stopped law already exists; no separate assembly of event witnesses or second budget is needed. Coefficient subtraction gives, on the entire cube,
+
+$$
+p(w)-q(w)=\sum_{i<j}g_{ij}(1-w_i)w_j,
+\tag{358.4}
+$$
+
+and therefore gives (358.2).
+
+For one list set $S=\sum_{t=1}^{2h+1}b_tw_{i_t}\in\mathbb Z$. The alternating prefix before $t$ sums to zero for odd $t$ and one for even $t$. Consequently
+
+$$
+\begin{aligned}
+\Psi_I(w)
+&=\sum_{s<t}b_sb_t(1-w_{i_s})w_{i_t}\\
+&=-\sum_{t\text{ even}}w_{i_t}
+   -\frac{S^2-\sum_tw_{i_t}}2
+ =\frac{S(1-S)}2\le0.
+\end{aligned}
+\tag{358.5}
+$$
+
+The last inequality uses integrality, not a bound on a continuous quadratic. If the first zero $n$ is at or beyond $k=i_{2h+1}$, the first $2h$ selected bits are one; their alternating sum is zero. Thus $S$ is zero or one and $\Psi_I=0$. Otherwise $n<k$, so both $V(0)$ and $V(n)$ are nonnegative. The contribution $\Psi_I V$ to (358.4) is therefore nonpositive at both protected labels. An active edge factor $(1-w_i)w_j$ has $w_i=0$, hence $n\le i$; its contribution $-B(1-w_i)w_j$ has the same sign at these labels. Sum all contributions before using the two coordinate inequalities. Adding them transfers the *already imposed* independent union row from its actual old value. All factors in (358.4) vanish at $1^L$, proving whole-vector equality there.
+
+Empty sums cover $L=0,1,2$, where no odd list of length at least three need exist. At $M=0$, (357.6) forces $c=U_i=0$ and $T_i=0$. Then $r=s=0$; zero sums force $g=Q=0$, and $U_i=(-D_i)_+=0$ forces $D_i=\ell_i=0$. The zero allocation needs no division. Zero summands, zero schedule masses, multiple-zero words and equality endpoints require no change to the argument. $\square$
+

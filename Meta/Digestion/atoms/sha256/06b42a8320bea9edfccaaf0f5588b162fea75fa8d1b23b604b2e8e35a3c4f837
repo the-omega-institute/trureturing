@@ -1,0 +1,21 @@
+**Proposition 3.3 (exact signed paired balance).** Every compatible pair satisfies the exact identities
+
+$$
+\begin{aligned}
+T-F(c,P)&=c(1+c)J_U+cJ_R-K_\beta,\\
+q-G(c,P)&=-K_3.
+\end{aligned}
+\tag{3.11}
+$$
+
+Proof. Equation (3.4) gives $P=S(c)(m-c)+A_P$ and $q=c^3(m-c)+A_3$. The reciprocal chord difference is exactly
+
+$$
+\frac{19/15-t}{2/5}-\frac1t
+=\frac{(t-3/5)(2/3-t)}{(2/5)t}.
+$$
+
+Hence $\mathbb E(U_0^{-1})=(5/2)(19/15-m)-J_U$. Substitute this into (3.7), retain $\mathbb E(U_1/U_0)=1+J_R$, and use $m=c+(P-A_P)/S(c)$. The first identity in (3.11) follows. The formula for $q$ gives the second. Nonnegativity of $J_U$ follows pointwise; that of $J_R$ is (3.8). No signed term is bounded or discarded in these identities. ∎
+
+For example $A_1=\mathbb E[(Z_0-c)g_1]$ is a covariance. Higher $A_j$ also retain products of deviations and their correlation with the terminal completion weight. Dispersion alone does not determine their signs. Proposition 3.3 is used below to locate the signed obstruction that the unsigned estimate in Theorem 3.1 can leave open.
+

@@ -1,0 +1,17 @@
+**定理 136.3（联合关系及共同换基不变量）。** 令 $R=c\ell$。对每个允许且已执行的 $A$，有 $y_A=\operatorname{tr}(AR)$。若可逆 $S$ 同时改变对象、量具和操作的表示，
+
+$$
+c'=Sc,\qquad \ell'=\ell S^{-1},\qquad
+A'=SAS^{-1},\qquad R'=SRS^{-1},
+$$
+
+则 $\ell'A'c'=y_A$，亦即 $\operatorname{tr}(A'R')=\operatorname{tr}(AR)$。
+
+证明（136.3）。迹的坐标展开为 $\operatorname{tr}(Ac\ell)=\sum_i(Ac)_i\ell_i=\ell Ac$；同时换基后，$c'\ell'=Sc\ell S^{-1}$，且
+
+$$
+\ell S^{-1}(SAS^{-1})Sc=\ell Ac.
+$$
+
+这是同一关系的共同表示变换。它不宣布 $S$ 已成为新的实际操作，也不把换基后仍须运输的量具免费留在旧坐标中。$\square$
+

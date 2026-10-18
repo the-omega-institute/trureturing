@@ -1,0 +1,20 @@
+**Theorem 5.1 (homogeneous gap).** There exists $\theta>0$ such that
+
+$$
+h[u]\ge a\theta b[u]\quad\text{if }u\in\mathcal Q_E\text{ and }b(p,u)=0.
+\tag{5.1}
+$$
+
+Every $\sigma$-odd vector satisfies this orthogonality. The estimate is a gap in horizontal energy, without a positive $L^2$ spectral gap above the threshold zero mode.
+
+Proof. Spectral calculus and the bounded increasing resolvent forms in (2.9) show that $M_Vf\in D(\mathcal E^{-1/2})$ for every $f\in L^2$. Define $A_0=\mathcal E^{-1/2}M_V$. Monotone spectral convergence gives $A_0^*A_0=K_0$ and $\|A_0\|^2=C_*$. Polar decomposition and compactness of $K_0$ make $A_0$ compact. Thus $P=A_0A_0^*$ is compact positive, with the same nonzero eigenvalues and multiplicities as $K_0$.
+
+For $f\in\mathcal Q_E$, spectral pairing gives $A_0^*\mathcal E^{1/2}f=M_Vf$, and consequently
+
+$$
+\int V|f|^2=\langle\mathcal E^{1/2}f,P\mathcal E^{1/2}f\rangle.
+\tag{5.2}
+$$
+
+The critical equation implies $P\mathcal E^{1/2}p=C_*\mathcal E^{1/2}p$. The vector is nonzero, since $b[p]=\chi\mu/a>0$. Simplicity of the top eigenvalue in (2.9) therefore gives $\rho<C_*$ bounding $P$ on the orthogonal complement of $\mathcal E^{1/2}p$. Set $\theta=1-\rho/C_*$. Substitute $\mathcal E^{1/2}u$ in (5.2) and use $\chi C_*=a$ to obtain (5.1). Reflection commutes with the canonical form and $p$ is even, so $b(p,u)=0$ for odd $u$. The argument concerns the compact operator on energy coordinates and does not bound $h[u]$ below by a positive multiple of $\|u\|_2^2$. $\square$
+

@@ -1,0 +1,21 @@
+#### FMR.5 Counting and logical scope
+
+The exact absolute norm is
+[
+|N_{K/mathbb Q}(v^ell-1)|
+ =v^ell+v^{-ell}-2 <v^ell .
+]
+Any rational prime below (U_ell) is therefore (<v^ell). Taking
+(ellle(log X)/log v+O(1)) produces (ple X). The prime number theorem
+gives (gglog X/loglog X) prime indices in this range, proving the count.
+
+The Grell--Peng paper (arXiv:1511.01210, Theorem 3) gives a related
+conditional infinitude argument through square-free Fibonacci parts, while
+Ding and Graves--Murty give fixed-modulus arithmetic-progression estimates
+for non-Wieferich bases. None of those checked statements phrases the
+split-only contraction with (ho(p)=2ell). The present result is therefore
+best recorded as a literature-derived fixed-golden corollary and alternative
+conditional route. The project already contains the separate PH6 result under
+the rational Pell-height hypothesis (mathrm{PH}(kappa)), (kappa<4/3);
+no comparison of abc with that hypothesis is asserted here. No unconditional
+WSS exclusion, WSS existence, or claim that the WSS zero set is empty follows.

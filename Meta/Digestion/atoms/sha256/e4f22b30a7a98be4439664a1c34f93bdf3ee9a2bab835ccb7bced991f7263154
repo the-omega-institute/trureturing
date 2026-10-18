@@ -1,0 +1,65 @@
+## 8. Supplier correspondence and unresolved realization
+
+**Mathematical citation 8.1 (source-specific inference and mature tools).**
+[LATE, Sections 6--9][LATE15403] is used at the exact source revision
+$\mathtt{e0b3be330ba79b298ea9e02d67ff3ddea04b75a3}$.
+Its positive-kernel comparison, two complete-TV conversions and original
+risk consumer supply (6.4), (6.10)--(6.12) and the triangle argument.
+Its coefficient $C_{r,n}$ is finite at each fixed index. The additional
+source-specific implication here is (6.7)--(6.8): the index-three box
+and a late predecessor box control $L^3F$, regardless of the distance
+to that predecessor. This gives the constants $H_r$ independent of the
+word-return index, and the simultaneous necessary bound (7.4).
+Neither an eventual recurrence nor positive mass at a native descriptor
+is assumed. This is a repo-derived ordinary mathematical
+deduction relative to the cited suppliers, without a global originality
+or optimal-constant claim.
+
+Positive-kernel order, integration against an invariant probability,
+finite telescoping and the complete-measure triangle inequality are
+mature intermediate tools. Ferré, Rousset and Stoltz, *More on the long
+time stability of Feynman--Kac semigroups*,
+[Section 2, Assumptions 1--3 and Lemma 2](https://arxiv.org/html/1807.00390v3),
+study positive kernels with Lyapunov, minorization/irreducibility and
+local regularity hypotheses for their spectral conclusions. None of
+those extra hypotheses is supplied here; (6.8) instead uses the given
+stationary unweighted probability for $P$ and three positive comparisons.
+Li and Schneider, *Applications of Perron--Frobenius Theory to Population
+Dynamics*, [Theorems 2.1(a) and 2.3](https://arxiv.org/html/math/0109008v1),
+require a finite irreducible matrix for their positive Perron vectors
+and primitivity for normalized-power convergence. Neither conclusion
+is used to replace the arbitrary Borel kernels. Leskelä and Vihola,
+*Conditional convex orders and measurable martingale couplings*,
+[Theorems 1.2(i) and 1.3(i)](https://arxiv.org/html/1404.0999v3),
+supply finite-first-moment vector and measurable-kernel coupling results.
+Bounded word projections meet that integrability premise, but do not
+by themselves supply two compatible full-law flows or this stability
+estimate. [PAIR, Theorem 20.2][PAIR-STABILITY] retains the entire
+prescribed marginals in its compatibility criterion; they are not
+replaced here by separately chosen finite projections.
+
+**Mathematical citation 8.2 (distinct suppliers and boundary controls).**
+The all-source [cut-partition classification][CUT-STABILITY] concerns
+finite prefix-free cuts: factorization between realized images of the
+entire literal row maps is equivalent to a common suffix decomposition.
+Its source-free decoder and absent-cut and empty/root clauses concern
+those original tree rows. They supply neither the stochastic residual
+identities (6.1) nor the unweighted law comparison (6.8).
+The [arbitrary-family lexicographic supplier, Theorem 41.2][LEX-STABILITY]
+assumes linear forms on one finite-dimensional real input space and
+finite feasibility. Its polynomial witnesses have constraintwise
+thresholds. No such full-law parameterization with both residuals,
+common marginals and every supported budget is established here, and
+those constraintwise thresholds supply no simultaneous complete-law
+application or replacement for (6.8).
+
+The native endpoint flows, half-native mixture and index-three nonnative
+contact remain the supplied controls of [LATE, Section 8][LATE15403].
+At a native r flow, both sides of (6.3) vanish. The half-native mixture
+retains its own two-endpoint zero-excess scope and its supported
+nonendpoint obstruction; its midpoint conditions alone do not imply
+all other supported budgets. The nonnative upper contact has
+$e_{b,3}=0$ and positive complete TV, so a universal finite-coefficient
+extension to $n=3$ remains false. These are supplier consistency
+conditions, not substitutes for the proof over arbitrary Borel supports.
+

@@ -1,0 +1,49 @@
+**Theorem 2.1 (relative greatest stable core).** Under Definition 1.1,
+every $R_n$ and $R_\infty$ is a typed equivalence. The latter is the largest
+response-preserving invariant equivalence contained in $K_0$. All executable
+domains, complete responses, successors and declared selector/update readouts
+descend to $Q_i=X_i/(R_\infty|_{X_i})$. It is the coarsest such boundary
+subject to $K_0$. It is an absolutely coarsest exact boundary for the declared
+task if $K_0$ is exactly equality of type and initial task observations and
+the compared fields and language are precisely that task's contract.
+
+**Proof.** For each executable name, simultaneous legality and response
+equality are reflexive, symmetric and transitive. On a legal pair, these
+properties also hold for the requirement that successors be $R$-related.
+The same is true of the selector/update equalities. Intersecting these
+conditions with $R$ preserves equivalence and type. Refinement is monotone
+and preserves nonempty intersections, since all of its tests are universal
+pairwise tests. Thus
+
+$$
+\operatorname{Ref}(R_\infty)
+=\bigcap_{n\ge0}\operatorname{Ref}(R_n)
+=\bigcap_{n\ge0}R_{n+1}=R_\infty.
+$$
+
+If $S\subseteq K_0$ satisfies the same response and invariance conditions,
+$S\subseteq R_n$ implies $S\subseteq\operatorname{Ref}(R_n)=R_{n+1}$.
+Induction gives $S\subseteq R_\infty$. The fixed-point conditions give
+saturated executable domains and representative-independent labels and
+successors, which define the quotient operations. If $K_0$ has extra
+constraints, maximality is only within those constraints. If it is exactly
+the initial task-observation kernel, every exact task representation has a
+kernel contained in $K_0$ and satisfying these pairwise conditions; hence its
+actual image maps uniquely onto $Q$. This proves the final assertion.
+$\square$
+
+**Mathematical citation 2.2 (reused mechanisms).** The greatest-invariant
+subkernel construction is already present in
+[MaximalForwardInvariantSubkernel](../../../D5/S1/FixedPoints/MaximalForwardInvariantSubkernel.lean),
+`maximal_forward_invariant_subkernel`, for a total self-map.
+[TypedFiniteViewKernel](../../../D5/S3/ObserverMemory/RefinementClosure/TypedFiniteViewKernel.lean),
+`typed_finite_view_kernel`, relates typed finite-path views, refinement and
+complete behavior. [DynamicsDescent](../../../D5/S0/Rewriting/Quotients/DynamicsDescent.lean),
+`dynamics_descends_iff`, supplies the fiber-preserving total-map criterion.
+[StrictOneHoleContexts](../../../D5/S3/ConceptDynamics/Observation/StrictOneHoleContexts.lean),
+`contextual_equivalence_is_greatest` and `signature_extension_refines`,
+supply strong partial-operation congruence and signature enlargement.
+Theorem 2.1 uses these established mechanisms with explicit complete-response
+and selector conditions; these mechanisms are intermediate ingredients, not
+a claim of new fixed-point or factorization theory.
+

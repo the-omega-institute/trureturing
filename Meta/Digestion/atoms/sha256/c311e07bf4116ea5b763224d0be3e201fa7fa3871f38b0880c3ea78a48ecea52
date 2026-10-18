@@ -1,0 +1,155 @@
+**Theorem 14.2 (cyclic whole-graph injection).** Every graph satisfying
+Definition 14.1 admits an injection
+
+$$
+\Phi:V\longrightarrow Q_{\mathrm{live}},
+\qquad \Phi(h,z)\in F_{(h,z)}.
+\tag{SI.117}
+$$
+
+Consequently the same installed graph satisfies
+
+$$
+|Q_{\mathrm{live}}|\ge G=k(n-k+1),\qquad
+D\le E,\qquad m\ge G+u.
+\tag{SI.118}
+$$
+
+No attainment claim for each fixed cyclic partition or nonconstant
+$f$ is included.
+
+Proof. Reuse Theorem 2.2 for actual live freshness and nonempty cell
+families, PCA Theorem 35.1 for equal-support unequal-hit exclusion,
+PE Lemma 4.1 for properly nested live supports, and the one-sided
+private-cost consequence (SI.88) of PE Theorem 3.1(2). The last
+consequence is applied through the full-fiber lift of this same
+complete dual-cap graph: if lower-hit and higher-hit histories with
+incomparable supports $S,T$ share a host, and all old bits of
+$T\setminus S$ on the higher-hit history are one, then
+$C_{T\setminus S}\le C_{S\setminus T}$. These are credited local
+suppliers; no residual predicate is assigned to an installed state.
+
+First separate representatives at one depth $d$. A live occurrence
+there has exposed exactly the first $d$ coordinates of its prescribed
+permutation, by live freshness and the actual-live order condition.
+While querying $\mathsf I$ or $\mathsf V$, every mode has the same
+support. Distinct cells on that depth have unequal hit counts, so
+equal-support exclusion separates any chosen hosts.
+
+While querying a rotating block, let $r\in\{0,\ldots,v-1\}$ be its
+block slot, starting with slot zero before $\mathsf U$, and let
+$t\in\{1,\ldots,b\}$ be the next within-block position. Both are
+determined by the depth, independently of mode. In mode $j$ the
+next fixed coordinate must be $x_{j+r,t}$. For different modes these
+coordinates differ, since the blocks are disjoint. One installed state
+has only one coordinate label, so two such histories cannot share it.
+Within one mode the supports coincide, and unequal hits again exclude
+sharing. Thus at every depth outside queries in $\mathsf U$, choose
+any actual host for each cell using Theorem 2.2; those chosen hosts
+are distinct on that depth.
+
+It remains to choose representatives during the common $\mathsf U$
+scan. Write
+
+$$
+d=p+b+t,\quad 0\le t<|\mathsf U|,\qquad
+a(h)=\min\bigl(p,\max(0,h-b)\bigr),\quad j(h)=\gamma(a(h)).
+\tag{SI.119}
+$$
+
+For a live cell $(h,d-h)$ use $\eta_{a(h)}$ on $\mathsf I$.
+If $h\le b$, then $a(h)=0$; put $h$ ones in the early block
+$\mathsf X_{j(h)}$ and put zeros on the first $t$ members of
+$\mathsf U$. If $h>b$, put every early-block bit to one and put
+
+$$
+h-a(h)-b
+$$
+
+ones among those $t$ members of $\mathsf U$. This number lies in
+$[0,t]$: it is zero when $h-b\le p$, and otherwise equals
+$h-p-b\le t$, since $h\le d$. Thus the chosen exposed assignment
+has exactly $h$ ones and $d-h$ zeros on
+
+$$
+S_{j(h)}(d)=\mathsf I\cup\mathsf X_{j(h)}
+                         \cup\mathsf U^{\le t}.
+\tag{SI.120}
+$$
+
+Each assignment just chosen is actual. Take a completion on all
+coordinates. Every earlier prefix in its specified permutation has
+hit and zero counts bounded by this final live pair, so also is live.
+Starting from the sole fixed start, correctness forbids an earlier
+terminal while both outputs have completions. Inductively the
+actual-live rule forces the next specified coordinate and its fixed
+successor follows the assigned reply. The completed $\mathsf I$
+assignment specifies the selected mode. This realizes the entire
+prefix on that one completion; it assumes no general realizability
+of syntactic paths.
+
+Compare two selected histories at this depth with $h<h'$. The
+function $a(h)$ is nondecreasing. If their selected modes agree,
+their supports agree and unequal hits exclude a common host. If
+their modes differ, then $a(h)<a(h')$, since equal $a$ would select
+the same mode. In particular $a(h')>0$ and $h'>b$, so every bit
+of the higher history's whole early block is one. The private
+differences of (SI.120) are exactly the two distinct early blocks.
+They have equal positive size, hence incomparable supports, and
+(SI.116) gives
+
+$$
+C_{S_{j(h)}(d)\setminus S_{j(h')}(d)}
+<
+C_{S_{j(h')}(d)\setminus S_{j(h)}(d)}.
+\tag{SI.121}
+$$
+
+A common host would give the reverse weak inequality by (SI.88).
+This contradiction separates the selected hosts during $\mathsf U$
+as well. If $\mathsf U$ is empty this step is absent.
+
+Finally separate different depths, using the one fixed label of
+each installed state. A coordinate in $\mathsf I,\mathsf U$ or
+$\mathsf V$ has one position in every permutation. It cannot label
+a live host at two different depths. For $x_{\ell,t}$, if
+$\mathsf X_\ell$ is in slot $r$, its predecessor support is exactly
+
+$$
+P_r=
+\mathsf I\cup\mathsf X_\ell^{<t}
+\cup\bigcup_{j=1}^{r}\mathsf X_{\ell-j}
+\cup
+\begin{cases}
+\varnothing,&r=0,\\
+\mathsf U,&1\le r<v.
+\end{cases}
+\tag{SI.122}
+$$
+
+Here $\mathsf X_\ell^{<t}$ is the first $t-1$ members of that
+ordered block. As $r$ increases from zero to $v-1$, these supports
+form a strict inclusion chain: each step adds a nonempty whole block,
+and the first step also adds $\mathsf U$. The corresponding query
+positions strictly increase, because all blocks have length $b\ge1$.
+Thus different-depth live occurrences of this fixed label have
+properly nested supports and cannot share a host by PE Lemma 4.1.
+This covers all coordinate labels and all actual modes, including
+modes not selected by the transversal.
+
+Combining the within-depth and different-depth separations gives
+(SI.117). The credited identity
+$|Q_{\mathrm{live}}|=G+E-D$ from Theorem 5.2 gives $D\le E$;
+adding the $u$ genuinely nonlive installed states gives (SI.118).
+A selected state may also receive certified traffic on another input
+and is still counted once. These are count-cell incidence statements,
+not allocations of disjoint physical batches; a paid discriminator
+is not automatically in $u$ or outside the representative image.
+
+The proof makes no comparison of late cyclic prefix costs. Those
+cost orders can reverse as more blocks are read. Fixed next labels
+separate different modes in the rotating slots, and whole-block
+costs are compared only in the common $\mathsf U$ scan. Hence no
+all-depth cost monotonicity or star support geometry is a premise.
+$\square$
+

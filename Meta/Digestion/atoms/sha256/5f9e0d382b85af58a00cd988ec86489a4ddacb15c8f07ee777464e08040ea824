@@ -1,0 +1,57 @@
+**Definition 2.1 (periodic actual flow).** For a positive integer $d$ denoting an observer period, distinct from the fixed source parameter of Definition 1.1, let $X_i,Y_i$ be finite p and suspended label sets, with indices modulo $d$. There are probability rows $\pi_i,\tau_i$, row-stochastic actual kernels $B_i:X_i\to Y_i$, $A_i:Y_i\to X_{i+1}$, and synthetic $\alpha$ probabilities $u_i,v_i$, satisfying
+
+$$
+\pi_iB_i=\tau_i,\qquad \tau_iA_i=\pi_{i+1}.
+\tag{2.1}
+$$
+
+All rows here are analysis coordinates. The installed machine samples $\pi_0$ source-independently in the same original update that writes the third record and then latches it. It uses $B_i$ after an actual p-$\beta$ and $A_i$ after an actual suspended-$\alpha$; the finite mode advances only in the suspended-$\alpha$ return update, in actual execution and in same-update synthetic generation. Completion clears the labels and retains the original pendingStop. Before the latch, synthetic letters are fair and the original updates are used. Both seeds and every current actual record use this same rule. The finite mode is a charged part of COMPLETE.
+
+Put
+
+$$
+U_i=\operatorname{diag}(1-u_i),\quad V_i=\operatorname{diag}(v_i),
+\quad H_i=U_iB_iV_iA_i,
+\quad f_i=u_i,\quad g_i=U_iB_i(1-v_i).
+\tag{2.2}
+$$
+
+For $j\ge0$, define
+
+$$
+Z_{i,b}^{(j)}=H_iH_{i+1}\cdots H_{i+j-1}t_{i+j,b},
+\quad t_{i,0}=f_i,\quad t_{i,1}=g_i,
+\tag{2.3}
+$$
+
+where an empty product is the identity. Then
+
+$$
+Q_{i,x}(w_{j,b})=Z_{i,b}^{(j)}(x),
+$$
+
+$$
+W_{i,y}(\beta)=1-v_i(y),\qquad
+W_{i,y}(\alpha w_{j,b})=(V_iA_iZ_{i+1,b}^{(j)})(y).
+\tag{2.4}
+$$
+
+The remaining mass after $L$ returns is
+
+$$
+t_i^{(L)}=H_i\cdots H_{i+L-1}\mathbf1
+$$
+
+at p, and $V_iA_it_{i+1}^{(L)}$ after the suspended initial $\alpha$. The limits of these remaining masses include infinite noncompletion. Equations (2.2)–(2.4), rather than a posterior update, define the same-update decoder.
+
+**Mathematical citation 2.2 (supplied comparison).** [FLOW, §3] supplies the following comparison for every observer of Definition 1.3. One periodic table of Definition 2.1 satisfies, simultaneously,
+
+$$
+R_j(\mathcal H_s;M^\circ)\le R_j(\mathcal H_s;M),
+\qquad
+\Delta_{\rm all}(M^\circ)=\Delta_4(M^\circ)\le\Delta_4(M).
+\tag{2.5}
+$$
+
+For every mode and every $k$ with $\mu(k)>0$, its pure-target configuration risks are bounded by the corresponding original risks. The source, positive finite histories, current records and original control are unchanged. The comparison does not preserve a state or total-resource budget. Periodicization, finite-chain limits and actual circulation in this statement are supplied results.
+

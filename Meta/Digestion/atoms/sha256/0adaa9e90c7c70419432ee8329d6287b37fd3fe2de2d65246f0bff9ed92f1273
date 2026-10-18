@@ -1,0 +1,10 @@
+设图保持连通，\(c_e(s)\) 对 \(s\) 可微，令
+\[
+L_s=\sum_ec_e(s)q_eq_e^{\mathsf T},
+\qquad
+\phi_s=L_s^+b.
+\]
+在 \(\mathbf1^\perp\) 上有
+\[
+\frac{d}{ds}L_s^+
+=

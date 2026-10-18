@@ -1,0 +1,11 @@
+**Lemma 2.7 (exact equal boundary pushforwards).**
+
+$$
+(\partial_p)_*\mu_0=(\partial_p)_*\mu_1.
+\tag{2.14}
+$$
+
+**Proof.** Each core law assigns $1/16$ to each of the sixteen descriptors
+$(j,e)$ and zero to $B$. The uniform component is identical in (2.13), so
+its boundary pushforward cancels in the comparison. $\square$
+

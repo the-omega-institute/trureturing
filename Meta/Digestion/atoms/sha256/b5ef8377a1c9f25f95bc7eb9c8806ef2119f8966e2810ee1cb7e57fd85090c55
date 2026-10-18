@@ -1,0 +1,34 @@
+**Definition 7.3 (unresolved frontier).** The uniform upper construction
+settles avoidability of an auxiliary full-tree snapshot and supplies the
+small-boundary/small-workspace family under the original all-finite,
+unknown-finite-interference contract. A sharp universal Pareto frontier among
+mutable workspace, installed immutable storage, candidate/output size, Read
+traffic and retained certificates remains open. In particular, the traffic
+lower bound does not settle minimum mutable width in models with paid
+immutable operand regions or alternative traversal encodings. The explicit
+matrix is a complete partition representation, not a minimum-size partition
+encoding; canonical classes could reduce its quadratic output, but need their
+own same-program resource proof.
+
+The next relational question is which additional *small retained relations*,
+short of full trees, suffice to join disconnected row-overlap components and
+recover their relative epochs, with an acquisition-and-retention bill under
+the same native ports. This keeps the original spatial-cut, internal-time,
+boundary and memory recovery objective: final boundary sufficiency and the
+resources needed to acquire it are distinct. Exact certificate minimality,
+authentication of source and origin, all-fair progress with infinitely many
+updates, physical realization and a globally minimal relational structure
+remain separate unresolved obligations. No broad-goal completion follows.
+
+[CNA]: RECURSIVE_RELATIONAL_OBSERVATION_CONCURRENT_NATIVE_CUT_ACQUISITION.md
+[NAR]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ALPHA_RECUT_MEMORY.md
+[SLD]: RECURSIVE_RELATIONAL_OBSERVATION_SERIAL_LITERAL_DELIVERY.md
+[ACPD]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionDecoder.lean
+[NFSP]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeFullSourceProducer.lean
+[NWRS]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeWholeRowService.lean
+[NDP]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeDepthPatterns.lean
+[DOR]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/DelayedOriginalReadout.lean
+[CILB]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/CombLiteralInstallationBounds.lean
+[HW]: https://cs.brown.edu/~mph/HerlihyW90/p463-herlihy.pdf
+[TURING]: https://www.cs.virginia.edu/~robins/Turing_Paper_1936.pdf
+

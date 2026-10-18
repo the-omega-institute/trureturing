@@ -1,0 +1,80 @@
+### 70.3 Contraction and same-branch identification
+
+All centers, radii, and preconditioning matrices below are exact rationals.
+For a box \(\mathcal X=x_0+[-r_1,r_1]\times\cdots\times[-r_n,r_n]\),
+use the weighted norm \(\|u\|_r=\max_i|u_i|/r_i\). For a square system
+\(F_b\) and a fixed rational matrix \(Y\), let
+
+\[
+ \mathcal T_b(x)=x-YF_b(x),\quad
+ E_{ij}\supseteq\delta_{ij}-\sum_kY_{ik}\,\partial_jF_{b,k}(\mathcal X).
+\]
+
+Set
+
+\[
+ e_i=\sum_j\sup|E_{ij}|r_j,\quad
+ d_i\ge|(YF_b(x_0))_i|,\quad
+ q=\max_i e_i/r_i,\quad a=\max_i(d_i+e_i)/r_i.
+ \tag{70.9}
+\]
+
+The bounds \(q<1\) and \(a<1\) make \(\mathcal T_b\) a contraction of
+\(\mathcal X\) into its interior. Invertibility of \(Y\) follows from
+\(\|I-YJ\|_r<1\) at any point of the box. Its unique fixed point is
+therefore the unique zero of \(F_b\) in the box.
+
+For the uniform parameter interval \(B=[b_0-\epsilon,b_0+\epsilon]\),
+with \(b_0=211/2000\) and \(\epsilon=1/2000\), derivative intervals in
+(70.9) range over \(\mathcal X\times B\). The bound at the center is obtained
+by the one-variable mean-value inequality after preconditioning:
+
+\[
+ d_i=\sup|(YF(x_0,b_0))_i|
+       +\epsilon\sup|(YF_b(x_0,B))_i|.
+ \tag{70.10}
+\]
+
+This avoids treating different occurrences of the common parameter as unrelated
+perturbations. It is an ordinary derivative bound, not a numerical cancellation
+assumption. Uniform contraction gives a unique zero \(X(b)\in\mathcal X\)
+for every \(b\in B\). It is continuous: the fixed-point difference is bounded
+by \((1-q)^{-1}\|\mathcal T_b(X(b'))-\mathcal T_{b'}(X(b'))\|_r\), which
+tends to zero as \(b\to b'\).
+
+The following rational upper bounds result from the exact interval evaluations
+specified in §70.5. The endpoint and joint boxes have all radii \(10^{-10}\).
+
+| Box | Number of unknowns | Contraction bound \(q\) | Inclusion bound \(a\) |
+|---|---:|---:|---:|
+| Uniform branch, \(b\in[0.105,0.106]\) | 5 | \(<0.255\) | \(<0.744\) |
+| Left endpoint, \(b=0.105\) | 5 | \(<3\cdot10^{-8}\) | \(<9\cdot10^{-6}\) |
+| Right endpoint, \(b=0.106\) | 5 | \(<3\cdot10^{-8}\) | \(<5\cdot10^{-6}\) |
+| Joint system \((F,N)=0\) | 6 | \(<10^{-7}\) | \(<18\cdot10^{-6}\) |
+
+The endpoint boxes lie strictly inside the uniform five-dimensional box.
+Uniqueness therefore identifies their zeros with the endpoint values of the
+same branch \(X(b)\). Their exact rational sign enclosures are
+
+\[
+ N(X(0.105),0.105)\in[0.001197089,0.001197100],\qquad
+ N(X(0.106),0.106)\in[-0.001398270,-0.001398260].
+ \tag{70.11}
+\]
+
+Continuity already gives a zero of \(N\) on this branch. Independently, the
+six-dimensional joint contraction gives a unique zero of \((F,N)\) inside
+its much smaller box. Its first five coordinates lie strictly inside the
+uniform box, and its parameter interval lies strictly inside \(B\). By
+uniqueness of the uniform zero at that parameter, this isolated joint zero
+necessarily lies on the same continued branch. Its sixth coordinate gives (70.1).
+
+All rational denominators in (70.6) and (70.8) are nonzero on the real boxes.
+Multiplying every equation of the six-dimensional joint system by
+\(4(1+T^2)^2(1+G^2)^2(1+S^2)^2\) gives integer polynomials. The contraction
+bound implies a nonsingular joint Jacobian at its zero; clearing those nonzero
+denominators preserves nonsingularity. Thus it is an isolated complex zero of
+a rational polynomial system, and its coordinates are algebraic. Equations
+(70.1), (70.3), and the isolating box specify an exact algebraic witness, rather than
+only a decimal approximate solution.
+

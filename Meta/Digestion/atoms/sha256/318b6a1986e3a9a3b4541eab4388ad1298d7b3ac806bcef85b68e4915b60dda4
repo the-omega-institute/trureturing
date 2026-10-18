@@ -1,0 +1,110 @@
+**引理 10.1（两个实际世界的响应雅可比证书）。** Use the bijective
+positive-source chart
+
+$$
+P(\alpha,\beta)=\frac1{1+\alpha\beta}
+ \begin{pmatrix}1&\beta\\\alpha&\alpha\beta\end{pmatrix},
+\qquad \alpha,\beta>0.                                    \tag{10.1}
+$$
+
+Its inverse is $\alpha=P_{21}/P_{11}$,
+$\beta=P_{12}/P_{11}$; the rank-one equation determines the fourth
+entry and trace one determines the denominator. Let
+$\mathcal T_J=(\mathcal Y,\mathcal Z,S_J)$ and
+$\mathcal T_M=(\mathcal Y,\mathcal Z,S_M)$, using the interpolant
+and response functions of Definition 8.1. Their coordinate domain is
+$\{\alpha,\beta>0,d\in\mathbb R\}$. Both are smooth there.
+At $x_0=(1,1,0)$ their four response gradients, with columns
+$\alpha,\beta,d$, are
+
+$$
+\begin{array}{c|rrr}
+&\partial_\alpha&\partial_\beta&\partial_d\\ \hline
+\mathcal Y&-56&1352/25&-1/2\\
+\mathcal Z&-20878/75&19738/75&-29/6\\
+S_J&-16152/25&18072/25&-13\\
+S_M&-27552/25&27552/25&-23.
+\end{array}                                                 \tag{10.2}
+$$
+
+In particular,
+
+$$
+\det\frac{\partial(\mathcal Y,\mathcal Z)}{\partial(\alpha,\beta)}
+=\frac{197952}{625},\quad
+\det D\mathcal T_J(x_0)=-\frac{382512}{25},\quad
+\det D\mathcal T_M(x_0)=-\frac{1142016}{125}.                 \tag{10.3}
+$$
+
+At $x_\theta=(1,\theta/(1-\theta),d_\theta)$,
+$D\mathcal T_J$ has its nine entries in the respective open
+intervals below; every endpoint in the table is divided by $100$:
+
+$$
+\begin{pmatrix}
+(29567,29569)&(-9918,-9916)&(364,365)\\
+(75219,75223)&(-46913,-46906)&(847,849)\\
+(440914,440931)&(-73660,-73642)&(4101,4102)
+\end{pmatrix}.                                             \tag{10.4}
+$$
+
+Consequently
+
+$$
+\frac{502852949701}{500000}
+\le\det D\mathcal T_J(x_\theta)
+\le\frac{1052660174081}{1000000},                            \tag{10.5}
+$$
+
+so this determinant too is nonzero.
+
+Proof. Write $h=1+\alpha\beta$. The source coordinates and their
+partial derivatives are
+
+$$
+\begin{gathered}
+a=h^{-1},\qquad u=(\alpha+\beta)/h,\qquad v=1+\beta/h,\\
+(a_\alpha,a_\beta)=(-\beta,-\alpha)/h^2,\\
+(u_\alpha,u_\beta)=(1-\beta^2,1-\alpha^2)/h^2,\qquad
+(v_\alpha,v_\beta)=(-\beta^2,1)/h^2.
+\end{gathered}                                              \tag{10.6}
+$$
+
+For $\tau=(1,u,v,u+v)$ and $y=(0,24,48,312/5)$, the interpolation
+samples satisfy, for $r=\alpha,\beta$,
+
+$$
+(q_i)_r=-\frac{(y_i-d)(\tau_i)_r}{\tau_i^2},\qquad
+(q_i)_d=-\frac1{\tau_i}.                                   \tag{10.7}
+$$
+
+This also gives $(q_0)_r=0,(q_0)_d=-1$. Apply (8.5) to these
+derivatives. If a response is $d+G_it$, its $r$ derivative is
+$t(G_i)_r+G_it_r$ for $r=\alpha,\beta$, and its $d$ derivative
+is $1+t(G_i)_d$. Substituting $x_0$ gives (10.2), and determinant
+expansion gives (10.3).
+
+For (10.4), differentiate with $\alpha,\beta,d$ independent first.
+Then in (10.6)–(10.7), (8.5)–(8.6) substitute
+$\alpha=1$, $\beta=b/(1-b)$ and the rational function
+$d=N_4(b)/Q_4(b)$ from (9.10). On each rational interval $I_k$ of
+(9.14), the interval rules in Corollary 9.2 put the nine resulting
+entries strictly between the endpoints in (10.4). The denominators
+$1-b,h,u,v,u+v,Q_4$ are positive on these intervals. The derivative
+with respect to $d$ is a partial derivative, not a derivative along
+the substituted curve $d=N_4(b)/Q_4(b)$.
+
+Finally let $E_{ij}$ denote the closed interval obtained by dividing
+the corresponding endpoints of (10.4) by $100$. Applying the same
+interval rules to the six signed products
+
+$$
+E_{11}E_{22}E_{33}+E_{12}E_{23}E_{31}+E_{13}E_{21}E_{32}
+-E_{13}E_{22}E_{31}-E_{12}E_{21}E_{33}-E_{11}E_{23}E_{32}
+\tag{10.8}
+$$
+
+gives exactly the endpoint interval in (10.5). Its lower endpoint
+is positive. This is a finite rational certificate for the remote
+Jacobian, without a generic-rank assumption. ∎
+

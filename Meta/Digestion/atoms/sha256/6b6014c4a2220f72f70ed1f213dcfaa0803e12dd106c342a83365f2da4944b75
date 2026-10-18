@@ -1,0 +1,28 @@
+**Corollary 14.2 (actual native constant-composition sets).** Let
+$p\in\mathcal P(\mathcal N)$ be rational, use unit weights, and put
+
+$$
+\nu=\frac1n\sum_i(x_i)_*p_i\in\Delta(S_d).
+\tag{COK.71}
+$$
+
+The original constant-composition capacity of
+[NPC, Theorem 4.3][NPCbase] satisfies
+
+$$
+\alpha_d(\nu)\ge\max\{0,H_{\rm cov}(p)/n\}.
+\tag{COK.72}
+$$
+
+Proof. Every row counted in $Z_p$ has exactly
+$m\sum_i p_i\{a:x_i(a)=x\}=nm\nu(x)$ occurrences of each actual
+block state $x$. The row set is a subset of the complete native
+cover solution set, hence is admissible by the credited restriction
+closure. Some cover has at least
+$2^{mH_{\rm cov}(p)}(m+1)^{-r(p)}$ such distinct rows by (COK.67).
+Thus its type subset witnesses the original $a_{nm}(nm\nu)$ in
+(NPC.10). Pass through common denominator multiples in (NPC.12)
+to get the second entry in the maximum; $\alpha_d\ge0$ supplies
+the first. Actual owner replies ensure that rows were not counted
+with multiplicity. $\square$
+

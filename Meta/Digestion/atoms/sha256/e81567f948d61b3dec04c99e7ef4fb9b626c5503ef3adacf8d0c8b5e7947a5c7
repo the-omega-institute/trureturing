@@ -1,0 +1,25 @@
+**Lemma 8.2 (Exact actual payment).** The controller stops almost surely and
+
+$$
+T=1+\tau+\sum_{n=1}^N(K_n+1),
+\qquad
+\mathbb E_iT=1+\beta_i+\mu_i\mathbb E_iN.
+$$
+
+**Proof.** The initial phase reads $\tau$ zeros and its first one. Every later begun gap
+is read through its closing one, including the terminating gap. Thus the pathwise identity
+charges every holding zero, every post-cap zero, and the terminal bit. Each source gap and
+$\tau$ is finite almost surely, and Lemma 8.1 makes $N$ finite.
+
+The event $\{N\ge n\}$ is known before gap $n$ is drawn and is therefore independent of
+$K_n$. Hence
+
+$$
+\mathbb E_i[(K_n+1)\mathbf1_{\{N\ge n\}}]
+ =\mu_i\mathsf P_i(N\ge n).
+$$
+
+Tonelli's theorem gives the claimed expectation identity. This is predictable inclusion
+for the present complete-gap table; it does not claim duration-score independence within
+a gap and does not apply to an observer that stops partway through zeros. $\square$
+

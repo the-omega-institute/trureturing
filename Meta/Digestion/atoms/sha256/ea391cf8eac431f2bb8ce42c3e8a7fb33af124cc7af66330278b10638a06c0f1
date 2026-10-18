@@ -1,0 +1,30 @@
+**Theorem 9.2 (Uniform fully paid dyadic upper).** There are positive constants
+$C_M,C_T$ depending only on the fixed $(r,c,\alpha)$, chosen before $s$ and $J$, such
+that every permitted $(s,J)$ has the six obligations and
+
+$$
+M(s,J)\le C_M\frac{J+1}{s^r\sqrt{J-1}},
+\qquad
+\max_i\mathbb E_iT\le C_T\frac{s^{-(2r+1)}}{J-1}.
+$$
+
+**Proof.** The ceiling gives $H\le R/\delta+1$ and hence
+
+$$
+M\le(2R+4)\frac{J+1}{\delta}.
+$$
+
+The lower affinity bound gives
+$\delta\ge\sqrt{h_-}s^r\sqrt{J-1}$, which proves the first estimate. By Lemma 8.2,
+Lemma 3.1, and Lemma 8.1,
+
+$$
+\mathbb E_iT
+ \le \frac{C_\beta}{s}+\frac{C_\mu B}{2su}
+ \le \frac{C_\beta+C_\mu B/2}{su}
+ \le \frac{C_\beta+C_\mu B/2}{h_-}
+       \frac{s^{-(2r+1)}}{J-1}.
+$$
+
+The table and all six conclusions are common to the two source labels. $\square$
+

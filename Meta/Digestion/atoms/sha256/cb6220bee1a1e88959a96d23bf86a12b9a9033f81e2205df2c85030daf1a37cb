@@ -1,0 +1,15 @@
+**Lemma 7.3 (four axis-endpoint shared states force a mixed fork).** There are at most four shared states having an axis endpoint. If there are four, the unique hosts of $Z_2$ and $O_2$ coincide, and
+
+$$
+e_{(1,2)}\ge1,\qquad e_{(2,1)}\ge1,\qquad e_3\ge2.
+\tag{19}
+$$
+
+**Proof.** Each of the five cells in (18) has exactly one host. A shared state with an axis endpoint uses at least one of these five axis incidences. The only partners of $Z_2$ are $O_2,O_3$, and the only partners of $O_2$ are $Z_2,Z_3,Z_4$, by (3). Both marked cells therefore require an axis partner. Five axis-endpoint shared states would use exactly one axis incidence each, contrary to this requirement for $Z_2$. Thus there are at most four.
+
+If four occur, both $Z_2$ and $O_2$ participate. Otherwise at most four axis cells remain and each of the four states must use exactly one of them; the remaining marked cell, if present, cannot have its required axis partner, while if both are absent only three cells remain. There can be at most one state with two axis endpoints, since two such states among four would use at least six axis incidences. Both marked cells need axis partners, so they must share that same state $q$.
+
+Let $x$ be the start coordinate, $y$ the next coordinate after first reply zero, and $v$ the next coordinate after first reply one. These queries exist and are live. The axis words $00,11$ end at $q$ with supports $\{x,y\},\{x,v\}$. Freshness gives $y,v\ne x$. Equal supports with unequal hits are forbidden, so $y\ne v$. Write $w=i(q)$; freshness for both occurrences gives $w\notin\{x,y,v\}$.
+
+The actual word $001$ ends at the one successor of $q$ in cell $(1,2)$, with support $\{x,y,w\}$ omitting $v$. The actual live word $100$ ends in that same cell with support containing $v$. Thus it has at least two supports, and hence at least two hosts. Likewise $110$ ends at the zero successor of $q$ in cell $(2,1)$ with support $\{x,v,w\}$ omitting $y$, whereas the actual live word $011$ has support containing $y$. This forces two hosts at $(2,1)$. Every word used has final live counts and is actual by Convention 7.1. The two axis assignments need not agree, and no state is copied. This proves (19). $\square$
+

@@ -1,0 +1,36 @@
+**Proposition 5.1 (One actual visible-order law from a positive flow).** Let $M\ge1$. Regard a legal word $e\in B_{M+1}$ as an edge from its first $M$ bits to its last $M$ bits. Suppose a vector $f(e)>0$ has total one and satisfies, for every $u\in B_M$,
+
+$$
+\sum_{a:ua\in B_{M+1}}f(ua)
+=\sum_{b:bu\in B_{M+1}}f(bu).
+\tag{5.1}
+$$
+
+There is a permitted stationary visible-order-at-most-$M$ law $P^f$ whose $(M+1)$-word marginal is exactly $f$.
+
+**Proof.** Set
+
+$$
+\pi_f(u)=\sum_{a:ua\text{ legal}}f(ua)>0,\qquad
+K_f(a\mid u)=\frac{f(ua)}{\pi_f(u)}.
+\tag{5.2}
+$$
+
+The kernel is normalized and positive on precisely the legal extensions. The state transition is $u=u_1\cdots u_M\longmapsto u_2\cdots u_Ma$. Conservation (5.1) gives its stationarity explicitly:
+
+$$
+\sum_{b:bu\text{ legal}}\pi_f(bu_1\cdots u_{M-1})
+K_f(u_M\mid bu_1\cdots u_{M-1})
+=\sum_{b:bu\text{ legal}}f(bu)=\pi_f(u).
+$$
+
+The stationary two-sided state chain, supported on these overlap edges, thus defines a bit process. More explicitly its probabilities are, for $n\ge M$,
+
+$$
+P^f_n(b)=\pi_f(b_1\cdots b_M)
+\prod_{j=M+1}^nK_f(b_j\mid b_{j-M}\cdots b_{j-1}),
+\tag{5.3}
+$$
+
+with shorter cylinders the corresponding marginals of $\pi_f$. Summing a final bit uses a row sum equal to one; summing an initial bit uses the incoming conservation identity. These give both endpoint consistency and translation-invariant cylinder distributions, hence one normalized stationary law on $\mathbb Z$. Its state is exactly the last $M$ visible bits, so its visible next-bit dependence is at most $M$. Each legal cylinder has positive mass in (5.3), including shorter cylinders by marginalization. At length $M+1$, (5.3) equals $f(ua)$. $\square$
+

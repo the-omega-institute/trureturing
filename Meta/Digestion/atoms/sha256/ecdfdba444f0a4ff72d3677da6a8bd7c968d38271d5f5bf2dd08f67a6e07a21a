@@ -1,0 +1,59 @@
+**Theorem 249.1 (Equality of the full normalized N and O plateau faces).**
+For every $L\ge3$, at $a_1=\cdots=a_L=1$ and
+
+$$
+\varepsilon=(L-2)/(L+1),\qquad s=3/(L+1),
+\tag{249.1}
+$$
+
+the entire normalized finite feasible N face equals the O face.
+It consists exactly of probability mixtures on triples of
+$[L]\cup\{\infty\}$ whose inclusion marginal at each of the $L+1$
+labels is $s$. The triple queries its two smallest numerical labels,
+stops at its first queried zero with that label, and otherwise emits
+the third label, with $\infty$ meaning zero.
+In any complete deterministic-table decomposition of a feasible N
+kernel, every positive-mass table is, in sorted form,
+
+$$
+N(i,j;i,i,j,r),\qquad i<j<r\le L,
+\quad\text{or}\quad N(i,j;i,i,j,0).
+\tag{249.2}
+$$
+
+Empty, singleton and repeated-information forms have zero mass.
+
+Proof. Here $D=0$. Equations (248.4) and (248.8) force zero defect,
+positive base $s$, and sole-zero correct probability $s$ at every index.
+Theorem 248.2 additionally forces $00=01$ in every positive-mass pair
+of any decomposition. Therefore the zero-defect form is already
+stopped, with $00=01=i$, $10=j$, and $11$ zero or an unqueried label.
+
+If an exhaustion label $r<j$ had positive mass, choose a word with
+first zero $r$ and also zero at the later queried index $j$.
+That table loses correct $r$ relative to $v^r$. Every forced stopped
+form has correct-$r$ indicator at most its sole-zero indicator: a
+queried $r$ is correctly reached, and an unqueried exhaustion guess
+can only be lost. Thus no other form can gain to compensate.
+Since correctness at $v^r$ is already tight at $s$ and the all-word
+correct row also requires $s$, this is impossible. Hence numerical
+exhaustion guesses satisfy $r>j$, proving (249.2).
+
+These tables correspond exactly to triples $\{i,j,r\}$ or
+$\{i,j,\infty\}$. On every first-zero-$n$ word the output is $n$
+exactly when its triple contains $n$; on the positive word output
+zero is exactly inclusion of $\infty$. Thus all marginals must be $s$.
+Conversely every probability triple mixture with those marginals has
+correct mass $s$, pair mass at least $s=1-\varepsilon$, base at least
+zero above its literal demand $-\varepsilon$, and positive base $s$.
+Every independent row holds. Uniform triple weights supply existence.
+
+The sole-zero equalities, exhaustion reserve and complete O-face
+argument belong to §224; the implication forcing the N $00$ cell and
+therefore the equality of full faces is supplied by Theorem 248.2.
+This is a normalized finite-law classification. It does not classify
+arbitrary conic mass or unprojected original full-carrier decompositions.
+The numerical-exhaustion mass is $1-s=\varepsilon$, and the original
+unit-plateau attainer and its closed-tail transport remain §§87,
+110 and 176. ∎
+

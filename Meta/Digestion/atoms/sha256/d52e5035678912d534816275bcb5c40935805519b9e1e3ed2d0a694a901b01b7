@@ -1,0 +1,20 @@
+**Definition 8.1 (one-hole context selector).** Let $D[-]$ be a fixed
+finite ordered full context over the native constructors with exactly
+one hole, at address $w$. Its other leaves and branches are concrete.
+Let $A_D$ recognize exactly
+
+$$
+D[\mathcal T]=\{D[t]:t\in\mathcal T\}.
+\tag{NRF.36}
+$$
+
+Such a finite total deterministic bottom-up automaton is effectively
+available. One construction records, for every subcontext of $D$,
+whether the current subtree matches it, treating its unique hole as
+an unrestricted tree, and also records equality with each ground
+subterm of $D$. Ground-leaf tests and ordered pair tests propagate
+these finitely many Boolean flags bottom-up. The flag for $D$ is
+the acceptance condition. Thus no unbounded hidden matching history
+is part of the public selector. Take $w\ne\varepsilon$ when a
+strictly deeper boundary is desired.
+

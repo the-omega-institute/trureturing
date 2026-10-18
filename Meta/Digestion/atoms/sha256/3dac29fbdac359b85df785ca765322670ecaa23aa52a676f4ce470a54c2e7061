@@ -1,0 +1,103 @@
+**Proposition 76.1 (all-height heat and killed-resolvent bounds).** There
+are constants $C,c>0$ such that for every $Y,Z\in\mathcal C$,
+
+$$
+0\le p_t(Y,Z)\le
+\begin{cases}
+Ct^{-7/2},&0<t\le1,\\
+Ce^{-\lambda t}t^{-3/2},&t\ge1.
+\end{cases}
+\tag{76.1}
+$$
+
+Consequently, for $0<\tau\le1$,
+
+$$
+\|W_\tau\|_\infty\le C\tau^{-5/2},\qquad
+\int D_\tau dY\le C,\qquad
+\|B^{-1}D_\tau\|_\infty\le C\tau^{-3/2}.
+\tag{76.2}
+$$
+
+Here the last expression denotes the nonnegative killed-resolvent
+integral. For every complex $u\in\mathcal Q$ it implies
+
+$$
+\int D_\tau|u|^2dY
+ \le C\tau^{-3/2}\bigl(T[u]+\lambda\|u\|_2^2\bigr).
+\tag{76.3}
+$$
+
+Proof. The all-height diagonal supplier is G (32.3)--(32.6) on the
+real cover. Its hypotheses use the same coefficient vector and an
+interval $J$ containing $\overline I$ with positive margins. In
+particular
+
+$$
+\det(c_\kappa,c_\kappa',c_\kappa'')(k)
+ =-\frac{H^2-\kappa^2}{2H^3(k-\alpha_\kappa)^3}\ne0
+\tag{76.4}
+$$
+
+on that larger interval. The local expansion on $J$ is uniform for
+centres $k\in[l,u]$; domination by its killed kernel bounds the kernel
+on $I$, including heights approaching either absorbing face, by
+$Ct^{-7/2}$ on the diagonal. Phase translation gives the same bound
+at every phase. Semigroup contraction extends the bound from small
+times to $0<t\le1$. Symmetry and the semigroup Cauchy--Schwarz
+inequality give
+$p_t(Y,Z)\le\sqrt{p_t(Y,Y)p_t(Z,Z)}$.
+This proves the first line of (76.1), rather than inferring an
+all-height estimate from an interior diagonal limit alone.
+The second line is the large-time bound in L Lemma 41.2, after
+removing its factor $e^{\lambda t}$ and bounding the height factors.
+The first line of that lemma, whose power is $t^{-6}$, is not used
+as a sharp short-time estimate.
+
+Integration of (76.1) against $e^{\lambda t}$ proves the first
+inequality of (76.2), since
+$\int_\tau^1t^{-7/2}dt\le C\tau^{-5/2}$ and
+$\int_1^\infty t^{-3/2}dt<\infty$.
+The exact raw mass gives
+
+$$
+\int D_\tau dY
+ =\int_\tau^1 e^{\lambda t}\mathbb P_{k_0}(\zeta>t)dt
+ \le e^\lambda.
+\tag{76.5}
+$$
+
+This uses the killed semigroup; it does not treat $F$ as a
+conservative raw-measure transition density. By Tonelli, symmetry
+and the semigroup identity, for $0<\tau<1$,
+
+$$
+\begin{aligned}
+(B^{-1}D_\tau)(Y)
+ &=\int_\tau^1e^{\lambda t}\int_0^\infty
+                p_{t+s}(o,Y)ds\,dt\\
+ &\le C\int_\tau^1(t^{-5/2}+1)dt
+ \le C\tau^{-3/2}.
+\end{aligned}
+\tag{76.6}
+$$
+
+Indeed the inner integral from $t$ to one is bounded by
+$C\int_t^1v^{-7/2}dv$, and the remaining killed large-time integral
+is uniformly finite by (76.1).
+
+For completeness, the classical weighted Schur test gives precisely
+the form consequence needed here. The symmetric positive-kernel
+operator $D_\tau^{1/2}B^{-1}D_\tau^{1/2}$ has Schur weight
+$D_\tau^{1/2}$: its weighted row integral is
+$D_\tau(Y)^{1/2}(B^{-1}D_\tau)(Y)$.
+Thus its $L^2$ norm is at most the last bound in (76.2).
+For $\tau<1$, positivity of the interior heat kernel makes the weight
+positive; at $\tau=1$ the assertion is trivial.
+Since $B\ge\lambda>0$, the squared norm of
+$D_\tau^{1/2}B^{-1/2}$ is the norm of this Schur operator.
+Applying it to $B^{1/2}u$ proves (76.3), also for complex functions.
+All operators in this calculation use $B$, whose heat is killed and
+sub-Markov, rather than assuming that the shifted heat of $S$ is
+Markovian in raw measure. $\square$
+

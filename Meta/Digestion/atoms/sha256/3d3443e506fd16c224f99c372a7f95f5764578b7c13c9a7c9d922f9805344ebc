@@ -1,0 +1,23 @@
+**Proposition 3.6 (future response and chronology require different data).**
+Exact target recovery, full future-response recovery and recovery of
+acquired chronology are distinct tasks in (1.1). In particular a target
+boundary need not support the next unread response, and even a complete
+response function need not recover the order or cost of its past
+acquisition.
+
+**Proof.** Take $N=3,t=1$ and the positive one-read record $((1,n))$.
+The sources $(n,\{2\})$ and $(n,\{3\})$ have this record and the same
+target $n$, but their next replies at address 2 differ. This consumes
+the strict part of (3.4).
+
+At $b$ with $N\ge2$, the histories $((1,0),(2,0))$ and
+$((2,0),(1,0))$ have the same response function, acquired set and number
+of calls, but different chronology. With $N=2,t=1$, both already
+identify $b$. The histories $((1,0),(2,0))$ and
+$((1,0),(1,0),(2,0))$ in that same family also identify $b$ and have
+the same distinct-query charge, but their query-call and response-bit
+charges are 2 and 3. These are actual legal histories, obtainable by
+public deterministic schedules. Recovering their past order or call
+count requires retention of additional acquired data. Neither response
+recovery nor set compatibility supplies such retention. $\square$
+

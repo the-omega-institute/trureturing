@@ -1,0 +1,33 @@
+**Proposition 6.3 (exact native mixed form at the actual ground state).**
+For the vectors of Definition 6.1,
+
+$$
+q_g(f_0,w)=-\frac{g}{2\pi}\int_I\chi(k)C_1(k)dk<0.
+\tag{6.6}
+$$
+
+In particular the magnitude of this mixed form is at least
+
+$$
+\frac{g}{2\pi}\int_I\chi(k)R_+(k)dk>0.
+\tag{6.7}
+$$
+
+Proof. The free mixed form vanishes by (6.4). On the support of $w$,
+and with both sides zero outside its height support,
+
+$$
+f_0w=\frac{v(k,\alpha)b(k,\alpha)}{2\pi}
+          \cos(\beta-\beta_o)
+       =\frac{\chi(k)}{2\pi}\cos(\beta-\beta_o).
+\tag{6.8}
+$$
+
+All functions in this pairing are real. Absolute integration on the
+remote compact support and (5.1) give (6.6). The lower comparison
+(5.5), $g>0$ and the nonzero nonnegative bump give (6.7).
+This cancellation uses the actual, potentially $\alpha$-dependent,
+minimizer. It does not require a sign for a ground-state-weighted
+angular harmonic: after cancellation the harmonic is exactly $C_1$.
+$\square$
+

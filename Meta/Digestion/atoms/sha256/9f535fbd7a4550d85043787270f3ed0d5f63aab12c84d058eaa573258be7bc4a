@@ -1,0 +1,19 @@
+**Definition 2.4 (complete raw carrier).** Use ARC Definition 6.2's physical
+codec with 74 port lists, actual eight-track cells, creation positions,
+heads, latches, PC, ownership/tokens and finite control slots of this
+graph. Retain raw partially written control stores separately from the
+last complete active table. Until DONE the actual bootstrap stays active.
+After raw DONE, a unique well-typed decoded row has its actual primitive
+successor when enabled; absent/duplicate/out-of-range fields give no main
+edge. Earlier IN/WRITE/DONE rows remain executed. No canonical table is
+substituted for raw supply.
+
+The carrier includes input-before-WR latches, EX blanks, incomplete banks,
+descriptors, staged placements, installed/inactive code, source overwrite,
+partial loans, both copy stages, receiver import, output, ACK and Ready.
+Every enabled malformed input has its actual successor and receipt.
+Missing tokens, busy second entry and premature unsealed reads execute
+nothing. These are not typed input rejections. The positive replay theorem
+uses authentic canonical code and a completed predecessor; this restriction
+removes no state from the physical carrier.
+

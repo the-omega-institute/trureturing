@@ -1,0 +1,42 @@
+**Proposition 2.1 (an original payload IN supplies the obstruction).**
+Fix the one initialization of [ARC] Definition 9.1:
+$H_0=h=K=1$, $u=\beta$, prior $\{\alpha,\beta\}$, and the truthful
+original INITIAL-Stop client. After its canonical activation, choose 01
+at an outer $R_r$, entering the separately numbered original caller
+$F^A$. Supply TagRead header 010 and length $U(1)=10$. Let $h$ end
+after the first positive payload-length RD and before its payload
+IN(5). Then both Supply$(0)$ and Supply$(1)$ are in the original task
+domain. For the split protocol of Definition 1.3, no causal
+original-prefix interpretation of the post-admission cut can preserve
+both the actual consumed input word and the number of completed
+original rows.
+
+Proof. [CAP] Definition 4.6 allocates and zeroes the payload before the
+length-controlled five-row reader. [ARC] Definition 4.1 changes only
+the final return CTL of that original caller. Its payload sequence is
+
+$$
+\operatorname{RD}(\text{length}),\quad
+\operatorname{IN}(5),\quad\operatorname{WR}(13,5),\quad
+\operatorname{MR}(13),\quad\operatorname{MR}(\text{length}).
+$$
+
+Thus the current wire prefix is exactly 01010. The two complete frames
+010100 and 010101 are canonical one-letter addresses. Their later
+TagRead answers on beta may both be absent; this does not identify
+their primitive input successors. The reached producer/source admission,
+actual length and payload positions and current permissions are those
+of this ordinary canonical caller. No additional entry is assumed.
+
+Let $x_0$ be its claimed stable image, $n=|h|$, and let $x_1$ follow
+just admission with the actual bit 0. The actual input word has changed
+from $I(h)$ to $I(h)(\tau,0)$, but completed-row count and original
+meter material remain $n$. Suppose a map $p$ starts with $p(x_0)=h$,
+maps later cuts to extensions of $h$, and preserves completed rows.
+Then $h\preceq p(x_1)$ and $|p(x_1)|=n=|h|$, so $p(x_1)=h$.
+Input preservation would give $I(p(x_1))=I(h)(\tau,0)$, contradicting
+this equality. Mapping to the post-IN original cut instead increases
+the original receipt count to $n+1$; postponing the input letter to
+Finish changes its actual occurrence. The contradiction uses no
+receipt per fine event. ∎
+

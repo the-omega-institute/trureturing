@@ -1,0 +1,55 @@
+**Lemma 4.3 (interval Gram constraints after arbitrary live updates).** For
+every $s\le t$, any causal realization must satisfy
+
+$$
+\begin{aligned}
+\mu^2\left|1-A_1(t,s)A_2(t,s)
+                   e^{-i(\Phi_2(t,s)-\Phi_1(t,s))}\right|^2
+ &\le(1-A_1(t,s)^2)(1-A_2(t,s)^2),\\
+\mu^2(1-B_1(t,s)B_2(t,s))^2
+ &\le(1-B_1(t,s)^2)(1-B_2(t,s)^2).
+\end{aligned}
+\tag{CP.12}
+$$
+
+Proof. In a consistent proof dilation the interval success contraction $F_{t,s}$
+satisfies $F_{t,s}W_s=W_t$. The matrices $\widetilde K_j(s,0)$ are
+invertible, since their attenuation factors are strictly positive. Their
+phase and attenuation integrals add. Substituting (CP.11) and varying $q$
+therefore gives
+
+$$
+F_{t,s}(q\otimes e_j(s))
+       =\widetilde K_j(t,s)q\otimes e_j(t)
+\quad(q\in V).
+\tag{CP.13}
+$$
+
+Taking the two middle inputs, their input Gram matrix minus output Gram
+matrix is positive semidefinite because $F_{t,s}$ is a contraction.
+Its diagonal entries are $1-A_1^2,1-A_2^2$; its off-diagonal entry is
+$\mu(1-A_1A_2e^{-i(\Phi_2-\Phi_1)})$, since both residue overlaps are
+$\mu$. Nonnegative determinant gives the first inequality. The two minus
+inputs give the second in the same way. No failure record was discarded to
+derive contractivity. Indeed these are necessary even for the weaker task
+that forgets the failure time. $\square$
+
+Proof of Theorem 4.1, necessity. At a common Lebesgue point $s$ of the
+integrable rates, set $t=s+h$ in (CP.12). Then
+
+$$
+\begin{aligned}
+1-A_j(s+h,s)^2&=h\lambda_j(s)+o(h),\\
+1-A_1A_2e^{-i(\Phi_2-\Phi_1)}
+ &=h\left(\frac{\lambda_1(s)+\lambda_2(s)}2+i\delta(s)\right)+o(h),\\
+1-B_j(s+h,s)^2&=h\gamma_j(s)+o(h),\\
+1-B_1B_2&=h\frac{\gamma_1(s)+\gamma_2(s)}2+o(h).
+\end{aligned}
+\tag{CP.14}
+$$
+
+Here $\Phi_2-\Phi_1=\int_s^{s+h}(x_2-x_1)\omega/r$. Divide the
+determinant inequalities by $h^2$ and let $h\downarrow0$. Lebesgue
+differentiation gives (CP.10) almost everywhere, including points with zero
+rates. No continuity of the updated memory vectors is needed. $\square$
+

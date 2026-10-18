@@ -1,0 +1,35 @@
+**Definition 4.1 (all accessible assistance is in the retained memory).**
+After the actual record in Theorem 3.1 is acquired, consider a coding
+interval ending at the fixed terminal clock $1$. The joint information
+accessible to the decoder factors through the finite algebra
+
+$$
+\mathcal B=\bigoplus_{\alpha=1}^n M_{d_\alpha},\qquad
+n<\infty,\quad d_\alpha\geq1,\qquad
+D=\sum_{\alpha=1}^n d_\alpha,\quad d=\max_\alpha d_\alpha.
+\tag{EM.9}
+$$
+
+A state of $\mathcal B$ is a normalized block-diagonal density operator
+on $\bigoplus_\alpha\mathbb C^{d_\alpha}$. $D$ is its total Hilbert
+dimension, not its matrix-space dimension $\sum_\alpha d_\alpha^2$,
+and not just the largest live block $d$.
+
+The code may use the entire actually acquired time, mode and other
+available joint inputs in preparing this state. Every source-dependent
+register accessible across the interval is included jointly in (EM.9):
+classical branches, mode records, clock latches, programme/controller and
+archive states, ancillas, returned environments and timing ports. A
+receiver's retained share of prior entanglement is also included if it
+can assist decoding. It cannot be excused from this joint count because
+its marginal was initially input-independent. An inaccessible reference
+may remain, but cannot assist either channel. Fixed metadata and fresh
+input-independent local randomness supply no missing event value.
+Independent shared classical randomness is allowed by conditioning the
+following proof on it and averaging. No outcome is removed by
+postselection or by a state-dependent choice of decoder.
+
+This is an explicit finite-memory factorization hypothesis. A decoder
+reading an uncounted continuously running event-sensitive clock, old log,
+programme pointer, external event copy or environment does not meet it.
+

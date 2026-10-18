@@ -1,0 +1,16 @@
+**References 13.1 (exact mathematical suppliers).** Repository
+contracts are read at the immutable [source baseline][BASE].
+The following results are reused at their displayed scope.
+
+| Source | Exact use and boundary |
+| --- | --- |
+| [ABC §§2–5][ABC] | All-native $B/E$ inverses, smart pairing, translation with its image restriction, masks and full-source correspondence. No ambient uniform normality predicate is inferred. |
+| [ARH §§1–3][ARH] | Entire paid signed input, both guards, original old-class reconstruction, prefix cells, paid producer and static/serial/prefix existence equivalence. Its recognized fragment decisions remain available. |
+| [SLH Theorem 2.2][SLH] | Actual current decoding of old literal replies, including absent paths and the one-read known-reached root form under a full physical prefix. No past event is fabricated. |
+| [JRF §§2–4][JRF] | Sourcewise nonexpansive late probes, cap, cleanup and finite comparator unrolling. Its literal-only logical decision is not applied to arbitrary signed histories. |
+| [CAR][CAR] | Native atomic-cycle recognizer, exact joint atomic charts, arithmetic prefix and physical-resource results. Theorem 4.3 permits residual non-atomic shapes not forced by that recognizer. |
+| [SRF][SRF] | Full synchronous-family source/action formulas and exact resources, including non-atomic residuals. No arbitrary constructor-offset closure is presumed. |
+| [CRF][CRF] | Entire constructor-elimination family, finite-marker common-word bridge, exact resources and sharp native example. Its covered bridge is not proposed again here. |
+| [GRS §§1–2 and resource theorems][GRS] | Fixed graph $\langle\rho y,y\rangle$ with every retained literal history and original cut; exact graph resources. Its input explicitly excludes arbitrary further signed constraints. |
+| [TPO Definition 1.2 and §4][TPO] | Nondefinability in its exact term-power language. It does not exclude a formula-dependent existential witness replacement or prove general native undecidability. |
+

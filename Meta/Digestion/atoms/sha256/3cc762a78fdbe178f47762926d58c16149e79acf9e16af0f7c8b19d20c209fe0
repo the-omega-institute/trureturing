@@ -1,0 +1,51 @@
+### 107.2. Fourier coordinates and the original complete norm
+
+**Proof of Theorem 107.1.** First assume the pair is calibrated, so its fibre blocks are \(I_2\). Put \(\zeta=\exp(\pi i/4)\), and define
+\[
+ (C_k)_{ij}=\zeta^{k(j-i)},\qquad P_k=C_k/8,
+ \qquad k\in\mathbb Z/8\mathbb Z.
+ \tag{107.4}
+\]
+The \(P_k\) are mutually orthogonal rank-one projections summing to \(I\). A positive semidefinite Hermitian circulant matrix has a unique expansion in the \(C_k\) with nonnegative real coefficients. Calibration is therefore equivalent to
+\[
+ G=\sum_k g_kC_k,\qquad g_k\ge0,\qquad
+ \sum_{k\ {\rm even}}g_k=\sum_{k\ {\rm odd}}g_k=\tfrac12.
+ \tag{107.5}
+\]
+Indeed the two sums are equivalent to \(G_{jj}=1\) and \(G_{j,j+4}=0\). Write \(H\) similarly with coefficients \(h_k\). Since \(C_k\odot C_l=C_{k+l}\), the coefficients of \(K=G\odot H\) are the cyclic convolution \(c=g*h\). Its even and odd coefficient sums are each \(1/2\). The target coefficients are
+\[
+ (t_0,\ldots,t_7)
+  =(\tfrac12,\tfrac18,0,\tfrac18,0,\tfrac18,0,\tfrac18).
+ \tag{107.6}
+\]
+Thus \(L=T-K\) has eigenvalues \(\ell_k=8(t_k-c_k)\), with eigenvalue sum zero separately in each parity sector.
+
+For calibrated original Grams, the adaptive complete-norm theorem of [RT III §91](ARITHMETIC_HOLOGRAPHIC_RT_III.md#91-adaptive-original-channel-witnesses-and-an-obstruction-to-all-two-fibre-tests) gives
+\[
+ F(G,H)=\delta(A,B)
+ =\max\{2\operatorname{Tr}(LW):
+    \rho=\bigoplus_f\rho_f\ge0,\ \operatorname{Tr}\rho=1,
+    \ 0\le W\le\rho\}.
+ \tag{107.7}
+\]
+The forward-Gram convention makes the actual coefficient map use \(L^{\mathsf T}\). For a pure reference/input state, its error output is \(V L^{\mathsf T}V^*\), where \(V^*V\) is a fibre-block density. With \(\rho=(V^*V)^{\mathsf T}\), its trace norm is \(\|\sqrt\rho L\sqrt\rho\|_1\). Every such density is realizable. The zero fibre blocks of \(L\) make this norm twice the positive-part trace. Convexity and Jordan decomposition handle mixed and Hermitian inputs, while Hermitian block dilation handles arbitrary operator inputs. Hence (107.7) has the original complete, unhalved normalization.
+
+Let \(J\) send \(j\) to \(j+4\). The densities \(\rho_{\rm even}=(I+J)/8\) and \(\rho_{\rm odd}=(I-J)/8\) are feasible, with eigenvalue \(1/4\) on their selected parity. Taking \(W\) to be one quarter of the positive spectral projection of \(L\) within that parity gives respectively
+\[
+ \begin{aligned}
+ E&=\tfrac14\sum_{k\ {\rm even}}|\ell_k|
+     =2\sum_{k\ {\rm even}}|t_k-c_k|,\\
+ O&=\tfrac14\sum_{k\ {\rm odd}}|\ell_k|
+     =2\sum_{k\ {\rm odd}}|t_k-c_k|.
+ \end{aligned}
+ \tag{107.8}
+\]
+For the matching upper bound put \(Z=|L|\). Then \(Z\ge\pm L\), and each original fibre block of \(Z\) has the form \(\left(\begin{smallmatrix}d&b\\b&d\end{smallmatrix}\right)\), with eigenvalues \(E,O\). Thus \(Z_{ff}\le\max(E,O)I_2\), giving a feasible original complete-norm dual majorant. Equivalently, the positive coefficient matrices \(Z\pm L\) give completely positive majorants whose fibre-block bound controls every reference input and its operator-input dilation. Consequently
+\[
+ F(G,H)=\max\{E,O\}.
+ \tag{107.9}
+\]
+The two densities are realized by the no-reference unit vectors \(8^{-1/2}\sum_{f=0}^3(|f\rangle\pm|f+4\rangle)\). The dual proves that reference systems cannot improve (107.9). This assertion concerns the calibrated pair; the leaking case below uses the tagged-reference bound of RT III §91.
+
+Fourier diagonalization and positive/negative spectral majorants for circulant Schur maps are established techniques; see Regula, Takagi and Gu, *Operational applications of the diamond norm and related measures in quantifying the non-physicality of quantum maps*, equations (70)–(74), [DOI:10.22331/q-2021-08-09-522](https://doi.org/10.22331/q-2021-08-09-522), and the [source note](../../../Library/QuantumChannels/regula2021operational.md). Their scalar Schur-map normalization differs from (107.7); the original two-coordinate fibre normalization and the matching witnesses above are retained here.
+

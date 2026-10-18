@@ -1,0 +1,42 @@
+**Proposition 8.3 (lawfulness, attained entries and structure dependence).**
+Under Assumption 3.1, (NRE.16) is a terminating finite computation on the
+acquired current data. Its attained range is $\{0,1\}$, and it is not a
+function of the class roots or of the complete target alone.
+
+**Proof.** Inspect the four actually acquired right-class finite terms
+for literal equality with alpha to compute $h$, and compare the acquired
+term $x_{b_2}$ with the fixed finite term $E$. When the supplied acquired
+data are the lossless current tree, local traversal at the fixed class
+representatives extracts those same terms. All inspections and comparisons
+terminate on finite acquired syntax. They ask neither an unknown-subtree
+equality question nor a new native invocation and do not use a predecessor
+input. The assumed export and entry services carry the resulting complete
+bit across the access cut.
+
+If $x_{b_2}=\alpha$, the image classification forces $h=2$ and the bit
+is zero. If $x_{b_2}=\beta$, that classification forces $h=0$ and the
+bit is one: a positive target would already have beta at its different
+partner class. Both cases have actual origins by the finite filling and
+inverse criterion of Definition 2.1 and Theorem 4.1. Thus both bits are
+attained. More explicitly, the six witnesses in Proposition 8.5 include
+a code-zero origin, while the injective all-image tuple
+$(T_2,T_3,T_4,\beta,T_5,T_6)$ has code one. Here and below
+$T_n=\rho^n\alpha$ is the distinct finite orbit established in Theorem
+4.1; $T_2=E$ and every $T_n$, $n\ge2$, is a branch image.
+
+For structure dependence, in class order $(a,c,b_1,b_2,b_3,b_4)$ take
+
+$$
+(\beta,T_4,\alpha,T_2,T_5,T_6),\qquad
+(\beta,T_4,\alpha,T_3,T_5,T_6).
+\tag{NRE.17}
+$$
+
+Each tuple is injective, has the sole nonimage alpha at $b_1$ with its
+forced beta partner, and satisfies the exact image criterion. Hence each
+has the actual finite origin $\delta\mathscr S(x)$ in $\mathcal U_*$.
+Both have the same class roots and complete target $R_1$. Their bits
+are respectively zero and one by (NRE.16), because their $b_2$ terms
+are $E$ and $T_3\ne E$. This proves the asserted dependence while
+keeping all acquisition and access conditions explicit. $\square$
+

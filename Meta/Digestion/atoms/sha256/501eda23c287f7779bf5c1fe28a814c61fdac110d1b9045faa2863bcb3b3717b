@@ -1,0 +1,9 @@
+**Definition 5.2 (S to B).** Parse the ordered unique path list, require
+root, require each nonroot immediate prefix and require that every node
+has either both children or neither. Check the layout as in Definition
+5.1. Scan the list, retaining $p$ precisely when neither $p0$ nor $p1$
+occurs. Each test is a finite Find. Output that ordered sublist.
+
+This algorithm needs no raw image or seed to take the boundary. The service's
+additional membership check is separately charged in Definition 5.6.
+

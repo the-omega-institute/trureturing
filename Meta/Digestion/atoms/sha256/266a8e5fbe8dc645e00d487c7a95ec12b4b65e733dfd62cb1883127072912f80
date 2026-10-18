@@ -1,0 +1,26 @@
+**定义 1.1（完整目标与逐原子采集）。** 令
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix}.
+$$
+
+$\mathcal W_3$ 的元素是完整三元组 $W=(P,f,d)$：$P$ 为逐项严格正、秩一、迹一的实 $2\times2$ 矩阵，$f\ne0$ 为次数至多三的实多项式，$d\in\mathbb R$。沿按时间书写的动作串 $E_1\cdots E_i$，定义
+
+$$
+A_0=I,\qquad A_i=E_iA_{i-1},\qquad
+z_i(W)=f(i)\operatorname{tr}(A_iP)+d.                       \tag{1.1}
+$$
+
+初读计数；每个 $M$ 或 $J$ 后立即读取。八总读的时钟恰为 $0,\ldots,7$。只有一条不可重置、不可复制的轨迹，不跳读、不使用未读复合动作、空动作读、时钟重编号或额外观测端口。动作、停止及完整答案可以是全部实际历史的任意确定性函数，不要求连续性或可测性。增益的两个符号、所有实际低次数、采样根、重根和任意常漂移均在定义域内。
+
+对字面历史 $H$，$\mathcal F(H)$ 表示同时实现其中每个动作和每个读数的全部完整目标。固定目标对未选动作的预测只是数学函数，不是增加的观测。若用未归一化正秩一矩阵 $R$ 和增益 $F$，其代表的完整目标为
+
+$$
+(P,f,d)=\left(\frac R{\operatorname{tr}R},
+                 (\operatorname{tr}R)F,d\right);
+\quad z_i=F(i)\operatorname{tr}(A_iR)+d.                    \tag{1.2}
+$$
+
+这里正归一化保留符号、次数与根；$(R,F)\mapsto(cR,F/c)$、$c>0$ 给出同一目标。
+

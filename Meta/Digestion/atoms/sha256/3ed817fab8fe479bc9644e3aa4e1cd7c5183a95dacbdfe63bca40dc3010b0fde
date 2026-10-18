@@ -1,0 +1,4 @@
+### 108.5. Central partner actions of the two nonabelian groups
+
+Let $\Gamma$ now be the dihedral group $D_8$ of order eight or the quaternion group $Q_8$, and let $z$ be its central involution. Label the original coordinates by $\Gamma$, with original fibres $\{x,xz\}$, and write $P_a|x\rangle=|ax\rangle$. Left-translation invariance means $`P_aGP_a^*=G`$ for all $a$, equivalently $G_{xy}=g(x^{-1}y)$. All channel, encoding, leakage and norm conventions of §108.1 are retained.
+

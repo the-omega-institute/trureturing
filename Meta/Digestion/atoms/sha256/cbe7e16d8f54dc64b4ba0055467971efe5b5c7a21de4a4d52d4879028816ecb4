@@ -1,0 +1,73 @@
+### 220.7 Reuse, intersections and excluded increments
+
+The eligible-prefix instance common to 220.4 and 220.8 is counted once.
+B's cellwise pooled condition is broader in a different direction:
+220.11 has $C>A$ at two words on a prefix zero face and thus fails A's
+wordwise eligibility. Conversely A can reset an interior eligible
+coordinate six after positive coordinate four, as in 220.6; a prefix
+cone extending through that positive coordinate cannot satisfy D1,
+which forces every prefix $\beta_i\le0$. The two operations therefore
+have separate stated domains, with their shared contraction counted
+once. The least-stock specialization with $u=A$, $h=z=0$, $r=C$
+and $K_{\rm lo}=K_{\rm hi}=D+G$ is already 219.5–219.6.
+It supplies no separate increment.
+
+The terminal-mask specialization of 220.15 is already 218.8–218.9.
+The arbitrary interior operation adds the arrival/crossing cuts of
+(220.12), whose pair-only counterexample 220.18 prevents a
+terminal-tail accounting rule from being used unchanged inside a mask.
+The old hull, one-pivot, donor, finite-flow, stock, normalization,
+weak-duality and source-transport results are reused without additional
+credit. The gate result is conditional on an actual joint block and
+fixed remainder; its four-distinct-label block is not the old
+suffix-separated global-minimum operation of 218.3.
+
+For explicit reuse, the equal-triple interleaved-debt assembly has
+$4\le p<d<r<u\le L$, $J=\{p,r,u\}$ and $g>0$, $s,t\ge0$.
+Its coefficients are $P=g/3$ at $w(\{i,j\})$ for
+$i=1,2,3$, $j\in J$, and $P=g/3$ at $w(\{i\}\cup J)$,
+$C=g$ at each $w(\{j\})$, together with $A=s$ at $w(\{d\})$
+and $C=t$ at $w(\{3\})$. The core is the existing equal-triple
+core with $P=g/6$ at the triple words plus another $P=g/6$ there.
+It has zero cost. Adding the two elementary rows bounds the support
+by $4g+s+t$; singleton three outputs three on zero and zero on one
+and attains it. Thus $P_{\rm total}=4g$, $K=7g+s+t$, $W=4g+s$,
+$\beta_3=t$, $\beta_j=g$ for $j\in J$, $\beta_d=-s$,
+and both costs are $t$. This entire family is old supplier assembly,
+with zero additional credit, including $(L,J,d,g,s,t)=(7,\{4,6,7\},5,1,1,1)$.
+Interleaving alone does not turn its elementary addition into new coverage.
+
+The direct per-pair merge/slack formulas are support identities,
+not another structural result. An expression $P_{1^L}>0$ is outside
+220.1's domain. It is neither silently relabeled as $T$ nor used to
+repair an excluded witness. The consecutive profile already discussed
+in 219.10 is also omitted as an increment: its actual terminal is
+$2t+u$ and its value seven is a sum of schedule cell maxima, not the
+value of every cell. No extra theorem is attached to that profile.
+
+The scoped constructions and proofs here are `repo-derived` ordinary
+mathematics. They do not assert worldwide priority or exclusion from
+all old convex, signed-residual or polar consequences. Their examples
+are full-score improvements or local operation obstructions, not
+strict original-source separation witnesses.
+
+The primary mappings in 219.10 retain their stated versions and
+hypotheses. Blackwell's risk-set comparison requires one common
+randomized decision rule; it does not realize a stopped hard-two
+schedule. Chen's binary comparison extends to finite actions only
+under binary decomposability of the whole value function. Yang–Yang's
+versioned v1 compact-Polish and min-closed-test-cone hypotheses have
+not been identified with the present legal-table cone. Zaev's constrained
+coupling duality allows an empty feasible set. Gale's finite real-capacity
+flow theorem supplies deterministic allocation under its balance and
+cut hypotheses, not a query budget. Embrechts–Hofert–Wang's Boolean
+compatibility and Angel–Spinka's simultaneous-coupling boundaries
+require one joint law; separate compatible margins or pairwise optima
+are insufficient. Bertschinger–Rauh's nonstochastic factor illustrates
+missing common normalization, not our original separator.
+These literature-attested statements are reference frames, not missing
+premises for a universal conversion. No inaccessible or metadata-only
+citation is used as a theorem premise; no identity between different
+PDF/HTML versions is assumed. The complete ordinary proofs above
+are the evidence for the four scoped relations.
+

@@ -1,0 +1,23 @@
+**引理 5.2（两个余式必须共同定位三个根）。** 在式 (4.8) 的非零域，式 (4.6) 的两个等式等价于
+
+$$
+p(t)=(t-\gamma)(t-\beta)(t-\alpha)
+\tag{5.2}
+$$
+
+及式 (4.9) 的三个根共享同一组对称系数。
+
+证明。式 (4.9) 已给和 $\alpha+\beta+\gamma=s_1$。其两两乘积和与乘积分别为
+
+$$
+\begin{aligned}
+\alpha\beta+\alpha\gamma+\beta\gamma
+&=-s_1^2-2s_1(\lambda+\kappa)-\lambda^2-\lambda\kappa-\kappa^2,\\
+\alpha\beta\gamma
+&=-(s_1+\lambda)(s_1+\kappa)(s_1+\lambda+\kappa).
+\end{aligned}
+\tag{5.3}
+$$
+
+要求它们等于 $s_2,s_3$，分别乘已知非零 $u_2^2v_2^2$，正好得到 $\mathcal J_2=\mathcal J_3=0$；清分母可逆。于是三个首一系数全部相同，得式 (5.2)。反向比较系数即得同样等式。$\alpha\ne\beta$ 恰为 $p_uv_2-p_vu_2\ne0$；其余根差仍由式 (4.10) 前的两两不同过滤保证。∎
+

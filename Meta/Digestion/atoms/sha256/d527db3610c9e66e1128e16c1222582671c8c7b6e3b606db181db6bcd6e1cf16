@@ -1,0 +1,26 @@
+**Definition 4.1 (the delimited macro input).** Choose one complete table
+$C$ from SLHC §§11–12 in its positive regime. Let $\ell,W_*,P,n_R,n_U$
+have that table's meanings, including all unreachable rows; take $P$
+to bound **all installed** literals. The original table has four Halt
+rows and $n_R=W_*-4-n_U$. Its explicit padded image, denoted $T_0$, has
+length
+
+$$
+T_0=W_*\bigl(\ell+2+\lambda(P+1)+P+4\lambda(\ell+1)\bigr),
+\qquad \lambda(a)=\lceil\log_2a\rceil.
+\tag{4.1}
+$$
+
+Each response slot stores hold or the index of the single native bit
+to flip. The native initial word uses $\ell$ additional immutable bits.
+All literals and response slots are already fixed mathematical data.
+No current shape, source epoch or source-derived position is an
+installation input. For $P=0$, zero-length payload fields are allowed.
+
+The refinement uses the **paid sequential interpreter mechanism** of
+[Effective Acquisition Horizon, Proposition 8.1][PH81] and the **owned
+copy mechanism** of [Transport Memory Completion, PR57.D7][PR57]. The
+following parameterization specifies the parity consumer. It is not a
+new general serializer or an application of those suppliers' different
+source theorems.
+

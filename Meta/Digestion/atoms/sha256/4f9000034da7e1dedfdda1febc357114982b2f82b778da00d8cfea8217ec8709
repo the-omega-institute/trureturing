@@ -1,0 +1,27 @@
+**引理 32.2（Successful global columns retain every stopping rule）。** Consider a correct preset controller for the joined target, with uniform fee at most $H$, whose common stream actually issues a first-zero block at index $q$, after $a=qm+r<k$ ones. Its parent satisfies (31.9), and $a$ satisfies (31.5). There is a matrix on every actual INITIAL phase,
+
+$$
+x_t(j),\qquad 0\le t<H,\quad j\in P,
+\tag{32.2}
+$$
+
+whose rows at $t<q$ are $I_t$, whose row at $q$ is its actual parent response, and whose later rows vanish outside $P\cap W_t$, such that
+
+$$
+\Lambda(j)\ne\Lambda(j')\quad\Longrightarrow\quad
+(x_0(j),\ldots,x_{H-1}(j))\ne(x_0(j'),\ldots,x_{H-1}(j')).
+\tag{32.3}
+$$
+
+Here $H\ge q+1$. Rows may be inspected on already stopped sources as a set calculation, but no such calculation adds an emitted-block fee to those sources.
+
+Proof. Apply the necessity proof of the supplied Theorem 24.2 at this actual first-zero location, through Theorem 29.2. Before the zero, each raw successful archive is $S_t(\beta)\times[0,h_t)$. Each preceding all-one block sends its rectangle $S_t(\beta)\times[h_t-m,h_t)$ to the same absorbing endpoint; the parent likewise sends $S_q(\beta)\times[h_q-r,h_q)$ to one absorbing endpoint. On a live archive, correctness forces the joined target to be constant on this rectangle, since absorption permits no later distinction. On an already stopped archive the rectangle is a subset of its homogeneous stopping leaf and is again constant. At every fixed phase, all tails $s<k-a$ survive the leading ones with identical observed histories and identical intermediate values. If they are still running, the first zero merges their full records; if already stopped, they shared that stopping archive. Either case forces their joined labels to agree with the label at $s=0$, namely $\Lambda(j)$. This establishes every part of (31.5) at the given $a$, including archives that do not execute the parent. The actual parent word has exactly (31.7), so Theorem 31.3 gives its row.
+
+For the column argument take one actual source with INITIAL value zero and INITIAL tail zero at each $j\in P$, using (1.3). All these representatives could successfully traverse the whole literal prefix through the parent, because $a<k$ and the zero clears their tails. Some representatives can already have stopped; their hypothetical continuation is used only to define response coordinates. Their labels are $\Lambda(j)$ and their successful chronological differences before the parent are $I_t(j)$.
+
+After the parent, all representatives have the same tail, independently of phase and scalar value. As long as the common suffix is successful, its literal response row is defined on the whole $P$ by (1.4) and is zero off $W_t$. If the common suffix first reaches a block that would reject, that rejection is simultaneous for every representative and for every still-running successful low-tail source. Within each prior observed archive, all still-running candidates would then give $\bot$ and have no future distinction. Correctness forces their joined INITIAL labels to be homogeneous already before this block. Stop each such archive there, and truncate this unused rejection and its suffix. The earlier stopping leaves remain unchanged. This gives a correct controller with no greater fee and a common successful suffix on all representatives. If fewer than $H$ rows remain, append zero response rows, represented by actual $0^m$ words in the formal extension.
+
+If two representatives of different labels had equal whole columns, their initial free readings and their successful endpoint differences would coincide up to the earlier of their stopping times in this normalized controller. They would consequently have the same acquired archive there. A deterministic stopping/decoding rule must then stop both with the same label, a contradiction. This argument covers stopping before the parent, at the parent, and on any later row. The zero extension cannot remove an earlier difference. Hence (32.3) holds. It retains all earlier archive information in the columns themselves, without merging siblings or taking a maximum of their separate optima. ∎
+
+The truncation in this lemma is used only after the first zero, when tails really are common. Before that zero, the different INITIAL tails make rejection partial, and the rejection rectangles in (31.5) are indispensable. A post-zero row replacement is not a replacement of the INITIAL parent's leading threshold.
+

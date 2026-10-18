@@ -1,0 +1,16 @@
+**定义 2.1（闭支撑面）。** 固定 $L=2d$。对非空 $S\subseteq[d]$，令
+
+$$
+D(S)=\{\alpha\geq0:|\alpha|=1,\ \alpha_j=0\text{ 对 }j\notin S\},
+\qquad
+Q_L(\alpha)=(\alpha B_w\mathbf1)_{w\in\Sigma^L}.
+$$
+
+$D(S)$ 是闭概率单纯形；允许其边界行的支撑严格小于 $S$。$Q_L(\alpha)$ 是概率向量。称 $(S,T)$ 不相容，若
+
+$$
+Q_L(D(S))\cap Q_L(D(T))=\varnothing.
+$$
+
+相容恰好表示两个闭面中存在未来输出等价的概率行；这一对应在定理 3.1 证明开头的「共同有限时域与最大对存在性」步骤中证明。
+

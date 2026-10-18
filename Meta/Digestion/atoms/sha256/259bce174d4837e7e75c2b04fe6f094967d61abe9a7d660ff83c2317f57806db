@@ -1,0 +1,15 @@
+**Convention 14.2 (literal implementation and evidence interfaces).** The
+native interpretation and public/private proof suppliers retain these
+exact scopes; reading them supplies documentary correspondence, not a new
+kernel certificate.
+
+| Source | Interface used and boundary |
+| --- | --- |
+| ABC Theorems 2.2–2.3; NCE Sections 2–4; SFP Sections 2–4 | Normal-code identities, same-source row compilation, scalar/block alignment and source-preserving arbitrary-shape coordinates are reused. Constant residual replacement is not applied to memberships. |
+| NRF Definition 4.1 and Sections 6–7 | Primitive-state periodicity and finite regular-domain methods are suppliers; their fixed selected-row producer is not the present arbitrary signed cross-epoch input. |
+| [NativeUnificationCore][NCE-CORE], namespace `NativeTermUnification` | `Source = FreeMagma Bool`, `Term X = FreeMagma (Bool ⊕ X)`, `evaluate` and the literal constructor encoding. There is no interpreted free-power symbol in this Lean term signature. |
+| [NativeGroundSolutionSpace][NCE-GROUND] and its [Scribe][NCE-GROUND-S] | `solutionEquiv` retains the full original assignment; `constrainedEquiv` pulls back an already supplied arbitrary predicate, and does not decide it. |
+| [NativeHistoryCells][CELL], its [Scribe][CELL-S]; [NativeSymbolicRecutting][NCE-RECUT] | Private `syntax_iff_ground`, public `cell_feasibility_exact`/`historyCellEquiv` and `symbolic_recut_exact` keep complete old-class negatives and actual fixed-history/depth scopes. They are not replaced by state equality. |
+| [NativeWholeRowPlan][NCE-PLAN] | Private `ground_action_value` actually consumes `parameterization.ground_exact`; public `pair_plan_correct` consumes `native_complete` in the failed-unification branch. These are existing consumers, not an installed evaluator of (NCE.23). |
+| CAP Sections 1, 4–6; ARC Definitions 4.1, 5.2, 9.1; GENERAL Lemma 8.1 | Existing seven-label ingress, current source16/$\phi_K$, maintenance, source semantics and complete paid returns establish Theorems 13.2–13.4. AIF/SOURCECALL establish only the indicated original-row completion domain. |
+

@@ -1,0 +1,14 @@
+**Definition 1.1 (unchanged source and complete histories).** Set $m=2,d=1,\ell=2,n=4$, with $F_0=0,F_1=1,F_{j+2}=F_{j+1}+F_j$. Install a finite or countable probability prior $\mu$ on positive integers, with $\mu(1),\mu(2)>0$. Draw one $K$ before the first actual Read. Conditional on that same $K=k$, every seed and payload Read is independent, with alpha probability
+
+$$
+r_k=\frac{F_{k+1}}{F_{k+3}},\qquad
+r_1=a=\frac13,\qquad r_2=b=\frac25,\qquad
+r_k\in[3/8,5/13]\quad(k\ge3).
+$$
+
+The paid seed parser rejects equal pairs, accepts alpha-beta as seed 0 and beta-alpha as seed 1. Each payload segment starts at p: alpha completes marker 0 and beta suspends. At suspension, alpha returns to p and beta completes marker 1. The first three completions advance segments; the third record write precedes its latch. The fourth completion enters its matching pendingStop, whose unique original Stop enters deliveredStop. Neither terminal admits Read.
+
+Keep the entire original finite control $C_0$: both seeds, parser, selectors, bare fields, the full marker tree, held $B,Q^+,Z$ records, write/latch flags, permissions, completion and Stop delivery. Both seeds, every marker triple, every positive finite seed-rejection history and every positive finite payload-return history remain admissible. There is no source reset, fresh depth, future-event conditioning, new actual observation or controller port. These are the source and full-record conventions of [ST, Sections 1–3], [CLIP, Section 1] and [PAID, Section 1].
+
+Write $\mathcal H_p,\mathcal H_\beta$ for all positive finite fourth-segment histories at p and suspension after the third latch. They include arbitrarily many fourth returns. The first p cut $\mathcal H_3$ is a proper subdomain and is not substituted for $\mathcal H_p$.
+

@@ -1,0 +1,55 @@
+**引理 90.2（同一个对偶的精确矩阵恒等式）。** 令 $\mu=H_{02}/q_{02}$。则 (RC.131) 的对偶满足
+
+$$
+\begin{aligned}
+\mathcal Y={}&G-\lambda C-2\mu Q-2\psi f_0f_0^T
++2\lambda c_{11}f_1f_1^T\\
+&+2\lambda\xi(f_0f_1^T+f_1f_0^T),\qquad c_{11}=l/e.
+\end{aligned}
+\tag{RC.182}
+$$
+
+它的两个实际非对角元可写成
+
+$$
+\begin{aligned}
+\mathcal Y_{01}-\mathsf x&=2\psi k/d+\lambda B_1,\\
+\mathcal Y_{02}-\mathsf y&=2\psi kr/d+\lambda B_2,\\
+B_1&=-\tfrac12+2l^2/e^2-\frac{u\Theta l(k-l)}{e^2J},\\
+B_2&=\frac{u}{e^2}\left[\frac{\alpha\Theta klu}{J}
+-\beta(\beta+\alpha u^2)\right].
+\end{aligned}
+\tag{RC.183}
+$$
+
+证明。在 $F$ 坐标中，(RC.180) 等价于
+
+$$
+\frac{H_{01}+\lambda c_{01}}{q_{01}}
+=\mu+\lambda c_{12}/q_{12}.
+$$
+
+(RC.182) 右侧的三个对角元为
+$-H_{00}-\lambda c_{00},H_{11}+\lambda c_{11},H_{22}-\lambda c_{22}$。
+$01$ 元是 $H_{01}-\lambda c_{01}-2\mu q_{01}+2\lambda\xi
+=-H_{01}-\lambda c_{01}$；$02$ 元是 $-H_{02}-\lambda c_{02}$；$12$ 元是 $H_{12}-\lambda c_{12}-2H_{02}q_{12}/q_{02}$。对称元相同，故全部九元与 (RC.131) 一致。此处 $-\lambda C$ 必须保留。
+
+回到物理坐标，$Q$ 没有非对角元。$-2\psi f_0f_0^T$ 给出 $2\psi k/d,2\psi kr/d$；将 $c_{11}=l/e$ 和 (RC.179) 的 $\xi$ 代入其他项，$01$ 系数正是 $B_1$。$02$ 系数先为
+
+$$
+-2l^2u/e^2+\frac{u\Theta l(ku+rl)}{e^2J}.
+$$
+
+利用下列直接展开的恒等式即得 $B_2$：
+
+$$
+\begin{gathered}
+l(ku+rl)=J+\alpha klu,\qquad
+\Theta-2l^2=-\beta(\beta+\alpha u^2),\\
+e^2-4l^2=\beta^2+2\alpha(2+\beta)u^2+(1+\beta)^2u^4.
+\end{gathered}
+\tag{RC.184}
+$$
+
+这些是自由参数满足 (RC.174)–(RC.176) 时的恒等式。它们不依赖源中心或有限采样；所有清分母因子均由 (RC.175)、(RC.177)、(RC.179) 排除为零。对偶加任意 $Q$ 倍数不会改变 (RC.183)。$\square$
+

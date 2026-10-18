@@ -1,0 +1,48 @@
+**Definition 1.1 (native source and supplier notation).** Let [N] be
+[Auric FIB atom probability, phase transport and holonomy](AURIC_FIB_ATOM_PROBABILITY_PHASE_TRANSPORT_AND_HOLONOMY.md),
+[B] its [observation and purity continuation](AURIC_FIB_ATOM_PROBABILITY_PHASE_TRANSPORT_AND_HOLONOMY_CONTINUATION.md),
+and [G] [Native two-control Green stability](FIB_NATIVE_TWO_CONTROL_GREEN_STABILITY.md).
+Fix the double wall of these sources:
+
+$$
+0<Z<1,
+\qquad r=1-Z,
+\qquad h=r/2,
+\qquad X=Y=h,
+\qquad 0<k<h.
+\tag{1.1}
+$$
+
+In mode order $(0,1,2,3,13)$ the probability vector is
+$(k,h-k,Z,h-k,k)$. Fix an arbitrary preparation height in $(0,h)$
+and arbitrary preparation phases. The phase convention remains
+$\psi_s=\sqrt{p_s}\,e^{-i\theta_s}$. If $u_0,v_0$ are the grouped
+phase increments, use exactly [G, Definition 4.1]'s torus coordinates
+
+$$
+\alpha=u_0-v_0\pmod{2\pi},\qquad
+\beta=u_0\pmod{2\pi},\qquad
+(u_0,v_0)=(\beta,\beta-\alpha).
+\tag{1.2}
+$$
+
+This is an integer unimodular coordinate change. Each displayed phase has
+period $2\pi$; neither is replaced by a doubled relation angle. The original
+current-ray manifold, including all reachable heights, is
+
+$$
+\mathcal M=(0,h)\times\mathbb T_\alpha\times\mathbb T_\beta,
+\qquad \mathbb T=\mathbb R/(2\pi\mathbb Z).
+$$
+
+[N, Theorem 8.2] supplies exact finite native histories reaching its points
+from the fixed preparation. This statement concerns individual rays, not
+preparation of functions on $\mathcal M$.
+
+After calibrating only the fixed preparation rotations, the bottom
+coherence is $z=\sqrt{k(h-k)}e^{i\alpha}$, and the middle-reference
+coherence is $w=\sqrt{Zk}e^{i\beta}$, as in [B, Proposition 10.4]. The
+four bottom edges give $z,z,\overline z,\overline z$, with their original
+fixed rotations and factor two in the raw real outputs. Calibration does
+not equate distinct preparation phases.
+

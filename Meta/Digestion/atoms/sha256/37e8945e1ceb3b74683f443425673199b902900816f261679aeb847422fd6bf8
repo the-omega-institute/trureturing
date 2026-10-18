@@ -1,0 +1,19 @@
+**Definition 5.1 (Two height modes in four stored coordinates).** Fix
+the constants of §4, and put
+
+$$
+\nu_1=\lambda+\varepsilon b,\qquad \nu_2=\lambda-1.
+$$
+
+Store exactly the four real entries of
+
+$$
+E_\varepsilon(k,\alpha,\beta)=(z_1,z_2)
+=\left(e^{\nu_1 k/H}U(\alpha),\ e^{\nu_2 k/H}U(\alpha)\right)
+\in\mathbb R^2\oplus\mathbb R^2.
+$$
+
+The numbers $k/H$, $\alpha$ and $\beta$ in this formula specify the
+encoder as a function on current rays. They are not additional stored
+coordinates.
+

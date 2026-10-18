@@ -1,0 +1,11 @@
+**Remark 3.4 (what the criterion does not decide).** Existence of some
+finite determining menu is an exact existence criterion, not an optimum
+at prescribed $H,p,\ell_P$. A generating graph might share states or
+stop early and use fewer states than (PCA.8). Its installed menu need
+not be an optimal sequential querying order. The criterion neither
+decides (PCA.7) for arbitrary $\kappa$ nor extracts an effective depth
+bound from arbitrary acquired-term program text. Finiteness of each
+acquired tree, and termination of a computation on that tree, do not
+give one finite observing menu valid uniformly over unbounded trees.
+Section 8 supplies a code with exactly this distinction.
+

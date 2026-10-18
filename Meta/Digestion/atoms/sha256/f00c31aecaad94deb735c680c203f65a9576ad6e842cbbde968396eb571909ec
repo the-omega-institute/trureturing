@@ -1,0 +1,4 @@
+## 15. Actual-source failures of unrestricted six-read stability
+
+The following pairs use precisely (2.1) and its fixed fifteen-atom implementation. For every source below use $\alpha=1$, $\beta=k$, $R=S$, and positive factors as specified. The row is fixed during each run. Equations (1.3)–(1.4) then verify every read and unread state, so these are original-model pairs.
+

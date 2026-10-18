@@ -1,0 +1,91 @@
+**Theorem 68.1 (finite common multipliers).** Suppose $t>t_0$ and
+$0\le\tau<\tau_{\max}(t)$. There are finite real symmetric matrices
+$Y\in\operatorname{Sym}_3$, $Z\in\operatorname{Sym}_2$ and
+$\lambda\ge0$ such that, on the entire circle,
+
+$$
+\begin{aligned}
+h^TYh&\ge|\ell(h)|+\lambda|z|,\\
+h^TYh+C(h)\widehat n_h^TZ\widehat n_h
+&\ge|\ell(h)+C(h)f(h)|+\lambda|z|,\\
+2\mathcal T_A(s)-H_0
+&=\operatorname{tr}Y+\operatorname{tr}(ZM_2)-\lambda\tau.
+\end{aligned}
+\tag{RC.67}
+$$
+
+Every optimal endpoint family of supported-nonzero low labels is
+supported on the corresponding contact equalities and satisfies
+$\lambda(\sum p_j|z_j|-\tau)=0$.
+
+**Proof.** Let $\rho_\circ$ be uniform angular probability on
+$z=\cos\phi/\sqrt\alpha$, $w=\sin\phi/\sqrt\beta$, and let
+$\rho_u$ assign equal mass to the four sign choices of
+$(1,\sqrt u,\sqrt{(1-\alpha u)/\beta})$. For small $\varepsilon>0$ set
+
+$$
+\begin{aligned}
+u_\varepsilon&=\frac{u_f-\varepsilon/(2\alpha)}{1-\varepsilon},\\
+d\sigma_\varepsilon
+&=\mu[(1-\varepsilon)d\rho_{u_\varepsilon}
+                  +\varepsilon d\rho_\circ],\qquad
+ dp_1=d\sigma_\varepsilon/(tc(h)).
+\end{aligned}
+\tag{RC.68}
+$$
+
+Here $0<u_\varepsilon<1/\alpha$. The moments of $\sigma_\varepsilon$
+are exactly $(\mu,V,W,0)$ for $(1,z^2,w^2,zw)$. The congruence
+$\widehat n=\left(\begin{smallmatrix}0&d/h_2\\-b/h_1&0\end{smallmatrix}\right)(z,w)^T$
+therefore gives the full failure matrix $M_2$. The remaining live Gram
+$B_\varepsilon=I-\int hh^Tdp_1$ is diagonal. At $\varepsilon=0$ it is
+
+$$
+B_0=\operatorname{diag}(1-q,1-qu_f,1-qv_f)\succ0,
+\tag{RC.69}
+$$
+
+since $t>t_0$ means $q<1/v_f$. Subtract a small positive multiple
+$a_\circ\int hh^Td\rho_\circ$ from $B_\varepsilon$. The remainder is
+still positive diagonal and $Q$-null. Writing it as
+$\operatorname{diag}(m,d_z,d_w)$, its four-point representation has
+mass $m$ and coordinates $(\pm\sqrt{d_z/m},\pm\sqrt{d_w/m})$;
+$\alpha d_z+\beta d_w=m$ puts them on the circle. Add back
+$a_\circ\rho_\circ$ to obtain $p_0$. Both sheets now have full-support
+positive density components. As $\varepsilon,a_\circ\downarrow0$,
+their contrast tends to (RC.65): the saturated part contributes
+$q\sqrt{u_f}$ and the pure part contributes
+$\sqrt{(1-q)(1-qu_f)}$. Choose them positive with contrast strictly
+above $\tau$.
+
+Consider the finite-dimensional cone of live moments, failure moments
+and a contrast coordinate allowed to decrease freely below achieved
+contrast. A supporting functional vanishing at our target is
+nonnegative on every sheet atom and on the downward contrast ray.
+Strict contrast slack forces its contrast coefficient to vanish.
+The full-support components then force its continuous sheet functions
+to vanish identically. On the pure sheet this says $h^TYh=0$ on the
+ellipse; comparison of the constant, first and second harmonics gives
+$Y=a_QQ$. On the saturated sheet it then says
+$\widehat n_h^TZ\widehat n_h=0$ everywhere, hence $Z=0$, because
+$\widehat n_h$ traverses every projective direction. Thus only the
+identity $h^TQh=0$ remains. After quotienting this identity, the target
+is in the relative interior of the moment projection.
+
+Adjoin height and its downward slack. Locally the first live moment
+bounds total measure mass; compactness of the two circles and continuity
+of all integrands make the upper height boundary closed and bounded.
+Separate its attained optimum from higher heights. The height
+coefficient of a nonzero supporting functional cannot vanish: that
+would support the relative-interior moment target just proved. Its
+sign is positive by downward height slack, so normalize it to one.
+The downward contrast ray gives $\lambda\ge0$. Evaluation on individual
+atoms yields the two inequalities in (RC.67); evaluation at the target
+gives equality of values. Integration of the nonnegative gaps gives
+contact and complementary slackness for every optimizer. $\square$
+
+This proof supplies the double-sheet relative-interior hypothesis,
+not merely primal feasibility. It makes no claim of finite dual
+attainment on $t=t_0$ or $\tau=\tau_{\max}(t)$; the known boundary
+value retains FA79's separate proof.
+

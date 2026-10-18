@@ -1,0 +1,17 @@
+**Proposition 5.1 (passive prediction and acquisition-side choice).**
+For the paired laws of Theorem 1.3 the random complete target future
+trajectory has the same distribution. Every fixed bounded experiment
+through order $r$, including its joint law with that trajectory, has
+the same distribution. These equalities coexist with the distinct
+optimal acquisition prices in (NCO.25).
+
+Proof. AAR13.3 factors the complete future through $d$; for the present
+right-ray task this is (NCO.20). Push forward the common $d$ law for
+the first assertion and the joint law in Theorem 4.1 for the second.
+The third assertion is Theorem 3.3. The operational difference is that
+an acquired higher-order bank relation can select the address of a
+subsequent genuine leaf-evidence Read. Under $P_0$, $H(z)$ identifies
+$j$; under $P_1$, $j$ remains independent of the whole bank. The
+actual target evidence and full-family fallback are required under
+both laws. $\square$
+

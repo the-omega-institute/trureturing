@@ -1,0 +1,33 @@
+**Attribution 11.2 (Exact source-relative increment).** The preceding
+theory sources have the following ownership.
+
+| Source | Inherited content used here |
+| --- | --- |
+| Original, *FIB harmonic-edge load: fixed-state tail nonuniformity and an erasure-risk jump*, Proposition 2.1 and (2.2) | The stationary four-state source on the original integer clock. |
+| Original, Definition 9.1, (9.4), Theorems 9.2–10.1 | The arbitrary-address paid acquisition contract, actual endpoint indices, finite sections and complementary-product mechanism. |
+| Original, Theorem 11.4; Risk, *FIB paid reads: return mass and hidden-endpoint classification risk*, Theorem 4.1 | The unrestricted one-read optimum $S_1$ and its deterministic actual-source attainer. Risk additionally owns its selective one-read curve and equality gate. |
+| Endpoint, *FIB two paid reads: exact almost-sure-return endpoint risk*, §§3–6, especially Theorem 6.1 and Definition 5.1 / Proposition 5.2 | The unrestricted $q_2=1$ value $S_2$, its full-address subtree bounds and simultaneous two-call actual-source policy. |
+| Endpoint, Definition 8.1, Lemma 8.2, Propositions 8.3–8.4 and Theorem 8.5 | The literal complete-controller convention, initialization averaging, equality rigidity, and minimum costs three/six for attaining the inherited optima. |
+
+Original is
+[FIB_LEGAL_EDGE_LOAD_FIXED_STATE_TAIL_NONUNIFORMITY_AND_ERASURE_RISK_JUMP.md](FIB_LEGAL_EDGE_LOAD_FIXED_STATE_TAIL_NONUNIFORMITY_AND_ERASURE_RISK_JUMP.md).
+Risk is
+[FIB_PAID_READ_RETURN_MASS_AND_ENDPOINT_RISK_FRONTIER.md](FIB_PAID_READ_RETURN_MASS_AND_ENDPOINT_RISK_FRONTIER.md).
+Endpoint is identified above by its full title and numbered sections.
+Endpoint's own attribution retains the fuller two-read geometry in
+its named FixedSeed source; no additional result from that nested
+source is required here.
+
+The installed-state frontier derivations supplied for this volume
+provide the two-read-row argument, the output-label dichotomy,
+the explicitly costed opposite-phase dominance, and the four-row
+attainer. This exposition supplies their ordinary proofs in §§6–10.
+Relative to Original, Risk and Endpoint, the substantive addition
+is the quantitative bound $T$ for every five-row table, its
+simultaneous attainment, and the resulting exact positive risk
+penalty. Their ownership is not transferred to an approval or
+checking verdict. The products, source sections, one-read value,
+two-read value and qualitative attainment minima remain inherited.
+No exhaustive literature-absence or global-originality assertion
+is made.
+

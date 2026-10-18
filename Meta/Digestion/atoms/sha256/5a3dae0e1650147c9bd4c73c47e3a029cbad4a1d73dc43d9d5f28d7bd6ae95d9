@@ -1,0 +1,41 @@
+**引理 2.5（剥离剩余行的亲和质量损失）。** 在定义 2.3 的情形，若 $c(R,S')=0$，则
+
+$$
+\sum_{z\in\Sigma^L}\sqrt{|RB_z|\,|S'B_z|}
+\leq\kappa\sqrt{|R|\,|S'|}.
+$$
+
+对任意非负行 $R,S'$ 及任意 $s\geq0$，还成立无损系数版本
+
+$$
+\sum_{z\in\Sigma^s}\sqrt{|RB_z|\,|S'B_z|}
+\leq\sqrt{|R|\,|S'|}.
+$$
+
+证明。对概率向量 $p,q$，令 $A(p,q)=\sum_j\sqrt{p_jq_j}$。Cauchy–Schwarz 给出
+
+$$
+2\operatorname{TV}(p,q)
+\leq
+\sqrt{\sum_j(\sqrt{p_j}-\sqrt{q_j})^2
+      \sum_j(\sqrt{p_j}+\sqrt{q_j})^2}
+=2\sqrt{1-A(p,q)^2}.
+$$
+
+因此
+
+$$
+A(p,q)\leq\sqrt{1-\operatorname{TV}(p,q)^2}
+\leq1-\frac12\operatorname{TV}(p,q)^2.
+$$
+
+若两条剩余行的质量均为正，引理 2.2 使其归一化行处于不相容闭面；长度 $L$ 输出的总变差至少为 $\zeta$，代入即得第一式。若一行质量为零，两边都为零。第二式直接来自 Cauchy–Schwarz 及
+
+$$
+\sum_{z\in\Sigma^s}|RB_z|=|R|,
+\qquad
+\sum_{z\in\Sigma^s}|S'B_z|=|S'|.
+$$
+
+这里仅用有限时域的亲和损失，未声称剩余行的完整未来测度互相奇异。
+

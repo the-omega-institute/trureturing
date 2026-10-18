@@ -1,0 +1,70 @@
+**Definition 1.2 (Hard two actual requests).**
+An original acquisition has one source-independent common seed, zero
+advice and sourcewise almost-sure finite handoff to the unchanged consumer.
+In $\mathcal N_2$ the whole schedule is preselected before replies and all
+its replies are obtained. In $\mathcal O_2$ an increasing schedule is
+preselected before replies and execution stops at its first queried zero
+or exhaustion. The second address cannot depend on the first reply.
+At most two actual requests are allowed, including repetitions and ignored
+replies. Competitors retain arbitrary addresses and arbitrary Borel outputs
+in $\Theta$. There is no source distribution, free observation of
+$r,g,N,n$, address bound, runtime bound or mean-request relaxation.
+
+A stopped rule has a same-source, same-seed $N$ completion: obtain the
+whole preselected schedule and reconstruct its stopped output. Its ignored
+second reply still counts as an actual request. This gives the class
+inclusion used below, without converting an arbitrary $N$ rule to $O$.
+
+**Reference frame 1.3 (Fixed source references).**
+All reference paths are under docs/develop/theory/. The fixed DEV revision
+of [XVII](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XVII.md)
+is 07dfbdac. The fixed DEV revision of
+[XVIII](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XVIII.md)
+is 24e09b5c3ffd3b9e709ae2319cf79239572be790.
+
+| Reference at its fixed revision | Reused content |
+| --- | --- |
+| XVII §§297, 309; XVIII §315 | Original objects, actual finite patterns, exact closed-cap class-feasibility and prefix transport |
+| XVII Theorems 305.2–305.3 | The reused six-late lower bound |
+| XVII Theorem 312.2 | Complete head-independent 43-charge core lower bound |
+| XVIII Theorem 318.2 | Complete $N$ and $O$ support of $Y_{128}$ |
+| XVIII Construction 319.1 and verification 319.2 | The actual $P^0$ and its all-word endpoint proof |
+| XVIII Construction 320.1 and Theorem 320.2 | The complete $P^\star$ and its all-word endpoint proof |
+| XVIII Theorem 321.1 | Equal-tail mixture, attained minima and original realization |
+
+Reuse the finite-pattern theorem in XVII 297.3 and XVIII 315.3: every
+finite reply word is actual, including all multiple-zero words and positive
+prefixes, and every actual first absence is finite. A finite positive word
+represents actual later first absences. No infinite all-positive word is
+made an actual source.
+
+The correspondence expressly stated in those sections imports Theorems
+109.1/110.2 and prefix consequence 280.3 at their supplied scope. At a met
+cap $0<c\le1$, any original competitor supplies some normalized complete
+finite representative in its own class on
+$H=\max(\{i:a_i>c\}\cup\{0\})$ bits. Vanishing makes $H$ finite.
+Necessity covers arbitrary addresses and full-carrier outputs through
+countability, sourcewise finite handoff, actual finite witnesses,
+whole-schedule truncation and finite-simplex compactness. It preserves
+class feasibility, not an arbitrary starting law or coupling.
+
+For a shorter prefix, fix higher finite replies to zero, project higher
+labels to zero and contract constant observations. For a longer prefix,
+ignore added inputs. For a probability law $p$ supported on labels
+$0,\ldots,K$ and any actual $n>K$, the exact identity is
+
+$$
+\operatorname{TV}(p,(1-a_n)e_0+a_ne_n)=\max\{1-p(0),a_n\}.
+\tag{1.3}
+$$
+
+This handles newly represented first zeros and closed ties. On a positive
+shorter prefix a higher first-zero target projects to the base point.
+These are necessity representations, not free actual observations.
+The normalized stopped criterion reused from 109.1 is $c_0\ge H_0$
+coordinatewise, where
+$p_w=c_0+\sum_i\ell_iw_i+\sum_{i<j}Q_{ij}w_iw_j$ and
+$H_0=\sum_i(\sum_{j>i}(-Q_{ij})_+-\ell_i)_+$.
+Normalization supplies its scalar schedule budget; degree two alone is
+not that criterion.
+

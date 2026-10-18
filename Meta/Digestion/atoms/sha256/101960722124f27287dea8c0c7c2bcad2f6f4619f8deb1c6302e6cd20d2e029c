@@ -1,0 +1,64 @@
+**Lemma 3.1 (global strict supporting tangent, including both axes).**
+For the supplied source, the tangent to $\mathcal F$ at $r$ is a strict
+global supporting line on $[0,U]$:
+
+$$
+\mathcal F(x)\ge\mathcal F(r)+\mathcal F'(r)(x-r),
+\qquad\text{equality if and only if }x=r.
+\tag{WE.17}
+$$
+
+Consequently a nonnegative measure $\nu$ of mass $\mu$ and first moment
+$V$ has
+
+$$
+\int\mathcal F\,d\nu\ge\mu\mathcal F(r)=C_{\rm end}>0,
+\qquad\text{equality if and only if }\nu=\mu\delta_r.
+\tag{WE.18}
+$$
+
+Proof. The required source-specific sign follows symbolically from the
+supplied JR.52 bounds. Put $J=adh_2-bch_1$. They imply
+$a>65/1000$, $d>98/1000$, $h_2>809/1000$, $b<147/1000$,
+$c<16/1000$, $h_1<707/1000$. Thus
+
+$$
+65\cdot98\cdot809=5153330>1662864=147\cdot16\cdot707,
+\qquad J>0.
+\tag{WE.19}
+$$
+
+These comparisons use inherited conditional enclosures, with no new
+numerical authentication. Write $D_c=D_0+D_1x$, $N_c=N_0+N_1x$.
+Direct substitution of $\alpha/\beta=ab h_2/(cd h_1)$ gives
+
+$$
+\begin{gathered}
+D_0=h_0^2\delta+d^2/\beta>0,\quad
+N_0=h_1^2h_2^2\delta+c^2h_1^2/\beta>0,\\
+D_1=-bJ/(ch_1)<0,\qquad N_1=(ah_2/d)J>0.
+\end{gathered}
+\tag{WE.20}
+$$
+
+For $\varrho=1/c_*=D_c/N_c$, all denominators stay positive, and
+
+$$
+\varrho'=\frac{D_1N_0-D_0N_1}{(N_0+N_1x)^2}<0,\qquad
+\varrho''=\frac{-2N_1(D_1N_0-D_0N_1)}{(N_0+N_1x)^3}>0.
+\tag{WE.21}
+$$
+
+On $0<x<1$, $H'=(1-1/\sqrt x)/2<0$ and
+$H''=1/(4x^{3/2})>0$. Therefore
+$\mathcal F''=H''\varrho+2H'\varrho'+H\varrho''>0$ there.
+Continuity at zero gives strict convexity on $[0,1]$; in particular
+the tangent at the interior point $r$ is strictly below $\mathcal F$
+at every other point, including zero. Also $\mathcal F'(r)<0$ and
+the tangent value at $1$ is strictly less than $\mathcal F(1)=0$.
+For $x>1$ that line decreases further, while $\mathcal F(x)\ge0$.
+This proves (WE.17) on the whole interval, including $x=U$.
+Integrate it and use $V=\mu r$ to prove (WE.18). Its continuous
+nonnegative gap vanishes only at $r$, proving the equality condition.
+$\square$
+

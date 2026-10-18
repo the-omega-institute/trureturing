@@ -1,0 +1,23 @@
+**定义 21.2（继承的反射对角族）。** 对满足
+
+$$
+56<d<\frac{4536}{61},\qquad
+b_d=6-\frac{336}{d},\quad c_d=\frac{4536-61d}{16d},\quad
+\rho_d=b_dc_d,\quad0<\rho_d<\frac14
+\tag{21.24}
+$$
+
+的 $d$，令
+
+$$
+\begin{gathered}
+r_\pm=\frac{1\pm\sqrt{1-4\rho_d}}2,\qquad
+P_\pm=\begin{pmatrix}r_\pm&b_d\\c_d&1-r_\pm\end{pmatrix},\\
+g_d(s)=\frac d{105}(s-3)(s-5)(s-7),\qquad
+E(d)=\{(P_-,g_d,d),(P_+,g_d,d)\}.
+\end{gathered}
+\tag{21.25}
+$$
+
+这是《FIB 实际 JMJM 的承诺纤维与联合例外几何》第 31–32 节已有的 $E(d)$，不是新定义的数学族。这里重列公式以完整说明世界与严格过滤。
+

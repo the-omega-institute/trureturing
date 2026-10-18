@@ -1,0 +1,137 @@
+**Proposition 180.1 (An all-word rational attainer).** Take the core
+(175.1), $L=7$, $g_6=1/100$, $g_7=1/200$. Then
+
+$$
+\begin{aligned}
+W&=1/40,&E&=3/200,&r&=39/40,&\varepsilon&=233/800,\\
+(a_1,\ldots,a_7)
+ &=\left(\frac{683}{800},\frac{683}{800},\frac{649}{1000},
+          \frac{1259}{2000},\frac{1103}{2000},
+          \frac{241}{800},\frac{237}{800}\right).
+\end{aligned}
+\tag{180.1}
+$$
+
+For every positive nonincreasing vanishing actual tail with
+$a_8\le233/800$, including $a_{7+j}=233/(800j)$, there are original
+same-seed stopped and preselected hard-two acquisitions of exact
+uniform error $233/800$. Each actual first absence six or seven,
+and every actual tail source, has that exact error.
+
+The mixture uses core mass $39/40$, $P_6$ mass $7/600$ and $P_7$
+mass $1/75$. A particular $P_6$ three-subset has mass $1/3000$,
+and a particular $P_7$ three-subset has mass $1/4200$. On all 128
+words its base probability is
+
+$$
+p_b(0)=\frac{39}{40}q_{(b_1,\ldots,b_5)}(0)
+       +\frac{\binom{k_6(b)}2}{3000}
+       +\frac{\binom{k_7(b)}2}{4200},
+\tag{180.2}
+$$
+
+where $k_h(b)=\sum_{i=1}^hb_i$. Its correct probabilities are constant
+on each first-zero class, respectively
+
+$$
+\left(\frac{489}{800},\frac9{16},\frac{1431}{4000},
+       \frac{1353}{4000},\frac{1041}{4000},\frac1{100},\frac1{200}\right).
+\tag{180.3}
+$$
+
+The minima of the three independent TV-row slacks, in the order
+base, correct, pair, are
+
+$$
+\begin{array}{c|c|c|c}
+n&\min[p_b(0)-(1-a_n-\varepsilon)]
+ &\min[p_b(n)-(a_n-\varepsilon)]
+ &\min[p_b(0)+p_b(n)-(1-\varepsilon)]\\\hline
+1&97/400&39/800&0\\
+2&233/800&0&0\\
+3&389/875&0&4293/28000\\
+4&13299/28000&0&643/3500\\
+5&13893/28000&0&2869/14000\\
+6&1663/5600&0&1/175\\
+7&1651/5600&0&1/280
+\end{array}
+\tag{180.4}
+$$
+
+The all-positive base probability is $567/800=1-\varepsilon$.
+Thus the $381$ zero-containing-word rows and the final base row all
+hold, retaining every multiple-zero word.
+
+**Proof.** Substitute the residuals into (173.4) to obtain $W,E,r$
+in (180.1). The branch weights in (172.2) are $7/600$ and $1/75$.
+There are $\binom73=35$ and $\binom83=56$ subsets, respectively,
+giving the individual masses. The amplitude formulas (173.1) give
+exactly (180.1); their order is
+$a_1=a_2>a_3>a_4>a_5>a_6>a_7>\varepsilon>0$.
+Equation (173.8) proves (180.2) at every word.
+
+The reused correct core probabilities from (118.8) are
+$37/60,17/30,107/300,101/300,77/300$.
+Each of the first five classes gains correct mass
+$3(7/600)/7+3(1/75)/8=1/100$ from the subset branches.
+The sixth class has that same mass, and the seventh has only
+$3(1/75)/8=1/200$. This proves (180.3), including its independence
+of later zeros.
+
+For completeness, the following words attain the base minima in
+their respective classes:
+
+$$
+0100000,\quad1000000,\quad1100000,\quad1110000,
+\quad1111000,\quad1111100,\quad1111110.
+\tag{180.5}
+$$
+
+For classes one through five, the reused core formula (118.8) gives
+base lower bounds $1/10,3/20,31/60,17/30,2/3$.
+They are attained at the first five listed words. In class one the
+core minimum $1/10$ follows from the transition bracket in (118.8);
+the attaining word has only one positive bit, so both subset base
+terms vanish. In class two every word has at least the positive bit
+one, and the attaining word again makes both subset terms zero.
+In each class $n=3,4,5$, every word has at least $n-1$ positive
+bits in each subset range. The displayed word has exactly this many
+and also attains the core minimum. Since $\binom{k}{2}$ is
+nondecreasing for nonnegative integer $k$, it simultaneously
+minimizes the subset contributions.
+
+In class six the core sees $1^5$ with base $43/60$ and the minimal
+positive-bit counts are $k_6=k_7=5$, attained at $1111100$.
+In class seven the counts are both six, attained at $1111110$,
+and the core has the same positive law. These observations give
+the exact base minima
+
+$$
+\frac{39}{400},\quad\frac{117}{800},\quad
+\frac{403}{800}+\frac1{1750},\quad
+\frac{221}{400}+\frac3{1750},\quad
+\frac{13}{20}+\frac6{1750},\quad
+\frac{559}{800}+\frac1{175},\quad
+\frac{559}{800}+\frac3{350}.
+\tag{180.6}
+$$
+
+Subtracting each base demand, and using the class-constant correct
+probabilities (180.3), gives every entry of (180.4). In particular
+the pair slack is computed from the sum of base and correct
+probabilities, rather than inferred from their separate lower bounds.
+All entries are nonnegative. At $1^7$, (180.2) gives
+$\frac{39}{40}\frac{43}{60}+15/3000+21/4200=567/800$.
+Thus all $3(128-1)+1=382$ rows hold by these identities and lower
+bounds, without a restriction to chain words.
+
+Theorem 173.1 realizes the entire mixture on the actual original
+source using one seed, with the same-seed $N$ completion counting
+ignored requests. It gives exact uniform error, and its tail formula
+uses the tight positive-word base mass just computed, so every actual
+tail has error $233/800$, including $a_8=233/800$.
+Theorem 110.2 supplies the same exact closed-cap finite/original
+correspondence, with full-carrier and arbitrary-address competitors
+in its necessary direction. No optimality at this cap is implied.
+$\square$
+

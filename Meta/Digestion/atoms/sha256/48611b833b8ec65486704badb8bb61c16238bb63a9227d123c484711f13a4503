@@ -1,0 +1,9 @@
+**假设 1.2（闭合分类供应）。** 使用 [FIB 原卷][FIB] §19.1、§19.4 的联合操作和 §20.2 的分类：
+
+$$
+\mathscr L_n=\{dV_n:d\mid n\},\qquad
+ dV_n=d(\mathbb Z/n\mathbb Z)\times d(\mathbb Z/n\mathbb Z),
+$$
+
+每个闭合子群有唯一正约数标签 $d$。该分类的循环子群接口是 $H=d(\mathbb Z/n\mathbb Z)$；§20.3 的素数判据据此断言，对 $n\ge2$，仅有全体和零子群当且仅当 $n$ 为素数。这些是以下桥梁的已有前提。
+

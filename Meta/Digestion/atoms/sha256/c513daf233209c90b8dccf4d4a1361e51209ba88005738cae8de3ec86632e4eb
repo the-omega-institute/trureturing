@@ -1,0 +1,83 @@
+**Theorem 3.5 (Original all-complex lower).** Every $T\in\mathfrak C_1$
+satisfies $e(T)\geq c$, with the exact rational $c$ in (0.1). In particular
+
+$$
+\varepsilon_1\geq c>\frac{65521}{125000}>
+\frac{129931}{250000},\qquad
+c-\frac{129931}{250000}>\frac{1111}{250000}.
+\tag{3.16}
+$$
+
+**Proof.** For every actual nonnegative wait $t$ and each of the four tests,
+use the legitimate original input
+
+$$
+\rho_s(t)=D O(t)^T V_s O(t)D^\dagger,
+\tag{3.17}
+$$
+
+then wait $t$, perform the complete read and Stop. The ideal probability
+of outcome $s$ is
+$\beta_s=v_{s,s}^2/(v_s^Tv_s)$. The replaced probability is
+
+$$
+f_s(t)=\operatorname{tr}\left[
+O(t)^T\Pi_sO(t)\,
+S(O(t)^TV_sO(t))\right].
+\tag{3.18}
+$$
+
+The full-read TV is at least $\beta_s-f_s(t)$, even when this difference
+is negative. Since the weights are positive and sum to one,
+
+$$
+e(T)\geq\beta-\sum_sw_sf_s(t),\qquad
+\beta=\sum_sw_s\beta_s.
+\tag{3.19}
+$$
+
+The squared frequency ratio
+$(\omega_+/\omega_-)^2=(21+5\sqrt {17})/4$ is irrational.
+Every nonconstant Fourier monomial of (3.18) therefore has zero forward-time
+mean. Its mean is the torus mean in (3.2), so (2.8) gives
+
+$$
+e(T)\geq\beta-5\operatorname{tr}(\chi\mathcal V).
+\tag{3.20}
+$$
+
+This argument does not assume $T$ is stationary or real. By (3.9),
+Lemma 3.4 and $\chi,\chi^\Gamma\geq0$,
+
+$$
+\operatorname{tr}(\chi W)
+=\frac12\left[\operatorname{tr}(\chi P)
++\operatorname{tr}(\chi^\Gamma P)\right]\geq0.
+\tag{3.21}
+$$
+
+The full TP marginal and the input location of $Y$ give
+$5\operatorname{tr}(\chi(I\otimes Y))=\operatorname{tr}Y$.
+Consequently
+
+$$
+e(T)\geq\beta-\operatorname{tr}Y+5\operatorname{tr}(\chi W)
+=c+5\operatorname{tr}(\chi W)\geq c.
+\tag{3.22}
+$$
+
+For explicit normalization arithmetic,
+
+$$
+\beta=
+\frac{1104429916712276629523507015039780167081355358825225239}
+{1111111098698224677165340733251230269582664037500000000},
+\qquad
+\operatorname{tr}Y=\frac{18792737}{40000000}.
+\tag{3.23}
+$$
+
+Their difference is (0.1). Cross multiplication gives (3.16).
+This proves the necessary lower for the entire original complex class,
+without treating a PPT point as a scalar port. $\square$
+

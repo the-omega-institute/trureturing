@@ -1,0 +1,29 @@
+**Definition 1.2 (field, source, energy and actual choices).** Let $p_t^B$ be the killed heat kernel of $B$ in raw measure and $o=(k_0,0)$. For $g,\tau>0$ set
+
+$$
+\begin{aligned}
+W_\tau&=\int_\tau^\infty e^{\lambda t}p_t^B(o,\cdot)dt,&
+\rho_\tau&=e^{\lambda\tau}p_\tau^B(o,\cdot),&SW_\tau&=\rho_\tau,\\
+\int\rho_\tau dY&=e^{\lambda\tau}\mathbb P_{k_0}(\zeta>\tau),&
+\int\phi(k)\rho_\tau(k,q)dk\,dq&=\phi(k_0),\\
+\mathfrak e_{g,\tau}[\psi]
+ &=a\|S^{1/2}\psi\|_2^2-g\int W_\tau|\psi|^2dY,&
+E_\tau(g)&=\inf_{\psi\in\mathcal Q,\ \|\psi\|_2=1}\mathfrak e_{g,\tau}[\psi].
+\end{aligned}
+\tag{1.6}
+$$
+
+The raw and $\phi$-weighted charges differ; neither is divided by a survival probability. The field clock is $B$, independently of $a$. P Propositions 70.2 and 75.2 supply, at each fixed positive $g,\tau$, a bounded multiplier $W_\tau$, operator $aS-gW_\tau$ on exactly $D(S)$, essential spectrum $[0,\infty)$ and a finite negative attained bottom. This is a positive-cutoff antecedent, not uniform boundedness at zero cutoff.
+
+On the exact critical path considered here,
+
+$$
+\tau=s^2,\qquad g_s=\chi_cs^3,\qquad
+E_s=E_{s^2}(\chi_cs^3),\qquad
+\epsilon_c(s)=s^2E_s<0,\qquad
+r_s=-\epsilon_c(s)/s^8=-E_s/s^6>0.
+\tag{1.7}
+$$
+
+For every prescribed sequence $s_n\downarrow0$, each $\psi_{s_n}$ may be any actual normalized complex ground state in $D(S)$. No subsequent statement replaces these states by Rayleigh trials or by the larger coarse near-minimizer class.
+

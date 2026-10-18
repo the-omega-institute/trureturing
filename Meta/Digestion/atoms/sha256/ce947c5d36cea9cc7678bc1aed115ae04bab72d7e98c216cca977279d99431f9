@@ -1,0 +1,44 @@
+### 八、最新动态结果：静态 $`\kappa`$ 还不是完整未来记忆
+
+当前动态文档的关键进展是：静态隐藏量 $`\kappa`$ 之外，未来预测还需要记录历史对隐藏 Fibonacci 深度的更新。
+
+令隐藏深度为 $`K`$，先验为 $`\mu(k)`$。定义
+
+```math
+r_k=\frac{\operatorname{Fib}_{k+1}}{\operatorname{Fib}_{k+3}},
+\qquad
+s_k=\frac{\operatorname{Fib}_{k+2}}{\operatorname{Fib}_{k+3}},
+```
+
+其中
+
+```math
+r_k+s_k=1.
+```
+
+对一段历史 $`h`$，设：
+
+- $`a(h)`$ 是当前 phase；
+- $`A_h`$ 是观察到的 $`\alpha`$ 次数；
+- $`B_h`$ 是观察到的 $`\beta`$ 次数。
+
+则深度后验为：
+
+```math
+\nu_h(k)
+=
+\frac{
+\mu(k)r_k^{A_h}s_k^{B_h}
+}{
+\sum_\ell\mu(\ell)r_\ell^{A_h}s_\ell^{B_h}
+}.
+```
+
+定义完整未来等价：
+
+```math
+h\sim_{\mathrm{Fut}}h'
+\quad\Longleftrightarrow\quad
+\mathscr L_h=\mathscr L_{h'}.
+```
+

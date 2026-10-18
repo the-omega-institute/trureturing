@@ -1,0 +1,43 @@
+**Proposition 3.3 (paid realization of the restricted covers).** Place
+$n=2^H$ actual motif blocks at the public depth-$H$ frontier in the right
+subtree, with $D=H+3$. Any finite cover of $P^n$ by native admissible sets
+can be implemented on this slice by first-membership names, using
+$7n$ preparation Reads of maximum length $H+3$ and $n(7H+17)$ submitted
+letters. A request on the slice uses at most one original-root Read of
+length at most $H+3$, chosen before the authentic count.
+
+**Proof.** Acquire each block boundary through the actual words $Ra_iq$,
+$q\in W_3$, where $|a_i|=H$. The seven suffix lengths sum to ten, giving
+$7(H+1)+10=7H+17$ letters per block. Compute the joint canonical tuple
+and its first containing member, then export only that fixed-width name.
+All other acquired distinctions are isolated under the paid service in
+[JTC, §1]. Constant scaffold targets need no Read; every other target uses
+its cover member's one constituent donor at the actual literal $Ra_ja$.
+The factor decoder handles every later authentic count. Installed cover
+tables, membership work, padded control/allocation, temporary storage,
+predictor, isolation and authentication are separate resources.
+
+For a full-family construction, scan the entire $W_D$ boundary using
+$2^D-1$ Reads and $(D-1)2^D+1$ letters, use these names on the canonical
+slice and a separate name for every other canonical state. This counts
+exactly $m_*+|S_D|-5^n$ attained names, where $m_*$ is the number of
+first-membership names actually used on $P^n$, and extends by
+canonicalization to every variable shape. No unused cover member is
+counted as retained source information. It does not make the restricted cover an optimal full-family
+cover. $\square$
+
+For a general restricted-support joint block menu at $n$ public prefix-free
+actual occurrences $Ra_i$, $|a_i|\le H$, the credited [FMR, Lemma 6.2]
+scan instead has bounds
+
+$$
+n(2^d-1)\text{ Reads},\qquad Q\le H+d,\qquad
+A\le n\bigl((H+1)(2^d-1)+(d-2)2^d+2\bigr).
+$$
+
+The submitted words are exactly $Ra_iq$, $q\in W_d$; a donor uses the
+corresponding one original-root word. At $d=3$ these are the motif bounds
+$7n$ and $n(7H+17)$. Presence and the declared joint menu are the
+supplier's premises; Proposition 3.3's fixed full-depth scaffold is what
+also covers every original permitted target in its full-family extension.
+

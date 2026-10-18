@@ -1,0 +1,47 @@
+### 86.5. The Hessian kernel is exactly T M
+
+We now calculate every implication in (16). Primes denote derivatives at the base along any smooth calibrated curve. There v=s, S^*W=0, W^*W=I_2/4 and ||W||_F^2=1/2. The first two conditions in (16) imply
+
+    D_f=S N_f+conjugate(v_f)W+O(t^2),
+    C_f=S+conjugate(v_f)W N_f+O(t^2).                     (17)
+
+Since D_col v=W and v is unit, substitution in the first equation gives S sum_f v_f N_f=O(t^2). As S has full column rank,
+
+    sum_f v_f N_f=O(t^2).
+
+Its imaginary first derivative yields sum_f Im(v_f')N_f=0. The only real relation between the four base N_f is the uniform one. The phase convention gives sum_f Im(v_f')=0, so Im(v_f')=0 for all f. The normalization of v gives sum_f Re(v_f')=0.
+
+The exact identity S^*W=lambda I_2 and tracelessness of N_f eliminate the cross term in the Frobenius norm of the second equation in (17). With p=||S||_F^2 and w=||W||_F^2,
+
+    1=p+|v_f|^2 w+O(t^2).
+
+Summing derivatives gives 4p'+w'=0. Each individual derivative is p'+w'/4+w_0 Re(v_f')=0, and w_0=1/2. Thus v'=0. The differentiated relation above then gives
+
+    sum_f N_f'=0,
+    P_w'=0,
+    P_*'=0.                                              (18)
+
+The last conclusion is where the full variational gap is essential. Differentiating spectral invariance, P_*'=0 implies
+
+    (I-P_0)(T-K)'P_0=0.
+
+Use its plus-orthogonal/minus-uniform component. If X=C_col^*D_col is the full cross Gram block, then Xv has f-th entry <C_f,W>. Equations (17) give
+
+    (Xv)_f=2lambda+v_f Tr(N_f W^*W)+O(t^2).
+
+Because v'=0 and W^*W=I_2/4 at the base, cross invariance says the four numbers Tr(N_f (W^*W)') are equal. Their sum is zero by balance, so they are all zero. The N_f span Pauli space; therefore (W^*W)' is scalar.
+
+Finally differentiate the individual matrix normalizations C_f^*C_f=I_2/2 using (17). They give
+
+    (S^*S)'+(1/4)(W^*W)'+Re(lambda')N_f=0.
+
+Averaging and then subtracting shows that (S^*S)' is scalar, equals -(W^*W)'/4, and Re(lambda')=0. Together with (18), these are exactly the tangent constraints of (8)--(9):
+
+    (W^*W)'=(h'/2)I_2,
+    (S^*S)'=-(h'/8)I_2,
+    (S^*W)'=i beta' I_2,
+    sum_f N_f'=0,
+    C_f'=S'+(W'N_f+WN_f')/2.                             (19)
+
+There are no omitted singular support cases: S and [S W] have full respective ranks two and four throughout the chosen neighborhood, and every base disphenoid spans all three Pauli directions. The parameterization in section 86.3 realizes all derivatives satisfying (19), because the positive-definite Gram constraint is a smooth Stiefel parameterization and balance is a regular constraint. Thus every calibrated Hessian-kernel vector lies in T M. Conversely F is constant and minimal on M, so every tangent to M is in the Hessian kernel.
+

@@ -1,0 +1,36 @@
+## 续篇：从“隐藏参数”到“关系阶数与填充闭包”
+
+当前项目最重要的新进展，是把原来的一维隐藏参数 $\kappa$ 放进了一个更大的层级结构：
+
+$$
+\boxed{
+\text{单态关系}
+\;\to\;
+\text{单窗联合纤维}
+\;\to\;
+\text{闭包投影}
+\;\to\;
+\text{多窗关系阶数}
+\;\to\;
+\text{动态未来商}
+}
+$$
+
+截至当前 `dev`：
+
+$$
+\texttt{HEAD}=
+\texttt{46ec5166a750ea6d0b0612d157c86f19975688ef}
+$$
+
+最新相关文档包括：
+
+- [联合投影、多窗关系阶数与响应纤维](https://github.com/the-omega-institute/trureturing/blob/46ec5166a750ea6d0b0612d157c86f19975688ef/docs/develop/theory/AURIC_FIB_ATOM_JOINT_PROJECTION_MULTIWINDOW_ORDER_AND_RESPONSE_FIBERS.md)
+- [动态未来商与 Future-Closed Memory](https://github.com/the-omega-institute/trureturing/blob/46ec5166a750ea6d0b0612d157c86f19975688ef/docs/develop/theory/AURIC_FIB_ATOM_DYNAMIC_FUTURE_QUOTIENT_AND_FUTURE_CLOSED_MEMORY.md)
+- [配对有限读数可观测性](https://github.com/the-omega-institute/trureturing/blob/46ec5166a750ea6d0b0612d157c86f19975688ef/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_PAIRED_CALIBRATION_OBSERVABILITY.md)
+- [稀疏字面历史传输](https://github.com/the-omega-institute/trureturing/blob/46ec5166a750ea6d0b0612d157c86f19975688ef/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT.md)
+
+其中联合投影、动态未来商和多窗响应纤维文档都明确标注为 open reference input。下面的推导是在这些项目结构上进行的进一步数学整理，并不把尚未进入 Lean/Frozen 的内容说成已经完成形式化验证。
+
+---
+

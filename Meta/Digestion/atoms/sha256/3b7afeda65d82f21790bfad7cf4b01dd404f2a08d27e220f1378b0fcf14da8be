@@ -1,0 +1,20 @@
+## 286. Applying the completed flat exclusion
+
+The fixed paired-frame certificate uses actual global edge labels, so
+the common length vector automatically gives equal lengths in each
+repeated transverse pair. No independent per-tetrahedron assignment or
+new symmetry hypothesis is needed. All actual normal links are circles,
+and all original degrees and face maps are unchanged.
+
+For |H|<=4, the paired-reservoir volume's Theorem 172.1 already proves
+realization under these same original hypotheses. For |H|=5, suppose
+the variational length vector has at least one flat owner. It cannot
+have only flat owners: every flat owner has zero local vertex deficit,
+whereas the sum of the vertex deficits on each boundary link equals
+-2*pi*chi(S_nu)>0 by the original edge equations and the link Euler
+identity. Thus a nonempty flat set would give a mixed-flat configuration.
+It satisfies the exact five-reservoir assumptions of Section 184 and
+the subsequent original-length and face-transport reductions. The
+completed exclusion through Section 283 rules this out. Hence every
+tetrahedron is genuine.
+

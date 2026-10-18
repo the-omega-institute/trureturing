@@ -1,0 +1,10 @@
+**Lemma 1.3 (complete representation scales).** For any fixed effective target $(S,\kappa,D)$, its original relation/gain representations are exactly
+
+$$
+R=S/t,\qquad \alpha=t>0,\qquad \beta=\kappa t,\qquad D\text{ fixed}.
+$$
+
+For a fixed positive relation $R=c\ell$, its positive factorizations differ exactly by $c'=\mu c$, $\ell'=\ell/\mu$, with $\mu>0$.
+
+**Proof.** The equations $\alpha R=S$ and $\beta/\alpha=\kappa$ force the displayed representation with $t=\alpha$. Conversely substitution preserves every observation on every common operation history and recorded index. For the internal factorization, equality of the first positive columns in $c\ell=c'\ell'$ gives $c'=(\ell_1/\ell'_1)c=\mu c$, with $\mu>0$. Equality of the second columns then gives $\ell'_2=\ell_2/\mu$, while the definition of $\mu$ gives the first component as well. The converse follows by multiplying the factors. These representation scales do not identify distinct effective targets. ∎
+

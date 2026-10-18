@@ -1,0 +1,46 @@
+**定理 C-29.5（同一方形中的部分持久性及校准块）。** 每轮另用新准备、与输入及此前环境独立的纯记录环境，约化通道固定为 C-29.2 的 $\mathcal N_\Gamma$。在五个标签上定义 $s\sim t\iff|\Gamma_{st}|=1$，等价类记 $C_a$，投影记 $P_a$。由模长一的矩阵单位张成的可逆关系代数为
+
+$$
+\mathcal A_{\mathrm{rev}}=\bigoplus_a\mathcal B(P_a\mathcal H_\Sigma)
+\cong\bigoplus_aM_{|C_a|}(\mathbb C).
+\tag{29.7}
+$$
+
+各类可选 $e_s=e^{i\phi_s}e_{C_a}$。若这个校准已知且相应 $U=\operatorname{diag}(e^{i\phi_s})$ 可实际执行，则
+
+$$
+\mathcal N_\Gamma^n(\rho)=\Gamma^{\circ n}\circ\rho,
+\qquad
+U^{-n}\mathcal N_\Gamma^n(\rho)U^n
+\longrightarrow\sum_aP_a\rho P_a.
+\tag{29.8}
+$$
+
+特别取本方形同一组记录
+
+$$
+e_O=(1,0),\quad e_L=(1,1)/\sqrt2,\quad e_J=(0,1),\quad
+ e_R=(-1,1)/\sqrt2,\quad e_T=e_O.
+\tag{29.9}
+$$
+
+则 $B_\square=-1/4$，四条边的模长均为 $1/\sqrt2$，达到 (29.5) 的可见度界；类为 $\{O,T\},\{L\},\{J\},\{R\}$，实际稳定代数是 $M_2(\mathbb C)\oplus\mathbb C^3$。它精确保留 $\{O,T\}$ 块的全部相干，却对每个确定系统恢复有 $\epsilon(\mathcal R)\ge1/2$。两次独立新环境后方形相位为零，仍没有恢复失去的类间信息。
+
+**证明。** 单位记录的 Cauchy–Schwarz 等号给“模长一当且仅当共线”，因此 $\sim$ 是等价关系。对本 Schur 通道，既保迹又 unital。调用 [Johnston–Kribs v1 定理 3](../../../Library/QuantumChannels/johnston2010generalized.md) 的乘法域平方等号判据：对矩阵 $A$，正缺陷 $\mathcal N_\Gamma(A^\dagger A)-\mathcal N_\Gamma(A)^\dagger\mathcal N_\Gamma(A)$ 的迹为
+
+$$
+\sum_{s,t}(1-|\Gamma_{st}|^2)|A_{st}|^2.
+$$
+
+另一个平方缺陷同样如此。迹为零的正矩阵为零，故乘法域恰是只在同一类内有条目的矩阵，即 (29.7)。这一步消费经典 unital 通道判据，不把文献的一般纠错定理当作重复通道的极限定理。在此代数上 $\mathcal N_\Gamma(A)=UAU^\dagger$，已供的逆校准使它精确可逆。
+
+新环境的独立性使各次约化映射可复合，逐元即第一式。类内 $\Gamma_{st}=e^{i(\phi_s-\phi_t)}$，校准后因子恒为一；类间模长严格小于一，幂趋零。只有有限个条目，所以逐元极限给任一矩阵范数的极限，证明 (29.8)。未经补偿的通道未必收敛：模长一但非一的因子可以一直旋转。原始固定点只允许 $\Gamma_{st}=1$ 的条目，其块可能比模长一的可逆类更小。
+
+在 (29.9) 中直接取内积，$OL,LJ,JR,RO$ 的因子依次为 $1/\sqrt2,1/\sqrt2,1/\sqrt2,-1/\sqrt2$。所有记录张成二维，共同 Gram 实现由 SecondOrder 定理 109.2 保证。唯一非平凡共线类是 $\{O,T\}$，其中相位本就一致，故该例可取 $U=I$，(29.8) 是原始通道的极限。与此同时 $e_O\perp e_J$、$e_L\perp e_R$；取其中任意一对用 (29.6) 得 $1/2$，说明达到边可见度极值并不达到边所给的弱恢复下界。
+
+平方通道的四条方形边均变为 $1/2$，所以环积变为 $1/16$，相位从 $\pi$ 变为零而幅度继续缩小。正交对仍为零，全部标签概率及 $\kappa$ 仍固定，$\{O,T\}$ 块仍无损。故这一模型同时满足全占位保持、有稳定二级块及不可恢复类间相干，三个结论互不抵消。
+
+对一般输入，必须保留类权重 $w_a=\operatorname{tr}(P_a\rho)$，$\sum_aw_a=1$；只有 $w_a>0$ 才定义 $\rho_a=P_a\rho P_a/w_a$。零质量类没有条件态。大小为二的类的条件态有三个 Bloch 坐标，大小三和五的类分别有八和二十四个实无迹 Hermitian 坐标；这些坐标还受正性约束，且不包含类权重。二级块的正质量归一化及零质量跨块消失直接复用 [SecondOrder 命题 76.3](AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md#76-五模式中的局部-qubit质量与跨块相干)。本例三条局部 Pauli 作用于 $\operatorname{span}\{|O\rangle,|T\rangle\}$，没有把全局三个交换占位变成互补 Pauli，也没有由原生标签自动得到制备或读出权限。
+
+最后，(29.8) 要求每轮新环境。若旧环境返回，则应调用 [SecondOrder 命题 110.4](AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md#110-相干历史块递归与可复用环境) 的同环境双 CNOT 比较及其共同联合载体，而不能使用通道平方。一次抽样并保留参数 $\lambda$、条件于它作无记忆调用的过程，仍是 [LocalClock 假设 25](AURIC_FIB_ATOM_LOCAL_CLOCK_KERNEL_AND_OUTPUT_RESOLVED_SEAM_VISIBILITY.md) 的另一份合同；本式不把其 $\int\lambda^n\,d\nu$ 换成独立重采样的 $c_1^n$。空标签在本章只是五个实际标签之一，其持久性由具体记录关系决定。上述是给定有限载体和操作的普通数学结论，不赋予物理空间方向、场、引力或统一无界执行资源。证毕。
+

@@ -1,0 +1,115 @@
+**Lemma 2.1 (actual-label reduction).** Put $t=e^A-1$ and
+$q=1-s/s_0$ for $0\le s<s_0$. For every finite-budget competitor,
+each actual low label nonzero on supported inputs has whole fibre
+dimension two and can be written
+
+$$
+K_j=\sqrt{\pi_j}K(z_j,w_j),\quad
+N_j=\pi_jv_j n_jn_j^T,\quad
+\pi_j>0,\quad(z_j,w_j)\in\mathcal E,\quad
+0\le v_j\le t c_*(z_j^2).
+\tag{JS.9}
+$$
+
+Here $N_j$ is its pulled-back total later-failure effect. Its supported
+acquisition effect is exactly $K_j^\dagger K_j+N_j$. On the existing
+label space let $P$ have masses $\pi_j$ and let $d\nu=v\,dP$; their
+ellipse pushforwards satisfy
+
+$$
+\int hh^T\,dP=I_3,\qquad \int nn^T\,d\nu=M,\qquad
+\nu(\mathcal E)=\mu,\qquad\int z^2\,d\nu=V,\quad
+\int w^2\,d\nu=W,\quad\int zw\,d\nu=0,
+\tag{JS.10}
+$$
+
+and
+
+$$
+0\le e:=\int H(z^2)dP=1-\int|z|dP\le q,
+\qquad\int F_c(z^2)d\nu\le te\le tq.
+\tag{JS.11}
+$$
+
+The TV of the full actual acquisition label is exactly
+
+$$
+T_{\rm instr}=\frac12\left[H_{\rm live}
+ +\int|f(z,w)+v k(z,w)|\,dP\right].
+\tag{JS.12}
+$$
+
+In this last integral each label retains its own $v$, including when
+several labels have the same ellipse point. Coarsening gives only an
+upper bound by (JS.12).
+
+Proof. JR42 gives supported live map $\Lambda_*$, total failure effect
+$M$, zero other effect, zero high failure, low coefficient Gram
+$\operatorname{diag}(\delta,1,1)$, and high products proportional to
+$D$. Complex equality forces each nonzero low product onto the real
+null face after removal of one phase; no real-processor restriction is
+imposed on competitors.
+
+The trace differential inequality from (JS.4) gives whole-fibre
+survival at least $e^{-A}I$, even with arbitrary admitted TP survivor
+controls. Hence a nonzero supported encoder cannot have zero live
+composition. A nonzero null product has rank two: its determinant is
+zero and its $1,2$ principal minor is nonzero. On a low fibre this
+forces dimension exactly two. For arbitrary encoder and live-decoder
+Kraus families fix a nonzero product $B_0C_0$; $C_0$ is onto and
+$B_0$ injective. For a null product $xD+zT+wS$, its kernel and
+adjoint kernel are respectively
+
+$$
+\mathbb C(1,-bz/(h_1x),-dw/(h_2x))^T,\qquad
+\mathbb C(1,-az/(h_1x),-cw/(h_2x))^T.
+\tag{JS.13}
+$$
+
+A common image or kernel fixes both ratios. Fixing $B_0$ therefore
+makes every nonzero $B_0C_j$ proportional; its injectivity makes all
+$C_j$ proportional. Fixing the onto $C_0$ similarly makes all live
+$B_i$ proportional. Zero products with these fixed matrices force
+zero factors. Absorbing the squared proportionality constants gives
+one supported encoder matrix and one live-decoder matrix on this
+actual label. This is FA69's double rigidity, not an observable Kraus
+refinement.
+
+Normalize its first coefficient to obtain $K_j$ in (JS.9). The failure
+effect kills both $e_0$, since it is dominated by $M$, and the kernel
+in (JS.13), since the encoder has that kernel. The remaining line is
+$n(z,w)$, nonzero even on either axis. FA69's explicit Schur complement,
+with $G_K=K(z,w)^\dagger K(z,w)$, is
+
+$$
+G_K-\frac{G_Ke_0e_0^TG_K}{(G_K)_{00}}=c_*(z^2)nn^T.
+\tag{JS.14}
+$$
+
+Indeed $(G_K)_{00}=D_c(z^2)$, and elimination of this pivot gives
+$N_c(z^2)nn^T/D_c(z^2)$ using
+$\delta=\theta z^2+\omega w^2$. The necessary survival bound pulls
+back to $N_j\preceq tK_j^\dagger K_j$; its Schur complement gives
+exactly $v_j\le tc_*(z_j^2)$. This bound is independent of the
+competitor's time law. Full decoder TP and zero other supported
+output give the stated acquisition effect.
+
+The low Gram gives the first matrix identity in (JS.10). The diagonal
+and off-diagonal failure entries give the $V,W,zw$ constraints;
+the ellipse equation gives mass $\mu$. Absorb the actual report coin
+into each label. Failure effects have zero $01$ entry, while high
+products proportional to $D$ also give zero $01$ contribution.
+The winding identity is therefore
+$\mathsf V=s_0|\int r_jz_jdP|\le s_0\int|z|dP$.
+Together with $\int1=\int z^2=1$ this proves the first part of
+(JS.11). Capacity gives $d\nu\le tc_*(z^2)dP$; multiplication by
+$F_c\ge0$ proves the second part.
+
+On an existing low label the exact height difference of its acquisition
+probability is $\pi_j(f+v_jk)$. High labels have no supported failure
+and positive differences totaling $H_{\rm live}$. Supported-zero labels
+contribute zero. Taking HALF the absolute sum proves (JS.12), without
+separating its live and failure contributions. The stipulated integral
+case uses the same almost-everywhere rigidity and integrable moments;
+no new disintegration is needed. $\square$
+

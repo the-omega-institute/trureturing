@@ -1,0 +1,11 @@
+**文献表态 10.2。** 文献支持一般最优恢复背景，原来源的尖锐几何属于 `repo-derived`，不作全球原创性声明。
+
+| 文献／结果 | 精确使用范围 |
+| --- | --- |
+| Foucart–Liao, *Optimal Recovery from Inaccurate Data in Hilbert Spaces: Regularize, but what of the Parameter?*, [arXiv:2111.02601v1](https://arxiv.org/html/2111.02601v1)，第 1.1–1.3 节 | `literature-attested`：兼容集、局部／全局最坏风险与 Chebyshev 中心背景。其线性信息、Hilbert 近似管和合计二范数噪声没有被验证为原非线性树图及三个块误差球，不导入其优化器或精确公式 |
+| Babenko–Parfinovych–Skorokhodov, *Optimal recovery of operator sequences*, [arXiv:2110.08543v1](https://arxiv.org/html/2110.08543v1)，第 2 节引理 1 | `literature-attested`：同一信息的三角不等式下界。对应对象是本卷实际源、兼容报告和全未来目标；普通共同报告论证已经直接给出。独立序列系数及对角算子类不替代原来源 |
+| Foucart–Liao, *S-Procedure Relaxation: a Case of Exactness Involving Chebyshev Centers*, [arXiv:2310.09677v1](https://arxiv.org/html/2310.09677v1)，第 1–2 节及定理 2.1 | `literature-attested`：特定 Hilbert 模型的精确性及实／复边界。正交投影、$`\Lambda\Lambda^*=I`$、共同核条件和合计 Euclidean 不确定性均未获本源桥梁；不导入 S-procedure 或 SDP 结论 |
+| 本卷推论 3.4、引理 4.1–4.2、定理 5.2、引理 6.2 和定理 6.3 | `repo-derived`：实际投影幂的使用、统一中心几何、全未来显式三次余项、改进实际下曲线及系数 $1/4$；普通证明自足 |
+
+恒等式、十制度、端点、一般风险／模量比较、原收缩族、半锚和有限字障碍是精确复用，不重复称为新增数学。实际新内容是把同源初读投影约束用于全部相位 0 未来，并与非共线三实际世界半径匹配，证明此前未定的二次系数及显式充分三次余项。读取形式源或文献只建立上述陈述对应，不构成当前 Lean 核验。
+

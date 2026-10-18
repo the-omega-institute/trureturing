@@ -1,0 +1,99 @@
+**Theorem 10.8 (actual-prefix inheritance and conditional sharp
+residual-grid constraints).** Fix an actual live prefix of the
+original Boolean graph, with exposed set $S$, assignment $\eta_S$
+and $h$ ones. Put
+
+$$
+t=|S|,\qquad R=[n]\setminus S,\qquad
+N=|R|,\qquad q=k-h.
+\tag{SI.55}
+$$
+
+Use the residual graph on $R$ supplied by [CP, Theorem 5.1][CP].
+For every original common-support depth $b$ with $t<b<n$,
+the residual depth $b-t$ is common-support, with support $T_b\setminus S$.
+The formal endpoint $n$ becomes its formal endpoint $N$.
+
+Form the increasing list consisting of $t$, all original common-support
+depths strictly greater than $t$, and $n$. If all successive distances
+in this list are at most four, and $N\ge6$, $3\le q\le N-2$,
+then, on the original installed coordinate vector,
+
+$$
+m(R)\ge q(N-q+1).
+\tag{SI.56}
+$$
+
+The bound is the exact grid minimum for the qualified residual class;
+it asserts no simultaneous attainment of all prefix constraints in
+one original graph. All inequalities (SI.56) for qualifying prefixes
+hold simultaneously on that graph's single vector $(m_i)$.
+There is no restriction on gaps lying before this prefix.
+
+For one complete native preparer at both original native caps, take
+its supplied Boolean projection and an actual live cube prefix.
+Under the same inherited-cut and residual-parameter conditions,
+
+$$
+M(R)\ge q(N-q+1),
+\tag{SI.57}
+$$
+
+where $M_i$ counts all its installed selected states in the original
+classes $E_i$ of CP Definition 1.2. These inequalities likewise
+concern one installed vector $(M_i)$.
+
+Proof. CP Theorem 5.1 gives a complete correct residual threshold-$q$
+graph on $R$, with at most $m(R)$ installed states and both
+uniform caps $N,C_R$ together. It fixes the old $S$ values,
+retains realized $R$-labelled states, and suppresses fixed
+$S$-labelled chains. No state is copied.
+
+At a live residual prefix with $j$ ones and $z'$ zeros,
+the corresponding original counts are
+$(h+j,t-h+z')$. Its residual liveness inequalities give
+
+$$
+h+j\le k-1,\qquad
+t-h+z'\le t-h+N-q=n-k=L-1.
+\tag{SI.58}
+$$
+
+Thus the original prefix remains live. Original live freshness excludes
+any intervening visit to an $S$ label. Induction on the live residual
+prefix therefore identifies it with an actual original extension,
+with identical current state and the same exposed $R$ assignment.
+Conversely every live original extension of this fixed prefix appears
+in the residual graph by its subsequence construction. Impossible
+edges assigned arbitrary successors in CP's restriction cannot occur
+on these actual histories.
+
+At residual depth $b-t$, the corresponding original live extension
+has depth $b$. Its support is $T_b$ if $b$ is an original cut.
+Consequently its residual support is $T_b\setminus S$; in
+particular $S\subseteq T_b$. This proves inheritance. Residual
+depth zero is common even when $t$ was not an original cut, and
+the residual formal endpoint is $N$. The inherited cuts divide
+its depth range into intervals of length at most four under the
+stated condition. Any additional residual common-support cuts
+only subdivide those intervals. All gaps in the residual graph
+therefore have span at most four.
+
+The residual costs are the same distinct original $c_i=s_i+4$
+for $i\in R$, reindexed in their original order. Apply Corollary
+10.6 to this one complete residual graph at both $N,C_R$ caps:
+its installed count is at least $q(N-q+1)$ and at most $m(R)$.
+This proves (SI.56). Repeating this argument for different prefixes
+never changes the meaning of any $m_i$. The different proof
+restrictions are not disjoint allocated pieces of the original graph.
+
+For the native assertion, CP Corollary 5.2 and the projection in WTF
+Theorem 4.1 preserve the actual selected-state subsequence and give
+projected multiplicities $m_i\le M_i$. A live cube prefix has the
+same $S,h$ in that projection; a possible live cube-constant profile
+call changes neither. Apply (SI.56) there and sum $m_i\le M_i$
+over $R$. All calls suppressed in these mathematical restrictions
+remain paid on the original native runs. The original apparatus
+acquires no restriction, reset, residual entry or free transition.
+$\square$
+

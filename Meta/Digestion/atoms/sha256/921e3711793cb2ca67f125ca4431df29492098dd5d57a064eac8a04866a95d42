@@ -1,0 +1,4 @@
+**Proposition 7.4 (the supported-interior hypothesis cannot be omitted).** On the allowed source with prior supported exactly on depths 1 and 2, the supplied fair persistent endpoint-tag generator has $e=0$ and $\mathcal I=0$.
+
+**Proof.** Use [ST, Theorem 2.1]: retain a fair source-independent endpoint label, set $u=v$ to its endpoint and preserve the label under both noncompleting updates. Its actual fair rows and exact complete laws attain all four phase combinations on this two-depth source. Both suspended emissions are endpoints. This is the existing two-depth attainer, not a new construction. $\square$
+

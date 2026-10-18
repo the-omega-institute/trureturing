@@ -1,0 +1,42 @@
+**推论 9.3（An unbounded equal-label consumer with a strict memory premium）。** For every integer $q\ge1$, set
+
+$$
+m=3q,\quad k=5q-1,\quad T=5q,\quad g=q,\quad
+J=\{q,2q,4q\},\quad H=\{2q\},\quad O=\varnothing,
+\tag{9.14}
+$$
+$$
+\lambda_0(q,2q,4q)=(0,1,0),\qquad
+\lambda_1(q,2q,4q)=(0,1,1).
+\tag{9.15}
+$$
+
+Use these literal lower labels, fresh $R,C$ and arbitrary $L_\bot$ on the entire target (3.2). Then
+
+$$
+K_{\min}^{\rm ad}(2;f)=N+4<N+5=K_{\min}^{\rm GLOBAL}(3;f),
+\qquad C_{\rm ad}(f)=2<3=C_{\rm pre}(f).
+\tag{9.16}
+$$
+
+Proof. Both diagonal joined pairs occur, so B fails. For A with $i=0$, $M_0=\{q,4q\}$ and the required repeated charge at $j=q=a$ is one, because the two labels agree there. But $q-m=m$ modulo $T$, and the compulsory leading-zero charge at $m$ is zero. For $i=1$, $M_1=\{2q,4q\}$. The missed phase $2q$ forces $\eta=1$, hence $e_E(4q)=0$; at $j=2q$ the required repeated charge is one while $e_E(2q-m)=e_E(4q)=0$. These are actual-vertex conflicts for every literal word, irrespective of nonactual parity freedom. Theorem 9.2 proves the universal $N+5$ lower bound.
+
+For a complete attainment put $L=1^{3q}$ and $B=0^{2q}1^q$. Use the following five word rows and all actual Halt rows, with $c(v)=a_v$, $c(\bot)=H_{L_\bot}$:
+
+| Row | Word | Endpoint $0$ | Endpoint $1$ | Bottom |
+| --- | --- | --- | --- | --- |
+| $a_0$ | $L$ | $b_0$ | $H_C$ | $H_R$ |
+| $a_1$ | $L$ | $H_C$ | $b_1$ | $H_R$ |
+| $b_0$ | $B$ | $p$ | $H_0$ | $H_R$ |
+| $b_1$ | $B$ | $H_0$ | $H_1$ | $H_R$ |
+| $p$ | $B$ | $H_1$ | $H_0$ | $H_R$ |
+
+The full supports of $B$ at indices one and two are $\{0,q\}$ and $\{3q,4q\}$. Both words begin zero and their terminal tail is $q$. The root and $b_v$ supports are (9.8), and
+
+$$
+\Gamma_p=\{(\lambda_0(j),(0,-j+2m,q)):j\in\{2q,4q\}\}.
+\tag{9.17}
+$$
+
+Ranks $3,2,1,0$ on roots, first queries, $p$ and exact Halt images (5.6) give all-source closure, correct literal outputs and termination. All executions are prefixes of $L\mid B\mid B$, and both labels in (9.17) issue the last word. There are $2|P|k+1=50q-9$ jointly attainable INITIAL records, including bottom; every one is retained. The adaptive count and the two block prices are Theorems 5.2 and 3.2. The complete GLOBAL count is nine for an existing bottom label and ten for a fresh one. This family consumes the new universal exclusion; it is not merely a local archive example. ∎
+

@@ -1,0 +1,13 @@
+**Proposition 46.5 (TV continuity is not sufficient on arbitrary measurable carriers).** On a general measurable carrier, the continuity condition in Theorem 46.3 is necessary but not sufficient.
+
+**Proof.** Take $\Theta=[0,1]$ with its Borel sigma algebra and let the consumer always return an unknown nonproposal. Thus every target row is $(0,0,1)$. Let $x_*$ denote the anchor and encode the prime observations as bits relative to the anchor: $s_i(y)=1$ when the answer at the $i$-th prime differs from the anchor answer, and $s_i(y)=0$ otherwise. If all bits agree, set $\mu_y$ equal to Lebesgue measure $\lambda$. Otherwise let $n$ be the first index with $s_n(y)=1$, use the next $n$ bits to choose one of the $2^n$ dyadic intervals $I_{n,j}$ of length $2^{-n}$, and set
+
+$$
+\mu_y(A)=\frac{\lambda(A\setminus I_{n,j})}{1-2^{-n}}.
+\tag{46.14}
+$$
+
+Every finite bit pattern used here is realized by an actual source by Theorem 35.2. At a non-anchor source, fixing the first $2n$ bits fixes its law. At the anchor, sources whose first difference is after $m$ have TV distance $2^{-n}\le2^{-m}$ from $\lambda$. Hence $y\mapsto\mu_y$ is $\operatorname {TV}$-continuous.
+
+Suppose a lawful preparation acquired this whole family exactly. Its preparation records at the anchor exhaust a full-measure event, so for some finite record bound $m$ the event $E_m$ has positive seed mass. The pushforward of $\mathsf P|_{E_m}$ under the anchor output map is a nonzero submeasure of $\lambda$. Choose $n>m$ and a level-$n$ interval $I_{n,j}$ having positive mass under this submeasure. By the finite-pattern theorem choose one actual source whose first difference is at $n$ and whose next $n$ bits encode $j$. It matches the anchor on the entire preparation menu, so the same positive submeasure is produced at that source, while (46.14) assigns the interval $I_{n,j}$ mass zero. This contradicts exact acquisition. The obstruction is a common-submeasure failure inside every anchor cylinder, not a failure of TV continuity. $\square$
+

@@ -1,0 +1,116 @@
+**Theorem 38.2 (simultaneous rank, law, reference and cost equality).**
+The acquisition of Definition 38.1 has exactly the stated fully counted
+fibre dimensions, a finite label alphabet, full TP decoders and total
+encoder effect $I_5$. Forgetting its acquired labels gives exactly
+$\widehat\Phi_*$ on EVERY complex five-mode matrix and after tensoring
+identity on every passive reference. This includes each of the five
+original exact-time failure CP measures on every Borel set, all
+cross-support entries and all zero additional sectors. Its original
+complete-output error is the credited $E_*$. Its contrast is exactly
+$s$ and its high-fibre probability on every normalized supported
+complex input is
+
+$$
+p_H^{[s]}(\rho)=(1-u)\sum_i h_i^2\rho_{ii}
+                      +(1-v)(b^2\rho_{00}+a^2\rho_{11}).
+\tag{JR.36}
+$$
+
+Thus on EACH original sign history it equals $P_y(s)$ and its worst
+history cost is $P_{27}(s)$. Both the full-class necessary curve and
+all three per-height averages are attained by this ONE factorization.
+
+Proof. From (JR.22) and $u=\theta v+\omega>0$,
+$\det L_{\sigma,\tau}=0$. Its rows and columns indexed by $1,2$
+have diagonal minor $u h_1h_2/4>0$, so its rank is exactly two.
+Also
+
+$$
+\det H_\sigma
+ =\frac{h_0h_1h_2}{2\sqrt2}\sqrt{1-u}
+       [(1-u)-\theta(1-v)]
+ =\frac{h_0h_1h_2}{2\sqrt2}\sqrt{1-u}\,k>0.
+\tag{JR.37}
+$$
+
+Thus every $H$ branch has rank three, including $v=1$ and $s=1$.
+There is no rank convention jump at either endpoint. The image
+isometries exist for the rank-two branches and satisfy
+$V_{\sigma,\tau}V_{\sigma,\tau}^\dagger L_{\sigma,\tau}
+=L_{\sigma,\tau}$. Compression and its isometric TP decoder therefore
+have product exactly $L_{\sigma,\tau}$ on all complex matrix units.
+
+The coefficient columns in (JR.34) are orthonormal when summed over
+the two $H$ rows and four $L$ rows: their squared masses are
+$(1-u)+u=1$, $(1-v)+v=1$, $0+1=1$, and every cross moment is zero.
+The existing Kraus-mixing identity used in (JR.6) therefore gives,
+for every complex $A$,
+
+$$
+\begin{aligned}
+\sum_\sigma H_\sigma A H_\sigma^\dagger
+ +\sum_{\sigma,\tau}L_{\sigma,\tau}A L_{\sigma,\tau}^\dagger
+ &=DAD^\dagger+TAT^\dagger+SAS^\dagger,\\
+\sum_\sigma H_\sigma^\dagger H_\sigma
+ +\sum_{\sigma,\tau}L_{\sigma,\tau}^\dagger L_{\sigma,\tau}+M
+ &=I_3.
+\end{aligned}
+\tag{JR.38}
+$$
+
+The last identity is exactly the credited (CG.141). The compressed
+encoders have the same effects as the uncompressed $L$ matrices.
+Every scalar failure decoder is TP because $\sum_\ell w_\ell=1$
+and $\int_0^1g(t)dt=1$. Summing their encoder-decoder products yields
+$w_\ell g(t)dt\,\operatorname{tr}(MA)P_f$ separately for each original
+$\ell$, with both zero-weight labels retained. For five modes the
+complementary encoder effect is $I_5-P$; hence the total encoder
+effect is $P+(I_5-P)=I_5$. The forgotten maps are exactly
+
+$$
+\begin{aligned}
+\Phi_{\mathrm{live}}(A)&=
+ E[D(E^\dagger AE)D^\dagger+T(E^\dagger AE)T^\dagger
+                                  +S(E^\dagger AE)S^\dagger]E^\dagger,\\
+\Phi_\ell(A)(dt)&=g(t)\left[
+ w_\ell\operatorname{tr}(EME^\dagger A)
+ +\mathbf1_{\ell=2}\operatorname{tr}((I_5-P)A)\right]dt\,P_f.
+\end{aligned}
+\tag{JR.39}
+$$
+
+These are equalities of maps and measures, not only their values on
+twelve densities. In particular cross operators between $P$ and
+$I_5-P$ have zero image, and every extra output sector is zero.
+Every identity holds on matrix units and thus after arbitrary passive
+reference amplification. More explicitly, the failure reference
+factor on a joint operator $X$ is
+$\operatorname{Tr}_5[(EME^\dagger\otimes I)X]$ in the first term,
+and $\operatorname{Tr}_5[((I_5-P)\otimes I)X]$ in the second.
+Multiplying these by the stated density and $P_f$ proves equality
+on every Borel time set, including the absence of singular mass.
+The maps leave common metadata in the same fixed state. Performance
+therefore reuses the original full-output theorem, with no new
+acceptance event or changed metric.
+
+Only the $H$ branches have dimension at least three. Their effects sum
+to $(1-u)D^\dagger D+(1-v)T^\dagger T$, proving (JR.36) even on
+complex inputs. At the original inputs this is $P_y(s)$, independent
+of both signs. The binary law is computed in §39; it gives contrast
+$s$. This finishes the simultaneous attainment claimed in Theorem
+37.2.
+
+For completeness, a dilation of this specified acquisition can use
+$|\alpha\rangle_C\otimes C_{\alpha j}|\psi\rangle$
+with an orthogonal environment copy $|\alpha,j\rangle_Z$ for every
+Kraus row. Their sum is an isometry by the encoder-effect identity.
+Trace out $Z$ to produce the actual classical label $\alpha$ and
+its declared fibre. The complementary-support multiplicity and all
+coin/dilation systems other than the retained classical label are in
+$Z$ and are permanently inaccessible BEFORE the cut. No retained
+specimen, quantum controller, environment or entanglement share is
+available outside the fibre. Later independent blank ancillas can be
+used by the TP decoders; later accessible correlated shares cannot.
+If an implementation retains $Z$, it is a different acquisition cost
+and is not the attaining implementation specified here. $\square$
+

@@ -1,0 +1,73 @@
+**Corollary 7.2 (a uniform necessary normalized correction).** For every
+boxed compatible pair of Assumption 6.1, both endpoints and all $n\ge4$,
+
+$$
+\mathcal J+H_r\frac{e_{r,n}}{c_rz_r^n}\ge\rho_p.
+\tag{7.3}
+$$
+
+Every compatible pair with $\mathcal J=0$, and separately every boxed
+p-midpoint pair, therefore satisfies simultaneously
+
+$$
+\frac{e_{r,n}}{c_rz_r^n}\ge\frac{\rho_p}{H_r}>0
+\quad(r=a,b,\ n\ge4).
+\tag{7.4}
+$$
+
+Equivalently, on either of those two classes,
+
+$$
+c_az_a^n\left(1+\frac{\rho_p}{H_a}\right)
+ \le d_n\le
+c_bz_b^n\left(1-\frac{\rho_p}{H_b}\right)
+\quad(n\ge4).
+\tag{7.5}
+$$
+
+**Proof.** The complete endpoint distance at p is $2\rho_p$; its
+endpoint-positive event is (6.9), with endpoint values $C_p+\rho_p$
+and $C_p-\rho_p$. Given $r$, the opposite endpoint $r^{\rm opp}$ is
+an original supported target since $\mu(1),\mu(2)>0$. The triangle
+inequality on each complete configuration law gives
+
+$$
+\begin{aligned}
+\mathcal J
+ &\ge\int\operatorname{TV}(Q,P_{p,r^{\rm opp}})\,d\nu_p-\rho_p\\
+ &\ge\rho_p-\int\operatorname{TV}(Q,P_{p,r})\,d\nu_p\\
+ &\ge\rho_p-E_r.
+\end{aligned}
+\tag{7.6}
+$$
+
+Apply Theorem 6.3. Taking one supported target as a lower bound in
+(7.6) does not remove any other target from (7.1).
+
+For a compatible pair with $\mathcal J=0$, the full boxes need not be
+assumed separately. At each phase both endpoint losses are at most
+$\rho_s$ and their sum is at least
+$\operatorname{TV}(P_{s,a},P_{s,b})=2\rho_s$. Thus both equal
+$\rho_s$. Equality in the integrated coordinate triangle inequality
+forces its nonnegative slack to vanish almost surely at each complete
+atom. Countability gives the full boxes simultaneously; their signed
+event formula also gives both midpoint means. This is the exact
+zero-face implication of [PAIR, (11.29)--(11.30)][PAIR-STABILITY].
+Hence (7.3) applies to that same pair and proves (7.4).
+
+Under the separate boxed p-midpoint assumption, the complete-TV event
+formula directly gives
+
+$$
+\int\operatorname{TV}(Q,P_{p,a})\,d\nu_p
+ =C_p+\rho_p-C_p=\rho_p,
+\qquad
+\int\operatorname{TV}(Q,P_{p,b})\,d\nu_p
+ =C_p-(C_p-\rho_p)=\rho_p.
+\tag{7.7}
+$$
+
+Thus $E_r\ge\rho_p$ for both endpoints, and Theorem 6.3 again gives
+(7.4). Substitution of the two definitions of slack gives (7.5).
+$\square$
+

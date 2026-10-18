@@ -1,0 +1,35 @@
+**定义 54.1（原INITIAL合同与公共包络）。** 原样采用定义45.1、46.1、51.1的来源、菜单、记录、损失和费用合同：
+
+$$
+\begin{aligned}
+E&=\operatorname{Im}\mathbb H,\qquad W=E\oplus\mathbb H,\\
+\mathcal D_2&=E\times\{b:|b|\in\{7,25\},\ \operatorname{Re}b\ge(4/5)|b|\},\\
+A_c(a',b')&=(c\times a',b'c),\quad c\in E,\quad |c|\le1,\\
+A_d(a',b')&=(\operatorname{Im}b',-a'),\qquad
+\operatorname{Read}(z)=P_Ez+e,\quad |e|\le\delta.
+\end{aligned}
+\tag{54.1}
+$$
+
+初始 $a$ 独立、任意且无界，包括零；两层未标记，每次运行的完整初始来源固定。
+致动、来源参数、定向标架、单位锚和实际动作身份精确供应。误差可联合对抗、相关及依赖历史；Read不改状态，重复Read不缩小误差。
+控制器共同初始化、源无关、确定且按已见有限前缀因果，保留每个实际Read、全部有序动作及Stop。每条有限或自然数索引的可数完整记录都输出一个 $W$ 值估计，没有可数前缀以后的事件。目标仍是完整INITIAL $(a,b)$，损失仍是欧氏距离，估计不必属于来源；预算只计破坏性更新。$\mathcal E_\pi(\delta)$、$\mathcal P_N$、$R_N(\delta)$、$\mathcal P_\infty$、$R_\infty(\delta)$ 均保持（46.3）的原定义。
+只有一个被覆盖的当前寄存器，不供应标签、复位、复制、混合控制、额外存档端口、反事实观察、独立重抽样、精度端口或极限Read。
+
+本节固定 $0<\delta\le1/100$。对公共计算参数 $0\le\rho\le1/10$ 及 $R\in\{7,25\}$，定义
+
+$$
+\begin{aligned}
+K(\rho)&=\sqrt{1-\rho^2},\\
+t_R(\rho,\delta)&=\sqrt{R^2-(RK(\rho)-2\delta)^2}
+ =\sqrt{R^2\rho^2+4RK(\rho)\delta-4\delta^2},\\
+S_R(\rho,\delta)&=\frac{R\rho+t_R(\rho,\delta)}2,\\
+B(\rho,\delta)&=\sqrt{2\delta^2+S_{25}(\rho,\delta)^2},\\
+\rho_-&=\delta/12,\qquad \rho_+=\delta/12+\delta^2/100.
+\end{aligned}
+\tag{54.2}
+$$
+
+$K\ge99/100$，$RK>2\delta$，且 $0<RK-2\delta<R$，故这些根号均为正实数。
+$B$ 是公共风险包络，不是额外观测、半径标签或最优值的定义。
+

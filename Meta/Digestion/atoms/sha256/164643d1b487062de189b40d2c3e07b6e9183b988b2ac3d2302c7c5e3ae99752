@@ -1,0 +1,12 @@
+## 来源归属与未决义务
+
+| 原料 | 本卷采用的范围与归属 |
+| --- | --- |
+| [基础公式与金字塔关系](AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md) | `repo-derived`：五态、占位、概率反解与平均投影是仓内已有推导的来源，重述不计新定理。 |
+| [动态未来商与未来闭合记忆](AURIC_FIB_ATOM_DYNAMIC_FUTURE_QUOTIENT_AND_FUTURE_CLOSED_MEMORY.md) | `repo-derived`：按 Q1–Q4 接收活动域、计数与完整残余律的来源主张；分离和联合静态—动态桥梁未在本卷证明。 |
+| [配对校准与联合可观测性](RECURSIVE_RELATIONAL_OBSERVATION_PAIRED_CALIBRATION_OBSERVABILITY.md) | `repo-derived`：使用 §§2–4 的共同循环和完整索引数组；不把离线逆变成原生运行端口。 |
+| Braunstein–Pati 与原文物理参考 | `literature-attested`：只作 Q7 所列条件下的定理原料和物理背景；没有 FIB 探测器认证。 |
+| 用户提供的遮挡、时间与生命综合 | 归属明确的开放解释，非原创性判定；没有仅据未找到来源而作出的 `suspected-novel` 主张。 |
+
+仍未解决的是：同一源律跨遮挡交互的校准模型、可取得的真实读出与误差界、静态和原生动态之间的联合接口、目标码上的物理量子恢复，以及资源约束下的持续保存与反馈。原文的代数反解不会单独结算这些义务。本卷没有给这些桥梁新增证明、实验或形式化认证。
+

@@ -1,0 +1,55 @@
+**Lemma 8.3 (all twelve use the saturated spectral branch).** Every original $C(\rho_{y,e,n})$ has $b_0<k$ in Lemma 4.1.
+
+Proof. First record the exact coarse implications needed for the contradiction. From the combined source margin, not the sum of two separate product bounds,
+
+$$
+\ell=\frac{ab}{h_0h_1}+\frac{cd}{h_0h_2}
+ <\frac{ab+cd}{695/1000}<\frac{18}{695}<\frac1{36}.
+\tag{RG.72}
+$$
+
+Indeed $2ab\le a^2+b^2$, $2cd\le c^2+d^2$ and (RG.8) give $ab+cd<18/1000$. In particular $\alpha<3/100$. Also $B_y<36/1000$ and
+
+$$
+|c_{12}|=ac\sqrt{64-y}/16\le ac/2<9/1000,
+\tag{RG.73}
+$$
+
+since $2ac\le a^2+c^2<36/1000$.
+
+From (RG.63), (RG.66) and (RG.67), $a/b>3/8$, while $b^2>19/1000>(2/15)^2$. The source diagonal bounds give $h_0>19/20$, $h_1>7/10$. Therefore
+
+$$
+\kappa=b(h_0a/b+h_1)
+ >\frac2{15}\left[\frac{19}{20}\frac38+\frac7{10}\right]
+ =\frac{169}{1200}>\frac7{50}.
+\tag{RG.74}
+$$
+
+Suppose an original signed Gram had $b_0\ge k$. For its real unit kernel vector $v_0$ with positive $D$ coordinate,
+
+$$
+b_0=1-(1+\alpha)v_T^2-(1+\beta)v_S^2\ge1-\ell
+\tag{RG.75}
+$$
+
+implies $|v_T|,|v_S|<1/6$ and $v_D>5/6$, by (RG.72). PSD of $C-\lambda_0B$ gives $\lambda_0\le c_{00}=A_y<1$ by its $DD$ entry. The latter strict bound follows from the exact normalization: each $h_i^2<1$ and $p_y$ is a strictly positive probability vector.
+
+The $T$ row of $(C-\lambda_0B)v_0=0$ would then imply
+
+$$
+|c_{01}|v_D\le(c_{11}+\alpha\lambda_0)|v_T|+|c_{12}||v_S|
+ <\frac{36/1000+3/100+9/1000}{6}=\frac1{80}.
+\tag{RG.76}
+$$
+
+At the three heights the products $y(64-y)$ are $295,768,999$, each exceeding $17^2$. Sign changes preserve the absolute entry $|c_{01}|=\kappa q_y$. Hence (RG.74) gives instead
+
+$$
+|c_{01}|v_D>\frac7{50}\frac{17}{128}\frac56
+ =\frac{119}{7680}>\frac1{80},
+\tag{RG.77}
+$$
+
+a contradiction. This proves $b_0<k$ for every sign and every original height, including exclusion of the transition. $\square$
+

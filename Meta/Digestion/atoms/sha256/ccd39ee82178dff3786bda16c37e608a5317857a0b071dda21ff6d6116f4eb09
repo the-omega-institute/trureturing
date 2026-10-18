@@ -1,0 +1,14 @@
+**定理 15.3（观察者延续的联合结构）。** 在共同来源、按定义 5.1 共同合法的拼接词 $uv$、有限因果历史和给定路径钟下，实际延续 $C\subseteq C'$ 同时满足
+
+$$
+\Omega_{C'}\subseteq\Omega_C,\qquad
+\ker P_{uv}\subseteq\ker P_u,\qquad
+\ker B_u\subseteq\ker B_{uv},
+$$
+
+$$
+\tau(s,uv)=\tau(s,u)+\tau(F_us,v).
+$$
+
+**证明。** 分别使用定理 4.2、5.2 和定义 6.3。事件域、相容来源、经历纤维、未来行为纤维和历时属于不同对象，不是同一信息标量；当前有限记忆也不等于完整事件档案。$\square$
+

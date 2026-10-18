@@ -1,0 +1,25 @@
+**定理 204.6（一个共同分数的分裂行）。** 令 $z$ 为最后一个活跃晚类，$\gamma_z=\mu>0$，$I=\{3,\ldots,z-1\}$，$\eta=\max_{i\in I}\gamma_i$（空集最大值为 0）。取
+
+$$
+0<u\le\mu,\qquad \tau\ge u,\qquad \eta\le u,\qquad \mu\le\tau+u/2.
+\tag{204.9}
+$$
+
+把总量 $2u$ 的均匀 interior bit product 平衡放在 early 类 1、2，令终端 $z$ 为 0、之后位为 1；每个 interior 向量在每个 early 类的权为 $u/2^{|I|}$。对 $i\in I$ 放
+
+$$
+q_i=\min(\gamma_i,u/2)\text{ 于 }w(\{i,z\}),\qquad
+r_i=(\gamma_i-u/2)_+\text{ 于 }w(\{i,i+1,\ldots,z\}),
+$$
+
+终端正确质量 $C_{\{z\}}=\mu$，$T=\tau$，重合字的系数相加；early 正确和 base 行为零。所得共同分数 $V$ 满足
+
+$$
+\Delta_N(V)=\Delta_O(V)=D=\max\left(\mu-u,\max_{i\in I}r_i\right).
+\tag{204.10}
+$$
+
+精确 pair 行可写成 $P_{\{a,z\}\cup H}=u/2^{|I|}$，$a=1,2,H\subseteq I$，其他 pair 行为零。零标签收集各胞的 pair 基线，early 标签不超过它。$(1,2)$ 的 excess 为 $(\mu-\tau)_+\le\mu-u$。对 early/interior $(a,i)$，early-zero 两胞无正确行，10 的 pair 基线为 $u/2$，正确标签 $i$ 收集 $\gamma_i$，较早标签只收集 $r_n\le u/2$，较晚标签无质量；唯一增益为 $r_i$。11 基线为 $u/2+\tau\ge\mu$。
+
+对 interior pair $i<j$，四个 pair 胞质量都是 $u/2$。00 只有各 $n\le i$ 的后缀部分 $r_n\le u/2$；01 只有 $q_i\le u/2$；10 含 $\gamma_j$ 和 $i<n<j$ 的 $r_n\le u/2$，唯一增益为 $r_j$；11 由 $u/2+\tau\ge\mu$ 覆盖全部标签。对 $(i,z)$，00、10 的 pair 基线各为 $u$，00 的标签 $i$ 收集 $\gamma_i\le u$、较早标签收集 $r_n\le u/2$；10 中终端标签给 $\mu$、其余标签至多 $u$。01 为空，11 只有 $\tau$。故唯一增益为 $\mu-u$，early/$z$ 也由同一停止守卫达到此值。所有更晚位恒为 1；空表、singleton、重复和反序均归入这些上界。完整 $N$ 上界与 $O$ 停止表下界因此同时为 (204.10)。保留全部 pair、每个 $q_i$、$T=\tau$ 和终端正确总量 $u$ 得到 $0\le Z\le V$ 且 $\Delta_N(Z)=0$；同一胞计算中的全部增益此时均为零。$U_{\rm split}=V-Z$ 为链尾正确量；这是 $V$ 的分解，不声称它是原始 $y$ 的坐标子分数。
+

@@ -1,0 +1,42 @@
+### 定义 22.7（边链未来观测核与折扣 Gramian）
+
+给定任意有限维边更新
+
+\[
+U:\mathbb R^E\longrightarrow\mathbb R^E,
+\]
+
+令一步状态可见读出为
+
+\[
+O=AB.
+\]
+
+定义未来观测核
+
+\[
+\mathcal N_\infty^E
+=
+\bigcap_{m\ge0}\ker(OU^m).
+\]
+
+若 \(Y\) 带有 Euclidean 内积，并且 \(0<\beta<1\)，定义折扣 Gramian
+
+\[
+\mathcal G_\beta
+=
+\sum_{m=0}^{\infty}
+\beta^m
+(U^{\mathsf T})^mO^{\mathsf T}OU^m.
+\]
+
+有限维中该级数在 \(\|U\|\sqrt\beta<1\) 时按算子范数收敛；若 \(\beta\|U\|^2\ge1\)，可改用有限窗口 Gramian
+
+\[
+\mathcal G_{\beta,N}
+=
+\sum_{m=0}^{N}
+\beta^m
+(U^{\mathsf T})^mO^{\mathsf T}OU^m.
+\]
+

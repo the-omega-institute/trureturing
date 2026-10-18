@@ -1,0 +1,49 @@
+**Proposition 2.4 (Full-word ratios, including boundaries).** For any upward edge $c=b+e_i$ and $n\ge2$, put
+
+$$
+J_{n,i}=\{j:1\le j\le n-2,\ j\le i\le j+2\}.
+$$
+
+The ratio of the probabilities of its actual full-word endpoints is
+
+$$
+\frac{\mu_n(c)}{\mu_n(b)}
+=\frac{\pi_{c_1c_2}}{\pi_{b_1b_2}}
+\prod_{j\in J_{n,i}}
+\frac{P_{c_jc_{j+1},\,c_{j+1}c_{j+2}}}
+{P_{b_jb_{j+1},\,b_{j+1}b_{j+2}}}.
+\tag{2.8}
+$$
+
+At $n=1$ the unique upward ratio is $9/29$. In particular, for $n\ge5$ and $3\le i\le n-2$, the flip changes the window $x000y$ to $x010y$, and the ratio, independently of its outside completion, is
+
+$$
+R_{xy}=
+\frac{P_{x0,01}P_{01,10}P_{10,0y}}
+{P_{x0,00}P_{00,00}P_{00,0y}}
+=\frac{200}{343}\left(\frac76\right)^{x+y}.
+\tag{2.9}
+$$
+
+The four values in context order $xy=00,01,10,11$ are
+
+$$
+\frac{200}{343},\qquad
+\frac{100}{147},\qquad
+\frac{100}{147},\qquad
+\frac{50}{63}.
+\tag{2.10}
+$$
+
+**Proof.** Divide the two products in (2.2). A transition factor can change only when its triple contains position $i$. Every denominator in (2.8) is positive because the lower word is legal. This proves the formula for all boundaries and all $n\ge2$, including empty transition products. For an interior position, its initial pair is unchanged and exactly three transition factors remain; substituting (2.1) gives (2.9)–(2.10).
+
+These ratios arise from one probability vector. In particular the shares
+
+$$
+a_{c\leftarrow b}=\frac{\mu_n(c)}{\mu_n(b)+\mu_n(c)},\qquad
+a_{b\leftarrow c}=\frac{\mu_n(b)}{\mu_n(b)+\mu_n(c)}
+\tag{2.11}
+$$
+
+are simultaneously feasible on every original edge. Interior insertion ratios depend on the distance-two bits $x,y$, even though every insertion changes $k$ by the same amount. $\square$
+

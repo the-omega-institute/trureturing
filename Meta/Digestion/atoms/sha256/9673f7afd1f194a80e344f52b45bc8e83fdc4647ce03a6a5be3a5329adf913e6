@@ -1,0 +1,65 @@
+**Theorem 3.1 (one initialized rectangle).** Under Assumption 1.2, for every common reached $P$ of Definition 1.4 and every finite $N,r\ge1$, Definition 2.3 produces the following properties on the same $G_{\rm sel}$.
+
+1. Every $H_j$ obtains the same historical core $D_a$ through the actual checked received-reference Call and full return. Its authentic cover number is
+
+   $$
+   c_j=c_*+j-1.
+   $$
+
+   The complete received covers, bindings and delivery occurrences are distinct; they are not a common Image wrapper.
+
+2. There are ordinals $n_j$, independent of $w$ for fixed $j$, with
+
+   $$
+   |x_{j,w}|=n_j,\qquad n_1<n_2<\cdots<n_N.
+   $$
+
+   At fixed $j$ every $P_A^+(x_{j,w})$ is equal, including its pending bit, finite state and entire meter.
+
+3. The unchanged original task satisfies
+
+   $$
+   Q(x_{j,w})=Q(x_{\ell,v})
+   \quad\Longleftrightarrow\quad
+   j=\ell\ \text{and}\ w=v.
+   $$
+
+   A single lawful original Advance at the prescribed WR(13,5) separates every unequal pair.
+
+4. The actual joint selection $(c,W_r)$ has exactly this restricted $Q$ kernel. Any observation depending only on $D_a$ is constant on the entire family. Retaining $c$ in addition to that old-target observation leaves exactly the $2^r$ payload alternatives within each fixed-$j$ fibre.
+
+Proof. At each authentic Ready the frozen predecessor includes the completed stationary acquisition, so $a\le b_j$. Definition 2.1's actually supplied name therefore selects $k=a$. GCA Theorems 4.2, 5.6 and 6.4 reconstruct that same actual prefix and raw endpoint, independently of a longer reservoir suffix. The reconstructed historical core is consequently $D_a$ in every flight.
+
+For clarity, the exact binding in this arm is GCA Definition 6.1's tuple
+
+$$
+\varrho_j=
+\bigl((0100,1,F),\xi,c_j,0,\gamma,a,b_j,0\bigr),
+$$
+
+where $\gamma$ is this manifest's actual acquired service/capture/seed anchor. Its Issue metadata slots are $z=0$ and $s=0$. The received CoverRef carries $(c_j,a,b_j)$; the received PackageRef carries its actual package number $p_j$, $c_j$, $a$ and the whole $\varrho_j$; the received Image carries those bindings and the old core. The common result prefix retains the actual service/capture binding $B$ and $\xi$. These are the tuple fields and kinds of ARC Definition 7.1 and GCA Definitions 6.1–6.2, not an equality of untyped output strings.
+
+GCA Definition 5.1 creates one cover with the cardinality of the existing cover list, then appends it immutably. Each successful $H_j$ does this once. An intervening source cycle appends its source item to $M$ by ARC Definition 5.4 and creates no cover. Induction gives $c_j=c_*+j-1$. The receiver actually imports and checks this number before Bind; it is not supplied by the proof or inferred from an intention. The full binding contains $c_j$ and $b_j$, so even after decoding the common old core the full later bindings differ. The sender/mailbox/receiver intervals and their origins are separately created and retained in each flight.
+
+Complete return of $H_j$ leaves ARC Definition 5.1's outer relation: the original client remains parked, the producer has its twelve workspace tokens and original ingress/source resources, and the source-service token is at its dispatcher. Gate01 enters the separately numbered $F^A$. ARC Definition 4.1 changes only its final idle CTL successor; GCA Definition 2.1 preserves all its other native effects. Its final return, normalization and CaptureCAP are ARC Proposition 5.5's. Thus each baseline probe completes before the next $H$, and induction constructs every finite baseline required here. No row asks for $N$, $r$ or a later capacity maximum at initialization.
+
+Fix $j$. The common actual prefix through $P_j$, the gate and the header/length setup are identical for all $w$. All $r+1$ payload bits are allowed by the original canonical TagRead syntax. The first $r$ iterations have the same row/control schedule, allocation, head motions, descriptors, tokens and receipt symbols; only the corresponding producer13 value symbols vary. The next length RD is common and the final IN is 0 in every case. It overwrites the formerly varying input latch. At this cut no other latch retains a varying payload value.
+
+This is the local after-overwrite argument of UAS Theorem 5.2, with its common prefix replaced by the actual $P_j$ of $G_{\rm sel}$. Its use needs no transfer of the old graph's clock, generated labels or complete history kernels. The extra $G_{\rm sel}$ words and fields are fixed by that common prefix. No history-bank assignment occurs inside $F^A$, and no request dependency has yet been delivered to $A$. The source ingress changes no old package, receiver or annex field. Consequently the complete strengthened owner selections agree. If $n_{0,j}(r+1)$ is the actual ordinal before this probe's first payload RD, then
+
+$$
+n_j=n_{0,j}(r+1)+5r+2.
+$$
+
+The all-zero member is a prefix of the baseline. Its full remaining source/ACK/CaptureCAP/Ready return and the next full $H$ precede the next probe cut. Every such fragment has actual rows. Hence $n_{j+1}>n_j$, without an assumed common numeric row address or a numerical estimate of replay time.
+
+At each $x_{j,w}$ the next prescribed row is the original payload WR(13,5), with the actual producer writer token, constructed destination and pending 0. The only changed edge in $F^A$ is much later, at its final idle return. Thus the original primitive Advance is admitted and executed here by AIF Definition 2.6 and CAP Definition 4.6. The finite bank-parity alternative may have its own generated PC; both alternatives retain this original operand, guard and effect. No history-phase experiment or private-state-dependent experiment branch is used.
+
+Let $Y_{j,w}$ be the complete original successor retained in this successful response. Its original producer13 projection contains the previously written $w$ and the just-written final 0 at the actual payload interval. For a fixed $j$, different $w$ therefore give different $Y_{j,w}$. Its original meter projection has exactly $n_j+1$ receipts. GCA Definition 8.1 and Theorem 8.3 count every annex, source and return row on that same original meter. No recovery resets it. For $j\ne\ell$ the unequal receipt counts therefore distinguish $Y_{j,w}$ and $Y_{\ell,v}$ regardless of their payloads.
+
+These projections are original task-successor coordinates already used in UAS Theorems 5.2 and 6.2. They are not coordinates added to $Q$, and they grant no corresponding actor read. Actual labels or other original successor fields may also differ; no equality of those additional fields is needed for separation. It follows that unequal pairs have unequal responses to this one common experiment, hence unequal $Q$ maps. Equal pairs specify the same actual input prefix and stopping cut, so their histories, original experiment domains and every response agree. This proves assertion 3 and shows that the family has $N2^r$ members.
+
+Finally $c_j$ determines $j$ within this fixed family, and the actual current backing selection returns $w$. Thus $(c,W_r)$ is injective there and has precisely the displayed $Q$ kernel. The old prefix and endpoint at $a$ are unchanged throughout, so any function of that core is constant. Adding just $c$ separates the $j$ fibres and leaves all $w$ within each fibre. These statements concern actual joint material and mathematical equality, not an enabled cross-owner computation.
+
+For the first Ready, $N=2$ and $r=1$, both history frames are 11111000 and their acquired cover numbers are 0 and 1. The alternative source frames in each round are 01011000 and 01011010. They give four different original Advance responses: producer13 separates the two payloads within a round, and the original meter separates the rounds. The all-zero first probe must complete before the second baseline recovery; the alternative first-round payload is not asserted to coexist with that second baseline on one execution. ∎
+

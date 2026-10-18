@@ -1,0 +1,23 @@
+## 2. Supplied source reduction and endpoint slack
+
+**Mathematical citation 2.1 (one common acquired circulation).** [PAID, Lemma 14.1] extracts from each original observer finite p and suspended carriers $X,Y$, their actual noncompleting kernels $B:X\to Y$, $A:Y\to X$, and probability rows $\pi,\tau$ with
+
+$$
+\pi B=\tau,\qquad \tau A=\pi.
+\tag{2.1}
+$$
+
+Every positive-row label is an original reachable configuration on (1.5), with its own complete decoder pulled back through its own $I_c$. For every supported depth, the configuration losses on these same rows are bounded by the original phase suprema. Paid-history limits and Cesaro averaging produce analysis rows, not runtime inputs. Their countable-prior argument uses a summable dominating likelihood-ratio sequence. The original process need not be stationary or irreducible. Transient labels can disappear from the extracted support without being removed from the original domain.
+
+Delete zero-row labels; (2.1) excludes transitions into them from positive-row labels. Clip both emission vectors to $[a,b]$, retain $B,A,\pi,\tau$ and regenerate complete laws. The supplied same-update coupling [CLIP, Theorem 3.1; SEH, Citation 2.1] gives
+
+$$
+\widehat\varepsilon_p\le(41\varepsilon_p+20\varepsilon_\beta)/11,
+\qquad
+\widehat\varepsilon_\beta\le(12\varepsilon_p+41\varepsilon_\beta)/11,
+\qquad \widehat e\le(61/11)e(M).
+\tag{2.2}
+$$
+
+For every supported depth the clipped common rows have the corresponding configuration-loss bounds. This permits original zero/unit emissions and noncompletion mass, but does not preserve a resource budget or hard defect constraint. Clipping preserves (1.6), because equal emissions remain equal after clipping. It makes no new source observation.
+

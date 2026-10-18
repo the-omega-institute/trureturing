@@ -1,0 +1,84 @@
+## 8. Dependencies, known promises and remaining joint-realization gaps
+
+The late-double-root rigidity, exact sharpness example and terminal
+reductions develop the supplied late-root and terminal-reduction
+proposals. Lemma 2.1 is reused from the whole-class companion, with
+its full proof. The common model and ancestor come from VII.
+Polynomial factorization, direct trace multiplication, quadratic
+sign analysis and Bernstein convex combinations are established
+mathematics. The complete small certificate needed here is
+(3.10)–(3.13).
+
+The earlier whole-class companion proves conditioned decoders for
+one fixed polynomial shape and for one fixed source. Theorem 3.1
+instead starts with the entire known root class (3.1), with source,
+shape, amplitude sign and arbitrary original drift initially free.
+It derives one polynomial, at most two sources and a fixed one-read
+inverse. The terminal reductions concern simultaneously realized
+triples with varying sources and shapes. These are distinct
+deductions from the earlier fixed-shape and fixed-source inverses.
+No claim of external priority or literature completeness is made.
+
+VII, Theorem 4.1 separately states pair exclusion on every entire
+history (1.1). Its proof uses its nine integer coefficient matrices
+and their three-variable Bernstein identities, as well as a separate
+six/seven-double-root argument. Theorems 3.1, 4.1, 6.1 and 7.1 here
+do not use those large coefficient identities, that pair-exclusion
+theorem or any unseen II–VI bridge as a premise. The reductions do
+not independently certify those arrays. If the supplied pair
+exclusion is taken as a separately certified premise, (6.1) excludes
+the entire exactly-two-terminal-roots triple stratum, and (7.1)
+excludes common-drift triples with differing terminal signs. The
+unconditional results here are the displayed equivalences and the
+all-different-sign exclusion; they supply no losing pair or triple.
+The small quartic certificate is separate from VII's three-variable
+identities.
+
+The root conditions in (3.1) are promises about the known candidate
+class. Equal observed values $\widehat Y=\widehat z$ do not identify
+that class: (1.4) only equates
+$f(4)\operatorname{tr}(CP)$ and $f(5)\operatorname{tr}(QP)$ in
+that case; it does not make either zero or identify $d$ with their
+common reading. A candidate outside the promised class has not been
+excluded by the conditioned inverse. Injectivity on a class does
+not establish injectivity on an unrestricted union of classes.
+The same distinction applies to fixed-source and fixed-shape
+promises. All inverses here recover complete worlds, with every
+mandatory immediate reading and the original clocks retained.
+
+The precise unrestricted triple question remains whether some
+$D_0,Y,z\in\mathbb R$, $\lambda\ne0$ admit three pairwise distinct
+fixed legal worlds, all satisfying all six equations (1.4) on the
+same literal (1.1), for which $L_2$ holds, or whether such triples
+are uniformly impossible. No witness or uniform exclusion is given
+here. In particular:
+
+- Worlds outside $\mathcal Z_{45}$ retain the other zero-, one- and
+  two-ancestor-root patterns, variable sources and gain shapes,
+  all remaining degrees and multiplicities, and arbitrary original
+  drifts. A triple with only one or two members in
+  $\mathcal Z_{45}$ is not excluded by its whole-class decoder.
+- A single terminal-root world and the all-three-terminal-roots
+  pattern are not generally eliminated. Variable-drift triples with
+  no terminal roots, and common-drift triples with one common
+  nonzero terminal sign, remain outside these reductions. The
+  all-zero common-sign case is also not settled.
+- Roots at clock six, their interaction with clock seven and with
+  permitted ancestor roots, and other future-root multiplicities
+  remain available outside the restrictions actually proved above.
+- Different sixth actions may retain different collision pairs.
+  A sixth response shared by all three may leave different terminal
+  actions colliding on different pairs. These possibilities remain
+  except where Theorems 6.1 and 7.1 explicitly resolve them.
+  Separately compatible pairs do not supply a common three-world
+  realization, and pairwise separating suffixes do not give one
+  policy on an arbitrary family.
+
+The larger actual-fiber problem, the joint losing-arm question at
+the earlier $JMMJ$ parent, and the unrestricted original-root
+alternative of at least nine total readings versus a lawful decoder
+with at most eight on every degree-three complete world remain
+unresolved here. The distinct $MMJM$ and $MJMMJ$ ancestors discussed
+in VII are not identified with (1.1). No global nonlinear bound is
+proved, and the continuing mathematical objective is not settled.
+

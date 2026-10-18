@@ -1,0 +1,37 @@
+**Definition 1.1 (native trees and inclusive prefixes).** The source domain is
+the nonempty finite free ordered tree algebra
+
+$$
+\begin{aligned}
+\mathcal T&::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,\\
+\rho\alpha&=\beta,&\rho\beta&=\langle\beta,\alpha\rangle,&
+\rho\langle s,t\rangle&=\langle\rho s,\rho t\rangle,\\
+T_n&=\rho^n\alpha\qquad(n\in\mathbb N).
+\end{aligned}
+\tag{AAB.1}
+$$
+
+Addresses are words over $\{L,R\}$, with root $\varepsilon$. The original
+reply $r_u(p)$ is $\alpha$, $\beta$, $\mathsf{branch}$ or
+$\mathsf{absent}$. Only a reached address has a whole subtree $u|_p$.
+Write $u\equiv_h v$ when all replies at $|p|\le h$ agree, including
+absence. The same notation applies to finite or infinite ordered trees
+with two children at every branch. Let $\Omega$ be the all-branch infinite
+tree. No infinite tree is an original source.
+
+Let $\operatorname{ht}(u)$ be maximum leaf depth and $\mu(u)$ minimum leaf
+depth, both measured from the original root. A finite tree is isolated
+by its inclusive prefix through $\operatorname{ht}(u)$. For any finite-source
+set $X$, define $K\in\overline X$ by
+$\forall h\ \exists u\in X\ (u\equiv_h K)$. An accumulation point of
+$X$ is a prefix limit of a sequence of pairwise distinct members of $X$.
+An infinite tree in $\overline X$ is an accumulation point: a finite list
+of finite trees cannot approximate it at every depth.
+
+The identities $T_{n+2}=\langle T_{n+1},T_n\rangle$, injectivity of the
+atomic index and of $\rho$, and
+$\mu(T_n)=\lfloor n/2\rfloor$ are reused from [ABC, Definition 1.3][ABC]
+and [NLC, Lemma 3.1][NLC]. Consequently $T_n\to\Omega$ as $n\to\infty$.
+The symbol $\rho$ always has (AAB.1)'s interpreted meaning; it is never
+a free unary constructor. Repeated occurrences denote the same value.
+

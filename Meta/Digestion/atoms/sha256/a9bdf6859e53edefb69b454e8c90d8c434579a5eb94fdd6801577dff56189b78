@@ -1,0 +1,39 @@
+**Theorem 12.3 (unique actual lift and unchanged weights).** The full
+solution set of Definition 12.2's complete template is in bijection
+with $\mathbb F_2^E$. Its block at $v$ is exactly the perfect
+height-two tree with the four incident edge bits in the declared
+order. The inverse reads the actual owner slots. In particular there
+are $2^{2n}$ actual tuples, every seed has prescribed incidence two,
+and each vertex owns two bits and imports two singleton groups from
+distinct outside owners.
+
+For arbitrary nonnegative whole-block weights $w_v:S_3\to[0,\infty)$,
+the exact native mass is
+
+$$
+Z_G(\boldsymbol w)=
+\sum_{s\in\mathbb F_2^E}\prod_{v\in V}w_v(x_v(s)).
+\tag{GDB.52}
+$$
+
+Each original $w_v$ occurs once. Both directions concern the same
+actual tuple and the same shared edge variables.
+
+Proof. The three branch equations force the root and both children
+to be branches. Each terminal equation forces an alpha or beta leaf;
+the guarded owner equation excludes branch and absent there. An edge's
+other occurrence has the same leaf as its owner. Thus every solution
+has precisely the stated shape and labels and recovers a unique
+edge assignment. Conversely every edge assignment builds those actual
+trees and satisfies all equations, including all owner guards.
+These maps are inverse, proving (GDB.52) without replica multiplicity.
+An edge occurs only in its two endpoint blocks. Simplicity makes the
+two incoming tails distinct and different from their head; the Euler
+orientation gives the two owned bits.
+
+This is the specialization of [GCB, Theorem 1.2][ParityGCB] to
+four terminal slots and two-occurrence classes, with explicit actual
+owners as in [RRN, Theorem 5.2][ParityRRN]. It is reused here as
+the native carrier, rather than claimed as a new incidence embedding.
+$\square$
+

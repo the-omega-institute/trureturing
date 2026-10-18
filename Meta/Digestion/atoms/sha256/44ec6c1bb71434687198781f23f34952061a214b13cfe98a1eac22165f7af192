@@ -1,0 +1,77 @@
+**Theorem 13.1 (necessary local coordinate swap at the exact baseline).**
+Suppose $E_B=\beta_B-1$. On every internal depth there is exactly one
+support-ambiguous cell. At that cell $b_v=a_v=2$, while every other
+cell on the depth has $b_v=a_v=1$. Every support at every interior
+cell has exactly one host.
+
+If the ambiguous cell $v$ has two live internal children, its two
+supports $S_1,S_2$ satisfy
+
+$$
+S_1\setminus S_2=\{x\},\qquad
+S_2\setminus S_1=\{y\},\qquad x\ne y.
+\tag{CL.52}
+$$
+
+Writing $q_1,q_2$ for their unique respective hosts, one has
+
+$$
+i(q_1)=y,\quad i(q_2)=x,\qquad
+\delta(q_1,0)=\delta(q_2,0),\quad
+\delta(q_1,1)=\delta(q_2,1),
+\tag{CL.53}
+$$
+
+and the zero and one successor states are distinct. The inherited
+support in either child is $S_1\cup S_2$. The entire child family
+can have an additional support from another parent. Every demand
+graph $\Gamma_v$ in this gap is edgeless or has just one edge.
+These are necessary conditions, not a complete graph specification.
+
+Proof. There are $\beta_B-1$ internal depths. Their nonnegative
+integer excesses satisfy $e_d\ge1$ by (CL.12), so equality of their
+sum forces every $e_d=1$. Noncommonness supplies a cell with
+$a_v\ge2$ on each such depth. Since $b_v\ge a_v$, that cell uses
+the entire unit of excess and has $b_v=a_v=2$; every other cell
+has $b=a=1$. The fixed-cell map from hosts onto supports described
+in (CL.5) is a surjection of finite sets of equal sizes at every
+interior cell. It is consequently a bijection: each support has
+exactly one host. This is stronger than merely knowing $a_v\le2$.
+
+Now let $d=d(v)$ and let both children be live and internal. If
+$|S_1\cup S_2|\ge d+2$, then $\rho_v\ge2$. Theorem 11.1 with
+$j=1$ forces both children ambiguous. Their two positive excesses
+contradict $e_{d+1}=1$. Distinct $d$-element supports have union of
+size at least $d+1$, so their union has exactly that size. This
+proves (CL.52).
+
+Set $Z_i=S_i\cup\{i(q_i)\}$ for $i=1,2$. By (CL.6), each $Z_i$
+is an actual support at each of the two children. If $Z_1\ne Z_2$,
+both children are again ambiguous, contradicting $e_{d+1}=1$.
+Thus $Z_1=Z_2$. It contains $S_1\cup S_2$, and all these sets
+have size $d+1$, so it equals that union. Freshness now forces
+the queried coordinates in (CL.53). For a fixed reply the two
+successors host the same inherited support in the same child cell.
+The already proved host–support bijection at that child, not a
+singleton-family assumption, identifies those successors. The zero
+and one child cells have unequal hits and the same inherited
+support; the equal-support exclusion in Section 1 forbids a common
+host between them. Their successor states are therefore distinct.
+Another parent may supply a second support at the sole ambiguous
+child on that depth, consistently with all these conclusions.
+
+A demanded cell has at least two supports by Theorem 5.1, hence is
+the sole ambiguous cell on its depth. Lemma 11.2 gives its two live
+internal children, so (CL.52) applies there. Among its two supports
+only $x,y$ have varying membership, and their membership orientations
+are opposite. Every other coordinate is present in both supports or
+in neither. An edge requires both opposite membership orientations
+by Theorem 4.1, so its only possible pair is $\{x,y\}$. A cell
+with one support has no demand edge. This proves the final assertion.
+
+For an empty interior the depth assertions are vacuous. An ambiguous
+cell with only one live child, or in the last internal layer, is
+outside the two-child assertion. No unproved singleton property is
+assigned to its descendants, and no paid certified continuation is
+removed. $\square$
+

@@ -1,0 +1,41 @@
+**定理 C-105.3（密度性、相同边缘与底面质量）。** 对每个实数 $0\le t\le1$，
+$\Gamma_t$ 是密度算子，两个边缘均为 $\rho=I_5/5$。沿用 C-94.2 的底面识别，
+每份的底面质量与条件态，以及二份的底面联合质量分别为
+
+$$
+\begin{aligned}
+\operatorname{Tr}_2\Gamma_t&=\operatorname{Tr}_1\Gamma_t=I_5/5,\\
+r&=\operatorname{tr}(P_{\mathrm b}\rho)=4/5,\qquad
+\sigma=\frac{\iota^\dagger\rho\iota}{r}=I_4/4,\\
+r_{12}(\Gamma_t)&=\operatorname{tr}((P_{\mathrm b}\otimes P_{\mathrm b})\Gamma_t)=4/5.
+\end{aligned}
+\tag{C105.6}
+$$
+
+证明。$\|\Psi\|^2=4/4=1$，且 $\Psi\perp e_2$。
+$S$ 是五个单位向量投影的等权混合，$T$ 是两个单位向量投影的凸组合，
+故二者正半定、迹一；$0\le t\le1$ 保证 $\Gamma_t$ 同样如此。
+对于任意 $s,a\in B$，有
+
+$$
+\begin{aligned}
+\operatorname{Tr}_2(|e_s\rangle\langle e_a|)
+&=\langle f(a)|f(s)\rangle\,|s\rangle\langle a|,
+\\
+\operatorname{Tr}_1(|e_s\rangle\langle e_a|)
+&=\langle a|s\rangle\,|f(s)\rangle\langle f(a)|.
+\end{aligned}
+\tag{C105.7}
+$$
+
+$f$ 是置换，故两种偏迹都消去 $s\ne a$ 的交叉项。
+$S$ 的任一边缘为 $I_5/5$；$|\Psi\rangle\langle\Psi|$ 的任一边缘为
+$P_{\mathrm b}/4$，因此 $T$ 的任一边缘为
+$(4/5)(P_{\mathrm b}/4)+(1/5)|2\rangle\langle2|=I_5/5$。
+线性性给 $\Gamma_t$ 的两个边缘。将 $I_5/5$ 压缩到 C-94.2 的四维底面并除以
+$4/5$，得到 $I_4/4=(I_2/2)\otimes(I_2/2)$，所以每份的条件底面可分离。
+二份底面投影在 $V$ 上为恒等、在 $e_2$ 上为零。
+$S$ 的底面权重为四个 $1/5$ 之和，$T$ 的底面权重为 $4/5$，
+于是整族的 $r_{12}=4/5$。乘积边缘来源 $\rho\otimes\rho=I_{25}/25$ 才有
+$r_{12}=r^2=16/25$；本族达到 C-102.2 区间的上端 $r_{12}=r$。证毕。
+

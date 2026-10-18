@@ -1,0 +1,64 @@
+**Theorem 2.3 (Both actual classification-to-defect comparisons).** For every finite $N$, every $\theta\in\Theta_N$ and every $r,R\ge0$,
+
+$$
+e_L(r)\le\epsilon_Q(r),\qquad e_R(r)\le\epsilon_Q(r),\qquad
+\tau_P(R)\le2\sum_{r\ge R}\epsilon_Q(r).
+\tag{2.3}
+$$
+
+No unifilarity, positivity, irreducibility, aperiodicity, synchronization or attainment hypothesis is required. Summability of the class errors is sufficient, not asserted necessary.
+
+Proof. All following expectations are under the same $J_\theta$; output expectations agree with those under $P$.
+
+For the left comparison, write $W=X_{-r:-1}$, $L=X_{-\infty:-r-1}$ and $V=X_{1:\infty}$. Choose
+
+$$
+g(Q_0,V)=\mathbb E[X_0\mid Q_0,V].
+$$
+
+Lemma 2.2 screens $(X_0,V)$ from $(L,W)$ given $Q_0$. Conditioning further on $V$ therefore gives
+
+$$
+q=\mathbb E[g\mid L,W,V],\qquad
+p_L(r)=\mathbb E[g\mid W,V].
+$$
+
+The second field is contained in the first. Conditional contraction and projection optimality, with a MAP $m_L(W)$ for $Q_0$, give
+
+$$
+\begin{aligned}
+e_L(r)
+&\le\mathbb E(g-p_L(r))^2\\
+&\le\mathbb E\bigl(g(Q_0,V)-g(m_L(W),V)\bigr)^2\\
+&\le J_\theta(Q_0\ne m_L(W))=\epsilon_Q(r).
+\end{aligned}
+\tag{2.4}
+$$
+
+The approximation in the second line is $\sigma(W,V)$-measurable. Its squared error is zero on correct classification and at most one otherwise.
+
+For the right comparison, write $B=X_{-\infty:-1}$, $W=X_{1:r}$ and $V'=X_{r+1:\infty}$. Now choose
+
+$$
+g(B,W,Q_{r+1})=\mathbb E[X_0\mid B,W,Q_{r+1}].
+$$
+
+Screening at $r+1$ makes $V'$ independent of $(B,W,X_0)$ given $Q_{r+1}$. Thus
+
+$$
+q=\mathbb E[g\mid B,W,V'],\qquad p_R(r)=\mathbb E[g\mid B,W].
+$$
+
+For a MAP $m_R(W)$ for $Q_{r+1}$, contraction and the $\sigma(B,W)$-measurable approximation $g(B,W,m_R(W))$ give
+
+$$
+e_R(r)\le\mathbb E(g-p_R(r))^2
+\le\mathbb E\bigl(g(B,W,Q_{r+1})-g(B,W,m_R(W))\bigr)^2
+\le\epsilon_Q(r).
+\tag{2.5}
+$$
+
+Stationarity supplies the last equality of error probabilities; no time reversal is assumed. The whole $V$ in (2.4) and the whole $B$ in (2.5) remain conditioned on.
+
+Finite $Q$ and the standard Borel output spaces permit measurable $[0,1]$ extensions of both $g$ functions on impossible class/exterior pairs. Such extensions make the approximations legitimate, without assigning an auxiliary probability law or dividing by a null fiber. Summing the nonnegative bounds proves the tail comparison, including an infinite right side. $\square$
+

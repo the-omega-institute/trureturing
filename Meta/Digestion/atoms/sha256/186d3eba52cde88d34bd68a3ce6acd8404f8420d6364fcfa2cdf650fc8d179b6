@@ -1,0 +1,85 @@
+**命题 C-30.9（同三均值的内部负值及全域正余量的同源证书）。** 在定义 C-30.1 的完整单窗概率 $\Delta_4$ 上，令
+
+$$
+A_-=\frac97 I_5-\frac27\mathbf1\mathbf1^{\mathsf T},\quad
+A_+=A_-+\frac1{25}\mathbf1\mathbf1^{\mathsf T},\quad
+F_\pm(p)=p^{\mathsf T}A_\pm p.
+$$
+
+$F_-$ 在全部真正边界面严格正，中心值却为 $-1/35$。在固定均值 $(X,Y,Z)=(2/5,2/5,1/5)$ 的实际闭纤维上，
+
+$$
+p_\kappa=(\kappa,2/5-\kappa,1/5,2/5-\kappa,\kappa),\quad 0\le\kappa\le2/5,
+\quad F_-(p_\kappa)=\frac{36}7(\kappa-1/5)^2-\frac1{35}.
+$$
+
+$F_+$ 在全部 $\Delta_4$ 的最小值为 $2/175$，其同源五顶点重心细分的每个孩子有全部系数至少 $2/175$ 的二次 Bernstein 证书。非线性目标 $G(p)=F_+(p)+(p_O-p_L)^3/1000$ 在同一域满足 $G\ge73/7000>0$。
+
+证明。一个 $k$ 标签面的 $\sum p_s^2\ge1/k$，等号恰在该面均匀律，所以全部非空面的最小值完整为
+
+| $k$ | $\min F_-$ | $\min F_+$ |
+|---:|---:|---:|
+|1|$1$|$26/25$|
+|2|$5/14$|$139/350$|
+|3|$1/7$|$32/175$|
+|4|$1/28$|$53/700$|
+|5|$-1/35$|$2/175$|
+
+置 $c=\mathbf1/5$，$F_-(p)=\frac97\|p-c\|_2^2-1/35$；负域是 $\|p-c\|_2^2<1/45$，不是整个内部。代入完整纤维得显示式，两端为 $31/175$、中心为 $-1/35$。这否定从边界正性到内部正性的无条件推断。
+
+所用重心细分是经典工具，按实际五个来源标签作以下参数展开；四顶点 `BarycentricSubdivisionStar` 的原顶点星不能直接充当这份五顶点应用的证明。给 $p\in\Delta_4$ 选排序 $p_{\rho(1)}\ge\cdots\ge p_{\rho(5)}$，置 $p_{\rho(6)}=0$、$S_j=\{\rho(1),\ldots,\rho(j)\}$、$b_S=|S|^{-1}\sum_{s\in S}e_s$、$a_j=j(p_{\rho(j)}-p_{\rho(j+1)})$。则 $a_j\ge0$、$\sum a_j=1$，且
+
+$$
+p=B_\rho a,\quad (B_\rho)_{\cdot j}=b_{S_j},\qquad
+\sum_{j=k}^5a_j/j=p_{\rho(k)}.
+$$
+
+反向坐标差为 $a_k/k$，故 $120=5!$ 个闭孩子恰为各排序域；四维相对内部要求所有不等式严格且最小坐标正。并列及零坐标在公共低维面，不能删除。排序行后的矩阵三角对角为 $1,1/2,1/3,1/4,1/5$，故四维体积比 $1/120$；欧氏母体绝对体积 $\sqrt5/24$、孩子 $\sqrt5/2880$，体积比不等于直径。
+
+第一次细分的面链上，全部 $31=2^5-1$ 个非空 $S$（含全体）有开星
+
+$$
+p\in\operatorname{St}^{\circ}(b_S)
+\iff \min_{i\in S}p_i>\max(\{p_j:j\notin S\}\cup\{0\}).
+$$
+
+正层级切口的排序差权重恰给此 iff；取 $S=\operatorname{supp}p$ 证明覆盖。星通常重叠。中心只有 $S=\Sigma$ 有效，五个原顶点开星不足覆盖。面中心是概率混合，不表示同时占据这些排斥模式。
+
+同一仿射范数下，嵌套面 $F\subsetneq H$ 的顶点数为 $r<s$ 时，$b_H-b_F=(s-r)(b_{H\setminus F}-b_F)/s$。因此孩子直径至多母体的 $4/5$，逐层至多 $(4/5)^n$；标准欧氏实际比例为 $\sqrt{2/5}$，因为重心距离平方 $1/r-1/s$、孩子直径 $\sqrt{4/5}$、母体直径 $\sqrt2$。这不是 Fisher 测地距离的结论。
+
+在这些实际孩子上保留同一目标，$A_{\rm child}=B_\rho^{\mathsf T}A_+B_\rho$。嵌套列的内积为 $1/\max(r,s)$，所以全部正规化二次 Bernstein 系数为
+
+$$
+(A_{\rm child})_{rs}=\frac9{7\max(r,s)}-\frac{43}{175}\ge\frac2{175}.
+$$
+
+基 $a_i^2,2a_ia_j$ 非负且总和一，非对角正规化系数是矩阵项而非单项式的二倍交叉系数。这个充分证书同时覆盖所有排列及公共面，认证 $F_+$，没有把它改称为 $F_-$ 正性。对一般固定对称 $A$、同一紧母体上 $p^{\mathsf T}Ap\ge\delta>0$，欧氏算子范数 $M=\|A\|_2$ 给孩子顶点的配对
+
+$$
+v_i^{\mathsf T}Av_j=\frac{Q(v_i)+Q(v_j)}2-\frac12(v_i-v_j)^{\mathsf T}A(v_i-v_j)
+\ge\delta-\frac M2\operatorname{diam}_2(K')^2.
+$$
+
+故 $(M/2)(4/5)^{2n}\operatorname{diam}_2(K)^2<\delta$ 足以使全层系数严格正。边界趋零或最小值零时不由此保证有限严格证书。最后 $|p_O-p_L|\le1$ 给 $G\ge2/175-1/1000=73/7000$；这是下界而非其精确最小值。
+
+同源运输的度量也须保留。本卷 C-4.4–C-4.6 的固定随机读口公式，以输入混合成分 $a$、读口 $B_\rho$、输出来源 $p=B_\rho a$ 对应，旧实验拉回为 $B_\rho^{\mathsf T}\operatorname{diag}(1/p)B_\rho$，在质量零切向量上求值。把 $a$ 本身当作另一个可观察五结果实验，则其 Fisher 为 $\operatorname{diag}(1/a)$，不是换坐标所得旧度量。共同正域和 $\sum u_i=0$ 下，联合来源 $\Pr(I=i,S=s)=a_iB_{si}$ 给
+
+$$
+\sum_i\frac{u_i^2}{a_i}-\sum_s\frac{(Bu)_s^2}{(Ba)_s}
+=\sum_sp_s\operatorname{Var}(u_I/a_I\mid S=s)\ge0.
+$$
+
+本排序读口的首行接触全部输入列，$a_i>0$ 时非零质量零切向量损失严格正。$p$ 全正 iff $a_5>0$；有些 $a$ 边界仍在旧实验正域，fresh 实验的除零公式则无定义。再细分 $a=Db$ 时来源映射是 $BD$、目标及度量均拉回，不能每层重置实验。较小来源支持仅在真实正格求和，缺失格双侧切向量为零。
+
+为了获得上表的精确面最小值，亦可在此应用内采用经典 StQP 面搜索。G.-Tóth–Hendrix–Casado，*On monotonicity and search strategies in face-based copositivity detection algorithms*，DOI [10.1007/s10100-021-00737-6](https://doi.org/10.1007/s10100-021-00737-6)，§§1–3，承担面搜索及切向凸性的先例；所需退化条件如下。对任一非空闭面选支撑最小的全局最小点。其正支持 $T$ 上双侧扰动迫使 $u^{\mathsf T}Ap=0$、$u^{\mathsf T}Au\ge0$。若非零质量零 $u$ 给零二次项，则沿它整个可行线段目标恒定，端点少一个正格，矛盾。因此这个支撑最小点的切向二次型正定；单点切向空间为零。奇异 PSD 面仍可能有内部最小点，但亦有边界最小点，不能通过求逆排除。
+
+取参考标签 $s\in T$、列 $e_i-e_s$，置 $H_{ij}=A_{ij}-A_{is}-A_{sj}+A_{ss}$、$b_i=A_{is}-A_{ss}$，目标为 $A_{ss}+2b^{\mathsf T}z+z^{\mathsf T}Hz$，实际 Hessian 是 $2H$。仅当 $H\succ0$ 且 $`z^*=-H^{-1}b`$ 的所有坐标与 $`1-\sum z_i^*`$ 都正，才用内部最小值 $A_{ss}-b^{\mathsf T}H^{-1}b$；否则取所有删一标签子的最小值及其实际来源。上面的支撑最小性证明保证此递归完整，单点终止。Sylvester 的全部 leading 主子式严格正是 PD 判据，不是一般 PSD 判据；有理输入时 PD 分支的解及全部返回值有理。母矩阵本身不必可逆：二标签矩阵 $\left(\begin{smallmatrix}1&-1\\-1&1\end{smallmatrix}\right)$ 的切向系数四，返回 $(1/2,1/2)$、值零。五标签最多三十一个不同面状态、删除深度四，不是三十一次位运算或固定三十一个采样点。
+
+本例每个 $k$ 标签面的 $H=(9/7)(I+\mathbf1\mathbf1^{\mathsf T})$，实际 Hessian $2H\succ0$，返回恰为面均匀律，得到上表。一般面剪枝的正边条件 $A_{ii}+A_{jj}-2A_{ij}>0$ 只对支撑最小点必要，不充分：所引论文式(16)的矩阵 $\left(\begin{smallmatrix}8&5&3\\5&3&3\\3&3&4\end{smallmatrix}\right)$ 三边系数 $1,6,1$ 都正，参考三的 $H=\left(\begin{smallmatrix}6&3\\3&1\end{smallmatrix}\right)$ 却行列式 $-3$，方向 $(1,-2)$ 值 $-2$。三个边最小值为 $3,23/6,3$，全域最小值三在第二顶点；每个矩阵项至少三即证明。另一方面 $\mathbf1\mathbf1^{\mathsf T}+e_Oe_L^{\mathsf T}+e_Le_O^{\mathsf T}$ 在单纯形至少一，却在 $e_O-e_L$ 方向值 $-2$，进一步区分严格共正与 PSD；记录 Gram 则仍要求 C-30.8 的 PSD 单位对角合同。
+
+本纤维中的隐变量最小化使用完整域而非独立盒。对任意实际 $F_A$，写 $p=v+\kappa d$，$d=(1,-1,0,-1,1)$、$v=(1-X-Y-Z,X,Z,Y,0)$。于是 $F=\alpha\kappa^2+2\beta\kappa+c$，$\alpha=d^{\mathsf T}Ad,\beta=d^{\mathsf T}Av$。在实际区间 $[a,b]$，单点直接返回；$\alpha>0$ 取截断 $-\beta/\alpha$，$\alpha<0$ 取较小端点，$\alpha=0$ 按 $\beta$ 符号取端点、零时全段平。角概率零时优势比无定义，但连续二次目标仍定义。正支撑内 $\partial_\chi F=2(\alpha\kappa+\beta)/I_\kappa$，其中 $I_\kappa$ 与《信息逃逸与热力学作用》定理16.1相同。
+
+只有在 $C^2$ 目标的严格内部驻点、$F_{\kappa\kappa}>0$ 且选中同一局部全局分支时，隐函数微分才给 $V_{ij}=F_{ij}-F_{i\kappa}F_{\kappa j}/F_{\kappa\kappa}$；一般向量隐变量要求正定隐块。逐次消元必须使用同一联合目标、共同可行域及正最小化枢轴，不能只以可逆性代替。经典背景为 Boyd–Vandenberghe，*Convex Optimization*，Appendix A.5.5，(A.13)–(A.14)。例如 $F=-p_J$ 的值 $-\min(X,Y)$ 有折角；$F=p_J^2-2p_J$ 虽 $\alpha=1$，约束值仍可在 $X=Y$ 不光滑。共同约束 $0\le\kappa,\lambda\le1/2,\kappa+\lambda=1/2$ 的平方和最小值 $1/8$ 在 $(1/4,1/4)$，独立盒所得零只是扩大域的下界。单样本 $\mathbb E_pf^2$ 仍线性依赖 $p$，不等于 $p^{\mathsf T}Ap$；线性项及常数可在 $\mathbf1^{\mathsf T}p=1$ 上通过 $(b\mathbf1^{\mathsf T}+\mathbf1b^{\mathsf T})/2+c\mathbf1\mathbf1^{\mathsf T}$ 齐次化，未归一化源则须除总质量平方。
+
+固定有限采样不能替代这个目标依赖的面证明：给任意有限 $E\subset\Delta_4$，选有理正内部 $p_0\notin E$、有理 $0<\varepsilon<\min_{e\in E}\|e-p_0\|^2$（空集任选正值），有理二次式 $\|p-p_0\|^2-\varepsilon$ 在全部采样正、在 $p_0$ 负。它在归一化域的齐次矩阵是 $I-p_0\mathbf1^{\mathsf T}-\mathbf1p_0^{\mathsf T}+(\|p_0\|^2-\varepsilon)\mathbf1\mathbf1^{\mathsf T}$。这不否定随目标改变的驻点返回源，也不为概率二次界供应 Robin 所需整数映射、同一目标余项和无限尾。
+

@@ -1,0 +1,29 @@
+**Definition 23.1 (finite selected thresholds).** Fix a supplied finite
+set $A=\{s_1<\cdots<s_n\}$ of distinct positive integers, $n\ge3$.
+Write $w_i=L^{s_i}R$ and
+
+$$
+W_A=\sum_{i=1}^n(s_i+4),\qquad
+f_{A,k}(B)=\mathbf1_{\{\sum_{i=1}^n
+                 \mathbf1_{\{r_B(w_i)=\mathsf{branch}\}}\ge k\}},
+\qquad \sigma_{A,k}=\sigma_{f_{A,k}},\quad 1\le k\le n.
+\tag{PCA.53}
+$$
+
+Both leaf replies and absence contribute zero. Each formula specifies
+one new acquired-term function and hence one prescribed code on every
+member of the original $\mathcal U_*$. It is defined even when $B$
+has none of the selected comb shape. The second-hit code is
+$\sigma_{A,2}$; the near-unanimity code is $\sigma_{A,n-1}$.
+The other values of $k$ provide the common lower and construction
+lemmas consumed by these two cases.
+
+Retain Definitions 1.1, 4.1 and 4.2 literally: finite nonempty ordered
+alpha/beta trees, the same homomorphic $\rho$, the whole unbounded
+one-image fiber, the two occurrences of each repeated partner, and
+all six-class disequalities. The code remains zero on $\Pi_1,\Pi_2$,
+one on $\Pi_3,\Pi_4$, the value (PCA.53) on $Z_{b_3}$, and zero on
+all other zero profiles. It is not a recoloring of an already
+prescribed input. In particular the near-unanimity case does not
+complement the code on the other profiles.
+

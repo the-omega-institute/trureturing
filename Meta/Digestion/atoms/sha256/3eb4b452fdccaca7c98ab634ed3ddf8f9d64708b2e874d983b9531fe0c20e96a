@@ -1,0 +1,18 @@
+### 定理六：Auric FIB ATOM 隐藏 seam 的三层可见性定理
+
+对于五态 FIB ATOM，令：
+
+~~~math
+\mathcal B=\operatorname{span}\{1,x,y,z\},
+~~~
+
+~~~math
+\kappa=E[xy],
+~~~
+
+~~~math
+d=(1,-1,0,-1,1).
+~~~
+
+则：
+

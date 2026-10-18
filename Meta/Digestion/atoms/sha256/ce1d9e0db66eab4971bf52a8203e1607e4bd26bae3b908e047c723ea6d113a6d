@@ -1,0 +1,69 @@
+**Definition 1.2 (actual histories and original controls).** The original
+five modes have basis $e_0,e_1,e_2,e_3,e_4$; index $4$ names original mode
+$13$. Put
+
+$$
+\begin{gathered}
+c_{\rm src}=1/4,\quad Z_{\rm src}=1/2,\quad
+\mathfrak a=16/256,\quad \mathfrak h=11/256,\quad d_{\rm ramp}=6/256,
+\quad L=1,\\
+E=(|+\rangle,|-\rangle,|2\rangle),\qquad
+|+\rangle=(e_0+e_4)/\sqrt2,\quad
+|-\rangle=(e_1+e_3)/\sqrt2,\quad |2\rangle=e_2,\\
+P=EE^\dagger,\qquad Q_5=I_5-P,\qquad V=\operatorname{ran}E.
+\end{gathered}
+\tag{CA.2}
+$$
+
+Supported indices $0,1,2$ mean $(+,-,2)$, not the five failure labels.
+For $y\in\{5,16,27\}$ and $e,n\in\{+1,-1\}$ define
+
+$$
+p_y=(y/128,(64-y)/128,1/2),\quad
+ a_y=(\sqrt{p_{y0}},\sqrt{p_{y1}},\sqrt{p_{y2}})^T,\quad
+U_{e,n}=\operatorname{diag}(e,n,1),\quad
+\rho_{y,e,n}=U_{e,n}a_ya_y^TU_{e,n}^\dagger.
+\tag{CA.3}
+$$
+
+These are the twelve actual normalized specimens at the already reached
+old live cut at absolute time six. Their original parameters are
+$x=y/256$, $e=(-1)^{\beta_{\rm hist}/\pi}$,
+$n=e(-1)^m$, with $\beta_{\rm hist}\in\{0,\pi\}$ and $m\in\{0,1\}$.
+Thus $en=(-1)^m$ is original winding parity. Neither sign is supplied to
+the processor.
+
+The credited double-wall populations and real phase lift are
+
+$$
+\begin{aligned}
+p(k)&=(k,c_{\rm src}-k,Z_{\rm src},c_{\rm src}-k,k),\quad 0<k<c_{\rm src},\\
+w(k)&=\left(\frac{c_{\rm src}-k}{2c_{\rm src}},
+-\frac{k}{2c_{\rm src}},0,-\frac{k}{2c_{\rm src}},
+\frac{c_{\rm src}-k}{2c_{\rm src}}\right),\\
+\psi_i(t)&=\sqrt{p(k(t))_i}
+ \exp\left(-i\int_0^t w_i(k(v))\chi'(v)\,dv\right).
+\end{aligned}
+\tag{CA.4}
+$$
+
+CG Proposition 2.2 realizes all twelve histories from the same preparation
+at height $1/8$. Its six unit-duration legs are: phase $0\to2\pi m$;
+descent to $1/16$; phase $2\pi m\to2\pi m+B$; ascent to $1/8$;
+phase return to $2\pi m$; height change to $x$, where
+$B=8\beta_{\rm hist}-4\pi m$. The residual is
+$(\beta_{\rm hist},\beta_{\rm hist}-\pi m,0,
+\beta_{\rm hist}-\pi m,\beta_{\rm hist})$. The old reach masses are
+$32/177,2/9,32/111$. They are earlier positive branch masses, not history
+priors or acquisition acceptance weights.
+
+The source's finite duration, continuous strict height domain, signed
+real phase lift of finite variation, absolute-continuity or finite
+piecewise-$C^1$ alternative and literal chronological composition all
+remain. The continuation is $k(t)=x+d_{\rm ramp}t$ with phase fixed,
+$0\leq t\leq1$, in the common legal relative-command domain $(0,58/256)$.
+Zero duration permits only the matching zero-displacement identity.
+Known denial, visible unexecuted rejection, permissions and controller
+updates keep their original contracts. A partial command supplies no
+unknown-height detector or new actuator.
+

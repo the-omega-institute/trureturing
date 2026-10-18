@@ -1,0 +1,11 @@
+**反例 220.18（Arrived pair mass is essential）。** At $L=5$ put only
+$P=1$ at $w(\{4,5\})$ and erase $E=\{4\}$.
+Although old $\beta_4=0$, the pair mass becomes $A=1$ at
+$w(\{5\})$, so the residual has $\gamma_5=1$ and $C_E=0$.
+Formula (220.13) gives $\Theta_E=1$, attained at $v_5$.
+Both scores themselves have zero query cost. Thus a zero old net
+coordinate does not make interior erasure free, and dropping the
+arrived-$P$ term in (220.12) gives a false accounting rule.
+This is an operation counterexample, not a separation of the original
+classes.
+

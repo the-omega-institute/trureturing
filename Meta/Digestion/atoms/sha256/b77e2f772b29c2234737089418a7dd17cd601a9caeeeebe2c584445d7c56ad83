@@ -1,0 +1,37 @@
+**Proposition 20.4 (sharpness on actual native data).** Both constants
+$1/4$ and $1/6$ in (COK.99) are attained. For any $d\ge2$, use
+three binary seeds owned at the actual $L$ ports of three blocks,
+with complete prescriptions
+
+$$
+z_{i,\varepsilon}=(0,0),\qquad
+z_{i,Lr}=\Gamma_r(s_i),\qquad
+z_{i,Rr}=\Gamma_r(s_{i-1})
+\quad(Lr,Rr\in W_d),
+\tag{COK.102}
+$$
+
+with cyclic indices. Extend excluded branch and absent owner
+replies by the alpha factor, as in §21 below. Give weight $1/2$
+to each of $\langle\alpha,\alpha\rangle$ and
+$\langle\beta,\beta\rangle$, and zero to every other state
+of $S_d$. Its positive actual Gibbs support is precisely the
+two constant-bit assignments, equiprobable. There are no
+reciprocal pairs and
+
+$$
+T=2,\qquad J_{\rm out}=3,\qquad L=0,\qquad\Delta=1/2.
+$$
+
+Proof. The guarded full factors force exactly
+$x_i=\langle s_i,s_{i-1}\rangle$, with every binary assignment
+an actual solution. Positive weight at every block requires
+neighboring bits to agree, giving just the stated two tuples,
+of equal product weight. Their three owned bits each have
+entropy one and their joint entropy is one. Every incoming bit
+equals its owned bit under this one law, so its mutual
+information is one. Substitute in (COK.96)–(COK.97).
+The binary-slot realization is the credited COK/OOA/GCB mechanism;
+the example establishes sharpness of (COK.99), without an
+unrestricted mass or rate claim. $\square$
+

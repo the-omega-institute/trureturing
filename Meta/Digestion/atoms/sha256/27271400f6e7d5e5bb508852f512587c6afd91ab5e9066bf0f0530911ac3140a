@@ -1,0 +1,53 @@
+### 2.4 Proof of the controlled neighbor bound and exact threshold
+
+For neighbors, $V_1=U_s^\dagger U_r$ has eigenvalues $e^{\pm2i\theta}$. Thus every joint unit vector $x$, including an arbitrary workspace, satisfies
+
+$$
+\big|\langle x,(V_1\otimes I)x\rangle\big|\ge\cos(2\theta).
+\tag{2.11}
+$$
+
+The general shortest-eigenvalue-arc zero-error query principle is supplied by [Duan, Feng and Ying][DFY], Theorems 1–2. Its neighbor specialization has arc length $4\theta=\pi/L$ and minimal zero-error call count $L$. To include the present CPTP, adaptive and stopping contract and obtain its quantitative finite-$q$ bound, use the following projective-angle argument.
+
+For unit vectors put $A(x,z)=\arccos|\langle x,z\rangle|\in[0,\pi/2]$. This angle obeys the triangle inequality. To see the inequality for a middle unit vector $y$, align the phases of $x,z$ so their overlaps with $y$ are nonnegative real. Writing
+
+$$
+x=\cos\alpha\,y+\sin\alpha\,u,
+\qquad z=\cos\beta\,y+\sin\beta\,w,
+$$
+
+where $u,w$ are unit and orthogonal to $y$ when their terms are nonzero, gives
+
+$$
+\operatorname{Re}\langle x,z\rangle
+\ge\cos\alpha\cos\beta-\sin\alpha\sin\beta
+=\cos(\alpha+\beta).
+$$
+
+When $\alpha+\beta\le\pi/2$, this implies $A(x,z)\le\alpha+\beta$; for a larger sum the angle's range gives the same inequality. Zero sine terms are omitted. Common isometries preserve $A$.
+
+Purify the initial state and all controls, retaining the environments and instrument outcome records. Finite-dimensional channel dilations by isometries are the mature Stinespring characterization; see [Watrous][WAT], Corollary 2.27. Explicitly, if an instrument has Kraus operators $K_{a,\mu}$ for outcome $a$, with $\sum_{a,\mu}K_{a,\mu}^\dagger K_{a,\mu}=I$, use the common isometry
+
+$$
+W|x\rangle=\sum_{a,\mu}K_{a,\mu}|x\rangle\otimes|a\rangle_C\otimes|a,\mu\rangle_E.
+$$
+
+Its squared norm is $\|x\|^2$. Discarding $E$ yields the original classical outcome record and conditional state. Later outcome-dependent operations act by known controlled isometries on $C$, while every old environment is retained. This constructs the purification successively through an adaptive protocol and preserves its actual decision law when the environments are discarded. Retaining these systems is a grant to the discriminator, so a bound on the purified protocol also bounds its actual output. An instrument's selected branch is not postselected for free: all its outcomes are retained in this purification.
+
+If the two current purifications are $x,y$, then at the next ordinary call,
+
+$$
+\begin{aligned}
+A\big((U_s\otimes I)x,(U_r\otimes I)y\big)
+&\le A\big((U_s\otimes I)x,(U_s\otimes I)y\big)\\
+&\quad+A\big((U_s\otimes I)y,(U_r\otimes I)y\big)\\
+&\le A(x,y)+2\theta,
+\end{aligned}
+$$
+
+using (2.11). Starting from a common $s$-independent initial purification, $q$ calls give angle at most $2q\theta\le\pi/2$. The purified output half trace distance is at most $\sin(2q\theta)$ by the pure-state identity (2.8); discarding environments cannot increase trace distance. Finally the Holevo–Helstrom theorem, [Watrous][WAT], Theorem 3.4, gives binary success at most $(1+\sin(2q\theta))/2$.
+
+An at-most-$q$ protocol with classical stopping can be padded to $q$ calls: after a stopping record, retain its decision registers, swap the active port to a fresh uncorrelated computational eigenstate and make the remaining ordinary calls on that state. In each classical branch the dummy state acquires only a global phase, so the retained decisions are unchanged. This is a known, record-conditioned swap followed by an ordinary call, not a controlled unknown unitary. Purification of the padded protocol may retain these phases in its environments; tracing those environments still gives the original decision law. Thus the preceding upper bound applies to stopping protocols as well. Conditioning on a source-independent random seed gives the same bound for each seed, so averaging includes randomized controls.
+
+For $q<L$, $\sin(2q\theta)<1$, so even two neighbors cannot be distinguished with zero error. Whole-label recovery with zero error would distinguish them, proving necessity of $L$. At $q=L$, the product strategy in Section 2.3 gives opposite orthogonal $Y$-eigenstates at each site; all $2^n$ joint outputs are pairwise orthogonal and local readout recovers $s$ with certainty. This proves sufficiency and (iv).
+

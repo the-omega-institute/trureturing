@@ -1,0 +1,30 @@
+### 33.2. 漂移取得后的全部偶数候选与根交换
+
+**before drift.**
+
+The entire compatible prefix is the set of all real alpha,beta,r,b,c satisfying F!=0, d=a0-42\*alpha, every strict source condition and every already acquired physical equation for ONE P,g,d. At clock 5 impose only the chosen fifth equation and its ancestral Psi rule. This is necessary by the model and sufficient because the filters construct a positive trace-one determinant-zero source and one nonzero gain reproducing that full prefix. No finiteness or enumeration of this unknown-drift set is needed by the policy.
+
+**after drift.**
+
+Only after acquiring y6 set d=y6, alpha=(a0-d)/42 and z_i=(y_i-d)/H(i) for i=1,...,5. If clock 7 is acquired require y7=d. Define E(t)=alpha+L\*t+A\*t^2 from E(0)=alpha,E(2)=z2,E(4)=z4. Solving the two differences gives A=(z4-2\*z2+alpha)/8 and L=(z2-alpha-4\*A)/2: z4-2\*z2+alpha=8\*A and z2-alpha=2\*L+4\*A. All normalizers are fixed nonzero constants.
+
+**whole identity.**
+
+Put q=b/2>0 and e=1+q\*t. The actual traces at clocks 0,2,4 equal e at those clocks. E and F\*e have degree at most two and agree at these three distinct nodes, so their difference is identically zero. Coefficient comparison gives constant alpha, L=beta+alpha\*q and A=beta\*q. This uses actual zero samples as equations and never divides by them.
+
+**alpha zero.**
+
+If alpha=0, nonzero F implies beta!=0. The identity gives L=beta!=0 and A=beta\*q, so q=A/L is the sole possible candidate and must be positive. A zero L is rejected before division. This branch permits g(0)=0 and d=a0 but derives it after the actual drift read.
+
+**alpha nonzero.**
+
+If alpha!=0, eliminate beta to obtain alpha\*q^2-L\*q+A=0 and beta=L-alpha\*q. Retain ALL different real roots q>0, count a repeated root once, and check F!=0 and all later filters. The nonzero leading coefficient gives at most two roots. Conversely a retained algebraic root and its beta satisfy beta+alpha\*q=L and beta\*q=A, so reproduce the entire E. Every true world occurs at its own q and has b=2\*q.
+
+**degenerate even patterns.**
+
+For beta=0 the formal roots are the actual positive q and zero; zero is rejected by b>0 and no true source is lost. For alpha=0 both L and A are nonzero on a legal world. A repeated quadratic root still yields one candidate. E cannot be identically zero because F and e are nonzero polynomials. F(2)=0 or F(4)=0 merely makes the corresponding z sample zero and remains in these equations. A vanished coefficient of E never triggers an unsupported division.
+
+**two positive root exchange.**
+
+If the even polynomial has different positive roots s,k, alpha is nonzero. Its sum and product give L=alpha\*(s+k), A=alpha\*s\*k. Hence beta at q=s is alpha\*k, beta at q=k is alpha\*s, and E=alpha\*(1+s\*t)\*(1+k\*t). The two complete affine factors are F_s=alpha\*(1+k\*t) and F_k=alpha\*(1+s\*t). Each 1+v\*i is positive for v>0 and i>=0, so F(1),F(3),F(5) are nonzero for BOTH candidates. This is a consequence restricted to the two-positive-root case, not an assumption on general gains.
+

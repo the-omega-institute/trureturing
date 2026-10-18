@@ -1,0 +1,36 @@
+**Definition 4.1 (potential completion forest).** Fix arbitrary admissible
+$D,p$ and $n=|p|$. For $2\le i\le n$, let
+
+$$
+a_i=p_{i-1}\,\overline{p[i]}
+\tag{4.1}
+$$
+
+be the sibling where a word first leaves the target path, and let
+
+$$
+\mathcal Z_i=\mathcal T_{D+1-i},
+\qquad
+\mathcal Z_* =\mathcal T_{D-n}\times\mathcal T_{D-n},
+\tag{4.2}
+$$
+
+where $\mathcal T_h$ denotes all finite trees of height at most $h$.
+A completion forest is
+
+$$
+z=(z_2,\ldots,z_n,z_*),
+\qquad z_i\in\mathcal Z_i,\quad z_*\in\mathcal Z_*.
+\tag{4.3}
+$$
+
+Define $T(b,z)$ by following $p$ to the first leaf specified by
+$b=(j,e)$, installing $\lambda_e$ at $p_j$ and $z_i$ at every exposed
+$a_i$ with $i\le j$; for $b=B$, follow the whole path, install every
+$z_i$, and install the two components of $z_*$ below $p$. The fixed left
+root child is $\alpha$. Coordinates not exposed by $b$ are ignored.
+
+The height caps in (4.2) make every $T(b,z)$ a member of $\mathcal F_D$.
+The map is a single-source realization: once $(b,z)$ is chosen, all words
+are answered by that one finite tree.
+

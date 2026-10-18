@@ -1,0 +1,39 @@
+**构造 90.5（An infinite three-omission full INITIAL consumer）。** For every integer $h\ge5$ put
+
+$$
+N=2^h,\qquad k=N,\quad m=N-3,\quad T=N+1,\quad b=3,\qquad
+M_t=\{N-2-4t,N-1-4t,N-4t\},\quad0\le t<h.
+\tag{90.14}
+$$
+
+The actual gcd is $\gcd(N-3,N+1)=\gcd(N-3,4)=1$. The chronological path starts at $u_t=-4t\pmod T$ and misses exactly $M_t$. The induction $N\ge4h+12$ starts at $h=5$ and persists on doubling $N$; consequently the least listed omission is $N-4h+2\ge14$. The $M_t$ are disjoint triples separated by one phase, avoid $0,1,2,3$, and do not wrap in this representative list. No virtual phase is used.
+
+Assign $Z(1)=Z(2)=0$. On the remaining $N-1$ phases assign bijectively all $N-1$ nonzero vectors of $K=\mathbb F_2^h$, with these indexed lists:
+
+$$
+\mathcal L_j=
+\begin{cases}
+\{z\in K:z_0=1\},&j\in\{0,3\},\\
+\{z\in K\setminus\{0\}:z_t=0\},&j\in M_t,\quad0\le t<h,\\
+K\setminus\{0\},&\text{otherwise}.
+\end{cases}
+\tag{90.15}
+$$
+
+The phase groups are disjoint, so each constrained phase has exactly the indicated single restriction. Here is a complete Hall check. A subfamily containing an unrestricted list has union size $N-1$, at least its number of indices. A nonempty subfamily of $q\le N/2-1$ lists has union size at least $N/2-1$ from any member. A larger subfamily without an unrestricted list has $q\le3h+2$, the total number of restricted indices. It has at least two different types, since one type has at most three indices and $q\ge N/2\ge16$. Opposite root half-cubes have union $K\setminus\{0\}$. Two types on different coordinates have union of size at least $3N/4-1\ge3h+2$, using $N\ge4h+12$. Thus in every case the union has at least $q$ members; the empty inequality is immediate. The credited finite indexed-list Hall theorem [H] supplies the required bijection. Matching is used to inhabit this application, not asserted as a new mathematical mechanism.
+
+All cube vectors now occur, zero exactly twice and every nonzero vector once. Each coordinate of the cube has the even number $2^{h-1}$ of ones, so its XOR is zero. The full table XOR is therefore also zero, since its one extra occurrence is zero. Its rows vanish on $M_t$; its root charges at $0,1,2,3$ are $1,0,0,1$, so it satisfies the algebraic prefix for $1110$.
+
+For a fixed choice of this table let $a=\lceil h/2\rceil$, write $Z(j)=(I(j),J(j))\in\mathbb F_2^a\times\mathbb F_2^{h-a}$, and take disjoint sets of labels $\{A_i:i\in\mathbb F_2^a\}$ and $\{D_l:l\in\mathbb F_2^{h-a}\}$, distinct within each set. Choose a common $R$ fresh from both sets and any independent $L_\bot$. Specify the entire immutable target, before any experiment, by
+
+$$
+\begin{aligned}
+f_h(0,-j,s)&=A_{I(j)},&f_h(1,-j,s)&=D_{J(j)}&&0\le s<N-3,\\
+f_h(v,-j,s)&=R&&&&N-3\le s<N,\\
+f_h(\bot)&=L_\bot,\qquad F_h(w)=f_h(q_{\rm INITIAL}(w)).
+\end{aligned}
+\tag{90.16}
+$$
+
+The low component images have sizes $2^a$ and $2^{h-a}$, and their partitions differ: all cube vectors occur, so holding either coordinate projection fixed leaves multiple values of the other. The ordered join has exactly $N$ classes, its only double being phases $\{1,2\}$. No two separate value optima or separately realized marginals were combined.
+

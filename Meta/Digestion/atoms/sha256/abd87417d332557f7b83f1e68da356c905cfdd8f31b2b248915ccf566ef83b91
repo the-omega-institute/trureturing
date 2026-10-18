@@ -1,0 +1,25 @@
+**Proposition 8.2 (Finite rational preprocessing and growing exact arithmetic).** The rule of Definition 7.1 can be implemented using finite binary integer arithmetic, with no value or approximation of the true nuisance. Charge the preprocessing and storage of $H,m,C_{0,m},C_{1,m}$ and $b=2/\alpha$ separately. Let $B_{H,m}$ bound the bit length of these fixed model and polynomial descriptions, and $B_\alpha$ bound the supplied risk and threshold descriptions. On a finite path prefix of $L$ reads, let $J_L$ be its number of completed blocks, and set
+
+$$
+U_L=1+B_{H,m}+B_\alpha+\lceil\log_2(L+2)\rceil.
+$$
+
+After preprocessing, conservative upper bounds are
+
+$$
+\text{storage }O_{H,m}((J_L+1)U_L),\qquad
+\text{online bit work }O_{H,m}\bigl(LU_L+(J_L+1)^2U_L^2\bigr).
+$$
+
+They include arithmetic workspace and all reads through an unfinished initial wait, gap or block. At a threshold stopping path $L=L_m$, one has $J_L=J$.
+
+Proof. Lemma 3.1 and Corollary 3.2 give a finite exact rational construction of the two convolution polynomials on their full evaluation domain. All intermediate fractions, coefficient operations and coefficient storage used to construct them are preprocessing resources. Their fixed degrees are $10m-1$, and their legal values are positive. The construction makes no online enumeration of compositions necessary. Calculating the rational threshold from the supplied risk is another charged finite operation. No bound uniform in a varying $m$ or varying polynomial is asserted for preprocessing.
+
+After clearing fixed coefficient denominators, evaluate $H$ and the two $C_{i,m}$ by Horner schemes and form the products in Definition 7.1 by integer arithmetic. At an acquired total $T_j\le L$, each factor's numerator and denominator have $O_{H,m}(U_L)$ bits: evaluation of a fixed-degree polynomial on an integer of $O(\log(L+2))$ bits increases length by at most the degree times that length, plus the coefficient-description length and a fixed bound for the number of terms. Taking $m$ products changes only the fixed-$m$ constant. Polynomial coefficient signs cause no denominator problem, since positive legal values were proved in Theorem 2.2.
+
+Maintain positive integer numerator and denominator products for $M_j$ without fraction reduction. After $j$ factors they have $O_{H,m}(jU_L)$ bits. Compare against $b$ and $b^{-1}$ by cross multiplication of positive integers, resolving equality by the boundary convention. There is no rounding or exact-real comparison. Each fixed-degree factor evaluation costs $O_{H,m}(U_L^2)$ schoolbook bit work. Multiplication of a $jU_L$-bit accumulator by a $U_L$-bit factor, including threshold multiplication and comparison, costs $O_{H,m}((j+1)U_L^2)$. Summing over $j\le J_L$ proves the quadratic block term in the work bound.
+
+The retained data comprise a first-tick flag, block phase, current zero count, at most $m$ current gap counts, their total, a block index, a read counter, model and threshold descriptions, and the two growing accumulator integers. The gap and read counters have at most $O(\log(L+2))$ bits at this prefix. Each read costs at most $O_{H,m}(U_L)$ counter work, even before the first tick or during an incomplete block. A constant number of large integer intermediates suffice for each product or comparison, so the same $O_{H,m}((J_L+1)U_L)$ bound includes their workspace. At a partially read block, the current counts are retained and all its observed bits are charged even though its factor is not yet included.
+
+This exact-product implementation uses the rational-factor idea of the supplier's Proposition 22.6 and equation (22.53), together with the new polynomial preprocessing of Section 3. Its accumulation method is different from that proposition's dyadic-score controller. Here no logarithmic score approximation is performed, so there is no uncharged precision schedule; the exact products genuinely grow with the number of blocks. The special pair bound $U<2$ used for its logarithm series is not used here. A fixed number of integer registers is not a fixed-size exact real accumulator. No raw bit record, source-probability query or hidden clock is used. $\square$
+

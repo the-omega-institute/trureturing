@@ -1,0 +1,113 @@
+### 定理 22.4（加权最小边界提升与诱导 seam 度量）
+
+令 \(W\in\mathbb R^{E\times E}\) 对称正定，并在边链上定义
+
+\[
+\langle f,g\rangle_{W^{-1}}
+=
+f^{\mathsf T}W^{-1}g.
+\]
+
+记
+
+\[
+L_W=BWB^{\mathsf T}.
+\]
+
+对每个 \(s\in S\)，定义
+
+\[
+\mathsf L_W(s)
+=
+WB^{\mathsf T}L_W^\dagger s,
+\]
+
+其中 \(L_W^\dagger\) 是 Moore–Penrose 伪逆。则：
+
+1. \(B\mathsf L_W(s)=s\)；
+2. \(\mathsf L_W(s)\) 是约束 \(Bf=s\) 下唯一最小化
+   \[
+   \|f\|_{W^{-1}}^2=f^{\mathsf T}W^{-1}f
+   \]
+   的边链；
+3. \(\mathsf L_W(s)\) 与 \(K\) 在 \(\langle\cdot,\cdot\rangle_{W^{-1}}\) 下正交；
+4. 任意边界提升唯一写成
+   \[
+   f=\mathsf L_W(s)+k,\qquad k\in K;
+   \]
+5. \(S\) 上的二次型
+   \[
+   g_W(s,t)
+   =
+   \left\langle
+   \mathsf L_W(s),\mathsf L_W(t)
+   \right\rangle_{W^{-1}}
+   =
+   s^{\mathsf T}L_W^\dagger t
+   \]
+   是正定的。
+
+#### 证明
+
+对于连通图，\(\ker B^{\mathsf T}\) 是常数向量空间，故
+
+\[
+\ker L_W=\ker B^{\mathsf T},
+\qquad
+\operatorname{im}L_W=\operatorname{im}B=T.
+\]
+
+由于 \(s\in S\subseteq T\)，有
+
+\[
+L_WL_W^\dagger s=s,
+\]
+
+从而
+
+\[
+B\mathsf L_W(s)
+=
+BWB^{\mathsf T}L_W^\dagger s
+=
+s.
+\]
+
+若 \(k\in K\)，则
+
+\[
+\left\langle
+\mathsf L_W(s),k
+\right\rangle_{W^{-1}}
+=
+s^{\mathsf T}(L_W^\dagger)^{\mathsf T}B k
+=
+0.
+\]
+
+每个满足 \(Bf=s\) 的 \(f\) 与 \(\mathsf L_W(s)\) 之差属于 \(K\)，故正交分解给出唯一最小范数提升。
+
+最后，
+
+\[
+\begin{aligned}
+\left\langle
+\mathsf L_W(s),\mathsf L_W(t)
+\right\rangle_{W^{-1}}
+&=
+s^{\mathsf T}L_W^\dagger
+BWB^{\mathsf T}
+L_W^\dagger t\\
+&=
+s^{\mathsf T}L_W^\dagger t,
+\end{aligned}
+\]
+
+因为 \(s,t\in\operatorname{im}L_W\)。若 \(s\neq0\)，则 \(\mathsf L_W(s)\neq0\)，故
+
+\[
+g_W(s,s)=\|\mathsf L_W(s)\|_{W^{-1}}^2>0.
+\]
+
+证毕。
+

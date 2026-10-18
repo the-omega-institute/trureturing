@@ -1,0 +1,10 @@
+**假设 34.4（此消费者的末端产品读口）。** 本节在 $m=2$ 编码和假设 30.2 之外，另允许末端分别读两个逻辑块的模式，把两个实际结果共同写入经典记录，再作固定结果合并。没有中途测量；本权限独立于定义 32.1 的仅第一块读口，不能用于该节的观察者比较。采用 [《复合通信与校准》C-116.1、(C121.4)、C-125.3 及§126](AURIC_FIB_ATOM_HIDDEN_RELATIONS_COMPOUND_COMMUNICATION_AND_CALIBRATION.md) 的原端口标识 $|B_j\rangle_A,|f(B_j)\rangle_B$，$0\leq j\leq4$。令 $e_j$ 依次为本卷五模式，声明端口识别
+
+$$
+C_A|B_j\rangle_A=e_j,\qquad C_B|f(B_j)\rangle_B=e_j,
+\qquad C=C_A\otimes C_B.
+\tag{34.5}
+$$
+
+原联合输入 $\sigma$ 的数学编码为 $V_2C\sigma C^\dagger V_2^\dagger$。这里分别假设输入和该编码已供应，不从原匹配子空间的等距 $J$ 推出它们，也不供应 C-121 的批量源、通道控制、校准或完整处理器。
+

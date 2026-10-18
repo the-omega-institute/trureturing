@@ -1,0 +1,91 @@
+#### 证明
+
+由于：
+
+```math
+p_\kappa=p_\ast+\kappa d,
+```
+
+任意未来记录概率为：
+
+```math
+p_\kappa M_\omega g
+=
+p_\ast M_\omega g
++
+\kappa dM_\omega g.
+```
+
+因此记录是否依赖 $\kappa$，完全由：
+
+```math
+dM_\omega g
+```
+
+决定。
+
+而 $V_\infty$ 正是所有 $M_\omega g$ 的张成空间，所以：
+
+```math
+dV_\infty=0
+```
+
+当且仅当所有未来输出记录都对 $\kappa$ 盲。
+
+证毕。
+
+---
+
+这解释了最新项目里一个非常关键的事实：
+
+```math
+K_a\mathcal B\subseteq\mathcal B
+```
+
+不等于：
+
+```math
+M_{a,o}\mathcal B\subseteq\mathcal B
+\quad
+\text{对每一个 }o.
+```
+
+平均转移可以把不同输出支路中的隐藏项抵消；而真实输出历史仍然保留这些支路。
+
+因此：
+
+```math
+\boxed{
+\text{平均未来闭合}
+\neq
+\text{逐输出未来闭合}.
+}
+```
+
+将局部等待时间也作为输出标记，得到测度值子核：
+
+```math
+\widetilde M_{a,o}(B),
+\qquad
+B\subseteq\mathbb R_{\ge0}.
+```
+
+统一的隐藏响应为：
+
+```math
+\boxed{
+d\,\widetilde M_\omega(B)\,\mathbf 1.
+}
+```
+
+这一个公式同时涵盖：
+
+- 普通输出；
+- 局部等待时间；
+- 辐射吸收；
+- 反射和回流；
+- 多步因果记录；
+- 被遮挡后的局部状态变化。
+
+---
+

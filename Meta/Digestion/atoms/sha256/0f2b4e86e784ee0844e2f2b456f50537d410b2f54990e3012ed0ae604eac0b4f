@@ -1,0 +1,125 @@
+**Theorem 14.3 (six boundary corners, unequal gates and incidence).**
+In every cover of Theorem 14.2, write $e(t,t)=t$. Then:
+
+1. Every point $(a,b)\in C_t$ satisfies
+   $\min(a,b)\le t\le\max(a,b)$. Classes $C_0,C_1,C_2$ have
+   macro order $BBB\,BBB\,BBB\,AAA\,AAA\,AAA$, with their
+   minimum-coordinate corner exactly $(t,t)$. Classes
+   $C_{16},C_{17},C_{18}$ have the reverse macro order and their
+   maximum-coordinate corner exactly $(t,t)$. Each of these six
+   L paths has two ten-point arms. Their nonmiddle gaps remain free.
+2. There are distinct $m_+,m_-\in\{2,\ldots,16\}$ such that
+
+$$
+\begin{aligned}
+e(i+1,i)&=\begin{cases}i,&i<m_+,\\i+1,&i\ge m_+,\end{cases}\\
+e(i,i+1)&=\begin{cases}i,&i<m_-,\\i+1,&i\ge m_-,\end{cases}
+\qquad 0\le i\le17.
+\end{aligned}
+\tag{NARC.14.2}
+$$
+
+   Consequently adjacent-diagonal asymmetry occurs exactly at
+   $\min(m_+,m_-)\le i<\max(m_+,m_-)$, a nonempty interval.
+   No symmetric encoder $e(a,b)=e(b,a)$ can work at $q=19$.
+3. Every nonempty intersection of a class with a fixed row or column
+   has size $1+3j$ with $0\le j\le3$. If $N_a$ counts classes
+   meeting the line with fixed first coordinate $a$, and $M_b$
+   those meeting the line with fixed second coordinate $b$, then
+
+$$
+\begin{gathered}
+N_a,M_b\in\{4,7,10,13,16,19\},\\
+\sum_{a=0}^{18}N_a=190=\sum_{b=0}^{18}M_b.
+\end{gathered}
+\tag{NARC.14.3}
+$$
+
+   For coordinates $0,1,2,16,17,18$ the corresponding incidence
+   counts belong to $\{4,7,10\}$.
+
+All these necessities hold under both lag conventions. They give
+$15\cdot14=210$ ordered gate pairs as constraints, not 210 feasible
+encoders or an exclusion of every nonsymmetric encoder.
+
+**Proof, anchors and corners.** Before the anchor $(t,t)$, monotonicity
+gives $a\le t\le b$; afterwards it gives $b\le t\le a$.
+This proves the belt inequality without assuming labels are endpoints.
+For $t\le2$, at most $t$ pure $A$ changes can precede the anchor,
+since they increase $a$ by at least one from a nonnegative start.
+At most $t$ pure $B$ changes can follow it. If an $A$ triple
+preceded a later $B$ triple, the anchor would have to lie strictly
+before completion of the former (otherwise three $A$ changes precede
+it), and strictly after commencement of the latter (otherwise three
+$B$ changes follow it). The two requirements contradict their order.
+Thus every $B$ triple precedes every $A$ triple, giving $B^9A^9$.
+
+Write its corner as $(u,v)$. Both $u,v\le t$, and one equals $t$,
+because the anchor lies on one of the two arms. Each arm contains
+ten distinct points. Two of these lower-corner paths cannot share
+a corner's first coordinate: their ten-point fixed-first-coordinate
+arms would intersect within a nineteen-point line. They cannot share
+a corner's second coordinate for the same reason. For $t=0$ the
+corner is $(0,0)$. At $t=1$, neither corner coordinate can be zero,
+so the corner is $(1,1)$. At $t=2$, neither can be zero or one,
+so it is $(2,2)$. Reflect both coordinates by $x\mapsto18-x$ and
+reverse the path list. This preserves the normal form and disjoint
+coverage and gives the three upper-corner assertions.
+
+**Proof, independent gates and their inequality.** The belt makes each
+adjacent-diagonal cell's label one of its two endpoint indices. All
+eighteen labels on either band are different: within a class $d$
+is injective, whereas a band has constant $d=1$ or $d=-1$.
+A sequence of lower/upper choices cannot have an upper choice
+followed later by a lower choice. At its first upper-to-lower transition,
+positions $i$ and $i+1$ would both have label $i+1$. Thus each
+band consists of a lower prefix followed by an upper suffix, with
+a threshold in $\{0,\ldots,18\}$ and that threshold as its unique
+missing label. The two bands may initially have different thresholds.
+Class $C_2$, with minimum corner $(2,2)$, cannot contain $(1,2)$
+or $(2,1)$, so both those cells have label one and both thresholds
+are at least two. Class $C_{16}$ cannot contain $(16,17)$ or
+$(17,16)$, so both have label seventeen and both thresholds are
+at most sixteen.
+
+Suppose both thresholds equal $m$, and put $t=m-1$. Equations
+(NARC.14.2) force the consecutive $d=-1,0,1$ points
+
+$$
+(t,t+1),\quad(t,t),\quad(t+1,t)
+\tag{NARC.14.4}
+$$
+
+into $C_t$. They are consecutive because differences are distinct
+integers. This is a $B$-to-$A$ turn, hence a junction of triples.
+The edge entering the anchor is the last $B$ in its triple, so the
+previous middle $B$ edge is unit and forces $(t,t+2)$. The edge
+leaving the anchor is the first $A$ in its triple, so the following
+middle $A$ edge forces $(t+2,t)$. On the other hand $C_{m+1}$
+contains consecutive points
+$(m,m+1),(m+1,m+1),(m+1,m)$, an $A$-to-$B$ junction. Its
+two neighboring middle edges force $(m-1,m+1)$ and $(m+1,m-1)$.
+These are exactly the two extra points just forced into $C_t$.
+All lie in the square because $2\le m\le16$. Disjointness is
+contradicted, proving $m_+\ne m_-$. The asymmetry interval and
+the symmetric-encoder exclusion follow directly from (NARC.14.2).
+
+**Proof, joint row and column incidence.** On a saturated path the
+first coordinate never returns after an $A$ change. Its intersection
+with any fixed-first-coordinate line is consequently one run of
+vertices, and all edges inside it are whole $B$ triples. Its size
+is $1+3j$, $0\le j\le3$. The argument for fixed second coordinate
+uses whole $A$ triples. Each class occupies ten distinct first
+coordinates and ten distinct second coordinates.
+
+In a nineteen-point line, summing the nonempty intersection sizes
+makes its incidence count congruent to one modulo three. Each
+intersection has at most ten points, so at least two classes meet
+the line. These facts give precisely the displayed allowed incidence
+counts. Double-counting class-line memberships gives nineteen times
+ten in each direction. Each of the six boundary lines has a ten-point
+arm of its corresponding corner class, leaving only nine points for
+other classes, so its count is at most ten. These are simultaneous
+necessary equations on one cover; separately satisfiable arms or
+incidence lists do not supply a joint realization. $\square$
+

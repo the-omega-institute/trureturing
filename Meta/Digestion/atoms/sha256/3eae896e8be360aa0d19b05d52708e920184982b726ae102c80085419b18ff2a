@@ -1,0 +1,16 @@
+### Degree-eight lower faces
+
+Fix a local degree-eight edge as edge 1 and put x1=a. By monotonicity, the
+cosine is bounded below by the relaxed endpoint values listed below. The
+entries list (x2,x3,x4,x5,x6); coordinates 1 and 2 used for high edges
+can be outside [h,c], so these are conservative bounds, not attained minima.
+
+  three-star:   (a,a,2,1,1)       phi_1 = 73/100
+  three-cycle:  (a,1,2,1,a)       phi_1 = 8*sqrt(6)/27
+
+Each displayed number has square strictly larger than 1/2:
+5329/10000 > 1/2 and 384/729 > 1/2. Both numbers are positive,
+so taking squares preserves the comparison with 1/sqrt(2).
+Therefore every occurrence has alpha_1 < pi/4. A degree-eight edge has eight
+occurrences, so its cone angle is strictly less than 2*pi and K_e > 0.
+

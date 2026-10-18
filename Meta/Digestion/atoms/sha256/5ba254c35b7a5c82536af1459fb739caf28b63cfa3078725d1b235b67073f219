@@ -1,0 +1,19 @@
+**Convention 11.2 (time, stopping and complete output).** The required
+failure measure is an operationally timed output, not just the law of a
+number recorded at terminal time. Execution must cause the actual first
+failure at elapsed time $t$, with absolute clock $6+t$, make that branch
+absorbing, and perform no later positive-carrier action on it. A live
+branch must deliver its prescribed live output at elapsed time one.
+A sampled timestamp or the scalar CP measure in a mathematical decoder
+does not by itself implement this timing service. No new acquisition
+interval is added.
+
+The two nonzero side failure labels remain distinct; mode $0$ and mode
+$13$ remain named zero sectors. Every old stopped archive stays in its
+own branch. The source identity and epoch, calibrations, permissions,
+controller updates and clock alignment keep their original contracts.
+The complete live, failure and zero-sector reference identities are
+required together, including complement and cross-support actions.
+There is no conditioning on survival or acceptance and no rescaling by
+old reach probabilities.
+

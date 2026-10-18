@@ -1,0 +1,18 @@
+### 定义 56.1（Fibonacci 开路径图与调和边泛函）
+
+令
+\[
+B_n=\{b\in\{0,1\}^n:b_jb_{j+1}=0\},
+\]
+令 \(\Gamma_n\) 的边为合法 Hamming 距离一的词对。定义
+\[
+h(s,t)=
+\begin{cases}st/(s+t),&s+t>0,\\0,&s=t=0,\end{cases}
+\]
+以及
+\[
+\Phi_n(\mu)=\sum_{\{b,c\}\in E(\Gamma_n)}h(\mu(b),\mu(c)),\quad
+\kappa_n=\max_{\mu\in\mathcal P(B_n)}\Phi_n(\mu),\quad
+c_\ast=\lim_{n\to\infty}\kappa_n/n.
+\]
+

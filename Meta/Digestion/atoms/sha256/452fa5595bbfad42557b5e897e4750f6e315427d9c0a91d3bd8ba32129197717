@@ -1,0 +1,39 @@
+## 385. At least six genuine owners and the strict H contradiction
+
+For completeness, the total-angle count of Section 378 applies here.
+For any genuine owner with axes r,o and pair a,b, put
+
+    K=[sqrt(a^2-1)+sqrt(b^2-1)]/(a+b),
+    S=beta_a+beta_b=2*arctan(K*sqrt(L/J)).
+
+We have 0<K<1 and S in (0,pi). The paired half-angle identity gives
+
+    tan(theta_r/2)*tan(S/2)=K*sqrt((r-1)/(r+1))<1.
+
+Both half angles lie in (0,pi/2), so theta_r+S<pi. Apply this to
+both axes and add: every genuine owner's total six-slot angle is
+strictly less than 2*pi. Sigma has total angle exactly 2*pi.
+
+If there are N original owners, the six complete actual edge equations
+sum to 12*pi. There is at least one genuine owner, namely tau, so
+
+    12*pi < 2*N*pi.
+
+Thus N>=7 and the number G=N-1 of genuine owners is at least six.
+
+The complete H capacity is 8*pi. Sigma uses exactly 2*pi on H,
+one pi at M and one at V. Hence the genuine H capacity is exactly
+6*pi. But Section 384 gives a strict H expense greater than pi for
+every one of the G genuine owners. Summing disjoint original slots,
+
+    6*pi = sum_genuine H_expense > G*pi >= 6*pi,
+
+a contradiction. Strictness still holds when G is exactly six.
+This proves the theorem.
+
+No pairing inventory, auxiliary-circle replacement or quotient-existence
+claim enters the proof. In the remaining region v>min(c,d), this argument does not eliminate
+one or both axial-P residual families from Section 378, depending on
+the strict opposite-axis orders in Lemma 383.1. Full six-edge flat
+exclusion remains open.
+

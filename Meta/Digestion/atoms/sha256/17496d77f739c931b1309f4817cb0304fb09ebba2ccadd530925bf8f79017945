@@ -1,0 +1,47 @@
+**定理 5.2（单位读数类的显式上界）。** 对 $0<\delta\le1/4096$，定义全部实报告上的集合函数
+
+$$
+D_\delta(y,j)=
+\begin{cases}
+C_\delta(y_1),&j\equiv1\pmod3,\\
+C_\delta(y_2),&j\equiv2\pmod3,\\
+C_\delta(y_0),&j\equiv0\pmod3,\ b_j\ge B_\delta,\\
+|y_1|^{a_j-1}|y_2|^{b_j-1}Z(y),
+&j\equiv0\pmod3,\ b_j<B_\delta.
+\end{cases}
+$$
+
+使用 $\operatorname{sgn}(0)=0,0^0=1$。则对每个 $\mathsf s\in\mathcal U$、每个兼容的完整报告和每个 $j\ge3$，
+
+$$
+|D_\delta(y,j)-x_j(\mathsf s)|\le U_\delta.
+$$
+
+证明。分母在全部报告上严格正，幂指数非负，所以定义在空纤维也有意义，不需要来源搜索或优化器。相位 1、2 的目标属于对应实际线段，引理 4.1 给误差 $f_\delta$。相位 0 且 $b_j\ge B_\delta$ 时，零目标由中心范数界处理；非零目标用推论 3.4 的 $q\le P^{b_j}$，在引理 4.2 中取 $x=x_0,y=y_0,p=P$，得到误差不超过 $U_\delta$。
+
+只剩相位 0 且 $b_j<B_\delta$。真标量系数和报告标量系数分别记 $c_x,c_y$，次数 $n=a_j+b_j-2<2B_\delta$。每个真范数因子在 $[0,1]$，报告范数因子在 $[0,1+\delta]$，相应因子之差至多 $\delta$。逐因子替换给
+
+$$
+|c_y-c_x|\le n(1+\delta)^{n-1}\delta,\qquad
+c_y\le(1+\delta)^n,
+$$
+
+次数零的差按零处理。$|x_3|\le1$ 和引理 5.1 给
+
+$$
+|c_yZ-c_xx_3|
+\le(1+\delta)^n(9\sqrt\delta+n\delta).
+$$
+
+现在 $n\delta\le2B_\delta\delta\le1/32$，且
+
+$$
+(1+\delta)^n\le e^{1/32}<2,
+\qquad
+|c_yZ-c_xx_3|
+\le18\sqrt\delta+4B_\delta\delta
+\le\frac{18}{64}+\frac1{16}=\frac{11}{32}<\frac12.
+$$
+
+$e^{1/32}<2$ 也可由级数 $e^v\le1/(1-v)$、$0\le v<1$ 得到。故该分支的误差小于 $f_\delta$。所有分支使用同一个 $D_\delta$，覆盖每个未来指数和全部源大小。阈值只改变求值规则，没有截断所要求的未来。对源、报告和 $j$ 取上确界，再对集合函数取下确界，得到 $R_\delta(\mathcal U)\le U_\delta$。证明没有使用 $L,d_0$ 或收缩裕量。
+

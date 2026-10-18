@@ -1,0 +1,43 @@
+**Theorem 8.1 (closed limits and curve regularity).** On the open later
+branch the selected reduced arrays satisfy
+
+$$
+\begin{aligned}
+(P,Q,R,t,d_s)&\longrightarrow(p,q,r_0,0,\beta c_0)
+&& (s\downarrow s_*),\\
+(U,V,v)&\longrightarrow(z_0,z_0,z_0),\quad
+(P,Q,t)\longrightarrow(q_{\rm end},q_{\rm end},q_{\rm end}),\quad
+R\longrightarrow0,\quad d_s\longrightarrow\beta
+&& (s\uparrow1).
+\end{aligned}
+\tag{AS.57}
+$$
+
+Proof. Mix the attained plateau endpoint instrument with the attained
+strength-one instrument, retaining the independent choice as an actual
+classical label. Both forget to the same complete channel; the full
+effects interpolate affinely. As $s\downarrow s_*$ the resulting
+cost tends to $F$. The universal lower bound gives $V(s)\to F$.
+Compactness of the outer matrices and the unique equality in Lemma
+5.1 force every subsequential reduced limit to $(p,q,r_0,0)$.
+Since $d=(1-P)-\alpha(1-Q)$, its limit is $\beta c_0$.
+
+At one, monotonicity gives a left limit at most $V(1)$. Every compact
+subsequential matrix limit is feasible at one, and therefore has
+cost at least $V(1)$; this proves equality of the limit. Also
+$d_{\min}(s)\to\beta$ and $d_{\min}<d_s<\beta$, hence $d_s\to\beta$.
+Equation (AS.17) gives
+$u_s(d_s)\to(1+\alpha)\beta/(1-\alpha)$ and then all remaining
+limits in (AS.57).
+
+Within $(s_*,1)$, $e_s,r,v,f_u$ and every range denominator have
+strict positive margins. The derivative of the defining scalar
+equation with respect to $d$ is $\mathscr J_s''<0$.
+The real analytic implicit-function theorem gives local real
+analyticity at every point; uniqueness joins these into the one
+branch throughout the interval. The physical ranks in Section 7
+remain fixed there. Convexity and strict increase follow from
+Lemma 5.2, now that $E_s=V(s)$ on all branches. This proves all
+regularity claims in Theorem 3.2. No endpoint derivative or
+input-uniform limit is inferred. $\square$
+

@@ -1,0 +1,35 @@
+#### 470.1 同一实际前缀的行预算
+
+对自然数 $k$ 与正整数 $j$，定义
+
+$$
+c_{k,j}=H(\lfloor k/j\rfloor)-H(\lfloor k/(j+1)\rfloor),
+\qquad
+V_k(w)=\sum_{j=1}^{k}|c_{k,j}|w(j).
+\tag{QO.1}
+$$
+
+由 WN.15，$c_{k,j}$ 正是所有 $1\le d\le k$ 且 $\lfloor k/d\rfloor=j$ 的实际有符号系数 $\mu(d)/d$ 之和。正整数商的完整区间为 $(\lfloor k/(j+1)\rfloor,\lfloor k/j\rfloor]$。商零的实际纤维为空；QO.1 的前缀差公式只对正 $j$ 使用。
+
+对 $\alpha\ge0$，定义完整加权行成本
+
+$$
+w_{k,\alpha}(j)=\left(\frac{k+1}{j+1}\right)^\alpha,
+\qquad
+R_\alpha(k)=V_k(w_{k,\alpha}).
+\tag{QO.2}
+$$
+
+$k=0$ 时这些行和均为空，值为零；$k\ge1$ 时 WN.16 给
+
+$$
+\left\|\prod_{p\le N}U_p\right\|_{\alpha,N}
+=\max_{1\le k\le N}R_\alpha(k)
+\qquad(N\ge1).
+\tag{QO.3}
+$$
+
+当 $\alpha\ge1$ 时，仍用 §469.1 的显示公式定义有限加权最大范数。QO.3 的正权有限行最大值证明不使用 $\alpha<1$，因此也适用于这一范围。
+
+这里单位输入盒为 $|f(j)|\le(j+1)^{-\alpha}$；$R_\alpha(k)$ 包括输出坐标的因子 $(k+1)^\alpha$。对每个固定行，其系数符号的有限选择达到该行成本。达到某一行的输入可以依赖该行，QO.3 不要求一个输入同时达到全部行。
+

@@ -1,0 +1,48 @@
+**Lemma 7.1 (inherited lift algebra, including zero coordinates).** Suppose $v$ is real unit, $v_D>0$ and $v^TBv=k$. Set $P=vv^T$, $Q=I-P$ and
+
+$$
+R_v=\alpha v_S^2+\beta v_T^2 .
+$$
+
+Then $(1+\alpha)v_T^2+(1+\beta)v_S^2=\ell>0$, so $R_v>0$. Define the real symmetric $J$ by
+
+$$
+\begin{aligned}
+J_{DD}&=-v_T/v_D,&J_{DT}&=1,&J_{DS}&=0,\\
+J_{TT}&=-\frac{v_T(\beta v_D^2+v_S^2)}{v_D R_v},&
+J_{SS}&=-\frac{v_T(v_T^2-\alpha v_D^2)}{v_D R_v},&
+J_{TS}&=\frac{v_S(v_T^2-\alpha v_D^2)}{v_D R_v}.
+\end{aligned}
+\tag{PG.33}
+$$
+
+It satisfies $Jv=0$, $\operatorname{tr}(BJ)=0$. Put
+
+$$
+\begin{aligned}
+\tau&=-(h_0^2J_{DD}+b^2J_{TT}+d^2J_{SS}),&
+V_c&=J+\tau Q,\\
+W&=\Theta(J+\tau I)-\kappa X_{01},&
+M_2&=\operatorname{diag}(m_1,m_2),\qquad
+W_2=W|_{\operatorname{span}\{|1\rangle,|2\rangle\}} .
+\end{aligned}
+\tag{PG.34}
+$$
+
+The entire first row and column of $W$ vanish. All formulas are finite if either $v_T$ or $v_S$ is zero; neither is divided by.
+
+Proof. The stated identity follows by subtracting $v^TBv=k$ from $\|v\|^2=1$. Thus $v_T,v_S$ cannot both vanish, proving $R_v>0$. The first row of $Jv=0$ is immediate. In row $T$, multiply by $v_DR_v$: its remaining numerator is
+$v_D^2R_v-v_T^2(\beta v_D^2+v_S^2)+v_S^2(v_T^2-\alpha v_D^2)=0$.
+Row $S$ cancels directly. For its $B$ trace the multiplied numerator is
+$-v_TR_v+\alpha v_T(\beta v_D^2+v_S^2)+\beta v_T(v_T^2-\alpha v_D^2)=0$.
+For real symmetric $Z$,
+
+$$
+\Theta(Z)_{00}=h_0^2Z_{DD}+b^2Z_{TT}+d^2Z_{SS},\quad
+\Theta(Z)_{01}=\kappa Z_{DT},\quad
+\Theta(Z)_{02}=(h_0c+h_2d)Z_{DS}.
+\tag{PG.35}
+$$
+
+Also $\Theta(I)_{00}=1$. Equations (PG.33)–(PG.35) prove the zero first row. This algebra and its use as a sufficient lift are credited to RG. $\square$
+

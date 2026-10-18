@@ -1,0 +1,55 @@
+**proposition 9.3 (Inherited six-row unrestricted attainer).** Six
+installed rows attain $S_2$ with exactly two paid calls on every
+input.
+
+Proof. Initialize at $R$ and use Endpoint, (8.10), namely
+
+| Row | Instruction | Reply zero | Reply one |
+| --- | --- | --- | --- |
+| $R$ | $\operatorname{Read}(2j)$ | $R_0$ | $R_1$ |
+| $R_0$ | $\operatorname{Read}(2(j+2))$ | $Z$ | $P$ |
+| $R_1$ | $\operatorname{Read}(2(j+1))$ | $Q$ | $P$ |
+| $Z$ | $\operatorname{Halt}(h_1(\sigma))$ | — | — |
+| $P$ | $\operatorname{Halt}(h_0(\sigma))$ | — | — |
+| $Q$ | $\operatorname{Halt}(h_0(1-\sigma))$ | — | — |
+
+In phase zero the first edge is $\{j,j+1\}$ and the target is
+$S_j$. After zero, the second edge $\{j+2,j+3\}$ is disjoint
+from it. After one, the second edge $\{j+1,j+2\}$ is adjacent.
+In phase one all actual calls in the table are separators, and
+the target is $S_0$. The terminal masses are
+
+| Record | Output | Source mass | Correct mass |
+| --- | --- | --- | --- |
+| $00$ | $h_1(\sigma)$ | $(1+c^2)/2$ | $a/2$ |
+| $01$ | $h_0(\sigma)$ | $c\eta$ | $a^2\eta$ |
+| $10$ | $h_0(1-\sigma)$ | $\eta/2$ | $a\eta/2$ |
+| $11$ | $h_0(\sigma)$ | $\eta/2$ | $a\eta/2$ |
+
+For $00$, all phase-one samples give the two zero replies, and
+success is their target-majority event. Its additional phase-zero
+mass is $c^2/2$ and is incorrect for that phase-one output.
+For $01$, correct phase-zero samples have
+$S_j=S_{j+1}=\sigma$ and $S_{j+2}\ne S_{j+3}$, giving the
+joint mass $\tfrac12a^2(2\eta)=a^2\eta$.
+On $10$ the larger complementary completion of the actual triple
+$(S_j,S_{j+1},S_{j+2})$ is
+$(1-\sigma,\sigma,\sigma)$; on $11$ it is
+$(\sigma,1-\sigma,\sigma)$. Each has conditional mass $a^2b$,
+with complement mass $ab^2$, so each correct full-law mass is
+$a\eta/2$. The corresponding whole mixed leaf has mass
+$(a^2b+ab^2)/2=\eta/2$.
+
+All source masses are positive and sum to one. The correct masses
+sum to $a/2+a^2\eta+a\eta=S_2$. The target identification remains
+valid for $j=1$, where the phase-zero label is $b_{S_1}$; no target
+has moved. Every transition and output is in the displayed six
+rows, and every binary input path halts after exactly two calls.
+$\square$
+
+The constructions work for both bias directions and either fixed
+endpoint, for every given independent seed space. They require
+neither an event of prescribed seed mass nor a source-dependent
+initialization. At any larger allowed installed budget the same
+table remains admissible; no uncounted rows are needed.
+

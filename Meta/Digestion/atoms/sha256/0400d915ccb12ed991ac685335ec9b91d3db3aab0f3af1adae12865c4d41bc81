@@ -1,0 +1,78 @@
+**Theorem 10.1 (Necessary boundary preparation contact).** Take one
+normalized event/TP tuple of Definition 5.1 whose actual form is
+globally positive. Put $c=\beta-\tau^Ty$. If an original legal
+complex scalar port satisfies
+
+$$
+e(T)=c<\frac{11}{20}+c_{\rm pop},
+\tag{10.1}
+$$
+
+then there are $p\in\partial\Delta_2$ and a nonzero real
+measurement vector $b$ with
+
+$$
+\mathcal B_{C,y,\delta}(a(p))b=0.
+\tag{10.2}
+$$
+
+Consequently at least one of the fifteen nonnegative coefficient
+conditions in (3.5) is an equality, or one of its four square-root
+pair inequalities is saturated. This applies, in particular, to
+every such certificate matching the original $\varepsilon_1$ at
+the credited frontier. It conditions on a globally valid matching
+tuple; it does not assert that such a tuple exists. Nor does it
+assert positive primal weight at the boundary contact (10.2).
+
+Proof. Suppose instead that the matrix at every boundary preparation
+is positive definite. Its vertex tests make all fifteen $\alpha$
+and $\beta$ coefficients strictly positive. For an interior
+population, the tangent block decomposes as
+
+$$
+\mathcal T(p)
+=\mathcal T(0,p_+,p_-)
++p_0\operatorname{diag}(\beta_{+0},\beta_{-0})\succ0.
+\tag{10.3}
+$$
+
+The first term is PSD by global positivity and homogeneity, and
+the second is positive definite. Thus there are no tangent kernels
+anywhere in the simplex. Also $\mathscr F$ is strictly positive
+on the boundary. The identically-zero case of Theorem 7.2 is
+impossible. Its line case is impossible too: the closure of a
+nonempty interior line section meets the boundary, where continuity
+would give a zero. Hence there is at most one interior radial zero
+population $p_*$.
+
+Theorem 5.2 lower-bounds every original complex port by $c$.
+The credited no-worse replacement of Definition 1.5 sends the
+assumed $T$ to a selected real stationary reflected channel $S_x$
+with $e(S_x)\le c$. The same lower forces equality. Take a finite
+real-product representation of this same $x$ and apply (5.4)
+with $z=e(S_x)=c$. Every positive-weight atom has zero slack.
+Theorem 2.2 preserves the whole channel while splitting it into
+canonical zero seeds. Boundary preparations are impossible under
+the assumed strict boundary positivity; tangent seeds are impossible
+by (10.3). If no interior radial zero exists there can be no seeds,
+contradicting TP. Otherwise every remaining preparation has the one
+population $p_*$. The exact $25$-point realization in Theorem 2.3
+rotates these unit preparations within their sectors. It therefore
+realizes this same $S_x$ with pure decoders all having population
+$p_*$. Theorem 9.2 applies to that legitimate realization and gives
+$e(S_x)\ge11/20+c_{\rm pop}$, contradicting (10.1).
+Thus (10.2) holds.
+
+For the finite saturation consequence, suppose all fifteen
+coefficients were positive and all four pair inequalities strict.
+On a radial boundary face the row of the missing population
+decouples with positive diagonal; the other two-by-two block is
+positive definite by the strict binary inequality proved in
+(3.10)–(3.11). Vertices have positive diagonal matrices. The
+tangent block on $p_0=0$ is positive definite by its strict binary
+inequality, and on $p_0>0$ it is positive definite by (10.3).
+Every boundary matrix would be positive definite, contradicting
+(10.2). Global positivity already gives the non-strict versions,
+so at least one of these nineteen tests must be at equality.
+$\square$
+

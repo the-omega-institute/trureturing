@@ -1,0 +1,15 @@
+**Corollary 15.3 (internal ambiguity is necessary for a saving).**
+Every complete correct original graph with $m<G$ at both caps has
+a support-ambiguous cell satisfying
+
+$$
+1\le h\le K-2,\qquad 1\le z\le L-2.
+\tag{SI.138}
+$$
+
+Proof. Otherwise every interior cell has a singleton support family
+and Theorem 15.2 contradicts $m<G$. Theorem 2.2 gives singleton
+supports on both axes, so the ambiguous cell cannot lie there.
+This is a necessary condition; it is not sufficient for a saving.
+$\square$
+

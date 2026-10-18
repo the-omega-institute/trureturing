@@ -1,0 +1,18 @@
+**Definition 8.1 (occurrence).** In the cover's decoded acquired CAP chain,
+$m$ means the old all-event ordinal in SEG-U1, starting at zero. It is
+neither semantic $j$, source $q$, descriptor $c$, nor primitive time.
+Require its unique row to have kind Reserve, outcome ok and old/current
+$J>K$. Resolve its complete request-reference tuple and actual unified-row
+origin. Set
+
+$$
+\varrho=(\xi,m,\text{unified-row origin},\text{complete request origins}).
+$$
+
+Check its before/after $K$, layout ordinal, manifest extension and
+$d=4(J-K)>0$ by the finite tuple/unary operations of §3. The request's
+$U(J)$ must be exactly the actual acquired payload. Equal frame bytes at
+a later occurrence have another $m$ and origin. Unknown $m$, an unchanged
+or refused Reserve, another kind, or an unresolved acquired dependency
+returns paid NoOccurrence with complete rejection publication/ACK/return.
+

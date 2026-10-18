@@ -1,0 +1,46 @@
+**Assumption 2.1 (paid work realization).** First acquire the complete
+literal syntax of the stationary $t$ by original-root Reads. Construct a
+work representation $x_0=t$ from those acquired replies. This is a paid
+construction of acquired data, with an authenticated relation to the same
+source, not an unpriced copy port on the unknown original register. The
+original register remains stationary throughout.
+
+Supply a work capability with the two lawful actions
+
+$$
+\mathsf S:x\longmapsto\rho(x),\qquad
+\mathsf G:x\longmapsto G(x).
+\tag{ER.4}
+$$
+
+These actions are total and successful on finite work trees. Each commit's
+full mathematical output is its action identity, $\mathsf{ok}$ and the new
+work tree. The capability binds that successor to the preceding work tree
+and source session. Its common source namespace $\sigma$, session epoch
+$\nu$, work type and permission $P=\{\mathsf S,\mathsf G\}$ are fixed
+comparison fields, not identifiers encoding the unknown syntax or elapsed
+history. There is no exposed event counter, timestamp or distinguishing
+allocation identity. If an implementation exposes such distinctions, they
+belong to its complete name under Assumption 1.3.
+
+The observer already holds the complete current work syntax as acquired
+data. It may retain an initial reference $E(t)$, computed before the future
+action choices. A paid export after each transaction leaves just the stated
+work syntax and reference accessible; transient selector inputs, outputs and
+control provide no other retained channel. The additional archive field is
+empty for this menu. Access to the current syntax and local decoding remain
+charged resources even though they require no further original-source Read.
+
+The selector supplies one legal next action at a time, using public inputs
+and already acquired data. All finite choices are admitted. A retained input
+script is an archive and is charged; it is not common knowledge of the
+decoder. The theorem is uniform over these choices, rather than restricted
+to one publicly prescribed update word.
+
+There are no executed failures in this contract. A purported operation
+outside the menu is undefined and has no successor or event. Reads,
+constant-preparation transactions, resets, copies of the unknown register,
+failed attempts and physical timestamps are outside this work-history
+domain. These exclusions delimit the target; they do not assert that a
+physical executor cannot fail.
+

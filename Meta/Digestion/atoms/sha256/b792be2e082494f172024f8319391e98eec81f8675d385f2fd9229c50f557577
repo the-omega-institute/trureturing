@@ -1,0 +1,45 @@
+**Theorem 6.2 (boundary residual depth rigidity).** Suppose $N\ge6$ and
+$q\in\{3,N-2\}$. Two live descendants of this same actual prefix that
+end at one installed state have equal total exposed depth. At $q=3$,
+distinct new-hit counts at a common live state can only be $0,2$; at
+$q=N-2$ the dual statement holds for new-zero counts.
+
+Proof. We first justify the residual graph using the actual-prefix
+restriction of [CP, Theorem 5.1][CP]. By Lemma 2.2 the fixed prefix has
+exact charges $|S_0|,C_{S_0}$, so every completion has remaining caps
+$N,C_R$. Retain every $R$-labeled state reached on some completion after
+this prefix, and suppress intervening chains of $S_0$-labeled states
+using the fixed old assignment. A realized such chain is finite by actual
+termination. It leads to another retained state or an output terminal.
+The initial chain reaches a retained state since $1\le q\le N$ is
+nonconstant. Complete any unrealized edge by an arbitrary terminal.
+For each assignment on $R$, induction follows precisely its old
+$R$-state subsequence; it never reaches an edge newly assigned in this
+completion of the static table. The graph is correct, terminating and
+satisfies both residual caps, with no copied states and with its labels
+and costs inherited from $R$. All live descendant queries have labels in
+$R$ by freshness, so their endpoints are retained literally and the
+restriction preserves their newly exposed supports and counts.
+
+For threshold three, the depth lemma is [Third, Lemma 7.1][Third]. Here
+is its local argument in the residual graph. Equal hits at a common state
+force the same support by Lemma 2.3 and therefore the same depth. For
+different hits the two-gap rule leaves only $0,2$, so $\Delta=2$.
+The lower private set $X$ is all old zeros, giving $a\le b$. If
+$\delta_I=0$, the upper private set is all old ones and gives $b\le a$.
+If $\delta_I>0$, now $Q=3$, $V'=1$, $\lambda=b+u-2$, and (2.6)
+specializes to
+
+$$
+b+u=\lambda+V'+1\le u+\min(a,b),
+$$
+
+again giving $b\le a$. Thus $a=b$ and the support sizes are equal.
+For $q=N-2$, interchange zero and one replies and swap terminal labels.
+On $y$ the resulting graph computes
+$1-\mathbf1_{\{|1-y|\ge N-2\}}=\mathbf1_{\{|y|\ge3\}}$,
+with identical installed states and per-run charges. The threshold-three
+argument gives the dual conclusion. Adding back the fixed $|S_0|$
+exposures proves equality of total depth. Native selected histories obey
+the same conclusion through the projection of Theorem 1.4. $\square$
+

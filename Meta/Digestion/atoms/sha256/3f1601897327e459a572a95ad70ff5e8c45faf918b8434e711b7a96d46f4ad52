@@ -1,0 +1,12 @@
+**Definition 6.4 (closed Boundary74 and Prefix74).** Boundary74 starts at
+the canonical irreducible entrance, constructs the original private packet
+by Definition 6.1, and executes Step74. Its stopping test is the conjunction:
+activation complete; completed-cycle count equal to the actual cardinality
+of frozen $M$; PC equal to its particular outer $R_r$. It returns the
+acquisition tally $a$ and that boundary tally $b$. It does not stop merely
+on input exhaustion, a source ACK, a callback or a pre-activation Ready.
+Prefix74 copies a constructed internal natural $k$ into a countdown,
+executes one Step74 and tails that countdown per iteration, and stops
+before the next row when it is empty. It returns the exact consumed
+variable-input prefix $I_k$, native history and physical-state tuple.
+

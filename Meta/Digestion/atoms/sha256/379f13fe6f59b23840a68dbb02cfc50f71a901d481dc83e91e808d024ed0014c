@@ -1,0 +1,9 @@
+### 95.1. Statement and exact parameter field
+
+Put
+\[
+\begin{split}
+Q(b)={}&36b^{16}+1153b^{14}-8163b^{12}+20457b^{10}-106407b^8\\
+       &+440883b^6-628641b^4+299619b^2-24057.
+\end{split}
+\]

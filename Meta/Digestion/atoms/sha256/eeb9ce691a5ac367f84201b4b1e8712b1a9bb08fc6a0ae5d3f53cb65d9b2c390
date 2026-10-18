@@ -1,0 +1,13 @@
+### 58.7 Endpoint check
+
+The open endpoint cannot be added to this theorem. At \(b=h=a=1\),
+put \(z=(1-2i)/\sqrt5\), and take
+\(x=(1,z,-z)\), \(y=(-1,1,-z)\).
+Here \(P=-1+i,Q=-2\), \(g_0^-=z\). All six input entries have
+modulus one, and direct multiplication gives six squared output moduli
+six before division by \(\sqrt6\). Moreover
+\(\sum x+\bar z\sum y=1-1=0\).
+Thus this is a genuine noncanonical common-flat ray orthogonal to a
+zero-mode canonical ray at the excluded endpoint. Its input channels
+are not monochromatic, so it is not one of the canonical rays.
+

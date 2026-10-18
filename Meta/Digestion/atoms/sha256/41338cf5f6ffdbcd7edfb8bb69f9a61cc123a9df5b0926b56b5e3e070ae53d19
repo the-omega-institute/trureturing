@@ -1,0 +1,16 @@
+**约定 57.1（物理量分别接入）。** 本章使用的量子关系是成熟物理结果或其明确假设的应用，不从 FIB 无量纲语法推出新的普遍物理律。[BIPM《SI Brochure》第 9 版第 2.2 节](https://www.bipm.org/documents/20126/41483022/SI-Brochure-9.pdf)给出精确 SI 数值 $h=6.62607015\times10^{-34}\,\mathrm{J\,s}$，$\hbar=h/(2\pi)$ 将能量乘时间与相位联系。它的量纲是作用量，不是长度。定义 52.1 的 $t$、记录数、Fibonacci 资源和接受深度均未指定能量、时间或作用量单位；它们不能决定 $h$、某个长度网格或一个普遍时间刻度。
+
+若在同一准备的量子态上给定满足原域条件的正则 $x,p$ 及 $[x,p]=i\hbar$，标准 Robertson 关系给 $\Delta x\,\Delta p\ge\hbar/2$。这是同一态的方差关系，另一个测量器的误差或扰动须另建模型；若这个准备还有经核对的资源限制 $\Delta p\le P$、$P>0$，才得到资源相对的 $\Delta x\ge\hbar/(2P)$。参见 Robertson，[The Uncertainty Principle](https://journals.aps.org/pr/abstract/10.1103/PhysRev.34.163)及 Tong，[Quantum Mechanics，第 3.4.1 节](https://www.damtp.cam.ac.uk/user/tong/qm/qm.pdf)。这些前提不随模三证书自动成立。
+
+另在长 $L$ 的圆周上，周期波函数 $\psi(x+L)=\psi(x)$ 和动量算符给 $kL=2\pi n$、$p_n=2\pi\hbar n/L$。动量谱离散不使圆周位置读出成为像素集合；角位置和定义域问题也不能直接套用实线上全局正则 $x,p$。Tong 第 3.2.1 节的周期盒／环面说明给这一边界条件的标准计算。相位、Hilbert 空间、动力学、量子测量规则及实际边界条件共同给出谱，禁 $11$ 的经典自动机不供应这些结构。
+
+Mandelstam–Tamm 的正交化界
+
+$$
+\tau_\perp\ge\frac{\pi\hbar}{2\Delta E}
+$$
+
+用于闭合纯态、时间不变 Hamiltonian 的幺正演化和两端正交，$\Delta E$ 属于该同一准备。原始文献为 Mandelstam–Tamm，[The Uncertainty Relation Between Energy and Time in Non-relativistic Quantum Mechanics](https://doi.org/10.1007/978-3-642-74626-0_8)，重印于 *Selected Papers*，115–123 页；正交化公式及其标准适用模型亦见 Margolus–Levitin，[The maximum speed of dynamical evolution](https://arxiv.org/abs/quant-ph/9710043)的引言和式 (5)。若原任务要求到达彼此正交的编码状态，而且该转换确实在上述模型内，才把这个下界接到相应传递段。实际测量、反馈控制、开放过程和经典消息记录没有由此得到普遍最小时钟 tick；$\Delta E=0$ 的定态也不支持有限正交化。需要的能量、相位和钟资源须在同一准备和协议中核对，而非从另一实验取一个独立最优数。
+
+Planck 长度 $\ell_P=\sqrt{\hbar G/c^3}\simeq1.6\times10^{-35}\,\mathrm m$ 是量纲组合及物理常数校准。以局部相对论探针、$E\gtrsim\hbar c/\delta$、经典 $r_s\sim2GE/c^4$ 以及避免探测区域被遮蔽的条件联合估计，得到数量级 $\delta^2\gtrsim\hbar G/c^3$；这是那些探针与引力近似下的启发性约束。Mead，[Possible Connection Between Gravitation and Fundamental Length](https://journals.aps.org/pr/abstract/10.1103/PhysRev.135.B849)，及 Garay，[Quantum gravity and minimum length，第 II 节](https://arxiv.org/abs/gr-qc/9403008)讨论相关思想实验与理论范围。该估计不分类所有协议，也不证明空间本体离散；有限分辨率、最小可测长度和本体最小长度是不同命题。
+

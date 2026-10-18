@@ -1,0 +1,78 @@
+**Lemma 12.1 (The conditional $P^0$ union slack).**
+For every core first-zero word $n\le7$ with $w_6=w_7=1$,
+the outside-$\{0,n\}$ probability of $P^0$ is at most $4/24$.
+This includes every multiple-zero suffix where (11.4) acts.
+
+Proof. Record the precise reused full-word polynomials of XVIII
+319.2, now with $(b,c,d,z,t)=(w_3,w_4,w_5,w_6,w_7)$:
+
+$$
+\begin{aligned}
+B&=2b(1-c)+bc+(b+c)(2-d-z)+d(1-z)+z(1-t),\\
+G&=3(1-b)+(1-c).
+\end{aligned}
+\tag{12.1}
+$$
+
+Direct evaluation of the complete tables of 3.1 gives the following
+outside counts, all in units $1/24$:
+
+$$
+\begin{array}{c|l}
+n&24D_n(P^0)\\ \hline
+1&B+w_2G\\
+2&B+G\\
+3&2+2(1-c)+c(2-d-z)+d(1-z)+z(1-t)\\
+4&3+(1-d)+(1-z)+d(1-z)+z(1-t)\\
+5&3+2(1-z)+z(1-t)\\
+6&5\\
+7&5
+\end{array}
+\tag{12.2}
+$$
+
+These identities retain all suffix bits. For example, the two
+$(3,4)$ tables give $2b(1-c)+bc$, the four edges from
+$3,4$ to $5,6$ give $(b+c)(2-d-z)$, and the final edges
+give $d(1-z)+z(1-t)$. The head-to-$3,4$ contributions
+give $w_2G$ and $G$ in the first two classes.
+The correct counts are the reused
+$(11,8,8,5,4,3,1)$.
+
+The global bound five in 3.3 is visible from these identities.
+For $q=b+c$, maximizing
+$q(2-d-z)+d(1-z)+z(1-t)$ over $t$ at
+$dz=00,01,10,11$ gives $2q,q+1,q+1,1$.
+The maxima for $bc=00,01,10,11$ are $1,2,2,4$;
+adding $2b(1-c)+bc+G$ gives five in each case.
+Thus $B+G\le5$, and $B+w_2G\le5$ because $G\ge0$.
+In class three, $c=0$ gives
+$4+d(1-z)+z(1-t)\le5$, since the last two terms cannot
+both be one; $c=1$ gives $4-dz-zt\le4$.
+The next two expressions simplify to $5-dz-zt$ and
+$5-z-zt$, and the final two are constant.
+
+For the asserted stronger conditional bound set $z=t=1$.
+Now
+
+$$
+B=2b(1-c)+bc+(b+c)(1-d),\qquad G=3(1-b)+(1-c).
+\tag{12.3}
+$$
+
+For $bc=00,01,10,11$ the exact values of $B+G$ are,
+respectively,
+
+$$
+4,\qquad4-d,\qquad4-d,\qquad3-2d.
+\tag{12.4}
+$$
+
+All are at most four. This proves both first two classes, since
+$B+w_2G\le B+G$. Class three becomes
+$2+2(1-c)+c(1-d)=4-c-cd\le4$.
+Class four becomes $4-d\le4$, and class five becomes three.
+Classes six and seven cannot have $w_6=w_7=1$.
+The eighth bit is ignored by $P^0$, so every free suffix is
+included. $\square$
+

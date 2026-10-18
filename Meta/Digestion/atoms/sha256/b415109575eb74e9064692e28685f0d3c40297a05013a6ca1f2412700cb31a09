@@ -1,0 +1,120 @@
+### 16.5 Exact fixed finite full-residual template
+
+Let $\pi_5$ retain the complete coordinates
+
+$$
+Q(\alpha),\quad Q(w_{j,i}),\quad W(\beta),\quad W(\alpha w_{j,i})
+\quad(0\le j<5,\ i\in\{0,1\}),
+$$
+
+the residual cells $Q(T_p(5))$ and $W(T_\beta(5))$, each containing every longer word and its infinity outcome.  Let $Z_p$ and $Z_\beta$ be the outer domains of these projected coordinates subject to normalization, nonnegativity, the endpoint boxes (11.29), $a\le u\le b$, $a\le v\le b$, and all inherited tail inequalities from (11.2).  They are outer domains: every full zero-face descriptor projects into them, but a point of either domain is not asserted to extend to a full law or a compatible flow.  Explicitly, for every retained level-five cell $c$ at phase $s$, impose
+
+$$
+\min\{P_{s,a}(c),P_{s,b}(c)\}\le D(c)\le
+\max\{P_{s,a}(c),P_{s,b}(c)\},
+$$
+
+together with nonnegative cell masses summing to one and the level-five tail inequalities (including the infinity mass) inherited from (11.2).
+
+Here $\alpha=w_{0,0}$ is one p atom, even where its coordinate is displayed twice. Normalization counts each distinct cell once. For $0\le j\le5$, the retained p tail mass is
+
+$$
+\sum_{n=j}^{4}\sum_{i=0}^{1}Q(w_{n,i})+Q(T_p(5)),
+$$
+
+and the suspended tail mass is the corresponding sum of $W(\alpha w_{n,i})$ plus $W(T_\beta(5))$. Their bounds are $(4/15)^j$ and $b(4/15)^j$, respectively; an empty sum is zero. Every longer word and the infinite outcome stays inside the retained tail cell. Its endpoint interval follows from (11.29): for $n\ge5$, the endpoint ratios from Section 2 have fixed order on both branches, so summing the atomwise bounds gives precisely the two native tail endpoints. These finite constraints do not assert a completion of an outer-domain point to a full descriptor.
+
+Use the complete level-four partitions
+
+$$
+\mathscr F_p=\{\{\alpha\}\}\cup
+ \{\{w_{j,i}\}:0\le j<4,\ i\in\{0,1\}\}\cup\{T_p(4)\},
+$$
+
+$$
+\mathscr F_\beta=\{\{\beta\}\}\cup
+ \{\{\alpha w_{j,i}\}:0\le j<4, i\in\{0,1\}\}\cup\{T_\beta(4)\}.
+$$
+
+The tail cells include the entire infinity outcome.  For $E\in\mathscr F_\beta$ and $F\in\mathscr F_p$, define the full-event residual coordinates
+
+$$
+b_E(Q,W)=Q(\beta E)-(1-u(Q))W(E),
+\qquad
+a_F(W,Q)=W(\alpha F)-v(W)Q(F).
+\tag{16.17}
+$$
+
+All coordinates in (16.17) are determined by the level-five projection. Indeed, $\beta\{\beta\}=\{w_{0,1}\}$, $\beta\{\alpha w_{j,i}\}=\{w_{j+1,i}\}$, $\beta T_\beta(4)=T_p(5)$, $\alpha\{w_{j,i}\}=\{\alpha w_{j,i}\}$ and $\alpha T_p(4)=T_\beta(4)$, including the respective infinite outcomes. Thus the two pointwise expressions below are functions of the displayed outer coordinates.
+
+These are exact residual equalities in the input-conditioned integral sense: compatible flows annihilate them against the permitted input multipliers, without pointwise vanishing on arbitrary outer-domain pairs.  For example, the $b_E$ term is annihilated by (16.2) with the bounded input test $(1-u)\chi_E$; $a_F$ is annihilated with $v\xi_F$.  The positive original denominators are retained inside these multipliers and are never replaced by an unnormalized or future-conditioned equation.
+
+Set
+
+$$
+f=Q(E_p),\quad h=W(E_\beta),\quad q=Q(\beta\beta),\quad z=W(\alpha\alpha).
+$$
+
+The fixed potential and multiplier spaces are exactly the following.  Every $\chi_E$ is in $\mathcal P$, and every $\xi_F$ is in $\mathcal S$:
+
+$$
+\mathcal P=\operatorname{span}\{1,u,u^2,f,uf,q,Q(w_{3,1})\},
+$$
+
+$$
+\mathcal S=\operatorname{span}\{1,v,v^2,h,vh,z,W(\alpha w_{3,1})\}.
+\tag{16.18}
+$$
+
+For $r\in\{a,b,r_\star\}$, put
+
+$$
+\ell_{p,r}(Q)=\operatorname{TV}(\pi_4Q,\pi_4P_{p,r})-\rho_p,
+\qquad
+\ell_{\beta,r}(W)=\operatorname{TV}(\pi_4W,\pi_4P_{\beta,r})-\rho_\beta.
+\tag{16.19}
+$$
+
+The template asks for potentials $P\in\mathcal P$, $S\in\mathcal S$ and input multipliers $\chi_E\in\mathcal P$ for every $E\in\mathscr F_\beta$, $\xi_F\in\mathcal S$ for every $F\in\mathscr F_p$, all with rational coefficients in the respective seven-dimensional bases (16.18).  The event coefficients satisfy $\alpha_0,\beta_0\in\mathbb Q$.  The risk coefficients satisfy
+
+$$
+\lambda_{s,r}\in\mathbb Q_{\ge0}
+\qquad\text{for every }s\in\{p,\beta\}
+\text{ and }r\in\{a,b,r_\star\}.
+$$
+
+The thresholds satisfy $\delta_B,\delta_A\in\mathbb Q$ and $\delta_B+\delta_A>0$.  The $\ell^1$ norm of all scalar coefficients in these expansions is at most one; it includes both potential expansions, every input-multiplier expansion, both event coefficients and all six phase-indexed risk coefficients $\lambda_{s,r}$.  There are ten suspended partition cells and nine p partition cells, since $\{\alpha\}=\{w_{0,0}\}$. Hence the normed rational coefficient vector has exactly
+
+$$
+2\cdot7+(10+9)\cdot7+2+6=155
+$$
+
+entries. The two rational thresholds are additional variables and are not included in that norm. Coefficients of either potential, every input multiplier and the two event terms may have either sign; only the six risk weights must be nonnegative.
+
+Define
+
+$$
+\begin{aligned}
+G_B(Q,W)={}&P(Q)-S(W)+\sum_{E\in\mathscr F_\beta}\chi_E(Q)b_E(Q,W)\\
+&+\alpha_0(f-C)+\sum_{r\in\{a,b,r_\star\}}\lambda_{p,r}\ell_{p,r}(Q),
+\\[2mm]
+G_A(W,Q)={}&S(W)-P(Q)+\sum_{F\in\mathscr F_p}\xi_F(W)a_F(W,Q)\\
+&+\beta_0(h-H)+\sum_{r\in\{a,b,r_\star\}}\lambda_{\beta,r}\ell_{\beta,r}(W).
+\end{aligned}
+\tag{16.20}
+$$
+
+The exact certificate system is
+
+$$
+G_B(Q,W)\ge\delta_B\quad\text{for every }(Q,W)\in Z_p\times Z_\beta,
+\tag{16.21}
+$$
+
+$$
+G_A(W,Q)\ge\delta_A\quad\text{for every }(W,Q)\in Z_\beta\times Z_p,
+\tag{16.22}
+$$
+
+with (16.21)–(16.22) checked on every absolute-value sign cell of the projected TVs in (16.19), including the residual and infinity cells.  Clearing a denominator is lawful only after retaining $U\ge3/5$ and $v\ge1/3$; the displayed form (16.17) already avoids that loss.
+

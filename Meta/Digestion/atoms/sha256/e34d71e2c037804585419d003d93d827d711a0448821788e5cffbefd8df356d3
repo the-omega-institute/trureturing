@@ -1,0 +1,30 @@
+**Proposition 43.8 (A finite diameter minimizer need not minimize finite radius).** For every $0\le\delta<1$ and every $(h,d,z)\in\mathscr S$ with $h>0$, there is an admissible full-source family on a finite common carrier with diameter $h$ and attained best reference radius $2h/3$. It minimizes finite-carrier diameter but not finite-carrier radius.
+
+**Proof.** Use the five tapes $\{a,u,v,b,c\}$ with the full sigma algebra. Tape $a$ immediately proposes $1$, tapes $u,v,b$ each diverge through infinitely many prime queries, and tape $c$ immediately returns unknown. These common rules use only supplied advice zero and prime responses. Let $\kappa=d\delta_b+z\delta_c$, and define three probability laws
+
+$$
+\alpha_a=\kappa+h\delta_a,\qquad
+\alpha_u=\kappa+h\delta_u,\qquad
+\alpha_v=\kappa+h\delta_v.
+\tag{43.33}
+$$
+
+Assign $\alpha_a$ to every label with $N(y)=27$, $\alpha_u$ to every label with $N(y)=6$, and $\alpha_v$ to every remaining label. The classes are disjoint and exhaust $X$. They are all occupied: $(7,2)$ gives $27$, $(5,1)$ gives $6$, and $(13,26)$ gives $6059$, using Proposition 39.3 and Proposition 35.5. At the first class the row is $(h,d,z)$ and the proposal $1$ is correct; on both other classes all mass outside the unknown tape diverges, so $h_y=e_y=0$. Thus the error condition holds on all sources for every stated $\delta$, and numerical duplicates are treated identically. Every finite-record event is measurable on this finite carrier.
+
+Each pair of laws in (43.33) differs by moving mass $h$ between its two distinct private tapes, so the diameter is exactly $h$, the finite minimum from Theorem 42.3. The reference
+
+$$
+\bar\nu=\kappa+\frac h3(\delta_a+\delta_u+\delta_v)
+\tag{43.34}
+$$
+
+has distance $2h/3$ to each law, by the event-TV sum formula or the event consisting of the other two private tapes. To prove that this reference is best, let $\nu$ be any probability reference on this same carrier and put $T=\nu(\{a,u,v\})$. The singleton of each private tape has mass $h$ under its corresponding law. Averaging these three event lower bounds gives
+
+$$
+\sup_{i\in\{a,u,v\}}\operatorname{TV}(\alpha_i,\nu)
+\ge h-T/3.
+\tag{43.35}
+$$
+
+Under $\alpha_i$ the union of the other two private tapes has mass zero. Averaging these other three event bounds gives a lower bound $2T/3$. If $T\le h$, (43.35) is at least $2h/3$; if $T\ge h$, the second lower bound is at least $2h/3$. Thus every reference has radius at least $2h/3$, attained by (43.34). Since $2h/3>h/2$, the family fails to minimize finite radius. This is an actual all-source example, so the cooptimality of the particular two-law construction in Proposition 43.6 does not extend to all finite diameter minimizers. $\square$
+

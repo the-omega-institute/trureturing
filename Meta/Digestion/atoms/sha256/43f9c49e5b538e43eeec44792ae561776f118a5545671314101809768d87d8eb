@@ -1,0 +1,85 @@
+**Theorem 2.3 (actual-source realization and all-word equality).** The
+sources (NCO.12) lie in $\mathcal F_D$, the displayed laws are rational
+probability laws, and
+
+$$
+\partial_p(t_{j,e,z})=(j,e),\qquad
+P_0\equiv_r^\partial P_1.
+\tag{NCO.14}
+$$
+
+Both core laws also give $z$ the uniform law on $F^M$.
+
+Proof. A bank has height at most $\ell+1$. The right subtree of
+(NCO.12) consequently has height at most
+
+$$
+\max\{\ell+2,j-1\}\le D.
+\tag{NCO.15}
+$$
+
+For the last inequality, $\ell\le C-1$ for every integer $C\ge2$,
+and $C=8a\le3^{7a}=N$. The latter follows already at $a=1$, and
+persists under increment because multiplication by $3^7$ exceeds the
+required linear increment. Hence $\ell+2\le C+1\le N+1=D$.
+The outer left child is exactly alpha. Along the right ray all proper
+ancestors of $R^j$ are branches, and the leaf at $R^j$ is
+$\lambda_e$. This proves the descriptor assertion. Distinct triples
+$(j,e,z)$ give distinct trees: the descriptor identifies $j,e$ and the
+cell-root replies identify all digits of $z$. Each $H$ fiber has $Q^r$
+elements, so (NCO.13) has total mass one. Summing $P_0$ over $j,e$
+assigns each $z$ mass $1/(NQ^r)=1/Q^M$; the same holds for $P_1$.
+
+Here is the low-order projection argument in its exact finite form.
+For any $s\in F^{M-r}$, a uniform element of $H^{-1}(s)$ is
+
+$$
+z_i=f(\xi_i)+b_i,
+\qquad
+b_i=\begin{cases}0,&i\le r,\\s_{i-r},&i>r,\end{cases}
+\tag{NCO.16}
+$$
+
+where the $r$ coefficients of $f$ are independent uniform field
+elements. For any $q\le r$ distinct points, their evaluation map
+from these coefficients has rank $q$: its first $q$ columns have
+Vandermonde determinant
+$\prod_{u<v}(\xi_v-\xi_u)\ne0$.
+Every prescribed $q$-tuple therefore has exactly $Q^{r-q}$ coefficient
+preimages. Translation by $b$ preserves this uniform distribution.
+Thus every at-most-$r$ coordinate projection of each coset is uniform,
+just as for uniform $F^M$. In orthogonal-array terminology the coset
+table has strength $r$ and index one on $r$ columns. This is the
+standard polynomial-array mechanism, used here as an intermediate step.
+
+To lift it to every native word, classify words on (NCO.12) by their
+first left edge. The following cases exhaust all finite words:
+
+| Word | Actual reply on $t_{j,e,z}$ |
+| --- | --- |
+| $\varepsilon$ or $R$ | $\mathsf b$ |
+| $L$; $Lu$ with $u\ne\varepsilon$ | respectively $\alpha$; $\bot$ |
+| $RLu$ | a fixed skeleton/padding reply, or a function of one bank digit |
+| $R^i$, $i\ge2$ | $\mathsf b$ if $i<j$; $\lambda_e$ if $i=j$; $\bot$ if $i>j$ |
+| $R^iLu$, $i\ge2$, $u=\varepsilon$ | $\alpha$ if $i<j$; $\bot$ otherwise |
+| $R^iLu$, $i\ge2$, $u\ne\varepsilon$ | $\bot$ |
+
+Within the bank, a strict skeleton ancestor is always branch. A padded
+slot is alpha and every strict extension is absent. At a variable slot
+the root returns its digit's constructor. Either one-edge continuation
+returns alpha exactly when that digit is $2$, and otherwise absent;
+every continuation of length at least two is absent. A literal follows
+one path and cannot visit two incomparable cells. These statements also
+cover words longer than the whole tree's height.
+
+Condition on $d=(j,e)$. All nonbank replies in the table are fixed.
+Any tuple of $q\le r$ arbitrary words depends on at most $q$ bank
+digits, hence on at most $q$ field coordinates. Their joint field
+projection is identical under both laws by (NCO.16); taking the
+specified deterministic reply functions preserves equality. Multiple
+digits from one field coordinate, repeated words, nested words, and
+cell-root/child pairs are all included in this pushforward argument.
+It uses no independence assertion between repeated coordinates. Both
+descriptor laws give mass $1/(2N)$ to each $(j,e)$ in their support,
+so (NCO.14) follows. $\square$
+

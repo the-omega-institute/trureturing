@@ -1,0 +1,135 @@
+**Lemma 97.2 (quantitative complete-field comparison in this chart).**
+There are constants $C,c_0,s_0>0$, depending only on the fixed native
+data, such that for $0<s<s_0$, $R\ge1$ and $sR\le c_0$,
+
+$$
+\|\widetilde U_s-V\|_\infty
+ \le C(sR+R^{-5}+s^2+s^5).
+\tag{97.4}
+$$
+
+Both fields are extended by zero according to Definition 81.1 when
+appropriate. In particular, choosing $R=s^{-1/6}$ gives
+
+$$
+\|\widetilde U_s-V\|_\infty\le Cs^{5/6}.
+\tag{97.5}
+$$
+
+The heat clock and raw source factor in this estimate remain exactly
+$B$ and $j_0^{-1}$. It compares the complete infinite-time fields.
+
+Proof. We give the quantitative step for this rational family.
+Let $\widetilde P_s(t;0,(r,z))=P_s(t;0,\mathscr L_s(r,z))$.
+The unchanged Jacobian and (81.5) give
+$\widetilde U_s=j_0^{-1}\int_1^\infty
+ e^{\lambda s^2t}\widetilde P_s(t;0,\cdot)dt$.
+Choose $c_0$ small enough that $[-R,R]\subset I_s$ and
+$|\beta_s|R\le1/4$. Kill both comparison diffusions also at $r=\pm R$,
+and denote their strip kernels by $\widetilde P_s^R$ and $p_E^R$.
+This extra killing is used only to compare kernels; the field in
+(97.4) retains the original two faces.
+
+Here is the conditional Gaussian comparison, with its constants
+independent of $R,t,r,z$. The height path is $H_v=\sqrt2 B_v^1$.
+Condition on its bridge from $0$ to $r$ in time $t$ and on its staying
+in $(-R,R)$. The independent driver $B^2$ gives the phase covariances
+$2M_s$ and $2M_0$, where
+
+$$
+M_s=\int_0^t(1+\beta_sH_v)^{-2}u(H_v)u(H_v)^{\mathsf T}dv,
+\qquad M_0=\int_0^tu(H_v)u(H_v)^{\mathsf T}dv.
+\tag{97.6}
+$$
+
+The same height bridge is used in both matrices. They are positive
+definite almost surely: a nonconstant continuous bridge has an interval
+in its range, and a quadratic polynomial vanishing on that range is
+zero. On the survived event,
+$(1-C sR)M_0\le M_s\le(1+C sR)M_0$ in matrix order.
+For the Gaussian density
+$\gamma_M(z)=(4\pi)^{-3/2}(\det M)^{-1/2}
+ e^{-z^{\mathsf T}M^{-1}z/4}$ this implies
+
+$$
+|\gamma_{M_s}(z)-\gamma_{M_0}(z)|
+ \le C sR(\det M_0)^{-1/2}\qquad(z\in\mathbb R^3).
+\tag{97.7}
+$$
+
+Indeed conjugate the matrices by $M_0^{-1/2}$ and interpolate from
+$\mathrm{Id}$ to $M_0^{-1/2}M_sM_0^{-1/2}$. All eigenvalues stay in
+one fixed compact subset of $(0,\infty)$. Differentiating the determinant
+and exponential bounds the derivative by
+$C sR(\det M_0)^{-1/2}(1+|M_0^{-1/2}z|^2)
+ e^{-c|M_0^{-1/2}z|^2}$, which proves (97.7).
+Averaging over the bridge, including its unnormalized survival
+indicator and the free height density, now gives
+
+$$
+|\widetilde P_s^R(t;0,(r,z))-p_E^R(t;0,(r,z))|
+ \le C sR\,p_E(t;0,(r,0))\le C sR\,t^{-7/2}.
+\tag{97.8}
+$$
+
+The inverse-determinant expectation is finite by the canonical smooth
+kernel bound (82.3). More explicitly the Gaussian-mixture formula
+holds almost everywhere in $z$; Fatou along such points tending to zero
+bounds the zero-phase mixture by the continuous kernel's value at zero.
+This is the same justification used for the native bridge formula
+G (32.7)--(32.8), now also for bridges with different terminal heights.
+Thus (97.8) does not posit an inverse-moment estimate without evidence.
+
+For completeness, removing the extra strip killing costs, for
+$|r|\le R/2$ and $0<t\le s^{-2}$, at most
+
+$$
+C t^{-7/2}e^{-cR^2/t}
+\tag{97.9}
+$$
+
+for each kernel. To see this, split the paths exiting the strip into
+those whose first exit occurs before $t/2$ and the remainder. For the
+first set, the strong Markov property at exit leaves a kernel with time
+at least $t/2$, bounded by $Ct^{-7/2}$ by the rescaled all-height
+estimate (76.1), or by (82.3) for the canonical process. The probability
+of the height reaching $\pm R$ before $t/2$ is at most
+$Ce^{-cR^2/t}$ by the Brownian reflection bound. For the remainder,
+reverse the bridge. Symmetry of each Lebesgue kernel makes the reversed
+process the same process started at the terminal point, and its height
+starts at distance at least $R/2$ from the strip boundary. Apply the
+same first-half argument. This bounds the union and proves (97.9).
+For the native kernel the further original killing only decreases the
+exit probability; its remaining-time bound is valid because
+$s^2(t-v)\le1$. No estimate at a moving face is inferred from an
+interior expansion.
+
+Combining (97.8)--(97.9) yields, uniformly in all phases and
+$|r|\le R/2$,
+
+$$
+|\widetilde P_s(t;0,(r,z))-p_E(t;0,(r,z))|
+ \le C t^{-7/2}(sR+e^{-cR^2/t}),\qquad 0<t\le s^{-2}.
+\tag{97.10}
+$$
+
+Integrate on $1\le t\le s^{-2}$. The threshold-factor correction
+costs $Cs^2\int_1^{s^{-2}}t^{-5/2}dt\le Cs^2$, since
+$|e^{\lambda s^2t}-1|\le Cs^2t$ there. Also
+$\int_1^\infty t^{-7/2}e^{-cR^2/t}dt\le CR^{-5}$.
+The native infinite-time remainder is $Cs^5$ by (82.9), and the
+canonical remainder past $s^{-2}$ is $Cs^5$ by (82.4).
+These observations prove (97.4) on $|r|\le R/2$.
+
+On $|r|>R/2$ the height displacement alone gives
+$d(o,\Xi_s\mathscr L_s(r,z))\ge s|r|$ and
+$d_E(0,(r,z))\ge |r|$. Integrating (82.6) for original times up to
+one, and using (82.9) afterwards, bounds the native field by
+$CR^{-5}+Cs^5$. The canonical field is bounded by $CR^{-5}$ in the
+same way. Outside $I_s$ its native extension is zero and this
+canonical bound still applies. This proves (97.4) everywhere and
+(97.5) follows by substitution. The bridge, reflection, Gaussian
+matrix calculation and integration have all used one common killed
+law; no independently optimized covariance or marginal has been
+combined with it. $\square$
+

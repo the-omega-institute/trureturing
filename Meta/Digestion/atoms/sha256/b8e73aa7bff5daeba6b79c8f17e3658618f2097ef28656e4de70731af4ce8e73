@@ -1,0 +1,14 @@
+**假设 144.2（有限树上的完整事件编码）。** 原始树域为
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\qquad
+\rho\alpha=\beta,\quad
+\rho\beta=\langle\beta,\alpha\rangle,\quad
+\rho\langle s,t\rangle=\langle\rho s,\rho t\rangle.
+$$
+
+这是定义137.1的自由有序树；$\beta=\rho\alpha$ 表示替换结果，不把两个叶标签认作同一个叶。对本协议的完整事件域 $\mathcal E$，供应单射 $E:\mathcal E\to\mathcal T$ 和其像上的解码函数 $D_E$，满足 $D_E(Ee)=e$。在有限事件域上，可以用带标签的有限字段编码后配对，得到这样的编码；标签、字段边界及解码规则属于协议。若结果本来取任意不可数域，有限树域是可数的，因而不存在对全部这样的结果的单射编码。此时须声明有限精度、受限结果域或另一个载体，不能无损地把任意实读数塞进有限树。
+
+数学上的可解码还须与实际保存、读取和解码权限区分。称观察者“可追回”历史时，要求事件码留在实际可再次访问的载体上，且相应读取与解码可执行；只声明一个不可读的编码函数不满足这个取得接口。
+

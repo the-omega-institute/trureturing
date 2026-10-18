@@ -1,0 +1,13 @@
+**Definition 3.3 (S mask codec and parser).** Encode a finite prefix-closed
+support by visiting its prefix trie in preorder and emitting two bits
+`lr` at each vertex: whether left, then right, child exists. All masks
+00, 01, 10, 11 are admitted. The S-body contains only these bits, with no
+per-node length, source contents, seed, endpoint sidecar or replay count.
+
+Parse using a stack initially containing the empty root path. Pop one
+pending path, Take two bits, Insert its path in the node list, and push
+its right/left child paths exactly for mask bits 1. Fail on missing bits;
+accept only when stack and bit source exhaust together. Exact layout
+validation is Definition 3.5. Empty input is invalid; a one-vertex tree is
+00. Its exact body size is $2V$ bits for $V$ vertices.
+

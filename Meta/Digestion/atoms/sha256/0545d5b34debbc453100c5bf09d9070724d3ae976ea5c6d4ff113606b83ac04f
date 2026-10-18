@@ -1,0 +1,24 @@
+**Definition 28.1 (Risk inputs, band and rational compilation).** The source is exactly Definition 23.2, with $F_0(k)=k^9$ and the fixed rational-center $F_1(k)=H_c(k)$. Fix a real target $0<\alpha<1/2$. For the fixed-$\alpha$ existence assertion choose once a rational $\rho\in[\alpha/2,\alpha]$. Such a choice needs no real-number oracle: choose an integer $s$ with $2^{-s}<\alpha/2$, and an integer $a$ with $\alpha/2\le a2^{-s}\le\alpha$, by the Archimedean property and the integer ceiling. A finite compiler receives the chosen fraction $\rho$, not an arbitrary real encoding of $\alpha$. The relationship with $\alpha$ is a mathematical certificate on that supplied choice.
+
+The supplied rational risk is denoted by $\rho=\alpha_0$. The more general independent input domain $0<\rho\le\alpha$ is also allowed. All finite constructions and inequalities below hold on that domain, with constants depending on $H_c,\rho$. Constants denoted by dependence on $H_c,\alpha$ alone refer to the once-chosen controlled surrogate, or uniformly to choices in $[\alpha/2,\alpha]$. There is no uniform upper-resource assertion as an independent $\rho$ tends to zero.
+
+Let $h$ be the least nonnegative integer with $2^{-h}\le\rho/2$, and put
+
+$$
+b=h+1,\qquad \kappa=1/32,\qquad R=h+2+2\delta_9.
+$$
+
+Supply a rational $0<\varepsilon<1/4$, and put $u=1-2\varepsilon$, $v=1-\varepsilon$, $I_\varepsilon=[u,v]$. Reuse the finite rational certificate and moment evaluations (22.28)–(22.32) of the owning volume to obtain
+
+$$
+\begin{aligned}
+d_{\min}&=\underline d_{u,v}>0,&
+\bar\mu&=\max_i\mu_i(v),&\bar\beta&=\max_i\beta_i(v),\\
+\mathcal B&=1+\bar\beta+\frac{2\bar\mu R}{d_{\min}},&
+W&=\left\lceil\frac{2\mathcal B}{\rho}\right\rceil.
+\end{aligned}
+\tag{28.1}
+$$
+
+These are rational calculations; $R$ is rational as well. The supplier proves $\mathfrak d_i(q)\ge d_{\min}$ on the band, and (22.34) gives $d_{\min}=\Theta_H(\varepsilon^2)$, $\bar\mu,\bar\beta=O_H(\varepsilon^{-1})$. Thus $\mathcal B,W=O_{H,\rho}(\varepsilon^{-3})$; with the controlled surrogate these bounds are $O_{H,\alpha}(\varepsilon^{-3})$. Neither $q$ nor $q'$ is an input.
+

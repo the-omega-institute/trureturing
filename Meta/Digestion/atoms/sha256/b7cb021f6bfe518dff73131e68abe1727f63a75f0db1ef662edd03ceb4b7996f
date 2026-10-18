@@ -1,0 +1,69 @@
+**Theorem 6.3 (effective table-only common-pair certificate).** Under
+the nonempty-class promise, a terminating finite procedure whose
+only nonpublic input is $T,e_0,e_1$ returns a pair $(j,z)$ satisfying
+(TCR.12) and a finite certificate of that fact. It receives no
+original code program, code values, source oracle or certificate
+determining an original code.
+
+Proof. Compute (TCR.14). Enumerate Definition 5.1's finite pattern
+family, retain exactly the tuples passing (TCR.17), and compute for
+each retained profile its installed response vector, target and both
+bounded entry checks. Structural recursion decides the image test;
+finite free syntax decides all whole-class negatives. There is no
+test of a computation defining a code.
+
+For each of the eight pairs in lexicographic order on
+$J\times\{0,1\}$, test
+
+$$
+\Omega_b(j):=\{\eta\in\Omega_b:h(\eta)=j\}\ne\varnothing,
+\qquad
+\forall\eta\in\Omega_b(j),\quad\Gamma_T(\eta)=\{z\}.
+\tag{TCR.22}
+$$
+
+Each test is finite. Every $\Pi_j$ is nonempty, and Proposition 5.3
+shows that $\Omega_b(j)$ is exactly its family of attained profiles.
+By Theorem 4.2 some pair has (TCR.12); actual realization of every
+retained profile and (TCR.21) imply (TCR.22) for that pair. Thus the
+scan selects a pair. Conversely, for any pair passing (TCR.22),
+every $u\in\Pi_j$ has one of the scanned profiles and (TCR.21)
+gives (TCR.12). The finite test is therefore both sound and complete
+for this whole-fiber exclusive-entry property.
+
+After checking all eight pairs, choose the first passing pair in the
+fixed order. This makes the selection itself a function of the table
+and its original entry labels alone.
+
+One certificate contains $b$, the complete ordered retained profile
+list and its six free terms per profile, its image and whole-class
+syntax test data, all installed-state replies, the complete target
+row per profile, the two bounded state paths with call counts and
+acceptance results, and the selected pair. The explicit simultaneous
+filling rule (TCR.18) may be included with each profile's height
+bound; it provides finite ground witnesses without any source oracle.
+The certificate contains no program, evaluation or determining
+assignment for an original $\sigma$.
+
+An independent finite verifier rebuilds the candidate patterns from
+$b$, rechecks that $b$ is the installed maximum (TCR.14), and
+recomputes exactly the retained list using (TCR.17). In particular
+it checks exhaustive equality of the list, not just the validity
+of listed samples. It recomputes all installed replies, all full
+targets and both bounded runs, and checks (TCR.22). It can also
+check that the chosen pair is the first passing pair. Proposition
+5.3 proves that this exhaustive list misses no actual origin
+profile and contains none without an actual inverse origin.
+Lemma 6.2 then proves the verifier's conclusion for the entire
+$\Pi_j$. A false profile list, omitted state, altered row or
+incorrect entry path cannot establish that conclusion by these tests.
+
+All recursions have bounded finite syntax, each simulation uses
+at most two calls, and the last scan has eight candidates. Hence
+both the construction and verification terminate. Their finiteness
+asserts no useful complexity bound. The promise
+$\mathcal C(T)\ne\varnothing$ is retained as a hypothesis; no
+decision or certification of that promise is part of this procedure.
+The chosen $\sigma_0$ in Theorem 4.2 is used only to prove existence
+and is never queried or supplied to it. $\square$
+

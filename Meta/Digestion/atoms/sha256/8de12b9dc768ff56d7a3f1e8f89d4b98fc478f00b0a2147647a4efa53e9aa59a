@@ -1,0 +1,29 @@
+**Proposition 2.3 (Actual-word first-occurrence bridge).** Let $H_a(z)$ indicate the presence of at least one $a$ outcome in the measured word, and let $H_b(z)$ indicate the presence of at least one $b$ outcome. Set
+
+$$
+Z_m=(1-2w)^m,\qquad T_m=1-Z_m.
+\tag{2.4}
+$$
+
+Under every one of the four actual source labels,
+
+$$
+\Pr_X(H_a=0)=\Pr_X(H_b=0)=Z_m>0,
+\qquad D_m\ge\frac{c}{s}T_m.
+\tag{2.5}
+$$
+
+The two absence events need not be independent. A present pair whose signed count cancels has $H=1$, $h=0$; it is distinguished from an absent pair.
+
+Proof. Each specified pair has total one-copy probability $2w$ under every label. Copy independence therefore gives its absence probability $(1-2w)^m$. Since $w\le1/5$, $Z_m\ge(3/5)^m>0$ for finite $m$, including $Z_0=1$.
+
+On the same actual word, report the sign of the first $a$ outcome, or report an empty symbol if there is none. Under label $a,\sigma$, the empty probability is $Z_m$, and the probability of reporting $\epsilon\in\{1,-1\}$ is
+
+$$
+\sum_{\ell=1}^m(1-2w)^{\ell-1}(w+\sigma\epsilon u)
+ =T_m\frac{w+\sigma\epsilon u}{2w}.
+\tag{2.6}
+$$
+
+Here $w\ge1/25>0$. The formula includes the empty sum at $m=0$. The two opposite laws agree on the empty symbol and differ by $T_mu/w$ in absolute value at each sign. Their total variation is consequently $T_mu/w=(c/s)T_m$. For any grouping of word outcomes, the absolute difference of the grouped probabilities is at most the sum of their absolute differences; summing gives contraction of total variation. Applying this to the first-occurrence statistic and using Proposition 2.1 proves (2.5). The same computation remains valid when $u=0$ or $u=w$, so zero noise and zero probabilities require no support assumption. This is a proof statistic on the supplied experiment, not an additional program, a label oracle or postselection. QED.
+

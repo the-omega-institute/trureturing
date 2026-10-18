@@ -1,0 +1,161 @@
+**Theorem 6.1 (full native joint-prefix synthesis and stopping).** Under
+Definition 1.2, the effectively constructed Presburger sentence satisfies
+
+$$
+\mathsf G(I,B)\quad\Longleftrightarrow\quad
+\forall h\in\mathbb N\ J_B(h).
+\tag{NAC.21}
+$$
+
+There is therefore a total mathematical procedure on the finite input
+$(I,B)$ with the following alternatives:
+
+- it returns a finite $H$ with $\neg J_B(H)$; or
+- it returns a represented common completed contact and, on every requested
+  finite $h$, actual simultaneous finite originals $(u_r)_{r\in B}$ with
+  $u_r\in D_r$ and $u_r\equiv_h u_s$ for all $r,s\in B$.
+
+The procedure preserves every finite-source condition in (NAC.1), including
+every signed guard and the entire old and target rows. It has no supplied
+contact oracle, rank bound, source sample, or rational-native-contact
+restriction.
+
+**Proof (necessity).** Suppose $J_B(h)$ holds for every $h$. Choose finite
+witness tuples at increasing depths, and choose one exact-cover preimage
+of each original component. There are finitely many joint chart choices.
+One chart tuple occurs at an unbounded sequence of depths; keep it.
+
+The completion-tree space is compact. Indeed, at each depth there are
+finitely many four-reply patterns; repeated subsequence selection and a
+diagonal subsequence give compatible finite prefixes. Their limit is a
+full finite or infinite native tree. The scalar space
+$\overline{\mathbb N}=\mathbb N\cup\{\infty\}$ is also sequentially compact:
+a natural-number sequence has a constant subsequence or a subsequence
+tending to infinity. These arguments apply to the finite product of all
+parameter coordinates in all retained charts. Thus a further joint
+subsequence converges to $((\lambda_r,\eta_r))_{r\in B}$.
+
+Every finite scalar limit is eventually its exact value $c_{r,j}$.
+Every finite residual limit is eventually its exact finite native tree:
+replies through one more than its height isolate that tree. All other
+residual limits have an infinite branch. The source maps are continuous
+by Definition 1.1 and $T_n\to\Omega$. Their limits therefore satisfy one
+common equation (NAC.18), since the original source outputs agreed through
+unbounded depths along the subsequence.
+
+Let $F_r$ be all finite residual coordinates of this contact, with values
+$f_r$. For each simultaneous lower bound $M$, sufficiently late subsequence
+terms have every finite coordinate stabilized and every divergent scalar
+above $M$. Their finite parameters still satisfy all original $P$ and
+$\Delta$. They give the whole cofinal support with $f_r$ fixed. This is
+the necessary direction of [FNS, Theorem 5.2][FNS] and [SLP, Theorem 3.1][SLP]
+applied to the exact NIC cover, rather than a sign assigned to a limit.
+
+Code this completed contact using Lemma 2.4. The selected branch has the
+same original finite $c_r$ and definite natural collapse ranks. Theorems
+4.2--4.3 provide accepted finite parameters $p$ and selected finite sets
+$F_{r,\tau}\subseteq F_r$, with the same actual finite values there. The
+pointwise support inclusion in Lemma 5.2 shows that the cofinal witnesses
+with all $f_r$ fixed still witness every $\Psi_{r,\tau}$ after the optional
+finite coordinates are forgotten. The same $p$ precedes every $M$.
+Consequently (NAC.20) holds for this branch, proving $\mathsf G(I,B)$.
+
+This step is the reason setting a genuinely free ambient component to $O$
+is legitimate here. It is done after positive contact saturation, and its
+only change to the finite-barrier antecedent is to enlarge the entire
+feasible support. No arbitrary positive finite-source equation is being
+passed to SLP as a disequality-only constraint.
+
+**Proof (sufficiency and finite originals).** Suppose a sentence (NAC.20)
+holds, and choose one satisfying finite $p$. Corollary 4.4 gives computable
+native completions $\eta^*_{r,i}$ and $W^*$ satisfying (NAC.18). Exactly
+the residual coordinates in $F_{r,\tau}$ are finite; they have the supplied
+actual values $f_{r,\tau}(p)$. Every other selected residual has an infinite
+branch.
+
+Fix an inclusive depth $h$. Compute the depth-$h$ prefixes of all these
+infinite residuals. Require every divergent original rank to be at least
+$M=2h+2$. Then every occurrence of its atom $T_{w_{r,j}+c}$ has only branch
+replies through depth $h$, as does $\Omega$. Fix all original finite ranks
+at their components of $p$, and fix the finite residuals exactly. Pairing
+and fixed $\rho$ powers preserve inclusive depth-$h$ agreement, so these
+parameter requirements suffice to make every source map agree with $W^*$
+through depth $h$. They also suffice inside arbitrarily repeated or shifted
+occurrences of any residual name. A smaller local depth would sometimes
+suffice; this common one is finite and valid.
+
+The inner condition of (NAC.20) supplies one tuple $(w_r)_r$ satisfying
+all supports at this same bound. At each row's chosen ranks and finite
+residuals, (NAC.19) supplies a finite residual seed for the whole negative
+conjunction. Apply [SLP, Lemma 2.1 and Corollary 3.2][SLP] to that row,
+prescribing the computed prefixes of its infinite coordinates. Its
+hypotheses hold: the remaining residual product is Cartesian, every
+prescribed completion has a live frontier, the entire finite negative list
+has a seed, and all finite residual coordinates have been fixed.
+
+SLP supplies one finite residual tuple satisfying every listed negative
+and every prescribed prefix together. Its holes are independent only
+between distinct residual names; repeated occurrences use the same
+context and same filling. Different rows can use separate finite fillings.
+They are alternative originals, and their completed contact equations are
+not required as exact equalities on the finite fillings.
+
+Evaluate the actual native source maps at these finite parameters. By the
+forward direction of (NAC.1), the resulting $u_r$ lies in the entire $D_r$.
+It therefore retains the complete old exterior and partition, every literal
+at its actual epoch, both guards for each signed relation, all off-task
+constraints, all retained image/rank conditions, and its exact target row.
+By the prefix calculation each $u_r\equiv_h W^*$, hence every pair of them
+agrees through $h$. This gives one simultaneous witness tuple for (NAC.3).
+No signed condition or finite row partition has been asserted of $W^*$.
+For example the supplied finite native inequality $z\ne\rho z$ has
+finite prefix witnesses toward $\Omega$, although
+$\Omega=\rho\Omega$. Explicitly $P_0=\alpha$,
+$P_{d+1}=\langle P_d,P_d\rangle$, with $d>h$, has the required branch
+prefix and is different from its $\rho$ image. The latter fact follows
+from the strict increment of finite normal-code leaf ranks. The identity
+negative $z\ne z$, in contrast, has empty finite support. This familiar
+finite/limit distinction is enforced by (NAC.19), not by a negative test
+on $W^*$.
+
+Every requested-depth construction terminates: finite graph prefix
+unfolding terminates; Presburger witness extraction supplies ranks; finite
+NSF feasibility supplies seeds; SLP supplies finite prefix-preserving
+fillings; and the source maps are finite syntax. The fixed $p$ and contact
+are retained, while the actual finite witnesses can change with $h$.
+
+**Proof (total classification and a failed finite depth).** Finite chart
+normalization is supplied by NIC. Scalar masks and pair cases are finite.
+Theorem 3.2 bounds saturation by finitely many scans. Theorem 4.2 gives a
+finite cycle/path computation and a finite arithmetic guard. Lemma 5.2
+gives a finite support compilation. Hence (NAC.20) is an effectively given
+Presburger sentence. Its truth is decidable by [Ginsburg--Spanier,
+Theorem 1.2][GS]; Theorem 1.3 also gives effective semilinear descriptions
+if desired. Decide the finite disjunction $\mathsf G(I,B)$.
+
+If it is true, choose an accepted branch and its finite $p$. Existence is
+already decided, so enumeration of natural tuples with decidable membership,
+or Presburger witness extraction, terminates. Use the positive construction
+above on every requested depth.
+
+If it is false, the proved necessity implication gives
+$\exists H\ \neg J_B(H)$. For each specified $h$, the predicate $J_B(h)$
+has a total finite-source decision with actual positive witnesses by
+[NSF, Lemma 5.1 and Theorems 4.3, 5.2][NSF]. To spell out the multiway use,
+enumerate the finitely many common four-reply tables through depth $h$.
+For each table conjoin that same table with the complete finite native
+predicate for each separate original source and its row. Fixed-address
+navigation compilation produces a finite signed native formula on the
+whole product. NSF decides it and reconstructs finite originals when
+satisfiable. Thus all of $J_B(h)$ is decided, not only a selected source
+sequence or a pairwise subproblem.
+
+Starting at $h=0$, these terminating depth decisions eventually find a
+failed $H$, because its existence has already been established by the
+negative global decision. This extraction is not the proof of all-depth
+stopping: that proof is the finite graph and Presburger decision, completed
+before the search for $H$. Both alternatives therefore terminate on every
+finite input satisfying Definition 1.2. No explicit uniform numerical
+bound on the first failed depth or on runtime is needed for this conclusion.
+$\square$
+

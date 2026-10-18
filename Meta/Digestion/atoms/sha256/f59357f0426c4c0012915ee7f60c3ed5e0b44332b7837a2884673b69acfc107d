@@ -1,0 +1,22 @@
+**Assumption 1.4 (entire-cylinder feasibility and joint attainment).**
+Fix finite $\lambda>0$ and finite $y=(y_0,\ldots,y_7)\in\mathbb R^8$
+such that
+
+$$
+\mathscr D(x,\xi)=y\cdot\Gamma(x,\xi)-g_t(x,\xi)-\lambda|u|\ge0
+\quad((x,\xi)\in X),\qquad
+J_t(\pi)+\lambda K(\pi)=y\cdot B(t)
+\tag{IC.7}
+$$
+
+for at least one common law. This is FC's jointly attained dual premise,
+not nonnegativity at selected roots or on a grid. Let $\mathcal F$ be
+the full multiplier face and $[r_-,r_+]$ its achieved contrast interval.
+FC Theorem 4.2 gives $y\cdot B=C_t(\lambda)$, and, for every
+$r\in[r_-,r_+]$, every height-optimal common law has $K=r$ and zero
+integrated gap. No existence of finite duals at all requests, at
+$t=t_0$, or at other boundary points is included; (IC.7) must be
+supplied there if used. Integral laws have the inherited necessity
+scope of Assumption 1.1 and collect into the same finite contact-group
+data by FC Theorem 3.3.
+

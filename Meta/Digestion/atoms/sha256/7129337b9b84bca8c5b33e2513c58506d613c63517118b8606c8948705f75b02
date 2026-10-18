@@ -1,0 +1,49 @@
+**Definition 1.2 (the PAIR11 carriers).** Put
+
+$$
+w_{j,0}=(\beta\alpha)^j\alpha,\qquad
+w_{j,1}=(\beta\alpha)^j\beta\beta,
+$$
+
+$$
+\begin{aligned}
+\Omega_p&=\{w_{j,c}:j\ge0,\ c=0,1\}\cup\{\infty_p\},\\
+\Omega_\beta&=\{\beta\}\cup
+ \{\alpha w_{j,c}:j\ge0,\ c=0,1\}\cup\{\infty_\beta\},\\
+T_p(j)&=\{w_{n,c}:n\ge j,\ c=0,1\}\cup\{\infty_p\},\\
+T_\beta(j)&=\{\alpha w_{n,c}:n\ge j,\ c=0,1\}\cup\{\infty_\beta\}.
+\end{aligned}
+\tag{1.2}
+$$
+
+All subsets of each countable carrier are measurable, and
+$d_s(D,D')=\operatorname{TV}(D,D')=\tfrac12\sum_\omega|D(\omega)-D'(\omega)|$.
+The compact complete-law spaces are exactly
+
+$$
+\begin{aligned}
+\mathcal K_p&=\{Q\in\operatorname{Prob}(\Omega_p):
+ a\le Q(\alpha)\le b,\ Q(T_p(j))\le\lambda^j\ (j\ge0)\},\\
+\mathcal K_\beta&=\{W\in\operatorname{Prob}(\Omega_\beta):
+ a\le1-W(\beta)\le b,\ W(T_\beta(j))\le b\lambda^j\ (j\ge0)\}.
+\end{aligned}
+\tag{1.3}
+$$
+
+Their compactness and convexity are [PAIR, Lemma 11.1]. The tail bounds
+force their infinite masses to vanish, without deleting the infinite
+outcomes or conditioning on completion. Define
+
+$$
+\begin{aligned}
+u(Q)&=Q(\alpha),& U(Q)&=1-u(Q),&v(W)&=1-W(\beta),\\
+\mathcal R_B(Q)(E)&=Q(\beta E)/U(Q),&&
+\mathcal R_A(W)(E)&=W(\alpha E)/v(W).
+\end{aligned}
+\tag{1.4}
+$$
+
+Prefixing includes the infinite outcomes. These residuals are normalized
+probability measures on the full opposite carriers. A residual of an
+arbitrary input need not lie in the opposite $\mathcal K_s$.
+

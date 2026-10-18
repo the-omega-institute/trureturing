@@ -1,0 +1,11 @@
+**Assumption 2.3 (Supplied endpoint moments).** As $s=-\log q\downarrow0$, the continuation's equation (23.7) supplies, for both labels,
+
+$$
+Z_i(e^{-s})=9!s^{-10}(1+O_H(s)),\qquad
+\mu_i(e^{-s})=\frac{10}{s}+O_H(1),\qquad
+\beta_i(e^{-s})=\frac{11}{2s}+O_H(1).
+\tag{2.8}
+$$
+
+All constants implicit in these source estimates concern the one fixed $H_c$. They are not estimates uniform over changing polynomial shapes.
+

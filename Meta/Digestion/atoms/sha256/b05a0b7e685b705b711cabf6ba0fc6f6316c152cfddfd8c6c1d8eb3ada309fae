@@ -1,0 +1,59 @@
+**Theorem 87.7 (lower-order exact-budget collapse and the safe higher-order boundary).** For every $0<\sigma<2$, $B>0$ and $a,g,\eta>0$ there are normalized actual $\psi_n\in\mathcal D_0$ with $D_\sigma[\psi_n]=B$ and
+
+$$
+q_0[\psi_n]\longrightarrow-\infty,\qquad
+q_{\sigma,\eta}[\psi_n]=q_0[\psi_n]+\eta B\longrightarrow-\infty.
+\tag{87.38}
+$$
+
+Consequently neither law has a finite floor on this fixed positive budget at lower orders. For every $\sigma>2$, the unchanged-law budget instead has the safe bound
+
+$$
+q_0[\psi]\ge-\frac{g^2B^{2/\sigma}}{256a},
+ \qquad \psi\in\mathcal B_{\sigma,B}.
+\tag{87.39}
+$$
+
+Its sharp value and attainment are not asserted. For every finite $\sigma>0$, mere finiteness of $D_\sigma$ leaves the original $q_0$ unbounded below, even on normalized $\mathcal D_0$.
+
+Proof. Choose a real normalized smooth compact central $h$ with $h(0)\ne0$. The Coulomb intermediate (84.11), or its exponential minimizer followed by smooth punctured approximation, supplies a real normalized $u\in C_c^\infty(\mathbb R^3\setminus\{0\})$ with
+
+$$
+a\|\nabla u\|_2^2-
+ \frac{g|h(0)|^2}{4\pi}\int\frac{|u|^2}{r}d\xi<0.
+\tag{87.40}
+$$
+
+For example horizontal expansion of any fixed such nonzero test makes the negative $r^{-1}$ term dominate its $r^{-2}$ kinetic term. Let $f(\xi,t)=u(\xi)h(t)$, $A=A[f]$, $J=J[f]$ and $C_\sigma=\||D_t|^{\sigma/2}f\|_2^2>0$. The actual state (87.14) for this fixed profile has $D_\sigma=C_\sigma\varepsilon^{-\sigma}$ and
+
+$$
+q_0[u_\varepsilon]=\varepsilon^{-2}
+ \left(aA-\frac{gJ}{4\pi}+o(1)\right),
+\qquad aA-gJ/(4\pi)<0.
+\tag{87.41}
+$$
+
+Use the same horizontally disjoint $b_L$ as in (87.35), now with $d_L=D_\sigma[b_L]=L^{-2\sigma}D_\sigma[b]$, and replace $C_j\varepsilon^{-2}$ in (87.36) by $C_\sigma\varepsilon^{-\sigma}$. Exact orthogonality for the actual fractional central operator proves norm one and exact $D_\sigma=B$. With $\varepsilon\downarrow0$ and then a sufficiently large $L=L(\varepsilon)$, its spike mass is asymptotic to $B\varepsilon^\sigma/C_\sigma$, the background energy tends to zero, and
+
+$$
+q_0[\psi_\varepsilon]
+ \sim\frac{B}{C_\sigma}\left(aA-\frac{gJ}{4\pi}\right)
+ \varepsilon^{\sigma-2}\longrightarrow-\infty.
+\tag{87.42}
+$$
+
+The error in (87.41) is small relative to the fixed strictly negative coefficient; no quantitative convergence rate is assumed. The background choice follows the fixed profile and concentration choice, and enforces actual disjoint $z$ supports, so no nonlocal central cross term has been omitted. Adding $\eta B$ proves the second law's collapse on the same sequence. All trials are punctured compact tests, with finite actual potential and central moments.
+
+For higher-order fixed budgets apply (87.4) with norm one and $D_\sigma\le B$, then minimize $aT-(g/8)B^{1/\sigma}\sqrt T$. This proves (87.39) without a matching upper construction. It is not the added-law result (87.29), and the compactness proof for minimizing an added law does not prove attainment under this safe scalar floor.
+
+Finally a fixed normalized core state $v$ has $T[v],V[v]>0$ and finite $D_\sigma[v]$ for every finite $\sigma$. Its inward Carnot dilates have
+
+$$
+q_0[U_rv]=ar^{-2}T[v]-gr^{-3}V[v]\to-\infty,
+\qquad D_\sigma[U_rv]=r^{-2\sigma}D_\sigma[v]<\infty
+ \quad\text{for each }r>0.
+\tag{87.43}
+$$
+
+There is no common budget here. This proves precisely the mere-finiteness assertion; it does not contradict any fixed-budget bound. $\square$
+

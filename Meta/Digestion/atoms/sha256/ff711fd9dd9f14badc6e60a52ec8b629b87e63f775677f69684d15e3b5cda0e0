@@ -1,0 +1,33 @@
+**Theorem 9.2 (totality, soundness and the rejected-width examples).**
+$V_{\mathrm{rec}}$ is total computable and every acceptance implies
+$\beta_d(\mu)\le C$. It accepts the lifted caps $(\mu_h,B)$ of
+Proposition 5.2, the strict cap
+$(\mu_2,(101/100)(169/429)^4)$ rejected there by $V_1$, and every
+strictly positive perturbed cap $(\widetilde\mu,\widetilde C)$
+specified there. No cofinality is asserted.
+
+**Proof.** A finite table has finitely many finite state, target and
+rational checks, each terminating; there is no search for an unknown
+length cutoff. Induct along its node order. Leaves are sound by §2
+and Definition 5.1. Scaffold nodes are sound by the exact pressure
+identity of Theorem 4.2. Stability nodes are sound by the probability
+total-variation estimate of [NPC, Theorem 6.1]. Thus the last cap is
+valid at every length and for every complete native template.
+
+For the examples, $\nu=w/429$ at depth three has a $V_1$ leaf with
+$C_0=169/429$: [NCE, Theorem 4.3] supplies a suitable hard target on
+every heavy range-feasible support, and light supports need no bundle.
+This determines a finite exhaustive leaf table. A height-$h$ scaffold
+node then proves $(\mu_h,B)$. Its cap may be enlarged to
+$(101/100)B$ in that same scaffold check. For the positive perturbation,
+append a stability node; its variation is at most $\delta$, so the
+rational cap $B+2\delta$ passes. These acceptances cover the actual
+fixed-width rejection examples without changing their weights or
+claiming that arbitrary potentials admit this decomposition. $\square$
+
+The missing optimizer-cofinality obligation is still exactly: for every
+$d$ and rational $\epsilon>0$, obtain a $V_{\mathrm{rec}}$ acceptance
+with $-\log_2C>\sigma_d-\epsilon$. None of the three rules proves
+that assertion. The failure of fixed bundle width at specified weights
+also does not refute it.
+

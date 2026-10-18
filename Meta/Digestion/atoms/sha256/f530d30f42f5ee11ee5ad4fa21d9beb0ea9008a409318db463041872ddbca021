@@ -1,0 +1,53 @@
+**Definition 10.2 (Attribution, scope and the remaining joint relation).**
+The positive map underlying (4.8) is the classical Choi map displayed
+in [Singh–Nechita, Example 7.5, equation (43), version 2](https://arxiv.org/html/2010.07898v2).
+Product zeros and their dual separable faces are mature ingredients;
+see [Ha–Kye, §2, version 1](https://arxiv.org/html/1108.0130v1).
+Their exposed-map results do not imply a normalized actual-event
+certificate here. The scalar-port correspondence is the credited
+[Horodecki–Shor–Ruskai, Theorem 4(A–D), version 2](https://arxiv.org/html/quant-ph/0302031v2),
+with its separate POVM/TP condition. The zero analysis, its forced
+common TP weights and the mode-$N$ test above are applications to
+this exact walk-sector representation, without a novelty claim.
+The QRC no-worse replacements, QAP finite quadrature and QJM slack
+identity retain their supplier status.
+
+The conditional inequality in Theorem 9.2 concerns only scalar
+ports satisfying (9.9) for the precisely specified positive
+input-sector-filter family. It is not a lower $43/68$ on all
+scalar ports or on $\varepsilon_1$. Theorem 10.1 excludes only
+the slack mechanism (10.1). Changes to the coefficients of the
+cyclic witness, general output filters, nonscalar within-sector
+filters, different positive forms, and corrections of indefinite
+sign remain outside that exclusion. No assertion that all globally
+positive witnesses or all normalized event tuples have this form
+is made. The nonempty TP face in Proposition 9.3 is not an
+event-preserving reduction of an optimizer, and its exact full
+worst-case error is not evaluated.
+
+The credited numerical frontier (7.3) is unchanged:
+$129931/250000\le\varepsilon_1\le e_{\rm mix}$, with the
+same strict QSD upper enclosure. A matching solution still requires
+one normalized tuple of all fifteen signed event multipliers and
+all three TP multipliers, global product-atom positivity including
+the interior cubic, and one legal common-positive-weight port on
+its kernel face satisfying those same TP and complementary event
+equations. Theorems 8.2–10.1 rule out one defined route to that
+joint solution; they do not provide the missing tuple or a new
+unrestricted endpoint.
+
+All claims use the independent $\mathbb C^5/K$ preparation of
+Assumption 1.1. The event uses input $\Pi_N$, actual nonnegative
+wait zero, a complete five-outcome rank-one read and Stop, with
+the full history retained. Design rotations and witness congruences
+add no future control, coarse-block instrument, source copy, side
+information or exposed flag. The fixed scalar encoders and whole-block
+CPTP decoders in (8.12) bound quantum dimension and finite flags;
+they do not bound coefficient synthesis, finite-precision robustness,
+acquisition, physical preparation, clock precision, transport or
+storage duration. The exact original optimum and optimal port,
+the $q=2,3,4$ values, native preparation and all-size cofinality,
+memory rates and complete all-view mutual recovery remain unresolved.
+These are ordinary mathematical proofs, without new Lean certification
+or a physical implementation claim.
+

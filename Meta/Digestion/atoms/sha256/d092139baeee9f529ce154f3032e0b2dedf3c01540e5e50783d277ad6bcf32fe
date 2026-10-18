@@ -1,0 +1,15 @@
+**Boundary 6.3 (Unsettled and excluded conclusions).** The claims retain
+the specified biased interior parameter range; they add neither fairness
+nor endpoint parameters to the contract. They concern finite total hard
+budgets, with the explicitly stated optional almost-sure variant. They
+provide no unbounded-history, expected-cost-only, or general numeric risk
+result and do not settle [Original, Open Problem 6.4][Original]. Internal work,
+address encoding, persistent state, physical storage, finite precision,
+and memory are separate resources, with no bound asserted here. There
+is no empirical learning, neural, or whole-domain attainment conclusion.
+The proofs use ordinary finite probability and geometry, with no
+mathematical execution or formal certification as evidence.
+
+[Original]: FIB_LEGAL_EDGE_LOAD_FIXED_STATE_TAIL_NONUNIFORMITY_AND_ERASURE_RISK_JUMP.md
+[Paid-return]: FIB_PAID_READ_RETURN_MASS_AND_ENDPOINT_RISK_FRONTIER.md
+

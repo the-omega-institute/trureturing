@@ -1,0 +1,10 @@
+**Lemma 1.4 (polynomial interpolation).** A nonzero polynomial of degree at most $n$ has at most $n$ distinct real roots. At distinct nodes $t_0,\ldots,t_n$, arbitrary values $v_0,\ldots,v_n$ have the unique degree-at-most-$n$ interpolant
+
+$$
+P(t)=\sum_{j=0}^n v_j
+\prod_{\substack{0\le h\le n\\h\ne j}}
+\frac{t-t_h}{t_j-t_h}.
+$$
+
+**Proof.** A root $t_j$ gives a factor $t-t_j$ by polynomial division. Each additional distinct root remains a root of the quotient, since its removed factor is nonzero there. Iteration proves the root bound. The displayed products are defined by distinctness of the nodes, equal one at their own nodes, and vanish at every other node. They therefore interpolate. The difference of two interpolants has $n+1$ distinct roots and degree at most $n$, so it is zero. The empty product for $n=0$ is one. Lower actual degrees, zero interpolants, and repeated roots elsewhere cause no exception. ∎
+

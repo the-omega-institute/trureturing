@@ -1,0 +1,21 @@
+**Convention 7.3 (resource separation and applicability).** Preparation
+costs are distinct from the online budget $k$. If the scan is used,
+its Reads are paid once; they are not also counted as new online phase
+acquisition. Its complete transcript, temporary phase data and every
+other inaccessible field must remain unavailable to the tester under
+Assumption 1.4. Retaining a phase descriptor would change the accessible
+experiment and its name count. For example, an already accessible full
+phase vector permits the $E_\ell$ test with zero additional Reads;
+this demonstrates why the constant-name and complete-isolation premises
+are essential.
+
+The public scaffold, block-order, membership, decoding and decision
+tables need construction, installation, storage and lookup. Control,
+computation, source acquisition, temporary storage, post-handoff
+workspace and final decision storage retain separate accounts. Fixed
+public addresses and finite tables establish mathematical availability;
+no useful bound on their total construction or physical execution cost
+is supplied. Access services are separately paid premises. The result
+asserts exact online worst-case Read optimality with the displayed
+literal lengths and letter costs, without a physical-efficiency claim.
+

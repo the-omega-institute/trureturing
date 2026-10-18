@@ -1,0 +1,43 @@
+**Definition 1.2 (the full finite-activity comparison class).** Use
+exactly FA Definition 67.2. A positive-semidefinite first-event rate
+$R_\lambda(u)$ acts on each whole joint decoder fibre. Survivor controls
+are TP apart from this loss and may be noncommuting or unobserved TP
+controls. For its survivor map $\mathcal S_{\lambda,u}$,
+
+$$
+-\frac d{du}\operatorname{tr}\mathcal S_{\lambda,u}(X)
+=\operatorname{tr}(R_\lambda(u)\mathcal S_{\lambda,u}(X)),
+\qquad \mathcal S_{\lambda,0}=\mathrm{id}.
+\tag{WE.4}
+$$
+
+Rates are measurable with integrable operator norm; terminal survivor
+processing is TP. There is no singular first-event part, forced deadline
+failure, or later positive-carrier action after absorption. Activity is
+
+$$
+\mathsf A=\sup_\lambda\int_0^1\|R_\lambda(u)\|\,du.
+\tag{WE.5}
+$$
+
+Use a maximum for finite labels and essential supremum in the stipulated
+integral case. This is neither an expected cost nor an integral of a
+maximum over labels. Let $\mathfrak F_{s,A}$ have the original error
+$E_*$, (WE.3), and $\mathsf A\le A$. For nonempty classes let
+$\mathcal T_A(s)$ be the supremum of the TV distance between the full
+acquisition-label laws at $(5,+,+)$ and $(27,+,+)$. The principal class
+is finite; necessity also covers the convergent countable and expressly
+measurable/integrable finite-fibre extensions supplied in CG Convention
+21.3. No arbitrary disintegration or infinite-dimensional coding
+extension is presumed. Put
+
+$$
+t=e^A-1,\qquad q=1-s/s_0,\qquad
+A_{\min}(s)=\log(1+t_{\min}(s)).
+\tag{WE.6}
+$$
+
+FA Theorem 73.1 already proves a positive finite attained threshold
+$t_{\min}(s)$ for $0\le s<s_0$. The endpoint $s=s_0$ is infeasible
+at every finite activity. Empty classes have no claimed TV maximum.
+

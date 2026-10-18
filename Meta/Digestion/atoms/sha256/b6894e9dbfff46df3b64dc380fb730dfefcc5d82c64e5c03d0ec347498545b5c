@@ -1,0 +1,67 @@
+**Theorem 8.1 (collective demand restriction).** On the one original
+complete graph,
+
+$$
+\begin{aligned}
+\sum_{B\in\mathcal L_*}(D_B-E_B)
+&\le\sum_{B\in\mathcal L_*}
+       \bigl(D_B-(\beta_B-1)-\Delta_B\bigr),\\
+m-G&\ge R-\sum_{B\in\mathcal L_*}
+       \bigl(D_B-(\beta_B-1)-\Delta_B\bigr).
+\end{aligned}
+\tag{CL.32}
+$$
+
+In particular $m<G$ requires
+
+$$
+\sum_{B\in\mathcal L_*}
+\bigl(D_B-(\beta_B-1)-\Delta_B\bigr)>R.
+\tag{CL.33}
+$$
+
+Proof. Sum the deficit bound (CL.25) over the late-long pools. Their
+cell sets are disjoint, so the bounds use disjoint summands of $E$.
+The exact identity (CL.10) is
+$m-G=R-\sum_{B\in\mathcal L_*}(D_B-E_B)$, giving (CL.32).
+If $m<G$, that exact deficit exceeds $R$, so its upper bound also
+exceeds $R$. Cut states and other pools have their original single
+locations. Certified traffic that is live elsewhere stays in its live
+pool; only genuinely never-live states enter $u$. $\square$
+
+This is a necessary restriction on any strict-subgrid graph. It is not
+a sufficient criterion for correctness, termination or either resource
+cap. No demand graph is assumed nonbipartite, and no claim is made that
+$\Delta_B>0$ in every deficient pool. Sharing can fail (CL.15), or its
+eligible private demands can form only bipartite or edgeless graphs.
+Both cases remain within the theorem's scope.
+
+To state the exact remaining obligation, put
+$R_B^{\rm rem}=E_B-P_B\ge0$. Then (CL.10) rewrites the original
+comparison $m\ge G$ as
+
+$$
+\sum_{B\in\mathcal L_*}
+\bigl(D_B-(\beta_B-1)-\Delta_B-R_B^{\rm rem}\bigr)\le R.
+\tag{CL.34}
+$$
+
+This residual formula is bookkeeping from the credited identity, not
+another new bound. The demand theorems do not control the remaining
+duplicate incidences by $R_B^{\rm rem}$, cut excess, genuine nonlive
+states or other-pool surplus strongly enough to prove (CL.34).
+Independent lower bounds for different prefixes or overlapping coordinate
+sets cannot be subtracted to create additional states. Requiring every
+long pool to compensate separately would also be stronger than this
+collective target.
+
+For the original all-size domain $\min(k,n-k+1)\ge4$, the alternatives
+remain unresolved: either prove collective compensation for every
+complete original graph at both $n,W$ caps, or give one complete correct
+strict-subgrid graph meeting both caps on every input. No such graph
+is constructed here. The credited SI Open problem 14.6 interval at
+$n=8,k=4$ remains $17\le m_{\rm exec}\le20$ as supplied background;
+these inequalities assert no improved universal numerical optimum.
+No critical-twenty equality argument is needed as a premise. The
+unrestricted-budget minimum is a separate question.
+

@@ -1,0 +1,63 @@
+### 定理 31.2（CPTP 分量作用的 Dirichlet 收缩）
+
+设 \(\mathcal E:\mathsf L(H)\to\mathsf L(K)\) 为 CPTP。定义
+
+\[
+(\mathcal E_\ast\rho)_v=\mathcal E(\rho_v).
+\]
+
+则
+
+\[
+\boxed{
+\mathcal Q_G^{(1)}(\mathcal E_\ast\rho)
+\le
+\mathcal Q_G^{(1)}(\rho).
+}
+\]
+
+#### 证明
+
+对 Hermitian \(X\)，trace norm 的对偶表达为
+
+\[
+\|X\|_1
+=
+\sup_{\|A\|_\infty\le1}
+\operatorname{tr}(AX).
+\]
+
+由于 \(\mathcal E^\ast\) 是首一正映射，Kadison 不等式给出
+
+\[
+\|\mathcal E^\ast(A)\|_\infty
+\le
+\|A\|_\infty.
+\]
+
+因此
+
+\[
+\begin{aligned}
+\|\mathcal E(X)\|_1
+&=
+\sup_{\|A\|_\infty\le1}
+\operatorname{tr}(A\mathcal E(X))\\
+&=
+\sup_{\|A\|_\infty\le1}
+\operatorname{tr}(\mathcal E^\ast(A)X)\\
+&\le
+\|X\|_1.
+\end{aligned}
+\]
+
+每个 \(\rho_u-\rho_v\) 都是 Hermitian，故
+
+\[
+\|\mathcal E(\rho_u)-\mathcal E(\rho_v)\|_1
+\le
+\|\rho_u-\rho_v\|_1.
+\]
+
+平方并乘以 \(w_e\)，对所有边求和即得结论。证毕。
+

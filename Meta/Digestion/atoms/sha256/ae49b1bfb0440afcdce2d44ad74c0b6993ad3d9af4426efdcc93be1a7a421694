@@ -1,0 +1,15 @@
+**文献表态 42.1（普通理论的复用与新增连接）。** 第36–41章是 `repo-derived` 的普通数学综合，不主张外部原创、全球优先性或新增 Lean 认证。原语法、替换及组成来自 [Atomic](FIBONACCI_ATOMIC_RELATION_GENERATION.md) §§2–5；其129.1已给6.4旧素数种子推论的正确证明，不另提出重复修正。原像解析、交换中心化与已取得 $(k,y)$ 的条件入口恢复归 [ProcessGeometry §37](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md) 和 [Transport–Memory §22](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md)，不是精确实探针的 FC37。
+
+| 本卷新增关系 | 直接复用的陈述与证明 | 新的消费者及保留条件 |
+| --- | --- | --- |
+| 定理36.3–36.4 | PG.3705、原像语法、Atomic3.4及例34.4 | 全部树的原始射线与仅 $\rho$ 生成签名；不将总同态分类扩成实际因果必然性 |
+| 定理37.2–37.4 | PG.3713–PG.3719、原生地址律 | 全部入口切口数、当前源无法取得入口及深度／叶数关系；真实记录器另供 |
+| 定理38.3–38.4 | Auric172.2–172.3、本卷3.3、21.2及31.2 | 对每个真实逆轨道的深度尾和整个正纤维历史权重；逐候选运行全守卫 |
+| 定理39.2及两例 | Auric180.1、190.2，本卷32.2–33.1及既有形状秩 | 当前树／词／几何的加权入口秩；实际入口和完整付费切口不可省 |
+| 定理40.2–40.3 | 实际形状—词分解、第三像叶块及整个几何纤维 | 每个固定完整纤维的位置和强制叶地址支持；不是已知固定形状承诺 |
+| 定理41.2–41.6 | `source_foundation`、`acquisition_foundation`、本卷28.3–29.1、FC38.20、38.41 | 全域策略实际限制的查询行、保留终端缓存及共同遍历比较；表与物理资源分开 |
+
+其中 native 对应见 [GenealogicalFiberTransport](../../../D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.lean) 的 `Source/substitution/sourceEquiv/labelsEquiv/indexedEquiv/result`，及 [ActualTreeReadoutAcquisition](../../../D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean) 的 `readout/leaves/flip/Policy/Strategy/source_foundation/acquisitionTrace/restore/finiteDecision/acquisition_foundation`。原缓存和粗动作供应见 [ActualCoarseReadoutCompletion](../../../D5/S3/Arith/FibonacciAtomic/ActualCoarseReadoutCompletion.lean) 的 `encodeHistory/compileRaw/cachedExecute/completion_contract` 及其 [Blueprint](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/ActualCoarseReadoutCompletion.md)。这些正文供应取固定修订 `6741365efc8c4e3a28d4e169b9a0e74c5686de01`；FC38 和 [共同算术相位卷](FIBONACCI_ATOMIC_RELATION_GENERATION_SHARED_PHASE_EXACT_QUERY_COST.md) 取固定修订 `05149fa5456f6eb47259bab8138572902863368e` 的正文。读取代码陈述和证明不等于编译或取得新内核证据。
+
+本卷既有 Richomme 有界分拆对应、经典 Catalan 计数、有限单射下界及秩机制按原文献归属使用；这里的新目标是纯替换历史及固定整个几何纤维的字面支持，而不是重复发表这些一般工具。有界来源核对不构成全仓或全球文献的缺失证明。相位盲族、cyclotomic 单响应码或条件校准控制器仍可在另有实际消费者的接口中研究，没有在这里加入原生仪器或取得节省。
+

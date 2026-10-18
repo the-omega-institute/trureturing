@@ -1,0 +1,123 @@
+**Lemma 7.6 (Explicit derivative approximation with endpoint slack).**
+Put
+
+$$
+\ell=b-a,\qquad g(k)=k(H-k),\qquad
+g_{\min}=\min\{g(a),g(b)\},\qquad
+K=\frac{H^2}{2g_{\min}^{3/2}},
+$$
+
+$$
+m=\max\left\{1,\left\lceil\frac{K^2(b-a)^3}{4Z}\right\rceil\right\},
+\qquad d=m+1,\qquad \zeta=\frac{K\ell}{2\sqrt m}.
+$$
+
+There is an explicitly specified polynomial $\Pi_m$ of degree at most
+$d$ such that
+
+$$
+\Pi_m(b)=A(b),\qquad
+|\Pi_m(k)-A(k)|\le\zeta(b-k)\quad(a\le k\le b),
+\qquad \zeta^2\ell\le Z.
+$$
+
+**Proof.** For $k=(1-t)a+tb$ with $0\le t\le1$, expansion gives
+
+$$
+g(k)=(1-t)g(a)+tg(b)+t(1-t)\ell^2\ge g_{\min}>0.
+$$
+
+Differentiating the explicit native radius, not an encoder, gives
+
+$$
+A'(k)=\frac{H-2k}{\sqrt{g(k)}},\qquad
+A''(k)=-\frac{H^2}{2g(k)^{3/2}}.
+$$
+
+Thus $A'$ is Lipschitz on the band with constant $K$.
+For $t=(k-a)/\ell$, define the Bernstein weights and polynomial
+
+$$
+w_j(t)=\binom mj t^j(1-t)^{m-j},\qquad
+\nu_j=A'(a+\ell j/m),\qquad
+\mathcal B_m(k)=\sum_{j=0}^m\nu_jw_j(t).
+$$
+
+At $t=0,1$ the weights mean polynomial evaluations. They are
+nonnegative and sum to one by the binomial theorem. Using
+$j\binom mj=m\binom{m-1}{j-1}$ gives
+$\sum_jj w_j=mt$. For $m\ge2$, using
+$j(j-1)\binom mj=m(m-1)\binom{m-2}{j-2}$ gives
+$\sum_jj(j-1)w_j=m(m-1)t^2$. For $m=1$ both sides of this last
+identity are zero. It follows that, in every allowed case,
+
+$$
+\sum_{j=0}^m j^2w_j=m(m-1)t^2+mt,\qquad
+\sum_{j=0}^m(j/m-t)^2w_j=\frac{t(1-t)}m.
+$$
+
+Lipschitz continuity and the finite Cauchy--Schwarz inequality give
+
+$$
+\begin{aligned}
+|\mathcal B_m(k)-A'(k)|
+&\le K\ell\sum_{j=0}^m w_j|j/m-t|\\
+&\le K\ell
+ \sqrt{\left(\sum_jw_j\right)
+             \left(\sum_jw_j(j/m-t)^2\right)}\\
+&=K\ell\sqrt{\frac{t(1-t)}m}\le\zeta.
+\end{aligned}
+$$
+
+At $t=0$ all weight is at $j=0$; at $t=1$ it is at $j=m$.
+Thus $\mathcal B_m(a)=A'(a)$ and $\mathcal B_m(b)=A'(b)$,
+without an ambiguous endpoint power convention. Define
+
+$$
+\Pi_m(k)=A(b)+\int_b^k\mathcal B_m(v)\,dv.
+$$
+
+It is a polynomial of degree at most $m+1$, anchored at $b$.
+The fundamental theorem of calculus yields
+
+$$
+|\Pi_m(k)-A(k)|
+ =\left|\int_b^k(\mathcal B_m(v)-A'(v))\,dv\right|
+ \le\zeta(b-k).
+$$
+
+The chosen integer $m$ satisfies
+$\zeta^2\ell=K^2\ell^3/(4m)\le Z$, including when $m=1$.
+
+Here are exact finite coefficients for the later fixed decoder.
+Write $\mathcal B_m(k)=\sum_{h=0}^m\gamma_hk^h$. Expanding the two
+finite binomials in
+
+$$
+\mathcal B_m(k)=\ell^{-m}\sum_{j=0}^m
+ \nu_j\binom mj(k-a)^j(b-k)^{m-j}
+$$
+
+gives
+
+$$
+\gamma_h=\ell^{-m}\sum_{j=0}^m\nu_j\binom mj
+ \sum_{\substack{u+v=h\\0\le u\le j\\0\le v\le m-j}}
+ \binom ju\binom{m-j}v(-a)^{j-u}b^{m-j-v}(-1)^v.
+$$
+
+Set
+
+$$
+\pi_0=A(b)-\sum_{h=0}^m\frac{\gamma_h b^{h+1}}{h+1},
+\qquad
+\pi_{h+1}=\frac{\gamma_h}{h+1}\quad(0\le h\le m).
+$$
+
+Then $\Pi_m(k)=\sum_{j=0}^d\pi_jk^j$.
+All samples and coefficients are fixed exact real constants determined
+by the band and source; zero leading coefficients are allowed.
+The anchored factor $b-k$, rather than merely a constant uniform
+polynomial error, supplies the slack needed at the sharp threshold.
+$\square$
+

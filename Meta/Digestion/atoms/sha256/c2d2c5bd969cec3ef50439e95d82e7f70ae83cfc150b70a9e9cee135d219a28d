@@ -1,0 +1,58 @@
+## 34. Scope tests and boundaries of the finite-memory conclusion
+
+The radius in Theorem 32.2 must be the radius of the reachable
+restriction.  For example, take diagonal Kraus operators
+
+$$
+K_0=\operatorname{diag}(1/2,1/\sqrt2),
+\qquad
+K_1=\operatorname{diag}(\sqrt3/2,1/\sqrt2),
+\qquad
+\tau=E_{11}.
+\tag{34.1}
+$$
+
+They form a trace-preserving two-output instrument.  The full zero map
+has spectral radius $1/2$, while its restriction to the reachable first
+coordinate has radius $1/4$.  The actual next-one probability is a
+constant times $(1/4)^j$, so using the ambient radius would give the
+wrong exponential base.  This test has polynomial degree zero and is
+not an instance of the $m\ge1$ hypothesis; it isolates the radius
+bridge only.
+
+Properness is also a real premise.  With
+
+$$
+K_0=\operatorname{diag}(\sqrt q,1),
+\qquad
+K_1=\operatorname{diag}(\sqrt{1-q},0),
+\qquad
+\tau=I/2,
+\tag{34.2}
+$$
+
+one has $S_k=(1+q^k)/2$.  The tail of the next-one probabilities is
+$\sum_{j\ge k}\gamma_j=q^k/2$, not $S_k$, because the second component
+never emits.  The tail
+identity (32.5) therefore fails by the missing never-tick mass, and the
+dimension conclusion cannot be inferred from the displayed tail
+polynomial without adding properness.
+
+The assumption $R>0$ in Theorem 31.2 cannot be dropped.  On
+$\mathbb C^2$, let $A=E_{12}$ and $\Phi(X)=AXA^*$.  Then $\Phi\ne0$ but
+$\Phi^2=0$ and $\rho(\Phi)=0$; at $k=1$ the right side of (31.2) would
+be zero for every finite $K$.  Likewise, $K$ is map-dependent and is
+not a uniform constant over all CP maps of a fixed dimension and
+radius.
+
+Finally, (32.2) is a statement about the actual law of a fixed
+homogeneous instrument.  The argument does not replace a mixed state by
+a scalar pure amplitude, does not count only a selected Kraus operator,
+and does not permit a hidden external controller.  Conversely, it is
+only a necessary finite-memory bound: it proves neither that every
+$m$ has an instrument realizing the law nor sufficiency of dimension
+$m+1$.  It says nothing about energy, thermodynamic work, preparation
+of the coherent square-root state, or an all-cut phase construction.
+Those are separate questions from the actual-law versus quantum-memory
+relation settled here.
+

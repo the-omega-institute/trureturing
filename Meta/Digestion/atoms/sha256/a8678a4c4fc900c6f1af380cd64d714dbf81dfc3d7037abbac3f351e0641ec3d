@@ -1,0 +1,104 @@
+**定理 204.2（固定投影的零成本盒、最大剖面与自动类）。** 选一种并固定：活跃投影 $J=\{j\ge3:\gamma_j>0\}$，把不在 $J$ 的晚位在构造的对偶分数中重置为 1；或者全投影 $I=\{3,\ldots,L\}$，保留全部原始晚位测度。下文的 $\mathcal K$ 只表示所选的有序投影。固定投影 pair 测度 $\nu$ 和 $t$，令
+
+$$
+m_j=\nu(x_j=0),\qquad d_{ij}=\nu(x_i=1,x_j=0),\qquad
+c_j=\min\left(t,\frac{m_j}{2},\min_{i<j\atop i,j\in\mathcal K}d_{ij}\right),
+$$
+
+其中空的有向最小值省略。对只含 early pair 支撑、没有 early 正确行、没有 $\mathcal K$ 外正确行和基行的核心族，给定晚类总量 $\xi_j\ge0$，存在零成本 $O$ 代表，当且仅当
+
+$$
+\xi_j\le c_j\quad(j\in\mathcal K).
+\tag{204.1}
+$$
+
+同一盒条件也刻画零成本 $N$ 代表；两者使用同一份 $\nu$，不是两个独立容量。
+
+必要性来自完整停止目录。$(1,2;1,2,j)$ 给出 $\xi_j\le t$；$(a,j;0,j,0)$（$a=1,2$）给出两份互不相交的 early-one 容量，每份至少 $\xi_j$，故 $2\xi_j\le m_j$；$(i,j;0,j,0)$ 给出 $\xi_j\le d_{ij}$。这些推导允许原 pair 字为 00，因而不假定 early 位已经平衡。
+
+充分性把 $\nu(x)/2$ 放在 early lifts $01x,10x$，其余晚位恒为 1。对每个 $n$ 和 $s\in[0,\xi_n)$，取一个正确字，使较早位全为 1，$n$ 位为 0，并令后面指定的 $k$ 位在 $s<a_{nk}$ 时为 1，其中 $a_{nk}=\nu(x_n=0,x_k=1)$；按有限阈值区间给权，重合字的系数相加，取 $T=t$。在 early/late cell 中，$n<k$ 的奖励为 $(\xi_n-a_{nk})_+$，由 $m_n\le m_k+a_{nk}$ 和 $\xi_n\le m_n/2$ 不超过 $m_k/2$；$n>k$ 没有正奖励，11 cell 中每个奖励不超过 $\xi_n\le t$。late pair $i<j$ 时，00、01、10 三个可能奖励分别由 $p_{00}/2,p_{01},p_{10}$ 控制：包含关系
+$\{x_n=0\}\subseteq\{x_i=x_j=0\}\cup\{x_n=0,x_i=1\}\cup\{x_n=0,x_j=1\}$
+给出 $n\le i$ 的第一项；01 的截断阈值差和 $n<i$ 的 10 截断阈值差分别不超过 $p_{01},p_{10}$，准确差式见 204.8。$n=i$ 的 10 质量为零；$i<n\le j$ 的 10 质量为 $(\xi_n-a_{nj})_+\le p_{10}$，因为 $\xi_n\le d_{in}\le p_{10}+a_{nj}$，其中 $a_{jj}=0$。11 由 $t$ 覆盖，early 标签只收集 pair 子集。未选坐标恒为 1，其日程退化为 singleton 或常量。因此同一基线同时支配完整 $N$ 和 $O$ 的全部标签，锚值为 $S+t$，从而两种 excess 都为零。
+
+对原晚总量置
+
+$$
+\eta_j=\min(\gamma_j,c_j),\qquad r_j=\gamma_j-\eta_j,\qquad
+R_k=\sum_{j=3}^k r_j.
+$$
+
+活跃投影时在 $J$ 外约定 $\eta_j=r_j=0$；全投影保留全部 $j\in I$ 的约束。$J$ 为空时只构造 pair 与 $T$，不出现空集的除法或阈值。
+
+按盒构造 $Z\ge0$，保留所选 pair 投影、总量 $S$ 和 $T=t$。另构造 $Y$：保留原 pair 行和 $T$，删除 early 正确行，从每个原晚正确行取比例 $\eta_j/\gamma_j$（零类取零），得 $Y\le y$，满足 $Q(Y)=Q(Z)$，并令 $U_{\rm ext}=y-Y\ge0$。于是 $Q(y)=Q(Z)+Q(U_{\rm ext})$，而精确有符号残差为
+
+$$
+F_{Q(y)-Q(Z)}(b)=-\gamma_1(1-b_1)-\gamma_2(1-b_2)-Ee
+ +\sum_{j\ge3}r_j(b_j-e).
+\tag{204.2}
+$$
+
+它在四类顶点的值依次为
+
+$$
+-E,\qquad -\gamma_2,\qquad
+\frac{R_k-(k-2)E}{k-1},\qquad
+\frac{3R_k-(k-2)E}{k+1}.
+\tag{204.3}
+$$
+
+$v_k-u_k=2(k-2)(R_k+E)/((k-1)(k+1))\ge0$，故此固定抽取的准确正支撑为
+
+$$
+\Theta=\max\left(0,\max_{3\le k\le L}
+\frac{3R_k-(k-2)E}{k+1}\right).
+\tag{204.4}
+$$
+
+若 $\Theta\le1$，则 $(Z,\Theta)\in E_N$ 且 $F_y\le\Theta$ 于 $H_N$。在相同投影、相同 $t$、相同事件类型且 $0\le\xi_j\le\gamma_j$ 的核心族内，任何零成本竞争者的总量 $\xi_j$ 都满足 $\xi_j\le\eta_j$；其残差减去 (204.2) 为 $\sum_j(\eta_j-\xi_j)(b_j-e)\ge0$。因此 $\eta$ 是这个指定族的逐点最小残差剖面。该最大性不扩展到任意 $E_N$ 证书、额外 base/late-pair 行或另一投影。
+
+原输入删除 early 正确行后 excess 至多为 $\delta+E$。203.2 的同一组停止守卫给
+$m_j/2,d_{ij}\ge(\gamma_j-E-\delta)_+$，而保留 early 奖励的 $(1,2;1,2,j)$ 给 $t\ge(\gamma_j-\delta)_+$。故
+$0\le r_j\le\min(\gamma_j,E+\delta)$，没有为不同守卫各分一份预算。若对所有 $k$ 有
+
+$$
+3\sum_{j=3}^k\min(\gamma_j,E+\delta)\le (k+1)+(k-2)E,
+\tag{204.5}
+$$
+
+则 $\Theta\le1$。若 $D=\{j:\gamma_j>c_j\}$，$h_k=|D\cap[3,k]|$，则 $R_k\le h_k(E+\delta)$；因而 $\Theta\le\delta$ 的充分条件是 $\delta\le1$ 且 $3h_k\le k-2$ 对每个 $k$。在 $E=0$ 时，$3h_k\le k+1$ 已足够。只有一个缺陷坐标 $j$ 时，后缀比率递减，故
+
+$$
+\Theta=\frac{(3r_j-(j-2)E)_+}{j+1};
+$$
+
+特别地 $j\ge5$ 时它不超过 $3\delta/(j+1)$，而 $E=0$ 时任意 $j\ge3$ 都允许。$3|J\cap[3,k]|\le k-2$ 是稀疏支撑的特例。另一个允许无界峰值的背景类为：令 $D_0=E+\delta$，例外集合 $J_* =\{8,12,16,\ldots\}$，非例外处 $\gamma_j\le D_0/12$。此时所有前缀满足 $\Theta\le15\delta/16$。具体地，$k<8$ 时
+$3R_k-(k-2)E\le\delta(k-2)/4$；$k\ge8$ 时，$N_k=|J_*\cap[3,k]|\le(k-4)/4$，故
+
+$$
+R_k\le\frac{(E+\delta)(k-2+11N_k)}{12},\qquad
+3R_k-(k-2)E\le\frac{\delta(15k-52)-E(k+20)}{16}.
+$$
+
+除以 $k+1$ 即得界；$\delta=0$ 时仍得到有 early 行的有序零成本支配。
+
+还可在同一投影内固定尺度 $s\in[0,1]$。令
+
+$$
+\eta_j(s)=\min(\gamma_j,sc_j),\quad r_j(s)=\gamma_j-\eta_j(s),\quad R_k(s)=\sum_{j=3}^k r_j(s),\quad
+H_s=E+(1-s)B.
+$$
+
+用 $s\nu$、$st$ 构造 $Z_s$；$Y_s$ 保留 $sP,st$ 和原晚正确行的 $\eta_j(s)/\gamma_j$ 比例，删除 early 正确行，零类仍取零。因此 $0\le Y_s\le y$ 且 $Q(Y_s)=Q(Z_s)$；其顶点残差为
+
+$$
+-E,\quad -\gamma_2,\quad
+\frac{R_k(s)-(k-2)E}{k-1},\quad
+\frac{3R_k(s)-(k-2)H_s}{k+1}.
+\tag{204.6}
+$$
+
+尺度 $s$ 的逐点最优性只在这个固定尺度和固定投影内成立，$s<1$ 时不能删去 $u_k$ 列。它确实补足两个端点：$L=5$、$E=0$、三晚总量均为 $3/2$、取上述完全指定的 fair-suffix 分数 $S=3,t=3/5$ 时，$\Theta_0=9/8$、$\Theta_1=27/20$，而 $s=1/2$ 给 $\Theta_s=9/10$。其输入 $N/O$ excess 均为 $9/10$：按 $12,13,14,15,23,24,25,34,35,45$ 排列，两类 pair 支撑同为
+$(9/2,9/2,9/2,87/20,9/2,9/2,87/20,9/2,87/20,87/20)$，空表及各 singleton 均为锚 $18/5$。两列最后顶点值在 $s=0,1/2,1$ 分别为 $(9/8,9/20),(9/10,9/10),(27/40,27/20)$。这是抽取定理的尺度子句，不是新的独立覆盖类；该数值族属于既有 fair-suffix 供应器。
+
+活跃与全投影确实不同。$L=4$、$\gamma_3=0,\gamma_4=1,t=1$，原 pair 权在 0100、1000 各为 1，正确权 $C_{1110}=1$，其余行权为零。全投影有 $d_{34}=0$，故不能抽取总量 1；只取 $J=\{4\}$ 时重置位 3，放在 0110、1010，各为 1，并取 $C_{1110}=1,T=1$，两目录 excess 都为零。重置只发生在构造的对偶分数，原 acquisition 仍保留全部晚约束。
+

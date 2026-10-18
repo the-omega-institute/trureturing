@@ -1,0 +1,51 @@
+**Definition 20.2 (permitted elimination and eligibility).** Only an
+atomic equality known as a mandatory positive conjunct of $\Phi_\eta$
+may be used as a definition. Pair cancellation exposes both children of
+a mandatory positive equality as mandatory conjuncts. An atom under a
+disjunction or negation is not selected, and a task-hole equality is not
+assumed to hold.
+
+For either orientation $\rho^a(x)=T$, if $L_a(T)=V$ succeeds and $x$ does
+not occur in $V$, substitute $V$ for $x$ in every remaining constraint,
+the source pattern, the outside context and every hole term. Remove the
+now-true defining equation, normalize, and reduce comparisons again.
+Bare $x=T$ is included with $a=0$. Do not introduce new variables in this
+phase. Record the completely composed substitution
+
+$$
+\sigma:X_\eta\longrightarrow\operatorname{Templates}(Y_\eta),
+\qquad Y_\eta\subseteq X_\eta,\qquad \sigma(y)=y\ (y\in Y_\eta).
+\tag{CE.20.2}
+$$
+
+A formula is *synchronous residual* when reduction leaves a Boolean
+combination of constants and atoms
+
+$$
+\rho^a(y)=\rho^b(z),\qquad \rho^a(y)=g,
+\tag{CE.20.3}
+$$
+
+with $g$ a complete finite ground tree. These denote actual tree relations.
+For a chart search all permitted elimination schedules, including stopping
+immediately and stopping after any step. It is eligible if one schedule
+either yields a constant contradiction in its domain, or makes both its
+remaining domain $D_\eta=\Phi_\eta[\sigma]$ and every reached-hole equality
+
+$$
+e_{\eta,qr}(v):=
+[T_{\eta,q}[\sigma][v]=T_{\eta,r}[\sigma][v]],\qquad q<r\in J_\eta,
+\tag{CE.20.4}
+$$
+
+synchronous residual. A chart with a synchronous domain that is empty
+may also be discarded, using the finite automaton test of Lemma 21.1,
+without requiring its target comparisons to reduce.
+
+An input belongs to $\mathcal E_{\rm CE}$ if at least one of the two
+covers of Definition 19.3 has every surviving chart eligible. Choose one
+such cover and one witnessing schedule per chart, all from common input.
+There is no new branch choice depending on unknown parameter equality.
+An input failing this recognizer is **outside this theorem**. That result
+is never a certificate of service nonexistence.
+

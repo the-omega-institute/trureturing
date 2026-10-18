@@ -1,0 +1,20 @@
+**Remark 20.4 (index scope and distinct tasks).** The $\Sigma^0_2$ and
+$\Pi^0_1$ statements concern the explicit total presentation (PCA.44).
+For arbitrary program numbering, totality is an additional ambient
+index property. No such arithmetical label for the conjunction of
+totality and preparation is asserted here. The promise results are
+strong because the reductions actually land in the promise, not
+because off-promise descriptions were treated as total.
+
+Validity of a supplied certificate, extraction of some valid certificate,
+decision of a given three-budget request, construction of a mathematical
+table from valid finite data, and actual realization with paid services
+are separate questions. Theorem 15.2 already excludes a uniform extractor
+under totality and finite-preparability promises; that extraction theorem
+is reused without a second proof. Theorems 12.4 and 14.3 already give
+the exact finite mathematical table tasks once the entry assignment
+and determining facts are supplied. The new resource inequalities
+(PCA.43) and (PCA.47) expose cardinality and address weight for an
+unbounded family, rather than inferring those prices from mere
+termination of the input computation.
+

@@ -1,0 +1,58 @@
+**Definition 1.3 (one fixed added operator contract).** Choose
+$I=(l,u)\Subset(0,h)$, put $d=u-l$, and fix $\varepsilon>0$. Throughout,
+
+$$
+\Omega=I\times\mathbb T^2,\qquad
+D=I\times\mathbb T,\qquad
+\mu=dk\,d\alpha\,d\beta,\qquad \nu=dk\,d\alpha,
+\tag{1.8}
+$$
+
+with unnormalized angular measures. Use the constant density one and
+covariance $A_\varepsilon=\operatorname{diag}(\varepsilon^2,1)$ of
+[G, Definition 4.1]. Let
+
+$$
+T[f]=\int_\Omega\bigl(\varepsilon^2|Pf|^2+|Qf|^2\bigr)d\mu,
+\qquad
+\mathcal F=\overline{C_c^\infty(\Omega)}^{(\|\cdot\|_2^2+T)^{1/2}}.
+\tag{1.9}
+$$
+
+Phases are periodic; compact support here concerns the open height interval.
+The nonnegative selfadjoint operator is the form operator
+
+$$
+\begin{aligned}
+D(L)&=\{f\in\mathcal F:\ \exists F\in L^2(\mu),\
+ T(f,v)=\langle F,v\rangle\text{ for every }v\in\mathcal F\},\\
+Lf&=F,\qquad L=-(\varepsilon^2P^2+Q^2)_{F,\Omega}.
+\end{aligned}
+\tag{1.10}
+$$
+
+Inner products are linear in the first slot. This is the horizontal
+Dirichlet domain, not an asserted isotropic $H^1_0(\Omega)$ domain.
+The clock is $H_t=e^{-tL}$, with instantaneous control covariance
+$2A_\varepsilon\,dt$. Killing occurs on first height exit from $I$.
+For deterministic commands constrained to this cylinder, (1.3) is
+strengthened to $k+m>l$, $k+M<u$; this does not redefine the original
+guard on $\mathcal M$.
+
+Fix one original source point $o=(k_o,\alpha_o,\beta_o)\in\Omega$ and set
+
+$$
+\Gamma_o(q)=\int_0^\infty p_t^\Omega(o,q)\,dt,\qquad
+V_o[f]=\int_\Omega\Gamma_o|f|^2d\mu,\qquad q_g[f]=T[f]-gV_o[f].
+\tag{1.11}
+$$
+
+[G, Propositions 2.1--2.2] supply a positive smooth heat kernel, a positive
+spectral gap, compact free resolvent, and a positive Green field smooth and
+finite off $o$, integrable on $\Omega$, with
+$\int\Gamma_o L\varphi\,d\mu=\varphi(o)$ on the compact smooth core.
+Its value at $o$ is infinite. All field comparisons below use this field,
+this pole, this density, these boundaries and this clock unless a different
+source is explicitly declared. Diffusion, killing, attraction and the
+Hilbert space of amplitudes are added mathematical structure.
+

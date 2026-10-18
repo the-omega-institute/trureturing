@@ -1,0 +1,99 @@
+**Proposition 19.2 (all fifteen actual first-halt traces).** Under
+Assumptions 17.1 and 17.4's conditional services, Definition 19.1
+is a correct immediately writable controller. Its full traces are
+as follows. An ordered list of addresses means chronological
+submissions, and an ordered word path includes its first halt.
+Every row refers to the one actual $Y_{a,b}$ of Proposition 17.2.
+
+| Origin $(a,b)$ | Submitted actual literals in order | Actual replies in order | Complete word path | First halt | Complete output | Reads | Response writes | Peak | Sum |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| $(0,15)$ | `LLRRRRRRRRRRRRR`, `LRRRRRRRR` | $\bot,\bot$ | `000000` → `001000` → `001010` | $H_{15}$ | $2$ | $2$ | $2$ | $15$ | $24$ |
+| $(1,15)$ | `LLRRRRRRRRRRRRR`, `LRRRRRRRR` | $\bot,\bot$ | `000000` → `001000` → `001010` | $H_{15}$ | $2$ | $2$ | $2$ | $15$ | $24$ |
+| $(2,15)$ | `LLRRRRRRRRRRRRR`, `LRRRRRRRR` | $\bot,\bot$ | `000000` → `001000` → `001010` | $H_{15}$ | $2$ | $2$ | $2$ | $15$ | $24$ |
+| $(3,15)$ | `LLRRRRRRRRRRRRR`, `LRRRRRRRR` | $\bot,\bot$ | `000000` → `001000` → `001010` | $H_{15}$ | $2$ | $2$ | $2$ | $15$ | $24$ |
+| $(4,15)$ | `LLRRRRRRRRRRRRR`, `LRRRRRRRR` | $\bot,\bot$ | `000000` → `001000` → `001010` | $H_{15}$ | $2$ | $2$ | $2$ | $15$ | $24$ |
+| $(5,15)$ | `LLRRRRRRRRRRRRR`, `LRRRRRRRR` | $\bot,\bot$ | `000000` → `001000` → `001010` | $H_{15}$ | $2$ | $2$ | $2$ | $15$ | $24$ |
+| $(0,1)$ | `LLRRRRRRRRRRRRR`, `LRRRRRRRR` | $\bot,\alpha$ | `000000` → `001000` → `001001` | $H_{1L}$ | $16$ | $2$ | $2$ | $15$ | $24$ |
+| $(1,1)$ | `LLRRRRRRRRRRRRR`, `LRRRRRRRR` | $\bot,\beta$ | `000000` → `001000` → `001001` | $H_{1L}$ | $16$ | $2$ | $2$ | $15$ | $24$ |
+| $(1,0)$ | `LLRRRRRRRRRRRRR`, `LRRRRRRRR` | $\bot,\mathsf b$ | `000000` → `001000` → `101000` | $H_0$ | $17$ | $2$ | $2$ | $15$ | $24$ |
+| $(15,5)$ | `LLRRRRRRRRRRRRR` | $\alpha$ | `000000` → `010000` | $H_5$ | $12$ | $1$ | $1$ | $15$ | $15$ |
+| $(15,4)$ | `LLRRRRRRRRRRRRR` | $\beta$ | `000000` → `000100` | $H_4$ | $13$ | $1$ | $1$ | $15$ | $15$ |
+| $(15,3)$ | `LLRRRRRRRRRRRRR`, `LRRRRRRRRRRRRRRR` | $\mathsf b,\bot$ | `000000` → `100000` → `100100` | $H_3$ | $14$ | $2$ | $2$ | $16$ | $31$ |
+| $(15,2)$ | `LLRRRRRRRRRRRRR`, `LRRRRRRRRRRRRRRR` | $\mathsf b,\alpha$ | `000000` → `100000` → `100010` | $H_2$ | $15$ | $2$ | $2$ | $16$ | $31$ |
+| $(15,1)$ | `LLRRRRRRRRRRRRR`, `LRRRRRRRRRRRRRRR` | $\mathsf b,\beta$ | `000000` → `100000` → `100001` | $H_{1U}$ | $16$ | $2$ | $2$ | $16$ | $31$ |
+| $(15,0)$ | `LLRRRRRRRRRRRRR`, `LRRRRRRRRRRRRRRR` | $\mathsf b,\mathsf b$ | `000000` → `100000` → `101000` | $H_0$ | $17$ | $2$ | $2$ | $16$ | $31$ |
+
+**Proof, actual readout and writes.** The three addresses have native
+functions $P_{27},P_{16},P_{30}$. Equation (NARC.18.2) gives
+$P_{27}$ cells $D_L,\{27\},\{28\},D_U$;
+$P_{16}$ on $D_L$ has cells $\{2,\ldots,7\},\{16\},\{17\},\{18\}$;
+$P_{30}$ on $D_U$ has cells $\{29\},\{30\},\{31\},\{32\}$.
+Substitution of the fifteen ages in Proposition 17.2 gives exactly
+the displayed actual replies and first halts. The final constants
+are their respective $17-b$. Every running row realizes all four
+reply labels on its exact arriving support; no unsupported-response
+completion is needed here.
+
+All eleven displayed words are distinct, length six, and contain no
+adjacent ones. Number coordinates from the left by $1,\ldots,6$.
+The immediate response flips, in reply order, are
+
+$$
+\begin{array}{c|cccc}
+ &\bot&\alpha&\beta&\mathsf b\\ \hline
+R&3&2&4&1\\
+A&5&6&6&1\\
+B&4&5&6&3.
+\end{array}
+\tag{NARC.19.1}
+$$
+
+For example the lower branch transition is
+`001000` → `101000`, flipping coordinate one, while the upper
+branch is `100000` → `101000`, flipping coordinate three.
+Each listed actual transition changes exactly one bit to a legal
+installed word. The response is discarded at that update, with
+no added instruction or mutable field. All eleven installed words
+are reached by at least one displayed origin.
+
+**Proof, the same-source closed loop.** For every state $s$ define
+the exact proof support
+
+$$
+\mathcal C_s=
+\{(\ell_{a,b},Y_{a,b}):(a,b)\in C
+          \text{ and the displayed run visits }s\}.
+\tag{NARC.19.2}
+$$
+
+The running supports are all $C$ at $R$, the nine origins of $D_L$
+at $A$, and the four origins of $D_U$ at $B$. The halt supports
+are exactly those in Definition 19.1. Every actual Read is legal
+and has identity source transition: its successor source is that
+same $Y_{a,b}$. The response-cell calculation places that same
+$(\ell_{a,b},Y_{a,b})$ in the prescribed successor support.
+Every halt support has its halt's correct constant lag. Take proof
+rank two at $R$, one at $A,B$, and zero at every halt. Rank strictly
+decreases on every supported step. Initial coverage, action legality,
+same-source successor closure, rank descent and halt correctness
+are therefore exactly [FIB, Theorem 27.2][FIB-RW]'s conditions.
+Neither supports nor ranks are accessible inputs or runtime counters.
+
+The non-self supported edges are precisely
+
+$$
+\begin{aligned}
+&RA,\ RH_5,\ RH_4,\ RB,\\
+&AH_{15},\ AH_{1L},\ AH_0,\\
+&BH_3,\ BH_2,\ BH_{1U},\ BH_0.
+\end{aligned}
+\tag{NARC.19.3}
+$$
+
+Every edge is witnessed in the displayed actual-source table.
+The words give its injective edge-preserving map into $\Gamma_6$.
+[FIB, Theorem 45.4][FIB-RW] hence transfers the same closed-loop
+certificate under the conditional write service. The different
+source alternatives supply requirements on one installed table;
+no execution splices their trees or histories. $\square$
+

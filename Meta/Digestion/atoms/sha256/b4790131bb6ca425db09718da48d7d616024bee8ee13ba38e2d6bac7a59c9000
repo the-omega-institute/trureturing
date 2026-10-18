@@ -1,0 +1,60 @@
+**Theorem 2.1 (strict coercivity, closed forms and attainment).** Under
+Definitions 1.1--1.4 both infima in (1.14) are finite attained minima.
+The forms are closed and semibounded on exactly their declared domains.
+In particular
+
+$$
+-gB_\varepsilon\le E_{\rm full}\le E_{\rm base}<\infty.
+\tag{2.1}
+$$
+
+Proof. From (1.12), positivity of $\Gamma_o$ and (1.13),
+
+$$
+(1-\theta)T[f]-gB_\varepsilon\|f\|_2^2
+ \le q_g[f]\le T[f].
+\tag{2.2}
+$$
+
+For $\kappa=gB_\varepsilon+1$ this gives
+
+$$
+(1-\theta)T[f]+\|f\|_2^2
+ \le q_g[f]+\kappa\|f\|_2^2
+ \le T[f]+\kappa\|f\|_2^2.
+\tag{2.3}
+$$
+
+The middle expression is a positive definite quadratic form whose norm
+is equivalent to the complete free form norm on $\mathcal F$. The
+potential sesquilinear form is continuous in that norm, since
+
+$$
+\left|\int_\Omega\Gamma_of\overline z\,d\mu\right|
+ \le V_o[f]^{1/2}V_o[z]^{1/2}.
+\tag{2.4}
+$$
+
+It follows that the shifted form is a Hilbert norm on the same vector
+space, proving closedness and the lower bound. Equations (1.8) and
+(1.15) give exactly the same statements for the base form.
+
+The full free form domain embeds compactly into $L^2(\Omega)$ by the
+inherited compact free resolvent. Equivalently, the spectral calculus of
+$L$ writes this embedding as $(1+L)^{-1/2}$ from an $L^2$ space; this
+operator is compact because the free resolvent is compact. On the base,
+the eigenvalues (1.9) tend to infinity with $j^2+m^2$, so the same
+compactness follows directly by truncating the coefficient expansion.
+Equivalence (2.3) preserves both compact embeddings for the shifted forms.
+
+Each unit sphere has nonzero smooth members with finite energy by
+(1.12); hence its infimum has a finite upper bound. It has lower bound
+$-gB_\varepsilon$ by (2.2). A normalized minimizing sequence is bounded
+in the shifted form norm by (2.3). It has a weakly convergent subsequence
+in that Hilbert space and a strongly convergent subsequence in $L^2$.
+The two limits coincide, and the strong limit still has norm one. Weak
+lower semicontinuity of the shifted norm, followed by the strong
+$L^2$ convergence of the shift term, proves attainment. This argument
+applies to both forms. Finally the isometry $J$ and (1.15) give the
+middle inequality in (2.1). No sign of a trial energy was used. $\square$
+

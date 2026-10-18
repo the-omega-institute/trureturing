@@ -1,0 +1,4 @@
+**Proposition 11.1 (Two labels exhaust a two-state budget).** For $0<\alpha<1/2$, $\mathfrak A_2(q,\alpha)=\varnothing$ at every $q\in(0,1)$.
+
+Proof. Both decision labels are included in the complete budget, so no active configuration remains. The emitted label is a source-independent initial choice. If its probability of being one is $p$, the two risks require $p\le\alpha$ and $1-p\le\alpha$, which would imply $1\le2\alpha$. This is impossible. This is also the empty-class assertion of the uniform companion's Proposition 8.3. Thus (9.4) at $M=2$ is a universal statement over an empty class, not a nonemptiness assertion. $\square$
+

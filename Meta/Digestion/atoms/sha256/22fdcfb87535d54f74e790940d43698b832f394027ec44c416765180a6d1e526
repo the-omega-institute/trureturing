@@ -1,0 +1,15 @@
+**Corollary 14.4 (exact-three-pure critical supports have no paired pure parent).**
+Under Assumptions 1.1 and 1.4 with $t>T_3$, let
+$r\in[r_-,r_+]\setminus U_8$ and take the canonical edge
+representation of FC Theorem 6.1 at $r$. If it has exactly three
+positive pure coordinates, none belongs to a compatible paired group.
+
+Proof. FC Theorem 6.1 gives nine positive columns in nine distinct
+groups, rank $A_I=8$ and rank $H_I=9$. For any occupied pure
+coordinate in a pair, its companion has zero weight and is available
+in the complete inventory. Theorem 14.2 would give another law at
+the same $(B,r,J_t)$ with at most eight groups. FC Theorems 3.3
+and 5.2 would put $r$ in $U_8$, a contradiction. This excludes
+only the stated critical support pattern; it asserts no universal
+$U_8$ or $U_7$ coverage. $\square$
+

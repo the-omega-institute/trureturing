@@ -1,0 +1,21 @@
+**Proposition 8.1 (the complete phase tail).** A phase request of finite
+action $\alpha\in\mathbb R$ and duration $L>0$ has no new failure in
+any of the five modes. Its live unitary on $V$ is
+
+$$
+U_x(\alpha)=\operatorname{diag}_{(+,-,2)}
+ (e^{-i\alpha/2+ix\alpha/r},e^{ix\alpha/r},1).
+\tag{FH.26}
+$$
+
+Its normalized ideal output is
+$\rho_{x,\beta,m}^{\alpha}=U_x(\alpha)\rho_{x,\beta,m}
+U_x(\alpha)^\dagger$ in the live sector, with zero new failure,
+abort and rejection mass.
+
+Proof. Height is constant, so $\lambda=0$ and every $g_i=0$ in
+(FH.5). The integrated phase is $\alpha w(x)$. Equal weights within
+each paired direction and the original negative phase convention give
+(FH.26). This is also the response (RA.17) of [RA][RA]; the statement
+does not supply its separate blank-probe port. $\square$
+

@@ -1,0 +1,53 @@
+**Convention 17.1 (credited point and a necessary finite output test).**
+All quantities with a star in §§17–20 refer to the exact point $u_*$
+and channel of §§13–16. In particular, the root, ranks, strict margins,
+invertibility of $D\Psi(u_*)$ and value $E_*=F(x_*)$ are the credited
+ordinary computer-assisted premises of Proposition 13.2, Corollary 13.3
+and Theorem 16.1. The deductions below use those premises without
+introducing another numerical certificate. The basis indices $0,1,2$
+mean $(+,-,2)$, and the Choi order and normalization are exactly
+(CG.125), with no factor $1/3$.
+
+Define a common CPTP output operation $\mathcal C$ that keeps the live
+compression to $V$, sends its complementary trace to a scalar other
+flag, and sends the trace of the entire canonical failure register to
+a scalar failure flag. It discards cross terms between $V$ and its
+orthogonal live complement. All additional output sectors also go to
+other. Every original failure label, time and stopped quantum support
+contributes its entire mass to failure, including singular measures;
+none is selected or normalized. This is only a necessary lower test of
+the unchanged complete output task (CG.20).
+
+Its output algebra, target and arbitrary common channel have the forms
+
+$$
+\begin{aligned}
+\mathcal A_c&=M_3(\mathbb C)\oplus\mathbb C\oplus\mathbb C,\\
+\Omega^c_{y,U}&=(UB_yU^\dagger,\ a_y^{\mathrm f},\ 0),
+& a_y^{\mathrm f}&=1-s_y=\frac6{y+6},\\
+\Theta(A)&=(\Lambda(A),\ \operatorname{tr}(G_fA),
+                                     \operatorname{tr}(G_oA)),\\
+J_\Lambda&\succeq0,\quad G_f,G_o\succeq0,
+&\operatorname{Tr}_{\rm out}J_\Lambda+G_f^T+G_o^T&=I_3,\\
+E_c(\Theta)&=\max_{y,U}\frac12\left(
+ \|UB_yU^\dagger-\Lambda(U\rho_yU^\dagger)\|_1
+ +|a_y^{\mathrm f}-\operatorname{tr}(G_fU\rho_yU^\dagger)|
+ +\operatorname{tr}(G_oU\rho_yU^\dagger)\right).
+\end{aligned}
+\tag{CG.155}
+$$
+
+Here $y\in\{5,16,27\}$ and $U$ runs over the same four actual signs
+as (CG.111). The superscript on $a_y^{\mathrm f}$ distinguishes this
+scalar failure mass from the input vector $a_y$ of that equation.
+The input effects are $G_f,G_o$; the transposes in the Choi budget
+are essential for complex maps. Choi positivity and positive scalar
+functionals make this budget necessary and sufficient for one CPTP
+$\Theta$. Contractivity gives $E_c(\mathcal C\Phi)\leq E(\Phi)$.
+The effects in Theorem 14.1 factor through $\mathcal C$, so its same
+budget proof gives $E_c(\Theta)\geq F(x_*)$ for every finite-output
+$\Theta$, including ones not supplied as reductions of a particular
+full-output channel. The credited $\mathcal C\Phi_*$ supplies equality.
+Consequently $\min_\Theta E_c(\Theta)=E_*$. This auxiliary equality
+does not replace the original comparison by its finite marginal.
+

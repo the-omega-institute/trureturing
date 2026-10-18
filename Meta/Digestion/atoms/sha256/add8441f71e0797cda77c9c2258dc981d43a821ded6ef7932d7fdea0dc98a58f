@@ -1,0 +1,10 @@
+**Boundary 5.2 (Zero width).**
+At $\delta=0$ the incremental term in (5.2) vanishes. Then
+$a_8=5\tau$ and $a_9\le a_8$, and the declared heads satisfy
+both head conditions of
+[XVII300.1](https://github.com/the-omega-institute/trureturing/blob/07dfbdacb577f1cb1ebd6b6048ee3efa4c75285d/docs/develop/theory/KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XVII.md#300-exact-coupled-head-projection-and-one-common-stopped-law).
+Its existing common stopped law and counted $N$ completion attain
+both optima $5\tau$ for every such tail. This is that theorem's
+attained boundary, with no new attainment assertion at positive width.
+The case $\tau=0$ is outside the positive-sequence family (5.1).
+

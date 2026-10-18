@@ -1,0 +1,36 @@
+**Theorem 5.3 (journal coupling at every primitive cut).** At every actual cut
+of the adapter,
+
+$$
+E(h)=A_P(h)\mathbin{+\!+}P(h),\qquad |P(h)|\le1.
+$$
+
+Every completed producer row describes the event actually committed on that
+installed source; every readable receiver prefix is its designated sealed
+producer prefix bit for bit. At a quiescent cut $P(h)$ is empty. Source epoch,
+source-call count, semantic-event count and archive/copy progress remain distinct.
+
+**Proof.** Valid boot has empty event and row words. Request ingress,
+generation, execution and any partial successor writes precede commitment;
+they change actual work and receipts but add no semantic event or sealed row.
+At commitment append the one actual event of Theorem 4.5 to $E$ and put it
+in $P$. For NativeLocal or Halt use its completed controller or complete-output
+commitment, respectively. The admission rule prevents a second event while
+this pending event remains. Counter materialization and proper row-prefix
+writes preserve $E,A_P,P$. The final row seal appends precisely that pending
+event to $A_P$ and empties $P$, preserving the equation. Its fields come from
+the retained actual request and response, not a claimed transcript.
+
+Each copy begins with a sealed immutable sender and an allocated inaccessible
+destination. The serial loop copies exactly each designated bit; PR57.L4
+therefore supplies equality at final destination seal, with unchanged framing
+and origin identities. A partial copy changes no readable receiver prefix.
+An executed reject follows the same commitment/row sequence, whereas an
+unexecuted illegal action has no transition and contributes nothing. Induction
+over primitive cuts gives the invariant and authenticity assertions.
+
+The counters follow their different cases in Definition 4.3. Repeated reads
+and rejects advance $q,j$ without advancing $e$; locals advance only $j$;
+copies advance the primitive meter and destination progress without adding
+source events. Thus none of those counts can replace the others. $\square$
+

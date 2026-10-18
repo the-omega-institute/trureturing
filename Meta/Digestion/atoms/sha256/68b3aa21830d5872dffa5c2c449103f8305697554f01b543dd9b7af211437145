@@ -1,0 +1,68 @@
+**Lemma 8.1 (an exact estimating extension).** Choose $\delta_*>0$ sufficiently small that for $0<\delta\le\delta_*$ the strip $|r|\le3\delta/s$ lies strictly between both original faces and $3\nu\delta<1/4$. Let $\rho\in C_c^\infty(\mathbb R)$ be even, $0\le\rho\le1$, one on $[-2,2]$ and zero on $|r|\ge3$. Define
+
+$$
+d_{s,\delta}(r)=
+\begin{cases}
+\rho(sr/\delta)((1+\beta_sr)^{-2}-1),& |r|<3\delta/s,\\
+0,&|r|\ge3\delta/s.
+\end{cases}
+\tag{8.1}
+$$
+
+The rational expression is evaluated only in the first branch. It has no singularity there. In particular (8.1) does not multiply an undefined remote singularity by zero. Put
+
+$$
+\begin{aligned}
+\widehat q_{s,\delta}[u]
+ =h[u]+a\int d_{s,\delta}|Yu|^2
+ -\chi\int(\beta_sV_1+\beta_s^2V_2+\lambda s^2V_{\rm t}+\mathcal R_s)|u|^2
+ -a\lambda s^2\|u\|_2^2.
+\end{aligned}
+\tag{8.2}
+$$
+
+This is an estimating form on $\mathcal Q_E$. On vectors supported in $|r|\le2\delta/s$, it agrees exactly with the original sheared $q_s^c$, including its original multiplier. It is not a replacement native operator.
+
+For every such complex supported vector $u$, define
+
+$$
+c=\frac{b(p,u)}{b[p]}=\frac{\int Vp u}{\mu},\qquad v=u-cp.
+\tag{8.3}
+$$
+
+There are $c_1,C>0$, independent of sufficiently small fixed $\delta$, such that for all sufficiently small $s$,
+
+$$
+\widehat q_{s,\delta}[u]\ge c_1b[v]-Cs^2\|u\|_2^2.
+\tag{8.4}
+$$
+
+The eventual small-$s$ threshold is allowed to depend on $\delta$.
+
+Proof. Exact agreement follows from (2.3), (3.3) and $\rho=1$ on the indicated support. Smoothness of the cutoff makes (8.1) a bounded smooth coefficient. Uniformly for $\delta\le\delta_*$,
+
+$$
+\begin{gathered}
+|d_{s,\delta}|\le C\delta,\qquad
+|d_{s,\delta}|\le C|\beta_sr|\rho(sr/\delta),\\
+|d_{s,\delta}+2\beta_sr\rho(sr/\delta)|
+ \le C\beta_s^2r^2\rho(sr/\delta).
+\end{gathered}
+\tag{8.5}
+$$
+
+The weak critical equation proves the equality in (8.3), and $Vp\in L^2$ gives $|c|\le C\|u\|_2$, $\|v\|_2\le C\|u\|_2$, $b(p,v)=0$. Also $h[u]=h[v]$. The gap (5.1) applies.
+
+In the kinetic expansion of (8.2), the base linear integral against $|Yp|^2$ vanishes by parity, so (8.5) bounds its remaining base term by $C\beta_s^2A|c|^2$. The cross term is bounded by $Cs|c|\sqrt{b[v]}$, using $rYp\in L^2$, and the $v$ diagonal term is at least $-C\delta b[v]$. This decomposition uses the extension on $p$ and $v$ outside the strip, where each is defined; exact agreement with the native form is needed only for their sum $u$.
+
+For the potential, the $V_1$ base term is zero. The $V_2,V_{\rm t}$ base terms cost at most $Cs^2|c|^2$. Formula (4.5) bounds the cross terms by $C(s+s^2)|c|\sqrt{b[v]}$, and Theorem 4.1 bounds the diagonal coefficient terms by $C(s+s^2)b[v]$. Keep the residual as a form on $u$, bounding it by $Cs^{5/2}\|u\|_2^2$, and keep the exact threshold subtraction. Consequently
+
+$$
+\widehat q_{s,\delta}[u]
+ \ge(a\theta-C\delta-Cs)b[v]
+       -Cs|c|\sqrt{b[v]}-Cs^2(|c|^2+\|u\|_2^2).
+\tag{8.6}
+$$
+
+Choose $\delta_*$ smaller if necessary, then $s$ small, to preserve a fixed fraction of $a\theta$. Young's scalar inequality in $\sqrt{b[v]}$ and $|c|\le C\|u\|_2$ prove (8.4) with constants uniform over these fixed $\delta$. All steps hold for complex $u$, irrespective of kinetic size. $\square$
+

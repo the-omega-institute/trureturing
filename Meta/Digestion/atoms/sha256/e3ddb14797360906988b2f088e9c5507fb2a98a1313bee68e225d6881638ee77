@@ -1,0 +1,31 @@
+### 三、因果场还具有比钟场更强的 holonomy
+
+即使所有路径的局部钟积分都相同，状态更新仍可能具有路径依赖。
+
+对闭合路径：
+
+$$
+\gamma:
+e_0\to e_1\to\cdots\to e_n=e_0,
+$$
+
+定义状态 holonomy：
+
+$$
+\mathcal H_{\mathcal U}(\gamma)
+=
+\mathcal U_{e_{n-1}\to e_n}
+\circ\cdots\circ
+\mathcal U_{e_0\to e_1}.
+$$
+
+如果：
+
+$$
+\mathcal H_{\mathcal U}(\gamma)\ne\mathrm{id},
+$$
+
+表示状态绕一圈后发生了不可忽略的变化。
+
+这不是局部钟积分的失败，而是因果连接本身的路径依赖。
+

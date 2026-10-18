@@ -1,0 +1,55 @@
+**Corollary 2.5 (Uniform finite-wait alternatives).** For every rational
+$0<\delta<1$, put
+
+$$
+h=\frac\delta{48},\qquad
+n=\left\lceil\frac{153600}{\delta^2}\right\rceil,\qquad
+H=nh,\qquad \mathcal W_\delta=\{jh:0\le j\le n\}.
+\tag{2.19}
+$$
+
+For every original legal complex scalar port, one of the $4(n+1)$
+alternative tests with $s\in\{N,2,3,5\}$ and $t\in\mathcal W_\delta$,
+input $DQ_s(t)D^\dagger$, actual wait $t$, complete read and Stop has
+
+$$
+\operatorname{TV}>\frac{12993}{25000}-\delta,
+\qquad
+\frac{3200}{\delta}\le H\le\frac{3200}{\delta}+\frac\delta{48}.
+\tag{2.20}
+$$
+
+Proof. Retain the estimates of QEC Theorem 2.6, with the improved mean
+(2.17). Here is their dependence on the original conditions.
+The two-angle extension of $g$ is in $[0,1]$ for every CPTP channel,
+because each conjugated rank-one projector is a state and an effect.
+Its Fourier support satisfies $|k|+|l|\le4$, with at most forty
+nonconstant indices and each coefficient of modulus at most one.
+From (1.4), rational squaring gives
+$2.13<\omega_+<2.14$ and $0.66<\omega_-<0.67$.
+For all nonzero supported indices,
+$|k\omega_++l\omega_-|>1/10$: equal signs are immediate; with
+opposite signs, $|k|\ge2$ forces $|l|\le2$, whereas $|k|=1$
+permits at most $|l|=3$ and gives
+$2.13-3(0.67)=0.12>0.1$. Hence
+
+$$
+\left|H^{-1}\int_0^H g(t)\,dt-\mathscr S(T)\right|<800/H.
+\tag{2.21}
+$$
+
+Since $H\ge3200/\delta$, some $t\in[0,H]$ and positive-weight mode
+have failure at least $12993/25000-\delta/4$. The fourth-weight support
+is precisely the displayed set of four modes.
+For a rank-one projector $Q_s(t)$,
+$\|Q_s'(t)\|_1\le2\|A\|$. CPTP trace-norm contraction on Hermitian
+matrices, obtained from positive and negative parts, then gives
+$|f_s'(t)|\le4\|A\|=4\omega_+<12$.
+A grid point within $h$ loses at most $12h=\delta/4$ in failure.
+Its TV is at least $12993/25000-\delta/2$, strictly greater than the
+claimed threshold. The ceiling defining $n$ gives the time bounds.
+All waits are finite and nonnegative. These are alternative single-input
+tests, chosen for a competitor; they do not estimate an unknown channel
+from one sample or supply physical preparation and clock bounds.
+$\square$
+

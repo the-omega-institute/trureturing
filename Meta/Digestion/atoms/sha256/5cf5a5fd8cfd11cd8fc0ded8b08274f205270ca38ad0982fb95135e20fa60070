@@ -1,0 +1,12 @@
+**定义 10.1（质量零与初始隐藏方向上的未来盲核）。** 在假设 9.1 下，定义
+
+$$
+\begin{aligned}
+K_m&=T\cap\bigcap_{w\in\mathcal W,\ |w|\le m}\ker A_w,&
+K_\infty&=T\cap\bigcap_{w\in\mathcal W}\ker A_w,\\
+N_m&=N\cap K_m,&N_\infty&=N\cap K_\infty.
+\end{aligned}
+$$
+
+这些核比较的是共同初始源的差异。$N$ 已施加初始 $P$，故 $N_m$ 是仍对所声明未来记录盲的初始隐藏方向。$K_{m+1}\subseteq K_m$、$N_{m+1}\subseteq N_m$；包含关系依靠记录族累积，不声称每个新步骤都严格缩小。
+

@@ -1,0 +1,18 @@
+**Definition 7.3 (old-trace recollection after isolated export).** At the
+end of the sweep export one complete finite value
+$E(\theta,\sigma)$. It may correlate all labels and the actual order.
+After paid isolation, a common deterministic recollector knows only
+$E,c,D,\Sigma,q$, makes at most $q$ fresh adaptive original-root Reads,
+and must return the exact old ordered event content $T_{\theta,\sigma}$.
+The old prefix, selector script, permission state, schedule handles,
+timing and label buffers are unavailable unless represented in $E$.
+The source remains $t_\theta$ with the same authenticated binding.
+
+The attainable input domain is
+$H_{c,\Sigma}=\{\alpha,\beta\}^{U_c}\times\Sigma$.
+The name count is over source-and-history inputs, not the original
+source-only $M_1(D)$. Reconstructing the old event content does not
+manufacture an authenticated receipt that those events occurred. If a
+callable historical receipt is required, a service must bind the archive
+or its code to committed events and authenticate that binding.
+

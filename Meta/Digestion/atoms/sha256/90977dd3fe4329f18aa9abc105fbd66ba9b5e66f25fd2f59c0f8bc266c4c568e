@@ -1,0 +1,37 @@
+**Definition 5.2 (Original open-path optimization).** Let $B_n=\{w\in\{0,1\}^n:w_iw_{i+1}=0\ (1\le i<n)\}$ and let $E(\Gamma_n)$ contain all unordered legal Hamming-one edges, with the endpoint convention of Definition 1.1. Put $\gamma(u,v)=uv/(u+v)$ for $u+v>0$ and $\gamma(0,0)=0$, and
+
+$$
+\Phi_n(\mu)=\sum_{\{w,z\}\in E(\Gamma_n)}\gamma(\mu_w,\mu_z),\qquad
+\kappa_n=\max_{\mu\in\mathcal P(B_n)}\Phi_n(\mu),\qquad
+c_\star=\lim_{n\to\infty}\kappa_n/n.
+$$
+
+Use the stationary risk identity cited in [MW, §1]: $d(P)=\mathbb E_P(X_0-q)^2\le c_\star$. Define
+
+$$
+D_r(P)=\mathbb E_P(X_0-q_{r,0})^2,\qquad
+C_N=\sup_{\theta\in\Theta_N}d(P_\theta),\qquad
+U_{N,r}=\max_{\theta\in\Theta_N}D_r(P_\theta).
+$$
+
+**Open Problem 5.3 (Unchanged finite-attainer or all-$N$ target).** Decide whether an exact finite $\theta$ attains $c_\star$, or $C_N<c_\star$ for every finite $N$. The complete-domain separation criterion cited in [MW, §9] is
+
+$$
+\forall N\ge1\ \exists r,m\ge1:\qquad U_{N,r}<\kappa_m/(m+1).
+$$
+
+Even a universal solution of Open Problem 5.1 would supply only independent tail control for a response argument. It would not supply productive conditional-null directions for all remaining hypothetical finite attainers or strict bounds on the full-domain maxima. Structural-zero, zero-mass, reducible, periodic, null, forced, all-zero, endpoint and seam cases remain in this target.
+
+The compound mathematical content is the ambiguity-subtracted finite-mixture and phase moment reduction, the fixed-cut expected terminal-posterior KL comparison with exact slack, and their original-bit conditional allowance. The canonical finite-history orbit calculation obstructs a particular finite-hidden spectral transfer. The entropy–erasure bridge belongs to [EE], the multiword response consumer and exact four-state law to [MW]. Entropy bookkeeping, finite hidden-cut information, phase structure, word-frequency identification, Poisson–martingale concentration and conditional KL scoring are supporting established mathematics. The cited spectral, discrimination and path-mergeability results are used only within their stated hypotheses. These attributions express a compound derivation and its boundaries, without literature-wide priority, hidden minimality, empirical learning benefit or completion of the original target.
+
+[EE]: FIB_LEGAL_EDGE_LOAD_ENTROPY_ERASURE_INFLUENCE_WEIGHTED_MOMENT.md
+[MW]: FIB_LEGAL_EDGE_LOAD_MULTIWORD_RESPONSE_STABILITY_AND_VANISHING_TAIL_CERTIFICATE.md
+[CF]: https://arxiv.org/abs/cond-mat/0102181 "J. P. Crutchfield and D. P. Feldman, Regularities unseen, randomness observed: Levels of entropy convergence"
+[CT]: https://doi.org/10.1002/047174882X "T. M. Cover and J. A. Thomas, Elements of Information Theory, second edition: entropy chain rules, conditional information, KL and Fano bounds"
+[AZ]: https://doi.org/10.2748/tmj/1178243286 "K. Azuma, Weighted sums of certain dependent random variables"
+[KS]: https://arxiv.org/html/1507.02314v2 "S. Kiefer and A. P. Sistla, Distinguishing Hidden Markov Chains"
+[DK]: https://arxiv.org/html/2207.14088v2 "O. Darwin and S. Kiefer, On the Sequential Probability Ratio Test in Hidden Markov Models"
+[TR]: https://arxiv.org/html/1211.6181v2 "N. F. Travers, Exponential Bounds for Convergence of Entropy Rate Approximations in Hidden Markov Models Satisfying a Path-Mergeability Condition"
+[RC1]: https://arxiv.org/html/1705.08042v1 "P. M. Riechers and J. P. Crutchfield, Spectral Simplicity of Apparent Complexity, Part I: The Nondiagonalizable Metadynamics of Prediction"
+[RC2]: https://arxiv.org/html/1706.00883v1 "P. M. Riechers and J. P. Crutchfield, Spectral Simplicity of Apparent Complexity, Part II: Exact Complexities and Complexity Spectra"
+

@@ -1,0 +1,25 @@
+**Definition 1.1 (Complete legal objective).** For integers $n\ge1$, let
+
+$$
+\begin{aligned}
+B_n&=\{w\in\{0,1\}^n:w_jw_{j+1}=0\ (1\le j<n)\},\\
+X&=\{x\in\{0,1\}^{\mathbb Z}:x_jx_{j+1}=0\ (j\in\mathbb Z)\}.
+\end{aligned}
+$$
+
+$B_0$ contains the empty word. The graph $\Gamma_n$ contains all of $B_n$
+and every legal Hamming-one edge, with no first-to-last constraint. Testing
+an endpoint insertion uses $w_0=w_{n+1}=0$. On the whole probability simplex,
+
+$$
+h(s,t)=\begin{cases}st/(s+t),&s+t>0,\\0,&s=t=0,\end{cases}\qquad
+\Phi_n(\mu)=\sum_{\{w,z\}\in E(\Gamma_n)}h(\mu_w,\mu_z),\qquad
+\kappa_n=\max_{\mu\in\mathcal P(B_n)}\Phi_n(\mu).
+$$
+
+[Growth, Theorems 3.2 and 5.2][G] own these maxima and
+$c_\star=\lim_n\kappa_n/n$, with
+$nc_\star\le\kappa_n\le(n+1)c_\star$. Its elementary ceiling is
+$c_\star\le\bar c:=3-2\sqrt2<1/4$. No code-dependent decimal certificate
+is used here. Zero masses retain their original vertices and edges.
+

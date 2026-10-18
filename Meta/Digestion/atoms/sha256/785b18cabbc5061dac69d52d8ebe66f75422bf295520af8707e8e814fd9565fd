@@ -1,0 +1,6 @@
+### 101.9. Alternate proof of the product balance by Hilbert reciprocity
+
+**Proof of the product assertion in Theorem 101.1.**
+
+Keep exactly Theorem 101.1's hypotheses and put K0=Q(sqrt(5)), beta=-1-F_N sqrt(5), and gamma=8+3sqrt(5). Consider the quadratic Hilbert symbols (beta,gamma)_v over all places of K0. Their product is 1. We calculate every local contribution.
+

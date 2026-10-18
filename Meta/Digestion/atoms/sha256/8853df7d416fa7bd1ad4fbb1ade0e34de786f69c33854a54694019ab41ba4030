@@ -1,0 +1,72 @@
+**Definition 10.1 (separate finite costs).** Representation size is
+the size of the public descriptions of the patterns, ground constants,
+finite state domains, equality types, truth labels and arithmetic
+guards. Decision work is the work of constructing these descriptions,
+expanding their fixed ground terms, enumerating their finite choices,
+and reaching the capped fixed points. These differ from materializing
+an actual residual valuation, its decoded source, or
+$\rho^{n+j}u$ for an actual unbounded $n,j$.
+
+For a valid row there are
+$|J|=B_0+\mu+\lambda\le B_0+|Q|^2$ representatives. A direct
+product has at most $|Q|^{|J|}$ states; identical coordinate
+automata can be shared without changing the construction. For a
+pattern with $v$ raw variables and $g$ distinct ground constants,
+there are at most $\operatorname{Bell}(v+g)$ equality types before
+excluding those that merge constants. With $k$ free blocks and
+$N_M$ product states there are at most $N_M^k$ state assignments.
+The capped count computation needs at most $(k+g)N_M$ strict
+vector increases when $k>0$, each scanning its finite transition
+table. These are sufficient finite construction bounds, not
+polynomial or optimal-size bounds. A product augmented by $B$ in
+Theorem 7.3 has the additional $|Q_B|$ factor.
+
+All residual languages in (NRF.22) remain present. A finite
+representative list limits only the capacity certificate, not the
+possible source sizes. Constructor derivations can describe large
+finite terms, whose literal expansion has its own cost. Actual
+$\rho^{n+j}$ expansion is likewise separately charged; a compact
+arithmetic guard is not cheap physical execution of its exponent.
+
+The actual observer of Assumption 3.1 pays its entire full-capture
+cost. In empty-cut RA, for attempt $i$ let $d_i$ be the guard-leaf
+address length and $E_i$ its exterior Read addresses. The existing
+exact CWS account specializes to
+
+$$
+T_i=d_i+2+|E_i|,\qquad
+A_i=\frac{d_i(d_i+1)}2+d_i+\sum_{p\in E_i}|p|,
+\tag{NRF.42}
+$$
+
+where $T_i$ counts Reads and $A_i$ counts all delivered literal
+address letters. Failed attempts are included. On success $E_i$
+contains every node of the captured tree. If $b_*$ is the actual
+number of updates through outer Return, and $N_*,H_*$ are size
+and height of $\rho^{b_*}u$, the supplied bounds give at most
+$b_*+1$ attempts, at most
+$(b_*+1)(N_*+H_*+2)$ Reads, and at most $H_*$ times that many
+address letters. These are retrospective analysis parameters,
+not source advice, retained counters or an interference promise.
+
+After capture, one state evaluation per acquired node suffices for
+$A$ if table lookup is charged separately. Selection, address
+construction, exact subtree comparison and full partition formation
+are additional finite local work. They require no further source
+Reads but use paid acquired data. Temporary storage includes the
+full acquired tree, state information if stored, comparison workspace,
+output preparation and control. Cleanup also has a cost. The finite
+relation construction is a mathematical decoder on public $A,b$;
+it is not secretly inserted into the producer or supplied as
+source-specific initialization.
+
+Final retention is the canonical selected row and declared public
+code and parameters. Its addressed holes already determine $P$, so
+encoding $P$ once is lossless. In the CWS sixteen-symbol encoding,
+if the exterior uses $c$ cells and has $h$ holes, the row uses
+$c+\binom h2+2$ cells, four bits each, including every false
+partition bit. Other lossless encodings may use canonical class
+numbers; no globally minimal representation is asserted. All
+public code storage, address bytes and actual accessible fields
+remain part of their appropriate resource accounts.
+

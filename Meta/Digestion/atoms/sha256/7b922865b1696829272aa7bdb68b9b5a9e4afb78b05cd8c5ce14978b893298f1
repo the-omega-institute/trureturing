@@ -1,0 +1,18 @@
+**推论 23.4.2（全局分支预算的凸包界）。** 若所有可达 $(s,a,y,u,h)$ 的分支比值落在
+
+$$
+\underline r\le
+\frac{K^1(y\mid a,u,h)}{K^0(y\mid a,u,h)}
+\le\overline r,
+$$
+
+则隐藏接口每个输出格的比值也落在 $[\underline r,\overline r]$。因此其任何项目扩张不超过
+
+$$
+\log\overline r-\log\underline r.
+$$
+
+但这个界使用的是所有分支的联合端点；只知道每个固定动作分支在 $u$ 上的扩张，不能推出隐藏接口扩张为零。
+
+<a id="section-23-5"></a>
+

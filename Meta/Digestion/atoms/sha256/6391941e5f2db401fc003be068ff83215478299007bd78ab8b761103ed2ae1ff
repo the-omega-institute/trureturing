@@ -1,0 +1,61 @@
+**Proposition 7.4 (Genuine line and rank degeneracies in the actual form).**
+The exceptional cases cannot be discarded from arbitrary globally
+positive QAP forms. In particular, writing $s=p_0+p_++p_-$,
+the choices
+
+$$
+\begin{gathered}
+(A_0,A_+,A_-)=(s,s,p_0+p_+),\\
+(u,v,w,t)=(2,1,1,0),\qquad
+\mathcal T(p)=\operatorname{diag}(s,p_0+p_+)
+\end{gathered}
+\tag{7.5}
+$$
+
+are globally PSD and give $\mathscr F=s(p_0-p_+)^2$.
+An identically-zero cubic with rank-two interior blocks is given by
+
+$$
+\mathcal R(p)=\operatorname{diag}(\sqrt p)
+\begin{pmatrix}2&-1&-1\\-1&2&-1\\-1&-1&2\end{pmatrix}
+\operatorname{diag}(\sqrt p),\qquad
+\mathcal T(p)=\operatorname{diag}(2p_+,2p_-).
+\tag{7.7}
+$$
+
+Another allowed form has
+$\mathcal R(p)=\operatorname{diag}(s,0,0)$ and
+$\mathcal T(p)=0$; it has identically zero cubic and a
+two-dimensional radial kernel at every population in the simplex.
+The zero form gives the three-dimensional radial kernel.
+
+Proof. In (7.5), use $\delta_{2+}=\delta_{2-}=0$,
+$\delta_+=4$, $\delta_-=2$, and
+$\delta_\Delta=\delta_\Sigma=2$. Set $y=0$ and, for the
+displayed diagonals $A_j(p)=\sum_k\alpha_{jk}p_k$, take
+$C_{kj}=-\sqrt{n_kn_j}\alpha_{jk}$. This is exactly (3.2),
+so the example belongs to the actual fifteen-coefficient family.
+Writing $a_i=\sqrt{p_i}$, its radial quadratic form is
+
+$$
+b^T\mathcal R(p)b
+=\sum_{i<j}(a_ib_j-a_jb_i)^2+(a_0b_0-a_+b_+)^2.
+\tag{7.6}
+$$
+
+Expansion proves the claimed block entries and positivity;
+the tangent diagonal is nonnegative. Expansion of (3.4) gives
+$s(p_0-p_+)^2$. For (7.7), use $y=0$,
+$C=-\operatorname{diag}(2,4,4)$,
+$\delta_+=\delta_-=\delta_\Delta=\delta_\Sigma=2$ and
+$\delta_{2+}=\delta_{2-}=0$. The constant radial matrix is
+$3I-\mathbf1\mathbf1^T$, with eigenvalues $0,3,3$.
+Congruence by the invertible diagonal at an interior population
+gives rank two, and its determinant vanishes identically.
+For the rank-one example take all $\delta=0$,
+$y=0$, $C_{k0}=-\sqrt{n_k}$ and $C_{k+}=C_{k-}=0$.
+Equation (3.2) gives the stated blocks. All zero coefficients give
+the zero form. These examples concern positive atom forms; no
+realization of their coefficients by normalized positive event
+multipliers is asserted. $\square$
+

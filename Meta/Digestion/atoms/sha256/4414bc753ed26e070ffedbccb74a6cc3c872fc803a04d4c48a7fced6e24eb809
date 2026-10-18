@@ -1,0 +1,7 @@
+**Theorem 6.2 (at most seven total labels).** Under the same hypotheses and strength interval,
+$$
+\mathcal T_A^{(\le7\ {\rm total})}(s)=V_6(s).
+$$
+
+**Proof.** A positive high acquisition is compulsory under Assumption 1.2, and a generated label cannot simultaneously be a low fibre of dimension at most two and the required high fibre. An instrument with at most seven total generated actual labels therefore has at most six supported nonzero low labels; supported-zero labels consume the count and contribute no supported moment, contrast or height. The same-law reduction and Theorem 5.3 give the upper bound $V_6(s)$. The constructor in Theorem 6.1 has six low labels and one high label. Its supported-zero complement is included in that one high acquired label, so it supplies the reverse inequality. This is a sandwich for the two optima; it does not assert equality of their full feasible classes. Hidden Kraus multiplicity, failure-label count, quantum fibre dimension and actual acquisition alphabet remain distinct. $\square$
+

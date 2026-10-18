@@ -1,0 +1,43 @@
+## 9. Positive-width strict gap
+
+Let
+
+$$
+0<\tau\le\frac1{24},\qquad 0<\delta\le\frac{\tau}{11},
+$$
+
+and set
+
+$$
+\begin{aligned}
+&a_2=1-11\tau,\qquad (a_3,a_4,a_5,a_6,a_7)=(13,10,9,8,6)\tau,\\
+&a_2\le a_1\le1-7\tau,\qquad a_8=5\tau+11\delta.
+\end{aligned}
+$$
+
+The continuation satisfies $a_8\ge a_9\ge a_{10}\ge\cdots>0$ and $a_n\to0$, with no summability requirement. The order constraints hold on the whole parameter rectangle: $a_2\ge a_3$ follows from $\tau\le1/24$, and $a_8\le a_7$ follows from $\delta\le\tau/11$. The interval for $a_1$ is nonempty, and all displayed amplitudes are positive.
+
+Put $r_0=5\tau+\delta$ and test a cap $e=r_0+t$. Then
+
+$$
+S=51\tau+11\delta,
+\qquad s=44t,
+\qquad 3S-a_6-29e=4\delta-29t.
+$$
+
+The universal inequality gives
+
+$$
+4\delta\le(29+44\cdot216216)t=9513533\,t.
+$$
+
+Therefore every original $O2$ competitor $O$ satisfies
+
+$$
+\boxed{e_a(O)\ge r_0+\frac{4\delta}{9513533}}.
+$$
+
+The gap is strictly positive throughout the declared family. It includes $\tau=1/24$, $\delta=\tau/11$ (where $a_8=a_7$), either endpoint of the $a_1$ interval, every permitted later-tail tie, and every positive vanishing nonsummable continuation. No condition on $a_9$ beyond the declared sequence order and vanishing is needed. At the cap $e=r_0$, if $a_9\le r_0$, including $a_9=r_0$, the active horizon is exactly eight: $a_8-r_0=10\delta>0$, while every amplitude from $a_9$ onward is at most $r_0$. The same lower bound applies without this extra condition on $a_9$. At $\delta=0$ the extra term vanishes and the boundary is the already attained DEV300 family with $a_8=5\tau$.
+
+The old supplied lower bound from DEV305.3 remains valid for every original $N2$ competitor, namely $e_a(N)\ge r_0$. The new inequality is stronger only for $O2$ and does not establish whether an $N2$ rule attains $r_0$.
+

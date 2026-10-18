@@ -1,0 +1,121 @@
+## 1. Complete worlds and the common literal history
+
+A legal complete world is $W=(P,g,\delta)$, where $P$ is a strictly
+entrywise positive real $2\times2$ matrix of rank one and trace one,
+$g\in\mathbb R[T]\setminus\{0\}$ has degree at most three, and
+$\delta\in\mathbb R$. No source symmetry is imposed. Both gain signs,
+all lower degrees, sampled roots and repeated roots are allowed.
+Put
+
+$$
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+A_0=I,\quad A_i=E_iA_{i-1},\quad E_i\in\{J,M\}.
+\tag{1.1}
+$$
+
+The original-clock reading is $g(i)\operatorname{tr}(A_iP)+\delta$.
+The initial reading counts. Each selected atom is immediately read on
+one unresettable, uncopyable trajectory. Chronological $EF$ acts by
+$FE$ and includes both immediate readings. Policies, stops and answers
+may be arbitrary deterministic functions of the entire actual history,
+without regularity or computability assumptions. Recovery means
+recovery of the entire $(P,g,\delta)$.
+
+For arbitrary fixed $D_0,Y,z\in\mathbb R$ and $\lambda\ne0$, fix
+
+$$
+H=(D_0,J,D_0+24\lambda,M,D_0+48\lambda,
+                M,D_0+312\lambda/5,J,Y,M,z).
+\tag{1.2}
+$$
+
+Write $\mathcal F(H)$ for all legal complete worlds realizing its six
+readings. Thus the word is literally $JMMJM$. Define
+
+$$
+f=g/\lambda,\quad d=(\delta-D_0)/\lambda,\quad
+y=(Y-D_0)/\lambda,\quad \zeta=(z-D_0)/\lambda,\qquad
+\mathbf c=(0,24,48,312/5,y,\zeta).
+\tag{1.3}
+$$
+
+The inverse is $g=\lambda f$, $\delta=D_0+\lambda d$.
+The response map $w\mapsto D_0+\lambda w$ is a bijection of all real
+values for either sign of $\lambda$. It preserves every equality and
+actual retained set. In particular $D_0$ need not equal $\delta$.
+
+Use source coordinates
+
+$$
+P=\begin{pmatrix}s&p\\q&1-s\end{pmatrix},\qquad
+0<s<1,\quad p,q>0,\quad pq=s(1-s),
+\qquad u=p+q,\quad v=1+p.
+\tag{1.4}
+$$
+
+These conditions are exactly source legality. Source coordinates
+$s,p,q$ will remain distinct from the terminal-matrix entries
+$a,b,c,e$ below. The cumulative matrices are
+
+$$
+\begin{gathered}
+(A_0,\ldots,A_5)=(I,J,L,J+L,C_{\rm mat},Q),\\
+L=\begin{pmatrix}1&0\\1&1\end{pmatrix},\quad
+J+L=\begin{pmatrix}1&1\\2&1\end{pmatrix},\quad
+C_{\rm mat}=\begin{pmatrix}2&1\\1&1\end{pmatrix},\\
+Q=\begin{pmatrix}1&1\\3&2\end{pmatrix},\qquad
+Q^{-1}=\begin{pmatrix}-2&1\\3&-1\end{pmatrix}.
+\end{gathered}
+\tag{1.5}
+$$
+
+Consequently the complete ancestor equations on each same world are
+
+$$
+\begin{aligned}
+f(0)+d&=0,\\
+u f(1)+d&=24,\\
+v f(2)+d&=48,\\
+(u+v)f(3)+d&=312/5,\\
+(1+s+u)f(4)+d&=y,\\
+(u+2v-s)f(5)+d&=\zeta.
+\end{aligned}
+\tag{1.6}
+$$
+
+Write $t=(1,u,v,u+v,1+s+u,u+2v-s)$. Every $t_j$ is positive.
+For arbitrary but fixed common $d$, let
+
+$$
+\mathcal K_{\mathbf c,d}
+=\{W\in\mathcal F(H):(\delta-D_0)/\lambda=d,\ f(6)=0,\ f(7)\ne0\}.
+\tag{1.7}
+$$
+
+The same $y,\zeta,d$ are used for every member. There is no cardinality,
+source-sum, gain-shape or terminal-sign restriction on this class.
+The sixth and seventh sample promises are not labels obtained from $H$.
+
+We also distinguish two auxiliary source domains:
+
+$$
+\begin{aligned}
+\mathcal N&=\{P:0\le s\le1,\ p,q\ge0,\ p+q>0\},\\
+\mathcal N_1&=\{P\in\mathcal N:pq=s(1-s)\}.
+\end{aligned}
+\tag{1.8}
+$$
+
+Here $P$ always has the form in (1.4). Rank one is required in
+$\mathcal N_1$ and need not hold in $\mathcal N$.
+All six traces are positive on $\mathcal N$, since $v\ge1$,
+$t_4\ge1+u$ and $t_5\ge u+1$. A member of $\mathcal N_1$ is a legal
+physical source only when it is strictly positive.
+
+The model is that of
+[IX, Definitions 1.1–1.4](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_IX.md).
+We use the permanent predecessor
+[Pair injectivity, Sections 1–5](FIB_JMMJM_ZERO_SIXTH_PAIR_INJECTIVITY_AND_JOINT_COLLISION_OBSTRUCTIONS.md),
+abbreviated Pairs, at its exact whole-class scope.
+

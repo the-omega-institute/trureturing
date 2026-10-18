@@ -1,0 +1,29 @@
+**定理 9.4.1（对角作用判据）。** 枚举 $S=\{x_1,\ldots,x_n\}$。令 $M^-$ 在 $S^n$ 上
+按坐标同时作用。则
+
+$$
+g\in M^-
+\quad\Longleftrightarrow\quad
+(g(x_1),\ldots,g(x_n))
+\text{ 从 }(x_1,\ldots,x_n)\text{ 在该对角作用图中可达}.
+$$
+
+特别地，若 $g\notin M^-$，则 $\kappa_R(g)\le n$；而对任意 $D$，条件
+
+$$
+\forall x\in D\;\exists h_x\in M^-:h_x(x)=g(x)
+$$
+
+不能交换成共同的 $\exists h\in M^-\;\forall x\in D$。
+
+**证明。**
+
+一条从 $(x_1,\ldots,x_n)$ 到 $(g(x_1),\ldots,g(x_n))$ 的路径由一个反向词给出，
+其复合变换 $h$ 在全部坐标上等于 $g$，因此 $h=g\in M^-$。反向地，若 $g=h$ 对某
+$h\in M^-$，生成 $h$ 的词就给出该路径。
+
+取 $D=S$ 即得 $\kappa_R(g)\le n$。最后一个断言只是量词次序的直接区别：每个坐标
+可以有不同的 $h_x$，而统一编译要求一个共同词。证毕。
+
+<a id="section-9-5"></a>
+

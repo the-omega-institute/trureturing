@@ -1,0 +1,20 @@
+**Open problem 9.3 (finite memory and the wider programme).** The general
+exact $M_1(D)$, the credited unresolved $M_1(3)\in\{3,4\}$, sharp
+$\lambda$, and the broader minimal-relations/internal-observer mutual
+recovery programme remain open. The exact recovery relation used here is
+
+$$
+(E(t),D,p,\text{at most one paid native reply})
+\longrightarrow\Gamma_p(t)
+\longleftrightarrow\bigl(r_{\rho^kt}(p)\bigr)_{k\ge0}.
+\tag{NDR.38}
+$$
+
+The inverse recovers this temporal factor, not the full original source,
+an unknown age, hidden history, authentication, or physical space and
+time. The unchanged interval is (NDR.9). FMR's exact finite optima and
+gluing give computable decreasing upper approximants to $\lambda$.
+Effective two-sided convergence, a complete lower hierarchy and
+closed-form exactness remain distinct claims, none proved by this volume.
+No native noncomputability conclusion follows either.
+

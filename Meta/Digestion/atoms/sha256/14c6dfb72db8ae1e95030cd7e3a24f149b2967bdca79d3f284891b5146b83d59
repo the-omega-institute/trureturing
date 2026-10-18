@@ -1,0 +1,116 @@
+**Definition 8.3 (recognized decisions and logical supplier limits).**
+The acquired-input decision suppliers have the following exact scopes.
+[ARH, §§4–6][ARH] recognizes root-to-descendant certificates and computes
+finite/cofinite atomic-orbit indices with every further constraint still
+imposed. [ARH, §§10–18][ARH] instead recognizes the whole-input family
+$\mathfrak S$: after its fixed original-prefix cover, every retained
+constraint and required hole-equality comparison must reduce under its
+specified test to Boolean combinations of aligned fixed-power or ground
+relations. Its domains are joint padded finite-tree tuple languages.
+Proposition 12.1 includes both the complete concrete exterior and every
+hole-pair equality in Bad. The productive diagonal-prefix sequence of
+Theorem 13.1 has finitely many states and stabilizes; Theorem 14.1 uses
+that actual stopping rule and bounded original chart selection to decide
+existence of a determining prefix. A negative decision yields finite
+admissible bad source pairs at every requested original depth.
+
+[ARH, §§19–25][ARH] supplies the recognized family $\mathcal E_{\rm CE}$.
+Mandatory constructor definitions are eliminated by a finite search
+through permitted schedules, with at most one removal per original
+variable and no new variables during elimination. Surviving parameters
+remain actual original subtrees; complete substitution retains every
+old inequality, acquired sign and target comparison. Both the residual
+domain and the reduced target comparisons must be synchronous, unless
+the chart is proved empty. Proposition 23.1 includes the synchronous
+family, while Propositions 23.2–23.3 exhibit genuine coupled constructor-
+offset inputs beyond its unchanged frontier test, with positive and
+negative full-row answers. Those examples and the criterion are supplied
+results, not consequences first obtained from canonical blocks.
+
+The interface to this volume is (ABC.5.3)–(ABC.5.5). ARH Propositions
+19.4 and 20.4 supply respectively bounded chart selection and both
+original-prefix directions. Its Lemma 21.4 supplies finite productive
+saturation of the exact Bad automaton, and Theorem 22.1 supplies the full
+static/serial existence equivalence, effective positive consumer and
+finite negative witnesses. Merely having an exact canonical source
+bijection does not produce that automaton or its finite state bound.
+Nor does a finite chart list remove the chart-selection obligation:
+ARH Proposition 24.2 gives an exact finite disjoint presentation of all
+native trees with synchronous chart domains and constant within-chart
+rows, yet unbounded cross-chart disagreement for $Q=\{L,R\}$.
+In that example equality versus disequality of the two children cannot
+be selected by a bounded original prefix. A method without that selector
+must account for cross-chart Bad as well. The canonical map $B$ and the
+opaque trace correspondence preserve this failure as well as positive
+instances; neither grants an observer the chart or code for free.
+
+Thus recognized cases already have negative stopping arguments independent
+of §7. Arbitrary residual cyclic decorated-constructor constraints,
+unsupported target comparisons and the full unrestricted boundedness
+question still lie beyond these supplied decisions. Failure of a
+recognizer is not a negative answer on its whole acquired fiber.
+Assumption 7.3 remains a separate proposed uniform domain interpretation;
+even if supplied, Propositions 7.5–7.6 alone would not give the general
+stopping or variable-address decision of Definition 8.1.
+
+The use of Kuncak–Rinard is confined to its finite term-power language over
+a decidable base, with same-shape pointwise comparisons and guarded
+constructors.
+Its [§6.6][KR] explicitly separates this language from an extension with
+selection of the base element at an arbitrary leaf; over an infinite
+base such extensions can be undecidable. That caution is a boundary on
+transferring its theorem, not an undecidability theorem about (ABC.1.3).
+No arbitrary subterm selection or inductive domain predicate is added
+here under the name of that supplier.
+
+Similarly [Klarlund–Møller, *MONA Version 1.4 User Manual*, §§7.1–7.2][MONA]
+supplies decision and counterexamples for actual WS2S formulas: positions
+in the binary successor tree and finite sets of positions. To use it for
+(ABC.8.1), the native source, coupled morphic relations, original target
+and variable physical addresses require formulas in that language with
+the proved shared-source correspondence. An encoding of finite trees
+alone is insufficient. Ginsburg–Spanier applies after a Presburger
+formula is obtained; fixed-shape rank arithmetic in Proposition 7.4 does
+not encode arbitrary unknown shapes by itself.
+
+The [literal acquisition model][ACQUISITION] has the same four replies,
+but its policies query a fixed source and its cost counts distinct
+addresses. [Exact support pruning][SUPPORT] requires supplied support,
+legality and its own allowed-source domain; [exact trace replay][REPLAY]
+retains its fixed-source replay hypotheses. The [joint response-cost
+normalization][COST] compares a finite family of positive prototypes
+with distinct-address costs. These hypotheses do not supply the raw-call,
+serial-update, entire-fiber contract in Assumption 1.2. The pinned
+[free magma][FREE] and [term syntax and substitution][SYNTAX] supply
+ordinary construction and substitution, not a decision of coupled native
+morphic constraints.
+
+The particular canonical block construction gives an all-source action
+conjugacy, guarded original-address and whole-row interfaces, and exact
+transport of the acquired cells. These structural conclusions are
+unconditional under Assumption 1.2; the logical decisions of §7 additionally
+require Assumption 7.3. The recognized ARH decisions and their finite
+productive arguments, SCR's epoch-four raw normalization, JRF's epoch-five
+joint dominance, and the cited ambient logical decisions retain the
+hypotheses just specified. None implies unrestricted signed-fiber
+boundedness, minimum raw price or joint optimization through source
+encoding alone. The remaining boundary and memory recovery questions
+are exactly those of Definition 8.1.
+
+[ARH]: https://github.com/the-omega-institute/trureturing/blob/ce58f3e6607e4269821891c7ba7e7dad5e8066f9/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RELATION_HISTORY.md
+[SCR]: https://github.com/the-omega-institute/trureturing/blob/ebeec0b680e9584d1749fe60fefb98ee1044300a/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_SERIAL_COMPLETE_ROW_PRICE.md
+[JRF]: https://github.com/the-omega-institute/trureturing/blob/8629b924d8bd0e9d5156b933ee9947465c5aee06/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_SERIAL_JOINT_RESOURCE_FRONTIER.md
+[SLH]: https://github.com/the-omega-institute/trureturing/blob/8629b924d8bd0e9d5156b933ee9947465c5aee06/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT.md
+[TRANSPORT]: https://github.com/the-omega-institute/trureturing/blob/8629b924d8bd0e9d5156b933ee9947465c5aee06/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md
+[CENTRALIZER]: https://github.com/the-omega-institute/trureturing/blob/8629b924d8bd0e9d5156b933ee9947465c5aee06/D5/S3/Arith/FibonacciAtomic/SourceTransportCentralizer.lean
+[ENCODING]: https://github.com/the-omega-institute/trureturing/blob/8629b924d8bd0e9d5156b933ee9947465c5aee06/D5/S0/History/Spacetime/SourceTreeEncoding.lean
+[KR]: https://arxiv.org/html/cs/0408015v1
+[GS]: https://msp.org/pjm/1966/16-2/pjm-v16-n2-p09-s.pdf
+[MONA]: https://www.brics.dk/mona/mona14.pdf
+[ACQUISITION]: https://github.com/the-omega-institute/trureturing/blob/8629b924d8bd0e9d5156b933ee9947465c5aee06/D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean
+[SUPPORT]: https://github.com/the-omega-institute/trureturing/blob/8629b924d8bd0e9d5156b933ee9947465c5aee06/D5/S3/Arith/FibonacciAtomic/Observer/ActualExactSupportPruning.lean
+[REPLAY]: https://github.com/the-omega-institute/trureturing/blob/8629b924d8bd0e9d5156b933ee9947465c5aee06/D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.lean
+[COST]: https://github.com/the-omega-institute/trureturing/blob/8629b924d8bd0e9d5156b933ee9947465c5aee06/D5/S3/Arith/FibonacciAtomic/ActualJointResponseCostCore.lean
+[FREE]: https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Algebra/Free.lean
+[SYNTAX]: https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/ModelTheory/Syntax.lean
+

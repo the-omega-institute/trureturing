@@ -1,0 +1,28 @@
+**Corollary 58.9 (exact renewal energy and uniform ground-ray fidelity).** Under Definition58.1, every finite trajectory has constant common energy expectation, through all between-event evolution and all accepted renewals:
+
+$$
+ J^*\mathsf H_{D'}J=\mathsf H_D,\qquad
+ \langle u(\tau),\mathsf Hu(\tau)\rangle
+ =\langle u(0),\mathsf Hu(0)\rangle=:E_0.
+\tag{58.21a}
+$$
+
+Assume $m<\epsilon_*$ as in §55.4, let $w$ be its positive unit ground state, and let
+$\gamma=\inf\sigma(\mathsf H|_{w^\perp})-m>0$ be the common ground-state spectral gap. Then every such trajectory, on every finite supplied clock interval $[0,S]$, satisfies
+
+$$
+ \sup_{0\le\tau\le S}\ \inf_{|z|=1}\|u(\tau)-zw\|
+ \le\sqrt{\frac{2(E_0-m)}\gamma}.
+\tag{58.21b}
+$$
+
+Every supplied effect probability therefore differs from that of $w$ by at most $2\sqrt{2(E_0-m)/\gamma}$, independently of $S$ and of the finite number of renewals. In particular, expressly preparing the actual positive finite ground state on $D_{j_0}(t)$ gives $E_0=m_{j_0}(t)$; (55.13) makes this ray/effect bound tend to zero uniformly over all original sources as their separately legal accepted indices tend to infinity. This is an all-finite-clock bound for near-ground rays, not for all subescape states, all states or their full phases.
+
+Proof. The first equality is exactly the old principal-block equality used in Theorem58.2, also the compression energy identity of (55.4). Each unitary finite flow preserves its own energy expectation; zero extension at renewal preserves that expectation by the displayed congruence. Their finite composition proves (58.21a). The common ground eigenvalue is simple and isolated below the essential threshold by §55.3–55.4, so $\gamma>0$. The spectral inequality
+$\mathsf H-mI\ge\gamma(I-|w\rangle\langle w|)$ then gives
+$1-|\langle w,u(\tau)\rangle|^2\le(E_0-m)/\gamma$.
+Choosing the aligning phase and using
+$2(1-|\langle w,u\rangle|)\le2(1-|\langle w,u\rangle|^2)$ proves (58.21b). Effects do not depend on the aligning global phase, and the unit-state effect inequality used in Theorem58.7 gives the stated probability bound. The finite-ground specialization uses §55.4's already proved minimum-value comparison, not another source-learning or ground-state acquisition assertion. □
+
+The norm-preserving and energy-preserving mathematical transfer does not assign zero physical work, preparation cost or implementation duration. In the further precision model of Corollary58.8 energy need not be exactly conserved; this clock-independent conclusion requires either the ideal contract or an additional uniform accumulated energy-error bound. The theorem quantifies over finite histories of arbitrary finite duration, without an event after an infinite prefix or after Stop.
+

@@ -1,0 +1,129 @@
+### 58.5 Both channels have two distinct phases
+
+Use a simultaneous permutation and a common phase to write
+\(x=(1,1,q)\), \(|q|=1\), \(q\ne1\).
+Equality \(|Y|=|X|\) implies that the relative phase of the two values
+in \(y\) is either \(q\) or \(\bar q\), because
+\(|2+q|^2=5+4\operatorname{Re}q\).
+Consequently
+
+\[
+ y=gS^m x\quad\hbox{or}\quad
+ y=\gamma S^m\bar x,\qquad
+ \gamma=g\frac{2+q}{2+\bar q},\quad m=0,1,2.      \tag{58.16}
+\]
+
+Every Fourier coefficient of either input channel is nonzero here:
+\(q\ne1\), and \(2+q\ne0\).
+Here \(S(x_0,x_1,x_2)=(x_1,x_2,x_0)\). The first alternatives in
+(58.16) are excluded by Proposition 46.1 of the main theory, which
+rules out a shared phase times any cyclic shift for full-support actual
+inputs on the whole open real branch, including \(a=0\). To match its
+matrix convention exactly, set
+\(p_{\rm seed}=P+1,\ q_{\rm seed}=Q+1\). Its unnormalized upper blocks
+are \(J+PS,J+QS\), and its lower blocks are explicitly
+\(J+\bar Q S^2,-J-\bar P S^2\), namely \(B^*,-A^*\) in that convention.
+Left multiplication by \(\operatorname{diag}(S^2,S)\)
+gives exactly the displayed \(H_0\). This is only an output permutation,
+so preserves actual flatness and leaves both input channels unchanged.
+Furthermore \(y=gS^mx\) makes the two input autocorrelation rows
+proportional, hence gives precisely the forbidden zero determinant.
+This invocation uses no cyclic orthogonality assumption.
+
+A transposition of the two equal entries of \(x\) interchanges the
+remaining conjugate cases \(m=1,2\), while commuting with \(H_0\).
+Thus only \(m=0,1\) remain.
+For finite real \(v\), put
+
+\[
+ q=\frac{1+iv}{1-iv},\quad
+ D_v=(1-iv)(3+iv),\quad
+ X_v=(D_v,D_v,(1+iv)(3+iv)),
+\]
+
+and put \(Y_v=(y_a,y_a,y_b)\) for \(m=0\), or
+\(Y_v=(y_a,y_b,y_a)\) for \(m=1\), where
+
+\[
+ y_a=g(1+iv)(3-iv),\qquad y_b=g(1-iv)(3-iv).
+\]
+
+Then the actual input is \((X_v,Y_v)/D_v\), and
+\(|D_v|^2=(1+v^2)(9+v^2)>0\). Form its six original unnormalized
+output numerators
+
+\[
+ F_j=PX_{v,j}+QY_{v,j}+\sum X_v+\sum Y_v,
+\quad
+ F_{j+3}=\bar QX_{v,j}-\bar PY_{v,j}+\sum X_v-\sum Y_v.
+\]
+
+Order the six residual polynomials as top 0, bottom 0, top 1, bottom 1,
+top 2, bottom 2, and divide each
+\(|F_j|^2-6|D_v|^2\) by \(v\), obtaining real cubics \(p_0,\ldots,p_5\).
+This division is legitimate for the nonconstant finite case \(v\ne0\).
+The value \(v=0\) is the already classified constant canonical input.
+
+Here are explicit coefficient operations specifying a small certificate.
+Let \(k=[v^3]p_0\), \(p_*=p_0/k\),
+\(r_j=p_j-([v^3]p_j)p_*\) for \(1\le j\le5\), and
+\(\ell=[v^2]r_1\).
+For \(1<s<3\), exact reduction using (58.3) gives
+
+\[
+\begin{aligned}
+ \mathfrak N(k)&=\frac{2^8(s+3)^2(s^2-2s+3)^2}{(4s^2-3s+9)^2}>0,\\
+ \mathfrak N(\ell)&=
+ \frac{2^{12}3^4(s-1)^4(s+3)^2}{(s+1)^2(s^2-2s+3)^2}>0,\\
+ Q_v:=r_1/\ell&=v^2-\frac{2b(s+1)}{s-1}v-\frac{s+3}{s-1}.
+                                                               \tag{58.17}
+\end{aligned}
+\]
+
+For \(j=2,3,4,5\), let
+\(L_j=r_j-([v^2]r_j)Q_v=A_jv+B_j\).
+Then
+
+\[
+ (s-3)B_j=b(3-5s)A_j,
+\]
+
+and the norm of \(\sum_{j=2}^5A_j^2\) is respectively
+
+\[
+\begin{cases}
+\displaystyle
+ \frac{2^{44}3^8(s-3)^4(s+3)^8}
+ {(s-1)^8(4s^2-3s+9)^4},&m=0,\\[6pt]
+\displaystyle
+ \frac{2^{32}(s-3)^4(s+3)^8(4s^3-7s^2+30s+9)^4}
+ {(s-1)^8(s+1)^4(4s^2-3s+9)^4},&m=1.
+\end{cases}                                                   \tag{58.18}
+\]
+
+Both are nonzero, since
+\(4s^3-7s^2+30s+9=4s(s-1)^2+s^2+26s+9>0\).
+Thus at least one retained linear equation forces
+\(v=b(5s-3)/(s-3)\). But substituting this into (58.17) gives
+
+\[
+ Q_v(v)=-\frac{4(4s^2-3s+9)}{(s-3)(s+1)}>0,
+\]
+
+a contradiction. The missing circle-chart point \(q=-1\) is also
+excluded: its first residual is the leading degree-four coefficient
+\(k\), which is nonzero by (58.17).
+
+At \(a=b=0\), for either \(g=\epsilon i\), the first two cubics
+for both \(m=0,1\) are exactly
+
+\[
+ -4\{v^3+9v+\epsilon(3v^2-9)\},\qquad
+ -4\{v^3+9v-\epsilon(3v^2-9)\}.
+\]
+
+Their sum forces \(v(v^2+9)=0\), hence \(v=0\) for real \(v\),
+where neither cubic vanishes. Their leading coefficients are \(-4\),
+so the point \(q=-1\) is excluded as well. All two-valued cases are
+therefore impossible.
+

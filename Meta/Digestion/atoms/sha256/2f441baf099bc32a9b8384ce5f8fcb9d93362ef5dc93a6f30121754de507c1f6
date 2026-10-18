@@ -1,0 +1,30 @@
+**Proposition 7.3 (Constant and height witnesses).** The literal class
+has a zero-dimensional model of error exactly $R_0$. The guard class
+has a one-dimensional model of that error and has no zero-dimensional
+model at any tolerance.
+
+**Proof of Proposition 7.3.** In $\mathbb R^0$ let $E_0$ be the
+unique function to its singleton, use the unique affine map for every
+command, and read out zero in $\mathbb R^{10}$. Every lawful identity
+holds, including identities on empty domains, and Lemma 1.5 gives
+error supremum $R_0$. Theorem 6.2 proves that no constant prediction,
+and no competing one-coordinate factor with arbitrary readout, has
+smaller error.
+
+For the guard witness use
+
+$$
+E_1(k,\alpha,\beta)=k,\qquad
+\mathcal U_s^{(1)}(K)=K+s,\qquad
+\mathcal V_t^{(1)}(K)=K,\qquad \mathcal R_1(K)=0.
+$$
+
+Its actual image is $(0,H)$, its exact probability guard is
+$0<K+s<H$, and every phase command is lawful. The identities follow
+by substitution. The error is again $R_0$. Initialize at $K=k_0$,
+or exactly at any desired current height; the exact updates preserve
+that encoding at every lawful finite prefix and intermediate straight
+leg. The zero-dimensional encoder has a single fiber containing all
+heights, contradicting Proposition 7.1's necessary condition. This
+exclusion is independent of the tolerance. $\square$
+

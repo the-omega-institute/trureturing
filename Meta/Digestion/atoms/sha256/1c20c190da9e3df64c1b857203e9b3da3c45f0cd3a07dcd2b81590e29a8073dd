@@ -1,0 +1,48 @@
+**Lemma 268.2 (A vector diagonal trace).**
+Let $f_x$, $x\in\{0,1\}^m$, be nonnegative equal-mass measures
+on a finite set $S$, whose coordinate polynomials have degree at most
+two. For distinct $r_1,\ldots,r_m\in S$, put
+$\rho=\max_{x,y}\|f_x-f_y\|_{\rm TV}$. Then
+
+$$
+\left|\sum_{i=1}^m(f_{e_i}(r_i)-f_0(r_i))\right|\le8\rho.
+\tag{268.3}
+$$
+
+**Proof.**
+The scalar supplier is Filmus–Hatami,
+[*Bounds on the sum of $L_1$ influences*, Theorem 3.1](https://arxiv.org/html/1404.3396v1#S3):
+if $g:\{-1,1\}^m\to[-1,1]$ has multilinear degree $d$, then at
+every vertex $y$,
+$\frac12\sum_i|g(y)-g(y^{(i)})|\le d^2$.
+Its hypotheses concern the range on the whole cube and a pointwise
+sum, rather than an average over vertices. Its proof uses the
+Banach-space derivative bound in its Proposition 3.2.
+
+If $\rho=0$, the assertion is immediate. Otherwise take independent
+uniform signs $\varepsilon_j$ and set
+$\phi_\varepsilon(x)=\sum_j\varepsilon_j f_x(r_j)$.
+The output test equal to $\varepsilon_j$ on $r_j$ and zero elsewhere
+has oscillation at most two. Equal mass and TV duality therefore give
+$\max\phi_\varepsilon-\min\phi_\varepsilon\le2\rho$.
+Center this range at $c_\varepsilon$. The function
+$g_\varepsilon(y)=(\phi_\varepsilon((y+1)/2)-c_\varepsilon)/\rho$
+has range in $[-1,1]$ and degree at most two. The scalar theorem at
+$(-1,\ldots,-1)$ yields
+$\sum_i|\phi_\varepsilon(e_i)-\phi_\varepsilon(0)|\le8\rho$.
+Finally,
+
+$$
+\begin{aligned}
+\mathbb E_\varepsilon\sum_i\varepsilon_i
+  (\phi_\varepsilon(e_i)-\phi_\varepsilon(0))
+&=\sum_{i,j}\mathbb E(\varepsilon_i\varepsilon_j)
+       (f_{e_i}(r_j)-f_0(r_j))\\
+&=\sum_i(f_{e_i}(r_i)-f_0(r_i)).
+\end{aligned}
+$$
+
+Taking absolute values proves (268.3). The finite sign average is
+part of the proof and supplies no source prior or operational seed.
+$\square$
+

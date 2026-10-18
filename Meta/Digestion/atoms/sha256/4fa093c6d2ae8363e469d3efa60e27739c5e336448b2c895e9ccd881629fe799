@@ -1,0 +1,80 @@
+**Proposition 78.5 (finite three-dimensional sufficiency for both variants).** For
+every fixed authentic legal finite source $D$, the contract $E_s^\lambda(D)$ has a
+placement for every $\lambda\in I$ and every integer $s\ge3$. Separately, for every
+$0\le\delta\le1/50$ and every prescribed family $r_{p,j}\in[1-\delta,1+\delta]$, the
+contract $E_s(D;r)$ has a placement for every integer $s\ge3$. Reflection in $y=0$
+yields an embedded connected double with $3n+1$ vertices and $4n$ edges, retaining
+unit inherited edges and the respective prescribed ground-stub lengths. All angle
+and clearance margins belong to this finite placement.
+
+**Proof.** Use the finite direction and azimuth construction of72.3, with the
+endpoint circles now determined by the prescribed lengths. The source-seam part is
+unchanged. In $\mathbb R^3$ put the root at height $1/2$ and attach children
+successively, always using a unit direction whose vertical component has absolute
+value less than $1/[8(n+1)]$. A source path has at most $n-1$ seams, so every source
+vertex has height in $(3/8,5/8)$.
+
+At a current attachment vertex, directions that send the new segment through a
+nonincident old segment are radial projections of that old segment onto the unit
+sphere. Each such set has spherical area zero: it lies in the at most
+one-dimensional intersection of the sphere with the plane spanned by the vertex and
+the old supporting line. Existing vertices, endpoint collisions and repeated
+incident rays exclude further area-zero sets. For an old segment incident at the
+attachment vertex, its prescribed endpoint contact is allowed; any extra overlap
+excludes its ray. There are finitely many exclusions, and the direction band is an
+open set of positive spherical area. A permissible direction therefore exists at
+every step. This gives an injective separated source tree with the exact unit seam
+lengths.
+
+For a stub of prescribed length $r$ from a leaf $p$, either parameter regime gives
+$r>3/4>y_p$. Its possible tips on the grounding plane form the circle
+
+$$
+ g(\varphi)=\bigl(x_p+c\cos\varphi,\ z_p+c\sin\varphi,\ 0\bigr),
+ \qquad c=\sqrt{r^2-y_p^2}>0,
+\tag{78.14}
+$$
+
+where $(x,z)$ are the two horizontal coordinates. The segments from $p$ to this
+circle form a truncated circular cone. Every point of that cone other than $p$
+determines one azimuth. The double cone's quadratic equation is
+
+$$
+ (X-x_p)^2+(Z-z_p)^2
+   =\frac{c^2}{y_p^2}(Y-y_p)^2.
+\tag{78.15}
+$$
+
+Restricting this equation to an old supporting line gives a quadratic, so at most
+two intersection points unless the line is contained in the cone. Such a contained
+line is a generator: after translating $p$ to zero and rescaling the vertical
+coordinate, write its direction and offset as $(u,t)$ and $(v,w)$. Identical
+vanishing of $|v+ku|^2-(w+kt)^2$ gives $|u|^2=t^2$, $|v|^2=w^2$ and $u\cdot v=tw$. A
+nonzero direction has $t\ne0$; equality in Cauchy-Schwarz then forces $v=(w/t)u$.
+The line passes through the apex and excludes only its generator azimuth in the
+truncated cone. An old line through $p$ that is not a generator meets the cone only
+at $p$, which is an allowed contact only when prescribed. Thus old segments exclude
+only finitely many azimuths once prescribed apex contacts are ignored. Old vertices
+and ground tips each exclude at most one more azimuth; repeated rays are excluded as
+well.
+
+Choose a permissible azimuth, install that stub, and repeat for the second stub and
+every remaining leaf. The first stub is among the old segments when the second is
+chosen. This ensures distinct rays and distinct tips even for unequal prescribed
+lengths. All new open stubs have positive height and all intersections are
+prescribed. Finiteness of the disjoint compact nonincident objects gives a positive
+minimum distance; finiteness of the distinct incident rays gives a positive minimum
+angle. These minima depend on the placement.
+
+Reflect the upper half in the grounding plane and identify only the prescribed
+ground tips of the two halves. Upper and lower open edges have opposite strictly
+nonzero heights, so they have no extra intersections. At a ground tip the angle
+between the upper stub and its reflected stub of length $r$ is $2\arcsin(y_p/r)>0$.
+There are two copies of the $n$ source vertices and $n+1$ distinct ground tips,
+giving $3n+1$ vertices; doubling the $2n$ half edges gives $4n$ edges. Every leaf
+connects its source half to the reflected half, so the double is connected and has
+no self-loops. Finiteness again gives its positive margins. Finally, a
+height-preserving isometric inclusion of this three-dimensional space into $\mathbb
+R^{s-1}\times\mathbb R$ preserves all lengths, incidences, angles and clearances.
+This proves both separately quantified sufficiency assertions. $\square$
+

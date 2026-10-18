@@ -1,0 +1,45 @@
+**Proposition 9.2 (an infinite coupled fiber with a one-read consumer).**
+Add to Proposition 9.1 the epoch-zero literal record
+
+$$
+(0,LRRRRL,\mathsf{absent}),
+\tag{CAR.43}
+$$
+
+and take authentic entry $N=1$. The entire fiber is now (CAR.40) with
+$m\in\{4,5\}$. Its target has exactly two full rows, and one actual read
+at the physical address $R^7$ at epoch one recovers the full row:
+$\mathsf{absent}$ or $\alpha$ selects the row with the cross-sector
+equalities, and $\beta$ or branch selects the row without them. This
+has exact costs $(q,a,\ell)=(1,0,7)$ on every source and optimal raw
+cost one. No equality call or coordinate read is used.
+
+Proof. The added address is the old $z$ address $LRR$ followed by $RRL$.
+In $T_m$, that nonempty suffix is reached exactly when
+$m\ge w(RR)+2=6$. Its absence, together with $m\ge4$, gives precisely
+$m=4$ or $m=5$.
+
+Combining $n\ge4$, $|m-n|\ge2$ and $n\ne m+3$ gives
+
+$$
+n=m+2\quad\text{or}\quad n\ge m+4.
+\tag{CAR.44}
+$$
+
+In (CAR.42), the first case equates left holes 1 and 2 with right holes
+4 and 6, and left hole 3 with right hole 5. In the second case all
+cross-sector equalities are false. The local equalities and the concrete
+exterior remain fixed, so these are exactly two full rows. Both occur,
+for example at $(m,n)=(4,6)$ and $(4,8)$.
+
+The actual address $R^7$ enters $w$ after its prefix $RRR$, leaving
+suffix $R^4$. At epoch one this reads $T_{n+1}$ with suffix weight eight
+and last edge $R$. It is absent for $n=6$, gives $\alpha$ for $n=7$,
+$\beta$ for $n=8$, and branch for $n\ge9$. All admitted $n$ are at least
+six. Under (CAR.44), $n=6,7$ is exactly the first case and $n\ge8$ is
+exactly the second. The stated one-read controller therefore has the
+claimed output and paid costs, including absence as a useful actual
+reply. A zero-read controller has the same common input on these two
+outputs; deterministic updates supply no replies. It cannot output
+both rows correctly. Hence the raw optimum is one. $\square$
+

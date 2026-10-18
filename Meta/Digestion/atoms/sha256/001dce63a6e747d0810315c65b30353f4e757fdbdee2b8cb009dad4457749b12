@@ -1,0 +1,82 @@
+**推论 9.2（远端符号界及实际第六读逆）。** The algebraic target has
+
+$$
+53<d_\theta<54,\qquad -199<g_\theta(6)<-197,
+\tag{9.11}
+$$
+
+and its actual sixth responses satisfy
+
+$$
+-922<S_J(W_\theta)<-921,\qquad
+-945<S_M(W_\theta)<-944.                                    \tag{9.12}
+$$
+
+Either sixth atom recovers the entire known slice of Theorem 9.1
+with seven total readings. Execute either chosen sixth atom and
+return $W_\theta$ when its reading is below $-800$, and $W_0$
+otherwise.
+
+Proof. On the remote branch, the sixth trace factors in (8.6) are
+$5-3\theta$ and $5+2\theta$. The gain formula is
+
+$$
+g_\theta(6)=864-26d_\theta
+ +\frac{45(d_\theta-48)}{1+\theta}
+ +\frac{20(312/5-d_\theta)}{2+\theta}.                        \tag{9.13}
+$$
+
+For explicit rational interval bounds, partition the interval in
+(9.2) into
+
+$$
+I_k=\left[\frac{64\cdot22697+k}{64000000},
+           \frac{64\cdot22697+k+1}{64000000}\right],
+\qquad 0\le k<64.                                          \tag{9.14}
+$$
+
+Evaluate (9.10), $d=N_4/Q_4$, (9.13), and then
+$d+g(6)(5-3b),d+g(6)(5+2b)$ on each $I_k$. Horner evaluation
+and rational interval addition, multiplication, and reciprocal give
+the following containing intervals, uniformly for every $k$:
+
+$$
+\begin{array}{c|c}
+\text{expression}&\text{containing open interval}\\ \hline
+Q_4&(7,9)\\
+d&(53,54)\\
+g(6)&(-199,-197)\\
+d+g(6)(5-3b)&(-922,-921)\\
+d+g(6)(5+2b)&(-945,-944).
+\end{array}                                                 \tag{9.15}
+$$
+
+All input endpoints and all coefficients in this finite interval
+certificate are given in (9.10), (9.13)–(9.14). For multiplication
+take the least and greatest of the four endpoint products; for a
+nonzero interval $[r,s]$ use reciprocal $[1/s,1/r]$. Every reciprocal
+here has positive denominator, including $Q_4>7$, $1+b>1$ and
+$2+b>2$. These rules establish (9.11)–(9.12) on their union.
+
+In particular $g_\theta(0),g_\theta(1),g_\theta(2)<0$ and
+$g_\theta(3)>0$, by (9.4) and $53<d_\theta<54<312/5$.
+The positive fourth and fifth trace factors and their ancestor
+equations give $g_\theta(4),g_\theta(5)<0$; (9.11) gives the
+same strict sign at six. Thus the remote target has a nonzero
+initial sample and a different ancestor sign pattern from $W_0$.
+
+For the base world, (8.5)–(8.6) give
+
+$$
+S_J(W_0)=-1344/5,\qquad S_M(W_0)=-2304/5.                   \tag{9.16}
+$$
+
+Both exceed $-800$, whereas both remote responses are below it.
+Theorem 9.1 exhausts the slice, so the stated inverse returns the
+complete actual target. Execute only the selected sixth atom and
+immediately read it at original clock six. The already acquired
+six readings plus this one give seven. The two distinct targets
+share $H_*$, so no answer before this added reading can recover
+the whole slice. The source-slice label is a supplied class
+restriction, not an observation inferred from $H_*$. ∎
+

@@ -1,0 +1,44 @@
+**Lemma 4.4 (Disjoint one/one continuation and genuine ties).**
+After two disjoint active one pairs, the cap with at most one further
+call is $J=2a\eta^2$. If the target is in a pair, every instruction
+other than a fresh extension of that pair outside the two pairs has
+correct mass at most $\eta^2$, losing
+
+$$
+J-\eta^2=d\eta^2=g_1.
+\tag{4.4}
+$$
+
+The required extension has both replies positive and unique opposite
+preferred target spins. For an exterior target, a majority halt or
+any last actual call can attain $J$. Its complete maximizing labels
+are $\sigma$ on every positive section, except that an active fresh
+edge from the target to a vertex outside both pairs and the target
+has a unique $\sigma$ choice on zero and a genuine two-spin tie on
+one. Every stated spin means the actual label $h_\alpha(s)$.
+
+Proof. Each pair has weights $(\eta,\eta)$ and probability
+$2\eta$. For an internal target, no read, a repeat, a separator or
+a query missing its component leaves best mass $\eta^2$ after
+the phase factor. Joining the two tie pairs also leaves a tie, by
+(4.1). A fresh extension of its own pair makes a mixed triple of
+weights $a^2b,ab^2$ for either reply. Multiplying the other pair's
+probability and phase factor gives best mass $a\eta^2$ on each
+reply, hence $J$ in total. Formula (4.2) shows that either vertex
+of the original one pair has opposite preferred spins on the two
+replies, uniquely since $a>b$. The line geometry of Lemma 4.1
+leaves no other improving instruction. This proves (4.4).
+
+For an exterior target the prefix probability is $4\eta^2$ and
+its independent majority factor gives full-law best mass $J$.
+A call missing the target only partitions independent constraints,
+even if it joins the two nontarget components. A join of the target
+to a tie pair contributes the same factor $\eta$ to either target
+spin on each reply, retaining its strict $a:b$ preference. Repeats
+and separators retain it as well. Finally a fresh edge at the target
+has weights $(a^2,b^2)$ on zero and $(\eta,\eta)$ on one,
+times the two old one-pair probabilities. Its best sum is unchanged,
+but its one reply is genuinely tied. These are all last moves.
+Wrong-phase labels never maximize a positive certified section.
+$\square$
+

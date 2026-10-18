@@ -1,0 +1,56 @@
+**定理 C-126.3（条件置信覆盖与频率学误报界）。** 在假设 C-126.1 下，
+对每个固定五维复密度态 $\rho$，
+
+$$
+\Pr_\rho\bigl(\widehat R_{\rm low}\le R_3(p_\rho)\bigr)\ge1-\delta,
+\qquad
+\sup_{\operatorname{cn}_{\mathcal B}(\rho)\le3}
+\Pr_\rho(\widehat R_{\rm low}>T)\le\delta.
+\tag{C126.3}
+$$
+
+阈值改用 $\widehat R_{\rm low}>2$ 仍有相同误报界。
+这是固定状态与供应模型下重复实验的误报概率，不是数据后关于状态的后验概率。
+
+证明。对任意 $X\sim\operatorname{Bernoulli}(p)$，包括 $p=0,1$，定义
+
+$$
+\begin{aligned}
+h(\theta)&=\log\mathbb E e^{\theta(X-p)}
+=\log(1-p+pe^\theta)-p\theta,\\
+q_\theta&=\frac{pe^\theta}{1-p+pe^\theta},\qquad
+h(0)=h'(0)=0,\qquad h''(\theta)=q_\theta(1-q_\theta)\le\frac14.
+\end{aligned}
+\tag{C126.4}
+$$
+
+分母始终正。Taylor 积分式对所有实 $\theta$ 给
+$h(\theta)=\theta^2\int_0^1(1-v)h''(v\theta)\,dv\le\theta^2/8$。
+独立性使中心化和的矩母函数不超过 $e^{n\theta^2/8}$。
+对 $\theta=4\varepsilon>0$，指数 Markov 给
+
+$$
+\Pr\left(\sum_{r=1}^n(X_{jr}-p_j)>n\varepsilon\right)
+\le e^{-n\theta\varepsilon+n\theta^2/8}=e^{-2n\varepsilon^2}.
+\tag{C126.5}
+$$
+
+下尾对负中心化和同理，得到
+$\Pr(|\widehat p_j-p_j|>\varepsilon)\le2e^{-2n\varepsilon^2}=\delta/10$。
+对十设置取并集界，事件
+
+$$
+\mathcal G=\bigcap_{j=0}^9\{|\widehat p_j-p_j|\le\varepsilon\}
+\quad\text{满足}\quad\Pr_\rho(\mathcal G)\ge1-\delta.
+\tag{C126.6}
+$$
+
+在此事件上，因 $0\le p_j\le1$，截断保留
+$0\le\ell_j\le p_j\le u_j\le1$。
+由 C-125.1，$0\le L_3\le M_3(p_\rho)$，
+$U_1\ge M_1(p_\rho)\ge1/4$，于是 $L_3/U_1^2\le R_3(p_\rho)$。
+若再有 (C123.4)，同一事件上 C-123.2 给
+$\widehat R_{\rm low}\le R_3(p_\rho)\le T$，所以误报事件包含于 $\mathcal G^c$。
+这个界对每个零假设态使用同一 $\delta$，取上确界即得 (C126.3)。
+$T<2$ 给更保守触发规则的结论。证毕。
+

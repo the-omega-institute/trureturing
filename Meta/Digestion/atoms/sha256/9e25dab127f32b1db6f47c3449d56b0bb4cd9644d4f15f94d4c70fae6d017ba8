@@ -1,0 +1,62 @@
+**Theorem 7.4 (Complete classification for each fixed auxiliary
+law).** For every specified independent probability space of
+Definition 1.2, all feasible masses are exactly the compact set
+
+$$
+\mathcal Q_\nu=\bigcup_\kappa[Q_\kappa,Q_\kappa+d].
+\tag{7.5}
+$$
+
+It contains zero and one. At every $q\in\mathcal Q_\nu$ the
+infimum in (1.5) is an actually attained minimum. Explicitly, if
+$d>0$ it is
+
+$$
+\mathcal L_{2,\nu}(q)=
+\min_{\substack{\kappa:\ Q_\kappa\le q\le Q_\kappa+d}}
+\left[B_\kappa+dF\left(\frac{q-Q_\kappa}{d}\right)\right],
+\tag{7.6}
+$$
+
+and if $d=0$ it is
+
+$$
+\mathcal L_{2,\nu}(q)=\min_{\kappa:\ Q_\kappa=q}B_\kappa.
+\tag{7.7}
+$$
+
+Outside $\mathcal Q_\nu$, no original protocol has that exact
+return mass and $\mathcal L_{2,\nu}(q)=+\infty$.
+
+Proof. By Lemma 7.3 the feasible mass set of the original class is
+exactly the first-coordinate projection of $\mathcal B_\nu$.
+For each atomic assignment the remainder's mass projection is
+$[0,d]$: all $q_k$ are in $[0,1]$, and the zero and one policies
+already supply every convex mass between those endpoints. This
+proves (7.5) in both directions. Compactness follows by projection
+of the compact set in Lemma 7.3. Assigning all parts to a zero or
+one policy proves inclusion of zero and one.
+
+Fix a feasible $q$. The section of $\mathcal B_\nu$ with first
+coordinate $q$ is nonempty and compact, so its second coordinate
+has a minimum $l$. Every original protocol with mass $q$ has risk
+at least $l$, by same-mass domination. The minimizing point itself
+is attained on the original space by Lemma 7.3. Hence $l$ is
+exactly $\mathcal L_{2,\nu}(q)$, with actual attainment even for
+countably infinitely many atoms.
+
+For a fixed atomic assignment and $d>0$, the remainder must have
+normalized mass $(q-Q_\kappa)/d$. Its feasibility is equivalent
+to the inequalities under the minimum in (7.6), and its smallest
+risk is the attained value $dF((q-Q_\kappa)/d)$. For $d=0$,
+the mass constraint is precisely $Q_\kappa=q$, with risk
+$B_\kappa$. These observations give the displayed formulae.
+To justify their outer minimum signs, take the already attained
+minimizing point of the compact section and any representation of
+it in (7.2). Its remainder must minimize (7.1); replacing a
+nonoptimal remainder would contradict minimality. Its atomic
+assignment therefore attains the outer expression. The $d=0$
+case is immediate from that representation. If $q$ is outside the
+projection there is no feasible protocol, proving the last clause.
+$\square$
+

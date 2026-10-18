@@ -1,0 +1,17 @@
+### 定义 12.1（五态实函数与概率条件）
+
+沿用定义 1.1 的有序五态集合 $\Sigma=(0,2,3,5,25)$，令 $\mathcal L=\mathbb R^\Sigma$。五态两两可判别且可穷举；$p\in\mathcal L$ 只表示实函数，概率条件另为
+
+$$
+\operatorname{Prob}(p)\ \Longleftrightarrow\
+(\forall s\in\Sigma,\ p_s\ge0)\ \land\ \sum_{s\in\Sigma}p_s=1.
+$$
+
+令 $x=\mathbf1_{\{2,25\}}$、$y=\mathbf1_{\{5,25\}}$、$z=\mathbf1_{\{3\}}$，并对所有 $p\in\mathcal L$ 定义
+
+$$
+V(p)=(X(p),Y(p),Z(p))
+=\left(\sum_s p_sx(s),\sum_s p_sy(s),\sum_s p_sz(s)\right),
+\qquad \kappa(p)=p_{25},\qquad d=(1,-1,0,-1,1).
+$$
+

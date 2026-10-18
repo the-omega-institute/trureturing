@@ -1,0 +1,97 @@
+**Convention 50.1 (the original weak-plateau problem).** Retain the original
+full twelve-history, all-complex, common-processor problem of Definition
+41.1. The source-root, complete-channel, sharp-cost and minimax statements
+from CG §§13--17 and JR §§41--49 are conditional premises here. The
+inequality on the binary effect remains the original inequality; no other
+binary-effect coordinate, complete-channel representative, or input phase
+is fixed. In particular, the reduction below does not replace the original
+problem by CA's prescribed complete binary effect.
+
+Put
+
+$$
+L_0=\operatorname{diag}(\delta,1,1),\qquad
+L=L_0^{1/2}=\operatorname{diag}(\sqrt\delta,1,1),\qquad
+\chi=\frac{\omega}{\delta},
+$$
+
+and
+
+$$
+Q_0=\operatorname{diag}(1,-\theta,-\omega),\qquad
+Q=\operatorname{diag}(1,-(1-\chi),-\chi).
+$$
+
+Then $LQ_0L=\delta Q$ and $\operatorname{tr}Q=0$. For the four real
+PSD matrices in JR.58 write
+
+$$
+Z_{r,\epsilon}=LX_{r,\epsilon}L,\qquad
+G=LNL=
+\begin{pmatrix}g_0&x&y\\x&g_1&z\\y&z&g_2\end{pmatrix},
+$$
+
+where
+
+$$
+\begin{gathered}
+N=\begin{pmatrix}\Delta A&\xi&\eta\\\xi&\Delta B&\zeta\\\eta&\zeta&\Delta C\end{pmatrix},
+\quad(g_0,g_1,g_2,x,y,z)=(\delta\Delta A,\Delta B,\Delta C,s_0\xi,s_0\eta,\zeta),\\
+\tau=s/s_0.
+\end{gathered}
+\tag{JR.83}
+$$
+
+Thus the exact normalized primal is
+
+$$
+\begin{aligned}
+J_s=\max\quad&\sum_{r,\epsilon=\pm1}\epsilon\operatorname{tr}(GX_{r,\epsilon})\\
+\text{subject to}\quad
+&X_{r,\epsilon}\succeq0,\qquad
+\operatorname{tr}(QX_{r,\epsilon})=0,\\
+&\sum_{r,\epsilon}X_{r,\epsilon}=I,\qquad
+\sum_{r,\epsilon}r(X_{r,\epsilon})_{01}\geq\tau.
+\end{aligned}
+\tag{JR.84}
+$$
+
+Every coordinate of the original effect not displayed in (JR.84) remains
+free. The height record is still
+
+$$
+\mathcal T(s)=\frac12\bigl[(1-\delta)\Delta A+L_f+J_s\bigr].
+\tag{JR.85}
+$$
+
+For numerical enclosures in §§50–51, use the full inherited box
+$\mathcal B_{\rm CG}=\prod_{i=0}^8[c_i-10^{-24},c_i+10^{-24}]$,
+where $c$ is the exact rational centre table in [CG, Proposition 13.2],
+in the order $(\lambda,\alpha_1,\alpha_2,\beta_1,\beta_2,z,\eta_0,\eta_1,\eta_2)$. Reconstruct the coefficients by (CG.112),
+(CG.113), (CG.116), (CG.134), then (JR.21), (JR.49) and (JR.83).
+The CG coordinate $z$ in that table is distinct from $z=G_{12}$ here.
+Every narrow directed enclosure below uses this entire box, with outward
+rational arithmetic and square-root bounds as specified in §48;
+terminating decimal endpoints are exact rationals. This only evaluates
+derived quantities on the inherited box; it does not reauthenticate
+its isolated root, exact ranks, normalization or minimax certificate.
+
+A coarse consequence of this full premise, with rational endpoints, is
+
+$$
+\begin{gathered}
+\frac{12227}{100000}<\chi<\frac{12230}{100000},\qquad
+\frac{1269}{10^6}<g_0<\frac{1270}{10^6},\qquad
+\frac{29222}{10^7}<g_1<\frac{29224}{10^7},\\
+\frac{16771}{10^7}<g_2<\frac{16773}{10^7},\qquad
+\frac{2370}{10^6}<x<\frac{2372}{10^6},\qquad
+\frac{2207}{10^6}<y<\frac{2209}{10^6},\\
+-\frac{1017}{10^7}<z<-\frac{1016}{10^7}.
+\end{gathered}
+\tag{JR.86}
+$$
+
+The coarse bounds (JR.86) support strict sign and positive-pivot
+comparisons. The narrow numerical enclosures below use $\mathcal B_{\rm CG}$,
+not (JR.86) alone.
+

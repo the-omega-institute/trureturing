@@ -1,0 +1,36 @@
+### 1.1 Probabilities, arbitrary preparation and transport
+
+Use the mode order $(0,1,2,3,13)$. On the native double wall $X=Y=H$,
+fix the probability curve and its tangent by
+
+$$
+p(k)=(k,H-k,Z,H-k,k),\qquad 0<k<H,
+\qquad d=(1,-1,0,-1,1)^{\mathsf T}.
+$$
+
+All five probabilities are positive and sum to $2H+Z=1$.
+Choose any fixed preparation height $k_0\in(0,H)$ and any fixed
+preparation phases $\theta^{\rm in}_s$. They need not be equal within
+any group. With the native negative phase convention, the amplitudes and
+transport equations are
+
+$$
+\psi_s=\sqrt{p_s}\,e^{-i\theta_s},\qquad
+\dot p=d\dot k,\qquad
+\dot\theta_s=w_s(k)\dot\chi,\qquad
+w_s(k)=\frac{d_s}{p_s(k)I(k)},
+$$
+
+$$
+I(k)=\frac1{p_0(k)}+\frac1{p_1(k)}+
+     \frac1{p_3(k)}+\frac1{p_{13}(k)}.
+$$
+
+Here $k$ and $\chi$ are the original controls. A producing history is a
+piecewise $C^1$ or absolutely continuous path on a finite compact time
+interval, with $k$ strictly between $0$ and $H$ throughout and with finite
+phase variation. The initial real relation phase is chosen consistently
+with $d^{\mathsf T}\theta^{\rm in}$. Queries are allowed at any finite
+prefix; no return loop or integer winding is required. Real lifts may be
+used to integrate a history, but the current state is its ray, not a lift.
+

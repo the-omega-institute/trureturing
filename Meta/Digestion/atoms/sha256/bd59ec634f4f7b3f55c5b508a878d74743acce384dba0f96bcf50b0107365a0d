@@ -1,0 +1,18 @@
+**定理 176.2（四叶反例在固定读口都为恒等）。** 本章固定表示满足
+
+$$
+U(r)=\mathsf a\mathsf b\mathsf b\mathsf a=I,\qquad
+U(s)=\mathsf b\mathsf a\mathsf a\mathsf b=I.
+$$
+
+因此两个来源的不同面积位置没有由这个固定终端矩阵读口读出；它们作为单系统通道也相同。
+
+证明（176.2）。$X^2=Y^2=I$，所以 $\mathsf a^2=\mathsf b^2=-I$。于是
+
+$$
+\mathsf a\mathsf b^2\mathsf a=-\mathsf a^2=I,\qquad
+\mathsf b\mathsf a^2\mathsf b=-\mathsf b^2=I.
+$$
+
+每个密度算子都被 $I\varrho I^\dagger$ 保持，故通道相同。定理169.2同时给不同矩，说明五量读出与这个矩阵读出保留的区别不同。证明只计算所列两词；没有在本章从此二例外推全部同步 $\rho$ 层上的矩阵恒等。$\square$
+

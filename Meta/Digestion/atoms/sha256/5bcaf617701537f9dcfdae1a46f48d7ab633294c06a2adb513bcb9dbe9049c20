@@ -1,0 +1,28 @@
+**Open problem 8.4 (the unchanged full-family optimum).** Determine
+$M_1(D)$ for arbitrary finite $D$ by a non-tautological native
+structural characterization with an exact recurrence, or close the
+alphabet-scale gap with rigorously matching bounds. In particular,
+determine the sharp leading alphabet rate, including whether
+
+$$
+\lim_{D\to\infty}\frac{\log_2 M_1(D)}{2^{D-2}}
+$$
+
+exists and what its value is. The present bounds place any such
+limit between $\log_2(7/5)$ and $1$. The exact value at $D=3$
+also remains between $3$ and $4$.
+
+The missing relation is a global coloring or optimal-fiber theorem
+on the full variable-shape family that preserves all late targets
+and all native words on each jointly attained code fiber. Lemma 2.2
+names that interface but is only a generic partition criterion.
+The exact restricted theorem does not extend its box fibers to the
+whole family; Theorem 7.1 excludes a general unchanged-fiber
+prefix reduction, and $C_2=3$ excludes multiplying independent
+local minimum code counts. Finite source-table enumeration, small
+depth checks and selected scaffold families do not discharge this
+general obligation. The retained-bit order is a partial result
+within the full minimal-relations and mutual-recovery programme,
+whose physical realization and broader recovery questions remain
+open as well.
+

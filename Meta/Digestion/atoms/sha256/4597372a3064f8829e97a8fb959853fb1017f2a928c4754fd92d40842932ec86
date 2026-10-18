@@ -1,0 +1,18 @@
+**定义 29.5.1（随机化设计）。** 令 $\pi$ 是 assignment 空间上的设计分布，支持为
+
+$$
+S_\pi=\{a\in\mathcal A:\pi(a)>0\}.
+$$
+
+若要讨论均值，先给结果一个校准的数值评分 $s_v:\mathcal Y_v\to\mathbb R$，并把
+$Y_v(a)$ 的均值理解为 $m_v(a)=\mathbb E[s_v(Y_v(a))]$。设这些有限结果的
+响应类允许的均值函数为 $m_v$。
+
+对已支持的 assignment，假设随机化观测核能识别 $m_v(a)$。给定固定权重 $w(a)\ge0$ 且 $\sum_aw(a)=1$，目标为
+
+$$
+\mu_w=\sum_{a\in\mathcal A}w(a)m_v(a).
+$$
+
+<a id="claim-29-5-2"></a>
+

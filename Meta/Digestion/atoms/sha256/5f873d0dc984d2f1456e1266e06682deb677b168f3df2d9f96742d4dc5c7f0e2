@@ -1,0 +1,20 @@
+**定义 1.7（Bayes 与 minimax 两种评分）。** 置
+
+$$
+I_\omega(q)=\mathbf1_{E_q}(\omega),\qquad p_\Pi(q)=\mathbb P(E_q).
+$$
+
+对另行声明的先验 $\pi$，其中 $\pi(q)\ge0$、$\sum_q\pi(q)=1$，定义完整服务 Bayes 成功率
+
+$$
+\mathsf B_\pi(\Pi)=\sum_{q\in Q_v}\pi(q)p_\Pi(q).
+$$
+
+特别另行声明均匀先验 $\pi(q)=1/(2h)$，记 $\mathsf B(\Pi)=\mathsf B_\pi(\Pi)$。最坏来源成功率的最优值定义为
+
+$$
+\mathsf V(h)=\sup_\Pi\min_{q\in Q_v}p_\Pi(q).
+$$
+
+上确界均取遍定义1.5–1.6的可容许控制器。Bayes 平均、逐来源成功、单次查询正确率和当前状态恢复是不同评分。
+

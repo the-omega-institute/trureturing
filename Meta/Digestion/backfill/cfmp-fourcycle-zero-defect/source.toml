@@ -1,0 +1,5 @@
+source_id = "cfmp-fourcycle-zero-defect"
+path = "docs/develop/theory/CFMP_FOURCYCLE_ZERO_DEFECT.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

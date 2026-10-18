@@ -1,0 +1,37 @@
+**Definition 3.2 (one common selector and reply decoder).** For each
+$c\in\mathcal C_d$ and every $|q|\le d$, define a relative query
+$W_d(c,q)$ and a factor decoder $J_d(c,q,y)$ as follows.
+At $q=\varepsilon$, query the root and decode its reply as
+$(2,1)$ for alpha, $(1,0)$ for beta and $(0,0)$ for branch.
+For $d=1$ and $|q|=1$, code $0$ queries the root and applies
+(LTR.3) to its label with residual $q$; code $1$ queries $q$ and
+decodes its alpha, beta or branch reply as the endpoint factor.
+
+At depth $d+1$, for $q=br$ with $b\in\{L,R\}$, write
+$c=(c_L,c_R)$ and set
+
+$$
+W_{d+1}(c,br)=bW_d(c_b,r).
+\tag{LTR.8}
+$$
+
+Decode its one reply by
+
+$$
+J_{d+1}(c,q,y)=
+\begin{cases}
+(s(q)+2,\mathbf1_{q\text{ ends in }R}),
+       &c=(P_d,P_d),\ y=\mathsf{absent},\\
+(s(q)+1,\mathbf1_{q\text{ ends in }R}),
+       &c=(Q_d,Q_d),\ y=\mathsf{absent},\\
+J_d(c_b,r,y),&\text{otherwise}.
+\end{cases}
+\tag{LTR.9}
+$$
+
+Unattained decoder cases may be assigned any fixed value. In the
+actual source $t=\langle\alpha,v\rangle$, a relative word $a$ means
+the submitted original-root literal $Ra$. The recursion in (LTR.8)
+constructs one word before its reply; it does not execute recursive
+Reads or transfer a subtree.
+

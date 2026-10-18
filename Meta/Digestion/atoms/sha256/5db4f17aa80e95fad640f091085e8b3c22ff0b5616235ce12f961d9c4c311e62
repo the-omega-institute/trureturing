@@ -1,0 +1,11 @@
+**假设 18.1（有限对称梯度合同）。** $u\in\mathbb R^p,h\in\mathbb R^q$，$A=A^{\mathsf T}$，$D=D^{\mathsf T}>0$，$B$ 为 $p\times q$ 矩阵。能量与受迫过程为
+
+$$
+E(u,h)=\frac12\begin{pmatrix}u\\h\end{pmatrix}^{\mathsf T}
+\begin{pmatrix}A&B\\B^{\mathsf T}&D\end{pmatrix}
+\begin{pmatrix}u\\h\end{pmatrix},\qquad
+u'=-Au-Bh+f(t),\quad h'=-B^{\mathsf T}u-Dh.
+$$
+
+$f$ 连续，初态任意。对称性使过程是该能量的欧氏负梯度加边界强迫；不对称的 $A$ 只会在能量中留下其对称部，不能仍称这个指定过程为同一梯度过程。
+

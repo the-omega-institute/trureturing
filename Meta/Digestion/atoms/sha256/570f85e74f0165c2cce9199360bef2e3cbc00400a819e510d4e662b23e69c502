@@ -1,0 +1,15 @@
+**Definition 24.1 (actual family and inherited domain).** Retain the actual real class, passive frame, arbitrary complex recoveries on the whole output, unhalved norms and all finite references of Definitions 1.1 and 23.1. Write $(e_0,e_1,e_2,e_3,h)=(b_1,g_1,b_2,g_2,h)$, with $Je_0=e_1$, $Je_2=e_3$, $J^T=-J$ and $Jh=0$. Throughout Sections 24–27 take $0<\beta\leq1/2$, $a=1-\beta$. Choose real, possibly signed or zero parameters satisfying
+
+$$
+u^2+\frac{v^2}{a}+s_0^2+s_1^2+k^2=1,
+\qquad
+\begin{aligned}
+K_0&=(\sqrt a\,e_0,\sqrt a\,e_1,
+       -\sqrt{\beta/a}\,v e_1+s_0e_2+s_1e_3+kh),\\
+K_1&=(\sqrt\beta\,e_2,\sqrt\beta\,e_3,u e_0+v e_3).
+\end{aligned}
+\tag{R.115}
+$$
+
+The notation $(x,y,t)$ specifies all three columns. These two matrices define $N(X)=K_0XK_0^T+K_1XK_1^T$ on every complex input. The specialization $u=v=t$, $s_0=s_1=0$ is already owned by (R.75), (R.89)–(R.96); those statements are reused directly. The additional independent coefficients and their phase interference are the subject here.
+

@@ -1,0 +1,8 @@
+#### 468.3 全部素数剥离的实际 Euler 终点
+
+令 $P_N=\{p:p\text{ 素且 }p\le N\}$，并定义
+
+$$
+u_N(0)=0,\qquad u_N(k)=1\quad(1\le k\le N).
+$$
+

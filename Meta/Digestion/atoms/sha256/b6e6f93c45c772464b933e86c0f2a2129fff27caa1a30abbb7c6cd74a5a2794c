@@ -1,0 +1,221 @@
+**Theorem 83.3 (Exact-cap equivalence with arbitrary-address acquisitions).**
+For every $0<\varepsilon\le1$ and $k\in\mathbb N_0$, an acquisition in
+$\mathcal A_\varepsilon(a)$ has $K_{A,x}\le k$ almost surely at every
+actual source if and only if a feasible scheme on $\mathcal T_{L,k}$
+exists. Necessity allows arbitrary adaptive addresses, repeated requests
+and full-carrier output laws. Sufficiency gives an acquisition handing off
+at every source and every seed, with
+
+$$
+K_{A,x}\le k,\qquad M_{A,x}\le L.
+\tag{83.6}
+$$
+
+Consequently $\kappa_\varepsilon$ is the least feasible integer in
+$\{0,\ldots,L\}$, and this least value is attained under the original
+contract.
+
+**Proof.** Define the finite marked projection on the original carrier by
+
+$$
+\pi_L(\theta)=
+\begin{cases}
+\theta_j,&\theta=\theta_j\text{ for some }1\le j\le L,\\
+\theta_0,&\text{otherwise}.
+\end{cases}
+\tag{83.7}
+$$
+
+Its retained singleton fibers and their complement are Borel, so it is
+measurable. For any two original-tape probabilities, pulling back events
+gives
+
+$$
+\operatorname{TV}((\pi_L)_*\nu,(\pi_L)_*\lambda)
+\le\operatorname{TV}(\nu,\lambda).
+\tag{83.8}
+$$
+
+This is the finite coarsening of the projection method in Theorem 82.1.
+It fixes $\lambda_n$ when $n\le L$ and sends $\lambda_n$ to
+$\delta_{\theta_0}$ when $n>L$. If a probability $p$ is supported on
+$\theta_0,\ldots,\theta_L$ and $n>L$, the already supplied overlap
+identity (77.7) gives
+
+$$
+\operatorname{TV}(p,\lambda_n)=\max\{1-p(\{\theta_0\}),a_n\}.
+\tag{83.9}
+$$
+
+Indeed its mass at $\theta_n$ is zero. This identity will transport the
+finite all-one constraint back to the original tail targets.
+
+Suppose first that $A$ is an original hard-$k$ competitor. All its
+probabilities below use its unchanged seed law. Countability of $X$ and
+the measurable finite-handoff sublevel events give a common event
+
+$$
+G=\bigcap_{x\in X}\{K_{A,x}\le k\},\qquad\mathsf P_A(G)=1.
+\tag{83.10}
+$$
+
+No source-dependent seed conditioning is involved. For the common
+high-address event $J_{A,k,m}$ of (74.4), the exactness-independent
+finite-forest supplier (70.3)--(70.4) gives
+
+$$
+\gamma_m=\mathsf P_A(J_{A,k,m})\longrightarrow0.
+\tag{83.11}
+$$
+
+To recall its applicable content, at a fixed seed the first $k$ requests
+over all actual sources occupy at most $2^k-1$ binary query nodes.
+Processing with no further request adds no node. Their maximum address
+is finite; the countable union of measurable request-index events makes
+$J_{A,k,m}$ measurable. This uses neither exact output laws nor a uniform
+transition bound.
+
+For each integer $m\ge L+1$ and each $b\in Q$, fix an actual source
+$x_{b,m}$ whose answers are $b$ through $L$ and zero at every index
+$L<i\le m$. Boundaries, Theorem 35.2 supplies these finite patterns.
+The entire countable family is chosen independently of the seed. If $b$
+has first zero $n\le L$, then $n(x_{b,m})=n$. If $b=1^L$, then
+$n(x_{b,m})=L+1$. Hence in both cases
+
+$$
+(\pi_L)_*\lambda^a_{x_{b,m}}=\eta_b.
+\tag{83.12}
+$$
+
+Let $T_{A,x}$ denote the number of transitions to handoff, with value
+$\infty$ on nonhandoff. For each fixed $m$, the finite family
+$(T_{A,x_{b,m}})_{b\in Q}$ is finite almost surely. Therefore a deterministic
+integer $t_m$ can be chosen so that
+
+$$
+\max_{b\in Q}\mathsf P_A\{T_{A,x_{b,m}}>t_m\}\le1/m.
+\tag{83.13}
+$$
+
+This choice is for that finite family only and asserts no uniform bound
+on transition counts over $X$.
+
+Construct a finite mathematical truncation of the common rule. For input
+$b$, simulate at most $t_m$ transitions of $A$ with its original seed.
+At a requested index $i\le L$ supply $b_i$; at $L<i\le m$ supply zero.
+Stop with $\theta_0$ before an attempted address above $m$ or an attempted
+$(k+1)$st simulated request, or if handoff has not occurred by $t_m$.
+A simulated request is counted even if it repeats an index. At an original
+handoff apply $\pi_L$ to its tape. This construction specifies a bounded
+finite reply table and a truncation, not an execution at a postulated
+infinite source. The fixed high-coordinate replies are used to extract a
+finite tree; the acquisition constructed from that tree will issue only
+its actual low-coordinate requests.
+
+For completeness the finite output label $f_{s,m}(b)\in J$ of this
+truncation is measurable in the seed $s$. For every consistent finite
+request/answer word choose once an actual witness realizing its finite
+pattern, using Theorem 35.2 and a fixed enumeration of $X$. Such words
+form a countable set, and all these witnesses are chosen before seeds.
+On the whole event of following a word, the original rule at its witness
+has the same finite processing and answers, by Lemma 45.3. The record,
+cutoff and retained singleton-output events are consequently measurable
+finite-record events or countable unions of them. For $j\ge1$, the event
+$f_{s,m}(b)=j$ is such a union of original handoff events with output
+$\theta_j$; every remaining truncated outcome has label zero. Thus each
+label event is measurable, including cutoffs. Since $Q$ is finite, the
+joint map $s\mapsto(f_{s,m}(b))_{b\in Q}$ is measurable into the finite
+set $J^Q$. No measurable equality diagonal on the unprojected tape carrier
+is needed.
+
+After freezing $s$, the truncation is one deterministic decision rule on
+the complete cube $Q$. Between low-coordinate questions it has a unique
+continuation: all high replies and all previously requested replies are
+fixed. Contract these fixed-answer and repeated-query nodes. What remains
+is a binary query tree with fresh labels in $\{1,\ldots,L\}$ and path
+depth at most $k$, since there were at most $k$ simulated requests before
+contraction. Every branch of this finite tree is covered by some $b\in Q$.
+Thus $f_{s,m}$ is represented by a member of $\mathcal T_{L,k}$.
+Choose one representing tree for each representable function in the
+finite set $J^Q$. The preceding measurable function-valued map then
+induces a measurable tree-valued map and a probability vector
+$w^{(m)}$ on $\mathcal T_{L,k}$.
+
+For each fixed $b$, couple the truncation with $A$ at the fixed actual
+$x_{b,m}$ on the original seed space. On the whole measurable event
+
+$$
+G\cap\{T_{A,x_{b,m}}\le t_m\}\setminus J_{A,k,m}
+\tag{83.14}
+$$
+
+the original execution makes at most $k$ requests, all at indices at most
+$m$, and hands off by $t_m$. Its answers agree with the finite reply
+table, so induction over its complete finite execution identifies the
+truncated output with its projected original output. The complement of
+(83.14) has probability at most $\gamma_m+1/m$. Event indicators for the
+two projected outputs therefore differ in expectation by at most this
+number. Using (83.8), (83.12), the original cap and the triangle inequality,
+the law $\nu_b^{(m)}$ induced by $w^{(m)}$ satisfies
+
+$$
+\begin{aligned}
+\operatorname{TV}\bigl(\nu_b^{(m)},
+     (\pi_L)_*\widehat\lambda_{A,x_{b,m}}\bigr)
+ &\le\gamma_m+1/m,\\
+\operatorname{TV}(\nu_b^{(m)},\eta_b)
+ &\le\varepsilon+\gamma_m+1/m.
+\end{aligned}
+\tag{83.15}
+$$
+
+All seed mass, including every cutoff outcome, is included in these laws.
+The comparison sources are fixed actual sources, never functions of an
+individual seed.
+
+There are finitely many trees. Their probability simplex is compact:
+successive subsequence selection for its finitely many coordinates gives
+a subsequence of $w^{(m)}$ converging to a nonnegative vector $w$ of total
+mass one. Each $p_b(j)$ in (83.5) is linear in this vector, and TV on the
+finite marked carrier is a continuous finite sum. Letting $m$ tend to
+infinity along that subsequence in (83.15) gives
+$\operatorname{TV}(\nu_b,\eta_b)\le\varepsilon$ for every $b$.
+The limit uses a single vector of weights for all inputs. In particular
+it yields the exact cap, rather than only every larger cap. This proves
+necessity for full-carrier, arbitrary-address competitors.
+
+Conversely, sample a tree from the fixed weights $w_T$ with one
+source-independent uniform seed, using half-open categorical intervals.
+Run its node questions as actual requests to the primes $p_i$, and hand
+the original tape at its leaf to the unchanged consumer. This is one
+common seeded deterministic rule, with zero advice and no further source
+observation. Every path is finite and satisfies (83.6). Records and outputs
+are measurable finite unions of categorical seed intervals. At $x$ with
+$n(x)\le L$, its actual low word has that first zero, and the finite cap
+is precisely its selected-law cap. At $n(x)>L$, the word is $1^L$ and its
+constraint is $1-p_{1^L}(0)\le\varepsilon$. Since $a_{n(x)}\le\varepsilon$,
+(83.9) gives the original tail-target error at most $\varepsilon$.
+Thus this is an original member of $\mathcal A_\varepsilon(a)$.
+
+Finally a feasible scheme exists at $k=L$: query the low coordinates in
+order until the first zero $n\le L$ and sample $\lambda_n$ there;
+otherwise emit $\theta_0$. One common uniform coordinate can decide the
+two-point sample for every possible $n$. Freezing that coordinate gives
+a labeled depth-$L$ tree, so these samplers form a finite tree mixture.
+At a tail source its error is $a_{n(x)}\le\varepsilon$. For $L=0$ the
+rule is simply immediate $\theta_0$. The nonempty finite set of feasible
+integers has a least member, attained by the preceding converse. $\square$
+
+**Mathematical citation 83.4 (Decision trees and the actual-source bridge).**
+Deterministic adaptive query trees, depth as worst path query count, and
+randomized trees as distributions over deterministic trees are established
+ingredients in Buhrman and de Wolf, [*Complexity Measures and Decision Tree
+Complexity: A Survey*, Sections 3.1--3.2](https://homepages.cwi.nl/~rdewolf/publ/qc/dectree.pdf).
+The finite input model is obtained here from actual-pattern realization
+and the finite-request-forest and whole-event suppliers, not assumed for
+$X$. The bidirectional full-carrier transport and exact positive-cap
+attainment in Theorem 83.3 are `repo-derived` compositions of those
+suppliers. The theorem preserves feasibility at $(k,\varepsilon)$; it does
+not preserve an arbitrary competitor's output laws, mean resources or
+address usage.
+

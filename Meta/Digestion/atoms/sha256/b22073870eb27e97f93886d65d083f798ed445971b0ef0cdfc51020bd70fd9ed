@@ -1,0 +1,57 @@
+### theorem 4.1: 定理 3：响应可见性定理
+
+固定 $(X,Y,Z)$ 后，未来响应能够识别隐藏坐标 $\kappa$，当且仅当
+
+$$
+\boxed{
+J_{\mathscr L}\neq 0.
+}
+$$
+
+如果
+
+$$
+J_{\mathscr L}=0,
+$$
+
+则整个 $\kappa$-纤维在该响应仪器下坍缩为同一个未来律。
+
+#### 证明
+
+在固定 $(X,Y,Z)$ 的纤维上，只有 $\kappa$ 变化，因此
+
+$$
+\overline{\mathscr L}(\kappa)=
+C(X,Y,Z)+J_{\mathscr L}\kappa.
+$$
+
+若 $J_{\mathscr L}=0$，则响应与 $\kappa$ 无关。
+
+若 $J_{\mathscr L}\neq0$，取一个线性泛函 $\varphi$，使得
+
+$$
+\varphi(J_{\mathscr L})\neq0.
+$$
+
+则
+
+$$
+\varphi(\overline{\mathscr L})=
+\varphi(C)+\varphi(J_{\mathscr L})\kappa,
+$$
+
+从而
+
+$$
+\kappa=
+\frac{
+\varphi(\overline{\mathscr L})-\varphi(C)
+}{
+\varphi(J_{\mathscr L})
+}.
+$$
+
+因此 $\kappa$ 可被唯一恢复。证毕。
+
+---
+

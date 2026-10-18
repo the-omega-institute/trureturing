@@ -1,0 +1,11 @@
+**Definition 5.2 (acquired complementary calibration).** In an RA attempt
+for $P=\{R\}$, construct the entire row candidate. If its root is a
+concrete leaf, set the calibration candidate to zero. Otherwise its
+left exterior is a complete finite tree $x$; compute $c(x)$ by a
+finite scan of those paid bytes. The reached right hole has persistent
+base $R$. Apply Definition 4.1 below it to acquire a provisional
+$c(y)$. On INVALID reject the attempt. Otherwise set
+$\delta'=1+c(y)-c(x)$ and perform RA's original final left-guard Read.
+Accept the row and $\delta'$ only on its identical leaf reply.
+Only the complete row and a canonical signed integer are exported.
+

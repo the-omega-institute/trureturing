@@ -1,0 +1,70 @@
+**定理 450.2（真实曲率概率与原轮廓的超额期望）。** 存在正随机变量
+\(V\)，其严格正的密度、分布函数与生存函数为
+
+\[
+f_V(v)=\frac{B(v)}k\quad(v>0),\qquad
+\mathbb P(V\le v)=\frac{\Phi'(v)-1}k,\qquad
+\mathbb P(V>v)=\frac{C-\Phi'(v)}k\quad(v\ge0).
+\tag{CVP.5}
+\]
+
+它满足完整质量和一阶矩身份
+
+\[
+\int_0^\infty B(v)\,dv=k,\qquad
+\int_0^\infty vB(v)\,dv=1,\qquad
+\mathbb EV=\frac1k.
+\tag{CVP.6}
+\]
+
+而同一原 \(\Phi\) 对每个 \(v\ge0\) 精确满足
+
+\[
+\boxed{
+\begin{aligned}
+\Phi(v)&=1+v+k\,\mathbb E[(v-V)_+]\\
+       &=Cv+k\,\mathbb E[(V-v)_+]\\
+       &=v+k\,\mathbb E[\max(v,V)].
+\end{aligned}}
+\tag{CVP.7}
+\]
+
+所有期望使用同一 \(V\)，其无穷尾均保留。
+
+**证明：质量与一阶矩。** 引理450.1已给可积性。在有限区间上使用
+FTC，然后以（CVP.4）取极限：
+
+\[
+\int_0^R B(v)\,dv=\Phi'(R)-1\longrightarrow C-1=k,
+\]
+
+\[
+\int_0^R vB(v)\,dv
+=R\Phi'(R)-\Phi(R)+1\longrightarrow1.
+\]
+
+因此 \(B/k\) 确实定义 \((0,\infty)\) 上的概率密度。（CVP.5）由
+其从零积分得到；\(B>0\) 保证任意正长度的正轴区间有严格正质量，
+所以这不是点质量，且没有零点原子。
+
+**证明：完整超额表示。** 对固定 \(v\ge0\)，\((w-v)_+B(w)\)
+由 \(wB(w)\) 主导，故完整尾绝对收敛。有限区间分部积分给
+
+\[
+\int_v^R(w-v)B(w)\,dw
+=(R-v)\Phi'(R)-\Phi(R)+\Phi(v).
+\]
+
+准确地写成
+
+\[
+v\Phi'(R)-Cv\longrightarrow0,\qquad
+R\Phi'(R)-\Phi(R)\longrightarrow0,
+\]
+
+便得到
+\(\int_v^\infty(w-v)B(w)\,dw=\Phi(v)-Cv\)。这给（CVP.7）第二行。
+有限区间的两次 FTC 则给
+\(\Phi(v)=1+v+\int_0^v(v-w)B(w)\,dw\)，即第一行。
+最后用 \(\max(v,V)=v+(V-v)_+\) 和 \(C=1+k\) 得第三行。证毕。
+

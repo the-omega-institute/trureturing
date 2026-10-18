@@ -1,0 +1,23 @@
+**Proposition 167.3 (The stronger prefix-cone assertion).**
+
+$$
+P_{R,L}\subseteq\Pi_O
+\quad\Longleftrightarrow\quad
+\rho_O(b)\le1\quad
+\text{for every }b\in H_L\text{ with }\rho_N(b)<\infty.
+\tag{167.4}
+$$
+
+This is a stronger condition than (167.3). A finite hypothetical direction
+with $\rho_N(b)=\rho_O(b)>1$ would violate (167.4), while the two
+probability-feasible radial intervals would coincide. This distinguishes
+the conditions without asserting existence of such a direction.
+
+**Proof.** By cone feasibility and positive homogeneity, every finite
+$\rho_N$ direction belongs to $P_{R,L}$ for all $0<t\le1$, including
+$b$ itself. At $t=1$ it is $O$ feasible exactly when $\rho_O(b)\le1$.
+That condition is also sufficient at every smaller parameter.
+The displayed hypothetical costs give equal intervals
+$[0,1/\rho_N(b)]$, despite failure at $b$. Thus finite cone feasibility
+cannot be silently promoted to probability budget one. $\square$
+

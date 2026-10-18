@@ -1,0 +1,4 @@
+**Example 349.3 (Raw mass is a different quantity).** At $L=2$ take
+$p_1=(1-w_1)(1-w_2)$ and $p_2=w_1$. Then
+$Z_1=1$, $\xi_{12}=1$, $t_{12}=0$, $m^0_{12}=1$, $S_{1,2}=1$, $A_1=0$, $D_1=1$, and $B_W=2$. The input table has mass one but its exact W reconstruction needs mass two. For actual words with $n>2$ it emits a wrong marked label, so this is a law-preservation diagnostic only; it is neither a lower bound for all original $O$ rules nor a strict separator.
+

@@ -1,0 +1,57 @@
+**Theorem 5.3 (acquired all-primitive-cut reconstruction).** Each of the four
+expressions in NCR.4 determines the entire original joint state $x_h$ and the
+entire actual prefix $h$, for every $h\in\mathscr H_{H,J}$. On each actual
+expression image there is an effective finite prefix decoder $H_V$ and an
+endpoint decoder $D_V=\operatorname{endpoint}\circ H_V$ satisfying
+
+$$
+H_V(V(h))=h,\qquad D_V(V(h))=x_h\quad(V=S,T,B,M).
+\tag{NCR.5}
+$$
+
+These are decoding algorithms on acquired finite descriptions for named cuts;
+their own paid execution, scratch and output are additional resources.
+
+Proof. The node set with ordered addresses determines the unlabelled shape:
+nodes with children are branches, and the remaining nodes are dots. The finite
+leaf antichain determines the same shape by prefix closure. Since $e_h\ge2$
+throughout this domain, NCR.1 and NCR.3 apply. Decode
+
+$$
+u=I^{e_h-2}\bigl(D(\operatorname{sh}(r_h))\bigr).
+\tag{NCR.6}
+$$
+
+Every inverse application is in its actual domain by NCR.1. This uses the
+existing two-step support decoder and actual-substitution inverse; it neither
+reproves those suppliers nor assumes that a bare current source reveals its
+own absolute epoch. Thus $S$ and $B$ both determine $(u,n_h)$.
+
+The temporal word contains all the producer acquisition Reads before the
+acquisition fence. Their projection is exactly the existing truthful preorder
+and hence determines $u$ by the existing reconstruction. Counting all its
+primitive occurrences gives $n_h$; counting actual update occurrences gives
+$e_h$. The memory value supplies $(u,n_h)$ directly.
+
+Now replay the explicitly installed program from its common entrance on a
+local finite description of $u$, for exactly $n_h$ primitives. This is a
+calculation with acquired data, not another physical source. On a Native Read,
+compute its finite literal reply on the locally maintained current tree; on
+an update, substitute that tree; on a tape occurrence, perform exactly the
+same finite tape/latch/token/control rewrite and receipt append. Include all
+retired cells and the native trace. Reproduce deterministic allocation,
+framing, references, current and lagging counter versions, pending responses,
+mailboxes and unavailable destinations. No hidden independent allocator or
+control choice is allowed by Definition 2.2.
+
+Induction on the replayed primitive number gives equality with the actual
+state: the entrances agree; equal control selects the same next opcode; equal
+actual-tree descriptions give the same literal reply or substituted tree;
+equal constructed tapes give the same ordinary transition. The receipt
+extension and all metadata changes are also the same. At $n_h$ the induction
+therefore gives $x_h$, including a partially written row or an incompletely
+copied destination. The replay records its full prefix along the way.
+Termination follows because $n_h$ is finite and is a reached position of the
+finite run. One may totalize off-image input with a typed decoding error, but
+this is not an authentication theorem for such inputs. ∎
+

@@ -1,0 +1,14 @@
+**定义 6.1（奇数频率分支族）。** 对每个 $`k\in\mathbb Z`$ 定义
+
+```math
+\mathcal F_k(t)=\frac{e^{at}-e^{(-a+i(2k+1)\pi)t}}{\sqrt5}.
+```
+
+本卷是 $`k=-1`$ 的分支；所引 [Özvatan–Pashaev §5.1](../../../Library/Analytic/ozvatanpashaev2017binetcurves.md) 是 $`k=0`$。整数时 $`e^{i(2k+1)\pi n}=(-1)^n`$，所以所有分支都给 $`F_n`$。两个指数的一步因子分别为 $`\varphi,\psi`$，各满足 $`r^2=r+1`$，故对每个实 $`t`$ 有
+
+```math
+\mathcal F_k(t+2)=\mathcal F_k(t+1)+\mathcal F_k(t).
+```
+
+不同 $`k`$ 的负频项比为 $`e^{2\pi i(k-\ell)t}`$，不是恒一；其导数在零处相差 $`-2\pi i(k-\ell)/\sqrt5`$，所以非整数曲线不同。它们均是整函数；连续性、解析性及这份实参数递推合在一起也没有选出唯一分支。
+

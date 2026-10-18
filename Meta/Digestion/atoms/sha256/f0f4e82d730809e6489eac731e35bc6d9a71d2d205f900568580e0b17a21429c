@@ -1,0 +1,44 @@
+**定理 C-142.1（固定有限参考的精确优化及最大值存在）。** 对 C-136.2
+中的每个固定有限参考态和整数电荷表示，定义线性有效效果映射
+
+$$
+\Phi_\zeta(\mathsf E)
+=\operatorname{Tr}_R\!\left[(I\otimes\sqrt\zeta)\mathsf E(I\otimes\sqrt\zeta)\right].
+\tag{C142.1}
+$$
+
+令 $\Gamma_q$ 为 $L$ 的谱投影，$I_q$ 为其子空间恒等算符。
+$A^\zeta_{\mathcal F_{\rm all}}(\delta)$ 精确等于下列有限 Hermitian 半定规划的最大值：
+
+$$
+\begin{aligned}
+\text{最大化}\quad&\operatorname{Tr}(P\Phi_\zeta(\mathsf E)),\\
+\text{约束}\quad&\mathsf E=\bigoplus_q\mathsf E_q,\qquad0\preceq\mathsf E_q\preceq I_q,\\
+&\Pi_J\Phi_\zeta(\mathsf E)\Pi_J\preceq\delta\Pi_J
+\quad\text{对每个 }J\subseteq\{1,\ldots,5\},\ |J|=3.
+\end{aligned}
+\tag{C142.2}
+$$
+
+承诺域将十个压缩约束换成 C-129.1 八射线 $w$ 的八个标量约束
+$\langle w|\Phi_\zeta(\mathsf E)|w\rangle\le\delta$，其最大值恒为
+$\min\{1,3\delta/2\}$。
+
+证明。正夹心和偏迹给 $0\preceq\Phi_\zeta(\mathsf E)\preceq I$；
+上界使用 $\Phi_\zeta(I)=\operatorname{Tr}_R(I\otimes\zeta)=I$。
+迹的循环性给每个系统密度态的恒等式
+
+$$
+\operatorname{Tr}(\Phi_\zeta(\mathsf E)\rho)
+=\operatorname{Tr}(\mathsf E(\rho\otimes\zeta)).
+\tag{C142.3}
+$$
+
+不要求 $\zeta$ 满秩、纯或与 $\mathsf E$ 对易。
+(C139.3) 的复主压缩条件使十个 LMI 精确等价于全部有限混合全零假设的风险约束；
+总电荷块条件精确等价于 (C136.2)。固定 $\zeta$ 后，所有映射和约束均为线性或半定的。
+有限个正收缩块的直积是紧集，十个 LMI 切出闭子集，且零效果在全部 $\delta\in[0,1]$ 可行。
+连续线性目标在非空紧集上取得最大值，不需严格可行性前提。
+承诺域的八个约束由 (C129.3) 精确给出；其值和达到效果已由 C-137.1 证明。
+这给任意混参考及简并电荷的精确有限优化，不给一般 $\zeta$ 的全域闭式公式。证毕。
+

@@ -1,0 +1,19 @@
+### 86.3. Canonical classification and the remaining mixed cases
+
+Since \(q\) is common-flat, (86.4) and Theorem 81.1 identify it with
+one of the four nonzero-Fourier canonical rays. Proposition 60.1 then
+identifies the common-flat ray \(w\), which is orthogonal to \(q\),
+as canonical too. The four nonzero-Fourier canonical rays have three
+distinct entries in each channel and cannot be aligned. Thus \(w\)
+is one of the two constant canonical rays. The operation \(\Theta\)
+exchanges those two rays; the four other canonical rays are orthogonal
+to both. This proves the theorem and its converse.
+
+The reflection identity itself is independent of \(b\), but its
+rigidity consumer here uses the stated punctured domain. No conclusion
+at the center or endpoints is imported from this proof. A noncanonical
+orthogonal triple containing two aligned rays must therefore place those
+two rays at different singleton positions. The latter case, and triples
+with fewer aligned rays, remain unresolved by this result.
+
+后续的全参数有限例外分类见[理论续卷 IV](MUB_SIX_FOURTH_BASIS_THEORY_CONTINUATION_IV.md)。

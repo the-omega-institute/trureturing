@@ -1,0 +1,119 @@
+## 3. Complete terminal and ancestor linear certificates
+
+For a world in (1.7), put
+
+$$
+X=f(7)QP=\begin{pmatrix}a&b\\c&e\end{pmatrix},\quad
+S=Q^{-1}X=f(7)P,\quad h=f/f(7),\quad
+\sigma_j=\operatorname{tr}(A_jS).
+\tag{3.1}
+$$
+
+Here $c$ is a matrix entry, distinct from the reading vector
+$\mathbf c$. The entries of $X$ and all six $\sigma_j=f(7)t_j$
+are nonzero and have the sign of $f(7)$, and $ae=bc$.
+In particular a negative terminal gain is permitted. We have
+
+$$
+\deg h\le3,\quad h(6)=0,\quad h(7)=1,\qquad
+h(j)\sigma_j=c_j-d\quad(0\le j\le5).
+\tag{3.2}
+$$
+
+There is no division by a possibly zero ancestor gain in (3.2).
+Both sixth response functions are $d$. The terminal functions, in
+literal chronological order, are
+
+$$
+\begin{array}{c|c|c}
+EF&FE&r_{EF}=d+\operatorname{tr}(FE X)\\ \hline
+JJ&I&A=d+a+e\\
+JM&\begin{pmatrix}1&0\\1&1\end{pmatrix}&B=d+a+b+e\\
+MJ&\begin{pmatrix}1&1\\0&1\end{pmatrix}&C=d+a+c+e\\
+MM&\begin{pmatrix}1&1\\1&2\end{pmatrix}&D=d+a+b+c+2e.
+\end{array}
+\tag{3.3}
+$$
+
+Indeed multiplication gives $J^2=I$, $MJ=L$,
+$JM=\left(\begin{smallmatrix}1&1\\0&1\end{smallmatrix}\right)$ and
+$M^2=\left(\begin{smallmatrix}1&1\\1&2\end{smallmatrix}\right)$;
+taking their traces against $X$ gives every displayed coefficient.
+These are functions on candidates. Only one chronological word is
+executed on an actual trajectory. This terminal interface is established
+in [F, Definition 2.2 and Lemma 2.3](FIB_JMMJM_NONZERO_TERMINAL_COLLISION_SPARSITY_AND_RATIO_DIVERSITY.md)
+and [G, Section 3](FIB_JMMJM_ZERO_SIXTH_ROOT_RIGIDITY_AND_TERMINAL_COLLISION_GEOMETRY.md).
+
+For the ancestor conversion, direct multiplication gives
+
+$$
+S=\begin{pmatrix}-2a+c&-2b+e\\3a-c&3b-e\end{pmatrix}.
+\tag{3.4}
+$$
+
+Taking the traces against the six matrices in (1.5) yields the complete
+six-by-four array, with column order $a,b,c,e$:
+
+$$
+\begin{pmatrix}\sigma_0\\\sigma_1\\\sigma_2\\\sigma_3\\\sigma_4\\\sigma_5\end{pmatrix}
+=\begin{pmatrix}
+-2&3&1&-1\\
+3&-2&-1&1\\
+-2&1&1&0\\
+1&-1&0&1\\
+-1&1&1&0\\
+1&0&0&1
+\end{pmatrix}
+\begin{pmatrix}a\\b\\c\\e\end{pmatrix}.
+\tag{3.5}
+$$
+
+For completeness the six traces from (3.4) are respectively
+$-2a+3b+c-e$, $3a-2b-c+e$, $-2a+b+c$, $a-b+e$,
+$-a+b+c$, and $a+e$. For example $\operatorname{tr}(LS)$
+is $\operatorname{tr}S+S_{12}$, and
+$\operatorname{tr}((J+L)S)=\operatorname{tr}(JS)+\operatorname{tr}(LS)$.
+The $C_{\rm mat}$ trace is $2S_{11}+S_{21}+S_{12}+S_{22}$;
+the $Q$ trace is $S_{11}+S_{21}+3S_{12}+2S_{22}$.
+These give all 24 coefficients and, in particular, the identity
+
+$$
+\sigma_3=\sigma_1+\sigma_2.
+\tag{3.6}
+$$
+
+For two worlds write $\Delta X=X_2-X_1$ and
+$\Delta\sigma_j=\sigma_{2,j}-\sigma_{1,j}$. At common $d$, solving
+each indicated pair of equalities in (3.3) gives the full table
+
+$$
+\begin{array}{c|c|l}
+\text{equal coordinates}&\Delta X&(\Delta\sigma_0,\ldots,\Delta\sigma_5)\\ \hline
+AB&\begin{pmatrix}-\epsilon&0\\\gamma&\epsilon\end{pmatrix}
+ &(\epsilon+\gamma,-2\epsilon-\gamma,2\epsilon+\gamma,0,\epsilon+\gamma,0)\\[2mm]
+AD&\begin{pmatrix}-\epsilon&\beta\\-\epsilon-\beta&\epsilon\end{pmatrix}
+ &(2\beta,-\beta-\epsilon,\epsilon,-\beta,0,0)\\[2mm]
+AC&\begin{pmatrix}-\epsilon&\beta\\0&\epsilon\end{pmatrix}
+ &(\epsilon+3\beta,-2\epsilon-2\beta,2\epsilon+\beta,-\beta,\epsilon+\beta,0).
+\end{array}
+\tag{3.7}
+$$
+
+To derive every conversion, put $\Delta e=\epsilon$. Equal $A$
+gives $\Delta a=-\epsilon$. In the $AB$ row, equal $B$ gives
+$\Delta b=0$, leaving $\Delta c=\gamma$. In the $AD$ row,
+equal $D-A=b+c+e$ gives $\Delta c=-\epsilon-\beta$ when
+$\Delta b=\beta$. In the $AC$ row, equal $C-A=c$ gives
+$\Delta c=0$, leaving $\Delta b=\beta$. Substitution of these
+four entries into each of the six linear forms in (3.5) gives
+exactly the 18 displayed trace differences. No scalar cancellation
+is used in this table; it includes zero values of its parameters.
+
+If $X_1=X_2$, then $S_1=S_2$ and taking traces gives the same
+nonzero $f(7)$ because $\operatorname{tr}P_i=1$. Dividing by that
+value gives $P_1=P_2$. At common $d$, the first four positive trace
+factors in (1.6) give equal gain samples; degree-at-most-three
+uniqueness gives $f_1=f_2$. Thus the complete original worlds agree.
+This implication includes degree drops and all multiplicities and
+also follows from the IX source graph.
+

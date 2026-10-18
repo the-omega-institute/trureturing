@@ -1,0 +1,21 @@
+**定义 54.1（固定有界模拟位）。** 固定一个有效枚举 $(M_i)_{i\ge0}$，枚举空白输入上的确定机器，并固定步数及停机约定。对每个有限树 $z$ 写 $n(z)=|\operatorname{Pos}(z)|$，定义
+
+$$
+W_0(z)=\langle\langle\beta,z\rangle,\alpha\rangle,
+\qquad W_{i+1}(z)=\langle\alpha,W_i(z)\rangle,
+\tag{SLH.54.1}
+$$
+
+以及一个固定的全来源位
+
+$$
+B(u)=1\iff
+\left[u=\alpha\right]
+\ \text{或}\
+\left[\exists i,z, u=W_i(z)\ \text{且 }M_i
+\text{ 在 }n(z)\text{ 步内停机}\right].
+\tag{SLH.54.2}
+$$
+
+其余来源取零。生产者采用假设53.1的真实全取得与完整切口；它的共同程序固定在后来任务之前，不接受后来索引或纪元作为生产输入。
+

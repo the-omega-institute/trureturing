@@ -1,0 +1,30 @@
+**Definition 393.2 (Depleted-anchor replacement and a common price test).** For every $L\ge8$, every prefix/cap of Corollary 391.2 with $\ell\le u$, and every depleted $(k,x)\in\mathcal J_N(m)$ with
+
+$$
+0\le m\le B,\qquad \delta:=\sum_s x_s\in[\ell,u],
+\tag{393.2}
+$$
+
+the required replacement lemma asks for one entire $(\widetilde k,\widetilde x)\in\mathcal J_O(\max\{1,m\})$ with $\sum_s\widetilde x_s\ge\delta$. The entire complementary allocation and every stock coordinate may change. The four depleted $N$ faces are precisely the vanishing of at least one entry in the first case of (390.5).
+
+An equivalent fixed-complement test for this requested output uses prices on the earlier-word and positive stock constraints. Let $\mathcal W=\{w:n(w)<L\}\cup\{w^+\}$, with $s_{w^+}=s_+$, and for one $\widetilde k\in K_O(\max\{1,m\})$ put
+
+$$
+\Phi(\widetilde k,\lambda)
+=\sum_{w\in\mathcal W}\lambda_w s_w(\widetilde k)
+ +\sum_s a_s(\widetilde k)
+   \left(1-\sum_{w\in\mathcal W}\lambda_w I_s(w)\right)_+,
+\qquad\lambda\ge0.
+\tag{393.3}
+$$
+
+The price form of the missing lemma requires the same nonempty complement before all prices:
+
+$$
+\exists\widetilde k\in K_O(\max\{1,m\})\quad
+\forall\lambda\ge0:\ \Phi(\widetilde k,\lambda)\ge\delta.
+\tag{393.4}
+$$
+
+For fixed $\widetilde k$, finite linear-programming duality gives $\operatorname{cap}(\widetilde k)=\min_{\lambda\ge0}\Phi(\widetilde k,\lambda)$. Indeed the packing has constraints $Ix\le s$, $x\le a$, $-x\le0$ and is nonempty and compact. Its dual has $I^{\mathsf T}\lambda+\mu\ge\mathbf1$ and objective $\lambda\cdot s+\mu\cdot a$; minimizing over $\mu\ge0$ gives (393.3). The valid-inequality alternative in Kaibel, [*Basic Polyhedral Theory*, arXiv:1001.2161v1, Theorem 12](https://arxiv.org/html/1001.2161v1), supplies equality and attainment. This standard duality is only the fixed-complement test: (393.4) still requires selection of one whole complement, including when $\delta=0$. Choosing a different complement for each price is not the asserted lemma.
+

@@ -1,0 +1,89 @@
+**Proposition 243.2 (One seed, complete words and closed tails).**
+Each normalized table law above is an original zero-advice acquisition
+with one source-independent seed and at most two actual requests.
+It has finite handoff on every source and seed. The stopped law and
+its N completion use the same seed and have identical output laws.
+For every actual first absence $n>7$, each constructed seven-coordinate
+attainer of cap $e_*$ has exact TV error $e_*$ for every allowed tail,
+including $a_8=e_*$ and all later closed ties.
+
+Proof. Partition a single uniform $U\in[0,1)$ into the complete-table
+probabilities, using (237.8) for terminal-vector rows and flattening
+whole-law mixtures into that one partition. This selects the entire
+schedule and all its potential outputs before any replies. Execute the
+scheduled prime queries and return its selected original mark.
+O uses an increasing preselected schedule and stops at its first queried
+zero or exhaustion. N acquires the entire same preselected schedule;
+when O would stop after the first reply, N still acquires and ignores
+the second reply and reconstructs the stopped output from the same $U$.
+This is the counted completion of §90.2. Singleton and empty branches
+use at most one and zero requests. No extra coin after answers, source
+label, integer value, first absence or source law is observed.
+Repeated requests, when present in competitors, and ignored replies
+are actual counted requests. There is no free probe, restart, address,
+depth, runtime or expected-count replacement for the hard bound.
+
+On an actual low first-zero source its actual Boolean word is one of
+all the words verified above, regardless of later zeros. Equation
+(237.2) proves its all-Borel TV cap. On a tail source $n>7$, all seven
+replies are positive and no mark $\theta_n$ is emitted. More generally,
+for any finite law with labels through $H<n$ and positive-cell base
+$p_+(0)$, direct calculation on the disjoint marks gives
+
+$$
+\begin{aligned}
+\operatorname{TV}\left(\sum_{j=0}^Hp_+(j)\delta_{\theta_j},
+     (1-a_n)\delta_{\theta_0}+a_n\delta_{\theta_n}\right)
+ &=\tfrac12\bigl(|a_n-(1-p_+(0))|+1-p_+(0)+a_n\bigr)\\
+ &=\max\{1-p_+(0),a_n\}.
+\end{aligned}
+\tag{243.3}
+$$
+
+Every constructed attainer has $p_+(0)=1-e_*$, and the theorem's
+hypotheses retain $0<a_n\le e_*$ for all $n>7$.
+Thus (243.3) equals $e_*$ on every actual tail, with no zero-tail
+substitution and no exclusion of equality. The first seven amplitudes
+strictly exceed $e_*$, so the strict active length at that cap is seven.
+All errors are uniform over all actual sources and all Borel events.
+Different constructions can use different partitions of the same uniform
+seed, or their common finite refinement; this makes no assertion that
+different laws have identical seedwise outputs. ∎
+
+The lower bounds use exactly the necessary correspondence of §110.2,
+with its original source-independent preselected schedules, source-free
+readout, reachable-read discipline and measurable terminal extensions.
+For $0<c\le1$ set $L_a=\max(\{i:a_i>c\}\cup\{0\})$.
+Countability of $X$ gives one common probability-one seed event of
+actual finite handoff and hard request count. The maximum address of
+the whole preselected schedule has vanishing seed tails. Before choosing
+seeds, the finite-pattern interface supplies actual witnesses for every
+finite comparison word. For each finite witness family, sourcewise
+almost-sure finite handoff also supplies finite execution cutoffs.
+Whole-execution replay on equal acquired transcripts, followed by the
+measurable projection fixing low marks and sending other tapes to zero,
+produces same-class finite comparisons. One vanishing schedule/execution
+error controls the finite family. Compactness of one finite catalog
+simplex retains the closed cap in its limit. There is no asserted uniform
+address or runtime bound on the original class.
+
+This is the reused arbitrary-address/full-carrier necessity, not a
+restriction of original competitors to the displayed tables. The two
+horizon operations are those of §207.20: if a score extends beyond
+$L_a$, ignore the new coordinates in the one kernel and use (243.3)
+on the new first-zero classes; if its horizon is shorter, fix subsequent
+finite replies zero and project subsequent labels to zero for the finite
+comparison. The latter is a comparison, not an attainer on omitted
+active tails. No algebraic operation grants an uncounted observation.
+Caps at least one admit immediate base output; equality tails and the
+empty active horizon remain included.
+
+All-label legality is essential. The actual source $(r,g)=(19,436)$
+has $F_{19}=4181$, $N=1822917$ and replies $0100$ through the first
+four prime addresses. The legal N table $(3,4;1,0,0,0)$, in full
+cell order, emits earlier unqueried label one on that word. Its
+base/correct/pair readings are $(0,1,1)$; replacing that output by
+zero gives $(1,0,1)$. No general pruning to zero or queried labels
+is used. The score-specific cell maxima and inactive-bit arguments
+retain this full original catalog, including multiple zeros.
+

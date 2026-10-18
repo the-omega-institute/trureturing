@@ -1,0 +1,52 @@
+**Proposition 11.2 (limits, mirrors and unnormalized inputs).** The
+following boundaries are part of the stated laws.
+
+As $\xi\downarrow0$ for fixed $\tau$, one has
+$c_\xi\to1$, $\sigma_\xi\to0$, $\delta_\xi\to k$,
+$p\to k$, $q,r_0,\gamma\to0$, $H_*\to k|D\rangle\langle D|$,
+$F\to kA$ and $s_*\to\sqrt\ell$. For the last cost limit use
+$\lambda\to A$. This is the inherited diagonal law as a limit;
+$\xi=0$ is not a genuinely nonreal case. All admitted positive $\xi$
+have positive $q,\gamma$, and the exact laws include $s=0$ and
+$s=s_*$. The change from fourteen to twelve labels occurs at the
+closed endpoint. At $s=0$ the binary report is fair on every normalized
+input, but the finer actual labels can depend on input.
+
+The negative-imaginary mirror uses conjugated FIXED encoder matrices
+and the conjugated public input. Since $D,T,S$, the fixed channel and
+prescribed effects are real, this is another valid CP instrument with
+the same values, thresholds and counts. It is not an anti-linear
+conjugation operation on an unknown specimen. A negative binary strength
+is handled by swapping the two report names and using its absolute
+value; the principal parameter range remains $[0,1]$.
+
+For any positive five-mode input $\sigma$ with
+$E^\dagger\sigma E=t_0\rho$, $t_0>0$, including complement and
+cross-support terms, the exact plateau value is $t_0F$. The later
+bracket becomes
+
+$$
+t_0\left[F+\frac{(s-s_*)^4}{144K_0^2}\right]
+ \leq E_s(\sigma)\leq t_0 U(s)\quad(s\geq s_*).
+\tag{NP.68}
+$$
+
+Proof of the scaling assertion. The full operator domination in (NP.19)
+gives $\operatorname{tr}(G_{\rm acq}\sigma)\geq
+\operatorname{tr}(\Theta(H)E^\dagger\sigma E)=t_0\operatorname{tr}(CH)$.
+Use the NORMALIZED selected-state certificate and quartic bound, then
+multiply by $t_0$. The constructed upper high effects are supported
+on $V$ and ignore complement and cross-support in this expectation;
+they give $t_0F$ or $t_0U(s)$. No acceptance division occurs, and the
+normalization-dependent step $d\leq1$ is not applied to an unnormalized
+$d$ with unchanged constants. If $t_0=0$, positivity also kills the
+cross-support block of $\sigma$ and any of these full instruments has
+zero supported high cost at every strength, so $E_s(\sigma)=0$.
+This does not insert a singular Gram into a positive-definite formula.
+The zero input is immediate. $\square$
+
+These construction counts do not bound the minimum number of flags,
+continuous-time symbols or exact-clock bits. A finite acquired alphabet
+and a decoder with a continuous Borel output measure are different
+mathematical objects.
+

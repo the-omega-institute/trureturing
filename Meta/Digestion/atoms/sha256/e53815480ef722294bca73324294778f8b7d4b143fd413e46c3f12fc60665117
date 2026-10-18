@@ -1,0 +1,22 @@
+**Theorem 1.5 (Credited premise [S]).** We use the following exact source
+results. Every unrestricted at-most-four literal competitor is dominated by
+some $R\in\mathcal E_2$, every such profile has a lawful four-real-coordinate
+realization, and
+
+$$
+(e_{4,\mathsf L}^{\rm aff}(Z))^2=16H^2T_4(\tau).
+$$
+
+A scalar minimum exists for every $\tau>0$, and every minimizer has minimal
+order two when $0<\tau<1$. In that range all four contracts have common
+infimum $4H\sqrt{T_4(\tau)}$. This endpoint is attained in $\mathsf G$ if
+and only if at least one global minimizer is (i) confluent with nonzero
+linear coefficient, (ii) distinct with some $\operatorname{Re}\lambda_j\ne0$,
+or (iii) purely imaginary $\lambda_j=i\omega_j$ with
+$|\omega_1-\omega_2|\le2\pi$. A minimal purely imaginary pair with
+$\Omega=|\omega_1-\omega_2|>2\pi$ is bad; $\Omega=2\pi$ is good because
+the first alias is across the absent scalar endpoints. A profile realizes
+squared original error $16H^2J_\tau(R)$. The credited realization preserves
+all preparations, signed commands, affine offsets, finite histories,
+prescribed paths, and full all-times guards.
+

@@ -1,0 +1,22 @@
+**Definition 1.2 (The actual endpoint and its target spin).** The target
+is the unchanged $H_j$ from (1.1). Write
+$H_j=h_{j,\varphi,S_{q_{j,\varphi}}}$, where
+$q_{j,0}=j$, $q_{j,1}=0$, and the state labels are given by the full table
+
+$$
+\begin{array}{c|c|c|c|c}
+j&\phi&q_{j,\phi}&h_{j,\phi,s}&2q_{j,\phi}+\phi\\ \hline
+0&0&0&a_s&0\\
+0&1&0&b_s&1\\
+1&0&1&b_s&2\\
+1&1&0&a_s&1
+\end{array}
+\tag{1.2}
+$$
+
+For example, when $j=0$ and $\phi=1$, the integer $0$ is the separator
+position after the active address $-1$, so its hidden state is $b_{S_0}$.
+This checks the negative-index case directly. The table is precisely
+[Original, (9.4)][Original]. In particular
+$2q_{j,\phi}+\phi\in\{j,j+1\}$, but the endpoint itself remains $j$.
+

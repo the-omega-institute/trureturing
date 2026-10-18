@@ -1,0 +1,11 @@
+**命题 9.3（原替换的半线性符号后继）。** 定义 $\mathfrak h(f)=f(B,\Delta,0)$，则
+
+$$
+\Sigma(P,Q,T)=(-B\mathfrak h(T),\ \mathfrak h(P)+C\mathfrak h(T),\ -\mathfrak h(Q)),
+\qquad z(\rho t)=\Sigma z(t).
+$$
+
+$\Sigma$ 可加且为 $\mathfrak h$ 半线性，不是 $\mathscr R$ 线性。记录 $z$ 由 $J,\Sigma$ 决定所有全制备未来及同制备有编码上下文。
+
+证明。$F(p)$ 的叶对是 $(b,-h)$，Gram 为 $(B,\Delta,0)$，其第三基向量为 $b\times(-h)=-Ba+Cb$。代入定理9.2并收集 $a,b,h$ 系数得所列公式；全称唯一性给与实际 $\rho$ 的交换式。两种递归保持实际符号像。这个记录取得自有限树码，不是有限数值读的结果。
+

@@ -1,0 +1,15 @@
+**Theorem 6.3 (replenishment destroys the bounded-tail guarantee).** A
+reset operation that replenishes the deletion budget can require older
+values absent from the bounded boundary, even when its cut and new budget
+are public.
+
+Proof. Let $H=0$ over $\mathbb F_2$, $n=2$, and compare type $(2,1)$ prefixes
+$00$ and $10$. They have equal syndrome and last-one tail. Both execute
+$\operatorname{delete}_0$, reaching cut 1 and budget 0 with equal boundary.
+Add a reset edge that raises the budget there to 1, without changing the
+prefix. Its successor must support $\operatorname{delete}_0$ at prefix $0$
+but not at prefix $1$. Thus the common old boundary cannot determine the
+reset successor behavior. The two-deletion experiment was forbidden by
+the original total budget; treating the budget as a reusable window
+changes the required residual relation. $\square$
+

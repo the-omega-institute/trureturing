@@ -1,0 +1,19 @@
+### Exact checks
+
+These checks are independent integer arithmetic and are not used in the
+proof. They also expose the first lifted residues:
+\[
+\begin{array}{c|r|r|l|c|c}
+j&m_j&B_j&\text{factorization}&u_j\bmod81&S_j\bmod81\\ \hline
+1&18&19&19&1&1\\
+2&54&5779&5779&26&26\\
+3&162&192900153619&3079\cdot62650261&55&55\\
+4&486&7177905237579946589743592924684179&
+59779\cdot120074026624398979403194983601&26&26
+\end{array}
+\]
+The displayed factors are prime and each is \(1\bmod m_j\), as required by
+TBN.3. The recurrence and the factorizations were checked with exact
+integer arithmetic; no search bound or probabilistic primality assertion is
+part of (M81.1)--(M81.2).
+

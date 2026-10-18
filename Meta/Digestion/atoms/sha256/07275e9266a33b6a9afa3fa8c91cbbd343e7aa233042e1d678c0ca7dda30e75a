@@ -1,0 +1,53 @@
+**定义 220.1（Full words, rewards and supports）。** Fix $L\ge3$.
+Let $\mathcal B_L=\{0,1\}^L$, let $n(w)$ be the first zero of a
+nonpositive word, and put $\Omega_n=\{w:n(w)=n\}$.
+For every $w\ne1^L$ the three coefficients $A_w,C_w,P_w$ are
+independently nonnegative; $T\ge0$ is the terminal coefficient.
+The full reward is
+
+$$
+g_y(w,\ell)=A_w[\ell=0]+C_w[\ell=n(w)]
+ +P_w[\ell\in\{0,n(w)\}],\qquad
+ g_y(1^L,\ell)=T[\ell=0].
+$$
+
+All labels $0,\ldots,L$, including earlier and unqueried labels, are
+legal. The complete catalogs contain empty schedules, every singleton,
+and every pair $i<j$. A full $N$ pair has cells $00,01,10,11$;
+a stopped increasing $O$ pair has cells $0,10,11$, where the first cell
+is the union of $00$ and $01$. A table chooses an arbitrary legal output
+on each cell. Write $\Pi_C(S)$ for that partition and
+
+$$
+ B_C^S(y)=\sum_{H\in\Pi_C(S)}\max_{0\le\ell\le L}
+                   \sum_{w\in H}g_y(w,\ell),\qquad
+ B_C(y)=\max_S B_C^S(y),\quad C\in\{N,O\}.
+$$
+
+Reversing an $N$ pair permutes its information cells; repeating an
+address gives singleton information. These are support identities,
+not a discount on actual requests: repetitions and ignored replies
+still count in an execution.
+
+Use the quotient and baseline of 219.1:
+
+$$
+\begin{aligned}
+ W_y&=\sum_{n(w)\ge3}A_w+\sum_{n(w)\le2}C_w+\sum_wP_w+T,\\
+ \beta_n&=\sum_{w\in\Omega_n}(C_w-A_w),\qquad
+ K=\sum_w(A_w+C_w+P_w)+T,\\
+ Q(y)&=(\beta,K),\qquad \Delta_C(y)=B_C(y)-W_y.
+\end{aligned}
+$$
+
+With $Z_0=\sum(A+P)+T$ one has $W=Z_0+\beta_1+\beta_2$.
+If $A_n,C_n$ denote class totals, the absolute spare stock is
+
+$$
+ K-\sum_n|\beta_n|=2\sum_n\min(A_n,C_n)+\sum_wP_w+T.
+$$
+
+These quantities are different: $K$ is the full coefficient total,
+$Z_0$ the zero-label reward, and the last expression the spare stock.
+Proof weights on words are not a probability distribution on sources.
+

@@ -1,0 +1,96 @@
+**Theorem 89.1 (right derivative and horizontal form convergence).**
+For the fixed source and clock of Definition 81.1,
+
+$$
+e(\chi_c+\delta)=-\mu_c\delta+o(\delta)
+\quad(\delta\downarrow0),\qquad \mu_c=\int V|\Phi_c|^2d\xi>0.
+\tag{89.1}
+$$
+
+For every sequence $\delta_n>0$ tending to zero and every complex
+$f_n\in\mathcal Q_E$ with $\|f_n\|_2=1$ and
+
+$$
+r_n:=h_{\chi_c+\delta_n}[f_n]-e(\chi_c+\delta_n)
+\ge0,\qquad r_n/\delta_n\longrightarrow0,
+\tag{89.2}
+$$
+
+there are constant phases $\theta_n\in\mathbb R$ such that
+
+$$
+\|f_n-e^{i\theta_n}\Phi_c\|_{\mathcal Q_E}\longrightarrow0.
+\tag{89.3}
+$$
+
+In particular this holds for all the normalized supercritical
+ground states of Theorem 84.1 as $\chi\downarrow\chi_c$.
+The topology in (89.3) contains the global $L^2$ norm and both
+horizontal derivative norms, with no spatially varying phase or
+centre adjustment. Also $b_{\chi_c+\delta}/\delta\to\mu_c/a$
+for the resolvent root in (84.5).
+
+Proof. Testing on $\Phi_c$ gives
+$e(\chi_c+\delta)\le-\mu_c\delta$.
+For any sequence (89.2) set $v_n=v[f_n]$. Nonnegativity of $h_c$
+and $0\le v_n\le\|V\|_\infty$ give
+
+$$
+\begin{aligned}
+0\le h_c[f_n]
+ &=e(\chi_c+\delta_n)+r_n+\delta_nv_n\\
+ &\le\delta_n(v_n-\mu_c)+r_n=O(\delta_n),\\
+v_n&\ge\mu_c-r_n/\delta_n.
+\end{aligned}
+\tag{89.4}
+$$
+
+It follows from $a b[f_n]=h_c[f_n]+\chi_cv_n$ that
+the sequence is bounded in $\mathcal Q_E$. The fixed-field
+compactness used in Lemma 83.1 gives, along every subsequence,
+a further subsequence converging weakly in $L^2$, strongly in
+local $L^2$, and weakly in its two horizontal derivatives to
+$f\in\mathcal Q_E$, with $\|f\|_2\le1$.
+For clarity, this use fixes $X,Y$ throughout: local form
+compactness follows from the fixed-field subelliptic estimate,
+and the global derivative limit and Friedrichs-domain membership
+follow from the cutoff and convolution argument in Lemma 83.1.
+Since $V$ is bounded and vanishes at infinity, local convergence
+and the uniform $L^2$ bound imply $v_n\to v[f]$.
+Lower semicontinuity and (89.4) imply $h_c[f]=0$.
+Theorem 88.1 therefore gives $f=c\Phi_c$, $|c|\le1$, while
+the last line of (89.4) gives
+
+$$
+|c|^2\mu_c=v[f]=\lim v_n\ge\mu_c.
+\tag{89.5}
+$$
+
+Thus $|c|=1$. Weak convergence of unit vectors to a unit vector
+is strong in global $L^2$. Moreover (89.4) yields
+$b[f_n]\to\chi_c\mu_c/a=b[\Phi_c]$.
+Weak convergence of the joint derivative vector
+$(Xf_n,Yf_n)$ and equality of its limiting norm yield strong
+convergence of both derivatives. Every subsequence consequently
+has a further subsequence converging in $\mathcal Q_E$ to the
+phase orbit of $\Phi_c$. Its distance from this compact orbit
+must tend to zero. Choosing a phase attaining that distance
+proves (89.3) for the whole sequence.
+
+Take now $f_n=\Phi_{\chi_c+\delta_n}$, whose existence on exactly
+this domain is Theorem 84.1. The preceding argument gives
+$v_n\to\mu_c$. On these exact minimizers,
+
+$$
+-v_n\le e(\chi_c+\delta_n)/\delta_n\le-\mu_c,
+\tag{89.6}
+$$
+
+where the lower bound is $h_c[f_n]\ge0$. Since the sequence
+$\delta_n\to0$ was arbitrary, (89.6) proves (89.1).
+The last assertion follows from $e(\chi)=-ab_\chi$ in (84.5).
+The use of the attained critical vector supplies the upper bound;
+the compact potential and the original full-domain lower bound
+prevent loss of mass in this $o(\delta)$ tangent class.
+$\square$
+

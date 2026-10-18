@@ -1,0 +1,55 @@
+**Proposition 7.1 (Bridge and actual anchor mass).** Define
+
+$$
+Z_6=eA^6v=eA^6M_1\mathbf1,\qquad
+r_*(w)=\frac{eM_wv}{Z_6},\qquad w\in\{0,1\}^6,
+\qquad \beta=\frac{Z_6}{Z}.
+\tag{7.1}
+$$
+
+Then $r_*$ is positive and band-compatible on exactly $K_6^{1,1}$, and zero on all incompatible words. For every six-bit interval $C=[u,u+5]$, on
+
+$$
+H_C=\{X_{u-1}=X_{u+6}=1\}
+\tag{7.2}
+$$
+
+its full-complement conditional under $P$ is $r_*$ almost surely. The same identity holds at every supported complete complement under any $\mu_n$ containing $C$ and both anchors. In each case the anchor-event probability is $\beta>0$.
+
+Proof. Summing the ordered products $eM_wv$ over all binary six-bit words gives $eA^6v=Z_6$. An internal $11$ vanishes because $M_1^2=0$. A first bit one vanishes because $eM_1=0$, and a last bit one because $M_1v=v(ev)=0$. Thus all required internal and boundary zeros are retained, and the sum is precisely over $K_6^{1,1}$.
+
+For a compatible word, insert the exterior ones and factor between consecutive ones. The numerator $eM_wv$ is a product of positive gap probabilities. In particular the all-zero numerator is
+
+$$
+eM_0^6v=f(7)=pa s^5+cb t^5>0.
+\tag{7.3}
+$$
+
+Hence $Z_6>0$. Also $eA^6$ is a probability row and $v$ has entries in $[0,1]$, so $Z_6\le1$. This proves normalization and precise support.
+
+Now fix a supported entire finite complement. Write its left part as $\ell1$ and its right part as $1t'$, with the displayed ones adjacent to $C$. The joint mass of a completion is
+
+$$
+\lambda M_\ell M_1M_wM_1M_{t'}\mathbf1
+=(\lambda M_\ell v)(eM_wv)(eM_{t'}\mathbf1).
+\tag{7.4}
+$$
+
+The two exterior factors are positive and the same for every $w$. Their cancellation proves (7.1) for the full finite complement, including when an anchor is an endpoint and an outer word is empty. Null complements require no division.
+
+For the infinite complement, choose increasing finite contiguous collars containing both anchors. For each word $w$, (7.4) gives
+$\mathbb E_P[\mathbf1_{\{X_C=w\}}\mid\text{collars}]=r_*(w)$ on $H_C$ at every collar size. To justify the limit without discarding distant observations, put $Y=\mathbf1_{\{X_C=w\}}$ and let $Q_m$ be these conditional expectations. For nested fields and $l\ge m$, conditional projection gives
+$\|Q_l-Q_m\|_2^2=\|Q_l\|_2^2-\|Q_m\|_2^2$.
+The squared norms are bounded, so the sequence converges in $L^2$. Its limit has the conditional integral identity on every finite collar event. Those events generate $\sigma(X_j:j\notin C)$, so the limit is the full-complement conditional expectation. Since $H_C$ is already a collar event and $Q_m=r_*(w)$ on it, multiplication by its indicator and $L^2$ convergence give the asserted equality there. There are finitely many words, and a countable intersection handles all translated intervals simultaneously.
+
+The actual event mass is
+
+$$
+P(X_0=1,X_7=1)
+=\lambda M_1A^6M_1\mathbf1
+=(\lambda v)eA^6v=\frac{Z_6}{Z}=\beta>0.
+\tag{7.5}
+$$
+
+Stationarity and marginalization give the identical value in every stated finite setting. Finally, $r_*$ is the conditional of $\mu_8$ given its first and last bits equal to one. Theorem 5.2 and Corollary 5.3 give its band by division by this same positive event mass. The first and sixth bridge coordinates are forced zeros, with singleton fibers, throughout this argument. $\square$
+

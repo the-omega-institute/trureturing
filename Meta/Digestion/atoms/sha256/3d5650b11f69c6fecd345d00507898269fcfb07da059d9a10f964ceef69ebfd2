@@ -1,0 +1,4 @@
+**Remark 6.1 (What is not claimed).** This volume makes no statement about $Q_{t,n,k}$ for $n\ge3$, about the case $(n,k)=(2,0)$, about Conjecture 6.1 or Conjecture 6.3 of the source, or about the grid $z=(-1,-1)$, where $Q_{t,2,1}(z+1)$ is undefined. It does not treat the interpolation-theoretic formulation of cited fact (a) beyond the Schur-polynomial inequalities stated there. Stance: repo-derived.
+
+**Open question 6.2 (The case $k=0$ for two nodes).** For $(n,k)=(2,0)$ the first inequality involves $s_{(d\mid1)}$ and $e_2$, and the second involves $s_{(t-2\mid1)}$ and $e_2$. Determine, for two-node self-conjugate grids in $\mathbb{D}^2$, the set of grids on which each inequality holds for every $t\ge2$, and decide whether, as in Theorems 4.1 and 5.1, it coincides with the set on which it holds at $t=3$. Stance: repo-derived (question posed in this volume).
+

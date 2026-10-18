@@ -1,0 +1,52 @@
+**Convention 9.1 (supplied results that retain their own consumers).**
+[NPC, Theorems 5.3 and 6.2][NPC] gives semantic product-pressure
+completeness, including one minimizing law valid at every length.
+CBN gives exact actual constructor compilation and once-owned whole
+block weights, without a width bound or effective cutoff. The acquisition
+improvement above changes neither representation nor any cover or
+pressure optimum.
+
+For the unrestricted joint integral covers $K_d(n)$ defined below,
+reuse FMR's rate definitions and existence theorem:
+
+$$
+\sigma_d=\inf_{n\ge1}\frac{\log_2K_d(n)}n,\qquad
+\lambda=\lim_{D\to\infty}2^{-D}\log_2M_1(D)
+       =\sup_{d\ge1}2^{-d}\sigma_d.
+\tag{PPF.25}
+$$
+
+[NCE, §§13–19][NCE] supplies the positive asymmetric depth-three law
+with exact all-length pressure $3038031/7792603$, and the original
+all-competitor consequences
+
+$$
+M_1(D)\ge
+\left\lceil\left(\frac{7792603}{3038031}\right)^{2^{D-3}}\right\rceil
+\quad(D\ge3),\qquad M_1(6)\ge1874.
+\tag{PPF.26}
+$$
+
+Together with D3's credited upper and finite optimum, the retained
+frontier is
+
+$$
+\frac18\log_2\frac{7792603}{3038031}\le\lambda<\frac3{16},
+\qquad M_1(3)=4.
+\tag{PPF.27}
+$$
+
+These are supplied results, without a new endpoint here. Fixed-law
+pressure attainment is not optimization over laws or an attaining exact
+memory code.
+
+[COK, §§18–25][COK] distinguishes its exact matching-population
+maximum from the common-law entropy defect and leaves the general
+envelope/pressure equality open. [OCC, §§10–17][OCC] prices acquisition
+of an explicitly additional component descriptor; its four-name bound
+is not an original $M_1(D)$ bound. [GDB, §§20–25][GDB] concerns two
+specified whole-star forest mechanisms, with proper syndrome-rank
+repairs only in its parity sector. Their scopes remain intact. The
+cone bound instead uses the unchanged original requested trajectory
+as its failing output; no component descriptor or new service is added.
+

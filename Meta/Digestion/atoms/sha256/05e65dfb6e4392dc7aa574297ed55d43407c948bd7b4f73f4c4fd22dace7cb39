@@ -1,0 +1,10 @@
+**定理 3.2（一次合并与明确闭合字）。** 对 $n\ge5$，$\mathcal T_g$ 在恰 $2n-4$ 个不同 $D$ bracelets 中各删一条 $F_0$ 边，并将这些完整 bracelets 合为一个圈。置
+
+$$
+A=b(ab)^{n-1},\qquad B'=a(ba)^{n-1}.
+$$
+
+合并后的圈字为 $(Ac(B'c)^{n-3})^2$，长度 $4n(n-2)$，闭合边为 $gc\to g$。
+
+证明：$gE$ 中删去的短路 $g\xrightarrow b gb\xrightarrow c gbc\xrightarrow b g\delta$ 的两条 $b$ 边，正好位于两个共享 bracelets。长路留下的 $n-3$ 条 $b$ 边各属于一个私有 bracelet；$gaE$ 同理。引理 3.1 保证两组私有 bracelets 互不相交。两条 $a$ 切边分别位于 $gD,g\delta D$，于是每个受影响 bracelet 恰切一次。各 bracelet 的剩余部分为完整路径，新增 $c$ 边按 $W$ 的循环次序将这些路径合成一个简单圈。$A,B'$ 分别是被删 $a,b$ 边在其 bracelet 中的长补路径，长度均为 $2n-1$，群元素分别为 $a,b$。逐边替换得到所述圈字；顶点数为 $(2n-4)2n$，且最后一条新增 $c$ 边不变。
+

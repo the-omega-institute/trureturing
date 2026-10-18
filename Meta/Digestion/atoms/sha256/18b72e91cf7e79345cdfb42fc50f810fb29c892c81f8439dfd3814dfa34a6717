@@ -1,0 +1,81 @@
+**Theorem 33.2 (Terminal syzygies of the algebra carrying the layer action).**
+For this exact mode presentation,
+
+$$
+\begin{aligned}
+D_n&=F_{n-1}^{\mathrm{Fib}}+F_{n+1}^{\mathrm{Fib}},\\
+\Sigma_n&=(D_n;F_{n-1}^{\mathrm{Fib}}\mathbf1),\qquad
+p_n=\operatorname{pd}_{S_n}R_k=D_n-n-1,\\
+F_{p_n}&=\bigoplus_{j=1}^{k-1}S_n(-\Theta_j),\\
+\Theta_j&=\Sigma_n-\nu_j
+=\bigl(D_n-(2j+1);(F_{n-1}^{\mathrm{Fib}}-j)\mathbf1\bigr).
+\end{aligned}
+\tag{33.2}
+$$
+
+Thus the last module has rank $k-1$. The same interior degrees
+$\nu_j$ that define the canonical layers and the action (31.7)
+give all these terminal multidegrees by subtraction from the sum
+of the actual mode degrees. This statement specifies the final
+module; it does not specify all differential matrices.
+
+Proof. Independent sets in a path of $r\ge0$ positions are counted
+by $F_{r+2}^{\mathrm{Fib}}$: split according to whether the first
+position is unoccupied or occupied, leaving paths of lengths
+$r-1$ and $r-2$, with initial counts one and two for lengths zero
+and one. In the $n$-cycle, sets omitting position zero leave a
+path of length $n-1$, with count $F_{n+1}^{\mathrm{Fib}}$.
+Sets containing zero omit its two neighbors and leave a path of
+length $n-3$, with count $F_{n-1}^{\mathrm{Fib}}$.
+This proves the first formula. The latter argument at any fixed
+position proves that it occurs in exactly $F_{n-1}^{\mathrm{Fib}}$
+mode variables. Summing the degree vectors therefore gives the
+second formula, including every occupancy coordinate.
+
+The ring $R_k$ has dimension and depth $n+1$ by Theorem 31.3,
+whereas the polynomial ring $S_n$ has dimension $D_n$.
+Auslander–Buchsbaum at the homogeneous maximal ideal, as in
+[Stacks, Proposition 10.111.1, section 090U][AB27], gives
+$p_n=D_n-n-1$. A minimal multigraded resolution exists by choosing
+minimal homogeneous generators successively; Hilbert syzygy gives
+a finite free resolution, and its minimal length is this projective
+dimension. These are the same hypotheses used in §29.4 for seven
+positions, now for the mode set (33.1).
+
+The polynomial canonical module is $\omega_{S_n}=S_n(-\Sigma_n)$:
+the top exterior product of the variable differentials has degree
+the sum of their degrees. The precise multigraded canonical-Ext
+input is [Barile–Bruns, Theorem 4.5(a)][BB31]. Their regular
+graded-local ring is $S_n$, its homogeneous maximal ideal is
+$(z_I)_I$, and its Cohen–Macaulay residue ring is the stated
+quotient $R_k$. The codimension is $p_n$, so their result and its
+Ext vanishing give
+
+$$
+\operatorname{Ext}^{p_n}_{S_n}(R_k,S_n(-\Sigma_n))
+\simeq\omega_{R_k},\qquad
+\operatorname{Ext}^{i}_{S_n}(R_k,S_n(-\Sigma_n))=0
+\quad(i\ne p_n).
+\tag{33.3}
+$$
+
+In particular the canonical module used here has the same full
+grading as the interior ideal, by their Theorem 5.1 and the
+correspondence in the proof of Theorem 31.3.
+
+Dualizing $F_\bullet$ into $S_n(-\Sigma_n)$ shows that
+$\omega_{R_k}$ is the cokernel of the map into
+$\operatorname{Hom}_{S_n}(F_{p_n},S_n(-\Sigma_n))$.
+Minimality means that every original differential has entries in
+$(z_I)_I$; the dual map has this property too. Reducing its
+cokernel modulo that maximal ideal therefore leaves one basis
+vector for every summand of this final dual free module, with
+its degree unchanged. If the original summand is $S_n(-\Theta)$,
+the dual summand has generator degree $\Sigma_n-\Theta$.
+The minimal generator degrees of $\omega_{R_k}$ are exactly
+$\nu_1,\ldots,\nu_{k-1}$, each once, by the generation and
+minimality proof in §31.2. There are no others. Equating these
+degrees gives precisely all the summands in (33.2).
+This argument uses the actual canonical module and minimal
+resolution, not just an alternating Hilbert numerator. $\square$
+

@@ -1,0 +1,15 @@
+**Theorem 65.1 (repo-derived full 36-ray graph germ).** The 36 central
+rays defined below are distinct and noncanonical. Each has a unique
+unrestricted analytic common-flat continuation near zero. For some
+\(\varepsilon>0\), their orthogonality graph at every
+\(0<|b|<\varepsilon\) is the disjoint union of two copies of
+\(K_{3,3}\) and two connected four-regular bipartite graphs on twelve
+vertices. In particular, there are 36 disjoint ray neighborhoods
+whose union contains no common-flat orthogonal triple at these
+parameters.
+
+The conclusion controls all edges between the 36 rays, including
+edges between different transported six-ray copies. It does not by
+itself claim that these neighborhoods cover the entire noncanonical
+locus, at zero or away from zero.
+

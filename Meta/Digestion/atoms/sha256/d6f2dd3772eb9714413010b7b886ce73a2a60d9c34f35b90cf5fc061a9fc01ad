@@ -1,0 +1,103 @@
+**Theorem 14.2 (uniform original pure rigidity and one-companion deletion).**
+Under Definition 14.1, every nonnegative law with the same original
+$B(t)$ satisfies the full three-dimensional bound
+
+$$
+M_0\succeq\left[1-\frac{\mu+\max(V,W)}{tc_{\min}}\right]D_3.
+\tag{IC.59}
+$$
+
+If $t>T_3$, every finite such endpoint law has at least three distinct
+positive pure coordinates. Now also impose Assumption 1.4 and fix
+$w^0\in\mathcal P(r)$ with a canonical support $I$, exactly three
+pure and six saturated coordinates. If one occupied pure coordinate
+$p\in I$ has its zero-weight saturated companion $j$ in its own
+compatible complete group, there is a finite law in $\mathcal P(r)$
+with at most eight occupied complete groups. It preserves the same
+$B(t)$, active $K=r$, $J_t$ and original absolute height.
+The alternative condition $C(1+1/m)<1$ suffices for all these rigidity
+and deletion conclusions.
+
+Proof. The bound is a supporting step for the whole-group conclusion.
+All integrals in it use the single positive saturated measure $\rho_1$.
+The three original failure rows and the circle identity give
+
+$$
+\int\mathfrak c(x)\,d\rho_1=\frac\mu t,\qquad
+\int\mathfrak c(x)xx^T\,d\rho_1
+=\frac1t\operatorname{diag}(\alpha V,\beta W).
+\tag{IC.60}
+$$
+
+In particular the mixed entry is zero and both diagonal entries are
+strictly positive. These are GC Proposition 12.2's full failure
+covariance, in angular coordinates, not separately chosen scalar
+marginals. Since $\mathfrak c\ge c_{\min}$,
+
+$$
+S\le\frac\mu{tc_{\min}},\qquad
+\int xx^T\,d\rho_1\preceq
+\frac1{tc_{\min}}\operatorname{diag}(\alpha V,\beta W).
+\tag{IC.61}
+$$
+
+For $z=(z_0,z_1,z_2)^T$, put
+$L_z(x)=z_1u/\sqrt\alpha+z_2v/\sqrt\beta$ and
+$q_z^2=z_1^2+z_2^2$. The standard Cauchy–Schwarz inequality for
+this same positive measure bounds its odd cross term. It gives
+
+$$
+\begin{aligned}
+z^TD_3^{-1/2}M_1D_3^{-1/2}z
+&=\int(z_0+L_z)^2\,d\rho_1\\
+&\le\left(|z_0|\sqrt S+
+                  \sqrt{\int L_z^2\,d\rho_1}\right)^2\\
+&\le\frac{(\sqrt\mu\,|z_0|+
+                      \sqrt{\max(V,W)}\,q_z)^2}{tc_{\min}}\\
+&\le\frac{\mu+\max(V,W)}{tc_{\min}}\|z\|^2.
+\end{aligned}
+\tag{IC.62}
+$$
+
+The last inequality is ordinary Euclidean Cauchy–Schwarz. Subtracting
+from $D_3$ proves (IC.59), including the degenerate case $S=0$ as
+an inequality. At $t>T_3$ its right side is positive definite. A sum
+of fewer than three positive rank-one pure coordinate matrices has
+rank at most two, so cannot equal $M_0$. This inference holds for
+every common endpoint law with $B(t)$, including laws reached by
+activation. It uses neither an initial-rank assumption alone nor
+small mass measured only at the starting law. Finally
+$\max(V,W)\le\mu/m$, so $C(1+1/m)<1$ implies $t>T_3$.
+
+For the claimed deletion, keep all inventory columns and define
+
+$$
+\delta_j=1,\qquad \delta_I=-H_I^{-1}H_j,\qquad
+\delta_i=0\quad(i\notin I\cup\{j\}),\qquad
+\tau=\min_{i\in I:\delta_i<0}\frac{w_i^0}{-\delta_i}.
+\tag{IC.63}
+$$
+
+The mass row gives $\sum_{i\in I}\delta_i=-1$. Thus the minimum
+is over a nonempty finite set and $0<\tau<\infty$. On
+$0\le s\le\tau$, $w(s)=w^0+s\delta$ is nonnegative, has
+$Hw(s)=(B(t),r)^T$, and activates only the saturated column $j$.
+Every changed column is a contact of the same supplied dual, so
+$g_i=y\cdot\Gamma_i-\lambda\kappa_i$ and $J_t$ is unchanged.
+At $s=\tau$ at least one old coordinate dies.
+
+None of the three old pure coordinates can die: no pure coordinate
+is activated, and such a death would leave at most two positive pure
+coordinates in another nonnegative law with the same $B(t)$,
+contradicting (IC.59). Consequently an old saturated coordinate
+$q\in I$ dies. Its group is different from the group of $p,j$,
+and all its other coordinates remain zero. The nine original groups
+were distinct, and the only newly positive coordinate belongs to an
+already occupied group. Hence the death of $q$ empties its whole
+group and leaves at most eight. Ties can empty more groups and cause
+no difficulty. The parent $p$ remains positive; its paired fraction
+at exit is $w_j(\tau)/(w_p(\tau)+w_j(\tau))\in[0,1]$.
+FC Theorem 3.3 merges all occupied compatible groups, retaining
+$(B,r,J_t)$ and producing exactly one original fractional low label
+per remaining group. Zero total masses are omitted. $\square$
+

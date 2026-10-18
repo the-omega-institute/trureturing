@@ -1,0 +1,28 @@
+**Theorem 84.1.** For every \(0<|b|<1\), two aligned common-flat
+rays with the same singleton position are orthogonal if and only if they
+are projective \(\Theta\) partners. This includes constants and all
+aligned phase poles.
+
+Take \(w\) as in (83.2) and
+\(w'=(1,1,Z;G,G,GR)\). Their unnormalized overlap vanishes exactly when
+\[
+ 2+\bar zZ+\bar gG(2+\bar rR)=0.                       \tag{84.1}
+\]
+Taking absolute values gives
+\(\operatorname{Re}(\bar zZ)=\operatorname{Re}(\bar rR)\).
+Two unit complex numbers with the same real part are equal or conjugate.
+In the equal case, \(2+\bar zZ\ne0\) gives \(G=-g\) and
+\(Z/R=z/r\). The dephased partner
+\[
+ \Theta w\sim(1,1,\bar r;-g,-g,-g\bar z)              \tag{84.2}
+\]
+has those same data. Theorem 83.1 identifies \(w'\) with it.
+In the conjugate case,
+\[
+ ZR=zr.                                                   \tag{84.3}
+\]
+The alternatives can overlap. We will exclude nonconstant equal-product
+orthogonal pairs without assuming that the product map is injective.
+Two possible interior collision fibers are retained explicitly below;
+no existence assertion for their possible common-flat lifts is needed.
+

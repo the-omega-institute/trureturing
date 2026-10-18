@@ -1,0 +1,11 @@
+**Corollary 5.5 (credited terminal span-four margin).** If $(n-4,n)$
+is consecutive, then $E_I-D_I\ge2$. The only possible shared pair
+is $(K-3,L-1),(K-1,L-3)$. No attainment of this margin is asserted.
+
+Proof. This is [SI, Corollary 10.5][SI]. Here $d=n-3,H=2$ in
+Lemma 5.3, so only $AZ$ survives the two-gap rule. If $s$ states
+share, then $D_I=s$ and the first diagonal has excess at least
+$\max(1,2s-2)$; the other two have at least one each. Consequently
+$E_I-D_I\ge2+\max(1,2s-2)-s\ge2$: the bound is three at
+$s=0$, two at $s=1$, and $s\ge2$ for $s\ge2$. $\square$
+

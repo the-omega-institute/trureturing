@@ -1,0 +1,23 @@
+### 92.6. A quantitative support exclusion from quadratic inertia
+
+**Theorem 92.3.** Under the hypotheses of Theorem 92.2, put d_f=|S∩{(f,0),(f,1)}|, n=|S|, and m=Σ_(f<g)d_fd_g. Then
+
+\[
+                         m\le2n-1,\qquad n\le5.               \tag{26}
+\]
+
+Thus a positive subhalf calibrated local minimum with both ranks seven cannot have active support on six, seven, or eight input coordinates.
+
+**Proof.** The real vector space of Hermitian D supported on S with zero fibre blocks has one complex variable z=D_xy for each of its m unordered cross-fibre edges, hence dimension 2m. Equation (21) gives
+
+\[
+ Q_W(D)=-\alpha\sum_{x,y\text{ in different fibres}}
+             \frac{a_y\overline{a_x}}{G_{xy}}D_{xy}^2.         \tag{27}
+\]
+
+Each unordered edge contributes −2α Re(c_xy z²), where c_xy=a_y conjugate(a_x)/G_xy≠0. For z=u+iv, the real quadratic form Re(cz²) has eigenvalues +|c| and −|c|. Thus (27) has exactly m positive and m negative eigenvalues, with no zero eigenvalue, for arbitrary complex phases.
+
+Fix any one point of 𝒜₀ and its m-dimensional negative eigenspace N. The real-linear map D↦Da has rank at most 2n−1, because its image lies in the hyperplane Im(a*Da)=0. If m>2n−1, a nonzero D∈N therefore satisfies Da=0. It obeys every condition in (22) and has Q_W(D)<0. For every other point of 𝒜₀, formula (27) is a strictly positive scalar multiple of the same form, so this single D is negative for all common witnesses. That contradicts (22) and proves the first inequality of (26).
+
+For n=6 the possible fibre sizes are (2,2,2,0) and (2,2,1,1), giving m=12 or 13, both greater than 11. For n=7 the sizes are (2,2,2,1) and m=18>13. For n=8 they are (2,2,2,2) and m=24>15. This proves n≤5 with the original fibre constraints retained.
+

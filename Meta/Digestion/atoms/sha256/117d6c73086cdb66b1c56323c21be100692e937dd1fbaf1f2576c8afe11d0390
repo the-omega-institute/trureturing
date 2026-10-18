@@ -1,0 +1,72 @@
+**Lemma 31.1 (enclosed tangent solves).** Both Jacobians in AC.143 are
+nonsingular. For $b_n=-\partial_\lambda\mathcal F_n$, put
+$w_n=R_nb_n$. The ordinary infinity-norm bounds are
+
+| $n$ | $q_n=\|I-R_nJ_n\|_\infty$ | $q_n\|w_n\|_\infty/(1-q_n)$ |
+| --- | --- | --- |
+| $5$ | $<5.89\cdot10^{-14}$ | $<2.61\cdot10^{-13}$ |
+| $6$ | $<6.54\cdot10^{-9}$ | $<4.71\cdot10^{-7}$ |
+
+At the transition, along the five- and six-contact branches, respectively,
+
+$$
+\begin{gathered}
+-0.00009408323<\frac{d}{d\lambda}P_{\rm unused}
+ <-0.00009408322,\qquad
+71.95465<\frac{dp_5}{d\lambda}<71.95467,\\
+0.0039816305<\frac{d\tau_5}{d\lambda}<0.0039816307,\qquad
+0.0112044<\frac{d\tau_6}{d\lambda}<0.0112103.
+\end{gathered}
+\tag{AC.144}
+$$
+
+All six signed angular curvatures are positive, each exceeding
+$0.00008276009$; the contact boxes are pairwise distinct.
+
+Proof. The matrices, source intervals and transition box give the two
+Neumann bounds in the table by the same outward rational arithmetic as
+Lemma 27.1. Since $q_n<1$, the exact solve satisfies
+
+$$
+\|J_n^{-1}b_n-w_n\|_\infty
+ \le\frac{q_n\|w_n\|_\infty}{1-q_n}.
+\tag{AC.145}
+$$
+
+Indeed $R_nJ_n=I-E_n$, so $J_n^{-1}b_n=(I-E_n)^{-1}w_n$;
+subtract $w_n$ and bound the Neumann tail. This encloses the complete
+tangent, without finite differences. For explicit reproducibility,
+$\partial_\lambda F$ has zero moment rows and contact rows
+$-\sigma_iW_i(x_i),-\sigma_iW_i'(x_i)$. At fixed unused $x_5$,
+
+$$
+P_{\rm unused}'(\lambda_D)
+ =\sum_{j=0}^7(d_j)'\Gamma_{0,j}^{\rm num}(x_5)-W_0(x_5).
+\tag{AC.146}
+$$
+
+Motion of the minimizing unused angle makes no first-order contribution
+because its angular gradient is zero. For either branch,
+
+$$
+\tau_n'=\frac1{\sqrt\alpha}\sum_{i<n}\sigma_i
+ [p_i'u_i+p_i(\partial_{x_i}u_i)x_i'],\quad
+\partial_xu=(U'r-2xU)/r^2.
+\tag{AC.147}
+$$
+
+Substituting AC.145 into AC.146–.147 gives AC.144. For every contact,
+value and first derivative vanish exactly, so its angular curvature is
+
+$$
+\gamma_i=\frac{P_i''(x_i)(1+x_i^2)^2}{4D_{\eta_i}(x_i)}.
+\tag{AC.148}
+$$
+
+In index order $0,\ldots,5$ the curvatures lie respectively in
+$(0.00008276009,0.00008276011)$, $(0.05854371,0.05854373)$,
+$(0.06407661,0.06407663)$, $(17.00212,17.00214)$,
+$(1.13779,1.13780)$ and $(0.00008276009,0.00008276011)$.
+These strict rational bounds use the whole transition box, including
+its unused contact, not just its centre. $\square$
+

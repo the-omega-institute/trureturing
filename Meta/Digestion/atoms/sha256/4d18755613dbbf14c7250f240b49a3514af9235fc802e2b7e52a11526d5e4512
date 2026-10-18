@@ -1,0 +1,6 @@
+# k-bonacci 自校准获取资源续卷 XII：非相邻坐标的共享库存与有符号剩余量
+
+This volume continues [Continuation XI, §§213–215](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XI.md).
+The results are ordinary mathematical statements with their stated domains.
+Write $x_+=\max(x,0)$ and interpret empty sums as zero.
+

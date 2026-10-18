@@ -1,0 +1,46 @@
+**Corollary 5.3 (equal feasible upper budgets and nondominated frontiers).**
+For either class let $b(A)$ be the componentwise maximum of its run
+costs over the paired histories, and let
+$\mathcal F=\{v\in\mathbb N^3:\exists A,\ b(A)\le v\}$.
+The native and coordinate $\mathcal F$ are equal, as are their
+coordinatewise minimal elements. More strongly, the two classes admit
+the same feasible sourcewise upper-budget functions
+$B:\{0,1\}^m\to\mathbb N^3$.
+
+**Proof.** Exact forward transport maps any feasible coordinate budget
+to the same native budget. Sourcewise reverse dominance maps any
+feasible native budget to a coordinate budget below it, for the same
+$b$ in every inequality. The two inclusions give both assertions.
+The coordinatewise minimal feasible budgets are therefore the same;
+each is attained, since any strict slack in the worst vector of its
+witness would contradict minimality. Repetitions and unnecessarily
+long native words can have strictly larger cost than their reverse
+simulation. Equality of all strategy-cost profiles is not asserted.
+$\square$
+
+For example, the standard finite decision-tree recursion, used here as
+an algorithmic consequence rather than a new decision-tree theorem,
+computes this common frontier. At a nonempty partial-assignment cell
+$E$ let $\mathcal P(E)=\{(0,0,0)\}$ if $f$ is constant there.
+Otherwise range over unexposed coordinates $i$, let
+$E_{i,t}=\{b\in E:b_i=t\}$, and use
+
+$$
+\mathcal P(E)=\operatorname{Min}\bigcup_i
+\left\{
+\left(1+\max_t C_t,\ d_i+\max_t L_t,
+\ \max(d_i,\max_t P_t)\right):
+(C_t,L_t,P_t)\in\mathcal P(E_{i,t})
+\right\}.
+\tag{NTL.20}
+$$
+
+Only nonempty children occur. Each is a strict subcell, and at most
+$m$ distinct bits are needed on any path. The choices in each child
+are complete *triples for one continuation*. Thus the formula does
+not combine separately optimal resources from incompatible strategies.
+Coordinate maxima may occur at different inputs; every displayed
+budget still belongs to one strategy. This is the same joint-budget
+discipline as [AOF §§3--5][AOF] and [JRF, Definitions 1.2--1.3][JRF].
+The enumeration need not be efficient in a compact description of $f$.
+

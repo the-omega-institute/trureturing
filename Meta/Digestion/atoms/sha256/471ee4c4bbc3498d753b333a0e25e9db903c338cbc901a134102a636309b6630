@@ -1,0 +1,51 @@
+**Theorem 71.2 (finite formula and full degenerate recovery).** For each
+pair with $\det(v_i,v_j)\ne0$, let $u_{ij}$ solve
+$u_{ij}\cdot v_i=d_i$, $u_{ij}\cdot v_j=d_j$. The maximum low height is
+
+$$
+\sum_iq_im_i+
+\min_{\det(v_i,v_j)\ne0}\sum_kq_k|d_k-u_{ij}\cdot v_k|.
+\tag{RC.77}
+$$
+
+For a minimizing pair set $r_k=d_k-u_{ij}\cdot v_k$. Set
+$\vartheta_k=\operatorname{sgn}r_k$ for $r_k\ne0$. On the zero-residual
+indices enumerate box vertices as follows: choose zero, one or two
+free indices, put every other zero-residual index at $\pm1$, and solve
+$\sum q_k\vartheta_kv_k=0$. With zero free indices check this equation;
+with one solve its scalar coefficient and check both coordinates;
+with two use Cramer's formula only when their columns $q_kv_k$ are
+independent. Retain values in $[-1,1]$ and remove zero actual weights.
+At least one candidate exists. Repeated or parallel residual lines and
+an all-zero residual vector are allowed.
+
+**Proof.** For every $u\in\mathbb R^2$ the balance equation gives
+
+$$
+\sum_iq_id_i\vartheta_i
+=\sum_iq_i(d_i-u\cdot v_i)\vartheta_i
+\le F(u):=\sum_iq_i|d_i-u\cdot v_i|.
+\tag{RC.78}
+$$
+
+The covariance $I_2$ implies that the $v_i$ span the plane and hence
+$\min_{\|e\|=1}\sum_iq_i|e\cdot v_i|>0$. Thus $F$ is coercive and
+attains its minimum. Its zero subgradient condition supplies precisely
+the balanced $\vartheta_i$, fixed to residual signs off the zero set.
+This attains the bound. The minimizing set is a nonempty compact
+polyhedron. At one of its vertices the active zero-residual normals
+must span two dimensions. Otherwise a nonzero direction preserving all
+zero residuals leaves the objective locally affine; minimality makes
+it locally constant in both directions, contradicting the vertex.
+Thus a minimizing pair exists, proving (RC.77).
+
+For a fixed minimizing $u$, the residual-zero balance section of the
+box is nonempty and compact and has a vertex. If the columns of its
+strictly fractional variables were dependent, a small two-sided
+perturbation in their kernel would contradict that vertex. There are
+therefore at most two such variables and their columns are independent.
+The zero-, one- and two-variable enumeration above includes this
+vertex. Duplicated and parallel rows remain constraints but never
+supply an invalid two-by-two inverse. The same argument covers no
+fractional variables and the all-zero residual case. $\square$
+

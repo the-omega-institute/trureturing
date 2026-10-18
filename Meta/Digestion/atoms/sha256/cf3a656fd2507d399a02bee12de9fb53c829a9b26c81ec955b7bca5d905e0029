@@ -1,0 +1,32 @@
+**定义 56.1（静态第三像分块）。** 为避免与（JM.152）的字母重名，记
+
+$$
+X=\rho^3\alpha=((\beta,\alpha),\beta),\qquad
+Y=\rho^3\beta=(X,(\beta,\alpha)),\qquad
+D=(\beta,(\alpha,\beta)).
+\tag{JM.166}
+$$
+
+固定 $n\ge3$，取参考树 $S=T_{n-3}$。令 $E_a,E_b$ 分别为 $S$ 的带标签叶地址集合，$a=|E_a|,b=|E_b|$。因 $\rho$ 保有序配对，$T_n=\rho^3S$ 在每个 $p\in E_a$ 填 $X$，在每个 $p\in E_b$ 填 $Y$，外围配对不变。$E_a\sqcup E_b$ 是完整叶反链，故这些块的地址锥两两不交。它是已知参考树的数学分解，不是对未知竞争者取得子树、叶词、时钟或祖先的新操作。
+
+定义三个五叶比较块
+
+$$
+Y_1=(D,(\beta,\alpha)),\qquad
+Y_2=(((\beta,\alpha),(\beta,\beta)),\alpha),\qquad
+Y_3=((X,\beta),\alpha).
+\tag{JM.167}
+$$
+
+四个五叶块的完整叶词都是 $babba$；$X,D$ 的完整叶词都是 $bab$。令以下集合只含相对字面地址：
+
+$$
+\begin{aligned}
+H_X&=\{L,R,LL,LR,RL,RR\},\\
+H_1&=\{LL,LR,LLL,LLR,LRL,LRR\},\\
+H_2&=\{LR,R,RL,RR,LRL,LRR\},\\
+H_3&=\{R,RL,RR,LLL,LLR,LLLL,LLLR\}.
+\end{aligned}
+\tag{JM.168}
+$$
+

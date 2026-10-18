@@ -1,0 +1,30 @@
+**Definition 2.1 (source dictionary).** In the qutrit coordinates put
+
+$$
+\begin{gathered}
+D=\operatorname{diag}(h_0,h_1,h_2),\quad
+T=ae_0e_1^T+be_1e_0^T,\quad
+S=c_{\rm src}e_0e_2^T+de_2e_0^T,\quad M=\operatorname{diag}(0,m_1,m_2),\\
+D^\dagger D+T^\dagger T+S^\dagger S+M=I_3,\\
+\theta=ab/(h_0h_1),\quad\omega=c_{\rm src}d/(h_0h_2),\quad
+\delta=\theta+\omega\in(0,1),\quad s_0=\sqrt\delta,\quad
+\alpha=\theta/\delta>0,\quad\beta=\omega/\delta>0,\quad\alpha+\beta=1,\\
+\Delta=\rho_{27,+,+}-\rho_{5,+,+},\quad
+(K_0,K_1,K_2)=(D,T,S),\quad
+N_{ij}=\operatorname{tr}(K_i\Delta K_j^\dagger),\\
+L_{\rm coeff}=\operatorname{diag}(s_0,1,1),\quad
+G=L_{\rm coeff}NL_{\rm coeff},\quad H_{\rm high}=(1-\delta)N_{00}>0,\\
+V=m_2h_1^2/b^2,\quad W=m_1h_2^2/d^2,\quad \mu=\alpha V+\beta W.
+\end{gathered}
+\tag{QS.6}
+$$
+
+All nine source amplitudes $h_0,h_1,h_2,a,b,c_{\rm src},d,m_1,m_2$ are
+positive. These are the same quantities as [GC, (GC.6)–(GC.12)][GC];
+$c_{\rm src}$ distinguishes the source amplitude from capacity. If
+$u_F=V/\mu$, $v_F=W/\mu$ and
+$c_f=c(1,\sqrt{u_F},\sqrt{v_F})$, the inherited feasibility floor is
+$t_0=W/c_f$. Feasibility of the fixed request is assumed, rather than
+inferred from $t\ge t_0$ and $s<s_0$ alone. All identities refer to the
+same isolated root, not independently variable points in its enclosure.
+

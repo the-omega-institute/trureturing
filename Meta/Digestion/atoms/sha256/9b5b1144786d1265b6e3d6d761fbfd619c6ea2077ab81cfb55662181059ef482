@@ -1,0 +1,17 @@
+## 9. Target resistance, optimal four-corner ports and conjugate information cost
+
+The resolved experiment of Chapter 8 allows a target-specific question:
+which phase contrast can be estimated, and how should the sampling budget
+be assigned to its legal ports? The answer depends on the contrast as well
+as on the graph. The four-corner contrast has an optimal one-endpoint
+readout, while another contrast on the same five modes requires all three
+ports. A fixed-reference probability–phase family then makes the cost of
+estimating two conjugate coordinates explicit, including an exact
+finite-sample design.
+
+All results in this chapter are ordinary mathematical applications in the
+specified finite experiment. The probability law, coherent reference,
+measurement menu and independent preparations are supplied assumptions.
+The scalar called $\kappa$ below is a joint probability, not the graph
+maximum $\kappa_n$ of Definition 1.1.
+

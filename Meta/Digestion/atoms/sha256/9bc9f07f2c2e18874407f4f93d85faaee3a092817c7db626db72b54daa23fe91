@@ -1,0 +1,2 @@
+**Open question 9.4 (Efficient exact minimization).** Determine an efficient method to minimize $\tau$ over the finite integer set $\mathcal F_K$, using conformal indecomposability without losing an optimum. The cutoff proves finiteness and gives coordinate bounds, but establishes no complexity bound or efficient algorithm. No enumeration, numerical experiment or computed support catalogue supports an algorithmic claim in this volume.
+

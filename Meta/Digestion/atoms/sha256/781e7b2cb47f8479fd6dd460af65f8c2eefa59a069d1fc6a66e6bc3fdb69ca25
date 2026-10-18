@@ -1,0 +1,74 @@
+**Definition 344.1 (Normalized slice and certificate identity).** Use
+coordinates $x=(b_1,b_2,b_4,b_5,b_6,b_7,e)$, with $b_3=b_2$.
+Let $H_7$ be the compact seven-dimensional polytope
+
+$$
+\begin{gathered}
+1\ge b_1\ge b_2=b_3\ge b_4\ge b_5\ge b_6\ge b_7\ge e\ge0,\\
+0\le b_3+b_4+b_5+b_6+b_7-8e\le1-b_1.
+\end{gathered}
+\tag{344.1}
+$$
+
+The dataset $\mathcal D_7$ is the complete file
+`calibration238-complete-n-h7/H7-certificate.json` in
+[the-omega-institute/trureturing-experiments](https://github.com/the-omega-institute/trureturing-experiments),
+schema `research161-H7-complete-normalized-common-allocation-v1`,
+with exactly $2{,}579{,}533$ bytes and SHA256
+`621bed2ac570875c2bcb96796338e753ba045c544aa30fb8e1af8702cc94581d`.
+This content identity specifies the data independently of a mutable
+branch. The complete dataset is available at the
+[immutable scientific revision](https://github.com/the-omega-institute/trureturing-experiments/blob/1be64035b2fc5d379ba49b52cb0c402010286922/calibration238-complete-n-h7/H7-certificate.json). All rational strings denote exact rationals.
+The complete data, rather than a sample or a selected sublist, are
+part of the finite mathematical certificate below.
+
+Its matrix fields $A,B$ define $Ax\le B$ with $481$ rows.
+Rows $0,\ldots,9$ are exactly (344.1), in the order
+$b_1\le1$, $b_2\le b_1$, the successive descending inequalities
+through $e\le b_7$, $e\ge0$, the lower excess inequality,
+and the upper excess inequality. The remaining $471$ rows are
+specified by `cuts`. Call this polytope $P$.
+There is no assertion that these inequalities are distinct facets
+or form a minimal description.
+
+Words are lexicographic with $w_1$ first. At each of the first
+$127$ words list $A,C,P$, and at $1^7$ list $T$; row indices
+are $0,\ldots,381$. For first zero $n$, their events and demands are
+
+$$
+\begin{array}{c|c|c}
+A&\{0\}&1-b_n-e\\
+C&\{n\}&b_n-e\\
+P&\{0,n\}&1-e\\
+T\text{ at }1^7&\{0\}&1-e.
+\end{array}
+\tag{344.2}
+$$
+
+An omitted score weight is zero. For a cut's nonnegative weights $y$,
+let $f_y(w,z)=\sum_{r:\,w_r=w,\,z\in E_r}y_r$ and set
+
+$$
+\begin{aligned}
+\beta_n&=\sum_{w:n(w)=n}(y_{w,C}-y_{w,A}),\\
+K&=\sum_r y_r,\qquad C_y=\sum_w(y_{w,A}+y_{w,P})+y_{+,T},\\
+M_{ij}^{ab}&=\max_{z\in J}\sum_{w:w_i=a,w_j=b}f_y(w,z),\\
+B_N(y)&=\max_{1\le i<j\le7}\sum_{a,b\in\{0,1\}}M_{ij}^{ab}.
+\end{aligned}
+\tag{344.3}
+$$
+
+Every cut record supplies all these quantities and the primitive
+positive scaling of
+
+$$
+(\beta_1,\beta_2+\beta_3,\beta_4,\beta_5,\beta_6,\beta_7,-K)
+                 \cdot x\le B_N-C_y.
+\tag{344.4}
+$$
+
+A vertex record supplies its seven rational coordinates and the full
+set of active row indices. Its matching lift record supplies one
+allocation of increasing pairs, with three sparse terminal vectors
+in cells $0,10,11$. Every coordinate is a label in $J=\{0,\ldots,7\}$.
+

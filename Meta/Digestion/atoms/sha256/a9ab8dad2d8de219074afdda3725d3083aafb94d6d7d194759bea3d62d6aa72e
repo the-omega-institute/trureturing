@@ -1,0 +1,59 @@
+**Proposition 6.2 (Unsplit extension orders and explicit node bound).**
+The Bose-supported extension in Definition 2.1 can be represented by
+a positive matrix of order
+
+$$
+h_n=5\binom{n+4}{4}.
+\tag{6.9}
+$$
+
+Its half-transpose is supported on
+$I\otimes\operatorname{Sym}^{\lceil n/2\rceil}(O)
+\otimes\operatorname{Sym}^{\lfloor n/2\rfloor}(O)$, with unsplit
+ambient positive-matrix order
+
+$$
+\widetilde h_n=
+5\binom{\lceil n/2\rceil+4}{4}
+\binom{\lfloor n/2\rfloor+4}{4}.
+\tag{6.10}
+$$
+
+At $n=52$ the corresponding quantities and the quadrature parameters are
+
+$$
+\begin{gathered}
+D_{52}=\binom{56}{4}=367290,\qquad h_{52}=1836450,\\
+D_{26}=\binom{30}{4}=27405,\qquad
+\widetilde h_{52}=5(27405)^2=3755170125,\\
+t=53,\quad s=27,\quad m=54,\qquad
+K_{52}=(27\cdot54)^4=4518872583696.
+\end{gathered}
+\tag{6.11}
+$$
+
+These are mathematical support and explicit-construction counts.
+They are not lower bounds for every equivalent certificate description
+or a runtime, memory, coefficient-bit-length or physical-cost estimate.
+
+Proof. A basis of $\operatorname{Sym}^n(\mathbb C^5)$ is indexed
+by the five nonnegative occupation numbers summing to $n$.
+Stars and bars gives $D_n=\binom{n+4}{4}$, and tensoring with
+the five-dimensional input gives (6.9). Bose support implies left and
+right invariance under permutations within either half of the outputs.
+The projectors onto those two symmetric subspaces are real. After
+partial transpose of one half, its left and right support projectors
+are interchanged and remain those same projectors. Thus (6.10) is a
+valid support representation for the half-transpose PSD condition.
+It need not have the same order as the original Bose matrix.
+Substituting $n=52$ gives the first two lines of (6.11), and (4.1)
+gives the last line.
+
+The QRC $225$-flag support bound concerns the repaired two-body state;
+it does not reduce the extension orders by itself. Further block
+reductions or smaller certificates require their own exact support or
+representation argument. Conversely (6.11) makes no assertion that
+these unsplit arrays must be materialized to prove a useful certificate.
+The finite sufficiency result in Theorem 5.3 includes its uninstantiated
+primal and dual conditions at these orders. $\square$
+

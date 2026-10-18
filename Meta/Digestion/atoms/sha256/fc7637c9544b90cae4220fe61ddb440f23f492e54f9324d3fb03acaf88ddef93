@@ -1,0 +1,25 @@
+**Definition 209.1 (Inherited scores and actual carriers).** Use
+Definitions 207.1–207.3 and 208.1 without changing the original source,
+resource classes, event rows or certificate. Thus $L\ge3$,
+$I=\{3,\ldots,L\}$, $A=0$, $P$ is supported on
+$\Omega_1\cup\Omega_2$, and every correct suffix is permitted.
+In particular the actual full late projection is
+$\nu(x)=P_{00x}+P_{01x}+P_{10x}$, of mass $S$.
+Write $e_j=w(\{j\})$ and $v_j=w(\{j,j+1,\ldots,L\})$.
+The prefix-reset map $R_j$ sends a late word $x$ to the full word
+with coordinates before $j$ equal to one, coordinate $j$ zero, and
+coordinates after $j$ copied from $x$.
+All measures below are finite nonnegative score weights on this full
+Boolean carrier. Several class measures may use the same atom.
+They are not source laws or normalized probability kernels.
+
+For a fixed increasing pair $s$, write $B_N^s,B_O^s$ for its support
+before maximizing over schedules. The complete catalogs, all labels,
+and the refinement argument for short $N$ schedules are those of
+207.2. In particular $B_O\le B_N$ includes every empty and singleton
+$O$ rule. No embedding of a last-address singleton into a longer
+increasing stopped pair is needed. The signed hull, its four vertex
+families, and the single certificate inequality remain (207.7)–(207.10).
+
+### 209.1 Equal pair marginals with unrestricted class masses
+

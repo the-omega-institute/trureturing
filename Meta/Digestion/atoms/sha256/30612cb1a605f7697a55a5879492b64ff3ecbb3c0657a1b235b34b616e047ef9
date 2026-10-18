@@ -1,0 +1,82 @@
+**Theorem 7.1 (paid realization of the exact refinement).** Suppose
+$Ra_1,\ldots,Ra_n$ are public prefix-free, actually present roots
+in one stationary original source, with $|a_i|\le H$, each block
+of height at most $d$. Given common source-independent finite
+joint-cover tables, an assignment rule and complete witnesses for
+their assigned fibers, the refinement (SIR.22) is
+realized by one source-blind preparation before any target. Its
+complete attained names are precisely the attained pairs
+
+$$
+(e,a),\qquad
+a=(r_{x_{i_c}}(q_c))_{c\in H_{e,L}},
+\tag{SIR.36}
+$$
+
+where $x$ is the acquired canonical tuple and $e$ its assigned
+joint parent name. If all $S_d^n$ tuples are realized by the source
+domain, their number is exactly the left-hand side of (SIR.23);
+on a smaller actual tuple domain the same formula is restricted
+to that domain.
+Sufficient preparation resources on every source are
+
+$$
+\begin{aligned}
+T&\le n(2^d-1),& Q&\le H+d,\\
+A&\le n\bigl((H+1)(2^d-1)+(d-2)2^d+2\bigr).
+\end{aligned}
+\tag{SIR.37}
+$$
+
+A block request is answered by zero Reads or one original-root
+late literal of length at most $H+d$, selected before every supplied
+count. When $H+d\le D$ these are permitted original requests.
+
+Proof. Submit every actual word $Ra_iq$, $q\in W_d$, in a
+public fixed order, including absent suffixes. These charged
+replies determine $x_i=\pi_d(t|_{Ra_i})$ and all possible owner
+replies. Select $e$ by the installed public assignment rule, then
+compute its actual high-incidence owner vector $a$. The parent
+network and its high-seed list depend on the exported parent name
+and public tables, so (SIR.36) includes the entire extra selector.
+Theorem 4.2 gives its exact attained alphabet and upper bound.
+
+Export only a fixed-width name for the attained pair. Use public
+allocation, a fixed scan and a padded finite selection schedule.
+Under Assumption 1.2 isolate the acquired constructor arrays,
+unexported owner replies, intermediate buffers, control and other
+preparation dependence. Every surviving source distinction is
+then a function of this name and public inputs. The isolated
+workspace has supplied no free source-dependent color or seed.
+
+For a requested port, the section prescribes a full-factor constant
+or a table of one remaining seed. The constant uses zero Reads.
+For the latter, RRN's converse queries that seed's actual owner
+$(j,q_c)$, implemented by the single original-root word $Ra_jq_c$.
+The seed's domain guard and tables remain valid on this named
+section. Canonicalization preserves that reply and the required
+factor. Since $Ra_i$ is present, homomorphic substitution gives
+
+$$
+r_{\rho^kt}(Ra_iq)
+=r_{\rho^k(t|_{Ra_i})}(q)\qquad(k\ge0).
+\tag{SIR.38}
+$$
+
+This is the actual-presence premise of
+[`original_present_transport`][Depth]. The notation for a subtree
+is mathematical, not an extra input. The decoder (SIR.4) gives
+every subsequent authentic-count reply with no further Reads.
+No count or source-dependent target guided acquisition or query
+choice. An artificial wrapper's root and left cone are public
+constants; its virtual $Rw$ is realized only by the actual word
+at its present occurrence followed by $w$, as in FMR Lemma 3.1.
+
+There are $2^d-1$ words per block. Their suffix lengths sum to
+$\sum_{j=0}^{d-1}j2^j=(d-2)2^d+2$; each prefix has length at
+most $H+1$. This proves (SIR.37), also at $d=1$. These are the
+credited scan bounds of RRN Proposition 7.3, applied to the new
+counted refinement. Joint table generation and installation,
+membership work, temporary and post-request storage, predictor
+size and the paid services remain separate resources. $\square$
+

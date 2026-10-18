@@ -1,0 +1,28 @@
+**Lemma 7.1 (strict response on the whole strip).** $k_\lambda>0$ everywhere. The map in Theorem 1.1 has the asserted injectivity and analytic inverse.
+
+Proof. In physical variables $z_{\rm phys}=(p,\phi)$ let $M_0=d_z(\sum p\Gamma)$ and
+
+$$
+L=Y\cdot(\sum p\Gamma-B)-\sum p(|H|+\lambda|u|).
+$$
+
+Nonzero chart and row scalings identify the contact Jacobian with the KKT Jacobian at the positive root. A nonzero left null vector of $M_0$ would give a pure-dual kernel vector, so $\operatorname{rank}M_0=8$. The Hessian has zero weight and mixed blocks and angular block $\operatorname{diag}(p_i\gamma_i)>0$. It is positive definite on $\ker M_0$: vanishing forces zero angular variation, then the independent columns force zero weight variation. For a basis matrix $N_T$ of this kernel, implicit differentiation and projection give
+
+$$
+k_\lambda=q^T(N_T^TL_{zz}N_T)^{-1}q,\qquad q=N_T^T\nabla k.
+\tag{10}
+$$
+
+To prove $q\ne0$, use only pure contacts $0,1,2$. Let the columns of $A_p$ be $\sqrt{p_i}(1,u_i,v_i)^T$, $Q=\operatorname{diag}(1,-1,-1)$, and $S_{ij}=(A_p^TQA_p)_{ij}=\sqrt{p_ip_j}[1-\cos(\phi_i-\phi_j)]>0$ for $i\ne j$. Choose skew $\Omega$ by $\Omega_{10}=1/S_{01}$, $\Omega_{20}=-1/S_{02}$, $\Omega_{21}=1/S_{12}$. Then $\dot A_p=A_p\Omega$ preserves $A_pA_p^T$, and $\operatorname{diag}(S\Omega)=0$ preserves the three null conditions to first order. Positive weights turn this into legitimate weight/angle variations. Saturated columns stay fixed; the last three moments on pure columns vanish identically. Thus this is a tangent to all eight constraints.
+
+For $a=x_0,b=x_1,c=x_2$, $\rho_1=(a-b)/(1+ab)$, $\rho_2=(a-c)/(1+ac)$, direct differentiation of $k$ with signs $+,-,-$ gives
+
+$$
+\dot k=2\frac{1-a^2}{1+a^2}(\rho_1-\rho_2)
+\left(\rho_1+\rho_2-\frac{2a}{1-a^2}\right)>0.006533.
+$$
+
+The exact tangent bounds in Appendix C establish this throughout every box. Hence $q\ne0$ and (10) is strictly positive. The joined continuous law is strictly strength ordered at each fixed $t$. Differentiating the moment/contact identities also gives $\partial_\lambda\sum p|H|=-\lambda k_\lambda$, so $\mathcal T_s=-\lambda\sqrt\alpha/(2s_0)$.
+
+Since $t\mapsto\log(1+t)$ is injective, the full parameter map is injective. In coordinate order $(t,\lambda)\mapsto(A,s)$ its determinant is $s_0k_\lambda/[(1+t)\sqrt\alpha]>0$. Compactness gives a homeomorphism onto the closed image and the analytic inverse theorem gives an interior analytic inverse. For each fixed $t$, the intermediate value theorem identifies the entire image strength interval with the interval between the two edges. Strict geometry and quotient bounds persist through all joins. ∎
+

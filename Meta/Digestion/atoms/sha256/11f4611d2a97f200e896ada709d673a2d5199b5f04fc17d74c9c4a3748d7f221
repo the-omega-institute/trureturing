@@ -1,0 +1,10 @@
+**Theorem 107.1.** Suppose both correct-output Grams are circulant in this same original labeling:
+\(G_{j+1,k+1}=G_{jk}\) and \(H_{j+1,k+1}=H_{jk}\), with indices modulo eight. Then
+\[
+ \delta(A,B)\ge\sqrt2-1>\tfrac14.
+ \tag{107.3}
+\]
+The bound is sharp, with an attaining calibrated physical pair of local Kraus ranks \((3,3)\). The infimum is also \(\sqrt2-1\) in each calibrated simultaneous-cyclic exact-rank class \((7,4)\) and \((7,5)\) with full-support first kernel.
+
+The simultaneous-cyclic hypothesis allows complex entries and arbitrary original output leakage. It is a substantive hypothesis on both correct-output Grams, rather than a phase convention. The proof occupies §§107.2–107.6. Corollary 107.2 below weakens this to a cyclic hypothesis on just one Gram, allowing the other original channel to be arbitrary.
+

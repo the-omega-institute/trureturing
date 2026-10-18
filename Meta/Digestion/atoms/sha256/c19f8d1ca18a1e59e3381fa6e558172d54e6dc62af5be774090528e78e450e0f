@@ -1,0 +1,47 @@
+**Theorem 2.4 (Product sharpness exactly on cluster graphs).**
+For every strictly positive activity and weight vector,
+
+$$
+L_{\rm prod}=\Lambda
+\quad\Longleftrightarrow\quad
+G\text{ is a disjoint union of cliques}.
+\tag{2.10}
+$$
+
+If $G$ has an induced path of three vertices, the inequality is
+strict for every such parameter vector.
+
+Proof. For distinct nonadjacent vertices $i,j$, the four sets
+$\varnothing,\{i\},\{j\},\{i,j\}$ are actual legal
+configurations. Put $A_v=a_v(1+x_v)$. Inclusion-exclusion in
+the insertion contributions of (2.1) gives
+
+$$
+R_x(\{i,j\})-R_x(\{i\})-R_x(\{j\})+R_x(\varnothing)
+=\sum_{v\in N(i)\cap N(j)}A_v.
+\tag{2.11}
+$$
+
+The deletion terms cancel. The closed neighborhoods intersect
+only in common neighbors, since $i,j$ are nonadjacent. If they
+have a common neighbor, the right side is positive. Hence the
+row ratios of every product vector are nonconstant.
+
+Suppose nevertheless that $L_{\rm prod}=\Lambda$. By Theorem
+2.2 choose an attaining vector with $Ag_x\le\Lambda g_x$.
+Multiplying by a positive left Perron vector makes the total
+defect zero. Every coordinate defect is nonnegative, so all
+must vanish. The row ratios would then be constant, contrary
+to (2.11). Thus an induced three-vertex path forces strictness.
+
+A graph without an induced three-vertex path has every connected
+component complete: if a component had two nonadjacent vertices,
+the first three vertices on a shortest path between them would
+induce such a path. Conversely a disjoint union of cliques has
+no such path. On each clique the only independent configurations
+are the vacuum and singletons. Any positive Perron vector is
+therefore product-representable. Tensoring the actual clique
+Perron vectors produces a product Perron vector for the whole
+graph. Its constant ratio is $\Lambda$, proving equality.
+$\square$
+

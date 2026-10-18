@@ -1,0 +1,50 @@
+**Definition 1.1 (stationary source and exact request family).** Let
+
+$$
+\mathcal T ::= \alpha\mid\beta\mid\langle u,v\rangle,
+\qquad
+\rho(\alpha)=\beta,
+\quad \rho(\beta)=\langle\beta,\alpha\rangle,
+\quad \rho\langle u,v\rangle=\langle\rho u,\rho v\rangle .
+$$
+
+Pairing is ordered. Every finite word over $L,R$, including $\varepsilon$, is
+an original-root literal. Its reply is one of
+$\mathcal A=\{\alpha,\beta,\mathsf{branch},\mathsf{absent}\}$, with traversal
+past a leaf returning $\mathsf{absent}$. For $D\ge1$ use exactly
+
+$$
+\mathcal F_D=\{\langle\alpha,v\rangle:h(v)\le D\},
+\qquad W_D=\{q:|q|\le D-1\},
+\qquad \mathcal P_D=\{Rq:q\in W_D\}.
+\tag{JTC.1}
+$$
+
+The one actual source remains stationary through preparation and later
+acquisition. A deterministic source-blind preparation, not given the later
+request, acquires all source dependence by charged literal Reads and exports a
+finite code $E(t)$ containing every surviving accessible distinction, including
+selectors, control, buffers, lengths, allocation and timing. A separately paid
+handoff and access-isolation service is assumed. Only after export is a public
+source-independent $p\in\mathcal P_D$ supplied. The reader uses $E(t),D,p$ and
+common tables, chooses zero Reads or one fresh Read of the same stationary
+source at an original-root literal before any authentic $k$ is supplied, and
+then returns
+
+$$
+\operatorname{Dec}(Z,D,p,k)=r_{\rho^k(t)}(p)
+\quad(t\in\mathcal F_D,\ p\in\mathcal P_D,\ k\ge0),
+\tag{JTC.2}
+$$
+
+with no later Reads. There is no subtree, equality, source-identity, age,
+copying, reset, navigation or hidden advice port. Preparation cost, installed
+code, workspace, final predictor, submitted address, authentication, handoff,
+isolation and physical time are separate resources. The optimized quantity is
+only the complete attained cardinality $M_1(D)=\min|E[\mathcal F_D]|$.
+
+The temporal factor $\Gamma_q$ and its all-count decoder are the credited
+[AAR] result, and canonicalization, paid literal realization and scaffold
+transport are the credited [FMR] results. In particular, no statement below
+changes the original late target or introduces a second observation port.
+

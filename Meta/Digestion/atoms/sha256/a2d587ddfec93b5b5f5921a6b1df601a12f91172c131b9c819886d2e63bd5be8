@@ -1,0 +1,26 @@
+**Lemma 5.1 (dissipation in programme Gram coordinates).** Let $0\le\mu<1$
+and $H=\operatorname{span}\{r_1,r_2\}$. Given integrable real $l_j,\nu_j$,
+define the single operator $C$ by
+$Cr_j=(-l_j/2-i\nu_j)r_j$. If $Q=-C-C^\dagger$, its quadratic-form matrix
+on this basis is
+
+$$
+\bigl(\langle r_j,Qr_k\rangle\bigr)_{j,k=1}^2
+=\begin{pmatrix}
+l_1&\mu((l_1+l_2)/2+i(\nu_2-\nu_1))\\
+\mu((l_1+l_2)/2-i(\nu_2-\nu_1))&l_2
+\end{pmatrix}.
+\tag{CP.15}
+$$
+
+Thus, for $l_j\ge0$, $Q\ge0$ is equivalent to
+$l_1l_2\ge\mu^2[((l_1+l_2)/2)^2+(\nu_2-\nu_1)^2]$.
+
+Proof. If $z_j=-l_j/2-i\nu_j$, then
+$\langle r_j,Qr_k\rangle=-(z_k+\overline z_j)\langle r_j,r_k\rangle$.
+This gives (CP.15). The two vectors are independent, so positivity of this
+matrix is positivity of the operator quadratic form by an invertible
+congruence, even though the basis is not orthogonal. A Hermitian two by two
+matrix is positive exactly when both diagonals and its determinant are
+nonnegative. $\square$
+

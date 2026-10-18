@@ -1,0 +1,25 @@
+**命题 40.1（相同目标全未来、不同实际取得记录）。** 取空历史、$N=0,q=LL$，使用定理36.1中先读 $q$、再取区间下中点的显示策略。实际原来源 $u=\beta$ 和 $v=\langle\alpha,\alpha\rangle$ 的原始请求记录分别为
+
+$$
+\begin{aligned}
+T_u&=[(LL,\mathsf{absent}),(\varepsilon,\beta)],\\
+T_v&=[(LL,\mathsf{absent}),(\varepsilon,\mathsf{branch}),(L,\alpha)].
+\end{aligned}
+\tag{SLH.40.1}
+$$
+
+二者却有相同的完整未来：
+
+$$
+\sigma_{LL}(u)=\sigma_{LL}(v)=\mathsf D_2,
+\qquad
+\mathcal F_{LL}(u)=\mathcal F_{LL}(v)
+ =(\mathsf{absent},\mathsf{absent},\beta,
+   \mathsf{branch},\mathsf{branch},\ldots).
+\tag{SLH.40.2}
+$$
+
+所以该目标的完整序列及其准确有限码既不能恢复来源，也不能恢复这份真实策略的 raw 记录、缓存或完整终端行。
+
+证明。两来源第一次 $LL$ 都缺席。初始区间 $[0,1]$ 的下中点为0；$u$ 的根回复 $\beta$，此时已找到首叶，$2-1+w(L)=2$。$v$ 的根回复分支，区间变成 $[1,1]$；请求 $L$ 得 $\alpha$，$2-0+w(\varepsilon)=2$。最后字母为 $L$，故出生时为 $\beta$，之后恒为分支。记录中所有地址和回复都实际发生，同版本空缓存没有重复项，两份首次出现缓存也不同。需要精确保留 raw 缓存的完整行不可能把它们合并；只保留答案码则确实合并。这与静态完整行可重放前缀的命题23.3不冲突，因为码不是那个完整行。即使先取得命题39.3的共同旧行再进入新任务，首次 $LL$ 请求可以成为同版本命中，两条新记录之后仍按所列根和 $L$ 读取分开。$\square$
+

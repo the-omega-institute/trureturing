@@ -1,0 +1,8 @@
+**Lemma 96.1.** Every common norming density and witness is supported on S. The full error t equals the exact adaptive norm of the principal coefficient on S, retaining the original intersections of S with the fibres. In addition, G_S minimizes that principal norm with H_S fixed over the full feasible principal Gram domain.
+
+**Proof.** Equation (2) makes every cross-fibre entry of W with an endpoint outside S vanish. The coefficient L=T−G⊙H has zero entire fibre blocks, so 2Tr(LW)=2Tr(L_SW_S). Put s=Tr ρ_S. Compression preserves 0≤W_S≤ρ_S and block diagonality. If s=0, the objective would be zero. If 0<s<1, the normalized principal pair would have value t/s>t and would extend by zero to a feasible original witness, a contradiction. Hence s=1. Positivity and W≤ρ make both matrices supported on S. Every principal witness also extends by zero, so the two norm values are equal.
+
+For any feasible principal Gram G′_S, complete it to the original domain by assigning all missing coordinates new mutually orthogonal records, orthogonal to the principal records. Every original fibre identity block is preserved. The same common witness exposes G's one-party face. Its objective at this completed Gram is therefore at least t, and its principal adaptive norm is at least that fixed-witness value. The original G_S attains t. This proves the asserted global one-party minimum. ∎
+
+This statement uses a common norming witness and makes no claim that every normer belongs to the common-witness subset, or that a full-domain local minimum projects to a joint local minimum of the principal problem.
+

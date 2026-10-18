@@ -1,0 +1,34 @@
+**Theorem 6.1 (exact nonzero singleton fee).** Let $k\ge2$, $2\le m<k$ and $\gcd(m,k+1)=1$. Fix $1\le j\le k$ and distinct labels $A,B$. In a specified free value fiber give INITIAL index $j$ label $B$ and every other index label $A$, independently of INITIAL tail. Then
+
+$$
+C_v(j)=\max\{2,\lceil j/m\rceil\}.
+\tag{6.1}
+$$
+
+For $m=2$ this is already implied by Theorem 4.1. The wider-block content is the following literal helper construction and its actual seam.
+
+**Proof.** If $j<m$, first emit $0^j1^{m-j}$, whose mask is $\{j,m\}$. Difference zero returns $A$. On the positive child emit the whole $L=1\,0^{m-1}$ at the next block boundary. Its mask is $\{m,m+1\}$, selecting only $m$ within the actual child $\{j,m\}$. Return $A$ on one and $B$ on zero. The root begins zero and leaves tail $m-j$; the repair joins $m-j+1\le m<k$ ones.
+
+If $j=m$, first emit $0^{m-1}1$, with mask $\{m-1,m\}$. Difference zero returns $A$; on one emit $L$, returning $B$ on one and $A$ on zero. The actual seam joins two ones, which is safe because $m\ge2$ and $m<k$ imply $k\ge3$.
+
+If $j>m$, write
+
+$$
+d=\lceil j/m\rceil\ge2,\qquad a=(d-1)m,\qquad r=j-a\in\{1,\ldots,m\}.
+$$
+
+Emit $d-2$ whole zero blocks, then the whole penultimate pulse $0^{m-1}1$. This pulse lies at absolute position $a-1$ and has mask $\{a-1,a\}$. Both are $A$ indices: $a<j\le k$. Difference one therefore returns $A$ immediately. On difference zero, both candidates have been excluded on this actual path, in particular the boundary helper $a$ is unavailable as a source. Emit the final literal block
+
+$$
+1^r0^{m-r}.
+\tag{6.2}
+$$
+
+Its selected consecutive edges telescope to $\{a,a+r\}=\{a,j\}$. Since $a$ has actually been excluded, its restricted mask is the desired singleton $j$. Return $B$ on one and $A$ on zero. All waiting is paid: the long branch uses $(d-2)+1+1=d$ blocks. If $d=2$, the wait is empty and the penultimate pulse itself starts with zero and clears every INITIAL tail; for $d>2$ the first zero block does so.
+
+The penultimate terminal tail is one. If $m\le k-2$, (6.2) joins a run of at most $1+r\le m+1\le k-1$. If $m=k-1$ and $j>m$, necessarily $j=k$, $d=2$ and $r=1$, so the seam joins two ones and $2<k$. These are all parameter cases. The final padding consists of precisely $m-r$ emitted zeros; when $r=m$ there is no padding and the safe all-one final block simply ends the experiment. No additional free or paid cleanup is implicit.
+
+For every adaptive protocol, root zero is necessary. The actual tail-zero pair at indices zero and $j$ remains indistinguishable before block $\lceil j/m\rceil$, proving that lower bound by §2. One block cannot suffice either: its root-zero mask is even, avoids index zero, and is supported on $\{1,\ldots,m\}$, whereas separating this singleton target in the orientation fixed by index zero requires the odd singleton $\{j\}$. Uniform rejection cannot help. The upper bounds meet both lower bounds, proving (6.1). $\square$
+
+The index-zero singleton is outside this statement. Unit-width singletons are already part of Theorem 3.1. Width $m=k$ is supplied critical overlap [S5], and no case with $k=2$, $2\le m<k$ exists.
+

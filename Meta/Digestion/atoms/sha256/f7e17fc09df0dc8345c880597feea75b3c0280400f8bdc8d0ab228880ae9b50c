@@ -1,0 +1,27 @@
+**Proposition 6.2 (Energy and cut entanglement do not coincide).**
+A nontrivial joint phase on two nonadjacent sites lying on
+the same side of a cut has positive fixed-parent energy
+but unchanged cut Schmidt spectrum. For any placement,
+the conjugated parent
+
+$$
+H_z=U_zHU_z^\ast
+\tag{6.3}
+$$
+
+has the same spectrum as $H$ and annihilates $\psi_z$.
+In particular a legal cross-cut phase can have the strictly
+larger entropy of Theorem 5.1 and zero energy relative to
+$H_z$.
+
+Proof. The first assertion combines (6.1) with cut-local
+unitary invariance. For the second,
+$H_z\psi_z=U_zH\psi_+=0$, and unitary conjugation
+preserves the full spectrum. $\square$
+
+The normalized energy in (6.1) has the clock units supplied
+by $w$. It is not a spacetime energy density or a gravitational
+source. Neither the exact rank nor the finite-angle energy
+provides a physical phase-control protocol or a preparation
+cost.
+

@@ -1,0 +1,25 @@
+**对象与既有供应。** 保持 §§441–448 的同一原始轮廓和原完整两段常数：
+
+\[
+\operatorname{Ein}(v)=\int_0^v\frac{1-e^{-w}}w\,dw,
+\qquad \Phi(v)=\exp(\operatorname{Ein}(v)),
+\qquad C=e^{\gamma_E},\qquad k=C-1>0,
+\]
+
+\[
+A=\int_0^1\frac{\Phi'(v)-1}{v}\,dv
+ +\int_1^\infty\frac{\Phi'(v)-C}{v}\,dv.
+\tag{CVP.1}
+\]
+
+零端使用原有限区间表示
+\(r(v)=\int_0^1e^{-sv}\,ds\)、\(\Phi'=\Phi r\)、\(\Phi(0)=1\)。
+§444 已证明 \(\Phi''(0)=1/2\)、\(0<\Phi''(v)<1/2\) 于全部
+\(v>0\)，且 \(\Phi''\) 在非负轴严格递减；原 \(A<1/2\) 也已支付。
+Euler 常数的经典界 \(\gamma_E>1/2\) 保证 \(k>0\)，可直接复用
+Mathlib 的 `Real.one_half_lt_eulerMascheroniConstant`。
+
+本节新增的是同一 \(\Phi\) 的曲率概率解释、原 \(A\) 的负对数矩、
+严格 Jensen 下界与二阶完全单调障碍。§433（SL.21）、§434 已有的
+经典 Dickman Laplace 身份在本节末尾复用，不另列为新变换。
+

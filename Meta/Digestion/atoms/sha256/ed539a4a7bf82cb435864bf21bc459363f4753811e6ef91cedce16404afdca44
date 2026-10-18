@@ -1,0 +1,72 @@
+**Theorem 9.1 (an attained native fiber with charged acquisition).**
+Fix any three states $Q\subset P$ in Proposition 7.1. For every
+$H\ge0$, put $n=2^H$ and $D=9+H$. There is a correct preparation
+and reader on every original $t\in\mathcal F_D$ with complete
+attained alphabet exactly
+
+$$
+|S_D|-3^n+1.
+\tag{RCE.33}
+$$
+
+It merges precisely the canonical trees in $T_H(Q^n)$ into one
+name and names all other canonical trees separately. Sufficient
+resources on every source are
+
+$$
+T_{\mathrm{prep}}=2^D-1,\qquad
+Q_{\mathrm{prep}}\le D,\qquad
+A_{\mathrm{prep}}=(D-1)2^D+1.
+\tag{RCE.34}
+$$
+
+The optional one late Read has length at most $D$ and is selected
+before any authentic count. At $H=0$ these bounds are $511$
+preparation Reads and $4097$ submitted letters, with
+$|S_9|-2$ attained names.
+
+Proof. Before any target, submit all actual words $Rq$, $q\in W_D$,
+including absent replies. They determine $\pi_D(v)$ by the credited
+FMR scan. Compute the described finite membership name and export
+only that fixed-width name. The public scan, allocation and a
+padded finite computation schedule can depend on $D$ alone. All
+other acquired descriptions, control distinctions, buffers and
+timing records are isolated under the paid service of Definition
+1.1. Thus every accessible surviving distinction is a function of
+the name and public inputs.
+
+The $3^n$ special trees are distinct actual members of $S_D$;
+every other canonical tree has its own distinct name. All names
+are attained by canonical actual sources, giving (RCE.33).
+Counting the scan gives $\sum_{l=0}^{D-1}2^l=2^D-1$ calls and
+$\sum_{l=0}^{D-1}(l+1)2^l=(D-1)2^D+1$ letters. This is a
+deterministic effective preparation for every variable shape, not
+a preassigned unacquired coloring.
+
+After a singleton name, the installed table determines all its
+canonical target factors and no Read is needed. For the special
+name, targets strictly above the outer frontier are branch.
+Every other request first enters one actual $Q$ block and either
+ends above that block's inner height-six frontier, again branch,
+or enters a core module. Its possible module states form a subset
+of at most three core states, determined by $Q$ and its public
+module address. Select the $L$ or $RL$ query of Lemma 6.2 and
+prefix it by $R$, the outer height-$H$ address and the inner
+height-six address. Its length is at most
+$1+H+6+2=D$. Its reply determines the requested module factor;
+no hash row or full block identity is supplied to the reader.
+
+Every queried occurrence is actually present on the canonical
+special fiber, and its literal lies in the acquired boundary.
+On every original source with that name, canonicalization
+preserves the queried reply and the requested factor. The credited
+all-count law (RCE.5) therefore gives (RCE.2) for every later
+authentic count, including initially absent targets. No preparation
+transcript is accessed and no second observation is made.
+
+Source-independent table generation, canonical-state membership
+computation, control and workspace, predictor size, authentication,
+isolation and physical time remain separate paid resources. These
+codes are deliberately nonoptimal; (RCE.33) is not a claim about
+the exact optimum. $\square$
+

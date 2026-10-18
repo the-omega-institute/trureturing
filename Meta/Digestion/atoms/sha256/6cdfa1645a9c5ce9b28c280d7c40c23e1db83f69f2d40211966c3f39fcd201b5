@@ -1,0 +1,27 @@
+**Theorem 54.1 (exact fixed-$M$ baseline expansion).** Set
+
+$$
+\beta=\frac{C_*^2}{\mu},\qquad
+c_{\rm tail}=\frac{j_0A_p^2\phi(k_0)^2}{4\pi\mu\sqrt{\det\mathsf M}}.
+\tag{54.1}
+$$
+
+For every separately fixed finite $M\ge M_{0,d}$, the exact baseline (49.1) satisfies
+
+$$
+\mathcal B_s(Ms^8)=\mathcal C_{\chi,s}
+ +s^8\bigl(c_\chi-\beta M-c_{\rm tail}\sqrt M\bigr)
+ +o_{d,M,\chi}(s^8).
+\tag{54.2}
+$$
+
+Proof. The baseline definition, with no discarded term, is
+
+$$
+\mathcal B_s(h)=\ell_s+
+ \frac{\ell_s\delta_s+\langle x_s,L^hx_s\rangle-\langle x_s,Dx_s\rangle}{n_s}.
+\tag{54.3}
+$$
+
+Subtract $\mathcal C_{\chi,s}$, insert $L^h=L^0-(L^0-L^h)$, and apply (52.3) and (53.1), with $n_s\to\mu$. This proves (54.2). Every probe constant and cutoff was fixed first; the remainder is not asserted uniform for $M\to\infty$, a varying $M(s)$, moving faces or varying cutoffs. $\square$
+

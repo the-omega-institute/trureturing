@@ -1,0 +1,58 @@
+**Theorem 4.2 (effective whole locus and one cofinal ray).** For every
+case $\tau$, $G_\tau$ is effectively semilinear. One can decide whether it
+is empty. If nonempty, one can produce a single fixed $\mathbf p_0$ and
+finite vectors $\mathbf w_0,\mathbf q$ such that
+
+$$
+\Phi_\tau(\mathbf p_0,\mathbf w_0+t\mathbf q)
+\quad(t\in\mathbb N),
+\qquad q_i>0\quad(i\in A).
+\tag{PAC.13}
+$$
+
+If $A=\varnothing$, the positivity condition is vacuous and this means one
+feasible empty tuple. The procedure treats all finite parameters at once;
+it does not enumerate $\mathbf c$ or a finite list of contacts.
+
+Proof. Apply [Ginsburg–Spanier, Theorem 1.3][GS] to the Presburger set
+$S_\tau=\{(\mathbf p,\mathbf w):\Phi_\tau(\mathbf p,\mathbf w)\}$.
+This supplies an effective finite union of linear sets
+
+$$
+L_\ell=\mathbf b_\ell+
+ \sum_{j=1}^{s_\ell}\mathbb N\mathbf a_{\ell j}
+ \ \subseteq\mathbb N^{\mathbf p}\times\mathbb N^A.
+\tag{PAC.14}
+$$
+
+Call a component eligible if, for every $i\in A$, some period has zero
+$\mathbf p$ part and positive $i$th $\mathbf w$ coordinate. The sum of all
+its zero-$\mathbf p$ periods is $(0,\mathbf q)$ with every $q_i>0$.
+Adding $t(0,\mathbf q)$ to any point of that component proves cofinality
+with that same finite parameter. In particular its base gives (PAC.13).
+
+Conversely fix $\mathbf p$. The coefficient of any period with a positive
+$\mathbf p$ coordinate is bounded in the fibre at $\mathbf p$, since
+all periods and coefficients are nonnegative. If a component is ineligible,
+choose a coordinate $i$ that no zero-$\mathbf p$ period increases. That
+coordinate is bounded throughout this fixed fibre, including the bounded
+contributions of all other periods. A finite union of ineligible components
+therefore bounds the minimum of the $\mathbf w$ coordinates and cannot
+satisfy all simultaneous lower bounds. For a cofinal fibre some eligible
+component must contain a point with that $\mathbf p$. Consequently
+
+$$
+G_\tau=\bigcup_{\ell\text{ eligible}}\operatorname{pr}_{\mathbf p}L_\ell.
+\tag{PAC.15}
+$$
+
+Projection gives the exact effective semilinear locus. Eligibility is a
+finite period-coordinate test. For $A=\varnothing$, every component is
+eligible and (PAC.15) is ordinary nonemptiness of the projected support.
+An empty support has no components. This proves the algorithm and its
+termination, not just a quantified notation for it. $\square$
+
+The proof's arithmetic direction is supplied only after Lemma 3.2 and
+(PAC.11) have eliminated the native tree operations. Presburger
+decidability alone would not eliminate an unknown native predicate.
+

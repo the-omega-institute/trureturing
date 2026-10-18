@@ -1,0 +1,123 @@
+**Lemma 12.2 (A primitive polynomial kernel and actual endpoint atoms).**
+Suppose the interior zeros of this nonzero cubic form a line, as in
+Theorem 7.2(c). Let $p_A,p_B$ be the endpoints of the closure of
+its simplex section and set
+
+$$
+p(t)=(1-t)p_A+tp_B,\quad 0\le t\le1,
+\qquad D_p=\operatorname{diag}(\sqrt{p_0},\sqrt{p_+},\sqrt{p_-}).
+\tag{12.2}
+$$
+
+All $p_i(t)>0$ for $0<t<1$. There is a polynomial vector
+$r(t)\in\mathbb R[t]^3$, of degree at most two, with no common
+zero of its three entries at any real parameter, such that the
+following are kernel vectors on the open interval:
+
+$$
+\begin{gathered}
+\mathsf L_{ii}(t)=A_i(p(t)),\qquad
+\mathsf L_{ij}(t)=-c_{ij}p_j(t)\quad(i\ne j),\\
+\mathcal R(p(t))D_p=D_p\mathsf L(t),\qquad
+\mathsf L(t)r(t)=0,\qquad b(t)=D_pr(t).
+\end{gathered}
+\tag{12.3}
+$$
+
+Write $V(t)=k(a(p(t)),b(t))$ homogeneously in its second factor.
+It is a polynomial vector of degree at most six, given completely by
+
+$$
+\begin{aligned}
+\Lambda_{ij}(V(t))&=p_i p_j r_j^2,\\
+\eta_+(V(t))&=p_0p_+r_0r_+,&
+\eta_-(V(t))&=p_0p_-r_0r_-,\\
+\eta_{2+}(V(t))&=p_+^2r_+^2/4,&
+\eta_{2-}(V(t))&=p_-^2r_-^2/4,\\
+\eta_\Delta(V(t))&=p_+p_-r_+r_-/2,&
+\eta_\Sigma(V(t))&=p_+p_-r_+r_-/2.
+\end{aligned}
+\tag{12.4}
+$$
+
+Define its trace $N(t)=\operatorname{tr}Z(V(t))
+=\sum_jp_j(t)r_j(t)^2$. Put $e_A=1$ if $N(0)=0$ and zero
+otherwise, and $e_B=1$ if $N(1)=0$ and zero otherwise. Then
+
+$$
+g(t)=t^{e_A}(1-t)^{e_B},\qquad
+\widetilde V(t)=V(t)/g(t)
+\tag{12.5}
+$$
+
+is a polynomial vector of degree at most six. Its trace is strictly
+positive throughout $[0,1]$. Every $\widetilde V(t)$ is a positive
+multiple of an actual canonical split zero atom. At either endpoint
+that atom is a boundary atom. In the open interval its ray is exactly
+the radial kernel ray of Theorem 7.3.
+
+Proof. Equation (12.3) follows entrywise from (3.4); set
+$c_{ji}=c_{ij}$, with $c_{0+}=u,c_{0-}=v,c_{+-}=w$ keeping
+their actual signs. On the
+open interval $D_p$ is invertible, and Theorem 7.2 makes
+$\mathcal R$ and $\mathsf L$ have rank exactly two. Their
+determinant is identically zero along this line. The entries of
+$\mathsf L$ are affine polynomials in $t$, so its adjugate has
+degree at most two. At least one adjugate column is a nonzero
+polynomial vector. Divide that column by the greatest common divisor
+of its entries in $\mathbb R[t]$, ignoring zero entries. The
+result is $r(t)$ of degree at most two. Polynomial cancellation
+in $\mathsf L\operatorname{adj}\mathsf L=0$ proves
+$\mathsf Lr=0$. If all entries of $r$ vanished at a real $t_0$,
+they would share the factor $t-t_0$, a contradiction. This primitive
+step also removes zeros of the chosen column caused solely by a poor
+choice of adjugate column at a parameter value.
+
+Thus $b(t)\ne0$ in the open interval and spans its kernel line.
+Substitution into (2.6) proves every coordinate in (12.4); square
+roots cancel in these products. The degree bound is
+$1+1+2+2=6$. Since $\sum_i p_i=1$, summing the population
+coordinates gives exactly $N(t)>0$ there.
+
+At $t=0$, if $N(0)=0$, every entry $r_i(0)$ with $p_i(0)>0$
+is zero. Some other entry is nonzero because $r$ is primitive.
+For such an index, $p_i(0)=0$ and the affine function $p_i(t)$
+has strictly positive slope, since it is positive in the open interval.
+It follows that $N(t)$ has a simple zero at zero. Indeed those
+indices contribute positive first-order terms; indices with
+$p_i(0)>0$ contribute $O(t^2)$ and cannot cancel them. Every
+coordinate in (12.4) vanishes at zero, so $t$ divides the polynomial
+vector. The same argument at $t=1$ uses $1-t$. Hence (12.5)
+is polynomial and $N/g$ is strictly positive even at the endpoints.
+No interior factor is divided out.
+
+For the endpoint's actual atom, take the limit of the unit measurement
+$\widehat b(t)=D_pr(t)/\sqrt{N(t)}$. If $N(0)>0$, its limit
+is immediate. If $N(0)=0$, its nonzero limiting entries are
+
+$$
+\widehat b_i(0)=
+\frac{\sqrt{p_i'(0)}r_i(0)}
+{\sqrt{\sum_{j:p_j(0)=0}p_j'(0)r_j(0)^2}}
+\quad\text{for }p_i(0)=0;
+\qquad \widehat b_i(0)=0\quad\text{otherwise}.
+\tag{12.6}
+$$
+
+The denominator is strictly positive by the preceding argument. The
+same formula with inward derivatives gives the limit at one. The
+preparation converges to the unit $a(p_A)$ or $a(p_B)$, which
+misses a sector. By continuity and homogeneity,
+
+$$
+\widetilde V(t)=\frac{N(t)}{g(t)}
+ k(a(p(t)),\widehat b(t))
+\tag{12.7}
+$$
+
+extends to those endpoint atoms with a strictly positive scalar.
+The pairing with $\ell_{\mathfrak d}$ is zero by continuity.
+Global PSD of the form then makes their measurements genuine kernel
+vectors as well. Thus no nonphysical endpoint ray is added by
+cancellation. $\square$
+

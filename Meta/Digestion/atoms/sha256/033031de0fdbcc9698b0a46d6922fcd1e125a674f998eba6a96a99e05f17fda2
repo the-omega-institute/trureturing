@@ -1,0 +1,17 @@
+## 269. Inherited actual hypotheses and conclusion
+
+Retain the original mixed-flat five-reservoir hypotheses through Section
+268 of the return continuation, including distinct transverse labels,
+actual shared positive lengths, complete connected circular edge links,
+and minimum original degree six. Assume neither of the two remaining
+interacting owners eta,xi contains M. Sections 264–268 give the exact
+six-slot M circle with two distinct genuine owners
+ A_i=(M,C,D,R_i,C,D), i=1,2,
+and
+ Theta=theta_M(A_1)+theta_M(A_2)<2*pi/3.
+The unique flat owner is sigma=(M,C,D,O,C,D), with O=C,D or special.
+We prove O is C or D. This excludes the whole special-O subcase,
+regardless of whether the two R_i labels coincide or their stars overlap.
+It does not exclude the remaining low-O, special-R_i configurations or
+the cases in which eta or xi contains M.
+

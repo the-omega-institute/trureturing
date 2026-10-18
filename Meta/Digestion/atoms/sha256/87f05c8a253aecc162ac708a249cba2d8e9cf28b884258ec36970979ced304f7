@@ -1,0 +1,11 @@
+**Open Problem 6.4 (Unchanged arbitrary-finite attainment and separation).** For the whole original domain, decide whether some finite $N$ and $\theta\in\Theta_N$ attain $c_\star$, or whether $C_N<c_\star$ for every finite $N$. By [Universal, Theorem 6.2 and Open Problem 7.4][U], the latter remains equivalent to
+
+$$
+\forall N\ge1\ \exists r,m\ge1:\qquad U_{N,r}<\kappa_m/(m+1).
+\tag{6.3}
+$$
+
+No all-$N$ separation pairs or finite attainer are supplied here. [Renewal][R]'s effective-three-state and stated rank-one reset exclusions remain their existing restricted results. The response route still needs a productive same-law conditional-null direction, or another strict certificate, covering every remaining hypothetical finite attainer and all original boundaries. This already-excluded zero-response family does not provide that coverage.
+
+Universal per-law finiteness of $\tau_{P_\theta}(0)$ on the complete finite-hidden domain is also unresolved here. All members of this family have finite observable tails; its unbounded supremum is not a single-law divergent tail. No hidden-minimality, uniform or efficient radius, finite-sample, global novelty, physical or empirical machine-learning improvement follows.
+

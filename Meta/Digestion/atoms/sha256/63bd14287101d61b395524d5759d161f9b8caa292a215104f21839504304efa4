@@ -1,0 +1,37 @@
+**Definition 4.1 (the common design sentence).** For a fixed graph and
+descriptor types, define
+
+$$
+\begin{aligned}
+\operatorname{Valid}_G(\boldsymbol\delta)
+={}&\bigwedge_{e\in E_R}\operatorname{Valid}(\delta_e),\\
+\operatorname{Total}_G(\boldsymbol\delta)
+={}&\bigwedge_{\eta\in\mathcal A}\forall\mathbf n\in\mathbb N^{d_\eta}\quad
+\operatorname{Adm}_\eta(\mathbf n)\ \Longrightarrow\
+\bigvee_{h\in E_H}H_{\eta,h}(\mathbf n;\boldsymbol\delta),\\
+\operatorname{Shared}_G(\boldsymbol\delta)
+={}&\bigwedge_{\eta,\theta\in\mathcal A}\ \bigwedge_{h\in E_H}
+\forall\mathbf n\in\mathbb N^{d_\eta}\ \forall\mathbf m\in\mathbb N^{d_\theta}\quad\\
+&\left(\operatorname{Adm}_\eta(\mathbf n)\land
+\operatorname{Adm}_\theta(\mathbf m)\land
+H_{\eta,h}(\mathbf n;\boldsymbol\delta)\land
+H_{\theta,h}(\mathbf m;\boldsymbol\delta)\right)
+\ \Longrightarrow\ \operatorname{Same}_{\eta\theta}(\mathbf n,\mathbf m),\\
+\Phi_{G,\mathbf b}
+={}&\exists\boldsymbol\delta\quad
+\operatorname{Total}_G(\boldsymbol\delta)\land
+\operatorname{Shared}_G(\boldsymbol\delta)\land
+\operatorname{Valid}_G(\boldsymbol\delta).
+\end{aligned}
+\tag{UDB.16}
+$$
+
+Each displayed implication is inside its displayed source quantifiers.
+The finite type tuple $\mathbf b$ is selected before this sentence.
+**All numeric descriptor variables precede all source variables.**
+Inside $H$ each source may have its own terminal epoch, phase lengths and
+path witnesses. Shared compares any two sources reaching the same halt,
+even in different charts and at different epochs; it is equality of the
+complete original row. A constant row on each separately chosen trace
+leaf would not suffice to install one row at a shared halt.
+

@@ -1,0 +1,13 @@
+**定义 1.6（封闭完整服务与全未来成功事件）。** 安装输出是总定义的确定性响应程序及其初始安装状态 $z$。状态包含全部能影响响应的保留数据和可变程序成分；安装后只接收切口 $r\in\mathcal R=\{0,\ldots,h-1\}$ 及自身查询历史，不再访问原来源、新的来源相关建议或未计入状态的工作区。每个查询在有限计算后返回 $\mathbb F_2\cup\{\bot\}$ 中的值。令 $\operatorname{Ans}_z(r_1,\ldots,r_n)_t$ 表示从该初始安装状态依次响应第 $t$ 次查询的值。成功事件为
+
+$$
+E_q=\left\{\omega:
+\begin{array}{l}
+\text{在 }q\text{ 上有限完成安装，且}\\[1mm]
+\displaystyle\forall n\in\mathbb N_{>0}\ \forall(r_1,\ldots,r_n)\in\mathcal R^n\ \forall t\in\{1,\ldots,n\},
+\quad\operatorname{Ans}_{z(q,\omega)}(r_1,\ldots,r_n)_t=O_{r_t}(q)
+\end{array}\right\}.
+$$
+
+响应映射可测；有限查询串只有可数多个，故 $E_q$ 可测。这里量化于全部有限未来历史，包括重复、任意顺序和依先前回复适应选择的查询。随机性用于安装，安装后的服务遵循取得卷12.6(b)的确定性合同。只通过一条固定扫描不能替代此全称条件。
+

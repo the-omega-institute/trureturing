@@ -1,0 +1,59 @@
+**定理 6.3.1（单动作商核的充要条件）。** 对分区 $q$ 和动作核 $K_a$，以下等价：
+
+1. $q$ 对 $K_a$ 强 lumpable；
+2. 存在唯一 Markov 核 $\overline K_a$ 在 $Z$ 上，使
+
+$$
+\boxed{
+q_*(\mu K_a)=(q_*\mu)\overline K_a
+\quad\text{对所有分布 }\mu;
+}
+$$
+
+3. 对每个微观状态 $s$ 和宏观标签 $z$，$q_*(\delta_sK_a)(z)$ 只依赖 $q(s)$，不依赖块内的具体 $s$。
+
+**证明。**
+
+**1 推出 3。** 若 $q(s)=q(s')$，定义 6.2.3 正好给出
+
+$$
+q_*(\delta_sK_a)(z)=\sum_{t\in B_z}K_a(s,t)
+=\sum_{t\in B_z}K_a(s',t).
+$$
+
+**3 推出 2。** 对 $z,z'\in Z$，取任意 $s\in B_z$，定义
+
+$$
+\overline K_a(z,z')=\sum_{t\in B_{z'}}K_a(s,t).
+$$
+
+条件 3 保证定义与 $s$ 的选择无关。非负性显然，且对固定 $z$：
+
+$$
+\sum_{z'}\overline K_a(z,z')
+=\sum_{t\in S}K_a(s,t)=1,
+$$
+
+所以它是 Markov 核。对任意 $\mu$：
+
+$$
+\begin{aligned}
+(q_*(\mu K_a))(z')
+&=\sum_{s,t:q(t)=z'}\mu(s)K_a(s,t)\\
+&=\sum_z\sum_{s\in B_z}\mu(s)\overline K_a(z,z')\\
+&=((q_*\mu)\overline K_a)(z').
+\end{aligned}
+$$
+
+**2 推出 3。** 代入 $\mu=\delta_s$，得到
+
+$$
+q_*(\delta_sK_a)=\delta_{q(s)}\overline K_a,
+$$
+
+故它只依赖 $q(s)$。唯一性来自每个 $\overline K_a(z,\cdot)$ 必须等于任意 $s\in B_z$ 的粗化下一步分布。证毕。
+
+定理 6.3.1 给出的商核不是近似拟合，而是一个精确因子化：先在微观层执行动作再粗化，等于先粗化再执行宏观商核。
+
+<a id="section-6-4"></a>
+

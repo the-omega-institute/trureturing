@@ -1,0 +1,68 @@
+**Lemma 46.2 (global weighted Gaussian Taylor bound).** Let $B$
+range over positive matrices with eigenvalues in one fixed positive
+compact interval. Let $A$ be any positive semidefinite matrix with
+a fixed upper bound. Denote by $\mathcal N_A$ its centered Gaussian
+probability measure, allowing singular $A$, and let $p_B$ be the
+density of $\mathcal N_B$. With $D=A-B$ set
+
+$$
+\mathcal L_B[D](z)=\frac{p_B(z)}2
+\left[z^{\mathsf T}B^{-1}DB^{-1}z-\operatorname{tr}(B^{-1}D)\right].
+\tag{46.5}
+$$
+
+There is a uniform constant $C$ such that
+
+$$
+\begin{aligned}
+\int(1+|z|)|\mathcal L_B[D](z)|dz&\le C\|D\|_F,\\
+\int(1+|z|)d|\mathcal N_A-\mathcal N_B-\mathcal L_B[D](z)dz|
+&\le C\|D\|_F^2.
+\end{aligned}
+\tag{46.6}
+$$
+
+Proof. The first bound follows directly from (46.5) after writing
+$z=B^{1/2}Z$ with $Z$ standard normal. Suppose first
+$\|D\|_{\rm op}\le\lambda_{\min}(B)/2$. All matrices
+$C_t=B+tD$, $0\le t\le1$, then have uniformly positive lower and
+finite upper eigenvalue bounds. Differentiating their explicit
+Gaussian density gives
+
+$$
+\begin{aligned}
+\partial_t p_{C_t}&=p_{C_t}\ell_{C_t}(D),\\
+\ell_C(D)&=\tfrac12[z^{\mathsf T}C^{-1}DC^{-1}z-
+\operatorname{tr}(C^{-1}D)],\\
+\partial_t^2p_{C_t}&=p_{C_t}\left[
+\ell_{C_t}(D)^2+\tfrac12\operatorname{tr}(C_t^{-1}DC_t^{-1}D)
+-z^{\mathsf T}C_t^{-1}DC_t^{-1}DC_t^{-1}z\right].
+\end{aligned}
+\tag{46.7}
+$$
+
+Indeed $\partial_t C_t^{-1}=-C_t^{-1}DC_t^{-1}$ and
+$\partial_t\log\det C_t=\operatorname{tr}(C_t^{-1}D)$; their
+substitution proves each line. Under $p_{C_t}$ write
+$z=C_t^{1/2}Z$. The weighted absolute first derivative is bounded
+in integral by $C\|D\|_F$, and the second by $C\|D\|_F^2$:
+the displayed polynomials have degrees at most two and four in $Z$,
+and multiplication by $1+|z|$ requires moments only through degree
+five. These moments are uniformly finite, since each real Gaussian
+density is proportional to $e^{-v^2/2}$ and every polynomial times
+that density is integrable; a coordinate bound controls $|Z|^j$.
+Taylor's identity with integral remainder
+$\int_0^1(1-t)\partial_t^2p_{C_t}dt$ now gives the second bound
+in (46.6), with its weighted integration justified by these bounds.
+
+On the complementary region, $\|D\|_F$ is bounded below by half
+the common positive lower eigenvalue bound for $B$, and bounded
+above by a fixed constant. The weighted variation of $\mathcal N_A$
+is $1+\mathbb E|\mathcal N_A|\le1+\sqrt{\operatorname{tr}A}$,
+also for singular $A$. The corresponding bound for $B$ and the
+already proved bound for the linear term show that the left side
+of (46.6) is at most a uniform constant. This is at most another
+constant times $\|D\|_F^2$ on this region. Thus (46.6) is global;
+it assumes no density for a singular actual conditional Gaussian.
+$\square$
+

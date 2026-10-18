@@ -1,0 +1,80 @@
+**定理 C-114.5（实际至多二维以上资源的精确平台）。** 对每个 $q=2,3,4,5$，
+将 (C114.10) 的来源和系综域换成 $\mathcal F^{\le q}_{t,\eta}$，其 minimax 值、
+唯一参考和最大 $\chi$ 完全不变。熵端点也仍为 $h,H$；$b>0$ 时，
+全部最优系综仍由 (C114.11) 刻画，另要求每个成员属于该资源域。
+该族全部通道至多需要四维，故 $\mathcal F^{\le4}_{t,\eta}=\mathcal F_{t,\eta}$。
+无环境噪声时的标量子域精确为
+
+$$
+\mathcal F^{\le1}_{t,0}=\{S\},\qquad
+\inf_R\sup_{\rho\in\mathcal F^{\le1}_{t,0}}D(\rho\Vert R)=0.
+\tag{C114.14}
+$$
+
+对 $\eta>0$ 不据此断言整个标量子域或其转变阈值。
+
+证明。取 C-111.1 的边端点并置 $X_{\rm E}=5C^{\rm E}-I_5$。
+$X_{\rm E},-X_{\rm E}\in\mathcal K_*$。
+C-112.13 的两个边块有限因子在复共轭后仍二稀疏，故
+$C_{t,\pm X_{\rm E}}$ 的通道都有秩至多二的有限 Kraus 实现。
+添加 C-113.3 的二十五个白噪声秩一 Kraus，仍至多二维。
+$\Omega_\eta$ 由原基去相干通道与完全去极化通道的凸组合给出，是标量端口的 Choi。
+所以每个上述资源域都含熵最大态及一对熵最小反足态。
+完整域上的上下界因此都在子域内达到；(C114.13) 同时保留参考唯一性。
+等号条件是完整域的必要条件，又对域内系综充分。
+C-111.2 的四稀疏有限分解加秩一白噪声 Kraus 给四的统一上界。
+
+这里的达到确实是整个块通道达到：从有限 Kraus $K_\nu$，
+选 $V_\nu:\mathbb C^q\to\mathbb C^5$ 等距且像包含其值域，
+编码分支 $V_\nu^\dagger K_\nu$，解码 $Y\mapsto V_\nu YV_\nu^\dagger$。
+$V_\nu^\dagger V_\nu=I_q$ 保证每个整个块解码 TP，
+$\sum K_\nu^\dagger K_\nu=I_5$ 保证总编码 TP；矩形夹乘保证 CP。
+这直接消费 C-109.7、C-112.15、C-113.13 的原字典，不以一个输出态的制备替代。
+最后 $\eta=0$ 时 C-106.2/C-109.3 的匹配态唯一可分离点是 $S$，
+而至多一维恰为 SN 一，给 (C114.14)，包括 $t=0$。证毕。
+
+**定理 C-114.6（同族固定复参考的唯一傅里叶极大点与完整剖面）。**
+设 $b>0$，用 C-111.2 的原坐标傅里叶投影定义
+
+$$
+\begin{aligned}
+F&=5C^{\rm F}-I_5=P_1+P_2-P_3-P_4,\qquad F^2=I_5-P_0,\\
+R^{\leftarrow}_{t,\eta}&=\rho_{t,\eta}(-F/2)\in\mathcal F_{t,\eta},\\
+\gamma&=\tfrac12\log\frac{a+b/2}{a-b/2}>0,\\
+E_0&=-a\log a-2a\log(a^2-b^2/4)-20c\log c,\\
+M_{t,\eta}&=E_0-h_{t,\eta}+4b\gamma.
+\end{aligned}
+\tag{C114.15}
+$$
+
+该参考支持整个族；它的非零谱在匹配支撑上严格为正。
+固定这个参考并只让来源在 $\mathcal F_{t,\eta}$ 内变化，精确有
+
+$$
+\begin{aligned}
+D(\rho_{t,\eta}(X)\Vert R^{\leftarrow}_{t,\eta})
+&=E_0-S(\rho_{t,\eta}(X))+b\gamma\operatorname{tr}(XF),\\
+\max_XD(\rho_{t,\eta}(X)\Vert R^{\leftarrow}_{t,\eta})&=M_{t,\eta},\\
+\operatorname*{argmax}_X D(\rho_{t,\eta}(X)\Vert R^{\leftarrow}_{t,\eta})&=\{F\}.
+\end{aligned}
+\tag{C114.16}
+$$
+
+因此唯一极大来源恰为原 $\rho^{\rm F}_{t,\eta}$。
+参考是同族中的反向半幅来源，不是 $\mathsf W$ 或 $\mathcal W_t$ 的 Gibbs 态。
+
+证明。$\overline P_m=P_{-m}$ 给 $\overline F=-F$；C-111.3 给
+$F\in\mathcal K_*$。由于 $a-b/2\ge a/2>0$，支持条件成立，包括 $\eta=0,t=1$。
+在匹配支撑中直接计算
+
+$$
+J^\dagger(\log R^{\leftarrow}_{t,\eta})J
+=(\log a)P_0+\tfrac12\log(a^2-b^2/4)(I_5-P_0)-\gamma F.
+\tag{C114.17}
+$$
+
+$P_0$ 和 $I_5-P_0$ 是实对称矩阵，故与 $X$ 的迹配对为零。
+常数配对为 $E_0$，得完整剖面。
+(C114.6) 中的 $Y=-\gamma F$ 秩四；定理 C-114.3 的全部等号条件
+强制 $X=F$，其熵恰为 $h$、$\operatorname{tr}F^2=4$，遂给精确最大值。证毕。
+

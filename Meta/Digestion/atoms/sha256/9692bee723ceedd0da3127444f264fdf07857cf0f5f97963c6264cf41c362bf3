@@ -1,0 +1,31 @@
+### 定义 15.9（RH 零空间的静态算子）
+
+设 \(\mathcal Z\) 为 zeta 非平凡零点的索引集合，\(\rho_v\) 为对应零点。令
+\[
+\mathcal H_Z=\ell^2(\mathcal Z),\qquad
+R e_v=\rho_v e_v,
+\]
+并定义
+\[
+H_Z=-i(R-\tfrac12 I),
+\]
+其自然定义域为
+\[
+D(H_Z)=
+\left\{\psi:
+\sum_v|\rho_v-\tfrac12|^2|\psi_v|^2<\infty
+\right\}.
+\]
+
+则 \(H_Z\) 自伴当且仅当全部 \(\operatorname{Re}\rho_v=\tfrac12\)。在 RH 条件下
+\[
+\rho_v=\tfrac12+i\gamma_v,\qquad
+H_Ze_v=\gamma_v e_v.
+\]
+Cayley 算子
+\[
+C_Z=(R-I)R^{-1}
+=(iH_Z-\tfrac12I)(iH_Z+\tfrac12I)^{-1}
+\]
+酉当且仅当 \(H_Z\) 自伴，等价于 RH（假设零点数据穷尽且按重数索引）。
+

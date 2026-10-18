@@ -1,0 +1,30 @@
+**Theorem 5.1 (All power kernels, images and ranks).** For Definition 2.1 and every integer $n\ge0$, put $a_n=\max(H-n,0)$. With empty spans interpreted as zero,
+
+$$
+\begin{aligned}
+\ker\mathcal E_\theta^n
+&=\operatorname{span}\{E_{ij}:0\le i,j\le H,\ i\ne j,\ \max(i,j)+n>H\},\\
+T^n(\mathcal N)
+&=\operatorname{span}\{E_{ij}:0\le i,j\le H,\ i\ne j,\ \min(i,j)\ge n\},\\
+\operatorname{im}\mathcal E_\theta^n
+&=T^n(\mathcal N)\oplus W_\theta,\\
+\operatorname{rank}\mathcal E_\theta^n&=d+a_n(a_n+1),\\
+\dim\ker\mathcal E_\theta^n&=H(H+1)-a_n(a_n+1).
+\end{aligned}
+\tag{5.1}
+$$
+
+In particular $\ker\mathcal E_\theta^H=\mathcal N$ and $\operatorname{im}\mathcal E_\theta^H=W_\theta$, and these kernels and images stabilize for $n\ge H$. The zero-eigenvalue kernel filtration is literally the same family of subspaces for every phase; the image complement $W_\theta$ need not be.
+
+Proof. From $D\mathcal E_\theta^n=P^nD$, a matrix in the kernel must have zero diagonal because $P^n$ is invertible. On $\mathcal N$, the power is $T^n$. A matrix unit $E_{ij}$ with $i\ne j$ survives precisely when $\max(i,j)+n\le H$, and then its image is $E_{i+n,j+n}$. Distinct surviving units have distinct images, so no cancellation can enlarge the kernel. This proves its asserted span and, by listing the resulting indices, the asserted image of $T^n$.
+
+The direct-sum conjugacy of Theorem 3.4 gives
+
+$$
+\operatorname{im}\mathcal E_\theta^n
+=G_\theta\bigl(T^n(\mathcal N)\oplus P^n(V)\bigr)
+=T^n(\mathcal N)\oplus W_\theta,
+$$
+
+where directness follows from $W_\theta\cap\mathcal N=0$. For $0\le n\le H$ there are $H-n+1$ possible surviving indices in each coordinate and the equal pairs must be removed. Their number is $(H-n+1)^2-(H-n+1)=a_n(a_n+1)$. For $n>H$ there are none, again giving $a_n(a_n+1)=0$. Adding the invertible summand of dimension $d$ proves the rank formula; subtracting from $d^2$ proves the kernel dimension. These arguments include $n=0$, giving kernel zero and full image. For $n\ge H$, $T^n=0$, proving stabilization. $\square$
+

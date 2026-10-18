@@ -1,0 +1,77 @@
+**Lemma 5.1 (exact final bridge and inclusion of the original data).**
+Fix any exactly-$n$ policy completed as in Lemma 2.2 and any deterministic
+$0<h<\tau$. Put $s=\tau-h$, $x=K_s$, $z=K_\tau$ and
+
+$$
+b_r=K_{s+r}-x-\frac rh(z-x),\qquad
+K^z_r=x+\frac rh(z-x)+b_r,\qquad0\le r\le h.
+\tag{5.1}
+$$
+
+Let the enlarged past be $P_s=(U,K_{[0,s]},W^2_{[0,s]})$. Given this
+past, the joint height kernel in coordinates $(b,z)$ is exactly
+
+$$
+\beta_h(db)\,\gamma_h(z-x)\,e^{\lambda h}\frac{\phi(z)}{\phi(x)}
+\mathbf1_{\{K^z_r\in I\ \forall r\in[0,h]\}}\,dz,
+\qquad
+\gamma_h(v)=\frac{e^{-v^2/(2\sigma^2h)}}{\sqrt{2\pi\sigma^2h}},
+\tag{5.2}
+$$
+
+where $\beta_h$ is centered Brownian bridge measure of variance rate
+$\sigma^2$. Enlarge further by revealing the real phase increment
+from $s$ to the first actual query after $s$ and the real increments
+between subsequent actual queries. These enlarged data determine the
+entire original seed/time/wrapped-value record. Their target remains
+$z$; it is not revealed. There are between one and $n$ future normal
+observations in this comparison, including all crossing cases.
+
+Proof. Ordinary Brownian height on $[s,s+h]$ decomposes into its
+endpoint displacement and the residual bridge in (5.1). Their covariance
+is zero, so joint Gaussianity gives independence and the reference
+kernel $\beta_h(db)\gamma_h(z-x)dz$. Killing imposes the indicator
+for both original faces. The exact fixed-start Q derivative in
+Proposition 1.2 supplies $e^{\lambda h}\phi(z)/\phi(x)$, proving
+(5.2). The height Markov property and independence of $U,W^2$ show
+that conditioning on $P_s$ introduces no further factor. Its past
+law is its actual stationary Q law, including its original initial
+height weight.
+
+The phase past is a causal Borel function of the revealed path
+coordinates, modulo one null set. To specify a version, approximate
+$\sqrt2\int_0^tB_\kappa(K_r)dW_r^2$ by left-step integrals on dyadic
+partitions of a bounded time interval. Lemma 1.3, (1.6), the isometry
+and the maximal inequality bound the expected squared uniform error
+by $C2^{-m}$ at level $m$. Markov's inequality at threshold
+$2^{-m/8}$ and Borel--Cantelli give uniform almost sure convergence.
+The step integrals are Borel functions of the paths and their prefixes;
+their continuous uniform limit, with a fixed default on failure, is
+the required version. The same construction over countably many
+bounded horizons suffices. This is a reconstruction only within the
+comparison data.
+
+Thus $P_s$ permits recursive simulation of the original policy through
+every query at or before $s$. Let $q$ be their number. It also determines
+the already chosen next endpoint. Exactly $N=n-q$ future queries
+remain, with $1\le N\le n$; $N$ is fixed on each $P_s$ fiber. A query
+exactly at $s$ belongs to the revealed past. If an original interval
+straddles $s$, its pre-$s$ phase portion is known and the first revealed
+future increment is just its remaining portion. This gives one future
+increment for that original query, not two. If there is no query at
+$s$, its phase value is known from $P_s$ and is not a new original
+query. The successive future increments give the wrapped queried
+values, and hence every later decision, recursively. This covers
+$q=0$, $q=n-1$ and all intermediate cases. Information inclusion
+therefore has the direction
+
+$$
+\inf_g\mathcal R_\kappa(\mathcal P,g)
+\ \ge\ \text{Bayes risk with the enlarged data}.
+\tag{5.3}
+$$
+
+All revealed coordinates are random variables on the unchanged source.
+They are a lower-bound device, not an observation port in Definition
+2.1. $\square$
+

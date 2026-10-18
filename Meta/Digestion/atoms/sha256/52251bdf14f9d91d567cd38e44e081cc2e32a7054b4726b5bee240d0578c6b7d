@@ -1,0 +1,47 @@
+**Theorem 96.2 (Complete active-four hard-two feasibility).** For every
+sequence (73.3) and every cap $a_5\le\varepsilon<z$,
+
+$$
+\begin{aligned}
+\kappa^{\mathcal A}_\varepsilon(a)\le2
+ &\quad\Longleftrightarrow\quad \varepsilon\ge F_A,\\
+\kappa^{\mathcal N}_\varepsilon(a)\le2
+ &\quad\Longleftrightarrow\quad \varepsilon\ge F_R,\\
+\kappa^{\mathcal O}_\varepsilon(a)\le2
+ &\quad\Longleftrightarrow\quad \varepsilon\ge F_R.
+\end{aligned}
+\tag{96.2}
+$$
+
+Every sufficient direction is attained by one common seeded acquisition
+handing off at every actual source and every seed, with $K\le2$ and
+$M\le4$. Competitors in the necessary directions may use arbitrary
+addresses, repetitions and the full original carrier.
+
+For any retained tail, including $a_5$ above the finite formula,
+
+$$
+\begin{aligned}
+F_A&\le E_{\mathcal A}(2;a)\le\max\{F_A,a_5\},\\
+F_R&\le E_{\mathcal N}(2;a)\le E_{\mathcal O}(2;a)
+                              \le\max\{F_R,a_5\}.
+\end{aligned}
+\tag{96.3}
+$$
+
+Consequently $E_{\mathcal A}(2;a)=F_A$ when $a_5\le F_A$, and
+$E_{\mathcal N}(2;a)=E_{\mathcal O}(2;a)=F_R$ when $a_5\le F_R$.
+These equalities are attained under their respective tail hypotheses.
+Equation (96.3) asserts no matching exact value when the corresponding
+tail hypothesis fails.
+
+**Proof.** Lemma 97.3 proves all necessary terms without a tail restriction.
+Lemma 99.1 supplies a single finite hard-two scheme at $t=F_A$ in the
+adaptive class and at $t=F_R$ in the ordered class, for every real monotone
+quadruple. Proposition 100.1 executes these schemes on actual sources
+and proves error at most $\max\{t,a_5\}$. Its padding to $\mathcal N_2$
+is Proposition 90.2. These results imply (96.2)--(96.3) and the attained
+equalities. In particular the finite scheme's weights are common to all
+low words, and the real tail transport is a separate full-carrier TV
+calculation. $\square$
+

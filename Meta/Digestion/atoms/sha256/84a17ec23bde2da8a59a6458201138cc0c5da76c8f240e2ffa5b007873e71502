@@ -1,0 +1,74 @@
+### 95.3. Two exact mean points and the excluded linear F8 chart
+
+The following rational polynomials define \(x_C,y_C\) in \(K\):
+\[
+\begin{split}
+x_C={}&\frac{6227638877b^{14}}{2100947893920}
++\frac{7431822595793b^{12}}{75634124181120}
+-\frac{7091765173453b^{10}}{12605687363520}
++\frac{2889816706213b^8}{2801263858560}\\
+&-\frac{587361173209b^6}{77812884960}
++\frac{25936875770923b^4}{933754619520}
+-\frac{2953352598239b^2}{155625769920}
+-\frac{78990949899}{103750513280},\\
+y_C={}&\frac{47902082597b^{15}}{6302843681760}
++\frac{56542077041273b^{13}}{226902372543360}
+-\frac{57976598645773b^{11}}{37817062090560}
++\frac{26717818392413b^9}{8403791575680}\\
+&-\frac{42467452612321b^7}{2100947893920}
++\frac{72865663112161b^5}{933754619520}
+-\frac{35242166643919b^3}{466877309760}
++\frac{4306128200621b}{311251539840}.
+\end{split}
+\tag{95.2}
+\]
+Put \(h=x_C^2+y_C^2\), and define
+\[
+ (x_B,y_B)=-\frac R h(x_C,y_C).
+\tag{95.3}
+\]
+Their good residues are \((22,42)\) and \((71,11)\), respectively.
+Direct division by \(Q\) verifies that both are decic/radial source
+points: for \(k=y/x,t=(x^2+y^2-R)/x\),
+\(F(b,k)=0\) and \(T(b,k)=tF_k(b,k)\) with the exact §88 numerator.
+The good residues are \(h=56,x_C=22,x_B=71,F_k=32\); thus
+the denominators here, including \(F_k\), are nonzero. Therefore (95.2)
+and (95.3) are points of (95.1). They are exchanged by the radial involution
+\(X\mapsto t/(1+k^2)-X\).
+
+Use the global original-coordinate system of §87. Let
+\(\operatorname{Re}E_n/6=Au+D_0v+C_0\),
+\(\sigma=A^2+D_0^2\), and use the division-free line coordinate
+\[
+ u=(-AC_0-D_0\tau)/\sigma,\qquad
+ v=(-D_0C_0+A\tau)/\sigma.
+\tag{95.4}
+\]
+The global imaginary equation is
+\(Q_g=-8(b^2+3)F_8\tau^2+Q_1\tau+Q_0=0\).
+Its two global linear necessary equations are
+\(a_Y\tau+\mu_Y=a_D\tau+\mu_D=0\).
+
+At the source point B, exact division by \(Q\) gives
+\[
+ F_8=a_Y=a_D=\mu_Y=\mu_D=0,\qquad Q_1\ne0,\quad\sigma\ne0.
+\]
+The original imaginary equation is genuinely linear. Its unique candidate
+is \(\tau=-Q_0/Q_1\), with good residues
+\[
+ (\sigma,Q_1,Q_0,\tau)=(130,82,116,32).
+\]
+Substitute (95.4) into the original, cleared norm equations \(N_Y,N_D\)
+from the quaternion/original-flatness system. Their exact field values
+have residues 103 and 43, respectively. Both are nonzero. Thus B has no
+original common-flat lift with three distinct entries in the selected upper
+channel. This excludes it using original equations,
+not by declaring F8 invertible or by deleting a source root.
+
+At C the combined linear pivot is nonzero. Its unique lift (95.4), with
+\(\tau=-(\mu_Y+\mu_D)/(a_Y+a_D)\), satisfies the original complex
+\(E_n=0\) and both norm equations exactly in \(K\). At this lift
+\(\Delta=D\bar D-C\bar C=0\). These are characteristic-zero polynomial
+checks; existence of a strict physical lift is not needed in the argument.
+C is retained throughout the complete coverage algebra.
+

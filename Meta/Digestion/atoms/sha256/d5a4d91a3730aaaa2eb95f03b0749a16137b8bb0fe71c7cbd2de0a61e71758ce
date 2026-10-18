@@ -1,0 +1,49 @@
+#### 83.1.1. A normalized reference input and a full-output witness
+
+Use the normalized reference input
+
+    |Omega_sigma>=(1/sqrt(k))sum_f |f>_R tensor |f,i_f>_logical.
+
+Let omega be its original product-channel output after the input MC encoding, and let tau be the target output. The orthonormal correct-output reference/output support has basis
+
+    {|f>_R tensor |ff>_out : f=1,...,k}.
+
+On this support the actual output compression is K_sigma^T/k, where K_sigma=G_sigma entrywise-multiplied by H_sigma. The target is entirely supported there, with coefficient matrix
+
+    T_sigma/k,   T_sigma=(I_k+J_k)/2.
+
+The form of T_sigma is the same for every transversal: between distinct fibres the target coefficient is 1/2 independently of the selected bits. The transpose occurs because the Grams are forward inner products.
+
+The complementary actual block is positive and has trace 1-Tr K_sigma/k. Pinching therefore gives the valid original-channel bound
+
+    ||omega-tau||_1
+       >= [||K_sigma-T_sigma||_1+k-Tr K_sigma]/k
+        = (2/k) Tr(T_sigma-K_sigma)_+.               (4)
+
+For s=ones/sqrt(k), positive-part duality bounds the last expression below by
+
+    (2/k)<s,(T_sigma-K_sigma)s>
+      = (k+1)/k-(2/k^2)Tr(G_sigma^T H_sigma).         (5)
+
+Transposition leaves this real uniform-vector Rayleigh value unchanged. This proves (1).
+
+Equivalently, (5) is one explicit full-output trace-norm witness, without needing to pinch. Put
+
+    |chi_sigma>=(1/sqrt(k))sum_f |f>_R tensor |ff>_out,
+    Q_sigma=|chi_sigma><chi_sigma|,
+    W_sigma=I-2Q_sigma.
+
+The actual and target outputs have trace one, so W_sigma is a Hermitian contraction and
+
+    Tr W_sigma(omega-tau)
+       =2Tr Q_sigma(tau-omega)
+       =(k+1)/k-(2/k^2)Tr(G_sigma^T H_sigma).         (6)
+
+Thus the witness tests the full physical output, including any unpinched cross-sector coherences. It never assumes that these coherences vanish. The transversal input retains all cross-fibre coherences among its selected bits; no independent pairwise record replacement or unsupported two-test implication is used.
+
+Since G_sigma^T is positive and G_sigma^T<=L_A,sigma I,
+
+    Tr(G_sigma^T H_sigma) <= L_A,sigma Tr H_sigma.
+
+Exchanging the two matrices gives the symmetric estimate. Substituting in (1) proves (2), and t_A,sigma,t_B,sigma<=1 proves (3).
+

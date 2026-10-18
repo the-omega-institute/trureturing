@@ -1,0 +1,78 @@
+**Theorem 36.1 (fixed spectral scale and absolute full-principal coefficient).** Assume Definition 32.1, including (32.1). For every separately fixed spectral probe constant $H>0$, independent of the probability parameter contained in $d$,
+
+$$
+k_d(Hs^5)=C_*+(\mathscr A\mathfrak m_d-\beta_*H)s^5+o_{d,H}(s^5).
+\tag{36.1}
+$$
+
+At the two smaller probes, for $q=6,7$,
+
+$$
+k_d(s^q)=C_*+\mathscr A\mathfrak m_ds^5+o_d(s^5).
+\tag{36.2}
+$$
+
+For each separately fixed finite $M\ge M_{0,d}$ of Theorem 35.1,
+
+$$
+\begin{aligned}
+\mathscr A\mathfrak m_d
+&\le\liminf_{s\downarrow0}\frac{k_d(Ms^8)-C_*}{s^5}\\
+&\le\limsup_{s\downarrow0}\frac{k_d(Ms^8)-C_*}{s^5}
+\le\mathscr A\mathfrak m_d+C_d(M^{-1/4}+M^{-1/2}).
+\end{aligned}
+\tag{36.3}
+$$
+
+In particular (36.3) is a bracket with a retained error, rather than equality at a fixed finite $M$.
+
+Proof. Equations (36.2)–(36.3) follow by inserting Theorem 34.2 into Theorem 35.1. For (36.1), fix $H>0$ first and set $h=Hs^5$. P (104.2) now has all errors tending to zero. The same bounded product factorization and compact spectral neighborhood in Theorem 35.1 give a bounded simple top $k$ and a fixed gap from the rest of the spectrum. Use exactly the vectors and split (35.5)–(35.6), so every field and return remains present.
+
+The late kernel still has (35.9), with $h/s^2=Hs^3\to0$. Therefore (35.7) and (35.10) hold. The long self and late cross bounds in (35.11)–(35.12) are $O_H(s^{13/2})$ and $O_H(s^{23/4})$, hence $o(s^5)$. The damping cross is at most $Cs^5hs^{-1/2}=O_H(s^{19/2})$. The damping quadratic scalar itself has a nonzero limit at this scale; we compute it.
+
+For every fixed $t>0$, $Q_s(t)\to P_t$ strongly on common $L^2$, where $P_t=e^{-t\mathcal E}$. To see the strong assertion directly, first take compactly supported smooth inputs. P104's local both-endpoint convergence gives weak convergence. Selfadjoint semigroup composition gives
+
+$$
+\|Q_s(t)f\|_2^2=\langle f,Q_s(2t)f\rangle
+ \longrightarrow\langle f,P_{2t}f\rangle=\|P_tf\|_2^2.
+\tag{36.4}
+$$
+
+Weak convergence plus convergence of norms gives strong convergence on this dense class. Contraction of both semigroups extends it to every fixed $L^2$ input. Restriction and zero extension preserve the composition identity. Since $x=F_su_s\to Vp$ in $L^2$, this also gives convergence of $\langle x,Q_s(t)x\rangle$ at each fixed positive time.
+
+The exact damping scalar is
+
+$$
+\frac{\langle x,Dx\rangle}{h}
+ =\int_0^T\frac{1-e^{-ht}}h\,\langle x,Q_s(t)x\rangle dt.
+\tag{36.5}
+$$
+
+Its integrand, extended by zero beyond $T$, is bounded by $Ct$ for $t<1$ and by $Ct^{-5/2}$ for $1\le t\le T$. Indeed $(1-e^{-ht})/h\le t$, and contraction or the $1\to2$ bound applied at $t/2$ gives these two bounds using the uniform $L^2$ and $L^1$ norms of $x$. Both majorants are integrable on their respective intervals. Dominated convergence in (36.5) yields
+
+$$
+\frac{\langle x,Dx\rangle}{h}
+\longrightarrow\int_0^\infty t\langle Vp,P_tVp\rangle dt
+=\|G_0(Vp)\|_2^2=C_*^2.
+\tag{36.6}
+$$
+
+For the middle equality integrate the nonnegative spectral measure of $\mathcal E$; its $\lambda^{-2}$ moment is finite since $G_0(Vp)=C_*p\in L^2$. Equivalently integrate $\|P_{t/2}Vp\|_2^2t$ by Tonelli. This evaluates the damping on this one input and does not assert a global derivative of an infinite-time operator.
+
+It follows that $\langle x,Dx\rangle=HC_*^2s^5+o_H(s^5)$. Insert this into the exact quotient (35.13). Since $m\to\mu$, $d_s/s^5\to W_1(o)$ and $\ell_s\to C_*$, it gives
+
+$$
+\mathcal Q_s=\ell_s+\mathscr A W_1(o)s^5
+                         -\frac{C_*^2}{\mu}Hs^5+o_H(s^5).
+\tag{36.7}
+$$
+
+The full weighted residual (35.18) is, at this fixed scale,
+
+$$
+O_H(s^9+s^8+s^{13/2})=O_H(s^{13/2})=o(s^5).
+\tag{36.8}
+$$
+
+The selfadjoint variance inequality (35.19) consequently upgrades (36.7) to the full principal value, with the same $o_H(s^5)$ remainder. Combining with Theorem 34.2 proves (36.1). Each $H$ was fixed before its $s$ limit. The proof has not replaced a fixed finite $M$ by an $s$-dependent value or inferred a fixed-$M$ equality from (36.1). $\square$
+

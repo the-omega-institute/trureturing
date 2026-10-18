@@ -1,0 +1,53 @@
+**Corollary 5.2 (finite classical capacity with assistance separately
+specified).** If the accessible classical record in Definition 2.3 has
+at most $A<\infty$ possible values, positive exact success at all $M$
+distinct candidate heights requires
+
+$$
+A\geq\lceil M/2\rceil.
+\tag{RB.19}
+$$
+
+Under the uniform prior on those heights, for each fixed signed $m$,
+
+$$
+\frac1M\sum_{j=1}^M p_j(m)\leq\min(1,2A/M).
+\tag{RB.20}
+$$
+
+A $B$-bit bound on that entire accessible classical record consequently
+requires $2^B\geq\lceil M/2\rceil$ for positive success everywhere.
+With no parity assistance as in Corollary 4.3, replace the necessary
+$A$ by $M$, and the average upper bound by $\min(1,A/M)$.
+
+Proof. Only records whose support has at most two heights can contribute
+positive success. Their union contains at most $2A$ heights. Each height
+with positive success belongs to that union, proving (RB.19). Each
+$p_j(m)\leq1$, and heights outside the union have probability zero,
+which proves (RB.20). The bit inequality is cardinality. Without parity
+assistance, only singleton supports contribute, by Corollary 4.3.
+$\square$
+
+The integer threshold in (RB.19) is attained for the task with an already
+known fixed parity by partitioning the height list into pairs and a possible
+singleton, recording the part, and using Theorem 4.1. With both parities
+unknown, a supplied calibrated orthogonal quantum parity token also permits
+the same $A$-value height record and coherent control by its two supports.
+That token is an extra two-dimensional quantum resource. If parity is
+instead delivered as an actual classical bit, its alphabet must also be
+charged: the part-plus-parity record has up to $2\lceil M/2\rceil$
+values. The free parity grant in the upper bound is not a free real bit
+in a claimed total-memory construction. The average bound (RB.20) is a
+universal estimate, without a claim of a sharp constant for each prescribed
+height list; distinct paired heights have $\kappa<1$.
+
+All readable classical calibration, programme, clock, archive and selector
+fields count in the actual alphabet. Fixed fields add no alternatives but
+still require descriptions and storage. A separate source-bearing quantum
+register cannot be ignored: it must meet the height/phase independence in
+(RB.7), or the theorem's premise fails. These are classical-alphabet
+bounds with specified assistance, not a bound on total Hilbert dimension,
+physical memory or an entanglement-assisted encoding problem. They are not
+multiplied by the distinct event-memory bound of Event Memory and Coarse
+Aliasing.
+

@@ -1,0 +1,54 @@
+**定理 C-151.1（同输入标签的两组二元实验）。** 每次另行供应所指定的两个源标签之一，
+先验各为 $1/2$，并允许任意复输出二元 POVM。用未除二的迹范数，两个实验为
+
+| 同一对被动源输入 | $\mathcal A$ 输出距离 | $\mathcal B_c$ 输出距离 | $\mathcal A$ 最优成功率 | $\mathcal B_c$ 最优成功率 |
+| --- | --- | --- | --- | --- |
+| $P_1,P_2$ | $2$ | $2a$ | $1$ | $1-\beta/2$ |
+| $P_{u_+^p},P_{u_-^p}$ | $4\sqrt{2a}/3$ | $4\sqrt2/3$ | $1/2+\sqrt{2a}/3$ | $1/2+\sqrt2/3$ |
+
+两组标签均已属于 (C145.1) 的实际源，不使用任意新输入替换原标签。
+在保持同输入标签的输出 CPTP 后处理序中，不存在
+$\mathcal A=\Phi\circ\mathcal B_c$，也不存在 $\mathcal B_c=\Phi\circ\mathcal A$。
+
+证明。第一组在 $\mathcal A$ 下为 $aR_1+\beta R_3$ 与 $R_4$，支持正交。
+在 $\mathcal B_c$ 下的差为
+$(a-\beta)R_1-aR_2+\beta R_4$；$a\ge\beta$ 给范数 $2a$，包括 $a=\beta$。
+按输出是否位于 $\operatorname{span}(e_1,e_3)$（$\mathcal A$）或
+$\operatorname{span}(e_1,e_4)$（$\mathcal B_c$）作二元测量即达到表中第一行。
+
+第二组的实际被动差为
+
+$$
+X=P_{u_+^p}-P_{u_-^p}
+=\frac{2i\sqrt2}{3}(|0\rangle\langle2|-|2\rangle\langle0|).
+\tag{C151.1}
+$$
+
+由全部原 Kraus 列，
+
+$$
+\begin{aligned}
+\mathcal A(X)&=\frac{2i\sqrt{2a}}3
+(|e_0\rangle\langle e_4|-|e_4\rangle\langle e_0|),\\
+\mathcal B_c(X)&=\frac{2i\sqrt2}3
+\left[a(|e_0\rangle\langle e_2|-|e_2\rangle\langle e_0|)
++\beta(|e_3\rangle\langle e_1|-|e_1\rangle\langle e_3|)\right].
+\end{aligned}
+\tag{C151.2}
+$$
+
+每个非零二阶块的谱为相反两数，$\mathcal B_c$ 的两块正交，
+故范数分别为 $4\sqrt{2a}/3$ 与 $4\sqrt2(a+\beta)/3$。
+令 $g_{pq}=(e_p-ie_q)/\sqrt2$，第二组达到测量的标签加效果可分别取
+$P_{g_{04}}$ 与 $P_{g_{02}}+P_{g_{31}}$，其余效果为补投影。
+这是输出差的正谱投影；零谱空间的分配不改变成功率。
+标准 Holevo–Helstrom 公式给 $p_{\rm succ}=1/2+\|\rho_+-\rho_-\|_1/4$，
+故得表中全部成功率。其精确引文为 Watrous，
+[*The Theory of Quantum Information*, Chapter 3, Theorem 3.4, (3.11)](https://cs.uwaterloo.ca/~watrous/TQI/TQI.3.pdf)，
+取 $\lambda=1/2$、$X=K$；这里只在这两个具体实验内消费该标准公式。
+
+若 $\mathcal A=\Phi\circ\mathcal B_c$，第一行违反 CPTP 迹范数收缩，
+因为 $2>2a$。若 $\mathcal B_c=\Phi\circ\mathcal A$，第二行违反同一收缩，
+因为 $4\sqrt2/3>4\sqrt{2a}/3$。收缩亦可直接由二元效果经
+$\Phi^\dagger$ 拉回仍是二元 POVM 得到，未加实数或对易限制。证毕。
+

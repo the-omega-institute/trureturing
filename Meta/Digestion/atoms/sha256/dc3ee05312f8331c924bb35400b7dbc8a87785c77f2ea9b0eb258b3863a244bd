@@ -1,0 +1,39 @@
+##### 定义 1.14.2： 类型化响应画像与伪距离
+
+令 $q$ 是任一类型化查询，$P_\theta(q)$ 是其有限结果空间上的精确概率律。对有限查询族 $\Gamma$，定义画像
+
+$$
+\Phi_\Gamma(\theta)=\bigl(P_\theta(q)\bigr)_{q\in\Gamma},
+$$
+
+以及
+
+$$
+\Pi_\Gamma
+=\{(\theta,\theta'):\Phi_\Gamma(\theta)=\Phi_\Gamma(\theta')\}.
+$$
+
+令 $\operatorname{TV}$ 是总变差距离，定义
+
+$$
+d_\Gamma(\theta,\theta')
+=\max_{q\in\Gamma}
+\operatorname{TV}\bigl(P_\theta(q),P_{\theta'}(q)\bigr),
+$$
+
+空查询族的距离规定为零。于是
+
+$$
+d_\Gamma(\theta,\theta')=0
+\iff
+(\theta,\theta')\in\Pi_\Gamma.
+$$
+
+给每个查询一个非负整数成本 $c(q)$，查询族成本为
+
+$$
+\operatorname{cost}(\Gamma)=\sum_{q\in\Gamma}c(q).
+$$
+
+<a id="claim-1-14-3"></a>
+

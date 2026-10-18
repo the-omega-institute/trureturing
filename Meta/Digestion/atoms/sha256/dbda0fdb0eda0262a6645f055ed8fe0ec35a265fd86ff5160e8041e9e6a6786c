@@ -1,0 +1,18 @@
+**Definition 9.1 (owner correspondence).** Replace the storage of each
+original owner by its own switch components on the same assigned ports.
+The producer retains the private raw source and scratch authority; ingress
+retains its input-latch/frame authority; journal and channel owners retain
+their archive, mailbox, seal and token authority; the meter keeps its
+original append/readout permissions. A cell descriptor is still its paid
+original encoding, followed by paid positioning; no edge to every named
+block is installed.
+
+The trusted primitive core maintains the bounded footprint of its admitted
+row under these permissions. An owner-local RD is the corresponding paid
+structural inspection and latch update, returning exactly its original
+finite result. A WR requires exactly its original authority. Hidden
+structural probes needed to preserve a writable cell's remaining fields
+are internal to that primitive, not a capability passed to the actor.
+The full support and frontier remain mathematical relations across all
+owners' actual storage; there is no default traversal permission over them.
+

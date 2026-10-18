@@ -1,0 +1,25 @@
+**Definition 3.1 (trace erasure and the simulation obligation).** A
+microtrace includes every paid local and transport occurrence and each
+original source-call occurrence with its selected macro row, actual
+literal, raw reply and source successor. Its erasure deletes only the
+new local and transport occurrences. It keeps every macro routing
+Read, every Update, each raw reply and the first Halt bit.
+
+A refinement has a relation to macro configurations $(y,w)$ at every
+cut. Before a source response it relates to the old $(y,w)$; at its
+actual receipt it relates to $(y',\delta(w,r))$. Local cleanup must
+maintain that latter relation while preparing the next returned cut.
+A partially updated representation may use a counted saved old row and
+reply latch to define this relation. Such a projection is proof data;
+its computation is not a runtime port. The runtime must actually finish
+the paid continuation it describes. At returned cuts the next selected
+original instruction must be precisely the one at the related word.
+
+Micro-observation labels may expose local instructions, head movements,
+transmitted symbols and local fees. Before response receipt they must
+be functions of the public installation and already acquired original
+prefix. The same deterministic simulator, stopped at any cut, generates
+these labels and consumes each raw source reply only at its actual
+receipt. Source internals, duration and unreleased source data remain
+outside this observation alphabet.
+

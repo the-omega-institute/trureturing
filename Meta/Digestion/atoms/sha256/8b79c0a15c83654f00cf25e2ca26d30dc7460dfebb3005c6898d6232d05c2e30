@@ -1,0 +1,66 @@
+**Lemma 4.2 (Product remainder through fourth order).** Let
+
+$$
+B=\sum_{j=2}^8|b_j|,\qquad
+D_m=B+2^{m-2}(m-1)\delta^2,\qquad
+\Lambda_m=\delta(1+\delta)^{m-1}.
+$$
+
+For every composition at every legal total,
+
+$$
+w_n=1+aA_n+e_n,\qquad
+|e_n|\le D_m\sum_jK_j^{-2},\qquad
+0\le w_n-1\le\Lambda_m A_n.
+$$
+
+Consequently, for $p\in\{1,2,3,4\}$,
+
+$$
+\begin{aligned}
+\mathbb E_{0,n}|e_n|&=O_{H,m}(n^{-2}),&
+\mathbb E_{0,n}e_n^2&=O_{H,m}(n^{-4}),\\
+\mathbb E_{0,n}|w_n-1|^p&=O_{H,m}(n^{-p}),&
+\operatorname{Var}_{0,n}(w_n)&=\frac{a^2v_m}{n^2}+O_{H,m}(n^{-3}),\\
+c_n&=1+\frac{am(10m-1)}{9n}+O_{H,m}(n^{-2}).
+\end{aligned}
+$$
+
+Proof. Write $u_j=r_{K_j}-1$. The exact inverse-power expansion and the envelope give
+
+$$
+0\le u_j\le\delta/K_j,\qquad
+\varepsilon_j:=u_j-a/K_j,\qquad |\varepsilon_j|\le B/K_j^2.
+$$
+
+In the expansion of $\prod_j(1+u_j)$, the terms of degree at least two satisfy
+
+$$
+\sum_{|S|\ge2}\prod_{j\in S}u_j
+\le\sum_{u<v}u_u u_v\prod_{j\ne u,v}(1+u_j).
+$$
+
+Indeed each nonnegative monomial indexed by $S$ appears on the right with multiplicity $\binom{|S|}{2}\ge1$. Since $1+\delta<2$ and
+
+$$
+\frac1{K_uK_v}\le\frac12(K_u^{-2}+K_v^{-2}),
+$$
+
+the right side is at most $2^{m-2}\delta^2(m-1)\sum_jK_j^{-2}/2$. Adding $\sum_j\varepsilon_j$ proves the stated, conservatively larger, constant $D_m$. A telescoping expansion of the product gives
+
+$$
+\prod_{j=1}^m(1+u_j)-1
+=\sum_{j=1}^m u_j\prod_{r<j}(1+u_r)
+\le\delta(1+\delta)^{m-1}\sum_jK_j^{-1}.
+$$
+
+For the square remainder, finite-sum Cauchy–Schwarz gives
+
+$$
+e_n^2\le D_m^2m\sum_jK_j^{-4}.
+$$
+
+Lemma 3.3 therefore proves its $O(n^{-4})$ expectation, as well as the $O(n^{-2})$ first absolute moment. The fourth inverse moment is essential to this particular square estimate. For $1\le p\le4$, convexity gives $(\sum_j x_j)^p\le m^{p-1}\sum_jx_j^p$ for $x_j\ge0$. Apply it to the last product bound and use the inverse moments to obtain $\mathbb E|w_n-1|^p=O(n^{-p})$.
+
+Finally $\operatorname{Var}(e_n)\le\mathbb Ee_n^2=O(n^{-4})$, while Lemma 4.1 gives $\operatorname{Var}(A_n)=O(n^{-2})$. Cauchy–Schwarz yields $|\operatorname{Cov}(A_n,e_n)|=O(n^{-3})$. Expanding the variance of $1+aA_n+e_n$ proves its coefficient. Taking expectations proves the stated expansion of $c_n$. All estimates include the endpoint compositions. $\square$
+

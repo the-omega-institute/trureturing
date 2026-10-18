@@ -1,0 +1,47 @@
+**Definition 1.2 (Fixed ports and the unchanged objective).** For
+$q\in\{1,2,3,4,5\}$, a legal port is a composite $T=\operatorname{Dec}
+\circ\operatorname{Enc}$ of fixed CPTP maps
+
+$$
+\operatorname{Enc}:M_5\longrightarrow\bigoplus_{f\in F}M_q,
+\qquad
+\operatorname{Dec}((Y_f)_f)=\sum_f\operatorname{Dec}_f(Y_f),
+\qquad \operatorname{Dec}_f:M_q\longrightarrow M_5,
+\tag{1.2}
+$$
+
+with finite fixed $F$ and every decoder CPTP on its whole block.
+The design precedes the unknown input and the choice of future protocol.
+There is no retained original input, entangled assistance or bypass.
+Flags are free for this quantum dimension criterion, are consumed in
+decoding, and are not additionally exposed to the future policy. Write
+$\mathfrak C_q$ for the entire complex class and set
+
+$$
+e(T)=\sup_{\rho\in\mathcal D(\mathcal H)}
+\sup_{\pi\ {\rm actual,finite}}
+\operatorname{TV}(P_\rho^\pi,P_{T(\rho)}^\pi),
+\qquad \varepsilon_q=\inf_{T\in\mathfrak C_q}e(T).
+\tag{1.3}
+$$
+
+The replacement happens once before the common future protocol. TV is
+half the $\ell^1$ difference, with its measure version for random
+controls. CPTP legality includes arbitrary reference extensions; this
+performance criterion measures only the system histories. No trace-distance
+or diamond-norm objective is substituted.
+
+The supplier names in this volume refer to these exact sources at
+repository revision `3b275991a1a78fa1468e590c3fea27abb9b4622b`:
+
+| Name | Source and reused content |
+| --- | --- |
+| QMB | [Measurement-relative quantum boundary](RECURSIVE_RELATIONAL_OBSERVATION_MEASUREMENT_RELATIVE_QUANTUM_BOUNDARY.md), Assumption 1.1, Definitions 1.2–1.3, Theorem 2.1: the contract and first-read identity. |
+| QPC | [Port covariance and certified frontier](RECURSIVE_RELATIONAL_OBSERVATION_QUANTUM_PORT_COVARIANCE_AND_CERTIFIED_FRONTIER.md), Theorem 3.3 and §9: stationary reduction and its shortcut boundaries. |
+| QFA | [Finite port attainment](RECURSIVE_RELATIONAL_OBSERVATION_QUANTUM_FINITE_PORT_ATTAINMENT.md), Definition 2.1 and Lemma 2.2: the encoder and finite circle quadrature. |
+| QEC | [Classical-port exact certificates](RECURSIVE_RELATIONAL_OBSERVATION_QUANTUM_CLASSICAL_PORT_EXACT_CERTIFICATES.md), §§1–2: spectral coordinates, weighted moment and decomposable witness; Theorem 2.6: finite-wait estimates. |
+| QRC | [Real-port boundary coordinates](RECURSIVE_RELATIONAL_OBSERVATION_QUANTUM_REAL_PORT_BOUNDARY_COORDINATES.md), §§4–6: independent-product cone, full TP marginal and fifteen event residuals. |
+
+The first-read, stationarity and coordinate reductions are credited
+suppliers, rather than additional results of this volume.
+

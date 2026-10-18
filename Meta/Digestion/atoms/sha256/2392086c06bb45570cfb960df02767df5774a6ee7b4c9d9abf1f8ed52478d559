@@ -1,0 +1,19 @@
+**Lemma 3.2 (actual four-history average).** For every $0<x<c$ put
+
+$$
+\bar\rho_x=\tfrac14\sum_{\beta\in\{0,\pi\},\ m\in\{0,1\}}
+\rho_{x,\beta,m}.
+\qquad
+\bar\rho_x=2xP_++2(c-x)P_-+ZP_2.
+\tag{AC.7}
+$$
+
+In particular $x\mapsto\bar\rho_x$ is affine.
+
+Proof. The two values of $e^{-i\beta}$ cancel every middle-to-bottom
+matrix entry. The two parities cancel the plus-to-minus entry. The three
+diagonal entries are the displayed squared amplitudes. Every summand has
+the common-preparation realization of Proposition 3.1. Averaging is a
+mathematical source witness; it gives the processor neither four specimens,
+the nuisance labels nor a measured probability law. $\square$
+

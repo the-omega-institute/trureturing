@@ -1,0 +1,15 @@
+**Proposition 294.3 (Comparison with the checked weighted supplier).**
+On $\gamma=B_a\mathbf1_J+e_{j_a}$ the threshold in 282.1 is
+$(46/5)B_a+26/5$, while (294.2) uses
+$(46/5)B_a+r^\star_a$. On
+$\gamma=B_a\mathbf1_J-e_{j_a}$ those values are respectively
+$(46/5)B_a-1$ and $(46/5)B_a-r^\star_a$.
+
+**Proof.** Substitute $G=5B_a\pm1$ and
+$\max\gamma=B_a+1$ or $B_a$ in the checked bound
+$G+(21/5)\max\gamma$. Both improvements are strict since
+$1<r^\star_a<26/5$. These two rays meet (294.1) with $t=B_a$,
+$d=\pm e_{j_a}$. The uniform subray uses the old core $Z/3$.
+The comparison is with 282.1 only; no exclusion of every other
+earlier construction or combination is inferred. $\square$
+

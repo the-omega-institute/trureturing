@@ -1,0 +1,133 @@
+**Theorem 246.2 (Exact original optimum throughout the region).**
+For every tuple in $\mathcal P$, every $t\le h\le1$, and
+$a_1=h,a_2=a_3=t,a_4=u,a_5=v,a_6=w,a_7=z$, put
+
+$$
+e_* =\max\{e,(h+S-1)/8\}.
+\tag{246.3}
+$$
+
+For every entire positive nonincreasing vanishing actual tail with
+$a_8\le e_*$, both original hard-two classes have attained optimum
+$e_*$. Each is feasible at a positive closed cap exactly when that
+cap is at least $e_*$. The stopped attainer and its counted N completion
+use the same seed and tape on every source. The strict active horizon
+at the optimum is seven, since $0<e_*\le S/8<z$.
+
+Proof. At head $h_0$, use the following unnormalized terminal vectors.
+Each entry $a\mathbf e_r$ means mass $a$ at actual label $r$;
+unlisted schedules have zero mass.
+
+| Pair | Cell $0$ | Cell $10$ | Cell $11$ |
+| --- | --- | --- | --- |
+| $12$ | $k\mathbf e_1$ | $k\mathbf e_2$ | $k\mathbf e_0$ |
+| $13$ | $A\mathbf e_1$ | $A\mathbf e_3$ | $k\mathbf e_0+(A-k)\mathbf e_7$ |
+| $14$ | $B\mathbf e_1$ | $B\mathbf e_4$ | $k\mathbf e_0+G\mathbf e_5+(B-k-G)\mathbf e_6$ |
+| $15$ | $k\mathbf e_1$ | $k\mathbf e_5$ | $k\mathbf e_0$ |
+| $16$ | $k\mathbf e_1$ | $k\mathbf e_6$ | $k\mathbf e_0$ |
+| $17$ | $C\mathbf e_1$ | $C\mathbf e_7$ | $C\mathbf e_0$ |
+| $23$ | $D\mathbf e_2$ | $D\mathbf e_3$ | $H\mathbf e_0+I\mathbf e_4+(D-H-I)\mathbf e_5$ |
+| $24$ | $k\mathbf e_0+(A-k)\mathbf e_2$ | $A\mathbf e_4$ | $k\mathbf e_0+(A-k)\mathbf e_7$ |
+| $25$ | $k\mathbf e_2$ | $k\mathbf e_5$ | $k\mathbf e_0$ |
+| $26$ | $k\mathbf e_2$ | $k\mathbf e_6$ | $k\mathbf e_0$ |
+| $34$ | $k\mathbf e_0$ | $k\mathbf e_4$ | $k\mathbf e_0$ |
+| $35$ | $k\mathbf e_3$ | $k\mathbf e_5$ | $k\mathbf e_0$ |
+| $36$ | $k\mathbf e_3$ | $k\mathbf e_6$ | $k\mathbf e_0$ |
+| $45$ | $k\mathbf e_0$ | $k\mathbf e_5$ | $k\mathbf e_0$ |
+| $46$ | $F\mathbf e_4$ | $F\mathbf e_6$ | $k\mathbf e_0+(F-k)\mathbf e_7$ |
+| $56$ | $k\mathbf e_0$ | $k\mathbf e_6$ | $k\mathbf e_0$ |
+| $67$ | $k\mathbf e_0$ | $k\mathbf e_7$ | $k\mathbf e_0$ |
+
+Every terminal mass is nonnegative by (246.2). The three cell sums
+are the same within each row, and the seventeen schedule masses sum to
+$11k+2A+B+C+D+F=1$. Formula (237.8) therefore specifies one common
+probability distribution on full deterministic tables.
+Every numerical exhaustion guess is later than both queries.
+Summing correct contributions on an entire first-zero class gives,
+independently of all suffix zeros,
+
+$$
+\begin{aligned}
+(p_w(n))_{n=1}^7
+={}&(3k+A+B+C,\ 2k+A+D,\ 2k+A+D,\ A+B+k+F+I,\\
+ &4k+G+D-H-I,\ 3k+F+B-G,\ C+2A+F-2k)\\
+={}&(h_0,t,t,u,v,w,z)-e(1,1,1,1,1,1,1).
+\end{aligned}
+\tag{246.4}
+$$
+
+This counts the unqueried exhaustion labels as well as queried outputs.
+For an arbitrary word let $r=\sum_{i=1}^6 w_i$. The same rows give
+
+$$
+p_w(0)=k\left[5-\sum_{i=2}^6w_i+\binom r2+w_6w_7\right]
+                        +(H-k)w_2w_3+Cw_1w_7.
+\tag{246.5}
+$$
+
+The first-cell base terms come from $24,34,45,56,67$.
+Every pair inside $[6]$ has base exhaustion mass $k$, except $23$,
+whose base is $H$; the other base edges are $17$ and $67$.
+This proves the identity on every word.
+
+Since $H-k,C\ge0$, the first-zero-one base is at least $4k$:
+its bracket is $5-r+\binom r2+w_6w_7\ge4$.
+For $n\ge2$, $w_1=1$ and $r\ge n-1$, so the core bracket is
+$6-r+\binom r2$. Its minima for $n=2,\ldots,7$ are
+$5,5,6,8,11,15$. For $n\ge4$, $w_2w_3=1$ forces the extra
+$H-k$. Hence the seven base lower bounds are
+
+$$
+(4k,5k,5k,5k+H,7k+H,10k+H,14k+H).
+\tag{246.6}
+$$
+
+They dominate $1-(h_0,t,t,u,v,w,z)$: classes one, two, three and five
+are equalities; the other three comparisons are precisely the last
+line of (246.2). Thus correct is amplitude minus $e$, base is at least
+one minus amplitude, and their independent pair sum is at least $1-e$.
+The original base demand $1-a_n-e$ remains in force, including negative
+values. At the positive word the base is $15k+C+H=1-e$.
+All 382 independent rows hold and correct deficit gives exact low-word
+TV $e$ at head $h_0$.
+
+For $t\le h\le h_0$, keep this whole law. Head correctness exceeds
+its new demand, and the pair demand is unchanged. The base demand is
+paid because $1-h-e\le5k-e\le4k$. Class two still has exact deficit
+$e$. For $h>h_0$, use the head-one supplier of §113.3 at $e_S=S/8$.
+All seven amplitudes exceed $e_S$, and
+$\sum_{n=3}^7(a_n-e_S)=3e_S$. Its explicit uniform-triple masses
+are those of (244.10), with $m=7$, plus mass $1-t$ on $(1,2;1,0,0)$.
+It satisfies all rows and has positive base $1-e_S$.
+The exact identities
+
+$$
+1-h_0=4k,\qquad e_S-e=k/2
+\tag{246.7}
+$$
+
+give saturated mixture weight $(h-h_0)/(4k)$ and mixed cap
+$e+(h-h_0)/8=(h+S-1)/8$. Every row uses this same whole mixture.
+At $k=0$, $t=h=h_0=1$ and there is no division. All closed stock,
+head and mixture endpoints are included.
+
+For every original competitor, §117.2 at $m=7$ requires
+$40c\ge4t+5S-4=40e$. Section 113.2 at any smaller positive cap
+$c<z$ requires $8c\ge h+S-1$. Since $e_*\le S/8<z$, an
+intermediate positive cap below $e_*$ contradicts these necessary
+bounds. They retain all arbitrary-address full-carrier competitors and
+all positive tail residuals. The whole law above, executed on the actual
+source using one seed, attains $e_*$; its positive base is $1-e_*$.
+Every actual $n>7$ has exact error $\max\{e_*,a_n\}=e_*$ by (243.3).
+Counted same-seed N completion gives the other attainer. This proves
+both optima and all positive closed-cap assertions. ∎
+
+For every $L\ge7$, pad this finite profile by $e_*$ through coordinate
+$L$. The same law ignores the added bits and emits no added label.
+New first-zero classes have base and pair at least $1-e_*$ and correct
+demand zero. Thus it is a full mass-one feasible O allocation at that
+same padded point, and its N completion supplies the N allocation.
+The hull inequalities reduce to $8e_*\le S$ and
+$h+S-8e_*\le1$. For every full unit-O $y$, the same allocation gives
+$F_{Q(y)}\le\Delta_O(y)\le1$ there. This is a pointwise consequence.
+

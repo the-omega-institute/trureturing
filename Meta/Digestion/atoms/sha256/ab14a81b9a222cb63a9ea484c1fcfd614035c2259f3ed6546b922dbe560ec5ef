@@ -1,0 +1,66 @@
+**Lemma 24.2 (three singly installed bits cannot decide the interior
+threshold).** Fix $2\le k\le n-1$ and any preparer correct on the
+whole original domain. Let $m_i$ be the number of its installed
+running states whose literal belongs to $E_i$. Then
+
+$$
+m_i\ge1\quad(1\le i\le n),\qquad
+\bigl|\{i:m_i=1\}\bigr|\le2,\qquad
+\sum_i m_i\ge2n-2.
+\tag{PCA.57}
+$$
+
+Proof. On the actual family of Lemma 24.1, each installed state is
+analytically either a test of one bit or a fixed-successor state.
+At a bit test its two successors are those for the two actual replies
+in Lemma 24.1. The other reply edges are irrelevant to this lower
+comparison. All four native edges remain part of the original table.
+For each $i$, fix $k-1$ of the other bits to one and all remaining
+bits to zero. Changing bit $i$ changes the prescribed code. Without
+an installed word in $E_i$ every menu reply would agree, contradicting
+Lemma 2.3 and the different required latches. Hence $m_i\ge1$.
+
+Suppose three indices each had exactly one such installed state.
+Fix precisely $k-2$ of the other $n-3$ bits to one, and the rest to
+zero; this is possible throughout the stated interior range. The
+remaining prescribed predicate is two-of-three on the three unfixed
+bits. Every other installed state now has a fixed successor on this
+restricted family. For the following impossibility argument only,
+suppress paths through these fixed-successor states. Such suppression
+is a mathematical examination of state paths, not a free native
+transition offered to a preparer, and it is not used to reduce any
+execution charge.
+
+This leaves at most three test vertices, one for each unfixed bit,
+a common start, and the two possible terminal values. Suppression is
+well-defined on reachable edges: a reachable unique bit has not been
+tested before on the prefix reaching its vertex, so either of its
+values can extend that prefix. A fixed-successor infinite path after
+such an edge would give a nonterminating actual input. The same
+argument applies to the initial fixed-successor path. Terminal values
+are identified here solely for the impossibility argument; the
+original literal latches are not identified in the installed apparatus.
+
+The reachable three-test graph must be acyclic. A simple path to a
+first vertex of a directed cycle has no vertex of that cycle earlier
+on it. All tested bits on that prefix and on one traversal of the
+cycle are distinct. Assign them the values selecting those edges.
+This is a consistent assignment that reaches and repeats the cycle,
+contradicting sourcewise termination. Thus acyclicity is proved only
+for this unique-bit restriction, not assumed for the competitor's
+union graph.
+
+There cannot be an acyclic three-test graph for two-of-three. Let its
+first test be $x$, leaving $y,z$. Its zero continuation must compute
+$y\land z$, and its one continuation must compute $y\lor z$.
+Both nonconstant residuals depend on both remaining variables, so each
+continuation must start at $y$ or $z$ and must have a path testing both.
+If the two continuations start at the same vertex they are the same
+residual function, a contradiction. If they start at different vertices,
+one requires a path from $y$ to $z$ and the other a path from $z$ to
+$y$, contradicting acyclicity. This excludes the three singleton
+indices. With at most two $m_i$ equal to one and all others at least
+two, summation gives $\sum_i m_i\ge2n-2$. Repeated tests, unreachable
+states and cycles elsewhere in the installed graph have not been
+excluded or counted as separate path copies. $\square$
+

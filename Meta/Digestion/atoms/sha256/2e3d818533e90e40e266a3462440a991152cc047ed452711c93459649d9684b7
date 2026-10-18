@@ -1,0 +1,66 @@
+#### 定理 4：局部未来商定理
+
+在非单例 Fibonacci 深度先验下：
+
+$$
+\boxed{
+h\sim_{\mathrm{Fut}}h'
+\Longleftrightarrow
+\bigl(\varphi(h),A_h,B_h\bigr)
+=
+\bigl(\varphi(h'),A_{h'},B_{h'}\bigr).
+}
+$$
+
+##### 证明
+
+如果三元组相同，则当前 phase 相同，后验权重：
+
+$$
+\mu(k)r_k^{A_h}s_k^{B_h}
+$$
+
+完全相同，因此：
+
+$$
+\nu_h=\nu_{h'}.
+$$
+
+未来所有合法响应的条件分布相同，所以：
+
+$$
+\mathscr L_h=\mathscr L_{h'}.
+$$
+
+反过来，如果未来律相同，则 phase 相同，且后验相同。对先验支持中的两个不同深度 $i,j$，有：
+
+$$
+\left(\frac{r_i}{r_j}\right)^{A_h-A_{h'}}
+\left(\frac{s_i}{s_j}\right)^{B_h-B_{h'}}
+=1.
+$$
+
+Fibonacci 比率的分离性要求：
+
+$$
+A_h=A_{h'},
+\qquad
+B_h=B_{h'}.
+$$
+
+所以三元组相同。证毕。
+
+这里没有使用全局时间 $t$。
+
+$A_h$、$B_h$ 是沿因果路径实际取得的历史信息，不是宇宙统一时钟上的读数。
+
+因此：
+
+$$
+\boxed{
+\text{未来由局部因果历史决定，而不是由全局时间决定。}
+}
+$$
+
+---
+

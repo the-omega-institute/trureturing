@@ -1,0 +1,72 @@
+**Theorem 28.3 (one separator for every family omitting reverse groups).**
+Under Assumption 28.1 take any $Q\subseteq\mathscr G$ with
+$Q\cap\mathscr G_{\rm rev}=\varnothing$. Retain every column of
+every selected group, including both columns of each paired group.
+In the original nine joint coordinates $(\Gamma,k)$, the vector
+
+$$
+\zeta_t=\left(0,0,0,0,0,-t,\frac{7t}{5},\frac{39t}{10},0\right)
+\tag{FC.114}
+$$
+
+satisfies, uniformly for every such $Q$ and every $r\in[r_-,r_+]$,
+
+$$
+\zeta_t\cdot(\Gamma(x_i),k(x_i))\ge0\quad(i\in I_Q),\qquad
+\zeta_t\cdot(B(t),r)<-\frac35.
+\tag{FC.115}
+$$
+
+Thus $\mathcal P_Q$ is empty, and in particular its slice at $K=r$
+is empty. The certificate is independent of the number of retained
+groups and of $r$; its target pairing has this sign for every real
+$r$, although the original optimal-face interpretation uses the
+stated interval.
+
+Proof. For an endpoint $x_i=(u_i,v_i,j_i)$, $j_i\in\{0,1\}$,
+direct expansion on $u_i^2+v_i^2=1$ gives
+
+$$
+\begin{aligned}
+\zeta_t\cdot(\Gamma(x_i),k(x_i))
+&=t j_i\mathfrak c_i
+       \left(-1+\frac75u_i^2+\frac{39}{10}u_iv_i\right)\\
+&=-t j_i\mathfrak c_i\Psi(u_i,v_i).
+\end{aligned}
+\tag{FC.116}
+$$
+
+For a pure column $j_i=0$ the value is zero, whatever its direction.
+For any retained saturated column, $\Psi_i>0$ would put that
+column in a singleton group of $\mathscr G_{\rm rev}$ by
+Proposition 28.2, contrary to the choice of $Q$. Therefore
+$\Psi_i\le0$ and its value is nonnegative. Equality includes all
+$\Psi_i=0$ boundary columns. A paired group contributes its pure
+zero value and its saturated nonnegative value separately; neither
+column is discarded or replaced by a fixed convex mixture.
+Zero-height contacts, unused contacts, coincident signed descriptions
+and zero weights retain their earlier complete-inventory meanings.
+
+On the target, the sixth, seventh and eighth $\Gamma$ coordinates
+are $\mu/t,m_u/t,0$, so
+
+$$
+\zeta_t\cdot(B(t),r)
+=-\mu+\frac75m_u
+=-\left(m_v-\frac25m_u\right)<-\frac35.
+\tag{FC.117}
+$$
+
+Any proposed nonnegative representation supported on $I_Q$ would
+make this target pairing a nonnegative sum of (FC.116), a contradiction.
+This is a concrete application of the already available Farkas
+interface (FC.22)–(FC.23), with all nine coordinates present and
+ninth coefficient zero, rather than a new general separation theorem.
+Indeed it excludes the full coordinate face before a $K$ slice is
+specified. Retaining a saturated column with $\Psi>0$ would invalidate
+the column inequality: algebraically at $(u,v)=(0,1)$ and
+$j=t=\mathfrak c=1$ the value is $-1$. That is a boundary check
+of (FC.116), not a claim that an axis is a feasible contact at
+$\lambda>0$. Thus the omission condition cannot be dropped.
+$\square$
+

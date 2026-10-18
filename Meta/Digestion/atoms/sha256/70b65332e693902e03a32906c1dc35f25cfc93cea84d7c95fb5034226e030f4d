@@ -1,0 +1,25 @@
+**Proposition 13.7 (consumed feasibility with full installation charged).**
+Let $I_m=I(C_m)$ under Definition 12.3. For every $m\ge6$, the exact
+question (CAR.54) is true at
+
+$$
+(K,S,k,d,L)=(5,I_m,m,2m-2,B_m)
+\tag{CAR.70}
+$$
+
+and false at $(5,S,\infty,0,B_m)$ for every finite $S$, in particular
+for $S=I_m$. The question of Theorem 12.1 is true at
+$(K,k,d,L)=(m+2,m,0,B_m-m(m-1)/2)$.
+
+Proof. $I_m$ is finite and effectively obtained by serializing exactly
+the common retained data and five literal rows in Definition 13.1 and
+Theorem 13.3. This includes the long read word and both deep concrete
+output exteriors; none is a five-state storage allowance. Theorem 13.3
+is the positive witness to (CAR.70), and Theorem 12.4 checks precisely
+its entire acquired domain, not just the representatives attaining its
+maxima. Theorem 13.4 gives at least six states when $m\ge6$ under
+the second question's zero-update and length bounds, even without an
+installation cap, proving its negative answer. Proposition 13.5 gives
+the last witness. These are mathematical answers to the exact finite
+decision problems, not reports of executing a solver. $\square$
+

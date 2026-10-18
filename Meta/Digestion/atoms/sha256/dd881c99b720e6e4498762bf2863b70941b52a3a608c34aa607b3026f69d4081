@@ -1,0 +1,25 @@
+**Proposition 475.1.** The exact tuple
+
+    (m,c,d,z)=(100,2,90,112)
+
+defines an axial-flat local word sigma=(M,C,D,D,C,D), a genuine
+local word tau with transverse M expense less than pi, and z<2*m+1,
+despite both weak source inequalities.
+
+**Proof.** Its axial-flat product is
+
+    (m-1)*(d-1)=8811>8464=(c+d)^2.
+
+It satisfies m>=1+c+d and z>=1+m+c. The source tau is strictly
+genuine because its two paired genuine factors are
+
+    L=(m+c)^2-(z-1)*(d-1)=525>0,
+    J=(z+1)*(d+1)-(m-c)^2=679>0.
+
+Its transverse M cosine numerator is N(z)=8904>0, so its two M
+angles spend strictly less than pi. Yet z=112<201=2*m+1.
+Thus the local hypotheses in Section 474, with C repetition replaced
+by D repetition, do not imply the same source gap. This exact tuple
+is a scalar counterexample to that substituted implication; it is
+not an actual complete face quotient or a flat-exclusion counterexample. QED.
+

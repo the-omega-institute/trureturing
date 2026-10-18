@@ -1,0 +1,40 @@
+## 2. One actual incidence closes that fiber
+
+Add the second one-event $d$ to the first scope and keep the second scope unchanged:
+
+$$
+S_1^+=\{a,c,d\},
+\qquad
+S_2^+=\{b,c\}.
+$$
+
+The writer is causal. Before seed acquisition both records are empty and $Z=0$. On the full marker tree, meaning all $16$ binary words and their prefixes, a completed marker with old $t<3$ is assigned one of $a,b,c,d$ by the four rules above when one of those ordinal identities applies. The writer appends that event to every declared containing scope only in that case. An unmatched ordinal event, every completed marker with old $t\ge3$, and every seed retry, return cycle, partial parse or other non-marker event holds the relation fields. The writer writes $Z=e$ only when old $t=0$. On old $t=2$, the third-marker record update completes before the original snapshot latch while $Z$ holds the value written at the first marker. After the latch, the records and $Z$ hold while the parser advances to the actual fourth marker and the original source delivers its Stop.
+
+This is the same write-before-latch and hold contract instantiated in the source-coherence continuation. The new fact is only the additional membership $d\in S_1^+$; no new read, acceptance bit, replay port or decoder is introduced.
+
+The resulting finite table is:
+
+| full marker word | selected past | event word | $Q^+=(r_1^+,r_2^+)$ | $Z$ | $B$ | $Y$ | Stop | colex rank |
+| --- | --- | --- | --- | ---: | --- | ---: | ---: | ---: |
+| $1001$ | $100$ | $bac$ | $(ac,bc)$ | 1 | $B_1$ | 1 | 1 | 0 |
+| $0101$ | $010$ | $abc$ | $(ac,bc)$ | 0 | $B_1$ | 1 | 1 | 1 |
+| $0011$ | $001$ | $acb$ | $(ac,cb)$ | 0 | $B_1$ | 1 | 1 | 2 |
+| $1100$ | $110$ | $bda$ | $(da,b)$ | 1 | $B_2$ | 0 | 0 | 0 |
+| $1010$ | $101$ | $bad$ | $(ad,b)$ | 1 | $B_2$ | 0 | 0 | 1 |
+| $0110$ | $011$ | $abd$ | $(ad,b)$ | 0 | $B_2$ | 0 | 0 | 2 |
+
+Here $B_1=(1,2,3,1,1)$ is the previous weight-one snapshot. The first three rows are unchanged by the incidence because $d$ occurs only after the bookmarked prefix in that cell.
+
+The adapter to the unchanged colex decoder is defined on these realized addresses by
+
+$$
+\begin{aligned}
+j((ac,bc),z)&=1-z,\\
+j((ac,cb),0)&=2,\\
+j((ad,b),z)&=2-z,\\
+j((da,b),1)&=0.
+\end{aligned}
+$$
+
+The decoder remains the original total function on its full nonnegative-integer code domain; these equations only specify the finite realized addresses.
+

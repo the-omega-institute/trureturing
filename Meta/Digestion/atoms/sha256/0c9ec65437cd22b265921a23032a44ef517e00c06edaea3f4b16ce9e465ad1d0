@@ -1,0 +1,27 @@
+**Theorem 7.2 (global optima on connected local sides of the seam).** There is $\varepsilon>0$ such that the original global optimum at $t=1000$ has minimum six supported low/seven total labels on a connected strength interval immediately below $s_S$ and at $s_S$, and minimum seven supported low/eight total labels on a connected interval immediately above $s_S$. The upper-side law has three distinct saturated physical failure lines. No maximal interval or ordering relative to earlier selected roots is asserted.
+
+Proof. The exact tangent certificates give
+
+$$
+\|I-R_6J_6\|_\infty<2.836\cdot10^{-8},\qquad
+\|I-R_{7S}J_{7S}\|_\infty<6.060\cdot10^{-9},
+$$
+
+$$
+-0.003919<\partial_\lambda P_{\rm unused}<-0.003918,
+\qquad0.0017109<\partial_\lambda p_6<0.0017111,
+$$
+
+$$
+0.000336<\partial_\lambda\tau_6<0.000338,
+\qquad0.000379<\partial_\lambda\tau_7<0.000380.
+$$
+
+Nonsingular $J_6$ gives the analytic six-contact branch by the implicit function theorem. The unused gap has positive second derivative, so a second implicit-function application to its stationary equation tracks its strict local minimum analytically. Its value is zero at the seam with negative derivative. It is therefore strictly positive just below $\lambda_S$ and strictly negative just above. All six old weights remain positive on a sufficiently small interval.
+
+Whole-circle feasibility on the lower side needs more than these local derivatives. Take disjoint small neighborhoods of the seven seam equality directions on their appropriate sheet/sign cases. Around each occupied contact, the continued exact double factor and strictly positive second derivative give a nonnegative gap with precisely that zero. Around the unused contact the continued minimum is strictly positive on the lower side, and curvature stays positive. On the compact remainder of the two circles all seam gaps have a strictly positive minimum by Theorem 4.1. Continuity preserves that margin after shrinking the interval. The report axes are in this strict remainder. The other height/report cases have the same strict or weaker-sign bounds. Thus the six-contact dual is globally valid below the seam. Its moment law and common constructor match the bound, so it is an original global optimum there. The equality-set and independent-column arguments preserve its exact six-low/seven-total minimum.
+
+Independently nonsingular $J_{7S}$ continues the seven-contact branch through the seam. Since $p_6=0$ and its derivative is positive, its seventh weight is positive on exactly the upper side locally; the other six weights remain positive. The seven exact contacts and their deflated positive quotients persist on their compact arcs, as do noncollision, nonzero height/report signs, curvature and the independent moment minor. Hence its two-sheet dual remains globally valid, and its own common constructor matches it. It gives an original global optimum and exact seven-low/eight-total minimum just above the seam. The six-contact dual's failure above the seam is not being used alone as an optimizer lower bound; the positive attaining seven-contact law and equality rigidity supply that bound.
+
+Both $\tau_6'$ and $\tau_7'$ are positive, so each multiplier side maps monotonically to a nonempty connected strength side. Contact 6 activates a third distinct physical failure line; the wedge bounds exclude an antipodal coincidence, and the height and curvature bounds exclude a height-sign crossing or collision at this event. $\square$
+

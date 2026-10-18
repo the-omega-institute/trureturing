@@ -1,0 +1,61 @@
+**Theorem 8.3 (infinite orbit fibers cannot be exact finite old-input unions).**
+Let $\mathcal O=\{T_k:k\ge0\}$. Every basic old-row/literal-history fiber
+$\mathcal U_{R'}(H')$ contained in $\mathcal O$ is finite, allowing its
+own arbitrary finite original cut $P'$. Hence no infinite fiber in
+Theorem 5.2 with $\tau=1$ is a finite union of such basic fibers.
+
+Proof. Use the exact finite prefix decomposition [SLH, Definition 74.2
+and (SLH.74.8)][SLH] for $R',H'$. If this basic fiber were infinite,
+some nonempty cell would have a residual variable $x$ occurring in its
+source term $W$. Otherwise each of finitely many ground cells would give
+only one source. The only remaining constraints in a cell are its full
+finite old disequality list $\Delta$; its literal replies are already
+fixed by the prefix.
+
+Fix one feasible valuation and every variable except $x$. The supplied
+one-variable free-term fact again says that each true disequality excludes
+at most one new value of $x$. Let $F$ be their finite union of excluded
+values. Choose an integer $M\ge2$ with $2^M>|F|+1$, fix a full binary
+shape with $M$ leaves, and vary its two leaf labels. At least two distinct
+such trees $z,z'$ avoid $F$. Their substitutions into $W$ yield different
+original sources: at an occurrence of $x$ their entire subtrees differ.
+Both substitutions preserve the old row, every old inequality and all
+literal replies. Their total leaf counts are the same,
+
+$$
+A+cM\ge2,
+\tag{ARH.8.6}
+$$
+
+where $c\ge1$ is the number of occurrences of $x$ in $W$ and $A\ge0$
+is the fixed contribution from the rest of $W$.
+
+By (ARH.4.2), the leaf counts of $T_0,T_1$ are one, and
+$\ell(T_{j+2})=\ell(T_{j+1})+\ell(T_j)$. They are strictly increasing
+from $T_2$ onward. There is at most one orbit tree of each leaf count
+at least two. The two distinct legal substitutions with (ARH.8.6) cannot
+both lie in $\mathcal O$, contradicting containment. Thus every such
+basic fiber is finite, and a finite union cannot equal an infinite
+subset of $\mathcal O$. $\square$
+
+Both representation obstructions have a paid-interface consequence.
+Suppose a deterministic source-total converter with a common $K$ new
+reads outputs only an ordinary finite description in the same original
+coordinates, or only a basic old-row/literal input, and promises that each
+terminal description's full semantic fiber over **all** $\mathcal T$
+is exactly its incoming branch fiber. Assume no relation, morphic domain
+promise or other source-bearing information survives outside that
+description. The finite reply-tree supply in §2 gives only finitely many
+terminal descriptions, even with serial updates. Their fibers cover the
+incoming domain and are contained in it. For (ARH.8.5) this contradicts
+Theorem 8.2; for an infinite orbit fiber and basic outputs it contradicts
+Theorem 8.3.
+
+The requirement “over all $\mathcal T$” is essential. Describing a branch
+as a basic fiber *intersected with the retained morphic promise* is a
+richer representation, not the forbidden conversion. Unbounded paid
+acquisition of the actual tree and task-specific output of a constant
+row are also not excluded. Theorem 8.3 shows why the infinite-tail
+consumer of Theorem 6.1 is not merely a finite exact selection of already
+solved literal-history inputs.
+

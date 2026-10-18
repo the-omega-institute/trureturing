@@ -1,0 +1,29 @@
+**Proposition 4.1 (Reference invariance and the already controlled pair span).** Under (1.5)–(1.6),
+intrinsic nullity and $T_{C,f}=0$ make $R_{C,f}$ invariant under replacing the zero reference by any
+measurable compatible completion $s(y)y$. Under $\mathsf Z(P)$ it vanishes on the span
+$\mathcal K_C^{\rm pair}$ of positive two-word intrinsic relations.
+
+Proof. Let $b(y)=d_C(s(y);y)$. The finite choices and (2.1) give
+
+$$
+|b(y)|^2\le c_L^{-1}\sum_w p_C(w;y)d_C(w;y)^2,
+\qquad \|b\|_{L^2(\mu_C)}\le c_L^{-1/2}\mathsf B_L.
+\tag{4.1}
+$$
+
+Additivity changes $d_C$ to $d_C-b$. All square and cross terms are integrable, and the change in (3.7)
+is $-2bT_{C,f}+b^2\sum p_Cf=0$. Also $m_C$ changes to $m_C-b$, so $a_C$ itself is reference independent,
+even without first-order balance.
+
+For a generator $f=\alpha\mathbf1_v-\beta\mathbf1_w$, $\alpha,\beta>0$, with positive actual word masses,
+[Two-word, Theorem 2.1][W] gives a common exterior law, $\alpha p_C(v;y)=\beta p_C(w;y)$, and equality of
+original exterior losses on its support. [Cocycle, Theorem 5.1][E] uses $\mathsf Z(P)$ to give equality
+of the interior total losses there. Consequently $d_C(v;y)=d_C(w;y)$ on the common positive conditional
+support. Their weighted squares cancel, and both weighted masses vanish elsewhere. Linearity proves the
+span assertion. The same finite-fiber argument gives pointwise identities for every nonnegative integer
+power on this span; it does not assert integrability of higher powers. Zero-mass word pairs give only a
+zero actual direction and no conditional pair law. $\square$
+
+Thus $f\mapsto R_{C,f}$ factors through $\mathcal K_C(P)/\mathcal K_C^{\rm pair}$ under all first-order
+balances. Neither a nontrivial quotient nor a nonzero functional on it is asserted.
+

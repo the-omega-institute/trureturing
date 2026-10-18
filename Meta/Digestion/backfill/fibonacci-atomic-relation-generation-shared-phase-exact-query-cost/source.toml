@@ -1,0 +1,5 @@
+source_id = "fibonacci-atomic-relation-generation-shared-phase-exact-query-cost"
+path = "docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION_SHARED_PHASE_EXACT_QUERY_COST.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

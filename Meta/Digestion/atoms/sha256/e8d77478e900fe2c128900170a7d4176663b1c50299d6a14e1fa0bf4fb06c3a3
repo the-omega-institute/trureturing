@@ -1,0 +1,36 @@
+**Convention 6.2 (pressure and the original lower witness).** Write
+
+$$
+A_n(w)=\max_\Theta\sum_{x\in C_\Theta}\prod_iw(x_i),\qquad
+\beta_d(w)=\sup_{n\ge1}A_n(w)^{1/n}.
+\tag{RRN.24}
+$$
+
+Theorem 6.1 expresses this same all-size pressure as the supremum
+over owned-seed networks. For a probability $\mu$ on $S_d$,
+[NPC, Theorems 5.3 and 6.2][NPC] supply
+
+$$
+2^{-\sigma_d}=\min_{\mu\in\Delta(S_d)}\beta_d(\mu),\qquad
+\sigma_d=\inf_{n\ge1}\frac{\log_2K_d(n)}n.
+\tag{RRN.25}
+$$
+
+Their minimum includes zero coordinates. If either equivalent cap
+condition holds for a probability $\mu$, [NPC, Theorem 7.1][NPC]
+gives the unchanged original-task consequence
+
+$$
+M_1(D)\ge\left\lceil C^{-2^{D-d}}\right\rceil\quad(D\ge d),
+\qquad \lambda\ge-2^{-d}\log_2C.
+\tag{RRN.26}
+$$
+
+This uses one actual perfect scaffold with $2^{D-d}$ present blocks
+inside $\mathcal F_D$. An arbitrary original-root late literal is a
+constant or is a function of one canonical boundary reply in one
+of those same blocks. Restricted code fibers retain all their
+correlations, and the analytical product law gives their mass bound.
+The scaffold is a restriction for a lower bound, not an additional
+reader input or an imposed form for general competitors.
+

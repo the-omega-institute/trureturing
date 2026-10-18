@@ -1,0 +1,47 @@
+**Definition 15.1 (Soft occupation profiles).** On the original
+path and law let $a,b\in\mathbb R^n$ and define
+
+$$
+F_a(s)=\prod_i\bigl(1+(a_i-1)s_i\bigr).
+\tag{15.1}
+$$
+
+Let $Z_G(x)$ be the independent-set partition polynomial with
+coordinate argument $x$. Coordinatewise multiplication of
+arguments is denoted by juxtaposition. Direct expectation under
+the original positive $p$ gives
+
+$$
+\operatorname{Cov}_p(F_a,F_b)
+=\frac{Z_G(\lambda ab)}{Z_G(\lambda)}
+-\frac{Z_G(\lambda a)Z_G(\lambda b)}{Z_G(\lambda)^2},
+\tag{15.2}
+$$
+
+and the same occupied-endpoint calculation as in Definition 11.2 gives
+
+$$
+\mathcal E_\omega(F_a,F_b)
+=\frac1{Z_G(\lambda)}\sum_i
+\frac{\omega_i\lambda_i}{1+\lambda_i}
+(a_i-1)(b_i-1)Z_{G\setminus N[i]}(\lambda ab).
+\tag{15.3}
+$$
+
+To see the second identity, the erasure increment at an occupied
+$i$ is $(a_i-1)\prod_{j\in s\setminus\{i\}}a_j$.
+Both increments multiply to $(a_i-1)(b_i-1)$ times the product
+of $a_jb_j$ on the remaining occupied sites. Every neighbor of
+$i$ is empty, so summing their product-activity mass leaves
+exactly the deleted partition polynomial in (15.3).
+These are algebraic evaluations under the original law even
+when some arguments are zero or negative; $\lambda ab$ is not
+a replacement stationary distribution. A vacancy cylinder
+sets $a_i=0$ on its marked sites and one elsewhere.
+
+The profiles provide a structured phase menu and bilinear
+matrix entries for its linear combinations. The expectation
+and deletion computations are inherited finite-sum ingredients;
+their use in the strict certificate below keeps the original
+preparation, generator and site normalization.
+

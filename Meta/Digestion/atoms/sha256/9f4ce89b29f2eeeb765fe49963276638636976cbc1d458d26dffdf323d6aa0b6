@@ -1,0 +1,30 @@
+**Definition 1.1 (actual typed contract).** Let
+
+$$
+X=\bigsqcup_{i\in I}X_i
+$$
+
+be the actual image of a declared common source, closed under the operations
+under consideration. An executable name $a:i\to j$ has a domain
+$D_a\subseteq X_i$, a successor $T_a:D_a\to X_j$ and a complete response
+$\ell_a$. The response distinguishes illegal access, legal success and legal
+executed failure. An illegal action has no successor; a legal failure has its
+declared successor, which may be a stopped state. Responses include every
+task-visible event, record, selector decision, namespace, clock, inherited
+meter and resource update. If an illegal request has a task-visible rejection
+label, that label is also retained. External controls and initial records are
+matched when two states are compared. Every selector or record update required
+by the task is included among the compared readouts, at every reachable state.
+
+The language is typed and contains every prefix of each declared finite
+experiment. Every allowed continuation after a legal failure is included.
+For chronological words $uv$, $T_{uv}=T_v\circ T_u$ on
+
+$$
+D_{uv}=\{x\in D_u:T_ux\in D_v\}.
+\tag{1.1}
+$$
+
+The complete trace retains ordered labels and all declared terminal readouts.
+It does not replace an archive by its task summary.
+

@@ -1,0 +1,31 @@
+### 89.7. A uniform anisotropy remainder estimate and local positivity
+
+Fix any number 0<κ<35/2048. By (18), joint analyticity, and continuity of the Hessian, shrink the m,E-neighborhood so that for every traceless Hermitian H,
+
+\[
+ \frac12 d_E^2g(m,E)[H,H]\ge\kappa\|H\|_F^2.             \tag{25}
+\]
+
+For a physical D put E=D*D, λ=Tr(E)/2 and E₀=E−λI₂. The segment λI₂+sE₀, 0≤s≤1, remains inside the chosen neighborhood. Taylor's formula with integral remainder based at the scalar point, using both identities in (24), gives the exact estimate
+
+\[
+ \begin{split}
+ \psi(m,D)-\frac14
+  &=\int_0^1(1-s)\,
+      d_E^2g(m,\lambda I_2+sE_0)[E_0,E_0]\,ds\\
+  &\ge\kappa\|D^*D-\tfrac12\operatorname{Tr}(D^*D)I_2\|_F^2.
+ \end{split}                                             \tag{26}
+\]
+
+Together with (12), this proves the uniform gauge-slice bound
+
+\[
+ f(m,y,D)\ge\frac14+a\|y-y_*(m,D)\|^2
+       +\kappa\|D^*D-\tfrac12\operatorname{Tr}(D^*D)I_2\|_F^2.
+                                                               \tag{27}
+\]
+
+This is the needed remainder control relative to the scalar cone. An uncontrolled O(‖D‖⁶) term has not been dropped or absorbed into a quartic expression that vanishes there. Instead the exact scalar value and first derivative force the full remainder to be quadratic in the anisotropy.
+
+The local zero set of this witness is exactly y=0 with D*D scalar, by (23) and (27). It is a set of witness minima; the full diamond equality set is a subset, since M allows additional complex marker parameters. If desired, (27) also implies a quartic distance bound to this witness-minimum set in these local coordinates. Indeed, if the singular values of D are s₁,s₂, its squared distance to the scalar-Gram cone is (s₁−s₂)²/2, whereas the squared anisotropy is (s₁²−s₂²)²/2 and is at least twice the fourth power of that distance. The smooth y_* vanishes on the cone, so it introduces only a bounded local Lipschitz factor in this distance comparison.
+

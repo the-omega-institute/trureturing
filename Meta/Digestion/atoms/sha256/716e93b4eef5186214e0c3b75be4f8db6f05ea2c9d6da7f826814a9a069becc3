@@ -1,0 +1,27 @@
+**Definition 2.1 (unchanged source and periods).** Fix
+
+$$
+0<Z<1,\qquad r=1-Z,\qquad H=r/2,\qquad X=Y=H.
+\tag{2.1}
+$$
+
+In mode order $(0,1,2,3,13)$ the probabilities at height $k$ are
+$(k,H-k,Z,H-k,k)$, with $0<k<H$. Fix the original preparation height
+and arbitrary preparation phases. A common phase gauge makes the middle
+amplitude positive; it does not set the other preparation phases to zero.
+The representative remains $\psi_s=\sqrt{p_s}e^{-i\theta_s}$.
+The grouped phase increments are $u,v$, and
+
+$$
+\alpha=u-v\pmod{2\pi},\qquad \beta=u\pmod{2\pi},
+\qquad (u,v)=(\beta,\beta-\alpha).
+\tag{2.2}
+$$
+
+Both circles have period $2\pi$. The integer unimodular change (2.2)
+does not double either circle. The current-ray source is
+$\mathcal M=(0,H)\times\mathbb T^2$. A starting ray
+$q_0=(k,\alpha_0,\beta_0)$ may be the preparation itself or any specified
+ray reached from it by N, Theorem 8.2. A preceding preparation history,
+if needed, remains a separate finite history with its own cost.
+

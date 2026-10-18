@@ -1,0 +1,73 @@
+**Lemma 6.1 (Analytical epochs and a per-target stopped comparison).** Couple the actual observer to the full source history and hold its label fixed after the actual stop. Let $Y_n$ be its analytical state just after the tick at $\tau_n$, and define
+
+$$
+N=\inf\{n\ge0:Y_n\in\{d_0,d_1\}\},
+\qquad Q_T=\sum_{t\ge0}\mathbf1_{\{T>t\}}X_t,
+\qquad p_i=\mathsf P_{i,q}(D=1).
+\tag{6.1}
+$$
+
+For a compliant machine, $Y_0$ has row $\nu_i$, its transition kernel is $U_i$ under family $i$, and
+
+$$
+Y_N=d_D,
+\qquad N\le Q_T\le T.
+\tag{6.2}
+$$
+
+For each target $i$ separately, with the target's $W$ from (5.6),
+
+$$
+|p_i-p_j|\le r_H(q)+\chi_{M,L}+(\pi_i+\pi_j)\mathbb E_{i,q}N,
+\qquad \chi_{M,L}=\gamma_L^{K_M}-1,
+\quad j=1-i.
+\tag{6.3}
+$$
+
+Proof. The epoch representation and pathwise inequality (6.2) are the continuation's Lemma 25.1 applied at this fixed $q$. Independence of the future gaps and fresh update randomness gives (3.2). If the machine stops before or at the first tick, $N=0$. Otherwise, each live state $Y_0,\ldots,Y_{N-1}$ is immediately after an actually read tick and commits to a further read. These are $N$ distinct paid ticks, proving $N\le Q_T$. Each tick counted in $Q_T$ is one of the $T$ actual reads.
+
+If stopping occurs during zeros, the next analytical tick merely records the frozen label. It need not have been read, and is not charged in $Q_T$. All source intervals are finite almost surely, so actual termination ensures $N<\infty$ and $Y_N=d_D$. The finite paid mean gives $\mathbb E_iN<\infty$.
+
+Let $h$ be the probability of ever reaching $d_1$ for $W$, and let $h_j$ be that probability for $U_j$. First-step conditioning gives
+
+$$
+0\le h,h_j\le1,
+\qquad Wh=h,
+\qquad U_jh_j=h_j,
+\qquad h(d_0)=h_j(d_0)=0,
+\quad h(d_1)=h_j(d_1)=1.
+\tag{6.4}
+$$
+
+These hitting functions are defined even at abstract states with nonabsorbing classes. By Lemmas 4.1 and 5.2,
+
+$$
+\sup_x|h(x)-h_j(x)|\le\chi_{M,L}.
+\tag{6.5}
+$$
+
+For an integer $n\ge1$, stopped conditional expectation along the actual target chain gives
+
+$$
+\mathbb E_i h(Y_{N\wedge n})-\nu_i h
+=\mathbb E_i\sum_{r=0}^{(N\wedge n)-1}
+  [(U_i-W)h](Y_r).
+\tag{6.6}
+$$
+
+Indeed a live increment has conditional mean $(U_i-I)h=(U_i-W)h$, and after $N$ the increment vanishes. Because $h$ takes values in $[0,1]$, (5.7) bounds each summand by $\pi_i+\pi_j$ in absolute value. Bounded convergence on the left and domination by $(\pi_i+\pi_j)N$ on the right justify $n\to\infty$. Using $h(Y_N)=D$ yields
+
+$$
+|p_i-\nu_i h|\le(\pi_i+\pi_j)\mathbb E_iN.
+\tag{6.7}
+$$
+
+The opponent terminates from its actual initial law, so $p_j=\nu_jh_j$. Decompose
+
+$$
+p_i-p_j=(p_i-\nu_i h)+\nu_i(h-h_j)+(\nu_i-\nu_j)h_j.
+\tag{6.8}
+$$
+
+Bounds (6.7), (6.5) and (5.2) prove (6.3). Repeating with the other target changes only the analytical comparison $W$; it uses the same actual $\eta,A,C$ and gives the other expectation separately. Neither global absorption from every abstract state nor a bound on the sum of the two means replaces these two inequalities. $\square$
+

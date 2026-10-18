@@ -1,0 +1,42 @@
+**Theorem 7.3 (native current-frontier and prefix consequences).** For
+the native preparer and its same cube projection in Theorem 7.1, if every
+projected gap ending after $e_*$ has span at most four, then
+
+$$
+H\ge G+4+r+\nu+E_{\rm reg}+b_{\rm short}+2\tau.
+\tag{7.2}
+$$
+
+The exact minimum for this projected qualified class, and for its
+all-spans-at-most-four subclass, is $G+4+r$. If its projection has a
+terminal span-four gap, the bound includes the credited two-unit margin;
+no attainment with that gap is asserted. In any unrestricted native
+strict saving $H<G+4+r$, that same projection strictly reverses
+(5.15) and has a late span-at-least-five gap satisfying (5.16).
+
+For an actual live prefix in that projection under Theorem 6.4's
+conditions, its selected installed vector satisfies
+
+$$
+M(R)\ge q(N-q+1)+\nu_P+E_{{\rm reg},P}
+ +b_{{\rm short},P}+2\tau_P.
+\tag{7.3}
+$$
+
+Proof. Theorem 1.4 gives $m\le M\le H-4-r$ on one actual
+projection. Apply Theorem 5.6 for (7.2). The same full-fiber grid lift
+as in Theorem 7.1 attains the class minima and both native caps on a
+single actual origin, while remaining correct on the full unbounded
+fiber. Those numerical minima and the late-gap necessity are already
+[SI, Corollary 10.6 and Proposition 10.9][SI]; the explicit short-block
+slack uses Section 4 here. If $H<G+4+r$, then $m<G$ in this
+projection, giving the strict global deficit without mixing histories
+from other projections. Finally $m_i\le M_i$ for every selected
+coordinate, so (6.1) implies (7.3). Its numerical part is SI Theorem
+10.8, and its short-block slack is the corresponding proved deduction.
+All these inequalities constrain the one original installed vector;
+states in different cones need not be distinct. Native calls suppressed
+by either mathematical restriction remain paid. The original literal
+code, $2+r$ latches, four replies, complete entries and separately
+priced eight-state reader remain those of Section 1. $\square$
+

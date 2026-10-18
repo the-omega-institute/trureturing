@@ -1,0 +1,40 @@
+**Theorem 6.4 (strict native failure of the stated replacement language).**
+Every acceptance $(\mu,C)$ of $V_{\mathrm{sep},h}$ satisfies
+
+$$
+C\ge\mu(\mathcal Q_h).
+\tag{JPL.28}
+$$
+
+For the diagonal uniform law $\mu_0$, the smallest accepted cap is
+exactly $1$, whereas the exact native pressure is $4/5$. Thus the
+language's best scalar all-length upper envelope exceeds the true
+maximum by $(5/4)^n$ at length $n$. A multiplicative correction whose
+logarithm is $o(n)$ cannot remove this exponential loss at fixed $h$.
+
+Proof. Sum the pointwise inequalities (JPL.26) on the five actual
+states $v_s$. For each separated term, Lemma 6.3 gives
+
+$$
+\sum_{s=0}^4F_\ell(v_s)
+=\sum_s\prod_jf_{\ell j}(u_s)
+\le\prod_j R(f_{\ell j}).
+$$
+
+Also $\sum_s e(v_s)\le\sum_xe(x)$. Consequently each leaf has
+$\mu(\mathcal Q_h)\le L\le C$, regardless of the number of terms
+or the remainder's support. For probabilities on the full alphabet,
+$\mu(\mathcal Q_h)\le\nu(\mathcal Q_h)
++\operatorname{TV}(\mu,\nu)$. Hence (JPL.28) survives every
+stability step and every cap enlargement. Induction proves it for
+all finite derivations.
+
+For $\mu_0$ the right side is one. A cap of one is accepted, for
+example by the remainder $e=\mu_0$ with no separated terms. It is
+also attained with no remainder: use five diagonal singleton products,
+with weight $1/5$ in one module and unit singleton weights in the
+others. Each term has charge $1/5$, and their sum is exactly $\mu_0$
+on all of $S_d$. Theorem 5.2 gives the true mass $(4/5)^n$, while
+the best accepted scalar cap produces $1^n$. Their ratio is
+$(5/4)^n$ and has positive logarithmic rate. $\square$
+

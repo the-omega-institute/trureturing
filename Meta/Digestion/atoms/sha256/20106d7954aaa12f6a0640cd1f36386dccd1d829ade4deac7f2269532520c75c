@@ -1,0 +1,33 @@
+**定义 53.1（All positive INITIAL tails and arbitrary two-value phase tables）。** In (52.1), choose arbitrary $R_0,R_1\in Y$ and arbitrary tables $\lambda_v:P\to Y$, $v\in\mathbb F_2$. With arbitrary coincidences, define the complete INITIAL target by
+
+$$
+f(v,-j,s)=
+\begin{cases}
+\lambda_v(j),&s=0,\\
+R_v,&1\le s<k.
+\end{cases}
+\tag{53.1}
+$$
+
+Give initial bottom any independent label. There is no freshness, injectivity or value-independence hypothesis. Write
+
+$$
+\rho_0=2p,\qquad \rho_i=2i-1\ (1\le i<p),\qquad
+b_v(i)=\lambda_v(\rho_i),\qquad b(i)=(b_0(i),b_1(i)).
+\tag{53.2}
+$$
+
+For a table $c$ on $\{0,\ldots,p-1\}$ use the following expression inside this family's fee:
+
+$$
+\psi(c)=
+\begin{cases}
+0,&c\text{ is constant},\\
+1,&c\text{ is nonconstant, }c|_{\{2,\ldots,p-1\}}\text{ is constant, and }|c[\{0,\ldots,p-1\}]|\le2,\\
+\max\{2,B(c)\},&\text{otherwise},
+\end{cases}
+\tag{53.3}
+$$
+
+In the last case $B(c)=\max\{i:0\le i<p-1,\ c(i)\ne c(i+1)\}$. A nonconstant table has such a boundary. Constancy of the empty outside set is vacuous. The constant, one-block and path-column mechanism of Theorem 43.2 is consumed only after the actual even-order parent and suffix correspondence below; its odd-order source and acquired fee are not identified with the present INITIAL problem.
+

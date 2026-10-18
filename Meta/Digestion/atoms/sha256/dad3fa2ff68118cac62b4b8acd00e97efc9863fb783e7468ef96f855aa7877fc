@@ -1,0 +1,26 @@
+**Definition 1.4 (graphs and same-assignment whole potentials).** Let
+$G=(V,E)$ be a connected simple 4-regular graph, $n=|V|\ge5$,
+such that $G-v$ is connected for every $v\in V$. Thus $|E|=2n$.
+Orient an Euler tour and fix the resulting two outgoing and two
+incoming slots at every vertex, in that order, as $LL,LR,RL,RR$.
+There is one shared bit $s_a\in\mathbb F_2$ for each edge $a$;
+its two endpoint occurrences are the same variable. Its owner is its
+terminal slot at the tail. Write $\operatorname{st}(v)$ for the four
+incident edges. For fixed real parameters $A>B>0$, put
+
+$$
+\begin{aligned}
+\Phi_v(z)&=\begin{cases}
+A,&\sum_{a\in\operatorname{st}(v)}z_a=0\pmod2,\\
+B,&\sum_{a\in\operatorname{st}(v)}z_a=1\pmod2,
+\end{cases}\\
+W(s)&=\prod_{v\in V}\Phi_v(s_{\operatorname{st}(v)}),
+\qquad
+Z_G=\sum_{s\in\mathbb F_2^E}W(s).
+\end{aligned}
+\tag{WBF.5}
+$$
+
+Each $\Phi_v$ is one entire original-block potential. It is not
+replaced by independently weighted terminal or pairwise factors.
+

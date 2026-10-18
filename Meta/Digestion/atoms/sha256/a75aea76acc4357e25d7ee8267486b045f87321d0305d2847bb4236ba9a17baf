@@ -1,0 +1,35 @@
+**Theorem 5.1 (paired invisibility with positive acquired kernels).** The family in Definition 3.1 has the same emissions, $A,\pi,\tau$, and the same configuration-indexed arrays $f,h$ for every $\theta$. Both arrays are nonconstant. From each corresponding p label, its truncated original transcript law through $2q+1=N-1$ Reads is independent of $\theta$. From each suspended label, the same holds through $2q+2=N$ Reads. Nevertheless
+
+$$
+\begin{aligned}
+Q_i^\theta(w_{q,1})-Q_i^{\theta'}(w_{q,1})
+&=(\theta-\theta')\gamma_q U_i z_i,\\
+W_i^\theta(\alpha w_{q,1})-W_i^{\theta'}(\alpha w_{q,1})
+&=(\theta-\theta')\gamma_q v_i(ASz)_i.
+\end{aligned}
+\tag{5.1}
+$$
+
+In particular the first line is nonzero at $i=0,1$ for distinct $\theta,\theta'$. Its first separating completed word has exactly $N$ future Reads.
+
+**Proof.** Since $q\ge3$, the common g powers in (4.6) include $j=0,1,2$, proving equality of $f$ in (2.6). Equality of $g,A,v$ proves equality of $h$. For nonconstancy, $f$ is sampled from a degree-six polynomial: the $L_0^2g_0$ summand has leading coefficient $1/32$, and the other summands have lower degree. If all $N\ge8$ entries were equal, this nonconstant degree-six polynomial minus that common value would have at least eight distinct roots, which is impossible. Similarly $h$ has degree three with leading coefficient $1/4$, so cannot be constant on $N\ge8$ distinct nodes.
+
+From p, the completed raw words through $2q+1$ Reads are exactly $w_{j,0}$ for $j\le q$ and $w_{j,1}$ for $j\le q-1$. Their probabilities are the common columns in (4.6). The sole unfinished legal prefix at that horizon is $(\beta\alpha)^q\beta$, whose probability is
+
+$$
+(L_\theta^q U)_i.
+\tag{5.2}
+$$
+
+It too is common by (4.6). These completed words and this unfinished prefix partition the truncated observation space. Hence the entire truncated law agrees, including every coarser observation at an earlier Read cut.
+
+From suspension there is the immediate completed beta, with common probability $1-v_i$. Otherwise the first future alpha has probability $v_i$ and uses the same $A$ to enter the p family. Thus one extra future Read transports the p prefix equality to suspension.
+
+The final identity of (4.6) and (2.4) prove the first line of (5.1). The suspended generation equation proves the second. Since $Sz=(U_0,-U_1,0,\ldots,0)$ and $U_0-U_1=\eta$,
+
+$$
+(ASz)_0=\frac12U_0+\frac{\eta}{2N}>0.
+$$
+
+So the suspended laws also differ. Rendering the same raw words on the same current $C_0$ preserves these masses and the prefix equality, inserts the same operation blocks, and retains the mandatory Stop. No private mode or transition draw is inserted into that original transcript. $\square$
+

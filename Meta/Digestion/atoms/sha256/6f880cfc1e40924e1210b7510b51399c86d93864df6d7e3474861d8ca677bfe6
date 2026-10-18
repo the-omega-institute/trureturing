@@ -1,0 +1,25 @@
+**Attribution 7.1 (Scoped synthesis and mature mechanisms).** The XOR/spin-complement filtering mechanism is classical: [Chigansky–van Handel, Example 10][CVH] observes equality of consecutive fair iid hidden bits, equivalently the complement of their XOR, and contrasts minimal and maximal hidden filters. Proposition 2.1 inserts actual emitted zero separators and a stationary phase on the original clock; §§3–5 prove the resulting legal-law erasure defects and Brier-risk parameter boundary directly. No hidden-filter theorem is substituted for those observable calculations.
+
+[Dawid–Lauritzen–Parry, §4.2.1, Example 4.4 and (14)][DLP] supplies classical conditional Brier/ratio-matching loss and squared posterior discrepancy. Its strictly positive full-product setup does not itself cover hard no11 or zero-mass fibers. Here those cases are handled by the supplied legal-fiber identity and the direct conditional computations. [van Enter–Verbitskiy, §1.1, Theorem 2 and Theorems 5–6][EV] supplies classical whole-exterior Shannon erasure uncertainty; its Gibbs formula has a Gibbs hypothesis. Shannon erasure entropy is not the present squared-defect series or harmonic/Brier objective. Single-site recovery here is not asserted to recover every erased finite block or to establish strong bilateral determinism.
+
+| Source | Status and exact use |
+| --- | --- |
+| [Universal][U], §§1, 3–4, Theorem 6.2 and Open Problem 7.4 | Ordinary supplier: actual risk, complete $\Theta_N/J_\theta/P_\theta$, full-support necessity and compact finite separation; original target unchanged. |
+| [Renewal][R], §1.3 and §8 | Ordinary supplier: upper semicontinuity, same-law zero-mass trimming and its existing restricted exclusions. |
+| [Conditional Response][C], §§2–4 | Ordinary supplier: exact one-sided fields, attained-law budgets, conditional-null response and finite certificate, with attainment hypotheses retained. |
+| [Multiword][M], Theorems 2.2–3.1 | Ordinary supplier: conditional stability and expanded certificate; their actual posterior and tail hypotheses are not inferred from fixed state count. |
+| Chigansky and van Handel, *A complete solution to Blackwell's unique ergodicity problem for hidden Markov chains*, arXiv:0910.3603v2, Example 10, DOI 10.1214/10-AAP688 | `literature-attested`: fair equality/XOR hidden-memory mechanism; not a supplier of this legal-clock tail or risk formula. |
+| Dawid, Lauritzen and Parry, *Proper Local Scoring Rules on Discrete Sample Spaces*, arXiv:1104.2224v2, §4.2.1, Example 4.4, (14) | `literature-attested`: conditional Brier loss and posterior discrepancy; no transfer of full-product positivity or estimation conclusions. |
+| van Enter and Verbitskiy, *Erasure entropies and Gibbs Measures*, arXiv:1001.3122v1, §1.1, Theorems 2, 5–6 | `literature-attested`: whole-exterior Shannon erasure and its stated Gibbs boundary; no replacement of the present quantities. |
+| §§2–5 and Proposition 6.1 | `repo-derived`: the exact legal fixed-state construction/application and its proved boundary consequences relative to the named suppliers, without worldwide priority. |
+
+**Proof limits.** All new claims are ordinary handwritten arguments over the one actual law, with finite conditional identities and explicitly justified infinite-field limits. No mathematical program, numerical experiment, enumeration run, new test, ingestion or Lean compilation supplies evidence here. Bounded primary attribution does not establish exhaustive literature absence. The remaining whole-domain tail and attainment questions are precisely those in Open Problem 6.4.
+
+[U]: FIB_LEGAL_EDGE_LOAD_UNIVERSAL_POSTERIOR_DEFECT_AND_FINITE_HIDDEN_SEPARATION.md
+[R]: FIB_LEGAL_EDGE_LOAD_RENEWAL_CLOSURE_SEPARATION_AND_OBSERVABLE_DEPENDENCE.md
+[C]: FIB_LEGAL_EDGE_LOAD_CONDITIONAL_NULL_RESPONSE_AND_FINITE_CERTIFICATE.md
+[M]: FIB_LEGAL_EDGE_LOAD_MULTIWORD_RESPONSE_STABILITY_AND_VANISHING_TAIL_CERTIFICATE.md
+[CVH]: https://arxiv.org/html/0910.3603v2
+[DLP]: https://arxiv.org/html/1104.2224v2
+[EV]: https://arxiv.org/html/1001.3122v1
+

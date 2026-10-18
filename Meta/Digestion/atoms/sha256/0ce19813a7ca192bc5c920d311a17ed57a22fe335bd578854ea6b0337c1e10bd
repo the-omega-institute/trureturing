@@ -1,0 +1,52 @@
+**Theorem 11.7 (two universal whole-table charging principles fail).**
+Consider the class of all Definition 3.1 threshold tables feasible at
+$(n,W)$, with $n\ge6$, $3\le k\le n-2$ and original distinct
+positive selected positions. For a fixed representative system, let
+$E$ be any cell-disjoint collection of its fixed-history collisions
+satisfying Theorem 7.1 with $\lambda=v=1$. Write $s(e,\omega)$
+and $P(e,\omega)$ for their first separators and packs.
+
+There is no dimension-independent finite constant $C$ for which,
+for every table, every lawful representative system and every such
+$E$, one can jointly choose allowed completions $(\omega_e)_{e\in E}$
+so that
+
+$$
+\left|\{e\in E:s(e,\omega_e)=q\}\right|\le C
+\quad\text{for every installed running state }q.
+\tag{WTF.44}
+$$
+
+Also false is the principle with those same universal quantifiers
+which permits joint completion choices and requires an injection
+$e\mapsto q_e$ into $Q_B\setminus\operatorname{im}f$ with
+$q_e\in P(e,\omega_e)$. It fails even when injectivity is dropped
+and $E$ consists of only one collision.
+
+Proof. Given $C$, choose an integer $M\ge2$ with $M-1>C$.
+Theorem 11.3 gives a complete cap-feasible table, and Proposition
+11.6 gives one lawful representative system. Take the $M-1$ pairs
+$\{L_j,H_j\}$, $2\le j\le M$, for $E$. They are cell-disjoint
+and satisfy all stipulated parameters by (WTF.41). For every joint
+completion choice Theorem 11.4 gives $s(e,\omega_e)=J$ for all
+$e$. Thus its multiplicity is $M-1>C$, contradicting (WTF.44).
+The joint existential choice of completions cannot repair this failure.
+
+For the external-pack principle keep that same table and representative
+system but take $E=\{\{L_2,H_2\}\}$. By (WTF.43), no allowed
+completion supplies even one state of its pack outside the image.
+Hence the asserted assignment does not exist, before any question of
+injectivity. These are counterexamples to principles quantified over
+whole feasible tables and arbitrary fixed lawful representative
+systems, with the actual incoming histories held fixed.
+
+The first statement rules out bounded reuse of these first separators
+as a universal replacement for injective charging. The second rules
+out accepting an arbitrary representative system and subsequently
+repairing its collisions solely with external states from these packs,
+even after coordinating completions. Neither asserts a false numerical
+inequality $m_B<G$: Theorem 11.3 instead gives $m_B>G$. Other installed
+states and a new jointly chosen representative system are different
+possible sources of compensation. In particular Proposition 11.5
+shows that this very table has a favorable injective choice. $\square$
+

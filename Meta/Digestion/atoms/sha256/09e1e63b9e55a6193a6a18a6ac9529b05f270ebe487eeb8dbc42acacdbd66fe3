@@ -1,0 +1,17 @@
+# Recursive relational observation: native joint potential limits
+
+This volume proves two results about whole-block weights in the native
+late-target problem. On a fixed scaffold filled with the four-state core,
+every admissible relation has a lossless local completion, even when its
+weights correlate all modules. On a different, diagonal support, exact
+pressure separates owned joint weights from a specified language of finite
+nonnegative separable majorants and scalar cap summation. The restricted
+core atlas has a sharp optimizer ceiling. The diagonal obstruction is
+pointwise and is already handled by the existing full joint rule.
+
+These are ordinary mathematical statements and proofs, not Lean
+certifications. This source is reference input; no statement of compilation,
+freezing or machine-maintained coverage is made. Its mathematics uses the
+GitHub `$...$` and `$$` conventions. Existing text is preserved when this
+volume is extended; further material belongs after its final append anchor.
+

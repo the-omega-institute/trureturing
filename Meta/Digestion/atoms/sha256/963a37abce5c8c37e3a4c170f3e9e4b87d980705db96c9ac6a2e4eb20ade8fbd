@@ -1,0 +1,34 @@
+**Convention 6.1 (the prescribed original encoder).** Reuse exactly
+the four-name encoder of [D3, Theorem 2.3, (D3.23)–(D3.26)][D3],
+credited there to LTR. If $\tau(x)=0$ at a leaf and $1$ at a branch,
+
+$$
+E_0(\langle\alpha,v\rangle)=
+\begin{cases}
+00,&v=\alpha,\\
+11,&v=\beta,\\
+\tau(x)\tau(y),&v=\langle x,y\rangle.
+\end{cases}                                                   \tag{SCE.19}
+$$
+
+It is actually acquired by the three fixed original-root Reads
+$R,RL,RR$, with maximum length two and five submitted letters.
+Only its four complete names survive paid export. Its existing
+one-request reader serves every original target with at most one
+fresh literal, chosen before the count. These facts and $M_1(3)=4$
+are credited inputs, not conclusions obtained from pooling.
+
+Put $A=\alpha,B=\beta$ and
+$\mathcal G=\{\langle x,y\rangle:x,y\in S_1\}$, of size nine.
+The canonical fibers are precisely
+
+$$
+\begin{array}{c|c|r}
+e&B_e&|B_e|\\\hline
+00&\{A\}\cup\langle\{A,B\},\{A,B\}\rangle&5\\
+01&\langle\{A,B\},\mathcal G\rangle&18\\
+10&\langle\mathcal G,\{A,B\}\rangle&18\\
+11&\{B\}\cup\langle\mathcal G,\mathcal G\rangle&82.
+\end{array}                                                    \tag{SCE.20}
+$$
+

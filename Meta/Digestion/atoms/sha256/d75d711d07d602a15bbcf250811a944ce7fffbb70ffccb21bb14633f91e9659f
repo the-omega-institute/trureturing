@@ -1,0 +1,12 @@
+**Theorem 5.1 (all-parameter identical-output counterexample).** Replace (P.11) by the real passive Kraus family
+
+$$
+B_0=u(e_0\langle0|+e_1\langle1|),\quad
+B_1=v(e_2\langle0|+e_3\langle1|),\quad B_2=e_4\langle2|.
+\tag{P.17}
+$$
+
+For every $\beta\in[0,1/2]$ this actual encoder has the same entire phase output states (P.13), hence the same actual physical $\theta$ outputs and $\gamma=\beta$, but optimal recovery error exactly one.
+
+**Proof.** The TP sum is $I_3$ and the channel agrees with (P.11) on the entire $P$-supported algebra. It erases every $P$–$Q$ coherence. Therefore its outputs on the orthogonal $\eta_\pm$ above are identical. The same-recovery triangle inequality forces diamond error at least one. Decoder (P.14) gives exactly $\Phi(X)=PXP+QXQ=(X+ZXZ)/2$, whose diamond distance from identity is one by the argument for (P.15). This also proves attainability. These are different full channels: (P.11) sends $|0\rangle\langle2|$ to $u|e_0\rangle\langle e_4|$, while (P.17) sends it to zero. Thus neither the gain nor even the two full phase outputs fix the individual recovery error. $\square$
+

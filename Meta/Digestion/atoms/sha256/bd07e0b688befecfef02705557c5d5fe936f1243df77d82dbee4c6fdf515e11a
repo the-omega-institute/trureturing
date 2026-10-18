@@ -1,0 +1,53 @@
+**Theorem 2.8 (Arithmetic of the fixed-reference optimal lift).** Fix a
+positive probability and use $\theta=\theta^{\rm in}+w\chi$ with a continuous
+real change $\Delta\chi=2\pi q$, $q\in\mathbb Z_{>0}$. The ray returns if and
+only if
+
+$$
+qw_s\in\mathbb Z\quad\text{for every }s\in\Sigma.
+$$
+
+There is no one-circle return. If all components of $w$ are rational, the least
+positive return count is their least common denominator in reduced form. If
+any component is irrational, there is no finite integer-circle return.
+
+Proof. Ray return means all factors $e^{-2\pi i qw_s}$ are the same. Because
+$p_2>0$ and $w_2=0$, the common factor must be one. This proves both directions
+of the integer criterion. The positive components satisfy
+
+$$
+0<w_0=\frac{1/p_0}{I}<1,\qquad
+0<w_{13}=\frac{1/p_{13}}{I}<1,
+$$
+
+so $q=1$ cannot work. A positive integer simultaneously clearing all reduced
+denominators is exactly a multiple of their least common multiple. A nonzero
+integer times an irrational component cannot be an integer. $\square$
+
+For the uniform law the first return is four circles, $\Delta\chi=8\pi$.
+After one circle the state and squared overlap, from initial zero phases, are
+
+$$
+\frac1{\sqrt5}(-i,i,1,i,-i),\qquad \frac1{25}.
+$$
+
+There is no uniform finite upper bound on the return count, even with fixed
+means. Indeed, fix any $r\in(0,1)$ and $X=Y=r/2$, $Z=1-r$. For every integer
+$q\ge2$, choose
+
+$$
+p_0=p_{13}=\frac{r}{2q},\qquad
+p_1=p_3=\frac{r(q-1)}{2q}.
+$$
+
+Then $I=4q^2/[r(q-1)]$ and
+
+$$
+w_0=w_{13}=\frac{q-1}{2q},\qquad
+w_1=w_3=-\frac1{2q},\qquad w_2=0.
+$$
+
+The negative component has reduced denominator $2q$ and this count clears all
+components, so the least return is exactly $2q$. This is an arithmetic fact
+about this continuous lift, not a period statement for an integer automaton.
+

@@ -1,0 +1,14 @@
+**Theorem 7.4 (what a certificate proves).** Every feasible $(\rho,Y)$ in (R.32) bounds every originally allowed recovery at that one witness input:
+
+$$
+F_e(\rho,RN)\leq\operatorname{Tr}Y,\qquad
+\delta_N\geq2(1-g_N^2)\geq2(1-\operatorname{Tr}Y).
+\tag{R.35}
+$$
+
+In particular $\operatorname{Tr}Y\leq(1+\sqrt a)/2$ certifies $\delta_N\geq1-\sqrt a$ for that actual encoder.
+
+**Proof.** Positivity gives $\operatorname{Tr}(XM_\rho)\leq\operatorname{Tr}[X(Y\otimes I_3)]=\operatorname{Tr}Y$ for every recovery-feasible $X$. Thus each recovery's worst-input fidelity is at most this witness value, even without minimax. Measuring a pure identity target on any purification gives unhalved trace-norm error at least $2(1-F_e)$. Maximizing over inputs and then minimizing over recoveries yields (R.35).
+
+The first inequality is a statement about one witness input, not an upper bound on every input's fidelity. No uniform existence of a threshold certificate is asserted. Conversely $g_N^2>(1+\sqrt a)/2$ does not refute the diamond benchmark: the fidelity-to-diamond lower bound then fails to certify that benchmark. An actual improved recovery with a full-reference diamond upper bound would still be required. $\square$
+

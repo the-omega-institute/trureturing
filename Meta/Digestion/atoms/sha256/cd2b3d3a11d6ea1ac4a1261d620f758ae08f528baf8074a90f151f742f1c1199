@@ -1,0 +1,46 @@
+### 20.2 逆极限与 Mosco 极限的最小桥
+
+令 \(\mathcal H\) 是一个共同 Hilbert 宿主空间，并给出等距嵌入
+
+\[
+\iota_j:\mathcal H_j\hookrightarrow\mathcal H.
+\]
+
+将有限层二次型延拓为 \(\mathcal H\) 上的扩展泛函
+
+\[
+\overline{\mathcal Q}_j(u)
+=
+\begin{cases}
+\mathcal Q_j(f),&u=\iota_jf,\\
++\infty,&u\notin\iota_j\mathcal H_j.
+\end{cases}
+\]
+
+图二次型的 Dirichlet 极限依赖以下三条条件：
+
+\[
+\tag{M1}
+u_j\rightharpoonup u
+\Longrightarrow
+\mathcal Q(u)
+\le
+\liminf_{j\to\infty}\overline{\mathcal Q}_j(u_j),
+\]
+
+\[
+\tag{M2}
+\forall u\in D(\mathcal Q),\ \exists u_j\to u\text{ 强收敛},
+\qquad
+\limsup_{j\to\infty}\overline{\mathcal Q}_j(u_j)
+\le
+\mathcal Q(u),
+\]
+
+\[
+\tag{M3}
+\text{有限能量子水平集具有共同宿主空间中的相对紧性}.
+\]
+
+(M1) 是 Mosco 下极限，(M2) 是恢复序列，(M3) 是从有限层抽取极限场时所需的紧性。若只要定义闭极限二次型，(M1) 和 (M2) 是核心条件。若还要得到相容静态场、最小值收敛或特征函数收敛，必须增加 (M3) 或等价的 compactness 条件。
+

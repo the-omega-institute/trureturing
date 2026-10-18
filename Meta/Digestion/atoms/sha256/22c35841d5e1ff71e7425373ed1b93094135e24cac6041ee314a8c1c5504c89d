@@ -1,0 +1,79 @@
+**Definition 20.4 (mathematical supplier correspondence).** Native
+definitions and results used here are the exact §§4.1, 5.2, 5.3,
+9.1 and 11.1 in [NARC at the fixed base][NARC-RW-base]. Those
+sections, together with the class-one coordinate certificate of
+Theorem 11.5, are also the same text in the immutable
+[native supplier revision][NARC-RW-source]. Integration status of
+other theory increments is not a mathematical hypothesis. The
+following correspondence specifies the retained semantic parameters.
+
+| Supplier at the native supplier revision | Exact parameter or semantic correspondence | Boundary of its use |
+| --- | --- | --- |
+| [NAR Definitions 1.1--1.2 and Reuse 16.2][NAR-RW] | Actual ordered trees, homomorphic $\rho$, four-valued literal Read, entire exterior and reached-hole partition; acquired literals compute their clocks | No hidden-origin, epoch, subtree or hidden-visible comparison port |
+| NARC Theorem 5.2 and Definition 5.3 | $q=16,z=17,C=e_{16}^{-1}(1)$; $n=17+a-b$, $\ell=17-b$; guarded $E/P/S$ laws | Whole-row compatibility is retained; no interval age-identification formula |
+| NARC Assumptions 4.1 and 9.1; [AOF Definitions 8.2 and 10.1][AOF-RW] | Common installed table, complete mutable state, fixed literals and complete outputs; chronological two-Read budget and shortest native representatives | The Moore restriction is added explicitly; fixed-reference and interval numerical optima are not applied |
+| NARC Definition 11.1 and class-one certificate of Theorem 11.5 | Actual right offset sixteen; code inverse class $C$; offsets $10,-1,13$ at $h=17$ | No premise about the rest of the full encoder or its packing |
+| [GenealogicalFiberTransport: `Source`, `substitution`][RW-Source] | `FreeMagma Bool`, `true` = $\alpha$, `false` = $\beta$; actual homomorphic leaf images | Semantic correspondence only |
+| [ActualTreeReadoutAcquisition: `Address`, `Reply`, `readout`][RW-Read] | `List Bool`, `false` = $L$, `true` = $R$; a nonempty suffix at a leaf returns absence | Its distinct-address payment is not chronological Read count |
+| [DelayedOriginalReadout: `rightClock`, `right_clock_iterate`, `right_clock_readout`][RW-Clock] | Literal clock increases by the substitution count; $R^s$ yields thresholds $2s,2s+1$ | A decoder supplied a known epoch does not recover an unknown lag |
+| [ActualCutPartitionDecoder: `literalRecord`, `actualPartition`, `canonicalRow_record_iff`][RW-Row] | Prefix-free cut $\{L\}$; complete exterior and all reached-hole equality pairs | Singleton partition adds no hidden-visible comparison or acquisition trace |
+| [NativeCutFibers: `legal_values_row`, `rowFiberEquiv`][RW-Fiber] | Legal fillings and actual complete-row fibers | Filling coordinates in a proof are not accessible values |
+| [ActualFibonacciSupportChain: local recurrence in `actual_fibonacci_support_chain`][RW-Orbit] | $T_n=\rho^n\alpha$ and $T_{n+2}=\langle T_{n+1},T_n\rangle$ | The support-chain conclusion supplies no controller optimum |
+
+The response-write supplier is [FIB §§45--47 at its immutable
+revision][FIB-RW], with its Definitions 26.1--26.2 and Theorem
+27.2. The exact support is $\mathcal C_s$ of (NARC.19.2), the
+source transition is identity, and the target coordinate is the full
+lag. FIB45.1--45.4 supply the conditional complete-word service,
+separate costs and injective supported-edge criterion. FIB46.2
+reuses the classical cube obstruction; here Theorem 18.1 supplies
+the missing universal native-task premise. FIB47.1 supplies the
+actual-path refinement contract met by Proposition 19.3.
+
+FIB47.2's generic finite-history refinement uses [Cabello--Eppstein--
+Klavžar, Corollary 3.6][CEK-RW]: for a finite tree $T$,
+$\operatorname{fdim}(T)=\operatorname{idim}(T)=|E(T)|$ under
+isometric embedding. That is a safe existence supplier for a larger
+history refinement, not the optimum eleven or six. Isometric tree
+dimension is not a lower bound for the weaker edge-preserving
+shared-halt encoding used here. No tree-dimension proof is repeated.
+
+The cube obstruction and Fibonacci degree counts consumed in Theorem
+20.1 are literature-attested intermediate results. The increment is
+the repo-derived universal acquired-native-query/support correspondence
+and its attained conditional resource separation. It asserts no global
+originality. The ordinary arguments do not assert a new Lean theorem,
+current kernel verification or any digestion or frozen-state status.
+
+The primary mathematical citations attached to these consuming proofs
+are Ivan Havel and Jaroslav Morávek, *B-valuations of graphs*,
+Czechoslovak Mathematical Journal 22(2), 338--351 (1972),
+DOI [10.21136/cmj.1972.101102][HM-RW], Propositions 1--2 and
+Example 1, [primary text pp.340--342][HM-RW-full]; Sandi Klavžar,
+Michel Mollard and Marko Petkovšek, *The degree sequence of Fibonacci
+and Lucas cubes*, Discrete Mathematics 311(14), 1310--1322 (2011),
+DOI [10.1016/j.disc.2011.03.019][KMP-RW-doi], Corollary 3.4 and
+Theorem 4.6, [author manuscript pp.7 and 12][KMP-RW]; and Sergio
+Cabello, David Eppstein and Sandi Klavžar, *The Fibonacci Dimension
+of a Graph*, The Electronic Journal of Combinatorics 18(1), P55
+(2011), DOI [10.37236/542][CEK-RW], Corollary 3.6,
+[primary preprint pp.7--8][CEK-RW-full].
+
+[NARC-RW-base]: https://github.com/the-omega-institute/trureturing/blob/8d16d2f170a857dc60923345f02127947dc53f11/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ALPHA_RECUT_MEMORY_CONTINUATION.md
+[NARC-RW-source]: https://github.com/the-omega-institute/trureturing/blob/154126ff1e0d3bf6c7283e3765b6c496e69ca005/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ALPHA_RECUT_MEMORY_CONTINUATION.md
+[NAR-RW]: https://github.com/the-omega-institute/trureturing/blob/154126ff1e0d3bf6c7283e3765b6c496e69ca005/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ALPHA_RECUT_MEMORY.md
+[AOF-RW]: https://github.com/the-omega-institute/trureturing/blob/154126ff1e0d3bf6c7283e3765b6c496e69ca005/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_ORBIT_RESOURCE_FRONTIER.md
+[FIB-RW]: https://github.com/the-omega-institute/trureturing/blob/8d9ce47ac151e4ff332c8b1fb44759ebd0e0f11c/docs/develop/theory/FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_II.md
+[RW-Source]: https://github.com/the-omega-institute/trureturing/blob/154126ff1e0d3bf6c7283e3765b6c496e69ca005/D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.lean
+[RW-Read]: https://github.com/the-omega-institute/trureturing/blob/154126ff1e0d3bf6c7283e3765b6c496e69ca005/D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean
+[RW-Clock]: https://github.com/the-omega-institute/trureturing/blob/154126ff1e0d3bf6c7283e3765b6c496e69ca005/D5/S3/Arith/FibonacciAtomic/Observer/DelayedOriginalReadout.lean
+[RW-Row]: https://github.com/the-omega-institute/trureturing/blob/154126ff1e0d3bf6c7283e3765b6c496e69ca005/D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionDecoder.lean
+[RW-Fiber]: https://github.com/the-omega-institute/trureturing/blob/154126ff1e0d3bf6c7283e3765b6c496e69ca005/D5/S3/Arith/FibonacciAtomic/Observer/NativeCutFibers.lean
+[RW-Orbit]: https://github.com/the-omega-institute/trureturing/blob/154126ff1e0d3bf6c7283e3765b6c496e69ca005/D5/S3/Arith/FibonacciAtomic/Observer/ActualFibonacciSupportChain.lean
+[HM-RW]: https://doi.org/10.21136/cmj.1972.101102
+[HM-RW-full]: https://dml.cz/bitstream/handle/10338.dmlcz/101102/CzechMathJ_22-1972-2_15.pdf
+[KMP-RW]: https://users.fmf.uni-lj.si/klavzar/preprints/DegSeqRevised.pdf
+[KMP-RW-doi]: https://doi.org/10.1016/j.disc.2011.03.019
+[CEK-RW]: https://doi.org/10.37236/542
+[CEK-RW-full]: https://arxiv.org/pdf/0903.2507
+

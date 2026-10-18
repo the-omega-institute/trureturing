@@ -1,0 +1,31 @@
+## 208. Exact hypotheses and reused inputs
+
+Retain the finite actual paired-frame quotient, complete circular edge links,
+minimum degree six, common positive generalized lengths and all original
+2*pi edge equations. Suppose exactly five reservoirs and a nonempty flat set.
+Use the maximal-selected escape tau=(Z,M,C,D,M,C), with H={M,C,D,Z,U}.
+Write cosh values m,z,c,d,u. The proved five-label results give
+
+ m>1+c+d>3, c,d<m-2, z>1+m+c, u>m,
+ p_M=1, p_Z=p_U=0.
+
+All five labels are genuinely witnessed. By Proposition 206.1, sigma is the only flat owner. Its frame is
+(M,C,D,O,C,D), where O=C,D, or a special label S. Every other owner is
+genuine. Put P={M,Z,U}; its total genuine angle capacity is 5*pi.
+
+We reuse the exact paired response and flat-product formulas of §95,
+the special fixed-pair barrier §112.1, and the response transfer proof
+of §116.1. In particular, for a genuine frame (r,a,b,o,a,b),
+
+ L=(a+b)^2-(r-1)*(o-1)>0,
+ J=(r+1)*(o+1)-(a-b)^2>0,
+ tan(theta_r/2)^2=(r-1)/(r+1)*J/L,
+ (beta_a+beta_b)/2=atan(lambda_r*cot(theta_r/2)),
+ lambda_r=kappa*sqrt((r-1)/(r+1)),
+ kappa=(sqrt(a^2-1)+sqrt(b^2-1))/(a+b).
+
+If a>b, the individual a angle is
+ atan(A*t)+atan(B*t), t=cot(theta_r/2),
+ A/B=[sqrt(a^2-1) +/- sqrt(b^2-1)]/(a+b)*sqrt((r-1)/(r+1)).
+For A,B>0 with A+B>=1 this gives theta_r+2*beta_a>pi.
+

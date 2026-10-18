@@ -1,0 +1,58 @@
+**定义 48.1（起点与独立指定的有限状态族）。** 设 $n\ge10$，记 $d=n-2$、$m=n-1=d+1$，固定互异标签 $p,q,z_1,\ldots,z_d$。取第 24 节的负定向种子
+
+$$
+E_i=(z_i,[p,z_{i-1},\ldots,z_1,q,z_{i+1},\ldots,z_d]),\qquad1\le i\le d,
+$$
+
+其供应集为 $\mathcal S_*$，完整 $D$ 邻域并为 $\mathcal D_*=N(\mathcal S_*)$。这里 $[W]$ 表示无向圆序；$N(s,[W])$ 是把遗漏标签 $s$ 插入 $[W]$ 的全部间隙所得的完整 $D$ 邻域。独立定义
+
+$$
+\mathcal F_1=\{(p,[W]):|N(p,[W])\cap\mathcal D_*|=1\},\qquad
+\mathcal S_{\mathrm b}=\mathcal S_*\cup\mathcal F_1,\qquad
+\mathcal D_{\mathrm b}=N(\mathcal S_{\mathrm b}).
+$$
+
+第 26 节的全部单接触 $p$ 纤维延拓给出一个覆盖恰此域的实际圈，并有
+
+$$
+e_{\mathrm b}=|\mathcal S_{\mathrm b}|=d^2-d-2,\qquad
+K_{\mathrm b}=|\mathcal D_{\mathrm b}|=d(d-2)(d+1).
+$$
+
+取所有满足 $5\le r\le d-3$ 的奇数 $r$，置
+
+$$
+h=r-1\ge4,\qquad \ell=d-r\ge3,\qquad T=\ell-1,
+$$
+
+并记 $x=z_r$、$U=(z_1,\ldots,z_{r-1})=(u_1,\ldots,u_h)$、$V=(z_{r+1},\ldots,z_d)=(v_1,\ldots,v_\ell)$，$\overline U=(u_h,\ldots,u_1)$。在任何重接证明前指定
+
+$$
+\begin{aligned}
+Q_{r,g}&=(q,[p,v_1,\ldots,v_g,x,v_{g+1},\ldots,v_\ell,\overline U]),&&0\le g\le\ell,\\
+A_r&=(x,[p,q,V,\overline U]).
+\end{aligned}
+$$
+
+其中 $Q_{r,0},Q_{r,\ell}$ 为准备供应，$B_{r,t}=Q_{r,t}$、$1\le t\le T$ 为预留供应。对 $0\le k\le T$ 定义
+
+$$
+\begin{aligned}
+\mathcal S_{r,k}={}&\mathcal S_{\mathrm b}
+\cup\{A_s,Q_{s,g}:5\le s<r,\ s\text{ 为奇数},\ 0\le g\le d-s\}\\
+&\cup\{Q_{r,0},Q_{r,\ell},A_r\}
+\cup\{B_{r,t}:1\le t\le k\},\\
+\mathcal D_{r,k}={}&N(\mathcal S_{r,k}).
+\end{aligned}
+$$
+
+实际排列域 $\Omega_{r,k}$ 为圆序属于 $\mathcal D_{r,k}$ 的全部排列。当前两项准备依次加入、尚未选择 $A_r$ 的状态也单独作为中间状态。所有域均由指定供应的完整邻域定义，不以重接成功或未知切口次序定义。
+
+对任一供应 $(s,[W])$，以所列 $W$ 为原生有向代表，设
+
+$$
+L_j=(\operatorname{rot}_jW,s),\qquad R_j=L_jb,\qquad R_jc=L_{j+1},
+$$
+
+指标按 $m$ 循环。切口的正、负号分别指实际圈沿 $L_j\to R_j$ 或反向通过该旧 $b$ 边。
+

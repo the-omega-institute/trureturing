@@ -1,0 +1,12 @@
+**Proposition 5.5 (copy and increment counts).** The copy has exactly
+$5(x+1)$ primitives and constructs $x+1$ data cells. The increment has
+exactly $5x+7$ primitives and constructs $x+2$ data cells. Appending a
+delimiter adds three primitives and one cell. A separate seal adds one
+CTL. All positioning, containing-record construction and handoffs are
+additional.
+
+Proof. Each leading source one uses RD, EX, WR and two moves. The copy's
+zero uses the same body. The increment's terminal stage uses RD and two
+three-row appends. EX is the sole ordinary-cell constructor in these
+bodies. Delimiter append and seal have their displayed primitive effects. ∎
+

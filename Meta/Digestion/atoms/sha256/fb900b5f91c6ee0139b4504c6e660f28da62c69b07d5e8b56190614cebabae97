@@ -1,0 +1,15 @@
+**Lemma 4.2 (All off-diagonal band chains).** For Definition 2.1, $T$ has exactly two Jordan blocks $J_m(0)$ for each $1\le m\le H$. An explicit basis consists, for each $1\le r\le H$, of the two lists
+
+$$
+E_{0,r},E_{1,1+r},\ldots,E_{H-r,H},
+\qquad
+E_{r,0},E_{1+r,1},\ldots,E_{H,H-r},
+\tag{4.1}
+$$
+
+reversed within each list. The zero generalized eigenspace of the full channel $\mathcal E_\theta$ is exactly $\mathcal N$.
+
+Proof. Within each list, $T$ sends a unit to the next and kills the last by Lemma 3.2. Each list has $H-r+1$ independent units. Its span is invariant and its reversed order is a single block $J_{H-r+1}(0)$. Every off-diagonal unit belongs to exactly one of these lists: its offset $|i-j|$ gives $r$, and the order of its indices gives the list. The lists therefore constitute a basis of $\mathcal N$. As $r$ ranges from $1$ to $H$, their lengths range from $H$ to $1$, once for each of the two orientations. This proves all block multiplicities by an actual basis, with total dimension $H(H+1)=d^2-d$.
+
+If $\mathcal E_\theta^n A=0$ for some $n\ge1$, (3.1) gives $P^nD(A)=0$. Since $P$ is invertible, $D(A)=0$. Conversely every element of $\mathcal N$ is killed by $\mathcal E_\theta^H=T^H$ on that subspace. Thus the zero generalized eigenspace is precisely $\mathcal N$; no extra zero chains arise from the quotient. $\square$
+

@@ -1,0 +1,26 @@
+**Convention 8.1 (finite exact scope).** Bounded in-memory calculations
+on actual trees give the following readings for the constructions above:
+
+| Public $D$ | Actual right subtrees of height at most $D$ | Theorem 4.2 names | Its worst $(T,L,H)$ | Full-boundary acquisition worst $(T,L,H)$ | Full-boundary canonical names |
+| --- | ---: | ---: | --- | --- | ---: |
+| $1$ | $6$ | $1$ | $(0,0,0)$ | $(1,1,1)$ | $3$ |
+| $2$ | $38$ | $3$ | $(1,1,1)$ | $(2,4,2)$ | $11$ |
+| $3$ | $1446$ | $11$ | $(2,4,2)$ | $(4,12,3)$ | $123$ |
+
+The full-boundary columns concern acquisition of $\pi_D(v)$ before
+cover naming; they are not complete-name counts for Theorem 5.1.
+At $D=1$ that unnecessary full-boundary scan is replaced by the
+zero-preparation construction when optimizing names.
+
+The five trees in (PPF.14) give exactly (PPF.15). For every actual
+source at $D=1,2,3$, every permitted request and every
+$0\le k\le2D$, the constructed factor decoder agrees with direct
+substitution/readout in $71442$ comparisons. At $D=3$, acquisition
+was also checked for every original-root $a$ of length at most two
+and $h=0,1,2$: $30366$ acquisitions, including absent roots, returned
+the exact whole table (PPF.17) and obeyed the call bound. These are
+finite checks. The ordinary proofs establish the universal depth,
+arbitrary-word and authentic-count statements; no convergence is
+inferred from these readings. No experimental program or data is
+needed as an additional premise.
+

@@ -1,0 +1,22 @@
+**Convention 14.1 (what the construction consumes).** The logical input
+is a supplied finite formula, complete rows and declared regular predicates.
+For actually acquired truthful records on the stated prepared pure-Rho
+segment, their actual source belongs to (NCE.30) when its additional
+predicates hold. To assert that this is the *entire* accessible-information
+fiber still requires a two-sided acquisition/selection proof, including
+all retained fields. No complete acquired request, context, snapshot,
+archive or accessible distinction is removed to enlarge that fiber.
+Theorem 13.2 supplies alternative source-value histories, not histories
+with identical retained inputs or identical physical records.
+
+This distinction is substantive in [NASF, Definitions 1.2–1.4 and Theorem
+3.4][NCE-NASF]: one returning adaptive program has its entire accessible
+output and branch-sensitive history fiber. Its exact representation is
+in general a countable family of finite constraints. NASF Theorem 6.2
+and Corollary 6.3 concern the undecidable fiber of one such program;
+Theorem 10.2 does not make that countable family one finite formula.
+NRF Theorem 6.6 retains every original source for its regular-selector
+producer, with a separate invocation/validation/Return correspondence.
+The arbitrary shared signed epoch comparisons here do not instantiate
+that producer or its complete handoff in $G_{\mathrm{gc}}$.
+

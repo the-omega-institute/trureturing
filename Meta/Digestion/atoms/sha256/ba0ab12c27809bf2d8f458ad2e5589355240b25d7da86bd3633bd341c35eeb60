@@ -1,0 +1,17 @@
+**Theorem 9.2 (Stationary purity is not identified by law, full Jordan form and minimum dimension).** There is no function of the triple
+
+$$
+\bigl(\text{complete stationary binary law},\;
+\text{full complex Jordan form of the averaged channel},\;
+\text{minimum exact homogeneous complex memory dimension}\bigr)
+\tag{9.1}
+$$
+
+which returns stationary purity for every realization in the equal-probability $H=3$ phase family of Section 7. The minimum dimension in this statement is taken over exactly the comparison class in Source interface 7.2. Consequently no such function can succeed on any larger class containing these realizations with the same meaning of minimum dimension. On this one fixed triple the actual stationary-family purity range is $[29/81,5/9]$.
+
+Proof. The two realizations are the explicit $S,J_+,J_-$ instruments of Definition 2.1 and Theorem 7.1, initialized in their own stationary densities in Source interface 7.2. Thus the states, branches and outputs are jointly realized by each one device model. Source Theorem 23.2 gives their identical complete stationary law. Theorem 7.1 gives the same actual full Jordan form (7.1) and minimal polynomial, with no unresolved block-size inference. Source Theorem 23.4 gives the common minimum dimension four in the specified comparison class. All three arguments of a putative function are therefore identical for the two realizations.
+
+Source Proposition 23.3 gives purities $5/9=45/81$ and $29/81$, which are different. A function at one input triple cannot have both values, proving the contradiction. More generally all phases in this equal-probability family share the law, the Jordan form by Theorem 4.5, and the minimum dimension by Source Theorem 23.4. The credited formula (7.3), with $\delta$ ranging over the circle, attains exactly the stated interval at this fixed triple. No independent choice of a density with the same diagonal has been substituted for a stationary state of an actual family member. $\square$
+
+The data in (9.1) do not contain the embedding of the generalized eigenvectors (4.5) into the physical matrix algebra, its positive cone or its Hilbert–Schmidt geometry. Similarity alone also does not specify eigenoperators, stationary-density eigenvalues or quantum intervention responses. Full channel or instrument tomography is richer than these data. Equality of stationary-density spectra is neither assumed for the purity pair nor implied: such equality would make the two sums of squared density eigenvalues, and hence their purities, equal. The conclusion is an exact identification obstruction for the stated observations, not a claim about every richer observation scheme, all-$H$ memory minimality, approximation, finite-bit production or a physical memory advantage. In particular the constant-purity singleton case in Proposition 6.1 is compatible with failure of a recovery function on the broader family.
+

@@ -1,0 +1,63 @@
+**Lemma 4.1 (the source sign needed by the state).** The inherited source
+premises imply
+
+$$
+r_T=\frac{ah_1}{bh_0}\in(1/4,2/5),\qquad h_1/h_0>7/10,\qquad
+\chi=h_1b-h_0a>\frac9{49}h_1b>0.
+\tag{NP.21}
+$$
+
+Proof. Here is the rational source implication, also credited to §8 of
+*Real coefficient Grams and a small-record resource law*. The source box
+implies $.479<\lambda_{\rm src}<.480$,
+$1.412<\alpha_1<1.413$, $1.185<\alpha_2<1.186$,
+$.413<\beta_1<.414$, $.809<\beta_2<.810$. All finite decimals here are
+rational numbers. For $r_5=1+\alpha_1^2+\alpha_2^2$ and
+$r_{27}=1+\beta_1^2+\beta_2^2$, positive multiplication gives
+$4.39<r_5<4.41$, $1.82<r_{27}<1.83$, and
+
+$$
+\begin{gathered}
+(A_5^{\rm src})_{00}>.21,\quad(A_{27}^{\rm src})_{00}>.04,\\
+.180<(A_5^{\rm src})_{01}<.185,\qquad
+.094<(A_{27}^{\rm src})_{01}<.097.
+\end{gathered}
+\tag{NP.22}
+$$
+
+Using $17<\sqrt{295}<18$ and $31<\sqrt{999}<32$ in
+
+$$
+N_{01}^{\rm src}=\frac{(A_5^{\rm src})_{01}\sqrt{295}
+                         +(A_{27}^{\rm src})_{01}\sqrt{999}}{128}
+\tag{NP.23}
+$$
+
+gives $.045<N_{01}^{\rm src}<.051$: the lower numerator is
+$(180\cdot17+94\cdot31)/1000$ and the upper one is
+$(185\cdot18+97\cdot32)/1000$. The two positive pivots in (NP.9)
+also satisfy
+
+$$
+\begin{aligned}
+(S_{01}^{\rm src})_{00}
+ &<\frac{(.48-.21)59-.04\cdot37}{128}<3/25,\\
+(S_{02}^{\rm src})_{00}&<.24-(.21+.04)/2<3/25.
+\end{aligned}
+\tag{NP.24}
+$$
+
+The rank-one adjugate factor gives $a/b=N_{01}^{\rm src}/
+(S_{01}^{\rm src})_{00}$. The diagonal margins give
+
+$$
+(7/10)^2<498/970<(h_1/h_0)^2<500/968<(3/4)^2.
+\tag{NP.25}
+$$
+
+Consequently $r_T>(7/10)(45/1000)/(3/25)=21/80>1/4$ and
+$r_T<(3/4)(51/1000)/(1/10)<2/5$. In particular
+$h_0a/(h_1b)=r_T/(h_1/h_0)^2<40/49$, proving (NP.21).
+These are symbolic consequences of the exact supplied point, not a new
+numerical certificate for it. $\square$
+

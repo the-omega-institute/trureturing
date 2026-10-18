@@ -1,0 +1,30 @@
+### 3.1 合法词图的计数与谱界
+
+每个合法词中的任意一个 $1$ 改成 $0$ 后仍合法。每条邻边恰有一个含较多 $1$ 的端点；按删除一个 $1$ 定向，每个 $b$ 贡献 $|b|$ 条边，得到 $e_n=\sum_b|b|$。
+
+首段分解 $B_n=0B_{n-1}\mathbin{\dot\cup}10B_{n-2}$ 给出 $M_n=M_{n-1}+M_{n-2}$，初值 $M_0=1,M_1=2$，故 $M_n=F_{n+2}$。两部分内部的图分别是 $A_{n-1},A_{n-2}$。跨部分邻边只能翻转第一位，恰为 $00v$ 与 $10v$，$v\in B_{n-2}$，因此
+
+$$
+e_n=e_{n-1}+e_{n-2}+M_{n-2}\quad(n\ge2),
+\qquad e_0=0,\quad e_1=1.
+\tag{3.1}
+$$
+
+这是经典 Fibonacci cube 的首段分解和跨部分匹配，见 [Klavžar、Mollard、Petkovšek，*The degree sequence of Fibonacci and Lucas cubes*](https://users.fmf.uni-lj.si/klavzar/preprints/DegSeqRevised.pdf)，§§1–2；这里只用作计数供应。
+
+置 $H_n=nF_{n+1}+2(n+1)F_n$。Fibonacci 递推直接给出
+
+$$
+H_n-H_{n-1}-H_{n-2}=5F_n=5M_{n-2}\quad(n\ge2),
+\qquad H_0=0,\quad H_1=5.
+$$
+
+所以 $H_n/5$ 与 $e_n$ 的递推和初值相同，证明式（2.4）。任一顶点至多翻转 $n$ 个位置，故 $d_b\le n$。对任意复向量 $z$，按无向边求和，利用 $2|z_bz_c|\le|z_b|^2+|z_c|^2$，有
+
+$$
+|z^\dagger A_nz|
+\le\sum_b d_b|z_b|^2\le n\|z\|^2.
+$$
+
+$A_n$ 实对称，故 $\|A_n\|_{\mathrm{op}}\le n$；另有 $\sum_b d_b=2e_n$。
+

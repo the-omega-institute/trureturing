@@ -1,0 +1,66 @@
+**Proposition 16.2 (a coupled chain with no uniform full-row budget).**
+Keep $P,C,\pi$ from (ARH.16.1), but now take
+
+$$
+\begin{gathered}
+H_0=\{(0,LL,\mathsf{branch}),(0,RR,\alpha)\},\\
+H_{\rm rel}=\{(1,LL,0,LR,=),(1,LR,0,RL,=)\},\\
+Q=\{L,R\}^3,\qquad N\ge1.
+\end{gathered}
+\tag{ARH.16.5}
+$$
+
+This input is in $\mathfrak S$. Its entire source fiber is exactly
+
+$$
+\left\{\langle\langle t,\rho(t)\rangle,
+                  \langle\rho^2(t),\alpha\rangle\rangle:
+                 t\text{ any finite branch tree}\right\}.
+\tag{ARH.16.6}
+$$
+
+No deterministic source-total static or serial service has a uniform
+finite new-read budget for its entire original $Q$ row.
+
+Proof. The two equalities and two literals force (ARH.16.6), and conversely
+every displayed tree gives those records with both endpoints reached.
+The already supplied clock obeys $\kappa(\rho t)=\kappa(t)+1$, so
+$t,\rho(t),\rho^2(t)$ are pairwise distinct. They are all branch trees,
+hence each differs from the fourth old value $\alpha$. Thus all six old
+inequalities hold for **every** branch $t$; none narrows the displayed
+fiber further. Proposition 15.1 proves eligibility. The same paid
+producer as Proposition 2.1 realizes this record schedule.
+
+Fix $h\ge0$. Let $a$ be the complete binary tree of depth $h+1$ with
+all leaves $\alpha$, and let $a'$ change exactly one depth-$h+1$ leaf
+to $\beta$. They are finite, different, and agree through depth $h$.
+Put $t=\langle a,a\rangle$ and $t'=\langle a,a'\rangle$.
+Both are legal branch values in the entire fiber. Their original prefixes
+agree through depth $h$, and (SLH.74.7) gives the same for their first
+two iterates. Thus the two whole sources (ARH.16.6) agree through original
+depth $h$ and preserve all retained constraints.
+
+For both sources precisely the first six depth-three cuts are reached;
+$RRL,RRR$ lie below the original $\alpha$ and are absent. The outside
+context is the same, namely
+
+$$
+\langle\langle\langle\square_1,\square_2\rangle,
+                       \langle\square_3,\square_4\rangle\rangle,
+          \langle\langle\square_5,\square_6\rangle,\alpha\rangle\rangle.
+\tag{ARH.16.7}
+$$
+
+The complete partitions differ: at $LLL,LLR$ the values are $a,a$ for
+$t$ and $a,a'$ for $t'$. This differing entry witnesses inequality of
+the entire required row; it does not replace the target by that bit.
+As $h$ was arbitrary, these finite sources disprove every original
+prefix bound. Theorem 14.1, using the inherited operational bridge,
+excludes every uniform finite serial budget.
+
+The free branch parameter ranges over all finite branch shapes, not an
+orbit-index family. The target image here is nevertheless finite: the
+context and reached set are fixed and only a partition of six holes
+varies. Its obstruction is unbounded observation depth, not infinitely
+many target rows. $\square$
+

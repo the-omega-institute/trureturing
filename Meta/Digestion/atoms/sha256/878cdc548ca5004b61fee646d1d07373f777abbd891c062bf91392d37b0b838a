@@ -1,0 +1,75 @@
+**Theorem 5.1 (Strict entropy increase for a legal cross-cut phase).**
+For the full-support positive path state, the von Neumann cut
+entropy satisfies
+
+$$
+S(\psi_z)>S(\psi_+)
+\quad\Longleftrightarrow\quad
+z\ne1,\quad i\le k<j,\quad j-i\ge2,
+\tag{5.1}
+$$
+
+where sites are ordered $i<j$. In the nontrivial case the
+eigenvalue probability vector of the reduced state of $\psi_z$
+is strictly majorized by that of $\psi_+$, after padding with
+zeros.
+
+Proof. Let $\rho_z=A_zA_z^\ast$, and put $\rho_+=A_+A_+^\ast$.
+Since $A_+=|A_z|$ entrywise,
+
+$$
+|\rho_z|\le\rho_+
+\tag{5.2}
+$$
+
+entrywise. Every entry of $\rho_+$ on the internally legal
+left words is strictly positive: the right vacuum alone gives
+a positive summand. For the left vacuum and the left
+$i$-singleton, the right vacuum has phase one and the right
+$j$-singleton has phase $\bar z$ in their reduced-matrix
+entry. Both are legal for this pair of left words exactly
+when the selected cross pair is nonadjacent. Grouping the
+other right words according to $s_j$ therefore gives an
+entry $a+b\bar z$ with $a,b>0$. For $z\ne1$,
+
+$$
+|a+b\bar z|<a+b.
+\tag{5.3}
+$$
+
+Thus (5.2) is strict in at least one entry. The standard
+Perron comparison for a positive matrix, together with the
+spectral-radius bound for entrywise absolute values, yields
+
+$$
+\lambda_{\max}(\rho_z)
+\le r(|\rho_z|)<r(\rho_+)=\lambda_{\max}(\rho_+).
+\tag{5.4}
+$$
+
+For completeness, the strict comparison uses the positive
+Perron vector $v$ of $\rho_+$. The defect
+$\rho_+v-|\rho_z|v$ is nonnegative and nonzero. Positivity
+of $\rho_+$ spreads this defect to every coordinate in the
+comparison of squared matrices, giving
+$|\rho_z|^2v<r(\rho_+)^2v$. The positive-vector bound then
+gives $r(|\rho_z|)<r(\rho_+)$. The first inequality in
+(5.4) follows by taking absolute values in a complex
+eigenvector equation, or by the induced power norm bound.
+
+The reference reduced state has exactly two positive
+eigenvalues $\alpha,1-\alpha$ with $\alpha\ge1/2$.
+By (5.4), the largest eigenvalue of $\rho_z$ is smaller
+than $\alpha$. Both spectra are nonnegative and sum to one.
+The first sorted partial sum is consequently smaller; every
+partial sum from the second onward is at most one, the
+corresponding reference sum. This proves strict majorization.
+Strict Schur concavity of von Neumann entropy proves (5.1)
+in the nontrivial case. A same-side gate preserves spectrum,
+and an adjacent cross pair is the identity. These establish
+the remaining cases. $\square$
+
+The comparison uses positivity of the reference, its rank two
+and actual cross-side interference. Rank increase by itself
+is not the reason for the entropy conclusion.
+

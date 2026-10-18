@@ -1,0 +1,28 @@
+**A fixed short twist family.** Make the integral change of coordinates
+
+$$x=9X-30D,\qquad y=27Y.$$
+
+Direct expansion gives
+
+$$E'_D:y^2=x^3-8775D^2x-236250D^3.\tag{91.2}$$
+
+This rational group isomorphism sends $R$ and $K$ to integral points $P$ and $mP$, and $P$ is nontorsion.
+
+The model (91.2) is quasi-minimal in Ingram's sense: its discriminant is minimal among integral short Weierstrass equations. Indeed, $8775=3^3\cdot5^2\cdot13$, and $D$ is squarefree and coprime to $15$. Every prime valuation of $8775D^2$ is less than $4$: at $3$ it is $3$, at $5$ it is $2$, at $13$ it is $1$ or $3$, and at other primes it is $0$ or $2$. An isomorphism between short equations in characteristic zero has no translation term and scales the coefficient of $x$ by a fourth power. A strict local decrease of the discriminant with integral short coefficients would require a prime fourth power dividing that coefficient, which is impossible.
+
+The base curve $E'_1$ is fixed, and $E'_D$ is its squarefree quadratic twist. Its invariant is
+
+$$j(E'_D)=35152/9.$$
+
+For $D\ge144$, Ingram's height convention therefore gives
+
+$$
+\begin{aligned}
+h(E'_D)
+&=\max\bigl(h(j),\log\max(4\cdot8775D^2,4\cdot236250D^3)\bigr)\\
+&=3\log D+\log945000.
+\end{aligned}\tag{91.3}
+$$
+
+Here $h(j)=\log35152$ is smaller than the displayed expression.
+

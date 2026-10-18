@@ -1,0 +1,69 @@
+##### 定理 2.5.2： 永久区域束缚等价于跨边界耦合为零
+
+下列条件等价：
+
+$$
+R\text{ 对该动力学普适不变};
+$$
+
+$$
+\boxed{
+Q_RHP=0;
+}
+$$
+
+$$
+\boxed{
+[H,P]=0.
+}
+$$
+
+**证明。**
+
+**区域不变推出跨界耦合为零。**
+
+取任意 $\psi\in\operatorname{ran}P$。区域不变性给：
+
+$$
+Q_RU_t\psi=0
+\qquad\forall t.
+$$
+
+在 $t=0$ 微分：
+
+$$
+Q_R\left(-\frac{i}{\hbar}H\right)\psi=0.
+$$
+
+因此 $Q_RHP=0$。
+
+**跨界耦合为零推出对易。**
+
+由于 $H$ 自伴，取伴随得到：
+
+$$
+PHQ_R=0.
+$$
+
+所以 $H$ 在：
+
+$$
+\mathcal H=\operatorname{ran}P\oplus\operatorname{ran}Q_R
+$$
+
+上分块对角，故 $[H,P]=0$。
+
+**对易推出区域不变。**
+
+若 $[H,P]=0$，则 $U_tP=PU_t$。于是：
+
+$$
+U_t\rho U_t^\dagger
+=
+U_tP\rho PU_t^\dagger
+=
+P\,U_t\rho U_t^\dagger P.
+$$
+
+证毕。
+

@@ -1,0 +1,72 @@
+**Convention 9.3 (other supplied interfaces).** The public
+[finite-reader synthesis volume][FCS], especially Theorem 6.1 and
+Theorem 10.2, distinguishes choosing some lawful acquired-term code for
+a fixed finite reader from verifying a prescribed program. It assumes
+acquired whole terms on a repeated-partner inverse fiber and gives no
+bounded preparer for the original all-depth task. This volume uses no
+transfer of that result; Theorem 7.1 supplies its own actual paid scan.
+
+The source declaration `FiniteNaturalJoin.join_covers` requires two
+`Covers` premises on the same full assignment. It does not supply a
+global law or its mass. `NativeDepthPatterns.original_present_transport`
+requires an actual present occurrence, used precisely in (OCC.27).
+The finite-root minimax and effective-root-criterion declarations concern
+complete predecessor-row recovery after a certified actual substitution,
+with a prefix-free cut, nonempty origin fiber and compatible acquired
+image values in the latter criterion. No all-length stationary-source
+cap follows from them, and no compilation is asserted here.
+
+[RCE][RCE]'s range extension, [JPL][JPL]'s specified joint-potential
+boundaries and the existing joint/scaffold/stability rules remain within
+their own grammars. The present result adds no rule to those grammars,
+removes none, and supplies no counterexample to their unrestricted
+optimizer-cofinality. A generic local uniqueness failure would not
+justify such a conclusion.
+
+**Open problem 9.4 (the weighted global completion still required).**
+In a conditional-integration route, the additional joint relation is the
+original component law
+
+$$
+\pi_C=\frac{Z_C}{\sum_{C'}Z_{C'}},\qquad
+Z_C=\sum_{s\in C}\prod_i\Phi_i(s),
+\tag{OCC.29}
+$$
+
+with each original whole-block weight once and all actual guards,
+compatibility zeros and shared incidences retained. This law must be
+derived from the unchanged actual fiber, or its contribution bounded
+uniformly across all original templates. Compatible bounded-owner
+conditionals, even together with the globally realizable local COK laws,
+do not by themselves provide that missing relation. Complete component
+enumeration handles each finite instance and this explicit family, but
+does not bound the all-size extremum.
+
+The original obligation remains a total computable sound cap verifier
+whose accepted rational labels are optimizer-cofinal for every original
+$\sigma_d$, or a uniform effective original length-error bound yielding
+two-sided approximation of the same $\lambda$. General exact $M_1(D)$,
+sharp $\lambda$, that effective bridge, and the broader mutual-recovery
+programme remain open. No current numerical rate endpoint is asserted
+by this volume. The operational relation proved here recovers a requested
+full temporal trajectory after one paid native reply; it does not
+recover arbitrary physical space and time, an unseen history or unknown
+age, or the declared authentication and access services.
+
+[AAR]: https://github.com/the-omega-institute/trureturing/blob/91170b89dfe9dd7eadc64d14d86d2157ed14abdf/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ADAPTIVE_ACQUIRED_REFERENCE_FRONTIER.md
+[FMR]: https://github.com/the-omega-institute/trureturing/blob/91170b89dfe9dd7eadc64d14d86d2157ed14abdf/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_LATE_TARGET_FRACTIONAL_MEMORY_RATE.md
+[NPC]: https://github.com/the-omega-institute/trureturing/blob/91170b89dfe9dd7eadc64d14d86d2157ed14abdf/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PRODUCT_PRESSURE_COMPLETENESS.md
+[RRN]: https://github.com/the-omega-institute/trureturing/blob/91170b89dfe9dd7eadc64d14d86d2157ed14abdf/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_REPRESENTATIVE_REPLY_NORMAL_FORM.md
+[CBN]: https://github.com/the-omega-institute/trureturing/blob/91170b89dfe9dd7eadc64d14d86d2157ed14abdf/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CONSTRUCTOR_BOUNDARY_NETWORKS.md
+[OCB]: https://github.com/the-omega-institute/trureturing/blob/91170b89dfe9dd7eadc64d14d86d2157ed14abdf/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_OVERLAP_CLOSURE_BOUNDARIES.md
+[SIR]: https://github.com/the-omega-institute/trureturing/blob/91170b89dfe9dd7eadc64d14d86d2157ed14abdf/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SEED_INCIDENCE_REDUCTION.md
+[COK]: https://github.com/the-omega-institute/trureturing/blob/91170b89dfe9dd7eadc64d14d86d2157ed14abdf/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CONDITIONAL_OWNER_KERNELS.md
+[GDB]: https://github.com/the-omega-institute/trureturing/blob/91170b89dfe9dd7eadc64d14d86d2157ed14abdf/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_GLOBAL_DEPENDENCE_BOUNDARIES.md
+[SCP]: https://github.com/the-omega-institute/trureturing/blob/91170b89dfe9dd7eadc64d14d86d2157ed14abdf/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SOFT_CONSTRAINT_PRESSURE.md
+[NCM]: https://github.com/the-omega-institute/trureturing/blob/91170b89dfe9dd7eadc64d14d86d2157ed14abdf/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CORRELATED_MEMORY_LOWER.md
+[RCE]: https://github.com/the-omega-institute/trureturing/blob/91170b89dfe9dd7eadc64d14d86d2157ed14abdf/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_RECURSIVE_CERTIFICATE_ESCAPE.md
+[JPL]: https://github.com/the-omega-institute/trureturing/blob/91170b89dfe9dd7eadc64d14d86d2157ed14abdf/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_JOINT_POTENTIAL_LIMITS.md
+[FCS]: https://github.com/the-omega-institute/trureturing/blob/91170b89dfe9dd7eadc64d14d86d2157ed14abdf/docs/develop/theory/FIB_NATIVE_FINITE_READER_CODE_SYNTHESIS.md
+[SS]: https://arxiv.org/html/math/0405046v1
+[Emerson]: https://arxiv.org/html/2608.31120v1
+

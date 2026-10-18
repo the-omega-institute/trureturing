@@ -1,0 +1,17 @@
+**Definition 10.1 (One-sided erasure, including both seam terms).** Use precisely the fields and errors of [Guarded, Definition 2.1]:
+
+$$
+\begin{aligned}
+\mathcal H_j^L&=\sigma(X_{-j},\ldots,X_{-1},X_1,X_2,\ldots),&
+p_j^L&=\mathbb E_P[X_0\mid\mathcal H_j^L],&
+e_L(j)&=\mathbb E_P(q_0-p_j^L)^2,\\
+\mathcal H_j^R&=\sigma(\ldots,X_{-2},X_{-1},X_1,\ldots,X_j),&
+p_j^R&=\mathbb E_P[X_0\mid\mathcal H_j^R],&
+e_R(j)&=\mathbb E_P(q_0-p_j^R)^2,\\
+A_P&=\sum_{j\ge0}\bigl(\sqrt{e_L(j)}+\sqrt{e_R(j)}\bigr).
+\end{aligned}
+\tag{10.1}
+$$
+
+At $j=0$ the finite retained side is empty; the entire opposite half-line is still retained. Every field is a subfield of $\mathcal E_0$, and all predictors use the reference law $P$.
+

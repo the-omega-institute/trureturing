@@ -1,0 +1,11 @@
+**Convention 8.6 (assignment and time boundaries).** The old five-vertex
+setter is not silently imported onto UAS's two-occurrence unary bits.
+Existing Boolean periodicity, SSA's continuation-information examples,
+and its unchanged-write accounting remain supplied boundaries.
+This volume supplies no new relocation-only assignment algorithm.
+Nor does geometry retain all general elapsed time: navigation-only
+events or a returned no-op cycle can leave a child tree unchanged.
+The phase recovery here works because every declared fine event is
+one new vertex in this fixed literal schedule. A finer model exposing
+the inspection instants would need its own cursor/evaluation phases.
+

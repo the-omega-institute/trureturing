@@ -1,0 +1,54 @@
+**Theorem 4.2 (two ambiguous depths).** If $B=[\ell,\ell+1]$ is a maximal
+ambiguity block, then
+
+$$
+E_B\ge\max(2,2D_B-1),\qquad E_B-D_B\ge1.
+\tag{4.1}
+$$
+
+Each shared state has exactly two cell incidences, both at depth $\ell$,
+and those cells must be the admissible pair
+
+$$
+p_-=(\ell-L+1,L-1),\qquad
+p_+=(K-1,\ell-K+1).
+\tag{4.2}
+$$
+
+If either is inadmissible or the two-gap rule fails, there is no sharing.
+In particular $D_B=0$ if this block ends at depth $n-1$.
+
+Proof. Put $T_-=T_{\ell-1}$, $T_+=T_{\ell+2}$ and
+$C=T_+\setminus T_-$; $|C|=3$, including at the formal endpoint.
+At depth $\ell+1$, a support adds two coordinates of $C$ and the next
+query is the omitted third. Different supports demand different labels;
+equal supports in distinct cells cannot share. Thus no state there hosts
+two cells. An earlier support adds one coordinate $x$. If a later support
+contains $x$, they are properly nested. Otherwise its forced next label
+is $x$, already read by the earlier history. Live freshness excludes this
+common state too. Hence there is no cross-depth sharing.
+
+At depth $\ell$, each hosted cell has a nonempty live-reply set, since
+$\ell\le n-2$. If distinct hosted cells had a common live reply, their
+actual fixed successor would host the two distinct child cells at depth
+$\ell+1$, just excluded. Their nonempty live-reply sets must therefore
+be disjoint subsets of $\{0,1\}$. A shared state has exactly two cells,
+one with only a live one reply ($z=L-1$), and the other with only a live
+zero reply ($h=K-1$). This gives (4.2); there can be no third hosted cell.
+This is the classification from [SI, Theorem 9.4][SI]. It makes no claim
+that a certified child halts or that this pair is actually shared.
+
+Let $s$ count these shared states. Each has exactly two incidences and
+all other hosts have one, so $D_B=s$. Both extreme cells have at least
+$s$ hosts, and their diagonal excess is at least $2s-2$. Independently,
+maximality of this two-depth block means that each of its depths really
+is ambiguous. Each diagonal thus has excess at least one, by $b_p\ge a_p$.
+For $s\ge1$ the first diagonal has excess at least
+$\max(1,2s-2)$ and the last at least one; for $s=0$ both still have
+excess at least one. Consequently
+$E_B\ge\max(2,2s-1)$. If $s=0,1,2$, this implies respectively
+$E_B-s\ge2,1,1$; for $s\ge3$ it implies $E_B-s\ge s-1\ge2$.
+This proves the strict unit for every case. No host from another block is
+charged. If $\ell+1=n-1$, then $\ell=n-2=K+L-3$, and (4.2) has
+hit gap one. Lemma 2.3 forbids sharing, so $s=0$ there. $\square$
+

@@ -1,0 +1,24 @@
+### 2.6 Proof of the five-window service correspondence
+
+Definition 1.5 uses the public bijection $b\mapsto s(b)$. The archive is constant on its image by (i). The existing legal-word counting recurrence in [FIB], Section 2, gives $|B_n|=F_{n+2}$: its empty and one-bit counts are $1$ and $2$, and the no-adjacent syntax splits by initial $0$ or $10$. This count is a cited combinatorial step, not a new enumeration claim.
+
+Different $b,b'$ have different blocks at some index $j$, so their services disagree already on the one-query history $(j)$. In particular, one installed deterministic service cannot be successful for two different legal words, regardless of its representation or internal updates. For a score-only randomized installation the law of the installed service is independent of $b$. Its exact-success events for the different $b$ are disjoint, so their probabilities sum to at most one. Uniform averaging bounds Bayes success by $1/|B_n|$, and minimax success by the same value. Uniformly selecting a legal word and installing its true service attains that value separately for every source. This proves (2.6), including services required to answer every future history rather than just one chosen scan.
+
+The legal words $b^{(0)}=0^n$ and $b^{(1)}=(1,0,\ldots,0)$ are both in $B_n$, and their sign labels are neighbors. Their first blocks are $000$ and $100$. A zero-error installation would allow their distinction by a subsequent indexed query at $j=1$, with no new source input. The controlled neighbor bound therefore rules out installation with fewer than $L$ calls. This witness uses finite-word syntax and does not assert that $b^{(0)}$ passes canonical $\mathrm{End}$.
+
+Conversely, the $L$-call readout identifies $s$ and hence the entire legal word $b$ with probability one. Retain its $n$ bits and answer each indexed request by selecting the three corresponding bits. The response at time $t$ on any finite history $(j_1,\ldots,j_k)$ is exactly $W_{j_t}(b)$. A direct induction gives this for repeated or adaptive requests: the retained $b$ is unchanged by an indexed read, so the assertion remains true after each answer. Queries consume whatever computation and retention resources their realization charges; the acquisition count is still $L$ device calls.
+
+For the pointer variant the retained representation is $(b,p)$, not $b$ alone. On a legal $\mathrm{Next}$, it returns the substring at $p$ and increments $p$; indexed reads leave $p$ unchanged. Thus the represented and true services have identical replies, the same legal domain $p\le N$ for $\mathrm{Next}$, and the same next pointer. By induction these equalities hold on every finite legal mixed history. Equivalently, for the latent task state consisting of the fixed source label and service pointer, the coordinate map
+
+$$
+e(s(b),p)=(b,p)
+$$
+
+preserves the outputs, action domains and updates in the sense of [FIB], Definition 8.1. The inverse sign code is public. In contrast, $(\mathcal H(s(b)),p)$ cannot supply the indexed readout at $j=1$ for the neighbor witness above, since that observation is equal for the two sources while their answers differ. The weight-vector task and this response task therefore have different sufficient observations.
+
+The same retained bits give the $L$-call upper bound for the pointer task, and its first $\mathrm{Next}$ distinguishes the neighbor witness, giving the lower bound. The $n$ stored bits are the resources of this explicit representation, not an asserted minimum storage requirement for $B_n$.
+
+Under the restricted angle variation, the product readout recovers $b$ with the success probability in (2.5). If a measured word is illegal, replace it by any fixed legal word before installation; if it is the true word, this replacement is unnecessary. Thus exact-service success is at least (2.5), with ideal readout still required. Neither this transfer nor the legal-word restriction computes the intermediate-$q$ optimum under the uniform legal-word prior.
+
+This correspondence encodes a constrained finite response task into the promised channels. It does not give a native FIB-tree generation or destructive-root operation. A transfer to any other state model requires a map preserving that model's source, observable information, legal actions, readouts and updates, and requires accounting for the preparation and acquisition resources. The all-history preservation under such maps is the existing implication in [FIB], Definition 8.1. No correspondence with the states or updates of a particular trained network is assumed here. $\square$
+

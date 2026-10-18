@@ -1,0 +1,68 @@
+**Theorem 63.2 (weak finite positive decoders).** For every
+$0\le s<s_0$ there is a finite instrument in $\mathfrak P_s$.
+
+Proof. Choose
+
+$$
+\varepsilon=\frac{1-s/s_0}{2}>0,\qquad
+s_{\rm raw}=(1-\varepsilon)s_0+\varepsilon\sqrt\theta,\qquad
+\eta_s=s/s_{\rm raw}<1.
+\tag{JRH.37}
+$$
+
+Indeed $s_{\rm raw}-s=\varepsilon(s_0+\sqrt\theta)>0$.
+Supply the following pairs of live matrices and attached failure
+effects, all with fixed input-independent coefficients:
+
+$$
+\begin{array}{c|c}
+K&N_K\\ \hline
+\sqrt kD&0\\
+A_\sigma=\sqrt{\varepsilon/2}(\sqrt\theta D+\sigma T)
+ &m_2|2\rangle\langle2|/2\\
+B_\tau=\sqrt{\varepsilon/2}(\sqrt\omega D+\tau S)
+ &m_1|1\rangle\langle1|/2\\
+C_{\sigma\tau}=\sqrt{1-\varepsilon}
+ (\sqrt\delta D+\sigma T+\tau S)/2&0
+\end{array}
+\tag{JRH.38}
+$$
+
+Every nonzero low matrix is null and rank two. The row space of
+$A_\sigma$ contains $|2\rangle$, and that of $B_\tau$ contains
+$|1\rangle$; consequently each pair satisfies JRH.30's kernel
+condition. Use that factor for all low pairs and the pure live
+dimension-three encoder $\sqrt kD$ for the high branch.
+The coefficient Grams sum to
+$\operatorname{diag}(k,0,0)+
+\varepsilon\operatorname{diag}(\theta,1,0)+
+\varepsilon\operatorname{diag}(\omega,0,1)+
+(1-\varepsilon)\operatorname{diag}(\delta,1,1)=I_3$.
+The attached effects sum to $M$. Thus the total encoder is TP and
+the forgotten supported maps are exactly $\Lambda_*$ and JRH.31
+pulled back with $M$.
+
+On $A_\sigma,C_{\sigma\tau}$ generate report $r$ with probability
+$(1+r\eta_s\sigma)/2$; on $B_\tau$ and the high branch use a
+fair coin. Keep both the branch and report as the actual label.
+The failure signed effects vanish. Summing the live signed effects
+gives $\eta_s[\varepsilon\sqrt\theta+(1-\varepsilon)s_0]
+\kappa X_{01}$, so $F_+=I_3/2+\kappa sX_{01}/2$.
+The only high effect is $kD^\dagger D$, giving cost $kA_{27}$,
+exactly the original plateau cost. The two mixed decoder live effects
+have eigenvalues $1$ and, respectively,
+
+$$
+\ell_A=\frac{\varepsilon\theta h_2^2}
+ {\varepsilon\theta h_2^2+m_2}>0,\qquad
+\ell_B=\frac{\varepsilon\omega h_1^2}
+ {\varepsilon\omega h_1^2+m_1}>0.
+\tag{JRH.39}
+$$
+
+These follow because the attached failure direction is the separate
+one-dimensional row block of the corresponding live matrix. All other
+decoders are pure live. This includes $s=0$, with fair binary report.
+The $s=s_0$ exclusion follows from Theorem 62.1 and $v^\dagger<1$,
+not from a limit of JRH.39. $\square$
+

@@ -1,0 +1,63 @@
+**Proposition 8.5 (favorable and hostile actual representative systems).**
+The same $B_M$ has an injective representative map using only retained tree
+vertices. It also has one lawful fixed map choosing $L_j,H_j$ at $V_j$
+for all $j\ge2$ and with $Z_M,O_M,B_X,B_Y,J$ in its image. For the
+latter system the collision $L_2,H_2$ has exactly these packs:
+
+| $(u_{M-1},u_M)$ | three-state first-exposure pack |
+| --- | --- |
+| $(0,0)$ | $\{V_2,B_X,J\}$ |
+| $(0,1)$ | $\{V_2,Z_M,J\}$ |
+| $(1,0)$ | $\{V_2,O_M,J\}$ |
+| $(1,1)$ | $\{V_2,B_Y,J\}$ |
+
+Every allowed pack for that one collision lies in the chosen image. For
+all $j\ge2$, the one-hot-at-$u_M$ completions have exact packs
+$\{V_j,Z_M,J\}$ in that same image.
+
+Proof. For favorable representatives at cell $(h,z)$ put $d=h+z<n$.
+If $d\le M$, choose any routing prefix with those counts. Deletions
+begin at depths $n-j-2>M$, so its vertex remains. If $d>M$ and
+$h\ge2$, set $a=\min(h,M)$ routing bits to one, for example the first
+$a$. Here $M-a\le z$, since either $a=M$ or $d>M$ and $a=h$.
+This routing cylinder has at least two ones and is untouched. In the next
+$d-M$ positions put $h-a$ ones and $z-(M-a)$ zeros; these nonnegative
+counts sum to $d-M$. If instead $d>M$ and $h\le1$, use $R=0^M$;
+then $z\ge M$, and the next $d-M$ positions can contain $h$ ones
+and $z-M$ zeros. All chosen vertices are running and live. Their earlier
+prefixes are live because their counts cannot exceed the chosen live
+counts. Actual completions realize them. Distinct cells cannot select the
+same retained vertex because its inherited tree prefix has a fixed count
+pair. This proves injectivity, without asserting that all lawful fixed
+representative maps are injective.
+
+For the hostile map use the fixed collision histories of (8.3) and the
+following five additional actual histories:
+
+| chosen state | live cell | actual prefix reaching it |
+| --- | --- | --- |
+| $Z_M$ | $(k-1,n-k-2)$ | high $j=2$ prefix, then $u_{M-1}=0$ |
+| $O_M$ | $(k-3,n-k)$ | low $j=2$ prefix, then $u_{M-1}=1$ |
+| $B_X$ | $(k-1,n-k-1)$ | high $j=2$ prefix, then $U_2=(0,0)$ |
+| $B_Y$ | $(k-2,n-k)$ | low $j=2$ prefix, then $U_2=(1,1)$ |
+| $J$ | $(k-1,n-k)$ | the untouched zero-routing prefix defining $J$ |
+
+Starting from $H_2=(k-1,n-k-3)$ adds one or two fresh zeros; starting
+from $L_2=(k-4,n-k)$ adds one or two fresh ones. Thus all five are
+live, pairwise distinct and actual. They avoid (8.3): its low hits are at
+most $k-4$, its high zeros at most $n-k-3$. Choose these and the
+$2(M-1)$ collision histories, and use the favorable construction for all
+remaining cells. No cell receives incompatible choices.
+
+For $(0,0)$ the scan's first zero at $V_2$ completes the negative
+certificate and $x=1$ at $B_X$ completes the positive one. For $(0,1)$
+the corresponding first new one is at $Z_M$. For $(1,0)$ the first
+new one is at $V_2$ and first new zero at $O_M$. For $(1,1)$ the first
+new zero is at $B_Y$. The separator is $J$ in every case. These are the
+exact packs in the table, with three distinct states. For the one-hot
+completion at $u_M$ at any $j\ge2$, the first new zero is at $V_j$
+and the first new one at $Z_M$, giving the asserted pack. We do not
+assert that every allowed pack for every $j$ lies in the image. These
+are the two separate representative results of [WTF, Propositions
+11.5--11.6][WTF]. $\square$
+

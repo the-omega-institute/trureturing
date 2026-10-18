@@ -1,0 +1,44 @@
+**Theorem 69.1 (arbitrary Kraus implementations are doubly rigid).**
+For finite $A$, every actual low label nonzero on supported inputs has
+fibre dimension exactly two. Its supported encoder and live decoder
+are CP maps of Kraus rank one,
+$\mathcal E_\alpha=\operatorname{Ad}_{C_\alpha}$ and
+$\mathcal R_\alpha^L=\operatorname{Ad}_{B_\alpha}$, with
+$C_\alpha:\mathbb C^3\to\mathbb C^2$ onto and
+$B_\alpha:\mathbb C^2\to\mathbb C^3$ injective. This conclusion is
+about the existing actual label; it exposes no discarded Kraus index.
+
+**Proof.** Trace balance proves the whole-fibre live effect
+$L_\alpha^{\rm dec}\succeq e^{-A}I$. Thus a nonzero supported encoder
+cannot have zero composite live map. Start with arbitrary Kraus matrices
+$C_j,B_i$ of these two maps. Some product $B_{i_0}C_{j_0}$ is nonzero.
+By FA.1 and the no-rank-one assertion CA Lemma 3.1, it has rank two.
+Since the fibre is low, its dimension is two; $C_{j_0}$ is onto and
+$B_{i_0}$ is injective. For every real null direction the kernels are
+
+$$
+\begin{aligned}
+\ker K(\mathbf c)&=\mathbb C(1,-bz/(h_1x),-dw/(h_2x))^T,\\
+\ker K(\mathbf c)^\dagger&=\mathbb C(1,-az/(h_1x),-cw/(h_2x))^T.
+\end{aligned}
+\tag{FA.5}
+$$
+
+The lower two equations prove these identities, the upper one following
+from FA.1. The coefficients are positive; a common kernel or a common
+image fixes both ratios $z/x,w/x$, hence fixes the product up to a
+complex scalar. With $B_{i_0}$ fixed, all nonzero $B_{i_0}C_j$ have
+its image and are proportional. Injectivity makes all nonzero $C_j$
+proportional. With $C_{j_0}$ fixed and onto, all nonzero $B_iC_{j_0}$
+have its kernel and are proportional; surjectivity makes all nonzero
+$B_i$ proportional. Absorb the sums of squared proportionality constants
+into one matrix each. A zero product with the fixed injective/onto
+matrix forces the other factor zero, so none has been missed. This also
+covers countable Kraus representations in finite dimensions.
+
+The supported other output is zero by JR42. Onto $C_\alpha$ lifts that
+zero CP composition to zero on the entire decoder fibre: for every
+positive $Y$ choose positive $X$ with $C_\alpha XC_\alpha^\dagger=Y$.
+Thus the full decoder consists of live and canonical failure there.
+No extra output loss is hidden. $\square$
+

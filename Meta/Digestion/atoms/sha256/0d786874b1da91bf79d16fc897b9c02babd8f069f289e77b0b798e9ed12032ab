@@ -1,0 +1,38 @@
+**Proposition 5.3 (All signed affine commands and exact guards).** For
+every real $s,t$ define ambient linear maps
+
+$$
+\mathcal U_s^{(2)}(z)=\exp(s/H)z,\qquad
+\mathcal V_t^{(2)}(z)=R_{t/2}z.
+$$
+
+They satisfy all identities in Definition 2.1. On the actual image the
+probability guard is exactly
+
+$$
+0<K(z)+s<H
+\quad\Longleftrightarrow\quad
+1<\exp(s/H)\|z\|_2<\exp(1),
+$$
+
+and the phase guard is all of $\mathscr S_2$.
+
+**Proof of Proposition 5.3.** Direct substitution gives
+
+$$
+\mathcal U_s^{(2)}E_2(k,\alpha,\beta)
+=\exp((k+s)/H)U(\alpha)=E_2(P_s(k,\alpha,\beta))
+$$
+
+whenever the source command is lawful. Similarly rotation gives
+$\exp(k/H)U(\alpha+t/2)=E_2(Q_t(k,\alpha,\beta))$.
+The actual change of $\beta$ under $Q_t$ is present in the source;
+only this encoder ignores it. The displayed guard is precisely the
+original height guard, since $K(E_2(x))=k$. It is equivalent to the
+norm condition by strict monotonicity of the exponential. These
+identities prove image preservation on the guard, and every rotation
+preserves the whole annulus. All coefficients depend only on the
+command and fixed $H$. Both signs and zero commands are included.
+When $|s|\ge H$ the source guard is empty, while the same ambient
+linear formula remains defined. $\square$
+

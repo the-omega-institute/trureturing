@@ -1,0 +1,13 @@
+## 448. 严格 Euler 库存也不可能属于有限 Fibonacci 最小公倍数族
+
+§447 排除了精确单项来源 $N^-(t)=F_m$。本节把排除扩大到
+§365 定义的完整有限 Fibonacci 最小公倍数族
+
+$$
+\mathcal M=\left\{\operatorname{lcm}_{s\in S}F_s:
+S\subseteq\mathbb N_{>0}\text{ 有限}\right\}.
+$$
+
+新增的约束来自同一个严格库存的二进赋值，而不是重新使用平方层 WSS
+账本。
+

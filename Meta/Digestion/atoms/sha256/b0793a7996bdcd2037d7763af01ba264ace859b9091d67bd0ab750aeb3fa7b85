@@ -1,0 +1,9 @@
+**Corollary 9.6 (Actual literal and path minima).** Theorem 3.3 holds.
+
+Proof. Realize a scalar minimizer from Theorem 9.4 by Proposition
+8.1 and extend it to all prescribed paths by Proposition 8.3.
+Its error is exactly $4H\sqrt{T_4(\tau)}$. The literal lower
+bound is Corollary 8.4, and $\mathsf P$ is a literal subclass.
+Thus both classes attain this same value. Proposition 9.5
+supplies the additional order and root assertions. $\square$
+

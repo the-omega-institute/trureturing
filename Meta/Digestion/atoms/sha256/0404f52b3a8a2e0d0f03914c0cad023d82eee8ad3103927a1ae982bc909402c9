@@ -1,0 +1,68 @@
+**Proposition 21.3 (matching local optima are compatible).** At every
+copied block, in the order (own seed, incoming seed), prescribe
+the full four-point law
+
+$$
+p(\alpha,\alpha)=p(\beta,\beta)=\frac25,\qquad
+p(\alpha,\beta)=p(\beta,\alpha)=\frac1{10}.
+\tag{COK.106}
+$$
+
+Its two marginals are fair, so the whole-group matching equations
+hold for every $h$. Put
+
+$$
+I_0=1-h_2(1/5)>0,\qquad c=\frac{\sqrt{10}}b.
+\tag{COK.107}
+$$
+
+Each block has mutual information $I_0$ and its individual local
+COK minimax value is exactly $c$. Explicit normalized rows are
+
+$$
+Q_\varnothing(o)=\tfrac12,\qquad
+Q_{\{1\}}(o\mid z)=
+ \begin{cases}4/5,&o=z,\\1/5,&o\ne z.\end{cases}
+\tag{COK.108}
+$$
+
+For every $m,h$, there is a common actual law of full support on
+the solution cube with exactly these copied local laws. It need
+not be the Gibbs law of the once-owned weights.
+
+Proof. The uniform marginal and binary crossover probability
+$1/5$ give the mutual information in (COK.107). On all four
+local inputs, direct substitution gives
+
+$$
+\mu(x_i)^2=c^2Q_\varnothing(o)Q_{\{1\}}(o\mid z).
+\tag{COK.109}
+$$
+
+The marginal and conditional rows of $p$ are precisely
+(COK.108). Take logarithms and expectations in (COK.109).
+The conditional Gibbs identity gives
+$[H_p(O)+H_p(O\mid B)]/2+\mathbb E_p\log_2\mu(x_i)
+=\log_2c$. The pointwise equality gives a cap $c$, and this
+one-law objective, or the credited local minimax Theorem 4.1,
+forces every such local cap to be at least $c$. These are the
+four actual configurations of this decoration, all positive
+under (COK.103). The calculation does not optimize over the
+entire decoration list defining $\Omega_d$.
+
+For common-law existence, let $U_{2m}$ be uniform on all owner
+bit assignments and let $C_{2m}$ be uniform on the two constant
+assignments. The law
+
+$$
+P^{\rm comp}=\tfrac35 C_{2m}+\tfrac25 U_{2m}
+\tag{COK.110}
+$$
+
+is positive on the whole actual cube. Every local pair concerns
+two distinct owner bits, by Proposition 21.2. A given equal pair
+has probability $3/10+(2/5)(1/4)=2/5$, and a given unequal
+pair probability $(2/5)(1/4)=1/10$. Thus its local law is exactly
+$p$ at every block, for every $h$. This proves compatibility,
+without identifying it with a Gibbs law. $\square$
+

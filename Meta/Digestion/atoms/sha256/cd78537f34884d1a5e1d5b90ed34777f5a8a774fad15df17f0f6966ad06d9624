@@ -1,0 +1,20 @@
+**定理 11.7（FIB 两步递推的洛伦兹型不变量）。** 令
+
+$$
+Q(a,b)=a^2+ab-b^2,\qquad
+\mathsf T=a+b/2,\quad\mathsf X=\sqrt5\,b/2.
+$$
+
+则 $Q(Mc)=-Q(c)$、$Q(M^2c)=Q(c)$、$Q=\mathsf T^2-\mathsf X^2$，两步递推为
+
+$$
+\begin{pmatrix}\mathsf T'\\\mathsf X'\end{pmatrix}
+=
+\begin{pmatrix}3/2&\sqrt5/2\\\sqrt5/2&3/2\end{pmatrix}
+\begin{pmatrix}\mathsf T\\\mathsf X\end{pmatrix}.
+$$
+
+对 $u=\mathsf T+\mathsf X$、$v=\mathsf T-\mathsf X$，有 $u'=\varphi^2u$、$v'=\varphi^{-2}v$。
+
+**证明。** 代入 $M(a,b)=(b,a+b)$ 得符号翻转，两次执行恢复。坐标替换给所列矩阵及零方向。亦有 $Q=(a+b\varphi)(a+b\varphi')$，$\varphi'=(1-\sqrt5)/2$，是标准黄金环范数在此组成递推中的表达。$M$ 可逆，计数组合坐标未指定物理钟或不可逆接口，故此结构不单独证明物理时间箭头。$\square$
+

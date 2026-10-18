@@ -1,0 +1,35 @@
+**定义 1.2（真实来源及同一已付根）。** 固定公共参数与初值 $v\in\mathbb F_2$，满足
+
+$$
+3\le m<k<2m,\qquad T=k+1,\qquad \gcd(m,T)=1,\qquad h=k-m\ge2.
+$$
+
+于是 $2\le h\le m-2$。成功记录为 $(p,\theta,t)$，其中 $p\in\mathbb F_2$、$\theta\in\mathbb Z/T\mathbb Z$、$0\le t<k$；另有吸收拒绝态 $\bot$。逐位转移采用取得卷（AA.2）：
+
+$$
+c_i=\mathbf1_{\{0,T-1\}}(i\bmod T),\qquad
+\delta_0(p,\theta,t)=(p,\theta+1,0),
+$$
+
+$$
+\delta_1(p,\theta,t)=
+\begin{cases}
+(p\oplus c_\theta,\theta+1,t+1),&t+1<k,\\
+\bot,&t+1=k,
+\end{cases}
+\qquad \delta_b(\bot)=\bot.
+$$
+
+初读供应标量。来源实际执行并支付同一个根块 $1^m$，条件化到根成功、标量差为一的共同档案 $A_v$。真实 INITIAL 候选为
+
+$$
+Q_v=\{0,m\}\times\{0,\ldots,h-1\},\qquad
+\operatorname{INITIAL}_v(j,s)=(v,-j,s),
+$$
+
+$$
+\operatorname{current}_v(j,s)=(v\oplus1,m-j,s+m).
+$$
+
+INITIAL 是实验起点的不可变目标，不随当前记录更新。每个 $q\in Q_v$ 都是取得卷定义1.1共同历史先验中的真实候选；不同候选表示不同原历史上的同一实验，不表示复制同一个来源。候选可行性不指定候选的概率分布。
+

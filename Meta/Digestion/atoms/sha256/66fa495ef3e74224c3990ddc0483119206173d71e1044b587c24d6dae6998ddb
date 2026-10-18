@@ -1,0 +1,59 @@
+**Lemma 9.1 (Limits of bounded scalar primitives and annihilators).**
+Let $R_n\in\mathcal E_2$ be uniformly bounded on $[0,1]$. For each
+$n$ choose a monic quadratic annihilator $p_n$ of $R_n$, padding
+lower orders if necessary. A subsequence has uniformly convergent
+primitives
+
+$$
+F_n(x)=\int_0^xR_n(t)\,dt\longrightarrow F(x),
+$$
+
+and normalized coefficient vectors converging to those of a nonzero
+polynomial $p$ of degree at most two. The distribution $u=F'$ on
+$(0,1)$ satisfies $p(\partial_x)u=0$.
+
+Proof. For a distinct pair use
+$p_n(z)=(z-\lambda_{1,n})(z-\lambda_{2,n})$; for a confluent
+profile use $(z-\lambda_n)^2$. A nonzero single exponential may
+use $z(z-\lambda_n)$, and zero may use $z^2$. Thus a monic
+quadratic always exists without bounding its roots.
+
+Write $p_n(z)=p_{0,n}+p_{1,n}z+z^2$ and divide its coefficient
+vector by its Euclidean norm $b_n$. The resulting vectors lie on
+the unit sphere in $\mathbb C^3$, viewed as $\mathbb R^6$. A
+subsequence converges to a unit vector $(p_0,p_1,p_2)$, defining
+$p(z)=p_0+p_1z+p_2z^2\ne0$. Its leading coefficient can be zero.
+No bound on the unnormalized coefficients or roots has been used.
+
+Let $|R_n|\le M$ on the scalar interval. Then $F_n(0)=0$,
+$|F_n|\le M$ and $|F_n(x)-F_n(y)|\le M|x-y|$. On a countable
+dense subset of $[0,1]$, successively extract convergent scalar
+subsequences and take a diagonal subsequence. The common Lipschitz
+bound makes it uniformly Cauchy: for a prescribed error choose a
+finite sufficiently fine net from the dense subset, use convergence
+at those finitely many points, and bound the two intervening
+differences by the common Lipschitz constant. Hence $F_n$ converges
+uniformly to a Lipschitz, in particular continuous, $F$. This
+further subsequence retains the coefficient limit.
+
+We use complex distributions as continuous linear functionals on smooth
+compactly supported test functions on $(0,1)$, with
+$\langle v',\phi\rangle=-\langle v,\phi'\rangle$. Every $R_n$
+is an ordinary smooth function. Integration by parts gives
+
+$$
+\int_0^1R_n\phi=-\int_0^1F_n\phi'
+\longrightarrow-\int_0^1F\phi'
+=\langle F',\phi\rangle.
+$$
+
+Applying this identity to each fixed derivative of $\phi$ gives
+distributional convergence of $R_n$ and all derivatives needed
+for a quadratic equation. The normalized polynomial annihilates
+$R_n$ too. In its pairing with $\phi$, each of the three scalar
+coefficients converges and each corresponding derivative pairing
+converges to a finite value. Passing to the limit therefore gives
+$p(\partial_x)F'=0$. All integration here involves the explicit
+smooth scalar profiles or their continuous primitives, never an
+arbitrary original encoder. $\square$
+

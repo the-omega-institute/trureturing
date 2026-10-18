@@ -1,0 +1,25 @@
+**定理 75.4（一般 qubit 通道的方向下界）。** 对任意 qubit CPTP 通道，不要求它幺正、unital 或 Pauli 对角，定义
+
+$$
+\lambda_i=\frac12\operatorname{tr}\bigl(\sigma_i\mathcal T(\sigma_i)\bigr),
+\qquad i=x,y,z.
+$$
+
+则 $\lambda_y\ge\lambda_x+\lambda_z-1$。若 $\lambda_x,\lambda_z\ge1-\epsilon$，其中 $\epsilon\ge0$，就有 $\lambda_y\ge1-2\epsilon$。
+
+证明（75.4）。每个 Kraus 算子唯一展开为 $K_\nu=a_{\nu0}I+a_{\nu x}X+a_{\nu y}Y+a_{\nu z}Z$。置 $p_j=\sum_\nu|a_{\nu j}|^2\ge0$。Pauli 的迹正交性及保迹条件的迹给
+
+$$
+\sum_jp_j=\frac12\sum_\nu\operatorname{tr}(K_\nu^\dagger K_\nu)=1.
+$$
+
+共轭 $\sigma_i\sigma_j\sigma_i$ 在 $j=0,i$ 时等于 $\sigma_j$，在另两方向时等于 $-\sigma_j$。展开 $\operatorname{tr}(\sigma_iK_\nu\sigma_iK_\nu^\dagger)$ 后，不同 Pauli 项的迹为零，故
+
+$$
+\lambda_i=p_0+p_i-\sum_{j\ne0,i}p_j=2(p_0+p_i)-1.
+$$
+
+因此 $1-\lambda_x+\lambda_y-\lambda_z=4p_y\ge0$，代入两个下界即得结论。$\square$
+
+这些 $\lambda_i$ 是各方向对自身的线性响应系数；通道可以另有平移及交叉响应。此不等式本身没有给完整通道保真度、所有状态的距离或 diamond 距离界。精确刚性依赖共同 CPTP map、锐平方关系和全态读出保持；上述近似方向结论不能替代这些精确条件。
+

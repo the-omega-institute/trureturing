@@ -1,0 +1,62 @@
+**Theorem 71.1 (isolated strong feasibility and attained threshold).**
+Define
+
+$$
+\begin{gathered}
+v^\dagger=\frac{m_2d^2h_1^2}{m_1b^2h_2^2},\quad
+s^\dagger=\mathfrak f(v^\dagger),\quad u^\dagger=\theta v^\dagger+\omega,\\
+\mathfrak c_\dagger=\mathfrak c(\sqrt{u^\dagger},\sqrt{v^\dagger},1),
+\quad\nu_\dagger=\frac{m_1h_2^2}{d^2\mathfrak c_\dagger},
+\quad A_\dagger=\log(1+\nu_\dagger).
+\end{gathered}
+$$
+
+Then $s_0<s^\dagger<1$, and for $s\in[s_0,1]$
+
+$$
+\mathfrak F_{s,A}\ne\varnothing
+\quad\Longleftrightarrow\quad s=s^\dagger\ \text{and}\ A\ge A_\dagger.
+\tag{FA.14}
+$$
+
+In particular the threshold is attained, while $s=s_0$ and $s=1$
+are infeasible at every finite budget.
+
+**Proof.** JR42–43's equality conditions give four real low rays
+$K_{\sigma\tau}=\sqrt uD+\sigma\sqrt vT+\tau S$ with total live
+coefficient weight $1/4$ on each, where $v=v_s$, $u=\theta v+\omega$.
+This includes $s=s_0$ and $s=1$. By FA.7 all supported failure on such
+a ray has line $(0,dh_1,-\sigma\tau\sqrt v\,bh_2)^T$.
+Thus its diagonal ratio is $d^2h_1^2/(vb^2h_2^2)$. Finite activity
+excludes nonzero supported labels with zero live map, and high labels
+cannot carry supported failure by JR42. Summing all failures to $M$
+forces $v=v^\dagger$. The whole-box bounds in Proposition 74.1 give
+$0<v_0<1/5<v^\dagger<3/10<1$. Strict decrease of $\mathfrak f$ on
+$[v_0,1]$ gives the stated location of $s^\dagger$.
+
+Put $b_\kappa=(0,\sqrt{m_1},-\kappa\sqrt{m_2})^T$,
+$W_\kappa=b_\kappa b_\kappa^T$. A label on ray $\sigma,\tau$ has
+live matrix $\sqrt pK_{\sigma\tau}$ and failure $qW_{\sigma\tau}$.
+FA.8, using $\mathfrak c$'s invariance under scalar multiplication,
+is exactly
+
+$$
+0\le q\le rp,\qquad r=t_A/\nu_\dagger.
+\tag{FA.15}
+$$
+
+The two signs $\kappa=\sigma\tau$ must each have total $q=1/2$:
+the diagonal equations give their sum one and the zero off-diagonal
+entry gives their difference zero. Each has two rays with $p=1/4$,
+so capacity requires $r\ge1$. Conversely on each ray take
+$p=q=1/4$; their failures sum to $M$ and their live Gram is the
+required $\operatorname{diag}(u^\dagger,v^\dagger,1)$.
+Use FA.11–.13 and the high pair
+$H_\sigma=(\sqrt{1-u^\dagger}D+\sigma\sqrt{1-v^\dagger}T)/\sqrt2$,
+with report $\sigma$ on low and high labels and fair complement report.
+Failures kill coordinate zero and contribute no $01$ report entry.
+JR.29 then gives contrast exactly $\mathfrak f(v^\dagger)$;
+Theorem 75.1 proves all original outputs and costs simultaneously.
+Every low decoder has activity $A_\dagger$, and high/complement rates
+are zero. Thus the equality budget is feasible. $\square$
+

@@ -1,0 +1,30 @@
+### 推论 23.3（统一收缩常数）
+
+若存在 \(0\le q<1\) 使
+
+\[
+|a_j|\le q
+\]
+
+对所有 \(j\) 成立，并且
+
+\[
+\sup_n\operatorname{diam}(F_n)<\infty,
+\]
+
+则仿射 FIB 纤维逆极限至多含有一个元素。
+
+#### 证明
+
+有
+
+\[
+\operatorname{diam}(F_n)
+\prod_{k=j}^{n-1}|a_k|
+\le
+\left(\sup_m\operatorname{diam}(F_m)\right)q^{n-j}
+\longrightarrow0.
+\]
+
+应用定理 23.2。证毕。
+

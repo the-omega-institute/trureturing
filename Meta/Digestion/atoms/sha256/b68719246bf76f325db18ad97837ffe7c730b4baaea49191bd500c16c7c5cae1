@@ -1,0 +1,46 @@
+**Lemma 4.1 (BV interpolation constants).** Suppose $k$ is absolutely
+continuous and $k'=v$ a.e. with $\operatorname{TV}(v)\leq W$. Let $k^0$ be
+its exact-value affine interpolant on the uniform mesh. Then
+
+$$
+\|(k^0)'-k'\|_{L^1}\leq Wh/2,\qquad
+\|k^0-k\|_\infty\leq Wh/4.
+\tag{SC.9}
+$$
+
+If $|k'|\leq L$, independently $\|k^0-k\|_\infty\leq Lh/2$.
+The single-cell constants $1/2$ and $1/4$ are attained by a velocity with
+one jump at the midpoint.
+
+Proof. On $I=[l,l+h]$, the interpolant slope is the mean
+$\bar v=h^{-1}\int_Iv$. Jensen and the variation measure give
+
+$$
+\begin{aligned}
+\int_I|v-\bar v|
+&\leq\frac1h\int_I\int_I|v(t)-v(s)|\,ds\,dt\\
+&\leq\frac2h\int_{(l,l+h)}(u-l)(l+h-u)\,d|Dv|(u)
+\leq\frac h2|Dv|((l,l+h)).
+\end{aligned}
+\tag{SC.10}
+$$
+
+The middle inequality follows by integrating the variation between $s,t$;
+the set $s<u<t$ has area $(u-l)(l+h-u)$, and the other order contributes
+the same amount. All integrands are nonnegative. A mesh-point jump has no
+effect on either adjacent cell's a.e. values, so the open-cell variation
+measures sum to at most $W$ without double counting. This proves the first
+bound. The cell residual $k-k^0$ starts and ends at zero. Its derivative
+$v-\bar v$ has integral zero; each positive or negative part has integral
+half its $L^1$ norm. Any primitive value is bounded by that half, giving
+the second bound after (SC.10). For the Lipschitz bound write
+$t=l+uh$ and use
+
+$$
+|k(t)-(1-u)k(l)-uk(l+h)|\leq 2Lu(1-u)h\leq Lh/2.
+$$
+
+For a midpoint jump of size $q$, direct integration gives derivative error
+$hq/2$ and maximum height error $hq/4$. This also verifies the stated
+constants for jumps. $\square$
+

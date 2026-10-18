@@ -1,0 +1,25 @@
+**Definition 5.1 (after-overwrite family and strengthened owner view).**
+Fix any one reached outer $R_r$ of the fixed beta apparatus, after any
+common finite lawful Reserve/Raise/history prefix. For
+$r_{\rm len}\ge1$, put $d=r_{\rm len}+1$ and choose
+$w\in\{0,1\}^{r_{\rm len}}$. From that same prefix actually supply 01
+and the original TagRead frame
+
+$$
+010\;U(d)\;w0.
+$$
+
+Let $h_w$ stop immediately after the final payload IN(0), before its
+matching WR(13,5). If $n_0(d)$ is the common actual ordinal before the
+first payload RD, this cut has ordinal
+$n_0(d)+5r_{\rm len}+2$. The parameter $r_{\rm len}$ is unrelated to
+the client entry $r$ or a CAP layout ordinal.
+
+Let $P_A$ contain all currently A-owned material, its heads, authentic
+origins, current read/call/invocation rights, acquired dependencies,
+old packages and completed history banks. Strengthen it to $P_A^+$ by
+also revealing all finite native control/version/latch bits, all head
+positions/token fields and the actual whole meter word. This is a
+mathematical strengthening of possession, not a new enabled observation.
+The producer retains 1–12 during this auxiliary source ingress.
+

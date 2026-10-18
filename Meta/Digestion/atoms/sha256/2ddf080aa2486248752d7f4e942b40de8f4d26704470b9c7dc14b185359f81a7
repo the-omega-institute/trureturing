@@ -1,0 +1,21 @@
+**Theorem 63.7 (all finite near-minimizers, common and killed).** Suppose $m_N<B_N$, in particular under (63.17). For every sequence of original finite sources $t_n$ and legal-prefix indices $j_n\to\infty$, write $D_n=D_{j_n}(t_n)$. For either prescription $\diamond\in\{\mathrm c,\mathrm k\}$, let $f_n\in\ell^2(\mathcal C_N(D_n))$ be unit and satisfy
+
+$$
+\langle f_n,H^\diamond_{D_n,N}f_n\rangle
+-\inf\sigma(H^\diamond_{D_n,N})\longrightarrow0.
+\tag{63.21}
+$$
+
+Their identical-address zero extensions are strongly precompact in $\mathscr H_N$, and every cluster point is a unit common ground state. In particular this holds along every fixed original source's legal-prefix family.
+
+Proof. Theorem62.6 supplies the finite infimum recovery. Its proof is uniform under contained-ball exhaustion: choose its finite recovery vector first, contain its finitely many occupied addresses in $B_r$, and use (63.20) with $b=\lfloor j_n/2\rfloor-r$. This gives the needed local coefficient recovery for arbitrary varying $t_n$, without a norm limit of the full Green operators. The finite inequalities are exactly
+
+$$
+m_N\le q_N(I_{D_n,N}f_n)
+=\langle f_n,H^{\rm c}_{D_n,N}f_n\rangle
+\le\langle f_n,H^{\rm k}_{D_n,N}f_n\rangle.
+\tag{63.22}
+$$
+
+Thus either near-minimizer family is a common near-minimizer. Apply Theorem63.5. This uses the actual inherited diagonal and the pointwise killed/common ordering, not a claim that all finite pair multipliers converge in operator norm. $\square$
+

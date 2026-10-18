@@ -1,0 +1,67 @@
+## 88. A strict finite-interior submaximal-height counterexample
+
+Set
+
+$$
+V_f=\frac{m_2h_1^2}{b^2},\quad W_f=\frac{m_1h_2^2}{d^2},\quad
+\mu_f=\alpha V_f+\beta W_f,\quad
+\nu=\frac{\mu_f}{c_*(V_f/\mu_f)},\quad
+\nu_f=u_f=V_f/\mu_f,\quad \upsilon_f=W_f/\mu_f.
+\tag{FA.103}
+$$
+Under the supplied source enclosure, $0<\nu_f<1<\upsilon_f<3$ and
+$\alpha\nu_f+\beta\upsilon_f=1$. Let
+
+$$
+ h^F_{\sigma\upsilon}=(1,\sigma\sqrt{\nu_f},\upsilon\sqrt{\upsilon_f}),\qquad
+\Sigma_f=\frac{\mu_f}{4}\sum_{\sigma,\upsilon=\pm1}\delta_{h^F_{\sigma\upsilon}}.
+\tag{FA.104}
+$$
+For $0<q\le10^{-5}$ set $t=\nu/q$ and $A=\log(1+t)$. Four failure-bearing labels have weight $q/4$ and saturated coefficient
+$b_F=\mu_f/q$; their total failure covariance is $M$.
+The remaining Gram is
+
+$$
+B_q=\operatorname{diag}(m,d_1,d_2),\qquad
+m=1-q,\quad d_1=1-q\nu_f,\quad d_2=1-q\upsilon_f,
+\quad m=\alpha d_1+\beta d_2.
+\tag{FA.105}
+$$
+It is positive definite. The unique maximum-contrast completion is the four
+corner measure
+
+$$
+h^4_{\sigma\upsilon}=(1,\sigma\sqrt{d_1/m},\upsilon\sqrt{d_2/m}),\qquad
+p^4_{\sigma\upsilon}=m/4,
+\tag{FA.106}
+$$
+with height contribution $J_4(q)=\frac m4\sum|\ell(h^4_{\sigma\upsilon})|$.
+Indeed, Cauchy--Schwarz gives the upper bound $\sqrt{md_1}$ and equality fixes
+both absolute coordinates and then all four cross moments.
+
+A different null decomposition is
+
+$$
+\begin{gathered}
+\chi_q=m+\alpha d_1,\quad h^0=(1,\alpha^{-1/2},0),\quad
+p_0=\frac{m\alpha d_1}{\chi_q},\\
+h^\pm=\left(1,-\frac{\sqrt\alpha d_1}{m},
+ \pm\frac{\sqrt{d_2\chi_q}}m\right),\quad
+p_\pm=\frac{m^2}{2\chi_q}.
+\end{gathered}
+\tag{FA.107}
+$$
+All three weights are positive, all three directions lie in $\mathscr C$, and
+
+$$
+p_0h^0(h^0)^T+p_+h^+(h^+)^T+p_-h^-(h^-)^T=B_q,
+\tag{FA.108}
+$$
+while their contrast is
+
+$$
+\kappa_3(q)=\frac{2m\sqrt\alpha d_1}{m+\alpha d_1}<\sqrt{md_1}.
+\tag{FA.109}
+$$
+Define $J_3(q)=p_0|\ell(h^0)|+p_+|\ell(h^+)|+p_-|\ell(h^-)|$.
+

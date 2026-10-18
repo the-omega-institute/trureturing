@@ -1,0 +1,22 @@
+**命题 6.1（Conditional resource interpretation for the specified channels）。**
+Retain exactly the finite classical-flag, entire-block CPTP interface of
+C-109.1–C-109.3. For each $C=C(X)$ define its specified Schur channel
+$T_C(Y)=(5C)\circ Y$. The inherited dictionary is
+
+$$
+q_{\rm exact}(T_C)=k(C)
+=\operatorname{SN}_{H^{(1)}\mid H^{(2)}}(JCJ^\dagger).
+\tag{6.1}
+$$
+
+Under that interface, the maximum of these specified exact-channel
+resources, and of these matched-source Schmidt numbers, is four. The
+state $\Gamma_*$ and channel $T_{C_*}$ attain it.
+
+Proof. C-109.3 supplies (6.1) with finite decompositions, original
+coordinates, a fixed finite classical flag space and CPTP decoding on
+each entire $M_q$ block. Applying Theorem 2.4 to its $C$ gives the upper
+bound four, and applying Theorem 5.4 to $C_*$ gives attainment. This is
+an application of the inherited dictionary; the new argument is the
+matrix maximum proved in Sections 3–5. $\square$
+

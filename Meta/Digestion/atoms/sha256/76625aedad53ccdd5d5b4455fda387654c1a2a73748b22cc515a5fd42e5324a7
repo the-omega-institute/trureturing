@@ -1,0 +1,13 @@
+## 3. The prior rational collision, with its full-open bridge
+
+This section reconstructs the rational common-turn erasure of the factor
+source [F, §10]. It is used as prior mathematical content, not claimed
+as a new factor classification. Its proof is included to keep the
+arbitrary-readout lower bound independent of any regularity or affine-
+observable assumption.
+
+Let $\mathscr L=\operatorname{aff}E(\mathcal M)$ for any factor in
+Definition 2.1. Affine maps agreeing on a set agree on its affine hull,
+because they preserve finite affine combinations with coefficients
+summing to one.
+

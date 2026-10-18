@@ -1,0 +1,35 @@
+**Lemma 6.3 (Latent boundedness is derived after saturation).** The
+function $w$ is bounded on $(0,H)$, and the matrices $B_t$ and
+$B_t^{-1}$ are bounded for $t$ near zero.
+
+Proof. Apply Lemma 4.1 on $I=\mathbb R$ to the row-valued orbit
+$v(t)=\ell A_t$, with translation implemented by right
+multiplication by $A_a$. A basis of $\mathscr M$ can therefore
+be chosen from $\ell A_{t_j}$ with $|t_j|<H/8$. In these basis
+coordinates,
+
+$$
+w_j(k)=f(k+t_j)\qquad(H/8<k<7H/8).
+$$
+
+All such coordinates are uniformly bounded by (5.1). For
+$0<k\le H/8$, translate by $H/4$ into the central interval and
+write $w(k)=B_{-H/4}w(k+H/4)$. For $7H/8\le k<H$, translate
+by $-H/4$ and use $B_{H/4}$. Each is a fixed finite matrix, so
+$w$ is bounded on the whole open interval. A change to any other
+fixed basis preserves boundedness.
+
+Choose two interior heights $k_1,k_2$ with independent vectors
+$w(k_1),w(k_2)$, which exist by Proposition 6.2. For sufficiently
+small $t$, both translated heights are lawful, and
+
+$$
+B_t=[w(k_1+t)\ \ w(k_2+t)]
+       [w(k_1)\ \ w(k_2)]^{-1}.
+$$
+
+The first matrix is uniformly bounded and the second fixed. This
+bounds $B_t$ near zero; applying the same argument to $-t$ bounds
+$B_t^{-1}=B_{-t}$. No bound on the original hidden coordinates
+was used before proving the affine isomorphism. $\square$
+

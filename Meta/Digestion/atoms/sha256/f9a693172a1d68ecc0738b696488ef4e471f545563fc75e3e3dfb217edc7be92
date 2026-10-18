@@ -1,0 +1,32 @@
+### 3.2 平方根的精确列余项
+
+令 $S=\sqrt G$。对 $t>-1$ 的精确恒等式为
+
+$$
+\sqrt{1+t}-1-\frac t2
+=-\frac{t^2}{2(1+\sqrt{1+t})^2}.
+$$
+
+在 Hermitian 谱演算中，它给出
+
+$$
+R_S:=S-I-\frac x2A
+=\frac E2-\frac12H^2(I+S)^{-2}.
+\tag{3.5}
+$$
+
+后项各因子交换，且 $\|(I+S)^{-2}\|\le1$。因此式（3.4）逐列给出
+
+$$
+\begin{aligned}
+\|R_S\mathbf e_b\|
+&\le\frac12\|E\mathbf e_b\|
+ +\frac12\|H\|\,\|H\mathbf e_b\|\\
+&\le\frac n2x^2+\sqrt2\,n^{3/2}x^2
+\le2n^{3/2}x^2.
+\end{aligned}
+\tag{3.6}
+$$
+
+最后一步只用 $n\ge1$ 与 $\sqrt2+1/2<2$。关键量是 $\|H\|\,\|H\mathbf e_b\|$；把它替换成 $\|H\|^2$ 会失去所需的列尺度。
+

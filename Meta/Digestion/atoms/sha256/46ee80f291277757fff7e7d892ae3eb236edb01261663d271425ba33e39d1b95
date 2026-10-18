@@ -1,0 +1,55 @@
+**theorem 8.1 (Universal five-installed-row bound).** Every table of
+Definition 2.2 with $|K|\le5$ and $q_2=1$ has correct mass at most
+$T$ in (6.1).
+
+Proof. Apply Lemma 3.2 and fix an eligible deterministic initial row.
+If there are at most two installed read rows, Theorem 6.1 applies.
+Otherwise at least three rows read, leaving at most two halt rows.
+No halt row makes $q(r)=1$ impossible. If there is only one
+distinct halt label, every successful return has that fixed label,
+so its correct mass is at most its prior $a/2$. Duplicate halt rows
+do not change this conclusion. If the two distinct labels belong
+to the same phase, Lemma 7.1 gives a strict bound below $T$.
+
+It remains to treat two labels in opposite phases. An initial halt
+again gives at most $a/2$. For a reading start $R$ of parity
+$\alpha$, call the two existing halt rows $Z_\alpha,Z_\beta$,
+with $\lambda(Z_\gamma)=\operatorname{Halt}(d_\gamma)$ for
+$\gamma\in\{\alpha,\beta\}$, where $d_\gamma$ is a label in phase
+$\gamma$. Their spin values can be arbitrary. First reply one
+certifies phase $\alpha$. Every original success on that section
+must therefore have $H_j=d_\alpha$. Sending the first-one
+transition directly to $Z_\alpha$ realizes the whole event
+$\{X_t=1,H_j=d_\alpha\}$, and cannot decrease correctness.
+This assertion does not assume that the label is the majority spin.
+
+For precision, construct the following fresh comparison table for
+this deterministic start. Retain the root $R$, both halt rows, and
+its original zero successor $S$ if that successor reads. If the zero
+successor halts there is no $S$. Lemma 3.3 gives $S\ne R$ when it
+exists. Keep the retained address literals and halt labels. Set
+$\delta(R,1)=Z_\alpha$ and keep $\delta(R,0)$ as originally
+specified. For $S$, keep its transition on each positive zero-branch
+second-call section; its destination is already one of the two halt
+rows by Lemma 3.3. On each null such section set the destination
+to either retained halt row. This specifies both transitions of
+every retained read row. Initialize constantly at $R$.
+
+There are at most two read and two halt rows in this complete
+comparison table. It returns within two calls, preserves correctness
+on the zero section, and weakly improves it on the one section.
+No output latch, hidden branch index, seed access, extra phase
+observation or address operation has been added. The original
+table's rows are all still counted in the original cost; the
+comparison is a separate legal table with its own explicit cost
+at most four. Theorem 6.1 bounds its correctness by $T$, and hence
+also bounds that of the original deterministic start.
+
+These alternatives exhaust every Read/Halt split with at most
+five installed rows, including unused rows and arbitrary label
+choices. History merging was retained in the argument, positive
+cycles were excluded only where $q(r)=1$ forces their exclusion,
+and null destinations were changed only in the explicitly
+constructed comparison. Average over the original initialization
+cells to conclude the theorem. $\square$
+

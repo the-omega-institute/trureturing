@@ -1,0 +1,34 @@
+**例 220.21（Four distinct labels and a joint Hamming block）。**
+Take four pairwise distinct labels $a_{00},a_{01},a_{10},a_{11}$,
+each strictly before suffix addresses $i<j$, $L\ge j$, and $h\ge0$.
+One table $N(i,j;a_{00},a_{01},a_{10},a_{11})$ has mass $h$.
+For each label with code $(u,v)$ add two mass-$h$ donors, one for
+$(a_{uv},i)$ and code bit $u$, one for $(a_{uv},j)$ and bit $v$:
+for bit zero use $N(a_{uv},k;0,a_{uv},0,0)$;
+for bit one use $N(a_{uv},k;a_{uv},0,0,0)$.
+These nine actual tables form one block $\eta$ of mass $9h$.
+Distinctness is essential to the following coordinate identity.
+
+For every word on the zero face of $a_{uv}$, with
+$p=(w_i,w_j)$,
+
+$$
+ \eta_w(a_{uv})=h\bigl([p=(u,v)]+d_H(p,(u,v))\bigr).
+ \tag{220.17}
+$$
+
+At Hamming distances zero, one and two this is $h,h,2h$.
+The code table contributes only at its code; the two donors each
+contribute on the corresponding mismatch. Thus each zero-face minimum
+is $h$, including on the actual first-zero class. With $w_{a_{uv}}=1$
+the donors give zero; choosing a different suffix code gives zero
+also from the code table. Its global coordinate minimum is zero.
+It therefore is not a global suffix-only block.
+
+If all actual remainder deficits are at most $h$, replace all nine
+tables together. At equal deficits $h$, four gates of mass $h$ and
+empty zero of mass $5h$ suffice. At a word with all four proposed
+labels zero the four lower masses coexist and are paid once.
+Theorem 220.20 supplies every row and resource conclusion. This is
+not a separately normalized replacement of the code table alone.
+

@@ -1,0 +1,20 @@
+## 10. Relation to existing resource and residual boundaries
+
+The following reuse map states what is consumed and what remains an
+assumption.
+
+| Existing volume | Interface used here | Boundary retained here |
+| --- | --- | --- |
+| [Boundary Dynamics §§19--21, 26--27](RECURSIVE_RELATIONAL_OBSERVATION_BOUNDARY_DYNAMICS.md) | Future response kernels, typed partial actions, right-congruence closure, four-view kernel conditions | Adds the resource response and explicit namespace/failure/archive/clock fields |
+| [Transport--Memory Completion §§2.1, 2.17--2.20, 3--4](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md) | Task-relative memory, common source, weighted continuation and lawful gluing | Separates fresh suffix from inherited meter and states their factorization obligations |
+| [Serial Joint Resource Frontier §§1, 5, 7--8](RECURSIVE_RELATIONAL_OBSERVATION_SERIAL_JOINT_RESOURCE_FRONTIER.md) | Uniform sourcewise budgets, Pareto basis, weighted worst-run prices and update/read tradeoff | Uses the quantifier $\exists\Pi\,\forall x$ and does not combine maxima from different runs |
+| [Uniform Descriptor Boundary §§4--7](RECURSIVE_RELATIONAL_OBSERVATION_UNIFORM_DESCRIPTOR_BOUNDARY.md) | Source-independent descriptors, exact replies, boundary factorization and paired-history tests | Restricts minimality to the declared actual image and task |
+| [Typed Residual Cocycle Reconstruction §§1--6](RECURSIVE_RELATIONAL_OBSERVATION_TYPED_RESIDUAL_COCYCLE_RECONSTRUCTION.md) | Typed residual graph, descended cocycle, ordered-path obstruction | Explains cancellation and why an additive resource still loses order |
+| [Process Geometry §§27--34](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md) | Common calibrated source, complete traces, four views and transport equations | Supplies the view-kernel proof shape; no physical metric is inferred |
+| [Fibonacci Atomic Relation Generation §§2--5, 21](FIBONACCI_ATOMIC_RELATION_GENERATION.md) | Abstract atoms, ordered constructors and relation ports | Treats $\alpha,\beta$ as carriers only; no universal recurrence or physics |
+
+The action-order closure in §5 is intentionally tied to the fixed menu
+$\mathcal M$.  A theorem for one menu does not provide a theorem for all
+future names, and a finite quotient for one resource contract does not provide
+a quotient for a different clock, archive or meter contract.
+

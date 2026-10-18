@@ -1,0 +1,29 @@
+**Proposition 6.2 (A nonvacuous constant-seed obstruction).** With
+a constant auxiliary variable, mass $q=\eta$ is attainable
+within two reads, but no protocol attains the universal face
+value $b\eta-D$ there. The exact optimal excess over this
+value is not determined by this nonattainment statement.
+
+Proof. Make one actual read at $2(j+2)$ and return
+$h_0(\sigma)$ only on reply one, otherwise continue internally
+forever. In phase zero its active spin pair
+$\{j+2,j+3\}$ avoids target $j$; in phase one the reply is
+zero. Thus its return mass is $\eta$ and its correct mass
+$a\eta$, with risk $b\eta$. This is the inherited one-read
+selective witness in Original, Theorem 10.1, and Risk,
+Theorem 4.1. Its one call is paid on all paths and it belongs
+to the present budget-two class.
+
+Since $c<1$ and $c>1/2$,
+
+$$
+q_H=\eta c<\eta<\eta(c+1/2)=q_H+\eta/2.
+\tag{6.4}
+$$
+
+So $\eta$ lies in the universal face but is none of its four
+constant-seed equality masses. Theorem 6.1 excludes equality
+under that specified law. Nonattainment alone does not rule
+out a sequence approaching the universal value; no strictly
+positive infimum gap is inferred here. $\square$
+

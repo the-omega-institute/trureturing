@@ -1,0 +1,134 @@
+**Theorem 12.9 (paid acquisition and complete handoff).** Suppose a
+stationary initial $\mathcal F_D$ source is available for capture.
+For nonempty $P$ there is a native literal acquisition followed by
+export of exactly the code in Theorem 12.6. A sufficient full-tree
+acquisition has the explicit successful-capture bounds
+
+$$
+ T\le2^{D+1}+1,\qquad
+ A\le D\,2^{D+1}+3,\qquad Q\le D+1.
+\tag{AAR.72}
+$$
+
+Alternatively one may acquire a sufficient fixed public ray table by
+Proposition 11.8 and then compress it by Theorems 12.4 and 12.6,
+with that proposition's acquisition bounds. These are sufficient
+constructions, not claims of minimal acquisition cost.
+
+Proof. Read $L$ as alpha, then traverse the right subtree using full
+literal addresses from the root. Read each visited node once and
+visit both children precisely when the reply is branch. A branch
+reply at depth $D+1$, an unexpected absence, or an unsuccessful
+alpha guard rejects the capture. Finally reread $L$ as alpha. The
+existing equal-leaf rigidity supplier excludes every update between
+the two successful guards. The acquired right subtree is therefore
+one actual $v$ and the complete initial source is
+$\langle\alpha,v\rangle$ at the final guard. No snapshot or subtree
+port was used. The traversal has at most $2^{D+1}-1$ right-subtree
+nodes plus the two guards. At relative depth $j$ in that subtree it
+submits at most $2^j$ words of length $j+1$. Hence its total literal
+length is bounded by
+
+$$
+ 2+\sum_{j=0}^D(j+1)2^j=D\,2^{D+1}+3,
+$$
+
+proving (AAR.72). Acquisition buffers, the temporary tree, traversal
+state, local work and any failed attempt remain separately charged.
+This conditional capture does not promise an $\mathcal F_D$ version
+after an unprotected writer has already changed the initial left
+alpha. A failed guard supplies no source with the required premise.
+
+Compute (AAR.67) from this genuinely acquired tree. Use a fixed
+output-region identity with the public fixed width
+$\lceil\log_2 n(S)\rceil$, and clear or retract all other accessible
+source dependence before handoff. In particular discard the temporary
+tree, descriptors, selectors, reply latches, buffers, traversal and
+retry states, old outputs and distinguishing allocation metadata.
+The construction realizes Definition 12.1 when the host supports
+this complete export; an accessible surviving distinction enlarges
+the retained state. Inaccessible physical remnants still incur their
+storage cost. For the ray-table alternative, (AAR.63) computes the
+statistic; its unique code is found by the finite representative
+grammar of Definition 12.5, since Theorem 12.6 identifies exactly its
+fibers. Public codebooks, their construction and lookup work are not
+free resources. Empty $P$ needs only the constant code and empty
+output, so the task requires no source acquisition.
+
+After export, every supplied count is interpreted relative to that
+validated capture and its authentic continuation, even if the source
+advanced during encoding. The decoder may replace $k$ by
+$\min(k,H_P)$ for this task alone. Acquisition, authentication,
+transmission and representation of the supplied count are separate
+inputs and costs; the code does not provide them. The predicted
+values create no observation events at their addresses. A service
+requiring actual common-version receipts must acquire and validate
+those separately. $\square$
+
+**Mathematical citation 12.10 (reuse, attribution and recovery limits).**
+The substantive native assertions are (AAR.57)–(AAR.60), the concrete
+boundary factor (AAR.63), the unique leaf/branch overlap (AAR.65),
+and its exact joint count with height-bounded representatives. They
+are ordinary `repo-derived` deductions. Generic behavioral equivalence
+and minimum sufficient coding are reused; no new kernel verification
+or worldwide originality is claimed.
+
+The source correspondences are as follows. [NAR, §§11–12], especially
+its Proposition 12.8, supplies absence-safe $J^c$, unit advancement
+and the canonical density; it does not count this task's fibers.
+[READ] fixes the four replies and literal addresses, and [NDP]'s
+`original_present_transport` and `original_prefix_locality` supply
+same-source transport and finite-depth dependence. [DOR]'s
+`right_clock_iterate` and `right_clock_readout` fix the right-ray
+parameter meanings. The guarded atomic table, including its
+$L$-ending absence case, is reused from SLH Theorem 6.2 and AOF
+Definition 8.2. SLH §§6.2–6.3 optimize paid original right-prefix
+acquisition from a certified later version; AOF §§8–9 optimize calls
+and peak literal length for an unknown atomic age in a supplied
+interval. Neither objective is the retained-alphabet objective here.
+
+The static target-family supplier in Theorem 12.6 applies directly
+because $(p,k)$ is an index, requiring no endomap on $\mathcal F_D$.
+The existing
+[`canonical_minimal_realization`](../../../D5/S3/ObserverMemory/Realization/CanonicalMinimalRealization.lean)
+and
+[`predictive_memory_minimal_quotient`](../../../D5/S3/ObserverMemory/RefinementClosure/PredictiveMemoryMinimalQuotient.lean)
+require an actual endomap and exact update/readout factorization.
+They can be interpreted on all finite native trees with update $\rho$
+and output $V_P$, before restricting initial captures. The original
+family $\mathcal F_D$ is not $\rho$-invariant: its initial left alpha
+already becomes beta after one update. Likewise the finite-carrier
+premise of
+[`finite_future_maximal_congruence`](../../../D5/S3/Observer/Separation/FiniteFutureCongruence.lean)
+cannot be supplied by pretending that $\rho:\mathcal F_D\to\mathcal F_D$.
+The native horizon in Theorem 12.3 instead directly proves which
+finite prefix determines the trajectory. Saturation concerns selected
+replies, not a bound on future-tree height or recovery of an unknown
+count. The horizon also makes the set of all suffixes of attained
+trajectories finite and shift-closed: each trajectory has at most
+$H_P+1$ different suffixes, and shifting a suffix produces another
+one. That is a lawful carrier for the finite congruence supplier,
+without regarding $\mathcal F_D$ as a source endomap carrier.
+
+The bounded primary-literature correspondences are these:
+
+| Primary statement | Object, assumption and objective correspondence |
+| --- | --- |
+| [Rabin and Scott, *Finite Automata and Their Decision Problems*, Theorem 2 and Corollary 2.1](https://www.cse.chalmers.se/~coquand/AUTOMATA/rs.pdf) | Equality under all continuation tests gives the least-state accepting automaton; the authors attribute this relation and corollary to Nerode. Continuation tests correspond here to supplied substitution counts and selected reply coordinates. Their tape languages and binary acceptance are not the native tree family, four-valued reply function or spatial recurrence (AAR.66). |
+| [Angluin, *Learning Regular Sets from Queries and Counterexamples*, §2.1 and Theorem 1](https://people.eecs.berkeley.edu/~dawnsong/teaching/s10/papers/angluin87.pdf) | Rows of a closed, consistent observation table represent candidate states and columns distinguishing experiments; a consistent inequivalent acceptor must have more states. Here a finite horizon yields complete distinguishing data for a specified native task. No membership/equivalence teacher is supplied, and no learning-time bound or acquisition algorithm is imported from that theorem. |
+| [Charpenay, Le Treust and Roumy, *Optimal Zero-Error Coding for Computing under Pairwise Shared Side Information*, Definitions II.1 and IV.5, Theorem IV.8](https://arxiv.org/html/2211.03649v2) | With source $t$, side input $k$ and task $V_P(\rho^k t)$, different response vectors induce the analogous characteristic-graph separation. One can restrict side inputs to the finite horizon here. Their full-support response-vector grouping is background; their i.i.d. distribution, expected prefix-code length and asymptotic rate objective are not the finite worst-case number of retained names. Their theorem does not give the native overlap or height-bounded joint realizations. |
+
+Thus the minimum-target principle alone would leave the native question
+unanswered: it names a quotient without supplying (AAR.57), deciding
+its leaf/branch identifications, or constructing all of its joint
+classes. The additional spatial analysis supplies those missing facts.
+Its recoverability is exactly between the task statistic, its minimal
+names, and the selected complete future trajectory on their attained
+images. The canonical boundary and the acquired initial tree map to
+that statistic; they need not be recoverable from it. The twelve-class
+example already merges distinct trees, and Counterexample 11.9 retains its
+hidden-equality obstruction. Counts after saturation are also merged
+by the reply output. The rest of Open problem 11.12 and the broader
+space, time, boundary and memory programme have not been identified
+with this supplied-count prediction problem.
+

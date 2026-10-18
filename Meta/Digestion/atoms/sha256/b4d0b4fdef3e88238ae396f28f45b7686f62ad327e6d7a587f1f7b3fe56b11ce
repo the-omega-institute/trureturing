@@ -1,0 +1,11 @@
+### 101.3. All real kernel signs in the positive-record geometry
+
+Now impose the original full calibrated-domain local-minimum hypotheses:
+\(\operatorname{rank}(G,H)=(7,6)\), \(0<t=F(G,H)<1/4\), and a spanning
+kernel vector \(a\) of \(G\) supported exactly on \(S\), of occupancy
+\((2,1,1,0)\) as above.
+Assume that, in one simultaneous reciprocal diagonal unitary gauge preserving
+\(G_{ij}H_{ij}\), the supported \(H\) records satisfy (2) and the supported
+kernel vector \(a\) is real with every coordinate nonzero.
+This simultaneous reality is an additional assumption.
+

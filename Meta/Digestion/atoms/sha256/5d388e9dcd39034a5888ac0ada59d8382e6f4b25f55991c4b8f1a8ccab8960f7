@@ -1,0 +1,50 @@
+## 3. Common flows and endpoint event calibration
+
+For a regular stationary table, use finite p and suspended label sets $X,Y$, positive probability rows $\pi,\tau$, row-stochastic acquired kernels $B:X\to Y$, $A:Y\to X$, and emissions $u_x,v_y\in[1/3,2/5]$. Both actual flows satisfy
+
+$$
+\pi B=\tau,\qquad \tau A=\pi.
+\tag{3.1}
+$$
+
+Zero-row labels can be deleted: the two nonnegative flow identities exclude transitions into them from positive-row labels. Write $C=BA$. The source-independent latch sampler installs $\pi$ after the original third record write and latch. Its full-domain product realization is supplied by [PAID, Lemma 2.1.1]: take the product with the complete original $C_0$, keep its deterministic update and event block on every operation, and use the private kernels only on the original noncompleting beta and alpha updates. Completion clears private labels and enables only the original matching Stop. Earlier synthetic letters are fair; sampling $\pi$ follows the third record write and latch within that same original update. Both seeds and every marker triple use this rule while retaining their own records. The private component never changes the permission menu. Induction on operations preserves all original fields and legal paths; it introduces no source query or controller port. Define each decoder by running this same synthetic program from its current configuration, including its original completion and Stop. Earlier rejected-pair survival is $1/2$, early payload-return survival is $1/4$, and fourth-return survival is at most $4/15$, so completion is almost sure. Infinite noncompletion stays in the carrier with zero mass rather than being conditioned away. Pending and delivered decoders are the unique Stop future and empty future. All private labels, tables and sampler service states are counted in COMPLETE. Actual rows are $\pi,\tau$ after every fourth history by (3.1), without synthetic weighting.
+
+The generated complete raw laws obey
+
+$$
+Q_x=u_x\delta_\alpha+(1-u_x)\beta\sum_yB_{xy}W_y,
+\qquad
+W_y=(1-v_y)\delta_\beta+v_y\alpha\sum_xA_{yx}Q_x.
+\tag{3.2}
+$$
+
+Prefixing keeps the entire raw word and its subsequent $I_c$ rendering. Every return survives with probability at most $\lambda=4/15$, so these equations determine normalized complete laws, retaining infinite outcomes with zero mass.
+
+On these tables the supported pure-target configuration-loss supremum equals the full positive-history risk [CLIP, Proposition 2.3]. For the upper direction, substitute (2.2) and use countable convexity of TV with the fixed actual label row. For the converse, the paid rejection histories constructed in §7 expose each supported depth while the installed actual row is unchanged. TV is 1-Lipschitz in its target, so those positive histories approach its pure-target loss. The same reasoning works for the law order after mixing configurations. Endpoint triangle inequalities imply $\varepsilon_p,\varepsilon_\beta\ge0$. This includes the entire countable posterior and paid rejection exposure, not a new reset experiment.
+
+Use the supplied endpoint-positive events
+
+$$
+E_p=\{w_{0,1},w_{1,1},w_{2,1}\},
+\qquad E_\beta=\{\beta,\alpha w_{0,1}\}.
+$$
+
+Their endpoint probabilities are $412/729,7299/15625$ and $22/27,93/125$. Their respective differences are $d_p,d_\beta$; their midpoints are
+
+$$
+C_p=11758471/22781250,
+\qquad C_\beta=5261/6750.
+$$
+
+The endpoint distances can be checked without a future cutoff. On p marker-0 words the endpoint-2/endpoint-1 ratio is $(6/5)(27/25)^j>1$; on marker-1 words it is $(81/100)(27/25)^j$, below one for $j=0,1,2$ and above one for $j\ge3$. At suspension the standalone beta ratio is $9/10<1$, the alpha-marker-0 ratio is $(36/25)(27/25)^j>1$, and the alpha-marker-1 ratio is $(243/250)(27/25)^j$, below one only at $j=0$. Both infinite masses are zero. Thus the displayed events are exactly the positive endpoint-1 difference events on the complete carriers, and their mass differences equal the full TV distances $d_p,d_\beta$.
+
+Let $a=\pi Q(E_p)$ and $b=\tau W(E_\beta)$. Endpoint risk bounds imply
+
+$$
+|a-C_p|\le\varepsilon_p,
+\qquad |b-C_\beta|\le\varepsilon_\beta.
+\tag{3.3}
+$$
+
+Indeed TV to endpoint 1 is at least its event probability minus the predicted event probability; TV to endpoint 2 is at least the reverse difference. Average before using these inequalities. Both endpoint risk bounds give (3.3). The argument does not confuse an expected configuration loss with a marginalized loss; convexity permits the event bound in either order.
+

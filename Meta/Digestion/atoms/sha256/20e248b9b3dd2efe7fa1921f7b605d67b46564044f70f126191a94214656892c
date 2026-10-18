@@ -1,0 +1,58 @@
+## 50. 实际三锚、投影和多项式核
+
+置 $A=|a|^2,B=|b|^2,C=a\cdot b,\Delta=AB-C^2$，$K=b\times a$、$U=K\times a=Ca-Ab$、$V=K\times b=Ba-Cb$。运输 $F(a,b)=(b,K)$ 满足 $E_p(\rho^jt)=E_{F^jp}(t)$：两个叶直接成立，节点用双线性结构归纳，随后对 $j$ 归纳。它只是解释换参。
+
+以下五符号表、尾递推和三读符号恒等式复用本卷引理 4.2、定理 4.3、5.1；此处 $U,V$ 对应原表的 $L,N$，$F$ 对应定理 3.1 的解释运输。给出其关系是为了固定求值核的参数，不将这些经典恒等式或已发表证明计为新数学。完整上三角叉积表为
+
+| $\times$ | $b$ | $K$ | $U$ | $V$ |
+|---|---|---|---|---|
+| $a$ | $-K$ | $-U$ | $AK$ | $CK$ |
+| $b$ | | $-V$ | $CK$ | $BK$ |
+| $K$ | | | $-\Delta a$ | $-\Delta b$ |
+| $U$ | | | | $-\Delta K$ |
+
+同向项为零，反序取负。逐项由重复向量恒等式及上述 $U,V$ 展开验证；例如 $U\times V=-\Delta K$。因此每树有对全部准备同时有效的零描述子，或 $\epsilon A^uB^vC^h\Delta^wZ$，$Z\in\{a,b,K,U,V\}$。在单位叶 $(e_1,e_2)$ 处，令 $f_1=e_1,f_2=e_2,f_3=e_2\times e_1$，单位标签 $\chi(t)$ 为 $0,\pm f_i$。表归纳说明标签非零恰是所选描述子无正 $C$ 因子且非零；其初始方向依次为 $\sigma(a\text{ 或 }V)$、$\sigma(b\text{ 或 }-U)$、$\sigma K$，各乘正单项式。
+
+若 $\Delta>0$，$r=\sqrt B,s=\sqrt\Delta$，$g_1=b/r,g_2=K/s,g_3=V/(rs)$ 是左手正交单位标架。树的组成 $(m,n)$ 为两种实际叶数。对 $\chi(t)=\sigma f_i\ne0$，齐次性和运输给
+
+$$x_1=\sigma r^ms^ng_i,\quad x_2=\sigma r^ns^{m+n}g_{i+1},\quad
+q_{j+2}=q_jq_{j+1},\quad x_{j+2}=\sigma(x_{j+1}\times x_j)\quad(j\ge1).$$
+
+因为组成更新矩阵 $M=\left(\begin{smallmatrix}0&1\\1&1\end{smallmatrix}\right)$ 满足 $M^2=M+I$，每个幅度指数满足该递推；标架叉积表给方向。标签零时 $F(p)$ 已正交，全部 $j\ge1$ 为零，但 $x_0$ 可非零；$\Delta=0$ 时 $F^2p=0$，全部 $j\ge2$ 为零。
+
+令 $w=x_2\times x_1$。初始五符号中 $a\cdot V=\Delta$、$(-U)\cdot b=\Delta$，其余相应内积为正范数平方，故
+
+$$x_3=\operatorname{sgn}(x_0\cdot w)w,\qquad\operatorname{sgn}(0)=0.$$
+
+零及依赖分支 $w=0$ 仍成立。将此式应用于每个实际替换后树，三次准确读决定完整未来。
+
+以下投影恒等式与无除法不等式复用本卷引理 16.2、推论 16.3；其五符号次数证明覆盖全部实际树。它们是实际像中的量化约束，不能给环境三元组强加它。给 $A,B,C,\Delta$ 双次数 $(2,0),(0,2),(1,1),(2,2)$，给 $a,b,K,U,V$ 双次数 $(1,0),(0,1),(1,1),(2,1),(1,2)$。表保持次数。非零标签写 $x_0=\sigma A^uB^v\Delta^w Z$、$Z\in\{a,b,K,-U,V\}$。对应单位正投影依次为 $s/r,r,s,s^2/r,rs$，恰为 $(s/r)^{m_Z}r^{n_Z}$。因此，$\widehat w=w/|w|$ 时
+
+$$\sigma x_0\cdot\widehat w=(AB/\Delta)^u q_2/q_1\ge q_2/q_1,
+\qquad \sigma x_0\cdot\widehat w\ge\sqrt{\Delta/(AB)}q_0.$$
+
+后式由五个方向的投影/范数比分别为 $\sqrt{\Delta/(AB)},1,1,\sqrt{\Delta/(AB)},1$ 得到。退化分支两边归零。于是所有实际来源都有
+
+$$|x_0\cdot w|\ge q_2^2,\quad q_2\le q_0q_1;\qquad
+\Delta\ge d_0,\ |a|,|b|\le L\Longrightarrow |x_0\cdot w|\ge c q_0|w|,\quad c=\sqrt{d_0}/L^2.$$
+
+若三读均不超过 $H$，又有 $|w|=q_1q_2\le H^2q_0$。
+
+令 $F_0=0,F_1=1,F_{n+2}=F_{n+1}+F_n$。对 $j\ge3$，置 $a_j=F_{j-2},b_j=F_{j-1}$。归纳给 $q_j=q_1^{a_j}q_2^{b_j}$，并把向量写成非负三锚式：相位 $1,2,0$ 分别为
+
+$$q_1^{a_j-1}q_2^{b_j}x_1,\quad q_1^{a_j}q_2^{b_j-1}x_2,\quad q_1^{a_j-1}q_2^{b_j-1}x_3.$$
+
+所有出现的指数非负，约定 $0^0=1$；依赖分支中 $x_3=0,q_2=0$，后两个相位亦由正 $q_2$ 次数消为零。$F_n\bmod2$ 的状态 $(F_n,F_{n+1})$ 从 $(0,1)$ 经 $(1,1),(1,0)$ 返回，故周期三。于是对任意有限报告，取
+
+$$Z=\operatorname{sgn}(y_0\cdot(y_2\times y_1))(y_2\times y_1),\quad U_y=|y_1|^2,V_y=|y_2|^2,$$
+
+得到统一执行核
+
+$$P_j(y)=\begin{cases}
+U_y^{(a_j-1)/2}V_y^{b_j/2}y_1,&j\equiv1\pmod3,\\
+U_y^{a_j/2}V_y^{(b_j-1)/2}y_2,&j\equiv2\pmod3,\\
+U_y^{(a_j-1)/2}V_y^{(b_j-1)/2}Z,&j\equiv0\pmod3.
+\end{cases}$$
+
+这些指数全为非负整数，报告为实际准确值时 $P_j=x_j$。除三锚的有限符号比较外，核在 $y_1,y_2$ 中总次数为 $F_j$。不需要平方根、归一化、裁剪或真实范数端口；平方根只用于证明其误差。
+

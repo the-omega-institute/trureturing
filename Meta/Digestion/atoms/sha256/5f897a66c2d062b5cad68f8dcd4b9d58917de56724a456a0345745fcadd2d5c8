@@ -1,0 +1,60 @@
+**Theorem 2.1 (Tensor-sign ambiguity, optimal block recovery and legal service transfer).** Under Definitions 1.1–1.5 and the ideal resources of Assumption 1.6, the following statements hold for every $n,L\ge1$ and integer $0\le q\le L$.
+
+(i) The entire archive $\mathcal H$ is constant on the $2^n$ distinct channels $\Lambda_s$. For every integer $m\ge0$ its common Pauli-weight coordinates are
+
+$$
+Q_w(m;s)=\binom nw
+\cos(m\theta)^{2(n-w)}\sin(m\theta)^{2w},
+\qquad 0\le w\le n.
+\tag{2.1}
+$$
+
+Within this finite promise family the archive fiber is all of $S_n$. The optimal score-only uniform Bayes and minimax whole-label successes are both $2^{-n}$. Completeness of the hierarchy for the time-indexed weight vector is the already established Corollary 6.2 of [SIC]; it does not imply completeness for the source label or response service.
+
+(ii) If $h=h(s,r)$, then
+
+$$
+D_q(s,r)=\sin\left(\frac{\pi\min(hq,L)}{2L}\right).
+\tag{2.2}
+$$
+
+Every distance is attained by a pure input without a reference. In particular the diameter of this promised family at time $q$ is $\sin(\pi\min(nq,L)/(2L))$.
+
+(iii) The optimal uniform Bayes and minimax whole-label successes in the one-block contract are both
+
+$$
+P_q=\left(\frac{1+\sin(q\pi/(2L))}{2}\right)^n.
+\tag{2.3}
+$$
+
+The same product probe and local measurement attain $P_q$ separately for every $s$. The ratio to score-only optimal success is $(1+\sin(q\pi/(2L)))^n$.
+
+(iv) For a pair of neighboring labels $h(s,r)=1$, every controlled comparison protocol has equal-prior binary success at most
+
+$$
+\frac{1+\sin(q\pi/(2L))}{2}.
+\tag{2.4}
+$$
+
+Consequently $L$ ordinary calls are necessary and sufficient for zero-error recovery of all signs, even in the controlled comparison class. This is a controlled zero-error threshold; (2.3) asserts finite-error optimality only for the one-block class.
+
+(v) The attaining block strategy uses one $n$-qubit computational preparation, $q$ calls to the same full device, $3n$ known single-qubit gates, $n$ computational measurements and $n$ retained answer bits, without an ancilla. It invokes neither an inverse nor an unknown controlled call nor a source reset. Calibration has the separate price $C_{\mathrm{cal}}$ of Assumption 1.6. Under that assumption's restricted angle variation, its $L$-call whole-label success for each $s$ is exactly
+
+$$
+\prod_{i=1}^n\cos^2(L\varepsilon_i)
+\ \ge\ 1-\sum_{i=1}^n\sin^2(L\varepsilon_i)
+\ \ge\ 1-nL^2\eta^2.
+\tag{2.5}
+$$
+
+Thus, for a target failure tolerance $0\le\delta\le1$, $\eta\le\sqrt{\delta/n}/L$ suffices for whole-label success at least $1-\delta$. This is a sufficient angle tolerance, not an optimal calibration-acquisition law or a bound for general preparation/readout errors.
+
+(vi) When $n=3N$ with $N\ge1$, on the restriction $\{\Lambda_{s(b)}:b\in B_{3N}\}$, the archive remains constant, while different $b$ have different complete indexed services. Under an explicitly uniform legal-word prior, optimal score-only exact-service success, both Bayes and minimax, is
+
+$$
+\frac1{|B_{3N}|}=\frac1{F_{3N+2}}.
+\tag{2.6}
+$$
+
+Installing every exact indexed service, or its pointer variant, has the same sharp controlled zero-error threshold $L$. The $L$-call product readout followed by retention of $b$ gives a task-sufficient representation satisfying the readout, legal-domain and update correspondences of [FIB], Definition 8.1, on every finite legal history. This is the explicit five-window code of Definition 1.5; no realization as a native FIB generation tree is assumed. Formula (2.3) is not an asserted optimum for the nonproduct prior on $B_{3N}$.
+

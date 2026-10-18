@@ -1,0 +1,171 @@
+**Theorem 216.2 (Shared-stock lower bound and common chamber minimum).**
+Let $3\le n<m\le L$, $m\ge n+2$, and prescribe
+$\beta_n=g\ge0$, $\beta_m=h\ge0$, arbitrary $\beta_1,\beta_2$,
+and $\beta_j\le0$ at every other late coordinate. Assume
+$K\ge\sum_j|\beta_j|$. Define
+
+$$
+\begin{gathered}
+S=K-g-h,\qquad D=(-\beta_1)_++(-\beta_2)_+,\\
+I_-=\{1,\ldots,n-1\},\quad I_+=\{n+1,\ldots,m-1\},\quad
+I=I_-\cup I_+\cup\{\star\},\quad |I|=m-1,\\
+d_i=|\beta_i|\ (i\ne\star),\quad
+d_\star=\sum_{j>m}(-\beta_j),\quad
+d_-=\sum_{I_-}d_i,\quad d_+=\sum_{I_+}d_i,\quad S_0=d_-+d_++d_\star,\\
+J=\max\left\{\frac S{m-1},\max_{i\in I}d_i\right\}.
+\end{gathered}
+\tag{216.3}
+$$
+
+For every full exact-Q competitor,
+
+$$
+\Delta_N\ge\Delta_O\ge D+(g+h-S+J)_+.
+\tag{216.4}
+$$
+
+If in addition
+
+$$
+\begin{gathered}
+g,h\ge J,\qquad
+r_-:=\max(d_-,S-h)\le(n-1)J,\\
+r_+:=\max(d_+,S-g)\le(m-n-1)J,\qquad
+r_-+r_++d_\star\le S,
+\end{gathered}
+\tag{216.5}
+$$
+
+one full score $V_\star$ has
+
+$$
+Q(V_\star)=(\beta,K),\quad W_{V_\star}=S-D,\quad
+B_N(V_\star)=B_O(V_\star)=g+h+J,
+\qquad \min\Delta_N=\min\Delta_O=D+g+h-S+J.
+\tag{216.6}
+$$
+
+Both minima are over the unrestricted full exact-Q fiber. Conditions
+(216.5) are sufficient for this attained formula, not necessary conditions
+for general certificate existence.
+
+**Proof.** For $i<n$, let $\ell_i=i$ if $\beta_i>0$ and zero otherwise.
+Use the legal stopped tables
+
+$$
+D_i=(i,n;\ell_i,n,m)\ (i<n),\quad
+D_i=(n,i;n,0,m)\ (n<i<m),\quad D_\star=(n,m;n,m,0).
+$$
+
+Every table collects both correct pivot classes on every suffix. Table
+$D_i$ collects its preferred base/correct label on all of $\Omega_i$.
+Exactly $D_\star$ outputs zero on all post-m classes and at $1^L$.
+These facts hold for all words, without limiting later zeros.
+
+For any competitor use (216.2), put $Z=\sum_jz_j$,
+$Z_p=z_n+z_m$, $P_p=P_n+P_m$, and $P=P_{\rm tot}$. Then
+$S=S_0+2Z+P+T$ and $W=S-D-Z$.
+Mix these detectors by one probability vector $\pi$ on I and set
+$u=\min_i\pi_i$. Its expected reward satisfies
+
+$$
+R_\pi\ge g+h+Z_p+P_p+\sum_i\pi_i d_i
+       +u[(Z-Z_p)+(P-P_p)+T].
+$$
+
+The pair reward has been counted once as its own coefficient. Subtract W
+and the right side of
+
+$$
+R_\pi-W\ge D+g+h-S+\sum_i\pi_i d_i+u(S-S_0).
+$$
+
+The remainder is $(1-u)(Z+Z_p+P_p)\ge0$.
+Uniform $\pi$ gives $S/(m-1)$; a point mass at a maximal slot gives
+$\max_i d_i$. These are alternative unit tests. The head table
+$(1,2;\ell_1,\ell_2,0)$ independently gives excess D, proving (216.4).
+
+Choose one allocation $d_i\le x_i\le J$ with total S and
+$X_-:=\sum_{I_-}x_i\ge S-h$, $X_+:=\sum_{I_+}x_i\ge S-g$.
+It exists because the three group intervals
+
+$$
+[r_-,(n-1)J],\quad[r_+,(m-n-1)J],\quad[d_\star,J]
+$$
+
+are nonempty, their lower endpoints sum to at most S, and their upper
+endpoints sum to $(m-1)J\ge S$. Start at their lower endpoints and
+fill remaining capacities in order; within each ordinary group start
+at $d_i$ and fill to J in increasing address order. This is a finite
+simultaneous construction. It gives
+$X_-+x_\star\le g$, $X_++x_\star\le h$ and $\max_i x_i=J$:
+either a floor equals J, or every slot must equal the average J.
+
+At $w(\{i,n\})$, $i<n$, put
+$A=(-\beta_i)_+$, $C=(\beta_i)_+$, $P=x_i-|\beta_i|$.
+At $w(\{i,m\})$, $n<i<m$, put
+$A=-\beta_i$, $P=x_i+\beta_i$, $C=0$.
+Put C=g at $w(\{n\})$, C=h at $w(\{m\})$, A=$-\beta_j$
+at $w(\{j\})$ for $j>m$, and $T=x_\star-d_\star$.
+This spends exactly S outside the two pivot atoms and gives the Q and W
+in (216.6). In particular post-m negative mass and terminal mass share
+the single aggregate slot $\star$.
+
+Each ordinary stock atom has total weight $x_i$ and earns at most
+$x_i$ at every label. Aggregate post-m/terminal stock has total
+$x_\star$. On a queried pair containing n but not m, the stock in
+the n-atom cell is at most $X_-$, in the m-atom cell at most
+$X_++x_\star$, and outside both at most J. On a pair containing m
+but not n these bounds are $X_-+x_\star,X_+,J$. On pair n,m they
+are $X_-,X_+,x_\star$. The allocation inequalities make the first
+two cells cost at most g and h, so every such full support is at most
+$g+h+J$, maximizing over all labels.
+
+If neither query is a pivot, both pivot atoms lie in cell 11. Outside
+it at most two ordinary stock atoms or isolated post-m atoms occur;
+their total z is at most $2J$. Inside it the reward is at most
+$\max(g,h,S-z)$. Thus the support is at most
+$\max(S,\max(g,h)+z)\le g+h+J$, since $S\le g+h$ and
+$\min(g,h)\ge J$. Empty and singleton N schedules refine to pairs.
+Every $D_i$ attains $g+h+x_i$, including the aggregate table; hence
+the maximum is $g+h+J$ also in O. Moreover
+$g+h\ge S+x_\star$, so the excess in (216.6) is nonnegative.
+All zero masses, $S=0$, exhausted reserves and closed ties are included;
+the only division is by $m-1>0$. $\square$
+
+If all nonpivot beta vanish, (216.5) reduces to
+$g\ge nS/(m-1)$, $h\ge(m-n)S/(m-1)$, and the cost is
+$g+h-(m-2)S/(m-1)$. For $S>0$, $g,h\ge S$, splitting S into
+two independently charged one-positive allocations gives cost at least
+$g+h-(m-2)S/m$, using the owning one-positive formula 213.18.
+The difference is $(m-2)S/[m(m-1)]>0$. This compares that decomposition
+only; it is not exclusion from arbitrary signed or joint constructions.
+
+For a signed example take $L=8,n=3,m=6$,
+$\beta=(-1,1/2,4,-1/2,-1/4,3,0,-1/2)$ and K=12.
+Then $S=5,S_0=11/4,D=J=1$. All five slots are one. The score is
+
+| Zero set | A | C | P |
+| --- | --- | --- | --- |
+| $\{1,3\}$ | $1$ | $0$ | $0$ |
+| $\{2,3\}$ | $0$ | $1/2$ | $1/2$ |
+| $\{3\}$ | $0$ | $4$ | $0$ |
+| $\{4,6\}$ | $1/2$ | $0$ | $1/2$ |
+| $\{5,6\}$ | $1/4$ | $0$ | $3/4$ |
+| $\{6\}$ | $0$ | $3$ | $0$ |
+| $\{8\}$ | $1/2$ | $0$ | $0$ |
+
+With T=$1/2$, W=4 and both supports eight, dividing every coefficient
+by four gives a complete unit score with terminal $1/8$ and largest
+late correct total one. This is an exact score, not an amplitude-cap
+attainer. The actual unit score of 213.6 at $c=1,t_0=0$ has
+$q=(0,0,1,0,0,1;4)$: here $S=2,J=2/5$ and the chamber would require
+$g,h\ge6/5$. Its existing certificate shows why chamber failure is
+not nonmembership.
+
+For every actual full unit-O input whose quotient satisfies (216.5),
+(216.4) forces the attained cost at most one. Its certificate is
+$(V_\star,0)$, regardless of the input's carrier or anchor. For another
+signed target only the sufficient test
+$\Delta_N(V_\star)+\max(0,\sigma_H(q-Q(V_\star)))\le1$ applies.
+

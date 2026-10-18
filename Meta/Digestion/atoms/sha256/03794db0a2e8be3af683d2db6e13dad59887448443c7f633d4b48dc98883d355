@@ -1,0 +1,34 @@
+**推论 220.16（One-pivot landing with the same final budget）。**
+Suppose an actual full $y$ has $\Delta_O(y)\le1$ and a mask $E$
+lands in a quotient $Q(z)$ with at most one positive late coordinate.
+The existing signed one-pivot minimum XI 214.2 gives one full $V$
+with $Q(V)=Q(z)$ attaining both unrestricted exact-$Q(z)$ minima,
+with common value $d_*(Q(z))$. If every $R_t\le0$, then $(V,0)$
+satisfies (220.1). With positive charge it supplies a certificate
+precisely when this chosen score and residual obey
+
+$$
+ d_*(Q(z))+\Theta_E\le1.\tag{220.14}
+$$
+
+**证明。** Any full score has $K\ge\sum|\beta|$, so the supplier's
+stock hypothesis holds for $z$. Its attaining score satisfies
+$d_*\le\Delta_O(z)\le\Delta_O(y)\le1$. Its exact quotient leaves
+residual $\Theta_E$. At zero charge this proves (220.1); at positive
+charge the additional inequality (220.14) is required. For the same
+$b\in H_N$ and same feasible $\lambda$,
+
+$$
+ F_{Q(y)}(b,e)\le M d_*+\Theta_E\le\max(1,M).
+$$
+
+The latter conclusion uses (220.14), not unit $O$ alone.
+For a union of masks compute its final residual once; separately
+optimized per-coordinate residuals are not separate budgets.
+$\square$
+
+The one-pivot minimum and its water filling are reused suppliers.
+Terminal masks are the existing operation of XII 218.8–218.9;
+they add no separate scope here. No proof establishes an affordable
+landing mask for every unit-$O$ input.
+

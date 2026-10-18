@@ -1,0 +1,77 @@
+**Theorem 27.4 (Sparse support: least largest window four and unrestricted coherent cost six).** For $K=\{1,2,4\}$ and every fixed known positive $p_1,p_2,p_4$, the least identifying largest window is $L=4$ and the least unrestricted coherent cost is $C=6$, attained by $(2,4)$. At $L\le4$ at least two nontrivial windows are necessary. Two quadrature settings, with setting retained, give a six-label law identifying exactly the affine, averaged-channel and labeled-instrument orbits. The single length-six separator of Theorem 25.3 has the same $C$ and one herald, with larger $L$.
+
+Proof. Here $x=c_4e_0+c_2e_2+c_1e_3$. The length-two and length-three vectors are those of Theorem 27.3 with $c_3=0$. Set $d=c_4\overline c_1\overline c_2$ and $e=c_2^2\overline c_1^{\,3}$. The complete short densities are
+
+$$
+\Omega_1=|0\rangle\langle0|,\qquad
+\Omega_2=\begin{pmatrix}1-p_1&d\\\overline d&p_1\end{pmatrix}_{00,01},\qquad
+\Omega_3=\begin{pmatrix}
+p_4&d&d\\\overline d&p_2&p_1p_2\\\overline d&p_1p_2&p_1
+\end{pmatrix}_{000,001,010}.
+\tag{27.16}
+$$
+
+The complete length-four vector list is
+
+$$
+0000:c_4e_4,\qquad0010:c_2Sx,\qquad
+0100:c_1S^2x,\qquad0101:c_1^2x.
+\tag{27.17}
+$$
+
+All other vectors vanish, including $0001$ whose coefficient is $c_3$. In this order its entire untwirled density is
+
+$$
+\Omega_4=\begin{pmatrix}
+p_4&d&d&0\\
+\overline d&p_2&p_1p_2&e\\
+\overline d&p_1p_2&p_1(1-p_1)&p_1d\\
+0&\overline e&p_1\overline d&p_1^2
+\end{pmatrix}.
+\tag{27.18}
+$$
+
+For completeness, the tail overlaps are $\langle x,Sx\rangle=\overline c_1c_2$, $\langle x,S^2x\rangle=\overline c_2c_4$, and $\langle Sx,S^2x\rangle=\overline c_1c_2$. Thus the $0010/0101$ entry is $c_2\overline c_1^{\,2}\langle x,Sx\rangle=e$, the $0100/0101$ entry is $c_1\overline c_1^{\,2}\langle x,S^2x\rangle=p_1d$, and the $0010/0100$ entry is $p_1p_2$. The $0000$ overlaps with the two count-one vectors are both $d$, and its overlap with $0101$ is zero. The four displayed diagonal weights sum to one. These calculations specify every supported entry; omitted word rows and columns are zero in (27.16)–(27.18).
+
+The pair's complete product Gram vectors are
+
+$$
+\begin{array}{c|c|c}
+\text{joint word}&\text{memory-history vector}&\text{total count}\\ \hline
+00|0000&S^2x\otimes c_4e_4&0\\
+00|0010&S^2x\otimes c_2Sx&1\\
+00|0100&S^2x\otimes c_1S^2x&1\\
+00|0101&S^2x\otimes c_1^2x&2\\
+01|0000&c_1x\otimes c_4e_4&1\\
+01|0010&c_1x\otimes c_2Sx&2\\
+01|0100&c_1x\otimes c_1S^2x&2\\
+01|0101&c_1x\otimes c_1^2x&3
+\end{array}
+\tag{27.19}
+$$
+
+As for (27.11), these realize the product in parallel and (27.5) realizes the identical flag density serially. The allowed count-two pair $u_s=00|0101$, $v_s=01|0010$ has entry
+
+$$
+\begin{aligned}
+Z_s&=\mathsf Q_{(2,4)}[00,0101;01,0010]
+=\langle c_1x\otimes c_2Sx,S^2x\otimes c_1^2x\rangle\\
+&=d\overline e=p_1c_1^2c_4\overline c_2^{\,3}
+=p_1R_6e^{i\phi},\qquad R_6=p_1p_2^{3/2}\sqrt{p_4}>0.
+\end{aligned}
+\tag{27.20}
+$$
+
+It follows that $e^{i\phi}=Z_s/(p_1R_6)$, with a known positive denominator. The complete primitive character and the source classification mapped in Theorem 27.2 give identification for all phases and all allowed probabilities. The converse is (27.8).
+
+For the largest-window obstruction, take the sparse gauge $\theta_1=\theta_2=0$, $\theta_4=\phi$. Then $d=\sqrt{p_1p_2p_4}e^{i\phi}$, and all its locations in (27.16) have row count zero and column count one. All equal-count entries there are constant. Therefore, including every zero row,
+
+$$
+\Omega_n(\phi)=U_n(-\phi)\Omega_n(0)U_n(-\phi)^*\qquad(n=1,2,3).
+\tag{27.21}
+$$
+
+The same angle acts at every short length. Hence every finite product with $L\le3$, at any coherent cost, has globally twirled density independent of $\phi$. Distinct characters are distinct affine classes, proving $L\ge4$.
+
+For the unrestricted coherent lower bound, partition every positive-integer list of $C\le5$. It is one length-five window; one length-four window with only possible length-one companions; or a list all of whose lengths are at most three. The whole-state phase blindness of $T_4,T_5$ is the established Theorem 25.3 result, and pure companions add no count exchange. Equation (27.21) handles the remaining lists. Thus every allowed batch type is phase independent; any one fixed distinct phase pair is a common collision across all these types. This proves $C\ge6$. At $L\le4$ a list with at most one nontrivial window supplies a single phase-blind $T_n$, $n\le4$, and any number of pure companions, so two nontrivial windows are necessary. Equation (27.20) attains both sharp bounds. The single-window-six comparison uses the actual coherence (25.29), not an abstract relation assumed measurable at a shorter horizon. Theorem 27.5 gives the finite pair readout. $\square$
+

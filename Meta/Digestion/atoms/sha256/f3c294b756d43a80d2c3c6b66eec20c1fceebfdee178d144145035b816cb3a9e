@@ -1,0 +1,96 @@
+**Theorem 2.1 (Conditional gain-deficit reduction).** For every $\theta\in\Theta_N$ and the actual law of Definition 1.1,
+
+$$
+\begin{aligned}
+e_L(r)&=d_L(r)+s_L(r),&e_R(r)&=d_R(r)+s_R(r),\\
+0\le d_L(r),d_R(r)&\le a_r/2,&s_L(r)_-&\le d_L(r),\quad s_R(r)_-\le d_R(r).
+\end{aligned}
+\tag{2.1}
+$$
+
+The unweighted entropy budget is finite:
+
+$$
+\sigma_0=I_P\bigl(\mathcal P;\sigma(X_j:j\ge0)\bigr)
+\le H_{J_\theta}(H_0)\le\log N.
+\tag{2.2}
+$$
+
+For every $R\ge0$, including extended nonnegative sums, the exact nonnegative remainder and its bounds are
+
+$$
+\begin{aligned}
+\tau_P(R)&=K_2(R)+\sum_{r\ge R}
+\bigl(\min\{e_L(r),d_L(r)\}+\min\{e_R(r),d_R(r)\}\bigr),\\
+K_2(R)&\le\tau_P(R)\le K_2(R)+\sigma_R.
+\end{aligned}
+\tag{2.3}
+$$
+
+Consequently $\tau_P(0)<\infty$ if and only if $K_2(0)<\infty$. If a separate same-law argument, without an attainment hypothesis, establishes a deterministic finite bound
+
+$$
+K_2(R)\le B_2(R),\qquad B_2(R)\longrightarrow0,
+\tag{2.4}
+$$
+
+for all sufficiently large $R$, then
+
+$$
+\tau_P(R)\le\eta_P(R):=\sigma_R+B_2(R)<\infty,
+\qquad \eta_P(R)\longrightarrow0
+\tag{2.5}
+$$
+
+on those radii. All omitted initial radii are finitely many bounded terms. Hypothesis (2.4) is additional; the theorem does not supply it for every finite producer.
+
+Proof. Conditional expectation is orthogonal projection in $L^2(P)$ (Doob, *Stochastic Processes*). For nested fields $\mathcal A\subseteq\mathcal B$,
+
+$$
+\mathbb E\bigl(\mathbb E[X_0\mid\mathcal B]-\mathbb E[X_0\mid\mathcal A]\bigr)^2
+=\mathbb E\mathbb E[X_0\mid\mathcal B]^2-\mathbb E\mathbb E[X_0\mid\mathcal A]^2.
+\tag{2.6}
+$$
+
+Apply this established identity along the two paths $W_L(r)\subseteq\mathcal P\subseteq\mathcal E$ and $W_L(r)\subseteq G_L(r)\subseteq\mathcal E$. It gives
+
+$$
+\begin{aligned}
+e_L(r)&=\mathbb E q^2-\mathbb E p_L(r)^2,&d_L(r)&=\mathbb E u_L^2-\mathbb E u_{L,r}^2,\\
+J_L(\infty)&=\mathbb E q^2-\mathbb E u_L^2,&J_L(r)&=\mathbb E p_L(r)^2-\mathbb E u_{L,r}^2.
+\end{aligned}
+$$
+
+Subtraction proves the left identity in (2.1). The right projection paths prove its right identity without a reversibility assumption. These are conditional Brier gains with the binary loss $(X_0-p)^2$; conditional scoring and squared posterior discrepancies are mature tools [Dawid–Lauritzen–Parry, §4.2, Example 4.4 and equation (14)][DLP]. The full-product strict-propriety implication under positive distributions is not needed on the no11 domain.
+
+For nested binary posteriors $v=\mathbb E[X_0\mid\mathcal A]$ and $u=\mathbb E[X_0\mid\mathcal B]$, the entropy chain rule gives
+
+$$
+\mathbb E D\bigl(\operatorname{Ber}(u)\Vert\operatorname{Ber}(v)\bigr)
+=H(X_0\mid\mathcal A)-H(X_0\mid\mathcal B).
+\tag{2.7}
+$$
+
+For $0<v<1$, the divergence as a function of $u$ has second derivative $1/[u(1-u)]\ge4$, value zero and derivative zero at $u=v$. Thus $D(\operatorname{Ber}(u)\Vert\operatorname{Ber}(v))\ge2(u-v)^2$, including the limits $u=0,1$. On $v=0,1$, nesting forces $u=v$ almost surely. Applying (2.7) to the left predictors yields $d_L(r)\le a_r/2$. The block-entropy equalities in Definition 1.3 yield the same bound for $d_R(r)$. No positivity premise is used.
+
+The finite hidden cut and entropy chain rules are reused information-theoretic facts (Cover–Thomas, *Elements of Information Theory*, Chapter 2). Under (1.2), conditioning on $H_0$ separates the emitted past from the emitted coordinates at and after zero. Data processing bounds their mutual information by $H_{J_\theta}(H_0)$. For a finite future block,
+
+$$
+I_P(\mathcal P;X_0,\ldots,X_{n-1})=\mathsf H_n-nh=\sum_{k=0}^{n-1}a_k.
+\tag{2.8}
+$$
+
+The second equality follows by stationary conditional entropy chain rules. Increasing finite future blocks gives (2.2). Conditional entropies of the binary target converge by bounded conditional projection, so $a_r\ge0$ and $a_r\to0$. Since their sum is finite, $\sigma_R\to0$. Neither a hidden-state classification requirement nor a mixing assumption enters this argument.
+
+For each side, $e=d+s\ge0$ and $d\ge0$ imply $s_-\le d$ and the scalar identity
+
+$$
+e=s_++\min\{e,d\}.
+$$
+
+Sum this nonnegative identity first over finitely many radii, then take increasing limits. The remainder is at most $\sum_{r\ge R}(d_L(r)+d_R(r))\le\sigma_R$, proving (2.3) without subtracting infinite series. This also proves the finiteness equivalence. Combining (2.4), (2.3) and $\sigma_R\to0$ gives (2.5). $\square$
+
+The theorem pays $\sum_r(d_L(r)+d_R(r))$ and $\sum_r(s_L(r)_-+s_R(r)_-)$ by at most $\log N$. It isolates the unpaid positive deficit rather than showing it integrable. For example, the additional inequalities $J_L(r)\ge J_L(\infty)$ and $J_R(r)\ge J_R(\infty)$ at all sufficiently large radii would imply $\tau_P(R)\le\sigma_R$ there; those gain inequalities are not automatic.
+
+The weighted allowance $\tau_P(R)\le\sum_{k\ge R}(k-R+1)a_k$ from [Entropy moment][EM] remains a sufficient supplier when its weighted moment is finite. Theorem 2.1 requires no weighted moment in its conditional conclusion. It establishes neither a finite-hidden law outside that supplier with verified finite $K_2(0)$ nor strict enlargement of verified supplier domains.
+

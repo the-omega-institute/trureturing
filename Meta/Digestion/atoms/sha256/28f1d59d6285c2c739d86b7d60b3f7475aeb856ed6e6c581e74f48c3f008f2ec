@@ -1,0 +1,15 @@
+**Corollary 3.3 (one retained NULL155 tail mean prevents completion).**
+The two p laws of [NULL155, Definition 2.1][NULL155] both have
+$Q(w_{n,1})=c_az_a^n$ for every $n\ge5$. Any proposed compatible
+original zero-face completion must strictly increase each of these
+averaged coordinates, even if its descriptor support, weights, early
+coordinates and conditional branching are all allowed to change.
+Preserving even one such mean is impossible.
+
+**Proof.** Every probability mixture of the two specified p descriptors
+has the same displayed late means. Apply (3.3) separately at each
+$n\ge5$ to any proposed completion. This is a necessary condition on a
+completion, not its existence. The fixed null itself has unequal full
+marginals and omitted nonzero residuals [NULL155, Proposition 5.1], so
+it is not an input to Theorem 2.1. $\square$
+

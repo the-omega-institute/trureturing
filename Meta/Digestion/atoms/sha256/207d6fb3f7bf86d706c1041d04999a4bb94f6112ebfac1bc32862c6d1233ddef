@@ -1,0 +1,31 @@
+**Proposition 5.2 (two active states defeat a fresh-tape restart).**
+There is a source-preserving two-state system with initial attempt
+probabilities $h=1/2,d=0,r=1/2$, in which repeatedly attempting after a
+finite nonproposal gives eventual proposal probability $1/2$, rather
+than $h/(h+d)=1$. Independent fresh randomness for each attempt does
+not change this fact.
+
+**Proof.** Take a singleton source with target 1, states $u$ and $v$,
+and initial state $u$. Both states permit the action Attempt. At $u$,
+it consumes one fair independent bit, changes the state to $v$, and
+returns either the proposal 1 or the finite label retry, each with
+probability $1/2$. At $v$, Attempt performs an endless sequence of
+internal transitions and never returns. There are no other actions.
+Every source action leaves the singleton source unchanged.
+
+The initial attempt has exactly the probabilities asserted. On its
+proposal branch the controller stops. On its retry branch it remains
+at $v$, where the second attempt diverges with probability one. Thus
+the actual eventual proposal and divergence probabilities are both
+$1/2$. The state $u$ cannot be restored by any legal action.
+
+There is a second version with the same initial probabilities: replace
+the action at $v$ by a finite return of retry, leaving $v$ unchanged.
+After an initial retry every individual attempt is now finite, yet the
+controller makes infinitely many of them and still never proposes.
+The full execution again diverges on a set of probability $1/2$.
+The first version traps inside one attempt; the second accumulates
+infinitely many finite nonproposals and attempt-start charges. Neither
+version authorizes identifying a finite nonproposal with literal
+divergence of that individual attempt. $\square$
+

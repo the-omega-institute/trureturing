@@ -1,0 +1,21 @@
+**Definition 7.2 (four decoders with explicit input domains).** Each decoder
+has logical arguments `(body,b,PublicCode)` and returns either a typed
+failure or a derived native prefix/raw endpoint. It also reconstructs the
+original RCA/ARC HistoricalImage codec, with its redundant semantic fold.
+Each following procedure has fresh helper temporaries.
+
+| Decoder | Complete procedure |
+| --- | --- |
+| $D_S$ | Parse masks; exact unary layout inverse gives $W$; basic extraction from $W$ gives input/$n$; require $n=k$; RunN; require full raw endpoint equality with $W$ and target binding; re-emit S masks and require body equality. |
+| $D_B$ | Parse contour to terminal antichain; enumerate all prefixes by consuming each copied path and Insert; require exact contour re-encoding/maximality; exact layout inverse; basic extraction/RunN/raw equality and $n=k$ as for $D_S$; require re-emitted B body equality. |
+| $D_M$ | Parse exact seven families; require all numeric/tag/order/exhaustion rules; basic extraction from those records; require $n=k$; RunN; reselect by Definition 6.2, compare the entire canonical M-body, and check target binding. |
+| $D_T$ | Parse exact chronological records; start foundation; for each record use only its own optional supplied bit at an IN, execute one Step, compute/compare the complete canonical record by Definition 5.2, update maps and unary count; require list exhaustion, count $k$ and target binding. |
+
+For $D_T$, non-IN with a supplied bit, IN with none, or any mismatch in
+native row/guard/labels/probes/assignments/identity/receipt fails. For
+$D_S,D_B$, raw shape parsing itself is valid on $\mathcal R_\circ$, but
+the extra canonical history test can fail outside $\mathcal C_\circ$.
+No canonicality filter is installed on the physical raw transition relation.
+Self-consistent body parsing authenticates no hostile input by itself;
+actual sealed-copy provenance is a separate §8 invariant.
+

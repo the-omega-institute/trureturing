@@ -1,0 +1,11 @@
+**约定 C-72.1（组成矩阵与实际外部供应）。** 以 $F_0=0,F_1=1,F_{m+2}=F_{m+1}+F_m$ 定义 Fibonacci 数。沿用[《辛预测完成》§35.10](SYMPLECTIC_PREDICTIVE_COMPLETION.md#3510-原生守卫固定仿射分支与反辛符号)的两坐标线性部分，另取交换矩阵，写为
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+P=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+A=PMP=\begin{pmatrix}1&1\\1&0\end{pmatrix}.
+\tag{C72.1}
+$$
+
+只交换坐标得到 $A$，不识别概率标签与任意物理坐标。$A$ 也正是 C-60.1 的兼容矩阵 $J$；为避免与对数比 $J(H)$ 混淆，此处专用字母 $A$。定义 $H_m=A^m$，$m\ge2$。C-8.3、C-65.1 已给路径幂公式；在均匀正活动环的外部路径中，其实际参数为 $m=n-2$，因而该环供应使用 $m\ge3$。$m=2$ 则仍是有效的两边路径响应。
+

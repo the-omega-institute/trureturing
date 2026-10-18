@@ -1,0 +1,26 @@
+**Definition 4.2 (wire and receipt rules).** The open-row relation has
+the following requirements.
+
+1. Only Ready and the actual original guard admit a new row. IN
+   admission consumes exactly one bit at its bound actual site. Other
+   admissions consume none. Disabled admission has no wire event or
+   original receipt. Every physically enabled raw input value retains
+   its actual successor. Canonical-prefix admissibility restricts only
+   the original task comparisons, not this raw admission relation.
+2. Internal stages consume no input. The row has at most its one
+   prescribed OUT, at its bound authorized site and bit. No next
+   original row starts before this row finishes.
+3. Every overwrite has its required old value captured beforehand.
+   All unmentioned material persists. All current and partial
+   constructors, marks, links, controls and rights remain actual
+   physical material, including partially shaped receipts.
+4. There is one identified original receipt append per admitted row,
+   with the prescribed ordinary/F kind, one new meter R and distinct
+   read/append lanes. No constructor prefix or receipt is repeated.
+   Even if its final geometry is present while Busy, it is staged.
+5. Finish is enabled only after the complete original successor,
+   both head lanes and the one receipt have their prescribed final
+   values. It completes that row once, retires its continuing
+   permission, and selects the actual successor's Ready, or Halt
+   exactly for the original final halt. Halt has no outgoing action.
+

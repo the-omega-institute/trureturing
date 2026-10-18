@@ -1,0 +1,29 @@
+#### 证明
+
+由 $`p(t)=p+td`$：
+
+```math
+\mathbb E_{p(t)}[f]
+=
+\sum_{\sigma}
+(p_\sigma+t d_\sigma)f_\sigma
+=
+\mathbb E_p[f]
++
+t\sum_\sigma d_\sigma f_\sigma.
+```
+
+而
+
+```math
+\sum_\sigma d_\sigma f_\sigma
+=
+f_0-f_2-f_5+f_{25}
+=
+J_f.
+```
+
+所以结论成立。证毕。
+
+这给出了一个非常重要的隐藏关系：
+

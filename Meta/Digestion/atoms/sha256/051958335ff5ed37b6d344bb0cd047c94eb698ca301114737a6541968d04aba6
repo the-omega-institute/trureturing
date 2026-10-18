@@ -1,0 +1,8 @@
+**定义 38.1（固定合法函数域）。** 取低到高印刷的单窗口域
+
+$$
+L=\{000,100,010,101,001\}=\{N,2,3,25,5\}.
+$$
+
+这里 $N$ 表示 $\mathrm{null}$ 模式，$25$ 表示同时选中 $2,5$ 的标签。定义 $x,z,y:L\to\mathbb R$ 分别为 $2,3,5$ 位置的占位指示。这一域沿用 [FIB 关系延拓几何，定义 2.1、7.1](https://github.com/the-omega-institute/trureturing/blob/94fb8f7b14e6dca112b6806810ed40d59e096bfe/docs/develop/theory/FIB_RELATIONAL_CONTINUATION_GEOMETRY.md)；多窗口来源、来源树和复振幅另有各自载体。
+

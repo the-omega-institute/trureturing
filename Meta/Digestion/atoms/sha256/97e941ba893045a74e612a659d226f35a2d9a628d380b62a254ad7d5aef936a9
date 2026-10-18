@@ -1,0 +1,25 @@
+**Application 7.2 (calibrated and uncalibrated cross-cone memory).**
+Use an initial empty-cut row fixing
+$t_d=\langle T_d,\alpha\rangle$, where $d\ge1$. At later
+epochs $a\le b$ use the two-hole cut $\{L,R\}$ with two distinct
+classes. The link earlier $L$ equals later $R$ gives exactly
+$b-a=d$; replacing its sign by disequality gives exactly $b-a\ne d$.
+Both statements allow arbitrarily late $a$.
+
+The calculation is
+$\rho^a t_d=\langle T_{d+a},T_a\rangle$ and
+$T_{d+a}=T_b\leftrightarrow b-a=d$. The case $d=1$, including
+its failure under every shared finite cap, is already
+[NUE, Proposition 6.3][NUE]; it is a supplier, not the new support
+argument of this volume.
+
+If instead the initial row is also the two-hole distinct-class row,
+the same equality at the later captures gives exactly
+$\{(0,a,b):0\le a<b\}$. Ties would contradict the within-row
+disequality. Conversely each positive $d=b-a$ has the common source
+$t_d$, whose three complete rows and link have the prescribed form.
+Thus an equality bit without the calibration does not determine a
+positive numerical offset. Application 7.1 identifies its offset
+through the root/descendant relation and literal path, a different
+constraint from this uncalibrated cross-cone comparison.
+

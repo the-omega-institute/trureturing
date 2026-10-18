@@ -1,0 +1,118 @@
+**Theorem 3.1 (risk-controlled emission clipping).** Let $M$ be any observer of Definition 1.3. Set
+
+$$
+\varepsilon_p=R_{\rm conf}(\mathcal H_p;M)-\rho_p\ge0,
+\qquad
+\varepsilon_\beta=R_{\rm conf}(\mathcal H_\beta;M)-\rho_\beta\ge0.
+$$
+
+Use its supplied periodic comparison $M^\circ$. For a scalar $t$, write $[t]_{[a,b]}=\min\{b,\max\{a,t\}\}$. Replace only its emission entries by
+
+$$
+\widehat u_i=[u_i]_{[1/3,2/5]},\qquad
+\widehat v_i=[v_i]_{[1/3,2/5]}.
+\tag{3.1}
+$$
+
+The actual rows, actual letter kernels, mode rule, current records and source are unchanged. The resulting finite table $\widehat M$ has exact per-configuration same-update generation. Define
+
+$$
+T_p=\frac{30\varepsilon_p+20\varepsilon_\beta}{11},
+\qquad
+T_\beta=\frac{12\varepsilon_p+30\varepsilon_\beta}{11}.
+\tag{3.2}
+$$
+
+At every same actual fourth-segment history, in either risk order,
+
+$$
+|e_j(h;\widehat M)-e_j(h;M^\circ)|\le T_s
+\qquad(h\in\mathcal H_s).
+\tag{3.3}
+$$
+
+Consequently, simultaneously for all four coordinates, $R_j(\mathcal H_s;\widehat M)\le R_j(\mathcal H_s;M)+T_s$. In particular the same model satisfies
+
+$$
+R_{\rm conf}(\mathcal H_p;\widehat M)
+\le\rho_p+\frac{41\varepsilon_p+20\varepsilon_\beta}{11},
+$$
+
+$$
+R_{\rm conf}(\mathcal H_\beta;\widehat M)
+\le\rho_\beta+\frac{12\varepsilon_p+41\varepsilon_\beta}{11}.
+\tag{3.4}
+$$
+
+If $\max(\varepsilon_p,\varepsilon_\beta)<1/6$, then
+
+$$
+\Delta_{\rm all}(\widehat M)=\Delta_4(\widehat M)
+\le\Delta_4(M)+
+\max\left\{\frac{10}{3}T_p+T_\beta,\ T_p+6T_\beta\right\}.
+\tag{3.5}
+$$
+
+If both excesses are at most $e<1/6$, the additional defect is at most $302e/11$.
+
+**Proof.** On either complete countable phase space, for endpoint laws $P_1,P_2$ and any law $D$, the coordinate absolute-value identity gives
+
+$$
+\operatorname{TV}(D,P_1)+\operatorname{TV}(D,P_2)-2\rho_s
+=\sum_w\operatorname{dist}(D(w),[P_1(w)\wedge P_2(w),P_1(w)\vee P_2(w)]).
+\tag{3.6}
+$$
+
+This includes the infinite word. Its use at exact endpoint equality is supplied by [NATIVE, equation (6.4); FLOW, equation (7.2)]. Here apply it to each mode's configuration expectation with the two pure-target bounds in Citation 2.2. The single p word $\alpha$ has probability $u_i(x)$; the single suspended word $\beta$ has probability $1-v_i(y)$. Consequently
+
+$$
+D_{u,i}:=\pi_i|u_i-\widehat u_i|\le2\varepsilon_p,
+\qquad
+D_{v,i}:=\tau_i|v_i-\widehat v_i|\le2\varepsilon_\beta.
+\tag{3.7}
+$$
+
+Indeed the two expected endpoint distances at mode $i$ sum to at most $2\rho_s+2\varepsilon_s$; their nonnegative coordinate excesses in (3.6) therefore have total at most $2\varepsilon_s$. Each of the indicated single-word excesses is bounded by this total. No assertion that every configuration is individually close to a center is used.
+
+Let $\widehat H_i$ be the clipped return mass kernel and $C_i=B_iA_i$ the actual return kernel. Entrywise,
+
+$$
+0\le\widehat H_i\le\lambda C_i,
+\qquad \lambda=\frac4{15},
+\qquad \pi_i C_i=\pi_{i+1}.
+\tag{3.8}
+$$
+
+Couple old and clipped synthetic letters maximally while their configurations agree; after a matched letter couple their identical actual-update row identically. At a p step the mismatch probability is $|u-\widehat u|$, and at a suspended step it is $|v-\widehat v|$. The probability that the coupled paths are still identical is dominated by the clipped survival subprobability. From $\pi_i$, (3.8) bounds its p row at the $j$th return by $\lambda^j\pi_{i+j}$, and its suspended row by $(2/3)\lambda^j\tau_{i+j}$.
+
+The clipped generator completes almost surely. Summing the mismatch hazards up to that completion, including all possible return lengths, gives
+
+$$
+\sum_x\pi_i(x)\operatorname{TV}(Q_{i,x},\widehat Q_{i,x})
+\le\sum_{j\ge0}\lambda^j\left(D_{u,i+j}+\frac23D_{v,i+j}\right)
+\le T_p.
+\tag{3.9}
+$$
+
+Starting at a suspended row, its first mismatch hazard is $D_{v,i}$. A matched initial $\alpha$ gives a p subrow bounded by $(2/5)\pi_{i+1}$. Thus
+
+$$
+\sum_y\tau_i(y)\operatorname{TV}(W_{i,y},\widehat W_{i,y})
+\le D_{v,i}+\frac25T_p\le T_\beta.
+\tag{3.10}
+$$
+
+The last inequality is the identity $2\varepsilon_\beta+(2/5)T_p=T_\beta$. The coupling bounds also cover possible old infinite noncompletion: on no mismatch the old path completes with the clipped one. Stepwise coupling is a mature tool [ART, §3.2]; the stationary actual-flow domination (3.8) and the endpoint-risk control (3.7) are the source-specific ingredients.
+
+The actual rows have not changed at any acquired history. The triangle inequality, convexity for the law order, and (3.9)–(3.10) therefore prove (3.3) on every positive history, irrespective of its length or posterior. Combine it with (2.5) to obtain (3.4).
+
+For the defect, the old p-$\beta$ probability is at least $3/5-D_{u,i}>0$, and its old suspended-$\alpha$ probability is at least $1/3-D_{v,i}>0$ under the stated excess bound. The corresponding clipped probabilities are at least $3/5$ and $1/3$. For probability laws at TV distance at most $t$, conditioning on a common positive event whose second-law probability is at least $q$ changes the conditional law by at most $2t/q$. For the old law $P$, clipped law $Q$ and any event $A$, the difference after conditioning on $E$ is
+
+$$
+\frac{P(A\cap E)}{P(E)}-\frac{Q(A\cap E)}{Q(E)}
+=\frac{P(A\cap E)-Q(A\cap E)}{Q(E)}
++\frac{P(A\cap E)}{P(E)}\frac{Q(E)-P(E)}{Q(E)}.
+$$
+
+Both terms are bounded by $t/Q(E)$, proving the estimate for every conditional event. Deleting the original operation block contracts TV. Apply this estimate to the old and clipped marginal forecasts, then use the next-cut forecast differences $T_\beta,T_p$ from (3.9)–(3.10). This gives $10T_p/3+T_\beta$ and $6T_\beta+T_p$. Completing letters and terminals have zero defect in both models. Proposition 2.3 covers earlier histories, proving (3.5). Substitution of $T_p\le50e/11,T_\beta\le42e/11$ gives $302e/11$. ∎
+

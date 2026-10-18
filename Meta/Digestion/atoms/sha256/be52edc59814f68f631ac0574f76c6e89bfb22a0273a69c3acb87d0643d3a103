@@ -1,0 +1,59 @@
+**Definition 2.1 (literal exteriors and complete partitions).** Write
+$(q_1,q_2,q_3,q_4)=(LL,LR,RL,RR)$. The complete rows
+$R_h=(C_h,\pi_h)$ are as follows:
+
+$$
+\begin{aligned}
+C_0={}&\left\langle
+ \left\langle\langle\square_{LLL},\square_{LLR}\rangle,
+                  \langle\square_{LRL},\square_{LRR}\rangle\right\rangle,
+ \left\langle\langle\square_{RLL},\square_{RLR}\rangle,
+                  \langle\square_{RRL},\square_{RRR}\rangle\right\rangle
+\right\rangle,\\
+C_1={}&\left\langle
+ \left\langle\beta,\langle\square_{LRL},\square_{LRR}\rangle\right\rangle,
+ \left\langle\langle\square_{RLL},\square_{RLR}\rangle,
+                  \langle\square_{RRL},\square_{RRR}\rangle\right\rangle
+\right\rangle,\\
+C_2={}&\left\langle
+ \left\langle\langle\square_{LLL},\square_{LLR}\rangle,\beta\right\rangle,
+ \left\langle\langle\square_{RLL},\square_{RLR}\rangle,
+                  \langle\square_{RRL},\square_{RRR}\rangle\right\rangle
+\right\rangle,\\
+C_3={}&\left\langle
+ \left\langle\langle\square_{LLL},\square_{LLR}\rangle,
+                  \langle\square_{LRL},\square_{LRR}\rangle\right\rangle,
+ \left\langle\beta,\langle\square_{RRL},\square_{RRR}\rangle\right\rangle
+\right\rangle,\\
+C_4={}&\left\langle
+ \left\langle\langle\square_{LLL},\square_{LLR}\rangle,
+                  \langle\square_{LRL},\square_{LRR}\rangle\right\rangle,
+ \left\langle\langle\square_{RLL},\square_{RLR}\rangle,\beta\right\rangle
+\right\rangle.
+\end{aligned}
+\tag{FCS.9}
+$$
+
+$$
+\begin{aligned}
+\pi_0&=\{\{LLL,LRL\},\{LLR\},\{LRR\},
+                    \{RLL,RRL\},\{RLR\},\{RRR\}\},\\
+\pi_1&=\{\{LRL\},\{LRR\},\{RLL,RRL\},\{RLR\},\{RRR\}\},\\
+\pi_2&=\{\{LLL\},\{LLR\},\{RLL,RRL\},\{RLR\},\{RRR\}\},\\
+\pi_3&=\{\{LLL,LRL\},\{LLR\},\{LRR\},\{RRL\},\{RRR\}\},\\
+\pi_4&=\{\{LLL,LRL\},\{LLR\},\{LRR\},\{RLL\},\{RLR\}\}.
+\end{aligned}
+\tag{FCS.10}
+$$
+
+Every pair of different blocks in each partition asserts disequality.
+The remaining canonical data are part of the output as well.
+
+| Row | Ordered reached holes | Recomputed name vector | Absent cut members and concrete guard |
+| --- | --- | --- | --- |
+| $R_0=R_*$ | $LLL,LLR,LRL,LRR,RLL,RLR,RRL,RRR$ | $(0,1,0,3,4,5,4,7)$ | None |
+| $R_1$ | $LRL,LRR,RLL,RLR,RRL,RRR$ | $(0,1,2,3,2,5)$ | $LLL,LLR$; beta at $LL$ |
+| $R_2$ | $LLL,LLR,RLL,RLR,RRL,RRR$ | $(0,1,2,3,2,5)$ | $LRL,LRR$; beta at $LR$ |
+| $R_3$ | $LLL,LLR,LRL,LRR,RRL,RRR$ | $(0,1,0,3,4,5)$ | $RLL,RLR$; beta at $RL$ |
+| $R_4$ | $LLL,LLR,LRL,LRR,RLL,RLR$ | $(0,1,0,3,4,5)$ | $RRL,RRR$; beta at $RR$ |
+

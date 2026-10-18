@@ -1,0 +1,18 @@
+**命题 61.3（Exact charged spine certificate, consuming the supplied offspring laws）。** On every actual archive just specified,
+
+$$
+D_{\rm ad}(b,S,\sigma,\lambda)
+=\min_{\text{certificates of Definition 61.2}}(\Pi-b).
+\tag{61.5}
+$$
+
+For nonempty starting support, each certificate has a lawful attaining policy with worst actual absolute depth exactly $\Pi$.
+
+**证明。** At a nonconstant common-tail archive a rejecting word rejects every candidate. Its absorbing endpoint cannot resolve different INITIAL labels, so every correct next action is safe. Induction with (1.4) and the literal tail update proves that (61.3) gives the exact acquired zero child and its actual positive sibling. The recorded zero remains in this same issued history. Each retained phase continues an actual original witness; its INITIAL label is unchanged.
+
+For each nonconstant positive sibling, Theorem 27.3 gives tail at most $k-m$ and at most $m$ phases, or precisely the odd-width full window at tail one. In its all-one case, the proof uses the actual immediately preceding endpoint: a positive incoming tail means its preceding word ended one. A preceding zero difference excludes the common endpoint; a preceding positive difference confines the support to the preceding window, which excludes the new far endpoint because $T\ge2m+1$. Thus a nonconstant two-endpoint all-one child must have incoming tail zero. There is a preceding block because the archive already recorded an issued zero. All supplier hypotheses are therefore actual, including the tail bound, and Theorems 27.2 and 27.4 give exactly (61.1), with their literal optimal streams. Homogeneous siblings stop. This is reuse of those acquired-child laws, not a new fee assertion about unrelated supports or high tails.
+
+Execute the written spine until its first positive difference, then run that sibling's supplied least-code construction and decode its own endpoints. On the final zero support return its homogeneous label. All actions are complete paid words; (61.3) checks their strict seams. Every nonempty $A_t$ has an actual source reaching it and an attaining continuation. If $S_L$ is nonempty, an actual source traverses all $L-b$ spine words. If it is empty and $L>b$, the last nonempty $S_{L-1}$ went entirely to the last positive child, so a source still pays that last word. Hence (61.4), including waits, padding and clearing inside the side words, is the exact maximum. The empty-sequence case is immediate.
+
+Conversely stop homogeneous archives immediately in any finite correct continuation and retain its own zero-difference path. Its words are safe as just proved. Every first-positive subtree has the supplied all-action lower bound $K$ on that actual child. Replacing it by its fixed attaining stream yields a certificate whose maximum is no greater than the original controller's maximum. This establishes both inequalities in (61.5). Finiteness and attainment use $T-1$ successive $01\,0^{m-2}$ words from the starting offset. Their leading zero makes every seam safe. Over $T$ chronological positions each phase's endpoint-difference cycle has exactly two ones; equality of its first $T-1$ entries forces equality of the last by that integer count, and then equality of the phases by the period $T$ and coprimality. This is the supplied safe phase-recovery construction. Restricting it to $S$ decodes every label. A finite minimum over integer fees is attained, and the preceding replacement produces an attaining certificate. Different siblings may use different streams; (61.5) is an adaptive statement. ∎
+

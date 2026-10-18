@@ -1,0 +1,44 @@
+**Mathematical citation 7.2 (a sparse initial vector).** The example
+following [DEV, Proposition 11.7] uses $D\ge2$, $P=\{RL\}$ and
+$t=\langle\alpha,\alpha\rangle$,
+$t'=\langle\alpha,\beta\rangle$. Both initial selected replies are
+absent; at count one they are absent and beta. It is the missing
+$\varepsilon$ prefix in $S=\{L\}$. Theorem 5.2 supplies witnesses
+for every such failure, beyond this one example. For this pair its
+uniform witness rule also separates at count two, by beta versus
+branch; a separating count need not be the earliest one.
+
+**Mathematical citation 7.3 (same optimal code, different hidden
+structure).** Reuse [DEV, Counterexample 11.9]'s sources
+
+$$
+\begin{aligned}
+X&=\langle\alpha,\alpha\rangle,&Y&=\langle\beta,\alpha\rangle,\\
+t&=\langle\alpha,\langle X,X\rangle\rangle,&
+t'&=\langle\alpha,\langle Y,X\rangle\rangle.
+\end{aligned}
+\tag{FM.29}
+$$
+
+Both are in $\mathcal F_2$. For $P=\{RL,RR\}$ every selected reply
+is branch at every count. Adding $R$ gives the same fact for
+$P=A_2$. Citation 4.3 therefore gives equal optimal codes for these
+sources in both tasks. The initial full-menu vector is sufficient
+for its future replies by Theorem 5.2, despite this equality of codes
+on different sources.
+
+A complete row at a prefix-free cut retains the literal exterior,
+addressed reached holes, concrete blockers and every equality and
+disequality between hidden subtrees [DEV, Definition 1.2]. The
+published counterexample proves that the rows at $\{RL,RR\}$ have
+the same exterior and different hidden equality partitions at every
+common count: their hidden pairs are
+$(\rho^k X,\rho^k X)$ and $(\rho^k Y,\rho^k X)$, respectively.
+The latter pair stays unequal, as the supplier's right-clock argument
+shows. The same sufficient ray table is initially $(5,6)$ in both
+sources, for $Q=\{RLR^\infty,RRR^\infty\}$; it remains sufficient
+when $R$ is added. Thus neither sufficient ray memory nor the minimal
+reply code determines the complete row or the full source. This
+consequence uses the existing counterexample and classification,
+without a second hidden-equality proof.
+

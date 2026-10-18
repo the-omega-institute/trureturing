@@ -1,0 +1,63 @@
+## 6. Terminal padding, read optimality, and exact fibres
+
+The mechanism has a general formulation. Suppose four legal early endpoints $A_0,\ldots,A_3$ and a later legal endpoint $B$ have an injective residual map
+
+$$
+(S,k)\longmapsto
+\bigl((1+ki)\operatorname{tr}((B-A_i)S)\bigr)_{i=0}^3
+\tag{6.1}
+$$
+
+on the original source domain. For every $d\ge1$, record $B$ at the actual indices $4,\ldots,d+4$. Then $P=D+\operatorname{tr}(BS)(1+k\tau)$ has degree at most $d$ and is interpolated from these $d+1$ readings. Its early residuals are exactly (6.1), recovering $S,k$, then the entire $D$. The same finite words suffice for every degree; only empty-word reads are added. This proves the terminal repetition principle. Sections 3–5 verify its hypothesis and an explicit inverse for (2.1).
+
+For completeness, the credited all-fixed-history lower bound applies on the identical target. For a known $d\ge0$, use the injective open actual-target chart
+
+$$
+(p,q,r,k,\delta_0,\ldots,\delta_d)\in(0,\infty)^3\times\mathbb R^{d+2},
+\quad S=\begin{pmatrix}p&q\\r&qr/p\end{pmatrix},\quad
+D(\tau)=\sum_{h=0}^d\delta_h\tau^h.
+\tag{6.2}
+$$
+
+It has dimension $N=d+5$, and (1.2) realizes every point. For any predetermined $m$-read history, its observation map $F$ is smooth, with components
+
+$$
+F_i=(1+ki)\bigl((A_i)_{11}p+(A_i)_{12}r+(A_i)_{21}q+(A_i)_{22}qr/p\bigr)
++\sum_{h=0}^d\delta_hi^h.
+$$
+
+If $m<N$, let $\rho\le m<N$ be the greatest attained derivative rank. If $\rho=0$, integrate the zero derivative along segments in a small convex chart ball; $F$ is constant there and has a collision. Otherwise a nonzero maximal $\rho$-minor stays nonzero on a neighborhood, on which maximality makes the rank exactly $\rho$. Reorder inputs and outputs to place that minor first. The implicit function theorem makes the level set of the first $\rho$ outputs a smooth graph over a small connected open ball in $N-\rho>0$ remaining coordinates. Every remaining output differential is in the span of the first $\rho$ differentials, and vanishes on graph tangent vectors. Integration along paths makes all outputs constant on that graph. Distinct graph points are distinct actual targets with identical complete data. Thus fewer than $d+5$ reads cannot recover the target uniformly. A fixed list with early stopping can be padded along its predetermined continuation to its claimed limit, using empty words where needed; equal complete data give equal prefixes and stopping decisions. This argument does not apply to adaptive word selection.
+
+Together with Theorem 2.1, this retains the credited equality
+
+$$
+C_{\mathrm{fix}}(d)=d+5\qquad(d\ge1).
+\tag{6.3}
+$$
+
+For $d=0$ the same lower bound is five. Applying Theorem 2.1 with declared upper degree one to the constant-drift submodel gives six reads and returns its true entire constant polynomial. Thus
+
+$$
+5\le C_{\mathrm{fix}}(0)\le6.
+\tag{6.4}
+$$
+
+This restriction of a six-read inverse does not prove a five-read inverse.
+
+Let $A_*(d)$ denote the minimum total number of executed literal $M/J$ occurrences among recovering fixed histories with exactly $d+5$ reads. Theorem 2.1 gives $A_*(d)\le17$ for every $d\ge1$. The credited parity family has count $2w+2a-1$, where $a=d+3$ and $w$ is the smallest even integer at least $a$: its count is $4d+11$ for odd $d$ and $4d+13$ for even $d$. The other credited family has count $6d+9$. Both have fifteen at $d=1$ and exceed seventeen for $d\ge2$. Hence the new construction strictly improves these two counts for $d\ge2$, while the stronger credited bound $A_*(1)\le15$ remains. No unrestricted atom optimum or shortest-word claim follows.
+
+For every uniquely recovered effective target, the complete original relation/gain fibre is exactly
+
+$$
+R=S/b,\qquad\alpha=b>0,\qquad\beta=bk,\qquad D\text{ fixed}.
+\tag{6.5}
+$$
+
+Necessity follows from $S=\alpha R$ and $k=\beta/\alpha$. Conversely substitution preserves every observation, including future indices on any common history, and preserves positivity and rank one. For fixed $R=c_{\mathrm{col}}\ell$, all positive factorizations have precisely the internal scale freedom
+
+$$
+c'_{\mathrm{col}}=\mu c_{\mathrm{col}},\qquad\ell'=\ell/\mu,\qquad\mu>0.
+$$
+
+Equality of first columns forces this positive scalar, and equality of second columns forces the remaining row component. These are representation freedoms; they do not identify different effective targets.
+

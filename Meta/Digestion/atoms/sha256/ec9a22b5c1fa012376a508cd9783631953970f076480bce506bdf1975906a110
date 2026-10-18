@@ -1,0 +1,41 @@
+**定义 35.2（完整未来序列及有限码）。** 对任意有限树 $y$ 和地址 $q$，令 $d=|q|$，$q_j$ 为长度 $j$ 的前缀，$w(s)=\#_L(s)+2\#_R(s)$，并定义
+
+$$
+\mathcal F_q(y)=(r_{\rho^k y}(q))_{k\ge0}.
+\tag{SLH.35.2}
+$$
+
+根的码集为 $\mathcal C_\varepsilon=\{\mathsf C,\mathsf A,\mathsf B\}$。非根的码集为
+
+$$
+\mathcal C_q=\{\mathsf C,\mathsf A,\mathsf B\}
+ \cup\{\mathsf D_t:1\le t\le w(q^-)+2\}.
+\tag{SLH.35.3}
+$$
+
+符号 $\mathsf C,\mathsf A,\mathsf B$ 分别解码为
+
+$$
+\begin{aligned}
+E_q(\mathsf C,k)&=\mathsf{branch},\\
+E_q(\mathsf A,k)&=
+ \begin{cases}\alpha&k=0,\\\beta&k=1,\\\mathsf{branch}&k\ge2,\end{cases}\\
+E_q(\mathsf B,k)&=
+ \begin{cases}\beta&k=0,\\\mathsf{branch}&k\ge1.\end{cases}
+\end{aligned}
+\tag{SLH.35.4}
+$$
+
+若 $q\ne\varepsilon$，$E_q(\mathsf D_t,k)$ 在 $k<t$ 为 $\mathsf{absent}$；从 $k=t$ 起，末字母为 $L$ 时依次为 $\beta,\mathsf{branch},\mathsf{branch},\ldots$，末字母为 $R$ 时依次为 $\alpha,\beta,\mathsf{branch},\ldots$。这里 $t$ 是相对于取得切点的正出生偏移，不是未认证的绝对年龄。
+
+令 $\sigma_q(y)$ 如下：当前 $r_y(q)$ 是分支、$\alpha$、$\beta$ 时分别取 $\mathsf C,\mathsf A,\mathsf B$；当前缺席时，取沿 $q$ 的唯一首个叶 $q_j$，设其标签为 $\lambda_b$，$b\in\{0,1\}$，其中 $j<d$。置 $s=q\setminus q_j\ne\varepsilon$，并令
+
+$$
+\sigma_q(y)=\mathsf D_t,
+\qquad t=2-b+w(s^-)
+       =2-b+w(q^-)-w(q_j).
+\tag{SLH.35.5}
+$$
+
+这个定义不声称首叶已经取得。首叶唯一性来自自由满树：沿路径在首叶以前都是分支，以后全是缺席；非空树的根存在。数学供应是运输与记忆卷引理23.2、命题24.1及本卷带存在守卫的 (SLH.29.2)。把其中任意种子取为当前实际树 $y$、演化次数取为相对偏移 $k$，只是在一个对所有有限树成立的式子中代参；原来源仍为 $u$，实际绝对纪元仍为 $N+k$，没有重置寄存器或纪元。首叶以下取 $s=q\setminus q_j$，得到 $k+b\ge w(s^-)+2$ 的出生条件，以及出生时左为 $\beta$、右为 $\alpha$ 的原有规则。
+

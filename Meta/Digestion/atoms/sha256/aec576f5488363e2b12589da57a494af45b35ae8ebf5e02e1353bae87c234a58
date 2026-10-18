@@ -1,0 +1,34 @@
+**Theorem 4.4 (pointwise acceptance characterization).** For every
+rational native input $(d,\mu,C)$,
+
+$$
+\boxed{
+\exists\pi\ V_{\mathrm{rec}}(d,\mu,C,\pi)
+\quad\Longleftrightarrow\quad C\ge J_d(\mu).}
+\tag{RCE.19}
+$$
+
+Thus every accepted label has an exhaustive ungrouped joint leaf
+with the same input and same cap.
+
+Proof. Induct over the certificate nodes. An ungrouped joint leaf
+gives exactly $C\ge J_d(\mu)$, including all zero-weight cases
+by Lemma 2.2. For an $m$-grouped leaf Theorem 3.4 makes its
+maximum equal to $J_d(\mu)^m$, hence its test forces
+$C\ge J_d(\mu)$. For a bundle leaf, the full hard partition
+refines the selected bundle partition. Its norm cannot exceed
+the bundle norm. On a light support its norm is at most
+$\mu(P)\le C$. Therefore this leaf gives the same inequality.
+
+At a scaffold node apply the inductive premise and (RCE.18):
+$C\ge C_0^{2^h}\ge J_{d_0}(\nu)^{2^h}=J_d(\mu)$.
+At a stability node (RCE.11) gives
+$J_d(\mu)\le J_d(\nu)+\operatorname{TV}(\mu,\nu)\le C$.
+This accounts for every rule, every support and every grouping size.
+
+Conversely, if rational $C\ge J_d(\mu)$, list all feasible
+positive supports and their exact hard-target cell masses. There
+are finitely many, and each squared comparison is rational. These
+tables pass the ungrouped joint leaf at that same $C$.
+$\square$
+

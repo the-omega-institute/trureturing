@@ -1,0 +1,26 @@
+**Theorem 4.1 (Universal original-output floor).** Every model of
+Definition 2.1 satisfies
+
+$$
+\operatorname{err}(E,\mathcal R)\ge e_*=2\sqrt{ZH}.
+$$
+
+**Proof of Theorem 4.1.** At any interior height compare
+$x=(k,\alpha,\beta)$ and $x'=(k,\alpha,\beta+\pi)$. They are
+actual reachable rays. Theorem 3.4 makes their encodings equal, so
+their deterministic predictions are the same vector $v$. Their four
+bottom-edge pairs agree, while their $02$ pairs are opposite. By
+Lemma 1.5,
+
+$$
+\|y(x)-y(x')\|_2
+=\|D(0,2B(k)U(\beta))\|_2=2B(k).
+$$
+
+The triangle inequality gives
+$\max\{\|v-y(x)\|_2,\|v-y(x')\|_2\}\ge B(k)$.
+Taking the supremum of $B(k)=2\sqrt{Zk}$ over $0<k<H$ proves the
+bound. This is a supremum of explicit target values; there is no
+endpoint encoding or limiting evaluation of the decoder. Infinite
+error satisfies the bound as well. $\square$
+

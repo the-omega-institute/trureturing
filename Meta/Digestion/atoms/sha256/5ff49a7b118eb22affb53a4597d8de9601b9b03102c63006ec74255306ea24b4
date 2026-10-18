@@ -1,0 +1,32 @@
+**实例 83.7（The safe depth-four consumer on the original reader）。** At $d=2$, $h=4$, $m=15$, $k=16$, $T=17$, the full phase-code table of Construction 83.5 is
+
+$$
+\begin{array}{c|rrrrrrrrr}
+j&0&1&2&3&4&5&6&7&8\\\hline
+c(\Lambda(j))&1000&1001&1001&0011&0101&0110&0111&1010&1011
+\end{array}
+\tag{83.35}
+$$
+
+$$
+\begin{array}{c|rrrrrrrr}
+j&9&10&11&12&13&14&15&16\\\hline
+c(\Lambda(j))&1100&1000&1101&0100&1110&0010&1111&0000
+\end{array}
+\tag{83.36}
+$$
+
+The first two digits select the row label, the last two the column label; $0000$ is the fresh outside class. The omitted vector is $0001$. Inverting at the actual starts $0,15,13,11\pmod{17}$ gives the one GLOBAL stream
+
+$$
+\begin{aligned}
+B_0&=101111101010011,\\
+B_1&=111111010001101,\\
+B_2&=101111100101000,\\
+B_3&=111100010100110.
+\end{aligned}
+\tag{83.37}
+$$
+
+Every word has fifteen bits. The successive pairs of preceding terminal run and next leading run are $(2,6),(1,1),(0,4)$, with seam sums $8,2,4$, all strictly less than sixteen. Every low source emits these four complete words and uses only its own endpoints to recover (83.35)–(83.36); high tails are absorbed on the root's first bit but still emit and pay that full root. Initial bottom stops freely. The exact adaptive/GLOBAL block pair is $3/4$ and the emitted-bit pair is $45/60$. This instance displays the uniform selected attainment; the counterexample (83.23)–(83.26) uses the same reader parameters but a different table and unsafe algebraic witness.
+

@@ -1,0 +1,104 @@
+**Proposition 5.3 (exact complete output distance).** Let
+
+$$
+\Theta_y=\frac12\left(\Omega_{y/256,0,0}+
+                           \Omega_{y/256,\pi,0}\right)
+\qquad(y=5,27).
+\tag{CG.28}
+$$
+
+Define
+
+$$
+v=\frac{\sqrt{363}+\sqrt{1643}}{64}.
+\tag{CG.29}
+$$
+
+Their exact complete-output distance, retaining live coherence and all
+marked failures, is
+
+$$
+\delta_{\rm out}=\operatorname{dist}(\Theta_5,\Theta_{27})
+          =\frac3{11}+\frac{\sqrt{49-45v^2}}{22}.
+\tag{CG.30}
+$$
+
+Proof. Equations (CG.13)–(CG.15) give, at every exact $t\in[0,1]$,
+
+$$
+\begin{aligned}
+s_y&=\frac{y}{y+6},\qquad f_y(t)=\frac{6y}{(y+6t)^2},\\
+(\Theta_y)_{\rm live}&=\frac{s_y}{2}(P_2+Q_{y+6}),\\
+\bigl((\Theta_y)_i(t)\bigr)_{i=0}^4
+       &=\left(0,\frac14,\frac12,\frac14,0\right)f_y(t)P_f.
+\end{aligned}
+\tag{CG.31}
+$$
+
+The live $(+,-)$ off-diagonal entry is
+$s_y\sqrt{(y+6)(58-y)}/128$, so the live block is still coherent.
+Its trace is $s_y$ and the integrated failure trace is $1-s_y$;
+$\Theta_y$ is normalized without success renormalization. At the
+endpoints, $s_5=5/11$ and $s_{27}=9/11$.
+
+First evaluate every marked failure sector. Write $w=6t$, so
+
+$$
+f_5(t)-f_{27}(t)=
+\frac{132(135-w^2)}{(5+w)^2(27+w)^2}>0
+                   \qquad(0\leq w\leq6).
+\tag{CG.32}
+$$
+
+The denominator is positive and $135-w^2\geq135-36>0$.
+Each nonzero original-mode difference has this same sign and its own
+weight in (CG.31). Since those weights sum to one, their summed norm is
+
+$$
+\begin{aligned}
+\sum_{i=0}^4\int_0^1
+ \|(\Theta_5)_i(t)-(\Theta_{27})_i(t)\|_1\,dt
+ &=\int_0^1(f_5(t)-f_{27}(t))\,dt\\
+ &=(1-s_5)-(1-s_{27})=\frac4{11}.
+\end{aligned}
+\tag{CG.33}
+$$
+
+Modes $0$ and $13$ contribute zero, not omitted outcomes. This equality
+sums exact-time norms with the original labels still present.
+
+Next evaluate the quantum live block. Its $P_2$ part has norm
+$(s_{27}-s_5)/2=2/11$. Its orthogonal $(+,-)$ part, up to an overall
+sign, is
+
+$$
+\frac9{22}Q_{33}-\frac5{22}Q_{11},\qquad
+\langle b_{11},b_{33}\rangle
+       =\frac{\sqrt{11\cdot33}+\sqrt{53\cdot31}}{64}=v.
+\tag{CG.34}
+$$
+
+Again $0<v<1$. With $A=9/22$ and $B=5/22$, Lemma 5.1 gives
+
+$$
+\left\|\frac9{22}Q_{33}-\frac5{22}Q_{11}\right\|_1
+ =\sqrt{\left(\frac7{11}\right)^2-
+                         \frac{45}{121}v^2}
+ =\frac{\sqrt{49-45v^2}}{11}.
+\tag{CG.35}
+$$
+
+The two live subspaces and all classical failure sectors are orthogonal
+direct summands for this difference. Applying the one-half factor in
+(CG.11) to their total norm therefore yields
+
+$$
+\delta_{\rm out}=\frac12\left(
+       \frac4{11}+\frac2{11}+\frac{\sqrt{49-45v^2}}{11}\right)
+       =\frac3{11}+\frac{\sqrt{49-45v^2}}{22}.
+\tag{CG.36}
+$$
+
+This is the entire cq distance, not just a survival-event discrepancy.
+$\square$
+

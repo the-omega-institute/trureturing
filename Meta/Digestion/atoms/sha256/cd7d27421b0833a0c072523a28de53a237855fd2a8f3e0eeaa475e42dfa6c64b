@@ -1,0 +1,16 @@
+**定义 22.1（正方形四分之一圈接口）。** 正方形周界上的点每四分之一圈采样一次，更新和横坐标读出为
+
+$$
+T_\square=\begin{pmatrix}0&-1\\1&0\end{pmatrix},\qquad
+C_\square=(1,0).
+$$
+
+于是 $y_0=x_0,y_1=-z_0$，
+
+$$
+\mathcal O_2=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\qquad
+(x_0,z_0)=(y_0,-y_1).
+$$
+
+矩阵满秩给 $N_\infty=\{0\}$、$d_{\mathrm{mem}}=1$。绕行次数若作为目标须另加历史变量，二维周期相位不记录它。
+

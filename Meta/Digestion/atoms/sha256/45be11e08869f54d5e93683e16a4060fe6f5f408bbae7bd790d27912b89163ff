@@ -1,0 +1,101 @@
+**Theorem 69.4 (Loss under uniform $L^1$ convergence without a shared modulus).**
+There are a countable binary prefix space $Q$, a probability carrier
+$([0,1],\mathcal B,\lambda)$ and density families $g^{(N)}$ converging uniformly
+in $q$ in $L^1(\lambda)$ to $g$ such that
+
+$$
+\Omega_{g^{(N)}}(m)=0\text{ for all sufficiently large }m
+\quad\text{for each }N\ge1,
+\tag{69.13}
+$$
+
+but
+
+$$
+\boxed{\Omega_g(m)=1\quad\text{for every }m\in\mathbb N_0.}
+\tag{69.14}
+$$
+
+There is no single decaying modulus bounding all $\Omega_{g^{(N)}}$.
+This is an abstract prefix-space counterexample, not an additional target
+family prescribed on the original $X$.
+
+**Proof.** For each integer $r\ge2$, partition $[0,1)$ into its $r$ half-open
+intervals of length $1/r$, and enumerate all these intervals as
+$A_1,A_2,\ldots$ in increasing blocks of $r$. Their measures
+$\alpha_n=\lambda(A_n)$ tend to zero, while every point of $[0,1)$ belongs to
+infinitely many $A_n$. Put
+
+$$
+h_n=\frac{\mathbf1_{A_n^c}}{1-\alpha_n},\qquad n\ge1,
+\tag{69.15}
+$$
+
+with complements taken in $[0,1]$. Each $h_n$ is a probability density, and
+
+$$
+\|h_n-1\|_1=2\alpha_n\longrightarrow0.
+\tag{69.16}
+$$
+
+Let $q_\ast=0^\infty$, $q_n=0^n10^\infty$ for $n\ge1$, and
+$Q=\{q_\ast,q_1,q_2,\ldots\}$. With coordinates indexed from one, the first
+$1$ of $q_n$ is at coordinate $n+1$. Its genuine depth-$m$ neighborhoods are
+
+$$
+U_m(q_\ast)=\{q_\ast\}\cup\{q_n:n\ge1,\ n\ge m\},
+\qquad
+U_m(q_n)=
+\begin{cases}
+\{q_n\},&n<m,\\
+U_m(q_\ast),&n\ge m.
+\end{cases}
+\tag{69.17}
+$$
+
+For each fixed $m$, the singleton sets with $1\le n<m$ and the one remaining
+tail set form the clopen prefix partition. At $m=0$ every neighborhood is
+$Q$; at $m=1$ it is still $Q$, since all first coordinates are zero.
+
+Take $\mathcal G=\mathcal B$, set $g_{q_\ast}=1$, $g_{q_n}=h_n$, and for
+$N\ge1$ set
+
+$$
+g^{(N)}_{q_\ast}=1,
+\qquad
+g^{(N)}_{q_n}=\begin{cases}h_n,&n\le N,\\1,&n>N.\end{cases}
+\tag{69.18}
+$$
+
+Because $\alpha_n\to0$,
+
+$$
+\sup_{q\in Q}\|g^{(N)}_q-g_q\|_1
+\le2\sup_{n>N}\alpha_n\longrightarrow0.
+\tag{69.19}
+$$
+
+For fixed $N$, the tail neighborhood contains only unit densities once $m>N$,
+and the remaining singleton cylinders have common mass one. Therefore
+$\Omega_{g^{(N)}}(m)=0$ for $m>N$.
+
+In the limit, every $t\in[0,1)$ belongs to infinitely many $A_n$, hence for
+every $m$ some $n\ge\max\{1,m\}$ has $h_n(t)=0$. Thus
+$\underline g_m(q_\ast)=0$ on $[0,1)$ and $a_m(q_\ast)=0$, proving (69.14).
+The endpoint $1$ is null. Changing representatives adds only a single null
+union over the countably many densities and stages and leaves this calculation
+unchanged.
+
+For any fixed $m$, choose a partition block whose every index is at least
+$\max\{1,m\}$, and choose $N$ at its last index. At that finite stage the
+corresponding $h_n$ vanish collectively on all of $[0,1)$ inside
+$U_m(q_\ast)$, so $\Omega_{g^{(N)}}(m)=1$. Consequently
+$\sup_N\Omega_{g^{(N)}}(m)=1$ for each $m$, excluding any shared decaying
+modulus. $\square$
+
+Each finite stage has an exact cutoff and converges uniformly in TV to the
+limit, but its cutoff depends on the stage. This failure does not contradict
+Theorem 69.3, whose common bound (69.11) is absent. The local range conditions of
+Section 68 are sufficient for sourcewise acquisition of continuous selections;
+they do not replace a shared uniform or summable cost modulus.
+

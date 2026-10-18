@@ -1,0 +1,5 @@
+source_id = "fib-critical-renewal-deterministic-alphabet-frontier"
+path = "docs/develop/theory/FIB_CRITICAL_RENEWAL_DETERMINISTIC_ALPHABET_FRONTIER.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

@@ -1,0 +1,52 @@
+**定义 14.1（完整来源、坐标次序与水平约定）。** 本节的共同来源是完整五态概率律。记 [SPLIT《局部源分裂与读出几何》](AURIC_FIB_ATOM_LOCAL_SOURCE_SPLITTING_AND_READOUT_GEOMETRY.md) 定义 1.1–1.3、数学引文 2.1–2.2 的输入支持为 $s_0,s_1,s_2,s_3,s_{13}$。与本卷及 [FOUND《基础公式》](AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md) 定义 2.1 的逐标签双射为
+
+$$
+\begin{aligned}
+s_0=\varnothing&\longleftrightarrow 0, &
+s_1=\{1\}&\longleftrightarrow 2, &
+s_2=\{2\}&\longleftrightarrow 3,\\
+s_3=\{3\}&\longleftrightarrow 5, &
+s_{13}=\{1,3\}&\longleftrightarrow 25.
+\end{aligned}
+$$
+
+右侧的 $25$ 是联合输出标签 $[2,5]$，不是数值乘积。该双射的概率推前逐项保留全部五个概率，特别将 SPLIT 的 apex 质量 $p_{s_2}$ 保留为本卷 $p_3$。在右侧标签上，$x=\mathbf1_{\{2,25\}}$、$z=\mathbf1_{\{3\}}$、$y=\mathbf1_{\{5,25\}}$，且 $\kappa=p_{25}=\mathbb E_p[xy]$。以下对数为自然对数，一律按本卷次序 $(0,2,3,5,25)$ 写概率和切向量；写 $P$ 时则采用 SPLIT 的均值次序：
+
+$$
+\begin{aligned}
+\mathcal D^\circ&=\{p\in\mathbb R^5:p_i>0,\ \textstyle\sum_i p_i=1\},
+&T_p\mathcal D^\circ=T&=\{v:\textstyle\sum_i v_i=0\},\\
+P(p)&=(X,Z,Y)=(p_2+p_{25},p_3,p_5+p_{25}),
+&DP(v)&=(v_2+v_{25},v_3,v_5+v_{25}),\\
+\mathcal B&=\{(X,Z,Y):0<Z<1,\ 0<X,Y<1-Z\},
+&T_b\mathcal B&=\mathbb R^3.
+\end{aligned}
+$$
+
+本卷 §§1、8 的均值次序是 $\Pi P=(X,Y,Z)$，其中 $\Pi(X,Z,Y)=(X,Y,Z)$；在两种次序间同时置换基向量及导数，不置换或删除概率质量。复用 SPLIT 的 $\ker(DP)=\mathbb R\nu$，其中 $\nu=(1,-1,0,-1,1)$，以及固定线性右截面
+
+$$
+L(u_X,u_Z,u_Y)=(-u_X-u_Z-u_Y,u_X,u_Z,u_Y,0).
+$$
+
+本节明确选择全五态 Fisher 度量及其正交补：
+
+$$
+g_p(v,w)=\sum_{i\in\{0,2,3,5,25\}}\frac{v_iw_i}{p_i},
+\qquad \mathcal H_p=(\mathbb R\nu)^{\perp_{g_p}}\subset T.
+$$
+
+这给 §11.1 的「Fisher 水平」指定一个解释；SPLIT 定义 4.1 的固定截面没有预先选择此度量。记
+
+$$
+\theta_{\mathrm h}(p)=\log\frac{p_0p_{25}}{p_2p_5},\qquad
+S(p)=\frac1{p_0}+\frac1{p_2}+\frac1{p_5}+\frac1{p_{25}}>0.
+$$
+
+$\theta_{\mathrm h}$ 是 §§9、11.1 的 $A_q$，与 §10 的径向角 $2\arcsin\sqrt r$ 不同。复用 §8 的 $r=1-p_3$、$q=(p_0,p_2,p_5,p_{25})/r$ 及 $(\alpha,\beta,\eta)=(X,Y,\kappa)/r$；这里 $q$ 只是保留 $r$ 后的坐标，未将共同来源替换为四态条件律。其严格正域为
+
+$$
+0<r<1,\quad 0<\alpha,\beta<1,\quad
+\max(0,\alpha+\beta-1)<\eta<\min(\alpha,\beta).
+$$
+

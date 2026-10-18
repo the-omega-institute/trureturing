@@ -1,0 +1,16 @@
+### 457.2 唯一标量根与内部交替误差
+
+对 \(E\ge0\)，定义
+\[
+\begin{aligned}
+G_E(v)&=(F(a)+E)^{1-\theta}(F(b)+E)^\theta,
+\qquad \theta=\frac{v-a}{b-a},\\
+\tau_E&=\frac{\log((F(a)+E)/(F(b)+E))}{b-a}>0,\\
+G_E(v)&=(F(a)+E)e^{-\tau_E(v-a)},\\
+D_E(v)&=F(v)-G_E(v),\\
+H(E)&=\max_{v\in[a,b]}D_E(v)-E.
+\end{aligned}
+\tag{UI.5}
+\]
+这些正端点保证所有幂、对数及指数均有定义。
+

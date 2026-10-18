@@ -1,0 +1,30 @@
+**Corollary 64.2 (inherited endpoint attainment and dual boundary).**
+This exact branch has the same endpoint primal and quantitative
+square-root law as JR Theorems 51.4, 55.2 and 55.3. In particular,
+for $0<\varepsilon\leq10^{-8}$,
+
+$$
+T_0+\Gamma\sqrt\varepsilon-15\varepsilon
+\leq\mathcal T(s_0(1-\varepsilon))
+\leq T_0+\Gamma\sqrt\varepsilon+11\varepsilon,
+\quad T_0=T_{\rm flat}-f_-/4.
+\tag{RC.54}
+$$
+
+Every optimal normalized multiplier has JR.172's limit $\Gamma$ and
+remainder estimate. At $\tau=1$ the finite four-atom primal is attained
+and the original dual infimum equals it, but there is no finite
+original dual minimizer. Equations (RC.23)–(RC.24) apply only for $a>0$.
+
+Proof. Proposition 64.1 identifies the exact branch and the coefficient
+with the inherited endpoint objects, so the existing bounds and
+all-multiplier theorem apply directly; no new endpoint-bound proof is
+needed. In particular $f_-/4$ is JR.50's $\mathsf b(1)$.
+The scale in (RC.34) gives
+$\mathcal T-T_0=L_\xi e_2\xi+O(\xi^2)$, not twice this amount.
+Equivalently its square-root coefficient is $\Gamma$.
+The endpoint nonattainment of the dual and equality of its infimum
+are exactly JR Theorems 51.4 and 55.3, and are consistent with
+$\lambda\xi\to L_\xi>0$. The finite contact of §63 has neither this
+divergence nor this failure of finite dual attainment. $\square$
+

@@ -1,0 +1,20 @@
+**定义 60.2（守卫、尝试与终结）。** 初态为 FRESH，接受游标 $n=0$，无加载描述符、stop 或 receipt，各尝试计数为零。LOAD、STOP、VERIFY、USE 各有一次尝试额度；成功 LOAD 前 SAMPLE 额度为零，之后为 $B$。ABORT 只受全局额度限制。检查顺序为：字段范围、操作码、actor、$s,v,o$、操作尝试额度、适用状态、描述符相等、操作特定条件。首个失败决定原因。
+
+对非 ABORT 的已识别操作，若额度检查前的全部守卫通过且尚有该操作额度，即消耗一次该额度，即使其后状态、游标或证书检查失败。已耗尽时响应 QUOTA，仍消耗全局槽。RANGE、BAD_OP、ACTOR、身份失败不消耗操作额度；没有额度补充。RANGE 的优先级最高。描述符相等指 mode、$a,b$ 三字匹配；LOAD 验证自己提出的规范格式，ABORT 不要求描述符和游标。
+
+| 60.2 操作 | 共同守卫之后的要求 | 接受的实际更新 |
+| --- | --- | --- |
+| 60.2LOAD | FRESH；EXACT 的 $a=b=0$ 或 CUT 的 $1\le a,b<2^T$；范围及既约程序接受 | 固定描述符、$D,B$，初始化 $d,r,n$，记实际 load 事件，进入 ACTIVE |
+| 60.2SAMPLE | ACTIVE；请求游标为 $n$；$n<B$ | 发布带 presence 一的当前零门位，更新转子，$n\leftarrow n+1$ |
+| 60.2STOP | ACTIVE；请求游标为 $n$ | 封存样本边界与 $n$，记实际 stop 事件，进入 SEALED |
+| 60.2VERIFY | SEALED；游标及 stop 句柄正确；第 61 节谓词与提案匹配 | 从实际检查结果形成类型回执，保留实际 verify 句柄；样本继续封存 |
+| 60.2USE | SEALED；游标、stop、receipt、描述符和提案匹配实际回执；未成功使用 | 实际复制、类型检查与消费者写入，进入 USED 并关闭 |
+| 60.2ABORT | 任一未终结状态；规定 actor 与身份守卫通过 | 进入 ABORTED 并关闭，无回执或任务 Finish |
+| 60.2BAD | 已获准提交，操作码为 BAD_OP | 返回 BAD_OP，不改来源 |
+
+表首格仅为唯一地址，操作名仍为原十二字请求中的 op。失败原因按上述守卫分别取 RANGE、BAD_OP、ACTOR、IDENTITY、QUOTA、STATE、DESCRIPTOR、CURSOR、STOP_REF、RECEIPT_REF、SOURCE、CERTIFICATE、PROPOSAL；一个操作有多个末级条件时按表述顺序判首败。对 USE，C 的同字段核对失败对应 RECEIPT_REF 或 PROPOSAL，类型不合对应 CERTIFICATE。全表按固定比较与选择计算，不早停。
+
+拒绝不发表一个样本或新回执：presence、sample_bit、receipt_kind、receipt_value 为规范零。它保留源、转子、已加载描述符、接受游标、stop 和先前保留回执；只有已说明的尝试计数和全局计数改变。拒绝 VERIFY 即使交付空候选，也不覆盖 $P,C$ 的先前回执，接收暂存与持久提交是不同步骤。达到 $B$ 个接受样本后不能再获样本，但 STOP 仍可执行。提前花掉 STOP／VERIFY／USE 额度的错误策略不受成功保证。
+
+响应完成时，若全局已达 $E$ 且没有成功 USE 或 ABORT，则状态为 EXHAUSTED，末响应写剩余零并关闭；成功 USE 或 ABORT 保留各自终结码。USED、ABORTED、EXHAUSTED 和本地 HALT 后本调用无下一请求。失败 LOAD 保持 FRESH 但额度已按规则消耗，不能据此输出 $\tau=0$。
+

@@ -1,0 +1,49 @@
+**命题 10.2（已有二阶包络的连续面积证书桥）。** 对定义 10.1 的联合角点，
+
+$$
+G\left(n\prod_iq_i\right)
+=G(n)+\sum_i\bigl[G(nq_i)-G(n)\bigr]+\mathcal C,
+$$
+
+$$
+\boxed{
+h(\log n+S)\sum_{i<j}s_is_j
+\le\mathcal C\le
+h(\log n)\sum_{i<j}s_is_j.
+}
+$$
+
+因此若基点、各轴端点以及成对面积预算满足
+
+$$
+U:=G(n)+\sum_i[G(nq_i)-G(n)]
++h(\log n)\sum_{i<j}s_is_j<0,
+$$
+
+则该联合角点 $G(n\prod_iq_i)<0$。$k=0,1$ 时 $\mathcal C=0$，两侧界均为零。
+
+**证明。** 不同素数幂仍只改变各自的 $\log Z$ 局部项，因而约数收益精确分离。将尺度项收集在同一基点 $x=\log n$，剩余修正为
+
+$$
+\mathcal C=\sum_if(x+s_i)-(k-1)f(x)-f(x+S).
+$$
+
+对空族此式解释为 $0+f(x)-f(x)=0$，单族也为零。对 $k\ge2$ 置 $S_j=s_1+\cdots+s_j$，则严格的望远镜分解为
+
+$$
+\mathcal C=\sum_{j=2}^k
+\bigl[f(x+S_{j-1})+f(x+s_j)-f(x)-f(x+S_j)\bigr]
+=\sum_{j=2}^k\int_0^{S_{j-1}}\int_0^{s_j}h(x+u+v)\,dv\,du.
+$$
+
+每个矩形自变量在 $[x,x+S]$，总面积 $\sum_{j=2}^kS_{j-1}s_j=\sum_{i<j}s_is_j$。直接微分给
+
+$$
+h'(x)=-\frac{2(\log x)^2+3\log x+2}{x^3(\log x)^3}<0
+\quad(x>1),
+$$
+
+用单调性逐矩形夹逼即得双侧界。这是同一共同尺度的积分，不依赖各个矩形之间的概率独立。
+
+其包络方向与既有 [ZECKENDORF_EULER_5040，“二阶图模型是全立方体的安全下界”，Theorem 5.1](https://github.com/the-omega-institute/trureturing/blob/78d2f7c423b15d01062f3ffacf4f75b8cee44f30/docs/develop/theory/ZECKENDORF_EULER_5040.md) 一致：该供应对 $\Delta=-G$ 给 $Q_2\le\Delta$，翻号后成为 $G$ 的安全上界。当前面积界把具体二阶核进一步上界为 $h(x)s_is_j$，从而只消费轴端点和尺度函数即可构成证书。它是该既有结构的任务适配，不宣称新高阶符号或新 Robin 全局范围。由 $G(\text{角点})\le U$ 得充分条件。证毕。
+

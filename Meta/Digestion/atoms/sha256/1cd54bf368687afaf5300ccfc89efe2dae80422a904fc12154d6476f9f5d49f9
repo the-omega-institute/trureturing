@@ -1,0 +1,14 @@
+**Proposition 4.5 (why this is not the excluded domain interpretation).**
+Theorem 4.3 does not define $\mathcal N$ by a uniform formula in the
+ambient term-power language excluded by [TPO][TPO].
+
+Proof. It modifies existential witnesses after finitely many shape
+equations have been solved, using a marker size depending on those
+equations and disequalities. It does not preserve every assignment,
+every formula with alternation, or an arbitrary parameter code's
+normality. Normality is proved directly for the finitely constructed
+templates. Consequently no uniform ambient predicate defining all
+normal codes, or canonicalization graph for arbitrary codes, is
+obtained. Theorem 4.3 and TPO's exact-language obstruction have different
+quantifiers and are compatible. $\square$
+

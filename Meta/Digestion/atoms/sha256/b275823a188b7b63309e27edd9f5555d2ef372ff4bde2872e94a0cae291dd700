@@ -1,0 +1,26 @@
+**Corollary 6.2 (rational live bound).** Set
+
+$$
+c=1/4,\quad Z=1/2,\quad
+a=1/16,\quad h=11/256,\quad d=3/128,\quad L=1.
+\tag{AC.20}
+$$
+
+The three current heights are $x_-=5/256$, $x_0=16/256$, $x_+=27/256$.
+Their complete ideal output discrepancy is $D=1/11$, so worst live-cut
+error is at least $1/22$.
+
+Proof. With $w=256u$, (AC.15) becomes
+
+$$
+J(u)=\frac{121w}{(w+5)(w+16)(w+27)},\qquad0\leq w\leq6.
+\tag{AC.21}
+$$
+
+Its derivative with respect to $w$ has numerator
+$242(6-w)(w^2+30w+180)$ and denominator
+$(w+5)^2(w+16)^2(w+27)^2$. It is nonnegative on this interval.
+Thus $D=J(d)=1/11$. The three terminal survivals are $5/11,8/11,9/11$.
+The full-output equality follows from Theorem 6.1, not merely these three
+survival values. $\square$
+

@@ -1,0 +1,82 @@
+**Theorem 11.4 (Exact guaranteed-return one-call risk).** For each original
+endpoint $j\in\{0,1\}$, among protocols of Definition 9.1 with almost-sure
+finite return and at most one actual call, the minimum unconditional state
+error is exactly
+
+$$
+b+\frac{ac}{2}=1-\frac a2-a^2b.
+\tag{11.13}
+$$
+
+Proof. The two candidates for $z_1$ have the common denominator $1+c$;
+their success numerators are respectively $a$ and $a^2$. Since $a>a^2$,
+
+$$
+z_1=\frac{b+c}{1+c},\qquad \beta_1=\frac{1+c}{2},\qquad e_1=b.
+$$
+
+Theorem 11.3, including protocols which return without a call on some
+seeds, bounds the error below by
+
+$$
+b+\left(\frac{b+c}{1+c}-b\right)\frac{1+c}{2}
+=b+\frac{ac}{2}.
+$$
+
+For equality, ignore the auxiliary variable without changing its law and
+read the actual bit at the fixed even address $t=2(j+2)$. Return
+$h_{j,0,\sigma}$ on reply one and $h_{j,1,\sigma}$ on reply zero, with
+$\sigma$ and the states as in Theorem 11.1. Equivalently the outputs are
+$a_\sigma,b_\sigma$ for replies one, zero when $j=0$, and
+$b_\sigma,a_\sigma$ for replies one, zero when $j=1$.
+
+In phase zero this bit is $S_{j+2}\mathbin\oplus S_{j+3}$, independent
+of the endpoint spin $S_j$; in phase one it is a separator zero. Thus a
+one identifies phase zero, while a zero leaves positive mass in both
+phases. The zero branch's output has joint success mass $a/2$ from phase
+one, without observing that phase. The one branch has joint success mass
+$a^2b$. More explicitly the actual joint reply and error masses are
+
+$$
+\begin{array}{c|cc}
+x&\mathbb P_p(X_t=x)&\mathbb P_p(X_t=x,A\ne H_j)\\ \hline
+0&(1+c)/2&(b+c)/2\\
+1&ab&ab^2
+\end{array}
+\tag{11.14}
+$$
+
+The rule returns after its one paid call on every path. The total error
+is $1-a/2-a^2b$, equal to $b+ac/2$ because $c=1-2ab$. It is legal for
+both original endpoints and both directions of bias under the unchanged
+stationary law and auxiliary law. $\square$
+
+For $k\ge2$, (11.10)--(11.11) are lower bounds without a general sharpness
+assertion. The exact zero-record envelope and its selective witnesses do
+not provide a protocol jointly attaining all the recordwise bounds and
+the forced zero-record mass at an arbitrary prescribed return probability.
+The full joint risk/return-probability/expected-read-cost frontier remains
+unresolved. Its total cost is the extended expectation $\mathbb E_pN$
+over returning and nonreturning paths, including all repetitions and
+separators; replacing it by a mean restricted to returns would discard
+the $n(1-r_{n,m})$ charges in (11.7). Internal nonreturn after finitely many
+reads and infinite-read nonreturn are distinct allowed cost cases.
+Open Problem 6.4's whole-domain attainment and separation question remains
+unchanged.
+
+The supplier law, complementary-spin products and terminal-cylinder
+reduction are Proposition 2.1, Lemma 3.1 and Theorems 9.2--10.1. The
+convexity and finite-product Bayesian comparisons above are elementary;
+the source-specific zero-record coefficient, its same-law equality and
+the return-budget consequences are `repo-derived`. Classical attribution
+remains [Chigansky--van Handel, arXiv:0910.3603v2, Example 10][CVH] for the
+fair equality/XOR ambiguity, and [Travers--Crutchfield,
+arXiv:1008.4182v3, Definitions 5--8 and Theorem
+3](https://arxiv.org/html/1008.4182v3) and
+[arXiv:1011.1581v2, §VI Theorem 1 and §VII.1 Proposition
+3](https://arxiv.org/html/1011.1581v2) for consecutive-word current-state
+synchronization. Their current-state/consecutive-observation statements
+do not supply the arbitrary-address, fixed-original-endpoint zero-record
+envelope under Definition 9.1. These attributions make no worldwide
+priority claim.
+

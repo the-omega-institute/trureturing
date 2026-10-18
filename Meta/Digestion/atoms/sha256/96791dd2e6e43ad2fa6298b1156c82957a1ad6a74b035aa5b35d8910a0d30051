@@ -1,0 +1,45 @@
+**Theorem 6.1 (spectral law at the real quadratic boundary).** Suppose $C$ comes from the off-plane real quadratic stratum of Theorem 4.2. For $\lambda>0$ let
+$\mu(\lambda)=\lambda_{\max}(\lambda B-C)$ and choose its real unit eigenvector $v(\lambda)$ with $v_D>0$. There is exactly one $\lambda_* >0$ with
+
+$$
+v(\lambda_*)^TBv(\lambda_*)=k.
+\tag{PG.27}
+$$
+
+Its $\mu_*=\mu(\lambda_*)$ is strictly positive. Put $v=v(\lambda_*)$, $P=vv^T$ and
+
+$$
+F(C)=k\lambda_*-\mu_*=v^TCv>0,\qquad
+S_{\rm cert}=C-\lambda_*B+\mu_*P .
+\tag{PG.28}
+$$
+
+Then $S_{\rm cert}\succeq0$ has rank two and kernel $\mathbb Rv$. Among all complex Hermitian $0\preceq H\preceq I$ with $\operatorname{tr}(BH)\ge k$, the minimum of $\operatorname{tr}(CH)$ is $F(C)$ and its unique minimizer is $P$.
+
+Proof. The real kernel $n$ has $n^TBn=0$, so its Rayleigh value in $\lambda B-C$ is zero. If the top value were zero, the negative semidefinite matrix would kill $n$, whereas its product with $n$ is $\lambda Bn\ne0$. Thus $\mu(\lambda)>0$. Lemma 5.2 makes this eigenvalue simple, and its Rayleigh identity gives $b(\lambda):=v^TBv\ge\mu/\lambda>0$, so $v_D\ne0$ and its sign is well defined.
+
+Differentiating a normalized simple eigenpair and projecting onto its orthogonal eigenvectors gives
+
+$$
+\mu'=b,\qquad
+b'=2\sum_{j\ne{\rm top}}\frac{|v_j^TBv|^2}{\mu-\mu_j}>0 .
+\tag{PG.29}
+$$
+
+Repeated negative eigenvalues cause no problem: the sum is the positive quadratic form of the inverse restricted spectral gap, independent of their chosen orthonormal basis. If it were zero, $Bv$ would be proportional to $v$. Positive $b$ forces $v=e_D$ up to sign, since all other eigenspaces of $B$ are negative. But $e_D$ cannot be an eigenvector of $C$: if $c_{ND}=0$, $Cn=0$ and $n_D\ne0$ would force $c_{DD}=0$, whereas $D$ is invertible and the specimen is nonzero. This proves strictness.
+
+At $\lambda=0$ the simple zero eigenpair of $-C$ is its kernel. Local simple-eigenpair continuity, not continuity of an optimization value, gives $b(\lambda)\to0$. For large $\lambda$, the $e_D$ Rayleigh test yields
+$\mu\ge\lambda-c_{DD}$, while $\mu=\lambda b-v^TCv\le\lambda b$. Hence $0\le1-b\le c_{DD}/\lambda$ and $b\to1$. Strict monotonicity and $0<k<1$ give the unique selector (PG.27).
+
+On $v^\perp$, $C-\lambda_*B$ has the two strictly positive eigenvalues $-\mu_j$, while its eigenvalue on $v$ is $-\mu_*$. Adding $\mu_*P$ proves the claimed certificate and rank. For any complex feasible $H$,
+
+$$
+\operatorname{tr}(CH)-F(C)
+ =\lambda_*[\operatorname{tr}(BH)-k]
+   +\operatorname{tr}(S_{\rm cert}H)
+   +\mu_*[1-v^\dagger Hv]\ge0.
+\tag{PG.30}
+$$
+
+All terms are nonnegative. Equality forces $\operatorname{ran}H\subseteq\mathbb Cv$ and $v^\dagger Hv=1$, so $H=P$. This also supplies equality in the bound. Finally $v^TCv$ cannot vanish: the Gram kernel has $B$ value zero, while $v$ has positive $B$ value $k$. $\square$
+

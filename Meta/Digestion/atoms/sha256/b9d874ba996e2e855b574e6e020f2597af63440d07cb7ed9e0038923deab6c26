@@ -1,0 +1,106 @@
+**Theorem 10.3 (Native privileged coordinates in every mean regime).** The
+flag $\mathcal D^1=\operatorname{span}\{P,Q\}$,
+$\mathcal D^{j+1}=\mathcal D^j+[\mathcal D^1,\mathcal D^j]$ has the following
+constant growth on each fixed-mean manifold:
+
+$$
+\begin{array}{c|c|c|c|c}
+\text{regime}&g&\text{growth}&\text{weights}&Q_{\rm vol}\\ \hline
+ E_-^c\cap E_+^c&4&(2,3,4,5)&(1,1,2,3,4)&11\\
+ E_-\cap E_+^c&3&(2,3,4)&(1,1,2,3)&7\\
+ E_-^c\cap E_+&3&(2,3,4)&(1,1,2,3)&7\\
+ E_-\cap E_+&2&(2,3)&(1,1,2)&4.
+\end{array}
+\tag{10.6}
+$$
+
+At $q_0=(k_0,[h_0])$ take real grouped phase differences and define
+
+$$
+W_{k_0}=\left(\frac{w^{(j)}(k_0)}{j!}\right)_{0\le j<g},\qquad
+x=\kappa-k_0,\quad (z_0,\ldots,z_{g-1})^{\mathsf T}=W_{k_0}^{-1}(h-h_0).
+\tag{10.6a}
+$$
+
+These are privileged coordinates with weights $1$ for $x$ and $j+1$ for
+$z_j$. Write $\nu=(1,1,2,\ldots,g)$. For $q_0$ in any compact
+$K\Subset\Omega$, there are uniform $c,C,s_0>0$ such that
+
+$$
+\{|(x,z)_i|<c s^{\nu_i}\}
+\subset B_{d_A^\Omega}(q_0,s)
+\subset\{|(x,z)_i|<C s^{\nu_i}\},\qquad 0<s<s_0,
+\tag{10.7}
+$$
+
+and
+
+$$
+c s^{Q_{\rm vol}}\le\mu(B_{d_A^\Omega}(q_0,s))
+\le C s^{Q_{\rm vol}},\qquad
+Q_{\rm vol}=1+\frac{g(g+1)}2.
+\tag{10.8}
+$$
+
+Equivalently $d_A^\Omega(q_0,q)\asymp
+|x|+\sum_{j=0}^{g-1}|z_j|^{1/(j+1)}$ locally. The estimates are for fixed
+means and compact interiors, with no uniformity across a wall or at a
+probability endpoint.
+
+**Proof.** Reuse Theorem 9.5: $[P,Q_n]=Q_{n+1}$ and $[Q_i,Q_j]=0$,
+where $Q_n=w^{(n)}\cdot\partial_h$. Smooth-coefficient brackets add no
+new directions beyond these, so
+$\mathcal D^j=\operatorname{span}(P,Q_0,\ldots,Q_{j-1})$ until saturation.
+The grouped-pole Vandermonde determinant (9.25) makes the first $g$
+vertical vectors independent at every interior height. This gives (10.6)
+and invertibility of $W_{k_0}$, with no further exceptional means or heights.
+
+In (10.6a), Taylor's formula gives
+
+$$
+P=\partial_x,\qquad Q=\sum_{j=0}^{g-1}f_j(x)\partial_{z_j},\qquad
+f_j(x)=x^j+O(x^g).
+\tag{10.8a}
+$$
+
+Every word in $P,Q$ of length less than $j+1$ annihilates $z_j$ at the
+origin; a word containing two $Q$'s, applied to $z_j$, vanishes identically,
+since all coefficients depend only on $x$. But $P^jQz_j(0)=j!$. Hence the nonholonomic order of
+$z_j$ is exactly $j+1$, and $x$ has order one. This proves the required
+privileged property, rather than inferring it from ordinary coordinates.
+The weighted dilations and leading fields are explicitly
+
+$$
+\delta_s(x,z_0,\ldots,z_{g-1})=(sx,sz_0,s^2z_1,\ldots,s^gz_{g-1}),
+\qquad \widehat P=\partial_x,\quad
+\widehat Q=\sum_{j=0}^{g-1}x^j\partial_{z_j}.
+\tag{10.8b}
+$$
+
+The chart is injective whenever $|x|<\delta$ and
+$|W_{k_0}z|_\infty<\eta<\pi$. Proposition 10.2 bounds the length before
+its first exit. The smooth fields satisfy the bracket condition with step
+$g$ everywhere in this chart. Their growth ranks are constant, so all its
+points are regular. These are the hypotheses of
+[Jean, *Control of Nonholonomic Systems*, Theorem 3.5,
+Corollary 3.6 and Remark 3.3](https://arxiv.org/abs/1209.4387v2).
+Apply the ball-box estimate to $P,Q$ with the Euclidean control norm.
+On a compact interior neighbourhood,
+$\mathsf L_{I_2}/\sqrt\Lambda\le\mathsf L_A
+\le\mathsf L_{I_2}/\sqrt\lambda$; the same two-sided comparison holds for
+distances. Thus the very same privileged coordinates give (10.7) for $A$.
+The charts vary smoothly with $k_0$ and phase translation; regularity and a
+finite compact cover give uniform constants on $K$.
+
+For volume, $d\mu=\rho(k_0+x,h_0+W_{k_0}z)|\det W_{k_0}|\,dx\,dz$.
+Its factor is bounded above and below on these compact charts. Integrating
+the two boxes gives (10.8). This also matches Jean's Corollary 4.8: the
+adapted frame $(P,Q_0,\ldots,Q_{g-1})$ has lengths $(1,1,2,\ldots,g)$,
+a nonzero volume determinant, and a compactly bounded step. No singular
+stratum is crossed in this use. The exponent is distinct from state
+count, current-ray dimension $g+1$, direct rank two, and the finite or
+infinite real Lie-algebra dimension in §9.3. The inverse-gap costs (10.5b)
+retain the obstruction to cross-wall uniform synthesis. Varying $\kappa$
+alone injects an open interval into the rays, since $p_{13}=\kappa$; the
+state set is uncountable in every regime. $\square$
+

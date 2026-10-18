@@ -1,0 +1,110 @@
+## 1. Complete worlds, original clocks and the entire ancestor
+
+A complete world is $W=(P,g,\delta)$, where $P$ is a strictly
+entrywise positive real $2\times2$ matrix of rank one and trace one,
+$0\ne g\in\mathbb R[T]$ has degree at most three, and
+$\delta\in\mathbb R$. Let $\mathcal W_3$ be the set of all these
+complete worlds. Symmetry of $P$ is not assumed. Put
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+A_0=I,\quad A_i=E_iA_{i-1},\quad E_i\in\{J,M\}.
+\tag{1.1}
+$$
+
+The reading at original clock $i$ is
+
+$$
+z_i(W)=g(i)\operatorname{tr}(A_iP)+\delta.
+\tag{1.2}
+$$
+
+The initial reading counts. Each individual atom is immediately read
+on one unresettable, uncopyable trajectory. Eight total readings use
+clocks $0,\ldots,7$. There are no skipped readings, unread compound
+actions, empty-action readings, renumbered clocks or additional ports.
+Actions, stops and complete-target answers may be arbitrary
+deterministic functions of the entire actual history, without
+regularity or computability assumptions. The target is the entire
+$(P,g,\delta)$. Both gain signs, every lower actual degree, all other
+roots and all root multiplicities are initially permitted.
+
+Fix arbitrary real $D_0,Y,z$ and $\lambda\ne0$. The literal history is
+
+$$
+H=(D_0,J,D_0+24\lambda,M,D_0+48\lambda,
+       M,D_0+312\lambda/5,J,Y,M,z).
+\tag{1.3}
+$$
+
+Let $\mathcal F(H)$ denote the complete worlds realizing every action
+and reading of this history. Normalize by
+
+$$
+f=g/\lambda,\quad d=(\delta-D_0)/\lambda,\quad
+\widehat Y=(Y-D_0)/\lambda,\quad \widehat z=(z-D_0)/\lambda.
+\tag{1.4}
+$$
+
+The inverse is $g=\lambda f$, $\delta=D_0+\lambda d$.
+A normalized response $r$ has raw value $D_0+\lambda r$.
+This is a bijection of all real response values for either sign of
+$\lambda$; it preserves equality, actual children and complete-world
+distinction. The observed $D_0$ is not assumed to equal the drift.
+
+Write
+
+$$
+P=\begin{pmatrix}r&u\\v&1-r\end{pmatrix},\qquad
+0<r<1,\quad u>0,\quad v>0,\quad uv=r(1-r)\le\frac14.
+\tag{1.5}
+$$
+
+These conditions are equivalent to source legality: the determinant
+vanishes and the nonzero trace is one. The inequality follows from
+$r(1-r)=1/4-(r-1/2)^2$. Set $j=u+v>0$ and $\ell=1+u>1$.
+The six actual cumulative matrices are
+
+$$
+\begin{gathered}
+(A_0,A_1,A_2,A_3,A_4,A_5)=(I,J,L,J+L,C,Q),\\
+L=MJ=\begin{pmatrix}1&0\\1&1\end{pmatrix},\quad
+J+L=\begin{pmatrix}1&1\\2&1\end{pmatrix},\\
+C=J(J+L)=\begin{pmatrix}2&1\\1&1\end{pmatrix},\quad
+Q=MC=\begin{pmatrix}1&1\\3&2\end{pmatrix},\quad
+Q^{-1}=\begin{pmatrix}-2&1\\3&-1\end{pmatrix}.
+\tag{1.6}
+\end{gathered}
+$$
+
+Direct multiplication gives all six ancestor equations:
+
+$$
+\begin{aligned}
+f(0)+d&=0,\\
+f(1)(u+v)+d&=24,\\
+f(2)(1+u)+d&=48,\\
+f(3)(1+2u+v)+d&=312/5,\\
+f(4)(1+r+u+v)+d&=\widehat Y,\\
+f(5)(2-r+3u+v)+d&=\widehat z.
+\end{aligned}
+\tag{1.7}
+$$
+
+Every trace factor is strictly positive: its matrix is nonzero and
+entrywise nonnegative and $P$ is strictly positive. In particular,
+both late equations remain constraints with fixed readings.
+For a fixed arbitrary real $d$, define the whole promised class
+
+$$
+\mathcal C_d(H)=\{W\in\mathcal F(H):
+ (\delta-D_0)/\lambda=d,\ f(6)=0,\ f(7)\ne0\}.
+\tag{1.8}
+$$
+
+The common drift and root restrictions are promises about candidates;
+they are not inferred from the six readings. The model, normalization,
+literal ancestor and actual-fiber conventions are established in
+[VII, Definitions 1.1–1.3](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_VII.md).
+

@@ -1,0 +1,30 @@
+**定义 31.2（Eligible common cuts and all-one stopping depths）。** Write $\operatorname{Const}$ for image size at most one, including the empty image. A cut $a=qm+r$ is eligible if $0\le a<k$, $0\le r<m$, and
+
+$$
+\begin{aligned}
+&\operatorname{Const}\{\Gamma(j,s):j\in S_t(\beta),\ h_t-m\le s<h_t\}
+&& (0\le t<q,\ \beta\in\mathbb F_2^t),\\
+&\operatorname{Const}\{\Gamma(j,s):j\in S_q(\beta),\ h_q-r\le s<h_q\}
+&& (\beta\in\mathbb F_2^q),\\
+&\Gamma(j,s)=\Lambda(j)
+&& (j\in P,\ 0\le s<k-a).
+\end{aligned}
+\tag{31.5}
+$$
+
+These are exactly the supplied common-cut conditions (24.4)–(24.6) applied to the supplied value join: (31.3) merely changes $\theta$ to $-j$, and the surviving interval contains $s=0$, which identifies its constant with $\Lambda(j)$. Thus (31.5) is not a replacement attainability criterion. In particular its quantifier chooses one $a$ before either free-value fibre or any archive. It permits $q=D$ and $r=0$; an empty rejection rectangle imposes no condition.
+
+An all-one stopping depth is an integer $d\in\{0,\ldots,D\}$ such that
+
+$$
+\begin{aligned}
+&\operatorname{Const}\{\Gamma(j,s):j\in S_t(\beta),\ h_t-m\le s<h_t\}
+&& (0\le t<d,\ \beta\in\mathbb F_2^t),\\
+&\operatorname{Const}\{\Gamma(j,s):j\in S_d(\beta),\ 0\le s<h_d\}
+&& (\beta\in\mathbb F_2^d).
+\end{aligned}
+\tag{31.6}
+$$
+
+At $d=0$ the second condition says that $\Gamma$ is constant on all successful INITIAL records. The two scalar-value fibres of $f$ may still have different constant labels. Conditions (31.6) describe a stream stopped without issuing any first-zero block.
+

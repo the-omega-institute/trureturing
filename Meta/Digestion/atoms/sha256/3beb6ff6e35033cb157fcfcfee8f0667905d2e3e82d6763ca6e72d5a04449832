@@ -1,0 +1,4 @@
+**例 75.2（向旧孔内部重切及原缺席分支）。** 取 $P=\{L,R\}$、$C=\langle\square_1,\square_2\rangle$、$\pi=\{\{1,2\}\}$，$H=\varnothing$，$Q=\{LL,LR,RL,RR\}$。整个旧纤维为 $\{\langle z,z\rangle:z\in\mathcal T\}$。若 $z=\alpha$ 或 $\beta$，所有新切址原来缺席，整行分别是具体 $\langle\alpha,\alpha\rangle$ 或 $\langle\beta,\beta\rangle$，均无孔。若 $z=\langle x,y\rangle$，四个新孔全部达到，外部为 $\langle\langle\square^Q_1,\square^Q_2\rangle,\langle\square^Q_3,\square^Q_4\rangle\rangle$；分区在 $x=y$ 时为单类，否则为 $\{\{1,3\},\{2,4\}\}$。故完整目标像恰有四行。
+
+任意深度 $h$ 上，取足够高的 $x=y$，仅在 $y$ 深度 $h$ 以下改变一支，保持旧的两次 $z$ 出现一起改变，就给同一旧行、相同原有限前缀而不同新分区的两棵来源。依定理74.4不存在有限统一预算。这个障碍既没有来自新外部的无限像，也没有来自旧类间比较；它来自同一旧类内部新生成的比较。原叶经更新生出的 $LL$ 等节点不能将前两种无孔原行改成有孔原行。
+

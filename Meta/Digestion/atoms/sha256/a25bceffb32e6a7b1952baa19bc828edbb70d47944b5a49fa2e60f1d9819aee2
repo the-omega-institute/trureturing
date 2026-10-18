@@ -1,0 +1,37 @@
+**Convention 1.2 (Same-law risk and supplied identities).** Let $P$ be one
+normalized two-sided stationary probability law on
+
+$$
+X=\{x\in\{0,1\}^{\mathbb Z}:x_ix_{i+1}=0\ (i\in\mathbb Z)\}.
+$$
+
+Write $X_i$ for its coordinate variables, $[w]$ for any translated interval
+cylinder, and $P_n$ for its actual length-$n$ marginal. For integers $r\ge1$, set
+
+$$
+\begin{aligned}
+\mathcal E_0&=\sigma(X_j:j\ne0),\qquad F=\{X_{-1}=X_1=0\},\\
+\mathcal F_r&=\sigma(X_{-r},\ldots,X_{-1},X_1,\ldots,X_r),\\
+q_P&=\mathbb E_P[X_0\mid\mathcal E_0],\qquad
+D_r(P)=\mathbb E_P[(X_0-\mathbb E_P[X_0\mid\mathcal F_r])^2].
+\end{aligned}
+$$
+
+[Stationary, §2][S] supplies, without a support or memory assumption,
+
+$$
+\begin{aligned}
+d(P)&:=\lim_{n\to\infty}\Phi_n(P_n)/n
+=\mathbb E_P[(X_0-q_P)^2]=\inf_{r\ge1}D_r(P)\le c_\star,\\
+D_r(P)&=\sum_{\substack{u,v\in B_r\\u_r=v_1=0}}
+h(P([u0v]),P([u1v])),\qquad
+nc_\star\le\kappa_n\le(n+1)c_\star.
+\end{aligned}
+\tag{1.1}
+$$
+
+Neighbor-one fibers force $X_0=0$ and contribute zero. Zero-total fibers
+also contribute zero, with no division by their mass. The identity between
+the open-word density and the full exterior risk includes the original
+endpoint contributions; it also holds along $n=3N$.
+

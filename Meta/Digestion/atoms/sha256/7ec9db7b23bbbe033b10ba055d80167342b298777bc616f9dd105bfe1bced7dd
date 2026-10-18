@@ -1,0 +1,14 @@
+## 352. P: shared parent gates and whole-vector cancellation
+
+Partition the addresses into roots $R$ and leaves $D$, with every nonzero interaction from a root $i$ to a later leaf $j$. For each leaf choose a nonempty parent set
+$P_j\subseteq\{i\in R:i<j\}$ containing every root $i$ with $Q_{ij}\ne0$; roots with $Q_{ij}=0$ may also be included. Choose source-independent numbers $\lambda_{ij}\ge0$ with
+$\sum_{i\in P_j}\lambda_{ij}=1$. Require, for distinct parents $i,h\in P_j$,
+
+$$
+\lambda_{hj}Q_{ij}+\lambda_{ij}Q_{hj}=0
+\tag{352.1}
+$$
+
+as an equality of the whole label vector. Put
+$B_{ij}=\lambda_{ij}(\ell_j+Q_{ij})$ and require, for each leaf and each output label, that all values $B_{ij}(r)$ have one sign; zero and ties are allowed.
+

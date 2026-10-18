@@ -1,0 +1,28 @@
+**Lemma 7.2 (The mixed-phase zero-leaf margin after the forced
+geometry).** If $E,F,G$ are disjoint parity-$\alpha$ edges and
+$T\in E\cup F$, the $000$ leaf has unique maximizing label
+$h_\beta(\sigma)$. Every other label loses at least $g_1$.
+
+Proof. The four masses there are
+
+$$
+\frac a2,\quad\frac b2,\quad
+\frac{a^2c^2}{2},\quad\frac{b^2c^2}{2},
+\tag{7.4}
+$$
+
+with the first two belonging to phase $\beta$. Its reads are
+all separators in that phase. In phase $\alpha$ the target is
+in one zero pair, and the other two zero pairs contribute $c^2$.
+The first mass exceeds the second by $d/2\ge d\eta^2=g_1$.
+It exceeds the largest phase-$\alpha$ mass by
+
+$$
+\frac{a-a^2c^2}{2}\ge\frac{a-a^2}{2}
+=\frac\eta2\ge d\eta^2=g_1,
+\tag{7.5}
+$$
+
+using $d\eta<1/4<1/2$. Thus every minority or wrong-phase
+choice on this mixed leaf has the required loss. $\square$
+

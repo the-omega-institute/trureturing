@@ -1,0 +1,46 @@
+**Definition 2.1 (signed chart and common coefficients).** Retain FC's
+homogeneous dual and source matrices:
+
+$$
+\begin{gathered}
+P_y=y_0+y_1u+y_2v+y_3u^2+y_4uv,\quad
+Q=\begin{pmatrix}y_5+y_6&y_7/2\\y_7/2&y_5\end{pmatrix},\quad
+Q_y=x^TQx,\quad R_-=Q+t\mathsf F,\quad R_+=Q-t\mathsf F,\\
+F_{0,\epsilon,\sigma}=P_y-\epsilon\lambda u-\sigma\ell,\quad
+F_{1,\epsilon,\sigma}=D_cF_{0,\epsilon,\sigma}
+                      +N_c x^T(Q-\sigma t\mathsf F)x.
+\end{gathered}
+\tag{IC.8}
+$$
+
+For $u\ne0$, write $z=v/u$ and
+
+$$
+\begin{gathered}
+s(z)=\sqrt{1+z^2},\qquad x_\epsilon(z)=\frac{\epsilon(1,z)^T}{s(z)},
+\qquad\epsilon=\operatorname{sgn}u,\\
+d_c(z)=D_u+D_vz^2,\quad n_c(z)=N_u+N_vz^2,\quad
+p_y(z)=(y_0+y_3)+y_4z+y_0z^2,\\
+E(z)=E_{\ell,11}+2E_{\ell,12}z+E_{\ell,22}z^2,\quad
+\bar f(z)=2ez-d_*z^2,\\
+o_\sigma(z)=(y_1-\sigma l_u)+(y_2-\sigma l_v)z,\\
+T_{\epsilon,\sigma}(z)=p_y(z)-\sigma E(z)
+                 +s(z)\big(\epsilon o_\sigma(z)-\lambda\big),\\
+G_{\epsilon,\sigma}(z)=\sigma t\bar f(z)
+                 -\frac{d_c(z)}{n_c(z)}T_{\epsilon,\sigma}(z),\\
+q(z)=(1,z)Q(1,z)^T=q_0+q_1z+q_2z^2,\qquad
+(q_0,q_1,q_2)=(y_5+y_6,y_7,y_5).
+\end{gathered}
+\tag{IC.9}
+$$
+
+The tags $(\epsilon,\sigma)\in\{\pm1\}^2$ retain both direction and
+height sign. At equal $z$, $x_+(z)$ and $x_-(z)$ remain different
+original directions. In particular $z=0,\epsilon=-1$ is $(-1,0)$
+and is included. A saturated contact has its actual $\epsilon$ and
+every maximizing $\sigma$: one sign for nonzero height and both for
+zero height. The functions $T_{\epsilon,\sigma}$ and
+$G_{\epsilon,\sigma}$ are determined by the original capacity, source
+height, $t$, $\lambda$ and $y_0,\ldots,y_4$; they contain no fitted
+failure coefficients $q_0,q_1,q_2$.
+

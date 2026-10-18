@@ -1,0 +1,21 @@
+**Definition 3.3 (finite normality and negative requirements).** Impose
+$r_{\rm left}\ne r_{\rm right}+1$ at every explicit cherry in every
+$\widehat S_Z$, meaning a node with two explicit $c$ children.
+For a code disequality $X\ne Y$:
+
+- if $S_X,S_Y$ are syntactically different, retain it as a shape-separation
+  requirement;
+- if they are identical, decompose the disequality into the finite
+  disjunction of unequal corresponding scalar ranks or unequal
+  corresponding blocks.
+
+Distribute these latter disjunctions. Each resulting branch has scalar
+offset equations and disequations, and whole-block offset equations and
+disequations. Writing offsets on both sides instead of one makes no
+difference. A reflexive disequality yields an empty successful
+disjunction and rejects its branch.
+
+Normality has not yet been asserted for arbitrary fillings of the
+residual shapes. The next section supplies a restricted witness family
+and proves its sufficiency. It does not erase that obligation.
+

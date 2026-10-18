@@ -1,0 +1,43 @@
+**Corollary 9.3 (critical interval and conditional native consumer).** At both original Boolean caps,
+
+$$
+19\le m_{\min}(8,4)\le20.
+\tag{37}
+$$
+
+Under exactly the supplied correspondence (2), equivalently (SI.5), and its source and service assumptions, the original preparation minimum at the fixed native caps $9,W+3$ satisfies
+
+$$
+23+r\le H_{\min}^{\,9,W+3}\le24+r.
+\tag{38}
+$$
+
+The original eight-state complete predecessor-row reader remains separately priced.
+
+**Proof.** Theorem 9.1 gives the lower endpoint in (37). The unchanged twenty-state grid of Proposition 5.1 gives the upper, with every-input correctness, actual termination and simultaneous charges at most $8,W$; one input attains both. Its complete fixed table and proof are reused directly.
+
+For a native competitor, the supplied projection is a complete correct Boolean graph with both caps and at most $H_P-4-r$ running states. Thus Theorem 9.1 gives $H_P\ge23+r$. The unchanged full-fiber grid lift in Corollary 5.2 supplies the upper $24+r$, replacing the Boolean terminals by the two original entry latches, adding the two profile states and retaining all $r$ further mandated latches. Boolean terminals are not charged a second time. The selected route adds one call and three letters; the other profiles use at most two calls and six letters, within the same native caps.
+
+The quantifier remains the entire unbounded original $\mathcal U_*$ of Section 1, with the original homomorphic $\rho$, current row, occurrences, repetitions, disequalities and guards. The pointwise code is precisely (SI.2): zero on $\Pi_1\cup\Pi_2$, one on $\Pi_3\cup\Pi_4$, the selected threshold on $Z_{b_3}$, and zero on the other zero profiles. Preparation produces the original $\widehat e_\sigma$ and hands off literally to the original complete $e_\sigma$ on the same source. Every original address and all four replies remain fixed; alpha, beta and absent use their separately installed Boolean-zero edges, and branch uses the Boolean-one edge. The upper covers arbitrary allowed noncomb images and absent selected nodes; the cube supplies lower witnesses and joint attainment, rather than replacing the source domain.
+
+The independent reader retains its three running states and five whole-row halts, at most two fresh queries and six fresh letters. Its output remains the entire predecessor row: ordered exterior, occurrences, canonical equality partition, repetitions, disequalities and strict-prefix guards. All unused installed states and actual constant, repeated and post-certificate queries keep their charges. Source binding, the fixed register, acquired same-version row, authentication, permission, export, access isolation, code-only handoff, lawful complete entry and stationary continuity remain the original supplied service assumptions. Equation (38) is a conditional installed-control consequence, not an independently established original-Q bridge or physical acquisition, time, memory or realization theorem. $\square$
+
+**Attribution and remaining boundary 9.4.** [This critical companion, Theorem 4.1][CE19] owns the earlier eighteen lower bound. Its Lemma 3.2 and Proposition 5.1 own the reused endpoint-six observation and explicit twenty-state upper. [SI, Theorems 2.2, 4.1, 5.2, 9.3–9.4 and 10.4, and Lemma 10.2][SI19] own the actual live-incidence, local diagonal, localization, short-gap and right-cut interfaces. Their nested PCA, PE and WTF suppliers remain exactly at the conditional interfaces of Section 2; (SI.5) owns the native correspondence. These earlier statements and the weaker intervals in Sections 4–6 remain valid.
+
+The additional deductions are the critical sharing classification and four-axis forced fork, the fixed-zero-successor/singleton-segment contradiction in Lemma 8.1, the complete endpoint-one and terminal estimates without an assumed upper bound on $m$, and their exhaustive same-graph consequence (34) with equality conditions (35)–(36). They are ordinary symbolic deductions at the supplied interfaces. No kernel verification, external unrestricted lower-bound supplier, exhaustive search or worldwide priority is asserted. The count relaxation, both-conflict capacity, star and cyclic sufficient classes and above-grid inclusions of SI retain their separate scope and are not premises imposing a new class here.
+
+The exact critical minimum is still either nineteen or twenty. No complete correct nineteen-state construction satisfying all original obligations is supplied, and no unrestricted twenty-state lower bound is proved. A nineteen-state construction must satisfy (35)–(36), actual support and successor compatibility, all-input correctness and termination, and both same-run caps; those necessary conditions alone are not a construction.
+
+For general $\min(k,n-k+1)\ge4$, the original alternatives remain unresolved: prove $m\ge G=k(n-k+1)$ for every complete correct original graph at both caps, equivalently the same-graph collective inequality
+
+$$
+\sum_{B\in\mathcal L_*}(D_B-E_B)
+\le E_{\rm cut}+u+\sum_{B\in\mathcal A_*}(E_B-D_B),
+\tag{39}
+$$
+
+where $\mathcal L_*=\{(a,b):b-a\ge5,\ b>\max(k,n-k+1)\}$ and $\mathcal A_*$ is its complement among consecutive gaps; or construct one complete correct strict-subgrid graph satisfying both caps on every input. Neither general alternative follows from (34). Separate compensation in every late pool is stronger than (39). The unrestricted-budget minimum, fixed-specification attainment and the complete original native bridge retain their separate unresolved meanings. No quantum, calibration, stochastic timing, analytic or expanded-storage contract supplies an additional numerical or operational transfer here.
+
+[SI19]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SUPPORT_INCIDENCE_AND_COUNT_RELAXATION.md
+[CE19]: RECURSIVE_RELATIONAL_OBSERVATION_CRITICAL_EIGHT_INPUT_LOWER_BOUND.md
+

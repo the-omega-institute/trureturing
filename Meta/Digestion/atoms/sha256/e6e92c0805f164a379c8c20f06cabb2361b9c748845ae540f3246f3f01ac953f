@@ -1,0 +1,14 @@
+**定义 13.2.3（接口泄漏）。** 对输入区域 $A$ 与输出区域 $B$，定义
+
+$$
+\Lambda_{A\to B}(t)=\|P_BT_tP_A\|.
+$$
+
+若初态密度矩阵满足 $\rho=P_A\rho P_A$，则量子在 $B$ 的占据概率记为
+
+$$
+p_B(t)=\operatorname{Tr}(P_BT_t\rho T_t^\dagger).
+$$
+
+<a id="claim-13-2-4"></a>
+

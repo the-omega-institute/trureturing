@@ -1,0 +1,27 @@
+**Assumption 7.4 (resource and realization limits).** Acquisition,
+same-source continuation, stationarity, permission and truthful discard
+are the native contract's premises. Formula (NTL.6) may evaluate
+$f(b)$ to describe a realizing history. It is an existence
+construction; it is not an inexpensive algorithm for discovering an
+unknown task value from its later reads. The installed encoder may
+use the whole public task table, of $2^m$ entries, and may require
+other finite public data or computations on the full $q^r$ cube.
+These descriptions are independent of the actual acquired source
+but are not included in the retained $q$ labels.
+
+Likewise, the currently stored source, old acquisition work, the
+retained later row, code representation, local parsing, controller
+workspace, cached replies, address production and output all have
+their stated separate roles. Unrolling or simulating a decision tree
+can change state count and memory usage. The precise internal-memory
+distinctions in [NARC §§17--30][NARC] are not transported by
+(NTL.18)--(NTL.19). In particular a $q$-label *source summary* does
+not mean a $q$-state whole service.
+
+The relation established here connects an early memory label, a later
+boundary row, literal positions and a discrete substitution lag on
+one explicit source family. It supplies a mutual-recovery theorem for
+the task quotient under those conditions. It neither identifies
+physical spacetime with these trees nor supplies a universal cheap
+computation model or a completion of a minimal-relations programme.
+

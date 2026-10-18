@@ -1,0 +1,98 @@
+**Application 26.9 (a one-read consumer of two complete rows).** Let
+$H_0=\varnothing$ and $Q=\{LL,LR,RL,RR\}$. The entire retained fiber is
+$\{u_j:j\ge0\}$. Its complete original rows are exactly
+
+$$
+\begin{array}{c|c|c|c}
+j&\text{reached cuts}&\text{entire exterior}&\text{complete partition}\\
+\hline
+0&(RL,RR)&\langle\beta,\langle\square_1,\square_2\rangle\rangle
+ &\{\{1\},\{2\}\}\\
+\ge1&(LL,LR,RL,RR)&
+\langle\langle\square_1,\square_2\rangle,
+        \langle\square_3,\square_4\rangle\rangle
+ &\{\{1,4\},\{2\},\{3\}\}.
+\end{array}
+\tag{CS.26.25}
+$$
+
+At every certified permitted epoch $r$, one paid read at $L^{r+1}$
+returns $\beta$ exactly when $j=0$ and $\mathsf{Pair}$ exactly when
+$j\ge1$, selecting these entire rows.
+
+Proof. The empty intersection leaves all $j\ge0$. At $j=0$ the original
+left child is $T_1=\beta$, so $LL,LR$ are absent, while $RL,RR$ contain
+$\beta,\alpha$. This gives the first row, including its concrete exterior
+leaf. At $j\ge1$ all four cuts are reached, and their whole values in
+lexicographic order are
+
+$$
+T_j,\quad T_{j-1},\quad T_{j+1},\quad T_j.
+$$
+
+Index distinctness gives exactly the second partition. All exterior
+nodes are the three displayed pairs. The read is (CS.26.23) with $t=0$;
+its whole reached subtree is $T_{j+1}$. Both rows occur at the same
+retained input, so zero reads cannot distinguish them under deterministic
+common control, even with unobserved real updates. Thus one is also the
+minimum new-read count for this particular example. $\square$
+
+**Acquisition and resource correspondence.** Proposition 2.1 supplies a
+compatible actual producer for this fixed schedule. Paid traversal at
+epoch zero computes the entire old row and acquires the complete subtree
+at $R$. After one real update, paid traversal at $L$ acquires its entire
+current subtree; finite comparison of the two paid descriptions supplies
+the sign in (CS.26.1). Every literal occurrence is actually read at its
+own epoch, including repeated requests and absent replies. The earlier
+description is kept until comparison is possible, and further stipulated
+updates reach the certified service epoch. No access to an old physical
+register is needed to compare already acquired descriptions.
+
+Under the complete access cut of Assumption 1.3 the accessible state is
+exactly the stated records, certified epoch and common parameters and
+control. Every finite source producing this retained state satisfies its
+old row and all records; conversely every finite source in (CS.26.3)
+produces that same successful retained state under the fixed schedule
+and cut. The original $R$ and the entire original source stay fixed
+throughout. Acquisition traversal lengths, source descriptions and any
+other source-bearing fields cannot remain as undeclared information.
+The complete cut is the same conditional access assumption as before,
+not a conclusion of the algebraic equation.
+
+All consumers operate on the same register at its certified epoch.
+A test (CS.26.23) has physical address length $r+t+1$; the example has
+length $r+1$. Requests and any repetitions are paid. Address formation
+and transmission, pre-cut acquisition, finite comparison, local tree
+construction and row computation, installation, entry, working memory,
+retention, epoch/version evidence, real updates, archives and complete
+output remain separate resource coordinates. Bounds above concern new
+raw calls only; no joint-resource optimum or general price formula is
+asserted. A finite pre-cut cost for each source need not have a uniform
+bound. There is no reset, reroot, clone, identity port, free subtree
+comparison, or observable source-dependent update timing. A later entry
+after an absorbing halt remains separately supplied and paid. Producing
+a row does not erase accessible old data or new replies; any subsequent
+cut owes its own complete-state correspondence.
+
+**Scope and reuse status.** This is ordinary application exposition of
+the existing `repo-derived` results, not an additional mathematical
+increment. Theorem 4.2 supplies the feedback classification; (ARH.4.2)–
+(ARH.4.3) supply transport, index injectivity and guarded addresses;
+Theorems 5.2 and 6.1 supply the orbit/history and complete-row machinery.
+The explicit root-exchange correspondence, finite interval intersection
+and prefix embedding only specialize those results. Definitions 1.1–1.2,
+Assumption 1.3, Proposition 2.1 and (ARH.2.3) retain their full source,
+acquisition and service conditions. No new lemma, invariant, complexity
+bound or non-bind-only theorem is asserted here. No general cyclic
+normalizer or automaton closure under constructor offsets is used.
+
+Arbitrary additional $H_{\rm rel}$, arbitrary guarded coupled cyclic
+interpreted equations, and unsupported target comparisons in the earlier
+recognizers remain outside this result. In particular the unrestricted
+decision of Definition 9.1 and §25 remains open. The present negative
+quantifiers concern the specified retained tail and specified whole-row
+task only. They prove neither general impossibility nor undecidability.
+General mixed-history minimum prices, joint resource optima and the
+stochastic targets listed in §25 are unchanged. No new formal or kernel
+result, implementation, independent approval or publication is claimed.
+

@@ -1,0 +1,8 @@
+## 488. Four repeated X slots close within rho
+
+If rho has four X slots, its two axes are X and its pair is {X,A}, A!=X. Every face has labels X,X,A. Track any X corner across such a face. An axial X receiver would have fixed pair {X,A}; a transverse X receiver must also have pair {X,A}, since the other possible companion X is forbidden by distinct transverse labels. Either way the receiving owner is transverse at X and hence is rho.
+
+All endpoints of rho's four original X intervals are therefore paired within those four intervals. A union of several components violates the connected actual X-circle hypothesis. A single component would have original degree four, below six. No interval is collapsed by a self-gluing or an orientation reversal. Thus rho has at most three X slots.
+
+For the profile (n_3,n_4,n_5,n_6)=(2,0,2,1), only its two five-high owners can contribute further X intervals, one axial interval each. The full degree is at most 3+2=5, a contradiction.
+

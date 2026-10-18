@@ -1,0 +1,35 @@
+**Theorem 4.1 (bounded random query budget).** Fix the pulse parameters of
+Lemma 3.1 with $0<S\leq\pi/2$. Let a measurable randomized strategy use at
+most $q$ point queries, with its seed independent of the unknown source
+history. It may know the exact fixed variations $2\delta,2a$. For every
+integer $M>q$, two fixed histories can be selected before the seed is drawn
+so that the transcript laws, even including the seed and all retained state,
+have total variation distance at most $q/M$. Every character estimator has
+maximum expected absolute error on these two histories at least
+
+$$
+\sin S\,(1-q/M).
+\tag{4.1}
+$$
+
+For complete responses multiply (4.1) by $a_{02}$. The conclusion is
+unchanged at any common prescribed future test of Definition 1.4.
+
+Proof. Choose $M$ pairwise disjoint open candidate intervals inside $(0,T)$.
+Run the strategy with constant-value replies and the fixed side information.
+For each seed at most $q$ intervals contain a queried time. If $P_j$ is the
+probability of hitting interval $j$, then $\sum_jP_j\leq q$. Select an
+interval with $P_j\leq q/M$ using this distribution, not the realized seed.
+Put the plus and minus pulses in that interval. For each seed that does not
+hit it on the constant-reply run, induction gives exactly the same complete
+run on both fixed sources. The same-seed coupling thus has probability at
+least $1-q/M$ of identical transcripts. Its disagreement probability bounds
+their total variation distance.
+
+On the no-hit event the two estimates are the same, while their targets
+have distance $2\sin S$. Their two absolute losses sum to at least that
+distance. Integrating over this common event shows that the two risks sum
+to at least $2\sin S(1-q/M)$; one is at least (4.1). Future rotation preserves
+the target distance. The selection rule chose the source before the seed,
+and did not assume independence of any model or repository priors. $\square$
+

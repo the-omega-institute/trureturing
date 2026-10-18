@@ -1,0 +1,149 @@
+**Theorem 3.2 (Fifteen signs, four scalar inequalities and one cubic).**
+The following three conditions are equivalent:
+
+(a) $\mathcal B_{C,y,\delta}(a)\succeq0$ for every real
+$a\in\mathbb R^5$.
+
+(b) $\mathcal R(p)\succeq0$ and $\mathcal T(p)\succeq0$
+for every $p\in\Delta_2$.
+
+(c) All of the following hold:
+
+$$
+\begin{gathered}
+\alpha_{ik}\ge0\quad(i,k\in\{0,+,-\}),\qquad
+\beta_{jk}\ge0\quad(j\in\{+,-\},\ k\in\{0,+,-\}),\\
+|c_{ij}|\le\sqrt{\alpha_{ii}\alpha_{jj}}
+                +\sqrt{\alpha_{ij}\alpha_{ji}}
+\quad((i,j)=(0,+),(0,-),(+,-)),\\
+|t|\le\sqrt{\beta_{++}\beta_{--}}
+                +\sqrt{\beta_{+-}\beta_{-+}},\\
+\mathscr F(p)\ge0\quad\text{whenever }p_i>0,\quad\sum_ip_i=1.
+\end{gathered}
+\tag{3.5}
+$$
+
+The first line contains nine plus six coefficient signs. The next
+two lines contain exactly four scalar inequalities. Those finite
+conditions already imply $\mathscr F\ge0$ on the whole boundary
+of $\Delta_2$. They do not in general imply its interior
+nonnegativity.
+
+Proof. The scalar form of (3.1) is
+
+$$
+b^T\mathcal B_{C,y,\delta}(a)b
+=\|a\|^2y^Th(b)-\langle C,h(a)h(b)^T\rangle
+                  -\frac12\sum_\nu\delta_\nu z_\nu(a)^Tz_\nu(b),
+\tag{3.6}
+$$
+
+where $\langle C,M\rangle=\sum_{i,j}C_{ij}M_{ij}$.
+It is invariant under simultaneous $g\in\mathcal G$ on $a,b$,
+by the proof of (2.3). Consequently
+$\mathcal B(ga)=g\mathcal B(a)g^T$. For nonzero $a$, first
+divide by $\|a\|$ and use the canonical preparation construction
+of Theorem 2.2. Orthogonal congruence and the positive factor
+$\|a\|^2$ preserve positivity. The zero vector gives the zero
+matrix and requires no separate assumption.
+
+At the canonical preparation, the complete list of plane coordinates is
+
+$$
+\begin{aligned}
+z_+(a(p))&=(\sqrt{2p_0p_+},0),&
+z_-(a(p))&=(\sqrt{2p_0p_-},0),\\
+z_{2+}(a(p))&=(p_+/\sqrt2,0),&
+z_{2-}(a(p))&=(p_-/\sqrt2,0),\\
+z_\Delta(a(p))&=(\sqrt{p_+p_-},0),&
+z_\Sigma(a(p))&=(\sqrt{p_+p_-},0).
+\end{aligned}
+\tag{3.7}
+$$
+
+Substitution into the literal normalized matrices (1.6) gives
+
+$$
+\mathcal B_{C,y,\delta}(a(p))=
+\mathcal R(p)\oplus\mathcal T(p)
+\tag{3.8}
+$$
+
+in the reordered adapted basis. In particular the radial mixed entry
+contains $\delta_\Delta+\delta_\Sigma$, while the tangent mixed
+entry contains $\delta_\Delta-\delta_\Sigma$. This proves (a)
+equivalent to (b), without omitting either mixed plane.
+
+The diagonal entries of (3.8) are five linear forms on the nonnegative
+orthant. Their nonnegativity on the simplex is equivalent to
+nonnegativity of their fifteen coefficients, by testing the three
+vertices. This proves the first line of (3.5) in both directions.
+
+For a radial pair $i,j$, its principal minor is
+
+$$
+A_i(p)A_j(p)-c_{ij}^2p_ip_j.
+\tag{3.9}
+$$
+
+On the face where the third population vanishes, write $x=p_i,y=p_j$.
+The expression becomes $ax^2+bxy+cy^2$, with
+
+$$
+a=\alpha_{ii}\alpha_{ji},\qquad
+b=\alpha_{ii}\alpha_{jj}+\alpha_{ij}\alpha_{ji}-c_{ij}^2,
+\qquad c=\alpha_{ij}\alpha_{jj}.
+\tag{3.10}
+$$
+
+Here $a,c\ge0$. The elementary binary quadratic criterion on the
+nonnegative orthant is $b+2\sqrt{ac}\ge0$. For sufficiency,
+$ax^2+cy^2\ge2\sqrt{ac}xy$. For necessity when $a,c>0$, take
+$(x,y)=(\sqrt c,\sqrt a)$. If $a=0,c>0$ and $b<0$, take
+$y=1$ and $x$ sufficiently large; if $c=0,a>0$ reverse the roles.
+If both vanish, take $x=y=1$. Thus the criterion includes all
+degenerate coefficients. This is a standard binary quadratic
+calculation, used here inside the full three-sector criterion.
+
+Using (3.10), it is exactly
+
+$$
+c_{ij}^2\le
+\left(\sqrt{\alpha_{ii}\alpha_{jj}}
+           +\sqrt{\alpha_{ij}\alpha_{ji}}\right)^2,
+\tag{3.11}
+$$
+
+equivalent to the corresponding inequality in (3.5). Adding the
+third nonnegative population can only increase each of $A_i,A_j$,
+because all their coefficients are nonnegative. Both factors are
+already nonnegative, and the subtracted term in (3.9) is unchanged.
+Hence the face criterion is equivalent to nonnegativity of this
+minor on the entire orthant. Homogeneity justifies using arbitrary
+$(x,y)\ge0$ rather than only their normalized face.
+
+The identical binary calculation for
+$B_+(p)B_-(p)-t^2p_+p_-$, with $p_0$ as the third population,
+gives exactly the fourth scalar inequality. Thus the finite
+conditions in (3.5) are equivalent to all one-by-one and two-by-two
+principal minors of both blocks being nonnegative for every $p$.
+
+The only remaining principal minor is $\det\mathcal R(p)$.
+Expanding its determinant gives exactly $\mathscr F(p)$ in (3.4).
+The product of its three negative off-diagonal entries contributes
+$-2uvw\,p_0p_+p_-$; the sign of $uvw$ is not discarded.
+If one population is zero, that row's off-diagonal entries vanish.
+The radial block is then a nonnegative one-by-one block and the
+other two-by-two principal block. Its determinant is nonnegative
+by the conditions already proved. This includes vertices and
+multiple zero populations. For all strictly positive populations,
+homogeneity reduces the remaining determinant condition to the
+last line of (3.5).
+
+The standard principal-minor criterion for a real symmetric matrix
+says that all its principal minors are nonnegative exactly when it
+is positive semidefinite. Applied to these blocks of sizes three
+and two, it finishes (b) equivalent to (c). No strictly positive
+pivot, invertible principal submatrix, or division by a population
+was used. $\square$
+

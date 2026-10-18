@@ -1,0 +1,29 @@
+**Theorem 4.1 (minimal partial-atlas recovery criterion).** The following
+conditions are equivalent:
+
+1. every $\iota_i$ is injective;
+2. for every chart $i$, every actual closed transport word $p:i\rightsquigarrow i$
+   and every $q\in D_p$, $H_pq=q$;
+3. there is a carrier $W$ and injections $f_i:Q_i\hookrightarrow W$ such
+   that $f_j(H_eq)=f_i(q)$ on every actual edge domain.
+
+When they hold, each chart is bijective with its own image $\iota_i(Q_i)$
+in $Y$. No chart is thereby required to cover all of $Y$. The quotient $Y$
+is the universal carrier for maps obeying just these edge identifications.
+
+**Proof.** Each finite equivalence chain is an actual word: a forward
+identification is an edge and a backward identification is its partial
+inverse. Its successive values witness that the entire word is defined.
+If two points of the same chart have the same image in $Y$, such a chain
+is a closed path between them. Condition 2 therefore implies they are equal,
+giving 1. Conversely, a closed path identifies its input and output in $Y$;
+1 makes them equal, giving 2. Condition 1 gives 3 with $W=Y$. Under 3, every
+identification chain has constant $f$ value; a closed chain in one chart
+then has equal endpoints by injectivity, giving 2. A compatible family of
+maps from the charts is constant along chains, hence has a unique factor
+through $Y$. This also proves universality and the image bijections.
+$\square$
+
+This theorem is about state coordinates on each route's domain. It does
+not say that all parallel partial paths have the same domains or labels.
+

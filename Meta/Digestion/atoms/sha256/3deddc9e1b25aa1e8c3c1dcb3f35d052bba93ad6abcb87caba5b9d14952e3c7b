@@ -1,0 +1,49 @@
+**Convention 1.4 (credited factors and canonicalization).** Set
+$C_0=\langle\alpha,\alpha\rangle$ and
+
+$$
+S_1=\{\alpha,\beta,C_0\},\qquad
+S_{d+1}=\{\alpha,\beta\}\sqcup\{\langle x,y\rangle:x,y\in S_d\},
+\qquad m_d=2^d-1.
+\tag{OOA.3}
+$$
+
+Reuse [AAR, §§12–13][AAR]'s complete temporal factor. At an original
+branch endpoint $\Gamma_q(u)=(0,0)$. Otherwise let the first blocking
+leaf be $\ell$ at $a$, write $q=ar$, and put
+$e(\alpha)=0,e(\beta)=1$. Then
+
+$$
+\Gamma_q(u)=
+\begin{cases}
+(2-e(\ell),1-e(\ell)),&r=\varepsilon,\\
+(\#L(r)+2\#R(r)+2-e(\ell),\mathbf1_{r\text{ ends in }R}),&r\ne\varepsilon.
+\end{cases}
+\tag{OOA.4}
+$$
+
+On attained factors the credited decoder is
+
+$$
+\operatorname{Pred}((b,c),k)=
+\begin{cases}
+\mathsf{branch},&k\ge b,\\
+\beta,&b\ge1,\ k=b-1,\\
+\alpha,&c=1,\ k=b-2,\\
+\mathsf{absent},&\text{otherwise}.
+\end{cases}
+\tag{OOA.5}
+$$
+
+It equals $r_{\rho^ku}(q)$ for every $k\ge0$. The whole trajectory
+recovers $b$ as its first branch count and $c$ by its alpha stage.
+Write $h(z)=\operatorname{Pred}(z,0)$ and $G_q=\Gamma_q[S_d]$.
+The factor vector on $W_d$ separates $S_d$.
+
+[FMR, Lemma 2.2 and Theorems 2.3–2.5][FMR] supply completion
+$\pi_d(v)\in S_d$, fixing $S_d$ and preserving all boundary replies
+and factors, including variable shapes. On a canonical block every
+arbitrary finite probe is a function of one boundary reply in that same
+block, or a constant. In particular, a length-$d$ reply is alpha exactly
+when its length-$(d-1)$ parent is branch; longer words are absent.
+

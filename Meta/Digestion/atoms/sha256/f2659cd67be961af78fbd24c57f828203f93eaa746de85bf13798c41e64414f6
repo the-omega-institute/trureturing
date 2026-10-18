@@ -1,0 +1,36 @@
+**Theorem 40.2 (scalar envelope from the same kernel and phase input).** Every vector in Definition 40.1 gives
+
+$$
+ g_N^2\leq\frac{1+\sqrt{1-t_\xi}}2,
+ \qquad
+ \delta_N\geq1-\sqrt{1-t_\xi}.
+\tag{R.189}
+$$
+
+In particular, for positive beta, $t_\xi\geq\beta$ is sufficient for $g_N^2\leq T_\beta=(1+\sqrt a)/2$ and $\delta_N\geq1-\sqrt a$. No existence of such a charged kernel vector for every actual encoder is assumed.
+
+**Proof.** At one fixed complex environment density $\omega$, put $z=\operatorname{Tr}(\omega E_\xi)\in[0,1]$. The weighted reference-bearing certificate (R.28) and the actual phase-input test in (R.44) give respectively $h(\omega)^2\leq1-z$ and $h(\omega)\leq f(\tau,\omega)$. Apply the binary environment measurement with effects $E_\xi,I_E-E_\xi$ to the latter two states. The root-fidelity monotonicity attributed in Definition 10.1 gives
+
+$$
+ h(\omega)^2\leq
+ \min\left\{1-z,
+ B_{t_\xi}(z)\right\},\qquad
+ B_t(z):=\left(\sqrt{tz}+\sqrt{(1-t)(1-z)}\right)^2.
+\tag{R.190}
+$$
+
+Both tests use the same $\omega$. The first test has not been replaced by an environment marginal test; its reference-dependent input is precisely the one supplied by (R.28).
+
+For every scalar $0\leq t\leq1$ the exact envelope is
+
+$$
+ \max_{0\leq z\leq1}\min\{1-z,B_t(z)\}
+ =\frac{1+\sqrt{1-t}}2,\qquad
+ z_*:=\frac{1-\sqrt{1-t}}2.
+\tag{R.191}
+$$
+
+For $t>0$, $z_*=t/[2(1+\sqrt{1-t})]\leq t$, and direct substitution gives $B_t(z_*)=1-z_*$. Write $t=\sin^2\alpha$, $z=\sin^2\theta$, with $\alpha,\theta\in[0,\pi/2]$. On $0\leq z\leq t$, $B_t(z)=\cos^2(\alpha-\theta)$ is increasing. Thus below $z_*$ its value is at most $1-z_*$, and above $z_*$ the first member $1-z$ is at most $1-z_*$. Equality holds at $z_*$. At $t=0$, $B_0(z)=1-z$ and the maximum is one at zero; at $t=1$ the two functions are $z$ and $1-z$, meeting at $1/2$. This proves every endpoint of (R.191).
+
+Bound (R.190) by (R.191) before maximizing over the common center in (R.186). The pure-target unhalved norm bound (R.35), $\delta_N\geq2(1-g_N^2)$, then gives (R.189). Monotonicity of $1-\sqrt{1-t}$ proves the sufficient condition. The scalar maximization supplies an upper bound; it asserts neither that every $z$ is obtainable from an environment density nor that the actual channel attains the scalar envelope. $\square$
+

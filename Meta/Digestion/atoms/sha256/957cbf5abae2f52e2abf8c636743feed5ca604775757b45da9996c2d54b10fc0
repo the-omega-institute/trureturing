@@ -1,0 +1,94 @@
+**Theorem 166.2 (Attainment, probability feasibility and all infinite
+branches).** For every profile $x$, a finite $\rho_C(x)$ is an attained
+minimum, and
+
+$$
+\begin{aligned}
+x\in\Pi_C&\Longleftrightarrow\rho_C(x)\le1,\\
+\rho_C(x)=0&\Longleftrightarrow h(x)\le0,\\
+x\in P_{R,L}&\Longleftrightarrow x\in Q_L\text{ and }\rho_N(x)<\infty,\\
+\rho_C(x)&=\sup\{y\cdot h(x):y\ge0,\ \Delta_C(y)\le1\}.
+\end{aligned}
+\tag{166.2}
+$$
+
+The last equality includes value $+\infty$. For $t>0$ in (165.3),
+
+$$
+\rho_C((1-t)\alpha+tb)=t\rho_C(b),\qquad \rho_N(x)\le\rho_O(x).
+\tag{166.3}
+$$
+
+At $t=0$, $\rho_C(\alpha)=0$ is defined and proved separately; no
+expression $0\cdot\infty$ is used.
+
+**Proof.** If $\lambda^0$ is feasible with mass $s_0$, restrict the
+feasible set to $\lambda\ge0$, $\sum\lambda\le s_0$. This is a closed
+subset of a finite compact simplex, and the continuous mass objective
+attains its minimum there. It is also the unrestricted infimum, since
+larger masses cannot improve it. If the attained mass $s$ is at most
+one, assign $D$ weight $\lambda_D$ and give $R$ the remaining mass
+$1-s$. Its event vector is
+
+$$
+\sum_D\lambda_Dz_D+(1-s)r=r+A_C\lambda\ge d(x).
+\tag{166.4}
+$$
+
+Conversely a probability table $w$ gives
+$A_Cw=Z_Cw-r\ge h(x)$ with mass one. This proves the first equivalence,
+including its closed endpoint. At mass zero all coefficients vanish,
+so attainment gives the second equivalence.
+
+Cone feasibility is
+$h(x)\in\operatorname{cone}\{z_D-r\}-\mathbb R^m_{\ge0}$, a closed
+finitely generated polyhedral cone. The finite-dimensional Farkas
+alternative says this holds if and only if
+$y\cdot h(x)\le0$ for every $y\ge0$ with $A_C^Ty\le0$.
+Since the zero column is present,
+$\max_Dy\cdot(z_D-r)=\Delta_C(y)\ge0$; thus that multiplier condition
+is precisely $\Delta_C(y)=0$. Taking $C=N$ proves the third equivalence.
+The use of the mature Farkas alternative here and below is the polyhedral
+ingredient specified in Section 171, not a separate acquisition theorem.
+
+For any feasible primal and dual pair,
+
+$$
+y\cdot h\le y\cdot A_C\lambda
+      \le\Delta_C(y)\sum_D\lambda_D\le\sum_D\lambda_D,
+\tag{166.5}
+$$
+
+which proves weak duality. If the cone system is infeasible, Farkas gives
+$y\ge0$ with $\Delta_C(y)=0$ and $y\cdot h>0$. Every positive multiple
+is dual feasible, so the dual supremum is $+\infty$, exactly as required.
+
+For the feasible case let $\rho$ be the attained finite minimum and,
+for $s\ge0$, define the closed convex set
+
+$$
+T_s=\{A_C\lambda-v:\lambda\ge0,\ \sum_D\lambda_D\le s,
+                                                \ v\ge0\}.
+\tag{166.6}
+$$
+
+It is the sum of a compact image and the negative orthant, hence closed.
+Its support in direction $y\ge0$ is $s\Delta_C(y)$, because the zero
+column permits unused mass. If a coordinate of $y$ is negative its
+support is infinite. For $0\le s<\rho$, separation of $h$ from $T_s$
+gives $y\ge0$ with $y\cdot h>s\Delta_C(y)$.
+Cone feasibility excludes $\Delta_C(y)=0$ with positive $y\cdot h$.
+Therefore $\Delta_C(y)>0$; divide by it to obtain a feasible dual vector
+of value greater than $s$. Let $s$ tend upward to $\rho$.
+Together with weak duality this proves equality when $\rho>0$.
+For $\rho=0$, weak duality and $y=0$ give equality directly.
+No infeasible or zero case has been dropped.
+
+For $t>0$, scale a feasible conic representation by $t$ and divide a
+feasible scaled representation by $t$ for the converse. Equation (165.5)
+gives exact homogeneity, including simultaneous infeasibility on both
+positive scales. At $\alpha$, $h=0$ and $\lambda=0$ gives zero directly.
+Every completed $O$ table has an $N$ column with the same event vector,
+so any $O$ conic representation is an $N$ one with the same mass.
+This proves $\rho_N\le\rho_O$, including extended values. $\square$
+

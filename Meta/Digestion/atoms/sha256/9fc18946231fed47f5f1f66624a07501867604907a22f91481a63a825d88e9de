@@ -1,0 +1,53 @@
+**Theorem 6.3 (exact boundary memory and the conditions for recovery).**
+For the family (SFP.19), the mathematical memory consisting of the actual
+right-subtree value $v$ and its lag $d$ is equivalent to the full
+original history. Its exact domain and decoder are
+
+$$
+\begin{aligned}
+\mathcal M&=\{(v,d):v\in\mathcal T,\ d\ge1,
+                          \min\operatorname{rank}(B(v))\ge d\},\\
+u&=E(\tau_{-d}B(v)),\qquad
+\operatorname{Recover}(v,d)
+       =(\langle u,v\rangle,(0,d)).
+\end{aligned}
+\tag{SFP.21}
+$$
+
+The subtraction denotes the supplied code-image inverse, not a physical
+backward update. The forward memory map takes $(t,(0,d))$ to $(t|_R,d)$.
+The two maps are mutually inverse on the displayed domains. Consequently
+this memory computes every original complete finite-cut row of that
+source and every subsequent finite iterate and its complete rows.
+
+Neither these two retained rows alone, nor $v$ alone, nor $u$ alone,
+nor residual shape and lag alone, determine the full original in this
+family. The same value memory is not a certificate of physical provenance.
+
+Proof. In (SFP.19), $v=\rho^d u$, so ABC gives the rank lower bound and
+its unique normal preimage. This proves both inverse identities in
+(SFP.21). Conversely the lower bound makes subtraction natural and
+normal, and ABC gives $\rho^d u=v$, hence (SFP.19). Once $t$ is
+reconstructed, finite recursion computes any requested iterate and its
+entire finite-cut exterior and partition; this is a mathematical
+calculation on the supplied value.
+
+All $u$ and all positive $d$ give the same two rows and links, so the
+rows alone do not select a source. For $v=T_2$, both $(u,d)=(T_1,1)$
+and $(T_0,2)$ are legal. They give different originals
+$\langle\beta,T_2\rangle$ and $\langle\alpha,T_2\rangle$.
+The original target cut $Q=\{LL,R\}$ has respective exteriors
+$\langle\beta,\square_R\rangle$ and
+$\langle\alpha,\square_R\rangle$: its $LL$ request is blocked at $L$.
+Thus forgetting the lag loses even this concrete original row, while
+retaining $v,d$ recovers it. Fixing $u=\alpha$ and taking $d=1,2$
+likewise gives different sources, so $u$ alone is insufficient.
+Finally $F([0],[0])$ and $F([0],[2])$ give different normal residuals
+of the same shape at the same $d$, hence different originals by (SFP.20).
+
+If $d=0$, the distinct-class rows fail. If the rank lower bound fails,
+there is no native preimage for (SFP.21). If the retained subtree is
+not the actual right value of the same continuing source, the inverse
+identities provide no assertion about that physical source. These are
+exact failed hypotheses of the recovery statement. $\square$
+

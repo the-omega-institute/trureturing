@@ -1,0 +1,80 @@
+**Theorem 3.1 (exact hidden-circle marginal).** For the same original pole,
+
+$$
+\int_{\mathbb T}p_t^\Omega(o,(k,\alpha,\beta))d\beta
+ =\overline p_t(\pi o,(k,\alpha)),
+\tag{3.1}
+$$
+
+and, with nonnegative integral representatives,
+
+$$
+\int_{\mathbb T}\Gamma_o(k,\alpha,\beta)d\beta
+ =\overline\Gamma_{\pi o}(k,\alpha).
+\tag{3.2}
+$$
+
+The identity holds as an extended pointwise integral and in $L^1(D)$.
+In particular the conditional average and the integral are different:
+
+$$
+W_o(k,\alpha):=\frac1{2\pi}\int_{\mathbb T}\Gamma_o(k,\alpha,\beta)d\beta
+ =\frac{\overline\Gamma_{\pi o}(k,\alpha)}{2\pi}.
+\tag{3.3}
+$$
+
+For every $v\in\overline{\mathcal F}$ the same-field restriction is
+
+$$
+V_o[Jv]=\int_D W_o|v|^2d\nu,
+\qquad
+q_g[Jv]=\overline T[v]-g\int_D W_o|v|^2d\nu.
+\tag{3.4}
+$$
+
+Uniformly smearing the original source along its hidden circle produces
+another full-space field, namely
+
+$$
+\frac1{2\pi}\int_0^{2\pi}
+ \Gamma_{(k_o,\alpha_o,\beta_o+s)}(k,\alpha,\beta)ds
+ =W_o(k,\alpha).
+\tag{3.5}
+$$
+
+Its source is $\delta_{(k_o,\alpha_o)}\otimes d\beta/(2\pi)$, not the
+original point mass $\delta_o$.
+
+Proof. Integrate the left kernel against a bounded base test and use (2.5).
+This gives (3.1) almost everywhere; both densities are smooth in the
+interior for $t>0$, and the hidden circle is compact, so equality holds at
+every base point. Tonelli gives (3.2) as an extended identity. Integrating
+again in $\alpha$ gives the already supplied [G, Proposition 6.1] value
+
+$$
+\int_{\mathbb T^2}\Gamma_o(k,\alpha,\beta)d\alpha d\beta
+ =\varepsilon^{-2}G_I(k_o,k),\qquad
+G_I(a,k)=\frac{(\min(a,k)-l)(u-\max(a,k))}{d}.
+\tag{3.6}
+$$
+
+One can obtain this pointwise version directly from the smooth heat
+marginal and Tonelli; its right side is finite at every interior height.
+Its height integral is $(k_o-l)(u-k_o)/(2\varepsilon^2)$, proving the
+claimed $L^1$ statement. At the base pole $\overline\Gamma$ is infinite:
+the one-dimensional interior height diagonal and the circle diagonal each
+have order $t^{-1/2}$ in (2.7). This does not make $\Gamma_o$ infinite at
+other points of that hidden fiber; [G, Proposition 2.2] says it is finite
+there. All finite witnesses below stay away even from the source height.
+
+Formula (3.4) follows from $|Jv|^2=|v|^2/(2\pi)$ and Tonelli. Its
+finiteness on the full form domain follows from [G, Proposition 4.3], whose
+hypotheses and constants are retained in Definition 3.2 below; weighted
+polarization gives the corresponding sesquilinear identity. Hidden
+translation symmetry of the free form and its heat kernel gives
+$\Gamma_{(k_o,\alpha_o,\beta_o+s)}(k,\alpha,\beta)
+=\Gamma_o(k,\alpha,\beta-s)$. Averaging proves (3.5), including its
+normalization. Testing against $L\varphi$ gives the declared smeared source.
+Thus source smearing has been identified by a correspondence, not silently
+substituted for the point source. $\square$
+

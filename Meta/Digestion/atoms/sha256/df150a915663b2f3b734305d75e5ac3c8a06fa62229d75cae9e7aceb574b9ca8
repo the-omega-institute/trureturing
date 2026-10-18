@@ -1,0 +1,19 @@
+### 定义 2.1（一阶代数与完整代数）
+
+令
+
+\[
+\mathcal A_1=\operatorname{span}\{1,x,y,z\},
+\]
+
+\[
+\mathcal A_2=\operatorname{span}\{1,x,y,z,xy\}.
+\]
+
+由于五个状态的评价向量彼此可区分，有代数同构
+
+\[
+\mathbb R[x,y,z]/(x^2-x,\ y^2-y,\ z^2-z,\ xz,\ yz)
+\cong\mathbb R^\Sigma.
+\]
+

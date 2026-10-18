@@ -1,0 +1,25 @@
+**Lemma 3.4 (Disjoint zero and one edges).** Two vertex-disjoint active
+edges with labels zero and one, in either acquisition order, have summed
+full-law correct mass at most $a^2\eta$ after at most one further query.
+
+Proof. Their component weights are $(a^2,b^2)$ and $(\eta,\eta)$.
+If the target is in the zero pair, its odds are $R^2$. An extension by
+one fresh vertex cannot improve the best sum. Joining the tie pair
+gives $2a^2\eta$ by (3.2); a nontarget query only partitions the
+other factor. Thus $2a^2\eta$ is an upper bound before the phase prior.
+
+If the target is in the one pair, an extension gives $2a\eta$ times
+the zero-pair probability $c$, namely $2ac\eta$. Joining the zero
+pair gives $2a^2\eta$. The latter dominates because $c<a$.
+Queries not touching the target component, repeats and separators
+give at most its original best mass $c\eta$.
+
+If the target is outside both pairs, joining its singleton to the zero
+pair gives $a^2$ times $2\eta$, because
+$\max(ac,a^2)=a^2$. Joining the tie pair, adding a fresh vertex at
+the singleton, or making a nontarget query gives at most
+$2ac\eta\le2a^2\eta$. This includes a query joining the two
+nontarget components: their labels are summed and the target remains
+independent. All other components retain their probability factors.
+Multiply the common bound $2a^2\eta$ by $1/2$. $\square$
+

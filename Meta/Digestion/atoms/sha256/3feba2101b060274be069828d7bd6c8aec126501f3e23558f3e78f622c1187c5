@@ -1,0 +1,50 @@
+**Theorem 5.2 (uniform risk and defect certificates).** For every regular periodic table, every mode and every $r\in[1/3,2/5]$, put $b=6/25$. Then
+
+$$
+0\le F_{p,i}(r)-F_{p,i,L}(r)\le b^L,
+\qquad
+0\le F_{\beta,i}(r)-F_{\beta,i,L}(r)\le\frac25b^L.
+\tag{5.2}
+$$
+
+The same inequalities hold for $G$. For the marginalized noncompletion-letter defects, their finite-partition values $D_{i,L}^{p\beta},D_{i,L}^{\beta\alpha}$ satisfy
+
+$$
+0\le D_i^{p\beta}-D_{i,L}^{p\beta}\le\frac25\lambda^L,
+\qquad
+0\le D_i^{\beta\alpha}-D_{i,L}^{\beta\alpha}\le\lambda^L,
+\quad\lambda=\frac4{15}.
+\tag{5.3}
+$$
+
+Every quantity on the left of these finite certificates uses the same table, actual flow and prior domain.
+
+**Proof.** If a partition leaves one residual cell of masses $a,c$, refining that cell increases TV by at most $\min(a,c)$: its additional half-$\ell^1$ contribution is at most $[(a+c)-|a-c|]/2$. At p the actual residual mass is $a_r^L\le b^L$; at suspension it is $r a_r^L\le(2/5)b^L$. Apply the bound configurationwise and then average; mixtures obey the same bound. This proves (5.2), including any infinite outcome in the residual cell.
+
+For clarity, the conditional label rows involved in (5.3) are
+
+$$
+q_i=\pi_i(1-u_i)\ge\frac35,
+\qquad \gamma_i=\frac{\pi_iU_iB_i}{q_i},
+$$
+
+$$
+a_i^{\rm first}=\tau_i v_i\ge\frac13,
+\qquad \eta_i=\frac{\tau_iV_iA_i}{a_i^{\rm first}}.
+\tag{5.4}
+$$
+
+The p-$\beta$ conditional residual is $\sum_y\gamma_i(y)W_{i,y}$; its actual successor report is $\sum_y\tau_i(y)W_{i,y}$. The suspended-$\alpha$ residual and actual successor use $\eta_i$ and $\pi_{i+1}$ on $Q_{i+1,x}$. In particular the finite-partition defects are exactly
+
+$$
+\begin{aligned}
+D_{i,L}^{p\beta}
+&=\frac12\left\|\sum_y(\gamma_i(y)-\tau_i(y))z_{i,y}^{\beta,L}\right\|_1,\\
+D_{i,L}^{\beta\alpha}
+&=\frac12\left\|\sum_x(\eta_i(x)-\pi_{i+1}(x))z_{i+1,x}^{p,L}\right\|_1.
+\end{aligned}
+\tag{5.4a}
+$$
+
+These formulas define both finite values directly from the common table. Every suspended law has residual mass at most $(2/5)\lambda^L$, and every p law at most $\lambda^L$, by Proposition 3.2. Apply the residual-cell inequality to these pairs of mixtures. ∎
+

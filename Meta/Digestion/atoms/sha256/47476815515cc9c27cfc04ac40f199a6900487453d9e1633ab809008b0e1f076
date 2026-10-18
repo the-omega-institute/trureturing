@@ -1,0 +1,26 @@
+**Proposition 83.4 (support boundary for the selected dual).** For any fixed density $\rho$ and any trace-optimal dual $Y$ in (S.191), including singular cases,
+
+$$
+\operatorname{ran}Y
+=\operatorname{ran}\!\left(\mathcal N(\rho^2)^T\right)
+=\operatorname{ran}\!\left(\mathcal N(\rho)^T\right).
+\tag{S.197}
+$$
+
+Consequently,
+
+$$
+\operatorname{rank}Y
+=\dim\operatorname{span}_\alpha K_\alpha\operatorname{ran}\rho.
+\tag{S.198}
+$$
+
+Proof. The row-vectorization convention gives
+
+$$
+\operatorname{Tr}_3 C_{\rho,N}=\mathcal N(\rho^2)^T=:B.
+\tag{S.199}
+$$
+
+Every feasible dual satisfies $3Y\succeq B$. Let $\Pi$ be the support projection of $B$. Positivity of $C_{\rho,N}$ and the vanishing partial trace on $\ker B$ imply $C_{\rho,N}=(I_3\otimes\Pi)C_{\rho,N}(I_3\otimes\Pi)$. Compressing $Y$ to $\Pi$ preserves feasibility and cannot increase its trace. At optimum, positivity removes the exterior and cross blocks, so $\operatorname{ran}Y=\operatorname{ran}B$. Since $\rho$ and $\rho^2$ have the same support, $\mathcal N(\rho)$ and $\mathcal N(\rho^2)$ have the same output support, proving (S.197)–(S.198). $\square$
+

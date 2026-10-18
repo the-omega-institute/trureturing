@@ -1,0 +1,98 @@
+**定理 20.5.1（Hilbert 投影容量）。** 固定基线输入 $a$、目标输入 $x$ 和选择标签 $z$。令
+
+$$
+f(u)=s_x(u),
+\qquad
+g(u)=s_a(u),
+\qquad
+\nu=B_a^z\pi,
+\qquad
+r(u)=\frac{f(u)}{g(u)}.
+$$
+
+写 $\bar r=\mathbb E_\nu[r]$，并令
+
+$$
+m=\min_{u\in\operatorname{supp}\nu}r(u),
+\qquad
+M=\max_{u\in\operatorname{supp}\nu}r(u).
+$$
+
+则有精确换测度式
+
+$$
+B_x^z\pi(u)=\nu(u)\frac{r(u)}{\bar r},
+$$
+
+以及
+
+$$
+\operatorname{TV}(B_x^z\pi,B_a^z\pi)
+=\frac{1}{2\bar r}\mathbb E_\nu|r-\bar r|
+\le
+\frac{\sqrt M-\sqrt m}{\sqrt M+\sqrt m}.
+$$
+
+定义选择似然两行的投影扩张
+
+$$
+\Delta_z(a,x)=\log\frac{M}{m}
+=\max_u\log\frac{s_x(u)}{s_a(u)}
+-\min_u\log\frac{s_x(u)}{s_a(u)}.
+$$
+
+则对任意终端读出核 $K_x$，顺序效应满足
+
+$$
+\boxed{
+R_{a,x,z}(\pi,K)
+\le
+\operatorname{TV}(B_x^z\pi,B_a^z\pi)
+\le
+\tanh\!\left(\frac{\Delta_z(a,x)}4\right).
+}
+$$
+
+对所有允许的先验与读出取上确界时，上界可达：
+
+$$
+\boxed{
+\sup_{\pi,K}R_{a,x,z}(\pi,K)
+=\tanh\!\left(\frac{\Delta_z(a,x)}4\right).
+}
+$$
+
+**证明。** 由 Bayes 公式，$\nu(u)\propto\pi(u)g(u)$，故
+
+$$
+B_x^z\pi(u)=\frac{\pi(u)f(u)}{\sum_v\pi(v)f(v)}
+=\nu(u)\frac{f(u)/g(u)}{\mathbb E_\nu[f/g]}.
+$$
+
+这给出等式。由于 $r\in[m,M]$，固定其均值 $\bar r$ 时，凸函数 $t\mapsto|t-\bar r|$ 的端点表示给出
+
+$$
+\mathbb E_\nu|r-\bar r|
+\le
+\frac{2(M-\bar r)(\bar r-m)}{M-m}.
+$$
+
+除以 $2\bar r$，再对 $\bar r\in[m,M]$ 最大化；最大点是 $\bar r=\sqrt{Mm}$，最大值为
+
+$$
+\frac{\sqrt M-\sqrt m}{\sqrt M+\sqrt m}
+=\tanh\!\left(\frac14\log\frac Mm\right).
+$$
+
+任意随机读出核都收缩总变差，得到第一项不等式。为达到上确界，在两个取到 $m,M$ 的潜变量上令 $\nu$ 的质量分别为
+
+$$
+\nu(r=m)=\frac{\sqrt M}{\sqrt M+\sqrt m},
+\qquad
+\nu(r=M)=\frac{\sqrt m}{\sqrt M+\sqrt m},
+$$
+
+并取 $\pi(u)\propto\nu(u)/g(u)$。若坚持先验满支撑，可在其余点加入趋于零的正质量，故上确界不变。最后用二值 Hahn 读出 $Y=\mathbf1_A(U)$，其中 $A$ 是 $B_x^z\pi-B_a^z\pi$ 的正部；该读出达到潜变量总变差。证毕。
+
+<a id="claim-20-5-2"></a>
+

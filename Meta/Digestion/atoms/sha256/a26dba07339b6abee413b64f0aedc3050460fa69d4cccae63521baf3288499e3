@@ -1,0 +1,25 @@
+**Definition 21.1 (boundary of the consumed factorization).** Equation (R.92) used exactly two actual real Kraus matrices and a real orthogonal pair. If a channel has additional Kraus matrices and the same relation $\lambda K_0u+\eta K_1v=0$, the expansion instead reads
+
+$$
+\begin{aligned}
+N(uv^T+vu^T)
+&=xy^T+yx^T+\sum_{\gamma\geq2}
+ \left[(K_\gamma u)(K_\gamma v)^T+(K_\gamma v)(K_\gamma u)^T\right],\\
+x^Ty&=-\sum_{\gamma\geq2}(K_\gamma u)^T(K_\gamma v).
+\end{aligned}
+\tag{R.97}
+$$
+
+Indeed the relation combines only the first two summands, and TP makes the sum of all column inner products $u^Tv=0$. The residual therefore also supplies the trace cancellation: the isolated two-term part need not be traceless. Complementary Choi rank at most five neither removes this residual nor bounds its trace norm. The encoder rank two in Theorem 18.2 is a property of that family, not a consequence of the complementary rank bound for the whole class. A full-class kernel route still needs a bound on every remaining contribution in the same actual output, or a different uniform certificate. The all-third-column domain and rank-nine real compression in Theorem 1.3 are retained.
+
+The family above needs no reference entanglement for its exclusion, since (R.89) is already an orthogonal pure pair. For the whole original class, neither a useful unrestricted orthogonal pure pair for every encoder nor the necessity of reference entanglement has been established. There is a separate mixed-state route before adding a reference. In this particular qutrit domain, take a nonzero traceless Hermitian input $X$. Its Jordan parts $X_+,X_-$ have disjoint supports and the same trace $c=\|X\|_1/2>0$, so $X=c(\rho-\sigma)$ with $\rho\sigma=0$. Their ranks sum to at most three, so after changing the sign of $X$ if needed, one state is pure and the other has rank at most two. Spectral decomposition supplies exactly
+
+$$
+\rho=|v\rangle\langle v|,\qquad
+\sigma=p|w_1\rangle\langle w_1|+(1-p)|w_2\rangle\langle w_2|,
+\qquad 0\leq p\leq1,
+\tag{R.98}
+$$
+
+where $v,w_1,w_2$ are orthonormal; a zero-weight direction can be completed arbitrarily. Consequently the minimum of $\|N(X)\|_1/\|X\|_1$ over all nonzero traceless Hermitian qutrit inputs is the minimum of $\|N(\rho-\sigma)\|_1/2$ over these orthogonal-support pairs. Equation (R.95) applies to all of them. This Jordan reduction only delineates the remaining contraction method: it proves neither that mixed inputs are necessary in the original class nor that a reference is necessary or sufficient for its sharp bound. Failure to find a restricted pair, or even an unrestricted pure pair, would not exclude an orthogonal-support mixed witness.
+

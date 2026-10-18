@@ -1,0 +1,38 @@
+**Corollary 254.2 (Optimized $\Psi$ and the combined repair bound).**
+Define
+
+$$
+\Psi(S,\delta)=2S+3\delta+2\sqrt{S(S+\delta)}.
+\tag{254.5}
+$$
+
+For this same decomposition,
+
+$$
+\mu\le\min\{1,B,4\kappa,\Psi(S,\delta)\},\qquad
+\Psi(S,\delta)\le4(S+\delta)=4(D-s_0).
+\tag{254.6}
+$$
+
+Consequently the fixed repair is cap-feasible at
+$\min\{1,e+\mu\}$, with the same positive and sole-zero vectors.
+
+**Proof.** Dividing (254.1) gives
+
+$$
+\mu\le\frac S t+\frac{S+\delta}{1-t}+2\delta.
+$$
+
+For $S>0$, the minimum is attained at
+$t=\sqrt S/(\sqrt S+\sqrt{S+\delta})$ and equals (254.5).
+One can see the minimum without differentiation by completing
+$\bigl(\sqrt{S(1-t)/t}-\sqrt{(S+\delta)t/(1-t)}\bigr)^2$.
+For $S=0$, let $t\downarrow0$ in the numerical inequality to get
+$\mu\le3\delta$, including $\delta=0$. This is a limit of
+inequalities, not a limiting sampler. Finally
+$2\sqrt{S(S+\delta)}\le2S+\delta$ by squaring the nonnegative
+sides. Intersecting bounds on the same $\mu$ proves (254.6).
+It does not claim that $\Psi$ always improves the actual
+$4\kappa$ bound. The factor four already counted in Section 252
+is one bound, not a second independent result. $\square$
+

@@ -1,0 +1,55 @@
+**Theorem 8.3 (causally acquired sharp complement).** A public enumerative rank
+of the actually executed command word, conditional on its current histogram,
+attains Theorem 8.2's supplement bound at each sealed semantic cut. The pair
+$(Z,\operatorname{rank})$ has exactly the task kernel for arbitrary future
+Native commands together with complete historical-row lookup on this
+separate interface.
+
+Proof. Fix a public alphabet order. For remaining counts $\mathbf c$ of total
+$l>0$, the words beginning with an available symbol $a$ form a consecutive
+lexicographic block of size
+
+$$
+F_a(\mathbf c)=
+\frac{(l-1)!}{(c_a-1)!\prod_{q\ne a}c_q!}.
+\tag{NCR.12}
+$$
+
+Rank adds the sizes of available preceding-symbol blocks and recurses after
+decrementing $c_a$. Unranking chooses the unique block containing the given
+integer, subtracts its preceding blocks and recurses. The blocks are disjoint
+and their sum is $F(\mathbf c)$ because they partition by first symbol.
+Induction on $l$, with the sole empty word at $l=0$, proves a bijection with
+$\{0,\ldots,F(\mathbf m)-1\}$. This is Cover's credited enumerative method.
+
+After an actual command has committed, unrank the old finite prefix, append
+that acquired command, increment its histogram and rerank the resulting
+finite word. The new version is sealed before admitting another command.
+This algorithm needs no future histogram or command. Interim versions,
+scratch, the pending command and its result remain actual charged work.
+At the sealed cut the logical rank field uses the claimed conditional width;
+this is not a bound on all simultaneous constructed storage.
+
+Given $(Z,\operatorname{rank})$, recover $u$ by Theorem 8.2, unrank the actual
+word, replay it on $\rho^2u$ and regenerate every epoch/address/reply row.
+Equal $(u,w)$ therefore gives identical task behavior for equal future
+commands. If $w$ differs, a historical-row lookup separates it; if one word
+is a proper prefix, an in-range row versus an executed out-of-range refusal
+separates them. If $w$ is equal but $u$ differs, their current trees differ by
+substitution injectivity. Two different finite labelled ordered trees have a
+different literal reply at an address: follow common branches to the first
+differing constructor/colour. A Native Read there separates them. Hence task
+equivalence is exactly equality of $(u,w)$, which the stated code captures.
+All arithmetic, source-free replay, rank bits, ingress, row accesses and
+copies are paid finite string routines. ∎
+
+The same proof applies to distinct within-epoch row permutations with the
+product-factorial alphabet. These are conditional source-recovered ordering
+bounds, not lower bounds for the single fixed controller of Sections 3–7.
+Neither a scalar update epoch nor a source code contains this independent
+order. A primitive counter cannot be used as a covert command-word encoder.
+The count here grants an equal *semantic command count*; no assertion is made
+that different command orders have equal expanded tape runtimes. If a runtime
+length is additionally supplied as side information, the relevant count is
+its conditional fiber, not automatically NCR.11.
+

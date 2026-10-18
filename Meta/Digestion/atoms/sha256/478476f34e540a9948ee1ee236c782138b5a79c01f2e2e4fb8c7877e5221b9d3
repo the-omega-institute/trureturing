@@ -1,0 +1,92 @@
+## 66. 来源范围与三种读数的共同边界
+
+**命题 C-66.1（来源模型内的完整活动恢复及其边界）。** 对已知带标号环 $n\ge5$ 的正乘积活动来源，全部中心的五律给出
+
+$$
+\lambda_i=\frac{p_2^{(i)}}{p_0^{(i)}},\qquad
+\frac{p_2^{(i)}}{p_0^{(i)}}
+\left(p_0^{(i)}p_{13}^{(i)}-p_1^{(i)}p_3^{(i)}\right)
+=\frac{(-1)^n\prod_j\lambda_j}{\mathcal Z^2}.
+\tag{C66.1}
+$$
+
+因此，在这个已经指定的源族内，全部精确比值唯一确定活动，进而唯一确定完整环律。后一个式子是同一律的跨窗口校准恒等式，不是任意局部表列表来自该乘积活动源族的充分条件。
+
+证明。式 (C60.3) 中 $p_0>0$，并且 $p_2=\lambda_ip_0$，故恢复公式无除零问题。每个位置都可作为中心，所以全部活动被唯一恢复；定义 (C59.1) 对这些参数给唯一有限总权和唯一概率律。第二式就是式 (C60.6) 的概率坐标表达。
+
+若只给候选五律，可先从比值构造唯一候选活动，但还须用该活动构造完整律并核对全部窗口是否真的等于所给表；只核对比值或共同残差并不完成这个核对。一个全正的具体例子是在六环的每个中心都报告
+
+$$
+p=\frac{(1,1,4,1,3)}{10},\qquad
+X=Y=Z=\frac25,\quad \frac{p_2}{p_0}=4,\quad
+\Delta=\frac1{50},\quad\frac{p_2}{p_0}\Delta=\frac2{25}.
+$$
+
+这份列表的单位置及相邻边边缘一致，且每窗校准值相同、符号为正。然而若它来自正乘积活动六环，恢复式强制每个活动都为四。该环的独立集数按占位数为 $1,6,9,2$：非相邻对有 $\binom62-6=9$ 个，三占位只有两个交替配置。因此其配分总权为 $1+6\cdot4+9\cdot4^2+2\cdot4^3=297$，式 (C60.5) 强制残差为 $4^5/297^2=1024/88209\ne1/50$，矛盾。这个例子只排除指定乘积源族，不据此排除全部相关来源。
+
+C-26.8 另外区分局部相容与任意共同来源的存在性，模型内的单射性不扩大那个存在性结论。跨位置共同值在一次给定律上恒定，并未规定随活动变化的动力学守恒量。证毕。
+
+**命题 C-66.2（去掉来源条件的两个具体失败方式）。** 固定总占位会破坏本章的活动比和路径符号结论；对一般共同来源，即使所有三位窗口完全相同，也未必决定全局律。
+
+证明。第一种情形取六环、所有活动一，再条件化于总占位恰为一。六个单点配置等概率，对每个中心的窗口有
+
+$$
+p=\frac{(3,1,1,1,0)}6,\qquad
+\frac{p_2}{p_0}=\frac13\ne1,\qquad
+\Delta=-\frac1{36}<0.
+$$
+
+空窗口来自窗口外三个单点；另外三个局部单点各一项，两端共同占位不允许。这个总数条件不是定义 C-59.2 的来源，故其偶数环负残差不与命题 C-60.3 矛盾。切开图也没有去掉剩余总占位约束，所以不能再将两侧总权相乘。
+
+第二种情形取九环，只让 $B_0,B_3,B_6$ 可变，其余位固定零。令 $\nu$ 在这三位上为三个独立公平位的律；令 $\eta$ 在四个偶校验词 $000,011,101,110$ 上均匀。二者都支持合法环配置，而且每个连续三位窗口至多含上述一个可变位置，所以所有窗口边缘相同：该位公平，其余位确定零。但 $\nu$ 对三位奇校验事件赋概率 $1/2$，$\eta$ 赋概率零，完整律不同。
+
+若还要求每个合法环配置都正，取定义 C-59.2 中单位活动的全支持律 $\tau$，固定 $0<\varepsilon<1$，令
+
+$$
+\widetilde\nu=(1-\varepsilon)\nu+\varepsilon\tau,\qquad
+\widetilde\eta=(1-\varepsilon)\eta+\varepsilon\tau.
+$$
+
+二者在每个合法配置上的质量至少为 $\varepsilon\tau(b)>0$，全部三位窗口仍相同，而上述事件概率之差为 $(1-\varepsilon)/2>0$。因此合法支持上的严格正性本身也不能替代乘积活动假设。证毕。
+
+**约定 C-66.3（经典来源及其精确使用范围）。** 下列文献作为已知中间方法使用；版本、对象及条件均随引文给出。当前源特定应用由 C-59–C-66 的普通数学推导承担，不把经典恒等式、同义改写或参数代入作为独立的新内容。
+
+| 文献 | 实际使用范围与条件 |
+| --- | --- |
+| Alistair Sinclair、Piyush Srivastava、Yitong Yin，*Spatial mixing and approximation algorithms for graphs with bounded connective constant*，[arXiv:1308.1762v2](https://arxiv.org/abs/1308.1762v2)，§1.1、Theorem 1.1 | §1.1 的统一活动硬核独立集权为 $\lambda^{|I|}$。Theorem 1.1 要求连接常数至多 $\Delta$ 且统一活动 $\lambda<\lambda_c(\Delta+1)$。这里只取模型背景；非齐次恒等式及 $q_\Lambda$ 界由 C-60、C-63 的有限源证明给出。 |
+| Ferenc Bencs，*Christoffel-Darboux type identities for independence polynomial*，[arXiv:1409.2527v1](https://arxiv.org/abs/1409.2527v1)，Theorem 1.3、Corollary 1.5 | Theorem 1.3 对独立集多项式给含指定两点的诱导连通二分子图求和，项的符号由子图内部距离决定。Corollary 1.5 对二分图及正统一变量给符号结论。Theorem 1.1 是匹配多项式恒等式。该文还明确一般图的最短距离奇偶猜想不成立；本章不援引一般图奇偶法则。 |
+| Alejandro Edera、Facundo Bromberg、Federico Schlüter，*Markov random fields factorization with context-specific independences*，[arXiv:1306.2295v1](https://arxiv.org/abs/1306.2295v1)，Theorem 1、Auxiliary Lemma 1、Theorem 2 | 三处均要求正联合分布；Theorem 2 还要求各约化依赖模型 graph-isomorph 及 CSI-map 条件。硬排斥的全二值来源有零概率配置，不满足其正性前提。此文只用于定位适用边界，不承担双切口因子分解。 |
+| Nathalie Peyrard、Marie-Josée Cros、Simon de Givry、Alain Franc、Stéphane Robin、Régis Sabbadin、Thomas Schiex、Matthieu Vignes，[arXiv:1506.08544v2](https://arxiv.org/abs/1506.08544v2)，§§2.1–2.2、3.2 | v2 PDF 题名为 *Exact or approximate inference in graphical models: why the choice is dictated by the treewidth, and how variable elimination can be exploited*；摘要页题名为 *Exact and approximate inference in graphical models: variable elimination and beyond*。使用有限因子与分配律消元背景；§2.1 也讨论 Boolean $0/1$ 势。当前非负因子证明允许零，不调用正势反推定理，也不从一般稠密表复杂度推出本两项表示的存储下界。 |
+| Mathias Drton、Seth Sullivant，*Algebraic Statistical Models*，[arXiv:math/0703609v1](https://arxiv.org/abs/math/0703609v1)，§3.2 Example 16 | 离散条件独立的交叉乘积等式背景。对应这里底面二元表的行列式零判据；它不单独给活动恢复、路径符号、外部唯一性或衰减界。 |
+
+Bencs Theorem 1.3 的原式使用一个共同变量 $x$，明确为
+
+$$
+I(G-u,x)I(G-v,x)-I(G,x)I(G-u-v,x)
+=\sum_{H\in\mathcal B_{u,v}}
+(-1)^{d_H(u,v)+1}x^{|V(H)|}I(G-N[H],x)^2,
+$$
+
+其中 $\mathcal B_{u,v}$ 是包含 $u,v$ 的诱导连通二分子图族，$N[H]$ 是闭邻域。这是独立多项式差的先例定位，不把当前非齐次权强行代入其单变量陈述，也不把不同子图的符号用整个图的一条最短路径替换。
+
+仓内对应关系也逐项限定：C-7.1 的孤立三位正活动律提供局部计权，C-7.3 区分无条件协方差与底面残差，C-7.7–C-7.10 给四角系数及额外排斥边的区别；C-8.2–C-8.3 给路径矩阵与均匀闭式，C-8.7 给同边缘二元表的差；C-19.3 给共同指标与乘积分量的秩论证；C-26.11–C-26.12、C-26.22 给完整闭路迹及同源归一化。C-3.6、C-4.5–C-4.6 的 KL、Fisher 与对数四角坐标用于 C-61 的实际纤维。底面行列式与退化条件表另沿用《行列式、条件拼接与原生守卫接续》推导 4.2–5.2。它们都作为本应用的中间输入，不被重新命名为独立成果。
+
+**约定 C-66.4（全链条与不可省略的条件）。** 当前应用的连接是
+
+$$
+\mathbb P_\lambda
+\ \longrightarrow\ H_i
+\ \longrightarrow\ p^{(i)}
+\ \longrightarrow\left(
+\frac{p_2^{(i)}}{p_0^{(i)}},\ \Omega_i,\ \lambda_i\Delta_i
+\right).
+$$
+
+第一箭头对同一外部变量求和；第二箭头接回三个局部活动并用同一 $\mathcal Z$ 归一化。第三箭头的三个读数分别为：中心活动、固定外部的联合四角比、同一完整环律的跨中心校准量。它们的固定参数不同，不能互换“恒定”的含义。
+
+简单环、$n\ge5$、正活动、完整乘积来源及不固定总占位，是 C-60 的严格非零结论和 C-62–C-63 路径论证的共同前提。所有对数和比值只在已证明正的格上使用；$\lambda_j=0$ 的极限可改变秩和支持，不能照用正性结论。三角形的端点直接相邻，101 不在支持中，不能使用这里的全正五律；长度四不在本章所声明范围内。
+
+衰减界另需统一有限上界 $\Lambda$；其概率空间先固定为 $B_i=0$ 的事件条件律，完整条件互信息另乘 $1-Z$。双切口组件允许退化，但条件事件总质量必须正。串联、并联还分别要求 C-64.2 的共有顶点、边集合及计权条件；多路连接可有 C-64.4 的精确抵消。模型内的全活动恢复以精确标号窗口律为输入，不声称任意局部列表可实现，也不从有限样本取得精确人口律。
+
+这些结论限于已声明的有限占位概率源及其数学消元。普通证明承担各全称命题；所列具体配置与有理数实例说明其适用方式和失败边界，不替代全称证明。
+

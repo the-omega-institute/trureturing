@@ -1,0 +1,112 @@
+**Theorem 77.2 (Full-carrier center feasibility and its unique minimum).**
+For every $m\ge0$, $0\le\varepsilon\le1$ and probability $\nu$ on the
+entire original carrier,
+
+$$
+\sup_{x\in H_m}\operatorname{TV}(\nu,\lambda^a_x)\le\varepsilon
+\quad\Longleftrightarrow\quad
+\begin{cases}
+\nu(\{\theta_0\})\ge1-\varepsilon,\\
+\nu(\{\theta_n\})\ge(a_n-\varepsilon)_+&\text{for every }n>m.
+\end{cases}
+\tag{77.4}
+$$
+
+Such a probability exists exactly when $S_m(\varepsilon)\le\varepsilon$.
+The attained minimum radius is
+
+$$
+R_m=\max_{k\ge1}\frac{\sum_{j=1}^k a_{m+j}}{k+1}.
+\tag{77.5}
+$$
+
+It is the unique positive solution of $S_m(R_m)=R_m$. Its unique minimizing
+probability, even among all full-carrier probabilities, is
+
+$$
+\nu_m^*=(1-R_m)\delta_{\theta_0}
+       +\sum_{n>m}(a_n-R_m)_+\delta_{\theta_n}.
+\tag{77.6}
+$$
+
+This law has finite support. Moreover
+$a_{m+1}/2\le R_m<a_{m+1}$, and $R_m$ is nonincreasing with limit zero.
+
+**Proof.** Put $T=1-\nu(\{\theta_0\})$ and
+$b_n=\nu(\{\theta_n\})$. The two target singletons and their complement
+give
+
+$$
+\begin{aligned}
+\operatorname{TV}(\nu,\lambda_n)
+ &=1-\min\{1-T,1-a_n\}-\min\{b_n,a_n\}\\
+ &=\max\{T,a_n\}-\min\{b_n,a_n\}.
+\end{aligned}
+\tag{77.7}
+$$
+
+Indeed all negative mass of $\nu-\lambda_n$ lies on these two singletons;
+the sum of their negative deficits equals its positive mass, since both
+measures have total mass one. This also proves (77.7) when $\nu$ has
+diffuse mass or other atoms. The elementary TV overlap identity and its
+event-supremum normalization are the ingredients in Levin and Peres, with
+Wilmer, [*Markov Chains and Mixing Times*, second edition, Chapter 4,
+Proposition 4.2, Remark 4.3 and equation
+(4.13)](https://pages.uoregon.edu/dlevin/MARKOV/mcmt2e.pdf).
+The finite partition argument here accounts for the whole original carrier.
+
+Every $n>m$ is realized at an actual source in $H_m$. As $n\to\infty$,
+the right side of (77.7) tends to $T$: both $a_n$ and
+$\min\{b_n,a_n\}$ tend to zero. A uniform cap therefore forces
+$T\le\varepsilon$. If $a_n>\varepsilon$, then
+$b_n\le T\le\varepsilon<a_n$, and (77.7) reduces to $a_n-b_n$.
+The cap then forces $b_n\ge a_n-\varepsilon$. If
+$a_n\le\varepsilon$, (77.7) is at most
+$\max\{T,a_n\}\le\varepsilon$ without an additional condition.
+These statements prove necessity and sufficiency in (77.4). The limiting
+inequality is taken along occupied actual $D_n$; it introduces no limiting
+source.
+
+Disjointness of the marked singletons gives
+$S_m(\varepsilon)\le T\le\varepsilon$. Conversely, if this sum is at
+most $\varepsilon$, assign mass $(a_n-\varepsilon)_+$ to each $n>m$
+and the remaining mass to $\theta_0$. This is a probability satisfying
+(77.4). At $\varepsilon=0$ feasibility is impossible, because
+$S_m(0)\ge a_{m+1}>0$.
+
+For $t>0$, monotonicity of $(a_n)$ gives the finite-positive-part identity
+
+$$
+S_m(t)=\sup_{k\ge0}
+       \left(\sum_{j=1}^k a_{m+j}-kt\right),
+\tag{77.8}
+$$
+
+where the term $k=0$ is zero. The positive summands form an initial
+segment, and adjoining a nonpositive summand cannot increase a partial
+sum. Hence $S_m(t)\le t$ is equivalent to
+$\sum_{j=1}^k a_{m+j}\le(k+1)t$ for every $k\ge1$.
+The averages in (77.5) tend to zero, by $a_n\to0$, and the first one is
+positive. Their positive supremum is consequently a maximum at a finite
+$k$. Let that maximum be $R$. The preceding equivalence gives
+$S_m(R)\le R$. A maximizing $k$ in (77.5), substituted in (77.8), gives
+$S_m(R)\ge R$. Thus $S_m(R)=R$ and $R$ is the minimum feasible radius.
+
+On every closed interval of positive $t$, only finitely many summands can
+be nonzero; therefore $S_m$ is continuous there. Since $S_m$ is
+nonincreasing, $S_m(t)-t$ is strictly decreasing. Its positive root is
+unique. At that root (77.4) forces
+
+$$
+R_m=S_m(R_m)\le\sum_{n>m}b_n\le T\le R_m.
+$$
+
+All inequalities are equalities. Each required marked mass is fixed, and
+there is no remaining mass for another tape. This proves (77.6) and
+uniqueness on the entire carrier. Finite support follows from $R_m>0$.
+The first average in (77.5) gives $R_m\ge a_{m+1}/2$. Each average is
+strictly less than $a_{m+1}$, and the maximum is attained, so
+$R_m<a_{m+1}$. Finally $S_{m+1}(t)\le S_m(t)$ implies
+$R_{m+1}\le R_m$, and the upper bound implies $R_m\to0$.
+$\square$
+

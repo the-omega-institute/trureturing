@@ -1,0 +1,111 @@
+**定义 202.1（完整行空间与本节参数）。** 固定整数 $L\ge3$，令
+$\Omega=\{0,1\}^L\setminus\{1^L\}$，$n(w)=\min\{i:w_i=0\}$，
+$\Omega_j=\{w:n(w)=j\}$，并记 $w(Z)$ 为零集恰为 $Z$ 的字。
+对每个 $w\in\Omega_j$，保留基事件 $\{0\}$、正确事件 $\{j\}$、独立 pair
+事件 $\{0,j\}$，对应评分为 $A_w,C_w,P_w$；全正字的基行评分为 $T$。
+剖面 $b=(b_1,\ldots,b_L;e)$ 的这四类需求依次为
+
+$$
+1-b_j-e,\qquad b_j-e,\qquad1-e,\qquad1-e.
+\tag{202.1}
+$$
+
+需求向量记为 $d(b)$。全部 Boolean 字、任意多零字、负的单点需求和零权重行
+仍在完整系统中，独立 pair 行不由两条单点行代替。
+标签集为 $\{0,\ldots,L\}$。完整目录 $\mathcal D_N$ 包含空日程、单询日程、
+所有 $i<j$ 的四胞 $00,01,10,11$ 表；$\mathcal D_O$ 的双询胞为 $0,10,11$。
+每胞允许任意标签，包括未查询标签和较早标签。静态回答下，反序双询只交换胞，
+重复日程只含单询信息；这不免除执行中重复请求的计数。
+
+沿用前卷的共同锚和事件矩阵：
+
+$$
+\begin{aligned}
+R&=(1,2;1,2,0),&\alpha&=(1,1,0,\ldots,0;0),&
+\mathbf r&=z_R=d(\alpha),\\
+h(b)&=d(b)-\mathbf r,&G_C&=(z_D-\mathbf r)_{D\in\mathcal D_C},&
+B_C(y)&=\max_{D\in\mathcal D_C}y\cdot z_D,\\
+\Delta_C(y)&=B_C(y)-y\cdot\mathbf r,&
+\rho_C(b)&=\min\{\textstyle\sum_D\lambda_D:\lambda\ge0,\ G_C\lambda\ge h(b)\},
+&&C\in\{N,O\}.
+\end{aligned}
+\tag{202.2}
+$$
+
+不可行时 $\rho_C=\infty$。$R$ 的标签按停止胞排列；在 $N$ 的 $00,01$ 胞都
+输出 $1$。对非负评分及任意带符号商分别置
+
+$$
+\begin{aligned}
+\beta_j(y)&=\sum_{w\in\Omega_j}(C_w-A_w),&
+K_y&=\sum_{w\in\Omega}(A_w+C_w+P_w)+T,\\
+Q(y)&=(\beta_1,\ldots,\beta_L;K_y),&
+F_q(b)&=\sum_{j=1}^L\beta_j(b_j-\alpha_j)-Ke
+\quad(q=(\beta;K)).
+\end{aligned}
+\tag{202.3}
+$$
+
+于是 $F_{Q(y)}=y\cdot h$。使用前卷闭域
+
+$$
+\begin{aligned}
+H=H_L=\{b:\;&1\ge b_1\ge\cdots\ge b_L\ge e\ge0,\quad b_2=b_3,\\
+ &(L+1)e\le\sum_{j=3}^Lb_j,\quad b_1+\sum_{j=3}^Lb_j-(L+1)e\le1\}.
+\end{aligned}
+\tag{202.4}
+$$
+
+记 $H_N=\{b\in H:\rho_N(b)<\infty\}$，
+$P_H=\{q:F_q\le0\text{ 在 }H\text{ 上}\}$，以及
+
+$$
+\begin{aligned}
+D_C(d)&=\{Q(V):V\ge0,\ \Delta_C(V)\le d\}\quad(d\ge0),\\
+E_N&=\{q:\exists V\ge0,\ \exists\theta\in[0,1],\quad
+\Delta_N(V)\le1-\theta,\quad \sigma_H(q-Q(V))\le\theta\},\\
+\sigma_H(q)&=\max_{b\in H}F_q(b).
+\end{aligned}
+\tag{202.5}
+$$
+
+$V$ 非负，但 $q-Q(V)$ 无符号限制；$\theta=1$ 仍允许非零的零超额评分。
+本节输入评分满足
+
+$$
+A=0,\qquad\operatorname{supp}P\subseteq\Omega_1\cup\Omega_2,
+\qquad C_w\ge0\text{ 任意},\qquad T=t\ge0.
+\tag{202.6}
+$$
+
+定义
+
+$$
+\gamma_j=\sum_{w\in\Omega_j}C_w,\quad
+E=\gamma_1+\gamma_2,\quad G=\sum_{j=3}^L\gamma_j,\quad
+\mu=\max_{j\ge3}\gamma_j,\quad S=\sum_wP_w,\quad B=S+t,
+\quad\delta=\Delta_O(y).
+\tag{202.7}
+$$
+
+因此 $K_y=E+G+B$、$y\cdot\mathbf r=E+B$。
+停止表 $(1,2;1,2,j)$ 与锚给出的既有读数为
+
+$$
+B_O(y)\ge E+S+\max\{t,\mu\},\qquad\delta\ge(\mu-t)_+.
+\tag{202.8}
+$$
+
+为说明每个证书的用途，若同一个完整配置 $\lambda\ge0$ 满足
+$G_N\lambda\ge h(b)$，总质量为 $M$，则非负性给
+
+$$
+F_q(b)\le V\cdot h(b)+\theta
+\le V\cdot G_N\lambda+\theta
+\le M\Delta_N(V)+\theta.
+\tag{202.9}
+$$
+
+当 $(V,\theta)$ 满足 (202.5)，右端不超过 $\max\{1,M\}$。
+这是定理 199.3—199.4 的证书解释；它不把评分归一成获取核。
+

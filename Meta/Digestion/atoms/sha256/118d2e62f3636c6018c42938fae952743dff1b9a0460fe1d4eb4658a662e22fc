@@ -1,0 +1,16 @@
+**Example 11.3 (finite exact arithmetic).** At
+$c=2/5$, $Z=1/5$, $r=4/5$, $a=1/5$, $\eta=1/10$, $T=1$,
+$L=1/5$, $W=V=1$, take $n=4096$, $d_k=\tau=n^{-2}$ and $d_x=n^{-1}$.
+These are conditional sensor specifications, not laboratory readings.
+The exact rational general-phase budgets are
+
+$$
+\begin{aligned}
+E&=29/40960,&\Delta&=1027/41943040,&M&=2053/10240,\\
+B&=32517135/4294967296,&E_A&=1409/5242880,&
+P&=2433/4194304,\\
+3B+P&=100042797/4294967296<1/40.
+\end{aligned}
+\tag{SC.33}
+$$
+

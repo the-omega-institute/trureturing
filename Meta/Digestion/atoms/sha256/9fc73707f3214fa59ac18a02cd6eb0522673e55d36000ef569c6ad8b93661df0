@@ -1,0 +1,33 @@
+**Proposition 5.3 (uniform local footprint).** The compiler of Definition
+5.2 is finite and source uniform. Every original executing primitive uses
+at most three old cell components, at most two appended cell components,
+the $b$ finite-register switches, and bounded fixed routing paths. It
+creates at most 96 vertices. Its old and new footprint is contained in a
+fixed-radius port neighborhood of the distinguished root; for example
+$R=20+\lceil\log_2(b+1)\rceil$ suffices for the specified scaffolds.
+
+Proof. A core tape row addresses one cell and, for a move, one neighbor.
+The receipt adds its old append R. Other core rows touch finite registers
+and at most their designated seal cell. Thus at most three old cell
+components are needed, with overlap reducing this number. EX or a boot
+constructor creates at most one core cell and the receipt creates one
+meter cell, giving two cell appends and $2\cdot48=96$ new vertices.
+Other writes rewire existing switch occurrences.
+
+The outer scaffold has height at most seven. Its origin/head route has
+at most eight edges. A neighbor adds three; a cell component has height
+five. The finite-register component has height at most
+$\lceil\log_2 b\rceil+2$. Append terminals are two edges from their
+old final cell root, and the new cell is attached there. These estimates
+are bounded by the displayed $R$, also including returns and head slots.
+All relevant sites are reached by specified walks from the distinguished
+root. Only finitely many bytes, finite registers, and aliases occur in
+these fixed roles, so the enumeration terminates and yields a finite table.
+Neither its size nor $R$ depends on a tape length or private input.
+
+The meter access link is essential to this locality assertion. On a bare
+growing tape with access only from its left origin, the append receipt site
+can be arbitrarily far away. Calling such a bare-chain rule local would
+not prove this proposition. The explicit head links are paid additional
+relations, and port locality here is not Euclidean locality. ∎
+

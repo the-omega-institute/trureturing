@@ -1,0 +1,35 @@
+**Definition 8.1 (All finite hidden producers and one actual law).** For each $N\ge1$ retain
+
+$$
+\Theta_N=\left\{(\lambda,M_0,M_1):
+\begin{array}{l}
+\lambda\ge0,\quad\lambda\mathbf1=1,\quad M_0,M_1\ge0,\\
+A=M_0+M_1,\quad A\mathbf1=\mathbf1,\quad\lambda A=\lambda,\\
+\lambda M_1^2\mathbf1=0
+\end{array}\right\}.
+\tag{8.1}
+$$
+
+Here $\lambda$ is a row and the matrices are $N\times N$, with arbitrary exact-real entries. Zero stationary masses, structural zeros, reducibility and periodicity are all allowed. The legality condition is scalar, not entrywise $M_1^2=0$.
+
+For $\theta\in\Theta_N$, [Universal, Definition 4.1 and Proposition 4.2][U] supplies the actual stationary joint law $J_\theta$ of hidden states $\mathsf H_j$ and visible bits $X_j$ with
+
+$$
+J_\theta(\mathsf H_a=h_a,\ldots,\mathsf H_{b+1}=h_{b+1},
+X_a=x_a,\ldots,X_b=x_b)
+=\lambda_{h_a}\prod_{j=a}^b M_{x_j}(h_j,h_{j+1}).
+\tag{8.2}
+$$
+
+Let $X_j(x)=x_j$ and let $[w]_a$ specify $X_a\cdots X_{a+|w|-1}=w$. With $M_w=M_{w_1}\cdots M_{w_m}$ and $M_\varepsilon=I$, the visible marginal $P_\theta$ satisfies
+
+$$
+P_\theta([w]_a)=\lambda M_w\mathbf1,
+\qquad
+\mathsf X=\{x\in\{0,1\}^{\mathbb Z}:x_jx_{j+1}=0\ \forall j\},
+\qquad P_\theta(\mathsf X)=1.
+\tag{8.3}
+$$
+
+Every seam uses the ordered product of the same matrices. The time unit is one original emitted bit. The scalar response $H_i$ in (4.4) is unrelated to the hidden-state symbol $\mathsf H_j$ in this definition.
+

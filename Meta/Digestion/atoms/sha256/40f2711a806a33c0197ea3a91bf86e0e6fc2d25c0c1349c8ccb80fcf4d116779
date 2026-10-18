@@ -1,0 +1,33 @@
+**定理 75.2（第三方向不可独立丢弃）。** 在假设 74.1 下，设
+
+$$
+\mathcal T(\varrho)=\sum_\nu K_\nu\varrho K_\nu^\dagger,
+\qquad \sum_\nu K_\nu^\dagger K_\nu=I.
+$$
+
+若 $\Phi(A)=A$、$\Phi(B)=B$，则每个 $K_\nu$ 同时与 $A,B,C$ 交换，且 $\Phi(C)=C$。在最小载体 $\mathbb C^2$ 上必有 $\mathcal T=\mathrm{id}$。一般重数分解上则 $K_\nu=I_2\otimes L_\nu$，故 $\mathcal T=\mathrm{id}_2\otimes\mathcal S$，其中 $\mathcal S$ 为重数空间上的 CPTP 通道。
+
+证明（75.2）。记 $[A,K]=AK-KA$。用 $A^2=I$、保迹和对偶定义逐项展开，得到
+
+$$
+\begin{aligned}
+\sum_\nu[A,K_\nu]^\dagger[A,K_\nu]
+&=\sum_\nu\bigl(K_\nu^\dagger K_\nu
+-K_\nu^\dagger A K_\nu A
+-AK_\nu^\dagger A K_\nu
++AK_\nu^\dagger K_\nu A\bigr)\\
+&=2I-\Phi(A)A-A\Phi(A)=0.
+\end{aligned}
+$$
+
+每项为正算子。对任意向量取二次型，非负数之和为零，所以每个 $[A,K_\nu]$ 都为零。对 $B$ 重复同一论证。于是每个 $K_\nu$ 与 $C=-iAB$ 交换，其伴随也与 $C$ 交换，故
+
+$$
+\Phi(C)=\sum_\nu K_\nu^\dagger C K_\nu
+=C\sum_\nu K_\nu^\dagger K_\nu=C.
+$$
+
+在第 74.3 条的基中，与 $Z\otimes I_r$ 交换的算子没有两块间的非对角角；再与 $X\otimes I_r$ 交换迫使两对角块相等，故它恰为 $I_2\otimes L$。保迹条件成为 $\sum L_\nu^\dagger L_\nu=I_r$，给所述通道。在 $r=1$ 时 $K_\nu=c_\nu I_2$、$\sum|c_\nu|^2=1$，因而 $\mathcal T(\varrho)=\varrho$ 对全部矩阵成立。$\square$
+
+第三方向即使不在实际读出列表中，也不能在上述共同物理替换中被删掉。这个论断不把第三方向升级为已授权的直接测量；它限制的是合法通道。重数 $r>1$ 时，选择 $\mathcal S$ 为重数因子的退相干或重置通道，仍固定整个 qubit 代数却可以改变联合态，说明“固定 qubit 关系”不等于“固定全部载体态”。全态量词同样必要：只准 $Z$ 对角输入时，$Z$ 基退相干对该态族同时保持 $Z$ 与 $X$ 的期望，却不是全态恒等通道。
+

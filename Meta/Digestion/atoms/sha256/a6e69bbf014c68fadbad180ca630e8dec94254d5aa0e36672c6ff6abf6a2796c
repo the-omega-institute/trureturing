@@ -1,0 +1,11 @@
+**引理 11.3（Slack changes the aggregate code）。** If $n<2^d$, the vectors in Lemma 11.2 can be chosen so that
+
+$$
+X=\bigoplus_{i\in A}z_i\ne0.
+\tag{11.8}
+$$
+
+If $n=2^d$, every distinct assignment has $X=0$.
+
+Proof. Begin with any matching. If its XOR is nonzero, retain it. Otherwise take the phase with full-cube list and replace its assigned vector $x$ by any unused cube vector $y$, which exists when $n<2^d$. This preserves every list condition and injectivity, and changes the aggregate from zero to $x\oplus y\ne0$. Under saturation the assigned vectors are the whole cube. Each coordinate then occurs as one exactly $2^{d-1}$ times, an even number since $d\ge2$, so the aggregate is zero. ∎
+

@@ -1,0 +1,20 @@
+**Theorem 9.1 (an equivalent all-position target).** Fix admissible
+$n,k$. The following assertions are equivalent.
+
+1. For every original positive integer position set $A$,
+   $m_{\mathrm{exec}}(c,k)=G$.
+2. Every $P\in\mathcal T_{n,k}$ with $|Q|<G$ has the
+   sparse full-length actual-run obstruction (TC.16).
+3. No $P\in\mathcal T_{n,k}$ with $|Q|<G$ has a
+   nonempty positive gap cone (TC.17).
+4. There is no correct strict-subgrid graph at both original caps with
+   $s_n\le n^n-4$.
+
+Proof. Theorem 7.3 identifies failure of the obstruction with existence
+of admissible feasible costs for that same table, proving the
+equivalence of the first three assertions using the supplied grid
+upper $G$. Corollary 8.2 gives the fourth. These implications retain
+all installed states and complete actual runs. In particular the
+quantifier over correct $n$-query tables in assertion 2 has not been
+discharged by the general Farkas theorem. $\square$
+

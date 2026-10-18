@@ -1,0 +1,47 @@
+### 推论 462.2（固定禁素集预算的迭代极限障碍）
+
+对 $r>5$ 为素数，令 $q_{r,1}<q_{r,2}<\cdots$ 是不整除 $F_r$ 的素数，
+并置
+
+$$
+Q_{r,k}=\prod_{j\le k}q_{r,j},\qquad
+A_{r,k}=\prod_{j\le k}\frac{q_{r,j}}{q_{r,j}-1}.
+$$
+
+则
+
+$$
+\boxed{
+\lim_{\substack{r\to\infty\\ r\ {\rm prime}}}
+\ \lim_{k\to\infty}
+\frac{A_{r,k}}{e^\gamma\log\log Q_{r,k}}
+=1.
+}
+\tag{462.3}
+$$
+
+因此不存在固定的 $\eta>0$ 和 $k_0$，使所有素数秩 $r>5$ 及所有
+$k\ge k_0$ 都满足
+
+$$
+A_{r,k}\le(1-\eta)e^\gamma\log\log Q_{r,k}.
+$$
+
+**证明。** §461 所引的经典 Mertens 极限给出，对每个固定 $r$，
+
+$$
+\lim_{k\to\infty}
+\frac{A_{r,k}}{e^\gamma\log\log Q_{r,k}}
+=c_{F_r}.
+$$
+
+命题 462.1 的文献上界给出 $c_{F_r}=1-\delta_r\to1$，再取外层极限
+即得（462.3）。若存在所述统一 $\eta,k_0$，固定一个使
+$c_{F_r}>1-\eta/2$ 的素数秩，再令 $k$ 足够大，便与该统一界矛盾。
+证毕。 $\square$
+
+这个障碍只针对“缺失 Euler 因子提供固定比例安全余量”的路线。它不构成
+Robin 反例：$Q_{r,k}$ 是允许素数的 primorial，且
+$A_{r,k}$ 只是约数比的上包络；真实整数的指数层、同一来源的完整素支撑
+和有符号 Robin 余量仍未被此迭代极限确定。
+

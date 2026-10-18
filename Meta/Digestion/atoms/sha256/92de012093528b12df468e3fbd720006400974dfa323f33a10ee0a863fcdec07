@@ -1,0 +1,54 @@
+**Lemma 5.4 (whole-source formula for a fixed labelled contact).** For
+$m\ge1$, construct the following predicate on two independent tuples
+of hole values:
+
+$$
+\Psi_C(\mathbf z^0,\mathbf z^1)\quad\Longleftrightarrow\quad
+\bigwedge_{i=0}^1
+\big(C[\mathbf z^i]\in D\ \land\ R_Q(C[\mathbf z^i])=r_i\big).
+\tag{NLC.16}
+$$
+
+It has an effective finite native QF compilation with exact
+reconstruction, and its designated output tuple is the nonempty tuple
+of all $2m$ hole values. Then
+
+$$
+\begin{aligned}
+&\operatorname{Contact}(C;r_0,r_1)\\
+&\quad\Longleftrightarrow\quad
+\forall h\ \exists\mathbf z^0,\mathbf z^1\quad
+\left(\Psi_C(\mathbf z^0,\mathbf z^1)\ \land\
+\bigwedge_{i=0}^1\bigwedge_{j=1}^m\mu(z_j^i)>h\right).
+\end{aligned}
+\tag{NLC.17}
+$$
+
+Proof. Substitute the finite context into every predicate defining each
+stratum. NSF Lemma 5.1 compiles its fixed epoch/address observations,
+whole guarded comparisons and complete old and target row tests. All
+variables within one source copy retain their shared occurrences; the
+two different original source copies use disjoint variable lists.
+Both copies impose the same entire retained input. In particular a
+negative relation is its two guards and its whole-tree inequality,
+not the complement of a guarded equality.
+
+The exact row compiler keeps the reached set, the full native mask of
+the concrete exterior and every pairwise equality or disequality
+specified by the partition. It retains uncut residual terms in the
+mask. These are [NSF, Lemma 5.1][NSF] and [NPL, Lemma 5.2][NPL], with
+the prescribed row values, not a relaxation to their partitions.
+The finite prefix-case reconstruction returns $C[\mathbf z^i]$ with
+all these predicates. Conversely every original tuple satisfying
+(NLC.16) chooses its actual prefix cases. Thus both source-fiber
+inclusions hold even when some cut addresses are absent, classes
+repeat, or a constraint involves an off-task subtree.
+
+If contact holds, for a given $h$ choose a source in each stratum
+agreeing with $K_C$ through $H=h+d_C$. Lemma 5.3 gives its unique
+context filling, with each depth greater than $h$. The two choices
+combine in (NLC.16) because it has no extra relation between source
+copies. Conversely a tuple in the right side of (NLC.17) gives a
+source in each exact stratum and, by Lemma 5.3, both agree with $K_C$
+through $h$. This proves contact at every $h$. $\square$
+

@@ -1,0 +1,26 @@
+**Definition 1.1 (native carrier and original prefixes).** Let
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\qquad
+\rho\alpha=\beta,\quad
+\rho\beta=\langle\beta,\alpha\rangle,\quad
+\rho\langle u,v\rangle=\langle\rho u,\rho v\rangle,
+\qquad T_n=\rho^n\alpha.
+\tag{TOS.1}
+$$
+
+All sources are nonempty finite free ordered trees. The displayed $\rho$
+is interpreted, not a free unary constructor. An address is a word in
+$\{L,R\}^*$, with root $\varepsilon$. Its reply is
+$r_u(p)\in\{\alpha,\beta,\mathsf{branch},\mathsf{absent}\}$.
+Write $u\equiv_h v$ when these replies agree at every $|p|\le h$;
+the inclusive prefix $p_h(u)$ includes absence below early leaves.
+
+For a finite prefix-free cut $A$, the complete original row $R_A(u)$
+consists of its ordered reached set, its concrete exterior with numbered
+holes, and the equality partition of the entire reached subtrees. Every
+repeated occurrence and every different-class inequality is retained.
+An absent cut position contributes no hole. In particular the root cut
+has a constant one-hole row, and the empty cut retains the whole source.
+

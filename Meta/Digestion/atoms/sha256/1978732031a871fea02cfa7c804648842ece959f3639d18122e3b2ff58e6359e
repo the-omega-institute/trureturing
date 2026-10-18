@@ -1,0 +1,60 @@
+**Definition 212.2 (Retained rewards and projected surplus).**
+Let $y$ be an arbitrary complete score and $I=\{3,\ldots,L\}$.
+Put $\gamma_n=\sum_{\Omega_n}C_w$ for $n\in I$ and $W=W_y$.
+Delete exactly these late correct rows to obtain $Z$; all $A,P,T$
+and early correct rows stay at their actual words. Thus $W_Z=W$.
+For every label $r$, let $z_r(w)=g_Z(w,r)$ be its reward measure
+on the whole cube, including the positive word.
+
+For $n\in I$, let $\pi_n(v)=P_{1^{n-1}0v}$ on the full suffix
+cube $\{0,1\}^{\{n+1,\ldots,L\}}$, and put
+$p_n=|\pi_n|$, $\pi_{nj}=\pi_n\{v_j=0\}$.
+Let $\omega_{rn}$ be the suffix projection of
+$z_r|_{\{w_n=0\}}$. In particular
+$\omega_{nn}=\pi_n$ and $\omega_{0n}\ge\pi_n$ atomwise.
+Define the nonempty compact convex set
+
+$$
+\mathcal T_n=\left\{\tau\ge0:\sum_{r=0}^L\tau_r=1,
+ \quad\Omega_{\tau,n}:=\sum_r\tau_r\omega_{rn}\ge\pi_n\right\}.
+\tag{212.6}
+$$
+
+A permitted replacement chooses one $\tau_n\in\mathcal T_n$ and
+one actual suffix measure
+
+$$
+0\le\sigma_n\le\Omega_{\tau_n,n}-\pi_n,
+\qquad |\sigma_n|=\eta_n\ge0,
+\qquad c_{nj}=\sigma_n\{v_j=0\}.
+\tag{212.7}
+$$
+
+Set $C^V_{1^{n-1}0v}=\sigma_n(v)$ for every late class and retain
+$Z$ everywhere else. Write $k_n=p_n+\eta_n$ and
+$t_{nj}=\pi_{nj}+c_{nj}$ for the total reward of label $n$.
+These definitions specify one score $V$. Different labels may reuse
+the same carrier atoms: there is no additional constraint
+$\sum_n\sigma_n\le\omega$. Only one output label wins a terminal cell.
+The subtraction of the retained $\pi_n$ in (212.7) is compulsory.
+
+For $i<j$, put
+
+$$
+\begin{aligned}
+b_{ij}^{ab}&=\max_r z_r\{w_i=a,w_j=b\},\qquad
+ b_{ij}^0=\max_r z_r\{w_i=0\},\\
+a_{ij}&=b_{ij}^{00}+b_{ij}^{01},\qquad
+ \chi_{ij}=a_{ij}-b_{ij}^0\ge0,\\
+X_{ij}&=\max\left\{b_{ij}^{10},\ k_j\ (j\in I),\
+                     t_{nj}\ (n\in I,\ i<n<j)\right\},\\
+Y_{ij}&=\max\left\{b_{ij}^{11},\ k_n\ (n\in I,\ n>j),\
+                     k_n-t_{nj}\ (n\in I,\ i<n<j)\right\}.
+\end{aligned}
+\tag{212.8}
+$$
+
+All baseline maxima include every label. In particular a positive
+$\chi_{ij}$ is a retained split defect, not removable by selecting
+a different maximizer after merging the cells.
+

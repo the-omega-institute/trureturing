@@ -1,0 +1,60 @@
+**Proposition 10.1 (the old optimizer and rate gaps).** With $b_d,j_d$
+as defined above, $b_d\le j_d$. The old $V_{\mathrm{rec}}$ is
+cofinal at every fixed depth in the precise sense of [NPC,
+Definition 8.1] if and only if $j_d=b_d$ for every $d$. Its best
+depth-$d$ original-rate endpoint is $L_d$, and exactly
+
+$$
+\lambda-L_d
+=\left(\lambda-2^{-d}\sigma_d\right)
+ +2^{-d}\log_2(j_d/b_d).
+\tag{RCE.37}
+$$
+
+Its endpoints over increasing depths approach the original
+$\lambda$ if and only if
+
+$$
+2^{-d}\log_2(j_d/b_d)\longrightarrow0.
+\tag{RCE.38}
+$$
+
+Proof. The joint theorem in JTC gives $\beta_d(\mu)\le J_d(\mu)$,
+so minimization gives $b_d\le j_d$. Theorem 4.4, rational
+density and Corollary 4.5 give supremum accepted block endpoint
+$-\log_2j_d$. NPC's endpoint target is
+$\sigma_d=-\log_2b_d$, yielding the first equivalence.
+Subtract and add $2^{-d}\sigma_d$ to obtain (RCE.37).
+Its first term lies in $[0,2^{-d}\phi]$ by (RCE.8), and its
+second is nonnegative. This proves the limiting equivalence.
+$\square$
+
+**Open problem 10.2 (optimizer coverage and effective original convergence).**
+Neither $j_d=b_d$ for all depths nor (RCE.38) is proved or
+disproved here. The strict gaps of Theorem 7.2 concern specified
+weights, whereas cofinality optimizes over all probabilities.
+They refute the stronger premise that every rational strict
+pointwise cap has an old proof; they do not refute optimizer
+cofinality. The cofinality of $V_{\mathrm{rec+range}}$ likewise
+remains open. A sound new leaf and exact finite conic optimization
+do not supply a uniform effective length error or a proof that
+optimized accepted endpoints reach the unchanged $\sigma_d$.
+
+Sharp $\lambda$, general exact $M_1(D)$, terminating two-sided
+effective approximation of the original rate, and the broader
+minimal-relations/internal-observer mutual-recovery programme
+remain unresolved. The operational recovery proved and reused is
+
+$$
+(E(t),D,p,\text{at most one actual reply})
+\longrightarrow\Gamma_p(t)
+\longleftrightarrow\bigl(r_{\rho^kt}(p)\bigr)_{k\ge0}.
+\tag{RCE.39}
+$$
+
+The inverse recovers the temporal factor, not a whole source,
+unknown age, hidden history, authentication or physical space and
+time. There is no conclusion of native noncomputability or of
+universal obstruction to different certificate languages, lawful
+finer cuts or global recoloring.
+

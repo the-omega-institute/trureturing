@@ -1,0 +1,35 @@
+## 178. Every owner with reservoir pair {Z,M} is rho
+
+First no owner can have all six labels in {M,Z}. Such an owner is
+genuine because Z is transverse. At each vertex its angle sum is
+
+    theta+2*atan(lambda*cot(theta/2))
+       >=4*atan(sqrt(lambda)),
+
+where all involved values exceed three and lambda>2/3. The inequality
+follows from the tangent addition formula and AM--GM, and its right
+side exceeds pi/2. The sum of all six dihedral angles therefore exceeds
+pi. This owner differs from tau and rho, both of which have a C slot.
+Together with their respective M/Z costs greater than pi it would
+exceed the complete 3*pi capacity. Such an owner does not exist.
+
+Any owner with fixed pair {Z,M} is genuine and has no special axes,
+by Section 176. At least one axis B is consequently in L, with b<=m-2;
+write r<=z for the other. Put k=z+m and
+
+    L=k^2-(b-1)(r-1)>0,
+    J=(b+1)(r+1)-(z-m)^2>0,
+    kappa=(sqrt(z^2-1)+sqrt(m^2-1))/k.
+
+Its transverse sum is gamma+delta=2*atan(kappa*sqrt(L/J)). Directly,
+
+    L-2J=3z^2-2zm+3m^2-3br-b-r-3
+         >=3z^2-5zm+3m^2+5z-m-1>0.
+
+For the last inequality write z=m+s, s>0; the expression becomes
+m^2+ms+3s^2+4m+5s-1>0. Since kappa^2>8/9, it follows that
+gamma+delta>pi/2. Thus every such owner consumes more than pi of M/Z
+through its four transverse slots. Any one different from rho would
+contradict the complete 3*pi capacity together with tau and rho.
+Therefore every owner with reservoir pair {Z,M} is rho.
+

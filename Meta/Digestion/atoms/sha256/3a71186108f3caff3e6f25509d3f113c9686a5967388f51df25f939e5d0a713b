@@ -1,0 +1,14 @@
+### 460.3 实际 Möbius 有限谱的单位成本
+
+保持 §459.5 的原实际有限谱
+$$
+a_{x,m}=\mu(m)\mathscr D_x(m),\qquad
+\sigma_{x,N}=\sum_{\substack{m\le N\\m\text{ odd}}}a_{x,m}\delta_{\log m},
+\quad N\ge1.
+\tag{SDD.8}
+$$
+不同 $m$ 的谱位置不同，故正负部由这些系数的真实符号确定。
+特别地，必须保留的单位 $m=1$ 位于 $t=0$，系数
+$a_{x,1}=\mathscr D_x(1)$；不能用单位曲率系数为零的另一 primorial 谱替换它。
+令 $a_+=\max(a,0)$。
+

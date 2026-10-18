@@ -1,0 +1,56 @@
+**Lemma 4.1 (positive homogeneous auxiliary kernel).** On the canonical group define
+
+$$
+\mathcal G(\xi)=\int_0^\infty k_t(\xi)dt\quad(\xi\ne0).
+\tag{4.1}
+$$
+
+It is positive, locally integrable on the whole group, smooth away from $0$, and
+
+$$
+\mathcal E\mathcal G=\delta_0,\qquad
+\mathcal G(\delta_R\xi)=R^{-5}\mathcal G(\xi),\qquad
+0<\mathcal G(\xi)\le C d_E(0,\xi)^{-5}.
+\tag{4.2}
+$$
+
+In particular $\mathcal G(r,\mathbf z)\le C|r|^{-5}$ for $r\ne0$.
+
+Proof. The left invariant fields in (2.5) have degree one under $\delta_R$, and Haar measure has degree seven. Unitary dilation of the Friedrichs form therefore gives
+
+$$
+k_t(\delta_R\xi)=R^{-7}k_{t/R^2}(\xi).
+\tag{4.3}
+$$
+
+The Gaussian estimate (2.7), with $D=d_E(0,\xi)>0$, gives
+
+$$
+\int_0^\infty k_t(\xi)dt
+ \le C\int_0^\infty t^{-7/2}e^{-cD^2/t}dt
+ =C D^{-5}\int_0^\infty v^{-7/2}e^{-c/v}dv<\infty.
+\tag{4.4}
+$$
+
+Both ends of the last integral converge. Positivity of the heat makes the result strictly positive. Changing time in (4.3) gives the homogeneity in (4.2).
+
+The control metric is left invariant and homogeneous. Its proper unit ball has finite positive Haar volume $v_E$, and hence its radius-$\rho$ ball has volume $v_E\rho^7$. On annuli of radii $2^{-j-1}$ and $2^{-j}$ the bound in (4.2) has integral at most $C2^{-2j}$. Summing proves integrability at zero. Away from zero it is bounded on compact sets, so it defines a distribution. This also proves
+
+$$
+\int_{d_E(0,\xi)<1}\mathcal G(\xi)d\xi<\infty,
+\qquad \sup_{d_E(0,\xi)\ge1}\mathcal G(\xi)<\infty.
+\tag{4.5}
+$$
+
+For $\varphi\in C_c^\infty$, integrate the heat equation between $\epsilon$ and $T$:
+
+$$
+\int_\epsilon^T\!\int k_t\mathcal E\varphi\,d\xi\,dt
+ =\int k_\epsilon\varphi\,d\xi-\int k_T\varphi\,d\xi.
+\tag{4.6}
+$$
+
+Near time zero, absolute integrability on the left follows from conservativity and $\|\mathcal E\varphi\|_\infty$. At large time it follows from the uniform $Ct^{-7/2}$ bound and $\|\mathcal E\varphi\|_1$. Thus the time integral can be identified with $\langle\mathcal G,\mathcal E\varphi\rangle$. The first term on the right tends to $\varphi(0)$ by the heat initial condition, and the second tends to zero by $Ct^{-7/2}\|\varphi\|_1$. This proves the distributional fundamental-solution identity.
+
+The brackets $[X,Y]=\partial_z+r\partial_w$ and $[X,[X,Y]]=\partial_w$, together with $X,Y$, span everywhere. The supplied hypoellipticity of this canonical operator makes its distributional harmonic solution have a smooth representative off the source. Use that representative for $\mathcal G$. Its upper bound extends from almost every point to every point off the source by continuity of the control distance and of the representative. Likewise, for any fixed $t>0$, the semigroup property and positivity give the pointwise raw-integral bound $\mathcal G\ge\int_t^{2t}k_vdv$. The latter is positive and continuous, so the same bound extends everywhere to the smooth representative. Thus it remains strictly positive. Homogeneity also extends from its distributional equality to this representative. Finally the height component of a controlled path changes at speed at most its control speed, so $d_E(0,(r,\mathbf z))\ge|r|$, with the stated normalization. This proves the height bound. The kernel $\mathcal G$ is auxiliary; it does not replace $V$, remove the native cutoff, or assert a semibounded unregularized native interaction. $\square$
+

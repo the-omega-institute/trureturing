@@ -1,0 +1,111 @@
+**Lemma 344.2 (Complete finite identities of $\mathcal D_7$).** The
+following are exact properties of this data. All $471$ score records
+satisfy (344.3)–(344.4). The complete vertex list of $P$ consists
+of its $1606$ supplied distinct points, each of active-normal rank
+seven; their affine hull has dimension seven. The $1606$ matching
+lifts satisfy all counterfactual cell budgets, global mass one,
+and every row (344.2) on all $128$ words. In total they contain
+$22027$ schedule rows and $66081$ terminal vectors, giving
+$205568$ word laws and $613492$ separate event inequalities.
+
+Proof. The finite identities have the following exhaustive specification;
+no continuous optimization or floating-point tolerance is involved.
+For a score, accumulate its weights into the $128\times8$ array
+$f_y$. For each of the $21$ ordered pairs and each of its four
+cells, sum the entries over the $32$ consistent words, separately
+for each of the eight labels, and take their maximum. These are
+exactly the four `cell_maxima` entries in that pair's record.
+The maximum of their $21$ sums is its `BN`; the independent class
+sums and total weight are its `beta`, `const`, and `K`.
+After folding the two equal coordinates, multiply (344.4) by the
+least common denominator and divide all eight integer entries,
+including the right side, by their positive greatest common divisor.
+The resulting normal and right side equal row $10+h$ of $A,B$
+for cut $h=0,\ldots,470$. This specifies every entry comparison,
+including scores with zero components and negative $\beta$.
+
+Here is a complete exact enumeration of the geometry. For the initial
+ten domain rows, solve every one of the $\binom{10}{7}=120$
+seven-row systems, discarding singular systems and points violating
+any of the ten inequalities. Deduplicating gives precisely the
+following twelve points, expressed in the unreduced amplitudes:
+
+$$
+\begin{aligned}
+o&=(0,\ldots,0;0),\qquad p=(1,0,\ldots,0;0),\\
+u_k&=(\underbrace{1/(k-1),\ldots,1/(k-1)}_{k},0,\ldots,0;0),\\
+v_k&=(\underbrace{1,\ldots,1}_{k},
+ \underbrace{(k-2)/(k+1),\ldots,(k-2)/(k+1)}_{7-k};(k-2)/(k+1)),
+ \qquad k=3,\ldots,7.
+\end{aligned}
+\tag{344.5}
+$$
+
+At each stage retain full active sets. Insert rows $10,\ldots,480$
+in their listed order. Retain all vertices on or inside the new
+halfspace. For every strict crossing pair $u,v$ whose common active
+normals have rank six, insert
+
+$$
+\frac{s(u)v-s(v)u}{s(u)-s(v)},\qquad s(x)=B_h-A_hx,
+\tag{344.6}
+$$
+
+and deduplicate exact rational coordinates. Its old active set is
+exactly the intersection of those at $u,v$; add the new row.
+This recurrence has $21337$ strict crossing edges. Its final set is
+exactly the $1606$ listed points, with the listed full active sets;
+there are $8363$ final edges and $251$ points with exactly seven
+active rows. Every listed point satisfies all $481$ inequalities,
+and its active normals have rank seven. The differences between
+these points have rank seven as well.
+
+To justify completeness of this enumeration, a vertex of a
+seven-dimensional polyhedron has seven independent active normals,
+so the initial $120$ systems omit no domain vertex. For distinct
+vertices $u,v$ the relative interior of their segment has exactly
+the constraints common to their active sets. The minimal face
+containing that segment therefore has dimension seven minus the
+rank of those normals. Rank six is equivalent to their segment
+being an edge. A new vertex strictly inside an old face cut by the
+new hyperplane can arise only from a one-dimensional old face:
+a transverse cut through the relative interior of a face of dimension
+$d$ has dimension $d-1$. Hence the complete new list is exactly
+old retained vertices and strict intersections with old crossing
+edges. Old boundary vertices are already retained. The final
+rank-seven affine hull proves that no intermediate polytope lost
+full dimension, since every intermediate one contains the final
+set. These observations prove the recurrence by induction through
+all $471$ cuts, including degeneracies and redundant cuts.
+All ranks and intersections here are over the rationals.
+
+Finally, for each lift, compare its vertex index and all seven
+coordinates with the corresponding vertex record. In every schedule
+$i<j$ the three nonnegative vectors have exactly the recorded
+schedule mass; the sum of those masses is one. For every word form
+
+$$
+p_w=\sum_{i<j}
+ \begin{cases}T_{ij}^{0},&w_i=0,\\
+ T_{ij}^{10},&w_i=1,w_j=0,\\
+ T_{ij}^{11},&w_i=w_j=1.
+ \end{cases}
+\tag{344.7}
+$$
+
+Each such vector is nonnegative of mass one. Direct rational
+substitution into each of (344.2), with $b_3=b_2$, gives its
+$381+1$ inequalities. This is $1606(3\cdot127+1)=613492$
+inequalities, with no discarded negative demand or multiple-zero
+word. The sums of schedule and terminal-vector counts are as stated.
+Together with (344.3) and the exhaustive recurrence, these finite
+identities prove all the claims of the lemma. $\square$
+
+The geometry principle is mature polyhedral theory: Kaibel,
+[*Basic Polyhedral Theory*, arXiv:1001.2161v1](https://arxiv.org/abs/1001.2161v1),
+Theorems 8, 13 and 15 and the face description in §1.5, applies to
+finite real halfspace systems, with rational data giving rational
+vertices. Here boundedness removes recession rays. The particular
+$471$ scores and $1606$ simultaneous stopped lifts are additional
+finite data; those general theorems do not supply them.
+

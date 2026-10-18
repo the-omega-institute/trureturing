@@ -1,0 +1,45 @@
+**Definition 289.1 (Full rows and the common pairing).**
+Fix $L\ge6$, $\Omega_n=\{w\in\{0,1\}^L:\operatorname{first0}(w)=n\}$,
+and $+=1^L$. All labels $0,\ldots,L$ are allowed. A complete $N$ pair
+$N(i,j;u,v,s,t)$ has these outputs on $00,01,10,11$; an increasing
+$O$ pair $O(i,j;v,s,t)$ merges $00,01$. Empty and singleton schedules
+are included. For every $w\in\Omega_n$, retain the independent demands
+$1-b_n-e,b_n-e,1-e$ on $\{0\},\{n\},\{0,n\}$; the positive demand is
+$1-e$ on $\{0\}$. Negative singleton demands remain.
+
+Use the full nonnegative score $y=(A_w,C_w,P_w,T)$ and reward
+
+$$
+g_y(w,\ell)=A_w[\ell=0]+C_w[\ell=n]+P_w[\ell\in\{0,n\}],\qquad
+g_y(+,\ell)=T[\ell=0].
+$$
+
+As in 273.1–273.2, $R=O(1,2;1,2,0)$, $\alpha=(1,1,0,\ldots,0)$,
+$r=z_R=d(\alpha,0)$, $G_C=(z_D-r)_D$, $h=d-r$, and
+
+$$
+\begin{aligned}
+W_y&=y r=\sum_{n\ge3}A_n+\sum_{n\le2}C_n+\sum_wP_w+T,\\
+\Delta_C(y)&=\max_{D\in C}y z_D-W_y,\quad
+\beta_n=C_n-A_n,\quad K=\sum_w(A_w+C_w+P_w)+T,\\
+Q(y)&=(\beta;K),\qquad
+F_{(\beta;K)}(b,e)=\sum_n\beta_n(b_n-\alpha_n)-Ke.
+\end{aligned}
+$$
+
+Here $A_n,C_n$ are class totals. The closed hull and its feasible part are
+
+$$
+\begin{aligned}
+H_L&=\{1\ge b_1\ge\cdots\ge b_L\ge e\ge0,\ b_2=b_3,
+\ 0\le\sum_{n=3}^Lb_n-(L+1)e\le1-b_1\},\\
+H_N&=\{(b,e)\in H_L:\exists\lambda\ge0,\ G_N\lambda\ge h(b,e)\},\qquad
+\sigma_H(q)=\max_{H_L}F_q.
+\end{aligned}
+$$
+
+For one such full allocation, $M=\sum_D\lambda_D$ is arbitrary finite
+mass and $y h\le yG_N\lambda\le M\Delta_N(y)$. In particular every
+nonnegative zero-cost score has $F_{Q(y)}\le0$ on this same allocation.
+This is the pairing of 280.2; it uses every independent row at once.
+

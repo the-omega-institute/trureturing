@@ -1,0 +1,52 @@
+**Definition 78.1 (fixed data, original target and actual spatial carriers).** Fix an authentic nonempty finite source $D$, its original leaf cap $H$, commissioned $a,g>0$, $\nu\ge0$, $0<\delta\le1$, finite $\Omega\ge1$, and an integer $s\ge3$. All remain fixed as $\varepsilon\downarrow0$. Use the exact unit-cylinder assembly, source chambers, distinct ground half-chambers, grounding, normalizations and kinetic coefficient $\beta=a/\delta$ of72.1–72.10. Choose a sufficiently small aperture after the fixed skeleton's separation and angle margins have been chosen, as in72.4, and then hold that aperture fixed. No aperture or source parameter is another limiting variable.
+
+The target particle space and nonnegative kinetic operator are exactly
+
+$$
+\mathcal K=\mathbb Cr\oplus\mathcal K_{D,1}\oplus\mathcal K_{D,2}^{\rm hc},
+\qquad
+A=0\oplus A_{\delta,D,1}\oplus A_{\delta,D,2}.
+\tag{78.1}
+$$
+
+Here every atom, entire interval, mixed slice, rectangle and both same-cable triangles, their weights $1,\delta,\delta^2$, symmetry, missing atomic collision coordinates, exterior killing and all Hilbert-valued traces are those of Definition64.5. In particular the singleton still has its complete continuum two-position sector. The target is not a harmonic or atomic subspace.
+
+For clarity write the full spatial particle space as
+
+$$
+\mathcal P_\varepsilon=\mathbb Cr\oplus L^2(\Omega_\varepsilon^+)
+                    \oplus L^2_{\rm sym}((\Omega_\varepsilon^+)^2).
+\tag{78.2}
+$$
+
+Use either of the following installations, separately. In the hard installation, retain75.9's allowed two-position carrier, zero-extension isometry and Dirichlet exclusion form, with either $R_\varepsilon=\kappa r_\varepsilon$, fixed $\kappa>0$, $r_\varepsilon=\varepsilon^{(s-1)/s}$, or precisely75.12's alternative $R_\varepsilon\to0$, $R_\varepsilon/r_\varepsilon\to\infty$. In the finite-height installation retain the full product carrier and75.13's nonnegative penalty $\Lambda_\varepsilon\mathbf1_{\{|x-y|\le R_\varepsilon\}}$, with fixed $\kappa>0$, $R_\varepsilon=\kappa r_\varepsilon$ and finite $\Lambda_\varepsilon\ge0$ satisfying $\Lambda_\varepsilon R_\varepsilon\to\infty$. The mesoscopic hard alternative does not assert a finite-height theorem for a different schedule.
+
+Let $\mathcal P_\varepsilon^{\rm a}$ be the direct sum of reference, full one-position carrier and the chosen actual two-position carrier. Let $\iota_\varepsilon^{\rm p}:\mathcal P_\varepsilon^{\rm a}\to\mathcal P_\varepsilon$ be identity on reference and one-position sectors and zero extension on the hard two-position sector; it is identity in the finite-height installation. Its adjoint is actual restriction. Denote by $B_\varepsilon\ge0$ the direct sum of zero,72.10's full one-position kinetic operator and the chosen75 $C_0$ spatial operator, with no $W_{\varepsilon,\diamond}$ pair multiplier. Thus the latter form is, respectively,
+
+$$
+\begin{aligned}
+q_{\varepsilon,2}^{\rm a}[u]
+ &=\beta\int_{(\Omega_\varepsilon^+)^2}
+       (|\nabla_x\iota_\varepsilon^{\rm p}u|^2+
+        |\nabla_y\iota_\varepsilon^{\rm p}u|^2),\\
+q_{\varepsilon,2}^{\Lambda}[u]
+ &=\beta\int_{(\Omega_\varepsilon^+)^2}(|\nabla_xu|^2+|\nabla_yu|^2)
+       +\Lambda_\varepsilon\int_{|x-y|\le R_\varepsilon}|u|^2 .
+\end{aligned}
+\tag{78.3}
+$$
+
+Their domains are exactly75.9's zero-extended mixed-ground $H^1$ domain and75.13's entire symmetric mixed-ground $H^1$ domain, respectively. The one-position form domain is the mixed-ground $H^1$ domain of72.10. Exterior Neumann conditions are natural conditions of these forms.
+
+The actual raw particle isometry is
+
+$$
+L_\varepsilon^{\rm p}=I_r\oplus J_{\varepsilon,1}\oplus J_{\varepsilon,2}E,
+\qquad (L_\varepsilon^{\rm p})^*L_\varepsilon^{\rm p}=I.
+\tag{78.4}
+$$
+
+$J_{\varepsilon,1}$ is72.30's map, $J_{\varepsilon,2}$ is the complete product map75.7, and $E$ inserts zero at each atomic $(p,p)$ and otherwise identifies the literal hard-core Hilbert coordinates. More explicitly, with $c_\varepsilon=\sqrt\delta\,\varepsilon^{-(s-1)/2}$, $J_{\varepsilon,1}$ multiplies both chamber values and longitudinal cable functions by $c_\varepsilon$, and is zero on ground half-chambers. The product map multiplies every chamber/chamber, chamber/cylinder, cylinder/chamber and cylinder/cylinder value by $c_\varepsilon^2$. Its adjoint integrates only the chamber and transverse variables, with factors $b_p=c_\varepsilon$, $b_e=c_\varepsilon/\delta$ in each coordinate. The one-position adjoint has these same individual factors. The target two-position adjoint then applies $E^*$, deleting atomic $(p,p)$ coordinates. These are the adjoints on all spatial Hilbert data, including ground half-chamber functions, and not just on a prepared range.
+
+The restricted particle lift is $T_\varepsilon^{\rm p}=(\iota_\varepsilon^{\rm p})^*L_\varepsilon^{\rm p}$, with adjoint $(L_\varepsilon^{\rm p})^*\iota_\varepsilon^{\rm p}$. It is a contraction. Neither it nor the raw map is an asserted kinetic operator intertwiner.
+

@@ -1,0 +1,106 @@
+**定理 2.1（整体误差、受限译码与非平稳测量）。** 在定义 1.2–1.5 的合同下，以下结论成立。
+
+(A) 对每个整数合同 $(L,q)$，整个一块式协议类满足
+
+$$
+\varepsilon_n^\star(L,q)\ge\ell_n(x),
+\qquad
+\ell_n(x)=\frac{2e_n}{M_n}\frac{x^2}{(1+\sqrt{1+nx})^2}.
+\tag{2.1}
+$$
+
+因此 $1-\ell_n(x)$ 是不可超过的均匀整词 Bayes 成功率上界，不断言此有限参数界可达。
+
+(B) 一次准备 $|+\rangle^{\otimes n}$，令 $\phi_b=U_{s(b)}^q|+\rangle^{\otimes n}$，$\Phi$ 以 $\phi_b$ 为列。$q>0$ 时
+
+$$
+G_{bc}=x^{h(b,c)},\qquad G>0.
+$$
+
+测量 $\Phi G^{-1/2}$ 的正交归一列，并把正交补归给任一固定合法词，得到精确可达分数
+
+$$
+P_{\mathrm{SRM}}=\frac1{M_n}\sum_{b\in B_n}\bigl((\sqrt G)_{bb}\bigr)^2.
+\tag{2.2}
+$$
+
+若 $(1+x)^n<2$，则
+
+$$
+\begin{aligned}
+\varepsilon_n^\star&\le1-P_{\mathrm{SRM}}\le u_n(x),\\
+u_n(x)&=\frac{(2e_n/M_n)x^2+(1+x^2)^n-1-nx^2}
+{[1+\sqrt{2-(1+x)^n}]^2}.
+\end{aligned}
+\tag{2.3}
+$$
+
+这里的区间限制属于这条显式上界，不是对源增加承诺。
+
+(C) 图的边数为
+
+$$
+e_n=\sum_{b\in B_n}|b|
+=\frac{nF_{n+1}+2(n+1)F_n}{5},
+\qquad |b|=\sum_i b_i.
+\tag{2.4}
+$$
+
+对每个固定 $n=3N$，沿符合原整数合同且 $x\to0$ 的参数族，整个一块式协议类的最优错误率满足
+
+$$
+\varepsilon_n^\star(L,q)=C_nx^2+O_n(x^3),
+\qquad
+C_n=\frac{e_n}{2M_n}
+=\frac{nF_{n+1}+2(n+1)F_n}{10F_{n+2}}.
+\tag{2.5}
+$$
+
+$C_n$ 是均匀合法词平均占位数的一半；式（2.5）描述整词错误率，不是平均单个位错误率。固定整数 $r\ge1$，取 $q=L-r$ 且 $L\to\infty$，有
+
+$$
+\varepsilon_n^\star(L,L-r)
+=\frac{\pi^2r^2e_n}{8M_nL^2}+O_{n,r}(L^{-3}).
+\tag{2.6}
+$$
+
+极限跨越不同但各自符合定义的设备合同。每次实验的 $L,\theta,b$ 固定，不能在固定设备上免费改角度。最优性仅涉及首项；余项不声称对增长的 $n$ 一致。
+
+(D) 固定 $|+\rangle^{\otimes n}$ 探针和逐位 $Y$ 测量，只优化使用全部读出词的经典译码，允许其使用完整无相邻约束。该受限类的精确最优均匀整词分数为
+
+$$
+P_Y^{\mathrm{ML}}=\frac{T_n(p)}{M_n},
+\qquad
+T_0(p)=1,\quad T_1(p)=2p,\quad
+T_n(p)=p[T_{n-1}(p)+T_{n-2}(p)]\quad(n\ge2).
+\tag{2.7}
+$$
+
+令 $D_n=T_n'(1)$、$K_n=D_n-2e_n$，则
+
+$$
+K_0=K_1=0,\quad K_2=1,\quad
+K_n=K_{n-1}+K_{n-2}+M_{n-3}\quad(n\ge3).
+\tag{2.8}
+$$
+
+故每个固定 $n=3N$ 在充分小的 $x>0$ 时满足
+
+$$
+P_{\mathrm{SRM}}-P_Y^{\mathrm{ML}}
+=\frac{K_n}{4M_n}x^2+O_n(x^3)>0.
+\tag{2.9}
+$$
+
+完整 $B_3$ 上 $M_3=e_3=5$，$P_Y^{\mathrm{ML}}=(2p^3+3p^2)/5$，并有显式有限区间
+
+$$
+0<x\le\frac1{20}\quad\Longrightarrow\quad
+P_{\mathrm{SRM}}-P_Y^{\mathrm{ML}}\ge\frac{x^2}{32}>0.
+\tag{2.10}
+$$
+
+原整数合同 $q=L-1,L\ge32$ 位于此区间。该分离是均匀合法先验的整词 Bayes 分离，不是逐来源支配或 minimax 分离；受限类只包括指定的 $Y$ 测量加任意经典译码，不包括所有局部测量或所有 LOCC。
+
+(E) 对每个固定 $n=3N$，充分小的 $x>0$ 时，保持同一 $|+\rangle^{\otimes n}$ 输入，只旋转 SRM 的两个末端测量向量，即可严格提高 $P_{\mathrm{SRM}}$。因此 SRM 不是这些有限参数下的精确最优策略；达到最优首项与达到精确最优值是不同命题。
+

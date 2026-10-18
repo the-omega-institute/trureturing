@@ -1,0 +1,52 @@
+### 108.3. Coincident or distinct dominant character locations
+
+Choose $\omega\in O$ and index four probability distributions by $E$:
+
+$$
+ p_x=2g_x,\quad q_x=2g_{\omega+x},\quad
+ r_x=2b_x,\quad s_x=2b_{-\omega+x}.
+ \tag{108.6}
+$$
+
+Set $A=\sum_xp_xr_{-x}$ and $B=\sum_xq_xs_{-x}$. Then $c_0=(A+B)/4$, and (108.5) gives $E_0=2-A-B$. If $E_0\ge1/2$, both conclusions follow. Otherwise $A,B>1/2$.
+
+For two probability distributions with inner product $a>1/2$, each unique maximum exceeds one half. Those maxima occur at the same position: if their positions differ and their heights are $m,n$, splitting the sum at the first position bounds it by $m(1-n)+(1-m)n<1/2$. At a common peak, $a\le mn+(1-m)(1-n)$. Therefore $(m+n-1)^2\ge(2m-1)(2n-1)\ge2a-1$, and $m+n\ge1+\sqrt{2a-1}$.
+
+Apply this to $(p_x,r_{-x})$ and $(q_x,s_{-x})$. Their peaks occur at $u,-u,v,-v$, respectively. Writing the four peak heights as $m_p,m_r,m_q,m_s$, we obtain
+
+$$
+ m_p+m_r\ge1+\sqrt{2A-1},\qquad
+ m_q+m_s\ge1+\sqrt{2B-1}.
+ \tag{108.7}
+$$
+
+The dominant $`p*s`$ contribution lies at $\chi_1=-\omega+u-v$, and the dominant $`q*r`$ contribution lies at $\chi_2=\omega+v-u=-\chi_1$. Put $S=\{\chi_1,\chi_2\}\subset O$. These locations may coincide; their contributions still add. Hence
+
+$$
+ \sum_{\chi\in S}c_\chi\ge\tfrac14(m_pm_s+m_qm_r),
+ \qquad O_0\ge m_pm_s+m_qm_r-\tfrac{|S|}{2}.
+ \tag{108.8}
+$$
+
+For the second inequality, the vectors $(c_\chi)_{\chi\in O}$ and $(1/8)_{\chi\in O}$ have equal total mass. Their $\ell^1$ distance is at least twice the excess on any subset; (108.5) supplies the additional factor two.
+
+Since $|S|\le2$ and $xy\ge x+y-1$ on $[0,1]^2$,
+
+$$
+ O_0\ge\sqrt{2A-1}+\sqrt{2B-1}-1
+       \ge\sqrt{1-2E_0}.
+ \tag{108.9}
+$$
+
+For the last step, put $X=2A-1$, $Y=2B-1$. These lie in $(0,1]$, satisfy $X+Y=2-2E_0$ and $XY\ge X+Y-1$, and therefore satisfy $\sqrt X+\sqrt Y\ge1+\sqrt{X+Y-1}$ by squaring nonnegative quantities. The increasing function $E_0$ and decreasing function $\sqrt{1-2E_0}$ meet at $E_0=\sqrt2-1$. This proves (108.1), including $E_0=0$ and the separately treated branch $E_0\ge1/2$.
+
+If $\Gamma=(\mathbb Z/2\mathbb Z)^3$, every character has order at most two. Thus $\chi_1=\chi_2$ and $|S|=1$. The same calculation improves (108.9) to
+
+$$
+ O_0\ge\tfrac12+\sqrt{1-2E_0}>\tfrac12
+       \quad\text{when }E_0<\tfrac12.
+ \tag{108.10}
+$$
+
+The other branch already has $E_0\ge1/2$, proving the additional elementary-abelian bound.
+

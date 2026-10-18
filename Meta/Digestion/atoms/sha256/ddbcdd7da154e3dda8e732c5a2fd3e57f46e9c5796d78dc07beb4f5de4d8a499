@@ -1,0 +1,36 @@
+**Theorem 37.1 (Quantum upper construction for every degree).** For every pair $(n,q)$ in Definition 35.1, Theorem 36.1 produces (35.1) on $D_n$ dimensions, using one zero Kraus operator for even $n$ and exactly two for odd $n$. The zero-word reachable space from the reset density is the whole displayed memory.
+
+Proof for even $n=2m$, $m\ge1$. On the basis $e_0,\ldots,e_m$, let $Je_j=e_{j-1}$ for $j\ge1$, $Je_0=0$, $U=I+J$, $f=e_0$ and $K=\sqrt q\,U$. For Stirling numbers of the second kind write ${m\brace r}$, and choose $x_r=r!{m\brace r}$ for $0\le r\le m$. The classical Newton/Stirling binomial identity gives
+
+$$
+f^*U^kx=\sum_{r=0}^m\binom{k}{r}x_r=k^m,\qquad \operatorname{Tr}[F\mathcal T^k(xx^*)]=q^kk^{2m},\qquad \mathcal T(X)=KXK^*. \tag{37.1}
+$$
+
+Here $x_0=0$, $x_m=m!\ne0$, and $\binom{k}{r}=0$ for $r>k$; the formula includes $k=0$. All eigenvalues of $K$ equal $\sqrt q$, so all eigenvalues of its superoperator equal $q$ and $\rho(\mathcal T)=q<1$. If $f^*U^ky=0$ for all $k\ge0$, the polynomial $\sum_r\binom{k}{r}y_r$ vanishes identically, hence every $y_r=0$. This proves $Q>0$. Theorem 36.1 therefore gives the exact normalized law on $m+1=D_n$ dimensions. Its zero Kraus operator is invertible, so the branch is nonzero and has Kraus rank one. Finally $x_m\ne0$ makes $x,Jx,\ldots,J^mx$ independent; the powers of $U$ span the same cyclic space, and invertible $S$ preserves its dimension.
+
+Proof for odd $n=2m+1$, $m\ge0$. Consider the exact forward difference $\Delta_n(t)=(t+1)^n-t^n$. It is strictly positive for every real $t$, since $t\mapsto t^n$ is strictly increasing on the whole real line. It has degree $2m$ and leading coefficient $n$. For $m>0$, its roots are nonreal conjugate pairs, with multiplicities; choose one root from each pair. The classical conjugate-root factorization then gives
+
+$$
+\Delta_n(t)=n\prod_{j=1}^m(t-\zeta_j)(t-\overline{\zeta_j}),\qquad p(t)=\sqrt n\prod_{j=1}^m(t-\zeta_j),\qquad |p(t)|^2=\Delta_n(t)\quad(t\in\mathbb R). \tag{37.2}
+$$
+
+For $m=0$, take $p=1$ and empty products. The coefficients of $p$ may be complex. This is an exact factorization of the positive difference, not merely a choice of a polynomial with the same degree. On the target space $\mathbb C^{m+1}$ use $U=I+J$ as above, and let $v_r=(\Delta^rp)(0)$, where $\Delta p(t)=p(t+1)-p(t)$. The Newton expansion $p(t)=\sum_{r=0}^m\binom{t}{r}(\Delta^rp)(0)$ gives $e_0^*U^tv=p(t)$ for all natural $t$ and $v_m=m!\sqrt n\ne0$.
+
+Add one source coordinate $e_s$, so the full memory is $\mathbb C^{m+1}\oplus\mathbb Ce_s$ of dimension $m+2=D_n$. Set $x=e_s$, $f=(e_0,0)$ and
+
+$$
+K_A=\sqrt q\begin{pmatrix}U&0\\0&1\end{pmatrix},\qquad K_B=\sqrt q\,|(v,0)\rangle\langle e_s|,\qquad \mathcal T(X)=K_AXK_A^*+K_BXK_B^*. \tag{37.3}
+$$
+
+Since $K_B$ annihilates the target space, $K_BK_A^rK_B=0$ for every $r\ge0$. In a length-$k$ word acting on $e_s$, the all-$A$ word stays in the source and is invisible to $f$; every word with at least two $B$'s vanishes. A word with exactly one $B$ is $K_A^tK_BK_A^{k-1-t}$ for a unique $0\le t<k$, and sends $e_s$ to $q^{k/2}(U^tv,0)$. The CP sum uses the squared norm of each word amplitude separately. Consequently
+
+$$
+\operatorname{Tr}[F\mathcal T^k(e_se_s^*)]=q^k\sum_{t=0}^{k-1}|p(t)|^2=q^k\sum_{t=0}^{k-1}\big((t+1)^n-t^n\big)=q^kk^n\quad(k\ge0). \tag{37.4}
+$$
+
+For $k=0$ both the empty sum and the observed source amplitude are zero. Telescoping removes all lower-degree terms exactly; summing $t^{2m}$ instead would not give this monomial. The no-tick alternatives are unresolved CP alternatives, not coherently added amplitudes.
+
+For stability, decompose matrix space into target-target, target-source, source-target and source-source blocks. The $A$ part preserves each block and has, respectively, maps $qUXU^*$, $qUX$, $qXU^*$ and $qX$; every eigenvalue in these four diagonal superoperator blocks is $q$. The $B$ part sends only the source-source block to the target-target block, as $qX_{ss}vv^*$, and vanishes on the other three. Thus the full superoperator is block triangular with spectrum consisting only of $q$, proving $\rho(\mathcal T)=q<1$ and convergence of its Gramian.
+
+For faithfulness, if $y^*Qy=0$, the all-$A$ words first force $e_0^*U^ty_{\rm target}=0$ for all $t$, hence $y_{\rm target}=0$ by the same binomial-basis observability. The words $K_A^tK_B$ then force $y_s p(t)=0$ for every natural $t$. A nonzero polynomial cannot vanish at all these points, so $y_s=0$. Thus $Q>0$ on all $m+2$ coordinates, $z=Z_n(q)$ by (37.4), and Theorem 36.1 gives the required complete resetting instrument. The matrices $K_A$ and $K_B$ are linearly independent: the former is invertible and block diagonal, and the latter is nonzero of rank one in an off-diagonal block. Vectorizing Kraus matrices identifies Choi rank with their span dimension, so the zero branch has rank exactly two; invertible similarity preserves this independence. The reachable span contains $e_s$ and every $(U^tv,0)$; $v_m\ne0$ makes the latter span the full target space. Again similarity preserves reachability. $\square$
+

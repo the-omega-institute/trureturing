@@ -1,0 +1,23 @@
+**Theorem 306.1 (Exact closed-cap head projection on the strip).**
+For every real $\tau>0$ and $0\le\delta\le\tau/40$, put
+$e=5\tau+\delta$. Prescribe
+
+$$
+(a_3,\ldots,a_7)=(13,10,9,8,6)\tau,\qquad
+1\ge a_1\ge a_2\ge13\tau,
+\tag{306.1}
+$$
+
+and append any positive nonincreasing vanishing tail with $a_8\le e$.
+Then original $\mathcal N_2$ feasibility at this closed cap, original
+$\mathcal O_2$ feasibility there, and the conjunction
+
+$$
+a_1\le1-7\tau+17\delta,
+\qquad a_2\le1-11\tau+40\delta
+\tag{306.2}
+$$
+
+are equivalent. The following explicit single allocation realizes all
+feasible heads simultaneously.
+

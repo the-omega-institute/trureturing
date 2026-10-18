@@ -1,0 +1,30 @@
+**Proposition 60.2 (monotonicity and positive tails from a fixed boundary).** For $1/2\leq s<T$ and $t>0$, $f(s,t)$ increases strictly with $t$. For each such fixed $s$, a nonzero interval immediately below $t_0=1-s$ is excluded by (S.75), and therefore excludes positive-tail centers in that interval.
+
+Proof. The roots of $\Delta$ are $d,T$, so $0<\Delta\leq1/2$ in this range. Differentiating only in $t$ gives
+
+$$
+\partial_t f=1-\frac{2h\Delta}{s(4t+2h)^2}\geq1-h>0.
+\tag{S.76}
+$$
+
+Indeed $s(4t+2h)^2\geq(1/2)(2h)^2=1$ and $2h\Delta\leq h$. The scalar expression is defined for every $t>0$, whether or not that $t$ is the second eigenvalue of an ordered center.
+
+At $t=t_0=1-s$, one has $d<t_0\leq1/2$ and $\Delta=4(t_0-d)(T-t_0)$. Put $C(s,t)=1/(4s+2h)+t/[s(4t+2h)]$. Then
+
+$$
+f(s,t_0)-d=(t_0-d)\bigl[1-4(T-t_0)C(s,t_0)\bigr].
+$$
+
+Clearing the positive denominator $s(4s+2h)(4t_0+2h)$ shows that the bracket has the sign of
+
+$$
+\begin{aligned}
+D_0&=s(4st_0+2h+h^2)-2(T-t_0)(4st_0+h)\\
+&=h-h^2t_0-4st_0(h-t_0)\\
+&\geq h-h^2t_0-(h-t_0)=\frac{t_0}{2}>0.
+\end{aligned}
+\tag{S.77}
+$$
+
+The last step uses $s+t_0=1$, $4st_0\leq1$ and $h>t_0$. This is the boundary comparison already used in (R.228)–(R.229) of Theorem 44.2 of the first volume, with $c=h$; it is not a new rank-two result. Its use here is continuity of the explicit scalar function: since $f(s,t_0)>d$, there is $\varepsilon_s\in(0,t_0)$ such that $f(s,t)>d$ whenever $t_0-\varepsilon_s<t\leq t_0$. The part $t<t_0$ has $0<\epsilon=1-s-t<\varepsilon_s$, and so gives genuinely positive-tail exclusions in ranks $3$ through $9$ whenever the spectrum is ordered. Section 62 gives explicit rational widths and margins. $\square$
+

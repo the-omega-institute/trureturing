@@ -1,0 +1,17 @@
+**Definition 2.1 (a row-dependent threshold).** For a valid $(P,R)$,
+write $R=(C,\pi)$ and put
+
+$$
+b(P,R)=
+\begin{cases}
+2(d+1),&\text{if }C\text{ has a concrete leaf, with least such depth }d,\\
+2D,&\text{otherwise, where }D=\max(\{0\}\cup\{|p|:p\in P\}).
+\end{cases}
+\tag{NUE.5}
+$$
+
+Both depths are computed from the finite supplied syntax. The first
+case uses the shallowest concrete exterior leaf, including a blocking
+leaf; it does not use the unknown hidden subtrees. These are sufficient
+thresholds, without a minimality assertion.
+

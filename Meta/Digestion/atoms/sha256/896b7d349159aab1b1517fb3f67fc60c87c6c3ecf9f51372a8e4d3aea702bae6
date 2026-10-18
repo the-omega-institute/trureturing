@@ -1,0 +1,67 @@
+**Attribution 37.2 (classical hypotheses and source-specific
+deductions).** Wegener, *The Complexity of Boolean Functions*,
+Chapter 14 §4, Definition 4.1 and Theorems 4.1 and 4.3,
+[printed pp. 423–425][WBP], owns the optimal synchronous
+read-once representation of symmetric functions and its residual
+count. The proof on printed p. 424 expressly uses that every
+graph path in a BP1 is realized by an input, a property it
+does not claim for general branching programs. Bryant,
+[§2, Definition 1][BRY], requires strictly increasing argument
+indices on nonterminal edges. These are genuine additional
+hypotheses. Live-prefix freshness proved here is not a proof
+that an arbitrary installed native graph meets them; Proposition
+36.1 already obstructs the direct residual assignment, even
+with an acyclic constructed graph.
+
+Sinha, *Some Topics in Parallel Computation and Branching
+Programs*, [§2.1.3, printed p. 17][SINHA95], allows cycles
+provided no semantic path contains a cycle, and records the
+Pippenger leveling construction with $(l+1)s$ states for size
+$s$ and semantic length $l$. That construction's copies do
+not establish a cardinality-preserving comparison for the
+native installed-state question. The classical results remain
+their suppliers' results; no read-once optimality theorem is
+reproved or imported beyond its hypotheses.
+
+The native mathematical suppliers are NBP Proposition 9.3,
+(NBP.9.7), Proposition 15.2 and the unchanged reader of Theorem
+15.5; here their contracts are Definitions 1.1–2.2 and 4.1–4.2,
+Convention 23.2 and Lemma 24.1. Theorem 26.1 supplies the
+reused fallback grids and profile front. The added deductions
+are the two-sided actual comparisons and their all-prefix
+saturation, its consumption in (PCA.86), and the balanced-literal
+full-domain live merger (PCA.88). Their consumer is the
+installed-state gap of Definition 32.2 and Proposition 32.3. They are
+repository-derived ordinary-paper arguments, without a current
+kernel or worldwide-priority claim.
+
+[Bounded native preparer synthesis, Theorems 8.3 and 9.1 and
+Convention 11.3][BPS34], and [Polynomial origin certificates,
+§9, Lemma 9.1][POC34], preserve an attained joint relation
+and SAME budgets while allowing different pointwise generated
+bits on different matched actual sources. Their SOME-code
+normalization supplies no preservation of the independently
+prescribed $\sigma_{A,k}$ on the identical source.
+[Native weight optimization, §8, Open problem 8.4][NWO34],
+retains its distinct local-to-global compatibility and
+native-completion obligations. No entropy, certificate or
+finite-relaxation optimum from those contracts is substituted
+for a native shared-state exclusion here.
+
+All services and separate prices in Assumption 33.2 remain
+supplied: actual origin/version binding and update, acquisition
+and authentication, export, isolation, code-only handoff,
+faithful complete reader entry and stationary truthful service.
+Every installed running, latch and whole-output state retains
+its appropriate phase's charge; every actual invocation and
+absolute literal is paid. Table representation, literal storage,
+entry and whole-output contents, initialization, handoff,
+service storage, time and energy keep their separate prices.
+Neither the lower comparisons nor the full-domain construction
+adds an archive, source copy, address operation, decoder,
+counter or unpriced phase coordinate.
+
+[BPS34]: FIB_BOUNDED_NATIVE_PREPARER_SYNTHESIS.md
+[POC34]: FIB_NATIVE_POLYNOMIAL_ORIGIN_CERTIFICATES.md
+[NWO34]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_WEIGHT_OPTIMIZATION.md
+

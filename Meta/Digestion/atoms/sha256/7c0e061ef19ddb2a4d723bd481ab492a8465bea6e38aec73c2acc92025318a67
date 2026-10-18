@@ -1,0 +1,77 @@
+**Proposition 6.1 (uniform actual histories and the joint native price).**
+Specialize to $K=1$ and $f(b)=\bigoplus_{i=0}^{m-1}b_i$. Thus
+$H=2$, $q=3$, and
+
+$$
+d_i=D+\left\lfloor\frac{3i+1+\lambda_0}{2}\right\rfloor.
+\tag{NTL.21}
+$$
+
+Give the actual histories (NTL.11) the uniform law, equivalently the
+conditional law of Proposition 3.3. For any deterministic native
+observation procedure whose complete observable transcript leaves at
+least one bit unexposed on *every* possible transcript, that transcript
+is independent of the required lag. In particular every single native
+query carries zero lag information when $m\ge2$.
+
+Every exact parity recovery run must expose every bit, with no
+probabilistic qualification needed for this necessity. One reader
+jointly attains the exact call, summed-length and peak vector
+
+$$
+\left(m,\ mD+\sum_{i=0}^{m-1}
+\left\lfloor\frac{3i+1+\lambda_0}{2}\right\rfloor,
+\ D+\left\lfloor\frac{3(m-1)+1+\lambda_0}{2}\right\rfloor\right).
+\tag{NTL.22}
+$$
+
+**Proof.** The information and certificate ingredients are the classical
+uniform-parity facts, already used in [WPE, §392 and Proposition
+396.9][WPE]. In particular §392.1 gives the normalized two-bit kernel
+$\frac12\mathbf1_{y_1\oplus y_2=x}$; its correction governs the
+earlier §317 statement. The present use is their transfer to actual
+native lag histories and the prices in (NTL.21).
+
+Say a bit is exposed when some issued word has different replies at
+its two adjacent slot ages. By Theorem 4.2 a complete transcript fixes
+exactly the values of its exposed coordinates. Every assignment of
+the remaining bits gives the identical transcript: replay the
+deterministic choices, using fixed replies or the already fixed bit
+at every step. Conversely a nonconstant reply fixes that bit. Thus
+each positive-probability transcript cell is a Boolean subcube,
+including its stopping decision, chosen words and all repeated and
+absent replies. Local deterministic processing adds no new distinction.
+
+If any bit remains free in such a cell, flipping it pairs even and
+odd inputs bijectively. Under the uniform law, conditional parity,
+and hence the two possible lags, is exactly fair in every such cell.
+If all possible transcripts leave a free bit, this proves independence
+and mutual information zero for the transcript random variable. The
+free coordinate may depend on the transcript. Merely leaving a bit
+free on one branch would only give balance on that branch, not global
+independence. One native query exposes at most one coordinate, so
+$m\ge2$ suffices for the single-query assertion. At $m=1$, $p_0$
+already identifies the lag.
+
+Without using probabilities, if an exact reader halted with bit $i$
+unexposed, flipping that bit would preserve its complete run but
+change the required output. Both histories are genuine by Theorem
+3.2, a contradiction. Its run therefore contains at least one exposing
+call for each $i$; these are different calls, each of length at least
+$d_i$. This yields the simultaneous sourcewise lower bound
+$(m,\sum_i d_i,\max_i d_i)$. Querying each $p_i$ once and taking
+the parity attains it on every history. The $d_i$ are nondecreasing,
+so this is (NTL.22). For $m=2,D=2$ the attained triples are
+$(2,6,4)$ for nonnegative lags and $(2,7,4)$ for positive lags.
+$\square$
+
+The probability law is essential to the zero-information statement;
+the exact-recovery lower bound instead uses the full support. After
+$m-1$ bits have been exposed, one further bit determines parity, so
+zero initial one-query information does not mean that every later
+query has zero conditional information. Conversely arbitrary biased
+input laws need not have the stated independence. This separation of
+the joint law from its coordinate marginals agrees with [CG,
+Proposition 14.12][CG] and [WPE, Definition 392.2][WPE]. No new XOR
+or general synergy theorem is being asserted.
+

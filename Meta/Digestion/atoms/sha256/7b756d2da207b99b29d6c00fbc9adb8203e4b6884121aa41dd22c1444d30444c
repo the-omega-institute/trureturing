@@ -1,0 +1,78 @@
+**Theorem 8.4 (attainment with arbitrary countably additive time laws).**
+There is a common channel $\Phi_{\min}$ in the enlarged class (CG.20)
+with $E(\Phi_{\min})=E_*$. Its time laws need not have densities.
+
+Proof. The class is nonempty, for example by the channel that always
+returns other, and its errors lie in $[0,1]$. By Proposition 8.2 take a
+minimizing sequence represented by $(J_n,B_n)$ of Lemma 8.3. Taking the
+trace of (CG.52) gives
+
+$$
+\operatorname{tr}J_n+\operatorname{tr}B_n(K)=3.
+\tag{CG.55}
+$$
+
+Thus the positive matrices $J_n$ have a convergent subsequence with
+positive limit $J$. Every component of $B_n$ has uniformly bounded total
+variation. Indeed, for every finite Borel partition $(A_j)$, positivity
+and Cauchy–Schwarz give
+
+$$
+\sum_j|(B_n)_{ab}(A_j)|
+ \leq\sum_j\sqrt{(B_n)_{aa}(A_j)(B_n)_{bb}(A_j)}
+ \leq\sqrt{(B_n)_{aa}(K)(B_n)_{bb}(K)}\leq3.
+\tag{CG.56}
+$$
+
+Choose a countable uniformly dense family of real continuous functions
+on compact metric $K$, including $1$. A diagonal subsequence makes their
+integrals against the real and imaginary parts of all nine components
+converge. The uniform variation bound extends these limits, by uniform
+approximation, to bounded linear functionals on all continuous functions.
+For every vector $z$ and nonnegative continuous function $h$, the limit
+of $\int h\,d(z^\dagger B_nz)$ is nonnegative. Riesz–Markov
+representation of positive functionals on $C(K)$, and polarization in
+$z$, therefore supply a positive matrix-valued regular Borel measure $B$
+with these component functionals. Its components are genuine countably
+additive measures. No finitely additive completion is used. Testing the
+constant $1$ passes (CG.52) to the limit. Thus $(J,B)$ is feasible.
+
+It remains to check the topology against the complete error, rather than
+assume norm compactness of measures. For each fixed history, (CG.53)
+gives matrix convergence of $L_{\rho,n}$, hence continuity of its live
+trace-norm error, and weak convergence of $\mu_{\rho,n}$ against all
+continuous functions on $K$. Write $\nu_\rho$ for the fixed target
+record measure, having densities $w_i f_y(t)$ and zero other mass.
+For a finite real signed regular measure $\xi$ on compact metric $K$,
+
+$$
+\|\xi\|_{\rm TV}
+ =\sup_{h\in C(K;\mathbb R),\ \|h\|_\infty\leq1}
+                         \left|\int_K h\,d\xi\right|.
+\tag{CG.57}
+$$
+
+The inequality from right to left follows from the definition of total
+variation. For the reverse inequality, approximate the positive and
+negative Hahn sets by disjoint compact subsets in their respective
+variation measures. A continuous function bounded by one can equal
+$+1$ and $-1$ on these two compact subsets. The omitted variation tends
+to zero by regularity, proving the formula. Each integral on the right
+is continuous in the convergence just obtained, so the supremum is lower
+semicontinuous. Consequently
+
+$$
+\frac12\left(\|L_\rho-(\Omega_\rho)_{\rm live}\|_1
+                         +\|\mu_\rho-\nu_\rho\|_{\rm TV}\right)
+\tag{CG.58}
+$$
+
+is lower semicontinuous, as is the maximum of these twelve expressions.
+On the disjoint space $K$, its variation is exactly the sum over all
+five labelled intervals and other; atoms and singular continuous mass
+are included. The limiting channel has error at most the liminf of the
+minimizing errors, namely $E_*$. Membership in the same class supplies
+the reverse inequality, proving equality. This is existence in the
+all-common-CPTP class; it gives no finite description, finite event
+storage or physical implementation of the limiting channel. $\square$
+

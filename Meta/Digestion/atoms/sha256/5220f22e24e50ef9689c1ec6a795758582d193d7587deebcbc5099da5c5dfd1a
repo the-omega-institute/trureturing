@@ -1,0 +1,11 @@
+**Corollary 4.3 (boundary of the stated hypotheses).** The same
+formula holds for $A=B>0$, attained by (WBF.23), with $P$ the
+uniform cube law. No assertion here includes $B=0$ or zero reference
+probabilities in Definition 2.1.
+
+Proof. At $A=B$, take $r=0$ and repeat the proof; $h=4$ and
+$a=\log_2A$, so (WBF.22) remains valid. The original class requires
+strictly positive tables and reference probabilities. A hard-zero
+extension would have different admissible data and logarithmic
+conventions, which are not used in this theorem. $\square$
+

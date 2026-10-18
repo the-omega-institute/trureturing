@@ -1,0 +1,49 @@
+**Theorem 101.5 (real-gauge opposite-principal exclusion).**
+At an original full calibrated-domain local minimum with ranks \((7,6)\),
+kernel support of occupancy \((2,1,1,0)\), and \(0<t<1/4\), the supported
+opposite Gram \(H_S\) cannot have a diagonal-unitary gauge in which it is real.
+The other Gram and all outside records may be complex.
+
+**Proof.**
+A reciprocal diagonal unitary gauge
+\[
+G'=EGE^*,\qquad H'=E^*HE,\qquad
+G'_{ij}H'_{ij}=G_{ij}H_{ij} \tag{34}
+\]
+extends to the full eight coordinates and is a homeomorphism of the
+original calibrated domain. It preserves the objective, ranks, support,
+all original fibre identities and local minimality.
+Under the asserted gauge, work with \(H_S\) real.
+The quotient and rank facts of §§95 and 97 give
+\(G_S=H_S\odot\overline R\) and \(\operatorname{rank}H_S=2\).
+The cycle is nonzero by the matrix-unit bound.
+Its negative sign is excluded by Lemma 101.3.
+
+For a positive cycle, a diagonal sign matrix makes all four
+\(F,\{3,4\}\) entries positive: choose the signs at 3 and 4 to make the
+two entries from coordinate 1 positive, then the sign at 2 to make
+entry \(23\) positive; the cycle condition makes entry \(24\) positive.
+Apply these signs to both full Grams as in (34).
+Lemma 101.4 gives a real full kernel in this gauge.
+Rank two and \(H_{FF}=I_2\) make the singleton \(H\) records precisely
+the positive real columns from \(F\).
+Theorem 101.2 excludes the resulting local minimum. \(\square\)
+
+Equivalently, every remaining minimum in this support class must satisfy
+\[
+\operatorname{Im}\chi\ne0,\qquad
+\chi=H_{13}H_{24}\overline{H_{14}H_{23}}. \tag{35}
+\]
+Indeed \(\chi\) is invariant under diagonal unitary conjugation.
+Its reality is necessary for a real gauge.
+Conversely, choose phases so that \(H_{13},H_{23},H_{14}>0\).
+If \(\chi\) is real, then \(H_{24}\) is real.
+Rank two and \(H_{FF}=I_2\) give
+\[
+H_{34}=\overline{H_{13}}H_{14}
+       +\overline{H_{23}}H_{24}, \tag{36}
+\]
+which is real in that gauge. Thus all of \(H_S\) is real, proving sufficiency.
+Condition (35) is a genuine phase obstruction, with no quantitative lower
+bound on \(|\operatorname{Im}\chi|\).
+

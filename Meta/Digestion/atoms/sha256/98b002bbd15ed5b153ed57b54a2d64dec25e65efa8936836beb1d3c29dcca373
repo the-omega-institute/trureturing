@@ -1,0 +1,23 @@
+**引理 4.2（multiplicative error transport）。** For $a,b\in[0,1]$,
+
+$$
+\begin{aligned}
+g(ca,cb)&\ge c\,g(a,b) &&(0\le c\le1),\\
+g(\min(ca,1),\min(cb,1))&\le c\,g(a,b) &&(c\ge1).
+\end{aligned}
+$$
+
+Starting from Definition 3.1's two seeds and applying the pair update
+$(x,y)\mapsto(y,G_P(x,y))$, after $t$ updates each component is bracketed by its true counterpart times $(1-\alpha)^{t+1}$ and $(1+\alpha)^{t+1}$. For $0\le t\le T$, each absolute deficit error is at most
+
+$$
+2\alpha(T+2)\le\epsilon^2\,2^{-30}.
+$$
+
+**证明。** Expansion proves the first inequality. For the second, if neither input is clipped, $c^2ab\ge cab$ proves it. If one is clipped, the left side is one and the right side is at least $c\max(a,b)\ge1$. Monotonicity of $g$, Lemma 4.1 and these two inequalities extend each bracket by one factor at an update; the unchanged component satisfies the enlarged bracket too.
+
+For $n\le T+2$, the definition of $P$ gives $\alpha n\le2^{-2K-31}$. Thus
+$(1+\alpha)^n-1\le e^{\alpha n}-1\le2\alpha n$ and
+$1-(1-\alpha)^n\le n\alpha$. True deficits are at most one. Finally
+$2\alpha(T+2)=2^{2-P}(T+2)\le2^{-2K-30}$.
+

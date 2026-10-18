@@ -1,0 +1,48 @@
+**Definition 97.1 (comparison coordinates for the same native operator).**
+Retain all the data and full complex domains of Definitions 75.1 and
+81.1. Put $d_0=k_0-\alpha_\kappa>0$, $\beta_s=\varepsilon s/d_0$,
+and, for $z=(y,z_2,w)$, define
+
+$$
+L_s=\begin{pmatrix}1&\beta_s&0\\0&1&2\beta_s\\0&0&1\end{pmatrix},
+\quad \mathscr L_s(r,z)=(r,L_sz),\quad
+(\mathcal T_sF)(r,z)=F(\mathscr L_s(r,z)),\quad
+\widetilde U_s=U_s\circ \mathscr L_s.
+\tag{97.1}
+$$
+
+It preserves Lebesgue measure, fixes the source and both height faces,
+and is a constant linear change of the three real phase coordinates.
+Write $u(r)=(1,r,r^2/2)$ and
+$Y=u(r)\cdot\partial_z$. Then, exactly,
+
+$$
+\begin{aligned}
+v_s(r)&=(1,r,r^2/[2(1+\beta_sr)]),\\
+\widetilde b_s[f]&:=b_s[\mathcal T_s^{-1}f]
+ =\int_{\Omega_s}\left(|\partial_rf|^2+
+                   (1+\beta_sr)^{-2}|Yf|^2\right)dr\,dz.
+\end{aligned}
+\tag{97.2}
+$$
+
+These are identities of closed forms on
+$\mathcal T_s\mathcal Q_s$, not additional regularity assumptions.
+In particular no estimate of the three separate phase derivatives
+is used. To verify the identities, each component of the original
+$c_\kappa(k)$ in G (25.4) is an affine function of $k$ plus a
+constant divided by $k-\alpha_\kappa$. Consequently its exact Taylor
+identity, with $h=k-k_0$, is
+
+$$
+c_\kappa(k_0+h)=c_0+h c_1+
+                 \frac{h^2}{2(1+h/d_0)}c_2.
+\tag{97.3}
+$$
+
+Substitution in (78.1) gives the first line of (97.2), and
+$L_su(r)=(1+\beta_sr)v_s(r)$ gives its second line on the smooth
+core. Unitarity and closure give the stated full-domain identities.
+The denominator stays positive on $I_s$, since the original
+admissible interval has $k-\alpha_\kappa>0$.
+

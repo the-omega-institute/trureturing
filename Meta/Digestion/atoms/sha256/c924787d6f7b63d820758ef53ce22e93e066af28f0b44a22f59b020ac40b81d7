@@ -1,0 +1,52 @@
+**Theorem 7.1 (One neighborhood for all finite budgets).** Fix $(d,r,c,\alpha)$ as in Section 1. There exist $s_-\in(0,1)$ and $A_->0$, independent of all budgets and observers, such that for every $0<s<s_-$, finite integer $M\ge2$, observer $\mathcal A\in\mathfrak A_M(e^{-s},\alpha)$ and target $i$, the following bounds hold. With $b=1-2\alpha$ and
+
+$$
+L_M=\max\left\{1,\left\lceil\left(\frac{2c(M-2)}b\right)^{1/r}\right\rceil\right\},
+\tag{7.1}
+$$
+
+they are
+
+$$
+\mathbb E_i^{\mathcal A}T\ge
+\begin{cases}
+A_-\max\{s^{-(2r+1)},s^{-(a+1)}M^{-(a-2r)/r}\},&a>2r,\\
+\dfrac{A_-s^{-(a+1)}}{1+\log(\min\{L_M,1/s\})},&a=2r,\\
+A_-s^{-(a+1)},&a<2r.
+\end{cases}
+\tag{7.2}
+$$
+
+Proof. Select $s_-$ from the source estimates and Theorem 6.1 so $r_{\rm init}(s)\le b/4$. This selection precedes $M$. For any finite $M$, choose $L=L_M$ before its observer. The function $f(u)=(e^u-1)/(e^u+1)$ has $f(0)=0$ and $f'(u)=2e^u/(e^u+1)^2\le1/2$, so $f(u)\le u/2$ for $u\ge0$. Also $\log(1+v)\le v$. Therefore
+
+$$
+\chi_{M,L}\le\frac{M-2}{2}\log\left(1+\frac{c}{(L+1)^r}\right)
+\le\frac{(M-2)c}{2(L+1)^r}\le\frac b4.
+\tag{7.3}
+$$
+
+For $M=2$, the expression is exactly zero. For $M>2$, the cutoff ensures $L^r\ge2c(M-2)/b$.
+
+Theorem 5.3 leaves $b/2\le\sqrt{D_i(s,L)Bs\mathbb E_iT/2}$. Squaring nonnegative sides gives
+
+$$
+\frac{b^2}{4}\le\frac{D_i(s,L)Bs\mathbb E_iT}{2}.
+\tag{7.4}
+$$
+
+Insert the corresponding strictly positive upper bound of Theorem 6.1 and divide by that upper bound. In the subcritical case the result is a constant times
+
+$$
+\max\{s^{-(2r+1)},s^{-(a+1)}L_M^{-(a-2r)}\}.
+\tag{7.5}
+$$
+
+The ceiling, including the maximum with one, gives
+
+$$
+L_M\le1+\left(\frac{2c(M-2)}b\right)^{1/r}\le C_LM^{1/r},
+\tag{7.6}
+$$
+
+with a source/risk constant $C_L$. This proves the first line of (7.2) after reducing $A_-$. The critical line follows directly from its positive logarithmic denominator. The rare-event line also follows this way; alternatively (5.10) and the full-law bound yield it with no forest loss at all. In every case all constants and the neighborhood precede every finite budget and design, and both directions concern the same actual observer. If an exact entropy vanished, (7.4) would contradict compliance; division was only by a positive source upper coefficient. $\square$
+

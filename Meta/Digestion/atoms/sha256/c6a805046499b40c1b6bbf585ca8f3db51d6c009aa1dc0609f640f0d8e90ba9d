@@ -1,0 +1,16 @@
+**Convention 10.2 (Resulting frontier information).** The demonstrated
+intervals and strict endpoint information are
+
+| Port | Necessary lower information | Credited sufficient channel error |
+| --- | --- | --- |
+| $q=1$ | $L\le\varepsilon_1$, with $L=1-(m+63/125)/2>7/17$ | $4/7$ |
+| $q=2$ | $21/68<\varepsilon_2$ | $3/7$ |
+| $q=3$ | $7/34<\varepsilon_3$ | $2/7$ |
+| $q=4$ | $7/68<\varepsilon_4$ | $1/7$ |
+| $q=5$ | $\varepsilon_5=0$ | $0$ |
+
+The strict all-$q<5$ result gives no explicit improved numerical lower constant
+for $q=2,3,4$. The algebraic algorithm can produce such constants and
+arbitrarily small certified intervals, but no such constants or intervals
+are specified. The right-column ports are those of QMB Theorem 3.1.
+

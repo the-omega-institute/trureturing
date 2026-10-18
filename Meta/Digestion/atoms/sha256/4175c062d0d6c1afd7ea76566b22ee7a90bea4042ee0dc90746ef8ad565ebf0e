@@ -1,0 +1,21 @@
+### 71.1 Statements, conventions, and the boundary of this note
+
+Chen--Yu's [Theorem 3, arXiv:1610.04875v3](https://arxiv.org/pdf/1610.04875v3)
+states that a quartet containing identity cannot contain another basis of
+operator Schmidt rank at most two on \(\mathbb C^2\otimes\mathbb C^3\).
+Their Definition 4 uses “MUB trio” for the three Hadamards in addition to
+identity. The rank-two part invokes Lemma 13(ii.d), proved in Appendix D.
+The 2026 [McNulty--Weigert review, Theorem 7.12](https://arxiv.org/pdf/2410.23997)
+repeats that exclusion.
+
+The actual family has exactly this rank and tensor convention, as shown
+below. Thus the stated theorem would exclude the whole branch if imported.
+However, the following exact examples invalidate two specific intermediate
+steps in the inspected proof. A separate example contradicts the
+two-representative classification in
+[Liang--Chen, arXiv:2504.15576v3, Lemma 1](https://arxiv.org/pdf/2504.15576v3).
+The conclusions here concern those intermediate claims. They neither
+construct a quartet nor disprove the no-quartet conclusions, which could
+have alternative proofs. The local theorems in §§62--69 do not depend on
+these external exclusions. No novelty claim about the whole-branch exclusion problem is made.
+

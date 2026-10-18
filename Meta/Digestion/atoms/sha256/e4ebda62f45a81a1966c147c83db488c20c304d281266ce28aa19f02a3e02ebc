@@ -1,0 +1,21 @@
+**Definition 5.1 (Target-specific analytical comparison).** At any interior $q$ and finite integer $L\ge1$, put
+
+$$
+\begin{aligned}
+\pi_i&=\sum_{k=1}^Lf_i(k),
+&J_i^L&=\pi_i^{-1}\sum_{k=1}^Lf_i(k)\mathcal K_k,\\
+V_i^L&=(1-\pi_i)^{-1}\sum_{k>L}f_i(k)\mathcal K_k,
+&\gamma_L&=1+\frac\delta{L+1}.
+\end{aligned}
+\tag{5.1}
+$$
+
+For target $i$ and opponent $j=1-i$, define
+
+$$
+W_i=\pi_jJ_j^L+(1-\pi_j)V_i^L.
+\tag{5.2}
+$$
+
+The split and the target-specific $W_i$ are the supplied lower-source Lemma 6.2 and uniform-source Lemma 5.2. The following proof retains their exact opponent comparison so that the refined additive estimate applies to the same object.
+

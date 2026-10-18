@@ -1,0 +1,35 @@
+**Lemma 3.2 (Corridor criterion with strict interior upper inequality).**
+For $t>\tau$, a positive exponential $R(x)=ce^{\ell x}$ with
+$\mathcal J(c,\ell)\le t$ exists if and only if $\Phi_\tau(t)\le0$.
+Every feasible $R$ satisfies $R\le f_t$. For every $t>\tau$,
+
+$$
+f_t(x)<s(x)+v_t(x)\qquad(0<x<1).
+$$
+
+When $\Phi_\tau(t)\le0$, the exponential $f_t$ itself is feasible.
+
+Proof. Feasibility is exactly the pair of corridor inequalities
+
+$$
+s-v_t\le R\le s+v_t.
+$$
+
+The endpoint limits give $R(0)\le\sqrt t$ and
+$R(1)\le\sqrt{t-\tau}$. Since $\log R$ is affine, interpolation of
+these two inequalities gives $\log R\le\log f_t$. Hence feasibility
+requires $s-v_t\le f_t$.
+
+For the reverse implication, put $u_t=s+v_t$. The function $s$ is
+strictly concave on $[0,1]$; on its interior,
+$s''=-1/(4s^3)<0$, and continuity excludes any affine endpoint segment.
+The function $v_t$ is concave and positive. Thus $u_t$ is strictly
+concave and positive on the closed interval. For distinct points and a
+strict convex combination, apply strict concavity of $u_t$, then the
+increasing logarithm, then concavity of the logarithm. This proves that
+$\log u_t$ is strictly concave. Its endpoint chord is $\log f_t$.
+It follows that $f_t<u_t$ in the interior, with equality at the two
+endpoints. If $s-v_t\le f_t$, both corridor inequalities therefore hold
+for $f_t$. The lower corridor can be negative; no logarithm of it has
+been taken. $\square$
+

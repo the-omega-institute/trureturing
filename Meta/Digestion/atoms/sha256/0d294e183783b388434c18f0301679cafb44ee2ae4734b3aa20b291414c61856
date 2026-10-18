@@ -1,0 +1,33 @@
+**Definition 3.1 (reused source bounds).** Write the source height as
+
+$$
+\begin{gathered}
+\ell(u,v)=A_\ell u^2-2a_\ell uv+B_\ell v^2+l_u u+l_vv,\qquad
+\gamma_\ell=B_\ell-A_\ell,\\
+A_\ell=\delta N_{00}+N_{11}/\alpha,\quad
+B_\ell=\delta N_{00}+N_{22}/\beta,\quad
+a_\ell=-N_{12}/\sqrt{\alpha\beta},\\
+l_u=2\sqrt{\delta/\alpha}N_{01},\qquad
+l_v=2\sqrt{\delta/\beta}N_{02}.
+\end{gathered}
+\tag{PC.10}
+$$
+
+FC Proposition 18.1, Proposition 24.1 and (FC.139), together with
+FC Proposition 34.2, give the strict same-source bounds
+
+$$
+\begin{gathered}
+\alpha>219/250,\qquad \mu<12,\qquad
+\mathfrak c(u,v)>1/25\quad((u,v)\in S^1),\\
+A_\ell<463/100000,\quad 0<\gamma_\ell<529/50000,\quad
+a_\ell>0,\quad l_u>63/12500,\quad l_v>1251/100000.
+\end{gathered}
+\tag{PC.11}
+$$
+
+The corresponding decimal bounds are $0.00463$, $0.01058$,
+$0.00504$ and $0.01251$, each an exact terminating rational.
+These are expression enclosures inherited at the one root, rather
+than new root-existence or TP hypotheses on a rectangular family.
+

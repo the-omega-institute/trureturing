@@ -1,0 +1,59 @@
+**Corollary 11.1 (sharp actual branch-mass tradeoff).** Fix
+$1\leq r<d$ and $0\leq q\leq1$. Consider all-Schur-fixing supermaps
+with a supplied finite or countable realization (JG.51) whose actual
+high-memory mass is
+
+$$
+h_r=\sum_{c:m_c>r}p_c\leq q.
+\tag{JG.71}
+$$
+
+There is no upper cap on these high dimensions other than their stated
+finite values. The uniform minimax distance for this class, and its
+minimax distance at the fixed slot $K$, both equal
+
+$$
+\epsilon_{r,q}=\frac{2(d-r)}{d-1}(1-q).
+\tag{JG.72}
+$$
+
+One common finite attainer is
+$\mathcal S_{r,q}=(1-q)\mathcal S_r+q\Theta$, with an ACTUAL independent
+classical flag selecting the two circuits. It also satisfies, for every
+$\Phi$,
+
+$$
+\delta(\mathcal S_{r,q}(\Phi))
+ =\|\mathcal S_{r,q}(\Phi)-\Theta(\Phi)\|_\diamond
+ =\epsilon_{r,q}\max_i(1-t_{ii}).
+\tag{JG.73}
+$$
+
+Proof. Theorem 9.2 gives the actual probabilities, not a freely selected
+ensemble of the output Choi matrix. Its dimension bound implies
+
+$$
+F(\mathcal S(\operatorname{Dep}_d))
+ \leq\frac rd(1-h_r)+h_r.
+\tag{JG.74}
+$$
+
+Use $\mathcal S(\Delta)=\Delta$ and (JG.58)–(JG.59) to obtain
+$\delta(\mathcal S(K))\geq\epsilon_r(1-h_r)
+\geq\epsilon_r(1-q)$. This applies to the actual finite or countable
+branch set, including high branches larger than $d$.
+
+For attainment use (JG.63) with memory $r$ on the low flag, and its
+$d$-dimensional $\Theta$ endpoint on the high flag. The resulting
+high-memory probability is exactly $q$ on every input, also with
+references. Both circuits have the same off-diagonal coefficients;
+their difference from $\Theta$ is $(1-q)L$. Equations (JG.68)–(JG.69)
+and the same basis measurement prove (JG.73), and $K$ attains (JG.72).
+At $q=0$ or $q=1$ omit the zero-probability circuit. The lower bound
+at $K$ also shows that this same supermap cannot have another allowed
+realization with high-memory mass smaller than $q$. At $q=1$, the
+exact obstruction forces every positive branch of $\Theta$ to have
+dimension at least $d$. These dimensions and probabilities are
+therefore not justified merely by padding a Kraus representation.
+$\square$
+

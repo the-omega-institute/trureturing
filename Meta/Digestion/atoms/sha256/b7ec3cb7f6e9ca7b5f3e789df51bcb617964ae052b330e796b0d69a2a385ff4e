@@ -1,0 +1,14 @@
+**Proposition 4.3 (actual acquisition of fixed phases).** The phases
+of any fixed $s$ distinct gadgets, $0\le s\le\ell$, can be acquired
+with $s$ charged original-root Reads, each of length $H+1\le D$.
+
+Proof. Fix an actual $x_1$-owner block in each chosen gadget, at
+frontier position $b(j)$. Submit the literal word
+$w_j=Ra_{b(j)}$ from the original root. Every prefix down to this
+frontier is actually present by construction. The endpoint is its
+actual owner block, $A$ in phase zero and $B$ in phase one by
+Lemma 2.3. The alpha/beta reply therefore recovers $F_j$ exactly.
+This is a present original-root word, without any subtree input or
+artificial root. Its length is $H+1\le H+d=D$. The empty list
+handles $s=0$. $\square$
+

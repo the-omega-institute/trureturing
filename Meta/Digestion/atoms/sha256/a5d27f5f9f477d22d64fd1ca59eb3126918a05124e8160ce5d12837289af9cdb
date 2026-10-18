@@ -1,0 +1,42 @@
+**Theorem 4.3 (full-class limiting necessity).** If $q_n\to0$ through
+positive values, $t_n=e^{A_n}-1$, $q_nt_n\to\lambda<\infty$, and
+original competitors are feasible, then $\lambda\ge C_{\rm end}$ and
+
+$$
+\limsup_n T_{{\rm instr},n}\le B_0+\Phi(\lambda).
+\tag{JS.21}
+$$
+
+Proof. The coefficient probability laws $P_n$ have
+$\int(|z|-1)^2dP_n=2e_n\le2q_n$. Every weak limit is therefore
+supported on $|z|=1$, and the ellipse then gives $|w|=1$.
+The exact zero moments of $z,w,zw$ force the four corner weights to
+be $1/4$ by the four sign equations. Hence
+$P_n\Rightarrow\frac14\sum_{\sigma,\eta}\delta_{(\sigma,\eta)}$
+and $\int|f|dP_n\to S_{\rm corner}$.
+
+The failure-weighted measures $\nu_n$ have fixed mass $\mu$ on this
+same compact ellipse. Along any subsequence they have a further weak
+limit retaining covariance, including possible axis mass. Its continuous
+cost integral is at most $\lambda$ by (JS.11). No compactness is
+asserted for $t_nP_n$, whose mass diverges, or for the unbounded
+label multipliers $v_j$. Fixed weighted failure mass is the compact
+quantity. Corollary 3.2 gives $\lambda\ge C_{\rm end}$.
+
+For every covariance-admissible $\nu$,
+$\int k d\nu=\operatorname{tr}(M\Delta)=-d_f$, so
+$\int|k|d\nu=d_f+2\int k_+d\nu$. The actual-label triangle inequality
+in (JS.12) gives
+
+$$
+T_{{\rm instr},n}\le\frac{H_{\rm live}+\int|f|dP_n+
+\int|k|d\nu_n}{2}.
+\tag{JS.22}
+$$
+
+Take a subsequence realizing the upper limit and then a compact
+failure subsequence. The resulting bound is
+$(H_{\rm live}+S_{\rm corner}+d_f)/2+\int k_+d\nu
+\le B_0+\Phi(\lambda)$. This necessity covers every admitted
+survivor control, time law and free completion. $\square$
+

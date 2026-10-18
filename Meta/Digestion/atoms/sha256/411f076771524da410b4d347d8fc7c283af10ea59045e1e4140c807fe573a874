@@ -1,0 +1,20 @@
+**约定 54.8（承重关系、文献与未决边界）。** （54.8）的负端点／内移径向同层对、（54.19）的容许负分支条件、（54.24）–（54.30）的有限包络及统一修正项是原声明来源上的 `repo-derived` 推导。
+首锚状态律和完整因果记录复用§40，临界两层帽几何复用§45，联合Read与逐槽中点续接复用§46；§51已给尖锐首项5，但它的区间宽度界未给这里两个修正系数。
+§53的分支区间为参考：其隐藏增益合同中的径向不确定性含 $\zeta$，本节重新在精确致动、$\zeta=0$ 的原合同内证明（54.17）–（54.19），不把命令身份冒充潜在执行参数。
+§47、§50、§53各自的隐藏增益、观测激励与证书条件保持原范围；§49的全噪声小预算及大噪声结论也保持原范围。
+
+共同输出的两点半距、区间中点及欧氏球投影是成熟中间工具，直接复用
+[Recovery Geometry §3](RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY.md#31-候选纤维半径与恢复的最小最坏误差)。
+Foucart–Liao，[*Optimal Recovery from Inaccurate Data in Hilbert Spaces: Regularize, but what of the Parameter?*, arXiv:2111.02601v1](https://arxiv.org/html/2111.02601v1)，§1.1及Lemma11中的同数据半距论证提供经典背景；其Theorem4要求复Hilbert空间中的两个仿射范数球约束，Theorem10采用固定线性观察与子空间逼近来源。
+其 [*S-Procedure Relaxation: a Case of Exactness Involving Chebyshev Centers*, arXiv:2310.09677v1](https://arxiv.org/html/2310.09677v1) §1–2讨论经典局部恢复和Chebyshev中心，
+[*Radius of Information for Two Intersected Centered Hyperellipsoids and Implications in Optimal Recovery from Inaccurate Data*, arXiv:2401.11112v1](https://arxiv.org/html/2401.11112v1) Theorem1采用两个中心化超椭球的交及预定线性观察。
+这些条件不能替代本节的两球帽并、破坏性适应控制、完整共同记录和INITIAL目标；一般中心或Taylor理论不另列为新增定理，没有全球新颖性声明。
+
+§52的实际发生树、附加场和谱目标，Parity §120的有限路径联合概率与标记生成函数，以及Atomic §439的固定尺度有限素数核和补偿积分，各保留自己的共同来源关系；它们未给到（54.1）的来源、动作、Read、INITIAL和欧氏距离对应，因而不供应本节的有限包络或修正系数。
+
+本节只处理 $0<\delta\le1/100$、精确实数和原精确致动合同。
+（54.24）–（54.27）没有确定固定正 $\delta$ 的精确minimax值、最优倾斜、全局达到策略、不同预算在固定正误差下的风险相等性或再下一阶最优系数；不增加中等噪声、$N\le2$ 或 $\delta\ge15$ 的结论。
+（54.21）的达到性只属于所指定控制器。
+来源制备、两个未标记初始半径与帽、无界独立 $a$、校准、精确方向和动作身份、Read精度、完整记录保存、实数计算、存储和物理费用仍分别供应或计价。
+三更新四Read及纸面渐近不等于有限位实现、价格或物理节约；§15的完整旋转、忠实位移、实际资源成本及共同环境贯通／任务容量四项原生／物理桥仍各须独立证明。本节是普通数学证明，不作Lean或kernel认证声明。
+

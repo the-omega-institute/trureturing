@@ -1,0 +1,76 @@
+**Theorem 65.2 (all-complex/reference/five-Borel identity and all histories).**
+At the conditional source root, Definition 65.1 is one common finite
+instrument with whole-fibre TP decoders and total encoder effect $I_5$.
+For every complex matrix $X\in M_5$, $X_V=E^\dagger XE$, its forgotten
+live map and its failure measure for every Borel $\mathcal B\subseteq[0,1]$
+are exactly
+
+$$
+\begin{aligned}
+\widehat\Phi^L(X)
+ &=E[D_{\rm src}X_VD_{\rm src}^\dagger+
+       T_{\rm src}X_VT_{\rm src}^\dagger+
+       S_{\rm src}X_VS_{\rm src}^\dagger]E^\dagger,\\
+\widehat\Phi^f_\ell(\mathcal B)(X)
+ &=\left(\int_{\mathcal B}\frac{2\,dt}{(1+t)^2}\right)
+ [w_\ell\operatorname{tr}(M_fX_V)
+  +\mathbf1_{\ell=2}\operatorname{tr}((I-P)X)]P_f,
+\quad \ell\in\{0,1,2,3,13\}.
+\end{aligned}
+\tag{RC.57}
+$$
+
+These are CP-map identities with arbitrary passive-reference
+amplification and the original conditional reference partial traces.
+Every one of the twelve original history errors is unchanged; their
+maximum remains $E_*$. This does not assert that each individual
+history has error $E_*$.
+
+Proof. Every nonzero real null vector has nonzero coordinate $0$.
+The determinant identity JR.22 applied to (RC.56) gives $\det K_i=0$;
+the lower-right minor $h_1h_2(c_i)_0^2\ne0$ gives rank exactly two.
+Thus IR Lemma 4.2's fixed image isometry exists and its decoder is TP
+on all $M_2$, not merely the encoded support. Its composite live
+matrix is $EK_iE^\dagger$. The coefficient Gram is
+
+$$
+\sum_i c_ic_i^T=\operatorname{diag}(\delta,1,1),\qquad
+\operatorname{diag}(\delta,1,1)+(1-\delta)e_0e_0^T=I_3.
+\tag{RC.58}
+$$
+
+Expansion in the three source Kraus matrices proves (RC.57)'s live
+identity on every complex matrix unit. No equality of an entry and its
+complex conjugate is assumed. The total live effect is $I_3-M_f$ by
+the exact root identity CG.141. The four spectral rows sum to $M_f$;
+the complement adds $I-P$, giving total effect $I_5$. Every encoder
+branch is CP/TNI since its positive effect is bounded by this total.
+The scalar decoders are TP because $\int_0^1g_{\rm time}=1$ and
+$\sum_\ell w_\ell=1$. The high and low isometric decoders are TP on
+their entire declared fibres.
+
+Summing the spectral rows gives $\operatorname{tr}(M_fX_V)$ and
+summing the complement gives $\operatorname{tr}((I-P)X)$ at original
+label $2$ only. Integration of their specified scalar decoders proves
+the second identity for every Borel set, separately for all five labels,
+including zero-target labels $0,13$. There are no additional singular
+measures. Cross-support terms are annihilated, as in CG.142.
+
+Tensor every finite Kraus identity with $I_R$ for a passive reference.
+The scalar traces in the failure formula become respectively
+
+$$
+\operatorname{Tr}_5[(EM_fE^\dagger\otimes I_R)X],\qquad
+\operatorname{Tr}_5[((I-P)\otimes I_R)X],
+\tag{RC.59}
+$$
+
+which are conditional reference operators, not the unconditional
+reference marginal. This proves the full complex/reference/Borel
+correspondence, rather than only probabilities on twelve inputs.
+Consequently the forgotten channel is exactly the credited CG/JR
+channel, with all twelve HALF complete-cq errors preserved. Its actual
+common density $g_{\rm time}$ has not replaced any ideal $f_y$.
+The TP step uses CG.141 at the source root; none of it is inferred
+from an arbitrary off-root comparison point. $\square$
+

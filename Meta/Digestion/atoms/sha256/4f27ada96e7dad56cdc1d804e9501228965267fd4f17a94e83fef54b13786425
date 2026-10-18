@@ -1,0 +1,40 @@
+**定理 4.1（增长词长的端点联合极限）。** 设 $(N_j,L_j,q_j)$ 是任意原整数合同列，令 $n_j=3N_j$、$x_j=\cos(\pi q_j/(2L_j))$。若
+
+$$
+n_j\longrightarrow\infty,\qquad x_j>0,\qquad n_jx_j\longrightarrow0,
+\tag{4.1}
+$$
+
+则沿这同一参数列，
+
+$$
+\begin{aligned}
+\frac{\delta_n(L,q)}{nx^2}&\longrightarrow c_\star,\\
+\frac{\varepsilon_n^\star(L,q)}{nx^2}&\longrightarrow c_B,\\
+\frac{\beta_n(L,q)-\beta_n^{\mathrm{mm}}(L,q)}{nx^2}
+ &\longrightarrow c_\star-c_B>\frac{51}{10000},\\
+\frac{\delta_n(L,q)}{\varepsilon_n^\star(L,q)}
+ &\longrightarrow\frac{c_\star}{c_B}
+ =\frac{20c_\star}{5-\sqrt5}>1.
+\end{aligned}
+\tag{4.2}
+$$
+
+**证明。** 所述列最终满足 $nx\le1/4$。由定理 2.1 与既有式（1.4），逐项有
+
+$$
+\begin{aligned}
+\left|\frac{\delta_n}{nx^2}-c_\star\right|
+ &\le6nx+\frac{c_\star}{n},\\
+\left|\frac{\varepsilon_n^\star}{nx^2}-c_B\right|
+ &\le\frac34nx+\left|\frac{C_n}{n}-c_B\right|,\\
+\left|\frac{\beta_n-\beta_n^{\mathrm{mm}}}{nx^2}-(c_\star-c_B)\right|
+ &\le6nx+\frac{c_\star}{n}+\left|\frac{C_n}{n}-c_B\right|.
+\end{aligned}
+\tag{4.3}
+$$
+
+每个右侧沿同一列趋于零，没有交换固定词长极限与词长极限。$c_B>0$，且 $x>0$ 时式（1.3）的 Bayes 下界严格为正，故最后一个比值有定义并趋于所示值。正间隔使用 [Growth][Growth] 定理 7.3、推论 7.4 的解析界：$1800/12559>1433/10000$，而 $\sqrt5>559/250$ 给出 $c_B<1382/10000$。
+
+另有 $nx^2=(nx)^2/n\to0$，所以两个最优成功率都趋于一，绝对成功率差趋于零；式（4.2）的正间隔位于错误尺度。这里分离的是两个优化值，未要求一个协议同时优化两种损失。若 $nx\to\lambda>0$，式（4.3）的余项不再趋于零，因而该证明不决定此尺度的极限。证毕。
+

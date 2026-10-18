@@ -1,0 +1,5 @@
+source_id = "fib-native-residual-endpoint-four-contact-branch-and-next-coefficient"
+path = "docs/develop/theory/FIB_NATIVE_RESIDUAL_ENDPOINT_FOUR_CONTACT_BRANCH_AND_NEXT_COEFFICIENT.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

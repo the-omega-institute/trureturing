@@ -1,0 +1,66 @@
+**Theorem 7.1 (O1: every actual zero).** Let $p_0$ be any actual-source zero of $c$, $q_0=1-p_0$, $\lambda_0=C(p_0)$. Its multiplicity $k$ is finite. Evaluate the following at $(p_0,q_0)$:
+
+$$
+\begin{gathered}
+d=p_0-q_0,\quad B=B(p_0,q_0),\quad\Delta=\Delta_J(p_0,q_0),\quad\eta=g(p_0)/B,\\
+G_0=-g''(p_0)>0,\quad f_p=J''(p_0),\quad f_q=J''(q_0),\\
+a_0=G_0B+g(p_0)f_p>0,\quad b_0=\eta f_q(d\Delta-B)>0,\quad\rho=b_0/a_0>0,\\
+h_0^{\rm loc}=B/d,\qquad K_0^{\rm loc}=h_0^{\rm loc}+\rho(\Delta-h_0^{\rm loc})>0.
+\end{gathered}
+\tag{TB.18}
+$$
+
+The local symbols $h_0^{\rm loc},K_0^{\rm loc}$ are unrelated to a source amplitude or TC's initial Taylor coefficient. One has
+
+$$
+P'(q_0)=-\rho,\quad L'(q_0)=-K_0^{\rm loc},\quad
+c'(p_0)=v(p_0)a_0(\rho-1)/\Delta,\quad W_{\rm cross}=Ba_0(1-\rho).
+\tag{TB.19}
+$$
+
+Write $c(p)=c_k(p-p_0)^k+O((p-p_0)^{k+1})$, $c_k\ne0$. The analytic formal inverse $q_3(\lambda)$ of $L$ satisfies
+
+$$
+\omega_-(\lambda)=\frac{\Delta}{4d\,v(p_0)^3a_0}\,c_k
+\left(\frac{\lambda-\lambda_0}{K_0^{\rm loc}}\right)^k
++O((\lambda-\lambda_0)^{k+1}).
+\tag{TB.20}
+$$
+
+On sufficiently small punctured budget sides, $c_k(\lambda-\lambda_0)^k>0$ selects the three positive lines, and a negative sign selects the projective pair. Every equality measure is the indicated unique line measure modulo antipodes and proportional splitting. At $\lambda_0$ the two positive masses are one each; a distinct third exposed line has zero mass.
+
+Consequently an odd downward zero gives three lines then two as budget increases; an odd upward zero gives two then three. An even positive zero gives three lines on both punctured sides and two at the isolated central budget. An even negative zero gives two lines throughout, with an extra unused exposed line at the center. This classifies each zero without specifying which zeros the actual source has.
+
+Proof. Analyticity and $T_p<0$ give an analytic $P$ near $q_0$. At the zero $g'=\eta\Delta$ and $g=\eta B$, so $T_p=-a_0$, $T_q=-b_0$, and $P'=-\rho$. The strict integral bound gives $0<h_0^{\rm loc}<\Delta$. Differentiating $m$ at $m=1$ yields $m'=(\rho-1)/d$. From $Z=mg(P)$ and $L'=Z'/\eta$,
+
+$$
+L'(q_0)=B(\rho-1)/d-\rho\Delta=-K_0^{\rm loc}<0.
+$$
+
+This supplies a simple analytic budget inverse regardless of root multiplicity. Since $D_T'=T_p-T_q=-a_0+b_0$, differentiation of $c=vD_T/\Delta$ proves (TB.19), including its equivalent $W_{\rm cross}$ formula.
+
+For the full order statement put $y(q)=1-q$, $H(q)=P(q)+q-1$ and
+
+$$
+\overline a(q)=\int_0^1[-T_p(P(q)+s(y(q)-P(q)),q)]ds>0.
+$$
+
+This is analytic locally and equals $a_0$ at $q_0$. The exact mean-value identity gives
+
+$$
+T(y,q)-T(P,q)=\overline a H,\qquad
+H=\frac{c(1-q)\Delta_J(1-q,q)}{v(1-q)\overline a},\qquad1-m=H/(P-q).
+\tag{TB.21}
+$$
+
+Set $A_0^{\rm mass}=(2-m)v(q)$, $B_0^{\rm mass}=mv(P)$. Equation (TB.8) gives
+
+$$
+\omega_-=\frac{A_0^{\rm mass}-B_0^{\rm mass}}{2v(q)}
+=\frac{1-m}{2v(q)(A_0^{\rm mass}+B_0^{\rm mass})}.
+$$
+
+All denominators are analytic and positive locally. At the zero $A_0^{\rm mass}+B_0^{\rm mass}=2v(p_0)$. Combining with (TB.21) expresses $\omega_-$ as an exact analytic positive factor times $c(1-q)$; its factor there is $\Delta/(4d v(p_0)^3a_0)$. Since $q_3'(\lambda_0)=-1/K_0^{\rm loc}$, substitution proves (TB.20) and preserves multiplicity exactly.
+
+The other masses equal one at the zero and stay positive locally. A positive third mass gives a feasible measure and the global certificate (TB.9). The projective inverse $p_2=C^{-1}(\lambda)$ is analytic with derivative $1/\Delta$ at the zero, so $c(p_2(\lambda))$ has the same leading sign $c_k(\lambda-\lambda_0)^k$. On a negative side its global certificate (TB.6) applies. These alternatives exhaust both punctured sides. At the center the constructions coincide. Complementarity and independence of the exposed projectors give every equality case. The parity/sign classification follows. $\square$
+

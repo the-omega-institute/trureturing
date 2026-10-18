@@ -1,0 +1,47 @@
+**Definition 13.2 (the full asymmetric block law).** Write
+$A=\alpha$, $B=\beta$, $C_0=\langle A,A\rangle$, and retain
+
+$$
+S_1=\{A,B,C_0\},\qquad
+\mathcal G=\{\langle u,v\rangle:u,v\in S_1\},\qquad
+S_2=\{A,B\}\sqcup\mathcal G,\qquad
+S_3=\{A,B\}\sqcup\{\langle x,y\rangle:x,y\in S_2\}.
+\tag{NCE.81}
+$$
+
+Thus $|S_2|=11$ and $|S_3|=123$. Let $c(A)=A,c(B)=B$ and
+$c(g)=G$ for $g\in\mathcal G$. In category order $A,B,G$, set
+
+$$
+M_{\rm a}=\begin{pmatrix}
+254586&1024686&251250\\
+1024686&1347714&215358\\
+250826&214934&48071
+\end{pmatrix},\qquad
+w_{\rm a}(A)=4481982,\quad w_{\rm a}(B)=2959092,
+\tag{NCE.82}
+$$
+
+and $w_{\rm a}(\langle x,y\rangle)=(M_{\rm a})_{c(x),c(y)}$.
+Every actual state has positive weight. Put
+
+$$
+\begin{aligned}
+C_{\rm a}&=9114093,& m_{\rm a}&=48071,\\
+W_{\rm a}&=w_{\rm a}(S_3)=23377809,&
+\mu_{\rm a}(x)&=w_{\rm a}(x)/W_{\rm a},\\
+\frac{C_{\rm a}}{W_{\rm a}}&=\frac{3038031}{7792603},&
+R_{\rm a}&=\frac{7792603}{3038031}.
+\end{aligned}
+\tag{NCE.83}
+$$
+
+For $e=(1,1,9)^{\mathsf T}$ the exact total is
+$4481982+2959092+e^{\mathsf T}M_{\rm a}e
+=7441074+15936735=23377809$. The minimum state weight is
+$m_{\rm a}$. The table is asymmetric, and its $A,B$ principal
+minor is $-706872282192\ne0$; it is not a product of separate
+child weights. Each original block receives this whole weight once.
+Categories, weights and hard-target choices are mathematical
+counting data, never acquired advice supplied to a reader.
+

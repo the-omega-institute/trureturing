@@ -1,0 +1,42 @@
+**Definition 12.4 (Result and source map).** The following table locates
+the mathematical obligations and separates inherited interfaces from
+the deductions in this volume.
+
+| Result | Present declarations | Source dependence and role |
+|---|---|---|
+| Native rays, arbitrary preparation, all signed domains and Gram weights | 1.1–1.6 | [M, §§1–2], [Q, §§1–2], [O, §§1–2]; the native bridge is reconstructed explicitly |
+| Bounded-observable erasure and exact worst-beta residual | 2.1 | [M, Theorem 3.4 and Proposition 3.5], [O, Theorem 3.3 and Proposition 4.1]; permits arbitrary hidden coordinates |
+| Exact budgets two and three, all four attained endpoints | 2.2–2.3 | [M, Theorems 6.4, 7.4–7.6, 8.1, 9.2, 10.2, 17.2 and 19.1, Corollaries 18.1–18.2]; reused with the same parameter map |
+| Parameterwise strict four-coordinate upper certificate | 2.4–2.5 | [Q, §4 and Theorem 7.2], with its actual image and path realization in §§5–6 |
+| Model-uniform fixed-dimension lower certificate | 2.6–2.7 | [O, Theorem 11.1 and §§11.2–11.4]; the finite relaxation is not a native-realizability converse |
+| Proof 1: every local interval spans, lawful subdivision and beta quotient | 4.1–4.4 | Hull restriction from [M, Lemma 13.1]; the local-span and extension argument gives strict four-dimensional beta independence using the inherited plateau |
+| Proof 2: native observable coefficient | 5.1–5.3 | Bounded-module argument of [M, Lemmas 3.2 and 14.2] and positive averages of [M, Lemma 6.1], applied without their budget-three multiplicity count |
+| Proof 3: complete primary blocks, row module and actual saturation | 6.1–6.3 | Dimension-independent projectors of [M, Lemma 15.1], expanded on a homogeneous space of dimension five; new saturation and derived latent bounds |
+| Proof 4: locally bounded height representation and character removal | 7.1–7.5 | Full two-complex-coordinate classification, state and row cyclicity, pointwise cluster averaging, ordinary normal forms and confluence |
+| Proof 5: actual spectral models and every prescribed path | 8.1–8.4 | New complex diagonal/confluent witnesses; native path interface [M, Proposition 9.1], [Q, §6], [O, §9 and §11.7] is kept intact |
+| Proof 6: scalar attainment and strict-sublevel root bound | 9.1–9.6 | Bounded primitives, normalized annihilators, distribution equations, degree collapse and endpoint corridors; no parameter compactness premise |
+| Proof 7: equality of the four infima | 10.1–10.3 | Height recovery and small real spectral shifts supply actual combined-contract approximants |
+| Proof 8: necessary and sufficient guarded endpoint | 11.1–11.4 | Saturation preserves original fibers; exact imaginary separation threshold and existential quantifier over global minimizers |
+| Parameter bounds and transition | 12.1–12.3 | Combines the three suppliers with the new reduction and attainment, without evaluating the subtransition minimum |
+
+The contribution relative to [M], [Q] and [O] is the unrestricted
+order-two spectral reduction and rigidity of every strict improver,
+including elimination of discontinuous height phases, global scalar
+minimum existence, equality of the four budget-four infima and the
+exact remaining guarded-attainment condition. The two-coordinate
+root, three-coordinate plateau, existing strict improvement and
+fixed-dimension gap retain their credited sources. Their statements
+are handwritten premises, not consequences of publication status.
+
+The general tools are finite-dimensional affine homogenization,
+commuting representations and invariant flags, Bezout primary
+projectors and Cayley–Hamilton, compactness in finite-dimensional
+Euclidean spaces, elementary bounded additivity, positive finite
+character averages, and ordinary real/complex calculus. The forms
+of local spanning, cluster removal, primitive compactness and
+distributional ODE solution needed here are proved explicitly.
+No external translation-space regularity theorem is a premise.
+The source-relative classification is repo-derived handwritten
+mathematics; no worldwide originality or exhaustive literature
+claim is made.
+

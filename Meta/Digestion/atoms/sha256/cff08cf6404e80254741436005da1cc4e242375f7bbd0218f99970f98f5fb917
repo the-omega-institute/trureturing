@@ -1,0 +1,4 @@
+**定义 18.5.1（二元擦除通道）。** 令 $X=\{0,1\}$，输出集为 $Y=\{0,1,\perp\}$。给定 $\varepsilon\in[0,1]$，通道 $E_\varepsilon$ 以概率 $1-\varepsilon$ 输出输入位，以概率 $\varepsilon$ 输出擦除符号 $\perp$。
+
+<a id="claim-18-5-2"></a>
+

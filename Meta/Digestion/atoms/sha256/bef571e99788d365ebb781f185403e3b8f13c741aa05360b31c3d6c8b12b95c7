@@ -1,0 +1,16 @@
+**Definition 1.1 (Original coordinates and four labels).** Retain the original cut $A\mid B$, the ordered labels $B=(0,1,2,3,13)$ and $f=(0\ 13)(1\ 3)$, with $f(2)=2$. Write $e_0,\ldots,e_4$ for coefficient coordinates, $E_{jk}=|e_j\rangle\langle e_k|$, and retain the fixed identifications
+
+$$
+Ve_j=|B_j\rangle_A,\qquad We_j=|f(B_j)\rangle_B,\qquad
+Je_j=|B_j,f(B_j)\rangle.
+$$
+
+Each local support is five-dimensional; their tensor product has dimension $25$. These identifications preserve the original labels and cut. Define
+
+$$
+X_a=i(E_{04}-E_{40}),\qquad X_b=i(E_{13}-E_{31}),\qquad
+U_4=\{X_a,-X_a,X_b,-X_b\}.
+$$
+
+The active coordinate pairs are $(0,4)$ and $(1,3)$, corresponding to the original label pairs $(0,13)$ and $(1,3)$. Each $X$ is Hermitian, has zero diagonal and spectrum $1,-1,0,0,0$.
+

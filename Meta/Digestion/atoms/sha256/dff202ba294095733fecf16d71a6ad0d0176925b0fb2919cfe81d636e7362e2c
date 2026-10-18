@@ -1,0 +1,68 @@
+**Proposition 74.1 (scope of the variational bridge).** Theorems 72.1
+and 73.1 retain the following distinctions. The coefficient $\beta$
+uses the raw point-source field and the actual height density; it is
+not obtained by replacing the source with a stationary height mixture.
+The cutoff $\tau$ does not change $\beta$ but is essential to the
+bounded-multiplier argument. There is no conclusion here with
+$\tau=0$, on a wrapped threshold cover, on the actual frozen-$D$ zero
+leaf, or uniformly as $\kappa\to0$.
+
+For $\kappa\ne0$, let $J_\kappa=\operatorname{diag}(1,1,\kappa)$.
+Under the original real lift $D=\kappa x$ the unitary transport of a
+wavefunction and the transport of a unit-source kernel are different.
+Here $W_\tau^{\rm orig}$ uses the same cutoff and clock, with unit
+source relative to $dk\,d\theta\,dv\,dD$ on that real lift:
+
+$$
+\psi^{\rm orig}(k,J_\kappa q)=|\kappa|^{-1/2}\psi(k,q),\qquad
+W_\tau^{\rm orig}(k,J_\kappa q)=|\kappa|^{-1}W_\tau(k,q).
+\tag{74.1}
+$$
+
+Thus the multiplier unitarily equivalent to $W_\tau$ is
+$|\kappa|W_\tau^{\rm orig}$; a unit-source original-coordinate
+coupling is $g_{\rm orig}=|\kappa|g$. The transported tensor is
+$J_\kappa M J_\kappa^{\mathsf T}$, with its signed cross terms.
+The three coordinates in this theorem are real winding coordinates,
+not a deduction of physical three-space or physical $SO(3)$.
+
+Proof. The tail (70.3) is proportional to $\phi_0\phi(k)$.
+Multiplication by the limiting density $\phi(k)^2dk$ produces exactly
+$\phi_0\int\phi^3$, while (70.4) exhibits the distinct raw and
+$\phi$-weighted source charges. A Q kernel would instead carry the
+height factors of L Definition 41.1; the killed kernel would have the
+additional factor $e^{-\lambda t}$. Neither replacement has occurred.
+The fixed-time subtraction has Gaussian spatial decay, proving the
+assertion about $\tau$ in $\beta$. At zero cutoff the local
+unregularized point-field collapse supplied by G Theorem 3.1 is not
+removed by the threshold shift: subtracting a constant from the
+kinetic energy is bounded on normalized states, and the threshold
+Green is at least the killed Green by positivity. The real-chart
+concentration proof G (3.5)–(3.8) uses only a positive
+small-time window and therefore applies on this real lift with its raw
+source normalization. Thus that unregularized instability is compatible
+with, and excluded from, the present result.
+
+L §§39 and 44–45 distinguish the comparison $x$ coordinate at zero
+from the actual frozen-$D$ leaf, and establish the logarithmic
+threshold divergences on the actual two-real-phase leaf and the
+hidden-periodic cover. A positive lower time cutoff does not remove
+those large-time divergences. Hence the present finite threshold
+multiplier cannot be transferred to those spaces by a parameter
+substitution. Formula (74.1) is the absolute-Jacobian change of raw
+measure; transporting the multiplication form gives its coupling
+factor. L §§39–40 and 46 preserve the distinction between winding
+covers, original observations and spatial interpretation.
+
+The native ingredients consumed by the new variational inference are
+G (26.6) for the full complex form domain, L §36 for the actual tensor,
+low-band eigenfunctions and quartic error, L Lemma 41.2 and Theorem
+42.1 for the cutoff field, and L §48 for the full direct-integral
+domains. The new inference is (71.2)–(71.5), its full-domain lower
+bound (72.5), and the near-minimizer compactness argument (73.5).
+Hardy, local Rellich compactness, Weyl's theorem and the Coulomb square
+identity are classical intermediate tools, not new standalone results.
+No physical realization, observation/preparation/acquisition operation,
+resource service, or literature-wide novelty conclusion follows from
+these mathematical statements. $\square$
+

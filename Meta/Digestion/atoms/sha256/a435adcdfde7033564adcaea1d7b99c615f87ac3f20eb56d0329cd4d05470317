@@ -1,0 +1,42 @@
+**Proposition 4.2 (Simultaneous attainment at the same root).** For
+each $\rho\in\{I,D\}$ and every
+$(r,s)\in\mathcal R\times\mathcal S$, Definition 4.1 is one
+admissible deterministic policy with
+
+$$
+q=r+s,\qquad C=U_\rho(r)+V_\rho(s).
+\tag{4.2}
+$$
+
+Proof. The addresses have the incidences stated after (4.1), so the
+leaf masses are those of Lemmas 2.4–2.5. On an isolated one edge
+containing the target, the target masses tie, and the fixed output
+$h_0(\sigma)$ is maximizing. On a zero edge containing the target,
+the majority choice maximizes its state mass. When the target avoids
+all queried spin supports in a certified phase, the same output
+uses its unchanged majority prior.
+
+For the type-$I$ adjacent edge $g$, the larger triples for $10$,
+$11$ and $01$ are respectively
+$(1-\sigma,\sigma,\sigma)$, $(\sigma,1-\sigma,\sigma)$ and
+$(\sigma,\sigma,1-\sigma)$, as in (2.3).
+Their target is the leftmost spin $S_j$. Hence their
+maximizing outputs are respectively $h_0(1-\sigma)$,
+$h_0(\sigma)$ and $h_0(\sigma)$, exactly as specified. For a
+type-$D$ root and $g$, the target is outside the entire triple;
+$h_0(\sigma)$ has maximal mass there.
+
+On any same-parity $00$ leaf, $h_1(\sigma)$ has correct mass
+$a/2$. On the opposite-parity $00$ leaf using $i$, its phase-one
+edge touches $S_0$, so $h_1(\sigma)$ has mass $a^2/2$.
+On $01$ using $o$, phase one is certified and its target is
+independent of the distant edge, giving correct mass $a\eta$.
+These checks give every output and every table maximum in Section 3.
+
+The second-call rules on first zero and first one are choices on
+mutually exclusive branches of a single tree, with the same first
+address. Therefore any $r$ row and any $s$ row of the same root
+type are simultaneously realizable. Their masses add because they
+are disjoint source sections. This proves (4.2), without combining
+incompatible marginal extrema or adding a random coin. $\square$
+

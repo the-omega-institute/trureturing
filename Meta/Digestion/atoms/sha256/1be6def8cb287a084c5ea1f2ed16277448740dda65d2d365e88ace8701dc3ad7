@@ -1,0 +1,40 @@
+**Definition 8.1 (actual finite expansion recurrence).** For a schema $P$
+at its complete actual entry $z$, let $\mathcal Q(P,z)$ return its
+opcode/purpose vector, successor, ordinary-cell additions and finite-bit
+additions. Its recursion is RCA Definition 11.5's literal expansion:
+
+| Schema | Count and complete successor |
+| --- | --- |
+| One native row | Its unit opcode/purpose coordinate, actual PR57 local effect and one receipt |
+| Sequence | First result, then second result at that complete successor; add vectors/additions |
+| Test | The actual RD/CTL row, then its selected branch |
+| Home/Tail | RD, exit at the actual boundary or move once and recurse |
+| Append | EX; WR; MR, with net one ordinary cell |
+| Base/Seek/unary copy | RCA's full counted scans on actual constructed unary words and entry heads |
+| Assignment | Base; dry emission of all $r_2$ fields; actual emission, sep/F/seal; descriptor count/full descriptor; parity/purpose CTL |
+| Word/list loop | Actual test, then zero on exit or actual finite body and recurrence at its successor |
+
+Every new helper in §§2–6 has been reduced to this grammar. Find, sorting,
+selection, graph enumeration, virtual Step, re-encoding and registry
+assignment therefore have no independent unit-price oracle. Intermediate
+register banks are real retained versions. Purpose changes and delimiters
+are actual CTLs/appends, not annotations added without their rows.
+
+For a continuing execution $\rho$ write $C(z)$ for the scalar sum through
+$z$, $A_{\rm cell}(z)$ for all ordinary cell additions under RCA's boot
+convention, and $b_{\rm ctl}(z)$ for actual constructed control bits.
+Then, on that same execution,
+
+$$
+\operatorname{tick}(z)=C(z),\quad
+\operatorname{fee}(z)=2C(z),\quad
+\operatorname{storage}_{\rm native}(z)
+ =S_0+b_{\rm ctl}(z)+8A_{\rm cell}(z)+8C(z).
+\tag{PVC.9}
+$$
+
+Ordinary boot boundary cells are included in $A_{\rm cell}$, the irreducible
+meter foundation in $S_0$, and all later receipts in $C$. Erasure,
+retirement, registry replacement and inactive code remove no constructed
+material from this accounting.
+

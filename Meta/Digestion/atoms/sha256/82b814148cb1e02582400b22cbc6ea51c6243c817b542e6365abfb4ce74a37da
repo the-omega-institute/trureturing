@@ -1,0 +1,91 @@
+**Theorem 30.2 (complete arbitrary-cut decision on the entire graph).**
+For every finite $H_0$ and every finite prefix-free original $Q$ in
+Definition 27.1, the algorithm of Definition 30.1 terminates. Its answer
+is YES if and only if
+
+$$
+\exists H\ge0\ \ \forall u,u'\in U,\quad
+ \bigl[\forall p,\ |p|\le H\Longrightarrow r_u(p)=r_{u'}(p)\bigr]
+ \Longrightarrow R_Q(u)=R_Q(u').
+\tag{ARH.30.2}
+$$
+
+For nonempty $U$, YES supplies the computed sufficient original prefix.
+NO supplies, for every requested inclusive original depth $b$, an
+effective pair of finite sources in that same entire retained fiber
+which agree at every original address of length at most $b$ and have
+different entire original $Q$ rows. All original repetitions, absences,
+old distinctness, endpoint guards and coupling are preserved. No
+eligibility restriction on $Q$ is imposed.
+
+Proof. The pattern list is finite. Ground evaluation, finite partial
+inversion, word-prefix comparisons and the finite enumeration (ARH.29.4)
+terminate. The only saturation is the finite-state terminating
+Theorem 13.1 application in Proposition 28.2. Proposition 29.2 has a
+finite syntactic branch test. Thus every branch of the decision
+terminates, independently of the size of any unknown source.
+
+Suppose the answer is YES and $U$ is nonempty. The root-cut case is
+immediate from the definition of a whole row. In the other cases take
+$u=F(y),u'=F(y')$ satisfying the antecedent of (ARH.30.2) with the
+computed $H$. Every relative address $s$ of length less than $H$ has
+original address $Rs$ of length at most $H$. Hence $y\equiv_H y'$.
+Since $H\ge d$, Proposition 27.2 puts them in the same listed pattern
+$t$, with their own finite valuations $v,w$.
+
+Its reached set and numbering agree by (ARH.27.7). Its exterior is
+constant since $O_t$ is empty. For every hole pair,
+$H\ge h_{t,qr}$, so the exact pair test proves equal equality status on
+$y,y'$. Agreement of all those statuses is exactly agreement of the
+whole partition on the fixed finite reached set. The entire rows are
+therefore equal. This is a simultaneous statement about the two actual
+sources; separately chosen equality witnesses have not been assembled
+into a fictitious partition. It proves YES implies (ARH.30.2).
+
+Now suppose a listed pattern fails the exterior requirement. Choose
+$x\in O_t$. For any supplied $b$, let $z$ be the perfect finite binary
+tree of height $b+1$ with all leaves $\alpha$, and let $z'$ change one
+depth-$b+1$ leaf to $\beta$. They are distinct and agree at every
+relative address of length at most $b$. Use $z,z'$ for $x$ in two
+valuations, and the same $\alpha$ for every other frontier variable.
+All valuations are permitted by (ARH.27.4). Filling the fixed pattern
+preserves $\equiv_{b+1}$, and Lemma 19.2 preserves it after $F$.
+The two resulting finite original sources thus agree through depth
+$b$. Their exteriors differ by (ARH.27.8), because $\rho$ is injective
+as well as a bare variable being injective. Their entire rows differ.
+
+The remaining negative case is a failed pair test. A ground comparison,
+an equal-position comparison and a constantly false nested comparison
+cannot fail. For a failed incomparable comparison, apply Proposition
+28.2 with $j=b+1$ and use its two finite full-cylinder completions.
+For the exceptional failed nested comparison, use the explicit
+construction (ARH.29.6)–(ARH.29.7). In both cases this gives finite
+$y,y'\in\mathcal C(t)$ with $y\equiv_{b+1}y'$ and opposite truth values
+for the chosen complete-hole equality. Apply $F$ to both. Locality gives
+original agreement through depth $b$, while (ARH.27.7) makes the two
+entire partitions, and hence entire rows, different.
+
+Every constructed source belongs to the same $U$ by both inclusions
+of (ARH.27.4). In particular the left component is recomputed as
+$\rho(y)$ after each change; it is never varied independently or kept
+as an incompatible old value. The clock preserves distinct old
+children for every new $y$. Literal repetitions and all original
+guards have already been imposed on the whole cylinder. Finite
+completion cannot invalidate them. These constructions are effective
+for every requested finite $b$ and disprove (ARH.30.2) at every bound.
+
+The two negative cases exhaust every way the algorithm returns NO,
+so they prove (ARH.30.2) implies YES as well. With $\mathcal L$ empty,
+Proposition 27.2 proves logical emptiness and (ARH.30.2) is vacuously
+true. Reporting that flag does not claim a nonempty acquired entry.
+One may take $H=0$ in this case. $\square$
+
+For $Q=\varnothing$, the exterior is all of $F_t$; every free frontier
+variable is visible. The decision is consequently YES exactly when
+every listed pattern is ground, equivalently when $U$ is finite.
+This conclusion includes the empty logical fiber. For a root cut the
+row is constant even on an infinite fiber. Cuts that are absent in one
+pattern and reached in another are distinguished by the finite selector;
+an absent cut creates no hole in its own pattern. These conclusions
+use the original cuts, without replacing them by a level cut.
+

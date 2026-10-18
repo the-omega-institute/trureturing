@@ -1,0 +1,15 @@
+**Scope and provenance.** The positive-angle construction and the
+Luo--Yang variational existence theorem are reused inputs. The new
+conclusion is the removal of all four-reservoir flat returns by complete
+angle budgets and actual face transport. No two-copy seed, additional
+H-witness condition, dual-girth bound, prohibition of parallel face pairs,
+role balance, or tetrahedron-transitivity hypothesis is imposed. Distinct
+local edge slots remain distinct in every budget even if their global
+labels coincide. This is a paper proof; no Lean certification is claimed.
+The hypotheses still require the fixed paired frame in every tetrahedron;
+this does not establish unrestricted CFMP or claim an example separating
+this class from every earlier realization criterion. An abstract face
+pairing without the stated manifold and boundary hypotheses does not
+inherit the variational existence step from this theorem.
+
+

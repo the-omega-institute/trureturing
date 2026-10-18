@@ -1,0 +1,87 @@
+**Theorem 48.2 (coupled censoring and decreasing-risk limits).**
+Write $e_\rho=\rho^2+d_0\le2\rho^2$ and let $d$ be the first actual
+paid boundary Read, when it occurs. On $G_{\rho,\Lambda}$, if $\tau\le T$,
+
+$$
+\tau\le d\le\min(T,\tau+d_0),\qquad
+\zeta^{\rm N}=
+ \begin{cases}d+\rho^2,&d+\rho^2\le T,\\
+ \infty,&d+\rho^2>T,
+ \end{cases}
+\qquad 0\le S^{\rm N}-S\le e_\rho.
+\tag{48.3}
+$$
+
+If $\tau>T$, both marks are infinite on this event. Every retained own
+death, also on unsuccessful paths, is later than target death and at
+its same exit face. There is no premature own death. For
+$e_\rho\le T/2$, with $C_T$ of (31.1),
+
+$$
+\begin{aligned}
+\mathbb P(\mathbf1_{\{\zeta^{\rm N}<\infty\}}
+       \ne\mathbf1_{\{\zeta<\infty\}})&\le\delta+C_Te_\rho,\\
+\mathbb E d_\zeta(\zeta^{\rm N},\zeta)
+ &\le\delta+(1+C_T)e_\rho,\\
+\mathbb E(S^{\rm N}-S)&\le e_\rho+T\delta.
+\end{aligned}
+\tag{48.4}
+$$
+
+Consequently, if $\eta_n\to0$ and $\delta_n\to0$, the same-source
+held triples and native paths converge uniformly in probability,
+the censored lifetimes converge in probability, and the killed paths
+converge in probability in $J_1$. If additionally
+$\sum_n\delta_n<\infty$, these convergences hold almost surely,
+with eventually equal death marks. A fixed positive risk guarantee
+alone does not imply these decreasing-risk conclusions.
+For each member of this family, on $\{\tau\le T\}$ the same-clock
+uniform isolated-cemetery distance is exactly $2$.
+
+Proof. Every waiting or service polling gap is at most $d_0$.
+On $G_{\rho,\Lambda}$ there is no abort, and a boundary return has priority
+over all service decisions before the horizon. The Read at $T$ needs
+no subsequent movement. This proves the bound on $d$. All normal
+connectors have interior height endpoints and interior prefixes.
+The accepted terminal connector starts at an interior own height,
+ends at the acquired boundary, and has a nonzero last height leg;
+constant arclength parametrization reaches that boundary exactly after
+its prescribed positive duration $\rho^2$. This proves (48.3).
+On any path where an abort occurs the own height instead holds in the
+interior. On any other path an own exit still requires an actual paid
+boundary return and the same final height leg. Thus the no-premature-
+death and exit-face statements hold without conditioning on success.
+
+On $G_{\rho,\Lambda}$ a mark mismatch can occur only if
+$T-e_\rho<\tau\le T$. The one-sided passage densities (31.3) for
+distances $k-l,u-k$ bound its probability by $C_Te_\rho$.
+Off $G_{\rho,\Lambda}$ use probability at most $\delta$, lifetime metric
+at most one, and cutoff delay at most $T$. On equal finite marks the
+time error is at most $e_\rho$. These facts prove (48.4).
+
+For convergence, (47.2), (47.1) and (48.4) prove the stated probability
+limits. On $G_{\rho,\Lambda}\cap\{\tau<T-e_\rho\}$ both death times
+are strictly below $T$, and the piecewise linear comparison
+homeomorphism matching them has displacement at most $e_\rho$ and
+live-state error at most $\eta+\omega_{\bar q}(e_\rho)$, as in (31.5).
+When $\tau>T$, the identity comparison suffices on $G_{\rho,\Lambda}$.
+The remaining window $T-e_\rho\le\tau\le T$ has probability tending
+to zero by (31.3). In particular an own death exactly at $T$ can be
+excluded with this window; equality of the two finite marks alone is
+not used to construct a homeomorphism sending an interior time to $T$.
+The continuous held target has modulus tending to zero, proving the
+$J_1$ limit in probability. For almost-sure convergence, $\tau\ne T$
+almost surely, so the required strict endpoint inequalities eventually
+hold on every path with $\tau<T$. If the risks are summable,
+Borel–Cantelli makes $G_{\rho_n,\Lambda_n}$ hold
+eventually almost surely; the same argument then gives the almost-sure
+limits and eventual equality of marks. No independence across stages
+is required or claimed. Retiming compares observations only; every
+resource still uses its original execution time.
+
+Finally own death in this family is strictly later than $\tau$ whenever
+it occurs. At time $\tau\le T$ the target is at the isolated cemetery
+and the own state is still alive. Their distance is $2$, proving the
+last assertion even on aborted paths. Neither a positive-risk held tube
+nor $J_1$ convergence changes this uniform-cemetery boundary. $\square$
+

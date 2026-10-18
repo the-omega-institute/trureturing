@@ -1,0 +1,113 @@
+### 32.2 The retained band and the entire translated tail
+
+For $m\ge3$ set $q=m-3$ and $b=c-\mathbf1$. The strict inequalities
+for an interior exponent $(m,c)$ become
+
+$$
+b_i\ge0,\qquad b_i+b_{i+1}\le q,\qquad
+\sum_i b_i\le kq+(k-2).
+\tag{32.6}
+$$
+
+Indeed the global bound is
+$\sum c_i\le km-1=k(q+3)-1$, and subtracting $n=2k+1$ gives
+$kq+k-2$. This is the same interior translation as (29.10).
+Those tuples with $\sum b_i\le kq$ correspond precisely to the
+interior exponents in $\nu_1+\mathcal S_k$ of degree $m$, whose
+monomials are removed in $\mathcal C_k$.
+The remaining tuples have
+
+$$
+\sum_i b_i=kq+\ell,\qquad 1\le\ell\le k-2,
+\qquad \delta(m,c)=k-1-\ell.
+\tag{32.7}
+$$
+
+The last equality follows by substituting
+$m=q+3$ and $\sum c_i=kq+\ell+n$ into $km-\sum c_i$.
+In particular this is the layer $j=\ell+1$ of (31.14).
+Conversely a locally feasible $b$ of excess in this range gives
+$c=b+\mathbf1$ satisfying all strict inequalities, and has deficit
+between one and $k-2$; it therefore represents a nonzero quotient
+monomial. The correspondence is inverse in both directions.
+
+It remains to remove all larger excesses, not merely compare two
+formal series. Write $h=k-2$ and let
+
+$$
+\mathcal T(q)=\{b\in\mathbb Z_{\ge0}^n:
+ b_i+b_{i+1}\le q,\ \sum_i b_i=kq+\ell
+ \text{ for some }\ell\ge h+1\}.
+\tag{32.8}
+$$
+
+For $b\in\mathcal T(q)$, (32.4) gives
+$b_i=B_i(a)+\ell\ge\ell\ge h+1$ and $q=|a|+2\ell$.
+Consequently
+
+$$
+q'=q-2h\ge2,
+\qquad b'=b-h\mathbf1\in\mathbb Z_{\ge0}^n,
+\qquad b'_i+b'_{i+1}\le q'.
+\tag{32.9}
+$$
+
+The excess of $b'$ is
+
+$$
+\sum_i b'_i-kq'
+=(kq+\ell)-nh-k(q-2h)=\ell-h\ge1,
+\tag{32.10}
+$$
+
+since $n-2k=1$. Its slack vector is unchanged, and its inverse in
+(32.4) is $b'_i=B_i(a)+(\ell-h)$. This proves that (32.9) maps
+the whole tail into the domain counted by $E_k(q')$.
+
+Conversely take any tuple counted by $E_k(q')$ for $q'\ge0$.
+Let its excess be $\ell'\ge1$, put $q=q'+2h$ and
+$b=b'+h\mathbf1$. These coordinates are nonnegative and their
+edge sums are at most $q$. Their total excess is
+
+$$
+\sum_i b_i-kq
+=(kq'+\ell')+nh-k(q'+2h)=\ell'+h\ge h+1.
+\tag{32.11}
+$$
+
+Thus $b\in\mathcal T(q)$, and subtraction recovers $b',q'$.
+If $q'=q-2h<0$, no tail can exist, because its first direction
+would force $q'\ge2$. If $q'=0$ or $1$, the source of this
+inverse is empty by $\ell'\le\lfloor q'/2\rfloor$, and the tail
+is empty as well. These observations include every low-degree
+case; they do not treat negative parameters as occupancy spaces.
+Therefore $|\mathcal T(q)|=E_k(q-2h)$ with the zero convention of
+Definition 32.1. Removing the tail from all errors in degree $q$
+leaves exactly (32.7), proving
+
+$$
+C_k(m)=E_k(q)-E_k(q-2h)
+=E_k(m-3)-E_k(m-(2k-1))
+\tag{32.12}
+$$
+
+for $m\ge3$. At $m=0,1,2$, both error arguments are negative
+and $C_k(m)=0$ by its smallest generator degree five, so the
+identity holds for all $m\ge0$.
+
+The generating-function form records the same degree translations:
+
+$$
+\begin{aligned}
+H_{\mathcal C_k}(t)
+&=(t^3-t^{2k-1})H_{E_k}(t)\\
+&=\frac{t^5(1-t^{2(k-2)})}{(1-t^2)(1-t)^{2k+1}}
+=\frac{\sum_{j=2}^{k-1}t^{2j+1}}{(1-t)^{2k+1}}.
+\end{aligned}
+\tag{32.13}
+$$
+
+In particular $E_k(m)$ itself is not the canonical correction in
+degree $m$. The subtraction of two translated errors selects its
+finite excess band. $\square$
+

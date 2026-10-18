@@ -1,0 +1,30 @@
+**定理 6.3（sharp numerical-core peak）。** Fix
+
+$$
+L>1,\qquad 1<d_0<L^{2/\varphi^2},\qquad
+H=1,\qquad 0<E\le E_0<1/2.
+$$
+
+For all sufficiently large proof-only $N$, uniformly over that accuracy interval,
+
+$$
+M_{\rm num}(N,E)
+=\Theta_{L,d_0,E_0}
+\left(1+\log(1/E)+\log\log(N+2)\right).
+$$
+
+The upper uses a single fixed finite interpreter. The lower concerns actual joint sources and complete running configurations; it is not a lower inferred from acquisition precision or a count of real registers.
+
+**证明。** Choose the least $K\ge1$ with $2^{-K}\le E$. It has
+$K=O(1+\log(1/E))$. Proposition 3.2 and Theorem 5.1 give the source-aware upper; Lemma 2.2 bounds $h$ by $O_{d_0}(\log(N+2))$. Tiny or zero sources use the smaller branch.
+
+For the time-scale lower, take the largest sufficiently large multiple of six with $F_{k+2}\le N$. The elementary estimates
+$F_j\le2^j$ and $F_{j+2}\ge2F_j$, with fixed initial constants, imply $k=\Theta(\log(N+2))$. Lemmas 6.1–6.2 force
+$B\ge\log_2(k-c-2)-1$, uniformly for $E\le E_0$. This is the needed $\Omega(\log\log(N+2))$ lower.
+
+For precision, fix one sufficiently late legal member whose $q_3=r_*>2E_0$. Proper rotations of the entire preparation preserve its tree, determinant, leaf bounds and all three read bounds. Its first future vector ranges over the sphere of radius $r_*$. A maximal set with pairwise chordal distances greater than $2E$ has at least $r_*^2/E^2$ points: maximality covers the sphere by caps of chordal radius $2E$, each of area at most $4\pi E^2$, whereas the sphere has area $4\pi r_*^2$. The strict inequality $E\le E_0<r_*/2$ ensures this is a nontrivial packing. No two such sources can have the same installed ready configuration, because its first output cannot lie within $E$ of both first targets. The complete configuration count gives
+$B\ge2\log_2(r_*/E)-1$, and hence
+$\Omega_{E_0,r_*}(1+\log(1/E))$ including a positive baseline.
+
+Increase the common $N$ threshold to include this fixed tree and the positive part of the prefix lower. The maximum of two nonnegative lower bounds is at least half their sum. Combined with the upper this proves the claimed order. The prefix proof uses $2E_0<1$; no endpoint lower at $E=1/2$ is obtained from it.
+

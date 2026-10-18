@@ -1,0 +1,37 @@
+**Proposition 5.1 (Pairs, Theorem 4.1).** For every fixed
+$\mathbf c,d$, the maps $AB$ and $AD$ are injective on the entire
+$\mathcal K_{\mathbf c,d}$. There is no source-sum, shape, cardinality
+or sign hypothesis.
+
+The following proof records the reused interface. For $AB$, clocks
+three and five have equal nonzero $\sigma$, so (5.2) gives equal
+$h$ values there. Along with six and seven, four distinct roots
+force $h_1=h_2=h$. Clocks one and two then give
+
+$$
+h(1)(-2\epsilon-\gamma)=0,\qquad h(2)(2\epsilon+\gamma)=0.
+\tag{5.7}
+$$
+
+Their samples cannot both vanish, as that would force $d=24=48$.
+Hence $\gamma=-2\epsilon$. If $\epsilon\ne0$, clocks zero and four
+force $h(0)=h(4)=0$ and $d=0$. The other two normalized samples force
+
+$$
+h(T)=T(T-4)(T-6)/21,\quad
+[h]=(0,24/21,-10/21,1/21),
+\quad (h(1),h(2),h(3))=(5/7,16/21,3/7).
+\tag{5.8}
+$$
+
+Consequently $(\sigma_1,\sigma_2,\sigma_3)=(168/5,63,728/5)$,
+whereas (5.5) requires $\sigma_3=483/5$, a discrepancy of 49.
+Thus $\epsilon=\gamma=0$ and the worlds agree.
+
+For $AD$, equal nonzero $\sigma$ at four and five gives common
+$h$ through the four nodes $4,5,6,7$. If $\beta\ne0$, clocks
+zero and three force $d=0=312/5$, impossible. Thus $\beta=0$.
+If $\epsilon\ne0$, clocks one and two force $d=24=48$.
+All parameters therefore vanish, proving the proposition.
+No ancestor gain was canceled without first proving it nonzero. ∎
+

@@ -1,0 +1,21 @@
+**定理 5.2（前缀—残余双向包含）。** 有
+
+$$
+\boxed{\ker P_{uv}\subseteq\ker P_u,\qquad
+\ker B_u\subseteq\ker B_{uv}.}
+$$
+
+若执行 $uv$ 后存在允许程序从后继状态精确读取 $P_u$，还具有
+
+$$
+\ker B_{uv}\subseteq\ker P_u.
+$$
+
+**证明。** 拼接式
+
+$$
+P_{uv}(x)=P_u(x)\mathbin{\|}\operatorname{tr}_v(F_ux)
+$$
+
+使完整前缀相等蕴含较短前缀相等。残余式 $B_{uv}=\operatorname{res}_vB_u$ 给另一包含。若档案仍可读取，行为相同的状态必须给出相同档案响应，得到最后一式。包含未必严格。$\square$
+

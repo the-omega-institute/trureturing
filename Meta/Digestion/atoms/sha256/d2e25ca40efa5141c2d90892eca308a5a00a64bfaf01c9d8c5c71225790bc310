@@ -1,0 +1,38 @@
+**Convention 16.3 (scope of the obstruction and complete accounting).**
+Theorem 15.2 covers complete event services and both installed producer
+journal entries, including no-row, repetition, already-acquired material
+and retained packet reuse. Its lower bound is proved from their actual
+row writer, parser and channel graphs; event-freedom of a journal does
+not make it allocation-free. A packet-free local scan, verifier/consumer
+lookup on an acquired snapshot, malformed-query or structural-fault
+return, interrupted protocol, and a branch consisting only of standalone
+primitives are not covered by the journal lemma. An extension to every
+such path remains open and would require its own entry, work and return
+analysis. In particular no claim that every original primitive or every
+possible recovery construction is impossible follows from this theorem.
+
+Endpoint equality is already impossible for the stated replacements;
+requiring every executed original action's full successor cannot repair
+that failure. The theorem itself does not identify a native history
+flight with an original experiment. It adds no publication-occurrence
+condition to endpoint equality. BANK_DISCLOSURE's complete View0
+publication-origin theorem remains the supplier when such an occurrence
+is separately required. It is not used to exclude the empty composition;
+the actual retained meter does that. Nor does a physical endpoint
+inequality by itself prove an original-$Q$ kernel separation, especially
+at absorbing halt: the empty terminal response remains output-only.
+
+For each actual $L$-row branch keep GENERAL Definition 8.5's same-run bill
+
+$$
+(\Delta\mathrm{ticks},\Delta\mathrm{fee},\Delta\mathrm{bits})
+=(L,2L,\Delta b_{\mathrm{ctl}}+8\Delta A+8L).
+$$
+
+Here $A$ counts all actual nonmeter cells on all ports, including the
+annex, every dead bank, retired descriptor, sender, mailbox, receiver,
+partial block and scratch word; it is not $A_{55}$. Every actual input,
+copy, test, ACK and return remains charged. Keep the separately declared
+atomic-incidence tariff and foundation as in GENERAL. The allocation
+bounds are not numerical runtime measurements or complete bills.
+

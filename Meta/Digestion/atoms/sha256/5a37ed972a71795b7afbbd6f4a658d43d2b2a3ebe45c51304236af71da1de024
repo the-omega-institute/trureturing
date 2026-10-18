@@ -1,0 +1,54 @@
+**Theorem 7.1 (all nonnegative rational weighted minima given success).**
+Under Assumption 6.1, for every $\lambda\in\mathbb Q_{\ge0}^3$ the
+unrestricted value
+
+$$
+W_\lambda^*=\inf_{B\text{ correct and total on }D}W_\lambda(B)
+\tag{NFO.21}
+$$
+
+is a computable rational number, attained by a finite lawful physical
+controller. An original source attaining that controller's worst weighted
+sum can also be returned. Every zero-weight case is included.
+
+Proof. This is JRF Theorem 7.1's same-source construction with the native
+threshold decision of Theorem 5.2 in place of its literal-only logical
+decision. The static witness gives
+
+$$
+T_0=\lambda_qK_0+\lambda_\ell L_0\in\mathbb Q_{\ge0}.
+\tag{NFO.22}
+$$
+
+If both observation weights vanish, that finite static witness attains
+zero, the smallest possible value. Otherwise choose a positive common
+denominator $b$ of the three weights. Every sourcewise finite weighted
+sum lies in $b^{-1}\mathbb N$. A nonempty bounded subset of this lattice
+has a maximum in the same lattice. Hence any competitor with finite
+$W_\lambda\le T_0$ has value on the finite list
+
+$$
+0,\ 1/b,\ 2/b,\ \ldots,\ T_0 .
+\tag{NFO.23}
+$$
+
+Here $bT_0$ is an integer. Decide those thresholds in increasing order
+by Theorem 5.2. The last is true because of the static witness, so a first
+true threshold is found in finitely many terminating calls. Its positive
+answer is a finite controller. A competitor of smaller value would either
+have a smaller lattice value, contradicting the earlier NO decision, or
+would violate the lattice fact. A competitor of value larger than $T_0$
+or infinite cannot improve the returned value. These comparisons cover
+all source-total adaptive services, including those with unbounded
+zero-priced coordinates. NSF Theorem 7.2 supplies an original source
+attaining the returned finite controller's weighted maximum.
+
+In particular when $\lambda_\ell=0$ and $\lambda_q>0$, the decision at
+each threshold uses the finite obstruction theorem with genuinely
+unbounded physical words. When $\lambda_q=0$ and $\lambda_\ell>0$,
+cleanup supplies the needed read cap from length. At no point is a
+zero weight used as a divisor or a sourcewise objective replaced by a
+sum of separate maxima. The Pareto set in Theorem 6.3 need not be the
+right candidate family for (NFO.21); this proof does not optimize over
+that set. $\square$
+

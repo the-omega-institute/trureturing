@@ -1,0 +1,20 @@
+**Corollary 15.4 (the qualified Boolean minimum).** For every
+$n,k,A$ of Definition 15.1, the minimum running count in
+$\mathfrak I$, subject to both original caps on one graph, is $G$.
+The Boolean total installed minimum is $G+2$.
+
+Proof. The lower bound is Theorem 15.2. The supplied threshold
+grid of PCA Theorem 26.1 has $G$ running states, reads coordinates
+in their fixed order until a certificate, and satisfies both caps.
+Its support at $(h,z)$ is $\{1,\ldots,h+z\}$, so it belongs
+to $\mathfrak I$. Its two distinct output terminals give the total.
+$\square$
+
+The witnesses in Theorem 15.2 may have different completing inputs.
+Their nested supports provide a counting injection, not one common
+runtime history, a live-order normalization or an executable subgraph.
+Boundary support families can be multiple, and different cells can
+share other live hosts. A selected host may be certified on another
+history. Only genuinely never-live installed states contribute to $u$;
+$E,D$ remain incidences on this one graph, not separate state batches.
+

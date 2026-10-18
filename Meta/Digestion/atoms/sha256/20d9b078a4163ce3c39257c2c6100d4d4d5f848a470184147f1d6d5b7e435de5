@@ -1,0 +1,26 @@
+**Corollary 9.3 (the two finite envelopes at this particular law).**
+With $J_d$ and the conditional-owner envelope $\Omega_d$ defined in
+[COK, Definitions 2.5 and 5.1][COKj],
+
+$$
+J_3(\mu_{\rm j})=\Omega_3(\mu_{\rm j})
+=\beta_3(\mu_{\rm j})=\frac{2499}{6407}.
+\tag{NCE.70}
+$$
+
+Proof. Work first with $w_{\rm j}$. For a range-feasible $P$ of
+mass at most $9996$, the Euclidean norm of its joint hard-target cell
+masses is at most its total mass. For a heavier $P$, its hard vector
+contains the target selected in Theorem 9.1. Its joint cells refine
+that target's cells; splitting nonnegative masses cannot increase
+the sum of their squares. Equation (NCE.65) bounds the joint norm
+strictly below $9996$. It follows that $J_3(w_{\rm j})\le9996$.
+On $P_B$ all targets are easy, so its hard vector is empty and its
+one cell has mass $9996$. Hence $J_3(w_{\rm j})=9996$.
+The credited comparison
+$\beta_d\le\Omega_d\le J_d$ in COK Theorem 5.2, together with
+Theorem 9.2, forces equality for $\Omega_3$ as well. Homogeneity
+gives (NCE.70). This is equality at one fixed law, not optimization
+over laws or proof of a conditional certificate's boundary attainment.
+$\square$
+

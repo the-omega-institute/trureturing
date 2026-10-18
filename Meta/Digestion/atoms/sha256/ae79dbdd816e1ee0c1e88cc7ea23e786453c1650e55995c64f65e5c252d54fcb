@@ -1,0 +1,60 @@
+**Theorem 53.1 (early damping and the late square-root coefficient).** Fix any finite $M\ge M_{0,d}$ and put $h=Ms^8$, $b=h/s^2=Ms^6$, $D=H_s-H^h$. Distinguish $M$ from the original positive phase tensor $\mathsf M=\int_I\phi(k)^2c_\kappa(k)c_\kappa(k)^{\mathsf T}dk$. Then
+
+$$
+\begin{aligned}
+\langle x_s,Dx_s\rangle&=C_*^2Ms^8+o_{d,M}(s^8),\\
+\langle x_s,(L^0-L^h)x_s\rangle
+ &=\frac{j_0A_p^2\phi(k_0)^2}{4\pi\sqrt{\det\mathsf M}}\sqrt M\,s^8+o_{d,M}(s^8).
+\end{aligned}
+\tag{53.1}
+$$
+
+Proof. Reuse the input-specific damping argument (36.4)–(36.6). Its hypotheses are (35.5), strong fixed-time heat convergence, and the early Gaussian bounds, all available at Definition 45.1 scope without the vanishing identities used for Theorem 36.1's other conclusions. In particular
+
+$$
+\frac{\langle x_s,Dx_s\rangle}{h}
+ =\int_0^{s^{-2}}\frac{1-e^{-ht}}h\langle x_s,Q_s(t)x_s\rangle dt
+ \longrightarrow\int_0^\infty t\langle Vp,P_tVp\rangle dt=C_*^2.
+\tag{53.2}
+$$
+
+The integrand, zero extended in time, is dominated by $Ct$ below one and $Ct^{-5/2}$ above one. The spectral-calculus equality is $\|G_0(Vp)\|_2^2=C_*^2$, since $G_0(Vp)=C_*p$ and $\|p\|_2=1$. This is the existing early damping coefficient on its existing input, applied at the present fixed probe.
+
+For the late difference define
+
+$$
+J_b(A,Y)=\int_1^\infty(1-e^{-bt})K(t;A,Y)dt.
+\tag{53.3}
+$$
+
+L Lemma 41.2 gives $0\le J_b\le C\sqrt b$ globally. Its integrable band error contributes at most $C\int_1^\infty\min(bt,1)t^{-5/2}dt=O(b)$. Uniformly on fixed compact endpoint sets, replacing the Gaussian phase displacement by zero costs the same $O(b)$, since $|e^{-|q_A-q_Y|_{\mathsf M}^2/(4t)}-1|\le C/t$. The remaining time integral is
+
+$$
+\begin{aligned}
+\frac1{\sqrt b}\int_1^\infty(1-e^{-bt})t^{-3/2}dt
+ &\longrightarrow\int_0^\infty(1-e^{-v})v^{-3/2}dv\\
+ &=2\int_0^\infty e^{-v}v^{-1/2}dv=2\sqrt\pi.
+\end{aligned}
+\tag{53.4}
+$$
+
+The equality follows by integration by parts, whose two boundary terms vanish, and the Gaussian integral. Consequently
+
+$$
+\frac{J_b(A,Y)}{\sqrt b}\longrightarrow
+ \frac{\phi(k_A)\phi(k_Y)}{4\pi\sqrt{\det\mathsf M}}
+\tag{53.5}
+$$
+
+uniformly on fixed compact endpoint sets. This evaluates the constant in the square-root order already supplied by Lemma 43.1.
+
+The exact late difference in microscopic variables is
+
+$$
+\langle x_s,(L^0-L^h)x_s\rangle
+ =j_0s^5\iint J_b(Y_s\eta,Y_s\xi)x_s(\eta)x_s(\xi)d\eta d\xi.
+\tag{53.6}
+$$
+
+After division by $j_0s^5\sqrt b$, the global bound above permits replacement of both inputs by $Vp$ with error bounded by $C\|x_s-Vp\|_1(\|x_s\|_1+\|Vp\|_1)=o(1)$. For each fixed microscopic pair, its physical endpoints tend to $(o,o)$ and lie in one fixed interior compact set. Thus (53.5) applies with limiting height factor $\phi(k_0)^2$. Full-product dominated convergence against $(Vp)(\eta)(Vp)(\xi)$ gives the coefficient in (53.1), since $s^5\sqrt b=\sqrt M\,s^8$. Neither endpoint has been held fixed while discarding the other moving input. $\square$
+

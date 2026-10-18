@@ -1,0 +1,107 @@
+**Theorem 240.1 (The complete 45-charge cut).**
+For every $L\ge7$, every $3\le j_1<\cdots<j_5\le L$, and every
+same full feasible N allocation of any finite mass,
+
+$$
+2b_2+4b_{j_1}+6b_{j_2}+5b_{j_3}+6b_{j_4}+6b_{j_5}\le2+45e.
+\tag{240.1}
+$$
+
+Every original N or O cap attainer satisfies the identical necessary
+inequality with $a,c$ in place of $b,e$, at every positive closed cap.
+No active-horizon condition on the selected addresses is required.
+
+Proof. On seven positions set $A=0$, $T=4$, with the following
+nonzero $P,C$ coefficients; every unlisted coefficient is zero.
+
+| Word | Event | Weight |
+| --- | --- | --- |
+| $0011000$ | $P$ | 1 |
+| $0011110$ | $P$ | 1 |
+| $0101000$ | $P$ | 1 |
+| $0101100$ | $P$ | 1 |
+| $0110010$ | $P$ | 1 |
+| $0110100$ | $P$ | 1 |
+| $1001010$ | $P$ | 1 |
+| $1001100$ | $P$ | 1 |
+| $1010000$ | $P$ | 1 |
+| $1010100$ | $P$ | 1 |
+| $1011000$ | $C$ | 1 |
+| $1011110$ | $C$ | 1 |
+| $1100000$ | $P$ | 1 |
+| $1100110$ | $P$ | 1 |
+| $1101000$ | $C$ | 1 |
+| $1101010$ | $C$ | 1 |
+| $1101100$ | $C$ | 2 |
+| $1110000$ | $C$ | 3 |
+| $1110100$ | $C$ | 1 |
+| $1110110$ | $C$ | 2 |
+| $1111000$ | $C$ | 4 |
+| $1111010$ | $C$ | 1 |
+| $1111100$ | $C$ | 6 |
+| $1111110$ | $C$ | 6 |
+
+The class totals are $C=(0,2,4,6,5,6,6)$ and
+$P=(6,4,2,0,0,0,0)$. Thus $W=18$, $K=45$ and
+$Q=(0,2,4,6,5,6,6;45)$. Here are all schedule cell maxima
+from (237.3), with N cells $00,01,10,11$ and O cells $0,10,11$;
+singletons use $0,1$. The maxima include all eight labels.
+
+| Schedule | N maxima | O maxima |
+| --- | --- | --- |
+| $\varnothing$ | $(16)$ | $(16)$ |
+| $1$ | $(6,10)$ | $(6,10)$ |
+| $2$ | $(6,10)$ | $(6,10)$ |
+| $3$ | $(6,10)$ | $(6,10)$ |
+| $4$ | $(6,10)$ | $(6,10)$ |
+| $5$ | $(6,10)$ | $(6,10)$ |
+| $6$ | $(8,8)$ | $(8,8)$ |
+| $7$ | $(12,4)$ | $(12,4)$ |
+| $12$ | $(2,4,6,6)$ | $(6,6,6)$ |
+| $13$ | $(2,4,6,6)$ | $(6,6,6)$ |
+| $14$ | $(2,4,6,6)$ | $(6,6,6)$ |
+| $15$ | $(3,3,5,7)$ | $(6,5,7)$ |
+| $16$ | $(4,2,6,6)$ | $(6,6,6)$ |
+| $17$ | $(6,0,6,4)$ | $(6,6,4)$ |
+| $23$ | $(2,4,6,6)$ | $(6,6,6)$ |
+| $24$ | $(2,4,6,6)$ | $(6,6,6)$ |
+| $25$ | $(3,3,5,7)$ | $(6,5,7)$ |
+| $26$ | $(4,2,6,6)$ | $(6,6,6)$ |
+| $27$ | $(6,0,6,4)$ | $(6,6,4)$ |
+| $34$ | $(2,4,6,6)$ | $(6,6,6)$ |
+| $35$ | $(3,3,5,7)$ | $(6,5,7)$ |
+| $36$ | $(4,2,6,6)$ | $(6,6,6)$ |
+| $37$ | $(6,0,6,4)$ | $(6,6,4)$ |
+| $45$ | $(3,3,5,7)$ | $(6,5,7)$ |
+| $46$ | $(4,2,6,6)$ | $(6,6,6)$ |
+| $47$ | $(6,0,6,4)$ | $(6,6,4)$ |
+| $56$ | $(4,2,6,6)$ | $(6,6,6)$ |
+| $57$ | $(6,0,6,4)$ | $(6,6,4)$ |
+| $67$ | $(8,0,6,4)$ | $(8,6,4)$ |
+
+This finite addition is a complete support proof: for each cell sum
+its $P$ mass plus terminal mass at label zero, and compare with every
+class's $C+P$ mass at its numerical label. The atoms above give precisely
+the displayed maxima. Every schedule sum is at most 18, and the anchor
+attains 18. Thus $B_N=B_O=W=18$ and both excesses are zero.
+For arbitrary ordered selected late addresses use skeleton
+$(1,2,j_1,j_2,j_3,j_4,j_5)$ and put one in every unselected bit.
+Each scored class and its reward label is transported to its skeleton
+address. A query outside that skeleton is constant on this score and
+folds to an empty or singleton observation. Its numerical label has
+zero reward. Reversals permute cells and repetitions coarsen them.
+Thus the same support bound holds for the complete catalog at every $L$;
+it restricts only this score, not competitors or unscored words.
+
+Equation (237.5) now gives (240.1) for any mass on whole tables.
+For original competitors, use the necessary direction of §110.2 and
+extend a shorter active kernel by ignoring new bits as in Corollary
+239.3. If the active horizon is longer than the score, pad the score
+with ones, or restrict the finite comparison by fixing later bits zero
+and projecting later labels to zero. The positive low word then has
+base target, and TV contracts. These are finite representation operations,
+not free source observations. Pairing the resulting single full
+configuration with the score proves (240.1) on actual amplitudes.
+At $c\ge1$ the coefficient sum 29 is below $2+45c$.
+Counted same-seed N completion covers O competitors. ∎
+

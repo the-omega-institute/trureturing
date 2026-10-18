@@ -1,0 +1,95 @@
+**Theorem 16.10 (shared acquisition and equal-width/depth obstructions).**
+For every indicated admissible $D$, the following exact costs hold:
+
+| Declared menu | Minimum Reads | Minimum admissible $D$ |
+| --- | ---: | ---: |
+| $\varnothing$ | $0$ | $1$ |
+| $\{R\}$ | $1$ | $1$ |
+| $\{RL,RR\}$ | $2$ | $2$ |
+| $\{RLL\}$ or $\{R,RLL\}$ | $2$ | $3$ |
+| $\{RLL,RLR\}$ | $3$ | $3$ |
+| $\{RLL,RRR\}$ | $4$ | $3$ |
+
+Thus a joint menu can cost strictly less than the sum of its singleton
+optima. Menu size, antichain width and maximum target depth alone do
+not determine the price.
+
+Proof. The empty, root and singleton entries reuse (AAR.97); adding
+$R$ does not change the singleton's prefix tree. For $\{RL,RR\}$,
+Read $RL$. If absent, Read $R$: it is a leaf and its actual label
+resolves both trajectories. If nonabsent, $R$ is branch and Read $RR$
+resolves the other component. This uses at most two actual Reads.
+For a matching lower bound take the four simultaneous native sources
+
+$$
+ t_{x,y}=\langle\alpha,\langle x,y\rangle\rangle,
+ \qquad x,y\in\{\alpha,\beta\}.
+\tag{AAR.98}
+$$
+
+All lie in $\mathcal F_2$. Every literal is either constant or reads
+one of the two independent leaf labels. The requested count-zero
+vector determines both, so one Read cannot suffice. Each singleton
+has price two by Theorem 13.8, but the joint price is two rather than
+four. The same acquired reply may certify their common branch and
+supply one requested label; it is one event shared by the tasks.
+
+For $\{RLL,RLR\}$, first Read $RL$. Absence is resolved by one $R$
+Read, a leaf resolves both targets directly, and branch is followed
+by the two child Reads. The maximum is three. Its relative trie is
+$\{\varepsilon,L,LL,LR\}$. In (AAR.95) first querying the root has
+positive continuation two, querying $L$ has worst continuation two, and
+querying either terminal child has worst continuation two. For the
+last case the positive forest has one vertex of cost one, while its
+negative truncation is the two-vertex path of cost two. Thus the
+minimum is three, giving the matching all-word bound by (AAR.96).
+
+For $\{RLL,RRR\}$ the relative trie is
+$\{\varepsilon,L,LL,R,RR\}$. Querying its root has positive
+continuation four; querying $L$ or $R$ has positive continuation
+three and negative continuation one; querying $LL$ or $RR$ has
+positive continuation two and negative continuation three. The
+latter truncated shape is $\{\varepsilon,L,R,RR\}$. Its root
+query has continuation three; querying $L$ leaves the two-vertex
+$R$ path of cost two; querying $R$ has positive continuation two
+and negative continuation one; querying $RR$ has positive
+continuation one and negative continuation two, the latter being
+the two-child root $\{\varepsilon,L,R\}$ of cost two. Its exact
+value is therefore three. Consequently (AAR.95)
+gives four for the five-vertex trie.
+
+There is also a direct native lower correspondence for that price.
+Restrict to the 16 sources
+
+$$
+ t=\langle\alpha,\langle x,y\rangle\rangle,
+ \quad
+ \begin{aligned}
+ x&\in\{\alpha,\beta,\langle\alpha,\alpha\rangle,
+                            \langle\beta,\alpha\rangle\},\\
+ y&\in\{\alpha,\beta,\langle\alpha,\alpha\rangle,
+                            \langle\alpha,\beta\rangle\}.
+ \end{aligned}
+\tag{AAR.99}
+$$
+
+Their right-subtree height is at most two, so they lie in $\mathcal F_3$.
+In the left component the selected child is $L$: a root Read merges
+its two branch completions, a child Read merges the two root leaves,
+and every other literal is constant or supplies no finer partition.
+Its two leaf labels and selected child reply require two Reads in
+the worst case. In the right component the selected child is $R$,
+with the symmetric two-Read obstruction. Any original-root literal
+concerns at most one component, or is a fixed outer reply. Theorem
+16.7's product argument gives four against arbitrary interleaving
+on one of these actual sources, with both local hard histories
+simultaneously realizable. This is a common-source lower bound,
+not the sum of initial singleton bounds.
+
+Both three-letter menus have two incomparable targets and width two,
+but costs three and four. They therefore falsify any formula using
+only those summaries. The shared and split possibilities are realized
+by actual trees, including the independent factors in (AAR.99);
+the difference is their prefix overlap, rather than an imagined
+combination of separately optimal probes. $\square$
+

@@ -1,0 +1,49 @@
+**Lemma 5.2 (credited right-cut separation).** Let $I=(a,b)$ be any
+consecutive-cut interval of Theorem 3.3, of span $\beta_I=b-a$.
+Write $Q_I=\bigcup_{p\in V_I}F_p$. Every host at depth $b-1$
+hosts no other cell in $V_I$. If distinct cells $(h,z),(g,w)\in V_I$
+share a host, orient them by $h<g$. Then
+
+$$
+g-h,\ z-w\ \ge\max(2,n-b+1).
+\tag{5.6}
+$$
+
+Put $d_*=\min(K,L)$ and $e_*=\max(K,L)$. If $b\le e_*$,
+then $D_I=0$, irrespective of the interval's span.
+
+Proof. This is [SI, Lemma 10.2][SI], using the actual envelopes above.
+At a depth-$b-1$ occurrence with support $S$ and host $q$, freshness
+and the right envelope give $S=T_b\setminus\{i(q)\}$. Any other
+occurrence of $q$ inside $I$ has support contained in this same set.
+At an earlier depth it is properly nested, and at the same depth it has
+the same support with unequal hits. Lemma 2.3 excludes both possibilities.
+The argument includes $b=n$, where $T_n=[n]$ is only a formal boundary.
+
+Lemma 2.3 gives the two gaps at least two. Suppose their minimum is at
+most $n-b$. Set
+
+$$
+M=\max(h+z,g+w),\quad t=b-1-M,\quad
+A_1=K-1-g,\quad A_0=L-1-z.
+$$
+
+All three capacities are nonnegative, and
+$g+z-M=\min(g-h,z-w)$ implies
+$A_1+A_0-t=n-b-\min(g-h,z-w)\ge0$.
+Choose $t_1\le A_1,t_0\le A_0$ nonnegative with $t_1+t_0=t$.
+Append the same word $1^{t_1}0^{t_0}$ to both actual histories.
+Every intermediate count is live for both, since its counts are bounded
+by their final live counts. Inductively the common state's fixed label
+is fresh for both histories, each requested reply has an actual completion,
+and their one fixed successor is again common. Thus these are actual
+paired live extensions, even if their old assignments disagree.
+At their ends the larger depth is $b-1$, the cell differences persist,
+and both depths remain internal to $I$. This contradicts last-layer
+exclusivity. The case $t=0$ is that same contradiction immediately.
+Hence both integer gaps exceed $n-b$, proving (5.6).
+
+If $b\le e_*$, then $n-b+1\ge d_*$. One of the two live count
+ranges has diameter $d_*-1$, so no such shared pair exists. No arbitrary
+syntactic path was assumed actual in this proof. $\square$
+

@@ -1,0 +1,37 @@
+**Lemma 3.1 (rank-to-depth identity).** For all $r\in\mathbb N$,
+
+$$
+\mu(T_r)=\left\lfloor\frac r2\right\rfloor.
+\tag{NLC.8}
+$$
+
+If a normal code $X$ has primitive rank $r_p$ at each code-leaf address
+$p$, then
+
+$$
+\mu(E(X))=
+ \min_{p\text{ a code leaf}}\left(|p|+\left\lfloor\frac{r_p}{2}\right\rfloor\right).
+\tag{NLC.9}
+$$
+
+In particular an explicit primitive occurrence at code address $p$ and
+rank $r$ supplies an actual native leaf at depth
+$|p|+\lfloor r/2\rfloor$, regardless of all other code subtrees.
+
+Proof. The cases $r=0,1$ are the two native leaves. The native recurrence
+$T_{r+2}=\langle T_{r+1},T_r\rangle$, supplied by (NLC.1) and ABC,
+gives
+
+$$
+\mu(T_{r+2})
+ =1+\min\left(\left\lfloor\frac{r+1}{2}\right\rfloor,
+                \left\lfloor\frac r2\right\rfloor\right)
+ =\left\lfloor\frac{r+2}{2}\right\rfloor.
+$$
+
+This proves (NLC.8) by induction. Expansion preserves every displayed
+$F$ as a native pair. Induction on the code therefore adds one to the
+minimum at each such constructor, proving (NLC.9). To obtain the stated
+leaf, follow $p$ and then a shortest leaf path in its finite $T_r$.
+Neither formula identifies code leaves with native leaves. $\square$
+

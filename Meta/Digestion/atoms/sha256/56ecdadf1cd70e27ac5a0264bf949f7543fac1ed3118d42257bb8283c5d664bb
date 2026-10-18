@@ -1,0 +1,53 @@
+**定理 72.3（Two binary free-value tables, four joined labels and a full INITIAL consumer）。** Under (72.1)–(72.2), take tables $\lambda_0,\lambda_1:J\to Y$ with exactly two labels each and ordered join
+
+$$
+\Lambda(j)=(\lambda_0(j),\lambda_1(j)),\qquad
+|\Lambda[J]|=4,\qquad |\Lambda[H]|\le2.
+\tag{72.14}
+$$
+
+Cross-value label coincidences are unrestricted; the ordered pairs are the labels relevant to the common stream. Choose distinct common root labels $R,C$ fresh from $\lambda_0[J]\cup\lambda_1[J]$, enlarge the label set if necessary, and give initial bottom any independent label $L_\bot$. Define the entire immutable INITIAL target by
+
+$$
+f(v,-j,s)=\begin{cases}
+R,&h\le s<k,\\
+C,&0\le s<h,\ j\in\{0,m\},\\
+\lambda_v(j),&0\le s<h,\ j\in J,
+\end{cases}
+\qquad f(\bot)=L_\bot.
+\tag{72.15}
+$$
+
+With $\mathsf K(\Lambda)$ defined by (72.5) using the joined images, the exact total original-source fees under either alphabet are
+
+$$
+\boxed{C_{\rm ad}(f)=
+\begin{cases}
+2,&|\Lambda[H]|\le1,\\
+3,&|\Lambda[H]|=2,
+\end{cases}
+\qquad
+C_{\rm pre}(f)=
+\begin{cases}
+3,&\mathsf K(\Lambda),\\
+4,&\neg\mathsf K(\Lambda).
+\end{cases}}
+\tag{72.16}
+$$
+
+These total fees include the actual root; the local joined additional fees are two and three. The formula transports the local law to exactly the defined full consumer, not to arbitrary full extensions of $\Lambda$ or its components.
+
+**证明（all roots, the credited binary scopes and every adaptive child）。** Fix either free value and any actual $j\in J$. The jointly realized INITIAL tails zero and $h$ have different labels $\lambda_v(j)$ and fresh $R$. Free stopping is impossible. Every root containing a zero has at most $m-1$ leading ones. Both sources survive to its first zero since $h+(m-1)=k-1<k$, have the same scalar and phase there, and merge their entire records at that zero. The remaining bits are safe, and their complete root endpoints agree. No later literal action, absorption, paid wait or endpoint stop can recover their unequal INITIAL labels. This is the credited first-zero obstruction of [S1, Lemma 4.3], Proposition 4.2 and [M72, Corollary 3.1]. Thus every correct root is $1^m$, separately on both free-value fibres and for a GLOBAL stream.
+
+That forced root rejects exactly the high tails, which all return $R$ at fee one. Its successful positive-difference archive has exactly phases $0,m$, all labelled $C$, and stops at fee one. Its two successful zero-difference archives have exactly (72.3), with tables $\lambda_v$. Initial bottom returns $L_\bot$ freely; an all-one complete-block history of length at least $k$ realizes that separate source. The high, positive and zero archives are full joint-history fibres, and all phases and tails used here have the witness from the proof of Theorem 72.2.
+
+The binary continuation law is supplied by [M72, Theorem 2.1, cut zero], agreeing with the appropriate clauses of Chapter 69: for a nonconstant binary table, its additional price is one when its $H$ image is homogeneous and two otherwise. Its second visibility test is automatic at cut zero. To spell out a legal attainment on the present actual subgroup, orient the homogeneous $H$ label as zero when there is one, and otherwise choose either binary orientation $b_v$. The first row charges exactly $\{j\in J\setminus H:b_v(\lambda_v(j))=1\}$, compensating parity at zero, and is inverted on $W_1$. It starts zero. If $H$ is homogeneous, both responses finish in that one block. Otherwise its one child returns the one-labelled INITIAL value and stops; the zero child follows the row charging exactly $\{j\in H:b_v(\lambda_v(j))=1\}$, with donor $m$ on $W_2$. This second word begins zero, safely clears the actual first-word tail, and finishes its two labels. Its full padding and any uninformative first row are paid. These are the supplied binary constructions, not a new binary theorem.
+
+The remembered free value may select these different adaptive words. Write $d_v=1$ for homogeneous $\lambda_v[H]$ and $d_v=2$ otherwise. Each binary table has two labels on $J$, so its live zero archive cannot stop at the root, and the quoted binary all-action bounds give exact total adaptive fee $1+\max_v d_v$. The two component images are both homogeneous precisely when the join is homogeneous; when $|\Lambda[H]|=2$, at least one component is nonconstant there. This proves the adaptive formula, with all rejection and positive children already stopped.
+
+**证明（the credited value join and one GLOBAL attainment/lower bound）。** Apply exactly Definition 29.1 and Theorem 29.2, including their original all-parameter, all-alphabet and different-stopping-time scopes. Under a fixed literal stream, the phase/tail trajectory and rejection time do not depend on the INITIAL scalar. The actual free value and actual endpoint archive determine the two value-translated successful archives by complementation, with identical issued words and bottom entries. A decoder retains a component when determined and continues the same actual stream until both component decoders stop. Their maximum stopping time remains within a uniform bound valid on both jointly realized free-value fibres. This computes the ordered join without another experiment or borrowed observation. Conversely, the joined label returns the component selected by the remembered free value.
+
+For (72.15) the full joined target has high label $(R,R)$, positive-root label $(C,C)$, zero-root table $\Lambda$, and a separately readable bottom pair. The same root-forcing argument applies. Its only live root archive is exactly Theorem 72.2. For the upper bound, issue the one GLOBAL stream $1^m$ followed by (72.9) when $\mathsf K(\Lambda)$ holds, or by (72.9), (72.13) with the fallback code when it fails. Every original source uses its own consecutive differences, decodes the joined label as proved, and returns its value component. All root, suffix and terminal seams have been checked on these same sources. Stopping may occur earlier for a component; no later observation is then requested on that stopped source.
+
+Conversely, any cheaper GLOBAL controller for $f$ yields, through the supplied value-join decoder on its very same stream, an equally bounded controller for this full joined target. Its forced paid root leaves the exact four-label archive (72.3), contradicting the all-action adaptive lower bound of Theorem 72.2 if its total fee is less than the corresponding value in (72.16). Actual sources attain the required maximal stopping depth. This proves the GLOBAL formula without inferring one stream from the separate binary optima. ∎
+

@@ -1,0 +1,95 @@
+## 10. All six pair maps, actual TT and the limited scalar policy
+
+**Corollary 10.1.** For every fixed $y,\zeta$ and
+$d\in[48,312/5]$, all six terminal-pair maps
+$AB,AC,AD,BC,BD,CD$ are injective on the entire
+$\mathcal K_{\mathbf c,d}$, equivalently on (2.9).
+No triple of distinct worlds in that class has all four terminal
+columns noninjective.
+
+The pair assertions follow from Proposition 5.1 and Theorems 8.1
+and 9.1. For the triple assertion, choose one colliding unordered
+pair in each of four noninjective columns. There are only three
+unordered pairs on the same three worlds, so one chosen pair recurs
+in two columns. The corresponding pair map is injective, a
+contradiction. This includes constant columns, all collision
+assignments, both terminal signs, simple and repeated sixth roots.
+
+To relate this to actual acquisition, for any known compatible set
+$K$ and literal history $H'$ use
+
+$$
+\begin{aligned}
+L_0(K,H')&\Longleftrightarrow |K|\ge2,\\
+L_{r+1}(K,H')&\Longleftrightarrow |K|\ge2\ \land\
+\bigwedge_{E\in\{J,M\}}\exists w\in\mathbb R:\
+L_r(K\cap\mathcal F(H',E,w),(H',E,w)).
+\end{aligned}
+\tag{10.1}
+$$
+
+For a triple $K=\{W_1,W_2,W_3\}\subseteq\mathcal K_{\mathbf c,d}$
+and either sixth action, every raw response gives exactly
+
+$$
+K\cap\mathcal F(H,E,w)=
+\begin{cases}
+K,&w=D_0+\lambda d,\\
+\varnothing,&w\ne D_0+\lambda d.
+\end{cases}
+\tag{10.2}
+$$
+
+After the nonempty child, the raw terminal response $v$ for word
+$EF$ retains
+
+$$
+\{W_i\in K:D_0+\lambda r_{EF}(W_i)=v\}.
+\tag{10.3}
+$$
+
+Therefore, writing
+$\Pi(R)=(R_1-R_2)(R_1-R_3)(R_2-R_3)$,
+
+$$
+L_2(K,H)\quad\Longleftrightarrow\quad
+\Pi(A)=\Pi(B)=\Pi(C)=\Pi(D)=0.
+\tag{10.4}
+$$
+
+Necessity follows from the sole nonempty sixth child and the
+last-action pair requirement. Conversely choose raw sixth response
+$D_0+\lambda d$ for each sixth action, and for each last action
+separately choose its colliding pair's common raw terminal value.
+These witness both recursive levels. Pairs and terminal values may
+differ among the four columns. Every raw value is covered by
+(10.2)–(10.3), for both signs of $\lambda$.
+This is the interface of Pairs, Proposition 6.1,
+[G, Proposition 5.1](FIB_JMMJM_ZERO_SIXTH_ROOT_RIGIDITY_AND_TERMINAL_COLLISION_GEOMETRY.md)
+and [IX, Definition 5.2](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_IX.md).
+
+**Corollary 10.2.** A supplied known set
+$K\subseteq\mathcal K_{\mathbf c,d}$ with $|K|\le3$ and
+$d\in[48,312/5]$ has a lawful terminal policy using at most two
+further readings, hence at most eight total including the ancestor.
+
+For $|K|=3$, Corollary 10.1 proves that some scalar in $A,B,C,D$
+is injective on $K$. For $|K|=2$, if all four scalars collided,
+$AB$ would contradict pair injection. The empty set has no reachable
+response, and a singleton can stop.
+For a nonsingleton choose the first injective scalar in the order
+$A,B,C,D$ and its corresponding word $EF$. Execute sixth $E$ and
+read immediately, then seventh $F$ and read immediately.
+For every pair of raw responses $w,v$, the retained set is empty
+when $w\ne D_0+\lambda d$, and otherwise has at most one member
+by scalar injectivity. At a reachable response return its unique
+entire $(P,g,\delta)$.
+
+This policy assumes the entire known $K$ and its promises.
+Two-coordinate injection alone does not give a scalar injective on
+an arbitrary triple; all six pair maps and the same-triple argument
+are used here. The result supplies neither acquisition of both
+alternative coordinates nor a scalar policy on larger or infinite
+sets, the entire fiber, or other histories. No reduction of a larger
+losing family to a losing triple is asserted.
+

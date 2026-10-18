@@ -1,0 +1,100 @@
+**引理 86.3（One actual GLOBAL stream attains the extra block）。** For Definition 86.1 there is a single lawful stream of $h+1=2d+1$ complete words serving both free values and every actual source, with no extra clearing or final cleanup.
+
+证明（available simultaneous rows）。 Use the actual root
+
+$$
+P=11(01)^{(m-2)/2}.
+\tag{86.11}
+$$
+
+Its width is $m$, its prefix is $110$ and its literal terminal tail is one. By the preceding root analysis it rejects precisely the two high INITIAL tails and preserves every low label. Its actual arithmetic row is $\mathbf1_S$, where $S$ is (86.7). Thus all low sources have current tail one, with successful root-zero phases exactly $\{1,N-1,N\}$.
+
+Number the $h$ suffix words by their actual absolute issued indices $t=1,\ldots,h$. Their omissions, including the last suffix index, are
+
+$$
+M_t=\{N-1-3t,N-3t\}.
+\tag{86.12}
+$$
+
+These are (84.3) on the present calendar, since $m\equiv-3\pmod T$. There is no wrap in (86.12). The least representative is $N-1-3h\ge45$ at $h=6$, and the inequality persists for $h\ge6$. The $h$ adjacent pairs are disjoint, lie in $S$, and avoid all three root-zero phases. This verifies the domain of every unavailable coordinate actually used below.
+
+For suffix codes use $\mathbb F_2^h$ with coordinates $1,\ldots,h$ and units $u_1,\ldots,u_h$. Put
+
+$$
+K=\mathbb F_2^h\setminus\{0,u_1\}.
+\tag{86.13}
+$$
+
+Choose a bijection $\xi:S\to K$ subject to $\xi_t(j)=0$ for $j\in M_t$. Such a choice exists by the following direct finite selection. There are exactly $2h$ constrained phases and each belongs to only one $M_t$. Its allowed set $\{z\in K:z_t=0\}$ has at least $N/2-2$ members. The elementary inequality
+
+$$
+N/2-2=2^{h-1}-2\ge2h\qquad(h\ge6)
+\tag{86.14}
+$$
+
+holds at six and is preserved by increasing $h$. Assign distinct allowed vectors to these $2h$ phases in any fixed order: before each assignment at most $2h-1$ vectors have been used, so one allowed vector remains. The remaining phases have no coordinate restriction and their number equals the number of unused vectors of $K$. Any bijection between those finite sets completes $\xi$. This chooses rows for a protocol; it does not alter (86.3).
+
+Extend $\xi$ to a full suffix-vector table $Q$ by
+
+$$
+Q(j)=\xi(j)\ (j\in S),\qquad
+Q(1)=u_1\oplus u_2,\qquad Q(N-1)=0,\qquad Q(N)=u_2.
+\tag{86.15}
+$$
+
+The XOR of the full $h$-cube is zero. Therefore $\bigoplus_{z\in K}z=u_1$, while the XOR of the three other displayed vectors is also $u_1$. It follows that $\bigoplus_{j=0}^NQ(j)=0$. Each coordinate row $Q_t$ has even full-cycle charge and vanishes on its actual $M_t$. The supplied literal inverse consequently gives the actual width-$m$ word
+
+$$
+B_{t,i}=\bigoplus_{b=0}^{i}Q_t(tm+b\bmod T),
+\qquad 1\le t\le h,\quad 0\le i<m.
+\tag{86.16}
+$$
+
+Its complete arithmetic row is exactly $Q_t$. These are simultaneous full rows of these very words, with the actual chronological starts $tm\bmod T$. The values at the root-zero phases are prescriptions for emitted bits, rather than extra observations or a borrowed sibling source.
+
+证明（strict seams and the true inherited tail）。 Available even rows alone do not establish safe execution. Here their density supplies the additional physical condition. In $K$, coordinate one has $N/2-1$ ones, and every other coordinate has $N/2$ ones. For two distinct consecutive suffix coordinates, all $N/4$ vectors with both bits one remain in $K$, because neither removed vector has two one coordinates. Since $\xi$ is a bijection onto $K$, the actual complete row intersections satisfy
+
+$$
+\begin{aligned}
+|\{j:q_{0,P}(j)=Q_1(j)=1\}|&=N/2-1>3,\\
+|\{j:Q_{t-1}(j)=Q_t(j)=1\}|&\ge N/4\ge16>3,
+&&2\le t\le h.
+\end{aligned}
+\tag{86.17}
+$$
+
+The first equality uses precisely $S$, where the root charge is one; its charge is zero at the other three phases. The second inequality counts distinct actual phases of this same table. It does not assume that separately feasible rows are jointly feasible.
+
+Every low source completes $P$. If $B_1$ rejected after that successful root on any such source, the sharp original rejecting-seam bound of Lemma 84.2 would make the first intersection in (86.17) at most three. This is a contradiction. Inductively, after successful $B_{t-1}$ the same lemma excludes rejection by $B_t$ using the second intersection. Thus the entire stream succeeds on every low source.
+
+Lemma 84.2 retains the true incoming tail even when a preceding word is all ones; its transfer is $\sigma+m$, not the literal run $m$. In the present selected stream each suffix row has at least $N/2-1>2$ charged phases, whereas an all-one word has only its two charged endpoints. Hence every selected suffix word contains a zero. Only after this exclusion may its actual outgoing tail be identified with its literal trailing run. All the actual seams therefore satisfy
+
+$$
+1+\alpha(B_1)<k,\qquad
+\rho(B_{t-1})+\alpha(B_t)<k\quad(2\le t\le h).
+\tag{86.18}
+$$
+
+Every internal run is shorter than $k$ because the width is $m<k$. No wait, padding, repair or clearing word occurs between these consecutive issued indices.
+
+证明（own-endpoint decoding and fully paid stops）。 The length-$(h+1)$ vector $(\mathbf1_S(j),Q(j))$ is injective on the entire phase cycle: on $S$ this follows from bijectivity of $\xi$, and off $S$ the three suffix vectors $u_1\oplus u_2,0,u_2$ are distinct. Codes on opposite root outcomes are already distinct. In particular the two occurrences of each doubled joined label receive different root bits, as required by Lemma 86.2.
+
+A low source executes exactly
+
+$$
+P\mid B_1\mid\cdots\mid B_h.
+\tag{86.19}
+$$
+
+From its own scalar endpoints $v_0,\ldots,v_{h+1}$ it obtains
+
+$$
+(v_1\oplus v_0,\ldots,v_{h+1}\oplus v_h)
+=(\mathbf1_S(j),Q(j)).
+\tag{86.20}
+$$
+
+At that completed endpoint, the inverse finite table gives the unique INITIAL phase $j$. Return $\widetilde\lambda_{v_0}(j)$, using the remembered free INITIAL value. Decoding phase from these acquired differences is not a hidden phase observation. The words in (86.19) are fixed independently of that value and all subsequent outputs.
+
+Initial bottom stops freely with $L_\bot$. High INITIAL tails $m+1$ and $m$ are absorbed on the first and second bits of $P$, respectively; both still emit all $m$ bits of the root and stop with $R$ only at its completed paid endpoint. Every low source stops after all $h+1$ fully paid words. The joint witnesses (86.5) supply actual low sources attaining this worst fee. No terminal operation is needed. ∎
+

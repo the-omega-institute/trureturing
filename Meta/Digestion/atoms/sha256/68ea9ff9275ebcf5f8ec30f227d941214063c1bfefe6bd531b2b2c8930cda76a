@@ -1,0 +1,15 @@
+**Theorem 4.2 (stationary traversal certificate).** Every accepted bracketed
+transcript certifies zero updates from its guard leaf Read $g$ through
+validation $v$. All Reads and local steps of the entire fresh traversal
+are within that stationary interval, and its tree is $U_g=U_v$.
+The finite check is sound in every legal realization of the transcript.
+
+**Proof.** Apply (CNA.3) to the two paid guard observations.
+Every fresh-traversal event lies between them, so the stationary
+reconstruction supplier applies directly, or use the grammar induction
+of Theorem 3.3 with no preceding branch exception.
+Guard search itself stays legal under concurrency by persistence of
+branches and their left children. Its branches before $g$ may cross
+updates, but they are not part of the fresh traversal. Every decision
+uses retained finite data. $\square$
+

@@ -1,0 +1,59 @@
+**Theorem 13.2 (uniform assignment and its scoped lower bound).** For each
+$x,b\in\{0,1\}$, under Definition 13.1 there is a path of exactly three
+nontrivial strict relocations from $g_x$ to $g_b$ on the same occurrences,
+fixing SSA.15 and every exterior incidence. Its worst-case relocation
+count is least in this fixed-occurrence relocation basis; a common length
+for all four assignments cannot be less than three.
+
+Proof. Put $a=x$, $c=1-x$. First move $f$ from $r.a$ to $t.0$.
+Then execute:
+
+$$
+\begin{array}{c|cc}
+ &\text{second relocation}&\text{third relocation}\\ \hline
+ b=x
+ &f:\ t.0\longrightarrow t.1
+ &f:\ t.1\longrightarrow r.a\\
+ b\ne x
+ &t:\ r.c\longrightarrow r.a
+ &f:\ t.0\longrightarrow r.c .
+\end{array}
+\tag{SSA.17}
+$$
+
+Initially $t$ is a terminal sibling of $f$, so $t.0$ is vacant and
+outside $f$'s subtree. After the first move the whole nonroot component
+is attached through $r.c=t$, with $t.0=f$ and $r.a$ vacant.
+If $b=x$, $t.1$ is vacant and its parent $t$ is outside $f$'s subtree.
+Moving $f$ there and then to still-vacant $r.a$ is legal and restores
+exactly the original named incidences. Thus unchanged assignments perform
+three actual relocations.
+
+If $b\ne x$, move the whole $t$ subtree into vacant $r.a$; $r$ is
+outside that subtree. This vacates $r.c$. Moving $f$ there from $t.0$
+is legal and leaves $r.a=t$, $r.c=f$, exactly $g_b$. The fork children
+and all occurrence identities are retained.
+
+Each command reattaches one subtree outside itself, preserving acyclicity,
+unique parents, root reachability and reciprocal incidence. Every exposed
+cut is therefore an actual spanning tree. No source-packet validity,
+acceptance, seal or completed-request hypothesis is used.
+
+The fixed-occurrence three-slot argument is as follows. Changing a
+vertex's parent-slot partner changes its own $\mathsf P$, its old
+parent child slot and its new parent child slot. No nonzero change of
+such reciprocal tree incidence has fewer than three changed slots.
+Exactly three forces the new child slot previously to be vacant:
+displacing another child also changes that child's $\mathsf P$.
+This is the restricted relocation fact, not a universal atomicity bound.
+
+For a changed assignment, both $f$ and $t$ change parent-slot partners.
+A relocation changes that partner only for its moved root, even when
+carrying descendants. With at most two relocations each would have to
+move once directly to its final root slot, but either first destination
+is occupied by the other. Thus a changed assignment needs at least three.
+SSA.17 attains the bound and has the same length for unchanged writes.
+An unchanged write alone admits a zero-move identity; the bound concerns
+worst-case and common length. Allocation, renaming, forest carriers and
+other primitive effects are outside this lower bound. ∎
+

@@ -1,0 +1,34 @@
+**Theorem 63.4 (two-sided certificates and actual escaping trial families).** For every fixed finite $N\ge2$,
+
+$$
+B_N\le\Sigma_N\le
+\min_{0\le k<N}\{m_k+u_{N-k}\},
+\qquad
+u_m:=\min\{am\lambda,3am-\nu w_m\},\qquad
+w_m:=\tfrac23(m-2+2^{1-m}).
+\tag{63.13}
+$$
+
+Proof. First, any weakly null unit sequence $f_n$ has
+
+$$
+\liminf_n q_N(f_n)\ge B_N.
+\tag{63.14}
+$$
+
+For fixed $R$, $\chi_N$ has finite support, so $\chi_Nf_n\to0$ strongly and its energy tends to zero. Apply (63.11)–(63.12) to the other pieces, take the lower limit, then let $R\to\infty$. If the spectral subspace below some $c<B_N$ were infinite dimensional, an orthonormal sequence in it would be weakly null with energies at most $c$, contradicting (63.14). Thus below each such $c$ the full spectral subspace is finite dimensional, proving $\Sigma_N\ge B_N$.
+
+For the upper bounds fix $k<N$, $m=N-k$ and a unit finite-support root trial $f$ for $H_k$ with energy at most $m_k+\epsilon$. For $k=0$ take the scalar vacuum. For the free branch, use the actual radial sine packets of §55.3, each on finitely many levels of a deep descendant subtree. Choose $m$ such subtrees pairwise disjoint and separated by distances tending to infinity, and also escaping the finite support of $f$. Each packet has kinetic expectation tending to $\lambda$ and root-field expectation tending to zero. Their tensor product has exactly one particle in each disjoint support. Union of its occupations with those of $f$ is a literal occupation isometry; there are no factorial normalization or ordering signs. The inherited kinetic expectations add, including support-boundary killing. All far-far and near-far pair terms tend to zero, since the support separations tend to infinity. These weakly null unit trials have limiting energy at most $m_k+\epsilon+am\lambda$.
+
+For the intact-cluster branch take one basis occupation on $m$ consecutive nonroot vertices of a ray, translated to depth tending to infinity. Its diagonal kinetic expectation is exactly $3m$, even though adjacent particles block moves. Its root-field and image-pair terms tend to zero, while
+
+$$
+\sum_{r=1}^{m-1}(m-r)\frac23\,2^{-r}
+=\frac23(m-2+2^{1-m})=w_m.
+\tag{63.15}
+$$
+
+The same union isometry with $f$ gives weakly null unit trials of limiting energy at most $m_k+\epsilon+3am-\nu w_m$. Cross-group attraction tends to zero because $f$ is fixed and finite. These basis occupations are variational trials, not asserted Weyl eigenvectors.
+
+For a bounded self-adjoint operator, any weakly null unit sequence has energy lower limit at least the essential lower edge: its projection onto the finite-dimensional spectral subspace below any number smaller than that edge tends to zero. This also follows directly from the min-max principle of §55.8. Apply it to the two trial families, let $\epsilon\downarrow0$ and minimize over $k$. The constructed finite-energy weakly null families also show the essential spectrum is nonempty. The result is a sufficient sandwich, not an assumed sharp HVZ identity. $\square$
+

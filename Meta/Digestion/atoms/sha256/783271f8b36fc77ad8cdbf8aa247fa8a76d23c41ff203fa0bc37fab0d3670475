@@ -1,0 +1,67 @@
+**Theorem 71.2 (attained TV at every feasible strong budget).** Set
+$r=t_A/\nu_\dagger\ge1$ and
+
+$$
+\begin{gathered}
+d_{\sigma\tau}=\operatorname{tr}(K_{\sigma\tau}^\dagger
+ K_{\sigma\tau}\Delta)=4\ell_{\sigma,\tau}(s^\dagger),\quad
+g_\kappa=d_f+2\kappa z_f>0,\\
+k_{\sigma\tau}(r)=\min\{(d_{\sigma\tau})_+/r,g_{\sigma\tau}\},\quad
+k_{\kappa,1}(r)\le k_{\kappa,2}(r)
+ \ \text{the two values with }\sigma\tau=\kappa,\\
+D_\kappa(r)=\min\{1/2,r/4\}k_{\kappa,1}(r)
+ +(2-r)_+k_{\kappa,2}(r)/4,\quad
+\gamma_f=(L_f-d_f)/2>0.
+\end{gathered}
+$$
+
+The maximum, including all saturation changes, is
+
+$$
+\mathcal T_A(s^\dagger)=\mathcal T(s^\dagger)-\gamma_f
+ -D_+(r)-D_-(r).
+\tag{FA.16}
+$$
+
+For $1\le r\le2$ the two coefficients in $D_\kappa$ are $r/4$
+and $(2-r)/4$; for $r\ge2$ they are $1/2$ and zero.
+Each $k$ changes formula at $r=d_+/g_\kappa$; equal values may be
+ordered either way. This min/sort expression therefore specifies every
+piece, including $r=1$, $r=2$ and coincident switches, without an
+unresolved optimization.
+
+**Proof.** The actual height difference on one label is $pd-qg$,
+since $\operatorname{tr}(W_\kappa\Delta)=-g_\kappa$.
+On the interval $0\le q/p\le r$, convexity of $|pd-qg|$ bounds
+its absolute difference by that of two genuinely generated endpoint
+labels, pure live and saturated, with the same totals. Conversely those
+labels are admissible by FA.11. On one ray, with total $P=1/4$ and
+total failure coefficient $Q$, the attained absolute-difference sum is
+
+$$
+P|d|+Qg-2Q\min\{d_+/r,g\}.
+\tag{FA.17}
+$$
+
+To verify this also when $d\le0$, use pure-live weight $P-Q/r$ and
+saturated weight $Q/r$; the sum is
+$(P-Q/r)|d|+(Q/r)|d-rg|$, which gives FA.17 for either sign of
+$d-rg$ and either sign of $d$. A zero weight is omitted.
+
+For each $\kappa$, allocate its required total $Q=1/2$ between two
+capacities $r/4$. If $1\le r\le2$, assign $r/4$ to the smaller $k$
+and $(2-r)/4$ to the other; if $r\ge2$, assign all $1/2$ to the
+smaller. This attains the minimum loss $D_\kappa$ and proves its
+necessity by the elementary exchange inequality for a linear objective.
+At $r=1$ both capacities must be full; at $r=2$ the second allocation
+is zero. Crossing equal costs causes no discontinuity or lost attainment.
+Both failure directions have negative height difference, so their total
+absolute failure contribution is $(g_++g_-)/2=d_f$, rather than
+$L_f$. The high branches contribute the fixed positive differences of
+JR43; the four live rays have fixed total weights. Relative to JR.51,
+replacing $L_f$ by $d_f$ loses $\gamma_f$, and FA.17 loses
+$D_++D_-$ after taking HALF the absolute sum. This proves FA.16.
+The endpoint splitting, optimal allocation and FA.11–.13 generate a
+finite actual instrument attaining every bound simultaneously, with the
+same reports, Gram, error and sharp cost. $\square$
+

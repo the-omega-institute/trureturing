@@ -1,0 +1,31 @@
+**Proposition 175.2 (A geometric family at every finite length).** For
+each finite $L\ge6$, choose
+
+$$
+g_i=\frac{1}{100\,2^{i-6}}\quad(6\le i\le L),\qquad
+z=2^{-(L-6)}.
+$$
+
+Then the construction in Proposition 175.1 has
+
+$$
+W=\frac{8-z}{300},\quad E=\frac{5-z}{300},\quad
+r=\frac{292+z}{300},\quad \varepsilon=\frac{17r}{60}+E,
+\qquad B:=\sum_{i=6}^Lg_i=\frac{2-z}{100}<\frac r{10}.
+\tag{175.4}
+$$
+
+One permitted original tail is $a_{L+j}=\varepsilon/j$, $j\ge1$.
+Each finite $L$ defines its own positive monotone vanishing sequence
+with the conclusions of Proposition 175.1.
+
+**Proof.** The finite geometric sum gives
+$\sum_{i=7}^Lg_i=(1-z)/100$, including its empty value at $L=6$,
+where $z=1$. Substitution proves the formulas. Since $0<z\le1$,
+$W<1$ and $r\ge292/300$. Thus
+$B\le1/50<292/3000\le r/10$. All residuals are positive.
+The proposed tail starts at the closed cap, is positive, nonincreasing
+and vanishes. Proposition 175.1 applies. The family is indexed by
+finite active lengths; it supplies no single infinite positive-cap
+plateau. $\square$
+

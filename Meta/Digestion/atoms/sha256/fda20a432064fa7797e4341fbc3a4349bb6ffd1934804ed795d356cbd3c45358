@@ -1,0 +1,68 @@
+**Theorem 22.1 (first activation and quantitative right branch).**
+Under Convention 18.1 let
+
+$$
+s_c(t)=C_s k_u(t,0),\qquad
+T_c(t)=\tfrac12[H_0+d(t,0)\cdot B(t)].
+\tag{AC.119}
+$$
+
+For every $t\in I$, the original weak value equals $T_c(t)$
+exactly on $0\le s\le s_c(t)$. Every feasible larger weak request
+has strictly smaller value. The endpoint satisfies AC.85's enclosure.
+The map $\lambda\mapsto s_\lambda(t)$ is strictly increasing and
+covers
+
+$$
+\boxed{\quad s_c(t)\le s\le s_c(t)+3\cdot10^{-16}.\quad}
+\tag{AC.120}
+$$
+
+For each request in this interval take the unique
+$\lambda\in[0,10^{-12}]$ satisfying $C_s k_u(t,\lambda)=s$.
+Then the original value is
+
+$$
+\boxed{\mathcal T_{\log(1+t)}(s)
+ =\tfrac12[H_0+d(t,\lambda)\cdot B(t)-\lambda k_u(t,\lambda)].}
+\tag{AC.121}
+$$
+
+The system, root box and strictly monotone equation specify its value;
+there is no remaining optimization or unselected algebraic root.
+
+Proof. The eight exact equations restore both full moment identities
+in AC.11: the omitted live $v^2$ moment follows from $u^2+v^2=1$,
+and the omitted failure $v^2$ moment from $\mu=\alpha V+\beta W$.
+Positive weights and the five height signs turn contact equality into
+$\sum_i p_i|H_{\eta_i}|=dB-\lambda k_u$. Section 13's common
+instrument therefore matches AC.110 when its request is $s_\lambda$.
+
+At $\lambda=0$, any unconstrained original maximizer must have zero
+integrated nonnegative certificate slack. A strict intermediate
+$0<b<tc$ would require both endpoint gaps to vanish at that same
+direction. Their disjoint zero sets exclude this. Thus every supported
+nonzero low label belongs to the five listed endpoint directions.
+The independent five columns and positive matching weights fix their
+aggregate weights uniquely. Every top law has **available** contrast
+$s_c(t)$. It is feasible for every smaller request, whereas FA72's
+attainment prevents an equal value at any larger feasible weak request.
+This identifies the actual first endpoint, rather than merely a contrast
+of one displayed maximizer. The same argument works for countable
+slack sums and, only in the stipulated integral model, almost everywhere.
+
+The source bounds give $1/8<C_s<4/25$. Integrating AC.112 yields
+
+$$
+s_{10^{-12}}(t)-s_c(t)
+>\frac18\frac3{1000}10^{-12}
+=3.75\cdot10^{-16}>3\cdot10^{-16}.
+\tag{AC.122}
+$$
+
+Strict monotonicity gives unique inversion and AC.121. There is a
+feasible higher contrast even at the upper endpoint in AC.120.
+Together with $t_0<265<9999/10$ and $s_\lambda<s_0$, this is
+an original weak interior interval, not a maximum-contrast boundary.
+$\square$
+

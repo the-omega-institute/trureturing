@@ -1,0 +1,12 @@
+\|(I-P)S_t f\|_\pi^2.
+}
+\]
+并且
+\[
+\lim_{t\downarrow0}
+\frac{\langle f,(T_{2t}-T_t^2)f\rangle_\pi}{t^2}
+=
+\|(I-P)Lf\|_\pi^2.
+\]
+因此 \(q\) 强 lumpable 当且仅当所有 \(f\in\mathcal H_q\) 满足 \((I-P)Lf=0\)。
+

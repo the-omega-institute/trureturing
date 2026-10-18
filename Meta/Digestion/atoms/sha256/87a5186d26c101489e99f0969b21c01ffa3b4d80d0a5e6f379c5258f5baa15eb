@@ -1,0 +1,5 @@
+**Machine contract.** This is a `generic-v1` reference volume. Locators are
+> determined from its bytes. Merged text and append anchors are preserved;
+> corrections and extensions belong in new sections after the terminal append
+> anchor. The volume supplies mathematical reference input, not machine status.
+

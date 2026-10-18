@@ -1,0 +1,37 @@
+**Definition 1.3 (the full original targets).** For each height set
+
+$$
+\begin{aligned}
+\varsigma_y&=y/(y+6),& f_y(t)&=6y/(y+6t)^2,\\
+d_y&=\left(y/128,\frac{y(58-y)}{128(y+6)},\frac{y}{2(y+6)}\right),&
+(B_y)_{ij}&=\sqrt{d_{yi}d_{yj}},\\
+w&=(0,1/4,1/2,1/4,0),&P_f&=|f\rangle\langle f|.
+\end{aligned}
+\tag{IR.5}
+$$
+
+The original target $\Omega_{y,e,n}$ has live block
+$EU_{e,n}B_yU_{e,n}^\dagger E^\dagger$ and five separate failure
+measures $w_\ell f_y(t)dt\,P_f$, $\ell=0,1,2,3,4$. Exact elapsed
+time is $t\in[0,1]$, equivalently absolute time $6+t$. Labels $1,3$
+are distinct, and the zero-density labels $0,13$ remain named. The
+live trace is $\varsigma_y$ and $\int_0^1 f_y=1-\varsigma_y$.
+For a common processor the original error is
+
+$$
+\mathcal E(\Phi)=\max_{y,e,n}\frac12
+ \|\Phi(E\rho_{y,e,n}E^\dagger)-\Omega_{y,e,n}\|_{1,\mathrm{cq}},
+\qquad \mathcal E_* =\inf_{\Phi\ \mathrm{common\ CPTP}}\mathcal E(\Phi).
+\tag{IR.6}
+$$
+
+The full cq norm adds the live trace norm and variation trace norms
+in every separately labelled time sector, including atoms and singular
+measures through a common dominating scalar measure. All abort,
+rejection, wrong-support and other zero-target outcomes are counted.
+First executed failure is absorbing; every old stopped archive stays in
+its own branch. The sole specimen and fixed common source/epoch,
+calibration, permissions, controller and aligned-clock metadata are the
+available input. No unknown history label or readable old programme is
+supplied. Every new acquisition outcome remains unnormalized.
+

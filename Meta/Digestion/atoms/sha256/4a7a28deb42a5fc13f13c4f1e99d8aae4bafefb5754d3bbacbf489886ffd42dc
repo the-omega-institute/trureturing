@@ -1,0 +1,20 @@
+**适用边界 C-152.2（抽象效果与原任务的量词）。** $tQ_N^{\otimes n}$
+是允许的抽象效果；若将缩放解释为实验操作，另需一个独立于源、控制及结果的
+最终 Bernoulli 随机数，仅以概率 $t$ 保留整个全通过宣告。
+逐份各缩放 $t$ 会给 $t^n$，不是这里的 $t$。
+源律必须实际供应；源支持、独立新副本、共同边缘和相关分支不能由事件推出。
+坐标识别不安装 $E^\dagger$，抽象最优效果不安装原生 POVM、源、ancilla、
+量子 bypass 或额外参考；这里也没有参考保持、重置或跨试验复用服务。
+
+检测只要求给定支持承诺下的目标与零假设统计，恢复则仍要求一个共同通道作用于
+全部复 qutrit 输入及其任意有限参考。前者的精确前沿和源承诺不构造后者。
+[相位恢复卷定义 6.2](AURIC_OMEGA_PHASE_GAIN_AND_QUTRIT_RECOVERY.md#6-class-optimization-and-remaining-mathematical-obligations)
+与[完整恢复卷定义 10.2](AURIC_OMEGA_FULL_INPUT_RECOVERY_CERTIFICATES.md#10-standard-sources-and-unresolved-uniform-certificate-problem)
+的正 $\beta$ 原全类尖锐问题仍未解决：须证明整个 $\mathcal R_\beta$ 的恢复 infimum
+为 $1-\sqrt{1-\beta}$，或给出实际该类编码器与一个完整复 CPTP 恢复，
+使全参考、未除二 diamond 误差严格更小。
+当前构造既没有对全部剩余编码器的统一匹配下界，也没有这样的改进恢复；
+$\mathcal B_c$ 的更差恢复能力不结算这个 infimum 问题。
+全部陈述为明确假设下的普通数学推导，不附 Lean／形式内核、
+原生合成、源认证、经验物理或有限样本保证。
+

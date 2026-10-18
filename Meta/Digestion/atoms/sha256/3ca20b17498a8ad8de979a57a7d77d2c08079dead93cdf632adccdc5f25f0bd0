@@ -1,0 +1,39 @@
+**Proposition 207.20 (Original necessary bound by existing transport).**
+For either original class attaining a closed cap $\varepsilon>0$, the
+representative of 207.17 yields the necessary condition
+
+$$
+\sum_{j=3}^L\gamma_j a_j
+ \le D+\bigl(G+(c+1)s\bigr)\varepsilon.
+\tag{207.49}
+$$
+
+At (207.45) this reads
+
+$$
+28(a_3+a_4)+27(a_5+a_6+a_7+a_8)\le10+245\varepsilon.
+\tag{207.50}
+$$
+
+**Proof.** The ordinary full support bound is $B_N=W+D$, while the
+target event score is $W+\sum\gamma_ja_j-K\varepsilon$, with
+$W=(c+1)s$, $K=G+W$. Multiplying all independent event demands by
+their nonnegative score weights and comparing gives (207.49). This
+finite inequality requires no membership in $H_L$.
+
+For arbitrary original active length, reuse the finite-prefix argument
+of 137.1 together with 110.2. If the transported active length exceeds
+$L$, restrict its later replies to zero and project output labels
+greater than $L$ to zero. The full low-word event bounds remain and
+constant high replies can be composed into each finite table. This is
+an algebraic restriction of the representation, not an uncounted source
+observation. If active length is smaller than $L$, ignore new input
+coordinates; their positive amplitudes are at most $\varepsilon$,
+and the exact tail identity below supplies their TV bounds. Thus all
+low words, including multiple zeros, and the positive word satisfy the
+finite comparison. For $\varepsilon\ge1$ the inequality is immediate
+from $a_j\le1$ and $K\ge G$. Containment of stopped laws in
+preselected laws uses 90.2 with the same seed and hard count. The
+rational substitution multiplies (207.49) by ten, giving (207.50).
+These are necessary conditions only. $\square$
+

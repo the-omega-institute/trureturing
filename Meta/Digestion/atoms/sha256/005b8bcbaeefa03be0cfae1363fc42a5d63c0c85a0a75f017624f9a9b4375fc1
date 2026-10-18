@@ -1,0 +1,96 @@
+### 61.3 A complete unrestricted phase chart and its minor
+
+For each column \(k=0,\ldots,5\), fix only its first entry to 1.
+Every sufficiently nearby unit-entry matrix then has a unique expression
+with all \(\theta_{r,k}\) in a sufficiently small neighborhood of \(0\):
+
+\[
+ Z_{rk}(\theta)=V_{rk}e^{i\theta_{r,k}},\qquad
+ \theta_{0,k}=0,\qquad
+ \theta_{r,k}\in\mathbb R\quad(1\le r\le5).
+\tag{61.9}
+\]
+
+The 30 remaining phases are independent coordinates. No row phase has
+been removed, and no covariance or cross-column relation is imposed.
+In particular, all five simultaneous row-phase directions remain present.
+
+Define a real-analytic map \(\Phi(b,\theta)\in\mathbb R^{60}\), with
+zero-based row order as follows:
+
+1. For \((j,k)\) in lexicographic order with \(0\le j<k\le5\), append
+   \(\Re((Z^*Z)_{jk})\), then \(\Im((Z^*Z)_{jk})\). These are rows 0–29.
+2. For \(k=0,\ldots,5\), then \(a=0,\ldots,4\), append
+   \(|(M(b)Z)_{ak}|^2-6\). These are rows 30–59.
+
+The input moduli and Gram diagonal are automatic. Since
+\(M(b)^*M(b)=6I_6\), every input column has output squared norm 36.
+Thus the omitted sixth output condition follows from the first five,
+throughout the branch, not merely to first order. Consequently
+\(\Phi=0\) is equivalent to all conditions in (61.4).
+
+For the actual coefficients of (60.1),
+\(a'(0)=\sqrt3\), \(h'(0)=0\), and therefore
+
+\[
+ p=\frac{\sqrt3+i}{2},\qquad
+ M'(0)=\begin{pmatrix}pI_3&-pI_3\\-\bar pI_3&-\bar pI_3\end{pmatrix}.
+\tag{61.10}
+\]
+
+Put \(Y=M(0)V\), \(Y'=M'(0)V\). Order the Jacobian columns as
+
+\[
+ (\theta_{1,0},\ldots,\theta_{5,0},
+   \theta_{1,1},\ldots,\theta_{5,1},\ldots,
+   \theta_{1,5},\ldots,\theta_{5,5},b).
+\]
+
+For \(j<k\), the complex Gram derivative in the column
+\(\theta_{r,\ell}\) is
+
+\[
+ i\bar V_{rj}V_{rk}(\delta_{\ell k}-\delta_{\ell j}).
+\]
+
+Its real and imaginary parts give the two Gram rows; their \(b\)-entries
+are zero. The output-row entries are
+
+\[
+ \begin{aligned}
+ \partial_{\theta_{r,\ell}}\Phi^{\rm out}_{ak}
+   &=2\delta_{\ell k}\Re\!\left(i\bar Y_{ak}M(0)_{ar}V_{rk}\right),\\
+ \partial_b\Phi^{\rm out}_{ak}
+   &=2\Re(\bar Y_{ak}Y'_{ak}).
+ \end{aligned}
+\tag{61.11}
+\]
+
+These formulas specify the full \(60\times31\) real Jacobian
+\(\mathcal J=D\Phi(0,0)\) over \(\mathbb Q(\sqrt3,\sqrt7)\).
+Choose its rows in the following exact order:
+
+\[
+ \begin{aligned}
+ \rho=(&0,1,2,3,4,5,6,7,8,9,12,13,14,16,18,19,20,\\
+       &24,25,26,27,30,31,32,33,34,35,36,37,45,46).
+ \end{aligned}
+\]
+
+For \(B=\mathcal J[\rho,:]\), expansion in this specified field gives
+
+\[
+ \det B=\frac{25\cdot3^{24}(84+31\sqrt{21})}{2^{14}7^2}>0,
+ \qquad
+ N_{\mathbb Q(\sqrt3,\sqrt7)/\mathbb Q}(\det B)
+   =\frac{3^{98}5^{16}}{2^{56}7^6}.
+\tag{61.12}
+\]
+
+The determinant uses the positive \(b\)-derivative in (61.11).
+Its degree-four norm includes both repetitions of the quadratic
+conjugates, since the determinant lies in \(\mathbb Q(\sqrt{21})\).
+Indeed \((84+31\sqrt{21})(84-31\sqrt{21})=-3\cdot5^4\cdot7\).
+Thus (61.12) is a nonzero minor of the unrestricted joint derivative,
+not of a restricted construction of bases.
+

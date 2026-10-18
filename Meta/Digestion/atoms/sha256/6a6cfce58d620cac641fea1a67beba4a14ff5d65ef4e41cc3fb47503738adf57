@@ -1,0 +1,67 @@
+**Proposition 78.8 (both complements, cross blocks and the genuine restriction loss).** Let
+
+$$
+P_\varepsilon=\ell_\varepsilon\ell_\varepsilon^*,\quad
+Q_\varepsilon^{\rm ran}=I-P_\varepsilon,\quad
+A_\varepsilon^{\rm a}=\iota_\varepsilon\iota_\varepsilon^*,\quad
+F_\varepsilon^{\rm forb}=I-A_\varepsilon^{\rm a}.
+\tag{78.39}
+$$
+
+The charge $Q_\varepsilon$ of(78.8) is distinct from the range-complement projection $Q_\varepsilon^{\rm ran}$. At every permitted $z$,
+
+$$
+\begin{aligned}
+\|Q_\varepsilon^{\rm ran}\mathcal R_\varepsilon(z)Q_\varepsilon^{\rm ran}\|,
+\quad\|Q_\varepsilon^{\rm ran}\mathcal R_\varepsilon(z)P_\varepsilon\|,
+\quad\|P_\varepsilon\mathcal R_\varepsilon(z)Q_\varepsilon^{\rm ran}\|
+ &\le\|\Delta_\varepsilon(z)\|,\\
+\|F_\varepsilon^{\rm forb}\mathcal S_\varepsilon(z)\|,
+\quad\|\mathcal S_\varepsilon(z)F_\varepsilon^{\rm forb}\|
+ &\le\|\Delta_\varepsilon(z)\|.
+\end{aligned}
+\tag{78.40}
+$$
+
+The same block bounds with $N$ on the left hold with $\|N\Delta_\varepsilon(z)\|$, and with the right weight by adjunction at $\overline z$. In the hard installation
+
+$$
+T_\varepsilon^*T_\varepsilon\longrightarrow I
+\quad\hbox{strongly on each fixed target joint vector},\qquad
+\|I-T_\varepsilon^*T_\varepsilon\|=1
+\quad\hbox{for all sufficiently small }\varepsilon
+\tag{78.41}
+$$
+
+when $\mathcal A\ne\{0\}$. In the finite-height installation $T_\varepsilon=\ell_\varepsilon$ is an isometry.
+
+**Proof.** The lifted target resolvent is supported on $P_\varepsilon$ in both directions, whereas the actual extended resolvent is supported on $A_\varepsilon^{\rm a}$. Multiplying their difference proves(78.40). These projections are particle projections tensored with field/auxiliary identity and hence commute with $N$. The weighted conclusions follow without requiring either projection to preserve a kinetic domain.
+
+The range complement includes both the complement of the full free product raw map and its excluded effective atomic part. On the two-position sector it decomposes orthogonally as
+
+$$
+I-J_{\varepsilon,2}EE^*J_{\varepsilon,2}^*
+ =(I-J_{\varepsilon,2}J_{\varepsilon,2}^*)
+       +J_{\varepsilon,2}(I-EE^*)J_{\varepsilon,2}^* .
+\tag{78.42}
+$$
+
+Thus nonconstant chamber modes, transverse modes, ground half-chamber data and the effective atomic $(p,p)$ coordinates are all covered, together with their cross blocks to the retained target. The forbidden projection is a different complement; no commutation of $P_\varepsilon$ with $A_\varepsilon^{\rm a}$ is assumed. Compressing the last two bounds of(78.40) also controls its two cross blocks and its diagonal block relative to $A_\varepsilon^{\rm a}$.
+
+To prove the strong assertion, let $R_D=(\mathsf M_D+\sigma)^{-1}$. Since $F_\varepsilon^{\rm forb}\mathcal R_\varepsilon(-\sigma)=0$,
+
+$$
+\|F_\varepsilon^{\rm forb}\ell_\varepsilon R_D\Psi\|
+ \le E_\varepsilon\|\Psi\|.
+\tag{78.43}
+$$
+
+$R_D$ has dense range, and $\ell_\varepsilon$ is an isometry. Approximation by this dense range proves
+$F_\varepsilon^{\rm forb}\ell_\varepsilon\Psi\to0$
+for each fixed $\Psi$. Since
+$I-T_\varepsilon^*T_\varepsilon
+=\ell_\varepsilon^*F_\varepsilon^{\rm forb}\ell_\varepsilon$,
+the strong assertion follows. This also shows that aligned actual inputs exist mathematically, for example $u_\varepsilon=T_\varepsilon\Psi$; it supplies no preparation procedure.
+
+For the norm assertion retain exactly75.11's normalized same-cable target form vector supported in the interior diagonal strip $|x-y|<R_\varepsilon/4$, vanishing on the diagonal and all outer traces. Its raw spatial lift is entirely forbidden for small $\varepsilon$, because $R_\varepsilon/\varepsilon\to\infty$ in either hard schedule. Tensor any nonzero field/auxiliary unit vector. This is a unit kernel vector for $T_\varepsilon$, while $0\le I-T_\varepsilon^*T_\varepsilon\le I$. Hence its norm is one. The vector depends on $\varepsilon$ and has diverging particle energy as already quantified in75.11; it does not contradict the fixed-vector assertion. $\square$
+

@@ -1,0 +1,81 @@
+**Theorem 105.1 (Attainment at $7/40$).** For every base sequence,
+$E_{\mathcal O}(3;a)=7/40$ is attained by the following integer blocks
+with $D=240$. Use Definition 103.1's single seed, but stop at the first
+queried zero. Columns $z_1,z_2,z_3,*$ mean first zero at the first,
+second or third scheduled position, and all-positive exhaustion.
+
+| Schedule $S$ | Block $w$ | $z_1$ | $z_2$ | $z_3$ | $*$ |
+|---|---:|---|---|---|---|
+| 1,2,3 | 112 | 1 | 2 | 3 | (0:92,4:15,6:5) |
+| 1,2,4 | 28 | 1 | 2 | 4 | (0:19,6:9) |
+| 1,2,5 | 4 | 1 | 2 | 5 | 0 |
+| 1,2,6 | 2 | 1 | 2 | 6 | 0 |
+| 1,3,4 | 19 | 1 | 3 | 4 | 0 |
+| 1,3,5 | 4 | 1 | 0 | 5 | 0 |
+| 1,4,5 | 4 | 1 | 4 | 5 | 0 |
+| 2,3,4 | 19 | 0 | 3 | 4 | 0 |
+| 2,3,5 | 4 | 2 | 0 | 5 | 0 |
+| 2,4,5 | 4 | 0 | 4 | 5 | 0 |
+| 3,4,5 | 13 | 0 | 4 | 5 | 6 |
+| 3,5,6 | 2 | 0 | 5 | 6 | 0 |
+| 4,5,6 | 19 | 0 | 5 | 6 | 0 |
+| 5,6,7 | 6 | 0 | (0:2,6:4) | 7 | 0 |
+
+**Proof.** The blocks sum to $240$, and each cell's masses sum to its
+block size. Replace the column selector in (103.1) by
+$t_S(b)=\min\{h:b_{i_h}=0\}$, or $*$ on exhaustion. This is one
+source-independent deterministic stopped table at each seed, with
+$K\le3$, $M\le7$ and finite handoff everywhere. Only acquired replies
+are used. The integer sums give the following whole-class minima;
+the correct-mark numerator is constant on each first-zero class.
+
+| First zero $n$ | Minimum $Dp_b(0)$ | $Dp_b(n)$ | Minimum $D(p_b(0)+p_b(n))$ |
+|---|---:|---:|---:|
+| 1 | 25 | 173 | 198 |
+| 2 | 48 | 150 | 198 |
+| 3 | 48 | 150 | 198 |
+| 4 | 117 | 102 | 219 |
+| 5 | 155 | 54 | 209 |
+| 6 | 171 | 54 | 225 |
+| 7 | 192 | 6 | 198 |
+
+For a direct all-suffix calculation of the first three rows, write
+$h=b_1b_2b_3b_4$, $u=b_5,v=b_6,z=b_7$. The base numerators below
+are exact, and their minima are over all eight suffixes. The correct
+numerators are respectively $173,150,150$ according to the first zero.
+
+| Prefix $h$ | $Dp_b(0)$ | Minimum |
+|---|---|---:|
+| 0000 | $63-4u-2uv+6uvz$ | 57 |
+| 0001 | $44-4u+17uv+6uvz$ | 40 |
+| 0010 | $48-4u+6uvz$ | 44 |
+| 0011 | $29-4u+19uv+6uvz$ | 25 |
+| 0100 | $44-4u-2uv+6uvz$ | 38 |
+| 0101 | $25+17uv+6uvz$ | 25 |
+| 0110 | $25+6uvz$ | 25 |
+| 0111 | $25+4u+19uv+6uvz$ | 25 |
+| 1000 | $67-4u-2uv+6uvz$ | 61 |
+| 1001 | $48+17uv+6uvz$ | 48 |
+| 1010 | $48+6uvz$ | 48 |
+| 1011 | $48+4u+19uv+6uvz$ | 48 |
+| 1100 | $48+2v-2uv+6uvz$ | 48 |
+| 1101 | $48+8u+2v+17uv+6uvz$ | 48 |
+
+Each minimum follows from the same four-number formula used in
+Theorem 103.2, now with nonnegative coefficient $6uvz$. For later
+classes the exact base numerators are $117+8b_5+2b_6+6b_5b_6b_7$,
+$155+2b_6$, $171$, and $192$. These identities account for every
+$127$ low word with a zero. At error $42/240=7/40$, the required base
+numerators are $(6,6,6,54,102,102,150)$, the correct numerators are
+$(150,150,150,102,54,54,6)$, and the required pair numerator is $198$.
+All three TV rows hold, including the pair row.
+
+The all-positive law has integer vector
+$(198,0,0,0,15,0,27,0)$. Hence every actual tail source has error
+$\max\{42/240,a_{n(x)}\}=7/40$ by (83.9), since
+$a_8\le\varepsilon_0<7/40$. At the actual word $1111110$, the base
+mass is $192/240=1-A_7$ and the correct mass is $6/240$, giving
+error $(48-6)/240=7/40$. The universal bound of Theorem 104.1
+proves optimality against all original $\mathcal O_3$ rules.
+$\square$
+

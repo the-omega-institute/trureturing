@@ -1,0 +1,117 @@
+**Theorem 6.1 (sufficient observable-quotient erasure theorem).** Fix an actual positive stationary component $C$ of any $\theta\in\Theta_N$. Suppose it has a quotient satisfying both (3.2) and (3.3), and both all-feasible-word hypotheses (3.7). Then for every integer $j\ge0$,
+
+$$
+\boxed{\quad e_L^{P_C}(j)\le\frac14\rho_-^{\lfloor j/m_-\rfloor},
+\qquad
+e_R^{P_C}(j)\le\frac14\rho_+^{\lfloor j/m_+\rfloor}.\quad}
+\tag{6.1}
+$$
+
+For every integer $r\ge0$,
+
+$$
+\boxed{\quad
+A_{P_C}(r)\le\frac12\left[
+\frac{m_-\rho_-^{\lfloor r/m_-\rfloor/2}}{1-\sqrt{\rho_-}}
++\frac{m_+\rho_+^{\lfloor r/m_+\rfloor/2}}{1-\sqrt{\rho_+}}
+\right]<\infty.\quad}
+\tag{6.2}
+$$
+
+Also
+
+$$
+\tau_{P_C}(r)\le\frac14\left[
+\frac{m_-\rho_-^{\lfloor r/m_-\rfloor}}{1-\rho_-}
++\frac{m_+\rho_+^{\lfloor r/m_+\rfloor}}{1-\rho_+}
+\right].
+\tag{6.3}
+$$
+
+Left erasure uses the reverse constants; right erasure uses the forward constants. These are component-dependent bounds for the original emitted-bit indices, with the original center unobserved. They do not assert contraction of a normalized nonlinear filter map.
+
+**Proof.** Work throughout on $J_C$ and let $U=X_0$. For left erasure set
+
+$$
+V_j^L=(X_{-j:-1},X_{1:\infty}),\qquad Z_j^L=Q_{-j},\qquad
+\Delta_j^L=\mathcal D(U;Z_j^L\mid V_j^L).
+\tag{6.4}
+$$
+
+At the cut $-j$, a next reverse block of length $m$ is
+
+$$
+W=(X_{-j-1},X_{-j-2},\ldots,X_{-j-m}),\qquad Z'=Q_{-j-m}.
+$$
+
+It lies to the left of the cut, whereas $(U,V_j^L)$ lies on the other side. Lemma 3.3 gives precisely (5.1), with $B_w=\check{\bar M}_w$. Summing these matrices over all length-$m$ binary words gives $(\check{\bar M}_0+\check{\bar M}_1)^m$, whose row sums are one, as required in Lemma 5.1. Joining $W$ to $V_j^L$ gives $V_{j+m}^L$ as a conditioning field. Every word of positive conditional probability has a nonzero matrix and so, for $m=m_-$, is covered by (3.7). Lemma 5.1 yields
+
+$$
+\Delta_{j+m_-}^L\le\rho_-\Delta_j^L.
+\tag{6.5}
+$$
+
+Initially $V_0^L$ is the whole right half-line, and
+
+$$
+\Delta_0^L\le\mathbb E\operatorname{Var}(U\mid V_0^L)\le\frac14.
+$$
+
+For $j=km_-+s$, $0\le s<m_-$, first apply $k$ full reverse blocks. If $s>0$, apply one final block of length $s$; every normalized stochastic kernel has row diameter at most one, so Lemma 5.1 shows that this remainder cannot increase $\Delta$. If $s=0$ there is no remainder. Hence
+
+$$
+\Delta_j^L\le\frac14\rho_-^k.
+\tag{6.6}
+$$
+
+It remains to connect this variance to the original output, rather than to an altered hidden comparison. Let
+
+$$
+T_j^L=X_{-\infty:-j-1},\qquad
+g_j=\mathbb E[U\mid Q_{-j},V_j^L],\qquad
+a_j=\mathbb E[U\mid V_j^L].
+$$
+
+The remote field $T_j^L$ is independent of $(U,V_j^L)$ given $Q_{-j}$ by Lemma 3.3. It follows that
+
+$$
+\mathbb E[U\mid T_j^L,V_j^L]
+=\mathbb E[g_j\mid T_j^L,V_j^L].
+$$
+
+Subtract $a_j$, apply conditional Jensen, and integrate. Since $T_j^L$ joined to $V_j^L$ is exactly $\mathcal E_0$, while $V_j^L$ generates $\mathcal L_j$, this gives
+
+$$
+e_L^{P_C}(j)
+=\mathcal D(U;T_j^L\mid V_j^L)
+\le\mathcal D(U;Q_{-j}\mid V_j^L)=\Delta_j^L.
+\tag{6.7}
+$$
+
+For right erasure, use instead
+
+$$
+V_j^R=(X_{-\infty:-1},X_{1:j}),\qquad Z_j^R=Q_{j+1},\qquad
+T_j^R=X_{j+1:\infty}.
+\tag{6.8}
+$$
+
+The center edge is on the left of the cut at $j+1$. The next block and endpoint are
+
+$$
+W=(X_{j+1},\ldots,X_{j+m}),\qquad Z'=Q_{j+m+1}.
+$$
+
+Lemma 3.3 now supplies (5.1) with the forward matrix $B_w=\bar M_w$. Start from $Q_1$ and $\mathcal D(U;Q_1\mid V_0^R)\le1/4$, use full blocks with $m_+,\rho_+$ and a remainder with coefficient one. The same Jensen argument with $T_j^R$ gives $e_R^{P_C}(j)\le\rho_+^{\lfloor j/m_+\rfloor}/4$. This proves (6.1).
+
+All half-line identities above are valid directly by the cylinder extension in Lemma 3.3. The fields are countably generated and $U$ is bounded. Equivalently, truncate the opposite and remote half-lines, use the same uniform variance bounds, pass first through the remote truncation and then through the opposite truncation by bounded $L^2$ martingale convergence. No interchange of an uncontrolled random prefactor and an expectation is present. At $j=0$ the argument has no blocks and retains the opposite infinite half-line. When $\rho_\pm=0$, one complete block makes the corresponding variance and output error zero.
+
+Taking square roots in (6.1) gives the coefficient $1/2$. For $0\le\rho<1$ and integer $m\ge1$, each floor value occurs at most $m$ times among $j\ge r$, whence
+
+$$
+\sum_{j\ge r}\rho^{\lfloor j/m\rfloor/2}
+\le\frac{m\rho^{\lfloor r/m\rfloor/2}}{1-\sqrt\rho}.
+$$
+
+Sum the two directions to obtain (6.2). The same argument without square roots gives (6.3). This is a geometric estimate in original bit time, not in a changed observation clock. $\square$
+

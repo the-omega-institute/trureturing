@@ -1,0 +1,14 @@
+**The additional $BD$ endpoint $d=24$.** Here $Q_1=0$ and $L(1)=0$.
+But $Q_0F_0=(-24)(-5)>0$ and
+$Q_3F_3=(312/5-24)2>0$ make $L(0)$ and $L(3)$ nonzero with the
+same sign $-\operatorname{sgn}w$. An affine polynomial vanishing
+at one must have opposite signs at zero and three unless it is zero;
+the nonzero samples exclude the latter case. This proves the
+additional injection and completes Theorem 9.1. ∎
+
+All sample-zero branches at the drift endpoints and every relevant
+$\theta$ equality are retained. Divisibility in (9.3) covers all
+lower degrees, repeated sixth roots, and zero slope or zero $L$.
+No ancestor gain, residual $Q_j$, sixth gain, root difference,
+leading coefficient or discriminant was divided out.
+

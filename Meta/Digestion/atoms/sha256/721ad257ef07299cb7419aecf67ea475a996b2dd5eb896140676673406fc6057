@@ -1,0 +1,23 @@
+## 6. 供应比较与证据边界
+
+仓内有限 deficiency 风险转移与三角结果处理实验之间的近似随机模拟和有界决策损失；BeliefMarkovUpdate 处理给定实际联合权重的 Bayes 更新。它们不直接给当前来源的完整停止尾、同一实际历史、有限状态保持及边缘更新缺陷。式(2.3)消费成熟的条件混合计算，不新增独立的 Bayes 方法定理。钉版 Mathlib 的 `PMF.bind_apply` 和 `condDistrib_apply_of_ne_zero` 是这些混合及正事件条件化的基础供应，未读到当前源特定风险—缺陷价格；这里只读声明，不作编译结论。
+
+Abate–Redig–Tkachev 的 [条件概率扰动论文][ART] Theorems 1–2、equations (2.1)–(2.2) 研究由条件概率核产生的乘积概率测度的 TV 扰动。其全变差范数是本卷概率测度 TV 的两倍；在可数完整尾空间，本卷 TV 等于半 $\ell^1$；统一换算后，Theorem 1 的有限前缀逐步误差累积是成熟方法，Theorem 2 在 Borel 空间还给乘积型改进。这里不把它改名为新理论：原共同历史极限、两个完整停止事件的平衡和第三返回圈词的正间隙决定(3.1)。本卷逐词条件误差直接按(3.4)–(3.6)展开，不把整族 $Q_n,V_n$ 预先假定为某个一致路径测度。通用路径扰动界本身不能证明条件核来自同一实际保持，也不供应这三个源特定关系；式(2.3)、(3.4)、(3.8)、(3.13)承担所需对应。
+
+Berg–Ordentlich–Shayevitz 的 [有限记忆综述][Survey] 使用有限状态、来源独立随机性、时间不变规则、长期检验和累计预测损失。其背景可复用，长期分类或累计平方损失不等于本卷每条实际停止历史的完整条件 TV。Balle–Panangaden–Precup 的 [奇异值自动机论文][SVA] Theorem 7.1 要求最小加权自动机、平方可和词函数及其 Hankel 奇异值，给平方词函数误差；它不保持本卷所需的随机归一化、原 paid-Read 条件关系和 COMPLETE 资源合同，因此不能直接供应本前沿。
+
+[WB] §§1–2 的五分类是无相邻占位三位窗 $\{000,100,010,101,001\}$ 的输入语法，动态解释还要对指定续接和递归操作闭合；输入类别数不直接规定控制器状态数。§43 是这些五窗原始输入、首次坏接缝标签和平方完整标签风险；其谱截断与共同树不相容结果提供“局部最佳未必相容”的研究提示，但没有从五窗被动源到当前共享深度源的操作、损失或资源映射。本卷检验的闭合关系具体为(2.3)，误差和质量具体为(2.1)、(1.4)，没有把五窗的状态、谱或损失当成它们的参数。[QSP] 的系数跨度 $2\to3\to2$ 不保证固定子空间单项式/等距作用；这是另一来源与操作的反例。这里不从相同维数、统一术语或比方转移 QSP、机器学习、几何、取得或物理成本结论。张量符号取得、原地址、KBonacci 和其他 atomic 构造也没有在本卷取得这种桥。
+
+TV 凸性、三角余项、有限单纯形紧性、介值与收缩估计、共同均匀耦合和几何生存尾均为成熟工具，消费在上述证明内部。新增知识限于所列原来源的量化不相容价格及共同达到范围。证明都是普通数学与精确有理算术核对；没有 Lean kernel 核验、物理实现、实际训练网络定理、世界范围新颖性、统计或模型独立性、或持续研究目标完成声明。
+
+[CO]: https://github.com/the-omega-institute/trureturing/blob/2fb672d85b9efe8f1b4e7bd135a14474aea3b258/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_SIMULTANEOUS_PHASE_COHERENCE_OBSTRUCTION.md
+[PH]: https://github.com/the-omega-institute/trureturing/blob/d54b775b50754d407dd4e39ea1d4c6c7d67d5021/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_PHASE_COHERENT_FULL_TAIL_MINIMAX.md
+[ST]: https://github.com/the-omega-institute/trureturing/blob/d54b775b50754d407dd4e39ea1d4c6c7d67d5021/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_RANDOMIZED_STOPPED_TAIL_MINIMAX.md
+[BD]: https://github.com/the-omega-institute/trureturing/blob/c633bce93ac6ffd5fa44ae3d9489c87c7557a531/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_BOUNDARY_DYNAMICS.md
+[E1]: https://github.com/the-omega-institute/trureturing/blob/d54b775b50754d407dd4e39ea1d4c6c7d67d5021/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_FULL_E1_SCOPE_EXTENSION.md
+[WB]: https://github.com/the-omega-institute/trureturing/blob/b61f5e5c68557444246bef639ca3b41534f09889/docs/develop/theory/FIB_ATOM_MACHINE_LEARNING_WHITEBOX.md
+[QSP]: https://github.com/the-omega-institute/trureturing/blob/b61f5e5c68557444246bef639ca3b41534f09889/Blueprint/D5/S3/Quantum/Algebra/MultivariateQSPCollapseRefutation.md
+[ART]: https://arxiv.org/abs/1311.3066v1
+[Survey]: https://arxiv.org/html/2312.15225v1
+[SVA]: https://arxiv.org/html/1711.05994v2
+

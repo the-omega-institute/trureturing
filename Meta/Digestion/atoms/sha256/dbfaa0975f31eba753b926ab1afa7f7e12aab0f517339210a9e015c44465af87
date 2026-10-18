@@ -1,0 +1,18 @@
+### 定义 10.1（Cayley 缺陷）
+
+对 zeta 非平凡零点 \(\rho\)，定义
+
+\[
+c(\rho)=\frac{\rho-1}{\rho}.
+\]
+
+则
+
+\[
+|c(\rho)|^2-1
+=
+\frac{1-2\operatorname{Re}\rho}{|\rho|^2}.
+\]
+
+在穷尽零点数据的条件下，RH 等价于所有 Cayley 系数模长为一，也等价于相应对角算子酉。
+

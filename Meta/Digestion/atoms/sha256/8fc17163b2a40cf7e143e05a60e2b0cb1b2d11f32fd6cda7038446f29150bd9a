@@ -1,0 +1,98 @@
+**Proposition 6.3 (reset failure and cumulative charges in the two-state example).**
+Augment the first system of Proposition 5.2 by a legal Reset action at
+$v$. Every such action costs one call. Independently on each invocation,
+it restores $u$ with probability $\alpha\in[0,1]$ and otherwise halts
+with finite abort. Each Attempt at $u$ also costs one call and uses an
+independent fair bit. The controller stops on a proposal or abort and,
+after a retry, uses Reset before its next attempt. At $\alpha=1$ this
+actual recovery meets Assumption 6.1; at $\alpha<1$ it does not.
+Accounting for the actual reset outcomes, its probabilities are
+
+$$
+\Pr(\text{proposal})=\frac1{2-\alpha},\qquad
+\Pr(\text{finite abort})=\frac{1-\alpha}{2-\alpha},\qquad
+\Pr(\text{divergence})=0.
+\tag{6.3}
+$$
+
+Its expected counts of Attempt and Reset calls are respectively
+$2/(2-\alpha)$ and $1/(2-\alpha)$. For every $\alpha>0$ it has no
+finite worst-execution call bound. If unsuccessful Reset instead
+literally diverges, the same mass $(1-\alpha)/(2-\alpha)$ is divergence
+rather than finite abort; the expected number of initiated calls stays
+the same, whereas infinite internal execution is then possible.
+
+**Proof.** The scalar supplier is
+[KBonacci, Corollary 39.2, equation (39.3)](KBONACCI_SELF_CALIBRATING_BOUNDARIES.md),
+including its disjoint-attempt calculation and zero-denominator case.
+To apply it to actual recovery under Assumption 6.1, fix one original
+source $x$. Removing each finite recovery segment preserves the
+attempt outcome and false-proposal labels, and every reached $R$ is
+followed legally by another attempt at that same $x$. By (6.1) and
+iterated conditional expectation, every finite string of retry outcomes
+followed by a proposal or divergence has the same probability as in
+the supplier's reference restart experiment. This verifies the
+correspondence needed for its scalar calculation; independence of
+complete attempt records is stronger than required. Countably many
+sourcewise null recovery failures remain null for each fixed $x$.
+Thus the credited identities used for this comparison are
+
+$$
+\widetilde h_x=\frac{h_x}{h_x+d_x},\qquad
+\widetilde e_x=\frac{e_x}{h_x+d_x}
+\quad\text{if }h_x+d_x>0,
+\tag{6.2}
+$$
+
+with both zero when $h_x+d_x=0$. When the denominator is positive,
+the supplier's calculation gives zero mass to infinitely many returned
+retries, leaving nonproposal mass $d_x/(h_x+d_x)$ as literal divergence
+in an attempt. When it is zero, every reached attempt returns $R$
+almost surely and the actual controller makes infinitely many attempts
+almost surely. The positive transition charge of every restart makes
+this literal divergence of the full execution, even though each
+attempt and recovery is finite almost surely. These are sourcewise
+comparisons and do not replace $x$ by a prior mixture.
+
+In the present two-state system, $\alpha=1$ supplies legal finite
+restoration of $u$ after each retry and the independent fair attempt
+bit supplies (6.1), with $(h,e,d,r)=(1/2,0,0,1/2)$. Equation (6.2)
+therefore gives proposal probability 1 and false-proposal probability
+zero, with no divergence. The reset calls still carry their own costs.
+For $\alpha<1$ a reached reset fails with positive probability, so this
+application of Assumption 6.1 is unavailable.
+
+For every $\alpha\in[0,1]$, the chance of reaching attempt $j$ in the
+actual system is $(\alpha/2)^{j-1}$: reaching another ready attempt
+requires both a retry and a successful reset. Thus endless returned
+retries have probability $\lim_m(\alpha/2)^m=0$. Let $p$ and $a$ be
+the actual eventual proposal and finite-abort probabilities. Conditioning
+on the first Attempt and its possible Reset gives
+
+$$
+p=\tfrac12+\tfrac\alpha2p,\qquad
+a=\tfrac{1-\alpha}{2}+\tfrac\alpha2a.
+$$
+
+Solving these two equations proves (6.3). Let $M$ and $G$ be the
+expected counts of initiated Attempt and Reset calls. The above
+reach probabilities are at most $2^{1-j}$, so both expectations are
+finite. Conditioning on the same first step then gives
+
+$$
+M=1+\tfrac\alpha2M,\qquad
+G=\tfrac12+\tfrac\alpha2G,
+$$
+
+hence $M=2/(2-\alpha)$ and $G=1/(2-\alpha)$.
+
+For $\alpha>0$, the first $m$ attempts can all return retry and be
+successfully reset, an event of positive probability $(\alpha/2)^m$;
+the total count then exceeds every prescribed finite bound for a
+suitable $m$. When reset failure is divergence, only its terminal type
+changes, so the same event probabilities and initiated-call counts
+apply. Internal transition time on that event is infinite. In
+particular $\alpha<1$ fails the almost-sure finite recovery hypothesis
+of Assumption 6.1 and cannot be silently treated as $\alpha=1$.
+$\square$
+

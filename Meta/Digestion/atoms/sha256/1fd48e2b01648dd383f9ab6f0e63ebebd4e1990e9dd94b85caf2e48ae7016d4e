@@ -1,0 +1,49 @@
+**命题 24.6（关系相位的响应与两个荷相容读数）。** 对初始均匀概率 $p_s=1/5$，有 $\Delta=0$、$R=1/25$。若 $\chi=0$，定理 24.5 给所有 $u$ 的 $\kappa'=1/5$；若 $\chi=\pi/2$，则
+
+$$
+\kappa'=\frac15+\frac1{25}\sin2u.
+$$
+
+两份准备的完整经典概率相同，有限交换响应却可不同。定义 Hermitian 算子
+
+$$
+O_c=A+A^\dagger=V,\qquad O_s=-i(A-A^\dagger).
+$$
+
+二者都与每个 $Q_a$ 交换。在实际初始乘积 $|\psi\rangle^{\otimes2}$ 上，
+
+$$
+\langle O_c\rangle=4R\cos\chi,\qquad
+\langle O_s\rangle=4R\sin\chi.
+$$
+
+已知 $R>0$ 时，这两个期望确定 $\chi\bmod2\pi$。在 $V$ 运动下，$O_c$ 是动力学常量，$O_s$ 一般不是。
+
+证明。均匀律有 $p_0p_{13}=p_1p_3=1/25$，故直接代入精确概率律得到两种响应。例如取其他角全零、$\theta_{13}=\pi/2$ 可实现第二种准备；$u=\pi/4$ 时两种 $\kappa'$ 分别为 $1/5$ 和 $6/25$。
+
+对任意实际乘积输入，两个有序矩阵单位各贡献 $\overline a b$，所以
+
+$$
+\langle A\rangle=2\overline a b=2Re^{i\chi}.
+$$
+
+取实部与虚部给两个因子为四的期望。$[Q_a,A]=0$ 及伴随关系证明两读数都与荷相容。令
+
+$$
+P_a=AA^\dagger=|0,13\rangle\langle0,13|+|13,0\rangle\langle13,0|,
+$$
+
+$$
+P_b=A^\dagger A=|1,3\rangle\langle1,3|+|3,1\rangle\langle3,1|.
+$$
+
+由于 $A^2=(A^\dagger)^2=0$，
+
+$$
+[V,O_c]=0,\qquad [V,O_s]=2i(P_a-P_b)\ne0.
+$$
+
+在参数 $u$ 下，Heisenberg 期望导数为 $d\langle O_s\rangle/du=i\langle[V,O_s]\rangle=-2\langle P_a-P_b\rangle$，初始值为 $-4\Delta$。因此与占位荷交换不等于沿交换运动保持。两象限读数本身也不对易；相位重构指分别在相同准备的样本上取得两个期望，并非一次同时尖锐测得它们。证毕。
+
+单系统上若一个读出效果 $E$ 与 $N_x,N_y,N_z$ 全交换，则对 $s\ne t$ 选一个区分 $v_s,v_t$ 的占位，有 $(a_s-a_t)E_{st}=0$，从而 $E$ 对角。其期望只有 $\sum_sE_{ss}p_s$，不能区别上述同概率的两种相位。这一限制属于没有另供相位或荷参照、且读出效果保持这三个占位对称性的接口；它不排除另供参照后的单系统相干读出，也不是一般测量样本复杂度下界。$R=0$ 时两个乘积期望均为零，不能由它们识别一个本来就未定义的四角相位。
+

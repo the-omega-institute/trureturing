@@ -1,0 +1,43 @@
+**引理 5.2（Positivity on every three-coordinate complex subspace）。** For
+every three-element subset $A$ of the five original coordinates,
+
+$$
+\operatorname{spec}(iT[A,A])=\{0,\sqrt3,-\sqrt3\},\qquad
+\operatorname{spec}(H[A,A])=\{1,0,2\}.
+\tag{5.2}
+$$
+
+Consequently $z^\dagger H z\ge0$ for every complex vector $z$ supported
+on at most three original coordinates.
+
+Proof. Write $R=T[A,A]$. This is a real skew $3\times3$ matrix with
+three upper entries of magnitude one. Since the dimension is odd,
+
+$$
+\det R=\det R^T=\det(-R)=-\det R,
+$$
+
+so $\det R=0$. The matrix $iR$ is Hermitian and has trace zero. The trace
+of its square is
+
+$$
+\operatorname{tr}((iR)^2)
+=-\operatorname{tr}(R^2)
+=2\sum_{j<k,\ j,k\in A}|T_{jk}|^2=6.
+\tag{5.3}
+$$
+
+At least one of its three real eigenvalues is zero by its determinant.
+The other two sum to zero by its trace, so they are $t,-t$.
+Equation (5.3) gives $2t^2=6$, proving the first spectrum in (5.2).
+The affine map $x\mapsto1-x/\sqrt3$ gives the second spectrum. Thus
+$H[A,A]$ is positive semidefinite on $\mathbb C^3$, including its zero
+eigenvalue.
+
+Every set of at most three original coordinates lies in a three-element
+set $A$. A vector supported there has
+$z^\dagger H z=z_A^\dagger H[A,A]z_A\ge0$, allowing the unused entries of
+$z_A$ to be zero. This proves the assertion for all complex phases and
+all such supports at once, without enumerating triples or restricting
+the vectors to be real. $\square$
+

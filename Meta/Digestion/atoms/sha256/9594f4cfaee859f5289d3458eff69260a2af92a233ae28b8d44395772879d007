@@ -1,0 +1,41 @@
+**Definition 73.1 (Marked first-absence family).** From here on retain exactly
+the carrier, consumer and original targets of
+[Source-Correlated Laws, Theorem 67.5](KBONACCI_SELF_CALIBRATING_SOURCE_CORRELATED_LAWS.md#67-original-target-proportional-containment-and-unavoidable-nonatomic-ranges).
+In particular
+
+$$
+\Theta=\bigsqcup_{j\ge1}B_j\ \sqcup\ \bigsqcup_{j\ge1}P_j,
+\qquad B_j\cong(0,1),\quad P_j\cong(0,1),
+\tag{73.1}
+$$
+
+with its disjoint-union Borel sigma algebra. The unchanged consumer returns
+unknown immediately on every $B_j$ and proposes $j$ immediately on $P_j$.
+Fix distinct original points
+$\theta_j=(B_1,1/(j+2))$ for $j\in\mathbb N_0$; their singletons are
+measurable. Define
+
+$$
+n(x)=\min\{i\ge1:q_i(x)=0\},\qquad D_n=\{x:n(x)=n\}.
+\tag{73.2}
+$$
+
+Every $n(x)$ is finite because $N(x)$ has finite prime support. Every $D_n$
+is occupied by Theorem 35.2. For a sequence
+
+$$
+1\ge a_1\ge a_2\ge\cdots>0,\qquad \lim_{i\to\infty}a_i=0,
+\tag{73.3}
+$$
+
+prescribe the selected laws
+
+$$
+\lambda^a_x=(1-a_{n(x)})\delta_{\theta_0}
+                  +a_{n(x)}\delta_{\theta_{n(x)}}.
+\tag{73.4}
+$$
+
+This specifies a selected family on the original tapes, not a change to the
+original target family or an observation of $n(x)$ supplied to an acquisition.
+

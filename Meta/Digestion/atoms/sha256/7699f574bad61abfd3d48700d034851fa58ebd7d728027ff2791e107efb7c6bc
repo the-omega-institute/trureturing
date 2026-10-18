@@ -1,0 +1,57 @@
+## 42. Observation closure is the unifying criterion
+
+Given a state observation
+
+\[
+\mathsf O:\mathcal X\to\mathcal Y
+\]
+
+and a generator \(\mathsf G\), define the closure residual
+
+\[
+\mathcal R_{\mathsf O}(x)
+=
+D\mathsf O_x[\mathsf G(x)]
+-
+\overline{\mathsf G}(\mathsf O(x)),
+\tag{42.1}
+\]
+
+whenever a candidate reduced generator \(\overline{\mathsf G}\) has been chosen. Exact autonomous closure is the equation
+
+\[
+\mathcal R_{\mathsf O}=0.
+\tag{42.2}
+\]
+
+For a flow \(\Phi_\tau\), (42.2) is equivalent to the intertwining relation
+
+\[
+\mathsf O\circ\Phi_\tau
+=
+\overline\Phi_\tau\circ\mathsf O.
+\tag{42.3}
+\]
+
+Thus the same criterion can be instantiated at different layers:
+
+- in the classical predictive setting, \(OA=KO\) is exact finite-dimensional closure;
+- for FIB, \(\mathsf O_{\mathrm{FIB}}(p)=(X,Y,Z)\), and closure fails when the projected generator depends on \(\kappa\);
+- for quantum observables, closure is invariance of the observable algebra under \(A\mapsto i[H,A]+\mathcal D^\dagger(A)\);
+- for electromagnetism, the residual contains unobserved field components, gauge holonomy, and boundary port terms;
+- for hidden-memory elimination, the residual is represented by a memory kernel or a conditional prediction defect.
+
+The quantity \(\mathcal R_{\mathsf O}\) is the rigorous version of “information escape” at the dynamical level. A static fiber can be nontrivial even when a statistic is currently constant. A dynamic escape occurs when the generator moves two points in the same observation fiber into distinguishable future observations. Consequently, the correct order is
+
+\[
+\text{state carrier}
+\longrightarrow
+\text{observation quotient}
+\longrightarrow
+\text{generator}
+\longrightarrow
+\text{closure residual}.
+\]
+
+This also gives a precise distinction between a static field and an autonomous observed field. A field may exist as a compatible inverse-limit state while its current finite readout fails to close under the generator.
+

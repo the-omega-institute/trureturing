@@ -1,0 +1,73 @@
+**References 9.1 (bounded comparison and exact reuse).** The project
+comparison is against the immutable source collection at
+[`124cd13b334f992a6dcee980a5527e0dbfe4492e`][BASE]. The following are
+the precise suppliers and boundaries used in this volume.
+
+| Source | Supplied result and scope of use |
+| --- | --- |
+| [ARH, §§1–3, Theorem 8.2, §§27–32][ARH] | Exact paid acquired graph and complete-state cut; both original-source inclusions; entire arbitrary-$H_0,Q$ determining-prefix decision, finite bad pairs at every depth, and sufficient static budgets. The source already gives existence on this complete family. It expressly leaves minimum resources open. |
+| [SRF, entire volume, especially §§1–3][SRF] | Exact resources on the complete synchronous family; fixed-epoch finite-set reply formula, source/action interpretation obligations, prefix-to-whole-row labels, finite control, Pareto and separate same-run methods. Its synchronous premise is not asserted for arbitrary graph targets. Its §4 consumer is a one-leaf alternative in a different four-hole fiber; it is not (GRS.21). |
+| [ABC, Proposition 6.4 and Definition 8.1][ABC] | Same-source nonexpansive epoch-five cap and cleanup on acquired signed fibers, and conditional cofinality after a static supplier. These operational hypotheses are matched in Lemma 5.1. ABC8.1 states, but does not itself discharge for this graph, the common-address-before-universal-source decision obligation. |
+| [JRF, §§4–7][JRF] | Finite-control equivalence, exact finite-length tests, cofinal Pareto construction and separate rational weighted optimization, including zero weights. Their methods are attributed suppliers; their literal-only source predicates are replaced by (GRS.10)–(GRS.15), with both operational directions proved. |
+| [SCR, §§9–10][SCR] | Epoch-four raw normalization with an additive address estimate. It is not used as joint sourcewise domination or substituted for the nonexpansive epoch-five cap. |
+| [SLH, Theorem 2.2, §§55, 59–62, 74][SLH] | Paid original-node decoder, complete old rows and leaf certificates on all finite comparison trees. SLH55.3 supplies the static upper certificate in Theorem 6.3; the adaptive two-copy packing lower bound is proved here. |
+| [AOF, Assumption 1.1 and §§2–5][AOF] | Exact resources on the acquired whole-root/proper-descendant certificate family. Its orbit promise is not imposed on the present graph and does not supply this theorem. |
+| [TPO, Definition 1.2, Corollary 4.2, Proposition 5.2][TPO] | A language-specific all-shape normal-domain and canonicalization obstruction. Its scope is kept in §8; it supplies no general impossibility conclusion about the graph or $\mathcal E_{\rm CE}$. |
+| [Nils Klarlund and Anders Møller, *MONA Version 1.4 User Manual*, January 2001, §§7.1–7.2, printed pp. 39–40][MONA] | Primary `literature-attested` supplier: positions in the infinite binary successor tree, finite sets, fixed successor strings, and WS2S decidability by ordinary finite bottom-up tree automata. Page 39 states validity decision and counterexamples; page 40 defines the transitions via the one-state-space guided special case. This supplies logical decision only after Lemma 2.2 and the explicit source/action/terminal interpretation. |
+
+The primary PDF is identified by SHA-256
+`392974616c46d86d7225cf5c12f76e14b5da3a1f37fd1e7b00e97d9e0095d444`.
+Its printed pages 39–40 are PDF pages 41–42. The formulas here use
+ordinary two-valued WS2S; MONA's optional restrictions with a third
+“don't-care” value are not used. No solver execution, implementation,
+complexity estimate or broader automata closure is asserted.
+
+The `repo-derived` delta is the complete graph's shared-source physical
+action interpretation (GRS.7)–(GRS.10), its exact full-row resource
+decision after the supplied graph gate, and the scalable whole-fiber
+separation (GRS.25)–(GRS.31). Generic finite games, automata decisions,
+prefix labels, normalization, cofinal grids, Pareto order and rational
+threshold optimization are supplied methods, not new knowledge claimed
+by this manuscript. Graph parameterization and ARH's nested comparison
+classification are supplied results too.
+
+Merely restating ARH existence, wrapping SRF, or presenting a finite
+menu without the two directions of Theorem 4.2 would add no proved
+resource bridge and would not justify another volume. The mathematical
+reason for this volume, compared with no new publication, is the
+completed source/action/whole-row correspondence on the entire named
+graph and the quantitative whole-fiber counterexample to row sampling.
+This is a bounded source-relative comparison, not a global originality,
+priority or absence-of-literature claim. The primary literature check is
+limited to the stated MONA interface; no other primary theorem is
+silently imported as an unproved constructor-offset closure.
+
+**Authorship and verification boundary.** The construction and exposition
+are those of an independent CLI mathematical author with repository
+priors exposed. The formal-thinking-and-answer and theory-volume-template
+conventions are applied within the explicit pure-theory scope. The
+proofs are ordinary deductions with their supplier hypotheses stated;
+they do not claim sterile context, statistically independent priors,
+independent review, Lean verification or implemented-solver validation.
+Source identity and manuscript checks do not certify the mathematics.
+
+No result refunds acquisition or certifies physical realization. Outputting
+the row does not erase the acquired graph, old literals, new replies or
+other accessible state. Any later complete retention cut and new entry
+need their own actual state correspondence and payment. Exact resources
+for general guarded coupled histories, for the entire
+$\mathcal E_{\rm CE}$, and for other computational or physical interfaces
+remain outside the proved conclusions. These results form a finite
+mathematical unit, not completion of the continuing research programme.
+
+[BASE]: https://github.com/the-omega-institute/trureturing/tree/124cd13b334f992a6dcee980a5527e0dbfe4492e
+[ARH]: RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RELATION_HISTORY.md
+[SRF]: RECURSIVE_RELATIONAL_OBSERVATION_SYNCHRONOUS_RESOURCE_FRONTIER.md
+[ABC]: RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_BLOCK_CONJUGACY.md
+[JRF]: RECURSIVE_RELATIONAL_OBSERVATION_SERIAL_JOINT_RESOURCE_FRONTIER.md
+[SCR]: RECURSIVE_RELATIONAL_OBSERVATION_SERIAL_COMPLETE_ROW_PRICE.md
+[SLH]: RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT.md
+[AOF]: RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_ORBIT_RESOURCE_FRONTIER.md
+[TPO]: RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_TERM_POWER_OBSTRUCTION.md
+[MONA]: https://www.brics.dk/mona/mona14.pdf
+

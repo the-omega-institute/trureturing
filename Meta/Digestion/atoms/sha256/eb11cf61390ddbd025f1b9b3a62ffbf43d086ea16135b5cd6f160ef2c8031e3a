@@ -1,0 +1,66 @@
+**Definition 26.1 (comparison tasks and their complete alphabets).**
+Retain exactly Definition 1.2 and Assumption 1.3: ordered alpha/beta
+sources, the substitution in (GDB.1), all four replies, one stationary
+actual source, and the charged original-root literal interface. In
+particular
+
+$$
+\mathcal F_D=\{\langle\alpha,v\rangle:\operatorname{ht}(v)\le D\},
+\qquad
+\mathcal P_D=\{p:p\text{ starts with }R,\ 1\le|p|\le D\},
+\qquad |\mathcal P_D|=2^D-1.
+\tag{GDB.102}
+$$
+
+For a fixed nonempty public $Q\subseteq\mathcal P_D$, let $M_D(Q)$
+be the minimum complete attained alphabet under that same contract,
+with only the later request menu restricted to $Q$. Preparation may
+depend on $D,Q$ and common installed tables, but not on which request
+in $Q$ is supplied after export. It starts source-blind, acquires every
+source distinction by paid Reads, and terminates on every original
+source. Every surviving source-dependent control, selector, buffer,
+length, allocation and accessible timing distinction belongs to its
+complete name. The paid export, entry, continuity, access-isolation
+and authentication services are precisely those of Assumption 1.3.
+
+After export the common deterministic reader must serve every $p\in Q$
+on every $t\in\mathcal F_D$, using zero Reads or one fresh Read at
+any finite original-root word chosen from the name, $D,p$ and public
+tables before its reply and every supplied count. Its final predictor
+must return $r_{\rho^kt}(p)$ for every subsequently supplied authentic
+$k\ge0$, with no further Reads. Earlier preparation transcripts are
+inaccessible. Thus
+
+$$
+M_D(\mathcal P_D)=M_1(D).
+\tag{GDB.103}
+$$
+
+The restricted tasks are comparisons, rather than alternative
+interpretations of $M_1(D)$. For a singleton menu its sole possible
+request is already public; this does not grant a full-menu preparer
+knowledge of its later request. No competitor is restricted to prefix
+queries, product codes, independent children or any fixed source shape.
+Preparation charges, installed tables, local work and workspace,
+post-request space, final predictor, address costs and the paid services
+remain separate from the optimized attained alphabet.
+
+Put, for integers $n\ge1$ and $1\le k\le2^D-1$,
+
+$$
+\begin{aligned}
+m(n)&=\left\lceil\frac{2n+1}{4}\right\rceil
+       =\left\lfloor\frac n2\right\rfloor+1,\\
+H_D(k)&=\max_{\substack{\varnothing\ne Q\subseteq\mathcal P_D\\|Q|\le k}}
+                 M_D(Q),\qquad
+R_{\rm a}=\frac{7792603}{3038031}.
+\end{aligned}
+\tag{GDB.104}
+$$
+
+The ratio $R_{\rm a}$ is the credited [NCE, Theorem 17.1][NCE]
+ratio; it is not a new pressure calculation. All logarithms in these
+sections have base two. The constructions below establish finite
+nonempty classes of lawful schemes, so the positive integer alphabet
+minima exist. The maximum defining $H_D(k)$ is over a finite set.
+

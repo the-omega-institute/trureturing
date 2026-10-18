@@ -1,0 +1,73 @@
+## 149. 任意输出零边缘域严格大于实际源像
+
+**定义 C-149.1（另行扩大的输出域）。** 在 $K^{\otimes n}$ 上另定义
+
+$$
+\begin{aligned}
+\widehat{\mathrm{Marg}}_{N,n}
+&=\{\Omega\in\mathsf D(K^{\otimes n}):\Omega_i\in\mathcal F_N\ (\forall i)\},\\
+\widehat{\mathrm{Marg}}_{N,n}^{=}
+&=\{\Omega\in\widehat{\mathrm{Marg}}_{N,n}:\Omega_1=\cdots=\Omega_n\}.
+\end{aligned}
+\tag{C149.1}
+$$
+
+在这些域上定义 $\widehat f$ 时，风险直接为 $\sup_\Omega\operatorname{Tr}(T\Omega)$，
+目标仍为同一 $\tau_N^{\otimes n}$。它们不是 (C146.1) 的源律定义。
+
+**定理 C-149.2（严格包含与前沿数值相同）。** 对每个 $N$，
+
+$$
+\begin{aligned}
+N^{\otimes n}(\mathrm{Marg}_n)&\subseteq\widehat{\mathrm{Marg}}_{N,n},\\
+N^{\otimes n}(\mathrm{Marg}_n^{=})&\subseteq\widehat{\mathrm{Marg}}_{N,n}^{=}.
+\end{aligned}
+\tag{C149.2}
+$$
+
+两包含在 $n=1$ 均为相等，在每个 $n\ge2$ 均严格；然而两扩大域的优化前沿仍均为
+$\min\{1,3\delta/2\}$，对全部 $\delta\in[0,1]$ 成立。
+
+证明。局部通道与偏迹相容，给 (C149.2)；单份时均为 $\mathcal F_N$。
+为严格性写 $\vartheta_N=\sum_{j=0}^4p_j^NR_j$，其中
+
+$$
+\begin{aligned}
+(p_j^{\mathcal A})_{j=0}^4&=(ma,0,m\beta,0,1-m),\\
+(p_j^{\mathcal B_c})_{j=0}^4&=(ma,(1-m)\beta,(1-m)a,m\beta,0),\\
+\Omega_{N,n}&=\sum_{j=0}^4p_j^NR_j^{\otimes n}.
+\end{aligned}
+\tag{C149.3}
+$$
+
+这是真实正迹一输出联合态，每个边缘恰为 $\vartheta_N\in\mathcal F_N$，
+故已属于较小的扩大同边缘域。置 $r_{\mathcal A}=2,r_{\mathcal B_c}=3$。
+完整原 Kraus 列给
+
+$$
+N^\dagger(R_0)=aP_0,\qquad N^\dagger(R_{r_N})=\beta P_0.
+\tag{C149.4}
+$$
+
+因此任意复联合输入 $\xi\in\mathsf D(H^{\otimes n})$（无需零假设或可分离限制）
+的实际编码输出，在前两个位置都满足
+
+$$
+\begin{aligned}
+\operatorname{Tr}\!\left[(R_0\otimes R_{r_N}\otimes I)N^{\otimes n}(\xi)\right]
+&=a\beta\operatorname{Tr}\!\left[(P_0\otimes P_0\otimes I)\xi\right]\\
+&=\frac\beta a\operatorname{Tr}\!\left[(R_0\otimes R_0\otimes I)N^{\otimes n}(\xi)\right].
+\end{aligned}
+\tag{C149.5}
+$$
+
+对 (C149.3)，左端为零，右端为 $(\beta/a)ma=m\beta>0$。
+故它不在任何输入联合态的实际通道像中，尤其不在 (C149.2) 任一左域中。
+这证明全部 $n\ge2$ 的严格性，而非只区分零假设分支。
+
+最后，实际 $\Gamma_{N,n}$ 仍属于扩大同边缘域，(C148.2) 给全部效果的上界。
+对任意扩大域中的 $\Omega$，单边缘满足
+$\operatorname{Tr}(Q_N\Omega_i)\le m$，故投影不等式给全通过风险至多 $m$。
+同一 $\Gamma_{N,n}$ 达到 $m$，而目标通过概率一；缩放仍给 $(tm,t)$。
+所以相同的是优化数值，不是联合态集合，也不是所有单项统计。证毕。
+

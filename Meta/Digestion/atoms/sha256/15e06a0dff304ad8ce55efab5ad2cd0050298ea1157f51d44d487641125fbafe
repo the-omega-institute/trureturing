@@ -1,0 +1,14 @@
+**定义 66.8（原合同中的比较层次与未供应参数）。** 本章的来源对应是 $\omega\mapsto\omega$，对该本人档案之后的端点数值、INITIAL 标签及实际块次数分别比较。只比较这些量的关系与第 44 节假设 44.1 的逐原操作关系不同：后者还保持输入句柄、全部实际局部选择、响应、控制可见性、权限、资源身份、消费者合法域及允许交错，才由定理 44.2 得共同任务与真实费用保真。本章用另一个字面词实现原端点数据，并没有实例化该逐操作保真合同。
+
+若任务接入真实供应者、控制器和消费者，原来源身份、准备、版本、记录寿命、验收与承接权限仍由它们原合同给出。第 46 节假设 46.2 的已校准钟、共享占用两端、资源次序、剩余预算和有限消费者骨架，以及第 50 节定义 50.1 的全部参数、初始覆盖、局部视图、合法域和完整响应标签，都不能由相同 $(v,\theta)$、相同块数或相同 K 三坐标替代。尚未给出这些对应时，这些量在本章是未供应参数；完整 K 相等也不据此推出物理历时、所有权、全部有限原生行为或极大运行进展相等。
+
+本章的差值和树均取原无噪声读者。带噪声或误读的后续选择、真实报告支撑、仪器标定及有效调度保证须在它们自己的共同来源合同中给出；有限字面核对不认证未知仪器的无界未来。块费一是声明的调用计数，不是秒、能耗或空间量子。全参数最优费用、一般符号闭式及物理对应仍保留 K 原卷第 6 节与本卷第 44、46、50 节各自的未决范围。
+
+最近的有限状态机文献比较取 Türker–Hierons–Mousavi–El-Fakih 的 [《Efficient State Identification for Finite State Machine-Based Testing》接受稿][K66FSM]。其定义 11–15 在指定机器的单路径上覆盖每个状态／刻画词对，并要求逐对最短区分前缀与无额外转移串；这里则对同一个未知 INITIAL 来源的原树保留本人端点前缀及规定停止记录。该文 Supplementary Material 的定义 18 是 X3C，额外转移长度预算及其存在问题分别见定义 19、20，不能把 X3C 定义当成转移长度条件。正文与补充材料的编号流须分别读取。这些覆盖和转移合同没有给出本章的同源掩码—接缝—停止尾条件，也不授权把本章的固定字面动作改为任意状态查询。本章只在上述原 K 数据上给出该条件及其反例，不作文献优先权断言。
+
+[K66]: https://github.com/the-omega-institute/trureturing/blob/5e14c126e8a9b94996efbc5d54cea8ec39b6b748/docs/develop/theory/KBONACCI_RESPONSE_CODES_AND_ADAPTIVITY_BOUNDARIES.md
+[K66S2]: https://raw.githubusercontent.com/the-omega-institute/trureturing/73168b5b84a8ba1328b6fa51eb9d722f3d4a7daa/docs/develop/theory/KBONACCI_MINIMAL_MODULAR_OBSERVER.md
+[K66S3]: https://raw.githubusercontent.com/the-omega-institute/trureturing/84aeabc092530002a1a9f17079c15a8c803e38cd/docs/develop/theory/KBONACCI_SELF_CALIBRATING_BOUNDARIES.md
+[K66S10]: https://raw.githubusercontent.com/the-omega-institute/trureturing/84c05a76262b9b8c1a491c02afdee34e60535e9b/docs/develop/theory/KBONACCI_NARROW_QUERY_WINDOW_COST.md
+[K66FSM]: https://eprints.whiterose.ac.uk/id/eprint/230260/1/Ordered_Wset_Accepted.pdf
+

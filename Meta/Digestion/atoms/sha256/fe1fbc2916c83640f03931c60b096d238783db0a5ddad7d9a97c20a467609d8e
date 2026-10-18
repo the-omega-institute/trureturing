@@ -1,0 +1,26 @@
+**Proposition 2.2 (Simultaneous signed expectations).** For a measured string $z$, set
+
+$$
+h_a(z)=\operatorname{sgn}(n_{a_+}(z)-n_{a_-}(z)),\qquad
+h_b(z)=\operatorname{sgn}(n_{b_+}(z)-n_{b_-}(z)),\qquad \operatorname{sgn}(0)=0.
+$$
+
+Writing $D=D_m(t,\eta)$, these two statistics from the same actual experiment satisfy
+
+$$
+\mathbb E_{a,\sigma}h_a=\sigma D,\qquad
+\mathbb E_{a,\sigma}h_b=0,\qquad
+\mathbb E_{b,\sigma}h_b=\sigma D,\qquad
+\mathbb E_{b,\sigma}h_a=0.
+\tag{2.3}
+$$
+
+Proof. If $u>0$ and $w-u>0$, the ratio of opposite-$a$ string probabilities is $((w+u)/(w-u))^{n_{a_+}-n_{a_-}}$, so the sign of their difference, whenever nonzero, is $h_a$. If $w-u=0$, a nonzero difference can occur only on a support with one distinguished count positive and the opposite count zero; its sign is again $h_a$. Strings where both laws vanish contribute nothing. Swapping $a_+,a_-$ exchanges the two laws and negates $h_a$. Hence
+
+$$
+\mathbb E_{a,+}h_a
+ =\frac12\sum_z\bigl(p_{a,+}^{\otimes m}(z)-p_{a,-}^{\otimes m}(z)\bigr)h_a(z)=D.
+$$
+
+The same swap gives the negative-sign identity. Swapping the inactive $b$ pair preserves either $a$ law and negates $h_b$, proving its expectation zero. Exchanging pairs proves the other two identities. If $u=0$, sign swaps preserve each law, so every expectation is zero and $D=0$. The empty string has both signs zero. Thus (2.3) holds on all boundaries without a full-support assumption or an unknown-label-dependent measurement. QED.
+

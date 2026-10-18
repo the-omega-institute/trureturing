@@ -1,0 +1,17 @@
+**Definition 7.1 (one finite entrance and counted production).** Fix one
+actually reached finite entrance $P$ of a proposed lower apparatus on
+the same original source. Let $R_0$ be its finite initial vertex stock,
+generously including all initial code, foundation, spare material and
+already constructed buffers. Let its next $m$ actual executing fine
+events have birth counts $\beta_1,\ldots,\beta_m$, and set
+$A(m)=\sum_{i=1}^m\beta_i$. Every current vertex must have come from
+this initial stock or these counted births. All stock, event and birth
+counts in this section are natural numbers. Any physical material
+influx is counted here; a hidden external allocator is excluded.
+
+Count all executing events, including fine metering, receipt catch-up,
+probes made separate events by that model, helper construction,
+installation after $P$, and cleanup. Deletion may occur in this
+general bound, but creates no new vertex. The constructor in §§2–6
+itself deletes none.
+

@@ -1,0 +1,5 @@
+**Immutable source convention.** This is a `generic-v1` theory volume.
+> Locators are determined from its Markdown bytes. After publication,
+> corrections and additions belong in numbered sections after the terminal
+> append anchor; existing source bytes and anchors remain unchanged.
+

@@ -1,0 +1,81 @@
+**Corollary 5.2 (whole-row recovery under the actual register bridge).**
+Under Assumption 1.3, a YES for any $B$ of at least two distinct full
+rows excludes a uniform finite-new-read legal static or serial forward
+service recovering the entire $R_Q$ on $D$. A NO excludes only that
+joint $B$ at its depth.
+
+If additionally the entire attained image $\mathcal R=R_Q(D)$ is a
+supplied finite exact list, and all its distinct pairs have functional
+rank-free certificates, the full-row service existence question is
+terminating: any YES pair excludes a uniform finite-read service; if
+all pairs return NO, the maximum of their exclusion depths determines
+the whole row. A singleton image needs no new reads. No finite-image
+promise is needed for Theorem 5.1 itself.
+
+**Proof.** Reuse [ARH, Definition 2.2 and (ARH.2.3)][ARH], with the
+complete-state and same-register premises unchanged. A uniformly bounded
+effective deterministic serial controller has a finite four-reply tree
+of read outcomes. The supplier compresses each reply-free computation
+and forward-update segment. Its finite set of submitted words has a
+maximum original dependency depth, including born and absent positions.
+Native locality then makes that original prefix determining. A YES
+supplies two finite differently labelled sources agreeing through any
+such depth, contradicting recovery. Static controllers are included.
+This transfers an existence bridge, not an equality of optimal prices.
+
+For $|B|>2$, exclusion at $H$ merely says no one $H$-prefix occurs in
+every stratum of $B$. It can occur in several other rows or several rows
+inside $B$. Even exclusion of one pair leaves other pairs untouched.
+For an entire finite image, however, take the maximum $H$ of all pair
+exclusions. If two sources at that depth had different full rows, their
+pair would violate its own exclusion. This proves full-row determination.
+
+The lawful consumer uses actual static epoch-$N$ reads to recover the
+original replies through $H$, via [SLH, Theorem 2.2][SLH] and
+[DelayedOriginalReadout.original_decoder_correct and
+original_decoder_service][DECODER]. This gives upper bounds
+
+$$
+q\le2(2^{H+1}-1),\qquad a=0,\qquad
+\text{total literal length}\le
+ 2(2^{H+1}-1)(H+\lceil N/2\rceil).
+\tag{FJC.15}
+$$
+
+The bound includes original absence. Condition the whole input on the
+recovered prefix and use NSF to produce one finite compatible source;
+the actual source makes that query nonempty. Determination makes its
+whole row the actual correct answer, without identifying the witness
+with the actual source. Equivalently precompute a finite table of
+nonempty conditioned-prefix fibers and their common rows.
+
+Independently of a uniform bound, paid traversal of the current finite
+tree $\rho^N u$ gives its whole finite description. The effective partial
+inverse of [ARH, Lemma 19.2][ARH], applied $N$ times to that description,
+recovers the finite original $u$ and hence its whole $R_Q(u)$. This is
+local computation on paid evidence, not inverse execution on the register.
+It proves sourcewise finite recovery even on a YES instance; it gives no
+uniform read cap. The traversal costs $|\operatorname{Pos}(\rho^N u)|$
+new calls and the sum of their actual address lengths, with storage and
+inverse computation charged separately.
+
+Preparation of the class certificates, their decisions, that table,
+address generation, comparisons, memory, installation, acquisition and
+entry remain paid separately from (FJC.15). A concrete compatible-source
+search has sourcewise finite local cost; no optimum or uniform local-cost
+bound is proved. ARH Proposition 2.1 provides paid pre-cut acquisition
+with raw cost
+
+$$
+|\operatorname{Pos}(u)|+|H_0|
+ +\sum_{(e,p)\in E}|\operatorname{Pos}((\rho^e u)|_p)|,
+\tag{FJC.16}
+$$
+
+where endpoint occurrences $E$ retain repetitions and their traversals
+include their root reads. Updates, finite word lengths, comparisons,
+retained descriptions, certification and the cut add their own costs.
+Every term is finite on each finite source. Nothing here grants a
+runtime completion, coordinate, source selector or equality operation.
+$\square$
+

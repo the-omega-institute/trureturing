@@ -1,0 +1,36 @@
+## 1. Scope, proof status and source ownership
+
+This volume determines the entire joint attainable region of whole-state purity
+and negativity in the fixed five-coordinate invisible skew fiber. Its universal
+statements include every legal real skew matrix, with arbitrary signs, dense
+entries and positive semidefinite boundary states. Negativity always refers to
+the original two five-dimensional factors.
+
+The proofs are ordinary finite-dimensional mathematics. This is a theory
+reference source, not a Lean/kernel certificate. No numerical certificate,
+external priority claim or physical implementation claim is asserted. The
+literature status of the additional deductions is `repo-derived`, relative to
+the supplied source identified below; literature-wide originality is unresolved.
+
+The inherited source is
+[the mixed-state capacity and certification volume, C-106–C-108](AURIC_FIB_ATOM_HIDDEN_RELATIONS_MIXED_STATE_CAPACITY_AND_CERTIFICATION.md).
+C-106 owns the matched-support reduction and its already attributed
+partial-transpose blocks. C-107 owns the whole-state purity identity and the
+distinction between the original tensor split and independent copies of the
+whole source. C-108 owns the invisible skew fiber, its purity interval and
+equal-two-block purity attainers, and the conditional actual-menu and fixed
+fourteen-flag erasure statements. Those results are reused here.
+
+The additional mathematical content relative to that source is the sharp lower
+and upper negativity at every purity, the sign-matrix obstruction and exact
+crossovers, the dense upper attainers, the maximum and the full interval between
+the boundaries. Complete proofs and actual common-state constructions appear
+below. The purely matrix-theoretic result does not require the operational
+suppliers. Its interpretation as an actual-menu invisible fiber and as a fiber
+erased by the specified port remains conditional on the C-108 interfaces in
+Section 11. Their nested QMB/QFA and other source-specific suppliers are not
+independently verified here.
+
+Corrections or extensions after incorporation belong after the final append anchor with new
+section numbers; the final append anchor and existing text are retained.
+

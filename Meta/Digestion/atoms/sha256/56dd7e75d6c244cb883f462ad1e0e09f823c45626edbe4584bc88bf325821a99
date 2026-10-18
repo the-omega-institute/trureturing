@@ -1,0 +1,69 @@
+**Theorem 266.2 (Exact signed identity for every allocation).**
+For every suffix $z$ there is an equality of signed label measures
+
+$$
+\Delta_{11}(z)=\Delta_{10}(z)+\Delta_{01}(z)-\Delta_{00}(z).
+\tag{266.3}
+$$
+
+Consequently the signed contrast
+
+$$
+\begin{split}
+\mathcal C_\lambda
+ &=\sum_{n=3}^L\left(
+ \Delta_{10}(z^n)(n)+\Delta_{01}(z^n)(n)-\Delta_{00}(z^n)(n)\right)\\
+ &=E_b+2e+s_++\sum_{n=3}^Ls_n+\mu_+(1)+\mu_+(2)\\
+ &\le(L-2)(2\rho_1+\rho_2).
+\end{split}
+\tag{266.4}
+$$
+
+In particular every feasible arbitrary-mass allocation on $H_L$
+with $e>0$ has
+$2\rho_1+\rho_2\ge(E_b+2e)/(L-2)>0$.
+For a normalized probability kernel at profile $a$, the same identity
+implies
+
+$$
+\sum_{n=3}^L(a_n-e)\le e+(L-2)(2\rho_1+\rho_2).
+\tag{266.5}
+$$
+
+These are necessary relations, without a class nonmembership or
+sufficient deficit-to-certificate conclusion.
+
+**Proof.** Every coordinate of the output measure of a deterministic
+hard-two nonadaptive table is a multilinear polynomial of degree
+at most two in its queried bits. Constants and singletons have
+smaller degree. A stopped pair has the polynomial
+$(1-w_i)e_u+w_i(1-w_j)e_s+w_iw_je_t$ and has the same degree
+bound. Finite linear combinations preserve it, irrespective of mass.
+In any degree-two polynomial, its alternating difference in the
+first two bits is independent of all suffix bits: a suffix-dependent
+term would involve at least three coordinates. Subtract its value
+at the positive suffix to obtain (266.3) coordinatewise.
+No scalar-representation converse is needed.
+
+By (266.3), the first line of (266.4) equals
+$\sum_{n\ge3}(\mu_{v^n}(n)-\mu_+(n))$.
+The correct slacks give its first part; equal mass gives
+$\sum_{n\ge3}\mu_+(n)=M-\mu_+(0)-\mu_+(1)-\mu_+(2)$.
+Substitute $\mu_+(0)=M-e+s_+$ to get
+$\sum_{n\ge3}b_n-(L-1)e+s_++\sum s_n+\mu_+(1)+\mu_+(2)$,
+which is exactly the second line. This is an equality, with every
+signed term retained.
+
+For each $n$, the two measures defining $\Delta_{00}(z^n)$
+and $\Delta_{01}(z^n)$ belong to first-zero fibre one, and
+those defining $\Delta_{10}(z^n)$ to fibre two.
+Each signed difference has total mass zero, so any signed singleton
+coordinate is bounded in absolute value by its TV. Hence its
+contribution to the contrast is at most $2\rho_1+\rho_2$.
+Summing proves the upper bound. Nonnegative slacks and positive
+cap prove the strict variation conclusion on $H_L$.
+For normalized laws the same expansion gives
+$\mathcal C=\sum_{n\ge3}(a_n-e)-e+$ nonnegative terms,
+which proves (266.5). No division of a conic witness at unchanged
+$b$ has occurred. $\square$
+

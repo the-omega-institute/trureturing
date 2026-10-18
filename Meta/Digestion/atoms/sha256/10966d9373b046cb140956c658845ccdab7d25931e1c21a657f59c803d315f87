@@ -1,0 +1,15 @@
+**Corollary 10.2 (Separate and joint infima).** For $M\ge M_0$, define
+
+$$
+\begin{aligned}
+\mathfrak m_i(s,M)&=\inf_{\mathcal A\in\mathfrak A_M(e^{-s},\alpha)}\mathbb E_i^{\mathcal A}T,\\
+\mathfrak m_{\max}(s,M)&=\inf_{\mathcal A\in\mathfrak A_M(e^{-s},\alpha)}
+\max\{\mathbb E_0^{\mathcal A}T,\mathbb E_1^{\mathcal A}T\}.
+\end{aligned}
+\tag{10.4}
+$$
+
+Each of these three quantities lies in $[A_-\Phi(s,M),A_+\Phi(s,M)]$ on (10.1), with constants independent of $s,M$.
+
+Proof. The lower inequality holds for each mean of every actual observer, so it also holds for their maximum and for each stated infimum. The one common table in (10.1) makes the class nonempty and bounds each of the three infima above. No separate optimizers have been combined, and no exact optimizer is asserted. $\square$
+

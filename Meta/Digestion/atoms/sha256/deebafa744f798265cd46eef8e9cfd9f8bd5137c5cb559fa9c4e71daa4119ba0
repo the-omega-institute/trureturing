@@ -1,0 +1,99 @@
+**Theorem 8.1 (one lawful attained fiber, all original targets and counts).**
+Let $N=8\cdot2^j=2^h$, $h=j+3$, and $D=h+5$. There is a correct
+procedure on the entire unchanged $\mathcal F_D$ satisfying Assumption
+1.2 with one attained fiber exactly the sources obtained by placing
+$B_G$ on a perfect height-$h$ right-subtree scaffold. Every other source
+has a distinct singleton code. With
+
+$$
+f_0=2,\qquad f_{d+1}=2+f_d^2,
+\tag{NDR.32}
+$$
+
+its complete attained alphabet has exactly
+
+$$
+f_D-5^{2N}+1
+\tag{NDR.33}
+$$
+
+values. Preparation uses, on every source,
+
+$$
+T=2^{D+1}-1,\qquad Q_{\rm addr}=D+1,\qquad
+A_{\rm letters}=D\,2^{D+1}+1.
+\tag{NDR.34}
+$$
+
+The reader uses at most one fresh original-root Read of length at most
+$D$, chosen before any supplied $k$; all subsequent counts are answered
+without Reads.
+
+**Proof.** List the frontier addresses of a perfect height-$h$ scaffold
+as $a_v$, $v\in V$, so $|a_v|=h$. Insert the actual tree $x_v\in S_5$
+there, giving $v_x$, and set $t_x=\langle\alpha,v_x\rangle$.
+Its right-subtree height is at most $h+5=D$. These actual sources belong
+to $\mathcal F_D$ and are distinct for distinct $x\in B_G$. Denote
+their family by $\mathcal B_G$; it has $5^{2N}$ members.
+
+Before any request, submit every literal $Rw$ with $|w|\le D$ on the
+actual stationary source, including absent words. Since $h(v)\le D$,
+these replies reconstruct the entire finite ordered right subtree,
+including terminal labels. The fixed scan has
+$\sum_{l=0}^D2^l=2^{D+1}-1$ calls, maximum length $D+1$, and
+$\sum_{l=0}^D(l+1)2^l=D2^{D+1}+1$ submitted letters. The source
+is neither changed nor copied by this acquisition.
+
+Membership in $\mathcal B_G$ is now a finite local computation from this
+paid description: test the fixed scaffolds, identify each of its five
+possible module trees, and test each edge's $\tau$ relation. No unknown
+source identity or tuple was given as an input. Export code $0$ exactly
+on this family; give every other acquired tree its own index in a fixed
+public ordering. There are exactly $f_D$ right subtrees of height at most
+$D$ by ordered pairing and (NDR.32). Merging precisely $5^{2N}$ of
+their names gives (NDR.33). Every specified code is attained.
+
+Use a fixed-width representation of the complete name. The public scan,
+buffer allocation and a padded finite computation schedule may be fixed
+from $D$ alone. All other acquired descriptions, membership workspaces,
+selectors and source-dependent control or timing records are isolated by
+the separately paid service. Every accessible surviving distinction must
+be a function of the name and public data; any failure of that isolation
+would fail Assumption 1.2 rather than justify an uncounted field.
+
+After a target is supplied, a singleton name identifies its acquired
+source through the installed source-independent table. Compute its
+factor by (NDR.3) with zero Reads. On name $0$, a target ending strictly
+above the module frontier is constantly branch. Every remaining target
+is uniquely
+
+$$
+p=Ra_vwq,\qquad |a_v|=h,\quad |w|=2,\quad q\in W_3,
+\qquad |p|\le1+h+2+2=D.
+\tag{NDR.35}
+$$
+
+For $q=\varepsilon$ the factor is $(0,0)$ and no Read is needed.
+For $q=LL$, read the actual original-root literal
+$Ra_{v'}w'RL$, where $(v',w')$ is this edge's other endpoint port,
+and apply (NDR.22). For every other $q$, use its own-module literal
+$Ra_vwa$, with $a$ as in (NDR.23), and its displayed decoder.
+All choices use only the name, $D,p$ and public graph/port tables;
+their lengths are at most $D$. They precede the reply and any supplied
+count, and there is only one actual source-bearing query.
+
+Every scaffold and module occurrence used here is originally present on
+every source with name $0$. Homomorphic substitution transports it for
+every $k$, so
+
+$$
+r_{\rho^kt_x}(Ra_vwq)=r_{\rho^k u_s}(q)
+=\operatorname{Pred}(\Gamma_q(u_s),k).
+\tag{NDR.36}
+$$
+
+This establishes all authentic counts, including initially absent
+requests. No subtree is an operational input, no source is reset, no
+artificial root is queried, and no prior transcript is accessible.
+$\square$
+

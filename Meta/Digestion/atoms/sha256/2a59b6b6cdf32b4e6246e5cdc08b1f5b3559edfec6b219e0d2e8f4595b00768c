@@ -1,0 +1,4 @@
+## 1. Conditional theorem and the original experiment
+
+This volume gives an ordinary conditional mathematical theorem for the original experiment. Its proof consists of the displayed algebra, finite rational interval inequalities and their continuum consequences. The numerical appendices are part of the theorem: their constants define the selected roots and contain every preconditioner, box and covering leaf. The complete numerical appendices are stored in the fixed-version data files linked below; their [manifest](https://github.com/the-omega-institute/trureturing-experiments/blob/08cfceafd9500530ffa128764313472b003a72ab/experiments/theory/fib-native-complete-continuation/two-parameter-strip/manifest.json) records their SHA-256 hashes. This is neither a Lean/kernel certificate nor a physical implementation theorem.
+

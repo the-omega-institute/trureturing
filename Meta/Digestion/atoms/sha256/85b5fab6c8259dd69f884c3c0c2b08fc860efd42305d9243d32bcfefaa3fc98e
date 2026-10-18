@@ -1,0 +1,20 @@
+**Lemma 2.2 (Score identity and positive compact band).** The graph on $K=K_m^{\xi,\zeta}$ is connected. Every band-compatible probability is positive and satisfies
+
+$$
+\nu_{0^m}\ge |K|^{-1},\qquad
+\nu_w\ge3^{-k(w)}\nu_{0^m}\ge\alpha_m:=6^{-m}.
+\tag{2.3}
+$$
+
+Moreover
+
+$$
+\mathbb E_\nu\sum_i(W_i-r_i(W_{-i}))^2
+=\Phi_K(\nu)+\mathcal D_K(\nu\Vert r).
+\tag{2.4}
+$$
+
+For positive $\nu,r$, $\mathcal D_K(\nu\Vert r)=0$ if and only if $\nu=r$.
+
+Proof. Delete ones to reach $0^m$, and insert the desired nonadjacent ones to reach any other compatible word. The insertion inequalities make every mass at most $\nu_{0^m}$, so normalization gives the first inequality in (2.3). Inserting back gives the second, and $|K|\le2^m$, $k(w)\le m$ give the displayed floor. For (2.4), condition on $W_{-i}$ and expand the square around its conditional mean under $\nu$. The cross term vanishes. The weighted variance on a two-point fiber is $h(\nu_u,\nu_v)$, and a forced fiber contributes zero. Summing proves the identity. Zero discrepancy under positivity equates the posterior odds on every edge, making $r_w/\nu_w$ constant on the connected graph; normalization makes that constant one. For a singleton graph there is only one probability and the same conclusion holds. These are the constrained-graph arguments of [Guarded, Lemmas 3.2–3.3]. $\square$
+

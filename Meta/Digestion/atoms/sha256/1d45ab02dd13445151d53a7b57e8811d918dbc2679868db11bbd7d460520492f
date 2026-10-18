@@ -1,0 +1,100 @@
+**Theorem 106.1 (Scaled separation and four-request feasibility).** Let
+
+$$
+\frac{1425}{1447}<s\le1,\qquad
+(a_1,\ldots,a_7)=sA,\qquad a_8\le s\varepsilon_0,
+\tag{106.1}
+$$
+
+and retain any positive nonincreasing vanishing tail. There is an
+$N_s\in\mathcal N_3$ with exact error $s\varepsilon_0$, finite
+handoff everywhere and $M\le7$. Every original $O\in\mathcal O_3$
+satisfies
+
+$$
+e_a(O)\ge r_s:=\frac{19s-5}{80}>s\varepsilon_0,\qquad
+r_s-s\varepsilon_0=\frac{1447s-1425}{22800}.
+\tag{106.2}
+$$
+
+For every $s\varepsilon_0\le\varepsilon<r_s$, the hard-count tuple
+is $(3,3,4)$. For $s=1$ it is $(3,3,3)$ at $\varepsilon=r_0$.
+Both equalities $\varepsilon=s\varepsilon_0$ and
+$a_8=s\varepsilon_0$ are included. For example an entire admissible
+sequence is $a_{7+j}=s\varepsilon_0/j$ for every $j\ge1$.
+
+**Proof.** Mix the kernel $N$ of Theorem 103.2 with immediate base
+output, in weights $s$ and $1-s$. One uniform real seed selects a
+branch and, on the $N$ branch, its uniform integer position; both
+choices are fixed before replies. On a low first-zero class,
+
+$$
+\nu_{s,b}=(1-s)\delta_{\theta_0}+s\nu_b,\qquad
+\lambda^{sA}_n=(1-s)\delta_{\theta_0}+s\lambda^A_n.
+\tag{106.3}
+$$
+
+The difference of these signed measures is $s(\nu_b-\lambda^A_n)$,
+so event-TV scales exactly by $s$. All low errors are at most
+$s\varepsilon_0$, and the realizable $1111110$ attains equality.
+At an actual tail source the nonbase mass is $s\varepsilon_0$, no
+tail mark is emitted, and (83.9) gives
+$\max\{s\varepsilon_0,a_{n(x)}\}=s\varepsilon_0$.
+Thus the original all-source cap is attained, with $K=3$ on the
+positive-probability kernel branch and $K=0$ on the base branch.
+Theorem 104.1 at $sA$ gives the non-strict bound $r_s$; the strict
+comparison is the exact rational identity in (106.2).
+
+For a four-request upper rule, let $U_j$ be the exact ordered prefix
+through $j$: stop at its first zero and emit that mark, otherwise
+emit base. Let $P_{\ell,4}$ be the already supplied subset kernel
+of Theorem 87.1 on labels $1,\ldots,\ell,*$. Its auxiliary target
+is the pure first-absence mark through $\ell$, otherwise base, and
+its error relative to that target is $(\ell-4)/(\ell+1)$ on every
+word, including every multiple-zero suffix. Use the common mixture
+
+$$
+(1-4s/5)\,\delta_{\theta_0}
++\frac{s}{5}\,U_3+\frac{s}{5}\,U_4
++\frac{s}{5}\,P_{6,4}+\frac{s}{5}\,P_{7,4}.
+\tag{106.4}
+$$
+
+Here $\delta_{\theta_0}$ denotes the immediate-base rule. Its
+nonnegative weights sum to one. Each component is in $\mathcal O_4$,
+uses only actual requests with indices at most $7$, and hands off
+finitely for every source and seed. To make its categorical execution
+explicit, the two subset branches choose uniformly among the
+$\binom75=21$ five-subsets of $\{1,\ldots,6,*\}$ and the
+$\binom85=56$ five-subsets of $\{1,\ldots,7,*\}$, respectively.
+Their first four labels are queried increasingly until a zero; on
+exhaustion their final unqueried label is emitted. All component and
+subset choices form one finite partition of one uniform real seed.
+
+The four auxiliary pure-prefix target vectors mix to $sA$: their
+combined mark weights at indices $1,2,3$ are $4s/5$, at $4$ are
+$3s/5$, at $5,6$ are $2s/5$, and at $7$ are $s/5$. TV convexity
+therefore bounds every low-word error of (106.4) by
+
+$$
+\frac{s}{5}\left(\frac27+\frac38\right)
+=\frac{37s}{280}<s\varepsilon_0.
+\tag{106.5}
+$$
+
+At $1^7$, its nonbase mass is exactly $37s/280$. At every actual
+$n(x)>7$ it emits no tail mark and has error
+$\max\{37s/280,a_{n(x)}\}\le s\varepsilon_0$. Thus it is an
+original hard-four attainer for that cap, including the tail equality.
+
+For the lower count, Theorem 85.1 with $k=2,n=3$ forces
+$e_a(B)\ge a_3/4=s/5$ for every $B\in\mathcal A_2$. Indeed
+$(a_3-e)_+\le3e$ gives that bound when $e<a_3$, and when
+$e\ge a_3$ it is automatic. Since
+$s/5-r_s=(5-3s)/80>0$, every cap in the stated interval excludes
+all adaptive hard-two competitors. Containment (90.3), the
+$N_s$ attainer and the hard-four ordered rule now give $(3,3,4)$.
+At $s=1,\varepsilon=r_0$, Theorem 105.1 gives hard-three ordered
+feasibility, while $1/5>r_0$ excludes hard two in all classes.
+This proves the endpoint tuple $(3,3,3)$ as well. $\square$
+

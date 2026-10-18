@@ -1,0 +1,196 @@
+## 129. Actual quantum hits supply phase coherence under fixed real joint controls
+
+**Definition C-129.1 (Same source, restricted operations and comparison class).**
+Retain exactly C-116.1 and C-121.1–C-121.3: the ordered original labels
+$B=(0,1,2,3,13)$, $f=(0\ 13)(1\ 3)$ with $f(2)=2$, the real isometry
+$Je_j=|B_j,f(B_j)\rangle$, the original $A\mid B$ cut, $U_4$, and
+$\rho_X=\rho_{t,\eta}(X)$ with known $t,\eta\in[0,1]$. In particular,
+
+$$
+\begin{aligned}
+\rho_X&=(1-\eta)J(I_5+tX)J^\dagger/5+\eta I_{25}/25,\\
+\Phi_X(Y)&=(1-\eta)(I_5+tX)\circ Y+\eta\operatorname{tr}(Y)I_5/5,\\
+c&=(1-\eta)t,\quad s=1-4\eta/5,\quad w=s/5,\quad u=c/5.
+\end{aligned}
+\tag{C129.1}
+$$
+
+There is one fixed unknown $X\in U_4$, no prior on it, and $m$ actual
+conditionally iid copies, initially independent of the data and every complex
+reference. Thus $1/5\le s\le1$ and $0\le c\le s$.
+All maps act complex linearly on the whole indicated complex matrix algebras.
+The fixed real structure is entrywise conjugation in these original product
+bases; it is not a change of cut or a restriction to real input states.
+
+A real processor has a complete finite Kraus family of real rectangular
+matrices in this fixed structure. Write $e_m^{\mathbb R}(t,\eta)$ for the
+infimum in (C121.2) restricted to these processors, retaining the unhalved
+diamond norm and arbitrary complex references. In particular
+$e_m\le e_m^{\mathbb R}$. Real operations, in this established sense, are
+the operations of [Wu et al.](../../../Library/Quantum/wu2021imaginarity.md).
+The finite realization menu used here consists of real blank ancillas,
+computational basis permutations and sign reflections, specified two-level
+real rotations on joint registers, computational projective measurement,
+classical feedforward, and discarding. A two-level rotation on basis vectors
+$p,q$ has matrix $\left(\begin{smallmatrix}\cos\theta&-\sin\theta\\
+\sin\theta&\cos\theta\end{smallmatrix}\right)$ there and identity elsewhere.
+Exact known angles and the corresponding joint controls are supplied services.
+The menu includes real quantum wires when the original laboratories are
+separated, charged in C-133.1. It contains no conjugation or transpose gate
+on an unknown state, no externally supplied imbit, and no revealed label.
+
+**Theorem C-129.2 (First-hit real processor and its exact error).**
+For every $m\in\mathbb N_0$ and every $t,\eta\in[0,1]$, one common real
+whole-algebra CPTP processor has, simultaneously for all four labels, error
+
+$$
+E_m(t,\eta)=\frac cs\big[(1-2s/5)^m-(1-s)\big]_+.
+\tag{C129.2}
+$$
+
+More precisely, put
+
+$$
+p=2s/5,\qquad q_m=1-(1-p)^m,\qquad h=\min\{q_m,s\},\qquad b=c/s.
+\tag{C129.3}
+$$
+
+Its promised induced channels, on every $Y\in M_5(\mathbb C)$, are
+
+$$
+N_{\sigma X_a}=T_\eta(\sigma bh,0),\qquad
+N_{\sigma X_b}=T_\eta(0,\sigma bh),\qquad \sigma\in\{1,-1\},
+\tag{C129.4}
+$$
+
+with $T_\eta$ as in (C121.7). These identities extend after tensoring with
+the identity on every finite complex reference. Whole-algebra validity of
+the processor also includes unpromised programs and correlated data/program
+inputs; the promised identity (C129.4) uses the specified independent batch.
+
+Proof. Set $d_a=(0,4)$ and $d_b=(1,3)$. For $d=(j,k)$ let
+
+$$
+P_d=|Je_j\rangle\langle Je_j|+|Je_k\rangle\langle Je_k|,\qquad
+F_d=I_{25}-P_d,\qquad
+T_d=|0\rangle\langle Je_j|+|1\rangle\langle Je_k|.
+\tag{C129.5}
+$$
+
+These are real matrices, $T_d^\dagger T_d=P_d$, and $P_d$ is diagonal in
+the original product basis. Direct compression of the actual source gives
+$\operatorname{tr}(P_d\rho_X)=2w=p$ for every $X$. With
+$H=i(|0\rangle\langle1|-|1\rangle\langle0|)$,
+
+$$
+\frac{T_d\rho_XT_d^\dagger}{p}
+ =\begin{cases}(I_2+\sigma bH)/2,&X=\sigma X_d,\\
+ I_2/2,&X\text{ is on the other pair}.
+ \end{cases}
+\tag{C129.6}
+$$
+
+In particular this is a mixed extracted subsystem, with its actual bias
+$b=c/s$. It is not a supplied eigenvector or a chosen maximally imaginary
+state. The $20$ unmatched white-noise coordinates, the singleton, and the
+other pair all belong to the measured complement $F_d$.
+
+First pinch the data with the three real projections onto
+$\operatorname{span}\{e_0,e_4\}$, $\operatorname{span}\{e_1,e_3\}$ and
+$\operatorname{span}\{e_2\}$. On a pair sector $d$, measure
+$\{P_d,F_d\}$ on the program copies in their fixed order until the first
+hit. On a hit extract by $T_d$, retaining its qubit, and discard the other
+program registers. If all $m$ tests fail, retain the no-hit outcome. On the
+singleton sector discard every program register immediately.
+
+For completeness, the unnormalized CP success map $\mathcal H_{d,m}$ from
+programs to a qubit is the sum over first-hit positions $\ell=1,\ldots,m$:
+project preceding factors with $F_d$, extract factor $\ell$ with $T_d$,
+and trace out every other factor. Each summand has real Kraus operators.
+On a product-basis vector $|z_1\cdots z_m\rangle$, its effect is the
+indicator that the first factor belonging to the two matching coordinates
+of $d$ occurs at $\ell$. Thus
+
+$$
+\mathcal H_{d,m}^*(I_2)=I-F_d^{\otimes m},\qquad
+\mathcal H_{d,m}(\rho_X^{\otimes m})
+ =\sum_{\ell=1}^m(1-p)^{\ell-1}T_d\rho_XT_d^\dagger
+ =q_m\omega_{d,X},
+\tag{C129.7}
+$$
+
+where $\omega_{d,X}$ is (C129.6). The effect identity is on the full program
+space, not just on the promised states. The empty sum is zero and
+$F_d^{\otimes0}=1$ at $m=0$.
+
+If $q_m>0$, accept a hit with probability $a=h/q_m$ using a real coin;
+otherwise put $a=0$. Rejection and no hit are both failure outcomes and
+are retained. The accepted quantum map is $a\mathcal H_{d,m}$; the failure
+effect is
+$I-a(I-F_d^{\otimes m})\succeq0$. The instrument is complete on every
+program input. Its promised acceptance probability is $h$, independent of
+the unknown label, and the accepted qubit is still $\omega_{d,X}$.
+
+On acceptance apply, to the data pair and that actual qubit, the real
+orthogonal controlled matrix
+
+$$
+R=\begin{pmatrix}0&1\\-1&0\end{pmatrix},\qquad
+G_d=|j\rangle\langle j|\otimes I_2
+       +|k\rangle\langle k|\otimes R,
+\tag{C129.8}
+$$
+
+then discard the qubit. On the selected pair $G_d^\dagger G_d=I_4$.
+For a gate on the entire data/qubit register, extend it by identity on the
+other three data coordinates.
+This is the restricted controlled-imbit mechanism of
+[Wu et al., Appendix A, (22)–(23)](../../../Library/QuantumChannels/wu2024distributedimaginarity.md),
+used here with the actual mixed state (C129.6). Directly, for
+$\omega=(I_2+zH)/2$ and every complex pair matrix,
+
+$$
+\operatorname{tr}_2[G_d(E_{jk}\otimes\omega)G_d^{\mathsf T}]
+ =E_{jk}\operatorname{tr}(\omega R^{\mathsf T})=izE_{jk};
+\tag{C129.9}
+$$
+
+the $kj$ multiplier is $-iz$ and both diagonal multipliers are one.
+Indeed $R^{\mathsf T}=-R$, $R^2=-I_2$ and $H=iR$. Equation (C129.9)
+also holds at $z=0,\pm1$; no sign measurement or phase calibration depending
+on $X$ is performed. Inactive-pair hits supply $z=0$ and hence no coherence.
+
+On failure measure the data coordinate $r\in d$ and use the real classical
+channel with transition probabilities
+
+$$
+v_{l|r}=\begin{cases}(s-h)/(1-h),&l=r,\\
+\eta/[5(1-h)],&l\ne r.
+\end{cases}
+\tag{C129.10}
+$$
+
+For finite $m$, $p\le2/5$ gives $q_m<1$, hence $h<1$. Thus this formula
+has no vanishing denominator, including at $\eta=0$. It is nonnegative,
+and its column sum is $(s-h+4\eta/5)/(1-h)=1$.
+The Kraus matrices are $\sqrt{v_{l|r}}|l\rangle\langle r|$.
+On the singleton $r=2$, instead use probabilities $s$ for $l=2$ and
+$\eta/5$ for each $l\ne2$, again a complete real measure-and-prepare map.
+
+Each branch is a composition of real CP instruments, a real orthogonal
+matrix and partial traces. The first-hit instrument, coin, failure
+transitions and singleton map each retain every outcome. Their completeness
+proves TP for the full data/program algebra, without independence or any
+promise on that input. Tensoring the same real Kraus matrices with $I_R$
+proves CP and TP with every complex reference.
+
+For the promised inputs, a pair-sector diagonal $E_{rr}$ has output weight
+$h+(1-h)v_{r|r}=s$ at $r$, and $(1-h)v_{l|r}=\eta/5$ at every $l\ne r$.
+The singleton has exactly the same target populations. Every cross-sector
+matrix unit vanishes, as it does under $\Phi_X$. Within a pair, the failure
+branch kills its off-diagonals; (C129.6)–(C129.9) give coefficients
+$\sigma bh$ on the active pair and zero on the inactive pair. This checks
+all $25$ complex matrix units and proves (C129.4) and its reference extension
+by complex linearity. Finally $bh\le c\le s$; (C121.8) gives exact error
+$c-bh=(c/s)[s-q_m]_+$, which is (C129.2). QED.
+

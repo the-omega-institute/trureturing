@@ -1,0 +1,21 @@
+**定义 18.1（所选二阶链）。** 对 $(t,\kappa)\in\mathcal U$，令
+
+$$
+\alpha=\frac{t-\kappa}{1-2t},\qquad
+\beta=\frac\kappa t,\qquad
+K=\begin{pmatrix}
+1-\alpha&\alpha&0\\
+0&0&1\\
+1-\beta&\beta&0
+\end{pmatrix},\qquad
+\pi=(1-2t,t,t).
+\tag{18.1}
+$$
+
+状态顺序是 $(00,01,10)$，从 $(a,b)$ 转到 $(b,c)$ 表示追加最后一位 $c$。
+由 (17.2) 有 $0<\alpha<1$、$0<\beta<1$。
+$K$ 是按公共二位边缘归一化的条件概率；它不是未归一化的底面联合表，
+也不是仅由读到局部概率就自动获得的原生执行操作。
+将具有初始平稳律 $\pi$ 的双侧链投影到相容位序列，记所得源为
+$\mu^{(2)}_{t,\kappa}$。
+

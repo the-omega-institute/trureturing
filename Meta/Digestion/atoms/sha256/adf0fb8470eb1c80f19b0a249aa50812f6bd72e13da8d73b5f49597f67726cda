@@ -1,0 +1,22 @@
+**引理 5.2（Two forced roots and the complete cut entries）。** For every correct controller in Definition 5.1, the two scalar initial states $a_v=c(v)$ are distinct emitting states with $u(a_v)=1^m$. Their zero-difference successors
+
+$$
+d_v=V(a_v,v)
+\tag{5.3}
+$$
+
+are emitting states distinct from both roots. For some $b_v,c_v\in\{0,1\}$ their words are exactly
+
+$$
+u(d_v)=1^r0b_vc_v.
+\tag{5.4}
+$$
+
+If $d_0=d_1$, the two words, hence their two final bits, coincide. On the mandatory root occurrence, each of a root's scalar response entries is realized by a source with target different from $B$. On the mandatory cut occurrence, each scalar response entry is realized by an $A$ source. Consequently none of these scalar entries can lead directly to a state with instruction $\operatorname{Halt}(B)$.
+
+Proof. At either free value, choose $j\in J$ and initial tails $0,h$. Their labels differ. A root containing a zero after $\ell<m$ leading ones lets both reach that zero, because $h+\ell\le2m-3=k-1$. Their values and phases agree and the zero clears both tails. They then have the same physical record and the same observed archive, so no later deterministic continuation recovers the unequal INITIAL labels. Stopping initially is also impossible. Thus the root word is $1^m$, as in Corollary 3.1.
+
+Suppose its two initial control states coincide. After this common root, condition on either scalar endpoint $y$. That one control state must contain the zero-difference sources with initial value $y$, and the positive-difference sources with initial value $1-y$. It cannot stop. If its next word begins zero, at any fixed $j\in J\setminus\{j_B\}$ the former sources with initial tails $0,1$ merge, losing labels $A,M$. If it begins one, take initial tail $h-1$ from both a zero-difference phase in $J$ and a positive-difference phase in $\{0,m\}$. Both current tails are $k-1$ and both current values are $y$; the first bit rejects them into the same bottom record and endpoint, losing labels $M,C$. These two first-bit cases exhaust every literal next word. Hence $a_0\ne a_1$.
+
+The root-zero archive at either value contains $A,B,M$ and cannot stop. Another $1^m$ rejects every member and loses unequal labels, so its next state is neither root. Theorem 2.1 and Example 3.2 force the unique eligible first zero at $r=m-3$. Directly, a first zero after $\ell<r$ leading ones lets the initial tails $0,1$ at a fixed $A$ phase survive and merge, losing $A,M$; after $\ell>r$, one has $\ell\ge h$ and even the initial tail-zero $A,B$ sources reject together. Only $\ell=r$ remains. There are then exactly two unconstrained final bits, giving all four words (5.4) without selecting a preferred final tail. The low-tail phase set $H=\{2,\ldots,m-1\}$ has cut charge zero and label $A$. The cut turn $2m-3$ has charge one and also label $A$, regardless of $b_v,c_v$. Thus both successful scalar entries at each cut are occupied by $A$ sources. At root $a_v$, response $v$ includes $A$ sources and response $1-v$ includes $C$ sources. Correctness prohibits a direct $B$ stop at all these entries. ∎
+

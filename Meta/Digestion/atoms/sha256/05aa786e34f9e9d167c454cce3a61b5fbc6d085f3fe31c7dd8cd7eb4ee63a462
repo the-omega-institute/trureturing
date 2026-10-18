@@ -1,0 +1,62 @@
+**Theorem 85.1 (two-sided finite-positive-coupling limit).** Let
+$g_n>0$, $\tau_n>0$ tend to zero in any manner such that
+
+$$
+\chi_n=g_n\tau_n^{-3/2}\longrightarrow\chi_0\in(0,\infty).
+\tag{85.1}
+$$
+
+On exactly the native domain (75.1), with no restriction to a band,
+product vector, real vector or ordinary phase $H^1$ domain,
+
+$$
+\boxed{\displaystyle
+\lim_n\tau_n E_{\tau_n}(g_n)=e(\chi_0).}
+\tag{85.2}
+$$
+
+In fact every normalized native sequence $\psi_n\in\mathcal Q$
+satisfies
+
+$$
+\liminf_n\tau_n\mathfrak e_{g_n,\tau_n}[\psi_n]\ge e(\chi_0),
+\tag{85.3}
+$$
+
+and normalized admissible recovery sequences attain the upper
+limit $e(\chi_0)$.
+
+Proof. Put $s_n=\sqrt{\tau_n}$, $f_n=\mathcal U_{s_n}\psi_n$.
+The exact conjugacy (81.4) makes the expression in (85.3) equal to
+$q_n[f_n]$ in (83.5). If its lower limit is infinite there is
+nothing to prove. Otherwise pass to a subsequence realizing that
+lower limit. Uniform boundedness of $U_s$ bounds these forms below
+and makes their kinetic energies bounded above along this
+subsequence. Proposition 83.2 gives a further subsequence and a
+limit $f$ with
+
+$$
+\liminf_n q_n[f_n]\ge h_{\chi_0}[f]
+             \ge e(\chi_0)\|f\|_2^2\ge e(\chi_0).
+\tag{85.4}
+$$
+
+The last step uses $\|f\|_2\le1$ and $e(\chi_0)\le0$, established
+in Theorem 84.1. In particular mass outside all rescaled compact
+sets is allowed. Its absence from $f$ cannot lower (85.4): it loses
+the entire compact potential contribution and the discarded
+kinetic energy is nonnegative. No assertion of tightness entered
+the lower direction.
+
+For the upper direction choose a normalized compact core vector
+$f$ with $h_{\chi_0}[f]\le e(\chi_0)+\epsilon$. Such vectors exist
+by the defining core and boundedness of $V$. For all large $n$ its
+support lies inside both moving height faces, and
+$\mathcal U_{s_n}^{-1}f\in\mathcal Q$ is normalized. Its rescaled
+energy tends to $h_{\chi_0}[f]$ by Proposition 83.2. Let
+$\epsilon\downarrow0$, using a diagonal choice if a single recovery
+sequence is desired. Applying (85.3) to normalized infimizing
+native vectors and this upper bound proves (85.2). These two
+arguments cover every sequence (85.1), not just a power-law path.
+$\square$
+

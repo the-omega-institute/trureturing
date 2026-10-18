@@ -1,0 +1,34 @@
+**推导 4.4（移位矩阵及复 Cassini）。** 代入 $`S`$ 的显式矩阵，并置 $`b=e^{(-a-i\pi)t}`$，得
+
+```math
+U(t)=\frac12\begin{pmatrix}
+e^{at}+b-(e^{at}-b)/\sqrt5&2(e^{at}-b)/\sqrt5\\
+2(e^{at}-b)/\sqrt5&e^{at}+b+(e^{at}-b)/\sqrt5
+\end{pmatrix}.
+```
+
+第一节的指数式给 $`\mathcal F(t)=(e^{at}-b)/\sqrt5`$，并给
+
+```math
+\mathcal F(t-1)=\frac{\varphi^{-1}e^{at}+\varphi b}{\sqrt5},\qquad
+\mathcal F(t+1)=\frac{\varphi e^{at}+\varphi^{-1}b}{\sqrt5}.
+```
+
+利用 $`\varphi=(1+\sqrt5)/2`$，对角项正好是这两个值，故
+
+```math
+U(t)=\begin{pmatrix}
+\mathcal F(t-1)&\mathcal F(t)\\
+\mathcal F(t)&\mathcal F(t+1)
+\end{pmatrix}.
+```
+
+在两个谱线上的特征值乘积为 $`e^{at}e^{(-a-i\pi)t}`$，因此
+
+```math
+\det U(t)=e^{-i\pi t},\qquad
+\mathcal F(t+1)\mathcal F(t-1)-\mathcal F(t)^2=e^{-i\pi t}.
+```
+
+整数点恢复经典 Cassini 的正确符号 $`F_{n+1}F_{n-1}-F_n^2=(-1)^n`$。整数时它描述实组成平面平行四边形的有向面积反号；非整数复行列式属于复线性表示，不是普通实空间面积。它的相位也不是在此建立的量子相干度。
+

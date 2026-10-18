@@ -1,0 +1,60 @@
+**Theorem 9.2 (one-boot uniform returning recovery).** For the one fixed
+initialization of Definition 9.1 and every finite strictly increasing
+list $1<J_1<\cdots<J_t$, actually supply choice 01 and CAP's canonical
+Reserve$(J_i)$ frame for each $i$. Between these calls insert any finite
+number of canonical recovery requests for completed strict occurrences,
+with actual acquired $m$ and $0\le z\le4(J_i-K_i)$,
+$0\le s\le4$. Under Assumption 1.2 and canonical code supply:
+
+1. Every such source call is the genuine strict Reserve on the one original
+   source and has its full original acquired row/ACK return to $R_r$.
+2. Every such recovery acquires its actual cover reference and package
+   reference, returns the exact requested raw prefix/endpoint with all
+   intervening historical native work counted, and finishes output,
+   check, ACK, token and outer return finitely.
+3. After the finite list, choice 00 resumes the original INITIAL-Stop
+   consumer and reaches its genuine global halt with target $q_1(\beta)$.
+
+The same boot allows, after enough reservation, optional actual auxiliary
+Raise and original Rho frames before choice 00. They use their historical
+current guard; Reserve alone never changes it. No per-capacity
+reinitialization, reseeding or new original controller is involved.
+
+Proof. Proposition 4.4 gives the first actual initialized $R_r$ with the
+parked Stop client. Induct on the supplied finite cycle list. At an
+auxiliary Reserve entry the actual current reserve is the preceding $J$
+(or 1 initially). Strict increase makes its greater branch genuine.
+CAP Theorem 5.2 preserves $t=\beta,h=1,\xi,u$ and extends the real
+$\phi_K$; its complete return and Proposition 5.5 reestablish $R_r$
+with its actual acquired row and longer $M$. No supplied future maximum
+was used. A history cycle satisfies Propositions 6.5, 8.4 and 7.4;
+its old targets lie in its already completed predecessor and its newly
+executed rows enter the next real prefix. The induction also supplies
+the finite-predecessor condition needed when a later Boundary simulates
+this very recovery. The original 24–27 client state remains parked,
+while the source's real counters/layout and the meter evolve.
+
+For optional Raise, CAP Theorem 5.3 changes only the current guard on its
+lawful strict branch. A subsequent original Rho has CAP Theorem 4.5's
+whole-candidate behavior under that guard, including an executed reject
+if it is insufficient. Neither operation changes the acquired initial
+source or retroactively changes any earlier row's guard. Proposition
+5.5 gives their actual auxiliary returns too.
+
+Choice 00 transfers and loans the original workspace as in §5 and
+enters the actual original client table. It constructs/seals its output
+on 31 and copies the complete output/terminal packet to producer 21 on
+route 49, with all CAP workspace loans/returns. Its global Halt marker
+has its genuine semantic/unified rows, dependencies and mandatory ACK.
+The terminal route freezes both original journal ends, builds SEG-P1,
+copies every dependency and snapshot to verifier 32 on route 50 with
+native descriptors on 33, and executes CAP Definition 6.5's historical-
+guard enumeration/checks. Acquired initial beta identifies the actual
+initial candidate in $D$; its original target is $q_1(\beta)$ even if
+optional Rho has changed the current source. CAP Theorem 6.6 therefore
+accepts this truthful proposal. Its SEG-R1 receipt travels on route 51
+to consumer 40, whose original binding checks, allocation, target copy,
+OUT, ACK and return precede the actual global halt CTL. No new history
+entry is enabled after that edge. This proves the original-target and
+terminal assertion on the same continuing execution. ∎
+

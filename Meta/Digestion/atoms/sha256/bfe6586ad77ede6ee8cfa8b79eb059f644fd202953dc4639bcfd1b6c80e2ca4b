@@ -1,0 +1,144 @@
+### 217.5 D — natural ownership: arbitrary guards and one joint share test
+
+Let disjoint finite address sets $I,J\subseteq\{1,\ldots,L\}$ satisfy
+$1,2\in I$, $|I|,|J|\ge3$. Put $k=|I|$, $j_0=\min J$, and set
+all beta coordinates outside $I\cup J$ to zero. Let $\gamma_j>0$ for $j\in J$,
+$\xi_i\ge0$ for $i\in I$, $\alpha_i\ge0$ with $\sum_I\alpha_i=1$, and
+$p_j,c,d,t\ge0$. The $\alpha_i$ here are donor shares, separate from the
+anchor-offset vector in 217.1. Put
+$G=\sum_J\gamma_j$, $P=\sum_Jp_j$, $S=P+c+d$,
+$E=\xi_1+\xi_2$, $D=\sum_I\xi_i$.
+For $U\subseteq I$, define
+$a_j(U)=\sum_{i\in I,\ i>j,\ i\notin U}\alpha_i$ and
+$f_j=1-a_j(\varnothing)$. If the following five conditions hold,
+
+$$
+\begin{aligned}
+\xi_i&\le\alpha_i[d+\sum_{j\in J,\ j>i}p_j+c1_{i<j_0}],\\
+f_jp_j&\ge\gamma_j,\\
+(1-\alpha_i)(p_r+c)-(p_r+c1_{r=j_0})a_r(\{i\})&\ge\gamma_r,\\
+(1-\alpha_i)(P-p_r+d)+t-p_ja_j(\{i\})&\ge\gamma_j,\\
+(1-\alpha_i-\alpha_h)S+t-(p_j+c1_{j=\min J})a_j(\{i,h\})&\ge\gamma_j,
+\end{aligned}
+\tag{217.9}
+$$
+
+The first line is for every $i\in I$, the second for every $j\in J$,
+the third for every $i\in I,r\in J$, the fourth for every $i\in I$ and
+distinct $j,r\in J$, and the fifth for distinct $i,h\in I$ and every
+$j\in J$. If these simultaneous conditions hold, then with $\beta_i=-\xi_i$, $\beta_j=\gamma_j$,
+$K=G+S+t$, one explicit score has
+
+$$
+\min_{Q(V)=q}\Delta_N(V)=\min_{Q(V)=q}\Delta_O(V)=E.
+\tag{217.10}
+$$
+
+The initial score is specified by the following rows; coincident words add.
+
+| Word | P mass | C mass |
+|---|---:|---:|
+| $w(\{i,j\})$ | $\alpha_i p_j$ | $0$ |
+| $w(\{i\}\cup J)$ | $\alpha_i c$ | $0$ |
+| $w(\{i\})$ | $\alpha_i d$ | $0$ |
+| $w(\{j\})$ | $0$ | $\gamma_j$ |
+
+The indexed rows range over $i\in I,j\in J$, the middle two once per i,
+with initial A zero and $T=t$. The actual P mass of first-zero class i is
+$R_i=\alpha_i[d+\sum_{j\in J,\ j>i}p_j+c1_{i<j_0}]$.
+In that class convert fraction $\xi_i/R_i$ of each P atom to A at the
+same word. A row indexed by a donor i but whose first zero is a positive
+j belongs to class j and is not converted. If $R_i=0$, the first condition
+forces $\xi_i=0$ and no division or conversion occurs.
+The total donor mass remains one shared stock, and the quotient is exact with
+$W=S+t-E$. Its absolute stock is $S+t-D$, not literal $S+t=K-G$.
+
+Proof: before conversion, zero reward dominates every donor label pointwise.
+For a J/J pair at r,l the zero cells are $c,p_r,p_l,P-p_r-p_l+d+t$.
+Label r in 01 has P reward $p_ra_r(\varnothing)$ in addition to its
+correct atom; its remaining reserve is exactly $f_rp_r$, and likewise for l
+in 10. An unqueried j in 11 has reward
+$\gamma_j+p_ja_j(\varnothing)\le p_j$, which is included in the
+baseline. All P-only cells are dominated by zero. For a mixed i,r pair,
+in (guard bit, positive bit) order regardless of numerical address order,
+the four zero masses are
+$\alpha_i(p_r+c),\alpha_i(P-p_r+d),(1-\alpha_i)(p_r+c),
+(1-\alpha_i)(P-p_r+d)+t$. Label r in 10 has extra P reward
+$(p_r+c1_{r=j_0})a_r(\{i\})$; every other positive j in 11 has extra
+P reward $p_ja_j(\{i\})$. These subtractions are exactly the third and
+fourth reserves. For two guards, all correct atoms
+lie in 11 and the final inequality protects every positive label. Inactive
+coordinates reduce to singleton partitions; all labels remain present.
+In that 11 cell positive j has P reward
+$(p_j+c1_{j=j_0})a_j(\{i,h\})$, which the last inequality subtracts.
+Conversion leaves zero reward fixed and decreases only donor labels, so
+$B_N=B_O=S+t$ and (217.10) follows from the universal constant-zero lower
+bound $W=Z-E$. A failure of any positive-label reserve is exposed by
+its indicated pair cell; since zero's total is $S+t$, that failure raises
+the N support above $S+t$. Thus, after valid class conversions, the four
+reserve families are necessary and sufficient for this particular score
+to have $\Delta_N=E$. Its attainment proves the unrestricted minimum on
+the stated cone. The tests are only sufficient for unrestricted fiber
+attainment and are not necessary conditions on every possible score.
+
+If every guard precedes every positive, $p_j=\gamma_j$, and
+$S=G+c+d>0$, put
+$h=\min\{c/(\mu+c),\min_j[1-(\mu_{-j}-t)_+/(G-\gamma_j+d)]\}$,
+$v=1+(t-\mu)/S$, and $l_i=\xi_i/S$ for $i\in I$. Here
+$\mu=\max_{j\in J}\gamma_j$ and $\mu_{-j}=\max_{h\in J\setminus\{j\}}\gamma_h$.
+Write $l_{[1]}\ge l_{[2]}$ for the two largest values among all $l_i$,
+including ties. These ranks do not relabel physical addresses 1 and 2,
+which still define E. The joint share problem is feasible exactly when
+
+$$
+\sum_{i\in I}l_i\le1,\quad l_{[1]}\le h,\quad
+l_{[1]}+l_{[2]}\le v,\quad
+1\le\min\{kh,kv/2,(k-1)v-(k-2)l_{[1]}\}.
+\tag{217.11}
+$$
+
+This follows by reducing (217.9) to $\alpha_i\ge l_i$,
+$\alpha_i\le h$, $\alpha_i+\alpha_j\le v$, $\sum\alpha_i=1$;
+The first three tests say that the lower vector l is feasible before
+requiring total one. If $h\le v/2$, its maximum-total extension has all
+coordinates h. If $h>v/2$ and $l_{[1]}\le v/2$, use all coordinates
+$v/2$. Otherwise keep the coordinate with largest lower share at
+$l_{[1]}$ and put all others at $v-l_{[1]}$. The lower and pair tests
+make each of these vectors feasible in its stated case. Summing individual
+and pair constraints gives the first two total upper bounds. In the last
+case, fixing a coordinate at least $l_{[1]}$ gives the third upper bound.
+The corresponding constructed vector attains the minimum of all three.
+Interpolation between that vector and l reaches total one exactly under
+(217.11). The denominators in h are positive because at least three
+$\gamma_j$ are positive. This includes ties, zero lower shares and every
+closed cap, using one vector of shares on the actual physical addresses.
+
+A concrete family takes $I=\{1,2,3\}$, $J=\{4,5,6\}$,
+$\alpha_i=1/3$, $p_j=\gamma_j=g$, $c=g/2,d=t=0$ and
+$0\le\xi_i\le7g/6$. Put $A_{w(\{i,j\})}=2\xi_i/7$,
+$P_{w(\{i,j\})}=g/3-2\xi_i/7$,
+$A_{w(\{i,4,5,6\})}=\xi_i/7$,
+$P_{w(\{i,4,5,6\})}=g/6-\xi_i/7$, and C mass g at each pivot.
+Then $Q=(-\xi_1,-\xi_2,-\xi_3,g,g,g;13g/2)$ and both minima are
+$\xi_1+\xi_2$. For $0\le u\le g$, moving $u$ of class-4 C mass from $w(\{4\})$ to
+$w(\{4,5\})$ gives $\Delta_O=E$ and
+$\Delta_N=E+(u-g/2)_+$; at $g=4$, $\xi=(1,0,1)$, $u=4$ this is
+$Q=(-1,0,-1,4,4,4;26)$ with input costs $(3,1)$ and repaired costs $(1,1)$.
+Here the zero baselines in guard/guard, guard/positive and positive/positive
+pairs are respectively $(0,7g/6,7g/6,7g/6)$,
+$(g/2,2g/3,g,4g/3)$ and $(g/2,g,g,g)$. The moved label 4 remains covered
+in every pair other than full (4,5); that pair has maxima
+$(\max(g/2,u),g,g,g)$. Its stopped first cell has baseline $3g/2$ and
+correct mass g. These formulas prove the relocation on $0\le u\le g$.
+At the displayed unit input W is 13, supports are (16,14), and repaired
+supports are (14,14). At $g=0$, capacities force $\xi=0$ and the score is zero.
+
+For an interleaved instance, take $I=\{1,2,4,6,8\}$,
+$J=\{3,5,7\}$, all donor shares $1/5$, $\gamma=(2,3,1)$,
+$p=(5,5,5/4)$, $c=5,d=1,t=0$, and
+$\xi=(1/2,1/4,1/2,1/5,1/10)$ on I. The same first-zero conversion gives
+$\beta=(-1/2,-1/4,2,-1/2,3,-1/5,1,-1/10)$,
+$K=93/4$, $W=33/2$ and both costs $3/4$. This retains negative
+coordinates before, between and after positives, including ownership of
+P rewards on positive first-zero classes.
+

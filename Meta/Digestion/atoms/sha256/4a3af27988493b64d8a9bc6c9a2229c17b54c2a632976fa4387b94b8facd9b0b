@@ -1,0 +1,44 @@
+**引理 48.6（完整嵌套预留及逐步增长）。** 以定理 48.5 从 $L_0^{A_r}$ 开始的方向定向，令 $\eta_t=(T-t)\bmod2$。全部预留旧切口的完整词为
+
+$$
+B_{r,T,\eta_T}^+\cdots B_{r,1,\eta_1}^+
+B_{r,1,1-\eta_1}^-\cdots B_{r,T,1-\eta_T}^-.
+$$
+
+依次选择 $B_{r,1},\ldots,B_{r,T}$ 后，每一步仍是一圈，剩余词恰为删去已选择供应两项标记的词，且保留同一实际闭合边 $R_{m-1}^{A_r}c=L_0^{A_r}$。
+
+**证明。** $B_{r,t,1}$ 在 $X_{t+2}$ 中，$B_{r,t,0}$ 在 $X_{t+3}$ 中；$t=T$ 时后一项在 $X_0$。定理 48.5 中 $3\le j\le\ell+1$ 的路径方向仍为 $(-1)^{\ell-j}$，而 $X_0$ 正向。直接按两个列表读出，正标记按 $t$ 递减、负标记按 $t$ 递增，正标记原生指标为 $\eta_t$。
+
+当前最内供应仍仅有旧指标 $0,1$。其余 $m-2=d-1$ 个新原圈的完整补路径及原生 $c$ 边组成简单链
+
+$$
+F_t:\quad R_1\xrightarrow cL_2\xrightarrow H R_2
+\xrightarrow c\cdots\xrightarrow cL_{m-1}\xrightarrow H R_{m-1}\xrightarrow cL_0,
+$$
+
+另一链是实际边 $R_0\xrightarrow cL_1$。$H$ 表示相应新原圈删去该原生 $b$ 边后的完整补路径。若当前正标记为指标 $0$，把完整区间
+
+$$
+L_0\xrightarrow bR_0\xrightarrow I R_1\xrightarrow bL_1
+$$
+
+替换为
+
+$$
+L_0\xrightarrow{F_t^{-1}}R_1\xrightarrow{I^{-1}}R_0\xrightarrow cL_1.
+$$
+
+若当前正标记为指标 $1$，把
+
+$$
+L_1\xrightarrow bR_1\xrightarrow I R_0\xrightarrow bL_0
+$$
+
+替换为
+
+$$
+L_1\xrightarrow cR_0\xrightarrow{I^{-1}}R_1\xrightarrow{F_t}L_0.
+$$
+
+这是第 47 节的两种完整同端点替换，删除该供应的全部原生 $b$ 边并插入其全部 $c$ 边；旧区间全部保留，新原圈全部加入恰一次。最内旧区间 $I$ 不含任何其它剩余预留标记，故反向它保留剩余联合词。不同 $q$ 邻域不交，所以以后每项旧接触仍恰为 $0,1$。闭合边在全部正项到对应负项的嵌套区间之外，每次完整替换都保留它。
+

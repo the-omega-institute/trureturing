@@ -1,0 +1,13 @@
+**Proposition 2.3 (necessary distinctions in the guard).** Hole
+acceptance alone, rejection only at strict hole ancestors, and equality
+of automaton states each fail to characterize the selected complete row.
+
+Proof. If $F=Q$, every nonempty source selects its root, even when the
+two child states also accept. If $A$ accepts exactly $\alpha$, the
+bare row $P=\varnothing,C=\alpha$ has no hole ancestors but cannot
+be an output: its concrete root leaf accepts. For an automaton giving
+both leaves the same accepting state and rejecting pairs,
+$\langle\alpha,\alpha\rangle$ and $\langle\alpha,\beta\rangle$
+select the same two addresses and have the same hole-state tuple,
+but their complete partitions differ. $\square$
+

@@ -1,0 +1,45 @@
+**Proposition 6.1 (established actual TT equivalence).** On this same
+triple,
+
+$$
+L_2(K,H)\ \Longleftrightarrow\
+\Pi(A)=\Pi(B)=\Pi(C)=\Pi(D)=0.
+\tag{6.3}
+$$
+
+**Proof.** For either sixth action $E$ and every raw $w$,
+
+$$
+K\cap\mathcal F(H,E,w)=
+\begin{cases}
+K,&w=D_0+\lambda d,\\
+\varnothing,&w\ne D_0+\lambda d.
+\end{cases}
+\tag{6.4}
+$$
+
+Thus only the entire same triple can witness $L_1$ at sixth, under
+either action. On this child the last action $F$ and raw value $v$
+retain exactly
+
+$$
+\{W_i\in K:D_0+\lambda r_{EF}(W_i)=v\}.
+\tag{6.5}
+$$
+
+This has at least two members for some $v$ exactly when its column
+has a collision. For sixth $J$ the columns are $A,B$; for sixth
+$M$ they are $C,D$. Expanding (6.1) proves necessity. Conversely,
+choose the raw sixth response in (6.4) for each $E$, and for each
+last action separately choose its colliding pair and that pair's
+common raw terminal value in (6.5). These witness both $L_1$
+children and hence $L_2$. The four pairs and terminal values may
+differ. The affine bijection works also for $\lambda<0$.
+This is G, Proposition 5.1, equivalently the zero-sixth specialization
+of F, Proposition 7.2 and IX, Definition 5.2. ∎
+
+A column constant on all three worlds contributes all three unordered
+pair collisions. A nonconstant but noninjective column contributes
+exactly one proper pair. Literal columns retain their meanings
+$A=JJ$, $B=JM$, $C=MJ$, $D=MM$.
+

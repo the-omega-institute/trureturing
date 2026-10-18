@@ -1,0 +1,4 @@
+**定理 47.3（无损事件补集的准确条件）。** 以下条件等价：$A$ 为纤维并；$q_\exists(A)=q_\forall(A)$；存在 $B\subseteq Y$ 使 $A=q^{-1}(B)$；$q[\Omega\setminus A]=Y\setminus q[A]$。
+
+证明（47.3）。纤维全选或全不选恰使存在与必然相同，且以全选纤维的标签为 $B$ 给逆像表达；逆像表达反向保证饱和。两像互为补集恰排除同时有选点、未选点的纤维，由第 47.2 条等价于混合纤维为空。此处使用 [情境时空算术，命题 10](https://github.com/the-omega-institute/trureturing/blob/94fb8f7b14e6dca112b6806810ed40d59e096bfe/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC.md)及 FIB 任务纤维判据作为中间工具。取 $\Omega=L,q=(x,y),A=\{3\}$，$N,3$ 同落 $00$，此标签同时容许 $A$ 和其补集；这表示观察不足，并非同一来源同时属于互斥事件。点模式补集 $C_U$ 与本章事件幂集的补集不能互换。$\square$
+

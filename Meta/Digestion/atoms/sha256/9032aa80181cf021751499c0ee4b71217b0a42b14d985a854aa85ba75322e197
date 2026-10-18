@@ -1,0 +1,21 @@
+**Definition 6.1 (complete circle cases).** For each of the event, seven and six refined boxes take the eight cases ordered as
+
+$$
+(\eta,\epsilon,\sigma)=(0,+,+),(0,+,-),(0,-,+),(0,-,-),
+(1,+,+),(1,+,-),(1,-,+),(1,-,-).
+$$
+
+Use base $0$ for $\sigma=+$ and base $\pi$ for $\sigma=-$, with $x\in[-1,1]$. These two closed report half-circles include both axes and cover the circle. The polynomial is the corresponding $Y\cdot\Gamma_{\rm num}-\epsilon H_{\rm num}-\lambda\sigma W_{\rm num}$. Remove the successive exact double factors indexed by
+
+$$
+[0,3],\ [1],\ [],\ [2],\ [4],\ [],\ [6],\ [5],
+$$
+
+respectively. In the seventh case the contact root in this base-zero chart is $\widehat x_6=(x_6-1)/(x_6+1)$; its denominator is positive on the box. The quotient degrees are $(0,2,4,2,6,8,6,6)$. In the six-box fifth case the meaning of this quotient is the identity
+
+$$
+P_4(x)=P_4(x_4)+(x-x_4)^2Q_4(x),
+$$
+
+with the unused constant retained. All other indicated occupied factors have zero value and derivative and are genuinely divisible.
+

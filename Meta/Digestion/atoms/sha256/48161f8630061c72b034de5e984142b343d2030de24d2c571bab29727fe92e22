@@ -1,0 +1,49 @@
+**Proposition 17.1 (The R2 identity survives and its extra strengthening fails).**
+Let a complete normalized eight-bit $N$ law be feasible at
+$e=5\tau+d\in[0,1]$ for the first eight amplitudes of (1.4).
+Extend that same law by ignoring nine at auxiliary $b_9=e$
+as in 7.1. With $Y=Y_{128}$ and $\mathfrak d_r$ the demand
+of a full nine-bit row, define
+
+$$
+S=\sum_D\lambda_D(368-Yz_D)
+   +\sum_rY_r\,[p(\operatorname{event}r)-\mathfrak d_r].
+\tag{17.1}
+$$
+
+Then the supplied R2 slack identity is exactly
+
+$$
+S=8(117d-11u)\ge0.
+\tag{17.2}
+$$
+
+The additional proposed full-class strengthening $S\ge212d$
+is false for every $u>0$, as witnessed by $K$ at $e=h$.
+
+Proof. Full support gives $Yz_D\le368$ for every complete
+$N$ table. Every full row of the extended law is feasible, and
+$Y\ge0$, so each summand in (17.1) is nonnegative.
+Normalization and $p=\sum_D\lambda_Dz_D$ cancel the incidence
+terms, leaving $S=368-Y\mathfrak d$.
+The quotient (2.3)–(2.4), with $b_9=e$, gives exactly
+$S=8[117(e-5\tau)-11u]$.
+This auxiliary finite amplitude asserts nothing about the actual
+original $a_9$ and needs no order assumption.
+The identity is the credited score pairing, not a new certificate.
+
+For $K$, $d=22u/217$, and therefore
+
+$$
+S=\frac{1496u}{217},\qquad
+212d=\frac{4664u}{217},\qquad
+S-212d=-\frac{3168u}{217}<0\quad(u>0).
+\tag{17.3}
+$$
+
+The nonnegative identity remains valid.
+Its proposed strengthening would imply
+$8(117d-11u)\ge212d$, equivalently $181d\ge22u$;
+(17.3) shows why that additional full-class step cannot hold.
+For $K$ at $u=0$, one has $d=0$ and both quantities vanish. $\square$
+

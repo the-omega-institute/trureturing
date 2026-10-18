@@ -1,0 +1,23 @@
+**Definition 1.2 (first-leaf boundary).** The native descriptor is
+
+$$
+\partial_p(t)=
+\begin{cases}
+ B,&p\text{ is branch in }t,\\
+ (j,e),&p_j\text{ is the first leaf on the path to }p,\quad
+       t|_{p_j}=\lambda_e,
+\end{cases}
+\tag{1.3}
+$$
+
+where $\lambda_0=\alpha$ and $\lambda_1=\beta$. A source with descriptor
+$(j,e)$ has branches on the strict path prefixes, the label $\lambda_e$ at
+$p_j$, and no descendants below that leaf. A source with descriptor $B$ has
+branches through $p$.
+
+The published AAR13.3 factor $\Gamma_p(\partial_p(t))$ determines the complete
+future reply trajectory at $p$ for every authentic supplied count. It is a
+passive prediction factor, not an acquisition operation. The source family,
+the all-word encoder class, and the distinction between an acquired
+descriptor and its decoder are exactly those of AAR13.1--AAR13.8.
+

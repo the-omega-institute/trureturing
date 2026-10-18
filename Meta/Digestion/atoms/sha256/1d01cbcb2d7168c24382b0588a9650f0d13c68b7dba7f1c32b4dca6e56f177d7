@@ -1,0 +1,14 @@
+### Degree-eight upper faces
+
+Put x1=2. Relaxing the high opposite coordinate to 1 gives these upper
+bounds for the cosine:
+
+  three-star:   (2,2,1,c,c)       phi_1 = 709/1003
+  three-cycle:  (2,c,1,c,2)       phi_1 = 11*sqrt(249)/249
+
+Each square is strictly smaller than 1/2:
+2*709^2 < 1003^2 and 2*(11^2*249) < 249^2. The endpoint
+values are positive, so each is strictly below 1/sqrt(2).
+Thus alpha_1 > pi/4 at every occurrence, the cone angle is strictly larger
+than 2*pi, and K_e < 0.
+

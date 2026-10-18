@@ -1,0 +1,33 @@
+**定理 18.2.2（强数据处理预算）。** 在 $U\to X\xrightarrow K Y$ 下，
+
+$$
+\boxed{
+I(U;Y)\le \eta_{\mathrm{KL}}(K)\,I(U;X).
+}
+$$
+
+**证明。**
+
+记 $p_u=p_{X\mid U=u}$，$p_X=\sum_up(u)p_u$。由通道条件独立性，
+
+$$
+p_{Y\mid u}=p_uK,
+\qquad
+p_Y=p_XK.
+$$
+
+因此
+
+$$
+\begin{aligned}
+I(U;Y)
+&=\sum_up(u)D(p_uK\Vert p_XK)\\
+&\le\eta_{\mathrm{KL}}(K)\sum_up(u)D(p_u\Vert p_X)\\
+&=\eta_{\mathrm{KL}}(K)I(U;X).
+\end{aligned}
+$$
+
+若某个项为零或无穷，按相对熵的扩展值逐项成立。证毕。
+
+<a id="claim-18-2-3"></a>
+

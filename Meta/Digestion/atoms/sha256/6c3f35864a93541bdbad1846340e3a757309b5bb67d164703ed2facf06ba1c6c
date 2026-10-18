@@ -1,0 +1,21 @@
+**Definition 4.3 (nonoverlapping physical accounts).** At any observer step
+partition its live storage as follows. The peak of a sum need not equal the
+sum of peaks.
+
+| Region | Bill and status |
+| --- | --- |
+| Immutable cut and code | $4K+I_{\rm code}$ bits; no source-dependent installation. |
+| Candidate/output payload | $4|B|$ bits, including its one current payload only; $B$ is private until validation, then becomes the output. |
+| Operand payload | $4(|a|+1)$ bits for the complete flat query and delimiter; a dedicated mutable region, separate from paths and candidate. |
+| Auxiliary paths and pending replies | Guard $g$, exterior cursor $x$, two hole bases $p,q$, comparison cursor $z$, constant-size temporary sequence copies and replies. |
+| Mutable control and indices | Every sequence length, scan position, cut position, pair index, hole counter, operand head, output write head and allocation extent; finite control plus binary encodings. |
+| Retained certificate/history | Zero in the row-only variant; no Read or retry archive. |
+
+Lengths and heads are in the control account only, not charged again as
+payload. A fixed number of sequence copies suffices to implement the displayed
+concatenations; all are at most a constant times $H+1$ cells. In-place path
+operations also give such a realization. The returned object's length and
+canonical framing depend on its bytes and belong to its retained representation;
+any extra machine header is charged explicitly. The mathematical encoding
+uses its end token, so a separately retained length is unnecessary.
+

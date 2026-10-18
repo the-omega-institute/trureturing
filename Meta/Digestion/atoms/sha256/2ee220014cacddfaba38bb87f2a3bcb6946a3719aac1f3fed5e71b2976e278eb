@@ -1,0 +1,28 @@
+**Definition 2.3 (The frontier).** With $A$ the returned label, for
+$k\in\{1,2\}$ put
+
+$$
+E_k=\{\tau<\infty,N\le k\},\qquad
+q_k=\mathbb P_p(E_k),\qquad
+L_k=\mathbb P_p(A\ne H_j,E_k).
+\tag{2.2}
+$$
+
+For $m\ge1$ define, over precisely the tables of Definition 2.2,
+
+$$
+\begin{aligned}
+C_m(p,j,\nu)&=\sup\{q_2-L_2:|K|\le m,\ q_2=1\},\\
+R_m(p,j,\nu)&=\inf\{L_2:|K|\le m,\ q_2=1\}.
+\end{aligned}
+\tag{2.3}
+$$
+
+The admissible sets are nonempty because an immediate halt is legal.
+The condition $q_2=1$ is almost sure: source-null nonreturns or paths
+with more calls remain in the comparison class. It is not an all-input
+hard cap. Since $E_2$ has mass one, $R_m=1-C_m$, and classification
+error is unconditional up to a null extension of $A$. Classification
+of the four-valued hidden endpoint differs from squared loss for an
+erased visible bit.
+

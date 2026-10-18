@@ -1,0 +1,59 @@
+**Theorem 28.4 (Complete full pair density).** Label $a_0=00,a_1=01$ and $b_0=000,b_1=001,b_2=010$. Let $P=p_2+p_3+p_4$ and $Q=p_3+p_4$. In the support order
+
+$$
+a_0b_0\mid(a_0b_1,a_0b_2,a_1b_0)\mid(a_1b_1,a_1b_2),
+$$
+
+the noisy global-count density has the three blocks
+
+$$
+QP\quad\text{and}\quad
+\begin{pmatrix}
+Pp_2&P\overline C_3&\mu d_2\overline d_1\\
+PC_3&Pp_1&\mu|d_2|^2\\
+\overline\mu\,d_1\overline d_2&\overline\mu|d_2|^2&p_1Q
+\end{pmatrix}
+\quad\text{and}\quad
+p_1\begin{pmatrix}p_2&\overline C_3\\ C_3&p_1\end{pmatrix},
+\tag{28.4}
+$$
+
+with every omitted row, column and cross-block entry zero. In particular, the only nuisance-dependent entries are $Z,R$ and their conjugates.
+
+**Proof.** The nonzero local vectors are
+
+$$
+a_0=S^2x,\ a_1=c_1x,\qquad
+b_0=S^3x,\ b_1=c_2x,\ b_2=c_1Sx.
+$$
+
+The six joint vectors are
+
+$$
+\begin{array}{c|c|c}
+00|000&S^2x\otimes S^3x&0\\
+00|001&S^2x\otimes c_2x&1\\
+00|010&S^2x\otimes c_1Sx&1\\
+01|000&c_1x\otimes S^3x&1\\
+01|001&c_1x\otimes c_2x&2\\
+01|010&c_1x\otimes c_1Sx&2
+\end{array}
+$$
+
+where the last column is total tick count. Their diagonal norms are $PQ;Pp_2,Pp_1,p_1Q;p_1p_2,p_1^2$. The entry between the first two middle vectors is $P\overline C_3$, and its adjoint is $PC_3$; the last block similarly gives $p_1\overline C_3,p_1C_3$. For the middle first/third pair, the Gram product is
+
+$$
+\langle c_1x\otimes S^3x,S^2x\otimes c_2x\rangle
+=\langle c_1x,S^2x\rangle\langle S^3x,c_2x\rangle
+=d_2\overline d_1.
+$$
+
+For the middle second/third pair, the product is
+
+$$
+\langle c_1x,S^2x\rangle\langle S^3x,c_1Sx\rangle
+=d_2\overline d_2=|d_2|^2.
+$$
+
+Both pairs have $\Delta m_1=-1$, hence acquire $\mu$ by (28.1); their adjoints acquire $\overline\mu$. There are no other supported vectors or equal-total-count pairs, so (28.4) specifies the whole density. $\square$
+

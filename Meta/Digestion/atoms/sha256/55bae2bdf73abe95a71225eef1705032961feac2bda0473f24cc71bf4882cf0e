@@ -1,0 +1,36 @@
+**Lemma 2.3 (Actual sections and finite initialization).** For an
+installed table write $w_r=\nu(c_{\rm init}^{-1}\{r\})$. If
+$q(r),C(r)$ are its return and correct-return source masses within
+three calls from deterministic row $r$, then
+
+$$
+q_3=\sum_rw_rq(r),\qquad
+q_3-L_3=\sum_rw_rC(r),\qquad \sum_rw_r=1.
+\tag{2.3}
+$$
+
+If $q_3=1$, each $w_r>0$ has $q(r)=1$. At a deterministic start,
+a consistent reachable finite history has exactly its acquired-reply
+cylinder as source section. On every positive section after three
+calls the actual current row must Halt.
+
+Proof. The seed has no role after choosing the row. Independence
+gives (2.3) on the finite measurable initialization cells. Since
+$\sum_rw_r(1-q(r))=0$ has nonnegative summands, every positive
+cell has the stated mass-one property. This uses no conditioning on
+singleton seeds, regular conditional law, atomic-seed assumption,
+divisibility of seed masses or additional randomness.
+
+For sections, start with the whole source at the empty history.
+At each prefix the instruction is fixed. A Read at $t$ with reply
+$x$ intersects the old section with $\{X_t=x\}$. A Halt and its
+finite duration add no source condition. Induction gives the cylinder
+assertion, including adaptive paths through the table. Contradictory
+repeated replies give empty sections. Further intersections keep them
+empty. A Read after three calls on a positive section incurs a fourth
+call on all of that section, contradicting $q(r)=1$. The instruction
+set consequently forces a Halt there. Null destinations remain
+unrestricted. Measurable completions give the same integrated masses:
+representatives agree off product-null sets, whose source sections are
+null for almost every seed by Tonelli. $\square$
+

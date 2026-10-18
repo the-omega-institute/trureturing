@@ -1,0 +1,63 @@
+**Definition 3.2 (strict attractive realizations and their domains).**
+Retain the sufficient constant $C_H>0$ and, for each fixed $\varepsilon$,
+the finite $B_\varepsilon\ge0$ of [G, Proposition 4.3]:
+
+$$
+V_o[f]\le\frac{2rC_H}{\varepsilon^2}T[f]
+             +B_\varepsilon\|f\|_2^2
+\qquad(f\in\mathcal F).
+\tag{3.7}
+$$
+
+For statements involving a full attractive operator or its evolution,
+assume
+
+$$
+g=\gamma\varepsilon^2,\qquad
+0<\gamma<(2rC_H)^{-1}.
+\tag{3.8}
+$$
+
+[G, Theorem 5.1] supplies a closed semibounded $q_g$ on exactly
+$\mathcal F$, with compact resolvent and the bound
+
+$$
+q_g[f]\ge(1-2rC_H\gamma)T[f]
+             -\gamma\varepsilon^2B_\varepsilon\|f\|_2^2.
+\tag{3.9}
+$$
+
+Write $H_g$ for its selfadjoint form operator, with domain
+
+$$
+D(H_g)=\{f\in\mathcal F:\ \exists F\in L^2(\mu),\
+ q_g(f,v)=\langle F,v\rangle\ \forall v\in\mathcal F\}.
+\tag{3.10}
+$$
+
+Write $\overline H_g$ for the operator of the restricted form in (3.4)
+on exactly $\overline{\mathcal F}$, with the analogous variational domain.
+This form is closed and semibounded by (3.7), (2.3) and KLMN [T, Theorem
+6.24]; the same strict relative bound is less than one. Its form norm is
+equivalent to the free base norm, and the latter embeds compactly into
+$L^2(D)$ by (2.4). Hence it also has compact resolvent. Neither domain
+(3.10) is being replaced by the intersection of a free operator domain
+and a multiplier domain.
+
+On compact smooth tests whose height support avoids $k_o$, the full and
+restricted operators do have the concrete expressions
+
+$$
+H_gf=Lf-g\Gamma_of,\qquad
+\overline H_gv=\overline Lv-gW_ov.
+\tag{3.11}
+$$
+
+Indeed the multipliers are smooth and bounded with all derivatives on such
+supports, so integration by parts against the form core extends by form
+continuity to the entire domain. The right sides are again compact smooth
+tests supported away from $k_o$. These tests therefore belong to the
+domains of every positive integer power of the respective operators.
+This local statement, rather than unrestricted multiplier membership of
+all form states, will justify the response derivatives below.
+

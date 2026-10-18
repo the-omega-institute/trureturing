@@ -1,0 +1,86 @@
+**Definition 5.2 (RC branch and contact).** In the rectangle
+$0\leq a\leq37/125$, $7/20\leq k\leq2/5$, set
+
+$$
+\begin{aligned}
+D_a&=\alpha(1-2a)+a^2,&U_a&=-\alpha+2a-a^2,&V_a&=\alpha-a^2,\\
+n&=(D_a,U_a,V_a)^T,&\sigma&=D_aU_a,\\
+W&=D_aCn-2\beta akQn,&H&=-n^TQW,&R&=W^TQW,\\
+Z&=2HW+Rn,&\mathcal E&=2HW^TW+D_aR\sigma,\\
+g_a&=Z^TGZ,\qquad
+\mathcal P(a,k)=a^{-1}\det[D_a^2\sigma CZ-\mathcal EW,\ QZ,\ GZ].
+\end{aligned}
+\tag{TA.29}
+$$
+
+The last division is exact polynomial division before evaluation,
+including $a=0$. RC supplies the unique selected analytic root
+$k=k(a)\in(7/20,2/5)$ across the entire closed $a$ interval. All
+subsequent branch expressions use this root. Put
+
+$$
+B(a)=-\frac{R}{2D_a\sigma H}nn^T,\quad
+C_0(a)=\frac{ZZ^T}{2H\mathcal E},\quad
+A(a)=I-B(a)-C_0(a),\quad \tau(a)=2A(a)_{01}.
+\tag{TA.30}
+$$
+
+RC supplies the unique zero $a_\dagger$ of $\operatorname{tr}A(a)-1$,
+with $.2951251<a_\dagger<.2951252$, and the decreasing continuous
+bijection $\tau:[0,a_\dagger]\to[\tau_\dagger,1]$. Here
+$t_\dagger=Z_2/Z_1$ at $a_\dagger$,
+$\tau_\dagger=h(t_\dagger)$, $s_\dagger=s_0\tau_\dagger$, and
+
+$$
+.9962433511188<\tau_\dagger<.9962433511192.
+\tag{TA.31}
+$$
+
+The unique optimizing normalized tuple above contact is $(A,0,B,C_0)$.
+Its height value is $T_{\rm flat}-g_a/(2H\mathcal E)$.
+The aggregate ranks are $(2,1,1)$ for $a<a_\dagger$ and $(1,1,1)$
+at contact. Define
+
+$$
+\begin{aligned}
+N_Q&=\beta W_1^2+\alpha W_2^2-\alpha\beta W_0^2,\\
+v_\pm&=\frac{-\alpha W_0W_2\pm W_1\sqrt{N_Q}}
+                 {\alpha W_2^2+\beta W_1^2},\qquad
+u_\pm=-\frac{W_0+W_2v_\pm}{W_1},\qquad q_\pm=(1,u_\pm,v_\pm)^T,\\
+w_+&=\frac{A_{02}-v_-A_{00}}{v_+-v_-},\qquad
+w_- =\frac{v_+A_{00}-A_{02}}{v_+-v_-}.
+\end{aligned}
+\tag{TA.32}
+$$
+
+RC's whole-domain comparisons give positive $D_a,H,R,\mathcal E,N_Q,W_1$,
+negative $\sigma,g_a,W_0$, and $W_2\geq0$, as well as $u_\pm>0$.
+All displayed denominators are nonzero. The four lines $q_+,q_-,n,Z$
+are distinct. Their normalized coefficient vectors are
+
+$$
+\sqrt{w_+}q_+,\quad\sqrt{w_-}q_-,\quad
+\sqrt{-R/(2D_a\sigma H)}\,n,\quad Z/\sqrt{2H\mathcal E}.
+\tag{TA.33}
+$$
+
+Their projectors sum to $I_3$. Both $w_\pm$ are positive for
+$a<a_\dagger$; $w_+(a_\dagger)=0<w_-(a_\dagger)$.
+Their height signs are $(+,+,+,-)$ and reports $(+,+,-,-)$.
+The $n$ ray has signs $(+,-,+)$ and $Z$ signs $(-,+,+)$.
+At $a=0$ the four coordinate-$0$-one rays are $(1,\pm1,\pm1)$,
+each with coefficient weight $1/4$. At contact the surviving three
+weighted rays are the initial orthonormal frame. The new exposed
+$q_+$ unit ray at contact has positive coordinates enclosed by
+
+$$
+(.6491799,.6491801),\quad
+(.6813365,.6813368),\quad
+(.3381503,.3381505).
+\tag{TA.34}
+$$
+
+These source comparisons, selected-root properties, unique aggregates,
+gluing and absence of later aggregate/contact transitions are credited
+RC results. They are not inferred from a sampled trial family.
+

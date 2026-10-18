@@ -1,0 +1,43 @@
+## 279. A common receiver containing M is impossible
+
+Every face of a chosen paired frame contains both transverse labels.
+Since eta has an incoming face {U,Z,C} with no M, any M occurrence in
+eta is axial and opposite this face. There is exactly one such M axis:
+if both axes were M, every face would contain M. The incoming face has
+three distinct labels, so up to paired-frame symmetries there are exactly
+three possible roles:
+ (i) eta=(M,U,Z,C,U,Z),
+ (ii) eta=(M,U,C,Z,U,C),
+ (iii) eta=(M,Z,C,U,Z,C).
+The two incoming face occurrences are precisely the two faces of the
+non-M axis in each of these roles.
+
+In (ii), all Z intervals in tau,rho,eta form a closed subset of the
+actual Z circle. Tau has one Z axis, rho two transverse Z slots, and
+eta one Z axis. Their incident faces have all been paired in this chain:
+tau to rho across {M,Z,C}, then rho to eta across {U,Z,C}. There are
+exactly 1+2+1=4 slots, contradicting minimum degree six.
+In (iii), the unique U axes in rho and eta close across their two paired
+faces, giving a closed two-slot U circle, again impossible.
+
+In (i), eta's two remaining face occurrences are {M,U,Z}, incident to
+its unique M axis. They are marked. They cannot meet tau's unused faces,
+and all rho faces are occupied. Self-pairing would close eta's single
+M interval. Consequently both remaining eta faces must meet xi.
+
+An incoming {M,U,Z} face forces xi's transverse pair to contain two
+of these three distinct high labels, with its incident axis the third.
+Thus every xi face is marked, independently of its other axis. Its two
+remaining faces cannot meet tau's unmarked free faces; rho and eta
+have no unused faces. They must pair to each other.
+
+Now all M-incident faces of eta and xi are paired within these two
+owners. Eta's incoming {C,U,Z} faces have no M. Its M axis has its two
+ends paired to xi. Every xi face pairs either to eta or to xi itself.
+Hence their nonempty set of original M intervals is closed. Eta supplies
+one M slot; xi has at most three M slots. Indeed M is either transverse,
+with two slots and at most one additional M axis because the incoming
+axis is another high label, or axial, with at most two slots. The closed
+subset has at most four original M slots. Connectedness of the actual
+M circle contradicts minimum degree six. This excludes (i) as well.
+

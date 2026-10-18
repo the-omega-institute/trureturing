@@ -1,0 +1,32 @@
+**Definition 274.1 (A complete-fibre capacity score).**
+Let $L\ge4$ and $c=c_m=4-2/\lceil(m+1)/2\rceil$, so $3\le c<4$.
+Use the balanced suffix measure $\nu$ of Section 201.2, also used
+in Sections 207.4 and 271.1. In zero-set notation, if $m=2q-1$
+each $q$-subset has mass $2m/(q\binom mq)$; if $m=2q$, each
+$q$-subset has mass $2/\binom mq$ and each $(q+1)$-subset has
+mass $2q/((q+1)\binom m{q+1})$.
+Its mass is $c$, each zero marginal is 2, and each distinct pair
+has reply-cell masses $(1,1,1,c-3)$ in $00,01,10,11$ order.
+For odd $m$, the marginal calculation is
+$(2m/q)(q/m)=2$ and the two-zero mass is
+$(2m/q)q(q-1)/(m(m-1))=1$. For even $m$, the two layers give
+unary masses $1+1=2$ and two-zero masses
+$(q-1)/(2q-1)+q/(2q-1)=1$; subtraction gives the other cells.
+
+Define $Y$ by
+
+$$
+P_{01z}=P_{10z}=\nu(z)/2,\qquad
+C_{1^{n-1}0v}=2^{-(L-n)}\quad(n\ge3),\qquad T=1,
+\tag{274.1}
+$$
+
+with every other score zero. Each complete late correct fibre has
+total weight one and every suffix on it has positive weight.
+Consequently $W_Y=c+1$, $\beta_j(Y)=1$ for $j\in J$ and zero
+otherwise, $K_Y=m+c+1$, and
+$F_Y=E_b-(c-2)e$. Write $\delta_b=(c-2)e-E_b$.
+The measure and its capacity projection are existing suppliers;
+the whole-fibre and column information below retains their common
+allocation before projection.
+

@@ -1,0 +1,61 @@
+### 63.2 Exact continuation from the original single-ray equations
+
+For each column \(j\), use the complete five-phase chart
+
+\[
+ z_j(\theta)_r=(V_{\rm nc})_{rj}e^{i\theta_r},
+ \qquad \theta_0=0.
+\]
+
+Take the five original equations
+\(F_j(b,\theta)_a=|(M(b)z_j(\theta))_a|^2-6\), \(a=0,\ldots,4\).
+The sixth follows from \(M(b)^*M(b)=6I_6\), so no condition has been
+dropped from the common-flat system. Put
+\(Y=M(0)V_{\rm nc}\), \(Y'=M'(0)V_{\rm nc}\), with \(M'(0)\) as
+in (62.3). The phase Jacobian \(A_j\) and parameter column \(f_j\) are
+
+\[
+ \begin{aligned}
+ (A_j)_{ar}&=2\operatorname{Re}
+ (i\bar Y_{aj}M(0)_{ar}(V_{\rm nc})_{rj})\quad(1\le r\le5),\\
+ (f_j)_a&=2\operatorname{Re}(\bar Y_{aj}Y'_{aj}).
+ \end{aligned}
+\tag{63.2}
+\]
+
+Exact determinants give
+
+\[
+ \det A_j=
+ \begin{cases}
+ 196830\sqrt7/49,&j=0,1,2,\\
+ -196830\sqrt7/49,&j=3,4,5.
+ \end{cases}
+\tag{63.3}
+\]
+
+The analytic implicit-function theorem therefore supplies the unique
+local common-flat curve \(z_j(b)\) in each ray chart. Shrinking six
+product neighborhoods yields a common parameter interval and the six
+disjoint neighborhoods in Theorem 63.1.
+
+For explicit differentiation, the phase tangents solve
+\(A_j\theta'_j(0)+f_j=0\). With \(s=\sqrt{21}\), they are the rows
+of the following matrix divided by 84, in the phase order \(r=1,\ldots,5\):
+
+\[
+ \begin{pmatrix}
+ 0&-48+20s&-104&-104&-56+20s\\
+ 70-14s&59-17s&-32-14s&38&-21-17s\\
+ -70+14s&-11-3s&-32+14s&-102&-91-3s\\
+ 0&-48-20s&-104&-104&-56-20s\\
+ -70-14s&-11+3s&-32-14s&-102&-91+3s\\
+ 70+14s&59+17s&-32+14s&38&-21+17s
+ \end{pmatrix}.
+\tag{63.4}
+\]
+
+All entries in (63.2)–(63.4) come from the same actual matrix and the
+same six original columns. The normalized input rays are represented
+by \(z_j(b)/\sqrt6\).
+

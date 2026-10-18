@@ -1,0 +1,52 @@
+**Corollary 219.17 (Scoped unit certificates and necessary amplitude cuts).**
+For an actual full unit-O input whose quotient lies in Theorem 219.3's
+sufficient face, or a zero-excess domain of Theorem 219.9 including
+Corollaries 219.11–219.12, the unrestricted lower bound forces $E\le1$.
+The constructed score has $\Delta_N=E$, the same quotient and
+$\theta=0$ in (219.6). In Theorem 219.13 the independent lower bound
+instead forces $2g\le1$, and its constructed score has cost $2g$.
+For Theorem 219.6 the analogous certificate is conditional on one
+allocation with $\Psi_N\le1-E$; unit-O feasibility provides only an
+O allocation and does not prove that N condition.
+
+At any original positive closed cap, either original class's feasible
+selected-law acquisition must satisfy, for each stated plateau score,
+
+$$
+\sum_{j:\beta_j>0}\beta_j a_j
+ \le\sum_{i:\beta_i<0}(-\beta_i)a_i+K\varepsilon.
+\tag{219.52}
+$$
+
+For the sharp family the necessary inequality is
+
+$$
+g(a_{j_1}+a_{j_2})+\sum_{r\ge3}h_ra_{j_r}
+ -(g-d)(a_1+a_2)-(H+g/2+2d)a_3
+ \le2d+(2H+9g/2)\varepsilon.
+\tag{219.53}
+$$
+
+**Proof.** The unit certificates follow from the attained unrestricted
+minima and $\sigma_{H_L}(0)=0$. At the same full feasible $\lambda$
+their weak-duality bound is $F_{Q(y)}\le ME$ or $F_{Q(y)}\le2gM$,
+respectively, as in (219.7). No independent component budget is added.
+For the necessary cuts use 110.2 and both horizon cases to obtain one
+normalized finite configuration satisfying every row in (219.49).
+Pairing with a score of support $W+c_0$ gives
+$F_{Q(V)}(a,\varepsilon)\le c_0$.
+Because early coefficients are $-\xi_1,-\xi_2$, the left side equals
+$\sum\gamma_j a_j-\sum\xi_i a_i+E-K\varepsilon$.
+For a plateau $c_0=E$; for Theorem 219.13, $c_0=2g=E+2d$.
+Canceling gives (219.52)–(219.53).
+For $\varepsilon\ge1$ the same inequalities are automatic from
+$a_j\le1$ and the stock bounds. They are necessary conditions,
+not sufficient amplitude classifications or new nonatomic-target claims. ∎
+
+The earlier-label regression remains explicit. On 0100 the legal
+N table $(3,4;1,0,0,0)$ has base, correct, pair readings $(0,1,1)$;
+replacing its first output by zero gives $(1,0,1)$.
+The source $(19,436)$ has $N=1822917$ and this prefix.
+No general pruning to zero or queried labels is allowed.
+All dominance arguments above concern the displayed constructed score.
+

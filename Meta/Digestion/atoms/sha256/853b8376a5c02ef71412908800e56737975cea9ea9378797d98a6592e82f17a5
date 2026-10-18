@@ -1,0 +1,45 @@
+**定义 85.2（原计数与事务内扫描）。** 对当前决定之前、此前没有书签的字，沿用 Boundary106.1、107.1 的 $V_i(\beta,h,\kappa)$ 与未剪枝计数 $A_i=|V_i|$。对于公开掩码 $M\subseteq Q$，置
+
+$$
+V_i(\beta,h;M)=\mathop{\dot\bigcup}_{\kappa\in M}V_i(\beta,h,\kappa),
+\qquad C_i(\beta,h;M)=\sum_{\kappa\in M}A_i(\beta,h,\kappa).
+\tag{85.4}
+$$
+
+当前决定后的活动掩码与活动集合为
+
+$$
+S_c(\beta,h)=\{\kappa:\chi_c(\beta,h,\kappa)=0\},\qquad
+W_c^\rho(\beta,h)=V_c(\beta,h;S_c(\beta,h)).
+\tag{85.5}
+$$
+
+完整后缀计数仍为 $N_c^\rho(t,h)$；实际格的完成数记 $N_b=N_c^\rho(\ell-\beta,h)$，越域重量取0。$A$ 不按 $N_b$、接受或 $\beta\le\ell$ 剪枝。所有秩从0起，使用最大不同坐标0先于1的 colex 顺序。$D_\rho,D,K_\pi$ 完全取式（110.8）、（110.10），包括全部种子的最大值以及终端分别按末位计数的两块。
+
+取原带门前驱
+
+$$
+P_{i,a}(\beta,h;M)=
+\{\kappa\in Q:\chi_{i-1}(\beta-a,h+av_i,\kappa)=0,
+\ \delta_{i-1}(\kappa,a)\in M\}.
+\tag{85.6}
+$$
+
+若 $\beta-a\notin\{0,\ldots,i-1\}$，前驱为空、计数为0，且不在越域字段求值 $\chi$。直接复用式（107.3）：$V_i(\beta,h;M)$ 分成末位0块 $V_{i-1}(\beta,h;P_{i,0})0$ 与末位1块 $V_{i-1}(\beta-1,h+v_i;P_{i,1})1$，按上述次序相接；每块内部保留前缀次序。这个关系不要求 $\delta$ 单射。
+
+在一次事务内，给两个掩码 $M,L$ 与有效源秩 $r\in[C_c(\beta,h;M)]$，初始化 $i=c,t=0$，并用当前局部值重复
+
+$$
+\begin{aligned}
+B_M&=C_{i-1}(\beta,h;P_{i,0}(\beta,h;M)),
+&B_L&=C_{i-1}(\beta,h;P_{i,0}(\beta,h;L)),\\
+b&=\mathbf1_{\{r\ge B_M\}},
+&r&\leftarrow r-bB_M,\quad t\leftarrow t+bB_L,\\
+(M,L)&\leftarrow(P_{i,b}(\beta,h;M),P_{i,b}(\beta,h;L)),
+&(\beta,h,i)&\leftarrow(\beta-b,h+bv_i,i-1).
+\end{aligned}
+\tag{85.7}
+$$
+
+右端一律读取该层更新前的值。至根，恰在 $r=0$、$\beta=0$、$h=C_\rho$ 且 $\kappa_{\rm init}\in M\cap L$ 时返回 $t$；否则返回事务内无效标志 $\bot$。初始界面越域、非法掩码或无效源秩也返回 $\bot$。记此局部函数为 $\mathcal R_c^\cap(\beta,h;M,L,r)$。它与式（107.4）使用相同分支计数，但不用该式的 $M\subseteq L$ 成员保证，而在根检验目标成员。$\bot$、扫描位置与掩码只占付费事务暂存，不进入 $z$ 的持久字母表；$\kappa_{\rm init}$ 是公开已知初始化常数，不是实际当前控制读口。
+

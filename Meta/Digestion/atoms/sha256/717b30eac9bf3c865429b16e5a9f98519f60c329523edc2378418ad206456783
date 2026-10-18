@@ -1,0 +1,105 @@
+**Theorem 7.4 (Native phase approximation floor).** Every model in
+Definition 7.1 satisfies
+
+$$
+\epsilon\ge B(b)=2\sqrt{Zb}.
+$$
+
+For this necessary bound, all probability-update requirements may be
+deleted. It even suffices to require one nonzero phase command $Q_{t_0}$
+on the full source, with its finite repetitions.
+
+**Proof.** Suppose $\epsilon<B(b)$ and take the actual reachable rays
+$x_k=(k,0,0)$ for $k\in[a,b]$. Put $e_j(k)=E_j(x_k)$ and
+
+$$
+W=\operatorname{span}_{\mathbb C}\{1,e_1,\ldots,e_n\}.
+$$
+
+After a fixed relative phase command $Q_t$, the decoded complex $02$
+prediction is
+
+$$
+f_t(k)=\pi\bigl(c+D_*(C_tE(x_k)+d_t)\bigr)\in W.
+$$
+
+The constant function absorbs both affine offsets. The true response is
+
+$$
+F_t(k)=B(k)e^{ic_0(k)t},\qquad c_0(k)=\frac12-\frac kr,
+$$
+
+so exact encoded continuation and the uniform original-output error imply
+
+$$
+|f_t(k)-F_t(k)|\le\epsilon,\qquad
+\|f_t\|_\infty\le B(b)+\epsilon.
+$$
+
+An encoder coordinate need not be bounded. Instead set
+
+$$
+W_{\rm bd}=\{f\in W:\sup_{k\in[a,b]}|f(k)|<\infty\}.
+$$
+
+This is a complex vector subspace of dimension at most $n+1$,
+with its genuine supremum norm, and it contains every $f_t$.
+
+Choose $q\in[a,b)$ with $B(q)>\epsilon$; this is possible by
+continuity and $B(b)>\epsilon$. Put
+
+$$
+T=\frac{2\pi r}{b-q},\qquad t_j=jT\quad(j=0,1,2,\ldots).
+$$
+
+For $j\ne l$, the interval of values of
+$(t_j-t_l)c_0(k)$ on $[q,b]$ has length $2\pi|j-l|$.
+Every closed interval of length at least $2\pi$ contains an odd multiple
+of $\pi$. At a corresponding height the two true responses are
+antipodal, giving
+
+$$
+\|f_{t_j}-f_{t_l}\|_\infty
+ \ge2(B(q)-\epsilon)>0.
+$$
+
+This is an infinite, uniformly separated family in a norm-bounded
+subset of the finite-dimensional space $W_{\rm bd}$.
+
+For completeness, total boundedness here requires no regularity of
+functions of $k$. If $v_1,\ldots,v_d$ is a basis of $W_{\rm bd}$,
+then
+
+$$
+N(\lambda)=\left\|\sum_{i=1}^d\lambda_i v_i\right\|_\infty
+$$
+
+is continuous on $\mathbb C^d$, because differences are at most
+$\sum_i|\lambda_i-\mu_i|\|v_i\|_\infty$.
+For $d>0$, it is positive on the Euclidean unit sphere by linear
+independence. The sphere is compact, so its minimum $\mu$ is positive.
+Homogeneity gives $N(\lambda)\ge\mu\|\lambda\|_2$. A bounded set in
+$W_{\rm bd}$ therefore has bounded coefficient vectors and lies in
+the continuous image of a compact coefficient ball. That image is
+compact and hence has a finite cover by balls of any positive radius.
+Balls of radius less than one third of the displayed separation contain
+at most one member of the separated family, a contradiction.
+For $d=0$ the space consists only of zero and cannot contain that
+separated family either.
+
+Each $Q_{t_j}$ is a separately finite lawful history; no infinite
+execution is used. To use just one nonzero $t_0$, choose a positive
+integer $M$ with
+
+$$
+M|t_0|(b-q)/r\ge2\pi
+$$
+
+and replace $Q_{t_j}$ by $jM$ repetitions of $Q_{t_0}$.
+Its native increment is $jMt_0$, and the corresponding iterate of one
+affine map is still affine. The predictions still lie in the same
+$W_{\rm bd}$ and have the same uniform bound. For distinct $j,l$,
+the frequency interval has length at least $2\pi$, giving the same
+contradiction. No group law on the ambient feature space, inverse
+matrix, or command-parameter continuity is needed. $\square$
+

@@ -1,0 +1,75 @@
+**Definition 5.1 (boundary of an admitted execution history).** Fix one
+installed table from a graph and valid common descriptor tuple, with
+$p(\delta_e)$ at each read state. Any other realization has the same
+replies by (UDB.4). Let $\mathcal X$ be its finite execution histories from
+the common start on sources $u\in D$, including first halt. A history $s$
+has immutable original-source coordinate
+$\lambda(s)=(\eta,\mathbf n)$, control $e(s)$ and update epoch $j(s)$.
+The action labels are $\mathsf{Read}_e$ for $e\in E_R$,
+$\mathsf{Update}_e$ for $e\in E_U$, and $\mathsf{Stop}$. A state-indexed
+action is enabled exactly at its named state; $T_a$ appends that actual
+instruction and its actual response to the history. Stop is enabled at a
+halt and acts as identity, so the history space need not include
+additional post-termination instructions.
+Define the retained row accumulator
+
+$$
+A(s)=\begin{cases}
+\mathsf{Pending},&e(s)\notin E_H,\\
+\mathsf{Done}(Y_{e(s)}),&e(s)\in E_H.
+\end{cases}
+\tag{UDB.19}
+$$
+
+The tags distinguish a pending empty row from a completed empty row.
+Here the accumulator is finite-valued and determined by the complete
+control state. It can equally be stored in that state. This notation
+does not grant a free unbounded memory register. For a flattened
+finite-accumulator table, use its actual finite accumulator value instead.
+
+The **observable boundary form** is
+
+$$
+b(s)=\bigl(e(s),j(s),V_{\Theta(\lambda(s))}(j(s)),A(s)\bigr).
+\tag{UDB.20}
+$$
+
+The response-vector component is the finite phase value, not just its
+ordinal position in a list of phases. The mathematical exact interface
+with source context retained is
+
+$$
+\mathfrak e(s)=\bigl(\lambda(s),b(s)\bigr).
+\tag{UDB.21}
+$$
+
+Its observable portion has exactly the four fields in (UDB.20). Its
+source coordinate is immutable semantic context, not an observation
+available to the installed controller. A family-indexed transition on
+the observable portion is different from a single autonomous transition
+that has discarded that context. This distinction is necessary even
+when all replies are monotone. Here observable refers to the declared
+response and output semantics of the external execution model; it does
+not mean the controller has measured every vector component or can read
+its epoch.
+
+For a valid descriptor tuple, call the installed halt outputs
+**reachable-witness-installed** when
+
+$$
+\begin{aligned}
+\forall\eta\in\mathcal A\;\forall\mathbf n\in\mathbb N^{d_\eta}\;\forall h\in E_H\quad
+&\left(\operatorname{Adm}_\eta(\mathbf n)\land
+H_{\eta,h}(\mathbf n;\boldsymbol\delta)\right)\\
+&\Longrightarrow Y_h=R(\Theta_\eta(\mathbf n)).
+\end{aligned}
+\tag{UDB.22a}
+$$
+
+The reachable-witness construction in Theorem 4.2 installs halt rows with
+this property: it chooses a complete row from one admitted witness for every
+reachable halt, while **Shared** and (UDB.2) show that every source reaching
+that halt has the same row. An unreachable halt receives $Y_*$. **Total** and
+**Shared** alone do not impose (UDB.22a) on an arbitrary
+preinstalled $Y_h$.
+

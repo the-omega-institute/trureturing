@@ -1,0 +1,70 @@
+**Theorem 6.6 (finite all-source representation, decoding and inverse extraction).**
+From any finite $A$ and proposed $b$ one can effectively construct a
+finite list $\mathcal C$ of nonempty cells (NRF.22)–(NRF.24) such that
+
+$$
+\begin{aligned}
+\{(u,n):H_b(u,n)\}
+ &=\bigcup_{c\in\mathcal C}
+   \{(\operatorname{Dec}_c(\mathbf y),n):
+                  \mathbf y\in\Omega_c,\ n\in I^H_c\},\\
+\{(u,n):E_b(u,n)\}
+ &=\bigcup_{c\in\mathcal C}
+   \{(\operatorname{Dec}_c(\mathbf y),n):
+                  \mathbf y\in\Omega_c,\ n\in I^E_c\}.
+\end{aligned}
+\tag{NRF.30}
+$$
+
+For selected sources the full operational denotation is
+
+$$
+\mathscr R_b=
+\bigcup_{c\in\mathcal C}
+\left\{
+\bigl(\operatorname{Dec}_c(\mathbf y),n,j,
+ \rho^{n+j}\operatorname{Dec}_c(\mathbf y)\bigr):
+\mathbf y\in\Omega_c,\ n\in I^E_c,\ j\in\mathbb N
+\right\}.
+\tag{NRF.31}
+$$
+
+Every candidate in (NRF.31) lifts to an actual selected producing run
+with identical $u,n,j$ and entire $b$. Every actual selected candidate
+extracts a code that decodes back to the identical source and counts. For fixed
+$u,n$, the canonical extracted source cell and residual values are
+unique. The cells can retain arbitrarily large source trees.
+
+Proof. Reject non-row-valid input by the empty list. Otherwise perform
+the finite constructions of Definitions 4.1, 5.1, 5.3 and 6.1–6.3.
+There are finitely many pruning patterns, finite expansions at finitely
+many representative numerals, finitely many equality types of a
+finite set, and finitely many assignments of states to free blocks.
+Theorem 6.5 removes exactly the empty domains. Cells with every
+$h_r$ false can also be discarded. Thus every stage terminates,
+including the entirely empty case.
+
+For any retained residual valuation, Lemma 6.4 and Theorem 4.2 give
+(NRF.30) at every actual $n$. Substitution into Theorem 3.2 gives
+(NRF.31) and the actual history lift. In particular the exponent in
+its Return coordinate is $n+j$, never $\kappa(n)+j$.
+
+Conversely take any original $u,n$ with $H_b(u,n)$, and set
+$r=\kappa(n)$. Theorem 4.2 retains this very $u$ at $r$.
+Lemma 5.2 extracts its unique original pruning pattern $S$ and its
+actual subtree values. Equality among those values and with every
+member of $G_S$ determines $\theta$ uniquely. The values of its
+free blocks determine their unique $M$ states $\sigma$. They lie
+in the full domain (NRF.22), so its cell cannot have been removed
+as empty. Definition 6.3 gives $h_r$ true, and $e_r$ true if the
+candidate was selected. Filling the original pattern with the
+extracted values returns exactly $u$. Actual $n,j$ are kept as
+coordinates of the code; they are not inferred from representative
+states or supplied to the producer.
+
+Within a cell every free block occurs at an original position, so
+reading the corresponding subtree of the mathematical candidate
+inverts (NRF.23). Between cells the canonical pruning, equality type
+and product-state vector are unique. This proves the stated inverse
+extraction, while imposing no bound on any residual value. $\square$
+

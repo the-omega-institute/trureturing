@@ -1,0 +1,26 @@
+**Definition 1.1 (domain and observations).** Throughout,
+
+$$
+\begin{aligned}
+\mathcal T&::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,\\
+\rho\alpha&=\beta,&\rho\beta&=\langle\beta,\alpha\rangle,&
+\rho\langle u,v\rangle&=\langle\rho u,\rho v\rangle.
+\end{aligned}
+\tag{NCE.1}
+$$
+
+These are all nonempty finite ordered full trees, with free literal
+constructors. Put $T_j=\rho^j\alpha$. An address is a finite word over
+$L,R$, with root $\varepsilon$. The subtree $u|_p$ is defined only for
+$p\in\operatorname{Pos}(u)$. A literal read has one of the replies
+$\alpha,\beta,\mathsf{branch},\mathsf{absent}$.
+
+For a finite prefix-free cut $P$, the complete row $R_P(u)=(C,\pi)$
+retains every exterior constructor and concrete leaf, a hole at each
+reached member of $P$ labelled by its actual address, and the entire
+equality partition of the hidden subtrees. Different classes assert
+disequality. An unreached requested cut leaves its concrete blocking
+leaf visible. These are [NUE, Definition 1.1][NUE] and the independent
+record of [ActualCutPartitionDecoder][ROW], `literalRecord` and
+`canonicalRow_record_iff`, with [its Scribe][ROW-S].
+

@@ -1,0 +1,36 @@
+**Proposition 40.1 (the precise dimension and resource distinction).**
+Before target death the state dimension remains three and the primitive
+native-control rank remains two. The declared independent central
+component gives the target direct covariance rank three, with local
+covariance tensor
+
+$$
+2\left(P\otimes P+Q\otimes Q+
+             \frac{\nu^2}{r^2}\partial_\beta\otimes\partial_\beta\right)dt.
+\tag{40.1}
+$$
+
+For each fixed nonzero $\nu$, the finite nonanticipating hard-tube
+resource powers are those of Theorem 38.1. In particular the published
+$\nu=0$ offline powers $O(\eta^{-1})$ for variation/length and
+$O(\eta^{-2})$ for energy in Theorem 18.1 cannot hold for this new
+finite nonanticipating target. This comparison makes no claim about
+sharp constants, a uniform crossover as $\nu\to0$, or the best
+anticipating costs for the new target.
+
+Proof. The exact native correspondence gives the target differential
+$d\kappa=dW^1$, $d\widetilde\alpha=dW^2/2$ and
+$d\widetilde\beta=(1/2-\kappa/r)dW^2-\lambda dt/r-\nu dC/r$.
+The three Brownian coordinates are independent and each has quadratic
+variation $2dt$, proving (40.1). Its noise-column determinant is
+$-\nu/(2r)\ne0$. The original two command fields are unchanged;
+central noise is an analytic target law, realized approximately by paid
+small rectangles and not supplied as a third native actuator.
+The positive coefficients (33.5) exclude the old powers for this class,
+and (38.1) proves attainment of the larger powers. The lower coefficients
+vanish as $\nu\to0$, so this argument asserts no uniform transition
+at zero noise. A fixed arbitrary $\lambda$ enters the estimates but
+changes no covariance rank or power. These facts distinguish current
+state dimension, direct stochastic covariance and primitive control
+rank; they identify none of them with physical spatial axes. $\square$
+

@@ -1,0 +1,133 @@
+**Lemma 2.3 (support exclusions and the two-gap rule).** Live histories at
+one state cannot have properly nested supports. Equal supports force equal
+hits; different supports with equal hits cannot share a state. If different
+count pairs share a state, orient them as $(h,z),(g,w)$ with $h<g$; then
+
+$$
+g-h\ge2,\qquad z-w\ge2.
+\tag{2.1}
+$$
+
+For incomparable supports write
+
+$$
+I=S\cap T,\quad X=S\setminus T,\quad Y=T\setminus S,\quad
+U=[n]\setminus(S\cup T),\qquad a=|X|,\ b=|Y|,\ u=|U|,
+$$
+
+and $Q=k-h$, $V'=k-g$, $\Delta=g-h=Q-V'$. If the old $X$ bits
+are all zero, then $a\le b$ and $C_X\le C_Y$. If the old $Y$ bits
+are all one, then $b\le a$ and $C_Y\le C_X$.
+
+Proof. These are the local exclusions of [PE, Lemma 4.1 and Theorem
+3.1][PE] and [WTF, Theorem 9.1][WTF]. We record the argument so that
+neither graph-path realizability nor nonresonance is implicit.
+If $S\subseteq T$ and $b=|T\setminus S|$, a negative saturated suffix
+from $T$ queries only outside $T$ and halts. Replay it from $S$, putting
+ones on $T\setminus S$ and using the same outside assignment. Determinism
+from the common state makes the suffix identical, regardless of old
+agreements on $S$. Correctness gives $h+b+(k-1-g)\le k-1$.
+The positive saturated suffix with zeros on $T\setminus S$ similarly
+gives $h+(k-g)\ge k$. Thus $h+b\le g\le h$, so $b=0$ and $h=g$.
+Reverse containment is symmetric.
+
+For incomparable $S,T$, the clipped integer intervals
+
+$$
+[0,u]\cap[Q-b,Q-1],\qquad [0,u]\cap[V'-a,V'-1]
+\tag{2.2}
+$$
+
+are nonempty by liveness. They are disjoint: otherwise assign $U$ a common
+weight in their intersection. Even after all $U$ is read, each history has
+a nonconstant threshold on its private unread block. Every earlier prefix
+is live too, so a common next query must be fresh for both, hence in the
+as yet unread part of $U$. A terminal is impossible, and after $U$ is
+exhausted there is no such fresh query. Each continuation is consistent
+with its own incoming history; the old $I$ assignments need not agree.
+If $h=g$, the intervals have the same upper endpoint, contradiction.
+For $h<g$, their disjointness and $Q>V'$ put the second strictly below
+the first, giving
+
+$$
+u\ge1,\qquad Q\ge b+1,\qquad 1\le V'\le u,\qquad\Delta\ge b.
+\tag{2.3}
+$$
+
+If old $X$ is zero, complete $T$ with $X$ zero, first $V'-1$ fresh
+$U$ replies one and the rest zero. This remains live until all of $X\cup U$
+is read: while those ones are pending there are too few zeros for a negative
+certificate, and afterwards every remaining bit is needed. It is a saturated
+negative suffix with no further query. Replay it from $S$ with any $Y$
+assignment. Its weight is at most $h+b+V'-1\le k-1$, and its charges
+are $n+a-b$ and $W+C_X-C_Y$. Its own two caps give the claimed first
+inequalities. Dually, when old $Y$ is one, complete $S$ with $Y$ one,
+first $b+u-Q$ new $U$ replies zero and the rest one. The saturated positive
+suffix on $Y\cup U$ replays from $T$, with weight at least
+$g+Q-b\ge k$ and charges $n+b-a$, $W+C_Y-C_X$. Its caps give the
+reverse inequalities. All repeated private queries in these replays are paid.
+
+It remains to prove the two gaps. Let $\xi,\eta$ count the old ones on
+$X,Y$ respectively, and put
+
+$$
+\delta_I=\Delta+\xi-\eta=(\Delta-b)+\xi+(b-\eta)\ge0,
+\qquad \lambda=b+u-Q+1.
+\tag{2.4}
+$$
+
+When $\delta_I>0$, the conflict band
+
+$$
+\max(0,V'-\xi)\le t\le\min(u,Q-\eta-1)
+\tag{2.5}
+$$
+
+contains an integer: the outer endpoints are feasible by (2.3) and
+$\eta\le b$, and $V'-\xi\le Q-\eta-1$. Choose any assignment on $U$
+of that weight. On both completions use old $S$ values on $X$, old $T$
+values on $Y$, and this same $U$ assignment; on $I$ retain each history's
+own values. The resulting weights are $h+\eta+t\le k-1$ and
+$g+\xi+t\ge k$. The common state sequence must eventually first receive
+different replies, at an old coordinate $i\in I$. Before that invocation
+both histories must be certified: querying this old coordinate while either
+was live would violate Lemma 2.2. The negative certificate needs $\lambda$
+new zeros, first exposed in $Y_0\cup U_0$, and the positive certificate
+needs $V'$ new ones, first exposed in $X_1\cup U_1$. These are disjoint
+coordinate sets on the common suffix; subscripts denote values in the
+chosen assignments. Together with the discriminator they
+give, separately on the two complete actual runs,
+
+$$
+|S|+\lambda+V'+1\le n,\qquad
+|T|+\lambda+V'+1\le n,
+$$
+
+and, if $A_-,A_+$ are the chosen certificate sets,
+
+$$
+C_S+C_{A_-}+C_{A_+}+c_i\le W,\qquad
+C_T+C_{A_-}+C_{A_+}+c_i\le W.
+$$
+
+Thus
+
+$$
+\lambda+V'+1\le u+\min(a,b),\qquad
+C_{A_-}+C_{A_+}+c_i\le C_U+\min(C_X,C_Y).
+\tag{2.6}
+$$
+
+No budgets of distinct inputs have been added. The discriminator state is
+absent from either incoming path, including its endpoint, by live freshness
+there and no-revisit on the completed runs. This does not exclude its being
+live on another input. Substituting
+$\lambda+V'+1=b+u-\Delta+2$ in (2.6) gives
+$\Delta\ge2+\max(0,b-a)$ and
+$z-w=\Delta+a-b\ge2$. If $\delta_I=0$, (2.4) forces
+$\Delta=b$, $\xi=0$, $\eta=b$. Both private-polarity inequalities apply,
+so $a=b=\Delta$ and $C_X=C_Y$. Nonempty disjoint private sets cannot
+both be singletons of equal cost, since the individual $c_i$ are distinct.
+Hence $a=b=\Delta\ge2$, also giving both gaps. Equal sums of larger
+subsets remain allowed. This completes the proof. $\square$
+

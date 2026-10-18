@@ -1,0 +1,38 @@
+**Corollary 15.3 (conditional quantitative tightness).** Suppose
+$w\ne0$ is uniform and a rational positive matching population on
+$n$ blocks satisfies, for $\delta,\epsilon\ge0$,
+
+$$
+\mathcal U_{\mathcal N}(p;w)/n\ge\log_2\Omega_d(w)-\delta,
+\qquad \mathcal I_{\rm cov}(p)/n\le\epsilon.
+\tag{COK.77}
+$$
+
+Then
+
+$$
+0\le\log_2\Omega_d(w)-\log_2\beta_d(w)\le\delta+\epsilon.
+\tag{COK.78}
+$$
+
+At every admissible multiplier $m$, (COK.70) gives the same
+comparison with $\log_2 A_{d,L,nm}(w)/(nm)$, with the additional
+loss $r(p)\log_2(m+1)/(nm)$, when the base has incidence at most
+$L$.
+
+Proof. The identity gives
+$\mathcal B_{\mathcal N}/n\ge\log_2\Omega_d(w)-\delta-\epsilon$.
+Corollary 14.1 bounds native pressure below by this quantity.
+The existing all-size upper $\beta_d(w)\le\Omega_d(w)$ is
+Theorem 3.1. These are the two needed directions; neither is
+an individual-cover Bethe upper. The finite assertion follows
+from the first line of (COK.70). $\square$
+
+The charge $\mathcal I_{\rm cov}$ is the difference of these
+two population functionals. It is distinct from the common-Gibbs
+global loss $\Delta(P)$ in (COK.21), and from the local-to-joint
+defect $\mathcal L_\eta$ in (COK.32). The low-entropy law of
+Theorem 12.2 cannot be substituted into COK.22 as its Gibbs law.
+No existence of populations satisfying (COK.77) with small errors
+is asserted.
+

@@ -1,0 +1,39 @@
+**Theorem 4.1 (N3).** Every bad profile obeys
+
+$$
+J_\tau(R)>\tau+\frac{(1-\tau)^6}{65536\pi^2}
+\qquad(0<\tau<1).
+\tag{4.1}
+$$
+
+Consequently,
+
+$$
+\inf_{\text{bad }R}J_\tau(R)\ge
+\tau+\frac{(1-\tau)^6}{65536\pi^2}.
+\tag{4.2}
+$$
+
+The infimum conclusion is intentionally non-strict.
+
+**Proof.** Write $B=\tau+a^6/(65536\pi^2)$. Since $B<\tau+a=1$,
+$T>1$ implies $T>B$. Suppose $T\le1$. If $p\le3a/4$, let $n$ be the
+least positive integer with $np\ge a/8$. Then
+
+$$
+a/8\le d=np<a/8+p\le7a/8<a.
+$$
+
+Lemma 2.2 gives $\delta\ge a^3/2048$, which is strictly larger than
+$a^6/(65536\pi^2)$ because $a^3<32\pi^2$. If $p>3a/4$, then
+$\Omega=2\pi/p<8\pi/(3a)$ and Lemma 3.1 gives
+
+$$
+\delta\ge\frac{a^4}{9216\Omega^2}
+>\frac{a^6}{65536\pi^2},
+$$
+
+using $9216=9\cdot1024$. The two cases exhaust $p\in(0,1)$, proving
+(4.1). Taking an infimum keeps only (4.2), since pointwise strict
+inequalities need not give a strict infimum. $\square$
+

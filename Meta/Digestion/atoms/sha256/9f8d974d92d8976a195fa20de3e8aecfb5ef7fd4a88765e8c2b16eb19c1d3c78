@@ -1,0 +1,81 @@
+**Theorem 56.1 (noncommuting weights in the same certificate).** Fix a supported diagonal center of rank $k\geq2$ as in Section 52, but now allow every Hermitian $X>0$. Define precisely
+
+$$
+\begin{aligned}
+B_X&=(\sqrt\omega X^{-1}\sqrt\omega)^T,\\
+m_X&=a\lambda_1(X)+\beta\lambda_2(X),\\
+J_c(X)&=S_5\!\left(\operatorname{diag}(B_X,B_X,c\omega)\right)+2m_X-cT,
+\qquad c\geq0.
+\end{aligned}
+\tag{S.47}
+$$
+
+The eigenvalues in $m_X$ are decreasingly ordered. The sufficient certificate remains $J_c(X)\leq4v$. If $\mathcal E$ is diagonal pinching in this chosen eigenbasis of the center, then
+
+$$
+J_c(\mathcal E X)\leq J_c(X)
+\quad\text{for every }X>0,\ c\geq0.
+\tag{S.48}
+$$
+
+In particular the global minimum of Section 55 is also the infimum over all positive $X$ in this specified extension.
+
+Proof. For general $X$ the trace identity is
+
+$$
+\operatorname{Tr}(M_\psi X^{-1})
+=\operatorname{Tr}(\sqrt\omega X^{-1}\sqrt\omega H_\psi^T)
+=\operatorname{Tr}(B_XH_\psi).
+\tag{S.49}
+$$
+
+The full transpose is essential. The product $\omega X^{-1}$ is generally non-Hermitian and cannot replace $B_X$. The budget (S.17) still holds in the eigenbasis of $X$. Repeating (S.19)–(S.24) with $B_X$ in place of $A$ proves the same sufficient implication. Thus (S.47) specifies the extension being considered.
+
+Let $X_0=\mathcal E X>0$. The inverse Jensen/pinching inequality is
+
+$$
+X_0^{-1}\preceq\mathcal E(X^{-1}).
+\tag{S.50}
+$$
+
+It is the inverse-function instance of the operator Jensen mechanism in [Hansen–Pedersen, *Jensen's operator inequality*, arXiv:math/0204049, Theorem 2.1(ii)](https://arxiv.org/pdf/math/0204049). For this finite pinching there is a direct proof: the block matrix
+
+$$
+\begin{pmatrix}X&I\\I&X^{-1}\end{pmatrix}
+=\begin{pmatrix}X^{1/2}\\X^{-1/2}\end{pmatrix}
+\begin{pmatrix}X^{1/2}&X^{-1/2}\end{pmatrix}\succeq0
+$$
+
+is positive. Average its simultaneous block conjugations by all diagonal sign unitaries to obtain
+
+$$
+\begin{pmatrix}\mathcal EX&I\\I&\mathcal E(X^{-1})\end{pmatrix}\succeq0.
+$$
+
+Its Schur complement is (S.50). No singular matrix is inverted. Multiplication by $\sqrt\omega$ and full transposition preserve the positive order here, and pinching commutes with both operations, so
+
+$$
+B_{X_0}\preceq\mathcal E(B_X).
+\tag{S.51}
+$$
+
+By (S.22), $S_5$ is convex, unitarily invariant and monotone in positive order. Simultaneous sign conjugation on the first two blocks, leaving $c\omega$ fixed, and averaging give
+
+$$
+\begin{aligned}
+S_5\!\left(\operatorname{diag}(B_{X_0},B_{X_0},c\omega)\right)
+&\leq S_5\!\left(\operatorname{diag}(\mathcal EB_X,\mathcal EB_X,c\omega)\right)\\
+&\leq S_5\!\left(\operatorname{diag}(B_X,B_X,c\omega)\right).
+\end{aligned}
+\tag{S.52}
+$$
+
+Also, with $S_2(X)=\lambda_1(X)+\lambda_2(X)$,
+
+$$
+m_X=(a-\beta)\lambda_1(X)+\beta S_2(X).
+\tag{S.53}
+$$
+
+Both coefficients are nonnegative. The rank-one and rank-two versions of the diagonal proof of (S.22) make $\lambda_1$ and $S_2$ convex and unitarily invariant. Therefore $m_{\mathcal EX}\leq m_X$, proving (S.48). The pinched weight commutes with $\omega$, and commuting weights form a subset of all weights. At (S.31) the two infima therefore agree with $G_1$, attained by (S.33). This excludes improvement by this precise extension. Direction-dependent weights and other matrix methods are outside (S.47). $\square$
+

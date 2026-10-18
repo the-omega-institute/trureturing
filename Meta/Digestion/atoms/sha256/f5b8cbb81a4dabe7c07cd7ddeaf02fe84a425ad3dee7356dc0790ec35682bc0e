@@ -1,0 +1,6 @@
+## 4. Joint-completion criterion and prefix reduction
+
+The separation disappears under a law-faithful completion condition. The
+condition is stronger than equality of one-query marginals and is designed
+to preserve one actual source throughout an adaptive run.
+

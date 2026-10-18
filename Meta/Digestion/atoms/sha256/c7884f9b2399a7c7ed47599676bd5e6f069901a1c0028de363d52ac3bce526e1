@@ -1,0 +1,48 @@
+**Definition 5.1 (original experiment certificate for a starting cut).**
+Fix $h\in\mathcal C_{\mathrm{gc}}$ and put $N=n(h)$. The following is a
+condition on the existing original interface and existing GENERAL
+service, not a declaration extending either one. It is not instantiated
+for added cuts by the results above.
+
+There is a finite original experiment tree $E_N$, with fixed literal
+parameters and only permitted public branching, satisfying the following
+requirements.
+
+1. Its first node is an original primitive Supply or Advance, executed
+   from $h$ as exactly one actual native row, with no preliminary driver
+   or checking rows. Uniformly over $\mathcal C_{\mathrm{gc}}$, whenever
+   that node has the same executed response kind, it is one such row and
+   its complete original successor retains the actual meter. Thus its
+   successor receipt count from a starting cut $z$ is $n(z)+1$.
+2. From $h$, $E_N$'s actual continuation before outer00 obtains an authentic
+   completed predecessor with tally $b\ge N$, accepts the existing
+   AcquisitionOffset$(N-a)$ and completes GENERAL's authenticated cycle,
+   checks, ACKs and resource return. Every operation used by $E_N$ has
+   its real original admission, lawful input domain and response
+   correspondence. Semantic nodes, if used, retain all the executed
+   original-action responses required by Definition 1.3.
+3. A fixed extraction from existing released finite outputs in the
+   response identifies one canonical body of a fixed
+   $V\in\{S,B,M_J,T\}$ and its actual GENERAL target binding. It adds no
+   output to $Q$. From $h$ this is a body for target tally $N$.
+   Its success meaning is uniform: for any $z\in\mathcal C_{\mathrm{gc}}$
+   where $E_N$ is defined and has that successful extracted response
+   form, the extraction comes from the actual authenticated GENERAL
+   publication/callback route on that continuation, with matching
+   source/seed/code, an authentic completed predecessor in GENERAL
+   Definition 1.4's domain, genuine completed cover, accepted target
+   tally $N$ and checked body. Recognition of a printed numeral or a
+   self-consistent body alone is insufficient.
+
+Requirement3 is an occurrence and interface-authenticity condition.
+GENERAL Lemmas 5.3 and 7.3 supply authenticity once their actual route
+is established; they do not make an arbitrary original output occurrence
+that route. Uniformity includes alternative histories at different
+earlier Ready prefixes. It cannot be replaced by a proof only for the
+successful execution from $h$.
+
+The literals $N$ and $N-a$ may be mathematical parameters of a separating
+experiment, but their supplied numerals are real finite input. The
+certificate gives no actor a hidden-meter read or a uniform procedure
+for choosing these numerals from its current accessible information.
+

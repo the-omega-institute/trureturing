@@ -1,0 +1,105 @@
+**Theorem 20.1 (tilted pair, consumed two-Kraus factorization and diamond exclusion).** For the same actual encoder (R.75), let
+
+$$
+v=\frac{\sqrt\beta\,|2\rangle-t|1\rangle}{\sqrt{\beta+t^2}},\qquad
+\psi_\pm=\frac{|0\rangle\pm v}{\sqrt2}.
+\tag{R.89}
+$$
+
+These are orthogonal unit pure inputs, and their exact output half distance is
+
+$$
+m_{\rm tilt}^2:=
+\left[\tfrac12\|N_{\beta,t}(P_{\psi_+}-P_{\psi_-})\|_1\right]^2
+=a+\frac{\beta(2\beta-1)t^2}{\beta+t^2}\leq a,
+\qquad P_\psi=|\psi\rangle\langle\psi|.
+\tag{R.90}
+$$
+
+**Proof.** The original-input Choi matrix in (R.78) has the real kernel vector
+
+$$
+\kappa=-\frac{t}{\sqrt a}|0\rangle\otimes|0_E\rangle
+       +\left(|2\rangle-\frac{t}{\sqrt\beta}|1\rangle\right)\otimes|1_E\rangle,
+\qquad J_0\kappa=0.
+\tag{R.91}
+$$
+
+To see the actual kernel equation without choosing separate blocks, contract $\kappa$ with the Gram map $\mathcal F(|i\rangle\otimes|\alpha_E\rangle)=K_\alpha|i\rangle$. The reality of the Kraus matrices gives $J_0=\mathcal F^T\mathcal F$. Its image is
+
+$$
+-\frac{t}{\sqrt a}K_0|0\rangle
+ +K_1\left(|2\rangle-\frac{t}{\sqrt\beta}|1\rangle\right)=0.
+$$
+
+The rank five in (R.80) makes this the whole one-dimensional kernel in dimension six. The two logical factors in (R.91) are orthogonal and nonzero, so its logical Schmidt directions are precisely $|0\rangle$ and $v$. This is a kernel of the same $C_0,C_1,\sigma$ and, by (R.2), the same phase $C,S$.
+
+The kernel relation has a concrete factorization consumer in this family proof. For two actual real Kraus matrices, real orthonormal $u,v$ and real coefficients $\lambda,\eta$ with $\eta\ne0$ and $\lambda K_0u+\eta K_1v=0$, put $x=K_0u$ and $y=K_0v-(\lambda/\eta)K_1u$. Expanding the two Kraus contributions and then using TP gives
+
+$$
+\begin{gathered}
+N(uv^T+vu^T)=xy^T+yx^T,\\
+x^Ty=(K_0u)^TK_0v+(K_1u)^TK_1v=u^Tv=0,\\
+\tfrac12\|N(uv^T+vu^T)\|_1=\|x\|\,\|y\|.
+\end{gathered}
+\tag{R.92}
+$$
+
+For nonzero $x,y$, the last equality follows from the two eigenvalues $\pm\|x\|\|y\|$ on their orthogonal span; if either vector vanishes both sides are zero. Apply this calculation to (R.75) with $u=|0\rangle$, $v$ from (R.89), $\lambda=-t/\sqrt a$ and $\eta=\sqrt{(\beta+t^2)/\beta}$. The needed relation is exactly (R.91). With $c=\sqrt\beta/\sqrt{\beta+t^2}$, direct multiplication gives
+
+$$
+K_0v=c\left(s_t e_4-\frac{t}{\sqrt{a\beta}}e_1\right),\qquad
+K_1v=ct\,e_0.
+\tag{R.93}
+$$
+
+Consequently $x=\sqrt a\,e_0$, $\sqrt a\,y=f$, where
+
+$$
+\begin{gathered}
+f=c\left(A_t e_4+B_t e_2-\frac{t}{\sqrt\beta}e_1\right),\qquad f\perp e_0,\\
+N_{\beta,t}(P_{\psi_+}-P_{\psi_-})
+=N_{\beta,t}(|0\rangle\langle v|+|v\rangle\langle0|)
+=e_0f^T+fe_0^T.
+\end{gathered}
+\tag{R.94}
+$$
+
+Thus (R.92) gives half norm $\|f\|$; the full output eigenvalues are $\|f\|,-\|f\|,0,0,0$. In particular
+
+$$
+\begin{aligned}
+\|f\|^2
+&=\frac{\beta}{\beta+t^2}\left(A_t^2+B_t^2+\frac{t^2}{\beta}\right)\\
+&=\frac{a\beta+(1-2a\beta)t^2}{\beta+t^2}
+ =a+\frac{\beta(2\beta-1)t^2}{\beta+t^2},
+\end{aligned}
+$$
+
+proving (R.90). The tilted difference has a nonzero $0$–$1$ component for $t>0$, whereas every $X(u,\varphi)$ in Definition 18.1 has only plane–$2$ coherences. Hence this witness lies outside that restricted family of differences.
+
+Reuse the same-recovery contraction argument of Theorems 4.3 and 14.2. It also applies to any orthogonal-support density matrices $\rho,\sigma$. For a single arbitrary complex CPTP recovery $R:M_5\to M_3$, put $d_R=\|RN-\mathrm{id}_3\|_\diamond$. Then
+
+$$
+\begin{aligned}
+2=\|\rho-\sigma\|_1
+&\leq\|(\mathrm{id}-RN)(\rho)\|_1
+      +\|RN(\rho-\sigma)\|_1
+      +\|(\mathrm{id}-RN)(\sigma)\|_1\\
+&\leq2d_R+\|N(\rho-\sigma)\|_1,\\
+\delta_N&\geq1-\tfrac12\|N(\rho-\sigma)\|_1.
+\end{aligned}
+\tag{R.95}
+$$
+
+The contraction step uses only the Hermitian argument: its positive and negative parts are sent to PSD operators whose traces are preserved, so triangle inequality bounds the output norm by the sum of those traces. Each individual error term is bounded by the unhalved diamond norm. Infimizing the same $R$ proves the last line; no separately optimized recoveries have been combined. Using (R.89) yields
+
+$$
+\delta_{N_{\beta,t}}
+\geq1-\sqrt{a+\frac{\beta(2\beta-1)t^2}{\beta+t^2}}
+\geq1-\sqrt a=U(\beta).
+\tag{R.96}
+$$
+
+For $0<\beta<1/2$ and $t>0$ the first lower bound is strictly greater than $U(\beta)$. At $\beta=1/2$ it equals $U(\beta)$; this establishes no equality for the encoder's optimum. Product inputs are legitimate lower witnesses in the original diamond norm with all finite references, and impose no restriction on its supremum. $\square$
+

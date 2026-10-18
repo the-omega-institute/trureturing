@@ -1,0 +1,38 @@
+**Lemma 2.1 (Semantic normalization with every paid depth retained).** A
+pathwise-hard-total-budget-$k$ rule can be represented, at each fixed
+seed, by a finite binary read tree of height at most $k$. Its leaves have
+labels in $\mathcal A\cup\{\bot\}$, and their depths are the exact paid
+counts, including at $\bot$ leaves. It can be capped on every formal
+binary reply branch without changing $Z$ on any actual execution.
+
+Proof. Replace every finite internal delay by one fixed finite delay,
+keeping finite read events, finite returns, and indefinite internal
+continuation distinct. At any record of length $k$, replace a next read
+request by indefinite internal continuation without making that call.
+Keep a return or an existing internal nonreturn at that boundary. These
+choices depend only on the same available data as the original rule.
+
+On an execution already satisfying $N\le k$, the boundary replacement
+suppresses no actual call or return. A finite number of finite waits is
+still finite, and internal nonreturn remains nonreturn. Thus its output,
+return indicator, and exact paid count are unchanged; only finite timing
+values can change. The modified rule also caps formal branches whose
+replies are inconsistent or have source probability zero.
+
+At fixed $u$, unfold this semantic next-event rule. A read node has its
+integer address and two ordered children, for replies $0$ and $1$.
+A return is a leaf with its actual state label; internal nonreturn is a
+$\bot$ leaf. No read occurs at depth $k$, so there are at most
+
+$$
+1+2+\cdots+2^{k-1}=2^k-1
+\tag{2.1}
+$$
+
+read nodes when $k\ge1$, and none when $k=0$. Every visited read node
+costs one, even if its address repeats an earlier label. A leaf at depth
+$n$ therefore has $N=n$, with no padding and no conversion of nonreturn
+into return. This is the normalization used in [Original, Theorem 12.2][Original].
+It is a semantic finite-tree representation, not an algorithm for deciding
+whether arbitrary internal code eventually has a next event. $\square$
+

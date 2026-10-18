@@ -1,0 +1,26 @@
+**Theorem 2.5 (exact native integral-cover correspondence).** The minimum
+number of members of $\mathcal H_D$ covering $S_D$ is $m_D$. Every
+such cover has an effective actual preparation obeying (FMR.11) and
+one common all-target, all-count reader.
+
+Proof. Restrict any original complete code to the canonical actual
+sources. Its fibers retain arbitrary correlations. For a fixed code
+and request the decision to stop or the one submitted word is fixed.
+Equal replies give identical final predictors and hence identical
+factors. Lemma 2.2 replaces every arbitrary word by one boundary
+experiment or a constant, so each restricted fiber satisfies (FMR.12).
+They cover $S_D$ with at most the attained original alphabet size.
+
+Conversely, order a cover and assign each $x$ to its first containing
+member. Its actual fibers are subsets of admissible members. Install
+one witnessing experiment for every cover member and target, and its
+reply-to-factor table. Acquire $\pi_D(v)$ by (FMR.11) and export only
+the first-containing-member index. After the request, perform its
+prescribed actual boundary Read, or zero Reads, and output the factor.
+Equations (FMR.5) and (FMR.8) give every required $k$. Thus the cover
+becomes a paid deterministic complete code, without a free color
+oracle. A minimum cover attains all its indices: an unused member
+could be deleted. Finite enumeration of subsets, experiments and
+covers makes these optima uniformly effective in public $D$; it
+asserts no useful bound on installation or local work. $\square$
+

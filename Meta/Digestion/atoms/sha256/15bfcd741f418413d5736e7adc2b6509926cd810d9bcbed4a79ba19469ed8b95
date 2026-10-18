@@ -1,0 +1,35 @@
+**Premise 2.1 (Universal optimization, risk and attained support).** [Universal][U], Convention 1.3, Lemma 2.1, equation (1.5), Theorem 3.1 and Proposition 7.1, supplies the following facts in the domains of §1:
+
+$$
+nc_\star\le\kappa_n\le(n+1)c_\star,\qquad
+\frac{\kappa_n}{n+1}\longrightarrow c_\star,\qquad
+c_\star\ge c_0:=\frac{1800}{12559}>\frac19,
+\tag{2.1}
+$$
+
+$$
+\begin{aligned}
+D_r(P)&=\sum_{\substack{u,v\in B_r\\u_r=v_1=0}}
+h(P([u0v]),P([u1v])),\\
+D_r(P)&\downarrow d(P)=\mathbb E_P\ell_0\le c_\star.
+\end{aligned}
+\tag{2.2}
+$$
+
+For every attaining stationary law, $d(P)=c_\star$ implies, simultaneously at all integer sites,
+
+$$
+q_i=0\text{ on }F_i^c,\qquad \frac14\le q_i\le\frac12\text{ on }F_i,
+\quad P\text{-almost surely},
+\tag{2.3}
+$$
+
+and, for every $w\in B_n$ and every location $a$,
+
+$$
+P([w]_a)\ge2^{-(n+2)}3^{-k(w)}>0,\qquad k(w)=\sum_iw_i.
+\tag{2.4}
+$$
+
+These facts retain Universal's source ownership, including its finite-optimizer square identity and the growth and stationary-risk sources underlying them. No consistency of the separate finite optimizers is assumed. The exact rational comparison in (2.1) is a supplied lower bound for the growth constant, not a computed separation gap.
+

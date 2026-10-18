@@ -1,0 +1,87 @@
+**Definition 216.1 (Full scores and a single certificate budget).**
+Fix $L\ge3$. Let $\Omega=\{0,1\}^L\setminus\{1^L\}$,
+let $n(w)$ be the first zero, and let $\Omega_j=\{w:n(w)=j\}$.
+The notation $w(Z)$ means the length-$L$ word whose zero set is exactly
+$Z$. Every word, including every multiple-zero word, remains in the domain.
+A full score has independent coefficients $A_w,C_w,P_w,T\ge0$ and reward
+
+$$
+g_V(w,\ell)=A_w\mathbf1_{\ell=0}+C_w\mathbf1_{\ell=n(w)}
+ +P_w\mathbf1_{\ell\in\{0,n(w)\}},\qquad
+g_V(1^L,\ell)=T\mathbf1_{\ell=0}.
+$$
+
+Every cell maximizes over every label $0,\ldots,L$, including earlier
+and unqueried labels. The complete catalogs contain empty and singleton
+schedules and every pair $i<j$. N observes $00,01,10,11$; O observes
+$0,10,11$, merging $00,01$ before maximizing. Write $(i,j;u,v,z)$
+for a stopped table in this cell order. Reversals permute full cells;
+repetitions carry singleton information. These representation facts do
+not discount actual repeated or ignored requests. Put
+
+$$
+\begin{aligned}
+B_{\mathcal C}(V)&=\max_{\text{complete schedules}}
+ \sum_{\text{cells }E}\max_{0\le\ell\le L}\sum_{w\in E}g_V(w,\ell),\\
+W_V&=\sum_{n(w)\ge3}A_w+\sum_{n(w)\le2}C_w+\sum_wP_w+T,\\
+\Delta_{\mathcal C}(V)&=B_{\mathcal C}(V)-W_V
+ \quad(\mathcal C=N,O),\\
+Q(V)&=(\beta,K),\qquad \beta_j=\sum_{\Omega_j}(C_w-A_w),\qquad
+K=\sum_w(A_w+C_w+P_w)+T.
+\end{aligned}
+$$
+
+The anchor is $R=(1,2;1,2,0)$, so
+$0\le\Delta_O\le\Delta_N$. Use the hull $H_L$, its signed support
+$\sigma_H$, and the complete matrices of Definition 213.1 and
+[199.1–199.4](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_VI.md#199-完整事件锥的有符号替代零成本闭包与剩余原始比较).
+Explicitly, with $\alpha=(1,1,0,\ldots,0)$,
+
+$$
+\begin{aligned}
+H_L=\{(b,e):\;&1\ge b_1\ge\cdots\ge b_L\ge e\ge0,\ b_2=b_3,\\
+ &(L+1)e\le\sum_{j\ge3}b_j,\quad
+ b_1+\sum_{j\ge3}b_j-(L+1)e\le1\},\\
+F_q(b,e)&=\sum_j\beta_j(b_j-\alpha_j)-Ke,
+ \qquad\sigma_H(q)=\max_{H_L}F_q.
+\end{aligned}
+$$
+
+At each zero word the independent demands are
+$1-b_n-e,b_n-e,1-e$ for A,C,P; the positive demand is $1-e$.
+Negative singleton demands are retained. Set $r=z_R$, $h=d-r$,
+$G_N=(z_D-r)_D$, and
+$H_N=\{b\in H_L:\exists\lambda\ge0,\ G_N\lambda\ge h(b)\}$.
+For a signed target q the existing certificate condition is
+
+$$
+V\ge0,\quad 0\le\theta\le1,\qquad
+\Delta_N(V)+\theta\le1,\qquad \sigma_H(q-Q(V))\le\theta.
+\tag{216.1}
+$$
+
+For the same complete feasible $\lambda$ of mass $M$, weak duality gives
+$F_q(b)\le M\Delta_N(V)+\theta\le\max(1,M)$.
+Every statement of affordability below requires an actual full input
+$y$ with $\Delta_O(y)\le1$, or a separately established cost bound
+at most one. Exact fiber minima alone supply neither premise.
+Nonzero zero-cost cores are allowed at $\theta=1$.
+
+All unspecified score coefficients are zero; coincident contributions
+are added. Zero coefficients remove no acquisition constraints. For
+class totals one always has
+
+$$
+A_j=(-\beta_j)_++z_j,\quad C_j=(\beta_j)_++z_j,\quad z_j\ge0,
+\qquad K=\sum_j|\beta_j|+2\sum_jz_j+P_{\rm tot}+T.
+\tag{216.2}
+$$
+
+This determines the stock convention separately in each theorem.
+Full exact-Q minima allow arbitrary A, early and late P, cancellations,
+suffix correlations, changed anchors and unaries. Only a displayed
+constructor has its specified support. Coefficients are proof weights,
+not a probability distribution on sources or an acquisition law.
+
+### 216.1 An attained signed chamber with one aggregate tail slot
+

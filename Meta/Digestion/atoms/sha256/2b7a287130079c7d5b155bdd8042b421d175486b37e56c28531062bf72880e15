@@ -1,0 +1,22 @@
+**Definition 1.2 (resources and target).** A reader is a common
+deterministic effective controller that terminates correctly on every
+history in its stated domain. The global target is the forgotten
+substitution lag $\ell$, under (NTL.2)--(NTL.3). For each run let
+
+$$
+c_A=(C_A,L_A,P_A),\qquad
+C_A=\#\text{ actual Read invocations},\quad
+L_A=\sum_{\text{actual Reads at }p}|p|,\quad
+P_A=\max\bigl(\{0\}\cup\{|p|:p\text{ submitted}\}\bigr).
+\tag{NTL.4}
+$$
+
+Repeated, absent, visible and empty-word Reads are all invocations.
+An empty relative suffix at $w_j$ is the paid whole word $w_j$ of
+length $D$. Local parsing of an already supplied literal row adds no
+new source invocation. The retained source-summary alphabet, its binary
+representation, acquisition, installed task and encoder tables, source
+and row storage, workspace, local computation, address production and
+transmission, and output storage have separate resource accounts.
+No bounds for these other accounts follow from (NTL.4).
+

@@ -1,0 +1,45 @@
+### 定义 53.5（参数化 triangle quantum network）
+
+令 \(E=\{AB,BC,CA\}\)。对每条边给定严格正定参数化源态
+
+\[
+\omega_e(\theta_e)\succ0,
+\qquad
+X_e=\partial_{\theta_e}\omega_e(\theta_e).
+\]
+
+独立源乘积态为
+
+\[
+\Omega_{\boldsymbol\theta}
+=
+\omega_{AB}(\theta_{AB})
+\otimes
+\omega_{BC}(\theta_{BC})
+\otimes
+\omega_{CA}(\theta_{CA}).
+\]
+
+令
+
+\[
+\mathcal N:
+\mathsf L(H_{AB}\otimes H_{BC}\otimes H_{CA})
+\to
+\mathsf L(K_A\otimes K_B\otimes K_C)
+\]
+
+为由输入重排、局部节点 CPTP 映射和输出重排组成的网络信道，并定义
+
+\[
+\rho_{\boldsymbol\theta}
+=
+\mathcal N(\Omega_{\boldsymbol\theta}).
+\]
+
+以下定理在所考察参数点满足
+\[
+\rho_{\boldsymbol\theta}\succ0
+\]
+时陈述。若网络输出发生秩下降，则必须把 SLD 超算子限制到输出支撑，或改用带 Moore--Penrose 伪逆的广义 Fisher 型。
+

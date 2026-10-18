@@ -1,0 +1,155 @@
+**Proposition 4.1 (zero native mass with maximal tail growth).** There
+is a nonatomic pair in $\mathfrak C_{\rm box}$ with $m_b=0$ for which
+
+$$
+\lim_{n\to\infty}d_n^{1/n}=z_b,\qquad
+\frac{d_n}{z_b^n}\sim
+ \frac{c_bz_b}{z_b-x_0}\frac1n,\qquad x_0=\frac{239}{1000}.
+\tag{4.1}
+$$
+
+Its averaged sequence violates (3.1) at every index. Thus the
+$o(z_b^n)$ conclusion of Theorem 2.1 cannot be replaced by an
+exponential bound $O(r^n)$ with any $r<z_b$, even for one fixed
+boxed pair. This pair is not a common zero-excess witness.
+
+**Proof.** Use the singleton complete-law parametrization
+[REV, (11.22)] as a supplied construction, with
+
+$$
+q=c_bz_b^3=\frac{1944}{390625},\qquad
+x\in[x_0,z_b],\qquad
+g_x=\frac q{x^3},\quad
+u_x=1-g_x-x,\quad
+v_x=\frac x{g_x+x}.
+\tag{4.2}
+$$
+
+The two singleton acquired kernels are identity kernels. Their own laws
+are
+
+$$
+Q_x(w_{n,0})=u_xx^n,\qquad
+Q_x(w_{n,1})=g_xx^n,\qquad
+W_x=(1-v_x)\delta_\beta+v_x\alpha Q_x.
+\tag{4.3}
+$$
+
+Indeed $(1-u_x)v_x=x$ and $(1-u_x)(1-v_x)=g_x$.
+Also $u_x+g_x=1-x$, so the completed masses sum to one,
+and the infinite coordinates are zero.
+
+Here is an all-coordinate check of both boxes on the entire interval.
+One has
+
+$$
+c_b\le g_x<\frac{73}{200},\qquad
+u'_x=\frac{3q}{x^4}-1>0,\qquad
+v_x=\frac{x^4}{q+x^4}\ \text{is strictly increasing}.
+\tag{4.4}
+$$
+
+For the first upper bound it suffices to check
+$q/x_0^3=4976640/13651919<73/200$.
+Thus
+$u_x\ge1-73/200-z_b=79/200>a$ and
+$v_x\ge x_0/(73/200+z_b)=239/605>a$.
+Their maxima are $u_{z_b}=v_{z_b}=b$.
+The derivative bound follows from
+$3q/x^4\ge3c_b/z_b>1$.
+In particular all emissions are regular.
+
+The marker-zero p and suspended masses lie in their endpoint intervals
+for every $n$, since $u_x,v_x\in[a,b]$ and $x\in[z_a,z_b]$.
+For p marker one at $n=0,1,2$, the functions
+$g_xx^n=q/x^{3-n}$ have lower endpoint $c_bz_b^n$ and satisfy
+
+$$
+g_xx^n\le\frac{73}{200}z_b^n<c_az_a^n
+\qquad(n=0,1,2),
+\tag{4.5}
+$$
+
+where each of the three final inequalities is a rational comparison.
+At $n=3$ their common value is $q$, the upper endpoint.
+From index 3 onward the p endpoint ordering is fixed, and the next
+actual mass multiplies by $x\in[z_a,z_b]$. Induction proves all
+remaining p marker-one boxes.
+
+At suspension put
+$m(x)=v_xg_x=qx/(q+x^4)$. It is decreasing on the interval because
+$q<3x_0^4$, whereas $xm(x)$ is increasing because $q>z_b^4$:
+
+$$
+m'(x)=\frac{q(q-3x^4)}{(q+x^4)^2}<0,\qquad
+(xm(x))'=\frac{2qx(q-x^4)}{(q+x^4)^2}>0.
+\tag{4.6}
+$$
+
+Consequently
+
+$$
+bc_b\le m(x)\le b\frac{73}{200}=\frac{73}{500}<ac_a,
+\qquad
+ac_az_a<bc_bx_0\le xm(x)\le bc_bz_b.
+\tag{4.7}
+$$
+
+These are the suspended marker-one boxes at indices 0 and 1.
+Their endpoint ordering is fixed from index 1 onward; multiplication
+by $x\in[z_a,z_b]$ proves all later boxes. The beta coordinate is
+boxed by $v_x\in[a,b]$. The complete tails are $x^j$ and $v_xx^j$,
+so (1.3) holds, with infinity still included. This proves all boxes,
+without substituting a finite-prefix problem.
+
+Choose $x$ with normalized Lebesgue law on $[x_0,z_b)$.
+Push it forward to $(Q_x,W_x)$ for $\Gamma_B$ and to $(W_x,Q_x)$
+for $\Gamma_A$. Each constituent is a compatible singleton pair,
+so both common margins and both full conditional equations hold.
+There is no resampling of $x$ at successive returns in these
+analysis flows. Coordinate continuity and the uniform geometric tail
+bound give TV continuity of both descriptor maps.
+Strict increase of $u_x$ and $v_x$ makes both maps injective.
+Their pushforward marginals are therefore nonatomic. As $x<z_b$
+almost surely, neither native b singleton has positive mass.
+
+For $n\ge3$, exact integration yields
+
+$$
+d_n=\frac{q}{z_b-x_0}
+       \frac{z_b^{n-2}-x_0^{n-2}}{n-2},
+\qquad
+\frac{d_n}{z_b^n}
+=\frac{q}{(z_b-x_0)z_b^2}
+  \frac{1-(x_0/z_b)^{n-2}}{n-2}.
+\tag{4.8}
+$$
+
+This proves both limits in (4.1). The recurrence residual is
+
+$$
+d_{n+2}-(z_a+z_b)d_{n+1}+z_az_bd_n
+=\frac1{z_b-x_0}\int_{x_0}^{z_b}
+        g_xx^n(x-z_a)(x-z_b)\,dx<0
+\tag{4.9}
+$$
+
+for every $n\ge0$. The integrand is strictly negative in the
+interior. Thus an endpoint spectral growth rate is insufficient
+for the exact recurrence conclusion.
+
+The pair is a residual-graph pair, with no native endpoint laws
+almost surely. Its p event mean satisfies the explicit bound
+
+$$
+\int Q(E_p)\,d\nu_p
+\le\frac{73}{200}(1+z_b+z_b^2)
+<\frac{11758471}{22781250}=M_p.
+\tag{4.10}
+$$
+
+Thus it fails the original p midpoint equation. It is not a
+zero-excess pair, and it supplies no finite COMPLETE realization
+of its nonatomic marginals.
+$\square$
+

@@ -1,0 +1,28 @@
+**Proposition 6.2 (a genuine locally easy entry with no global service).**
+Take $D=1,H=1,q=2$, positive lags, $S=\{1\}$ and the constant
+encoder. At the complete row
+
+$$
+V_1=\bigl(\langle\square_L,T_3\rangle,\{\{L\}\}\bigr)
+\tag{LQF.16}
+$$
+
+the exact fiber is $((0,0),1)$ and $((1,0),1)$, and its frontier is
+$\{(0,0,0)\}$. Nevertheless the encoder has no globally correct
+NAR service. This example also gives a zero-call terminal set with
+multiple genuine original sources.
+
+Proof. The displayed normalized clock is $z_1=1$. Positive lag and
+$a_1\in\{0,1\}$ force $\ell=1,a_1=0$; either $a_0$ is allowed.
+Their actual original trees are $\langle T_0,T_2\rangle$ and
+$\langle T_1,T_2\rangle$, and their current left subtrees are
+respectively $T_1,T_2$. Both complete rows are (LQF.16). Output one
+immediately, without reconstructing the hidden original left value.
+
+Elsewhere, the fixed originals with profiles $(0,0)$ and $(1,1)$,
+at lags two and one, both have current tree
+$\langle T_2,T_4\rangle$. Their code and entire later row agree but
+their lags differ. They refute global correctness by actual full-tree
+equality. This pair is also a nonempty locally impossible entry; it
+is not an inconsistent proposed row. $\square$
+

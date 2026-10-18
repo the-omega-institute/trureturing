@@ -1,0 +1,39 @@
+**Theorem 4.1 (prediction completion).** Fix any $D\ge2$, attained
+$e\in S_{D-1}$ and integer $q\ge0$. Under Assumption 1.3 and Definition
+1.4, retaining $e$ as part of the complete name, the least number of
+attained refinement values conditional on $e$ that permits prediction
+completion in at most $q$ fresh Reads is
+
+$$
+P(f,q)=3^{\max\{f-q,0\}}.
+\tag{CCF.12}
+$$
+
+This minimum ranges over arbitrary correlated refinements and adaptive
+arbitrary-word completion protocols. No preparation resource cap is
+imposed on acquisition of the refinement.
+
+Proof. Restrict correctness to the actual $3^f$ sources with every
+$x_a\in\{\alpha,\beta,C_0\}$. They have distinct prediction answers
+by Proposition 3.3. For any fixed complete refinement value, every query
+has at most three possible replies on this restricted family by Theorem
+3.2. A deterministic decision tree of depth at most $q$ has at most
+$3^q$ terminal transcripts, also when it stops early. This follows by
+induction on its remaining depth: a terminal node counts one and an
+internal node has at most three child subtrees. Queries, stopping and
+local work are determined by the name and preceding replies, so they
+cannot introduce additional branches. A correct terminal transcript
+identifies at most one of these constructor vectors. Consequently $m$
+attained names satisfy $m3^q\ge3^f$. Together with $m\ge1$ this gives
+the lower bound (CCF.12), irrespective of correlations in a name fiber.
+
+Let $s=\max\{f-q,0\}$. During additional preparation Read the first
+$s$ addresses $Ra$, $a\in A_e$, and retain their root constructors.
+Export exactly this tuple with $e$, isolating all other dependence. During
+completion Read the other $f-s\le q$ roots, reconstruct $z$, and apply
+Proposition 3.3. Every retained trit tuple is realized by the actual
+fiber, so its attained alphabet is exactly $3^s$. All queries are actual
+original-root words of length $D$, chosen from $e,D,q$. This is an
+effective paid acquisition, rather than a supplied source-aware code.
+$\square$
+

@@ -1,0 +1,57 @@
+**Theorem 5.2 (entire fiber, both full rows and actual acquisition).**
+The entire source domain of Definition 5.1 is exactly
+
+$$
+D=\{W(y):y\in\mathcal T,\ r_y(\varepsilon)=\mathsf{branch}\}.
+\tag{AAB.16}
+$$
+
+Its full $Q$-row image has exactly two attained labels, both with
+reached set $\{L,R\}$ and exterior $\langle\square_1,\square_2\rangle$.
+The equal partition's fiber is
+
+$$
+D_= =\{\langle T_{n+2},T_{n+2}\rangle:n\ge2\},
+\tag{AAB.17}
+$$
+
+and the unequal partition's fiber is exactly $W(y)$ for every finite
+branch-rooted non-atomic $y$. This input is a successful outcome of
+ARH Proposition 2.1's common paid producer, conditional on its complete
+handoff premise; its mathematical coordinates are not runtime ports.
+
+Proof. The literals uniquely give $u=\langle x,\langle z,y\rangle\rangle$
+with branch-rooted $y$. Original branch positions survive every fixed
+iterate, so the two positive records impose exactly $x=\rho^2y$ and
+$z=\rho y$ with reached endpoints. Their converse holds on every such
+$W(y)$. The negative record is automatic for a finite nonempty $y$:
+$\rho^2$ replaces either original leaf by a tree having at least two
+leaves, so strictly increases leaf count. If $\rho y=y$, applying
+$\rho$ would contradict that increase. Thus both domain inclusions
+in (AAB.16) preserve the negative and its guards.
+
+The two entire $Q$-hole values are $\rho^2y$ and
+$\langle\rho y,y\rangle$. Reuse the finite-source stability
+classification of [SourceTransportCentralizer,
+`source_transport_centralizer`, first conjunct][CENTRALIZER], also
+stated in ABC's atomic supply: equality holds exactly for $y=T_n$.
+Here branch-rootedness gives $n\ge2$, and the atomic recurrence gives
+(AAB.17). There are only two partitions of these two reached holes,
+and the exterior is fixed, so this lists complete rows rather than
+two selected equality bits. The source $y=T_2$ attains the equal row.
+The source $y=\langle T_2,T_2\rangle$ attains the unequal row: every
+branching atom has two different consecutive atomic children, whereas
+these children are equal. No finite branch-rooted non-atom is removed
+from the unequal fiber.
+
+Apply ARH Proposition 2.1 to the public literal and endpoint lists in
+(AAB.15). The producer actually acquires whole finite endpoints at
+their epochs, retains the earlier paid descriptions until comparison,
+and makes genuine forward updates to $N=2$. All endpoints here are
+reached. Every source in (AAB.16) gives the same specified old row,
+literals and signs, and every source giving that retained output is
+in (AAB.16) by the proved converse. Its exact post-cut fiber follows
+only conditional on ARH Assumption 1.3's complete-state factoring.
+The pre-cut traversals and comparisons remain paid and may have no
+uniform cost bound over $D$. $\square$
+

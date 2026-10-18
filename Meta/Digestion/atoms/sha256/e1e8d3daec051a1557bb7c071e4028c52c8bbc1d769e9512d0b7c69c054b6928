@@ -1,0 +1,53 @@
+**Theorem 9.3 (paid full-family realization of the separating fibers).**
+For either graph $G\sqcup G$ or $G\times K_2$ in Theorem 8.2,
+let $n=6e$, $K=2^H$ with $H=\lceil\log_2n\rceil$, and
+$D=d+H$. Pad the $n$ actual blocks by $K-n$ alpha blocks and
+put them at the public frontier of a perfect height-$H$ scaffold in
+the right subtree. There is a correct original preparation and reader
+on every $t\in\mathcal F_D$ that merges precisely the resulting
+$2^{2v}$ canonical trees into one name and names every other canonical
+state separately. Its complete attained alphabet is exactly
+
+$$
+|S_D|-2^{2v}+1.
+\tag{GDB.46}
+$$
+
+It satisfies (GDB.43), and every original late target uses at most one
+actual owner-root Read of length at most $H+1\le D$, before any
+supplied count. The two constructions have equal alphabet cardinality.
+On the common analytical product-$\mu_d$ scaffold slice, the
+probabilities of their merged names have the mass ratio in Theorem 8.2.
+
+Proof. Ordered scaffold parsing embeds the padded actual tuples
+injectively into $S_D$. Theorem 7.2 gives exactly $2^{2v}$ rows
+for each graph. A public finite membership table assigns their one
+merged name and a distinct name to every remaining canonical state.
+Actually scan the full $W_D$ boundary as in Theorem 9.1 to select
+that name before the request. All canonical states occur as actual
+right subtrees, so every stated name is attained and the count is
+exact. No preassigned unacquired coloring is used.
+
+At a singleton name all factors are fixed. At a merged name, targets
+strictly above the frontier are branch; padding targets have the fixed
+alpha factors, including absent suffixes. A connector target queries
+its own or its cyclic next connector's actual root as in (GDB.32).
+An edge target queries the appropriate endpoint connector root as in
+(GDB.33). These are exactly one original-root literal $Ra_j$, not
+two endpoint observations. The installed target table chooses which
+endpoint from the request, before its reply and every count. All
+$q\in W_d$ are specified, so every permitted full-source target is
+covered. Canonicalization preserves the scaffold, queried replies and
+full target factors on the entire inverse-image fiber, including all
+original variable shapes assigned that name. Equation (GDB.4) proves
+correctness for every subsequent authentic $k$.
+
+The public graph, orders and scaffold are source-independent codebook
+data, not additional retained selectors. Isolation leaves only the
+complete name accessible, as in Theorem 9.1. Padding contributes the
+common analytical factor $(W_d^{\rm wt})^{-(K-n)}$ to both masses;
+their ratio is unchanged. That analytical law supplies no prior or
+observation to the reader. These deliberately nonoptimal constructions
+do not determine $M_1(D)$ or improve an optimized lower bound.
+$\square$
+

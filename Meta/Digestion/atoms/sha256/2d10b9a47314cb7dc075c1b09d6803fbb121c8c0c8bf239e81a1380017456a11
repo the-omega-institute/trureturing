@@ -1,0 +1,70 @@
+**Theorem 105.1 (sufficiency and equivalence for every actual choice).**
+For every prescribed sequence $s_n\downarrow0$ and every choice
+of actual normalized complex ground states $\psi_{s_n}$ at
+$g_n=\chi_cs_n^3$, retain exactly $F_s,\epsilon_c(s),r_s$
+of Definition 102.1. Then
+
+$$
+r_{s_n}\longrightarrow\infty
+\quad\Longleftrightarrow\quad
+\operatorname{dist}_{L^2(\mathbb R^4)}
+       (F_{s_n},\mathcal O_c)\longrightarrow0.
+\tag{105.1}
+$$
+
+Proof. Necessity is Corollary 103.2. For sufficiency the actual
+eigen-equation in $D(S)$, transported by (81.4), is exactly
+
+$$
+\begin{aligned}
+(C_s+h_s)F_s&=\frac{\chi_c}{a}U_sF_s,&
+h_s&=-\epsilon_c(s)/a=r_ss^8/a>0,\\
+F_s&=\frac{\chi_c}{a}R_s(h_s)U_sF_s.
+\end{aligned}
+\tag{105.2}
+$$
+
+Indeed the source multiplier coefficient before replacing
+$W_{s^2}$ by $s^{-5}U_s$ is $s^2g_s/a$, and
+$s^2g_ss^{-5}/a=\chi_c/a$. The energy shift is
+$s^2m_s=-s^2E_s/a=-\epsilon_c(s)/a$. Thus neither the
+kinetic coefficient nor a density factor has been absorbed
+into the heat clock. Negative attainment is Proposition 75.2,
+and bounded multiplication gives the full operator domain as
+in Definition 102.1.
+
+Theorem 98.1 supplies $0<h_s\le Hs^{2/3}$ eventually for
+a fixed $H$ depending only on the fixed data. If
+$r_{s_n}\to\infty$, Theorem 104.2 and $s_n^8/h_{s_n}=a/r_{s_n}$
+therefore give
+
+$$
+\left\|F_{s_n}-\frac{\chi_c}{a}K_{\rm rec}F_{s_n}\right\|_2
+\longrightarrow0.
+\tag{105.3}
+$$
+
+Compactness of $K_{\rm rec}$ and $\|F_{s_n}\|_2=1$ make
+this sequence precompact in the global $L^2$ norm. Any strong
+subsequential limit $F$ has norm one and satisfies
+$F=(\chi_c/a)K_{\rm rec}F$. The range assertion in
+Definition 104.1 gives $F\in D(\mathcal E)$ and
+$\mathcal EF=(\chi_c/a)VF$, so $H_cF=0$.
+By Theorem 88.1, $F=e^{i\theta}\Phi_c$. Every subsequence
+has a further subsequence of this kind; a subsequence whose
+distance to $\mathcal O_c$ stayed positive would contradict
+it. This proves sufficiency and hence (105.1) for all the
+declared complex ground-state choices.
+
+Equivalence (105.1) leaves the behavior of $r_s$ for the
+fixed original family undecided. It supplies no actual bounded-$r_s$
+sequence and no proof that $r_s\to\infty$ occurs. The exact
+energy coefficient, centered crossover, analytic-state preparation
+and physical-space interpretation remain unresolved. The
+macroscopic trial of Proposition 100.1 retains only its stated
+one-sided energy consequence. The compact inverse in (104.1)
+and the actual finite-native resolvent in (105.2) are linked by
+(104.2), while remaining different operators on different
+underlying domains. The observation and resource results
+§§92--96 add no preparation premise to (105.1). $\square$
+

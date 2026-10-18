@@ -1,0 +1,17 @@
+## 481. Strong high/low separation
+
+The exact identity
+
+    (q+b)^2-4*(q+1)*(b-1)=(b-q-2)^2
+
+and its Q/B exchange give, from (480.1),
+
+    v>=4*q+5, m>=4*b+5, v>4*b+3.
+
+Consequently, for w=max(c,d)=max(q,b),
+
+    v>4*w+3, v>9, c,d<v-2.                         (481.1)
+
+Here v>9 follows separately from v>=4*q+5 and q>1.
+In particular v>1+2*w. No strictness of the two flat inequalities is assumed.
+

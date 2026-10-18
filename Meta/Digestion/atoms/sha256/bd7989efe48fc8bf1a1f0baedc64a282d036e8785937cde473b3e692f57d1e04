@@ -1,0 +1,122 @@
+**Convention 9.2 (scope of the present proofs).** Theorems 2.1 and
+3.1 cover every finite interface of §1, every $n\ge1$, every
+nonnegative analytical weight, and every joint fiber under the stated
+local bounds; the graph is chosen from actual missing-target witnesses.
+The proof includes rectangular dimensions, arbitrary donor choices,
+empty fibers, zero weights, $m=2$ and $n=1$. Corollary 3.2 states
+the correct nonnegative dual direction, ceiling lower bound and
+classical finite rounding upper bound.
+
+Theorems 5.1--5.2 cover exactly the proper alphabet $P$, the seven
+$W_3$ targets, every finite native experiment, all joint correlations,
+all $n\ge1$ and $0\le\theta\le1$. Theorem 6.1 constructs every
+cycle length $\ell\ge2$, with full bad projections and an exact
+trace/recurrence for that family. Theorem 7.1 refutes only (CIT.34)
+at the same charge $1+\theta$, uniformly by a ratio at least $5/4$.
+The operational restriction and attainments in §8 depend on every
+condition of Assumption 8.1 and the credited temporal/occurrence
+interfaces. They do not discharge those service conditions.
+
+The component certificate with rectangular traces, sharp proper-$P$
+extremum and exact all-length recurrence for the particular $B_\ell$
+family are additional conclusions relative to the supplied NCM text.
+NCE Theorem 2.2 already handles arbitrary donor cycles through its
+entropy certificate; it does not supply these exact rectangular-trace,
+proper-$P$ extremum or particular Lucas-recurrence statements. The
+classical recurrence, original pair, predecessor depth-two lower and
+NCE full-$S_3$ lower retain their separate credit. This comparison
+supplies no worldwide priority claim or claim of originality against
+unsearched literature.
+
+**Open problem 9.3 (credited full-$S_3$ lower and unresolved sharpness).**
+The sharp $P^n$ mass theorem remains a proper-subalphabet result. It
+supplies neither an all-$S_3$ extremum nor a full depth-three fractional
+optimum, and no full-$S_3$ rate advance follows from $P$ alone.
+The depth-two predecessor bounds
+
+$$
+M_1(D)\ge
+\left\lceil\left(\frac{25}{17}\right)^{2^{D-2}}\right\rceil
+\quad(D\ge2),\qquad
+\frac14\log_2\frac{25}{17}\le\lambda<0.216605159
+\tag{CIT.43}
+$$
+
+retain their NCM and FMR attribution and remain valid weaker lower
+bounds. Here $M_1(D)$ is the minimum complete attained alphabet in
+Assumption 8.1 and
+$\lambda=\lim_{D\to\infty}2^{-D}\log_2 M_1(D)$ is the supplied
+existing rate. The strict upper remains credited to FMR.
+
+NCE Theorem 2.2 supplies a separate entropy certificate: every heavy
+range-feasible projection of weight greater than $C$ must have an
+own-coordinate missing target whose cell weights $A_z$ satisfy
+$\sum_z A_z^2\le C^2$. For the positive weights below and a nonempty
+fiber, each selected target is a deterministic function of both its own
+coordinate and its donor coordinate under the same joint law
+$\Pr[X=x]=\prod_iw(x_i)/\Omega_w(B)$ on the same unchanged joint
+fiber $B$. No independence, locally admissible donor or acyclic donor
+graph is required. This is
+a credited sufficient mass certificate, without a completeness claim
+or an identification with the trace criterion of Theorem 3.1.
+
+The exact full-$S_3$ weights used by NCE Theorem 6.1 are, with the
+canonical alphabets of (CIT.16),
+
+$$
+\begin{aligned}
+v(\alpha)&=v(\beta)=4,&
+v(\langle x,y\rangle)&=1\quad(x,y\in S_1),\\
+w(\alpha)&=88,&w(\beta)&=52,\\
+w(\langle x,y\rangle)&=v(x)v(y)\quad(x,y\in S_2),&
+C&=169,\qquad w(S_3)=429.
+\end{aligned}
+\tag{CIT.43a}
+$$
+
+NCE Theorems 6.1 and 6.2 give the credited current lower. Together
+with the unchanged FMR upper recalled by NCE Corollary 6.3, the
+bounds are:
+
+$$
+\begin{aligned}
+Z_3(n)&\ge\left(\frac{33}{13}\right)^n
+&& (n\ge1),\\
+M_1(D)&\ge
+\left\lceil\left(\frac{33}{13}\right)^{2^{D-3}}\right\rceil
+&& (D\ge3),\\
+\frac18\log_2\frac{33}{13}&\le\lambda<0.216605159.
+\end{aligned}
+\tag{CIT.43b}
+$$
+
+Here $Z_3(n)$ is the fractional covering optimum over every jointly
+admissible subset of the complete $S_3^n$, with all seven targets
+and every finite native experimental word retained. NCE Corollary
+6.3 establishes the strict improvement over the depth-two rate lower.
+These are recalled NCE conclusions, not stronger lower bounds proved
+by this volume's component, proper-$P$ or Lucas results.
+
+The native conclusion retains every condition of Assumption 8.1 and
+the credited exact temporal and actual-occurrence interfaces: one
+stationary source, source-blind paid preparation, complete export,
+separately paid handoff and isolation, lawful entry and source
+continuity, source-independent late requests, and one common reader
+using zero or one charged original-root Read before the subsequently
+supplied authentic count. All allowed sources, targets, off-target
+queries and correlated fibers remain in scope. The services and the
+separate resource charges are not discharged by the entropy lower.
+
+The exact original $\lambda$, effective lower endpoints converging
+to it with certified gaps, and a uniform all-depth lower hierarchy
+remain unresolved here and in the supplied NCE conclusions. A single
+all-length depth-three certificate does not supply that hierarchy,
+and a depth-specific normalized rounding error does not supply a
+uniform all-depth error. The exact finite values of $M_1(D)$ in
+general, including the credited unresolved $M_1(3)\in\{3,4\}$,
+are not determined by these results. Exact $Z_3(n)$ and $\sigma_3$
+remain unresolved as well. Neither an attained mass cap, an exact
+fractional value nor a cycle partition sum alone determines a finite
+integral memory optimum. Failure of either sufficient certificate
+would not prove that a stronger full-family lower is impossible.
+

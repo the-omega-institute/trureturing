@@ -1,0 +1,28 @@
+**命题 63.5（整个粗来源关系不等于实际块边缘的乘积）。** 对每个 $n\ge6$，取 $S=R=V=\varnothing$ 的整个 $\mathcal F_n=\mathcal F_{n,\varnothing;\varnothing,\varnothing}$。任意 $U\in\mathcal F_n$ 的每个 $p\in E_a\sqcup E_b$ 都存在，因为该锥有已观察的 $\alpha$ 后代。完整参考叶反链因此强制 $U$ 在其外围具有同一配对骨架。定义
+
+$$
+\mathcal R_n=\{(U|_p)_{p\in E_a\sqcup E_b}:U\in\mathcal F_n\},\qquad
+\mathcal P_p=\{U|_p:U\in\mathcal F_n\}.
+\tag{JM.198}
+$$
+
+这些投影保留实际带标签子树本身及其可变叶数，不是目标值或两个查询坐标。则
+
+$$
+\mathcal R_n\ \subsetneq\ \prod_{p\in E_a\sqcup E_b}\mathcal P_p.
+\tag{JM.199}
+$$
+
+证明。先取 $n=6$。参考骨架是 $T_3=((\beta,\alpha),\beta)$，三槽位为 $LL,LR,R$，且 $T_6=((Y,X),Y)$。定义
+
+$$
+C_4=((\beta,\alpha),(\beta,\beta)),\qquad
+E_4=(\alpha,((\beta,\beta),\alpha)),\qquad
+U_*=((Y,C_4),E_4).
+\tag{JM.200}
+$$
+
+局部词为 $w(Y)=babba,w(C_4)=babb,w(E_4)=abba$，故 $w(U_*)=babbababbabba=w(T_6)$。$C_4$ 在 $LR$ 给 $\alpha$；$E_4$ 在 $LL$ 缺席、在 $RR$ 给 $\alpha$；$Y$ 在 $LL$ 分支、在 $RR$ 给 $\alpha$。所以 $T_6,U_*\in\mathcal F_6$，它们的三槽叶数分别为 $(5,3,5)$、$(5,4,4)$。实际边缘因此分别含 $Y\in\mathcal P_{LL}$、$C_4\in\mathcal P_{LR}$、$Y\in\mathcal P_R$。但重组合 $((Y,C_4),Y)$ 有十四叶，不能属于固定十三叶的 $W_6$，也不能由任何 $U\in\mathcal F_6$ 实现该三块元组。外围骨架固定排除了用另一个外部形状修复此矛盾，故是严格的来源重组合障碍。
+
+一般 $n\ge6$ 时，原递推 $T_j=(T_{j-1},T_{j-2})$ 使 $q=L^{n-6}$ 处有 $T_6$；参考第三像骨架 $T_{n-3}$ 在同处有 $T_3$，故 $qLL,qLR,qR$ 正是全局第三像的三个叶槽位。将该 $T_6$ 子树换为 $U_*$，外围保持参考，仍同词且匹配全部初始粗约束，给 $\mathcal F_n$ 中的第二个实际来源。从它取 $qLR$ 的 $C_4$ 边缘，从 $T_n$ 取其余各块，重组合后比 $T_n$ 多一叶，不能在 $W_n$。这证明每个所述 $n$ 的严格包含。它与63.3的实际缓存像为完整二元立方体并存：缓存只记指定地址回复，块投影记整棵子树；前者的独立实现不供应后者的自由拼接。$\square$
+

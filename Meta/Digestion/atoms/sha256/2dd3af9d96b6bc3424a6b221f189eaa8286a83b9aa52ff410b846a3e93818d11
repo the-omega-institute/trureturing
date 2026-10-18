@@ -1,0 +1,45 @@
+**Theorem 10.13 (Bounded common orbits are exactly invariant orbits).**
+For any finite affine factor and any source state $x$, the set
+
+$$
+\{E(C_cx):c\in\mathbb T\}
+$$
+
+is bounded if and only if it is the singleton $\{E(x)\}$.
+Consequently boundedness on each common-phase orbit suffices
+for set-theoretic factorization through $(k,u-v)$, without
+a continuity hypothesis. Any common-phase sensitivity forces
+unbounded values along finite iterates of an affected turn.
+
+**Proof.** Use the homogeneous representation on
+$\mathbb R^{d+1}$ and write
+$\widehat{\mathcal R}_c=I+N_c$ with $N_c^N=0$.
+For $z=(E(x),1)$, interpreted in the chosen affine coordinates,
+and every integer $m\ge0$, the finite binomial identity gives
+
+$$
+\widehat{\mathcal R}_c^m z
+ =\sum_{j=0}^{N-1}\binom mj N_c^jz
+ =\bigl(E(C_{mc}x),1\bigr).
+$$
+
+If $N_cz\ne0$, choose the greatest $j\ge1$ with
+$N_c^jz\ne0$ and a real linear functional nonzero on that
+vector. Applied to the displayed sum, it gives a polynomial
+in $m$ of degree $j$ with nonzero leading coefficient,
+because $\binom mj$ has leading coefficient $1/j!$.
+The polynomial is unbounded on nonnegative integers.
+A bounded common orbit would give a bounded sequence of
+homogeneous vectors and hence a bounded value under every
+linear functional, a contradiction.
+
+Thus a bounded orbit forces $N_cz=0$ for each $c$, or
+$E(C_cx)=E(x)$ for each $c$. The converse is immediate.
+If every orbit is bounded, the section in Theorem 10.12
+defines the set-theoretic quotient factor. Its continuity
+does not follow from boundedness alone. If an affected
+$x,c$ has unequal encodings, the same polynomial argument
+gives unboundedness of the corresponding finite iterates.
+Each iterate is a finite valid sequence of finite rectangles;
+no infinite execution is required. $\square$
+

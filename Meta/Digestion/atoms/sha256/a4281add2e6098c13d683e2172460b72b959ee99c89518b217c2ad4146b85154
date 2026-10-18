@@ -1,0 +1,29 @@
+**Definition 5.2 (literal outer receiver).** At $R_r$, Tail(66); Base(70)
+records the choice base before any IN. Execute
+IN(6); EX(70); WR(70,6); MR(70).
+Testing CTL on the unchanged ingress latch selects 1 immediately, or
+on 0 executes a second identical four-row reception and its finite test.
+Thus the prefix-free choices are 00, 01 and 1. No compiler assignment
+occurs between these bit receptions and their finite tests.
+
+Append F and seal the choice block. Construct its literal length $U(2)$
+for 00/01 or $U(1)$ for 1 on 67, with sep/seal. Count preceding descriptors
+and write the complete 68 descriptor, using the saved measured base and
+actual creation count as in RCA's native ingress recipe. Import this
+sealed block from 70, retaining its value in the bank; no choice exists
+only as an unstored branch latch.
+
+| Acquired choice | Actual successor |
+| --- | --- |
+| 00 | TOK handoff to the original-client loan prelude; twelve old workspace TOKs and CTL enter the already initialized $r$. |
+| 01 | CTL enters $F^A$ at its original header Base/setup prelude, before any header IN. Its own source-token admission is unchanged. |
+| 1 | TOK from outer-client invocation slot to history handler; reserve CTL; acquire one history frame on 70. |
+
+For 00, finite new-role setup finishes before the old workspace loan. No
+new helper starts during a partial twelve-token transfer. The terminal
+client route has no interception at global halt. For 01, all seven old
+canonical tags retain their exact CAP branch, guard, actual raw ingress,
+row/dependency/channel/ACK and fault behavior. The finite inner return
+is InnerReturn; the outer return remains $r$. These are different static
+labels, not a variable return-address word.
+

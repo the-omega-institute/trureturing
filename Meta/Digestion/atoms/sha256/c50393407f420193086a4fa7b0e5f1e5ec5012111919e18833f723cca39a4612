@@ -1,0 +1,52 @@
+### Lemma 3.1 (three antichains obstruct two consecutive five-depth windows)
+
+If $m\le17$, neither all depths $2,3,4,5,6$ nor all depths $3,4,5,6,7$ can be noncommon-support.
+
+**Proof.** Consider
+
+$$
+\begin{aligned}
+\mathcal A_0&=(\{0,1\}\times\{0,1,2,3,4\})\cup(\{2,3\}\times\{3,4\}),\\
+\mathcal A_1&=(\{1,2\}\times\{0,1,2,3,4\})
+ \cup(\{0\}\times\{0,1\})\cup(\{3\}\times\{3,4\}),\\
+\mathcal A_2&=(\{2,3\}\times\{0,1,2,3,4\})
+ \cup(\{0,1\}\times\{0,1\}).
+\end{aligned} \tag{6}
+$$
+
+Each set has fourteen cells. Each is an antichain for the comparison (3). For $\mathcal A_0$, a possible comparison between its two horizontal strips has lower zero count at most $4$ and higher zero count at least $3$, so the required zero decrease is at most one. For $\mathcal A_1$, the low strip has zero count at most $1$, the middle strip has hit counts $1,2$, and the high strip has zero count at least $3$; every cross-strip comparison again has a required gap at most one. For $\mathcal A_2$, the same argument applies to its low strip against its middle strip. Within a strip the hit difference is at most one or the hit counts agree. Thus no two cells in any $\mathcal A_j$ satisfy (3).
+
+Hosts of cells in an antichain are disjoint. Therefore
+
+$$
+\sum_{p\in\mathcal A_j}e_p\le m-14\le3\qquad(j=0,1,2). \tag{7}
+$$
+
+The axis excesses vanish. The non-axis cells and their multiplicities in the three antichains are
+
+$$
+\begin{array}{c|c|c}
+d&\text{non-axis cells}&\text{multiplicity in }(\mathcal A_0,\mathcal A_1,\mathcal A_2)\\ \hline
+2&(1,1)&3\\
+3&(1,2),(2,1)&2,2\\
+4&(1,3),(2,2),(3,1)&2,2,1\\
+5&(1,4),(2,3),(3,2)&2,3,1\\
+6&(2,4),(3,3)&3,3\\
+7&(3,4)&3.
+\end{array} \tag{8}
+$$
+
+Consequently, summing (7), the contribution of depths $2$ through $6$ is at least
+
+$$
+3e_2+2e_3+e_4+e_5+3e_6,
+$$
+
+and the contribution of depths $3$ through $7$ is at least
+
+$$
+2e_3+e_4+e_5+3e_6+3e_7. 
+$$
+
+If the first five depths are all noncommon, each relevant $e_d\ge1$, so the first expression is at least $10$, contradicting the sum of the three upper bounds in (7), which is at most $9$. If the second five depths are all noncommon, the second expression is at least $10$ and gives the same contradiction. \(\square\)
+

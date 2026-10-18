@@ -1,0 +1,99 @@
+**Theorem 5.6 (strict short-block slack at the current late-gap frontier).**
+Let $\mathcal I$ be the consecutive-cut intervals, including empty
+interiors, and define
+
+$$
+\begin{aligned}
+\mathcal L_*&=\{I=(a,b)\in\mathcal I:b-a\ge5,\ b>e_*\},\\
+\mathcal A_*&=\mathcal I\setminus\mathcal L_*,\\
+\mathcal S&=\{I\in\mathcal I:\beta_I=2\text{ or }3\},\\
+\tau&=\mathbf1_{\{(n-4,n)\in\mathcal I\}}.
+\end{aligned}
+\tag{5.12}
+$$
+
+Thus $|\mathcal S|=b_{\rm short}$. Define, with an absent terminal
+interval contributing zero,
+
+$$
+\begin{aligned}
+\Xi={}&\sum_{I\in\mathcal S}(E_I-D_I-1)\\
+&+\begin{cases}E_{(n-4,n)}-D_{(n-4,n)}-2,&\tau=1,\\0,&\tau=0,\end{cases}\\
+&+\sum_{I\in\mathcal A_*\setminus(\mathcal S\cup\{(n-4,n)\})}
+ (E_I-D_I).
+\end{aligned}
+$$
+
+Every summand defining $\Xi$ is nonnegative, and on the same graph
+
+$$
+m-G=\nu+E_{\rm reg}+b_{\rm short}+2\tau+\Xi
+ -\sum_{I\in\mathcal L_*}(D_I-E_I).
+\tag{5.13}
+$$
+
+In particular, if every gap ending after $e_*$ has span at most four,
+then
+
+$$
+m\ge G+\nu+E_{\rm reg}+b_{\rm short}+2\tau.
+\tag{5.14}
+$$
+
+This enlarged qualified class, and its subclass with every span at most
+four, have exact minimum $G$. The terminal-gap conditional bound has no
+attainment assertion. For an arbitrary original graph, $m\ge G$ is
+equivalent to the still unresolved inequality
+
+$$
+\sum_{I\in\mathcal L_*}(D_I-E_I)
+\le\nu+E_{\rm reg}+\sum_{I\in\mathcal A_*}(E_I-D_I)
+=\nu+E_{\rm reg}+b_{\rm short}+2\tau+\Xi.
+\tag{5.15}
+$$
+
+A strict saving reverses this inequality strictly. It therefore requires
+some $I=(a,b)\in\mathcal L_*$ with
+
+$$
+D_I>E_I,\quad |Q_I|<|V_I|,\quad
+D_I\ge E_I+1\ge\beta_I\ge5.
+\tag{5.16}
+$$
+
+There are at least four consecutive ambiguous depths in this interval,
+and $b\in\{e_*+1,\ldots,n\}$, with $d_*-1$ possible right
+endpoints. These are necessary conditions, not a construction of a saving.
+
+Proof. For a span-one interval the interior is empty and $E_I=D_I=0$.
+Spans two and three are Theorems 4.1--4.2; span four is Theorem 5.4.
+Every remaining interval in $\mathcal A_*$ ends at $b\le e_*$,
+so $D_I=0$ by Lemma 5.2. Thus all safe contributions $E_I-D_I$
+are nonnegative. For each early-ending nonempty gap this reasoning also
+gives $E_I-D_I=E_I\ge\beta_I-1$. The short intervals and the
+terminal span-four interval are disjoint members of the same interval
+partition. Subtract their respective proved units and two-unit margin,
+leaving exactly the nonnegative terms defining $\Xi$. Theorem 3.3
+then gives (5.13), hence (5.14)--(5.15). No interval contribution has
+been charged twice and no separate block implementation has been used.
+
+If $m<G$, the sum on the left of (5.15) exceeds its nonnegative right
+side, so some late gap has $D_I>E_I$. Every one of its $\beta_I-1$
+internal depths is ambiguous and contributes at least one to $E_I$.
+Integer strictness and the restricted incidence identity prove (5.16).
+The endpoint count is $n-e_*=d_*-1$. Duplicate-incidence units need
+not be distinct states. The fixed-order grid from Theorem 5.1 has every
+depth a cut, belongs to both qualified classes, and attains $G$ at both
+caps, proving their exact minima.
+
+The enlarged class, its minima, the terminal two-unit margin and the
+late-span-at-least-five necessity are credited to [SI, Corollaries
+10.5--10.6 and Proposition 10.9][SI]. In particular (5.15) before its
+explicit slack expansion is SI's current global sum. The additional
+short-block content is the $b_{\rm short}$ contribution proved in
+Section 4, which SI's stated span-two/three estimates leave nonnegative.
+Keeping that contribution together with the credited terminal margin is
+a deduction on one actual installed vector. Neither the bare existence
+of a late gap nor a positive local deficit settles the global sum.
+$\square$
+

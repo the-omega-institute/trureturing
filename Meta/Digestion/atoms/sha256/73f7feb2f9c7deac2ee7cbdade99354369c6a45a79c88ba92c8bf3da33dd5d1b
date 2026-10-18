@@ -1,0 +1,38 @@
+**Assumption 3.1 (acquisition, export, isolation and paid service).**
+Exactly one genuine authenticated update binds the actual origin $u$
+to the same register $t_u=\rho u$. The origin, root, cut and version
+are fixed, with no resets, rerooting, source substitution, arbitrary
+edits or subsequent updates. Authentication certifies continuity and
+selects no source within $\mathcal U_*$. The complete current row is
+lawfully acquired on that stationary version.
+
+Before the access cut a producer genuinely possesses same-source,
+same-version finite data $A(u)$: either the lossless current tree, or
+$R_*$ and one acquired finite subtree value for each of the six classes.
+Local structural inspection and equality comparison act on those acquired
+terms. A lawful code is computed by a terminating finite deterministic
+computation on those data. The producer actually exports its complete
+original bit with the row before access to the acquired material is lost.
+
+A supplied lawful common entry exposes exactly that bit, $P,R_*$ and
+common source-independent controls, with the declared payload recoverable
+at entry. No additional source-bearing identifier, predecessor data,
+alpha marker, acquired value, old output, trace, cache, archive, pointer,
+allocation, control field, acquisition order or count, length, meter,
+timing or update packet is accessible. A field determined by the payload
+adds no distinction; any further field changes this contract. Material
+made inaccessible need not be physically erased.
+
+The same current register stays stationary during reading. Its sole
+source port is the native literal four-reply port. There is no
+unknown-subtree equality, image, provenance, generation, inverse or
+additional subtree port. Every invocation counts, including repeats,
+absences, leaf continuations and addresses previously used in acquisition.
+Acquisition, local acquired-term computation, constants, workspace,
+authentication, installation, representation, actual export, isolation,
+faithful lawful entry and continuing authentic stationary service are
+separately supplied and priced. An absorbing producer stop supplies no
+resume action; later entry is a separately supplied invocation. These
+are NBP Assumption 9.2 and PCA Assumption 1.2's acquired-data route,
+with the complete services retained as in TCR Assumption 3.1.
+

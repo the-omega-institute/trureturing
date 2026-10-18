@@ -1,0 +1,45 @@
+**Proposition 10.3 (same-run equations and honest subtotals).** The preceding
+recurrences account for every component of one finite returning execution.
+In particular, with $n=\sum_{o,p}N_{o,p}(n)$,
+
+$$
+T(n)=n,\qquad F(n)=2n,\qquad
+S(n)=S_{\rm irreducible}+b_{\rm ctl}(n)+8A(n)+8n.
+$$
+
+For one recovery, at its successive actual states, its vector is the ordered
+sum of gate, selector ingress/import, Boundary, cover record/publication,
+ClientCover, binding, Issue/package publication, ClientIssue,
+Call/serializer/Image publication, ClientImage/ACK and
+$M$ append/token/Ready vectors. Preceding actual CaptureCAP costs are
+additional source-cycle work. For the three published payload lengths
+$L_C,L_P,L_I$, the two tested copies through the second handoff and mandatory
+print have scalar subtotal
+
+$$
+\sum_{i\in\{C,P,I\}}\bigl((12L_i+6)+(5L_i+1)\bigr)
+=\sum_i(17L_i+7).
+$$
+
+The whole recovery equals this subtotal plus the nonnegative sum of its
+other actual rows. It is not that subtotal alone. Its distinct immutable
+sender/mailbox/receiver payloads alone retain at least $3\sum_iL_i$ cells.
+
+Proof. At every expansion leaf Assumption 1.2 gives exactly the displayed
+increment. Induction over actual sequence/test/loop successors proves
+all vector coordinates and the storage equation, including partial data.
+In a later bootstrap the control installs contribute
+$(4|E(L)|+2)+(4|E(G)|+2)$ rows; the intervening actual $\Delta(G)$ capture,
+manifest copies and bank initialization are separate recurrence terms.
+Inactive versions remain in $b_{\rm ctl}$. The ten new boundary pairs
+contribute twenty cells/constructors in $A$, with their receipts too.
+
+CAP Proposition 18.3 supplies the copy endpoint: $12L+6$ ends after the
+second handoff; stopping at the second seal would give $12L+5$. The
+$5L+1$ print has its own terminal test. Base/allocation, descriptors,
+positioning, status/completion, client parsing, ACK and final return
+are disjoint additional rows in Definition 10.2. Applying this to each
+actual publication gives the stated decomposition. The three payload
+intervals coexist and are not aliases. These are additions at actual
+shared endpoints, without combining separately optimal schedules. ∎
+

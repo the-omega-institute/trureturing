@@ -1,0 +1,26 @@
+**Theorem 6.4 (scope under changed candidate encodings).** The equality
+obstruction also holds if each chosen value is encoded by any fixed
+finite number of finite free-variable tracks local to its candidate
+subtree, provided that the two codes are independent and the same
+fixed finite context combines them. It excludes neither eager
+selection before shared emission nor synchronized tuple generation.
+
+Proof. For a fixed formula there are still only finitely many local
+types for the second candidate, however its finitely many tracks
+encode a value. Apply the pigeonhole principle to an infinite list
+of different values, keep the first code equal to one member of
+a colliding pair, and propagate types as in Theorem 6.3. Exact
+equality demands different answers on the diagonal and off it.
+For the explicit depth obstruction one needs an encoded family with
+the comb discrepancies used there and a clock outside the replaced
+subtree; the canonical carrier supplies both.
+
+In Theorem 2.5 a whole deterministic value is selected before its
+multiple occurrences are emitted, and $\mathsf F_m$ jointly selects
+all constructors above a common depth. Those occurrences cannot
+be replaced independently while keeping the rest of that generation
+derivation fixed. They therefore do not meet the separated-code
+hypothesis. The type collision also does not rule out an
+input-specific formula deciding unboundedness without validating
+every independent candidate pair. $\square$
+

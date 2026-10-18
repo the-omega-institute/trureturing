@@ -1,0 +1,67 @@
+## 7. 冲突图是两个项目之间的严格桥梁
+
+固定一个有限的姿态集合 $\Omega$。每个姿态 $a\in\Omega$ 表示一个物体中心、方向和形状参数。
+
+对给定 $(\tau,L)$，定义冲突图：
+
+$$
+G_{\tau,L}=(V_{\tau,L},E_{\tau,L}),
+$$
+
+其中：
+
+- $a\in V_{\tau,L}$：姿态 $a$ 的形状满足容器边界；
+- $\{a,b\}\in E_{\tau,L}$：两个姿态对应的形状发生重叠。
+
+一个刚性合法填充就是一个独立集：
+
+$$
+I\subseteq V_{\tau,L}.
+$$
+
+它的占用向量是：
+
+$$
+\chi^I_a=
+\begin{cases}
+1,&a\in I,\\
+0,&a\notin I.
+\end{cases}
+$$
+
+而软填充是一个分数向量：
+
+$$
+x\in[0,1]^{V_{\tau,L}},
+$$
+
+满足：
+
+$$
+x_a+x_b\le1
+\qquad
+(\{a,b\}\in E_{\tau,L}).
+$$
+
+因此，`soft-to-rigid` 与 AURIC 的对应关系是：
+
+$$
+\boxed{
+\text{软几何填充}
+\longleftrightarrow
+\text{冲突图上的分数填充}
+}
+$$
+
+以及：
+
+$$
+\boxed{
+\text{刚性几何填充}
+\longleftrightarrow
+\text{冲突图独立集的指示向量}.
+}
+$$
+
+---
+

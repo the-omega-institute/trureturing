@@ -1,0 +1,103 @@
+**Theorem 7.2 (spatial/temporal recovery corollary and its converse boundary).**
+Under Definition 7.1 and the exact interface hypotheses, the same
+source-context boundary recovers all declared spatial replies by Reply
+and recovers temporal progress by its epoch and $\tau$. It recovers the
+complete original target row on termination for every extracted successful
+table. If the spatial probes are the table's installed probes, their
+current readout is exactly its boundary phase vector. For additional
+declared probes, use their supplied descriptors with the same original
+coordinate. For a finite enlargement of the probe list, under the
+successor-consistency condition for that enlarged finite response vector,
+the source-free boundary also transports those readouts autonomously.
+
+Conversely, if Reply or Same is replaced by a weakened predicate, soundness
+and completeness require separate conditions. With the other hypotheses
+retained, positive extraction (soundness) of a reachable-witness-installed
+table is guaranteed if weakened Reply implies the actual literal reply on
+every admitted source, valid descriptor and realization at every epoch,
+and weakened Same implies actual complete-row equality on all admitted
+pairs. These implications suffice on the task's domain; no claim about
+arguments outside that domain is required.
+
+For completeness, the reverse implication from actual Reply to weakened
+Reply supplies inclusion of actual traces only. If weakened Reply enlarges
+halt support, Shared is evaluated on the enlarged support and can reject a
+previously successful table. With the other hypotheses retained and actual
+complete-row equality implying weakened Same, completeness is guaranteed
+if Reply is exact, or if the weakened halt supports equal the actual halt
+supports for each represented successful table, or if actual supports are
+included and another supplied condition preserves Shared on every enlarged
+support. Equality of halt supports here concerns the represented literals;
+it includes the chosen realizations used in extraction. Thus task-specific
+exactness may survive weaker global predicates. A weakening alone does not
+show that exact recovery fails; without the appropriate task-level
+guarantees, arithmetic consistency of a coarse summary establishes only an
+approximation, and postprocessing cannot supply a missing distinction.
+
+Proof 7.2. For $u=\Theta_\eta(\mathbf n)$, substitute the common
+$\delta(z)$ and actual epoch $j$ in (UDB.4). Definition 7.1 identifies the
+resulting literal reply with the declared spatial one. The number of
+updates increments $j$ by exactly one, so (UDB.26) identifies its temporal
+progress. Theorem 5.2 transports the joint same-source state, and Theorem
+4.2 supplies the complete terminal row. Enlarging the vector requires
+applying the same successor-fiber criterion to that enlarged interface;
+unrecorded probes are not automatically determined by the old vector.
+
+For positive extraction under the stated one-way implications, each
+weakened phase guard still supplies the actual reply at every read of its
+witnessed path. The concatenation in Proof 3.4 is therefore an actual finite
+first-halt trace, so weakened halt support is contained in actual halt
+support. Weakened Total supplies such a trace for every admitted source.
+Install one witness's complete row at each supported halt as in Proof 4.2.
+Weakened Shared and the implication from weakened Same to actual complete-row
+equality make that row correct for every source in that support. Determinism
+and Total ensure that every actual run reaches its witnessed halt; defaults
+at unsupported halts are never used. This proves positive extraction without
+requiring the converse implications.
+
+For completeness, actual Reply implying weakened Reply keeps each actual
+trace and its bounded phase partition as witnesses, hence preserves Total.
+Actual complete-row equality implying weakened Same establishes Shared on
+the actual supports, but not necessarily on added supports. For an explicit
+counterexample, take two finite one-port sources $u_0,u_1$ with permanent
+replies $c_0,c_1$, identity transport, entry epoch zero and distinct complete
+rows $Y_0\ne Y_1$. Use one singleton literal descriptor and exact Same. A
+three-state table reads the port and sends $c_i$ to halt $h_i$ with row
+$Y_i$; it succeeds on both sources. Replace both reply predicates by true.
+Actual Reply implies weakened Reply, but each weakened halt support now
+contains both sources. Shared with exact Same is false at each halt because
+the two complete rows differ. The successful table is rejected by the
+weakened arithmetic criterion. This is a completeness failure, not a claim
+that every weakening fails.
+
+Under exact Reply the supports stay exact as in Proof 3.4, and the stated
+row-equality implication supplies Shared for every successful table.
+Exact halt support is enough for the same argument even when Reply is
+globally weaker. More generally, trace inclusion supplies Total and a
+condition preserving Shared on all enlarged supports supplies the remaining
+clause. These are sufficient replacements for completeness; they do not
+assert that global semantic biconditionals are necessary for every task.
+
+For the negative boundary, take two finite one-port records with identical
+summary but replies $c_0\ne c_1$. A single reply value selected from that
+summary is wrong for one of them; a set containing both is an approximation,
+not an exact deterministic reply. Likewise take two sources with identical
+coarse row mask but distinct whole-subobject equality partitions. If
+$\widetilde{\operatorname{Same}}$ declares them equal on their mask, a
+shared halt may be arithmetically accepted although no one complete row
+fits both. These illustrate particular missing soundness implications,
+not failure of every weakening. An under-approximate Same can instead
+reject a genuinely common row, and an under-approximate Reply can omit a real
+trace; those are completeness
+failures. Other weakened predicates may remain exact on a restricted task, or
+may have their missing direction restored by another supplied relation. A
+function of identical summary values cannot separate either pair. $\square$
+
+This corollary is relation-level recovery under a supplied correspondence.
+It provides no physical timing, distance, metric, simultaneity, acquisition
+procedure, authenticated handoff or installation mechanism. Extra probes
+require their actual permitted access. The epoch in the proof counts
+updates, not elapsed read or serialization time. No statement here turns
+an ordinary mathematical proof into Lean verification or gives arbitrary
+signed-fiber coverage.
+

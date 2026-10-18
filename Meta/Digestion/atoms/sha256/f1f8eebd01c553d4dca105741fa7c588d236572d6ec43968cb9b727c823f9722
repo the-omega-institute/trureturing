@@ -1,0 +1,39 @@
+## 190. The complete Z circle admits at most one dominant axial run
+
+In this case z>m>=u and c,d<m, so Z is the numerically largest reservoir.
+Every Z occurrence is genuine. If its entire circle were axial, actual
+face transport would give one constant reservoir pair. It could not
+contain both of the distinct pairs just produced. Thus the circle has
+transverse occurrences and both dominant runs are proper.
+
+At a boundary of any dominant axial Z run with pair {A,B}, transport
+gives a genuine frame (B,Z,A,Q,Z,A), after interchanging A,B if needed.
+If Q is H, q<=z; if it is special, q<1+z+a. In either case q<1+z+a.
+Dominance means z>=1+a+b. The transverse Z cosine numerator N(q) is
+strictly increasing and satisfies
+
+ N(1+z+a)=[a+z(1+z+a)]*(1+a+b-z)<=0.
+
+Hence the boundary Z angle exceeds pi/2. Every such owner has two equal
+transverse Z angles. The complete Z budget 2*pi therefore permits only
+one actual owner rho with this property. Each proper dominant run must
+have its two distinct boundary Z slots at the two transverse Z slots of
+rho, since all other such slots have angle at most pi/2.
+
+At one of those slots, write rho's companion as A and axes as B,Q.
+Its two incident faces have complementary pairs {A,B} and {A,Q}.
+If that slot bordered dominant axial runs on both sides, then
+
+ z>=1+a+b, z>=1+a+q,
+
+so (z-a)^2>=(b+1)(q+1). This contradicts genuineness of rho, whose
+corresponding strict inequality is (z-a)^2<(b+1)(q+1).
+Each of its two transverse Z slots can therefore support at most one
+dominant-run boundary incidence. A proper dominant run already uses
+both distinct slots. A second proper dominant run is impossible.
+This is an actual-slot argument and includes repeated owners and
+self-glued faces.
+
+The two distinct dominant pairs from Section 189 are consequently
+impossible. Thus the source's U axis satisfies u<1+c+d.
+

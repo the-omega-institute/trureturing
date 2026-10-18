@@ -1,0 +1,37 @@
+**Lemma 5.1 (generic common root).** Let $q$ be an absolutely irreducible
+rational conic dividing one of the resultants. In $K=\mathbb Q(q)$, the
+corresponding polynomials have a common root $z$ in an algebraic closure of
+$K$. The leading coefficients are nonzero: $P$ is monic, $Q$ is monic, and
+the leading coefficient of $R$ is $(Y+1)^{m_2}$, which is nonzero in $K$.
+
+If $z'$ is another common root and $z$ is nonconstant, then
+
+$$
+z'=\zeta z,
+\qquad z'+1=\eta(z+1),
+$$
+
+where $\zeta^{n_1}=1$ and $\eta^{n_2}=1$. Hence
+
+$$
+(\zeta-\eta)z=\eta-1.
+$$
+
+If $\zeta\ne\eta$, this makes $z$ algebraic over $\mathbb Q$, contrary to
+the nonzero pole orders below. If $\zeta=\eta$, the same equation gives
+$\zeta=\eta=1$. Thus the common root is unique. Every $K$-conjugate of it
+is common, and separability in characteristic zero descends $z$ to $K$.
+
+**Proof.** Resultant divisibility gives a common root after mapping the
+resultant to the fraction field of the conic. The root equations give the two
+root-of-unity relations. The displayed identity then proves uniqueness. A
+nonconstant rational-function root has a nonzero pole on each parametrized
+survivor, so it cannot be algebraic over the constant field. Finally, all
+conjugates are common and uniqueness forces the minimal polynomial to have
+degree one. $\square$
+
+This is a generic-function-field statement. It does not assert that every
+specialized zero of a resultant has the same root. The survivor arguments use
+the generic statement only to rule out a factor, while the $e=1/2$ case is
+excluded directly by positivity.
+

@@ -1,0 +1,17 @@
+**Definition 7.3 (cardinality and resource boundaries of normalization).**
+The original optimal alphabet and its paid representative readers
+are already identified by RRN Theorem 7.1. For an arbitrary possibly
+nonminimal original $m$-name competitor, canonical normalization
+may reduce its attained alphabet. RRN Corollary 7.2 supplies exact
+$m$-name realization if required, with sufficient fuller-scan bounds
+$2^{D+1}-1$ Reads, maximum address $D+1$, and $D2^{D+1}+1$
+letters. These are credited correspondences, not preparation-cost
+preservation by seed conditioning. The refinement cost is instead
+the exact attained selector count (SIR.23).
+
+The factor predictor can use $0\le b\le2D$, $c\in\{0,1\}$,
+requiring at most $\lceil\log_2(2D+1)\rceil+1$ bits separately
+from the export and count representation. No physical erasure,
+timing, authentication or free-total-efficiency conclusion is part
+of Theorems 7.1–7.2.
+

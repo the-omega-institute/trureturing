@@ -1,0 +1,10 @@
+**定理 6.4（五态同源响应的秩与比较范围）。** $S$ 的秩至多为一，且当响应对不为零时恰为一。若 $\Delta_{13}\mathsf H\ne0$，则在已知响应线 $\mathbb R\Delta_{13}\mathsf H$ 上有唯一线性泛函
+
+$$
+\psi(a\Delta_{13}\mathsf H)=a\Delta_{13}K.
+$$
+
+它满足 $\psi(r_{\mathsf H,\mathrm{hid}})=r_{K,\mathrm{hid}}$。这不推出整个状态统计之间的 $\tau_K=\psi\circ h_{\mathsf H}$，也不选择 $V$ 全空间上的唯一延拓。
+
+证明。$S$ 的像由一个响应对张成。非零向量 $\Delta_{13}\mathsf H$ 使其倍数的系数唯一，所以 $\psi$ 良定义。选择响应线的补空间可以延拓 $\psi$，但当 $\dim V>1$ 时补空间上的取值通常任意。状态统计另含常数和水平项。具体取 $V=\mathbb R$、$\mathsf H=xy$、$K=x$：$\psi=0$，但 $h_{\mathsf H}=\kappa$、$\tau_K=X$，后者可随 $X$ 改变，不能由 $\kappa$ 单独决定。当 $V$ 本身就是响应线时延拓无需选择，仍不消除这个水平项障碍。∎
+

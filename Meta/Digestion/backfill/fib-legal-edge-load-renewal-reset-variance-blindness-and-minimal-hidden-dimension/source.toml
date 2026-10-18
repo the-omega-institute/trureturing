@@ -1,0 +1,5 @@
+source_id = "fib-legal-edge-load-renewal-reset-variance-blindness-and-minimal-hidden-dimension"
+path = "docs/develop/theory/FIB_LEGAL_EDGE_LOAD_RENEWAL_RESET_VARIANCE_BLINDNESS_AND_MINIMAL_HIDDEN_DIMENSION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

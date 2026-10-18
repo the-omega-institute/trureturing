@@ -1,0 +1,4 @@
+## 4. Two normalized scalar likelihood caps
+
+All logarithms in relative entropy are natural. For probability masses $p,g$ with common support, write $D(p\Vert g)=\sum p\log(p/g)$ and $\chi^2(p\Vert g)=\sum(p-g)^2/g$.
+

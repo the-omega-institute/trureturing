@@ -1,0 +1,24 @@
+### 92.1. Physical domain and the attained Gram optimization
+
+Retain the original local CPTP maps A,B:C⁸→C⁴, input labels x=(f,i) with f=1,...,4 and i=0,1, correlated encoding |x〉↦|xx〉, and output encoding |f〉↦|ff〉 from section 91. The target forward coefficient matrix T has T_ff=I₂ and T_fg=J₂/2 for f≠g. The error is the unhalved diamond norm with arbitrary references.
+
+The [physical calibration theorem](ARITHMETIC_HOLOGRAPHIC_RT_II.md#72-exact-physical-calibration-reduction-for-collapsed-fibre-channels) permits calibration when taking the unrestricted global minimum. It preserves the product structure and does not increase the error, but may enlarge either local environment. It is not a rank-preserving replacement of an arbitrary leaking pair. The calibrated Gram domain and the adaptive witness domain are
+
+\[
+ \begin{split}
+ \mathcal E&=\{G\in\operatorname{Herm}(8):G\ge0,
+                                      \ G_{ff}=I_2\},\\
+ \mathcal C&=\{(\rho,W):\rho=\bigoplus_f\rho_f\ge0,
+                      \ \operatorname{Tr}\rho=1,\ 0\le W\le\rho\}.
+ \end{split}                                                   \tag{1}
+\]
+
+Every G,H∈ℰ is physically realized by calibrated local channels: factor each as the Gram of eight records, whose two records in each fibre are orthonormal, and use |f,i〉↦|f〉⊗a_fi on the first side and similarly on the second. The local Choi ranks equal rank G and rank H. With the forward-Gram transpose convention already incorporated as in section 91, the exact error is
+
+\[
+ F(G,H)=\max_{(\rho,W)\in\mathcal C}
+               2\operatorname{Tr}[(T-G\odot H)W].             \tag{2}
+\]
+
+Both sets in (1) are compact. Thus F is continuous and has a minimum on ℰ×ℰ, equal to the unrestricted original-channel minimum by the calibration theorem. The local assertions below concern local minima on this full calibrated Gram domain. They are not assertions about every competitor of the same rank, nor do they transfer local minimality through a rank-changing calibration.
+

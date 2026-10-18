@@ -1,0 +1,24 @@
+**The original Lucas index.** Use the canonical-height bounds of §74 in precisely the normalized coordinate $z=X/(5D)$:
+
+$$\frac12h(z(P))-\frac{\log144}{6}\le\widehat h(P)
+\le\frac12h(z(P))+\frac{\log24}{6}.$$
+
+These refer to the canonical height on $E_D$; the real coordinate change above does not change that height. Since $z(R)=D$ and $D\ge144$,
+
+$$\widehat h(R)\ge\frac12\log D-\frac{\log144}{6}\ge\frac13\log D.\tag{90.3}$$
+
+Let $\alpha=(1+\sqrt5)/2$ and $v=\alpha^{2N}>1$. Since $N$ and $Nk$ are odd,
+
+$$D=v+1+v^{-1},\qquad
+B_{Nk}=v^k+1+v^{-k}<(v+1+v^{-1})^k=D^k.$$
+
+The strict inequality for $k>1$ follows from the positive mixed terms in the expansion. As $z(K)=B_{Nk}$ is an integer, the upper height estimate gives
+
+$$\widehat h(K)<\frac k2\log D+\frac{\log24}{6}\le\frac{2k}{3}\log D,\tag{90.4}$$
+
+because $k\log D\ge\log24$. Combining $K=mR$, quadraticity, and (90.3)–(90.4),
+
+$$\frac{m^2}{3}\log D\le\widehat h(K)<\frac{2k}{3}\log D.$$
+
+Hence $k>m^2/2>D/2$. ∎
+

@@ -1,0 +1,14 @@
+**Example 3.2 (unbounded nonconstant intrinsic depth).** For every $m\ge2$
+and $a\ge0$, the actual tree $\rho^a p_m$ has
+
+$$
+p(\rho^a p_m)=p_m,\quad \nu(\rho^a p_m)=a,\quad
+c(\rho^a p_m)=m+a,\quad d(\rho^a p_m)=m,\quad e(\rho^a p_m)=0.
+\tag{IDC.3.4}
+$$
+
+On the separate atomic ray $T_a=\rho^a\alpha$, the corresponding values
+are $\nu(T_a)=c(T_a)=a$, $d(T_a)=0$ and $e(T_a)=1$. The calibration
+consumer therefore includes all primitive trees and unbounded intrinsic
+depths, rather than only atomic trees or a fixed-word family.
+

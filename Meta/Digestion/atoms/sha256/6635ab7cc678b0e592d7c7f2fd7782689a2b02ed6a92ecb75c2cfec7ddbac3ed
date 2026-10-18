@@ -1,0 +1,14 @@
+**数学引文 5.1（复用数学的范围）。** 以下输入各自只供应所列步骤。
+
+| 供应 | 精确作用与边界 |
+| --- | --- |
+| [Recovery][Recovery]，定义 1.2–1.4、§3.4、定义 4.2 与推论 4.3 | 原完整来源、普通一块式访问、SRM 构造及有限历史服务等价。 |
+| [Minimax][Minimax]，定义 1.2–1.6 与定理 2.1 | 不变的 minimax 目标及其已有首项定律；不作 minimax 下一阶推断。 |
+| [Quartic][Quartic]，定理 2.1 及 §§3.1–3.6 | 完整准备与参考的精确压缩、局部检测器对偶证书、全局准备局部化、解析偶最优值及矩展开（3.1）。六阶系数和末端修正不在其已给出的系数之列。 |
+| Singal–Ghosh，[Minimum Error Discrimination for an Ensemble of Linearly Independent Pure States][SG]，v5，定理 3.2、4.1–4.2 与 §4.2 末尾 | `literature-attested`：固定正定 Gram 的最小错误检测器最优性及解析性。其加权 Gram 在这里为 $G/M$。不优化本来源的输入分布，也不给出六阶系数。 |
+| Eldar–Forney，[On Quantum Detection and the Square-Root Measurement][EF]，v2，定理 3 与 §8 | `literature-attested`：平方根正交化。其特殊几何均匀最优性需要完整群轨道假设，合法子集不具备该假设。 |
+| Tyson，[Error rates of Belavkin weighted quantum measurements and a converse to Holevo's asymptotic optimality theorem][Tyson]，v1，§§1.2–1.4、2.3 | `literature-attested`：固定态族的近正交渐近比较，不是本卷的来源与输入优化。 |
+| D'Ariano–Sacchi–Kahn，[Minimax quantum state discrimination][DSK]，v5，定理 3–4 | `literature-attested`：固定态的 minimax 与 Bayes 关系，在完全协变态族下相等。这些假设不能将本合法来源的 Bayes 和 minimax 目标等同。 |
+| Chefles–Kitagawa–Takeoka–Sasaki–Twamley，[Unambiguous discrimination among oracle operators][CK]，v5，§II 与定理 3 | `literature-attested`：交换酉的辨识及辅助系统比较。其无歧义辨识目标不供应整词最小错误的六阶定律。 |
+| 固定 mathlib `db584cd6d46c92f209a44c0f1c829460d327499d`：`Analysis/Calculus/Implicit`、`Analysis/Matrix/PosDef`、`Analysis/Matrix/HermitianFunctionalCalculus` | 通用隐函数、正性与谱基础设施，不是本定理的现有形式化或已编译应用。 |
+

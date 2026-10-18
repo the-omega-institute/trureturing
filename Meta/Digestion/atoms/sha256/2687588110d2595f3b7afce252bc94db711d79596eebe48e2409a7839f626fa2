@@ -1,0 +1,32 @@
+**定理 108.2（控制干涉与纯记录互补等号）。** 对任意目标密度输入，控制约化态为
+
+$$
+\varrho_C=\frac12
+\begin{pmatrix}
+1&\eta\operatorname{tr}(U\varrho V^\dagger)\\
+\overline{\eta\operatorname{tr}(U\varrho V^\dagger)}&1
+\end{pmatrix}.
+$$
+
+当 $V=-U$，令 $z=-\eta$。在允许扫控制相位的测量中，$p_{\max}=(1+|\eta|)/2,p_{\min}=(1-|\eta|)/2$，可见度 $\mathcal V=|\eta|$。环境记录的迹距离为
+
+$$
+D_{\mathrm{record}}=
+\frac12\bigl\||e_0\rangle\langle e_0|-|e_1\rangle\langle e_1|\bigr\|_1
+=\sqrt{1-|\eta|^2},\qquad
+\mathcal V^2+D_{\mathrm{record}}^2=1.
+$$
+
+证明（108.2）。联合密度的 $01$ 块为 $U\varrho V^\dagger\otimes|e_0\rangle\langle e_1|/2$，分别取目标和环境迹得到公式。$V=-U$ 时目标迹为 $-\operatorname{tr}\varrho=-1$。对 $|+_\theta\rangle=(|0\rangle+e^{i\theta}|1\rangle)/\sqrt2$，概率为 $(1+\operatorname{Re}(e^{i\theta}z))/2$，取相位极值得两概率和可见度。
+
+为求记录距离，若 $|\eta|=1$，两投影相同，距离零。否则在两记录张成的二维空间里取 $e_0$ 及单位 $f\perp e_0$，写 $e_1=\alpha e_0+\beta f$，$|\alpha|=|\eta|$、$|\beta|^2=1-|\eta|^2$。两投影之差迹零、行列式 $-|\beta|^2$，故本征值为 $\pm\sqrt{1-|\eta|^2}$；其余空间为零，迹范数给所列距离。$\square$
+
+等号只属于上述等权、纯记录且两过程仅差符号的模型。对同一等权纯记录模型的任意两支酉，令 $z=\eta\operatorname{tr}(U\varrho V^\dagger)$，上述测量给 $\mathcal V=|z|$。将 $\varrho$ 谱分解为纯态的概率混合，每项 $|\langle\psi|V^\dagger U|\psi\rangle|\le1$ 由 Cauchy–Schwarz 及酉性得到，故 $|\operatorname{tr}(U\varrho V^\dagger)|\le1$。于是
+
+$$
+\mathcal V^2+D_{\mathrm{record}}^2
+=|\eta|^2|\operatorname{tr}(U\varrho V^\dagger)|^2+1-|\eta|^2\le1.
+$$
+
+混合记录、不等先验等需另定区分量，不能无条件套同一等号。Berthold-Georg Englert，[*Fringe Visibility and Which-Way Information: An Inequality*, Physical Review Letters 77，2154–2157，DOI:10.1103/PhysRevLett.77.2154](https://doi.org/10.1103/PhysRevLett.77.2154)，给两路可见度与潜在路径信息的不等式背景；这里特定纯记录等号由上面的矩阵证明承担。
+

@@ -1,0 +1,20 @@
+**引理 17.2.2（零总质量分解）。** 若 $h:X\to\mathbb R$ 满足 $\sum_xh(x)=0$，令
+
+$$
+h_+(x)=\max\{h(x),0\},
+\qquad
+h_-(x)=\max\{-h(x),0\}.
+$$
+
+则
+
+$$
+h=h_+-h_-,
+\qquad
+\sum_xh_+(x)=\sum_xh_-(x)=\operatorname{TV}(\mu,\nu)
+$$
+
+当 $h=\mu-\nu$ 时成立。
+
+<a id="claim-17-2-3"></a>
+

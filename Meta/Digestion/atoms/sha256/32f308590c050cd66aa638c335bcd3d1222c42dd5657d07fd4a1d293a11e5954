@@ -1,0 +1,39 @@
+**Definition 164.2 (Every complete table and its joint event vector).**
+An $N$ table has one of the schedules $\varnothing$, $(i)$, $(i,j)$ with
+$i<j$, and a label in $J_L$ for each of its respective cells
+$\varnothing$, $0,1$, or $00,01,10,11$. An $O$ table has the same
+schedules with pair cells $0,10,11$, merging $00,01$.
+Every label is allowed in every cell; an output need not be queried.
+Write $\mathcal D_N,\mathcal D_O$ for these entire finite catalogs,
+retaining duplicate descriptions if they define the same output function.
+Their numbers of descriptions are
+
+$$
+\begin{aligned}
+|\mathcal D_N|&=(L+1)+L(L+1)^2+\binom L2(L+1)^4,\\
+|\mathcal D_O|&=(L+1)+L(L+1)^2+\binom L2(L+1)^3.
+\end{aligned}
+\tag{164.3}
+$$
+
+Static reversal or repetition does not add an $N$ output function; its
+canonical representative uses at most two requests. This represents laws
+and does not assert preservation of mean count. For a table $D$, let
+$z_D\in\{0,1\}^m$ indicate membership of its output in each row's event.
+Let $Z_C$ have all these columns and define
+
+$$
+\Pi_C=\{x:\exists w_D\ge0,\ \sum_Dw_D=1,
+                           \ Z_Cw\ge d(x)\},\qquad C=N,O.
+\tag{164.4}
+$$
+
+The same weights mix whole tables in every row. By Proposition 140.3,
+this is equivalent to complete terminal allocations with equal masses
+in every schedule cell and one total schedule budget. Completing a
+stopped table makes an $N$ table; ignored actual requests still count.
+Thus $\Pi_O\subseteq\Pi_N$, and Theorem 109.1 identifies the stopped
+kernels with $\mathscr C_L$. Theorem 110.2 transports these feasibility
+sets at an original positive closed cap and its actual active length.
+Its exact arbitrary-address and full-carrier necessity is reused here.
+

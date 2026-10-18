@@ -1,0 +1,24 @@
+**Definition 2.1 (supported live map and comparison matrix).** Let
+$\Lambda:M_3(\mathbb C)\to M_3(\mathbb C)$ be the supported live
+compression. It is zero-transfer in the calibrated basis when
+$T_{ij}=\langle i|\Lambda(P_j)|i\rangle=0$ for $i\ne j$.
+Use unnormalized output-input Choi order
+
+$$
+J_\Lambda=\sum_{i,j}\Lambda(|i\rangle\langle j|)\otimes|i\rangle\langle j|,
+\qquad Se_i=|ii\rangle.
+\tag{JG.8}
+$$
+
+The homogeneous cone $\mathfrak S_2$ consists of positive sums
+$\sum_s|L_s\rangle\!\rangle\langle\!\langle L_s|$ with
+$\operatorname{rank}L_s\leq2$, where
+$|L\rangle\!\rangle=\sum_{a,i}L_{ai}|ai\rangle$.
+Zero is included and no trace normalization is imposed. For a Hermitian
+matrix $C$, write $d_i=C_{ii}$, $r_{ij}=|C_{ij}|$, and define
+
+$$
+M(C)_{ii}=d_i,\qquad M(C)_{ij}=-r_{ij}\quad(i\ne j).
+\tag{JG.9}
+$$
+

@@ -1,0 +1,171 @@
+**Theorem 300.1 (The entire positive-tail family).**
+Let $\tau>0$ and let the entire sequence (297.1) satisfy
+
+$$
+\begin{gathered}
+1\ge a_1\ge a_2\ge13\tau,\qquad
+(a_3,a_4,a_5,a_6,a_7)=\tau(13,10,9,8,6),\\
+a_8\ge a_9\ge\cdots>0,\qquad a_8\le5\tau,\qquad a_n\longrightarrow0.
+\end{gathered}
+\tag{300.1}
+$$
+
+On the original source and full carrier with the unchanged consumer and
+the selected marked targets, the following are equivalent:
+
+$$
+\begin{aligned}
+&\exists N\in\mathcal N_2:\ e_a(N)\le5\tau;\\
+&\exists O\in\mathcal O_2:\ e_a(O)\le5\tau;\\
+&a_1+7\tau\le1\quad\hbox{and}\quad a_2+11\tau\le1.
+\end{aligned}
+\tag{300.2}
+$$
+
+Feasibility necessarily implies $\tau\le1/24$. On precisely this
+feasible head domain, both original optima are attained and equal $5\tau$.
+For every positive closed cap $\varepsilon$, either class is feasible iff
+$\varepsilon\ge5\tau$. This last cap classification is asserted under
+the two head conditions; heads failing them are only excluded at cap
+$5\tau$ by (300.2).
+
+**Proof.** The necessity follows from Theorem 299.1 on $J=(3,4,5,6,7)$.
+Here $S_J=46\tau$, and the weighted late sum in $Y_2$ is
+$(52+50+45+40+24)\tau=211\tau$. At $e=5\tau$, the two relations
+are exactly $a_1+7\tau\le1$ and $a_2+11\tau\le1$. Since
+$a_2\ge13\tau$, they imply $24\tau\le1$.
+
+For sufficiency use the following one law. In the table,
+$O(i,j;u,s,t)$ emits $u$ after its first queried zero, $s$ after $10$,
+and $t$ after $11$. Its mass is the final entry times $\tau$.
+
+| $i$ | $j$ | $u$ | $s$ | $t$ | Mass / $\tau$ |
+| --- | --- | --- | --- | --- | ---: |
+| 1 | 2 | 1 | 2 | 0 | 4 |
+| 1 | 2 | 1 | 2 | 3 | 2 |
+| 1 | 2 | 1 | 2 | 4 | 1 |
+| 1 | 2 | 1 | 2 | 5 | 1 |
+| 1 | 3 | 1 | 3 | 0 | 3 |
+| 1 | 4 | 1 | 4 | 0 | 1 |
+| 2 | 3 | 0 | 3 | 0 | 3 |
+| 2 | 4 | 0 | 4 | 0 | 1 |
+| 3 | 4 | 0 | 4 | 0 | 1 |
+| 3 | 4 | 0 | 4 | 5 | 1 |
+| 3 | 5 | 0 | 5 | 0 | 1 |
+| 3 | 6 | 0 | 6 | 0 | 1 |
+| 4 | 5 | 0 | 5 | 0 | 1 |
+| 4 | 6 | 0 | 6 | 0 | 1 |
+| 5 | 6 | 0 | 6 | 0 | 1 |
+| 6 | 7 | 0 | 7 | 0 | 1 |
+
+These integer masses sum to 24. Set
+
+$$
+\rho=1-24\tau,\qquad x_1=(a_1-17\tau)_+,\qquad x_2=a_2-13\tau.
+\tag{300.3}
+$$
+
+The head conditions give $0\le x_1\le\rho$ and $0\le x_2\le\rho$
+individually. There is just **one shared remaining branch** of mass
+$\rho$, with schedule $(1,2)$ and exhaustion output zero. On that branch
+let $V$ be its local uniform coordinate. After first-zero 1 it emits 1
+iff $V<x_1/\rho$, otherwise zero; after first-zero 2 it emits 2 iff
+$V<x_2/\rho$, otherwise zero. Both counterfactual choices use the
+same $V$. If $\rho=0$, omit the branch; then $x_1=x_2=0$.
+There is no condition $x_1+x_2\le\rho$: different stopped cells use
+the same schedule mass. For example, at $\tau=1/30$ the simultaneous
+upper heads $a_1=23/30$, $a_2=19/30$ give
+$x_1=x_2=\rho=1/5$.
+
+Here is an all-word verification of that one law for every real permitted
+parameter. Put $(s,t,u,v,z)=(w_3,w_4,w_5,w_6,w_7)$ and define
+
+$$
+\begin{aligned}
+B&=2s(1-t)+st+(s+t)(2-u-v)+u(1-v)+v(1-z),\\
+G&=3(1-s)+(1-t).
+\end{aligned}
+\tag{300.4}
+$$
+
+For fixed $q=s+t$ and $(u,v)=00,01,10,11$, maximization over $z$
+of $q(2-u-v)+u(1-v)+v(1-z)$ gives $2q,q+1,q+1,1$.
+Consequently its maxima for $(s,t)=00,01,10,11$ are $1,2,2,4$.
+Adding $2s(1-t)+st+G$ in those four cases gives respectively at most
+$5,5,5,5$. Hence $B+G\le5$ and $B\le5$.
+
+Direct addition of the sixteen tables gives the following correct mass
+$c_n$ after including the shared branch, and the mass $\delta_n$
+outside $\{0,n\}$ in units of $\tau$:
+
+| First zero $n$ | $c_n$ | $\delta_n/\tau$ |
+| --- | --- | --- |
+| $1$ | $12\tau+x_1$ | $B+w_2G$ |
+| $2$ | $8\tau+x_2$ | $B+G$ |
+| $3$ | $8\tau$ | $2+2(1-t)+t(2-u-v)+u(1-v)+v(1-z)$ |
+| $4$ | $5\tau$ | $5-uv-vz$ |
+| $5$ | $4\tau$ | $5-v-vz$ |
+| $6$ | $3\tau$ | $5$ |
+| $7$ | $\tau$ | $5$ |
+
+The correct masses are constant over each entire first-zero fibre, with
+no restriction on subsequent zeros. In row 3, $t=0$ gives
+$4+u(1-v)+v(1-z)\le5$, since the last two terms cannot both be one.
+For $t=1$ the expression is $4-uv-vz\le4$. Every other wrong-mass
+entry is at most five by (300.4) or its displayed nonnegative products.
+The residual branch adds only correct or base mass in classes 1 and 2,
+and only base mass in later classes, so it adds no wrong mass.
+
+For class 1, $13\tau\le a_1$ gives $c_1\le a_1$; when
+$a_1\le17\tau$, $c_1=12\tau\ge a_1-5\tau$, and otherwise
+$c_1=a_1-5\tau$. For class 2, $c_2=a_2-5\tau$. In all late
+classes $c_n=a_n-5\tau$. Thus, for every zero word,
+
+$$
+a_n-c_n\le5\tau,\qquad
+c_n+\delta_n-a_n\le\delta_n\le5\tau,\qquad
+\delta_n\le5\tau.
+\tag{300.5}
+$$
+
+These are separately the correct, base and independent union deficits
+in (297.3). They prove all three rows for every word, including every
+multiple-zero suffix and any negative singleton demand.
+
+At the finite positive word the law is exactly
+
+$$
+p_+=(1-5\tau)\delta_0+2\tau\delta_3+\tau\delta_4+2\tau\delta_5.
+\tag{300.6}
+$$
+
+For every actual $n>7$ it follows from (297.2) that its error is
+$\max\{5\tau,a_n\}=5\tau$. This includes the closed tie
+$a_8=5\tau$ and every specified positive vanishing tail. A positive
+finite prefix represents actual later-zero sources, not an infinite
+all-positive source. The late correct deficits also equal $5\tau$.
+
+To execute the construction, partition one uniform seed $U\in[0,1)$
+into the sixteen table intervals and the shared interval of length $\rho$.
+Within the latter, use its affine coordinate as $V$; this is a coordinate
+of the same seed, not an extra random input. The whole schedule and all
+counterfactual outputs are thereby determined before replies. Execute only
+that increasing schedule, stop at its first queried zero or exhaustion,
+and emit the indicated actual $\theta_j$ on the full carrier. Every
+source and seed has finite handoff, zero advice and at most two actual
+requests. The same-seed $N$ completion obtains the entire schedule and
+counts the ignored second request. The law is identical in both classes.
+
+For the lower bound use the old five-late zero-cost score
+[281.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XVI.md),
+whose necessary relation is $\sum_{j=3}^7a_j\le(46/5)\varepsilon$.
+If any original arbitrary-address, full-carrier $N$ rule had error below
+$5\tau$, choose a positive closed cap $\varepsilon<5\tau$ above
+that error. Here $a_7=6\tau>\varepsilon$, so 110.2 supplies its
+complete finite representative through address seven. Pairing the old
+score gives $46\tau\le(46/5)\varepsilon$, a contradiction.
+The same lower bound holds for every original $O$ by counted completion.
+The constructed law attains it, and the same law is feasible at all
+larger closed caps, irrespective of their changed active horizons.
+$\square$
+

@@ -1,0 +1,27 @@
+## 339. The combined-angle comparison
+
+**Proof of Theorem 333.2.**
+
+For positive x,y, the function (xy-1)/(x+y) strictly increases in each
+variable: the derivatives are (y^2+1)/(x+y)^2 and (x^2+1)/(x+y)^2.
+Equations (338.1), (338.3) and (338.4) give xy>1 and
+
+    (xy-1)/(x+y)>43/88>(sqrt(41)-4)/5
+                        >sqrt(1+w^2)-w.         (339.1)
+
+For the middle strict comparison, both sides of
+sqrt(41)<567/88 are positive, and
+567^2-41*88^2=3985>0. The last comparison uses w>4/5 and strict
+decrease of sqrt(1+w^2)-w for w>0.
+
+Since xy>1, the positive arctangent identity gives
+
+    atan(x)+atan(y)=pi/2+atan((xy-1)/(x+y)).
+
+Also tan(pi/4-atan(w)/2)=sqrt(1+w^2)-w. Hence (339.1) implies
+
+    2*atan(w)+4*atan(x)+4*atan(y)>3*pi.
+
+By (334.2) this is exactly (333.6). This proves the scalar implication. QED.
+
+

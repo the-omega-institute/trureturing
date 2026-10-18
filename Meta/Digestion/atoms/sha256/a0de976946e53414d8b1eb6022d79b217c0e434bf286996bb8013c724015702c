@@ -1,0 +1,48 @@
+**Particular weighted response.** Put $U_h=pF_*$ and $v=\Psi-U_h$, with exactly the height projection of R (16.2). R (16.3) supplies
+
+$$
+|F_*|\le C|r|,\quad |F_*'|=|q_*|\le C,\quad
+p\le C(1+\mathfrak d)^{-5},\quad
+|\nabla_Hp|\le C(1+\mathfrak d)^{-6},\quad
+\mathfrak d\ge c_r|r|.
+\tag{22.4}
+$$
+
+The control balls have volume $v_dR^7$. Let $\vartheta_R$ be the even compact spatial cutoff of R §20, equal to one on $\mathbb B_{2R}$ and supported in $\mathbb B_{3R}$. R (20.4) and its $\operatorname{Err}_R=O(R^{-3})$ bound give $h[(1-\vartheta_R)v]\le CR^{-3}$. This vector is odd, so R (16.1) gives $b[(1-\vartheta_R)v]\le CR^{-3}$. Outside $\mathbb B_{3R}$ its horizontal derivatives equal those of $v$. Moreover
+
+$$
+XU_h=F_*Xp+pq_*,\qquad YU_h=F_*Yp,
+\qquad |\nabla_HU_h|\le C(1+\mathfrak d)^{-5}.
+$$
+
+Integrating these pointwise bounds, and using R Lemma 20.1 for $v$ and the same decay for $U_h$, proves, for $R\ge1$,
+
+$$
+\int_{\mathfrak d>R}|\nabla_H\Psi|^2\le CR^{-3},
+\qquad \|\mathbf1_{\mathfrak d>R}\Psi\|_2\le CR^{-1/2}.
+\tag{22.5}
+$$
+
+Dyadic summation of $\mathfrak d^2|\nabla_H\Psi|^2$ bounds its integral over $\mathfrak d>1$ by $C\sum_{j\ge0}2^{2j}2^{-3j}<\infty$. Local form membership handles the remaining ball. Together with (22.4), this proves
+
+$$
+\begin{gathered}
+rX\Psi,rY\Psi\in L^2,\qquad r^2Yp\in L^2,\qquad p\in L^{14/9},\\
+\|\mathbf1_{|r|>R}p\|_2+
+\|\mathbf1_{|r|>R}rYp\|_2\le CR^{-3/2},\qquad
+\|\mathbf1_{|r|>R}Y\Psi\|_2\le CR^{-3/2}.
+\end{gathered}
+\tag{22.6}
+$$
+
+For instance $r^4|Yp|^2\le C\mathfrak d^4(1+\mathfrak d)^{-12}$ is integrable in homogeneous dimension seven, and $5(14/9)>7$ proves the stated integrability of $p$. The Engel Sobolev inequality yields
+
+$$
+\|w\|_{14/5}\le C\sqrt{b[w]},\qquad
+|\langle p,w\rangle|\le C\sqrt{b[w]}
+\quad(w\in\mathcal Q_E).
+\tag{22.7}
+$$
+
+Here the first inequality is the $s=1$ case of Bahouri–Barilari–Gallagher–Léautaud, [arXiv:2206.10396v1](https://arxiv.org/pdf/2206.10396v1), Theorem 5.1. Their fields, group law, Haar measure and $Q=7$ coincide with (2.6), and their homogeneous norm is $\sqrt b$. Its core inequality extends by form closure to this complex domain, either directly in the complex-valued spaces or by real and imaginary parts; Hölder and (22.6) give the second inequality. These steps prove only the weighted horizontal derivatives needed here. Neither $r\Psi\in L^2$ nor $\Psi\in D(\mathcal E)$ or an uncut native response membership is used.
+

@@ -1,0 +1,70 @@
+## 6. Determinant geometry and the common-source collision bridge
+
+Continue with an arbitrary legal history at $n=d+5$ and the operators $\mathcal B,\mathcal C,\mathcal T_\kappa$ of Section 2. None of the following results restricts the finite words, their lengths, or empty-word repetitions. Define the symmetric bilinear form on the real matrix space by
+
+$$
+\mathfrak b(X,Y)=\det(X+Y)-\det X-\det Y.
+$$
+
+For $S=(\begin{smallmatrix}p&q\\r&s\end{smallmatrix})$ this is
+
+$$
+\mathfrak b(S,Y)=sY_{11}+pY_{22}-rY_{12}-qY_{21},
+\qquad \mathfrak b(X,X)=2\det X.
+$$
+
+Testing the four single-entry matrices shows that $\mathfrak b$ is nondegenerate. At a positive rank-one $S$, the source tangent space is
+
+$$
+\mathsf V_S=\{V:\mathfrak b(S,V)=0\}.
+\tag{6.1}
+$$
+
+Indeed the determinant differential is the displayed nonzero functional, and the positive source chart $S=rE(x,y)$, with
+
+$$
+E(x,y)=\begin{pmatrix}x&xy\\1&y\end{pmatrix},
+\qquad r,x,y>0,
+$$
+
+parametrizes exactly the positive part of its zero set. For any linear operator $H$ on matrices, put
+
+$$
+Q_H(S)=\mathfrak b(S,H(S)),\qquad R_H(S)=\det(H(S)).
+$$
+
+The determinant expansion of Section 2 is therefore
+$\det(S+tH(S))=tQ_H(S)+t^2R_H(S)$ on this source domain.
+
+We use the following common-source bridge for every quotient equality below. Given positive rank-one $S_0,S_1$ and slopes $\kappa_0,\kappa_1$ with
+$\mathcal T_{\kappa_0}S_0=\mathcal T_{\kappa_1}S_1$, define
+
+$$
+u_i=(1+\kappa_0i)\operatorname{tr}(A_iS_0)
+ -(1+\kappa_1i)\operatorname{tr}(A_iS_1).
+$$
+
+By Lemma 2.1, $\Lambda u=0$ means that one entire polynomial $P\in\mathcal P_d$ agrees with $u$ at every recorded position. Its explicit expression is
+
+$$
+P(t)=\sum_{h=0}^d u_h
+ \prod_{\substack{0\le b\le d\\b\ne h}}\frac{t-b}{h-b}.
+\tag{6.2}
+$$
+
+The node differences are nonzero; the product is one when $d=0$. Use $D_0=0,D_1=P$. Thus every original observation agrees, including a position where either affine gain vanishes. The quotient identity guarantees all $d+5$ equations, beyond the first $d+1$ interpolation nodes.
+
+For each endpoint $S_a=(\begin{smallmatrix}p_a&q_a\\r_a&s_a\end{smallmatrix})$, the actual original parameters are
+
+$$
+R_a=S_a,\quad \alpha_a=1,\quad\beta_a=\kappa_a,
+\qquad c_a=(p_a,r_a)^{\mathsf T},\quad
+\ell_a=(1,q_a/p_a).
+\tag{6.3}
+$$
+
+Positivity and $p_as_a=q_ar_a$ give $c_a\ell_a=S_a$ and
+$\ell_a A_i c_a=\operatorname{tr}(A_iS_a)$. The fixed row $\ell_a$ is used at every read and unread state of its run. Each atom sends a positive column to a positive column:
+$M(v_1,v_2)^{\mathsf T}=(v_2,v_1+v_2)^{\mathsf T}$ and
+$J(v_1,v_2)^{\mathsf T}=(v_2,v_1)^{\mathsf T}$. This realizes the prescribed history with its actual recorded clock and the single polynomial $D_a$ throughout each run. Different slopes give distinct effective targets even if $S_0=S_1$. For same-slope collisions the positive-secant criterion supplies distinct sources. Equations (6.2)–(6.3) implement the credited quotient and realization interfaces; they introduce neither independent lifted sources nor per-read drift choices.
+

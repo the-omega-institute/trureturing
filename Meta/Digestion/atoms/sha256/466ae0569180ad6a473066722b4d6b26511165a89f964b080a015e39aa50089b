@@ -1,0 +1,10 @@
+**Corollary 86.2 (the next possible integral index).** Under the hypotheses and notation of Theorem 85.1, every affine integral point $K$ with $\delta(K)=(5,D,5D)$ has
+
+$$X(K)=5D B_{Nk},\qquad \gcd(k,210)=1.$$
+
+If $K\ne\pm R$, then $k\ge11$, so its index is at least $11N$.
+
+**Proof.** Theorem 85.1 gives $n=Nk$ with $k$ positive odd, $3\nmid k$, and $B_n=Dc^2$ for a positive integer $c$. Apply Theorem 86.1. The least positive integer greater than one and coprime to $210$ is eleven. ∎
+
+These conclusions retain the original integral orbit and the full squarefree kernel. They exclude two infinite families of relative indices without an elliptic-rank or Selmer premise. They do not exclude every remaining index or squarefree kernel, and do not solve the WSS problem. The polynomial proof is self-contained; classical background on square classes of individual Fibonacci and Lucas terms is [Ribenboim, *Square classes of Fibonacci and Lucas numbers*, Portugaliae Mathematica 46 (1989), 159–175](https://geodesic.mathdoc.fr/item/PORMA_1989__46_2_115659/). No exhaustive priority claim is made for this application to the quotient blocks.
+

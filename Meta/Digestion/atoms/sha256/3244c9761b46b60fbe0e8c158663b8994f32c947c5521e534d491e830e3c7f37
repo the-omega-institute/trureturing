@@ -1,0 +1,17 @@
+**定义 18.1（统一参数与组成支撑）。** 置
+
+$$
+\varphi=\frac{1+\sqrt5}{2},\quad s_0=\sqrt{d_0},\quad
+z=\log s_0,\quad \ell=\log L,\quad h=\log H,\quad
+\gamma=z-\ell/\varphi^2,\quad T=s_0^{\varphi^2}/L=e^{\varphi^2\gamma}.
+$$
+
+站立条件为 $z<2\ell$。非零单位标签的组成支撑恰为
+
+$$
+\mathcal S=\{(1,0),(0,1)\}\cup
+\{(m,n):m,n\ge1,\ (m,n)\notin(2\mathbb N)^2\}.
+$$
+
+此支撑直接复用 [Process Geometry 定理44.2](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md)：三轴的 $\mathbb F_2^2$ 分次排除双偶混合组成，纯标签多叶树的同标签 cherry 排除其非零值。可用的实际见证是从 $\langle\beta,\alpha\rangle$ 出发，两次左接同一标签来增加对应叶数2；正奇／奇组成由此全得到。正偶／奇再左接一次 $\alpha$，正奇／偶再左接一次 $\beta$，所接轴与原轴垂直，仍非零。另两纯组成就是原叶。这些是构造来源的有限配方，不是观察者取得组成或接合权限。
+

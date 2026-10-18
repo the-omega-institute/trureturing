@@ -1,0 +1,62 @@
+**Theorem 4.2 (unbounded-address budget decision).** For every input of
+Definition 1.1 and every $k,b\in\mathbb N$, there is a terminating
+necessary-and-sufficient decision of
+
+$$
+\exists A\text{ legal on all }D:
+       \sup_Dq_A\le k\quad\land\quad\sup_Da_A\le b.
+\tag{CRF.12}
+$$
+
+A positive answer constructs an actual source-total service.
+The comparison includes all deterministic effective adaptive serial
+services with arbitrary physical words, pointwise finite local work
+and absorbing halt.
+
+Proof. Apply the already supplied ARH22.1 recovery decision. If it
+is negative, its serial-to-original-prefix implication excludes
+every finite raw budget, so (CRF.12) is false. If positive,
+compute $\mathscr R$ and its formulas. Enumerate the finitely many
+skeleton shapes, epochs and whole-row leaf labels of Definition 4.1.
+For each one, Theorem 3.4 constructs a finite word automaton for
+(CRF.11). Decide its emptiness. If any is nonempty, extract its
+finite tuple of physical words. If all are empty, answer no.
+The product-automaton searches terminate; there is no increasing
+address cutoff on the negative branch.
+
+For the positive direction, execute an accepted skeleton using only
+its installed words and common control. Each actual $u\in D$
+has a feasible chart valuation. Induction along the physical
+execution and Theorem 3.4 identify its path with that valuation's
+actual replies. It reaches a halt in at most $k$ reads and at most
+$b$ updates. Equation (CRF.11) forces the leaf label to be its entire
+original row. Its actual costs are exactly (CRF.10). No source,
+chart or equality query is needed to execute the certificate.
+
+For the converse, fix an arbitrary legal comparator satisfying
+(CRF.12). Its common state and the finite reply prefix fix every
+subsequent local computation, real update and physical word before
+the next reply. At a reachable prefix that segment is finite:
+otherwise the comparator would fail to terminate on a source
+reaching it. There are at most $1+4+\cdots+4^k$ reachable reply
+prefixes. Unroll their finite segments into a finite reply tree,
+keeping every actual read, its word, its epoch, and every early
+halt. Replace unreachable children by immediate halts. Delete
+updates after the final read on any path; they carry no new
+source information under the contract and their removal decreases
+only the update coordinate. The already determined output can be
+returned before those updates.
+
+All remaining read epochs lie in $[N,N+b]$ and are nondecreasing.
+Every reachable halt returns some row in $\mathscr R$; label it
+accordingly, and choose any row for unreachable halts.
+The resulting skeleton is among the finite choices above.
+Correctness of the comparator and both source directions in
+Theorem 3.4 make (CRF.11) true for its actual words.
+Thus a no answer excludes every such comparator.
+
+This last direction is a mathematical unrolling, not an asserted
+algorithm extracting a uniform bound from arbitrary source-total
+code. The decision constructs its own finite certificate using
+the finite automata. $\square$
+

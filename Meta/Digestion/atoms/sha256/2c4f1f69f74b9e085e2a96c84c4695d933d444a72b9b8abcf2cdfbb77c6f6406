@@ -1,0 +1,64 @@
+**Theorem 205.2 (Correct-or-pair support).** Define
+
+$$
+J_{CP}(V)=\{j\ge3:\sum_{n(w)=j}(C_w+P_w)>0\}.
+$$
+
+All base rows, early correct and pair rows, and $T$ are unrestricted.
+For $m=L-2$, $1\le d<m$, set
+
+$$
+H_d=3(m+1)-2d,\qquad a=\frac{d+3}{H_d},\qquad
+ e=\frac d{H_d},\qquad b_1=\cdots=b_L=a.
+\tag{205.5}
+$$
+
+For every full $V\ge0$ with $|J_{CP}(V)|\le d$,
+
+$$
+b\in H_L,\qquad F_{Q(V)}(b)\le\Delta_O(V)\le\Delta_N(V).
+\tag{205.6}
+$$
+
+Consequently, for any finite decomposition
+$q=\sum_iQ(V_i)+q_{\rm res}$ with $|J_{CP}(V_i)|\le d$ and
+$\sigma_H(q_{\rm res})\le\theta$, $\theta\ge0$, its additive cost obeys
+
+$$
+F_q(b)\le\sum_i\Delta_C(V_i)+\theta\qquad(C=N\text{ or }O).
+\tag{205.7}
+$$
+
+**Proof.** Here $0\le e<a\le1$,
+$ma-(m+3)e=3(m-d)/H_d\ge0$ and
+$(m+1)a-(m+3)e=1$, proving membership in $H_L$.
+Pad $J_{CP}(V)$ to $J'$ of size $d$, and order
+$S_0=\{1,2\}\cup J'$ by actual address. Adjoin a final symbol $\ast$
+meaning output label zero. With probability $1-a$ output zero without
+requests. With probability $a$ choose uniformly a three-subset of
+$S_0\cup\{\ast\}$, query its two smallest labels increasingly, stop
+at the first queried zero, and otherwise output its largest label.
+The first two are always numerical. This is the whole-table rule of
+87.1, on these actual addresses, and uses at most two actual requests.
+
+If the actual first zero $n$ belongs to $S_0$, the output is $n$ exactly
+when $n$ was selected: all smaller selected addresses answer one; if
+$n$ is the unqueried final label it is then guessed. This argument
+allows every later zero pattern and every gap between addresses. Thus
+
+$$
+p_w(n)=\frac{3a}{d+3}=a-e\quad(n\in S_0),\qquad
+p_w(0)\ge1-a\quad\text{on every word}.
+$$
+
+The base demand $1-a-e$ is met everywhere; on retained classes the
+independent pair demand $1-e$ is met by adding these two probabilities.
+On $1^L$, zero is emitted precisely by the constant branch or a subset
+containing $\ast$, so $p_{1^L}(0)=1-e$. This one law satisfies all rows
+scored by $V$; only excluded late correct and pair rows are unasserted.
+Multiplying these simultaneous inequalities by the coefficients of $V$
+and subtracting the unit-mass anchor gives (205.6). For (205.7), apply
+that scalar inequality separately at the same $b$ and add the single
+residual bound. The partial-row laws for different $V_i$ need not be
+the same law and are not asserted to satisfy all rows jointly. $\square$
+

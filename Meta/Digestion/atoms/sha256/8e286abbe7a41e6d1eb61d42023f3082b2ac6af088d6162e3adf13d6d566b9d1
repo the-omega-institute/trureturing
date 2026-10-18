@@ -1,0 +1,49 @@
+**Proposition 9.2 (a strict obstruction for every interior parameter).**
+For every $n\ge6$, $3\le k\le n-2$, every original $A$ and $r$,
+partition coordinates with
+
+$$
+|I|=n-k,\qquad X=\{x\},\quad Y=\{y\},\qquad |U|=k-2.
+\tag{WTF.34}
+$$
+
+Consider an $S=I\cup X$ history with all $I$ bits zero and $x=1$,
+and a $T=I\cup Y$ history with exactly two ones on $I$ and $y=0$.
+These are actual live histories obtainable in a full-domain original
+preparer obeying both caps. They cannot reach the same original
+selected state in any such preparer. The exclusion is additional to
+PE's interval and one-sided private-polarity conditions.
+
+Proof. The supports have the same size. Their hits are $h=1,g=2$,
+and their zero counts are $n-k,n-k-1$. Both are live, since $k\ge3$.
+Their nonempty common unread set is $U$. Both private polarity
+hypotheses fail: the old $X$ bit is one and the old $Y$ bit is zero.
+Their two clipped intervals from (WTF.19) are respectively
+$\{k-2\}$ and $\{k-3\}$, so the existing interval exclusion does not
+rule them out; neither does PE Theorem 3.1. They are not equal-hit
+or nested-support pairs, and PE Corollary 4.3's defect-free extreme
+hypothesis is absent.
+
+For actual occurrence of these prefixes, take a full Boolean query
+tree reading all coordinates once. First read $I$ in a fixed order.
+In the all-zero branch next read $x$; in a branch with exactly two
+ones on $I$ next read $y$. At the respective resulting nodes choose
+the same member of $U$ as next query, and finish each tree path by
+fixed installed tests of its remaining coordinates. Every vertex has
+a fixed label; no running count or selector is added. Attach threshold
+terminals and apply the full-fiber lift of Theorem 4.1. Each selected
+path pays exactly $n$ calls and $W$ letters, preceded by $D$; all other
+profiles use its original two-state front. Supplier 2.1 gives actual
+origins for both prefixes and every completion. This construction
+only witnesses that the proposed incoming histories are lawful; it
+claims no installed-state improvement.
+
+If they shared a selected state, their hit difference one would
+contradict Theorem 9.1. More explicitly, their parameters are
+$a=b=1,\ u=k-2,\ q=k-1,\ v=k-2,\ \xi=1,\ \eta=0,\ \delta=2$.
+Here $\lambda=1$, and (WTF.24) would require
+$k\le k-1$. Thus any continuation identifying these histories violates
+the original caps or correctness, for every set of original absolute
+costs. This is a uniform parametric obstruction, not a list of
+small-cardinality optima. $\square$
+

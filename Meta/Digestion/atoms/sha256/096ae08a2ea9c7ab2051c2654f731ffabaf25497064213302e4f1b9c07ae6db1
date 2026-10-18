@@ -1,0 +1,64 @@
+**Convention 1.1 (source and unchanged problem).** The isolated CG root,
+its isolation/Jacobian certificate, exact ranks, TP normalization and
+original minimax identification are named `ASSUMED-UNVERIFIED`
+antecedents. Operator equalities below apply at that root. Supplied
+coefficient enclosures are conditional inequalities of the displayed
+expressions, not off-root normalization or fresh numerical
+certification. All results are ordinary conditional mathematics.
+
+Use the original five modes indexed by $(0,1,2,3,13)$ and
+
+$$
+\begin{gathered}
+E=((e_0+e_{13})/\sqrt2,(e_1+e_3)/\sqrt2,e_2),\quad P=EE^\dagger,\\
+p_y=(y/128,(64-y)/128,1/2),\quad a_y=(\sqrt{p_{yi}})_i,\\
+\rho_{y,e,n}=U_{e,n}a_ya_y^TU_{e,n}^\dagger,\quad
+U_{e,n}=\operatorname{diag}(e,n,1),\quad
+y\in\{5,16,27\},\quad e,n\in\{\pm1\}.
+\end{gathered}
+\tag{JS.1}
+$$
+
+The sole unknown normalized specimen is $E\rho_{y,e,n}E^\dagger$.
+Its original height is $y/256$ and winding parity is $en=(-1)^m$.
+The instrument receives neither history. The ideal live block remains
+the entire coherent matrix $EU_{e,n}B_y^{\rm ideal}U_{e,n}^\dagger E^\dagger$
+of CG.111. The five separate ideal failure measures are
+
+$$
+w_\ell f_y(u)du\,P_f,\qquad
+w=(0,1/4,1/2,1/4,0),\qquad f_y(u)=\frac{6y}{(y+6u)^2},
+\quad 0\le u\le1.
+\tag{JS.2}
+$$
+
+Absolute time is $6+u$. Error is HALF the full stopped-cq trace norm,
+maximized over all twelve histories, including every live coherence,
+singular-time component, wrong support, abort and zero-target sector.
+The actual output density used in recovery is $g(u)=2/(1+u)^2$;
+it never replaces the ideal $f_y$ in this comparison.
+
+An actual acquisition has CP encoders of total effect $I_5$, actually
+generated dephased classical labels, and full-output TP conditional
+decoders. Each fibre counts jointly every future-accessible
+input-bearing specimen, memory, quantum controller, environment,
+return system and entanglement share. Other dilation systems are
+permanently inaccessible before this same cut. Discarded Kraus
+multiplicity is not readable. No prior, helper, copy, postselection,
+acceptance division, reset, retry, readable old history, bypass or free
+time is supplied.
+
+For the plus effect $F$ of an actually acquired binary report retain
+exactly the original inequality and cost:
+
+$$
+\mathsf V(F)=\frac{2|\operatorname{Re}F_{01}|}{\kappa}\ge s,
+\qquad \mathsf W=\mathsf C(s).
+\tag{JS.3}
+$$
+
+Here $\mathsf W$ is the maximum over the twelve histories of the
+ACQUIRED probability of a joint fibre of dimension at least three,
+including its later-failure mass. Other effect coordinates and the
+forgotten full channel remain free in the comparison class.
+

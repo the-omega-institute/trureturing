@@ -1,0 +1,37 @@
+**Proposition 4.3 (conditional examples and the uniform-table boundary).**
+At $H=3,a_0=0$ the fixed complete inputs of Theorem 3.1 have the
+following simultaneous minima under Assumption 4.1:
+
+| Lag convention and entire row | Hidden interval | Running states | Halts | Worst calls | Physical peak |
+| --- | --- | --- | --- | --- | --- |
+| $\lambda_0=0$, $Y_3=(\langle\square_L,T_7\rangle,\{\{L\}\})$ | $[0,3]$ | $2$ | $4$ | $2$ | $2$ |
+| $\lambda_0=1$, $Y_4=(\langle\square_L,T_8\rangle,\{\{L\}\})$ | $[1,4]$ | $1$ | $4$ | $1$ | $2$ |
+
+Even at fixed $H$, no single finite table with fixed numeric halts
+returns every unbounded allowed lag over all genuine acquired inputs.
+Fixed conditional state count and call price do not bound the static
+literal/output representation or physical memory of this table family.
+
+**Proof.** Apply Theorem 4.2 to the exact inputs and histories of
+Theorem 3.1. In the first row the two running states read physical $L$
+and, on its branch reply, $LR$; alpha and beta at the first go to
+fixed lags zero and one, and alpha and beta at the second go to fixed
+lags two and three. Fill the other entries with the halt zero. In
+the second row one state reads $LR$, with absent, alpha, beta and
+branch leading directly to the respective complete lags $1,2,3,4$.
+These are the prefixed tables of AOF Proposition 10.3.
+
+For the uniform obstruction take the legal original $X_{0,0}$ and
+cut $\{L\}$. Its fixed code is zero, and after each permitted lag
+$\ell$ its genuine entire later row is $Y_\ell$ of (NARC.1.2), with
+right tree $T_{q+\ell}$. Correct outputs include arbitrarily large
+$\ell$, whereas one finite halt set has finite numeric image. A
+varying conditional table or external output field cannot be identified
+with that one fixed table. For $H=0$ each conditional fiber is a
+singleton but the same infinite-output obstruction persists across
+inputs. For $H\ge1$ and $z\ge H+\lambda_0$, (NARC.4.1) is the
+translated interval $[a_0+z-H,a_0+z]$ of fixed size $H+1$, with
+unbounded physical peak by (NARC.4.3). Thus the separately charged
+literal and complete numeric constants cannot be absorbed into the
+abstract state cardinality or chronological call count. $\square$
+

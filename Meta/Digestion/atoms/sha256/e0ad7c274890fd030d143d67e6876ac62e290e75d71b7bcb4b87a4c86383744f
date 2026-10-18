@@ -1,0 +1,14 @@
+**Definition 1.2 (independent completion family).** A context $C$ is a finite ordered full binary expression whose leaves are fixed labels or distinguished holes $\square_1,\ldots,\square_k$, with $k\ge1$. Every hole occurs exactly once. Its root-relative addresses $p_1,\ldots,p_k$ are therefore pairwise prefix-incomparable. The entire finite $C$, including those addresses, is known. Set
+
+$$
+\begin{aligned}
+\mathcal U_C
+  &=\{C[U_1,\ldots,U_k]:U_i\in\mathcal T\text{ for every }i\},\\
+M_C(C[U_1,\ldots,U_k])
+  &=\sum_{i=1}^k m(U_i).
+\end{aligned}
+\tag{NDR.1}
+$$
+
+There are no equality or disequality restrictions between the $U_i$. Independence here means this Cartesian completion domain, without a probability law. The filling map is injective because each $U_i$ can be retrieved at the known occurrence $p_i$. The special context $C=\square_1$ has $k=1$, $\mathcal U_C=\mathcal T$ and $M_C(T)=m(T)$; knowing this context supplies no source-dependent information.
+

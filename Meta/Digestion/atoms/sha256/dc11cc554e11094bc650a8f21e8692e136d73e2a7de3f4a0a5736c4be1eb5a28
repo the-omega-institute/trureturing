@@ -1,0 +1,52 @@
+**Lemma 3.3 (First-one subtrees).** Let $\alpha$ be the parity of the
+root address $t$, and let $e$ be its active edge in phase $\alpha$.
+The optimal supporting contribution on the first-one branch is
+$U_I$ for a type-$I$ root and $U_D$ for a type-$D$ root.
+
+Proof. A first one certifies phase $\alpha$ and has full-law mass
+$\eta$. For a type-$I$ root the target is in $e$, and its spin is
+fair on this branch. A repeat or separator adds no information. A
+vertex-disjoint second active edge is independent of that target
+and its first constraint. Its leaves still have confidence $1/2$,
+so selecting their positive contributions gives
+$\eta(1/2-\lambda)_+$. A distinct adjacent edge instead gives two
+leaves, each with
+
+$$
+(W,M)=(\eta/2,a\eta/2),
+\tag{3.4}
+$$
+
+by Lemma 2.2, for either possible endpoint of $e$. Their total
+support is $T$. Since $a>1/2$,
+$(1/2-\lambda)_+\le(a-\lambda)_+$ for every real $\lambda$;
+hence adjacency dominates all the other choices and $U_I=T$.
+
+For a type-$D$ root a repeat or separator leaves the untouched target
+at its prior, giving $T$. An adjacent edge again has the two pairs
+(3.4). Indeed the target is outside the triple or is the newly
+added vertex, and the corresponding independent-prior or triple
+calculation applies. A disjoint active edge avoiding the target
+also leaves confidence $a$ on both leaves, with total $T$.
+
+The remaining possibility is a second active edge $f$ disjoint from
+$e$ and touching the target. The first constraint uses spins
+disjoint from $f$. Multiplying its probability $2\eta$ by the
+one-edge table and phase factor $1/2$ gives
+
+$$
+\begin{array}{c|cc}
+\text{second reply}&W&M\\ \hline
+0&\eta c&a^2\eta\\
+1&2\eta^2&\eta^2
+\end{array}
+\tag{3.5}
+$$
+
+Its support is precisely $H$. At least one of the target's two
+incident edges is vertex-disjoint from an edge avoiding the target:
+such an edge can meet at most one of those two incident edges.
+Thus (3.5) is available. The preceding alternatives exhaust the
+second address by Lemma 2.3, proving $U_D=\max(T,H)$.
+$\square$
+

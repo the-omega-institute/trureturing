@@ -1,0 +1,16 @@
+**Open problem 10.2 (an admissible coherent-transfer bridge).** To use
+RT81 for the original quantum task requires a coherent, phase-consistent
+record construction and a source/input/target correspondence; an error
+inequality in the direction that transfers its lower bound to the
+original twelve-history HALF objective; and a proved relation between
+RT81's local pure environment resource and the original actual-label
+and jointly accessible fibre resources. The original eight moments do
+not specify cross-label coherent phases. The original finite test
+objective is not the arbitrary-reference norm of (PC.33), and merely
+having that larger norm lower-bounded gives no lower bound on the
+original restricted objective. Proposition 9.2 excludes the stated
+exact input identification, and Corollary 8.2's instrument calculation
+distinguishes readable counts from the specified-channel environment
+resource. Noisy encodings and other explicitly proved reductions
+remain available.
+

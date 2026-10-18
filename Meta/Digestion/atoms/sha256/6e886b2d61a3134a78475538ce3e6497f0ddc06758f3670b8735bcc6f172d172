@@ -1,0 +1,99 @@
+**Theorem 12.2 (Positive slow overlap with an explicit actual-law bound).**
+For every $n\ge1$ in Definition 12.1,
+
+$$
+\eta:=\frac{\|\Pi_\gamma S_0\|_{L^2(p)}^2}
+{\operatorname{Var}_p(S)}>0,\qquad
+\eta\ge\frac{p_{\min}}{n^2},\qquad
+p_{\min}=\min_{s\in B_n}p(s)>0.
+\tag{12.3}
+$$
+
+Proof. Conditional on the other legal coordinates, the chance
+that the updated $y_i$ is one is
+
+$$
+\begin{cases}
+q_i\displaystyle\prod_{j\in N(i)}y_j,&i\text{ odd},\\
+1-q_i\displaystyle\prod_{j\in N(i)}(1-y_j),&i\text{ even}.
+\end{cases}
+\tag{12.4}
+$$
+
+Both expressions increase with the neighboring $y$ coordinates.
+Use the same selected site and the same uniform random number
+for two ordered inputs. The updated configurations remain legal
+and ordered. Hence $P$ preserves increasing functions, as does
+
+$$
+e^{-tH_{\rm cl}}=e^{-t}\sum_{k\ge0}\frac{t^k}{k!}P^k.
+\tag{12.5}
+$$
+
+The increasing-eigenfunction spectral-projection method is an
+established ingredient: Nacu [Nacu03], Lemma 3 attributed to
+Y. Peres, uses it for monotone Ising dynamics. On the present
+legal finite poset its required spanning argument is as follows.
+Principal-upset indicators form a triangular inclusion matrix
+in a linear extension of the poset, with diagonal one; thus they
+span all functions. At least one such increasing function $f$
+has nonzero gap projection. By the finite self-adjoint spectral
+decomposition,
+
+$$
+e^{\gamma t}e^{-tH_{\rm cl}}(f-\mathbb E_pf)
+\longrightarrow h:=\Pi_\gamma(f-\mathbb E_pf)\ne0.
+\tag{12.6}
+$$
+
+Each term is increasing; the finite pointwise limit $h$ is
+increasing, centered and a gap eigenfunction. This step uses
+neither an FKG inequality nor invariance of a linear subspace.
+
+Normalize $\operatorname{Var}_p(h)=1$, and let
+$R=\max h-\min h>0$. On every upward legal edge the increments
+of $h$ and $S$ are respectively nonnegative and one. Therefore
+
+$$
+\mathcal E_\omega(h,S)
+=\sum_{\text{legal edges }e}c_e|\Delta_e h|,
+\qquad
+\mathcal E_\omega(h,h)
+\le R\mathcal E_\omega(h,S),
+\qquad c_e>0.
+\tag{12.7}
+$$
+
+Connectivity and nonconstancy make the first sum positive. The
+eigenfunction equation and normalization give
+
+$$
+\gamma=\mathcal E_\omega(h,h),\qquad
+\mathcal E_\omega(h,S)=\gamma\operatorname{Cov}_p(h,S),\qquad
+\operatorname{Cov}_p(h,S)\ge R^{-1}>0.
+\tag{12.8}
+$$
+
+Since $\sum_sp(s)h(s)^2=1$, one has
+$|h(s)|\le p_{\min}^{-1/2}$ and $R\le2p_{\min}^{-1/2}$.
+Orthogonal projection and Cauchy--Schwarz now imply
+
+$$
+\|\Pi_\gamma S_0\|^2
+\ge\langle h,S_0\rangle_p^2
+\ge\frac{p_{\min}}4.
+\tag{12.9}
+$$
+
+The signal lies in $[0,n]$. Expanding its variance around the
+constant $n/2$ gives $\operatorname{Var}_p(S)\le n^2/4$.
+It is nonconstant on the positive carrier. Division proves
+(12.3). $\square$
+
+The quantitative hard-core overlap is the deduction here.
+Nacu's Corollary 6 instead establishes a linear gap eigenfunction
+for zero-field ferromagnetic Ising on a cycle. That linear
+invariance is not a premise of Theorem 12.2: at an interior path
+site the hard-core update contains the genuine quadratic
+neighbor product in (12.4).
+

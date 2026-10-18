@@ -1,0 +1,10 @@
+### 102.3. Norm-p generators, signs, and choice
+
+The ring O is norm-Euclidean. Indeed for x in K, round both rational coefficients in the basis 1,phi to integers. The difference is a+b phi with |a|,|b|<=1/2. Its norm is a^2+ab-b^2. Its absolute value is at most a^2+|ab|+b^2<=3/4<1. This proves the Euclidean division inequality, hence O is a PID.
+
+Since (5/p)=1, p splits as two distinct prime ideals of norm p. A generator of either ideal has rational norm p or -p. Multiplying by phi, whose norm is -1, achieves norm p. Its two real embeddings then have the same sign; multiplying by -1 if needed makes it totally positive. This yields gamma_p, integral with ideal valuation vector (1,0) at the two primes over p and zero at all other finite primes.
+
+Every totally positive unit of O is a square. Here is a direct verification. If a totally positive unit epsilon>1 has norm 1, write epsilon=(a+b sqrt5)/2 with integers a,b of the same parity. Its conjugate is epsilon^(-1), so b=(epsilon-epsilon^(-1))/sqrt5 is a positive integer. Hence epsilon-epsilon^(-1)>=sqrt5 and epsilon>=(3+sqrt5)/2=phi^2. Dividing any positive unit by a suitable power of phi^2 puts it in [1,phi^2), where it must be 1. Thus all totally positive units are phi^(2m), m integral.
+
+Two totally positive norm-p generators of the same prime ideal consequently differ by a square unit. Generators of the other ideal differ by a square unit from the conjugate gamma_bar. Since gamma_p*gamma_bar=p becomes a square after adjoining sqrt p, both choices give the same F_p. At a split prime q with (p/q)=1, their residue characters also agree. This proves the asserted choice independence, without imposing a minimal dyadic normalization on gamma_p.
+

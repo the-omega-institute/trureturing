@@ -1,0 +1,25 @@
+## 11. 数学对象与依赖条件
+
+下列名称对应本卷的数学对象与命题，按依赖顺序排列：
+
+1. FiveModeLaw：五态概率律；
+2. VisibleCoordinates：\(X,Y,Z\)；
+3. FiberCoordinate：\(\kappa\)；
+4. FiberReconstruction：四个重构公式；
+5. FourCornerDefect：\(J_f\)；
+6. SecondMomentRecovery：由 \(W,W^2\) 恢复 \(\kappa\)；
+7. ConditionalIndependenceDefect：\(\Delta\)；
+8. MaximumEntropySection：\(\kappa_*=XY/(1-Z)\)；
+9. FisherFiberMetric：\(ds_F^2=\mathcal I\,d\kappa^2\)；
+10. ReadoutFisherContraction；
+11. StateEdgeShortExactSequence；
+12. FibonacciHiddenDimension；
+13. ArithmeticEncodingBridge；
+14. TriangleLocalPushforward；
+15. RHBridgeAxiom。
+
+前十二项属于有限维代数、凸几何、信息几何和图论，适用条件见各对应条目。第十三至十五项是桥接条件；相关结论仍依赖尚未给出的具体构造。
+
+
+---
+

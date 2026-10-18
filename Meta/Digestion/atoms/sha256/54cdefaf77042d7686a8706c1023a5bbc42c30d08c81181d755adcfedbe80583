@@ -1,0 +1,18 @@
+**Lemma 3.2 (No returning revisit).** On a fixed source sample, a
+returning execution never visits the same read row twice. Consequently
+a table with at most two read rows and $q_3=1$ has $q_2=1$ and
+correct mass at most $T$. With at most one read row it has $q_1=1$
+and correct mass at most $S_1$.
+
+Proof. Once the source sample is fixed, every read row has a static
+reply. Its successor is a deterministic function of that row. A repeated
+read row therefore repeats the whole subsequent state trajectory. A
+first halt could not occur after such a repetition: it would already
+have occurred on the first traversal. Thus repetition before return
+causes perpetual reading. Every finite return uses at most the number
+of installed read rows. On the mass-one return event this proves the
+asserted smaller budgets. Apply the inherited bounds in Convention 2.3,
+or apply them to the positive initialization cells of Lemma 3.1 and
+average. This argument retains the actual table, its row sharing, all
+unused rows and every null-path cycle. $\square$
+

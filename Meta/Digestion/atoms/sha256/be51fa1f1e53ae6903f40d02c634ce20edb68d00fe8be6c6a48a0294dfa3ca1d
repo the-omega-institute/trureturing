@@ -1,0 +1,89 @@
+**Proposition 317.1 (A complete-sequence diagnostic).**
+Set
+
+$$
+e_0=501/2400,\qquad
+(a_1,\ldots,a_{10})=(1300,1300,1300,1000,900,800,600,506,506,506)/2400,
+\qquad a_n=e_0\,2^{-(n-11)}\quad(n\ge11).
+\tag{317.1}
+$$
+
+This is positive, nonincreasing and vanishing, has active horizon ten
+at $e_0$, and retains the closed tie $a_{11}=e_0$. Its ten-coordinate
+finite profile belongs to $H_{10}$, where
+
+$$
+H_L=\{1\ge b_1\ge\cdots\ge b_L\ge e\ge0,\ b_2=b_3,
+\ 0\le\sum_{n=3}^Lb_n-(L+1)e\le1-b_1\}.
+\tag{317.2}
+$$
+
+It passes the named families 299.1, 304.6, 305.2, 310.2 and 312.2
+at every permitted embedding and finite omitted set, but violates
+(316.2) by $1/120$. It has no complete feasible $N$ allocation at
+$e_0$ at any finite mass, and hence no such $O$ allocation. Every
+original competitor for this sequence has error at least $3259/15600$.
+
+**Proof.** The hull excess and its head sum are
+$\sum_{3}^{10}a_n-11e_0=607/2400$ and $1907/2400<1$.
+Order and $b_2=b_3$ give all remaining hull conditions. The complete
+left-minus-right maxima for the named old tests are:
+
+| Family | Maximum reading |
+| --- | ---: |
+| $Y_1$ of 299.1 | $-139/800$ |
+| $Y_2$ of 299.1 | $-1/60$ |
+| $C$ of 299.1 | $-57/800$ |
+| Collective residuals 304.6 | $-13/960$ |
+| Six-late cut 305.2 | $-1/120$ |
+| Seven-late cut 310.2 | $0$ |
+| Head-independent cut 312.2 | $-43/2400$ |
+
+The values have an explicit arithmetic specification. For the
+nonnegative-coefficient cuts insert consecutive ordered late coordinates
+in their printed formulas: these maximize their readings by order.
+For 304.6, for a selected five-tuple $J$ put $r_k=(a_k-e_0)_+$,
+take every omitted positive residual, and compute
+
+$$
+\max\{\max_{k\notin\{1,2\}\cup J}r_k,
+          \tfrac12\sum_{k\notin\{1,2\}\cup J}r_k\}-s_J.
+\tag{317.3}
+$$
+
+At $J=(3,\ldots,7)$ the omitted residuals are three copies of
+$5/2400$, so the maximum is $15/4800=1/320$ and
+$s_J=1/60$. Their difference is $-13/960$.
+These consecutive computations already give the displayed old maxima
+over all unbounded embeddings, as follows. All residuals from 11 on
+are zero. In any legal single-address move later, let the selected
+amplitude decrease by $\delta\ge0$. For (317.3) the omitted
+residual sum can grow by at most $\delta$, and its maximum individual
+residual can grow by at most $\delta$. Thus its displayed maximum
+grows by at most $\delta$, while $s_J$ increases by at least
+$4\delta$. Its reading cannot increase. Starting with the consecutive
+tuple, move coordinates from right to left to reach any ordered tuple;
+each intermediate tuple is legal. Taking every omitted positive
+residual maximizes all finite-$I$ tests of 304.6. This proves their
+full scope, without relying on a finite horizon scan.
+
+At the consecutive eight-late placement the new reading is
+
+$$
+4\,3\,(506-501)/2400-1/60=1/120>0.
+$$
+
+The zero-cost pairing in 316.2 therefore excludes every complete
+allocation of every finite mass. Its original inequality gives
+
+$$
+e_a(A)\ge e_0+\frac{1/120}{52}
+         =e_0+\frac1{6240}=\frac{3259}{15600}.
+\tag{317.4}
+$$
+
+This is refinement of the expressly printed basis, not exhaustive
+historical nonderivability. The profile is $N$-infeasible at the tested
+cap, so is not a same-profile $N/O$ separator. Attainment of (317.4)
+is not asserted. $\square$
+

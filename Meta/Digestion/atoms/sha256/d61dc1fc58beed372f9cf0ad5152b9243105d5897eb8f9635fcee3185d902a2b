@@ -1,0 +1,20 @@
+**Definition 8.2 (scope of sufficiency).** In this source the exact
+sufficiency statements are indexed by their tasks:
+
+| Task on the declared source | Sufficient information and mathematical boundary |
+| --- | --- |
+| Native bottom outputs and command refusal | $(k,\alpha)$ with the complete guards (1.3), by [B] |
+| Added free killed base laws | Initial base law and the operator of Theorem 2.1, in the original clock |
+| Hidden-integrated point Green field | $\pi o$ and the base Green kernel, with the integral normalization (3.2) |
+| Same-field form on $\operatorname{Ran}J$ | Base amplitude and multiplier $W_o=\overline\Gamma/(2\pi)$, by (3.4) |
+| Full fixed-pole point field | Does not factor through $\pi$, by the finite witnesses (4.8) |
+| Full fixed-pole energy on all allowed amplitudes | Not determined by the combined base summaries and kinetic scalar, by (5.4) |
+| Full attractive evolution followed by projection | Differs from restricted evolution and fails a semigroup law, by (6.2)--(6.7) |
+| Unitary-invariant spectrum as the pole moves along one hidden fiber | Constant along that fiber, by (7.1) |
+
+These tasks distinguish an output function, a pushforward law, an amplitude
+projection, a Green marginal, multiplication by a field and an evolution.
+The table does not assert that one common smaller state solves all of them.
+The family of probability densities in Proposition 5.3 is a family of
+functions on a two-dimensional base, not a two-real-number predictor.
+

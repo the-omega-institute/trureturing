@@ -1,0 +1,29 @@
+## 239. The stronger original-angle bound
+
+Let its paired frame be (r,a,b,o,a,b), with r,a,b,o>3. Write theta_r,
+theta_o for its two axial angles and beta_a,beta_b for the paired
+transverse angles. Put s=beta_a+beta_b. All angles are genuine, and
+the hyperideal vertex inequalities give theta_r+s<pi and theta_o+s<pi.
+The exact paired response gives
+ tan(theta_r/2)*tan(s/2)=lambda_r,
+ lambda_r=kappa*sqrt((r-1)/(r+1)),
+ kappa=(sqrt(a^2-1)+sqrt(b^2-1))/(a+b),
+and the analogous identity for o. Since a,b>3,
+ kappa>sqrt(8/9),
+while r,o>3 give sqrt((r-1)/(r+1)),sqrt((o-1)/(o+1))>1/sqrt(2).
+Thus lambda_r,lambda_o>2/3.
+
+For positive A,B with A+B=t<pi/2,
+ tan(A)*tan(B)=[cos(A-B)-cos(t)]/[cos(A-B)+cos(t)]
+              <=[1-cos(t)]/[1+cos(t)]=tan(t/2)^2.
+The denominator is positive and the quotient is increasing in cos(A-B),
+so this bound does not assume A=B. If theta_r+s<=3*pi/4, taking
+A=theta_r/2, B=s/2 gives
+ lambda_r<=tan(3*pi/16)^2<tan(pi/5)^2=5-2*sqrt(5)<2/3,
+a contradiction. Here 3/16<1/5, tangent is increasing on (0,pi/2),
+and 5-2*sqrt(5)<2/3 follows by squaring 13<6*sqrt(5).
+Consequently theta_r+s>3*pi/4, and similarly theta_o+s>3*pi/4.
+The total angle expense in its six original high slots is therefore
+ theta_r+theta_o+2*beta_a+2*beta_b>3*pi/2.
+Repeated axis or transverse labels do not change this original-slot sum.
+

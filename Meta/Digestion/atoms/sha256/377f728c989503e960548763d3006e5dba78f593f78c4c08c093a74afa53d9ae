@@ -1,0 +1,22 @@
+**Definition 3.3 (lawful BOTH-bit-attained compatibility).** For any
+$L\in\mathbb N_0$, let $\mathcal C_L(T)$ consist of codes
+$\sigma:\mathcal U_*\to\{0,1\}$ realized by a specified total finite
+deterministic acquired-term computation under Assumption 3.1, actually
+exported there, such that
+
+$$
+\sigma[\mathcal U_*]=\{0,1\},\qquad
+\forall u\in\mathcal U_*,\quad
+T\text{ from }e_{\sigma(u)}\text{ returns the whole }F(u)
+\text{ within }L\text{ calls}.
+\tag{FCS.12}
+$$
+
+There is no additional bound on the producer's finite computation,
+constants or workspace. Arbitrary extensional functions are not presumed
+lawful: sufficiency below constructs a finite computational realizer.
+Only the selected entry must be correct and terminate on a source.
+The other entry may return a wrong row, exceed the bound or diverge.
+No compatible initial code, determining certificate, source oracle or
+denied archive is an input.
+

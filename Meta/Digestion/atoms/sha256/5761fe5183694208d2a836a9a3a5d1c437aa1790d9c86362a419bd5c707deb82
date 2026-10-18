@@ -1,0 +1,10 @@
+**定义 29.1.2（暴露映射）。** 一个 exposure map 是映射
+
+$$
+e_v:\mathcal A\to\mathcal E_v,
+$$
+
+把完整 assignment 压成目标节点允许使用的暴露标签。最粗的单点 treatment 记法是 $e_v(a)=a_v$；邻域暴露可以是 $e_v(a)=a|_{N(v)}$；更进一步还可以把对结果无差异的邻域构型合并。
+
+<a id="claim-29-1-3"></a>
+

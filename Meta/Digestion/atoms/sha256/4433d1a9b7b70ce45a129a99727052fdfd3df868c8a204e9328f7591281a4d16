@@ -1,0 +1,27 @@
+**Lemma 14.1 (An actual phase representation and a fixed covector).**
+There is a representation $\delta\mapsto V_\delta$ of the abstract
+circle $\mathbb T$ on $X$ satisfying
+
+$$
+V_\delta F(k,\alpha)=F(k,\alpha+\delta),\qquad
+V_\delta V_\epsilon=V_{\delta+\epsilon},\qquad
+V_0=I,\qquad V_\delta^{-1}=V_{-\delta}.
+\tag{14.1}
+$$
+
+It obeys $\lambda_0V_\delta=\lambda_0$. The assertion is about a
+covector; it does not assert a fixed vector with first coordinate one
+or a common affine fixed point.
+
+**Proof of Lemma 14.1.** For a real representative of $\delta$,
+restrict $S_{2\delta}$ to $X$. The full-domain $Q_{2\delta}$ identity
+and $\beta$-independence give the first equality in (14.1).
+Changing that representative by $2\pi$ gives the same values on
+every actual $F$, and therefore the same linear operator on their
+span $X$. Products, zero, and inverses in (14.1) likewise agree on
+all actual $F$, hence on $X$. The full-domain phase operators
+preserve $X$ because they map these generators to generators. The
+first coordinate of every generator is one, which also proves the
+covector identity. None of these arguments applies an asserted
+ambient law to unused directions. $\square$
+

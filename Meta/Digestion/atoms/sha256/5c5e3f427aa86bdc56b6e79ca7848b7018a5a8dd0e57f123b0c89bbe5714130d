@@ -1,0 +1,19 @@
+## 130. 同一边仪器产生概率、酉运输与记录相关矩阵
+
+在 $\mathbb C^5\otimes\mathbb C^2$ 上定义边 Kraus 算子
+$$
+ K_{ji}=\sqrt{P_{ij}}\,|j\rangle\langle i|\otimes U_{ji}
+$$
+并给每条正边一个互相正交的记录向量 $|i\to j\rangle$。正边数为
+$4+3+3+3+2=15$，等距为
+$$
+ V_{\rm edge}=\sum_{i,j}K_{ji}\otimes|i\to j\rangle.
+$$
+逐边有
+$$
+ K_{ji}^\dagger K_{ji}=P_{ij}|i\rangle\langle i|\otimes I_2,
+ \qquad K_{ji}K_{ji}^\dagger=P_{ij}|j\rangle\langle j|\otimes I_2.
+$$
+因此行随机性给出 $\sum_{ji}K_{ji}^\dagger K_{ji}=I$，所以
+$\mathcal E(\varrho)=\sum_{ij}K_{ji}\varrho K_{ji}^\dagger$ 是 CPTP；(129.1) 的列和也为一，故同一通道还是 unital。
+

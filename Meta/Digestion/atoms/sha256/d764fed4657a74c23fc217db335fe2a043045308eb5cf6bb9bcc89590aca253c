@@ -1,0 +1,60 @@
+**Theorem 10.3 (four-tree separation for every first literal).**
+For every finite prefix-free $P\ne\{\varepsilon\}$ the following
+source-specific alternatives hold.
+
+1. If $a\ne\varepsilon$, then $u=\alpha$ satisfies (CNA.16).
+2. If $a=\varepsilon$ and $P\ne\{L,R\}$, then
+   $u=\langle\alpha,\alpha\rangle$ satisfies (CNA.16).
+3. If $a=\varepsilon$ and $P=\{L,R\}$, every $u$ with
+   $r_u(a)=r_{\rho u}(a)$ instead satisfies $R_P(u)=R_P(\rho u)$.
+
+Consequently, among nonroot cuts, absence of a one-step separation at
+the first literal holds exactly for $(P,a)=(\{L,R\},\varepsilon)$.
+The separating sources in the first two cases belong to the single set
+
+$$
+\{\alpha,\beta,\langle\alpha,\alpha\rangle,
+                         \langle\beta,\beta\rangle\},
+\tag{CNA.17}
+$$
+
+independently of cut size, cut depth or first-literal length.
+
+**Proof.** For a nonempty literal $a$, both one-leaf trees $\alpha$ and
+$\rho\alpha=\beta$ give $\mathsf{absent}$. Their complete rows differ
+at the concrete root, as in Lemma 10.2. This holds even when no cut
+address is reached; absence of holes does not discard the exterior.
+
+For a root literal, both
+$u=\langle\alpha,\alpha\rangle$ and
+$\rho u=\langle\beta,\beta\rangle$ give $\mathsf{branch}$.
+Since $P$ contains neither the root nor both children, choose
+$q\in\{L,R\}\setminus P$. Here the assertion that it cannot contain
+both children uses prefix freedom: every nonempty word extends one
+of them, so containing both would force $P=\{L,R\}$.
+Neither the root nor $q$ is a cut address. Thus the exterior at $q$
+is the concrete leaf $\alpha$ in $u$ and $\beta$ in $\rho u$.
+No descendant cut hides this strict-prefix leaf.
+
+For completeness, the reached sets in this comparison are exactly
+$O=P\cap\{L,R\}$ on both sources. If $O$ is nonempty, all its hidden
+subtrees are equal on each source, so its complete partition has one
+class in both rows. If $O$ is empty, both partitions are empty.
+Every deeper cut word is blocked at its first letter; whenever such
+a word extends $q$, that same strict-prefix guard changes label.
+If no word extends $q$, the changed leaf remains a visible exterior
+leaf without a blocked descendant. In either case the literal exteriors,
+hence the complete rows, differ. No partition information is dropped
+from this comparison.
+
+Finally, equality of root replies before and after one update forces
+$u$ to be a branch: $\alpha$ changes to $\beta$, and $\beta$ to branch.
+For $u=\langle x,y\rangle$ and $P=\{L,R\}$ both holes are reached,
+and the exterior is $\langle\square_L,\square_R\rangle$.
+Homomorphism and the supplied native injectivity give
+$x=y$ if and only if $\rho x=\rho y$.
+Thus the complete partition, including its possible disequality, is
+unchanged. These algebraic facts are the suppliers [GFT] and [STC]
+used in Proposition 7.3; they are not new injectivity assertions.
+This proves the three alternatives. $\square$
+

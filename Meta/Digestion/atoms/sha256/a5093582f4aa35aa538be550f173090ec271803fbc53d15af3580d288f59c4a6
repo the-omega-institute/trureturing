@@ -1,0 +1,45 @@
+**定理 C-110.4（原单系统实际菜单的误差—泄漏曲线）。** 令
+$v=O(2/3)^Te_N$、$c_0=\sum_s|v_s|^4$，其中 $O$ 与被动坐标
+$D=\operatorname{diag}(1,i,i,i,1)$ 都取自 C-109.7。
+对每个 $q=1,2,3,4$ 和原 $T\in\mathfrak C_q$，其所有复单系统输入上的实际完整历史误差满足
+
+$$
+\begin{aligned}
+e(T)&\ge1-\left(\sqrt{qc_0}+\sqrt{5(1-c_0)\ell(T)}\right)^2,\\
+e(T)&>1-\left(\sqrt{53q/250}+2\sqrt{\ell(T)}\right)^2.
+\end{aligned}
+\tag{C110.11}
+$$
+
+若 $e(T)<1-qc_0$，还可反解第一式为
+
+$$
+\ell(T)\ge
+\frac{\left(\sqrt{1-e(T)}-\sqrt{qc_0}\right)^2}{5(1-c_0)}.
+\tag{C110.12}
+$$
+
+上述误差下界的右端为负时仅为无效的负下界，不断言误差严格为正。
+
+证明。C-109.7 的实际矩阵指数及解析尾界给
+$1/5\le c_0<53/250<1$，而非只给一列有理近似。
+在被动坐标中取 $\widehat T(X)=D^\dagger T(DXD^\dagger)D$。
+该式只改变表示；对同一 Kraus 族作 $K_\alpha\mapsto D^\dagger K_\alpha D$
+保持秩和完备性，且逐项保持 $m_{rs}$，故
+$\widehat T\in\mathfrak C_q$、$\ell(\widehat T)=\ell(T)$。
+这里无需把 $D$ 或 $D^\dagger$ 加入未来菜单。
+
+任意复输入的量词允许制备 $\rho_0=Dvv^\dagger D^\dagger$。
+C-109.7–C-109.8 已给同一实际正等待 $t_0=2/3$ 后
+$U(t_0)Dv=e_N$，所以理想完整模式律是 $N$ 处点质量。
+对替换通道使用完全相同的等待、完整读数和 Stop，$N$ 的概率恰为
+$F_v(\widehat T)$，该历史律的 TV 恰为 $1-F_v(\widehat T)$。
+因此 $e(T)\ge1-F_v(\widehat T)$。把 C-110.2 用于 $\widehat T$ 即得第一式。
+
+由 $c_0\ge1/5$ 得 $\sqrt{5(1-c_0)\ell}\le2\sqrt\ell$，而
+$q>0$、$c_0<53/250$ 给 $\sqrt{qc_0}<\sqrt{53q/250}$。
+两项之和非负，且后一上界严格为正，故平方保持严格比较，得到第二式。
+若 $e(T)<1-qc_0$，则 $\sqrt{1-e(T)}-\sqrt{qc_0}>0$；
+由存活率界移项、平方并除以 $5(1-c_0)>0$ 即得 (C110.12)。
+这条链使用原实际菜单的一个事件，没有把 $e(T)$ 换成 diamond 范数或双边来源误差。证毕。
+

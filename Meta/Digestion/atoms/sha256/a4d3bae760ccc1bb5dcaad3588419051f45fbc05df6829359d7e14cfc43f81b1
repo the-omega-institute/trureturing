@@ -1,0 +1,39 @@
+**Definition 13.2 (additional joint port service).** The producer retains
+its actual classical setting $K$ throughout a declared finite calibration
+interval. The native branch makes a constant-height, zero-relative-phase
+hold. A separate two-level probe $Q$ has a calibrated basis $|0\rangle,
+|1\rangle$ and, for permitted real phase action $a$, receives
+
+$$
+R_k(a)=|0\rangle\langle0|+e^{ika/r}|1\rangle\langle1|.
+\tag{RA.16}
+$$
+
+The port is bound to this same producer, source and epoch. It reads neither
+an unrelated setting nor an estimated setting. Conditional on every actual
+classical history $h$ with current height $k$, its full operation is
+$\operatorname{id}_{SAR}\otimes\operatorname{Ad}_{R_k(a)}$ on the old
+specimen $S$, archive $A$, quantum reference $R$ and the probe. All old
+classical boundary fields are also retained. In particular, the coupling
+does not change $k$, the old real phase lift, source identity, permissions
+or controller inputs. Clock advancement and the appended calibration event
+are explicit updates; old clock/archive entries are not overwritten.
+The same statement holds for every conditional joint density $\rho^h_{SAR}$,
+including entanglement, and every actual mixture of these histories.
+The producer setting is classical here; no promise is made for a coherent
+superposition of different settings.
+
+This is a joint channel premise, stronger than a probe marginal or a claimed
+nondisturbance of separate old marginals. Stable setting, source/epoch
+authentication, coupling gain $1/r$, blank probe, coherent preparation,
+phase reference, action calibration, clock, readout and permissions are all
+additional services/resources. Port permission and hold permission must
+actually be present. Calibration by this ideal service has no inconclusive
+or executed-failure branch on its promised domain. A known missing
+permission or known interface mismatch returns an unexecuted rejection
+with its actual reason and no height certificate. Unflagged violation of
+the service premise is outside the theorem; this definition supplies no
+universal detector for such violations. An already stopped specimen keeps
+its old first failure and absorbing successor, without a live calibration
+attempt.
+

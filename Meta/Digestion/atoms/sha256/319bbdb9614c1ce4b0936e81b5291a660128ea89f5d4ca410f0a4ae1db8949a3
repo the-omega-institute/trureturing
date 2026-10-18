@@ -1,0 +1,30 @@
+#### 469.1 加权范数与完整整数商估计
+
+固定 $0\le\alpha<1$ 和自然数 $N$，在 $V_N$ 上定义
+
+$$
+\|f\|_{\alpha,N}
+=\max\left(\{0\}\cup
+ \{(k+1)^\alpha|f(k)|:1\le k\le N\}\right).
+$$
+
+对 $N\ge1$，各权严格正，此式是范数；齐次性与三角不等式由各坐标的绝对值及有限最大值给出。对 $N=0$，$V_0$ 为零空间，此式给其唯一向量范数零。用同一记号表示诱导算子范数；零空间上包括恒等及逆映射在内的全部算子范数均为零。以下非空行最大值公式取 $N\ge1$。
+
+对每个正整数 $d$ 和 $k\ge0$，写 $k=dq+r$，其中 $0\le r<d$。准确整数商给
+
+$$
+k+1=dq+r+1\le d(q+1),\qquad
+\lfloor k/d\rfloor+1\ge(k+1)/d.
+\tag{WN.1}
+$$
+
+若 $q=0$，则 $T_df(k)=f(0)=0$。若 $q\ge1$，则
+
+$$
+(k+1)^\alpha|T_df(k)|
+\le\left(\frac{k+1}{q+1}\right)^\alpha\|f\|_{\alpha,N}
+\le d^\alpha\|f\|_{\alpha,N}.
+$$
+
+因此 $\|T_d\|_{\alpha,N}\le d^\alpha$，包括 $\alpha=0$。这一估计保留准确 floor 和零坐标。
+

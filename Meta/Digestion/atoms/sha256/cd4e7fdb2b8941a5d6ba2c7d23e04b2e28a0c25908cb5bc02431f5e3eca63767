@@ -1,0 +1,56 @@
+**Definition 6.2 (Step74).** Use RCA Definitions 12.2–12.4's complete
+physical-state codec, but with 74 port-list entries and the finite token,
+control-version, phase and entry slots of $G$. Cell identity is the port
+and its actual creation-chain position. Lookup traverses the full framed
+row list, decodes its seven unary fields and finite effects, and requires
+one matching state. Validate port range 0–73, latch range 0–7, symbol
+range, Boolean-table range, unique state numbers, successors and finite
+entry/effect fields. Mark lookup, Nth, Replace and AppendItem are the
+literal word expansions of §2.
+
+| Native row | Represented effect before its receipt |
+| --- | --- |
+| RD | Select the actual marked cell, copy its symbol to the designated latch, and take the row's actual test branch. |
+| WR | Check represented writer/writability, then change that one symbol using its literal/latched variant. |
+| ML/MR | Check the existing adjacent cell and represented token, clear/set the same head track on the two cells. |
+| EX | At ordinary R replace it by blank retaining its head, append a new unmarked R, preserve creation identity of the old cell. |
+| BF | Select its literal eight-bit table entry from represented operand subfields and replace result subfield 3. |
+| IN | Pop from the site kind of Definition 6.1 and change only its represented ingress latch. |
+| OUT | Append the represented actual output bit to the event; perform no live OUT from that bit. |
+| TOK | Check and update precisely its finite named port/phase availability slots. |
+| CTL | Apply its finite list of purpose/phase/parity, seal, bootstrap entry/advance/DONE, commitment or halt effects, then its prescribed successor. |
+| Boot boundary/control-bit variant | Construct one designated boundary cell or write one prescribed finite control bit and update its finite bootstrap cursor. |
+
+There is no effect constructor for a whole string assignment, counter
+increment, M append, source change, Cover or Call. Those are native rows
+of their expanded graphs. New phase effects name only a fixed finite
+slot and literal finite value. The initial finite ownership/token words
+are installed bit by bit. Concretely, a finite effect is a list of the
+following constructors in its written order: preserve; set one named
+finite bit to literal 0/1 or a designated latch bit; set the seal/mark bit
+at a named port's current or immediately preceding existing marker; select
+one named bootstrap/version/stage; advance one slot of that version's
+fixed finite cursor; select halt; select the F receipt. A phase name,
+parity, role permutation or fixed return label has its finite bit encoding;
+setting it expands to that fixed finite list. A TOK has named source and
+destination slots, guard source=1/destination=0, then their two literal
+bit updates. A public CTL test is equality of its designated latch with
+its literal symbol, as in PR57.03. Commitment changes only the declared
+finite phase/availability bits; its semantic event interpretation reads
+the already constructed packet and counter versions. There is no finite
+effect whose argument is a runtime list, address, code word or natural.
+Current raw code bits and last completed active code are separate
+coordinates; bootstrap rows stay active until DONE.
+
+The common receipt stage appends exactly its ordinary/F receipt on the
+represented meter, preserving the core row's newly updated meter read
+mark. Append one unary tally mark and one complete event, including
+actual operand identities and read/written/supplied/emitted symbol.
+Tick and fee wire words are built by unary copy/doubling. The acquisition
+annotation copies its actual tally. Completed-cycle annotations are at
+outer Ready after actual M append/token return, not source ACK or an
+internal callback. These annotations update simulator bookkeeping by
+word instructions; they are not extra coordinates of the old physical
+state. The physical projection contains only its actual cells, control
+stores, PC, heads, latches and tokens.
+

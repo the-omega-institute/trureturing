@@ -1,0 +1,15 @@
+**Definition 35.1 (joint clipped-rank agreement).** For $K\in\mathbb N$ put
+$\operatorname{clip}_K(k)_b=\min(k_b,K)$, and abbreviate its equality by
+
+$$
+\mathsf{Clip}_K(k,l):=
+\bigwedge_{b\in\mathcal B}
+\bigl[(k_b=l_b\land k_b<K)\ \lor\ (k_b\ge K\land l_b\ge K)\bigr].
+\tag{LAC.35.1}
+$$
+
+Let $A=\max(\{0\}\cup\{|a_b|:b\in\mathcal B\})$. Use the inclusive
+original-prefix convention of Definition 2.2. Both empty tuples agree
+under every cutoff. The clipped tuples describe observation classes;
+they do not replace the unbounded jointly constrained set $S$.
+

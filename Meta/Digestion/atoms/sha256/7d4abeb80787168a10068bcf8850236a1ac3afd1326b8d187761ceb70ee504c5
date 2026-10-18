@@ -1,0 +1,25 @@
+### 77.1. Exact support envelope and its channel consequence
+
+Let c₀ be a maximally entangled rank-two unit vector in arbitrary finite-dimensional bipartite spaces. Let P_A,P_B be its local Schmidt-support projections and
+
+    Q=P_A⊗P_B−|c₀><c₀|.
+
+This is a rank-three orthogonal projection. For any two local orthonormal pairs a_0,a_1 and b_0,b_1, define
+
+    c=(a_0⊗b_0+a_1⊗b_1)/sqrt(2),
+    d=(a_0⊗b_0−a_1⊗b_1)/sqrt(2),
+    F=|<c₀,c>|²,  ℓ=||(I−Q)d||².
+
+The dimension-independent sharp upper envelope, allowing arbitrary local dimensions, is
+
+    ℓ_max(F)=min{1,2(1−sqrt(F))},  0≤F≤1.              (1)
+
+Every value in (1) is attained using local dimension three. This sharp auxiliary statement strengthens §76's e+e² estimate, where e=1−F; it does not assert that a family of channel fibres can simultaneously attain every auxiliary equality.
+
+For the uniform collapsed-fibre channel F_(k,2), k≥4, every original physical product of CPTP maps, with arbitrary environments and output leakage, consequently obeys
+
+    ||(A⊗B)J_in−J_out F_(k,2)||diamond
+       ≥2(k−3)/(3k).                                   (2)
+
+The diamond norm is unhalved and the encodings are the fixed MC encodings of §§66 and 76, with full local input dimension 2k and output dimension k. At four fibres this gives 1/6. Together with §73 the unrestricted one-product optimum therefore lies in [1/6,1/3). Neither that channel optimum nor equality in (2) is claimed.
+

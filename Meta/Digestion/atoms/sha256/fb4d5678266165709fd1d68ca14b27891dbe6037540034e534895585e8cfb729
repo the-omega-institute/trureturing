@@ -1,0 +1,29 @@
+**Definition 8.1 (a separate ingress interface).** After acquisition and the
+two warm-up updates, grant an explicitly paid, source-independent command
+ingress with alphabet
+$\{U,R_1,\ldots,R_d\}$, where $U$ is actual Native $\rho$ and $R_i$ is actual
+literal Read at the $i$th distinct address of a paid public dictionary. Every
+finite command word is admitted at semantic sealed idle cuts; each chosen
+command and its actual response is journalled before the next is admitted.
+External choice is not an `Op` of `NativeSerialMachine` and is not presumed
+determined by the source. Apart from this command word, the canonical finite
+command encoding, ingress expansion, journal and allocation schedules are
+fixed. There are no independently varying waiting ticks or input encodings.
+This section's family consists of those sealed
+semantic cuts and does not assert four-view microcut minimality for the
+enlarged runtime.
+
+For a histogram $\mathbf m=(b,m_1,\ldots,m_d)$, let $b$ be the number of $U$
+commands, $m_i$ the number of $R_i$ commands, and $N=b+\sum_i m_i$. For a
+fixed acquired seed $u$, all such words finish at $\rho^{b+2}u$. Define the
+spatial base
+
+$$
+Z(h)=(\operatorname{Pos}(r_h),\mathbf m).
+\tag{NCR.10}
+$$
+
+This base already includes the entire unlabelled current ordered support,
+not a coarse numerical projection. A supplement is a causally acquired finite
+label, rather than advice chosen using the future schedule.
+

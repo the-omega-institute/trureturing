@@ -1,0 +1,48 @@
+**Definition 6.2 (finite equality types on the same original).** Fix
+$S\in\Gamma(C)$, with variable set $V_S$. Perform Definition 5.3
+for every $r\in J$. Form the finite set of distinct ground trees
+
+$$
+G_S=\{\iota_r(g_{r,p}):r\in J,\ \gamma_{S,r}\text{ true},\
+ p\text{ a born hole},\ \iota_r(g_{r,p})\text{ defined}\}.
+\tag{NRF.21}
+$$
+
+An equality type $\theta$ is a partition of
+$V_S\sqcup\{c_h:h\in G_S\}$ in which different constant names
+$c_h,c_{h'}$ are in different blocks. A block containing $c_h$
+forces all its variables to the actual tree $h$. Each block containing
+variables and no constant is a *free block*. Number those blocks by
+least variable address as $1,\ldots,k$. They have values
+$y_1,\ldots,y_k$ required to be pairwise distinct and outside $G_S$.
+Constant-only blocks need no variable. Every actual valuation of
+$V_S$ has exactly one such type, with uniquely determined free values.
+
+For each free block choose a product state $\sigma_i$. Substitute
+its variable $Y_i$ for all variables in that block of $S$, and the
+appropriate ground tree for each forced block. Call the resulting
+original constructor term $W_{S,\theta}(\mathbf Y)$. Each free
+variable occurs at least once at a specified original hole address.
+The cell's full residual domain is
+
+$$
+\Omega_{S,\theta,\sigma}=
+\left\{\mathbf y\in\mathcal T^k:
+ y_i\in L_{\sigma_i}\setminus G_S\ (1\le i\le k),\quad
+ y_i\ne y_l\ (i\ne l)\right\}.
+\tag{NRF.22}
+$$
+
+Its source decoder is direct original filling
+
+$$
+\operatorname{Dec}_{S,\theta}(\mathbf y)=W_{S,\theta}[\mathbf y].
+\tag{NRF.23}
+$$
+
+Thus the representation language consists of finite constructor
+patterns, finite equality types, finite deterministic state-language
+descriptions, finite ground exclusions and explicit all-different
+guards. In particular (NRF.22) is not the original selected predicate
+renamed, and is not replaced by a finite witness list.
+

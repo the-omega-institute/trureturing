@@ -1,0 +1,42 @@
+**假设 6.2（四块及完整纤维供应）。** 使用 [FIB][FIB] §58、§74–§75 和更正命题 §89.1 的接口。合法坐标满足
+
+$$
+u,v,w,\kappa\in\mathbb N_0,\qquad0\le\kappa\le\min(u,w),
+$$
+
+且
+
+$$
+(a_2,a_3,a_5,a_7)=(u-\kappa,v,w-\kappa,\kappa),
+$$
+
+$$
+n=2^{u-\kappa}3^v5^{w-\kappa}7^\kappa,
+\qquad
+\ell:=\log n=u\log2+v\log3+w\log5-\kappa\log(10/7).
+$$
+
+固定母体 $N=2^{A_2}3^{A_3}5^{A_5}7^{A_7}$，$A_p\in\mathbb N_0$，约数投影的合法域为
+
+$$
+\mathcal F_N=\left\{(u,v,w)\in\mathbb N_0^3:
+0\le v\le A_3,\quad
+k_{\min}\le k_{\max}\right\},
+$$
+
+$$
+k_{\min}=\max(0,u-A_2,w-A_5),\qquad
+k_{\max}=\min(A_7,u,w),
+$$
+
+其纤维总权重是
+
+$$
+\Omega_{u,v,w}=2^{-u}3^{-v}5^{-w}
+\sum_{k=k_{\min}}^{k_{\max}}(10/7)^k,
+\qquad
+\sum_{(u,v,w)\in\mathcal F_N}\Omega_{u,v,w}=Z(N).
+$$
+
+这里的来源是互异约数或互异交换块配置，不是该约数的全部有序语法实现。
+

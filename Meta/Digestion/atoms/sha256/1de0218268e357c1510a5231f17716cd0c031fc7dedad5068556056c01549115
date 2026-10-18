@@ -1,0 +1,41 @@
+**Definition 341.1 and hypotheses.**
+
+Consider a finite face-paired tetrahedral quotient with exactly the six
+actual global edge labels M,V,C,D,Z,U. Every actual edge has a connected
+circular normal link. Each tetrahedron owner has one fixed vertex-induced
+paired frame, in edge order (12,13,14,34,24,23), of the form
+
+    (R,A,B,O,A,B),
+
+with R,A,B,O four distinct global labels. An actual owner is a tetrahedron
+of the quotient before its faces are identified; a normal-link interval
+is one original local edge occurrence, not an owner or a role vector.
+Face pairings identify original face occurrences and preserve their
+actual global edge labels. Distinct-face self-gluings and repeated
+visits to the same owner in a normal circle are allowed.
+
+There is one shared positive generalized length at each actual edge;
+write its cosh as m,v,c,d,z,u, respectively. Original generalized
+dihedral angles are nonnegative and sum to 2*pi around each actual edge.
+There is a unique flat owner
+
+    sigma=(M,C,D,V,C,D),
+
+whose M and V axial angles are pi and whose C and D transverse angles
+are zero. Every other owner is genuine and has all angles in (0,pi).
+Assume there is a genuine owner
+
+    tau=(Z,M,C,D,M,C),
+
+and retain the exact scalar hypotheses
+
+    c,d,v>1, m>1+c+d, 1<v<=m-2,
+    z>1+m+c, u>m,
+    (m-1)*(v-1)>=(c+d)^2.                         (341.1)
+
+All genuine paired frames have the usual strict tests, with shared
+coshes r,a,b,o:
+
+    L=(a+b)^2-(r-1)*(o-1)>0,
+    J=(r+1)*(o+1)-(a-b)^2>0.                     (341.2)
+

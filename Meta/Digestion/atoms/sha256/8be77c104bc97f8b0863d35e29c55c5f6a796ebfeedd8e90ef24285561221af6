@@ -1,0 +1,49 @@
+**Theorem 14.2 (exact same-source-cut capacity).** For every arbitrary
+correlated nonempty $B_e$,
+
+$$
+\min c_e=|B_e|.
+\tag{RRN.57}
+$$
+
+More precisely place the $N$ slot coordinates below one node of a
+fixed finite Full tree, and place the public request coordinate outside
+that node, with promise $B_e\times\mathcal P_D$ and task
+$f_e(x,p)=\Gamma_p(t_x)$. Among total extensions of this task to
+$Q_s^N\times\mathcal P_D$, the minimum response capacity at that
+source cut is exactly $|B_e|$. The minimum reachable source-message
+alphabet of fixed-tree protocols is the same. All other node resources
+are left unrestricted in this statement.
+
+Proof. If $H_e(x)=H_e(y)$, the decoder gives identical answers for
+every $p$. At a slot where $x_i\ne y_i$, choose $p=a_i$ and use
+$k=0$ in the equivalent predictor form. The root constructors differ,
+a contradiction. Thus $H_e$ is injective on $B_e$. Sending the index
+of $x$ attains $|B_e|$ abstractly.
+
+For the extension assertion, the response row of a source assignment
+is the function of all complementary request values. Every total
+extension must give the specified responses on $B_e\times\mathcal P_D$;
+the preceding slot argument distinguishes all $|B_e|$ of these rows.
+Conversely select $x_0\in B_e$ and define a finite retraction
+$g:Q_s^N\to B_e$ fixing $B_e$ and mapping its complement to $x_0$.
+The total extension
+
+$$
+\widetilde f_e(x,p)=\Gamma_p(t_{g(x)})
+\tag{RRN.58}
+$$
+
+has exactly $|B_e|$ response rows at that source cut. A fixed-tree
+protocol can propagate the full source-coordinate tuple within that
+subtree and send $g(x)$ at the cut; the root receives it and the
+request and decodes (RRN.58). Conversely equal source messages with
+the same exterior request give equal root outputs, proving the
+protocol lower. The coordinate sets are disjoint, alphabets finite
+and nonempty, and the promise is nonempty. This is an exact
+specialization of the resource correspondence in
+[FixedTreeCommonExtension.result][FTMenu] and its [owning
+narrative][FTBMenu]. It does not implement native acquisition: that
+fixed-tree model gives leaf coordinates to encoders and full child
+message tuples to mergers. $\square$
+

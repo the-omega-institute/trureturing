@@ -1,0 +1,30 @@
+**定义 40.4（带接缝与拒绝的模五摘要）。** 置
+
+$$
+Y=\bigl(\{0,1\}\times\mathbb F_5\bigr)\sqcup\{\bot\},
+\qquad
+\eta(\bot)=\bot,\quad \eta(s,C)=(s,\rho_5(C)).
+$$
+
+对 $\sigma\in\Sigma$ 定义摘要的总更新
+
+$$
+\overline T_\sigma(\bot)=\bot,
+\qquad
+\overline T_\sigma(s,r)=
+\begin{cases}
+\bigl(x(\sigma),\,2r+c_\sigma\bigr),&s\,y(\sigma)=0,\\
+\bot,&s\,y(\sigma)\ne0.
+\end{cases}
+$$
+
+第二坐标在 $\mathbb F_5$ 中计算，$c_\sigma$ 是定义 40.1 最后一列。对有限输入词 $w=(\sigma_1,\ldots,\sigma_n)$，按输入先后定义
+
+$$
+T_w=T_{\sigma_n}\circ\cdots\circ T_{\sigma_1},
+\qquad
+\overline T_w=\overline T_{\sigma_n}\circ\cdots\circ\overline T_{\sigma_1}.
+$$
+
+空词的两个更新均为恒等映射；这与一个空模式窗口 $\sigma=0$ 是不同的操作。
+

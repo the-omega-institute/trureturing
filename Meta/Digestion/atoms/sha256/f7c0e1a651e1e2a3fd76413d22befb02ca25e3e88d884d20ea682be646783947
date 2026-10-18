@@ -1,0 +1,24 @@
+**Lemma 6.1 (rank-many real null decomposition).** If a real symmetric
+$T_0\succeq0$ satisfies $\operatorname{tr}(B_0T_0)=0$, it has a
+factorization into exactly $\operatorname{rank}T_0$ nonzero real null
+projectors $y_jy_j^T$, $y_j^TB_0y_j=0$. The zero matrix uses none.
+
+Proof. Take a real rank-many spectral factor $T_0=YY^T$, with $Y$
+injective on its column space. The real symmetric matrix
+$A_0=Y^TB_0Y$ has trace zero. A trace-zero symmetric matrix has an
+orthonormal basis with all Rayleigh values zero. To construct one,
+if it is nonzero choose orthogonal eigenvectors $e_+,e_-$ for
+$a_+>0>a_-$. The unit vector
+
+$$
+f=\frac{\sqrt{-a_-}\,e_++\sqrt{a_+}\,e_-}{\sqrt{a_+-a_-}}
+\tag{NP.40}
+$$
+
+has zero Rayleigh value. Compression to $f^\perp$ still has trace zero;
+induct on the dimension, with the zero matrix allowing any basis.
+Multiplying that orthonormal basis by $Y$ gives the desired columns.
+Injectivity makes every one nonzero and their projectors sum to $T_0$.
+This standard zero-Rayleigh argument covers repeated and zero eigenvalues.
+$\square$
+

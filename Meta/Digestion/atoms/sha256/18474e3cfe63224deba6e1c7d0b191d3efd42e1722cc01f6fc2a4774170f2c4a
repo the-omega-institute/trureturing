@@ -1,0 +1,10 @@
+**Lemma 3.2 (pure terminal histories cannot recover the complete target).** A correct deterministic complete-target protocol on all of $\mathcal W_d$ cannot terminate on a word containing just one atom type, including the empty word.
+
+**Proof.** Fix $A=M$ or $J$. Its powers lie in $\operatorname{span}\{I,A\}$, by $M^2=M+I$ and $J^2=I$. For every legal $P=uv^{\mathsf T}$ with $u,v>0$ and $v^{\mathsf T}u=1$, there is a distinct legal $P'$ with $\operatorname{tr}(AP')=\operatorname{tr}(AP)$. If $u,Au$ are independent, perturb $u$ slightly to a nonproportional positive $u'$ and solve
+
+$$
+(v')^{\mathsf T}u'=1,\qquad (v')^{\mathsf T}Au'=v^{\mathsf T}Au.
+$$
+
+The coefficient matrix remains invertible near $u$; its solution is continuous and stays positive near $v$. Different column lines ensure $u'(v')^{\mathsf T}\ne P$. If $Au=\lambda u$, keep $u$ and vary $v$ within the positive part of the line $v^{\mathsf T}u=1$. The $A$ trace stays $\lambda$ and the source changes. With the same $g,\delta$, the two worlds share every pure-$A$ read. Determinism forces the same decisions along this actual history, including the terminal decision, so both cannot receive a correct common target. With no actions, $z_0=g(0)+\delta$ is independent of $P$ and the same conclusion holds. $\square$
+

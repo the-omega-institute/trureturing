@@ -1,0 +1,28 @@
+### 54.5 实参数闭区间与实际列基方向
+
+固定同一单位相位输入。在 \(|a|\le1/2\) 上，\(\Im p(a),\Im q(a)\ge\sqrt7/4\)，直接求导得
+\[
+|p'(a)|=\frac1{2\Im p(a)}\le\frac2{\sqrt7}<1,
+\qquad |q'(a)|=\frac1{2\Im q(a)}\le\frac2{\sqrt7}<1.
+\]
+因而 \(|p(a)-\omega|,|q(a)-\omega|\le|a|\)。由 (54.2)，六个原始输出坐标，即 \(\sqrt6H_a(x,y)^T\) 的坐标，与其中心值之差的模各不超过 \(2|a|\)。如果 \(H_a\xi\) 平坦，这些原始坐标的模均为 \(\sqrt6\)，故
+\[
+\mathcal R\le2|a|(2\sqrt6+2|a|)\le12|a|.
+\tag{54.13}
+\]
+若 \(|a|\le2^{-423}\)，则 (54.12)–(54.13) 给出
+\[
+1\le2^{419}\cdot12\cdot2^{-423}=\frac34,
+\]
+矛盾。这证明闭区间结论，包括两个端点。
+
+最后，若 \(f\) 是原始列基对 \((I,G_a)\) 的实际共同无偏向量，置 \(\xi=G_a^*f\)。则 \(\xi\) 与 \(G_a\xi=f\) 平坦，且由整个实分支上的同一恒等式 \(H_a=LG_a\)，\(H_a\xi=Lf\) 平坦。\(G_a\) 与 \(\mathcal S\) 交换并且酉，所以
+\[
+f,\mathcal Sf,\mathcal S^2f\text{ 正交归一}
+\quad\Longleftrightarrow\quad
+\xi,\mathcal S\xi,\mathcal S^2\xi\text{ 正交归一}.
+\]
+故以上排除确实适用于原始基的实际同步循环三元组。证毕。
+
+Brierley–Weigert 的 [*Constructing Mutually Unbiased Bases in Dimension Six*，§2、§4.2](https://arxiv.org/html/0901.4051v2) 将中心种子关联到 Fourier-family 交点，并报告该点的共同无偏射线数量；这一数量本身不规定此处的同步循环作用。本命题依靠 (54.1)–(54.13) 的具体相位方程和除法恒等式，不以 Fourier-edge 猜想或一般 no-fourth-basis 结论为前提。结论只排除上述闭区间中的单一同步循环轨道型正交三元组，不排除由不同轨道取出的任意三元组，也不解决六维第四个无偏基问题。
+

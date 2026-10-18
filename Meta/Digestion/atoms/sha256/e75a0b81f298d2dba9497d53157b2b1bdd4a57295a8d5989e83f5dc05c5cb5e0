@@ -1,0 +1,15 @@
+**定理 32.3.1（Wald/LATE）。** 若 $\pi_C>0$，则
+
+$$
+\boxed{
+\frac{\Delta_Y}{\Delta_A}=\tau_C
+=\mathbb E[Y_1-Y_0\mid C].
+}
+$$
+
+**证明。**
+
+由定理 32.2.1 与定理 32.2.2，分子为 $\pi_C\tau_C$，分母为 $\pi_C$；除以正数 $\pi_C$ 即得。证毕。
+
+<a id="claim-32-3-2"></a>
+

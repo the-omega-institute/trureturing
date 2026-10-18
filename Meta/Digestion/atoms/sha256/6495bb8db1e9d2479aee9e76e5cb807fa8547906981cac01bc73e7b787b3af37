@@ -1,0 +1,45 @@
+### 假设18（一个完整运行的校准相位探针合同）
+
+取已校准的两种等待时长 $a,b>0$、实数 $\Omega _2$，置
+
+~~~math
+\Omega _1=\frac{2\pi}{a},\qquad \Omega _3=\frac{2\pi}{b},
+\qquad
+\omega(s)=\Omega _1x(s)+\Omega _2z(s)+\Omega _3y(s).
+~~~
+
+每次完整运行从固定的 $p_\kappa$ 抽取一个模式 $s$，在该次运行的全部等待阶段保持这个 $s$。探针为有固定校准基 $|0\rangle,|1\rangle$ 的量子比特，每次运行与来源无初始关联，并重新制备为
+
+~~~math
+|+\rangle=\frac{|0\rangle+|1\rangle}{\sqrt2}.
+~~~
+
+对每个 $t\ge0$，实际供应的条件相对相位操作及状态为
+
+~~~math
+V_s(t)=|0\rangle\langle0|+e^{-i\omega(s)t}|1\rangle\langle1|,
+\qquad
+|\psi_s(t)\rangle=V_s(t)|+\rangle
+=\frac{|0\rangle+e^{-i\omega(s)t}|1\rangle}{\sqrt2}.
+~~~
+
+同一模式上的等待满足 $V_s(t_2)V_s(t_1)=V_s(t_1+t_2)$。这些操作由同一对角生成元产生并彼此交换；有序 FIB 树的其他非交换表示不由此实现。这里测量的是两基矢之间相对于校准参照的相位，整体相位不产生该读数。重复运行按同一来源律作独立同分布准备；一个未知模式永久固定于所有运行是另一统计实验。
+
+使用标准矩阵
+
+~~~math
+X_{\rm P}=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+Y_{\rm P}=\begin{pmatrix}0&-i\\i&0\end{pmatrix},\qquad
+Z_{\rm P}=\begin{pmatrix}1&0\\0&-1\end{pmatrix}.
+~~~
+
+允许的仪器是运行末端的二值测量，$\theta\in\mathbb R$ 为校准方向：
+
+~~~math
+M_\theta=\cos\theta\,X_{\rm P}+\sin\theta\,Y_{\rm P}
+=\begin{pmatrix}0&e^{-i\theta}\\e^{i\theta}&0\end{pmatrix},
+\qquad E_{\theta,\pm}=\frac{I\pm M_\theta}{2}.
+~~~
+
+输出标记为 $\pm1$。分别准备的 $\theta=0,\pi/2$ 试验用于取得两项期望；一次输出不直接给出精确复数。中途测量、反馈、重置、动态切换及任意中间仪器均须另供合同。本卷 Q2、Q9–Q10 及 [输出仪器卷 Q2–Q4、Q13](AURIC_FIB_ATOM_OUTPUT_RESOLVED_INSTRUMENT_CLOSURE.md) 在此分别约束共同来源、菜单和概率取得。下文的重抽及环境重置仅是显式声明的比较协议。
+

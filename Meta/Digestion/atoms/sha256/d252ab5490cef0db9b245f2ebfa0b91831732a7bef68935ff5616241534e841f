@@ -1,0 +1,30 @@
+**定义 4.1（Dense matrix in the original order）。** For real $\alpha,\beta$ put
+
+$$
+F(\alpha,\beta)=
+\begin{pmatrix}
+0&\alpha&\alpha&\alpha&\alpha\\
+-\alpha&0&\beta&-\beta&\alpha\\
+-\alpha&-\beta&0&\beta&\alpha\\
+-\alpha&\beta&-\beta&0&\alpha\\
+-\alpha&-\alpha&-\alpha&-\alpha&0
+\end{pmatrix}.
+\tag{4.1}
+$$
+
+Define
+
+$$
+G=F(1,0),\qquad K=F(0,1),\qquad
+X_*=\frac{G}{\sqrt7}+\frac{K}{\sqrt3},\qquad
+C_*=\frac{I_5+iX_*}{5},\qquad \Gamma_*=JC_*J^\dagger.
+\tag{4.2}
+$$
+
+The matrix $F$ is the matrix denoted $M$ in Section 8 of the supplied
+sharp-negativity volume. Thus $X_*$ is exactly its dense negativity
+maximizer, in the same positional order. Its construction and
+negativity-maximizing property are inherited. The legality calculation
+below is included to make the coherence lower bound a statement about an
+actual member of (2.2).
+

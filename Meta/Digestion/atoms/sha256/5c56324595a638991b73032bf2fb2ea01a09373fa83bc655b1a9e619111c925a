@@ -1,0 +1,23 @@
+**Proposition 35.3 (the precise limitation of the exclusion).** The
+conclusions of Theorem 35.1 do not entail that an installed state
+determines an exposed set, hit count or live residual function.
+There is a whole-domain preparer at both execution minima with
+two live histories at one state for which both the exposed sets
+and hit counts differ.
+
+Proof. Proposition 36.1 below constructs such a preparer. At its
+common state take
+
+$$
+S=\{1,2,5\},\ h=0,\qquad
+T=\{1,3,4\},\ g=3,\qquad n=7,\ k=4.
+\tag{PCA.87}
+$$
+
+Here $a=b=u=2$. The two threshold intervals in (PCA.86) are
+$[2,3]$ and $[-1,0]$, so the exclusion does not apply. The
+two live residuals in (PCA.87) are the different functions proved
+in Proposition 36.1. Thus the empty-intersection case is a real
+remaining sharing class, not a license to assert a converse.
+$\square$
+

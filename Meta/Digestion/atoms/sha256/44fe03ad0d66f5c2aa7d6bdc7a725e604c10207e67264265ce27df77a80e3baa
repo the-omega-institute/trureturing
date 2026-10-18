@@ -1,0 +1,12 @@
+**Boundary 7.2 (Return mass and auxiliary-law frontiers).** Theorem 6.1
+settles $q_2=1$. It does not determine the complete lower frontier at
+a prescribed $q_2<1$. Selectively omitting leaves changes the
+accounting in (4.1)–(4.10). No complete selective equality criterion,
+supporting-objective family, or optimal mixing construction is
+established here. Under a specified atomic auxiliary law, measurable
+gate availability remains a real constraint; ignoring the seed in
+the $q_2=1$ attainer does not resolve those selective frontiers.
+Risk's exact one-read equality gate is inherited, while optima above
+that universal envelope at attainable masses without such a gate
+remain outside this result.
+

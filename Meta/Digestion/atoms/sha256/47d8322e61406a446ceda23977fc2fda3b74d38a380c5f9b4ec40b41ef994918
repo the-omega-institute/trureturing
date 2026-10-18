@@ -1,0 +1,50 @@
+**Theorem 14.2 (uniform value error below the spectral threshold).**
+Fix $C_{\rm end}<\bar\zeta<C_{\rm sat}$. Uniformly over all actually
+feasible weak points with $C_{\rm end}\le\zeta=t(1-s/s_0)\le\bar\zeta$,
+
+$$
+\mathcal T_{\log(1+t)}(s)=B_0+\Phi(\zeta)+O_{\bar\zeta}(t^{-1}).
+\tag{JS.68}
+$$
+
+Proof. The triangle inequality and Lemma 13.1 imply for each competitor
+
+$$
+T_{\rm instr}-[B_0+\Phi(\zeta)]
+\le-[\Phi(\zeta)-\Phi(z_\nu)]
+ +K/t+K\sqrt{(\zeta-z_\nu)/t}.
+\tag{JS.69}
+$$
+
+Choose $\zeta'\in(\bar\zeta,C_{\rm sat})$. Concavity and strict
+increase give the positive lower secant
+$\Phi(\zeta)-\Phi(z_\nu)\ge m_{\bar\zeta}(\zeta-z_\nu)$,
+where $m_{\bar\zeta}=[\Phi(\zeta')-\Phi(\bar\zeta)]/
+(\zeta'-\bar\zeta)>0$. Completing the square in
+$\sqrt{\zeta-z_\nu}$ bounds (JS.69) by $K'/t$.
+
+For the lower bound, TC Theorem 8.1 supplies the finite right slope
+$S_0=\Phi'_+(C_{\rm end})$; concavity gives the global Lipschitz bound
+$0\le\Phi(b)-\Phi(a)\le S_0(b-a)$ on this interval.
+All covariance measures have the uniform repair bound $B,K_B$ in
+(JS.36). Choose a fixed $D>K_B$. If
+$\zeta-C_{\rm end}\ge D/t$, select the optimizing failure measure
+at $\zeta-D/t$ (including the critical measure at equality) and
+apply the exact four-label repair (JS.23)–(JS.27).
+Its normalized contrast deficit obeys
+$te_t\le\zeta-D/t+K_B/t\le\zeta$. The rare weights, all moment
+entries and grouping loss are uniformly bounded by source constants;
+there are at most three failure lines by TC. Its full actual-label
+TV is at least $B_0+\Phi(\zeta-D/t)-K/t$, hence at least
+$B_0+\Phi(\zeta)-K'/t$.
+
+If $\zeta-C_{\rm end}<D/t$, the point was assumed feasible; choose
+any feasible instrument and apply (JS.65). Its TV is $B_0+O(t^{-1})$,
+while $\Phi(\zeta)=O(t^{-1})$ by the same finite initial slope.
+This gives the lower bound even in the narrow finite feasibility strip.
+In particular feasibility is never inferred from the leading product
+alone. FA Theorem 78.3/FA.41 already evaluates the exact threshold,
+and FA.55 excludes $q=C_{\rm end}/t$ for large $t$.
+All recovery lists have the explicit reports and simultaneous original
+outputs of §17. $\square$
+

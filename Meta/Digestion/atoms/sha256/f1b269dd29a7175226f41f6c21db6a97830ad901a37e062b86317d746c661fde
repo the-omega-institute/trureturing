@@ -1,0 +1,36 @@
+## 156. Core capacity: fixed complete-star data
+
+The following argument uses the actual shared-length framework of
+Sections 137--155 and the exact paired-angle response of Section 95.
+
+Retain the source's actual finite ideal face pairing with complete circular
+edge links, minimum degree six, fixed paired frames and common positive
+generalized length field with original angle sums 2*pi. There are exactly
+four actual reservoir labels H={M,C,D,Z}. Assume a flat exists and choose
+the source's maximal-selected M and its escape. Their cosh lengths obey
+
+    m>1+c+d>3,       z>1+m+c>5.
+
+M has exactly one flat occurrence; its total genuine angle is pi. Every
+Z occurrence is genuine, with total angle 2*pi. The escape is a genuine
+tetrahedron
+
+    tau=(Z,M,C,D,M,C).
+
+Its axial Z angle theta and its transverse M angle beta satisfy
+
+    theta+2*beta>pi.                               (156.1)
+
+Its two faces containing that axial Z slot are paired to the two return
+faces of one different genuine owner rho. The latter has two transverse
+Z slots, with common angle gamma>pi/2. It has one of the four remaining
+H-only return frames:
+
+    (C,Z,M,M,Z,M),
+    (C,Z,M,Z,Z,M),
+    (C,Z,M,D,Z,M),   with d>(z-m)^2/(c+1)-1>c,
+    (M,Z,C,Z,Z,C).
+
+The unique dominant axial Z run consists only of tau. None of these
+facts assigns M's remaining pi budget to Z.
+

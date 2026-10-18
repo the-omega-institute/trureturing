@@ -1,0 +1,43 @@
+**Corollary 2.2 (necessary conditions in the original problem).** On
+$\mathfrak C$ retain the original objective
+
+$$
+\mathcal J=\max_{s=p,\beta;\ k=1,2,3}
+ \left\{\int\operatorname{TV}(D_s,P_{s,r_k})d\nu_s-\rho_s\right\},
+\quad D_p=Q,\ D_\beta=W,\quad \rho_\beta=\frac{239}{6750}.
+\tag{2.2}
+$$
+
+Every pair with $\mathcal J=0$ satisfies
+
+$$
+V\ge\left(\frac{\delta_3}{2C}\right)^2>0.
+\tag{2.3}
+$$
+
+On the class with both full endpoint boxes, for all complete atoms at
+both phases, one has
+
+$$
+\frac{\delta_3}{2}
+ \le [1+C(1+\kappa)]\mathcal J+C\sqrt V.
+\tag{2.4}
+$$
+
+Proof. The endpoint triangle identity [PAIR, §11.8] supplies both full
+boxes and both exact means at $\mathcal J=0$. They imply (1.6) and
+$\eta=0$. Partition contraction gives
+$L_\Pi\le\int\operatorname{TV}(Q,R)d\nu_p\le\rho_p$, hence (2.3).
+For any fully boxed pair, the endpoint coordinate signs are fixed. Writing
+$m_s=\int D_s(E_s)d\nu_s$, its two endpoint losses are
+$P_{s,a}(E_s)-m_s$ and $m_s-P_{s,b}(E_s)$, whose maximum is
+$\rho_s+|m_s-M_s|$. Consequently
+$\eta\le(1+\kappa)\mathcal J$ and
+$L_\Pi\le\rho_p+\mathcal J$. Substitute these two upper bounds into
+(2.1). This proves (2.4). $\square$
+
+Zero $\mathcal J$ is zero excess above the nonzero phase baselines.
+Both full boxes, both means and both depth-3 budgets remain requirements
+of the original zero face. Neither (2.3) nor (2.4) decides
+$j_c=\min_{\mathfrak C}\mathcal J=0$ versus $j_c>0$.
+

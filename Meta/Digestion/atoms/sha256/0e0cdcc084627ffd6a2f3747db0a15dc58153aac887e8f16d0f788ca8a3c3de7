@@ -1,0 +1,17 @@
+**Definition 90.3 (the three-component observation).** Use precisely the
+$q$ port of [Process Geometry, Definition 44.1](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md):
+in the fixed oriented Euclidean space $\mathbb R^3$, put
+
+$$
+a=e_1=(1,0,0),\quad b=e_2=(0,1,0),\qquad
+q(\alpha)=a,\quad q(\beta)=b,\quad
+q(\langle s,t\rangle)=q(s)\times q(t).
+\tag{90.6}
+$$
+
+The observation here is the ordered triple
+$(q_1(u),q_2(u),q_3(u))$ of the **entire original source** in that fixed
+basis. It is not $V_Q$, a tuple of subtree observations, the composition
+port $c$, the joint port $\eta=(c,q)$ or a spatial position. Evaluating this
+mathematical function supplies no numerical read permission or free acquisition.
+

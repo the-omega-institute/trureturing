@@ -1,0 +1,33 @@
+**Definition 2.5 (initial profile and stable residual core).** A weaker task
+may expose ordinary continuation responses and an aggregate resource total at
+the initial cut, while exposing a fresh resource response only after a later
+cut.  Let $\operatorname{Ord}(x,u)$ omit that fresh resource field and let
+$A_x(u)$ be the aggregate total measured from the initial cut.  Define
+Here “initial cut” is relative to the state being tested: after a prefix $p$,
+$A_{T_px}(v)$ is the aggregate profile re-formed at that successor cut under
+the declared meter contract.  Thus a fresh response that was hidden inside a
+total from $x$ can become an observable component when $T_px$ is tested as a
+new boundary state.
+
+$$
+xK_0y\quad\Longleftrightarrow\quad
+\forall u\in\mathcal U,
+\ \operatorname{Ord}(x,u)=\operatorname{Ord}(y,u)
+\ \land A_x(u)=A_y(u).
+$$
+
+On the same actual reachable carrier let
+$\mathcal U_{\rm com}(x,y)$ be the tested prefixes legal from both states;
+$\varepsilon$ is included because it is always common.  Define
+
+$$
+xKy\quad\Longleftrightarrow\quad
+xK_0y\ \land\ \forall p\in\mathcal U_{\rm com}(x,y),\quad
+K_0(T_px,T_py).
+$$
+
+A legal failure with a declared successor is included among the common legal
+prefixes.  If a tested prefix is legal on only one side, $xK_0y$ already fails
+because its ordinary response contains the unequal legality, so no undefined
+successor is formed.
+

@@ -1,0 +1,53 @@
+**Theorem 18.1 (actual-surface rectangle necessity).** Under
+Assumption 1.2, the whole-domain value continuity of Theorem 7.3,
+the original fractional-count closure of Theorem 8.1, and the
+minimum-count identity (GC.10), if $M_{\max}=10$, then there are
+nonempty ordinary open intervals $I_s,I_t$ whose rectangle is
+contained in the strict weak domain and continuous real functions
+$a,b$ on $I_t$ such that
+$$
+\mathcal T(s,t)=a(t)-b(t)s\quad(s\in I_s,\ t\in I_t),
+\qquad b(t)>0.
+\tag{GC.82}
+$$
+Here $s,t$ are the actual physical request and finite budget coordinate,
+not coordinates in an ambient unconstrained moment space.
+
+Proof. The weak upper count is ten. Relative closedness of $\{n\le9\}$
+therefore makes $\{n=10\}$ relatively open in $\mathcal D_w$.
+If the global maximum is ten, the strong bound $n\le8$ of
+Theorem 9.1 and the entire weak minimum-budget boundary bound
+$n\le7$ of Theorem 5.2 exclude both those parts of the domain.
+A maximizing weak point has $t>t_0$ and
+$s<s_0\tau_{\max}(t)$, possibly $s=0$. Its relatively open
+maximal neighborhood contains a positive-$s$ point with all weak
+inequalities strict. Continuity of $\tau_{\max}$ permits an
+ordinary open rectangle $I_s\times I_t$ about that point,
+contained in $0<s<s_0\tau_{\max}(t)$, $t>t_0$, and with
+$n=10$ everywhere. Equivalently one may use Theorem 9.2;
+$A=\log(1+t)$ is a homeomorphism, so the passage between $(s,A)$
+and $(s,t)$ does not change ordinary openness.
+
+Fix any $t\in I_t$. At every $s\in I_s$, identity (GC.10)
+makes the minimum supported low count exactly nine. Theorem 17.1
+and Corollary 17.2 make $\mathcal T(\cdot,t)$ locally affine
+with strictly negative slope about every point of this connected
+interval. These affine germs agree on overlaps, since two affine
+functions agreeing on an open interval have identical slope and
+intercept. Hence their slope and intercept are locally constant
+functions of $s$ and, by connectedness, constant on all of $I_s$.
+Thus (GC.82) holds for this $t$ with $b(t)>0$.
+
+Choose fixed $s_1<s_2$ in $I_s$. The coefficients are explicitly
+$$
+b(t)=\frac{\mathcal T(s_1,t)-\mathcal T(s_2,t)}{s_2-s_1},\qquad
+a(t)=\mathcal T(s_1,t)+b(t)s_1.
+\tag{GC.83}
+$$
+Theorem 7.3 gives their continuity in $t$, and the strict decreasing
+slice gives $b(t)>0$ at every $t$. The argument requires neither a
+continuous choice of optimizers nor a joint analytic contact atlas.
+It uses count closure for original fractional atoms; replacing that
+premise by closure only after endpoint splitting would not suffice.
+$\square$
+

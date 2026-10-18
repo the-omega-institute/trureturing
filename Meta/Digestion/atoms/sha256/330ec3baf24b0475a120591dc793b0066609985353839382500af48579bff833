@@ -1,0 +1,284 @@
+**Theorem 26.1 (joint heat estimate and hidden-circle mixing).**
+For the fixed data (25.1), there is one $\kappa_*>0$ and constants
+$c,C>0$, independent of $\kappa,t,\tau$ and $g$, such that, for both
+signs $0<|\kappa|\le\kappa_*$ and every $t\ge\tau_{\min}$,
+
+$$
+0<p_\kappa(t,o,y)\le
+ C e^{-\lambda t}\left(1+\frac1{|\kappa|\sqrt t}\right)
+\qquad(y\in\Omega).
+\tag{26.1}
+$$
+
+In particular, throughout that same neighbourhood and for all
+$\tau\ge\tau_{\min}$,
+
+$$
+\|V_{\kappa,\tau}\|_\infty\le
+ C e^{-\lambda\tau}\left(1+\frac1{|\kappa|\sqrt\tau}\right).
+\tag{26.2}
+$$
+
+The lowest free eigenvalue is exactly $\lambda$, with normalized
+positive eigenfunction $(2\pi)^{-3/2}\phi(k)$. If
+$\delta_\kappa$ is the gap above it, then
+
+$$
+c\kappa^2\le\delta_\kappa\le C\kappa^2.
+\tag{26.3}
+$$
+
+For $t\ge\max(\tau_{\min},|\kappa|^{-2})$ one also has, uniformly
+in every actual phase and every height,
+
+$$
+\left|e^{\lambda t}p_\kappa(t,o,y)
+ -\frac{\phi(k_0)\phi(k)}{(2\pi)^3}\right|
+ \le C e^{-c\kappa^2t}.
+\tag{26.4}
+$$
+
+Thus (26.1) includes winding and mixing at times of order
+$|\kappa|^{-2}$ and beyond. The additive constant in its factor
+$1+(|\kappa|\sqrt t)^{-1}$ is the actual-circle saturation of the
+hidden heat factor.
+
+Proof. The argument uses the actual phase Fourier series and scalar
+Dirichlet operators; it does not assume a uniform hypoelliptic heat
+constant. Choose a closed two-sided parameter interval on which all
+probabilities on a slightly larger height interval have positive
+margins. The coefficients in (25.4) and their derivatives are then
+uniformly bounded on $[l,u]$, and $0<m\le b_\kappa\le M<\infty$.
+All subsequent parameter restrictions are fixed independently of time.
+
+Write $a_\kappa(k)=(A_\kappa(k),B_\kappa(k),b_\kappa(k))$.
+For $\eta\in\mathbb R^3$ let
+
+$$
+H_{\kappa,\eta}=-\varepsilon^2\partial_k^2+
+                 |\eta\cdot a_\kappa(k)|^2
+\quad\hbox{on }H_0^1(I),\qquad
+\beta_\kappa(\eta)=\inf\sigma(H_{\kappa,\eta}).
+\tag{26.5}
+$$
+
+The phrase ``on $H_0^1$'' specifies its form domain; the operator is
+the scalar Dirichlet Friedrichs realization. We prove the uniform bound
+
+$$
+\beta_\kappa(\eta)\ge\lambda+c\Psi(|\eta|),\qquad
+\Psi(r)=\begin{cases}r^2,&0\le r\le1,\\r^{2/3},&r\ge1.\end{cases}
+\tag{26.6}
+$$
+
+The following elementary one-dimensional estimates are intermediate
+steps in this native Fourier calculation. For $|e|=1$, the numerator
+of $v_{\kappa,e}=e\cdot a_\kappa$ with denominator
+$2H(k-\alpha_\kappa)$ is the quadratic polynomial
+
+$$
+P_{\kappa,e}(k)=e_1(k-2\kappa)(s_\kappa-k)
+                 -e_2k(k-2\kappa)+2e_3(s_\kappa-k).
+\tag{26.7}
+$$
+
+At zero its coefficient vector is
+$(2He_3,He_1-2e_3,-e_1-e_2)$. The map from $e$ to these three
+coefficients is invertible. By continuity its inverse remains uniformly
+bounded after a single parameter shrink. The denominator is bounded
+above and below by positive constants. Hence, uniformly in $\kappa,e$,
+
+$$
+\|v_{\kappa,e}\|_\infty\le M_1,\qquad
+|\{k\in I:|v_{\kappa,e}(k)|\le s\}|\le C_1\sqrt s
+\quad(0<s\le1).
+\tag{26.8}
+$$
+
+For the second inequality, a measurable set of length $b>0$ contains
+three points whose successive distances are at least $b/4$, up to an
+arbitrarily small reduction. If a quadratic is bounded there by $C s$,
+its Lagrange interpolation formula bounds its coefficient norm by
+$C' s/b^2$, since $I$ is bounded. The uniform lower coefficient norm
+in (26.7) gives $b\le C''\sqrt s$. Applying this to the sublevel set
+proves (26.8), including linear and constant polynomial cases.
+
+For normalized $f\in H_0^1(I)$ put
+
+$$
+\mathcal E=\varepsilon^2\|f'\|_2^2+
+ r^2\|v_{\kappa,e}f\|_2^2,\qquad r>0.
+$$
+
+One-dimensional Sobolev and Dirichlet Poincare give
+$\|f\|_\infty^2\le2\|f'\|_2\le2\sqrt{\mathcal E}/\varepsilon$
+and $\mathcal E\ge\lambda$. Splitting its unit norm over the sublevel
+set in (26.8) and its complement yields
+
+$$
+1\le C\sqrt{s\mathcal E}+\frac{\mathcal E}{r^2s^2}.
+\tag{26.9}
+$$
+
+Choose $s=c_0/\mathcal E$, where $c_0\le\lambda$ is fixed small
+enough to make the first term at most $1/2$. It follows that
+$\mathcal E\ge c_1 r^{2/3}$, uniformly for every normalized $f$.
+This proves the needed large-frequency growth without a boundary
+subelliptic estimate.
+
+For small frequencies, compactness of the parameter interval and unit
+sphere and the polynomial independence give
+
+$$
+m_1:=\inf_{\kappa,|e|=1}\int_I
+             |v_{\kappa,e}|^2\phi^2dk>0.
+\tag{26.10}
+$$
+
+Indeed a zero integral would make the polynomial (26.7) identically
+zero. Decompose $f=z\phi+h$, $h\perp\phi$. The next scalar Dirichlet
+height eigenvalue is $4\lambda$. If
+$\mathfrak d=\mathcal E-\lambda$, then
+$\|h\|_2^2\le\mathfrak d/(3\lambda)$. When $\mathfrak d\le d_0$ for a sufficiently
+small fixed $d_0>0$, the triangle inequality, (26.8) and (26.10) give
+
+$$
+\|v_{\kappa,e}f\|_2
+ \ge |z|\sqrt{m_1}-M_1\sqrt{\mathfrak d/(3\lambda)}
+ \ge\tfrac12\sqrt{m_1}.
+$$
+
+Thus $\mathfrak d\ge m_1r^2/4$. If $\mathfrak d>d_0$ and $r\le1$, instead
+$\mathfrak d\ge d_0r^2$. This proves (26.6) for $r\le1$. For each fixed
+$\kappa,e$, the scalar variational bottom is nondecreasing in $r$.
+It therefore has a uniform positive gap above $\lambda$ for $r\ge1$.
+Combining that gap on a bounded range with
+$\beta_\kappa(re)\ge c_1r^{2/3}$ on the large range proves (26.6)
+for all $r$. This proof also applies to complex $f$, by the same norm
+inequalities.
+
+Let $K_{\kappa,\eta}(t;k,k')$ be the scalar kernel of (26.5), and
+$h_I$ the original killed height kernel. Positivity and domination give
+
+$$
+0\le K_{\kappa,\eta}(t;k,k')\le h_I(t;k,k').
+\tag{26.11}
+$$
+
+For attribution, this is the elementary bounded nonnegative-potential
+case of the Trotter product formula [T, Theorem 5.11]: alternate the
+height heat semigroup and multiplication by
+$\exp(-t|\eta\cdot a_\kappa|^2/n)$. Every product is positive and
+dominated by the height semigroup, and its strong limit has the same
+property. At each fixed $\eta$ the potential is bounded and the scalar
+operator is selfadjoint with the same Dirichlet domain, exactly the
+hypotheses of that theorem. No uniform bound on that potential is assumed.
+
+Fix $\delta=\tau_{\min}/4$. The height sine series bounds
+$\sup_kh_I(2\delta;k,k)$ by a finite constant. Splitting the scalar
+semigroup at times $\delta,t-2\delta,\delta$, and using its spectral
+norm and (26.11), gives for $t\ge\tau_{\min}$
+
+$$
+\begin{aligned}
+|K_{\kappa,\eta}(t;k,k')|
+&\le C_\delta e^{-\beta_\kappa(\eta)(t-2\delta)}\\
+&\le C e^{-\lambda t}\exp(-c t\Psi(|\eta|)).
+\end{aligned}
+\tag{26.12}
+$$
+
+Here $t-2\delta\ge t/2$; this fixed positive smoothing interval
+loses no fraction of the height death exponent $\lambda$.
+
+Use the orthonormal angular modes
+$(2\pi)^{-3/2}e^{i(n\theta+mv+jD)}$, for $(n,m,j)\in\mathbb Z^3$.
+Parseval for the raw measure gives the exact scalar potential
+$(nA_\kappa+mB_\kappa+\kappa j b_\kappa)^2$.
+Consequently the completed free form is the orthogonal sum of (26.5)
+with $\eta=(n,m,\kappa j)$. More explicitly, for the orthonormal
+expansion $f=\sum f_{nmj}(k)(2\pi)^{-3/2}e^{i(n\theta+mv+jD)}$,
+
+$$
+\begin{aligned}
+\mathcal F_\kappa=\biggl\{f\in L^2(\mu):\;&
+ f_{nmj}\in H_0^1(I)\text{ for all }n,m,j,\\
+&\sum_{n,m,j}\left(\varepsilon^2\|f'_{nmj}\|_2^2+
+ \|(nA_\kappa+mB_\kappa+\kappa j b_\kappa)f_{nmj}\|_2^2\right)
+ <\infty\biggr\},
+\end{aligned}
+$$
+
+and $T_\kappa$ is precisely that sum. Phase convolution commutes with
+both fields and converges in the form norm. Finite Fourier truncation
+and scalar height approximation show conversely that every sequence in
+the displayed domain is a limit of the original core. This proves the
+decomposition for the complete domain. In particular
+
+$$
+p_\kappa(t,o,(k,\theta,v,D))=
+\frac1{(2\pi)^3}\sum_{n,m,j\in\mathbb Z}
+ e^{i(n\theta+mv+jD)}
+ K_{\kappa,(n,m,\kappa j)}(t;k_0,k).
+\tag{26.13}
+$$
+
+Absolute convergence follows from (26.12) and the summation estimate
+below. Thus this kernel identity follows from the orthogonal-sum
+semigroup first, and then holds pointwise by continuity. It is not a
+formal Fourier density at $\kappa=0$.
+
+Set $a=|\kappa|\le1$. Monotonicity of $\Psi$ gives
+
+$$
+\Psi(\sqrt{n^2+m^2+a^2j^2})
+ \ge\tfrac13\{\Psi(|n|)+\Psi(|m|)+\Psi(a|j|)\}.
+$$
+
+For $t\ge\tau_{\min}$ the first two one-dimensional sums are
+bounded independently of $t$. For the third, comparison with an
+integral gives
+
+$$
+\begin{aligned}
+\sum_{j\in\mathbb Z}e^{-c t\Psi(a|j|)}
+&\le1+\frac2a\int_0^\infty e^{-c t\Psi(r)}dr\\
+&\le C\left(1+\frac1{a\sqrt t}\right).
+\end{aligned}
+\tag{26.14}
+$$
+
+On $(0,1)$ the integral is bounded by $C t^{-1/2}$; on $(1,\infty)$
+comparison with the full $r^{2/3}$ integral gives $C t^{-3/2}$,
+which is at most a fixed multiple of $t^{-1/2}$ on this time range.
+The Fourier sum, (26.12) and (26.14) prove (26.1) on the entire original
+cylinder. Integrating it for $t\ge\tau$, and using
+$t^{-1/2}\le\tau^{-1/2}$, proves (26.2).
+
+For the gap, the zero angular mode has bottom $\lambda$ and next
+eigenvalue $4\lambda$. Every nonzero angular mode has
+$|(n,m,\kappa j)|\ge a$, so (26.6) gives a gap at least $c a^2$
+when $a\le1$. The normalized test
+$(2\pi)^{-3/2}\phi(k)e^{iD}$ is orthogonal to the ground state and has
+energy
+
+$$
+\lambda+a^2\int_I b_\kappa(k)^2\phi(k)^2dk\le\lambda+Ca^2.
+\tag{26.15}
+$$
+
+It belongs to the completed form domain by height approximation.
+The variational principle [T, Theorem 4.10] proves (26.3); the same
+Fourier decomposition proves simplicity of the ground state. This
+derives the gap rather than importing one from a different diffusion.
+
+Finally, omit the zero triple in (26.13). Each remaining frequency
+satisfies $\Psi(|\eta|)\ge a^2$. Remove half of its exponential as
+$e^{-c a^2t/2}$, and sum the other half by (26.14). For $t\ge a^{-2}$
+that sum is bounded. The zero triple is $h_I(t;k_0,k)$, whose sine
+series differs from $e^{-\lambda t}\phi(k_0)\phi(k)$ by at most
+$C e^{-4\lambda t}$ on $t\ge\tau_{\min}$. After decreasing $c$,
+these statements give (26.4). The integer lattice in (26.13) is exactly
+the actual $2\pi$ lattice; neither a changed angular Haar mass nor a
+noncompact approximation was used. $\square$
+

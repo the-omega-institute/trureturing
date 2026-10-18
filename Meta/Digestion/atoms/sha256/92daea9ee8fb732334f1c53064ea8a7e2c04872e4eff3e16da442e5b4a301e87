@@ -1,0 +1,100 @@
+**Theorem 48.2 (Sourcewise finite-support infimum and its attainment).** Let $\mathcal D_{\mathrm{sw}}$ be the class of lawful designs whose every target law $\mu_y$ is finitely supported, with a common countable carrier allowed, and let $\mathcal D_{\mathrm{anch}}$ require only the anchor law $\mu_{x_*}$ to be finitely supported. For both classes,
+
+$$
+\inf\varepsilon=R.
+\tag{48.4}
+$$
+
+If $h=0$, or if the profile reaches its limit at a finite index, the infimum is attained. If $h>0$ and the profile is strict, the following are the exact remaining cases:
+
+1. If $B<1$, neither class attains $R$.
+2. If $B=1$ and $d=0$, neither class attains $R=0$.
+3. If $B=1$ and $d>0$, both classes attain $R=0$.
+
+**Proof.** For the upper infimum, choose $L\ge1$, put $c_L=b(L)$ and $b_L(k)=\min\{b(k),c_L\}$. Apply the complete countable construction (47.2)--(47.3) with $b_L$ in place of $b$ and with $B_L=c_L$. Its prepared law has finite support because its proposal tail vanishes for $k\ge\max\{2,L\}$, and every target law has that finite support together with at most one added tape $a_k$. It satisfies the original profile since $b_L\le b$, and its error is
+
+$$
+R_L=\frac{(1-c_L)h}{2-c_L}\downarrow\frac{(1-B)h}{2-B}=R.
+\tag{48.5}
+$$
+
+If $b(L)=B$, then $R_L=R$ and the construction attains the boundary. This includes $B=0$.
+
+Assume now $h>0$ and a strict profile. Suppose first that $B<1$ and fix any target design in either support class. Its anchor target law is finitely supported, so one consumer cutoff $A=A_m$ of (44.13) carries all anchor proposal mass $\mu_{x_*}(A)=h$. Fix this integer $m\ge1$, bounding the consumer records, prime indices and outputs, independently of the preparation and its tolerance. For any lawful preparation and any $\gamma>0$, Lemma 45.3 gives a finite preparation menu $P$ on whose matching cylinder the prepared laws differ by at most $\gamma$. Apply Lemma 48.1 to $S=P_m\cup P$ and $H=m+1$. This selects one actual source for the whole cutoff event, with $m+2\le k\le m+22$. Every tape in $A$ is false there. The signed test (46.5) gives
+
+$$
+\widehat\mu_y(A)\le b(k)\widehat\mu_y(H_y)+\varepsilon
+\le b(m+22)M+\varepsilon.
+$$
+
+The preparation coupling and the anchor error imply
+
+$$
+ h-\varepsilon-\gamma\le\widehat\mu_y(A).
+$$
+
+Using $(1-B)M\le\varepsilon$ and then letting $\gamma\downarrow0$ yields
+
+$$
+\varepsilon\ge
+\frac{(1-B)h}{2(1-B)+b(m+22)}
+>\frac{(1-B)h}{2-B}=R,
+\tag{48.6}
+$$
+
+because strictness gives $b(m+22)<B$. Thus the boundary is excluded in both support classes.
+
+For $B=1$ and $d=0$, fix any finite anchor target law and any lawful preparation. Because the anchor has no divergent mass, choose measurable finite-record cutoffs $A\subseteq H_{x_*}$ and $R_0\subseteq R_{x_*}$ carrying respectively masses $h$ and $1-h$, and choose an integer $m\ge1$ bounding their records and outputs. Combine the fixed consumer menu with the preparation menu of Lemma 45.3 at tolerance $\gamma$, and apply Lemma 48.1 with the same fixed $H=m+1$ to choose one matching source with $m+2\le k\le m+22$. At the anchor, $\mu_{x_*}(A)=h$ and $\mu_{x_*}(R_0)=1-h$; at the matching source, $A\subseteq F_y$ and $R_0\subseteq R_y$. The test
+
+$$
+\psi=\mathbf1_A-b(k)\mathbf1_{H_y}
+$$
+
+has oscillation at most one. Its anchor expectation is $(1-b(k))h$, because the anchor law gives no mass to divergent tapes and $R_0\cap H_y=\varnothing$; its expectation at $y$ is at most zero, since $A\subseteq F_y$ and $\mu_y(F_y)-b(k)\mu_y(H_y)\le0$. Therefore
+
+$$
+\operatorname {TV}(\mu_{x_*},\mu_y)\ge(1-b(k))h>0.
+$$
+For any acquisition error, the triangle through the two prepared laws and Lemma 45.3 gives
+
+$$
+2\varepsilon+\gamma\ge(1-b(k))h,
+\tag{48.7}
+$$
+
+Letting $\gamma\downarrow0$ gives the fixed-family bound $\varepsilon\ge(1-b(m+22))h/2>0$, so exact attainment is impossible. Positive anchor divergence cannot be included in the finite nonproposal cutoff and does not obey this argument.
+
+It remains to show the positive $B=1,d>0$ case. Enumerate the primes other than $3$ as $q_1,q_2,\ldots$ and set
+
+$$
+ w_3=d,\qquad w_{q_j}=h2^{-(j+1)},\qquad
+ w_0=h/2,\qquad w_u=z.
+\tag{48.8}
+$$
+
+Choose a strictly increasing function $f:\mathbb P\to\mathbb N_{>0}$ with $f(p)\ge p$ and
+
+$$
+1-b(f(p)+1)\le w_p.
+\tag{48.9}
+$$
+
+Choose integer values of $f$ successively in increasing prime order, larger than the preceding value and at least $p$, until (48.9) holds. The limit $b(k)\uparrow1$ makes each such choice possible. The resulting fixed table is common to the entire source family, not advice selected by the source. Use tapes $u,t_0,t_p$ ($p$ prime): $u$ returns unknown; $t_0$ queries primes increasingly until the first divisor and proposes $f(q)$; $t_p$ queries primes strictly larger than $p$ until the first divisor and proposes $f(q)$, diverging if none appears. The preparation uses one query: on the baseline atom of mass $w_0$ it emits $t_0$, on the atom of mass $w_u$ it emits $u$, and on the atom of mass $w_p$ it queries $p\mid N(y)$ and emits $t_p$ on a positive answer and $t_0$ otherwise. It terminates for every seed at every source.
+
+For a source with prime support $P_y$, prescribe the finite law
+
+$$
+\mu_y(t_p)=w_p\ (p\in P_y),\qquad
+\mu_y(t_0)=w_0+\sum_{p\notin P_y}w_p,\qquad
+\mu_y(u)=z.
+\tag{48.10}
+$$
+
+The seed masses sum to $w_0+z+\sum_pw_p=h/2+z+d+h/2=1$. The preparation pushforward is exactly (48.10): each prime atom either remains at its own $t_p$ or is sent to $t_0$. The law has at most $k+2$ support tapes at a source with $k$ divisors. At the anchor $P_{x_*}=\{3\}$, the row is $(h,d,z)$: $t_0$ has mass $h$, $t_3$ diverges with mass $d$, and $u$ is unknown. At an arbitrary source, only the positively weighted tape indexed by its largest divisor $q_{\max}$ diverges. Thus $d_y=w_{q_{\max}}$, $z_y=z$ and $h_y=1-z-w_{q_{\max}}$. If $f(q_{\min})\ge k=\Omega(y)$, every finite proposal is correct. Otherwise choose the largest divisor $p$ with $f(p)<k$; it is not the largest divisor of $N(y)$ because that prime is at least $k$ and $f(p)\ge p$. The next divisor makes $t_p$ a correct finite proposal. By (48.9) and monotonicity,
+
+$$
+ w_p\ge1-b(f(p)+1)\ge1-b(k).
+$$
+
+Tape $t_p$ is present with exactly that mass $w_p$, so the correct proposal mass is at least $w_p\ge1-b(k)\ge(1-b(k))h_y$. Therefore $e_y\le b(k)h_y$. Every law (48.10) is normalized and finite. All finite records and output events are measurable on the countable power-set carriers for both seeds and consumer tapes, preparation terminates at every declared seed, and the uniform acquisition error is exactly zero. Numerical duplicates and even distinct integers with identical prime supports receive identical laws. No effective sampler for the real weights or effective construction of the table from an arbitrary real profile is asserted. This proves attainment in both support classes. The cases $h=0$ and the plateau case were already covered. $\square$
+

@@ -1,0 +1,20 @@
+### 479.1. 原积分核与完整块级数
+
+取 $x>1$，沿用实际阶乘余项与原权重
+
+$$
+\eta(u)=\log(\lfloor u\rfloor!)-u\log u+u,
+\qquad
+w(t)=\frac{1+\log t}{t^2(\log t)^2},
+\qquad
+P_x(s)=\int_x^\infty\eta(t/s)w(t)\,dt.
+$$
+
+令 $M_m=\sum_{a=1}^m\mu(a)$、$\psi(t)=\sum_{n\le t}\Lambda(n)$，并记
+
+$$
+B_m(t)=M_m\bigl[\eta(t/m)-\eta(t/(m+1))\bigr]w(t),
+\qquad
+I_\psi(x)=\int_x^\infty(\psi(t)-t)w(t)\,dt.
+$$
+

@@ -1,0 +1,76 @@
+**Theorem 30.5 (The same obstruction across the occupancy, relation and
+index observations).**
+For the seven-position cyclic subalgebra with the degree map (28.15),
+the locally feasible degree vector $w=(2;\mathbf1)$ has the
+following linked consequences: it is the only degree-two local-trace
+tuple without a common-copy lift; it is the difference of the two
+minimal canonical generator degrees; the canonical quotient is the
+shifted seven-variable face module in (29.4); and that quotient has
+the smooth linear-face index correction (30.5). The two terminal
+syzygy degrees are $\Sigma-\nu_3$ and $\Sigma-\nu_5$, not the
+single path terminal degree. These conclusions remain statements of
+the specified occupancy and algebraic observations, even though each
+local five-mode relation is preserved.
+
+Proof. The degree-two slack bijection in Proposition 28.3 identifies
+$w$ uniquely and proves its failure to lift. Equation (29.7) identifies
+the same vector, with the same position and copy coordinates, as
+$\nu_5-\nu_3$. More precisely the membership calculation
+$s+w\in\mathcal S\Longleftrightarrow\delta(s)\ge1$ is (29.14);
+its failure on the face identifies the annihilator $J$ of the
+canonical quotient. The additive inverse coordinates (29.13) then
+identify that face with the actual seven maximum modes. Formula
+(29.16) transports their canonical generator degrees through Ext to
+(29.6). The coordinate map (30.7) places the face as the specified
+linear subspace of the same ambient mode space, so the short exact
+sequence has precisely the pushforward quotient (30.8), and its
+Euler characteristic yields (30.5). Each step uses an explicit map
+or exact sequence; equal numerical counts alone are not its premise.
+
+For a finite relation-space realization, choose any finite homogeneous
+binomial generating family $f_a$ of $I\subset S$ and let $d_a$ be their
+ordinary degrees. Such a family exists: the grouped-monomial argument
+in Proposition 28.5 generates the kernel by binomials, and $S$ is
+Noetherian. With the Bargmann inner product of Definition 25.2 on
+$S_m$, put
+
+$$
+M_{f_a}:S_{m-d_a}\to S_m,\qquad
+A_{a,m}=M_{f_a}^{\dagger},\qquad
+H_m^{\mathrm{cyc}}=\sum_a A_{a,m}^{\dagger}A_{a,m}.
+\tag{30.17}
+$$
+
+Negative-degree source spaces are zero. Positivity gives
+$\ker H_m^{\mathrm{cyc}}=\bigcap_a\ker A_{a,m}$.
+The sum of the images of $M_{f_a}$ is $I_m$, because the $f_a$
+generate the ideal. Taking orthogonal complements therefore gives
+
+$$
+\ker H_m^{\mathrm{cyc}}=I_m^\perp\simeq(S/I)_m=R_m,
+\qquad\dim\ker H_m^{\mathrm{cyc}}=L(m).
+\tag{30.18}
+$$
+
+This is the same quotient mechanism as Proposition 26.6 applied to
+the actual cyclic ideal. It does not supply a complete generating
+list of $I$, its full resolution matrices, or a native Hamiltonian
+implementation. The metrics and positive eigenvalues depend on the
+chosen family and inner products; the finite self-adjoint map in
+(30.17) itself has index zero. The graded elliptic index in (30.5)
+is a different construction with an explicitly identified quotient.
+
+Finally, the two arrays in Proposition 28.5 have the same observation
+but different three-position mode distributions. Hence even perfect
+knowledge of a feasible $(m,c)$ cannot recover prescribed full
+marginals or the unordered array, and therefore cannot recover an
+ordered history either. A construction of some common array does not
+prove that it was the supplied initialized native history. The
+relation maps, canonical module and elliptic carrier contain no
+initialization or allowed-action data that could discharge those
+additional obligations. Seven positions are still seven positions,
+and a polytope facet is still a face of a convex set. Neither the
+local relation identities nor the index correction changes these
+domains into seven native windows, a physical boundary, or an
+APS/full-spectrum theorem. $\square$
+

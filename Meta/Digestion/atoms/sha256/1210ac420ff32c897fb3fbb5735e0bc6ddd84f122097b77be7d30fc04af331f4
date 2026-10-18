@@ -1,0 +1,92 @@
+**Theorem 19.1 (continuum restricted minimum and attainment).** For every parameter in Definition 18.1,
+
+$$
+\min_{\substack{u\in\operatorname{span}(|0\rangle,|1\rangle),\ \|u\|=1\\
+                 \varphi\in\mathbb R}}
+\mu_{N_{\beta,t}}(u,\varphi)
+=\sqrt a\,s_t+\sqrt\beta\,t>\sqrt a.
+\tag{R.81}
+$$
+
+**Proof.** Absorb the unrestricted phase into $c=e^{-i\varphi}u=c_0|0\rangle+c_1|1\rangle$, with $|c_0|^2+|c_1|^2=1$. Define
+
+$$
+p=c_0e_0+c_1e_1,\qquad q=c_0e_2+c_1e_3,\qquad
+w_0=e_0+e_3,\qquad A_t=\sqrt a\,s_t,\qquad B_t=\sqrt\beta\,t.
+$$
+
+The $w_0$ here is a vector, distinct from the outside-support probability $w$ of (R.10). Substitution of the actual Kraus matrices gives
+
+$$
+H_t:=N_{\beta,t}(X(u,\varphi))
+=A_t(pe_4^\dagger+e_4p^\dagger)
+ +B_t(qw_0^\dagger+w_0q^\dagger-pe_1^\dagger-e_1p^\dagger).
+\tag{R.82}
+$$
+
+Let $P_U$ project onto $U=\operatorname{span}(p,e_4)$, let $P=I-P_U$, and put $\xi=Pw_0$. The vector $q$ is unit and lies in $U^\perp$, whence
+
+$$
+PH_tP=B_t(q\xi^\dagger+\xi q^\dagger).
+\tag{R.83}
+$$
+
+For this actual matrix, the reflection $Z=P_U-P$ is unitary and self-adjoint, and its two-block pinching is $(H_t+ZH_tZ^\dagger)/2=P_UH_tP_U+PH_tP$. Triangle inequality and unitary invariance therefore give, for every complex $c$,
+
+$$
+\|H_t\|_1\geq\|P_UH_tP_U\|_1+\|PH_tP\|_1.
+\tag{R.84}
+$$
+
+In the orthonormal basis $(p,e_4)$, the first block and its half norm are
+
+$$
+P_UH_tP_U=
+\begin{pmatrix}-2B_t\operatorname{Re}c_1&A_t\\A_t&0\end{pmatrix},\qquad
+\tfrac12\|P_UH_tP_U\|_1
+=\sqrt{A_t^2+B_t^2(\operatorname{Re}c_1)^2}.
+\tag{R.85}
+$$
+
+For the second block, write $z=\langle q,\xi\rangle$, using the inner product conjugate-linear in its first variable. On $\operatorname{span}(q,\xi)$ the two possibly nonzero eigenvalues of $q\xi^\dagger+\xi q^\dagger$ are
+
+$$
+\operatorname{Re}z\ \pm\sqrt{\|\xi\|^2-(\operatorname{Im}z)^2}.
+$$
+
+Indeed splitting $\xi=zq+\xi_\perp$ gives the matrix with diagonal $(2\operatorname{Re}z,0)$ and off-diagonal magnitude $\|\xi_\perp\|$. Cauchy–Schwarz gives $\|\xi\|^2-|z|^2\geq0$, so the two displayed eigenvalues have opposite signs or include zero. Thus in this compression
+
+$$
+\tfrac12\|q\xi^\dagger+\xi q^\dagger\|_1
+=\sqrt{\|\xi\|^2-(\operatorname{Im}\langle q,\xi\rangle)^2}.
+\tag{R.86}
+$$
+
+Here $\|\xi\|^2=2-|c_0|^2=1+|c_1|^2$ and $\langle q,\xi\rangle=\bar c_1$. Combining the two blocks proves
+
+$$
+\begin{aligned}
+\mu_{N_{\beta,t}}(u,\varphi)
+&\geq\sqrt{A_t^2+B_t^2(\operatorname{Re}c_1)^2}
+       +B_t\sqrt{1+(\operatorname{Re}c_1)^2}\\
+&\geq A_t+B_t.
+\end{aligned}
+\tag{R.87}
+$$
+
+This is a pointwise inequality over the whole complex unit sphere. At $c_0=0,c_1=i$, (R.82) is
+
+$$
+H_t=iA_t(e_1e_4^\dagger-e_4e_1^\dagger)
+    +iB_t(e_3e_0^\dagger-e_0e_3^\dagger),
+$$
+
+a direct sum on two orthogonal planes with eigenvalues $A_t,-A_t,B_t,-B_t,0$. Hence the lower bound is actually attained. Finally
+
+$$
+A_t^2=a-(2-\beta)t^2,\qquad
+A_t^2-(\sqrt a-B_t)^2=2t(\sqrt{a\beta}-t)>0.
+$$
+
+Since $B_t<\beta\sqrt a<\sqrt a$, both sides compared before squaring are nonnegative. It follows that $A_t+B_t>\sqrt a$, proving (R.81). $\square$
+

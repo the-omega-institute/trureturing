@@ -1,0 +1,121 @@
+**Theorem 8.1 (effective exact resource consequences).** On the recognized
+family, Theorem 5.2 and Theorem 7.2 supply the decision interfaces needed
+for the resource conclusions of JRF. In particular let
+
+$$
+\mathcal F=\{b\in\mathbb N^3:\exists A\ b(A)\le b\}.
+\tag{CAR.31}
+$$
+
+If (CAR.16) fails, $\mathcal F$ is empty. If it holds, there is an
+effectively computable nonempty finite set $\mathcal B$ with
+
+$$
+\mathcal F=\{b:\exists v\in\mathcal B\ v\le b\},
+\qquad \mathcal B=\operatorname{Min}(\mathcal F).
+\tag{CAR.32}
+$$
+
+Every $v\in\mathcal B$ is the exact worst-budget vector of a constructible
+finite actual service. For every $\lambda\in\mathbb Q_{\ge0}^3$,
+$\inf_A W_\lambda(A)$ is effectively computable in
+$\mathbb Q_{\ge0}\cup\{\infty\}$ and is attained by a source-total actual
+service. When (CAR.16) holds a finite reply tree attains it, including
+all zero-weight cases.
+
+These optimization conclusions reuse [JRF, §§3, 5 and 7][JRF] with the
+newly proved logical and physical suppliers, rather than applying its
+literal-history WS2S supplier to (CAR.3).
+
+Proof. The source-independent ingredients of JRF are its cap (CAR.29),
+its cleanup Lemma 3.2 and its finite cofinal argument. Cleanup gives the
+sourcewise bound
+
+$$
+q\le\ell+s_N,\qquad s_N=\max(0,2-N),
+\tag{CAR.33}
+$$
+
+by caching repeated actual epoch/address replies and omitting universally
+branch root replies at epochs at least two. Those hypotheses are unchanged
+here. The exact replacements for its domain-specific ingredients are:
+(CAR.13) for entire-fiber realization, Lemma 4.1 for the full-row terminal
+predicate, Theorem 5.2 for boundedness and a paid static supplier,
+Theorem 6.2 for unbounded physical addresses and lengths, and Theorem 7.2
+for exact feasible skeletons and same-source reachability. Both positive
+and negative directions of every replacement have been proved on (CAR.3).
+
+For completeness, the finite stopping calculation from JRF is as follows.
+When (CAR.16) holds take $(K_0,0,L_0)$ from (CAR.18) and set
+
+$$
+K=\max(K_0,L_0+s_N).
+\tag{CAR.34}
+$$
+
+The argument of JRF Lemma 5.2 now applies: every finite-worst-budget
+comparator is weakly dominated in those worst budgets by a finite service
+with read budget at most $K$ and update budget at most $U$. Indeed cap
+and clean first. If its worst raw cost exceeds $K$, (CAR.33) makes its
+worst length exceed $L_0$, while its worst raw cost exceeds $K_0$; the
+static supplier dominates its three suprema. Otherwise its finite raw
+bound permits the exact finite unrolling of Theorem 7.2. The static
+replacement in this argument compares coordinate suprema, not individual
+source profiles.
+
+For each of the finitely many $(k,d)\in[0,K]\times[0,U]$, first decide
+the length-unbounded question in (CAR.28). Discard a false pair. For a
+true pair extract a service and its finite worst length $L^{\rm wit}$.
+Test $0\le L\le L^{\rm wit}$ to find its least feasible length. Retain
+these feasible triples and their witnesses, then remove dominated triples.
+The cofinal argument proves (CAR.32). At a minimal feasible upper triple,
+a witnessing service must attain every coordinate of the triple in its
+worst vector, since a strictly smaller vector would itself be feasible.
+Corollary 7.3 supplies the maxima and witnesses. False pairs never start
+an unbounded witness search; this proves effective stopping, rather than
+appealing to Dickson finiteness alone.
+
+For weighted optimization use the same-source argument of JRF Theorem
+7.1, not the finite Pareto list. When $\lambda_q+\lambda_\ell>0$ and
+(CAR.16) holds, set
+
+$$
+B_0=\lambda_qK_0+\lambda_\ell L_0.
+\tag{CAR.35}
+$$
+
+Cap and cleanup are sourcewise nonexpansive, hence nonexpansive for
+$W_\lambda$. A comparator of weighted worst cost at most $B_0$ can be
+restricted to read depth
+
+$$
+k_\lambda=
+\begin{cases}
+\lfloor B_0/\lambda_q\rfloor,&\lambda_q>0,\\
+\lfloor B_0/\lambda_\ell\rfloor+s_N,&\lambda_q=0,\ \lambda_\ell>0.
+\end{cases}
+\tag{CAR.36}
+$$
+
+The second case uses (CAR.33). Epochs lie in $[N,M]$. Test (CAR.30) at
+this depth over the finite lattice of rational thresholds from zero to
+$B_0$, with a common denominator of the three weights. Every finite
+run has a cost in this lattice; a bounded nonempty subset has a maximum
+in the same lattice. The first true threshold therefore equals the
+infimum, and Theorem 7.2 constructs a service attaining it. This proof
+also covers $B_0=0$. A zero length weight leaves the descriptor lengths
+unbounded in the arithmetic formula and causes no termination problem.
+
+For all remaining cases, use the supplied pointwise-total static
+whole-original-tree traversal: the historical literal decoder reads the
+original root, recursively reads children only after an original branch,
+and stops at original leaves. Each actual original source is finite,
+so this terminates, computes its entire row and uses zero actual updates.
+If $\lambda_q=\lambda_\ell=0$, it attains price zero; in the bounded case
+the finite static supplier does so as well. If (CAR.16) fails, ARH (2.3)
+forces infinite worst raw cost for every correct service, and (CAR.33)
+forces infinite worst length. Thus any positive raw or length weight
+has value $\infty$, attained as a supremum by the static traversal.
+No individual run is infinite. Finally boundedness failure excludes
+all finite triples in (CAR.31). $\square$
+

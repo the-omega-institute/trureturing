@@ -1,0 +1,22 @@
+**定义 9.1（同一整数的完整前缀账）。** 对 $n\ge2$，令 $P=P(n)\ge2$ 为最大素因子，使用同一个实际素因数分解的指数 $a_p=v_p(n)$。定义
+
+$$
+\mathcal M(P)=\prod_{p\le P}(1-p^{-1})^{-1},\qquad
+\varepsilon(P)=\log\frac{\mathcal M(P)}{e^\gamma\log P},
+$$
+
+$$
+D_{\mathrm{miss}}(n)
+=-\sum_{\substack{p\le P\\p\nmid n}}\log(1-p^{-1}),\qquad
+D_{\mathrm{cap}}(n)
+=-\sum_{p\mid n}\log(1-p^{-(a_p+1)}).
+$$
+
+两个 $D$ 均非负，且 $D_{\mathrm{cap}}>0$；$D_{\mathrm{miss}}=0$ 当且仅当全部 $p\le P$ 都出现。对 $n\ge3$ 另定义
+
+$$
+L(n)=\log\frac{\log\log n}{\log P}.
+$$
+
+它可以有任一符号。$\mathcal M(P)>0$、$\log P>0$，故 $\varepsilon(P)$ 在 $n\ge2$ 的整个域内有定义；$L(n)$ 的正对数参数需 $n\ge3$。
+

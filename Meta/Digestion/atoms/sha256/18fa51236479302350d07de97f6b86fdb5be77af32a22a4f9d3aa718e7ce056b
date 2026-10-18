@@ -1,0 +1,144 @@
+**Theorem 2.3 (exact original depth-three alphabet).** Under Assumption
+1.2,
+
+$$
+\boxed{M_1(3)=4.}
+\tag{D3.18}
+$$
+
+The lower bound excludes every original three-name encoder, with
+arbitrary correlations and arbitrary native one-Read experiments. The
+attaining four-code upper is the credited LTR Theorems 3.3–3.4
+construction.
+
+Proof. Restrict any correct encoder with at most three attained names
+to the actual sources $\langle A,u\rangle$, $u\in S_3$. Let their
+nonempty fibers be $H_i$; if necessary repeat a member to obtain three
+covering sets. Fixing a name and a late target fixes the reader's stop
+decision or entire literal before any reply or supplied $k$. A single
+native reply has at most four values. Equal replies give identical final
+predictors, and correctness for all $k$, with (D3.6), forces equal
+factors. Consequently (D3.14) holds, including zero-Read branches.
+
+Apply Lemma 2.2. The factors of the two parent root leaves are
+
+$$
+\begin{array}{c|cc}
+u&\Gamma_{RL}(u)&\Gamma_{RR}(u)\\\hline
+A&(5,0)&(6,1)\\
+B&(4,0)&(5,1).
+\end{array}
+\tag{D3.19}
+$$
+
+Each entry lies outside the corresponding child range
+$\Gamma_L[S]$ or $\Gamma_R[S]$ in (D3.12). Thus if either parent
+leaf belongs to $H_i$, its addition to the branch part requires
+
+$$
+d_L(Y_i)\le3,\qquad d_R(Y_i)\le3.
+\tag{D3.20}
+$$
+
+By (D3.15) this is impossible for $i\ne j$. Both parent leaves must
+therefore belong to $H_j$. Also $A,B\in Y_j$, so for some $x,x'\in S$
+the same fiber contains
+
+$$
+A,\quad B,\quad\langle x,A\rangle,\quad\langle x',B\rangle.
+\tag{D3.21}
+$$
+
+For relative target $q=R$, that is actual request $p=RR$, their factors
+are respectively
+
+$$
+(4,1),\quad(3,1),\quad(2,1),\quad(1,0),
+\tag{D3.22}
+$$
+
+all distinct. The actual original-root query $R$ has replies alpha,
+beta, branch, branch, merging the last two. Every other actual literal
+merges the first two: the outer root and left cone have equal replies,
+and every strict extension of $R$ is absent on both
+$\langle A,A\rangle$ and $\langle A,B\rangle$. This exhausts all
+finite words, whatever $x,x'$ are. Zero Reads also merge these two
+sources. No query can serve $RR$ on $H_j$, a contradiction.
+This proves $M_1(3)\ge4$. Only the four legal requests
+$RR,RLL,RRL,RRR$ were needed to test the mandatory all-target
+correctness; every experiment remained available.
+
+For completeness, expand the existing LTR four-code upper on the entire
+original family, not just $S_3$. Write $\tau(u)=0$ for a leaf and $1$
+for a branch. Preparation submits the fixed three actual literals
+$R,RL,RR$ and exports only
+
+$$
+E(\langle A,v\rangle)=
+\begin{cases}
+00,&v=A,\\
+11,&v=B,\\
+\tau(x)\tau(y),&v=\langle x,y\rangle.
+\end{cases}
+\tag{D3.23}
+$$
+
+These source distinctions come from the three replies, including absent
+replies under a root leaf. Sufficient preparation charges are
+$T=3,Q=2,A=5$. On the canonical family the full fibers are
+
+$$
+\begin{array}{c|c|r}
+\text{name}&\text{right-subtree fiber}&\text{size}\\\hline
+00&\{A\}\cup\langle\{A,B\},\{A,B\}\rangle&5\\
+01&\langle\{A,B\},\mathcal G\rangle&18\\
+10&\langle\mathcal G,\{A,B\}\rangle&18\\
+11&\{B\}\cup\langle\mathcal G,\mathcal G\rangle&82.
+\end{array}
+\tag{D3.24}
+$$
+
+They partition all $123$ canonical states and attain all four names.
+Equation (D3.23) also applies directly to every original tree of height
+at most three, with arbitrary terminal labels and variable shapes.
+
+For $p=Rq$, write the received name as $c_Lc_R$. Before any reply or
+$k$, submit the single actual literal $Ra$, where
+
+$$
+a=
+\begin{cases}
+\varepsilon,&q=\varepsilon,\\
+s,&q=s,\ s\in\{L,R\},\\
+s,&q=su,\ c_s=0,\\
+su,&q=su,\ c_s=1.
+\end{cases}
+\tag{D3.25}
+$$
+
+Define the endpoint decoder by
+
+$$
+\widehat\gamma(\alpha)=(2,1),\quad
+\widehat\gamma(\beta)=(1,0),\quad
+\widehat\gamma(\mathsf{branch})=(0,0).
+\tag{D3.26}
+$$
+
+At the root target use this decoder. At a nonempty target, an absent
+reply identifies the parent leaf: $A$ for name $00$, $B$ for name $11$;
+output its $\Gamma_q$ from (D3.5). Indeed, on every branch source the
+selected query is present: it is a child root, or a grandchild whose
+parent the selected code bit certifies as branch. Mixed names cannot
+give this absent case. If $q=su$, $c_s=0$, and the reply is present,
+it is the actual leaf label $\ell$ of that child; output
+$\Gamma_u(\ell)$. In all other present cases the query reaches the
+target endpoint, so use (D3.26). These rules cover all seven targets
+on every $v$ with $h(v)\le3$. The resulting factor, followed by
+(D3.6), gives every authentic subsequent $k$ with no further Reads;
+its first coordinate is at most six. The late address length is at most
+three. Only the fixed-width name survives export; all other acquired
+distinctions are isolated by Assumption 1.2. The upper and its two-bit
+naming consequence are reused LTR results. Combining it with the new
+lower proves (D3.18). $\square$
+

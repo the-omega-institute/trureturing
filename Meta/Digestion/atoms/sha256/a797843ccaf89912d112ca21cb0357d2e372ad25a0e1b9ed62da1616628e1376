@@ -1,0 +1,28 @@
+**定义 58.2（两个不可互换的目标）。** 公共目标描述符有两种：EXACT 要求规范阈值字 $a=b=0$；CUT 要求 $1\le a,b<2^T$，表示正有理阈值 $\epsilon=a/b$。描述符在 LOAD 前由实际控制器选定并写入，成功加载后不再改变。初始来源的目标分别为
+
+$$
+\tau(p,q)=
+\begin{cases}1/q,&q\text{ 为奇数},\\0,&q\text{ 为偶数},\end{cases}
+\qquad
+Z_{a,b}(p,q)=\mathbf1_{\{\tau(p,q)\ge a/b\}}.
+\tag{58.2}
+$$
+
+EXACT 的输出格式为倒数分母字，零分母字表示值零；CUT 的格式为上述不等式的布尔值。CUT 假不表示 EXACT 零。CUT 模式计算公共界
+
+$$
+D=\max\bigl(\{0\}\cup\{d:1\le d\le Q,\ ad\le b\}\bigr),
+\qquad B=\lceil D/2\rceil;
+\tag{58.3}
+$$
+
+EXACT 模式置 $D=Q,B=L$。这只是公共阈值算术，不查询私有来源。
+
+实际清单为十二个付费字
+
+$$
+(s,v,o,Q,T,E,L,W,h,\mathrm{code\_id},\mathrm{phase\_origin},\mathrm{model\_id}),
+$$
+
+其中相位原点码为零，模型码为一。单位、端口身份、操作码及一次尝试额度为字面程序数据，SAMPLE 额度 $B$ 在 LOAD 计算。版本码指这里固定的程序与规则表；其内容、存储、输入和传递均在第 64 节计费。不存在从来源内容免费选择的版本或代码。
+

@@ -1,0 +1,82 @@
+## 11. 原费用消费者、来源与未解边界
+
+定理 10.2 直接作用于定义 1.3 的原 $D_h$。结合旧定理 7.3，在全部上述参数及每个 $h\ge H$（含无穷）有
+
+$$
+A+3q\le D_h(a,b;d)\le A+n-2+c_d(a,b),\qquad
+c_d(a,b)=\begin{cases}a,&d=3,\\\min(a,b),&d\ge6.\end{cases}
+$$
+
+右端及其全负域正确的取得策略保持旧定理 7.2–7.3 的含义，直接引用，不构成新上界。$q=1$ 时左端就是旧 $A+3$。$q\ge2$ 等价于 $a,b\ge2$ 且 $n\ge8$，此时左端相对旧下界严格增加 $3(q-1)$；增量不依赖 $d$，不表示总费用具有相同的比例改进。
+
+作为原费用的直接应用，取 $(a,b,d)=(4,4,3)$。由 $M^3=\left(\begin{smallmatrix}1&2\\2&3\end{smallmatrix}\right)$，有 $n=8$、$(A,B)=(12,20)$、$q=2$、$H=10$。联合证明可以取两个库存 $(1,3),(3,1)$ 的核，固定骨架为一对孔；任一局部成员对填孔后整体替换，所得全源组成都恰为 $(12,20)$。因此对每个 $h\ge10$，包括 $h=\infty$，
+
+$$
+18\le D_h(4,4;3)\le22.
+$$
+
+下端为 $12+3\cdot2=18$，上端直接由旧 $12+8-2+4=22$ 得到。它排除正源最坏不同地址费用至多 $17$ 的原合法策略；没有给出达到 $18$ 的策略，也没有指定准确值。这个八宏叶应用不重认领定义 9.1 所引的两个四叶准确值，应用中的矩阵计算和旧上界也不另作成果。
+
+本定理的数学归属为仓内普通综合推导（repo-derived）。原字面来源、四值端点、空史策略及费用由定义 1.1–1.3 供应；两色完整终端、同组成唯一性、替换单射和高度由 §2 供应。每个有限局部词的覆盖由定理 3.2 供应，硬集、共同 $\alpha$ 与不同非 $\alpha$ 源对由定理 3.4 及 §4 的原坐标书供应，三阶段和单孔的有限同源实现由定义 5.1、定理 5.2–5.3 供应。这些供应的固定原文见 [5f24 版本的本卷](https://github.com/the-omega-institute/trureturing/blob/5f24ef669fb929320a2d417d2c2f3f713e046d97/docs/develop/theory/FIB_ATOM_MIXED_ACTUAL_ADDRESS_PARTIAL_BOUNDS.md)。
+
+完整颜色前沿的原普通证明、原准确深度及带阈值的识别取得桥另见 [同一固定版本续篇的定义 57.1、引理 57.2、定理 57.3–57.4、57.7](https://github.com/the-omega-institute/trureturing/blob/5f24ef669fb929320a2d417d2c2f3f713e046d97/docs/develop/theory/FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION.md#57-uniform-paid-acquisition-of-actual-image-certificates-at-exact-composition)。这里使用的是该原合同下的普通供应；叶回复相容接口不能替代定理 10.2 的全四值历史，全组成第三像的策略或把两色叶都赋零的权重也不能替代原 $D_h$。
+
+$q\ge2$ 的承重联合关系在定理 10.2 中具体由同一全史的嵌套乘积归纳、任一未完成核禁止终端、整个有限族的 $m_*$、一个固定全源的真实重放组成，并在最终原费用中被消费。各核分别存在困难源不能直接代替这个同时见证。库存分配、静态乘积、前缀局部性、单核规则、末端计数、$q=1$、旧上界和四叶值均直接复用，不另立包装声明。
+
+确定性决策树、证书及直和是成熟方法背景。相关文献包括 Jain–Klauck–Santha 的 [arXiv:1004.0105v1](https://arxiv.org/abs/1004.0105v1) 和 Montanaro 的 [arXiv:1302.4207v1](https://arxiv.org/abs/1302.4207v1)。前者的布尔独立坐标、单位查询深度，后者的有限字母表及按坐标固定的权重，不能未经原假设对应就替代这里任意字面词、四值、按真实回复计数的非 $\alpha$ 不同地址及全负域成员判定。它们只作方法背景，不承担数值下界。仓内综合推导不意味着全球原创；没有给出文献或第三方生态穷尽结论。定理 10.2 是普通数学证明，未取得 Lean kernel 认证。
+
+一般准确 $D_h$ 和达到最优值的原合法策略仍未解决。定义 8.3 的 $E_h$ 与原定理 57.7 保持其阈值：$D_h<B$ 时有 $D_h=A+E_h$，特别是 $A+E_h<B$ 足以给此等式；本下界没有取消 $B$ 阈值。几何代数表达、KBonacci 的块执行和其他取得模型没有在此建立保持实际来源、动作、四值、费用及终止的运输关系。
+
+定义 8.4 的 GeneralH 仍是另一原目标：来源为同一固定自然数对 $(a,b)$，包括零与混合零；正时间轨道为
+
+$$
+y(k)=F_{k+3}a+F_{k+4}b,
+$$
+
+读口返回完整 $\gcd(y(k),H)$，每次实际查询执行均收费，包括重复；策略从空历史作确定适应，要求逐源有限确定全部正未来。这里的 $H$ 保持公因数任务的模数含义，不是树的高度阈值。其 $H1$、素数 $2,5$、指数一、未知内容、非满轨道、饱和、停滞及退出秩与 WSS 的原边界均保持。树的不同地址下界没有决定这个按每次执行收费的目标。
+
+定义 8.5 的 sameN 也保持原实际来源、选择器和严格预算。用该数论目标自己的记号，$r\ge7$ 为素数，$V=F_r$ 是 Fibonacci 整数而不假定为素数，$I$ 为非空连续整数区间且
+
+$$
+I\subseteq\left[\left\lceil\frac V{10}\right\rceil,\left\lfloor\frac V5\right\rfloor\right],\qquad
+C_0>1,\quad A>5040,\quad
+A\le N_g=1+Vg\le C_0A\quad(g\in I).
+$$
+
+这里的 $A,V$ 使用 sameN 的数论含义，不是树组成计数和定理 10.2 的正树。保留
+
+$$
+\begin{aligned}
+Z(m)&=\frac{\sigma(m)}m,\qquad s=\log A\,\log\log A,\qquad t=e^\gamma\log\log A,\\
+b_s(1)&=1,\qquad b_s(p^j)=Z(p^j)^s-Z(p^{j-1})^s\quad(j\ge1),\\
+w_s(d)&=\frac{b_s(d)}d,\qquad
+M_s=\prod_p\max_{j\ge0}w_s(p^j),\qquad
+J_s(d)=\log\frac{M_s}{w_s(d)},
+\end{aligned}
+$$
+
+其中 $b_s$ 按互素乘法延拓，$w_s(1)=1$，$\gamma$ 为 Euler 常数。原实际正整数 $n_0$ 与 $J_0,L_0\ge0$ 满足：每个 $J_s(d)\le J_0$ 的 $d$ 有既约分式 $d/n_0=u_d/v_d$，$\log v_d\le L_0$，且
+
+$$
+n_0e^{-2L_0}>\operatorname{diam}I.
+$$
+
+原集合
+
+$$
+E^*=\{g\in I:\exists d\mid N_g,\ J_s(d)\le J_0\}
+$$
+
+非空时给出同一个唯一 $g^*$。这些假设和选择器不被本树定理更换。必须保留同一实际整数 $N^*=1+Vg^*$，以及它的每个实际正素数幂和每个实际约数；严格目标仍是
+
+$$
+\begin{aligned}
+C^*&=t^{-s}\sum_{\substack{d\mid N^*\\J_s(d)\le J_0}}b_s(d),\qquad
+H^*=t^{-s}\sum_{\substack{d\mid N^*\\J_s(d)>J_0}}b_s(d),\\
+C^*+H^*&<\mathcal B(N^*),\qquad
+\mathcal B(N^*)=\left(\frac{\log\log N^*}{\log\log A}\right)^s.
+\end{aligned}
+$$
+
+既有精确望远镜到 $Z(N^*)$ 是复用；若只知 $H^*\le\epsilon_A$，则 $C^*+\epsilon_A<\mathcal B(N^*)$ 只是充分条件，较强的 $C^*+\epsilon_A<1$ 不是原目标的必要条件。原 $N^*$ 不能换成 $g^*F_r$、另一种极值整数、边缘最优值或密度平均。本下界没有支付这些预算；一般树准确最优、GeneralH、sameN 严格预算及原 Robin、黎曼假设问题仍保持未解。
+

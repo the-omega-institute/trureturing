@@ -1,0 +1,35 @@
+**定理 3.1（不受限恰三目标的共同非对角第五响应）。** For every real $Y$
+and every set $K\subseteq\mathcal F(H_4(Y))$ of exactly three distinct
+complete targets,
+
+$$
+L_3(K,H_4(Y))\quad\Longrightarrow\quad
+\exists m,j\in\mathbb R:\ m\ne j\ \land\
+\bigl(\forall W\in K:\ m(W)=m,\ j(W)=j\bigr).                 \tag{3.1}
+$$
+
+Proof. Apply the failure recursion to fifth $J$, retaining all its actual
+response fibers. The selected $L_2$ child cannot contain fewer than two
+targets; II, Theorem 53.2 excludes exactly two. Since the whole parent
+set has exactly three targets, the selected child must be all of $K$.
+Thus $j(W)=j$ is constant on the entire original triple.
+
+Apply the recursion to fifth $M$. Its selected $L_2$ child again contains
+at least two targets. If it had exactly two, they would share their
+actual fifth-$M$ reading and the fifth-$J$ prediction already derived on
+the same $K$. Theorem 2.2 excludes this pair. The child must therefore
+be all three targets, so $m(W)=m$ is constant as well. In particular the
+two selected children are the same fixed triple, not separately fitted
+families at unrelated fifth histories.
+
+If $m=j$, (1.7) forces $H_W(5)=0$ for each $W\in K$, hence $g_W(5)=0$
+because $\eta_W>0$. The root-five domain of II, Theorem 58.1 therefore
+contains the entire $K$. Its single fixed $J,J,J$ continuation recovers
+all these targets within the three remaining readings, contradicting
+$L_3$. Thus $m\ne j$.
+
+All targets retain the same literal $Y$ and every earlier reading. The
+argument starts with varying fifth responses and exhausts their possible
+actual children. Each selected losing node contains distinct targets,
+so early stopping is included. ∎
+

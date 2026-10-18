@@ -1,0 +1,12 @@
+**定义 163.1（来源代表的固定选择）。** 令 $\gamma=\langle\beta,\alpha\rangle$，另为五个局部模式选定贡献代表
+
+$$
+\mathrm{null}\leftrightarrow\epsilon,\quad
+[2]\leftrightarrow\alpha,\quad
+[3]\leftrightarrow\beta,\quad
+[5]\leftrightarrow\gamma,\quad
+[25]\leftrightarrow\langle\gamma,\alpha\rangle.
+$$
+
+这是前卷第103章来源代表的同一个选择。模式组成由基础卷定义2.1和7.1给出；面积则依本章代表及共同几何参照选择。$\epsilon$ 只给零贡献，不把实际读取 $\mathrm{null}$ 改为未读，不在原树语法新增空叶，也不宣称模式标签唯一指定一棵树。
+

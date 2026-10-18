@@ -1,0 +1,99 @@
+## 20. Suppliers, primary attribution and remaining original obligations
+
+**Source statement 20.1 (credited inputs and substantive addition).**
+All following repository references select the public revision in §14.1.
+
+| Supplier | Exact use and nonduplication boundary |
+| --- | --- |
+| [FiniteRectangleTransport][AC14FRT] and [owning Scribe][AC14FRTB] | ValidBase, positive probability, signed phaseWeight, weight_compatible and finite_rectangles_realize, together with the Scribe's common-preparation/all-signed-sector application, supply the original source. Naming a control supplies no physical actuator or sensor. |
+| [OriginalControlComposition][AC14OCC] and [owning Scribe][AC14OCCB] | OriginalControl, FiniteC1Control, the internal original_ac regularity argument and concatenate_original supply both regularities, literal unchanged prefix, matching height, translated real tail, additive transport and finite/zero durations. |
+| This volume §§3, 8–10 | Actual preparations, scalar return, the $23/434$ survival-bit deficiency, the relaxed decision frontier and single fair-direction excursion curve are credited. Theorem 15.1 adds optimality over every common AC/PC1 return, including arbitrarily many reversals; Theorems 16.2–17.1 add the sharp finite-mixture infimum and its nonattainment. |
+| [Instrument Boundaries][AC14IB], §§4–5.2, 9–15, 17–27 | Full original orbit, canonical exact-time/five-mode CP law, whole-law classification and finite joint continuation are reused. Source-height programmes and mixed-programme rank-sum capacity remain supplied-assistance results. Neither supplies this actuator's acquisition. |
+| [Instrument Stability][AC14IS], §§1–6 | Marked-law metrics, conditional inverse bounds, forward discontinuity and sufficient strong error data keep their scope. The present calibration score is not their complete-output error or a new stability certificate. |
+| [Quantum Carrier Minimum][AC14QCM], §§1, 7–10 | Carrier correspondence, known-anchor generated labels, total-domain guard and already received-command capacity are credited. The four seeds here do not determine full archive size or arbitrary unknown-past acquisition. |
+| [Record Acquisition][AC14RA], §§2–9, 13–17 | Query obstructions, paid sampled certificates and the additional calibrated producer phase port are credited. That port can supply a binary guard under its own contract; its source-to-probe bridge is not supplied here or identified with the return actuator. |
+| [Sampled Instrument Certificates][AC14SCI], §§3, 7–10 | Simultaneous timed tables and the explicit joint sampler law remain extra acquisition premises. A finite return record is not a waveform table, strong loss-density certificate or passive nondisturbing sensor. |
+| [Event Memory and Coarse Aliasing][AC14EMA], §§2–6 | Exact same-event memory bounds, finite-bin aliases and known-programme law resampling retain their distinctions. All actual failure records are retained here; scalar wrong-live mass replaces none of them. |
+| [Parity Record Transport][AC14PRT], §§12–23 | Helpers, updates, exclusive-live mass and the attained finite-charge parity frontier are credited. Its source-owned old-parity/future-programme dependence at a known return height differs from our common command at an unknown mirrored height. Its attained frontier is not (AC.60). |
+| [Reanchoring Boundaries][AC14RB], §§2–8 | Exact uncertain-height reanchoring and its extra endpoint service remain separate consumers. A zero-phase return keeps each actual height; it does not reanchor to a common known height. |
+| [Transport–Memory Completion][AC14TM], §§2.9–2.12, 2.18 | Actual common coherent source/port, aligned acquired readings, known nonzero amplitudes and known nonzero record overlap remain required. No such readings or overlaps are obtained by (AC.56). |
+| [Process Geometry][AC14PG], §34; [Atlas Stable Core][AC14ATLAS], Theorem 6.3 | Actual joint source/epoch image, complete success/failure routes and selector/update inputs, and each individually sufficient four-view map remain separate obligations. The retained seed and return invariant do not instantiate those full interfaces. |
+
+The source-specific additions are the all-path inequalities
+(AC.48)–(AC.55), finite-mixture bound and strictness (AC.57)–(AC.59),
+and the exact-yield approaching constructions (AC.60)–(AC.67).
+The symmetric preparation and finite instance explicitly connect these
+deductions to the actual source. AC calculus, concavity tangents,
+convexity chords, binary Bayes decisions and CP likelihood calculus are
+mature tools. No worldwide originality or exhaustive nonduplication
+claim is made.
+
+**Literature statement 20.2 (primary scope and access premises).**
+
+| Primary source | Verified content and precise use |
+| --- | --- |
+| S. Gammelmark and K. Mølmer, [Bayesian parameter inference from continuously monitored quantum systems, arXiv:1212.5700v1](https://arxiv.org/html/1212.5700v1), Eqs. (12)–(13), §III.1 | The trace of an unnormalized conditional state is a likelihood relative to its stated reference measure; clicks and no-click evolution both enter the specified instrument. This is mature likelihood context. Equations (AC.44)–(AC.56) derive the present probabilities directly, without importing a sensor or calibration service. |
+| F. Buscemi, [Comparison of quantum statistical models: equivalent conditions for sufficiency, arXiv:1004.3794v4](https://arxiv.org/html/1004.3794v4), Definitions 15 and 19, Theorems 2–3 | Statistical-morphism m-sufficiency and sufficiency through one CPTP map have different premises. A decision comparison alone supplies neither our extra actuator nor a complete acquired joint successor. |
+| A. Jenčová, [Randomization theorems for quantum channels, arXiv:1404.3900v1](https://arxiv.org/html/1404.3900v1), §3.1, Theorem 2 | Finite experiments are compared through common CP randomizations, with trace-norm error at most $2\epsilon$. This presupposes the common processing class. No original producer-to-actuator route or extra probe access follows. |
+| L. Leppäjärvi and M. Sedlák, [Incompatibility of quantum instruments, arXiv:2212.11225v2](https://arxiv.org/html/2212.11225v2), Proposition 7 | For its stated instruments, compatibility is equivalent to postprocessing a complementary instrument from a dilation. The environment/complementary operation and implementing postprocessor are additional access premises. Neither is used here. |
+
+These bounded primary comparisons furnish no verified directly sufficient
+joint acquired original observer under the specified one-specimen,
+absorbing-failure contract. This is neither an exhaustive absence theorem
+nor evidence of priority. No theorem or resource cost is transferred from
+a different model by shared dimensions or terminology.
+
+**Verification boundary 20.3 (ordinary proofs and exact finite checks).**
+The universal conclusions rest on the ordinary proofs above.
+Bounded exact in-memory rational checks cover 8,981 closed polygon
+returns over five mirrored catalogues, both survival envelopes and their
+strict chord inequalities, 128 exact-yield mixture instances, 28 exact
+quadratic-field checks of (AC.65), four symmetric preparation catalogues,
+and the rational source/protocol values in Example 18.1. These checks do not
+establish the arbitrary AC theorem, source calibration, physical
+implementation or Lean verification. No experiment file or process
+transcript is part of this volume.
+
+**Open boundary 20.4 (the unchanged acquired-observer problem).**
+The new optimality statement concerns earlier survival filtering only
+after the extra source-bound actuator is actually supplied. It does not
+construct or certify that actuator from the original legal observation
+menu, nor the distinct producer phase port of Record Acquisition §13.
+Every finite live record in this class retains both height alternatives;
+an arbitrarily small conditional-error infimum is not an exact guard.
+
+A full positive observer still must actually acquire the needed joint
+source dependence, authenticate source/epoch and permissions, establish
+calibration/reference and timing, and implement record-dependent legal
+selection, updates and the complete same-live-branch successor. Generated
+invariants, phase/winding-correlated or unequal-support assistance,
+genuinely implemented joint ports, richer intermediate interventions and
+changing menus require their own faithful acquisition and closure proofs;
+the present restricted result does not exclude them.
+
+The full original class retains all valid bases, strict positive support,
+real lifts and every signed winding, both regularity alternatives and
+arbitrary finite durations with matching interfaces. This mirrored
+two-height zero-phase subclass does not replace it. No unknown past
+waveform, preinitial winding, record overlap, whole law, uniform
+four-view recovery or unbounded-horizon certification is recovered.
+Full space/time/boundary/memory mutual recovery, native stationary
+$\alpha/\beta$ memory-rate/cofinality and effective certification, and
+the independent fixed-Hamiltonian quantum minimax remain unresolved.
+
+[AC14FRT]: https://github.com/the-omega-institute/trureturing/blob/11e2a65d554143d0e3f38b37f1b686453451e3c4/D5/S3/Quantum/Fibers/FiniteRectangleTransport.lean
+[AC14FRTB]: https://github.com/the-omega-institute/trureturing/blob/11e2a65d554143d0e3f38b37f1b686453451e3c4/Blueprint/D5/S3/Quantum/Fibers/FiniteRectangleTransport.scribe.cs
+[AC14OCC]: https://github.com/the-omega-institute/trureturing/blob/11e2a65d554143d0e3f38b37f1b686453451e3c4/D5/S3/Quantum/Fibers/OriginalControlComposition.lean
+[AC14OCCB]: https://github.com/the-omega-institute/trureturing/blob/11e2a65d554143d0e3f38b37f1b686453451e3c4/Blueprint/D5/S3/Quantum/Fibers/OriginalControlComposition.scribe.cs
+[AC14IB]: https://github.com/the-omega-institute/trureturing/blob/11e2a65d554143d0e3f38b37f1b686453451e3c4/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_INSTRUMENT_BOUNDARIES.md
+[AC14IS]: https://github.com/the-omega-institute/trureturing/blob/11e2a65d554143d0e3f38b37f1b686453451e3c4/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_INSTRUMENT_STABILITY.md
+[AC14QCM]: https://github.com/the-omega-institute/trureturing/blob/11e2a65d554143d0e3f38b37f1b686453451e3c4/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_QUANTUM_CARRIER_MINIMUM.md
+[AC14RA]: https://github.com/the-omega-institute/trureturing/blob/11e2a65d554143d0e3f38b37f1b686453451e3c4/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_RECORD_ACQUISITION.md
+[AC14SCI]: https://github.com/the-omega-institute/trureturing/blob/11e2a65d554143d0e3f38b37f1b686453451e3c4/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_SAMPLED_INSTRUMENT_CERTIFICATES.md
+[AC14EMA]: https://github.com/the-omega-institute/trureturing/blob/11e2a65d554143d0e3f38b37f1b686453451e3c4/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_EVENT_MEMORY_AND_COARSE_ALIASING.md
+[AC14PRT]: https://github.com/the-omega-institute/trureturing/blob/11e2a65d554143d0e3f38b37f1b686453451e3c4/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_PARITY_RECORD_TRANSPORT.md
+[AC14RB]: https://github.com/the-omega-institute/trureturing/blob/11e2a65d554143d0e3f38b37f1b686453451e3c4/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_REANCHORING_BOUNDARIES.md
+[AC14TM]: https://github.com/the-omega-institute/trureturing/blob/11e2a65d554143d0e3f38b37f1b686453451e3c4/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md
+[AC14PG]: https://github.com/the-omega-institute/trureturing/blob/11e2a65d554143d0e3f38b37f1b686453451e3c4/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md
+[AC14ATLAS]: https://github.com/the-omega-institute/trureturing/blob/11e2a65d554143d0e3f38b37f1b686453451e3c4/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ATLAS_STABLE_CORE_HOLONOMY.md
+

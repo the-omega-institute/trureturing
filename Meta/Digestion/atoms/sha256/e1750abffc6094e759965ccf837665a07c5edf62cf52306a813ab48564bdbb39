@@ -1,0 +1,47 @@
+**Corollary 19.1 (the best error in Corollary 15.3).** Fix $d\ge1$
+and a nonzero nonnegative rational homogeneous $w$. For the exact
+$\mathcal U,\mathcal B,\mathcal I_{\rm cov}$ of §§13–15,
+
+$$
+\min_{\substack{n\ge1,\ \mathcal N\text{ actual}\\
+                  p\in\mathcal P^+(\mathcal N;w)\text{ rational}}}
+ \left[\log_2\Omega_d(w)
+     -\frac{\mathcal U_{\mathcal N}(p;w)}n
+     +\frac{\mathcal I_{\rm cov}(p)}n\right]
+ =\log_2\frac{\Omega_d(w)}{\ell_d(w)}.
+\tag{COK.92}
+$$
+
+Consequently the two errors $\delta,\epsilon\ge0$ in (COK.77)
+can have arbitrarily small sum, over all these networks and
+populations, if and only if $\Omega_d(w)=\ell_d(w)$. More
+precisely, their smallest possible sum is the right side of
+(COK.92), and is attained.
+
+Proof. The credited identity (COK.74) turns the expression in
+brackets into $\log_2\Omega_d(w)-\mathcal B_{\mathcal N}/n$.
+Theorem 18.5 bounds it below by the right side and attains that
+bound with an edge-free one-block maximizing Gibbs law. For that
+law $\mathcal I_{\rm cov}=0$ and
+$\mathcal U=\mathcal B=\log_2\ell_d(w)$. Thus choose
+$\delta=\log_2(\Omega_d(w)/\ell_d(w))$ and $\epsilon=0$.
+Conversely (COK.77) forces $\delta+\epsilon$ to be at least its
+bracketed expression. Nonnegativity follows from (COK.84).
+$\square$
+
+For each specified rational weight the equality in this corollary
+is decidable: $\ell_d(w)$ is an exact rational finite maximum,
+and [NWO, Theorem 6.1][COKNwoJoint] makes $\Omega_d(w)$ a
+computable algebraic number. Exact algebraic comparison tests
+their equality. This settles this fixed-law population premise;
+it does not compute $\beta_d(w)$ or decide $a_d=b_d$.
+
+As a credited tightness check, [NCE, Theorems 9.2–9.3][COKNceJoint]
+has a one-block attaining set at its positive joint law
+$\mu_{\rm j}$ and
+$\beta_3(\mu_{\rm j})=\Omega_3(\mu_{\rm j})=2499/6407$.
+Thus $\ell_3(\mu_{\rm j})$ equals that same supplied value,
+and (COK.92)'s floor is zero there. Neither that credited
+fixed-law equality nor this population consequence identifies
+an optimizer over all laws.
+

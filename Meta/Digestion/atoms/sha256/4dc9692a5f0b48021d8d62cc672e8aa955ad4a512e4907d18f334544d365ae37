@@ -1,0 +1,15 @@
+**Definition 2.2 (right congruence and forward invariance).** A relation
+$R\subseteq X\times X$ is a typed right congruence for $\mathcal U$ when
+it relates only equal types and, for every allowed action $a$,
+
+1. related states agree on whether $a$ is illegal, legally failing or
+   successful, and agree on all one-step response fields;
+2. whenever $a$ has a successor on both sides, their successors are again
+   related:
+   $xRy\land x,y\in D_a\Rightarrow T_a(x)R T_a(y)$;
+3. the selector and its namespace choice factor through the relation whenever
+   they are part of the task.
+
+The relation is **forward invariant** when the second condition holds for all
+reachable action steps, including legal failure successors.
+

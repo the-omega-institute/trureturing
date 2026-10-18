@@ -1,0 +1,37 @@
+**Theorem 4.4 (closed-flight stopping and target-reference acquisition at
+the finite-string level).** Boundary-stopped replay terminates, determines
+$a$ and $b=|s|$, and constructs their finite unary representations. Its
+represented chronology is exactly $s$. Consequently the interval
+
+$$
+\{\operatorname{CutRef}(v_0,\xi,B_s,k):a\le k\le b\}
+\tag{RCA.4}
+$$
+
+can be acquired by finite enumeration without an externally supplied
+$n$ or $b$. Every issued reference denotes one actual original prefix of
+this same flight. The theorem is about finite-string computation and its
+owner-authorized execution requirement; it does not assert that the
+original dispatcher already admits this computation.
+
+Proof. Canonical boot and no-update acquisition terminate for the supplied
+finite source. For each complete frame, the prescribed original service
+terminates and reaches exactly its post-acknowledgement ready boundary.
+Induct on the number of scanned complete frames. The actual frame word
+fixes every external input in each such fragment; all other original
+control, allocation and work are deterministic. AIF's literal actual-image
+replay identifies this represented fragment with the actual one. Thus the
+final stopping boundary is $s$, including all its original record/copy
+work, rather than its earlier response commitment or row seal.
+
+Appending a tally mark after each simulated original primitive gives
+exactly $b$ marks; the retained acquisition tally gives $a$. Terminators
+give $U(b)$ and $U(a)$. These are computed strings, not physical receipt
+readouts. All loops are finite because there are finitely many complete
+frames and each has finite service. Finally copy $U(a)$, issue its binding,
+and repeatedly increment a fresh unary version while it is at most the
+constructed $U(b)$. There are $b-a+1$ iterations. Each integer is a
+unique prefix position in $s$, proving the authenticity of its denotation.
+Which issued reference is later selected is an additional acquired choice,
+as Theorem 3.3 requires. ∎
+

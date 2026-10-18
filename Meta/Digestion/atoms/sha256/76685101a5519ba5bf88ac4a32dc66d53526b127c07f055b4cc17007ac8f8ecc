@@ -1,0 +1,19 @@
+## 309. Statement and dependencies
+
+Retain the actual finite paired-framework hypotheses: connected circular
+normal links, degree at least six, fixed distinct-transverse paired frames,
+one common positive generalized length vector and every original 2*pi
+edge equation. Assume exactly six reservoir labels and a nonempty flat set.
+Choose the maximal-selected escape and upper-gap label as before:
+
+    H={M,C,D,Z,U,V}, tau=(Z,M,C,D,M,C),
+    m>=1+c+d, z>=1+m+c, p_M=1, p_Z=0,
+    u>T(m,z)>m-2.
+
+Use the six-reservoir witness theorem: every reservoir is genuinely
+witnessed and every flat selects its axes. Hence each reservoir has at
+most one original flat pi slot. The arbitrary-reservoir upper-witness
+result also excludes every flat transverse occurrence of any label
+whose value exceeds m-2. The one-upper-gap lemma allows arbitrarily
+many other labels of value at most m-2.
+

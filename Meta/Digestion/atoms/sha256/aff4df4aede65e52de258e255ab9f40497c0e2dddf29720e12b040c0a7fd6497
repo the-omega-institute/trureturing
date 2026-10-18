@@ -1,0 +1,39 @@
+**引理 9.1（既有仿射引理在 JMJ 的应用）。** 对 $D_0\in\mathbb R$、$\lambda\ne0$，令
+
+$$
+\Phi_{D_0,\lambda}(P,g,\delta)=(P,\lambda g,D_0+\lambda\delta),\qquad
+\Phi^{-1}_{D_0,\lambda}(P,G,\Delta)=
+(P,G/\lambda,(\Delta-D_0)/\lambda).
+\tag{9.1}
+$$
+
+它是完整域上的双射，把 $H_3(c)$ 变为
+
+$$
+(D_0,J,D_0+24\lambda,M,D_0+48\lambda,J,D_0+\lambda c).
+\tag{9.2}
+$$
+
+它保持每个原时钟、每个实际响应子集、每项 $L_s$、停止与同预算整体恢复，两种 $\lambda$ 符号均成立。
+
+证明。源的严格正性、秩与迹保持；非零增益的次数和根保持。对每个动作词以及其中每个原时钟 $i$，
+
+$$
+(\lambda g(i))\operatorname{tr}(A_iP)+D_0+\lambda\delta
+=D_0+\lambda\bigl(g(i)\operatorname{tr}(A_iP)+\delta\bigr).
+\tag{9.3}
+$$
+
+该恒等式同时覆盖已经取得的 $0,1,2,3$ 时钟及全部将来前缀，并非只匹配末端矩阵。响应仿射映射对两种符号均为双射，所以实际子集满足
+
+$$
+\Phi_{D_0,\lambda}\bigl(K\cap\mathcal F(H,E,z)\bigr)
+=\Phi_{D_0,\lambda}(K)\cap
+\mathcal F\bigl(\Phi_{D_0,\lambda}(H),E,D_0+\lambda z\bigr).
+\tag{9.4}
+$$
+
+基数保持和式 (1.3) 的归纳便保持全部失败及停止分句。输运策略对每个实际取得读数先减去 $D_0$ 再除以 $\lambda$，供原策略选择同一个单独动作或停止；最后输运其完整返回值。逆向亦同。不使用响应大小次序，也不取得未选动作读数。∎
+
+因此定理 3.1 输运为式 (9.2) 中整个 $\delta=D_0,g(7)=0$ 承诺类的逆；分类配对的输运漂移为 $D_0+90\lambda\eta$，增益为 $\lambda\eta(T-3)(T-5)(T-6)$。定理 5.1、7.1 和推论 8.1 的所有实际子集表述随之输运。此为 [V，引理 9.2](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_V.md) 的直接应用，不新增一般输运定理；不平移时钟，也不补上未知承诺。
+

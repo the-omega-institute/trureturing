@@ -1,0 +1,21 @@
+**Proposition 5.3 (a larger distinct-endpoint collision family).** For every $n\ge5$, the legal path
+
+$$
+A_0=I,\quad A_1=M,\quad
+A_i=U^{i-1}\ (2\le i\le n-2),\quad
+A_{n-1}=MU^{n-3}
+$$
+
+has a collision. In particular $n=d+5$ excludes a candidate at the inherited lower endpoint for every $d\ge0$.
+
+Proof. Execute $M$, then $J$ to reach $U$, then successive $U$ blocks to reach the listed powers, and finally $M$. Each $U$ block is chronologically $M,J$ without an intermediate read. This is one legal path with distinct recorded matrices.
+
+Take
+
+$$
+S_0=\begin{pmatrix}3&5\\6&10\end{pmatrix},\qquad
+S_1=\begin{pmatrix}4&6\\6&9\end{pmatrix}.
+$$
+
+They are positive and their determinants are $30-30=0$ and $36-36=0$. Both have trace $13$, $M$ signal $21$, and lower-left entry $6$. Since $U^k=(\begin{smallmatrix}1&k\\0&1\end{smallmatrix})$, their $U^k$ signals are both $13+6k$. The last signals, with $k=n-3$, are respectively $21+10k$ and $21+9k$. Use the common $\kappa=-1/(n-1)$ and $D=0$. The last gain is zero and all earlier signals agree, so every reading agrees. Proposition 1.1 gives actual positive factorizations. This family has neither an initial repeated-read block nor the recorded $I,U,U^2$ calibration prefix. ∎
+

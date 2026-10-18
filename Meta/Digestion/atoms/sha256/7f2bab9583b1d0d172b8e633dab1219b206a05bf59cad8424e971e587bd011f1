@@ -1,0 +1,246 @@
+**Theorem 104.2 (global complex weighted-resolvent estimate).** There
+are $C,s_0>0$ depending only on the fixed native data, and numbers
+$d_s\ge0$ with $d_s\to0$ as $s\downarrow0$, such that, for every
+$0<s<s_0$ and every $0<h\le1$,
+
+$$
+\|R_s(h)U_s-K_{\rm rec}\|_{2\to2}
+ \le d_s+Ch^{3/4}
+       +C\left(\frac{s^8}{h}\right)^{1/4}
+       +C\left(\frac{s^8}{h}\right)^{1/2}.
+\tag{104.2}
+$$
+
+Consequently for every fixed $H>0$ there is
+$\eta_H(s)\to0$ such that for all sufficiently small $s$ and all
+$0<h\le Hs^{2/3}$ the same estimate holds with its first two
+terms replaced by $\eta_H(s)$. One may take
+$\eta_H(s)=d_s+CH^{3/4}s^{1/2}$, with the same $C$ independent
+of $H,s,h$.
+
+Proof. We first supply the two-endpoint and full-output heat
+convergence needed here. For each fixed $t>0$,
+
+$$
+q_s(t;\eta,\xi)\longrightarrow p_E(t;\eta,\xi)
+\quad\hbox{locally uniformly in }(\eta,\xi)\in\mathbb R^4\times\mathbb R^4.
+\tag{104.3}
+$$
+
+The primary supplier is exactly Colin de Verdière--Hillairet--Trélat,
+[Theorem B, (2.8), pp.915--916, and Theorem 3.2, pp.920--921](https://ahl.centre-mersenne.org/item/10.5802/ahl.93.pdf).
+Their statement allows both scaled endpoints to vary on compact
+sets. In the present application the fields are the original
+$\varepsilon\partial_k,c_\kappa\cdot\partial_q$, their drift and
+potential are zero, and their smooth constant density is $dk\,dq$.
+The nonzero determinant (76.4) gives constant flag weights
+$(1,1,2,3)$ and bounded step three on an interior neighborhood of
+the fixed pole. The privileged coordinates are exactly (78.1),
+with limiting fields (81.2). The nilpotentized density in that
+chart is $j_0d\xi$, so converting the limiting kernel to unit
+Lebesgue measure gives precisely $j_0s^7p_{s^2t}=P_s$.
+Both endpoints in any fixed compact rescaled set lie in this
+interior neighborhood eventually. The localization theorem applies
+to the identical differential expression and density there and
+to its selfadjoint killed realization, whose heat is a contraction;
+it retains both original faces. Finally
+$e^{\lambda s^2t}\to1$ on compact positive-time windows. These
+checks give (104.3), without a global heat convergence premise.
+For a fixed compact set larger than the coordinate neighborhood,
+choose a fixed $R$ such that its image under $\delta_{1/R}$ lies
+in that neighborhood. The exact identities
+$q_s(t;\eta,\xi)=R^{-7}q_{Rs}(t/R^2;
+\delta_{1/R}\eta,\delta_{1/R}\xi)$ and the identical canonical
+dilation identity reduce its convergence to the checked local
+statement. Here $R$ is fixed before $s\downarrow0$.
+
+Symmetry and the semigroup identity give
+$\|q_s(t;\eta,\cdot)\|_2^2=q_s(2t;\eta,\eta)$.
+Using (76.1) in this identity proves, uniformly over all input
+heights and phases,
+
+$$
+\begin{aligned}
+\|Q_s(t)\|_{2\to2}&\le1,\\
+\|Q_s(t)\|_{1\to2}&\le
+\begin{cases}
+Ct^{-7/4},&0<t\le s^{-2},\\
+Cs^2t^{-3/4},&t\ge s^{-2}.
+\end{cases}
+\end{aligned}
+\tag{104.4}
+$$
+
+Indeed at original times $2s^2t\le1$ the diagonal is bounded
+by $Ct^{-7/2}$, with bounded threshold factor. At
+$2s^2t\ge1$ it is bounded by $Cs^4t^{-3/2}$; on the overlap
+$t\le s^{-2}$ this is at most $Ct^{-7/2}$. Integration against
+an $L^1$ input and the triangle inequality give the stated
+$1\to2$ bounds from the column norms. The first line uses
+$C_s\ge0$, not a raw-measure Markov property of the shifted heat.
+The canonical analog is $\|P_t\|_{1\to2}\le Ct^{-7/4}$ by
+(82.4) and the same column identity.
+
+For every fixed $t>0$ and $\eta$, (104.3), (104.4) and that
+identity imply the global statement
+
+$$
+q_s(t;\eta,\cdot)\longrightarrow p_E(t;\eta,\cdot)
+\quad\hbox{in }L^2(\mathbb R^4).
+\tag{104.5}
+$$
+
+To prove it, local uniform convergence and the uniform column
+$L^2$ bound give weak $L^2$ convergence, first against compactly
+supported tests and then by density. The squared column norms
+converge to $p_E(2t;\eta,\eta)$ by (104.3). This equals the
+squared norm of the limiting column. Weak convergence and norm
+convergence in the complex Hilbert space give (104.5).
+Thus no output tail is discarded in passing from local kernels
+to (104.5).
+
+The short potential satisfies
+
+$$
+\sup_{0<s<s_0}(\|U_s^{<}\|_\infty+\|U_s^{<}\|_2)<\infty,
+\qquad \|U_s^{<}-V\|_2\longrightarrow0.
+\tag{104.6}
+$$
+
+Its supremum bound follows from $0\le U_s^{<}\le U_s$ and
+Theorem 82.3. For its $L^2$ assertions use (104.1), (104.5)
+at $\eta=0$, and the column bound $Ct^{-7/4}$ for
+$1\le t\le s^{-2}$. Extend that integrand by zero for
+$t>s^{-2}$. It converges in $L^2$ at every fixed $t\ge1$
+to $p_E(t;0,\cdot)$ and is dominated in $L^2$ norm by an
+integrable function $Ct^{-7/4}$. The triangle inequality for
+the integrals and dominated convergence prove (104.6), with the
+unchanged factor $1/j_0$. Also $V\in L^2$ by (82.4), since
+the homogeneous dimension is seven and $V$ decays with power five.
+
+For each fixed $t>0$ we next have operator-norm convergence
+
+$$
+\|Q_s(t)U_s^{<}-P_tV\|_{2\to2}\longrightarrow0.
+\tag{104.7}
+$$
+
+The norm of $Q_s(t)(U_s^{<}-V)$ is bounded by
+$Ct^{-7/4}\|U_s^{<}-V\|_2$ for small $s$, by Hölder
+from $L^2$ to $L^1$ and (104.4). For the other term first
+replace $V$ by $V\mathbf1_K$ on a fixed compact box $K$.
+The squared Hilbert--Schmidt norm of
+$(Q_s(t)-P_t)V\mathbf1_K$ is
+
+$$
+\int_K |V(\eta)|^2
+ \|q_s(t;\eta,\cdot)-p_E(t;\eta,\cdot)\|_2^2d\eta
+ \longrightarrow0.
+\tag{104.8}
+$$
+
+Here (104.5) gives pointwise convergence, and (104.4) supplies
+the uniform integrable bound on $K$. The omitted multiplier
+has $L^2\to L^1$ norm at most
+$\|V\mathbf1_{K^c}\|_2$. Applying both heat $1\to2$
+bounds and then exhausting by compact boxes proves (104.7).
+This controls both input endpoints and output tails on the entire
+common space.
+
+Define the norm-convergent finite integral
+
+$$
+J_s=\int_0^{s^{-2}}Q_s(t)U_s^{<}\,dt,
+\qquad d_s=\|J_s-K_{\rm rec}\|_{2\to2}.
+\tag{104.9}
+$$
+
+The integrands, extended by zero beyond $s^{-2}$, are bounded
+in operator norm by $C$ on $(0,1)$ and by $Ct^{-7/4}$ on
+$[1,\infty)$, using (104.4)--(104.6). The canonical
+$P_tV$ has the same integrable bound. Equations (104.7) and
+dominated convergence therefore prove $d_s\to0$. This
+argument also identifies its limiting integral with $TM$ in
+(104.1). In particular the time-zero contribution is uniformly
+at most $C\delta$ on $(0,\delta)$; the convergence does not
+claim uniform local kernel convergence down to time zero.
+Norm measurability follows from positive-time norm continuity
+of the selfadjoint heat operators, after bounded multiplication.
+
+For $0<h\le1$, the same integrable bounds give
+
+$$
+\left\|\int_0^{s^{-2}}(e^{-ht}-1)Q_s(t)U_s^{<}\,dt\right\|
+ \le C\int_0^1 ht\,dt+
+       C\int_1^\infty\min(ht,1)t^{-7/4}dt
+ \le Ch^{3/4}.
+\tag{104.10}
+$$
+
+Split the last integral at $1/h$ to obtain the last inequality.
+The complete remaining native time interval is bounded by
+
+$$
+\left\|\int_{s^{-2}}^\infty e^{-ht}Q_s(t)U_s^{<}\,dt\right\|
+ \le Cs^2\int_{s^{-2}}^\infty e^{-ht}t^{-3/4}dt
+ \le C s^2h^{-1/4}.
+\tag{104.11}
+$$
+
+The last constant absorbs the finite integral
+$\int_0^\infty e^{-u}u^{-3/4}du$. Equations
+(104.9)--(104.11) control $R_s(h)U_s^{<}-K_{\rm rec}$.
+
+It remains to control the long potential $U_s^{>}$, whose
+Coulomb tail means that its multiplier function is not in $L^2$.
+The fixed-cutoff results (70.3), (71.2) and (71.4) at
+$\tau=1$, with a fixed $\delta=\delta_0$, imply
+
+$$
+\|W_1\psi\|_2\le C\|S^{1/2}\psi\|_2
+\qquad(\psi\in\mathcal Q).
+\tag{104.12}
+$$
+
+In fact the low-band piece has this bound by (71.4), while
+the remainder satisfies
+$\|W_1r\|_2\le\|W_1\|_\infty\|r\|_2
+\le C\sqrt{T[\psi]}$ by (71.2). This uses Hardy only on
+the extracted phase-$H^1$ band, and proves (104.12) for
+every complex native vector. Spectral calculus now gives, for
+every $m>0$,
+
+$$
+\|W_1(S+m)^{-1}\|_{2\to2}
+ \le C\sup_{x\ge0}\frac{\sqrt x}{x+m}
+ \le C m^{-1/2}.
+\tag{104.13}
+$$
+
+Taking adjoints gives the same bound for $(S+m)^{-1}W_1$.
+The exact unitary scaling (104.1), including restriction and
+extension, consequently gives
+
+$$
+\begin{aligned}
+\|R_s(h)U_s^{>}\|_{2\to2}
+ &=s^3\|(S+h/s^2)^{-1}W_1\|_{2\to2}\\
+ &\le Cs^4h^{-1/2}.
+\end{aligned}
+\tag{104.14}
+$$
+
+The Laplace formula for $R_s(h)$ is valid in operator norm
+after either bounded multiplier because $h>0$ and $Q_s$ is
+an $L^2$ contraction. Adding (104.9)--(104.11) and
+(104.14) proves (104.2). Substituting $h\le Hs^{2/3}$
+proves the asserted $\eta_H$. All norm estimates act on the
+full complex $L^2$ space and use the original two-face
+Friedrichs realization. No positive gap at the tangent threshold,
+ordinary isotropic phase regularity, or survival normalization
+has entered. The source-specific reconstruction estimate is
+`repo-derived`; its classical intermediate tools are spectral
+calculus, the Hilbert--Schmidt estimate, Hilbert-space weak/norm
+convergence and dominated integration, with the local primary
+heat theorem used only in the checked scope (104.3). $\square$
+

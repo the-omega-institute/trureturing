@@ -1,0 +1,40 @@
+**Theorem 2.2 (positive reconstruction of every omitted coordinate).**
+For every $d\ge1$, every actual $v$ with $h(v)\le d$, and every
+$q\in W_d\setminus J_d$,
+
+$$
+\Gamma_q(v)=\Psi(\Gamma_{qL}(v)),                              \tag{SCE.8}
+$$
+
+where the public function needed on attained inputs is
+
+$$
+\begin{aligned}
+\Psi(0,0)=\Psi(1,0)=\Psi(2,1)&=(0,0),\\
+\Psi(2,0)&=(1,0),\\
+\Psi(3,0)&=(2,1),\\
+\Psi(b,0)&=(b-1,1)\qquad(b\ge4).
+\end{aligned}                                                 \tag{SCE.9}
+$$
+
+In particular $qL\in J_d$, and its attained range is contained in
+the displayed domain of $\Psi$.
+
+Proof. An omitted word is either $\varepsilon$ or an R-ending word
+of length at most $d-2$. Its L-child is in $W_d$ and is either at
+maximum depth or L-ending, so belongs to $J_d$.
+
+If $q$ is branch, its L-child is branch, beta or alpha. Their factors
+are $(0,0),(1,0),(2,1)$, respectively, and the desired parent factor
+is $(0,0)$. If $q$ is a beta leaf, its L-extension has factor $(2,0)$;
+if it is an alpha leaf that factor is $(3,0)$. Their parent factors are
+$(1,0)$ and $(2,1)$, giving the next two lines.
+
+If $q$ is absent, it is nonempty and ends in R. Its residual after the
+first blocking leaf therefore ends in R and has weight at least two.
+Equation (SCE.3) gives $\Gamma_q=(b,1)$ with $b\ge3$. Appending L
+adds one to the first coordinate and makes the second zero, giving
+$\Gamma_{qL}=(b+1,0)$. The last line of (SCE.9) applies. These
+exhaust all actual shapes. The argument uses the first original leaf,
+including when the target itself is absent. $\square$
+

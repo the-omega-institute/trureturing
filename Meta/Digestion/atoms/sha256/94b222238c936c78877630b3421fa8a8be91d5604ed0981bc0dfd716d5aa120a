@@ -1,0 +1,31 @@
+**Lemma 6.1 (the $F$ family).** For $q_e$ use
+
+$$
+X=t,\qquad Y=\frac{(e-1)t}{t+e},\qquad
+X+1=t+1,\qquad Y+1=\frac{e(t+1)}{t+e}.
+$$
+
+For $e\in\mathbb Q\setminus\{0,1\}$, the used poles are nonzero and
+distinct. The first monomial has pole orders $m_1$ at $t=-e$ and $k_1$ at
+infinity. Since it is an $n_1$-th power, $n_1$ divides both $m_1$ and $k_1$;
+primitive normalization of the three exponents gives $n_1=1$. In the $F$
+branch, the shifted monomial has pole orders $m_2$ at $-e$ and $k_2$ at
+infinity, so the same argument gives $n_2=1$.
+
+The equality of the two rational functions then forces
+
+$$
+m_1=m_2=m,\qquad k_1=k_2=k,
+\qquad (e-1)^m=e^m.
+$$
+
+The ratio $(e-1)/e$ is rational and is a rational root of unity. It cannot be
+$1$, so it is $-1$ and $e=1/2$, with $m$ even. But
+
+$$
+q_{1/2}(X,Y)=XY+\frac{X+Y}{2}>0
+$$
+
+for $X,Y>0$. Therefore no positive lift lies on an $F$-branch member of the
+family.
+

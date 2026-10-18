@@ -1,0 +1,15 @@
+**Example 9.1 (feedback and the image check).** The interpreted
+equation $\rho x=\langle x,\alpha\rangle$ has $x=\beta$, as already
+emphasized by NSF §2 and URR §7. In (PDC.7), the right side's collapse
+branch has right rank $0$, left rank $1$ and output rank $2$. It
+therefore retains that source. The ordinary $F$ branch cannot retain
+a cycle through a proper $F$ child, but that rejection does not reject
+the separate collapse branch.
+
+For an edge $X=\tau_1Y$, choosing $X$ as representative gives
+$Y=\tau_{-1}X$. Its actual domain requires every rank of $X$ to be
+at least one. A putative value $X=[0]$ cannot be repaired by treating
+$\tau_{-1}$ as an everywhere-defined native operation. Definition 4.1
+reads the occurrence in $Y$, even if $Y$ is absent from a designated
+output, and imposes precisely this lower bound.
+

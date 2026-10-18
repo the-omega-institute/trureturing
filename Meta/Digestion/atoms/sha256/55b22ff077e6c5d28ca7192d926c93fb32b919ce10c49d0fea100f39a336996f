@@ -1,0 +1,42 @@
+**Definition 10.1 (complete run vector).** For one actual finite run let
+$N_{o,p}(n)$ count its first $n$ rows with opcode $o$ and entering purpose
+$p$. Purposes are the disjoint PR57.D9 classes, refined finitely for
+new-role initialization, import/parser, Boundary, binding, Issue, Call,
+publication and each callback. A helper inherits its caller's purpose
+unless its explicit CTL changes it. Each row has exactly one such pair.
+Let $A(n)$ count all constructed nonmeter ordinary cells after the
+irreducible entrance, and $b_{\rm ctl}(n)$ count every constructed control
+bit, active or inactive. Let $C_\tau(n)$ count actually consumed IN bits
+of each site kind $\tau$ in Definition 6.1. Complete code captures,
+current partial blocks, all captured inputs, dead banks and old control
+versions are retained, not erased from these counts.
+
+For an enabled actual row $o_n$ at $x_n$, its entire component recurrence is
+
+$$
+\begin{aligned}
+N_{o,p}(n+1)&=N_{o,p}(n)+[ (o,p)=(o_n,p_n)],\\
+A(n+1)&=A(n)+a(o_n,x_n),\\
+b_{\rm ctl}(n+1)&=b_{\rm ctl}(n)+c(o_n,x_n),\\
+C_\tau(n+1)&=C_\tau(n)+[o_n=\operatorname{IN}_\tau],\\
+T(n+1)&=T(n)+1,\qquad F(n+1)=F(n)+2,\\
+S(n+1)&=S(n)+8a(o_n,x_n)+c(o_n,x_n)+8.
+\end{aligned}
+$$
+
+Here $a=1$ precisely for one-cell ordinary EX or a one-boundary constructor,
+and otherwise zero; $c=1$ precisely for a newly installed finite control
+bit, and otherwise zero. Existing-cell WR, including erasure or overwriting
+an old source bit, decreases no storage. A disabled attempt is no row and
+has none of these increments. At an IN the supplied actual bit determines
+$x_{n+1}$ and consumes exactly that typed reservoir bit. The terminal
+and returned-boundary cost is zero only after the stated final row.
+
+Equivalently the full opcode/purpose cost satisfies
+$V(e,x,I)=\mathbf e_{o,p}+V(e',x',I')$ at an enabled row. Sequence evaluates
+the second vector at the first fragment's complete successor. Tests use
+their actual RD/CTL successor; while repeats at its actual updated bank
+and heads. Withheld input or divergent original local work has no finite
+completed-flight value. No maximum or independently optimized fragment
+is inserted into this recurrence.
+

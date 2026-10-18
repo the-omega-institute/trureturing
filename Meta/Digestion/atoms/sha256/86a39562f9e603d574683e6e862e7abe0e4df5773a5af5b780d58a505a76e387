@@ -1,0 +1,62 @@
+**Theorem 2.3 (Finite fixed ports for the split generators).** For a
+generator on the right of (2.2), the full unnormalized Choi matrix is
+
+$$
+Z(k(a(p),b))=\frac1{25}\sum_{k,l=0}^4
+(g_{kl}a(p)a(p)^Tg_{kl}^T)\otimes(g_{kl}bb^Tg_{kl}^T),
+\quad g_{kl}=G(2\pi k/5,2\pi l/5).
+\tag{2.8}
+$$
+
+Consequently a TP sum of $m$ such generators has a realization by
+at most $25m$ fixed scalar flags. Applying Theorem 2.2 to any
+finite generator decomposition therefore supplies an exact finite
+realization. The same whole channel also retains the credited
+at-most-$225$ real-product realization bound.
+
+Proof. The joint product projector for $a(p),b$ is fixed by
+$g_*\otimes g_*$: each of its two projector factors is fixed
+separately. As $\mathsf J=G(\pi,\pi)g_*$ and $\mathsf J$ reverses
+the torus angles, the joint torus average of this projector is already
+$\mathsf J\otimes\mathsf J$ invariant. Its full torus-and-reflection
+average is therefore just its torus average. QRC Theorem 5.2 identifies
+that average with $Z(k(a(p),b))$.
+
+Every entry of a joint product projector contains four vector
+coordinates. Each vector coordinate under $G(\theta,\phi)$ has
+frequencies in $\{0,\pm e_1,\pm e_2\}$. The resulting Fourier support
+is contained in $|m|+|n|\le4$. The five-point sum in each angle
+annihilates a frequency unless both $m,n$ are divisible by five.
+Only the zero frequency in this support survives. This proves (2.8)
+entry by entry. This is the elementary finite Fourier mechanism
+credited to [QFA, Lemma 2.2](RECURSIVE_RELATIONAL_OBSERVATION_QUANTUM_FINITE_PORT_ATTAINMENT.md)
+and QRC Theorem 5.2, with the reflection made redundant by (2.4).
+
+For a TP sum, assign to each of these finitely many projectors its
+nonnegative coefficient $c_f$, with unit real preparation and
+measurement vectors $a_f,b_f$. The full marginal gives
+$\sum_fc_fb_fb_f^T=I_5$. The actual original-coordinate maps are
+
+$$
+\begin{gathered}
+B_f=\sqrt{c_f}\,b_f^TD^\dagger:\mathbb C^5\longrightarrow\mathbb C,
+\qquad R_f=Da_f:\mathbb C\longrightarrow\mathbb C^5,\\
+\operatorname{Enc}(X)=(B_fXB_f^\dagger)_f,\qquad
+\operatorname{Dec}_f(y)=R_fyR_f^\dagger.
+\end{gathered}
+\tag{2.9}
+$$
+
+Here $\sum_fB_f^\dagger B_f=I_5$ and $R_f^\dagger R_f=1$.
+Matrix sandwiches remain positive at every reference extension.
+The encoder is TP, each decoder is TP on every matrix of its whole
+scalar block, and each nonzero composite Kraus matrix $R_fB_f$ has
+rank one. The flag is consumed in decoding. These formulas give the
+same channel as the sum in (2.8), without continuous flags or access
+to an averaging record.
+
+The support bound $225$ follows from QRC's real-product Carathéodory
+argument applied to this unchanged Choi matrix. That compression
+concerns a realization of the whole channel; it need not preserve a
+particular list of canonical generator representatives. $\square$
+

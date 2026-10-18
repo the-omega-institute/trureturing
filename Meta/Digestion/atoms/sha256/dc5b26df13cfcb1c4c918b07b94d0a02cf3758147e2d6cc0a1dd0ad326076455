@@ -1,0 +1,11 @@
+**定义 53.1（指定任务的原生地址证书）。** 固定 $n\ge3$，令 $\tau$ 分别取 $\operatorname{Pos}$、$\nu$、$Q$ 或字面树恒等任务 $\operatorname{id}$。对 $s\in\{\mathrm{raw},\mathrm{coarse}\}$，置 $r_{\mathrm{raw}}=r$、$r_{\mathrm{coarse}}=\kappa r$。有限集 $J\subset\mathcal A$ 在 $T_n$ 的任务证书性质是
+
+$$
+\forall U\in W_n,\quad
+\bigl(\forall q\in J,\ r_s(q,U)=r_s(q,T_n)\bigr)
+\Longrightarrow\tau(U)=\tau(T_n).
+\tag{JM.158}
+$$
+
+以 $C^{s,\tau}_{\mathrm{word}}(T_n)$ 记这类 $|J|$ 的最小值。完整叶地址集是证书，故最小值存在。$J$ 无须前缀闭合，地址长度无额外上限。竞争者是整个 $W_n$，不是 $\{V_A:A\subseteq P_n\}$；完整已知词是此证书定义的显式理论许诺。
+

@@ -1,0 +1,10 @@
+## 474. A stronger lower source gap when C is the repeated axis
+
+Use common positive cosh lengths for four distinct labels M,Z,C,D,
+with m>=1+c+d, z>=1+m+c and c,d>1. Let
+
+    tau=(Z,M,C,D,M,C)
+
+be genuine, and suppose its two original transverse M angles together
+spend at most pi. No degree or face-incidence hypothesis is used below.
+

@@ -1,0 +1,15 @@
+**假设 39.1（完整任意替换与标志擦除合同）。** 固定非负整数 $f,e$。对每个被传递的带身份坐标，报告类型为 $\widehat Y_i=Y_i\sqcup\{\bot_i\}$。$\bot_i$ 是可靠识别的擦除标志，不属于载荷字母表。对 $S\subseteq I$，允许全部报告
+
+$$
+\mathcal U^{f,e}_S(\omega)=
+\left\{(E,r):
+\begin{array}{l}
+E\subseteq S,\quad |E|\le e,\quad r\in\prod_{i\in S\setminus E}Y_i,\\
+|\{i\in S\setminus E:r_i\ne R_i(\omega)\}|\le f
+\end{array}\right\}.
+$$
+
+$(E,r)$ 与含擦除标志的 $S$ 元组等价。擦除坐标已知，其余坐标可被任意替换成该坐标的合法值；合同包含每个这样的掩码和替换组合，误差无独立性假设。可将它实现为 $I$ 上同一完整信道支撑的投影：任意局部模式在其余坐标保真即可延拓。$f,e$ 是同一记录族在整个传递及保存之后的最终误差预算；多跳或多次读取不能各自重新取得一份预算。没有报告且擦除状态尚未确认的坐标，不计作已取得的 $(E,r)$。错标签、误配或静默删除须另改支撑，不能藏在可靠身份及可靠掩码的假设内。
+
+记录距离、任意错误与已知位置擦除的标准中间接口采用 Guruswami, [Introduction to Coding Theory，第 2 节 Definitions 1、5 与 Lemma 6](https://www.cs.cmu.edu/~venkatg/teaching/codingtheory/notes/notes1.pdf)。其错误纠正和擦除纠正接口分别针对所述信道；下述共同来源目标上的混合预算判据直接以假设 39.1 的报告碰撞证明。
+

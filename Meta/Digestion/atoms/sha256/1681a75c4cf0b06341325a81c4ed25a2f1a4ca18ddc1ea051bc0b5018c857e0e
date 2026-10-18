@@ -1,0 +1,32 @@
+**Definition 2.1 (finite adaptive certificates).** A $(q,d)$ skeleton is
+a finite tree with read depth at most $q$. An internal node $v$ has four
+reply children and a chosen epoch $e_v\in\{N,\ldots,N+d\}$, nondecreasing
+along paths. It has either a fixed address in $I$, or a fixed header
+$c_v\in B$ and one suffix variable $z_v$. A leaf is an absorbing halt
+labelled by a member of $\mathscr R$ when that image has been computed.
+No actions are appended to a halt. Execution performs the actual epoch
+differences and submits the actual word from (SRF.2).
+
+For a leaf $t$, let $\mathsf{Path}_{\eta,t}(X;\mathbf z)$ be the conjunction
+of its actual edge-reply formulas from Lemma 1.4. Its counts are
+$k_t$, the number of read ancestors, and $d_t=e_{\rm last}-N$ (zero for
+root halt). Its submitted-length sum is
+
+$$
+ L_t(\mathbf z)=
+ \sum_{\substack{v\prec t\\p_v\in I}}|p_v|
+ +\sum_{\substack{v\prec t\\c_v\in B}}(|c_v|+|z_v|).
+\tag{SRF.7}
+$$
+
+A leaf's exact reachability predicate is
+
+$$
+ E_t(\mathbf z)=\bigvee_\eta\exists X\,
+       [D_\eta(X)\land\mathsf{Path}_{\eta,t}(X;\mathbf z)].
+\tag{SRF.8}
+$$
+
+Ground charts contribute their constant-source path predicates. Empty
+paths mean true. Unreachable leaves have no execution cost.
+

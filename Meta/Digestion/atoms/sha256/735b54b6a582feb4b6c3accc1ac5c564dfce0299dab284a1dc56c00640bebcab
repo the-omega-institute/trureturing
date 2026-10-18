@@ -1,0 +1,38 @@
+**定理 22.11.2（完整记录、旗标与运行时损失）。** 有
+
+$$
+\boxed{\mathbb E_\theta T_N=S_N(q_\theta).}
+$$
+
+完整停止记录的项目扩张为
+
+$$
+\boxed{
+\Delta_{\mathrm{full}}=N\rho+\sigma=\delta+(N-1)\rho.
+}
+$$
+
+一位旗标的项目扩张为
+
+$$
+\boxed{
+\Delta_{\mathrm{flag}}
+=N\rho+\log\frac{1-q_0^N}{1-q_1^N}
+=\operatorname{logit}(q_1^N)-\operatorname{logit}(q_0^N).
+}
+$$
+
+隐藏停止失败时间所损失的扩张恰好是
+
+$$
+\boxed{
+\Delta_{\mathrm{full}}-\Delta_{\mathrm{flag}}
+=\log\frac{S_N(q_1)}{S_N(q_0)}
+=\log\frac{\mathbb E_1T_N}{\mathbb E_0T_N}.
+}
+$$
+
+**证明。** 对 $0\le k<N$，记录 $C^kS$ 的概率为 $q_\theta^k(1-q_\theta)$，其类型 $1$ 对类型 $0$ 的似然比为 $e^{k\rho-\sigma}$；记录 $C^N$ 的似然比为 $e^{N\rho}$。这些对数比严格递增，故最小值为 $-\sigma$，最大值为 $N\rho$。旗标两格的概率分别为 $q_\theta^N$ 与 $1-q_\theta^N$，直接取两格对数比之差得到第二式。最后使用 $1-q^N=(1-q)S_N(q)$。证毕。
+
+<a id="section-22-12"></a>
+

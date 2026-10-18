@@ -1,0 +1,30 @@
+**Construction 325.1 (Only one exhaustion vector changes).**
+Let $R=O(1,2;1,2,0)$ and use exactly the genuine sixteen-table
+$P^0$ in 319.1 and the complete $P^\star$ in 320.1. Start with
+
+$$
+p^B=(1-24\tau)R+24(\tau-t)P^0+24tP^\star.
+\tag{325.1}
+$$
+
+Here every row of the displayed $P^0$ table has its integer count
+multiplied by $\tau-t$. In particular its row
+$O(1,4;0,4,0)$ keeps first output zero: its class-1 correct count
+is eleven per 24, not the twelve of the other head-fill variant.
+Every deterministic row in the displayed $P^\star$ table keeps its
+schedule and all three labels, with its integer count multiplied by
+$s=t/128$. Keep the five mixed $P^\star$ rows as follows, listing
+unnormalized vectors. Different rows, including coincident schedules
+from $P^0$ or $R$, remain alternative branches.
+
+| Schedule | Mass | First vector | Middle vector | Exhaustion vector |
+| --- | --- | --- | --- | --- |
+| $(1,2)$ | $944s$ | $944s e_1$ | $944s e_2$ | $463s e_0+220s e_3+162s e_4+99s e_5$ |
+| $(2,3)$ | $391s$ | $333s e_0+58s e_2$ | $391s e_3$ | $391s e_0$ |
+| $(3,4)$ | $236s$ | $236s e_0$ | $236s e_4$ | $148s e_0+88s e_5$ |
+| $(6,7)$ | $74s$ | $74s e_0$ | $74s e_7$ | $17s e_0+(4s+\delta)e_8+(53s-\delta)e_9$ |
+| $(6,8)$ | $53s$ | $53s e_0$ | $53s e_8$ | $17s e_0+36s e_9$ |
+
+Call the resulting law $p^\delta$. Only the exhaustion vector of
+the $P^\star$ component on $(6,7)$ was changed. Its separate
+$P^0$ component on that same schedule is unchanged. In every row,

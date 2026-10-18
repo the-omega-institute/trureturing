@@ -1,0 +1,41 @@
+**Convention 10.1 (mathematical attribution).** The source-specific
+deductions in §§3–6 are the lower-left cutoff, the explicit complete
+nine-coordinate separator, the positive pure-contact cap and its
+conditional rank-one consequence. They are repo-derived applications
+of the precise source bounds and complete-face interfaces in FC and
+GC. The maximal-zero real-square reduction is FC Theorem 12.1;
+the all-optima and compatible-group mechanisms are FC Theorems 3.3,
+4.2 and 7.3; the mandatory reverse and negative-pure results are FC
+§28 and §§32–34. Theorem 8.1, Corollary 8.2 and Proposition 9.2 give
+exact interface obstructions using the coherent RT81 definitions and
+elementary matrix identities. No general factorization, separation,
+quadrature, Schmidt or Kraus–Stinespring theorem is claimed as new.
+
+The following primary texts specify the finite-support interfaces
+relevant to this problem:
+
+| Primary source | Statement and permitted use |
+| --- | --- |
+| Dritschel–Rovnyak, *The Operator Fejér–Riesz Theorem*, [arXiv:0903.3639v1, §1](https://arxiv.org/html/0903.3639v1) | The scalar nonnegative Laurent polynomial factors as $|p|^2$ on the circle. FC Theorem 12.1 supplies the stronger maximal-zero real-square step used in (PC.25). No operator-factor rank or actual-label bound follows from the scalar citation. |
+| Nailwal–Zalar, *Gaussian Quadratures with prescribed nodes via moment theory*, [arXiv:2412.20849v1, Theorem 3.1 and Example 3.6](https://arxiv.org/html/2412.20849v1) | For distinct prescribed nodes, complete univariate moments through $D=d_1+2d_2-1$ and positive definite $M_{\lfloor D/2\rfloor}$, existence of the specified $(d_1+d_2)$-atomic rule requires invertibility of $\mathcal H_f(d_2-1)$ and positive definiteness of the recursively generated $M_{d_1+d_2-1}$. With factorial moments and prescribed $1/3,11$, Example 3.6 violates extension positivity. The original rational-capacity and absolute-value tests are not supplied as such complete polynomial data. |
+| di Dio–Schmüdgen, *The Moment Cone*, [arXiv:1809.00584v1, Theorem 52](https://arxiv.org/html/1809.00584v1) | The $m-1$ atom refinement requires at most $m-1$ path-connected components of the normalized evaluation image. A finite exposed contact set need not retain connectedness of the source circle. That hypothesis cannot be inferred from the circle alone. |
+| Mädler–Schmüdgen, *On the Truncated Matricial Moment Problem. I*, [arXiv:2310.00957v1, Theorem 5.1](https://arxiv.org/html/2310.00957v1) | On its measurable space with measurable singletons, a nonzero moment functional on a finite-dimensional real space $\mathcal E$ of integrable measurable Hermitian matrix tests has a representation by at most $\dim\mathcal E$ rank-one matrix-mass terms, with the stated measurable support restriction when supplied. This preserves the chosen test functional, not an unproved recovery of fractional labels, height signs or seven original groups. |
+
+At a common matrix node, separate pure and saturated matrix entries
+still need the weak-sign condition (PC.9) to merge without height loss.
+Neither a node count nor a matrix-mass rank replaces that condition.
+The source-specific separator applies directly to the original moments
+and needs no quadrature reduction.
+
+Watrous, *The Theory of Quantum Information*, author-hosted
+[Chapter 1, Schmidt decompositions](https://cs.uwaterloo.ca/~watrous/TQI/TQI.1.pdf),
+[Chapter 2, instrument equations (2.258)–(2.262), Theorem 2.22 and Corollary 2.27](https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf),
+and [Chapter 3, Definition 3.43](https://cs.uwaterloo.ca/~watrous/TQI/TQI.3.pdf),
+gives the coefficient-matrix Schmidt correspondence, the
+standard instrument construction, Kraus/Choi/Stinespring interfaces
+and the arbitrary-reference norm
+convention. These textbook interfaces support the elementary arguments
+above; they do not supply an original-source reduction. The bounded
+source and literature interfaces here carry no exhaustive novelty or
+worldwide priority assertion.
+

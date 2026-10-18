@@ -1,0 +1,25 @@
+**Corollary 10.2.** A supplied known set
+$K\subseteq\mathcal K_{\mathbf c,d}$ with $|K|\le3$ and
+$d\in[48,312/5]$ has a lawful terminal policy using at most two
+further readings, hence at most eight total including the ancestor.
+
+For $|K|=3$, Corollary 10.1 proves that some scalar in $A,B,C,D$
+is injective on $K$. For $|K|=2$, if all four scalars collided,
+$AB$ would contradict pair injection. The empty set has no reachable
+response, and a singleton can stop.
+For a nonsingleton choose the first injective scalar in the order
+$A,B,C,D$ and its corresponding word $EF$. Execute sixth $E$ and
+read immediately, then seventh $F$ and read immediately.
+For every pair of raw responses $w,v$, the retained set is empty
+when $w\ne D_0+\lambda d$, and otherwise has at most one member
+by scalar injectivity. At a reachable response return its unique
+entire $(P,g,\delta)$.
+
+This policy assumes the entire known $K$ and its promises.
+Two-coordinate injection alone does not give a scalar injective on
+an arbitrary triple; all six pair maps and the same-triple argument
+are used here. The result supplies neither acquisition of both
+alternative coordinates nor a scalar policy on larger or infinite
+sets, the entire fiber, or other histories. No reduction of a larger
+losing family to a losing triple is asserted.
+

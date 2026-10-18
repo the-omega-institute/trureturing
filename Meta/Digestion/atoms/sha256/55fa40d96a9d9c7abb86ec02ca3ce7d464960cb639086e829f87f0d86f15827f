@@ -1,0 +1,39 @@
+**Theorem 5.3 (traffic lower bound, allowing rereads and paid immutable
+operands).** Every deterministic observer that returns exact complete rows
+for all finite sources on quiescent progressing calls, with the same
+source-independent code, initialization and public cut $\{L,R\}$, must,
+on its quiescent run at $u_h$, query each of its $2^{h+1}$ leaf addresses.
+Consequently
+
+$$
+T\ge2^{h+1},\qquad A\ge(h+1)2^{h+1},\qquad Q_{\rm peak}\ge h+1.
+\tag{CWS.12}
+$$
+
+Proof. Fix any one leaf occurrence and change only its label to beta.
+Exactly one of the two hidden trees changes, so the correct partition bit
+changes from equality to disequality. Every other address has the same reply:
+proper ancestors remain branches, other nodes are unchanged, and strict
+extensions of the changed leaf are absent in both trees. Therefore only a
+Read at that exact leaf address distinguishes the two sources. If the run
+on $u_h$ omits it, induction over the deterministic local steps and replies
+gives the same terminating run and output on the neighbor, a contradiction.
+Apply this separately to every leaf of $u_h$. These are distinct addresses
+of length $h+1$, giving all three bounds.
+
+The argument allows arbitrary local recomputation, repeated Reads, arbitrary
+finite immutable code/literal installation and readable output. It needs
+only identical initial observer data for the two sources and absence of any
+extra source port. It bounds traffic and materialized operand size, not
+online writable width for arbitrary representations. A paid immutable
+operand may have small mutable selection state. The immutable-tail example
+in [SLD, §8][SLD] explicitly prevents inferring a universal mutable-space
+lower bound merely from length. $\square$
+
+Thus RA is optimal in Read and address-traffic order on this quiescent family:
+$T=\Theta(2^h)$ and $A=\Theta((h+1)2^h)$, while its observer storage is
+$\Theta(h+1)$ bits and its retained boundary is constant. Full hidden-tree
+retention would require exponentially many literal cells. The all-source
+upper bound still permits linear-height workspace on very unbalanced trees;
+it is not a logarithmic-size bound on every tree.
+

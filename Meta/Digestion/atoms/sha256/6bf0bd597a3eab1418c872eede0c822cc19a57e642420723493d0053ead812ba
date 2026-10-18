@@ -1,0 +1,72 @@
+**Proposition 10.4 (Eight-row lower realization).** This complete
+table attains $X_\star$:
+
+| Row | Instruction | Zero successor | One successor |
+| --- | --- | --- | --- |
+| $R$ | $L(1)$ | $R_0$ | $R_1$ |
+| $R_0$ | $L(0)$ | $A_0$ | $Q$ |
+| $R_1$ | $L(-1)$ | $P$ | $B$ |
+| $A_0$ | $L(3)$ | $Z_H$ | $P$ |
+| $B$ | $L(-2)$ | $Q$ | $P$ |
+| $Z_H$ | $\operatorname{Halt}(h_1(\sigma))$ | — | — |
+| $P$ | $\operatorname{Halt}(h_0(\sigma))$ | — | — |
+| $Q$ | $\operatorname{Halt}(h_0(1-\sigma))$ | — | — |
+
+| Record | Output | Source mass | Correct mass | Calls |
+| --- | --- | --- | --- | --- |
+| $01$ | $h_0(1-\sigma)$ | $\eta/2$ | $a\eta/2$ | $2$ |
+| $001$ | $h_0(\sigma)$ | $t\eta$ | $a^3\eta$ | $3$ |
+| $000$ | $h_1(\sigma)$ | $(1+tc)/2$ | $a/2$ | $3$ |
+| $10$ | $h_0(\sigma)$ | $c\eta$ | $a^2\eta$ | $2$ |
+| $110$ | $h_0(1-\sigma)$ | $\eta^2$ | $a\eta^2$ | $3$ |
+| $111$ | $h_0(\sigma)$ | $\eta^2$ | $a\eta^2$ | $3$ |
+
+Proof. Its zero subtree is precisely the six-row table's zero
+subtree with the same first edge and target. Proposition 10.2
+proves those first three records and their masses. On first one
+the root pair $\{j+1,j+2\}$ is disjoint from target pair
+$\{j-1,j\}$. On $10$ their one/zero constraints give source
+mass $c\eta$ and majority-target mass $a^2\eta$.
+On $11$ the last edge $\{j-2,j-1\}$ freshly extends the
+target pair. The heavier local triples in order $j-2,j-1,j$ are
+
+$$
+(\sigma,\sigma,1-\sigma),\qquad
+(\sigma,1-\sigma,\sigma)
+\tag{10.7}
+$$
+
+for final replies zero and one. Each has weight $a^2b$, versus
+complement $ab^2$. Multiplying the independent root-one
+probability $2\eta$ and phase factor gives source mass
+$\eta^2$ and correct mass $a\eta^2$ on each leaf, with
+the displayed target labels.
+
+The first-one source mass is $c\eta+2\eta^2=\eta$, and
+its correct mass is $D$. The zero subtree has source mass
+$1-\eta$ by (10.3), and correct mass
+$Z_V=a/2+a\eta/2+a^3\eta$. Hence the full law normalizes.
+Moreover
+
+$$
+Z-Z_V=a\eta\bigl(a(1+c)-1/2-a^2\bigr)
+=\frac{ad\eta c}{2},
+\tag{10.8}
+$$
+
+so its correct sum is $Z_V+D=X_\star$. It has five Read and
+three Halt rows, and halts on every formal path within three calls.
+Its exact paid costs are
+
+$$
+\mathbb P(N=2)=\eta(c+1/2),\quad
+\mathbb P(N=3)=1-\eta(c+1/2),\quad
+\mathbb E N=3-\eta(c+1/2).
+\tag{10.9}
+$$
+
+In particular $L(-1),L(-2)$ are actual charged integer calls,
+including their negative values. Phase one still sees only paid
+separators. The target and seed remain those in (1.2) and
+Definition 2.1 for either $j$ and either bias. $\square$
+

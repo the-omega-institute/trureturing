@@ -1,0 +1,19 @@
+**Definition 3.1 (common cap and finite representatives).** For valid
+input put
+
+$$
+\begin{aligned}
+B&=\max\bigl(\{1\}\cup\{b(P_i,R_i):i<m\}\bigr),\\
+\kappa_B(\mathbf n)_i&=\min(n_i,B),\\
+A_B&=\{\mathbf c\in\mathbb N^m:0=c_0\le\cdots\le c_{m-1}\le B\},\\
+L_{\mathbf c}&=\{\mathbf n\in\mathcal C_m:
+                                       \kappa_B(\mathbf n)=\mathbf c\}.
+\end{aligned}
+\tag{NUE.8}
+$$
+
+The common $B$, rather than different coordinate caps, is used to
+preserve chronology. The regions $L_{\mathbf c}$ are nonempty,
+pairwise disjoint, and cover $\mathcal C_m$. Each contains its own
+representative $\mathbf c$.
+

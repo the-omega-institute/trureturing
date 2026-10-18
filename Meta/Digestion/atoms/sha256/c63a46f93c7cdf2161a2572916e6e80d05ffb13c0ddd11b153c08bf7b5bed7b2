@@ -1,0 +1,12 @@
+**命题 A-8.2（谱类型对秩任务的约束）。** $`\epsilon_p=1`$ 时两根在 $`\mathbb{\text{𝔽}}_p`$，$`\epsilon_p=-1`$ 时 Frobenius 交换两根。于是
+
+
+```math
+p\mid F_{p-\epsilon_p},\quad F_p\equiv\epsilon_p\pmod p,\quad L_p\equiv1\pmod p,
+\qquad
+\epsilon_p=\begin{cases}1&p\equiv1,4\pmod5,\\-1&p\equiv2,3\pmod5.\end{cases}
+```
+
+
+证明。Frobenius 固定基域，并保持特征多项式的根；分裂时逐根固定，非分裂时交换。代入和差式给后两同余。比值 $`\lambda_+/\lambda_-`$ 在分裂时的 $`p-1`$ 次幂为一，在非分裂时 $`p+1`$ 次幂为一，因此相应 $`F`$ 归零。二次互反律给 $`(5/p)=(p/5)`$，模五非零平方类为一和四，得表。证毕。
+

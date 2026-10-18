@@ -1,0 +1,193 @@
+**定义 80.1（三射线 frame）。** 以下静态参数记为 $r$，不与 $b_A$  混用。置
+
+$$
+k_r=\sqrt{\alpha+\beta r^2},\qquad
+d_r=1+\alpha+(1+\beta)r^2,
+$$
+
+$$
+B_r=\alpha r^2+\beta,\qquad
+R_r=\sqrt{\beta^2(1+\alpha)+\alpha^2(1+\beta)r^2},
+$$
+
+$$
+u_1=\frac{\beta k_r+rR_r}{B_r},\qquad
+v_1=\frac{\alpha k_rr-R_r}{B_r},
+$$
+
+$$
+u_2=\frac{\beta k_r-rR_r}{B_r},\qquad
+v_2=\frac{\alpha k_rr+R_r}{B_r}.
+$$
+
+定义
+
+$$
+f_0(r)=\frac{(k_r,-1,-r)^T}{\sqrt{d_r}},
+$$
+
+$$
+f_i(r)=\frac{(1,u_i,v_i)^T}{\sqrt{1+u_i^2+v_i^2}},
+\qquad i=1,2,
+\qquad F(r)=(f_0,f_1,f_2).
+\tag{RC.115}
+$$
+
+直接代入可得
+
+$$
+F^TF=I,\qquad f_i^TQf_i=0.
+$$
+
+在 $r_\star\le r\le r_{\rm c}$ 上，
+
+$$
+u_1>0,\quad v_1<0,\qquad u_2<0,\quad v_2>0.
+$$
+
+对应的 coordinate-zero-one rays 与权重为
+
+$$
+a_i=\frac{f_i}{(f_i)_0},\qquad
+\pi_i=(f_i)_0^2>0.
+\tag{RC.116}
+$$
+
+它们满足
+
+$$
+\sum_{i=0}^2\pi_i a_ia_i^T=I.
+$$
+
+原静态报告和 live height 符号分别为
+
+$$
+(r_0,r_1,r_2)=(-,+,-),\qquad
+(\operatorname{sgn}\ell(a_0),\operatorname{sgn}\ell(a_1),
+\operatorname{sgn}\ell(a_2))=(-,+,+).
+\tag{RC.117}
+$$
+
+这些符号与该族的原始全局静态最优性来自 JR50–54／RC60–63 静态供应。令
+
+$$
+h_{\rm fr}(r)=2(f_1)_0(f_1)_1
+=\frac{2u_1}{1+u_1^2+v_1^2},
+$$
+
+$$
+\psi(r)=f_0(r)^TGf_0(r)=\frac{P(r)}{d_r},
+$$
+
+$$
+P(r)=g_0k_r^2+g_1+g_2r^2
+-2\mathsf x k_r-2\mathsf y k_rr+2\mathsf z r.
+\tag{RC.118}
+$$
+
+### 80.2 平台端点的确切选择
+
+令 $r_\star$  为方程
+
+$$
+d_rP'(r)-2(1+\beta)rP(r)=0
+\tag{RC.119}
+$$
+
+的唯一正根，其中
+
+$$
+P'(r)=
+2r(\beta g_0+g_2)+2\mathsf z
+-\frac{2\beta r(\mathsf x+\mathsf y r)}{k_r}
+-2\mathsf y k_r.
+$$
+
+原静态供应给出选择区间
+
+$$
+\frac{17}{20}<r_\star<\frac9{10}.
+\tag{RC.120}
+$$
+
+这里的唯一性也有直接解析解释。置 $p=(f_0)_2^2$，则
+
+$$
+(f_0)_1^2=\frac{1-(1+\beta)p}{1+\alpha},\qquad
+(f_0)_0^2=\frac{\alpha+(\beta-\alpha)p}{1+\alpha}.
+$$
+
+这里 $p_0=(f_0)_0^2$、$p_1=(f_0)_1^2$ 都是 $p$ 的正仿射函数。$\psi$ 是一个线性函数，加上
+
+$$
+-2\mathsf x\sqrt{p_0p_1}
+-2\mathsf y\sqrt{p_0p}
+-2|\mathsf z|\sqrt{p_1p}.
+$$
+
+对正仿射函数 $u,v$，
+
+$$
+(\sqrt{uv})''
+=-\frac{(u'v-uv')^2}{4(uv)^{3/2}}.
+$$
+
+故 $\psi$  在 $0<p<1/(1+\beta)$  上严格凸，其两端导数分别趋于 $-\infty,+\infty$。这确定唯一根，而不是留下一个待优化的最小化。源给出的有理区间 (RC.120) 用于选定实际静态分支。记
+
+$$
+\tau_{\rm p}=h_{\rm fr}(r_\star),\qquad s_{\rm p}=s_0\tau_{\rm p}.
+$$
+
+实际静态接触参数 $r_{\rm c}$  在 §84.1 用 RC 选根完全绑定；其供应区间为
+
+$$
+1.04175447537<r_{\rm c}<1.04175447539,
+$$
+
+$$
+\tau_{\rm c}=h_{\rm fr}(r_{\rm c}),\qquad
+.9962433511188<\tau_{\rm c}<.9962433511192,
+\qquad s_{\rm c}=s_0\tau_{\rm c}.
+\tag{RC.121}
+$$
+
+### 80.3 从强度直接恢复 $r$
+
+对 $0\le\tau\le\tau_{\rm p}$，置 $r(\tau)=r_\star$。对 $\tau_{\rm p}<\tau\le\tau_{\rm c}$，可以直接使用根式
+
+$$
+\kappa_\tau=
+\frac{\beta+\sqrt{\beta^2+(\alpha-\beta)(1+\beta)\tau^2}}
+{(1+\beta)\tau},
+$$
+
+$$
+u_\tau=\sqrt{\frac{\kappa_\tau^2-\alpha}{\beta}},\qquad
+\mathcal R_\tau=
+\sqrt{\beta^2(1+\alpha)+\alpha^2(1+\beta)u_\tau^2},
+$$
+
+$$
+\boxed{\quad
+r(\tau)=
+\frac{1-\alpha\kappa_\tau^2}
+{u_\tau+\kappa_\tau\mathcal R_\tau}.
+\quad}
+\tag{RC.122}
+$$
+
+在所列区间，根式取正根、分母严格正。这是 $h_{\rm fr}(r)=\tau$ 的选定分支。为核对选根，令 $u=-v_1/u_1>0$ 和 $\kappa=\sqrt{\alpha+\beta u^2}$。由 $H(u)=\tau$ 得
+
+$$
+\tau[(1+\beta)\kappa^2+(\beta-\alpha)]=2\beta\kappa.
+$$
+
+$\alpha>\beta$ 和 $\tau>0$ 使该二次式只有一个正 $\kappa$，正是上式的 $\kappa_\tau$。正交关系 $k_r\kappa+ru=1$ 对正 $r$ 严格递增；平方并有理化其选定根得到 (RC.122)。§81 证明 $h_{\rm fr}'(r)>0$，故不存在同一分支的第二个 $r$。$\tau=0$ 单独用平台分支，不使用含 $1/\tau$ 的式子。静态值供应因而可写为
+
+$$
+j(\tau)=\operatorname{tr}G-2\psi(r(\tau)),
+\qquad
+\mathcal T(s_0\tau)=\frac{H_0+L_f+j(\tau)}2.
+\tag{RC.123}
+$$
+

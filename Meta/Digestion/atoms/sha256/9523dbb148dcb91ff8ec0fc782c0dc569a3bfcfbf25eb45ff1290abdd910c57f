@@ -1,0 +1,15 @@
+**定义 5.1（每个素数方向的相位）。** 对素数 $p$、$a\ge0$，令
+
+$$
+F_{p,a}(\theta)=\sum_{k=0}^a p^{-k/2}e^{ik\theta},\qquad
+\theta\in\mathbb R/(2\pi\mathbb Z).
+$$
+
+对 $n\ge2$ 的支持给每个素数一个独立坐标 $\theta_p$，令
+
+$$
+A_n(\boldsymbol\theta)=\prod_{p\mid n}F_{p,a_p}(\theta_p).
+$$
+
+积分采用乘积圆周上归一化 Haar 测度 $d\boldsymbol\theta/(2\pi)^{\omega(n)}$。这是一个确定的积分读出定义，不预设随机来源、实际测量装置或自由相位控制。
+

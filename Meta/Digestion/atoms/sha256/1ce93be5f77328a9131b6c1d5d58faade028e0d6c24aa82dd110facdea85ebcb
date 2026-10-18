@@ -1,0 +1,219 @@
+## 2. Two closed forbidden root rectangles
+
+**Theorem 2.1.** No legal world satisfying even the first four equations
+of (1.6) has
+
+$$
+f(T)=\gamma(T-a)(T-b)(T-7),\quad \gamma\ne0,
+\qquad (a,b)\in[3,4]\times[4,5]\ \text{or}\ [4,5]\times[5,6].
+\tag{2.1}
+$$
+
+The assertion includes all edges, corners and permitted coincidences
+$a=b=4$ or $a=b=5$. There is no restriction on $y,\zeta$.
+
+**Proof, elimination without a clock-three division.** Put
+
+$$
+\begin{gathered}
+s=a+b,\quad p=ab,\quad U=p-s+1=(a-1)(b-1),\\
+V=p-2s+4=(a-2)(b-2),\quad W=p-3s+9=(a-3)(b-3).
+\end{gathered}
+\tag{2.2}
+$$
+
+Here $p,U,V>0$, $U-2>0$, while $W$ may be zero. The samples at
+zero through three are $-7p\gamma,-6U\gamma,-5V\gamma,-4W\gamma$.
+Thus $d=7p\gamma$ and, dividing only by $\gamma\ne0$,
+
+$$
+6Uj=7p-24/\gamma,\quad
+5V\ell=7p-48/\gamma,\quad
+4W(j+\ell)=7p-c_0/\gamma.
+\tag{2.3}
+$$
+
+Eliminating $1/\gamma$ gives
+
+$$
+5V\ell=12Uj-7p,\qquad
+20W(j+\ell)=78Uj-56p.
+\tag{2.4}
+$$
+
+Define
+
+$$
+\begin{aligned}
+D&=78UV-20WV-48WU\\
+ &=10p^2+58ps-350p-108s^2+708s-840,\\
+L_0&=19p-39s+99,\qquad K_0=9p-29s+109.
+\end{aligned}
+\tag{2.5}
+$$
+
+Multiplying the second equation in (2.4) by $5V$ and substituting
+the first yields $5Dj=140p(2V-W)$. Since $2V-W=p-s-1$,
+
+$$
+Dj=28p(p-s-1),\qquad
+D\ell=\frac{14}{5}pL_0,\qquad
+D(\ell-j)=\frac{14}{5}pK_0.
+\tag{2.6}
+$$
+
+For completeness the second identity follows from
+$5V D\ell=12U\cdot28p(p-s-1)-7pD$ and
+$336U(p-s-1)-7D=14VL_0$; the last follows from
+$L_0-10(p-s-1)=K_0$. As $j>0$ and $p-s-1=U-2>0$,
+the first identity proves $D>0$, including exclusion of $D=0$.
+Consequently
+
+$$
+j=\frac{28p(p-s-1)}D,\quad
+\ell=\frac{14pL_0}{5D},\quad
+u=\ell-1,\quad v=1-\frac{14pK_0}{5D}.
+\tag{2.7}
+$$
+
+The following four complete polynomial certificates contradict
+$uv\le1/4$.
+
+**First rectangle.** Substitute $a=3+X$, $b=4+Z$ with
+$0\le X,Z\le1$. Then $p=12+4X+3Z+XZ$, $s=7+X+Z$. Set
+
+$$
+\begin{aligned}
+E_1&=14pL_0-8D
+ =186p^2-1010ps+4186p+864s^2-5664s+6720,\\
+E_2&=35D-168pK_0
+ =-1162p^2+6902ps-30562p-3780s^2+24780s-29400.
+\end{aligned}
+\tag{2.8}
+$$
+
+In the ordered monomial basis
+$(1,X,Z,X^2,XZ,Z^2,X^2Z,XZ^2,X^2Z^2)$ the entire coefficient
+rows are
+
+$$
+\begin{array}{c|rrrrrrrrr}
+ &1&X&Z&X^2&XZ&Z^2&X^2Z&XZ^2&X^2Z^2\\ \hline
+E_1&1584&632&-948&-200&702&-492&478&106&186\\
+E_2&4536&14140&24276&5236&2730&6468&-2394&-70&-1162
+\end{array}
+\tag{2.9}
+$$
+
+Here $632X-200X^2\ge0$; the other terms of $E_1$ except
+$-948Z,-492Z^2$ are nonnegative. Thus
+
+$$
+E_1\ge1584-948-492=144>0,\qquad
+E_2\ge4536-2394-70-1162=910>0.
+\tag{2.10}
+$$
+
+For $E_2$ the inequality drops its nonnegative terms and bounds the
+three remaining monomials by one. Equations (2.7)–(2.8) give exactly
+
+$$
+\frac{E_1}{5D}=\ell-\frac85=u-\frac35,\qquad
+\frac{E_2}{60D}=v-\frac5{12}.
+\tag{2.11}
+$$
+
+Hence $u>3/5$, $v>5/12$ and $uv>1/4$, a contradiction.
+
+**Second rectangle.** Substitute $a=4+X$, $b=5+Z$ with
+$0\le X,Z\le1$. Then $p=20+5X+4Z+XZ$, $s=9+X+Z$. Put
+
+$$
+\begin{aligned}
+E_3&=28pL_0-15D
+ =382p^2-1962ps+8022p+1620s^2-10620s+12600,\\
+E_4&=5D-28pK_0
+ =-202p^2+1102ps-4802p-540s^2+3540s-4200.
+\end{aligned}
+\tag{2.12}
+$$
+
+The full rows in exactly the same basis are
+
+$$
+\begin{array}{c|rrrrrrrrr}
+ &1&X&Z&X^2&XZ&Z^2&X^2Z&XZ^2&X^2Z^2\\ \hline
+E_3&8320&7520&1876&1360&6506&-116&1858&1094&382\\
+E_4&5440&1040&4004&-80&-2206&636&-918&-514&-202
+\end{array}
+\tag{2.13}
+$$
+
+Dropping nonnegative terms and bounding the remaining monomials by one,
+
+$$
+E_3\ge8320-116=8204>0,\qquad
+E_4\ge5440-80-2206-918-514-202=1520>0.
+\tag{2.14}
+$$
+
+Now
+
+$$
+\frac{E_3}{10D}=\ell-\frac32=u-\frac12,\qquad
+\frac{E_4}{10D}=v-\frac12.
+\tag{2.15}
+$$
+
+Both $u,v>1/2$, contradicting $uv\le1/4$ again.
+
+**Complete coefficient identity.** Every entry of (2.9) and (2.13)
+can be checked with the following single distribution identity. For
+
+$$
+F(p,s)=Ap^2+Bps+Cp+Es^2+F_0s+G,
+$$
+
+at $a=a_0+X,b=b_0+Z$ write $p_0=a_0b_0$, $s_0=a_0+b_0$,
+$H=b_0X+a_0Z+XZ$, $N=X+Z$. Then exactly
+
+$$
+\begin{aligned}
+F(p_0+H,s_0+N)={}&F(p_0,s_0)
+ +(2Ap_0+Bs_0+C)H+(Bp_0+2Es_0+F_0)N\\
+ &+AH^2+BHN+EN^2.
+\end{aligned}
+\tag{2.16}
+$$
+
+The constant, $H$ and $N$ coefficients and the remaining three
+quadratic coefficients are respectively
+
+$$
+\begin{array}{c|rrr|rrr}
+ &F(p_0,s_0)&[H]&[N]&A&B&E\\ \hline
+E_1&(1584)&1580&-5688&186&-1010&864\\
+E_2&(4536)&-10136&54684&-1162&6902&-3780\\
+E_3&(8320)&5644&-20700&382&-1962&1620\\
+E_4&(5440)&-2964&15860&-202&1102&-540
+\end{array}
+\tag{2.17}
+$$
+
+Here $(p_0,s_0)=(12,7)$ for the first two rows and $(20,9)$ for
+the last two. To spell out all terms, if $H=hX+kZ+XZ$ then
+
+$$
+\begin{aligned}
+H^2&=h^2X^2+2hkXZ+k^2Z^2+2hX^2Z+2kXZ^2+X^2Z^2,\\
+HN&=hX^2+(h+k)XZ+kZ^2+X^2Z+XZ^2,\\
+N^2&=X^2+2XZ+Z^2.
+\end{aligned}
+\tag{2.18}
+$$
+
+Thus no higher or unlisted coefficient is suppressed. The bounds hold
+on the closed squares, and every variable denominator in this proof is
+positive by (2.6). No division by $W$, $f(3)$, $a-b$, or an endpoint
+root sample occurred. This proves both closed rectangles. ∎
+

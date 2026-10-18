@@ -1,0 +1,41 @@
+**Theorem 8.1 (independent moment columns, $m\le8$).** Retain Assumptions
+1.1 and 5.1, and suppose $1\le m\le8$ and
+$A_\Gamma=[\Gamma(z_1)\ \cdots\ \Gamma(z_m)]$ has independent columns.
+Choose any left inverse $J_{\rm left}A_\Gamma=I_m$, and set
+
+$$
+K=\max_i\|\operatorname{row}_i(J_{\rm left})\|_2>0,\qquad
+p_{\min}=\min_i p_i^*>0,\qquad
+\Delta_m=c_0\left(\frac{p_{\min}}{KL}\right)^2>0,
+\tag{QS.37}
+$$
+
+using $F=\Gamma$ in Theorem 7.1. Every feasible law with fewer than $m$
+supported original atoms has low-height deficit $\mathcal E\ge\Delta_m$.
+Every original competitor in (QS.5) with fewer than $m$ supported nonzero
+low labels, and hence every one with fewer than $m$ actual low labels,
+has the actual HALF-TV deficit
+
+$$
+\mathcal T(s,t)-T_{\rm actual}\ge\frac{\Delta_m}{2}
+       =\frac{c_0}{2}\left(\frac{p_{\min}}{KL}\right)^2.
+\tag{QS.38}
+$$
+
+Proof. Rounding gives
+$\|A_\Gamma q-B\|_2\le L\sqrt{\mathcal E/c_0}$, while
+$A_\Gamma p^*=B$. Applying the chosen left inverse gives exactly
+$q-p^*=J_{\rm left}(A_\Gamma q-B)$ and hence
+
+$$
+\|q-p^*\|_\infty\le KL\sqrt{\mathcal E/c_0}.
+\tag{QS.39}
+$$
+
+A law with fewer than $m$ original atoms has fewer than $m$ occupied
+rounding cells, so some $q_i=0$. For that index
+$p_{\min}\le p_i^*=|q_i-p_i^*|$. Inserting (QS.39) and squaring
+proves (QS.37)'s low-height bound. Theorem 3.1 maps every stated original
+competitor to such a law without height optimality, and (QS.29) divides
+the deficit by two. $\square$
+

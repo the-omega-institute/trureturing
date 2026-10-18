@@ -1,0 +1,80 @@
+**Theorem 10.1 (inherited bounds, unchanged).** The affine recovery companion *Shared affine gain and zero-crossing recovery*, Theorems 2.1 and 5.1, gives
+
+$$
+d+5\le C_{\mathrm{fix}}(d)\le\max(d+6,7).
+$$
+
+The upper bound uses a legal nine-operation history and allows every real slope, including every gain zero. These numerical bounds are credited existing results.
+
+Proof of the upper interface. Set $B=\max(d+1,2)$ and record $B$ reads at $I$, then $U,U^2,F,G,H$. The chronological blocks after the initial repeats are $M,J$; $M,J$; $M,M$; $J$; $M,J$, so the history has nine operations and $B+5$ reads. Put $a=\operatorname{tr}S$ and $P(t)=D(t)+a(1+\kappa t)$. This polynomial has degree at most $B-1$; its $B$ initial values determine it by
+
+$$
+P(t)=\sum_{j=0}^{B-1}z_j
+\prod_{\substack{0\le h<B\\h\ne j}}\frac{t-h}{j-h}.
+$$
+
+Each denominator is a fixed nonzero integer. The products take the prescribed values at all nodes, and uniqueness follows from the root argument in Theorem 3.1.
+
+The two shear signals are $a+r$ and $a+2r$. Hence
+
+$$
+v_0=z_B-P(B)=r(1+\kappa B),\qquad
+v_1=\frac{z_{B+1}-P(B+1)}2=r(1+\kappa(B+1)).
+$$
+
+Thus $\eta=v_1-v_0=\kappa r$, $r=v_0-B\eta>0$, and $\kappa=\eta/r$, without dividing by either gain sample.
+
+At each nonzero-gain final position form
+$V_i=(z_i-P(i))/(1+\kappa i)=\operatorname{tr}(A_iS)-a$.
+For $F,G,H$, after subtracting respectively $3r,4r,7r$, these yield
+
+$$
+X=q+3s,\qquad Y=q+2s,\qquad Z=p+q+2s.
+$$
+
+The affine gain has intercept one and at most one zero, so at least two are available. The following three inverses cover every pair:
+
+$$
+\begin{array}{c|l}
+(X,Y)&s=X-Y,\quad q=Y-2s,\quad p=qr/s,\\
+(Y,Z)&p=Z-Y,\quad s=rY/(p+2r),\quad q=ps/r,\\
+(X,Z)&h=Z-X,\quad b=h+3r,\quad
+s=2rX/(\sqrt{b^2+4rX}+b),\quad p=s+h,\quad q=ps/r.
+\end{array}
+$$
+
+For actual positive sources the first denominator is $s>0$, and $p+2r>0$ in the second pair. For the third pair $h=p-s$ and $rX=(p+3r)s$ imply $s^2+bs-rX=0$. Since $rX>0$, exactly one root is positive; rationalizing that root gives the formula, whose denominator is positive because $\sqrt{b^2+4rX}>|b|$. It covers either sign of $h$, either sign of $b$, and $b=0$. Consequently every available pair recovers the true positive source. Set
+
+$$
+D(t)=P(t)-(p+s)(1+\kappa t).
+$$
+
+For $d=0$ the possibly affine part of $P$ cancels exactly, leaving the actual constant drift. For $d\ge1$ the degree bound also holds. Equal data force equal $P,r,\kappa$, the same available pair, and hence equal $S,D$. Proposition 1.1 realizes the entire single-source history. This proves the upper interface, including every zero-gain case.
+
+Proof of the lower interface. Use the injective actual-target chart
+
+$$
+\mathcal V=(0,\infty)^3\times\mathbb R^{d+2},\qquad
+(p,q,r,\kappa,\delta_0,\ldots,\delta_d),
+$$
+
+$$
+S=\begin{pmatrix}p&q\\r&qr/p\end{pmatrix},\qquad
+D(t)=\sum_{h=0}^d\delta_ht^h.
+$$
+
+Its dimension is $N=d+5$, and every point has the positive realization of Proposition 1.1. For any fixed $m$-read history the observation map $F:\mathcal V\to\mathbb R^m$ is smooth with components
+
+$$
+F_i=(1+\kappa i)\left((A_i)_{00}p+(A_i)_{10}q+(A_i)_{01}r
+ +(A_i)_{11}\frac{qr}{p}\right)+\sum_{h=0}^d\delta_hi^h.
+$$
+
+Suppose $m<N$ and let $\rho$ be its largest attained Jacobian rank. Then $\rho\le m<N$. If $\rho=0$, integration of the zero derivative along line segments in a small convex ball shows that $F$ is constant there, giving distinct actual targets with identical observations.
+
+If $\rho>0$, choose a nonzero $\rho$-minor at a point. On a sufficiently small neighborhood it stays nonzero, and maximality of $\rho$ makes the total rank exactly $\rho$. Permute coordinates and outputs to put this minor in the first $\rho$ coordinates and components. The implicit function theorem makes the level set of those first components through the point a smooth graph over a small open ball in the remaining $N-\rho>0$ coordinates. At every graph point, all other output differentials are linear combinations of the first $\rho$ output differentials, since those rows are independent and the total rank is $\rho$. They therefore vanish on all graph tangent vectors. Integrating along paths in the connected graph patch makes all output components constant. The graph contains distinct actual targets, proving noninjectivity.
+
+If a fixed protocol stops early, extend its predetermined history to its claimed uniform bound. Equal complete observations give equal prefixes and the same stopping decisions, so the padded collision still prevents recovery. This smooth fixed-history argument does not establish an adaptive lower bound. ∎
+
+For finite proposed data on the upper-bound history, positivity and rank one of the decoded $S$, the declared degree of the decoded $D$, and every actual observation equation, including all gain-zero positions, are necessary and sufficient for common-source compatibility. Necessity follows from the inverse just proved. For sufficiency choose $\alpha=1,R=S,\beta=\kappa$ and the positive factorization in Proposition 1.1; the checked equations realize all the proposed readings on that one history. Under its injectivity the representation fibre is precisely Proposition 1.1.
+

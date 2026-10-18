@@ -1,0 +1,69 @@
+### 推论 459.2（Robin 三项账本的可检验充分条件）
+
+在 §458 的严格自匹配根上，若 $P\ge x_0$，则
+
+$$
+\boxed{
+\Delta_{\rm Robin}
+\ge
+\log\frac{\log t}{\log P}
+-\log(1+\delta_+)
++\mathcal A_P(\varepsilon_*)
++\mathcal L_P(\varepsilon_*).
+}
+\tag{459.3}
+$$
+
+因此定义所需的剩余阈值
+
+$$
+\Theta_+(P,t;x_0,\ell)
+=
+\max\!\left\{0,
+\log\frac{(1+\delta_+(P;x_0,\ell))\log P}{\log t}
+\right\},
+$$
+
+则下面的联合条件足以推出严格 Robin 不等式：
+
+$$
+\boxed{
+\mathcal A_P(\varepsilon_*)+\mathcal L_P(\varepsilon_*)
+>\Theta_+(P,t;x_0,\ell).
+}
+\tag{459.4}
+$$
+
+还可以丢弃连续价格衰减这一非负项，得到较强但更直接的 floor 证书：
+
+$$
+\boxed{
+\mathcal L_P(\varepsilon_*)
+>\Theta_+(P,t;x_0,\ell)
+\quad\Longrightarrow\quad
+\Delta_{\rm Robin}>0.
+}
+\tag{459.5}
+$$
+
+由（457.4），一个完全逐素数、可由 FIB 观察继续攻击的充分条件是
+
+$$
+\boxed{
+\sum_{p\le P}
+\frac{p^{-Y_p(\varepsilon_*)}}{1-p^{-Y_p(\varepsilon_*)}}
+\{Y_p(\varepsilon_*)\}\log p
+>
+\Theta_+(P,t;x_0,\ell).
+}
+\tag{459.6}
+$$
+
+**证明。** 将（459.2）的上界代入（458.2），并用
+$\mathcal A_P\ge0$、（457.4）的取整损失下界，即得（459.3）--（459.6）。
+$\square$
+
+式（459.4）是有限尺度的充分判据。完整 CA 指数向量与自匹配条件足以确定
+其全部量；FIB 同余与支撑单独则不足。这里需要的是足够强的联合估计，而不能
+把完整补偿拆分后当成两份独立增加的预算。
+

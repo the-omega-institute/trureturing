@@ -1,0 +1,11 @@
+### 推论 60.2（FIB 隐藏核与静态场）
+
+离散更新族 \(F_a:V\to V\) 的观察商 \(P\) 具有自治闭合，当且仅当每个 \(F_a\) 保持 \(\ker P\) 所定义的等价关系；线性生成元版本是
+\[
+L(\ker P)\subseteq\ker P.
+\]
+因此 FIB 或三维 \(q\) 只有在 hidden kernel 对全部 transport、CPTP 或 Hamiltonian 更新不变时，才形成自治静态场。否则精确约化动力学必含记忆项。定理 51.2 的 \(t^2\) 压缩缺陷是这一充要条件失败的有限可计算证书。
+
+该定理只涉及有限维线性代数和矩阵指数。它不把 \(P\) 解释为物理测量，也不推出引力或 RH。相关行为商的最大不动点版本见 dev 的 [COMPUTATIONAL BEHAVIOR REPRESENTATION THEORY](https://github.com/the-omega-institute/trureturing/blob/dev/docs/develop/theory/COMPUTATIONAL_BEHAVIOR_REPRESENTATION_THEORY.md)。
+
+

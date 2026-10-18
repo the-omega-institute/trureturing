@@ -1,0 +1,9 @@
+**约定 5.1（既有正词对的显式实例）。** 取
+
+$$
+P_0=baaab,\quad P_1=ababa,\qquad
+Q_0=babab,\quad Q_1=abbba.
+$$
+
+它们分别是既有 `PositivePairFiltration.positivePairWords` 在三级索引 $(a,b,a)$、$(a,b,b)$ 的两对正词，顺序为 $(P_1,P_0)$、$(Q_1,Q_0)$。递归从 $(a,\epsilon)$ 起，二级为 $(ab,ba)$，下一步 $(h,k,c)\mapsto(hck,kch)$ 就给所列字串；没有新定义通用正词对机制。
+

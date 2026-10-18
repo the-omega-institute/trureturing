@@ -1,0 +1,24 @@
+**Theorem 62.2 (literal statistics, full carrier and the same-L pair field).** On the full qubit carrier, $P_p(1,\xi)=e^{-i\xi n_p}$ and $B_{pq}(1,\xi)=e^{i\xi(b_p^*b_q+b_q^*b_p)}$, including their vacuum and double-occupation entries. Consequently their installed one-body generator on (62.1) is exactly the hard-core operator in (62.2). Its diagonal counts inherited exterior and collision killing; it is not the Laplacian obtained by counting only allowed configuration moves. It is not an exterior-power substitution for the literal gates.
+
+For all addresses $p,q$ in the same infinite rooted occurrence tree, let $p\wedge q$ be their longest common prefix and let $d(p,q)=|p|+|q|-2|p\wedge q|$. Then
+
+$$
+G^{\rm c}(p,q)=\frac23\,2^{-d(p,q)}+\frac13\,2^{-(|p|+|q|)}.
+\tag{62.3}
+$$
+
+It is the kernel of the already installed $L^{-1}$, not a new pair-field supplier. For every authentic $D$,
+
+$$
+0<G_D^{\rm k}(p,q)\le G^{\rm c}(p,q),\qquad
+0<L_D^{-1}\le\lambda^{-1}I,\qquad
+0<P_DL^{-1}P_D\le\lambda^{-1}I.
+\tag{62.4}
+$$
+
+Proof. The generator $b_p^*b_q+b_q^*b_p$ interchanges $10,01$ and kills $00,11$. Exponentiation gives exactly (60.2), including phase one on $11$. Operators at distinct sites commute; a permitted hop has coefficient $-a$ with no ordering sign. Embed $e_S$ into the normalized symmetric sum of the $N!$ ordered distinct-site tensors. Compression of $\sum_{i=1}^N L_D^{(i)}$ to these tensors gives diagonal $\sum_{p\in S}d_p$ and coefficient $-1$ for each allowed single-site replacement. A replacement onto an occupied site is projected out; its inherited diagonal contribution remains. This proves the operator correspondence and, from §55's gap, $K_{D,N}\ge N\lambda I$. The normalized symmetric embedding is a proof device, not a carrier copy or a preparation permission.
+
+For (62.3), fix $q$. At each nonroot $p\ne q$, the distance term satisfies $3f(p)-f(p^-)-f(pL)-f(pR)=0$. At $p=q\ne o$ its value after applying $L$ is $3(2/3)-3(1/3)=1$. The depth term is harmonic off the root. When $q\ne o$, the distance term's root residual is $-(1/3)2^{-|q|}$, canceled by the depth term's root residual $+(1/3)2^{-|q|}$. When $q=o$, both terms combine to $2^{-|p|}$ and the root residual is one by (55.5). Each column is square summable: split into the finitely many branches meeting the root-to-$q$ path and use the geometric sum $\sum_{j\ge0}2^j4^{-j}$. Hence $LG^{\rm c}(\cdot,q)=e_q$ in $\ell^2$. The positive gap makes this column $L^{-1}e_q$ uniquely.
+
+For the entrywise comparison use $L=3(I-P)$, with $P=I-L/3$ the nonnegative substochastic/compression matrix of §55. The parent–child adjacency has norm at most $2\sqrt2$: sum $2|f(p)f(pz)|\le2^{-1/2}|f(p)|^2+2^{1/2}|f(pz)|^2$ over the two children. Hence $\lambda I\le L\le(3+2\sqrt2)I=(6-\lambda)I$, and $\|P\|\le1-\lambda/3<1$. The inverse is $\frac13\sum_{n\ge0}P^n$. Compressing after every factor retains only paths staying in $D$; compressing the infinite inverse retains all paths with endpoints in $D$. All terms are nonnegative and some finite path connects every two sites. This proves the entrywise assertions. The operator inequalities follow directly from the gap, and do not assert that an arbitrary entrywise comparison is an operator comparison. $\square$
+

@@ -1,0 +1,21 @@
+### 定义 7.1（无相邻支持）
+
+令
+
+\[
+\Sigma_n=
+\{I\subseteq[n]:i\in I\Rightarrow i+1\notin I\}.
+\]
+
+含 \(k\) 个元素的合法支持数为
+
+\[
+N_{n,k}=\binom{n-k+1}{k}.
+\]
+
+总状态数为
+
+\[
+V_n=\sum_kN_{n,k}=F_{n+2}.
+\]
+

@@ -1,0 +1,16 @@
+**定义 13.5.1（代数未来锥）。** 对输入区域 $A$，定义
+
+$$
+\mathcal K_n(A)=\operatorname{span}\{G^k\psi: \psi\in\operatorname{ran}P_A,\ 0\le k\le n\},
+$$
+
+以及稳定锥
+
+$$
+\mathcal K_\infty(A)=\sum_{k\ge0}G^k\operatorname{ran}P_A.
+$$
+
+它是包含 $A$ 的最小 $G$-不变子空间。
+
+<a id="claim-13-5-2"></a>
+

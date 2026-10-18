@@ -1,0 +1,18 @@
+## 311. The two-upper-gap case first gives at most three
+
+Suppose v>m-2. No flat has any of M,Z,U,V transversely, so every flat
+has reservoir pair {C,D}. At least one selected H axis is present in
+each flat. Choose its largest selected H value x. As in Section310,
+axial flatness implies x>=1+c+d, so X cannot be C or D. It is not Z,
+which has p_Z=0. Thus every flat selects at least one of M,U,V.
+
+Each of these three genuinely witnessed labels has at most one pi
+slot, so there are at most three actual flat owners. Suppose there
+are exactly three. Each must use exactly one of the available M,U,V
+slots, and all three are used. Therefore p_M=p_U=p_V=1 and
+m-2<u,v<=m. Every H label except Z has value at most m, and z>m.
+For each flat, its selected label X in {M,U,V} is its largest H axis:
+its other axis cannot use another one of M,U,V, since the three owners
+already require all three distinct slots. Hence each chosen X satisfies
+x>=1+c+d as well as x>m-2.
+

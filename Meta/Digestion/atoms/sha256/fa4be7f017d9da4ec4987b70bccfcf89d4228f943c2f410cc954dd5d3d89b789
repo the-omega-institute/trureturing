@@ -1,0 +1,15 @@
+**复用 25.3（一次出生的准确局部式）。** 令 $b_L=\beta,b_R=\alpha$。运输与记忆卷 (RA.2205)、(RA.2321) 对全部原树给出
+
+$$
+r_{\rho v}(p)=
+\begin{cases}
+\beta,&r_v(p)=\alpha,\\
+\mathsf{branch},&r_v(p)\in\{\beta,\mathsf{branch}\},\\
+b_d,&r_v(p)=\mathsf{absent},\ p=hd,\ r_v(h)=\beta,\\
+\mathsf{absent},&r_v(p)=\mathsf{absent},\ p=hd,\ r_v(h)\ne\beta.
+\end{cases}
+\tag{SLH.25.4}
+$$
+
+根在非空树中不缺席，故最后两项无根的例外待填。旧不存在父下面的更深位置不能在同一步出生。特别地，$v=\alpha$ 与 $v=\beta$ 都可给已取得行 $[(L,\mathsf{absent})]$，但其新 $L$ 分别为缺席与 $\beta$；缺席不能逐地址恒定运输为缺席。此处直接调用既有出生式，不将它另计为新增结果。
+

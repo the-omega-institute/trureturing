@@ -1,0 +1,25 @@
+**Definition 15.1 (the matching-population COK functional).** At a
+positive matching law let $B_{i,1},\ldots,B_{i,k_i}$ be the whole
+incoming groups of block $i$. Define, using (COK.12),
+
+$$
+\begin{aligned}
+\mathcal U_{\mathcal N}(p;\boldsymbol w)
+ &=\sum_i\left[\sum_{A\subseteq[k_i]}\gamma_{k_i}(A)
+        H_{p_i}(O_i\mid B_{i,A})
+             +\mathbb E_{p_i}\log_2 w_i(x_i)\right],\\
+\operatorname{TC}_{p_i}(I_i)
+ &=\sum_{g=1}^{k_i}H_{p_i}(B_{i,g})-H_{p_i}(I_i),\\
+\mathcal I_{\rm cov}(p)
+ &=\sum_i\left[\operatorname{TC}_{p_i}(I_i)
+       +\sum_{A\subseteq[k_i]}\gamma_{k_i}(A)
+          I_{p_i}(O_i;B_{i,A^c}\mid B_{i,A})\right].
+\end{aligned}
+\tag{COK.73}
+$$
+
+Empty tuples have entropy zero, and their total correlation is zero.
+Each entropy or conditional information uses its displayed single
+local law $p_i$. Neither independence of incoming groups nor a
+common Gibbs law for these different $p_i$ is assumed.
+

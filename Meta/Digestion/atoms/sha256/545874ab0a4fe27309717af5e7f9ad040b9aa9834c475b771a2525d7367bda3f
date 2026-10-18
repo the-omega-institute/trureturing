@@ -1,0 +1,12 @@
+## 296. Assumptions and statement
+
+Retain the assumptions of Section 130: an actual finite ideal face
+pairing with connected circular edge links, every original degree at
+least six, fixed vertex-induced paired frames (R,A,B,O,A,B) with
+A,B in H and A!=B, one common positive generalized length field, and
+all original angle sums 2*pi. Axes can repeat and self-gluings are
+allowed. There is no bound on the number of reservoir labels.
+
+Assume a flat exists. Choose M maximal in cosh-length among all
+pi-selected reservoir labels, and write m=x_M, as in Section 132.
+

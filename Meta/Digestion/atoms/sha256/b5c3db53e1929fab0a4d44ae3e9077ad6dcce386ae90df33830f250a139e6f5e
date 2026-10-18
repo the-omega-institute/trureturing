@@ -1,0 +1,24 @@
+**Definition 208.6 (Relocated carrier and ordered statistics).**
+For nonnegative $c_1,c_2,p_1,p_2,\gamma_3,\ldots,\gamma_L,t$, let
+$r_a=c_a+p_a$, $S=p_1+p_2$, $Z=E+S$, and $W=Z+t$.
+For a multiset $D$, let $\operatorname{top}_k(D)$ be the sum of its
+$k$ largest entries, padding with zeros. Put
+
+$$
+\begin{aligned}
+D&=\{\gamma_3,\ldots,\gamma_L,t\},&
+M_k&=\operatorname{top}_k(D),\\
+U_2&=\operatorname{top}_2(\{\gamma_4,\ldots,\gamma_L,t\}),&
+q_3&=\operatorname{top}_3(\{r_1,r_2\}\cup D),\\
+h&=\max(Z/2,c_1,c_2),&
+B_*&=\max(M_3,h+M_2,Z+M_1).
+\end{aligned}
+\tag{208.21}
+$$
+
+The fixed-total family $\mathcal A(c_1,c_2,\gamma,S,t)$ consists of
+all input scores with these correct totals, total early pair mass $S$
+and terminal $t$. Its pair split and every correct or pair suffix
+are free, including early $00$. It fixes neither the actual measure
+(208.2) nor unary correct marginals.
+

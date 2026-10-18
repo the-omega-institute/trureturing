@@ -1,0 +1,4 @@
+# Six-read constant-drift recovery and different-slope collisions
+
+Six exact scalar reads on one predetermined forward history recover the complete effective target for constant additive drift and every real affine-gain slope. On that same history, allowing affine additive drift produces a different phenomenon: every prescribed-slope slice is injective, but distinct positive slopes have explicit positive-source collisions. The unrestricted minimum over all fixed histories remains unresolved.
+

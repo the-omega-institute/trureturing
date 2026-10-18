@@ -1,0 +1,13 @@
+**构造 12.4（One paid terminal block in the obstructed case）。** In the saturated coprime case with $C\ne D$, use Construction 12.1 for the first $d$ queries. Its outside sources have all stopped with their immutable labels by total fee $1+d$. Its endpoint responses remain equal by (12.7), but the endpoint phases have not merged. To finish, let
+
+$$
+t=d+1,\qquad a=tm\pmod T,\qquad W_t=[tm,tm+m]\pmod T.
+\tag{12.9}
+$$
+
+Choose $h\in H\cap W_t$ and $e\in W_t\setminus\{a,0,m\}$. Assign charge one exactly at $h,e$ and zero at the other full-path vertices, then issue its complete inverse (1.5).
+
+These choices always exist. For $n\ge3$, $d\le n-1$, so $d+1\le p-2$. Coprimality implies $a\notin H$: equality to zero would require $d+1\equiv0\pmod p$, and equality to $m$ would require $d\equiv0\pmod p$. Neither is possible. The complementary arc of $W_t$ has $r-1$ vertices. It cannot contain both zero and $m$, whose two cyclic separations have $r$ and $m>r$ edges. Hence the path contains at least one endpoint $h$, distinct from its left vertex. Finally $|W_t|=m+1\ge4$, so deleting its left vertex and both endpoints leaves a donor $e$.
+
+The two charges have even parity and the left charge is zero, so the inverse starts zero. It safely clears the continuing endpoint sources' common tail and has no internal forbidden run. Its endpoint difference is one at $h$ and zero at the other endpoint, returning $C,D$. The donor is outside the continuing $H$ archive; using its literal charge does not combine histories or require a response from an already stopped outside source. This is one predetermined terminal block, charged in full. The total worst fee is $1+d+1$.
+

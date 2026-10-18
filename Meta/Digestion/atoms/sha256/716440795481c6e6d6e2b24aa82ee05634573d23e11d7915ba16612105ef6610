@@ -1,0 +1,39 @@
+## 255. The split return is impossible
+
+Assume the exceptional role. Rho's two unused face occurrences have
+three distinct labels {U,M,Z}. They cannot meet tau's unused faces
+{D,M,C}. If they pair to one another, rho's unique U normal interval
+closes, giving degree(U)=1. All these faces are marked, so their partners
+belong to K. The remaining possibilities are a double return to one
+of eta,xi or a split return, one face to each.
+
+Suppose the return splits. Each of eta and xi has an incoming face with
+three distinct high labels. Its transverse pair is two of these labels
+and an incident axis is the third. If the owner is not entirely high,
+its other axis is outside P; a special axis is excluded by the fixed
+high-pair condition. Thus this other axis is C or D and is its unique
+occurrence of that low label. Every face of either such owner is marked.
+Every face of an entirely high owner is marked as well, because its
+transverse labels are distinct and high.
+
+If neither is entirely high, each has at most two U slots: one if U is
+its high axis, or two if U is transverse. Tau has no U and rho has one.
+Every U-incident face of these core owners is marked and therefore pairs
+within K. Their nonempty set of U normal intervals is closed and has
+at most 1+2+2=5 original slots. It must equal the whole connected normal
+circle of the actual U edge, contrary to minimum degree six. This
+argument includes every possible choice of the high axis.
+
+Both eta and xi cannot be entirely high by the at-most-one theorem.
+If exactly one is entirely high, denote the other by eta and its low
+axis by B. Eta's two B-incident faces have multiset {B,A1,A2}, where
+A1,A2 are two distinct P labels. They are marked and cannot be the
+incoming {U,M,Z} face. They cannot pair to tau, whose unused faces have
+only one distinct P label; rho has all four faces occupied; and xi,
+being entirely high, has no B face. Within eta the only B faces are
+these two. Thus they must pair to each other. Since B occurs exactly
+once in eta, the two ends of that original B normal interval close,
+forcing degree(B)=1. All alternatives contradict the hypotheses.
+This proof uses the connected actual edge circle, not connectedness of
+an arbitrary marked-face graph.
+

@@ -1,0 +1,22 @@
+**Corollary 16.7 (the scoped task-kernel obstruction).** On either displayed
+finite extension class, $\ker(T)\subsetneq\ker(Q)$. Any natural view $V$ that
+retains the differing immutable ingress header or full chronology is also
+strictly finer than $Q$ on the exhibited fibre. A terminal-type coincidence
+alone is insufficient: the equality of $Q$ additionally uses the same actual
+terminal target/output and the absence of an enabled original posthalt audit.
+
+**Proof.** Determinism gives $T\sim_TT'\Rightarrow T\sim_QT'$, hence
+$\ker(T)\subseteq\ker(Q)$. Theorem 16.4 or Proposition 16.6 supplies a pair
+in the reverse difference. A view retaining the differing cell or ordered
+primitive word separates that pair. The qualification about output and audits
+is exactly the step in the proofs where terminal type is strengthened to an
+equal response map. $\square$
+
+These families do not establish a failure for every task-relative natural
+view. They establish that exact full-history recovery, or any view that keeps
+the displayed terminal distinctions, cannot be identified with the original
+terminal task on these explicitly installed extensions. The fixed-initial-state
+and finite-fragment discipline is the one used by Lynch and Vaandrager,
+*Forward and Backward Simulations*, §3.2, Lemma 3.8 and Theorem 3.10; those
+results supply no reverse decoder or paid owner authority.
+

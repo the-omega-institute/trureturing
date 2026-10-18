@@ -1,0 +1,24 @@
+**推论 7.3.2（因果边界）。** 定义
+
+$$
+\mathcal Z
+=
+\mathcal R/(\mathcal R\cap\mathcal N),
+\qquad
+d_{\mathrm{causal}}=\dim\mathcal Z.
+$$
+
+则 $\mathcal Z$ 的元素恰好是可由允许干预产生、且能被某个未来合法读出区分的状态类。
+
+$$
+\boxed{
+d_{\mathrm{causal}}
+=
+\dim\mathcal R-\dim(\mathcal R\cap\mathcal N).
+}
+$$
+
+这给出一个只依赖接口的因果维数。它不等于 $\dim X$，也不等于单独的可控维数 $\dim\mathcal R$。
+
+<a id="section-7-4"></a>
+

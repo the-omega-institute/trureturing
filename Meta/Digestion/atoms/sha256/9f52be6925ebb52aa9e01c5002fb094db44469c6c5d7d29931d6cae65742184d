@@ -1,0 +1,35 @@
+## 1. Result, proof status and ownership
+
+The maximum finite complex Gram coherence number over the entire original
+five-coordinate invisible skew fiber is exactly four. Every member has an
+actual decomposition into at most sixty complex vectors, each missing an
+original coordinate. The inherited dense negativity maximizer attains four:
+an exact Hermitian witness excludes every finite decomposition of that state
+into complex vectors supported on at most three original coordinates.
+
+This volume supplies complete ordinary finite-dimensional proofs. It is a
+theory reference source, not a Lean or kernel certificate. Its additional
+deductions have status `repo-derived` relative to the supplied mathematics;
+no literature-wide priority claim is made. The document uses `generic-v1`
+numbered claims and retains a terminal append anchor. After incorporation,
+extensions and corrections belong after that anchor in new sections.
+
+The ownership of the ingredients is as follows.
+
+| Mathematical source | Inherited content and contribution used here |
+| --- | --- |
+| [Mixed-state capacity and certification volume, C-106–C-108](AURIC_FIB_ATOM_HIDDEN_RELATIONS_MIXED_STATE_CAPACITY_AND_CERTIFICATION.md) | Exact matched support, the original tensor split and real-skew invisible fiber, purity facts, and conditional local-menu and flag-erasure interfaces. |
+| The same capacity volume, C-109 | The finite complex, fixed-basis definition of coherence number; the coherence/Schmidt/fixed-channel dictionary; and the edge/triangle examples with exact values two and three. C-109.11 leaves the entire-fiber maximum open. |
+| The same capacity volume, C-110 | Necessary relations between finite-block port error and population leakage on the same sources, with their stated scope and limitations. |
+| Supplied volume *FIB invisible fiber: the sharp purity–negativity attainable region*, Sections 4, 8 and 10 | Skew spectral structure, the dense matrix used below, its legality and spectrum, and its negativity-maximizing role. That source owns its sharp purity–negativity region and the construction of that matrix. |
+| Supplied coherence-maximum proposal, `proposed-coherence-maximum.json` | The coordinate-cancellation identity, four-sign spectral mixture, and three-coordinate-positive witness underlying the two bounds below. |
+| Supplied mathematical check, `independent-coherence-maximum-check.json` | Complete algebraic checking of those constructions, including original-coordinate supports, degeneracies, normalization and the direction of the witness inference. |
+
+The increment relative to the two ordinary source volumes is precisely the
+universal finite four-support construction and the all-decomposition lower
+bound for the inherited dense state. The proposal and check supply mathematical
+arguments, not proof premises by virtue of their verdicts. The identities and
+inequalities needed for the result are proved below. The inherited fiber,
+resource dictionary, edge/triangle examples and dense negativity attainer are
+not presented as new constructions of this volume.
+

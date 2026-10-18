@@ -1,0 +1,20 @@
+**Convention 9.2 (finite-interface suppliers do not supply the missing
+operation).** The inspected `result` in [FixedTreeCommonExtension][FTCE]
+assumes a fixed finite full tree with disjoint sibling coordinate sets,
+finite nonempty leaf alphabets and nonempty promise; its local tables
+receive leaf values and complete child-message tuples. Its owning
+[Scribe narrative][FTCES] describes common total extensions and equal
+upward resource closures. A root decoder in that interface is not
+a paid original-root literal. No transfer from that result is used.
+
+The inspected `NativeLiteralFeasible`, `RootLiteralFeasible` and
+`finite_literal_synthesis` in [NativeLiteralMoore][NLM], with its
+[owning narrative][NLMS], concern a fixed prefix-free cut and current
+row, supplied `ImageValues` on a complete predecessor fiber, and
+simultaneous finite export/state/Read/literal budgets. They do not
+acquire that supplied table or supply the original public-late-target
+all-count pressure interface. `join_covers` in [FiniteNaturalJoin][FNJ]
+requires both cover premises on the same full assignment. It supplies
+no global existence or all-size weighted upper here. These source
+inspections are not current compilation or Lean certification.
+

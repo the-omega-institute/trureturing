@@ -1,0 +1,28 @@
+**Corollary 9.2 (the six original beta-pair sums).** Define
+
+$$
+g_y=\left(1-\frac1R\right)
+\left[\sum_iH_{ii}p_{yi}
++b^2\frac y{128}+a^2\frac{64-y}{128}\right].
+\tag{RE.62}
+$$
+
+Write $\rho_{y,\beta,m}$ for (RE.2) with the signs (RE.3).
+For each original $y\in\{5,16,27\}$ and $m\in\{0,1\}$, every
+allowed ceiling factorization satisfies
+
+$$
+p_H^{\rm acq}(\rho_{y,\beta=0,m};\mathfrak F)
++p_H^{\rm acq}(\rho_{y,\beta=\pi,m};\mathfrak F)\geq2g_y.
+\tag{RE.63}
+$$
+
+All six inequalities are equalities for one common construction,
+Definition 5.1 at $s=1$.
+
+Proof. By (RE.3), $W$ sends $(y,e,n)$ to $(y,-e,-n)$, precisely the
+other value of $\beta$ at fixed $y,m$. Evaluating the diagonal effect
+(RE.61) gives (RE.62) on either member. Apply Theorem 9.1.
+All twelve histories, not only a subset chosen for a lower witness,
+remain prescribed in the original error task. $\square$
+

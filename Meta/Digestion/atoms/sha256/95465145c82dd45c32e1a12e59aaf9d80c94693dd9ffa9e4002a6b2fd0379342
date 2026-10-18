@@ -1,0 +1,19 @@
+**定义 42.1（偏向叶的代码骨架）。** 本节固定 $H=\varnothing,N=0$，给定全部原树上一个已达到的联合码 $\mathbf c$。重复地址的码必须相同，构造时先去重，输出仍保留原位置字典。定义有限带孔骨架 $S_Q(\mathbf c)$；孔 $\square$ 可以填入任意非空有限满树。递归到地址 $p$ 时，其严格祖先已取分支；令 $Q_p=\{q\in Q:p\preceq q\}$。
+
+- 若 $Q_p=\varnothing$，置孔 $\square$ 并结束该支。
+- 否则，对 $\lambda\in\{\alpha,\beta\}$ 检查“在 $p$ 放该叶”是否给出 $Q_p$ 的全部指定码：若 $q=p$，用存在码 $\mathsf A$ 或 $\mathsf B$；若 $p\prec q$，用 $\mathsf D_{A_q-w(p)+2-b}$，其中 $\lambda=\lambda_b$。若匹配，放该叶并结束该支。
+- 若两种叶都不匹配，放分支并递归 $pL,pR$。如果 $p\in Q$，达到性保证其码是 $\mathsf C$。
+
+同一个非空 $Q_p$ 不可能同时匹配两种叶，因为任一坐标的两种码不同。每次分支向有限 $P_Q$ 的下一级走，离开 $P_Q$ 就放孔，所以这是给定码后的有限整数／字串构造，没有取得实际来源或调用语义 oracle。达到性的有限判定仍由 §39 供应；本定义的输入已经通过该条件，不把任意不相容元组当作达到码。
+
+定义可展开位置集
+
+$$
+F_Q(\mathbf c)=\{p:S_Q(\mathbf c)\text{ 在 }p\text{ 放 }\beta,
+\quad\varnothing\ne Q_p\subseteq pL\{L,R\}^{+}\},
+\qquad k_Q(\mathbf c)=|F_Q(\mathbf c)|.
+\tag{SLH.42.1}
+$$
+
+这里严格要求菜单在 $pL$ 下方，$p$ 与 $pL$ 自己都不能是这些任务。由于 $F_Q$ 是骨架叶的子集，它是前缀反链。给每个 $p\in F_Q$ 一位 $e_p$：零保留 $p:\beta$，一将它换成 $p:\langle\alpha,\square\rangle$。其余骨架不变。记所成带孔树为 $S_Q(\mathbf c;e)$。
+

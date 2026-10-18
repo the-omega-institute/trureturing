@@ -1,0 +1,10 @@
+## 16. Compact complete-law circulation and finite own-law regeneration
+
+Fix the original once-$K$ source of Definitions 1.1–1.3, with one installed finite or countable prior $\mu$, positive endpoint masses, and at least one supported depth $k\ge3$. All supported interior depths are retained. Write
+
+$$
+R_\mu=\overline{\{r_k:\mu(k)>0\}}\subset[1/3,2/5].
+$$
+
+This is the parameter support closure; $\mathfrak S_\mu$ continues to denote the class of finite regular stationary tables in Corollary 2.3. The objective uses configuration-before-TV on the complete carrier, with the supremum over all original positive paid histories; law-order comparisons are auxiliary. The raw-law notation removes only the deterministic current-record rendering $I_c$; it does not remove Reads, records, permissions, completion, matching Stop or delivery. The stationary realization, parameter continuity, finite cells and two-phase contraction of §§2, 5 and 9 are reused. The additional bridge is from arbitrary feasible complete-law edge measures to actual finite tables.
+

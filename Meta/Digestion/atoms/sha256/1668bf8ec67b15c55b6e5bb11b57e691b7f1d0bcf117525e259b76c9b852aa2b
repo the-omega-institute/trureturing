@@ -1,0 +1,15 @@
+**Definition 4.1 (limiting correspondence problem).** For finite
+$\lambda\ge C_{\rm end}$ put
+
+$$
+\Phi(\lambda)=\max\left\{
+\int k(z,w)_+d\nu:\ \nu\ge0,\quad
+\int nn^T d\nu=M,\quad\int F_c(z^2)d\nu\le\lambda
+\right\}.
+\tag{JS.20}
+$$
+
+The measure is on the whole compact ellipse, including its axes.
+This definition is an intermediate optimization, not an evaluated
+scalar crossover.
+

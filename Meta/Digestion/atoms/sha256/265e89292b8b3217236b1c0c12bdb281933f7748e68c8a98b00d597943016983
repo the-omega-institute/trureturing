@@ -1,0 +1,40 @@
+**Corollary 7.1.** For every integer $q\ge1$, set
+
+$$
+m=5q,\quad k=7q-1,\quad T=7q,\quad g=q,
+\quad J=\{q,2q,3q,4q,6q\},\quad H=\{4q\},\quad O=\{2q\},
+$$
+$$
+\lambda_0(j)=\mathbf1_{\{2q\}}(j),\qquad
+\lambda_1(j)=\mathbf1_{\{2q,6q\}}(j).
+\tag{7.1}
+$$
+
+Use these literal labels $0,1$, fresh $R,C$ and arbitrary bottom in the entire target (1.2). Then
+
+$$
+C_{\rm ad}(f)=2,\quad C_{\rm pre}(f)=3,
+\qquad K_{\min}^{\rm GLOBAL}(3;f)=N+5,
+\quad K_{\min}^{\rm GLOBAL}(4;f)=N+4.
+\tag{7.2}
+$$
+
+Proof. Both diagonal pairs occur, so $\mathsf B$ fails. Homogeneous $H$ fixes the orientation in $\mathsf A$. For component zero, phase $q\in M_0$ needs shifted charge one, but $q-m=3q$ has charge zero. For component one, phase $2q\in M_1$ needs shifted charge one, but $2q-m=4q$ lies in $H$. The reused [OWN, Theorem 9.2] therefore gives the deadline-three lower value $N+5$.
+
+Condition $\mathsf R$ holds with $v=0,w=1$, $z=0$,
+
+$$
+B=0^q1^{3q}0^q,\quad I=\{2q,6q\},\qquad G(0)=1,\quad G(1)=0.
+$$
+
+Translation by $-2m$ sends $2q,6q$ to $6q,3q$, with matching literal labels $1,0$. The complete raw table is
+
+| Row | Word | Endpoint 0 | Endpoint 1 | Bottom |
+| --- | --- | --- | --- | --- |
+| $a_0$ | $1^{5q}$ | $b_0$ | $H_C$ | $H_R$ |
+| $a_1$ | $1^{5q}$ | $H_C$ | $b_1$ | $H_R$ |
+| $b_0$ | $B$ | $H_0$ | $a_1$ | $H_R$ |
+| $b_1$ | $B$ | $H_1$ | $H_0$ | $H_R$ |
+
+Initialization, all Halt self-updates, exact unions and ranks are (6.4)–(6.5). Every one of the $98q-13$ jointly actual INITIAL records, including bottom, is included. Some sources issue all four blocks; the common optimal fee remains three because a different controller attains it. Complete states drop from nine to eight when bottom uses an existing output, and from ten to nine when its label is fresh. The dictionary has two words and $10q$ expanded bits; the four-block prefix has $20q$ bits. Those lengths are not complete-state counts. ∎
+

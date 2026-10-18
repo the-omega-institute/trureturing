@@ -1,0 +1,84 @@
+## 8. 统一锥坐标：把三维底座和隐藏纤维放到同一个状态空间
+
+令 \(r=1-Z\)。在 \(r>0\) 时再归一化底部四态：
+
+\[
+\alpha=\frac{X}{r},\qquad
+\beta=\frac{Y}{r},\qquad
+\eta=\frac{\kappa}{r}.
+\]
+
+于是
+
+\[
+p=
+\bigl(
+r(1-\alpha-\beta+\eta),\
+r(\alpha-\eta),\
+1-r,\
+r(\beta-\eta),\
+r\eta
+\bigr),
+\]
+
+并且
+
+\[
+\max(0,\alpha+\beta-1)
+\le\eta\le
+\min(\alpha,\beta).
+\]
+
+这说明完整概率空间可以看成底部四态单纯形沿 \(r\in[0,1]\) 的锥化。\(r=0\) 时所有 \((\alpha,\beta,\eta)\) 都塌缩到同一个 apex \(p=\delta_3\)，所以它不是普通的全局积空间，而是边界退化的区间纤维化：
+
+\[
+\mathcal E=
+\{(r,\alpha,\beta,\eta):0<r\le1,\ \eta\in I(\alpha,\beta)\}
+\cup\{\delta_3\}.
+\]
+
+三维金字塔是忘掉 \(\eta\) 后的商：
+
+\[
+(X,Y,Z)=(r\alpha,r\beta,1-r).
+\]
+
+在这个坐标中，
+
+\[
+\kappa=r\eta,\qquad
+\kappa_*=r\alpha\beta,\qquad
+\Delta=r^2(\eta-\alpha\beta),
+\]
+
+\[
+w_\kappa
+=
+r\min\{\alpha,\beta,1-\alpha,1-\beta\}.
+\]
+
+因此隐藏纤维的绝对长度按 \(r\) 缩放，关联 determinant 按 \(r^2\) 缩放，而条件分布中的关联 \(\eta-\alpha\beta\) 可以保持 \(O(1)\)。
+
+在 \(0<r<1\) 且底部四格 \(q_i>0\) 的内部，概率 Fisher 度量在这个分解下满足
+
+\[
+ds_F^2
+=
+\frac{dr^2}{r(1-r)}
++
+r\,ds^2_{F,\Delta^3}(q),
+\]
+
+其中 \(q\) 是底部四态条件分布。沿隐藏方向的度量为
+
+\[
+g_{\eta\eta}
+=
+r\left(
+\frac1{q_0}+\frac1{q_2}+\frac1{q_5}+\frac1{q_{25}}
+\right).
+\]
+
+这给出一个很重要的区分：Fisher 几何告诉我们哪些方向在统计上可辨识，Onsager mobility 则决定动力学实际沿哪个方向耗散。二者可以一起使用，但不能直接视为同一个 metric。
+
+

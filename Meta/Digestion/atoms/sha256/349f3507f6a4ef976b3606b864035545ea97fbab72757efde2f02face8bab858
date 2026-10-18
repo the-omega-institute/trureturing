@@ -1,0 +1,42 @@
+### 76.3 Two normalized coherent tests select an actual anchor
+
+By §72's resource-preserving calibration theorem, any original product has a calibrated product replacement of no greater diamond error. It suffices to prove (1) for that replacement; for the remainder of the proof let δ denote its error. This reduction preserves the number of product branches, and no claim about preservation of its original environment dimensions is needed here.
+
+A calibrated product has local Stinespring records a_(f,0),a_(f,1) and b_(f,0),b_(f,1), orthonormal within each fibre, with unrestricted common local environment spaces. Put
+
+    x_(f,i)=a_(f,i)⊗b_(f,i),
+    c_f=(x_(f,0)+x_(f,1))/sqrt(2),
+    d_f=(x_(f,0)−x_(f,1))/sqrt(2).
+
+Let C and M be their k×k Gram matrices, C_fg=<c_f,c_g> and M_fg=<d_f,d_g>. Each c_f and d_f is a unit vector; within each fibre c_f is orthogonal to d_f. Define the two normalized logical input states
+
+    |ψ_±>=k^(-1/2)Σ_f |f,±>,
+    |f,±>=(|f,0>±|f,1>)/sqrt(2).
+
+After the output MC isometry is removed, the actual outputs are C^T/k and M^T/k respectively. The transpose comes from tracing the environment in the convention Gram_fg=<record_f,record_g>. The ideal outputs are J_k/k and I_k/k. Transposition preserves trace norm, so
+
+    δ≥||C−J_k||₁/k,
+    δ≥||M−I_k||₁/k.                                   (4)
+
+These tests need no reference, but their errors are lower bounds for the full-reference diamond norm. All four output operators in (4), divided by k as displayed, are normalized density matrices. This normalization supplies the trace-zero factor two used below.
+
+Let c̄=k^(-1)Σ_f c_f. Testing the first output difference against the pure uniform state gives
+
+    2(1−||c̄||²)≤δ.                                    (5)
+
+Indeed the difference has trace zero, and the ideal uniform-state expectation is one. Set σ=k^(-1)Σ_f|c_f><c_f|. The Gram representation gives λ_max(σ)≥||c̄||². Since 0≤δ≤2 for channel differences, (5) implies
+
+    Trσ²≥λ_max(σ)²≥(1−δ/2)²≥1−δ.
+
+Average over actual fibre indices a:
+
+    (1/k)Σ_a Σ_f (1−|<c_a,c_f>|²)
+       =k(1−Trσ²)≤kδ.
+
+Therefore some actual c_a, still maximally entangled of Schmidt rank two, satisfies
+
+    s:=Σ_f e_f≤kδ,
+    e_f:=1−|<c_a,c_f>|²∈[0,1].                         (6)
+
+The anchor is c_a, not the mean c̄; no Schmidt-rank assertion about the mean is made.
+

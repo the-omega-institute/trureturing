@@ -1,0 +1,61 @@
+**Corollary 9.9 (Distinct dimensions and retained restrictions).**
+Under Definitions 8.1 and 9.1, the double wall has a three-dimensional
+nonlinear sufficient current-ray state and a three-dimensional real
+native Lie algebra, but infinite all-future fixed affine capacity on
+every domain (9.26). Off that wall the native real Lie algebra is
+infinite dimensional even though the current-ray state remains finite
+dimensional. Neither conclusion changes the current capacities
+$10,6,4$ of Theorem 8.6, the closed-loop fixed-base capacities $6,4,3$
+of Theorem 4.2, or the zero-winding double-wall value $2$ of
+Proposition 4.3. Nor does it give a mean-selection law or a realization
+of physical spatial axes.
+
+Proof. Combine Theorems 9.5, 9.7 and 9.8 on their stated domains.
+For the current-output task only the constant continuation is queried;
+Theorem 8.6 therefore retains its finite factorization. In Theorem 9.8
+the starting height ranges over an open interval even though each
+witness continuation individually fixes that height. This differs
+from a task whose starting probability is fixed once and for all.
+At a single height the frequency $w_0(k)$ in (9.31) is constant,
+and its future pair lies in the span of the current sine and cosine.
+Thus the unbounded-span proof makes no assertion contradicting a
+fixed-probability endpoint capacity or closure.
+
+The original loop conditions further fix the terminal height and
+require an integral relation-phase winding; they define the smaller
+phase domains of Theorem 3.3. On the double wall a command that is
+itself a loop based at its current starting height has $A=0$ and
+$B=2\pi m$, with real phase integral $kB+K$. At the preparation
+height, substitution into (9.11) recovers exactly Theorem 3.7, including
+its parity and negative phase convention. For a preceding prefix with
+real relation increment $L_*$, the total increment instead is
+$L_*+B$; the command winding does not replace that history record.
+Actual zero winding still means the relevant real increment is zero,
+not merely an endpoint phase class. The finite capacities for the
+original restricted tasks are therefore preserved.
+
+The same-source requirement in the
+[observer interface, Hypothesis 10.1 and Theorem 10.2](AURIC_FIB_OBSERVER_INTERNAL_THREE_AXIS_GEOMETRY_AND_PREDICTIVE_INTERFACE.md)
+includes a common linear realization, calibrated distance and all
+generator closure. The
+[harmonic interface, Definitions 9.1 and 12.1](FIB_LEGAL_EDGE_LOAD_SECOND_ORDER_LOSS_LOCALIZATION_AND_LOCAL_TILT_AVERAGING_OBSTRUCTION.md)
+requires rotational intertwining and a shared linear response source,
+respectively. Theorem 9.8 excludes any finite realization of (9.27)
+for the present complete future menu, even with an arbitrary encoder;
+it does not negate those conditional interface theorems for their
+other declared tasks. The Heisenberg algebra and the partial action
+in Theorems 9.3 and 9.5 supply no free $SO(3)$ or $SU(2)$ rotations.
+Definition 3.1 keeps the means fixed and contains no rule selecting
+$X=Y=r/2$. A physical actuator realizing the relative commands, a
+method of acquiring exact expectations, a finite-memory or finite-bit
+implementation, and a mapping to spatial axes are additional bridges,
+not consequences of these source equations.
+
+The source-specific conclusions here concern the lawful family (9.2),
+its exact chronological action, the grouped-pole Lie classification,
+and the independent future responses (9.31). They consume the
+reachability and current observation results of §§3 and 8, and the
+classical chronological and observable-span suppliers at their cited
+entries; they assert no worldwide priority for those suppliers or for
+these ordinary mathematical deductions. $\square$
+

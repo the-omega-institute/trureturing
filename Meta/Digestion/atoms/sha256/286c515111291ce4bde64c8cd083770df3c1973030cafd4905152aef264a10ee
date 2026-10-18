@@ -1,0 +1,4 @@
+**定理 4.3（跨调用封口域的原任务核）。** 对任意上述固定 $P$ 及 $h,k\in\mathcal D_P^{\rm seal}$，分别对每个 $V\in\{S,B,T,M_J\}$ 有 $V(h)=V(k)\Longleftrightarrow h=k\Longleftrightarrow h\sim_Q k$。
+
+证明。此域的原始 Advance 执行成功。若两个 $Q$ 相等，其完整原始后继相等；引理 4.2 从同一旧请求列表和收据数恢复同一后继历史，再去掉最后一行。反向及四视图方向与定理 3.4 相同。它比较的包括不同已完成 source-flight 数和不同实际有限容量，不要求源树或已提交计数相同。$\square$
+

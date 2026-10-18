@@ -1,0 +1,30 @@
+**Convention 2.3 (unchanged mass, cover and rate objectives).** Write
+
+$$
+\begin{aligned}
+A_n^{(d)}(w)&=\max_\Theta\sum_{x\in C_\Theta}\prod_iw(x_i),&
+\beta_d(w)&=\sup_{n\ge1} A_n^{(d)}(w)^{1/n},\\
+\sigma_d&=\inf_{n\ge1}\frac{\log_2K_d(n)}n,&
+2^{-\sigma_d}&=\min_{\mu\in\Delta(S_d)}\beta_d(\mu),\\
+\lambda&=\sup_{d\ge1}2^{-d}\sigma_d,&
+0&\le\lambda-2^{-d}\sigma_d\le2^{-d}\phi.
+\end{aligned}
+\tag{GDB.11}
+$$
+
+Here $K_d(n)$ is the unrestricted admissible cover number,
+$U_0=1,U_{j+1}=1+U_j^2$, and $\phi=\lim_j2^{-j}\log_2U_j\le1$.
+These are [FMR, §6][FMR] and [NPC, §§5–7][NPC] suppliers. All logarithms
+are base two except where $\ln$ is written. A genuine all-template cap
+$\beta_d(\mu)\le C$, $C>0$, gives the credited consequence
+
+$$
+M_1(D)\ge\left\lceil C^{-2^{D-d}}\right\rceil\quad(D\ge d),
+\qquad\lambda\ge-2^{-d}\log_2C.
+\tag{GDB.12}
+$$
+
+The analytical product law in these sums is not a reader input and does
+not make a competing relation independent. [CBN, §§4–6][CBN] likewise
+keeps one common realization and once-owned full block potentials.
+

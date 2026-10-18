@@ -1,0 +1,52 @@
+**Convention 2.1 (the published all-count predictor).** Put
+$s(q)=\#L(q)+2\#R(q)$, and $e(\alpha)=0$, $e(\beta)=1$.
+Use the predictive factor $G_q(u)=(b_q(u),c_q(u))$ of
+[Adaptive Acquired Reference Frontier, Definition 12.2 and Theorem 12.3](RECURSIVE_RELATIONAL_OBSERVATION_ADAPTIVE_ACQUIRED_REFERENCE_FRONTIER.md#12-the-native-spatial-quotient-for-arbitrary-retained-prediction-codes),
+abbreviated AAR. If $q$ is an original branch, $G_q(u)=(0,0)$.
+If the first leaf along $q$ is at $a\preceq q$, with actual label
+$\lambda$ and $q=ar$, then
+
+$$
+G_q(u)=
+\begin{cases}
+(2-e(\lambda),1-e(\lambda)),&r=\varepsilon,\\
+(s(r)+2-e(\lambda),\mathbf1_{r\text{ ends in }R}),&r\ne\varepsilon.
+\end{cases}
+\tag{LTR.3}
+$$
+
+For every finite $u$, word $q$ and $k\ge0$, the supplied theorem gives
+
+$$
+r_{\rho^k u}(q)=\mathsf{Pred}(G_q(u),k),\qquad
+\mathsf{Pred}((b,c),k)=
+\begin{cases}
+\mathsf{branch},&k\ge b,\\
+\beta,&b\ge1\text{ and }k=b-1,\\
+\alpha,&c=1\text{ and }k=b-2,\\
+\mathsf{absent},&\text{otherwise}.
+\end{cases}
+\tag{LTR.4}
+$$
+
+On attained factors $c=1$ implies $b\ge2$. The entire trajectory
+recovers $b$ as the first branch count and $c$ by the presence of an
+alpha stage. Thus factors and trajectories determine each other.
+For $t=\langle\alpha,v\rangle$ and $p=Rq$,
+
+$$
+G_p(t)=G_q(v),\qquad
+r_{\rho^k t}(Rq)=r_{\rho^k v}(q),\qquad b_p(t)\le2D.
+\tag{LTR.5}
+$$
+
+The source correspondence is the pairing homomorphism and
+`original_present_transport` in
+[NativeDepthPatterns](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeDepthPatterns.lean).
+Transport applies only at an actually present original subtree, in
+particular at the blocking leaf of an absent target. The atomic last-edge
+guard in (LTR.3) is essential: an $L$-ending nonempty suffix has no alpha
+stage. The decoder is also AAR Proposition 13.3's $\Gamma_p$.
+These laws and the factor/trajectory bijection are reused suppliers,
+not new recovery theorems.
+

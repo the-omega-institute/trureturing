@@ -1,0 +1,22 @@
+### 66.1 Channel family and resource statements
+
+Let d≥2 and k≥2. The logical input has orthonormal labels |f,i>, with 1≤f≤k and 1≤i≤d; the logical output has labels |f>. Fix MC encodings J_in(|x><y|)=|xx><yy| and J_out(|f><g|)=|ff><gg|. Define the logical map F_(k,d) on all matrix units by
+
+    F(|f,i><f,j|)=δ_ij |f><f|,
+    F(|f,i><g,j|)=(1/d)|f><g|  when f≠g.
+
+This is CPTP. Consider exact physical implementations Φ∘J_in=J_out∘F, where Φ=Σ_(t=1)^r w_t(A_t⊗B_t), all w_t>0, Σ_t w_t=1, and A_t,B_t are arbitrary local CPTP maps C^(kd)→C^k. The same channel must implement every encoded matrix unit, hence all coherent inputs and passive references. Arbitrary local ancillas and physical outputs are allowed; exactness, rather than an imposed ansatz, will force the needed output structure.
+
+The following resource statements hold.
+
+1. A single product channel implements F_(k,d) iff k mutually unbiased orthonormal bases exist in C^d.
+2. Every exact r-branch implementation satisfies
+
+    k(d−1)≤r(d²−1),  hence r≥ceil(k/(d+1)).                 (1)
+
+   More strongly, every branch weight obeys w_t≤(d+1)/k. Its Shannon entropy is therefore at least max{0,log₂(k/(d+1))}.
+3. An exact finite implementation exists for every k,d, with at most d^(k−1) product branches.
+4. If a real Hadamard matrix of order r exists, then for d=2 and k=3r the minimum number of product branches is exactly r, and the minimum Shannon entropy of the shared branch variable is exactly log₂r. More generally the same branch minimum r holds for any 3(r−1)<k≤3r obtained by restricting this construction. For d=2, every restriction to at most three whole fibres admits one product implementation.
+
+The last assertion concerns coordinate-fibre restrictions, not every subspace of the logical input. The entropy counts the shared classical branch variable in an exact finite LOSR decomposition; local private randomness is already absorbed into the arbitrary CPTP factors.
+

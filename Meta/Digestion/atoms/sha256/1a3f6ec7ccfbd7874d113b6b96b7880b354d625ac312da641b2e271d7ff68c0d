@@ -1,0 +1,28 @@
+**定义 3.1（规范窗口中的两个既有固定世界）。** 置
+
+$$
+h(T)=T(T-5)(T-7),\qquad
+R_a=\frac1{55}\begin{pmatrix}12&19\\36&57\end{pmatrix},\qquad
+R_b=\frac1{55}\begin{pmatrix}28&35\\20&25\end{pmatrix},       \tag{3.1}
+$$
+
+并定义完整目标
+
+$$
+\begin{aligned}
+W_a&=\left(\frac1{69}\begin{pmatrix}12&19\\36&57\end{pmatrix},
+                \frac{69\lambda}{55}h,D_0\right),\\
+W_b&=\left(\frac1{53}\begin{pmatrix}28&35\\20&25\end{pmatrix},
+                \frac{53\lambda}{55}h,D_0\right).
+\end{aligned}                                                   \tag{3.2}
+$$
+
+$R_a,R_b$ 是 [IV](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_IV.md) 定理 2.1 的 $R_1,R_3$，也是 V 命题 5.3、11.3 已在互补第四 $J$ 历史上使用的同一对；未归一化多项式为 $\lambda h$。在 V 定理 10.1、11.1 的参数中，它们对应
+
+$$
+y=1632/55,\qquad t=81/88,\qquad
+\ell_a=88/69,\quad \ell_b=88/53.
+$$
+
+这里保留这些既有世界在该同一互补历史上的精确证明，不将它们的互补臂响应另计为新构造。
+

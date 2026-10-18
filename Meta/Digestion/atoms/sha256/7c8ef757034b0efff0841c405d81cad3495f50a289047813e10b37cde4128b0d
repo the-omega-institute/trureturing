@@ -1,0 +1,11 @@
+**Assumption 2.3 (Source moment estimates).** With $s=-\log q\downarrow0$, retain the supplied estimates
+
+$$
+Z_i(e^{-s})=9!s^{-10}(1+O_H(s)),
+\qquad \mu_i(e^{-s})=\frac{10}{s}+O_H(1),
+\qquad \beta_i(e^{-s})=\frac{11}{2s}+O_H(1).
+\tag{2.8}
+$$
+
+These are equation (23.7) of the continuation, also equation (2.8) of the uniform companion. The source attributes them to its polynomial-geometric moment suppliers. The source-only threshold used below will require only the consequences $Z_0(e^{-s})\ge(9!/2)s^{-10}$ and $\mu_0(e^{-s})\ge5/s$ on a sufficiently small neighborhood.
+

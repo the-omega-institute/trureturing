@@ -1,0 +1,14 @@
+\operatorname{tr}
+\left[
+\mathcal L(\rho_t)
+(\log\rho_t-\log\sigma)
+\right].
+\]
+对 \(\mathcal L=\sum_e\mathcal L_e\) 分解，得到
+\[
+\frac{d}{dt}D(\rho_t\Vert\sigma)
+=
+-\sum_e\Sigma_e(\rho_t).
+\]
+每个 \(\Sigma_e\ge0\) 来自固定态量子 Markov 半群下相对熵的数据处理单调性。积分即得 \(\tau\) 的公式和单调性。证毕。
+

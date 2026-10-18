@@ -1,0 +1,48 @@
+**Convention 19.3 (precise matrix-quadrature reuse).** Mädler–Schmüdgen,
+[arXiv:2310.00957v1, Theorem 5.1, Corollary 5.3 and Definitions 5.5–5.7](https://arxiv.org/pdf/2310.00957v1),
+gives rank-one matrix-mass representation for a finite-dimensional
+Hermitian matrix test space with a dimension bound. Its node count
+and rank-sum definitions remain distinct; applying its general
+bound to all the original tests does not supply seven or eight
+original height-preserving labels. Zalar–Zobovič,
+[*Matricial Gaussian quadrature rules: nonsingular case*, served arXiv:2508.21534v1, Theorem 1.1 and §2](https://arxiv.org/html/2508.21534v1),
+requires a complete polynomial matrix moment functional and a positive
+definite block moment matrix; its minimality concerns the sum of mass
+ranks, and its prescribed-node assertion concerns that node's mass
+rank. The served page has an arXiv v1 header of 29 August 2025 and
+a body date of 24 August 2026; a historical version-exact identity
+of that body is not an assumption here. The theorem is used only
+at the stated served-text scope.
+
+Their [*The matricial univariate rational truncated moment problem*,
+arXiv:2608.28227v1, Theorem 1.1, Theorems 2.12–2.13 and Theorem 4.2](https://arxiv.org/html/2608.28227v1)
+requires its complete rational moment data, matrix positivity,
+column-space conditions, pole avoidance and simultaneous node
+conditions. Its atomic multiplicities are also mass-rank sums.
+Half-angle rationalization of the circle still requires valid charts,
+coverage of excluded chart points and the appropriate pole/endpoint
+conditions; it does not eliminate the original absolute-value sign
+partitions. Completing the polynomial or rational moment sequence
+adds data not determined by the original eight moments. None of
+these literature conclusions provides the missing simultaneous
+preservation of (GC.85)'s contrast and absolute height or the
+label recovery sign condition of Proposition 19.2. They are
+contextual reusable results, not new original support theorems.
+No exhaustive priority or nonexistence claim is made.
+
+**Open problem 19.4 (the required optimal quadrature transfer).** The
+missing transfer is a constrained quadrature on an ACTUAL original
+optimal law that simultaneously preserves
+$$
+\left(hh^T,\ t\mathfrak c(h)\xi n_hn_h^T,\ |u|,
+                    \ |\ell(h)+t\mathfrak c(h)\xi f(h)|\right)
+\tag{GC.88}
+$$
+and controls the number of recovered original fractional atoms.
+The absolute height is evaluated after live and failure signed
+mass are added inside each acquired label. Separate short
+coefficient decompositions, a three-plus-five polynomial node count for
+polynomial data, or a generic matrix-rank bound does not establish
+this transfer. Any seven-low theorem or genuine eight-/nine-low
+necessity result must still satisfy this original interface.
+

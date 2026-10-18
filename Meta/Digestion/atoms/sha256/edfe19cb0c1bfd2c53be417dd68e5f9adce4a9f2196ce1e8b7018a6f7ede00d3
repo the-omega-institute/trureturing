@@ -1,0 +1,18 @@
+### 余下边界
+
+定理 10.1–10.2 只处理 $d=1$ identically singular common-safe-kernel 分支中实际记录
+$M$ 或 $JMJ$ 的历史。它们不处理记录事件集合中不含这两个矩阵的其它 kernel 方向，也不
+处理 regular pencils；特别是，regular 五读 $d=0$ 分支仍在原问题内。对 $d\ge2$，
+共同 safe kernel 的记录信号一般是次数至多 $d-1$ 的多项式，不能由本节的常值超平面分类
+替代。全局 sharp endpoint、所有斜率的统一逆、以及覆盖其余合法历史的普适碰撞仍未结算。
+原有界保持为
+
+$$
+5\le C_{\mathrm{fix}}(0)\le6,\qquad
+d+5\le C_{\mathrm{fix}}(d)\le d+6\quad(d\ge1).
+$$
+
+本节增加的是完整的实际记录 $M/JMJ$ stratum 分类、每个 $a<b$ 的合法历史、固定斜率
+全局逆和严格正来源的不同斜率碰撞；它不把该 stratum 的结论外推成全历史 endpoint 结论。
+
+

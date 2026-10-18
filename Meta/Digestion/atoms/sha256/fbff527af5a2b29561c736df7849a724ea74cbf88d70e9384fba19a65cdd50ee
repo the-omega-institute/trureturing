@@ -1,0 +1,37 @@
+## 460. 实际自匹配源对单独头部证书的条件性障碍
+
+本节将主卷 §111.4 的实际自匹配链接到同窗素数头部，得到一种证书路线的条件性障碍。
+这是既有来源的仓内应用（`repo-derived`），不主张文献原创性。假设 RH，并沿用
+[Nicolas 比较笔记](../../../Library/ArithSums/nicolas2025comparison.md) 的完整零点公式及误差范围；
+另明确采用 RH 下 $\vartheta(u)-u=O(\sqrt u\log^2u)$ 作为外部解析输入。
+下面的非存在结论只在这些条件下成立，不给出无条件 Robin 结论或 RH 结论。
+
+取主卷 §111.4 的同一实际链 $N_j$，置
+
+$$
+A_j=\log N_j,\qquad L_j=\log A_j,\qquad T_j=\sqrt{A_j}\,L_j.
+$$
+
+定义这个整数自己的窗口：
+
+$$
+\begin{aligned}
+D_j&=\lfloor A_j^{1/8}\rfloor,\\
+G_j&=\sum_{\substack{d\le D_j\\d\mid\operatorname{rad}(N_j)}}
+       \frac{\mu^2(d)}{\varphi(d)},\\
+h_j&=\min\{L_j/2000,G_j/100\},\qquad B_j=A_j e^{h_j}.
+\end{aligned}
+$$
+
+这里 $\mu$ 是 Möbius 函数。令 $Y_j=\sqrt{B_j}$，令 $P_j$ 为所有满足
+$p\le Y_j$ 且 $p\mid N_j$ 的素数之积，并记
+
+$$
+\begin{aligned}
+S_j^\circ&=\sum_{\substack{A_j<r\le B_j\\(r,P_j)=1}}\frac1r
+-\sum_{\substack{k\ge2,\ A_j<p^k\le B_j\\p\nmid N_j}}\frac1{p^k},\\
+V_j&=-\frac{\vartheta(A_j)-A_j}{A_jL_j}
+ +\log\frac{L_j+h_j}{L_j}-S_j^\circ.
+\end{aligned}
+$$
+

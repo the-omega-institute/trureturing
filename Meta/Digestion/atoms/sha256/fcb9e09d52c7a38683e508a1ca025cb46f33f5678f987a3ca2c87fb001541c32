@@ -1,0 +1,29 @@
+**命题 6.3（同一乘法给定向旋转的读出桥）。** 设 $n$ 是单位方向，$\theta\in\mathbb R$，
+
+$$
+q_\theta=(\cos(\theta/2),n\sin(\theta/2)).
+$$
+
+则 $N(q_\theta)=1$，并且
+
+$$
+q_\theta\odot(0,u)\odot q_\theta^{-1}
+=(0,R_{\theta,n}u),
+$$
+
+$$
+R_{\theta,n}u
+=u\cos\theta+C(n,u)\sin\theta
++n\,g(n,u)(1-\cos\theta).
+$$
+
+证明。Rodrigues 结构沿用 §28 的供应，下面核对本卷乘法与符号。记 $t=\cos(\theta/2)$、$h=\sin(\theta/2)$。第一次乘法给 $(-h g(n,u),tu+hC(n,u))$，第二次与 $(t,-hn)$ 相乘。标量槽相消，向量槽用
+
+$$
+C(C(n,u),n)=u-n g(n,u)
+$$
+
+化为 $(t^2-h^2)u+2thC(n,u)+2h^2n g(n,u)$，即所列式。轴 $n$ 固定，其正交平面上为 $u\cos\theta+C(n,u)\sin\theta$，是保定向的平面旋转；故整个 $R_{\theta,n}\in SO(3)$。范数一和共轭逆由命题 6.2 得到。
+
+$q$ 与 $-q$ 给相同共轭作用，因为两个负号相消。这只说明该共轭读出有二对一纤维，不把两个乘法元素或它们在其他任务中的相对符号认作同一个来源。∎
+

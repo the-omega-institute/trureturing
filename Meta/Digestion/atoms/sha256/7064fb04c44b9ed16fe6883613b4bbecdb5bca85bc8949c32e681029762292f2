@@ -1,0 +1,32 @@
+**Definition 1.2 (Stationary first wait and subsequent complete gaps).**
+For $i\in\{0,1\}$ put
+
+$$
+\begin{aligned}
+Z_i(q)&=\sum_{k\ge1}F_i(k)q^k,&
+f_i(k)&=F_i(k)q^k/Z_i(q)\quad(k\ge1),& f_i(0)&=0,\\
+S_i(u)&=\sum_{k\ge u}f_i(k)\quad(u\ge0),&
+\mu_i&=\sum_{k\ge1}(k+1)f_i(k),\\
+\beta_i&=\frac{\sum_{k\ge1}k(k+1)f_i(k)}{2\mu_i}.
+\end{aligned}
+\tag{1.2}
+$$
+
+Draw $\tau$ with $\mathsf P_i(\tau=u)=S_i(u)/\mu_i$ for every integer
+$u\ge0$. Independently draw iid $K_n\sim f_i$, $n\ge1$. The visible bits
+$X_0,X_1,\ldots$ have ones exactly at
+
+$$
+\tau_0=\tau,\qquad
+\tau_n=\tau+\sum_{h=1}^n(K_h+1)\quad(n\ge1).
+\tag{1.3}
+$$
+
+All other bits are zero. Thus $K_n$ counts zeros and $K_n+1$ includes
+the closing one. The first wait is stationary and is not an iid $K_n$;
+$S_i(0)=S_i(1)=1$, so $\tau=0$ is included. Nonnegative summation gives
+$\sum_{u\ge0}S_i(u)=\mu_i$ and $\mathbb E_i\tau=\beta_i$. All fixed
+polynomial moments are finite for $0<q<1$. These are precisely [C,
+Definition 1.2]; the equilibrium-renewal correspondence there is
+$S_2=K+1$, $S_1=\tau+1$ in Zamparo's notation.
+

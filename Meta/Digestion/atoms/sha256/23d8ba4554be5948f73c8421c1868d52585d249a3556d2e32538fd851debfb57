@@ -1,0 +1,36 @@
+**Lemma 2.3 (complete actual support).** The gadget has one phase-one
+tuple $g_1$ and $2^m$ phase-zero tuples $g_0(e)$, indexed by
+$e=(e_1,\ldots,e_m)\in\{a,b\}^m$. In phase one all $x_i=1$
+and all $a_i=b_i=0$. In phase zero all $x_i=0$, with
+$(a_i,b_i)=(1,0)$ when $e_i=a$ and $(0,1)$ when $e_i=b$.
+Each such Boolean assignment has exactly one actual native lift.
+Every block in every lift is $A,B$ or $C_0$. The two selectors at
+edge $i$ are both $A$ in phase one, both $B$ for phase-zero
+choice $a$, and both $C_0$ for choice $b$. Every connector is its
+incident variable leaf.
+
+Proof. A Boolean owner is the leaf determined by its root seed: its
+whole factor vector is that leaf's, and separation leaves no alternative
+canonical block. The same argument makes a selector the indicated
+$u_c$. At a connector, the root factor is one of the two nonbranch
+leaf factors. Therefore its actual block is that variable leaf. The
+left prescription agrees with this leaf exactly when its Boolean value
+is $\mathbf1_{\{c=h\}}$, since $\Gamma_L(A)\ne\Gamma_L(B)$.
+Its right and additional factors then agree as well. Applying this to
+all three positions forces exactly the selected variable to be true.
+Thus native compatibility is precisely the exact-one clause requirement, with no
+remaining connector freedom. Conversely a satisfying assignment fills
+all these actual blocks consistently and uniquely. Additional factors
+for $d>2$ are factors of the very same blocks, so neither exclude these
+lifts nor create others.
+
+The two clause equations at edge $i$ are
+$x_i+a_i+b_i=1$ and $x_{i+1}+a_i+b_i=1$. Subtraction gives
+$x_i=x_{i+1}$; cycling gives one common $x$ value. Value one
+forces both auxiliaries zero. Value zero allows exactly the two stated
+choices at each edge, without any further condition between edges.
+This remains valid at $m=2$, where every displayed clause still has
+three distinct variables. The selectors and connectors therefore have
+exactly the stated actual shapes. This proves both solution directions,
+the count and uniqueness. $\square$
+

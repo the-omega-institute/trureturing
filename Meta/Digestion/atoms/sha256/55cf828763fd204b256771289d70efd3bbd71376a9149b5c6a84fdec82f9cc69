@@ -1,0 +1,4 @@
+**引理 2.3（完整调用体中的原始行对应）。** 固定任一实际到达、规范 acquired 的 outer Ready 前缀 $P$。实际供给 gate `01` 并完成其原有分派，令 $e_P$ 为进入 $F^A$ 的 header Base/setup 之前的实际切口。$F^A$ 从这里至 row ACK、source TOK、最后 idle CTL 的体，逐行使用 CAP 定义 4.6 的原始输入位置、操作数、守卫、owner、结果、记录、传送和收据；唯一改变的原始边是最后 idle CTL 的后继：它进入 InnerReturn，而不是旧 raw 图的下一帧 IN。该最后 CTL 之前的行具有直接的原始实验对应。它不与未扩展运行的时钟、静态地址或捕获代码逐字相等。
+
+证明。ARC 定义 4.1 指定的是单独编号的完整内联，明确保持 latch 5 的实际外部 IN，并只改最后 CTL 的后继；定义 5.2 的 `01` 进入原始 header Base 前导，不把 gate 位当作 header。命题 5.5 保证体内无 compiler 赋值，历史银行 parity 只作为固定有限控制乘积保留。因而静态重编号把每条非最后行的原始 guard、core、原始控制效果、receipt 和下一原始位置逐项对应；没有新贷款或并行入口插入。CAP 定义 4.6、引理 4.7 和引理 6.7 已分别规定完整 ingress、全部七分支及行交付/ACK/source TOK。将其连接便得断言。最后 CTL 的两个不同后继由定义直接给出，所以该行不满足上述未变后继断言。$\square$
+

@@ -1,0 +1,25 @@
+### 64.6 “5 \(\to\) 4 \(\leftrightarrow\) 3”的严格解释
+
+这条线可以写成
+\[
+\mathbb R^5
+\ \xrightarrow{\ \sum p_s=1\ }\ 
+\Delta^4
+\ \xrightarrow{\ P\ }\ 
+\mathcal P^3.
+\tag{64.14}
+\]
+
+其中：
+
+- \(5\) 是五个未归一化模式坐标；
+- \(4\) 是归一化后概率场的仿射维数；
+- \(3\) 是三坐标观察商；
+- 从 \(4\) 回到 \(3\) 是投影，始终存在；
+- 从 \(3\) 回到 \(4\) 需要选择一个截面
+  \[
+  s:\mathcal P\to\Delta^4,
+  \qquad P\circ s=\operatorname{id}_{\mathcal P},
+  \]
+  也就是给出一条 \(\kappa(X,Y,Z)\)。
+

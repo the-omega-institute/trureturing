@@ -1,0 +1,64 @@
+**Theorem 4.4 (actual all-microcut replay).** Under Definitions 2.1–2.5,
+for every $H\ge1$, every actual installed $u\in\mathcal T_H$ and every
+$h\in\mathcal R_H$, one effective finite decoder on the actual image of
+AIF.5 returns the full original primitive prefix $h$ and its full joint
+endpoint $X(h)$. This includes incomplete ingress, acquired-but-unwritten
+latches, partial invalid source packets, accepted and rejected modifications,
+pending events, incomplete rows and both copy stages. The decoder needs no
+independently supplied source-response word or private workspace snapshot.
+
+Proof. First decode the acquired prefix code into $u$. The canonical padded
+packet, including every private installation bit and its order, is uniquely
+determined by $u,H$. All other boot material is fixed public data. Reconstruct
+the canonical installation locally, starting with the same fixed primitive
+port and immutable preparation binding. This is computation on acquired
+data; it is not a second installation or a new read port to the actual source.
+
+Replay the exact paid boot and acquisition graphs until their declared
+acquisition fence. The supplied producer terminates on this finite source;
+the implemented traversal, output and handoff are deterministic. Hence their
+entire prefix and absolute length $a(u)$ are computed. In particular the
+decoder is not given a free physical snapshot of the acquisition endpoint.
+
+Continue the literal transition interpreter until the total simulated
+primitive count is $n(h)$. At an enabled public IN consume the next bit of
+$I(h)$. At every other primitive execute the installed rule on the current
+locally represented bits, marked cells, PC, latches and tokens. Never replace
+an actual source fragment by one abstract source call. In particular Boolean
+gates operate on their actual operand bits, and partial MUX/source writes
+are ordinary bit rewrites even if the packet does not decode to a tree.
+
+We prove equality with the original prefix by induction on this absolute
+primitive count. The initial primitive-port states agree. Installation
+inputs agree because their canonical source packet and fixed control bits
+agree. Every acquired-input occurrence after the entrance consumes the same
+next bit, including one not yet written at the target cut. At an ordinary
+step the equal PC and public data select the same native row and operands.
+Equal bits and latches give equal reads, Boolean results and writes; equal
+marked heads and constructed bounds give equal movement and allocation.
+The deterministic Base/descriptor routine constructs the same occurrence
+references, rather than arbitrary isomorphic names. Receipt construction
+and every actual fence are the same local side effects.
+
+The same induction covers the complete source candidate, guard, private
+scratch and successor writes. At release it obtains the actual read reply
+or accept/reject, selects the same counter versions, and commits the same
+semantic event. It then writes the same row prefix, seals it at the same
+occurrence, and reproduces each mailbox/destination write, token transfer
+and acknowledgement. Thus the joint state agrees simultaneously, including
+permission and availability fields. There is no step choosing different
+source and archive witnesses merely because their marginal values agree.
+
+Because $h$ is actual, the supplied input word has exactly the bits consumed
+before $n(h)$, and replay never asks for a future bit. Every individual
+simulated primitive is a finite local transition on a finite representation.
+Executing exactly this finite prefix therefore terminates. Its stored
+simulation trace is the original full prefix, and the last represented
+state is $X(h)$, proving the claim.
+
+On an arbitrary proposed key, simulation may detect an invalid code,
+prematurely exhausted input, surplus inconsistent input or termination
+before the claimed position. No total authentic-history recognition is
+inferred from success on the actual image; the theorem requires actual
+entrance and acquisition provenance. ∎
+

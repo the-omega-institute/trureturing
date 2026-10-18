@@ -1,0 +1,40 @@
+**Lemma 7.1 (credited root-seven interpolation).** If $f(7)=0$,
+$f(0)=-d$ and $a_i=f(i)$ for $i=1,2,3$, then
+
+$$
+\begin{aligned}
+20d+70a_1-84a_2+35a_3&=0,\\
+f(4)&=a_1/2-9a_2/5+9a_3/4,\\
+f(5)&=a_1-16a_2/5+3a_3,\\
+f(6)&=a_1-3a_2+5a_3/2.
+\end{aligned}
+\tag{7.1}
+$$
+
+The full increasing-power coefficient vector is
+
+$$
+\left(-d,\ \frac{11d}{6}+3a_1-\frac{3a_2}{2}+\frac{a_3}{3},
+-d-\frac{5a_1}{2}+2a_2-\frac{a_3}{2},
+\frac d6+\frac{a_1}{2}-\frac{a_2}{2}+\frac{a_3}{6}\right).
+\tag{7.2}
+$$
+
+**Proof.** The interpolation basis at $0,1,2,3$ is
+
+$$
+\begin{aligned}
+\ell_0&=-(T-1)(T-2)(T-3)/6,&\ell_1&=T(T-2)(T-3)/2,\\
+\ell_2&=-T(T-1)(T-3)/2,&\ell_3&=T(T-1)(T-2)/6.
+\end{aligned}
+\tag{7.3}
+$$
+
+Its evaluation rows at $4,5,6,7$ are respectively
+$(-1,4,-6,4)$, $(-4,15,-20,10)$, $(-10,36,-45,20)$ and
+$(-20,70,-84,35)$. The last gives the first line of (7.1).
+Solving it for $f(0)$ and substituting in the other rows gives the
+three stated sample identities. Distribution of
+$-d\ell_0+a_1\ell_1+a_2\ell_2+a_3\ell_3$ gives (7.2).
+Only fixed nonzero integer denominators occur. ∎
+

@@ -1,0 +1,17 @@
+**Definition 2.1 (finite design choices).** For $1\le s\le K$, a graph
+$G$ consists of $E=\{0,\ldots,s-1\}$, $e_*\in E$, a partition into
+read states $E_R$, update states $E_U$ and halt states $E_H$, and the
+successors required by Assumption 1.1. At this point words and halt rows
+are unspecified. There are finitely many such graphs, including graphs
+with unreachable states and graphs with no halt. Put $r=|E_R|$.
+
+Choose one descriptor type for each $e\in E_R$. Write
+$\boldsymbol\delta=(\delta_e)_{e\in E_R}$ for the resulting tuple of
+numeric parameters and fixed types, and
+$V_G(\boldsymbol\delta)=\bigwedge_{e\in E_R}
+\operatorname{Valid}(\delta_e)$. The graph, all types and all numeric
+parameters are common design data, chosen before source quantification.
+Distinct read states may contain identical words; descriptors need not
+be distinct. There is only one descriptor for every visit to a given
+state.
+

@@ -1,0 +1,18 @@
+**Lemma 360.2 (Common-mass score bound).** For a finite stopped catalog, assign nonnegative weights $A_w,C_w,P_w,T$ to all rows of (357.4). Let $f_w(z)$ be their label reward, namely
+$A_w\mathbf1_{z=0}+C_w\mathbf1_{z=n(w)}+P_w\mathbf1_{z\in\{0,n(w)\}}$ at a zero word and $T\mathbf1_{z=0}$ at $1^7$. For a schedule $S$ and its stopped cell $c$, set
+
+$$
+H_{S,c}=\max_{0\le z\le7}\sum_{w:\,\operatorname{cell}_S(w)=c}f_w(z),
+\qquad B=\max_S\sum_cH_{S,c}.
+\tag{360.2}
+$$
+
+Put $C_0=\sum_w(A_w+P_w)+T$, $K=\sum_w(A_w+C_w+P_w)+T$, and $\beta_n=\sum_{n(w)=n}(C_w-A_w)$. Every normalized complete allocation in the catalog satisfying the prefix rows at cap $e$ obeys
+
+$$
+C_0+\beta\cdot b-Ke\le B.
+\tag{360.3}
+$$
+
+*Proof.* Let $X_{S,c}(z)$ be its cell vectors, with $\sum_zX_{S,c}(z)=t_S$ for every owning cell and $\sum_St_S=1$. Its reward is at most $\sum_St_S\sum_cH_{S,c}\le B$. Pair the *same* allocation with all independent row demands; their weighted sum is $C_0+\beta\cdot b-Ke$. Comparing the two expressions proves (360.3). All labels enter each maximum, including earlier and unqueried labels. $\square$
+

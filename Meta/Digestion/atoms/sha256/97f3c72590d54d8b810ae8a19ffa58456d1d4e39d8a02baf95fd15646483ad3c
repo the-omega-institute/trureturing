@@ -1,0 +1,16 @@
+**定义 28.1（带接收条件的共同记录）。** 设观察者指标集 $I$ 有限，可为空；共同来源 $\Omega$ 非空，目标为 $Z:\Omega\to\mathcal Z$，接收者初始记录为 $M:\Omega\to\mathcal M$。每份档案为 $R_i:\Omega\to Y_i$，包含约定的准备、版本和配对标识。固定 $m\in M(\Omega)$，置
+
+$$
+\Omega_m=M^{-1}\{m\},\qquad
+R_S(\omega)=(R_i(\omega))_{i\in S},\qquad
+J_{S,m}=R_S(\Omega_m),\quad S\subseteq I.
+$$
+
+$\Omega_m$ 是非空的实际候选域，而 $J_{S,m}$ 是其联合实际像；不同分量必须由同一 $\omega$ 产生。仅有
+
+$$
+J_{S,m}\subseteq\prod_{i\in S}R_i(\Omega_m)
+$$
+
+不保证乘积中的任意组值具有共同实现。有限双观察者情形的乘积充满判据采用仓内 [JointPredictionProductFullness 的 `joint_prediction_product_fullness_criterion`](../../../D5/S3/ObserverMemory/Fusion/JointPredictionProductFullness.lean)：其有限类型、满射实现、单射联合表示及分量实现相容假设下，联合表示满射等价于每对局部纤维非空相交，亦等价于联合状态数达到两分量状态数之积。此接口是集合与基数结论，不是概率独立性结论。
+

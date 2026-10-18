@@ -1,0 +1,37 @@
+**定理 43.5（可达到的最小终端记录范围）。** 令
+
+$$
+\mathcal B_Q=\{\mathbf B_Q(u):u\in\mathcal T\},\qquad b(Q)=|\mathcal B_Q|.
+\tag{SLH.43.2}
+$$
+
+规范执行给双射 $\mathcal B_Q\leftrightarrow\{\operatorname{Can}_Q(u):u\in\mathcal T\}$。所有合同43.1的精确取得器中，终端 raw 记录范围的最小基数准确为 $b(Q)$，由该执行达到。其有限计数可直接从菜单树递归：令 $Q_L=\{s:Ls\in Q\}$、$Q_R=\{s:Rs\in Q\}$，在此计数中去重，则
+
+$$
+b(\varnothing)=1,\qquad
+b(Q)=2+b(Q_L)b(Q_R)\quad(Q\ne\varnothing).
+\tag{SLH.43.3}
+$$
+
+对单地址（包括根），
+
+$$
+|\operatorname{ran}\operatorname{Can}_{(q)}|=2|q|+3\qquad
+|\operatorname{ran}\sigma_q|=
+\begin{cases}3&q=\varepsilon,\\w(q^-)+5&q\ne\varepsilon.\end{cases}
+\tag{SLH.43.4}
+$$
+
+证明。规范过程只请求菜单前缀；$\mathbf B_Q$ 决定这些地址的全部回复，再加固定控制、缓存规则和次序，决定整个记录。反向由实际首叶／分支读恢复边界，或用定理43.3。全部边界均有有限原树完成，所以这是范围上的双射。任意精确取得器的不同边界不能共享终端记录，故其范围基数至少为 $b(Q)$，可以更多乃至无穷；规范过程达到该界。
+
+非空菜单在根有两种叶边界，或根为分支。后一情形的左、右菜单边界独立由两棵实际有限子树实现，故贡献 $b(Q_L)b(Q_R)$；三类边界不相交。空子菜单不提供区别，给一个值。此递归也证明有限性及全体原来源对应。单地址递归从根的三种边界开始，每加一条路径边增加两种首叶，得 $2|q|+3$。代码数复用定理37.1。$\square$
+
+更精确地，每个初始联合码 $\mathbf c$ 恰对应 $2^{k_Q(\mathbf c)}$ 条规范记录，因而
+
+$$
+b(Q)=\sum_{\mathbf c\in\mathcal K_{\varnothing,0,Q}}2^{k_Q(\mathbf c)}.
+\tag{SLH.43.5}
+$$
+
+根的两个范围都是三，$L,R$ 都是五；$LL,LR$ 的边界范围七、码范围六，$RL,RR$ 的两个范围都是七。这是不同**终端记录值的数目**，不是记录长度、全部可达中间控制行、总内存或查询最优值。请求上界、地址字母费用、服务未命中和算术资源仍使用 §§36–38；本节不重新求初次联合取得 minimax。
+

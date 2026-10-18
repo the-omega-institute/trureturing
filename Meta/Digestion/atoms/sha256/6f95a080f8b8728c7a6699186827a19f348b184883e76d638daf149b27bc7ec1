@@ -1,0 +1,49 @@
+**Definition 13.2 (the completed services being compared).** An original
+event service is a whole actually invoked CAP source, Reserve, Raise,
+NativeLocal or Halt service, through its real commitment, row/index
+construction, required dependency delivery, checks and ACK, followed by
+its prescribed return or global halt. The five source kinds include
+ReadE, TagRead, Rho, Left and Right. Canonical executed source rejects,
+absent literal replies and all three maintenance outcomes are included.
+
+A producer journal service means CAP Definition 6.2a's installed
+three-field packet service, with authentic complete metadata, an owned
+complete query and the actual closed-prefix binding. Its five query
+kinds are semantic row, unified row, source-only row, semantic prefix
+and whole prefix. GetSourceRequest includes its paid zero-to-one-based
+translation before GetSourcePost. Include either actual entry below,
+with the retained return kind and all its required completion edges.
+
+| Entry | Required actual path and authority |
+| --- | --- |
+| Actor archive client | CAP Definition 4.6's installed public caller at acknowledged idle; producer admission CTL and busy source-token TOK; the twelve-word loan; retained query construction/staging and route49; the actor's twelve reverse TOKs and CTL before producer parsing; requested reply/dependency work, checks, ACK, source-token TOK and idle CTL. |
+| Producer-local frozen-prefix client | The installed frozen/stop continuation already holds its producer phase, source-service token and owned retained packet/payload. It uses the producer parser and bounded service, then the fixed edge back to that retained continuation. It has no new actor query channel, idle admission or idle return. |
+
+The token/workspace assignments are CAP Definition 2.2's: public word
+ports1–12, producer descriptor/counter/index work17–23, actor archive
+and checking work28–31, and original mailboxes48–55. Actor24–27 remain
+protected. An origin reference supplies no private token. In particular,
+a successful actor lookup reads its acquired local copy after seal,
+not a printed producer address. A producer-local helper uses authority
+already held by its actual continuation. Neither entry can be invoked
+merely because another cut has an idle-looking counter or an old token
+in a recovered history.
+
+A finite out-of-range or zero row query returning typed `no-row` is a
+well-formed service in this domain. Repeated queries, previously acquired
+rows/dependencies, empty selected prefixes and reuse of a complete
+retained packet are included whenever the actual caller invokes them.
+They are distinct from malformed packets, structural metadata faults,
+interrupted calls, partial token transfers and entry attempts at an
+arbitrary busy cut. These latter cases are not completed services of
+this definition. CAP Definition 6.2a's fixed caller constructs the three
+Frames from complete public words and invokes the service with that
+retained packet. Its canonical invocation does not supply a partial or
+malformed packet as another query outcome. A structural refusal from a
+wider raw or faulty-metadata state can have executed work; it is not
+identified with an unexecuted `none`. No allocation bound for every such
+refusal is asserted here. Verifier/consumer scans of their own acquired
+snapshots are also not producer journal invocations: CAP Definition
+6.2a gives them local lookup, without a reverse mailbox route or private
+read.
+

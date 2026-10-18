@@ -1,0 +1,95 @@
+**Theorem 17.1 (sharp infimum at every prescribed live yield).**
+For every fixed $0<P\leq1$, the infimum of $B_*$ over finite
+public mixtures with yield exactly $P$ is
+
+$$
+\inf B_*(P)=\max\left\{0,\frac{P-P_0}{2-H}\right\}.
+\tag{AC.60}
+$$
+
+It is not attained for $0<P<1$. The approaching families can have
+the same completed-live yield $P$ at each actual height and the same
+wrong-live mass at each height. Four public seed values suffice; each
+live path uses at most three triangles and waits.
+
+Proof. Choose $v_n=2^{-n}$, and set
+
+$$
+d_n=\frac{ab(1-v_n)}{b+av_n},\qquad
+u_n=f(v_n),\qquad P_n=\frac{u_n+v_n}{2}.
+\tag{AC.61}
+$$
+
+A fair public direction chooses the positive or negative triangle of
+amplitude $d_n$. On a live return guess $a$ for positive and $b$ for
+negative. Equation (AC.55) makes this Bayes optimal. At either height
+the yield is $P_n$ and the wrong-live mass is $v_n/2$.
+Since $f$ is strictly increasing, $P_n$ decreases to $P_0$.
+Every finite $d_n<a$.
+
+First suppose $P_0<P\leq1$. For all sufficiently large $n$,
+$P_n<P$. Mix a wait with the fair-direction protocol, using
+
+$$
+w_n=\frac{P-P_n}{1-P_n}
+\tag{AC.62}
+$$
+
+as the wait probability. On the wait retain a fair guess. The four
+seed values are wait-and-guess-$a$, wait-and-guess-$b$, positive and
+negative, with probabilities $w_n/2,w_n/2,(1-w_n)/2,(1-w_n)/2$;
+zero-weight values may be removed. Both heights have yield exactly $P$
+and wrong-live mass
+
+$$
+B_n=\frac{w_n+(1-w_n)v_n}{2}
+\longrightarrow\frac{P-P_0}{2(1-P_0)}
+ =\frac{P-P_0}{2-H}.
+\tag{AC.63}
+$$
+
+The equal-likelihood wait guesses are optimal ties. For $P=1$ only
+the wait is needed.
+
+Now suppose $0<P\leq P_0$. Following the first fair-direction
+triangle, and only while still live, append a positive triangle of
+amplitude $e$ and its negative mirror of the same amplitude.
+At either height their combined multiplicative survival is
+
+$$
+\tau(e)=\frac{(a-e)(b-e)}{(a+e)(b+e)},\qquad 0\leq e<a.
+\tag{AC.64}
+$$
+
+This follows by multiplying the two monotone-leg factors of each
+triangle. The function is continuous, strictly decreasing from one
+to zero: its logarithmic derivative in the interior is
+$-1/(a-e)-1/(b-e)-1/(a+e)-1/(b+e)<0$.
+Consequently there is a unique legal $e_n$ with
+$\tau(e_n)=\tau_n:=P/P_n\in(0,1)$. Explicitly,
+
+$$
+e_n=
+\frac{2ab(1-\tau_n)}
+ {c(1+\tau_n)+
+  \sqrt{c^2(1+\tau_n)^2-4ab(1-\tau_n)^2}}.
+\tag{AC.65}
+$$
+
+The discriminant is positive; (AC.65) is the smaller root of
+$(1-\tau_n)e^2-c(1+\tau_n)e+ab(1-\tau_n)=0$.
+The monotonicity argument proves that this root belongs to $(0,a)$.
+The damping pair has equal likelihood at the two heights, so it
+does not change the optimal direction guess. Its completed yield is
+exactly $P$ at each height, with wrong-live mass
+
+$$
+B_n=\frac{P}{P_n}\frac{v_n}{2}\longrightarrow0.
+\tag{AC.66}
+$$
+
+Every failure stops the sequence immediately; the remaining triangles
+are then unvisited. Each finite path is a common strict original
+AC/PC1 path, and Proposition 14.5 gives all its joint failure outputs.
+The lower bound and nonattainment are Theorem 16.2. $\square$
+

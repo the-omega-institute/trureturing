@@ -1,0 +1,25 @@
+**Definition 7.2 (twelve actual interior labels).** For each nonzero low
+$z=z_{r,\pm}$ fix an isometry $V_z:\mathbb C^2\to\mathbb C^3$ onto
+$\operatorname{ran}K(z)$. One explicit choice normalizes specimen
+column $1$, subtracts its projection from column $2$, and normalizes
+the residual. The nonzero $1,2$ minor ensures both denominators are
+positive. All choices depend only on public $\rho,s$.
+
+For each $r=\pm1$ supply the following six acquired labels.
+
+| Label | Whole joint fibre dimension | Encoder | Whole-fibre full-output decoder |
+| --- | --- | --- | --- |
+| $(r,H)$ | $3$ | Kraus matrix $K(h_r)E^\dagger$ | $X\mapsto EXE^\dagger$ in live |
+| $(r,L,+)$, $(r,L,-)$ | $2$ each | Kraus matrix $V_z^\dagger K(z)E^\dagger$ | $X\mapsto EV_zXV_z^\dagger E^\dagger$ in live |
+| $(r,f,1)$, $(r,f,2)$ | $1$ each | row $\sqrt{m_j/2}\langle j|E^\dagger$ | scalar $a\mapsto a w_\ell g(t)dt\,P_f$ in each original label $\ell$ |
+| $(r,\perp)$ | $1$ | CP map $A\mapsto\operatorname{tr}(Q_5A)/2$ | scalar $a\mapsto a g(t)dt\,P_f$ only in original label $2$ |
+
+The complement map has two Kraus rows but a scalar quantum output;
+its multiplicity is discarded. The actual dephased classical label
+and the whole stated fibre remain accessible, and every other
+input-dependent dilation system is permanently inaccessible before
+the cut. On a supported selected input the complement probabilities
+are zero, but its two maps remain part of the full-algebra instrument.
+The report is the actual retained $r$; no inaccessible old Kraus
+index is made readable by this definition.
+

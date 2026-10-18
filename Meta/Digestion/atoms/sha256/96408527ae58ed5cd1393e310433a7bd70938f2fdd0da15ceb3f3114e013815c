@@ -1,0 +1,43 @@
+### 10.3 The no-separator result and the exact failed coordinate
+
+At this pair, the directional point masses
+
+$$
+\widehat\Gamma_B=\delta_{(Q,W)},\qquad
+\widehat\Gamma_A=\delta_{(W,Q)}
+$$
+
+have common unweighted phase marginals. Whole-input multipliers of the selected scalar residuals integrate to zero, marginal potentials cancel, the centered affine event terms vanish, and all supported loss terms are nonpositive because the endpoint losses equal their bounds while the interior losses are strictly below. Therefore any pointwise lower bounds in the selected event-output class obey
+
+$$
+\kappa_B+\kappa_A\le F_p(Q)+F_\beta(W)\le0.
+$$
+
+In the normalized-residual-square extension the two square contributions cancel exactly, with the same nonpositive loss conclusion. Thus no finite nonnegative combination of supported losses in this class, for any permitted $L\le5$, yields a positive summed separator. The pair also gives equality of the two scalar event laws, so scalar convex-order tests of those events cannot separate it.
+
+The pair nevertheless fails the complete residual equation at the beta coordinate. PAIR15 computes
+
+$$
+Q(w_{0,1})-U_0W(\beta)=-\frac{97339}{388125000},
+$$
+
+and hence
+
+$$
+\mathcal R_B(Q)(\beta)-W(\beta)
+=-\frac{97339}{246148875}\ne0.
+$$
+
+Consequently
+
+$$
+\operatorname{TV}(\mathcal R_B(Q),W)
+\ge\frac{97339}{246148875}>0.
+$$
+
+The constant input test $\phi=1$ in the full residual equation already fails. Since both directional marginals are Dirac masses, their only coupling is the displayed point mass; no alternate coupling repairs this coordinate. The pair is therefore not compatible in the sense of Definition 2.2 and cannot be installed as an observer.
+
+This exact failure has a narrow meaning. The pair satisfies full endpoint-box membership, all complete tails, both scalar event means, both selected residual-event equalities, the complete endpoint and supported interior loss bounds, and the selected no-separator test. It does not satisfy the unrestricted complete-coordinate residual vector. The failed bridge is therefore evidence that the selected event-output certificate class is too weak, not a no-go theorem for the full word/tail vector class. It supplies neither a compatible zero pair nor an infeasibility certificate for all compatible flows.
+
+The candidate response theorem in Sections 3–5 uses the complete residual equations recursively on every coordinate, including the $w_{3,1}$ mass and the signed same-path balances. Those equations are stronger than the two scalar event equalities above. The PAIR15 pair cannot be substituted into that theorem, so its failed beta coordinate does not refute Theorem 3.1, Theorem 4.1, or Theorem 6.2. Conversely, the candidate's full-vector inequalities do not imply the PAIR15 no-separator statement for the selected event class.
+

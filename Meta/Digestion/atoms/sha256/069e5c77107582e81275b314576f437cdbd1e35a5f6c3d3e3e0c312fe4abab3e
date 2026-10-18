@@ -1,0 +1,111 @@
+**定理 48.2（初始读数与尾叉积的分别灵敏度）。** 对定义48.1任一声明载体上的每个实际来源对，
+
+$$
+\begin{aligned}
+|x_3-x'_3|
+&\le H^2 e_0+\frac{|w-w'|}{\kappa}\\
+&\le H^2 e_0+\frac{H}{\kappa}(e_1+e_2).
+\end{aligned}
+$$
+
+因而
+
+$$
+\omega_V(\varepsilon)\le
+\min\{2H^2,C_{\rm dir}\varepsilon\},
+\qquad C_{\rm dir}=H^2+\frac{2H}{\kappa}.
+$$
+
+三维中该充分系数严格小于定理17.1的充分系数：
+
+$$
+K_*-C_{\rm dir}
+=H^2\left(\frac2\kappa-1\right)
++2H\left(1+\frac1\kappa\right)>0.
+$$
+
+这比较两个充分界，不确定最优系数、实际模量的严格下降或任意非实际报告的恢复风险。
+
+证明。三维直接复用定理4.3、5.1及引理16.2。七维先在每个来源内使用约定2.3和 [Boundary定理8.2](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY.md) 的二生成闭包。其经典依据为 Baez 的 [两生成结合性](https://math.ucr.edu/home/baez/octonions/node2.html) 和 [虚部叉积](https://math.ucr.edu/home/baez/octonions/node14.html)，以及 [Darpö文献注](../../../Library/Geometry/darpo2009vectorproduct.md) 所引定义与Lemma2（这些中间工具为 literature-attested）。由于 $\Delta>0$，可在证明中将 $a$ 归一化，并将 $b$ 的垂直分量归一化为两个正交单位虚元 $e,f$；它们生成 $\operatorname{span}\{1,e,f,ef\}$ 的四元数代数，其虚部为
+
+$$
+U_p=\operatorname{span}\{a,b,b\times a\}.
+$$
+
+固定一个保内积及叉积的线性等距同构 $J_p:\mathbb R^3\to U_p$，令 $\widetilde p=(J_p^{-1}a,J_p^{-1}b)$。按原有序节点的结构归纳，对全部字面树及全部 $j\ge0$ 同时有
+
+$$
+E_p(\rho^jt)=J_pE_{\widetilde p}(\rho^jt).
+$$
+
+所有 $F^j(p)$ 也留在此切面，运输仍只是定理3.1的等式。没有重排叉积括号；四元数乘法结合不使叉积结合。该固定同构保留叶 Gram 数据、每次响应范数和来源内的投影，故引理16.2及准确符号公式逐来源适用。另一个来源使用自己的 $J_{p'}$，不把两组坐标中的差当作环境向量差；以下比较全在共同 $V$ 的内积与叉积中进行。
+
+对非零尾，写 $q_j=|x_j|$、$u=w/|w|$、$x_3=\sigma w$，其中 $\sigma\in\{\pm1\}$。复用引理16.2的两个投影界，并保留投影本身，得
+
+$$
+P=\sigma x_0\cdot u>0,\qquad
+P\ge\kappa q_0,\qquad
+|w|=q_1q_2\le q_1^2P\le H^2P.
+$$
+
+若任一尾为零，定理5.1使其目标为零；若两非零尾符号相同，目标差等于 $|w-w'|$。这些分支均满足所列界，因为 $\kappa<1$，且不对零向量归一化。
+
+余下两符号相反，交换来源名使 $\sigma=+1,\sigma'=-1$。记
+
+$$
+\begin{gathered}
+r=|w|,\quad s=|w'|,\quad
+u=w/r,\quad v=w'/s,\quad d=|u-v|\le2,\\
+P=x_0\cdot u>0,\quad P'=-x'_0\cdot v>0,\quad
+S=P+P',\quad R=r+s,\quad b_0=|w-w'|.
+\end{gathered}
+$$
+
+分别沿 $u$ 和 $v$ 展开 $S$，Cauchy–Schwarz 给
+
+$$
+\begin{aligned}
+S&=(x_0-x'_0)\cdot u+x'_0\cdot(u-v)
+\le e_0+q'_0d,\\
+S&=(x_0-x'_0)\cdot v+x_0\cdot(u-v)
+\le e_0+q_0d.
+\end{aligned}
+$$
+
+由两个投影下界，$\min(q_0,q'_0)\le(q_0+q'_0)/2\le S/(2\kappa)$。同时两个幅度界给 $R\le H^2S$，所以
+
+$$
+S\left(1-\frac d{2\kappa}\right)\le e_0,
+\qquad R\le H^2S.
+$$
+
+环境欧氏几何给
+
+$$
+b_0^2=(r-s)^2+rsd^2,\qquad
+b_0^2-\frac{R^2d^2}{4}
+=(r-s)^2\left(1-\frac{d^2}{4}\right)\ge0.
+$$
+
+因此 $Rd/2\le b_0$。若 $d\le2\kappa$，因 $1-d/(2\kappa)\ge0$，有
+
+$$
+R\left(1-\frac d{2\kappa}\right)
+\le H^2S\left(1-\frac d{2\kappa}\right)\le H^2e_0,
+$$
+
+于是 $R\le H^2e_0+Rd/(2\kappa)\le H^2e_0+b_0/\kappa$。若 $d\ge2\kappa$，直接有 $b_0\ge Rd/2\ge\kappa R$。两个分支都包括 $d=2\kappa$，不除以可能为零的差因子。异号目标差为 $|w+w'|\le R$，第一界成立。
+
+两个载体均有全局双线性和 $|z\times y|\le|z||y|$；七维中此界由正定八元数叉积范数恒等式给出，即使 $z,y$ 属不同切面也成立。因此
+
+$$
+\begin{aligned}
+|w-w'|
+&\le|(x_2-x'_2)\times x_1|
++|x'_2\times(x_1-x'_1)|\\
+&\le H(e_2+e_1).
+\end{aligned}
+$$
+
+每个实际目标范数又为 $|w|\le H^2$；取原实际成对上确界得到模量界，含零记录距离和空上确界。严格系数比较由代入定理17.1的 $c=\kappa$ 得到。本方向比较及其原来源载体对应为 repo-derived；二生成闭包、配对及范数恒等式只作已有中间工具，不需要共同切面或全 $SO(7)$ 等变。
+

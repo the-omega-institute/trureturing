@@ -1,0 +1,52 @@
+**Proposition 206.13 (Balanced all-length examples and one shared budget).**
+Let $2<\mu<3$, $m=L-2\ge3$, and $m(3-\mu)>1$.
+Use the complete fair score
+
+$$
+c_1=c_2=\mu-2,\quad p_1=p_2=2,\quad
+\eta_j=\mu\ (j\ge3),\quad \tau=\mu-1.
+\tag{206.35}
+$$
+
+Thus (206.13) specifies every early row and every late correct row.
+Its data are $E=2\mu-4,S=4,W=3\mu-1$, and both excesses equal
+one. It demonstrates a strict loss in separately budgeting two
+components of a common score, and it fails the named direct tests
+below despite being its own unit certificate.
+
+**Proof.** Equation (206.29) gives $D=1$.
+Let $V_0,V_\mu$ have the same fair late rows and $T=\mu-1$,
+with early $c_1=c_2=0$ and $c_1=c_2=\mu$, respectively, and
+$p_a=\mu-c_a$ in each. The score in (206.35) is
+
+$$
+V=\frac2\mu V_0+\frac{\mu-2}\mu V_\mu.
+$$
+
+Their exact costs are $\mu/2$ and one. The weighted sum of these
+costs is $1+(\mu-2)/\mu>1$, while the assembled score costs one.
+This proves strict loss of that additive bound, not impossibility of
+all decompositions.
+
+For the zero-score test,
+$F_{Q(y)}(u_L)=m(4-\mu)/(m+1)>1$, exactly by
+$m(3-\mu)>1$. The fair family with zero early correct totals in
+203.6 needs $W\ge5(\mu-1)$ to retain this late profile at budget
+one, exceeding the present $W$ by $2\mu-4$.
+For the actual fair pair projection,
+$m_j=2$, $d_{ij}=1$, and the quantities in 203.2 are
+$\kappa=2\mu-3>1$, $\pi=1$.
+The maximal zero core at this fixed projection retains one in each
+late class; its exact positive residual charge is
+$(\mu+1)m/(m+3)>1$.
+In 203.4's product family, the internal weights require its parameter
+$u\ge\mu$, and the $(1,2)$ unit bound at $W=3\mu-1$ forces
+$u\le\mu$. At $u=\mu$, an internal pair has its two non-$11$
+gains equal to $\mu$ each, so that family cannot have unit cost.
+For the terminal layer coefficient
+$a_m=4-2/\lceil m/2\rceil\ge3$, the 202.6 interpolation threshold
+is $\mu+a_m(\mu-1/2)>3\mu-1$.
+These calculations concern only the specified tests and parameters.
+The comparison with 205.10 and the overlap with clipping are given
+in 206.22. $\square$
+

@@ -1,0 +1,26 @@
+**Definition 3.2 (completion and common-map obligation).** Let
+$\widehat{\mathcal T}$ be the finite-prefix completion of native trees and let
+$\Omega$ be the all-branch tree. A completed source map is obtained from
+(FNS.8) by replacing a divergent atomic sequence $T_{w_j}$ by $\Omega$ and
+by taking finite-prefix limits of residual coordinates. Finite signs and
+finite row partitions are interpreted only on finite sources; no sign is
+assigned to a completion point.
+
+For a tuple of row pieces $\mathbf b=(b_r)_{r\in B}$, a **common completed
+map certificate** consists of:
+
+1. a finite mode for each piece's scalar coordinates, with a fixed finite
+   complement $\mathbf c_r$ and the other coordinates set to $\infty$;
+2. a completed residual tuple $\boldsymbol\eta_r$ for each piece, with its
+   finite coordinates retained as their actual native values $\mathbf f_r$;
+3. the continuous extension $\widehat U_{r,b_r}$ of every exact source map,
+   and a proof that all its completed outputs are one common original tree.
+
+Coordinates of different alternative sources are independent unless the
+common-output equations prove a relation between them. Within each source,
+all repeated names retain the same value. Thus a common completed output does
+not require unrelated charts to have identical residual coordinates. Finite
+profiles precede all depths and lower bounds. Effective prefix synthesis from
+a certificate additionally requires computable finite prefixes of its
+completed values; an arbitrary existence proof supplies no runtime port.
+

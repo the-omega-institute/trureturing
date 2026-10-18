@@ -1,0 +1,40 @@
+**Corollary 10.17 (Six-position values and the limitation of a ray
+calculation).** For $n=6$, the two alternating targets each have
+$I_\star=21\cdot8=168$ and individual quantum variance $42/N$.
+For every site budget, either a target is not fully locally estimable,
+or at least one of the two variances is at least $336/(5N)$.
+Assigning equal budget to the two endpoint sites makes both efficiencies
+in (10.58) equal to $5/8$, but it does not in general attain the
+full-nuisance variance bound.
+
+Proof. The numerical values are the substitutions
+$I_\star/(4N)=168/(4N)$ and
+$(8/5)\,42/N=336/(5N)$ in Theorem 10.16.
+With $\eta_1=\eta_{2k}=1/2$, each alternating target receives efficiency
+one from its own endpoint and $1/4$ from the opposite endpoint,
+so its mean efficiency is $5/8$.
+
+For every supported $J\subseteq T_0$, the right endpoint $2k$ is
+always unblocked, belongs to the budget, and reverses $d_{T_0}$
+when toggled. It pairs the source coefficients within each component,
+so $T_0$ is balanced; the left endpoint gives the analogous pairing
+for $T_k$. Both targets are therefore estimable in this budget.
+Nevertheless equality in the scalar subpath bound would require
+the reference estimate to be proportional to the subpath score.
+For target $T_0$, that statistic has full gradient proportional to
+$L_\eta f_{T_0}$. Its proportionality could be the required
+$d_{T_0}$ only if $L_\eta f_{T_0}$ were a scalar multiple of $d_{T_0}$.
+At the unsupported singleton $\{1\}$, the site-$1$ edge to
+$\varnothing$ contributes
+$-\tfrac14d_{T_0}(\varnothing)\ne0$ to $L_\eta f_{T_0}$,
+whereas the site-$2k$ contribution is zero there.
+Thus this vector is not proportional to $d_{T_0}$.
+Reflection proves the same for $T_k$, including $k=1$.
+Consequently the endpoint efficiency equality alone does not supply
+equality in (10.62) under the full gradient condition. $\square$
+
+The constant in (10.60) is a proved lower factor for this one-site
+recorded menu. No exact minimax allocation or optimal full-nuisance
+value is inferred from it. Sequential multi-operation experiments
+have a different likelihood and are outside this menu bound.
+

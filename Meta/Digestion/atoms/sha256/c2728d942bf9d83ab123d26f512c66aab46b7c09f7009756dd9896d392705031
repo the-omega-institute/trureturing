@@ -1,0 +1,71 @@
+## 2. Linear trace coordinates and terminal words
+
+**Lemma 2.1.** The matrices $I,J,L,C$ form a basis of
+$\operatorname{Mat}_2(\mathbb R)$. Every five matrices in (1.2) span
+this space, and every four span a space of dimension at least three.
+
+**Proof.** In
+$a_0I+a_1J+a_2L+a_3C=0$, the first diagonal entry minus the second is
+$a_3$, so $a_3=0$. The lower off-diagonal entry minus the upper one
+then gives $a_2=0$. The upper off-diagonal and diagonal entries now
+give $a_1=a_0=0$.
+
+If $I$ is missing from the six matrices, recover it as
+$Q-2J-2L+C$. If $J$ or $L$ is missing, recover it from $J+L$ and the
+other summand. If $C$ is missing, use $I+2J+2L-Q$. If $J+L$ or $Q$
+is missing, the original basis remains. Thus every five span all four
+dimensions. Adding one matrix to any given four can increase dimension
+by at most one; since the resulting five span four dimensions, the
+given four have dimension at least three.
+
+The trace pairing is nondegenerate:
+$\operatorname{tr}(E_{ab}U)=U_{ba}$ for matrix units $E_{ab}$.
+Consequently all these span assertions are also rank assertions for
+the corresponding linear trace equations. ∎
+
+The fifth cumulative matrix $Q$ is invertible, with
+
+$$
+Q^{-1}=\begin{pmatrix}-2&1\\3&-1\end{pmatrix}.
+$$
+
+Two useful sixth-matrix identities, obtained by the displayed
+multiplications, are
+
+$$
+JQ=\begin{pmatrix}3&2\\1&1\end{pmatrix}=2C-L,\qquad
+MQ=\begin{pmatrix}3&2\\4&3\end{pmatrix}=I+2J+2L.                    \tag{2.1}
+$$
+
+For any $X=\left(\begin{smallmatrix}u&v\\w&e\end{smallmatrix}\right)$,
+the four chronological terminal trace expressions, with an added
+drift $d$, are
+
+$$
+\begin{array}{c|c|c}
+\text{word at clocks six and seven}&\text{matrix acting on }X&
+                                  \text{terminal expression}\\ \hline
+JJ&J^2=I&u+e+d\\
+JM&MJ=L&u+v+e+d\\
+MJ&JM&u+w+e+d\\
+MM&M^2&u+v+w+2e+d .
+\end{array}                                                       \tag{2.2}
+$$
+
+The four values determine
+
+$$
+v=r_{JM}-r_{JJ},\qquad
+w=r_{MJ}-r_{JJ},\qquad
+e=r_{MM}-r_{MJ}-r_{JM}+r_{JJ}.                                   \tag{2.3}
+$$
+
+If $X$ has rank one and $e\ne0$, then $u=vw/e$, after which
+$d=r_{JJ}-u-e$. This is the rank-one terminal reconstruction mechanism
+displayed in VII, equation (4.2), and credited there to
+[V, Theorem 7.1](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_V.md).
+Equations (2.2)–(2.3) give the complete calculation needed here; no
+unseen result of V is required. These four counterfactual expressions
+are used together only to prove separation. The decoder acquires one
+chronological path.
+

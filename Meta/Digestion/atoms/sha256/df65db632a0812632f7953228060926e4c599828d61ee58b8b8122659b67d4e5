@@ -1,0 +1,104 @@
+**Convention 17.2 (bounded exact counting readings).** The following
+finite readings test the count and grouping, without an empirical
+convergence claim or a new rate endpoint. In the credited native
+binary-slot three-cycle of [GCB, §§1–2][GCBbase], use four sheets
+and the uniform local pair type. Each owner list is balanced,
+giving six possibilities. For any two such lists, exactly sixteen
+of the twenty-four permutations realize the uniform ordered-pair
+type. The number of matching cover/configuration pairs is
+$6^3\,16^3=884736$ over $24^3=13824$ covers. Their exact
+average is $64=(24/6)^3$, as in (COK.65). With local whole-block
+matrix $\left(\begin{smallmatrix}1&2\\3&5\end{smallmatrix}\right)$,
+each local type has weight $30$, so the weighted average is
+$64\,30^3=1728000$.
+
+For a whole-group check, take two depth-two blocks, with the first
+owning both binary seeds at its actual $L,R$ ports and the second
+using both seeds at those ports; both roots are constant branch.
+Use the uniform four-pair local law at both blocks and four
+sheets. There is one full group edge with four labels. For each
+of its twenty-four permutations, exactly twenty-four actual
+solutions have the prescribed two local types. Thus the average
+is $24=24^2/24$; replacing the group denominator by two binary
+denominators would give the incorrect $24^2/6^2=16$. Giving both
+blocks the displayed matrix weights gives exact average
+$24\,30^2=21600$. Zeroing one of those four weights makes this
+particular full type's contribution zero; it does not make its
+zero row a positive matching law.
+
+The regular-cover construction can separately be checked on a
+three-block binary-slot cycle with uniform local pair laws and
+four-sheet lists: its twenty-four-sheet law has the prescribed
+local distribution at every copy, with at most four outcomes,
+and every copied seed retains incidence two. These bounded
+in-memory checks exercise the stated finite identities. The
+arbitrary-size assertions rely on the proofs in §§12–16.
+
+**Open problem 17.3 (what completion still leaves unproved).**
+The constructive completion relation is equality of whole incoming
+group laws with projections of the same actual owner tuple laws.
+Once it holds rationally, local realizability on some finite
+cover is no longer an existence gap. It still does not make
+independently selected local maximizers match, nor put their
+marginals on the unlifted base. In addition, the explicit charge
+$\mathcal I_{\rm cov}/n$ need not be small. The useful sufficient
+condition is (COK.77); no theorem here supplies such populations
+near minimizing native weights or forces their normalized
+information charge to vanish.
+
+For the plain finite envelope, [NWO, Definitions 1.3–1.7][NWOCOK]
+uses exactly the same depth $d$, entire $S_d,W_d,\mathcal E_d$,
+simultaneous positive-support witness for each whole outside-owner
+group, and coefficients $\gamma_k(A)$ as Definitions 1.3–2.5.
+Its Theorems 3.2–3.3 prove exact-support continuity,
+support-preserving rational approximation, global lower
+semicontinuity and real attainment. In particular,
+
+$$
+a_d=\min_{\mu\in\Delta(S_d)}\Omega_d(\mu)
+   =b_{\rm cond}^{\mathbb Q}(d)\ge b_d.
+$$
+
+[NWO, Theorems 5.1, 5.3 and 6.2][NWOCOK] give the exact
+support-disjunctive closed-kernel semialgebraic epigraph and a
+computable positive algebraic $a_d$. Its Theorem 7.2 gives every
+strict rational cap $C>a_d$ at some rational probability for
+the unchanged full-row positive-rational $V_{\rm cond}$.
+Thus rational approximation for this finite-envelope infimum is
+settled without filling support zeros. Global continuity across
+supports is false in general (NWO Corollary 4.5); closed real
+kernels do not imply positive-rational acceptance at the boundary
+(NWO Proposition 7.3).
+
+The remaining equality is $a_d=b_d=\min_\mu\beta_d(\mu)$ at
+general depth, not the real/rational equality for $\Omega_d$
+(NWO Open problem 8.4). Neither finite optimization nor the
+cover construction supplies matching near-maximizing populations
+with small charge in (COK.77). Consequently COK.57's native
+optimizer-cofinality, [GDB, Definition
+11.1][GDBbase]'s universal sound cofinal verifier and effective
+original length error remain unresolved. The finite multiplier
+error in (COK.67) controls cover counting for a prescribed
+rational population; it is not an error for $\log_2K_d(n)/n$,
+a finite cutoff for arbitrary native templates, or an algorithm
+evaluating the all-size pressure. Preserving bounded incidence
+does not add bounded width, mixing or positivity. The numerical
+rate endpoints are not restated or improved by this construction.
+General exact $M_1(D)$, sharp $\lambda$ and the full minimal-
+relations/internal-observer/mutual-recovery programme are not
+settled. The operational recovery proved here is the requested
+full temporal factor and its authentic-count trajectory from
+the complete name and at most one actual reply, under the paid
+services; it does not identify the whole hidden source, unseen
+history or age, or physical space and time.
+
+[RRNbase]: https://github.com/the-omega-institute/trureturing/blob/91170b89dfe9dd7eadc64d14d86d2157ed14abdf/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_REPRESENTATIVE_REPLY_NORMAL_FORM.md
+[FMRbase]: https://github.com/the-omega-institute/trureturing/blob/91170b89dfe9dd7eadc64d14d86d2157ed14abdf/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_LATE_TARGET_FRACTIONAL_MEMORY_RATE.md
+[NPCbase]: https://github.com/the-omega-institute/trureturing/blob/91170b89dfe9dd7eadc64d14d86d2157ed14abdf/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PRODUCT_PRESSURE_COMPLETENESS.md
+[SIRbase]: https://github.com/the-omega-institute/trureturing/blob/91170b89dfe9dd7eadc64d14d86d2157ed14abdf/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SEED_INCIDENCE_REDUCTION.md
+[GCBbase]: https://github.com/the-omega-institute/trureturing/blob/91170b89dfe9dd7eadc64d14d86d2157ed14abdf/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_GRAPH_COVER_BETHE_BOUNDARIES.md
+[GDBbase]: https://github.com/the-omega-institute/trureturing/blob/91170b89dfe9dd7eadc64d14d86d2157ed14abdf/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_GLOBAL_DEPENDENCE_BOUNDARIES.md
+[VontobelCOK]: https://arxiv.org/html/1012.0065v2
+[RuozziCOK]: https://arxiv.org/html/1202.6035
+[NWOCOK]: https://github.com/the-omega-institute/trureturing/blob/29f45c0bee5e8d45e4993ef7824b43d2c52235eb/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_WEIGHT_OPTIMIZATION.md
+

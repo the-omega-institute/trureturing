@@ -1,0 +1,33 @@
+**Lemma 5.2 (entire signed fibers with native mask outputs).** From the
+finite retained input and $Q$ one can compute finitely many formulas
+$\Phi_i(\mathbf x)$, native source terms $W_i(\mathbf x)$, fixed reached
+sets $I_i$, native mask terms $m_i(\mathbf x)$ and whole-hole terms
+$h_{i,q}(\mathbf x)$ for $q\in I_i$, such that
+
+$$
+\begin{aligned}
+D&=\bigcup_i\{W_i(\mathbf x):\Phi_i(\mathbf x)\},\\
+I_Q(W_i(\mathbf x))&=I_i,\qquad
+m_Q(W_i(\mathbf x))=m_i(\mathbf x),\qquad
+W_i(\mathbf x)|_q=h_{i,q}(\mathbf x)
+\end{aligned}
+\tag{NPL.11}
+$$
+
+on every satisfying assignment. Each original $u\in D$ has its actual
+prefix case and frontier values giving these identities. Every
+satisfying filling gives an original member of $D$ with every old and
+additional constraint intact.
+
+Proof. Use ARH Proposition 3.2's full-domain guarded cells, or equivalently
+NSF Lemma 5.1's fixed-navigation compiler, including the full predicate
+(NPL.3). Split original prefix patterns strictly beyond all fixed
+endpoints and cut positions. Reached target sets are then fixed;
+navigation yields the entire native subtree expressions, not only root
+labels. Mask those reached expressions by $\alpha$, retaining every
+uncut residual term in the exterior. Old class occurrences share their
+original variables and all class disequalities remain in $\Phi_i$.
+The actual frontier decomposition gives the inverse source direction;
+filling it gives the forward direction. These are reused correspondences,
+not a claim that the cell domains are finite. $\square$
+

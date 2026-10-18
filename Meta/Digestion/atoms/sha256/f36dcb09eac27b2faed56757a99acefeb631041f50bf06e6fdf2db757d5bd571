@@ -1,0 +1,23 @@
+**Definition 8.3 (The inherited global rank discrepancy).** For a positive law $r$ on $B_n$, let $r_j(w_{-j})$ be its full-complement posterior, zero at forced fibers. Extend $r$ by zero to every illegal binary word. At an internal cut define
+
+$$
+\mathsf F_k(r)(s,t)=r(st),\qquad
+s\in\{0,1\}^k,\quad t\in\{0,1\}^{n-k}.
+\tag{8.7}
+$$
+
+Let $\mathscr F_{N,n}^{0,0}$ be the probabilities satisfying the insertion bounds on every legal edge and having nonnegative rank at most $N$ at every cut (8.7). Nonnegative rank is the least number of nonnegative rank-one summands. The insertion bounds imply positivity on the connected legal graph, as in [Guarded, Lemma 3.3]. The family is compact and, when nonempty, its continuous discrepancy attains its minimum by [Guarded, Definition 6.3]. Put
+
+$$
+\mathcal D_{B_n}(\pi_n\Vert r)
+=\sum_{j=1}^n\mathbb E_{\pi_n}(a_{n,j}-r_j)^2,
+\qquad
+\mathcal R_{N,n}=\min_{r\in\mathscr F_{N,n}^{0,0}}
+\mathcal D_{B_n}(\pi_n\Vert r),
+\tag{8.8}
+$$
+
+with $\min\varnothing=+\infty$. At $n=1$ there are no internal cuts. A singleton conditional completion graph has its unique law and zero discrepancy; a zero-mass conditioning event has zero weighted contribution and no conditional denominator. Illegal seam entries are retained as zeros in (8.7).
+
+Each candidate $r$ in (8.8) is one global law. Its different conditionals cannot be fitted independently. Such rank families are necessary relaxations and are not asserted to characterize stationary producers or common-matrix representations.
+

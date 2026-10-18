@@ -1,0 +1,36 @@
+## 2. 一侧缺陷预算
+
+固定任意达到律 $P$，置 $c=d(P)=c_\star$、$q_i=\mathbb E_P[X_i\mid\mathcal E_i]$、$\ell_i=(X_i-q_i)^2$。后验均取 $[0,1]$ 版本，并可取 $q_i=q_0\circ T^i$。本节及一般响应定理的全部期望均属于这个 $P$。令
+
+$$
+p^L_r=\mathbb E_P[X_0\mid X_{-r},\ldots,X_{-1},X_1,X_2,\ldots],\quad
+p^R_r=\mathbb E_P[X_0\mid\ldots,X_{-2},X_{-1},X_1,\ldots,X_r],
+$$
+
+$$
+e_L(r)=\mathbb E_P(q_0-p^L_r)^2,\quad e_R(r)=\mathbb E_P(q_0-p^R_r)^2,\quad
+\tau(R)=\sum_{r\ge R}(e_L(r)+e_R(r)),\qquad r,R\in\mathbb N.
+$$
+
+空坐标列表不提供信息。条件投影、原纤维恒等式和有限图上界给出
+
+$$
+\sum_{r=0}^{m-1}(e_L(r)+e_R(r))\le c\quad(m\ge1),\qquad
+\tau(0)\le c,\quad \tau(R)\downarrow0,
+\tag{2.1}
+$$
+
+$$
+0\le D_r(P)-c\le\frac{c}{r+1}.
+\tag{2.2}
+$$
+
+证明这些预算，令 $u_{n,i}=\mathbb E_P[X_i\mid\sigma(X_j:1\le j\le n,j\ne i)]$。投影正交性给
+
+$$
+0\le\sum_{i=1}^n\mathbb E_P(q_i-u_{n,i})^2
+=\Phi_n(P_n)-nc\le c.
+$$
+
+取 $n\ge2m$；首 $m$ 个有限字段各包含于对应 $p^L_0,\ldots,p^L_{m-1}$ 的平移字段，末 $m$ 个包含于对应 $p^R_{m-1},\ldots,p^R_0$ 的平移字段。精化条件减小平方缺陷，平稳性遂给（2.1）的部分和界。非负级数给其尾界及尾趋零。在长 $r+1$ 区间，每个去中心有限字段都包含于该坐标的半径 $r$ 字段；故上述和至少为 $(r+1)(D_r(P)-c)$，得到（2.2）。这是达到律的边界预算，不需有限隐藏、混合、不可约或收缩假设。
+

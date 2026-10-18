@@ -1,0 +1,36 @@
+## 307. The saturated sixth label forces the forbidden u<=m case
+
+Suppose V is unwitnessed. Every transverse-selected flat must select V,
+and there is at most one such owner F_V. Every axial zero V slot lies
+in F_V. If F_V exists it has at most one V axis, since two would require
+v-b>=v+1 for a positive companion. Its two transverse slots exhaust
+p_V=2. Without F_V exactly two axial V slots have angle pi and no axial
+V slot is zero.
+
+Let k be the number of axial-flat owners with V transverse. Each has
+two such slots. The exact V degree is 2+2*k+t, t in {0,1}, when F_V
+exists, and 2+2*k otherwise. Therefore k>=2.
+Every one has pair {V,C} or {V,D}, since M,Z,U have no flat transverse
+occurrence. It differs from the source sigma, whose pair is {C,D}.
+It cannot select M, already selected once in sigma, or Z. It has at
+least one selected H axis, by the special-edge barrier. Its selected
+H axes are consequently among C,D,U,V.
+
+If such an owner has no U axis, choose its largest selected H value x.
+For pair {V,B}, where B=C or D, the other axis is H-valued and at most
+x, or special with shifted value less than v+b. Axial flatness implies
+x>=1+v+b in either case. Thus X is neither V nor B; it is the other
+low label A, strictly larger than both. Every owner without U therefore
+selects that same larger label A. Since A is witnessed, p_A<=1, so
+there is at most one such owner. Also p_U<=1, giving at most one owner
+with U selected. Since k>=2, both kinds must occur and U is selected.
+Maximality of M gives u<=m.
+
+Apply the complete-star lemma with L={C,D,V}. All its premises hold:
+c,d<m-2 and v<=m-2; U is genuinely witnessed and u>T>m-2;
+Z has no flat transverse occurrence; the original source data remain
+unchanged. The lemma instead gives u>m, contradiction.
+Thus V is witnessed too. No flat can select a transverse pair of any
+reservoir, since that would exhaust a witnessed edge's equation.
+Every flat therefore selects its axes, proving the theorem.
+

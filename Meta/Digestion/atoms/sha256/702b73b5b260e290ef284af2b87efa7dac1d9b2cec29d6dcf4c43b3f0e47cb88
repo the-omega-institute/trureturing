@@ -1,0 +1,50 @@
+**推论 3.1（变第五响应的初根整族策略与失败族必要条件）。** Every
+known subset of $C_0(Y)$, finite or infinite, is recoverable within
+three further readings, hence at most eight total readings. Every
+known subset of $C_0^-$ is recoverable within four further readings
+and the same total bound. Every known subset of $K_0(Y,z)$ is
+recoverable within two further readings. In particular,
+
+$$
+\begin{aligned}
+L_2(K,H_{JM}(Y,z))&\Longrightarrow
+                 \exists W\in K:\ g_W(0)\ne0,\\
+L_3(K,H_J(Y))&\Longrightarrow
+                 \exists W\in K:\ g_W(0)\ne0,\\
+L_4(K,H_J^-)&\Longrightarrow
+                 \exists W\in K:\ g_W(0)\ne0
+\end{aligned}                                                   \tag{3.1}
+$$
+
+for any compatible $K$ at the indicated node.
+
+Proof. At $H_J(Y)$ execute fifth $M$ and read its actual $z$, then
+use the corresponding branch of Theorem 2.1 on the retained subset.
+This is one rule on every possible actual fifth-response fiber,
+without assuming that $z$ is constant on the known input class.
+Its two possible budgets are $5+1+1=7$ and $5+1+2=8$.
+At $H_J^-$ first execute fourth $J$ and read $Y$, then apply the
+same rule, with budgets $4+1+1+1=7$ and $4+1+1+2=8$.
+Restriction of these policies to any known subset preserves
+correctness. If one of the losing sets in (3.1) consisted entirely
+of initial-root targets, the corresponding whole-class policy would
+contradict (1.7).
+
+The conclusion is noncontainment in one promised stratum. It does
+not assert that a losing family exists or that it contains both
+initial-root and noninitial-root targets, or different drifts.
+At each of these literal histories $g(0)\ne0$ is equivalent to
+$\delta\ne D_0$; the existential conclusion does not require two
+different values of $\delta$ within the family.
+
+For the separate history
+$H_4(Y)=(0,M,1,M,23/7,J,331/35,M,Y)$, the analogous assertion that
+an $L_3$ family cannot lie entirely in $g(0)=0$ is already
+[II, Theorem 62.1 and Proposition 63.1](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_II.md):
+on that history $g(0)=0$ is exactly $\delta=0$. Its rule is fifth
+$J$, sixth $J$, then seventh $M$ exactly when the actual sixth
+response plus $Y/2$ is zero, otherwise seventh $J$. The exceptional
+input is II, Proposition 63.3. These are the existing $MMJM$
+decoder, consequence and consumer; no identification of that
+history with $JMMJM$ is used in (3.1). ∎
+

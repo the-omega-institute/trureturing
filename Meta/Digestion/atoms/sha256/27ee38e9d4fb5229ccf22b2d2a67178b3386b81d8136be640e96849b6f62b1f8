@@ -1,0 +1,13 @@
+**文献表态 8.1（精确重叠与专门化）。** 下列仓内来源取固定修订 `8434d8154c2097fbd421ec5d7960df8529eae6bb`；Auric 相关第168–177章也见固定修订 `146d4f86785c15c6eda92b496aca7557f905db79`。版本用于明确供应的陈述，不用文件登记或来源元数据代替证明。
+
+| 8.1 的来源 | 精确范围与归属 |
+| --- | --- |
+| [Auric](AURIC_FIB_HISTORY_RECORDS_TIME_ARROW.md)，定义168.2、169.1、170.3，定理170.2、171.2–171.3、175.2、177.1、177.5 | `repo-derived`：复用正叶来源、中心矩、完整接缝及旧值更新、整数界、经典三阶签名对应和非恢复反例；不将一般实折线或数值逆转成正词权限。 |
+| `D5/S1/Words/Complexity/PositivePairs/Coefficients/PositivePairFiltration.lean` 的 `positivePairWords`、`full_positivePair_ratio_filtration` | `repo-derived`：第5章两对字串是已有三级索引实例；低阶相同的正词对机制已有归属。 |
+| 同目录系统的 `Span/LiteralPowerSubstitution.lean`；`Digits/CentralDigitWords.lean`、`CentralDigitData.lean`、`CentralDigitInjection.lean` 的 `actual_positivePair_multiScale_central_digits` | `repo-derived`：字母连续重复、同低阶数据下的首阶差相加、独立多尺度数字注入和精确长度控制均复用；其共同参考低阶 profile 未直接指定 $(2m,2m,2m^2)$。本卷的承重适配是显式平衡零面积块及固定纤维补齐。 |
+| `D5/S1/Words/Complexity/ExactDecks/Asymptotics/PositivePairExactDeckAsymptotics.lean` 的 `actual_exactKDeckImage_weightedLyndon_isTheta` | `repo-derived`：已有有限有序字母表的总体精确 $k$-deck 锐阶增长。二元三级时 Lyndon 数 $L_2(1),L_2(2),L_2(3)=2,1,2$，加权指数减一为 $2+2+6-1=9$。不从总体增长推出任意指定纤维的下界。 |
+| Gwénaël Richomme，*On some 2-binomial coefficients of binary words: geometrical interpretation, partitions of integers, and fair words*，[arXiv:2510.07159v1](https://arxiv.org/abs/2510.07159v1)，§4.2 引理4.12–4.13 | `literature-attested`：固定字母数与散置对数的有界分拆双射；其分拆为本卷 $x$ 列的倒序。分拆数量计词，不计不同联合矩。 |
+| Ilya Chevyrev、Andrey Kormilitzin，*A Primer on the Signature Method in Machine Learning*，[arXiv:1603.03788v2](https://arxiv.org/abs/1603.03788v2)，Definition 1.4，Theorem 1.17，§2.1.5 式(41)；由 Auric 定理177.5作本约定的完整转接 | `literature-attested`：经典迭代积分、Chen 拼接及三阶对数系数；任意实折线的可达性不保证正单位词和指定端点、面积。本卷不重建通用签名理论。 |
+| Arman Nilforoushan、Farzad Parvaresh，*Improved upper bound on the number of distinct k-decks for any k and alphabet size by counting the independent parameters*，[arXiv:2609.23106v1](https://arxiv.org/html/2609.23106v1)，引理7.1、命题7.11、定理7.12 | `literature-attested`：二元三阶 profile 的参数压缩和总体 $\Theta(n^9)$。其构造取 $w\in[0.68n,0.75n]$ 并指定可扫的 $t,A$；本任务 $w=n/2,t=uv/2$ 不实例化该域。命题3.2核对正字母、散置计数和中心化的精确对应；总体指数作为已有背景，不另认领。 |
+| 本卷命题3.1–3.4、4.1，定理4.2、5.3、6.1–6.2、推论6.3、定理7.1 | `repo-derived`：在所列成熟框架中给普通数学适配、指定纤维的显式见证和边界；其中通用分拆、坐标转换、数字机制和计数原则不算新通用成果。指定纤维的共同来源容量与其边界是本卷推进的内容。 |
+

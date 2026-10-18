@@ -1,0 +1,17 @@
+**Definition 218.7 (Projection and embedding of full scores).**
+For $L\ge m\ge3$, define $z=\mathcal E_m(y)$ as follows.
+At each nonpositive prefix $v\in B_m\setminus\{1^m\}$, sum A,C,P
+separately over every suffix of v. At its positive prefix put
+
+$$
+T_z=T_y+\sum_{n(w)>m}(A_w+P_w).
+$$
+
+Discard only the tail C coefficients. Write
+$A_>=\sum_{n(w)>m}A_w$, $C_>=\sum_{n(w)>m}C_w$ and
+$S_k=\sum_{j=m+1}^k\beta_j(y)$ for $m<k\le L$.
+Empty tail sums are zero. The embedding $\iota_m(V)$ appends ones to
+every nonterminal scored m-word, keeps its terminal at $1^L$, and gives
+the extra numerical labels zero score. These are operations on deterministic
+dual weights, not input-source distributions or acquisition kernels.
+

@@ -1,0 +1,63 @@
+**Theorem 7.2 (universal endpoint lower bound).** For every original
+finite factorization satisfying the fixed complete channel and the
+ceiling binary law, and every positive supported input,
+
+$$
+p_H^{\rm acq}(\rho;\mathfrak F)\geq
+p_H^L(\rho;\mathfrak F)\geq B(\rho).
+\tag{RE.43}
+$$
+
+For arbitrary $\sigma\succeq0$ in $M_5$ its lower bound is
+$B(E^\dagger\sigma E)$, using the unnormalized compression.
+
+Proof. Fix $r$ and suppress it on $u,v,w$. Equations (RE.39) and
+(RE.42) express its high live mass as
+$uA_r+vC-2wU_r$. Since $u\geq u_0>0$, put $x=w/u$.
+Positivity gives $v\geq ux^2$. Together with the upper bound on $v$
+this implies
+
+$$
+u(R-x^2)\geq(R-1)/2>0,
+\qquad u\geq\eta(x).
+\tag{RE.44}
+$$
+
+In particular $R-x^2>0$ before any division. The low-cone bound gives
+$u|x|\leq\sqrt R(1/2-u)$, or
+$u\leq\sqrt R/[2(\sqrt R+|x|)]$. Combining with (RE.44) and
+multiplying positive denominators yields
+
+$$
+(\sqrt R|x|-1)(|x|+\sqrt R)\leq0,
+\quad\text{hence}\quad |x|\leq1/\sqrt R.
+\tag{RE.45}
+$$
+
+Since $C\geq0$,
+
+$$
+\begin{aligned}
+uA_r+vC-2wU_r
+&\geq u(A_r+Cx^2-2U_rx)\\
+&\geq\eta(x)(A_r+Cx^2-2U_rx)\geq b_r(\rho).
+\end{aligned}
+\tag{RE.46}
+$$
+
+The second inequality is legitimate because the bracket is
+$\operatorname{tr}((K_r-xS)^\dagger(K_r-xS)\rho)\geq0$.
+Summing the two records and using acquired-live domination proves
+(RE.43). No trace-one, nonsingularity or preparation-prior premise
+was used.
+
+For five modes, the full fixed live Choi support has both its output
+and input in the supported three-dimensional spaces. Every positive
+live Choi summand inherits that support by domination, including every
+actual high submap. Its live mass therefore depends only on
+$E^\dagger\sigma E$. This proves the five-mode version even when
+$\sigma$ has cross-support coherence. An arbitrary acquired high
+effect need not itself kill those cross terms; only its dominated
+supported live submap has been proved to do so. Inequality (RE.19)
+is what transfers this lower bound to acquisition. $\square$
+

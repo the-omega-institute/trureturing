@@ -1,0 +1,45 @@
+**Corollary 258.4 (Optional same-cap affordability on the same conic data).**
+Fix the same full $\lambda,b,M\ge1$ as in Theorem 253.2 and
+normalize at the blended profile (253.6). Form its actual
+$C_E$ and slacks $s_E(f_G(w))$. If every $C_E\le s_E$, its
+repaired same-mass vector $\lambda^\sharp$ satisfies
+$G_O\lambda^\sharp\ge h(b,e)$, and
+$F_y(b,e)\le M\Delta_O(y)$ for every full score. In general,
+
+$$
+F_y(b,e)\le M\Delta_O(y)
+ +M\sum_{\text{all rows }(w,E)}y_{w,E}
+                [C_E(w)-s_E(f_G(w))]_+.
+\tag{258.7}
+$$
+
+For the universal common-map schedules of Theorem 258.3,
+$C_E=0$ at every row, so the same-cap condition holds.
+
+**Proof.** Equation (258.3) says that the repaired probability of
+each row is at least its normalized demand minus its exact
+positive deficit. Multiply by $M$. Since
+$M(d(x,e_x)-\mathbf r)=h(b,e)$ and the repaired vector has
+mass $M$, the full row inequalities give the first assertion and,
+after multiplication by the same nonnegative $y$, (258.7).
+Every repaired column is in the full $O$ catalog, so its total
+excess is at most $M\Delta_O(y)$. For a universal common map,
+all transcript matches in the proof make (258.2) identically zero;
+the original law at $f_G(w)$ is feasible because the first zero
+is preserved. These are optional sufficient mechanisms, not
+restrictions on the original competitors or certificate scores.
+$\square$
+
+The eligible reset of
+[Definitions 220.3–220.5](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XIII.md#2202-eligible-coordinates-and-the-original-bad-pair-graph)
+acts on a dual score: its wordwise hypothesis $C_w\le A_w$
+on reset zero faces ensures contraction of each schedule support,
+while preserving the quotient and baseline. Its graph records bad
+score pairs. Equations (258.2)–(258.4) instead act on one primal
+table distribution, use no such score domination, and compare signed
+transcript changes with that distribution's actual event slacks.
+The graph in Theorem 258.3 records positive schedules and its iff
+quantifies all terminal assignments. These are different specified
+maps and hypotheses; the dual reset is not re-proved by the primal
+transfer identity.
+

@@ -1,0 +1,57 @@
+### 命题 462.1（素秩 Euler 缺口的双边夹逼）
+
+设 $r>5$ 为素数，置
+
+$$
+\delta_r=1-c_{F_r}.
+$$
+
+则
+
+$$
+\boxed{
+\frac1{F_r}\le \delta_r
+\le
+\frac{r\log\varphi}{(2r-1)\log(2r-1)}.
+}
+\tag{462.1}
+$$
+
+此外，已有文献估计给出某个绝对常数 $C>0$，使
+
+$$
+\boxed{
+\delta_r\le C\frac{\log r}{r}.
+}
+\tag{462.2}
+$$
+
+因此实际 $\delta_r\to0$（沿素数秩）。这说明固定禁素集证明中的 Euler
+缺失因子在变化秩上确实退化；它不是一个可以统一保留的正余量。
+
+**证明。** 先取任意素数 $p\mid F_r$。因为 $F_r>1$ 且 $p\le F_r$，有
+
+$$
+c_{F_r}\le1-\frac1p\le1-\frac1{F_r},
+$$
+
+得到左侧。
+
+对（462.1）的右侧，$p\ge2r-1$ 给
+$\omega(F_r)\log(2r-1)\le\log F_r<r\log\varphi$，故
+$\delta_r\le\omega(F_r)/(2r-1)$ 即得该显式界。
+
+对更强的（462.2），任意 $p\mid F_r$ 的入口秩满足 $z(p)\mid r$；因 $r>5$
+为素数，$p=2,5$ 被排除且 $z(p)=r$。因此
+
+$$
+\delta_r
+\le\sum_{p\mid F_r}\frac1p
+\le\sum_{z(p)=r}\frac1p.
+$$
+
+最后一项的 $O(\log r/r)$ 界正是主卷 §171 所引
+Luca--Mejía Huguet--Nicolae (2009), Lemma 3, 式 (5) 的结果。故
+（462.2）是该文献估计对 $c_{F_r}$ 的直接应用，而非重新证明其素数桶
+估计。证毕。 $\square$
+

@@ -1,0 +1,22 @@
+**引理 2.3（Exact matched populations force the support）。** Suppose an arbitrary
+complex density matrix $\Gamma$ on $\mathcal H$ has all $25$ populations
+
+$$
+\langle s,u|\Gamma|s,u\rangle
+  =\frac15\mathbf1_{\{u=f(s)\}}\qquad(s,u\in B).
+\tag{2.3}
+$$
+
+Then it has a unique representation $\Gamma=JCJ^\dagger$ with
+$C\succeq0$ and $C_{ss}=1/5$. Within this population class,
+$\operatorname{Re}C=I_5/5$ is equivalent to membership in (2.1).
+
+Proof. Positivity of every two-coordinate principal submatrix gives
+$|\Gamma_{xy}|^2\le\Gamma_{xx}\Gamma_{yy}$.
+An unmatched computational vector has zero diagonal entry by (2.3), so its
+whole row and column vanish. All remaining entries lie in $\mathcal E$,
+which gives $C=J^\dagger\Gamma J$ and the claimed uniqueness and positivity.
+For Hermitian $C$, an entrywise vanishing real part of $C-I_5/5$ means that
+it is $iX/5$ with $X$ real skew; conversely such a matrix has precisely that
+real part. Positivity remains an explicit requirement. $\square$
+

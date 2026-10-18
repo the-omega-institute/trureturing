@@ -1,0 +1,19 @@
+**命题 C-3.2（残差与布尔界）。** $`\langle u,b\rangle=\langle v,b\rangle=0`$，并且
+
+
+<table><tbody><tr><td>
+
+```math
+\|u\|^2=\frac{X(r-X)}r,\quad
+\|v\|^2=\frac{Y(r-Y)}r,\quad
+\langle u,v\rangle=\frac\Delta r,\quad
+\Delta^2\le XY(r-X)(r-Y).
+```
+
+</td></tr></tbody></table>
+
+
+底面条件协方差是 $`\Delta/r^2`$。最后的不等式不能代替完整概率合法性。
+
+**证明。** 𝑥𝑏=𝑥,𝑦𝑏=𝑦，展开各内积得到 $`X-X^2/r,Y-Y^2/r,\kappa-XY/r`$，再应用 Cauchy–Schwarz。对 $`Q_b=\begin{pmatrix}p_0&p_3\\p_1&p_{13}\end{pmatrix}`$ 展开得 $`\det Q_b=\Delta`$，除以 𝑟 的条件表给协方差。候选 𝑍=0,𝑋=1/4,𝑌=1/2,𝜅=5/16 有 Δ=3/16，$`\Delta^2=9/256\le12/256`$，却有 $`p_1=-1/16`$。它的残差矩阵可正，不能把该有符号候选称为实际概率 Hilbert 空间。𝑟=0 没有底面后验，直接使用唯一顶点律。□
+

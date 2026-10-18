@@ -1,0 +1,39 @@
+**Definition 12.1 (Hard budget and the preserved law).** Retain exactly
+Definition 9.1, with the one original $J_p$, fixed public
+$0<p<1$, $p\ne1/2$, fixed original endpoint $j\in\{0,1\}$, and the given
+independent probability space $(\mathsf U,\mathcal U,\nu)$ with its
+unchanged law. Fix $k\in\mathbb N_0$. A pathwise hard total budget means
+$N\le k$ on every execution, including nonreturns and exceptional
+source/seed paths. An almost-sure hard total budget means
+$\mathbb P_p(N\le k)=1$. Neither condition merely bounds the count on
+returning paths or on $E_k$.
+
+Set $\mathcal A=\{a_0,a_1,b_0,b_1\}$ and introduce a symbol
+$\bot\notin\mathcal A$. The statistics to be preserved are
+
+$$
+D=\mathbf1_{\{\tau<\infty\}},\qquad
+O=\begin{cases}A&D=1,\\\bot&D=0,\end{cases}
+\qquad Z=(H_j,O,D,N).
+\tag{12.1}
+$$
+
+Under a pathwise cap $Z$ takes values in the following finite alphabet;
+under an almost-sure cap it does so almost surely:
+
+$$
+\mathcal Z_k=
+\{(h,o,d,n):h\in\mathcal A,\ o\in\mathcal A\cup\{\bot\},
+ d=\mathbf1_{\{o\ne\bot\}},\ 0\le n\le k\}.
+\tag{12.2}
+$$
+
+We preserve the joint law of $(u,Z)$ on
+$\mathsf U\times\mathcal Z_k$, so the dependence on the given seed is
+part of the assertion. Finite numerical return times and the numerical
+names of acquired addresses are not coordinates of this law. Equality
+of this law is not equality of outputs or counts on each original source
+sample. A nonreturn with $N=n$ keeps its $n$ paid calls and means
+indefinite internal continuation after those calls; it is not a finite
+return with an omitted output.
+

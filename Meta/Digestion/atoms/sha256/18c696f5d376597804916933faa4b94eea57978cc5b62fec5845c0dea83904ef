@@ -1,0 +1,50 @@
+**Definition 1.2 (one common randomized policy).**
+A policy uses a probability space $(\Theta,\mathcal F,\mu)$ whose law
+is independent of the source. Fixing $\theta\in\Theta$ gives one
+deterministic procedure. Its actions, internal transitions, stopping
+and proposed upper bound depend only on public parameters, that tape
+and previously acquired replies and retained control information.
+In particular neither $n$, $J$ nor a source-dependent program is supplied.
+All retained history, random choices and numerical values used by the
+procedure are part of its information, rather than an extra advice port.
+
+At source $x$, write $T_x$ for its number of execution transitions before
+stopping, $h_x=((a_1,y_1),\ldots,(a_{R_x},y_{R_x}))$ for its ordered
+acquired query record, and $C_x$ for its terminal proposed upper bound.
+Internal transitions and the terminal transition also contribute to
+$T_x$. The class $\mathcal P_s$ consists of policies such that, for every
+fixed source, $T_x<\infty$ and $C_x\in\mathbb R$ almost surely, with
+exactly one such terminal proposal. Each execution queries at most $s$
+distinct addresses, where $0\le s\le N$. Repetitions and internal work
+are allowed; neither a uniform execution horizon nor a uniform bound
+on the finite values $C_x$ is imposed.
+
+All finite execution records, stopping events and query sets are
+measurable, using discrete fields for actions and integer responses and
+Borel fields for real proposals. For each fixed source $x$, the
+terminating domain $L_x$ is measurable and has full measure, and
+$T_x,h_x,C_x$ are measurable there. On $\Theta\setminus L_x$ give them
+the fixed defaults $+\infty$, the empty record and $0$, respectively.
+These totalizations are measurable even when $(\Theta,\mathcal F,\mu)$ is
+not complete, since each default is constant on a measurable set.
+Any other measurable totalizations agreeing on $L_x$ give the same
+probabilities below. The sourcewise error and worst-source error are
+
+$$
+e_x(P)=\mu\{C_x<g(x)\},\qquad
+\mathcal E(P)=\sup_{x\in X_{N,t}}e_x(P),\qquad
+V(N,t,s)=\inf_{P\in\mathcal P_s}\mathcal E(P).
+\tag{1.2}
+$$
+
+Correctness here is correctness at the actual source. A finite proposal
+need not bound the targets of every other source compatible with its
+record. In particular $C_b<0$ is an error at $b$.
+
+The common-tape, sourcewise-probability convention is the one in
+[KBonacci Self Calibrating Boundaries, Definition 38.1](KBONACCI_SELF_CALIBRATING_BOUNDARIES.md).
+That definition concerns Boolean prime queries on a different source
+space; (1.1) instead supplies exact numerical replies. Its source space
+and numerical access are not supplied by a finite Boolean decision-tree
+model.
+

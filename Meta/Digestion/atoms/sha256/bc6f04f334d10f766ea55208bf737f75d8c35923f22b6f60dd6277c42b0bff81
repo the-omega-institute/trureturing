@@ -1,0 +1,29 @@
+**Convention 3.3 (Independent actual tail and existing certificate).** Use
+the actual one-sided defects of [Multiword, §2][M]:
+
+$$
+\begin{aligned}
+p^L_j&=\mathbb E_P[X_0\mid X_{-j},\ldots,X_{-1},X_1,X_2,\ldots],\\
+p^R_j&=\mathbb E_P[X_0\mid\ldots,X_{-2},X_{-1},X_1,\ldots,X_j],\\
+e_L(j)&=\mathbb E_P(q_0-p^L_j)^2,\qquad
+e_R(j)=\mathbb E_P(q_0-p^R_j)^2,\\
+\tau_P(R)&=\sum_{j\ge R}(e_L(j)+e_R(j)).
+\end{aligned}
+$$
+
+The entire opposite half-line stays in each field, including at $j=0$.
+A full forced center does not make a reduced defect zero if its forcing
+neighbor has been omitted. Suppose a finite nonnegative allowance
+$\tau_P(R)\le\eta_P(R)$ is justified independently of attainment.
+[Multiword, Theorem 3.1][M] then consumes actual-null $f$ and certifies
+$d(P)<c_\star$ whenever
+
+$$
+|U_{R,r}(P,f)|>
+F B_{L,R,r}(P),\qquad
+B_{L,R,r}(P):=\eta_P(R)+2(L+2R)\sqrt{\bar c/(r+1)}.
+\tag{3.2}
+$$
+
+The finite identity (3.1) needs no tail hypothesis or unifilarity.
+

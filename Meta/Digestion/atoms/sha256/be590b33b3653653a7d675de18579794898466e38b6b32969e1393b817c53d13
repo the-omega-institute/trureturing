@@ -1,0 +1,74 @@
+**Comparison 2.5 (exact current-JR correspondence and scope).** The
+isolated point $u_*$ and the matrices $D,T,S,M,E$ and number $\kappa$
+in (IR.7)–(IR.10) are exactly those of (JR.2), with no rescaling of
+the input or error. The remaining dictionary is
+
+| This volume | JR §§34–39 |
+| --- | --- |
+| $\alpha=ab/(h_0h_1)$ | $\theta$ |
+| $\beta=cd/(h_0h_2)$ | $\omega$ |
+| $\ell=\alpha+\beta$, $k=1-\ell$ | $\delta$, $k=1-\theta-\omega$ |
+| $\sqrt\ell$, $1-q_{\max}=\beta/(1-\alpha)$ | $s_0$, $v_0$ |
+| $1-q_s$, $1-p_s=\alpha(1-q_s)+\beta$ | $v_s$, $u_s=\theta v_s+\omega$ |
+| $\mathscr H_s=(1-\beta)\ell-\alpha s^2$ | $\theta(1-s^2)+\omega k$ |
+| $g_y(s)=p_sA_y+q_sB_y$ | $P_y(s)$ |
+| $g_{27}(s)$ | $\mathsf C(s)$ |
+
+Here $p_s,q_s,q_{\max},\mathscr H_s$ are (IR.31)–(IR.32),
+$g_y$ is (IR.54), and the shared height weights are
+$A_y=\sum_i h_i^2p_{yi}$,
+$B_y=b^2p_{y0}+a^2p_{y1}$ and
+$C_y=d^2p_{y0}+c^2p_{y2}$ as in (JR.23).
+The resource coefficient $q_s$ is unrelated to the input coherence
+$q_y=\sqrt{y(64-y)}/128$ in JR's winding law.
+
+This dictionary identifies the closed formulas, including their root
+branches. Indeed $p_s-\alpha q_s=k$ becomes
+$u_s=\theta v_s+\omega$, and
+$F(p,q)=\sqrt{pq}+\sqrt{(1-p)(1-q)}$ is unchanged by replacing
+$(p,q)$ with $(1-p,1-q)$. Thus (IR.40) is exactly (JR.30)'s
+unique strong-branch equation. Its interval
+$0\leq q\leq k/(1-\alpha)$ maps to $v_0\leq v\leq1$.
+Both weak branches have $(p_s,q_s)=(k,0)$, and both endpoints have
+$p_1=q_1=k/(1-\alpha)$. The radical identity in the table follows
+from $k=1-\alpha-\beta$. Hence the rationalized expression (IR.31)
+and (JR.31) specify the same coefficients without a numerical root
+choice. The diagonal proof in §6 retains this credited scalar argument
+with arbitrary nonnegative weights
+$\operatorname{tr}(D^\dagger D\tau)$,
+$\operatorname{tr}(T^\dagger T\tau)$ and
+$\operatorname{tr}(S^\dagger S\tau)$.
+
+The comparison classes differ. JR Definition 34.1 permits every common
+full-output optimizer $\Phi$ with $\mathcal E(\Phi)=\mathcal E_*$,
+and asks only for normalized winding contrast
+$\mathsf V(F)=2|\operatorname{Re}F_{01}|/\kappa\geq s$.
+It includes finite, countable and explicitly stipulated measurable
+integral actual factorizations. Here (IR.12) fixes the entire channel
+$\widehat\Phi_*$, (IR.13) fixes both binary effects on every five-mode
+input, and the implementation class remains finite. Its members have
+contrast exactly $s$, so form a subclass of JR's comparison. JR's
+explicit finite attainer belongs to this subclass: on the strong branch
+$(r,\epsilon)=(\sigma,\tau)$ identifies (IR.43) with (JR.34).
+On the weak branch, splitting JR's low labels with the kernel
+$(1+r\sigma s/\sqrt\ell)/2$ gives (IR.42) with
+$(\epsilon,\zeta)=(\sigma,\tau)$. Proportional high copies at a
+fixed $r$ combine into $A_r=\sqrt{k/2}D$; the scalar failure and
+complement copies combine into the halves in §7. Thus these particular
+attainers also preserve JR §§30–31's binary-conditioned complete maps,
+as verified on all complex inputs, passive references and labelled time
+sets in Theorem 7.2. JR's lower bound and this attainer already give
+worst-history minimum $g_{27}(s)$ even in the present fixed-channel,
+exact-effect class. Neither this minimum nor JR's inverse scalar budget
+evaluates the general coherent-input minimum or the whole twelve-vector
+frontier.
+
+JR Theorem 35.1 preserves the actual winding contrast and four-sign
+averaged acquisition costs by relabelling the record during sign
+averaging. It identifies the averaged live Choi matrix $J_*$ and total
+canonical-failure effect $M$. It does **not** identify an arbitrary
+optimizer's entire forgotten channel or individual labelled failure-time
+CP measures, either before or after averaging. The explicit complete-map
+identities of JR's attainer and §7 are proved identities for those
+instruments, not a uniqueness assertion about all optimizers.
+

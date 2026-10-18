@@ -1,0 +1,21 @@
+**Definition 7.7 (Finite equality encoding and fixed coefficient readout).**
+Using Lemma 7.6, set
+
+$$
+E_*(k,\alpha,\beta)=(\xi,\mathbf f_0,\ldots,\mathbf f_d),
+\qquad
+\xi=k,\qquad \mathbf f_j=k^jU(\alpha).
+$$
+
+The real dimension is $1+2(d+1)=2m+5$.
+For an arbitrary feature vector define
+
+$$
+M(z)=\sum_{j=0}^d\pi_j\mathbf f_j,\qquad
+L_*(z)=D(M(z),0).
+$$
+
+This is one fixed linear decoder, with zero affine offset and a zero
+column on $\xi$. It reads a fixed linear combination of stored
+features; it does not evaluate a polynomial nonlinearly on $\xi$.
+

@@ -1,0 +1,22 @@
+**Definition 3.1 (indexed native sets).** Enumerate the nine trees of
+$\mathcal G$ by $g_i$, equivalently by $(x,y)\in T^2$ in the order
+$A,B,C$ in each coordinate, and set
+
+$$
+H_A=\{A\}\cup\mathcal G,\qquad
+H_B=\{B\}\cup\mathcal G,\qquad
+T_i=\{A,B,g_i\},
+$$
+
+$$
+P(X,Y)=\langle X,Y\rangle,\qquad
+P_\ell(X,Y)=\{\ell\}\cup P(X,Y)\quad(\ell=A,B).
+\tag{D3.27}
+$$
+
+The child sets $H_A,H_B,T_i$ are the credited maximal depth-two
+admissible sets of FMR Theorem 5.1; their depth-two optimal fractional
+value is $25/17$. The parent sets and weights below use those sets as
+ingredients, without treating a parent projection as an admissible
+fiber or imposing independent child codes on competitors.
+

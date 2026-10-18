@@ -1,0 +1,48 @@
+**Convention 9.3 (current JR scope through Section 52).** JR's original
+joint winding/resource law optimizes over all original error optimizers,
+uses a contrast inequality with other effect coordinates free, and
+imposes sharp worst-history cost before optimizing height-record TV.
+Its four-sign average lower frontier, inverse budget, common H/L
+attainers, supported sharp-cost rigidity, strong-regime height-TV
+evaluation and spectral failure-record gain remain credited. So do
+the weak four-real-PSD reduction, finite attainment, all-label
+three-low comparison, and the specified symmetric point's strict
+improvement.
+
+The current JR Sections 50–52 go further. In their normalized real-null
+problem, $L=\operatorname{diag}(\sqrt\ell,1,1)$,
+$\omega/\delta=\beta/\ell$ in their notation, and $G=LNL$ is the
+height-difference matrix, not the selected Gram $C$ here.
+Their isolated real-null stationary vector $v_*$, its spectral
+value $\mu_*<0$, and the orthonormal real-null frame
+$(v_*,u_*,w_*)$ give the aggregate three-ray optimum. They prove the
+maximal initial height-TV plateau
+
+$$
+\mathcal T(s)=T_{\rm flat}-\mu_*
+\quad(0\leq s\leq\bar s),\qquad
+.99\,s_0<\bar s<s_0,\quad s_0=\sqrt\ell,
+\tag{AS.60}
+$$
+
+with their exact endpoint $\bar s=2s_0(u_*)_0(u_*)_1$ and finite
+eleven-branch common instrument, or twenty-two branches after exact
+contrast attenuation retaining all original labels. Their equality
+classification fixes aggregate optimal real-atom lines, not a whole
+channel or an inaccessible refinement. On $(\bar s,s_0]$ their
+height-TV value is strictly decreasing; they give the retained-choice
+chord lower bound and the evaluated endpoint at $s_0$.
+For $s<s_0$ their four-slack SDP dual has a finite attained minimum;
+on the residual interior its contrast multiplier is positive and
+the contrast inequality saturates. At $s_0$ the primal is finitely
+attained and the dual infimum equals it but has no finite minimizer.
+The remaining JR task is the exact residual curve on
+$(\bar s,s_0)$, its contact rays and transitions, together with its
+native obligations. Its entire initial height plateau is not open.
+
+These height-TV results have a different objective and constraint
+set from (AS.11)–(AS.12). For example JR's positive $02$ effect in
+its local comparison is outside (AS.10). No optimality, resource,
+TV or simultaneous-optimizer migration in either direction is
+established by their coexistence.
+

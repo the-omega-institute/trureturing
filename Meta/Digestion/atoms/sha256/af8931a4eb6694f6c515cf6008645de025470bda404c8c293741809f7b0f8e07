@@ -1,0 +1,69 @@
+##### 定理 2.5.4： 小跨界耦合给出有限时间泄漏上界
+
+令：
+
+$$
+\varepsilon_R=\|Q_RHP\|.
+$$
+
+若初态支持于 $R$，则：
+
+$$
+\boxed{
+\operatorname{Tr}[Q_RU_t\rho U_t^\dagger]
+\le
+\min\left\{
+1,\frac{t^2\varepsilon_R^2}{\hbar^2}
+\right\}.
+}
+$$
+
+**证明。**
+
+定义分块动力学：
+
+$$
+H_0=PHP+Q_RHQ_R,
+\qquad
+U_t^0=e^{-itH_0/\hbar}.
+$$
+
+Duhamel 恒等式给：
+
+$$
+U_t-U_t^0
+=
+-\frac{i}{\hbar}
+\int_0^tU_{t-s}(H-H_0)U_s^0\,ds.
+$$
+
+由于 $U_s^0P$ 的像仍在 $P$ 子空间，且：
+
+$$
+(H-H_0)U_s^0P=Q_RHP\,U_s^0P,
+$$
+
+所以：
+
+$$
+\|Q_RU_tP\|
+=
+\|Q_R(U_t-U_t^0)P\|
+\le
+\frac{|t|}{\hbar}\varepsilon_R.
+$$
+
+对支持于 $R$ 的纯态取范数平方，再对混合态作凸组合，得到所需界。概率本身不超过一，故可取两界的最小值。证毕。
+
+这提供了一个比“锁在某处”更细的分级：
+
+$$
+\boxed{
+\text{严格封闭}
+\quad\text{或}\quad
+\text{在指定时间与误差内近似封闭}.
+}
+$$
+
+<a id="section-2-6"></a>
+

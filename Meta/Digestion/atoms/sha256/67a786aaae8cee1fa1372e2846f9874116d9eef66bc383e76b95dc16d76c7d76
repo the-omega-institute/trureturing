@@ -1,0 +1,30 @@
+**Proposition 6.5 (earlier recovery is counted literally).** For a frozen
+completed predecessor at a reached $R_r$, Boundary74 returns its actual
+absolute $a,b$ finitely. Prefix74 at $a\le k\le b$ returns that run's
+exact length-$k$ prefix and raw endpoint. These assertions include every
+earlier recovery's native rows and cells, and any finite number of earlier
+such cycles.
+
+Proof. Induct on the completed-cycle list. Proposition 4.4 supplies the
+base initialized Ready, including its entire boot/capture/import prefix.
+For an added source cycle, Proposition 5.5 and CAP Lemma 6.7 give a finite
+actual fragment. For a history cycle, its frozen predecessor is shorter
+than the current cycle list. Its Boundary/Prefix operations therefore
+refer to already finite actual prefixes, and Proposition 6.3 simulates
+each of their native rows finitely. The remaining parsing/publication
+and return operations in §§7–8 have fixed finite inputs and closed ends.
+This is simultaneous induction with their finite-completion assertion:
+the zero-cycle case contains no history call; at the induction step all
+historical operands refer to earlier completed boundaries or cuts thereof.
+
+The conjunction in Boundary is false at every earlier Ready with fewer
+completed cycles and before activation. At the intended Ready it is true.
+Following its finite actual prefix with Proposition 6.3 proves termination
+and the tally value. Prefix has exactly $k$ countdown marks and hence
+exactly $k$ finite Step executions. Determinism gives the actual input
+prefix, including a last acquired but unwritten bit when present. A later
+reservoir suffix has no influence before a further IN. This is RCA
+Lemma 15.1's argument applied through the newly supplied CAP/74-role
+input and entry joins. It does not replace an earlier history service
+by its semantic answer or omit its compiler/receipt work. ∎
+

@@ -1,0 +1,21 @@
+**Lemma 5.1 (the exact atomic prefix relation).** For $i,j,h\in\mathbb N$,
+
+$$
+T_i\equiv_h T_j
+\quad\Longleftrightarrow\quad
+ i=j\ \lor\ (i\ge2h\ \land\ j\ge2h).
+\tag{CAR.15}
+$$
+
+Proof. Equal indices give equal trees. Suppose $i<j$. At every address
+of length less than $\lfloor i/2\rfloor$, the remaining index in both
+trees is at least two: each edge subtracts at most two, and all those
+edges have been traversed through branches. Thus both replies are branch
+there. At $R^{\lfloor i/2\rfloor}$ the reply in $T_i$ is $\alpha$ when
+$i$ is even and $\beta$ when $i$ is odd. The reply in $T_j$ differs:
+its residual index is larger, giving $\beta$ or branch in the even case
+and branch in the odd case. That address is reached in both trees by
+(CAR.7). The first differing depth is therefore exactly
+$\lfloor i/2\rfloor$, which is at least $h$ exactly when $i\ge2h$.
+The case $j<i$ is symmetric. The root and $h=0$ are included. $\square$
+

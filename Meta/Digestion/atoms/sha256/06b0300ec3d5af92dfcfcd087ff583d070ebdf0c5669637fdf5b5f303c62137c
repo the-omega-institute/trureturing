@@ -1,0 +1,25 @@
+## 347. Original occurrences and scope
+
+No number of MCD or VCD partners is prescribed. A source face may pair
+to another face of the same owner; two faces may have the same receiving
+owner; an axial chain may contain arbitrarily many distinct owners or
+revisit an owner in the full normal-link traversal. The argument uses
+only endpoint closure (346.1), not a count of such chains or a claim that
+a particular chain has two different owners. Loops in the link and
+multiple edges cause no change to that closure argument. Four-distinctness
+ensures that an axial D owner has one D interval, whereas a transverse
+D owner has two; those two cases are never merged.
+
+The unique-CD-owner fact is used exactly in the first case of (345.2).
+The global opposite-M and opposite-V exclusions are both necessary to
+the closure proof; proving absence only among the four source-face
+partners would not suffice for a transported axial chain. Their global
+use is justified in Sections 343–344 by actual-slot budgets and the two
+published angle implications.
+
+The unique-flat and strict source-normal-form hypotheses remain explicit
+premises of Theorem 341.2. Its conclusion concerns the Z/U axial expense
+in that setting, without assuming an opposite-companion receiver. It
+does not exclude the unique flat source, settle the remaining M/U or
+M/Z high-axis patterns, or prove six-edge or general CFMP realization.
+

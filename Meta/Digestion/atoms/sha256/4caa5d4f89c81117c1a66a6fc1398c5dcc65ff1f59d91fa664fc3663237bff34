@@ -1,0 +1,37 @@
+### 31.4. 实际第六 J 的真一次完整逆
+
+实际 $Q_6$ 给
+
+$$
+\begin{aligned}
+x_6&=-\lambda+(1+2b)(\lambda+6\mu)\\
+&=6\mu+2b\lambda+12b\mu
+=2\mu+4L+24A.
+\end{aligned}
+\tag{31.14}
+$$
+
+按以下顺序重建：
+
+$$
+\begin{gathered}
+\mu=\frac{x_6-4L-24A}{2},\qquad
+b=\frac{2A}{\mu},\qquad
+\lambda=\frac{2(L-\mu)}b,\qquad r=\frac{2D}{\mu},\\
+j=\frac{B-r\lambda/2}{\mu}+\frac r2,\qquad
+c=j-b,\qquad d=a_0-\lambda.
+\end{gathered}
+\tag{31.15}
+$$
+
+先拒绝 $\mu=0$ 才除它，先要求 $b>0$ 才除 $b$。再检验 $0<r<1,c>0,bc=r(1-r)$、整个非零增益、两个整个插值恒等式和全部已取得响应。在前缀参数上，$x_6=2As+4L+24A$ 对 $s$ 有非零斜率，因此也直接分开式 (31.12) 所有不同合法根。
+
+每个真一次合法记录恢复出其原世界；所有右侧只由记录决定，所以至多一个完整目标。此步不除 $\lambda$ 或 $g(6)$，故 $\lambda=0,g(6)=0$ 都保留。八读协议仍实际取得最终 $M$ 并检查
+
+$$
+y_7=(a_0-\lambda)+(\lambda+7\mu)(1+r+3b+c).
+\tag{31.16}
+$$
+
+若 $g(7)=0$，方程仅为 $y_7=d$，无除法。七次总读的真一次识别不被宣称为该类的最小读数。
+

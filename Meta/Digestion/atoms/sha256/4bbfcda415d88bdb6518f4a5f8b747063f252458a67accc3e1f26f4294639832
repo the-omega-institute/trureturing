@@ -1,0 +1,62 @@
+**Lemma 46.1 (signed covariance moment with terminal height).** Put
+$A=S_{[0,b]}$, $B=2bM_\kappa$, $D=A-B$. For each entry define the
+finite signed height measure
+
+$$
+m_{ij}(E)=\mathbb E_{g,\tau}[D_{ij}\mathbf1_{\{K_\tau\in E\}}].
+\tag{46.1}
+$$
+
+Then $\|m_{ij}\|_{\rm var}\le C/T$, uniformly under both exact
+laws and in every parameter and initial state in Theorem 42.2.
+
+Proof. For any measurable height test $a$ with $|a|\le1$ and the
+centered entry $f=f_\kappa$ in (43.1), Fubini and the Markov
+property give
+
+$$
+\mathbb E_{g,\tau}\left[a(K_\tau)\int_0^\tau f(K_r)dr\right]
+=\frac1{d_\tau}\int_0^\tau
+\mathbb E_k^Q[f(K_r)Q_{\tau-r}(ag)(K_r)]dr.
+\tag{46.2}
+$$
+
+The absolute integrand before conditioning is bounded by
+$F g(K_\tau)$, with finite expectation, so Fubini is justified.
+For $r\le\tau-1$, put $s=\tau-r\ge1$. Equation (41.3) applies
+also to the integrable, possibly unbounded function $ag$, and yields
+
+$$
+Q_s(ag)=\pi(ag)+\epsilon_s,\qquad
+\|\epsilon_s\|_\infty\le C_R G e^{-\gamma s}.
+\tag{46.3}
+$$
+
+Use centering only on the constant term:
+$\mathbb E_k^Q f(K_r)=Q_rf(k)$, bounded by $Ce^{-\gamma r}$ from
+(43.3)'s preceding estimate. Bound the error term absolutely.
+Since $|\pi(ag)|\le G$, the integrand in (46.2) has absolute value
+at most $CG[e^{-\gamma r}+e^{-\gamma(\tau-r)}]$. Its integral over
+$[0,\tau-1]$ is at most $CG$.
+
+For $r\in[\tau-1,\tau]$, take $\tau\ge2$, so $r\ge1$ and the
+law of $K_r$ has density at most $1+C_R$ relative to $\pi$.
+Positivity of $Q_s$ and $\pi$-invariance, valid for nonnegative
+integrable functions by monotone convergence, give
+
+$$
+\mathbb E_k^Q|f(K_r)Q_s(ag)(K_r)|
+\le (1+C_R)F\int Q_s(|ag|)d\pi
+\le (1+C_R)FG.
+\tag{46.4}
+$$
+
+This includes $s=0$, where $g=\phi^{-1}$ is unbounded. The last
+unit contributes at most $CG$. Divide by $d_\tau\ge G/2$ in
+(46.2). Multiplication by $2/T$ bounds
+$|\int a\,dm_{ij}|$ by $C/T$, uniformly over every measurable
+$|a|\le1$. Variation of a signed measure is the supremum over
+this class (choose its sign in a Hahn decomposition), proving the
+claim. An estimate of $\mathbb E|D_{ij}|$ alone would lose this
+signed cancellation. $\square$
+

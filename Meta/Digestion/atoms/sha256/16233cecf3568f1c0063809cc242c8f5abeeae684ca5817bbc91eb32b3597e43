@@ -1,0 +1,70 @@
+## 11.7 Prescribed paths, all-times guards, and contract matching
+
+Consider the larger contract that additionally requires an affine update for
+each prescribed finite native path from §9. Let
+$$
+\rho_{\rm path}(\tau)=\int_0^\tau a_c(v)\,dv,\qquad
+\Delta_k=\rho_{\rm path}(T),\qquad
+L_\chi=\int_0^T b_c(\tau)\,d\tau,
+$$
+and
+$$
+C_{\rm path}=\int_0^T
+ \rho_{\rm path}(\tau)b_c(\tau)\,d\tau.
+$$
+For a lawful path the exact guard is
+$$
+0<k+\rho_{\rm path}(\tau)<H
+\quad\text{for every }\tau\in[0,T],
+\tag{11.29}
+$$
+equivalently
+$$
+k+\min_{[0,T]}\rho_{\rm path}>0,\qquad
+k+\max_{[0,T]}\rho_{\rm path}<H.
+$$
+Integrating the native equations gives the endpoint
+$$
+k'=k+\Delta_k,\qquad
+\alpha'=\alpha+\frac{L_\chi}{2},
+$$
+$$
+\beta'=\beta+
+ \left(\frac12-\frac kr\right)L_\chi-\frac{C_{\rm path}}r.
+\tag{11.30}
+$$
+The mixed term has this sign because the varying height contributes
+$-\rho_{\rm path}b_c/r$ to the phase integral.
+
+A model required to implement all such paths is a subclass of the
+straight-command class used in Theorem 11.1 and §11.3. Hence the same
+lower gap and certificate apply. Conversely, the polynomial witness has
+the exact affine path update
+$$
+K'=K+\Delta_k,\qquad
+f_j'=R_{L_\chi/2}
+ \sum_{h=0}^j\binom jh\Delta_k^{\,j-h}f_h,
+\tag{11.31}
+$$
+and the height witness has $K'=K+\Delta_k$. Substitution gives the exact
+encoding of the endpoint in (11.30); $C_{\rm path}$ is forgotten only in
+the permitted beta-independent encoder. At every intermediate time,
+replace $T$ by that time in the displayed integrals. The same identities
+therefore prove all prefixes and intermediate points, with the original
+uniform readout bound. Concatenating two paths gives
+$$
+(\Delta_1+\Delta_2,\,
+ L_1+L_2,\,
+ C_1+C_2+\Delta_1L_2),
+\tag{11.32}
+$$
+which agrees with successive application and introduces no extra stored
+history coordinate.
+
+Thus the classification, the dimension upper bound, and the finite
+certificate are unchanged when prescribed paths and their full all-times
+guards are added. The same comparison applies within the corresponding
+guard-recoverable subclasses. It does not identify the capacities of these
+different contracts with one another, and it does not replace an all-times
+guard by an endpoint check.
+

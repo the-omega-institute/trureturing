@@ -1,0 +1,74 @@
+**Proposition 75.10 (arbitrary forcing and full operator norm).** The complete form assertions in75.9 imply both conclusions of75.4, uniformly on each fixed nonreal compact spectral set.
+
+**Proof.** First use the common shift $b=M+1$. For an arbitrary sequence of forcings $f_\varepsilon\in\mathcal P_\varepsilon$ with $\|f_\varepsilon\|\le1$, let
+
+$$
+u_\varepsilon=\iota_\varepsilon(H_{\varepsilon,R,C}^{\rm D}+b)^{-1}
+                                      \iota_\varepsilon^*f_\varepsilon.
+\tag{75.38}
+$$
+
+The variational identity and(75.37) give $q_{0,\varepsilon}[u_\varepsilon]+\|u_\varepsilon\|^2\le1$: if $A$ is its shifted energy, then $A\le\|u_\varepsilon\|\le\sqrt A$. Extract a subsequence with $J^*f_\varepsilon\rightharpoonup h$ in the fixed $\mathcal H^{\rm fr}$ and $u_\varepsilon-L_\varepsilon u\to0$ with $u\in\mathcal Q^{\rm hc}$. Lemmas75.5–75.6 provide the latter conclusion, with no restriction on forcing.
+
+The vector(75.38) minimizes, on the zero-extended allowed form domain, the strictly positive functional
+
+$$
+\mathcal F_\varepsilon(v)
+ =h_{\varepsilon,C}[\iota_\varepsilon^*v]+b\|v\|^2
+                     -2\operatorname{Re}\langle f_\varepsilon,v\rangle.
+\tag{75.39}
+$$
+
+Its limiting functional is $\mathcal F(w)=q_C[w]+b\|w\|^2-2\operatorname{Re}\langle E^*h,w\rangle$. The lower bound of75.9 gives $\mathcal F(u)\le\liminf\mathcal F_\varepsilon(u_\varepsilon)$. For every $w\in\mathcal Q^{\rm hc}$ its complete recovery gives $\mathcal F_\varepsilon(v_\varepsilon)\to\mathcal F(w)$, including the forcing term. Indeed any strongly identified $v_\varepsilon=L_\varepsilon w+o(1)$ satisfies $\langle f_\varepsilon,v_\varepsilon\rangle\to\langle h,Ew\rangle$. Minimization therefore gives $\mathcal F(u)\le\mathcal F(w)$ for every $w$. The unique minimizer is
+
+$$
+u=(C+b)^{-1}E^*h.
+\tag{75.40}
+$$
+
+The target resolvent is compact. Its shifted form norm is equivalent to the inherited free form norm on $E\mathcal Q^{\rm hc}$, by boundedness of $U_C$; the free form embedding is compact. Thus $(C+b)^{-1}E^*J^*f_\varepsilon\to u$ strongly. Since $L_\varepsilon$ is an isometry, the difference between(75.38) and $L_\varepsilon(C+b)^{-1}L_\varepsilon^*f_\varepsilon$ tends to zero along this subsequence. If the corresponding operator norm had a positive upper limit, a sequence of unit forcings realizing at least half that discrepancy would have a subsequence just shown to have vanishing discrepancy. This contradiction proves
+
+$$
+\|S_\varepsilon-T_\varepsilon^0\|\longrightarrow0,\qquad
+S_\varepsilon=\iota_\varepsilon(H_{\varepsilon,R,C}^{\rm D}+b)^{-1}
+                      \iota_\varepsilon^*,\quad
+T_\varepsilon^0=L_\varepsilon(C+b)^{-1}L_\varepsilon^*.
+\tag{75.41}
+$$
+
+Both operators are bounded nonnegative operators on the full $\mathcal P_\varepsilon$, with spectra in $[0,1]$. For nonreal $z$ put $c=z+b$ and $h_z(t)=t/(1-ct)$. Its value at zero is zero. Because $\iota_\varepsilon$ and $L_\varepsilon$ are isometries on their respective original carriers, spectral calculus gives
+
+$$
+\begin{aligned}
+h_z(S_\varepsilon)
+ &=\iota_\varepsilon(H_{\varepsilon,R,C}^{\rm D}-z)^{-1}
+                                                   \iota_\varepsilon^*,\\
+h_z(T_\varepsilon^0)&=K_{\varepsilon,C}(z).
+\end{aligned}
+\tag{75.42}
+$$
+
+This correctly preserves zero action on the two possibly different orthogonal complements. For a fixed nonempty compact $K\subset\mathbb C\setminus\mathbb R$,
+
+$$
+d_K=\min_{z\in K,\ 0\le t\le1}|1-(z+b)t|>0.
+\tag{75.43}
+$$
+
+The expression cannot vanish: at $t=0$ it is one, and at $t>0$ vanishing would force $z$ real. Compactness supplies the positive minimum. The elementary bounded-operator identity
+
+$$
+h_z(S)-h_z(T)
+ =(I-cS)^{-1}(S-T)(I-cT)^{-1}
+\tag{75.44}
+$$
+
+holds by multiplying on the left by $I-cS$ and on the right by $I-cT$: the middle expression becomes $S(I-cT)-(I-cS)T=S-T$, without assuming that $S$ and $T$ commute. It bounds the supremum of(75.14)'s full discrepancies by $d_K^{-2}\|S_\varepsilon-T_\varepsilon^0\|$. This proves full norm convergence uniformly on $K$. Compressing the full difference by $\iota_\varepsilon^*$ and $\iota_\varepsilon$ gives exactly the allowed-carrier difference, hence
+
+$$
+D_{\varepsilon,C}^{\rm a}(z)\le D_{\varepsilon,C}^0(z).
+\tag{75.45}
+$$
+
+No isometry of the restricted target lift was used. The three prescriptions are finite in number and share all geometry and radius choices, so taking their maximum preserves convergence and gives the common tolerance threshold in75.4. $\square$
+

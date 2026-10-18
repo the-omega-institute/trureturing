@@ -1,0 +1,20 @@
+**Corollary 7.6 (arbitrary finite catalogues and the continuum guard).**
+The lower bound $D\geq3M$ also holds for any ordered distinct interior
+heights $k_1<\cdots<k_M$, if the exact total guard includes separating
+positive ramps. In particular no fixed finite algebra (QC.40) can supply
+exact identity-cut recovery and this total original-domain classification
+over the whole continuum $0<k<c$.
+
+Proof. For each adjacent pair use the unit ramp of displacement
+$u_i=c-(k_i+k_{i+1})/2>0$. Its legal domain is
+$(0,(k_i+k_{i+1})/2)$, so its executed event gives exactly (QC.43).
+Proposition 7.2 and the pure-output argument remain valid. Arbitrarily
+large finite subsets contradict a fixed finite $D$. This argument uses
+the full domain-sensitive target; a common promised support interval and
+a smaller promised-legal menu need not include these tests. $\square$
+
+The separating requests in this corollary are illegal at some candidate
+heights. They test a different consumer from the credited containment
+obstructions using a continuation legal at every compared input; neither
+kind of witness substitutes for the other.
+

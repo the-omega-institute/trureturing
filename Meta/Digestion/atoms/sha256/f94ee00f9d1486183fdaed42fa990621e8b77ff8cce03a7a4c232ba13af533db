@@ -1,0 +1,29 @@
+**Definition 3.1 (target positions).** Identify $0,1$ with L,R. In UAS
+Definition 2.1 the eight-track unary cell $C_U(c_R)$ is an $F_8$
+scaffold with eight terminal bit children. Relative to the old $z$,
+the desired support is
+
+$$
+P_{24}=\{\varepsilon,1\}
+ \ \cup\ \{0w:|w|\le3\}
+ \ \cup\ \{0w b_{i(w)}:|w|=3\},
+$$
+
+where $i(w)=1,\ldots,8$ is lexicographic track order. Its root is the
+old $z$; the left subtree is $C_U(c_R)$ and path 1 is the new trailing
+terminal. The 24 nonroot positions, in parent-before-child left-first
+preorder, are the following fixed list:
+
+$$
+\begin{aligned}
+(w_1,\ldots,w_{24})=(&0,00,000,0000,0000b_1,0001,0001b_2,\\
+ &001,0010,0010b_3,0011,0011b_4,\\
+ &01,010,0100,0100b_5,0101,0101b_6,\\
+ &011,0110,0110b_7,0111,0111b_8,1).
+\end{aligned}
+$$
+
+There is no runtime recursion in this list. It is a fixed finite
+description. Each $b_i$ is substituted by its literal side before
+the mechanism is endowed.
+

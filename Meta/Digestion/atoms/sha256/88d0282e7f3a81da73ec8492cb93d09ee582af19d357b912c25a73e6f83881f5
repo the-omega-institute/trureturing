@@ -1,0 +1,36 @@
+**定理 5.4（All-decomposition lower bound and attainment of four）。** Every
+finite complex Gram decomposition of $C_*$ has a vector supported on
+at least four original coordinates. Together with Theorem 3.4 this yields
+$k(C_*)=4$ and proves Theorem 2.4.
+
+Proof. Suppose there were any finite decomposition
+
+$$
+C_*=\sum_{a=1}^m z_az_a^\dagger,\qquad
+z_a\in\mathbb C^5,\quad |\operatorname{supp}_B z_a|\le3.
+\tag{5.7}
+$$
+
+By finite linearity and the rank-one trace identity,
+
+$$
+\operatorname{tr}(HC_*)
+=\sum_{a=1}^m\operatorname{tr}(H z_az_a^\dagger)
+=\sum_{a=1}^m z_a^\dagger H z_a\ge0,
+\tag{5.8}
+$$
+
+where the last inequality is Lemma 5.2 applied to each term. This
+contradicts Lemma 5.3. The argument imposes no limit on $m$ except
+finiteness and no restriction on the phases, norms, overlap or patterns
+of the supports. It therefore excludes every decomposition in (5.7),
+including every positively weighted version after absorption of its
+weights into the vectors. Hence $k(C_*)\ge4$.
+
+Proposition 4.3 proves $X_*\in\mathcal X$, so the actual finite upper
+construction of Theorem 3.4 applies to it and gives $k(C_*)\le4$.
+The universal upper bound and this legal attaining state establish the
+maximum four over all of $\mathcal X$. Only positivity of the small
+compressions is used in (5.8); no positivity of $H$ on the whole space,
+nor any converse of the witness criterion, is assumed. $\square$
+

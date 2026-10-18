@@ -1,0 +1,11 @@
+**命题 63.1（不等关系改变原生后来值）。** 取 $P=\{L,R\}$ 的 $C=\langle\square_1,\square_2\rangle$ 及两个不同类。实际可达的后来历史
+
+$$
+H=((0,L,\alpha),(0,RL,\mathsf{absent}))
+\tag{SLH.63.1}
+$$
+
+把整个剩余族确定为 $\{\langle\alpha,\beta\rangle\}$，所以纪元一地址 $R$ 的准确回复集为 $\{\mathsf{branch}\}$。若遗忘完整分区而只保留这个 $C,H$，准确集合扩大为 $\{\beta,\mathsf{branch}\}$。
+
+证明。第一个读强制第一孔为 $\alpha$；第二个读强制第二孔为原叶，只有 $\alpha,\beta$ 两种。两类不同排除 $\alpha$，留下 $\beta$。无不等关系时 $\langle\alpha,\alpha\rangle$ 也满足全部字面证据，纪元一右孔为 $\beta$；两叶的替换穷尽所列集合。定理59.4保证两类行确曾由实际取得产生，定理62.2允许在其新入口上实际执行 $H$。$\square$
+

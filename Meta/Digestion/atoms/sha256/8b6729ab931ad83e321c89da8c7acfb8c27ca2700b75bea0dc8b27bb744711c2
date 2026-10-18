@@ -1,0 +1,121 @@
+**Theorem 14.2 (full finite-observer law-diameter noncollapse).** For every finite observer $M$ of the original source and every allowed installed prior,
+
+$$
+e(M)+\frac{18}{11}D_p(M)>\eta,
+\qquad
+e(M)+\frac{20}{11}D_\beta(M)>\eta,
+\tag{14.4}
+$$
+
+where
+
+$$
+e(M)=\max\{R_{\rm conf,p}(M)-\rho_p,
+            R_{\rm conf,\beta}(M)-\rho_\beta\}.
+$$
+
+In particular, if $e(M_n)\to0$ along finite observers, then
+
+$$
+\liminf_nD_p(M_n)\ge\frac{11}{1800000},\qquad
+\liminf_nD_\beta(M_n)\ge\frac{11}{2000000}.
+\tag{14.5}
+$$
+
+If either held-fibre diameter is zero, then $e(M)>\eta$. This conclusion uses no zero-defect assumption and makes no claim about a fixed COMPLETE budget.
+
+**Proof.** Use Lemma 14.1 and write the common stationary rows and copied laws as $\pi,\tau,Q_x,W_y$, with means
+
+$$
+\bar u=\sum_x\pi_xu_x,\qquad \bar v=\sum_y\tau_yv_y,
+\qquad \bar Q=\sum_x\pi_xQ_x,\qquad \bar W=\sum_y\tau_yW_y.
+$$
+
+Let
+
+$$
+d_p=\sum_x\pi_x\operatorname{TV}(Q_x,\bar Q),\qquad
+d_\beta=\sum_y\tau_y\operatorname{TV}(W_y,\bar W).
+$$
+
+Because every positive table label is reachable on the held fibre, convexity gives
+
+$$
+d_p\le D_p(M),\qquad d_\beta\le D_\beta(M).
+\tag{14.6}
+$$
+
+If $e(M)>\eta$, both inequalities are immediate. Assume $e(M)\le\eta$. The endpoint cylinders give
+
+$$
+\frac25-\rho_p-e(M)\le\bar u\le\frac13+\rho_p+e(M),
+$$
+
+$$
+\frac25-\rho_\beta-e(M)\le\bar v\le\frac13+\rho_\beta+e(M),
+\tag{14.7}
+$$
+
+Under $e(M)\le\eta$, the intervals in (14.7) are contained, respectively, in the enclosing intervals with bounds
+$127931891/364500000$ and $139368109/364500000$, and
+$984373/2700000$ and $995627/2700000$.
+These bounds are obtained by substituting $\eta=1/100000$ for $e(M)$; they imply $\bar u,\bar v\in[1/3,2/5]$ without asserting attainable extrema for arbitrary $e(M)$.
+
+Construct an auxiliary singleton table with emissions $\bar u,\bar v$ and identity acquired kernels. Its complete laws $Q^0,W^0$ obey
+
+$$
+Q^0=\bar u\,\delta_\alpha+(1-\bar u)\,\beta W^0,\qquad
+W^0=(1-\bar v)\,\delta_\beta+\bar v\,\alpha Q^0.
+\tag{14.8}
+$$
+
+The return mass is at most $(2/3)(2/5)=4/15$, so these complete laws are normalized on the unbounded legal carrier and retain its infinite noncompletion outcome with mass zero. No real-valued row is supplied to the running observer; this singleton is an analysis comparison.
+
+Define the pooled residuals
+
+$$
+c_p=\operatorname{TV}\bigl(\bar Q,\bar u\delta_\alpha+(1-\bar u)\beta\bar W\bigr),
+$$
+
+$$
+c_\beta=\operatorname{TV}\bigl(\bar W,(1-\bar v)\delta_\beta+\bar v\alpha\bar Q\bigr).
+$$
+
+The individual equations, $\pi B=\tau$, $\tau A=\pi$, and the facts
+$u_x=Q_x(\{\alpha\})$ and $1-v_y=W_y(\{\beta\})$ give the four estimates
+
+$$
+c_p\le\frac12d_p,\qquad c_\beta\le d_p,
+\qquad c_p\le d_\beta,\qquad c_\beta\le\frac12d_\beta.
+\tag{14.9}
+$$
+
+For example, the first residual is the zero-mass signed mixture
+$\sum_x\pi_x(\bar u-u_x)L_x$, whose positive and negative masses are at most
+$\frac12\sum_x\pi_x|u_x-\bar u|\le d_p/2$. For the second estimate in the first pair, convexity gives
+$\operatorname{TV}(J_y,\bar Q)\le\sum_xA_{yx}\operatorname{TV}(Q_x,\bar Q)$ and then $\tau A=\pi$; the other pair is dual.
+
+Let $a=\operatorname{TV}(\bar Q,Q^0)$ and $b=\operatorname{TV}(\bar W,W^0)$. From (14.8),
+
+$$
+a\le c_p+\frac23b,\qquad b\le c_\beta+\frac25a,
+$$
+
+so
+
+$$
+a\le\frac{15c_p+10c_\beta}{11},\qquad
+b\le\frac{6c_p+15c_\beta}{11}.
+\tag{14.10}
+$$
+
+Using the first pair in (14.9) gives $\max\{a,b\}\le18d_p/11$; using the second gives $\max\{a,b\}\le20d_\beta/11$. For every supported depth, the singleton's two law distances are at most the corresponding common-row distances plus $a$ or $b$. Those distances are at most the original configuration risks by Lemma 14.1 and convexity. The singleton's full actual-history risks are the suprema of these pure-depth distances by (2.3). Thus its maximal law excess is at most
+
+$$
+e(M)+\frac{18}{11}d_p
+\quad\text{and also at most}\quad
+e(M)+\frac{20}{11}d_\beta.
+$$
+
+The singleton is regular and both of its acquired kernels are complete redraws. Theorem 12.1 therefore makes each displayed quantity strictly larger than $\eta$. Finally use (14.6). Taking liminf proves (14.5). ∎
+

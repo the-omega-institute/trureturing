@@ -1,0 +1,129 @@
+**定理 441.2（两尺度常数与实际阻尼匹配）。** 定义
+
+\[
+A=\int_0^1\frac{\Phi(v)(1-e^{-v})-v}{v^2}\,dv
+ +\int_1^\infty\left[\frac{\Phi(v)(1-e^{-v})}{v^2}-\frac Cv\right]dv,
+\]
+
+\[
+Z_0=\int_0^1\frac{1/Q(u)-1}{u}\,du,
+\qquad Z_1=\int_1^\infty\frac{du}{u^2\zeta(1+u)},
+\qquad B_*=A+C(Z_0+Z_1).
+\tag{PX.14}
+\]
+
+这些积分均绝对收敛。对真实前缀令
+
+\[
+\mathcal B_z=\int_0^1\frac{H_z(v)}{v^2}\,dv
+ +\int_1^\infty\frac{F_z(v)(1-e^{-v})}{v^2}\,dv.
+\]
+
+则
+
+\[
+\mathcal B_z=C\log L+B_*+o(1),\qquad
+J_z(tL^{-C})\longrightarrow\log t+\gamma_E+B_*.
+\tag{PX.15}
+\]
+
+第二个极限在每个固定 \(0<a\le t\le b<\infty\) 上一致成立。因此
+定理 441.1 中的实际唯一阻尼满足
+
+\[
+\sigma_zL^C\longrightarrow e^{-\gamma_E-B_*}.
+\tag{PX.16}
+\]
+
+**证明：两个端点的付款。** 零端补偿支付 \(A\) 的第一积分。经典恒等式
+\(\operatorname{Ein}(v)=\log v+\gamma_E+E_1(v)\)，其中
+\(E_1(v)=\int_v^\infty e^{-t}\,dt/t\le e^{-v}/v\)，给
+\(\Phi(v)=Cv\exp(E_1(v))\)，故 \(A\) 的远尾指数可积。
+由（PX.9），\(|(1/Q(u)-1)/u|\le1\)，而 \(Z_1\) 的被积函数不超过
+\(u^{-2}\)，故其两个端点均已支付。每个固定 \(z\) 的
+\(\mathcal B_z\) 由零端二阶界及有限乘积上界绝对收敛。
+
+**证明：先固定切点比例，再消去比例。** 固定 \(0<\varepsilon<1\)，
+先令 \(z\to\infty\)，使 \(\varepsilon L\ge1\)。将
+\(\mathcal B_z\) 在 \(v=\varepsilon L\) 分为近部与完整宏观尾。
+由（PX.6），在 \(0<v\le\varepsilon L\) 有
+
+\[
+|F_z(v)-\Phi(v)|\le\Phi(v)e^{B\varepsilon}Bv/L.
+\]
+
+在 \((0,1]\) 中额外因子 \(1-e^{-v}\le v\) 支付零端，近部差为
+\(O(1/L)\)。在 \([1,\varepsilon L]\) 使用 \(\Phi(v)\le e(1+v)\)，
+可取与 \(z,\varepsilon\) 无关的固定 \(K\)，使总近部差不超过
+
+\[
+K/L+Ke^{B\varepsilon}
+ \left[\varepsilon+\frac{\log(\varepsilon L)}L\right].
+\tag{PX.17}
+\]
+
+\(A\) 的定义及其尾收敛给对应的 \(\Phi\) 近部等于
+\(A+C\log(\varepsilon L)+o_z(1)\)。整个宏观尾的精确换元是
+
+\[
+\int_{\varepsilon L}^\infty\frac{F_z(v)(1-e^{-v})}{v^2}\,dv
+=\frac{C_z}L\int_\varepsilon^\infty
+ \frac{E_z(1+u)(1-p^{-u})}{u^2}\,du
+\longrightarrow C\int_\varepsilon^\infty\frac{du}{u^2\zeta(1+u)}.
+\tag{PX.18}
+\]
+
+对这个固定 \(\varepsilon\)，\(C_z/L\) 最终有界且
+\(0\le E_z(1+u)(1-p^{-u})\le1\)，故共同主导函数为常数乘
+\(u^{-2}\)，支付整个尾。又精确地有
+
+\[
+\log\varepsilon+\int_\varepsilon^\infty\frac{du}{u^2\zeta(1+u)}
+=Z_0+Z_1-\int_0^\varepsilon\frac{1/Q(u)-1}{u}\,du.
+\]
+
+结合（PX.17）–（PX.18）及末积分的绝对值不超过 \(\varepsilon\)，得
+
+\[
+\limsup_{z\to\infty}|\mathcal B_z-C\log L-B_*|
+\le K\varepsilon e^{B\varepsilon}+C\varepsilon.
+\]
+
+最后才令 \(\varepsilon\downarrow0\)，即得（PX.15）的第一式。
+整个推导只用 \(C_z/L\to C\)，没有使用更强的
+\((C_z/L-C)\log L\to0\) 或随 \(z\) 移动的切点比例。
+
+**证明：联合阻尼的完整尾。** （PX.6）给最终有界的 \(s_z\)；
+（SC.5）的有限支持曲率证明在新时钟下同样适用，因为
+\(0<\log q/L<1\)。由 \(F_z'=F_zk_z\)、
+\(F_z''=F_z(k_z^2-T_z)\)、\(0\le k_z\le s_z\) 及
+\(0\le T_z\le2s_z\)，存在与 \(z\) 无关的 \(K_0\)，使最终所有
+\(0\le v\le1\) 满足 \(|H_z(v)|\le K_0v^2\)。故此区间的阻尼差
+不超过常数乘 \(\sigma\)。正尾在 \(0<\sigma\le1\) 满足
+
+\[
+\begin{aligned}
+0&\le\int_1^\infty(1-e^{-\sigma v})
+ \frac{F_z(v)(1-e^{-v})}{v^2}\,dv\\
+&\le C_z\int_1^\infty\frac{\min(\sigma v,1)}{v^2}\,dv
+=C_z\sigma[1+\log(1/\sigma)].
+\end{aligned}
+\tag{PX.19}
+\]
+
+负线性尾保持为 \(-E_1(\sigma)=\log\sigma+\gamma_E+O(\sigma)\)。于是
+
+\[
+|J_z(\sigma)-\log\sigma-\gamma_E-\mathcal B_z|
+\le K_1\sigma+C_z\sigma[1+\log(1/\sigma)]
+\tag{PX.20}
+\]
+
+有固定最终预算 \(K_1\)。取 \(\sigma=tL^{-C}\)，在每个正 \(t\) 紧区间
+上误差一致为 \(O(L^{-C}+L^{1-C}\log L)=o(1)\)，因为 \(C_z=O(L)\)
+且 \(C>1\)。与常数匹配合并得（PX.15）的第二式。最后在
+\(t_*=e^{-\gamma_E-B_*}\) 两侧任取正的固定 \(t_-<t_*<t_+\)，一致极限
+给相反符号；由实际阻尼唯一性，
+\(t_-<\sigma_zL^C<t_+\) 最终成立。令两侧趋于 \(t_*\)，即得（PX.16）。
+证毕。
+

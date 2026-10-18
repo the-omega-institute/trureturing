@@ -1,0 +1,6 @@
+### 93.1. Domain and quantitative statement
+
+Retain the original local CPTP maps A,B:C⁸→C⁴, four fibres of two input coordinates each, correlated encoding |f,i〉↦|f,i〉|f,i〉, and output encoding |f〉↦|ff〉. The error is the unhalved diamond norm, including arbitrary reference systems. For calibrated channels the forward local Grams satisfy G_ff=H_ff=I₂, their product coefficient is G⊙H, and the target has T_ff=I₂ and T_fg=J₂/2 for f≠g, as in sections 91–92. Calibration of arbitrary leaking channels is used only through the physical global comparison of section 72; it is not assumed to preserve local ranks or local minima.
+
+The common-stress and active-support reduction in section 92 makes the two principal Grams equal on a hypothetical doubly rank-seven minimum's common support. The following bound treats the entire complex rank-two three-coordinate domain, so no further singular-error or curvature condition is needed for the three-singleton case.
+

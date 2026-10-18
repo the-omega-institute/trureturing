@@ -1,0 +1,26 @@
+**Convention 8.1 (unchanged objects and pointwise comparison).** Keep the
+entire actual domain $\mathcal U_*$ in (NRE.8), the filling (NRE.7), all
+six pairwise distinct class values, and both occurrences of each repeated
+partner. In particular there is no restriction on the size or internal
+shape of an admissible finite branch image. Keep exactly Assumption 3.1
+and Definition 3.2: genuine same-version acquired data, the authenticated
+single update, actual complete-code export, the complete access cut,
+faithful common entry, stationary native reading, and the current state
+as the entire mutable accessible memory. All installed Reads and Halts
+count, as does every invocation, including absence and repetition.
+
+The inherited image classification in Theorem 4.1 gives the exhaustive
+alternatives: when $h=0$, all six values are images and beta may occupy
+any one class or none; when $h=j>0$, $b_j$ is alpha, its partner is beta,
+and every other class value is a branch image. In every alternative
+$F(u)=R_{h(u)}$ by (NRE.13). The five whole rows are precisely Definition
+2.2, with its full exteriors, restricted partitions, canonical names,
+disequalities and concrete absence guards. These native facts are reused,
+not new hypotheses or a restriction to witness sources.
+
+Write $\sigma$ for the bit already defined in (NRE.12). The new bit
+$\sigma^\dagger$ below is a different specified computation. Each
+comparison involving either bit holds that bit pointwise fixed on every
+original actual origin. Neither a new coloring nor the code of a chosen
+representative may replace it for a competing reader.
+

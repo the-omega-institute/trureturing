@@ -1,0 +1,28 @@
+**Lemma 6.2 (rigidity of the enlarged continuing task).** For $h,k\in\Omega$,
+equality of the at-most-one-primitive $Q_+$ response maps implies $h=k$.
+Conversely equal histories give equal complete finite-experiment maps.
+
+Proof. Every cut in this domain has a successful lawful next action.
+At a non-IN use its prescribed Advance, including the ordinary old Ready
+continuation rather than optional Install. At a variable IN choose a next
+bit from a witnessing canonical completion. At a code IN choose its fixed
+canonical next bit. The dispatcher is continuing: after finite source or
+service return another canonical frame may be appended. RCA Theorem 15.3
+and AIF Lemma 2.7 provide these lawful successors throughout installation
+and busy phases. Missing hypothetical external supply is not an executed
+refusal, and progress here asserts existence of a lawful supplied action,
+not unconditional eventual completion.
+
+Choose such an action at $h$. Equal partial maps require that action at
+$k$ to be defined and successful with equal complete successors; `none`
+or undefined cannot equal it. By CSA.3 and Lemma 3.4 the structural
+successors decode to the same $Y$. Lemmas 5.3–5.4 identify their whole
+successor histories as equal. Removing the last occurrence gives $h=k$.
+This avoids treating a fixed-code IN as an extra variable-frame bit or
+silently treating Advance as Install. Equal histories conversely have
+identical raw states, actual permissions, names and future partial domains;
+determinism gives equal labels, outputs, prices and successors along every
+allowed finite/adaptive experiment. This is SSA's one-step rigidity
+argument on the instantiated larger image. It uses complete successors
+and does not assert rigidity for public outputs alone. ∎
+

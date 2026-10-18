@@ -1,0 +1,27 @@
+**定理 10.2（Maximum and the purity and rank of every maximizer）。** The maximum
+is (3.7), attained by
+
+$$
+X_{\max}=M(1/\sqrt7,1/\sqrt3),\qquad
+\Gamma_{\max}=\frac15J(I_5+iX_{\max})J^\dagger.
+\tag{10.1}
+$$
+
+Every maximizer has $s=2$, $p=9/25$ and rank three.
+
+Proof. The attained upper envelope for $L$ is continuous at $10/7$ and
+strictly increasing on both branches. Hence its largest value occurs only
+at $s=2$, where it is $\sqrt7+\sqrt3$. Section 8 gives the legal matrix
+(10.1) attaining it. A different maximizer at $s<2$ would have $L$ bounded
+by a strictly smaller upper-envelope value, a contradiction. For every
+legal $X$ with $s=2$, its parameters obey $a,b\le1$ and $a^2+b^2=2$,
+so both are one. The compressed spectrum is therefore
+
+$$
+\operatorname{spec}C=(2/5,2/5,1/5,0,0).
+$$
+
+The isometry $J$ preserves nonzero eigenvalues and rank. This proves the
+purity and rank statement for every maximizer, without claiming a
+classification of their entrywise sign patterns. $\square$
+

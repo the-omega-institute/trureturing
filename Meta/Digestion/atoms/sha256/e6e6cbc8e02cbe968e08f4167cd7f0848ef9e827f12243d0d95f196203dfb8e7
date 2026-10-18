@@ -1,0 +1,43 @@
+**Definition 189.2 (The still missing intersection).** The fixed
+original obligation of Definition 181.1 remains, for every sequence
+(182.1) and positive closed cap, at its actual active length,
+
+$$
+\mathcal F_N(a,\varepsilon)\ne\varnothing
+\quad\Longrightarrow\quad
+\mathcal F_N(a,\varepsilon)\cap\mathscr C_L\ne\varnothing.
+\tag{189.2}
+$$
+
+On the remaining radial directions this is the full-catalog demand
+
+$$
+\rho_O(b)\le\max\{1,\rho_N(b)\}
+\quad(b\in H_L,\ \rho_N(b)<\infty).
+\tag{189.3}
+$$
+
+Theorem 167.2 owns this equivalence and finite attainment.
+When $s=\rho_N(b)\ge1$, it requires cost equality
+$\rho_O(b)=\rho_N(b)$, since $\rho_N\le\rho_O$.
+When $s<1$, it requires only $\rho_O(b)\le1$.
+The conditioned criterion exactly tests one fixed restricted
+allocation and its graph at $M=\max\{1,s\}$; existence of such
+an allocation for every $b$ is unproved. The sparse family supplies
+explicit subunit upper budgets and all-word original attainers;
+it does not resolve the $s\ge1$ cost-equality directions or enlarge
+the prior residual amplitude projection. Sufficiency of $E_L$ and
+the universal allocation inequality (179.5) also remain unproved.
+
+A failed restricted graph, compensation test or subcatalog is a
+method failure, not a full-class separator. A negative answer would
+need an explicit original common-seed $N_2$ attainer and a uniform
+lower certificate against every original full-carrier arbitrary-address
+$O_2$ competitor, including all actual tails, as in Section 169.
+The exact-law obstruction of Theorem 112.2 does not exclude a
+different stopped law at the same cap. The results here are ordinary
+mathematical deductions with the cited classical and repository
+suppliers; they assert neither optimality of the new family,
+universal classification, exhaustive novelty or literary priority,
+nor a Lean/kernel verification.
+

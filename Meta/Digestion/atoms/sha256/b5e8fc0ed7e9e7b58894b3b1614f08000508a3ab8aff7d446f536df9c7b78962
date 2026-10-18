@@ -1,0 +1,48 @@
+**Theorem 18.2 (exact protected invocation-row budget for every finite cut).**
+Under Assumption 14.1,
+
+$$
+q(P)=
+\begin{cases}
+\infty,&P\text{ is incomplete},\\
+\displaystyle\min_{\text{covering sequences in }I}
+\max_{1\leq i\leq m}\bigl(i+\lceil\log_2 d_i\rceil\bigr),
+ &P\text{ is complete}.
+\end{cases}
+\tag{CNA.30}
+$$
+
+The empty maximum is zero. Thus, for complete $P$, a public integer $k$
+suffices exactly when there is a covering sequence with
+
+$$
+m\leq k,\qquad d_i\leq2^{k-i}\quad(1\leq i\leq m).
+\tag{CNA.31}
+$$
+
+All negative and minimality assertions already hold when the writer is
+restricted to at most one update after Release. They quantify arbitrary
+adaptive protected literal queries and arbitrary later legal observations,
+retention and finite computation.
+
+**Proof.** Fix any allegedly correct finite-budget program. Lemma 16.4
+makes its all-branch path finite. If $P$ is incomplete, Lemmas 16.2 and
+16.1 refute its terminal protected transcript. Thus no finite $k$ works.
+
+For complete $P$, Lemmas 16.2 and 16.1 force the branch-query prefix
+closure on that path to cover $I$, whether it Releases or Returns.
+Use the $B_i,d_i$ of Lemma 18.1. Delete each query
+with $d_i=0$. Project every remaining query to its deepest prefix in
+$I$. Its $I$-ancestor set, and thus its positive contribution $d_i$,
+are unchanged. The projected sequence lies in $I$, adds vertices at
+every step, and covers $I$. If a retained query has new index $j$ and
+old index $i$, then $j\leq i$; (CNA.29) gives
+$d_i\leq2^{k-i}\leq2^{k-j}$. This is a covering sequence satisfying
+(CNA.31). Deleting uninformative Reads does not pretend they were free:
+the lower bound first counted them at their original indices.
+
+Conversely, Theorem 17.1 executes every such sequence within $k$.
+Taking the finite minimum gives (CNA.30). The witness histories in all
+lower-bound steps are precisely the one-update/zero-update pair of
+Lemma 16.1, or two protected Returns with no update. $\square$
+

@@ -1,0 +1,25 @@
+**Corollary 5.2 (degree-counted extensive loss).** Suppose $G$ has
+maximum degree at most an integer $\Delta\ge1$. Mark $t$ vertices
+high, and suppose each high vertex is incident to an edge satisfying
+(OOA.16) with $\delta_e\ge\delta$ for a fixed $0<\delta<1$. If
+$C_i\le c_0$ at low vertices and $C_i\le c_1$ at high vertices,
+where $0<c_0\le c_1$, put $B=2\Delta^2(\Delta+1)$. Then
+
+$$
+Z_R\le c_0^{n-t}c_1^t(1-\delta/\Delta)^{t/(2B)}.
+\tag{OOA.19}
+$$
+
+Proof. Select one certified edge incident to each high vertex, retaining
+only distinct edges. At least $t/2$ remain. For any edge $ij$,
+$|N[i]\cup N[j]|\le2\Delta$, since $i,j$ belong to both closed
+neighborhoods. For a fixed vertex $v$, at most
+$\Delta(\Delta+1)$ edges have neighborhoods containing $v$: one
+endpoint must be in $N[v]$, and its degree is at most $\Delta$.
+An edge neighborhood therefore meets those of at most $B$ candidate
+edges, including itself. Greedy selection leaves at least $t/(2B)$
+edges with disjoint neighborhoods. Each has
+$2\delta_e/|W_e|\ge\delta/\Delta$. Apply (OOA.17).
+Since $0<1-\delta/\Delta<1$, monotonicity in the number selected
+gives the displayed real exponent. $\square$
+

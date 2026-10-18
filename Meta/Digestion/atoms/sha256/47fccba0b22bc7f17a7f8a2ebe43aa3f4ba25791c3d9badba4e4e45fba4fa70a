@@ -1,0 +1,35 @@
+**定义 1.2（标量松弛合同）。** 将实际 $Z$ 换成正整数上的正函数
+$\widetilde Z$，令 $\widetilde G(n)=\widetilde Z(n)/\log\log n$
+仅在 $n>e$ 上定义。另取最终正且严格递增的连续函数
+$Q,\widetilde\psi,\widetilde\vartheta$，以及可微势 $\widetilde H$。
+在来源 $n$、尺度 $a=\log n$ 上要求
+
+$$
+\begin{aligned}
+\widetilde Z(m)m^{-g(a)}
+&\le\widetilde Z(n)n^{-g(a)} &&(m\in\mathbb N_{\ge1}),\\
+\widetilde G(m)&\le\widetilde G(n) &&(m\ge n),\\
+\widetilde G(n/p)&\le\widetilde G(n),\quad n/p>e &&(p\mid n),\\
+Q(a)&=a,\qquad
+\widetilde H(a)=\log\widetilde G(n),
+\end{aligned}
+\tag{1.3}
+$$
+
+以及完整的势、核心和尾积分关系
+
+$$
+\begin{aligned}
+\widetilde H'(t)&=k(t)(Q(t)-t),&
+\lim_{t\to\infty}\widetilde H(t)&=\gamma,\\
+\widetilde K(a)&=\int_a^\infty(Q(t)-\widetilde\psi(t))k(t)\,dt,&
+\widetilde I(a)&=\int_a^\infty(\widetilde\psi(t)-t)k(t)\,dt,\\
+\gamma-\log\widetilde G(n)&=\widetilde I(a)+\widetilde K(a).
+\end{aligned}
+\tag{1.4}
+$$
+
+这里 $Q$ 是正单调累积量；$t-Q(t)$ 是有符号量，不要求逐点非负。
+合同没有要求 $\widetilde Z=\sigma/n$，没有规定事件为普通素数幂，
+也没有要求 $\widetilde\psi(t)=\sum_{r\ge1}\widetilde\vartheta(t^{1/r})$。
+

@@ -1,0 +1,5 @@
+source_id = "cfmp-threestar-div16"
+path = "docs/develop/theory/CFMP_THREESTAR_DIV16.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

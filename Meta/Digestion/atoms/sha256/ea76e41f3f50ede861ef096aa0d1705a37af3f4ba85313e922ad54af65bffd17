@@ -1,0 +1,19 @@
+**Theorem 105.1.** There is no full-domain local minimum satisfying (105.1), the stated support condition and (105.2).
+
+For the proof, [RT III §§95–97](ARITHMETIC_HOLOGRAPHIC_RT_III.md) give
+\[
+\operatorname{rank}H_S=\operatorname{rank}\mathsf R=2,
+\qquad G_S=H_S\odot\overline{\mathsf R},
+\qquad \mathsf R\succeq0,
+\qquad \mathsf R_{ii}=1,
+\qquad \mathsf R\operatorname{diag}(\overline a)H_S=0,
+\tag{105.3}
+\]
+where \(a\) spans the full kernel of \(G\) and all four supported coordinates are nonzero. The same sections give equality of principal and full complete norms and unrestricted principal one-party best responses. RT III §99 gives uniqueness of every principal norming pair, including singular competitors, and positive definiteness of its density. The same original common normer satisfies
+\[
+W_{ij}=-\frac{\alpha a_i\overline a_j}{2\overline H_{ij}},
+\qquad \alpha>0,
+\tag{105.4}
+\]
+on pairs in distinct supported original fibres. These statements concern a local minimum in the full original domain. They do not assert a joint local minimum on a principal or fixed-rank domain.
+

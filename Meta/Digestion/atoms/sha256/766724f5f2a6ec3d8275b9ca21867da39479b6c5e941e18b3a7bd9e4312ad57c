@@ -1,0 +1,34 @@
+**Proposition 16.4 (conditional full-residual separator).** If the rational coefficient system (16.18)–(16.22) has a solution on the stated outer domains, no compatible full-law pair has $\mathcal J=0$.
+
+**Proof.** Suppose a compatible pair had $\mathcal J=0$ and that a coefficient tuple satisfying (16.21)–(16.22) existed.  The zero-face endpoint geometry supplies
+
+$$
+\int f\,d\nu_p=C,
+\qquad
+\int h\,d\nu_\beta=H.
+\tag{16.23}
+$$
+
+Integrate (16.21) against $\Gamma_B$ and (16.22) against $\Gamma_A$.  The two potential differences cancel by the common marginals (16.1).  Every residual term vanishes by (16.2), with the input-conditioned multipliers described after (16.17).  The event terms vanish by (16.23).  All three targets $a,b,r_\star$ come from actually supported depths of the installed prior.  For every $r\in\{a,b,r_\star\}$, contraction of TV under the complete projection $\pi_4$, followed by the corresponding supported-depth supremum bound at $\mathcal J=0$, gives
+
+$$
+\int\ell_{p,r}(Q)\,d\nu_p(Q)
+\le\int\operatorname{TV}(Q,P_{p,r})\,d\nu_p(Q)-\rho_p\le0,
+$$
+
+$$
+\int\ell_{\beta,r}(W)\,d\nu_\beta(W)
+\le\int\operatorname{TV}(W,P_{\beta,r})\,d\nu_\beta(W)-\rho_\beta\le0.
+$$
+
+All six $\lambda_{s,r}$ coefficients are nonnegative, and (16.1) identifies these phase integrals with their corresponding flow integrals.  Thus all six weighted risk terms have nonpositive integrals.  This uses no maximizing supported depth.  Hence
+
+$$
+\int G_B\,d\Gamma_B+\int G_A\,d\Gamma_A\le0,
+$$
+
+whereas (16.21)–(16.22) force this same sum to be at least
+$\delta_B+\delta_A>0$, a contradiction.
+
+This argument uses both full residual flows, both common unweighted marginals, and the entire level-four tail; it does not use a finite-shape or native-mixture restriction. $\square$
+

@@ -1,0 +1,10 @@
+### 103.4. Positive classes and their full Galois module
+
+For d|D set I_d=product_(q|d) P_q and let H^+=|Cl^+(L)|, which is odd. Then I_d^(H^+)=(A_d) for a totally positive algebraic integer A_d. This gives the required parity class. If x,y are two positive representatives of that parity, (x/y)=J^2. The absence of 2-torsion in Cl(L) makes J=(u), so x/y=u^2 epsilon for a totally positive unit epsilon. The unit theorem in section 103.2 makes epsilon a square. This proves uniqueness, including fractional representatives with denominators.
+
+Multiplicativity follows from valuation parity. The complete marked factorization and positivity give delta_D=[3-t]. Also Norm(A_d)=d^(H^+), because A_d is positive and its ideal is I_d^(H^+), proving Norm(delta_d)=[d].
+
+Choose A_q with (A_q)=P_q^(H^+). The sole odd valuation of g(A_q) is at g(P_q). These hN prime ideals are distinct, so inspecting each valuation proves independence of all their squareclasses. This proves the degree over L.
+
+For an explicit splitting of the Galois group, choose radicals r_(q,g)^2=g(A_q). Their monomials form an L-basis by independence. A generator tau of the cyclic group G extends semilinearly by r_(q,g) mapping to r_(q,tau g). This automorphism has order N and supplies the claimed semidirect product. Its commutator subgroup is the sum of the augmentation kernels in the h regular permutation blocks, of dimension h(N-1). The product of the radicals in the q-block is, up to sign, q^((H^+-1)/2)sqrt(q). Thus L and all sqrt(q) belong to its fixed field. Their total degree N*2^h is the abelian-quotient degree, so the maximal abelian subfield is exactly the one asserted. This proves Theorem 103.1. ∎
+

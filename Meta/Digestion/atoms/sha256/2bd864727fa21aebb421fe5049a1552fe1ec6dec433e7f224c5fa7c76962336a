@@ -1,0 +1,21 @@
+**推论 12.1（Identical inherited records do not determine the source coordinates）。**
+Under the corresponding conditional interfaces of Section 11, the full
+actual-menu history laws, even with the complete fixed joint flag law,
+cannot determine original-source purity, negativity or separability within
+$\mathfrak I$.
+
+Proof. All states in $\mathfrak I$ have the same such laws by Theorems 11.3
+and 11.5. At $s=0$, the state $S$ is separable with $p=1/5$ and
+$\mathcal N=0$. At any $s>0$, the lower construction is entangled with
+$p>1/5$ and $\mathcal N>0$. These already give unequal answers for the same
+record laws. The exact region gives the stronger statement that every
+permitted purity and every negativity in its full fixed-purity interval
+occurs among states with those same laws. A function of identical data
+cannot return all these different values correctly. $\square$
+
+Equal histories or equal erased outputs do not assert equality of the input
+density matrices. The formulas in this volume describe mathematical source
+properties; the inherited menu provides no purity or negativity measurement.
+A new distinguishing procedure requires an explicitly allowed readout and
+the appropriate same-source assumptions.
+

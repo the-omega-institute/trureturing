@@ -1,0 +1,18 @@
+## 6. Omitting the recorded second shear: the residual inverse
+
+Define
+
+$$
+F=M^2U^2=\begin{pmatrix}1&3\\1&4\end{pmatrix},\quad
+G=JF=\begin{pmatrix}1&4\\1&3\end{pmatrix},\quad
+H=UG=\begin{pmatrix}2&7\\1&3\end{pmatrix}.
+$$
+
+For any integer $B\ge1$, take $B$ initial reads at $I$, followed by $U,F,G,H$ at indices $B,B+1,B+2,B+3$. After the last initial read the chronological blocks are $M,J$; then $M,J,M,M$; then $J$; then $M,J$. The intermediate $U^2$ is executed but unrecorded. There are nine atomic operations and $B+4$ scalar reads. Omitting this read changes all later recorded indices relative to the successful calibration scheme.
+
+For $S=(\begin{smallmatrix}p&q\\r&s\end{smallmatrix})$ put $a=\operatorname{tr}S$ and, with $(C_1,C_2,C_3,C_4)=(U,F,G,H)$, set $V_k(S)=\operatorname{tr}(C_kS)-a$. Then
+
+$$
+V(S)=(r,\ q+3r+3s,\ q+4r+2s,\ p+q+7r+2s).
+$$
+

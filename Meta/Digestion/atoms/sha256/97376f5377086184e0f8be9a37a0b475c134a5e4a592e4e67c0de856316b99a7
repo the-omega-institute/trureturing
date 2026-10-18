@@ -1,0 +1,73 @@
+**Theorem 391.1 (Stock-preserving anchor extraction).** Under Definition 390.1 set
+
+$$
+B=2-b_1-b_2+3e\ge0.
+\tag{391.1}
+$$
+
+For every finite real $M\ge0$,
+
+$$
+\mathcal X_{\mathcal C}(M)
+=\mathcal X_{\mathcal C}(\min\{M,B\}),\qquad
+\nu_{\mathcal C}(M)=\nu_{\mathcal C}(\min\{M,B\}).
+\tag{391.2}
+$$
+
+More precisely, every joint pair $(k,x)$ admits subtraction of $\tau=\tau_{\mathcal C}(k,x)$ units of $R$ from schedule $(1,2)$, with the identical stock vector $x$. The resulting joint allocation is depleted, has mass $m=M-\tau\in[0,B]$, and has the same individual earlier base and union slacks and positive slack. No ordering of the prefix or equality $b_2=b_3$ is needed for this theorem.
+
+*Proof.* For any $t\in[0,\tau]$, subtract $t$ from each anchor-label entry of schedule $(1,2)$ and decrease its owning mass by $t$. All its cells then have the same nonnegative mass $m_{12}-t$; other schedules are unchanged. The reservation in (390.5) gives
+
+$$
+k'_{12,11}(0)=k_{12,11}(0)-t\ge x_{12}.
+\tag{391.3}
+$$
+
+All other distinguished stocks retain their old upper bounds. Thus the same $x_s$, separately for every schedule, remains available.
+
+At first zeros $1,2$, the anchor has correct label $n$. Its subtraction leaves base and its floor fixed, and decreases the correct coordinate and its affine floor by $t$. At later first zeros the anchor has label $0$, so base and its affine floor decrease by $t$, while the correct coordinate and its floor stay fixed. Every independent union coordinate and its floor decrease by $t$. The collapsed base coordinates at $w^*,w^+$ and both of their floors also decrease by $t$. Consequently $k'\in K_{\mathcal C}(M-t)$ and
+
+$$
+s_w(k')=s_w(k),\qquad s_+(k')=s_+(k).
+\tag{391.4}
+$$
+
+The incidences and stock losses in (390.3) are unchanged. Hence $(k',x)\in\mathcal J_{\mathcal C}(M-t)$. This checks the separate signed floors, rather than only their sum.
+
+Take $t=\tau$, write $m=M-\tau$, and lift $k'$ using the same $x$ to obtain $U'$ and word laws $p'$. One of the tested anchor entries of $U'$ is zero. For $N$, choose $a\in\{0,1\}$ to match that cell if it is $00$ or $01$; if it is $10$ or $11$, choose either value. For $O$ choose $a=0$. Consider
+
+$$
+u=0a1^{L-2},\qquad v=101^{L-2},\qquad z=1^L,
+\tag{391.5}
+$$
+
+with desired labels respectively $1,2,0$. Schedule $(1,2)$ contributes at most $2m'_{12}$ to the sum of these three desired coordinates: the three visited cells are distinct and at least one tested desired entry is zero.
+
+Every other schedule observes at most one of coordinates $1,2$. All coordinates after $2$ are one on all three words, so such a schedule visits at most two terminal cells on this triple. Within any one cell the desired labels of the words assigned to it are distinct. Their entries sum to at most that cell's owning mass. Thus the contribution of any other schedule is at most $2m_s$. Summing over this one complete allocation gives
+
+$$
+p'_u(1)+p'_v(2)+p'_z(0)\le2m.
+\tag{391.6}
+$$
+
+The earlier correct floors and the paid positive floor of the lifted joint allocation give
+
+$$
+p'_u(1)\ge m-1+b_1-e,\quad
+p'_v(2)\ge m-1+b_2-e,\quad
+p'_z(0)\ge m-e.
+\tag{391.7}
+$$
+
+Adding these literal inequalities, including any negative floors, proves
+
+$$
+3m-2+b_1+b_2-3e\le2m,
+\qquad m\le B.
+\tag{391.8}
+$$
+
+This establishes the asserted depleted construction. In particular, if $M\ge B$, then $\tau\ge M-B$; subtracting just $M-B$ units instead produces mass exactly $B$ with every coordinate of $x$ unchanged. Conversely, adding any nonnegative multiple of the same anchor raises mass, leaves all slacks in (390.3) fixed and does not consume stock. Hence every stock vector feasible at $B$ is feasible at any $M\ge B$. For $M\le B$ (391.2) is the identity.
+
+Because a nonempty complementary set admits zero stock, equality of the stock projections also preserves emptiness. Taking the attained maxima proves the capacity equality with the $-\infty$ convention. At $M=0$ every nonnegative cell and every stock is zero; the joint set is either empty or consists of that zero allocation and stock. The proof divides neither masses nor floors by $M$. $\square$
+

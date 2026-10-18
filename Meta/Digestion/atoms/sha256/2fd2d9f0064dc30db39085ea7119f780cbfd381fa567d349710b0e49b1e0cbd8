@@ -1,0 +1,15 @@
+## 487. 放宽素数区间可直接使用既有 Chebyshev 上下界
+
+§485–486 的二倍区间计数给出更好的起点与常数。另一条路线可只使用经典 Chebyshev 上下界：把区间扩大到 $(y,4y]$，仍保持它在实际储备的指数一掩码内，从而得到同一平方根量级。
+
+记 $L=\log2$、$\vartheta(z)=\sum_{p\le z}\log p$。直接复用经典估计
+
+$$
+\begin{aligned}
+\vartheta(z)&\le z\log4 &&(z\ge0),\\
+\vartheta(z)&\ge(z-1)L-\log(z+2)-2\sqrt z\log z &&(z\ge1).
+\end{aligned}
+$$
+
+这些实端点估计分别是 Mathlib 的 `Chebyshev.theta_le_log4_mul_x` 与 `Chebyshev.theta_ge'` 所陈述的现有结果；其素数求和与端点使用同一通常的 $\vartheta$。此处不重证这两条经典定理。
+

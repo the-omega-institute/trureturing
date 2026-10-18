@@ -1,0 +1,10 @@
+**Proposition 1.3 (actual accepted witnesses).** The complete marker words in $H$ are exactly $1001,0101,0011$. Each has positive joint source mass
+
+$$
+\lambda=\frac12\sum_{k\ge1}\mu(k)r_k^2(1-r_k)^4>0,
+$$
+
+or the corresponding single-depth term. These are three members of the six-word accepted support of $E_1$, rather than the whole accepted support.
+
+Proof. At seed 1 the fingerprint is the parity of the complete weight, so every weight-two zero-return word passes it. Exactly one of the first three positions is 1 precisely for the three displayed words, whose last marker is then 1. Their literal payloads follow $0\mapsto\alpha$, $1\mapsto\beta\beta$; each uses two $\alpha$ and four $\beta$ Reads. The seed and payload law of §§100.2 and 102.2 gives the displayed positive mass. Acceptance here means $\widetilde A=1$, not the stronger true pairing condition $A=1$: $0101$ passes the fingerprint but fails true pairing. The restriction to $H$ is retrospective; no conditional source sampler or advance acceptance input is supplied. $\square$
+

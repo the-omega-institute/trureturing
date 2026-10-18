@@ -1,0 +1,61 @@
+### 69.3 Degrees, heights, and an effective lower bound
+
+For an integer polynomial \(p\), let \(\|p\|_1\) be the sum of the
+absolute values of its coefficients. This norm is submultiplicative
+and bounds each coefficient. Each row of (69.5) has four entries
+\(\pm2\) and two entries \(\pm(-1\pm ir)\). Each real or imaginary
+part of \((B(r)a)_j\) therefore has degree at most two and coefficient
+norm at most \(4\cdot2+2(1+1)=12\). Dephasing can only decrease that
+bound. Consequently
+
+\[
+ \deg F_{a,j}\le4,\quad\|F_{a,j}\|_1\le2\cdot12^2+24=312,
+ \qquad\deg G\le8,\quad
+ \|G\|_1\le12\cdot312^2=1168128<2^{21}.
+\tag{69.7}
+\]
+
+The overlap forms in (69.3) have coefficient norms 11 and 10, so
+\(\|Q\|_1\le11^2+10^2+6=227\) and
+\(\|1\pm10Q\|_1\le2271<2^{21}\). The remaining constraints have
+degree at most two and coefficient magnitudes at most three. Thus
+simultaneous valid bounds for all constraints and the objective are
+
+\[
+ n=21,\qquad m=14,\qquad d=8\text{ (even)},\qquad H=2^{21}.
+\tag{69.8}
+\]
+
+We use Theorem 1.1 of G. Jeronimo, D. Perrucci, and E. Tsigaridas,
+“On the Minimum of a Polynomial Function on a Basic Closed Semialgebraic
+Set and Applications,” SIAM J. Optim. 23 (2013), 241–255,
+[DOI 10.1137/110857751](https://doi.org/10.1137/110857751),
+[primary published text, p. 242](https://ri.conicet.gov.ar/bitstream/handle/11336/14866/CONICET_Digital_Nro.18274.pdf?isAllowed=y&sequence=1).
+For a basic closed set in \(\mathbb R^n\), \(n\ge2\), defined by
+\(m\) integer polynomials and an integer objective, assume degrees at
+most an even \(d\) and coefficient magnitudes at most \(H\). On a
+compact connected component, any nonzero objective minimum has absolute
+value at least
+
+\[
+ \bigl(2^{4-n/2}\widetilde H d^n\bigr)^{-n2^nd^n},
+ \qquad\widetilde H=\max\{H,2n+2m\}.
+\tag{69.9}
+\]
+
+No regularity or genericity is required. Choose a global minimizer of
+\(G\) on \(T\) and its connected component. The component is compact,
+and its minimum equals the positive global minimum. Thus (69.9)
+applies even if \(T\) is disconnected. For (69.8),
+\(\widetilde H=2^{21}>70\), and
+
+\[
+ 2^{4-n/2}\widetilde H d^n=2^{155/2},\qquad
+ n2^nd^n=21\,2^{84},\qquad
+ G\ge2^{-3255\,2^{83}}=2^{-E}\quad\text{on }T.
+\tag{69.10}
+\]
+
+This is an application of the cited effective minimum theorem; the
+integer encoding and its normalization above are specific to this family.
+

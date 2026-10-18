@@ -1,0 +1,19 @@
+**核验边界。** Owning public and private D5 sources were searched and
+their relevant types and proof boundaries inspected:
+`SourceTransportCentralizer.source_transport_centralizer`;
+`NativeDepthPatterns.original_present_transport`,
+`original_prefix_locality`, `depthEquiv`, and private
+`fill_decompose`/`decompose_fill`;
+`NativeCutFibers.legal_values_row`, `rowFiberEquiv`, and private
+`filled_exterior`, `recover_fill`, `fill_injective`,
+`classValue_distinct`;
+`NativeHistoryCells.cell_feasibility_exact`, `historyCellEquiv`, and
+private `syntax_iff_ground`, `sourceCell_right`, `cellSource_injective`;
+`NativeGroundSeparation.simultaneous_ground_separation` and its private
+mass helpers; and `DelayedOriginalReadout.original_decoder_correct`,
+`original_decoder_service` and their private presence/query bounds.
+These are their actual finite-source, literal-history, separator and
+decoder interfaces. They are not textual evidence of a newly compiled
+arbitrary signed contact solver. No Lean compilation, numerical
+experiment or software solver is part of this volume.
+

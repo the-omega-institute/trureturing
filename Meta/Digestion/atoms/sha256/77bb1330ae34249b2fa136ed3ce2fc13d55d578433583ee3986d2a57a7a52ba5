@@ -1,0 +1,36 @@
+**Source map 16.1 (credited results and precise uses).** Repository suppliers
+for §§12–15 are their committed public versions at
+`773d4d43b91abd515be1059283d79dd6572fc174`. Earlier sections retain their
+own stated readings. These references carry no fresh compilation claim.
+
+| Supplier | Use and boundary |
+| --- | --- |
+| `D5/S3/Quantum/Fibers/FiniteRectangleTransport.lean` and its owning Scribe | `ValidBase`, `probability`, signed `phaseWeight`, `weight_compatible` and `finite_rectangles_realize` supply the positive source and actual rectangles. The Scribe's all-signed-sector application supplies the real lift synthesis; that whole ordinary application is not attributed to the rectangle declaration alone. |
+| `D5/S3/Quantum/Fibers/OriginalControlComposition.lean` and its owning Scribe | `OriginalControl`, `FiniteC1Control` and `concatenate_original` preserve both regularity alternatives, literal prefix, matching height, relatively translated real tail, finite/zero durations and additive continuous weighted integrals. No unknown old lift, sensor or actuator is delivered. |
+| Instrument Boundaries, Theorem 4.1, §§4.2–5.2, 9–15 | Successful-Kraus rigidity, unassisted $s_*$, fixed-parity rotations, checkpoint products and the complete canonical stopped law are reused. §§12–14 add the equal-support probabilistic/update and live-calibration deductions; §15 specializes canonical scalar loops, without claiming their factors or completeness as new principles. |
+| This volume §§4–8 | Pure-helper Gram feasibility, success-return versus consumable optima and the repeated-excursion value are credited. Proposition 13.2 compares those values with an actually specified read; it does not rederive the pure-helper frontier. |
+| Instrument Stability; Sampled Instrument Certificates | Marked TV and complete-reference metrics, strong sufficient error data and finite timed-sample certificates keep their exact regularity, sensor and joint-kernel premises. No approximate certificate is imported for the endpoint gates here. |
+| Event Memory and Coarse Aliasing; Quantum Carrier Minimum | Actual-event memory and exact-time/coarse-law distinctions remain. The live $M_3$ carrier correspondence preserves supplied correlated archives; its separate lower bound denies accessible assistance. Neither its minimum nor a full archive capacity is inferred for these assisted protocols. |
+| Record Acquisition | Finite-query obstructions and conditional area/winding certification are credited. An empirical calibration score does not certify the exclusive zero probabilities in (PR.43) or (PR.51). |
+| Transport–Memory Completion §§2.9–2.12/2.18 | Actual common coherent source/port, aligned acquired readings, known nonzero amplitudes and record overlap remain required. An orthogonal parity latch has a different consumer from interference, and an unknown overlap is not divided out. |
+| Process Geometry §34, PG.3400b-full/PG.3400c and PG.3402-run-next; Atlas Stable Core Holonomy Theorem 6.3 | One actual source/epoch image and joint acquisition, selection and success/failure update routes are required. Equal helper diagnostics or a static marginal record do not instantiate individual four-view recovery or its response-preserving update hypotheses. |
+
+**Literature statement 16.2 (mature mechanisms and checked scope).**
+
+| Primary source | Exact use and non-transfer |
+| --- | --- |
+| A. Chefles, R. Jozsa and A. Winter, [On the existence of physical transformations between sets of quantum states, quant-ph/0307227v1](https://arxiv.org/html/quant-ph/0307227v1), Theorems 2–3; *International Journal of Quantum Information* 2(1), 11–21, DOI [10.1142/S0219749904000031](https://doi.org/10.1142/S0219749904000031) | `literature-attested`: finite pure-family transformations are governed by positive environment Gram factors and positive outcome contributions. The dilation can discard source-dependent environments. This mature framework, already credited in §10, supplies no acquired helper or calibration port. Our continuous-family input is handled by the credited rigidity and the explicit support argument, not by silently importing a finite-family acquisition theorem. |
+| T. Rudolph, R. W. Spekkens and P. S. Turner, [Unambiguous discrimination of mixed states, quant-ph/0303071v2](https://arxiv.org/html/quant-ph/0303071v2), support/kernel conditions and Eqs. (1)–(3); *Physical Review A* 68, 010301(R), DOI [10.1103/PhysRevA.68.010301](https://doi.org/10.1103/PhysRevA.68.010301) | `literature-attested`: an error-free conclusive effect annihilates the competing support; equal supports preclude such a conclusive label. Classical exclusive-mass reasoning and the unambiguous-read mechanism are mature. The stronger original-source probabilistic conversion factorization and its update application are proved in §§12–14. No general unequal-support mixed optimum is imported. |
+| [Classical Sufficiency in Quantum Statistical Experiments, arXiv:2609.29348v1](https://arxiv.org/html/2609.29348v1), abstract and prescribed-measurement/invariant-block formulation | A recent primary scope comparison: sufficiency is relative to a declared admissible measurement class, with classical decision postprocessing. It supplies no operation equality for this full original-source continuation or calibration acquisition. No theorem is transferred. |
+| [What Must a Quantum-Memory Decoder Know About Temporally Correlated Noise?, arXiv:2610.03545v1](https://arxiv.org/html/2610.03545v1), §III.1 | A recent primary scope comparison: its calibration analysis fixes a known common system/environment dilation and discusses independently prepared environment copies. Those copies and calibration experiments are absent from this absorbing original source. No cost, sensor or decoder theorem is transferred. |
+
+Positive-operator domination, spectral decomposition, Stinespring dilation,
+finite CP composition, Radon–Nikodym decomposition and purity of a convex
+positive sum are mature mathematics. The new exposition is `repo-derived`:
+Theorem 12.2 and Corollary 12.3, their exact finite continuation consequence,
+(PR.44), the actual diagnostic-preserving read comparison, the live-bound
+(PR.52), and the source-realized post-stage curve (PR.57). No worldwide
+priority or independent-review claim is made. The bounded primary-source
+comparisons identify no directly sufficient acquired original observer;
+that bounded finding establishes neither absence nor impossibility.
+

@@ -1,0 +1,18 @@
+**引理 35.3（实际联合来源的投影约束）。** 在非零尾部令 $w=x_2\times x_1=q_1q_2g_{i+2}$，则
+
+$$
+\begin{aligned}
+P&=\sigma x_0\cdot\frac w{\|w\|}
+ =\left(\frac{AB}{\Delta}\right)^h
+   \left(\frac sr\right)^m r^n
+ =\left(\frac{AB}{\Delta}\right)^h\frac{q_2}{q_1}
+ \ge\frac{q_2}{q_1},\\
+P&\ge\sqrt{\frac\Delta{AB}}\,q_0,\\
+|x_0\cdot(x_2\times x_1)|&\ge q_2^2,\qquad q_2\le q_0q_1.
+\end{aligned}
+$$
+
+最后两条不等式在零分支也成立。
+
+**证明。** 提取 $\sigma$ 后，初始非零描述子是正单项式乘 $a,b,K,-U,N$ 之一。它们对相应 $g_{i+2}$ 的正投影依次为 $s/r,r,s,s^2/r,rs$；双叶次数依次为 $(1,0),(0,1),(1,1),(2,1),(1,2)$。$A,B,\Delta$ 的次数为 $(2,0),(0,2),(2,2)$。乘法表在每个节点保持次数，描述子的总次数就是实际 $(m,n)$。将正投影按次数合并即得 $P$ 的等式，且 $AB\ge\Delta$。$a,-U$ 的投影与范数之比为 $\sqrt{\Delta/(AB)}$，$b,K,N$ 的该比为一；正标量相消给出第二条。第一条乘 $\|w\|=q_1q_2$ 得标量三重积下界，再由 $P\le q_0$ 得范数约束。零分支有 $w=q_2=0$，无需除法。这里约束的是实际联合来源，并非任意 $\mathbb R^9$ 三元组。证毕。
+

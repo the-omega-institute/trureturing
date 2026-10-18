@@ -1,0 +1,22 @@
+**Theorem 93.2.** For a calibrated principal restriction to one input coordinate in each of three different original fibres, suppose the two forward local Grams coincide and have rank at most two. With G that common Gram and L=(I₃+J₃)/2−G⊙G, the complete unhalved diamond error δ_S satisfies
+
+\[
+ \delta_S\ \ge\ \frac{\|L\|_1}{3}
+       \ \ge\ \frac23\sqrt{E(G)}
+       \ \ge\ \frac{\sqrt{21-9\sqrt[3]{9}}}{6}
+       \ >\ \frac14.                                       \tag{27}
+\]
+
+The Frobenius edge minimum in Theorem 93.1 is sharp; no sharpness claim is made for the derived diamond lower bound (27).
+
+**Proof.** The uniform density ρ=I₃/3 is feasible in the complete adaptive formula of section 91. Its value is ||L||₁/3. Equivalently the uniform correlated input on the three coordinates has output error Lᵀ/3 in the correlated output basis, whose trace norm is ||L||₁/3. This verifies the original forward-Gram transpose convention and the unhalved normalization. Since it is an allowed input, the complete norm, which also allows arbitrary references, is at least this value.
+
+The Hermitian matrix L has trace zero and Tr(L²)/2=E(G). Up to a sign reversal and reordering, its eigenvalues are s,t,−s−t for s,t≥0, including zero eigenvalues and the zero matrix. Thus
+
+\[
+ \|L\|_1=2(s+t),\qquad
+ E(G)=s^2+st+t^2\le(s+t)^2.                                 \tag{28}
+\]
+
+This proves the second inequality in (27); Theorem 93.1 proves the remaining two. No singularity of L is assumed.
+

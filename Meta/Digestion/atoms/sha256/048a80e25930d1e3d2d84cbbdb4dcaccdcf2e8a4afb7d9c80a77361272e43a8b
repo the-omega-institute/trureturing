@@ -1,0 +1,266 @@
+**Lemma 12.1 (three unit second-coordinate projections are impossible).**
+No cover satisfying Assumption 10.1 can have
+
+$$
+S_3^b=S_6^b=S_9^b=[0,9]_{\mathbb Z}.
+\tag{NAGC.12.1}
+$$
+
+**Proof, the common boundary and the supplied corner arms.** Suppose
+(NAGC.12.1) holds in the fixed cover $\mathcal C$. Its three
+indicated paths have all nine $B$ lengths equal to one. Their $A$
+triples can therefore occur only at second coordinates $9,6,3,0$:
+any $A$ triple occurs after zero, one, two or three complete $B$
+triples. All three paths start at $b=9$ and end at $b=0$.
+For every label put
+
+$$
+F_t=\{a:(a,0)\in C_t\}.
+\tag{NAGC.12.2}
+$$
+
+These sets refer to intersections of the chosen classes, not to
+independently selected paths. Lemma 11.2 says that only the labels
+$0,3,6,9$ meet $b=0$. By [NARC, Theorem 14.3, part 1][NARC],
+$C_0$ is the $B^9A^9$ path with corner $(0,0)$. Its entire
+first-coordinate projection occurs on its horizontal arm. Lemma 11.1
+therefore gives $F_0=[0,9]_{\mathbb Z}$, and complete disjoint
+coverage gives
+
+$$
+[10,18]_{\mathbb Z}=F_3\sqcup F_6\sqcup F_9.
+\tag{NAGC.12.3}
+$$
+
+The same corner supplier gives, for $j=0,1,2$, a fixed-first-coordinate
+arm of $C_j$ consisting of all $(j,b)$ with $b\in S_j^b$, where
+
+$$
+\min S_j^b=j,\qquad
+\max S_j^b=j+9+\gamma_j^b\ge j+9.
+\tag{NAGC.12.4}
+$$
+
+Lemma 10.2 bounds the number of omitted integers in each of these
+spans by three. Thus four distinct points of a different class on
+$a=j$, whose second coordinates lie in this span, would already
+contradict disjointness. This uses the actual vertical arm of $C_j$.
+
+**Proof, the forced path of $C_3$.** Since $C_3\ne C_9$,
+Proposition 8.3 makes its intersection with $b=9$ a singleton.
+It consequently begins with a $BBB$ triple. Write its initial first
+coordinate as $s$. The anchor gives $s\le3$. If $s=0$, its
+first triple occupies $(0,b)$ for $b=6,7,8,9$. These four second
+coordinates lie in the span of $S_0^b$ by (NAGC.12.4). Disjointness
+would omit all four from that projection, contrary to its budget.
+Hence $s\ge1$.
+
+No $A$ triple can occur before the path reaches $b=3$: one such
+triple would increase the first coordinate to at least $s+3\ge4$,
+after which the anchor $(3,3)$ could not be reached. It therefore
+makes its first six unit $B$ changes at $a=s$ and occupies all
+$(s,b)$ with $3\le b\le9$. If $s=1$ or $2$, these seven
+second coordinates lie in the span (NAGC.12.4) of $C_s$.
+Disjointness would force seven omissions there, again contradicting
+Lemma 10.2. Thus $s=3$.
+
+Lemma 11.1 puts every $(a,3)$ with $3\le a\le9$ in $C_3$.
+Three $B$ changes remain after this row, because its terminal second
+coordinate is zero. The row cannot be left at $a<9$, since it must
+first contain $(9,3)$, and it cannot be left at $a=9$, since the
+next $B$ edge would add another point to its singleton intersection
+with $a=9$. Thus its row $b=3$ contains those seven points and
+at least one further point with $a>9$.
+
+By [NARC, Theorem 14.3, part 3][NARC], a nonempty class-row
+intersection has size $1+3j\le10$. A size of at least eight
+therefore forces size ten. All nine $A$ changes occur on that row.
+The path and its first-coordinate endpoint are consequently
+
+$$
+C_3:\ B^6A^9B^3,\qquad
+\min S_3^a=3,\qquad
+u:=\max S_3^a=12+\gamma_3^a\in[12,15]_{\mathbb Z},
+\qquad F_3=\{u\}.
+\tag{NAGC.12.5}
+$$
+
+The notation $B^6A^9B^3$ specifies directions; the $A$ lengths
+retain their allowed values. In particular the first seven entries
+of its projection are
+
+$$
+x_{3,i}=3+i\quad(0\le i\le6).
+\tag{NAGC.12.6}
+$$
+
+**Proof, the restrictions on $C_6$ and $C_9$.** The intersection
+of $C_6$ with $b=9$ is also a singleton, so it starts with a
+unit $BBB$ triple. Let $s=\min S_6^a$ be its initial first
+coordinate. For $s=0,1,2$, its four initial second coordinates
+$6,7,8,9$ are all inside the corresponding corner span in
+(NAGC.12.4), giving the same four-omission contradiction. If
+$s=3$, these initial points intersect the fixed segment of $C_3$
+at $a=3$, $3\le b\le9$, just established. The anchor of $C_6$
+then gives
+
+$$
+4\le s\le6.
+\tag{NAGC.12.7}
+$$
+
+The forced row segment of Lemma 11.1 puts $a=6,7,8,9$ on
+$b=6$ in $C_6$. Six unit $B$ changes remain after this row.
+The same singleton-center argument requires the row to extend
+beyond $a=9$ before those changes begin. It has at least five
+points, so the supplied $1+3j$ intersection law makes it have
+at least seven. Thus at least two of the three $A$ triples of
+$C_6$ occur on $b=6$. At most one $A$ triple remains for
+$b=0$, whence
+
+$$
+|F_6|\in\{1,4\}.
+\tag{NAGC.12.8}
+$$
+
+For $C_9$, Proposition 8.3 supplies exactly four points on $b=9$,
+forming one complete $AAA$ triple containing $(9,9)$. Since the
+path starts at $b=9$ and never returns after a $B$ change, this
+is its first $A$ triple and its first macro block. It uses
+$x_{9,0},x_{9,1},x_{9,2},x_{9,3}$. The anchor nine cannot be
+$x_{9,3}$: the next block is $BBB$ and would then supply another
+point on $a=9$. Thus for some $r\in\{0,1,2\}$,
+
+$$
+x_{9,r}=9,\qquad x_{9,3}>9.
+\tag{NAGC.12.9}
+$$
+
+Together, (NAGC.12.3), $|F_3|=1$ and (NAGC.12.8) leave
+exactly the two terminal allocations
+
+$$
+(|F_6|,|F_9|)=(1,7)\quad\text{or}\quad(4,4).
+\tag{NAGC.12.10}
+$$
+
+Indeed, their sizes must sum to eight. In the first allocation,
+$C_9$ uses its two remaining $A$ triples at $b=0$, so
+$F_9=\{x_{9,3},\ldots,x_{9,9}\}$. In the second allocation,
+its last $A$ triple is at $b=0$, its middle $A$ triple is at
+$b=6$ or $3$, and $F_9=\{x_{9,6},\ldots,x_{9,9}\}$.
+These are all possibilities under the stated hypotheses, because
+there are exactly three $A$ triples per class and second coordinates
+never return.
+
+**Proof, allocation $(1,7)$.** The singleton $F_6$ is the maximum
+first coordinate of $C_6$, at least $s+9\ge13$. Also $u\ge12$
+by (NAGC.12.5). Hence the two smallest coordinates ten and eleven
+in (NAGC.12.3) both belong to $F_9$. They must be its first two
+values $x_{9,3}=10$ and $x_{9,4}=11$. The supplied unit fifth
+$A$ change makes $x_{9,5}=12$, so twelve also belongs to $F_9$.
+Disjointness now gives $u\ge13$, and therefore
+$\gamma_3^a=u-12>0$.
+
+Apply (NAGC.10.4) to the actual projection $S_3^a$, with
+$s=3$ and maximum $u$. It requires the pair $u-10,u$, so
+$C_3$ duplicates residue $u-10$. On the other hand $u\le15$,
+and at least two of $16,17,18$ belong to $F_9$: $F_3=\{u\}$
+contains none of them and $F_6$ can contain at most one. Thus
+$S_9^a$ has a value above $u$ as well as the value ten below it.
+The coordinate $u$ is absent from $F_9$ by boundary disjointness.
+Every first coordinate of $C_9$ preceding $F_9$ is one of
+$x_{9,0},x_{9,1},x_{9,2}$ and is strictly smaller than ten.
+It follows that $u$ is absent from $S_9^a$ altogether while
+lying inside its span.
+
+Lemma 10.2 therefore makes residue $u-10$ absent from $S_9^a$.
+This contradicts no cancellation with its duplication in $S_3^a$.
+Both projections are those of the same classes furnishing the
+partition (NAGC.12.3), so the contradiction concerns the chosen
+cover itself.
+
+**Proof, allocation $(4,4)$.** Here (NAGC.12.9) and positivity
+of all $A$ lengths give
+
+$$
+\min F_9=x_{9,6}\ge x_{9,r}+(6-r)\ge13.
+\tag{NAGC.12.11}
+$$
+
+Since $u\ge12$, neither ten nor eleven can belong to $F_3$ or
+$F_9$. Hence both belong to $F_6$. Its four points constitute
+its last $A$ triple, namely $x_{6,6},x_{6,7},x_{6,8},x_{6,9}$.
+The boundary partition gives $x_{6,6}=10$, $x_{6,7}=11$, and
+the unit eighth $A$ change gives $x_{6,8}=12$. Put
+$v=x_{6,9}\ge13$. The six earlier $A$ changes go from the
+initial coordinate $s\ge4$ to $x_{6,6}=10$. Their total is
+at least six, so $s=4$ and all six lengths are one. Therefore
+
+$$
+S_6^a=[4,12]_{\mathbb Z}\cup\{v\},\qquad
+F_6=\{10,11,12,v\},\qquad v\ge13.
+\tag{NAGC.12.12}
+$$
+
+If $v\ge15$, the interval of pairs required by (NAGC.10.4)
+contains the lower representative four and requires $4,14$ in
+$S_6^a$. Formula (NAGC.12.12) omits fourteen whenever $v\ge15$.
+Thus $v=13$ or $14$.
+
+Twelve now belongs to $F_6$, so $u\ge13$. Saturation of
+$S_3^a$, whose minimum is three, requires the pair $3,13$:
+$C_3$ duplicates residue three. If $v=14$, the span of $S_6^a$
+contains its omitted integer thirteen. Lemma 10.2 would then
+make that same residue three absent from $S_6^a$, violating no
+cancellation. Consequently
+
+$$
+v=13,\qquad u\ge14.
+\tag{NAGC.12.13}
+$$
+
+The latter inequality uses $u\ne13$, since thirteen is now in
+$F_6$. Local saturation of $S_3^a$ requires both pairs $3,13$
+and $4,14$. Its first seven values are fixed by (NAGC.12.6),
+so thirteen and fourteen are among $x_{3,7},x_{3,8},x_{3,9}$.
+In particular $x_{3,8}\ge13$. The unit eighth $A$ change gives
+$x_{3,7}=x_{3,8}-1\ge12$. There is therefore no place for ten
+or eleven in this projection:
+
+$$
+10,11\notin S_3^a.
+\tag{NAGC.12.14}
+$$
+
+Eleven lies inside the span $[3,u]_{\mathbb Z}$. Lemma 10.2
+makes residue one absent from $S_3^a$. The actual corner class
+$C_1$ has $\min S_1^a=1$ by [NARC, Theorem 14.3, part 1][NARC].
+If $\gamma_1^a>0$, its local saturation would require the pair
+$1,11$, contradicting no cancellation on the first axis. Thus
+$\gamma_1^a=0$, and its ten coordinates fill $[1,10]_{\mathbb Z}$.
+The same corner supplier puts its entire $A$ arm on $b=1$.
+Hence
+
+$$
+(10,1)\in C_1.
+\tag{NAGC.12.15}
+$$
+
+In this allocation, $C_6$ uses its last $A$ triple at $b=0$
+and at least two at $b=6$, so exactly its first two $A$ triples
+occur at $b=6$. By (NAGC.12.12) they go from first coordinate
+four to ten. Its two remaining unit $BBB$ triples then go from
+$b=6$ to $b=0$ at the fixed first coordinate ten, before the
+last $A$ triple starts. They contain $(10,1)$. Thus
+
+$$
+(10,1)\in C_6,
+\tag{NAGC.12.16}
+$$
+
+contradicting (NAGC.12.15) and the disjointness of $C_1$ and
+$C_6$ in $\mathcal C$. Both terminal allocations have now led
+to contradictions within the same chosen cover. This proves the
+lemma. $\square$
+

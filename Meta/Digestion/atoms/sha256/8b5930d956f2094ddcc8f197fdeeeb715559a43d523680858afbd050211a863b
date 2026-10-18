@@ -1,0 +1,55 @@
+**Theorem 5.1 (Sufficient $B_0,Q_0$ and a midpoint certificate).** For
+every allowed $s,J$, it suffices to choose integers
+
+$$
+\begin{aligned}
+B&\ge B_0(s,J):=
+ \max\left\{J,\left\lceil
+ \log_2\frac{8\mathrm e}{D_0s^{2r}2^{rJ}}
+ \right\rceil\right\},\\
+Q&\ge Q_0(s,J):=
+ \max\left\{r,\left\lceil
+ \log_2\frac{8\mathrm e}{D_0s^{2r}J}
+ \right\rceil\right\}.
+\end{aligned}
+\tag{5.1}
+$$
+
+Take a dyadic $\widehat\theta\in[0,2^{-r}]$ of denominator dividing
+$2^Q$ with $|\widehat\theta-\theta|\le2^{-Q}$ and set
+
+$$
+p_{B,z}=2^{-B}\lfloor2^B\widehat p_z\rfloor.
+\tag{5.2}
+$$
+
+Such a midpoint exists, for instance the downward $Q$-bit rounding of
+$\theta$. The resulting table satisfies Theorem 4.1. More generally,
+with $B\ge B_0$ any certified midpoint in the stipulated interval with
+
+$$
+|\widehat\theta-\theta|\le\frac{D_0s^{2r}J}{8\mathrm e}
+\tag{5.3}
+$$
+
+is sufficient with (5.2). The certificate is an absolute error bound for
+the known mathematical laws, not empirical calibration of an unknown
+parameter. If each of two mean approximations has absolute error at
+most $\gamma$, their average has midpoint error at most $\gamma$.
+
+Proof. Because $Q\ge r$, both endpoints of $[0,2^{-r}]$ are on the
+$Q$-bit grid. Downward rounding stays in that interval and has error
+less than or equal to $2^{-Q}$. Formula (5.2) stays in $[0,1]$ and has
+error at most $2^{-B}$, including $\widehat p_z=0$. From (5.1),
+
+$$
+\delta2^{-B}\le\frac{D_0I}{8\mathrm e},\qquad
+2^{-Q}\le\frac{D_0I}{8\mathrm e}.
+\tag{5.4}
+$$
+
+The sum is the allowance (4.1), and $B\ge J$ preserves the phase rows.
+The same argument uses (5.3) directly in place of the second inequality.
+For approximate means, the triangle inequality bounds the error of
+their average by the average of their errors. $\square$
+

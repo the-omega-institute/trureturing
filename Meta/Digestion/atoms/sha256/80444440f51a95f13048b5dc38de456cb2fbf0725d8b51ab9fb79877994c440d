@@ -1,0 +1,103 @@
+**Theorem 6.1 (diagonal-swap obstruction).** No three distinct worlds
+of $\mathcal F^{\ne0}_7(H)$ with common drift and common nonzero
+ratio
+
+$$
+q_i=g_i(6)/g_i(7)=q\ne0
+\tag{6.1}
+$$
+
+have $L_2$. Sources and cubic-or-lower gain shapes may all differ.
+
+Proof. Suppose otherwise. The nonzero ratio and nonzero terminal
+gains make all sixth gains nonzero. Theorem 5.1 and Theorem 3.1
+give (5.1) and a common terminal sign. Let this sign for the
+normalized terminal matrices $X_i$ be $\sigma\in\{1,-1\}$.
+For the rest of this proof replace every $X_i$ by $\sigma X_i$
+and use $a_i,b_i,c_i,e_i$ for its entries. All entries are now
+strictly positive,
+
+$$
+a_ie_i=b_ic_i,\qquad 1/3<b_i/e_i<1/2.
+\tag{6.2}
+$$
+
+Terminal equality equations with common drift can be multiplied
+by $\sigma$ after subtracting that drift. Sixth equality equations
+can be divided by the common nonzero $q$, and then multiplied
+by $\sigma$. Hence all equalities below follow from the original
+actual response equalities, with no sign change in positivity.
+
+Write $X_1=\left(\begin{smallmatrix}a&b\\c&e\end{smallmatrix}\right)$.
+The $J$ pair $\{1,2\}$ shares $A,B$, so
+$b_2=b$ and $a_2+e_2=a+e=:S$. Equality of $U_1,U_2$ in (2.8)
+gives $b+c=b_2+c_2$, so $c_2=c$. Rank one therefore gives
+$a_2e_2=bc=ae$. Eliminating $a_2=S-e_2$ gives the full factorization
+
+$$
+e_2^2-Se_2+ae=(e_2-e)(e_2-a)=0.
+\tag{6.3}
+$$
+
+If $e_2=e$, every entry of $X_2$ equals that of $X_1$.
+Together with common drift and the first four actual ancestor
+readings this makes the complete worlds equal by (2.10) and
+interpolation. Distinctness thus forces
+
+$$
+e_2=a,\qquad a_2=e.
+\tag{6.4}
+$$
+
+If the quadratic roots repeat, $a=e$, (6.4) also gives the same
+matrix, so distinctness is already impossible. Otherwise the
+second world's strip gives
+
+$$
+1/3<b/a<1/2,\qquad a>2b>b>0.
+\tag{6.5}
+$$
+
+For the $M$ pair $\{1,3\}$, equality of $C,D$ gives
+$b_3+e_3=b+e=:K$. Equality of $V_1,V_3$ gives
+$b_3+c_3+e_3=b+c+e$, hence $c_3=c$. Equality of $C$ then gives
+$a_3+e_3=a+e=S$. Rank one now gives
+
+$$
+(S-e_3)e_3=(K-e_3)c,
+\qquad e_3^2-(S+c)e_3+Kc=0.
+\tag{6.6}
+$$
+
+Since $ae=bc$, we have $Kc=(b+e)c=e(a+c)$ and
+$S+c=e+a+c$. Thus the second complete factorization is
+
+$$
+e_3^2-(S+c)e_3+Kc=(e_3-e)(e_3-a-c)=0.
+\tag{6.7}
+$$
+
+The root $e_3=e$ again makes all entries agree with $X_1$,
+so distinctness forces $e_3=a+c$. If these roots coincide,
+there is only that identical world and the contradiction is
+already obtained. Otherwise the remaining entry must satisfy
+the decisive identity
+
+$$
+\begin{aligned}
+b_3&=b+e-a-c\\
+   &=b+e-a-\frac{ae}{b}
+     =\frac{(b-a)(b+e)}b<0.
+\end{aligned}
+\tag{6.8}
+$$
+
+Here the only entry denominator is $b>0$; the last inequality
+uses (6.5) and $b+e>0$. This contradicts strict positivity of
+the third sign-adjusted matrix. Both possible roots of each
+quadratic and their repeated-root cases have been included.
+No discriminant, root difference or leading gain coefficient
+was divided out. The only gain-ratio cancellation used the
+explicit common $q\ne0$. The proof requires no common source,
+no common gain shape and no coefficient array. ∎
+

@@ -1,0 +1,9 @@
+#### 定理 D：三态唯一 seam
+
+```math
+\ker T_1
+=
+\operatorname{span}
+\{(1,-1,0,-1,1)\}.
+```
+

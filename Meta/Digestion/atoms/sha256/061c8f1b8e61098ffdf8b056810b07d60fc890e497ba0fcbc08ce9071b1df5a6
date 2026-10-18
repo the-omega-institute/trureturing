@@ -1,0 +1,21 @@
+**Proposition 7.1 (what is mutually recoverable).** At the selected
+entry, lag and task value are mutually recoverable by
+$\ell=\lambda_0+f(b)$ and $f(b)=\ell-\lambda_0$. The full
+coordinate vector and the actual selected current tree are mutually
+recoverable, with the latter-to-former direction attainable by the
+paid coordinate words. But the lag output alone, even together with
+the common entry, determines the original or current source on this
+fiber if and only if $f$ is injective.
+
+**Proof.** The first two formulas and (NTL.12) give the stated maps;
+Theorem 4.2 supplies the actual paid recovery of all coordinates.
+Theorem 3.2 makes both source maps injective in $b$. Therefore two
+different inputs with the same $f$ have the same entry and lag but
+distinct originals and current trees. This rules out source recovery
+from just that output. Conversely an injective finite public $f$ has
+an inverse on its image, so lag identifies $b$ and then both trees.
+The recovered object in general is the task quotient
+$\{0,1\}^m/{\sim_f}$, where $b\sim_f b'$ means $f(b)=f(b')$.
+This is a finite mathematical inverse, not a bound on the cost of
+constructing or storing a source. $\square$
+

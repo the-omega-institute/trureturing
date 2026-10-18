@@ -1,0 +1,25 @@
+**Definition 8.1 (native supplier correspondence).** The following
+sources supply the indicated mathematical ingredients, with their own
+hypotheses retained.
+
+| Supplier | Ingredient used here | Scope not transferred |
+| --- | --- | --- |
+| [NAR §§16.1--16.10][NAR] | Full independent age cube, acquired clocks, full-row equality, common-translation obstruction, minimum $q$, feasible-encoder decoder and unbounded-address criterion | No prescribed Boolean-task fiber or sourcewise coordinate-cost equality is supplied by those endpoints alone |
+| [NARC §§1--3][NARC] | Both fiber directions and all-address exclusion at a particular acquired two-slot input | Its fixed-reference interval task is not the arbitrary function $f$ here |
+| [AA, Propositions 12.5--12.6][AA] | An earlier actual ordered-tree presentation of a finite query task, all-address adaptive simulations, and the distinction between a coarse retained field and installation of a complete same-source service | Its installed constant-composition trees and passive-cut task do not give an early NAR16.1 encoder or forgotten-lag fiber; its installation obstruction cannot be bypassed by a mathematical presentation |
+| [SLH §§6.2--6.3][SLH] | Guarded all-word constructor replies, including absence, and elimination of redundant stationary reads | Certified-epoch arbitrary-source tasks there do not supply an unknown age or lag here |
+| [AOF §§3--5, 8--9][AOF], [JRF §2.1][JRF] | Same-source simulation, shortest literal representatives, simultaneous upper-budget reasoning and adjacent-age price | No stronger native query, arbitrary weights, free navigation or workspace equivalence |
+| [CG, Proposition 14.12][CG]; [WPE §392 and Proposition 396.9][WPE] | Exact common laws, corrected parity normalization, adaptive same-sample transcripts and the full-coordinate parity certificate | No general inference about information from marginal laws alone |
+
+The native formal-source interfaces are `Source` and `substitution` in
+[GenealogicalFiberTransport][GFT]; `Address`, `Reply` and `readout` in
+[ActualTreeReadoutAcquisition][ATRA]; `rightClock`, `rights`,
+`right_clock_iterate` and `right_clock_readout` in
+[DelayedOriginalReadout][DOR]; and `literalRecord`, `actualPartition`
+and `canonicalRow_record_iff` in [ActualCutPartitionDecoder][ACPD].
+The last interface represents both equality and disequality of reached
+holes. The certified-epoch `original_decoder_service` is not an oracle
+for the forgotten lag. These are definitions and suppliers for the
+mathematical correspondence, not a claim that this companion's
+applications have been compiled or certified.
+

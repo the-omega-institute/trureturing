@@ -1,0 +1,26 @@
+### 71.3 Approximate cross-Gram saturation in the same mixture
+
+For f≠g define contractions R_(t,fg),T_(t,fg) by
+
+    R_(t,fg)[i,j]=<V_(t,g)e_j,V_(t,f)e_i>,
+    T_(t,fg)[i,j]=<W_(t,g)e_j,W_(t,f)e_i>.
+
+The actual output coefficient on |ff><gg| for input |f,i><g,j| is the weighted product of the corresponding unrounded local overlaps. Its difference from 1/2 has modulus at most δ: the input matrix unit has trace norm one and the output matrix coefficient is a norm-one functional. Changing one local overlap to its rounded version costs at most the sum of the two frame errors. Each factor has modulus at most one. Therefore (7) gives
+
+    |Σ_t w_t R_(t,fg)[i,j] T_(t,fg)[i,j]−1/2| ≤ 5δ.      (8)
+
+Fix a row i and omit f,g from the notation. Each row of R_t and T_t has Euclidean norm at most one. Summing the real part of (8) over its two columns gives
+
+    Re Σ_t w_t Σ_j R_t[i,j]T_t[i,j] ≥ 1−10δ.
+
+Consequently,
+
+    Σ_t w_t Σ_j |R_t[i,j]−conj(T_t[i,j])|² ≤ 20δ,         (9)
+    Σ_t w_t ||R_t[i,:]||₂² ≥ 1−20δ.                    (10)
+
+For (9), expand the square and bound the two averaged row norms squared by one each. For (10), use Re Σ_j RT ≤ (||Rrow||²+||Trow||²)/2 ≤ (||Rrow||²+1)/2 before averaging. Weighted Cauchy–Schwarz and (9), applied to each entry, now show
+
+    |Σ_t w_t |R_(t,fg)[i,j]|²−1/2| ≤ 5δ+√(20δ).         (11)
+
+Indeed, the difference between Σw RT and Σw |R|² is bounded by (Σw |R|²)^(1/2)(Σw |T−conj(R)|²)^(1/2)≤√(20δ). All averages use the original common branch weights; no pairwise reoptimization has occurred.
+

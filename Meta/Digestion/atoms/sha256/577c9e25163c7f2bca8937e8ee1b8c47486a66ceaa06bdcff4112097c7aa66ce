@@ -1,0 +1,31 @@
+### 定义 4：观察过滤
+
+设有一列读出：
+
+$$
+R_0\preceq R_1\preceq R_2\preceq\cdots
+$$
+
+满足
+
+$$
+R_t=A_t\circ R_{t+1}.
+$$
+
+定义第 $t$ 层状态纤维：
+
+$$
+\mathcal F_t(b)=
+\{p:R_t(p)=b\}.
+$$
+
+由读出精化序：
+
+$$
+\mathcal F_{t+1}(b')
+\subseteq
+\mathcal F_t(b).
+$$
+
+---
+

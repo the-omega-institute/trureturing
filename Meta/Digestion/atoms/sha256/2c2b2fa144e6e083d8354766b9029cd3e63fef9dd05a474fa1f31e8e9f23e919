@@ -1,0 +1,39 @@
+**Lemma 26.2 (A complete finite-state realization).** The observer in Definition 26.1 is a single deterministic machine independent of $q$. It has a realization with at most
+
+$$
+10M(M+1)+3
+\tag{26.4}
+$$
+
+states, including its first-tick waiting state and both decision states. No elapsed-read counter, unbounded gap counter, rejected-pair counter or retained history is needed.
+
+Proof. Use one waiting state $w$, two absorbing states $d_0,d_1$, and active states
+
+$$
+(z,p,m,v),\qquad
+z\in\{0,1,2,3,4\},\quad
+p\in\{\varnothing,1,2,3\},\quad
+0\le m<M,\quad 0\le v\le m.
+\tag{26.5}
+$$
+
+Here $z$ counts zeros since the last tick, saturated at four; $p$ is the pending retained category; $m$ is the number of accepted pairs; and $v$ counts their one marks. Every nonabsorbing state orders a next-bit read. The waiting state loops on zero and moves on one to $(0,\varnothing,0,0)$.
+
+In an active state, zero replaces $z$ by $\min(z+1,4)$ and leaves the other coordinates fixed. On one, the following cases define the new state, with the current zero count reset to zero in every nonterminal case:
+
+1. If $z=4$, retain $p,m,v$ without change.
+2. If $z\in\{1,2,3\}$ and $p=\varnothing$, set $p=z$ and retain $m,v$.
+3. If $z\in\{1,2,3\}$ and $p\ne\varnothing$, form the retained pair $(p,z)$. When $p+z\ne4$, clear $p$ and retain $m,v$. When $p+z=4$, set $m'=m+1$ and $v'=v+\mathbf1_{\{p=z=2\}}$. If $m'<M$, move to $(0,\varnothing,m',v')$. If $m'=M$, move directly to $d_0$ for $v'\ge b_M$ and to $d_1$ otherwise.
+4. If $z=0$, leave $p,m,v$ unchanged and set $z=0$; this defines the transition on the impossible successive-tick input as well.
+
+Both decision states absorb on both bits. Every intermediate category and decision in these rules is determined by the old state and the bit. Thus the rules are a finite transition table, not an arithmetic process with an additional uncounted program state. In particular the terminal label is selected on the terminal paid read itself. The two thresholds in (26.3) are compiled into this fixed table; there are no mutable parameter-description registers outside (26.5).
+
+The number of listed active states is at most
+
+$$
+5\cdot4\sum_{m=0}^{M-1}(m+1)=10M(M+1).
+\tag{26.6}
+$$
+
+Some of them are unreachable, which only improves this upper bound. Adding $w,d_0,d_1$ proves (26.4). Encoding this state set uses at most $\lceil\log_2(10M(M+1)+3)\rceil$ mutable state bits. The fixed transition-table description is a separate fixed finite description; this construction makes no claim that its description is free, short or optimal. $\square$
+

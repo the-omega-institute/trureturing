@@ -1,0 +1,2 @@
+**Remark 3.4 (Rational data).** If $\Delta$ and $V$ have rational entries, as for potentials with values in $\{-1,1\}$, then $p,q_j\in\mathbb Q[t][\lambda]$, and the greatest common divisor computed in $\mathbb Q(t)[\lambda]$ coincides with the one in $\mathbb R(t)[\lambda]$, since the Euclidean algorithm does not leave the smaller field. Corollary 3.3 therefore decides badness of a given rational potential by finitely many exact polynomial computations, with no reference to symmetries. Stance: repo-derived.
+

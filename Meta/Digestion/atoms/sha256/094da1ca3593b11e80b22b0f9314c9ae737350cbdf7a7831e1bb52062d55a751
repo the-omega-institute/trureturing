@@ -1,0 +1,16 @@
+**Theorem 87.1 (uniform prime-factor bound).** Let $j,C,c,k$ be positive integers, let $N=3^j$, and suppose $k$ is odd and $3\nmid k$. Write $B_n=L_n^2+3$ for positive odd $n$. Suppose
+
+$$B_N=D C^2,\qquad B_{Nk}=D c^2,$$
+
+where $D$ is the full positive squarefree kernel of $B_N$. Then every prime $p\mid k$ satisfies
+
+$$\boxed{40p>N-1.}$$
+
+In particular, if $k>1$, its least prime factor $P^-(k)$ and the index $n=Nk$ satisfy
+
+$$P^-(k)>\frac{N-1}{40},\qquad n>\frac{N(N-1)}{40}.$$
+
+For each fixed prime $p\ge5$, all $j$ with $3^j\ge40p+1$ therefore exclude $p\mid k$. The same threshold for the largest prime in a fixed finite set excludes every factor from that set. The primes two and three are already excluded by the hypotheses. Theorem 86.1 remains stronger for five and seven at small $j$.
+
+**Proof.** We give the polynomial, denominator and size estimates explicitly.
+

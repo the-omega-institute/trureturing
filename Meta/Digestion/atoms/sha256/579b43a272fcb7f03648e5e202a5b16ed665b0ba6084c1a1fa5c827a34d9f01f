@@ -1,0 +1,57 @@
+**Proposition 9.1 (credited endpoint circuit and affine extension).** Put
+$q_{\max}=k/(1-\alpha)\in(0,1)$ and $U_1=q_{\max}(A+B_T)$.
+For $s_*\leq s\leq1$ let $\eta=(s-s_*)/(1-s_*)$. Then
+
+$$
+F+\frac{(s-s_*)^4}{144K_0^2}\leq E_s(\rho)
+\leq U(s)=(1-\eta)F+\eta U_1.
+\tag{NP.61}
+$$
+
+The upper has twenty-four actual acquired labels for $s_*<s<1$ and
+twelve at either end. $U_1$ is a feasible endpoint value, and (NP.61)
+is a bracket, not an evaluation of the later exact law.
+
+Proof. Reuse the current JR strength-one construction. At report $r$
+its high live product and two low live products are
+
+$$
+\frac{\sqrt{q_{\max}}D+r\sqrt{q_{\max}}T}{\sqrt2},\qquad
+\frac{\sqrt{1-q_{\max}}D+r\sqrt{1-q_{\max}}T+\zeta S}{2},
+\quad\zeta=\pm1.
+\tag{NP.62}
+$$
+
+Precompose by $E^\dagger$. Use the high carrier of dimension three
+with live isometry decoder $E$, and the low range encoders and full TP
+isometry decoders of §7. The high matrix is invertible since
+$q_{\max}(1-\alpha)=k>0$. Each low has nonzero first coefficient and
+zero determinant because $(1-q_{\max})(1-\alpha)=\beta$; its rank is
+two. Add the same two scalar supported failure rows and one scalar
+complement map per report as in §7, with the same full TP decoders.
+
+The coefficient sum at each report is $(I+rX_c)/2$: its diagonal
+entries are $1/2$, the $DT$ entry is $r/2$, and the two $S$ cross
+terms cancel. Equations (NP.49)–(NP.51) therefore prove full complex,
+reference, every labelled Borel-time, complement, cross-support and
+zero-extra identities for this twelve-label instrument at strength one.
+The high aggregate is $\operatorname{diag}(q_{\max},q_{\max},0)$,
+so its selected cost is $U_1$, with the imaginary $DT$ Gram entry making
+no contribution.
+
+To obtain strength $s$, generate a family label and take every endpoint
+encoder from Theorem 7.1 multiplied in Kraus amplitude by
+$\sqrt{1-\eta}$, and every encoder from (NP.62) multiplied by
+$\sqrt\eta$. Equivalently scale a scalar CP map by its family weight.
+Keep the full decoders. All generated labels, including the family label,
+are retained as actual classical data; no coherent selector is hidden.
+The effects sum to $(1-\eta)I_5+\eta I_5=I_5$, and their report effects
+are $(1-\eta)F_r(s_*)+\eta F_r(1)=F_r(s)$.
+Both complete forgotten channels equal (NP.11), so their convex sum
+preserves that entire channel, including conditional reference laws.
+The high effect is the same weighted sum and has cost $U(s)$.
+There are twelve nonzero labels in each family, hence twenty-four at
+interior weights; remove the zero family at either endpoint. Theorem
+8.3 gives the lower bound. No pointwise optimality of this reused
+endpoint circuit on the selected nonreal state is required. $\square$
+

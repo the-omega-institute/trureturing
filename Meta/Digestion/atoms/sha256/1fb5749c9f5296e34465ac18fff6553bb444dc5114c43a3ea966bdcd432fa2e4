@@ -1,0 +1,18 @@
+**Example 9.2 (two independent decisive distinctions).** At $D=1$ take
+$c=C_0$, so $U_c=\{RL,RR\}$. The four sources
+$\langle\alpha,\langle u,v\rangle\rangle$ for independent
+$u,v\in\{\alpha,\beta\}$ have identical original prediction
+trajectories at the only original target $R$, but differ at the actual
+literals $RL$ or $RR$. On the one source
+
+$$
+t=\langle\alpha,\langle\alpha,\beta\rangle\rangle,
+\tag{CCF.26}
+$$
+
+the permitted unrestricted sweeps $RL;RR$ and $RR;RL$ have the same
+source, full labelled support, acquired label map, call count two,
+letter total four and future stationary literal responses. Their actual
+ordered event traces differ. This is a same-source order witness, not
+an unknown age, prediction count or endpoint-cost distinction.
+

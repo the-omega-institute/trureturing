@@ -1,0 +1,55 @@
+**Definition 8.1 (remaining comparison).** The global grid comparison
+for Definition 1.2 is the assertion $m\ge G$ for every correct graph
+satisfying (SI.3). In the full actual-incidence notation (SI.18), it
+is equivalent to
+
+$$
+D\le E+u.
+\tag{SI.27}
+$$
+
+Theorems 4.1–4.2 establish this comparison when at most one count cell
+has more than one actual support. Theorem 5.2 states necessary
+conditions for any graph violating it. Theorem 6.2 settles exactly
+the weaker count-label problem. Theorems 7.2–7.3 supply an execution
+feasible graph violating the prescribed output, rather than a
+counterexample to (SI.27). The unrestricted comparison with multiple
+support-ambiguous cells is not established by these results.
+
+The classical comparison is [Ingo Wegener, *The Complexity of Boolean
+Functions*, Chapter 14, Section 4, Definition 4.1 and Theorems
+4.1–4.3][Wegener]. Its optimal synchronous
+form and residual count are for read-once branching programs. The proof
+on printed page 424 explicitly uses realizability of every graph path
+in that model and states that it fails for general branching programs.
+Likewise [R. E. Bryant, *Graph-Based Algorithms for Boolean Function
+Manipulation*, Section 2, Definition 1][Bryant] requires variable
+indices to increase strictly along nonterminal edges. Definition 1.2
+has neither premise. The common live order in Theorem 4.1 is deduced
+under its singleton-support hypothesis; it is not imposed on a general
+competitor, and it does not constrain paid post-certificate behavior.
+
+The support-incidence, rigidity and relaxation results above are
+ordinary deductions from the stated repository suppliers and their
+explicit finite combinatorial arguments. The external results just
+cited are literature-attested comparisons, not unrestricted lower-bound
+suppliers. The new deductions are repo-derived, with no priority claim
+over other literature. The local paired-completion and sharing
+constructions of [PE, Sections 7–9][PE] are compatible with this
+distinction: none supplies (SI.27) by counting local discriminators as
+globally distinct states.
+
+For the native consumer, any proof of the unrestricted Boolean grid
+comparison would transfer through (SI.5) to $H\ge G+4+r$, matching
+the supplied full-domain grid of [PCA, Theorem 26.1][PCA]. Conversely,
+a smaller native upper would require a correct graph, the original
+full-fiber lift and both simultaneous execution caps. No acquisition,
+authentication, export, handoff, physical-memory or four-view realization
+theorem follows from this installed-state comparison.
+
+[WTF]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_WEIGHTED_THRESHOLD_FRONTIER.md
+[PE]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PAID_PRIVATE_EXCHANGE.md
+[PCA]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PRESCRIBED_CODE_ACQUISITION.md
+[Wegener]: https://eccc.weizmann.ac.il/resources/pdf/cobf.pdf
+[Bryant]: https://www.cs.cmu.edu/~bryant/pubdir/ieeetc86.pdf
+

@@ -1,0 +1,82 @@
+**Proposition 71.1 (low-band extraction with a controlled remainder).**
+Let
+
+$$
+\overline W(q)=\int_I\phi(k)^2W_\tau(k,q)\,dk,\qquad
+J_3=\int_I\phi(k)^3dk,\qquad
+\beta=\frac{\phi_0J_3}{4\pi\sqrt{\det M}}>0,
+\qquad U(z)=\frac{\beta}{d(z)}.
+\tag{71.1}
+$$
+
+There are fixed $\delta_0>0$ and $C$ such that, for every
+$0<\delta\le\delta_0$ and every complex $\psi\in\mathcal Q$, one can
+write $\psi=J_\delta f+r$ as an orthogonal spectral decomposition with
+
+$$
+\begin{aligned}
+\|\psi\|_2^2&=\|f\|_2^2+\|r\|_2^2,&
+\|r\|_2^2&\le C\delta^{-2}T[\psi],\\
+K[f]&:=\int(\nabla f)^*M\nabla f\,dq\le CT[\psi],&
+T[\psi]&\ge(1-C\delta^2)K[f]+T[r],\\
+\|J_\delta f-\phi f\|_2&\le C\delta\sqrt{T[\psi]},&
+\left|V_\tau[\psi]-\int\overline W|f|^2dq\right|
+ &\le C\delta^{-2}T[\psi].
+\end{aligned}
+\tag{71.2}
+$$
+
+Here $f\in H^1(\mathbb R^3)$ has Fourier support in $|\eta|\le\delta$.
+For normalized $\psi$ one also has
+
+$$
+V_\tau[\psi]\le C\sqrt{T[\psi]}+C\delta^{-2}T[\psi].
+\tag{71.3}
+$$
+
+Proof. Use throughout the unitary version of L (36.5), namely its raw
+transform multiplied by $(2\pi)^{-3/2}$. For $|\eta|\le\delta_0$ let
+$v_\eta$ be the positive normalized first fibre eigenfunction of L §36.
+Define $\widehat f(\eta)=\mathbf1_{|\eta|\le\delta}
+\langle v_\eta,\widehat\psi(\eta)\rangle_{L^2(I)}$ and define
+$J_\delta f$ by Fourier transform $v_\eta\widehat f(\eta)$
+on the ball and zero outside it.
+The remainder is the orthogonal complement of this decomposable
+spectral projection, so the norm and kinetic energies split exactly.
+On the low-frequency excited subspace the shifted fibre spectrum is
+at least $3\lambda$ by min-max. On $|\eta|>\delta$, G (26.6) bounds
+it below by $c\delta^2$. These facts give the remainder estimate.
+L (36.4), positivity of $M$ and a fixed small $\delta_0$ give both
+kinetic inequalities in (71.2). The estimate
+$\|v_\eta-\phi\|_2\le C|\eta|^2$ from L (36.7) gives
+$\|J_\delta f-\phi f\|_2^2\le C\delta^2K[f]$.
+
+For clarity, Hardy's inequality is used only on these extracted
+phase-$H^1$ functions. Its usual three-dimensional statement, applied
+also to $L^2(I)$-valued functions by integration in height, is
+$\||q|^{-1}h\|_2\le2\|\nabla_qh\|_2$.
+It follows directly by integrating
+$\operatorname{div}(q/|q|^2)=|q|^{-2}$ and applying Cauchy--Schwarz,
+first on smooth functions away from zero and then by density.
+By (70.3), Plancherel and (71.2),
+
+$$
+\|W_\tau J_\delta f\|_2+\|W_\tau\phi f\|_2
+ \le C\sqrt{T[\psi]}.
+\tag{71.4}
+$$
+
+The cross potential with $r$ is bounded by
+$C\sqrt{T[\psi]}\|r\|_2\le C\delta^{-1}T[\psi]$;
+its diagonal potential is at most $\|W_\tau\|_\infty\|r\|_2^2$.
+Replacing $J_\delta f$ by $\phi f$ in its own potential changes that
+potential by at most $C\sqrt{T[\psi]}\|J_\delta f-\phi f\|_2$,
+using (71.4) on each term of the difference of quadratic forms.
+This proves the last estimate in (71.2).
+Finally $\overline W\le C/(1+|q|)$, and Hardy followed by
+Cauchy--Schwarz gives
+$\int\overline W|f|^2\le C\|f\|_2\|\nabla f\|_2$.
+For normalized $\psi$ this proves (71.3). No estimate has asserted
+that the original $\psi$ has all phase derivatives in $L^2$.
+$\square$
+

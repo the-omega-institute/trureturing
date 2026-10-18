@@ -1,0 +1,50 @@
+**Convention 9.3 (primary hypotheses and attribution).** The native
+section/type/pressure chain in §§3–7 is a repository-derived deduction
+from the named native suppliers. The type bounds, entropy variational
+identity, finite-dimensional separation and equality-node identity are
+mature cited intermediates. No world-priority assertion is attached to
+the native deductions. Besides the citations attached to their proofs,
+the following primary correspondences fix the remaining transfer limits.
+
+[Gogacz–Toruńczyk, Theorem 1 and Corollary 1][GT] concern a fixed
+conjunctive-query schema and functional dependencies, with an
+almost-entropic characterization and a submodular outer bound.
+A native equation (NPC.7) gives
+$H(g_q(X_i)\mid r_a(X_j))=0$ under one common law. The native state
+alphabet and maps stay fixed while length and donor topology vary;
+database achievability or a Shannon relaxation supplies neither
+(NPC.21) nor a cofinal verifier. The proof here uses the actual
+decoder equations throughout.
+
+[Dyer–Richerby, §2][DR] define a finite-domain constraint language
+whose instances have arbitrarily many variables. Native complete
+templates are such finite instances of the unary/binary language in
+NDR §2. Finite-instance counting and its complexity classification
+provide no universal size cutoff for (NPC.28), and no bounded-width
+or tractable-polymorphism property of this native language is assumed.
+
+Repository citations and definition correspondences use revision
+`b45e51761afc5b5f00d7d336389675c4354c2ed7` and only the specified
+supplier statements. Theorems 5.3, 6.2 and 6.4 concern exact all-size mathematical
+pressure, attainment and finite weight descriptions. They leave the
+additional effective premise of Definition 8.1 explicit.
+
+[NDR]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_DONOR_NETWORKS_AND_REPAIR_COST.md
+[FMR]: RECURSIVE_RELATIONAL_OBSERVATION_LATE_TARGET_FRACTIONAL_MEMORY_RATE.md
+[NCM]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CORRELATED_MEMORY_LOWER.md
+[NCE]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CYCLIC_ENTROPY_LOWER.md
+[AAR]: RECURSIVE_RELATIONAL_OBSERVATION_ADAPTIVE_ACQUIRED_REFERENCE_FRONTIER.md
+[D5G]: ../../../D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.lean
+[D5A]: ../../../D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean
+[D5L]: ../../../D5/S3/Arith/FibonacciAtomic/ActualLeafHistoryRigidity.lean
+[D5N]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeDepthPatterns.lean
+[D5T]: ../../../D5/S3/ConceptDynamics/SufficiencyQuotient/TargetFamilyMinimalQuotient.lean
+[D5C]: ../../../D5/S3/ObserverMemory/ProObjects/CompactObservationFactorization.lean
+[V]: https://arxiv.org/html/1903.01857 "Péter Vrana, Probabilistic refinement of the asymptotic spectrum of graphs, Propositions 3.3–3.4"
+[R]: https://doi.org/10.1515/9781400873173 "R. Tyrrell Rockafellar, Convex Analysis, §§11–12"
+[CLR]: https://arxiv.org/html/2407.02281v2 "Nicolas Charpenay, Maël Le Treust and Aline Roumy, On the Linearization of Optimal Rates for Independent Zero-Error Source and Channel Problems, Theorem 7"
+[AM]: https://arxiv.org/html/1209.3300v1 "Ali Al-Bashabsheh and Yongyi Mao, Normal Factor Graphs as Probabilistic Models, §§3.2–3.3 and 4.2"
+[BD]: https://arxiv.org/html/2001.11442v3 "Holger Boche and Christian Deppe, Computability of the Zero-Error Capacity with Kolmogorov Oracle, Theorem 12 and Remarks 13 and 38"
+[GT]: https://arxiv.org/html/1512.01808v1 "Tomasz Gogacz and Szymon Toruńczyk, Entropy bounds for conjunctive queries with functional dependencies, Theorem 1 and Corollary 1"
+[DR]: https://arxiv.org/html/1003.3879v4 "Martin Dyer and David Richerby, An Effective Dichotomy for the Counting Constraint Satisfaction Problem, §2"
+

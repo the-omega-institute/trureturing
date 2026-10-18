@@ -1,0 +1,45 @@
+## 6. Natural ownership: a promised-pair comparison
+
+The full-family theorem deliberately gives the controller no correlated past
+record.  A natural-ownership interface may instead declare a record owned by
+the source/control interaction.  The following sharp comparison is only for
+one promised pair and must not be read as a full-family implementation.
+
+Use
+
+$$
+b=(3/10,3/10,2/5),\quad r=3/5,\quad
+k_0=1/4,\quad k_1=1/8.
+\tag{OC.22}
+$$
+
+The two actual histories have lifts $h^{(0)}=0$ and
+$h^{(1)}=(0,-\pi,0,-\pi,0)$, with the same preparation and the same
+prescribed continuation.  Their input probability vectors are
+
+$$
+(1/4,1/20,2/5,1/20,1/4),
+$$
+
+and their target vectors are
+
+$$
+(1/8,7/40,2/5,7/40,1/8).
+$$
+
+The input overlap is $4/5$ and the target overlap is $3/10$.  These values
+are exact consequences of the signed modes; no sampled expectation is being
+treated as a state coordinate.
+
+Their actual prior histories can use (OC.10a) with $a=1/8$ and $\beta=0$.
+For signed integer $m$ the fixed-height leg has increment $2\pi m$, the
+rectangle coefficient is $-4\pi m/5$, and the residual is
+$(0,-\pi m,0,-\pi m,0)$.  Its duration is five and its phase variation is
+$18\pi|m|/5$.  Every path has the same probability waveform and minimum
+support $1/20$.  Select $m=0,1$ for the promised pair.  The common
+one-unit horizontal leg reaches $k_1$, and the zero-phase return excursion
+would have identity endpoint; the obstruction is already present at the
+outbound cut.  In Gram language the no-record deterministic environment
+would require overlap $8/3$, whose two-by-two correlation matrix has
+determinant $1-(8/3)^2=-55/9$.
+

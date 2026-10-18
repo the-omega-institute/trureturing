@@ -1,0 +1,49 @@
+**Theorem 67.6 (complete retained-norm finite-clock comparison).** Fix any finite $E,T$, the commissioned $a,g>0$, $\nu\ge0$, and one $0<\delta\le1$, $\Omega\ge1$. For every authentic nonempty finite source at any finite legal cap, either separate complete pair prescription, every supplied auxiliary Hilbert space, and every joint input
+
+$$
+\Psi\in\mathscr H_D\otimes\mathcal F_H\otimes\mathcal A,
+\qquad \|\mathsf n^{1/2}\Psi\|^2\le E\|\Psi\|^2,
+\tag{67.15}
+$$
+
+the following bound holds for every $|\tau|\le T$:
+
+$$
+\begin{aligned}
+&\|e^{-i\tau\mathbb M_D}(W_D\otimes I)\Psi
+ -(W_D\otimes I)e^{-i\tau\mathbb H_D^0}\Psi\|\\
+&\quad\le |\tau|R\sqrt\delta\,\|\Psi\|
++\left[(4+12a|\tau|)\rho+
+4|\tau|\kappa\omega(1+\rho)\right]b(\Psi)\\
+&\quad\le\left\{TR\sqrt\delta+
+\left[(4+12aT)\rho+4T\kappa\omega(1+\rho)\right]\sqrt{E+1}\right\}\|\Psi\|.
+\end{aligned}
+\tag{67.16}
+$$
+
+Every norm is the full joint Hilbert norm with its absolute reference convention. It includes all atomic, mixed, cell and field components, all excitations and all retained correlations. No trace, clean-state projection, postselection, phase quotient, field reset or source copy occurs. Input(67.15) is arbitrary within this energy/moment class, including unknown particle–field–auxiliary entanglement; it is not restricted to a vacuum or product field. Its particle ingress is the explicitly supplied $W_D$ range. An additional arbitrary retained vector of norm at most $\eta$ contributes at most $\eta$ to this comparison by unitarity; a large arbitrary continuum particle component is not silently included in the calibrated input class.
+
+Proof. First take $\Psi\in\operatorname{Dom}(\mathsf n)$ and let $P_D=(W_D\otimes I)U_D$. This is an isometry and has the domain property in Lemma67.5. Combining (67.12) and (67.13) gives, on this core,
+
+$$
+\|[\mathbb M_DP_D-P_D\mathbb H_D^0]\Xi\|
+\le R\sqrt\delta\,\|\Xi\|
++4\kappa\omega[b(\Xi)+\rho\|\Xi\|]
++12a\rho\,b(\Xi).
+\tag{67.17}
+$$
+
+The ideal generator $\mathbb H_D^0$ commutes with $\mathsf n$; it preserves both $b(\Psi)$ and $\|\Psi\|$. Its particle part is bounded and its field part preserves $\operatorname{Dom}(\mathsf n)$. Consequently the exact derivative of
+$e^{-i(\tau-s)\mathbb M_D}P_De^{-is\mathbb H_D^0}\Psi$ is legitimate in Hilbert norm. Integrate (67.17). Replace $P_D$ at the two endpoints by $W_D\otimes I$ using the first inequality of (67.13), adding $4\rho b(\Psi)$. Since $\|\Psi\|\le b(\Psi)$, the result is the first inequality of (67.16). Finite-number spectral cutoffs approximate any input of (67.15) in the $B$ graph norm; unitarity and the bounded isometries pass the result to that input. Tensor identities and the direct-sum estimates apply throughout, so no product-input restriction was inserted. The second inequality uses $b(\Psi)\le\sqrt{E+1}\|\Psi\|$. $\square$
+
+For a single explicit common choice $\delta=\Omega^{-2}$, let $c=\sqrt\nu/\lambda$. Since $\omega\le144/\Omega$, (67.16) implies
+
+$$
+\sup_{|\tau|\le T}\frac{\|\text{full comparison difference}\|}{\|\Psi\|}
+\le\frac{TR}{\Omega}
++\frac{[(4+12aT)c+576T\sqrt\nu(1+c)]\sqrt{E+1}}{\sqrt\Omega}.
+\tag{67.18}
+$$
+
+The constants are independent of $D$, its cap, shape, boundary, bank size and pair choice. Thus the supremum over all separately legal finite commissions and their inputs satisfying the same moment bound tends to zero. This is uniformity of an estimate, not one apparatus completing an infinite refinement, an infinite population limit, an unbounded-horizon assertion or a finite total construction price. A fixed scaled-field-energy bound $\langle h_D\rangle\le E_h\|\Psi\|^2$ suffices with $E=E_h/\lambda$. The unscaled free field energy in a commissioned input is $\Omega\langle h_D\rangle$, so maintaining a fixed number-moment class while increasing $\Omega$ does not keep that resource fixed. At $\nu=0$ all displacement/coupling terms vanish and the already supplied particle-only residual remains. The zero two-occupation target on a singleton, zero time and all reference superpositions are included.
+

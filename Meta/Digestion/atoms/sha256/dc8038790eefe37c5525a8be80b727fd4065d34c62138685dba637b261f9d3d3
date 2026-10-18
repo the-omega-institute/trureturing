@@ -1,0 +1,61 @@
+**Theorem 219.6 (One exact joint suffix relation).**
+Under Theorem 219.5, let $v\in\{0,1\}^{|J|}$ denote the bits on
+$J$ in address order. Use one collection of nonnegative measures
+$u_i(v),z_j(v)$ with
+
+$$
+\sum_vu_i(v)=d_i,\quad \sum_vz_j(v)=\gamma_j,\quad
+z_j(v)=0\text{ unless the first zero of }v\text{ is at }j.
+\tag{219.16}
+$$
+
+The $u_i$ atom has sole guard zero $i$; every $z_j$ atom has all guard
+bits one. Inactive bits are one. All suffix patterns, including the
+all-one $A$ suffix, remain. Put $U=\sum_i u_i$,
+$\mu=\max_j\gamma_j$ and $R(H)=\max_j\sum_{v\in H}z_j(v)$.
+For $\mathcal C=N,O$, define $\Psi_{\mathcal C}$ to be the maximum
+of zero and all the following quantities, on this same allocation:
+
+$$
+\begin{aligned}
+& (\mu-D+d_i+d_h)_+ &&(i\ne h\in I),\\
+& \sum_{t=0,1}\bigl(R\{v:v_a=t\}-(U-u_i)\{v:v_a=t\}\bigr)_+
+ &&(i\in I,\ a\in J),\\
+& \sum_{H\in\Pi_{\mathcal C}(a,b)}(R(H)-U(H))_+
+ &&(a<b\text{ in }J).
+\end{aligned}
+\tag{219.17}
+$$
+
+Here $\Pi_N(a,b)$ has the four bit cells and $\Pi_O(a,b)$ has
+$v_a=0$, $(v_a,v_b)=(1,0)$, $(v_a,v_b)=(1,1)$.
+Then
+
+$$
+\min_{V\ge0:\,Q(V)=(\beta,D+G)}\Delta_{\mathcal C}(V)
+ =E+\min_{(u,z)\text{ satisfying }(219.16)}\Psi_{\mathcal C}(u,z),
+\tag{219.18}
+$$
+
+and both minima are attained. A full representative of cost at most
+$b$ exists exactly when $b\ge E$ and one allocation satisfies all
+quantities in (219.17) at most $b-E$.
+
+**Proof.** The retract in Theorem 219.5 is parametrized exactly by
+(219.16). A pair of guards $i,h$ has all $C$ in 11 and $A$ mass
+$D-d_i-d_h$ there, giving the first line of (219.17).
+For guard $i$ and positive address $a$, the guard-zero cell contains
+only $A_i$ and the guard-one cells have baseline $U-u_i$.
+This gives the second line in either catalog. Two positive queries give
+exactly their respective partitions in the third line.
+
+A guard singleton is dominated by a guard pair. A positive singleton
+has surplus $\sum_t(R-U)_+$, bounded by a mixed term because
+$U-u_i\le U$. Empty partitions are coarser; inactive bits are constant.
+Thus no short schedule adds another maximum. Equation (219.15) gives
+$B_{\mathcal C}=D+\Psi_{\mathcal C}$, hence the displayed equality.
+The allocation domain is a nonempty product of finite compact simplices,
+and the functional is continuous and convex. Compactness gives
+attainment. The same domain is used for N and O, but their positive-pair
+partitions differ, so equality of the optimized values is not inferred. ∎
+

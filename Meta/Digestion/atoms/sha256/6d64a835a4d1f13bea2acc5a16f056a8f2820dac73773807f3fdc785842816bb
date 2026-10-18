@@ -1,0 +1,70 @@
+**Proposition 6.1 (joint law, including the failure programme).** For each
+actual history $h$ of index $j$ and every actual input $\rho^h_{VR}$, tensor
+its programme $|r_j\rangle\langle r_j|$. Put
+$\zeta_{j,2}(u)=\sqrt{Q_2(u)}r_j$ and
+$\zeta_{j,-}(u)=\sqrt{Q_-(u)}r_j$. The unnormalized live successor on
+$[s,t]$ is
+
+$$
+(\widetilde K_j(t,s)\otimes I_R)\rho^h_{VR}
+ (\widetilde K_j(t,s)^\dagger\otimes I_R)
+       \otimes|r_j\rangle\langle r_j|.
+\tag{CP.21}
+$$
+
+Up to a fixed ordering of tensor factors, its failure density in mode $2$ is
+
+$$
+A_j(u,s)^2|f\rangle\langle f|\otimes(\rho^h)^R_{22}
+       \otimes|\zeta_{j,2}(u)\rangle\langle\zeta_{j,2}(u)|\,du,
+\tag{CP.22}
+$$
+
+and in either mode $1$ or $3$ it is
+
+$$
+\frac12B_j(u,s)^2|f\rangle\langle f|\otimes(\rho^h)^R_{--}
+       \otimes|\zeta_{j,-}(u)\rangle\langle\zeta_{j,-}(u)|\,du.
+\tag{CP.23}
+$$
+
+All old classical source/epoch, calibration, permission, clock, controller
+and archive fields remain in their actual blocks. Append the actual request,
+live or failure flag and, on failure, exact original time and mode. Equations
+(CP.21)–(CP.23), integrated against the same actual history measure, are the
+joint law, not a product of separately chosen marginals.
+
+If the actual clock at interval start $s$ reads $\tau_s$, a live cut at $t$
+has working clock $\tau_s+t-s$, and a first failure at $u$ is recorded at
+$\tau_s+u-s$. Past clock entries remain archived; the working clock advances.
+On live return the public catalogue becomes
+$(k_1(t),k_2(t))$, the actual latent height is its original-index member,
+and the real phase lift adds $b(t)-b(s)$ without becoming a readable field.
+The specified controller update acts on the actually obtained request and
+outcome. Failure latches its first event, cancels the unexecuted native tail
+and retains the stopped branch with that same archive and programme successor.
+There is no further positive-carrier height update from $f$.
+
+Proof. Apply (CP.18) and (CP.17) to each input matrix block. The middle jump
+selects precisely its $22$ block; either minus jump selects its $--$ block.
+The programme factors on live success, and its failure vector is the displayed
+$\zeta$. Their squared norms are the corresponding rates by (CP.16), giving
+(CP.9) after tracing that register. Linearity gives every actual history
+mixture, with no invented coupling. $\square$
+
+For the actual pure orbit, $S_j(t)=x_j/k_j(t)>0$. Conditioning on live success
+reweights a history distribution by this actual probability. An old archive
+marginal need not stay fixed under this conditioning; the unnormalized joint
+map is the preservation statement. In particular the returned live programme
+is independent of $\beta,m$ conditional on $j$, but a mixed distribution over
+$j$ can correlate it with archives and the survival flag.
+
+If a failure rate or reference block has zero mass, its CP density is zero.
+No normalized conditional state is assigned at that zero-probability event.
+Otherwise the normalized failure programme is its actual $\zeta$ divided by
+its norm. It need not equal $r_j$, and there is no original retry from $f$.
+
+Exact time here is a measurable record, with Borel events and density maps.
+It is not a finite-bit timestamp or an uncountable orthonormal Hilbert basis.
+This distinction retains the [Event Memory][EMA] same-event contract.
+

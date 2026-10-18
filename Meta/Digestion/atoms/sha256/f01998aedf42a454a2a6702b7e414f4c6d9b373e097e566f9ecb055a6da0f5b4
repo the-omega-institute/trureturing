@@ -1,0 +1,55 @@
+**约定 1.1（原读者）。** 固定整数
+
+$$
+3\le m<k,\qquad T=k+1,\qquad g=\gcd(m,T)\ge2,
+\qquad T=gp,\qquad m=gu.
+$$
+
+于是 $u<p$，且 $\gcd(u,p)=1$。词从低位到高位读，合法词不含 $1^k$。匹配权重和模二读口为
+
+$$
+G_i=2^i\ (0\le i<k),\qquad
+G_i=\sum_{r=1}^{k}G_{i-r}\ (i\ge k),\qquad
+V_k(w)=\sum_i w_iG_i\pmod2.
+$$
+
+匹配系数按 [S2] 第13节、定理14.1周期延伸到所有整数，满足
+
+$$
+c_i=G_i\bmod2=\mathbf 1_{\{0,-1\}}(i\bmod T).
+\tag{1.1}
+$$
+
+初始相位写成
+
+$$
+\theta_j=-gj\pmod T,\qquad j\in\mathbb Z/p\mathbb Z.
+\tag{1.2}
+$$
+
+完整块端点只显示当前值 $v\in\mathbb F_2$ 或独立的吸收符号 $\bot$；当前实际尾 $s$ 是末端连续一的长度。块内位和中间值不可见。控制字母表分别为全部 $m$ 位词和内部不含 $1^k$ 的 $m$ 位词；跨块接缝在两种字母表中都执行同一拒绝规则。由于本节 $m<k$，这两个字面动作集实际相同。
+
+合法端点记录集为 $Q_{\rm live}=\mathbb F_2\times P\times\{0,\ldots,k-1\}$，其中 $P=g\mathbb Z/T\mathbb Z$；再加入独立记录 $\bot$ 得到 $Q$。块内允许相位在整个 $\mathbb Z/T\mathbb Z$ 中，逐位转移是
+
+$$
+\delta_0(v,\theta,s)=(v,\theta+1,0),\qquad
+\delta_1(v,\theta,s)=
+\begin{cases}
+(v\oplus c_\theta,\theta+1,s+1),&s<k-1,\\
+\bot,&s=k-1,
+\end{cases}
+\qquad \delta_a(\bot)=\bot.
+$$
+
+完整块转移是这 $m$ 个逐位转移按词序的复合。来源先验是全部有限实际完整块历史，包括初始已拒绝来源；[S3]（引理15.1） 的联合实现可直接写为：给定 $(v,\theta,s)\in Q_{\rm live}$，取
+
+$$
+N\equiv0\pmod m,\quad N\equiv\theta\pmod T,\quad N\ge s+2,
+\qquad D=\bigoplus_{i=N-s}^{N-1}c_i,
+\qquad w=(v\oplus D)0^{N-s-1}1^s.
+$$
+
+同余因 $\theta\in P$ 相容；首位和末串一的总值为 $v$，中间零隔开两个一串，故这个同一合法词同时实现值、相位和尾，且可切成完整合法块。不同来源的初始长度可以不同；这些长度不交给控制器。此处复用实际满射，不以三个边缘可达集代替联合先验。初始输出免费，以后每个发出的完整块收费一单位，包括全零等待和补齐块；离线计算时间与控制器记忆另计。
+
+控制器只沿一个实际来源继续运行，不能复位、复制、取得隐藏初始时钟、观察块内端点或合并不同运行分支。原来源的 INITIAL 标签在破坏性更新后保留。上述来源、控制、输出与费用约定沿用 [S1] 定义1.2、2.1；[S4] 定义2.1–2.4、命题4.1、5.3的给定来源实现词及最短源编码，使用相同合法词，但其目标与未知 INITIAL 标签的最坏分支费用不同。
+

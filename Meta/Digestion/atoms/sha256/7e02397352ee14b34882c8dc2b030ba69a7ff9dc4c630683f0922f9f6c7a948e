@@ -1,0 +1,84 @@
+**Proposition 6.2 (exact full strata and synthesized contact).** With
+the common exterior (FJC.20), let $r_0,r_1$ have complete partitions
+
+$$
+\pi_0=\{\{1,4\},\{2\},\{3\},\{5\},\{6\}\},
+\qquad
+\pi_1=\{\{1\},\{2,5\},\{3,6\},\{4\}\}.
+\tag{FJC.21}
+$$
+
+Their exact strata in the entire fiber (FJC.19) are
+
+$$
+\begin{aligned}
+D_{r_0}&=\{U(F(z,w),z,w):z,w\in\mathcal T, z\ne w\},\\
+D_{r_1}&=\{U(y,G(y),H(y)):y\in\mathcal T\}.
+\end{aligned}
+\tag{FJC.22}
+$$
+
+Both rows are attained. Their common-output equations have a functional
+native presentation. Theorem 5.1 returns YES and synthesizes actual
+finite sources in both strata with a common prefix at every requested
+depth. Other full rows of $D_0$ are preserved.
+
+**Proof.** Finite leaf count gives
+$\ell(\rho^a t)\ge\ell(t)$ and
+$\ell(\langle s,t\rangle)=\ell(s)+\ell(t)$.
+Thus $F(z,w)$ has strictly more leaves than either $z$ or $w$,
+and $G(y),H(y)$ each have strictly more than $y$. Also $G(y)\ne H(y)$
+because their left children are $\alpha$ and $\beta$.
+
+In the first displayed stratum, the hole values are
+$y=F(z,w),z,w,F(z,w),G(y),H(y)$. The first and fourth are equal.
+The second and third are unequal by the entire history. Both differ
+from $y$ by the leaf count of $F$. Both last values have strictly more
+leaves than $y$ and hence than $z,w$. They differ from one another by
+their left children. These are all cross-class inequalities of $\pi_0$.
+Conversely row $r_0$ imposes $y=F(z,w)$, and its source already has
+$z\ne w$, so (FJC.22) recovers the same source.
+
+For the second stratum, set $z=G(y),w=H(y)$.
+These differ, satisfying the retained negative. They have more leaves
+than $y$; $F(z,w)$ has more than either, and consequently more than $y$.
+Thus exactly the indicated copies are equal and every different class
+of $\pi_1$ is unequal. Conversely its second/fifth and third/sixth
+class equalities force exactly $z=G(y),w=H(y)$, recovering the same
+source. No additional literal or reach restriction remains.
+The examples $(z,w)=(\alpha,\beta)$ in the first chart and $y=\alpha$
+in the second prove attainment. Constructor decomposition, positive
+substitution and the proven redundant-conjunct removals furnish the
+checkable chart reductions of Definition 2.2.
+
+Write the first-chart coordinates as $Z,W$ and the second-chart
+coordinate as $Y$. Equality of the full completed sources cancels their
+identical outside constructor skeleton. Equality of their first three
+holes is exactly
+
+$$
+Y=F(Z,W),\qquad Z=G(Y),\qquad W=H(Y).
+\tag{FJC.23}
+$$
+
+These imply equality of the other three holes by substitution into
+$F,G,H$. Conversely equality of whole sources implies the first three
+hole equations by ordered-pair cancellation. Hence (FJC.23), with no
+auxiliaries, proves both completed directions of (FJC.11).
+It is a functional system with every dependency below a pair and all
+three states reaching a directed cycle. Theorem 3.1 makes all its
+canonical coordinates infinite; there are no finite coordinates to
+freeze. The first-chart conjunction $Z\ne W$ is feasible, and the
+second conjunction is empty, so the canonical tuple passes. Theorem
+4.2 constructs the finite signed realizers; it does not assert that
+finite sources satisfy (FJC.23) exactly.
+
+The source $U(\alpha,\alpha,\beta)$ also belongs to $D_0$.
+Its hole values satisfy $1=2=\alpha$, $3=\beta$,
+$4=6=\langle\beta,\langle\beta,\alpha\rangle\rangle$ and
+$5=\langle\alpha,\beta\rangle$. Its full partition is therefore
+$\{\{1,2\},\{3\},\{4,6\},\{5\}\}$, distinct from both selected
+rows. This third row remains in the entire input: testing
+$B=\{r_0,r_1\}$ does not replace $D_0$ by their two strata.
+$\square$
+

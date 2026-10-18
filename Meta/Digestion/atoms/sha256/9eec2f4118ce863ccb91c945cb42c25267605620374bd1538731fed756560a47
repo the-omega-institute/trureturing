@@ -1,0 +1,36 @@
+**Lemma 7.2 (the actual common-law witness).** Put
+$\tau=(1\ 4)$, fixing $0,2,3$. On $P^2$ the paired template has
+exactly the five solutions
+
+$$
+B_* =\{(u_s,u_{\tau(s)}):0\le s<5\}.
+\tag{INB.29}
+$$
+
+The product of the uniform laws on these pairs is a probability $Q$
+on positive actual solutions of $\Theta_m$ with every block
+marginal $\mu_0=\operatorname{Unif}(P)$.
+
+Proof. The own-coordinate equations are the credited NCM witness
+tables. For the only cross target their exact needed entries are
+
+$$
+\begin{array}{c|ccccc}
+s&0&1&2&3&4\\\hline
+\Gamma_{LL}(u_s)&(3,0)&(2,0)&(2,1)&(1,0)&(3,0)\\
+r_{RL}(u_s)&\mathsf{absent}&\mathsf{absent}&\alpha&\beta&\mathsf{branch}
+\end{array}
+$$
+
+These follow directly from (INB.3) on the five written trees.
+The two equations require both
+$\Gamma_{LL}(u_s)=\delta(r_{RL}(u_t))$ and its reversal.
+The table gives exactly $(s,t)=(0,0),(1,4),(2,2),(3,3),(4,1)$.
+Every one satisfies all the own equations by their specified decoders.
+Thus the intersection with $P^2$ is exactly (INB.29), not just a
+subset. Each coordinate is a permutation of all five indices, proving
+both uniform marginals. Products keep these marginals and solve every
+equation in $\Theta_m$. This calculation identifies the law used in
+Theorem 6.2; the motif and its paired admissibility remain credited
+NCM inputs. $\square$
+

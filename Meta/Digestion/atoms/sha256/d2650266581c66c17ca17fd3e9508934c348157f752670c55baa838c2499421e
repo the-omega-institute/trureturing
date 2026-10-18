@@ -1,0 +1,10 @@
+**Assumption 93.1 (source, class and identification).** Retain FA Convention
+67.1, Definitions 67.2--67.3 and Theorem 87.2; RC Conventions 58.1 and
+Definitions 58.2--58.3; CG Definitions 13.1, Proposition 13.2, Theorem 15.1
+and Convention 21.3; and JR Theorem 42.1 and its sharp-cost equality face.
+The original isolated source root, its existence, uniqueness, isolation,
+Jacobian, ranks, exact source-root TP normalization, stopped-cq minimax/error
+identification and sharp joint acquisition-cost identification are
+`ASSUMED-UNVERIFIED` premises here. The new contact root below is a different
+root, and its proof does not discharge those source premises.
+

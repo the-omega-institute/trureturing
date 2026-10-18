@@ -1,0 +1,187 @@
+**Theorem 10.7 (Native local heat, stochastic scales and a weaker factor).**
+The added operator has a smooth positive interior heat density
+$p_t^\Omega(q,q')$ with respect to $\mu$. Use the privileged chart $\Phi_q$
+of (10.6a), centred at $q$, and its dilation (10.8b). Then
+
+$$
+\epsilon^{Q_{\rm vol}}p_{\epsilon^2t}^\Omega
+ \bigl(q,\Phi_q^{-1}(\delta_\epsilon\xi)\bigr)
+\longrightarrow\widehat p_q(t,0,\xi).
+\tag{10.19}
+$$
+
+The convergence is smooth locally for $t>0$, and uniform for $q$ in compact
+interior sets. The tangent operator is
+$\sum a^{ij}(q)\widehat X_i\widehat X_j$, with
+$(\widehat X_1,\widehat X_2)=(\widehat P,\widehat Q)$ of (10.8b), and its
+density is $d\widehat\mu_q=\rho(q)|\det W_k|\,dx\,dz$. In particular,
+
+$$
+\mu(B_{d_A^\Omega}(q,\epsilon))\asymp\epsilon^{Q_{\rm vol}},\qquad
+p_t^\Omega(q,q)\sim\widehat p_q(1,0,0)t^{-Q_{\rm vol}/2},
+\quad \widehat p_q(1,0,0)>0.
+\tag{10.20}
+$$
+
+Thus the diagonal powers are $11/2,7/2,7/2,2$ in the four regimes. These
+are local small-time exponents for this added process, not a global spectral
+law or a count of physical axes.
+
+On the double wall, specialize to $A=I_2$ and
+$d\mu=d\kappa\,d\alpha\,d\beta$ (unnormalized angular measure). Then
+$\mathcal L_{I_2,\Omega}=\bigl(-(P^2+Q^2)\bigr)_{F,\Omega}$.
+The change $(u,v)\mapsto(\alpha,\beta)$ has absolute determinant one,
+so this is the grouped constant density. An unrestricted real
+comparison process, started at $(k,\alpha_0,\beta_0)$, is
+
+$$
+\begin{aligned}
+dK_t&=\sqrt2\,dB_t^1,\\
+d\alpha_t&=\frac1{\sqrt2}\,dB_t^2,\\
+d\beta_t&=\sqrt2\left(\frac12-\frac{K_t}{r}\right)dB_t^2,
+\end{aligned}
+\tag{10.21}
+$$
+
+where the two Brownian motions are independent. Project its phases onto the
+actual torus and kill at $\tau_I=\inf\{t:K_t\notin I\}$ to obtain exactly
+the diffusion in (10.18). The unrestricted process is only a comparison
+extension; its states outside $J_b$ are not probability states. On its real
+lift, at every finite $t$,
+
+$$
+K_t=k+\sqrt2B_t^1,\quad
+\alpha_t=\alpha_0+B_t^2/\sqrt2,\quad
+\beta_t=\beta_0+\sqrt2\int_0^t(1/2-K_s/r)\,dB_s^2.
+\tag{10.22}
+$$
+
+Conditionally on the whole $K$ path, the two phase increments are jointly
+Gaussian, with
+
+$$
+\begin{aligned}
+\operatorname{Var}(\alpha_t-\alpha_0\mid K)&=t/2,\\
+\operatorname{Var}(\beta_t-\beta_0\mid K)&=2\int_0^t(1/2-K_s/r)^2ds,\\
+\operatorname{Cov}(\alpha_t-\alpha_0,\beta_t-\beta_0\mid K)
+ &=\int_0^t(1/2-K_s/r)ds.
+\end{aligned}
+\tag{10.23}
+$$
+
+In the centred coordinates (10.9) this unrestricted comparison has exactly
+
+$$
+x_t=\sqrt2B_t^1,\quad y_t=\sqrt2B_t^2,\quad
+z_t=2\int_0^t B_s^1\,dB_s^2,\qquad
+\operatorname{Var}(x_t)=\operatorname{Var}(y_t)=2t,\quad
+\operatorname{Var}(z_t)=2t^2.
+\tag{10.23a}
+$$
+
+These unconditional finite-time moments are not moments of the killed or
+wrapped law. If $\sigma$ is the exit time from a fixed coordinate box centred
+at the initial point with closure inside the source chart and $\Omega$,
+then the corresponding localized statements are
+$\operatorname{Var}(x_t\mid\sigma>t)=2t+o(t)$,
+$\operatorname{Var}(y_t\mid\sigma>t)=2t+o(t)$ and
+$\operatorname{Var}(z_t\mid\sigma>t)=2t^2+o(t^2)$ as $t\downarrow0$.
+
+There is an exact two-dimensional observable factor in the same clock:
+for every bounded Borel $f$ on $I\times\mathbb T$,
+
+$$
+H_t^\Omega(f\circ\pi)(k,\alpha,\beta)
+=\left(e^{t(\partial_k^2+\frac14\partial_\alpha^2)}_{D,I\times\mathbb T}
+ f\right)(k,\alpha),\qquad \pi(k,\alpha,\beta)=(k,\alpha).
+\tag{10.24}
+$$
+
+It retains $p_k$ and the relative bottom phase $\alpha$, and loses the
+original middle-reference output
+
+$$
+y_{02}(k,\beta)=2\sqrt{kZ}
+\begin{pmatrix}\cos(\delta_{02}^0+\beta)\\
+\sin(\delta_{02}^0+\beta)\end{pmatrix}.
+\tag{10.25}
+$$
+
+Locally $y=2\alpha$ makes the factor generator $\partial_k^2+\partial_y^2$;
+globally that coordinate has period $4\pi$. It is not a three-target factor.
+
+**Proof.** Write $A=\Sigma\Sigma^{\mathsf T}$ with its smooth positive
+square root and $Y_a=\sum_i\Sigma_{ia}X_i$. The form in (10.17) is
+$\sum_a\|Y_af\|_2^2$. It is closable: if $f_n\to0$ in $L^2$ and
+$Y_af_n\to g_a$ in $L^2$, testing against $Y_a^*\varphi$ for
+$\varphi\in C_c^\infty(\Omega)$ gives $g_a=0$. In the interior
+
+$$
+-\mathcal L_{A,\Omega}=\sum_aY_a^2+Y_0,\qquad
+Y_0=\sum_a(\operatorname{div}_\mu Y_a)Y_a.
+\tag{10.25a}
+$$
+
+The drift is horizontal and smooth; there is zero potential. An invertible
+smooth change of horizontal frame preserves the full bracket flag, as
+follows inductively by expanding coefficient brackets. Theorem 10.3 thus
+gives strong Hörmander generation, constant ranks and bounded step $g$ on a
+neighbourhood of $\overline\Omega$. The manifold is connected, the density
+is smooth positive, and the Friedrichs realization is selfadjoint and
+nonnegative, with contraction semigroup. These verify the semigroup and
+positivity hypotheses in §3.1.2 of
+[Colin de Verdière--Hillairet--Trélat,
+*Small-time asymptotics of hypoelliptic heat kernels near the diagonal,
+nilpotentization and related results*](https://doi.org/10.5802/ahl.93).
+Their Theorem B, equation (2.8), uses privileged coordinates, a smooth
+horizontal drift and locally bounded bracket step, all verified here.
+The drift disappears on rescaling; $\Sigma$ freezes at $q$ and the density
+rescales to the displayed $\widehat\mu_q$. This proves (10.19).
+
+Their Theorem 3.2 permits different boundary realizations of the same smooth
+operator and density with bounded semigroup norms. Applied to a larger
+interior cylinder and the present Dirichlet cylinder, both are contractions
+and have identical interior differential expressions. It makes their kernel
+difference $O(t^N)$ for every $N$, with derivatives on overlap compacts.
+Thus (10.19) is valid away from the declared killing boundary; no new
+localization theorem or global homogeneous source is presumed. All points
+are regular, which is the supplier's condition for uniformity in $q$.
+Positivity of the tangent kernel, $t=1$, and $\epsilon=\sqrt t$ give the
+second estimate (10.20); the first was proved in Theorem 10.3.
+
+For the double-wall specialization $P,Q$ have zero divergence in the declared
+measure. There is no Itô correction in (10.21), since $QK=0$ and
+$Q(Q\beta)=0$, and the two Brownian motions have zero cross variation.
+Its generator is $P^2+Q^2$, with the factor $\sqrt2$ fixing the clock.
+Integration gives (10.22), and independence of $B^2$ from $K$ gives (10.23).
+In (10.9), $c_0=1/2-k/r$, so cancellation of the common $B^2$ term gives
+$z_t=2\int B^1dB^2$. Itô isometry gives
+$\mathbb E z_t^2=4\int_0^t s\,ds=2t^2$, with zero mean. In this chart
+$d\mu=(2r)^{-1}dx\,dy\,dz$; this is the density of its tangent heat kernel,
+not unit Lebesgue measure silently substituted into (10.19).
+
+For the localized moments, before exit from a box $|x|<d$, the stopped
+martingale $z$ has quadratic variation at most $2d^2t$. Brownian reflection
+for $x,y$ and the exponential martingale inequality for stopped $z$ give
+$\mathbb P(\sigma\le t)\le C e^{-c/t}$ for this fixed box. The unrestricted
+variables in (10.23a) have moments of every order, with Brownian scaling
+$x,y=O_{L^m}(\sqrt t)$ and $z=O_{L^m}(t)$. Cauchy--Schwarz bounds their
+first and second moments on the exit event by exponentially small errors.
+Dividing by $\mathbb P(\sigma>t)$ proves the stated conditional asymptotics.
+This argument concerns only the explicit comparison process and this box.
+
+For a smooth factor test, $Q(f\circ\pi)=\tfrac12(\partial_\alpha f)\circ\pi$,
+so its generator is $\partial_k^2+\tfrac14\partial_\alpha^2$. Tests compactly
+supported in the height interior pull back to $C_c^\infty(\Omega)$.
+More strongly, (10.21) projects to this cylinder diffusion and the exit
+event is exactly $\{\tau_I\le t\}$ on both sides. The killed expectation
+therefore gives (10.24) for bounded Borel tests. Surjectivity makes this
+pullback injective and isometric for the supremum norm; it is not a zero
+intertwiner. Changing the killing boundary to depend on $\beta$ would not
+justify this semigroup identity merely from the generator computation.
+Two states with the same $k,\alpha$ and different $\beta\bmod2\pi$ are
+actual reachable rays by Theorem 8.2, and (10.25) distinguishes them.
+The finite-time stochastic identities, their localized small-time versions
+and the original finite-variation histories are therefore distinct contracts.
+Brownian control paths are almost surely not Definition 3.1 controls. $\square$
+

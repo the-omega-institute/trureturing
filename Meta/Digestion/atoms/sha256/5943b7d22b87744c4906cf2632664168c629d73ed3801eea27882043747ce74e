@@ -1,0 +1,32 @@
+**Definition 32.2 (endpoint projections and residual angular moments).**
+Define measures on the directed circle by
+
+$$
+\rho_0(D)=\int_{D\times[0,1]}(1-\xi)\,d\pi,\qquad
+\rho_1(D)=\int_{D\times[0,1]}\xi\,d\pi,\qquad
+S=\rho_1(S^1),\qquad P=1-S.
+\tag{FC.130}
+$$
+
+Here $S$ is saturated endpoint coefficient mass. It is not physical
+failure or acquisition probability. Set
+
+$$
+\begin{gathered}
+m=\int x\,d\rho_0=-\int x\,d\rho_1,\qquad
+\Sigma=\int xx^T\,d\rho_0
+=\operatorname{diag}(\alpha,\beta)-\int xx^T\,d\rho_1
+=\begin{pmatrix}U_0&C_0\\C_0&V_0\end{pmatrix},\\
+k_0=\int|u|\,d\rho_0,\qquad
+H_-(\pi)=\int\ell_-\,d\rho_0
+=\int_X(1-\xi)\ell_-\,d\pi,\qquad \varepsilon_0=\frac1{30000}.
+\end{gathered}
+\tag{FC.131}
+$$
+
+The angular entries $U_0,V_0$ differ from the source quantities $V,W$.
+Endpoint projection means the comparison (FC.110), with these two
+measures on sheets $0,1$; it preserves all $\Gamma$ and $K$, and its
+height is at least $J_t(\pi)$ by (FC.108). It does not identify the
+original fractional actual labels with endpoint labels.
+

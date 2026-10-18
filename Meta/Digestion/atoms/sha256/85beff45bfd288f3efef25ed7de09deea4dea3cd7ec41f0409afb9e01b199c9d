@@ -1,0 +1,54 @@
+**Theorem 88.1 (strict height gain below maximum contrast).** Under the inherited
+source-box inequalities, for every $0<q\le10^{-5}$,
+
+$$
+J_3(q)>J_4(q).
+\tag{FA.110}
+$$
+
+**Proof.** Write
+$G=(g_{ij})$ and compare the continuous extensions at $q=0$. The source
+signs leave only $(1,-1,-1)$ among the four corners and only
+$(1,-\sqrt\alpha,-\sqrt{1+\alpha})$ among the three rays with negative
+$\ell$. Direct expansion gives
+
+$$
+\begin{aligned}
+D_0:=J_3(0)-J_4(0)
+={}&\frac{\beta(g_1-g_0)}{2(1+\alpha)}-\frac{g_2}{2}
+-\frac{g_{01}(1-\sqrt\alpha)^2}{1+\alpha}\\
+&+g_{02}\left(\frac2{\sqrt{1+\alpha}}-1\right)
++g_{12}\left(1-2\sqrt{\frac\alpha{1+\alpha}}\right).
+\end{aligned}
+\tag{FA.111}
+$$
+The directed source box supplies
+$0.8777<\alpha<0.8778$, $g_2<0.001678$,
+$g_{01}<0.002371$, $g_{02}>0.002208$,
+$\sqrt\alpha>0.936$, $\sqrt{1+\alpha}<1.371$ and
+$1+\alpha>1.877$. Therefore
+
+$$
+D_0>
+\frac{2208}{10^6}\left(\frac{2000}{1371}-1\right)-\frac{1678}{2\cdot10^6}
+-\frac{2371}{10^6}\frac{(64/1000)^2}{1877/1000}
+>\frac1{6250}.
+\tag{FA.112}
+$$
+On $0\le q\le10^{-5}$, the same enclosure gives $\|G\|<0.006$. The
+explicit derivatives of (FA.106)--(FA.107) bound
+$|J_4'|\le20\|G\|$ and $|J_3'|\le48\|G\|$, hence
+$|(J_3-J_4)(q)-D_0|\le68\|G\|q<q$. Thus
+$J_3-J_4>1/6250-q>0$.
+
+For $\tau_3(q)=q\sqrt{\nu_f}+\kappa_3(q)$, every
+$0\le\tau\le\tau_3(q)$ is feasible for both completions. Since
+$q<1/\upsilon_f$, $t>t_0$, and
+$\tau_3(q)<q\sqrt{\nu_f}+\sqrt{(1-q)(1-q\nu_f)}=\tau_{\max}(t)$,
+these are strict interior points above the minimum-budget boundary. The
+common constructor of Theorem 87.3 gives the same twelve error values, five
+Borel components, sharp joint cost and first-event clock. Therefore this is an
+original-class attainable height comparison, not a claim of global optimality
+or minimum alphabet. It refutes only the substitution of maximum contrast for
+height optimization below that contrast. $\square$
+

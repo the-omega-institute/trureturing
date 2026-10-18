@@ -1,0 +1,41 @@
+**Corollary 17.3 (population transfer is necessary for every full optimizer).**
+For any optimal common full-output map $\Phi$ of (CG.20), let $\Lambda$
+be its live compression to $V$, and define
+$T_{ij}=\langle i|\Lambda(|j\rangle\langle j|)|i\rangle$.
+Its sign-averaged live Choi matrix is (CG.156), and
+
+$$
+\begin{aligned}
+T_{01}&=(Q_*^{01})_{00}>0,&T_{10}&=(Q_*^{01})_{11}>0,\\
+T_{02}&=(Q_*^{02})_{00}>0,&T_{20}&=(Q_*^{02})_{11}>0.
+\end{aligned}
+\tag{CG.165}
+$$
+
+Proof. The reduction $\mathcal C\Phi$ has error at most $E_*$ and
+at least $E_*$ by Convention 17.1. It has precisely the same live
+compression, so Theorem 17.2 applies. Directly on the original full
+outputs, equality also holds throughout (CG.130)–(CG.133): the same
+positive endpoint weights and saturated lower bound force every
+endpoint effect to attain its individual half norm, and force every
+nonnegative budget term to vanish. Thus the support and effect conclusions
+of Theorem 17.2 hold before reduction as well.
+
+In the unnormalized output-input convention,
+$T_{ij}=\langle ij|J_\Lambda|ij\rangle$. Every $U\otimes U$
+conjugation fixes these diagonal entries. For $i<j$, $|ij\rangle$
+is coordinate $0$ and $|ji\rangle$ coordinate $1$ in its block,
+which gives exactly the four indices in (CG.165). The two coordinate-$0$
+positivities are (CG.117). The other two follow without new arithmetic:
+
+$$
+(Q_*^{01})_{11}=\eta_{1,*}(S_{01,*})_{00}>0,\qquad
+(Q_*^{02})_{11}=\eta_{2,*}(S_{02,*})_{00}>0.
+\tag{CG.166}
+$$
+
+These are the diagonal entries of the two-dimensional adjugates, using
+(CG.115) and $\eta_{1,*},\eta_{2,*}>0$. Averaging has supplied no
+physical sign gate. Equation (CG.156) identifies an averaged live map,
+not the whole unaveraged channel or its exact-time failure laws. $\square$
+

@@ -1,0 +1,35 @@
+**Boundary 11.2 (Preserved competitors and excluded conclusions).**
+All universal bounds retain the original almost-sure competitor
+class, including exceptional source/seed paths, unused rows,
+duplicate rows, null cycles and arbitrary actual integer addresses.
+The four inherited lower tables additionally halt on every formal
+binary input; that stronger property of those constructions does
+not narrow the universal comparison. Every actual call remains
+paid. Their displayed expected costs are attained costs of those
+tables, with no expected-cost optimality assertion.
+
+The result does not evaluate the $q_3<1$ frontier, larger-read
+optima, other runtime memory interfaces, fair or endpoint
+parameters, physical storage, code size, writes, energy, timing,
+empirical learning or general neural systems. Four-state
+classification supplies no visible-bit Brier theorem. [Original,
+Open Problem 6.4][O]'s whole-domain harmonic/Brier attainment
+and separation problem is unchanged. No broader research-goal
+completion follows from the explicit installed gap.
+
+There is no uniform positive gap asserted at the excluded limits.
+Indeed $\rho\le g_1=d\eta^2$ tends to zero at fairness,
+and $\rho\le g_7=b^7/2$ tends to zero as $p$ tends to
+either endpoint. Positivity in (3.4) has precisely the fixed-parameter
+scope stated there. The evidence ceiling is the ordinary proofs
+in this source: no mathematical execution, enumeration, experiment,
+new test, formal compilation, kernel verification or digestion
+result is used or claimed.
+
+[O]: FIB_LEGAL_EDGE_LOAD_FIXED_STATE_TAIL_NONUNIFORMITY_AND_ERASURE_RISK_JUMP.md
+[P]: FIB_PAID_READ_RETURN_MASS_AND_ENDPOINT_RISK_FRONTIER.md
+[E2]: FIB_TWO_PAID_READ_ALMOST_SURE_ENDPOINT_RISK.md
+[I2]: FIB_TWO_READ_INSTALLED_STATE_RISK_FRONTIER.md
+[E3]: FIB_THREE_PAID_READ_ALMOST_SURE_ENDPOINT_RISK.md
+[I3]: FIB_THREE_READ_INSTALLED_STATE_RISK_FRONTIER.md
+

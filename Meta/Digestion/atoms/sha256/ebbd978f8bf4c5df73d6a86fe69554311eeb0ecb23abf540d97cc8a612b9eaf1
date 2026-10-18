@@ -1,0 +1,49 @@
+**Theorem 3.5 (singleton-or-infinite branch dichotomy).** On a feasible
+branch, the original output image is a singleton if the branch is
+output-rigid. Otherwise it is infinite, with an effective sequence of
+original satisfying assignments having pairwise distinct output tuples.
+The singleton assertion concerns all original solutions of that branch,
+including those not produced by the marker construction.
+
+Proof. In the rigid case the output shapes are ground finite terms over
+$c,f$. Every output leaf rank is fixed by its equation path to $o$.
+Consequently the decorated output codes are fixed on every actual
+solution factoring through the unifier, by Lemma 2.3. Their expansions
+are fixed native values. Feasibility supplies an actual solution, so the
+image has exactly one tuple rather than being empty. A witness computes
+that tuple and supplies its original realizing assignment.
+
+If some output shape contains a residual variable, use any scalar
+solution and Lemma 3.2 for $M=M_0+k$. For that output, let $e$ be its
+number of explicit $c$ leaves and $v>0$ its number of residual-variable
+occurrences. Its ground code shape then has exactly
+
+$$
+e+v(M_0+k)
+\tag{NPL.8}
+$$
+
+leaves. This number strictly increases with $k$. The normal output codes
+are therefore pairwise different. Since $E$ is injective on normal
+codes, the native outputs are pairwise different too. This counts code
+leaves, not native source leaves; no equality of those counts is needed.
+
+It remains to consider ground output shapes with some output scalar in
+a free component $C$. Fix any one set of nonleaf markers. Apply
+Lemma 3.3 and keep the block constants of Lemma 3.2 fixed. That lemma
+applies to every resulting scalar solution. At the designated fixed
+output leaf, the rank increases by one with each $k$. The normal output
+codes are pairwise distinct and again expand to distinct native outputs.
+
+In both cases decoding the named input codes gives every original
+variable value. Each generated assignment satisfies the **whole**
+original formula by Lemma 3.2, not merely the output definitions.
+All constructions are finite for each $k$. These cases exhaust failures
+of output rigidity. $\square$
+
+The theorem does not assert an exact normal-form parametrization of all
+solutions. Universal rigidity and an infinite subfamily are enough for
+its two alternatives. In particular replacing originally primitive
+residual blocks by nonleaf markers is used only in the infinite-family
+construction, never to describe all original values.
+

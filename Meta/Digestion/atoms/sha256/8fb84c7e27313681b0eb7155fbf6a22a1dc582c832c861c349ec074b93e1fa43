@@ -1,0 +1,60 @@
+**Lemma 4.2 (finite complex null decomposition).** A positive $X=AA^\dagger$
+in $M_3$ is a sum of quadratic-null projectors $zz^\dagger$,
+$z^TB_0z=0$, if and only if the ordered Takagi values, padded to length
+three, satisfy
+
+$$
+\tau_1\leq\tau_2+\tau_3,\qquad \tau_1\geq\tau_2\geq\tau_3\geq0.
+\tag{CA.17}
+$$
+
+When feasible, at most four null projectors suffice.
+
+Proof. For necessity choose a minimal factor $A$. Positivity puts every
+vector of a decomposition $X=\sum_jz_jz_j^\dagger$ in $\operatorname{ran}A$:
+a vector orthogonal to that range has zero quadratic form against the
+sum, so is orthogonal to each $z_j$. Write $z_j=At_j$. Applying a left
+inverse of $A$ to the matrix identity gives $\sum_jt_jt_j^\dagger=I_r$.
+For $C=A^TB_0A=U\operatorname{diag}(\tau)U^T$ set $y_j=U^Tt_j$.
+$U^T$ is unitary, so $\sum_jy_jy_j^\dagger=I_r$, while nullity reads
+$\sum_i\tau_i(y_j)_i^2=0$. For each $j$ the triangle inequality gives
+$\tau_1|(y_j)_1|^2\leq\sum_{i>1}\tau_i|(y_j)_i|^2$. Summing over $j$
+proves (CA.17). Empty factors and zero values satisfy the same conclusion.
+
+For sufficiency put $F=A\overline U$. Then
+$FF^\dagger=X$ and $F^TB_0F=\operatorname{diag}(\tau)$. We first choose
+unit phases $\eta_i$ with $\sum_i\tau_i\eta_i^2=0$. If all values are
+zero, take arbitrary unit phases. If $\tau_3=0$ and $\tau_1>0$, the
+criterion forces $\tau_1=\tau_2$; use $\eta_1=1,\eta_2=i$ and arbitrary
+phases on zero coordinates. This includes every rank-two nonzero case;
+a rank-one feasible factor has its sole value zero.
+
+If $\tau_3>0$, all three values are positive and define
+
+$$
+\chi=\frac{\tau_1^2+\tau_2^2-\tau_3^2}{2\tau_1\tau_2},\quad
+\eta_1^2=1,\quad \eta_2^2=-\chi+i\sqrt{1-\chi^2},\quad
+\eta_3^2=-\frac{\tau_1+\tau_2\eta_2^2}{\tau_3}.
+\tag{CA.18}
+$$
+
+The triangle conditions $\tau_1-\tau_2\leq\tau_3\leq\tau_1+\tau_2$
+give $-1\leq\chi\leq1$. The first two squared phases have modulus one;
+the numerator defining the third has modulus $\tau_3$ by expansion.
+Thus it also has modulus one. Choose either complex square root of each.
+This treats degenerate triangles as well as strict ones without a limit.
+
+Let $R$ be the first $r$ rows of
+
+$$
+\begin{pmatrix}1&1&1&1\\1&1&-1&-1\\1&-1&1&-1\end{pmatrix}.
+\tag{CA.19}
+$$
+
+Its rows are orthogonal with squared norm four. The four columns of
+$F\operatorname{diag}(\eta)R/2$ have projector sum $X$, because
+$RR^T=4I_r$. Each has $B_0$-square $\sum_i\tau_i\eta_i^2/4=0$, because
+every sign squares to one. Remove zero columns. At $X=0$ use no columns.
+This proves all ranks, repeated/zero values and all triangle boundary
+cases. $\square$
+

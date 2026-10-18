@@ -1,0 +1,10 @@
+**Definition 6.1 (immutable mathematical package).** For a fixed authentic
+backing $B_s$ and accepted $a\le k\le b$, a selected package payload
+contains the complete version/entrance data, $\xi$, actual seed origin,
+the acquired seed, the selected input $I(s[0:k])$, $U(k)$, and its actual
+cover/naming provenance. An alternative shared-backing object contains a
+frozen $B_s$ descriptor and the same fixed target $U(k)$ with read/call
+authority to that backing. A mutable variable called latest-cover is
+neither payload nor backing. A physical callable package additionally
+needs an actual writer, seal/copy chain and installed admitted decoder.
+

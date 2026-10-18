@@ -1,0 +1,22 @@
+**Corollary 10.5 (no simultaneous pointwise optimum or least vector).**
+For every interior $0\leq s<1$ there is no original-class design attaining
+all twelve individual pointwise resource infima. There is no universally
+least twelve-coordinate resource vector, and no common design attaining
+the pointwise minimum on every supported input.
+
+Proof. Theorem 10.4 puts each original individual infimum strictly below
+its coordinate of the Pareto vector in Theorem 9.2. A design attaining
+all these infima would strictly reduce every coordinate of that Pareto
+vector, which is impossible. This reasoning does not assume that the
+individual infima have already been evaluated or attained.
+
+If a universally least vector existed, it would lie coordinatewise below
+the common Pareto vector and hence equal it by Pareto optimality. But
+it would also lie below the design in Theorem 10.4 that strictly reduces
+one selected coordinate, a contradiction. An all-input simultaneous
+attainer would in particular attain all twelve infima, so is excluded.
+Individual pointwise attainment is established separately in §11. At
+$s=1$ RE already supplies the stronger endpoint beta-pair obstruction;
+that endpoint result is not used to infer interior rigidity or an
+interior pair lower law. $\square$
+

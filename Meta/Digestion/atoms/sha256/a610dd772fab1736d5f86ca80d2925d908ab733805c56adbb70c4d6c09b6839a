@@ -1,0 +1,18 @@
+## 216. Finite interacting-core consequence and scope
+
+Define the interacting high core to be the set of actual tetrahedron
+owners containing at least two distinct labels from P, without
+requiring either label to be transverse. Every owner in this set
+consumes more than pi from the same original genuine P budget 5*pi.
+Distinct owners have disjoint original slots, even if their edge
+labels or face neighbors coincide. Hence the interacting high core
+has at most four owners. In particular the two previously forced
+owners tau and kappa lie in this core, leaving at most two additional
+owners containing two distinct P labels.
+
+This also excludes every special edge with a two-high fixed pair.
+It does not bound the number of owners containing only one high
+label, does not establish that a pair-{Z,U} owner exists, and does
+not rule out the five-reservoir case. Complete-edge transport across
+the remaining single-high owners is still required for exclusion.
+

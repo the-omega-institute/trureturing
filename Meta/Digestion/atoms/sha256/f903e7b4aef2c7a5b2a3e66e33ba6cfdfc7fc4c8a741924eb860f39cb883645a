@@ -1,0 +1,54 @@
+**Theorem 8.2 (explicit uniform zero-transfer loss).** Under Premise 5.2,
+the algebraic constant (ZG.29) is strictly positive. Every original common
+full-output CPTP channel with zero-transfer live compression satisfies
+(ZG.1). Every zero-transfer finite candidate of CG.155 also satisfies
+$E_c(\Theta)\geq E_\star+\epsilon_{\rm q}$.
+
+Proof. For $0\leq r\leq\tau_{\rm q}$ set
+
+$$
+\widehat Z(r)=Z_d(x(r))+b_{\rm q}r^2I_3,
+\qquad D_f(r)=\lambda(r)\operatorname{diag}(p_5).
+\tag{ZG.45}
+$$
+
+Lemma 7.3 supplies $\widehat Z(r)-N(x(r))\succeq0$. The special form of
+$Z_d$ gives the other constraints directly:
+
+$$
+\widehat Z(r)-D_f(r)=\kappa(r)P_0+b_{\rm q}r^2I_3\succeq0,
+\qquad D_f(r)\succ0,
+\qquad \widehat Z(r)\succ0.
+\tag{ZG.46}
+$$
+
+Here Lemma 7.1 supplies $\lambda(r)>0$ and $\kappa(r)>0$, and all entries
+of $p_5$ are positive. Thus Lemma 8.1 applies and, since the added identity
+has trace $3$, yields
+
+$$
+\begin{aligned}
+E(\Phi)
+&\geq F(x(r))-3b_{\rm q}r^2\\
+&\geq F(x_\star)+\eta_{1,\star}r-(M+3b_{\rm q})r^2.
+\end{aligned}
+\tag{ZG.47}
+$$
+
+At $r=\tau_{\rm q}$, the last bound in (ZG.31) implies
+$(M+3b_{\rm q})\tau_{\rm q}<\eta_{1,\star}/2$. With (ZG.22) this proves
+
+$$
+E(\Phi)>E_\star+\frac{\eta_{1,\star}\tau_{\rm q}}2
+             =E_\star+\epsilon_{\rm q},
+\tag{ZG.48}
+$$
+
+and hence the asserted weak uniform inequality. Lemma 7.1 proves positivity
+of the constant. The identical calculation using the finite version of
+Lemma 8.1 proves the stated finite-class bound. For an original channel,
+(ZG.16) also transfers that finite necessary lower bound in the correct
+direction. No compactness argument, minimax interchange, marginal lifting,
+numerical optimizer or additional information port enters this proof.
+$\square$
+

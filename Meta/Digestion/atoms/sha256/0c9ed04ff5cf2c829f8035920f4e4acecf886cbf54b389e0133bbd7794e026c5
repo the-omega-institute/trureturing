@@ -1,0 +1,63 @@
+**Proposition 38.4 (What the shared-root correspondence preserves).**
+The conclusions (35.2), (35.10)–(35.12), (36.2)–(36.4),
+(37.2)–(37.12) and (38.2)–(38.7) concern the graph consisting of
+one common vertex and otherwise disjoint labelled odd cycles, with no
+additional edges. They neither identify the full middle of the relation
+resolution nor determine a supplied ordered history or a physical
+operator. The terminal rank $202$ in (38.7) is an algebraic type, not
+a physical dimension, a full zero-mode count or an Atiyah–Singer index.
+
+Proof. The forward realization in Theorem 35.2 uses the fact that a
+root state is a single bit, and that agreement of its multiplicity
+$t$ allows all local root-one rows to be moved to the same positions.
+The union remains independent because every edge is already tested
+in one constituent cycle. The descent in Theorem 35.4 uses the stronger
+fact that the local interior generators have degree $2j+1$ and root
+$j$; it is this relation that makes the inequality $2t<m$ choose a
+root-zero row for every local representation, with the complementary
+case including equality. Neither proof supplies that property for
+an arbitrary shared boundary. With several shared vertices or a
+shared path, separate vertex totals need not specify the frequencies
+of joint boundary states, and a common removable boundary state would
+require a new proof. Extra cross edges can invalidate a rowwise union
+even when every local row is legal. Those graph classes are excluded.
+
+The maps retain occupancies, degree, root and the stated algebraic
+action. They do not retain row order: even permuting two distinct
+rows leaves $(m,c)$ unchanged. They can also lose unordered row
+correlations. On any one of the constituent cycles, the arrays
+$\{\{1\},\{3\}\}$ and $\{\varnothing,\{1,3\}\}$, with all
+other vertices empty, are both legal and have identical degree-two
+occupancies. They are not the same unordered array. Thus no recovery
+of a prescribed native ordered FIB history or an allowed physical
+operation follows from the existence of some common realization.
+
+The rank in (38.7) counts summands in one final free module. Computing
+an alternating invariant of a complex requires its other terms and
+maps or a justified equivalent description. A zero-mode or analytic
+index interpretation additionally requires an operator, its domain,
+its grading and the appropriate kernel or ellipticity comparison.
+None is specified by (38.7); the analytic constructions of chapters
+30 and 34 have their own stated modules and operators and are not
+transported to this graph by equality of a number. The complete final
+module does not claim a list of the $491$ differential matrices or
+all intermediate Betti numbers.
+
+The local integer decomposition is Theorem 28.2; the canonical
+classification and face layers are Miyazaki's §4 results with the
+explicit correspondence in Theorem 35.4, as used in chapters 29 and
+31–32. The action and terminal-duality precedents are §§31.3–31.4
+and chapter 33; chapter 34 distinguishes an action from observations
+that forget it. Matsuda–Ohsugi–Shibata's Proposition 1.3 supplies
+the singleton-clique toric-fiber precedent, Barile–Bruns supply the
+interior and Ext identifications, and Stacks supplies the precise
+Auslander–Buchsbaum formula. These are intermediate suppliers in
+the common-root application. Its additional derivation is the uniform
+root-compatible descent, the resulting complete compatible-tuple
+classification and counts, and their consequences for the shared-root
+quotient action and terminal module. This attribution makes no global
+priority claim for the classic supplier results or for graph gluing
+in general. $\square$
+
+[AB38]: https://stacks.math.columbia.edu/tag/090U
+

@@ -1,0 +1,29 @@
+**Lemma 6.1 (Real phase actions on an affine line have positive slopes).**
+If $\dim\operatorname{aff}E(\mathcal M)=1$, choose any affine
+coordinate on that line. The restricted phase maps have the form
+$F_t(z)=a_tz+b_t$ with $a_t>0$. For any affine map $F(z)=az+b$ with
+$a>0$, every finite-period point is a fixed point.
+
+**Proof of Lemma 6.1.** Global source bijectivity of each $Q_t$ makes
+$\mathcal V_t$ map the affine hull onto itself. Its restriction has
+an inverse, and the group law follows by equality on the encoded
+source and affine spanning, as in Lemma 3.2. Thus $a_t\ne0$ and
+
+$$
+a_t=a_{t/2}^2>0.
+$$
+
+The full real command menu, including halves, supplies this positivity;
+no continuity in $t$ was invoked. For a fixed $F(z)=az+b$, iteration
+and telescoping give
+
+$$
+F^j(z)-z=(1+a+\cdots+a^{j-1})(F(z)-z)\qquad(j\ge1).
+$$
+
+One way to see the identity is that
+$F^{h+1}(z)-F^h(z)=a^h(F(z)-z)$ for each $h\ge0$. The coefficient
+in the sum is strictly positive, so $F^j(z)=z$ implies $F(z)=z$.
+This includes $a=1$, every offset $b$, and does not require a common
+fixed point of the action. $\square$
+

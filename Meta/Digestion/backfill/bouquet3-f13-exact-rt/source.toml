@@ -1,0 +1,5 @@
+source_id = "bouquet3-f13-exact-rt"
+path = "docs/develop/theory/BOUQUET3_F13_EXACT_RT.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

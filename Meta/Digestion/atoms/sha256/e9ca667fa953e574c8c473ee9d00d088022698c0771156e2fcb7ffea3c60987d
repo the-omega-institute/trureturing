@@ -1,0 +1,19 @@
+**Definition 1.1 (Open words and all legal edges).** For $n\ge1$ put
+
+$$
+B_n=\{w\in\{0,1\}^n:w_iw_{i+1}=0\ (1\le i<n)\},\qquad
+\mathsf X=\{x\in\{0,1\}^{\mathbb Z}:x_ix_{i+1}=0\ (i\in\mathbb Z)\}.
+\tag{1.1}
+$$
+
+$B_0$ contains the empty word $\varepsilon$. The graph $\Gamma_n$ has every vertex in $B_n$ and every legal Hamming-one edge. An insertion at an endpoint uses the convention $w_0=w_{n+1}=0$, without identifying the endpoints or observing additional random bits. On the whole simplex $\mathcal P(B_n)$ define
+
+$$
+h(s,t)=\begin{cases}st/(s+t),&s+t>0,\\0,&s=t=0,\end{cases}\quad
+\Phi_n(\nu)=\sum_{\{u,v\}\in E(\Gamma_n)}h(\nu_u,\nu_v),\quad
+\kappa_n=\max_{\nu\in\mathcal P(B_n)}\Phi_n(\nu).
+\tag{1.2}
+$$
+
+Zero masses remove no words, edges or forbidden seams. The all-zero word, legal words beginning or ending in one, and both open endpoints remain part of this objective. Write $k(w)=\sum_iw_i$.
+

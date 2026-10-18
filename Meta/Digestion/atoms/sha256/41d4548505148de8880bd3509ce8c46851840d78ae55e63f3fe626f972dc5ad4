@@ -1,0 +1,21 @@
+**(2) 推出 (1)。** 若 $s_x(u)=\alpha_x\beta(u)$，则
+
+$$
+\ell_q(u)=\beta(u)\sum_xq(x)\alpha_x.
+$$
+
+代入定义，基线选择后的后验为
+
+$$
+\pi_{q,z}(u)=\frac{\pi(u)\beta(u)}{\sum_v\pi(v)\beta(v)},
+$$
+
+而固定 $x$ 后的后验同样为
+
+$$
+\pi_{x,z}(u)=\frac{\pi(u)\alpha_x\beta(u)}{\alpha_x\sum_v\pi(v)\beta(v)}
+=\frac{\pi(u)\beta(u)}{\sum_v\pi(v)\beta(v)}.
+$$
+
+两个潜变量后验逐点相同，经过任意 $K_x$ 推出输出律相同。
+

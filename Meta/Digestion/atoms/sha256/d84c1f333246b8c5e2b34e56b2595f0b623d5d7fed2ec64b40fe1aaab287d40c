@@ -1,0 +1,76 @@
+**Lemma 4.5 (Uniform first-variation and Taylor bounds).** On $[0,1]$,
+
+$$
+|W(x)|\le C_0.
+$$
+
+On the full rectangle $0\le u,x\le1$,
+
+$$
+|R_u|\le3\sqrt T,\qquad
+|\partial_uR_u|\le4\sqrt T,\qquad
+|\partial_u^2R_u|\le4\sqrt T,\qquad
+|\partial_u^2F_u|\le2M.
+$$
+
+Consequently for $0\le u\le1$, uniformly in $x\in[0,1]$,
+
+$$
+F_u(x)\le F_0(x)+uW(x)+Mu^2.
+$$
+
+Proof. We have $0<f\le\sqrt T$, $0\le s\le1/2$, and
+$|\psi-\eta|\le1$ by Lemma 4.2. Thus $|h|\le\sqrt T$ and
+
+$$
+|W|\le2(f+s)|h|
+\le2(\sqrt T+1/2)\sqrt T=2T+\sqrt T=C_0.
+$$
+
+The derivatives in the perturbation parameter are exactly
+
+$$
+\partial_uR_u
+=f\left[(a+bx(1+ua))e^{ubx}-e^{-x}\right],
+$$
+
+$$
+\partial_u^2R_u
+=f\left[2abx+(1+ua)(bx)^2\right]e^{ubx}.
+$$
+
+On the stated rectangle, $0<a<1$, $|b|<1$, $bx\le0$,
+$e^{ubx}\le1$, $e^{-x}\le1$, and $1+ua\le2$. Therefore the
+absolute values of the three brackets in $R_u,\partial_uR_u,
+\partial_u^2R_u$ are bounded respectively by $2+1=3$,
+$1+2+1=4$, and $2+2=4$. Multiplication by $f\le\sqrt T$
+proves the first three bounds. Differentiating the squared error gives
+
+$$
+\partial_u^2F_u
+=2(\partial_uR_u)^2+2(R_u-s)\partial_u^2R_u.
+$$
+
+Hence
+
+$$
+\begin{aligned}
+|\partial_u^2F_u|
+&\le 2(4\sqrt T)^2
++2(3\sqrt T+1/2)4\sqrt T\\
+&=56T+4\sqrt T=2M.
+\end{aligned}
+$$
+
+For every fixed $x$, Taylor's formula with integral remainder now gives
+
+$$
+F_u(x)=F_0(x)+uW(x)
++\int_0^u(u-v_0)\partial_{v_0}^2F_{v_0}(x)\,dv_0
+\le F_0(x)+uW(x)+Mu^2.
+$$
+
+All derivatives here are in $u$. No derivative of $s$ in $x$ at a
+scalar endpoint is required, so the estimate includes both endpoints.
+$\square$
+

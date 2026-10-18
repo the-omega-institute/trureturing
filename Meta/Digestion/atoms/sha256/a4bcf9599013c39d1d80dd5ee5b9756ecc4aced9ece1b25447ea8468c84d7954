@@ -1,0 +1,17 @@
+**Corollary 7.4 (Exact remaining obligation).** The interval
+$0<\tau<1-\varepsilon_0$ remains unresolved. This volume does not evaluate
+$T_4$, classify all global minimizing spectra, prove uniqueness, or establish
+sharpness of any displayed constant. A bad minimizer would not exclude a
+different good minimizer, and failure of the trial comparison would not prove
+nonattainment.
+
+**Proof.** Proposition 7.1 is necessary and Theorem 7.2 is sufficient; neither
+is an equivalence on the complementary range. Theorem 1.5 uses existence of
+at least one good global minimizer, not exclusion of one bad minimizer. $\square$
+
+The quantifiers are distinct. One bad minimizer does not imply
+nonattainment, because another minimizer may be good. Nonattainment would
+require that all global minimizers are bad. Theorem 7.2 instead supplies a
+sufficient upper threshold that excludes all bad minimizers at once and
+hence guarantees at least one good minimizer.
+

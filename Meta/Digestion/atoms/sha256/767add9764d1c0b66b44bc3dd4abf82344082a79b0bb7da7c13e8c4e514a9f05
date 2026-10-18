@@ -1,0 +1,51 @@
+**Assumption 7.1 (The credited complete-budget interfaces).** Write
+$\mathfrak A_M(e^{-s},\alpha)$ for the unrestricted-probability class
+of [C, Definition 1.3], with the same complete-state, common-table,
+stationary-wait and paid-read contract. Put
+
+$$
+\begin{aligned}
+b&=1-2\alpha,\\
+L_M&=\max\left\{1,
+ \left\lceil\left(\frac{2c(M-2)}b\right)^{1/r}\right\rceil\right\},\\
+\Psi(s,M)&=\frac{s^{-(2r+1)}}{1+\log\min\{L_M,1/s\}}.
+\end{aligned}
+\tag{7.1}
+$$
+
+The inherited converse is [C, Definition 2.2 and Theorem 6.1]: a fixed
+$C_->0$ satisfies, for every finite integer $M\ge2$, every compliant
+competitor and each $i$,
+
+$$
+\mathbb E_iT\ge C_-\Psi(s,M)\quad(0<s<s_0).
+\tag{7.2}
+$$
+
+It retains [C]'s credit to the renewal state/read source, Theorem 11.2
+and Open problem 11.3, including its finite-configuration, normalized
+entropy and actual tick-price premises. It covers arbitrary stochastic
+retuning, initial randomization, arbitrarily small positive edges and
+partial-gap stopping under the full contract. No new converse is assumed
+from the shape of the particular table in Section 3.
+
+Also reuse exactly [C, Theorem 6.1, equations (6.2)–(6.4)]. With
+$M_0=\lceil K_{\rm count}2^r\rceil$, for every finite $M\ge M_0$
+the immutable cap choice
+
+$$
+J=\left\lfloor\log_2
+ \min\{(M/K_{\rm count})^{1/r},\eta/s\}\right\rfloor
+\tag{7.3}
+$$
+
+satisfies $J\ge1$, $s2^J\le\eta$, $K_{\rm count}2^{rJ}\le M$ and
+
+$$
+1+\log\min\{L_M,1/s\}\le C_3J
+\tag{7.4}
+$$
+
+for a fixed $C_3>0$. These are existing uniform budget-selection
+statements, rather than newly derived frontiers.
+

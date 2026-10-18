@@ -1,0 +1,49 @@
+**Corollary 14.3 (global signal and paid acquisition costs).** If a
+static-signal architecture is correct on every original source, its
+restriction to either slice satisfies
+
+$$
+\sum_{e\in I_s}c_e\ge s^N.
+\tag{RRN.59}
+$$
+
+If $c_e\le c_D$ for every slice name, then $m c_D\ge s^N$.
+Consequently a sequence of these architectures with
+$\log_2c_D=o(2^D)$ has
+
+$$
+\liminf_{D\to\infty}2^{-D}\log_2m
+\ge\tfrac12\log_2s>3/16.
+\tag{RRN.60}
+$$
+
+It cannot preserve original optimal alphabet sizes, since their rate
+is $\lambda<3/16$. A single common four-valued signal is a special
+case. If the signal is retained beside $E$ before the request, the
+joint complete attained alphabet on the slice is itself at least
+$s^N$. Any deterministic initially source-blind literal preparation
+that actually acquires this joint pair pays at least $N$ Reads and
+$DN$ letters on every slice execution; these bounds are attained
+in the restricted task by reading all $a_i$.
+
+Proof. Sum $c_e\ge|B_e|$ over the partition to get (RRN.59).
+Then $m c_D\ge s^N$, and taking normalized logarithms proves
+(RRN.60). The pairs $(e,H_e(x))$ distinguish all slice inputs,
+so their attained cardinality is $\sum_e c_e\ge s^N$ as well.
+For the acquisition claim, if an execution left a slot untouched,
+the transcript cylinder from Theorem 11.2 would contain at least
+$s\ge2$ inputs with the same joint export. This contradicts
+injectivity. Thus every one of the $N$ slots is touched by a
+nonconstant word of length at least $D$. The fixed full slot scan
+attains both charges. The lower concerns actual acquisition of the
+joint pair, not a separately supplied free signal. $\square$
+
+The source-cut statement keeps one actual slot vector across all
+counterfactual requests. The native one-Read interface instead lets
+$p$ select the submitted address, so a leaf request selects $a_i$
+and receives only that slot's reply. Such controlled selection is not
+a one-way static source message across this cut. A transfer that
+retains this direction of selection is not excluded by Theorem 14.2.
+Neither that theorem nor Theorem 13.2 excludes lawful finer cuts,
+global pressure certificates or unrestricted effective approximation.
+

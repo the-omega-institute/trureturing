@@ -1,0 +1,34 @@
+**Corollary 7.4 (same-source finite Reserve consequence).** Fix once
+the beta initialization of ARC Definition 9.1 and any actually
+reached outer entry $P$ with current reserve $K_P$. Fix the finite
+$R_0,L$ of a proposed realization. Suppose it preserves the original
+uncompressed UAS source backing and realizes every canonical finite
+strict Reserve from this same entry through its original source
+Zero return. If its extra fine-receipt policy satisfies Theorem 7.3
+with $B\le a$, it cannot realize all these finite inputs.
+
+Proof. Actually supply 01 and the canonical strict Reserve$(J)$
+frame, $J>K_P$. ARC Proposition 10.4 gives $d=4(J-K_P)$ and
+$d+1$ newly appended source cells at that return, including the
+delimiter. UAS's source tape gains exactly 24 retained vertices per
+append, so the newly retained source material alone gives
+
+$$
+D_J=24(d+1)=96(J-K_P)+24.
+$$
+
+It is disjoint from the stipulated fine receipts. Original receipts,
+old source, later directory/journal/copy work and control material
+are additional demands that can be omitted from this lower bound.
+Choose the finite actual runtime input
+
+$$
+J=K_P+R_0+aL+1.
+$$
+
+Then $D_J>R_0+aL$, whereas Theorem 7.3 with $B\le a$ requires
+$D_J\le R_0+aL$ at that return, irrespective of elapsed fine time.
+The contradiction uses the same $\xi,u,H_0$, code and initial stock.
+It does not select a new source per size, assume infinite supply,
+or impose a uniform deadline on completing any one finite input. ∎
+

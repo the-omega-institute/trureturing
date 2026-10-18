@@ -1,0 +1,75 @@
+**Proposition 15.2 (no direct whole-cone Lorentz identification).** The
+full real null-Gram cone
+
+$$
+\mathcal K_Q=\{X\in\operatorname{Sym}_3:X\succeq0,
+ \operatorname{tr}(QX)=0\}
+\tag{AC.90}
+$$
+
+is not linearly isomorphic to a Lorentz cone.
+
+Proof. Since $I_3\succ0$ and $\operatorname{tr}Q=0$, it has
+relative dimension five. The nonnegative functional $X\mapsto X_{22}$
+exposes the proper two-dimensional face
+
+$$
+\left\{\begin{pmatrix}\alpha u&v&0\\v&u&0\\0&0&0\end{pmatrix}:
+ u\ge0,\ |v|\le\sqrt\alpha\,u\right\}.
+\tag{AC.91}
+$$
+
+Positive semidefiniteness makes the last row zero when $X_{22}=0$;
+the null trace then gives exactly this face. Every proper nonzero
+face of a Lorentz cone of dimension at least three is a ray: two
+nonproportional boundary rays have an interior sum by strict triangle
+inequality. Linear cone isomorphisms preserve faces and dimensions,
+so AC.91 rules out the identification. $\square$
+
+This excludes the direct whole-cone route, not separately proved
+rank-two slices, embeddings, alternative representations or other
+roof formulas. The saturated rational payoff and the joint moment
+constraints would still require their own correspondence.
+
+[Halaseh–Magron–Skomra, arXiv:2604.15072v1][HMS], Theorem 1.1 (PDF p.2),
+assumes $h_1\equiv1$, $b_1>0$ and $b$ in the relative interior of
+the moment cone in its compact generalized moment problem, and
+concludes dual attainment. Primal compactness/no-gap is a different
+statement. Proposition 4.1 explicitly provides the continuous two-sheet
+relative-interior argument, denominators, absolute values and contrast
+slack needed here. Quoting a polynomial GMP theorem without that
+mapping would not supply the common dual, a seed or a finite frontier.
+
+Hauenstein–Mohammad-Nezhad–Tang–Terlaky,
+*On computing the nonlinearity interval in parametric semidefinite
+optimization*, [arXiv:1908.10499v3][Hauenstein], uses independent constraint matrices
+and primal/dual strict feasibility (Assumptions 1–2, PDF p.2), with a
+fixed-direction linear objective perturbation. Theorem 1 (p.8) gives
+finitely many transitions. Lemma 2 (p.11) relates nonsingular optimal
+KKT Jacobians to nondegeneracy and strict complementarity; Theorem 2
+(p.12) gives the analytic optimal trajectory when that Jacobian is
+nonsingular. An algebraic root need not be PSD or optimal, and a
+singular algebraic point need not be a transition. These results do
+not establish the automatic rank and reduced positivity of §10;
+those were proved directly for the present contact system.
+
+Martin–Goldsztejn–Granvilliers–Jermann's author manuscript,
+[DOI 10.1007/s10898-014-0201-3][Martin], §§3.1–3.2 (PDF pp.8–11), starts
+ParCont from a solution on a regular one-manifold and certifies the
+tracked component by interval parallelotopes. Its active-system
+changes handle one activity change at a time; other singularities
+stop certification. It supplies neither an initial matching family,
+whole-circle global inequalities, disconnected-component coverage nor
+a two-parameter atlas. In §12 global sufficiency comes from AC.63,
+not from continuation alone.
+
+The related complete-class theorem of Dette–Melas,
+[arXiv:1105.3575v1][DetteMelas], Theorem 3.1 and equations 3.2–3.4, uses a
+distinguished information-matrix diagonal entry and the specified two
+**ordinary Chebyshev-system** conditions, with either the 3.3 or 3.4
+alternative. They must not be relabelled as extended-Chebyshev
+hypotheses. The pure sheet here has identically zero failure rows,
+so the full two-sheet function list does not directly satisfy those
+determinant conditions. No finite three-atom theorem follows from
+that attribution.
+

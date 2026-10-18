@@ -1,0 +1,65 @@
+**Proposition 78.7 (surviving separation and a genuine unequal near-unit
+counterexample).** For $0<\delta\le1/2$, every compatible planar placement whose
+prescribed stub lengths lie in $[1-\delta,1+\delta]$ has pairwise disjoint actual
+grounding intervals. Nevertheless, for every relative tolerance $\varepsilon>0$
+there is an authentic legal $T_2$ placement with unequal lengths in
+$[1-\varepsilon,1+\varepsilon]$ whose two tips at each leaf are strictly on the same
+side. Within any one positive tolerance, these examples have leaf widths tending to
+zero, so proximity to unit length alone implies neither opposite-side tips nor a
+uniform positive leaf-width floor.
+
+**Proof.** The separation conclusion follows from78.2 because every actual length is
+at most $1+\delta\le3/2$. For the counterexample choose
+
+$$
+0<t<\min\{\varepsilon,1/50\},\qquad
+c_1=\sqrt3/2,\qquad c_2=\sqrt{3/4+2t+t^2}.
+\tag{78.16}
+$$
+
+Use the authentic ordered source $T_2=\langle\beta,\alpha\rangle$, with root
+$o=(0,1/2)$, left leaf $L=(-1,1/2)$ labelled beta and right leaf $R=(1,1/2)$
+labelled alpha. The inherited seams $[o,L]$ and $[o,R]$ are straight and exactly
+unit. At each leaf $(x,1/2)$ choose the two tips $(x+c_1,0)$ and $(x+c_2,0)$. The
+respective lengths satisfy
+
+$$
+\sqrt{c_1^2+1/4}=1,\qquad
+\sqrt{c_2^2+1/4}=1+t,
+\qquad 0<c_1<c_2<1,
+\tag{78.17}
+$$
+
+where $c_2^2<3/4+2/50+1/2500=494/625<1$. Both tips are strictly right of their own
+leaf. The entire left stubs have horizontal coordinate less than zero; the right
+stubs have horizontal coordinate at least one. Every open stub is below the
+horizontal source seams at height $1/2$. The two rays from one leaf are different
+and meet only at that leaf. The source seams meet only at the root; a stub meets a
+source seam only at its own leaf. The four ground tips are distinct, with the left
+pair in $(-1,0)$ and the right pair in $(1,2)$. Thus all seven vertices are
+distinct, every incidence is prescribed, every nonincident pair of objects is
+disjoint, and all source heights satisfy the strict band. Finiteness supplies
+positive clearances and incident angles for each fixed $t>0$.
+
+This is source-admissible from immutable INITIAL $\alpha$ at a separately
+predeclared $H=2$: the first two whole candidates have one and two leaves and pass
+the unchanged guard. A third candidate has three leaves and is refused if attempted,
+retaining $T_2$ without candidate Read; Stop is absorbing. This separate commission
+alters no other INITIAL, cap or acquired history.
+
+Each actual leaf interval has width
+
+$$
+|I_L|=|I_R|=c_2-c_1
+ =\frac{2t+t^2}{c_2+c_1}\longrightarrow0
+ \quad\text{as }t\downarrow0.
+\tag{78.18}
+$$
+
+All these placements retain disjoint intervals. For any fixed $\varepsilon>0$ and
+any proposed positive floor depending only on that tolerance, sufficiently small
+positive $t$ violates the floor within the same admissible source and tolerance. The
+limiting value $t=0$ merges the two tips at each leaf and is not a legal placement.
+No uniform angle or clearance survives this limit, nor is such a bound part of the
+counterexample. $\square$
+

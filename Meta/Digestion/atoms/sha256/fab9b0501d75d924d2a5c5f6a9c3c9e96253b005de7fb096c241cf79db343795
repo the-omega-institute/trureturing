@@ -1,0 +1,15 @@
+**Lemma 3.2 (strictly increasing contrast capacity).** The function
+$\tau_{\max}(t)$ increases strictly for $t\ge t_0$.
+
+Proof. Differentiate its expression in $q=\nu/t$. The negative term
+in the derivative dominates $\sqrt{u_f}$ because
+
+$$
+(1+u_f-2qu_f)^2-4u_f(1-q)(1-qu_f)=(1-u_f)^2>0,
+\tag{AC.15}
+$$
+
+and $1+u_f-2qu_f>0$. The derivative with respect to $q$ is strictly
+negative; $q$ strictly decreases with $t$. The endpoint follows by
+continuity. $\square$
+

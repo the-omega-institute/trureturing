@@ -1,0 +1,19 @@
+**Corollary 12.3 (component count does not bound acquisition).** There
+is no finite size-independent budget $f(d,L,r,c)$ that guarantees
+exact acquisition of the actual owner component from a constant name
+through literal Reads for every such positive-support native fiber,
+even when its common law, bounded-owner full conditionals and all
+component normalizers are specified exactly. It already fails at
+$d=3,L=2,r=3,c=4$.
+
+Proof. For every $m\ge7$, Theorem 11.1 gives precisely those fixed
+parameters and four components, Corollary 11.2 gives their normalizers,
+and Theorem 12.2 requires $2m$ Reads. This exceeds any proposed finite
+value at those fixed parameters. $\square$
+
+This is a descriptor acquisition bound conditional on the constant
+named slice. The full-family preparation in §15 pays for its entire
+scan; the descriptor is computed from that acquired array and is not
+charged a second acquisition. A source-bearing retained name could
+already encode $\chi$, so the constant-name premise is material.
+

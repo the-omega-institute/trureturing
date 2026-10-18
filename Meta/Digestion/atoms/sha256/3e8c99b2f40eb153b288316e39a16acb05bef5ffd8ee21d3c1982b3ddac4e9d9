@@ -1,0 +1,14 @@
+**Theorem 2.2 (Conditional stability with actual tails).** Let $P_s$, $0\le s\le\epsilon$, be actual stationary legal laws on these same coordinates, with every finite marginal continuous at $s=0$. Let $f_s:B_L\to\mathbb R$ be conditional-null under its own $P_s$, with $\sup_s\|f_s\|_\infty=M<\infty$ and $\|f_s-f_0\|_\infty\to0$. Specify a common $[0,1]$ finite-coordinate Borel function $g_0$ of exterior coordinates and its translates $g_i$, such that $g_i=q_i(P_0)$ $P_0$-almost surely. Assume actual posterior versions satisfy
+
+$$
+\sup_{i\in\mathbb Z}\operatorname*{ess\,sup}_{P_s}|q_i(P_s)-g_i|\le\delta_s\longrightarrow0,
+\qquad \sup_{0\le s\le\epsilon}\tau_{P_s}(R)\le\eta(R)<\infty,\quad \eta(R)\longrightarrow0.
+\tag{2.5}
+$$
+
+The tail bound need only hold for all sufficiently large $R$. Then every complete $S_{P_s}(f_s)$ is absolutely convergent, and $S_{P_s}(f_s)\to S_{P_0}(f_0)$. A nonzero reference response remains nonzero for all sufficiently small parameters satisfying these hypotheses.
+
+Proof. Lemma 2.1 bounds each omitted absolute response by $M\eta(R)$, uniformly in $s$. On any fixed $I_R$, replacing the actual loss by $(X_i-g_i)^2$ costs at most $2M\delta_s$ per site; replacing $f_s$ by $f_0$ costs at most $\|f_s-f_0\|_\infty$. The resulting bounded integrand is a fixed finite-coordinate function, whose expectations converge by finite-marginal continuity. Thus each finite partial sum converges. First make the two tails arbitrarily small by choosing $R$, then take $s\to0$ on that finite interval. This proves the full-series limit and absolute convergence. Nonzero persistence follows from an error smaller than half the reference absolute value. $\square$
+
+The common $g_i$ is specified as a function on legal records, rather than transporting a $P_0$-only equivalence class to a possibly singular $P_s$. Finite-marginal continuity alone is insufficient: actual full-posterior control and uniform summable tails are separate hypotheses.
+

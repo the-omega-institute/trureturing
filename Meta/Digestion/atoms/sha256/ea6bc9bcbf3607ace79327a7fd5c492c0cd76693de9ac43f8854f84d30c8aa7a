@@ -1,0 +1,107 @@
+## 41. Typed unified-field architecture
+
+The phrase “one unified field” becomes mathematically usable only after the field, its observations, its reference state, and its generator are typed separately. Define a finite or inverse-limit realization
+
+\[
+\mathfrak U=
+(\mathcal X,\mathcal B,\mathcal K,\mathsf O,\pi,E,S,L,M,B,\mathsf G,\mathsf C),
+\]
+
+where:
+
+- \(\mathcal X\) is the state carrier. It may be a finite probability carrier, a finite-dimensional density-matrix state space, a graph field, or a compatible inverse-limit field;
+- \(\mathcal B\) is the observable/context family;
+- \(\mathcal K\) is the finite incidence, cochain, or graph complex that records locality and boundary;
+- \(\mathsf O:\mathcal X\to\mathcal Y\) is a selected observation or readout;
+- \(\pi\) is a reference state, such as a Gibbs state, product source law, equilibrium law, or FIB completion;
+- \(E\) and \(S\) are energy and entropy functionals;
+- \(L\) is the reversible operator and \(M\) is the dissipative operator;
+- \(B\) is an external port or source map;
+- \(\mathsf G\) is the state generator;
+- \(\mathsf C\) is a family of conserved quantities.
+
+The primitive object is this typed architecture, rather than an identification of all physical theories with one untyped variable. A realization is structure-preserving when
+
+\[
+L_x^*=-L_x,\qquad
+M_x^*=M_x\succeq 0,
+\]
+
+and the GENERIC degeneracy conditions hold:
+
+\[
+L_x\,dS_x=0,\qquad
+M_x\,dE_x=0.
+\]
+
+The closed generator is
+
+\[
+\dot x
+=
+\mathsf G(x)
+=
+L_x\,dE_x+M_x\,dS_x.
+\tag{41.1}
+\]
+
+For an open port, add \(B(x)u\). The finite-dimensional calculation is exact:
+
+\[
+\dot E
+=
+\langle dE,L\,dE\rangle
++
+\langle dE,M\,dS\rangle
+=
+0,
+\]
+
+and
+
+\[
+\dot S
+=
+\langle dS,L\,dE\rangle
++
+\langle dS,M\,dS\rangle
+=
+\langle dS,M\,dS\rangle
+\geq 0.
+\tag{41.2}
+\]
+
+With a port and output \(y=B^*dE\),
+
+\[
+\dot E=y^\top u,\qquad
+\dot S=\langle dS,M\,dS\rangle.
+\tag{41.3}
+\]
+
+At inverse temperature \(\beta\), define
+
+\[
+F_\beta=E-\beta^{-1}S.
+\]
+
+For a purely dissipative isothermal realization written as
+
+\[
+\dot x=(L-M)dF_\beta,
+\]
+
+one obtains
+
+\[
+\dot F_\beta
+=
+-\langle dF_\beta,M\,dF_\beta\rangle
+\leq 0.
+\tag{41.4}
+\]
+
+Equations (41.1)–(41.4) express the following mathematical decomposition: dynamics is the generator and its trajectory, thermodynamics is a reference-dependent monotone functional, and current or forcing enters through a port. The same algebra supports classical, graph, and finite quantum realizations. It does not by itself identify their physical units or continuum limits.
+
+The GENERIC interpretation of dissipative electromagnetism has been developed explicitly by coarse-graining microscopic Maxwell dynamics and writing macroscopic Maxwell equations in the reversible-irreversible form. This is a useful external anchor for the present typed interface. See Jelić, Hütter, and Öttinger, arXiv:1001.0899.
+

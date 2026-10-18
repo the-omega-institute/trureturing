@@ -1,0 +1,28 @@
+**Definition 4.2 (an unpadded serial read skeleton).** For an integer $k\ge0$, take a finite rooted tree with at most $k$ read vertices along each path. A vertex is either an absorbing halt or a read with four reply children. At each read vertex $v$, choose an epoch $m_v\in\{N,\ldots,M\}$, a class $b_v\in B$, and a first-order address variable $s_v$. Read epochs are nondecreasing along a path. Its physical request is $a_{b_v}s_v$ at epoch $m_v$. Before a read, the service actually performs the difference between its chosen epoch and its preceding actual epoch. A halt has no children and adds no actions. In particular, no reads are added after early termination.
+
+For a leaf $t$, let $k_t$ be the number of its read ancestors, and let $e_t$ be their final epoch, taking $e_t=N$ for a root halt. Define
+
+$$
+ d_t=e_t-N,\qquad
+ L_t(\mathbf s)=\sum_{v\prec t}(\delta_{b_v}+|s_v|),\qquad
+ \operatorname{Path}_t(X;\mathbf s)
+ =\bigwedge_{v\prec t}\operatorname{Reply}_{c(v,t)}
+                          (X_{b_v,m_v},s_v).
+\tag{JRF.4.1}
+$$
+
+Here $c(v,t)$ is the edge reply on the path to $t$. Empty paths have the usual empty conjunction and zero costs. Say the skeleton is correct when
+
+$$
+ \forall X\,\forall Y\,
+ \left[(\operatorname{Adm}(X)\land\operatorname{Adm}(Y))
+ \Longrightarrow
+ \bigwedge_t
+ \left((\operatorname{Path}_t(X;\mathbf s)\land
+        \operatorname{Path}_t(Y;\mathbf s))
+       \Longrightarrow\operatorname{SameRow}(X,Y)\right)\right].
+\tag{JRF.4.2}
+$$
+
+All skeleton choices and all $s_v$ are chosen before the universal source quantifiers. Only already acquired replies select which vertex is visited. A leaf is reachable precisely when $\exists X\,(\operatorname{Adm}(X)\land\operatorname{Path}_t(X;\mathbf s))$.
+

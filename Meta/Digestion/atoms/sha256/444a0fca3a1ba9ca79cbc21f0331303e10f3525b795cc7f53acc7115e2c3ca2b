@@ -1,0 +1,20 @@
+**Proposition 263.5 (Joint payment with actual slack).** For any full
+stopped allocation $\gamma$ of the same mass $M$ as $\lambda$, set
+$\ell_y(\lambda,\gamma)=y(G_N\lambda-G_O\gamma)$. The condition
+
+$$
+\ell_y(\lambda,\gamma)\le S_y+M(1-\Delta_O(y))
+\tag{263.7}
+$$
+
+implies $F_y(b,e)\le M$. In particular it is sufficient that
+$C_y m_\lambda$ be at most the right side, or, more strongly,
+that $C_y\min(M,4J_\lambda)$ be at most that side.
+
+**Proof.** The same-allocation identity gives
+$F_y=yG_O\gamma+\ell_y-S_y$.
+The support bound $yG_O\gamma\le M\Delta_O(y)$ proves the
+claim. Theorem 263.2 supplies the stated sufficient choices of
+$\gamma$. This is a sufficient signed payment condition; positive
+corrections are not paid in general. $\square$
+

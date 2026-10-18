@@ -1,0 +1,26 @@
+## 7. Original obligations, boundaries and mathematical credit
+
+The original alternatives retain the entire domain (1.2): with
+$C_N=\sup_{\theta\in\Theta_N}d(P_\theta)$ and
+$U_{N,r}=\max_{\theta\in\Theta_N}D_r(P_\theta)$, decide whether some
+finite producer attains $c_\star$, or whether $C_N<c_\star$ for every
+finite $N$. [Universal, Theorem 6.2][U] owns the equivalence of the
+latter with
+
+$$
+\forall N\ge1\ \exists r,m\ge1:\qquad U_{N,r}<\kappa_m/(m+1).
+\tag{7.1}
+$$
+
+A hypothetical same-law attainer also obeys the supplied full support
+bounds $P([0^m]_a)\ge2^{-m}$ and
+$P([w]_a)\ge2^{-(n+2)}3^{-k(w)}$, the bulk bounds
+$nc_\star\le\Phi_n(P_n)\le\kappa_n\le(n+1)c_\star$, and the
+attained-law projection budget $D_r(P)-c_\star\le c_\star/(r+1)$.
+Its actual positive-weight components attain by [Universal, Theorem 5.1][U].
+These conditions and $\mathsf Z(P)$ keep their supplier ownership.
+The smaller premise list used in Theorem 4.1 is not a definition of
+the full necessary-attainer domain or a sufficient test for attainment.
+In particular the all-$n$ bulk lower bound itself implies attainment
+after taking the limit; a low-risk example cannot satisfy that bound.
+

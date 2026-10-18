@@ -1,0 +1,30 @@
+**Corollary 254.3 (Original and conic consequences).** For every
+entire original sequence and positive cap $e$ with active length
+$L\ge3$, original $N_2$ feasibility gives an original $O_2$ rule
+with error at most $\min\{1,e+\min(1,4D)\}$.
+For any selected representative, (254.6) gives its sharper allowance.
+Its actual tails still have error at most the original $e$.
+For the same $b,\lambda,M$ as in Theorem 253.2, normalize as in
+(253.6), and evaluate $S,\delta,\kappa,B$ on that law. Then
+(253.3) holds with $\min\{M,4J_\lambda\}$ replaced by
+
+$$
+M\min\{1,B,4\kappa,\Psi(S,\delta)\}
+=\min\{M,MB,4J_\lambda,\Psi(MS,M\delta)\}.
+\tag{254.7}
+$$
+
+The coarser dimension-independent version is
+$F_y\le M\Delta_O(y)+K_y\min\{M,4D_b\}$.
+
+**Proof.** Use Theorem 110.2 to select a finite normalized witness,
+then apply the repair and Proposition 251.4. The exact positive law
+is preserved, so (251.9) retains the old tail cap even when the
+increased cap has a different active horizon. In the conic statement,
+$\kappa=J_\lambda/M$ and $\Psi$ is homogeneous of degree one.
+The column score argument of Theorem 253.2 then uses (254.6)
+instead of its single bound. Since $\omega_y\le K_y$ and
+$D_x=D_b/M$, the stated coarse consequence follows.
+Every positive allowance remains unpaid in the original one-unit
+certificate problem. $\square$
+

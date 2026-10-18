@@ -1,0 +1,29 @@
+**Lemma 2.2 (Source-section calculus and measurable lift).** For a fixed seed and a path of a normalized tree with record $r$, its source section is exactly the cylinder $\{X_{t_i}=x_i:1\le i\le n\}$ if its choices agree with the tree, and is empty otherwise. A terminal label and its paid depth determine $(O,D,N)$. If a specified map $C:\mathcal T_k\to\mathcal T_k$ preserves each tree's source law of $Z$, it produces one lawful representative on the unchanged seed space with the same full $(u,Z)$ law. Conversely, any full-law representative of a seed-ignoring witness has that witness's deterministic source law at almost every seed.
+
+Proof. Fix the seed and a consistent record. The recorded replies force the successive choices on that path, including adaptive addresses and whether a finite terminal event occurs. Internal waiting imposes no further source condition, since it is already determined by the same seed and replies. This proves the cylinder assertion, including internal nonreturn terminals.
+
+Write $a_{T,p}(z)=J_p(Z^T=z)$. Any specified map on the countable discrete tree space is measurable. Choose $C(T(u))$ at seed $u$ and execute that actual tree with actual source replies. On records inconsistent with it prescribe internal nonreturn. The countable measurable partition into selected trees and the finite record tests on each cell make this a total measurable next-event rule. Selection uses only the given seed and public data. If the image trees are capped on all formal branches, so is this rule. Independence of source and seed gives, for every $G\in\mathcal U$ and $z\in\mathcal Z_k$,
+
+$$
+\begin{aligned}
+\mathbb P_p(u\in G,Z^{\mathrm{input}}=z)
+&=\int_G a_{T(u),p}(z)\,d\nu(u)\\
+&=\int_G a_{C(T(u)),p}(z)\,d\nu(u)\\
+&=\mathbb P_p(u\in G,Z^{\mathrm{new}}=z).
+\end{aligned}
+\tag{2.2}
+$$
+
+The first equality uses Lemma 2.1. Since the $z$ alphabet is finite, these rectangles specify the full joint law.
+
+For the converse let $w_z$ be the seed-ignoring witness's source masses and $a_z(u)$ a competitor's tree source masses. Full joint-law equality says
+
+$$
+\int_G(a_z(u)-w_z)\,d\nu(u)=0\qquad(G\in\mathcal U).
+\tag{2.3}
+$$
+
+If $a_z-w_z$ were positive on a set of positive measure, it would exceed $1/n$ on such a set for some positive integer $n$, contradicting (2.3); apply the same argument to its negative. Thus $a_z=w_z$ almost everywhere. Intersect the finitely many equality sets over $z$ to obtain one full-measure set of good seeds. Every good seed has the exact deterministic witness law.
+
+These are source-section integrals, without a regular conditional distribution given a singleton seed. They work for arbitrary atomic or nonstandard seed spaces, split no atoms, and introduce no randomizer. Completion-version null changes affect none of the integrals. These facts reproduce the needed same-seed reasoning of Original Theorem 12.3 and *FIB stopping-law rigidity and sharp linear address radius*, Lemma 2.2, hereafter **Stopping**. $\square$
+

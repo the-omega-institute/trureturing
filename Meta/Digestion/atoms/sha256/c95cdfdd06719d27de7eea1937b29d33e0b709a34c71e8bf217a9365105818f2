@@ -1,0 +1,49 @@
+**Theorem 4.2 (all-address coordinate factorization with shortest words).**
+On the entire actual fiber (NTL.11), every finite native word has a
+source-independent reply or a reply depending on exactly one bit
+$b_i$. A nonconstant reply at a word in bit slot $i$ determines that
+bit, and every such word has length at least $d_i$. Word $p_i$
+attains $d_i$ and determines $b_i$ in one Read.
+
+**Proof.** Reuse the all-word reply formula of [SLH, Theorem 6.2][SLH]
+and [AOF, (AOF.8), Definition 8.2][AOF]. For a nonempty relative word
+$u$, let $\omega(u)=\#L(u)+2\#R(u)$. In $T_n$ the complete table is
+
+$$
+\begin{array}{c|cccc}
+ &\mathsf{absent}&\alpha&\beta&\mathsf{branch}\\ \hline
+u\text{ ends in }R&n<\omega(u)&n=\omega(u)&n=\omega(u)+1&n\ge\omega(u)+2\\
+u\text{ ends in }L&n\le\omega(u)&\text{never}&n=\omega(u)+1&n\ge\omega(u)+2.
+\end{array}
+\tag{NTL.16}
+$$
+
+At the empty suffix the replies are respectively $\alpha,\beta,$
+and branch for $n=0,1,$ and $n\ge2$. This includes the last-edge
+reach guard: subtracting a formal weight alone would wrongly allow
+some left-ending paths through a leaf. In particular all absent words
+remain in the table.
+
+A whole word shorter than $D$ ends in the complete skeleton and
+replies branch. Any longer word, including length exactly $D$, has a
+unique decomposition $w_j u$. At a reference or remaining slot
+$j\ge m$, its tree $T_{jq+z_*}$ is fixed on (NTL.11), so the reply
+is fixed. At a bit slot $i<m$, its tree is $T_{n_i+b_i}$, and its
+reply is the two-entry public table
+$b_i\mapsto\operatorname{Read}_{T_{n_i+b_i}}(u)$.
+If the entries differ, the reply determines the bit; if they agree,
+the word is constant. This covers every word, including ones leaving
+a tree, queries at holes, and queries with an empty suffix.
+
+For shortest length, set $k=\lfloor n_i/2\rfloor$. If $|u|<k$,
+then $\omega(u)\le2|u|\le2k-2$, and both $n_i,n_i+1$ are at
+least $\omega(u)+2$. Nonempty such words reply branch on both;
+the root case is also branch whenever this strict inequality admits
+it. Hence no shorter suffix separates the adjacent ages. At $R^k$
+the replies are $(\alpha,\beta)$ when $n_i=2k$, and
+$(\beta,\mathsf{branch})$ when $n_i=2k+1$. These statements include
+$k=0$ and ages zero and one. Adding the prefix gives (NTL.15).
+The adjacent-interval price is also the $[n_i,n_i+1]$ specialization
+of [AOF, Theorem 9.2][AOF]; the whole-tree exclusion above is what
+allows that price to transfer here. $\square$
+

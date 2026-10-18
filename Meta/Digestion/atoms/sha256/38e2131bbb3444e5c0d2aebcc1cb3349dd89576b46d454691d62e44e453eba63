@@ -1,0 +1,54 @@
+### 推论 20.11（联合有限层稳定证书）
+
+假设存在 \(\lambda_j^{\mathrm{graph}},\lambda_j^{\mathrm{FIB}}\ge0\)，使得在指定子空间上
+
+\[
+\mathcal Q_j(f)
+\ge
+\lambda_j^{\mathrm{graph}}\|f\|_{\mu_j}^{\,2},
+\]
+
+\[
+\mathcal I_j(p;u)
+\ge
+\lambda_j^{\mathrm{FIB}}\|u\|_{\mu_j,\mathrm{E}}^{\,2},
+\]
+
+其中 \(\|\cdot\|_{\mu_j,\mathrm E}\) 是节点和状态上的普通加权 Euclidean 范数。则
+
+\[
+\mathcal S_j^{(\tau)}(f,p;u)
+\ge
+\min\left\{
+\lambda_j^{\mathrm{graph}},
+\tau\lambda_j^{\mathrm{FIB}}
+\right\}
+\left(
+\|f\|_{\mu_j}^{\,2}
++
+\|u\|_{\mu_j,\mathrm E}^{\,2}
+\right)
+\]
+
+对 \(\tau>0\) 成立。
+
+#### 证明
+
+分别使用两个下界：
+
+\[
+\mathcal S_j^{(\tau)}
+\ge
+\lambda_j^{\mathrm{graph}}\|f\|^2
++
+\tau\lambda_j^{\mathrm{FIB}}\|u\|^2.
+\]
+
+右侧至少为最小系数乘以两个范数平方之和。证毕。
+
+该推论给出一个不依赖物理解释的稳定性判据。若图 sector 和 FIB sector 的有限层下界在相容细化中保持正，则其直和载体具有统一的正稳定下界。若某个 sector 的下界趋于零，必须记录为该 sector 的数学软化或退化，不能用另一个 sector 的正下界掩盖它。
+
+
+
+---
+

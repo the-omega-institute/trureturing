@@ -1,0 +1,18 @@
+**Definition 4.2 (the arithmetic supplier).** Write
+$\operatorname{Adm}_\eta(\mathbf n)$ for the formula of $S_\eta$, and
+$\operatorname{Same}_{\eta\theta}(\mathbf n,\mathbf m)$ for the full-row
+equality formula of Lemma 4.1. Finite chart quantification means a finite
+disjunction or conjunction over their tags; the numeric tuples can have
+different finite dimensions.
+
+The decision supplier is Ginsburg–Spanier, *Semigroups, Presburger
+Formulas, and Languages*, [Theorems 1.2–1.3][GS]: first-order Presburger
+sentences over nonnegative integers are decidable, and their definable
+sets are effectively semilinear. The present proof needs Theorem 1.2,
+Boolean closure and quantification. After a true existential decision,
+a witness tuple can also be obtained by enumerating natural tuples and
+testing the fixed formula. This enumeration is used only after existence
+has been decided positively. Theorem 1.3 additionally permits an exact
+semilinear presentation of every $S_\eta$; no semilinearity theorem for
+arbitrary native trees is asserted.
+

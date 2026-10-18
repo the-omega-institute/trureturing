@@ -1,0 +1,11 @@
+**Definition 2.3 (Contributions of actual coordinate edges).** For every $1\le i\le n$, let
+
+$$
+\Phi_{n,i}(\mu)=
+\sum_{\substack{b\in B_n\\ b_{i-1}=b_i=b_{i+1}=0}}
+h(\mu(b),\mu(b+e_i)).
+\tag{2.7}
+$$
+
+Each original edge has exactly one lower endpoint and exactly one coordinate. Consequently $\Phi_n(\mu)=\sum_{i=1}^n\Phi_{n,i}(\mu)$, with the same formula at both boundary coordinates.
+

@@ -1,0 +1,28 @@
+**Lemma 3.3 (Finite design identity and whole-channel stationarity).**
+The channel (3.3) equals its joint continuous-orbit expression, with
+normalized circle measures and total orbit weights $400/119$ and
+$195/119$. It commutes with every $\operatorname{Ad}_{G(\alpha,\beta)}$
+and with $\operatorname{Ad}_{\mathsf J}$ on every complex matrix.
+
+Proof. This is the QFA quartic quadrature mechanism, also applied to
+independent factors in QWS Lemma 3.3. For clarity, its hypotheses hold
+for (3.2): an A coefficient of $aa^T\otimes bb^T$ has bidegree
+$(4,0),(3,1),(2,2),(1,3)$ or $(0,4)$. At even degrees zero, two and
+four the three-point circle rule retains only zero frequency. In
+the odd bidegrees the degree-one factor has both discrete and continuous
+mean zero, killing the possible degree-three alias. A B coefficient
+has frequencies between $-4$ and $4$, and the five-point rule kills
+every nonzero frequency. Thus these are coefficient-tensor equalities
+on all complex inputs, with total weights
+$9(400/1071)=400/119$ and $5(39/119)=195/119$.
+
+Angle translation proves rotation covariance of the integrals.
+Also $\mathsf Jd=-d$ and
+$\mathsf Jw_\pm(\alpha)=w_\pm(-\alpha)$. For A, reflection reverses
+both angles. For B, an irrelevant simultaneous sign of each vector
+changes its reflected projector to the projector at angle $\pi-\alpha$.
+Both integrals are invariant. Hence the already finite channel has
+the asserted symmetries and is stationary for the actual walk.
+The integrals are design identities, not continuous flags or added
+physical controls. $\square$
+

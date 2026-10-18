@@ -1,0 +1,2 @@
+**Convention 2.3 (Characters).** For a finite abelian group $A$, $\widehat A$ is its group of characters $\chi:A\to\mathbb C^\times$. For $A=\mathbb Z_n^d$ and $j\in\mathbb Z_n^d$ write $\chi_j(r)=\omega^{\langle j,r\rangle}$ with $\omega=e^{2\pi i/n}$ and $\langle j,r\rangle=\sum_i j_ir_i$.
+

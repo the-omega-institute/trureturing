@@ -1,0 +1,44 @@
+## 6. Observer consequence: prediction versus choosing a Read
+
+After a truthful transcript $h$, the actual posterior is
+
+$$
+\mu_h(t)=
+\frac{\mu(t)\mathbf 1_{\{t\text{ is consistent with }h\}}
+      }{\mu(\{u:u\text{ is consistent with }h\})}.
+\tag{6.1}
+$$
+
+For a proposed word $w$, the action kernel is
+
+$$
+K_h(w,y)=\sum_t\mu_h(t)\mathbf1_{\{\operatorname{Read}_t(w)=y\}}.
+\tag{6.2}
+$$
+
+The next posterior is obtained by conditioning this same $\mu_h$ on the
+actual reply. A fresh nuisance draw is not an execution of the stationary
+source: repeated Reads of one word return the same reply, and cross-word
+correlations such as (5.5) persist.
+
+For a finite family, a sufficient action-state is the conditional joint law
+
+$$
+\mathcal L_\mu\left(
+\Gamma_p(\partial_p(t)),
+\bigl(\operatorname{Read}_t(w)\bigr)_{|w|\le D+1}
+\ \middle|\ h\right).
+\tag{6.3}
+$$
+
+Words longer than $D+1$ are constant absent on the initial bounded family.
+The vector in (6.3) is one response vector of one actual source and supports
+every finite adaptive continuation. It is sufficient, not claimed minimal.
+
+The relation retained for passive prediction is therefore
+$\Gamma_p(\partial_p(t))$. The relation needed for active acquisition is the
+boundary together with its conditional joint response experiment, or a
+law-faithful reduction such as Theorem 4.4. Neither relation recovers a full
+source, an unknown future task, physical time, or all retained memory for
+free.
+

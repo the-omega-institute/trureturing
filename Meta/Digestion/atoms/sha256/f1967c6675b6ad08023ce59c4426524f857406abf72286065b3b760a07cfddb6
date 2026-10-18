@@ -1,0 +1,19 @@
+**Proposition 24.2 (what exact representation alone does not supply).**
+A finite source presentation with a synchronous domain and constant
+whole row in each chart does not by itself imply finite original-prefix
+determination. Bounded original-prefix chart selection, or an explicit
+decision of cross-chart Bad, is also necessary for the cellwise argument.
+
+Proof. For the old one-hole root row and no history, use charts
+$\alpha$, $\beta$, $\langle x,x\rangle$, and
+$\langle x,y\rangle$ with $x\ne y$. These are an exact finite disjoint
+presentation of all finite sources; their domains are synchronous and
+$Q=\{L,R\}$ has a constant entire row on each chart. Every within-chart
+Bad is empty. But finite $t,t'$ can agree arbitrarily deeply while being
+different. The sources $\langle t,t\rangle$ and $\langle t,t'\rangle$
+then have arbitrarily deep identical original prefixes and different
+full two-hole partitions. Equality-chart identity has no bounded-prefix
+selector. Definitions 19.3 and 20.2 avoid this error: all branch selection
+is an original constructor question, and elimination introduces no
+semantic branches. $\square$
+

@@ -1,0 +1,40 @@
+**定义 82.1（Original arithmetic rows and an actual inherited-tail seam）。** Retain the original integer weights and matched reading of [IC, Definition 1.1]: $G_i=2^i$ for $i<k$, $G_i=\sum_{r=1}^kG_{i-r}$ thereafter, and $V_k(w)=\sum_iw_iG_i\bmod2$. In this chapter the width $m$ is odd, $k=m+1$ and $T=k+1=m+2$, so the actual coefficient cycle is
+
+$$
+\gamma_i=G_i\bmod2=\mathbf1_{\{0,T-1\}}(i\bmod T),
+\qquad \gcd(m,T)=1.
+\tag{82.1}
+$$
+
+The original complete-endpoint record is $(v,\theta,s)$, with $v\in\mathbb F_2$, $\theta\in\mathbb Z/T\mathbb Z$ and $0\le s<k$, or independently labelled absorbing bottom. A zero clears the tail and advances the phase; a one contributes $\gamma_\theta$, advances the phase and increments the tail, rejecting when that increment reaches $k$. Put $j=-\theta_{\rm INITIAL}$. For a complete literal word $B=(B_0,\ldots,B_{m-1})$ at actual issued index $t$, define its **full arithmetic row**, on all original phases, by
+
+$$
+q_{t,B}(j)=\bigoplus_{i=0}^{m-1}B_i\gamma_{-j+tm+i}.
+\tag{82.2}
+$$
+
+On a successful source this is its completed scalar difference. On a rejecting source it is an arithmetic expression only, not an observed extra value: the actual completed output is bottom. The full word is still emitted and paid even if rejection occurs before its endpoint.
+
+Write $u=tm\pmod T$. The credited literal inverse interface [IC, (1.4)–(1.5); S10, Interface 2.1; S15, Section 1] gives
+
+$$
+\begin{aligned}
+q_{t,B}(u)&=B_0,\\
+q_{t,B}(u+i)&=B_{i-1}\oplus B_i\quad(1\le i<m),\\
+q_{t,B}(u+m)&=B_{m-1},\\
+q_{t,B}(u+m+1)&=0.
+\end{aligned}
+\tag{82.3}
+$$
+
+Thus the row is even on its ordered path $W_t=[tm,(t+1)m]\pmod T$, and every even row on that path has the unique literal inverse $B_i=\bigoplus_{a=0}^i q_{t,B}(tm+a)$. This statement concerns one complete word and supplies no intermediate reading.
+
+For a word $B$, let $\rho(B)$ be its trailing run of ones and $\alpha(B)$ its leading run, each equal to $m$ for $1^m$. Consider consecutive issued words $P,Q$, with $P$ actually completed successfully on a source. Its current tail is $r=\rho(P)$: if $P$ contains a zero, that follows from its last zero; if $P=1^m$, success at $k=m+1$ forces its incoming tail to be zero, so its outgoing tail is $m$. Consequently the next word rejects precisely when
+
+$$
+r+\alpha(Q)\ge m+1.
+\tag{82.4}
+$$
+
+This includes the all-one words and the strict equality threshold. Both alphabets contain all width-$m$ words because $m<k$; the seam, rather than internal word legality, is the issue.
+

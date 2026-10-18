@@ -1,0 +1,33 @@
+## 1. Scope, consumer and mathematical provenance
+
+This volume separates preservation of an actually acquired stopping event
+from reconstruction of a terminal probability law. It gives a smooth
+original-control source for a sharp finite-memory timestamp test, and an
+opposite-orientation control pair for every finite fixed time partition.
+The pair has exactly equal binned CP instruments but a fixed nonzero
+exact-time separation. Both statements concern the canonical double-wall
+stopped instrument already supplied by
+[Instrument Boundaries](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_INSTRUMENT_BOUNDARIES.md),
+§5.2. They do not enlarge its ideal operation class.
+
+The concrete consumers are retention of the actual joint archive in
+[Quantum Carrier Minimum](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_QUANTUM_CARRIER_MINIMUM.md),
+§§1.3, 3.1 and 6, and the actual running image in
+[Process Geometry](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md),
+§34. The approximation consumer is the complete marked-law or quantum
+output metric of
+[Instrument Stability](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_INSTRUMENT_STABILITY.md),
+§1. These consumers distinguish an old event from a newly drawn event
+having the same marginal distribution.
+
+These are ordinary mathematical proofs. This source carries no new
+Lean/kernel verification, physical implementation or full-programme completion.
+Lean declarations and Blueprint applications below are credited suppliers.
+
+All repository suppliers are selected at the immutable revision
+`5094da88f161741b61de3b6b16dbc3a115a83d63`. Mature finite-dimensional
+quantum guessing, elementary CP postprocessing and the supplier's triangular
+signed-loss construction are credited. The additional deductions are their
+explicit applications to this source and these event/archive consumers.
+No worldwide originality claim is made.
+

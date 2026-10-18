@@ -1,0 +1,33 @@
+**Theorem 27.1 (exact entire preparation upper-budget region).** For
+$\sigma_{A,2}$ with $n\ge3$, under Convention 23.2 the exact region is
+
+$$
+\boxed{\ H\ge2n+2+r,\qquad p\ge n+1,\qquad
+                         \ell\ge3+\sum_{s\in A}(s+4)\ }.
+\tag{PCA.63}
+$$
+
+One full-fiber table attains all three coordinate minima. With no
+extra mandated latches $r=0$, this gives exactly the stated
+$2n+2,n+1,3+W_A$ triple. On an alphabet fixed in advance with the
+two original-entry latches and $r$ mandated further latches, a running
+start and at least $2n$ running states are necessary and sufficient
+for the minimum execution budgets. Every surplus installed state
+is still counted. The same exact region holds for the separately
+specified $\sigma_{A,n-1}$.
+
+Proof. Theorem 25.1 applies to both interior thresholds and yields
+$H\ge2n+2+r$, without restricting calls, literals, graph sharing or
+repeated reads. Theorem 25.2 gives the other two necessary bounds
+independently of the installed-state budget. For $k=2$ and for
+$k=n-1$, the grid count in Theorem 26.1 is
+$k(n-k+1)=2n-2$. Its one table therefore attains all three lower
+bounds simultaneously on the entire domain with literal original
+entries. Relabel its start $D$ as any prescribed running start.
+Additional running states can be left unreachable with arbitrary
+total four-successor tables and remain counted. A start fixed to a
+latch cannot produce both attained codes. These facts prove both
+sufficiency for upper budgets and the fixed-alphabet assertion.
+For $n=3$ the two displayed predicates coincide; for larger $n$ the
+two different predicates each have this proof. $\square$
+

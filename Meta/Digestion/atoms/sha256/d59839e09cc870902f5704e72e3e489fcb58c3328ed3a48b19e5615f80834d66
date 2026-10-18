@@ -1,0 +1,86 @@
+**定理 3.1（条件零响应与绝对可和）。** 对每个达到律 $P$ 和满足（3.1）的上述 $C,f$，级数
+
+$$
+S_P(f)=\sum_{i\in\mathbb Z}\mathbb E_P[f_C\ell_i]
+\tag{3.3}
+$$
+
+绝对收敛，且
+
+$$
+S_P(f)=0,\qquad
+\sum_{i\notin C}|\mathbb E_P[f_C\ell_i]|
+\le F\tau(0)\le Fc,\qquad
+\left|\sum_{i\in C}\mathbb E_P[f_C\ell_i]\right|\le Fc.
+\tag{3.4}
+$$
+
+**证明。** 若 $i\le0$，令 $\mathcal G_i^C=\sigma(X_j:j\le0,j\ne i)$；若 $i\ge L+1$，令 $\mathcal G_i^C=\sigma(X_j:j\ge L+1,j\ne i)$。置 $p_i=\mathbb E_P[X_i\mid\mathcal G_i^C]$。$X_i,p_i$ 及 $(X_i-p_i)^2$ 都是 $\mathcal H_C$ 可测的；$f_C$ 是 $\mathcal E_i$ 可测的。先用（3.1），再条件于 $\mathcal E_i$ 消去投影交叉项，得到
+
+$$
+0=\mathbb E_P[f_C(X_i-p_i)^2]
+=\mathbb E_P[f_C\ell_i]+\mathbb E_P[f_C(q_i-p_i)^2].
+\tag{3.5}
+$$
+
+这里没有假设 $f_C$ 对 $\mathcal H_C$ 可测。左侧 $i=-r$ 的平方缺陷是 $e_R(r)$，右侧 $i=L+1+r$ 的是 $e_L(r)$。因此外部绝对和至多 $F\tau(0)$，距离块至少 $R+1$ 的外部尾至多 $F\tau(R)$。块内只有 $L$ 项，故（3.3）绝对收敛。
+
+对实数 $t$ 满足 $|t|F\le1/2$，令 $g_C=1+tf_C$、$R_t=g_CP$。（3.1）使 $R_t$ 归一化且保留 $\mathcal H_C$ 上全部边缘；密度在 $[1/2,3/2]$ 内，所以两律等价并同样合法。记任意中间律 $R$ 的后验为 $q_i(R)=\mathbb E_R[X_i\mid\mathcal E_i]$，风险为 $r_i(R)=\mathbb E_R[(X_i-q_i(R))^2]$。
+
+块外 $g_C$ 是 $\mathcal E_i$ 可测的，故 $q_i(R_t)=q_i$。块内在自由外部的条件二点律上，令 $f_a$ 为把第 $i$ 位设为 $a$ 的 $f_C$ 值，直接条件化给
+
+$$
+q_i(R_t)-q_i=
+\frac{tq_i(1-q_i)(f_1-f_0)}
+{1+t((1-q_i)f_0+q_if_1)},\qquad |q_i(R_t)-q_i|\le |t|F.
+$$
+
+强制零外部后验仍零；概率零的外部集合可任选版本，不影响积分。所有有限零总质量纤维仍零总质量，不作除法，加权项为零。由 $\mathbb E_R\ell_i=r_i(R)+\mathbb E_R[q_i(R)-q_i]^2$ 的条件 Brier 正交分解，得到绝对收敛的总增量
+
+$$
+\Delta(t):=\sum_i(r_i(R_t)-c)
+=tS_P(f)-\sum_{i\in C}\mathbb E_{R_t}[q_i(R_t)-q_i]^2,\qquad
+0\le tS_P(f)-\Delta(t)\le LF^2t^2.
+\tag{3.6}
+$$
+
+为放大增量，固定整数 $m\ge1$ 和上述 $t$，取 $m$ 个互不相交的平移块 $C_j=[a_j,a_j+L-1]$，置 $f_j=f(X_{a_j},\ldots,X_{a_j+L-1})$、$g_j=1+tf_j$、$G=\prod_jg_j$、$R=GP$。平稳性把（3.1）转移至每块；其他因子对该块外部可测，逐个条件消去得 $\mathbb E_PG=1$，并保留整个块并集外字段 $\sigma(X_i:i\notin\cup_jC_j)$ 上的联合边缘。在 $i\in C_j$，其他因子对 $\mathcal E_i$ 可测而在条件后验分子分母中相消，故 $q_i(R)=q_i(g_jP)$；并集外 $q_i(R)=q_i$。置 $d_i=q_i(g_jP)-q_i$ 于 $C_j$ 内，并集外置 $d_i=0$，则
+
+$$
+r_i(R)-c=\mathbb E_P[(G-1)\ell_i]-\mathbb E_P[G\,d_i^2].
+\tag{3.7}
+$$
+
+以下说明块间距趋无穷的极限，不用独立性。记 $B=(1+|t|F)^{m-1}$。展开 $G-1=\sum_jtf_jh_j$，其中 $h_j=\prod_{k<j}g_k$ 且 $|h_j|\le B$。对全部块外的 $i$，$f_jh_j$ 是 $\mathcal E_i$ 可测的，$h_j$ 是 $C_j$ 外部可测的；（3.5）的同一投影计算给
+
+$$
+|\mathbb E_P[f_jh_j\ell_i]|
+\le FB\,\mathbb E_P(q_i-p_i^{\,j})^2.
+$$
+
+$p_i^{\,j}$ 用 $C_j$ 相应一侧的字段定义。对整数 $K\ge0$，令 $U_j(K)$ 为 $C_j$ 向两端各扩 $K$ 位的区间，则
+
+$$
+\sum_{i\notin\cup_jU_j(K)}|r_i(R)-c|
+\le m|t|FB\,\tau(K).
+\tag{3.8}
+$$
+
+此界对块间距一致，也证明每个固定复制律的总增量绝对收敛。
+
+在固定 $U_j(K)$ 中，$\ell_i$ 以及块内 $d_i^2$ 都是有界可测函数，能在 $L^1(P)$ 中由该位置附近的有限柱函数逼近；这是有限坐标字段递增生成全字段的条件期望收敛。平稳性使平移后的误差相同，$G\le(3/2)^m$ 一致控制积分误差。对这样的有限柱函数 $H$，当其他块在其坐标支撑之外时，逐个条件消去给 $\mathbb E_P[GH]=\mathbb E_P[g_jH]$。固定 $m,t,K$ 与逼近半径，送所有块的最小间距至无穷，再令逼近误差为零，（3.7）在这些有限邻域上的和趋于单块对应和的 $m$ 倍。最后用（3.8）和单块尾界 $|t|F\tau(K)$ 令 $K\to\infty$，得
+
+$$
+\sum_i(r_i(R)-c)\longrightarrow m\Delta(t).
+\tag{3.9}
+$$
+
+任意归一化合法中间律 $R$ 和有限区间 $I$ 上，全外部条件精化有限去中心字段，原纤维恒等式及有限图上界遂给
+
+$$
+\sum_{i\in I}r_i(R)\le\Phi_{|I|}(R_I)
+\le\kappa_{|I|}\le(|I|+1)c_\star.
+$$
+
+对上面绝对可和的改变，以区间穷尽 $\mathbb Z$ 得 $\sum_i(r_i(R)-c)\le c_\star$；这是带符号净增量的上界。若 $S_P(f)\ne0$，取符号使 $tS_P(f)>0$，再取充分小的 $t$ 使（3.6）给 $\Delta(t)>0$，最后固定 $m$ 使 $m\Delta(t)>c_\star$。（3.9）与上界矛盾。故 $S_P(f)=0$；结合外部绝对界得到（3.4）的块内界。$F=0$ 时全部项直接为零。$\square$
+

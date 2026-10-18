@@ -1,0 +1,21 @@
+**Proposition 8.1 (small members of the connected family).** The first
+five values of $m$ give the following exact instances of
+$\mathcal T_{m,d}$ for every $d\ge2$:
+
+| $m$ | Original blocks | Actual root-owned seeds | Actual solutions | Cross-phase owner distance | Cross-phase actual-block distance |
+| --- | --- | --- | --- | --- | --- |
+| $2$ | $22$ | $10$ | $5$ | $8$ | $16$ |
+| $3$ | $33$ | $15$ | $9$ | $12$ | $24$ |
+| $4$ | $44$ | $20$ | $17$ | $16$ | $32$ |
+| $5$ | $55$ | $25$ | $33$ | $20$ | $40$ |
+| $6$ | $66$ | $30$ | $65$ | $24$ | $48$ |
+
+At $m=2$ each phase has raw mass
+$111236572265625=(5^8 3^3)^2$ under (OCC.18).
+
+Proof. Substitute $m=2,\ldots,6$ into the counts $11m$, $5m$ and
+$2^m+1$ in Theorem 4.2, and the distances $4m,8m$ in Theorem 4.3.
+The mass is the numerator of (OCC.19) at $m=2$. These are exact
+instances of the all-$m$ proofs, not extrapolations from a finite sample.
+$\square$
+

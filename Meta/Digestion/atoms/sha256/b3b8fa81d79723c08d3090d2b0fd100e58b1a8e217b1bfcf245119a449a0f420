@@ -1,0 +1,32 @@
+**Definition 12.3 (a complete finite literal installation budget).**
+Fix the following injective binary serialization. Encode a natural
+number $t$ as $1^t0$. Encode a finite word by its encoded length followed
+by its bits, with $L=0,R=1$. Encode finite lists by their encoded length
+followed by their entries. Encode a finite marked exterior recursively
+with two-bit tags for $\alpha$, $\beta$, ordered pair, and numbered
+hole; a pair is followed by its two subtrees, and a hole by its encoded
+number. A complete row consists of its list of reached addresses in
+lexicographic order, its marked exterior, and the restricted-growth
+class-label list for its full hole partition. Hole numbering and class
+labels are canonical. This encodes the entire concrete exterior and
+partition, including zero holes; it is not a compressed output name.
+
+The common input has a fixed literal encoding of $P,Q,R,H_0,H_{\rm rel},N$
+and the stipulated finite permission and entry-description data. Use
+the preceding list, word, integer and row encodings, finite tags for
+replies and signs, and length-prefixed bits for any other fixed field.
+Let its length together with the fixed format description be $I_0$.
+This charges the retained description, not the act of acquisition,
+authentication or erasure. No additional source-bearing input is allowed.
+
+Index a table's $s$ states by $0,\ldots,s-1$. Append the encodings of
+$s$ and $e_0$, followed in state order by a two-bit instruction tag and:
+for a read, its word and four successor indices in a fixed reply order;
+for an update, its one successor index; for a halt, its complete row.
+Halt absorption is part of the fixed format. Invalid indices, tags or
+row encodings are rejected. Call the total bit length $I(C)$, including
+$I_0$ and every installed state. No table, word, row or common datum is
+stored outside this charge. This is a mathematical installation size
+for the specified atomic interface, not a claim about physical peak
+storage or serialization time. The online state count remains $s$.
+

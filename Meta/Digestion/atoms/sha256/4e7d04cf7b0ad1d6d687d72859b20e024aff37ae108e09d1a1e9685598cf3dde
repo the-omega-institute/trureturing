@@ -1,0 +1,20 @@
+**Definition 6.3 (task-coordinate boundary).** A full 74-coordinate
+primitive task that admits Advance/Supply during every added phase
+would record $W$ of those successors. AIF Definition 2.6 specifies
+complete original joint successors on its original carrier. ARC
+Definition 11.1 retains that original task and separately names $Q_G$;
+its row square does not provide a projection/inclusion theorem equating
+these two successor coordinates or their experiment sets during every
+added phase. In particular a new-role bank, package, invocation slot or
+raw-version distinction cannot be presumed visible in an original
+successor merely from the adjective complete.
+
+Theorems 5.2–5.3 and 6.2 use only the original source rows and retained
+original port-13/meter successor coordinates identified in their proofs.
+They do not require a new-role observation. A global proof of
+$Q(h)=Q(k)\Rightarrow h=k$ on running acquired cuts would additionally
+need an actual original experiment and successor-coordinate bridge on
+each added phase, with its exact projection and input domain. Such a
+bridge is not assumed here. The history-kernel theorem of §3 is not a
+substitute for it.
+

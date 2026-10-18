@@ -1,0 +1,22 @@
+### 96.2. Selmer directions
+
+**Proof.**
+
+The actual-block inputs are q>5, q=1 mod3 and (5/q)=1 for every q|D, and D=19 mod120. Theorem 95.1 gives the full Selmer parametrization
+
+ (y0,x,y) in F_2 x ker A^T x ker A,
+
+where the pair convention is (X,X+5D),
+ b1=(-1)^epsilon 3^a 5^x0 product q_i^x_i,
+ b2=5^y0 product q_i^y_i,
+ a=y0, epsilon=y0+delta^T x, x0=y0+t^T x+delta^T y,
+ delta_i=[-1/q_i], t_i=[2/q_i].
+
+Let v be the indicator of the primes dividing d. The cut conditions give Av=0. Each prime in d is 1 mod24, so diag(delta)v=0, delta^T v=0 and t^T v=0. The reciprocity identity A+A^T=diag(delta)+delta delta^T therefore gives A^T v=0. In the displayed parametrization the triples (0,v,0) and (0,0,v) give the full Selmer classes
+
+ lambda=(d,1), mu=(1,d).
+
+The all-one vector lies in both kernels: A1=0, and A^T1=A1+delta+delta(sum delta_i)=0 because sum delta_i=1. The vector v is nonconstant since the cut is proper. Since the two kernels both have dimension two, each is spanned by 1 and v.
+
+For completeness these are exactly the two extra pure Selmer directions. The actual translated golden point S has class (-15,5), corresponding to (y0,x,y)=(1,0,0). The two rational torsion generators T_- and T_0 have classes (-5D,1) and (-3,5D), corresponding respectively to (0,1,0) and (1,0,1). Thus S,T_-,T_0,lambda,mu form a full Selmer basis. Modulo the two-dimensional rational torsion image, S,lambda,mu form a basis of the three-dimensional pure Selmer space.
+

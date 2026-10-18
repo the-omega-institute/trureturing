@@ -1,0 +1,4 @@
+**与 projectivity/组合 holonomy 的联系。** Joswig, *Projectivities in Simplicial Complexes and Colorings of Simple Polytopes*, arXiv:math/0102186，研究沿面路径拼接顶点对合而产生的置换群，并在 Theorem 3.2、Corollaries 3.4–3.5 中联系余维二面奇偶与约化运输群。其结尾明确讨论与 holonomy 的类比。本卷第 101 节的沿边标签运输属于相关思路。
+
+但一个闭路径产生的局部置换，不自动提供 (127.2) 中作用于所有块和所有实际边的一致群作用。没有这个全局兼容条件，就不能用最大点唯一性宣称局部角向量固定。第 129 节的生成元逐个核查了这个条件；不从“观察到一个三循环”直接跳到 CFMP 实现。
+

@@ -1,0 +1,46 @@
+**Lemma 4.1 (boundary polynomial alternatives).** If a rational quadratic
+factor has a zero edge polynomial, the corresponding coordinate line divides
+the conic and is impossible for an absolutely irreducible conic. Otherwise,
+root specialization at $X=0$, $Y=0$, $X=-1$, and $Y=-1$ restricts the monic
+edge polynomials to the following complete lists. Constants and repeated roots
+are included.
+
+$$
+\begin{aligned}
+S&=[1,T,T+2,T^2,(T+2)^2,T(T+2),T^2+3T+3,\\
+&\qquad T^2+2T+2,T^2+T+1],\\
+U&=[1,T-1,T+1,(T-1)^2,(T+1)^2,T^2-1,\\
+&\qquad T^2+T+1,T^2+1,T^2-T+1],\\
+V&=[1,T+1,(T+1)^2].
+\end{aligned}
+$$
+
+Here $S$ is the shifted-root list, $U$ is the unshifted cyclotomic list,
+and $V$ is the final $G$-branch edge list. The complete monic quadratic
+coefficient pairs are
+
+$$
+S_2=[(0,0),(4,4),(2,0),(3,3),(2,2),(1,1)]
+$$
+
+and
+
+$$
+U_2=[(-2,1),(2,1),(0,-1),(1,1),(0,1),(-1,1)].
+$$
+
+**Proof.** At $X=0$ or $Y=0$, the first equation forces $Z=0$, and the
+remaining shifted coordinate is a root of unity. At $X=-1$, the $Q$ branch
+forces $Z=-1$ and the remaining coordinate is a root of unity; the $R$
+branch has the same alternatives together with its displayed exceptional
+root $-1$. The $Y=-1$ calculation is the coordinate-permuted version for
+$F$. For $G$, substitution $Y=-1$ gives
+
+$$
+R(X,-1)=-(X+1)^{k_2},
+$$
+
+so the only zero is $X=-1$, including the degree-drop specialization. The
+rational cyclotomic polynomials of degree at most two, after the indicated
+shift, are exactly $S$, $U$, and $V$. $\square$
+

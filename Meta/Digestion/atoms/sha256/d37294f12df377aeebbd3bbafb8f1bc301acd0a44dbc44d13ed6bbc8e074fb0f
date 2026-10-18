@@ -1,0 +1,24 @@
+**Definition 25.2 (enlarged competition and separate logical counts).**
+Let $\mathfrak W_{\rm int}(k,d)$ be all installations satisfying
+Assumption 25.1, at every installed-state count. Define
+
+$$
+\begin{aligned}
+L_{\rm int}(k)&=\min\{d\ge1:
+              \mathfrak W_{\rm int}(k,d)\ne\varnothing\},\qquad
+              \min\varnothing=\infty,\\
+N_{\rm int}(2)&=\min\{|W|:d\ge1,\quad
+              \mathcal K\in\mathfrak W_{\rm int}(2,d)\}.
+\end{aligned}
+\tag{NARC.25.1}
+$$
+
+On one actual path through its first halt, count Reads $r$, internal
+steps $u$, response bit writes $b_Q$, internal bit writes $b_I$, and
+submitted literal lengths separately. A same-word update contributes
+one step of its row type and zero bit writes. Initialization is a
+separate account. Hidden age, Read index, remaining budget and path
+position are proof coordinates, never row inputs. Thus $r+u$ measures
+primitive recovery transitions, whereas $r$ measures new interactions
+with the stationary source.
+

@@ -1,0 +1,18 @@
+### 定义 37.6（层级曲率数据）
+
+对第 \(j\) 层的 \((V_j,\mu_j,c_j)\)，定义
+
+\[
+K_j^{\mathrm{BE}}
+=
+\sup\{K:\ CD_{G_j}(K,\infty)\text{ 成立}\}.
+\]
+
+这给出一个完全由有限层矩阵确定的曲率序列
+
+\[
+(K_0^{\mathrm{BE}},K_1^{\mathrm{BE}},\ldots).
+\]
+
+若层间 bonding 还满足额外的 \(\Gamma\)-交换和 \(\Gamma_2\)-单调条件，才可以比较 \(K_j^{\mathrm{BE}}\) 与 \(K_{j+1}^{\mathrm{BE}}\)。Dirichlet 能量收缩本身并不自动推出曲率下界单调性。
+

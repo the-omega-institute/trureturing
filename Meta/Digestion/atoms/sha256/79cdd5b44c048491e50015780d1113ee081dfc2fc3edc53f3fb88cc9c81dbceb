@@ -1,0 +1,130 @@
+**Theorem 69.2 (Uniform modulus gives a uniform original-source query bound).**
+For the original-source application retain the entire labeled source, zero
+advice, target laws and consumer of Definition 59.1, namely
+
+$$
+\begin{aligned}
+X&=\{(r,g):r\text{ prime},\ g\in\mathbb Z,
+       \ \lceil F_r/10\rceil\le g\le\lfloor F_r/5\rfloor\},\\
+N(r,g)&=1+F_rg,\qquad \Omega(r,g)=\omega(N(r,g)),\qquad\beta_0=0.
+\end{aligned}
+$$
+
+Here $\omega$ counts distinct prime divisors; $\Omega_g$ in (69.3) is a separate
+quantity. Enumerate the actual primes as $p_1<p_2<\cdots$, put
+$[x]_i=\mathbf1_{p_i\mid N(x)}$, and take exactly $Q=\{[x]:x\in X\}$, without
+additional limit signatures. Then
+
+$$
+C_m(x)=\{y\in X:[y]\in U_m([x])\},\qquad C_0(x)=X.
+$$
+
+Use the original nonempty measurable tape carrier $(\Theta,\mathcal F)$ and
+its target mixture $\sigma=\sum_{i\ge1}2^{-i}\mu_{x_i}$ and likelihood sigma
+algebra $\mathcal G$ of (59.2), with $X$ enumerated without repetitions. Let $g$
+be a family of Definition 69.1 for these data, and set
+$\lambda_x=g_{[x]}\sigma$. The mixture is a tape probability, not a supplied
+source sampling law. All labels remain in $C_m(x)$, even when equal
+signatures have distinct original targets $\mu_x$.
+
+Assume the measurable common-rule semantics of Definitions 40.1 and 45.1:
+a preparation uses one source-independent seed probability space and fixed
+cylinder tables, observes only actual prime-divisibility answers with zero
+advice, and has measurable finite records and output-event preimages. The seed
+may be the countable probability product of original-tape coordinates and an
+independent uniform variable used in Theorem 46.4. After handoff the unchanged
+consumer receives only the declared original tape and runs on the same static
+source. No effective evaluation of the fixed tables or sampling from a single
+real seed is assumed.
+
+The masses $a_m(q)$ are nondecreasing in $m$, and $\Omega_g(m)$ is
+nonincreasing. If $a_m([x])\uparrow1$ at every actual $x$, the positive-increment
+realization of Theorem 46.4 acquires exactly $(\lambda_x)$ with sourcewise
+almost-sure finite handoff. Its handoff depth $N_x$, counting actual prefix
+queries and allowing depth zero, has the exact tail
+$\mathsf P\{N_x>m\}=1-a_m([x])$.
+In particular, uniform order calibration implies
+
+$$
+\boxed{
+\sup_{x\in X}\mathsf P\{N_x>m\}=\Omega_g(m).
+}
+\tag{69.4}
+$$
+
+If $\sum_{m\ge0}\Omega_g(m)<\infty$, then
+
+$$
+\boxed{
+\sup_{x\in X}\mathbb E[N_x]
+\le \sum_{m\ge0}\Omega_g(m)<\infty.
+}
+\tag{69.5}
+$$
+
+If $\Omega_g(m_0)=0$, this realization hands off by depth $m_0$ almost surely
+at every source.
+
+**Proof.** Refining a prefix neighborhood removes candidate signatures, so its
+pointwise infimum increases. This proves both monotonicity statements. The
+signature-cylinder correspondence gives the greatest common submeasure
+$\ell_C$ of $(\lambda_y)_{y\in C}$ and, at $C=C_m(x)$, gives
+
+$$
+\ell_C=\underline g_m([x])\sigma,
+\qquad a_C:=\ell_C(\Theta)=a_m([x])
+\ge1-\Omega_g(m).
+\tag{69.6}
+$$
+
+Index each occupied node by its depth and finite prime-answer word, so equal
+source sets at different depths remain distinct nodes. Give the depth-zero root
+$X$ a fictitious parent with zero submeasure. At each occupied non-root node put
+$\Delta_C=\ell_C-\ell_{C^-}$, and put
+$\Delta_X=\ell_X$. These are positive original-tape measures. For positive
+mass $d_C=\Delta_C(\Theta)$, preload a coordinate $W_C$ with probability law
+$\Delta_C/d_C$; for zero mass use the point-evaluation probability at one fixed
+original tape. There are countably many nodes, so these coordinates and an
+independent $U$ uniform on $(0,1)$ form one common product seed.
+
+At a reached node $C$, hand over $W_C$ if $U<a_C$; otherwise query the next
+actual prime. Reaching a non-root node implies $U\ge a_{C^-}$, so for every
+$A\in\mathcal F$ the unconditional node-output measure is
+
+$$
+\mathsf P\{a_{C^-}\le U<a_C,\ W_C\in A\}=\Delta_C(A),
+$$
+
+with root lower threshold zero; a zero-mass node has an empty output interval.
+The measures telescope along source $x$ through depth $m$ to $\ell_{C_m(x)}$.
+They are dominated by $\lambda_x$, and if their masses tend to one their limit
+is exactly $\lambda_x$. Finite records and output-event preimages are measurable
+interval and coordinate events, or countable unions of them. Thus the
+construction meets the stated handoff hypotheses on the original carrier.
+
+Define $N_x=\infty$ on a branch with no handoff. No handoff through depth $m$
+is equivalent to $U\ge a_{C_m(x)}$, including the root test before any query.
+Hence $\mathsf P\{N_x>m\}=1-a_m([x])$. Any endpoint ambiguities can be
+removed on the single seed-null union of $\{U=a_C\}$ over the countably many
+nodes. Surjectivity of $x\mapsto[x]$ onto the actual $Q$ gives (69.4).
+For a nonnegative integer-valued depth, with the extended value $\infty$ allowed,
+Tonelli's tail-sum identity gives
+
+$$
+\mathbb E[N_x]=\sum_{m\ge0}\mathsf P\{N_x>m\}.
+\tag{69.7}
+$$
+
+Bounding each term by $\Omega_g(m)$ proves (69.5); no exchange of supremum
+and sum as an equality is needed. Zero deficit at $m_0$ gives the final
+assertion. These are query-depth bounds for this specified realization, rather
+than bounds on all preparation transitions or on every possible preparation.
+$\square$
+
+Theorem 68.2 gives $a_m(q)\uparrow1$ separately at every $q$ for continuous
+selections into a locally order-controlled fixed range. Its depth can depend
+on $q$ and the tolerance. Uniform order calibration requires one depth for all
+$q$ at a given tolerance, and (69.5) additionally requires a summable modulus.
+Neither a uniform tail decay nor a finite uniform expected depth follows from
+the local block hypotheses of Section 68 alone.
+

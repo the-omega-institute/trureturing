@@ -1,0 +1,54 @@
+**Theorem 12.1.** Set $C_0=43200$. Fix any $u>0$. For any two points in $\Omega_u\times\mathbb R$, let $H=1+|\bar k|$ and $e_F=\|\Delta F_u\|_\infty$. Then
+
+$$
+\max\{H|\Delta t|,\ H|\Delta v|,\ u|\Delta k|\}
+\le C_0e_F.
+\tag{12.1}
+$$
+
+In particular the inverse of the reduced map is globally Lipschitz, with
+
+$$
+\|\Delta(t,v,k)\|_\infty
+\le C_0\max(1,1/u)e_F,
+$$
+
+uniformly over all positive shapes and all real slopes at this fixed $u$. For raw six-read data on this slice,
+
+$$
+\max\{|\Delta\zeta|,|\Delta\eta|,|\Delta t|,|\Delta v|,u|\Delta k|\}
+\le6C_0e.
+$$
+
+**Proof.** Subtract $(1+k^2)/4$ from each of the three quadratic brackets in (4.2). The resulting leading coefficients are positive, and their discriminants are respectively $-4345/4,-41/4,-201/4$. The completed-square criterion therefore gives
+
+$$
+|\mathcal J|\ge\frac{(p+q+r)(1+k^2)}4
+\ge\frac{u(1+k^2)}{12}
+\ge\frac{u(1+|k|)^2}{24}.
+\tag{12.2}
+$$
+
+Here $u\le3(p+q+r)$ and $(1+|k|)^2\le2(1+k^2)$.
+
+At any source point put $H_k=1+|k|$. The first two columns of the matrix in Section 4 have absolute entries at most $15H_k$ and $5H_k$. Its third column, in source coordinates, is
+
+$$
+(6p+4q+2r,\ 28p+4q+8r,\ 55p+5q+15r)^{\mathsf T}.
+$$
+
+The entries are bounded by $2u,28u/3,55u/3$, hence by $20u$. Each cofactor in either of the first two rows of the inverse has absolute value at most $600uH_k$; each in the last row is at most $150H_k^2$. The adjugate formula, including the three terms in each row sum, and (12.2) give, for every vector $w$,
+
+$$
+\begin{aligned}
+H_k\max\{|(DF_u^{-1}w)_1|,|(DF_u^{-1}w)_2|\}
+&\le43200\|w\|_\infty,\\
+u|(DF_u^{-1}w)_3|&\le10800\|w\|_\infty.
+\end{aligned}
+\tag{12.3}
+$$
+
+Here $DF_u^{-1}$ denotes the inverse derivative matrix at the given point. Apply these inequalities at the positive midpoint in (4.3). This proves (12.1). Equation (11.1) proves its raw-data consequence. ∎
+
+A bound on the determinant alone would not supply this estimate: the cofactor bounds and the exact finite midpoint identity are both used. No positive lower bound on $p/u$ or bound on $k$ enters Theorem 12.1.
+

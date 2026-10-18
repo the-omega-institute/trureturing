@@ -1,0 +1,49 @@
+## 8. 分裂谱、重根与窗口二次剩余约束
+
+**定义 A-8.1（有限域中的黄金根）。** 奇素数 $`p\ne5`$，在 $`\mathbb{\text{𝔽}}_{p^2}`$ 中取 $`\lambda_\pm=(1\pm\sqrt5)/2`$，满足和一、积负一。置 $`\epsilon_p=(5/p)`$。由相同初值及递归得到
+
+
+```math
+F_a=\frac{\lambda_+^a-\lambda_-^a}{\lambda_+-\lambda_-},\qquad
+L_a=\lambda_+^a+\lambda_-^a\quad\text{于该域， }a\ge0.
+```
+
+
+这些是 [A-L3，§2、Lemma 2.7] 的经典模数列中间表示；根的名称不供应量子相位操作。
+
+**命题 A-8.2（谱类型对秩任务的约束）。** $`\epsilon_p=1`$ 时两根在 $`\mathbb{\text{𝔽}}_p`$，$`\epsilon_p=-1`$ 时 Frobenius 交换两根。于是
+
+
+```math
+p\mid F_{p-\epsilon_p},\quad F_p\equiv\epsilon_p\pmod p,\quad L_p\equiv1\pmod p,
+\qquad
+\epsilon_p=\begin{cases}1&p\equiv1,4\pmod5,\\-1&p\equiv2,3\pmod5.\end{cases}
+```
+
+
+证明。Frobenius 固定基域，并保持特征多项式的根；分裂时逐根固定，非分裂时交换。代入和差式给后两同余。比值 $`\lambda_+/\lambda_-`$ 在分裂时的 $`p-1`$ 次幂为一，在非分裂时 $`p+1`$ 次幂为一，因此相应 $`F`$ 归零。二次互反律给 $`(5/p)=(p/5)`$，模五非零平方类为一和四，得表。证毕。
+
+**命题 A-8.3（特殊五切面的精确域）。** 模五写 $`M=3I+N`$，则 $`N^2=0`$。对 $`a\ge1`$，
+
+
+```math
+M^a=3^aI+a3^{a-1}N,\quad F_a\equiv a3^{a-1}\pmod5,\quad L_a\equiv2\cdot3^a\pmod5.
+```
+
+
+$`a=0`$ 单独有 $`M^0=I,F_0=0,L_0=2`$。故 $`5\mid F_a`$ 当且仅当 $`5\mid a`$，且五不整除任何 $`L_a`$，$`a\ge0`$。
+
+证明。特征多项式模五为 $`(t-3)^2`$，Cayley–Hamilton 得 $`N^2=0`$。二项式展开只有前两项，非对角元给 $`F_a`$，$`\mathrm{tr}N=0`$ 给迹。三为单位，归零与指标五整除等价。没有在 $`a=0`$ 写含 $`3^{-1}`$ 的未声明表达式。证毕。
+
+**命题 A-8.4（同一二次式对因子角色的限制）。** 对奇素数 $`p`$ 及 $`a\ge1`$，若 $`p\mid F_a`$，则 $`(-1/p)^a=1`$。若 $`p\mid L_a`$，则 $`p\ne5`$ 且
+
+
+```math
+\left(\frac5p\right)=\left(\frac{-1}p\right)^{a+1}.
+```
+
+
+所以奇 $`a`$ 的 Fibonacci 因子使负一为平方，Lucas 因子使五为平方；偶 $`a`$ 的 Lucas 因子要求五与负一有同一平方类。
+
+证明。若 $`F_a`$ 归零，二次式给 $`L_a^2=4(-1)^a`$，且右侧非零，取 Legendre 符号。若 $`L_a`$ 归零，五切面已排除，gcd 界排除 $`F_a`$ 同时归零；取 $`-5F_a^2=4(-1)^a`$ 的符号并除去平方因子得第二式。这是第六节经典恒等式对同窗因子判据的直接消费。证毕。
+

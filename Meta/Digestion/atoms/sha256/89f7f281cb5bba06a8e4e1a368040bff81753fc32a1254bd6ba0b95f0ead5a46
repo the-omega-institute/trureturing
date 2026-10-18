@@ -1,0 +1,6 @@
+**约定 55.3（原载体之间的运输边界）。** `KBonacciAcquisition.OriginalAcquiredTrace` 的来源是原始允许 Boolean 块的实际历史，记录同时保留其初始与当前 `LiveRecord`；`OriginalExecutionBridge.NativeExecute` 按发出的块推进记录并测试端点；`WindowChargeInverse` 与 `PhysicalWindowDecoder` 使用有限模相位和物理窗口电荷，从已发出档案解码初始记录。本章来源却是不可变原树，动作是任意字面地址，回复为四值，祖先坐标是逆替换次数。块操作、推进后端点和模相位都没有给（JM.152）的树位置、同词比较或原始性；不存在这些对象、动作、回复和目标的明确对应时，那些解码与电荷界不运输为（JM.159）或（JM.165）。
+
+[记录单纯形与高阶相容卷](AURIC_FIB_ATOM_RECORD_SIMPLEX_AND_HIGHER_ORDER_COMPATIBILITY.md)的载体是五模式概率及附加条件读口；其共同来源重心和高阶相容关系不构成原树地址或替换祖先的实现。[有效付费历史证书卷](RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_PAID_HISTORY_CERTIFICATES.md)第12–15章的共同先验、条件风险、逐字母生成和支付口也不具备此处的不可变树及固定词合同。本章不借这些卷的随机风险界推出确定性取得下界。
+
+Kozen，*On the Myhill–Nerode Theorem for Trees*，[作者原文](https://www.cs.cornell.edu/~kozen/Papers/mn.pdf)的单变量上下文代入和有限指数同余仍是第50章构造任务商的成熟背景。构造上下文的任务充分性与实际地址前缀的目标证书是不同的关系；本章的证明使用实际比较来源、准确回复及原生重放，而非从上下文同余取得操作权限。
+

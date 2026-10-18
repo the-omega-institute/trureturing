@@ -1,0 +1,33 @@
+**Lemma 28.11 (Uniform testing bound without relative entropy).** On the finite actual word support, the local Gram vectors are linearly independent for every phase: in full support use the successive earliest coordinates of $x,Sx,S^3x$ together with the two length-two vectors; in sparse support use $x,Sx,S^2x,e_4$ together with the two length-two vectors. Consequently there is $\lambda_p>0$ such that every compared noisy pair state is at least $\lambda_p I$ on its common support. If $\rho,\sigma$ are two such states, $\Delta=\rho-\sigma$, and $N\|\Delta\|_2^2\le 2\lambda_p$, then
+
+$$
+T(\rho^{\otimes N},\sigma^{\otimes N})
+\le\frac{\sqrt N\,\|\Delta\|_2}{2\sqrt{\lambda_p}},\qquad
+T=\frac12\|\cdot\|_1 .
+\tag{28.13}
+$$
+
+Thus the equal-prior Helstrom error is at least $(1-T)/2$, uniformly over all $\delta\le\delta _0<1/4$ whenever the right side is chosen smaller than $1-2\delta_0$.
+
+**Proof.** The stated earliest nonzero coordinates give independence; compactness of the phase torus gives a positive minimum eigenvalue for each local Gram matrix. Product Gram matrices have the product lower bound on the full six- or eight-word support. Count rotations preserve that bound, and both the common twirl and the angle average are convex unitary averages, so the same bound holds for the actual noisy states on that support. The law may be any probability measure, including the atomic laws in the lower-bound construction.
+
+Let $X=\sqrt\rho-\sqrt\sigma$. The exact Sylvester identity is
+
+$$
+\sqrt\rho\,X+X\sqrt\sigma=\rho-\sigma .
+$$
+
+Hilbert–Schmidt Cauchy–Schwarz and $\rho,\sigma\ge\lambda_pI$ give $\|X\|_2\le\|\Delta\|_2/(2\sqrt{\lambda_p})$. Since
+
+$$
+\operatorname{Tr}\sqrt\rho\sqrt\sigma=1-\frac12\|X\|_2^2,
+$$
+
+the root fidelity $F_r(\rho,\sigma)=\|\sqrt\rho\sqrt\sigma\|_1$ obeys $F_r\ge1-\|\Delta\|_2^2/(8\lambda_p)$. Root fidelity tensorizes. Bernoulli's inequality and the Fuchs–van de Graaf convention
+
+$$
+1-F_r\le T\le\sqrt{1-F_r^2}
+$$
+
+give (28.13) when the displayed smallness condition holds. Helstrom's equal-prior formula is $P_{\rm err}^{\rm opt}=(1-T)/2$. This argument uses no relative-entropy, chi-square or concentration inequality. $\square$
+

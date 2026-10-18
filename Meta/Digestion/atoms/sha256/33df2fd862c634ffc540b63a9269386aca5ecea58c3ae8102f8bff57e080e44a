@@ -1,0 +1,40 @@
+## 358. A common upper-axis bound and c<5m/12
+
+Let p=sqrt((m−1)(u−1)) and q=sqrt((m+1)(u+1)). The positive half-angle product from (357.2) gives
+
+    pq≤v²+c²+2vc(q−p)/(q+p)≤v²+c²+2vc/m.         (358.1)
+
+The last step uses u>m and (q−p)/(q+p)≤1/m. Since pq>(m−1)(u−1),
+
+    u<U=1+[v²+c²+2vc/m]/(m−1).
+
+The upper gap and v≤m−2 therefore give
+
+    z<R(m,c):=m+2+[(m−2)²+c²+2c(m−2)/m]/(m−1).  (358.2)
+
+Write
+
+    D_t(x)=x²+m²+c²+2xmc−1,
+    N_t(z,d)=c(z+d)+m(zd+c²−m²+1),
+    C_t(z,d)=N_t(z,d)/sqrt(D_t(z)D_t(d)).
+
+C_t strictly increases in z and d for m>c>1. For example the sign numerator of its z derivative is
+
+    (m²−1)[c(dz+m²−c²+1)+m(d+z)]>0.              (358.3)
+
+Set d1=m−c−1. If c≥5m/12, compare tau to z=R,d=d1. The exact polynomial
+
+    Q_C(m,c)=m²(m−1)²[D_t(R)D_t(d1)−4N_t(R,d1)²]
+
+is positive throughout m>4,5m/12≤c<m−2. The full finite positivity certificate is specified in Section 364. Hence |C_t(R,d1)|<1/2, while the actual tau cosine is strictly smaller. This contradicts (357.5). Thus
+
+    1<c<5m/12<4m/9.                               (358.4)
+
+R increases with c, and the exact identity
+
+    9m/4−R(m,4m/9)=(17m²−45m−72)/(324(m−1))>0
+
+holds for m>4; the numerator at m=4+b is 17b²+91b+20. Consequently
+
+    v,z,u<9m/4.                                   (358.5)
+

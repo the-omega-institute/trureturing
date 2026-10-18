@@ -1,0 +1,34 @@
+**Corollary 4.3 (the surviving SI sum on this slice).** Use SI
+Definitions 9.1 and 10.9 for the common-support intervals and their
+actual incidence quantities. On seven coordinates with threshold four,
+put
+
+$$
+\mathcal L_*=
+\{B=(a,b):b-a\ge5,\ b>4\},\qquad
+\mathcal A_*=\mathcal B\setminus\mathcal L_*.
+$$
+
+Then every qualifying graph satisfies the strengthened collective bound
+
+$$
+\sum_{B\in\mathcal L_*}(D_B-E_B)
+\le E_{\mathrm{cut}}+
+\sum_{B\in\mathcal A_*}(E_B-D_B)
+-\max(0,b_{1,1}-2).
+\tag{TC.7}
+$$
+
+Proof. The exact disjoint-pool accounting [SI, Theorem 9.3][SI] is
+
+$$
+|Q_{\mathrm{live}}|-16=
+E_{\mathrm{cut}}+\sum_{B\in\mathcal B}(E_B-D_B).
+$$
+
+Substitute (TC.5) and rearrange. SI Section 10 already supplies
+span-four compensation, separation for early-ending intervals of any
+length, and nonnegativity of the terms indexed by $\mathcal A_*$.
+Those results are reused here. No separate nonnegativity assertion for
+each interval in $\mathcal L_*$ is needed or proved. $\square$
+

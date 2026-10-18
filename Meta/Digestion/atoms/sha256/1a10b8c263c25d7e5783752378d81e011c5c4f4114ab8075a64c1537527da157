@@ -1,0 +1,23 @@
+### 2.1 Proof of the archive fiber
+
+For $A\subseteq\{1,\ldots,n\}$ set $Z_A=\bigotimes_i Z^{\mathbf1_{i\in A}}$ and $s_A=\prod_{i\in A}s_i$. Expanding each factor gives
+
+$$
+U_s^m=\sum_{A\subseteq\{1,\ldots,n\}}
+\cos(m\theta)^{n-|A|}
+\big(i\sin(m\theta)\big)^{|A|}s_A Z_A.
+\tag{2.7}
+$$
+
+In the unnormalized Pauli basis, the process matrix of a unitary with coefficient vector $u$ is $uu^\dagger$: this follows by expanding $U\rho U^\dagger$ on both sides. It is the process-matrix convention and unitary coefficient formula in [Korotkov][KOR], Section II, equations (1)–(4), also used by [SIC], Convention 2.1. Thus the diagonal weight of $Z_A$ in (2.7) is
+
+$$
+\cos(m\theta)^{2(n-|A|)}\sin(m\theta)^{2|A|},
+$$
+
+independent of $s$, and every other Pauli label has diagonal weight zero. Summing over the $\binom nw$ subsets of size $w$ proves (2.1), for all integer times, including $m=0$.
+
+Apply the existing Lemma 3.1 and Theorem 4.1 of [SIC]. They say that each allowed $F_k^{\mathcal F}$ is a fixed functional of these weights, independent of the product SIC frame. Therefore $\mathcal H(s)$ is identical for all $s$. The existing Corollary 6.2 of that volume recovers the weight vector from the hierarchy; neither its inversion nor its joint-simplex description is reproved here. Their application at every $m$ identifies the sequence $(Q_w(m;s))_{m,w}$.
+
+A score-only decision has a source-independent answer distribution $a(s)$ with $\sum_s a(s)=1$. Its uniform success is $2^{-n}\sum_s a(s)=2^{-n}$, and its minimum source success is at most this average. Uniform guessing attains the same success at every source. Allowing a failure answer can only reduce the sum, so does not improve either optimum. Distinctness of all the channels is established in the next part.
+

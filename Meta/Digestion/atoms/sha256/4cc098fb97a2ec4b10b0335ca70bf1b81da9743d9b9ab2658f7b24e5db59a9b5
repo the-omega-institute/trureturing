@@ -1,0 +1,49 @@
+### 定理 29.3（FIB 粗粒化的 CPTP 实现）
+
+\(\mathcal E_W\) 是 CPTP，且对所有 \(p\in\Delta(\Sigma)\) 有
+
+\[
+\mathcal E_W(\iota_\Sigma(p))
+=
+\iota_A(Wp),
+\]
+
+其中
+
+\[
+(Wp)_a
+=
+\sum_{s\in\Sigma}W(a\mid s)p_s.
+\]
+
+#### 证明
+
+由随机核归一化，
+
+\[
+\sum_{a,s}K_{a,s}^\ast K_{a,s}
+=
+\sum_s
+\left(\sum_aW(a\mid s)\right)
+|s\rangle\langle s|
+=
+I_{H_\Sigma}.
+\]
+
+所以 \(\mathcal E_W\) 是 CPTP。对角状态代入定义：
+
+\[
+\begin{aligned}
+\mathcal E_W(\iota_\Sigma(p))
+&=
+\sum_{a,s}
+W(a\mid s)p_s|a\rangle\langle a|\\
+&=
+\sum_a(Wp)_a|a\rangle\langle a|\\
+&=
+\iota_A(Wp).
+\end{aligned}
+\]
+
+证毕。
+

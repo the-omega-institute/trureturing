@@ -1,0 +1,37 @@
+**Theorem 32.3 (exact pure replacement with a strict height estimate).**
+Under Assumption 32.1, if $S\le1/100$, there is a measure
+$\widehat\rho_0$ on at most six directed circle points such that
+
+$$
+\begin{gathered}
+\int1\,d\widehat\rho_0=P,\quad
+\int x\,d\widehat\rho_0=m,\quad
+\int xx^T\,d\widehat\rho_0=\Sigma,\quad
+\int|u|\,d\widehat\rho_0=k_0,\quad
+\int\ell_-\,d\widehat\rho_0>\varepsilon_0.
+\end{gathered}
+\tag{FC.132}
+$$
+
+Keeping the entire original saturated endpoint measure $\rho_1$, the
+comparison $\widehat\pi=\widehat\rho_0\otimes\delta_0+
+\rho_1\otimes\delta_1$ has exactly the original $\int\Gamma$ and
+$K(\pi)$, legal pointwise capacity, and
+
+$$
+J_t(\widehat\pi)-J_t(\pi)
+>2\bigl(\varepsilon_0-H_-(\pi)\bigr),\qquad
+\Delta_\pi=R_t(r)-J_t(\pi)
+>2\bigl(\varepsilon_0-H_-(\pi)\bigr).
+\tag{FC.133}
+$$
+
+The right side need not be positive when $H_-(\pi)>\varepsilon_0$.
+This is an unrestricted comparison, with no claim of preserving the
+number of actual labels. For a nonfinite coefficient measure,
+$\widehat\pi$ retains all of $\rho_1$ algebraically. An admitted finite
+physical comparison with the same full target, exact $K$ and the same
+replacement value $J_t(\widehat\pi)$ follows from GC Proposition 12.2; it need
+not retain the entire saturated measure. The explicit construction and
+strict estimate are proved in §33.
+

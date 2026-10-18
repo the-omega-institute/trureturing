@@ -1,0 +1,40 @@
+**Lemma 2.2 (finite transfer collision).** Suppose $\mathsf T_a$ is invertible and put $\mathsf H=\mathsf T_a^{-1}\mathsf C$. If $\mathfrak b(S,\mathsf H S)$ takes both strict signs on positive rank-one sources, there are collisions with slopes $a,a+\epsilon$ for every sufficiently small $\epsilon>0$, using the whole drifts (2.3). The sources are distinct. At $a=0$ every sampled gain in these collisions is positive.
+
+**Proof.** Choose signed sources $S^+,S^-$ and their positive factors $f^\pm,\ell^\pm$ from (1.2). Define
+$$
+f(\theta)=(1-\theta)f^++\theta f^-,\qquad
+\ell(\theta)=(1-\theta)\ell^++\theta\ell^-,
+\qquad S(\theta)=f(\theta)\ell(\theta),\quad 0\le\theta\le1.
+$$
+This is an actual positive rank-one path of degree at most two. If $m_f,m_\ell$ are the minima of the entries of the two endpoint columns and rows, then every source entry is at least $m=m_fm_\ell>0$. Write
+$$
+S(\theta)=V_0+\theta V_1+\theta^2V_2,\qquad
+K=1+\max_{a,b}\sum_{j=0}^2|(\mathsf H V_j)_{ab}|.
+$$
+Here $V_0=f^+\ell^+$, $V_1=(f^--f^+)\ell^++f^+(\ell^--\ell^+)$, and $V_2=(f^--f^+)(\ell^--\ell^+)$. Thus all entries of $\mathsf H S(\theta)$ have magnitude less than $K$, and its determinant has magnitude at most $2K^2$. Let
+$$
+\eta=\min\{\mathfrak b(S^+,\mathsf H S^+),-\mathfrak b(S^-,\mathsf H S^-)\}>0.
+$$
+For any
+$$
+0<\epsilon<\min\{m/(2K),\eta/(4K^2)\},
+\tag{2.5}
+$$
+the polynomial
+$$
+h_\epsilon(\theta)=\mathfrak b(S(\theta),\mathsf H S(\theta))
++\epsilon\det(\mathsf H S(\theta))
+$$
+has opposite strict endpoint signs. It has degree at most four, is nonzero, and has a root in $(0,1)$. A nonzero polynomial has finitely many distinct roots, by successive division by root factors. Its smallest root in that interval is therefore an exact finite algebraic choice $\theta_\epsilon$.
+
+Set $S_1=S(\theta_\epsilon)$ and $S_0=S_1+\epsilon\mathsf H S_1$. Every entry of $S_0$ exceeds $m/2$. Equation (2.4) makes $\det S_0=0$, so both sources are positive rank one. Moreover
+$$
+\mathsf T_a S_0=\mathsf T_a S_1+\epsilon\mathsf C S_1
+=\mathsf T_{a+\epsilon}S_1.
+$$
+Equation (2.3) now proves equality of all five original readings, including the initial one. The sources differ: the four coordinates $i\operatorname{tr}(A_iS_1)$ of $\mathsf C S_1$ are strictly positive, so $\mathsf H S_1$ cannot vanish. The slopes differ as well.
+
+Every source has Proposition 1.2's original realization, not an independent lifted realization. Any additional positive upper bound can be imposed on $\epsilon$. If $a=0$, the gains are one and $1+\epsilon i>0$. More generally $|a|<1/16$ and $\epsilon<1/16$ ensure $1+ki>0$ for both slopes at $i\le4$. ∎
+
+The matrices and linear maps in this section are proof devices. They do not supply extra observations or sources.
+

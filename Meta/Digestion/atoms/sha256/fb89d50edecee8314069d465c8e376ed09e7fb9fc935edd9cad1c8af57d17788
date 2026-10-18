@@ -1,0 +1,31 @@
+**Proposition 15.1 (full ratio image for each sign).**
+Fix any $H\in(0,1/2)$ and any $a,\varepsilon>0$.
+Across distinct datasets obeying the explicit window of Proposition 14.1,
+for each prescribed sign of $\kappa\ne0$ the exact ratio image is $(0,\infty)$.
+Here intervals, poles and nonzero parameters may differ between datasets;
+each is fixed before its own critical limit. The endpoint zero is not
+attained and there is no finite upper endpoint.
+
+Proof. Positivity and finiteness follow from (14.1). Given any $R_*>0$,
+put $x=\sqrt{R_*}/\pi$, $t_0=\min\{x/2,1/2\}$ and
+$L=H/[2(x+1)]$. For the prescribed sign choose $\kappa=\pm\delta$
+with $\delta>0$ small, and set
+
+$$
+l=\alpha_\kappa+(x-t_0)L,\quad
+k_0=\alpha_\kappa+xL,\quad
+u=\alpha_\kappa+(x+1-t_0)L.
+\tag{15.1}
+$$
+
+At $\delta=0$ these endpoints satisfy $0<l<k_0<u<H/2$.
+By continuity, for all sufficiently small positive $\delta$ they satisfy
+$2\delta<\min\{l/4,(H-u)/2,H/4\}$. Taking the fixed radius
+$b=2\delta$ proves all original explicit admission restrictions,
+and Proposition 14.1 supplies the larger analytic neighbourhood.
+The original means are $X=Y=H+\kappa$ and $Z=1-2H$; no jet is
+chosen independently. Since $k_0-\alpha_\kappa=xL$, the ratio is
+exactly $R_*$. This proves surjectivity for each sign, including all
+intermediate values, while zero requires the impossible $d_0=0$.
+$\square$
+

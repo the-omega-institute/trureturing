@@ -1,0 +1,54 @@
+**Definition 208.10 (Earlier coverage and original-source boundary).**
+The fair/common-suffix mechanisms remain those of 198.2 and 203.6;
+the fixed two-late minima and zero-cost rays remain those of
+204.3–204.4. The lower bound (208.29) is 206.7's $d_0$.
+The retained early-credit restrictions of 205.5–205.6 and the
+fixed-projection results of §207 keep their own hypotheses.
+None of (208.6), (208.13), (208.24) or (208.32) asserts a
+sufficient characterization of unrestricted $E_N$.
+
+In particular the portion of 208.9 with every $g_j\le d$ is
+already covered by the zero-cost rays of 204.4 with one signed
+residual charge at most $d$. The same-$Q$ stock minimum does not
+assert new quotient membership for that portion. For $r>d$, no
+exclusion from the complete old convex, signed or zero-core closure
+is asserted either.
+
+The original countable labeled source, static prime replies,
+unchanged consumer and nonatomic targets are exactly those in
+207.1 and [110.1–110.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION.md#110-exact-closed-cap-transport-on-the-original-countable-source).
+The original sequences remain positive, monotone and vanishing;
+zero finite score totals place no zero-amplitude restriction on them.
+Only an actual normalized finite probability configuration satisfying
+all of (207.3) is supplied to 110.2. That theorem retains full-carrier
+outputs and arbitrary addresses in its necessary direction, and its
+compact finite-catalog limit retains the exact closed cap. In its
+sufficient direction one source-independent uniform seed selects
+the whole schedule and terminal table before replies. Two class
+configurations can use partitions of this same seed and their common
+refinement. Outputs need not agree seedwise. Handoff is actually
+finite, advice is zero, and the hard budget remains at most two
+actual requests, including repetitions and ignored replies.
+$N$ obtains its preselected replies; $O$ uses its increasing
+preselected schedule and stops at the first queried zero.
+
+Every multiple-zero word and independent pair demand remains in
+that finite configuration. The exact actual-tail identity (207.51)
+includes $a_n=\varepsilon$, small active lengths and the cap-one
+endpoint; the finite positive word is not an infinite positive
+source. The coefficient conditions $c\ge H$ and $\beta\le1$ retain
+all the probability-vector and degree hypotheses of 109.1.
+Neither a score measure nor a deterministic
+table maximizing its support is thereby a feasible probability
+configuration or acquired information.
+
+The all-profile, low-terminal, full-carrier comparison (207.52)
+remains unresolved, as does the critical $\tau=4$ affordability
+case omitted by 208.5. These results supply actual-input necessary
+relations and the stated restricted constructors and minima.
+They supply neither a universal affordable selector nor an original
+common-seed $N_2$ attainer together with a lower certificate against
+every original arbitrary-address $O_2$ competitor. In particular
+112.2's obstruction to preserving one law does not exclude a different
+stopped law at the same cap.
+

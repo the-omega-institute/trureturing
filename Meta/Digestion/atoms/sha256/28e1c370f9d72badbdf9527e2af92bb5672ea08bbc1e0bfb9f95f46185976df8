@@ -1,0 +1,61 @@
+**Theorem 9.1 (posterior equivalence for every finite lawful policy).**
+For every finite policy in Definition 2.1, the posterior law of
+$K_\tau$ given its seed and record is equivalent to $\pi$, almost
+surely. It has support $[l,u]$ and gives positive mass to every
+nonempty open subinterval of $I$.
+
+Proof. First take exactly $n$ and the completed policy. Fix a seed and
+write its record in circle-increment coordinates
+$z_1,\ldots,z_n\in[-\pi,\pi)$. The recursively determined times
+are fixed at that record, with positive spacings
+$\Delta_j=T_j-T_{j-1}$. Conditional on the height path, the same
+sequential argument as Lemma 5.2, now on the whole interval and then
+wrapped, gives the likelihood
+
+$$
+L_z(K)=\prod_{j=1}^n q_{V_j(K)}(z_j),\qquad
+q_V(z)=\sum_{r\in\mathbb Z}
+\frac{e^{-(z+2\pi r)^2/(2V)}}{\sqrt{2\pi V}},\qquad
+V_j(K)=\int_{T_{j-1}}^{T_j}a_\kappa(K_s)ds.
+\tag{9.1}
+$$
+
+The map between wrapped samples with their known initial value and
+circle increments is bijective. The times are determined by preceding
+increments and seed; they add no independent likelihood factor.
+For this fixed record,
+$a_-\Delta_j\le V_j\le a_+\Delta_j$. The periodized normal is
+strictly positive and continuous on the circle times any compact
+positive variance interval. Its series converges uniformly there,
+by the Gaussian tail. Hence there are finite constants
+$0<c(z,U)\le C(z,U)<\infty$ bounding $L_z(K)$ over every height
+path. These constants need not be uniform across records with tiny
+spacings.
+
+Disintegrate the unchanged height-path law over its endpoint
+$K_\tau\sim\pi$. Independence of the seed and height and Bayes'
+formula give a posterior density
+
+$$
+\frac{d\pi_{U,z}}{d\pi}(k)
+=\frac{\mathbf E[L_z(K)\mid K_\tau=k]}{\mathbf E L_z(K)}.
+\tag{9.2}
+$$
+
+The bounds just established make it finite and strictly positive for
+$\pi$-almost every $k$, for almost every seed and record. Thus it is
+equivalent to $\pi$. For a variable-count policy use the disjoint
+union of terminal record branches. Membership in a branch is a
+function of the seed and queried history alone. Its indicator is
+independent of the height coordinate at a fixed record and cancels
+from (9.2) on valid branches. The same positive finite product proof
+therefore applies for each possible terminal count. Almost surely
+lawful versions are covered by Lemma 2.2.
+
+The sine-squared prior has positive density throughout $I$ and support
+$[l,u]$, which proves the support statements. Equivalence implies a
+nondegenerate posterior and positive expected variance for each
+individual finite policy. The stronger positivity of the infimum
+over all policies follows separately from (7.2); individual positivity
+alone would not prove it. $\square$
+

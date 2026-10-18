@@ -1,0 +1,46 @@
+**Definition 70.1 (Actual request cost and intrinsic selected-law modulus).**
+Retain exactly the countable labeled source $X$, static integer $N(x)$,
+prime enumeration $(p_i)$, zero advice and original-tape handoff semantics of
+Definition 45.1 and Theorem 69.2. Only signatures of actual sources are
+present. Write $C_m(x)$ for the occupied depth-$m$ prime-prefix cylinder,
+including $C_0(x)=X$. A lawful preparation $A$ may choose arbitrary prime
+addresses adaptively from its one shared seed and the actual preceding answers.
+Let $K_{A,x}$ be the number of prime requests before finite handoff at $x$,
+counting repetitions, and put $K_{A,x}=\infty$ on every nonhandoff branch,
+even if that branch makes only finitely many requests. Define
+
+$$
+T_A(k)=\sup_{x\in X}\mathsf P\{K_{A,x}>k\},\qquad k\in\mathbb N_0.
+\tag{70.1}
+$$
+
+Uniform tightness of actual request counts means $T_A(k)\to0$. It supplies
+no deterministic ceiling on preparation transitions or requested prime indices.
+The seed law has no dependence on the actual source.
+
+For any selected family of probabilities $(\lambda_x)_{x\in X}$ on the
+unchanged nonempty measurable tape carrier $(\Theta,\mathcal F)$, enumerate
+the actual labels without repetitions and put
+
+$$
+\begin{aligned}
+\tau_\lambda&=\sum_{i\ge1}2^{-i}\lambda_{x_i},
+& f_x^\lambda&=\frac{d\lambda_x}{d\tau_\lambda},\\
+\ell_C^\lambda&=\left(\inf_{x\in C}f_x^\lambda\right)\tau_\lambda,
+& a_C^\lambda&=\ell_C^\lambda(\Theta),\\
+\Omega_\lambda(m)&=\sup_{x\in X}\left(1-a_{C_m(x)}^\lambda\right).
+\end{aligned}
+\tag{70.2}
+$$
+
+Here $C$ is a nonempty occupied prefix cylinder; choose nonnegative measurable
+versions of all the densities. The finite-measure
+Radon--Nikodym and countable-infimum argument of Theorem 46.4 makes
+$\ell_C^\lambda$ the intrinsic greatest common submeasure of
+$\{\lambda_x:x\in C\}$. Thus its measure and mass do not depend on the
+enumeration or density versions. This is the selected family's own tape
+mixture, not a law on sources and not the original-target mixture $\sigma$.
+In particular no assumption $\lambda_x\ll\sigma$ is imposed. Uniform order
+calibration means $\Omega_\lambda(m)\to0$; when the selected laws satisfy
+Definition 69.1 it is exactly its representative-independent modulus.
+

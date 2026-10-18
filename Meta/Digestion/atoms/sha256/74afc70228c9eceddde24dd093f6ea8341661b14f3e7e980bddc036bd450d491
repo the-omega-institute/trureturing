@@ -1,0 +1,39 @@
+**Definition 1.2 (the entire common-source fiber).** Write
+
+$$
+\begin{aligned}
+\mathscr H_I=\{(t,\mathbf n):\ &t\in\mathcal T,\quad
+\mathbf n\in\mathbb N^m,\quad 0=n_0\le\cdots\le n_{m-1},\\
+&R_{P_i}(\rho^{n_i}t)=R_i\quad(i<m),\\
+&(\rho^{n_i}t)|_p\ \epsilon\ (\rho^{n_j}t)|_q
+ \quad(((i,p),(j,q),\epsilon)\in\Lambda)\}.
+\end{aligned}
+\tag{SFP.2}
+$$
+
+The link line includes both reachedness requirements. The same $t$ occurs
+everywhere. No upper bound on epochs, source size, source depth or atomic
+age is imposed. Ties, repeated endpoints, reflexive signs, zero holes,
+empty link lists and empty fibers are included.
+
+For a validated row write its exterior as $C_i$, its holes as $H_i$,
+and its classes as $\mathcal B_i$. Use one variable $x_{i,b}$ for every
+class, shared at all of that class's occurrences, and set
+
+$$
+\begin{aligned}
+W_i(\mathbf x)&=C_i[(x_{i,[p]})_{p\in H_i}],\\
+\Psi_I(\mathbf n,t,\mathbf x)&=
+\bigwedge_{i<m}\rho^{n_i}t=W_i(\mathbf x)
+\ \land\ \bigwedge_i\bigwedge_{b\ne c}x_{i,b}\ne x_{i,c}
+\ \land\ \bigwedge_{\Lambda}x_{i,[p]}\ \epsilon\ x_{j,[q]}.
+\end{aligned}
+\tag{SFP.3}
+$$
+
+[NCE, Proposition 2.2][NCE] supplies the equivalence between (SFP.2)
+and the existence of the class valuation in (SFP.3), at the same original
+$t$ and the same chronological tuple. That valuation is unique once
+$(t,\mathbf n)$ is fixed. Equation (SFP.3) is the input to the construction,
+not its proposed output representation.
+

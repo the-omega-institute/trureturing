@@ -1,0 +1,93 @@
+**Proposition 20.2 (common preparation and unchanged original past).**
+Fix once an auxiliary height $z\in(0,c)$ distinct from $a$. Starting
+from the same positive preparation at $a$, use a unit fixed-height
+phase leg of increment $2\pi m$, followed by the four-unit rectangle
+at $z$ with phase height
+
+$$
+B_{\beta,m}
+ =\frac{2c(\pi m-\beta)-2\pi ma}{z-a}.
+\tag{PR.78}
+$$
+
+Append the selected programme (PR.75), then on survival the prescribed
+one-unit horizontal leg $a\to l$. This is an actual common-source
+construction for every real $\beta$ and signed $m$.
+
+Proof. The first five units are Proposition 2.2 with $k=a$ and auxiliary
+$z$. The signed weights (PR.2) give the real residual (PR.5)
+coordinate by coordinate, so every state in (PR.61) is reached from the
+same preparation. All its phase variation
+$2\pi|m|+2|B_{\beta,m}|$ is finite, without a uniform bound over the
+family. The new legs have matching heights and zero relative phase.
+At each actual join of duration $T$, the composition supplier gives
+$\chi(T+s)=\chi(T)+\chi_{\rm tail}(s)-\chi_{\rm tail}(0)$,
+leaves the entire earlier prefix pointwise unchanged, and adds the
+weighted integrals and real winding. Thus no old lift is passed to the
+observer. Every selected control is positive and piecewise affine and
+satisfies both original regularities.
+
+If these first five units also use the canonical instrument, their actual
+live mass is
+$s_*(a,z)s_*(z,a)>0$, independent of $\beta,m$.
+All preceding failures keep their original event and absorbing $f$.
+Every yield measured from preparation is multiplied by this live mass;
+no failure is retried to manufacture the stated initial cut. $\square$
+
+**Resource statement 20.3 (finite parameters, margin and time).** For the
+attainment at charge bound $C$, all its future acquisition heights lie
+in $[a,b(\ell)]$. A common probability-support margin is
+$\min\{a,c-b(\ell),Z\}>0$. Each programme has duration two, height
+speed at most $d(\ell)$, height variation at most $2d(\ell)$,
+and zero new phase variation. Its a.e. velocity has essential total
+variation $2d(q)$ on the interior two-leg interval. If the velocity is
+padded by zero before and after the excursion, the two exterior jumps
+increase this to $4d(q)$. Joins to a nonzero earlier or later velocity
+must instead count their actual velocity jumps. The tail has duration
+one, speed $|l-a|$, height variation $|l-a|$, and margin
+$\min\{a,l,c-a,c-l,Z\}$. These are future-stage costs, not bounds
+on the arbitrary old phase history.
+
+The charge frontier alone supplies no sharp time/precision tradeoff.
+For example the two-unit construction has
+
+$$
+c-b(\ell)=\frac{c\ell(c-a)}{a+\ell(c-a)}\longrightarrow0
+\quad\text{as }\ell\downarrow0.
+\tag{PR.79}
+$$
+
+It attains vanishing error with a shrinking margin and unbounded charge,
+not with every resource fixed. More generally, if every acquisition path
+also has margin at least $\eta>0$, speed at most $v$, and duration at
+most $T$, then
+$\Lambda\leq\operatorname{TV}(k)/\eta\leq vT/\eta$.
+Substituting this upper bound for $C$ in (PR.73) proves the necessary
+condition $vT/\eta\geq\log((1-\delta)/\delta)$ for the stated error.
+This condition is not asserted sharp in those extra resources.
+Repeating a fixed interior excursion can increase charge without losing
+its margin, but its time, height variation and velocity variation then
+grow with the number of executed excursions.
+
+The seed needs $\lceil\log_2|\mathcal U|\rceil$ classical storage bits
+in a binary register; the attaining observer retains one bit. The source
+separately retains its old parity bit, its received copy of the seed,
+comparison/pending-programme state and the installed path parameters.
+It also carries the old signed winding/phase programme. These source
+registers and the seed delivery route are resources; they are not newly
+acquired observer assistance. The active specimen has the credited live
+qutrit representation and a stopped sector, while the seed, flags,
+source/epoch tags, permissions, target, clock/reference, calibration,
+controller and every actual archive are additional resources.
+
+For rational $c,a,\ell,P,B$ in the allowed region, (PR.71) and (PR.75)
+have finite rational descriptions; the exact charge is the specified
+logarithm of a rational likelihood. General real frontier points require
+their actual exact real constants, which need not have finite effective
+descriptions. Old arbitrary $\beta,m$ have no uniform programme-width
+bound. Calibrated preparation directions, prescribed waveform execution,
+Kraus operations, blanks and exact time/mode recording remain the declared
+ideal services. Finite symbolic description is not exact physical
+execution at finite precision. No noisy-source certification, finite-time
+clock implementation or approximation guarantee follows here.
+

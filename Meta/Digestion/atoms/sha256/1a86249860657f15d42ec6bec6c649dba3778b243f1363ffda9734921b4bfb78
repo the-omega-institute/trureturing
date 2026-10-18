@@ -1,0 +1,10 @@
+**定义 31.1（第三分圆多项式与相位坐标）。** 取
+
+$$
+\Phi_3(t)=t^2+t+1,\qquad
+\omega=-\frac12+\frac{\sqrt3}{2}i,
+\qquad z_Q(a,b)=a-b\omega.
+$$
+
+有 $\omega^2+\omega+1=0$、$\omega^3=1$、$\overline\omega=\omega^2$。经典第三分圆表达式可参见钉版 Mathlib 的 [Polynomial.cyclotomic_three](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/RingTheory/Polynomial/Cyclotomic/Basic.lean)。经典 Eisenstein 整数环为 $\mathbb Z[\omega]$，其范数 $N(m+n\omega)=m^2-mn+n^2$ 见 Greg McShane，[*Eisenstein integers and equilateral ideal triangles*, arXiv:2403.14375v1，§1.1](https://arxiv.org/abs/2403.14375v1)。这一引用只承担整数环范数这一中间工具，不承担 FIB 树读出、窗口操作或实际几何的桥接。
+

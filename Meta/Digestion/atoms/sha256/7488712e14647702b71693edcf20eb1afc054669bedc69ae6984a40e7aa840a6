@@ -1,0 +1,45 @@
+**定义 1.2（同父及实际矩阵）。** 全文新定理只在
+
+$$
+36<z<\frac{361}{10},\qquad33<Y<34,\qquad
+H_4=(0,J,24,M,48,J,z,M,Y)
+\tag{1.3}
+$$
+
+上成立。记 $\mathcal F(H)$ 为实现整个字面历史 $H$ 的合法世界，置
+
+$$
+j=b+c,\quad t=1+b>1,\quad u=2t-1=1+2b>1,\quad T=r+j.
+$$
+
+直接取矩阵乘积的两个对角项，有
+
+$$
+\operatorname{tr}(AP)=A_{22}+(A_{11}-A_{22})r+A_{21}b+A_{12}c.
+\tag{1.4}
+$$
+
+原时钟零至四的实际矩阵和迹依次为
+
+$$
+I,\ J,\ MJ=\begin{pmatrix}1&0\\1&1\end{pmatrix},\
+JMJ=\begin{pmatrix}1&1\\1&0\end{pmatrix},\
+N=MJMJ=\begin{pmatrix}1&0\\2&1\end{pmatrix};\qquad
+1,j,t,T,u.
+\tag{1.5}
+$$
+
+实际第五动作选 $M$ 后的全部续行如下。最后两列的字母按时间从 $H_4$ 起排列。
+
+| 原时钟 | 后缀 | 实际累计矩阵 | 迹 |
+| --- | --- | --- | --- |
+| $5$ | $M$ | $Q=MN=\left(\begin{smallmatrix}2&1\\3&1\end{smallmatrix}\right)$ | $T+u=1+r+3b+c$ |
+| $6$ | $MJ$ | $JQ=\left(\begin{smallmatrix}3&1\\2&1\end{smallmatrix}\right)$ | $1+2r+2b+c$ |
+| $6$ | $MM$ | $MQ=\left(\begin{smallmatrix}3&1\\5&2\end{smallmatrix}\right)$ | $T+2u=2+r+5b+c$ |
+| $7$ | $MJJ$ | $JJQ=Q$ | $1+r+3b+c$ |
+| $7$ | $MJM$ | $MJQ=\left(\begin{smallmatrix}2&1\\5&2\end{smallmatrix}\right)$ | $2+5b+c$ |
+| $7$ | $MMJ$ | $JMQ=\left(\begin{smallmatrix}5&2\\3&1\end{smallmatrix}\right)$ | $t+2T+2r=1+4r+3b+2c$ |
+| $7$ | $MMM$ | $M^2Q=\left(\begin{smallmatrix}5&2\\8&3\end{smallmatrix}\right)$ | $2T+3u=3+2r+8b+2c$ |
+
+每一项由上一个相应矩阵左乘 $J$ 或 $M$ 再用式 (1.4) 得到，$b,c$ 系数不交换。所有显示的迹严格正；特别 $T=r+b+c>b=t-1$ 对每个合法来源严格成立。
+

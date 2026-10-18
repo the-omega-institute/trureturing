@@ -1,0 +1,8 @@
+## 4. Unbounded family without changing any local degree
+
+For the twelve-tetrahedron genus3-boundary manifold N, chi(N)=chi(boundary N)/2=-2. Connectedness, nonempty boundary and orientability imply b0=1,b3=0, hence b1=b2+3>=3. Its fundamental group therefore surjects onto Z and then onto Z/nZ for every n>=1. Take the associated connected ordinary n-sheeted covering and lift the actual ideal triangulation.
+
+Every original edge star lifts without ramification: each lifted edge has the same complete local occurrence circle and the same degree6 or9 as its base edge. Each base open tetrahedron and open edge has n lifts, so the lifted triangulation has12n tetrahedra,6n degree6 edges and4n degree9 edges. Boundary components cover the original genus3 boundary, so all still have genus at least2. The lifted geometric metric realizes the same lifted triangulation. Its Euler characteristic is -2n, distinguishing the manifolds for distinct n.
+
+Every lifted degree6 star still has only degree6/9 adjacent slots, so the complete canonical-box condition fails throughout this unbounded actual-manifold family, for every allowed C. This ordinary covering argument is distinct from the central group lift of §124, which changes return orders and is ramified at the original low edges.
+

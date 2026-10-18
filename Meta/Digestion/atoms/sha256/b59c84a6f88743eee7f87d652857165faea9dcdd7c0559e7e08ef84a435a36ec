@@ -1,0 +1,58 @@
+**Theorem 13.6 (sharp joint full-law and emission motion).** On the fiber of Theorem 13.5 define
+
+$$
+V_u(\Xi)=\int|u(Q)-u(Q')|\,d\Xi,\qquad
+V_Q(\Xi)=\int\operatorname{TV}(Q,Q')\,d\Xi.
+\tag{13.16}
+$$
+
+Their abstract attainable set is exactly
+
+$$
+\boxed{\ \{(V_u,V_Q)\}=\{(v,v):1/45\le v\le1/30\}.\ }
+\tag{13.17}
+$$
+
+Both endpoints and every rational value in this interval have a finite represented original observer under the exact sampler convention in Proposition 12.6. Arbitrary real points are attained in the algebraic table sense, without an effective exact sampler claim at an arbitrary real interpolation parameter. For the supplied installations, these are also the conditional motions at every original fourth p history and their designated-fiber history suprema.
+
+**Proof.** The covered full-law identity (11.33) gives $\operatorname{TV}(Q_{\sigma,i},Q_{\sigma,k})=|u_i-u_k|=|i-k|/30$: the difference of laws is $(u_i-u_k)(\delta_\alpha-\beta W_\sigma)$, whose two probability laws have disjoint supports. No cross-block triple contributes. Put $d=1/30$. The three row costs of (13.13) are $d$, $2ds_1^\sigma$ and $d$. With uniform incoming block row, their mean is $(1+s_1^\sigma)/45$. The two blocks each have mass $1/2$, so
+
+$$
+V_u=V_Q=\frac1{45}
+              +\frac{s_1^{7/20}+s_1^{23/60}}{90}.
+\tag{13.18}
+$$
+
+Each middle parameter lies in $[0,1/2]$, proving the asserted bounds. The lower endpoint holds exactly when both middle parameters are zero; then each block's other two row parameters are $1/2$. The upper endpoint holds exactly when both middle parameters are $1/2$; then the other two parameters in each block sum to $1/2$. In particular choose in both blocks
+
+$$
+T_{\min}=\begin{pmatrix}1/2&0&1/2\\0&1&0\\1/2&0&1/2\end{pmatrix},\qquad
+T_{\max}=\begin{pmatrix}1/4&1/2&1/4\\1/2&0&1/2\\1/4&1/2&1/4\end{pmatrix}.
+\tag{13.19}
+$$
+
+The lower matrix is the supplied $A_0$. Every point of the interval is realized by
+
+$$
+T(\theta)=(1-\theta)T_{\min}+\theta T_{\max},\qquad
+0\le\theta\le1,\qquad
+V_u=V_Q=1/45+\theta/90,
+\tag{13.20}
+$$
+
+using the same choice in both blocks. Its row parameters are $(1/2-\theta/4,\theta/2,1/2-\theta/4)$, which satisfy (13.13). The supplied independent join's $A_1$ is $T(2/3)$, with motion $4/135$ strictly between the endpoints.
+
+For represented endpoints, instantiate Proposition 12.6's sampler with common denominator 60. Each of the six latch labels receives 10 accepted integers; pre-latch fairness receives 30. The p alpha counts are 20, 22, 24 and the suspended alpha counts are 21, 23. The beta update is deterministic. The block alpha-update row counts of the two matrices (13.19) are respectively
+
+$$
+(30,0,30),(0,60,0),(30,0,30),\qquad
+(15,30,15),(30,0,30),(15,30,15).
+\tag{13.21}
+$$
+
+The supplier's six-bit rejection service accepts candidates below 60 with probability $15/16$, assigns the indicated cumulative intervals, and restores canonical candidate and cursor workspace before returning. Its output is exactly uniform on the 60 accepted integers, so these counts give all the claimed probabilities, including zero and unit entries. Fresh independent draws for emission and update give the same product cylinder as the algebraic table. All service states, thresholds, row tables, arithmetic, addresses, program counters, output cursors and persistent randomness are included in COMPLETE with $C_0$. Service microstates carry the continuation law of that same installed program; they introduce no original Read or extra queried cut.
+
+For rational $\theta$, all primitive probabilities have a finite common denominator $D$. Proposition 12.6's service with $L=\lceil\log_2D\rceil$ fair bits and rejection of candidates at least $D$ verifies the same premises. Every rational $v$ in (13.17) has rational $\theta=90(v-1/45)$. This proves exact represented attainment without claiming finite worst-case bit, work or output bounds: internal rejections and original paid rejections and returns may be arbitrarily numerous. Six private labels per phase are not the total COMPLETE count.
+
+The rows of every (13.13) are doubly stochastic. Theorem 13.4 and Proposition 12.6 therefore give uniform private phase rows at every positive original history, with one source-independent latch on all seeds and record fibers. Equation (13.8) cancels at each p history. A beta-alpha return leaves the original p control and held records unchanged, so the before and after complete raw laws use the same TV isometry $I_c$. Thus (13.18) is the actual conditional full-record and emission motion at each such history, in particular throughout the designated seed-1, marker-100 fiber. Taking its history supremum gives the same value. $\square$
+

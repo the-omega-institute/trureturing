@@ -1,0 +1,11 @@
+**Definition 3.2 (finite first-leaf transcript check).** Given one claimed
+successful attempt's ordered address/reply records and final validation
+record, start with the prescribed stack, check each successive literal,
+expand exactly the recorded branches, admit only alpha/beta/branch during
+traversal, and require exact stack exhaustion with no extra traversal
+records. Find its first leaf $(q,\ell)$ and require final record
+$(q,\ell)$. Reconstruct $T$ and its entire row. If a proposed output
+row is supplied, compare it to this result. Attempt and validation
+delimiters are finite syntax checked in order.
+Neither update counts nor source-state annotations enter the check.
+

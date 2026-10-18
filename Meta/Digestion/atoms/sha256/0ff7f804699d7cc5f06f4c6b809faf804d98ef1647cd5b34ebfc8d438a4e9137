@@ -1,0 +1,55 @@
+**定义 67.1（Sources, labelled leaves and the original prefix）。** Use the nonempty ordered trees
+$\mathcal T=\operatorname{FreeMagma}(\mathrm{Bool})$ of `GenealogicalFiberTransport.Source`, with
+$\alpha=\mathrm{of}(\mathrm{true})$, $\beta=\mathrm{of}(\mathrm{false})$ and ordered pairing $\mathrm{mul}$.
+The substitution is the original `substitution`: $\rho\alpha=\beta$, $\rho\beta=(\beta,\alpha)$,
+$\rho(s,t)=(\rho s,\rho t)$. Put $T_n=\rho^n\alpha$ and use the exact ordered leaf word
+$w(\alpha)=a$, $w(\beta)=b$, $w(s,t)=w(s)w(t)$. In `sourceEquiv` and `indexedEquiv`, fixing this
+word fixes the label at each left-to-right leaf position on every ordered shape; it does not fix
+the shape. The domain is $W_n=\{U:w(U)=w(T_n)\}$, the subset of the native composition fiber
+with this entire word. Let $r$ be `ActualTreeReadoutAcquisition.readout`, on all addresses
+$\mathcal A=\{L,R\}^*$ with $L=\mathrm{false}$, $R=\mathrm{true}$ and root $\varepsilon$.
+Write $c_U(q)=\kappa(r(q,U))$, where `ActualCoarseReadoutHistory.kappa` retains the two leaf
+labels and sends both `branch` and `absent` to `none`. Positivity means exactly
+$\operatorname{Pos}(U)\iff U\in\rho^3[\mathcal T]$, the original `Positive` predicate.
+
+Fix an integer $n\ge4$. With $B=T_3$ and $P_n=\{p:T_n|_p=B\}$, take exactly
+
+$$
+J_n=\{pL:p\in P_n\},\qquad
+h_n=((q,\mathrm{branch}):q\in J_n\text{ in shortlex order}),\qquad N=F_{n+1}.
+\tag{JM.230}
+$$
+
+These are (JM.214), with the superscript `raw` suppressed. In particular every $J_n$ address
+is internal in $T_n$. The word has $N$ leaves, so every member of $W_n$ has exactly $N$ leaves.
+Let $\Lambda_n$ be the target leaf-address set and put $\lambda_n(q)=(q,c_{T_n}(q))$ for
+$q\in\Lambda_n$. The finite vertex carrier is $\mathcal L_n=\lambda_n[\Lambda_n]$; its vertices
+retain both the literal address and its target label. Define
+
+$$
+\begin{aligned}
+\mathcal F_n^\kappa&=\{U\in W_n:\forall q\in J_n,\ c_U(q)=c_{T_n}(q)\},\\
+D_n(U)&=\{\lambda_n(q):q\in\Lambda_n,\ c_U(q)\ne c_{T_n}(q)\},\\
+H_n&=\{D_n(U):U\in\mathcal F_n^\kappa,\ \neg\operatorname{Pos}(U)\},\\
+\tau(H_n)&=\min\{|C|:C\subseteq\mathcal L_n,\ \forall D\in H_n,\ C\cap D\ne\varnothing\}.
+\end{aligned}
+\tag{JM.231}
+$$
+
+The empty family has transversal number zero. Every realized negative source in the entire
+$W_n$ satisfying the displayed coarse prefix condition contributes its set, regardless of its
+root split or child words. Here $W_n$ is finite: `GenealogicalFiberTransport.result` gives
+finiteness of its containing composition fiber, with parameters $(F_{n-1},F_n)$.
+
+An eligible reader is the original `ActualFiniteObserverAbsentElimination.Observer` on any
+finite complete nominal carrier $E$, with source-independent initial row, actions, four-reply
+transitions and raw decoder. Its initial decoder is empty, every decoder is address-Nodup,
+and `Legal M U` holds at every actual prefix for each $U\in W_n$. It terminates from that common
+initial row on every $U\in W_n$, with Boolean halt bit true exactly when $\operatorname{Pos}(U)$.
+Its original `historyAction` factors through the original `kappa_hist` on all finite raw
+histories. It actually produces $h_n$ on $T_n$ from the empty initial cache. For its terminal
+trace $h_nt$, its extra cost is $|\operatorname{paid}(h_nt)\setminus J_n|$, with `paid` the
+distinct literal-address support. Define $O_n$ as the infimum of these costs over eligible readers.
+Raw caches retain first-occurrence order and all four replies under the original `cacheUpdate`;
+repeats and absent reports remain in the chronological trace.
+

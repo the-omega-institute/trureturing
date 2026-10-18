@@ -1,0 +1,39 @@
+**Definition 1.1 (source and original row).** Let
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\qquad
+\rho\alpha=\beta,\quad
+\rho\beta=\langle\beta,\alpha\rangle,\quad
+\rho\langle x,y\rangle=\langle\rho x,\rho y\rangle.
+\tag{ARH.1.1}
+$$
+
+These are nonempty finite free ordered trees; brackets, order and repeated
+occurrences are part of the source. Addresses are finite words over
+$\{L,R\}$, with root $\varepsilon$. The reply $r_t(p)$ lies in
+$\mathcal A=\{\alpha,\beta,\mathsf{branch},\mathsf{absent}\}$.
+A subtree $t|_p$ is defined only when $p\in\operatorname{Pos}(t)$.
+
+For a finite prefix-free set $A$ of **original** addresses, use the complete
+row $R_A(t)$ of [SLH, Definition 59.1][SLH]. Its reached holes are exactly
+$A\cap\operatorname{Pos}(t)$, ordered lexicographically. Its concrete
+outside context is obtained by replacing those whole subtrees by numbered
+holes. Its partition equates two holes exactly when their complete ordered
+subtrees are equal. An absent cut address supplies no hole. Empty cuts,
+the root cut and cuts containing absent addresses are allowed.
+
+Fix arbitrary such $P,Q$ and an actually acquired old row $R=(C,\pi)$ at
+$P$. Let $\mathcal B$ be its set of classes. The old source correspondence from
+[SLH, Theorem 59.4][SLH] is used without weakening:
+
+$$
+u=C[(z_{[i]})_i],\qquad z_b\in\mathcal T,
+\qquad z_b\ne z_c\quad(b\ne c).
+\tag{ARH.1.2}
+$$
+
+The occurrence list, every repeated class, every cross-class disequality,
+the concrete outside and the old absent-address guards are retained.
+Classes outside the new task still participate in (ARH.1.2).
+

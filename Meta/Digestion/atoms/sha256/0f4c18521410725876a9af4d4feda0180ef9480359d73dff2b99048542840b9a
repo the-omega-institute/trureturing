@@ -1,0 +1,50 @@
+**Lemma 18.1 (finite inverse origins with exact six-address supports).**
+For any finite nonempty $S\subseteq A$, there are actual finite origins
+$u_0,(u_s)_{s\in S}\in Z_{b_3}$, all with whole target $R_0$, such that
+$\sigma_a(u_0)=0$, $\sigma_a(u_s)=1$, and the exact set of differing
+current replies on the pair $(u_0,u_s)$ is
+
+$$
+E_s=\{p w_s v:p\in\{LLL,LRL\},\quad
+                         v\in\{\varepsilon,L,R\}\}.
+\tag{PCA.42}
+$$
+
+The sets $E_s$ are pairwise disjoint. Every word of $E_s$ has absolute
+length at least $s+4$. All other finite addresses, including every
+deeper absent continuation, have identical replies on that pair.
+
+Proof. Put $G=\langle\beta,\beta\rangle$, $C_0=G$, and
+$C_{m+1}=\langle C_m,\beta\rangle$. Choose $m\ge\max S$.
+Take $B_0=C_m$ and let $B_s$ replace the beta at $w_s$ by $G$.
+The words $w_s$ are prefix-free. In $B_0$ every $w_t$, $t\ge1$,
+has beta or absent reply. In $B_s$ exactly $w_s$ among these words
+has branch reply. All these trees are finite branch images, since beta
+and pairs of images are images. They are pairwise distinct, and
+(PCA.41) gives $f_a(B_0)=0,f_a(B_s)=1$.
+
+Choose four pairwise distinct branch images $D_c,D_1,D_2,D_4$ avoiding
+all the finitely many $B$ values. The infinite supply is NBP Proposition
+15.2. Set $x_a=B_0$ or $B_s$, $x_{b_3}=\beta$, and
+$x_c=D_c,x_{b_j}=D_j$ for $j=1,2,4$. Each tuple has six pairwise
+distinct values, all images. NBP Proposition 9.3 gives the actual finite
+origin $u=\delta(\mathscr S(x))$, with $\rho u=\mathscr S(x)$,
+current row exactly $R_*$ and predecessor row exactly $R_0$.
+Both occurrences of $a$ contain the same chosen $B$ and both occurrences
+of $c$ contain $D_c$; none of the class disequalities is dropped.
+
+Inside $B_0,B_s$ the tested node $w_s$ changes from beta to branch.
+At $w_sL,w_sR$ the replies change from absent to beta. At every
+strict descendant of either child both replies are absent. Proper
+prefixes of $w_s$ remain branches, and every disjoint subtree is
+unchanged. Thus the relative difference set is exactly
+$\{w_s,w_sL,w_sR\}$, including the tested node itself.
+Above the depth-three cut both currents have the same branch skeleton.
+Any longer word has a unique cut prefix. In an unchanged class its
+whole reply function is unchanged; in either $a$ occurrence the actual
+occurrence identity (NBP.9.7) gives precisely the relative comparison
+just proved. This proves (PCA.42) for every actual finite address and
+all four possible replies, rather than just for the tested menu.
+Prefix-freeness and disjoint occurrence cones prove disjointness and
+the length bound. $\square$
+

@@ -1,0 +1,56 @@
+**Theorem 4.3 (sharp counts with the pinned component).**
+Let $C_0$ be the component of $G$ containing zero. For every
+$c\in\{0,\ldots,H\}$, with $z=2D+c$ retained, the exact additional
+source-summary alphabet on $A_c$ is
+
+$$
+M_{\rm pin}(G,H)=
+ (H+1)^{|C_0|-1}
+ \prod_{C\ne C_0}\bigl((H+1)^{|C|}-H^{|C|}\bigr).
+\tag{SCC.17}
+$$
+
+For any other retained code $B$, its exact supplement on this fiber
+is instead
+
+$$
+\max_{b\in B(A_c)}|Q_G(A_c\cap B^{-1}(b))|.
+\tag{SCC.18}
+$$
+
+If $z$ varies but remains an explicit decoder operand, one alphabet
+of size (SCC.17) works for all $c$. If the combined retained pair
+$(z,E)$ is counted, its minimum number of distinct values is
+
+$$
+(H+1)M_{\rm pin}(G,H).
+\tag{SCC.19}
+$$
+
+Proof. On $C_0$, equality of relative profiles implies that two age
+vectors differ by a constant. Their common value at vertex zero
+makes that constant zero. Hence every choice of the other
+$|C_0|-1$ ages has a different relative profile, giving
+$(H+1)^{|C_0|-1}$. All other components remain independent,
+with the counts of Theorem 3.2. Theorem 3.1 gives (SCC.17) and
+(SCC.18), and permits label reuse between different $z$ values.
+Distinct $z$'s distinguish the pairs in (SCC.19); summing their
+identical fiber minima proves that count and its attainment.
+$\square$
+
+Thus the unrestricted product (SCC.13) cannot be imported as a
+conditional lower bound into the fixed-$z$ handoff. Conversely, the
+smaller supplemental count does not make the retained $z$ free.
+For a connected graph the two counts are $(H+1)^r-H^r$ without $z$
+and $(H+1)^{r-1}$ conditional on $z$, whereas the combined pair
+$(z,E)$ has $(H+1)^r$ values. On this connected finite family that
+pair identifies the whole initial age vector; this statement is not
+whole-source recovery on all finite native trees.
+
+AAR §10 quantifies over all of $\mathcal T_z$ and gives the later
+service a paid native current-source port. Its acquisition bounds
+and all-source correctness requirement are not replaced by this
+restricted-family, already-acquired two-clock contract. Formula
+(SCC.15) is their source-fiber correspondence, not an equivalence of
+the two service models.
+

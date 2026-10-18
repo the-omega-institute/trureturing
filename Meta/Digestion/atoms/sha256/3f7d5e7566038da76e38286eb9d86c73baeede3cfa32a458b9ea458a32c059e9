@@ -1,0 +1,24 @@
+**定义 169.1（有向三角位置和五量读出）。** 对顶点为 $q_0=0,q_1,\ldots,q_N=q$ 的有限实折线，允许 $N=0$、重复顶点、自交与重走。设
+
+$$
+a_j=\frac12\det(q_{j-1},q_j),\qquad
+g_j=\frac{q_{j-1}+q_j}{3},\qquad
+A=\sum_{j=1}^N a_j,
+$$
+
+$$
+S=\sum_{j=1}^N a_jg_j,\qquad
+m=S-\frac{Aq}{2}
+=\sum_{j=1}^N a_j\left(g_j-\frac q2\right)
+=(m_x,m_y).
+$$
+
+$g_j$ 是三角形 $(0,q_{j-1},q_j)$ 的重心；$S$ 是其有向一阶面积矩之和，$m$ 相对于起终点中点中心化。两者都不除以总面积，故不是 $S/A$ 这样的重心坐标；$A=0$ 时仍有定义且可以非零。空折线的各和式为零。对单位正词定义
+
+$$
+D=2A,\qquad E=12m_x,\qquad F_m=12m_y,\qquad
+G(h)=(u,v,D,E,F_m),\qquad G(t)=G(\operatorname{wd}(t)).
+$$
+
+本批始终用 $F_m$ 表示第五个矩坐标，用 $F_{\mathrm{fib}}$ 表示替换映射，用 $F_n$ 表示 Fibonacci 数。一般实折线的五量在 $\mathbb R^5$ 中；正词的整数性在定理171.3由旧值在线归纳证明，不把任意整数五元组预设为正词可达像。
+

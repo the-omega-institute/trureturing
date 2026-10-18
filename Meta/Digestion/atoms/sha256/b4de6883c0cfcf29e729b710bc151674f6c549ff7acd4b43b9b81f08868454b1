@@ -1,0 +1,52 @@
+**Theorem 27.2 (retained coherent mass for every complex input).** Suppose
+the same near-optimal processor has an ACTUAL fully counted factorization
+of Definition 21.2, or a countable or explicitly supplied integral
+factorization with precisely Convention 21.3's hypotheses. Let
+$p_H^{\rm acq},p_H^L$ be (CG.193), with high meaning
+$d_\alpha\geq3$ for the JOINT future-accessible quantum payload. Then
+for EVERY normalized complex qutrit density matrix $\rho$,
+
+$$
+p_H^{\rm acq}(\rho)\geq p_H^L(\rho)
+\geq\frac{d(\epsilon)^2}{24}
+=\frac{[\max\{\delta_*-2C\sqrt\epsilon,0\}]^2}{24}.
+\tag{CG.223}
+$$
+
+In particular this holds for every original specimen separately. It is
+strictly positive whenever $\epsilon<\delta_*^2/(4C^2)$.
+The bound counts all retained entanglement shares and all other quantum
+systems available to execution, as required by Definition 21.2.
+
+Proof. Use the actual split $\Lambda=\Lambda_L+\Lambda_H$ of
+Theorem 24.1. The supplied factorization makes $J_L\in\mathfrak S_2$
+by (CG.191), including the specified countable and integral models.
+Hence (CG.186) and (CG.222) imply
+
+$$
+\delta_*-2C\sqrt\epsilon\leq\operatorname{tr}(W_3J_H).
+\tag{CG.224}
+$$
+
+The every-input homogeneous estimate already proved in
+(CG.196)–(CG.199) applies to this same aggregate CP/TNI high submap:
+for every unit complex vector $\psi$,
+$\operatorname{tr}(W_3J_H)\leq2\sqrt{6p_H^L(|\psi\rangle\langle\psi|)}$.
+It does not require the full channel to be exactly optimal. When
+$d(\epsilon)>0$, combine with (CG.224) and square nonnegative
+quantities; when $d(\epsilon)=0$, positivity of the branch probability
+gives the claimed zero lower bound directly. Spectral decomposition and
+linearity give the same bound for every mixed $\rho$. Finally each live
+decoder is TNI, so its trace is at most its encoder trace; summation or
+integration gives $p_H^L\leq p_H^{\rm acq}$.
+
+The aggregate high map has a finite Kraus representation because its
+input and compressed live output are both $M_3$, regardless of its
+actual classical alphabet. This representation is used only in the
+already established homogeneous estimate. It does not replace the
+actual acquisition record by a Choi decomposition. If the high set has
+zero measure, its aggregate map is zero; then (CG.224) forbids positive
+$d(\epsilon)$, consistently with (CG.223). A finite-test closure limit
+without an actual factorization has no branch-probability interpretation.
+$\square$
+

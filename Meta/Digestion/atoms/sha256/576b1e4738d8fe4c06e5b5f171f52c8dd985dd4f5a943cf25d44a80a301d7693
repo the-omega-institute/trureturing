@@ -1,0 +1,40 @@
+## 250. The first low axis and its forced successor
+
+Eta is not entirely high by the prerequisite. Its incoming {U,M,Z}
+face forces a pair of distinct high transverse labels and a third high
+axis. Its other axis B lies outside P={M,Z,U}; it cannot be special,
+since no special edge has a fixed pair contained in P. Thus B is C or D.
+
+If eta has U as its high axis, the unique U interval in eta and rho's
+unique U interval close across their two paired faces. This forces
+U degree two. If eta has Z as its high axis, it has pair {U,M}; then
+all Z intervals in tau, rho and eta form a closed set of 1+2+1=4 slots:
+tau's two Z faces pair to rho, whose two remaining Z faces pair to eta.
+These contradictions leave eta=(M,U,Z,B,U,Z).
+
+Its remaining faces {B,U,Z} are marked. They cannot self-pair because
+B is its unique axial occurrence, which would close a degree-one B
+edge. They cannot meet tau's unused unmarked {D,M,C} faces or any rho
+face, all of which are occupied. Consequently both pair to xi.
+
+At {B,U,Z}, xi has one of three axial roles. If its axis is B and its
+pair is {U,Z}, then a distinct other axis gives a closed B circle of
+two slots with eta. If its other axis is also B, xi's remaining two
+marked faces must self-pair: the other core faces are occupied or
+unmarked. All B slots in eta and xi then close, at most three slots.
+Both violate minimum degree six.
+
+If xi has U axis and pair {B,Z}, its U slots number at most two and
+all its U faces are marked. All U slots in K are then marked and their
+number is at most rho's one plus eta's two plus xi's two, namely five.
+They form a nonempty closed U circle, contradiction. The only role
+left is xi=(Z,U,B,Q,U,B).
+
+If Q is M or Z, all U faces in K are marked and the U count is 1+2+2=5,
+again impossible. If Q is U, xi has three U slots and some incident
+faces are unmarked; this case requires the additional budget below.
+At this point Q is U, C, D, or special. No such Q is Z. All Z slots
+in tau,rho,eta,xi are respectively 1,2,2,1 and all their incident faces
+are already paired within that chain. This is the complete Z circle,
+so its degree is exactly six.
+

@@ -1,0 +1,109 @@
+**Lemma 4.2 (all four root-leaf cases).** Let $P\subseteq S_3$ be
+range-feasible for all seven targets $W_3$, with reply capacity four.
+Write its branch part as
+$T=\{(x,y):\langle x,y\rangle\in P\}\subseteq S_2^2$,
+and let $X,Y$ be the two projections of $T$. Then
+
+$$
+\begin{array}{c|cc|c}
+P\cap\{A,B\}&v(X)\text{ at most}&v(Y)\text{ at most}
+ &w(P)\text{ at most}\\\hline
+\varnothing&13&13&169\\
+\{A\}&9&9&88+81=169\\
+\{B\}&13&9&52+117=169\\
+\{A,B\}&8&8&88+52+64=204.
+\end{array}
+\tag{NCE.32}
+$$
+
+In the last case, the branch mass alone is at most $64$.
+
+Proof. Positivity and $T\subseteq X\times Y$ give
+
+$$
+\sum_{(x,y)\in T}v(x)v(y)\le v(X)v(Y).
+\tag{NCE.33}
+$$
+
+This only enlarges a nonnegative sum. It does not replace a native
+fiber by a product or claim that $X,Y$ are locally admissible.
+If $T$ is empty the assertions follow directly. Otherwise both
+projections are nonempty.
+
+For the four deeper targets, the exact parent-leaf factors are
+
+$$
+\begin{array}{c|cccc}
+ &LL&LR&RL&RR\\\hline
+A&(4,0)&(5,1)&(5,0)&(6,1)\\
+B&(3,0)&(4,1)&(4,0)&(5,1).
+\end{array}
+\tag{NCE.34}
+$$
+
+For a branch, these same four columns give respectively
+$\Gamma_L(x),\Gamma_R(x),\Gamma_L(y),\Gamma_R(y)$.
+In the $LL$ column the parent $B$ value $(3,0)$ coincides only
+with the $x=A$ root-leaf value in $\mathcal V_L$; in $LR$ its
+value $(4,1)$ coincides only with the $x=A$ root-leaf value in
+$\mathcal V_R$. The parent $A$ values $(4,0),(5,1)$ in these
+columns are absent from $\mathcal V_L,\mathcal V_R$ respectively.
+In $RL$, both $(5,0)$ and $(4,0)$ are outside $\mathcal V_L$;
+in $RR$, both $(6,1)$ and $(5,1)$ are outside $\mathcal V_R$.
+The two added values in each right column are distinct. These
+are all parent-leaf versus child-factor collisions in (NCE.34).
+
+With neither parent leaf, range feasibility at these four targets
+bounds both side ranges of $X,Y$ by four. Lemma 3.3 gives $13,13$.
+With $A$ alone, its new value in each column reduces both side
+ranges of both projections to at most three, giving $9,9$.
+With $B$ alone, both side ranges of $Y$ are at most three, and
+both of $X$ are at most four, giving $13,9$. This proves the
+first three rows without imposing any restriction on which of
+the possible left collisions is actually attained.
+
+Suppose both parent leaves occur. At target $L$ their factors are
+$(3,0),(2,0)$; at $R$ they are $(4,1),(3,1)$. In either case
+these are two distinct values outside
+$\Gamma_\varepsilon(S_2)=\{(2,1),(1,0),(0,0)\}$.
+Hence $X$ and $Y$ each have at most two root-constructor types.
+At $LL,LR$, removing the new parent $A$ value leaves
+
+$$
+|\Gamma_L(X\cup\{A\})|\le3,\qquad
+|\Gamma_R(X\cup\{A\})|\le3.
+\tag{NCE.35}
+$$
+
+At $RL,RR$, the two new parent values give
+
+$$
+|\Gamma_L(Y)|\le2,\qquad|\Gamma_R(Y)|\le2.
+\tag{NCE.36}
+$$
+
+For completeness, the sector bounds implied by these restrictions are
+
+$$
+\begin{array}{c|cc}
+\text{root leaves in the child projection}&v(X)\text{ at most}
+ &v(Y)\text{ at most}\\\hline
+\{A,B\}&8&8\\
+\{A\}&4+4=8&4+1=5\\
+\{B\}&4+1=5&4+1=5\\
+\varnothing&4&4.
+\end{array}
+\tag{NCE.37}
+$$
+
+Indeed, two child leaves exhaust the two allowed constructor types,
+so exclude every branch. With only $A$ in $X$, (NCE.35) permits
+at most two branch child symbols per side, hence four branches.
+With only $B$, adjoining $A$ makes two leaf values, leaving only
+one branch symbol per side, hence one branch. With no leaves,
+adjoining $A$ leaves two symbols per side, hence four branches.
+For $Y$, (NCE.36) permits one branch symbol per side alongside
+one leaf, and two per side with no leaf. Thus both masses are
+at most eight. Equation (NCE.33) bounds the branch mass by $64$
+and proves the final row. $\square$
+

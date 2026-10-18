@@ -1,0 +1,72 @@
+**Theorem 7.2 (deleting only the acquired graph equality).** Delete only
+the equality in (GRS.2), retaining its two endpoint-existence guards,
+the full old row, every literal in (GRS.20), the original target and
+the same certified entry. The resulting entire fiber is
+
+$$
+U_m^-=\{\langle a,\langle z,g\rangle\rangle:
+             a,z\in\mathcal T,\ a\ne\langle z,g\rangle\}.
+\tag{GRS.30}
+$$
+
+For every $h\ge0$ it has two finite sources agreeing at ALL original
+words of length at most $h$ but having different entire $Q$ rows.
+No permitted serial service on $U_m^-$ has a uniform finite read bound
+or a uniform finite submitted-length bound. Nevertheless a static
+service terminates on each source and returns its row.
+
+Proof. The retained old row requires a root pair with distinct children.
+The same complete-leaf argument as Proposition 6.2 forces its right
+child to be $\langle z,g\rangle$. Without the graph equation its left
+child $a$ is unrestricted apart from the old disequality. This gives
+both inclusions in (GRS.30). The endpoint $L$ at epoch zero exists;
+the endpoint $R$ at epoch one is $\rho(\langle z,g\rangle)$ and exists.
+Thus retaining the two guards imposes no lost condition. The deleted
+predicate alone is the equation $a=\rho(\langle z,g\rangle)$.
+
+Choose $k>\max(h,m)$, let $z=B_k$, and let $z'$ change one depth-$k$
+leaf of $z$ to $\beta$. Take
+
+$$
+v=\langle z,\langle z,g\rangle\rangle,\qquad
+v'=\langle z',\langle z,g\rangle\rangle.
+\tag{GRS.31}
+$$
+
+Their old distinctness holds because $|z'|=|z|<|\langle z,g\rangle|$.
+Every literal concerns the unchanged $g$, and both guards just checked
+hold. Hence both are actual members of the entire enlarged fiber.
+The only changed physical original leaf lies at depth $k+1>h$, so
+their replies agree through $h$, including all absent replies at those
+depths. All three target cuts are reached with the same complete
+outside. Their partitions are respectively
+$\{\{1,2\},\{3\}\}$ and $\{\{1\},\{2\},\{3\}\}$: $z,z'$ have
+height $k>m$ and cannot equal $g$, and $z'\ne z$.
+
+For completeness, the operational implication used here is the
+presentation-independent finite-reply-tree and locality direction of
+[ARH, (2.3)][ARH]. A source-total comparator with a uniform read bound
+has finitely many reachable reply prefixes, and hence finitely many
+submitted physical words, by the unrolling argument of Theorem 4.2.
+Let $h$ bound their lengths. Agreement of original replies through $h$
+is preserved through every iterate of $\rho$: original branch nodes
+persist, and an original leaf met within the prefix has the same label
+and thus the same expanded image. Induction on the iterate proves this
+locality without a bound on the number of updates. The pair (GRS.31)
+therefore follows the same actual replies, choices and halt in the
+comparator and receives the same output, a contradiction. This proves
+the exclusion for EVERY comparator, not just a chosen finite menu.
+
+The physical root is always a branch on $U_m^-$ too. Deleting its
+constant reads gives $q\le\ell$ on each source, so a finite uniform
+length bound would imply a finite uniform read bound. Finally the paid
+original traversal in Corollary 5.3 works on every finite source of
+(GRS.30). Its lack of uniform bounds is consistent with sourcewise
+termination. $\square$
+
+The two-source reduction in Proposition 7.1 makes the task artificially
+cheaper; removing the acquired equation in Theorem 7.2 enlarges the
+fiber and destroys uniform finite recovery. They are opposite changes
+of domain. Neither is licensed by preserving only a list of output rows
+or by treating two physical copies as independent.
+

@@ -1,0 +1,44 @@
+**定理 456.2。** 取定理 456.1 的同一个 \(\eta\)。对任意
+\(0<a<b<\eta\)、\(m=(a+b)/2\)、\(c>0\) 和实线上的正测度
+\(\mu\)，假设三个核 \(t\mapsto e^{-at}\)、\(t\mapsto e^{-mt}\)、
+\(t\mapsto e^{-bt}\) 分别对 \(\mu\) 可积，记这三点上的真实积分为
+\[
+ L_\mu(v)=\int_{\mathbb R}e^{-vt}\,d\mu(t),
+ \qquad v\in\{a,m,b\}.
+\]
+则
+\[
+ \begin{aligned}
+ E(c,\mu;a,b)&:=\max_{v\in\{a,m,b\}}
+             |cB(v)-L_\mu(v)|\\
+ &\ge\frac{c\,d(a,b)}2
+ \ge\frac{c(b-a)^2}{192}.
+ \end{aligned}
+\tag{PLA.3}
+\]
+特别地，同一个固定三点组 \(a=\eta/3\)、\(m=\eta/2\)、
+\(b=2\eta/3\) 对每个 \(c>0\) 和全部上述正测度同时满足
+\[
+ E(c,\mu;\eta/3,2\eta/3)\ge\frac{c\eta^2}{1728}>0.
+\tag{PLA.4}
+\]
+不要求 \(\mu(\mathbb R)<\infty\)，也不要求其支撑包含于非负轴。
+
+**证明。** 实指数函数的凸性给每个实数 \(t\) 的点态不等式
+\[
+ e^{-mt}\le\frac{e^{-at}+e^{-bt}}2.
+\]
+三个完整可积性假设支付积分比较与线性性，故
+\(L_\mu(m)\le[L_\mu(a)+L_\mu(b)]/2\)。记
+\(e_v=cB(v)-L_\mu(v)\)。于是
+\[
+ \begin{aligned}
+ c\,d(a,b)
+ &=e_m-\frac{e_a+e_b}{2}
+   +L_\mu(m)-\frac{L_\mu(a)+L_\mu(b)}2\\
+ &\le |e_m|+\frac{|e_a|+|e_b|}{2}
+ \le 2E(c,\mu;a,b).
+ \end{aligned}
+\]
+再用（PLA.2）并代入 \(b-a=\eta/3\)，得到全部结论。证毕。
+

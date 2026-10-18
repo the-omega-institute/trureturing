@@ -1,0 +1,9 @@
+**假设 9.2（成熟测试与奇偶文献的限定对应）。** 下列原论文只供应列出的数学语言与比较合同，不供应本卷未经证明的最优费用，也不承担原创或穷尽性结论。
+
+| 原论文 | 精确数学对应 |
+| --- | --- |
+| Petra van den Bos、Frits Vaandrager，[State Identification for Labeled Transition Systems with Inputs and Outputs，arXiv:1907.11034v2](https://arxiv.org/html/1907.11034v2)，定义11、图3 | 自适应识别图及不可逆合并的根动作障碍。图3的输入 $a$ 合并状态1、2，输入 $b$ 合并2、3。这里每个输入是完整实际块，原标签附在来源而非当前状态；退休截止仍需原系数及同尾论证。 |
+| Anastasiya Chistopolskaya、Vladimir V. Podolskii，[Parity Decision Tree Complexity is Greater Than Granularity，arXiv:1810.08668v1](https://arxiv.org/html/1810.08668v1)，第2.2节 | 任意子集奇偶查询的二叉树及最坏深度。将相位编码为一个 one-hot 输入可解释响应，但不赋予任意子集查询；这里只准许实际移动路径、真实缺失点和同一个合法字面块。 |
+| Michał Szyfelbein、Dariusz Dereniowski，[Precedence-Constrained Decision Trees and Coverings，arXiv:2602.21312v1](https://arxiv.org/html/2602.21312v1)，第2、3.1节 | 测试的静态前驱偏序及最坏树高。本文动态窗口、实际排除集与终端尾不由这个偏序决定，没有以其算法最优性替代实际块最优性。 |
+| Uraz Cengiz Türker、Robert M. Hierons、Mohammad Reza Mousavi、Khaled El-Fakih，[Efficient State Identification for Finite State Machine-Based Testing，accepted manuscript](https://eprints.whiterose.ac.uk/id/eprint/230260/1/Ordered_Wset_Accepted.pdf)，[DOI 10.1109/TSE.2025.3604472](https://doi.org/10.1109/TSE.2025.3604472)，定义11–15、18 | 状态识别路径、覆盖全部状态／刻画词对、无额外转移串的路径、逐对最短区分前缀、ordered 及 bounded characterising sets。其定义13确有无额外转移串路径，定义14是逐对最短性，定义15并合两性质，定义18约束转移总长。这些指定起点覆盖义务不同于一个未知 INITIAL 标签的最坏实际分支最小化，不能将其统一说成依赖复位，也没有给出两优化问题的费用保持等价。 |
+

@@ -1,0 +1,18 @@
+## 159. A global special-edge consequence of the existing proof
+
+There is no special edge whose actual fixed reservoir pair is {Z,M}.
+Indeed the proof of Section 153 does not use that its special edge Q is
+the return axis. For any such edge all incident owners contain Z and
+are therefore genuine. Its degree is at least six; the M/Z genuine
+budgets are pi and 2*pi. Every other axis is either H, with value at most
+z, or special, with value below 1+z+m by Section 112.
+
+These are exactly the premises of the weighted complete-star argument
+of Section 153. It gives q<11/5, then theta_Q<pi/3 and the transverse
+angle sum>pi/2 in every owner, contradicting the full Q equation after
+weighting each owner's one or two axial occurrences. Hence the same
+contradiction excludes every special edge with this fixed pair.
+
+This is a reuse of that existing proof, rather than a new assumed bound
+on arbitrary special edges of other reservoir pairs.
+

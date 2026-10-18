@@ -1,0 +1,29 @@
+**Lemma 3.2 (Finite interval image of an abstract character).** Let
+$h:(\mathbb R,+)\to\{z\in\mathbb C:|z|=1\}$ be a group
+homomorphism. If its image on one nonempty open interval is finite,
+then $h$ is identically one.
+
+**Proof.** The image group is divisible: for any $h(y)$ and positive
+integer $q$, the element $h(y/q)$ is a $q$th root in the image.
+Suppose the image is nontrivial. Its element orders cannot all be at
+most any fixed integer $M\ge1$. If they were, every element raised
+to $M!$ would be one. Divisibility would then imply that every element
+itself is one, because it is an $M!$th power of an image element.
+Thus, for any $M$, the image contains an element of order greater than
+$M$, with infinite order allowed.
+
+Now suppose an interval $I$ has at most $M$ image values. Let $a$
+be its midpoint after taking a smaller finite open subinterval if
+necessary, and let $\ell>0$ be that subinterval's length. Choose $y$
+so that $h(y)$ has order greater than $M$. Choose a positive integer
+$q$ with $M|y|/q<\ell/2$. All $M+1$ points
+
+$$
+a+j y/q,\qquad 0\le j\le M,
+$$
+
+lie inside the subinterval. The order of $h(y/q)$ is greater than $M$,
+since its $q$th power is $h(y)$. Their images
+$h(a)h(y/q)^j$ are therefore distinct. This contradicts the bound $M$.
+No continuity or measurability was required. $\square$
+

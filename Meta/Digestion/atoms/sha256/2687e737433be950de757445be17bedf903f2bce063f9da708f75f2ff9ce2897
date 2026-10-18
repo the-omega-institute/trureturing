@@ -1,0 +1,39 @@
+**命题 6.2（Inherited witness halfspace, with no converse）。** For $a,b\ge0$
+in the legal rectangle,
+
+$$
+7a+3b>\frac{5\sqrt3}{2}\quad\Longrightarrow\quad k(C(a,b))=4.
+\tag{6.3}
+$$
+
+Proof. Use the inherited witness $T=F(1,1)$,
+$H=I_5-iT/\sqrt3$. On any three-coordinate set, the compressed real skew
+matrix $R$ has unit-magnitude upper entries. Odd skew dimension gives
+$\det R=0$; $iR$ is Hermitian with trace zero and square trace six.
+Its eigenvalues are therefore $0,\sqrt3,-\sqrt3$.
+The corresponding compression of $H$ has spectrum $1,0,2$, hence is PSD
+on the full complex coordinate subspace. Any smaller support embeds in a
+triple, so $z^\dagger Hz\ge0$ for every at-most-three-support complex vector.
+
+For the actual family, the seven $a$ entries and three $b$ entries give
+
+$$
+\operatorname{tr}(TF(a,b))=-2(7a+3b),\qquad
+\operatorname{tr}(HC(a,b))=1-\frac{2(7a+3b)}{5\sqrt3}.
+\tag{6.4}
+$$
+
+The second identity follows by expanding $H(I+iF)/5$; both skew traces vanish.
+A finite three-support Gram decomposition would give
+$\operatorname{tr}(HC)=\sum_\ell z_\ell^\dagger Hz_\ell\ge0$.
+The strict inequality (6.3) contradicts that, and Theorem 6.1 gives the
+upper bound four. The signed witness is obtained by the same permutations
+as the state. Equality or positive pairing in (6.4) gives no converse.
+The halfspace is an immediate inherited witness application and adds no
+mechanism. $\square$
+
+In particular the legal dense corner $(A,B_0)$ has negative pairing since
+$2\sqrt7>3\sqrt3$ is equivalent to $28>27$. It is the inherited dense
+negativity maximizer and coherence-four example. This does not classify
+other maximizers.
+

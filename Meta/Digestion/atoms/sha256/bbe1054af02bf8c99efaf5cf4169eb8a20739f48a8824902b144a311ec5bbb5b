@@ -1,0 +1,6 @@
+## 40. Exact complete-controller memory at the seven-phase three-block fee
+
+Section 26 prices emitted blocks for its dyadic INITIAL target family $(k,m)=(2^{r+1}-2,2^r)$, $r\ge3$. The present section returns to the seven-phase experiment $(k,m)=(6,4)$ of Section 24 and minimizes the complete controller state count at adaptive worst fee at most three blocks, including internal control and persistent outputs. The GLOBAL fee objective in Section 26 retains its own contract; the complete-controller objective below allows adaptive branches.
+
+Section 27's full INITIAL internal even-support zero/one/three fee classification retains its own $m\ge5$ parameters, INITIAL targets and GLOBAL fee contract. It does not alter the original $(6,4)$ result or supply its complete-controller memory optimum.
+

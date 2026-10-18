@@ -1,0 +1,17 @@
+**Theorem 5.2 (Selective support).** Every protocol satisfies
+
+$$
+B(a)=D=\delta\eta^2,\qquad
+C\le aq+D,\qquad L\ge bq-D.
+\tag{5.3}
+$$
+
+Proof. By Lemma 5.1 all accepted nonexceptional leaves have
+nonpositive contribution to $C-aq$, while the sole possible
+exception contributes at most $D$. The zero-read and initial
+rejection cases also obey the bound. Integration proves it
+for the full class. Equivalently (3.2) gives
+$U_I(a)=0$, $V_I(a)=D$, $U_D(a)=D$, $V_D(a)=0$.
+The paid policies below attain $D$, proving the claimed
+support value. $\square$
+

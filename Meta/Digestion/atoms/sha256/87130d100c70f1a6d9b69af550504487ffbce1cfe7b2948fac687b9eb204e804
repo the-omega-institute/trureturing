@@ -1,0 +1,34 @@
+**Definition 13.1 (face variables, boxes and constants).** On $r=0$ write
+$z=(p,\phi)\in\mathbb R^{12}$, $w=(z,Y,\lambda)\in\mathbb R^{21}$, and
+$w_e=(p^e,\phi^e,Y_e,\lambda_e)$. Define
+$$
+\Psi(w;\kappa)=
+\begin{pmatrix}
+\nabla_z\{Y\cdot(\mathcal M(z,0)-B)
+                    -\mathcal J(z,0)-\lambda(\mathcal K(z,0)-\kappa)\}\\
+\mathcal M(z,0)-B\\
+\kappa-\mathcal K(z,0)
+\end{pmatrix}.
+$$
+Its event $21\times21$ Jacobian, in this exact row and column order, is
+$$
+\mathcal B_e=D_w\Psi(w_e;k_e)
+ =\begin{pmatrix}
+ H&A^T&-q\\ A&0&0\\-q^T&0&0
+ \end{pmatrix},
+\qquad
+H=\nabla_z^2\mathscr L_e,\quad
+A=D_z\mathcal M_e,\quad q=\nabla_z\mathcal K_e.
+$$
+The block dimensions are $12,8,1$. This is the fixed-contrast face system, not the $22$-variable event system, not a seven-positive-weight Hessian and not a stationary system with an unremoved zero coefficient.
+
+Choose rational $\beta_B\ge\max(1,\|\mathcal B_e^{-1}\|_2)$ and
+$L_B\ge1$ bounding the Lipschitz constant of $D_w\Psi$ on the specified closed Euclidean ball
+$\overline B(w_e,R_{\rm chart})$. In particular $\|Y-Y_e\|_2\le R_{\rm chart}\le1/2$ and $|\lambda-\lambda_e|\le R_{\rm chart}\le1/2$ there; bounding instead on the product of the $z$ chart ball with multiplier variations at most one is sufficient. The $w$ derivative is independent of $\kappa$, so this bound has no additional target-contrast input. All derivatives are of the signed extensions just defined, with $r=0$.
+
+The exact inverse exists by the argument below; $\beta_B$ is an unevaluated bound for it, not an assumed uniqueness radius. The symbol $\beta_B$ is the bordered inverse bound, distinct from the source fraction $\beta=1-\alpha$. Put
+$$
+R_f=\min\{R_{\rm chart},1/(2\beta_BL_B)\},\qquad
+C_{\rm joint}=1+C_\mu .
+$$
+

@@ -1,0 +1,33 @@
+**Theorem 9.1 (All permitted cutoffs on one neighborhood).** Fix $(r,c,\alpha)$ as in Section 1. With the source-only $s_*,\eta$ of Definition 3.2 there are constants $C_M,C_T>0$ depending only on these fixed parameters such that
+
+$$
+\begin{gathered}
+\forall s\in(0,s_*)\ \forall L\in\mathbb Z,\ L\ge1,\ sL\le\eta:\\
+\exists\text{ one common table satisfying (2.3)},\\
+M(s,L)=3+\left(2\left\lceil\frac R{\sqrt{u(s,L)}}\right\rceil-1\right)(L+2)
+\le C_M\frac{L+2}{s^r\sqrt{H_L}},\\
+\max_{i\in\{0,1\}}\mathbb E_iT\le C_T\frac{s^{-(2r+1)}}{H_L}.
+\end{gathered}
+\tag{9.1}
+$$
+
+Proof. Use the table of Section 5. Lemmas 7.1–8.1 prove both errors, both actual almost-sure stops and both finite paid means for that same table. The ceiling gives $H\le R/\delta+1$, hence
+
+$$
+M\le3+(2R/\delta+1)(L+2)\le(2R+4)\frac{L+2}{\delta}.
+\tag{9.2}
+$$
+
+By Lemma 4.2, $\delta\ge\sqrt{h_-}s^r\sqrt{H_L}$. Thus $C_M=(2R+4)/\sqrt{h_-}$ is sufficient and fixed before $L$.
+
+For payment combine (7.5), the source moment bounds and (7.2). Since $0<u<1$,
+
+$$
+\mathbb E_iT\le\frac{C_\beta}{s}+\frac{C_\mu B}{2su}
+\le\frac{C_\beta+C_\mu B/2}{su}
+\le\frac{C_\beta+C_\mu B/2}{h_-}\frac{s^{-(2r+1)}}{H_L}.
+\tag{9.3}
+$$
+
+This supplies a common $C_T$ and includes the initial wait. Every bound is simultaneous for the two laws under one table on the whole permitted interval. $\square$
+

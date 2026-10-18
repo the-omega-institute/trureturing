@@ -1,0 +1,75 @@
+**Theorem 208.4 (Actual-input ordered-event packing).** Suppose
+$\Delta_O(y)\le d$. Select $m\ge2$ late addresses
+$j_1<\cdots<j_m$ with $\gamma_j\ge g$, and put $s=g-E-d>0$.
+For $3\le\tau<4$ define
+
+$$
+\begin{aligned}
+a_\tau&=\frac{4-\tau}{\tau},&
+n_\tau&=\max\left\{1,\left\lceil\frac{2(\tau-3)}{a_\tau}\right\rceil\right\},\\
+w_\tau&=\frac{\tau-3}{n_\tau},&
+\Pi(\tau)&=n_\tau\left\lfloor\frac1{a_\tau-w_\tau}\right\rfloor.
+\end{aligned}
+\tag{208.12}
+$$
+
+Then $S\ge3s$, $t\ge(\mu-d)_+$, and
+
+$$
+S\le\tau s\quad\Longrightarrow\quad m-1\le\Pi(\tau).
+\tag{208.13}
+$$
+
+**Proof.** The actual losses in (208.7), using the bound $d$ for
+the original excess, give $m_j\ge2s$ and $d_{ij}\ge s$ on the
+selected addresses. The disjoint-union and terminal arguments of
+208.2 give the first two assertions. Delete the largest selected
+address and, for each remaining one, put $A_i=Z_i^c$ and
+$r_i=\nu(A_i)/s$. Write $q=S/s\le\tau$. The outgoing directed
+loss to the deleted address is at least $s$, whereas $m_i\ge2s$,
+so
+
+$$
+1\le r_i\le q-2\le\tau-2,\qquad
+\frac{\nu(A_i\cap A_j)}s
+ =r_i-\frac{d_{ij}}s\le r_i-1\quad(i<j).
+\tag{208.14}
+$$
+
+Partition $[1,\tau-2]$ into $n_\tau$ bins of width $w_\tau$,
+assigning each endpoint to one bin. At $\tau=3$ this is one
+singleton bin. In a bin with lower endpoint $r$ and $N$ events,
+let $Z=\sum\mathbf1_{A_i}$ and integrate against $\nu/s$.
+The marginal lower bound and the ordered intersection upper bound
+give
+
+$$
+\int Z\ge Nr,\qquad
+\int Z^2\le N(r+w_\tau)+N(N-1)(r+w_\tau-1)
+ =N^2(r+w_\tau-1)+N.
+\tag{208.15}
+$$
+
+Cauchy–Schwarz on a measure of mass $q\le\tau$ gives
+$\int Z^2\ge N^2r^2/\tau$. Therefore
+
+$$
+N(1-r-w_\tau+r^2/\tau)\le1.
+\tag{208.16}
+$$
+
+On $[1,\tau-2]$, $1-r+r^2/\tau$ is decreasing and is at least
+$a_\tau$. The definition of $n_\tau$ gives
+$0\le w_\tau\le a_\tau/2$, so the denominator is positive.
+Each bin contains at most
+$\lfloor1/(a_\tau-w_\tau)\rfloor$ events. Summing over bins
+proves (208.13) for real, not just rational or integral, score
+weights.
+
+The threshold four in this dimension-free statement cannot be
+increased. For any $s>0$, $0\le d\le s$, the existing fair witness
+used in 208.3 has arbitrarily many late classes of weight $s+d$,
+actual $m_j=2s$, $d_{ij}=s$, $S=4s$, $T=s$, and both excesses
+$d$. This is a full score with one measure. It supplies no extension
+of the finite packing bound to $\tau=4$. $\square$
+

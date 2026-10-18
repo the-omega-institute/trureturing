@@ -1,0 +1,52 @@
+**定义 236.1（Actual labeled source and unchanged carrier）。** Retain
+the source of I, 110.1 and the resource contract of 90.1:
+
+$$
+\begin{gathered}
+F_0=0,\quad F_1=1,\quad F_{r+2}=F_{r+1}+F_r,\\
+X=\{(r,g):r\text{ prime},\ g\in\mathbb Z,\
+       \lceil F_r/10\rceil\le g\le\lfloor F_r/5\rfloor\},\\
+N_x=1+F_rg,\quad q_i(x)=[p_i\mid N_x],\quad
+n(x)=\min\{i:q_i(x)=0\}.
+\end{gathered}
+$$
+
+The $p_i$ enumerate primes increasingly. Replies are static and
+the actual first absence is finite. No probability distribution
+on $X$ or infinite all-positive source is introduced.
+
+The tape space is the full Borel disjoint union
+$\mathcal T=\bigsqcup_{j\ge1}B_j\sqcup\bigsqcup_{j\ge1}P_j$,
+each block a copy of $(0,1)$. The original consumer is unknown
+on $B_j$ and proposes $j$ on $P_j$; it still runs on the same
+actual source and delivered original tape. The original nonatomic
+target remains
+
+$$
+\mu_x=(1-h_0)\nu_x+h_0\pi_{\omega(N_x)},\qquad
+\frac{d\nu_x}{du}\bigg|_{B_{n(x)}}=
+ \frac{e^{t(x)u}}{Z_{t(x)}},\qquad
+t(x)=\sum_{i\ge1}3^{-i}q_i(x),\quad
+Z_t=\int_0^1e^{tu}\,du,
+$$
+
+where $h_0\in(0,1)$ is the fixed original mixture parameter,
+$\omega(N_x)$ is the number of distinct prime factors, and
+$\pi_j$ is uniform on $P_j$. These targets and the consumer
+are not modified by the constructions in this volume.
+
+Separately choose the original tape marks
+$\theta_j=(B_1,1/(j+2))$, $j\ge0$, and the marked targets
+
+$$
+\lambda_x^a=(1-a_{n(x)})\delta_{\theta_0}
+                  +a_{n(x)}\delta_{\theta_{n(x)}},\qquad
+1\ge a_1\ge a_2\ge\cdots>0,\quad a_n\longrightarrow0.
+$$
+
+Every accuracy claim in 231.3 concerns these separately selected
+marked targets. A finite marked law has TV distance one from the
+unchanged nonatomic $\mu_x$: its finite support has marked-law
+mass one and $\mu_x$ mass zero. A score measure such as $\mu_m$
+is neither of these two target families.
+

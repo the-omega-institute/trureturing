@@ -1,0 +1,24 @@
+**Lemma 7.2 (the $G$ exceptional conic).** Only $q_{22}$ is $G$-compatible.
+Use
+
+$$
+D=t^2-2t-1,\qquad X=\frac{2t}{D},\qquad Y=\frac{2}{D}.
+$$
+
+At roots of $D$, and at $t=0$, the first relation gives
+$n_1\mid(k_1+m_1)$ and $n_1\mid k_1$, hence $n_1\mid m_1$.
+Primitive normalization therefore gives $n_1=1$. The shifted ratio is
+
+$$
+\frac{(X+1)^{k_2}}{(Y+1)^{m_2}}
+=(t-1)^{k_2-2m_2}(t+1)^{k_2}D^{m_2-k_2}.
+$$
+
+Its orders at $t=-1$ and at a root of $D$ are $k_2$ and $m_2-k_2$.
+Primitive normalization therefore gives $n_2=1$. At $t=-1$, $X=-1$, $Y=1$,
+so $z=(-1)^{k_1}$ and the logarithmic derivative of $z$ is
+$k_1+2m_1\ne0$. Hence $z+1$ has order at most one, forcing $k_2\le1$.
+At a root of $D$, $z+1$ has pole order $k_1+m_1$. The ratio can have a
+pole only if $k_2>m_2\ge1$, which contradicts $k_2\le1$. Thus the $G$
+exception admits no positive lift.
+

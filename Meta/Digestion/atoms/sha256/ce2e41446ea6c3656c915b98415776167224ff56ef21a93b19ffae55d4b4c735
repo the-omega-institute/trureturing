@@ -1,0 +1,47 @@
+**Proposition 5.2 (known updates and refined code fibers).** After any known
+finite sequence of forward updates, the original source $u$, the original target
+$R_Q(u)$ and every acquired code value remain unchanged. The same code and its
+original-prefix decoder remain valid at the new certified epoch, with the
+corresponding current-register address transport. A further read
+$\mathsf{Read}(p)=c$ at epoch $M$ refines the state to
+
+$$
+D'=D\cap\{u:r_{\rho^M u}(p)=c\},
+\qquad
+D'_e=D_e\cap\{u:r_{\rho^M u}(p)=c\}
+\tag{SJM.31}
+$$
+
+for every old code value $e$, where $D_e=\{u\in D:E(u)=e\}$.
+The physical reply must be actually attained, so $D'\ne\varnothing$; only
+nonempty $D'_e$ are service entry fibers. In particular,
+$M(D',Q)\le M(D,Q)$ for such a refinement whenever $f(D)$ is finite.
+
+*Proof.* A known update changes only the physical register from $\rho^M u$ to
+$\rho^{M+k}u$; it does not change the original source or the declared target.
+[SLH, Theorem 2.2][SLH] converts each needed original prefix to reads at the
+new actual epoch, so no old-version read or reset is inserted. If a decoder was
+interrupted by an update, its bounded query list is restarted at the new
+certified epoch; replies from different epochs are not spliced. The decoder's
+stated bound applies after the last update; all interrupted and restarted reads
+are additional actual calls and remain charged.
+
+The new reply restricts every code fiber as shown in (SJM.31). At each depth
+$S'_h(p)\subseteq S_h(p)$ for every prefix attained in $D'$, hence
+$m'_h\le m_h$. At an old minimizing depth $h_*$ this gives
+$M(D',Q)\le m'_{h_*}\le m_{h_*}=M(D,Q)$. Both images are nonempty and finite
+because the reply is attained and $f(D')\subseteq f(D)$.
+The same old code and decoder already give a correct bounded service on each
+nonempty refined code fiber. If code-dependent path/control state remains
+accessible, it must still factor through the retained input, code and recorded
+replies. Using only $D'$ while forgetting $e$ describes a coarser state than
+the actual handoff retaining $e$.
+
+The inequality compares minima over newly admissible encoders; restriction
+alone does not compute or acquire a new optimal code. Such a replacement
+requires a justified source-total effective encoder, evaluated from actually
+acquired data or further paid acquisition, together with paid preparation,
+installation and a complete successor cut. Known updates alone need no new
+code computation when the target remains the original $R_Q(u)$. Changing $Q$
+changes the target and requires a new sufficiency argument. $\square$
+

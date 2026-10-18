@@ -1,0 +1,33 @@
+**Lemma 5.1 (full transcript correspondence, including noncompletion).** From $p$ the first-completion words are $w_{j,0}=(\beta\alpha)^j\alpha$ and $w_{j,1}=(\beta\alpha)^j\beta\beta$, $j\ge0$; from $\beta$ they are $\beta$ or $\alpha w_{j,b}$. At source parameter $r$ their masses are
+
+$$
+\begin{aligned}
+P_{p,r}(w_{j,0})&=r a_r^j,&
+P_{p,r}(w_{j,1})&=(1-r)^2a_r^j,\\
+P_{\beta,r}(\beta)&=1-r,&
+P_{\beta,r}(\alpha w_{j,0})&=r^2a_r^j,&
+P_{\beta,r}(\alpha w_{j,1})&=r(1-r)^2a_r^j,
+\qquad a_r=r(1-r).
+\end{aligned}
+\tag{5.1}
+$$
+
+These fixed-parameter masses, their first-completion interpretation and zero noncompletion mass are the reused [ST] §2.1 and sealed `FourthSegmentStoppedLaw` result. The new decoder's canonical $p$ law $Q$, canonical $\beta$ law $V$, and first-$p$ law $Q_q$ have
+
+$$
+\begin{aligned}
+Q(w_{j,0})&=ua^j,&Q(w_{j,1})&=ga^j,\\
+V(\beta)&=1-v,&V(\alpha w_{j,0})&=vua^j,&V(\alpha w_{j,1})&=vga^j,\\
+Q_q(\alpha)&=q,&Q_q(\beta\beta)&=(1-q)(1-v),\\
+Q_q(w_{j,0})&=(1-q)vu a^{j-1},&
+Q_q(w_{j,1})&=(1-q)vg a^{j-1}\quad(j\ge1).
+\end{aligned}
+\tag{5.2}
+$$
+
+All these are full normalized laws with zero noncompletion mass and positive mass on arbitrarily long finite legal words. On each fixed current original $c$, pushing through $I_c$ gives the complete original event/record/Stop law and preserves TV.
+
+**Proof.** The original parser at $p$ either completes 0 on $\alpha$, completes 1 on $\beta\beta$, or returns on $\beta\alpha$. Induction on returns yields precisely the displayed first-completion language; from $\beta$, $\beta$ completes and $\alpha$ returns. Conditional independence at fixed $r$ multiplies the acquired future letter masses to give (5.1), without reading any letter after first completion. The unique infinite $p$ continuation is $(\beta\alpha)^\infty$, with survival probability $a_r^j\to0$; from $\beta$ it has a preceding $\alpha$. Its legal inclusion is not conditioning on completion. The decoder has the same parser, canonical return factor $(1-u)v=a$, and one possible exceptional first emission $q$. Multiplication gives (5.2). Since $u+g=1-a$, the canonical $p$ mass is 1, and the other two laws have respective total masses $(1-v)+v=1$ and $q+(1-q)((1-v)+v)=1$. Their survival is bounded by a constant times $a^j$, proving the zero noncompletion assertion.
+
+For fixed $c$, execute the complete original event block after each input letter, append the original completion and Stop/delivery when allowed, and retain the held records in each event and current-state rendering. This defines $I_c$. Reading back the displayed Read letters recovers the entire raw word; the original deterministic table recovers all other events. Both maps are measurable for the finite-event cylinder sigma algebra: a finite output prefix is decided by finite input prefixes, and the position of each Read is detected by a countable union of event cylinders. This includes noncompletion. The maps are inverse on legal continuations. Thus the measurable image has exactly the same event probabilities and TV. For the countable fourth-tail carrier the same fact follows from the identical singleton masses. Nothing is projected to only a terminal bit. At earlier cuts no countable singleton-TV assumption is used. ∎
+

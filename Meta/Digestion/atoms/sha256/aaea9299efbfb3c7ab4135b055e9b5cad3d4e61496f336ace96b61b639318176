@@ -1,0 +1,34 @@
+**Convention 1.1 (Complete legal domain and supplied risk interface).** Retain
+
+$$
+\mathcal X=\{x\in\{0,1\}^{\mathbb Z}:x_ix_{i+1}=0\ (i\in\mathbb Z)\},\qquad
+B_n=\{w\in\{0,1\}^n:w_iw_{i+1}=0\ (1\le i<n)\}.
+$$
+
+The graph $\Gamma_n$ contains all $B_n$ vertices and all legal Hamming-one edges. Endpoint insertion uses $w_0=w_{n+1}=0$, with no first-to-last constraint. With
+
+$$
+h(s,t)=\begin{cases}st/(s+t)&s+t>0,\\0&s=t=0,\end{cases}\qquad
+\Phi_n(\mu)=\sum_{\{w,z\}\in E(\Gamma_n)}h(\mu_w,\mu_z),\qquad
+\kappa_n=\max_{\mu\in\mathcal P(B_n)}\Phi_n(\mu),
+$$
+
+use the supplied constant $c_\star=\lim_n\kappa_n/n$. All-zero words, endpoint ones, every legal seam, forced singletons and zero-total fibers remain in this domain. Assigning a word zero probability does not delete its vertex or edges.
+
+Write $X_i$ for the coordinate variable, $[w]_a$ for a word cylinder beginning at $a$, and $P_n$ for the actual marginal on $[1,n]$. For a normalized two-sided stationary legal law $P$, set
+
+$$
+\mathcal E_i=\sigma(X_j:j\ne i)\ (i\in\mathbb Z),\quad
+\mathcal F_r=\sigma(X_{-r},\ldots,X_{-1},X_1,\ldots,X_r),\quad
+q_P=\mathbb E_P[X_0\mid\mathcal E_0],\quad q_{r,P}=\mathbb E_P[X_0\mid\mathcal F_r],
+$$
+
+$$
+D_r(P)=\mathbb E_P(X_0-q_{r,P})^2,\qquad
+d(P)=\lim_n\Phi_n(P_n)/n=\mathbb E_P(X_0-q_P)^2
+=\inf_{r\ge0}D_r(P)\le c_\star.
+\tag{1.1}
+$$
+
+This is [Universal, §1][U]'s supplied harmonic/Brier identity. “Full-exterior erasure risk” means predicting one erased site from all other coordinates. It is not ordinary one-sided predictive risk or erasure of the entire record. Radius zero has the trivial field. An observed neighbor equal to one forces the center and its posterior to zero; zero-total fibers have zero weighted contribution, with no division required.
+

@@ -1,0 +1,27 @@
+**Assumption 2.3 (full conditional rows).** For every $i$ and
+$A\subseteq I_i$, choose a strictly positive normalized row
+$Q_{i,A}(o_i\mid b_A)$ on the entire $\Omega_i$ for every full
+context $b_A$, including unrealizable contexts. Put
+
+$$
+\gamma_k(A)=\frac{|A|!(k-|A|)!}{(k+1)!},\qquad
+G_i(s)=\prod_{A\subseteq I_i}
+ Q_{i,A}(O_i(s)\mid B_{i,A}(s))^{\gamma_{k_i}(A)}.
+\tag{OOA.10}
+$$
+
+Here the coefficient depends on $A$ only through its cardinality.
+The coefficients sum to one. Suppose $C_i>0$ and
+$\Phi_i(s)\le C_iG_i(s)$ on $R$, and define there
+$u_i(s)=\Phi_i(s)/(C_iG_i(s))\in(0,1]$.
+
+For reusable local checks use exactly [COK, Definitions 2.2–2.3][COK]'s
+finite decorations and support-aware outer relations. Such a relation
+requires the full local vector to reconstruct a positive-weight block
+and, for each incoming owner group, one positive-weight actual owner
+block realizing all that group's owner factors together. Different
+groups' witnesses need not extend globally. For heterogeneous weights,
+use the support of the actual outside owner's $w_j$ in that test;
+using $\operatorname{supp}w_i$ instead is not licensed. [COK,
+Proposition 2.4][COK] supplies coverage of positive global assignments.
+

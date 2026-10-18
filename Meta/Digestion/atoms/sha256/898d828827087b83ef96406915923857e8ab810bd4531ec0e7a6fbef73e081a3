@@ -1,0 +1,18 @@
+## 14. The full phase action and the bounded useful module
+
+The next arguments apply to a $\beta$-independent encoder on its
+actual affine hull of any dimension $d\le3$. They will be used for
+the remaining case of Corollary 13.4. Write
+
+$$
+F(k,\alpha)=(1,E(k,\alpha))^{\mathsf T},\qquad
+X=\operatorname{span}_{\mathbb R}\{F(k,\alpha):0<k<H,
+\ \alpha\in\mathbb T\}.
+$$
+
+The full actual affine hull implies $\dim_{\mathbb R}X=d+1\le4$.
+Let $\lambda_0$ be its first-coordinate covector, so
+$\lambda_0F(k,\alpha)=1$. Homogenize the hull updates, including
+offsets, as $T_s$ for probability commands and $S_t$ for phase
+commands.
+

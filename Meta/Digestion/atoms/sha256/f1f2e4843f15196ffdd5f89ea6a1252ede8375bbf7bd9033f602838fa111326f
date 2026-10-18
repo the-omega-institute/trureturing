@@ -1,0 +1,30 @@
+**Corollary 19.2 (comb and balanced families).** For the comb
+$P_h=\{R^jL:0\leq j<h\}\cup\{R^h\}$, $h\geq1$,
+and the complete level $Q_h=\{L,R\}^h$, $h\geq1$,
+
+$$
+q(P_h)=\lceil\log_2(h+1)\rceil,\qquad
+q(Q_h)=2^{h-1}.
+\tag{CNA.34}
+$$
+
+**Proof.** The comb has a chain of $h$ internal vertices. The sum bound
+in (CNA.33) is necessary. If $h\leq2^k-1$, split this chain consecutively
+into nonempty blocks of lengths at most
+$2^{k-1},2^{k-2},\ldots,1$, omitting unused final blocks, and query their
+endpoints. Such a split exists by repeatedly taking the first block up
+to its capacity and applying the same construction to the remainder.
+It satisfies (CNA.31), proving the first equality.
+
+For $Q_h$, its $w=2^{h-1}$ maximal internal vertices force $w$ queries.
+Query those vertices in any fixed order. If query $i$ adds a chain of
+$d_i$ new ancestors, every new ancestor above its endpoint has a sibling
+subtree containing an as yet unqueried maximal internal vertex. These
+$d_i-1$ sibling subtrees are disjoint. Hence $d_i-1\leq w-i$, so
+$d_i\leq w-i+1\leq2^{w-i}$. The capacity test with $k=w$ gives the
+upper bound. $\square$
+
+Thus two cuts with eight holes can need three protected Reads (the
+seven-vertex comb) or four (the complete depth-three level). The maximum
+of the width and counting lower bounds in (CNA.33) need not be attained.
+

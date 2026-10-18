@@ -1,0 +1,37 @@
+**Definition 4.1 (a parked original client).** Fix an actual finite CAP
+controller table and initial state whose next entry is $r$, before its
+workspace loan. Execute CAP Definition 2.4's public boot, single private
+preparation/validation, counters/directory/fences and stationary seed
+acquisition/delivery. At its handoff initialize that actual table/state
+on 24/25 and its initially empty waiting packet on 27 by CAP Definition
+8.1's paid writes and channel/loan discipline, as in CAP Definition 16.2.
+Return the twelve work tokens to the producer. Ports 24, 25 and 27, including
+their heads and owners, are now parked until the original client is resumed.
+Port 26 retains its acquired seed and owner; its initial import temporarily
+moves its head and then restores it before the first outer entry.
+The acquired initial seed and actual public/prior bindings remain readable
+by $A$. There is no pending actor operation requiring a public work word.
+
+The added source caller is a separately numbered inlining $F^A$ of CAP's
+complete seven-tag raw frame graph, from its header Base prelude through
+its final row ACK, source-token TOK and idle CTL. Only that final CTL's
+successor changes, to the fixed label InnerReturn. It does not enter the
+old raw graph's next-frame IN. Its input latch remains 5, as in CAP;
+these INs are actual external input even when the parked original client
+has an effective automatic mode. No original waiting packet is rewritten.
+
+At InnerReturn a producer CTL selects identity public-word permutation,
+Tail(13), Tail(17) and a CTL select CaptureCAP. The same normalization is
+used after initial acquisition, before activation. All public work words
+and scratch latches are dead at these normalized entries; their actual
+bytes are retained. CAP's directory, counters, source, journals, descriptor
+streams and source-token/producer-workspace ownership have their complete
+boundary invariants. Only a later explicit loan enters $r$.
+
+This is the normalized parked-client domain. It does not assert that an
+auxiliary source call preserves arbitrary live public arithmetic words
+at an internal automatic-maintenance return. In that different situation
+history work on fresh ports preserves them, but a raw CAP call may reuse
+them. Here the actual finite joins establish the needed entry instead of
+postulating an arbitrary continuation-restoration operation.
+

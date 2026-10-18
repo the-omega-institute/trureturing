@@ -1,0 +1,16 @@
+**Definition 5.4 (M to T).** Parse the eight lists and apply Lemma 4.3's
+explicit extraction. Require the counted receipt word to equal the target
+$1^k$ in $b$. Run Theorem 4.4's literal Prefix loop with a copy of this
+countdown. For each represented native row, use its pre-row record and
+actually read/supplied labels to enumerate the matching $\Pi_2$ template.
+Emit its ordered probe, assignment, creation and commitment record as
+Definition 3.4 specifies. Tail the countdown once per represented row.
+Emit only this ordered patch list as the T-body.
+
+The reconstructed source and state are derived word workspace. Extraction
+reads seed contents from this M-body's acquisition backing, not from the
+live manifest, a package, or a completed-image block. Reservoir exhaustion,
+inconsistent activation, missing code kind or an illegal represented row
+has a typed validation failure. The operation count $k$ bounds represented
+rows, not actual word-instruction rows spent on the conversion.
+

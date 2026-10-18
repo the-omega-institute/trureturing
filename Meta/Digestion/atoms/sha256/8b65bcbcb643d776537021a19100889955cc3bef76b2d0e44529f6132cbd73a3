@@ -1,0 +1,73 @@
+**Theorem 2.2 (One complete representative at a closed cap).**
+For any finite $K\ge2$, an arbitrary original rule in class $C=N,O$
+meeting a positive closed cap $c\le1$ supplies some normalized
+complete $K$-bit allocation in its own class satisfying every row of
+1.4 at $(a_1,\ldots,a_K;c)$, including the positive row.
+
+Proof. Countability of $X$ gives one probability-one seed event on
+which finite handoff and the hard request bound hold on every actual
+source. On that event a preselected $O$ schedule cannot have a
+potentially executed third request: an actual finite pattern with its
+earlier queried replies positive would execute it. Its relevant whole
+schedule therefore has at most two finite addresses, as does an $N$
+schedule. Every consistent counterfactual cell has an actual witness
+by 2.1, so its output is defined on this same event. Inconsistent
+repeat-query cells may be filled arbitrarily. The observation rule in
+1.3 makes outputs depend on seed and acquired transcript, independently
+of the chosen witness. Countably many schedules and finite transcripts
+permit fixed witness choices with measurable outputs.
+
+Project the full carrier measurably onto labels $0,\ldots,K$ by
+retaining $\theta_j$, $j\le K$, and sending every other point to zero.
+This retains each low target and sends every higher first-zero target
+to $e_0$. Let $\eta_M$ be the seed probability that a relevant
+address exceeds $M$; then $\eta_M\to0$.
+
+For $M\ge K+1$, on seeds with addresses at most $M$ fix all queried
+replies above $K$ to zero and contract those constant observations.
+On exceptional seeds use constant zero. Push the same seed forward to
+the finite complete $K$-bit catalog, with all counterfactual outputs.
+This is one normalized allocation in its own class. In $O$, removed
+higher observations follow lower ones, preserving increasing
+first-queried-zero stopping. In $N$, the four static cells remain
+independent. Repeats and reversals are covered by contraction or
+cell permutation.
+
+For each low word choose an actual source with that word and with bits
+$K+1,\ldots,M$ zero. A low first-zero target projects to itself; a
+positive low word has actual first zero $K+1$ and projects to $e_0$.
+On nonexceptional seeds the projected output agrees with the finite
+representative. Projection contracts TV, while exceptional probability
+costs at most $\eta_M$, uniformly over the finitely many words.
+Hence every independent row and the positive row holds at
+$c+\eta_M$ for that single allocation.
+
+Compactness of the finite catalog simplex gives a convergent
+subsequence as $M\to\infty$. Continuity of every row gives one
+normalized allocation at the exact closed cap $c$. This proves
+existence of class feasibility, without preserving an arbitrary
+starting law or coupling. It retains arbitrary original addresses,
+Borel outputs, closed ties and smaller caps activating more tail
+coordinates. Fixed high replies in this proof are never free actual
+observations. $\square$
+
+**Reference frame 2.3 (Credits and visible premises).**
+The original objects, arithmetic realization and closed-cap
+correspondence are mature results collected in
+[DEV XVIII, 315 and 331](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XVIII.md).
+The direct proof above exposes the observation premises used here;
+no unseen earlier proof body is an additional premise.
+
+| Ingredient | Credit |
+| --- | --- |
+| Complete $253$ score, full head allowance and nineteen-schedule law | DEV XVIII 336–339 |
+| Complete $128$ score | DEV XVIII 318 |
+| Genuine $P^0,P^\star$ and full Boolean endpoint bounds | DEV XVIII 319–320 |
+| $Q$ transfer and old attained unequal wedge | DEV XVIII 324–327; [Unequal Two-tail Frontier, 3–6](FIB_NATIVE_UNEQUAL_TWO_TAIL_ATTAINED_FRONTIER.md) |
+| Base-to-eight $217$ law and original counterexample | Unequal Two-tail Frontier 10–17 |
+| $256$ lift and intermediate complete-law synthesis | Supplied full-head investigation; its independent ordinary check supplies expanded verification |
+
+The local support calculations and endpoint data below make the new
+lift and synthesis reviewable. Their exposition and verification do
+not rediscover the credited endpoints.
+

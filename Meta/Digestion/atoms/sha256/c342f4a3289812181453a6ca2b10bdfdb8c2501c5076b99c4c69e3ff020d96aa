@@ -1,0 +1,49 @@
+**Theorem 4.2 (matching initialized lower and upper bounds).** Under $a\ne b$ and $0<2\epsilon<\kappa$, the minimum number of configurations of a deterministic autonomous observer with a common complete-law decoder is exactly
+
+$$
+\boxed{6+N_2}.
+$$
+
+The minimum number reached after at least one read is $5+N_2$. One update and one decoder attain the bound for every actual finite positive-probability history, uniformly over all future horizons, including the query at empty history.
+
+**Proof (4.2).** For the upper bound retain
+
+$$
+I,\quad R_0,\ldots,R_4,\quad A_0,\ldots,A_{N_2-1}.
+$$
+
+Set $\beta=\delta_{N_2}/2$. Decode $I$ by $F_*$, $A_k$ by $G_{\delta_k}$, $R_d$ by $G_\beta$, and every other $R_i$ by $F_i$. Every one is a single coherent law profile. Use singleton reset $U(z,j)=R_j$ from every state, and the pure-label $B$ transitions of Theorem 2.2. On startup use
+
+$$
+I\mapsto A_0,\qquad
+A_k\mapsto A_{k+1}\ (k<N_2-1),\qquad
+A_{N_2-1}\mapsto R_d
+$$
+
+for input $B$.
+
+Inductively an initial $B^{k+1}$ occupies $A_k$ if $k<N_2$, and $R_d$ otherwise. A history containing a singleton occupies the label for its exactly inferred current hidden state. These two cases exhaust the actual domain and are preserved by every next acquired symbol. On the saturated startup tail, $0<\delta_k\le\delta_{N_2}$, so
+
+$$
+d(G_{\delta_k},G_\beta)
+=|\delta_k-\beta|\le\delta_{N_2}/2\le\epsilon.
+$$
+
+A synchronized dominant state has the same error $\beta\le\epsilon$; all remaining histories and the empty query are exact. Theorem 3.1 supplies the all-horizon guarantee directly. A rare actual exit is a singleton and resets correctly, regardless of its forecast probability. All listed labels are actually reached: each transient by its own initial run, all pure labels by the histories of Theorem 2.1, and $I$ at initialization. This gives $6+N_2$ total and $5+N_2$ post-read.
+
+For the lower bound, consider any competing observer, and write $z_k=z(B^{k+1})$. If $z_i=z_j$ for $i<j$, deterministic iteration of the same $B$ update gives
+
+$$
+z_{i+\ell(j-i)}=z_i\qquad(\ell\ge0).
+$$
+
+Every corresponding finite history has positive probability. Their true profiles converge to $F_d$ in $d$, since $\delta_{i+\ell(j-i)}\to0$. The common decoder at $z_i$ lies within $\epsilon$ of all these profiles, and therefore within $\epsilon$ of $F_d$. Its distance from $G_{\delta_i}$ is also at most $\epsilon$. The triangle inequality forces
+
+$$
+\delta_i\le2\epsilon.
+$$
+
+Consequently $z_0,\ldots,z_{N_2-1}$ are distinct and none recurs later on the startup orbit. Each is farther than $2\epsilon$ from $F_d$, farther than $2\epsilon$ from $F_f$ because $1-\delta_i\ge1/2$, and separated from the three singleton laws by Theorem 3.3. It is also separated from $F_*$ by that theorem. Thus these $N_2$ states share with none of the five synchronized laws or the empty law. Those six laws themselves require mutually different states by Theorem 3.3. This forces $N_2+6$ initialized configurations, and $N_2+5$ reached after reads.
+
+The repeated-state argument invokes the standard iteration identity for a deterministic map; the new obstruction is its combination with this source's positive startup histories and exact distance $\delta_i$ to the limiting law. The limit is used to constrain decoders on finite histories. No query or actual observation is made on the probability-zero event of an infinite all-$B$ run. $\square$
+

@@ -1,0 +1,44 @@
+**Corollary 89.2 (rank-at-most-two fixed-allocation value and count).**
+Let $F$ be a finite oriented failure allocation
+$\Sigma=\sum_{h\in F}a_h\delta_h$ with
+$\sum a_hn_hn_h^T=M$, and let
+
+$$
+B=I-\sum_{h\in F}\frac{a_h}{t\mathfrak c(h)}hh^T\succeq0,
+\qquad \operatorname{rank}B\le2.
+\tag{FA.114}
+$$
+Write its unique null representation as $B=\sum_{h\in R}r_hhh^T$ and set
+$C_h=t\mathfrak c(h)$. The fixed-allocation feasible contrast condition is
+
+$$
+\tau\le\sum_{h\in F}\frac{a_h}{C_h}|z_h|+\sum_{h\in R}r_h|z_h|.
+\tag{FA.115}
+$$
+For every such request the fixed-allocation maximum height is
+
+$$
+\mathcal H_F(t)=\frac12\left[H_0+
+\sum_{h\in F}\frac{a_h}{C_h}|\ell(h)+C_hf(h)|+
+\sum_{h\in R}r_h|\ell(h)|\right].
+\tag{FA.116}
+$$
+Its minimum low actual-label count is
+
+$$
+|F\cup R|+\#\{h\in F\cap R:\ell(h)[\ell(h)+C_hf(h)]<0\}.
+\tag{FA.117}
+$$
+The total actual alphabet of the constructor is one larger.
+
+**Proof.** Saturating every fixed failure direction leaves the unique residual
+measure of (FA.114), independent of the requested contrast. For a common
+direction, convexity gives
+$|\ell+bf|\le(1-b/C_h)|\ell|+(b/C_h)|\ell+C_hf|$.
+Endpoint splitting attains equality. If the two endpoint values have opposite
+strict signs and both masses are positive, every interior coefficient has
+strict loss and two labels are necessary; equal signs, a zero endpoint or a
+zero mass permit one label. Distinct directions cannot share an actual low
+label by Theorem 87.2. Axes, coincident directions and zero weights are
+removed by the same formula. $\square$
+

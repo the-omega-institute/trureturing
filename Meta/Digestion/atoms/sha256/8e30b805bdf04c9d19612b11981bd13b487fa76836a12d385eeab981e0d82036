@@ -1,0 +1,17 @@
+## 133. CFMP 返回观察恰是黄金判别式算子
+
+**来源范围。** 第 133–139 节继续同一 CFMP 目标；Fibonacci 原子关系理论使用第 139 节所列源码版本。
+
+第 122 节的非交换低、高返回词是 $v^{-1}u^2$ 和 $v^2u$。先取循环群的加法参数 $z=(u,v)^{\mathsf T}$，两返回量为
+
+$$Cz=\binom{2u-v}{u+2v},\qquad
+C=\begin{pmatrix}2&-1\\1&2\end{pmatrix}. \tag{133.1}$$
+
+此处的 $u,v$ 是配面平移参数，不是余弦长度。为防止两个语义层混淆，本节只研究实际配面参数及其观察。
+
+沿用 Fibonacci 卷的
+
+$$M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\quad
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
+W=JMJ=\begin{pmatrix}1&1\\1&0\end{pmatrix}.$$
+

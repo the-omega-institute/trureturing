@@ -1,0 +1,55 @@
+## 1. Original model and the supplied interface
+
+The source domain is the complete unbounded fiber
+
+$$
+\mathcal U_* = \{u\in\mathcal T:R_{\{L,R\}^3}(\rho u)=R_*\},
+$$
+
+where
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\qquad \rho(\alpha)=\beta,
+\qquad \rho(\beta)=\langle\beta,\alpha\rangle,
+$$
+
+and $\rho$ acts homomorphically on pairs. The fixed row $R_*$ has equality classes
+
+$$
+\{LLL,LRL\}=a,\quad \{LLR\}=b_1,\quad \{LRR\}=b_2,
+\quad \{RLL,RRL\}=c,\quad \{RLR\}=b_3,\quad \{RRR\}=b_4,
+$$
+
+with distinct classes distinct. A complete predecessor row retains its ordered exterior, all occurrences, the canonical equality partition, disequalities, and strict-prefix guards.
+
+For distinct positive positions $s_1<\cdots<s_n$, put
+
+$$
+ w_i=L^{s_i}R,\qquad a_i=LLLw_i,\qquad c_i=s_i+4,\qquad W=\sum_{i=1}^n c_i.
+$$
+
+The Boolean execution graph has a finite installed running-state set $Q$, two distinct terminals $\mathsf 0,\mathsf 1$, a fixed start, one fixed queried coordinate $i(q)\in[n]$ at every $q\in Q$, and fixed successors $\delta(q,0),\delta(q,1)$. Its only changing configuration is the current state. On an input $\theta\in\{0,1\}^n$, a visit to $q$ queries $\theta_{i(q)}$, costs one query and $c_{i(q)}$ letters, and follows the corresponding successor. Every installed state, including an unused state and a state reached only after certification, contributes to
+
+$$
+ m=|Q|.
+$$
+
+A complete correct graph terminates on every input, returns $\mathbf 1_{\{|\theta|\ge k\}}$, and obeys on every same actual run
+
+$$
+ t_P(\theta)\le n,\qquad J_P(\theta)\le W. \tag{1}
+$$
+
+Arbitrary adaptive coordinate choices, sharing, repeated queries, paid post-certificate traffic, and syntactic cycles with actual termination are allowed. No history, counter, clock, computed address, phase, or other changing register is supplied.
+
+The supplied native correspondence is
+
+$$
+\mathsf N_{A,k,r}(H,p,\ell)
+\Longleftrightarrow
+\mathsf B_{c,k}(H-4-r,p-1,\ell-3). \tag{2}
+$$
+
+It installs the Boolean graph at the literals $a_i$, adds the two original profile states and the original entry latches, and applies on all of $\mathcal U_*$. Thus a Boolean lower bound is a conditional installed-control lower bound through (2). Source binding, the fixed register, acquired same-version data, authentication, permission, export, access isolation, code-only handoff, lawful complete entry, and stationary service are separate supplied assumptions. Boolean installed-state count does not assert physical acquisition, time, memory, or any other native resource law.
+

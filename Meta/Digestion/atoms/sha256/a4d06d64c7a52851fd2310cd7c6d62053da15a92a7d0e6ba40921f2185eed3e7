@@ -1,0 +1,26 @@
+**Corollary 4.4 (effective positive contact selector).** Every finite
+presentation of Definition 2.3 has an effectively constructed finite list
+of guarded weighted graphs. It has a completed native solution precisely
+when some graph guard has a natural solution. Each accepted graph gives
+one selected native solution and its finite-coordinate templates. All
+finite requested prefixes of that solution are computable.
+
+**Proof.** Combine Lemma 2.4 and Theorems 3.2--4.3, then decide the finitely
+many Presburger guards. For prefix computation at depth $h$, start at the
+requested slot with its potential. Follow at most $h+1$ raw pair levels
+on any path. A free or marked state gives branch replies indefinitely.
+At a reached terminal compute its affine label plus the accumulated
+weight; admissibility guarantees a natural number. Compute the required
+prefix of the finite $T_j$ there by the native recurrence. Although a
+representative in isolation can have negative labels, every reached
+terminal with its actual starting-slot potential has a nonnegative label.
+No negative-index native tree is evaluated. The computation visits finitely
+many nodes and terminates.
+
+For the supplied non-rational contact
+$X=\langle\alpha,\rho X\rangle$ of [SPC, Theorem 4.2][SPC], the raw
+graph is $C=F([0],\sigma C)$. Its left leaf at $R^jL$ has label $j$.
+Thus its expansion has the pairwise distinct finite subtrees $T_j$ at
+those addresses. The finite weighted representation computes its prefixes
+without asserting rationality of the native expansion. $\square$
+

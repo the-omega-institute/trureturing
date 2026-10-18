@@ -1,0 +1,72 @@
+### 10.3 What changes with readout, and what remains unresolved
+
+The new classification has two logically separate lower mechanisms.
+The prior rational common-turn erasure forces equal encodings with
+opposite reference outputs, yielding $e_*$ for every arbitrary fixed
+deterministic readout. The affine-line action additionally forces
+antipodes of the complete original output to collide, yielding $R_0$
+in at most one coordinate. The annular realization attains $e_*$ in
+two, matching both bounds and all tolerance endpoints. The high-$Z$
+constant/height witnesses and the zero-dimensional guard distinction
+are already contained in [A, §11.5]; they are retained in the complete
+table rather than presented as separate new discoveries.
+
+Below $Z=2/3$, [A]'s affine-readout capacity has a positive gap above
+$e_*$ at every fixed finite dimension, even when all model parameters
+vary. Its all-finite infimum still equals $e_*$. Here the arbitrary-
+readout capacity already equals and attains $e_*$ at dimension two.
+Theorem 3.3 of [A] establishes full $\beta$ independence for bounded
+affine observables. It is not a theorem about arbitrary deterministic
+decoders. Proposition 4.2 supplies the needed residual by keeping the
+prediction fixed on a forced rational orbit. It does not silently
+import that stronger independence claim.
+
+The mathematical ingredients are classical affine spanning,
+homogenization, determinants on generalized eigenspaces,
+characteristic-zero unipotence, divisibility of real command time,
+finite-order affine-line dynamics, Euclidean antipode bounds and
+exponential polar coordinates. Choice enters only the explicit
+pathological example, not either lower bound or any optimal witness.
+Their applications needed for the classification are proved above.
+This is a repository-derived synthesis; no external literature search,
+worldwide originality or independently verified literature-priority
+claim is made.
+
+The remaining boundaries are part of the result:
+
+- Full positive support, $0<Z<1$ and $0<k<H$, is essential to this
+  source. At a height endpoint one group disappears; at $Z=0$ the
+  positive middle reference disappears; at $Z=1$ the open interval
+  is empty. Limits of scalar error expressions do not include these
+  different ray spaces in the theorem.
+- Current rays, arbitrary producing histories, retained real lifts,
+  loop-only endpoints and reduced command menus are different
+  domains or contracts. The full-domain one-step identities here
+  imply every finite lawful iterate. Merely declaring a short
+  execution horizon without changing those identities does not
+  weaken their algebraic consequences.
+- Rational-turn erasure does not classify every individual factor's
+  fibers or its behavior on all irrational turns. Proposition 6.3
+  explicitly prevents the stronger assertion that every one-real-
+  coordinate factor is phase-blind. No general measurable-factor or
+  simultaneous separation classification is supplied.
+- Requiring physical decoded outputs, injective encodings, or
+  approximate instead of exact latent equivariance changes the
+  problem. The optimal decoded vectors here are permitted to leave
+  the native output image. Literal domain identities, encoded guard
+  recovery and all-times prescribed-path requirements remain
+  separately defined even when their attainable errors agree.
+- Exact real coordinate counts do not provide finite-bit storage,
+  efficient implementation, conditioning, stability under noisy
+  initialization or rounding, measurement acquisition, training or
+  empirical machine-learning performance. Nonaccumulation here is
+  only the repeated evaluation of the same readout bound at an
+  exactly encoded current state.
+- The fixed-positive-dimension affine-readout capacities and their
+  optimal rates left unresolved in [A] are not computed by the
+  changed-readout table. The original finite-hidden-$N$ alternative
+  of a finite attainer versus a strict gap at every finite $N$ also
+  remains unresolved. No identification of its objective or
+  admissible realizations with $e_n^{\rm arb}(Z)$ is established,
+  and no completion of a broader research objective follows.
+

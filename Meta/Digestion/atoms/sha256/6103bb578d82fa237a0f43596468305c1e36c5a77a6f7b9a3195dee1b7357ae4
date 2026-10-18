@@ -1,0 +1,18 @@
+## Appendix C. Exact independent enclosures and contracted-image bounds
+
+All bare endpoint pairs in this appendix have scale `2^210`. Rational fractions are absolute, without additional scaling. The per-root records are in cell order `0..49` followed by edge order `91/20,23/5,1000 at 91/20,1000 at 23/5`. Their keys retain their mathematical input ordering. Decimal summaries do not replace exact endpoints; `degrees` and `leaves` describe the mathematical covers. The remainder-containment diagnostic is excluded because it proves no divisibility.
+
+Exact JSON data (54 records): [appendix-c-independent-enclosures.json](https://github.com/the-omega-institute/trureturing-experiments/blob/08cfceafd9500530ffa128764313472b003a72ab/experiments/theory/fib-native-complete-continuation/two-parameter-strip/appendix-c-independent-enclosures.json).
+
+The following fifty records refer to the exact fixed-point images defined after (6), with the original 35 leaves per cell. `bernstein_lower`, `separation`, `wedge`, `weight_lower`, `signed_height_lower`, `curvature_lower` are absolute rational lower bounds; `T.dyadic` encloses the actual signed primal value on the same image.
+
+Exact JSON data (50 records): [appendix-c-contracted-image-bounds.json](https://github.com/the-omega-institute/trureturing-experiments/blob/08cfceafd9500530ffa128764313472b003a72ab/experiments/theory/fib-native-complete-continuation/two-parameter-strip/appendix-c-contracted-image-bounds.json).
+
+The next records give both stronger uniform implicit edge derivatives, separate midpoint strengths, their integrated intervals, and strict box-identification margins. The margins are the minimum coordinate distance of a contained box from the outer box boundary, in ordinary variable units.
+
+Exact JSON data (2 records): [appendix-c-edge-identification.json](https://github.com/the-omega-institute/trureturing-experiments/blob/08cfceafd9500530ffa128764313472b003a72ab/experiments/theory/fib-native-complete-continuation/two-parameter-strip/appendix-c-edge-identification.json).
+
+These exact common extrema summarize the preceding inequalities and the FA78 feasibility expressions.
+
+Exact JSON data (1 record): [appendix-c-extrema.json](https://github.com/the-omega-institute/trureturing-experiments/blob/08cfceafd9500530ffa128764313472b003a72ab/experiments/theory/fib-native-complete-continuation/two-parameter-strip/appendix-c-extrema.json).
+

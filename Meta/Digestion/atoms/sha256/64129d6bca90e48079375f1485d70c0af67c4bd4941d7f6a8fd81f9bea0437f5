@@ -1,0 +1,11 @@
+### 96.1. Statement and parameter fields
+
+Define
+\[
+\begin{split}
+Q_{10}(b)&=2b^{10}+33b^8+90b^6+4b^2-1,\\
+Q_{14}(b)&=9b^{14}+181b^{12}+140b^{10}-4254b^8+1537b^6
+ +30305b^4-58758b^2+24696.
+\end{split}
+\tag{96.1}
+\]

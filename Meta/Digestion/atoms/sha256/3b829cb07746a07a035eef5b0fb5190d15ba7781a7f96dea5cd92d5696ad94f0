@@ -1,0 +1,26 @@
+**Definition 4.1 (prices on one actual history domain).** If a locally
+correct controller $A$ submits $p_1,\ldots,p_k$ on $h$, put
+
+$$
+c_A(h)=\left(k,\ \sum_{i=1}^k|p_i|,
+                     \max(\{0\}\cup\{|p_i|:1\le i\le k\})\right),
+\qquad
+b_\eta(A)=\left(\max_h c_A(h)_1,
+                 \max_h c_A(h)_2,\max_h c_A(h)_3\right).
+\tag{LQF.9}
+$$
+
+All three maxima range over the same $\mathscr H_\eta$ and use the
+same controller. They can have different maximizing histories. Define
+the finite upper-budget region
+
+$$
+\mathcal F_\eta=
+\{b\in\mathbb N^3:\exists A\text{ locally correct},\ b_\eta(A)\le b\}.
+\tag{LQF.10}
+$$
+
+The frontier means its coordinatewise minimal elements. Upward closure
+is a statement about allowed upper budgets; it does not assert that
+every larger integer vector is an exact cost vector of a controller.
+

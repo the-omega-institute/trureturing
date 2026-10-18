@@ -1,0 +1,53 @@
+### 定理 22.6（边读出何时只依赖 seam）
+
+令
+
+\[
+R:C\longrightarrow Z
+\]
+
+是任意线性边读出。则以下两项等价：
+
+1. 存在唯一线性映射
+   \[
+   \overline R:S\longrightarrow Z
+   \]
+   使
+   \[
+   R=\overline R\circ B;
+   \]
+2. \(R\) 湮灭所有循环：
+   \[
+   R|_K=0.
+   \]
+
+在此情况下，
+
+\[
+\overline R(s)=R(\mathsf L_W(s))
+\]
+
+与权重 \(W\) 无关。若 \(R|_K\neq0\)，则 \(R\) 可以区分同一 seam \(s\) 的不同边界提升。
+
+#### 证明
+
+若 \(R=\overline R\circ B\)，则对 \(k\in K\)
+
+\[
+R(k)=\overline R(Bk)=0.
+\]
+
+反过来，若 \(R|_K=0\)，对 \(s\in S\) 选取任意 \(f\in C\) 满足 \(Bf=s\)，定义
+
+\[
+\overline R(s)=R(f).
+\]
+
+若 \(f'\) 是另一个提升，则 \(f'-f\in K\)，所以
+
+\[
+R(f')-R(f)=R(f'-f)=0.
+\]
+
+故 \(\overline R\) 良定义、线性且满足 \(R=\overline R\circ B\)。唯一性由 \(B(C)=S\) 得到。特别地，最小提升可用于计算该映射，但结果不依赖所选 \(W\)。若 \(R|_K\neq0\)，取 \(k\in K\) 使 \(R(k)\neq0\)，则 \(f\) 与 \(f+k\) 具有相同 seam 而读出不同。证毕。
+

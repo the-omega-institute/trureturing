@@ -1,0 +1,16 @@
+**Definition 2.1 (single-residual verifier).** A certificate for
+$V_{\mathrm{SR}}(d,\mu,C,\pi)$ is a finite rational decomposition
+$\mu=\sum_\ell w_\ell$ together with, for each $\ell$, a support
+$S_\ell$, residual target $q_\ell$, reply map $a_\ell$ and the maximizing cell
+values used in (SRP.1). The verifier checks the decomposition, the native reply
+and target tables, the residual condition for every other target, and the exact
+inequality
+
+$$
+C\ge\sum_\ell R_{S_\ell}(w_\ell).
+\tag{SRP.3}
+$$
+
+It rejects malformed or incomplete data. All checks are finite rational
+calculations, so the predicate is total.
+

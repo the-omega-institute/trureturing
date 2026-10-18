@@ -1,0 +1,55 @@
+**Theorem 7.1 (a finite target outside Zero).** Use ARC Definition 9.1's
+one $H_0=h=K=1$, $u=\beta$, prior $\mathcal T_1$ and initialized
+INITIAL-Stop client with truthful proposal $q_1(\beta)=(0,B,1)$.
+Install $G_{\rm sel}$ once by §2. Supply gate01 and the actual
+Reserve(2) frame $101\,U(3)\,U(2)$. At its next Ready let $m$ be the
+old unified ordinal in that actually acquired source row. Actually supply
+gate1, HistoryMode1 and frame
+
+$$
+111\,U(m+4)\,1\,U(m)\,U(1).
+$$
+
+This flight delivers the actual cut $e+1$ of that same Reserve call,
+after its first native header-setup row and before its Zero fragment,
+then returns completely. Optional genuine Raise(2) and Rho calls may
+follow. Gate00 subsequently reaches the original accepted INITIAL output
+and genuine global halt. The witness requires no supplied absolute $e$,
+$k$, future capacity maximum or private-source snapshot.
+
+Proof. CAP Theorem 5.2 gives genuine strict Reserve(2), with $d=4$, same
+$\xi,u=\beta,h=1$ and real $K=2$ backing. Its full row/ACK return and
+ARC CaptureCAP obtain this actual $m$ and its origins; it is not stipulated
+to be zero or equated with a cycle count. The requester must possess or
+be supplied this acquired row numeral and must actually supply the whole
+frame above, its mode and its gate. It may obtain $m$ from the already
+owned acquired row by ARC §3's parser. The fixed offset1 is the explicit
+communicated target; no search for an uncommunicated intention occurs.
+
+The payload $1U(m)U(1)$ has $m+4$ bits. The source locator constructs
+this occurrence's $e,f$ internally. $F^A$ begins at its actual header
+Base/setup prelude, whose first local row is followed by further native
+positioning/header ingress. The full three-block input, parsing, ReadState,
+maintenance start, comparison/arithmetic and bound positioning all precede
+the Reserve-greater Zero test. Thus the cut $e+1$ exists, lies strictly
+before that test and strictly before $f$. It is outside every cut
+$n_0+5z+s$ of ARC §8's Zero family. Theorems 5.5–6.4 bind and deliver it
+through the actual73 callbacks with complete output/ACK/return. The target
+is an old raw prelude state, not a completed source boundary disguised as
+a general cut. The SourceOffset family also covers later directory,
+response, row and channel phases whenever their actual finite offsets
+are supplied, by Theorem 5.6.
+
+History has changed no current source or historical guard. A subsequent
+Raise(2) obeys $1<2\le K$ and changes the guard without writing a source
+cell; the optional Rho therefore accepts $\langle\beta,\alpha\rangle$.
+ARC Proposition 9.3's packets are respectively $10$, $100000$ after
+reservation and $111001$ after that modification; the original target
+remains $q_1(\beta)$. Gate00 performs the actual twelve-token workspace
+loan to the parked original client. Its original31 output and route49
+terminal packet, semantic/unified Halt rows, frozen SEG-P1 snapshot,
+occupied verifier32–39 with its historical-guard/prior checks, route51
+SEG-R1 receipt and consumer40–47 checks/copy/OUT/ACK are ARC Theorem 9.2's
+unchanged original task route. The final halt CTL is genuine and admits
+no history continuation. No history image replaces the INITIAL target. ∎
+

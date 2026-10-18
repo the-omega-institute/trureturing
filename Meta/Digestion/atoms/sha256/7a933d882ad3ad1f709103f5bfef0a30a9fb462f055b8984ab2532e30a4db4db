@@ -1,0 +1,27 @@
+**Corollary 67.2.** For \(0<|b|<\varepsilon\), the pair
+\((I_6,H_0(b))\) admits exactly one common-unbiased basis up to column
+phases and permutation, namely
+
+\[
+ B_{\rm can}(b)=H_0(b)C(b)/\sqrt6.
+\tag{67.2}
+\]
+
+Consequently this fixed pair cannot belong to a quartet of mutually
+unbiased bases on that punctured parameter interval.
+
+**Proof.** A unitary matrix \(B\) is unbiased to both members of the
+pair exactly when both \(B\) and \(H_0(b)^*B\) have entry moduli
+\(1/\sqrt6\). Set \(W=H_0(b)^*B\). Then \(W\) is unitary and both
+\(W\) and \(H_0(b)W=B\) are flat. Thus \(W\) is precisely a
+common-flat input basis in the convention of Theorem 67.1.
+That theorem gives \(W=C(b)/\sqrt6\) up to phases and permutation,
+which yields (67.2). Conversely (67.2) satisfies both flatness
+conditions by the defining canonical identities.
+
+A quartet extending the pair would supply two additional common-
+unbiased bases. Both would have the same column-ray set (67.2).
+Their relative unitary would therefore be monomial, with entry moduli
+zero or one, rather than all \(1/\sqrt6\). They cannot be mutually
+unbiased. \(\square\)
+

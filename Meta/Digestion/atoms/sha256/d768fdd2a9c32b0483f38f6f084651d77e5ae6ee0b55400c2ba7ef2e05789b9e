@@ -1,0 +1,24 @@
+**Proposition 141.2 (Exact event-TV equivalence).** For every probability
+vector $p_b$ the 94 rows are equivalent to the closed cap
+$\operatorname{TV}(p_b,\eta_b)\le e$ on every word.
+
+**Proof.** For a target on $\{0,n\}$,
+
+$$
+\begin{aligned}
+\operatorname{TV}(p,(1-a)e_0+ae_n)
+ &=1-\min\{p(0),1-a\}-\min\{p(n),a\}\\
+ &=\max\{0,1-a-p(0),a-p(n),1-p(0)-p(n)\}.
+\end{aligned}
+\tag{141.1}
+$$
+
+The maximum of the last three expressions is already nonnegative for a
+probability vector, but the explicit zero makes the nonnegative form
+unambiguous. Thus each of the three listed rows is necessary, and
+jointly they are sufficient when $e\ge0$.
+At $11111$ the distance to $e_0$ is $1-p_{11111}(0)$.
+This reuses the TV identity in Acquisition Resources (84.2) and
+Continuation (110.6). The pair row is not replaced by adding singleton
+deficits. $\square$
+

@@ -1,0 +1,2 @@
+**假设 11.8（取得核变化与初始纤维的桥）。** [取得核盲方向卷](RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_KERNEL_BLIND_DIRECTIONS_AFTER_PAIRED_CALIBRATION.md) Conventions 1.1–2.5、§§5、7–9 比较的是省略了取得核的模型参数族。其未来算子随参数变化，完整控制、Stop、风险次序及资源合同均保留。把那里的参数变化等同于这里固定算子的初始差分 $d$，须给出共同实现、参数映射和全部记录律相等的证明；本卷不假定已有此桥。该卷的固定核反演引用与未知核障碍是不同问题，增长状态数的延迟族也不反驳固定五态齐次闭包界。
+

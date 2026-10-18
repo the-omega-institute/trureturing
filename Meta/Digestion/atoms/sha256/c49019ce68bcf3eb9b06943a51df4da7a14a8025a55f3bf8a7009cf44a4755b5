@@ -1,0 +1,10 @@
+**Definition 4.4 (The scope of the support obstruction).** The failure
+in (4.8) is failure of a cone representation, including its full TP
+slice. Thus no whole-channel-preserving decomposition can replace
+every feasible channel by boundary atoms. It does not state that an
+optimizer needs full-sector atoms, that a boundary-supported channel
+cannot attain $\varepsilon_1$, or that an objective-specific no-worse
+map to a smaller class is impossible. Such a map would require a
+separate proof for (1.3). The port (4.10) is a separation witness,
+not a sufficient endpoint improvement near the QJM upper bound.
+

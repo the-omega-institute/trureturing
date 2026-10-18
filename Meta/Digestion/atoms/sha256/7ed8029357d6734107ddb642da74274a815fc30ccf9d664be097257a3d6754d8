@@ -1,0 +1,37 @@
+**Proposition 7.1 (strict geometry and feasibility margins).** On all refined boxes the following comparisons hold, with each old index in $O$ and every indicated pair treated simultaneously:
+
+| Quantity | Strict comparison |
+| --- | --- |
+| Six old weights | $p_i>0.0442721$ |
+| Signed contact height | $\epsilon_iH_i>0.0033319$ |
+| Signed report | $\sigma_i u_i>0.7964$ |
+| Every pairwise circle squared separation | $\|(u_i,v_i)-(u_j,v_j)\|^2>0.08907$ |
+| Each prospective saturated failure-line squared wedge | $\det((u_i,v_i),(u_j,v_j))^2>0.0009307$ for $i,j\in\{4,5,6\}$ |
+| Seven-column moment minor, rows $(0,1,2,3,4,5,7)$ | $-0.0008500501<\det\Gamma_{\rm minor}<-0.0008500499$ |
+| Pure-column contrast tangent below | $Dk[\dot z]>0.0001701047$ |
+| Seven root tube | $s_{\max}(1000)-s>2.12\cdot10^{-10}$ |
+| Six root tube | $s_{\max}(1000)-s>3.61\cdot10^{-10}$ |
+
+At the event,
+
+$$
+3.61503476520\cdot10^{-10}<s_{\max}(1000)-s(\lambda_e)
+<3.61503476528\cdot10^{-10}.
+$$
+
+All occupied angular contact curvatures are strictly positive. Seven-column independence holds even on six when the unused stationary column is included, so every occupied subcollection is independent.
+
+Proof. Substitute Appendix 15 into Definition 4.1. The coefficients, source intervals and all exact arithmetic conventions are canonical in §§2, 4–5 and the appendices. Signed heights and reports use the indicated sign metadata. Separation is computed for all 21 pairs; prospective saturated wedges use all three pairs. For the minor use interval Gaussian elimination: at each stage the pivot interval excludes zero, eliminate below it and multiply the resulting pivots with the row-permutation sign. This gives the stated interval without an assumption that interval determinant expansion is sharp. Exact double factors, separated contacts, positive quotient values and positive clearing denominators imply positive second derivative of the normalized angular gap at every contact.
+
+For the contrast tangent use the explicit expression in Theorem 7.2. For feasibility use the scalar formula of FA Theorem 78.3, with every symbol evaluated from the same source:
+
+$$
+\begin{gathered}
+u_f=V_f/\mu,\quad c_f=c_h\big|_{z^2=u_f},\quad
+\nu=\mu/c_f,\quad t_0=W_f/c_f<265,\quad q=\nu/1000,\\
+s_{\max}(1000)=s_0\left(q\sqrt{u_f}+\sqrt{(1-q)(1-qu_f)}\right).
+\end{gathered}
+$$
+
+Capacity depends only on $z^2$ since $\alpha z^2+\beta w^2=1$. Appendix 17 gives exact enclosing geometry values at the event; direct substitution on the branch boxes gives the table. The small but strict slack is retained: none of these points is identified with the maximum-contrast boundary. Every comparison is uniform over the boxes, not merely at the decimal centers. $\square$
+

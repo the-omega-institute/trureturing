@@ -1,0 +1,19 @@
+**Lemma 4.3 (Distinct roots with a shared query imply $\mathsf B$).** Every four-row competitor of this shape has $r=2$ and satisfies (2.5).
+
+Proof. Write the rows $a_0,a_1,b,x$. Each raw child of $b$ contains one lower source at every $j$. A self-edge with the other edge a Halt can return only that one lower label; with the other edge emitting, phase $a$ repeats the self-edge at its second query and leaves a nonhalting last $b$.
+
+If both children enter $x$, its safe first word has a fixed binary effective output map on the lower sources. A last $b$ has no Halt, a last root cannot return a lower label, a repeated zero-containing $x$ has at most its existing scalar Halt, and a repeated all-one $x$ adds only one uniform bottom return. Complementary value inputs give at most two joined pairs. If an emitting edge instead enters a root, its zero edge leaves a last $b$ without Halts. Its positive edge can finish a lower label only through $x$; that same edge sends an actual initial $C$ source to $x$ at index one, forcing $u(x)=B$. Such an early safe $C$ occurrence prevents two lower scalar Halts at $x$. Two root entries cannot supply both lower labels, and a simultaneous root and $x$ at index two would require $u(x)=L$, contradicting $u(x)=B$.
+
+Thus $b$ has a homogeneous raw child $e$ with literal Halt $L$, and one continuing child $\beta=1-e$. Homogeneity gives
+
+$$
+\lambda_{e\oplus q(j)}(j)=L\quad(j\in J).
+\tag{4.1}
+$$
+
+This requires $L$ common to both label sets. For $r=3$, the other child contains $L$ and both exclusive lower labels. It cannot finish: at $x$ its first response has at most two fixed useful eventual labels, and a root offers only the last $b$'s $L$ Halt and at most one other lower Halt at an early-$C$ row $x$. The same observation gives $r=2$, with exactly the literal star in (2.5). The continuing support contains one initial value at every $j$, has common scalar $\beta$, and target $L$ on the central class and $L'$ on the leaves.
+
+If it enters $x$, each raw branch of the safe index-two word must already be homogeneous: the possible last rows just listed each offer a single useful lower label. Its full charge is therefore $\mu\oplus\delta$ for some orientation $\delta$, and its actual safe seam supplies (2.5).
+
+If it enters root $a_i$, the middle word is $L$. A lower return through its positive edge requires $x$ last. Its mandatory early $C$ occurrence forces $u(x)=B$ and fixes the raw-$1-i$ scalar Halt there to $C$, using original phase $m$. If $\beta=i$, actual phase $c$ takes the root-positive edge and has $q_3^B(c)=q(m)=0$, incorrectly returning that $C$ Halt. Hence $\beta=1-i$. On $\rho=1$, the root-zero edge reaches $b$ last and can only return $L$; on $\rho=0$, the positive edge reaches $x$ and can only return its other lower Halt $L'$. Thus $\mu=1-\rho$ on all $J$. The same actual safe $L$ has charge $\mu\oplus1$ and satisfies (2.5). No early stopping assumption was made on the root-positive $C$ paths. ∎
+

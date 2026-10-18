@@ -1,0 +1,19 @@
+**Lemma 6.2 (acquired height errors control every rate).** With the true
+and reconstructed heights in (SC.12),
+
+$$
+\|\lambda-\widetilde\lambda\|_1\leq B,\qquad
+e_i:=\|g_i-\widetilde g_i\|_1\leq2B,\qquad e_2\leq B.
+\tag{SC.19}
+$$
+
+Proof. At fixed height the hazard is piecewise linear in velocity, with
+slopes of modulus at most $1/\eta$. At fixed velocity $\widetilde k'$,
+changing the height by at most $\Delta$ costs at most
+$|\widetilde k'|\Delta/\eta^2$. Integrating gives the first bound,
+which is the credited estimate (IS.26) with now-acquired error data.
+Each of $k'/k$ and $-k'/(c-k)$ has the same $B$ difference bound, by the
+same denominator calculation. Subtract these logarithmic derivatives from
+the hazard for the plus and minus modes; the middle logarithmic derivative
+is zero. The triangle inequality proves (SC.19). $\square$
+

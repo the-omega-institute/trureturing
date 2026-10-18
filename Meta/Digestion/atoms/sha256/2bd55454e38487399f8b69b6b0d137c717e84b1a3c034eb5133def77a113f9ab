@@ -1,0 +1,76 @@
+**Definition 41.1 (the unchanged full-output problem).** Retain Definition
+34.1 and the complete comparison class of (JR.20). In particular the
+sole input is one of the twelve normalized states (JR.1), embedded by
+$E$ in the original five modes. The processor is one common all-complex
+CPTP map, with an actual acquisition factorization, full TP conditional
+decoders and the same jointly counted acquisition cut. The ideal targets
+are still the coherent live blocks $EU_{e,n}B_yU_{e,n}^\dagger E^\dagger$
+of (CG.111), together with all five separately labelled measures
+$w_j f_y(t)dt\,P_f$. Here $B_y$ in the ideal target denotes the matrix
+of (CG.111); the scalar $B_y$ in resource expressions below always
+means (JR.23). The error remains
+
+$$
+E(\Phi)=\max_{y\in\{5,16,27\},\ e,n=\pm1}
+ \frac12\|\Phi(E\rho_{y,e,n}E^\dagger)-\Omega_{y,e,n}\|_{1,\mathrm{cq}}.
+$$
+
+Thus every live coherence, singular-time component, abort, wrong support
+and zero-target sector is counted. There is no source prior, helper,
+acceptance division, copy, reset, retry, readable old history or quantum
+bypass. The isolated CG point, its ranks, normalization, strict source
+enclosures, endpoint witnesses and minimax certificate in CG §§13–17
+are named ordinary conditional premises. The deductions here reuse that
+certificate; they do not authenticate the original algebraic/minimax
+certificate anew and carry no Lean/kernel certification.
+
+Let $R$ be an actually generated classical record available at the
+acquisition cut, and $F$ the plus effect of a binary record obtained
+from that same acquisition. A common classical kernel for $R,F$ may
+be included in the actual label $\alpha$. It suffices for maximization
+to retain the entire generated label as $R$: classical processing
+contracts total variation. Define, on the supported qutrit,
+
+$$
+\begin{aligned}
+\Delta&=\rho_{27,+,+}-\rho_{5,+,+},\\
+\mathcal T(s)&=\sup\left\{
+ \operatorname{TV}(P^R_{5,+,+},P^R_{27,+,+}):
+ E(\Phi)=E_*,\quad \mathsf V(F)\geq s,\quad
+ \mathsf W=\mathsf C(s)\right\},\qquad 0\leq s\leq1.
+\end{aligned}
+\tag{JR.43}
+$$
+
+Here $\operatorname{TV}(P,Q)=\tfrac12\int|dP-dQ|$ on the actual
+classical record space; no inaccessible Kraus index is added to it.
+The law $P^R_{y,e,n}$ is induced by the actual encoder masses
+$\operatorname{tr}\mathcal E_\alpha(E\rho_{y,e,n}E^\dagger)$
+and its common classical kernel. Encoder traces on general positive
+inputs are unnormalized masses; they are probabilities only when the
+actual input is normalized.
+The constraint is exactly the original contrast inequality
+$\mathsf V(F)=2|\operatorname{Re}F_{01}|/\kappa\geq s$.
+It prescribes neither the other entries of $F$ nor the forgotten
+channel. In particular (JR.43) does not impose the full binary effects
+(CA.11) of [CA, Definition 2.2] or fix $\widehat\Phi_*$ in advance.
+
+The cost is still the maximum over all twelve histories of the
+probability that the joint future-accessible input-dependent quantum
+fibre has dimension at least three. Retained specimen, memory,
+controller, accessible environment and entanglement shares are counted
+together. Blank ancillas introduced later are independent; a later
+accessible correlated share is not a blank. All other dilation systems
+are permanently inaccessible before this same cut.
+
+The necessary statements use the finite class, its countable version
+with convergent CP instruments, and only the explicitly stipulated
+integrals of CG Convention 21.3: measurable finite fibre dimensions,
+measurable encoder/live-decoder Kraus fields, integrable effects and
+live Choi matrices, and full-output TP decoders almost everywhere.
+Integral encoder densities are CP, without an individual TNI requirement
+relative to the reference measure; their integrated effect is $I$.
+No arbitrary continuous-outcome disintegration or infinite-dimensional
+coding extension is asserted. All attainments below have finite actual
+alphabets, which does not enlarge these necessity scopes.
+

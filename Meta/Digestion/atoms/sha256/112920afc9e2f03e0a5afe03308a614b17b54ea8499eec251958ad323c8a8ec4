@@ -1,0 +1,66 @@
+**Proposition 12.2 (complete joint constraints and finite realization).**
+Under Assumption 1.2 the laws of Definition 12.1 are precisely the
+finite weak laws (GC.9), with the same complete live Gram, failure
+covariance, contrast and actual height. Their moment, contrast and
+height vectors admit exact finite representations. The maximum in
+(GC.57) exists, and $R_t$ is finite, concave and nonincreasing on its
+request interval. Every finite law has the simultaneous original
+realization of Proposition 10.1.
+
+Proof. The first five moments give
+$$
+\sum p=1,\quad\sum pu=\sum pv=\sum puv=0,\quad
+\sum pu^2=\alpha,\quad\sum pv^2=\beta.
+$$
+Rescaling $z=u/\sqrt\alpha$, $w=v/\sqrt\beta$ therefore gives
+$\sum phh^T=I_3$, including all off-diagonal entries. The last three
+moments, multiplied by $t$, give
+$$
+\sum pb_x=\mu,\qquad \sum pb_xz^2=V,\qquad
+\sum pb_xzw=0.
+$$
+The identity $\alpha z^2+\beta w^2=1$ and
+$\mu=\alpha V+\beta W$ then give $\sum pb_xw^2=W$.
+Since $n_h=(0,dw/h_2,-bz/h_1)^T$, the two lower diagonal entries of
+$\sum pb_xn_hn_h^T$ are $d^2W/h_2^2=m_1$ and
+$b^2V/h_1^2=m_2$, and the cross entry vanishes. Its first row and
+column vanish. Thus this sum is exactly $M$. Conversely the complete
+Gram and $M$ recover these eight moments by the same equations and
+the ellipse identity. No independent choice of a failure marginal is
+involved. The capacity condition holds pointwise because
+$0\le b_x\le t\mathfrak c(h)$.
+
+Deterministic reports $\operatorname{sgn}z$ give
+$\mathsf V=s_0K(\pi)/\sqrt\alpha$; a fixed choice at $z=0$ is harmless.
+The signed acquired mass of label $i$ is
+$p_i(\ell(h_i)+b_if(h_i))$, with live and eventual failure mass added
+inside that label. The high signed mass is $H_0>0$, giving (GC.58).
+The normalization $\sum p_i=1$ is for coefficient weights: the actual
+supported acquisition effect is
+$K_i^\dagger K_i+p_ib_in_{h_i}n_{h_i}^T$, rather than $p_iI$.
+
+The capacity is continuous and strictly positive on the compact circle,
+so $x\mapsto(\Gamma(x),k(x),g_t(x))$ has compact image. Its convex
+hull in a finite-dimensional real space is compact: by the ordinary
+finite-dimensional convex-hull theorem every point is a combination
+of at most one more than the ambient dimension of image points, and
+the corresponding finite simplex times compact power of $X$ is compact.
+Integrals of these vectors against probability measures belong to the
+same convex hull and hence have exact finite representations.
+Intersecting with the moment target and the closed inequality $K\ge r$
+is compact and nonempty at feasible requests. Maximizing its height
+coordinate gives (GC.57). Mixtures of two common laws preserve the
+moment target and give at least the mixed request with the mixed
+height, proving concavity. Increasing a request shrinks the feasible
+set, proving monotonicity. Boundedness follows from continuity of $g_t$.
+This argument uses measures only for finite-dimensional convex geometry,
+not a physical measurable disintegration.
+
+For every occupied finite atom the established equalities are exactly
+the same-joint-data premises of Proposition 10.1: complete live Gram
+$I_3$, complete physical covariance $M$, the pointwise physical capacity
+bound, and the requested contrast inequality. Thus that proposition
+applies to this very law with its actual $p_i,h_i,b_i$, not to separately
+chosen marginal representations. Its full-complex CP and Borel identities
+(GC.53)–(GC.54) and actual height formula consequently apply. $\square$
+

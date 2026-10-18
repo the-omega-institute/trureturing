@@ -1,0 +1,45 @@
+**Definition 14.3 (complete cuts and ordered ancestor coverage).** Write
+$a\preceq b$ when $a$ is a prefix of $b$, and $a\prec b$ for a strict
+prefix. Call $P$ complete if every infinite binary ray has a prefix in
+$P$. This includes $\{\varepsilon\}$ and excludes $\varnothing$.
+Completeness is decidable from the finite public trie: $P$ is nonempty
+and every nonterminal trie vertex has both children. Equivalently,
+
+$$
+\sum_{p\in P}2^{-|p|}=1.
+\tag{CNA.22}
+$$
+
+Indeed, choose a depth at least every cut-word length (depth zero is
+allowed for the empty cut). At that level the disjoint sets of
+extensions of cut words cover exactly that fraction of the finite level.
+An uncovered word at that level extends to an uncovered ray. This
+finite-prefix calculation concerns the public cut, not the shape of the
+unknown finite source.
+
+For complete $P$, define its internal public skeleton
+
+$$
+I=\{x: x\prec p\text{ for some }p\in P\},\qquad
+A(a)=\{x\in I:x\preceq a\}\quad(a\in I).
+\tag{CNA.23}
+$$
+
+The addresses not hidden by any cut word are exactly $I$. A covering
+sequence is a finite list $a_1,\ldots,a_m\in I$ for which
+$B_0=\varnothing$, $B_i=B_{i-1}\cup A(a_i)$,
+$d_i=|B_i\setminus B_{i-1}|\geq1$, and $B_m=I$.
+Its geometric cost is
+
+$$
+K(a_1,\ldots,a_m)=
+\max_{1\leq i\leq m}\bigl(i+\lceil\log_2 d_i\rceil\bigr).
+\tag{CNA.24}
+$$
+
+The empty sequence covers $I=\varnothing$ and has cost zero.
+Each $B_i$ is prefix-closed. The new vertices of $A(a_i)$ form one
+consecutive ancestor chain; $d_i$ is its length. In particular $K\geq m$.
+There are finitely many covering sequences because every entry adds a
+vertex, so $m\leq|I|$. No native source is enumerated in this definition.
+

@@ -1,0 +1,37 @@
+**Lemma 2.2 (N1, periodic-modulus obstruction).** For every positive integer
+$n$ with $d=np<1$,
+
+$$
+\sqrt{d(1-d)}\le\sqrt\delta+\sqrt{\delta+\tau d}.
+\tag{2.2}
+$$
+
+Whenever also $d<a$,
+
+$$
+\delta\ge\frac{d(a-d)^2}{4(1-d)}.
+\tag{2.3}
+$$
+
+**Proof.** Since $(\omega_1-\omega_2)p=\pm2\pi$, there is a unit $q$ with
+$R(x+p)=qR(x)$. Thus $|R(1-d)|=|R(1)|$. At $x=1$, (2.1) gives
+$|R(1)|\le\sqrt\delta$ and $\delta\ge0$. At $x=1-d$, put
+$S=\sqrt{d(1-d)}$. The triangle inequality and (2.1) give
+
+$$
+S\le |R(1-d)|+|R(1-d)-S|
+\le\sqrt\delta+\sqrt{\delta+\tau d}.
+$$
+
+This is (2.2). If $d<a$, put $t=\sqrt\delta$ and
+$h=(S^2-\tau d)/(2S)>0$. If $t\ge S$ then $t\ge h$; if $t<S$, squaring
+$S-t\le\sqrt{t^2+\tau d}$ gives $t\ge h$. Hence
+
+$$
+\delta\ge h^2
+=\frac{[d(a-d)]^2}{4d(1-d)}
+=\frac{d(a-d)^2}{4(1-d)}.
+$$
+
+This uses arbitrary coefficient phases and arbitrary common frequency. $\square$
+

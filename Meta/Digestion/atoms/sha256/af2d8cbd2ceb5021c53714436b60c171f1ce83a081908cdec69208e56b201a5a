@@ -1,0 +1,27 @@
+### 102.3. A principal antiunitary fixes the same common kernel phases
+
+Let \(P\) exchange coordinates 1 and 2 and fix 3 and 4. In the gauge (5),
+\[
+H_S=P\overline{H_S}P,\qquad T_S=P\overline{T_S}P.
+\tag{7}
+\]
+Define the real-linear involution \(\Theta(Q)=P\overline QP\). It preserves the principal Gram domain with blocks \((2,1,1)\) and the principal density/witness feasible set. For fixed \(H_S\), the exact principal objective satisfies
+\[
+f_H(\Theta(Q))=f_H(Q).
+\tag{8}
+\]
+Both \(G_S\) and \(\Theta(G_S)\) attain the global principal minimum \(t\). Their midpoint is feasible, and convexity plus global minimality gives value \(t\) there. At that midpoint take any normer and average it with its \(\Theta\)-image. This gives a \(\Theta\)-fixed midpoint normer. Its two endpoint objective values are at most \(t\), and their average equals \(t\), so each equals \(t\). It is therefore also a normer at the original principal coefficient. Principal uniqueness from section 99 implies
+\[
+\rho=P\overline\rho P,\qquad W=P\overline WP.
+\tag{9}
+\]
+
+Only the normer has been fixed in this argument. Neither the midpoint Gram's rank nor equality \(G_S=\Theta(G_S)\) is asserted or needed. The original outside records need not have this symmetry.
+
+Rescale the full kernel vector by a phase so that \(a_3=b>0\). The equality \(W_{13}=\overline{W_{23}}\), together with (3) and \(H_{13}=H_{23}=1/\sqrt2\), gives \(a_2=\overline{a_1}\). Also \(W_{34}\) is real by (9). As \(H_{34}=c>0\), formula (3) forces \(a_4\) real. Thus the same full kernel vector has the form
+\[
+a_S=(z,\overline z,b,d),\qquad
+z\ne0,\quad b>0,\quad d\in\mathbb R\setminus\{0\}.
+\tag{10}
+\]
+

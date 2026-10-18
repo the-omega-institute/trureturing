@@ -1,0 +1,42 @@
+**Theorem 52.4 (source-specific chronological spectral escape).** In the original fixed-cap TM30/57 numerical interface, with common public $H\ge8$, both actual initial trees (52.20) produce identical complete numerical execution records under every common deterministic causal policy using `Read`, whole $\rho$, `Left(v)`, `Right(v)`, their accept/reject responses and Stop. The assertion also holds if the fixed numerical ports of Process44 for $c,q,n$ and their declared scalar projections are separately supplied. No such policy determines the INITIAL target (52.21) on a source domain containing this pair. Under absolute spectral-value loss, every record-only estimator has worst-case error at least
+
+$$
+\frac{\Delta F}{2}=\frac{66953}{3285192}.
+\tag{52.25}
+$$
+
+The target stays INITIAL even after the sources have changed; it is not a function of whichever later tree remains in the register.
+
+Proof. The two trees have exactly the same ordered leaf word. The original Clifford evaluation is the associative leaf product, so it forgets brackets. Substitution applies the same leaf-word morphism to both. Each same prepared left/right context concatenates the same actual context word on the same side. Thus equality of leaf words is preserved by every accepted whole modification, including arbitrary mixtures of contexts and substitutions. Their compositions and candidate sizes are equal. At a fixed cap each guard accepts or rejects on the same whole-size comparison; rejection preserves each entire old source and returns no candidate value. Every actual Read therefore returns the same Clifford value. The additional Process44 ports also agree: compositions agree and both root cross-product values remain zero under every allowed modification.
+
+Induction on chronological records now makes the policy choose the same next command, actual context identity and next Read or Stop. Every executed parameter in this exact native interface is the specified whole operation on its actual tree; no source-dependent execution telemetry has been supplied. Repeated Reads and refusals remain separate recorded events. A common source-independent controller initialization supplies no distinguishing program or preparation metadata. The fixed-size private preparation in TM57 §57.6 has the same public trace for these valid inputs, despite their different private token choices. Context construction and transmission, record copying, any paid verification and consumer use retain the same original numeric projection; they must not export the private tree code under a new name.
+
+If both runs are finite they stop with identical complete records; if the policy does not stop, their every finite prefix still agrees. A natural-number-indexed infinite history has no event after an infinite prefix at which to add a spectral Read. Hence all these numerical records leave both actual INITIAL trees in the compatible source fiber, while (52.22) assigns them different targets. Apply this volume §25's actual-fiber criterion and §26's two-point lower bound to obtain impossibility and (52.25). □
+
+Here is one completely literal fixed-$H$ history. Set $H=20$ and use the same preparation-independent program on both sources. Read has no command argument; bracketed entries below are its actual replies or the actual update responses:
+
+$$
+\begin{aligned}
+&\operatorname{Read}\,[1];\quad\rho\,[\mathrm{accept}];\quad
+ \operatorname{Read}\,[1];\quad\rho\,[\mathrm{accept}];\quad
+ \operatorname{Read}\,[1];\\
+&\operatorname{Right}(\alpha)\,[\mathrm{reject}];\quad
+ \operatorname{Read}\,[1];\quad\rho\,[\mathrm{reject}];\quad
+ \operatorname{Read}\,[1];\quad\operatorname{Stop}.
+\end{aligned}
+\tag{52.26}
+$$
+
+The three accepted-window leaf sizes are $8,12,20$, so the second substitution accepts at equality. The rejected right candidate has 21 leaves and the rejected substitution candidate has 32. Both refusals retain the 20-leaf current source, and all five actual Reads return the Clifford identity. The original initial target is in both cases
+
+$$
+q_{20}(t)=\left(2,\left(((0,0,0),(0,0,0),(0,0,0)),(4,4)\right)\right).
+\tag{52.27}
+$$
+
+This is precisely the original nested tag-2 target, not a spectral target and not the later composition. In fact the entire compatible fiber of (52.26) over the public prior $\mathcal T_{20}$ has this same original target. Its first three actual Reads force all three INITIAL Clifford windows to be units. The two accepted substitutions install the exact second image, while the subsequent `Right(alpha)` refusal forces that current image to have exactly 20 leaves: its size is at most 20 and adding one would exceed 20. Lemma TM58.2 therefore gives the initial composition $(4r,4s)$ with $r,s\ge1$ and $8r+12s=20$, hence $r=s=1$. The initial second image fits at equality, so every compatible source has the literal tag-2 target (52.27). This uses actual accepted and refused events, not an additional size Read. The particular authentic target-factoring supplier of TM58 also gives the same symbol: $h=5,L=2,(z,w)=(2,3)$ in its notation yields $i=2$. This observation is conditional on that supplier's actual same-source production and delivery. Arbitrary tree-dependent supplier advice could distinguish the pair, but is additional source information and is not covered by Theorem 52.4. No telemetry, advice, calibration or supplier realization is inferred from the formulas.
+
+The obstruction has an actual consumer. A verifier replaying all original numeric rows over a prior containing both trees must reject a proposed unique `INITIAL-spectral` value, because this fiber contains both values (52.22). For the literal history and public prior $\mathcal T_{20}$, the existing record-only verifier in TM57 §57.10 accepts the correctly encoded `INITIAL-q_H` proposal (52.27) once its prescribed authentic framing, identity and receipt checks succeed: the preceding all-fiber calculation proves its constancy test. Its paid consumer can use that original receipt; the receipt cannot be retagged to authorize a spectral output. This is a different target tested on the same compatible original sources, not a defect of its original correctness theorem. Computing both candidate spectra from a public enumeration cannot identify which candidate is actual.
+
+A wider acquisition contract can instead pay for immutable-initial actual address replies and reconstruct its ordered syntax. [ActualTreeReadoutAcquisition](../../../D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean) has literal `alpha/beta/branch/absent` replies and full acquired terminal histories; it does not grant this interface to the numerical controller, nor change its original Boolean target for free. With an explicitly supplied finite syntax-output task, complete authentic initial code, or equivalent paid source acquisition, (52.15) computes (52.21) by finite rational arithmetic. There are $N-1$ actual seams on an $N$-node tree, $N$ node eliminations, and growing rational numerator/denominator widths; address requests, preparation, source/version authentication, code storage, arithmetic and output are separate resources. Physical spectral measurement is yet another supplied sensor contract. Later-state syntax alone does not authorize replacing the immutable INITIAL target or reading an old version without a retained authenticated record.
+

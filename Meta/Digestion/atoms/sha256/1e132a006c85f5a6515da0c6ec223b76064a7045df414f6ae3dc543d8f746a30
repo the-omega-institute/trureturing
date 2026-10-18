@@ -1,0 +1,9 @@
+**定义 4.1（同源平移与二进响应）。** 对 $a\ge0$，令 $T_af(r)=f(r+a)$，并定义
+
+$$
+q(r)=\left(I-\frac12T_\ell\right)h(r)
+=h(r)-\frac12h(r+\ell).
+$$
+
+此 $q$ 采用 [累计供应的同对象差分](https://github.com/the-omega-institute/trureturing/blob/c1b1f24da3ffc4aff376259b96685604d55525ea/Blueprint/D5/S3/Arith/Robin/ActualFactorialCumulativePositivity.scribe.cs) 中的字面 $h$。它只是完整高段的差分；[ActualFactorialRobinDyadicDerivative 的 `result`](https://github.com/the-omega-institute/trureturing/blob/c1b1f24da3ffc4aff376259b96685604d55525ea/D5/S3/Arith/Robin/ActualFactorialRobinDyadicDerivative.lean) 中总积分的低段仍是另一个加项。
+

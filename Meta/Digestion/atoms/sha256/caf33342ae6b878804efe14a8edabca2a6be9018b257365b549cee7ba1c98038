@@ -1,0 +1,32 @@
+**Definition 7.1 (The finite convex function and representative
+set).** Using the actual pairs in (4.3), define
+
+$$
+F(x)=\min\left\{\sum_{k\in K}t_k\ell_k:
+t_k\ge0,\ \sum_kt_k=1,\ \sum_kt_kq_k=x\right\},
+\qquad 0\le x\le1.
+\tag{7.1}
+$$
+
+For the fixed auxiliary space and its decomposition (6.1), put
+
+$$
+\mathcal B_\nu=\left\{
+\sum_n\lambda_n(q_{k_n},\ell_{k_n})
++d\sum_{k\in K}t_k(q_k,\ell_k):
+k_n\in K,\ t_k\ge0,\ \sum_kt_k=1\right\}.
+\tag{7.2}
+$$
+
+For an assignment $\kappa=(k_n)_n$, abbreviate
+
+$$
+Q_\kappa=\sum_n\lambda_nq_{k_n},\qquad
+B_\kappa=\sum_n\lambda_n\ell_{k_n}.
+\tag{7.3}
+$$
+
+All sums converge absolutely, because the pair coordinates belong
+to $[0,1]$ and $\sum_n\lambda_n\le1$. With no atoms the
+assignment is the single empty assignment and both sums are zero.
+

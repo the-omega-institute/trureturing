@@ -1,0 +1,17 @@
+**Definition 1.2 (Entropy moments).** For any stationary finite-alphabet law $Z$, use natural logarithms and set
+
+$$
+\begin{aligned}
+H_n(Z)&=H(Z_0,\ldots,Z_{n-1}),\qquad H_0(Z)=0,\\
+h_k(Z)&=H(Z_0\mid Z_{-k},\ldots,Z_{-1})=H_{k+1}(Z)-H_k(Z),\\
+h(Z)&=\lim_{k\to\infty}h_k(Z),\qquad a_k^Z=h_k(Z)-h(Z)\ge0,\\
+R_n^Z&=\sum_{k\ge n}a_k^Z,\qquad
+T_Z=\sum_{k\ge0}(k+1)a_k^Z=\sum_{n\ge0}R_n^Z,\\
+\eta_Z^{\mathrm{ent}}(K)&=\sum_{n\ge K}R_n^Z
+=\sum_{k\ge K}(k-K+1)a_k^Z.
+\end{aligned}
+\tag{1.3}
+$$
+
+All series are nonnegative extended quantities. The name transient information and its weighted entropy-gap expression are classical [CF]. Entropies expressed in bits must be multiplied by $\ln2$ here; the emitted-bit clock and squared losses are unchanged.
+

@@ -1,0 +1,34 @@
+**定义 11.2（数学来源与假设对应）。** The source-escape locus,
+its endpoint decisions, the four-ray exhaustion and the complete-world
+compactification are repository-derived deductions for this prescribed
+actual observation map. They extend the source graph of Theorem 3.1
+and the conditional geometry of VII; they are not external-priority
+claims. The interpolation, Descartes root count with multiplicity,
+Bernstein convex-hull identity, real-analytic implicit function theorem
+and Heine–Borel theorem are established tools inside these proofs.
+
+Yanjun Li, Kiryung Lee and Yoram Bresler, *A Unified Framework for
+Identifiability Analysis in Bilinear Inverse Problems with Applications
+to Subspace and Sparsity Models*,
+[Definition 2.7 and Theorem 2.8, arXiv:1501.06120v1](https://arxiv.org/html/1501.06120v1),
+require orbit identification among every compatible pair and a
+conditional second-factor identification. Conditional reconstruction
+by (3.2) does not establish the first condition. Their Theorem 3.3
+also assumes a nonvanishing gain vector, full-row-rank coefficient
+matrix and full-column-rank nondecomposable sensing matrix. Those
+hypotheses do not supply a result for the present arbitrary-root,
+additive-drift trajectory; no such bilinear identifiability theorem
+is a premise of Theorems 7.2–10.1.
+
+Paul Breiding, Fulvio Gesmundo, Mateusz Michałek and Nick Vannieuwenhoven,
+*Algebraic compressed sensing*,
+[Answers 7–9 and Theorem 4.12, arXiv:2108.13208v2](https://arxiv.org/html/2108.13208v2),
+distinguish generic-point from everywhere identification. Theorem 4.12
+uses a variety over an infinite field and a generic affine linear
+projection to its dimension to obtain a finite map. No such genericity
+hypothesis has been established for these prescribed actions and
+readings. In particular neither its finite-fiber conclusion nor the
+generic identification thresholds substitute for the explicit
+source-escape and boundary calculations here. These citations compare
+hypotheses; they do not assert an exhaustive literature classification.
+

@@ -1,0 +1,21 @@
+**Lemma 10.1 (the exact real trace-zero face).** The true cone satisfies
+
+$$
+\{L\in\mathcal C_2:\operatorname{tr}(B_0L)=0\}
+=\{L\succeq0:L\text{ is real symmetric},\operatorname{tr}(B_0L)=0\}.
+\tag{NP.63}
+$$
+
+Proof. A nonzero plane atom has strictly negative $B_0$ trace.
+For a quadratic-null atom,
+$|u|^2=|\alpha v^2+\beta w^2|\leq\alpha|v|^2+\beta|w|^2$.
+At equality $u\ne0$, and division by $u^2$ shows that
+$\alpha(v/u)^2$ and $\beta(w/u)^2$ are nonnegative real numbers with
+sum one. The equality case of the triangle inequality gives this also
+when one term vanishes. Therefore $v/u,w/u$ are real and the projector
+is real symmetric. Every atom's trace is nonpositive, so a finite sum
+with trace zero consists only of these zero-trace atoms. This proves
+one inclusion; Lemma 6.1 proves the other. This is the established
+complex-cone trace face, restated with its proof for the application.
+$\square$
+

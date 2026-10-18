@@ -1,0 +1,65 @@
+**Proposition 159.2 (Joint endpoint feasibility and completion).** Every
+row of Definition 159.1 is a nonnegative allocation satisfying (154.1),
+all 190 cap rows at its vertex, and
+
+$$
+p_{1^6}(0)=1-e_v.
+\tag{159.1}
+$$
+
+The total number of nonzero terminal numerators is 4936 and the largest
+endpoint denominator is 258. Completing each pair by
+
+$$
+(T^{N,00},T^{N,01},T^{N,10},T^{N,11})
+=(T^{O,0},T^{O,0},T^{O,10},T^{O,11})
+\tag{159.2}
+$$
+
+and leaving empty and singleton cells unchanged gives a full $N$
+allocation with the identical word laws. Each endpoint kernel belongs
+to $\mathscr C_6$ of Definition 108.2.
+
+**Proof.** All listed integers are positive, and all unlisted entries
+are zero. The formulas below give finite integer identities and
+inequalities for the whole table, without choosing separate mixtures.
+Write $u_{v,c,r}$ for the listed integers and let
+$q_{v,b,r}=\sum_Su_{v,c_O(b,S),r}$. If $c_S$ is a schedule's first cell,
+substitution in the table gives
+
+$$
+\begin{aligned}
+\sum_ru_{v,c,r}-\sum_ru_{v,c_S,r}&=0\quad(c\text{ a cell of }S),\\
+\sum_S\sum_ru_{v,c_S,r}&=D_v,\\
+\sum_{r\in E_j}q_{v,b_j,r}
+-D_vk_j-\sum_{i=1}^6t_{ji}(D_va_i)+D_ve_v&\ge0,\\
+q_{v,1^6,0}&=D_v-D_ve_v.
+\end{aligned}
+\tag{159.3}
+$$
+
+The first line has 36 nontrivial cell differences per endpoint; the
+second normalizes its 22 schedule masses. The third consists of 190
+integer inequalities per endpoint, with minimum slack zero in the
+complete collection. Thus (159.3) gives 5616 cell differences, 156
+budget identities and 29640 TV inequalities, all determined by the
+primitive tables and their explicit row-selection formulas.
+
+In (159.2) the completed $N$ cell selected by any word is exactly the
+selected $O$ cell. Hence all seven coordinates agree for every word;
+there are 9984 endpoint/word vector equalities. Equal masses remain
+equal after duplication, and the global normalization is unchanged.
+This proves law equality by construction, without resampling.
+
+The stopped formula in (140.8) shows degree at most two. The already
+proved [Theorem 109.1](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION.md#109-an-exact-coefficient-criterion-with-one-common-probability-budget)
+therefore gives $c\ge H$ and $\beta\le1$. These conditions can also be
+read directly from the primitive tables: put $c=p_{0^6}$,
+$\ell_i=p_{e_i^{\rm in}}-c$ and
+$Q_{ij}=p_{e_i^{\rm in}+e_j^{\rm in}}-p_{e_i^{\rm in}}-p_{e_j^{\rm in}}+c$;
+then $V_i=\sum_{j>i}(-Q_{ij})_+$,
+$H=\sum_i(V_i-\ell_i)_+$ and $\beta=\sum_rH(r)$.
+Substitution gives $c-H\ge0$, with $\beta=0$ at vertex 0 and $\beta=1$
+at each other vertex. The sparse supports describe existence witnesses;
+they do not restrict any competing $N$ or $O$ law. $\square$
+

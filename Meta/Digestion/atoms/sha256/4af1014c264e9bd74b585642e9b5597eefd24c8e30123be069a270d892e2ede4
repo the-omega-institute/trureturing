@@ -1,0 +1,52 @@
+**命题 236.3（Full-source necessity and exact closed tails）。** The
+necessary directions in 230.3 and 235.3 use the full original
+feasibility transport I, 110.2, not an exact-law transport or a
+restriction of original competitors. In that transport the
+finite-pattern source supplier includes arbitrary finite
+addresses fixed before the seed. In particular every multiple-zero
+word used by the score or event demands has an actual source
+witness. The original CRT/Fibonacci-window construction of
+[Boundaries, 35.2](KBONACCI_SELF_CALIBRATING_BOUNDARIES.md#35-exact-finite-divisibility-fibres-in-canonical-fibonacci-windows)
+is reused through 110.1–110.2.
+
+证明。 The necessary transport first projects arbitrary
+full-carrier outputs measurably onto marks without worsening
+the selected-target cap. Countability of the labeled source
+gives one common conull event for sourcewise finite handoff.
+Cutting off the maximum address of the same whole preselected
+schedule controls both requests together. Actual finite-pattern
+witnesses, chosen before seeds, and finite-family handoff cutoffs
+then give approximate finite catalog laws. The finite catalog
+simplex is compact; its closed row constraints survive the limit
+at the original cap. These are the ingredients of the complete
+110.2 proof, and they preserve both resource classes. They do
+not assert preservation of every original output law or runtime.
+
+For a displayed law observing only addresses at most $H$ and
+using labels $0,\ldots,H$, every actual first zero $n>H$ has
+the same positive-word law and exact error
+
+$$
+\operatorname{TV}(p_x,\lambda_x^a)
+=\max\{1-p_{1^H}(0),a_n\}.
+$$
+
+More generally, low output support alone gives
+$\max\{1-p_x(0),a_n\}$ on each actual tail source. Replacing
+$p_x$ by a common positive-word vector requires the additional
+low-observation and seed/reply-only hypotheses, which hold for
+231.1. Equality $a_n=\varepsilon$ is legal; the active length
+is always the strict threshold
+$\max(\{n:a_n>\varepsilon\}\cup\{0\})$.
+No zero tail or infinite positive source is substituted. All
+claims use the supremum over every actual source and every Borel
+event, with small active lengths zero, one and two retained in
+the original comparison. $\square$
+
+The legal earlier-output control is literal: at word $0100$,
+$N(3,4;1,0,0,0)$ outputs earlier unqueried label one. The actual
+source $(r,g)=(19,436)$ has $N_x=1822917$ and realizes this
+prefix. The base/correct/union vector is $(0,1,1)$; replacing
+that output by zero gives $(1,0,1)$. Neither catalog nor the
+all-label proof 233.3 prunes this output.
+

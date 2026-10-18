@@ -1,0 +1,44 @@
+**Convention 10.4 (limits of the finite examples).** The four-solution
+network of Theorem 8.1 has mass $5/18$ and owner-only product $4/9$;
+Proposition 8.2 supplies the same-law mass-one self-read family, and
+Proposition 8.3 supplies the $120$-name full-variable-shape construction
+with its stated paid resources. These examples and their proofs do not
+determine the full local-type maximum at arbitrary depth, settle all
+instances of the saturation criterion, establish higher-depth strict
+improvement or yield convergence of native pressure.
+
+The arbitrary-depth and all-size assertions rest on the proofs in
+§§3–7. No optimizer-cofinality, effective length tail, empirical
+convergence or Lean certification follows from these finite examples.
+
+[AAR]: RECURSIVE_RELATIONAL_OBSERVATION_ADAPTIVE_ACQUIRED_REFERENCE_FRONTIER.md
+[FMR]: RECURSIVE_RELATIONAL_OBSERVATION_LATE_TARGET_FRACTIONAL_MEMORY_RATE.md
+[NDR]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_DONOR_NETWORKS_AND_REPAIR_COST.md
+[NPC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PRODUCT_PRESSURE_COMPLETENESS.md
+[CBN]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CONSTRUCTOR_BOUNDARY_NETWORKS.md
+[RRN]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_REPRESENTATIVE_REPLY_NORMAL_FORM.md
+[OCB]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_OVERLAP_CLOSURE_BOUNDARIES.md
+[SIR]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SEED_INCIDENCE_REDUCTION.md
+[NCM]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CORRELATED_MEMORY_LOWER.md
+[NCE]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CYCLIC_ENTROPY_LOWER.md
+[D3]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_DEPTH_THREE_MEMORY_AND_FRACTIONAL_SEED.md
+[JTC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_JOINT_TARGET_CERTIFICATES.md
+[SRP]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SINGLE_RESIDUAL_PRESSURE.md
+[GCB]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_GRAPH_COVER_BETHE_BOUNDARIES.md
+[RCE]: https://github.com/the-omega-institute/trureturing/blob/76e56d4505199480f6a995a3a96dfba7fe719fe3/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_RECURSIVE_CERTIFICATE_ESCAPE.md
+[RCEnew]: https://github.com/the-omega-institute/trureturing/blob/292c09e25e3a1659e17174a95383ae5606fd3371/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_RECURSIVE_CERTIFICATE_ESCAPE.md
+[JPL]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_JOINT_POTENTIAL_LIMITS.md
+[D5N]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeDepthPatterns.lean
+[D5J]: ../../../D5/S0/Certificates/FiniteNaturalJoin.lean
+[D5M]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeFiniteRootMinimax.lean
+[D5E]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeEffectiveRootCriterion.lean
+[BM]: ../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeFiniteRootMinimax.md
+[BE]: ../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeEffectiveRootCriterion.md
+[MT]: https://arxiv.org/html/0901.0044v2
+[Sion]: https://msp.org/pjm/1958/8-1/pjm-v8-n1-p14-s.pdf
+[Basu]: https://arxiv.org/html/1409.1534v1
+[AKNS]: https://arxiv.org/html/1612.02503v3
+[BS]: https://arxiv.org/abs/1406.1771v3
+[BCKL]: https://arxiv.org/abs/1002.0115v1
+[HLS]: https://arxiv.org/abs/1205.4356v2
+

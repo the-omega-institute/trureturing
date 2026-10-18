@@ -1,0 +1,10 @@
+**定义。** 记 $S(t)=t\log t-t$，其中 $t>0$，并固定函数空间
+$V=\operatorname{span}_{\mathbb R}\{t\log t,t\}$。
+使用经典正缩放作用 $f(t)\mapsto f(at)$，其中 $a>0$。在函数值列向量
+$\mathbf v(t)=(t\log t,t)^{\mathsf T}$ 上，记
+
+$$
+R(a)=\begin{pmatrix}a&a\log a\\0&a\end{pmatrix},\qquad
+J=\begin{pmatrix}0&1\\0&0\end{pmatrix}.
+$$
+

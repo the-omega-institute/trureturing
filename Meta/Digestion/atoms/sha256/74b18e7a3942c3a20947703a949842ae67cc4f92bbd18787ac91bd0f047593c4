@@ -1,0 +1,9 @@
+**假设 22.1（实际运动的常秩方向分布）。** 光滑状态流形 $\mathcal X$ 上有光滑常秩三分布 $\mathcal D\subset T\mathcal X$，并给出它与局部关系接口 $V_x$ 的线性丛同型。允许运动是声明的 $\mathcal D$ 切向局部流，正反流的执行须由合同允许；抽象 $V_x$ 的维数三本身不提供这个同型或执行权限。定义横向 Levi 形式
+
+$$
+\mathcal F_x:\Lambda^2\mathcal D_x\longrightarrow T_x\mathcal X/\mathcal D_x,
+\qquad \mathcal F(X,Y)=[X,Y]\bmod\mathcal D.
+$$
+
+这里 $X,Y$ 是局部 $\mathcal D$ 值截面，而非单点常向量。
+

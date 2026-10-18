@@ -1,0 +1,27 @@
+**Construction 3.4 (The law $Q$ and its exact event transfer).**
+Replace exactly the $53/3072$ mass of $O(6,7;0,7,9)$ in $P^\star$
+by the same mass of $O(6,7;0,7,8)$. All other tables remain unchanged.
+The $(6,7)$ row now has vectors $74e_0$, $74e_7$, $17e_0+57e_8$,
+still of count 74 each.
+
+The change is active only when $w_6=w_7=1$. For every first-zero
+class $n\le7$, both exchanged labels lie outside $\{0,n\}$.
+Every $A,C,P$ event probability is therefore unchanged on the whole
+fibre, regardless of later zeros. The positive base probability is
+unchanged too. On a first-zero-8 word, bits 6 and 7 are one, so the
+correct count increases by 53; on a first-zero-9 word it decreases
+by 53. Base probability is unchanged in both cases. In units $1/3072$,
+
+$$
+\begin{array}{c|rr|rr}
+\text{law}&c_8&c_9&Z_8&Z_9\\\hline
+P^\star&106&106&728&679\\
+Q&159&53&728&679
+\end{array}
+\qquad Z_n=3072[1-p_w(0)].
+\tag{3.3}
+$$
+
+The new outside-pair counts are 569 and 626. These whole-fibre identities
+use the precise supplied law and assert no new supporting score.
+

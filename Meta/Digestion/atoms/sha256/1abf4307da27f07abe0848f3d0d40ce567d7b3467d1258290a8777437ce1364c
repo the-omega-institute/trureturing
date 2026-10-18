@@ -1,0 +1,26 @@
+**Theorem 68.2 (The fixed-range norm-to-order bridge).** Under (68.2), every TV-continuous selection $q\mapsto g_q\sigma$ into this fixed range has greatest cylinder common submeasures
+
+$$
+\ell_{C_m(q)}(A)=\int_A\inf_{q'\in U_m(q)}g_{q'}\,d\sigma
+\qquad(A\in\mathcal F)
+\tag{68.3}
+$$
+
+with $\ell_{C_m(q)}(\Theta)\uparrow1$ at every actual $q$. Consequently every such selection is exactly lawfully acquired on the original tapes. This conclusion does not require total boundedness of the range or a cap condition on the selection.
+
+**Proof.** The actual $Q$ is countable. Choose density representatives for the whole selected family and remove one common null set. For fixed $q$ and $\epsilon>0$, TV continuity, together with $\operatorname{TV}(g\sigma,k\sigma)=\frac12\|g-k\|_1$, supplies a finite actual depth $m$ with
+
+$$
+\|g_{q'}-g_q\|_1<\epsilon\qquad(q'\in U_m(q)).
+\tag{68.4}
+$$
+
+Its set of selected densities belongs to $\mathscr H_P(g_q,\epsilon)$. Hence
+
+$$
+1-\ell_{C_m(q)}(\Theta)\le D_P(g_q,\epsilon).
+\tag{68.5}
+$$
+
+Refining cylinders increases their infimum; the infimum is bounded by $g_q$ because $q\in U_m(q)$. Equation (68.2) and (68.5) therefore prove increasing convergence of the common masses to one. Greatestness of (68.3) is the countable Radon--Nikodym comparison of Theorem 46.4. That theorem acquires exactly these selected original-tape laws. Here the new implication is from a property of all norm neighborhoods in the fixed range to exhaustion for every continuous selection. The exhaustion-to-acquisition theorem 46.4 and the equivalent selected-family condition 62.3 are reused. $\square$
+

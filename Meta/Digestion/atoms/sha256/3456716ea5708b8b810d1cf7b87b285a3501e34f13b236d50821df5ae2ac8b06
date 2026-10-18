@@ -1,0 +1,86 @@
+**Proposition 81.2 (exact conjugacy and source normalization).** The map
+$\mathcal U_s$ is unitary onto $L^2(\Omega_s,d\xi)$, and on the entire
+complex form domain, for arbitrary norms,
+
+$$
+\begin{aligned}
+b_s[\mathcal U_s\psi]&=s^2\bigl(T[\psi]+\lambda\|\psi\|_2^2\bigr),\\
+s^2\mathfrak e_{g,s^2}[\psi]
+ &=a b_s[\mathcal U_s\psi]-\chi\int U_s|\mathcal U_s\psi|^2d\xi
+                         -a\lambda s^2\|\psi\|_2^2.
+\end{aligned}
+\tag{81.4}
+$$
+
+The rescaled unit-Lebesgue heat kernel is
+
+$$
+P_s(t;\eta,\xi)=j_0s^7p_{s^2t}(\Xi_s(\eta),\Xi_s(\xi)),
+\qquad
+U_s=\frac1{j_0}\int_1^\infty e^{\lambda s^2t}P_s(t;0,\cdot)dt.
+\tag{81.5}
+$$
+
+If $\rho_{s^2}$ is the exact source in (75.4), then in distributions
+on $\Omega_s$,
+
+$$
+(A_s-\lambda s^2)U_s=s^7\rho_{s^2}(\Xi_s(\cdot)),
+\qquad
+\mathcal E V=\frac1{j_0}p_E(1;0,\cdot).
+\tag{81.6}
+$$
+
+Moreover, with zero extensions,
+
+$$
+j_0s^7\rho_{s^2}(\Xi_s(\cdot))\longrightarrow p_E(1;0,\cdot)
+\quad\hbox{in }L^1(d\xi)\hbox{ and locally uniformly}.
+\tag{81.7}
+$$
+
+Thus the limiting source in (81.6) has Lebesgue mass $1/j_0$; its
+native raw-source mass is one. These are the same normalization in
+the two different densities.
+
+Proof. The absolute Jacobian is exactly $j_0s^7$, while its
+wavefunction factor is its square root. Pulling back $s\varepsilon
+\partial_k$ and $s(c_\kappa\cdot\partial_q)$ gives $X,Y_s$.
+The smooth-core calculation (78.5) therefore proves (81.4) there;
+unitarity and form closure extend it to exactly (75.1). Both height
+traces and all real phase frequencies are retained in this closure.
+No estimate of an ordinary phase gradient is involved. Changing
+variables in the heat semigroup gives the first identity in (81.5);
+changing the integration variable in $W_{s^2}$ gives the second.
+The native source equation (75.4) then gives the first equation
+in (81.6).
+
+The local positive-time blow-up used in (78.7), with its identical
+fields, constant density, interior pole and localization away from
+both faces, applies on any compact subset of
+$(0,\infty)\times\mathbb R^4$. Its supplier is
+Colin de Verdière--Hillairet--Trélat, Theorem B (2.8), pp.915--916,
+and Theorem 3.2, pp.920--921,
+[DOI 10.5802/ahl.93](https://ahl.centre-mersenne.org/item/10.5802/ahl.93.pdf).
+Consequently
+
+$$
+P_s(t;0,\xi)\longrightarrow p_E(t;0,\xi)
+\quad\hbox{locally uniformly for }t>0.
+\tag{81.8}
+$$
+
+The same normalization at $t=1$, multiplied by $e^{\lambda s^2}$,
+is the left side of (81.7). Its total integral is exactly
+$e^{\lambda s^2}\mathbb P_{k_0}(\zeta>s^2)\to1$ by (75.4).
+The canonical heat has mass one: its complete diffusion has height
+$\sqrt2 B^1$ and the other coordinates are the finite stochastic
+integrals of $1,r,r^2/2$ against $\sqrt2 B^2$ on each finite time
+interval. Local convergence, nonnegativity and convergence of total
+masses give (81.7), for example by the identity for the integral of
+the minimum of two nonnegative densities. This proves source
+convergence without renormalizing the surviving source. The second
+identity in (81.6) follows by testing the integral (81.3) and
+integrating the heat equation; its infinite-time boundary term
+vanishes by the bound established below. $\square$
+

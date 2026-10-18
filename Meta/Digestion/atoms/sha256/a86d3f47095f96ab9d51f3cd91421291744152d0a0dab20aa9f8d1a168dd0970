@@ -1,0 +1,42 @@
+**Lemma 5.2 (convexity, monotonicity and both active determinants).**
+$V$ is convex, nondecreasing, and strictly increasing on $[s_*,1]$.
+At every minimizer with $s_*<s<1$, $X,Y$ are nonzero rank-one
+matrices and
+
+$$
+t=\sqrt{PQ-R^2}\geq0,\qquad
+v=s-t=\sqrt{UV-R^2}\geq0.
+\tag{AS.30}
+$$
+
+Proof. Convexity follows by interpolating feasible points in the convex
+graph (AS.27). To lower strength from $s>0$ to $\sigma\in[0,s]$,
+replace $t$ by $\sigma t/s$ and keep $P,Q,R$ fixed. The real
+off-diagonal of $Y$ also scales by $\sigma/s$, so both determinant
+constraints improve, and all tilt conditions and the cost are unchanged.
+This proves monotonicity. If $s_*<a<b\leq1$, convexity gives
+
+$$
+V(a)\leq F+\frac{a-s_*}{b-s_*}(V(b)-F)<V(b),
+\tag{AS.31}
+$$
+
+using $V(b)>F$; the case $a=s_*$ follows from Lemma 5.1.
+
+At a later minimizer put $x=\sqrt{PQ-R^2}$ and
+$y=\sqrt{UV-R^2}$. Positivity gives $s\leq x+y$, while
+
+$$
+x+y\leq\sqrt{PQ}+\sqrt{UV}\leq
+\sqrt{(P+U)(Q+V)}=1.
+\tag{AS.32}
+$$
+
+If $x+y>s$, changing strength to $x+y$ and $t$ to $x$ preserves
+feasibility and cost, contradicting strict increase. Thus $x+y=s$.
+The inequalities $|t|\leq x$, $|s-t|\leq y$ force (AS.30), so both
+determinants vanish. $X=0$ contradicts $W\geq F>0$.
+$Y=0$ has cost $A+B$, beaten by the feasible
+$(1-\zeta)Z_s$ in Definition 4.5. Thus both are nonzero, and for
+$s<1$ both have rank one. $\square$
+

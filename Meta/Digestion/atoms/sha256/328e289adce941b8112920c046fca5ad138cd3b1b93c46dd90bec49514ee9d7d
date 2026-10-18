@@ -1,0 +1,47 @@
+**Corollary 205.9 (One exact signed charge with arbitrary early rows).**
+For an input (205.3) with nonempty $J$, put
+
+$$
+\pi=(\mu-t)_+,\qquad r_{\rm add}=(\pi-\zeta)_+,\qquad
+\tau=t+r_{\rm add},\qquad
+D=\max\{\kappa,\min(\pi,\zeta)\},\qquad
+\theta=\frac{L-2}{L+1}(r_{\rm add}-E)_+.
+\tag{205.25}
+$$
+
+The threshold score of 205.8 has both excesses exactly $D$ and exact
+nonnegative residual support $\theta$. Thus $D+\theta\le1$ supplies
+one certificate. If $J$ is empty, take only $T_V=W$, giving excess
+zero and a nonpositive residual.
+
+**Proof.** The definitions give $\tau+\zeta\ge\mu$ and
+$(\mu-\tau)_+=\min(\pi,\zeta)$, so 205.8 applies. Since
+$K_y-K_V=E-r_{\rm add}$, the residual is
+
+$$
+F_{Q(y)-Q(V)}(b)=-\gamma_1(1-b_1)-\gamma_2(1-b_2)
+                  +(r_{\rm add}-E)e.
+\tag{205.26}
+$$
+
+At $o,p,u_k,v_k$ its values are, respectively,
+
+$$
+-E,\quad-\gamma_2,\quad-\frac{E(k-2)}{k-1},\quad
+ (r_{\rm add}-E)\frac{k-2}{k+1}.
+$$
+
+The positive support is therefore exactly (205.25), by 198.5.
+Only one residual allowance is used and the $-Ee$ contribution occurs
+once. The actual stopped guards give $\pi\le\delta$ but generally
+only $\kappa\le\delta+E$, not $\kappa\le\delta$. Thus no automatic
+arbitrary-$E$ unit certificate follows without the stated test.
+The cases $r_{\rm add}=E$, $\theta=0,1$ and all capacity equalities
+are included. For empty $J$, $K_V=K_y=W$ and the residual consists
+only of the two nonpositive early terms.
+
+When $\zeta=0$, (205.26) is precisely the terminal-completion mechanism
+of 204.8, on the same projection; agreement with its full-projection
+statement requires fixing the full projection. Only the extension
+using positive-cell capacity is additional here. $\square$
+

@@ -1,0 +1,46 @@
+**Theorem 263.6 (Conditional all-point certificate).** Fix a full
+$y\ge0$ with $\Delta_O(y)\le1$. Write
+$\rho_N(b)=\min\{\sum_D\lambda_D:G_N\lambda\ge h(b),\lambda\ge0\}$
+for $b\in H_N$. Suppose that for every such $b$ a minimizing
+allocation, padded at the anchor to mass
+$M_b=\max\{1,\rho_N(b)\}$, admits one full stopped allocation
+of mass $M_b$ satisfying (263.7) with its actual slack.
+Then there is one unrestricted $V\ge0$ and $\theta\in[0,1]$ with
+
+$$
+\Delta_N(V)+\theta\le1,\qquad
+\sigma_H(Q(y)-Q(V))\le\theta.
+\tag{263.8}
+$$
+
+It suffices to verify either explicit bound of Proposition 263.5
+on those same allocations. The pointwise joint-payment hypothesis
+is not asserted for every unit-$O$ input.
+
+**Proof.** A mass minimum exists: intersect the finite feasible
+polyhedron with a nonempty finite mass sublevel. Nonnegativity makes
+that sublevel compact. If the minimizing mass is below one, add
+mass at $R$, whose $G_N$ column is zero. This changes none of
+$G_N\lambda,S_y,J_\lambda,m_\lambda$.
+Proposition 263.5 gives $F_y(b)\le\max(1,\rho_N(b))$ throughout
+$H_N$. The exact existing criterion of Corollary 199.4 then gives
+(263.8). Its generic equivalence is reused, rather than claimed as
+another result. Choices of $\gamma$ may depend jointly on $b,y$;
+they are not separate certificate budgets.
+
+For an explicit full certificate, the existing finite system 199.6
+asks for $V\ge0,\theta\ge0$ with
+$(z_D-\mathbf r)V+\theta\le1$ for every complete $N$ table,
+and $-h(v)V-\theta\le-F_y(v)$ at every hull vertex $v$.
+The vertices are the origin, $(1,0,\ldots,0;0)$, and, for
+$3\le k\le L$, the points
+$(1/(k-1),\ldots,1/(k-1),0,\ldots,0;0)$ with $k$ equal
+initial coordinates, and $(1,\ldots,1,e_k,\ldots,e_k;e_k)$
+with $k$ initial ones and $e_k=(k-2)/(k+1)$.
+These are all $2L-2$ vertices. The anchor inequality gives
+$\theta\le1$; a nonzero zero-cost $V$ at $\theta=1$ is legal.
+Failure of a sufficient sensitivity bound is not infeasibility of
+this unrestricted system. For $M\ge1$, normalization remains
+$(b,e)\mapsto\alpha+((b,e)-\alpha)/M$, not the same profile;
+Theorem 263.2 avoids that change altogether. $\square$
+

@@ -1,0 +1,123 @@
+**Proposition 227.2 (Sharp sixteen-mask value).** For this $Y$,
+
+$$
+\min_{Z\in\mathcal K_6(Y)}J_{Q(Y)}(Z)=\frac{667}{198}.
+$$
+
+Consequently $y=Y/3$ is unit-$O$ but its normalized convex interior-mask
+minimum is $667/594=1+73/594$.
+
+**Proof.** Use one fixed full-table law on
+$D_a=N(3,5;0,3,5,0)$ and $D_b=N(1,3;0,1,3,0)$, with weights
+$\nu_a=73/396$, $\nu_b=323/396$. Use one fixed hull law on
+$v_3,v_5,v_6$, with weights
+
+$$
+\mu_3=\frac{239}{4752},\qquad\mu_5=\frac{43}{396},\qquad
+\mu_6=\frac{3997}{4752}.
+$$
+
+Both sets of weights sum to one. For each mask put $V_E=T_EY$,
+$g_D(E)=V_E\cdot(z_D-r)$, $f_k(E)=F_{Q(Y)-Q(V_E)}(v_k)$ and
+
+$$
+\mathcal L(E)=\nu_ag_{D_a}(E)+\nu_bg_{D_b}(E)
+ +\mu_3f_3(E)+\mu_5f_5(E)+\mu_6f_6(E).
+$$
+
+The full 16-mask data, all with $W_{V_E}=48$, are
+
+| $E$ | $(g_{D_a},g_{D_b})$ | $(f_3,f_5,f_6)$ | $\mathcal L(E)$ | $\Delta_N(V_E)$ | $\sigma_H(Q(Y)-Q(V_E))$ |
+| --- | --- | --- | --- | --- | --- |
+| $\varnothing$ | $(5,3)$ | $(0,0,0)$ | $667/198$ | $5$ | $0$ |
+| $3$ | $(-21,0)$ | $(12,8,48/7)$ | $667/198$ | $3$ | $12$ |
+| $4$ | $(5,3)$ | $(0,1/2,27/7)$ | $10561/1584$ | $5$ | $27/7$ |
+| $5$ | $(-13,3)$ | $(0,4,24/7)$ | $667/198$ | $3$ | $4$ |
+| $6$ | $(5,3)$ | $(0,0,33/7)$ | $11617/1584$ | $5$ | $33/7$ |
+| $34$ | $(-21,0)$ | $(12,17/2,75/7)$ | $10561/1584$ | $3$ | $12$ |
+| $35$ | $(-5,0)$ | $(12,12,72/7)$ | $106/11$ | $1$ | $12$ |
+| $36$ | $(-21,0)$ | $(12,8,81/7)$ | $11617/1584$ | $0$ | $12$ |
+| $45$ | $(-13,3)$ | $(0,9/2,51/7)$ | $10561/1584$ | $3$ | $51/7$ |
+| $46$ | $(5,3)$ | $(-2,-7/2,4/7)$ | $667/198$ | $5$ | $12/5$ |
+| $56$ | $(-13,3)$ | $(0,4,57/7)$ | $11617/1584$ | $3$ | $57/7$ |
+| $345$ | $(-5,0)$ | $(12,25/2,99/7)$ | $20489/1584$ | $0$ | $99/7$ |
+| $346$ | $(-21,0)$ | $(10,9/2,52/7)$ | $667/198$ | $0$ | $10$ |
+| $356$ | $(-5,0)$ | $(12,12,15)$ | $21545/1584$ | $0$ | $15$ |
+| $456$ | $(-13,3)$ | $(-2,1/2,4)$ | $667/198$ | $3$ | $4$ |
+| $3456$ | $(-5,0)$ | $(10,17/2,76/7)$ | $106/11$ | $0$ | $76/7$ |
+
+A digit string in the mask column denotes that subset of addresses.
+Each $g$ is the reward of its displayed full table minus 48; each $f$
+is substitution in the displayed hull vertex. Thus all entries are
+finite rational linear evaluations on the literal rows of 227.1.
+They retain negative readings and are all at least $667/198$ in the
+$\mathcal L$ column.
+
+For any one convex combination $Z=\sum_Et_EV_E$, full support is
+at least the $\nu$-average table excess on that same $Z$.
+Its one residual charge is at least the $\mu$-average residual reading.
+Since $\sum t_E=1$, linearity gives
+
+$$
+J_{Q(Y)}(Z)\ge\sum_Et_E\mathcal L(E)\ge667/198.
+$$
+
+This lower bound uses neither a sum of mask costs nor a separately
+chosen residual for each component.
+
+For matching attainment take the one score
+
+$$
+Z_*=\frac{119}{132}Y+\frac1{22}T_{\{3\}}Y
+ +\frac{13}{396}T_{\{5\}}Y+\frac2{99}T_{\{4,5,6\}}Y.
+$$
+
+Its nonnegative coefficients sum to one. Its complete literal rows are
+as follows; the terminal coefficient is $907/99$.
+
+| Word | Type | Coefficient |
+| --- | --- | --- |
+| $000001$ | $P$ | $119/44$ |
+| $000011$ | $P$ | $13/132$ |
+| $000111$ | $P$ | $2/33$ |
+| $001001$ | $P$ | $3/22$ |
+| $001100$ | $P$ | $125/66$ |
+| $001110$ | $P$ | $13/198$ |
+| $001111$ | $P$ | $4/99$ |
+| $010100$ | $P$ | $238/33$ |
+| $010110$ | $P$ | $26/99$ |
+| $010111$ | $P$ | $16/99$ |
+| $011100$ | $P$ | $4/11$ |
+| $011101$ | $C$ | $625/132$ |
+| $011111$ | $C$ | $35/132$ |
+| $100000$ | $P$ | $119/22$ |
+| $100010$ | $P$ | $13/66$ |
+| $100100$ | $P$ | $595/132$ |
+| $100110$ | $P$ | $65/396$ |
+| $100111$ | $P$ | $211/99$ |
+| $101000$ | $P$ | $3/11$ |
+| $101100$ | $P$ | $5/22$ |
+| $101111$ | $P$ | $1/11$ |
+| $110000$ | $C$ | $119/33$ |
+| $110010$ | $C$ | $568/99$ |
+| $110101$ | $C$ | $119/22$ |
+| $110111$ | $C$ | $103/198$ |
+| $111010$ | $A$ | $776/99$ |
+| $111011$ | $C$ | $97/11$ |
+| $111100$ | $C$ | $125/44$ |
+| $111101$ | $C$ | $625/132$ |
+| $111110$ | $C$ | $97/9$ |
+
+It has $Q(Z_*)=(5,0,168/11,97/99,250/33,97/9;814/9)$.
+The complete support column in 227.1 gives
+$B_N(Z_*)=1119/22$, hence $\Delta_N(Z_*)=63/22$.
+In the ten-vertex order of 227.1 its residual readings are
+
+$$
+(0,0,4/11,50/99,74/297,38/99,29/99,50/99,46/165,50/99).
+$$
+
+Thus the one residual charge is $50/99$, and their sum is $667/198$.
+Homogeneity of the constructor and of the objective gives the asserted
+unit value. $\square$
+

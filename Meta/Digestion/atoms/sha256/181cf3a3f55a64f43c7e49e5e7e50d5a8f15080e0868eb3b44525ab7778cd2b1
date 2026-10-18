@@ -1,0 +1,20 @@
+**Theorem 5.3 (each natural view on this exact source family).** For
+each $V\in\{S,B,T,M_J\}$ separately and fixed common prefix and
+$r_{\rm len}$,
+
+$$
+V(h_w)=V(h_{w'})\quad\Longleftrightarrow\quad w=w'
+       \quad\Longleftrightarrow\quad Q(h_w)=Q(h_{w'}).
+$$
+
+Proof. Distinct $w$ give different retained raw 13 symbols. The direct
+support inverse gives different $S$; prefix closure gives different $B$.
+The chronological occurrence word contains the actual varying IN/WR
+values, so gives different $T$. The independently selected 13 backing
+in $M_J$ contains the written $w$, so gives different $M_J$, even though
+the selected pending bit is now the common 0. Equal $w$ fixes the entire
+actual supply and prefix and hence all four views. Theorem 5.2 separates
+$Q$ for unequal $w$; identical histories give identical original response
+domains and responses for equal $w$. These arguments prove both
+directions for every individual view, without using their intersection. ∎
+

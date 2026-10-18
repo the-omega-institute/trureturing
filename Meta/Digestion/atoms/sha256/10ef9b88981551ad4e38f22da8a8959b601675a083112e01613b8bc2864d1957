@@ -1,0 +1,29 @@
+**Proposition 7.2 (three-height affine witness with assistance).** In
+(AC.13) let $\bar\sigma_x$ be the four-history average and
+$\lambda=(7-\sqrt{21})/4$, so
+$x_*=\lambda a+(1-\lambda)b$. Put
+
+$$
+\kappa_*=\tfrac12\|
+\bar\sigma_{x_*}-\lambda\bar\sigma_a-(1-\lambda)\bar\sigma_b
+\|_{1,\rm cq}.
+\tag{AC.27}
+$$
+
+Uniform complete-output error $\epsilon$ necessarily satisfies
+$\kappa_*+2\epsilon\geq2\delta_*$.
+
+Proof. The common live-completion effect has expectation difference at
+most $\kappa_*$ between the two normalized joint mixtures. The ideal
+expectation difference is $g=2\delta_*$ from (AC.12). Its middle error
+is at most $\epsilon$ and the convexly averaged endpoint error is at
+most $\epsilon$. Combining gives the inequality. $\square$
+
+Records obtained through an earlier source-sensitive interaction, an actual
+readable old archive, or an added source port need not be common
+postprocessings of this cut specimen. The zero-defect premise then needs
+new verification. Their complete joint law, disturbance, source binding,
+calibration, permissions, representation and costs remain obligations;
+neither (AC.26) nor (AC.27) supplies them. Equality of separate register
+marginals does not determine either joint defect.
+

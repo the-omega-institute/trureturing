@@ -1,0 +1,15 @@
+**Definition 2.2 (owner partition and incidence).** Let $O_i$ be the
+tuple of all seeds owned by original block $i$, with an empty tuple at a
+block owning none. These tuples partition the seed coordinates. An
+incoming seed is grouped with others from its same actual outside owner,
+as in [COK, Definition 2.1][COK]; write the incoming groups at block
+$i$ as $B_{i,1},\ldots,B_{i,k_i}$. Prescribed incidence is
+
+$$
+\nu(c)=|\{i:\text{some port of original block }i\text{ is assigned to }c\}|.
+\tag{OCC.9}
+$$
+
+Multiple occurrences in a block count once. This is [SIR, Definition
+2.2][SIR]'s convention, including assigned constant tables.
+

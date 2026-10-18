@@ -1,0 +1,30 @@
+**Theorem 5.4 (sharp per-run raw calls and submitted letters).** With no
+supplementary source-dependent initial label, every uniformly correct
+initial-$U_x$ reconstruction protocol makes, on every input run, at least $m$
+informative literal calls, and has total submitted-address work at least
+
+$$
+\sum_{i=1}^m(d_i+1).
+\tag{DAF.8}
+$$
+
+Both bounds are simultaneously attained by the initial queries $p_iL$. For a
+perfect scaffold with $m=2^h$, the optimum is $m$ calls and $m(h+1)$ letters.
+
+Proof. Fix one actual successful run. If it has no query distinguishing bit
+$i$, flip that bit and hold every other bit fixed. Induct over the run. Common
+acquired data gives common control, context choices and guard decisions.
+Numerical/archive observations agree by Theorem 4.2. Queries involving another
+coordinate agree by locality. Queries involving $i$ agree by the assumed absence
+of a distinguishing suffix on this run. Hence the flipped source has exactly
+the same complete acquired history, termination and output, a contradiction.
+Thus every bit must be informatively queried. One query concerns at most one
+bit; choose one for each $i$ and apply Theorem 3.3's length bound. At epoch zero
+$p_iL$ has exactly length $d_i+1$ and reveals that bit, proving simultaneous
+attainment. For the perfect scaffold every $d_i=h$.
+
+The per-run claim uses no extra label. An arbitrary bounded label can have very
+unequal fibers, so the worst-budget counting theorem is not a per-run assertion
+that every input needs $m-b$ calls. Address work in (DAF.8) is not peak storage,
+total tape work, runtime or physical energy.
+

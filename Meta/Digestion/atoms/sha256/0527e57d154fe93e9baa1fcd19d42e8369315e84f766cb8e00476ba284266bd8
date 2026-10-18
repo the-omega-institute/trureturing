@@ -1,0 +1,37 @@
+**Corollary 10.16 (An arbitrary decoder cannot recover original coherence).**
+No finite affine factor of Definition 10.1 can exactly decode
+the original full coherence menu by any deterministic decoder
+of its encoded current state, even an arbitrary nonlinear or
+irregular decoder. Every such factor also fails to be injective
+on actual rays.
+
+**Proof.** The common turn $\pi$ is rational and is therefore
+erased by Theorem 10.6. In the native negative-phase convention,
+the original $02$ pair is
+
+$$
+y_{02}(k,u,v)=
+ 2\sqrt{kZ}\bigl(\cos(\eta_0+u),\sin(\eta_0+u)\bigr).
+$$
+
+This follows directly from
+$\overline\psi_0\psi_2=\sqrt{kZ}e^{i(\eta_0+u)}$
+and the two Hermitian observables in Definition 2.1.
+Since $kZ>0$ throughout the source,
+
+$$
+y_{02}(C_\pi x)=-y_{02}(x)\ne y_{02}(x),
+\qquad E(C_\pi x)=E(x).
+$$
+
+A deterministic function of that one latent value cannot
+return both different pairs. Thus it cannot return the
+whole original output either. The two actual rays are
+distinct by Proposition 10.2, so injectivity also fails.
+No decoder hypothesis entered the classification proof.
+This supplies an explicit forced collision for the full
+menu; the one-command exact-decoding obstruction in §8
+has a separate proof and weaker update requirements.
+No approximation error bound is being inferred here.
+$\square$
+

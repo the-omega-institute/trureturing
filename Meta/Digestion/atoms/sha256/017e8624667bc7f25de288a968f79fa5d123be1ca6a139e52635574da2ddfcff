@@ -1,0 +1,15 @@
+**推论 2.3（角宽对合与固定角）。** 定义 $`\mathcal{𝒟}(\theta)=\pi-\theta`$，则
+
+<table><tr><td>
+
+```math
+\mathcal{𝒟}^2(\theta)=\theta,\qquad
+\mathcal{𝒟}(\theta)=\theta\ \Longleftrightarrow\ \theta=\pi/2.
+```
+
+</td></tr></table>
+
+证明。代入两次得到 $`\pi-(\pi-\theta)=\theta`$；固定点方程为 $`2\theta=\pi`$。锥本身的两次负极性也恢复原锥：第一次轴反向、角宽互补，再次应用定理 2.2 并旋转参照，轴回到正横轴、角宽回到 $`\theta`$。这与闭凸锥的双负极定理一致。特别地，$`C_{\pi/2}^-=-C_{\pi/2}`$；固定的是角宽，不是原位不动的有向锥集合。∎
+
+对欧氏正 $`n`$ 边形，顶点切锥宽度为 $`\alpha_n`$，外法向锥宽度为 $`\beta_n`$。因此锐的内部角对应宽的支撑法向范围，钝的内部角对应窄的范围。正五边形给的是 $`108^\circ\longleftrightarrow72^\circ`$，其中 $`72^\circ`$ 不是正三角形的内角。
+

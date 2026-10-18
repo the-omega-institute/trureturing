@@ -1,0 +1,5 @@
+source_id = "higuchi-sudbery-many-body-exchange"
+path = "docs/develop/theory/HIGUCHI_SUDBERY_MANY_BODY_EXCHANGE.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

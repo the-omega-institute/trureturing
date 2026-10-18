@@ -1,0 +1,32 @@
+### 108.7. Physical attainers and exact-rank infima
+
+For $Q_8$, choose $v=|0\rangle$, $w=|1\rangle$. For $D_8$, choose $v=(|0\rangle+i|1\rangle)/\sqrt2$, $w=(|0\rangle-i|1\rangle)/\sqrt2$. In each case $v,w$ are orthonormal. Define records in $\mathbb C\oplus\mathbb C^2$ by
+
+$$
+ a_x=\frac{1\oplus U(x)v}{\sqrt2},\qquad
+ b_x=\frac{1\oplus U(x)w}{\sqrt2}.
+ \tag{108.22}
+$$
+
+They are unit vectors and their partner records are orthogonal because $U(z)=-I$. The maps $|x\rangle\mapsto|x\{e,z\}\rangle\otimes a_x$, and similarly for $b_x$, are therefore original Stinespring isometries with the fixed correlated encodings. The record span is three-dimensional: its even constant component is independent of the odd orbit, and the irreducible $U$ orbit spans two dimensions. Both local Kraus ranks are exactly three.
+
+Put $`f_v(x)=v^*U(x)v`$, $`f_w(x)=w^*U(x)w`$. Their sum is $\operatorname{Tr}U(x)$. For $Q_8$, their product is the indicator of $\{\pm I,\pm iZ\}$; for $D_8$, it is the indicator of the rotation subgroup. Consequently a nontrivial even sign character $\chi$ satisfies
+
+$$
+ f_v(x)f_w(x)=\frac{1+\chi(x)}2,\qquad
+ \operatorname{Tr}U(x)=2\mathbf1_{x=e}-2\mathbf1_{x=z}.
+ \tag{108.23}
+$$
+
+Since $g=(1+f_v)/2$ and $b=(1+f_w)/2$, direct multiplication gives
+
+$$
+ k(x)=\tfrac38+\tfrac18\chi(x)+\tfrac14\operatorname{Tr}U(x),
+ \qquad L=\tfrac18(C_0-C_\chi),
+ \tag{108.24}
+$$
+
+where $(C_\chi)_{xy}=\chi(x^{-1}y)$. The eigenvalues of $L$ are $+1,-1$ and six zeros. Its absolute value $Z=(C_0+C_\chi)/8$ has every original fibre block equal to the all-ones two-by-two matrix divided by four, with eigenvalues $1/2,0$. Thus $Z\succeq\pm L$ and $Z_{ff}\preceq I_2/2$, providing the complete-norm majorant matching (108.21). The physical error is exactly one half.
+
+For the rank infima, choose an auxiliary first Gram in (108.16) with $a_\chi=1/6$ on three even characters including the trivial character, zero on the fourth, and $M=I_2/4$. Mix it with the first attaining Gram using any weight $0<\varepsilon<1$. Equation (108.17) gives rank seven, with the omitted character as its unique full-support kernel. For the auxiliary second Gram, keep $N=|w\rangle\langle w|/2$, and choose either two even weights $1/4$ or three even weights $1/6$, including the trivial character. Mixing with the second attaining Gram gives rank four or five, respectively. All these Grams are calibrated and physically realizable. As $\varepsilon\to0$, continuity of the complete norm gives error tending to $1/2$; (108.21) supplies the matching lower bound. No common-stress or local-minimum property is asserted for the approximants.
+

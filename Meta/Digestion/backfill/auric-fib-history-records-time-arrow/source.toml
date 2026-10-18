@@ -1,0 +1,5 @@
+source_id = "auric-fib-history-records-time-arrow"
+path = "docs/develop/theory/AURIC_FIB_HISTORY_RECORDS_TIME_ARROW.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

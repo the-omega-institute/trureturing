@@ -1,0 +1,64 @@
+**Example 9.3 (constant algebraic labels do not provide a selector).**
+The following is an application of the existing atomic stability and
+NSF §9 deep-prefix suppliers, not a new general negative criterion.
+Set
+
+$$
+A(z)=\rho^2z,\quad B(z)=\langle\rho z,z\rangle,\quad
+W(z)=\langle A(z),B(z)\rangle,\quad
+U(z)=\langle W(z),z\rangle.
+\tag{PDC.25}
+$$
+
+Use old cut $P=\{L,R\}$, two distinct old classes and exterior
+$\langle\square_1,\square_2\rangle$. Retain literals
+$(0,L,\mathsf{branch})$, $(0,LR,\mathsf{branch})$, and signed records
+
+$$
+\begin{gathered}
+(0,LL,2,R,=),\quad(0,LRL,1,R,=),\\
+(0,LRR,0,R,=),\quad(1,R,0,R,\ne).
+\end{gathered}
+\tag{PDC.26}
+$$
+
+The full acquired fiber is exactly $\{U(z):z\in\mathcal T\}$.
+Indeed the old row and literals decompose any source as
+$\langle\langle a,\langle c,d\rangle\rangle,z\rangle$.
+The three positive records give $a=\rho^2z,c=\rho z,d=z$.
+Conversely every $U(z)$ has all those reached endpoints and equalities.
+The old classes differ because $W(z)$ properly contains a copy of $z$.
+The last record holds by the supplied native clock
+$\kappa(\rho z)=\kappa(z)+1$. These checks prove both source directions
+and both guards of every sign; an authentic acquisition can hand off
+at $N=2$ under Assumption 1.2.
+
+For $Q=\{LL,LR,R\}$ the full exterior is
+$\langle\langle\square_1,\square_2\rangle,\square_3\rangle$.
+The hole values are $A(z),B(z),z$. The first differs from $z$ by the
+clock, and the second differs from $z$ by proper containment.
+The first two are equal exactly when $z$ is atomic. Thus the entire
+row image consists of the two partitions
+$\{\{1,2\},\{3\}\}$ and $\{\{1\},\{2\},\{3\}\}$, with the same reached
+set and complete exterior.
+
+Let $C_1=\langle\alpha,\alpha\rangle$ and, for each $h$, put
+$t=2h+2$. The two finite members
+
+$$
+U(T_t),\qquad U(\rho^tC_1)
+\tag{PDC.27}
+$$
+
+have these different rows: $B(C_1)=F([0],[0])$ is nonprimitive and
+translation preserves that fact. The native template $U$ commutes
+with $\rho$. By [NSF, Lemma 9.2][NSF], every source shifted $2h+2$
+times has branch replies through inclusive depth $h$. Hence (PDC.27)
+has equal original prefixes through $h$.
+
+Each row stratum has a constant label, yet their original finite
+counterpairs exist for every $h$. Calling the algebraic label an
+available observation would therefore give a false recovery result.
+The full relations (PDC.21) retain these pairs; the correspondence
+and common completion assert no such selector.
+

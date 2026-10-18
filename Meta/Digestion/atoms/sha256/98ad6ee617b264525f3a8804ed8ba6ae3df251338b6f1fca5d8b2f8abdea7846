@@ -1,0 +1,11 @@
+**Proposition 289.4 (Scale on the specified ray).**
+The number $t$ in 289.3 is the least nonnegative scale $a$ for which the
+residual against $aY^4_{(3,4,5,6)}$ is at most $s$ on the $e=0$ part of
+$H_L$.
+
+**Proof.** The Abel argument proves sufficiency. At
+$u_k=(1/(k-1),\ldots,1/(k-1),0,\ldots,0;0)$ with $k$ nonzero entries,
+which belongs to $H_L$, the residual is
+$s+(D_k-an_k-s)/(k-1)$. Thus every prefix inequality is necessary.
+This proves least scale on this ray only. $\square$
+

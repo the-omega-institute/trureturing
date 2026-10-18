@@ -1,0 +1,29 @@
+**Lemma 2.3 (same-realization translation at the fixed cut).** The map
+from $n$ coarse scaffold trees in $T_h(S_3^k)$ to their $kn$ ordered
+actual modules is a bijection onto $S_3^{kn}$. Under this map an
+admissible coarse relation gives an admissible fine relation, and an
+admissible fine relation gives an admissible coarse relation. This also
+holds on any restricted module support; the relation and its correlations
+are not replaced by their projections. Every selected single donor
+translates to one single donor or a constant.
+
+Proof. The inverse groups consecutive $k$ actual modules and applies
+the fixed ordered constructor $T_h$. A coarse target $q\in W_{h+3}$
+with $|q|<h$ ends at a scaffold branch, so has constant factor $(0,0)$.
+Otherwise it uniquely has the form $a_jb$ with $b\in W_3$, and its
+factor equals $\Gamma_b$ in module $j$. Conversely every fine target
+has this coarse representative. These equalities hold for every row
+and every authentic count by homomorphic substitution at present
+occurrences.
+
+A coarse donor word either ends above the cut, giving a constant
+branch reply, or enters one unique actual module. The latter reply is
+that module's literal reply. If its suffix is outside $W_3$, Convention
+1.3 reduces it to a function of one boundary reply in the same module
+or to a constant; compose this function with its decoder. Conversely
+a fine donor is implemented by prefixing its literal with its own
+public module address in the selected coarse coordinate. Constants,
+self donors and cycles retain their values on the same rows. These
+translations give witness equations in both directions. They assert
+no independent realization of repeated module values. $\square$
+

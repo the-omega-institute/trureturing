@@ -1,0 +1,22 @@
+**Theorem 6.4 (terminal and horizon constraints on this lift).** The
+absorbing-terminal and Ready-only final-suffix limitations of CAP
+§§16–19 and ARC Proposition 11.2 persist for this initialized lift.
+In particular the history kernels of §3 cannot be asserted to equal
+the original terminal-task kernel whenever the supplied same-output,
+no-posthalt-audit fibre applies.
+
+Proof. The row square preserves the actual original Stop output,
+verifier/consumer work and global halt, with no new posthalt entry or
+empty-response archive. ARC Theorem 9.2 permits distinct finite strict
+Reserve prefixes before the same truthful beta INITIAL output; their
+retained input/history differs. ARC Proposition 11.2 explicitly retains
+CAP's same-output/no-audit terminal hypotheses for these continuations.
+Applying that supplied result, without changing the task, identifies
+their original terminal behavior while §3 distinguishes their histories.
+This is application of the inherited terminal obstruction, not a new
+terminal-collision theorem. The last 00 suffix has no subsequent outer
+Ready and every installed cover precedes its requesting flight. The
+same inherited Ready-only horizon therefore remains. Mathematical
+reconstruction of a terminal history from joint backing does not add
+the missing terminal response, selector or owner route. ∎
+

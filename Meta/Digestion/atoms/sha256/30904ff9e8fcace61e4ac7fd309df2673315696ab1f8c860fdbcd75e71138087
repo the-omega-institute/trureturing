@@ -1,0 +1,70 @@
+**Theorem 11.1 (actual descent of every alternative support).** Let
+$v\in V_B$, $d=d(v)$ and $A=a_v$. If
+
+$$
+w=v+(j_1,j_0)\in V_B,\qquad
+j_1,j_0\ge0,\qquad j=j_1+j_0,
+$$
+
+then every $S\in\mathcal S_v$ is contained in some member of
+$\mathcal S_w$. Consequently
+
+$$
+a_w=1\quad\Longrightarrow\quad
+|U_v|\le d+j,\qquad \rho_v\le j,\qquad \nu_v\le j a_v.
+\tag{CL.41}
+$$
+
+One has $0\le\rho_v\le b-d$. Either $j<\rho_v$ or
+$\nu_v>j a_v$ therefore forces $a_w\ge2$ and $e_w\ge1$.
+In particular, if either strict inequality holds, then
+
+$$
+e_{d+j}\ge
+|\{w\in V_B:w=v+(j_1,j_0),\ j_1,j_0\ge0,\ j_1+j_0=j\}|.
+\tag{CL.42}
+$$
+
+Proof. For each support $S$ choose one actual history at $v$ with that
+support. Append a reply word having $j_1$ ones and $j_0$ zeros. Its
+partial counts are bounded coordinatewise by the final live counts of
+$w$, so every prefix stays live. Repeated use of (CL.6) gives an actual
+extension, with fresh queries, whose final support contains $S$.
+Each extension is realized on a completion of its own exposed assignment.
+Different starting supports need no common completing input and need
+not follow the same coordinate sequence.
+
+If $\mathcal S_w=\{T\}$, each of these final supports is $T$.
+Thus $S\subseteq T$ for every $S\in\mathcal S_v$, and
+$U_v\subseteq T$ with $|T|=d+j$. This proves the first two necessary
+inequalities in (CL.41). The envelope (CL.9) puts $U_v$ inside $T_b$,
+while the nonempty family contains a set of size $d$; hence
+$0\le\rho_v\le b-d$.
+
+If $x$ is incident to a demanded edge, Theorem 4.1 supplies a support
+at $v$ containing $x$ and a support at $v$ omitting $x$, by the two
+opposite membership orientations. Under the singleton premise every
+such $x$ lies in $T$ and belongs to $T\setminus S$ for at least one
+$S\in\mathcal S_v$. Since each $S$ has size $d$ and is contained
+in $T$, finite union counting gives
+
+$$
+\nu_v\le\left|\bigcup_{S\in\mathcal S_v}(T\setminus S)\right|
+       \le\sum_{S\in\mathcal S_v}|T\setminus S|=a_v j.
+\tag{CL.43}
+$$
+
+This proves the last necessary inequality. Their contrapositives and
+(CL.5) give the ambiguity and excess conclusions. Each distinct forced
+cell contributes a different summand $e_w\ge1$ to its depth sum,
+proving (CL.42). Its hosts are not declared disjoint; any sharing is
+still retained in $D_B$. When $j=0$, the singleton premise gives
+$\rho_v=\nu_v=0$. When the displayed descendant set is empty, (CL.42)
+is the zero lower bound. No positive range is inferred from
+$\rho_v=0$. $\square$
+
+The union in Theorem 3.1 concerns different count cells at one shared
+host. The union $U_v$ instead concerns all alternative supports at one
+cell, including supports at different hosts. These are different
+constraints on the same actual graph.
+

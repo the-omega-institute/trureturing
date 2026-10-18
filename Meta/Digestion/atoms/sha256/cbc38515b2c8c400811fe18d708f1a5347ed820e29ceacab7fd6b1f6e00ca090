@@ -1,0 +1,44 @@
+**引理 5.3（Exact negative pairing with the legal dense state）。** The same
+$C_*$ and $H$ satisfy
+
+$$
+\operatorname{tr}(HC_*)
+=\frac{3\sqrt3-2\sqrt7}{5\sqrt3}<0.
+\tag{5.4}
+$$
+
+Proof. The upper entries of $X_*$ and $T$ have the same signs. There are
+seven entries of magnitude $1/\sqrt7$ and three of magnitude $1/\sqrt3$.
+For two real skew matrices, the two ordered terms of each unordered
+pair give
+
+$$
+\begin{aligned}
+\operatorname{tr}(TX_*)
+&=-2\sum_{j<k}T_{jk}(X_*)_{jk}\\
+&=-2\left(\frac7{\sqrt7}+\frac3{\sqrt3}\right)
+=-2(\sqrt7+\sqrt3).
+\end{aligned}
+\tag{5.5}
+$$
+
+Expanding the product before taking the trace gives
+
+$$
+HC_*=\frac15\left(I_5+iX_*-\frac{iT}{\sqrt3}
+                                      +\frac{TX_*}{\sqrt3}\right).
+\tag{5.6}
+$$
+
+Both skew matrices have trace zero. Therefore (5.5) implies
+
+$$
+\operatorname{tr}(HC_*)
+=1-\frac{2(\sqrt7+\sqrt3)}{5\sqrt3}
+=\frac{3\sqrt3-2\sqrt7}{5\sqrt3}.
+$$
+
+The denominator is positive. The two compared radicals are positive and
+$(2\sqrt7)^2=28>27=(3\sqrt3)^2$, so the numerator is strictly negative.
+This sign is symbolic and exact. $\square$
+

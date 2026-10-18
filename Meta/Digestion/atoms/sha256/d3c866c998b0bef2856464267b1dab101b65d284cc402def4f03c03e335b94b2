@@ -1,0 +1,43 @@
+**Definition 5.3 (T body grammar).** A chronological body is $\mathcal L$
+of occurrence records. Each record has exactly eleven fields, in order:
+
+| Field | Exact contents |
+| --- | --- |
+| 0 | `[version, U(PC), phase]` of the pre-row. |
+| 1 | Seven unary native fields and the framed ordered finite-effect list in the captured row grammar. |
+| 2 | A four-item list of optional read/written/supplied/emitted values; optional absent is 0, present is 1 Frame(value). |
+| 3 | Ordered actual native operands, each `[U(port),U(creationPosition),role]`; repeated operands remain. |
+| 4 | Ordered probes `[vertexName,slot,optionalPartner]`, with partner `[vertexName,slot]` or absent. |
+| 5 | Ordered designated final assignments with the same endpoint grammar. |
+| 6 | Ordered births `[newName,templateRole,sevenInitialSlots]`. |
+| 7 | Ordered head-link changes, including lane, old and new endpoints and first-activation case. |
+| 8 | Actual receipt/commitment annotation and its meter identities. |
+| 9 | Actual complete native event in ARC/RCA's event codec. |
+| 10 | Successor version/PC/phase, with absent active successor at halt. |
+
+Slots use fixed three-bit codes in the seven-slot order; finite template,
+role and effect tags use UAS/ARC's textual enumeration. All subrecords are
+exact-arity lists and all numeric fields are exhausted U words. There is
+no endpoint snapshot or seed alongside this chronological body. Its native
+erasure is the ordered field-9 events, checked against the other fields.
+The record refines PVC's occurrence format to this actual unary layout;
+it does not use PVC's switch or 64-port constants.
+
+The auxiliary subrecords are fixed as follows, so no parser must guess an
+arity. A label value is `[0,threeSymbolBits]` or `[1,oneBit]`; absence uses
+the optional grammar, and an IN/OUT present label must have the bit arm.
+An operand role is its U-encoded finite role tag. Field 7 is a list of
+six-field records `[U(port),lane,originName,optionalOldTargetName,
+newTargetName,firstActivationBit]`, with a one-bit lane; its endpoint
+slots are O-lane/H-lane. Field 8 is
+`[ordinaryOrFBit,oldAppendCell,newAppendCell,U(purpose),U(commitClass)]`;
+cell references there use the native port/creation pair. CommitClass is
+the existing finite row annotation, including none, acquisition, source,
+local, Halt, maintenance and completed outer cycle, in that order.
+Field 10 is 0 at halt, otherwise `1 Frame([version,U(PC),phase])`.
+Version/phase are their actual fixed finite native-field codes from the
+physical codec. Each birth's seven-slot field is a seven-item list of
+optional `[vertexName,slot]` partners. All fields are generated from the
+same row/effect case and compared as complete binary words; no external
+commitment oracle or free semantic event is consulted.
+

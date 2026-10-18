@@ -1,0 +1,46 @@
+### 77.4. An amplitude anchor yields the unrestricted channel bound
+
+Use §72 to replace an arbitrary original product by a calibrated product with no greater error. No environment-dimension constraint is imposed, so possible enlargement of its environments is harmless. Let δ be the calibrated error; a lower bound for it is also a lower bound for the original error.
+
+Write its actual joint records and their two coherent combinations as in §76:
+
+    x_(f,i)=a_(f,i)⊗b_(f,i),
+    c_f=(x_(f,0)+x_(f,1))/sqrt(2),
+    d_f=(x_(f,0)−x_(f,1))/sqrt(2).
+
+Each local pair is orthonormal. Let C and M be the Gram matrices of c_f and d_f, respectively. The normalized logical inputs
+
+    |ψ_±>=k^(-1/2)Σ_f(|f,0>±|f,1>)/sqrt(2)
+
+give actual logical outputs Cᵀ/k and Mᵀ/k, and ideal outputs J_k/k and I_k/k. The fixed MC output embedding preserves all norms. Thus, with c̄=k^(-1)Σ_f c_f,
+
+    δ≥||C−J_k||₁/k≥2(1−||c̄||²),
+    δ≥||M−I_k||₁/k.                                   (7)
+
+The factor two in the first line follows by testing the trace-zero difference of two normalized states against the pure uniform state. These unreferenced coherent inputs are valid tests for the full-reference diamond norm.
+
+The crucial anchor estimate uses amplitudes directly:
+
+    (1/k)Σ_a Σ_f Re<c_a,c_f>
+       =k||c̄||²≥k(1−δ/2).
+
+Some actual fibre index a therefore satisfies
+
+    Σ_f(1−|<c_a,c_f>|)
+       ≤k−Σ_f Re<c_a,c_f>≤kδ/2.                        (8)
+
+The anchor c_a has Schmidt rank two and equal Schmidt coefficients. Let Q be its rank-three support projection with the anchor direction removed. Apply (1) to each pair c_f,d_f. Using (8),
+
+    Σ_f||(I−Q)d_f||²
+       ≤2Σ_f(1−|<c_a,c_f>|)≤kδ.                        (9)
+
+This step does not apply Jensen's inequality to the nonlinear curve, and does not treat the mean vector as a rank-two anchor.
+
+Let B have columns d_f, so M=B*B. Since rank(QB)≤3, the sum of the k−3 smallest eigenvalues of M is at most Tr B*(I−Q)B≤kδ, by the variational argument in §76. If these eigenvalues are λ_1,...,λ_(k−3), the second normalized output test in (7), together with TrM=k, gives
+
+    δ≥(2/k)Σ_j(1−λ_j)_+
+      ≥(2/k)((k−3)−Σ_(j=1)^(k−3)λ_j)
+      ≥2(k−3)/k−2δ.
+
+Rearranging proves (2). The argument concerns the same physical product on both coherent inputs; optimizing them with different implementations would invalidate (8)–(9).
+

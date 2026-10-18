@@ -1,0 +1,58 @@
+**Lemma 44.1 (Gaussian maxima and continuous interpolation).** If
+$Z_1,\ldots,Z_n$ are centered Gaussian vectors in $\mathbb R^d$,
+each coordinate having variance at most $v$, then
+
+$$
+\mathbb E\max_{j\le n}|Z_j|\le C_d\sqrt{v\log(2n)}.
+\tag{44.1}
+$$
+
+No independence among these vectors is required. For every height
+history, let $P_N$ be polygonal interpolation of the actual
+conditional path on $N$ equal intervals of length $h=b/N$. Then
+
+$$
+\mathbb E[\|X_T-P_NX_T\|_\infty\mid K]
+\le C\sqrt{h\log(2N)},\qquad
+\mathbb E[\|X_T\|_\infty\mid K]\le C_b.
+\tag{44.2}
+$$
+
+The same statements hold for the target Brownian path, with common
+constants uniform in $\kappa$.
+
+Proof. Completing the square in a real Gaussian density gives
+$\mathbb E e^{\theta Z_{j,i}}=e^{\theta^2\operatorname{Var}(Z_{j,i})/2}$,
+also by continuity when variance is zero. Chernoff optimization and
+a coordinate union bound show
+$\mathbb P(|Z_j|>t)\le2d e^{-t^2/(2dv)}$. A union bound over $j$
+therefore gives $2dn e^{-t^2/(2dv)}$. Integrate this bound above
+$t_0=\sqrt{2dv\log(2dn)}$ and the bound one below it. With
+$t=\sqrt{2dv}(\sqrt{\log(2dn)}+u)$, the remaining tail is at most
+$e^{-u^2}$, whose integral is finite. This proves (44.1); $v=0$
+is immediate.
+
+By (41.6), every conditional coordinate increment variance is at
+most $2C_c^2|s-t|$; the target has the same type of bound from
+(41.4). Let $D_r$ be the maximum adjacent increment on the grid
+with $N2^r$ intervals, $r\ge0$. Equation (44.1) gives
+
+$$
+\mathbb E[D_r\mid K]
+\le C\sqrt{h2^{-r}\log(2N2^r)}.
+\tag{44.3}
+$$
+
+For a time in a base interval, its successive left dyadic
+approximations differ by at most one adjacent increment at each
+finer level. Continuity gives a distance from the base left endpoint
+at most $\sum_{r\ge1}D_r$. The base linear interpolation differs
+from that endpoint by at most $D_0$. Thus
+$\|X_T-P_NX_T\|_\infty\le\sum_{r\ge0}D_r$. The series of expected
+bounds is at most $C\sqrt{h\log(2N)}$, since
+$\sum_{r\ge0}2^{-r/2}\sqrt{1+r}<\infty$. It follows also that
+the series is finite almost surely. At $N=1$, add the expected norm
+of the endpoint to obtain the second assertion of (44.2).
+This proof uses the exact continuous process, including on all
+unfavorable height events. $\square$
+

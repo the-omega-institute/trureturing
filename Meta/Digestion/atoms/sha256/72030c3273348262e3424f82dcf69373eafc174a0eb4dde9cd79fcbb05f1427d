@@ -1,0 +1,17 @@
+**定理 4.4.2（精确事件解码判据）。** $E\succeq_B T_t$ 当且仅当存在函数 $g:\Omega\to[0,1]$，使
+
+$$
+\boxed{
+\sum_{\omega\in\Omega}K_E(\omega\mid\theta)g(\omega)=t(\theta)
+\qquad\forall\theta\in\Theta.
+}
+$$
+
+**证明。**
+
+若 $E\succeq_B T_t$，取后处理 $G(1\mid\omega)=g(\omega)$。后处理后的输出为一的概率正是左式；由于目标实验是确定输出，左式必须等于 $t(\theta)$。反过来，由给定 $g$ 定义二值后处理 $G$，则输出为一与为零的概率分别等于 $t(\theta)$ 与 $1-t(\theta)$，故 $K_{T_t}=K_EG$。证毕。
+
+当 $t$ 在隐藏状态上变化时，定理要求记录的不同状态行由同一个 $g$ 完全分开。普通的高预测率只要求左式接近 $t(\theta)$；精确因果认证要求等式对全部状态成立。
+
+<a id="section-4-5"></a>
+

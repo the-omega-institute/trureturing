@@ -1,0 +1,10 @@
+**complete target rows**, with decidable literal equality on $\mathcal Y$.
+For a cut task, completeness means the entire concrete marked exterior,
+the ordered reached original holes and their complete whole-subobject
+equality partition. For another relational task, all fields of its
+declared target belong to $R$; a mask, rank or selected coordinate is not
+silently substituted. Supply one effective default row $Y_*\in\mathcal Y$.
+The task starts on $U^N u$ and must output $R(u)$, for every $u\in D$.
+The target is attached to the original source, not to the transported
+register at the stopping epoch.
+

@@ -1,0 +1,51 @@
+**Theorem 3.2 (finite type-cover comparison).** For every $d,n\ge1$,
+with $H_m=\sum_{j=1}^m1/j$,
+
+$$
+R_d(n)\le Z_d(n)\le K_d(n)
+\le H_{s^n}(n+1)^s R_d(n).
+\tag{NDR.14}
+$$
+
+Consequently
+
+$$
+0\le\frac{\log_2K_d(n)-\log_2R_d(n)}n
+\le\frac{s\log_2(n+1)+\log_2(1+n\ln s)}n,
+\qquad
+\sigma_d=\lim_{n\to\infty}\frac{\log_2R_d(n)}n.
+\tag{NDR.15}
+$$
+
+**Proof.** For each fixed $\nu$, put dual mass $1/a_n(\nu)$ on
+$T_\nu$ and zero elsewhere. Every admissible member has mass at most one,
+so summing any fractional covering inequalities gives
+$Z_d(n)\ge |T_\nu|/a_n(\nu)$. Maximize over $\nu$.
+
+For the other direction choose an admissible
+$B_\nu=C_\Theta\cap T_\nu$ of size $a_n(\nu)$.
+Every coordinate permutation of it is admissible. The permutation group
+is transitive on $T_\nu$, and each point is in exactly
+$n!a_n(\nu)/|T_\nu|$ of these permuted sets, with multiplicity.
+Giving each permutation coefficient
+$|T_\nu|/(n!a_n(\nu))$ fractionally covers this type at cost
+$|T_\nu|/a_n(\nu)$. Summing over all types gives a cover of $S_d^n$
+at cost at most $(n+1)^sR_d(n)$, since there are at most $(n+1)^s$
+types. The finite harmonic rounding of [FMR, Lemma 4.4][FMR] gives
+$K_d(n)\le H_{s^n}Z_d(n)$, yielding (NDR.14).
+
+For completeness, that rounding charges each newly covered point the
+reciprocal of the number newly covered by the greedy chosen set. Within
+any fixed admissible set these charges sum to at most $H_{s^n}$:
+when $r$ of its points remain, greedy covers at least $r$ points.
+Summing these charges against a fractional cover bounds the number of
+chosen sets by $H_{s^n}$ times its weight. Singletons ensure termination.
+Finally $H_{s^n}\le1+n\ln s$. The error in (NDR.15) tends to zero;
+combine it with the supplied limit for $K_d(n)$. $\square$
+
+The error compares two finite quantities. Neither $\log_2R_d(n)/n$ nor
+$\log_2K_d(n)/n$ is thereby a certified lower endpoint for $\sigma_d$.
+The latter is an upper bound on its defining infimum. A computable
+converging sequence without a proved modulus does not supply two-sided
+effective approximation.
+

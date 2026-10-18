@@ -1,0 +1,19 @@
+**Theorem 77.3 (the robust unrestricted-height planar obstruction).**
+For this $D$, assign an independent exact length $\ell_e$ to every
+inherited seam and every stub, with
+
+$$
+\frac{19}{20}\le\ell_e\le\frac{21}{20}.
+\tag{77.10}
+$$
+
+There is no injective straight drawing realizing all these assigned lengths
+on the augmented occurrence tree in $\mathbb R\times[0,\infty)$,
+with all source vertices at strictly
+positive height, all ground tips globally distinct on $y=0$, segments
+meeting only at their prescribed common endpoints, and no vertex on a
+nonincident segment. This holds for every such length assignment and
+every possible order of the tips. It requires no source-height band,
+equal stubs, opposite-side tips, prescribed rotation order, common lower
+angle bound, or convergent family of drawings.
+

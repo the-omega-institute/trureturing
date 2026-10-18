@@ -1,0 +1,19 @@
+**定义 1.4（实际历史的全域纤维）。** 有限、按读取次序排列的历史为
+
+$$
+h=((q_1,y_1),\ldots,(q_m,y_m)),\qquad
+y_i=r(q_i,T).
+$$
+
+允许重复地址。记
+
+$$
+\begin{aligned}
+A=\operatorname{paid}(h)&=\{q_i:1\le i\le m\},\\
+\mathcal S(h)&=\{U\in\mathcal T:\forall i,\ r(q_i,U)=y_i\}.
+\end{aligned}
+\tag{NIC.3}
+$$
+
+若 $\forall U\in\mathcal S(h),\ \nu(U)=\nu(T)$，则称 $h$ 为 $T$ 的准确深度证书。竞争者始终是全部 $\mathcal T$：没有叶数、组成、词、深度、正成员或替换像许诺。顺序属于实际取得历史；$\mathcal S(h)$ 只检验全部已取得原始回复的合取。确定控制器从共同初态重放相同回复时也作相同请求和停止决定，这一对应复用 [JM §28.3][JM] 与 [Readout 的 source_foundation 证明中的 replay][Readout]。
+

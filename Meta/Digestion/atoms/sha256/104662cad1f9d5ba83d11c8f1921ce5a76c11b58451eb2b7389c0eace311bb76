@@ -1,0 +1,10 @@
+**Convention 1.3 (Owned growth and duality).** The results [Growth], Theorems 3.2 and 5.2, give
+
+$$
+\kappa_n=\max_{\mu\in\mathcal P(B_n)}\Phi_n(\mu),\qquad
+c_\star=\lim_{n\to\infty}\frac{\kappa_n}{n}.
+\tag{1.2}
+$$
+
+Here $\kappa_n$ is exactly the original squared-share minimax on $\Gamma_n$. These identities, including their complete domains, are reused; no numerical value of $c_\star$ is needed.
+

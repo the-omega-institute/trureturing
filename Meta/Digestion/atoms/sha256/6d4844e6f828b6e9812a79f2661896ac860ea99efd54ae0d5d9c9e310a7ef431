@@ -1,0 +1,29 @@
+### 98.6. The r-adic ramified-norm contribution
+
+Primitiveness forces r not to divide c. Otherwise the norm equation first gives r|a and then, modulo r^2, r|b, a contradiction. Since the right side has valuation one and the two norm terms have opposite valuation parity, v_r(b)=0 and v_r(a)>=1. In particular
+
+ beta^2=-5q modulo r.
+
+This is a square unit, consistently with (-1/r)=(q/r)=-1 and (5/r)=1. Use t=1,z1=-beta,z2=alpha, and choose a Hensel root z3=-2beta modulo r of z3^2=beta^2-15q. Then
+
+ L3=2rs b^2/c,
+ L2=beta(3beta+1)^2/2 modulo r.
+
+If the latter square factor vanishes, choose the other root z3=2beta modulo r; its reduction is
+
+ L2=-3beta(beta-1)^2/2 modulo r.
+
+It is a unit in that exceptional case since r>3. Thus one branch always makes L2 a unit. As r=19 modulo 24, (-3/r)=1 and (2/r)=-1, so either allowed branch gives
+
+ (L2,qr)_r=-(b/r)(c/r).
+
+For L3 both Hilbert arguments have valuation one. Keeping every unit factor gives
+
+ (L3,qr)_r=(-1/r)(2s/c/r)(q/r)=-(c/r),
+
+because (-1/r)=(2/r)=(q/r)=-1 and(s/r)=1. The possibly relevant units s and q have not been discarded. The product of the two local tangent factors is (b/r).
+
+Together with all other places this proves
+
+ <lambda,mu>=(b/q)(b/r)=Xi.
+

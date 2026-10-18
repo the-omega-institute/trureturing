@@ -1,0 +1,16 @@
+### Proposition 2.3. One-body rigidity
+
+Write rho_X=(I_2+r_X dot sigma)/2, and let
+
+$$\tau_4=\left|\psi^T\sigma_y^{\otimes4}\psi\right|^2.$$
+
+The literal purity identity in the existing code, equivalently [GW10], Theorem 6 with its stated tangle normalization, is
+
+$$2(P-1)=\sum_{X=A,B,C,D}|r_X|^2+\tau_4. \tag{2.5}$$
+
+Thus every maximizer is one-uniform and has tau_4=0. More quantitatively,
+
+$$\sum_X\|\rho_X-I_2/2\|_F^2\le\frac{3\ln2}{-B}\Delta,\qquad \tau_4\le\frac{6\ln2}{-B}\Delta. \tag{2.6}$$
+
+Proof. Each Bloch component is the corresponding diagonal difference or twice the real/imaginary part of the off-diagonal entry in `literal_purity_identity`. Taking its real part with the second amplitude argument equal to the conjugate gives (2.5). Since ||rho_X-I_2/2||_F^2=|r_X|^2/2, (2.6) follows from (2.4). QED.
+

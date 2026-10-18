@@ -1,0 +1,32 @@
+**Definition 6.1 (the language $V_{\mathrm{sep},h}$).** Fix $h\ge1$
+and $d=h+3$. A leaf for a rational probability $\mu$ on the entire
+$S_d$ supplies finitely many nonnegative rational functions
+$f_{\ell j}:P\to\mathbb Q_{\ge0}$, $1\le j\le k$, and an arbitrary
+nonnegative rational remainder $e:S_d\to\mathbb Q_{\ge0}$. The number
+of separated terms may be any finite integer, including zero. Define
+
+$$
+F_\ell(T_h(x_1,\ldots,x_k))=\prod_{j=1}^k f_{\ell j}(x_j)
+\quad(x_j\in P),\qquad
+F_\ell=0\text{ off }T_h(P^k).
+\tag{JPL.25}
+$$
+
+Check the full pointwise table and the scalar charge
+
+$$
+\mu(x)\le e(x)+\sum_\ell F_\ell(x)\quad(x\in S_d),\qquad
+C\ge L:=\sum_\ell\prod_{j=1}^k R(f_{\ell j})+\sum_{x\in S_d}e(x).
+\tag{JPL.26}
+$$
+
+A certificate is a finite topologically ordered list of such leaves,
+same-depth probability-stability steps
+$C\ge C_0+\operatorname{TV}(\mu,\nu)$ from earlier $(\nu,C_0)$,
+and cap-enlargement steps at unchanged $\mu$. The last label is the
+input $(\mu,C)$, with $C>0$. Invalid rational data, omitted pointwise
+entries and unsuccessful inequalities are rejected. There are no other
+cap premises in this grammar. In particular this proposed replacement
+language is distinct from the existing joint/group/scaffold calculus;
+it places no assertion on the rules it does not contain.
+

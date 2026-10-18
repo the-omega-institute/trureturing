@@ -1,0 +1,5 @@
+source_id = "fib-legal-edge-load-conditional-gain-deficit-and-unweighted-bridge-obstruction"
+path = "docs/develop/theory/FIB_LEGAL_EDGE_LOAD_CONDITIONAL_GAIN_DEFICIT_AND_UNWEIGHTED_BRIDGE_OBSTRUCTION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

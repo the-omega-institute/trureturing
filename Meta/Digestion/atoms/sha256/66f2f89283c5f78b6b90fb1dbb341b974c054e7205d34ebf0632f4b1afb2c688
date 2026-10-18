@@ -1,0 +1,118 @@
+**Theorem 3.4 (two-ingress extraction at every canonical acquired cut).**
+On $\mathcal C$, including partial activation and the original 00 stopping
+suffix and terminal successor, $M_J(h)$ determines exactly the consumed
+typed input reservoirs of ARC Definition 6.1 and $n=|h|$. It determines
+$h$ and its full raw endpoint. No completed-cycle reconstruction witness
+or future input is needed for this mathematical extraction.
+
+Proof. The acquired seed, its genuine binding and $H_0$ give ARC
+Definition 6.1's unique canonical padded original packet. The original
+public/controller/prior inputs are this apparatus's fixed canonical
+words or actual acquired bindings, not new source advice. The native
+boot, normalized acquisition entry, capture $L$ and prescribed
+$E/\Delta$ lineage determine their canonical supply. Hence the entire
+original preparation and activation input is determined even before
+the initial manifest is complete. This does not assume it was freely
+available to $A$ before its actual acquisition or capture. Fixed input
+is consumed at its real IN rows on replay, and its physical construction
+is not omitted. There is no variable late activation-position choice.
+
+The meter has one receipt per executed row and initially two boundary
+cells. Counting actual receipt cells, without moving a live head,
+gives $n$. This is a mathematical finite-chain observation, not an
+installed A readout. Replay of the fixed initial portion identifies
+the initial 13 prefix to skip and the first outer entry. For a cut during
+activation there is no later variable input to recover. The selected
+partial stores/stages are the actual ones, not a completed-manifest
+substitute at an earlier cut.
+
+After that entry, read the two retained ingress chains with the following
+frontier rules. On append ingress 70, completed fields are binary payload
+followed by F. Separate its initial sentinel, binary bits and delimiters.
+An EX-created blank is not an input bit. The literal outer reception is
+IN(6), EX(70), WR(70,6), MR(70), with no bank assignment between its bit
+receptions/tests. The history tag has the same body; unary length has
+the additional distinct-latch RD test; its payload body is
+RD(length,5), IN(6), EX(70), WR(70,6), MR(70), MR(length).
+Thus at any cut the written binary prefix plus the one occupied latch-6
+bit, if its WR has not occurred, is precisely that site's consumed prefix.
+Delimiters, seals, Base scratch, descriptor work and subsequent import
+RDs contribute no external bits. An incomplete descriptor does not
+remove the already written prefix or its native origin.
+
+Port 13 has CAP Definition 4.6's different physical layout. Its header
+is three IN/EX/WR/MR bodies, its unary length has
+IN/EX/WR/RD(test)/MR bodies, and its payload is allocated and zeroed
+before any payload IN. Separators and status cells are not wire bits.
+During setup, including a partially zeroed reservation, that allocation
+contributes no payload input. During the literal payload loop let $b$
+be its actual retained base and $p$ its marked payload position. These
+are positions selected from existing heads and base words, not free
+stored numerals. At its substages the number of written payload bits is
+
+$$
+\begin{array}{c|c|c}
+\text{substage}&\text{written extent from }b&\text{pending input}\hline
+\text{before IN, including after length RD}&p-b&\varepsilon\\
+\text{after IN and before WR}&p-b&\text{latch 5}\\
+\text{after WR and before payload MR}&p-b+1&\varepsilon\\
+\text{after payload MR, before length MR/next RD}&p-b&\varepsilon
+\end{array}
+$$
+
+Before its first IN use zero; after terminal RD(0) use the full declared
+length, even while At/status/seal later move the ingress head. The actual
+PC/substage and live length cursor distinguish these cases. This remains
+true for zero-length payloads. Before header/length completion take their
+written prefixes with their single occupied latch if applicable. After
+completion their literal sep/status layout and actual descriptors fix
+their intervals even when later helpers move the heads. During descriptor
+or length-copy construction use the actual live scratch/frontier and
+raw 13/17 material; a nonexistent completed descriptor is never assumed.
+
+These prefix identities follow by induction on the displayed reader
+rows. IN adds exactly one pending bit, EX adds no consumed input,
+WR transfers that bit into the written extent, and MR only updates the
+frontier. The length test has a different latch. No second input can
+overwrite an occupied bit before its matching WR. CAP's preallocated
+zeros become counted only as their actual writes pass the frontier.
+All completed fields are retained immutably. The identities therefore
+hold through installation, incomplete frames, bank work and copies,
+without requiring a service-boundary cut.
+
+There is also an ordering obligation between these two streams. The
+70 gate grammar is prefix-free 00, 01, 1. After 01 exactly the next
+13 header/length/payload triple is the auxiliary external frame; its
+complete return and CaptureCAP precede the next gate. After 1 exactly
+the next self-delimiting 70 history frame is consumed; all its callbacks
+are RD/import/computation, not new IN; its ACK/return precedes the next
+gate. After 00 there is no further external input in the fixed Stop
+continuation. Any subsequent original command blocks are computed
+Append/copy work, not another 13 external reservoir. A currently unfinished
+gate or frame supplies only its actual prefix. Gate syntax, actual site
+and the selected frontier therefore merge these two streams uniquely;
+no timestamp or completed-cycle list is required. The actual history
+selector's $m,z,s$ bits are retained in this same 70 frame and are not
+inferred from the common archive. Numeric refusals retain their actual
+input and paid rejection path.
+
+Starting at the actual entrance, execute precisely $n$ literal native
+rows with these extracted typed reservoirs and canonical fixed input.
+An IN pops from its actual version/PC/call-site kind; every other row
+uses its actual finite effect. Theorem 2.4 and ARC Proposition 6.3 give
+the same next state/event/receipt at each step. Induction gives the actual
+history through row $n$, including heads, latches, partial code, origins,
+loans and source-invalid bytes. A previous recovery is replayed as its
+expanded native rows, not replaced by its semantic answer. On an actual
+image every requested bit before $n$ exists in the extracted prefix;
+no completion beyond this stopping ordinal is requested. Every simulated
+row is finite. At the last original halt row the same induction stops
+at its terminal successor, with no subsequent input or Ready required.
+
+Thus equal $M_J$ gives equal reservoirs and $n$, and hence equal $h$.
+Equal $h$ gives the same selected material, frontier and rights by
+their actual definitions. This proves the assertion on all of
+$\mathcal C$, including its final suffix. It asserts no retained-history
+inverse before acquisition, on noncanonical private preparation or on
+wrong-code/raw-frame continuations in $\mathcal R\setminus\mathcal C$. ∎
+

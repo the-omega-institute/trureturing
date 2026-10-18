@@ -1,0 +1,48 @@
+**命题 32.3（固定词的精确例外）。** 令 G=(t-2)(t-4)(t-6)、K=t-6、V_bad=span{G,K}。对任意严格源、任意非零 lambda 和初读 a0，取 g=lambda G、d=a0+48lambda。沿本节固定词，其时钟六前缀及末 J 完整纤维恰为原源与其转置所给世界；b=c 时只有一个世界。末 M 仅在这个已完整分类的纤维内修复二元歧义。
+
+**plane and strict worlds.**
+
+Let G=(t-2)(t-4)(t-6), K=t-6, V_bad=span{G,K}. Different degrees make these independent, and both vanish at 6. For every lambda nonzero, every a0 and every strict P, set g=lambda G and d=a0+48 lambda. Its transpose P^T has the same diagonal r and swaps b,c, preserving positivity, trace one and determinant zero. It is a distinct source exactly when b differs from c. Both worlds use the identical entire gain and drift. The interior example r=1/2,b=1,c=1/4 proves nonemptiness.
+
+**independent complete sample ledger.**
+
+clock: 0 ; gain: -48 lambda ; response minus a0: 0
+
+clock: 1 ; gain: -15 lambda ; response minus a0: 48 lambda-15 lambda j
+
+clock: 2 ; gain: 0 ; response minus a0: 48 lambda
+
+clock: 3 ; gain: 3 lambda ; response minus a0: 48 lambda+3 lambda(j+r)
+
+clock: 4 ; gain: 0 ; response minus a0: 48 lambda
+
+clock: 5 ; gain: -3 lambda ; response minus a0: 48 lambda-3 lambda(j+2r)
+
+clock: 6 ; gain: 0 ; response minus a0: 48 lambda
+
+clock: 7 ; gain: 15 lambda ; response minus a0: 48 lambda+15 lambda(j+2r)
+
+**ledger proof.**
+
+At the nonroot integers, the three factors of G give respectively -48,-15,3,-3,15 at clocks 0,1,3,5,7; at 2,4,6 one factor is zero. Combining these values with d=a0+48 lambda and the independently checked actual trace table gives every response in the ledger. All positive even clocks read d, and every odd trace depends only on j=b+c and r. Transposition preserves both coordinates, so every actual ancestor and final-J response agrees.
+
+**entire prefix fiber necessity.**
+
+Take any competing strict world with gain in the whole V_bad and the same actual prefix through clock 6. The common zero at 6 first forces d'=y6=d. Write its unique whole gain as a G+s K. Since y2=d and its actual trace 1+b' is strictly positive, its gain at 2 must vanish. Here G(2)=0 and K(2)=-4, so s=0. The initial equation then gives -48a=a0-d=-48 lambda, hence a=lambda. Thus its entire gain and drift are fixed, not only a set of samples. At clock 1 the known nonzero gain -15 lambda fixes j'=j. At clock 3 the known nonzero gain 3 lambda fixes j'+r'=j+r, hence r'=r. The rank-one source equation now gives b'c'=r(1-r), together with b'+c'=j. Therefore b',c' must be the two roots of X^2-jX+r(1-r)=0, whose known roots are b,c. Only their ordered placements (b,c) and (c,b) are possible.
+
+**entire prefix fiber sufficiency and counts.**
+
+Both placements are strict sources and satisfy every entry of the complete prefix ledger. Thus both actually occur. If b differs from c there are exactly two complete worlds in the ENTIRE prefix fiber; no third source, gain or drift exists. If b=c the repeated root gives exactly one complete world, counted once. The proof keeps all r in (0,1), including r=1/2, and both signs of lambda. It divides only nonzero fixed constants and the known nonzero odd samples after lambda nonzero has been stated.
+
+**entire terminal fiber for final J.**
+
+The actual final J has product Q7=Q5 and trace j+2r, so the entire already classified prefix fiber retains its common last ledger response. Imposing a last equation cannot add worlds. Hence the terminal fiber is exactly the transpose pair, or its singleton when b=c.
+
+**actual final M and whole fiber separation.**
+
+Keep the actual prefix through Q6=[[1,0],[2,1]]. A final M gives M Q6=[[2,1],[3,1]], whose trace at P is 1+r+3b+c and at P^T is 1+r+3c+b. Their difference is 2(b-c). The original-clock-7 gain is still 15 lambda, so the response difference is 30 lambda(b-c). It is nonzero exactly in the two-world case. Since the entire earlier fiber has been classified, this one actual final action separates all its members. The final action alone changes; none of the preceding acquired actions or responses is retroactively altered.
+
+**evaluation boundary precision.**
+
+Delta24=0 because G vanishes at both 2 and 4 while the other basis vector has evaluations -4,-2. This permits one nonzero gain to erase both even source measurements. Independently, this example also has Delta15=0: (-15)(-1)-(-3)(-5)=0. Therefore it is not a demonstration that Delta24 alone is necessary while all other assumptions are held. The proposal does not claim such necessity, so this is a scope clarification, not a defect. Other determinant-zero loci and all other V_bad histories remain unclassified.
+

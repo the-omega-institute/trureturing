@@ -1,0 +1,32 @@
+**定理 4.5.1（揭示严格支配擦除）。**
+
+$$
+R\succeq_B E_\varepsilon,
+\qquad
+E_\varepsilon\not\succeq_B R.
+$$
+
+并且
+
+$$
+\delta(E_\varepsilon,R)=\frac{\varepsilon}{2}.
+$$
+
+**证明。**
+
+从 $R$ 的记录 $\theta$ 出发，按概率 $1-\varepsilon$ 原样输出，按概率 $\varepsilon$ 输出 $\perp$，即可得到 $E_\varepsilon$。
+
+反向不可能。擦除实验的两行分布总变差为 $1-\varepsilon$，而揭示实验两行总变差为 $1$。总变差在任意后处理下不增加，所以任何 $E_\varepsilon$ 的后处理仍有两行距离至多 $1-\varepsilon<1$，不可能等于 $R$。
+
+要算缺失度的精确值，先用下界：对任意后处理，两个输出行的总变差至多 $1-\varepsilon$，而目标两行相距 $1$。若两个状态行的误差分别为 $e_0,e_1$，三角不等式给出
+
+$$
+1\le e_0+(1-\varepsilon)+e_1,
+$$
+
+故 $\max\{e_0,e_1\}\ge\varepsilon/2$。再取后处理 $G$ 将 $0,1$ 原样保留，并把 $\perp$ 映到均匀二元结果；两个行误差都恰为 $\varepsilon/2$，达到下界。故 $\delta(E_\varepsilon,R)=\varepsilon/2$。证毕。
+
+这个见证把“公开种子”与“隐藏动作”之间的区别写成接口偏序：一次擦除并非只减少某个数字，而是产生一个不能由粗记录精确恢复的目标实验。
+
+<a id="section-4-6"></a>
+

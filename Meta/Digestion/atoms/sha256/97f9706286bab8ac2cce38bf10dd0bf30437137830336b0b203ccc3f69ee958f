@@ -1,0 +1,52 @@
+**命题 59.2（加载检查、转子不变量与已产生的门位）。** LOAD 用下面固定算术恰好接受 $D_Q$；在接受来源上，第 $k$ 个真正 SAMPLE 输出
+
+$$
+\chi_k=\mathbf1_{\{q\mid 2k+1\}}.
+\tag{59.1}
+$$
+
+拒绝样本不计入 $k$，也不改变转子。
+
+证明。计算范围位
+
+$$
+R=\mathrm{LE}(1,q)\land\mathrm{LE}(q,Q)\land\mathrm{LT}(p,q),
+\qquad x=\mathrm{SEL}(R,p,0),\quad y=\mathrm{SEL}(R,q,1).
+$$
+
+执行恰好 $2Q$ 轮。每轮先从旧值计算 $z=\mathrm{NE}(x,0)\land\mathrm{NE}(y,0)$、$g=\mathrm{LE}(y,x)$，同时更新
+
+$$
+x'=\mathrm{SEL}(z\land g,x-y,x),\qquad
+y'=\mathrm{SEL}(z\land\mathrm{NOT}(g),y-x,y).
+\tag{59.2}
+$$
+
+接受位为 $R\land\mathrm{EQ}(x+y,1)$。当 $R=1$ 且两坐标正时，选中的减法减去不大于被减数的正数，和至少减一，gcd 不变。初始和小于 $2Q$；相等时一个坐标减为零，之后冻结。因此不足 $2Q$ 轮即到零坐标，终和为 $\gcd(p,q)$。$p=0$ 时初态已冻结，终和为 $q$；$R=0$ 时接受位为零。故恰好接受 (58.1)。这里复用 Euclid 的减法求最大公约数，不将它另计为新的 gcd 结果。
+
+在有效来源上 LOAD 计算
+
+$$
+u=p+p,\quad d=\mathrm{SEL}(\mathrm{LE}(q,u),u-q,u),\quad r_0=p.
+$$
+
+于是 $d=2p\bmod q$ 且 $0\le d<q$。真正 SAMPLE 先求 $\mathrm{EQ}(r_k,0)$，再求 $t=r_k+d$、$r_{k+1}=\mathrm{SEL}(\mathrm{LE}(q,t),t-q,t)$。因为 $t<2q$，一次受守卫减法即给模 $q$ 的下一余数。归纳得到
+
+$$
+0\le r_k<q,\qquad r_k=(2k+1)p\pmod q.
+\tag{59.3}
+$$
+
+定义该数字相位为 $\theta_k=2\pi r_k/q$，则实际输出位为
+
+$$
+\mathrm{EQ}(r_k,0)
+=\mathbf1_{\{\theta_k=0\pmod{2\pi}\}}
+=\mathbf1_{\{q\mid(2k+1)p\}}
+=\mathbf1_{\{q\mid2k+1\}}.
+$$
+
+最后一步用本次已经执行的既约检查。位是实际寄存器比较的结果，不是从 $\tau$ 表查出的答案。后文的拒绝规则保持源、$d,r$ 和接受游标，所以插入失败尝试不改变这个归纳。$\square$
+
+奇 $q$ 首次命中为 $k=(q-1)/2$，偶 $q$ 永不命中。与应用 56.1 同一奇倍算术相接，令 $A_N=\sum_{k<N}(2k+1)^{-1}$、$P_N=\sum_{k<N}\chi_k/(2k+1)$。奇 $q$ 时，命中奇频率恰为 $q(2j+1)$，所以 $P_N=q^{-1}A_{m(N,q)}$，$P_N=(2q)^{-1}\log N+O_q(1)$ 且 $P_N/A_N\to1/q$；偶 $q$ 时 $P_N=0$。无理共同相位在抽象精确门中无命中，但不属于这里的来源。倒数既约分母复用 Thomae 型函数；奇分母限制及零相位取分母一的端点约定与原函数须分别保留。上述归一化解释 (58.2)，没有向 $D_Q$ 增加无限精度角读端口。
+

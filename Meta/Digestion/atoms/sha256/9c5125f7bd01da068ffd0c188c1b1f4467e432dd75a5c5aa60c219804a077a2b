@@ -1,0 +1,57 @@
+**Definition 3.3 (shared-source guards and halt formulas).** For one fixed
+chart tuple, define
+
+$$
+\begin{aligned}
+\Gamma_{\eta,v}(\mathbf n,\boldsymbol\delta;a,b)
+\ \Longleftrightarrow\
+\forall j\in\mathbb N\quad
+a\le j<b\ \Longrightarrow\
+\bigwedge_{e\in E_R}\operatorname{Reply}_{\eta,v(e)}(\mathbf n,j,\delta_e).
+\end{aligned}
+\tag{UDB.11}
+$$
+
+For $h\in E_H$, form $\mathcal H_{\eta,h}(\mathbf n,J;\boldsymbol\delta)$
+by a finite disjunction over
+
+$$
+1\le m\le qr+1,\qquad
+v_0,\ldots,v_{m-1}\in\mathcal C^{E_R},\qquad
+x_1,\ldots,x_{m-1}\in E,
+\tag{UDB.12}
+$$
+
+with $x_0=e_*$. Each disjunct existentially quantifies
+$t_0,\ldots,t_m,d_0,\ldots,d_{m-1}\in\mathbb N$ and imposes
+
+$$
+\begin{gathered}
+N=t_0<t_1<\cdots<t_m=J+1,\\
+\bigwedge_{i=0}^{m-1}
+\Gamma_{\eta,v_i}(\mathbf n,\boldsymbol\delta;t_i,t_{i+1}),\\
+\bigwedge_{i=0}^{m-2}
+\left(t_i+d_i=t_{i+1}\ \land\ X_{v_i}(x_i,x_{i+1},d_i)\right),\\
+t_{m-1}+d_{m-1}=J\ \land\ P_{v_{m-1}}(x_{m-1},h,d_{m-1}).
+\end{gathered}
+\tag{UDB.13}
+$$
+
+Put
+
+$$
+H_{\eta,h}(\mathbf n;\boldsymbol\delta)
+\ \Longleftrightarrow\ \exists J\in\mathbb N\;
+\mathcal H_{\eta,h}(\mathbf n,J;\boldsymbol\delta).
+\tag{UDB.14}
+$$
+
+Adjacent phase vectors need not be distinct or intervals maximal. The
+guard includes epoch $J$ by the delimiter $J+1$; that delimiter is not an
+update after halt. For $m=1$ the crossing conjunction is empty. For $r=0$
+one may use just $m=1$ and the empty vector. Most importantly, every
+occurrence of $\mathbf n$ in every phase is the **same free source tuple**.
+The quantifier order is a common $\boldsymbol\delta$, then one source,
+then that source's $J$ and phase witnesses. It is not
+$\exists\mathbf n_0\cdots\exists\mathbf n_{m-1}$.
+

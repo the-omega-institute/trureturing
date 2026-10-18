@@ -1,0 +1,24 @@
+## 247. The two remaining eta faces must reach xi
+
+Assume eta is entirely high-labelled. A face {U,M,Z} has three distinct
+labels, so eta's transverse pair consists of two of them; one axis is
+the third. Its other axis is also in P. In particular every face of eta
+contains two distinct P labels and is marked. Eta has at most three
+U slots: two if U is transverse, possibly one additional U axis, or at
+most two if U is axial.
+
+The two eta faces paired to rho have been used as actual occurrences.
+There remain two eta faces. They cannot pair to an unused tau face:
+tau's unused faces are {D,M,C}, which contain only one distinct P label.
+All rho faces have already been used. If eta's remaining faces pair to
+each other, every U-incident face in rho and eta is paired within these
+two owners: rho's other faces {C,M,Z} contain no U and pair to tau.
+The nonempty set of their U normal intervals is consequently closed,
+with at most 1+3=4 original slots. A closed nonempty subset is the whole
+connected normal circle of the actual U edge, contradicting degree six.
+This argument also covers eta roles whose remaining faces contain no U.
+
+All remaining eta faces are marked, so their partners belong to K.
+The only remaining possibility is that both pair to xi. This conclusion
+uses actual face occurrences and allows repeated axial labels in eta.
+

@@ -1,0 +1,38 @@
+**Theorem 14.2 (linear residual on complete actual fibers, including a growing-order regime).** For every $m\ge0$, $k\ge1$ and every fixed $\mu$, put $N=4m+6$, $A=B=2m+3$, and define
+
+$$
+\begin{aligned}
+Q_k(N)&=\prod_{j=2}^{\min(k,N)}
+       \left(1+\binom Nj\right)^{2^j-2},\\
+C_k&=\sum_{j=2}^{k}j(2^j-2)
+     =(k-1)2^{k+1}-k(k+1)+2.
+\end{aligned}
+\tag{SC.31}
+$$
+
+An empty product is 1. Some complete $G_k$ class within $\mathcal F_{A,B}$ has size at least $\lceil\binom{2m}{m}/Q_k(N)\rceil$. Its necessary supplementary zero-error bits, even with all $V$, are at least
+
+$$
+\max\left\{0,\left\lceil
+\log_2\binom{2m}{m}-\log_2 Q_k(N)
+\right\rceil\right\}
+\ge
+\max\left\{0,\left\lceil
+2m-\log_2(2m+1)-C_k\log_2(N+1)
+\right\rceil\right\}.
+\tag{SC.32}
+$$
+
+For each fixed $k$ this is $N/2-O_k(\log(N+2))$. More generally, along $N=4m+6\to\infty$, every integer schedule $k(N)\ge1$ satisfying
+
+$$
+k(N)2^{k(N)}\log(N+1)=o(N)
+\tag{SC.33}
+$$
+
+still leaves $(1/2-o(1))N$ supplementary bits on some actual class. An unbounded cutoff alone is therefore not a sufficiency condition. These are worst-case conditional distinguishable-configuration bounds, not per-history description lengths or minima of total observer resources.
+
+Proof. Theorem 10.1 supplies at least $\binom{2m}{m}$ actual zero-return retry orders in this count fiber. At fixed counts, degree one and the two pure-letter coordinates in every degree are fixed. Each other degree-$j$ coefficient is an integer between 0 and $\binom Nj$, so there are at most $Q_k(N)$ possible profiles. This is a product upper bound; it assumes neither independent coordinates nor joint attainability of their separate maxima. Pigeonhole on the complete actual fiber gives the displayed class, and Theorem 13.2 supplies its static supplement requirement.
+
+The central-binomial inequality of Theorem 10.1 gives $\log_2\binom{2m}{m}\ge2m-\log_2(2m+1)$. Also $1+\binom Nj\le(N+1)^j$, hence $\log_2Q_k(N)\le C_k\log_2(N+1)$. The finite sum in (SC.31) gives $C_k\le(k-1)2^{k+1}\le2k2^k$, which proves both the fixed-order and (SC.33) conclusions. Hypothesis 7.1 still supplies the held chronology representation (SC.20); a fixed small coefficient table has logarithmic held size but leaves this linear residual. The polynomial profile-counting mechanism is already literature-attested in Lejeune–Rigo–Rosenfeld, [*On the binomial equivalence classes of finite words*, arXiv:2001.11732v1, §4 Proposition 12](https://arxiv.org/pdf/2001.11732v1); only its explicit actual-fiber retention consequence is used here. $\square$
+

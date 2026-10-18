@@ -1,0 +1,9 @@
+**命题 52.1。** 设 `v=(x,y)/sqrt(6)`，其中 `x,y` 的六个分量均有模一。若 `H0v` 也 flat，且同一组实际向量 `v,Sv,S²v` 两两正交，则
+
+```math
+\boxed{\left|\sum_jx_j\right|^2\ne3,
+\qquad\left|\sum_jy_j\right|^2\ne3.}
+```
+
+等价地，`alpha_x=sum_j conjugate(x_j)x_(j+1)` 的实部非零。循环正交给出两个零模能量之和为六，故任一等式成立就会同时成立。本命题只限制种子中指定的零模，不把另外两个 mode 与它交换。
+

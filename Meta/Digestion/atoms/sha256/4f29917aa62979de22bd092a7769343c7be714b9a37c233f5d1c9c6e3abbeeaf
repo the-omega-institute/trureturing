@@ -1,0 +1,21 @@
+**Definition 9.1 (complete charges).** Extend PR57.D9's disjoint occurrence
+purpose tags to literal generation/execution, journal service and $V^+$.
+Each occurrence has one purpose and one primitive opcode; inherited seek or
+append helpers retain their caller's purpose. If $r$ has $n(r)$ core occurrences,
+
+$$
+T(r)=n(r),\qquad F(r)=2n(r).
+$$
+
+For a cut $c$, with $A(c)$ actually constructed ordinary cells and $n(c)$
+receipts, simultaneous storage is
+
+$$
+S(c)=S_0+b_{\rm ctl}(c)+8A(c)+8n(c).
+$$
+
+Source, gate/code/address tapes, every scratch/counter version, retained output,
+producer/actor archives, mailboxes, verifier and consumer copies coexist where
+their transitions require them. Erased cells remain counted. A source-dependent
+program, input, timing or retained name cannot be supplied free of charge.
+

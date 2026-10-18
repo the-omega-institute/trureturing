@@ -1,0 +1,42 @@
+**推论 460.4（单位成本的统一二阶系数）。** 在同一固定 $c>0$ 下，
+当 $h\downarrow0$，以下估计对整个 $\varepsilon\in[0,K_h]$ 一致成立：
+$$
+r_\varepsilon=1-h/6+O(h^2),\qquad
+\frac{(1-r_\varepsilon)^2}{M_\varepsilon}
+=\frac49h^2+O(h^3).
+\tag{SDD.11}
+$$
+因此，若满足推论 460.3 的一族真实候选有单位系数
+$a_{x(h),1}\to a>0$，则
+$$
+\liminf_{h\downarrow0}
+\frac{N_-(\sigma_{x(h),N(h)})-n_{\varepsilon_h}}{h^2}
+\ge\frac{4a}{9}.
+\tag{SDD.12}
+$$
+若另有 $\varepsilon_h/h^2\to\kappa$，则 $0\le\kappa\le c/72$，并有
+$$
+\liminf_{h\downarrow0}\frac{N_-(\sigma_{x(h),N(h)})}{h^2}
+\ge\frac{8c}{9}-64\kappa+\frac{4a}{9}.
+\tag{SDD.13}
+$$
+若单位系数趋于一个 $a<0$，则同样的候选满足
+$\liminf N_-\ge|a|$，故 $N_-/h^2\to+\infty$。
+
+**证明。** 原 $B$ 的二阶 Taylor 估计与 $0\le\varepsilon\le K_h=O(h^2)$
+给 $U=c/2-ch/6+O(h^2)$、$V=c/2-ch/4+O(h^2)$ 一致成立。
+又由 §459 的 $\Delta_\varepsilon=O(h^2)$ 和恒等式
+$D_\varepsilon-V=8\Delta_\varepsilon/(D_\varepsilon+V)$，
+有 $D_\varepsilon-V=O(h^2)$ 一致成立；所有分母都一致远离零。
+于是
+$r_\varepsilon=V/U-(D_\varepsilon-V)/(2U)=1-h/6+O(h^2)$。
+代入 $M=r^4/16$ 得（SDD.11）。对单位系数的正极限，
+在（SDD.9）中取正部项并除以 $h^2$ 得（SDD.12）；
+复用 §459.3 的 $n_{\varepsilon_h}/h^2\to8c/9-64\kappa$ 得（SDD.13）。
+对负极限，负部单位乘子 $1-(1-r)^2/M\to1$，
+（SDD.9）及 $n\ge0$ 给所述正下界与发散。证毕。
+
+本推论的单位系数极限是假设，不能从原有限谱定义自动取得。
+如果实际单位系数随 $x$ 衰减，须按（SDD.9）的真实系数结算，
+不能套用固定正极限来声称无条件额外常数。
+

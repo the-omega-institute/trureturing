@@ -1,0 +1,14 @@
+**B3 forced nonexceptional source and all signs.**
+
+**necessary b derivation.**
+
+Let delta=alpha-qstar, which is nonzero. The coefficients at qstar satisfy k2=delta\*kappa\*(s+9)=2\*kappa\*eta(qstar), and k1=delta\*kappa\*(p-23). Therefore Lstar=2\*kappa\*s\*eta(qstar)-delta\*kappa\*(p-23)=delta\*kappa\*[s(s+9)-p+23]. Set D=s^2+9s-p+23. Once D>0 is proved below, delta,kappa,D are nonzero and Lstar!=0. The necessary inverse is bstar=4\*kappa\*eta(qstar)/Lstar=2\*(s+9)/D. This derivation never divides by p-23 or k1, which may vanish.
+
+**denominator proof.**
+
+Write u=14+x and v=14+y with x,y>0. Then p=(196+14x+14y+xy)-(196+7x+7y)=7(x+y)+xy>0, and s=u+v-7>21. Independently, s^2-p=u^2+uv+v^2-7(u+v)+49=(u^2-7u)+(v^2-7v)+uv+49>0, because u,v>14. Hence D=(s^2-p)+9s+23>0, and s+9>0. In particular bstar is positive; the fatal condition is its diagonal value, not a sign choice for kappa.
+
+**strict diagonal contradiction.**
+
+The forced rstar=qstar\*bstar=(s+8-2alpha)\*(s+9)/D. Subtract D from its numerator: (s+8-2alpha)\*(s+9)-(s^2+9s-p+23)=(8-2alpha)\*s+49-18alpha+p. Each summand on the right is positive: s>0, 8-2alpha>0, 49-18alpha>31>0, and p>0. With D>0 this proves rstar>1. It contradicts the strict source requirement qb<1. Every world at qstar would have exactly this source value before any remaining drift or gain equation, so no other drift, root, sign or degree can evade the exclusion. All canceled quantities delta and kappa were first known nonzero.
+

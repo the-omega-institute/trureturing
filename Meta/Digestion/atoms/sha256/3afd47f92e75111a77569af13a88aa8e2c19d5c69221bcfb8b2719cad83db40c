@@ -1,0 +1,44 @@
+**Assumption 25.1 (query, internal and halt rows in one complete word).**
+Retain Assumption 17.1, Proposition 17.2's entire fifteen-origin fiber,
+Definition 17.3's complete numeric lag target, and the stationary native
+Read interface. For a positive integer $d$, install any subset
+$W\subseteq V(\Gamma_d)$, with $\Gamma_d$ as in (NARC.17.6), and
+one common initial word $w_0\in W$. Partition the installed words as
+$W=Q\sqcup I\sqcup H$. Each word has exactly one immutable row:
+
+- A query word $q\in Q$ submits one fixed fully materialized
+  original-root literal $\operatorname{addr}(q)\in\{L,R\}^\ast$.
+  Its total row $\delta(q,\cdot):\mathcal A\to W$ immediately uses
+  the actual reply to choose the same word or one legal bit flip,
+  and then discards the reply.
+- An internal word $i\in I$ has one predetermined successor
+  $\eta(i)\in W$, again the same word or one legal bit flip. It
+  obtains no source input, performs no Read and emits no target output.
+- A halt word $h\in H$ contains one fixed complete natural-number
+  output $\lambda(h)$ and has no outgoing step.
+
+The current word contains all mutable accessible configuration. Row
+type and every choice above depend only on that word, with the current
+reply used solely by its query row's immediate response update. There
+is no separately accessible reply, program counter, actuator phase,
+clock, history, counter, mutable address, output accumulator, conditional
+external decoder or source-bearing input. The acquired entry and all
+compilation workspace are closed after the common installation and
+initialization. Immutable instruction, address and complete-output
+storage, its access, acquisition, compilation and atomic writing remain
+separately stipulated and charged services, as in §§17 and 20.2.
+
+For each actual original $(a,b)\in C$, run on its own stationary
+$Y_{a,b}$ from the common $w_0$. Require a finite first halt with
+output $17-b$, at most $k$ chronological Reads, and finitely many
+internal steps. Every invocation counts, including a repeated literal.
+Every intermediate word is installed and counted. Initial internal
+processing, shared states and paths, duplicate outputs at different
+halts, arbitrary literals, unused rows, unsupported self updates and
+cycles in the union of different-source transitions are permitted.
+No global directed acyclic graph or tree topology is assumed.
+
+This explicitly enlarges the query/halt-only operational contracts of
+Assumptions 17.4 and 21.1 by allowing counted internal rows. It leaves
+their no-extra-phase theorems under their stated hypotheses.
+

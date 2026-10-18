@@ -1,0 +1,56 @@
+**Theorem 2.12 (Positive Gaussian curvature).** On every positive fixed-mean
+quotient cylinder,
+
+$$
+K=-\frac12 b''
+=\frac{I''}{I^2}-\frac{2(I')^2}{I^3}>0,
+$$
+
+where, with $B=\{0,1,3,13\}$,
+
+$$
+I'=-\sum_{s\in B}\frac{d_s}{p_s^2},\qquad
+I''=2\sum_{s\in B}\frac1{p_s^3}.
+$$
+
+More precisely,
+
+$$
+K=\frac2{I^3}\sum_{\substack{i<j\\i,j\in B}}
+\frac{(p_i-d_id_jp_j)^2}{p_i^3p_j^3}.
+$$
+
+Proof. This calculation is intrinsic to the displayed metric. Introduce
+meridian arclength $u$ by $du=d\kappa/\sqrt b$ and put $f(u)=\sqrt{b(\kappa(u))}$.
+The metric is $du^2+f^2d\chi^2$. Its nonzero Christoffel symbols are
+$\Gamma^u_{\chi\chi}=-ff'$ and
+$\Gamma^\chi_{u\chi}=\Gamma^\chi_{\chi u}=f'/f$. Substitution in the
+Riemann curvature formula gives $R_{u\chi u\chi}=-ff''$, hence
+$K=-f''/f$. Derivatives in $u$ obey
+
+$$
+\frac{df}{du}=\frac{b'}2,\qquad
+\frac{d^2f}{du^2}=\frac{b''\sqrt b}{2}.
+$$
+
+This proves $K=-b''/2$. Differentiating $b=2/I$ gives the expression in $I$.
+To see its sign, expand the numerator as unordered pairs:
+
+$$
+\begin{aligned}
+\frac{I^3K}{2}
+&=\left(\sum_i\frac1{p_i}\right)
+  \left(\sum_j\frac1{p_j^3}\right)
+ -\left(\sum_i\frac{d_i}{p_i^2}\right)^2\\
+&=\sum_{i<j}
+ \left(\frac1{p_ip_j^3}+\frac1{p_jp_i^3}
+             -\frac{2d_id_j}{p_i^2p_j^2}\right)\\
+&=\sum_{i<j}\frac{(p_i-d_id_jp_j)^2}{p_i^3p_j^3}.
+\end{aligned}
+$$
+
+The diagonal terms cancel because $d_i^2=1$ on $B$. Opposite-sign pairs have
+numerator $(p_i+p_j)^2>0$; such pairs exist, so the sum is strictly positive.
+This is Gaussian curvature of a probability-phase quotient, not the
+vector-valued $F$ of Theorem 2.5 or a curvature of physical space. $\square$
+

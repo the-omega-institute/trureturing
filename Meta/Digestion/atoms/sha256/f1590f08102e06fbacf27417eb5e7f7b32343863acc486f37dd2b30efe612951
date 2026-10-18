@@ -1,0 +1,4 @@
+**Definition 14.1 (the event).** The following exact $22$-coordinate center, common radius and full preconditioner refer to the event system of Definition 3.2. Its rows are the augmented six-contact rows, followed by $P_6$; its unknown order is recorded explicitly, with `d0..d7` denoting $Y_0,\ldots,Y_7$. Both geometry records and all eight event whole-arc certificates are included. All integer interval pairs in this and the remaining tables have denominator $2^{190}$.
+
+Exact JSON data (1 record): [section-14-event-box.json](https://github.com/the-omega-institute/trureturing-experiments/blob/08cfceafd9500530ffa128764313472b003a72ab/experiments/theory/fib-native-complete-continuation/connected-interval/section-14-event-box.json).
+

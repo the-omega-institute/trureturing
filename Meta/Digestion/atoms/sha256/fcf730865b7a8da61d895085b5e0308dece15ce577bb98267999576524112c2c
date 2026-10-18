@@ -1,0 +1,6 @@
+## 4. The exact worst-phase error and its equality residual
+
+A decoder is allowed to leave both the native output image and the linear
+space $\operatorname{im}D$. Neither possibility can be omitted in a
+lower bound.
+

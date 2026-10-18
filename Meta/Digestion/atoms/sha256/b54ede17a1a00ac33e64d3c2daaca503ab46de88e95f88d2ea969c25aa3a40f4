@@ -1,0 +1,4 @@
+## 3. The same path with affine additive drift
+
+In this section keep exactly the same six matrices, reading indices, and chronological atoms, but allow $D(t)=\delta_0+\delta_1t$.
+

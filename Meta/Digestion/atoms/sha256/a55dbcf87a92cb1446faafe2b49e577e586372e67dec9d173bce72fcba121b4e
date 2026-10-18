@@ -1,0 +1,82 @@
+**Theorem 15.1 (original operational consequence).** Under Assumption
+10.1 and either (FC.48) or (FC.50), every
+$r\in[r_-,r_+]$ has an original height-optimal realization with
+at most eight supported-nonzero low labels and one counted coherent
+high label. With the original physical normalization,
+
+$$
+r=\frac{\sqrt\alpha}{s_0}s,\qquad
+\mathcal T(s,t)=\frac{H_0+y\cdot B(t)-\lambda r}{2},\qquad
+n_{\rm tot}(s,t)=1+n_t(r)\le9.
+\tag{FC.52}
+$$
+
+These are conditional consequences in the full original comparison
+class, with its original count definitions and resource semantics.
+
+Proof. Take the replacement of an optimum given by Theorem 14.1.
+For its actual coefficient masses $p_i$, directions $h_i$ and
+$b_i=t\mathfrak c(h_i)\xi_i$, the unchanged first five moments
+are the complete live Gram, and the last three give the complete
+failure covariance:
+
+$$
+\begin{gathered}
+\sum_i p_ih_ih_i^T=I_3,\qquad
+\sum_i p_ib_i=\mu,\quad
+\sum_i p_ib_iz_i^2=V,\quad
+\sum_i p_ib_iz_iw_i=0,\quad
+\sum_i p_ib_iw_i^2=W,\\
+\sum_i p_ib_i n_{h_i}n_{h_i}^T=M,\qquad
+0\le b_i\le t\mathfrak c(h_i).
+\end{gathered}
+\tag{FC.53}
+$$
+
+Here $z_i=u_i/\sqrt\alpha$, $w_i=v_i/\sqrt\beta$.
+The fourth failure moment follows from
+$\alpha z_i^2+\beta w_i^2=1$ and
+$\mu=\alpha V+\beta W$; the two nonzero covariance diagonals
+are $d^2W/h_2^2=m_1$ and $b^2V/h_1^2=m_2$, and the cross
+entry vanishes. These are the same-law equations of GC Proposition
+12.2 and (FC.25), not independently chosen live and failure marginals.
+
+Apply the existing Theorem 8.1, hence the exact GC Proposition 10.1
+and RC Proposition 75.1 constructor, to this very law. Its supported
+low acquisition effect is
+$p_iK_{h_i}^\dagger K_{h_i}+p_ib_in_{h_i}n_{h_i}^T$;
+$p_i$ remains a coefficient weight, not an acquisition probability.
+The complete Gram preserves the live CP map on full complex inputs
+and its coherences. The full $M$ preserves all five separately
+labelled original failure Borel CP maps, including the two
+zero-target components, and arbitrary passive-reference conditional
+operators. Thus the original twelve-history stopped-cq HALF
+objective, minimax equality and sharp worst-history joint cost
+retain their original meanings. Full-complex multi-Kraus necessity
+comes from JR42 and FA69 through Assumption 1.1, rather than from
+restricting competitors to the real source directions constructed here.
+
+The same constructor's entire-low-fibre integrated rate norm is
+$\log(1+b_i/\mathfrak c(h_i))\le A$; its terminal survivor effect
+is at least $e^{-A}I>0$, its survivor controls are TP, and its
+absolute FIRST time is $6+a$. Failure has no later positive-carrier
+action. Its one weak high label has a five-dimensional joint fibre,
+including its supported rank-three part and the coherent ambient
+complement. It has zero rate and contributes the fixed positive
+signed height $H_0$. Specimen, memory, controller,
+accessible environments and entangled shares are counted together;
+no input-dependent accessible share is hidden. Hidden discarded
+Kraus indices are not extra readable labels.
+
+The exact activity $K=r$ from Theorem 4.2 gives the original binary
+contrast $s=s_0r/\sqrt\alpha$. The preserved $J_t$ equals
+$C_t(\lambda)-\lambda r=y\cdot B-\lambda r$, so HALF gives
+(FC.52). The count equality is the already supplied equality of
+**minimum** counts (GC.10) and (FC.24). Supported-zero full encoders
+remain admitted and count when generated; they have no positive-$p$
+ellipse ray and cannot lower that minimum. This construction uses
+one high label to incorporate the complement. It does not identify
+one instrument's total count with one plus its supported-low count
+for every competitor. Each request has its own instrument, fixed
+before the sole unknown input. $\square$
+

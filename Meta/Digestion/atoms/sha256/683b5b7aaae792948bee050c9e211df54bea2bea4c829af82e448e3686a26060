@@ -1,0 +1,38 @@
+**Theorem 5.6 (Uniform original-output error).** For every $m\ge0$,
+
+$$
+\sup_{x\in\mathcal M_{ab}}\|L_mE_m(x)-y(x)\|_2
+ \le C\frac{q^{m+1}}{1-q}.
+$$
+
+**Proof.** By Definition 5.1 the exact radii are
+
+$$
+A(k)=2\sqrt G\sqrt{1-t_A(k)},\qquad
+B(k)=2\sqrt{Zb}\sqrt{1-t_B(k)},
+$$
+
+with $t_A(k),t_B(k)\in[0,q]$. Lemma 5.2, with
+$R_m=q^{m+1}/(1-q)$, therefore gives
+
+$$
+|P_m(k)-A(k)|\le\sqrt G\,R_m,\qquad
+|Q_m(k)-B(k)|\le\sqrt{Zb}\,R_m.
+$$
+
+Both phase pairs have norm one. Applying the exact original decoder norm
+from Lemma 2.2 yields
+
+$$
+\begin{aligned}
+\|\widehat y_m-y\|_2^2
+ &=4(P_m(k)-A(k))^2+(Q_m(k)-B(k))^2\\
+ &\le(4G+Zb)R_m^2.
+\end{aligned}
+$$
+
+This includes all four bottom-edge pairs and the middle-reference pair in
+their original scale. Preparation rotations disappear from this norm only
+because they are orthogonal. The bound is uniform over the closed band and
+both entire phase circles. $\square$
+

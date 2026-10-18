@@ -1,0 +1,6 @@
+# FIB three-read bridge rigidity and compatible phase pruning
+
+Analytical phase pruning transfers active-edge constructions to the original paid-read problem without deleting any actual call. It gives radius five whenever both pruned active trees have height at most two, even if the original finite total cap is larger. For cap three, a continuation-compatible placement gives radius seven for every input whose first edge touches its target spin in that edge's active phase. Separately, the full law of the inherited three-read bridge witness forces every representative to query the two ends of a detached three-edge path before its middle bridge. This classifies all its representatives and its four minimum-radius address triples.
+
+These are partial results. The unrestricted three-read interval remains $7\le\rho_{\mathrm{law}}(3;p,j,\nu)\le15$, and the universal polynomial-versus-superpolynomial radius question remains unresolved. Ordinary proofs below carry the conclusions; neither a supplied checking disposition nor a formal certificate is a premise. The relative increments are those of the supplied Three-read proposal, with the independent Three-read check retaining its checking contribution. No external-literature priority is asserted.
+

@@ -1,0 +1,143 @@
+**Corollary 218.9 (Every input in the cumulative-nonpositive-tail cone).**
+For every $L\ge3$, every full $y\ge0$ and every $d\ge0$, if
+
+$$
+\Delta_O(y)\le d,\qquad
+\sum_{j=4}^k\beta_j(y)\le0\quad(4\le k\le L),
+\tag{218.30}
+$$
+
+then one unrestricted full $V\ge0$ has
+$\Delta_N(V)\le d$ and $\sigma_{H_L}(Q(y)-Q(V))=0$.
+There are no restrictions on early signs, A/C cancellations, P placements,
+terminal mass, suffix correlations or the number and sizes of positive
+tail coordinates. At unit d this is (218.4) with $\theta=0$.
+At $d=0$ it includes nonzero zero-cost replacements.
+
+**Proof and exact supplier substitution.**
+Set $z=\mathcal E_3(y)$. Its quotient satisfies $K_z\ge\sum_{i\le3}|\beta_i|$
+because z is a full nonnegative score. The signed one-pivot theorem 214.2
+applies at the exact parameters $L=n=3$, $(c_1,c_2,g)=(\beta_1,\beta_2,\beta_3)$,
+$K=K_z$. It constructs one full $V_3$ with $Q(V_3)=Q(z)$ and
+
+$$
+\Delta_N(V_3)=\min_{Q(U)=Q(z)}\Delta_O(U)
+ \le\Delta_O(z)\le\Delta_O(y)\le d.
+$$
+
+For explicit reconstruction when $g>0$, put
+$D=(-c_1)_++(-c_2)_+$, $H=K_z-g$, $a_1=|c_1|$, $a_2=|c_2|$,
+$a_3=0$ and
+
+$$
+J=\max\{a_1+a_2,\ (H+\max(a_1,a_2))/2,\ 2H/3\}.
+$$
+
+Choose the supplier's water-filled $z_i=\max(a_i,h)$ with sum H;
+at $H=\sum a_i$ use h=0. This finite monotone piecewise-linear equation
+has a solution, including H=0. Put P=$z_i-a_i$ at $w(\{i,3\})$
+for i=1,2, with C=$c_i$ there when $c_i\ge0$ and A=$-c_i$ otherwise;
+put C=g at $w(\{3\})$ and T=$z_3$.
+The complete pair supports are $H+(g-z_i)_+$ for the omitted slot i;
+their maximum is $H+(g-H+J)_+$, and
+$W=H-D$. The supplier proves its unrestricted O lower match,
+so both minima equal $D+(g-H+J)_+$.
+When $g\le0$, use sole-zero C masses $(c_i)_+$ and A masses
+$(-c_i)_+$ at i=1,2, A=$-g$ at 3, and
+T=$K_z-|c_1|-|c_2|-|g|$. Both costs are D.
+These formulas identify the actual reused score, not a new one-pivot proof.
+
+Embed $V=\iota_3(V_3)$. Its cost is the same.
+Condition (218.30) and (218.28) give residual support zero,
+which proves the corollary for every real nonnegative input and every L,
+including empty tails and equality. $\square$
+
+Only the total tail sign is insufficient for this operation.
+For $L\ge m+2$, put C=t>0 at the sole-zero $(m+1)$ word and
+A=t at the sole-zero $(m+2)$ word, all other coefficients zero.
+Its total tail beta is zero and both complete costs are t.
+But $S_{m+1}=t$ and the erased residual at $u_{m+1}$ is $t/m>0$.
+For $0<t\le1$ this is an actual unit-O score.
+It refutes the weakened erasure test only, not unrestricted certificates
+or the N/O comparison. Deleting an arbitrary zero-net middle coordinate
+remains subject to the counterexample in 216.4.
+
+Here is a complete changed-Q example with $L=8$ and $T_y=0$.
+Start with P=2 at each of $\{1,3,8\},\{2,3,8\}$, C=$1/2$ at
+$\{1,3,8\}$, C=3 at $\{3,8\}$ and A=2 at $\{8\}$.
+For every $a=1,2,3,4$, put P masses $2,3/2,2$ at
+$\{a,5,6,7,8\},\{a,6,7,8\},\{a,7,8\}$ respectively.
+Put C masses $4,2,6,6$ at
+$\{5,6,7,8\},\{5,7,8\},\{6,7,8\},\{7,8\}$,
+and A=18 at $\{4,8\}$. Zero sets mean the actual words w(Z);
+coincident contributions add and every other coefficient vanishes. Then
+
+$$
+Q(y)=(1/2,0,3,-18,6,6,6,-2;135/2),\qquad W_y=93/2.
+\tag{218.31}
+$$
+
+Its cumulative tail sums are $-18,-12,-6,0,-2$.
+Both complete supports can be checked without treating separate optima as
+a joint score. Before adding the common last zero, this actual measure is
+a three-coordinate core plus twice a seven-coordinate core.
+The first core has P=2 at $\{1,3\},\{2,3\}$, C=$1/2$ at
+$\{1,3\}$, C=3 at $\{3\}$ and T=2.
+Its W is $13/2$, both largest supports $15/2$, and both costs one.
+
+The second core has, for each guard $a\le4$, P masses $1,3/4,1$
+at $\{a,5,6,7\},\{a,6,7\},\{a,7\}$; C5 masses 2,1 at
+$\{5,6,7\},\{5,7\}$; C6=3 at $\{6,7\}$; C7=3 at $\{7\}$;
+and A4=9 at $\{4\}$. Before A4, guard/guard and guard/pivot supports
+are 11: zero reserves dominate each correct reward three, with guard/6
+receiving reserves $21/4$ and 3 covering the moved C5 pieces.
+Pair 56 has full maxima $(4,1,3,4)$ and stopped maxima $(4,3,4)$;
+pairs 57 and 67 have support 11. Inactive queries coarsen these types.
+A4 raises W and every support by at most nine and raises constant zero
+and the attaining pair by nine. Hence the second core has O cost zero
+and N cost one.
+
+Support subadditivity on the actual sum gives O cost at most one.
+Table $(1,3;1,3,0)$ attains $W+1$, proving O cost one.
+For a complete direct upper check, the following table gives the
+support for every possible schedule on the literal eight-coordinate score.
+Each entry sums the maximum over all nine labels in every cell, using
+independent A,C,P coefficients. The listed pair types are disjoint and
+exhaust all 28 pairs.
+
+| Schedule | Full N support | Stopped O support |
+| --- | --- | --- |
+| Empty | 46 | 46 |
+| Singleton 1 | $93/2$ | $93/2$ |
+| Every other singleton | 46 | 46 |
+| Pair $(1,3)$ | $95/2$ | $95/2$ |
+| Pair $(2,3)$ | 47 | 47 |
+| Pair $(1,j)$, $j\in\{2,4,5,6,7,8\}$ | $93/2$ | $93/2$ |
+| Pair $(5,6)$ | 48 | 46 |
+| Every remaining pair | 46 | 46 |
+
+These values follow by adding the printed coefficients for each cell
+and comparing all labels; for instance pair 56 has full cell maxima
+$(8,2,6,32)$ in 00,01,10,11 order. Its stopped zero cell has maximum 8,
+so its stopped support is $8+6+32=46$. The other rows already include
+all larger, earlier and unqueried labels. Query 8 is constant on the
+score support and its label has no numerical reward, so its schedules
+also have the displayed values. This finite exhaustive calculation proves
+the exact bounds for this literal example. Consequently
+
+$$
+\Delta_N(y)=3/2,\qquad\Delta_O(y)=1.
+$$
+
+The projected quotient is $Q(\mathcal E_3y)=(1/2,0,3;99/2)$.
+An explicit embedded replacement has C=$1/2$, P=15 at $\{1,3\}$,
+P=$31/2$ at $\{2,3\}$, C=3 at $\{3\}$ and T=$31/2$,
+all other bits one. Its K is $99/2$, W is $93/2$ and both costs zero.
+For the input $A_>=20$, $C_>=18$, so (218.28) gives exact residual zero.
+It is one nonzero changed-Q certificate with $\theta=0$.
+At the auxiliary $u_3$, $F_{Q(y)}=5/4$, excluding V=0 with
+$\theta\le1$. This does not make $u_3$ an $H_N$ witness:
+the nonzero zero-cost replacement has the same positive reading there,
+incompatible with any full feasible $\lambda$ by (218.5).
+Neither this example nor its input score gap is a negative separator.
+

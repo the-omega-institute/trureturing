@@ -1,0 +1,39 @@
+**Definition 4.1 (Variables and vectorization).** Let $N_*=625$ and introduce
+unrestricted complex matrices $C_i=X_i+iY_i\in M_5$, $1\le i\le N_*$,
+with $31,250$ real coordinates, and a real threshold $r$. Shorter families
+are padded by zero matrices. Define
+
+$$
+\Phi_C(X)=\sum_iC_iXC_i^\dagger,\qquad
+M_C=\sum_i\overline{C_i}\otimes C_i,\qquad
+G=I_5\otimes A+A\otimes I_5.
+\tag{4.1}
+$$
+
+Here column stacking is explicit:
+$\operatorname{vec}_{\rm col}(X)_{5j+i}=X_{ij}$ for $0\le i,j<5$,
+with tensor order input first, output second. It is related by a fixed tensor
+flip to the output-first $w(X)$ of (2.1). Then
+
+$$
+\begin{aligned}
+\operatorname{vec}_{\rm col}(CXC^\dagger)
+&=(\overline C\otimes C)\operatorname{vec}_{\rm col}(X),\\
+\operatorname{vec}_{\rm col}(AX-XA)
+&=(I\otimes A-A^T\otimes I)\operatorname{vec}_{\rm col}(X)
+=G\operatorname{vec}_{\rm col}(X).
+\end{aligned}
+\tag{4.2}
+$$
+
+For example the $(5j+i,5\ell+k)$ entry of $M_C$ is
+$\sum_a\overline{(C_a)_{j\ell}}(C_a)_{ik}$.
+The plus sign in $G$ is forced by $A^T=-A$.
+
+For $J\in\mathcal J_{15}$ put
+
+$$
+H_J(C)=\Pi_J-\sum_i C_i^\dagger\Pi_JC_i.
+\tag{4.3}
+$$
+

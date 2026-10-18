@@ -1,0 +1,16 @@
+**Theorem 3.4 (unknown finite interference).** On every observer-progressing
+history with a finite total of $b$ writer updates while the call is pending,
+RA Returns after finitely many observer actions. At most $b$ attempts fail
+validation and at most $b+1$ attempts are made.
+
+Proof. If a pending history with finitely many updates were infinite,
+Lemma 3.1 would still make every attempt finite, using its final finite
+source. Each failed validation encloses at least one update between its
+saved leaf and its validation: with none, the reply would agree. These
+intervals belong to successive nonoverlapping attempts, so distinct failures
+charge distinct updates. Thus there are at most $b$ failures, and the next
+finite attempt succeeds. Clearing and Return preparation are finite as well.
+Updates before a guard leaf, between attempts or after successful validation
+consume budget without creating extra failures. The program receives none
+of $b$, the final source, its size or its height. $\square$
+

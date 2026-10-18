@@ -1,0 +1,10 @@
+**Definition 9.1 (the achieved full resource vectors).** Fix one selected original history $h=(y,e,n)$ and write $v_h=C_gv_y$. For every original $h'=(z,\epsilon,\eta)$ define
+
+$$
+V^h_{h'}=\operatorname{tr}(\Theta(v_hv_h^T)\rho_{h'})
+ =\|K(v_h)U_{\epsilon,\eta}a_z\|^2.
+\tag{RG.81}
+$$
+
+For each $0\le s\le s_{\rm original}$, the saturated construction selected by $h$ has exactly this entire twelve-vector of acquired high masses. Its aggregate effect does not change with $s$; only its binary split changes. Each coordinate is the cost of the same common design on that history, without a source prior. Different choices of $h$ are not asserted to yield distinct vectors.
+

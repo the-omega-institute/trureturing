@@ -1,0 +1,76 @@
+**引理 23.1（整个增益、全部祖先和实际未来）。** 对任意 $W\in\mathcal C_{35}(H_5)$，令
+
+$$
+j=b+c,\quad t=1+b>1,\quad u=2t-1=1+2b>1.
+$$
+
+必有 $d=z,p=z$。它的整个增益及样本恰为
+
+$$
+\begin{gathered}
+g(s)=(s-3)(s-5)\left(\alpha s-\frac z{15}\right),\qquad
+q=\frac{48-z}{t},\qquad\alpha=\frac q6+\frac z{30},\\
+a=g(1)=\frac{4q}{3}-\frac{4z}{15},\quad
+v=g(4)=-\frac{2q}{3}-\frac z{15},\quad
+k=g(6)=3q+\frac{2z}{5},\quad
+\ell=g(7)=\frac{28q}{3}+\frac{4z}{3},
+\end{gathered}
+\tag{23.2}
+$$
+
+其中剩余实际祖先方程为
+
+$$
+aj=24-z,\qquad uv=Y-z,\qquad bc=r(1-r).
+\tag{23.3}
+$$
+
+反向，式 (23.2)–(23.3)、$p=d=z$ 及全部严格源条件给出一个实现 $H_5$ 的完整世界。对第六 $J$ 用索引 $n=2$，对第六 $M$ 用索引 $n=3$，其全部实际响应为
+
+$$
+\begin{aligned}
+h_n&=z+(1+nb)k,\\
+f_{nJ}&=z+(j+nr)\ell,\\
+f_{nM}&=z+(1+nb+j+(n-1)r)\ell,\qquad n=2,3.
+\end{aligned}
+\tag{23.4}
+$$
+
+证明。沿时间词 $(J,M,J,M,J)$ 的全部实际矩阵和迹为
+
+$$
+\begin{array}{c|c|c}
+i&A_i&\operatorname{tr}(A_iP)\\ \hline
+0&I&1\\
+1&\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)&j\\
+2&\left(\begin{smallmatrix}1&0\\1&1\end{smallmatrix}\right)&t\\
+3&\left(\begin{smallmatrix}1&1\\1&0\end{smallmatrix}\right)&r+j\\
+4&\left(\begin{smallmatrix}1&0\\2&1\end{smallmatrix}\right)&u\\
+5&\left(\begin{smallmatrix}2&1\\1&0\end{smallmatrix}\right)&2r+j
+\end{array}
+\tag{23.5}
+$$
+
+故祖先读数为 $d+g(0)=0,d+jg(1)=24$，以及
+
+$$
+d+tg(2)=48,\quad d+(r+j)g(3)=z,\quad
+d+ug(4)=Y,\quad d+(2r+j)g(5)=p.
+$$
+
+根三、根五先给 $d=z,p=z$，所以 $p\ne z$ 时类为空；初读给 $g(0)=-z$。因式定理和次数界给式 (23.2) 的整个因式，其中允许 $\alpha=0$。在节点二它给 $q=6\alpha-z/5$，第二祖先给 $q=(48-z)/t$，故 $\alpha=q/6+z/30$。在一、四、六、七代入这个同一多项式，得全部显示样本和式 (23.3)。这些方程反代逐项复现全部初始六读；零增益不可能，因为读数零和 $24$ 不同。
+
+从同一第五矩阵继续实际左乘，得到
+
+$$
+\begin{array}{c|c|c}
+\text{位置}&\text{实际矩阵}&\text{迹}\\ \hline
+6,n&\left(\begin{smallmatrix}1&0\\n&1\end{smallmatrix}\right)&1+nb\\
+7,nJ&\left(\begin{smallmatrix}n&1\\1&0\end{smallmatrix}\right)&j+nr\\
+7,nM&\left(\begin{smallmatrix}n&1\\n+1&1\end{smallmatrix}\right)&1+nb+j+(n-1)r
+\end{array}
+\tag{23.6}
+$$
+
+按式 (1.4) 取迹即给式 (23.4)。三个迹都正；最后一项也可写成 $1+(n+1)b+c+(n-1)r>0$。这两个第六和四个最终函数属于预先固定的整个世界，互择动作并未同时取得。∎
+

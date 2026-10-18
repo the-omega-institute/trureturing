@@ -1,0 +1,30 @@
+**Definition 83.2 (One common distribution of executable finite trees).**
+For $R\subseteq\{1,\ldots,L\}$ and $d\in\mathbb N_0$, let
+$\mathcal T(R,0)$ consist of the leaves labeled by $J$. For $d>0$, let
+$\mathcal T(R,d)$ consist of these leaves and all binary nodes
+
+$$
+(i,T_0,T_1),\qquad i\in R,\quad
+T_0,T_1\in\mathcal T(R\setminus\{i\},d-1).
+\tag{83.4}
+$$
+
+Thus $\mathcal T(\varnothing,d)$ contains only leaves. Write
+$\mathcal T_{L,k}=\mathcal T(\{1,\ldots,L\},k)$. A tree asks coordinate
+$i$ at its node and follows the edge labeled by the answer. Its leaf label
+on $b$ is $T(b)\in J$, and that label means the original tape
+$\theta_{T(b)}$. No index is repeated along a path, whose number of query
+nodes is at most $k$. A finite scheme is a single probability vector
+$(w_T)_{T\in\mathcal T_{L,k}}$, common to all $b$, with laws
+
+$$
+p_b(j)=\sum_{T\in\mathcal T_{L,k}}w_T\mathbf1_{\{T(b)=j\}},
+\qquad
+\nu_b=\sum_{j=0}^Lp_b(j)\delta_{\theta_j}.
+\tag{83.5}
+$$
+
+It is feasible at cap $\varepsilon$ when
+$\operatorname{TV}(\nu_b,\eta_b)\le\varepsilon$ for every $b\in Q$.
+Separate choices of a distribution for each input are not finite schemes.
+

@@ -1,0 +1,15 @@
+**Corollary 7.3 (Valid exclusions and the boundary).**
+For $u>0$, the bound $L_8$ exceeds the six-late value
+$r_0=5\tau+u/11$ by exactly $4u/1287>0$, uniformly in $v$ and the
+allowed continuation. Also
+
+$$
+L_8-E_{\rm sum}=\frac{11(11u-117v)}{14976}.
+\tag{7.5}
+$$
+
+Consequently the cap $E_{\rm sum}$ is infeasible in both classes
+whenever $u>0$ and $117v<11u$.
+At $117v=11u$ these two lower bounds coincide; this argument does not
+exclude their common cap. No matching law for $L_8$ is asserted.
+

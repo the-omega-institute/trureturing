@@ -1,0 +1,124 @@
+**定理 46.3（三更新四实际Read的全记录稳定取得）。** 对每个
+$0<\delta\le1$，原菜单有一个共同初始化的确定有限控制器，恰用三次更新、
+四次实际Read后停止，输出一个全定义的 $W$ 值估计，并满足
+
+$$
+\mathcal E_\pi(\delta)
+ \le\sqrt{2\delta^2+(5\delta+\sqrt{50\delta})^2}
+ <14\sqrt\delta.
+\tag{46.12}
+$$
+
+证明。只依赖公开的误差上界选择
+
+$$
+\begin{aligned}
+\rho&=\delta/10,\qquad K=\sqrt{1-\rho^2},\\
+\alpha&=(3/5)K-(4/5)\rho,\qquad
+\nu=(4/5)K+(3/5)\rho,\qquad q=\alpha+\nu i.
+\end{aligned}
+\tag{46.13}
+$$
+
+$0<\rho\le1/10$ 给 $0<\alpha<3/5$、$\nu>4/5$、
+$\alpha^2+\nu^2=1$，并有 $\kappa\nu-\tau\alpha=\rho$。
+设 $h=\tau\nu-\kappa\alpha$，由定理45.4证明中的实际投影范围，半径7的
+投影模至多7，半径25的投影模至少 $25h$。其间隙为
+
+$$
+\begin{aligned}
+g&=25h-7=24\rho-7(1-K),\\
+g&\ge\frac{12}{5}\delta-\frac7{100}\delta^2
+ \ge\frac{233}{100}\delta>2\delta.
+\end{aligned}
+\tag{46.14}
+$$
+
+这里 $1-K=\rho^2/(1+K)\le\rho^2$。选原菜单中的单位纯虚控制
+
+$$
+c_1=j,\qquad c_2=-\alpha j+\nu k,
+\qquad c_1c_2=q,
+\tag{46.15}
+$$
+
+执行同一来源的实际事件序列
+
+$$
+\text{初Read},\ A_{c_1},\ \text{Read},\ A_{c_2},\
+\text{Read},\ A_d,\ \text{Read},\ \text{停止}.
+\tag{46.16}
+$$
+
+记四个实际报告为 $(y_0,y_1,y_2,y_3)\in E^4$；真实首锚投影为
+$w=\operatorname{Im}(bq)$，所以 $y_0=a+e_0$、$y_3=w+e_3$。
+所有动作及停止预先固定，两个中间报告仍实际取得并保留。
+
+以下估计在整个 $E^4$ 上全定义。令
+
+$$
+\begin{aligned}
+T&=(7+25h)/2,\\
+\widehat R&=
+ \begin{cases}7,&|y_3|\le T,\\25,&|y_3|>T,\end{cases}\\
+P_R(y)&=
+ \begin{cases}y,&|y|\le R,\\R y/|y|,&|y|>R,\end{cases}\\
+v&=P_{\widehat R}(y_3),\qquad
+\widehat s=\sqrt{\widehat R^2-|v|^2},\\
+\widehat a&=y_0,\qquad
+\widehat b=(\widehat s+v)q^{-1},\qquad
+\widehat x=(\widehat a,\widehat b)\in W.
+\end{aligned}
+\tag{46.17}
+$$
+
+在 $y=0$ 时使用投影的第一分支，不作除零；投影后根号恒非负。估计对全部四个
+报告全定义，忽略中间两个数值不使它们变成未执行的读口。
+
+对每个真实来源及每条合法实际误差记录，（46.14）给
+
+$$
+|b|=7\Longrightarrow |y_3|\le7+\delta<T,
+\qquad
+|b|=25\Longrightarrow |y_3|\ge25h-\delta>T.
+\tag{46.18}
+$$
+
+因此 $\widehat R$ 始终等于这个来源自己的初始半径 $R$，不是额外供应的标签。
+真实 $w$ 在闭球 $|w|\le R$ 中。复用§42的欧氏球投影不扩张性质及§43的根号模量，
+可得
+
+$$
+\begin{aligned}
+|v-w|&\le\delta,\\
+\left|\sqrt{R^2-|v|^2}-\sqrt{R^2-|w|^2}\right|^2
+ &\le\bigl||v|^2-|w|^2\bigr|\le2R\delta.
+\end{aligned}
+\tag{46.19}
+$$
+
+写真实 $bq=s+w$。$s\ge0$ 时真实实部就是正平方根。若 $s<0$，来源条件给
+$\nu\sqrt{R^2-s^2}-\alpha|s|\ge\tau R$；函数
+$G(t)=\nu\sqrt{1-t^2}-\alpha t$ 在 $[0,1]$ 上严格递减，
+$G(\rho)=\tau$，所以 $|s|\le R\rho$，与定理45.4的负分支界相同。
+无论哪种符号，都有
+
+$$
+|\widehat s-s|\le2R\rho+\sqrt{2R\delta}
+ \le5\delta+\sqrt{50\delta}.
+\tag{46.20}
+$$
+
+右乘 $q^{-1}$ 保持范数，实部与虚部正交，加上初读
+$|\widehat a-a|\le\delta$，得到（46.12）的第一个不等式。由于 $\delta\le1$，
+
+$$
+2\delta^2+(5\delta+\sqrt{50\delta})^2
+ \le(77+50\sqrt2)\delta<196\delta.
+\tag{46.21}
+$$
+
+全部四个误差只各自使用 $|e_j|\le\delta$，从未把它们相加后假设独立或平均，
+故结论覆盖联合对抗及历史相关的全部实际记录。可见初态的无界性不改变这个
+绝对误差界。证毕。
+

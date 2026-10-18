@@ -1,0 +1,48 @@
+**定义 10.1（原合同、核数与全四值历史相容）。** 采用定义 1.1–1.3 的字面树合同。实际来源 $U$ 是一棵未知、有限、非空的完整有序二叉树；叶标签为 $\alpha,\beta$，每个分支有两个非空的有序子树。括号、左右次序和每个出现均属于来源。替换逐分支作用：
+
+$$
+\rho(\alpha)=\beta,\qquad
+\rho(\beta)=(\beta,\alpha),\qquad
+\rho(S,T)=(\rho S,\rho T),\qquad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix}.
+$$
+
+公开参数为整数 $k\ge1$、$d=3k$、$a,b>0$ 和 $n=a+b\ge4$。用 $F_0=0,F_1=1,F_{i+2}=F_{i+1}+F_i$ 记 Fibonacci 数，令
+
+$$
+\begin{aligned}
+C=(A,B)&=M^d(a,b)
+=\bigl(F_{d-1}a+F_db,\ F_da+F_{d+1}b\bigr),\\
+H&=d+n-1,\qquad
+q=\min\left\{a,b,\left\lfloor\frac n4\right\rfloor\right\}.
+\end{aligned}
+$$
+
+$\mathcal T_C$ 包含组成恰为 $(A,B)$ 的所有有限非空完整有序字面树，正域为 $\mathcal P=\mathcal T_C\cap\operatorname{im}\rho^d$，负域为 $\mathcal T_C\setminus\mathcal P$。目标是对整个 $\mathcal T_C$ 判定成员身份。正源高度至多 $H$；负域保留全部同组成完整树，不以这个正源高度筛选。
+
+给定任意 $h\in\mathbb N\cup\{\infty\}$、$h\ge H$，一次原动作可以直接请求任意有限 $L/R$ 词 $u$ 的端点，条件只有 $|u|\le h$，没有祖先查询要求。空词 $\varepsilon$ 请求根。对同一棵固定 $U$，读数 $r_U(u)$ 是端点叶的标签 $\alpha$ 或 $\beta$、端点分支的 $\mathsf{br}$，或穿过叶的缺失 $\varnothing$。实际历史
+
+$$
+\mathcal H_m=((u_1,y_1),\ldots,(u_m,y_m)),\qquad y_i=r_U(u_i)
+$$
+
+保留全部四值、实际原词、时间顺序和重复。确定策略 $\pi$ 从共同、来源无关的初始化及空取得历史出发，只依公开参数与自己的这条历史选择下一合法原词或布尔返回。合法性要求对每个 $U\in\mathcal T_C$ 正确且逐源有限终止。
+
+令 $T_\pi(U)$ 为完整真实终端历史，$Q(T)=\{u:(u,y)\text{ 出现在 }T\}$。原主费用是不同实际请求地址数：
+
+$$
+\operatorname{paid}(T)=|Q(T)|,\qquad
+D_h(a,b;d)=\min_{\pi\text{ 原合法}}\max_{V\in\mathcal P}|Q(T_\pi(V))|.
+$$
+
+无合法策略时值为 $+\infty$。所有回复类型都按实际地址收费；重复仍是一次实际查询并进入历史，只不增加不同地址费用。最坏费用取正源，正确性和有限终止覆盖正、负全域。不同原词即使在候选上给出相同向量，也没有共同的已付地址。局部精确数学计算在这个目标中没有另定价格；计算所得的候选描述不能充当取得的源索引、根报告、前沿、导航、重置或谱读数，也没有几何代数或 Clifford 坐标到访问的免费接口。
+
+对证明使用的任意有限真实源族 $\mathcal F$，沿用定义 5.1 的全四值相容关系：
+
+$$
+\operatorname{Comp}_{\mathcal F}(\mathcal H_m)
+=\{V\in\mathcal F:\ r_V(u_i)=y_i\text{ 对每个 }1\le i\le m\}.
+$$
+
+它约束每个历史项，包括分支、缺失和重复，不是仅保留叶回复的关系。它是证明中的集合，策略没有免费读出这个集合的操作。
+

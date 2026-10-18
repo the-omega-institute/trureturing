@@ -1,0 +1,69 @@
+## 143. 源承诺、能量相干与参考资源的适用范围
+
+**命题 C-143.1（支持承诺与粒子数对称性不同）。** $Q$ 不在一般物理粒子数
+$U(1)$ 作用下不变，$\mathcal F_{\rm all}$ 也不是该作用的不变态集合。
+因此 (C137.1)、(C140.2) 比较的是在明确供应条件下的检测能力，
+不把源承诺或给定参考的制备成本定为零。
+
+证明。$\psi_-\perp Q$，并且
+
+$$
+e^{-i\theta\widehat N}\psi
+=e^{-i\theta}(\cos\theta\,\psi+i\sin\theta\,\psi_-).
+\tag{C143.1}
+$$
+
+当 $\sin\theta\ne0$ 时该向量不在 $Q$。
+另一方面，$P_{b_1}\in\mathcal F_{\rm all}$ 是一支持能量零假设，
+但 $b_1=(e_0-e_1)/\sqrt2$ 具有粒子数差一相干，故
+$[P_{b_1},\widehat N]\ne0$。
+物理能量基相干数、数守恒测量限制和源的支持承诺是三个不同条件。
+(C137.3) 解释承诺域中数守恒效果何以已给目标统计，却不供应支持于 $Q$ 的源，
+也不认证其承诺真实性或建立其 SSR／参考系制备兼容性。证毕。
+
+**约定 C-143.2（引文的条件与固定模型增量）。** 固定基相干凸包、纯态最大
+三项权重和主压缩条件使用 Ringbauer 等，
+*Certification and Quantification of Multilevel Quantum Coherence*，
+[arXiv:1707.05282v3](https://arxiv.org/pdf/1707.05282v3)，式 (1)、式 (9)、Theorem 2／式 (10)。
+在这里取同一 $\mathcal B$、$d=5,k=3,W=\delta I-T$；
+纯态重叠和混态正序见证已经用于 C-131.1，未作为新增一般相干理论重立。
+
+先验输入信息与已供应不对称资源态对测量能力的不同作用，见 Ahmadi、Jennings、Rudolph，
+*The WAY theorem and the quantum resource theory of asymmetry*，
+[arXiv:1209.0921v1](https://arxiv.org/pdf/1209.0921v1)，
+Section II E.1 “The possession of prior information” 与
+Section II E.2 “The possession of asymmetry resource states”。
+该文的测量／区分论证带有自己的本征态系综和装置条件；
+这里仅借用先验与资源供应须分列的背景，不从该文导出八射线或四个本模型前沿。
+
+电荷模式的必要性背景见 Marvian、Spekkens，
+*Modes of asymmetry: the application of harmonic analysis to symmetric quantum dynamics and quantum reference frames*，
+[arXiv:1312.0680v2](https://arxiv.org/pdf/1312.0680v2)，Sections II、V，Lemma 17、Proposition 18。
+这些条目以给定参考态与 $G$ 协变联合模拟通道为前提，给出必要模式包含关系。
+本处 (C142.5) 直接在声明的守恒联合效果中证明缺失差二模式的结论，
+不把必要模式条件当作测量仪器的实现、参考保持或充分条件。
+
+本模型的增量是把 C-128.1 的同一源与能量基、C-129.1 的八射线／混态支撑桥、
+C-131.1 的实际混态见证，接到指定两电荷参考的精确块域 (C138.3)、
+全部十个压缩谱、固定功效残余响应 (C140.3)、闭式前沿 (C140.2)
+及逐点守恒联合达到 (C141.2)，并接到任意有限参考的 (C142.2)、(C142.4)–(C142.6)。
+支持、正序、主压缩、模式选择和有限凸优化均为这些固定模型证明内部消费的标准工具。
+此综合不附全局原创性、优先权或新一般资源理论的断言。
+
+**适用边界 C-143.3（效果、供应与原恢复任务）。** C-136.2 是额外声明的比较菜单。
+C-130.1–C-130.2 在其理想独立控制与最终硬币合同内的承诺域原生结果仍按原义成立；
+它们没有供应本处全部总数守恒联合效果，(C141.2) 也没有给出原翻转／相位／末端
+$n_1$ 菜单的合成证明。数学对称化不等于安装新的控制服务。
+
+每次参考与系统独立且在所有假设下相同，重新供应一份；
+没有假设相关参考、免费制备或重置、参考催化返还、跨试验复用、额外副本、
+可访问环境或未计价相位时钟。效果达到不确定测后参考态，
+故不推出保持、重复测量或非扰动服务，也不构成对守恒测量限制的违反。
+$Q$ 支持与参考供应各自承担资源前提；所得前沿不比较其总制备成本或转换率。
+
+[相位增益与 qutrit 恢复卷定义 6.2](AURIC_OMEGA_PHASE_GAIN_AND_QUTRIT_RECOVERY.md#6-class-optimization-and-remaining-mathematical-obligations)
+的原目标仍为正 $\beta$、整个实 Kraus 编码器类 $M_3\to M_5$ 的尖锐 diamond 恢复曲线，
+包括全部复 qutrit 输入、被动参考及共同恢复量词；该全类目标仍未解决。
+单个 $P$ 的检测前沿不构造统一恢复通道，不改变该目标或其完成判据。
+以上为所列假设下的普通数学推导，不附 Lean／形式内核、硬件实现、源认证或经验保证。
+

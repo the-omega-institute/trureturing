@@ -1,0 +1,70 @@
+**Theorem 3.2 (forced finite anchors and a canonical solution).** For
+each such tuple and face $K$ one can compute a Presburger condition
+$A_K(\mathbf t,\mathbf q)$ and residual values $f_K(\mathbf t,\mathbf q)$
+on a fixed set $F_K$ of residual names. The additional natural tuple
+$\mathbf q$ gives finite atomic indices, determined by $\mathbf t$
+whenever $A_K$ holds. The terminal equations have a completed solution
+at this scalar face if and only if
+$\exists\mathbf q\ A_K(\mathbf t,\mathbf q)$.
+
+When consistent, precisely the residual components incident to a finite
+anchor are forced finite. Their values are exactly $f_K$ in every
+solution. Every other component can simultaneously be assigned
+$\Omega$, giving a computable canonical completed solution. The theorem
+does not assert that all solutions have this canonical form.
+
+**Proof.** Make a graph on all residual names, including unused ones.
+For $\rho^a z_i=\rho^b z_j$, put an edge retaining both exponents.
+Comparisons of a decorated residual with a ground or an atomic terminal
+are anchors. Grounds and atomic terminals with finite scalar indices
+are finite anchors; divergent atomic terminals are infinite anchors.
+There may be loops, multiple edges and several anchors at a vertex.
+
+Since $\rho^a$ preserves infinite branches, a finite value of either
+edge side forces both residuals finite. Thus any component with a finite
+anchor is finite throughout. A component with both a finite and an
+infinite anchor is inconsistent.
+
+For finite inversion reuse [ABC, Theorems 2.2–2.3][ABC] exactly. In the
+normal code $B(g)$, $g$ lies in the image of $\rho^a$ precisely when
+every primitive rank is at least $a$. Subtracting $a$ then gives the
+unique finite preimage, still normal. This is inversion on that actual
+image, never an inverse on arbitrary completions or a physical reset.
+
+In a finite-anchored component choose a ground anchor if present.
+The equation $\rho^a z_i=g$ gives either failure of this image test or
+one fixed finite $z_i$. Along a spanning tree compute
+$\rho^a z_i$ and its inverse under the other edge exponent. Each
+step either fails or fixes the next finite residual uniquely. Test every
+remaining edge and anchor; this includes cycles and parallel constraints.
+A variable finite atomic anchor against a computed ground either fails
+because the ground is non-atomic, or imposes the affine equality of its
+index with the ground's primitive rank.
+
+If there is no ground anchor, start from a finite atomic anchor
+$\rho^a z_i=T_{t_j+c}$. Its preimage is $T_{q_i}$ with
+$q_i+a=t_j+c$, $q_i\ge0$. Propagation along an edge gives
+$q_i+a=q_j+b$, with every $q_j\ge0$. All additional edges and atomic
+anchors give the same affine constraints. These natural auxiliaries
+avoid informal subtraction at a negative index. A direct finite
+atomic/atomic comparison gives equality of indices. Direct
+atomic/ground comparison requires that ground to be atomic with the
+same index. Ground/ground tests are finite exact tests. Two divergent
+atomic terminals agree; a divergent and a finite terminal cannot agree.
+These finite procedures construct $A_K$. They also compute every
+forced value as a fixed ground or $T_{q_i}$.
+
+In a component without a finite anchor assign every residual $\Omega$.
+Every edge holds, regardless of its offset cycle, because every fixed
+power fixes $\Omega$. Every infinite anchor holds too. Unused names
+receive the same value. The direct terminal tests just imposed then
+make all remaining equations true. This proves sufficiency.
+
+Conversely any completed solution propagates finiteness from every
+finite anchor. Unique finite inversion forces exactly the values just
+computed, and every extra edge and anchor must pass the listed tests.
+Its atomic indices provide $\mathbf q$ satisfying $A_K$. Components
+without finite anchors admit the all-$\Omega$ solution, so none of
+their vertices is forced finite. These arguments prove both directions
+and the claimed classification. $\square$
+

@@ -1,0 +1,58 @@
+**Proposition 5.2 (One-, three- and four-row realizations).** The values
+$a/2,S_1,T$ are attained with one, three and four installed rows,
+respectively, under $q_3=1$ on every given seed space.
+
+Proof. For the first value use the sole row
+
+| Row | Instruction | Zero successor | One successor |
+| --- | --- | --- | --- |
+| $P$ | $\operatorname{Halt}(h_0(\sigma))$ | — | — |
+
+It has $N=0$ on every path and correct mass $a/2$.
+For $S_1$, use the inherited one-read realization
+
+| Row | Instruction | Zero successor | One successor |
+| --- | --- | --- | --- |
+| $R$ | $\operatorname{Read}(2(j+2))$ | $Z_H$ | $P$ |
+| $Z_H$ | $\operatorname{Halt}(h_1(\sigma))$ | — | — |
+| $P$ | $\operatorname{Halt}(h_0(\sigma))$ | — | — |
+
+In phase zero the queried pair $\{j+2,j+3\}$ avoids target $j$;
+in phase one it is a separator. Its terminal masses are
+
+| Record | Output | Source mass | Correct mass | Calls |
+| --- | --- | --- | --- | --- |
+| $1$ | $h_0(\sigma)$ | $\eta$ | $a\eta$ | $1$ |
+| $0$ | $h_1(\sigma)$ | $(1+c)/2$ | $a/2$ | $1$ |
+
+A one certifies phase zero and leaves its actual target independent.
+A zero succeeds for the displayed output exactly in phase one with
+$S_0=\sigma$. The correct sum is $S_1$, with $N=1$ always.
+
+For $T$ use [Two Installed, Proposition 9.2][I2]'s table:
+
+| Row | Instruction | Zero successor | One successor |
+| --- | --- | --- | --- |
+| $R$ | $\operatorname{Read}(2(j+2))$ | $S$ | $P$ |
+| $S$ | $\operatorname{Read}(2(j+4))$ | $Z_H$ | $P$ |
+| $Z_H$ | $\operatorname{Halt}(h_1(\sigma))$ | — | — |
+| $P$ | $\operatorname{Halt}(h_0(\sigma))$ | — | — |
+
+The two phase-zero pairs are disjoint from one another and target $j$.
+Their zero probabilities are $c$, independently within the same spin
+law. Phase one has only paid separators. Thus
+
+| Record | Output | Source mass | Correct mass | Calls |
+| --- | --- | --- | --- | --- |
+| $1$ | $h_0(\sigma)$ | $\eta$ | $a\eta$ | $1$ |
+| $01$ | $h_0(\sigma)$ | $c\eta$ | $ac\eta$ | $2$ |
+| $00$ | $h_1(\sigma)$ | $(1+c^2)/2$ | $a/2$ | $2$ |
+
+The source masses sum to one by $2\eta=1-c$, and the correct masses
+sum to $T$. Its exact cost law is
+$\mathbb P(N=1)=\eta$, $\mathbb P(N=2)=1-\eta$, so
+$\mathbb E N=2-\eta$ and its maximum is two. These tables halt on
+every formal input. The constructions and their one/two-read masses are
+inherited; the bounds against the three-read installed competitors are
+proved below. $\square$
+

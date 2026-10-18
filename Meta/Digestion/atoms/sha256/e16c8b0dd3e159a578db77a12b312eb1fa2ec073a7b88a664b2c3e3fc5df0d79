@@ -1,0 +1,42 @@
+**Definition 6.1 (general binding without a new package primitive).** Let
+$B$ be ARC Definition 7.1's actual service/capture binding, including the
+captured field-zero interval, original/current versions and initial seed's
+complete delivery reference. It is already part of each result prefix.
+For mode one construct the eight-field tuple
+
+$$
+\varrho_{\rm sel}=
+(\operatorname{Protocol}(\sigma),\xi,c,\kappa,\gamma,d_0,d_1,t).
+$$
+
+Here $\operatorname{Protocol}(\sigma)$ is the three-field tuple
+$(0100,\mu,w)$ containing the actual whole acquired frame; $\kappa$ is
+the numeric anchor-kind; $\gamma$ is Definition 5.1's manifest anchor
+or Definition 5.4's source anchor; and $d_0,d_1$ are its computed start
+and end. Natural/ordinal fields use exact wire U; the mode field retains
+its actual single bit. Verify this
+tagged fixed arity and require the retained selector to parse to exactly
+the stored $\kappa,m,t$ fields, with the source anchor's $m$ in the source
+case. Retain a complete expected copy before Issue/publication. For mode
+zero use exactly ARC's old occurrence $\varrho,z,s$ meaning.
+
+Use ARC Issue's existing copy body, with auxiliary numeric slots $z=t$
+and $s=\kappa$ in the general arm. These slots are general metadata,
+not Zero phases. Issue executes Prefix on the immutable cover at its
+already constructed $k$ and copies
+
+$$
+(\mathrm{manifest},\mathrm{code\ lineage},\xi,c,k,
+\varrho_{\rm sel},z,s,I_k)
+$$
+
+to a new sealed package on71 and its persistent bank list. Its number $p$
+is the actual list-cardinality word. The full selector is already inside
+$\varrho_{\rm sel}$, so this preserves the package's nine-field shape
+without another descriptor or unused external field. The general arm is
+distinguished by the retained mode/tag and exact eight-field grammar;
+the legacy four-field occurrence grammar is never reparsed as this arm.
+The common $B,\xi$ prefix and immutable $c$ bind the graph, seed and
+cover; $k$ and the complete $\varrho$ bind the target. No package follows
+the current capacity or a later cover.
+

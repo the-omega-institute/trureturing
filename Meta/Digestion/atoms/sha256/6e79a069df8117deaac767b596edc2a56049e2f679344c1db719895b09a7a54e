@@ -1,0 +1,78 @@
+**Theorem 50.2 (Sharp fixed-family value and the separate endpoint obligation).** Under the measurable common-rule contract of Definition 45.1, on every nonempty measurable consumer carrier,
+
+$$
+I(\mu)=R_\mu.
+\tag{50.3}
+$$
+
+For caps $0\le\eta\le1$, $\eta<R_\mu$ is impossible and $\eta>R_\mu$ is feasible. When $R_\mu=1$, the cap $1$ is attained. Feasibility at $\eta=R_\mu<1$ requires an additional attainment condition; (50.3) alone does not supply it. In particular, the center choices in (50.1) are local to actual observations, rather than one constant reference on $X$ or a redesign of the target family.
+
+**Proof.** Let $\widehat\mu$ be any lawful prepared family and let its uniform error be $\varepsilon$. For a fixed actual $x$ and $\gamma>0$, Lemma 45.3 supplies one $m$ for which
+
+$$
+\operatorname{TV}(\widehat\mu_x,\widehat\mu_y)<\gamma
+\qquad(y\in C_m(x)).
+$$
+
+Thus the single probability law $\widehat\mu_x$ is a center for all target laws in that same cylinder with radius at most $\varepsilon+\gamma$. Let $\gamma$ decrease to zero and then take the supremum over $x$. This proves $R_\mu\le\varepsilon$. The comparison uses a whole cylinder and a whole finite-record seed event, without choosing a comparison source separately for each seed.
+
+Conversely, fix $R_\mu<q<\eta$. Mark each occupied prefix node $C$ with $\rho_\mu(C)<q$, and choose one fixed law $v_C$ with
+
+$$
+\sup_{y\in C}\operatorname{TV}(v_C,\mu_y)<q.
+\tag{50.4}
+$$
+
+There are countably many nodes. Under one source-independent product seed law, preload coordinates $W_C$ with laws $v_C$ for all marked nodes. A common deterministic preparation queries primes in increasing order and hands over $W_C$ at the first marked prefix, also allowing the depth-zero node.
+
+For each actual $x$, the definition of $r_\mu(x)\le R_\mu<q$ guarantees a marked prefix at a finite depth. This preparation therefore terminates at every seed at that source. Its selected node depends only on the acquired prime prefix, so its prepared law there is exactly $v_C$, not a conditioning of $v_C$ on a seed-dependent event. The uniform error is at most $q<\eta$. Finite record events and output-event preimages are measurable coordinate events or countable unions of them. The normalized coordinate laws and their countable product give one inherited seed probability space. The center and marking tables are fixed shared constants of the prescribed problem. They do not supply a source label, a target input, an effective optimizer or an effective sampler. The original consumer subsequently runs on the same static source.
+
+This is the certified-prefix construction of Theorem 46.6 with probability centers in place of representative target laws. The local metric approximation mechanism and the product-measure ingredient are reused; the operational correspondence is the actual finite-prime decoder. Taking the infimum proves (50.3). If $R_\mu=1$, handing any fixed tape over in one transition has error at most $1$, hence exactly $1$ by the lower bound.
+
+For the endpoint, apply the published exact-acquisition criteria to a candidate prepared family $\lambda$, keeping the original $\mu$ fixed. On a countable power-set carrier, attainment is equivalent to existence of a TV-continuous family $\lambda$ such that
+
+$$
+\operatorname{TV}(\lambda_y,\mu_y)\le R_\mu
+\qquad(y\in X).
+\tag{50.5}
+$$
+
+Necessity is Lemma 45.3 and sufficiency is Theorem 46.3. On an arbitrary measurable carrier, enumerate the actual labels as $x_i$ and set
+
+$$
+\sigma_\lambda=\sum_{i\ge1}2^{-i}\lambda_{x_i},
+\qquad
+\ell^\lambda_C(A)=\int_A\inf_{y\in C}
+                   \frac{d\lambda_y}{d\sigma_\lambda}\,d\sigma_\lambda.
+\tag{50.6}
+$$
+
+The necessary and sufficient additional condition, together with (50.5), is
+
+$$
+\ell^\lambda_{C_m(x)}(\Theta)\longrightarrow1
+\qquad(x\in X).
+\tag{50.7}
+$$
+
+This is precisely Theorem 46.4 applied to $\lambda$. Its dominating measure is on tapes, never a sampled law on $X$. Countability makes the density infima measurable and their versions immaterial as measures. Continuity alone cannot replace (50.7). These reused criteria quantify over one jointly compatible law family; independent choices of optimal centers do not discharge them. At $R_\mu=0$, Theorem 46.6 gives the existing continuity characterization, with exactness on countable power-set carriers and the existing general-carrier exception of Proposition 46.5.
+
+The order $\sup_x\inf_m$ in (50.1) is essential. For a concrete comparison on the original source, use the countable power-set carrier $\mathbb N_{>0}$, an always-unknown consumer, and prescribe
+
+$$
+\mu_y=\delta_{j(y)},\qquad
+j(y)=\min\{i:p_i\nmid N(y)\}.
+\tag{50.8}
+$$
+
+Every actual integer $N(y)$ has finite prime support, so $j(y)$ is finite. Query until the first negative answer and hand over that index, using a unit seed. This is exact lawful acquisition; a prefix through $j(y)$ fixes its target law, so $R_\mu=0$. For every fixed $m$, however, the all-positive depth-$m$ cylinder contains laws $\delta_j$ for every $j>m$: Theorem 35.2 realizes the first $j-1$ positive answers and the $j$-th negative answer at an actual source. Any probability on the countable carrier has singleton masses tending to zero along these indices, so that cylinder has radius $1$. Consequently
+
+$$
+\sup_x\inf_m\rho_\mu(C_m(x))=0,
+\qquad
+\inf_m\sup_x\rho_\mu(C_m(x))=1.
+\tag{50.9}
+$$
+
+Sourcewise finite stopping gives no common finite horizon. Likewise $\rho_\mu(X)$ is only a constant-reference upper bound for $I(\mu)$; Proposition 49.1 already separates them. The global design values of Sections 47--49 vary the targets and do not determine (50.3) for a prescribed family. $\square$
+

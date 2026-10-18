@@ -1,0 +1,27 @@
+**Corollary 13.1 (extensive selectable menus at the original optimum).**
+Choose, for each $D$, any attaining original preparation and reader
+with complete alphabet $M_1(D)$. At each $D$ evaluate its menus on the
+uniform $s$-ary actual slice, with expectation denoted $\mathbb E_s$.
+Then, for $s=2$ and $s=3$,
+
+$$
+\liminf_{D\to\infty}2^{-D}\mathbb E_s b_{E(t_X)}
+\ge\frac12-\frac{\lambda}{\log_2s}
+>\frac12-\frac{3}{16\log_2s}.
+\tag{RRN.51}
+$$
+
+The same lower bound holds with the expectation replaced by the maximum
+over attained slice names. In particular the mean binary-menu lower
+limit exceeds $5/16$, and the mean ternary-menu lower limit exceeds
+$3/8$.
+
+Proof. Substitute $m=M_1(D)$ in (RRN.45), divide by $2^D$ and use
+$N/2^D=1/2$ and the credited existence of
+$\lambda=\lim_D2^{-D}\log_2M_1(D)$. The strict upper
+$\lambda<3/16$ is [D3, Theorem 4.1][D3Menu]. For the last ternary
+comparison, $3>2^{3/2}$ implies $\log_2 3>3/2$. A maximum is at
+least its mean. This is a necessary address-selection resource for
+optimal original codes; it is not a new lower endpoint for $\lambda$.
+$\square$
+

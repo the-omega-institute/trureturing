@@ -1,0 +1,25 @@
+**Open Question 11.4 (Whole-domain finite attainment versus all-dimension separation).** On exactly the full domain (1.5), define
+
+$$
+C_N=\sup_{\theta\in\Theta_N}d(P_\theta),\qquad
+U_{N,r}=\max_{\theta\in\Theta_N}D_r(P_\theta),\qquad N,r\ge1.
+\tag{11.5}
+$$
+
+[Universal, Theorem 6.2][U] supplies attainment of $C_N$ and
+
+$$
+C_N=\inf_{r\ge1}U_{N,r}\le c_\star.
+\tag{11.6}
+$$
+
+The original alternative is still whether some finite $N$ and some $\theta\in\Theta_N$ satisfy $d(P_\theta)=c_\star$, or whether $C_N<c_\star$ for every finite $N$. The latter is equivalent, by that supplied theorem, to
+
+$$
+\forall N\ge1\ \exists r,m\ge1:\qquad
+U_{N,r}<\frac{\kappa_m}{m+1}.
+\tag{11.7}
+$$
+
+The example's irreducibility, positive stationary masses, entrywise $M_1^2=0$, reset structure and strict parameter inequalities are not restrictions on (11.5). A nonattaining law of minimal dimension three neither excludes other laws of that dimension nor supplies the separation pairs in (11.7). The rank-family minima in (2.6) are necessary relaxations, with no converse realization theorem. The construction gives no finite attaining producer, no arbitrary-$N$ exclusion, no common optimizer representation, and no conclusion about empirical learning performance.
+

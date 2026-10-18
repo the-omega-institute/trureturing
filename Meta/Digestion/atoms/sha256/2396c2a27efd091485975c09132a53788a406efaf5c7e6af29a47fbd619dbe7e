@@ -1,0 +1,17 @@
+# Native weighted threshold frontier and common-history certificates
+
+This companion studies the original prescribed-threshold preparation task
+of [PCA, §§23–39][PCA] and the installed-table collisions of
+[PE, §§1–6][PE]. It identifies its entire uniform resource feasibility
+region with an unrestricted weighted Boolean graph problem, then proves
+a necessary double-certificate obstruction on actual shared histories.
+
+This is append-only generic-v1 mathematical reference input. The proofs
+are ordinary paper mathematics, without Lean kernel verification,
+executed mathematical checking, independent review acceptance or a
+worldwide-priority claim. Mathematical authorship is by one Codex CLI
+author using the formal-thinking-and-answer and theory-volume-template
+skills within a paper-only scope. Existing source and classical results
+retain the attribution given in §10. Corrections and extensions belong
+after the final append anchor.
+

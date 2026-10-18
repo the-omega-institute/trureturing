@@ -1,0 +1,118 @@
+**Proposition 340.2 (Identity of the old unequal wedge).**
+The attained wedge of
+[Unequal Two-tail Frontier, 5.1](FIB_NATIVE_UNEQUAL_TWO_TAIL_ATTAINED_FRONTIER.md)
+is exactly the parameterized family of 324.1 on its own allowed
+head/tail domain. Set
+
+$$
+t=\frac{u+v}{2},\quad\delta=\frac{u-v}{2},\quad
+u=t+\delta,\quad v=t-\delta.
+\tag{340.4}
+$$
+
+Then $75u\le181v$ is equivalent to $\delta\le53t/128$,
+and its optimal cap $5\tau+11(u+v)/128$ is
+$5\tau+11t/64$.
+
+**Proof.** Substitute (340.4) into the wedge inequality to get
+$256\delta\le106t$. In its notation,
+
+$$
+x=\frac{1536}{53}(u-v),\quad y=12(u+v)-x,\quad
+W=x+y=24t,\quad\frac{53x}{3072}=\delta.
+\tag{340.5}
+$$
+
+Its law $xQ+yP^\star$ uses the relabeling of the same
+$53/3072$ exhaustion stock from label nine to label eight.
+Thus it is exactly the whole-law conserved-cell transfer of
+325–327, with transfer fraction $x/W$ when $W>0$.
+At $W=0$ both prescriptions have zero endpoint weight.
+The native condition $a_{10}\le5\tau$ is contained in the
+$a_{10}\le5\tau+11t/64$ condition of 324.1.
+Consequently this wedge is an existing attained family, with no
+additional attainment region supplied by the change of coordinates.
+Its complementary upper bounds and separate compact-minimum
+statements retain their native scopes. $\square$
+
+The quantum common-channel obstruction in
+[Complete-continuation Distinguishability Gap, 3–6](FIB_NATIVE_COMPLETE_CONTINUATION_DISTINGUISHABILITY_GAP.md)
+concerns coherent cq outputs and one common CPTP map in its fixed
+experiment. There is no identified map of its source, observations,
+allowed operations and loss into (331.1). It supplies no classical
+$N/O$ conclusion here. The existing unequal-tail laws have internal
+gap $a_3-a_4=3\tau>0$ and therefore do not specialize to the
+flat-nine region 333.1 at positive $\tau$. The constructions
+333.1 and 339.1 therefore concern distinct parameterized regions.
+
+The mathematical increment in the first region is its feasibility
+for $1/2<t\le51/100$ with all the displayed heads and entire tails;
+272.2 supplies its matching lower for every $t$, and 272.3 with
+333.2 supplies its entire $t=1/2$ edge. The supporting score 334
+coincides with that lower on the flat face. The second region pairs
+the complete affine 253 necessity with one nineteen-schedule law
+attaining it on the whole head interval (339.1). The 117 folding,
+zero-width branch, generic finite support maximization, common
+randomization, affine interpolation and original source/closed-cap
+correspondence retain their prior attribution. These are bounded
+comparisons of explicit domains and stated generators, without an
+external-priority or whole-library nonderivability assertion.
+
+**Reference frame 340.3 (Whole procedures and scalar expectations).**
+David Blackwell, *Comparison of Experiments*, Proceedings of the
+Second Berkeley Symposium on Mathematical Statistics and Probability
+(1951), pp. 93–102, [primary text](https://digitalassets.lib.berkeley.edu/math/ucb/text/math_s2_article-08.pdf),
+§§2–3 and Theorem 2, compares finite families of Borel probability
+measures through whole attainable finite-dimensional loss vectors
+and supporting hyperplanes. Its converse in that paper is for
+dichotomies. It does not identify an increasing stopped-query class
+with a larger catalog.
+
+Jędrzej Kaniewski, Troy Lee and Ronald de Wolf,
+*Query complexity in expectation*,
+[arXiv:1411.7280v1](https://arxiv.org/abs/1411.7280v1),
+Definitions 6 and 8 and Theorem 9, characterize nonnegative scalar
+expectations by nonnegative literal degree. Their cost is the maximum
+supported root-to-leaf path length. In the reverse direction of
+Theorem 9 the procedure samples a coefficient with probability
+$\alpha/M$ and outputs $M$ times its literal indicator. This scalar
+rescaling does not provide normalized probability-vector outputs or
+equal counterfactual schedule masses. Here those properties follow
+instead from 332.1 and (337.4), and actual stopping and original
+transport follow separately from 331.2, 333.1 and 339.1.
+
+All constructed outputs are finite atomic laws on the actual marks.
+Their finite support has output mass one and mass zero under each
+unchanged original nonatomic target. Consequently their TV distance
+from $\mu_x^{\rm orig}$ is one. Only their selected marked-target
+accuracy has been asserted.
+
+**Open comparison 340.4 (The unchanged universal obligation).**
+For every $L\ge3$ and every full unit-$O$ score $y\ge0$,
+the unrestricted positive alternative still requires one unrestricted
+full $V\ge0$ and one $\theta\in[0,1]$ jointly satisfying
+
+$$
+\Delta_N(V)+\theta\le1,\qquad
+\sigma_{H_L}(Q(y)-Q(V))\le\theta.
+\tag{340.6}
+$$
+
+The residual is signed, and nonzero zero-cost $V$ remains admissible
+at $\theta=1$. The strict alternative requires the same actual
+$(b,e)\in H_N$, one complete feasible $N$ allocation of mass
+$M\ge1$, and a full unit-$O$ score with $F_{Qy}(b,e)>M$,
+together with its original $N$ attainer and a uniform lower bound
+against all original arbitrary-address, full-carrier $O$ competitors.
+Neither regional common attainer supplies this strict alternative,
+and (333.7) addresses only its stated profiles, not (340.6).
+
+The legal earlier-label example remains $(r,g)=(19,436)$,
+$F_{19}=4181$, $N=1822917$, with replies $0100$.
+$N(3,4;1,0,0,0)$ outputs the earlier unqueried label one;
+its endpoint replacement outputs zero, changes mass one and has
+counting defect two. Output-label pruning and a free repair therefore
+cannot be inferred. No fixed law, anchor ray, graph, restricted
+support, exact-law preservation or separate cell budget replaces the
+quantifiers of (340.6) or its strict alternative.
+

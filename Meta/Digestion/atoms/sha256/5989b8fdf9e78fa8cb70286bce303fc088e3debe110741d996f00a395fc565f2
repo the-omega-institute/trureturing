@@ -1,0 +1,11 @@
+**命题 11.2（rational source examples and the older exact interface）。** Finite rational descriptions do not remove the preceding autonomous-space obstruction. For example, the single $\alpha$ leaf at $(2e_1,e_2)$ satisfies
+$L=2,H=2,d_0=1,\Delta=4$, has reads $(2e_1,e_2,-2e_3)$ and
+$q_j=2^{F_{j-1}}$ for $j\ge1$. The single $\beta$ leaf at
+$(4e_1/3,3e_2/4)$ satisfies $L=2,H=1,d_0=1,\Delta=1$, has reads
+$(3e_2/4,-e_3,3e_1/4)$ and
+$q_j=(3/4)^{F_{j-1}}$. Both have exact finite rational histories.
+
+**证明。** Direct leaf/substitution evaluation gives the reads and determinants, and Lemma 2.1 gives both norm sequences. The first is unbounded and the second is positive and tends to zero. Theorem 11.1 applies.
+
+PCR §65.2's finite exact-rational description theorem remains valid at its original indexed-query scope: exact finite rational arithmetic and Fibonacci powers produce each finite answer in all ten regimes, with actual growing workspace, query and output widths. An autonomous version may also retain an unbounded internal position and growing arithmetic. Neither is a bounded-space theorem. Rational inputs have arbitrary numerator/denominator lengths, not bounded by $N$ and $E$; raw rational entry pays those lengths. Restricted computable-program descriptions likewise pay the actual program and their running space. A symbolic power expression is not a finite-coordinate output buffer of bounded width.
+

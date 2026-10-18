@@ -1,0 +1,102 @@
+**Definition 25.7 (The adjacent-window comparison).**
+Four consecutive positions give two overlapping length-three windows,
+not two disjoint complete windows. Their legal modes are
+
+$$
+B_4=\{\varnothing,1,2,3,4,13,14,24\}.
+$$
+
+The occupancy semigroup records replica number $m$ and four totals
+$c_i$, subject to $c_i\ge0$ and $c_i+c_{i+1}\le m$.
+[Correlation, Theorems 26.4, 26.6 and 26.9][C25] supply, respectively,
+feasible sectors, the Hibi relation kernel, and one zero ray per sector
+for its explicitly declared exchange Hamiltonian. A count of these
+sectors is not a count of ordered replica histories. In particular,
+$L$ actual disjoint three-position windows with their inter-window guard
+have $F_{3L+2}$ legal histories, not $5^L$.
+
+**Proof input 25.8 (Four-position counting data for the elliptic comparison).**
+Write $b=c_2,c=c_3$. Correlation Theorem 26.11 already identifies sector counts with its
+zero-space dimension. For the four-position complex constructed below,
+the required specialization at replica degree $m$ is
+
+$$
+\begin{aligned}
+N_4(m)
+&=\sum_{\substack{b,c\ge0\\b+c\le m}}(m-b+1)(m-c+1)\\
+&=\frac{(m+1)(m+2)(5m^2+15m+12)}{24}.
+\end{aligned}
+\tag{25.12}
+$$
+
+Its Hilbert series is
+
+$$
+\sum_{m\ge0}N_4(m)t^m
+=\frac{1+3t+t^2}{(1-t)^5}
+=\frac{1-5t^2+5t^3-t^5}{(1-t)^8}.
+\tag{25.13}
+$$
+
+Five quadrics in its relation ideal are
+
+$$
+\begin{aligned}
+f_1&=z_1z_3-z_0z_{13},&f_2&=z_1z_4-z_0z_{14},\\
+f_3&=z_2z_4-z_0z_{24},&f_4&=z_2z_{14}-z_1z_{24},\\
+f_5&=z_4z_{13}-z_3z_{14}.
+\end{aligned}
+\tag{25.14}
+$$
+
+The relations
+
+$$
+z_4f_1-z_3f_2+z_0f_5=0,\qquad
+z_2f_2-z_1f_3+z_0f_4=0
+\tag{25.15}
+$$
+
+are two explicit syzygies. The alternating numerator (25.13), by itself,
+does not construct a free resolution or prove exactness. Chapter 26
+supplies the actual maps and exactness, thereby resolving that specific
+missing-map question; (25.13) is not being presented as their proof.
+
+Proof. Once $b,c$ are fixed with $b+c\le m$, the choices of $c_1$ and
+$c_4$ are independently $0\le c_1\le m-b$ and $0\le c_4\le m-c$.
+The cited feasibility theorem realizes every such sector. Put $n=m+1$
+and $u=n-b$. Summing first over $c=0,\ldots,u-1$ gives
+
+$$
+\sum_{c=0}^{u-1}u(n-c)
+=\frac12u^2(2n+1-u),
+$$
+
+so (25.12) is
+$\frac12\sum_{u=1}^{m+1}u^2(2m+3-u)$.
+Use $\sum_{u=1}^nu^2=n(n+1)(2n+1)/6$ and
+$\sum_{u=1}^nu^3=n^2(n+1)^2/4$ and simplify to get the displayed
+polynomial. Equivalently it equals
+$\binom{m+4}{4}+3\binom{m+3}{4}+\binom{m+2}{4}$,
+with negative spaces zero. Summing these binomial series gives the first
+fraction in (25.13); multiplying its numerator by $(1-t)^3$ gives the
+second. Expanding each side of (25.15) cancels all its monomials.
+These computations exhibit counts and some dependencies, without
+asserting that no other homology survives. $\square$
+
+The comparison uses the same quotient at each stage: the finite
+Bargmann orthogonal representative, the analytic harmonic representative
+and the topological Euler characteristic. The first two depend on
+metrics; the last retains only a signed dimension. The character twist
+adds equivariance only for the compact torus and invariant metrics
+specified in Theorem 25.4. The four-position construction below adds
+relations between relations, which the one-relation quotient cannot supply.
+
+[T25]: AURIC_FIB_ATOM_CIRCULATION_CONTROL_KL_ACTION_AND_TORIC_RELATIONS.md
+[C25]: AURIC_FIB_ATOM_PYRAMID_CORRELATION_AND_NATIVE_CONTINUATION.md
+[AS25]: https://celebratio.org/Atiyah_MF/article/40/
+[FR25]: https://arxiv.org/html/2107.03557
+[PC25]: https://stacks.math.columbia.edu/tag/01XT
+[GA25]: https://www.numdam.org/item/AIF_1956__6__1_0.pdf
+[EM25]: https://arxiv.org/abs/2403.19715
+

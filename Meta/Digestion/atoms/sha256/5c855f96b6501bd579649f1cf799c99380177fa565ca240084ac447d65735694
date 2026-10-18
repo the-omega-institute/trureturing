@@ -1,0 +1,14 @@
+**定义 31.1（指定两级域与协调选择）。** 取原维数 $q\ge6$，标签为 $x,y,A=(a_1,\ldots,a_l)$，$l=q-2$。第一层新增 $z$，维数 $m=q+1$。令 $\mathcal W$ 为原完整供应 $(x,[y,A])$、$(y,[x,A])$ 的全部邻居圆序并，其大小为 $2q-4$。第一层因子取各 $W\in\mathcal W$ 的完整零层供应 $(z,[W])$ 及
+
+$$
+g=(x,A,z,y),\qquad \mathcal T_g=\bigl(ac(bc)^{m-3}\bigr)^2.
+$$
+
+第二层新增 $0$，维数 $n=q+2$。每个完整供应 $(z,[W])$ 选择 $\mathcal T_g$ 在该供应邻域内的唯一私有 $b$ 接触为影子。下层 $\mathcal T_g$ 使用反向代表 $ga=\operatorname{rev}g$，插零后实际代表为
+
+$$
+v=(y,z,\operatorname{rev}A,0,x).
+$$
+
+其余操作为定义 20.1 的完整星提升。记中心开关 $\mathcal T_v$ 的旧切口按实际字顺序为 $(L_i,R_i)$，$0\le i<2q$；$L_i$ 是旧 $a/b$ 边的起始元组，$R_i$ 是其终止元组。
+

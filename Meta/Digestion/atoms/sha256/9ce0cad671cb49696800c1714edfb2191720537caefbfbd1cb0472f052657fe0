@@ -1,0 +1,25 @@
+**定义 231.1（One fourteen-table law）。** For $0<t\le1/2$, give each
+following stopped table mass $tk/9$, where $k$ is its last column.
+Give $E_0$ mass $1-2t$.
+
+| Schedule | Labels $0,10,11$ | $k$ |
+| --- | --- | ---: |
+| $1,2$ | $(0,2,0)$ | 2 |
+| $1,2$ | $(0,2,7)$ | 1 |
+| $1,3$ | $(1,3,0)$ | 2 |
+| $1,4$ | $(1,4,0)$ | 1 |
+| $1,5$ | $(1,5,0)$ | 1 |
+| $2,3$ | $(0,3,0)$ | 2 |
+| $2,4$ | $(0,4,0)$ | 1 |
+| $2,5$ | $(2,5,0)$ | 1 |
+| $3,4$ | $(0,4,0)$ | 1 |
+| $3,4$ | $(0,4,6)$ | 1 |
+| $3,5$ | $(0,5,0)$ | 1 |
+| $4,5$ | $(0,5,0)$ | 1 |
+| $4,6$ | $(0,6,7)$ | 1 |
+| $5,6$ | $(0,6,7)$ | 2 |
+
+The integer sum is $18$, so the total mass is one, including at
+$t=1/2$. Each $N$ completion uses $(u,u,v,z)$ for the printed
+stopped outputs $(u,v,z)$, with exactly the same table-selection seed.
+

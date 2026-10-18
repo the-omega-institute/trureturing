@@ -1,0 +1,45 @@
+### 71.3 A unitary counterexample to the equal-magnitude step
+
+At \(\alpha=\beta=\pi/4\), the Appendix D argument immediately before
+(D11) infers \(v_{jk}=\pm i w_{jk}\) from its entrywise conditions.
+Consider instead
+
+\[
+V=\begin{pmatrix}
+1/\sqrt3&1/\sqrt3&1/\sqrt3\\
+1/\sqrt2&-1/\sqrt2&0\\
+1/\sqrt6&1/\sqrt6&-2/\sqrt6
+\end{pmatrix},\qquad
+R=\begin{pmatrix}1&0&0\\0&0&1\\0&1&0\end{pmatrix},\qquad W=iRV.
+\tag{71.5}
+\]
+
+Both \(V,W\) are unitary. Their entries are respectively real and
+imaginary, and column normalization of \(V\) gives, at every position,
+
+\[
+\operatorname{Re}(\bar v_{jk}w_{jk})=0,\qquad
+|v_{jk}|^2+|w_{jk}|^2=2/3.
+\tag{71.6}
+\]
+
+But \(v_{23}=0\), whereas \(w_{23}=-2i/\sqrt6\); thus neither sign
+in \(v_{23}=\pm i w_{23}\) is possible. Global unitarity does not
+repair the stated inference.
+
+This example gives a genuine six-dimensional flat unitary:
+
+\[
+H=\frac12\begin{pmatrix}V+W&V-W\\V-W&V+W\end{pmatrix}
+=(F_2/\sqrt2\otimes I)\operatorname{diag}(V,W)
+ (F_2/\sqrt2\otimes I).
+\tag{71.7}
+\]
+
+Unitarity follows from the factorization; (71.6) makes each squared entry
+modulus \(1/6\). Linear independence of \(V,W\) gives Schmidt rank two.
+This uses precisely \(\alpha=\beta=\pi/4,\gamma=0\) in the source's
+normal form. Its auxiliary matrices may have zero entries, but \(H\)
+has none. This is a counterexample to an intermediate implication, not
+to the claimed quartet exclusion.
+

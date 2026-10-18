@@ -1,0 +1,14 @@
+**Assumption 6.1 (Positive-mass irreducible component and flag block).** Consider a closed irreducible component of an actual finite producer that has positive stationary mass. Normalize its stationary row to $\pi$, restrict its marked matrices to this component, and denote its stationary visible law by $P_c$. All component states then have $\pi_i>0$. Let $d$ be the period of its hidden transition matrix $A_c$.
+
+Assume there is an integer $n\ge1$ with $\gcd(n,d)=1$ such that, for every target state $j$, there is a length-$n$ word $w_j$ of positive $P_c$ probability satisfying
+
+$$
+(M_{w_j}\mathbf1)_i>0
+\quad\Longrightarrow\quad
+(M_{w_j})_{ij}>0
+\qquad\text{for every component state }i.
+\tag{6.1}
+$$
+
+This says that every state capable of emitting $w_j$ can reach $j$ on that same word. It permits other endpoints and branching. It is precisely the flag-state condition for the block presentation with marked matrices $M_w$, as in [Travers, Definitions 7–8][TR]. The block transition matrix is $A_c^n$; the coprimality condition preserves its irreducibility and stationary row. This block presentation is a supplier construction; every final tail radius still counts original emitted bits.
+

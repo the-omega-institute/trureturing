@@ -1,0 +1,13 @@
+**Lemma 4.1 (primitive kernel from an adjugate).** Suppose $\det T_k=0$ identically and $\operatorname{rank}T_a=3$ for every real $a$. There is a primitive polynomial vector $K(k)$ of degree at most three such that
+
+$$
+T_kK(k)=0,\qquad K(a)\ne0\quad(a\in\mathbb R).
+\tag{4.1}
+$$
+
+Its value spans $\ker T_a$ at each real slope.
+
+**Proof.** Every entry of $\operatorname{adj}(T_k)$ is a three-by-three minor of an affine pencil, hence a polynomial of degree at most three. Cofactor expansion gives $T_k\operatorname{adj}(T_k)=(\det T_k)I=0$. At a rank-three real slope some three-by-three minor is nonzero. Therefore the adjugate has a nonzero polynomial column $v(k)$.
+
+The Euclidean algorithm in $\mathbb R[k]$, whose nonzero remainder degrees strictly decrease, gives a greatest common divisor $g$ of the nonzero entries of this column; zero entries impose no additional constraint. Divide every entry by $g$ to obtain a primitive nonzero $K$. From $gT_kK=0$ and the absence of zero divisors, $T_kK=0$. Division cannot increase its degree. If $K(a)=0$ at a real number $a$, the factor theorem makes $k-a$ a divisor of all four entries, contradicting primitivity. The kernel has dimension one at each real slope, so the nonzero $K(a)$ spans it. ∎
+

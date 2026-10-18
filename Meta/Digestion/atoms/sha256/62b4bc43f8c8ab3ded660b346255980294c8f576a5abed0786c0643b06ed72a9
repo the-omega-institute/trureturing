@@ -1,0 +1,33 @@
+**Theorem 5.2 (Nonzero-root kernel and image filtrations).** For Definition 2.1 fix $\lambda\in\Lambda$ and an integer $n\ge0$. Use the basis (4.5) and put $W_{\theta,\nu}=\operatorname{span}\{w_{\nu,j}^{\theta}:0\le j<m_\nu\}$. Then
+
+$$
+\begin{aligned}
+\ker(\mathcal E_\theta-\lambda I)^n
+&=\operatorname{span}\{w_{\lambda,j}^{\theta}:\max(m_\lambda-n,0)\le j<m_\lambda\},\\
+\operatorname{im}(\mathcal E_\theta-\lambda I)^n
+&=\mathcal N\oplus\bigoplus_{\nu\in\Lambda\setminus\{\lambda\}}W_{\theta,\nu}
+\oplus\operatorname{span}\{w_{\lambda,j}^{\theta}:n\le j<m_\lambda\},\\
+\dim\ker(\mathcal E_\theta-\lambda I)^n&=\min(n,m_\lambda),\\
+\operatorname{rank}(\mathcal E_\theta-\lambda I)^n&=d^2-\min(n,m_\lambda).
+\end{aligned}
+\tag{5.2}
+$$
+
+For a complex number $\lambda$ outside $\{0\}\cup\Lambda$, all these powers are invertible, with kernel zero and image $M_d(\mathbb C)$.
+
+Proof. Since $\lambda\ne0$, the restriction $T-\lambda I$ is invertible with inverse
+
+$$
+-\sum_{j=0}^{H-1}\frac{T^j}{\lambda^{j+1}}.
+$$
+
+Indeed multiplying the latter sum by $T-\lambda I$ telescopes to $I-T^H/\lambda^H=I$ on either side. On $W_{\theta,\nu}$ with $\nu\ne\lambda$, the operator is $(\nu-\lambda)I+N_\nu$ with $N_\nu^{m_\nu}=0$, and its inverse is
+
+$$
+\sum_{j=0}^{m_\nu-1}\frac{(-1)^jN_\nu^j}{(\nu-\lambda)^{j+1}}.
+$$
+
+Multiplication gives $I$ by the same finite geometric identity. Thus those summands contribute their whole spaces to the image and nothing to the kernel for every power.
+
+On $W_{\theta,\lambda}$, the $n$th power sends $w_{\lambda,j}^{\theta}$ to $w_{\lambda,j+n}^{\theta}$ if $j+n<m_\lambda$, and to zero otherwise. The surviving vectors are independent. The killed vectors and the surviving image vectors are exactly the two spans in (5.2). Their dimensions give the formulas. If $\lambda$ is outside the spectrum, the same inverse argument applies to every summand, proving the last assertion. $\square$
+

@@ -1,0 +1,26 @@
+**Definition 17.1 (boundary rejection criteria).** A lowering of §§11–16
+fails its specification if any of the following occurs: a self copy/cons/
+tail reads a newly written destination as its source; the bank's measured
+base is taken after construction; a dry length includes F or omits sep;
+its parity flips before the descriptor seal; an input bit is tested through
+a latch overwritten before WR; a scratch import moves its own source head;
+a length routine reads and appends on one ordinary head; a channel uses
+a staged descriptor's wire length as its payload length; a bootstrap uses
+the capture controller before installing it; a replay of activation looks
+up only the old source Ready row; a zero wire target simulates one row;
+a meter receipt restores an old rather than the just-updated read head;
+a loader installs archival framing as though it were native code; a
+bootstrap enables its partial table before DONE; an unretained optional
+output choice changes the history; or a copied destination becomes
+available before its final seal. Import also fails its representation if
+the initial port-37 F becomes a field, a legitimate empty field is skipped,
+the final head-table field loses its delimiter, the old-frame terminal 0
+changes another field's index, or any helper moves head 37 while it is
+the import source. The old
+falsifiers in Definition 9.1 also apply.
+
+These conditions distinguish executable realization from mathematical
+encoding. The declared bounded bootstrap permission is an instrument
+premise; a proof for the old unextended menu must not silently use it.
+Its absence cannot be repaired by a larger interpreter or more replay.
+

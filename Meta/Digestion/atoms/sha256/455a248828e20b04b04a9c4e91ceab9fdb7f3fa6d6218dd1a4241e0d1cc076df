@@ -1,0 +1,18 @@
+**Definition 2.2 (Compatible fibers and finite surgery).** Let $Y=X_{C^c}$
+and $\mu_C=P\circ Y^{-1}$. Use a regular conditional mass
+$p_C(w;y)=P(X_C=w\mid Y=y)$ on the finite set $B_L$.
+Exterior records are taken in the projection of $\mathsf X$ to $C^c$.
+Write $wy$ for the configuration obtained by filling $C$ with $w$, and
+
+$$
+K_C(w)=\{y:wy\in\mathsf X\},\qquad k(w)=\sum_{t=1}^Lw_t.
+$$
+
+Internal legality is already imposed by $w\in B_L$; compatibility asks
+exactly that $y_{a-1}w_1=w_Ly_{b+1}=0$. The zero word is always compatible.
+Let $Z_Cx=0^Lx_{C^c}$. For a fixed $w$, use the total legal map
+$R_{C,w}x=wx_{C^c}$ when $x_{C^c}\in K_C(w)$, and $R_{C,w}x=x$ otherwise.
+The identity on incompatible exteriors avoids assigning an illegal image.
+Conditional masses on a $\mu_C$-null set may be chosen arbitrarily; all
+support assertions below concern a specified conull exterior set.
+

@@ -1,0 +1,47 @@
+**Definition 4.1 (contact dictionary and charts).** For $r=1+x^2$ write $(u,v)=(U/r,V/r)$. The chart numerator pairs at bases $0,\pi,3\pi/2$ are
+
+$$
+(U,V)=(1-x^2,2x),\quad(-1+x^2,-2x),\quad(2x,-1+x^2),
+$$
+
+respectively; $\phi=\mathrm{base}+2\arctan x$. The seven indexed contacts have
+
+| $i$ | endpoint $\eta_i$ | height sign $\epsilon_i$ | report sign $\sigma_i$ | base |
+| --- | --- | --- | --- | --- |
+| 0 | 0 | $+1$ | $+1$ | $0$ |
+| 1 | 0 | $+1$ | $-1$ | $\pi$ |
+| 2 | 0 | $-1$ | $-1$ | $\pi$ |
+| 3 | 0 | $+1$ | $+1$ | $0$ |
+| 4 | 1 | $+1$ | $+1$ | $0$ |
+| 5 | 1 | $-1$ | $-1$ | $\pi$ |
+| 6 | 1 | $-1$ | $+1$ | $3\pi/2$ |
+
+Let $Z=U/\sqrt\alpha$, $W=V/\sqrt\beta$ and define the polynomials
+
+$$
+\begin{aligned}
+D_c&=h_0^2\delta r^2+b^2Z^2+d^2W^2,\\
+N_c&=h_1^2h_2^2\delta r^2+a^2h_2^2Z^2+c^2h_1^2W^2,\\
+L_c&=G_{00}r^2+G_{11}Z^2+G_{22}W^2+2G_{01}rZ+2G_{02}rW+2G_{12}ZW,\\
+F_c&=-\frac{11}{64}(d/h_2)^2W^2-\frac{2\Delta_{12}db}{h_1h_2}ZW.
+\end{aligned}
+$$
+
+For pure and saturated sheets use respectively
+
+$$
+\begin{array}{c|c|c|c|c}
+\eta&\Gamma_{\rm num}&d_\eta&H_{\rm num}&W_{\rm num}\\\hline
+0&(r^2,rU,rV,U^2,UV,0,0,0)&r^2&L_c&rU\\
+1&(D_cr^2,D_crU,D_crV,D_cU^2,D_cUV,N_cr^2,N_cU^2,N_cUV)&D_cr^2&D_cL_c+1000N_cF_c&D_crU
+\end{array}
+$$
+
+Thus $\Gamma_\eta=\Gamma_{\rm num}/d_\eta$ and $H_\eta=H_{\rm num}/d_\eta$. Every clearing denominator is positive, as $r>0$ and $D_c>0$. For each indicated contact put
+
+$$
+P_i(x)=Y\cdot\Gamma_{{\rm num},i}(x)-\epsilon_iH_{{\rm num},i}(x)-\lambda\sigma_iW_{{\rm num},i}(x).
+$$
+
+A prime denotes ordinary formal polynomial differentiation in $x$, including all coefficient dependence when other derivatives are taken.
+

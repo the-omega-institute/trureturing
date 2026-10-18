@@ -1,0 +1,38 @@
+**Scope 38.1 (the unchanged native contract).** Fix five distinct positive
+positions
+
+$$
+A = {s₁ < s₂ < s₃ < s₄ < s₅},   cᵢ = sᵢ + 4,   W_A = ∑ᵢ cᵢ,   k = 3,   r ≥ 0.
+$$
+
+A competitor is any Convention 23.2 preparer for the original prescribed
+code on the whole unbounded one-image fibre. It is a finite stationary graph
+of fixed absolute words with all four native replies installed, a common
+running start, sourcewise termination, the original complete entries and
+reader, and no restriction on order, read-once behaviour, acyclicity, source
+shape, repeated words, shared successors or unused states. Every installed
+running or latch state and every invocation is charged, including constants,
+absence, roots and repeats. Assume only the simultaneous execution caps
+
+$$
+p_P ≤ 6,   ℓ_P ≤ 3 + W_A.   (PCA.93)
+$$
+
+The reader, handoff, all complete rows, equality and disequality classes,
+strict-prefix guards, services and separately priced resources are exactly
+those of §§1–4 and 23. The finite cube below is a lower-bound family only.
+
+For a cube prefix before an effective selected invocation, let S be the set
+of selected coordinates already exposed, let h be the number of their one
+replies, and put d = |S|. Call the prefix live when both threshold values
+remain possible. For n = 5 and k = 3 this is
+
+$$
+h ≤ 2,   d − h ≤ 2.   (PCA.94)
+$$
+
+A state carrying the literal RLR can be followed on the cube through its
+constant beta edge; whenever a state is called selected below, this common
+edge has already been followed. Thus a possible profile call is still
+charged and cannot create a free state identification.
+

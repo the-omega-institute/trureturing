@@ -1,0 +1,28 @@
+**推论 68.3（One forced-root full INITIAL consumer）。** Take any two tables $F_0,F_1:\{0,m\}\times[0,h)\to Y$ under (68.1), and enlarge the label set by distinct fresh $R,C$ outside both images. Define the full INITIAL target $f^*$, with an arbitrary independent initial-bottom label, by
+
+$$
+f^*(v,-j,s)=
+\begin{cases}
+R,&s\ge h,\\
+F_v(j,s),&s<h,\ j\in\{0,m\},\\
+C,&s<h,\ j\notin\{0,m\}.
+\end{cases}
+\tag{68.8}
+$$
+
+The pair law is consumed with these very tables, and the exact full-source fees are
+
+$$
+C_{\rm ad}(f^*)=1+\max\{\Delta_{\rm ad}(0),\Delta_{\rm ad}(1)\},\qquad
+C_{\rm pre}(f^*)=1+\Gamma(\{0,1\}),
+\tag{68.9}
+$$
+
+including $+\infty$. If both tables are constant the actual worst fee is one; otherwise every finite fee in (68.9) is two. For every allowed $h\ge2$ this same consumer family includes $C_{\rm ad}=2$ and $C_{\rm pre}=+\infty$.
+
+**证明。** On either free-value fibre, at phase $j=0$ the actual INITIAL tails zero and $h$ have different labels $F_v(0,0)$ and fresh $R$. Thus free stopping is impossible. Any zero-containing root has a leading run $a\le m-1$. Both tails survive to its first zero because $h+a\le k-1$; their scalar and phase agree there, and the zero merges their complete records. The remaining internally safe bits and all later continuations produce identical archives and stops, contradicting the different INITIAL labels. This considers every such root, even with arbitrary later depth. The only remaining root is $1^m$, forced separately on both free-value fibres and hence also for one GLOBAL stream. The forcing is the supplied first-zero principle, not an assumption about an optimal controller.
+
+The forced root rejects exactly $s\ge h$, all labelled $R$, and that branch stops at fee one. Its successful zero-difference archives have only phases outside $\{0,m\}$ and label $C$, so they also stop there. Its positive archives are exactly (68.2) with the supplied $F_v$, and Theorem 68.2 gives their necessary and attainable additional prices. Initial bottom returns its own label freely. Thus only these positive archives constrain a suffix. Every full correct controller pays the root and obeys the local lower bounds. When all local prices are finite, an adaptive controller follows it with its own eligible $B_r$ on each live archive. When all live cuts exist and agree, a preset controller uses the one shared $B_r$ of (68.6); when no archives are live, it stops after the root. This proves (68.9). Constant pairs give fee one, while every nonconstant finite pair contains an actual source that emits both complete blocks. These are actual worst fees, not depths of unexecuted subtrees; stopped sources emit no later blocks.
+
+For the asserted GLOBAL obstruction choose five distinct labels $A,B,H,C,R$. Set $F_0(0,s)=A$ and $F_0(m,s)=B$ for all $s<h$. For $F_1$, keep those phase labels on $s<h-1$, and give both phases label $H$ at $s=h-1$. The first table has eligible cut zero. The second has eligible cut one, since its top band is common $H$ and each nonempty lower fibre has its phase label. Both tables are nonconstant, so uniqueness in Theorem 68.2 makes these their only cuts. They each have additional adaptive fee one, giving full fee two. Every GLOBAL controller is forced to use the all-one root, after which its next word would need leading runs zero and one simultaneously. The all-action proof excludes every delay, alternate root, early live stop and later repair, proving GLOBAL infinity. At $k=6,m=4$ the adaptive second words are $0001$ and $1000$. This is a consumption of the one pair law, with homogeneous zero siblings, rather than an inference flattening independently optimal sibling streams. ∎
+

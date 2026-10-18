@@ -1,0 +1,50 @@
+**Theorem 12.2 (every six-atom maximizer localizes quantitatively, with overshoot).** Let
+$d=k_e-\kappa$ with
+$$
+0<d<\min\{1,d_{\rm branch},p_*/(2A_w)\}.
+$$
+Every global maximizer of $J$ in the complete fractional class $\mathcal Q_6$ at target $\kappa$ has precisely one positive atom in each old rounding cell and no atom in the seventh cell. After matching to those cells it satisfies
+$$
+\begin{gathered}
+|p_i-p_i^e|\le A_wd,\quad p_i\ge p_*/2,\quad
+d_{\mathbb T}(\phi_i,\phi_i^e)\le A_qd,\quad
+0\le r_i\le A_q^2d^2,\\
+0\le K-\kappa\le Cd^2/\lambda_e .
+\end{gathered}
+$$
+If additionally $d<R_x/D_{\rm loc}$, the shortest angular lifts are unique and
+$\|x-x_e\|_2\le D_{\rm loc}d<R_x$.
+
+Proof. Compactness is Lemma 4.2, and Theorem 11.3 supplies a feasible six-atom comparator at this same target. For any law with the original eight moments the exact event identity is
+$$
+\begin{aligned}
+\mathcal E_e(\pi;\kappa)
+&:=J_e-\lambda_e(\kappa-k_e)-J(\pi)\\
+&=\lambda_e(K(\pi)-\kappa)+\int_XD_e\,d\pi .
+\end{aligned}
+$$
+For a feasible law both terms on the right are nonnegative, even though $\kappa<k_e$. Every maximizing six-law beats the comparator, so Theorems 10.2 and 11.3 give
+$$
+0\le\mathcal E_e\le Cd^2,\qquad
+\int\mathfrak d^2\,d\pi\le Cd^2/c_e,\qquad
+0\le K-\kappa\le Cd^2/\lambda_e .
+$$
+In particular overshoot has not been assumed absent.
+
+Assign every original fractional atom to a single nearest event pair for $\mathfrak d$, resolving ties by the lowest index. This is the Borel no-split assignment of QS Theorem 7.1. Let $q_i$ be its seven cell masses. The proof uses only the complete contact set and the gap/derivative inequalities, not a positive mass at every zero. Its moment estimate and the exact left inverse give
+$$
+\left\|\sum_{i=0}^6q_i\Gamma(z_i^e)-B\right\|_2
+ \le L\sqrt{C/c_e}\,d,\qquad
+|q_i-p_i^e|\le K_GL\sqrt{C/c_e}\,d=A_wd.
+$$
+For all six old cells, $q_i\ge p_*/2>0$. At most six supported original atoms can occupy at most six cells because none is split. There must therefore be exactly one positive atom in each old cell, none in cell $4$, and no unassigned atom. Proportional subdivisions or a redundant spare positive atom would exceed this bound. Zero padding contributes no atom. Thus $p_i=q_i$ after matching. The fact that $p_4^e=0$ is fully retained; QS's theorem requiring seven positive masses is not invoked.
+
+For the single atom in old cell $i$, its contribution to the gap estimate is
+$p_i(d_{\mathbb T}(\phi_i,\phi_i^e)^2+r_i)\le Cd^2/c_e$.
+Since $p_i\ge p_*/2$, the angular and inward bounds follow with $A_q$ as defined. If the additional coordinate-ball gate holds, $A_qd\le D_{\rm loc}d<R_x\le1/2$, so the shortest lifts are unambiguous. For $d\le1$ the squared coordinate norm is at most
+$$
+6(A_w^2d^2+A_q^2d^2+A_q^4d^4)
+ \le D_{\rm loc}^2d^2.
+$$
+This proves the uniform estimate for every maximizing law, starting from the global fractional class, rather than assuming a preassigned local chart or active contrast. $\square$
+

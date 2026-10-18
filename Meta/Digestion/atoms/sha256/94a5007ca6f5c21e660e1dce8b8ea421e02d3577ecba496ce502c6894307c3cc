@@ -1,0 +1,24 @@
+**Coefficient theorem.** Fix the records (5), denoting their full original-output Stinespring operator by R. Let U(s) be any smooth old rank-two comparison unitary, and V_A(s) any smooth original A-isometry, both based at the equality tuple. Consider the physical probability path
+
+\[
+ V_B(s)=U(s)\sqrt{I-sR^*R}\ \oplus\ \sqrt{s}\,R,
+ \qquad s\ge0.                                          \tag{6}
+\]
+
+The coefficient q in F=1/4+s²q+o(s²) depends only on the first old comparison tangent. Its minimum over all such tangents, including arbitrary finite A-environments, original output leakage, and phase gauges, is
+
+\[
+ q_{\min}(D)=\sum_{a=1}^3c(u_a)r_a^2,
+ \qquad c(u)={(1-u)(7u-1)^2\over256u^2}.                 \tag{7}
+\]
+
+The minimum is attained by a calibrated comparison tangent in A-environment dimension four. In particular
+
+\[
+ {35\over1024}|r|^2\le q_{\min}(D)\le {7\over144}|r|^2,
+ \qquad q_{\min}(D)\ge {35\over2048}
+       \|E-\tfrac12\operatorname{Tr}(E)I_2\|_F^2.        \tag{8}
+\]
+
+Both coefficient bounds are sharp over the classified disphenoids. If D has one row, then |r|²=‖D‖_F⁴/4, so q_min≥35‖D‖_F⁴/4096. A zero scalar component is not being assumed in (7).
+

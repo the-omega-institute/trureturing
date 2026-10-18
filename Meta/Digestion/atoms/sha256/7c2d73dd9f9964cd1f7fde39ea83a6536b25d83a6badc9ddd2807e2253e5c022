@@ -1,0 +1,27 @@
+### 动态未来层
+
+未来输出记录对 $\kappa$ 敏感，当且仅当存在合法输出词 $\omega$，使
+
+$$
+dM_\omega1\neq0.
+$$
+
+因此：
+
+$$
+\boxed{
+\begin{aligned}
+\text{当前边际可见性}
+&\Longleftrightarrow J_f\neq0,\\
+\text{联合关系可见性}
+&\Longleftrightarrow \Omega(f,g)\neq0,\\
+\text{未来可见性}
+&\Longleftrightarrow dM_\omega1\neq0\text{ 对某个 }\omega.
+\end{aligned}
+}
+$$
+
+这三者不能互相替代。
+
+---
+

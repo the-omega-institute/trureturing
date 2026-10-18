@@ -1,0 +1,65 @@
+**Theorem 8.2 (nine augmented columns and contrast overshoot).** Retain
+Assumptions 1.1 and 5.1 with $m=9$, and suppose the square matrix
+
+$$
+C=\begin{pmatrix}\Gamma(z_1)&\cdots&\Gamma(z_9)\\
+                         k(z_1)&\cdots&k(z_9)\end{pmatrix}
+\tag{QS.40}
+$$
+
+is invertible. Use $F=(\Gamma,k)$ in Theorem 7.1 and put
+
+$$
+\begin{gathered}
+K=\max_i\|\operatorname{row}_i(C^{-1})\|_2>0,\quad
+p_{\min}=\min_i p_i^*>0,\quad
+a_0=KL/\sqrt{c_0}>0,\quad b_0=K/\lambda>0,\\
+\Delta_9=\left[
+ \frac{2p_{\min}}{a_0+\sqrt{a_0^2+4b_0p_{\min}}}\right]^2>0.
+\end{gathered}
+\tag{QS.41}
+$$
+
+Every feasible law with fewer than nine supported original atoms has
+$\mathcal E\ge\Delta_9$. Every original competitor in (QS.5) with fewer
+than nine supported nonzero low labels, including every one with fewer
+than nine actual low labels, has the actual HALF-TV deficit
+
+$$
+\mathcal T(s,t)-T_{\rm actual}\ge\frac{\Delta_9}{2}
+ =\frac12\left[
+ \frac{2p_{\min}}{a_0+\sqrt{a_0^2+4b_0p_{\min}}}\right]^2.
+\tag{QS.42}
+$$
+
+Proof. Here $Cp^*=(B,r)$. The rounded vector differs from $(B,\bar k)$
+by norm at most $L\sqrt{\mathcal E/c_0}$. Thus
+
+$$
+C(q-p^*)=[Cq-(B,\bar k)]+(0,\ldots,0,\bar k-r).
+$$
+
+The exact overshoot estimate (QS.28) and the row norm bound give
+
+$$
+\|q-p^*\|_\infty
+ \le K\left[L\sqrt{\mathcal E/c_0}+\mathcal E/\lambda\right].
+\tag{QS.43}
+$$
+
+Fewer than nine original atoms leave a missing cell. Therefore
+$p_{\min}\le a_0\sqrt{\mathcal E}+b_0\mathcal E$. For
+$y=\sqrt{\mathcal E}\ge0$, the polynomial
+$b_0y^2+a_0y-p_{\min}$ is strictly increasing, with its unique positive
+zero
+
+$$
+y_*=\frac{-a_0+\sqrt{a_0^2+4b_0p_{\min}}}{2b_0}
+   =\frac{2p_{\min}}{a_0+\sqrt{a_0^2+4b_0p_{\min}}}.
+$$
+
+Hence $y\ge y_*$ and $\mathcal E\ge\Delta_9$. Theorem 3.1 and
+(QS.29) give (QS.42) for unchanged original acquisitions. Omitting the
+$\mathcal E/\lambda$ term would omit the achieved-contrast error in
+the ninth row and would not prove this bound. $\square$
+

@@ -1,0 +1,23 @@
+**Definition 23.1 (same-bridge fourth-order coefficients).** Reuse $p_0,p_1,p_2,V_1,V_2,V_{\rm t}$ of (3.1) and $p_3,V_3,V_{1t},\mathcal W_3$ of (22.8). On precisely that height bridge, with $u(h)=(1,h,h^2/2)$, define
+
+$$
+\begin{aligned}
+M_4&=\int_0^t H_u^4u(H_u)u(H_u)^{\mathsf T}\,du,\\
+p_4(t;\xi)&=h_t(r)\mathbb E_{0,r}^t\bigl[
+ 5D\gamma_{M_0}[M_4]+8D^2\gamma_{M_0}[M_1,M_3]
+ +\tfrac92D^2\gamma_{M_0}[M_2,M_2]\\
+&\hspace{31mm}+6D^3\gamma_{M_0}[M_1,M_1,M_2]
+ +\tfrac23D^4\gamma_{M_0}[M_1,M_1,M_1,M_1]\bigr],\\
+V_4&=j_0^{-1}\int_1^\infty p_4(t;\cdot)\,dt,\qquad
+V_{2t}=j_0^{-1}\int_1^\infty t p_2(t;\cdot)\,dt,\qquad
+V_{tt}=j_0^{-1}\int_1^\infty t^2p_0(t;\cdot)\,dt,\\
+\mathcal V_1&=\nu V_1,\qquad
+\mathcal V_2=\nu^2V_2+\lambda V_{\rm t},\qquad
+\mathcal V_3=\mathcal W_3,\\
+\mathcal V_4&=\nu^4V_4+\nu^2\lambda V_{2t}+\tfrac12\lambda^2V_{tt}.
+\end{aligned}
+\tag{23.1}
+$$
+
+Matrix derivatives keep the terminal phase fixed. Every integral uses the original $B$ clock, threshold $\lambda$ and factor $j_0^{-1}$.
+

@@ -1,0 +1,38 @@
+#### 28.6　协同反例：没有单端效应仍有责任
+
+取 $N=\{1,2\}$、$Y=\{0,1\}$，令
+
+$$
+\mu_\varnothing=\delta_0,
+\qquad
+\mu_{\{1\}}=\delta_0,
+\qquad
+\mu_{\{2\}}=\delta_0,
+\qquad
+\mu_{\{1,2\}}=\delta_1.
+$$
+
+单端干预都不改变结果：
+
+$$
+\mu_{\{1\}}-\mu_\varnothing=0,
+\qquad
+\mu_{\{2\}}-\mu_\varnothing=0.
+$$
+
+但 Möbius 项为
+
+$$
+\Gamma_{\{1,2\}}=\delta_1-\delta_0,
+$$
+
+因此
+
+$$
+\phi_1=\phi_2=\frac12(\delta_1-\delta_0).
+$$
+
+全体效应完全由二端协同产生。把「单端无效」解释成「两端都没有责任」会遗漏这份高阶关系。
+
+<a id="section-28-7"></a>
+

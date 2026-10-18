@@ -1,0 +1,48 @@
+**Lemma 3.4 (conditional endpoint forcing).** Suppose every $v_y\in\{a,b\}$. Define a probability row on the finite analysis pairs $(r,x)$ by
+
+$$
+\zeta(r,x)=\sum_{y:v_y=r}\tau_yA_{yx}.
+\tag{3.5}
+$$
+
+Its $x$ marginal is $\pi$. With
+
+$$
+\delta=4\varepsilon_p+6\varepsilon_\beta,
+$$
+
+one has
+
+$$
+\mathbb E_\zeta|f_x-F_r|\le\delta,
+\qquad
+\mathbb E_\zeta|t_x-T_r|\le\delta.
+\tag{3.6}
+$$
+
+The analysis mark $r$ is a predecessor emission, not a new source parameter or runtime posterior port.
+
+**Proof.** Treat either coordinate $q_x=f_x$ or $q_x=t_x$, writing its endpoint values as $q_a>q_b$. The corresponding suspended word has endpoint interval $[aq_a,bq_b]$ by (3.4), and its row probability is $v_y(Aq)_y$ by exact own generation.
+
+For $v_y=a$, the elementary absolute-value identity gives
+
+$$
+\sum_xA_{yx}|q_x-q_a|
+=q_a-(Aq)_y+2\sum_xA_{yx}(q_x-q_a)_+
+$$
+
+$$
+\le \frac{(aq_a-a(Aq)_y)_+}{a}
+       +2\sum_xA_{yx}\operatorname{dist}(q_x,[q_b,q_a]).
+$$
+
+For $v_y=b$ the analogous identity gives
+
+$$
+\sum_xA_{yx}|q_x-q_b|
+\le \frac{(b(Aq)_y-bq_b)_+}{b}
+       +2\sum_xA_{yx}\operatorname{dist}(q_x,[q_b,q_a]).
+$$
+
+Multiply by $\tau_y$ and sum over the two groups. The selected suspended outside-box violations have total at most $2\varepsilon_\beta$ by (3.2). Their divisors are at least $a=1/3$. The p violations have total at most $2\varepsilon_p$, since $\tau A=\pi$. Thus the sum is at most $6\varepsilon_\beta+4\varepsilon_p$. This proves both inequalities. No successor is presampled into the original decoder, and no configuration risk is replaced by a mean risk. $\square$
+

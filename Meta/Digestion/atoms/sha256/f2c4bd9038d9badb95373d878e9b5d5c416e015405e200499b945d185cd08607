@@ -1,0 +1,27 @@
+**Definition 3.1 (selected total-bijective tests).** Suppose all current
+seed domains are nonempty. Select any collection of tests (GDB.10)
+between distinct seeds such that the entire allowed relation on their
+current domains is the graph of a total bijection
+$\pi_{cb}:T_c\to T_b$. Neither a partial bijection on an unstated
+support nor a relation that becomes bijective only on unknown globally
+feasible assignments qualifies. Retain parallel tests separately.
+
+Form the undirected graph of selected tests. In each connected component
+$K$, choose a representative existing seed $r$ and a spanning tree.
+Compose the tree bijections, using inverses against edge orientations,
+to obtain $p_c:T_r\to T_c$ with $p_r=\mathrm{id}$. Define
+
+$$
+D_K=\{a\in T_r:
+ p_b(a)=\pi_{cb}(p_c(a))\text{ for every selected edge }c\to b
+                                     \text{ in }K\}.
+\tag{GDB.13}
+$$
+
+Tree edges satisfy this identically; the remaining conditions retain
+every cycle consistency requirement. Introduce one phase $a_K\in D_K$
+owned at the old actual port $o_r$. At every port formerly assigned to
+$c\in K$, substitute $B_v(p_c(a_K))$. Keep all original blocks,
+constants and weights, and impose actual compatibility on the resulting
+full vectors. Former nonrepresentative owner ports become ordinary ports.
+

@@ -1,0 +1,54 @@
+**Lemma 4.3 (Denominator, marked numerator and hitting identity).** For $V\ne\varnothing$, index coordinates by $V$ and define
+
+$$
+L_P=I-P_{VV},\qquad r_P(u)=P(u,t).
+\tag{4.4}
+$$
+
+If $L_P^{[x]}$ replaces column $x$ of $L_P$ by $r_P$, then
+
+$$
+\det L_P=\mathcal D_P>0,
+\qquad \det L_P^{[x]}=\mathcal A_P(x)>0,
+\qquad h_P(x)=\frac{\mathcal A_P(x)}{\mathcal D_P}
+\quad(x\in V).
+\tag{4.5}
+$$
+
+The corresponding identities hold for $Q$. These are the positive directed-forest and marked-column identities for this boundary problem; their determinant methods are classical.
+
+Proof. First, every $u\in V$ has a path to $t$ which stays outside $\mathcal Z$. Choose for each $u$ the first edge of a shortest such path. Distances to $t$ strictly decrease along chosen edges. This gives a positive forest in which every path terminates at $t$. Consequently the forest denominator and each marked sum are strictly positive for either kernel.
+
+For the determinant formula, let $e_u^\mathsf T$ be the coordinate row at $u$. Stochastic row sums give the exact row decomposition
+
+$$
+L_P(u,\cdot)=
+\sum_{v\ne u}P(u,v)
+\bigl(e_u^\mathsf T-\mathbf1_{\{v\in V\}}e_v^\mathsf T\bigr).
+\tag{4.6}
+$$
+
+In particular, its diagonal coefficient is $1-P(u,u)=\sum_{v\ne u}P(u,v)$. Self-loops have been accounted for by this equality, not removed from the stochastic experiment.
+
+Expand the determinant multilinearly in its rows. A term chooses a successor $v\ne u$ for each $u\in V$ with coefficient $\prod_u P(u,v)$. A zero edge gives zero contribution. If a successor choice contains an internal directed cycle, the rows belonging to that cycle sum to zero, so its determinant vanishes. For an acyclic choice $\phi$, every path ends in the boundary. Order coordinates by increasing length of their $\phi$-path to the boundary, permuting rows and columns together. Each row has diagonal entry one and its only possible other entry, minus one, in an earlier column. Its matrix $L_\phi$ is triangular with determinant one. A simultaneous row and column permutation has no net sign. Therefore the surviving terms are exactly the forest weights with positive coefficient one. This proves $\det L_P=\mathcal D_P$.
+
+Now replace column $x$ by $r_P$. The same row expansion uses the same successor coefficients. In a successor-choice matrix the entry in the replaced column is $\mathbf1_{\{\phi(u)=t\}}$, while all other columns have the entries of the row in (4.6). Rows on an internal cycle again sum to zero: in unreplaced columns they telescope, and in the replaced column every one of them is zero. Cyclic terms therefore still vanish.
+
+For a forest $\phi$, let $z_\phi(u)$ be one if its path ends at $t$, and zero if it ends in $\mathcal Z$. Set $r_\phi(u)=\mathbf1_{\{\phi(u)=t\}}$. Checking an interior edge or a boundary edge gives
+
+$$
+L_\phi z_\phi=r_\phi.
+\tag{4.7}
+$$
+
+Express $r_\phi$ as the sum of column $v$ of $L_\phi$ weighted by $z_\phi(v)$. Multilinearity in the replaced column annihilates every term $v\ne x$ because it duplicates column $v$. The $v=x$ term is $z_\phi(x)\det L_\phi=z_\phi(x)$. Thus this forest contributes its weight precisely when its path from $x$ ends at $t$. Summing proves the marked-numerator identity in (4.5), including its sign.
+
+Finally the actual hitting function satisfies $h_P=Ph_P$ by first-step conditioning and has the boundary values in Definition 4.1. Its restriction to $V$ therefore obeys
+
+$$
+L_P(h_P|_V)=r_P.
+\tag{4.8}
+$$
+
+The positive determinant makes this boundary problem uniquely solvable. Applying the same replaced-column argument to (4.8) gives $h_P(x)\det L_P=\det L_P^{[x]}$, proving the quotient. We have identified the actual hitting function, without assuming uniqueness of arbitrary harmonic functions on the original reducible chain or absorption from all its states. The proof for $Q$ is identical. If $V$ is empty, all states already have the specified boundary values; one may take the empty forest denominator to be one. $\square$
+

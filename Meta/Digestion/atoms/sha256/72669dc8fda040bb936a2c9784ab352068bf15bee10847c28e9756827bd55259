@@ -1,0 +1,6 @@
+**Proposition 84.2 (scope of the cut hypothesis).** At the level of quadratic-character conditions, the admissible-cut hypothesis need not supply any individual prime eligible for Theorem 83.1.
+
+**Proof.** Consider four abstract support primes, three of type $1\pmod4$ and one of type $3\pmod4$, with all pairwise Legendre characters equal to $-1$. This character assignment respects quadratic reciprocity. Every two-versus-two cut has both required products equal to $+1$ at each vertex. In contrast, each individual prime has three outgoing nonresidue characters, so none meets Theorem 83.1's hypothesis. This compares the conditions only; it asserts no actual block or prime family realizing this pattern. ∎
+
+The endpoint $d=D$ is allowed and yields $\chi_D=(-2/D)=1$ because $D\equiv19\pmod{120}$; no separate novelty claim is made for that endpoint. The theorem retains the full original integral orbit. It does not establish a violating numerical support surviving all previous restrictions, independence from all earlier Cassels conditions, prime-family infinitude, or a universal WSS exclusion.
+

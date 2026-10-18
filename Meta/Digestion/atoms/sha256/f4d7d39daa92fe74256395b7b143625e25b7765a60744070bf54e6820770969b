@@ -1,0 +1,145 @@
+### 219.10 Reuse boundaries and comparison sources
+
+The mathematical scopes here are the matched face in Theorem 219.3,
+the unrestricted retraction and exact single-allocation relation in
+219.5–219.6, the deduplicated matrix relation in 219.9–219.10,
+its two four-positive domains, and the independently sharp family
+219.13. The subset cuts, examples, normalized detector execution and
+necessary amplitude inequalities are consequences and interfaces of
+these scopes. General stock, support convexity, constant-zero and
+detector lower bounds, weak duality, finite flow, source witnesses and
+transport are reused with no separate new-content claim.
+
+Theorem 219.3 has first positive address 3 with two intervening donor
+positions. The uniform guard and common-chain scopes in XII 217.2
+and 217.6 require at least three guards before the positives.
+The moving triple and equal adjacent-triple scopes in 217.3–217.4
+and 217.7 retain their own address and profile restrictions.
+The two-debt theorem 218.2 has zero absolute stock; example (219.13)
+has absolute stock 18 and intervening debts. Its cumulative tail
+after position 3 is $-6,2,-4,5$, so the automatic cumulative-tail cone
+of 218.9 does not apply. Every cumulative sum is required there,
+rather than only a final total sign.
+
+The sole-zero-correct construction in 217.5 explicitly allows first
+positive 3, so an address distinction alone cannot exclude it.
+Here is its precise equality obstruction at the unsigned nonzero face
+$B=B_0$. Write its guard shares as $\alpha_r$, summing to one,
+its sole-positive columns as $p_v$, common multi-positive reserve as
+$c_{\rm old}$, sole-guard reserve as $d_{\rm old}$ and terminal as $T$.
+Its $P$ atoms have zero sets $\{r,v\}$, $\{r\}\cup I_+$,
+$\{r\}$, with the corresponding common shares.
+If its cost were zero, equality in the detector bound and (219.12)
+would force $A_{I_+}=A_{\rm out}=P_{I_+}=0$.
+Pivot-3 protection forces $p_3>0$.
+Since $P_{I_+}=0$, every guard share at $r>3$ must vanish:
+its $\{r,3\}$ atom would otherwise have first zero 3.
+Thus only shares 1 and 2 remain. Pair $(1,2)$, cell 11, contains
+every sole-zero correct atom and no such guard stock, forcing
+$T\ge\max(g,h,k)>0$. Its mixed protections also require
+$p_3+c_{\rm old}\ge2g$, $p_m\ge h$, $p_\ell\ge k$ and hence
+total stock at least $B_0+d_{\rm old}+T>B_0$, a contradiction.
+This excludes that constructor at the specified face; no exclusion
+of every old convex or signed-residual assembly follows.
+
+The unrestricted reset in Theorem 219.5 does not follow from choosing
+sole-guard carriers in a sufficient construction. It starts from every
+full score in its entire face and preserves every positive suffix.
+The full-set/equal-triple specialization of (219.19) reuses the
+217.7 detector. The proper-subset relation records additional debt
+concentration, without claiming sharpness against every conic lower cut.
+No fixed four-column or last-bit-zero suffix carrier is asserted
+necessary. Extra stock, interleaved signs and equality of the two
+general optimized functionals remain outside the retraction result.
+
+The matrix relation contains 218.6 by $x_{ij}=\chi_i\gamma_j$ and
+arbitrary permitted $t_i$. The numerical debt capacities in
+(219.32) and Corollary 219.12 exclude that proportional constructor
+at the displayed quotients. Uniform shares in 217.2 and 217.6 likewise
+have capacity at most $S/|I|$; they do not supply these concentrated
+debts. For example (219.37), that bound is at most $5/4<7/4$.
+For its larger common-share prefix construction 217.5, allow
+$p_j\ge\gamma_j$ and extra nonnegative sole-guard and terminal stock.
+Writing $P_0=\sum p_j\ge G=13/4$, the remaining reserve is at most
+$1/2-(P_0-G)$. Its two top columns imply
+$\min(p_p,p_q)+c_{\rm old}\le3/2$, forcing each common share
+at most $1/3$ by the mixed-cell condition. Its convertible guard stock
+is consequently at most $S/3=5/4$. This is another named-constructor
+comparison, not an exhaustive closure theorem.
+
+Theorem 219.13 has three debts and at least four positive coordinates.
+The one- and two-positive scopes in 216, the two-debt scope in 218.2,
+and the three-positive scopes in 217 keep their stated domains.
+At $d=0$, a uniform guard supplier including the third guard would
+need capacity exceeding $S/3$; excluding it leaves only $2g$ stock,
+below that supplier's top-positive protection threshold.
+For 217.5, top-column mixed protection at the same least-stock fiber
+forces $p_{j_1}+c_{\rm old}\ge S/2$ and
+$p_{j_2}+c_{\rm old}\ge S/2$.
+The tail columns require total at least $H$, so total stock $S$ forces
+$c_{\rm old}\ge H+d_{\rm old}$, while its remaining reserve is at
+most $g/2$. Since $H>g$, this is impossible for that constructor.
+The positive-$d$ theorem uses its separate unrestricted detector bound,
+rather than inferring unrestricted optimality from these comparisons.
+The cumulative-tail erasure cone does not automatically apply to its
+positive tail after the early coordinates.
+
+The separated-block operation 218.3 and affine-family test 218.4–218.5
+are conditional methods and are not excluded as possible components
+of other certificates. Their fixed-method failures do not establish
+original nonmembership. The alternative O laws in 112.2 remain valid.
+The fixed-baseline carrier-box criterion in X 212.3 is distinct from
+a freely selected donor matrix, and no converse transfer is assumed.
+The zero-net middle-deletion obstruction 216.4 and the need for all
+cumulative erased-tail inequalities 218.8–218.9 both remain.
+
+The equal-profile overlaps within 217 are retained: 217.4's equal
+triple is 217.7 at three guards, 217.3's equal zero endpoint is the
+same plateau, and 217.5's equal-three common-share core overlaps
+217.2. The sole-zero containment diagnostic adds no independent
+theorem. The common boundary of 219.12 and 219.13 is counted once.
+
+The consecutive profile $(0,0,2t,t,t,0,\ldots)$ at $L\ge5$,
+$K=11t+u$, $t,u\ge0$, is also reused rather than a new region.
+Indeed half-$t$ times generator $Z$ of XI 214.8 gives
+positive coefficients $(t,t,t)$, $K=7t$, $W=4t$, $T=t$.
+The one-pivot score of XI 213.18 at $n=3$, $g=t$, $B=3t$
+adds $\beta_3=t$, $K=4t$, $W=3t$, $T=t$.
+Pad by constant-one coordinates, add the coefficients and terminal
+mass $u$. This one joint score has $P=5t$, $T=2t+u$,
+$W=7t+u$, $K=11t+u$. Support subadditivity bounds both costs
+above by zero, and constant zero bounds them below by zero.
+Thus the whole family is already supplied. At $t=1,u=0$, the
+alternative explicit cell vector $(0,3,2,2)$ for pair $(1,2)$ has
+sum seven: it is each schedule's sum of cell maxima that equals
+seven, not every individual cell maximum.
+The terminal is $2t$ at $u=0$, and is not zero when $t>0$.
+No additional theorem or coverage claim is attached to this profile.
+
+The comparison with literature is limited to the following statements
+and versions. The ordinary proofs above do not import a universal
+hard-two containment theorem from any of them.
+
+| Primary source | Reused relation and unproved transfer boundary |
+| --- | --- |
+| [Gale, *A theorem on flows in networks*, Pacific J. Math. 7(2), 1073–1082, Feasibility and Minimum Cut Theorems](https://msp.org/pjm/1957/7-2/pjm-v7-n2-p04-s.pdf), DOI 10.2140/pjm.1957.7.1073 | Finite nonnegative real capacities and balanced residual row/column margins give the bounded matrix criterion. The lower-bound subtraction and cut elimination are explicit in 219.10. This deterministic allocation of dual weights is not normalized acquisition or a query-cost result. |
+| [Blackwell, *Comparison of Experiments*, §§2–5, Theorems 2, 4, 6 and 8](https://digitalassets.lib.berkeley.edu/math/ucb/text/math_s2_article-08.pdf) | Finite words, transcript cells and labels correspond to states, observations and actions. Common randomized decision procedures and risk-vector comparisons do not construct an increasing first-zero hard-two schedule or authorize a prior on sources. |
+| [Chen, 2502.06530v1](https://arxiv.org/pdf/2502.06530v1) and [2502.06530v2](https://arxiv.org/html/2502.06530v2), Theorem 3, Definition 7 and Corollary 3 | Distinct versions retain a binary-action comparison and a finite-action extension conditional on binary decomposability of the whole value function. A resource-preserving decomposition of this complete all-label problem is not supplied. |
+| [Yang–Yang, 2603.11448v1, §2 and Theorem 1](https://arxiv.org/pdf/2603.11448v1) | Compact Polish $X$ and a cone of bounded upper-semicontinuous tests containing constants, with a sup-norm-closed continuous part, decreasing continuous approximation and bounded decreasing-limit closure, support the min-closure/affine-value/order-preserving-coupling equivalence. No matching min-closed legal-table cone with the actual request budget is established. |
+| [Zaev, 1404.4962v1, Problem 1.3, Theorem 2.1 and Remark 2.4](https://arxiv.org/html/1404.4962v1) | One constrained coupling has fixed Polish marginals, the specified dominated continuous cost class and a linear constraint subspace. Duality permits an empty feasible set; it supplies neither our matrix's nonemptiness nor stopped resource realization. |
+| [Bertschinger–Rauh, 1401.3146v1, Example 18](https://arxiv.org/html/1401.3146v1) | The unique nonnegative factor in the displayed zonotope example has row sums $(2,2,2,0)$ and is not stochastic. This normalization obstruction is not an original-source strict separator. |
+| [Embrechts–Hofert–Wang, 1606.08212v1, Theorem 2.2](https://arxiv.org/html/1606.08212v1) | Boolean second-moment compatibility is a convex hull of $xx^T$ under one joint law. Jointness is essential; a PSD relaxation or separate pair marginals do not yield the required affordable table allocation. |
+| [Kaniewski–Lee–de Wolf, 1411.7280v1, Definition 8 and Theorem 9](https://arxiv.org/pdf/1411.7280v1) | Scalar nonnegative expectation and worst-path query depth are distinct from a normalized probability-vector law, mean request count and the original all-Borel TV problem. |
+| [Angel–Spinka, 1903.00632v2, opening example and Theorems 1–2](https://arxiv.org/html/1903.00632v2) | Uniform laws on $\{0,1\}$, $\{0,2\}$, $\{1,2\}$ have pairwise TV $1/2$, while every common realization has at least two unequal pairs. Pairwise optima need not coexist. The joint mismatch bound assumes one common sigma-finite dominating measure and gives no stopped hard-two implementation or source prior. |
+
+The Gale source is the Pacific Journal paper identified above;
+the unrelated PNAS DOI does not identify that theorem.
+The Yang–Yang citation is its versioned v1 PDF, whose source anchor
+in XII is SHA256
+1748332276759372cdb7f0efc61842c799484facf67a4388de4d03171e7df624;
+no identity of the entire PDF with another HTML version is assumed.
+These are bounded correspondence and reuse statements.
+The scoped constructions are repository-derived ordinary mathematics;
+no exhaustive exclusion of earlier convex or polar consequences,
+literature-absence assertion or worldwide priority claim follows.
+

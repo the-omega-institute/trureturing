@@ -1,0 +1,9 @@
+# Prefix kernels and finite collisions for shared affine gain
+
+Three sufficient prefix certificates obstruct uniform recovery from five readings with constant additive drift. The first fixes three transfer coordinates while the fourth endpoint of the prefix still has lower-right entry one; it covers every final word that leaves that stratum. The second uses a positive tangent section of an indefinite prefix kernel after the fourth endpoint has already left the stratum; it covers every final word, including the empty word. The third begins with the recorded permutation pattern $I,J,L$, permits an otherwise arbitrary legal fourth endpoint satisfying an explicit entry criterion, and covers every final word. A proved entry cone for the third certificate includes an arbitrary interior legal word. The hypotheses and continuation quantifiers of the three classes are distinct.
+
+All three mechanisms produce finite collisions of actual strictly positive rank-one sources, with one whole constant drift and one unchanged positive row in each run. They preserve the exact target $(S,k,D)$ and the actual recorded clock. Complete support for the credited positive-degree equality is included. The unrestricted constant-drift optimum remains
+$$
+5\le C_{\mathrm{fix}}(0)\le6.
+$$
+

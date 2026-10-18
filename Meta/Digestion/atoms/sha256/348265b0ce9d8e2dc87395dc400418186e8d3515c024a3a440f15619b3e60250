@@ -1,0 +1,29 @@
+### 定理19（实际终端密度矩阵及其纤维响应）
+
+在假设18下，对每个 $t\ge0$，平均探针态及复读数为
+
+~~~math
+\varrho_\kappa(t)=\sum_s p_\kappa(s)|\psi_s(t)\rangle\langle\psi_s(t)|
+=\frac12\begin{pmatrix}1&\overline{C_\kappa(t)}\\C_\kappa(t)&1\end{pmatrix},
+\qquad C_\kappa(t)=\sum_s p_\kappa(s)e^{-i\omega(s)t}=B(t)+\kappa J(t),
+~~~
+
+其中
+
+~~~math
+B(t)=1-X-Y-Z+X e^{-i\Omega _1t}+Z e^{-i\Omega _2t}+Y e^{-i\Omega _3t},
+\qquad
+J(t)=\bigl(1-e^{-i\Omega _1t}\bigr)\bigl(1-e^{-i\Omega _3t}\bigr).
+~~~
+
+$B(t)$ 为本卷 Q3 意义的代数基线，$\kappa=0$ 可以不可行。实际输出律为
+
+~~~math
+\mathbb E[M_\theta]=\operatorname{Tr}(\varrho_\kappa M_\theta)
+=\operatorname{Re}\!\bigl(e^{-i\theta}C_\kappa(t)\bigr),
+\qquad
+\Pr(\pm\mid\theta,t)=\frac{1\pm\operatorname{Re}(e^{-i\theta}C_\kappa(t))}{2}.
+~~~
+
+**证明。** 条件纯态的外积是 $\frac12\left(\begin{smallmatrix}1&e^{i\omega(s)t}\\e^{-i\omega(s)t}&1\end{smallmatrix}\right)$；按概率平均给出所示密度矩阵，且 $|C_\kappa|\le1$。五个相位依次是 $1,e^{-i\Omega _1t},e^{-i\Omega _2t},e^{-i\Omega _3t},e^{-i(\Omega _1+\Omega _3)t}$。代入定义17，$\kappa$ 的系数为 $1-e^{-i\Omega _1t}-e^{-i\Omega _3t}+e^{-i(\Omega _1+\Omega _3)t}$，即既有四角泛函在这个实际条件响应上的因子式。最后直接乘矩阵取迹，两个对角项之和是 $\operatorname{Re}(e^{-i\theta}C_\kappa)$；$M_\theta^2=I$ 给出相应二值概率。若改从 $|0\rangle$ 开始，操作保持 $|0\rangle$，所有这些赤道期望为零，故上述制备是必要的实验前提。证毕。
+

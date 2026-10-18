@@ -1,0 +1,10 @@
+**Corollary 4.3 (actual modifications are included).** At $H=3m$, every $U_x$
+accepts the first guarded $\rho$ and rejects the immediately following one:
+the candidate leaf counts are $3m$ and $6m$. At $H\ge3m+1$, a graft of one
+known alpha leaf followed by the first substitution can both accept. Thus
+Theorem 4.2 covers genuinely evolving sources, not only Stop or reject examples.
+
+Proof. Initially all $3m$ leaves are alpha. The first substitution makes them
+beta without changing their number; the second doubles their number. A preceding
+alpha graft gives an all-alpha tree with $3m+1$ leaves and the same calculation.
+

@@ -1,0 +1,37 @@
+### 定义 38.1（有限 detailed-balance 量子半群）
+
+令 \(H\) 是有限维复 Hilbert 空间，令 \(\sigma\in\mathsf D(H)\) 严格正定。对 \(A,B\in\mathsf L(H)\)，定义 GNS 内积
+
+\[
+\langle A,B\rangle_\sigma
+=
+\operatorname{tr}
+\left(
+\sigma^{1/2}A^\ast\sigma^{1/2}B
+\right).
+\]
+
+令 \(T_t=e^{t\mathcal L}\) 是有限维 Heisenberg 量子 Markov 半群，其中每个 \(T_t\) 首一完全正，\(\mathcal L(I)=0\)，其 Schrödinger 伴随保持 \(\sigma\)：
+
+\[
+\mathcal L^\ast(\sigma)=0.
+\]
+
+并假设 \(-\mathcal L\) 在 GNS 内积下非负。进一步要求 GNS detailed balance
+
+\[
+\langle A,\mathcal L B\rangle_\sigma
+=
+\langle\mathcal L A,B\rangle_\sigma.
+\]
+
+定义量子 Dirichlet 型
+
+\[
+\mathcal E_\sigma(A)
+=
+\langle A,-\mathcal L A\rangle_\sigma.
+\]
+
+在 \(A\) 为常数方向之外，\(\mathcal E_\sigma(A)\ge0\)。
+

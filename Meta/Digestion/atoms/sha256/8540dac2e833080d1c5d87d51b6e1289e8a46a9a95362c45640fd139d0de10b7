@@ -1,0 +1,30 @@
+**Lemma 4.3 (The fixed-order support limit controls the original density).** For the laws of Lemma 4.2 with $m$ fixed,
+
+$$
+Q^\delta_n(b)\longrightarrow S_n(b)\quad(\delta\downarrow0)
+\text{ for every fixed legal word }b,\qquad
+d(Q^\delta)\longrightarrow d(S).
+\tag{4.4}
+$$
+
+Proof. On each context $s$ with $S_m(s)>0$, (4.2) gives
+
+$$
+k_\delta(z\mid s)\longrightarrow
+\frac{S_{m+1}(sz)}{S_m(s)}=k_S(z\mid s).
+\tag{4.5}
+$$
+
+For a word of positive $S$-mass, its initial context and every traversed context and transition have positive supporting mass. Its finite product therefore converges to the $S$-product.
+
+For a word of zero $S$-mass and length at least $m$, either its initial context has zero $S_m$-mass, in which case the initial factor tends to zero, or there is a first extension of a positive-mass prefix which makes its mass zero. At that extension the context has positive $S_m$-mass, while its $(m+1)$-word mass is zero. The corresponding transition factor tends to zero by (4.5). All other factors are between zero and one, so the whole product tends to zero. This also handles paths which subsequently visit zero-mass contexts. Shorter words converge by their explicit marginal formula.
+
+In particular the finitely many $(2m+1)$-word masses converge. By (2.3), continuity of $h$ on the entire nonnegative quadrant, including $h(0,0)=0$, implies
+
+$$
+d(Q^\delta)=D_m(Q^\delta)\longrightarrow D_m(S)=d(S).
+\tag{4.6}
+$$
+
+Proposition 2.5 establishes these density identities before the support limit is taken. The convergence is at one fixed $m$, so no uncontrolled interchange with the growing observation length is used. Formula (2.9) applies to every original edge of $Q^\delta$, including former deterministic seams. $\square$
+

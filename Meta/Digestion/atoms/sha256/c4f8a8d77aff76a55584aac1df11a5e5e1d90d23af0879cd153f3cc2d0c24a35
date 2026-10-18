@@ -1,0 +1,13 @@
+## 4. A paired-emission comparison controlled by the actual alpha edges
+
+On the same source and prior, construct a comparison table with p and suspended labels both $X$, rows both $\pi$, acquired beta kernel $C=BA$, acquired alpha kernel the identity, and both emissions $u$. It has both exact acquired flows. Denote its own generated laws by $\widetilde Q_x,\widetilde W_x$.
+
+This is a finite installed comparison, not an assigned posterior or a pointwise replacement decoder. Its private beta kernel is the fixed matrix product $BA$; it does not perform another source Read. Its actual and synthetic updates use this same kernel. Product realization retains every original field and permission; earlier synthesis is fair, latch sampling follows the third write, completion clears private labels, and only original Stop delivers. No state, program, sampler-workspace or hard-defect budget is preserved.
+
+Set
+
+$$
+J=\sum_{y,x}\tau_yA_{yx}|v_y-u_x|,
+\qquad d=\sum_x\pi_x\operatorname{TV}(Q_x,\widetilde Q_x).
+$$
+

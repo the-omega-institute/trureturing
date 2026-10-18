@@ -1,0 +1,85 @@
+**Theorem 6.1 (a realized source and current-epoch record).** Set
+
+$$
+b=(1/4,1/4,1/2),\qquad c=1/4,\quad r=1/2,\quad
+a=1/8,\quad q=1/16,\quad \varepsilon=1/64,
+\qquad x_-=7/64,\quad x_0=8/64,\quad x_+=9/64.
+\tag{RB.21}
+$$
+
+Use the same fixed positive preparation, for example $\theta_i=0$ for
+all modes. Select the nine histories with
+
+$$
+m=0,\qquad \beta\in\{0,2\pi/3,4\pi/3\},\qquad
+x\in\{x_-,x_0,x_+\}.
+\tag{RB.22}
+$$
+
+Prepare the first five units by Proposition 2.2, for which $B=8\beta$,
+then use the final unit horizontal leg $a\to x$. They share the source,
+preparation, base, clock and permissions. Each satisfies both original
+regularity alternatives, with the common finite resource bounds
+
+$$
+\min_{t,i}p_i(k(t))\geq1/16,\qquad
+\|k'\|_\infty\leq1/16,\qquad
+\operatorname{TV}(k')\leq17/64,\qquad
+\operatorname{TV}(\chi)\leq64\pi/3.
+\tag{RB.23}
+$$
+
+Variation of the piecewise constant height velocity is on the open
+six-unit interval, with one-sided endpoint traces and no added extension
+by zero outside. Start the current recording epoch at time five. For any
+fixed finite rational schedule $0=u_0<\cdots<u_N=1$, a recorder reports
+the same nominal height $a$, relative phase zero and times $5+u_i$ on
+all nine histories. Its pointwise height error is at most $\varepsilon$
+and its relative-phase error is zero throughout this current leg. The
+recorder can be the deterministic constant report under this promise,
+so its joint operation is nondisturbing and independent of the specimen.
+
+Nevertheless no common endpoint processor given only this current record
+and any assistance satisfying (RB.7) has nonzero exact success in returning
+all nine live inputs to height $a$ while preserving their phase, even when
+$m=0$ is revealed for free.
+
+Proof. The original six-unit height waveform has unit-leg velocities
+
+$$
+0,\ -1/16,\ 0,\ 1/16,\ 0,\ x-a.
+\tag{RB.24}
+$$
+
+Every height lies in $[1/16,9/64]$, and every complementary height
+$c-k$ is at least $7/64$. The middle probability is $1/2$, so the
+support bound follows. The largest velocity magnitude is $1/16$.
+The first four velocity jumps total $1/4$; the last is
+$|x-a|\leq1/64$, giving $17/64$. The phase variation is
+$2|B|=16|\beta|\leq64\pi/3$. Every path is finite piecewise affine.
+The residual calculation (RB.5) yields precisely the promised phase
+$z=e^{-i\beta}$ at height $x$.
+
+On the last leg, $k(5+u)=a+(x-a)u$ and its real relative phase is
+identically zero. Thus the constant report has the stated simultaneous
+errors. Appending a fixed classical report to the actual input is exactly
+a product operation, not an inference of nondisturbance from marginal
+accuracy. Its bounded schedule, rational values and common metadata have
+one finite description. It supplies no preinitial phase, past programme
+archive or whole probability law.
+
+The three selected $z$ values are distinct. All three heights share the
+same current record and the same permitted assistance at fixed $m=0$.
+The finite-phase version of Theorem 3.3 therefore applies to these nine
+actual inputs and gives zero exact success. $\square$
+
+The record in this theorem is deliberately uninformative but actually
+pointwise correct within the displayed error. It is not claimed to sense
+arbitrary original waveforms. Making its current sample grid arbitrarily
+fine does not add information because the same constant bounded error is
+permitted at every current time. A prehistory programme descriptor or an
+actually acquired phase-bearing archive would be an additional accessible
+input; it is not deleted if supplied. The theorem then needs its joint
+premise checked again. All-sector Proposition 2.2 remains valid, while
+the finite resource certificate (RB.23) selects only (RB.22).
+

@@ -1,0 +1,26 @@
+**定理 4.2（准确深度的二阶单点阈值）。** 对全部 $\nu(T)\ge2$ 的原树 $T$ 与全部来自 $T$ 的有限真实历史 $h$，若 $A=\operatorname{paid}(h)$，则
+
+$$
+\begin{aligned}
+h\text{ 准确认证 }\nu(T)
+&\quad\Longleftrightarrow\quad F(T)\subseteq A\\
+&\quad\Longleftrightarrow\quad \mathcal S(h)=\{T\}.
+\end{aligned}
+\tag{NIC.13}
+$$
+
+特别地，在此深度范围内，一个非单点的原始证据纤维不能准确认证内在深度；仅查询每个叶的严格后代不能代替查询叶标签。
+
+证明。若 $p\in F(T)\setminus A$，既有单叶翻转的原始回复不变性说明
+
+$$
+\forall q\ne p,\quad
+r(q,\operatorname{flip}_p(T))=r(q,T).
+$$
+
+这是 [Readout 的 source_foundation][Readout] 的相应因子，也是 [JM §28.3][JM] 的单点反向证明：祖先仍是分支、后代仍缺席、其他支路及叶未变。因此 $\operatorname{flip}_p(T)\in\mathcal S(h)$。由定理4.1，它的深度至多一，与 $\nu(T)\ge2$ 不同。准确深度遂强制 $F(T)\subseteq A$。
+
+若包含全部真实叶，则全部候选匹配整个带标签前沿；复用同一完整前沿刚性即得 $\mathcal S(h)=\{T\}$。单点自然强制深度准确。最后，叶翻转只改变 $p$ 本身的回复，所有严格后代在两个来源中都缺席，所以任何数目的这类后代请求都不能排除该竞争者。$\square$
+
+定理4.2在 $\nu(T)\ge3$ 的部分也可直接由既有三阶障碍取得：$T\in I_3$，单叶翻转不在 $I_3$，于是深度不同。[Readout 的 source_foundation][Readout] 与 [ActualImageAddressCertificate 的 rigidity][ImageCert] 已供应该范围；后者的无组成许诺证书参数为 $d=3k,\ k\ge1$。本节扩展所依赖的是定理4.1的 $I_2$ 障碍，而不是重述这些三阶供应。
+

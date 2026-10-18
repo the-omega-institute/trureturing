@@ -1,0 +1,31 @@
+**Theorem 8.1 (Finite-$q$ bound for each paid mean).** Under Definitions 2.1–2.2 and (2.3), fix any $M\ge2$, $0<\alpha<1/2$, $q\in(0,1)$ and $\mathcal A\in\mathfrak A_M(q,\alpha)$. For every finite integer $L\ge1$ and each $i\in\{0,1\}$, put $b_\alpha=1-2\alpha$ and use $r_H,\pi_i,\gamma_L,\chi^*_{M,L}$ from (6.1), (6.6) and (7.3). Then
+
+$$
+b_\alpha\le r_H(q)+\chi^*_{M,L}
++[\pi_0(q,L)+\pi_1(q,L)]B(1-q)\mathbb E_{i,q}^{\mathcal A}T,
+\tag{8.1}
+$$
+
+and therefore
+
+$$
+\mathbb E_{i,q}^{\mathcal A}T
+\ge\frac{[b_\alpha-r_H(q)-\chi^*_{M,L}]_+}
+ {B(1-q)[\pi_0(q,L)+\pi_1(q,L)]},
+\qquad [x]_+=\max\{x,0\}.
+\tag{8.2}
+$$
+
+Proof. Both selected risks imply $p_0\le\alpha$, $p_1\ge1-\alpha$, and $p_1-p_0\ge b_\alpha$. Apply (7.4) with the chosen target, then use $\mathbb E_iN\le\mathbb E_iQ_T\le B(1-q)\mathbb E_iT$. This is (8.1). Its denominator in (8.2) is strictly positive because $B>0$, $q<1$ and $0<\pi_i<1$. Division and nonnegativity of the mean give (8.2). The same reasoning applies to the other target without changing the actual machine. $\square$
+
+The uniform companion's Theorem 7.1 already supplies this clipping and payment structure. Here its comparison loss $(1+\delta/(L+1))^{2\cdot3^M}-1$ is replaced by
+
+$$
+\chi^*_{M,L}
+=\frac{(1+\delta/(L+1))^{M-2}-1}
+       {(1+\delta/(L+1))^{M-2}+1}.
+\tag{8.3}
+$$
+
+No additive $O(s^{10})$ comparison of the original kernels $U_0,U_1$ uniformly over retuned machines is assumed. The continuation's Proposition 27.2 and the uniform companion's Section 9 already explain why such an estimate cannot simply be imported from a fixed matrix.
+

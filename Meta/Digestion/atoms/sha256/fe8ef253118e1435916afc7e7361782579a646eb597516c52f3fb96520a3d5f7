@@ -1,0 +1,20 @@
+**Definition 2.3 (support-aware local relation).** Fix a nonzero
+$w:S_d\to[0,\infty)$ and $F=\{x:w(x)>0\}$. For a decoration $\eta$,
+an assignment $s=(a,b_1,\ldots,b_k)$ of its seeds belongs to
+$R_\eta(w)$ precisely when both conditions hold:
+
+1. Its full local factor vector reconstructs $x(s)\in F$.
+2. For each external group $g$, there is one $u_g\in F$ with
+   $g_{q_c}(u_g)=B_{o_c}(s_c)$ simultaneously for every incoming
+   seed $c$ of that group.
+
+Set $\Phi_\eta(s)=w(x(s))>0$ on $R_\eta(w)$. The second condition is a
+joint owner-image test. Separate witnesses for the seeds of one group
+are insufficient. The witnesses for different groups are not asserted
+to extend simultaneously to a full network.
+
+For heterogeneous block weights, the correct relation for block $i$
+uses $F_i$ in condition 1 and the actual outside owner's $F_j$ in
+condition 2. Replacing it by $R_\eta(w_i)$ when $F_j\ne F_i$ is not
+licensed. A block with identically zero weight makes $Z=0$.
+

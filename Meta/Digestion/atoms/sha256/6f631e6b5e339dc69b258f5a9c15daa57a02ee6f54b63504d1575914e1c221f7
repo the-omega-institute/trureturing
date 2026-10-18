@@ -1,0 +1,10 @@
+## 9. A different full-span family detected by polynomial erasure
+
+Put
+
+$$
+T_0=MU=\begin{pmatrix}0&1\\1&2\end{pmatrix},\qquad
+T_1=UMU=\begin{pmatrix}1&3\\1&2\end{pmatrix},\qquad
+T_2=U^2MUMU=\begin{pmatrix}5&12\\2&5\end{pmatrix}.
+$$
+

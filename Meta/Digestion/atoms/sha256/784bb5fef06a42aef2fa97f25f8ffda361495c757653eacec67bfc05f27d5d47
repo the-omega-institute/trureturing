@@ -1,0 +1,6 @@
+**Corollary 4.3 (Bounded active height gives radius five at any finite cap).** For every finite original total cap $k$, every lawful input for which both pruned trees have active height at most two at each seed has a lawful full-law representative with addresses in $[j-4,j+5]\cap\mathbb Z$. It retains every original terminal label and paid depth, including nonreturn counts. A fixed supplied tree has one relabelling independent of $p$ working for all allowed $p$.
+
+Proof. Apply Lemma 3.1 to each $P_\gamma(T)$ with target $q_{j,\gamma}$ and tags (4.1). The preserved individual terminal masses give exactly the conditional target/tag identity needed by Theorem 4.2. Each active left endpoint is in $[q_{j,\gamma}-2,q_{j,\gamma}+2]$, hence its actual address is in $[B_{j,\gamma}-4,B_{j,\gamma}+4]$. Absent positions use $B_{j,\gamma}$. Since every base is $j$ or $j+1$, all addresses lie in $[j-4,j+5]$, of radius five. Theorem 4.2 and Lemma 2.2 retain all counts and give the measurable lift. Geometry alone specifies the choices, and Lemma 2.3 holds at every $p$.
+
+This hypothesis is not automatic. A tree making $k$ successive same-parity calls has matching-phase active height $k$. Thus the corollary does not give a general radius-five bound at larger budgets. $\square$
+

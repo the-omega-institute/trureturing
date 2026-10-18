@@ -1,0 +1,26 @@
+**Definition 7.1 (the resource boundary).** For a supplied shape tuple
+let $N=\sum_v|H_v|$, where nodes are counted with their occurrences,
+and let $V,E,D$ be the rank-vertex, equality-edge and forbidden-difference
+counts of Section 2. These quantities are finite but not bounded by
+the finite record description alone. Coordinate admission consists of
+finite traversals of those supplied shapes and certificates, forest
+construction, affine arithmetic and the checks (SFP.10). Evaluating an
+already specified coordinate requires no existential native solver.
+The size and bit complexity of all parameters remain actual costs.
+
+Native expansion has a separate output cost. If the decoded source code
+has leaf ranks $r_p$, its native leaf count is
+$\sum_p F_{r_p+1}$, with $F_1=F_2=1$, and its node count is
+
+$$
+2\sum_p F_{r_p+1}-1.
+\tag{SFP.23}
+$$
+
+Indeed $T_0,T_1$ each have one leaf and the atomic recurrence adds leaf
+counts; native pairing adds the leaf counts of its children. Every full
+finite tree has twice its leaf count minus one nodes. Thus even a
+one-leaf code with a binary-written large rank can have very large
+expanded output. A finite scheme does not bound residual storage,
+certificate depth, arithmetic bit lengths or decoding cost.
+

@@ -1,0 +1,25 @@
+**Proposition 206.1.** Sigma is the only flat tetrahedron. Every flat has fixed
+reservoir pair {C,D}, and its unique M slot is one axial pi occurrence.
+The other source axis O is C, D, or a special label.
+
+Consider any flat. Neither Z nor U occurs in it, so its two distinct
+reservoir labels form one of {M,C}, {M,D}, or {C,D}. All its axes are
+among M,C,D and special labels. For an axis that is special, the barrier
+uses this same fixed pair, because a special edge occurs only axially
+and actual face transport keeps its reservoir pair fixed.
+
+If the pair is {M,C} or {M,D}, each H axis has value at most m, strictly
+below 1 plus the sum of that pair's values. Every special axis has the
+same strict upper bound. If those axis values are r,o and the pair
+values are a,b, then (r-1)*(o-1)<(a+b)^2. This contradicts axial flatness.
+
+Thus every flat has pair {C,D}. An axis labeled C or D is strictly below
+1+c+d, as is every special axis. If neither axis were M, the same
+product contradiction would apply. Hence every flat has at least one
+axial M slot, necessarily pi-selected. The complete M edge has exactly
+one flat pi occurrence. Consequently there is exactly one flat owner,
+namely sigma, and it has exactly one M axis. Its other axis is not M,
+not Z or U, and is therefore C,D or special, as asserted. Repeated
+owners, repeated labels and self-gluings do not affect the occurrence
+count: two flat owners or two M axes would give two distinct pi slots.
+

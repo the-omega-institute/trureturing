@@ -1,0 +1,17 @@
+**Theorem 7.1 (every normalized optimal multiplier).** On the open
+endpoint branch every optimal multiplier in the original four-block
+dual equals $2/p$, and obeys the second line of EP.9. The physical
+$s$ derivative is $\mathcal T'(s)=-\lambda/(2s_0)$; this multiplier
+is distinct from JR50's spectral multiplier $\lambda_{\rm sp}$.
+
+Proof. Differentiate $W=\tau+pK$ and use $W'=K$:
+$\tau'=-pK'$, with $K'=2v_2+O(p)>0$. EP.26 yields
+$j'(\tau)=2K'/\tau'=-2/p$. Every finite optimal dual tuple at $\tau$
+is feasible at each other parameter, so it gives the supporting bound
+$j(\tau')\leq j(\tau)-\lambda(\tau'-\tau)$. Differentiability forces
+$\lambda=-j'(\tau)=2/p$. Expansion of EP.46 gives
+$2/p=\Gamma/\sqrt\varepsilon+2v_3/v_2+O(\sqrt\varepsilon)$,
+as claimed. Finite interior dual attainment follows either from
+Theorem 4.3 on this branch or from the strict-feasibility argument
+below. $\square$
+

@@ -1,0 +1,23 @@
+**命题 229.4（The reused one-budget pairing）。** A certificate for $q$
+consists of one full $V\ge0$ and one $\theta\in[0,1]$ with
+
+$$
+\Delta_N(V)+\theta\le1,\qquad
+\sigma_H(q-Q(V))\le\theta.
+$$
+
+For the same $(b,e)\in H_N$ and the same complete feasible $\lambda$,
+
+$$
+F_q(b,e)\le V\cdot h(b,e)+\theta
+\le V\cdot G_N\lambda+\theta
+\le M\Delta_N(V)+\theta\le\max\{1,M\}.
+$$
+
+证明。 The first inequality evaluates the whole signed residual at
+$(b,e)$. The second uses all row inequalities and $V\ge0$; the third
+sums the same table configuration. If $M\ge1$, the last bound is
+$M(1-\theta)+\theta\le M$; if $M\le1$ it is at most one. This is
+the pairing in VI, 199.3–199.4, not a new duality statement. At
+$\theta=1$ every nonzero zero-cost $V$ remains allowed. $\square$
+

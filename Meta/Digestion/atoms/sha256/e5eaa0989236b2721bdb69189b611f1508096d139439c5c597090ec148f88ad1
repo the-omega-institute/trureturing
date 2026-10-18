@@ -1,0 +1,29 @@
+**Theorem 4.3 (the productive native family is retained).** Take the
+entire SPC family with
+
+$$
+F(y)=\langle\alpha,\rho y\rangle,
+\qquad U(x,y)=\langle x,\langle y,F(y)\rangle\rangle,
+$$
+
+including its old root row, its full literals, the actual-epoch record
+$(1,RL,0,RRR,=)$ and the negative $(0,RL,0,RR,\ne)$.
+For its two complete rows $r_0,r_1$ of [SPC, Theorems 3.2–3.3][SPC],
+every supplied original witness pair there occurs in the corresponding
+accepted slice of $\mathcal W_{I,\{r_0,r_1\}}$.
+
+Proof. SPC identifies the entire strata as
+$D_0=\{U(y,y):y\in\mathcal T\}$ and
+$D_1=\{U(F(y),y):y\in\mathcal T\}$, with their entire common
+exterior and complete finite partitions. Its displayed finite pair
+at depth $h$ uses $y=F^{h+1}(\beta)$ and has all original replies
+equal through $h$. Every literal, sign and reached endpoint is part
+of that supplied theorem. Apply Theorem 3.4 to these actual originals
+and $n=h+1$. The emitted epoch-one copy uses the same selected $y$,
+so its $RL$ subtree is $\rho y$, while the epoch-zero $RRR$ subtree
+is the identical value. The finite inequality $y\ne F(y)$ remains
+checked at its original reached endpoints. Thus the original family,
+rather than independently reselected occurrences of $y$, is retained.
+This is a consumer of SPC's productive result, not a new contact or
+non-rationality claim. $\square$
+

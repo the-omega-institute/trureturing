@@ -1,0 +1,41 @@
+**Definition 2.1 (finite expansion convention).** Use ARC Definition 2.1's
+word language: empty, copy, literal cons, tail, empty/first-bit tests and
+finite flow. Reverse, Cat, Length, Equal, Frame, Take, ReadUnary, ReadFrame,
+ReadList, Nth, Replace and AppendItem are RCA Definition 12.1's acyclic
+expansions. An internal natural is $1^n$; every emitted $U(n)$ has an
+additional zero. A tuple below is a list of exactly its stated arity, using
+$0$ or $1\operatorname{Frame}(w)s'$ for its list grammar. Tuple parsing
+uses ReadList/ReadFrame, the terminal list zero and exhaustion. Each
+numeric field additionally uses ReadUnary and field exhaustion.
+
+The difference $x-y$ is constructed by copying $1^x,1^y$ to distinct
+cursors and tailing both until one empties; reject subtraction if the
+right cursor alone remains. The residue is $1^{x-y}$. The same cancellation
+tests order; Cat on natural words constructs addition. No arithmetic,
+lookup, list traversal or whole Step is a native primitive.
+
+Define $G_{\rm sel}$ by ARC's written routines with the substitutions in
+§§3–6, in that order. Preserve all other routines and native effects.
+Hygienically expand each static call with fresh temporaries. Number
+registers by first occurrence after macro expansion; number native rows
+by ARC's textual, false-before-true, finite-symbol and port order. Retain
+its finite product with bank parity. The entry/exit tests in §5 read these
+generated labels from the actual captured entry table specified below.
+They contain no main-code literal for their own numeric row addresses.
+Let $\mathcal R_{\rm sel}$ be that finite syntactic register set and
+$r_{\rm sel}=|\mathcal R_{\rm sel}|$. This is the count used by the
+empty-bank prelude, including every fresh macro temporary; it is not the
+old count $r_G$ or a capacity estimate.
+
+Persistent added fields are the imported mode, whole frame, expected
+binding, resolved source item/index/origins and selected target. Scan state
+uses separate represented state/reservoir/event/tally fields, a countdown,
+entry/exit flags, saved endpoints, and unary arithmetic cursors. Every
+callback, bank emission and compiler macro copies unchanged persistent
+fields. All other added flags and unbounded values are bank words. Native
+control uses the old finite invocation/mailbox/parity slots, two fresh-version
+tags in addition to the original regime, and finitely many new entry/test
+labels. A finite effect
+still sets only a named finite bit or marker, or selects a fixed stage.
+There is no runtime-valued CTL argument, native stack or row per natural.
+

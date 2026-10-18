@@ -1,0 +1,28 @@
+**Definition 6.1 (acquired six-hole input).** Use
+
+$$
+W(a,b,z)=\langle a,\langle b,\langle z,z\rangle\rangle\rangle,
+\qquad P=\{L,RL,RRL,RRR\}.
+\tag{PAC.16}
+$$
+
+The old row has entire exterior
+$\langle h_1,\langle h_2,\langle h_3,h_4\rangle\rangle\rangle$,
+reached set $P$, and partition $\{\{1\},\{2\},\{3,4\}\}$.
+Retain the literals $(0,L,\mathsf{branch})$ and
+$(0,RL,\mathsf{branch})$. The signed list is exactly
+
+$$
+\begin{aligned}
+ &(1,LL,0,L,=),\quad (1,RLL,0,RL,=),\\
+ &(0,RRL,0,RLR,\ne),\\
+ &(1,RRL,0,L,\ne),\quad(1,RRR,0,RL,\ne).
+\end{aligned}
+\tag{PAC.17}
+$$
+
+Every record retains both guards. Use the common public paid acquisition
+of Assumption 1.4 with final $N=1$. This successful output is inhabited by
+the witnesses below; no fictional acquisition of an impossible output is
+asserted. Its full mathematical fibre has no extra source-shape promise.
+

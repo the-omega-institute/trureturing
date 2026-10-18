@@ -1,0 +1,23 @@
+**Theorem 257.1 (Whole-law construction and an attained optimum).**
+Let
+
+$$
+\frac12\le t\le\frac35,\qquad t\le h\le t+\frac1{100},\qquad
+e_*(t)=\frac{30t-2}{43}.
+\tag{257.1}
+$$
+
+For every entire profile
+
+$$
+a=(h,t,t,t,t,t,t,t,a_9,a_{10},\ldots),\qquad
+e_*\ge a_9\ge a_{10}\ge\cdots>0,\quad a_n\longrightarrow0,
+\tag{257.2}
+$$
+
+both original hard-two infima are attained and equal $e_*$.
+Both classes are feasible at a positive closed cap $\varepsilon$
+exactly when $\varepsilon\ge e_*$. The actual active length at
+$e_*$ is eight, and every actual tail has error exactly $e_*$,
+including $a_9=e_*$.
+

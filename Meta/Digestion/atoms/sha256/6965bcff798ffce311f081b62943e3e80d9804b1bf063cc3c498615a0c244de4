@@ -1,0 +1,9 @@
+### 463.7 完整严格 Jensen 与预算合并
+
+对正质量和正一阶矩定义
+
+$$
+\mathcal F(r,m)=r\log(r/m)\qquad(r,m>0).
+\tag{RVF.28}
+$$
+

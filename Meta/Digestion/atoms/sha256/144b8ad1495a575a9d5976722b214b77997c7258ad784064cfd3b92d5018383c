@@ -1,0 +1,43 @@
+**Definition 14.2 (necessary ranges and unresolved attainment).** Retain
+$\mathsf{Cover}(q,\lambda)$ as the existence statement of Definition
+6.2. For a chosen nineteen-label cover, the necessary ranges furnished
+by Theorems 8.1, 13.1 and 13.2 are
+
+$$
+\begin{array}{c|c}
+\text{lag convention}&\text{necessary conditions on a chosen cover }\mathcal C\\ \hline
+\lambda=1&G(\mathcal C)\ge13,\quad
+ G(\mathcal C)=13\ \Longrightarrow\ g_0=g_{18}=0\\
+\lambda=0&G(\mathcal C)\ge14,\quad
+ \sum_t(U_t-L_t)\ge356.
+\end{array}
+\tag{NAGC.14.1}
+$$
+
+A bound on $G(\mathcal C)$ is conditional on that chosen complete
+cover; it is not an assignment of a gap count to the existential
+proposition $\mathsf{Cover}(q,\lambda)$. All four existence
+questions $\mathsf{Cover}(18,0)$, $\mathsf{Cover}(18,1)$,
+$\mathsf{Cover}(19,0)$ and $\mathsf{Cover}(19,1)$ remain unresolved.
+In particular the existence of a positive-lag cover with $G=13$,
+sharpness of either necessary range, a complete cover construction
+and attainment by an arbitrary finite producer remain unresolved.
+
+At eighteen labels the full families of Definition 1.2 still admit
+all their defect allocations, saturated and higher-defect classes,
+both nine-run cases, fused nonmonotone classes and complete
+zero-containing states. The ten-value projections and saturated
+line-intersection law used here are not supplied for that whole
+family. No eighteen-label gap bound or existence obstruction is
+inferred from the equality argument.
+
+The native contract remains Assumption 1.1: genuine original
+acquisition and export, discard of all other source-bearing data,
+continuation of the same original, complete future acquired rows,
+all permitted cuts and lags, and at most two chronological native
+Reads with materialized finite original-root words and termination
+on every promised input. The complete current tree is stationary
+during those Reads. No fixed finite controller, address limit,
+workspace limit or physical-cost bound is imposed by these necessary
+cover inequalities.
+

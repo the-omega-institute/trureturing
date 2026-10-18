@@ -1,0 +1,24 @@
+**Theorem 8.1 (all-degree fixed-history lower bound).** For every $d\ge0$,
+$$
+C_{\mathrm{fix}}(d)\ge d+5.
+$$
+
+**Proof.** Use the injective open actual-target chart
+$$
+(p,q,r,k,\delta_0,\ldots,\delta_d)
+\in(0,\infty)^3\times\mathbb R^{d+2},
+$$
+$$
+S=\begin{pmatrix}p&q\\r&qr/p\end{pmatrix},\qquad
+D(\tau)=\sum_{h=0}^d\delta_h\tau^h.
+$$
+It has dimension $N=d+5$, and Proposition 1.2 realizes every chart point. For any fixed $m$-read endpoint list its observation map $F$ is smooth:
+$$
+F_i=(1+ki)\bigl((A_i)_{11}p+(A_i)_{12}r+
+(A_i)_{21}q+(A_i)_{22}qr/p\bigr)+
+\sum_{h=0}^d\delta_hi^h.
+$$
+Suppose $m<N$, and let $\rho\le m<N$ be the largest attained derivative rank. If $\rho=0$, integration along line segments in a small convex chart ball makes $F$ constant there. Otherwise choose a nonzero $\rho$-minor. It remains nonzero on a neighborhood, where maximality makes the rank exactly $\rho$. Reorder coordinates and outputs so this minor comes first. The implicit function theorem makes the level set of the first $\rho$ outputs a smooth graph over a small connected open ball of dimension $N-\rho>0$. The differential of every remaining output lies in the span of the first $\rho$ differentials, and therefore vanishes on every tangent vector of the graph. Integrating along graph paths makes all outputs constant. Distinct graph points give distinct actual targets with identical complete data.
+
+A fixed protocol with earlier stopping can be padded along its predetermined continuation, using empty words where needed. Equal complete padded data include equal prefixes and stopping decisions. This proves the fixed-history lower bound; it is not an adaptive-word lower bound. ∎
+

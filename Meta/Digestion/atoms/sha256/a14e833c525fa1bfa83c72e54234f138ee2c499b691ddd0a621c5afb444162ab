@@ -1,0 +1,149 @@
+**Theorem 14.1 (unrestricted lower certificate).** Evaluating (CG.112)
+at $u_*$, every allowed common CPTP map in (CG.20) satisfies
+
+$$
+E(\Phi)\geq F(x_*).
+\tag{CG.124}
+$$
+
+This includes complex maps with population transfer and reverse
+coherence, arbitrary countably additive time laws and all additional
+zero-ideal output sectors.
+
+Proof. Use the output-first, unnormalized Choi convention
+
+$$
+J_\Lambda=\sum_{i,j}\Lambda(|i\rangle\langle j|)
+                         \otimes|i\rangle\langle j|.
+\tag{CG.125}
+$$
+
+It is the tensor-factor swap of the input-first convention (CG.54).
+For a CP live map $\Lambda$ with input effect $G_L=\Lambda^\dagger(I_3)$,
+the correct identities are
+
+$$
+\operatorname{Tr}_{\rm out}J_\Lambda=G_L^T,\qquad
+\operatorname{tr}((A\otimes\rho^T)J_\Lambda)
+ =\operatorname{tr}(A\Lambda(\rho)),\qquad
+\operatorname{tr}((I\otimes Z)J_\Lambda)
+ =\operatorname{tr}(Z^TG_L).
+\tag{CG.126}
+$$
+
+In particular the last transpose can be suppressed for the present real
+diagonal $Z_d$, but not for an arbitrary matrix $Z$. Define
+
+$$
+W=\frac14\sum_{e,n\in\{\pm1\}}
+(U_{e,n}\otimes U_{e,n})
+(A_5\otimes\rho_5^T+A_{27}\otimes\rho_{27}^T)
+(U_{e,n}\otimes U_{e,n})^\dagger.
+\tag{CG.127}
+$$
+
+The conjugate input representation in a general Choi covariance formula
+is $\overline U$; all four present $U_{e,n}$ are real, so it equals $U$.
+In output-input order the character spaces are
+
+$$
+\begin{aligned}
+&\langle|00\rangle,|11\rangle,|22\rangle\rangle,\qquad
+\langle|01\rangle,|10\rangle\rangle,\\
+&\langle|02\rangle,|20\rangle\rangle,\qquad
+\langle|12\rangle,|21\rangle\rangle.
+\end{aligned}
+\tag{CG.128}
+$$
+
+Indeed an entry $|ai\rangle\langle bj|$ survives the group average
+exactly when the products of its two coordinate signs agree. On the
+first space $W_{ii,jj}=N_{ij}$. On the $ij$ space its diagonal entries
+are $\sum_y(A_y)_{ii}p_{yj}$ and
+$\sum_y(A_y)_{jj}p_{yi}$, and its off-diagonal entry is $N_{ij}$.
+Consequently the full nine-dimensional inequality is
+
+$$
+S:=I_3\otimes Z_d-W
+ =S_0\oplus S_{01}\oplus S_{02}\oplus S_{12}\succeq0.
+\tag{CG.129}
+$$
+
+The direct-sum equality uses the order (CG.128). In particular the
+three two-dimensional spaces have not been suppressed. A real symmetric
+positive semidefinite witness is also positive on complex vectors,
+so (CG.129) bounds an arbitrary complex Hermitian positive Choi matrix.
+
+For each of the four $y=5$ histories choose a mathematical output effect
+with live part $U_{e,n}R_5U_{e,n}^\dagger$, identity on the entire
+canonical five-label failure register at every time, and zero on other
+sectors. For the four $y=27$ histories choose live part
+$U_{e,n}R_{27}U_{e,n}^\dagger$ and zero on every nonlive sector.
+Give these effects weights $\lambda/4$ and $(1-\lambda)/4$,
+respectively. The eight weights are positive and sum to one. They are
+coefficients of a lower witness, not preparation priors or labels
+accessible to the simulator. The $y=16$ errors remain in the original
+maximum.
+
+For normalized full outputs and an effect $0\preceq M\preceq I$,
+
+$$
+\operatorname{tr}M(\Omega-\omega)
+ \leq\frac12\|\Omega-\omega\|_{1,\mathrm{cq}}.
+\tag{CG.130}
+$$
+
+To see the factor, $\operatorname{tr}(\Omega-\omega)=0$ and
+$2M-I$ is a Hermitian contraction, whose pairing is bounded by the
+trace norm. This argument also applies to measures using a common
+dominating scalar measure. Summing the eight ideal payoffs gives
+
+$$
+\operatorname{tr}(A_5B_5)+\operatorname{tr}(A_{27}B_{27})
+                         +\frac6{11}\lambda.
+\tag{CG.131}
+$$
+
+Now let $\Phi$ be any allowed common channel, without assuming covariance.
+Compress its live output to $V$ to obtain the CP map $\Lambda$.
+Let $G_f$ be the input effect of its entire canonical failure register,
+including any stopped quantum support and singular time measures there.
+The uncounted-by-the-test, but still present, output effect is
+
+$$
+G_o=I-G_L-G_f\succeq0.
+\tag{CG.132}
+$$
+
+It includes live mass outside $V$, abort, rejection and all remaining
+zero-ideal sectors. The eight weighted simulated live payoffs are
+$\operatorname{tr}(WJ_\Lambda)$, and the weighted failure payoff is
+$\operatorname{tr}(D_fG_f)$ for
+$D_f=\lambda\operatorname{diag}(p_5)$: averaging the four actual input
+signs gives $\operatorname{diag}(p_5)$. Equations (CG.126) and (CG.132)
+give the exact budget identity
+
+$$
+\begin{aligned}
+\operatorname{tr}Z_d-\operatorname{tr}(WJ_\Lambda)
+                    -\operatorname{tr}(D_fG_f)
+={}&\operatorname{tr}(S J_\Lambda)
+   +\operatorname{tr}((Z_d-D_f)G_f)
+   +\operatorname{tr}(Z_dG_o)\geq0.
+\end{aligned}
+\tag{CG.133}
+$$
+
+Every term on the right pairs positive semidefinite matrices. Thus the
+simulated payoff is at most $\operatorname{tr}Z_d$. Subtract this from
+(CG.131), apply (CG.130), and bound the weighted average error by the
+original maximum. This proves (CG.124).
+
+The failure effect is constant on the exact time interval. Atoms and
+singular continuous mass therefore enter $G_f$ with their entire mass.
+Wrong stopped support in that register is also included in $G_f$.
+Other wrong-support and extra mass enters $G_o$. The half full norm in
+(CG.130) continues to count it all. No output-fixing reduction, finite
+time partition, minimax interchange, strong duality theorem or channel
+covariance restriction is needed for this lower proof. $\square$
+

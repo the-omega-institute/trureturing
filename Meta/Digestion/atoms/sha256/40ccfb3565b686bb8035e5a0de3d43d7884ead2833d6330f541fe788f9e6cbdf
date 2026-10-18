@@ -1,0 +1,56 @@
+**Theorem 4.1 (actual alternating cycles).** For every $d\ge2$ and
+$n\ge2$, index seeds and blocks cyclically. Let
+$T_i=\{\alpha,\beta\}$, with owner $(i,\varepsilon)$, and let
+$\tau$ exchange alpha and beta. Prescribe
+
+$$
+\begin{aligned}
+z_{i,\varepsilon}&=\Gamma_\varepsilon(s_i),&
+z_{i,L}&=\Gamma_L(\tau(s_{i+1})),\\
+z_{i,q}&=\Gamma_q(s_i)&&
+ (q\in W_d\setminus\{\varepsilon,L\}).
+\end{aligned}
+\tag{GDB.17}
+$$
+
+These are lawful complete native data with seed incidence exactly two.
+If $n=2m$ is even, their actual solution set consists exactly of the
+two alternating leaf tuples. If $n$ is odd, it is empty. The selected
+root-left compatibility tests are total complement bijections. Their
+contraction has a single phase with two values for even $n$, empty
+domain for odd $n$, and prescribed incidence $n$ in the even case.
+
+For every nonnegative $\mu:S_d\to[0,\infty)$ with
+$a=\mu(\alpha)>0$ and $b=\mu(\beta)>0$, the homogeneous even-cycle
+mass and its normalized actual solution law are
+
+$$
+Z_n(\mu)=2(ab)^m,\qquad Q_n=\tfrac12(\delta_{x^+}+\delta_{x^-}).
+\tag{GDB.18}
+$$
+
+Proof. The owner root table maps alpha to $(2,1)$ and beta to $(1,0)$.
+At its unused branch and absent inputs choose $(2,1)$; its reply is
+alpha, different from either excluded input. This is an explicit total
+guard. All other unused decoder entries can be any attained factor of
+their target. Thus every prescribed table belongs to the original native
+interface, and all targets, including absent suffixes, have equations.
+
+The root factor forces $x_i$ to be the actual leaf $s_i$. The factors
+$\Gamma_L(\alpha)=(3,0)$ and $\Gamma_L(\beta)=(2,0)$ are distinct,
+so the left equation holds exactly when $s_i=\tau(s_{i+1})$.
+All other factors then agree with that same leaf. Complementing around
+the cycle is consistent exactly for even length, and then its initial
+leaf determines one of two assignments. Each seed occurs in its own
+block and its predecessor, proving incidence two. Formula (GDB.9)
+makes the root-left test precisely that complement relation. Its cycle
+composition is the identity or complement according to parity, proving
+the contraction and the incidence assertion.
+
+Both even solutions contain $m$ copies of each leaf, so both have
+weight $(ab)^m$, irrespective of the ratio $a/b$. This proves the
+mass and the same-law balance. If either leaf weight vanishes, the
+even solution set is still the same but its mass is zero; the normalized
+law and subsequent positive-mass influence claims are then inapplicable.
+$\square$
+

@@ -1,0 +1,17 @@
+**Definition 10.6 (Calibrated amplitude completion).** Supply the legal
+Hilbert space with orthonormal basis $|I\rangle$, $I\in B_n$, and
+introduce independent local real angle coordinates $\Phi\in\mathbb R^r$.
+Keep the matrix $W$ fixed at the reference (10.14), and define
+
+$$
+|\psi(\xi,\Phi)\rangle
+=\sum_{I\in B_n}\sqrt{p^0_I+(D\xi)_I}\,
+ \exp[-i(W\Phi)_I]|I\rangle,\qquad \xi\in\mathcal U.
+\tag{10.21}
+$$
+
+All geometric and information matrices below are at $(\xi,\Phi)=(0,0)$
+unless explicitly stated otherwise. The amplitudes in (10.21) are
+additional to the probability model. The phases use local real lifts;
+no periodic identification of the chosen $W\Phi$ chart is assumed.
+

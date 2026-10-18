@@ -1,0 +1,27 @@
+**Definition 10.1 (finite native membership language).** Retain exactly
+$\mathcal T,\rho$ and literal equality from Definition 1.1. Let
+$\mathbf z\in\mathbb N^k$ be a finite tuple. Expressions have grammar
+(NCE.9); a supplied Presburger condition $G(\mathbf z)$ requires every
+specified integer-affine exponent to be nonnegative. Let $\Phi$ be any
+finite Boolean combination of
+
+$$
+A=B,\qquad A\in L_i,
+\tag{NCE.22}
+$$
+
+where each $L_i$ is supplied by a finite tree automaton over the fixed
+ranked signature $\alpha:0,\beta:0,\langle\ ,\ \rangle:2$. Membership
+is tested on the expanded native value of $A$. Automata are fixed input
+descriptions, independent of the values of $\mathbf z$. All tree variables
+are jointly existential finite native trees. Every occurrence of a name
+uses the same whole value, including occurrences beneath different powers.
+
+There are no free unknown tree parameters, rational or infinite trees,
+variable addresses, arbitrary homomorphisms, products of epoch parameters,
+tree-quantifier alternations or numerical leaf-count operator. A supplied
+finite ground tree is its literal constructor expression. Negated
+membership and whole-tree disequality are included by Boolean negation.
+The guard may contain scalar quantifiers; these are ordinary Presburger
+quantifiers and do not quantify native trees.
+

@@ -1,0 +1,32 @@
+**Proposition 254.4 (A strict comparison with the weighted guarantee).**
+Take $L=24$, $\eta=1/144$, $s=3/25$ and the uniform triple law
+$P$ on $[24]\cup\{\infty\}$. Set
+
+$$
+p=(1-\eta)P+\eta N(1,24;0,1,24,0),\qquad
+a_i=1\ (i\le24),\quad e=1057/1200.
+\tag{254.8}
+$$
+
+This is feasible at every independent row and has exact uniform
+error $e$, with any positive monotone vanishing tail bounded by $e$.
+For its displayed decomposition,
+
+$$
+\delta=0,\quad s_0=1/144,\quad S=1/72,\quad D=1/48,
+\quad\mu=1/144,\quad B=23/144,\quad\Psi=1/18.
+$$
+
+**Proof.** The triple component supplies correct mass
+$(1-\eta)s=1-e$ on every class. The union row follows from this
+mass, and the base demand is negative. Its positive base is at least
+$1-e$. A class-two word has exact correct deficit $e$.
+Only the exceptional pair changes. It has zero counting defect,
+adds sole-zero slack $\eta$ at one and 24, and positive slack
+$\eta$, giving every displayed quantity by (251.6).
+Thus the old weighted guaranteed cap clips to one, whereas
+$e+\Psi=3371/3600$ and $e+4D=1157/1200$ are strictly below one.
+This is an improvement of the universal repair estimate on a known
+profile; the old plateau suppliers already give a better stopped law
+there. It supplies no new plateau feasibility or optimality. $\square$
+

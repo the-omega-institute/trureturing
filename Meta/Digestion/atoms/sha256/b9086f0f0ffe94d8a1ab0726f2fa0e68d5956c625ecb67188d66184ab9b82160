@@ -1,0 +1,30 @@
+**Definition 1.2 (the fixed pointwise code).** Let $n\ge3$,
+$A=\{s_1<\cdots<s_n\}$ be distinct positive original positions,
+$1\le k\le n$, and $r\ge0$. Set
+
+$$
+w_i=L^{s_i}R,\quad a_i=LLLw_i,\quad c_i=|a_i|=s_i+4,\quad
+C_B=\sum_{i\in B}c_i,\quad W=C_{[n]}.
+\tag{WTF.5}
+$$
+
+For every finite branch image $B$, define
+$\theta_i(B)=\mathbf1_{\{r_B(w_i)=\mathsf{branch}\}}$.
+All three other replies, including absence, contribute zero. Keep the
+original function, without reselection or recoloring:
+
+$$
+\sigma_{A,k}(u)=
+\begin{cases}
+0,&u\in\Pi_1\cup\Pi_2,\\
+1,&u\in\Pi_3\cup\Pi_4,\\
+\mathbf1_{\{\sum_i\theta_i(x_a)\ge k\}},&u\in Z_{b_3},\\
+0,&u\text{ is in any other zero profile}.
+\end{cases}
+\tag{WTF.6}
+$$
+
+This is [PCA, Definitions 4.2 and 23.1][PCA] on the identical
+$\mathcal U_*$. It specifies a function on acquired finite data; those
+data are not an input to the paid preparer.
+

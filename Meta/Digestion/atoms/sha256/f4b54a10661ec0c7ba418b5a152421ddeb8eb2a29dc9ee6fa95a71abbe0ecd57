@@ -1,0 +1,88 @@
+**引理 81.1（实际六维联合矩映射）。** 整个 $r_\star\le r\le r_{\rm c}$ 区间，包括接触处，$D\mathscr M$ 可逆。
+
+证明。写
+
+$$
+q=F^TQF,\qquad c=F^TCF.
+$$
+
+由于 $q_{ii}=0$  且
+
+$$
+2q_{01}q_{02}q_{12}=\det q=\det Q=\alpha\beta>0,
+\tag{RC.125}
+$$
+
+三个非对角元都不为零。把列变化写成 $\dot F=FZ$。null 切向条件是
+
+$$
+\sum_jq_{ij}Z_{ji}=0.
+$$
+
+保持 Gram 的条件是 $Z+Z^T=0$。两组条件的共同解恰为一维：
+
+$$
+Z_{01}=q_{02}q_{12}t,\qquad
+Z_{02}=-q_{01}q_{12}t,\qquad
+Z_{12}=q_{01}q_{02}t.
+\tag{RC.126}
+$$
+
+沿此方向，对比度的变化为
+
+$$
+4tq_{02}(q_{12}c_{01}-q_{01}c_{12}).
+\tag{RC.127}
+$$
+
+现在直接证明它不为零。令
+
+$$
+u(r)=-v_1(r)/u_1(r)>0.
+$$
+
+正报告列可以写成
+
+$$
+f_1=
+\frac{(\sqrt{\alpha+\beta u^2},1,-u)^T}
+{\sqrt{(1+\alpha)+(1+\beta)u^2}}.
+$$
+
+与 $f_0$  正交等价于
+
+$$
+k_r\sqrt{\alpha+\beta u^2}+ru=1.
+$$
+
+因此
+
+$$
+u'(r)=-
+\frac{\beta r\sqrt{\alpha+\beta u^2}/k_r+u}
+{r+\beta u k_r/\sqrt{\alpha+\beta u^2}}<0.
+\tag{RC.128}
+$$
+
+另一方面，
+
+$$
+H(u)=
+\frac{2\sqrt{\alpha+\beta u^2}}
+{(1+\alpha)+(1+\beta)u^2}
+$$
+
+满足
+
+$$
+H'(u)=
+\frac{2u[\beta^2-2\alpha-\beta(1+\beta)u^2]}
+{\sqrt{\alpha+\beta u^2}
+[(1+\alpha)+(1+\beta)u^2]^2}<0.
+\tag{RC.129}
+$$
+
+故 $h_{\rm fr}'(r)=H'(u)u'(r)>0$，包括 $r=r_{\rm c}$。实际 frame 曲线保持 Gram；因 $f_0$ 的方向随 $r$ 非常数，其导数是上述一维 Gram 核的非零向量。因此 (RC.127) 在该核上非零，核中没有能同时消去对比度的非零方向。六维定义域和值域同维，联合导数可逆。 $\square$
+
+这里的六个变量是三个正权重及其三个 null 角度；结论直接作用于实际 Gram 加绝对对比度矩映射。
+

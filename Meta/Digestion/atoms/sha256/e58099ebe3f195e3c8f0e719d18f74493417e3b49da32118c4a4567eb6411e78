@@ -1,0 +1,23 @@
+**Definition 2.1 (integer-labelled ambient codes).** Let $\mathscr C_{\mathbb Z}$
+be the finite or infinite full ordered binary trees whose leaves have labels
+$[j]$, $j\in\mathbb Z$. Let $F$ denote raw ordered pairing. The unique
+leafless code is $O$; it is an infinite tree, not a leaf or an additional
+constant label. In particular $F(O,O)=O$ extensionally. For $d\in\mathbb Z$,
+let $\sigma^d$ add $d$ to every finite leaf label and preserve all pair nodes.
+It fixes $O$, is a group action, and commutes with $F$.
+
+A code is admissible if all its leaf labels are nonnegative. Write
+$\mathscr C_{\mathbb N}$ for these codes. Expansion is
+
+$$
+E([j])=T_j,\qquad E(F(C,D))=\langle E(C),E(D)\rangle,
+\qquad E(O)=\Omega.
+\tag{NAC.4}
+$$
+
+This defines expansion at every finite address: follow raw pairs until a
+code leaf is met, then follow its finite native tree. At a requested finite
+depth only finitely many raw pairs are visited. Thus expansion is also
+well-defined on infinite codes. It need not be injective:
+$E(F([1],[0]))=E([2])$.
+

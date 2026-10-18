@@ -1,0 +1,9 @@
+**推论 13.1（Every odd near-critical width at $r=2$）。** For every odd $m\ge3$, set $r=2$, $k=m+1$, and let $\lambda$ be injective on $Z=P\setminus\{0,m\}$. For the entire target (10.3), with arbitrary high, endpoint, and initial-bottom label coincidences,
+
+$$
+C_{\rm ad}(f)=C_{\rm pre}(f)=1+\lceil\log_2 m\rceil.
+\tag{13.1}
+$$
+
+Proof. Here $g=1$, $n=m$, and $d=\lceil\log_2m\rceil\ge2$. Since $m$ is odd, $m\ge2^{d-1}+1$. The elementary inequality $2^{d-1}\ge2d-2$ for $d\ge2$ gives the guard $m\ge2d-1=(d-1)\rho+1$. An odd $m\ge3$ is not a power of two, so the nonsaturated case of Theorem 12.5 applies. ∎
+

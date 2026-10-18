@@ -1,0 +1,23 @@
+**推论 4.3（六读不能认证初根标签）。** The fiber $\mathcal F(H^*)$
+contains uncountably many complete targets and contains both an
+initial-root target and noninitial-root targets. No function of the
+observed history through clock five alone can correctly assign the
+label $\mathbf1_{\{g(0)=0\}}$ to every target in this fiber.
+Those readings also do not determine the drift.
+
+Proof. The open interval in Theorem 4.2 injects into the fiber via
+$d\mapsto W_d$, since the drift coordinate is $d$. Its center has
+the initial-root label one; every nonzero parameter in the interval
+has label zero. Any function of the six observations takes the same
+value on all of them and therefore cannot give both required labels.
+The distinct drifts prove the last assertion. In particular $H^*$
+neither entails nor excludes $g(0)=0$.
+
+The theorem concerns information available at clock five. It gives
+no $L_2$ assertion: the recursive obstruction (1.7) requires suitable
+collisions after each possible next atom, which six-read compatibility
+alone does not supply. It also gives no failure assertion about the
+two further readings of an unrestricted policy. The initial-root
+condition used by Theorem 2.1 remains a prior promise at this same
+actual history. ∎
+

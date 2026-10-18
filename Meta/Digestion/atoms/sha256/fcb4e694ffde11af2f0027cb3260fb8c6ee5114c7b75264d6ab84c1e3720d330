@@ -1,0 +1,47 @@
+**Lemma 21.1 (finite residual automata).** Boolean combinations of
+(CE.20.3) have effectively constructible finite bottom-up automata on
+padded convolutions of their finite tree coordinates. Emptiness is
+decidable and a nonempty relation supplies a finite witness. The same
+holds after adjoining a finite list of coordinate-prefix conditions.
+
+Proof. The convolution has the union of the coordinate domains. A label
+lists their symbols in $\{\alpha,\beta,\mathsf{pair},\bot\}$, excluding
+the all-padding tuple; its arity is two if a coordinate is a pair and
+zero otherwise. Validity requires each root coordinate present; at a
+binary node a paired coordinate has two present children, while a leaf
+or padded coordinate has padded children. These are finite local checks.
+
+After cancelling common powers, a variable-variable atom is a graph
+$x=\rho^k(y)$ in one orientation. A finite grammar for that graph has
+one recursive production with pair/pair root and two graph children,
+and two complete ground productions
+
+$$
+\rho^k(\alpha)\otimes\alpha,
+\qquad \rho^k(\beta)\otimes\beta.
+\tag{CE.21.1}
+$$
+
+Induction on finite $y$ proves exactness in both directions. Expand the
+finite ground productions into finitely many ordinary automaton states.
+Ground atoms use the unique partial inverse, or are false, and ground
+equality has a finite automaton. Coincident variable names in an atom
+are handled by using the same coordinate twice, including possible
+self-power conditions; no independence is assumed.
+
+To lift an atomic automaton to a larger tuple, inspect its selected
+coordinates. Where all selected coordinates are padded, use a blank
+state. Where selected coordinates have already terminated but other
+coordinates continue, simulate their nullary transition and require
+selected blank states below. Otherwise simulate the selected transition.
+This deals explicitly with projection changing the union-domain arity.
+Intersect with tuple validity. Products, union and powerset
+complementation relative to valid tuples implement every Boolean formula.
+Coordinate-prefix restrictions use finite inspections of labels and
+padding and have finite automata too. Finally compute productive states
+from nullary transitions by repeated binary closure. Recording a first
+production for each new state constructs finite witnesses; intersection
+with final states decides emptiness. All steps terminate on finite state
+sets. These are the usual finite-tree automata constructions, specialized
+to the exact interpreted graphs (CE.21.1). $\square$
+

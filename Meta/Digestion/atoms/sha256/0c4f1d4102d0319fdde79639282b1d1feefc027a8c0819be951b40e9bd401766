@@ -1,0 +1,23 @@
+## 225. At most five genuine axial-X owners with pair {C,D}
+
+Each such owner has exactly one X axis: two would give flat product
+(x-1)^2>(c+d)^2, contrary to genuineness. Suppose g>=6 such owners
+exist, with axial angles theta_i whose sum is at most 2*pi.
+At least one has theta_i<=pi/3. The dominant-axis response estimate
+used in §116.1 applies to x>1+c+d and gives lambda_X^2>1/3, where
+ lambda_X^2=K*(x-1)/(x+1),
+ K=(sqrt(c^2-1)+sqrt(d^2-1))^2/(c+d)^2.
+Precisely, §96.5 supplies the dominant-axis identity
+ tan(theta_i/2)^2+2*lambda_X^2>1.
+For the selected theta_i<=pi/3, its first term is at most1/3;
+hence lambda_X^2>1/3. This part of §116.1 does not use its flat
+opposite-axis hypothesis, which is needed only for the second,
+opposite-axis bound. No flat opposite axis is assumed here.
+Once lambda_X^2>1/3 holds, Jensen gives
+ sum_i B_lambda_X(theta_i)>=g*B_lambda_X(2*pi/g)
+                            >=g*B_lambda_X(pi/3)>g*pi/4.
+Each owner has four C/D transverse slots, of expense
+4*B_lambda_X(theta_i). Their total therefore exceeds g*pi>=6*pi,
+contradicting the entire genuine C/D budget, which is at most4*pi.
+Thus g<=5.
+

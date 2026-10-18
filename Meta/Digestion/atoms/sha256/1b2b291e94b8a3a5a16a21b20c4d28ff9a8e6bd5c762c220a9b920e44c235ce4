@@ -1,0 +1,12 @@
+**Lemma 7.2 (exact reuse of the separated-value amplifier).** Given any primary simple instance $\mathcal B$, apply EA7.2 with its $A_0=\mathcal B$ and output $A=\mathcal A$. Its output is a finite simple automaton with point initialization and
+
+$$
+\begin{cases}
+V_{\mathcal A}\le1/2,&\text{if every }p_{\mathcal B}(w)\le1/2,\\
+V_{\mathcal A}=1,&\text{if some }p_{\mathcal B}(w)>1/2.
+\end{cases}
+\tag{7.1}
+$$
+
+**Proof by exact correspondence.** The alphabet $\Gamma$ in Definition 4.1 is the complete output alphabet of EA7.2, including its disjoint trial/round punctuation. Its accepting set and initialization are unchanged; its rational tables are the simple stochastic tables supplied there. Every finite $\Gamma$ word, including unfinished or malformed rounds, is encoded as data before our separate monitor delimiter $\diamond$. EA7.2's all-word proof therefore bounds precisely the $V_{\mathcal A}$ consumed by Theorem 6.1 and Corollary 6.2; it does not restrict the supremum to well-formed rounds. Its positive-case value one is a supremum approached by finite words, not an asserted attained word. Every punctuation transition acts only on the private sampled automaton state at an existing paid code completion. It neither initializes a second common source nor creates a reset/copy, experiment, clock or post-Stop operation. The monitor's fixed-width code and beta-rejection padding replace EA3.2's balanced code; no balanced-count or endpoint-2 posterior formula from EA6 is used. Our independent endpoint-1 likelihood proof is (6.3). These identifications satisfy all premises of the reused lemma, yielding (7.1) without a second amplifier construction. $\square$
+

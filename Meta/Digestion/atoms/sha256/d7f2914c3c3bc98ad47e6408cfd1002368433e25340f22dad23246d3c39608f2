@@ -1,0 +1,15 @@
+**文献表态 20.1（既有供应与本附录的转接）。** 下列仓内源码的供应版本为 `a7b6ab5c03955e60ee477e87b0fbe02414cc8a1e`；相关原始材料的共同固定版本为 `87e1d19ab25d74f12cd5a46802711de28a70ea20`。版本只标识来源，不将源码阅读升级为新编译、kernel 或公理闭包核验。
+
+| 20.1 的来源 | 准确归属及边界 |
+| --- | --- |
+| 本卷命题3.1–3.4、定理4.2、第9–15章；[Auric](AURIC_FIB_HISTORY_RECORDS_TIME_ARROW.md)定义168.2、169.1，定理170.2、171.2–171.3、177.1及假设168.1、171.1、177.4 | `repo-derived`：复用实际词与递增列双射、固定来源矩转换、平衡尖锐边界、旧值更新、完整取得及有限菜单条件。内部与缺口容量、二三宽及四宽/Bernays结果均为既有成果；本附录没有重新计算或重命名这些容量。 |
+| Gwénaël Richomme，*On some 2-binomial coefficients of binary words: geometrical interpretation, partitions of integers, and fair words*，[arXiv:2510.07159v1](https://arxiv.org/abs/2510.07159v1)，§4.2，引理4.12–4.13、推论4.14，pp.19–21 | `literature-attested`：前缀计数倒序是矩形分拆，精确逆词及固定字母数、散置对数的词枚举已有归属。这里 $x_j$ 对应其倒序分拆的第 $v+1-j$ 项，$K$ 对应散置 $ab$ 数；不由分拆数量推出不同双矩数量。 |
+| Runqiao Li、Ali K. Uncu，*A MacMahon Analysis View of Cylindric Partitions*，[arXiv:2501.19272v1](https://arxiv.org/abs/2501.19272v1)，§2开头的 $q$-二项定义、递推及矩形分拆解释；`D5/S3/Combinatorics/CylindricPartition/LiUncuDefs.lean` 的 `gauss`、同目录 `LiUncuRectangle.lean` 的 `gauss_rectangle` | `literature-attested` / `repo-derived`：Gaussian 矩形按面积枚举为成熟且已有仓内供应。源码参数取 $M=t-h,m=h$；本附录的 $(y_h,\ldots,y_1)$ 是其值域 $0,\ldots,M$ 的反单调列，面积 $d$ 对应其幂次。只使用非负上、下指标，不涉及该论文负指标变体或其它 cylindric partition 结果。系数给叶词重数，绝不是整个联合像容量。 |
+| Arman Nilforoushan、Farzad Parvaresh，[arXiv:2609.23106v1](https://arxiv.org/abs/2609.23106v1)，§7，引理7.1、命题7.11、定理7.12；本卷第8、15章的完整对应 | `literature-attested`：二元三阶计数与总体 deck 增长为既有结果；其总长及字母比例、扫区条件不等于任意指定 $u,v,K$。本附录不由总体增长推出新纤维容量。 |
+| `D5/S3/Arith/FibonacciAtomic/CarryGraphEmbedding.lean` 的 `Path`、`IsRootPath`、`tree_layers`；`CarryGraphRealization.lean` 的 `scan`、`sample`、`bill`、`result` | `repo-derived`：给已供应合法路径与 fair Tape 的真实逐比特扫描、固定标签和带费用停时构造已有归属；取列图和 fair Tape 是其合同输入。它不自动提供本附录未知原树的有序叶事件、共同参照或源保持映射；标签输出律、读数期望费用与实际叶词恢复不得混用。本附录未增加该 sampler 的新逆式。 |
+| `D5/S3/Arith/FibonacciAtomic/RemoteVectorCompensation.lean` 的 `sourceComposition`、`result`；[FIB 来源完成动力学](FIB_SOURCE_COMPLETION_DYNAMICS.md)命题1.2、引理2.2、推论2.5；本卷第15章 | `repo-derived`：有限合法 Fibonacci 地址的共同低前缀与两坐标模余实现、远处非零补偿及无有限 End 结论已有归属。`sourceComposition` 解释为组成须保留 `finiteTail`；地址的加法组成不自动指定叶词顺序、树括号、精确 $u,v,K$ 或实际取得策略。本附录没有将此构造当作未知 INITIAL 的动作。 |
+
+定理16.2使用有限权重交换，定理17.1–17.3将其全部等号来源转接成共同矩点列、完整词纤维及恢复守卫；定理18.1–18.3用最近整数和精确剩余类求和给自然法向的全端点条件。这是上述成熟结构中的普通数学推导，Gaussian 枚举、来源转换、平衡边界和计数因子化均明确复用。对定理16.2不依赖外部通用贪心定理：初段、次序和矩形帽均在证明中核对。
+
+相关文献元数据还包括 Federgruen–Groenevelt，*The Greedy Procedure for Resource Allocation Problems: Necessary and Sufficient Conditions for Optimality*，Operations Research 34(6), 909–918，DOI `10.1287/opre.34.6.909`，以及 Reznick，*The sum of the squares of the parts of a partition, and some related questions*，Journal of Number Theory 33(2), 199–208，DOI `10.1016/0022-314X(89)90006-1`。这两篇的完整定理及证明未核对，不能据题名宣称精确重叠或排除重叠，也未用它们承担上述结论。有限的相关仓内和原始文献核对不证明世界范围原创或优先性。所有新增结论的证据强度是本附录普通证明；没有新增 Lean 认证。
+

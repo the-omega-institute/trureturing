@@ -1,0 +1,14 @@
+**Corollary 5.3 (the missing one bit before WR).** At a fixed latch fiber
+with $r\ge1$, the written address prefix alone has $2^{r-1}$ values while
+the task has $2^r$ classes. Each written prefix has exactly two classes,
+distinguished by the actual pending input bit. Written-address data plus
+that bit has exactly the task kernel.
+
+Proof. Fix the first $r-1$ choices and vary just the last IN. The two
+histories have identical written request cells, source and common side
+data. The common next WR writes different public request bits, and the
+row experiment in Theorem 5.2 separates them without direct buffer access.
+The reverse inclusion follows from the identical-prefix argument there.
+There are $2^{r-1}$ choices of the fixed prefix and two choices of the
+pending bit for each. ∎
+

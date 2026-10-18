@@ -1,0 +1,21 @@
+**Definition 13.3 (relations, range and pressure).** At depth three
+the target menu is exactly
+$W_3=\{\varepsilon,L,R,LL,LR,RL,RR\}$. A relation
+$H\subseteq S_3^n$ is jointly admissible when, for every $i,q$,
+$\Gamma_q(x_i)$ is constant on $H$ or is a function of one
+$r_{x_j}(a)$ on that same $H$, with $a$ any finite word.
+Different targets may use different donors and words; self donors,
+off-target words, arbitrary correlations and cycles are allowed.
+The constant experiment represents zero Reads. Canonical all-word
+simulation in §1 makes this exactly the credited finite native
+family. A projection $P\subseteq S_3$ is range-feasible when
+$|\Gamma_q(P)|\le4$ for every $q\in W_3$.
+
+Use [NPC, Definitions 2.2 and 5.1][NPCa]: $A_n(\mu)$ is the
+maximum product-$\mu$ mass of a complete native template's full
+solution set on $n$ coordinates, and
+$\beta_3(\mu)=\sup_{n\ge1}A_n(\mu)^{1/n}$. Every admissible
+relation is contained in such a full solution set, with the same
+coordinates and nonnegative mass. No factorization of a competitor
+is included in these definitions.
+

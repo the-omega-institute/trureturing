@@ -1,0 +1,55 @@
+**Theorem 3.2 (square-root lifting).** For every $d,m\ge1$,
+
+$$
+Z_d(km)\ge Z_d(m)^{k/2}\quad(k\ge1),
+\qquad
+\sigma_d\ge\frac{\log_2Z_d(m)}{2m}.
+\tag{JTC.8}
+$$
+
+Consequently, for $D\ge d$ and $N=2^{D-d}$,
+
+$$
+M_1(D)\ge
+\left\lceil Z_d(m)^{\lfloor N/m\rfloor/2}\right\rceil.
+\tag{JTC.9}
+$$
+
+**Proof.** For the dual weight $w$ on $S_d^m$, every cell of a joint hard-target
+map is internally admissible: hard targets are fixed on the cell, while every
+other target retains its own-coordinate witness. If $a_w$ is the maximum
+weight of an internally admissible set and $W=\sum w=Z_d(m)$, then
+
+$$
+\kappa_w(P)^2=\sum_y b_y(P)^2
+\le a_w\sum_yb_y(P)\le W.
+$$
+
+Apply Theorem 2.2 to an admissible relation on $k$ supercoordinates. Its
+mass is at most $W^{k/2}$, whereas the whole universe has product mass
+$W^k$. The dual point weight therefore forces
+$Z_d(km)\ge W^{k/2}$. Since $Z_d(n)\le K_d(n)$ and [FMR] gives
+$\sigma_d=\lim_n n^{-1}\log_2K_d(n)$, taking that limit along
+$n=km$ proves the rate inequality. Restricting
+to $\lfloor N/m\rfloor$ actual blocks of a perfect scaffold and fixing leftover
+blocks to $\alpha$ gives (JTC.9); the fixed blocks only turn donor equations
+into constants. This is an analytical restriction of an actual scaffold, not
+independent child codes.
+$\square$
+
+The complementary bound is
+$\sigma_d\le m^{-1}\log_2Z_d(m)$. Indeed products of a length-$m$
+fractional cover give a cover of length $km$ with weight $Z_d(m)^k$;
+harmonic rounding costs at most $1+km\ln|S_d|$. Divide its logarithm by
+$km$ and let $k\to\infty$. Thus the finite LP gives the full comparison
+
+$$
+\frac{\log_2Z_d(m)}{2m}\le\sigma_d
+\le\frac{\log_2Z_d(m)}m,
+$$
+
+with a factor-two lower loss, rather than a vanishing length error.
+
+The factor $1/2$ is part of the theorem. It is not legitimate to replace it by
+one, and (JTC.8) is not an exact formula for $\sigma_d$.
+

@@ -1,0 +1,90 @@
+**Theorem 72.1 (full-state weak binding).** With precisely the fixed data
+of Definition 70.1, $-\infty<E_\tau(g)<0$ for every $g>0$.
+It is attained by a normalized vector in $D(S)$, and
+
+$$
+\lim_{g\downarrow0}\frac{E_\tau(g)}{g^2}
+ =e_*=-\frac{\beta^2}{4a}
+ =-\frac{\phi(k_0)^2\left(\int_I\phi^3dk\right)^2}
+             {64\pi^2a\det M}.
+\tag{72.1}
+$$
+
+The limiting Coulomb operator, relative to raw $dz$, is the form
+operator on $H^1(\mathbb R^3)$
+
+$$
+H_{\rm C}=-a\nabla_z\cdot M\nabla_z-\frac{\beta}{d(z)}.
+\tag{72.2}
+$$
+
+Proof. Boundedness of $W_\tau$ gives the finite lower bound. For a
+normalized smooth $h$ supported in an annulus, set
+$\psi_R(k,q)=\phi(k)R^{-3/2}h(q/R)$. This lies in the full native
+domain, and its exact kinetic energy is $R^{-2}K[h]$.
+By (70.3) its potential energy is
+$R^{-1}\int U|h|^2+o(R^{-1})$, with positive leading coefficient.
+For every fixed $g>0$, large $R$ therefore gives negative energy.
+Proposition 70.2 makes every spectral point below zero discrete;
+the finite negative bottom is consequently an eigenvalue in $D(S)$.
+
+The mature scalar Coulomb calculation used here is the square identity
+in [H3](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III.md)
+(82.4), with its Lebesgue normalization, as an intermediate only.
+Indeed $z=M^{1/2}y$, with the unitary change
+$h(z)=(\det M)^{-1/4}u(y)$, turns (72.2) into
+$-a\Delta_y-\beta/|y|$. With $\rho=\beta/(2a)$ its form satisfies
+
+$$
+ a\|\nabla u\|_2^2-\beta\int\frac{|u|^2}{|y|}dy
+       +a\rho^2\|u\|_2^2
+ =a\left\|\nabla u+\rho\frac{y}{|y|}u\right\|_2^2.
+\tag{72.3}
+$$
+
+Hardy controls the form and density justifies integration by parts for
+all complex $H^1$ functions. Thus its normalized minimum is $e_*$,
+attained only up to a constant complex phase by
+
+$$
+h_*(z)=(\det M)^{-1/4}\left(\frac{\rho^3}{\pi}\right)^{1/2}
+                      e^{-\rho d(z)}.
+\tag{72.4}
+$$
+
+Equality in (72.3) forces $e^{\rho|y|}u$ to have zero weak gradient
+locally, hence to be constant on connected $\mathbb R^3$.
+
+For the variational upper limit take
+$\psi_g(k,q)=\phi(k)g^{3/2}h_*(gq)$.
+Its exact kinetic energy is $g^2K[h_*]$. Proposition 71.2 gives
+$gV_\tau[\psi_g]=g^2\int U|h_*|^2+o(g^2)$, so
+$\limsup E_\tau(g)/g^2\le e_*<0$.
+
+For the lower direction first establish an estimate applying to every
+normalized native state with $\mathfrak e_g[\psi]\le0$.
+Use (71.3) with a fixed $\delta=\delta_0$ to get
+$0\ge(a-Cg)T[\psi]-Cg\sqrt{T[\psi]}$.
+For all sufficiently small $g$ this implies $T[\psi]\le Cg^2$.
+This is an estimate on the entire form domain.
+Now use (71.2) with $\delta=g^{1/4}$ and define
+$h_g(z)=g^{-3/2}f(z/g)$. Then
+
+$$
+\|h_g\|_2^2=1+O(g^2\delta^{-2}),\qquad K[h_g]\le C,
+\qquad
+\frac{\mathfrak e_g[\psi]}{g^2}
+ \ge a(1-C\delta^2)K[h_g]-\int U_g|h_g|^2dz
+                   -C g\delta^{-2}.
+\tag{72.5}
+$$
+
+The norm error is nonpositive before the $O$ notation.
+The final error tends to zero. Proposition 71.2 and (72.3) give a
+lower bound $e_*\|h_g\|_2^2-o(1)=e_*-o(1)$.
+Apply this to the attained ground states, which have negative energy.
+Together with the upper limit this proves (72.1), including its full
+variational lower direction. Neither a new effective-model hypothesis
+nor a restriction of the native admissible class has been made.
+$\square$
+

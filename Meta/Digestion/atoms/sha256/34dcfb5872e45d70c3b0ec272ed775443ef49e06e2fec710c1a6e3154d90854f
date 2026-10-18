@@ -1,0 +1,35 @@
+**定理 9.5（点态共振与均方稳定）。** 对归一化范数
+
+$$
+\|f\|_2^2=\frac1{2\pi}\int_{-\pi}^{\pi}|f(\theta)|^2\,d\theta,
+$$
+
+存在 $Y\in L^2$，使
+
+$$
+\|Y-Y_N\|_2\le\frac1{2\sqrt N}.
+$$
+
+对实响应核 $K\in L^2$，置 $\mathcal O_K(f)=(2\pi)^{-1}\int Kf$，则
+
+$$
+|\mathcal O_K(Y_N)-\mathcal O_K(Y)|
+\le\frac{\|K\|_2}{2\sqrt N}.
+$$
+
+宽度 $2\varepsilon$ 的周期平均窗口，$0<\varepsilon\le\pi$，满足
+
+$$
+|\Delta\mathcal O|\le\frac{\sqrt\pi}{2\sqrt{N\varepsilon}}.
+$$
+
+**证明。** Parseval 正交性给
+
+$$
+\|C-C_N\|_2^2=\|S-S_N\|_2^2
+=\frac12\sum_{j=N}^{\infty}\frac1{(2j+1)^2}
+\le\frac1{8N}.
+$$
+
+末式用 $(2j+1)^{-2}<1/(4j(j+1))$ 望远镜求和。整数倍频保持归一化均方范数，内部谐波绝对权重总和为一，所以 $U,V$ 各自尾部范数不超过对应圆形尾部。$U$ 偶、$V$ 奇，尾部正交，且 $Y_N=U_N+V_N$，得到第一界。Cauchy–Schwarz 给核界；平均窗口的核为 $\pi/\varepsilon$ 乘窗口指示函数，范数为 $\sqrt{\pi/\varepsilon}$。固定分辨率稳定不含范数随精度无界的点探针。$\square$
+

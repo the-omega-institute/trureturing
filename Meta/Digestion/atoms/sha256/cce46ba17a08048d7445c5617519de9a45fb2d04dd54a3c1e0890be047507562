@@ -1,0 +1,22 @@
+**定理 49.4（完整新域增长与保留的实际闭合）。** $\mathcal S_{\mathrm g}$ 的实际因子是覆盖恰 $\mathcal D_{\mathrm g}$ 全部排列的一个圈，其数量为
+
+$$
+e_{\mathrm g}=e_{\mathrm f}+1,\qquad
+K_{\mathrm g}=K_{\mathrm f}+d,\qquad
+|\Omega_{\mathrm g}|=2n(K_{\mathrm f}+d).
+$$
+
+它从 $L_0^{A_R}$ 开始并以原来的实际边 $R_{m-1}^{A_R}c=L_0^{A_R}$ 闭合。
+
+**证明。** $G$ 的唯一旧 $b$ 边终端遗漏 $z_1$，与已选择供应的切口不同，仍在旧圈上。其完整单接触接合从 $R_2^G$ 到 $L_2^G$ 为
+
+$$
+R_2\xrightarrow cL_3\xrightarrow H R_3\xrightarrow c\cdots
+\xrightarrow cL_{m-1}\xrightarrow H R_{m-1}
+\xrightarrow cL_0\xrightarrow H R_0\xrightarrow cL_1\xrightarrow H R_1\xrightarrow cL_2,
+$$
+
+其中每项 $H=(ab)^{n-1}a$ 是相应新原圈删去一项 $b$ 边后的完整补路径；方向反过来时取全路径反向。这个路径也可写为 $(cH)^dc$，内部恰为全部 $d$ 个新原圈的全部 $2nd$ 个顶点。以它替换唯一旧 $b$ 边，两端不变，所有旧顶点保留，新顶点加入恰一次；它使用完整 $G$ 的全部新 $c$ 边，故实际结果就是定义 49.1 的完整供应因子。唯一旧接触保证新域不交其它旧顶点，没有隐藏圈。
+
+全部其它旧边保留。原 $A_R$ 闭合边是 $c$ 边，不是被替换的 $G$ 旧 $b$ 边，所以它保留为从 $L_0^{A_R}$ 开始的同一实际闭合边。完整供应共有 $m=d+1$ 个邻居，唯一旧邻居与 $d$ 个新邻居给出数量公式。
+

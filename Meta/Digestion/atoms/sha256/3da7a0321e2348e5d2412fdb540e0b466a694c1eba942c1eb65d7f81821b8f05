@@ -1,0 +1,99 @@
+**Proposition 9.6 (the exact residual global obligation and a necessary
+long interval).** Partition $\mathcal B$ as
+$\mathcal B_{\le3}=\{B:\beta_B\le3\}$ and
+$\mathcal B_{\ge4}=\{B:\beta_B\ge4\}$. For this one complete
+graph, $m\ge G$ is equivalent to
+
+$$
+\sum_{B\in\mathcal B_{\ge4}}(D_B-E_B)
+\le E_{\mathrm{cut}}+u+
+       \sum_{B\in\mathcal B_{\le3}}(E_B-D_B).
+\tag{SI.38}
+$$
+
+Every correct strict-subgrid graph at both original caps therefore
+has an interval $B=(a,b)$ with
+
+$$
+b-a\ge4,\qquad D_B>E_B,\qquad |Q_B|<|V_B|.
+\tag{SI.39}
+$$
+
+Every internal depth of this interval contains a support-ambiguous
+cell. In particular there are at least three consecutive such depths.
+The same necessary condition holds for the supplied projection of
+any complete original native preparer with $H_P<G+4+r$ and
+both native caps $n+1,W+3$.
+
+Proof. Rearrange (SI.32) to obtain
+
+$$
+m-G=E_{\mathrm{cut}}+u+
+ \sum_{B\in\mathcal B_{\le3}}(E_B-D_B)
+ -\sum_{B\in\mathcal B_{\ge4}}(D_B-E_B).
+\tag{SI.40}
+$$
+
+This proves the equivalence with (SI.38). Each term on the right
+of (SI.38) is nonnegative by Theorem 9.4. If $m<G$, the inequality
+in (SI.38) is reversed strictly, so at least one long interval has
+$D_B-E_B>0$. Equation (SI.33) gives its host deficit. Consecutivity
+of the cuts means none of the internal depths is common-support;
+the equivalence in Definition 9.1 then supplies an ambiguous cell
+at each. The native projection has $m\le H_P-4-r<G$ and both
+Boolean caps by (SI.5), so the same argument applies. $\square$
+
+The remaining global obligation is (SI.38) for every original complete
+graph; it is not proved here when long intervals occur. A separate
+inequality $D_B\le E_B$ for each long interval
+would suffice, but is stronger than the required global sum: excess
+at cuts or other intervals and the genuine nonlive states can also
+compensate a local deficit. In a four-coordinate block the support
+patterns $T_a\cup\{x\}$ and $T_a\cup\{y,z\}$, with
+$x,y,z,w$ distinct, are incomparable and leave $w$ fresh for both.
+Thus the nested-support-or-full-union exclusion used for the two
+internal depths of a three-coordinate block no longer applies. These
+sets only identify the failure of that exclusion; they do not provide
+actual count-compatible histories, fixed successors or a correct table.
+Actual assignments, certified exits and both whole-run caps remain
+obligations for any proposed long-interval compensation or construction.
+
+The actual-prefix inequalities of [CP, Theorem 5.1][CP] continue to
+hold simultaneously on the same vector $(m_i)$ used in (SI.30).
+An interval here is not supplied with an independent total-threshold
+entry: different actual entry assignments and count cells may reach
+its states, and certified traffic may visit states live elsewhere.
+Neither independent residual lower bounds nor subtraction of lower
+bounds on overlapping coordinate sets establishes (SI.38). No
+cost-preserving normalization into the short-gap class is supplied.
+For $\min(k,n-k+1)\ge4$, neither the unrestricted compensation nor
+a complete correct strict-subgrid graph is established here. The
+unrestricted-budget $H_{\min}$ is a separate question.
+
+The new deductions are repo-derived ordinary mathematics: the support
+envelopes and localization concern all actual histories of one complete
+table, and Theorem 9.4 compensates every short interval without selecting
+representative histories or separator packs. Theorem 2.2, the local
+diagonal argument of Theorem 4.1, the identity of Theorem 5.2 and
+the exclusions cited in Section 2 are reused suppliers. The native
+feasibility equivalence and full-domain grid are reused without
+reproving their source or entry contracts. The fixed-representative
+obstructions of [WTF, Theorem 11.7][WTF] remain compatible with these
+incidence sums; no capacity bound for those separators is a premise.
+
+The literature comparisons retain the hypotheses stated in Section 8.
+Wegener's Chapter 14, Section 4, printed page 424 uses realizability
+of every graph path for BP1, and Bryant's Section 2, Definition 1
+requires strictly increasing variable indices. In addition,
+[Cook, Edmonds, Medabalimi and Pitassi, *Lower Bounds for
+Nondeterministic Semantic Read-Once Branching Programs*, Section
+2.1][CEMP] defines an acyclic nondeterministic graph and constrains
+every consistent accepting path to be read-once. Live freshness in
+Definition 1.2 does not impose that condition on paid post-certificate
+traffic. These are comparisons with distinct model hypotheses; no
+external unrestricted threshold lower bound is used in (SI.34) or
+(SI.38), and no worldwide priority assertion is made.
+
+[CP]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_COMMON_PREFIX_MEMORY_FRONTIER.md
+[CEMP]: https://doi.org/10.4230/LIPIcs.ICALP.2016.36
+

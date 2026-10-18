@@ -1,0 +1,67 @@
+**Theorem 10.1 (action range versus retained matrix-space dimension).**
+Set $Z=r=1/2$, $c=1/4$, $I_0=[1/8,3/16]$, and
+
+$$
+\tau_0=\sqrt{1-\left(\frac{4-\sqrt6-\sqrt2}{8}\right)^2}.
+\tag{FH.32}
+$$
+
+Fix $0\leq A<\infty$. Suppose one §4 handoff and its later processors give complete-output
+error at most $\varepsilon<\tau_0/2$ for every $x\in I_0$,
+$\beta=m=0$, and every phase request $|\alpha|\leq A$.
+For every integer $M\geq2$ with $A\geq8\pi(M-1)$, necessarily
+
+$$
+M\leq\left(1+\frac{2}{\tau_0-2\varepsilon}\right)^R.
+\tag{FH.33}
+$$
+
+If there are at most $2^b$ classical blocks, each quantum block having
+dimension at most $d_Q$, this implies
+
+$$
+2^b d_Q^2\geq
+\frac{\log M}{\log(1+2/(\tau_0-2\varepsilon))}.
+\tag{FH.34}
+$$
+
+This is a necessary packing estimate, not a sharp finite-action memory law.
+
+Proof. Choose $M$ equally spaced heights in $I_0$. Their minimum gap is
+$1/(16(M-1))$. For each distinct pair $x,y$ the common antiphase action
+$\alpha_{xy}=\pi r/(y-x)$ obeys
+$|\alpha_{xy}|\leq8\pi(M-1)\leq A$. Set
+$\theta(x)=\arcsin\sqrt{x/c}\in[\pi/4,\pi/3]$. Direct substitution
+into $v_x$ from §8 gives
+
+$$
+\langle v_x,v_y\rangle=r\cos(\theta(x)-\theta(y)).
+$$
+
+The target inner product at this antiphase action is
+$\tfrac12(1-\cos(\theta(x)-\theta(y)))$, lying between zero and
+$(1-\cos(\pi/12))/2=(4-\sqrt6-\sqrt2)/8$. Every target pair has
+trace distance at least $\tau_0$. Applying (FH.29) to the pair-specific
+common request shows that the handoff packets $\sigma_x$ are pairwise
+separated by $\delta=\tau_0-2\varepsilon>0$ in half trace norm.
+
+The real affine space of trace-one Hermitian elements of
+$\widehat{\mathcal B}=\mathcal B\oplus\mathbb C$ has dimension
+$(R+1)-1=R$. With the norm $\tfrac12\|\cdot\|_1$ on its
+translation space, all normalized states lie in the radius-one ball about
+any fixed state. The open radius-$\delta/2$ balls centered at these
+$M$ packets are disjoint, and lie inside the concentric ball of radius
+$1+\delta/2$. Translation-invariant $R$-dimensional volume scales by
+the $R$th power of radius, even though these balls include nonpositive
+Hermitian elements. Comparing volumes gives
+$M(\delta/2)^R\leq(1+\delta/2)^R$, proving (FH.33).
+Finally $R=\sum_\alpha n_\alpha^2\leq2^b d_Q^2$, giving (FH.34).
+$\square$
+
+The phase action is $|\alpha|$, the variation of one original phase leg.
+At duration one it is also the phase speed. It is not a physical energy
+or the spectral action of the extra probe port (RA.18), whose full
+implementation and access contract differ. Increasing duration to respect
+a speed bound is paid separately. Neither (FH.33) nor the exact symbolic
+actions certify noisy timing, gain, reference or gate precision.
+

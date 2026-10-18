@@ -1,0 +1,50 @@
+**Definition 3.2 (the common program).** $P_{H,J}$ performs the following finite
+algorithm, with every finite data operation expanded into the paid routines of
+PR57.D2 and its finite sequence/test/loop expansion rules.
+
+1. Run the existing `NativeFullSourceProducer.sourceControl` from
+   `initialControl`, serializing every actual literal Read into the producer
+   journal before resuming its saved continuation. Represent its frames and
+   acquired subtrees on constructed tapes. Its two local actions at each
+   branch have their actual control markers and paid tape implementation.
+   At the supplier's empty-stack delivery state, retain the returned tree by
+   paid serialization, rather than ending the host observer. The terminal
+   delivery is an internal return, not an extra Native Read.
+2. Seal that acquired seed code and acquisition prefix. Execute and journal
+   two actual Native $\rho$ calls, one at a time. Seal their rows and all
+   current counter/descriptor versions. Close an acquisition fence. Let its
+   cut index be $a(u)$. The four-view domain begins at this cut.
+3. For $i=0,\ldots,J-1$, construct $p_i=L^{i+1}$. Execute one literal
+   $\operatorname{Read}(p_i)$ on the current register and journal its actual
+   reply $y_i$. Execute one actual $\rho$ and journal it. Freeze the currently
+   sealed prefix $d_i$ with row count $a_i$. If $y_i$ is a leaf reply, call
+   $\operatorname{Fetch}(d_i,0)$; otherwise call
+   $\operatorname{Fetch}(d_i,a_i)$. Journal the complete success or rejection.
+   This choice uses the acquired reply, not the private current tree.
+4. After the rounds, perform one Fetch of row zero from the then-sealed prefix,
+   journal its successful complete copy, then Fetch the first out-of-range row
+   of the next sealed prefix and journal its executed rejection. Thus every
+   source exercises both recall and executed failure, even if the earlier
+   reply-dependent branch always made the same choice.
+5. Freeze the resulting data archive and make one complete owned copy to the
+   consumer. Halt with this full framed archive and its original identities
+   and descriptors as the terminal output $O(u)$. It includes the truthful
+   acquisition rows. It excludes its own later serialization and transmission
+   events; those are still in the actual primitive event word.
+
+Rows follow source-response commitment, so cuts exist at which a source event
+has executed but its row is only partially written. There is at most one
+completed semantic event awaiting its row seal. Copy destinations remain
+unavailable through their last bit and final seal. The program has no
+self-extending archive scan and no row that contains its own full successor
+archive.
+
+The source producer is reused by continuation composition: its actual read
+and branch-local sequence is unchanged on projection. Added writer work is
+paid `localStep` work between those instructions. The complete acquired tree
+is already the supplier's output, so no new source-reconstruction theorem is
+being substituted for it. The explicit stack, frame tags, address append,
+finite tree-code concatenation and tests are finite string algorithms; their
+stack data may grow, but their instruction descriptions are fixed. There is
+no atomic string operation or integer-indexed control family.
+

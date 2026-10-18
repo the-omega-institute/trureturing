@@ -1,0 +1,24 @@
+**Definition 14.1 (provenance and hypothesis correspondence).** The
+following identifications specify the suppliers of §§11–13.
+
+| Source | Exact use and retained boundary |
+| --- | --- |
+| [Continuation II §§26–30][MEM-CII] | Complete observable state, one instruction and response update per state, halt outputs, and proof-only support/rank. Its finite-plant enumeration is not applied directly to the infinite register/source domain. |
+| [Continuation II §38][MEM-CII] | The fixed literal instruction and full-state discipline already have this owner. That section's stationary third-image target, retained cache law and leaf-bounded source family differ from the evolving acquired fiber and full row here; neither its size cutoff nor its lower bound is imported. |
+| [Effective Resolution Continuation §13][MEM-ERC] | Synchronous whole-command control and separately counted output states are reused conventions. Its finite affine device and phase target do not supply the native separation. |
+| CAR §§3–6 | The whole-fiber bijection, exact joint predicates, full-row equality and one descriptor realized uniformly on every chart and epoch. The same source tuple supplies every response in (CAR.49). |
+| [JRF (2.4), Theorem 3.1][JRF] | Eventual branch replies on all finite sources supply the new per-table stopping bound. The actual resource cap is used as the specification refuted by Corollary 13.6 when augmented with a state guarantee, not as a state-preserving synthesis step. |
+| [SRF §§1–3][MEM-SRF] and [ARH §§27–32][MEM-ARH] | Exact resources on the entire recognized synchronous family, and whole acquired two-hole-graph arbitrary-cut boundedness with finite negative witnesses, respectively. Their source and decision suppliers retain those hypotheses; they do not establish transfer of a specified complete controller budget to CAR. |
+| [Ginsburg–Spanier, Theorem 1.2][GS] | Decidability of first-order Presburger sentences over nonnegative integers, after the explicit whole-source and action interpretation. Its Theorem 1.3 gives the separate effective semilinear description; no general native-tree solver is inferred from it. |
+| [Reissig–Weber–Rungger, §III][MEM-RWR] | Mature system, Moore-output and feedback-composition framework. It supplies background for the observation/control distinction, not the native stopping bound, state lower bound or arithmetic feasibility theorem. |
+
+The external logical and control-framework results are
+`literature-attested` at these stated scopes. The per-table native
+stopping bridge, shared-state use of the CAR predicates, entire acquired
+family (CAR.61) and its update/state separation are `repo-derived`
+ordinary mathematical deductions. No global novelty assertion is made.
+The [finite-simplicial cell induction supplier][MEM-CELL] concerns finite
+simplicial sets and boundary attachments. It supplies no correspondence
+for this acquired register or its response successors, and no memory
+implication is taken from it.
+

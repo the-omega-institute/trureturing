@@ -1,0 +1,42 @@
+**定义 90.3（Full INITIAL tables and the algebraic capacity condition）。** Assume
+
+$$
+h\ge5,\qquad 3\le m<k<2m,\qquad
+b=k-m\ge3,\qquad T=k+1,\qquad \gcd(m,T)=1.
+\tag{90.6}
+$$
+
+Take arbitrary tables $\lambda_0,\lambda_1:\mathbb Z/T\mathbb Z\to Y$, a common $R$ fresh from both low images, and any independently observed initial-bottom label $L_\bot$. On the entire original INITIAL space set
+
+$$
+\begin{aligned}
+f(v,-j,s)&=
+\begin{cases}
+\lambda_v(j),&0\le s<m,\\
+R,&m\le s<k,
+\end{cases}\qquad
+f(\bot)=L_\bot,\\
+F(w)&=f(q_{\rm INITIAL}(w)),\qquad
+\Lambda(j)=(\lambda_0(j),\lambda_1(j)),\qquad
+n=|\Lambda[\mathbb Z/T\mathbb Z]|\in\{2^h-1,2^h\}.
+\end{aligned}
+\tag{90.7}
+$$
+
+Every actual phase, every INITIAL tail $s<k$, both free values and all complete histories realizing them are included. The low tables are separately independent of INITIAL tail; their component partitions, images and decoder stopping times need not agree. $L_\bot$ may coincide with any other label. Targets are never reevaluated on current records.
+
+Let $\mathsf A_h$ assert the existence of a phase assignment $Z:\mathbb Z/T\mathbb Z\to\mathbb F_2^h$, with coordinates $0,\ldots,h-1$, satisfying exactly
+
+$$
+\begin{aligned}
+\Lambda(j)\ne\Lambda(j')&\ \Longrightarrow\ Z(j)\ne Z(j'),\\
+\bigoplus_{j\in\mathbb Z/T\mathbb Z}Z(j)&=0,\\
+Z_t(j)&=0&&j\notin W_t,\quad0\le t<h,\\
+Z_0(0)&=Z_0(b)=1,\qquad
+Z_0(i)=0&&1\le i<b.
+\end{aligned}
+\tag{90.8}
+$$
+
+Different vectors within one joined class are allowed. The XOR and support clauses mean that every full row is even and supported on its actual chronological path, whose complement has $b$ vertices. The final line is exactly the charge prefix corresponding to first literal zero at position $b$. There is no further seam condition in $\mathsf A_h$.
+

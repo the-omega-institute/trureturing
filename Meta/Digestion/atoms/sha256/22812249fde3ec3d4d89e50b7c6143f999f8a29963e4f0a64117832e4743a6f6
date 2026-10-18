@@ -1,0 +1,26 @@
+### Theorem 5.1. Two-local impossibility and a gapped three-local construction
+
+No two-local Hamiltonian can have H_+ or H_- as a nondegenerate ground state. Conversely,
+
+$$\boxed{H^{(+)}=L+I_{16}+\frac{K_{ABC}}{2\sqrt3}} \tag{5.1}$$
+
+has H_+ as its unique ground state, ground energy zero and spectral gap exactly 2 in the coefficient normalization shown. Changing the sign of K gives the analogous Hamiltonian H^{(-)} for H_-.
+
+Proof of the lower bound on locality. The two orthogonal states have identical two-body marginals, hence the same energy expectation for every two-local Hamiltonian T. If H_+ has ground energy e, then T-eI>=0 and <H_-|(T-eI)|H_->=0. Positivity makes H_- another ground vector. The same argument holds with the endpoints reversed.
+
+Proof of construction and gap. The operator L is nonnegative, and ||K||<=2sqrt(3) follows from its Hermitian cubic identity. Therefore I+K/(2sqrt(3))>=0. Let Pi_+,Pi_- be the two endpoint projectors and Q=I-Pi_+-Pi_-. Four spin-1/2 representations decompose as 0^{oplus 2} plus 1^{oplus 3} plus 2, which follows by applying (1/2) tensor (1/2)=0 plus 1 twice. Thus L>=2Q. Since the two endpoint eigenvectors of K are known and its remaining spectrum lies in [-2sqrt(3),2sqrt(3)],
+
+$$I+K/(2\sqrt3)\ge2\Pi_-.$$
+
+It follows that
+
+$$\boxed{H^{(+)}\ge2(I-\Pi_+).} \tag{5.2}$$
+
+H^{(+)}H_+=0 and H^{(+)}H_-=2H_-, so the lower bound is attained by an excited vector, proving uniqueness and the exact gap. Equation (5.1) contains only pair Heisenberg terms and one scalar-chirality term supported on ABC. Its maximum interaction order is three. QED.
+
+Consequently every maximizer in Theorem 3.1 has minimum unique-ground-state Hamiltonian locality exactly three: product local conjugation transports the construction and preserves operator support sizes.
+
+As an independent finite check, the full spectrum of (5.1), including multiplicities, is
+
+$$0^{(1)},\quad2^{(4)},\quad3^{(3)},\quad4^{(3)},\quad7^{(5)}.$$
+

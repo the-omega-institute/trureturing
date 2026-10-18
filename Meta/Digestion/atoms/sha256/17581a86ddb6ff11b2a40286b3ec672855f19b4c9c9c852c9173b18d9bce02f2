@@ -1,0 +1,78 @@
+**Definition 4.3 (local operations and complete fields).** The fixed
+interpreter has sequential ROM and work access: read or write the
+currently addressed bit, move a head by one cell, branch on one bit,
+or make a fixed finite-control transition. There is no whole-word
+random access. Seeking a row means moving through the intervening
+cells. Registers containing a successor index are bit strings copied
+one bit at a time; equality, increment, comparison, offset calculation
+and bounded addition are bit loops with carry and loop state. ROM
+fetching, routine entry/return and instruction selection have counted
+PCs and heads. Each local instruction includes its finite-control
+continuation in the same paid occurrence. A local move can change the
+binary head encoding and PC in several coordinates; a local array write
+can change its one data cell and the counted stage bits together.
+These are charged local instructions;
+**local instructions have no one-bit write restriction**. The one-bit
+restriction below is imposed at actual source-response receipt.
+
+There are three disjoint flat arrays of $P$ bits: sender $S$, mailbox
+$B$, receiver $D$. Their cells remain allocated even when erased or
+unreadable. They coexist with the entire installed image. For
+$P=0$ each has no cells. The complete integer slots, each of width
+$r$ specified in Definition 4.6, are the following thirty-two fields.
+
+| Slot | Meaning |
+| --- | --- |
+| 1 | Current graph node |
+| 2 | Pending graph successor |
+| 3 | Saved graph/routine return node |
+| 4 | Interpreter PC |
+| 5 | Saved fixed-routine return PC |
+| 6 | Code head |
+| 7 | ROM head |
+| 8 | Work head |
+| 9 | Installation input head |
+| 10 | Table address |
+| 11 | Row base |
+| 12 | Row offset |
+| 13 | Field position |
+| 14 | Field length |
+| 15 | Row width |
+| 16 | Sender occupied length $d$ |
+| 17 | Sealed mailbox length $b$ |
+| 18 | Receiver occupied length $a$ |
+| 19 | Sender head |
+| 20 | Mailbox head |
+| 21 | Receiver head $q$ |
+| 22 | Copy loop index |
+| 23 | Clear loop index |
+| 24 | Bit-operation loop index |
+| 25 | Literal capacity $P$ |
+| 26 | Graph node count $N$ |
+| 27 | Graph index width $w_G$ |
+| 28 | Image/table end |
+| 29 | First arithmetic temporary |
+| 30 | Second arithmetic temporary |
+| 31 | Installation output head |
+| 32 | Bounded routine/field continuation |
+
+Sixty-four Boolean fields contain five response flags; current ROM,
+work and transfer bits; carry, borrow and comparison bits; ownership,
+seal, armed, idle, stage and validity flags; and fixed finite-control
+scratch. Two of the already allocated stage bits encode the receiver
+phase $\phi\in\{\mathsf{pre},\mathsf{ready},\mathsf{written},
+\mathsf{sealed}\}$ as $00,01,10,11$, respectively. These bits are
+reserved throughout a frame; bit-loop and return control use the listed
+PC, return and continuation slots. Unused Boolean fields are also
+allocated. There is no additional vector, saved response, call stack,
+log or implicit interpreter control. A finite-control state is an encoding in these
+fields, not an extra uncounted state. Each fixed routine is inlined or
+uses the listed return slots without recursive nesting.
+
+The mathematical current source is separate from this observer. Source
+promise authentication, entry storage, and the physical Read/Update
+provider are separate services with their own memory/work bills; they
+are not included in $S,B,D$ or declared implemented by this interpreter.
+Any address or handshake field persisting on the observer side of that
+boundary belongs to the fields just listed.
+

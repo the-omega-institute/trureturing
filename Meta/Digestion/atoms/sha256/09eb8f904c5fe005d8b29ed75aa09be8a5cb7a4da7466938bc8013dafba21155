@@ -1,0 +1,65 @@
+### 63.2 RH 的 Poisson 概率场与 \(1/4\)
+
+令
+
+\[
+\mathbb H_{1/2}=\{s:\operatorname{Re}s>1/2\},
+\qquad
+B=\{1/2+it:t\in\mathbb R\},
+\]
+
+并在半平面内取点 \(s_0=1\)。其边界 Poisson 概率测度为
+
+\[
+\mu_C(dt)
+=
+\frac{dt}{2\pi(t^2+1/4)}.
+\tag{63.3}
+\]
+
+这里的 \(1/4\) 是点 \(s_0\) 到临界边界的距离平方 \((1/2)^2\)。令
+
+\[
+X(t)=\log|\zeta(1/2+it)|.
+\]
+
+Balazard–Saias–Yor 等价式可写成一个 Cauchy 概率场的缺陷能量：
+
+\[
+\mathcal D_{\rm RH}
+=
+\int_{\mathbb R}X(t)\,\mu_C(dt)
+=
+\sum_{\rho:\operatorname{Re}\rho>1/2}
+\log\left|\frac{\rho}{1-\rho}\right|.
+\tag{63.4}
+\]
+
+对 \(\rho=\frac12+\delta+i\gamma\)，
+
+\[
+\log\left|\frac{\rho}{1-\rho}\right|
+=
+\frac12\log
+\frac{\gamma^2+\delta^2+\frac14+\delta}
+{\gamma^2+\delta^2+\frac14-\delta}
+=
+\operatorname{artanh}
+\frac{\delta}{\gamma^2+\delta^2+\frac14}
+\ge0.
+\tag{63.5}
+\]
+
+因此
+
+\[
+\mathcal D_{\rm RH}=0
+\quad\Longleftrightarrow\quad
+\delta=0\ \text{for every nontrivial zero}
+\quad\Longleftrightarrow\quad
+\mathrm{RH}.
+\tag{63.6}
+\]
+
+这是真正的概率空间关系：RH 是 Poisson/Cauchy 加权零点法向缺陷的完全消失。Bui、Lester 和 Milinovich 对这一等价式及截断积分进行了研究，参见 [arXiv:1306.0856](https://arxiv.org/abs/1306.0856)。
+

@@ -1,0 +1,72 @@
+**Open problem 9.2 (the original collective target).** The class
+hypotheses of Definition 3.1 are not proved for arbitrary original
+competitors. In the general range $\min(k,n-k+1)\ge4$, retain both
+unrestricted alternatives: prove the original collective grid lower
+bound at both caps on every complete correct graph, or construct one
+complete correct strict-subgrid graph at both caps.
+
+In the notation of SI Sections 9–11, let $E_B,D_B$ be the actual
+cell-incidence excess and duplication in the common-support pool $B$,
+let $E_{\rm cut}$ be cut excess, and let
+$\mathcal A_*=\mathcal B\setminus\mathcal L_*$. The exact
+remaining general inequality is SI.59,
+
+$$
+\sum_{B\in\mathcal L_*}(D_B-E_B)
+\le E_{\rm cut}+u+
+           \sum_{B\in\mathcal A_*}(E_B-D_B).
+\tag{IC.37}
+$$
+
+Equivalently, with
+
+$$
+O_*=\sum_{B\in\mathcal L_*}\sum_{q\in Q_B}(\lambda(q)-1)_+,
+\qquad
+S_*=\sum_{B\in\mathcal L_*}\sum_{q\in Q_B}(1-\lambda(q))_+,
+$$
+
+the unresolved SI.83 target is
+
+$$
+O_*\le S_*+E_{\rm cut}+u+
+              \sum_{B\in\mathcal A_*}(E_B-D_B).
+\tag{IC.38}
+$$
+
+These are collective inequalities on one graph. Separate compensation
+in each remaining late gap would be stronger than required. Neither
+strict overload (IC.31) nor an interval-cover hole proves a deficit
+violating them. No marginal-flow lift, independently selected optimum,
+free residual entry or state-count-cell allocation is substituted for
+the actual joint table.
+
+The equivalent [TC, Theorem 9.1][TC] target still needs a proof that
+every correct $n$-query table with fewer than $G$ installed running
+states has a nonzero actual-full-length-run cost obstruction. TC's
+sparse alternative for each fixed table already exists; its universal
+shortage implication is not supplied here. No state-nonincreasing
+transformation into Definition 3.1 is established.
+
+In particular $P_g$ has $M_g>G$ and no state-saving claim. The
+unrestricted $n=8,k=4$ interval remains
+$17\le m_{\rm exec}\le20$. The unrestricted-budget native
+$H_{\min}$, without the two sharp execution caps, is a separate
+unresolved optimum. Attainment for every fixed nonconstant mode function
+in Definition 3.1 is also not asserted. The original whole fiber,
+pointwise code, literal entries and service prices remain fixed in all
+these questions. No operation, numerical state bound, source access,
+acquisition service, time precision or storage permission is transferred
+from a quantum, calibration, stochastic, analytic or expanded-storage
+contract. The mathematical tables give no physical acquisition, memory,
+energy or total-runtime conclusion.
+
+[SI]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SUPPORT_INCIDENCE_AND_COUNT_RELAXATION.md
+[PE]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PAID_PRIVATE_EXCHANGE.md
+[PCA]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PRESCRIBED_CODE_ACQUISITION.md
+[WTF]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_WEIGHTED_THRESHOLD_FRONTIER.md
+[TC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_THRESHOLD_COST_CERTIFICATES.md
+[TS]: FIB_NATIVE_TERMINAL_SPAN_FIVE_STRICT_COMPENSATION.md
+[KNPV]: https://domotorp.web.elte.hu/cikkek/setpairs.pdf
+[SW]: https://people.maths.ox.ac.uk/scott/Papers/twofamilies.pdf
+

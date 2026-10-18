@@ -1,0 +1,30 @@
+**Definition 9.1 (The q-retuned survival and midpoint table).** Fix $s,\lambda$ in Lemma 8.1 and define immutable constants
+
+$$
+\theta=\frac{p_0+p_1}{2},\qquad
+h_\alpha=\log\frac{1-\alpha}{\alpha}>0,\qquad
+H=\left\lceil\frac{2h_\alpha p_1}{\Delta}\right\rceil\ge1.
+\tag{9.1}
+$$
+
+The entire state set is a waiting state $w$, the two absorbing labels $d_0,d_1$, and
+
+$$
+(j,h),\qquad j\in\mathbb Z,\ -H<j<H,\qquad h\in\{0,1\}.
+\tag{9.2}
+$$
+
+Initialize in $w$ under both sources. Every nonlabel state undertakes its next actual paid read. Entry into $d_i$ emits $D=i$ and stops immediately. Both label rows are identity rows on both bits for analytical continuation. Define upward and downward successors from an interior $j$ to be respectively $d_1$ when $j+1=H$ and $d_0$ when $j-1=-H$, or $(j+1,1)$ and $(j-1,1)$ otherwise. The complete bit rows are:
+
+| State and read bit | Destinations and probabilities |
+| --- | --- |
+| $w$, zero | $w$ with probability one |
+| $w$, one | $(0,1)$ with probability one |
+| $(j,1)$, zero | $(j,1)$ with probability $z$; $(j,0)$ with probability $1-z$ |
+| $(j,0)$, zero | $(j,0)$ with probability one |
+| $(j,1)$, one | upward successor with probability $1-\theta$; $(j,1)$ with probability $\theta$ |
+| $(j,0)$, one | downward successor with probability $\theta$; $(j,1)$ with probability $1-\theta$ |
+| Either label, either bit | that label with probability one |
+
+The held one successor resets the flag too. The table defines impossible consecutive-one inputs as well. The thresholds, successors and real probabilities are immutable design data selected from common $q$ and the public pair. No source label enters their selection.
+

@@ -1,0 +1,21 @@
+## 353. C: a compact cancelling-fork normal form
+
+C is a deterministic companion to P. It is useful when parent averaging is unavailable but the whole kernel contains disjoint cancelling blocks. Let $h$ be a nonnegative vector kernel of mass $m\ge0$ with polynomial
+
+$$
+ c+\sum_{(a,b,C)}\left(Aw_a+\ell_bw_b+\sum_{d\in C}C_dw_d+Ew_aw_b
+ +\sum_{d\in C}D_d(w_a-w_b)w_d\right)+\sum_{i\in I}\ell_iw_i,
+\tag{353.1}
+$$
+
+where $a<b<d$ in each block, blocks and isolated coordinates are disjoint, and there are no other interactions in the subkernel. The full-vector identities are
+$Q_{ad}=D_d$, $Q_{bd}=-D_d$, and $Q_{de}=0$ for distinct leaves. Put $B=\ell_b+E$. For every output label $r$ define
+
+$$
+ u_r=(-A_r)_+,\qquad v_r=(-A_r-B_r)_+,\qquad
+ d_r=\sum_{d\in C}(-C_d(r))_+.
+\tag{353.2}
+$$
+
+Require $d_r=0$ or $v_r\ge u_r$ for every block and every label. Equality is allowed.
+

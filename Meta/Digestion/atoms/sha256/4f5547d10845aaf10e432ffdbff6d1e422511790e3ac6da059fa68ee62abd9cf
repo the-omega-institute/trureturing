@@ -1,0 +1,12 @@
+**Proposition 5.2 (Classical transient information and the weight).** If $E_P<\infty$, the classical transient-information expression satisfies
+
+$$
+\sum_{n\ge0}\bigl(E_P+nh-B_P(n)\bigr)
+=\sum_{k\ge0}(k+1)a_k=T_P
+\tag{5.2}
+$$
+
+as an extended nonnegative identity.
+
+Proof. Since $B_P(n)-nh=\sum_{k=0}^{n-1}a_k$, each summand on the left is $\sum_{k\ge n}a_k$. Nonnegative Tonelli summation yields the right side. This is the transient information of [Crutchfield–Feldman, §V, equation (63) and Proposition 12][CF], with their $h_\mu(L)-h_\mu$ equal to $a_{L-1}$ and their bit units converted to natural units. The quantity and its entropy interpretation are reused; the actual erased-center upper bound is the composite application in §§3–4. $\square$
+

@@ -1,0 +1,11 @@
+## 6. The sharp affine-line obstruction without regularity
+
+Define the finite constant
+
+$$
+R_0=\sup_{0<k<H}\sqrt{16k(H-k)+4Zk}.
+$$
+
+The following proof depends on the affine dimension of the actual image,
+not on any topology or intrinsic dimension of the source.
+

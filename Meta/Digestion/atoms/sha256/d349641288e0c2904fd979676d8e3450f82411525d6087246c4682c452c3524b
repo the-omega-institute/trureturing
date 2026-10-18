@@ -1,0 +1,52 @@
+**Theorem 7.1 (tuple equality and source-projection equality).** For
+any finite $A,b$, both of the following distinct statements are
+decidable:
+
+$$
+\begin{aligned}
+\mathsf{TupleEq}(b)&:\quad
+ \forall u\,\forall n,\ H_b(u,n)\Longrightarrow E_b(u,n),\\
+\mathsf{SourceEq}(b)&:\quad
+ \forall u,\ (\exists n\ H_b(u,n))
+                   \Longrightarrow(\exists m\ E_b(u,m)).
+\end{aligned}
+\tag{NRF.32}
+$$
+
+A negative answer in the first case gives a finite original and a
+failing epoch tuple. A negative answer in the second case gives one
+finite original admitted by the bare row at some epoch and excluded
+by selection at every epoch. Independent $j$ does not change these
+comparisons of the $(u,n,j)$ relations or their $u$ projections.
+
+Proof. Use the *same* cell list from Theorem 6.6 for both relations.
+Every relevant original source has one canonical cell. Lemma 6.4
+makes all representative-epoch bits constant throughout that whole
+source cell, and Theorem 4.2 covers every epoch. Hence
+
+$$
+\begin{aligned}
+\mathsf{TupleEq}(b)
+ &\longleftrightarrow
+ \neg\exists c\in\mathcal C\ \exists r\in J:\ h_{c,r}\land\neg e_{c,r},\\
+\mathsf{SourceEq}(b)
+ &\longleftrightarrow
+ \neg\exists c\in\mathcal C:\
+       (\bigvee_{r\in J}h_{c,r})\land
+       \neg(\bigvee_{r\in J}e_{c,r}).
+\end{aligned}
+\tag{NRF.33}
+$$
+
+These are finite tests on nonempty cells. If a test fails, use
+Theorem 6.5 to produce one valuation in that cell, decode it to
+$u$, and choose a representative with $h_r$ true. In the second
+case this *same* $u$ has $e_s$ false for every representative $s$,
+therefore for every actual epoch. If the tests pass, the unique
+cell of any purported counterexample contradicts the corresponding
+finite assertion. No complement or inclusion theorem for arbitrary
+globally constrained tree languages has been invoked. The proof
+works because the finitely many predicates are evaluated on one
+common original pattern, equality type and product-state vector.
+$\square$
+

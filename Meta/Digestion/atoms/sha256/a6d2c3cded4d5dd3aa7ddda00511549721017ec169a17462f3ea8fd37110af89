@@ -1,0 +1,57 @@
+**Definition 24.1 (One proper stationary renewal law).**
+Let the number of zeros between successive ones have law
+$\gamma=(\gamma_k)_{k\ge0}$, with
+
+$$
+\gamma_0=0,\qquad \gamma_k>0\ (k\ge1),\qquad
+\sum_{k\ge0}\gamma_k=1,\qquad
+\mu=\sum_{k\ge0}(k+1)\gamma_k<\infty.
+\tag{24.1}
+$$
+
+Use its proper stationary renewal version, without an
+additional all-zero stationary component. Write
+
+$$
+\nu=\mu^{-1},\qquad
+S_a=\sum_{k\ge a}\gamma_k,\qquad
+R_N=\sum_{k\ge N}(k-N+1)\gamma_k.
+\tag{24.2}
+$$
+
+Here $\nu$ is the stationary one-emission frequency.
+For a word w containing at least one one, let A and B be
+its initial and terminal zero counts, and let $g_h$ be
+its internal zero gaps. The stationary cylinder law is
+
+$$
+P(w)=\nu S_A S_B\prod_h\gamma_{g_h},\qquad
+P(0^N)=\nu R_N.
+\tag{24.3}
+$$
+
+The first formula follows by conditioning on the first
+and last renewal events, with independent intervening
+gaps. For the second, an interval of k zeros has
+$k-N+1$ possible placements of an all-zero N-window
+when $k\ge N$; multiply their stationary frequency
+by $\nu\gamma_k$ and sum. In particular $R_0=\mu$.
+These are one stationary law's actual cylinder
+probabilities, not separately fitted distributions.
+Assumptions (24.1) give positive probability to every
+legal finite word. The SNS of §22 has
+$\gamma_k=k/2^{k+1}$ and $\nu=1/4$.
+
+For integers $\ell,r\ge1$, let $A_{\ell,r}$ be the
+positive coherent coefficient matrix on complete legal
+left and right words of lengths $\ell$ and r:
+
+$$
+(A_{\ell,r})_{u,v}=\sqrt{P(uv)}.
+\tag{24.4}
+$$
+
+An illegal seam has coefficient zero. Its singular
+values are the Schmidt coefficients of the normalized
+finite-window state $\Psi_{\ell+r}(P)$.
+

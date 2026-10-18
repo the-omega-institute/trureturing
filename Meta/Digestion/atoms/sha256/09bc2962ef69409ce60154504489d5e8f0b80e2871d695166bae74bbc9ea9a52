@@ -1,0 +1,104 @@
+### 29.3 The two generators and the quotient action in Theorem 29.2
+
+For seven positions, both $\nu_3$ and $\nu_5$ satisfy the strict
+inequalities. If $(m,c)$ is interior and $\delta(m,c)\ge2$, subtract
+$\nu_3$. The remainder has nonnegative coordinates, edge sums at most
+$m-3$, and deficit $\delta(m,c)-2\ge0$, hence belongs to $\mathcal S$.
+The original degree is at least three, as just proved.
+
+It remains to treat $\delta(m,c)=1$, or $\sum c_i=3m-1$.
+Every coordinate is at least two. For if $c_i=1$, pair the other six
+vertices into three edges of the path obtained by deleting $i$.
+The strict edge bounds give
+$\sum c_i\le1+3(m-1)=3m-2$, a contradiction.
+Consequently $m\ge5$, because any edge has sum at least four and at
+most $m-1$. Subtracting $\nu_5$ leaves nonnegative coordinates, edge
+sums at most $m-5$, and total exactly $3(m-5)$. It belongs to the face
+semigroup of deficit zero. Conversely, adding either generator to any
+semigroup point is interior. Hence
+
+$$
+\omega_R=X^{\nu_3}R+X^{\nu_5}R.
+\tag{29.12}
+$$
+
+The difference in (29.7) satisfies all local edge bounds but has total
+seven at degree two, violating the total bound six. Thus $X^{\nu_5}$
+is not an $R$-multiple of $X^{\nu_3}$; the reverse divisibility is
+impossible by ordinary degree. Since monomials form a basis, no linear
+combination of monomial multiples changes that conclusion. This proves
+minimality and connects the canonical obstruction to the actual
+common-copy obstruction, rather than only to a numerical type.
+
+For a face point $s=(q,b)$ with $\sum b_i=3q$, define
+
+$$
+a_i=q-b_i-b_{i+1},\qquad
+\sum_i a_i=q,\qquad
+b_i=a_{i+1}+a_{i+3}+a_{i+5}.
+\tag{29.13}
+$$
+
+These assignments are inverse additive maps between the face semigroup
+and $\mathbb N^7$: for any nonnegative $a$, set $q=\sum a_i$ and
+use the last formula. Then $b_i+b_{i+1}=q-a_i$, and $\sum b_i=3q$.
+Conversely the odd-cycle edge equations have a unique solution.
+The basis vector $a_j=1$ corresponds to the degree-one mode $M_j$.
+Distinct monomials in these seven modes therefore have distinct
+exponents, proving that their face algebra is polynomial.
+
+The quotient $R/J$ has exactly this algebra structure. Products of
+zero-deficit monomials remain on the face. Multiplication by a
+positive-deficit monomial takes a face monomial into $J$.
+The map that kills positive-deficit monomials and retains face
+monomials is consequently an algebra homomorphism, with kernel $J$;
+it identifies the quotient with the face subalgebra and proves (29.3).
+This is a quotient by a face ideal inside the cyclic ring, a different
+operation from the invalid path-mode quotient in Proposition 28.5.
+
+To fix the $R$-module structure of the canonical quotient, for
+$s=(q,b)\in\mathcal S$ compute
+
+$$
+\begin{aligned}
+X^{\nu_5+s}\in X^{\nu_3}R
+&\ \Longleftrightarrow\ s+(2;\mathbf1)\in\mathcal S\\
+&\ \Longleftrightarrow\ \delta(s)\ge1.
+\end{aligned}
+\tag{29.14}
+$$
+
+Nonnegativity and the edge inequalities of the shifted point are
+automatic; its deficit is $\delta(s)-1$, giving the last equivalence.
+The $R$-linear map
+$r\mapsto[X^{\nu_5}r]$ from $R$ to $\omega_R/X^{\nu_3}R$ is
+surjective by (29.12). Its monomial kernel is exactly $J$ by (29.14),
+and independence of exponents shows that no further polynomial kernel
+occurs. The degree shift is $\nu_5$, giving (29.4).
+The left injection uses the domain property of $R$.
+
+This exact sequence is not an assertion of an $R$-module splitting.
+For example, $X^{(1;0)}\in J$ annihilates every class of $R/J$,
+whereas multiplication by that nonzero element is injective on
+$\omega_R\subset R$. A nonzero $R$-linear embedding of $R/J$ into
+$\omega_R$ is therefore impossible. The vector-space separation of
+the two deficit ranges, or freeness over the face subalgebra, must not
+be mistaken for such a splitting.
+
+Taking degree $m$ in the exact sequence gives (29.5): the quotient's
+dimension is the dimension of degree $m-5$ polynomials in seven
+variables, namely $\binom{m+1}{6}$ for $m\ge5$, and zero for $m<5$.
+In particular the interior points omitted by the path-style shift are
+
+| $m$ | $L^\circ(m)-L(m-3)$ |
+| ---: | ---: |
+| 5 | 1 |
+| 6 | 7 |
+| 7 | 28 |
+| 8 | 84 |
+| 9 | 210 |
+
+These are the dimensions of the successive face degrees, obtained by
+stars and bars from (29.13). They count a polyhedral facet contribution;
+no analytic boundary condition is involved.
+

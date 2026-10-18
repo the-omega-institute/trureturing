@@ -1,0 +1,29 @@
+**Convention 6.1 (same-run complete costs).** Let $\ell=|u_h|$ and let
+$e$ be the active source head's distance to its actual R when LastBank
+begins. RCA Definition 11.2 gives this existing LastBank's full row count
+$2e+2\ell+5$, including its final MR. That is a subtotal of $d(h)$;
+mode EX/WR/MR/test, seal, Base/descriptor work, prior dry work and every
+receipt remain counted. No new row is required for the mathematical
+selection or inverse.
+
+For any selected actual segment of $L$ native rows use GENERAL Definition
+8.5's increment
+
+$$
+(\Delta\mathrm{ticks},\Delta\mathrm{fee},\Delta\mathrm{bits})
+=(L,2L,\Delta b_{\mathrm{ctl}}+8\Delta A+8L).
+$$
+
+$\Delta A$ includes every actual nonmeter cell, partial destination,
+scratch, dead bank, descriptor, staging word and channel copy. The origin
+result does not remove any of the eight publications in a successful
+flight. With full payload lengths $L_C,L_P,L_I,L_0,\ldots,L_4$, its
+already supplied two-copy-plus-print subtotal is
+$17(L_C+L_P+L_I+\sum_{s=0}^4L_s)+56$ rows, separate from setup, imports,
+checks, arrows, ACKs and return. Both flights of Proposition 4.3 pay their
+own complete bills. The UAS structural account additionally retains
+GENERAL's actual ordered-stencil sum, finite rule apparatus, scaffold and
+paid foundation. Represented simulated receipts are bank data; producing
+them incurs further actual receipts. No uniform runtime, numerical
+benchmark, optimality or physical-energy conclusion is asserted.
+

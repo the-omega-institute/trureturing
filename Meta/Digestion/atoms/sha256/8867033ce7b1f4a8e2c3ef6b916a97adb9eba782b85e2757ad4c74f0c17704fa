@@ -1,0 +1,28 @@
+**定理 27.3.1（唯一缺失阶的分离）。** 对全体非零赋值 $a\in\{-1,+1\}^n$，有
+
+$$
+\Pr_{M_+}(Y=1\mid\operatorname{do}(X=a))
+=\frac12+\varepsilon\prod_{i=1}^n a_i,
+$$
+
+$$
+\Pr_{M_-}(Y=1\mid\operatorname{do}(X=a))
+=\frac12-\varepsilon\prod_{i=1}^n a_i.
+$$
+
+特别地，在 $a=(+1,\ldots,+1)$ 时：
+
+$$
+\boxed{
+\Pr_{M_+}(Y=1)=\frac12+\varepsilon,
+\qquad
+\Pr_{M_-}(Y=1)=\frac12-\varepsilon.
+}
+$$
+
+两模型被一个真正的 $n=(k+1)$ 阶同时干预分开；不需要序列组合、隐藏记忆对齐或等待渐近时间。
+
+**证明。** 全部坐标被钳制后 $q(X)=\prod_i a_i$ 是常数，直接代入通道定义即可。证毕。
+
+<a id="section-27-4"></a>
+

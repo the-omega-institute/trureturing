@@ -1,0 +1,46 @@
+**Theorem 6.2 (sharp completion costs for this same code).** Starting
+with exactly $E_0$ and no preparation transcript, the minimum worst
+fresh Read counts for pooled completion on names $00,01,10,11$ are,
+respectively, $2,3,3,4$. These are minima over every deterministic
+adaptive procedure with arbitrary finite original-root words on the
+whole original family. Sufficient worst fresh letter counts are
+$4,8,8,12$ respectively, with maximum fresh address lengths
+$2,3,3,3$; no letter optimum is asserted.
+
+Proof of necessity. Apply Theorem 5.2 separately to the four actual
+canonical subfamilies (SCE.20). The strict inequalities
+$4<5$, $16<18$, and $64<82$ give the respective lower bounds
+$2,3,3,4$, even against arbitrary off-target adaptive words.
+
+Proof of attainment on every original source. Reconstruct only
+$\pi_3(v)$, not the unobserved terminal labels of $v$. Whenever an
+acquired endpoint reply is branch, its public canonical representative
+at the cutoff is $C_0$; alpha and beta keep their labels.
+
+On $00$, query $RL$. An absent reply identifies $v=A$: a branch
+with this name has two leaf children, so $RL$ would be present.
+Otherwise this reply gives its left leaf, and a query $RR$ gives
+the right leaf. This uses at most two Reads and four letters.
+
+On $01$, query $RL,RRL,RRR$. The first gives the left leaf;
+the latter two give the canonical children of the known right
+branch. Their lengths sum to $2+3+3=8$. The case $10$ queries
+$RLL,RLR,RR$, with the symmetric reconstruction and the same cost.
+
+On $11$, first query $RLL$. An absent reply identifies $v=B$:
+on every branch with this name both children are branches, so this
+grandchild is present. Otherwise query $RLR,RRL,RRR$ as well.
+These four endpoint replies reconstruct both children, replacing
+cutoff branches by $C_0$. They use at most four Reads and twelve
+letters. All are actual original-root words on the same stationary
+source; rereading information once used by preparation is paid again.
+
+The code bits supply exactly the presence and type facts used in
+these case distinctions. Every right subtree of height at most three
+falls into them, including variable shapes. The reconstructed
+$\pi_3(v)$ preserves every target factor by the credited FMR
+canonicalization. Hence it supplies all original requested trajectories
+through (SCE.4), for authentic counts arriving only after completion.
+The initial four-name code and its three-Read preparation are
+unchanged. $\square$
+

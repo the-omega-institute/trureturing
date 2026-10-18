@@ -1,0 +1,35 @@
+**Proposition 8.2 (Distance and the five-edge window).** For all
+$u,v\in B_n$, the shortest operation-graph distance is their Hamming distance:
+
+$$
+\operatorname{dist}_{\Gamma_n}(u,v)
+=|\{i:u_i\ne v_i\}|.
+\tag{8.4}
+$$
+
+In the window (8.1), the operation edges are exactly
+$0\! -\!1$, $0\! -\!2$, $0\! -\!3$, $1\! -\!13$ and $3\! -\!13$.
+The graph is connected, with a four-edge bottom cycle and the middle
+vertex attached through $0$.
+
+Proof. Every single edge changes one bit, so any path must change each
+coordinate where $u$ and $v$ differ. For the reverse inequality identify a
+word with its set of occupied positions. Delete $u\setminus v$ in any
+order, reaching $u\cap v$. Deletions preserve legality. Then insert
+$v\setminus u$ in any order; every intermediate occupied set is a subset
+of the legal set $v$. This path changes each differing bit once. This is the standard isometric
+Fibonacci-cube property noted in Mollard's introduction; the argument
+here gives its explicit legal paths. Listing
+the Hamming-one pairs of the five words gives the displayed edge set.
+$\square$
+
+Under (8.2), [Boundary Calculus, §3, Definition 3.1 and Mathematical
+Citation 3.2][BC8] supplies the convex square pyramid with base vertices
+$0,1,13,3$ and apex $2$. It has four base edges and four apex edges, hence
+eight geometric edges. In particular the geometric edge $2\! -\!13$
+joins $010$ and $101$, whose Hamming distance is three. Its §10,
+Definition 10.1 and Theorem 10.2 supplies the separate five-edge flip graph.
+This is an exact consumption of its two defined constructions: geometric
+incidence supplies no allowed gate, and the pulse menu will follow the
+flip relation rather than the eight-edge convex skeleton.
+

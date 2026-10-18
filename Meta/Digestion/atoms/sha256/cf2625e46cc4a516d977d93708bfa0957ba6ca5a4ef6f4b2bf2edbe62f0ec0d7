@@ -1,0 +1,2 @@
+**Places above 19.** The prime splits in K0, and the residues of beta at its two primes are 16 and 1. Hensel's lemma makes beta a square in each local field because these are nonzero squares and 19 is odd. Both Hilbert symbols are therefore 1, even at the prime where gamma has positive valuation. No assumption about the primes of C has entered.
+

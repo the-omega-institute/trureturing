@@ -1,0 +1,19 @@
+**例 13.3（Smallest saturated member with literal streams）。** At $m=7,r=3,T=10,k=9$, one has $g=1$, $Z=\{1,2,3,4,5,6,8,9\}$, $n=8$, and $d=3$. Give these eight phases any distinct labels, keep $C\ne D$, and allow $R$ and either endpoint label to coincide with them. One feasible code table and its full common query words are
+
+$$
+\begin{array}{c|cccccccc}
+j&1&2&3&4&5&6&8&9\\\hline
+(z_1,z_2,z_3)&110&101&001&100&011&010&111&000
+\end{array}
+\tag{13.4}
+$$
+
+The guarded code stream and its terminal block can be chosen as
+
+$$
+1111111\mid0111011\mid0100111\mid0100111\mid0100000.
+\tag{13.5}
+$$
+
+The root rejects precisely INITIAL tails at least two. The three middle words start zero and produce (13.4) on $Z$ through their own actual endpoint differences; their endpoint responses at zero and seven are equal. The final word, at absolute block index four, has even charge support $\{9,0\}$ on the ordered path $8,9,0,1,2,3,4,5$. Its first bit is zero and it separates the still-running endpoint phases. This is the preset optimum five. For adaptive control replace the endpoint archive's continuation by $0010000$, whose isolated one is at absolute position nine, and use the three code words only on the outside archive. That adaptive protocol has optimum four. Every successful low INITIAL source with tail zero or one survives the appropriate continuation. The displayed words are independent of label names and of the initial free value.
+

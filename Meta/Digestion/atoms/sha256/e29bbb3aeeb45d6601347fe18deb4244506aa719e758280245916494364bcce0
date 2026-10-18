@@ -1,0 +1,11 @@
+**定义 3.2（单侧可行锥与双侧方向）。** 对 $p\in\mathcal D$，定义
+
+$$
+\begin{aligned}
+C_p&=\{v\in T:p_I=0\Rightarrow v_I\ge0\},\\
+B_p&=\{v\in T:p_I=0\Rightarrow v_I=0\}.
+\end{aligned}
+$$
+
+$C_p$ 刻画从 $p$ 出发的右侧一阶可行变化。$B_p$ 刻画以 $p$ 为参数内点的双侧可微概率路径的可能导数。它们与仿射包络变化空间 $T$ 是三个不同对象。
+

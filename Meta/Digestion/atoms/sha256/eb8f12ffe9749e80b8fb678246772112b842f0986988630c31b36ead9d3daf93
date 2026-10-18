@@ -1,0 +1,27 @@
+**Theorem 5.3 (Finite-parameter converse for each actual paid mean).** Put $b=1-2\alpha$. For every compliant observer, finite $M\ge2$, finite $L\ge1$ and target $i$,
+
+$$
+b\le r_{\rm init}(s)+\chi_{M,L}
++\sqrt{D_i(s,L)B(1-q)\mathbb E_iT/2}
+\le r_{\rm init}(s)+\chi_{M,L}
++\sqrt{D_i(s,L)Bs\mathbb E_iT/2}.
+\tag{5.9}
+$$
+
+There is also the direct full-law version
+
+$$
+b\le r_{\rm init}(s)
++\sqrt{D(f_i\|f_j)Bs\mathbb E_iT/2}.
+\tag{5.10}
+$$
+
+Proof. For the first assertion, take $h$ to be the actual probability of ever hitting $d_1$ under $W_i$. It is bounded, harmonic and has the required label values by first-step conditioning. Lemmas 5.1–5.2 on the actual chain $U_i$ give $|p_i-\nu_i h|\le\sqrt{D_i\mathbb E_iN/2}$, where $p_i=\mathsf P_i(D=1)$. Let $h_j$ be the opponent's actual hitting function for $U_j$. Opponent almost-sure stopping from $\nu_j$ gives $p_j=\nu_jh_j$. Decompose
+
+$$
+p_i-p_j=(p_i-\nu_i h)+\nu_i(h-h_j)+(\nu_i-\nu_j)h_j.
+\tag{5.11}
+$$
+
+Use the hitting comparison, initial variation and (3.6). Both risks give $p_1-p_0\ge b$. These steps prove (5.9) separately for each target of the same observer. For (5.10), use $Q=U_j$ and row log-sum with the full masses $f_i,f_j$. The hitting-comparison term is then zero. If an exact entropy is zero while the remaining separation is positive, these formulas prove emptiness of the compliant class; no division by zero is implicit. $\square$
+

@@ -1,0 +1,29 @@
+**Theorem 8.1 (same-law operational transfer of the criterion).** Under
+Assumptions 1.1 and 2.2, every finite law produced by a coordinate
+face or the interpolation (FC.18), after the compatible merges,
+has a common original optimal realization at its own request
+$s=s_0r/\sqrt\alpha$, with the exact complete original outputs,
+sharp joint cost and entire-fibre activity bound. For every integer
+$m\ge0$ and every $r\in[r_-,r_+]$,
+
+$$
+\begin{gathered}
+\mathcal T(s,t)=\frac{H_0+y\cdot B-\lambda r}{2},\qquad
+n_{\rm tot}(s,t)=1+n_t(r),\\
+n_{\rm tot}(s,t)\le m+1\quad\Longleftrightarrow\quad r\in U_m,\\
+n_{\rm tot}(s,t)=9\quad\Longleftrightarrow\quad r\in U_8\setminus U_7,
+\qquad
+n_{\rm tot}(s,t)=10\quad\Longleftrightarrow\quad r\notin U_8.
+\end{gathered}
+\tag{FC.24}
+$$
+
+The last equivalence is restricted to $r\in[r_-,r_+]$. If the
+interval is nontrivial, its physical height slope is
+$-\lambda\sqrt\alpha/(2s_0)$. There is no assertion of a slope
+on an open interval when $r_-=r_+$.
+
+Proof. The common moment equations on any such law give
+$\sum p=1$, $\sum pu=\sum pv=\sum puv=0$ and
+$\sum pu^2=\alpha$, hence $\sum pv^2=\beta$.
+After $z=u/\sqrt\alpha$, $w=v/\sqrt\beta$ these are the

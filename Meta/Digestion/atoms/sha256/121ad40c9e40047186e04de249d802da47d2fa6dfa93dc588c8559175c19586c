@@ -1,0 +1,75 @@
+**Proposition 5.4 (canonical coordinates for the supplied elimination charts).**
+For an input accepted by [ARH, Definition 20.2][ARH], let
+$F_\eta(Y_\eta)$ and $D_\eta$ be the reconstructed source template and
+complete residual domain supplied by its Proposition 20.3. The coordinates
+$y\in Y_\eta$ are surviving original subtrees at the fixed reached
+addresses $a_{\eta,y}$. Interpret the normalized template by $J$ and
+$\tau_a$ as in Definition 5.1, and put
+
+$$
+\begin{aligned}
+\Theta_\eta^\#
+ &=\{\mathbf X\in\mathcal N^{Y_\eta}:D_\eta(E\mathbf X)\},\\
+\Psi_\eta(\mathbf X)&=F_\eta^\#(\mathbf X)
+                     =B(F_\eta[E\mathbf X]).
+\end{aligned}
+\tag{ABC.5.3}
+$$
+
+Then $\Psi_\eta$ is a bijection onto the canonical codes of precisely
+that chart's sources, with inverse given by
+$X_y=\nu_{a_{\eta,y}}(\Psi_\eta(\mathbf X))$.
+The union over the selected cover is exactly $B[D]$.
+
+Define $X\equiv_h^\# X'$ to mean equality of
+$\lambda(\nu_p(X))$ and $\lambda(\nu_p(X'))$ for every $|p|<h$;
+for tuples require this coordinatewise. With
+$A_\eta=\max(\{0\}\cup\{|a_{\eta,y}|:y\in Y_\eta\})$, the supplied
+original-prefix directions become
+
+$$
+\begin{aligned}
+\mathbf X\equiv_h^\#\mathbf X'
+ &\Longrightarrow
+ \Psi_\eta(\mathbf X)\equiv_h^\#\Psi_\eta(\mathbf X'),\\
+\Psi_\eta(\mathbf X)\equiv_{A_\eta+h}^\#\Psi_\eta(\mathbf X')
+ &\Longrightarrow \mathbf X\equiv_h^\#\mathbf X'.
+\end{aligned}
+\tag{ABC.5.4}
+$$
+
+The chart selector remains a bounded original-prefix observation, and
+ARH's entire-row disagreement predicate has the exact interpretation
+
+$$
+\operatorname{Bad}_\eta(E\mathbf X,E\mathbf X')
+\ \Longleftrightarrow\
+\neg\operatorname{Same}_Q
+       (\Psi_\eta(\mathbf X),\Psi_\eta(\mathbf X'))
+\quad(\mathbf X,\mathbf X'\in\Theta_\eta^\#).
+\tag{ABC.5.5}
+$$
+
+Proof. ARH Propositions 19.4 and 20.3 supply both whole-source inclusions,
+the unique original-coordinate inverse and the finite selector. Apply
+Theorem 2.2 to every coordinate and (ABC.5.2) to the reconstructed
+template. This proves (ABC.5.3) and its inverse; all residual constraints
+are evaluated on the same tuple. In particular eliminating a variable
+does not discard an old disequality or an acquired sign involving it.
+Theorem 3.2 identifies $\equiv_h^\#$ exactly with agreement of the
+expanded original trees at addresses of length less than $h$. Applying
+ARH Proposition 20.4 gives both lines of (ABC.5.4). These are native
+prefixes, not prefixes of the compressed $F$ syntax. ARH's selector asks
+only fixed original constructor questions, so its bounded-prefix and
+paid-read interpretation is preserved. Finally ARH Proposition 21.3
+identifies its Bad with disagreement of the entire native rows, and
+Theorem 4.2 proves (ABC.5.5).
+
+The effective criterion and finite negative witnesses on these charts
+are supplied by ARH Theorem 22.1. They use automata on the surviving
+*original finite-tree* coordinates $E\mathbf X$, not an assumed
+recognizability of $\Theta_\eta^\#$ in the logical language of §7.
+The conjugacy preserves that restricted decision and its actual consumer;
+it does not extend the constructor-elimination recognizer to every
+acquired input. $\square$
+

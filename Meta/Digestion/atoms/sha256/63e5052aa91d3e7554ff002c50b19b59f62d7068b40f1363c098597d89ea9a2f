@@ -1,0 +1,93 @@
+**Theorem 2.4 (A necessary bound for every complex scalar port).** Every
+$T\in\mathfrak C_1$ satisfies
+
+$$
+e(T)\ge\frac{12993}{25000}=0.51972.
+\tag{2.14}
+$$
+
+Proof. A scalar-block encoder is a POVM: its $f$-th component has form
+$X\mapsto\operatorname{tr}(M_fX)$ with $M_f\succeq0$ and
+$\sum_fM_f=I_5$. A whole-block TP scalar decoder has form
+$y\mapsto y\sigma_f$ with $\sigma_f\succeq0$ and
+$\operatorname{tr}\sigma_f=1$. In the passive frame this gives
+
+$$
+\chi_T=\frac15\sum_f\sigma_f\otimes M_f^T\succeq0,
+\quad \chi_T^\Gamma=\frac15\sum_f\sigma_f\otimes M_f\succeq0,
+\quad \operatorname{Tr}_{\rm out}\chi_T=I_5/5,
+\quad \operatorname{tr}\chi_T=1.
+\tag{2.15}
+$$
+
+No reality, projector, covariance or unitality assumption has entered.
+This also proves directly the needed direction of the usual
+entanglement-breaking Choi correspondence.
+
+For any normalized PPT matrix $\chi$, pair (2.8) separately with
+$\chi$ and $\chi^\Gamma$. Both pairings are valid PSD trace pairings.
+Using (2.5), the trace self-adjointness of partial transpose and (2.7)
+gives
+
+$$
+\begin{aligned}
+\operatorname{tr}\bigl(\chi(I\otimes Y-\mathcal W)\bigr)
+&=\frac12\operatorname{tr}(P\chi)
+ +\frac12\operatorname{tr}(P\chi^\Gamma)\\
+&\ge\gamma\left(1-\frac12
+\operatorname{tr}(\chi(K_{\rm ker}+K_{\rm ker}^\Gamma))\right)\\
+&=\gamma\left(1-\frac12\operatorname{tr}(\chi Q)\right)
+\ge\frac\gamma2=\frac1{50000}.
+\end{aligned}
+\tag{2.16}
+$$
+
+The last inequality uses $Q\preceq I$, not positivity of
+$K_{\rm ker}^\Gamma$. For the same state's TP marginal,
+
+$$
+\operatorname{tr}(\chi_T\mathcal W)
+\le\frac{\operatorname{tr}Y}{5}-\frac1{50000}
+=\frac{4803}{10000}-\frac1{50000}
+=\frac{12007}{25000}.
+\tag{2.17}
+$$
+
+To connect this bound to actual protocols, the QEC moment is the actual
+forward-time mean
+
+$$
+\mathcal W=\lim_{H\to\infty}\frac1H\int_0^H
+\sum_s a_s Q_s(t)\otimes Q_s(t)\,dt,
+\qquad
+\mathscr S(T):=\lim_{H\to\infty}\frac1H\int_0^H g(t)\,dt
+=\operatorname{tr}(\chi_T\mathcal W).
+\tag{2.18}
+$$
+
+For completeness, $(\omega_+/\omega_-)^2=(21+5r)/4$ is irrational,
+so no nonzero integer pair has $k\omega_++l\omega_-=0$.
+The mean of every nonconstant Fourier term is zero, by integrating its
+exponential. The finite Fourier expansion of the integrand makes its
+mean equal to independent circle integration. The sector lengths from
+(1.6), together with the planar moments
+$\mathbb E n_an_b=\delta_{ab}/2$ and
+$\mathbb E n_an_bn_cn_d=(\delta_{ab}\delta_{cd}
++\delta_{ac}\delta_{bd}+\delta_{ad}\delta_{bc})/8$, give exactly
+(2.3). This is the supplied QEC weighted-moment calculation.
+Choi contraction gives
+$\operatorname{tr}(Q\widehat T(\rho))
+=5\operatorname{tr}(\chi_T(Q\otimes\rho^T))$.
+Since $Q_s(t)$ is real symmetric and $w_s=a_s/5$, this proves the
+second equality in (2.18) with its normalization unchanged.
+
+For each finite $t$ and mode $s$, prepare $DQ_s(t)D^\dagger$.
+The actual wait $t$, full read and Stop give $s$ with certainty before
+replacement, and with probability $f_s(t)$ after replacement.
+Their TV is exactly $1-f_s(t)$. Thus $e(T)\ge1-f_s(t)$ for every
+such test. Taking the weighted mean and its forward-time limit gives
+$e(T)\ge1-\mathscr S(T)$. Equation (2.17) proves (2.14).
+The proof even bounds the whole complex PPT TP Choi slice. It does not
+identify PPT with separability, construct a port from a PPT point, mix
+different marginals, or require a stationary competitor. $\square$
+

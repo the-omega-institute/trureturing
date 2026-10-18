@@ -1,0 +1,32 @@
+**Definition 1.1 (fixed physical and passive frames).** The logical input is $A=\mathbb C^3$ with physical basis $(|0\rangle,|1\rangle,|2\rangle)$. The physical output is the entire legal three-position chain
+
+$$
+B=\mathcal K_3=\mathbb C^5,\qquad
+(e_0,e_1,e_2,e_3,e_4)=(000,100,010,001,101).
+$$
+
+Use the fixed diagonal matrices $D=\operatorname{diag}(1,i,i,i,1)$ and $L=\operatorname{diag}(1,i,i)$, and $\operatorname{Ad}_U(X)=UXU^\dagger$. A physical encoder $N^{\rm ph}:M_3\to M_5$ and its passive representation are related by
+
+$$
+N=\operatorname{Ad}_{D^\dagger}\circ N^{\rm ph}\circ\operatorname{Ad}_L,
+\qquad N^{\rm ph}=\operatorname{Ad}_D\circ N\circ\operatorname{Ad}_{L^\dagger}.
+\tag{P.1}
+$$
+
+These are coordinates for the same channel, not extra physical gates. Kets used as channel arguments denote their rank-one projectors. Set
+
+$$
+\theta_\pm=(|0\rangle\pm|1\rangle)/\sqrt2,
+\qquad \chi_\pm=(|0\rangle\pm i|1\rangle)/\sqrt2.
+$$
+
+The physical candidate inputs throughout are $\theta_\pm$. In passive coordinates their signs swap:
+
+$$
+L^\dagger\theta_\pm=\chi_\mp,\qquad
+N^{\rm ph}(\theta_\pm)=D N(\chi_\mp)D^\dagger.
+\tag{P.2}
+$$
+
+The output order and $D$ are those of [the owning theory, Definition 68.1](AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md#48-固定初始五人口的全单纯形相位增益). All statements here are finite-dimensional ordinary mathematics. The full-input complement and recovery certificates are developed in the [companion volume](AURIC_OMEGA_FULL_INPUT_RECOVERY_CERTIFICATES.md).
+

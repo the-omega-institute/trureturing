@@ -1,0 +1,36 @@
+**Theorem 3.5 (four separate history kernels and lawful transport).**
+Separately for each $V\in\{S,B,T,M_J\}$ and $h,k\in\mathcal C$,
+
+$$
+V(h)=V(k)\quad\Longleftrightarrow\quad h=k.
+$$
+
+All twelve mathematical conversions between their actual images exist,
+with inverse and triangle equations. They preserve native partial
+legality, labels, successors and readouts on actual edges whose endpoints
+belong to the stated domains. They do not create new original experiments
+or current access permissions.
+
+Proof. If $S(h)=S(k)$, Theorem 3.2 gives equal raw records, hence equal
+selected $M_J$; Theorem 3.4 gives $h=k$. If $h=k$, the deterministic
+initialized templates give identical supports. This proves both $S$
+implications. Equal $B$ gives equal prefix closures and equal raw records,
+then the same memory and history; equal history gives the same terminal
+paths. This proves both $B$ implications independently. Equal $T$ erases
+to equal native histories; equal native histories produce the same
+ordered patch occurrences with actual constructor roles. This proves
+both $T$ implications. The last two implications are exactly the
+extraction and actual-selection directions of Theorem 3.4 for $M_J$.
+
+Support decodes raw backing and selects memory. Prefix closure and
+maximality convert boundary and support. Extraction and literal replay
+convert memory to occurrences; executing occurrences from the charged
+foundation gives support. Each composite returns the corresponding
+view of the same $h$, proving the inverse and triangle equations. The
+row square preserves the original native domains/labels/readouts and
+the same successor, so the induced image edges commute. A raw enabled
+exit outside $\mathcal C$ still executes by Theorem 2.4; it is not
+assigned an illegal-none response to make this subdomain closed. The
+last halt edge is transported although its terminal task kernel need
+not be diagonal. ∎
+

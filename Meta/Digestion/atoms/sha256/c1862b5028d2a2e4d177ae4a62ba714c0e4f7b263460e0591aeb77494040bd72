@@ -1,0 +1,40 @@
+**Assumption 6.1 (original legal service contract).** For service claims
+use ARH Assumption 1.3 on the entire $D$, with the same original root,
+source and physical register at the authentic certified epoch $N$.
+All records were actually acquired and paid before a complete access
+cut. The entire accessible initial state is a common recoverable
+encoding of $I$ and common parameters, and has exact source fiber $D$.
+Every accessible source-bearing cache, count, address, length, program
+position, timing field, archive, output, reference, permission and
+handle is included. Extra accessible distinctions change the fiber.
+Sourcewise finite acquisition does not imply uniformly bounded acquisition.
+
+A controller is deterministic and effective, correct and terminating
+for every $u\in D$. Its only new source observations are actual paid
+four-valued $\mathsf{Read}(p)$ replies at finite physical words. It may
+perform genuine serial forward same-register $\mathsf{ApplyRho}$ and
+absorbing $\mathsf{Halt}$. Computation and updates reveal no extra
+source-dependent information. No mathematical witness supplies a rank
+query, equality oracle, chart selector, reset, reroot, source clone,
+original-version access or new observation port. A later entry requires
+its own legal contract and payment.
+
+For actual runs keep separate
+
+$$
+\begin{aligned}
+c_A(u)&=(q_A(u),a_A(u),\ell_A(u)),&
+\ell_A(u)&=\sum_{\text{actual reads at }p}|p|,\\
+b(A)&=(\sup_Dq_A,\sup_Da_A,\sup_D\ell_A),&
+W_\lambda(A)&=\sup_{u\in D}\lambda\cdot c_A(u),
+\quad\lambda\in\mathbb Q_{\ge0}^3.
+\end{aligned}
+\tag{AAB.19}
+$$
+
+Every repeated or absent raw read counts; root reads have one call and
+zero address length. The same-source weighted sum is taken before its
+supremum. Acquisition, local work, strategy preparation, installation,
+address generation, transmission, authentication, memory, retention,
+output and physical time remain separate costs.
+

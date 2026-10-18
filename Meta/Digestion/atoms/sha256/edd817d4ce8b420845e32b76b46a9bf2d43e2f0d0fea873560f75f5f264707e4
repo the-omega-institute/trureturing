@@ -1,0 +1,71 @@
+**Definition 2.1 (The retained weighted moment and witness).** Use
+$a=(9/4,3/4,5/4,3/4,0)$ and $w=a/5$. For any competitor set
+
+$$
+f_s(t)=\operatorname{tr}(Q_s(t)\widehat T(Q_s(t))),\quad
+g(t)=\sum_s w_s f_s(t),\quad
+\chi_T=(\widehat T\otimes\mathrm{id})(\Omega\Omega^\dagger),\quad
+\Omega=\frac1{\sqrt5}\sum_s e_s\otimes e_s.
+\tag{2.1}
+$$
+
+The normalized Choi order is output first, input second; $\Gamma$
+transposes the input factor. Write $\mathsf F$ for swap and set
+
+$$
+\begin{gathered}
+\eta_j=\operatorname{vec}(R_j),\quad
+I_j=R_j\otimes R_j,\quad F_j=I_j\mathsf F,\quad
+E_j=\eta_j\eta_j^\dagger,\\
+I_{jk}=R_j\otimes R_k+R_k\otimes R_j,\quad
+F_{jk}=I_{jk}\mathsf F,\quad
+E_{jk}=\eta_j\eta_k^\dagger+\eta_k\eta_j^\dagger\quad(j<k).
+\end{gathered}
+\tag{2.2}
+$$
+
+The exact QEC Proposition 2.2 moment, with sector order $(0,+,-)$, is
+
+$$
+\begin{gathered}
+\mathcal W=\sum_j\kappa_j(I_j+F_j+E_j)
++\sum_{j<k}b_{jk}(I_{jk}+F_{jk}+E_{jk}),\\
+\kappa_0=\frac18,\quad
+\kappa_+=\frac{331-3r}{2176},\quad
+\kappa_-=\frac{331+3r}{2176},\\
+b_{0+}=\frac3{32}+\frac{9r}{544},\quad
+b_{0-}=\frac3{32}-\frac{9r}{544},\quad
+b_{+-}=\frac{49}{272}.
+\end{gathered}
+\tag{2.3}
+$$
+
+In particular $\mathcal W^\Gamma=\mathcal W$. Retain the same marginal
+multiplier and the same witness coefficients:
+
+$$
+\begin{gathered}
+(\ell_0,\ell_+,\ell_-)=\frac1{10000}(4025,4974,5021),\qquad
+Y=\sum_j\ell_jR_j,\\
+u_{0+}=-\frac{12204}{100000},\quad
+u_{0-}=-\frac{5359}{100000},\quad
+u_{+-}=-\frac{13938}{100000},\\
+t_0=0,\qquad t_+=2\kappa_+-\ell_+,\qquad
+t_-=2\kappa_--\ell_-,\\
+P=I_5\otimes Y-\mathcal W
++\sum_jt_j(F_j-E_j)+\sum_{j<k}u_{jk}(F_{jk}-E_{jk}).
+\end{gathered}
+\tag{2.4}
+$$
+
+Every matrix in (2.2) is real. Partial transpose fixes $I_j,I_{jk}$,
+interchanges $F_j,E_j$ and interchanges $F_{jk},E_{jk}$. Therefore
+
+$$
+I_5\otimes Y-\mathcal W=\frac{P+P^\Gamma}{2}.
+\tag{2.5}
+$$
+
+The new lower bound uses strict slack away from the known kernel of $P$;
+it does not change the weighted tests or the marginal multiplier.
+

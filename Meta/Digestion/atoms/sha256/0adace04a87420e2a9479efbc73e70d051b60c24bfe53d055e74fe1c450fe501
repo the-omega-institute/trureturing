@@ -1,0 +1,18 @@
+**Assumption 35.1 (G on the complete rank-two joint domain).** With $B=B_{\beta,\theta}$ and $C_{\rm out}=A_{\beta,\theta}T^T$, the rank-two part of Assumption 23.5 is exactly
+
+$$
+\begin{gathered}
+\forall\,0<\beta\leq1/2,\quad
+\forall\,\theta\in[0,\pi/4],\quad
+\forall\,T\in\mathcal T_{\beta,\theta},\\
+\exists\,0\ne X=
+\begin{pmatrix}\eta&z&w\\\bar z&-\eta&v\\\bar w&\bar v&0\end{pmatrix},
+\quad \eta\in\mathbb R,\quad z,w,v\in\mathbb C:\qquad
+\|\mathcal L_{B,C_{\rm out}}(X)\|_1
+\leq\sqrt{1-\beta}\,\|X\|_1.
+\end{gathered}
+\tag{R.166}
+$$
+
+At half beta, $\theta=0$ suffices by the common transformation (R.151); allowing other angles is redundant but equivalent. By (R.105), (R.146) and (R.152), the part still requiring an argument has $\operatorname{rank}T=2$ and $(1-2\beta)^2\sin^2(2\theta)<\beta$. All seven real coordinates $\eta,z,w,v$ remain. For $\beta>1/4$ every angle is in this strict plane region, although particular third columns can still admit the existing easy witnesses. Sections 31–34 do not establish (R.166); the failure in (R.156), (R.163) excludes only the specified plane selection.
+

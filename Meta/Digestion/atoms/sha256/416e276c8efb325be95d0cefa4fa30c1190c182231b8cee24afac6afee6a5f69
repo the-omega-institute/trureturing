@@ -1,0 +1,44 @@
+**Proposition 6.2 (homogeneity and a phase-adapted example).** For (JG.22),
+one can take $q=\mathbf1$, $\delta=3/5$ and $d_i=1$, giving
+$\beta=9/400$. Scaling $C$ by $0<\tau\leq1$ gives
+$\beta=9\tau/400$. There are also failing maps with this bound which
+the inherited fixed witness $W_3=|\Omega\rangle\langle\Omega|-2I_9$
+does not detect.
+
+Proof. In (JG.35) each unscaled denominator is $4\cdot2^2=16$,
+so $\beta_j=(3/5)^2/16=9/400$. Scaling multiplies $\delta$ by
+$\tau$ and $d_i$ by $\tau$, hence multiplies $\beta$ by $\tau$.
+At $\tau=0$ the map passes and Theorem 6.1 is not invoked.
+
+Let $\omega$ be a nontrivial cube root of unity and put
+
+$$
+g=(1,\omega,\omega^2)^T,\qquad
+C_g=\frac25I+\frac35gg^\dagger.
+\tag{JG.38}
+$$
+
+It is CP/TP with diagonal one and edge magnitudes $3/5$. Its comparison,
+$\delta$ and $\beta$ equal those of (JG.22). The separator is now
+phase-adapted: $H=2I-gg^\dagger$, with two-coordinate PSD blocks and
+$\operatorname{tr}(HC_g)=-3/5$.
+But $\mathbf1^\dagger g=0$, and therefore
+
+$$
+\operatorname{tr}(W_3SC_gS^\dagger)
+ =\mathbf1^\dagger C_g\mathbf1-2\operatorname{tr}C_g
+ =\frac65-6=-\frac{24}{5}.
+\tag{JG.39}
+$$
+
+The fixed witness is nonpositive here, while the supported separator
+still forces (JG.36) with $9/400$ for every actual realization.
+Moreover the inherited inequality CG.222, applied with
+$\eta=E(\Phi)-E_\star$, implies
+$\delta_\star-2K\sqrt\eta\leq-24/5$ for any original channel with
+this live map. Its inherited performance-based positive part is
+therefore zero. This establishes a distinct map-specific application;
+it neither improves an optimizer bound nor supplies a physical gauge
+operation. The trace and positivity calculations are exact symbolic
+identities. $\square$
+

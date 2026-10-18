@@ -1,0 +1,42 @@
+**Proposition 35.2 (two sufficient cofinal prefix bounds).** For all
+nonnegative rank tuples, all $h,K\ge0$, and the same fixed context,
+
+$$
+\begin{aligned}
+\mathsf{Clip}_{2h+2}(k,l)
+&\Longrightarrow
+ \forall |p|\le h,\quad r_{U_k}(p)=r_{U_l}(p),\\
+\left[\forall |p|\le A+K,\quad r_{U_k}(p)=r_{U_l}(p)\right]
+&\Longrightarrow\mathsf{Clip}_K(k,l).
+\end{aligned}
+\tag{LAC.35.2}
+$$
+
+These are sufficient bounds in opposite directions, not assertions of
+optimal or exactly matching prefix depths.
+
+Proof. If $j\ge2h+2$, every atomic reply at $|s|\le h$ is branch.
+At the root $j\ge2$. For a nonempty $s$, the guard
+$j\ge w(s^-)+2$ follows from $w(s^-)+2\le2|s|\le2h$;
+the reached rank $j-w(s)$ is at least two. Use (ARH.4.3).
+Consequently equal clipped coordinates at $2h+2$ either give identical
+whole atomic trees or two trees having the same replies through depth
+$h$. A physical word of length at most $h$ in a filling either remains
+in the fixed $C$, is blocked there, or enters one of its holes and uses
+a suffix of length at most $h$. The replies agree in each case, including
+every repeated occurrence. This proves the first line.
+
+For the second line there is nothing to prove at a coordinate whose
+two ranks are at least $K$. Otherwise choose the smaller rank $j<K$
+at that coordinate. The recurrence gives
+$\operatorname{ht}(T_0)=0$ and
+$\operatorname{ht}(T_j)=\max(0,j-1)$ for $j\ge1$, so every leaf of
+this $T_j$ is at relative depth at most $K$. At the fixed reached $a_b$,
+the assumed original-prefix agreement includes all these relative
+addresses. Matching all branch and leaf replies of a finite complete
+tree forces exactly that tree: recurse through its pairs, and at each
+leaf a matching leaf reply forbids any further child. Thus the other
+subtree is also $T_j$. Index injectivity gives equality of the ranks.
+For $K=0$ there are no small ranks and (LAC.35.1) is vacuous; for no
+old classes both conclusions are immediate. $\square$
+

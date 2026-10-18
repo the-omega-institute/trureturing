@@ -1,0 +1,13 @@
+**Proposition 7.2 (same finite observation, different lawful complete future).** For every $L\ge1$ there is one rational finite COMPLETE observer on the unchanged source, with emissions in $[1/3,2/5]$, and two positive-probability configurations at the same actual $\mathcal H_3$ history, such that their $\mathcal P_{p,L}$ law vectors agree but their complete decoded laws differ. Any decoder forced to give the same complete law to these two finite observations has maximum error at least
+
+$$
+\frac1{30}\left(\frac29\right)^L.
+\tag{7.1}
+$$
+
+This observer is not claimed to attain the endpoint minima.
+
+**Proof.** At the third latch, independently sample a persistent bit $J\in\{0,1\}$ fairly and set a charged return mode to zero. Use $L+1$ modes cyclically, incremented only by the actual suspended-$\alpha$ return; both actual noncompletion updates preserve $J$. Let all suspended emissions be $1/3$. Let all p emissions be $1/3$, except that at mode $L$ the $J=1$ emission is $2/5$. Synthetic generation uses precisely these same updates; earlier stages and current records follow Definition 1.1.
+
+At initial mode zero the two laws have the same complete-word probabilities for $j<L$ and the same residual mass $(2/9)^L$. They therefore have the same finite-partition observation. But the probabilities of $w_{L,0}$ are $(2/9)^L/3$ and $2(2/9)^L/5$. Their difference is $(2/9)^L/15$, so their complete-law TV is at least this amount. The triangle inequality gives (7.1) for any common law. Both configurations occur at the same actual latch history with positive observer probability. The bit, mode, table and sampler workspace are charged. All actual finite return histories remain available; no clock advance, source reset or added source observation is used. ∎
+

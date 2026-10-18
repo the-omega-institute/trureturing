@@ -1,0 +1,84 @@
+**Theorem 18.2 (actual channel, phase outputs and joint complement).** The two real matrices
+
+$$
+\begin{aligned}
+K_0&=\sqrt a(e_0\langle0|+e_1\langle1|)
+       +(s_t e_4-r_\beta t e_1)\langle2|,\\
+K_1&=\sqrt\beta(e_2\langle0|+e_3\langle1|)
+       +t(e_0+e_3)\langle2|
+\end{aligned}
+\tag{R.75}
+$$
+
+define the actual complex-linear CPTP map $N_{\beta,t}(X)=K_0XK_0^T+K_1XK_1^T$. Its physical channel belongs to $\mathcal R_\beta$. Its encoder Choi rank is two, while the Choi rank of its actual complement is five.
+
+**Proof.** Direct multiplication, including the third-column cross terms, gives
+
+$$
+\begin{aligned}
+K_0^TK_0&=\begin{pmatrix}
+a&0&0\\0&a&-\sqrt\beta t\\0&-\sqrt\beta t&1-2t^2
+\end{pmatrix},\qquad
+K_1^TK_1=\begin{pmatrix}
+\beta&0&0\\0&\beta&\sqrt\beta t\\0&\sqrt\beta t&2t^2
+\end{pmatrix},\\
+K_0^TK_0+K_1^TK_1&=I_3.
+\end{aligned}
+\tag{R.76}
+$$
+
+These real Kraus matrices therefore give complete positivity and trace preservation on all complex matrices. For $f_\pm=(e_0\pm ie_1)/\sqrt2$ and $g_\pm=(e_2\pm ie_3)/\sqrt2$,
+
+$$
+N_{\beta,t}(\chi_\pm)
+=a|f_\pm\rangle\langle f_\pm|
+ +\beta|g_\pm\rangle\langle g_\pm|.
+\tag{R.77}
+$$
+
+The four vectors are orthonormal, so these states have orthogonal supports and nonzero spectra $(a,\beta)$; their difference has spectrum $(a,\beta,0,-\beta,-a)$ and is purely imaginary Hermitian. In physical coordinates, with precisely $D=\operatorname{diag}(1,i,i,i,1)$ and $L=\operatorname{diag}(1,i,i)$ from (P.1), the actual matrices are $K_\alpha^{\rm ph}=DK_\alpha L^\dagger$. Consequently $N^{\rm ph}(\theta_\pm)=D N_{\beta,t}(\chi_\mp)D^\dagger$, with the sign reflection of (P.2). This verifies the actual original-model spectrum condition; these coordinate identities supply no physical gates.
+
+Use the same real environment basis $|0_E\rangle,|1_E\rangle$ and the actual dilation in (R.1). Its entries are $\Gamma(X)_{\alpha\gamma}=\operatorname{Tr}(K_\alpha X K_\gamma^T)$. Writing $E_{ij}=|i\rangle\langle j|$ gives
+
+$$
+\begin{gathered}
+D_\beta=\Gamma(E_{00})=\Gamma(E_{11})=\operatorname{diag}(a,\beta),
+\qquad \Gamma(E_{01})=0,\\
+C_0=\Gamma(E_{02})=t\begin{pmatrix}0&\sqrt a\\0&0\end{pmatrix},\qquad
+C_1=\Gamma(E_{12})=t\begin{pmatrix}-\sqrt\beta&0\\0&\sqrt\beta\end{pmatrix},\\
+\sigma=\Gamma(E_{22})=\operatorname{diag}(1-2t^2,2t^2),\qquad
+J_0=\begin{pmatrix}
+D_\beta&0&C_0\\0&D_\beta&C_1\\C_0^T&C_1^T&\sigma
+\end{pmatrix}.
+\end{gathered}
+\tag{R.78}
+$$
+
+The symbol $D_\beta$ is an environment density, distinct from the physical coordinate matrix $D$. For the fixed phase-input basis matrix $H$ in (R.2), the Choi reference transformation remains $J_p=(H^T\otimes I_2)J_0(\bar H\otimes I_2)$. It follows that
+
+$$
+J_p=\begin{pmatrix}
+D_\beta&0&C\\0&D_\beta&\bar C\\C^\dagger&C^T&\sigma
+\end{pmatrix},\qquad
+\tau=D_\beta,\qquad
+C=\frac{C_0+iC_1}{\sqrt2}
+ =\frac{t}{\sqrt2}\begin{pmatrix}-i\sqrt\beta&\sqrt a\\0&i\sqrt\beta\end{pmatrix},
+\qquad\operatorname{Tr}C=0.
+\tag{R.79}
+$$
+
+The left reference factor is $H^T$, as proved in (R.2), rather than $H^\dagger$. In particular $C\ne0$. Directly,
+
+$$
+\begin{gathered}
+C^\dagger D_\beta^{-1}C+C^TD_\beta^{-1}\bar C
+ =t^2\operatorname{diag}(\beta/a,2),\\
+S=\sigma-C^\dagger D_\beta^{-1}C-C^TD_\beta^{-1}\bar C
+ =\operatorname{diag}(s_t^2,0),\qquad
+\operatorname{rank}J_\Gamma=2+2+1=5.
+\end{gathered}
+\tag{R.80}
+$$
+
+The rank identity is the actual-support congruence (R.5), applied to the positive definite $D_\beta$ and this nonzero $S$. The two encoder matrices are linearly independent, as is already seen from their $|0\rangle$ columns, so the encoder Choi rank is two. All blocks above come from (R.75); no independently realized choice of $C$ or $S$ enters the construction. The fact that $\tau$ is real diagonal here does not restrict the full class to real or commuting complementary outputs. $\square$
+

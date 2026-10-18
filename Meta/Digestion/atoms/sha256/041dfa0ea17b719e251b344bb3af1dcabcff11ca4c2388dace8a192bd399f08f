@@ -1,0 +1,89 @@
+**定理 C-81.2（总面积、直接端斜率积分及全部缺角类型）。** 令
+$w=\kappa_+-\kappa_-=\min\{X,Y,r-X,r-Y\}>0$，则
+
+$$
+\operatorname{Area}(\overline M)=2\pi w,\qquad
+\int_M\mathcal K\,dA
+=2\pi\left(\frac1{m_-}+\frac1{m_+}\right).
+\tag{C81.3}
+$$
+
+两端总角为 $\alpha_\pm=2\pi/m_\pm$，缺角
+$D_\pm=2\pi-\alpha_\pm$，满足
+
+$$
+\int_M\mathcal K\,dA+D_-+D_+=4\pi.
+\tag{C81.4}
+$$
+
+证明。在 $(\kappa,\chi)$ 坐标中 $\det g=1$，故无向面积密度为
+$dA=d\kappa\,d\chi$，等于 $|\omega_{\rm red}|$；
+这里未把坐标次序的有向二形式 $d\kappa\wedge d\chi$ 与
+$d\chi\wedge d\kappa$ 误认同号。积分相位周期和区间宽度即得总面积。
+每个端尾面积随 $\delta$ 线性趋零，新增的两个点为零面积。
+宽度公式可直接分 $X+Y\le r$、$X+Y\ge r$：
+前者 $w=\min(X,Y)$，后者 $w=\min(r-X,r-Y)$，合并即四项最小值。
+
+式 (C80.4) 是解析展开，故可对端点求导，而非对不受控的渐近余项求导。
+下端向内坐标为 $\delta=\kappa-\kappa_-$，上端为 $\delta=\kappa_+-\kappa$，从而
+
+$$
+f'(\kappa_-)=\frac2{m_-},\qquad
+f'(\kappa_+)=-\frac2{m_+}.
+\tag{C81.5}
+$$
+
+$f''$ 在整个闭区间连续有界，故微积分基本定理和式 (C79.3) 给
+
+$$
+\begin{aligned}
+\int_M\mathcal K\,dA
+&=-\pi\int_{\kappa_-}^{\kappa_+}f''(\kappa)\,d\kappa\\
+&=-\pi\bigl(f'(\kappa_+)-f'(\kappa_-)\bigr)
+=2\pi\left(\frac1{m_-}+\frac1{m_+}\right).
+\end{aligned}
+$$
+
+加两个缺角得到式 (C81.4)。完整类型如下，其中一双零行包括两种端点次序：
+
+| 两端类型及条件 | 总面积 | 内部曲率积分 | 端点缺角总和 | 曲率加缺角 |
+| --- | ---: | ---: | ---: | ---: |
+| 单零、单零：$X+Y\ne r$ 且 $X\ne Y$ | $2\pi w$ | $4\pi$ | $0$ | $4\pi$ |
+| 一单零、一双零：$X+Y=r$ 与 $X=Y$ 恰一成立 | $2\pi w$ | $3\pi$ | $\pi$ | $4\pi$ |
+| 双零、双零：$X=Y=r/2$ | $\pi r$，此时 $w=r/2$ | $2\pi$ | $2\pi$ | $4\pi$ |
+
+这也核对锥度量 Gauss–Bonnet 公式，但拓扑和积分已分别直接证明。为精确应用
+Fang、Xu、Yang，*The Gauss-Bonnet formula of a conical metric on a compact Riemann surface*，
+[arXiv:1912.01187v3](https://arxiv.org/abs/1912.01187v3)，文首定义及 Theorem，
+还须核对其共形锥形和可积性条件。
+
+在每端取穿孔邻域的等温径向变量 $q>0$ 满足
+$dq/q=d\rho/h(\rho)$，并以 $z=q e^{i\chi}$ 作局部复坐标。
+式 (C80.3) 给
+
+$$
+\frac1{h(\rho)}=\frac m\rho+\rho A(\rho^2),\qquad
+q=c\,\rho^m e^{B(\rho^2)},\quad c>0,
+$$
+
+其中 $A,B$ 解析，可把 $B(0)$ 吸入 $c$。
+度量为
+
+$$
+g=\frac{h(\rho)^2}{q^2}|dz|^2
+=e^{2u(z)}|z|^{2\beta_{\rm cone}}|dz|^2,\qquad
+\beta_{\rm cone}=\frac1m-1.
+\tag{C81.6}
+$$
+
+确切地，
+$e^{2u}=h(\rho)^2/q^{2/m}$ 在 $\rho\to0$ 时趋于
+$1/(m^2c^{2/m})>0$，所以 $u$ 在端点连续，在穿孔处光滑。
+内部取相容等温图，两端分别取与定向相容的 $\chi$ 或 $-\chi$，
+获得紧球面上的 Riemann 曲面结构；符号选择不改变式 (C81.6)。
+锥指数为 $0$ 或 $-1/2$，都严格大于 $-1$。
+又因面积有限且 $\mathcal K$ 有界，$\int_M|\mathcal K|\,dA<\infty$。
+这满足所引定理的 $L^1$ 曲率条件，其
+$\int\mathcal K\,dA=2\pi(\chi_{\rm Euler}(S^2)+\sum\beta_{\rm cone})$
+正给式 (C81.4)。该文没有替本文证明四角概率的锐界、等号条件或完备化拓扑。证毕。
+

@@ -1,0 +1,58 @@
+**Definition 2.1 (Fourteen explicit vector flags).** The following lists
+give exact real coefficient pairs:
+
+$$
+\begin{array}{c|cc}
+k&c_k&s_k\\ \hline
+0&1&0\\
+1&-1/2&\sqrt3/2\\
+2&-1/2&-\sqrt3/2
+\end{array}
+\qquad
+\begin{array}{c|cc}
+k&C_k&S_k\\ \hline
+0&1&0\\
+1&(\sqrt5-1)/4&\sqrt{10+2\sqrt5}/4\\
+2&-(\sqrt5+1)/4&\sqrt{10-2\sqrt5}/4\\
+3&-(\sqrt5+1)/4&-\sqrt{10-2\sqrt5}/4\\
+4&(\sqrt5-1)/4&-\sqrt{10+2\sqrt5}/4
+\end{array}.
+\tag{2.1}
+$$
+
+Thus $(c_k,s_k)=(\cos(2\pi k/3),\sin(2\pi k/3))$ and
+$(C_k,S_k)=(\cos(2\pi k/5),\sin(2\pi k/5))$. Define the disjoint flag set
+
+$$
+F=\{(\mathrm A,k,\ell):0\le k,\ell<3\}
+\sqcup\{(\mathrm B,k):0\le k<5\}
+\tag{2.2}
+$$
+
+and, for every listed flag, the unit vector and positive coefficient
+
+$$
+\begin{aligned}
+v_{\mathrm A,k,\ell}
+&=\sqrt{\frac25}(c_ku_++s_kW_+u_+)
++\sqrt{\frac35}(c_\ell u_-+s_\ell W_-u_-),
+&c_{\mathrm A,k,\ell}&=\frac{10}{27},\\
+v_{\mathrm B,k}
+&=\sqrt{\frac35}d+\sqrt{\frac25}(C_ku_++S_kW_+u_+),
+&c_{\mathrm B,k}&=\frac13.
+\end{aligned}
+\tag{2.3}
+$$
+
+Here the subscripted $c_f$ is a flag weight, distinct from the circle
+coefficient $c_k$ in (2.1). Write
+
+$$
+P_f=v_fv_f^T,\qquad
+S(X)=\sum_{f\in F}c_fP_fXP_f,\qquad
+T_*(X)=DS(D^\dagger XD)D^\dagger.
+\tag{2.4}
+$$
+
+All fourteen flags, weights and vectors are fixed algebraic data.
+

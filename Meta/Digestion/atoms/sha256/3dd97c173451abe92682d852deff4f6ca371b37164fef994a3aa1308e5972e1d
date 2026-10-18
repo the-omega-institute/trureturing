@@ -1,0 +1,59 @@
+**Definition 10.1 (all acquired branches).** For each $r=\pm1$ put
+
+$$
+\begin{aligned}
+h_r&=\frac1{\sqrt2}
+ \left(\sqrt{P_\epsilon},
+       \frac{r x_\epsilon+iR_\epsilon}{\sqrt{P_\epsilon}},0\right)^T,\\
+\widehat u_L&=\frac{\beta+\sqrt{\beta^2+4\alpha v_\epsilon^2}}2,\qquad
+\widehat v_L=\frac{-\beta+\sqrt{\beta^2+4\alpha v_\epsilon^2}}{2\alpha},\\
+z_{r,\pm}&=\frac12R_{\theta_\epsilon}
+       (\sqrt{\widehat u_L},r\sqrt{\widehat v_L},\pm1)^T .
+\end{aligned}
+\tag{QO.48}
+$$
+
+For each particular low $z$, let $b_1,b_2$ be specimen columns
+one and two of $K(z)$, and fix
+
+$$
+q_1=b_1/\|b_1\|,\quad
+\widetilde q_2=b_2-q_1(q_1^\dagger b_2),\quad
+q_2=\widetilde q_2/\|\widetilde q_2\|,\quad U_z=(q_1,q_2).
+\tag{QO.49}
+$$
+
+All these matrices are fixed from public constants before the specimen
+arrives. For a Kraus matrix $C$, the encoder notation below means
+$A\mapsto CAC^\dagger$. Define the scalar supported decoder
+$\mathcal R_f$ by
+$\mathcal R_{f,j}(z)(dt)=z w_jg(t)dt\,P_f$ for each original $j$,
+with zero live and extra output; define $\mathcal R_\perp$ similarly
+using only original label $2$ with weight one.
+
+The complete generated acquired alphabet is the following twelve labels:
+
+| Actual label | Entire joint fibre dimension | Encoder | Full decoder |
+| --- | --- | --- | --- |
+| $(+,H)$ | $3$ | $K(h_+)E^\dagger$ | $X\mapsto EXE^\dagger$ in live |
+| $(+,L,+)$ | $2$ | $U_{z_{+,+}}^\dagger K(z_{+,+})E^\dagger$ | $X\mapsto EU_{z_{+,+}}XU_{z_{+,+}}^\dagger E^\dagger$ in live |
+| $(+,L,-)$ | $2$ | $U_{z_{+,-}}^\dagger K(z_{+,-})E^\dagger$ | $X\mapsto EU_{z_{+,-}}XU_{z_{+,-}}^\dagger E^\dagger$ in live |
+| $(+,f,1)$ | $1$ | $\sqrt{m_1/2}\langle1\rvert E^\dagger$ | $\mathcal R_f$ |
+| $(+,f,2)$ | $1$ | $\sqrt{m_2/2}\langle2\rvert E^\dagger$ | $\mathcal R_f$ |
+| $(+,\perp)$ | $1$ | $A\mapsto\operatorname{tr}(Q_5A)/2$ | $\mathcal R_\perp$ |
+| $(-,H)$ | $3$ | $K(h_-)E^\dagger$ | $X\mapsto EXE^\dagger$ in live |
+| $(-,L,+)$ | $2$ | $U_{z_{-,+}}^\dagger K(z_{-,+})E^\dagger$ | $X\mapsto EU_{z_{-,+}}XU_{z_{-,+}}^\dagger E^\dagger$ in live |
+| $(-,L,-)$ | $2$ | $U_{z_{-,-}}^\dagger K(z_{-,-})E^\dagger$ | $X\mapsto EU_{z_{-,-}}XU_{z_{-,-}}^\dagger E^\dagger$ in live |
+| $(-,f,1)$ | $1$ | $\sqrt{m_1/2}\langle1\rvert E^\dagger$ | $\mathcal R_f$ |
+| $(-,f,2)$ | $1$ | $\sqrt{m_2/2}\langle2\rvert E^\dagger$ | $\mathcal R_f$ |
+| $(-,\perp)$ | $1$ | $A\mapsto\operatorname{tr}(Q_5A)/2$ | $\mathcal R_\perp$ |
+
+Only the dephased generated label and its stated entire fibre remain
+future-accessible. All other input-dependent dilation systems are
+discarded permanently before the counted cut. In particular the
+complement map can be represented by two fixed orthonormal
+$V^\perp$ bra rows divided by $\sqrt2$; their Kraus multiplicity is
+discarded, leaving one scalar carrier, not an uncounted coherent
+two-dimensional register. No specimen part, controller, memory,
+environment or entanglement share is retained outside these fibres.
+

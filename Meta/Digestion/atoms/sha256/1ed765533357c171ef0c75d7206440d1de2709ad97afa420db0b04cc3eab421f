@@ -1,0 +1,10 @@
+**假设 20.2（有限维可观测接口）。** 使用标准有限维可观测矩阵
+
+$$
+\mathcal O_d=
+\begin{pmatrix}C\\CT\\\vdots\\CT^{d-1}\end{pmatrix},
+\qquad N_\infty=\ker\mathcal O_d.
+$$
+
+$d=0$ 时矩阵为空，核为零空间。等式的依据为 Cayley–Hamilton：$T^d$ 是较低次幂的线性组合，高次幂递推亦然，前 $d$ 次读出为零因而全部为零。
+

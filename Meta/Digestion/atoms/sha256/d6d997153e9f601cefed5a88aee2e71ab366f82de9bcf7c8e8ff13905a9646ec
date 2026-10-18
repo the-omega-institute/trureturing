@@ -1,0 +1,41 @@
+**Proposition 5.1 (the null has unequal full marginals and omitted residuals).**
+The measures in (3.1) are not a compatible pair in the sense of
+[PAIR, Sections 11 and 20]. Their p and suspended full marginals differ,
+and their complete-law extensions in Definition 2.1 fail residual
+identities beyond the retained partition.
+
+**Proof.** Although (3.2) matches the prescribed features, the next p
+zero-branch coordinate and its suspended counterpart give
+
+$$
+Q_B(w_{1,0})-Q_A(w_{1,0})
+=-\frac{292500403}{45927000000}\ne0,
+\tag{5.1}
+$$
+
+$$
+W_B(\alpha w_{1,0})-W_A(\alpha w_{1,0})
+=\frac{151337393407}{73856561906250}\ne0.
+\tag{5.2}
+$$
+
+Thus even their level-five marginals are different. In addition, the
+first omitted one-branch atoms have the raw residuals
+
+$$
+W_A(\alpha w_{4,1})-vQ_A(w_{4,1})
+=(a-v)y_4=-\frac{128}{3365793}\ne0,
+\tag{5.3}
+$$
+
+$$
+Q_B(w_{5,1})-UW_B(\alpha w_{4,1})
+=y_5-Uay_4=\frac{142232}{12555293625}\ne0.
+\tag{5.4}
+$$
+
+These nonzero coordinates cancel within the aggregate tail residuals
+(3.3)--(3.4). The full descriptor equations therefore do not follow from
+the finite output partitions, and the common feature values do not give
+common unweighted descriptor marginals. $\square$
+

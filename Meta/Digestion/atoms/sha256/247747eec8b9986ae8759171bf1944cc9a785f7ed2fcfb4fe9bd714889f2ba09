@@ -1,0 +1,38 @@
+**Lemma 3.3 (weighted child ranges).** On $S_2$, set
+
+$$
+v(A)=v(B)=4,\qquad v(g_{xy})=1.
+\tag{NCE.28}
+$$
+
+If $U\subseteq S_2$ has both side-target ranges at most $k$,
+for $k=2,3,4$, then respectively
+
+$$
+v(U)\le8,\qquad v(U)\le9,\qquad v(U)\le13.
+\tag{NCE.29}
+$$
+
+Proof. Let $\ell=|U\cap\{A,B\}|$, and let $c_L,c_R$ count the
+distinct child symbols appearing on each side among its branches.
+Table (NCE.26) gives $|\Gamma_s(U)|=\ell+c_s$ for $s=L,R$.
+The number of branches is at most $c_Lc_R$, so
+
+$$
+v(U)\le4\ell+\min\{3,k-\ell\}^2.
+$$
+
+The bounds for the three possible leaf counts are
+
+$$
+\begin{array}{c|ccc|c}
+k&\ell=0&\ell=1&\ell=2&\text{maximum}\\\hline
+2&4&5&8&8\\
+3&9&8&9&9\\
+4&9&13&12&13.
+\end{array}
+\tag{NCE.30}
+$$
+
+The empty set also satisfies every displayed bound. $\square$
+

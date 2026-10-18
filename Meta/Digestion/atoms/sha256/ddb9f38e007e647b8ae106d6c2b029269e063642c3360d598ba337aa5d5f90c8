@@ -1,0 +1,69 @@
+## 452. Fibonacci 极值递归在临界增长空间中的精确范数与指数逆成本
+
+**原对象与既有供应。** 保持 §§384–385、414、448–449 的同一实际来源
+\[
+q=\varphi_{\rm gold}^{-2}\in(0,2/5),\quad
+\beta_d=\log(1-(-q)^d),\quad b=\beta_1=\log(1+q),\quad
+\mathcal B(s)=\sum_{d\ge1}\beta_dd^{-s},\quad \gamma=\beta^{-1},
+\]
+\[
+\delta_\beta=b-\sum_{d\ge2}|\beta_d|>0,\qquad
+\sum_{d\ge1}|\gamma_d|\le1/\delta_\beta.
+\tag{IC.1}
+\]
+这里 \(\gamma\) 是 Dirichlet 卷积逆，不是 Euler 常数；
+\(\delta_\beta\) 不与 §451 的肩项常数混用。卷积单位为
+\(\varepsilon_1=1,\varepsilon_n=0\)（\(n>1\)）。§448 给全部实数 \(s\ge0\) 上
+\[
+0<\mathcal B(s)<b,\quad
+\mathcal B'(s)\ge c_*q^2(\log2)2^{-s},\quad
+c_*=\frac{187}{1323},\quad
+\mathcal B(s)\longrightarrow b\quad(s\to\infty).
+\tag{IC.2}
+\]
+以下不假定原 Mertens 函数的临界界，也不假定 RH。
+
+**同一最大值递归的算术读出。** 令
+\[
+a=\beta/b,\quad \eta=b\gamma,\quad
+a_m=a^{*m},\quad \eta_m=\eta^{*m}\quad(m\in\mathbb Z_{\ge0}),
+\qquad a_0=\eta_0=\varepsilon.
+\tag{IC.3}
+\]
+则 \(a_m*\eta_m=\varepsilon\)。§448 的非负变量 \(V\) 有分布函数
+\(h(u)=\mathcal B(1+u)/b\)（\(u\ge0\)）；与原素数极值 \(U\) 独立的
+\(m\) 份 \(V\) 给
+\[
+\mathsf F_m(u)=\mathbb P(\max(U,V_1,\ldots,V_m)\le u)
+=\frac{\mathcal B(1+u)^m}{b^m\zeta(1+u)}\quad(u>0).
+\tag{IC.4}
+\]
+这确实是点态 CDF 乘法的交换幺半群递归。其同一算术系数是
+\(e^{(m)}=\mu*a_m\)。对整数 \(N\ge1\)，置
+\[
+M(N)=\sum_{n\le N}\mu(n),\qquad H_m(N)=\sum_{n\le N}e^{(m)}_n,
+\qquad M(0)=H_m(0)=0.
+\]
+因此 \(H_0=M\)，\(H_1=H_{\rm raw}/b\)。在 \(\Re s>1\) 上的全部
+Dirichlet 级数身份绝对收敛，因为 \(a_m\in\ell^1\)、\(|\mu(n)|\le1\)；
+（IC.4）的系数绑定不依赖条件级数重排。
+
+**临界增长空间。** 固定一个整数 \(j\ge0\)，标量域取 \(\mathbb R\) 或 \(\mathbb C\)。
+序列与算术核使用同一标量域。令 \(\mathcal X_j\) 为满足
+\(f(0)=0\) 且下列范数有限的序列空间：
+\[
+W_j(N)=\sqrt N(1+\log N)^j,\qquad
+\|f\|_{\mathcal X_j}=\sup_{N\ge1}\frac{|f(N)|}{W_j(N)}.
+\tag{IC.5}
+\]
+对算术核 \(v=(v_d)_{d\ge1}\)，定义
+\[
+(T_vf)(N)=\sum_{1\le d\le N}v_df(\lfloor N/d\rfloor),\quad N\ge1,
+\qquad (T_vf)(0)=0,\qquad
+\|v\|_{1,1/2}=\sum_{d\ge1}|v_d|d^{-1/2}.
+\tag{IC.6}
+\]
+所有正商至少为一。有限约数分组给
+\(H_m=T_{a_m}M\)、\(M=T_{\eta_m}H_m\)，不要求实际 \(M,H_m\)
+已经属于 \(\mathcal X_j\)。
+

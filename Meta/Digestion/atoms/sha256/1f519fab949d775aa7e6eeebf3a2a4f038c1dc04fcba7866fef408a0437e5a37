@@ -1,0 +1,53 @@
+**Theorem 11.3 (unit supremum in every nonsingleton calibration cell).** Suppose a calibration cell contains distinct admissible $\vartheta,\varphi$. Every observer satisfying Definition 11.1, with any cardinality of retained carrier, has
+
+$$
+\sup_{\substack{\psi\text{ in the cell},\ M_\psi(h)>0\\
+ h\text{ queried},\ H<\infty}}
+\operatorname{TV}(F_{\psi,h}^H,Q_{z_\psi(h)}^H)=1.
+\tag{11.6}
+$$
+
+For each $0\le\epsilon<1$ there are a true parameter in the cell, a positive finite acquired history $h$, and a finite future horizon $H$ with error strictly greater than $\epsilon$. Both query conventions have this obstruction. The same conclusion applies if the two runs share a queried configuration after any one common positive nonempty history, even when their initial labels differ. The value one is a supremum over finite queries; attainment at a particular finite pair $(h,H)$ is not asserted.
+
+**Proof (11.3).** First use $h_0=[0]$, which has mass $1/5$ and posterior $e_0$ under every parameter. A shared label gives a shared configuration there. Let $Q$ be its decoded stream extension and let
+
+$$
+S=\{x:M_\vartheta(h_0x_{<n})>0\text{ for every }n\ge0\}.
+$$
+
+Theorem 10.2 makes this the same set for $\varphi$. Each true conditional law gives it probability one: its complement is a countable union of zero-mass cylinders. Put $\delta=1-\epsilon>0$. If some finite-horizon error under $\varphi$ at $h_0$ already exceeds $\epsilon$, that is a witness. Otherwise (11.2) and (11.4) give
+
+$$
+Q(A)\ge\delta>0,\qquad A=S\cap T_\varphi,
+\tag{11.7}
+$$
+
+because $F_{\varphi,h_0}(A)=1$.
+
+Let $\mathcal F_n$ be the sigma-field of the first $n$ future symbols and set $m_n=\mathbb E_Q[\mathbf1_{T_\vartheta}\mid\mathcal F_n]$. These bounded conditional expectations converge to $\mathbf1_{T_\vartheta}$ in $L^1(Q)$. An elementary proof suffices here. Approximate $T_\vartheta$ by a finite-coordinate event $B$ with $Q(T_\vartheta\mathbin{\triangle}B)<\eta$. For every $n$ beyond its coordinate horizon, conditional-expectation contraction gives
+
+$$
+\|m_n-\mathbf1_{T_\vartheta}\|_1
+\le2Q(T_\vartheta\mathbin{\triangle}B)<2\eta.
+$$
+
+Let $\eta\downarrow0$. Since $A$ is disjoint from $T_\vartheta$, it follows that $\int_A m_n\,dQ\to0$. Choose a finite $n$ with this integral less than $\delta Q(A)/2$. Among the finitely many length-$n$ cylinders there is therefore a word $v$ with
+
+$$
+Q(A\cap[v])>0,\qquad
+Q(T_\vartheta\mid[v])=m_n(v)<\delta/2.
+\tag{11.8}
+$$
+
+This cylinder has positive forecast mass and, since it meets $S$, $h=h_0v$ has positive actual mass under both parameters. Every preceding cylinder also has positive forecast mass and is an actual positive prefix. Equation (11.5) identifies the conditional tail with the decoder at that shared updated configuration. Finite-prefix invariance of $T_\vartheta$ makes (11.8) its probability under this tail decoder. But $F_{\vartheta,h}(T_\vartheta)=1$, so the stream-event gap at $h$ is greater than
+
+$$
+1-\delta/2=(1+\epsilon)/2>\epsilon.
+$$
+
+Equation (11.2) supplies a finite $H$ with error greater than $\epsilon$ at this positive finite $h$. This proves the claimed finite violation without assuming accuracy at descendant histories in advance. The same proof starts from any shared positive nonempty $h_0$: its continuation support is common and (11.4) holds from its actual posterior. Thus pure histories and every finite startup $B^{k+1}$ remain covered, as do both equality strata and an optional empty query.
+
+Forecast mass outside $S$ and zero-mass forecast cylinders are permitted throughout. Accuracy at $h_0$ forces the positive mass (11.7) on legal source paths; the selected witness conditions only on a positive part of that mass. Other true-positive forecast-zero histories remain queries with their total updates. They are never divided by or deleted from the contract.
+
+TV is at most one for any two normalized finite laws, and a finite violation exists for every smaller proposed bound, proving (11.6). A one-state observer with $U(z,y)=z$ for every report and $Q_z$ concentrated on the constant-$0$ stream is normalized, coherent and satisfies (11.1), including its zero-forecast inputs. It meets tolerance one without calibration. Hence the minimax threshold is also exactly one. $\square$
+

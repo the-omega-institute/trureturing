@@ -1,0 +1,23 @@
+**Corollary 87.4 (weak total actual alphabet).** Let $n_{\mathrm{opt}}(s,A)$ be
+the minimum number of actual low labels nonzero on supported inputs among
+weak height maximizers, and assume the weak finite-$A$ class is nonempty. Then
+
+$$
+N_{\mathrm{opt}}^{\mathrm{total}}(s,A)=n_{\mathrm{opt}}(s,A)+1.
+\tag{FA.102}
+$$
+The same equality holds with $n_{\mathrm{feas}}$ and $N_{\mathrm{feas}}$.
+Total counts include every nonzero full-$M_5$ acquisition map, including
+supported-zero labels; these are excluded only from the supported low count.
+
+**Proof.** Every competitor has its supported-nonzero low labels and at least
+one positive-supported high acquisition label. Any additional supported-zero
+labels also count, so the total is at least the supported low count plus one.
+Starting with a minimum supported-low-label optimum, use (FA.94)--(FA.100),
+placing the coherent complement inside the one high fibre. All high differences
+are nonnegative and sum to $H_0$ there, and the low TV is unchanged. The low
+sign reports attain at least the original contrast, and the deterministic high
+report contributes none, so the same inequality request is satisfied. This is
+a reconstruction of a common instrument, not an effect-only merge of arbitrary
+channels. $\square$
+

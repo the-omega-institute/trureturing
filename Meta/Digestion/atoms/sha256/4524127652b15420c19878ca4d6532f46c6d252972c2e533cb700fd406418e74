@@ -1,0 +1,28 @@
+**Definition 2.2 (one finite tuple).** Define a weight on the finite
+input syntax by
+
+$$
+\begin{aligned}
+w(g)&=\gamma(g),&w(T_{n_j+c})&=0,&w(\rho^a z_i)&=0,\\
+w(\langle A,B\rangle)&=1+w(A)+w(B).
+\end{aligned}
+\tag{URR.7}
+$$
+
+Let $M$ be the maximum of zero and the weights of all sides in
+$\mathcal L$, and let $d$ be the maximum of zero and all residual
+decoration exponents occurring there. Put
+
+$$
+\begin{aligned}
+G&=M+1,&C_0&=\alpha,&C_{r+1}&=\langle C_r,\alpha\rangle,\\
+b_i&=(i-1)(d+1),&z_i^\star&=\rho^{b_i}(C_G)
+\quad(1\le i\le m).
+\end{aligned}
+\tag{URR.8}
+$$
+
+This is a terminating construction from the finite input alone. It never
+evaluates an unknown rank or source. For $m=0$ its output is the empty
+tuple. Unused residual names may still be assigned by (URR.8).
+

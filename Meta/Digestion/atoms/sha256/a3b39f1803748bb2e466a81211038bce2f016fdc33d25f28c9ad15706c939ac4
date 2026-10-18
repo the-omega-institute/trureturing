@@ -1,0 +1,25 @@
+**Theorem 6.1 (small-root formula with the actual input transpose).** In any displayed input coordinates let the actual complement have $J_\Gamma=BB^\dagger$, using at most five columns. For every reference density $q\succeq0$, $\operatorname{Tr}q=1$, and environment density $\omega$, including singular ones,
+
+$$
+\Phi(q,\omega):=\operatorname{Tr}\sqrt{B^\dagger(q^2\otimes\omega)B},
+\qquad g_N=\max_\omega\min_q\Phi(q,\omega).
+\tag{R.27}
+$$
+
+The actual input density represented by $q$ is $q^T$. At the half-weight endpoint (R.25) supplies an explicit order-five root, including its zero column when $v=0$.
+
+**Proof.** The vector $|\psi_q\rangle=\sum_{ij}(\sqrt q)_{ij}|i\rangle_R|j\rangle_A$ has reference marginal $q$ and input marginal $q^T$. Applying $\Gamma$ or $\mathcal C_\omega$ gives the normalized states
+
+$$
+A_q=(\sqrt q\otimes I)BB^\dagger(\sqrt q\otimes I),\qquad Q_q=q\otimes\omega.
+$$
+
+The first normalization uses $\operatorname{Tr}_EJ_\Gamma=I_3$, not an invertible $q$. With $M=(\sqrt q\otimes I)B$, the nonzero eigenvalues of $Q_q^{1/2}MM^\dagger Q_q^{1/2}$ and $M^\dagger Q_qM$ agree, by the two Gram products of $Q_q^{1/2}M$. Therefore
+
+$$
+f(A_q,Q_q)=\operatorname{Tr}\sqrt{M^\dagger Q_qM}
+=\operatorname{Tr}\sqrt{B^\dagger(q^2\otimes\omega)B}.
+$$
+
+This needs no inverse and covers all singular supports and complex $q,\omega$. The map $q\mapsto q^T$ is a bijection on input densities. Applying unrestricted Bény–Oreshkov duality to the same $N,\Gamma$ gives (R.27), with a single center fixed across every input in the inner minimum. No input-dependent center is admitted. $\square$
+

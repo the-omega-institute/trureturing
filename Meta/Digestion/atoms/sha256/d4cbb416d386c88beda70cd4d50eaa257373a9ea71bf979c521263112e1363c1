@@ -1,0 +1,35 @@
+**Definition 2.1 (The full finite-gap phase family, from Source Definition 23.1).** Let $H\ge1$ be an integer, $d=H+1$, and $K\subseteq\{1,\ldots,H\}$ contain $H$. Choose $p_k>0$ for $k\in K$, with $\sum_{k\in K}p_k=1$, and set $p_k=0$ for every nonnegative integer outside $K$, in particular $p_0=0$. For integers $a\ge0$ put
+
+$$
+t(a)=\sum_{k\ge a}p_k,\qquad
+\mu=\sum_{k\ge0}(k+1)p_k=\sum_{a=0}^H t(a).
+$$
+
+Let $e_0,\ldots,e_H$ be the standard orthonormal basis of $\mathbb C^d$ and $E_{ij}=e_ie_j^*$. For arbitrary phases $\theta_k\in\mathbb R/(2\pi\mathbb Z)$, $k\in K$, define
+
+$$
+Se_j=e_{j+1}\quad(j<H),\qquad Se_H=0,\qquad
+x_\theta=\sum_{k\in K}\sqrt{p_k}e^{i\theta_k}e_{H-k},\qquad
+J_\theta=x_\theta e_H^*.
+$$
+
+The outcome-labeled CP instrument and its averaged channel act on the **full complex matrix algebra** $M_d(\mathbb C)$:
+
+$$
+\mathcal C_0(A)=SAS^*,\qquad
+\mathcal C_{1,\theta}(A)=J_\theta A J_\theta^*
+=A_{HH}x_\theta x_\theta^*,\qquad
+\mathcal E_\theta=\mathcal C_0+\mathcal C_{1,\theta}.
+$$
+
+A density is a positive semidefinite matrix of trace one. For a chronological word $w=b_1\cdots b_n$ and initial density $\sigma$, its probability is
+
+$$
+\mathbb P_{\theta,\sigma}(w)
+=\operatorname{Tr}\bigl(\mathcal C_{b_n,\theta}\cdots
+\mathcal C_{b_1,\theta}(\sigma)\bigr),\qquad
+\mathcal C_{0,\theta}=\mathcal C_0,
+$$
+
+and the empty word has probability one. A complete stationary binary law consists of all these finite-word probabilities with a stationary initial density. All linear-algebraic dimensions and ranks below are over $\mathbb C$; the operator space has dimension $d^2$.
+

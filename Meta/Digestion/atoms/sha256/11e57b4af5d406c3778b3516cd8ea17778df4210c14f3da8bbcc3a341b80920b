@@ -1,0 +1,19 @@
+**Proposition 17.3 (limits witnessed by this construction).** A fixed graph
+without the new activation permission still cannot start this installer
+at an arbitrary original busy cut, or take its new Ready edge as though
+it were an installed old row. A package cannot change its target by using
+a later live meter or latest-cover. Source-only input retention cannot
+recover earlier service INs. These restrictions remain after the word
+compiler and its native consumer have been constructed.
+
+Proof. The first statement is the unique prescribed-successor obstruction
+of Proposition 3.1, and at Ready the original menu still has no Install
+edge. Definition 14.1 openly changes this relation and Step explicitly
+records its use. For target validation the comparison is with frozen
+$b$, so advancing current time past $k>b$ still yields CutIndexReject.
+For a successful package $k$ and its input prefix are actual immutable
+bytes; later operations append other objects. Lemma 7.2 supplies two
+service latch states distinguished by their retained control input but
+not by source-only retention. Neither native simulation nor added budget
+can reconstruct an omitted choice from those identical old observations. ∎
+

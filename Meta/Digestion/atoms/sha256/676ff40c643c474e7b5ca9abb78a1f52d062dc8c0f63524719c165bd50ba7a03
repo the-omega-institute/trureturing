@@ -1,0 +1,177 @@
+## 137. A common attained finite-round real local instrument
+
+**Theorem C-137.1 (Whole-algebra original-cut attainment).**
+The following single protocol, independent of $X$, is finite-round
+BOTH-REAL LOCC, is CP/TP on its entire complex joint input algebra,
+and induces the error in (C134.5) for all four labels and every finite
+untouched complex reference.
+
+Proof. Alice first measures the three data sectors $d_a,d_b,\{2\}$
+using their real computational projectors. This removes only
+cross-sector coherences, which every target (C134.3) already sends to
+zero. Alice communicates the sector to Bob. In singleton sector $2$,
+Bob prepares the diagonal distribution with probability $s$ on $2$ and
+$\eta/5$ on each other coordinate. Both programs are discarded.
+
+In pair sector $d=(j,k)$, both parties locally test each copy, in order,
+for membership in their respective two-dimensional supports for $d$.
+The Alice support is $\{|B_j\rangle,|B_k\rangle\}$ and the Bob support
+is $\{|f(B_j)\rangle,|f(B_k)\rangle\}$. They communicate their binary
+membership results. A copy is accepted precisely when both tests say
+inside. This is the local pair-product test, retaining all four product
+modes; it is not a nondestructive test for matching coordinates.
+On the first accepted copy they use the Bell instrument below. Earlier
+failed copies and the unused copy are discarded. If neither copy is
+accepted they use the real fallback below. Every failure outcome is
+retained in this channel.
+
+On either copy the acceptance probability, the same for all four labels,
+is
+
+$$
+q=2(w+n)=\frac{10-6\eta}{25},\qquad
+\frac4{25}\le q\le\frac25.
+\tag{C137.1}
+$$
+
+The unnormalized accepted state, in order $00,01,10,11$, is
+
+$$
+\tau_{X,d}=\operatorname{diag}(w,n,n,w)
+        +iv_{X,d}(|00\rangle\langle11|-|11\rangle\langle00|),
+\tag{C137.2}
+$$
+
+where $v_{\sigma X_d,d}=\sigma u$, while $v_{X,d}=0$ when $X$ belongs
+to the other pair. These are descriptions of the actual state branches;
+no control is conditioned on $v_{X,d}$ or on an inferred label.
+
+Identify the retained local pairs with bits. Let
+
+$$
+Z_2=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\quad
+X_2=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
+R_2=\begin{pmatrix}0&1\\-1&0\end{pmatrix}.
+\tag{C137.3}
+$$
+
+Alice measures data and her accepted half in the four real Bell vectors
+$|\beta_V\rangle=(I\otimes V)(|00\rangle+|11\rangle)/\sqrt2$.
+She sends the outcome to Bob, who applies the correction in this table:
+
+| $V$ defining Alice's Bell vector | Bob's real correction $C_V$ |
+| --- | --- |
+| $I_2$ | $I_2$ |
+| $Z_2$ | $Z_2$ |
+| $X_2$ | $R_2$ |
+| $R_2$ | $X_2$ |
+
+All four matrices are real orthogonal. The corrections are independent
+of the unknown sign, axis and $t$. A direct contraction of each Bell
+vector with $Y\otimes\tau_{X,d}$, followed by $C_V$, gives one fourth
+of the following unnormalized channel, for every $Y\in M_2(\mathbb C)$:
+
+$$
+\mathcal T_{\tau}(Y)=
+\begin{pmatrix}
+2wY_{00}+2nY_{11}&2iv_{X,d}Y_{01}\\
+-2iv_{X,d}Y_{10}&2nY_{00}+2wY_{11}
+\end{pmatrix}.
+\tag{C137.4}
+$$
+
+For example the $I_2$ Bell outcome contracts the $(a,b),(a',b')$
+entry of $\tau$ with $Y_{aa'}/2$. The $Z_2$ outcome changes both
+off-diagonal signs, canceled by $C_V=Z_2$. The $X_2$ outcome interchanges
+the data coordinates; $R_2 E_{10}R_2^T=-E_{01}$ cancels its additional
+imaginary sign. The $R_2$ outcome has that additional minus in the Bell
+vector already and is corrected by $X_2$. Their diagonal swaps are the
+same in the last two cases. This proves (C137.4) on all four matrix units,
+including the two independent complex off-diagonal units. Its trace is
+$q\operatorname{tr}Y$. The Bell basis is complete, so its four outcomes
+are all included.
+
+Conditional iid programs imply that the first-copy acceptance contributes
+$\mathcal T_\tau$ and the second-copy acceptance after first failure
+contributes $(1-q)\mathcal T_\tau$. Define the paid hit populations and
+the total failure probability by
+
+$$
+\alpha=2w(2-q),\qquad
+\beta=2n(2-q),\qquad
+z=(1-q)^2=1-\alpha-\beta.
+\tag{C137.5}
+$$
+
+For a measured input coordinate $\ell\in\{j,k\}$ in the total-failure
+branch, Bob prepares output $r$ with probabilities
+
+$$
+p_{r\mid\ell}=
+\begin{cases}
+(s-\alpha)/z,&r=\ell,\\
+(\eta/5-\beta)/z,&r\in\{j,k\}\setminus\{\ell\},\\
+(\eta/5)/z,&r\notin\{j,k\}.
+\end{cases}
+\tag{C137.6}
+$$
+
+These are lawful at every endpoint. Indeed $z\ge9/25>0$,
+$\alpha\le4s/5\le s$, and
+$\beta\le4\eta/25\le\eta/5$. Their sum is
+$[s-\alpha+\eta/5-\beta+3\eta/5]/z=1$.
+This fallback measures the data coordinate at Alice, sends that classical
+coordinate, and prepares a real diagonal state at Bob. Its Kraus matrices
+on the pair are $\sqrt{p_{r\mid\ell}}|r\rangle\langle\ell|$ with the
+measurement and preparation spatially separated by that classical message.
+No data phase or quantum carrier is supplied by this branch.
+
+The hit branches and (C137.6) give exactly the target diagonal for every
+input coordinate: the correct coordinate has population
+$\alpha+(s-\alpha)=s$, its pair partner has
+$\beta+(\eta/5-\beta)=\eta/5$, and each other output has $\eta/5$.
+For either active label the only nonzero off-diagonal coefficient is
+
+$$
+g_2=2u(2-q)=4u(1-w-n)=\frac{c(80+12\eta)}{125},
+\tag{C137.7}
+$$
+
+with the source's sign; the other pair coefficient is zero. The singleton
+and cross-sector actions were already specified. Thus the induced map is
+exactly the supplier's response $T_\eta(\sigma g_2,0)$ or
+$T_\eta(0,\sigma g_2)$, on every complex matrix unit.
+The exact reference-norm identity in the supplier's Proposition 3.2
+therefore gives, without a new norm calculation,
+
+$$
+\|N_X-\Phi_X\|_\diamond=c-g_2
+               =\frac{c(45-12\eta)}{125}
+\quad\text{for each }X\in U_4.
+\tag{C137.8}
+$$
+
+Equality of these complex-linear maps remains equality after tensoring
+any finite untouched reference. In particular imaginary data coherences
+have not been replaced by their real parts.
+
+For completeness, every operation used above has a full-space real Kraus
+implementation. The data sector projectors sum to $I_5$. Each local
+membership instrument consists of a real projector and its complement.
+Failure records can be coarsened only after their subsequent actions
+have been specified identically; their probabilities are never dropped.
+Alice's four Bell projectors on the selected pair product can be completed
+by the twenty-one computational projectors outside it. The corrections
+extend as identity on the three complementary Bob coordinates. Discard
+has computational-bra Kraus matrices. Fallback measurement and preparation
+have the real Kraus matrices just displayed, whose squared weights sum
+to one. The singleton preparation is the same kind of instrument.
+Real computational pointers and controlled classical feedforward implement
+these branches with their complete complements. A finite composition of
+these specified instruments is CP and TP on all complex joint inputs,
+including arbitrary correlations among data and both programs. This
+argument does not infer implementability from Choi positivity, and it
+does not use the independent-input promise to establish CP/TP.
+The promise is used only to evaluate the induced channel and its
+$(1-q)$ factor. QED.
+

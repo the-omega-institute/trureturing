@@ -1,0 +1,4 @@
+#### 82.4.1. Both singular values strictly below one
+
+All four weights in (2) are positive, in particular a pair U and -U. Since D_(-U)=-D_U, their common residual in (10) is W_f=0. Equation (10) then gives C_U=S=C_(-U)=-C_U, forcing S=0. This contradicts (7). This also excludes both zero singular values and the cases with just one zero when the other is below one.
+

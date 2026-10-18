@@ -1,0 +1,16 @@
+**The endpoint $d=312/5$.** Now $Q_3=0$, hence $L(3)=0$.
+If $L=0$, the first three residuals force
+$F_0=F_1=F_2=0$. For $BD$ and $CD$ their nonzero constant entries
+exclude this, and for $BC$ it would require both $\theta=6$ and
+$\theta=3$. Thus $L$ is a nonzero multiple of $T-3$, and its
+values at zero, one and two have the same nonzero sign.
+All three corresponding residuals are negative, so
+$F_0,F_1,F_2$ must have the same nonzero sign.
+For $BC$, positivity requires $\theta>6$ and $\theta<3$;
+negativity requires $\theta>3$ and $\theta<2$.
+For $BD$, $F_0<0$ would require $\theta>5$ and $\theta<3$.
+For $CD$, $F_1>0$ would require $\theta<-3/2$ and $\theta>3$.
+These contradictions prove all endpoint injections.
+Extra parameter zeros are excluded by the nonzero affine samples,
+rather than silently discarded.
+

@@ -1,0 +1,26 @@
+## 追加结果：记录 $M$ 或 $JMJ$ 的完整 $d=1$ stratum
+
+本节固定 $d=1$，故实际记录索引恰为 $0,1,2,3,4,5$。沿用前文的
+$\mathcal R_+$、$\mathcal L$、$\mathcal I$、$\Lambda$、$B$、$C$ 和
+$T_k=B+kC$。假设历史位于仍可能统一恢复的 identically singular 分支：
+
+$$
+\operatorname{rank}T_k=3,\qquad
+\ker T_k=\mathbb R K\quad(k\in\mathbb R),
+$$
+
+其中 $K\ne0$ 为一个共同的 safe kernel 生成元，并作归一化
+
+$$
+\operatorname{tr}K=\operatorname{tr}(A_iK)=1\qquad(0\le i\le5).
+\tag{10.1}
+$$
+
+本节记
+
+$$
+U=JM=\begin{pmatrix}1&1\\0&1\end{pmatrix}.
+$$
+
+本节只分类实际记录的累计矩阵。它不把 regular pencil 排除在含有同一矩阵的其它历史之外。
+

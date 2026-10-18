@@ -1,0 +1,21 @@
+**Definition 1.3 (Prescribed independent batches and full-algebra processors).** For an integer $m\ge0$, the actual program is exactly $\rho_{t,\eta}(X)^{\otimes m}$ on $P_m=(\mathbb C^5\otimes\mathbb C^5)^{\otimes m}$. Conditional on the same fixed $X$, copies are independent of one another and initially independent of the entire data and reference state. At $m=0$, $P_0=\mathbb C$ and the program is the scalar state $1$. There is no prior distribution on $X$.
+
+A competitor is one label-independent complex CPTP map
+
+$$
+\mathcal P_m:M_{5\cdot25^m}(\mathbb C)\longrightarrow M_5(\mathbb C),\qquad
+N_X(Y)=\mathcal P_m(Y\otimes\rho_{t,\eta}(X)^{\otimes m}).
+$$
+
+It must be valid on the entire joint algebra, including correlated data/program inputs and programs outside the promised family. Only the stipulated independent batches are used in evaluating
+
+$$
+e_m(t,\eta)=\inf_{\mathcal P_m\ {\rm CPTP}}\max_{X\in U_4}
+ \|N_X-\Phi_{t,\eta,X}\|_\diamond.
+\tag{1.3}
+$$
+
+The diamond norm is unhalved and includes every finite complex reference, which is never acted on. Equivalently for differences of channels it is the supremum of the output trace norm over all such reference/data states. Competitors have no measurement, Schur, covariance, real-input or product-data restriction. A chosen program curve, selected eigenstate, classical label, postselection or free additional copy cannot replace the actual program.
+
+Program preparation, the joint measurement, exact complex controls and any spatial communication are supplied services with the costs in Sections 9–10. The abstract minimax (1.3) permits a joint processor; it does not itself make separated-party access free.
+

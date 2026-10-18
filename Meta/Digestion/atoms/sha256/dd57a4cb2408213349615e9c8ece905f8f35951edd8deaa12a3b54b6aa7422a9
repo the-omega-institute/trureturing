@@ -1,0 +1,32 @@
+**Convention 1.4 (credited semantic and rate relations).** Let $K_d(n)$
+be the least number of admissible sets covering $S_d^n$. Reuse
+
+$$
+\begin{aligned}
+\sigma_d&=\inf_{n\ge1}\frac{\log_2K_d(n)}n,\qquad
+b_d=2^{-\sigma_d}=\min_{\mu\in\Delta(S_d)}\beta_d(\mu),\\
+\lambda&=\lim_{D\to\infty}2^{-D}\log_2M_1(D)
+        =\sup_{d\ge1}2^{-d}\sigma_d,\\
+0&\le\lambda-2^{-d}\sigma_d\le2^{-d}\phi,\qquad
+0\le\phi\le1.
+\end{aligned}
+\tag{RCE.8}
+$$
+
+Here $U_0=1$, $U_{h+1}=1+U_h^2$ and
+$\phi=\lim_h2^{-h}\log_2U_h$. The covering/rate assertions are
+[FMR, Theorem 6.4]; the attained pressure minimum is [NPC, Theorem
+6.2], using its semantic completeness theorem. Neither is an effective
+all-length verifier. [NPC, Theorem 6.1] supplies
+
+$$
+|\beta_d(\mu)-\beta_d(\nu)|\le\operatorname{TV}(\mu,\nu),
+\qquad \operatorname{TV}(\mu,\nu)=\frac12\sum_x|\mu(x)-\nu(x)|.
+\tag{RCE.9}
+$$
+
+All logarithms are base two. Theorems proved below are ordinary
+repository-derived deductions. The suppliers just identified, the
+four-state core of [NCM]/[SRP], and the numerical bounds of [NCE]/[D3]
+are credited results.
+

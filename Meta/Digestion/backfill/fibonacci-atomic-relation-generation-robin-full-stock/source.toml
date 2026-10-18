@@ -1,0 +1,5 @@
+source_id = "fibonacci-atomic-relation-generation-robin-full-stock"
+path = "docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION_ROBIN_FULL_STOCK.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

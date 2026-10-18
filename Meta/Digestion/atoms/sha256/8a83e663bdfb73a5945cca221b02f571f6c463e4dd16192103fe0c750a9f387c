@@ -1,0 +1,13 @@
+**定义 1.2（完整合法词与同一固定源）。** 固定整数 $N,L\ge1$，置 $n=3N$、$\theta=\pi/(4L)$。系统为 $\mathcal K=(\mathbb C^2)^{\otimes n}$，因子标签、带符号的计算基及 $X,Y,Z$ 标准均已知。令
+
+$$
+\begin{aligned}
+B_n&=\{b\in\{0,1\}^n:b_i b_{i+1}=0\quad(1\le i<n)\},\\
+s_i(b)&=(-1)^{b_i},\\
+U_{s(b)}&=\bigotimes_{i=1}^n\exp(i s_i(b)\theta Z),\\
+\Lambda_{s(b)}(\rho)&=U_{s(b)}\rho U_{s(b)}^\dagger.
+\end{aligned}
+$$
+
+未知 $b$ 选定一次，此后所有普通调用使用同一个理想、无噪声、无记忆、已校准的源。一次普通调用作用于整个 $n$ 量子位系统，对参考和工作空间作用为恒等。Bayes 评分使用 $B_n$ 上的均匀先验；minimax 评分取所有固定合法来源中的最坏者。全零词、尾部 null 窗和每个跨窗接缝全部保留，没有 canonical $\mathrm{End}$，没有额外标签建议。
+

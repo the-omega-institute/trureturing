@@ -1,0 +1,59 @@
+**Definition 1.4 (complete templates and their credited owned seeds).**
+A complete template $\Theta$ on $n\ge1$ blocks prescribes at every
+$(i,q)$ either a constant $g_q(x_i)=z\in G_q$, or
+
+$$
+g_q(x_i)=\delta_{i,q}(r_a(x_j)),
+\qquad j\in[n],\ a\in W_d,\quad
+\delta_{i,q}:\mathcal A\longrightarrow G_q.
+\tag{COK.6}
+$$
+
+Let $C_\Theta\subseteq S_d^n$ be its full simultaneous solution set.
+All references concern the same tuple. Donors, cycles, self queries,
+off-target queries and correlations are unrestricted. [NDR,
+Theorem 2.2][NDR] supplies complete-template saturation for admissible
+subsets, preserving nonnegative mass maxima and cover optima.
+
+[RRN, Theorems 4.2, 5.2 and 6.1][RRN] give the exact two-way
+owned-seed representation. A seed $c$ has a nonempty domain
+$T_c\subseteq\mathcal A$ and a distinct actual owner port $o_c=(i,q)$.
+Every local port prescribes a constant full factor or a table of one
+seed. At the owner the table satisfies
+
+$$
+h(B_{o_c}(a))=a\qquad(a\in T_c).
+\tag{COK.7}
+$$
+
+Repeated occurrences are that same variable. For an assignment $s$,
+the prescribed factor vector of block $i$ either reconstructs a unique
+$x_i(s)\in S_d$ or is incompatible. With any nonnegative whole-block
+weights $w_i:S_d\to[0,\infty)$, set
+
+$$
+\Phi_i(s)=
+\begin{cases}w_i(x_i(s)),&\text{compatible},\\0,&\text{otherwise}.
+\end{cases}
+\qquad
+Z(\mathcal N;\boldsymbol w)=\sum_{s\in\prod_cT_c}\prod_{i=1}^n\Phi_i(s).
+\tag{COK.8}
+$$
+
+The exact identity is
+
+$$
+Z(\mathcal N;\boldsymbol w)
+=\sum_{x\in C_\Theta}\prod_iw_i(x_i).
+\tag{COK.9}
+$$
+
+Every original solution has precisely one lift, recovered as its owner
+replies, and every valid such network translates back to a complete
+template. Empty seed domains give no solution and can be treated
+separately. [CBN][CBN] supplies actual constructor compatibility and
+equality-aware reconstruction; [OCB, §§2–3][OCB] refines its temporal
+compatibility and elimination boundaries. In particular each original
+joint block weight occurs once. It is never replaced by pairwise
+weights or by independent copies of repeated seed occurrences.
+

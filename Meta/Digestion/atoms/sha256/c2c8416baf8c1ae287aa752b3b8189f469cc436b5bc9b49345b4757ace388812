@@ -1,0 +1,72 @@
+**Theorem 3.3 (effective joint support, negative termination and finite
+witnesses).** There is a terminating mathematical procedure which, on
+valid input of Definition 1.4, returns $B$ and a finite set
+$K\subseteq A_B$ such that
+
+$$
+\begin{aligned}
+K&=\{\mathbf c\in A_B:F_{\mathbf c}\ne\varnothing\},\\
+E&=\coprod_{\mathbf c\in K} L_{\mathbf c},\\
+\mathscr H&=\coprod_{\mathbf c\in K}
+                         (L_{\mathbf c}\times F_{\mathbf c}).
+\end{aligned}
+\tag{NUE.10}
+$$
+
+The product uses the same finite original source throughout each
+history. Each $F_{\mathbf c}$ has its exact fixed-epoch predicate
+(NUE.4); it is not replaced by a finite sample. The procedure decides
+emptiness and can return one finite source $t_{\mathbf c}$ for each
+accepted representative. That same source realizes every epoch tuple
+in $L_{\mathbf c}$.
+Invalid data return the empty representation, for example $B=1$ and
+$K=\varnothing$.
+
+Proof. Reject invalid proposed rows by Definition 1.2. For valid rows,
+compute $B$ and enumerate $A_B$. The number of representatives is
+
+$$
+|A_B|=\binom{B+m-1}{m-1},
+\tag{NUE.11}
+$$
+
+the number of nondecreasing lists of length $m-1$ selected with
+repetition from $0,\ldots,B$.
+
+At each representative $\mathbf c$, call NSF Theorem 5.2 directly
+on the first complete row at epoch zero and all the additional
+complete-row tests at the supplied numeral epochs $c_i$. Equivalently,
+use (NUE.4) with those numerals, including every different-class
+disequality. The theorem decides emptiness without an inhabitation
+promise and returns a finite original on a positive answer. Mark
+precisely these representatives as members of $K$. All calls concern
+one original variable shared by every record. Zero hidden classes
+produce ground contexts and empty valuation lists, not a missing case.
+
+For soundness, a returned $t_{\mathbf c}\in F_{\mathbf c}$ belongs
+to $F_{\mathbf n}$ for every $\mathbf n\in L_{\mathbf c}$, by
+Theorem 3.2. This preserves its concrete exterior, every blocking
+leaf, every reached hole and every partition bit at each capture.
+For completeness, an arbitrary unbounded realizing pair
+$(\mathbf n,t)$ has $\mathbf c=\kappa_B(\mathbf n)\in A_B$ and
+$t\in F_{\mathbf c}$. Therefore that finite representative is
+accepted. Applying the same equality to every $t$ proves the third
+line of (NUE.10), which is stronger than preservation of existential
+support alone.
+
+All parsing, threshold calculations and representative enumeration
+are finite. There are exactly (NUE.11) total fixed-epoch decisions
+in the exhaustive construction. If every representative is rejected,
+completeness proves that no unbounded tuple has a finite shared
+original. This is the terminating NO case. It does not infer
+emptiness from a finite unsuccessful search for trees or epochs.
+
+If $K\ne\varnothing$, choose any accepted representative and its
+returned finite source. To answer a query at an arbitrary supplied
+tuple $\mathbf n$, first check chronology and compute its cap.
+Reject if that cap is absent from $K$; otherwise return the stored
+source for the cap, or regenerate one by its fixed-epoch call. No
+iteration up to the size of $\mathbf n$ is needed for this selection.
+Actually materializing or executing $\rho^{n_i}t_{\mathbf c}$ is
+a separate finite, potentially much larger operation. $\square$
+

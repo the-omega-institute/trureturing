@@ -1,0 +1,65 @@
+**Proposition 5.3 (all twelve acquired laws, contrast and charged mass).**
+For every $y,e,n$ in RH.1, the full actual acquired law is
+
+$$
+\begin{aligned}
+p(j\mid y,e,n)={}&x_j^2A_y+z_j^2B_y+w_j^2C_y
+ +2x_jz_j\kappa enq_y\\
+ &+2x_jw_j\kappa_{02}e\frac{\sqrt y}{16}
+ +2z_jw_ja_Kc_Kn\frac{\sqrt{64-y}}{16},\\
+p(H,r\mid y,e,n)&=(1-\delta)A_y/2,\\
+p(f,\epsilon,r\mid y,e,n)&=\frac12\left|
+ \left\langle f_\epsilon^{\rm fail},
+ (\sqrt{m_1}n\sqrt{p_{y1}},\sqrt{m_2}\sqrt{p_{y2}})^T
+ \right\rangle\right|^2,\\
+p(\perp,r\mid y,e,n)&=0.
+\end{aligned}
+\tag{RH.40}
+$$
+
+These are nonnegative norm squares and sum to one by RH.35. The binary
+plus effect and its twelve laws, allowing all its other coordinates,
+are
+
+$$
+\begin{aligned}
+F&=\frac12I_3+\frac12\sum_jr_jK_j^\dagger K_j,\\
+F_5&=EFE^\dagger+(I_5-P_V)/2,\\
+\Pr(+\mid y,e,n)&=\frac12+\frac12\sum_jr_jp(j\mid y,e,n),\\
+\mathsf V(F)&=s_0\left|\sum_jr_j(f_j)_0(f_j)_1\right|.
+\end{aligned}
+\tag{RH.41}
+$$
+
+The only high fibres are RH.29, and on every normalized five-mode input
+$\sigma$ their acquired probability is exactly
+
+$$
+p_H(\sigma)=(1-\delta)\operatorname{tr}(ED^\dagger DE^\dagger\sigma).
+\tag{RH.42}
+$$
+
+In particular each original history has mass $(1-\delta)A_y$ and
+$\mathsf W=(1-\delta)A_{27}=\mathsf C(s)$ throughout the weak interval.
+The full retained-record height TV is exactly
+
+$$
+\frac12\left[(1-\delta)\Delta A+L_f+
+                         \sum_j|f_j^TGf_j|\right].
+\tag{RH.43}
+$$
+
+Proof. The cross effects are
+$D^\dagger T+T^\dagger D=\kappa X_{01}$,
+$D^\dagger S+S^\dagger D=\kappa_{02}X_{02}$ and
+$T^\dagger S+S^\dagger T=a_Kc_KX_{12}$.
+Born traces give RH.40. High, spectral and complement reports are fair,
+so RH.35 gives RH.41, with
+$\operatorname{Re}F_{01}=\kappa\sum_jr_jx_jz_j/2$.
+Only the high fibres have dimension at least three; their effect proves
+RH.42 even on complex coherent inputs and on reduced inputs of passive
+reference states. Each low height difference is $f_j^TGf_j$, the two
+high differences are positive with total $(1-\delta)\Delta A$, and
+the spectral differences sum in absolute value to
+$|\lambda_+|+|\lambda_-|=L_f$. This proves RH.43. $\square$
+

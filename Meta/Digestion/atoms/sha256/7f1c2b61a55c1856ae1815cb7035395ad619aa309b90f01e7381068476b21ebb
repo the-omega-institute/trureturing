@@ -1,0 +1,24 @@
+**Definition 2.1 (Additional hypotheses).** The general-law results assume
+
+$$
+\mathsf B(P):\quad q_i=0\text{ on }F_i^c,\qquad
+\tfrac14\le q_i\le\tfrac12\text{ on }F_i,
+\quad P\text{-almost surely for every }i\in\mathbb Z,
+\tag{2.1}
+$$
+
+and the following actual one-sided erasure condition:
+
+$$
+\begin{aligned}
+p^L_j&=\mathbb E_P[X_0\mid X_{-j},\ldots,X_{-1},X_1,X_2,\ldots],&
+e_L(j)&=\mathbb E_P(q_0-p^L_j)^2,\\
+p^R_j&=\mathbb E_P[X_0\mid\ldots,X_{-2},X_{-1},X_1,\ldots,X_j],&
+e_R(j)&=\mathbb E_P(q_0-p^R_j)^2,\\
+A_P&:=\sum_{j\ge0}\bigl(\sqrt{e_L(j)}+\sqrt{e_R(j)}\bigr)<\infty.
+\end{aligned}
+\tag{2.2}
+$$
+
+Each field retains the entire opposite half-line, also at $j=0$. In particular neither seam defect is discarded. [Universal, Theorem 3.1][U] makes the band necessary for attainment. No theorem here establishes (2.2) for every finite hidden law or every hypothetical attainer.
+

@@ -1,0 +1,36 @@
+## 320. The original-circle proof of the maximum gap
+
+First suppose X has a transverse occurrence with companion A and
+axes R,O. The four labels are distinct. The genuine inequality gives
+
+    (x-a)^2<(r+1)*(o+1).
+
+Since x>=a, it follows that
+
+    x<a+sqrt((r+1)*(o+1))
+      <=a+1+(r+o)/2.
+
+For any three distinct other labels, a+(r+o)/2<=a1+a2:
+if A carries a largest value, each of r,o is at most a2; otherwise
+A is at most a2 and the average of r,o is at most a1. Hence the
+claimed strict bound follows.
+
+Otherwise every X occurrence is axial. Connectedness transports one
+fixed pair {A,B} around its whole circle. Four-distinctness gives
+one X slot per owner, so there are n=degree(X)>=6 distinct genuine
+owners. Suppose x>=1+a+b. The established dominant-axis response
+inequality (the same one used in Sections 209 and 312) gives at each
+owner
+
+    2*theta_X+beta_A+beta_B>pi.
+
+Summing uses the actual X angles exactly once and only half of the
+two transverse A/B slots per owner. Thus
+
+    n*pi < 2*sum(theta_X)+sum(beta_A+beta_B)
+         <= 4*pi+(2*pi+2*pi)/2 = 6*pi.
+
+This contradicts n>=6. Therefore x<1+a+b<=1+a1+a2.
+All charging is by original slots at distinct actual owners; repeated
+visits or distinct-face self-pairings do not change the count. QED.
+

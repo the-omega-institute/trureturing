@@ -1,0 +1,2 @@
+**Definition 14.1 (rational preconditioners).** In each table $R_{ij}=A_{ij}/2^{151}$, with zero-based row index $i$. Each row lists the entire ordered integer vector $(A_{i0},\ldots,A_{i,n-1})$. Column order is the equation order, and row order is the variable order, of Definition 4.2.
+

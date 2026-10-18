@@ -1,0 +1,248 @@
+**Theorem 210.7 (One heavy internal class and equal light classes).**
+Let $m\ge2$, $a>0$, $0\le c\le a$. Choose a heavy address $h\ge3$,
+a disjoint set $J$ of $m$ light late addresses, and
+$z>\max(\{h\}\cup J)$ with $L\ge z$. Put $I=\{h\}\cup J$.
+Consider the following restricted class of input-family scores.
+The late correct rows are fixed as
+
+$$
+C_{w(\{h,z\})}=a,\qquad C_{w(\{j,z\})}=c\ (j\in J),\qquad
+C_{w(\{z\})}=a.
+\tag{210.21}
+$$
+
+There are no other late correct rows. Early $C$ is arbitrary.
+Pair rows may have any early prefix $00,01,10$, but their terminal
+bit is zero and inactive late bits are one. Their projection onto $I$
+is one measure $\nu$. Take $T=\tau\ge0$.
+Require protection: after early $C$ is removed, every late-label
+reward in every non-$11$ cell of every distinct-pair $N$ schedule is
+at most that cell's zero-label pair reward.
+
+Put $q_m=\lfloor m^2/4\rfloor$ and
+
+$$
+r_m(a,c)=\max\left\{a,
+ \max_{1\le k\le m-1}\frac{2(mkc-q_ma)}{k(k+1)}\right\},\qquad
+S_m(a,c)=2a+r_m(a,c).
+\tag{210.22}
+$$
+
+The exact least pair stock in this protected fixed-terminal class is
+$S_m(a,c)$, and it is attained. Every protected member has
+$\Delta_N=\Delta_O=(a-\tau)_+$.
+At fixed $B=S+\tau$, the class is empty for $B<S_m$; otherwise its
+attained minimum excess in either catalog is $(a-B+S_m)_+$.
+Thus for $d\ge0$ it contains a score of cost at most $d$ exactly when
+
+$$
+B\ge S_m(a,c)+(a-d)_+.
+\tag{210.23}
+$$
+
+In particular the least stock is $3a$ exactly when
+
+$$
+\frac ca\le\min_{1\le k\le m-1}
+                \frac{k(k+1)+2q_m}{2mk}.
+\tag{210.24}
+$$
+
+All these necessities and minima are restricted to the stated protection
+and fixed correct placements.
+
+**Proof.** Use zero subsets $Z\subseteq I$ and write
+$m_i=\nu(i\in Z)$, $a_{ij}=\nu(i\in Z,j\notin Z)$ for both
+ordered orientations. Protection forces
+
+$$
+m_i\ge2\gamma_i,\qquad a_{ij}\ge\gamma_i\ (i\ne j\text{ in }I),
+\qquad S-m_i\ge a,\qquad S\ge2a.
+\tag{210.25}
+$$
+
+Indeed class $i$ has reward $\gamma_i$ in the $10$ cell of each
+early/$i$ schedule. The two pair loss sets are disjoint, even with
+early $00$, and their sum is at most $m_i$.
+At an internal pair, the queried correct classes occupy the two
+opposite off-diagonal cells, forcing both directed bounds.
+On $(i,z)$ the terminal class in $10$ forces $S-m_i\ge a$.
+The two early/$z$ loss sets force $S\ge2a$.
+
+Conversely, a projected measure satisfying (210.25) gives a protected
+score by balanced early lifts at $w(\{1,z\}\cup Z)$ and
+$w(\{2,z\}\cup Z)$, each with coefficient $\nu(Z)/2$.
+Internal pairs have only their queried classes outside $11$;
+their directed capacities cover them. On $(i,z)$ the $00$ reward is
+at most $\gamma_i\le m_i$, and every $10$ correct reward is at most
+$a\le S-m_i$. Early/internal pairs use $m_i/2\ge\gamma_i$;
+early/terminal pairs use $S/2\ge a$.
+Inactive queries give singleton or constant information. Early labels
+collect subsets of pair mass. These cases prove protection for all
+labels; the converse assertion concerns the balanced lift, since an
+arbitrary early allocation can fail protection despite its projection.
+
+For a necessary stock bound set
+$U=\nu(h\in Z)\ge2a$, $V=\nu(h\notin Z)\ge a$, and
+$K=|Z\cap J|$. The light/light directed bounds and light/heavy
+bounds give
+
+$$
+\int K(m-K)\,d\nu\ge m(m-1)c,\qquad
+\int_{h\notin Z}K\,d\nu\ge mc.
+\tag{210.26}
+$$
+
+On $h\in Z$ use $K(m-K)\le q_m$.
+For an integer $k\ge\lfloor m/2\rfloor$, $k\le m-1$,
+$(K-k)(K-k-1)\ge0$ gives
+
+$$
+K(m-K)\le(m-2k-1)K+k(k+1).
+$$
+
+The coefficient of $K$ is nonpositive and $k(k+1)\ge q_m$.
+Integrating and using (210.26) yields
+
+$$
+2mkc\le q_mU+k(k+1)V
+ \le2aq_m+k(k+1)(S-2a).
+\tag{210.27}
+$$
+
+The second inequality uses $U\ge2a$ with the nonpositive coefficient
+$q_m-k(k+1)$. Also $S=U+V\ge3a$.
+If $f_k=2(mkc-q_ma)/(k(k+1))$, then
+
+$$
+f_{k+1}-f_k=\frac{2(2q_ma-mkc)}{k(k+1)(k+2)}\ge0
+ \quad(1\le k<\lfloor m/2\rfloor),
+$$
+
+using $c\le a$ and $mk\le2q_m$ in that range. Thus smaller $k$
+cannot increase the maximum, and (210.27) proves $S\ge S_m$.
+The cut-count principle $K(m-K)$ is the classical one in Robert
+Šámal, [*Cubical coloring — fractional covering by cuts and semidefinite
+programming*, Lemma 2.1 and Corollary 2.2](https://arxiv.org/pdf/0911.2589v3).
+Here the two conditional regions and their unequal directed requirements
+are supplied by (210.25), not by an undirected covering formula.
+
+To attain the bound put $r=r_m(a,c)$. On $h\in Z$ place mass $2a$
+on a uniform central-size subset of $J$: size $m/2$ if $m$ is even,
+or an equal mixture of sizes $(m-1)/2,(m+1)/2$ if $m$ is odd.
+On $h\notin Z$ place mass $r$; set $x=mc/r\in[0,m]$, choose
+the adjacent-integer law of mean $x$ for $K$, then choose a uniform
+$K$-subset of $J$. These are actual finite nonnegative atoms.
+Their moments are
+
+$$
+m_h=2a,\qquad m_j=a+c,\qquad a_{hj}=a,\qquad a_{jh}=c.
+\tag{210.28}
+$$
+
+For the remaining directed bounds, let $f_m(p)$ be the linear
+interpolation of $k(m-k)/(m(m-1))$ at $p=k/m$.
+The concavity of this interpolation, or its successive slopes, gives
+
+$$
+r f_m(c/r)=\min_{0\le k\le m-1}
+ \frac{m(m-2k-1)c+k(k+1)r}{m(m-1)}.
+\tag{210.29}
+$$
+
+For every $k\ge1$ the definition of $r$ implies
+$2aq_m+m(m-2k-1)c+k(k+1)r\ge m(m-1)c$;
+for $k=0$ this is immediate. Hence each light/light directed mass,
+equal by symmetry to
+$2aq_m/[m(m-1)]+r f_m(c/r)$, is at least $c$.
+The complements in (210.25) are $r$ for $h$ and $a+r-c$ for a
+light, both at least $a$. Also $a+c\ge2c$.
+Thus all of (210.25) hold, and balanced lifts attain $S_m$.
+Additional stock at the empty internal subset preserves those bounds
+and protection.
+
+The complete-support argument of 207.13 applies with largest late
+weight $a$. Every non-$11$ maximum of the protected core is its pair
+baseline; its $11$ maximum is at most that baseline plus
+$\max(\tau,a)$. The full support is at most $S+\max(\tau,a)$.
+Adding early correct mass $E$ increases each table by at most $E$
+and the anchor by exactly $E$. The stopped head table outputs 1,2
+on its first two cells and either zero or $z$ on exhaustion, attaining
+$E+S+\max(\tau,a)$. Thus both costs equal $(a-\tau)_+$.
+At fixed $B$, minimize $(a-B+S)_+$ over $S\ge S_m$, with
+$\tau=B-S\ge0$. This proves (210.23), including $d=0$, $\tau=0$
+and all ties. Formula (210.24) is exactly the condition that every
+$f_k\le a$. The case $c=0$ is included; $c=a$ specializes to the
+already-owned uniform protected result 207.13 with $m+1$ internal
+coordinates. No new uniform endpoint is asserted.
+
+The attaining pair measure also protects any reduced profile
+$0\le\eta_h,\eta_z\le a$, $0\le\eta_j\le c$ on $J$, with
+other late totals zero, by using the corresponding rows (210.21).
+Its cost is exactly $D=(\mu_\eta-\tau)_+$, by the same upper bound
+and a head attainer at a largest remaining label. This does not assert
+that $S_m$ is the least stock for the reduced profile.
+
+For a same-$Q$ application to an arbitrary input with the exact
+two-level totals, $B\ge S_m$ permits retaining its early $C$ and
+using $T=B-S_m$. Its cost is $(a-B+S_m)_+$; in particular
+(210.23) is a sufficient certificate threshold.
+For an altered profile $\eta$ of the allowed reduced shape, set
+$B'=S_m+\tau$ and $R_k=\sum_{j=3}^k(\gamma_j-\eta_j)$.
+Substitution in the old full signed hull (207.8), retaining early $C$,
+gives the exact nonnegative residual charge
+
+$$
+\Theta=\max\left\{0,\max_{3\le k\le L}\frac{R_k}{k-1},
+ \max_{3\le k\le L}\frac{3R_k+(k-2)(B'-B)}{k+1}\right\}.
+\tag{210.30}
+$$
+
+The $o,p$ readings are zero; $R_k$ may have either sign. One condition
+$D+\Theta\le1$ supplies the certificate, including $D=0,\Theta=1$.
+It uses $F_{Q(y)}\le MD+\Theta$ for the same feasible configuration
+of mass $M$, not separate allowances for components. This is an
+application of the existing hull inside the stock construction.
+
+For an explicit nonuniform example take $h=3$, $z=10$,
+$J=\{4,5,6,7,8,9\}$, $a=10$, $c=8$. Then
+$q_m=9$, $r=51/5$, $S_m=151/5$; the $k=4$ bound in (210.27)
+is equality. The attaining internal measure can be written
+
+$$
+\nu(\{3\}\cup U)=1\ (|U|=3),\qquad
+\nu(U)=1/5\ (|U|=4),\qquad
+\nu(U)=6/5\ (|U|=5),\quad U\subseteq J.
+\tag{210.31}
+$$
+
+Use balanced early lifts, the correct rows (210.21), $E=0$ and $T=9$.
+Its heavy marginal is 20, each light marginal 18, each heavy-to-light
+directed mass 10, each reverse mass 8, and every light/light directed
+mass 8. Therefore $W=196/5$, $K=536/5$, and both supports are
+$201/5$, giving protected-class minimum cost one at this $B$.
+
+This example admits a precise comparison with the positive 201.2
+block cone sharing the same terminal $z$ and preserving all these
+correct totals. The sum of block coefficients must be 10, and the
+heavy total 10 forces $h$ into every positive block. A block with
+$k$ lights has stock coefficient $c_{k+2}\ge11/4+k/8$ for
+$0\le k\le6$. For $k=0,1,\ldots,6$ the actual coefficients from
+201.2 are $3,3,3,10/3,10/3,7/2,7/2$, verifying the inequality
+and its equality at $k=2,6$.
+The total light incidence is 48, so every such mixture has stock at
+least $110/4+48/8=67/2$. Equality is attained by weight 7 on the
+full block and weight $1/5$ on each of the fifteen two-light blocks
+$\{h,i,j,z\}$. Each light appears in five of the latter.
+Thus this precisely specified cone costs more than $151/5$.
+The ordinary nested-layer stock of 201.3 is $8(7/2)+2(3)=34$,
+with unit total-stock threshold 43. The sufficient aggregate test
+205.10 instead requires
+$\max((18/5+1)9,27+10)=207/5>196/5$.
+The sparse sufficient test 202.8 requires the internal light sum
+to be at most $2a$; here it is $48>20$.
+Changing terminals, suffix placements, event types or allowing general
+signed and zero-core combinations is outside this block-cone exclusion.
+Neither its lower bound nor protection proves that an arbitrary actual
+unit-$O$ input must afford (210.23) or (210.30). $\square$
+

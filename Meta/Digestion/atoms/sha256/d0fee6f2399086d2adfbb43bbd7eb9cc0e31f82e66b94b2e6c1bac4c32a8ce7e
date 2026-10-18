@@ -1,0 +1,28 @@
+## 11. Credits and the exact remaining sharp question
+
+The source *FIB 自校准关系数学*, Definitions 10.1–10.3 and 38.1, supplies the positive rank-one domain, cumulative left action, fixed instrument, counted initial read, finite-composite-word contract, and effective target. Its §§1–5 supply the trace identity, Fibonacci recurrence, four-trace relation inverse, and positive factorization scale. Its §§14–15 supply the trace-zero secants and nonnegative integer unimodular collision mechanism used in §5. The fixed/adaptive reading distinctions and action boundaries of §§10–17 are retained. The unbiased fixed-fibre stability and word-frontier results of §§18–32 do not supply an affine-gain sharpness theorem here.
+
+Sections 33–35 of that source supply the known-unit-gain affine and bounded-degree additive-drift interfaces; §36 gives the positive-source five-read result for known unit gain and affine additive drift. Section 37 supplies the ten-dimensional lifted inverse and the distinction between independent lifted matrices and one common source. Theorem 38.2 supplies the $d+7$ restricted-gain and $d+8$ unrestricted single-switch upper bounds; Proposition 38.4 supplies its particular zero-gain collision, Proposition 38.5 its finite-data compatibility interface, and Corollary 38.3 its positive relation/gain scale. They remain credited separate results.
+
+The corrected affine companion supplies the smaller $\max(d+6,7)$ upper bound, the $d+5$ fixed-history lower bound, its exact positive-scale fibre, and its obstruction for predetermined continuations of the recorded $I$-block,$U,U^2$ prefix. Section 10 reproduces the complete bound interfaces. The omitted-$U^2$ family in §§6–8 omits that recorded calibration position and has positive-gain collisions; it is a separate restriction on candidate paths. The secant-cone and drift-kernel results in §§2–4 give the complete fixed-slope criterion, including safe one-dimensional kernels. The ten-operation family in §9 proves a strict additional exclusion even after every matrix-span test has passed. These are mathematical restrictions and equivalences, without an external priority claim.
+
+Section 39 of the main source treats a broader nonzero common polynomial gain $G$ of known degree at most $k$ and drift of degree at most $d$. Its single-switch recovery bound is $3k+d+5$, for normalized target $(R_0,H,D)$ with $R_0=R/\operatorname{tr}R$ and $H=(\operatorname{tr}R)G$. It includes initial gain zero and remains separate from the present affine model with $\alpha>0$. In the affine submodel the target correspondence is
+
+$$
+R_0=\frac S{\operatorname{tr}S},\qquad
+H(t)=(\operatorname{tr}S)(1+\kappa t),
+$$
+
+and conversely $S=H(0)R_0$, $\kappa=H'(0)/H(0)$ when $H(0)>0$. Thus its $k=1$ bound is $d+8$; it does not settle the smaller affine optimum.
+
+The numerical intervals remain exactly
+
+$$
+d+5\le C_{\mathrm{fix}}(d)\le d+6\quad(d\ge1),\qquad
+5\le C_{\mathrm{fix}}(0)\le7.
+$$
+
+The unresolved target is the sharp uniform number of exact scalar reads over all predetermined legal finite-word cumulative paths, with a matching actual common-source inverse valid for every real affine slope and the entire declared drift polynomial. No uniform $d+5$ construction and no obstruction covering every $d+5$ path is established here; the constant-drift optimum is also unresolved. The excluded families do not exhaust the legal paths. A surviving matrix span of four is not sufficient. Even passing every fixed-slope criterion would not exclude collisions between distinct slopes. The affine-drift family in §9 provides no constant-drift consequence.
+
+All operation counts are counts of actual $M/J$ atoms on the specified histories. Reading count, atomic-operation count, elapsed time, bit precision, and acquisition cost are distinct quantities. The theorems concern exact mathematical observations under the stated model; they give no adaptive impossibility theorem, noisy-stability guarantee, or optimal operation count.
+

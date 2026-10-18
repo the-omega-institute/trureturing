@@ -1,0 +1,13 @@
+**定义 87.3（尚缺的原完整前沿和转移分类）。** 完整有限 $(s,A)$ 弱高度前沿仍须在整个原可行内点上联合评价**定向 failure allocation 和所有 live-height decompositions**，包含低于固定 allocation 最大对比度的分解。只评价最大对比度 face、固定 even family、静态接触支撑、隐式 SDP、有限 KKT 系统或裸算法均不满足这一目标。全局有限预算 contact、rank、optimizer 变化、共同正权重参数 atlas，以及精确有限 $A$ 优化者的最小实际获取字母表仍未由 (RC.135)–(RC.157) 决定。
+
+逐点取向表 (RC.137) 已处理所有两取向并列，但中间 $b_+$、$b_-$ 的零点隔离、顺序、重数、符号区间及与已知重合集的全部交叉尚未枚举。连续的绝对值公式不自动给出全域 $C^1$，更不分类所有有限预算最优仪器。五 low 加一 high 和接触后简单六 low 加一 high 只是本节首阶达到族的构造上界；它们不证明精确最小值，不替代弱 $3/4/5$ 可行性计数，也不转移到强固定源计数。强固定源计数在其原范围内仍是 $r=1,2$ 时四、其他可行 $r$ 时五，无可达六标签强区域。TA 的静态全字母表、隐藏 Kraus 数、极限失败射线数、live 投影线数与共同量子维数各是不同的量。
+
+JS11–17 已供应 limiting selector、严格单调 inverse、物理两/三失败射线判据、every-instrument critical strip、sub-spectral uniform layer、Gram 稳定、零角点处理及 compact-uniform spectral layer；这些保持其已供应范围。剩余的 transition-root inventory 包括 JS12 的有限非空零集
+
+$$
+E_{\rm edge}(p)=g_+(p)C'(p)-g_+'(p)D_J(p,1-p)=0,
+\qquad p\in(p_z,p_s),
+$$
+
+其中符号按 JS.58 的原字典。该零集尚未全部隔离和排序；不能从每个预算具有唯一 selected optimizer 推出仅有一个简单转移。其他统一端点区间、下一项、临界五标签与静态接触的精确联合插值及相应尺度仍须分别解决。推论 84.2 的任意 $s_A\to s_{\rm c}$ 首阶极限不提供这些下一项，也不允许与 $s\uparrow s_0$ 的非一致端点极限互换。
+

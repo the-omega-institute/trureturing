@@ -1,0 +1,50 @@
+## 259. The joint response exceeds the actual total budget
+
+Set r=J_rho/(L_rho+J_rho), s=J_eta/(L_eta+J_eta).
+Both are positive. Their denominators strictly exceed 4*m*z and 4*u*z,
+respectively, so the scalar lemma gives r+s<1/4. Writing a=r+s and
+using r*s<=a^2/4 gives
+ (L_rho/J_rho)*(L_eta/J_eta)
+ =1+(1-a)/(r*s)>=1+4*(1-a)/a^2>49.
+(The last expression decreases for 0<a<1/4 and equals 49 at 1/4.)
+Therefore
+ x*y>7*(2+sqrt(3))/4>3+2*sqrt(3).
+Since x,y>sqrt(3), expanding their positive shifted product gives
+ x+y<x*y/sqrt(3)+sqrt(3).
+It follows that x*y-x-y>1: at x*y=3+2*sqrt(3), the lower bound
+ x*y*(1-1/sqrt(3))-sqrt(3)
+is exactly 1, and it increases strictly with x*y.
+
+Let s_rho=2*atan(x), s_eta=2*atan(y). Since x,y>1,
+atan(x)+atan(y) is in (pi/2,pi). The inequality x*y-x-y>1 gives
+ (x+y)/(x*y-1)<1; the tangent addition formula then yields
+ atan(x)+atan(y)>3*pi/4.
+Hence s_rho+s_eta>3*pi/2.
+
+For rho use its high U axis, and for eta its high M axis. Each
+transverse pair has both values greater than 3, so kappa^2>8/9;
+the chosen high axis has value greater than 3, giving lambda>2/3.
+The elementary response argument of Sections 238–239 implies
+ theta_high+s>3*pi/4. For completeness, if theta_high+s<=3*pi/4,
+the positive numbers theta_high/2 and s/2 have sum at most 3*pi/8;
+their tangent product is at most tan^2(3*pi/16)<2/3, contradicting
+its exact value lambda>2/3. The product bound follows from
+cos(A-B)<=1 in the cosine expression for tan(A)tan(B), with A+B<pi/2.
+For the numerical strict comparison one may use
+ tan^2(3*pi/16)<tan^2(pi/5)=5-2*sqrt(5)<2/3.
+
+The exact combined P expense of rho and eta is
+ (theta_U(rho)+2*s_rho)+(theta_M(eta)+2*s_eta)>3*pi.
+Their other axial labels C and B are low, so this counts precisely their
+original P slots, with no duplication. Tau and xi are two further
+distinct interacting owners; each consumes more than pi of P expense.
+Thus these four actual owners already consume more than 5*pi, contrary
+to the complete genuine P budget. External low-partner exits cannot
+repair a violated upper budget. This excludes the double return.
+
+Together with Section 255, every possible pairing of rho's two unused
+faces has been excluded. The exceptional-U common-return family is
+therefore impossible. The arbitrary-Q axial-M common-return family
+remains open; no general five-reservoir or unrestricted CFMP conclusion
+is asserted.
+

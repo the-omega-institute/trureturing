@@ -1,0 +1,16 @@
+**定义 1.1（共同原子规则与来源层）。** 原树是非空有限自由有序满二叉树
+
+$$
+T::=\alpha\mid\beta\mid\langle T,T\rangle.
+$$
+
+使用同一个保持左右顺序及既有括号的替换
+
+$$
+\rho(\alpha)=\beta,\qquad
+\rho(\beta)=\langle\beta,\alpha\rangle,\qquad
+\rho\langle U,V\rangle=\langle\rho U,\rho V\rangle.
+$$
+
+这个来源层取自 [Auric 第179章定义179.1][A]。一条单支系从某个指定的叶出现开始，每次替换只跟踪该出现的一个后代。它的类型历史写作 $x_0,x_1,\ldots,x_n$，其中 $x_k\in\{\beta,\alpha\}$；码为 $c_k=0$ 当 $x_k=\beta$，$c_k=1$ 当 $x_k=\alpha$。从 $\alpha$ 出发只有唯一的 $\beta$ 后代；从 $\beta$ 出发选择左后代得到 $\beta$，选择右后代得到 $\alpha$。长度 $n$ 指 $n$ 次替换，码词是替换后依时间先后排列的 $c_1\cdots c_n$，不把初始码 $c_0$ 算作一次替换。
+

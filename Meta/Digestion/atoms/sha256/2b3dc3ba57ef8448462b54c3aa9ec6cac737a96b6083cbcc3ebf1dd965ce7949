@@ -1,0 +1,79 @@
+### theorem 4.1: 定理 3：任意标量读数的补全判据
+
+对任意五态函数 $f$，有：
+
+$$
+E[f]=
+f_\nu
++
+(f_1-f_\nu)X
++
+(f_3-f_\nu)Y
++
+(f_2-f_\nu)Z
++
+J(f)\kappa
+$$
+
+因此，在 $\kappa$-纤维具有正长度时：
+
+- 若 $J(f)\neq0$，则 $E[f]$ 能恢复 $\kappa$；
+- 若 $J(f)=0$，则 $E[f]$ 对整条纤维恒定，不能恢复 $\kappa$。
+
+#### 证明
+
+代入：
+
+$$
+p_\nu=1-X-Y-Z+\kappa
+$$
+
+$$
+p_1=X-\kappa
+$$
+
+$$
+p_2=Z
+$$
+
+$$
+p_3=Y-\kappa
+$$
+
+$$
+p_{13}=\kappa
+$$
+
+得到：
+
+$$
+\begin{aligned}
+E[f]
+={}&
+f_\nu(1-X-Y-Z+\kappa)
++f_1(X-\kappa)\\
+&+f_2Z
++f_3(Y-\kappa)
++f_{13}\kappa
+\end{aligned}
+$$
+
+整理 $\kappa$ 的系数：
+
+$$
+f_\nu-f_1-f_3+f_{13}=J(f)
+$$
+
+所以：
+
+$$
+E[f]=
+\text{边缘项}
++
+J(f)\kappa
+$$
+
+结论成立。证毕。
+
+---
+

@@ -1,0 +1,12 @@
+**定义 4.1.2（记录的随机后处理）。** 若 $G:\Omega\to\Xi$ 是通道，实验 $E$ 经过后处理后的实验记为 $E G$：
+
+$$
+(K_EG)(\xi\mid\theta)
+=
+\sum_{\omega\in\Omega}K_E(\omega\mid\theta)G(\xi\mid\omega).
+$$
+
+后处理只能读取已经记录的 $\omega$，不能访问 $\theta$。
+
+<a id="claim-4-1-3"></a>
+

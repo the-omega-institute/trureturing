@@ -1,0 +1,60 @@
+**Theorem 12.2 (Matching sparse paid order with fixed sufficient capacity).** There exist $s_{\rm sp}>0$, $A_{{\rm sp},-},A_{{\rm sp},+}>0$ and a finite integer $M_{\rm sp}$, depending only on fixed $(d,c,\alpha)$, such that every compliant finite-budget observer has each mean at least $A_{{\rm sp},-}s^{-(d+2)}$. A common q-retuned family with at most $M_{\rm sp}$ configurations has both means at most $A_{{\rm sp},+}s^{-(d+2)}$. Consequently all three infima for $M\ge M_{\rm sp}$ have that order, uniformly over such budgets on $0<s<s_{\rm sp}$.
+
+Proof. The partition functions are $Z_0=R_d(s)$ and $Z_1^{\rm sp}=R_d(s)+ce^{-s}$. All sums remain finite and the stationary normalization proof of Lemma 2.2 applies. Differentiating these partition functions or inserting the single exceptional term in the moment numerators gives
+
+$$
+\mu_i=\frac a s+O(1),\qquad \beta_i=\frac{a+1}{2s}+O(1).
+\tag{12.3}
+$$
+
+The total added first-wait weight is $2ce^{-s}$, so the positive-mixture argument gives initial variation at most $2ce^{-s}/(R_{d+1}+R_d)=O(s^{a+1})$. The envelope verifies both hazards and predictable tick payment exactly as in Lemma 3.3: its proof used the growth bounds, not the persistent tail equality.
+
+Put $\varepsilon=ce^{-s}/R_d(s)=O(s^a)$. The normalized difference is
+
+$$
+w_k=\frac{[c\mathbf1_{\{k=1\}}-\varepsilon k^d]e^{-sk}}{Z_1^{\rm sp}}.
+\tag{12.4}
+$$
+
+For either reference direction, the same denominator comparison as (6.3) yields
+
+$$
+\sum_{k\ge1}\frac{w_k^2}{f_j(k)}
+\le\frac{2}{R_d(s)}\left(c^2e^{-s}+\varepsilon^2R_d(s)\right)
+\le C s^a.
+\tag{12.5}
+$$
+
+Thus both full entropies are at most $Cs^a$. The direct finite-path harmonic comparison (5.10) applies to this pair: the full-gap row entropy is bounded by log-sum, the initial row comparison has just been established, and the actual tick price is still $Bs$. Select a source/risk neighborhood with initial variation at most $b/2$. Squaring the remaining separation gives the lower $A_{{\rm sp},-}s^{-(a+1)}$ for every finite budget.
+
+For the upper, mark exactly the actual completed event $K=1$. Its potential iid Bernoulli probabilities are
+
+$$
+p_0=\frac{e^{-s}}{R_d(s)},\qquad
+p_1=\frac{(1+c)e^{-s}}{R_d(s)+ce^{-s}},\qquad
+\frac{p_1}{p_0}=\frac{1+c}{1+cp_0}.
+\tag{12.6}
+$$
+
+They satisfy $p_0\asymp s^a$, $p_1\asymp p_0$, and, with $\Delta=p_1-p_0$,
+
+$$
+\frac{\Delta}{p_1}=\frac{c(1-p_0)}{1+c}\longrightarrow\frac{c}{1+c}>0.
+\tag{12.7}
+$$
+
+Set $\theta=(p_0+p_1)/2$ and $H=\lceil2h_\alpha p_1/\Delta\rceil$. Shrinking the neighborhood to $p_0\le1/2$ bounds $H$ by the fixed finite integer $\lceil4h_\alpha(1+c)/c\rceil$.
+
+Here is the whole category-table realization. Use $w,d_0,d_1$ and $(j,z)$ for $-H<j<H$, with $z\in\{0,1,2\}$. Category two means at least two zeros since the last tick. Initialize $w$ and have every nonlabel state read. In $w$, zero loops and one enters $(0,0)$. In any active state, zero changes $z$ to $\min\{z+1,2\}$ and keeps $j$. On a one with $z=1$, move upward with probability $1-\theta$ and hold with probability $\theta$. On a one with $z=0$ or $z=2$, move downward with probability $\theta$ and hold with probability $1-\theta$. Every nonterminal successor has category zero. Moving into $H$ emits $d_1$ and moving into $-H$ emits $d_0$; both labels absorb on both bits. These rules define every bit row, including the impossible consecutive-one case. Long gaps remain fully read after saturation.
+
+The exact listed count is
+
+$$
+1+2+3(2H-1)=6H.
+\tag{12.8}
+$$
+
+Take $M_{\rm sp}$ to be six times the preceding fixed integer bound. Each actual completed gap yields mark one precisely for $K=1$, and independent gaps yield the potential iid marks of (12.6). The midpoint step law is exactly (9.3), with drift $\pm\Delta/2$. The finite signed-drift calculation (9.6), the bounded boundary-power martingale (9.7), and the log-ratio inequalities (9.8) therefore apply to these marks, proving both risks and $\mathbb E_iG\le2H/\Delta\le Cs^{-a}$. This reuse requires only the proved Bernoulli block law, midpoint table and positive contrast, all established here; geometric survival is not a premise of that walk calculation.
+
+This table completes every undertaken gap and stops on a read tick. The identical predictable event $\{G\ge n\}$ is fixed before gap $n$, so (9.9)–(9.10) give $\mathbb E_iT=1+\beta_i+\mu_i\mathbb E_iG\le Cs^{-(a+1)}$. They also give almost-sure actual stopping and finite paid means. The family has fixed sufficient capacity while its midpoint probabilities may retune with known $q$. Passing the universal lower and this one simultaneous upper to the three infima proves the assertion. $\square$
+

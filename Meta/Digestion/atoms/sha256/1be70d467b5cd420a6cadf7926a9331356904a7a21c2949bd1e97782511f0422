@@ -1,0 +1,117 @@
+**Proposition 15.1 (Twenty-nine tables and an actual attainer).**
+At $\tau=u=1/24$, $v=0$, the following is the full combined
+law $K$. There are 28 pair tables and one constant-zero table;
+every count is divided by 5208.
+
+| $i$ | $j$ | $f$ | $m$ | $z$ | Count |
+| --- | --- | --- | --- | --- | ---: |
+| 1 | 2 | 1 | 2 | 0 | 819 |
+| 1 | 2 | 1 | 2 | 3 | 398 |
+| 1 | 2 | 1 | 2 | 4 | 251 |
+| 1 | 2 | 1 | 2 | 5 | 188 |
+| 1 | 3 | 1 | 3 | 0 | 267 |
+| 1 | 3 | 0 | 3 | 0 | 391 |
+| 1 | 4 | 0 | 4 | 0 | 89 |
+| 1 | 4 | 1 | 4 | 0 | 110 |
+| 1 | 5 | 1 | 5 | 0 | 27 |
+| 2 | 3 | 0 | 3 | 0 | 600 |
+| 2 | 3 | 2 | 3 | 0 | 58 |
+| 2 | 4 | 0 | 4 | 0 | 199 |
+| 2 | 5 | 0 | 5 | 0 | 27 |
+| 3 | 4 | 0 | 4 | 0 | 237 |
+| 3 | 4 | 0 | 4 | 5 | 177 |
+| 3 | 5 | 0 | 5 | 0 | 221 |
+| 3 | 6 | 0 | 6 | 0 | 214 |
+| 3 | 7 | 0 | 7 | 0 | 15 |
+| 3 | 8 | 0 | 8 | 0 | 15 |
+| 4 | 5 | 0 | 5 | 0 | 206 |
+| 4 | 6 | 0 | 6 | 0 | 199 |
+| 5 | 6 | 0 | 6 | 0 | 216 |
+| 5 | 7 | 0 | 7 | 0 | 17 |
+| 5 | 8 | 0 | 8 | 0 | 17 |
+| 6 | 7 | 0 | 7 | 0 | 70 |
+| 6 | 7 | 0 | 7 | 8 | 93 |
+| 6 | 8 | 0 | 8 | 0 | 53 |
+| 7 | 8 | 0 | 8 | 0 | 17 |
+
+The remaining table is constant zero of count 17.
+Use first eight amplitudes $(13,13,13,10,9,8,6,6)/24$ and,
+for every $n\ge9$, take
+
+$$
+a_n=\frac5{24}\,2^{-(n-9)}.
+\tag{15.1}
+$$
+
+This is an entire actual amplitude sequence in (1.4).
+The law has exact original error $369/1736$, strictly below
+the plane value $309/1448$, and the actual source $(19,419)$
+attains that error.
+
+Proof. Here $s=1/5208$, $W=128/217$, $\varepsilon=36/5208$,
+the $R$ weight is zero, and the $P^0$ weight is $89/217$.
+In denominator 5208, before transfer the counts are 89 times
+the integer list of $P^0$ plus the integer list of $Q_8$.
+Their total is $89\cdot24+3072=2136+3072=5208$.
+For example the $(1,2)$ counts are
+$4\cdot89+463=819$, $2\cdot89+220=398$,
+$89+162=251$, and $89+99=188$.
+The distinct first-label-one and first-label-zero $(1,3)$
+counts are 267 and 391. Combining other coincident rows gives
+exactly the printed table. The changed $(6,7)$ counts are
+$89+17-36=70$ and $57+36=93$.
+Its remaining $P^0$ donor stock is $89-36=53$.
+The transfer preserves the total 5208 and all counts are nonnegative.
+
+The correct counts on the entire eight first-zero fibres are
+
+$$
+(2060,1714,1714,1063,846,629,195,195)/5208.
+\tag{15.2}
+$$
+
+The exact positive and class-eight vectors are
+
+$$
+\begin{aligned}
+K_+&=(4101e_0+398e_3+251e_4+365e_5+93e_8)/5208,\\
+K_8&=(3999e_0+398e_3+251e_4+365e_5+195e_8)/5208.
+\end{aligned}
+\tag{15.3}
+$$
+
+The class-eight $A,C,P$ deficits are respectively
+$-93/5208$, $1107/5208$, and $1014/5208$.
+Theorems 13.1 and 14.1 cover every other word and every actual
+source, not only the displayed class-eight vector.
+The exact cap and comparison are
+
+$$
+h=\frac{1107}{5208}=\frac{369}{1736},\qquad
+T=\frac{927}{4344}=\frac{309}{1448},\qquad
+T-h=\frac{33}{39277}>0.
+\tag{15.4}
+$$
+
+The sequence (15.1) has $a_9=5/24$, $a_{10}=5/48$,
+strictly positive ordered tail and vanishing limit.
+It keeps the actual ninth amplitude, and the law also works for
+every other permitted $v=0$ continuation by 14.1.
+
+Finally $19$ is prime, $F_{19}=4181$, and the legal $g$ window
+is $419\le g\le836$. With $g=419$,
+
+$$
+N(19,419)=1+4181\cdot419=1751840.
+\tag{15.5}
+$$
+
+This integer is even and has digit sum 26, so it is not divisible
+by three. Its first absence is exactly two.
+At that source $a_2=13/24=2821/5208$ and the correct count
+is $1714/5208$, giving deficit $1107/5208=h$.
+The all-word and actual-tail upper proof gives TV at most $h$,
+so this source attains the exact original uniform error.
+The witness is a law on the whole original source and entire
+positive sequence. $\square$
+

@@ -1,0 +1,72 @@
+**Theorem 4.3 (Real rank and the exact sampling tests).**
+In the strict crossing branch of (4.20), no real rank-one
+optimal spectral certificate exists. A complex Hermitian
+rank-one matrix can encode the same two real active directions.
+Every finite positive law satisfies $F_*>1/2$, hence
+$1/4<\omega_1^*=\omega_3^*<1/2$ and $0<\omega_2^*<1/2$.
+For every branch, the center has more samples than either
+endpoint exactly when $F_*<1$. The entire strict interval
+pattern (3.22) holds exactly when $1/2<F_*<1$.
+
+Proof. In the strict crossing branch the minimum eigenspace is
+exactly the real span of $\bar v,o$, by the secular intervals.
+Any optimal real certificate is supported there. A real unit
+vector in it is $z=\alpha\bar v+\beta o$. Its endpoint-energy
+difference is
+
+$$
+z^{\mathsf T}(K_1-K_3)z
+=-2\alpha\beta\sqrt{dq}\,\bar v_h.
+\tag{4.21}
+$$
+
+The coefficients $\sqrt{dq}$ and $\bar v_h$ are nonzero.
+Since all three optimal site weights are positive, an optimal
+certificate must have all three site energies equal. Thus
+$\alpha\beta=0$. The pure odd vector has center energy zero
+and endpoint energy $d/2>0$. The pure even vector has
+$G>E$. Neither gives an optimal rank-one real certificate.
+
+On the complexified space, instead set
+$z_{\mathbb C}=\sqrt\eta\,\bar v+i\sqrt{1-\eta}\,o$.
+It has norm one, and each real symmetric $K_i$ satisfies
+
+$$
+z_{\mathbb C}^\dagger K_i z_{\mathbb C}
+=\eta\bar v^{\mathsf T}K_i\bar v+(1-\eta)o^{\mathsf T}K_i o
+=\gamma^*.
+\tag{4.22}
+$$
+
+The imaginary cross terms cancel. This is a complex rank-one
+certificate, whose real part is (4.18); it packages two real
+phase directions and is not one real phase perturbation.
+
+At the even stationary root, put $f=F(\widehat t)$.
+Using $C_0+C_1+C_2=1$ and $f^2=R(\widehat t)^2$ gives
+
+$$
+(2f-1)((2-\widehat t)f+1)
+=\frac{q(2-q)C_1}{(q-\widehat t)^2}>0.
+\tag{4.22a}
+$$
+
+The second factor is positive because $0<\widehat t<q<2$.
+Therefore $f>1/2$. Since $t_*\le\widehat t$ and $F$ is
+decreasing, $F_*\ge f>1/2$.
+
+Finally (4.8) gives
+$y>x\iff1>F_*$,
+$x>1/4\iff F_*>1/2$,
+$x<1/3\iff F_*<1$, and
+$y<1/2\iff F_*>1/2$. These are the stated necessary and
+sufficient tests. $\square$
+
+Thus only the center-versus-endpoint ordering can fail in the
+older interval pattern; its endpoint lower bound survives every
+finite positive joint weight.
+
+Thus rank assertions require the coefficient field and parameter
+space. Neither certificate rank counts quantum memory dimension,
+independent preparations or physical particles.
+

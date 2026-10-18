@@ -1,0 +1,80 @@
+## 119. 固定复读数的尖锐 concurrence 包络
+
+**定理 C-119.1（原对角上的精确最小值）。**
+采用 C-96.3 的两量子位凸屋顶 concurrence $\mathcal C$。
+对每个 $|a|,|b|\le1$，所有具有这些复读数的底面态满足
+
+$$
+\mathcal C(\sigma)\ge\max\{0,|a|+|b|-1\},
+\tag{C119.1}
+$$
+
+且最小值恰为右端。
+即使再要求底面原占位对角全为 $1/4$，最小值仍相同；
+五模式实现因而可保持 (C117.3) 的每个概率。
+
+证明。局部酉保持纯态的 $2|\det B|$，且双向运输全部纯态分解，
+所以保持其凸屋顶。使用 (C118.5) 将读数转为
+$s=|a|\ge0$、$t=|b|\ge0$ 即可。
+令 $G=G_{++}$，则在底面联合本征基中直接有算子不等式
+
+$$
+|G\rangle\langle G|\succeq(K_1+K_2)/2.
+\tag{C119.2}
+$$
+
+四个本征位置的左、右值依次为 $(1,1),(0,0),(0,0),(0,-1)$。
+又 $G$ 是最大纠缠向量，因为其系数矩阵
+$\tfrac12\begin{pmatrix}1&1\\1&-1\end{pmatrix}$ 的两奇异值均为 $1/\sqrt2$。
+若归一化纯态 $\phi$ 的系数矩阵奇异值为 $d_1,d_2$，
+则 $d_1^2+d_2^2=1$、$\mathcal C(\phi)=2d_1d_2$。
+在其 Schmidt 基下，最大纠缠向量的每个矩阵元模不超过 $1/\sqrt2$，
+故三角不等式给
+
+$$
+|\langle G|\phi\rangle|^2
+\le\tfrac12(d_1+d_2)^2=\frac{1+\mathcal C(\phi)}2.
+\tag{C119.3}
+$$
+
+对 $\sigma$ 的任意纯态分解取平均，再取凸屋顶下确界，得到
+$2\langle G|\sigma|G\rangle-1\le\mathcal C(\sigma)$。
+与 (C119.2) 合并给 $s+t-1\le\mathcal C(\sigma)$；非负性给 (C119.1)。
+
+为达到下界，沿用 C-117.2 的
+$\sigma_1=(I_{\mathrm b}+K_1)/4$、$\sigma_2=(I_{\mathrm b}+K_2)/4$。
+若 $s+t\le1$，取
+
+$$
+\sigma_*=s\sigma_1+t\sigma_2+(1-s-t)I_{\mathrm b}/4.
+\tag{C119.4}
+$$
+
+其读数为 $(s,t)$，且可分离，所以 concurrence 为零。
+若 $s+t>1$，令 $\ell=s+t-1$，取
+
+$$
+\sigma_*=\ell|G\rangle\langle G|+(1-t)\sigma_1+(1-s)\sigma_2.
+\tag{C119.5}
+$$
+
+三个权重非负且和一，读数分别合成为
+$\ell+1-t=s$、$\ell+1-s=t$。
+凸屋顶的凸性及 $\mathcal C(G)=1$ 给 $\mathcal C(\sigma_*)\le\ell$，
+恰与下界相等。所有分量都在原占位基中对角均匀；
+最后用局部对角酉恢复目标复相位，保留对角与 concurrence。证毕。
+
+此处使用的凸屋顶定义及一般两量子位 concurrence 来源为 Wootters，
+*Entanglement of Formation of an Arbitrary State of Two Qubits*，
+[quant-ph/9709029v2](https://arxiv.org/abs/quant-ph/9709029v2)，式 (7)、(10)、(19)–(22)，
+亦见[本库文献注](../../../Library/QuantumStates/wootters1998formationfunction.md)。
+从有限见证期望求相容态上的最小纠缠量是成熟方法：Gühne–Reimpell–Werner，
+*Estimating entanglement measures in experiments*，
+[quant-ph/0607163v2](https://arxiv.org/abs/quant-ph/0607163v2)，式 (1)–(4)；
+Eisert–Brandão–Audenaert，*Quantitative entanglement witnesses*，
+[quant-ph/0607167v4](https://arxiv.org/abs/quant-ph/0607167v4)，节 “Paradigm of quantitative tests”。
+本条的 repo-derived 综合将这些成熟结构用于指定复读数和原占位固定对角的共同约束；
+(C119.4)–(C119.5) 是该约束下的显式达到态。
+所引凸屋顶及定量见证方法为 literature-attested 中间结构；
+该归属不将本综合表述为文献全域中的原创性定理。
+

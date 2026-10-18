@@ -1,0 +1,15 @@
+**Convention 1.2 (suppliers).** ARC, CAP, RCA, AIF, LJA, SSA, CSA and PVC mean
+the following source bodies at `c19ea77ebcde44b27d1c90d423f488730c9e50ff`.
+Numbered references use their own numbers.
+
+| Symbol | Source and load-bearing scope |
+| --- | --- |
+| ARC | [Actor-local Reserve recovery](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ACTOR_LOCAL_RESERVE_RECOVERY.md), §§1–10: actual 74 roles, parked entry, compiler relocation, boot capture, CAP imports, literal replay, immutable packages and receiver73 callbacks. Its §8 selector covers only strict Reserve Zero. |
+| CAP | [Capacity coherence and growth](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CAPACITY_COHERENCE_AND_GROWTH.md), §§2–8: one prepared source, seven-tag caller, segmented backing, historical guards, occupied verifier and INITIAL consumer; §§13,16–19 retain selection, terminal, horizon and cost boundaries. |
+| RCA | [Retrospective cut acquisition](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_RETROSPECTIVE_CUT_ACQUISITION.md), §§11–16: finite word expansion, physical codec, native ingress, capture, channel, Prefix and completed-predecessor induction. ARC supplies its actual relocation; RCA's unused-verifier premise is not imported. |
+| AIF | [Acquired input frontier and replay](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ACQUIRED_INPUT_FRONTIER_AND_REPLAY.md), §2: actual consumed inputs, raw successors, lawful experiments and task responses have different domains. |
+| LJA | [Literal journal adapter](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_LITERAL_JOURNAL_ADAPTER.md): authentic rows, busy phases and source/event lineage do not grant arbitrary interrupts. |
+| SSA / CSA | [Structural storage atlas](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_STRUCTURAL_STORAGE_ATLAS.md) / [Callable storage atlas](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CALLABLE_STORAGE_ATLAS.md): their stated structural images and wire interpretations do not install another serializer on ARC. |
+| PVC | [Paid view conversion](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PAID_VIEW_CONVERSION.md), Definitions 1.2 and 10.3: its fixed-$H$, unused-verifier, initially installed $D_2$ is a separate instance. |
+| TMC | [Transport memory completion](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md), PR57.D1–D2 and D7–D9: declared local primitives, ownership, receipts, finite boot and original INITIAL target. |
+

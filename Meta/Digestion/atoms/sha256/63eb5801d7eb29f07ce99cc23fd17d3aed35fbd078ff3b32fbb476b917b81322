@@ -1,0 +1,19 @@
+**Definition 304.1 (A sole-zero extension of the second-head score).**
+Fix $L\ge7$, an ordered skeleton
+$S=(1,2,j_1,\ldots,j_5)$ with $3\le j_1<\cdots<j_5\le L$,
+and any finite set $I\subseteq\{1,\ldots,L\}\setminus S$.
+Embed exactly the score $Y_2$ of 298.2 on $S$, with every nonskeleton
+bit equal to one on its scored words. For $k\in I$ let $w^{(k)}$
+have its sole zero at $k$, and, for arbitrary real $c_k\ge0$, set
+
+$$
+Y_c=Y_2+\sum_{k\in I}c_k C_{w^{(k)}}.
+\tag{304.1}
+$$
+
+Here $C_{w^{(k)}}$ is the correct event row of weight one, not a
+restriction on the output alphabet. Let $c_{[1]}\ge c_{[2]}\ge c_{[3]}$
+be the three largest weights, padded by zeros. Empty sums and maxima
+of nonnegative residuals are zero. The set $I$ may lie in gaps of $S$;
+it need not follow $j_5$.
+

@@ -1,0 +1,11 @@
+### 69.1 Explicit local consequence
+
+Retain \(H_\star=H_0(0)\) and the normalized common-flat input locus
+\(\mathcal F(H)\) from §68. Define
+
+\[
+ E=3255\,2^{83},\qquad K=3255\,2^{82}+11,\qquad
+ \rho=2^{-K},\qquad\beta=2^{-(K+1)}.
+\tag{69.1}
+\]
+

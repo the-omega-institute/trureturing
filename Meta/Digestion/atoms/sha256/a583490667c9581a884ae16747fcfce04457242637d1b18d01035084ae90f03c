@@ -1,0 +1,14 @@
+**Corollary 13.7 (fixed full predictions, risks and paired semantic arrays).** Across all parameters (13.13), both joint flows (11.34), all six individual p laws, both suspended laws with their repetitions and their phase distributions are fixed. For arbitrary complete targets the configuration losses are
+
+$$
+\frac16\sum_{\sigma,i}\operatorname{TV}(Q_{\sigma,i},T_p),\qquad
+\frac12\sum_\sigma\operatorname{TV}(W_\sigma,T_\beta).
+\tag{13.22}
+$$
+
+For the initialized installations, both full fourth-phase configuration-risk suprema are identical. Corresponding original pre-latch and terminal laws also agree. Their indexed event arrays are the unchanged nonconstant arrays (11.32).
+
+**Proof.** The exact two margins give the fixed phase distributions. Integrating per-configuration TV gives (13.22); TV has not been moved outside the configuration average. At every original history the same once-sampled source gives its unchanged posterior target (1.2). Proposition 12.6 supplies the same phase row there, and its own $I_c$ preserves TV, proving the equality of all fourth-phase history losses and their suprema. Before the latch, the same fair original-control program reaches the same uniform latch mixture of the same individual laws. Conditioning on its first latch entrance, or taking the finite-prefix limit with the supplied pre-latch survival bounds, proves equality of the entire pre-latch laws. Completing configurations have the same deterministic original Stop/delivery laws. Internal sampler continuations may differ between different installed row programs; they are not additional queried histories.
+
+The events in (11.32) are coordinates of those fixed full laws. Within a block $f_{\sigma,i}=(1-u_i)(1-\sigma)(1+t_\sigma+t_\sigma^2)$ varies with $i$. The suspended array is $h_{\sigma,i}=(1-\sigma)(1+t_\sigma)=1-m\sigma-q\sigma^2$, strictly decreasing between the two positive $\sigma$ values. Both indexed arrays are therefore nonconstant. [PAIRED, Theorem 4.1 and Corollary 4.2](RECURSIVE_RELATIONAL_OBSERVATION_PAIRED_CALIBRATION_OBSERVABILITY.md) identifies regular emissions and full laws from both indexed arrays on known fixed $B,A$, with its projected fixed point and unprojected equations as the joint realization test. Here the alpha-update varies; this does not assert identification of an unknown kernel from two marginal numbers. These arrays remain semantic events, not runtime probes or free oracle inputs. $\square$
+

@@ -1,0 +1,85 @@
+**定理 C-91.2（指定四项事件的宽度界与面积恒等式）。** 定义归一化向量及其效果
+
+$$
+|\Omega\rangle=\frac12\bigl(
+|0,13\rangle+|13,0\rangle-|1,3\rangle-|3,1\rangle\bigr),
+\qquad E_\Omega=|\Omega\rangle\langle\Omega|.
+\tag{C91.2}
+$$
+
+在假设 C-91.1 下，事件概率为
+
+$$
+q_\Omega
+=|\psi_0\psi_{13}-\psi_1\psi_3|^2
+=\frac{r^2\mathcal C^2}{4},
+$$
+
+$$
+q_{\Omega,\max}=w(r-w)
+=\frac{\mathcal A}{2\pi}\left(r-\frac{\mathcal A}{2\pi}\right).
+\tag{C91.3}
+$$
+
+最大值在闭纤维取得。若只允许全正态，它在 $y>w$ 或 $w=y=r/2$ 时取得，
+在 $y=w<r/2$ 时仅为未取得的上确界。
+
+证明。四个有序五模式基向量互相正交，四个系数模平方之和为一。
+对同一个实际 $\psi$ 的两份输入，
+
+$$
+\langle\Omega|\psi\otimes\psi\rangle
+=\frac12(\psi_0\psi_{13}+\psi_{13}\psi_0
+-\psi_1\psi_3-\psi_3\psi_1)
+=\psi_0\psi_{13}-\psi_1\psi_3.
+$$
+
+式 (C85.1) 给它为 $r\det B$。
+更一般，$E_\Omega$ 支持在底面双副本块内，所以由式 (C91.1) 取迹同样得到
+$r^2|\langle\Omega|\phi\otimes\phi\rangle|^2=r^2\mathcal C^2/4$。
+对状态最大化，消费 C-85.2 的容量和 C-85.3 的取得性，再代入 $\mathcal A=2\pi w$ 即得。证毕。
+
+这一因子分解明确保留成本：
+
+$$
+q_\Omega=
+\underbrace{r^2}_{\text{两份均落在底面的概率}}
+\ \underbrace{\frac{\mathcal C^2}{4}}_{\text{条件底面中的投影概率}}.
+\tag{C91.4}
+$$
+
+因此先条件化再报告大 concurrence，不能删去完整试验的 $r^2$ 因子。
+C-78.3 已给同一投影及其占位对易性质；这些性质并不供应一个原生仪器实现。
+
+数学先例与精确归一化。Aolita–Mintert，
+*Measuring multipartite concurrence with a single factorizable observable*，
+[quant-ph/0608012v2](https://arxiv.org/abs/quant-ph/0608012v2)，式 (1)–(2)，
+给两份纯态上的 $C_N^2=\langle A\rangle$，其中
+$A=4\sum P_{s_1}^{1}\otimes\cdots\otimes P_{s_N}^{N}$，
+求和限于偶数个反对称因子并排除全对称项。
+两个二元因子时只剩 $A=4P_-^L\otimes P_-^R$。
+按实际基序作重排
+
+$$
+R:\ |a,b\rangle\otimes|a',b'\rangle
+\longmapsto |a,a'\rangle\otimes|b,b'\rangle,\qquad
+|\varepsilon\rangle=(|01\rangle-|10\rangle)/\sqrt2.
+$$
+
+四项直接展开给
+
+$$
+R|\Omega\rangle=|\varepsilon\rangle_{LL'}\otimes|\varepsilon\rangle_{RR'},
+\qquad RE_\Omega R^\dagger=P_-^L\otimes P_-^R.
+\tag{C91.5}
+$$
+
+故两份归一化条件态的概率为 $\mathcal C^2/4$，与本处完全一致。
+重排只在四维底面各自的两因子结构上定义，不把整个五维载体当作二元张量积。
+Romero、López、Lastra、Solano、Retamal，
+*Direct measurement of concurrence for atomic two-qubit pure states*，
+[quant-ph/0611016v1](https://arxiv.org/abs/quant-ph/0611016v1)，式 (2)–(5)，
+采用另一个含局部操作、CNOT 与旋转的电路：
+$A_-=c_1c_2-c_0c_3$，$P_{gggg}=|A_-|^2/2=\mathcal C^2/8$。
+该输出不是此处归一化 $\Omega$ 的概率；两份资源的经典方向不能抹去这项因子差异。
+

@@ -1,0 +1,16 @@
+**Theorem 16.2 (finite promise and unrestricted finite completion).** Under Hypothesis 16.1, (SC.38) acquires the correct installed cutoff on every finite prefix up to the third latch while the required exact widths are supplied and no overflow occurs, and holds it thereafter. For a public promise $N\le L$, installing $k=q(L)$ from zero suffices for exact reconstruction on that domain. A sufficient dense coefficient data allocation is
+
+$$
+B_{\rm dense}(L,k)=\sum_{j=1}^{\min(k,L)}
+2^j\left\lceil\log_2\!\left(1+\binom Lj\right)\right\rceil
+\tag{SC.39}
+$$
+
+bits, plus charged control, length/overflow metadata, coordinate addressing, installation, arithmetic workspace and output. Identically zero higher levels may be omitted. For fixed $k$ the data allocation is $O_k(\log(L+2))$; it has the fixed-order recovery failure of Theorem 14.1. With $k=q(L)$ it is finite and at most $(L+1)(2^{k+1}-2)$. Installing every degree through $L$ is another sufficient choice of $O((L+1)2^L)$ data bits, not a necessary observer design.
+
+A finite length monitor may enter an explicit overflow state on the first Read beyond $L$, then hold invalid selected-past data while the original execution continues. It must detect exceeding the promise before a counter's out-of-range write; saturation or wraparound cannot be advertised as exact. This introduces no earlier Stop or truncation permission. Recovery is guaranteed only on nonoverflow histories in the declared domain. Universal service on all finite completions instead needs unbounded possible retained configurations, while each completed finite history can use finite storage.
+
+Proof. The reused scattered-subword recurrence splits occurrences into those avoiding the new last position and those using it exactly once. Induction from the initialized empty prefix gives (SC.38); write-before-latch and subsequent holding give the selected-past invariant. On $N\le L$, each degree-$j$ counter stays in $[0,\binom Lj]$, yielding (SC.39); $\binom Lj\le2^L$ yields the displayed envelope. Theorem 15.1 supplies the inverse, rather than interpreting finite memory as an extra measurement port. The length monitor has only the required finite initialized count/overflow states and changes the observer's validity claim, not the source menu.
+
+For unrestricted finite prefixes one can maintain a paid from-zero length counter and all degrees through its current acquired length $n$. Before the next update, degree $n+1$ has old value zero, so installing that level and then using all retained old lower levels preserves the invariant. All counter growth and allocation are charged; the number and widths of coordinates grow, with no uniform finite bound. More economically, reuse Hypothesis 7.1's from-zero $U,J_1,J_2,J_3$ and finite seed/marker fields. Its $|U|+O(\log(N+2))\le N/2+O(\log(N+2))$ held data reconstruct $h$ and permit local computation of any requested finite cutoff, or a streamed factored representation of its polynomial. That computation uses the already held same-history data, not a new source/archive query; materializing a coefficient table or a raw output pays its own space and work. Theorem 10.1 forbids a uniformly finite exact chronology record over all positive completions. Infinite noncompletion paths have no finite third-latch target in this claim. $\square$
+

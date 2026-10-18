@@ -1,0 +1,24 @@
+**Theorem 9.1.** For every integer $d\ge1$, put
+
+$$
+a=d+3,\qquad b=a+1,\qquad m=a-2,
+$$
+
+and choose the smallest even integer $w\ge a$. Thus $w=a$ for even $a$ and $w=a+1$ for odd $a$. Set $h=(w-2)/2$. Define
+
+$$
+Q_w=UL^{w-1}=\begin{pmatrix}w&1\\w-1&1\end{pmatrix},\qquad
+T_\nu=U^{\nu-1}JQ_w=\begin{pmatrix}\nu w-1&\nu\\w&1\end{pmatrix}.
+$$
+
+The $d+5$ consecutive recorded endpoints
+
+$$
+A_0=I,\quad A_1=L^h,\quad
+A_i=Q_w\ (2\le i\le d+2),\quad
+A_a=T_{a-1},\quad A_b=T_a
+\tag{9.1}
+$$
+
+recover exactly $(S,k,D)$ for all sources in (1.1), all real $k$, and every whole polynomial $D$ of degree at most $d$. A literal implementation uses $2w+2a-1$ atoms.
+

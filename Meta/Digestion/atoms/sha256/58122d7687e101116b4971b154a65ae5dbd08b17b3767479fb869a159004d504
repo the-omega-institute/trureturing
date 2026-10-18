@@ -1,0 +1,28 @@
+## 4. Absolute sine, folded doubling, and the remaining boundary
+
+For the cyclic action by multiplication by two, taking absolute sine
+identifies the residues $a$ and $-a$. The exponent permutation in the
+proof consequently sees the signed dyadic orbit without seeing the
+choice of positive lifts. The sum bound does retain information about
+those lifts, but replacing $A$ by $q-A=A-1$ decreases the canonical sum
+$q$ by one. Thus the budget $\sum_i p_i\le q$ permits this
+displayed change of sign.
+
+This connects to the existing folded doubling interpretation of the tent
+map $T(t)=1-|2t-1|$ on $[0,1]$. At $t=k/q$, its numerator action is
+$k\mapsto2k$ when $2k\le q$, and $k\mapsto2q-2k$ otherwise; modulo $q$
+these branches give $2k$ and $-2k$. Iteration therefore follows powers
+of two with signs, as in Marcus's cycle-length interpretation of
+[OEIS A003558](https://oeis.org/A003558). This common sign loss explains
+the connection; a tent orbit, a sine row, and an ordinary residue set are
+different observations of that cyclic action.
+
+Requiring $\sum_i p_i=q$ excludes this displayed family. A general
+classification under that stronger hypothesis is open here, as are a
+modulus-only conclusion and a general classification modulo independent
+signs. The family itself still has $q=2^n-1$, so it does not refute that
+part of the source conclusion. The main Fraenkel conjecture additionally
+requires a Beatty covering, which this construction does not supply.
+The adjacent complex-exponential Conjecture 5.1 and the source's proved
+covering criteria are separate assertions.
+

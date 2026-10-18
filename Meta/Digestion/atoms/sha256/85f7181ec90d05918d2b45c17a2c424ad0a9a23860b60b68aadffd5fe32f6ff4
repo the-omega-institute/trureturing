@@ -1,0 +1,50 @@
+## 1. The original model and its representation fibres
+
+Set
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\quad
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
+U=JM=\begin{pmatrix}1&1\\0&1\end{pmatrix},\quad
+L=MJ=\begin{pmatrix}1&0\\1&1\end{pmatrix}.
+$$
+
+A predetermined history has $A_0=I$ and $A_{i+1}=W_iA_i$, where each $W_i$ is a finite word in $M,J$, possibly empty. Products act on the left and execute from right to left. Chronological $(M,J)$ implements $U$, and $(J,M)$ implements $L$. Every scalar read advances the recorded index by one; an unread atom does not. In the five-read problem the indices are exactly $0,1,2,3,4$.
+
+The original all-degree programme has effective target $(S,k,D)$ and readings
+
+$$
+S=\begin{pmatrix}p&q\\r&s\end{pmatrix},\qquad
+p,q,r,s>0,\quad ps=qr,\qquad
+z_i=(1+ki)\operatorname{tr}(A_iS)+D(i),
+\tag{1.1}
+$$
+
+where $k\in\mathbb R$ is arbitrary and $D\in\mathbb R[\tau]$ has degree at most a known $d\ge0$. The zero polynomial and smaller actual degrees are included. The new obstructions concern $d=0$, so each run has one entire constant polynomial $D(\tau)=\delta$. Neither the gain domain nor the target is reduced: sampled gain zeros and negative gains remain allowed.
+
+In original parameters, $S=\alpha R$, $k=\beta/\alpha$, with $\alpha>0$, arbitrary real $\beta$, and a single strictly positive rank-one relation $R$. Every source in (1.1) has the actual realization
+
+$$
+\alpha=1,\quad\beta=k,\quad R=S,\qquad
+c=\binom p r,\quad \ell=(1,q/p),\quad c\ell=S.
+\tag{1.2}
+$$
+
+The last equality follows from $s=qr/p$. For $A=(\begin{smallmatrix}a&b\\c_1&e\end{smallmatrix})$,
+
+$$
+\ell A c=\operatorname{tr}(AS)=ap+b r+c_1q+es.
+\tag{1.3}
+$$
+
+The row $\ell$ stays fixed throughout its run. Both $M(x,y)^{\mathsf T}=(y,x+y)^{\mathsf T}$ and $J(x,y)^{\mathsf T}=(y,x)^{\mathsf T}$ preserve strictly positive columns. Thus (1.2) realizes every recorded and unread state on every history used below. Candidate runs may have different fixed rows. No reset, source copy, inverse acquisition, independent lifted source, alternative unexecuted history, or additional acquisition clock is used.
+
+For a fixed effective target, its exact original relation/gain fibre is
+
+$$
+R=S/b,\qquad\alpha=b>0,\qquad\beta=bk,\qquad D\text{ fixed}.
+\tag{1.4}
+$$
+
+Necessity follows from the definitions, and substitution proves sufficiency at every index on any common history. For a fixed $R=c\ell$, all positive factorizations are exactly $c'=\mu c$, $\ell'=\ell/\mu$, $\mu>0$: equality of first columns fixes this scalar and equality of second columns fixes the other row component. These are representation freedoms for a fixed target. A history with collisions can have several different effective targets, each with its own representation fibre. Every collision below changes the effective target itself.
+

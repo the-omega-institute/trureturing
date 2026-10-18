@@ -1,0 +1,31 @@
+**Definition 3.1 (information at a frozen height).** Put
+
+$$
+L_\kappa=\frac{a_\kappa'}{a_\kappa},\qquad
+j_\kappa=\frac12 L_\kappa^2,\qquad
+w_\kappa=\frac1{j_\kappa}
+=2\left(\frac{a_\kappa}{a_\kappa'}\right)^2
+=\frac{B_\kappa^2}{2(B_\kappa')^2},\qquad
+C_\kappa=\int_I w_\kappa(k)\pi(dk).
+\tag{3.1}
+$$
+
+Write $p_V(y)=(2\pi V)^{-1/2}\exp[-y^2/(2V)]$ for $V>0$.
+The meaning of $j$ is elementary: for $Y\sim N(0,V(z))$ its $z$ score is
+
+$$
+\partial_z\log p_{V(z)}(Y)
+=\frac{V'(z)}{2V(z)}\left(\frac{Y^2}{V(z)}-1\right),
+\quad
+\mathbf E\partial_z\log p_{V(z)}=0,
+\quad
+\mathbf E(\partial_z\log p_{V(z)})^2=\frac{V'(z)^2}{2V(z)^2}.
+\tag{3.2}
+$$
+
+These follow by differentiating the normal density and using its second
+and fourth moments. A frozen-height scale observation with
+$V(z)=\delta a_\kappa(z)$ has information $j_\kappa(z)$ for every
+$\delta>0$. This observation does not assert that zero-length
+increments supply data.
+

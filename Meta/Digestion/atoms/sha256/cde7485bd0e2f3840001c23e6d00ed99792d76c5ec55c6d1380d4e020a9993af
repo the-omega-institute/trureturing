@@ -1,0 +1,25 @@
+**Definition 1.2 (complete signed input).** Fix finite prefix-free original cuts
+$P,Q$, an attained complete old row $R_P$, a finite literal list $H_0$, and a
+finite list $H_{\rm rel}$ of records
+$e=(a,p,b,q,\bowtie)$ with $\bowtie\in\{=,\ne\}$. A literal requires
+$r_{\rho^a u}(p)$ to equal its stated reply. A relation record means
+
+$$
+\operatorname{Rel}_e(u)\;:\Longleftrightarrow\;
+ p\in\operatorname{Pos}(\rho^a u)\ \land\ q\in\operatorname{Pos}(\rho^b u)\ \land
+ (\rho^a u)|_p\ \bowtie\ (\rho^b u)|_q .
+\tag{SJM.5}
+$$
+
+Both endpoints must be reached for either sign. The entire original-source fiber is
+
+$$
+D=\{u\in\mathcal T:R_P(u)=R_P,\ H_0(u),\
+\bigwedge_{e\in H_{\rm rel}}\operatorname{Rel}_e(u)\}.
+\tag{SJM.6}
+$$
+
+This retains every old equality class, every cross-class disequality (including
+classes outside $Q$), all concrete exterior and all guards. It is not a selected
+subfamily described by a later label.
+

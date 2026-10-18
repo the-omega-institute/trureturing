@@ -1,0 +1,66 @@
+**Lemma 97.2 (A weighted seven-event preselected score bound).** Every
+original $A\in\mathcal N_2$ with $e_a(A)\le\varepsilon$ satisfies
+$v+2w+2z-1\le10\varepsilon$. The same holds in $\mathcal O_2$.
+
+**Proof.** Use the weighted rows
+
+$$
+\begin{array}{c|c|c|c}
+ b&H_b&\text{weight}&\eta_b(H_b)\\\hline
+0010&\{0,1\}&1&1\\
+0100&\{0,1\}&1&1\\
+1000&\{0,2\}&1&1\\
+1010&\{2\}&1&v\\
+1100&\{3\}&2&w\\
+1110&\{4\}&2&z\\
+1111&\{0\}&2&1
+\end{array}
+\tag{97.5}
+$$
+
+For a fixed pair of distinct low coordinates, a deterministic terminal
+label is constant in each transcript cell. In the weighted version of
+(97.2), the maximum cell scores for the four cells $00,01,10,11$ are
+
+$$
+\begin{array}{c|rrrr}
+\text{selected pair}&00&01&10&11\\\hline
+(1,2)&1&1&2&2\\
+(1,3)&1&1&2&2\\
+(1,4)&2&0&2&2\\
+(2,3)&1&1&2&2\\
+(2,4)&2&0&2&2\\
+(3,4)&2&0&2&2
+\end{array}
+\tag{97.6}
+$$
+
+For instance, for pair $(1,2)$ the cells contain respectively
+$\{0010\}$, $\{0100\}$, $\{1000,1010\}$ and
+$\{1100,1110,1111\}$. Their optimal weighted label scores are
+$1,1,2,2$. The other rows follow by the same displayed cell membership
+rule. Every pair totals six. A schedule with fewer distinct low
+coordinates can be padded to a distinct pair just for this bound;
+refining cells cannot reduce its best score. Query order and repetitions
+add no information to these cells. Hence six bounds every preselected
+hard-two low-coordinate rule, with unrestricted terminal labels.
+
+Use the same actual sixteen-source families, projection and event
+$G\setminus J_{A,2,m}$ as in Lemma 97.1. At a fixed seed a preselected
+schedule is common to all sources. After its common high zero replies
+and repetitions are removed, it gives at most two preselected distinct
+low coordinates. Within each cell complete acquired transcripts agree.
+Whole finite-execution transport therefore makes the projected output
+constant there; a source-dependent processing length provides no further
+observation. The weighted score is at most six off the high-address
+exception and at most its full row weight ten on that exception.
+Integration and the TV event bounds give
+
+$$
+5+v+2w+2z-10\varepsilon\le6+4\gamma_m.
+\tag{97.7}
+$$
+
+Let $m\to\infty$. Proposition 90.2 supplies the ordered-class lower
+bound by law-preserving padding. $\square$
+

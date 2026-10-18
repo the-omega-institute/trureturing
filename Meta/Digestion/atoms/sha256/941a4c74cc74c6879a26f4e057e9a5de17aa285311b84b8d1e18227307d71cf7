@@ -1,0 +1,76 @@
+**Theorem 26.5 (The four-position elliptic complex and its index).**
+On smooth $X_4=\mathbb {CP}^{7}$ sheafify (26.2), twist by $m\ge0$, and
+place its bundles in cochain degrees $-3,-2,-1,0$:
+
+$$
+\mathcal O(m-5)\xrightarrow{f}
+\mathcal O(m-3)^5\xrightarrow{M}
+\mathcal O(m-2)^5\xrightarrow{f^{\mathsf T}}\mathcal O(m).
+\tag{26.7}
+$$
+
+For $E^{-i}=\widetilde F_i(m)$ form the total Dolbeault complex with
+total degree $j=q-i$ and differential
+
+$$
+\delta=\bar\partial+(-1)^q d_{\rm rel}
+\quad\hbox{on }\Omega^{0,q}(E^{-i}).
+\tag{26.8}
+$$
+
+Choose smooth Hermitian metrics and put $D=\sqrt2(\delta+\delta^\dagger)$,
+with even-to-odd part $D^+$. Its $H^1\to L^2$ Sobolev realization is
+Fredholm, and
+
+$$
+\ker D^+\simeq(R_{4,\mathbb C})_m,\qquad
+\ker D^-=0,\qquad\operatorname{ind}D^+=N_4(m).
+\tag{26.9}
+$$
+
+With $\int_{\mathbb {CP}^{7}}h^7=1$, the index is
+
+$$
+\int_{\mathbb {CP}^{7}}e^{mh}
+(1-5e^{-2h}+5e^{-3h}-e^{-5h})
+\left(\frac h{1-e^{-h}}\right)^8.
+\tag{26.10}
+$$
+
+Proof. Holomorphicity makes $\bar\partial$ commute with $d_{\rm rel}$
+before the totalization sign, and (26.2) gives $d_{\rm rel}^2=0$.
+The signs in (26.8) make the cross terms cancel, hence $\delta^2=0$.
+All relation arrows are order zero on the base; the principal symbol
+is a direct sum of Dolbeault symbols, with parity reversed when $i$ is
+odd. In particular total degrees $-3$ and $-1$ are retained as odd,
+not discarded. The symbol is invertible away from the zero cotangent
+section, as in Theorem 25.3. The underlying projective relation variety
+may be singular; the differential operator is on smooth $X_4$.
+
+The smallest bundle twist is $m-5\ge-5$. Stacks 01XT on $\mathbb P^7$
+vanishes in positive sheaf degrees for every twist at least $-7$.
+After the same Serre GAGA comparison, the Dolbeault hypercohomology is
+therefore computed by the degree $m$ strand of (26.2). Its only
+cohomology is the quotient in degree zero, by actual exactness.
+The compact elliptic Hodge decomposition gives (26.9). The Sobolev
+domain, weak formal-adjoint description of the cokernel and elliptic
+regularity are exactly those in (25.4), with the present finite bundle
+sum on $X_4$; they are not a bounded-adjoint identification.
+
+The even relation bundles are $\mathcal O(m)$ and
+$\mathcal O(m-3)^5$, and the odd ones are
+$\mathcal O(m-2)^5$ and $\mathcal O(m-5)$.
+The classical Dolbeault index formula on the smooth ambient space
+therefore gives (26.10), equal to the alternating projective Euler
+characteristics in (26.6). Directly,
+
+$$
+1-5e^{-2h}+5e^{-3h}-e^{-5h}=5h^3+O(h^4).
+$$
+
+The constant, linear and quadratic coefficients vanish; the cubic
+coefficient is $40/6-135/6+125/6=5$.
+This explains why the count has degree four despite the ambient
+projective dimension seven. It does not erase the higher-degree
+terms or the relation maps. $\square$
+

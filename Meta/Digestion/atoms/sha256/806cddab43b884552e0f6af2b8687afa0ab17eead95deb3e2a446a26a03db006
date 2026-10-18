@@ -1,0 +1,62 @@
+**Definition 2.1 (chart, moving faces and exact shear).** For $\xi=(r,y,z,w)$ put
+
+$$
+\begin{aligned}
+\Xi_s\xi&=(k_0+\varepsilon sr,
+       s c_0y+\varepsilon s^2c_1z+\varepsilon^2s^3c_2w),\\
+I_s&=((l-k_0)/(\varepsilon s),(u-k_0)/(\varepsilon s)),&\Omega_s&=I_s\times\mathbb R^3,\\
+\mathcal U_s\psi&=(j_0s^7)^{1/2}\psi\circ\Xi_s,&\mathcal Q_s&=\mathcal U_s\mathcal Q,\\
+X&=\partial_r,&Y_s&=\partial_y+r\partial_z+\frac{r^2}{2(1+\beta_sr)}\partial_w,\\
+\beta_s&=\nu s,&b_s[F]&=\|XF\|_2^2+\|Y_sF\|_2^2,&U_s&=s^5W_{s^2}\circ\Xi_s.
+\end{aligned}
+\tag{2.1}
+$$
+
+The raw Jacobian is exactly $j_0s^7$. The map $\mathcal U_s$ is unitary onto $L^2(\Omega_s,d\xi)$. The Friedrichs operator $A_s$ of $b_s$ has domain $\mathcal U_sD(S)$, and
+
+$$
+\begin{aligned}
+C_s&=A_s-\lambda s^2=s^2\mathcal U_s S\mathcal U_s^{-1}\ge0,\\
+q_s^c[F]&=a b_s[F]-\chi_c\int U_s|F|^2-a\lambda s^2\|F\|_2^2,\\
+q_s^c[\mathcal U_s\psi]&=s^2\mathfrak e_{g_s,s^2}[\psi],\qquad
+\inf_{\|F\|_2=1}q_s^c[F]=\epsilon_c(s).
+\end{aligned}
+\tag{2.2}
+$$
+
+The native heat and rescaled source retain the exact density correspondence of P Proposition 81.2:
+
+$$
+\begin{aligned}
+P_s(t;\eta,\xi)&=j_0s^7p_{s^2t}^B(\Xi_s\eta,\Xi_s\xi),\\
+U_s&=j_0^{-1}\int_1^\infty e^{\lambda s^2t}P_s(t;0,\cdot)dt,\\
+(A_s-\lambda s^2)U_s&=s^7\rho_{s^2}\circ\Xi_s,\qquad
+j_0s^7\rho_{s^2}\circ\Xi_s\longrightarrow k_1
+\quad\text{in }L^1\text{ and locally uniformly}.
+\end{aligned}
+\tag{2.2a}
+$$
+
+The limiting source for $V$ has Lebesgue mass $1/j_0$; its native raw-source mass is one. The amplitude factor remains the square root of the raw Jacobian.
+
+For the phase triple $\mathbf z=(y,z,w)$ define
+
+$$
+L_s=\begin{pmatrix}1&\beta_s&0\\0&1&2\beta_s\\0&0&1\end{pmatrix},\qquad
+\mathscr L_s(r,\mathbf z)=(r,L_s\mathbf z),\qquad
+\mathcal T_sF=F\circ\mathscr L_s,\qquad
+\widetilde U_s=U_s\circ\mathscr L_s.
+\tag{2.3}
+$$
+
+The shear has determinant one, fixes the source and preserves both moving height faces. P Definition 97.1 gives, on the entire transported closed form domain,
+
+$$
+\widetilde b_s[f]:=b_s[\mathcal T_s^{-1}f]
+ =\int_{\Omega_s}\left(|Xf|^2+(1+\beta_sr)^{-2}|Yf|^2\right)d\xi,
+\qquad Y=\partial_y+r\partial_z+\tfrac12r^2\partial_w.
+\tag{2.4}
+$$
+
+This is the same native problem under an exact unitary change of variables. All comparisons on $\mathbb R^4$ use zero extension from $\Omega_s$, preserving both Dirichlet deaths.
+

@@ -1,0 +1,32 @@
+**定理 41.3（Identification before post-zero rejection and the two-phase normalization）。** In (41.1), consider one fixed literal stream with a first zero after $a<k$ leading ones. For $p\ge3$, before the first later block which would reject the common tail of its successful first-zero survivors, their completed endpoint-difference columns distinguish all $p$ actual INITIAL phases. This assertion concerns the completed prefix before the dangerous block. For an eligible cut, every still-running successful archive can therefore stop with its INITIAL joined label before that block.
+
+For $p=2$, any finite matrix of the formal literal rows (41.3) can instead have each suffix word $11$ after the first-zero parent replaced by $00$. A raw rejected word does not supply an observed endpoint difference; these formal rows are used only to specify the normalized words. This preserves equality and inequality between every pair of full phase columns, preserves their prefix equality relations at each completed depth, and gives a safe suffix without increasing its written number of blocks. The all-one prefix and the first-zero parent are left intact.
+
+**证明。** After the first zero, all surviving INITIAL tails at a fixed phase merge, and the final tail of its parent word is common across all surviving phases. Subsequently tail evolution depends only on the common literal stream. Any first post-zero rejection is thus simultaneous for all those raw surviving records. Let $n$ be the absolute bit position, counted from the first issued bit, where the run that first reaches $k=2p-1$ ones begins. This run is preceded by a zero, and begins after the stream's first zero.
+
+First suppose $n=2h$. Its first $p-1$ whole words, at indices $h,\ldots,h+p-2$, are $11$ and complete successfully: they contain $2p-2<k$ ones after a clearing zero. The next block, at index $h+p-1$, would reject on its first bit. On the cyclically ordered vertices $v_j=h+j\pmod p$, the preceding $p-1$ rows are the path edges $\{v_0,v_1\},\ldots,\{v_{p-2},v_{p-1}\}$. With $e_0,\ldots,e_{p-2}$ the unit columns, the phase columns restricted to these actual completed rows are
+
+$$
+e_0,\quad e_0+e_1,\quad e_1+e_2,\quad\ldots,\quad
+ e_{p-3}+e_{p-2},\quad e_{p-2}.
+\tag{41.7}
+$$
+
+They are pairwise distinct for $p\ge3$: the end columns are different unit vectors, and each interior column has its own two adjacent nonzero coordinates. Arithmetic here is in $\mathbb F_2$. Keeping earlier rows cannot remove a distinction.
+
+If $n=2h+1$, word $h$ is $01$. Its row is the singleton $\{v_1\}$, and the next $p-2$ successful words are $11$ on edges $\{v_1,v_2\},\ldots,\{v_{p-2},v_{p-1}\}$. The run at their final endpoint has length $1+2(p-2)=2p-3<k$. The next block is the first dangerous one. On these $p-1$ completed rows the columns are
+
+$$
+0,\quad e_0+e_1,\quad e_1+e_2,\quad\ldots,\quad
+ e_{p-3}+e_{p-2},\quad e_{p-2},
+\tag{41.8}
+$$
+
+where at $p=3$ this list is $0,e_0+e_1,e_1$. Again the columns are pairwise distinct. This case includes a zero in the first position of a block; the previous case includes a zero in the second position. These exhaust the possible alignment of the run. Each still-live source has actually paid for and observed all these rows; the argument supplies neither a midblock stop nor another source's archive.
+
+At an eligible cut, (41.5) says that every surviving tail at phase $i$ has the one INITIAL label $\Lambda_i$. A live archive whose own completed columns now determine $i$ is therefore label-homogeneous. It can stop before the dangerous block. Earlier rejection archives were already homogeneous by the eligible rectangles and have their own labels; they are not folded into the successful phase calculation.
+
+At $p=2$, (41.3) assigns word $11$ the constant response one on the whole actual phase set, and $00$ the constant response zero. Replacing the row adds one to that same coordinate of every phase column. All column comparisons, including comparisons of every prefix, are preserved. The decoder is defined from the new actual words and their actual outputs; it is not supplied an output of the old word. The parent ends with tail zero or one. Every following word is now $00,01$ or $10$, so its internal run is at most one and every seam has run at most two, strictly below $k=3$. The normalized suffix is safe and has exactly the same number of whole words.
+
+This leaves Mathematical counterexample 34.4 intact. Starting at tail zero, the raw written words $11\mid11$ at $k=3,m=2$ still reject on their third one. The theorem asserts lawful execution through actual stopping, or the specified common-coordinate normalization after a first-zero parent; it does not assert raw legality of every written row sequence. ∎
+

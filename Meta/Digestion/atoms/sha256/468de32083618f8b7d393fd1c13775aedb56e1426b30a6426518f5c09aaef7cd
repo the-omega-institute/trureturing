@@ -1,0 +1,24 @@
+**定义 1.2（实际动作与可见端点）。** 两种控制字母表分别为
+
+$$
+\mathcal A_{\rm all}=\{0,1\}^m,
+\qquad
+\mathcal A_{\rm loc}=\{B\in\{0,1\}^m:B\text{ 内部避免 }1^k\}.
+\tag{1.5}
+$$
+
+读入一位 $b$ 的更新为
+
+$$
+\delta_b(v,\theta,s)=
+\begin{cases}
+(v,\theta+1,0),&b=0,\\
+(v\oplus c_\theta,\theta+1,s+1),&b=1, s<k-1,\\
+\bot,&b=1, s=k-1,
+\end{cases}
+\qquad \delta_b(\bot)=\bot.
+\tag{1.6}
+$$
+
+相位模 $T$。一个动作必须完整发出 $m$ 位；其块内更新只定义行为，不提供中间观测。端点输出为 $o(v,\theta,s)=v$ 和 $o(\bot)=\bot$。两种字母表都保留跨块接缝导致的拒绝；局部合法块可以拒绝某些旧尾。
+

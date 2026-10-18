@@ -1,0 +1,9 @@
+### 57.2 A uniform punctured endpoint cube
+
+
+Use the exact polynomials of published (55.24)–(55.27), and let
+\(A_{R,c}+hB_{R,c}\) be their positive-factor seed reductions (56.4),
+for \(R\in\{I,H,G,L\}\) and \(c\in\{F,Q\}\). Thus
+\((\kappa_I,\kappa_H,\kappa_G,\kappa_L)=(3,3,4,3)\), and the proper
+chart degrees are \((d_I,d_H,d_G,d_L)=(2,1,2,1)\).
+

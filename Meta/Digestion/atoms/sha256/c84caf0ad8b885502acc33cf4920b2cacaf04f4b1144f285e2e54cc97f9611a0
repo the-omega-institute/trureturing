@@ -1,0 +1,38 @@
+**Theorem 58.6 (uniform localization of the complete common subescape space).** Put
+
+$$
+\epsilon_*=a(3-2\sqrt2),\quad c<\epsilon_*,\quad
+Q_c=\mathbf1_{(-\infty,c]}(\mathsf H),\quad
+ d=\epsilon_*-c,\quad b=(6a+\epsilon_*)/2,\quad
+ r=(6a-\epsilon_*)/2,\quad q=r/(b-c)<1.
+\tag{58.12}
+$$
+
+This is the full spectral projection from (55.18a), including every contrast channel and any coincident or exceptional eigenvalue. For every integer $R\ge0$ and $0\le s\le R$,
+
+$$
+\|(I-P_{B_R})Q_c\|
+\le\min\left\{1,\frac gd\left(q^{R-s+1}+2^{-s-1}\right)\right\}.
+\tag{58.13}
+$$
+
+In particular, with $s=\lfloor R/2\rfloor$, denote the displayed right side by $\ell_R$. Then $\ell_R\to0$. No cutoff-gap assumption is needed for this common projection, even if $c$ itself is an eigenvalue. An empty projection has no unit state to prepare; for $g>3a/4$, choosing $m\le c<\epsilon_*$ guarantees nonemptiness by §55.3–55.4. At $g=16a,c=-a$ this includes, in particular, both depth-one hidden channel ground states of §55.6, since their energies are at most $-a\sqrt3<-a$.
+
+Proof. Write $A=aL$, let $\mathcal K=\operatorname{ran}Q_c$, let $X:\mathcal K\to\ell^2(\mathcal P)$ be inclusion, and put $C=\mathsf H|_{\mathcal K}$. The existing gap and norm bounds give $\epsilon_*I\le A\le6aI$, $\|b-A\|\le r$, $C\le cI$ and $\|(b-C)^{-1}\|\le1/(b-c)$. From the actual potential equation,
+
+$$
+ AX-XC=gM_\phi X,\qquad
+ X=(b-A)X(b-C)^{-1}+gM_\phi X(b-C)^{-1}.
+\tag{58.14}
+$$
+
+The iteration is norm contracting by $q<1$; hence its unique bounded solution is the convergent operator series
+
+$$
+ X=g\sum_{n\ge0}(b-A)^nM_\phi X(b-C)^{-n-1}.
+\tag{58.15}
+$$
+
+This is the ordinary Neumann-series method applied to this two-operator equation, not an assumed resolvent decay theorem. Split $M_\phi=P_{B_s}M_\phi+(I-P_{B_s})M_\phi$. The tail has norm $2^{-s-1}$. The first factor has range in $B_s$, and each multiplication by $b-A$ enlarges support by at most one actual seam. Therefore its terms with $n\le R-s$ vanish after multiplication by $I-P_{B_R}$. Summing the remaining geometric bounds yields
+$gq^{R-s+1}/(b-c-r)=gq^{R-s+1}/d$; summing the potential-tail terms yields $g2^{-s-1}/d$. Since $X$ is isometric and $Q_c=XX^*$, this proves (58.13). The floor choice makes both terms tend to zero. The proof makes no root-visible or radial reduction and uses no finite-domain eigenvalue endpoint convention. □
+

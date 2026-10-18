@@ -1,0 +1,30 @@
+**Definition 7.1 (coordinates at the exposed endpoint).** Work near
+$(P,Q,R)=(p,q,r_0)$ in (QO.31). There
+$d=(1-P)-\alpha(1-Q)>0$ and $R>0$. Define
+
+$$
+m=\sqrt{d^2+4\alpha R^2},\qquad
+\eta=\beta-m\geq0,\qquad
+\theta=\operatorname{atan2}(2\sqrt\alpha R,d),\qquad
+u=\theta-\theta_0 .
+\tag{QO.35}
+$$
+
+The sign of $\eta$ follows from Lemma 6.2. The positive local branch is
+
+$$
+\begin{aligned}
+\delta&=1-\alpha-m\cos\theta,\qquad R=\frac{m\sin\theta}{2\sqrt\alpha},\\
+Z&=\sqrt{\delta^2+m^2\sin^2\theta+4\alpha x^2},\\
+P&=(\delta+Z)/2,\qquad Q=(Z-\delta)/(2\alpha).
+\end{aligned}
+\tag{QO.36}
+$$
+
+It solves $P-\alpha Q=\delta$ and $PQ=R^2+x^2$.
+At $(m,\theta,x)=(\beta,\theta_0,0)$ it gives $(p,q,r_0)$.
+Choose one sufficiently small closed neighborhood of this point.
+All radicals and reciprocals in (QO.36), and $\sqrt g$, are smooth
+there, because $p,q,s_*,\beta$ have strict positive margins.
+All local constants below refer to this fixed selected input.
+

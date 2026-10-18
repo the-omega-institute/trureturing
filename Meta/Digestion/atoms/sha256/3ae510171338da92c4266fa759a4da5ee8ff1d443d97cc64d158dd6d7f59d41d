@@ -1,0 +1,51 @@
+**定义 1.1（Versioned source and parameter domain）。** The source of the configuration matrix and internal transports is [AURIC_FIB_HISTORY_RECORDS_TIME_ARROW, revision 6bfd5342e47ba7eb50a5022e301d228f17daa8d2, §§126–135](https://github.com/the-omega-institute/trureturing/blob/6bfd5342e47ba7eb50a5022e301d228f17daa8d2/docs/develop/theory/AURIC_FIB_HISTORY_RECORDS_TIME_ARROW.md). Its matrix (129.1), transports (127.1), inverse reverse edges and identity self-loops are fixed throughout this volume. The parameters range over
+
+$$
+\mathcal D=\{(p,q,r)\in\mathbb R^3:p,q,r>0,\ p+q+r<1\}.
+$$
+
+Write
+
+$$
+t=p+q,\qquad B=1-t,\qquad A=B-r,\qquad C=1-r=A+t.
+\tag{1.1}
+$$
+
+All of $p,q,r,t,A,B,C$ are strictly positive. There is no exclusion of $p=q$ or any other equality inside $\mathcal D$, and no lower cutoff on a positive branch probability.
+
+The configurations, in source order, are
+
+$$
+s_0=\mathrm{null}=000,\quad s_1=2=100,\quad
+s_2=25=101,\quad s_3=5=001,\quad s_4=3=010,
+$$
+
+where the words use the source's low-to-high convention. The source-row, successor-column matrix is
+
+$$
+P=\begin{pmatrix}
+A&p&0&q&r\\
+q&B&p&0&0\\
+0&q&B&p&0\\
+p&0&q&B&0\\
+r&0&0&0&C
+\end{pmatrix}.
+\tag{1.2}
+$$
+
+Let $\mathcal C=\mathbb C^5$, $K=\mathbb C^2$ and $H=\mathcal C\otimes K$. With the standard Pauli matrices, put
+
+$$
+a=-\mathrm iX,\qquad b=-\mathrm iY,\qquad c=ba=\mathrm iZ.
+$$
+
+The forward square edges and the leaf edge have transports
+
+$$
+U_{10}=a,\quad U_{21}=c,\quad U_{32}=a^\dagger,
+\quad U_{03}=c^\dagger,\quad U_{40}=b.
+\tag{1.3}
+$$
+
+Each reverse edge has the adjoint transport, and $U_{ii}=I_K$. In particular, $U_{04}=b^\dagger$. These are the assignments of §127; the different assignment in §124 is not used. Let $\mathcal A=\{(j,i):P_{ij}>0\}$ denote the fifteen positive directed edges, including five loops. A zero entry contributes no edge and requires no record.
+

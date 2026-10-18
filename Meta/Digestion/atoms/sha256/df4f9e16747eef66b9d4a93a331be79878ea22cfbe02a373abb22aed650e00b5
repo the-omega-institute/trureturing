@@ -1,0 +1,63 @@
+### 66.4 Exhaustive elimination of the repeated-ratio sector
+
+If \(a=b=c\), the norm equation gives
+\(3(1-a^2)/(1+a^2)=0\), so \(a=\pm1\). There are two possible
+all-equal ordered ratio triples.
+
+Otherwise the equal pair is unique. A cyclic relabeling places it
+at \((u_0,u_1,u_2)=(a,a,c)\), with \(c\ne a\). Equation (66.6)
+and the norm equation give respectively
+
+\[
+ \begin{gathered}
+ (a-c)(2ac^2-a+c^3-2c)=0,\\
+ N(a,c)=3-a^2+c^2-3a^2c^2=0.
+ \end{gathered}
+\tag{66.8}
+\]
+
+Let \(T_2=2ac^2-a+c^3-2c\), \(D_0=3a^2-1\),
+\(H_0=7a^2-5\), and \(L_0=H_0c+a(5a^2-7)\). Then
+
+\[
+ D_0T_2+L_0=-(2a+c)N.
+\tag{66.9}
+\]
+
+Since \(T_2=N=0\), this gives \(L_0=0\) without division.
+The case \(H_0=0\) is impossible: it would give
+\(a^2=5/7\) and \(L_0=-24a/7\ne0\). Therefore
+
+\[
+ c=\frac{a(7-5a^2)}{7a^2-5}.
+\tag{66.10}
+\]
+
+Also \(D_0=0\) is impossible because \(N=8/3\) when \(a^2=1/3\).
+The remaining substitution is the exact identity
+
+\[
+ H_0^2N\left(a,\frac{a(7-5a^2)}{H_0}\right)
+ =-3(a^2-1)(a^2+1)(25a^4-62a^2+25).
+\tag{66.11}
+\]
+
+The real factor \(a^2+1\) is positive. If \(a^2=1\), the norm
+forces \(c^2=1\). The unequal case has \(c=-a\), but then
+\(T_2(a,-a)=a(a^2+1)=2a\ne0\), impossible. Thus the repeated
+parameter lies among precisely four distinct real quartic roots:
+
+\[
+ 25a^4-62a^2+25=0,\qquad
+ a=\frac{\pm\sqrt{31+4\sqrt{21}}}{5}
+ \quad\hbox{or}\quad
+ a=\frac{\pm\sqrt{31-4\sqrt{21}}}{5}.
+\tag{66.12}
+\]
+
+The radicands are positive and unequal. None of these roots is
+zero or \(\pm1\), and none makes \(D_0H_0\) vanish. For each root,
+(66.10) leaves at most one \(c\). There are therefore at most four
+non-all-equal ratio triples for each of the three possible equal-pair
+positions.
+

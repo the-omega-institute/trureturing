@@ -1,0 +1,4 @@
+**数学引文 4.4（任务依赖白盒对应）。** FIB 白盒卷定义 8.1 要求解释同时保留读数、合法域和更新。这里任务状态为 $(s(b),a)$，解释为 $(b,a)$；符号码公开可逆，索引读取和 $\mathrm{Next}$ 的读数、域与后继逐点对应。取得到的完整合法词足以安装这种任务服务。相同 SIC 档案则不足以决定服务：$0^n$ 和 $(1,0,\ldots,0)$ 档案相同而第一窗不同，这一纤维见证直接复用 SIC 时间取得卷定理 2.1(vi)。
+
+另一固定来源 [原生守卫延拓卷](https://github.com/the-omega-institute/trureturing/blob/aeb45cd336fe958eabf799ee4580bbad1e364077/docs/develop/theory/AURIC_FIB_ATOM_PYRAMID_DETERMINANT_AND_NATIVE_GUARD_CONTINUATION.md) 命题 10.5 使用当前回复条件化后的继续守卫读取关联；其来源、读出和更新不同，不供应此量子实验的概率律。本卷没有建立与原生 FIB 生成树、破坏性根操作、训练状态或任何具体机器学习网络的源及操作对应，因而不从上述服务结果推出实际网络改善。
+

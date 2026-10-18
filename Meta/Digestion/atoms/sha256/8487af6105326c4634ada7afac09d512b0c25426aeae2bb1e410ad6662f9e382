@@ -1,0 +1,50 @@
+**Theorem 162.2 (Loss identity and the six-coordinate cone projection).**
+For every finite $L\ge2$ and $y\ge0$, put
+$B_{N,S}=\sum_c\max_rg^N_{S,c}(r)$. For $i<j$ define
+
+$$
+\ell_{ij}=\max_rg^{00}_{ij}(r)+\max_rg^{01}_{ij}(r)
+              -\max_r\bigl(g^{00}_{ij}(r)+g^{01}_{ij}(r)\bigr)\ge0,
+$$
+
+and set $\ell_S=0$ for empty and singleton schedules. Then
+
+$$
+B_N(y)-B_O(y)=\min_S\bigl[B_N(y)-B_{N,S}(y)+\ell_S(y)\bigr].
+\tag{162.2}
+$$
+
+The cone $K_{R,L}$ is closed, convex and polyhedral, and every $y$ in
+it has equal full $N$ and $O$ supports, attained by $R_L$. All 65 scores
+of Section 156 belong to $K_{R,6}$. Consequently
+
+$$
+P=\{x\in Q_6:y\cdot d(x)\le y\cdot z_R
+                      \text{ for every }y\in K_{R,6}\}.
+\tag{162.3}
+$$
+
+**Proof.** The stopped pair merges exactly $00,01$, so
+$B_{O,S}=B_{N,S}-\ell_S$. Taking schedule maxima gives (162.2).
+The loss vanishes exactly when the maximizing label sets of the two
+merged cells intersect: a maximizer of their sum attains both maxima
+if and only if the sum of maxima is attained. Hence full support equality
+requires an $N$-maximizing schedule with zero loss, not zero loss for
+every schedule.
+
+The cone equals the intersection of $y\ge0$ and
+$y\cdot(z_D-z_R)\le0$ over the finite full $N$ catalog.
+Since $R_L\in O\subseteq N$, its members satisfy
+$y\cdot z_R\le B_O(y)\le B_N(y)=y\cdot z_R$.
+The support table proves membership of each of the 65 scores with this
+single $R$, and the inequalities defining the cone preserve membership
+under all nonnegative combinations.
+
+If $x\in P$, Theorem 160.1 supplies an $O$ probability table, whose
+score cannot exceed $B_O(y)=y\cdot z_R$ for $y\in K_{R,6}$.
+Conversely (162.3)'s inequalities contain all 65 primitive score cuts;
+together with $Q_6$ they imply every defining row of $P$.
+This proves equality. It does not assert that $R$ itself attains the cap:
+it is a dual maximizer, while the primal law generally varies with $x$.
+$\square$
+

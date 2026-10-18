@@ -1,0 +1,38 @@
+**Proposition 3.5 (Decoder projection and exact worst-phase error).**
+Every finite-error decoder has the unique orthogonal decomposition
+
+$$
+q=D(a,b)+w,\qquad w\perp\operatorname{im}D,\qquad
+\binom ab=(D^{\mathsf T}D)^{-1}D^{\mathsf T}q.
+$$
+
+Here $a,b,w$ are fixed affine observables of $E$ and are
+$\beta$-independent. At every $k,\alpha$,
+
+$$
+\max_{\beta\in\mathbb T}\|q-y\|_2^2
+=\|w\|_2^2+4\|a-A(k)U(\alpha)\|_2^2
+ +(\|b\|_2+B(k))^2.
+$$
+
+Replacing the decoder by $D(a,0)$ cannot increase uniform error, and
+every finite model has error at least $e_*$.
+
+**Proof of Proposition 3.5.** Lemma 1.5 gives an invertible Gram matrix
+and the asserted orthogonal projection. Its entries are fixed affine
+functionals of $E$ and bounded when $q$ is bounded, so Theorem 3.4
+applies. Orthogonality gives
+
+$$
+\|q-y\|_2^2=\|w\|_2^2+4\|a-A(k)U(\alpha)\|_2^2
+ +\|b-B(k)U(\beta)\|_2^2.
+$$
+
+The last term is maximized in the direction opposite to $b$ when
+$b\ne0$, and is constant when $b=0$. All these phases are actual
+reachable rays. This proves the formula and decoder domination.
+Dropping nonnegative terms gives error squared at least $4Zk$ for
+every interior $k$. Its real supremum is $4ZH$, with no evaluation
+at a missing endpoint. Infinite-error models satisfy this lower bound
+as well. $\square$
+

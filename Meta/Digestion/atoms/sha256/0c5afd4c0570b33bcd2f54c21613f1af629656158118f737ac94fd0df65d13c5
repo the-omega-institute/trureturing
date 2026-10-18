@@ -1,0 +1,14 @@
+**文献表态 15.1（复用的供应范围）。** 仓内相关供应取固定版本 `471f8458c28a20e01a5988b91bdca90e83d9a96e`，第57章的地址取得合同取固定版本 `9906baf4f5f0cea446260b8be06d89b6e292e4ea`。引用范围与新推导的边界如下。
+
+| 15.1 的来源 | 所供应的陈述及适用边界 |
+| --- | --- |
+| 本卷命题3.1–3.4、定理5.3、6.1–6.2、推论6.3、第7–8章 | `repo-derived`：精确正词逆式、非空性、固定纤维多尺度见证、内部容量和条件终端计数已有归属；定理10.1在 $h^2/6\le t\le5h^2/6$ 内直接复用完整普通内部定理，再用单钩与分离方框转接到小面积。 |
+| [Auric](AURIC_FIB_HISTORY_RECORDS_TIME_ARROW.md)假设168.1、171.1、177.4，定义168.2、169.1，定理170.2、171.2–171.3、177.1、177.5 | `repo-derived`：同一正叶来源、中心化、共同参照、完整旧值更新、有限共同菜单和非恢复边界保持原条件。本章动态证明只取实际供给的右追加子菜单。 |
+| Richomme，*On some 2-binomial coefficients of binary words: geometrical interpretation, partitions of integers, and fair words*，[arXiv:2510.07159v1](https://arxiv.org/abs/2510.07159v1)，§4.2引理4.12–4.13、推论4.14，pp.19–21 | `literature-attested`：正词与有界分拆双射、共轭及源词数稳定已有归属。$p_{u,v}(k)$ 和不限分拆数 $p(k)$ 计词；不能据此认领本卷双矩输出数。 |
+| `PositivePairFiltration.positivePairWords`、`CentralDigitInjection.actual_positivePair_multiScale_central_digits`；`PositivePairExactDeckAsymptotics.actual_exactKDeckImage_weightedLyndon_isTheta` | `repo-derived`：已有正词对、多尺度数字及总体精确deck增长。前两者的适配已在第5章给出；总体二元三阶指数九不提供任意指定面积纤维的下界，本章不另认领。源码阅读不构成新编译或公理核验。 |
+| Nilforoushan–Parvaresh，[arXiv:2609.23106v1](https://arxiv.org/abs/2609.23106v1)，§7引理7.1、命题7.11、定理7.12 | `literature-attested`：三阶二元profile参数与总体增长已有归属，第8章已给精确坐标桥。其所选字母比例和参数扫区不直接覆盖本卷的固定极端面积或四宽纤维。 |
+| Brink–Moree–Osburn，[arXiv:1003.1094v2](https://arxiv.org/abs/1003.1094v2)，§1式(2)、§2 pp.2–4；Moree–Osburn，[arXiv:math/0604163v2](https://arxiv.org/abs/math/0604163v2)，§2式(2.3)/HTML式(6) | `literature-attested`：经典 Bernays 不限互素表示的不同整数计数，以及相同判别式的相同首项常数。本卷只用两个判别式 $-20$ 的固定型，不重证经典解析定理；引理13.2及定理13.3给正词条件下的完整转接。 |
+| [原子边界几何续篇](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION.md)定义57.1、定理57.3、57.5、57.7 | `repo-derived`：静态证书、实际地址取得和统一策略是不同问题；其确切树来源、地址菜单、正负正确域和付费口径不与本卷自由叶流混用。 |
+
+分拆共轭、格对双计数、正交二次型、CRT与任务纤维因子化都是成熟结构。本卷的推进是保留较强参数域的共同单钩容量桥、薄纤维的精确来源逆式，以及四宽范数的同余—顺序—范围约束和带对数修正的实际联合容量转接。这些转接不附带世界范围原创性或优先性判断。所有新增结论的证明强度是上述普通数学及明确文献供应，不冒领新增 Lean 验证。
+

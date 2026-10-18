@@ -1,0 +1,19 @@
+**Proposition 38.1 (the half-supported source bound).** Let $q_{1/2}=\operatorname{diag}(0,1/2,1/2)$. For every diagonal center, (R.177) gives
+
+$$
+ \Phi(q_{1/2},\omega_t)=\frac{A+B+\sqrt{A^2+B^2}}2
+ \leq\frac{1+\sqrt a}{2}.
+\tag{R.180}
+$$
+
+Hence, by (R.27) and (R.35),
+
+$$
+ g_N\leq\frac{1+\sqrt a}{2},\qquad
+ \delta_N\geq1+\frac\beta2-\sqrt a
+ =\beta+\frac{(1-\sqrt a)^2}{2}.
+\tag{R.181}
+$$
+
+**Proof.** Cauchy--Schwarz gives $A+B\leq\sqrt{a+\beta}=1$, while $A^2+B^2=at+\beta(1-t)\leq a$. Apply (R.177), then maximize the fixed-input upper bound over the common center. The norm bound (R.35) gives the second statement. At $\beta=1/2$, (R.181) is exactly (R.40); this is the same endpoint certificate, not a new endpoint proof. At $\beta=0$ it is zero. For every positive beta it is strictly stronger than the specified-family lower bound $\delta_N\geq\beta$ from Theorem 9.1, but it does not determine the exact $\delta_N$.$\quad\square$
+

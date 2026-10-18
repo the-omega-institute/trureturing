@@ -1,0 +1,43 @@
+**Corollary 107.2.** Under the original hypotheses of §107.1, it is enough for either correct-output Gram to be circulant. More generally, the conclusion holds if either Gram becomes circulant after a diagonal unitary conjugation and an original-fibre-preserving coordinate permutation. The other original channel may be nonsymmetric and leaking. The sharp minimum is still \(\sqrt2-1\), as are the infima in the calibrated exact-rank classes \((7,4)\) and \((7,5)\) with full-support first kernel.
+
+Here a fibre-preserving permutation sends each original coordinate pair to a coordinate pair; it may permute the four fibres and interchange the two coordinates within any fibre. The corollary assumes that the specified phase gauge and relabeling exist; it does not assert their existence for every Gram.
+
+**Proof.** Let \(P|j\rangle=|j+1\rangle\). It sends \(\{f,f+4\}\) to \(\{f+1,f+5\}\) modulo eight, including the order interchange at the last fibre. Thus conjugation by \(P\) bijects the set \(\mathcal D\) of original fibre-block densities and the complete fixed witness set \(\{(\rho,W):\rho\in\mathcal D,\ 0\le W\le\rho\}\). Also \(PTP^*=T\). Permutation covariance of the Hadamard product and the trace identity therefore give
+\[
+ \mathcal B(PLP^*)=\mathcal B(L),\qquad
+ F(PGP^*,PHP^*)=F(G,H)
+ \tag{107.26}
+\]
+for calibrated Grams. Both identities hold for every power of \(P\). The function \(\mathcal B\) is convex, since its definition is a maximum of linear functionals on this one fixed witness set. Accordingly \(F\) is convex in either Gram with the other fixed.
+
+Suppose first that \(G,H\) are calibrated and \(G\) is circulant. The matrix
+\[
+ \overline H=\frac18\sum_{r=0}^7P^rH(P^*)^r
+ \tag{107.27}
+\]
+is positive semidefinite with the original \(I_2\) fibre blocks. It commutes with \(P\), and hence is circulant. Every such calibrated Gram has an original Stinespring realization; no shared correlated branch is added. Since \(P^rG(P^*)^r=G\),
+\[
+ F(G,\overline H)
+ \le\frac18\sum_{r=0}^7F(G,P^rH(P^*)^r)=F(G,H).
+ \tag{107.28}
+\]
+This inequality is separate convexity, rather than an exchange of the reference optimization with the average. Theorem 107.1 applies to \((G,\overline H)\), proving the bound. Interchange the parties if \(H\) is circulant. The average may change rank; the lower bound required no rank hypothesis.
+
+For arbitrary leaking original maps, apply the completions (107.23). If \(G\) is circulant, its completion is circulant by the same calculation in §107.6; no symmetry is needed for \(\widetilde H\). The operator order and the first two inequalities in (107.25) remain valid. Applying (107.28) to the completed calibrated pair proves \(\delta\ge\sqrt2-1\). This retains arbitrary nonsymmetric leakage on the other side.
+
+Finally, let \(D\) be diagonal unitary and let \(Q\) be an original-fibre-preserving permutation. Define
+\[
+ G'=Q^*D^*GDQ,\qquad H'=Q^*DHD^*Q.
+ \tag{107.29}
+\]
+The reciprocal phase factors cancel entrywise, so
+\[
+ G'\odot H'=Q^*(G\odot H)Q,\qquad Q^*TQ=T.
+ \tag{107.30}
+\]
+The original fibre-block contraction constraints are preserved. These transformations can be implemented by precomposing the two local channels by \(D,D^*\), whose phases cancel on each correlated input, then precomposing both by \(Q\) and undoing its induced output-fibre permutation on both outputs. The target is covariant under the common relabeling, including the within-fibre swaps, and the complete norm is unitarily invariant. Alternatively, the leakage bound, (107.30) and the witness-set covariance prove the same implication directly. Thus, if either transformed Gram is circulant, the preceding argument applies with the unchanged original error bound. These transformations preserve ranks and full support of a one-dimensional kernel.
+
+The attaining pair in §107.4 and both exact-rank families in §107.5 already satisfy simultaneous cyclic symmetry. They therefore establish the minimum and infima for the larger class of this corollary. \(\square\)
+
+The averaging in (107.27) is justified because the other Gram is fixed and invariant. Independent cyclic averaging of two varying Grams need not preserve their product or improve the complete error. No reduction of an arbitrary pair to the class of Corollary 107.2 is asserted. The general residual alternatives of Theorem 106.5 and the unrestricted global quarter optimum remain unresolved.
+

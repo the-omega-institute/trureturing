@@ -1,0 +1,53 @@
+**Proposition 20.3 (selected temporal recovery and operational memory).**
+Under the exact acquired-entry and service contract, acquired literal
+boundary structure and the causally exported origin relation, together
+with the permitted native Reads, recover the number of intervening
+substitutions. This recovery neither determines the full source nor
+identifies every hidden age. The additional writable state records
+an operational distinction for legal updates, while the sixth bit
+is forced by the actual transition geometry.
+
+**Proof.** The acquired right exterior gives the relation $b+\ell=17$.
+The causal label restricts $(a,b)$ to $C$. Actual native replies
+resolve $b$ to a common target at the reached halt, whose installed
+constant is exactly $\ell=17-b$. This links current spatial boundary
+data with elapsed substitution count relative to the genuinely
+acquired original. It gives no physical elapsed time or absolute epoch.
+
+Before a fresh Read, for example $(0,15)$ at lag two and $(15,0)$
+at lag seventeen have the same code and entire later row. Thus that
+entry alone does not determine the lag. Even one four-valued Read
+cannot serve its seven distinct lag values. The certificate completes
+recovery in at most two Reads, and Theorem 18.1 identifies the native
+partitions necessary to do so.
+
+The six origins $(j,15)$, $0\le j\le5$, have the same acquired
+entry and the same entire two-reply transcript, but distinct originals
+and current hidden ages $2,\ldots,7$. They all halt at $H_{15}$
+with output two. No decoder of that completed trace can reconstruct
+all those originals or hidden fillings. At output sixteen the lower
+origins $(0,1),(1,1)$ also share a halt. These collisions witness the
+precise distinction between target recovery and full reconstruction.
+
+The ten-state quotient freely shares equal-output halts. Immediate
+single-bit permission excludes its three-common-neighbor support.
+Splitting the output-sixteen halt distinguishes the lower and upper
+operational paths without changing their acquired information,
+observations, numeric answer or first halt. It supplies a counted
+legal-write configuration distinction, rather than an extra source
+fact. Partitioning legal words by initial $0$ or $10$ gives counts
+$a_d=a_{d-1}+a_{d-2}$, with $a_0=1,a_1=2$, hence $a_5=13$.
+Thus $\Gamma_5$ has enough legal names for eleven states, but its
+neighborhoods fail the universally forced path.
+Cardinality and representation alone do not grant the necessary write
+permission. The conditional atomic-write service grants that operation;
+the six-bit certificate does not prove its physical availability.
+
+These statements concern one fixed acquired entry. A single finite
+table has only finitely many fixed halt constants and cannot return
+every unbounded lag. Other labels, rows, cuts and Read budgets need
+their own acquired-fiber and controller proofs. This result establishes
+neither an all-input controller for $q=17$, a uniform finite memory
+bound over unbounded lags, a global resource frontier, nor completion
+of the space/time/boundary/memory programme. $\square$
+

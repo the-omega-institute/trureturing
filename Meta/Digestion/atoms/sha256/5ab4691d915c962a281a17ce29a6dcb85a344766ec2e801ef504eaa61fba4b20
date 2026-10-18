@@ -1,0 +1,27 @@
+**命题 39.2（Three infinite families of one-block preset excess）。** Let $h\ge2$ and $M=2^h$. Take a phase-only target, the same on both free values, whose label-cell sizes are either
+
+$$
+(1,1,\underbrace{2,\ldots,2}_{M-2}),\qquad T=2M-2,
+\tag{39.4}
+$$
+
+or
+
+$$
+(\underbrace{1,\ldots,1}_{M-2},2,2),\qquad T=M+2.
+\tag{39.5}
+$$
+
+At $k=T-1$, $m=2T-1$, both original alphabets have
+
+$$
+C_{\rm ad}(f)=h,\qquad C_{\rm pre}(f)=h+1.
+\tag{39.6}
+$$
+
+For $h\ge3$, the same separation holds for $T=M-2$ with every phase given a distinct label, at the same $k=T-1$, $m=2T-1$. Each target is defined on every INITIAL tail; its bottom label is arbitrary.
+
+Proof. Here $m=2k+1$ and $\gcd(m,T)=1$, so every phase is actual and all targets have common cut zero with sufficient room. Both (39.4) and (39.5) have $n=M$, and their odd-cell counts are respectively $2$ and $M-2$. These are the saturated exceptions of (37.3). The third family has $T=n=M-2$ and $\lceil\log_2 n\rceil=h$, its singleton exception. Corollary 38.2 gives preset fee $h+1$, with literal attainment from Theorem 38.1.
+
+For every family $n\ge3$. The supplied adaptive wide law [S26, Theorem 3.1] gives fee $\lceil\log_2 n\rceil=h$ on each free-value fibre, hence overall fee $h$. Its branch-specific even extensions are used only in that adaptive protocol. They are not combined into one preset stream. All cell sizes sum to the displayed actual $T$, so these are complete-source targets, not known-source encodings. ∎
+

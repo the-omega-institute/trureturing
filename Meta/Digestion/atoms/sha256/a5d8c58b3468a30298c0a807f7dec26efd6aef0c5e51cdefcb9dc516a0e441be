@@ -1,0 +1,30 @@
+**Lemma 75.6 (every collision condition in the hard lower limit).** If the $u_j$ in75.5 are zero extensions of members of $\mathcal Q_{\varepsilon_j,R}^{\rm D}$ for(75.13), then their limit satisfies $F\in E\mathcal Q^{\rm hc}$. Hence
+
+$$
+a k_{\delta,2}[E^*F]\le\liminf_jq_{0,\varepsilon_j}[u_j].
+\tag{75.22}
+$$
+
+**Proof.** For chamber coverage, $u_j=0$ on every entire source chamber pair, so $(J^*u_j)_{pp}=0$ exactly. For the strengthening, fix any $\kappa>0$ and set $h_p=\min\{\ell_p/2,\kappa/4\}>0$. The ball $A_p^\varepsilon=b_p^\varepsilon+h_pr_\varepsilon B_1$ lies in $Z_p^\varepsilon$, and $A_p^\varepsilon\times A_p^\varepsilon$ lies strictly in the forbidden region. Its fraction of the chamber-product volume is
+
+$$
+\theta_p=(\delta\omega_s h_p^s)^2>0,
+\qquad
+\int_{A_p^\varepsilon\times A_p^\varepsilon}|JF|^2
+                         =\theta_p|F_{pp}|^2.
+\tag{75.23}
+$$
+
+Since $u_j$ vanishes there, (75.18) implies $\theta_p|F_{pp}|^2\le\|u_j-JF\|^2\to0$. This forces every $F_{pp}=0$, even when part of a chamber pair remains allowed.
+
+On one straight cylinder the transverse separation is at most $2\rho\varepsilon$, where $\rho=\omega_{s-1}^{-1/(s-1)}$. Since $R_\varepsilon/\varepsilon=\kappa\varepsilon^{-1/s}\to\infty$, for all sufficiently small $\varepsilon$ every transverse pair above $|x-y|<R_\varepsilon/2$ has physical separation less than $R_\varepsilon$. Consequently the averaged same-cable cell $f_\varepsilon=(J^*u_\varepsilon)_{ee}$ vanishes on this entire longitudinal strip. Transverse averaging of the restriction to the cylinder product commutes with its weak longitudinal derivatives. Cauchy–Schwarz, the fiber volumes and(75.8) give
+
+$$
+\delta^2\|f_\varepsilon\|_2^2\le\|u_\varepsilon\|^2,
+\qquad a\delta\int_{(0,1)^2}|\nabla f_\varepsilon|^2
+                                      \le q_{0,\varepsilon}[u_\varepsilon].
+\tag{75.24}
+$$
+
+Thus these functions are bounded in $H^1$ on the full square. Their strong $L^2$ limit is $F_{ee}$, because $J^*u_j\to F$. A weak $H^1$ subsequence has that same limit. Each $f_\varepsilon$ has zero trace from both triangles on the diagonal, since it vanishes in a neighborhood of it; continuity of the triangle trace maps preserves these zero traces in the weak limit. Together with75.5 and all the free matching and grounding identities, (75.2) proves the exact hard-core domain assertion. In particular the shared-port slice endpoint conditions follow from $F_{pp}=0$ and the free endpoint equalities. No cell-corner point value is used. Equation(75.22) is then the free lower bound with its unchanged coefficients. $\square$
+

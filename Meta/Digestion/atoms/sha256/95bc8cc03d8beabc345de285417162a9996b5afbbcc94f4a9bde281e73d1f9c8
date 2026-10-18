@@ -1,0 +1,32 @@
+**Theorem 93.1 (explicit original-index cutoff).** Let $j,C,c$ be positive integers, $N=3^j\ge81$, and
+
+$$B=B_N=L_N^2+3=DC^2,$$
+
+where $D$ is the full positive squarefree kernel. Suppose $E_D:Y^2=X(X+5D)(X-15D)$ has rational rank one. If $k>1$ is odd, $3\nmid k$, and $B_{Nk}=Dc^2$, then
+
+$$\log B_N<200,\qquad j=4.$$
+
+Thus no such repeated kernel occurs for any original $j\ge5$ in this rank-one stratum. The surviving original index $N=81$ is not resolved by this theorem.
+
+**Proof.** Put $n=Nk$. The actual-point construction and real-arc argument of §92 give integral points
+
+$$R=(5DB,25D^2L_NCF_N),\qquad K=(5DB_n,25D^2L_ncF_n)$$
+
+with $K=mR$, where $m$ is odd, $a=|m|\ge3$, and
+
+$$a^2>B. \tag{93.1}$$
+
+The elimination of the torsion term uses Theorem 85.1 and Corollary 85.2 as in §92; rank one is retained throughout. The integral transformation $x=9X-30D$, $y=27Y$ sends these points to $P,mP$ on
+
+$$E'_D:y^2=x^3-8775D^2x-236250D^3.$$
+
+Replacing $m$ by $a$ changes only the ordinate's sign. Set $s=\log B$ and $\widehat h=\widehat h(P)$. The normalized-coordinate height bounds give
+
+$$\frac{s}{3}\le\widehat h\le\frac{s}{2}+\frac{\log24}{6}\le\frac{2s}{3}. \tag{93.2}$$
+
+The elementary Lucas estimate $L_N^2\ge2^{N-1}$ and $\log2>1/2$ give $s>40$. In Ingram's curve-height convention, since $19\le D\le B$,
+
+$$H=h(E'_D)=3\log D+\log945000<4s. \tag{93.3}$$
+
+Here $\log945000<14<s$, and $H>2\pi\sqrt3$. The point height uses the full block $B$; the curve height uses its squarefree kernel $D$.
+

@@ -1,0 +1,16 @@
+**定义 24.1（All-one response fibres）。** Put $T=k+1$, $g=\gcd(m,T)$, and $P=g\mathbb Z/T\mathbb Z$. For $\theta\in P$, define
+
+$$
+I_t(\theta)=\bigoplus_{i=tm}^{(t+1)m-1}c_{\theta+i}.
+\tag{24.1}
+$$
+
+$$
+S_t(\beta)=\{\theta\in P:(I_0(\theta),\ldots,I_{t-1}(\theta))=\beta\}.
+\tag{24.2}
+$$
+
+where $t\ge0$, $\beta\in\mathbb F_2^t$, and $S_0(\varnothing)=P$. For sources still successful after $t$ all-one blocks, these are precisely the phase fibres of their chronological endpoint archive. The INITIAL tail range is $0\le s<k-tm$; neither the current tail nor current value replaces the INITIAL arguments of $f$. Write $\operatorname{Const}$ for image size at most one, including an empty set.
+
+The full joint sources in [S1, Convention 1.3] apply also when $m\ge k$: the history (1.3) contains a separating zero and a terminal run $s<k$, has length divisible by $m$, and realizes value, phase and tail simultaneously. Every one of its complete blocks is internally legal. To realize absorption in that alphabet, follow an actual endpoint of tail $k-1$ by $10^{m-1}$; its first bit rejects across the seam. Thus wide blocks do not restrict the source quantifiers. History lengths remain unobserved.
+

@@ -1,0 +1,54 @@
+**Open problem 16.3 (unchanged effective all-size obligation).** The
+original question of §8.2 and [NPC, Definition 8.1][NPCMenu] remains:
+construct a total computable $V(d,\mu,C,\pi)$ whose every acceptance
+proves
+
+$$
+\forall n\ge1\ \forall\text{ complete native templates }\Theta,
+\qquad \sum_{x\in C_\Theta}\prod_{i=1}^n\mu(x_i)\le C^n,
+\tag{RRN.63}
+$$
+
+and whose accepted rational endpoints satisfy, for every $d\ge1$
+and rational $\epsilon>0$,
+
+$$
+\exists\mu,C,\pi:\quad
+V(d,\mu,C,\pi)\ \text{ and }\ -\log_2C>\sigma_d-\epsilon.
+\tag{RRN.64}
+$$
+
+Here $\mu$ ranges over rational probabilities on the whole $S_d$,
+$C>0$ is rational, and arbitrary correlations, donor cycles, actual
+guards, repeated seed occurrences, compatibility zeros and each full
+joint block weight once are retained. Equivalently one may seek a
+uniform effective length error of the form (RRN.36) with an effective
+tail modulus. No such verifier, cofinality theorem or length error is
+constructed by the slice frontiers or by either finite supplier.
+Soundness, finite verifiability, total computability and
+optimizer-cofinality remain separate requirements. In particular the
+local-to-global completion and loss control in COK §9.3 and GDB §11
+are not supplied by (RRN.57).
+
+The material constraint for an operational common-extension route is
+now explicit: it must preserve extensive request-selected literal
+alternatives, or pay the quantified static source-cut signal cost.
+For a controller route it must also distinguish the complete pretarget
+source alphabet from public post-target entries. These statements
+exclude precisely those replacements, including arbitrary recoloring,
+and leave other global mechanisms open. General exact $M_1(D)$,
+sharp $\lambda$, effective all-size certification and the broader
+minimal-relations/internal-observer and space/time/boundary/memory
+mutual-recovery programme remain unresolved. All statements here are
+ordinary mathematical arguments, without a kernel-certification or
+full-programme-completion claim.
+
+[D3Menu]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_DEPTH_THREE_MEMORY_AND_FRACTIONAL_SEED.md
+[NCEMenu]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CYCLIC_ENTROPY_LOWER.md
+[NPCMenu]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PRODUCT_PRESSURE_COMPLETENESS.md
+[FTMenu]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/D5/S3/Observer/Separation/FixedTreeCommonExtension.lean
+[FTBMenu]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/Blueprint/D5/S3/Observer/Separation/FixedTreeCommonExtension.scribe.cs
+[MooreMenu]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeLiteralMoore.lean
+[MooreBMenu]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeLiteralMoore.scribe.cs
+[KKMenu]: https://arxiv.org/html/1105.0240v2
+

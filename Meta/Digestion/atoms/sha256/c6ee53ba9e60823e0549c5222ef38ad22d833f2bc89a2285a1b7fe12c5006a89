@@ -1,0 +1,24 @@
+**The exceptional gcd prime and the original index.** Suppose $p\mid k$ and $40p\le N-1$. Then $p\ge5$ and $p<N$. Put $t=Nk/p$. It is odd, $t\ge N$, and $v_3(t)=j$. Since $t/N$ is odd and coprime to three, $B_N\mid B_t$.
+
+We claim $p\nmid B_t$. For $p=5$, this follows because $-3$ is a nonsquare modulo five. For $p>5$, suppose instead that $p\mid B_t$. The identity $5F_t^2=B_t+1$ makes five a square in $\mathbb F_p$. Choose $\phi=(1+\sqrt5)/2$ in that field and put $a=\phi^2$. The odd-index Binet formula gives
+
+$$B_t=a^t+a^{-t}+1\pmod p.$$
+
+Thus $a^t$ is a nontrivial cube root of unity. If $h=\operatorname{ord}(a)$, then $h/\gcd(h,t)=3$, and therefore
+
+$$v_3(h)=v_3(t)+1=j+1.$$
+
+Since $h\mid p-1$, this forces $3^{j+1}\mid p-1$, contradicting $p<N=3^j$. This proves the claim. Equation (87.1) now yields $\gcd(B_t,Q_p(L_t))=1$.
+
+Every prime in $D$ divides $B_t$. The assumed equality
+
+$$B_{Nk}=B_{pt}=B_tQ_p(L_t)=D c^2$$
+
+therefore forces $Q_p(L_t)$ to be a square: each of its prime factors is outside both $B_t$ and $D$ and must have even valuation.
+
+Finally, for odd $N\ge3$, Binet gives $L_N=\phi^N-\phi^{-N}>\phi^{N-1}$. After division by $\phi^{N-1}$, this follows from $\phi-1=\phi^{-1}$ and $1-2N<-1$. Since $\phi>\sqrt2$,
+
+$$L_t\ge L_N>2^{(N-1)/2}\ge2^{20p}.$$
+
+Equation (87.3) says that $Q_p(L_t)$ is not a square, a contradiction. Thus $40p>N-1$ for every prime divisor of $k$, proving all stated consequences. ∎
+

@@ -1,0 +1,23 @@
+**Corollary 30.1 (Fixed-risk complete-memory existence).** For the fixed stationary renewal families with polynomial $H_c$ and every fixed real $0<\alpha<1/2$, choose once a rational $\rho\in[\alpha/2,\alpha]$ as in Definition 28.1. For every sufficiently small supplied rational $\varepsilon>0$ there exists the deterministic controller of Section 29, compiled from that band and risk fraction, with source-independent initialization, satisfying
+
+$$
+\begin{gathered}
+\sup_{q\in[1-2\varepsilon,1-\varepsilon]}\mathsf P_{0,q}(D=1)\le\alpha,
+\qquad
+\sup_{q'\in[1-2\varepsilon,1-\varepsilon]}\mathsf P_{1,q'}(D=0)\le\alpha,\\
+L_\varepsilon\le W=O_{H,\alpha}(\varepsilon^{-3}),\qquad
+\mathbb E_{i,q}L_\varepsilon=\Theta_{H,\alpha}(\varepsilon^{-3})
+\quad(i=0,1,\ q\in I_\varepsilon),\\
+\text{complete online mutable bits}\le256w+32a+97
+=O_{H,\alpha}(1+\log(1/\varepsilon)),\\
+\text{internal online bit work}\le2^{40}Ww^3,
+\qquad
+\text{initialization bit work}\le2^{34}w^3.
+\end{gathered}
+\tag{30.1}
+$$
+
+Its complete configuration count is (29.14), polynomial in $\varepsilon^{-1}$. The same construction accepts every independent rational $0<\rho\le\alpha$ with the exact bounds (28.1), (29.1), (29.14)–(29.16); for that larger input domain the upper asymptotic constants are $H,\rho$ dependent. The lower mean constant can still be taken from the target-risk $\alpha$ supplier. No actual nuisance value is supplied, estimated for compilation, or used as an immutable transition parameter.
+
+Proof. Theorem 28.4 gives the risks, paid cap, fully priced mean upper bound and the direct owner 22.11 mean lower. Lemma 29.5 proves exact agreement for every legal capped history, not only in distribution or on selected examples. Theorem 29.6 gives all mutable coordinates and internal work; Proposition 29.7 supplies the separately charged compiler and bounded descriptor initialization. These apply simultaneously to this one controller at each band. $\square$
+

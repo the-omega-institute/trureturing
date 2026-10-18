@@ -1,0 +1,59 @@
+### 13.1 量子状态的最小提升
+
+定义一个分层 Hilbert 空间
+
+\[
+\mathcal H
+=
+\mathbb C\lvert 3\rangle
+\oplus
+(\mathbb C^2\otimes\mathbb C^2).
+\]
+
+第一项是 apex sector，第二项是底部两个 binary 变量的量子 sector。取块对角密度矩阵
+
+\[
+\rho
+=
+(1-r)\lvert3\rangle\langle3\rvert
+\oplus
+r\sigma,
+\]
+
+其中 \(0\le r\le1\)。在 \(r>0\) 时，\(r\) 是 \(\rho\) 的底面块迹，\(\sigma\) 是该块除以 \(r\) 后唯一确定的两个量子比特密度矩阵。\(r=0\) 时只有 \(\rho=\lvert3\rangle\langle3\rvert\)，不从它定义 \(\sigma,q,\alpha,\beta,\eta\)，经典读出直接为 \((X,Y,Z)=(0,0,1)\)。在正底面分支，对 \(\sigma\) 在计算基下测量或退相干，得到
+
+\[
+q=(q_{00},q_{10},q_{01},q_{11}).
+\]
+
+然后
+
+\[
+\alpha=q_{10}+q_{11},\qquad
+\beta=q_{01}+q_{11},\qquad
+\eta=q_{11}.
+\]
+
+于是正底面分支的经典金字塔状态是量子状态经过以下携带底面质量的复合读出后的结果：
+
+\[
+\rho
+\longmapsto
+(r,\text{dephase}(\sigma))
+\longmapsto
+(r,q)
+\longmapsto
+(r,\alpha,\beta,\eta)
+\longmapsto
+(X,Y,Z)=(r\alpha,r\beta,1-r).
+\]
+
+这给出了一个严格的解释：
+
+- \(\eta\) 是量子 sector 在选定测量基下的经典 joint-correlation 坐标；
+- \(\kappa=r\eta\) 是加上 apex 权重后的完整概率坐标；
+- \((X,Y,Z)\) 是进一步忘掉 joint correlation 后的 marginal readout；
+- \(\sigma\) 中的 off-diagonal coherence 和 entanglement 是更高层的隐藏信息，不能被 \(\eta\) 代替。
+
+因此，当前金字塔是量子状态空间经过两次 quotient 后得到的 classical observable sector。
+

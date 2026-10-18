@@ -1,0 +1,17 @@
+**Theorem 8.2 (identified endpoints and weak feasible interior).** The endpoint point roots in §16 belong to the first and last continuum tubes and give Theorem 2.1's endpoint enclosures. The event gives its middle enclosure. Throughout the cover $s<s_0$, and these points lie in the weak feasible interior at $t=1000$.
+
+Proof. The point boxes have exact centers, radii and preconditioners and satisfy the contraction inequalities of Theorem 4.2. Their strict containment in the endpoint tubes identifies their roots. Evaluating $\tau=k/\sqrt\alpha$, $s=s_0\tau$ and $(H_{\rm high}+\sum p|H|)/2$ on these boxes gives the stated rational decimal intervals. For comparison with FA78 put
+
+$$
+u_f=V_0/\mu,\quad c_f=\operatorname{cap}(1,\sqrt{u_f},\sqrt{(1-\alpha u_f)/\beta}),\quad
+\nu=\mu/c_f,\quad t_0=W_0/c_f,\quad q_f=\nu/1000.
+$$
+
+FA Theorem 78.3 and FA.44 give the threshold $t_0$ and maximum feasible normalized contrast
+
+$$
+\tau_{\max}(1000)=q_f\sqrt{u_f}+\sqrt{(1-q_f)(1-q_fu_f)}.
+$$
+
+The source enclosure and the exact feasibility table give $t_0<265$ and $\tau_{\max}(1000)>.99892345$, while every tube has $\tau<.997006297<1$. Thus the interval lies strictly inside the weak feasible domain, away from the minimum-budget boundary. This comparison uses FA78 at its stated antecedents; it is not a new source or scalar-feasibility certification. $\square$
+

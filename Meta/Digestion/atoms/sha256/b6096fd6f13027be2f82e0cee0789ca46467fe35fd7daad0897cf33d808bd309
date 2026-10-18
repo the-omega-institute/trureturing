@@ -1,0 +1,135 @@
+**Definition 6.5 (historical-guard verifier and actual receipt consumer).** The
+verifier receives only its sealed snapshot, copied public initialization/prior
+and target proposal. Enumerate initial candidates exactly as PR57.D8, over
+all $4^{2H_0-1}$ initial packets, validate each and apply the actual prior
+$D\subseteq\mathcal T_{H_0}$. For each retained candidate $s$, keep its initial
+target $q_{H_0}(s)$ distinct from its replay-current syntax and counters.
+Initialize replay $h=K=H_0$ and $r=p=q=g=e=j=m=0$; both expected predecessor
+references start as none. Replay counts are constructed local verifier
+words, never private bank-23 reads. Scan *every* unified row, its semantic
+mate when present, and complete associated request/control/output material
+in order, using the preceding explicit framing,
+ordinal, field and block-access scans. Malformed identity, predecessor,
+length, seal, manifest, directory-count, fence binding or counter relationships
+set a public failure
+bit; no shortened scan substitutes for the full frozen prefix.
+
+First bounded-parse the `SEG-P1` snapshot index and its two counts/two ends.
+For each position $a$, require `SEG-U1`, old $m=a$, prior after-fields equal
+to current before-fields and the exact previous unified reference. Compute
+$\epsilon$ from the kind, construct $j+\epsilon$ and compare both $j$ fields.
+On maintenance require the none semantic tag. Otherwise resolve its copied
+`SEG-J1` and compare all fifteen fields, including postcommit ordinal $j+1$,
+the previous semantic reference and the same boot/prior, historical guard,
+source layout/manifest, request/response, template and two fence tuples.
+Use the same joined-row checker as the actor, on verifier-owned acquired
+origins. In particular a private audit handle without its local payload
+does not pass. Compare the snapshot's optional semantic reference for this
+position to that actual unified field as well. Retain these proposed
+after-versions for the event's replay update below; select each counter
+once, not once in this check and again in source replay. Its local semantic
+end changes only on a semantic event, and its unified end changes on every
+event. At the frozen end require both constructed counts and both last
+references to equal the snapshot header. Leading, intervening and trailing
+maintenance therefore have their distinct complete-prefix meanings.
+
+Read the boot-binding manifest first. Parse each later manifest by
+ReadUnary for $v$ under its actual bit budget, then a $v$-bounded record
+loop. ReadFrame acquires the tag; its finite check supplies the arity; the
+inner fixed-arity ReadFrames acquire every field. Check its remaining budget
+and complete shape, not just its count. The first record must agree with
+the copied $\xi,H_0,b_0,L_0,16,0$ boot binding. Maintain the preceding complete
+manifest as an immutable local block. Compare all previous records/fields
+in full, using the same scans and word equality. For an ok reservation the
+new final record must be exactly tag `01` with $J,b,4(J-K),r+1,m,v,f_s$;
+for an ok raise exactly tag `10` with $J,p+1,m,v,f_s$. Check their resulting
+count, $h,K,r,p$, and that the declared new interval is positive and beyond
+every prior source interval. The intervening scratch gap is permitted;
+authentic provenance supplies its actual Base, not a candidate-tree guess.
+Every other event must have a byte-equal manifest and unchanged directory
+count. Thus unequal $h,K$, multiple records and no-change histories all
+retain their true meanings. Fence-reference tuples must have their expected
+kind, $\xi,m$ and before/after directory-count binding, and $2n$ fee relation; a successful publication has
+its distinct acquired post-publication fence between the start and response
+fences. A no-publication branch must have that literal tag. Their authenticity
+comes from the writer/channel, not from arithmetic on these labels.
+
+For a reservation row, recompute the public comparison and $d=4(J-K)$;
+check its exact ok/unchanged/refusal case and directory successor/count;
+on ok change only replay $K,r$ among source/layout/guard fields, preserving
+$q,g,e,j$ and advancing $m$. For a raise row,
+check $h<J\le K$, equality and refusal cases; on ok set only replay $h,p$.
+It likewise preserves $q,g,e,j$ and advances $m$ on every outcome.
+Construct replay counter versions by the same unary graphs. For an original
+source event and its semantic row, run the supplied whole candidate/read algorithm on the replay
+syntax with *that row's replay $h$*, compare the complete response, and
+install its candidate only on the recorded true guard. Replay guards and
+all metadata must agree with the row's before/after fields. The replica
+syntax is public enumerated work, not a new source port. Its backing can
+be Zero-allocated at the current replay $h$ and copied by the same bounded
+public routines; no private source is reacquired.
+
+Literal replies use the supplied public locator; ReadE and targets use the
+exact supplied coefficient and normal-form recurrences. NativeLocal markers
+and terminal blocks are checked with their installed actual source-free
+controller table and complete acquired requests/responses, by PR57.D5's
+row-by-row table interpreter; nonterminating local work has no completed
+marker to verify. All declared finite prior computations must terminate.
+The acquired terminal packet's return kind is checked against the installed
+code: an acquisition-internal Halt returns its complete output to its saved
+surrounding continuation; a global Halt finishes terminal services and
+admits no later event. Replay does not stop at an internal producer return
+or silently replace it by an unrecorded local microstep.
+Every source event advances replay $q,j,m$, with its exact accepted $g,e$
+case; each completed NativeLocal/Halt advances only $j,m$. Row construction,
+copying, lookups and seals advance none of these replay event counts.
+Layout bases and creation/fence references are checked as authentic provenance
+fields of the copied actual trace, not inferred from a candidate's tree value.
+There is no pretend test that a numerical name independently authenticates an
+external transcript. Provenance here comes from the exclusive owned writer
+and these allowed copies.
+
+The stop proposal is an actual retained output/input block, not a mathematical
+parameter converted to bytes for free. Copy it with the initialization and
+frozen-prefix binding from the producer to verifier archive 32 on route 50.
+After the snapshot index is sealed, its actual constructed reference and
+$(m_*,j_*,\mathrm{last}\ U,\mathrm{last}\ J)$ supply that binding. Construct a typed expected-task binding block from these
+complete words by Frame and the ordinary staging graph. Before consuming a
+receipt, copy this block on route 51 to consumer archive 40 as well, with
+its actual local descriptor on 41. The consumer loads its expected
+$\xi,H_0,D$, proposal, prefix and snapshot values from this acquired block;
+its requested target type is the fixed `INITIAL-q_H0` program tag. It does
+not compare a receipt against unacquired free parameters. These additional
+mandatory binding/proposal copies and construction are included in the
+same stop recurrence and use no source read.
+
+For each surviving initial candidate compare the proposal with the saved
+$q_{H_0}(s)$, using PR57.D8's literal tag/tuple encoding and complete
+normal-coordinate adapter if needed. The decision is nonempty compatible
+fiber AND equality of *all* surviving initial targets AND all structural
+checks. This is a finite exhaustive enumeration and finite replay recurrence:
+advance the base-four word; parse; evaluate prior; reset its replay state;
+consume the next complete row via its stored finite bound; execute the
+selected finite operation graph; conjoin comparison bits; continue through
+the last row and last initial candidate. All constituent scans, arithmetic,
+gates, replicas, field writes and copies have the specified expansions.
+
+An accepted receipt has model version `SEG-R1`, type `INITIAL-q_H0`, the complete $\xi,H_0,D$,
+literal proposal, both frozen journal counts and both optional last references,
+and snapshot reference, verifier
+creation/seal references in its completed delivery descriptor. These are the
+actual descriptor ordinal and constructed status-cell reference, with the
+sender's seal CTL in its authentic provenance; any numeric fence for that
+seal is obtained only by a later CloseFence and belongs to that delivery
+descriptor. The receipt payload does not predict its own seal-fence numeral.
+Copy it completely through Definition 6.3 to the
+consumer. The consumer first parses every field and checks model/type,
+$\xi,H_0,D$, both journal counts/ends and snapshot binding, proposed target and actual accepted
+receipt seal by finite scans and word comparison, before selecting its
+public success edge. Then Zero-allocate its task-output block and copy every
+target bit by the same bounded body; seal it and perform any required OUT
+one bit at a time. Wrong type/identity/proposal, ambiguity, refusal or
+malformation yields no task output. A requested current $q_h(t)$ or enlarged
+initial $q_J(u)$ requires its own explicitly typed verification and paid
+data; Raise does not convert an old receipt into either one.
+

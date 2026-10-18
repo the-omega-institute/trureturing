@@ -1,0 +1,25 @@
+**Corollary 22.4 (a trial law positive on the entire actual carrier).**
+Let $\zeta=1/256$ and
+$P_\zeta=(1-\zeta)P_0+\zeta\operatorname{Unif}(\mathbb F_2^E)$.
+Every actual solution tuple has positive probability under $P_\zeta$.
+For every $n\ge8$ its trial value in the pointwise forest objective
+exceeds $\log_2 Z_G+n/8$.
+
+Proof. Every edge remains fair. A star is uniform within each of its
+two parity classes, with odd probability $\zeta/2$, so its entropy is
+$3+h_2(\zeta/2)$. Consequently
+
+$$
+\Psi_F(P_\zeta)=2n-|F|[1-h_2(\zeta/2)]\ge2n-|F|,
+\qquad
+\mathbb E_{P_\zeta}\log_2 W
+=n\log_2 A-\frac{n\zeta}{2}\log_2 63.
+\tag{GDB.99}
+$$
+
+Use Theorem 22.3's trial lower bound and $\log_2 63<6$. The excess
+is strictly greater than $61n/256-2/3>n/8$ for $n\ge8$; the last
+inequality follows from $29n/256\ge29/32>2/3$. Positivity here is
+on the whole actual solution carrier $x(\mathbb F_2^E)$, not on all
+original sources outside that fiber. $\square$
+

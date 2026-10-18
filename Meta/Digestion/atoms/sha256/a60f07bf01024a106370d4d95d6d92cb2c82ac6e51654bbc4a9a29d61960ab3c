@@ -1,0 +1,58 @@
+**Example 288.4 (A positive-tail scalar exclusion with no feasible
+witness).** Put
+
+$$
+L=7,\quad e=1/20,\quad
+a_1=\cdots=a_7=\frac{8530229}{91396000},\qquad
+a_{7+r}=e/r\quad(r\ge1).
+$$
+The finite point is in $H_7$ and
+
+$$
+\frac{\delta_b}{e}=\frac{193}{2741880},\qquad
+\frac1{37560}<\frac{193}{2741880}<\frac1{8760}.
+$$
+These are obtained directly from $c_5=10/3$ and
+$\delta_b=(28/3)e-5a_3$. The point meets the named earlier sink
+bound with constant $1/37560$ and fails (287.2). It also fails
+the stronger bounds 285.9 and 282.2, so it supplies no additional
+excluded region beyond them. The actual tail is positive, ordered
+and vanishing, with $a_8=e$. By 110.2 there is no full feasible
+$N$ cap attainer for this selected marked target. In particular it
+is not a separating $H_N$ point or an original $N/O$ separator.
+
+**Mathematical boundary 288.5 (The remaining common-payment problem).**
+All finite words, multiple zeros, labels and independent events in
+273.1 remain part of the problem. The admissible competitors still use
+arbitrary addresses and full-carrier outputs, with the original source,
+consumer and nonatomic targets of 273.3 kept distinct from its selected
+marked laws. The negative singleton demands, actual positive vanishing
+tails, closed ties and both actual requests remain in force.
+
+In particular the actual source $(19,436)$ has $F_{19}=4181$ and
+$N=1822917$, and has first four replies $0100$. The table
+$N(3,4;1,0,0,0)$ outputs the earlier unqueried label one on that
+word. Its stopped endpoint repair outputs zero there. The mass is one
+and the defect in the sourcewise inequality of 279 is two. The
+same-seed completion of an $O$ rule to $N$ counts its ignored second
+request; it does not invert that failed endpoint repair.
+
+For every full $y\ge0$ with $\Delta_O(y)\le1$, the still required
+common-payment conclusion is one unrestricted $V\ge0$ and
+$\theta\in[0,1]$ satisfying
+
+$$
+\Delta_N(V)+\theta\le1,\qquad
+\sigma_H(Qy-QV)\le\theta.
+\tag{288.4}
+$$
+The alternative is one same actual $(b,e)\in H_N$ and one complete
+feasible nonnegative $N$ allocation of mass $M\ge1$ with
+$F_{Qy}(b,e)>M$, together with an original $N$ cap attainer and a
+uniform lower certificate against all original $O$ competitors.
+Such a separator must use the same profile and allocation throughout;
+normalization (273.10) changes the profile. The genuine transports
+109.1 and 110.2 do not supply that strict separator by themselves.
+The exact quotient cones, signed class, reserve estimates and necessary
+inequalities above do not settle this unrestricted alternative.
+

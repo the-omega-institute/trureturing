@@ -1,0 +1,143 @@
+**Theorem 341.2 (Exact complete $N$ coefficient criterion).** For every
+$L,M$ and data (341.2), a mass-$M$ complete $N$ allocation realizes
+$k$ on every word if and only if there exists one entire family $g$
+as above satisfying both
+
+$$
+\boxed{\quad c\ge\sum_iU_i\quad\text{coordinatewise},\qquad
+                \sum_i\max\{u_i,T_i\}\le M.\quad}
+\tag{341.4}
+$$
+
+Nonnegativity of the prescribed word laws is a consequence, rather
+than an additional assumption. At $M=1$ the inverse below gives
+one common-seed preselected acquisition with at most two actual calls.
+
+Proof. Start with (341.1), and take $g_{ij}=b_{ij}-a_{ij}$.
+Equal cell masses give $m(g_{ij})=0$. Comparing pair coefficients gives
+
+$$
+Q_{ij}=e_{ij}-d_{ij}-g_{ij},\qquad
+b_{ij}=a_{ij}+g_{ij},\quad e_{ij}=d_{ij}+g_{ij}+Q_{ij}.
+\tag{341.5}
+$$
+
+Consequently $a_{ij}\ge r_{ij}$, $d_{ij}\ge s_{ij}$,
+and $w_{ij}\ge t_{ij}$. Define
+$A_i=x_i+\sum_{j>i}a_{ij}$ and
+$B_i=y_i+\sum_{j>i}d_{ij}$.
+The constant and linear coefficients of (341.1) are exactly
+
+$$
+c=z+\sum_i A_i,\qquad B_i-A_i=D_i.
+\tag{341.6}
+$$
+
+Indeed a pair contributes $d_{ij}-a_{ij}$ to its first address
+and $b_{ij}-a_{ij}=g_{ij}$ to its second address.
+Thus $A_i\ge R_i$, $B_i\ge S_i$, so $A_i\ge U_i$.
+Their common mass is the singleton mass plus
+$\sum_{j>i}w_{ij}$, hence is at least both $u_i$ and $T_i$.
+Summing these masses, and adding $m(z)$, proves both inequalities
+of (341.4). This uses the same allocation throughout.
+
+Conversely, fix one family satisfying (341.4). Put
+
+$$
+\rho=c-\sum_i U_i,\qquad \delta_i=(T_i-u_i)_+.
+\tag{341.7}
+$$
+
+Here $\rho\ge0$ and
+$\sum_i\delta_i\le M-\sum_i u_i=m(\rho)$.
+If $m(\rho)>0$, choose
+
+$$
+A_i=U_i+\frac{\delta_i}{m(\rho)}\rho;
+\tag{341.8}
+$$
+
+if $m(\rho)=0$, every $\delta_i=0$ and choose $A_i=U_i$.
+Then $\sum_iA_i\le c$, $A_i\ge R_i$, and
+$B_i:=A_i+D_i\ge S_i$. Since $m(D_i)=0$,
+
+$$
+m(A_i)=m(B_i)=\max\{u_i,T_i\}=:v_i.
+\tag{341.9}
+$$
+
+For a fixed $i$ let $P_i=A_i-R_i\ge0$ and
+$W_i=B_i-S_i\ge0$. For every $j>i$ define
+
+$$
+\begin{aligned}
+a_{ij}&=r_{ij}
+ +\frac{t_{ij}-m(r_{ij})}{m(P_i)}P_i,\\
+d_{ij}&=s_{ij}
+ +\frac{t_{ij}-m(s_{ij})}{m(W_i)}W_i.
+\end{aligned}
+\tag{341.10}
+$$
+
+A fraction with zero denominator means a zero added vector.
+This convention is forced: the sum of the nonnegative numerators
+in the first line is $T_i-m(R_i)\le v_i-m(R_i)=m(P_i)$;
+thus $m(P_i)=0$ forces each numerator to vanish. The same
+argument with $S_i,W_i$ handles the second line. When a denominator
+is positive the sum of its fractions is at most one. It follows that
+
+$$
+\sum_{j>i}a_{ij}\le A_i,\qquad
+\sum_{j>i}d_{ij}\le B_i,
+\qquad m(a_{ij})=m(d_{ij})=t_{ij}.
+\tag{341.11}
+$$
+
+Use (341.5) to define $b_{ij},e_{ij}$.
+The definitions of $r,s$ make both nonnegative, and their masses
+are also $t_{ij}$. Set
+
+$$
+x_i=A_i-\sum_{j>i}a_{ij},\qquad
+y_i=B_i-\sum_{j>i}d_{ij},\qquad z=c-\sum_iA_i.
+\tag{341.12}
+$$
+
+These are nonnegative, and $x_i,y_i$ have the same mass $v_i-T_i$.
+The total schedule mass is
+$m(z)+\sum_i(v_i-T_i)+\sum_{i<j}t_{ij}=M$.
+Equations (341.5)–(341.6) now recover precisely $c,\ell,Q$.
+Uniqueness of the multilinear expansion gives (341.2) on the entire
+cube, including all multiple-zero words.
+
+For $L=0$ all indexed sums vanish and $z=c$ is the whole allocation.
+For $M=0$, (341.4) gives $c\ge\sum U_i\ge0$ of mass zero,
+so $c=U_i=0$ and $T_i=0$. Then $r=s=0$, $g\ge0$ and
+$g+Q\ge0$, with zero sums, force $g=Q=0$. Also
+$U_i=\max(0,-D_i)=0$ and $m(D_i)=0$ force $D_i=\ell_i=0$.
+The inverse is the zero allocation, with no division.
+
+At $M=1$, partition a uniform seed interval into the schedule masses.
+Within a positive-mass schedule interval use its rescaled uniform
+coordinate for every cell's quantile partition. The intersections of
+these finitely many label intervals fix the entire table before replies.
+Each cell has exactly its prescribed marginal, without choosing
+new randomness after an answer. Acquiring the preselected pair and
+using its fixed table realizes (341.1). Every execution is finite
+and every record is a measurable finite union of intervals. This is
+also the common-table realization of II 140.3. $\square$
+
+The slice $g=0$ has $r=0$, $s=(-Q)_+$ and
+$U_i=(\sum_{j>i}(-Q_{ij})_+-\ell_i)_+$.
+Its mass dominates $T_i$, because $m(\ell_i)=0$.
+Thus it is exactly the stopped criterion of
+[109.1](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION.md#109-an-exact-coefficient-criterion-with-one-common-probability-budget),
+with its mass scaled from one to $M$; that result is reused.
+The additional variables in (341.3) retain the distinct $00,01$ cells.
+For fixed $M$ and $|J|=L+1$, the free real coordinates of
+$(c,\ell,Q,g)$ number
+$L+L^2+2L\binom L2=L^3+L$.
+At $L=8$ this is $520$; the complete-cell chart of II 140.2
+has $1068$ dimensions after its independent equalities.
+These are representation dimensions, not running-time bounds.
+

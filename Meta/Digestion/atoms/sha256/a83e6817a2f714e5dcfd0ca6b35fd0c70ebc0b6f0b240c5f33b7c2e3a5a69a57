@@ -1,0 +1,7 @@
+**Volume contract.** This is ordinary mathematical reference input, with
+> definitions, proofs and bounded exact checks. It uses the `generic-v1`
+> heading and claim conventions. Published bytes and append anchors are
+> immutable; additions begin with a numbered heading after the last anchor
+> and end with a new anchor. The mathematical statements here have no
+> Lean-kernel verification claim.
+

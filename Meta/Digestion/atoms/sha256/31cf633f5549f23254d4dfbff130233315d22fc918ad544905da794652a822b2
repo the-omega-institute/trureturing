@@ -1,0 +1,58 @@
+**定义 2.1（块与两色前沿）。** 记 $X_t=\rho^t\alpha$。对正源 $V$，$\mathcal A(V)$、$\mathcal B(V)$ 分别是其实际 $\alpha$、$\beta$ 叶的地址集。$w(u)=\#L(u)+2\#R(u)$。一个宏树是替换前组成为 $(a,b)$ 的完整有序树；宏叶 $\alpha$、$\beta$ 分别替换为 $X_d$、$X_{d+1}$。
+
+定理 1.4 的证明直接使用[原引理 57.2、定理 57.3、57.4、57.7](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION.md#57-uniform-paid-acquisition-of-actual-image-certificates-at-exact-composition)。其所需的具体结论是：
+
+$$
+X_0=\alpha,\quad X_1=\beta,\quad
+X_t=(X_{t-1},X_{t-2})\ (t\ge2),\qquad \rho^d\beta=X_{d+1},
+\tag{2.1}
+$$
+
+$$
+r_{X_t}(u)=
+\begin{cases}
+\mathsf{br},&w(u)\le t-2,\\
+\beta,&w(u)=t-1,\\
+\alpha,&w(u)=t\text{ 且末字母为 }R,\\
+\varnothing,&\text{其余情况},
+\end{cases}
+\quad t\ge2.
+\tag{2.2}
+$$
+
+$\rho$ 单射，$\mathcal P$ 正是全部宏树的逐叶替换族，大小为 $\operatorname{Cat}_{n-1}\binom na$。正源高度至多 $H$；$H$ 是本混色域的准确可解深度阈值。
+
+接受正源 $V$ 的任何原合法策略，其实际终端请求集满足
+
+$$
+\mathcal A(V)\subseteq Q(T_\pi(V))
+\quad\text{或}\quad
+\mathcal B(V)\subseteq Q(T_\pi(V)),
+\tag{2.3}
+$$
+
+而任一完整颜色前沿的真实匹配在 $\mathcal T_C$ 中唯一确定 $V$，包括任意高度的负竞争者。并且
+
+$$
+B-A=F_{d-2}a+F_{d-1}b\ge a+b=n\ge4.
+\tag{2.4}
+$$
+
+以下是这些复用结论在定理 1.4 证明中的普通推导及条件展开。
+
+式 (2.1) 由字面替换得到。在块内，$L$ 把索引减一，$R$ 把索引减二；索引一或零已经是叶。权重至多 $t-2$ 时尚未到叶，权重 $t-1$ 时到 $\beta$。权重 $t$ 只有最后走 $R$ 才能从索引二直接到 $\alpha$；最后走 $L$ 则此前已到索引一，真实回复为缺失。超过此权重也穿过叶。这证明式 (2.2) 的全部端点情形，空词给分支。
+
+一步像的根 $\beta$ 唯一解码为 $\alpha$，特殊对 $(\beta,\alpha)$ 唯一解码为 $\beta$，其他像分支递归解码为源分支。特殊对不能是源分支的像，因为其右边的根 $\alpha$ 不是任何非空树的一步像。故一步替换以及每个迭代都单射。$\det M=-1$ 使组成为 $C$ 的 $d$ 次像前源组成必须是 $(a,b)$。有序完整树的形状计数及叶位置选择给出所述有限族。
+
+宏树的每个叶深度至多 $n-1$；$X_d$、$X_{d+1}$ 的高度分别为 $d-1,d$。于是正源高度至多 $H$。含最深宏 $\beta$ 的梳树达到 $H$，其中一对最深 $(\beta,\alpha)$ 叶深度均为 $H$。当 $h<H$，交换该对标签，所有允许端点回复不变却得到同组成负例，故不可正确区分。当 $h\ge H$，有限正候选的 $\alpha$ 前沿并集扫描已给出正确有限策略；其正确性使用下述唯一性，不对负源施加高度限制。
+
+$d\ge3$ 的正源都是二次像。二次叶块为 $(\beta,\alpha)$ 和 $((\beta,\alpha),\beta)$，所以每个分支都有两色后代，每个 $\alpha$ 是 $(\beta,\alpha)$ 的右叶；左 $\alpha$ 与终端对 $(\beta,\beta)$ 均不可能出现。
+
+若请求集同时遗漏实际叶 $x\in\mathcal A(V)$、$y\in\mathcal B(V)$，只交换这两片标签得 $W$。形状、组成及除 $x,y$ 之外的全部端点回复不变；穿过它们的词仍回复缺失。若 $y$ 是 $x$ 的左兄弟，交换制造左 $\alpha$；否则 $x$ 原所在的终端对变成 $(\beta,\beta)$。故 $W$ 非二次像，尤其非 $d$ 次像。这给出式 (2.3) 的静态必要性。
+
+任取颜色 $c$，把 $V$ 的全部 $c$ 叶地址及其前缀组成有限前缀树。每个分支有 $c$ 后代，故 $V$ 的每个分支均在此前缀树中；未占据的子槽恰是另一色的单叶。匹配全部这些 $c$ 端点的完整竞争树必须保留此前缀树，且其 $c$ 叶库存已全部用尽。每个空槽必须放一个非空的另一色子树。$V$ 每槽放一叶，已达到最少总叶数；同组成的竞争树有相同总叶数 $N$，故每槽也只能放一叶。竞争树因此等于 $V$。该论证对两色均适用，没有高度前提。
+
+为把静态必要性用于原终端，固定任何匹配实际有限历史的树。逐动作归纳：空初始化相同；相同历史前缀使确定选择器请求同一原地址，固定树给出同一回复，包括重复；返回动作也相同。因此一个匹配实际终端请求集的竞争者必重放整条历史并接受。所有负源上的正确性强制该集是正证书，故式 (2.3) 对真实终端成立。式 (2.4) 是式 (1.2) 的差，两个系数均至少一。□
+
+这些结构供应也对应 [ActualImageAddressCertificate.result、rigidity](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.md) 的组成证书与交换论证，以及 [ActualLeafHistoryRigidity.actual_address_geometry](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/ActualLeafHistoryRigidity.md) 的原端点和字面上下文。后者的叶回复相容关系省去分支、缺失约束；下文的相容关系会保留全部四值。
+

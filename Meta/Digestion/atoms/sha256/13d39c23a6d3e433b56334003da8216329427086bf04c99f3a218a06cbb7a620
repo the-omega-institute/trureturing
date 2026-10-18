@@ -1,0 +1,22 @@
+**Definition 4.2 (the remaining language transfer).** Theorem 4.1
+is a representation of the original unbounded alternative by a
+concretely filtered finite language. It does not supply a recursion
+scheme whose finite language is $\mathcal W_{I,B}$, or a
+WMSO+$\mathsf U_{\mathrm{tup}}$ formula defining the checker on
+the construction tree. Those are additional mathematical obligations.
+The checker evaluates finite negatives before any limiting operation;
+they are not required to hold at a common infinite contact.
+
+The [NSF][NSF] supplied-depth feasibility and original-source recovery
+remain the available finite decisions. Theorem 2.5 adds a shared
+whole-value carrier and Theorem 4.1 identifies its exact depth measure;
+neither is a second proof of finite feasibility. The [NIC][NIC]
+positive image cover gives a separate parameter presentation of
+the positive solutions. Applying $\mathsf F_m$ to an arbitrary
+positive-cover selector has no established equation-preservation
+property: its all-leaf alternatives and independent child selections
+can violate positive definitions. No composition of that selector
+with the synchronization construction is assumed here. In
+$\mathcal G_{m,\mathcal V}$ all positive definitions remain exact
+tests on the fully generated original tuple.
+

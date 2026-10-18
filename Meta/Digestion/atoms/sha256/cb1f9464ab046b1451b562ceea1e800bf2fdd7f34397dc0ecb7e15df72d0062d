@@ -1,0 +1,2 @@
+**Convention 8.1 (Mathematical suppliers).** The only project suppliers are [Growth] at pin `409f27ebed169a35fa000f22ed56a2f154cb9c93` and [TwoStep] at pin `348bfc85a973f021d8e3e79df589b335b5407ee7`. Growth owns the original graph objective, harmonic duality and growth limit. TwoStep owns its coherent pair law, actual full-word grouping, endpoint bound and strict one-activity separation. Its pair separation is not a premise for the universal obstruction. None of Growth's code-dependent numerical certificates is used.
+

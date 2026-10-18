@@ -1,0 +1,45 @@
+**Definition 1.2 (the unchanged threshold field).** Let $p_t^B(Y,Z)$ be the killed heat kernel of $e^{-tB}$ in raw measure, and $o=(k_0,0)$. For $\tau>0$ set
+
+$$
+\begin{aligned}
+W_\tau(Y)&=\int_\tau^\infty e^{\lambda t}p_t^B(o,Y)dt,\\
+\rho_\tau(Y)&=e^{\lambda\tau}p_\tau^B(o,Y),&
+SW_\tau&=\rho_\tau,\\
+\int\rho_\tau dY&=e^{\lambda\tau}\mathbb P_{k_0}(\zeta>\tau),&
+\int\phi(k)\rho_\tau(k,q)dk\,dq&=\phi(k_0).
+\end{aligned}
+\tag{1.6}
+$$
+
+The last two charges are different. There is no division by survival probability. The heat clock in the field is $B$, independently of $a$. The native energy is
+
+$$
+\mathfrak e_{g,\tau}[\psi]
+ =a\|S^{1/2}\psi\|_2^2-g\int W_\tau|\psi|^2dY,
+\qquad
+E_\tau(g)=\inf_{\psi\in\mathcal Q,\ \|\psi\|_2=1}
+                       \mathfrak e_{g,\tau}[\psi].
+\tag{1.7}
+$$
+
+At every fixed positive $g,\tau$, the supplied Propositions 70.2 and 75.2 assert that $W_\tau$ is bounded, the operator is $aS-gW_\tau$ on exactly $D(S)$, its essential spectrum is $[0,\infty)$, and its finite negative bottom is attained. These are standing native antecedents, without a uniform-in-$\tau$ multiplier assertion.
+
+For reference, $M=\int_I\phi^2c_\kappa c_\kappa^{\mathsf T}dk>0$ is the original long-time tensor and $d(q)=(q^{\mathsf T}M^{-1}q)^{1/2}$. The fixed-cutoff tail is
+
+$$
+W_\tau(k,q)=\frac{\phi(k_0)\phi(k)}{4\pi\sqrt{\det M}\,d(q)}
+              +O(\phi(k_0)\phi(k)|q|^{-3}).
+\tag{1.8}
+$$
+
+Under the original real lift $D=\kappa x$ and $J_\kappa=\operatorname{diag}(1,1,\kappa)$, the exact correspondence is
+
+$$
+\psi^{\rm orig}(k,J_\kappa q)=|\kappa|^{-1/2}\psi(k,q),\quad
+W_\tau^{\rm orig}(k,J_\kappa q)=|\kappa|^{-1}W_\tau(k,q),\quad
+g_{\rm orig}=|\kappa|g.
+\tag{1.9}
+$$
+
+The transported tensor is $J_\kappa M J_\kappa^{\mathsf T}$, including its signed cross terms. A wavefunction and a unit raw-source kernel have different Jacobian factors.
+

@@ -1,0 +1,6 @@
+## 491. Exact scope
+
+Retain the full inherited six-actual-edge repeated-frame ambient of Section 466: the connected orientable compact 3-manifold with nonempty closed genus-at-least-two boundary, its finite actual ideal tetrahedron pairing with a fixed-point-free involution on original face occurrences, connected actual normal circles of original degree at least six, distinct transverse labels in every fixed paired frame, common positive generalized lengths, and every original angle equation 2*pi.
+
+Suppose there are exactly two actual flat owners. Choose the same maximal-selected source data M,C,D,Z,U,V and tau=(Z,M,C,D,M,C), with m>=1+c+d, z>=1+m+c and u>m, supplied by the published reductions and Corollary 466.1. The second label U is named before V, so V is the remaining sixth actual label.
+

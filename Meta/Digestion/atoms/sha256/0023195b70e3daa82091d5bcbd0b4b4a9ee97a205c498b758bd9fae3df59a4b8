@@ -1,0 +1,16 @@
+**Definition 3.2 (the two 22-dimensional systems).** At $t=1000$, the seam system $F_S$ has unknown order
+
+$$
+X_S=(x_0,\ldots,x_5,p_0,\ldots,p_5,d_0,\ldots,d_7,\lambda,x_6).
+$$
+
+Its first eight equations are $\sum_{i=0}^5p_i\Gamma_{\eta_i}(x_i)=B(1000)$, followed, in index order $i=0,\ldots,6$, by the fourteen equations $(P_i(x_i),P_i'(x_i))=(0,0)$. The weight $p_6$ is identically zero. The point system $F_8$, with external $\lambda=23/5$, has order
+
+$$
+X_8=(x_0,\ldots,x_6,p_0,\ldots,p_6,d_0,\ldots,d_7),
+$$
+
+the eight equations $\sum_{i=0}^6p_i\Gamma_{\eta_i}(x_i)=B(1000)$ and the same fourteen contacts. Select each zero in the full rational box $\prod_j[c_j-10^{-12},c_j+10^{-12}]$, using the complete centre tables in §11. No short decimal display replaces those boxes.
+
+For an $n$-contact fixed-$\lambda$ system, moment derivatives are $\partial_{x_i}F_k=p_i\Gamma_{i,k}'$, $\partial_{p_i}F_k=\Gamma_{i,k}$. Contact-value and contact-derivative rows have $x_i$ entries $P_i'$ and $P_i''$, and $d_k$ entries $\Gamma_{{\rm num},i,k}$ and $\Gamma_{{\rm num},i,k}'$. A variable-$\lambda$ column has entries $-\sigma_iW_{{\rm num},i}$ and $-\sigma_iW_{{\rm num},i}'$. These formulas specify the complete analytic Jacobians, including off-root value derivatives. They are not set to zero inside interval boxes.
+

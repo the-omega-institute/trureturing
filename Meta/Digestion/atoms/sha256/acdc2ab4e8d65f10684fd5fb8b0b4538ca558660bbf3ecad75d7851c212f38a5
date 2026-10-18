@@ -1,0 +1,28 @@
+**Proposition 43.6 (Best references for the two existing diameter constructions).** Put $t=(1-\delta)h$. The countable private-atom family (42.12), including its law at $27$, has attained best reference radius
+
+$$
+\operatorname{rad}(\mu^{42.2})=t.
+\tag{43.23}
+$$
+
+For $\delta<1$ the two-law finite family (42.20) has attained best radius $h/2$, so it minimizes both finite-carrier diameter and finite-carrier radius. For $\delta=1$ the common-law attainers have both quantities zero.
+
+**Proof.** In (42.12), each source of numerical value $n\ne27$ has mass $t$ on its own distinct atom $p_n$. Since $W\setminus\{27\}$ is countably infinite, enumerate distinct such values $n_j$. For any probability reference $\nu$ on the same power-set space, countable additivity gives
+
+$$
+\nu(\{p_{n_j}\})\longrightarrow0.
+\tag{43.24}
+$$
+
+Indeed these singletons are disjoint and their masses have sum at most one. The singleton event at $p_{n_j}$ implies
+
+$$
+\sup_{y\in X}\operatorname{TV}(\mu_y,\nu)
+\ge\sup_j\bigl|t-\nu(\{p_{n_j}\})\bigr|\ge t.
+\tag{43.25}
+$$
+
+Choosing the law at $27$ as the reference gives distance $t$ to every other law by (42.14), and zero to itself. This proves (43.23) with attainment, for all endpoints as well. Only the private atoms of this particular family are used; their radius conclusion is not a lower bound for every admissible family.
+
+The finite family has only the two distinct laws $\alpha,\gamma$ of Theorem 43.4, with TV distance $h$. Their midpoint has radius $h/2$, and (43.20) prevents any smaller radius. Its finite diameter optimality is Theorem 42.3, while its finite radius optimality is Theorem 43.4. If $h>0$ and $\delta<1$, then $t/(2-\delta)<t$, so the old countable diameter attainer does not attain the measurable radius minimum; this includes $\delta=0$. When $h=0$ or $\delta=1$, $t=0$ and it attains both zero minima. $\square$
+

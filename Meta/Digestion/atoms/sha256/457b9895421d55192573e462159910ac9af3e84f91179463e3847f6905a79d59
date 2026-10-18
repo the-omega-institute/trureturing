@@ -1,0 +1,42 @@
+**Theorem 6.4 (large actual initial fiber with a common post-update boundary).**
+There exists one initial $q_H$ fiber $\mathcal F_s\subseteq\mathcal B_s$ with
+
+$$
+|\mathcal F_s|\ge K_s,
+\qquad
+K_s=\left\lceil
+\frac{C_{4s-1}\binom{4s}{2s}}
+ {\min\{(s+1)^2,22s\}}
+\right\rceil.
+\tag{DAF.18}
+$$
+
+Choose a largest such fiber using a fixed public ordering to break ties, before
+choosing the hidden source. On every member, one actual guarded $\rho$ accepts,
+installs $\rho t$ and gives the same current boundary $(0,E_1,6s)$. An immediately
+following $\rho$ executes reject because its whole candidate has $10s>H$ leaves.
+
+Proof. Theorem 6.2 and pigeonhole give a fiber of size at least
+$T_s/(s+1)^2$. For the stronger concentration estimate let
+$Z=k_0^2+k_1^2$. Lemma 6.3 and Markov's inequality give more than half the
+balanced words with $Z\le10s$. By (DAF.13), these lie in
+$P^2+Q^2\le5s$. Each axis of the step-two grid $I_s^2$ has at most
+$\sqrt{5s}+1$ points in the enclosing square. Its total point count is at most
+
+$$
+(\sqrt{5s}+1)^2\le11s\quad(s\ge1),
+$$
+
+since $2\sqrt{5s}\le5s$ and $1\le s$. Thus some boundary fiber contains
+at least $1/(22s)$ of all words. Every word has exactly $C_{4s-1}$ bracketings,
+all in its same boundary fiber, so the same fraction holds for actual trees.
+Taking the stronger bound and the integer ceiling proves (DAF.18).
+
+The fiber choice depends only on public $s$, not the chosen hidden member.
+Its computation, prior representation and installation are not free source
+advice. TM30.1 gives the post-update tag-0 boundary: initial tag 1 accepts once,
+with new $E=E_1$ and size $6s$, while its next candidate size is $10s$.
+The attempted second update has an actual reject label and successor; it is
+not an illegal unexecuted operation. Distinct initial trees remain distinct
+after the accepted update, by the injectivity supplier recalled in Lemma 7.1.
+

@@ -1,0 +1,33 @@
+**Definition 5.1 (row language).** A producer row is a length-framed tuple with
+these complete fields:
+
+1. Extended model/control version, $H$, immutable preparation identity and
+   `INITIAL-SOURCE` occurrence reference; its event ordinal $j$ and predecessor
+   sealed-row reference.
+2. A port tag distinguishing TagRead, ReadE, Rho, Left, Right, NativeLocal and
+   Halt; the complete submitted $p$ or context packet/name/code reference, or
+   controller-instruction reference or full terminal-output block reference.
+3. The exact committed response, or local marker/terminal output; before/after
+   $q,g,e$; the actual source-block descriptor and its unchanged preparation identity.
+4. Schedule/template identity, earlier start and response-commit fence references,
+   and the row creation reference. The final seal is an actual occurrence in the
+   row's external availability/descriptor chain, not an in-row numeral naming a
+   future receipt. Context/output references point
+   to actually sealed complete material delivered with the row when needed.
+
+Strings use `U(length)` followed by that many bits; fixed tuples have fixed
+arity, and port tags have separate fixed codes. The parser rejects a TagRead
+row with an E payload, a reject with a candidate value, or a Halt substituted
+for a literal reply. Natural fields use the actual unary strings of §4.
+No field contains its row's own future complete fee total or its full successor
+archive recursively. Creation and final seal identify actual occurrences by
+ownership/descriptor chains; closed-fence numerical readouts refer to earlier
+cuts. Serializing a seal's occurrence number, if requested, is a later paid
+readout referring to that already closed cut. Later copies preserve the origin
+chain rather than inventing a new origin.
+
+Only the producer writer can append this language. After commitment it reads
+the acquired response and retained request, materializes the fields, and appends
+them with the existing paid routines. Earlier sealed rows are immutable. There
+is no arbitrary external transcript-import operation.
+

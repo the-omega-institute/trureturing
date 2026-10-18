@@ -1,0 +1,10 @@
+**Definition 92.2 (paid prefix-scale mode).** Use distinct header $01101101$. Before the same fixed numerical fields, encode the positive bit length $b$ by $\lfloor\log_2b\rfloor$ zeros followed by its canonical binary expansion. Then append the last $b-1$ digits of $h+1$, whose leading one is supplied by the grammar. Counting zeros and reading the corresponding binary digits determines $b$; exactly $b-1$ further digits determine $h$. The subsequent fixed fields have their original widths. The parser rejects any unfinished field, invalid range or trailing bit/symbol, and consumes the full finite input before its result.
+
+This scale code is prefix-free: the initial positive gamma field determines the exact length of the remaining scale digits, and the numerical fields have fixed length. Its scale length is $b+2\lfloor\log_2b\rfloor$; its exact complete numerical length is
+
+$$
+142+b+2\lfloor\log_2b\rfloor.
+$$
+
+It therefore adds exactly $2\lfloor\log_2b\rfloor$ bits relative to the terminal-scale layout for the same fields. On the $N$ stratum its sufficient upper is $\log_2\log_2N+2\log_2\log_2\log_2N+O_{L,d_0}(1)$, with the same leading coefficient one. This is a specified sufficient prefix representation, not a prefix-free optimality theorem. Both modes have the identical semantic evaluator.
+

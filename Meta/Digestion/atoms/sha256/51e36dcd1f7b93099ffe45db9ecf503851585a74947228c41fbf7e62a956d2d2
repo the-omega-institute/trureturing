@@ -1,0 +1,64 @@
+## 4. A strict determinant and global uniqueness
+
+At fixed $\chi$, write $g_j=1+jk$. In coordinate order $(t,v,k)$,
+
+$$
+DF_\chi=\begin{pmatrix}
+3g_1&2g_1&3t+2v+\chi\\
+2g_2&g_2&2(2t+v)\\
+g_3&0&3t
+\end{pmatrix}.
+$$
+
+Expanding along the last column gives
+
+$$
+\begin{aligned}
+\mathcal J:=\det DF_\chi
+&=-(3t+2v+\chi)g_2g_3+4(2t+v)g_1g_3-3t g_1g_2\\
+&=(2t+2v-\chi)+(8t+6v-5\chi)k-6\chi k^2.
+\end{aligned}
+$$
+
+Substitution of (3.1) yields
+
+$$
+-\mathcal J
+=p(96k^2+38k+6)+q(36k^2+24k+4)+r(18k^2+7k+1).
+\tag{4.1}
+$$
+
+The brackets equal, respectively,
+
+$$
+96(k+19/96)^2+215/96,\qquad
+4(3k+1)^2,\qquad
+18(k+7/36)^2+23/72.
+$$
+
+The first and third are strictly positive and the second is nonnegative. Since $p,r>0$, $\mathcal J<0$ for every real $k$, including $k=-1/3$ where the middle bracket vanishes.
+
+This sign has a global consequence through an exact finite identity. Set $y=(t,v)^{\mathsf T}$. At fixed $\chi$, the reduced map is of the form
+
+$$
+F_\chi(y,k)=A y+k C y+k\chi e_1
+$$
+
+for fixed real matrices $A,C$ and $e_1=(1,0,0)^{\mathsf T}$. For two points use bars for arithmetic means and $\Delta$ for their difference. The identity
+
+$$
+k_0y_0-k_1y_1=\bar k\,\Delta y+\bar y\,\Delta k
+$$
+
+gives
+
+$$
+F_\chi(y_0,k_0)-F_\chi(y_1,k_1)
+=DF_\chi(\bar y,\bar k)(\Delta t,\Delta v,\Delta k)^{\mathsf T}.
+\tag{4.2}
+$$
+
+For two actual sources at the same $\chi$, convexity from (3.2) makes the midpoint's $p,q,r$ positive. Its $s$ is reconstructed as $qr/p$, so it is an admissible source. Equation (4.1) makes the midpoint matrix invertible for the real midpoint slope. Equal reduced outputs therefore force equal $t,v,k$.
+
+Two actual targets with the same whole recorded data have the same $P,\chi,W,Y,Z$ by (3.5)–(3.6). Equation (4.2) gives the same $t,v,k$; (3.2) and rank one give the same $S$; (3.9) gives the same entire $D$. This proves global uniqueness, beyond local nonsingularity.
+

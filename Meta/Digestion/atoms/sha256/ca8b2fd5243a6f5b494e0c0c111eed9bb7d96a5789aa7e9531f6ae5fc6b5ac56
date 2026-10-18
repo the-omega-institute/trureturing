@@ -1,0 +1,83 @@
+**Corollary 10.6 (upper budgets, small scalars and one fresh Read).**
+For nonnegative budgets $Q,A,L$, there is an admissible encoder and
+service satisfying $q\le Q$, $a\le A$, $\ell\le L$ if and only if
+
+$$
+Q\ge M,\qquad A\ge rM,\qquad L\ge r.
+\tag{AAR.40}
+$$
+
+For $z=0$ the optimum is $(1,0,0)$; for $z=1$ it is $(1,1,1)$.
+Exactly one fresh Read suffices uniformly on the performance slice
+if and only if $b\ge d=\lfloor z/2\rfloor$, while correctness still
+ranges over all $k\ge0$.
+
+Proof. Necessity follows from the common-source lower bound;
+sufficiency uses the attaining triple (AAR.38) within the stated
+upper budgets. When $z=0$, $d=e=r=0$ and $M=1$: the block consists
+of the empty word and its root Read distinguishes alpha from beta.
+When $z=1$, $d=0$, $e=r=1$ and $M=1$: the single literal $R$ is
+absent on beta and alpha on $\rho\beta$. More generally $M=1$ is
+equivalent to $b\ge d$. Zero Reads cannot recover an unknown lag,
+even with a completely known first tree; Theorem 10.3 includes this
+case and the contract also requires an actual later capture. The
+one-Read statement concerns the slice, not all unknown lags at the
+same query budget. $\square$
+
+**Mathematical citation 10.7 (suppliers and remaining boundaries).**
+The new result is `repo-derived`: its common finite padding and its
+complete-block native readout concern arbitrary effective retained
+information after actual acquisition. The proof uses the clock law
+AAR3.2, finite minimum certification AAR4.1–4.2, and the native
+present-subtree and right-clock suppliers [NDP] and [DOR]. The operand
+obstruction AAR6.1 is consistent with the attained value: at lag
+$e$, AAR3.2 gives
+
+$$
+\mu(\rho^e t)=\left\lfloor\frac{z+e}{2}\right\rfloor=r.
+$$
+
+Theorem 10.3 strengthens that one-operand requirement to $M$ long
+invocations on one source. It does not obtain a joint witness by
+combining coordinate bounds from different sources.
+
+AAR7.3 retains only the scalar and proves a particular exponential
+fresh-acquisition obstruction. The present result allows any
+$2^b$-valued effective retention on $\mathcal T_z$ and determines the
+joint optimum for both parity classes under the present performance
+slice. Static [WORD4.2](RECURSIVE_RELATIONAL_OBSERVATION_WORD_RETENTION_AND_GEOMETRIC_REACCESS.md#4-固定编码器的准确调用与加权价格)
+concerns a fixed encoder on a promised family of unchanged trees and
+allows inference of the last unqueried candidate. Its $|B_s|-1$
+price, including zero for a singleton fiber, is not the lag price
+here. Even when the original tree is known, the two continuations
+$\rho^e t$ and $\rho^{e+1}t$ still require different answers. The
+common-source construction explicitly preserves this distinction.
+
+For primary-literature context, Andrew Chi-Chih Yao, *Should Tables
+Be Sorted?*, Journal of the ACM 28(3), 615–628 (1981),
+[DOI:10.1145/322261.322274](https://doi.org/10.1145/322261.322274),
+provides the preprocessing/query viewpoint. Here the acquired
+instance supplies the retained advice $E(t)$; it is not advice chosen
+from the later unknown $k$. A bound on the number of retained states
+is not a bound on total storage, preprocessing work or a table's
+probe complexity. Robert D. Nowak, *The Geometry of Generalized
+Binary Search*, IEEE Transactions on Information Theory 57(12),
+7893–7906 (2011),
+[arXiv:0910.4397v5](https://arxiv.org/abs/0910.4397v5),
+[DOI:10.1109/TIT.2011.2169298](https://doi.org/10.1109/TIT.2011.2169298),
+relates query efficiency to available hypothesis-splitting geometry.
+The native port here accepts complete absolute words; it supplies
+neither arbitrary subset queries nor an address-dictionary index
+interface. These are contextual correspondences only. No literature
+theorem supplies a step of the proof of (AAR.39).
+
+Quiescence and the chosen two-lag performance slice are essential
+parts of this frontier's scope. No interference price or optimum
+for other resource coordinates is asserted. Acquisition and all
+non-query costs remain outside the three optimized coordinates,
+and no claim is made that every triple dominated by this minimum
+is an attainable exact supremum triple. This restricted result
+leaves AAR9.4 and the broad mutual recovery of spatial, temporal,
+boundary and memory descriptions open, with their existing source
+and operation boundaries intact.
+

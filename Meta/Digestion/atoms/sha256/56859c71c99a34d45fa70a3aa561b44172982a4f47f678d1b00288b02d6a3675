@@ -1,0 +1,16 @@
+**定义 39.1（本次量化的确切极限域）。** 使用(38.4)，$c_*$ 是原 $S_0$ 取得种子1、前三标记100、第三次写完并锁存后的 $p_4$ 配置。令 $Q_i$ 为原配置行 $\lambda_i$ 的解码混合，经同一个 $I_{c_*}$ 读回原始完整尾；令 $V_i$ 为 $\lambda_iP_\beta$ 的解码混合，经原 $I_{\delta(c_*,\beta)}$ 读回悬置完整尾。包括合法无限不完成结果。定义
+
+$$
+\begin{aligned}
+A_p^{\rm end}(M)&=\max_{0\le i<d,\ k\in\{1,2\}}
+ \operatorname{TV}(Q_i,P_{p,r_k}),\\
+A_\beta^{\rm end}(M)&=\max_{0\le i<d,\ k\in\{1,2\}}
+ \operatorname{TV}(V_i,P_{\beta,r_k}),\\
+\Psi^{\rm end}(M)&=\max\{A_p^{\rm end}(M)-\rho_p,
+ A_\beta^{\rm end}(M)-\rho_\beta\}.
+\end{aligned}
+\tag{39.1}
+$$
+
+这些是 PH21 两次有限链极限的端点行，不是只在 $\mathcal H_3$ 的报告、任意后验混合、纯微状态风险或新查询服务。每个周期公倍数的合法选择都可用于以下结论。
+

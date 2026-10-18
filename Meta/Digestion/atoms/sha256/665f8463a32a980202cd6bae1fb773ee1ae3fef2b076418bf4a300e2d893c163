@@ -1,0 +1,10 @@
+# Critical eight-input lower bound under the original two caps
+
+This companion fixes the original finite Boolean control model and its supplied native interface. Its new conclusion is the unrestricted critical-instance bound
+
+$$
+ n=8,\quad k=4\quad\Longrightarrow\quad m\ge 18,
+$$
+
+for every complete correct graph satisfying both original whole-run caps. The general grid bound and the exact critical minimum remain open below.
+

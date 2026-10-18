@@ -1,0 +1,26 @@
+**Proposition 8.1 (The surviving full-score face question).**
+In either complete nine-bit catalog, feasibility at
+$E_{\rm sum}=5\tau+d_{\rm sum}$ forces support on complete
+$Y_{128}$-score-$368$ maximizers and tightness of every positively
+scored row. All unscored independent $A,C,P$ and positive rows
+remain constraints. Conversely one normalized allocation on that
+support satisfying every full row is feasible.
+For $u>0$, the $256$ lower excludes this cap for $v<2u/19$.
+Feasibility for $2u/19\le v<75u/181$ is not settled here,
+including the tie $v=2u/19$.
+
+Proof. At this cap the demanded $128$ reward is $368$. For one
+normalized feasible allocation,
+
+$$
+0=\sum_D\lambda_D(368-Y_{128}z_D)
+ +\sum_r(Y_{128})_r
+       [p(\text{event }r)-\text{demand }r].
+$$
+
+Complete support and full feasibility make every summand nonnegative,
+giving the face restriction. Its converse is the all-row criterion;
+7.1 supplies original realization. The exclusion follows from
+$d_{256}-d_{\rm sum}=(2u-19v)/256$. A tie of lower bounds gives
+no feasible allocation on their common face. $\square$
+

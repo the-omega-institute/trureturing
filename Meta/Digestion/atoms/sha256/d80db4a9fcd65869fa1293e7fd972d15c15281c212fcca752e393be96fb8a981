@@ -1,0 +1,149 @@
+**Theorem 64.1 (every weak value is an unattained supremum).** For
+every $0\le s<s_0$, $\sup_{\mathfrak P_s}\operatorname{TV}=
+\mathcal T(s)$ and this supremum is not attained. The approximants
+below do not require an evaluated residual curve or a contact/rank
+classification beyond the finite compact problem in JR Theorem 45.1.
+
+Proof. Write
+$L_0=\operatorname{diag}(\delta,1,1)$,
+$Q_0=\operatorname{diag}(1,-\theta,-\omega)$ and
+$\mathcal G=L_0^{1/2}NL_0^{1/2}$. Choose two fixed compatible
+null directions using the spectral vectors from §60:
+
+$$
+\begin{gathered}
+r_\pm=\frac{dh_1}{bh_2}\sqrt{\frac{m_2}{m_1}}
+ \frac{(e_\pm)_2}{(e_\pm)_1},\qquad
+c_\pm=(\sqrt{\theta r_\pm^2+\omega},-r_\pm,1)^T,\\
+a_0=\frac1{4\sum_{\pm}c_\pm^TL_0^{-1}c_\pm},\qquad
+R_0=L_0-a_0(c_+c_+^T+c_-c_-^T).
+\end{gathered}
+\tag{JRH.43}
+$$
+
+The coordinate subscripts of $e_\pm$ are the physical supported
+coordinates $1,2$. Both denominators $(e_\pm)_1$ are nonzero.
+For $v_\pm=L_0^{-1/2}c_\pm$, the norm of
+$a_0\sum v_\pm v_\pm^T$ is at most
+$a_0\sum\|v_\pm\|^2=1/4$. Therefore
+$R_0\succeq(3/4)L_0\succ0$.
+Every removed direction is $Q_0$-null, as is $L_0$ in trace, so
+$\operatorname{tr}(Q_0R_0)=0$. Reuse IR Lemma 10.1, or JR.60's
+support-restricted zero-Rayleigh construction, to decompose
+$R_0=\sum_{j=1}^3d_jd_j^T$ with real null $d_j$.
+The construction is finite and explicit: diagonalize
+$R_0^{1/2}Q_0R_0^{1/2}$ on its support, choose a zero-Rayleigh unit
+vector between one positive and one negative eigenvector using IR.58,
+compress to its orthogonal complement and repeat. Zero compression
+permits any orthonormal basis. Multiplication by $R_0^{1/2}$ gives
+the required $d_j$. All nonzero null vectors give rank-two live matrices.
+
+This supplies a fixed auxiliary decomposition of $L_0$ with live
+matrices $K_\pm=K(\sqrt{a_0}c_\pm)$ and $K_j=K(d_j)$.
+By the kernel computation JRH.15, $\operatorname{ran}B_\pm$
+lies in the row space of $K_\pm$ respectively. This decomposition
+and both compatible row spaces are fixed independently of the input
+and of the subsequent approximation parameter.
+
+For the main decomposition at $s'<s_0$, use exactly the compact
+four-PSD problem of JR.58:
+
+$$
+\begin{gathered}
+Z_{r,\epsilon}\succeq0,\quad Z_{r,\epsilon}\in\operatorname{Sym}_3(\mathbb R),
+\quad\operatorname{tr}(Q_0Z_{r,\epsilon})=0,\\
+\sum_{r,\epsilon}Z_{r,\epsilon}=L_0,\qquad
+\sum_{r,\epsilon}r(Z_{r,\epsilon})_{01}\ge s',\qquad
+J_{s'}=\max\sum_{r,\epsilon}\epsilon\operatorname{tr}(NZ_{r,\epsilon}).
+\end{gathered}
+\tag{JRH.44}
+$$
+
+Choose any maximizing tuple; compactness and finite realization are
+JR Theorem 45.1. Apply the stated zero-Rayleigh procedure on each
+matrix's support. It gives at most twelve low matrices $K_i^{[s']}$,
+each with its actual report $r_i$, total coefficient Gram $L_0$,
+contrast at least $s'$ and total absolute low height difference
+$J_{s'}$. Equality of that last sum follows from JR.59's universal
+upper bound and actual finite realization; a strict excess would
+violate the same bound. Thus this is an exact finite-matrix prescription
+even where the value of the residual curve is left implicit.
+
+Fix $s<s_0$ and choose $0<\varepsilon<1-s/s_0$, with
+$s'=s/(1-\varepsilon)<s_0$. An explicit sequence is
+$\varepsilon_j=(1-s/s_0)/(2j)$, $j=1,2,\ldots$. Keep the
+high live matrix $\sqrt kD$ and a fair report. Use main low
+matrices $\sqrt{1-\varepsilon}K_i^{[s']}$ with pure live
+decoders and their original reports. Use auxiliary low matrices
+$\sqrt\varepsilon K_\pm$, with the ENTIRE effects $B_\pm$
+attached respectively, and $\sqrt\varepsilon K_j$ with no
+failure. Give all auxiliary branches fair generated reports.
+Use JRH.30 for each pair and the coherent completion JRH.40.
+
+The total low Gram is $(1-\varepsilon)L_0+\varepsilon L_0=L_0$;
+failure is exactly $B_-+B_+=M$. Thus the complete supported channel
+and all five measures are unchanged. The high effect stays
+$kD^\dagger D$, and the signed contrast is at least
+$(1-\varepsilon)s'=s$. There are finitely many actual labels;
+each low fibre is two-dimensional and has whole-fibre positive live
+effect by JRH.30. The two failure-bearing directions remain nonzero
+for each $\varepsilon>0$.
+
+Before fair coins, the individual history probabilities are
+
+$$
+\begin{array}{c|c}
+\text{actual branch}&\text{probability on }\rho_{y,e,n}\\ \hline
+H&kA_y\\
+\text{main }i&(1-\varepsilon)\mathsf p_{K_i^{[s']}}(y,e,n)\\
+\text{auxiliary }\pm&\varepsilon\mathsf p_{K_\pm}(y,e,n)
+ +\langle\psi,B_\pm\psi\rangle\\
+\text{auxiliary }j&\varepsilon\mathsf p_{K_j}(y,e,n)\\
+\perp&0
+\end{array}
+\tag{JRH.45}
+$$
+
+Each fair report halves its branch probability; every main report keeps
+its own prescribed value. JRH.41 and the explicit spectral vectors
+give exact probabilities for every one of the twelve histories.
+
+For any decomposition $L_0=\sum c_ic_i^T$, the normalized frame
+$v_i=L_0^{-1/2}c_i$ satisfies $\sum v_iv_i^T=I$. Hence
+
+$$
+\sum_i|c_i^TNc_i|=\sum_i|v_i^T\mathcal Gv_i|
+\le\sum_i v_i^T|\mathcal G|v_i=\|\mathcal G\|_1.
+\tag{JRH.46}
+$$
+
+Let $J_{s'}$ be the main sum and $U_{\rm aux}$ the auxiliary
+sum; both are bounded by $\|\mathcal G\|_1$. The reverse triangle
+inequality for each attached spectral branch gives
+
+$$
+\begin{aligned}
+2\operatorname{TV}_\varepsilon
+&\ge k\Delta A+(1-\varepsilon)J_{s'}+L_f
+ -\varepsilon U_{\rm aux},\\
+\mathcal T(s')-\varepsilon\|\mathcal G\|_1
+&\le\operatorname{TV}_\varepsilon\le\mathcal T(s).
+\end{aligned}
+\tag{JRH.47}
+$$
+
+This counts all generated labels, including the fair report splits.
+It makes no claim that the approximants themselves use optimal spectral
+readout as actual failure-only labels.
+
+For completeness, $\mathcal T$ is right continuous at each $s<s_0$
+directly from JRH.44. Mix a maximizing tuple at $s$ with any feasible
+tuple at $s_0$ in proportion
+$\alpha=(s'-s)/(s_0-s)$. The mixture is feasible at $s'$ and its
+linear objective tends to $J_s$. Monotonicity of the constraint gives
+$J_{s'}\le J_s$, so $J_{s'}\to J_s$. JR.59 transfers this to
+$\mathcal T$. Therefore JRH.47 tends to $\mathcal T(s)$.
+Theorem 60.1 excludes attainment in $\mathfrak P_s$, since positive
+entire-fibre decoders force $Z_{\rm cf}=0$. This proves the exact
+unattained weak supremum, without any later-curve formula. $\square$
+

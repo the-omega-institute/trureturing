@@ -1,0 +1,36 @@
+**Theorem 94.1 (the original threshold marginal is infinite).** Fix any
+$\tau>0$, $k\in I$ and $u\in\mathbb R^2$. Let $N$ be the upper
+$2\times2$ principal block of the positive tensor $M=M_\kappa$ in L §36.
+Then
+
+$$
+\int_{-R}^R W_\tau(k,u,x)dx
+ =\frac{\phi(k_0)\phi(k)}{2\pi\sqrt{\det N}}\log R+O(1)
+ \quad(R\to\infty).
+\tag{94.1}
+$$
+
+The remainder may depend on the fixed $\tau,k,u$.
+In particular $\mathsf M W_\tau(k,u)=+\infty$ at every retained point.
+This holds for every fixed positive cutoff, however small, with the
+original source and without a surviving-charge renormalization.
+
+Proof. The fixed-cutoff tail (70.3) gives, as $|x|\to\infty$ at fixed $u$,
+
+$$
+W_\tau(k,u,x)
+ =\frac{\phi(k_0)\phi(k)}
+ {4\pi\sqrt{\det M}\sqrt{(M^{-1})_{33}}}\frac1{|x|}
+       +O(|x|^{-2}).
+\tag{94.2}
+$$
+
+Indeed the square of its anisotropic distance is
+$(M^{-1})_{33}x^2+O(|x|)+O(1)$, and the error already in (70.3) is
+$O(|x|^{-3})$. The field is bounded on the remaining finite interval
+because $\tau>0$. Integrate (94.2) on both half-lines. The cofactor
+identity $\det M\,(M^{-1})_{33}=\det N$ proves (94.1). Its coefficient
+is strictly positive at every interior height. The argument uses the
+actual full-field tail, not just a covariance match of projected heat.
+$\square$
+

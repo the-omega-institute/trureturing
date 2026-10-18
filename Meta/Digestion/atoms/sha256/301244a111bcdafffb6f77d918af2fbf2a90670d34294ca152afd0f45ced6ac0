@@ -1,0 +1,28 @@
+### 98.6. Seven finite quadratic obstructions
+
+The principal zero-fibre Hermitian space has dimension \(n^2-\sum_fm_f^2\). The kernel compression in (28) is onto by the same adjoint argument as Corollary 98.3: a fibre-block-diagonal \(Z\) supported on \(\ker K\) satisfies \(ZK=0\), and \(K_{ff}=I_{m_f}\) forces \(Z_{ff}=0\). Since \(\dim\ker K=2\),
+\[
+\dim_{\mathbb R}\mathcal V_S=n^2-\sum_fm_f^2-4. \tag{31}
+\]
+The principal phase space
+\[
+\Gamma=\{i(KA-AK):A\text{ real diagonal on }S\} \tag{32}
+\]
+has dimension \(n-1\). All cross-fibre entries of \(K\) are nonzero, and the occupied-fibre graph is connected, so a phase direction vanishes exactly when \(A\) is scalar. Every such direction extends to (22). Lemma 98.4 and the minimizing formula therefore give
+\[
+q_{\mathrm{eff}}(X+X^A)=q_{\mathrm{eff}}(X),\qquad
+\dim_{\mathbb R}(\mathcal V_S/\Gamma)
+=n^2-\sum_fm_f^2-n-3. \tag{33}
+\]
+Consequently \(q_{\mathrm{eff}}\) is a real quadratic form on this quotient. For the seven unresolved occupancies, the quotient dimensions are
+\[
+\begin{array}{c|rrrrrrr}
+(m_f)&(2,1,1,0)&(1,1,1,1)&(2,2,1,0)&(2,1,1,1)&
+(2,2,2,0)&(2,2,1,1)&(2,2,2,1)\\ \hline
+\dim&3&5&8&10&15&17&26
+\end{array}. \tag{34}
+\]
+These are dimensions of the domain quotients; the forms may have further radical. In any real basis they give finite symmetric matrices that must be PSD at a hypothetical subquarter minimum. No determinant sign, negative direction or exclusion for any of the seven forms is established here.
+
+The curved construction applies on the full calibrated domain and retains the original fibre identities, complex phases, full kernels and common witness. It gives no rank-preserving calibration reduction and transfers no local minimality from leaking channels. Higher quotient ranks, unequal lower-rank cases, the seven listed supports and the unrestricted quarter optimum remain open; the global interval is still \([\sqrt3-\tfrac32,\tfrac14]\).
+

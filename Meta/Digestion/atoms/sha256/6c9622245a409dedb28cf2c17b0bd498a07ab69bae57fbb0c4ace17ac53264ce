@@ -1,0 +1,24 @@
+**Definition 9.3 (canonical states and prescribed refinement).** Set
+$C_0=\langle\alpha,\alpha\rangle$ and use the credited canonical
+sets and their attained sizes
+
+$$
+S_1=\{\alpha,\beta,C_0\},\qquad
+S_{a+1}=\{\alpha,\beta\}\sqcup(S_a\times S_a),\qquad
+s_a=|S_a|,\quad s_1=3,\quad s_{a+1}=2+s_a^2.
+\tag{LTR.25}
+$$
+
+A pair in this disjoint union means its actual ordered constructor.
+For a right subtree $v$ of height at most $D$, $\pi_D(v)$ keeps
+all reached constructors through depth $D-1$ and replaces each
+branch at that depth by $C_0$. It fixes $S_D$ and preserves
+$r_v(q)$ and $\Gamma_q(v)$ for all $|q|\le D-1$.
+
+For two complete acquired exports $E,E^\circ$ on the whole
+$\mathcal F_D$, say that $E$ **refines** $E^\circ$ if a public
+finite map $g$ satisfies $E^\circ=g\circ E$ on every source.
+Thus a refinement may split an old fiber but cannot merge two old
+names. This is a restriction on the assembly mechanism, not on the
+definition of $M_1(D)$.
+

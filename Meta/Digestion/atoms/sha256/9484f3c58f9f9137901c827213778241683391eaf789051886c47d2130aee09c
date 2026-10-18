@@ -1,0 +1,14 @@
+**Theorem 6.3 (Equivalent screening conditions).** For the actual optimizer, the following conditions are equivalent:
+
+1. $v_i=0$.
+2. $q_y=c_i$ for every $y\in S_i$.
+3. $H_i$ is constant on $S_i$.
+4. $H_i(y)=1-2c_i$ for every $y\in S_i$.
+5. $\langle H_i\rangle_i=1-2c_i$.
+
+Proof. Positivity of every $m_y$ makes the first two equivalent. If $q$ is constant, all internal gradients vanish by Lemma 4.4, and (5.3) forces the fourth condition. The fourth implies the third and fifth. If $H_i$ is constant, its covariance with $q$ is zero; (6.2) and nonnegativity give $v_i=0$.
+
+Finally suppose the fifth condition holds. The sum in (6.1) is then zero. If $q_y\ne q_z$ on some edge, its weighted average $\theta_e$ is strictly less than $1/2$, because both entries are at most $1/2$ and both weights are strictly positive. That edge would have a strictly positive summand in (6.1). Hence $q_y=q_z$ on every edge. Connectivity from Lemma 4.2 makes $q$ constant on $S_i$. This proof also covers a singleton, whose edge sum is empty. $\square$
+
+The mean excess in (6.1) detects nonconstancy, but its sign is the opposite of a positive context-free lower certificate in §7. Neither this equivalence nor the variance upper bound asserts a positive variance at any particular length.
+

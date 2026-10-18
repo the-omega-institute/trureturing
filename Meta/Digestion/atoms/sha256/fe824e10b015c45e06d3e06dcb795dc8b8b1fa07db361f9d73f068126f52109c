@@ -1,0 +1,35 @@
+**Definition 1.2 (finite interface).** Let $S$ be a finite nonempty
+set. Let $Q$ and $\mathcal A$ be finite sets of target and experiment
+indices. For each $q\in Q$ and $a\in\mathcal A$ fix functions
+
+$$
+g_q:S\longrightarrow Y_q,\qquad
+r_a:S\longrightarrow V_a.
+\tag{CIT.1}
+$$
+
+Fix an integer $m\ge2$ such that $|r_a(S)|\le m$ for every
+experiment. Only attained values of these functions matter. Constant
+experiments may be included, and a constant answer always requires
+zero experiments.
+
+For an integer $n\ge1$, a nonempty $B\subseteq S^n$ is jointly
+admissible if, for every coordinate $i\in[n]$ and target $q\in Q$,
+either $g_q(x_i)$ is constant as $x$ ranges over $B$, or there are
+$j\in[n]$ and $a\in\mathcal A$ such that
+
+$$
+\forall x,y\in B,\qquad
+r_a(x_j)=r_a(y_j)\ \Longrightarrow\ g_q(x_i)=g_q(y_i).
+\tag{CIT.2}
+$$
+
+The donor $j$ and experiment $a$ may depend on $B,i,q$. Every one
+of these implications is required on the same unchanged $B$. Different
+targets may use different experiments; there is no requirement that one
+reply determine their vector. Local admissibility of $P\subseteq S$
+means this condition in one coordinate. The empty set is admissible
+vacuously whenever it is useful to include it. A nonempty $P$ is
+range feasible if $|g_q(P)|\le m$ for every $q$; this is a necessary
+condition on joint projections, without an assertion of sufficiency.
+

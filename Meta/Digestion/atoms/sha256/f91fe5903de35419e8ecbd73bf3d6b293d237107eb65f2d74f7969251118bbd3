@@ -1,0 +1,20 @@
+### 定义 33.4（图电阻度量）
+
+给有限连通无向图 \(G=(V,E,w)\) 赋予正边权 \(w_e>0\)。令 \(B\) 为任意定向边界矩阵，\(W=\operatorname{diag}(w_e)\)，定义
+
+\[
+L_w=BWB^{\mathsf T}.
+\]
+
+对 \(u,v\in V\)，定义有效电阻
+
+\[
+R_w(u,v)
+=
+(e_u-e_v)^{\mathsf T}
+L_w^\dagger
+(e_u-e_v),
+\]
+
+其中 \(L_w^\dagger\) 是 Moore--Penrose 伪逆。
+

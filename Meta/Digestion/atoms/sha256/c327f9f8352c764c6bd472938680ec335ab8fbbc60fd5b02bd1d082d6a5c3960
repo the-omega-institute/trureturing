@@ -1,0 +1,43 @@
+**Theorem 5.4 (several components joined at once).**
+Suppose a group $\mathcal J$ of $k\ge1$ old components is joined
+into one by added edges. On a fixed old profile in the unrestricted
+box, the number of new relative calibrations is
+
+$$
+\prod_{C\in\mathcal J}(L_C+1)-\prod_{C\in\mathcal J}L_C.
+\tag{SCC.27}
+$$
+
+If this group contains the pinned component $C_0$ on $A_c$, the
+number is instead
+
+$$
+\prod_{C\in\mathcal J\setminus\{C_0\}}(L_C+1).
+\tag{SCC.28}
+$$
+
+For disjoint joined groups these counts multiply when the residual
+set is the independent box with at most the one pinned coordinate.
+For an arbitrary $\Lambda_b$, the exact count is the number of its
+classes under equality of the residual differences inside each
+joined group.
+
+Proof. In a joined group, equality of every new calibration means
+that two residual vectors differ by one common integer translation.
+Every such class in the unequal box $\prod_C[0,L_C]$ has a unique
+representative with minimum coordinate zero: subtracting its
+minimum keeps every coordinate within its own interval. The total
+number of vectors minus those with every coordinate positive is
+(SCC.27). With one coordinate fixed, a common translation must be
+zero, so all choices of the remaining residuals are distinct;
+this gives (SCC.28). Different groups have independent residuals
+under the stated hypothesis. The final assertion is Theorem 3.1
+on the actual set. $\square$
+
+These formulas do not equate worst-case sequential storage with an
+optimal one-shot encoding. For example three singleton components
+with $H=1$ have $2^3-1=7$ final relative profiles, although the
+product of two separately maximized two-component bridge alphabets
+is $3^2=9$. The second bridge's actual choices depend on the first
+bridge and its retained joint fiber.
+

@@ -1,0 +1,52 @@
+### 85.1. Statement
+
+Let (A_0,B_0) be an original four-fibre quarter-error pair with B_0 of Kraus rank two. Use the environment isometries and independent simultaneous target-preserving bit swaps of section 82 to put the pair in marker-aligned coordinates:
+
+    a_fi^0=conjugate(b_fi^0) tensor m_i,
+    ||m_i||=1, <m_0,m_1>=3/4,
+    sum_f |b_fi^0><b_fi^0|=2 I_2 for i=0,1.          (1)
+
+The two original maps are calibrated by the equality theorem. Write B_i for the 2-by-4 matrix with columns b_fi^0 and put
+
+    H_i^0=B_i^* B_i,  P_i=H_i^0/2.
+
+Thus B_i B_i^*=2I_2 and P_i is a rank-two orthogonal projection.
+
+Let A(t) be any family of original CPTP maps C^8->C^4 converging to A_0 as t goes to zero from above. Let B(t) admit a C^2 path of Stinespring isometries
+
+    V(t):C^8 -> C^4 tensor (E_old direct-sum E_new),
+    dim E_old=2,   V(0)=V_0 direct-sum 0,
+
+where V_0 is a minimal Stinespring isometry of B_0. The fixed finite dimension of E_new is unrestricted. Set
+
+    R=(I_out tensor P_new) V'(0).
+
+For each bit i, let R_i:C^4->E_new have columns
+
+    r_fi=(<f|_out tensor I_new)R|f,i>.
+
+Define the squared wrong-output norm by
+
+    ||R_wrong||_F^2
+       =sum_(f,i) ||[(I_out-|f><f|) tensor I_new]R|f,i>||^2.
+
+Let delta(t) be the unhalved arbitrary-reference diamond error of the original product A(t) tensor B(t) from the fixed RT target. Then
+
+    delta(t) >= 1/4+c(R)t^2+o(t^2),
+
+    c(R)=(1/8)[||R_wrong||_F^2
+                  +sum_(i=0,1)||R_i(I_4-P_i)||_F^2] >=0.   (2)
+
+Equivalently the asserted asymptotic lower bound means
+
+    liminf_(t->0+) [delta(t)-1/4]/t^2 >= c(R).        (3)
+
+If A(t)-A_0=O(t) in channel norm, for example if A(t) also has a C^2 Stinespring presentation, there are constants C and epsilon>0 such that
+
+    delta(t) >= 1/4+c(R)t^2-Ct^3
+    for 0<=t<=epsilon.                              (4)
+
+In particular positive c(R) gives a strict error gap for all sufficiently small positive t, independently of the other party's allowed path. If c(R)=0, (2)--(4) do not exclude higher-order escape.
+
+The conclusions are symmetric after exchanging the parties. For a general equality pair the coordinates used in (1) are obtained only by the allowed simultaneous swaps and fixed environment isometries; the theorem makes no unallowed rotation of the input-bit basis.
+

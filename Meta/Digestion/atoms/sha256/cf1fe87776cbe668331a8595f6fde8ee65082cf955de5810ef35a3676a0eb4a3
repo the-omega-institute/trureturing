@@ -1,0 +1,26 @@
+**Proposition 300.2 (Relation to the auxiliary hull and the earlier slice).**
+When $a_2=13\tau$, the finite profile of Theorem 300.1 belongs to
+$H_N$ with this same mass-one law. At $a_2>13\tau$ no membership in
+the unreduced hull requiring $b_2=b_3$ is asserted. In particular
+$(17,13,13,10,9,8,6)/24$, $e=5/24$, is attained in both classes.
+
+**Proof.** Recall explicitly
+
+$$
+H_L=\{(b,e):1\ge b_1\ge\cdots\ge b_L\ge e\ge0,\ b_2=b_3,
+\ 0\le E_b:=\sum_{j=3}^Lb_j-(L+1)e\le1-b_1\},
+$$
+
+and $H_N=\{(b,e)\in H_L:\exists\lambda\ge0,\ G_N\lambda\ge h\}$.
+For $L=7$, $a_2=13\tau$ and $e=5\tau$, one has $E_b=6\tau$ and
+$a_1+E_b\le1-\tau<1$ by the first head bound. The same law proves
+full feasibility with mass one. If $a_2>13\tau=b_3$, the required
+equality fails. The stated endpoint has $a_1=17\tau$, $a_2=13\tau$
+and satisfies both head bounds. The earlier
+[295.1](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XVI.md)
+already supplies its $a_1\le16\tau$, $a_2=13\tau$ slice; that old
+attainment and the old $46/5$ lower bound are reused. The new assertion
+is the coupled projection (300.2), including its necessary maximum scale.
+It is not a classification of larger-cap optima outside that projection,
+gapped primal laws or all feasible equality kernels. $\square$
+

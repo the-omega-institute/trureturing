@@ -1,0 +1,10 @@
+### 64.4. Matching finite common-channel attainment
+
+Section63 constructs, for every ||w||₁≤1, a single product of two local CPTP maps Φ_w satisfying Φ_w∘J_in=J_out∘E_w on all encoded matrix units and all reference extensions. It also proves
+
+    ||J_out∘E_z−J_out∘E_w||_diamond=||z−w||₂,
+
+by an explicit CPTP compression followed by the off-diagonal qubit map. Choose the Euclidean projection w onto the unit ℓ₁ ball. The finite-dimensional ball is compact, so this choice attains the minimum; §63's threshold proof gives exactly (2). The corresponding product channel supplies the upper bound equal to the lower bound above. Both local environments may be taken of dimension m+1.
+
+For the symmetric vector, permutation symmetry or the threshold formula gives w_i=1/m and ||z−w||₂=1−1/sqrt(m). Thus the common-channel error approaches1 in this normalization as the number of individually compatible leaf–hub pairs grows. This is a dimension-dependent exact result, rather than a compactness-only separation.
+

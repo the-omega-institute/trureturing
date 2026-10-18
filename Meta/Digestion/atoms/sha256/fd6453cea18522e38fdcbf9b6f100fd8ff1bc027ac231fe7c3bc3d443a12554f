@@ -1,0 +1,53 @@
+**定义 43.1（固定但未附标签的半径制备容差）。** 保持定义37.1、40.1的坐标 $W=E\oplus\mathbb H$、$E=\operatorname{Im}\mathbb H$、$C=P_E$ 和固定单位锚 $d=e_4$。公开且精确供应
+
+$$
+R>0,\qquad 0<\epsilon<R,\qquad |n|=1,\qquad
+L=R-\epsilon>0,\qquad U=R+\epsilon.
+\tag{43.1}
+$$
+
+声明两种可比较的初始来源，分别为
+
+$$
+\begin{aligned}
+\mathcal D_I
+ &=E\times\{b\in\mathbb H:L\le|b|\le U,\ \langle b,n\rangle\ge0\},\\
+\mathcal D_2
+ &=E\times\{b\in\mathbb H:|b|\in\{L,U\},\ \langle b,n\rangle\ge0\}
+ \subseteq\mathcal D_I.
+\end{aligned}
+\tag{43.2}
+$$
+
+可见初态 $a\in E$ 任意、无界且与 $b$ 独立。每个实例的初始实际半径 $|b|$ 固定；(43.2) 只约束初态，更新后的当前状态不必仍属该来源。来源没有附加该半径的标签或读口，控制器初始化对全部来源相同。$\epsilon$ 是这里另行供应的制备容差，不是Read误差，也不是法向 $n$、控制身份或致动的不确定性。$(R,\epsilon,n)$ 的公共校准仍精确；这些数学来源限制没有被推定为原生FIB或物理制备事实。
+
+原菜单及精确更新仍逐次为
+
+$$
+A_c(a,b)=(c\times a,bc),\quad c\in E,\ |c|\le1,
+\qquad A_d(a,b)=(\operatorname{Im}b,-a).
+\tag{43.3}
+$$
+
+只有一个被更新覆盖的当前寄存器，目标始终是不可改换的初态 $(a,b)$。控制器确定、因果、源无关初始化，只按已实际取得的有限记录前缀选择下一次Read、动作或停止。完整记录保留每个实际Read、动作身份及停止信息；允许重复Read、有限或可数记录，没有另外的极限读口。至多 $N\in\mathbb N_0$ 次更新是总破坏性更新预算；每条合法记录均须有一个 $W$ 值估计，估计不必属于来源。没有重置、初态副本、混合控制、反事实查询端口、每源初始化标签或独立重抽样权限。
+
+分别用 $J\in\{2,I\}$ 标记来源。另行供应每次实际Read的欧氏误差合同
+
+$$
+y_t=Cz_t+e_t,\qquad e_t\in E,\quad |e_t|\le\delta,
+\qquad \delta\ge0.
+\tag{43.4}
+$$
+
+误差可联合对抗、相关并依赖全部历史，不假设读数独立性。$\delta=0$ 专指精确Read。沿用定义42.4的全记录控制器和输出要求、把来源换为 (43.2)，定义全初态风险
+
+$$
+\mathcal R_N^J(\delta;R,\epsilon,n)
+ =\inf_\pi\ \sup_{x\in\mathcal D_J}
+   \sup_{|e_t|\le\delta}
+   |\widehat x_\pi(M)-x|.
+\tag{43.5}
+$$
+
+这里 $M$ 包括全部实际记录，可数记录的函数仍不是新增Read权限。完整原词响应作为精确预测目标仍由定理37.2分离初态；本节的近似误差度量固定为 $W$ 中初态欧氏距离，没有另定义无限词响应的统一近似范数。
+

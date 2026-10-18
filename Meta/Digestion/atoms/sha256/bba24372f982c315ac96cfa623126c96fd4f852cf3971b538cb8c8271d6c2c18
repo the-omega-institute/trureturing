@@ -1,0 +1,44 @@
+**Proposition 3.3 (The changed population moment).** For real symmetric
+$E$, set $t_j=\operatorname{tr}(R_jE)$. Then
+
+$$
+\begin{aligned}
+S(E)={}&(2t_0/3+t_+/6)R_0
++(t_0/6+17t_+/168+3t_-/14)R_+\\
+&+(3t_+/14+t_-/7)R_-
++\frac{17}{84}R_+ER_++\frac27R_-ER_-\\
+&+\frac13(R_0ER_++R_+ER_0)
++\frac37(R_+ER_-+R_-ER_+).
+\end{aligned}
+\tag{3.6}
+$$
+
+Proof. Equation (3.4) is $5\mathbb E[PXP]$ with orbit probabilities
+$7/10,3/10$, populations $p_{\mathrm A}=(0,3/7,4/7)$,
+$p_{\mathrm B}=(2/3,1/3,0)$ and moments
+
+$$
+\mathbb E p=(1,2,2)/5,\qquad
+M=\mathbb E[pp^T]
+=\frac1{105}\begin{pmatrix}14&7&0\\7&17&18\\0&18&24\end{pmatrix}.
+\tag{3.7}
+$$
+
+Contract the circle moments (2.8). The dark coefficient is
+$5M_{00}t_0+(5/2)\sum_{j=+,-}M_{0j}t_j$.
+A plane's diagonal block, for the other plane $k$, is
+
+$$
+\frac{5M_{jj}}8(t_jR_j+2R_jER_j)
++\frac{5M_{0j}}2t_0R_j+\frac{5M_{jk}}4t_kR_j.
+\tag{3.8}
+$$
+
+Dark/plane cross blocks have coefficient $5M_{0j}$ and the two-plane
+cross block has coefficient $5M_{+-}/2$. Substitution of (3.7)
+gives (3.6). This is the fourth-moment contraction used in QFA
+Proposition 3.1, evaluated at the different joint populations (3.7).
+The corresponding moment techniques in Fuchs–Sasaki §§4.2–4.3 concern
+ensemble fidelity; their irreducible symmetry hypotheses do not assert
+optimality for the present reducible $1+2+2$ representation. $\square$
+

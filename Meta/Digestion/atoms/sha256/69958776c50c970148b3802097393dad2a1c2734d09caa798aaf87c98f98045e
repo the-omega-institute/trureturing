@@ -1,0 +1,78 @@
+**Theorem 6.1 (complete-output lower bound).** For every common CPTP map
+of Definition 3.1,
+
+$$
+E(\Phi)\geq L_{\rm full},\qquad
+E_*\geq L_{\rm full},
+\tag{CG.37}
+$$
+
+where the exact constant is
+
+$$
+\boxed{L_{\rm full}=\frac3{22}
+       +\frac{\sqrt{49-45v^2}}{44}
+       -\frac{\sqrt{1-u^2}}4},\qquad
+u=\frac{\sqrt{135}+\sqrt{2183}}{64},\quad
+v=\frac{\sqrt{363}+\sqrt{1643}}{64}.
+\tag{CG.38}
+$$
+
+Proof. Put $E=E(\Phi)$. Linearity and trace-norm convexity, applied to
+the two actual histories at each endpoint, give
+
+$$
+\begin{aligned}
+\operatorname{dist}(\Phi(\Gamma_y),\Theta_y)
+ &\leq\frac12\operatorname{dist}
+       (\Phi(\rho_{y/256,0,0}),\Omega_{y/256,0,0})\\
+ &\quad+\frac12\operatorname{dist}
+       (\Phi(\rho_{y/256,\pi,0}),\Omega_{y/256,\pi,0})
+ \leq E\qquad(y=5,27).
+\end{aligned}
+\tag{CG.39}
+$$
+
+For clarity, contractivity here includes the full measurable-time output.
+For any Hermitian input $H=H_+-H_-$, positivity and trace preservation
+imply
+
+$$
+\|\Phi(H)\|_{1,\mathrm{cq}}
+ \leq\|\Phi(H_+)\|_{1,\mathrm{cq}}+
+          \|\Phi(H_-)\|_{1,\mathrm{cq}}
+ =\operatorname{tr}H_++\operatorname{tr}H_-=\|H\|_1.
+\tag{CG.40}
+$$
+
+A positive cq measure has norm equal to its total trace, so this argument
+requires no finite time alphabet. It includes any singular events and
+extra sectors. Consequently
+$\operatorname{dist}(\Phi(\Gamma_5),\Phi(\Gamma_{27}))
+\leq\delta_{\rm in}$. The triangle inequality now gives
+
+$$
+\begin{aligned}
+\delta_{\rm out}
+ &\leq\operatorname{dist}(\Theta_5,\Phi(\Gamma_5))
+      +\operatorname{dist}(\Phi(\Gamma_5),\Phi(\Gamma_{27}))
+      +\operatorname{dist}(\Phi(\Gamma_{27}),\Theta_{27})\\
+ &\leq2E+\delta_{\rm in}.
+\end{aligned}
+\tag{CG.41}
+$$
+
+Substituting (CG.25) and (CG.30) proves
+$E\geq(\delta_{\rm out}-\delta_{\rm in})/2=L_{\rm full}$,
+with exactly the factors in (CG.38).
+
+Independent ancillas and randomness are already inside the common map.
+Abort and rejection outputs, and any simulated outcomes of zero ideal
+weight, stay in the two error norms in (CG.39); no acceptance denominator
+can remove them. A processor required to handle all twelve histories must
+handle (CG.22) with their original targets. This restriction supplies a
+necessary test and does not alter the other eight targets. Finally the
+constant is independent of $\Phi$, so taking its infimum proves the
+second inequality in (CG.37). No compactness or attainment assumption is
+used. $\square$
+

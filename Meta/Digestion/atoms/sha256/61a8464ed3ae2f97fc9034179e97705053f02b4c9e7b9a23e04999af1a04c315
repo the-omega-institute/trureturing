@@ -1,0 +1,23 @@
+**Definition 1.1 (the sufficient interface).** The graph $G_{\rm sel}$ defined
+below is installed at original initialization on ARC's 74 roles. It keeps
+the outer menu $00,01,1$. Only inside the admitted history branch $1$ it
+acquires a separate bit $\mu$, called HistoryMode. Mode zero runs the old
+history-frame parser. Mode one acquires a frame with one of two payloads:
+
+$$
+\begin{aligned}
+\operatorname{AcquisitionOffset}(t)&=0\,U(t),\\
+\operatorname{SourceOffset}(m,t)&=1\,U(m)\,U(t),\qquad U(n)=1^n0.
+\end{aligned}
+$$
+
+For an authentic acquired cover with acquisition and predecessor tallies
+$a,b$, the first payload binds $k=a+t$ when $t\le b-a$. The second finds
+the actual completed auxiliary source occurrence with old unified ordinal
+$m$, constructs its entry and exit tallies $e,f$ internally, and binds
+$k=e+t$ when $t\le f-e$. Both feed ARC's existing immutable Issue and
+received-reference Call. AcquisitionOffset alone suffices for every cut of
+$[a,b]$; SourceOffset supplies an actual source-occurrence adapter without
+asking its requester for an absolute primitive tally. These are two arms of
+one installed program, with one common cover, source, codec and consumer.
+

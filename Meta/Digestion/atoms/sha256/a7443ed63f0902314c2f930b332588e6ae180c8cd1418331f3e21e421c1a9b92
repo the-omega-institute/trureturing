@@ -1,0 +1,25 @@
+**Proposition 3.3 (an optional independent prior producing the same law).**
+Fix $S=S_*$. Sample $A$ uniformly from the entire $q^r$-point cube,
+and independently sample $L$ uniformly from
+$\{\lambda_0,\ldots,\lambda_0+K\}$. Use the actual source $X_A$,
+its early encoder and its own $L$ substitutions. The event
+$\mathcal E=\{(S_*,e_f(A),V_{S_*}(A,L))=E_*\}$ has probability
+
+$$
+\Pr(\mathcal E)=\frac{2^m}{q^r(K+1)}>0.
+\tag{NTL.14}
+$$
+
+Conditionally on $\mathcal E$, the $2^m$ histories of Theorem 3.2
+are equiprobable, so their coordinates $B_0,\ldots,B_{m-1}$ are
+independent fair bits. Their lag is $\lambda_0+f(B)$.
+
+**Proof.** Each pair $(a,\ell)$ in this finite independent prior has
+probability $1/(q^r(K+1))$. Theorem 3.2 supplies exactly $2^m$
+distinct such pairs in the event, all with supported lags. Summing and
+dividing proves (NTL.14) and the conditional distribution. Independence
+of $A,L$ before conditioning does not assert independence of the
+selected history's lag and original afterwards. This prior is a law on
+allowed histories, not a restriction of the global recovery domain.
+$\square$
+

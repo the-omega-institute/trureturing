@@ -1,0 +1,19 @@
+**Theorem 28.9 (Finite legal upper laws).** For a coefficient $q=\langle u|\rho|v\rangle$, with $u,v$ in one count sector, use
+
+$$
+X=|u\rangle\langle v|+|v\rangle\langle u|,\qquad
+Y=i|u\rangle\langle v|-i|v\rangle\langle u| .
+$$
+
+Their three outcomes $+1,-1,0$ have signed means $2\operatorname{Re}q$ and $2\operatorname{Im}q$. Full support uses the two quadratures for $C_3,Z,R$, hence six retained settings and eighteen labels; sparse support uses those for $Z_s,R_s$, hence four settings and twelve labels. For $C_3$, use the corresponding second-window quadrature lifted by the identity on the first window; its mean is the actual marginal coefficient. Write $L=6$ or $4$ for the number of scalar settings. If settings are uniform and retained, bounded importance scores give, simultaneously, for the $L/2$ complex coefficients,
+
+$$
+\Pr\left[\max_\ell|\widehat q_\ell-q_\ell|>\tau\right]\le\delta,\qquad
+\tau=C_L\sqrt{\frac{\log(4L/\delta)}N},
+\tag{28.10}
+$$
+
+where $C_L$ depends only on $L$. The statistic is built from actual retained-setting masses, not conditional success probabilities.
+
+**Proof.** For a scalar setting $j$, the per-trial score is $W_j=(L/2)o\mathbf1_{\{S=j\}}$, with $o\in\{-1,0,1\}$. Directly taking $\operatorname{Tr}(\rho X)$ and $\operatorname{Tr}(\rho Y)$ gives twice the real and imaginary parts with the displayed sign. The score has the required mean and lies in $[-L/2,L/2]$. The log moment-generating function of a centered bounded variable has second derivative equal to its variance under exponential tilting, at most $L^2/4$; integrating twice gives $\log\mathbb E e^{a(W_j-\mathbb EW_j)}\le a^2L^2/8$. Chernoff optimization and a union bound with scalar tolerance $\tau/\sqrt2$ give failure at most $2L\exp(-N\tau^2/L^2)$. Thus (28.10) holds, for example with $C_L=L$. This is the bounded independent-summand method of Hoeffding, *Probability Inequalities for Sums of Bounded Random Variables*, JASA 58 (1963), 13–30, with normalization derived here. All projectors commute with total count, including the lifted marginal ones. $\square$
+

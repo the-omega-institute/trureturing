@@ -1,0 +1,32 @@
+**Mathematical citation 8.2a (bounded FIB supplier correspondence).** The comparison with [FIB-CHANGE; FIB-READOUT; FIB-FIELD; FIB-CLOCK; FIB-OCCLUSION; FIB-SYMMETRIC] concerns their listed mathematical constructions and governing applicability clauses. Graph integrability, calibrated static projections, output-resolved observation closure, quotient sufficiency and finite-dimensional stabilization are credited existing methods. The source-specific claims of Sections 3–7 do not acquire novelty from restating those methods.
+
+There is an actual shared paired-recursion supplier. [FIB-OCCLUSION, Section 九 and Q4] and [FIB-FIELD, Q12] explicitly attribute to [PAIR, Sections 2–4] the finite-table equations
+
+$$
+\begin{aligned}
+Q_x&=u_x\delta_\alpha+(1-u_x)\beta\sum_yB_{xy}W_y,\\
+W_y&=(1-v_y)\delta_\beta+v_y\alpha\sum_xA_{yx}Q_x,\\
+L&=\operatorname{diag}(1-u)B\operatorname{diag}(v)A,
+\qquad g=\operatorname{diag}(1-u)B(1-v),\\
+f&=g+Lg+L^2g,
+\qquad h=1-v+\operatorname{diag}(v)Ag.
+\end{aligned}
+$$
+
+Here $f_x=Q_x(E_p)$ and $h_y=W_y(E_\beta)$ are the entire configuration-indexed event arrays. The inverse fixes the same finite $A,B$, positive rows $\pi,\tau$ with $\pi B=\tau$, $\tau A=\pi$, regular emissions, and arrays satisfying the unprojected compatibility equations. It is an offline inverse within that known-kernel domain. This volume's $P=\pi f$ and $T=\tau h$ are only two scalar averages; neither the cited inverse nor a static second projection turns them into the full arrays, unknown acquired kernels or a compatible common-flow witness. The recursions are already the suppliers of (3.4), not an additional new result here.
+
+The other correspondences and their missing maps are as follows.
+
+| Supplier and exact compared clauses | Mathematical object supplied | Boundary for this complete stopped-flow problem |
+| --- | --- | --- |
+| FIB-CHANGE, 变化—场可积定理 and Q1–Q2, Q6–Q9 | A potential for abelian group increments on a connected underlying graph exists when every signed closed-walk increment sums to zero; calibrated five-state differences require common operator types and normalized feasible fibres. | An additive edge increment is not a probability residual barycentre. Formal reverse traversal supplies no legal reverse Read or waiting process. The compared statements give no map from their increments or static direction to the two residual equations, complete losses and acquired circulation in Definition 2.2. |
+| FIB-READOUT, 未来输出闭包判据 and Q2–Q7 | For a fixed common linear instrument and the declared legal output words and tests, a feasible initial-law difference is invisible precisely when it annihilates the generated future-test space. Output branch masses and complete records are retained. | The fixed-initial-law seam direction and an acquired-kernel parameter change are different objects. Its Q7 retains the missing source, initial-state, kernel, test and word map; a larger block representation does not identify that map with the original five-state direction or preserve the present risk and resources. |
+| FIB-FIELD, Q5–Q6, Q8–Q12 | Task-relative lumpability, fixed-generator observability, the attributed native Fibonacci phase/count future equivalence, and fixed-kernel indexed paired calibration. | Q8 retains the one sampled depth, every paid count, original renderer and legal active/pending/delivered domains. Its semantic phase/count summary is not a finite COMPLETE implementation. Q9 exhibits equal static and depth marginals with different joint future laws; separate marginals cannot supply this volume's joint flows. |
+| FIB-CLOCK, 局部时钟核, 输出分辨未来闭包判据 and Q1–Q2, Q5–Q11, Q16 | A fixed known waiting-law mixture on five states, its signed four-corner response, and future closure under complete output-resolved marked subkernels. | Its survival variable belongs to a state-conditioned waiting law, not the discrete synthetic pair weight $Z=(1-u)v$. Waiting, output and successor require one joint marked kernel; separately specified marginals do not determine it. No waiting-law observation is present in the original stopped source or installed observer. |
+| FIB-OCCLUSION, Section 九 and Q3–Q4 | The displayed PAIR recursions and an attributed inverse from both complete indexed arrays under fixed acquired kernels. | Q3 retains once-sampled $K$, positive paid histories, full records and matching Stop. Q4 limits the static/dynamic comparison to an analogy without a source/action/target/error/resource isomorphism. Compatibility of proposed arrays and a runtime readout are separate obligations. |
+| FIB-SYMMETRIC, the finite-prefix blind-direction comparison and Q6, Q11–Q13 | Symmetric mixed differences, order defects, and fixed-carrier future visibility under a full legal observation contract. A block-diagonal comparison can encode two known models on a larger carrier. | Its Q6 distinguishes growing private-label dimension and acquired-kernel variation from one fixed five-state initial-law direction. Q11 preserves all outputs, records, Stop and consistent cylinder laws; Q12 distinguishes additive clock increments from probability kernels. These statements provide no native stopped-flow map or lawful resource-preserving replacement for the present observer. |
+
+In the fixed five-state statements, the seam direction $d=(1,-1,0,-1,1)$ is a zero-total-mass initial-law direction. It is not this volume's dispersion $D$, the hidden depth $K$, or an unknown residual flow. Nonzero response along that direction requires feasible distinct initial laws and a fixed calibrated instrument; it does not itself generate a new observation permitted by Definition 2.1. The supplied native future equivalence likewise concerns semantic complete conditional laws on its own legal domain, rather than access to the depth, posterior or unbounded counts as finite runtime state.
+
+These compared sections give no source/action/risk/resource map that would transfer their static seam, additive potential, waiting-law or fixed-dimensional closure statements into a zero pair or a universal exclusion in $\mathfrak C$. This is the scope of the comparison, not a theorem that such a map is impossible or a catalogue of all FIB results. It leaves the original once-sampled source, acquired/synthetic update identity, configuration-before-TV order, exact-sampler conditions and COMPLETE accounting exactly as in Definitions 2.1–2.4 and Citation 8.2. No detector, clock, causal or practical-performance conclusion is imported.
+

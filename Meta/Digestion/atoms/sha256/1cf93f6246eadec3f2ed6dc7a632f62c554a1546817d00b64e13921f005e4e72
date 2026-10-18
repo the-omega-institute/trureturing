@@ -1,0 +1,29 @@
+**Theorem 61.3 (The universal truthful-row restriction with its all-source premise).** Suppose the original fixed targets satisfy
+
+$$
+h_y=h>0,\qquad e_y=0\qquad\text{for every original }y\in X.
+\tag{61.9}
+$$
+
+For every allowed consumer and arbitrary measurable tape carrier, $R_\mu\ge h$. Thus a proposed sharp value $r<h$ is impossible in this input class. If $h=1$, then $R_\mu=1$ and the endpoint is attained. More generally, under the original profile (44.2), an all-source premise $h_y\ge h_0$ gives
+
+$$
+R_\mu\ge L_\mu\ge(1-B)h_0,
+\qquad B=\lim_{k\to\infty}b(k).
+\tag{61.10}
+$$
+
+**Proof.** Under (61.9), every correct mass $s_y$ equals $h$, so every nonempty tail in (61.2) has infimum $h$ and $L_\mu=h$. Apply Theorem 61.2. At $h=1$, TV is at most one, and Theorem 50.2 supplies attainment at that value. Under the more general premise,
+
+$$
+s_y=h_y-e_y\ge(1-b(\Omega(y)))h_y\ge(1-B)h_0
+\qquad(y\in X),
+\tag{61.11}
+$$
+
+so the same theorem gives (61.10); the actual $L_\mu$ can be stronger than this profile-only bound.
+
+For $0<h<1$, the already prescribed examples of Theorems 56.2, 57.1 and 57.2 give unattained and attained possibilities at every $h\le r<1$ for the row $(h,0,0,1-h)$ and every allowed profile. Those examples are reused without reconstructing or substituting their families. They show, in particular, that $L_\mu=R_\mu=h$ does not decide attainment. The necessity $h\le R_\mu$ holds with arbitrary target divergence/nonproposal splits under (61.9), because its proof uses only correct mass.
+
+The all-source premise is essential to this conclusion. It is not the anchor-only bound $(1-B)h/(2-B)$ of Theorem 46.1, whose other target rows are free. For nonzero prescribed errors the correct quantity is $h_y-e_y$ or its localized bound (61.2); the inequality $h_y>r$ alone gives no exclusion. Thus the theorem settles the truthful-row parameter obstruction without classifying all nonzero-error profiles or all fixed families at a permissible scalar value. $\square$
+

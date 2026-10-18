@@ -1,0 +1,19 @@
+**Premise 2.3 (Direct attainment-to-strong-zero theorem).** [Direct][D], Theorem 1.5, gives for every stationary legal $P$
+
+$$
+d(P)=c_\star\quad\text{and}\quad A_P<\infty
+\quad\Longrightarrow\quad\mathsf Z_\Delta(P).
+\tag{2.6}
+$$
+
+Here $\mathsf Z_\Delta(P)$ means that one shift-invariant Borel $P$-conull set $\Omega_0$ is saturated under every legal finite modification, and for every finitely differing $x,z\in\Omega_0$ the original-law series
+
+$$
+\Delta_P(x,z)=\sum_{i\in\mathbb Z}\bigl(\ell_i(x)-\ell_i(z)\bigr)
+\tag{2.7}
+$$
+
+converges absolutely and equals zero. Saturation includes every legal completion obtained by changing finitely many sites. The functions $q_i$ and $\ell_i$ at a modified configuration remain those of $P$.
+
+Direct's Convention 2.2 retains the legal-surgery and version premises from Exterior, Theorem 3.1, and Guarded, Lemma 2.2: compatible full-exterior fibers are positive under the attained band, legal replacements are nonsingular, and two fixed original-law posterior-version collections agree on a common saturated conull domain. The nested bodies are uninspected mathematical premises; their identities and precise role are recorded in §13. Thus (2.6) is used as the stated handwritten supplier theorem, including this dependency boundary. The root sum will be proved in §5 for the actual renewal law before (2.6) is applied. No root-sum assertion for arbitrary nonrenewal hidden laws is part of this premise.
+

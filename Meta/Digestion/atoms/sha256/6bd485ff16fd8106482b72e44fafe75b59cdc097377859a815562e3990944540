@@ -1,0 +1,53 @@
+**Lemma 4.3 (Finite words, support and visible reversibility).** Set
+
+$$
+T_0=1,\qquad T_m=ps^{m-1}+ct^{m-1}\quad(m\ge1).
+\tag{4.6}
+$$
+
+For $m\ge1$,
+
+$$
+P([0^m])=\frac{(p/a)s^{m-1}+(c/b)t^{m-1}}Z,
+\qquad P(X_0=1)=\frac1Z.
+\tag{4.7}
+$$
+
+A legal word with $h\ge1$ ones, initial and final zero runs of lengths $\ell,r\ge0$, and intervening one-to-one distances $g_1,\ldots,g_{h-1}\ge2$, has probability
+
+$$
+P([0^\ell1\,0^{g_1-1}1\cdots0^{g_{h-1}-1}1\,0^r])
+=\frac{T_\ell T_r}{Z}\prod_{j=1}^{h-1}f(g_j).
+\tag{4.8}
+$$
+
+The empty product is one. Every $\mu_n$ is positive on all of $B_n$, nearest exterior ones exist on both sides of every site almost surely, and the visible two-sided law is reversible.
+
+Proof. Direct multiplication, or induction on $m$, gives
+
+$$
+\lambda M_0^m=
+\frac1Z\bigl(0,(p/a)s^{m-1},(c/b)t^{m-1}\bigr),\qquad m\ge1.
+\tag{4.9}
+$$
+
+The first multiplication uses $a+s=b+t=1$; subsequent ones multiply the last two coordinates by $s,t$. Summing coordinates gives (4.7), and $\lambda v=(p+c)/Z=1/Z$. Furthermore
+
+$$
+eM_0^m\mathbf1=T_m,\qquad \lambda M_0^mv=T_m/Z\quad(m\ge0).
+\tag{4.10}
+$$
+
+For $m=0$ these follow from $e\mathbf1=1$ and $\lambda v=1/Z$; for $m\ge1$ they follow from (4.9) and $eM_0^m=(0,ps^{m-1},ct^{m-1})$. Repeated factorization by $M_1=ve$ now gives (4.8). Every factor is positive. Illegal words have zero probability by $M_1^2=0$.
+
+Because $0<t<s<1$, (4.7) implies
+
+$$
+P([0^m])\le\frac{Z-1}{Z}s^{m-1}\longrightarrow0.
+\tag{4.11}
+$$
+
+Continuity of probability on decreasing events excludes an entirely zero left or right half-line. Stationarity and a countable intersection give exterior anchors on both sides simultaneously for every site.
+
+Reversing a word with ones exchanges $\ell,r$ and reverses the order of the gap factors in (4.8), leaving its probability unchanged. All-zero words are unchanged and illegal words remain illegal. Thus all contiguous word probabilities are reversal invariant. Marginalizing such words handles every finite set of coordinates; stationarity places the reflection at any integer site. Uniqueness of the measure determined by its cylinders proves visible reversibility. No reversibility of the hidden chain is asserted. $\square$
+

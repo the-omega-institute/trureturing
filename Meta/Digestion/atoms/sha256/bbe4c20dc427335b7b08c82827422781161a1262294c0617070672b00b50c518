@@ -1,0 +1,25 @@
+**定义 7.2.2（不可观测子空间）。** 定义
+
+$$
+\mathcal N
+=
+\bigcap_{k\ge0}\ker(CA^k).
+$$
+
+若 $z\in\mathcal N$，则从状态差 $z$ 出发，在没有额外输入时的全部未来读出都为零：
+
+$$
+CA^kz=0
+\qquad\forall k\ge0.
+$$
+
+同样由 Cayley–Hamilton 定理，
+
+$$
+\mathcal N
+=
+\bigcap_{0\le k<n}\ker(CA^k).
+$$
+
+<a id="claim-7-2-3"></a>
+

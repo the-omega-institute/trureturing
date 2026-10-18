@@ -1,0 +1,63 @@
+## 6. Explicit negation of L2 on actual children
+
+The decoder arguments give the same fixed-world quantifier statement
+for either conditioned class and every known subset $K$ of it.
+
+Here all appended readings $v,w$ are original, unnormalized values,
+and $H$ is exactly (1.1). Write $\rho_E(W)$ for the normalized sixth
+response ($j_6$ or $m_6$ in the shape class). The corresponding raw
+response functions are
+
+$$
+v_E(W)=D_0+\lambda\rho_E(W),\qquad
+w_{EF}(W)=D_0+\lambda r_{EF}(W).
+$$
+
+Since $\lambda\ne0$, each selected raw scalar has precisely the same
+injectivity as its normalized scalar. For the chosen first atom $E$
+and any real original-clock response $v$, set
+
+$$
+\begin{aligned}
+H_v&=(H,E,v),\\
+K_v&=K\cap\mathcal F(H,E,v)
+    =\{W\in K:v_E(W)=v\}.
+\end{aligned}                                                       \tag{6.1}
+$$
+
+If the selected sixth response is injective on $K$, then for every
+real $v$ the set $K_v$ has at most one world. The cardinality clause
+of (1.5) gives $\neg L_1(K_v,H_v)$ for every $v$.
+
+If instead the selected injective raw scalar is the terminal response
+$w_{EF}$ of a fixed word $EF$, then for every real $v$ and every
+real $w$,
+
+$$
+\begin{aligned}
+K_{v,w}
+ &=K_v\cap\mathcal F(H_v,F,w)\\
+ &=\{W\in K:v_E(W)=v,\ w_{EF}(W)=w\}
+\end{aligned}                                                       \tag{6.2}
+$$
+
+has at most one world. Thus $L_0(K_{v,w},(H_v,F,w))$ is false for
+every $w$. When $|K_v|\ge2$, the particular second atom $F$ consequently
+has no response retaining $L_0$, so the conjunction defining
+$L_1(K_v,H_v)$ fails. When $|K_v|\le1$, its cardinality clause already
+fails. In all cases,
+
+$$
+\exists E\in\{M,J\}\ \forall v\in\mathbb R:
+                  \neg L_1(K_v,H_v).                             \tag{6.3}
+$$
+
+This is precisely a failed action conjunct in the definition of
+$L_2(K,H)$. If $|K|\le1$, its cardinality clause gives the same
+conclusion immediately. Hence both theorems prove $\neg L_2$ on
+the whole promised class, without replacing its actual children by
+independently chosen pairs. Empty and singleton children, all real
+sixth responses and all real seventh responses have been included.
+The physical policy still acquires the immediate sixth read whenever
+the seventh read supplies the inverse.
+

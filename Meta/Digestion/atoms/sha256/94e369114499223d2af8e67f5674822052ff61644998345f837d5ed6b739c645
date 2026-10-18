@@ -1,0 +1,16 @@
+**Proposition 10.1 (one sufficient allocation).** For fixed effectively
+described $T,L,W,V,\eta,c$, taking $n\to\infty$ with
+$d_k,\tau=O(n^{-2})$ and $d_x=O(n^{-1})$ gives
+$\Delta,E,B,E_A,P=O(n^{-1})$ and hence a complete-operation certificate
+$O(n^{-1})$. If finite arithmetic is used, require its additional phase
+budget to be $O(n^{-1})$ as well.
+
+Proof. In (SC.11), $h=T/n$, $n\delta=O(n^{-1})$ and
+$M=LT+O(n^{-1})$. Substitute these into (SC.13), then (SC.20).
+The loop version has the same order. $\square$
+
+This is a sufficient finite-horizon allocation, not a physical price law.
+In the minimax task, optimizing the sample count against a fixed $\delta$
+instead uses $n$ of order $\min(N+1,\delta^{-1/2})$. Oversampling raw noise
+without this balance need not improve the complete instrument.
+

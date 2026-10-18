@@ -1,0 +1,35 @@
+**Theorem 4.5 (Complete actual Jordan basis and minimal polynomial).** For every $H,K,p$ and every phase choice of Definition 2.1,
+
+$$
+\mathcal E_\theta\ \sim_{\mathbb C}\quad
+\left[\bigoplus_{m=1}^H\bigl(J_m(0)\oplus J_m(0)\bigr)\right]
+\oplus
+\left[\bigoplus_{\lambda\in\Lambda}J_{m_\lambda}(\lambda)\right],
+\qquad
+m_{\mathcal E_\theta}(z)=z^Hf(z).
+\tag{4.4}
+$$
+
+An actual Jordan basis in $M_d(\mathbb C)$ consists of the reversed band lists (4.1), together with, for each $\lambda$, the reversed lifted list
+
+$$
+w_{\lambda,j}^{\theta}
+=\iota_\theta(v_{\lambda,j})
+=\Delta(v_{\lambda,j})+X_\theta v_{\lambda,j},
+\qquad 0\le j<m_\lambda.
+\tag{4.5}
+$$
+
+Proof. Theorem 3.4 identifies the channel with $T\oplus P$ through the explicit isomorphism $G_\theta$. Lemma 4.2 supplies a basis for the first summand and Lemma 4.4 supplies a basis for the second. Their images under $G_\theta$ are exactly the displayed matrices. In particular
+
+$$
+(\mathcal E_\theta-\lambda I)w_{\lambda,j}^{\theta}
+=w_{\lambda,j+1}^{\theta}\quad(j<m_\lambda-1),
+\qquad
+(\mathcal E_\theta-\lambda I)w_{\lambda,m_\lambda-1}^{\theta}=0.
+$$
+
+This proves the complete block list on the whole algebra.
+
+For minimality, a length-$H$ nilpotent chain has minimal polynomial $z^H$: if $r(T)$ kills its initial chain vector, the independent successive vectors force the coefficients of $z^0,\ldots,z^{H-1}$ in $r$ to vanish. Thus any polynomial annihilating the channel must be divisible by $z^H$ from its restriction to $\mathcal N$, and by $f$ from its action on $W_\theta\cong V$. The factors are coprime because $f(0)\ne0$, so their product divides every annihilating polynomial. Conversely $z^Hf(z)$ kills both summands. This proves the second assertion of (4.4). The characteristic polynomial (2.3) is consistent with the blocks, but was not used as a substitute for the basis construction. $\square$
+

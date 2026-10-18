@@ -1,0 +1,98 @@
+**Theorem 240.2 (Attained upper equal-seven region).**
+Suppose
+
+$$
+\tfrac12<t\le\tfrac{41}{77},\qquad a_1=\cdots=a_7=t,
+\qquad e_t=\frac{29t-2}{45}.
+\tag{240.2}
+$$
+
+For every positive nonincreasing vanishing actual tail with $a_8\le e_t$,
+both original classes have attained optimal uniform error $e_t$ and
+are feasible at a positive closed cap exactly when that cap is at least
+$e_t$. The half endpoint is the reused law of §231; no attainment
+beyond $41/77$ is asserted.
+
+Proof. Use that half-endpoint whole law, namely the 14 core rows of
+Theorem 238.1 divided by 18 without empty mass. Its cap is $5/18$.
+For the upper endpoint use these whole deterministic rows, with mass
+equal to the integer weight divided by 154:
+
+| Schedule | Outputs $0,10,11$ | Weight |
+| --- | --- | --- |
+| $12$ | $(0,2,0)$ | 12 |
+| $12$ | $(0,2,3)$ | 6 |
+| $12$ | $(0,2,6)$ | 2 |
+| $13$ | $(1,3,0)$ | 12 |
+| $13$ | $(1,3,7)$ | 4 |
+| $14$ | $(1,4,0)$ | 12 |
+| $15$ | $(0,5,0)$ | 1 |
+| $15$ | $(1,5,0)$ | 8 |
+| $23$ | $(0,3,0)$ | 7 |
+| $23$ | $(2,3,0)$ | 5 |
+| $23$ | $(2,3,6)$ | 2 |
+| $24$ | $(0,4,0)$ | 12 |
+| $25$ | $(2,5,0)$ | 9 |
+| $26$ | $(0,6,7)$ | 2 |
+| $34$ | $(0,4,0)$ | 12 |
+| $35$ | $(0,5,0)$ | 9 |
+| $45$ | $(0,5,0)$ | 9 |
+| $46$ | $(0,6,7)$ | 12 |
+| $56$ | $(0,6,7)$ | 18 |
+
+Their weights sum to 154. Every first-zero class has constant correct
+count 36: count every occurrence of its queried output and each
+exhaustion guess, whose two queried addresses precede that label.
+Consequently later zeros do not affect that count.
+For an explicit complete outside-pair verification, the following lists
+give all wrong positive counts in each class. For $n\le6$, fix
+$w_1=\cdots=w_{n-1}=1,w_n=0$ and list the free bits
+$(w_{n+1},\ldots,w_6)$ in lexicographic binary order. Bit seven is
+unqueried and does not alter the output. Class seven has one transcript.
+
+| First zero | Wrong counts, in the specified order |
+| --- | --- |
+| 1 | $16,16,34,34,37,37,46,46,37,37,46,46,46,46,46,46,37,37,46,46,46,46,46,46,46,46,46,46,43,43,34,34$ |
+| 2 | $37,37,46,46,46,46,46,46,46,46,46,46,43,43,34,34$ |
+| 3 | $46,46,46,46,43,43,34,34$ |
+| 4 | $43,43,34,34$ |
+| 5 | $28,28$ |
+| 6 | $10$ |
+| 7 | $10$ |
+
+Each entry follows from the explicit formula
+$\sum_D k_D[\operatorname{out}_D(w)\notin\{0,n\}]$;
+the table exhausts all suffixes. Its maxima are
+$(46,46,46,43,28,10,10)$. The base counts are $154-36-E_n$,
+so base is at least 72, correct is 36 and pair is at least 108.
+At $1^7$ the label counts are $(108,0,0,6,0,0,4,36)$.
+For $t=41/77=82/154$, $e=23/77=46/154$, these satisfy
+all three independent demands and the positive demand. In particular
+correct demand is 36, base demand is 26, and pair demand is 108.
+The low endpoint is verified on every suffix by (238.2).
+
+For $t\in[1/2,41/77]$ put $\eta=(154t-77)/5\in[0,1]$.
+Take the convex combination of the entire low and high laws with
+high weight $\eta$. Its amplitude and cap are the same convex
+combinations of endpoint data, and that cap is $(29t-2)/45$.
+All 382 rows are affine in this one kernel and in $(a,e)$, so every
+row holds simultaneously, with correct mass $t-e_t$ and positive
+base $1-e_t$. The correct event makes the low-word error exactly $e_t$.
+Definition 237.2 and §243 give an actual O attainer and same-seed
+counted N completion, with every actual tail error
+$\max(e_t,a_n)=e_t$ including equality. Conversely (240.1) at
+consecutive late positions gives $29t\le2+45c$ against every
+original competitor. An intermediate cap below $e_t$ contradicts it.
+This proves attained optimality and the assertion for every cap. ∎
+
+The finite attainer has mass one in the full cone and lies in $H_7$:
+the lower hull slack is $(16-7t)/45$ and the upper expression is
+$(38t+16)/45\le62/77$. Its full same-seed completion proves $H_N$.
+Relative to the old displayed directions, at
+$(b,e)=(51/100,\ldots,51/100;17/60)$ the old 63-charge reading
+is zero, the four old $\rho=2$ readings are nonpositive, and this
+cut reads $1/25>0$. This point is outside $H_N$ by (240.1), so it
+is not an original separator. At the former flat cap $5t/9$ this
+cut reads $4t-2>0$ beyond the half endpoint, excluding both classes.
+This necessary exclusion is distinct from the attained interval (240.2).
+

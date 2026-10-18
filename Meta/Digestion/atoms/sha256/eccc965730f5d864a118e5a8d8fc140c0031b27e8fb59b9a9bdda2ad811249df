@@ -1,0 +1,39 @@
+**Definition 34.1 (The bundle and the positive Dolbeault operator).**
+Restrict scalars in $\mathcal C_k$ along $A_k\hookrightarrow R_k$.
+By (31.6) its associated bundle on the smooth projective space
+$X_k=\operatorname{Proj}A_k=\mathbb {CP}^{2k}$, twisted by $m$, is
+
+$$
+\mathcal E_{k,m}
+=\widetilde{\operatorname{Res}_{A_k}^{R_k}\mathcal C_k}(m)
+=\bigoplus_{j=2}^{k-1}\mathcal O_{X_k}(m-2j-1).
+\tag{34.1}
+$$
+
+Take $m\ge0$, the Fubini–Study metric on $X_k$, and smooth
+Hermitian metrics on the line bundles. Let
+$\mathscr E_{k,m}^{+}=\Lambda^{0,\mathrm{even}}T^*X_k\otimes
+\mathcal E_{k,m}$ and
+$\mathscr E_{k,m}^{-}=\Lambda^{0,\mathrm{odd}}T^*X_k\otimes
+\mathcal E_{k,m}$, where parity is the Dolbeault form degree.
+Write $\bar\partial_{\mathcal E}$ for the holomorphic Dolbeault
+differential and $\bar\partial_{\mathcal E}^{\dagger}$ for its
+formal adjoint. Define
+
+$$
+D_{k,m}=\sqrt2\bigl(\bar\partial_{\mathcal E}
++\bar\partial_{\mathcal E}^{\dagger}\bigr),\qquad
+D_{k,m}^+:H^1(X_k,\mathscr E_{k,m}^+)
+\longrightarrow L^2(X_k,\mathscr E_{k,m}^-).
+\tag{34.2}
+$$
+
+Here $H^1$ is the first Sobolev space; sheaf cohomology will always
+be written as $H^q(X_k,\mathcal E_{k,m})$.
+The differential expression $D_{k,m}^-$ is the restriction from odd
+to even forms. This is the twisted Dolbeault–Dirac operator for the
+canonical complex $\operatorname{Spin}^c$ structure. No ordinary
+spin structure or boundary condition is part of the definition.
+Restriction to $A_k$ in (34.1) is essential: this construction has
+forgotten the extra multiplication maps (31.7).
+

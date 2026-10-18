@@ -1,0 +1,40 @@
+### 定理 24.6（梯度轨迹的能量耗散）
+
+在耗散轨迹存在且保持在 \(\mathcal C_G^\circ\) 内的时间区间上，有
+
+\[
+\frac{d}{dt}\mathcal E(\Phi_t)
+=
+-\left\langle
+\nabla\mathcal E(\Phi_t),
+\mathsf M_{\Phi_t}\nabla\mathcal E(\Phi_t)
+\right\rangle
+\le0.
+\]
+
+在保守轨迹上，有
+
+\[
+\frac{d}{dt}\mathcal E(\Phi_t)=0.
+\]
+
+#### 证明
+
+由链式法则，
+
+\[
+\frac{d}{dt}\mathcal E(\Phi_t)
+=
+\left\langle
+\nabla\mathcal E(\Phi_t),\dot\Phi_t
+\right\rangle.
+\]
+
+代入耗散生成元得到第一式，正半定性给出不等式。代入保守生成元得到
+
+\[
+\langle\nabla\mathcal E,\mathsf J_\Phi\nabla\mathcal E\rangle=0
+\]
+
+因为 \(\mathsf J_\Phi\) 反对称。证毕。
+

@@ -1,0 +1,30 @@
+## 200. 较早零守卫的加权缺陷与完整证书的实际切片
+
+本节保留[定义 110.1](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION.md#110-exact-closed-cap-transport-on-the-original-countable-source)的实际可数带标签来源：
+
+$$
+\begin{aligned}
+X&=\{(r,g):r\text{ 为素数},\ g\in\mathbb Z,
+\ \lceil F_r/10\rceil\le g\le\lfloor F_r/5\rfloor\},\\
+N(r,g)&=1+F_rg,\qquad q_i(x)=\mathbf1_{p_i\mid N(x)},\qquad
+n(x)=\min\{i:q_i(x)=0\}.
+\end{aligned}
+$$
+
+这里 $F_0=0,F_1=1,F_{r+2}=F_{r+1}+F_r$，$p_i$ 是递增的素数序列；回答静态，
+每个有限回答字都有实际来源见证，实际 $n(x)$ 总有限。完整可测纸带载体、原标记
+$\theta_j$、消费者和非原子原目标 $\mu_x$ 不变。所讨论的目标是另行选定的
+
+$$
+\lambda_x^a=(1-a_{n(x)})\delta_{\theta_0}
+                  +a_{n(x)}\delta_{\theta_{n(x)}},\qquad
+1\ge a_1\ge a_2\ge\cdots>0,\quad a_i\longrightarrow0.
+$$
+
+资源严格采用[获取资源定义 90.1](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES.md#90-adaptive-preselected-and-increasing-first-zero-stop-acquisitions)：
+零建议，一个与来源无关的共同种子，实际源上几乎处处有限交接，至多两次实际请求，
+包括重复请求及取得后忽略的请求。$N_2$ 预选日程并取得全部回答；$O_2$ 预选严格
+递增日程并在首个被查询的零或耗尽时停止。竞争者可用任意地址和完整载体内任意输出；
+误差是所有实际来源上的 TV 上确界，不引入来源概率律。辅助有限剖面的零帽和零幅
+仅用于以下几何，原始幅序列仍严格正且趋零。
+

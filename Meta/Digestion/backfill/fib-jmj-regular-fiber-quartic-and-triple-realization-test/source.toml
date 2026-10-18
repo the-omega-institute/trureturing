@@ -1,0 +1,5 @@
+source_id = "fib-jmj-regular-fiber-quartic-and-triple-realization-test"
+path = "docs/develop/theory/FIB_JMJ_REGULAR_FIBER_QUARTIC_AND_TRIPLE_REALIZATION_TEST.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

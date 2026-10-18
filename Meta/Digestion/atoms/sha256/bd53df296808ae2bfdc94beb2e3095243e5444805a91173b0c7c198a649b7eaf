@@ -1,0 +1,42 @@
+**Corollary 14.1 (correctly directed original pressure consequence).**
+Suppose $w_i=w\ne0$, and the base has prescribed incidence at most
+$L$, allowing $L=\infty$. Use the auxiliary
+$A_{d,L,N}(w)$ and $\beta_{d,L}(w)$ of
+[SIR, Definition 2.2][SIRbase]. For every rational positive matching
+$p$ and every admissible $m$,
+
+$$
+\begin{aligned}
+\frac1{nm}\log_2 A_{d,L,nm}(w)
+&\ge\frac{\mathcal B_{\mathcal N}(p;w)}n
+     -\frac{r(p)\log_2(m+1)}{nm},\\
+\log_2\beta_d(w)\ &\ge\log_2\beta_{d,L}(w)
+ \ge\frac{\mathcal B_{\mathcal N}(p;w)}n.
+\end{aligned}
+\tag{COK.70}
+$$
+
+Moreover $r(p)\le n4^{m_d}$, so the finite normalized loss is at
+most $4^{m_d}\log_2(m+1)/m$, uniformly in the size and topology
+of the base, for laws whose denominator divides $m$.
+
+Proof. Some permutation tuple has $Z_p$ at least its average.
+Its actual full solution mass is at least $Z_p$, and its incidence
+is still at most $L$ by Proposition 12.3. RRN's converse makes it
+a lawful competitor in the stated maximum. Corollary 13.4 proves
+the finite inequality. Take $m$ through denominator multiples and
+then the all-size supremum. At each local block there are at most
+$m_d$ seeds, each with at most four values, giving the support
+bound. No pressure normalization uses dyadic padding. $\square$
+
+For rational $w$ and rational $C>0$, a rational matching witness with
+$\mathcal B_{\mathcal N}(p;w)/n>\log_2 C$ therefore refutes the
+proposed universal cap $\beta_d(w)\le C$. More explicitly, choose
+a denominator multiple with the displayed finite loss below the
+strict gap. Some finite cover then has mass greater than $C^{nm}$.
+Finite exact enumeration of its permutations and actual tuples
+finds such a violating template. Computable log enclosures and the
+strict inequality suffice to find a large enough multiplier. This
+is a construction of counterexamples to undersized caps, not an
+NPC.8.1 upper certificate or a lower bound on $\sigma_d$.
+

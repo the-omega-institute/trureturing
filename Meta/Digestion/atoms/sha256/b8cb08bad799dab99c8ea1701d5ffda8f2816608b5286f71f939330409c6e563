@@ -1,0 +1,10 @@
+### 463.2 递归系数的零端点与完整正指数表示
+
+置
+
+$$
+p(v)=e^v-e^{-v}-2v,\qquad
+a(v)=\begin{cases}e^{-v}p(v)/v^3,&v>0,\\[2pt]1/3,&v=0.\end{cases}
+\tag{RVF.5}
+$$
+

@@ -1,0 +1,58 @@
+**定理 92.2（Exact proper-positive local price）。** Every child of Definition 92.1, under either original control alphabet, has
+
+$$
+\boxed{
+D_{\rm ad}(C)=D_{\rm child\text{-}pre}(C)=\left\lceil\log_2 n\right\rceil.}
+\tag{92.4}
+$$
+
+This is an additional fee: the complete chronological prefix in (92.2) has already been paid. The assertion is local to this actual child and imposes no stream compatibility on another child or free-value fibre.
+
+**证明（common tail and the all-adaptive lower bound）。** Since $n\ge3$, $P$ cannot be the all-one word. Indeed, the original charge identity gives the all-one word positive support only at the two endpoints of $W_a$; it cannot contain three surviving phase labels. Thus $P$ contains a zero. Every successful source in (92.2) therefore exits $P$ with the same terminal tail $\sigma=\rho(P)\le m-1$, independent of its incoming tail. Its current scalar is the common positive endpoint value $v+1$.
+
+Consider any original literal continuation from this common-value, common-tail archive. A complete word either succeeds on every candidate or rejects every candidate, because safety depends only on the common current tail and the word's leading run. Uniform rejection gives one absorbing endpoint and cannot resolve a nonconstant INITIAL label map. A successful word has only its binary scalar difference as an endpoint outcome; every wait, padding, attempted repair and endpoint stop is included in this statement. The common-tail binary bound [S10, Lemma 3.2] consequently gives at most $2^h$ distinct-label leaves for any adaptive continuation of worst additional fee $h$. The actual support supplies one jointly actual source for every label in $\lambda[A]$, so correctness requires $n\le2^h$. Hence
+
+$$
+D_{\rm ad}(C)\ge d,\qquad D_{\rm child\text{-}pre}(C)\ge d,\qquad d=\lceil\log_2n\rceil.
+\tag{92.5}
+$$
+
+**证明（extension to a full table and one actual suffix）。** Translate phases by $u=am\pmod T$ for the construction only, and write $A_0=A-u\subsetneq\{0,\ldots,m\}$. Since $A_0$ is nonempty, choose $L_0\in\lambda[A]$ and extend the actual table to the whole physical window by
+
+$$
+\bar\lambda(x)=
+\begin{cases}
+\lambda(u+x),&x\in A_0,\\
+L_0,&x\notin A_0.
+\end{cases}
+\tag{92.6}
+$$
+
+The extension has exactly the same $n$ labels. Because $n\le|A|\le m$ and $m$ is odd, the elementary bound used in (73.4) gives
+
+$$
+d\le\frac{m+1}{2},\qquad e_r=m+1-2r,\qquad s_r=e_r+1=m+2-2r
+\quad(1\le r\le d).
+\tag{92.7}
+$$
+
+Apply Lemma 73.3 to the full table $\bar\lambda$ and dimension $d$. It gives an injective label code $c:\bar\lambda[\{0,\ldots,m\}]\to\{0,1\}^d$ satisfying the missed-coordinate and first-bit clauses of (73.5), together with either its regular adjacent-seam clause or the displayed four-label alternative (73.8). Use the same actual-row prescription (73.10) and literal inverse (73.11) of Construction 73.4, then undo the phase translation. The resulting words $B_1,\ldots,B_d$ are issued at the actual indices $a+1,\ldots,a+d$.
+
+For an actual phase $x\in A_0$, the next window omits at most the single vertex $e_r$. If $x\ne e_r$, the charge of $B_r$ at $u+x$ is $c_r(\bar\lambda(x))=c_r(\lambda(u+x))$. If $x=e_r$, (73.5) makes that same code coordinate zero, exactly as the inverse prescribes at the omitted vertex. Thus every actual source's successive endpoint differences are its own label code
+
+$$
+\bigl(c_1(\lambda(u+x)),\ldots,c_d(\lambda(u+x))\bigr).
+\tag{92.8}
+$$
+
+The virtual values assigned in (92.6) are only compensated physical charges; they add no source, observation or borrowed archive. Injectivity of $c$ decodes the actual INITIAL label, including repeated labels at several phases.
+
+The first word supplied by Lemma 73.5 begins with zero. It therefore clears the actual incoming tail $\sigma\le m-1$. The same lemma proves every internal and cross-block seam of these very words, including its $d=2$, four-label alternative and the boundary $m=3$. Since $m<k$, every individual word is internally legal. No wait, repair, padding or final cleanup is inserted. Issuing the displayed suffix is consequently one fixed child-local stream of $d$ paid complete blocks, and it gives
+
+$$
+D_{\rm child\text{-}pre}(C)\le d,\qquad D_{\rm ad}(C)\le d.
+\tag{92.9}
+$$
+
+Combining (92.5) and (92.9) proves (92.4). The actual histories used in the lower bound are the histories already present in the definition of $A$; no product of separately reachable phase, value and tail coordinates is used. ∎
+

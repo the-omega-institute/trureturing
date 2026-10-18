@@ -1,0 +1,16 @@
+**Corollary 78.6 (conditional common-length minimum universal dimension).** For each
+fixed $\lambda\in I$, the minimum universal ambient integer dimension under78.1 is
+three. The same minimum holds at each one fixed cap $H\ge8$ for the legal finite
+commission class that includes INITIAL $\alpha$.
+
+**Proof.** In dimension one, the grounding hyperplane $y=0$ has only one point. It
+cannot supply two distinct ground tips even for a singleton. Dimension two fails for
+the cap-qualified source $T_5$ of78.4. Proposition78.5 supplies a placement for
+every legal finite source in every integer dimension at least three. The order of
+quantifiers is, for fixed $\lambda$ and dimension, every legal finite source
+followed by existence of that source's own placement. At a fixed $H\ge8$, the
+INITIAL-$\alpha$ prefix in78.4 belongs to the stated class, while78.5 still applies
+to every source in that class. This proves the conditional minimum, with no
+assertion about other lower-cap classes, a common apparatus or a physical dimension
+law. $\square$
+

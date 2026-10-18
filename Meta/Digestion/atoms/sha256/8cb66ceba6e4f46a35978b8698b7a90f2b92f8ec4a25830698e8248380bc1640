@@ -1,0 +1,57 @@
+**Proposition 7.4 (Ordinary continuous spectral normal forms).** Every
+character in Lemma 7.2 for a strict improver is continuous. The
+encoder and minimal profile consequently have exactly the forms
+in Theorem 3.2.
+
+Proof. A continuous unitary character of $\mathbb R$ is
+$e^{i\omega t}$ for some real $\omega$. To see the needed fact
+directly, choose a continuous argument $\theta$ near zero with
+$\theta(0)=0$. Shrink the interval until arguments are small.
+The character law makes
+$\theta(s+t)-\theta(s)-\theta(t)$ an integer multiple of $2\pi$;
+smallness forces it to be zero for sufficiently small $s,t,s+t$.
+Local additivity and continuity give $\theta(t)=\omega t$ there
+by rational subdivision and density. Subdividing any real $t$
+extends the character formula globally.
+
+If either character in (7.3) were discontinuous, Lemma 7.3 would
+leave at most one ordinary complex exponential, or zero, with
+the same error corridor. One complex coordinate
+$e^{(\gamma+i\omega)k}e^{i\alpha}$, with height multiplier
+$e^{(\gamma+i\omega)a}$ and phase multiplier $e^{it/2}$,
+realizes any such single-mode profile with a fixed linear decoder.
+The zero profile has the constant zero realization. Lemma 1.4
+and (5.1) would then give a literal budget-two model of error at
+most $\epsilon<e_2$, a contradiction. In (7.4) a discontinuous
+character would leave zero and gives the same contradiction.
+Thus all the used height characters are continuous.
+
+Set $x=k/H$. A diagonal character becomes
+$e^{\lambda_jx}$ with $\lambda_j=H(\gamma_j+i\omega_j)$;
+distinctness of the characters gives $\lambda_1\ne\lambda_2$.
+After the coordinate rescaling in Lemma 7.2 the state is exactly
+$e^{i\alpha}(e^{\lambda_1x},e^{\lambda_2x})$. In the confluent
+case rescale the second coordinate from $k$ to $x$ to obtain
+$e^{i\alpha}(e^{\lambda x},xe^{\lambda x})$. Dividing the scalar
+coefficient $f(k)$ by $2H$ gives $R(x)$ with the nonzero
+coefficients asserted in Theorem 3.2.
+
+These coefficients imply minimal order two. For a distinct pair,
+the equation $R'=\mu R$ would give
+$c_1(\lambda_1-\mu)e^{\lambda_1x}
++c_2(\lambda_2-\mu)e^{\lambda_2x}=0$; independence of the two
+exponentials and nonzero coefficients would force both distinct
+exponents to equal $\mu$. For a confluent profile with nonzero
+linear coefficient, $R'=\mu R$ would require the polynomial
+$(\lambda-\mu)(c_0+c_1x)+c_1$ to vanish; its linear and constant
+coefficients make this impossible. The stated quadratic
+annihilators do work, so the order is exactly two.
+
+The affine isomorphism of Proposition 6.2 and these fixed coordinate
+changes prove continuity and boundedness of the original encoder
+on its full source. For the scalar decoder (5.1) gives no greater
+error. This establishes the strict-improver part of T1. Together
+with Proposition 4.4 it proves the all-competitor domination
+direction, without assuming any spectral ansatz at the outset.
+$\square$
+

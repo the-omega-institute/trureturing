@@ -1,0 +1,39 @@
+**引理 11.1（Disjoint forbidden bands and an unrestricted phase）。** Identify an actual phase $j=gi$ with $i\in\mathbb Z/p\mathbb Z$, and set $A=(\mathbb Z/p\mathbb Z)\setminus\{0,u\}$. For query indices $t=1,\ldots,d$ after the parent, let
+
+$$
+a_t=p-t\rho=u-(t-1)\rho,
+\qquad
+\mathcal W_t=[a_t,a_t+u]\pmod p,
+\qquad
+J_t=\{u-t\rho+1,\ldots,u-(t-1)\rho\}\pmod p.
+\tag{11.1}
+$$
+
+The full physical path is $W_t=[tm,tm+m]\pmod T$, retaining all its nonactual vertices. Its actual vertices are $g\mathcal W_t$. Each $a_t$ is a positive representative, and
+
+$$
+(\mathbb Z/p\mathbb Z)\setminus(\mathcal W_t\setminus\{a_t\})=J_t.
+\tag{11.2}
+$$
+
+The sets $J_1,\ldots,J_d$ are disjoint, each has $\rho$ vertices, and at least one phase of $A$ belongs to none of them. Thus the safe code list
+
+$$
+\mathcal L_i=\{z\in\mathbb F_2^d:z_t=0\text{ whenever }i\in J_t\},
+\qquad i\in A,
+\tag{11.3}
+$$
+
+is either the full cube or a single coordinate-zero half cube. There is at least one full-cube list.
+
+Proof. The guard gives $a_d\ge1$ and $d\rho\le p-1$. Since $tm/g=tu\equiv-t\rho\pmod p$, the ordered actual path starts at $a_t$. Its last $u$ vertices, after deleting the first, have exactly the complementary band (11.2). All statements concern the circular order, even when the path or final band wraps. The bands concatenate the integer interval $u-d\rho+1,\ldots,u$, whose length is $d\rho<p$, so they are disjoint modulo $p$.
+
+Write $L=u-(d-1)\rho\ge1$. Vertex $u$ is in $J_1$. If $L\ge2$, the number of phases of $A$ outside all bands is at least
+
+$$
+(p-2)-(d\rho-1)=L-1\ge1.
+\tag{11.4}
+$$
+
+If $L=1$ and $\rho\ge2$, then $u=(d-1)\rho+1<d\rho$, so the concatenated interval also contains vertex zero. Exactly these two removed endpoint vertices belong to the bands. Hence there is exactly $p-d\rho=1$ outside phase outside all bands. The remaining possibility $L=\rho=1$ would give $u=d$ and $n=d-1$, contradicting $n>2^{d-1}$ for $d\ge2$. This proves the unrestricted list and the entire list description. ∎
+

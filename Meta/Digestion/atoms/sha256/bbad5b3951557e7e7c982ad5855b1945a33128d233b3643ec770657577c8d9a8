@@ -1,0 +1,99 @@
+**Theorem 16.2 (uniform quantified failure with full support).** Fix
+any integer $r\ge0$. Every graph satisfying (GDB.67) and
+
+$$
+n>24B(r)+12
+\tag{GDB.73}
+$$
+
+has the following property at the one fixed law (GDB.53). For
+every deterministic adaptive tree revealing at most $r$ actual
+owner replies in the network of Definition 12.2,
+
+$$
+\begin{aligned}
+\mathbb E_T\Delta(Q_T)
+&\ge \frac23[1-h_2(1/64)]n-2B(r)-1\\
+&>\frac{7n}{12}-2B(r)-1>\frac n2.
+\end{aligned}
+\tag{GDB.74}
+$$
+
+The same graph works for all these trees. In particular at least
+one attained section of each tree has loss greater than $n/2$.
+For every lower size threshold such graphs exist. Therefore
+$\mathsf H_{\rm pin}$ is false already at $d=3$, $L=2$,
+$\nu=\mu$ of (GDB.53) and $\epsilon=1/2$.
+
+Proof. Fix one attained transcript $\tau$. Because each next query
+and the decision to stop are deterministic functions of previous
+replies, its event is exactly a cylinder $s_P=b$ with
+$|P|\le r$. Repeated queries can be omitted. No additional
+condition on unqueried seeds is imposed by adaptivity.
+
+There are at most $B(r)$ exceptional vertices for this particular
+$P$. At a nonexceptional vertex none of its four edges is pinned;
+its two owned bits and two distinct singleton incoming owner groups
+therefore remain. Conditional on $(Y,\tau)$, the edge law is
+uniform on a nonempty affine section, because its original weight
+depends only on $Y$. Corollary 15.3 and mixing over the conditional
+syndrome law give exactly
+
+$$
+\sum_{J\subseteq[2]}\gamma_2(J)
+ H(O_v\mid B_{v,J},T=\tau)
+=\frac53+\frac13H(Y_v\mid T=\tau).
+\tag{GDB.75}
+$$
+
+The other local terms are nonnegative. If the actual exceptional
+count is $b\le B(r)$, then subadditivity and binary marginal
+entropies at most one give
+$\sum_{v\ {\rm nonexceptional}}H(Y_v\mid\tau)
+ \ge H(Y\mid\tau)-b$. It follows that
+
+$$
+\mathcal L(Q_\tau)\ge
+\frac{5n}{3}-2B(r)+\frac13H(Y\mid T=\tau).
+\tag{GDB.76}
+$$
+
+Conditional on a feasible $(Y,\tau)$ the affine fiber dimension
+is at most $\dim\ker H=n+1$. The pinned coordinates are fixed,
+so their removal changes no conditional entropy. Hence
+
+$$
+H(s_{\rm unpinned}\mid T=\tau)
+=H(s\mid T=\tau)
+\le n+1+H(Y\mid T=\tau).
+\tag{GDB.77}
+$$
+
+Subtracting proves
+$\Delta(Q_\tau)\ge2n/3-2B(r)-1-(2/3)H(Y\mid T=\tau)$.
+This step uses the actual residual owner groups, including their
+changes at exceptional vertices, without assigning them independent
+laws. Average over attained transcripts and use
+$H(Y\mid T)\le H(Y)$.
+
+The syndrome law in (GDB.63) holds on every connected graph,
+without that theorem's extra cut assumption. Its marginal satisfies
+$0\le q_n\le t=1/64$. Thus
+$H(Y)\le\sum_v H(Y_v)\le n h_2(t)$. Finally
+
+$$
+h_2(t)\le t\log_2(1/t)+t\log_2 e
+<\frac6{64}+\frac2{64}=\frac18.
+\tag{GDB.78}
+$$
+
+The first inequality uses
+$-(1-t)\ln(1-t)\le t$; the strict one uses $e<4$.
+These facts prove the first two lines of (GDB.74), and (GDB.73)
+proves its last inequality. The cut lemma and the exceptional
+bound hold uniformly for every possible pin set, so the chosen
+graph did not depend on the strategy. Proposition 15.4 supplies
+arbitrarily large graphs satisfying all the conditions. At least
+one attained section has loss exceeding its asserted threshold
+because its expectation does. $\square$
+

@@ -1,0 +1,30 @@
+**Proposition 3.2 (original finite exposure under its interface hypothesis).**
+Let $d$ be the native segment length through the read in Theorem 3.1.
+Suppose that, at every paired cut of this segment, the actual unchanged
+original interface admits Advance as precisely the prescribed next
+native row, with its actual guard, label, releases and complete original
+successor, including the inherited latch4. This original-interface
+hypothesis is not supplied by native enabledness and remains unverified
+for the annex segment. Under this hypothesis,
+
+$$
+x_0\not\sim_Q x_1.
+$$
+
+On $\{x_0,x_1\}$, each of GENERAL's four views separately has exactly
+the equality kernel of $Q$.
+
+Proof. The fixed nonadaptive experiment consisting of $d$ Advances
+belongs to the original language under the stated hypothesis. It uses
+no test of private coordinates. Each of its rows really executes; the
+last complete original successors have different latch4 values by
+Theorem 3.1, so its responses differ. No intermediate response, label
+or receipt is discarded. Equal histories give equal partial response
+maps, and Theorem 2.2 gives the two distinct values of each view. These
+facts prove the restricted kernel assertion. ∎
+
+The finite native exposure is unconditional within Assumption 1.2's
+model. Its interpretation as an original experiment has exactly the
+additional hypothesis in Proposition 3.2. Failure to establish that
+hypothesis does not establish equality of the two complete $Q$ maps.
+

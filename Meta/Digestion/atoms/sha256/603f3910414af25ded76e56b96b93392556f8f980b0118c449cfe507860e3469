@@ -1,0 +1,21 @@
+## 0. 目的与证据边界
+
+本卷把五个已经分别出现的对象放入同一个类型化管线：
+
+1. 五态 FIB 概率律；
+2. 固定一阶读出的 \(\kappa\)-纤维；
+3. Fisher 信息几何与读出收缩；
+4. Fibonacci 支持图的动态边界与环流；
+5. 算术驱动、triangle-local 提升以及 RH-Cayley 单元。
+
+本文只使用显式定义的映射和概率核。没有定义的映射不被视为存在。特别是，素数分类到五态模式的编码、FIB 到三个独立源的提升、FIB 缺陷到 zeta 零点的映射，均在本文中作为尚缺具体构造的桥接条件，而不是已经证明的等价。
+
+基础公式、隐藏关系、局部读出几何和静态 seam 的既有结果分别见：
+
+- AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md
+- AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS.md
+- AURIC_FIB_ATOM_LOCAL_SOURCE_SPLITTING_AND_READOUT_GEOMETRY.md
+- AURIC_FIB_ATOM_STATIC_SEAMS_TRANSITION_CIRCULATION_AND_FIBONACCI_TOGGLE_CYCLES.md
+
+---
+

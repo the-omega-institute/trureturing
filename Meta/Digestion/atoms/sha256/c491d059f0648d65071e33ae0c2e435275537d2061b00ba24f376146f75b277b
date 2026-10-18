@@ -1,0 +1,14 @@
+**Theorem 467.1.** Under these hypotheses,
+
+    z<1+2*w.                                           (467.1)
+
+This is a source-specific bound. It is not the four-distinct gap
+z<u+m+1, and does not identify w with a prescribed label U.
+It does not resolve the source-axis C/D cases or exclude a second flat.
+
+The proof uses the paired cosine and genuine-factor formulas of
+Sections 95 and 130 of the
+[paired-reservoir volume](CFMP_GEOMETRIC_REALIZATION_TWO_RESERVOIRS.md),
+and the source charge from Section 461. All interval counts below
+are original multiplicities, even when two slots have the same label.
+

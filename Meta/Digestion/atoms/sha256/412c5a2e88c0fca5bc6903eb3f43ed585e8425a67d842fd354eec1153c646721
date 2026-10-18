@@ -1,0 +1,89 @@
+**Theorem 65.4 (all-calibration terminal inertia and exact distance dimension).**
+For either prescription, every finite $h\ge1$ and every $\kappa>0$, the matrix
+in (65.6) on the $n=2^h$ terminal sites has inertia
+
+$$
+(n_+,n_-,n_0)=(1,n-1,0).
+\tag{65.11}
+$$
+
+Every restriction to $m\ge1$ distinct terminals has inertia $(1,m-1,0)$.
+Consequently its exact normalized hyperbolic distance dimension is $m-1$:
+the distances can be realized on a common future hyperboloid sheet in
+$\mathbb H^{m-1}$, and cannot be realized in a smaller hyperbolic dimension.
+For $m=1$ this means the singleton. In particular any five terminals obstruct
+$\mathbb H^3$, whereas every restriction to at most four terminals can be
+realized in $\mathbb H^3$. This cardinality statement concerns terminal
+restrictions, not arbitrary sets of internal and terminal sites.
+
+Proof. Fix one prescription and write $g_k=g^\diamond_{h,k}$. Define
+
+$$
+f(z)=\cosh\left(\tfrac12\log(1+z)\right)-1,
+\qquad a_k=f(\kappa/g_k).
+$$
+
+Theorem65.3 and strict monotonicity of $f$ on $z>0$ give
+$a_0>a_1>\cdots>a_{h-1}>0$. Let $J$ be the all-ones matrix on the
+terminals. For $1\le r\le h-1$, let $Q_r$ have entry one when two
+addresses have the same first $r$ letters and zero otherwise. It is the sum
+of outer products of the depth-$r$ cluster indicators, hence is positive
+semidefinite. The exact matrix identity is
+
+$$
+C=(1+a_0)J
+-\sum_{r=1}^{h-1}(a_{r-1}-a_r)Q_r-a_{h-1}I.
+\tag{65.12}
+$$
+
+For a distinct pair with common-prefix depth $k$, the sum telescopes to
+$1+a_k$; on the diagonal it gives one. Thus, on the zero-sum subspace,
+
+$$
+\begin{aligned}
+\sum_i z_i=0\quad\Longrightarrow\quad
+z^\mathsf TCz
+&=-a_{h-1}\|z\|_2^2\\
+&\quad-\sum_{r=1}^{h-1}(a_{r-1}-a_r)
+\sum_{|u|=r}\left(\sum_{p\text{ below }u}z_p\right)^2
+\le-a_{h-1}\|z\|_2^2.
+\end{aligned}
+\tag{65.13}
+$$
+
+The variational characterization of inertia supplies at least $n-1$
+strictly negative eigenvalues. Since $\operatorname{tr}C=n>0$, the remaining
+eigenvalue is positive and none is zero. Restrict (65.12) to any terminal
+subset: its restricted cluster matrices are still positive semidefinite,
+and the same argument applies on its $(m-1)$-dimensional zero-sum subspace.
+The trace there is $m$, proving the restricted assertion.
+
+For the dimension conclusion, use the classical Lorentz Gram recognition in
+Keller-Ressel–Nargang,
+[arXiv:1903.08977v2, LemmaA.1 and its proof](https://arxiv.org/pdf/1903.08977v2).
+In the sign convention here, points $v_i$ on the unit future hyperboloid have
+$C_{ij}=v_i^\mathsf T\operatorname{diag}(1,-I_d)v_j=\cosh r_{ij}$.
+Such a Gram matrix has at most one positive and at most $d$ negative
+eigenvalues. Conversely a real symmetric matrix with diagonal one, all
+off-diagonal entries greater than one and inertia $(1,m-1,0)$ has a real
+factorization in that Lorentz space. Each factored row has Lorentz norm one.
+Any two rows have positive Lorentz product, so their timelike sheets agree;
+a common sign puts all rows on the future sheet. Their geodesic distances
+are exactly $\operatorname{arcosh}C_{ij}$, without altering any prescribed entry.
+The negative index forces $d\ge m-1$, and the factorization attains equality.
+Embedding this hyperboloid as a totally geodesic subspace gives the assertion
+for at most four terminals. $\square$
+
+The hierarchical step has mature precedents. The matrix $C-J$, with zero
+diagonal and off-diagonal entries $a_{|p\wedge q|}$, is an ultrametric distance
+matrix: longer shared prefixes give smaller distances, and in every triple
+the largest distance occurs at least twice. Faver et al.,
+[arXiv:1201.6669v5, Theorem5.1 and Corollaries5.3–5.5](https://arxiv.org/pdf/1201.6669v5),
+supplies strict $p$-negative type for ultrametrics for every $p\ge0$.
+The cluster-indicator method is also present in Gorman–Lladser,
+[arXiv:2208.09927v1, Definitions1.1–1.2 and equations1.1–1.3](https://arxiv.org/pdf/2208.09927v1),
+for strict ultrametric covariance matrices. Equation (65.13) supplies the
+explicit margin needed here; it does not infer fixed hyperbolic dimension from
+a Hilbert embedding or add the covariance representation's auxiliary root edge
+to the occurrence graph.
+

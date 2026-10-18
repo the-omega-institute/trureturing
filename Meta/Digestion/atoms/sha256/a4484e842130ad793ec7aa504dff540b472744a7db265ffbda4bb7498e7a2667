@@ -1,0 +1,112 @@
+**Proposition 85.1 (fixed-implementation aggregation criterion).** Suppose
+fine acquired labels $i$ have encoders $\mathcal E_i$ and full-output
+decoders $\mathcal R_i$. After fixed identifications of their quantum
+fibres, forgetting the fine control label while preserving each original
+fine-branch composite output is possible precisely when there is one
+admissible full-fibre TP decoder $\mathcal R$ such that
+
+$$
+\mathcal R\mathcal E_i=\mathcal R_i\mathcal E_i\quad\text{for every }i.
+\tag{FA.77}
+$$
+
+Equality is on every complex input matrix and separately on live output
+and each of the five labelled Borel CP measures. Passive-reference
+identities then follow. The common decoder must satisfy the required
+whole-fibre activity and chronological conditions; equality of integrated
+effects alone does not supply it.
+
+For supported-nonzero low labels, different real-null rays cannot be
+aggregated into a single two-dimensional label in this way. On the same
+ray write the supported live composites as $p_i\operatorname{Ad}_K$,
+$p_i>0$, and define the supported failure composites
+
+$$
+\widehat\Phi^f_{i,\ell}(\mathcal B)
+ =\mathcal R_i^f{}_{\ell}(\mathcal B)\mathcal E_i
+       \operatorname{Ad}_E:M_3\longrightarrow\text{failure output}.
+$$
+
+Up to unitary identifications of the qubit fibres, preserving every fine
+composite **on the supported algebra** is equivalent to equality of
+$\widehat\Phi^f_{i,\ell}(\mathcal B)/p_i$ for all $i,\ell,\mathcal B$.
+This retains the entire time CP measures, not just their integrated
+failure/live ratios. In the resulting unitary coordinates the complete
+decoders agree on their entire qubit fibres, and therefore satisfy FA.77
+even for arbitrary full-$M_5$ encoders. With preassigned fibre coordinates,
+the common decoder must instead agree with each given decoder there.
+Neither statement identifies the full encoders divided by $p_i$ or
+requires equality of their normalized full-$M_5$ failure composites.
+FA.77 remains the full-domain criterion, with no restriction on the
+encoders' action on $V^\perp$ or cross-support operators.
+
+**Proof.** A common decoder preserving the fine composites necessarily
+satisfies FA.77; conversely the equality and an admissible common decoder
+suffice after adding the encoders and discarding $i$. This is the
+full-instrument postprocessing interface, as in Leppäjärvi–Sedlák,
+arXiv:2010.15816v1, §IV Definition 4, Eq.1. Here it is imposed
+componentwise also on Borel outputs, not inferred from POVM equality.
+
+For low labels the restriction
+$\widehat{\mathcal E}_i:=\mathcal E_i\operatorname{Ad}_E
+=\operatorname{Ad}_{C_i}$ has onto $C_i:\mathbb C^3\to\mathbb C^2$.
+This restricted linear map has image all $M_2$.
+Thus FA.77 determines the common decoder on its entire fibre, rather
+than only on selected input states. A common injective live decoder
+forces all products onto one coefficient ray by FA.5. For that ray
+write its live composite as $p_i\operatorname{Ad}_K$. Injectivity
+then gives $C_i/\sqrt{p_i}$ independent of $i$ in common live-decoder
+coordinates, after removing irrelevant Kraus phases. Hence precisely
+the supported failure composites $\widehat\Phi^f_{i,\ell}/p_i$
+coincide. Conversely, if those maps coincide, the supported total
+encoder effects $C_i^\dagger C_i/p_i$ coincide, by TP and the common
+normalized live composite. Onto factorizations of this rank-two effect
+differ only by fibre unitaries. In those coordinates the supported
+encoders divided by $p_i$ are the same surjective CP map, so equality
+of all its normalized output composites makes the complete decoders
+equal on $M_2$. The admissible chronological path of one supplies a
+common decoder with the required activity; constant unitary coordinate
+changes preserve the norm integral. This proves exactly the supported
+normalized equivalence. The equality just established is equality of
+decoders on $M_2$, since the restricted encoder is surjective. Composing
+those equal decoders with each original full encoder proves FA.77 on
+all of $M_5$. It does not extend the identity
+$\widehat{\mathcal E}_i/p_i=\widehat{\mathcal E}_j/p_j$ to full
+encoders; no such extension is used.
+
+The distinction is necessary within the original comparison class.
+Take a nonzero-failure low branch of the floor constructor, with
+supported encoder $C$, live coefficient $p$, and decoder $\mathcal R$
+whose total failure effect is $F\ne0$. Split it into two equal
+supported branches, using that same decoder on both, and on $M_5$ set
+
+$$
+\mathcal E_1=\tfrac12\operatorname{Ad}_{CE^\dagger}
+                 +\varepsilon\operatorname{Ad}_{W^\dagger},\qquad
+\mathcal E_2=\tfrac12\operatorname{Ad}_{CE^\dagger},
+\qquad 0<\varepsilon<1.
+$$
+
+Reduce the separate complement encoder from
+$\operatorname{Ad}_{W^\dagger}$ to
+$(1-\varepsilon)\operatorname{Ad}_{W^\dagger}$. Total encoder effect
+remains $I_5$. Every fibre is unchanged, and the added Kraus environment
+is discarded. The original twelve supported histories, individual
+errors, contrast, sharp joint cost, record TV, activity and FIRST clock
+are unchanged. FA.77 holds on all $M_5$ with
+$\mathcal R_1=\mathcal R_2=\mathcal R$. Yet for
+$X=W|v\rangle\langle v|W^\dagger$ with $\langle v|F|v\rangle>0$,
+branch 1 has nonzero failure output on some original label and Borel
+set, while branch 2 has none. Dividing by the equal supported live
+weights $p/2$ cannot make those full-domain maps equal. Their supported
+normalized maps do coincide. This is an allowed multi-Kraus free
+completion, with no additional specimen or readable Kraus control.
+
+This statement preserves full output instruments, not a particular
+unobserved Hamiltonian description. If an internal prescribed path is
+also required unchanged, that is an additional equality condition.
+Discarding a Kraus index is not a way to arrange FA.77. In the cited
+paper Proposition 6 recovers a detailed instrument only under its extra
+orthogonality condition $K_{ix}^\dagger K_{jx}=0$ for $i\ne j$;
+it supplies no such recovery for the present discarded indices. $\square$
+

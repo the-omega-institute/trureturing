@@ -1,0 +1,42 @@
+**Proposition 4.3 (conditioning on acquisition can change the tape law).**
+A source-independent random prefix need not retain a source-independent
+tape distribution conditional on acquiring zeros. Any subsequent error
+claim restricted to that acquisition event must retain its sourcewise
+probability.
+
+**Proof.** In $X_{2,1}$ let a fair prefix tape select one address $A_1$,
+perform that read and let $E$ be the event that its reply is zero.
+Then
+
+$$
+\Pr_b(E)=1,\qquad
+\Pr_{(n,\{1\})}(E)=\tfrac12,
+\tag{4.5}
+$$
+
+and
+
+$$
+\Pr_b(A_1=1\mid E)=\tfrac12,\qquad
+\Pr_{(n,\{1\})}(A_1=1\mid E)=1.
+\tag{4.6}
+$$
+
+Thus the conditioned prefix tape laws differ although their original
+laws agree. Independent fresh continuation randomness retains its law,
+but does not undo this selection of the prefix information. For any
+subsequent error event $F$ and fixed source with $\Pr_x(E)>0$,
+
+$$
+\Pr_x(F\cap E)=\Pr_x(E)\Pr_x(F\mid E).
+\tag{4.7}
+$$
+
+If $\Pr_x(E)=0$, the left side is zero and no conditional claim is
+assigned. An unconditional sourcewise bound $\Pr_x(F)\le\delta$
+therefore bounds the conditional probability by at most
+$\min\{1,\delta/\Pr_x(E)\}$, not automatically by $\delta$.
+Equations (4.5)–(4.7) preclude replacing a random acquired prefix by a
+free fixed prefix without checking its conditional information and
+acquisition mass. $\square$
+

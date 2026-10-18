@@ -1,0 +1,29 @@
+**Definition 1.1 (finite native sources).** Use the algebra of [ABC][ABC]
+and [NSF][NSF]:
+
+$$
+\begin{aligned}
+\mathcal T&::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,\\
+\rho\alpha&=\beta,&
+\rho\beta&=\langle\beta,\alpha\rangle,&
+\rho\langle x,y\rangle&=\langle\rho x,\rho y\rangle,\\
+T_n&=\rho^n\alpha\qquad(n\in\mathbb N).
+\end{aligned}
+\tag{PDC.1}
+$$
+
+All trees are nonempty, finite and ordered. A native expression uses
+variables, the two leaves, pairing and fixed natural powers of this
+interpreted $\rho$. There is no common bound on the size, depth, atomic
+rank or normal shape of a source. In particular $\rho$ is not a free
+unary constructor.
+
+For an original-root word $p$, the reply $r_u(p)$ is one of
+$\alpha,\beta,\mathsf{branch},\mathsf{absent}$. Write $u\sim_h v$ when
+these replies agree at every $|p|\le h$. Depth is inclusive throughout.
+For a finite prefix-free cut $Q$, the full row $R_Q(u)$ consists of its
+reached cut positions in their fixed order, the entire concrete exterior
+with those positions replaced by numbered holes, and the complete
+equality partition of their whole subtrees. An absent cut creates no
+hole. The empty cut retains the whole source as exterior.
+

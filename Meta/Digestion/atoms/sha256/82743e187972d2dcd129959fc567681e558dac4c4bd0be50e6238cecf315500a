@@ -1,0 +1,7 @@
+# A received unary view cycle on one growing original apparatus
+
+> This is an append-only `generic-v1` reference volume. Its definitions,
+> propositions and proofs are ordinary mathematics under the stated ideal
+> primitives. They are not Lean declarations, kernel certificates or evidence
+> of a native execution. Revisions belong after the final append anchor.
+

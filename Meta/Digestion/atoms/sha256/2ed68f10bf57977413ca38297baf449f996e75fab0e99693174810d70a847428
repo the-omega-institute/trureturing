@@ -1,0 +1,28 @@
+**定理 4.2（Environment-alone read costs fifteen dimensions）。** For the third contract,
+
+$$
+d_E=15.
+\tag{4.6}
+$$
+
+It is attained by the published $V_{\mathrm{edge}}$, whose unread reduced channel has minimum pure environment dimension fifteen even if no record read is requested.
+
+**证明。** All fifteen positive edge vectors must be pairwise orthogonal by the discrimination argument within Theorem 4.1. Therefore $\dim E\ge15$. Give every edge one vector $h_{ji}$ of a single orthonormal basis of $\mathbb C^{15}$ and take
+
+$$
+V_{15}=\sum_{(j,i)\in\mathcal A}K_{ji}\otimes h_{ji}.
+\tag{4.7}
+$$
+
+The source's §130 construction supplies this isometry: $\sum_{ji}K_{ji}^\dagger K_{ji}=I_H$. The basis measurement on $E$ alone produces exactly the fifteen branches $K_{ji}\rho K_{ji}^\dagger$, and identifies every edge. Thus (4.6) is sharp, independently of parameter equalities inside $\mathcal D$.
+
+The fixed unread channel in (4.7) is $\mathcal E_{\mathrm{edge}}$. Its Choi rank fifteen and minimum pure dilation dimension fifteen are reused from source §130, not claimed as a new bound for the variable-channel class. The exact applicability is as follows. Distinct $|j\rangle\langle i|$ matrix units make the fifteen $\operatorname{vec}K_{ji}$ mutually orthogonal; each has squared norm $2P_{ij}>0$. Hence
+
+$$
+J(\mathcal E_{\mathrm{edge}})
+=\sum_{ji}|\operatorname{vec}K_{ji}\rangle
+\langle\operatorname{vec}K_{ji}|
+$$
+
+has rank fifteen. A pure environment of dimension $m$ supplies at most $m$ Kraus components, and this Choi formula then has rank at most $m$. Therefore $m\ge15$, attained by (4.7). The general supplier is Watrous, 2018, Theorem 2.22 and Corollary 2.27. The fixed channel and the edge-readable task happen to have the same minimum here; neither statement raises $d_{\mathrm{un}}$ to fifteen. $\square$
+

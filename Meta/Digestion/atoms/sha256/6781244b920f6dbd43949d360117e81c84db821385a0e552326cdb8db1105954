@@ -1,0 +1,42 @@
+#### 24.9　有限状态的总变差收缩
+
+对一般有限私有状态 $h$，定义
+
+$$
+\eta_{\mathrm{pub}}
+=\max_{h,h'}\Pr_\mu[f(h,U)\ne f(h',U)],
+$$
+
+$$
+\eta_{\mathrm{hid}}
+=\max_{h,h'}\operatorname{TV}(K_h,K_{h'}).
+$$
+
+则
+
+$$
+0\le\eta_{\mathrm{hid}}\le\eta_{\mathrm{pub}}\le1.
+$$
+
+对任意私有状态分布 $\nu_0,\nu_1$，有
+
+$$
+\boxed{
+\operatorname{TV}(\nu_1K,\nu_0K)
+\le\eta_{\mathrm{hid}}\operatorname{TV}(\nu_1,\nu_0),
+}
+$$
+
+以及
+
+$$
+\boxed{
+\operatorname{TV}(\nu_1\widetilde K,\nu_0\widetilde K)
+\le\eta_{\mathrm{pub}}\operatorname{TV}(\nu_1,\nu_0).
+}
+$$
+
+证明可将 $\nu_1-\nu_0$ 写成 Jordan 分解的质量乘以两条概率律之差，再用最大耦合估计输出行距。点质量取到最大行距，故常数最优。这是 Dobrushin 收缩在控制器接口上的有限实例。
+
+<a id="section-24-10"></a>
+

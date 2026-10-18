@@ -1,0 +1,15 @@
+### Q4：精确律、取得记录与误差放大（供文五至八节、十二节）
+
+**适用命题 Q4。** 非零响应给出精确总体律的单射性；一个等待事件、单条有限历史或有限样本不是该精确律，不保证无误恢复。非零符号测度提供某个可测事件 $B$ 的响应见证，不自动提供取得该事件概率的实际读口。
+
+固定精确 $P$、核族和所选事件，记 $c=\operatorname{Curv}_K(B)\ne0$，$b=C_K^0(B)$、$q=C_K(p_\kappa)(B)$。若只把 $q$ 的估计误差限制为 $\lvert\widehat q-q\rvert\le\epsilon$，则该逆式给出
+
+~~~math
+\widehat\kappa=\frac{\widehat q-b}{c},
+\qquad
+\lvert\widehat\kappa-\kappa\rvert
+\le\frac{\epsilon}{\lvert c\rvert}.
+~~~
+
+非零 $c$ 没有统一正下界，故不提供统一稳定性、样本预算或可实现探测器。$P$ 的噪声、基线与响应的校准误差、重复取样独立性及单轨迹的代表性均另需精度与取得合同。
+

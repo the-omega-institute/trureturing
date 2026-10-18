@@ -1,0 +1,57 @@
+## 465. The residual run is charged by original intervals, not owners
+
+The unused rho faces now have three distinct labels {Z,M,Q}. A
+transported Z slot is exactly one of these roles:
+
+1. axial, with fixed pair {M,Q};
+2. transverse, with pair {Z,M}, hence belonging to rho;
+3. transverse, with pair {Z,Q} and an M axis, in a frame
+   eta=(M,Z,Q,R,Z,Q).
+
+The third owner is genuine, differs from tau and rho by its fixed
+pair, and has x_R<=z<1+z+q. Section 460 gives its three-slot M/Z
+expense >pi, contrary to the remaining capacity below pi. Thus
+no third-role owner occurs.
+
+The tau interval is one axial {M,C} arc between rho's two transverse
+Z intervals. The complementary arc contains every other Z interval.
+Starting at either residual rho face and using the displayed role
+list, original face transport preserves pair {M,Q} until a transverse
+boundary. The only permitted transverse boundary is rho itself.
+The complementary arc is therefore one axial {M,Q} run with
+
+    n=degree(Z)-3>=3
+
+original intervals. An immediate return would leave no such remaining
+intervals and is equally excluded by connectedness and the degree.
+
+For any axial Z slot of this run, let theta be its angle and beta
+its owner's transverse M angle. Its exact response is
+
+    beta=atan(A*t)+atan(B*t), t=cot(theta/2)>0,
+    A=[sqrt(m^2-1)+sqrt(q^2-1)]/(m+q)*sqrt((z-1)/(z+1)),
+    B=[sqrt(m^2-1)-sqrt(q^2-1)]/(m+q)*sqrt((z-1)/(z+1))>=0.
+
+Let alpha=sqrt((m-1)/(m+1)) and s=sqrt((z-1)/(z+1)). Since q>1,
+
+    sqrt(q^2-1)>alpha*(q-1),
+    sqrt(m^2-1)=alpha*(m+1),
+
+so A>alpha*s>1/2 because m,z>3. If theta>=pi/2, then theta+beta>pi/2.
+Otherwise t>1 and cot(theta)=(t-1/t)/2<t/2<A*t, giving the same
+strict conclusion.
+
+An owner in this run can supply one or two axial Z intervals. It
+has exactly two transverse M slots. Assign one beta to each original
+axial Z interval. With one Z axis this uses one of those two M slots;
+with two Z axes the equal-axis symmetry gives their equal responses
+and the two assigned betas are exactly the two actual transverse M
+angles. Extra axial M slots, if present, are not charged. Every run
+owner differs from tau,rho by its fixed pair, and no actual angle
+is charged more often than its original multiplicity.
+
+The resulting actual M/Z expense is greater than n*pi/2>=3*pi/2.
+But these owners have remaining capacity below pi. This contradiction
+completes the direct theorem, preserving repeated intervals, repeated
+owners, loops, parallel face pairs and distinct-face self-gluings.
+

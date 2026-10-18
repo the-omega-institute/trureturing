@@ -1,0 +1,38 @@
+## 199. Actual continuation forces the third owner
+
+The residual faces of rho have actual multiset {Z,M,U}. A Z slot across
+one is axial with fixed pair {M,U}, transverse with pair {Z,M} and axial
+U, or transverse with pair {Z,U} and axial M. These are exhaustive,
+since the three labels are distinct. The pair-{Z,M} owner is uniquely
+rho by the forced-return proposition.
+
+Suppose no owner of the third role occurs in the complete Z circle.
+The tau Z slot is the entire axial {M,C} arc between the two distinct
+transverse rho Z slots. The other arc contains every remaining Z slot.
+On leaving a residual rho face, it must enter an axial {M,U} slot or
+immediately return to rho. Actual face transport preserves {M,U}
+along an axial run. A transverse boundary has pair {Z,M} or {Z,U};
+under the supposition it must be rho. Consequently the other arc is
+one axial {M,U} run with
+
+ n=degree(Z)-3>=3
+
+actual slots. This also excludes the immediate-return empty arc.
+
+Every owner of that run differs from tau and rho by its fixed pair.
+An owner has at most two axial Z slots and exactly two transverse M
+slots. For one Z slot, assigning one beta uses at most its actual M
+expense; for two Z slots, their angles and beta values agree by the
+symmetry of its two equal Z axes, so assigning beta to both uses
+exactly its two transverse M angles. The sum of theta+beta over all
+run slots is therefore at most the actual M/Z expense of these owners.
+No actual angle is counted twice beyond its original occurrence.
+Any additional M axis only increases the available expense.
+
+By Section 198, this sum exceeds n*pi/2>=3*pi/2. But the distinct owners
+tau and rho each already consume more than pi of the total M/Z
+capacity 3*pi. The remaining owners have capacity strictly below pi,
+a contradiction. Hence an actual owner eta of the third role occurs.
+This is a connected normal-circle argument and includes repeated
+owners, repeated axes, and self-glued faces.
+

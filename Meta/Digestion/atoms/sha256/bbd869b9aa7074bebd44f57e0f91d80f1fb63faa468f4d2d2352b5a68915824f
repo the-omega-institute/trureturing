@@ -1,0 +1,71 @@
+**Theorem 10.15 (Simultaneous optimum if and only if a common site
+exists).** For the distinct nonempty targets $T_1,\ldots,T_r$ and a
+fixed recorded site budget $\eta$, the full-phase task admits a
+locally unbiased vector estimator with
+
+$$
+\operatorname{Cov}_0\widehat\Phi=\frac{G}{4N}
+\tag{10.53}
+$$
+
+if and only if
+
+$$
+\operatorname{supp}\eta\subseteq\bigcap_{j=1}^rT_j.
+\tag{10.54}
+$$
+
+In particular some site budget attains (10.53) if and only if that
+intersection is nonempty.
+
+Proof. Equality of the covariance matrices implies, on every
+diagonal, $\operatorname{Var}_0\widehat\Phi_j=G_{jj}/(4N)
+=I_{T_j}/(4N)$. Condition (10.41) supplies each full target gradient.
+Theorem 10.14 forces $\operatorname{supp}\eta\subseteq T_j$ for
+each $j$, proving necessity.
+
+Conversely assume (10.54). Formula (10.48) holds columnwise for every
+site in the budget, hence
+
+$$
+L_\eta P^{-1}D=D.
+\tag{10.55}
+$$
+
+All columns are therefore in $\operatorname{im}L_\eta$ and are balanced
+on every component, including isolated vertices.
+Let $J_\eta=4L_\eta$ and use the exact reference score $s_\theta(Y)$
+of (9.5) on the complete one-copy record. Define
+
+$$
+\widehat\Phi=\frac1N\sum_{\nu=1}^N
+D^{\mathsf T}J_\eta^+s_\theta(Y_\nu).
+\tag{10.56}
+$$
+
+Its mean is zero and its full expectation Jacobian is
+$D^{\mathsf T}J_\eta^+J_\eta=D^{\mathsf T}$, since each column
+of $D$ is in the image. The difference
+$P^{-1}D-L_\eta^+D$ has columns in $\ker L_\eta$ by (10.55).
+Pairing with $D$ removes those columns, so
+
+$$
+D^{\mathsf T}L_\eta^+D=D^{\mathsf T}P^{-1}D=G.
+\tag{10.57}
+$$
+
+Using $\mathbb E_0s_\theta s_\theta^{\mathsf T}=J_\eta$ and
+independence, (10.56) has covariance
+$D^{\mathsf T}J_\eta^+D/N=G/(4N)$. This is the matrix version of
+the same reference-score estimator in Theorem 9.4, with every nuisance
+derivative checked. Finally a probability budget has nonempty support.
+Such a support can lie in the intersection exactly when the intersection
+contains a site, in which case all budget may be placed there. $\square$
+
+The off-diagonal entries of $G$ remain present in (10.53);
+simultaneous attainment does not make the target errors independent.
+An empty common intersection is a restriction of this recorded site
+menu. It is not an intrinsic incompatibility of the phase targets under
+all quantum measurements: Theorem 10.13 supplies their simultaneous
+full-gradient optimum under the additional global setting.
+

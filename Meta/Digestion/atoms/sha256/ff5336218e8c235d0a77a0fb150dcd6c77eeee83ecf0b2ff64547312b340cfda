@@ -1,0 +1,28 @@
+## 264. Exact setting and theorem
+
+Retain the original mixed-flat five-reservoir hypotheses through Section
+263, with shared positive lengths, all original 2*pi angle equations,
+complete connected circular edge links of degree at least six, and
+chosen paired frames with two distinct transverse H labels. Write
+H={M,C,D,Z,U} and P={M,Z,U}. The four distinct interacting genuine
+owners are K={tau,rho,eta,xi}. The published reductions give
+ tau=(Z,M,C,D,M,C), rho=(M,Z,C,U,Z,C),
+with the two {M,Z,C} faces paired between tau and rho. Assume in this
+note that neither eta nor xi contains M.
+
+The unique flat owner has an axial M pi slot and transverse pair {C,D}.
+The genuine M budget is pi. Z and U occur in no flat and each has
+budget 2*pi. Lower-case cosh values satisfy
+ c,d>1, m>1+c+d, z>1+m+c, u>m.
+All repeated axes, repeated owners along circles, and distinct-face
+self-gluings remain permitted. External low-only components are not
+assumed closed inside K.
+
+We prove that this case necessarily has
+ max(c,d)<2*min(c,d)+1,
+and at least one of the two genuine axial-M/{C,D} owners constructed
+below has a special opposite axis. Thus the entire unbalanced case and
+the entire both-low-opposite-axes case are excluded. The balanced cases
+with one or two special opposite labels are not excluded here; nor is
+the case that eta or xi contains M. No five-reservoir closure is claimed.
+

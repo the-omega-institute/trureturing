@@ -1,0 +1,30 @@
+**定义 1.1（Original matched reader）。** Fix $k\ge2$ and $m\ge1$. Words are read in increasing weight position and are legal exactly when they avoid $1^k$. The original integer weights and value are
+
+$$
+G_i=2^i\quad(0\le i<k),\qquad G_i=\sum_{r=1}^kG_{i-r}\quad(i\ge k),\qquad V_k(w)=\sum_{i<|w|}w_iG_i.
+$$
+
+The legal endpoint reading is $V_k(w)\bmod2$. The matched coefficient interface of [S2, Sections 13–14] is
+
+$$
+T=k+1,\qquad c_i=G_i\bmod2=\mathbf1_{\{0,-1\}}(i\bmod T).
+\tag{1.1}
+$$
+
+The actual legal record is $(v,\theta,s)$, with $v\in\mathbb F_2$, $\theta\in P=g\mathbb Z/T\mathbb Z$, $g=\gcd(m,T)$, and $0\le s<k$. Rejection is a separate absorbing record $\bot$. Its reading differs from both free values. Literal transitions, without any intermediate observation, are
+
+$$
+\delta_0(v,\theta,s)=(v,\theta+1,0),\qquad
+\delta_1(v,\theta,s)=
+\begin{cases}
+(v\oplus c_\theta,\theta+1,s+1),&s+1<k,\\
+\bot,&s+1=k,
+\end{cases}
+\qquad \delta_b(\bot)=\bot.
+\tag{1.2}
+$$
+
+A block consists of exactly $m$ literal bits. Both original control alphabets are retained: all $m$-bit words, or all internally legal $m$-bit words. Cross-block rejection is checked in both. The prior is all finite actual histories of these complete blocks, including the empty and rejected histories. A leaf returns the target of the original record, even after destructive updates.
+
+The initial value or known initial $\bot$ is free. Later outputs occur only at block endpoints. Every emitted block and every zero wait costs one; the cost is the maximum over actual initial histories. Write $C_{\rm ad}$ for the optimal adaptive cost and $C_{\rm pre}$ for the optimal cost of a single fixed literal stream, allowing endpoint-dependent stopping and decoding. The initial $\bot$ branch returns its specified label for free. Both legal free-value fibres are included. Offline search time and controller memory are separate from this fee. No reset, copy, hidden initial clock, intermediate observation, or combination of different branches is permitted. These are the contracts of [S1, Sections 1–2]; its Proposition 2.3 supplies general alphabet equivalence.
+

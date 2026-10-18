@@ -1,0 +1,49 @@
+**Theorem 3.2 (a regular original-observer consequence).** Let $M$ be an
+original finite COMPLETE observer of Convention 1.1. On the seed-1,
+marker-100 held-record fibre of [PAID, Lemma 14.1], suppose:
+
+1. all reachable fourth-phase synthetic emissions belong to $[a,b]$;
+2. every positive acquired p-beta edge has the same four features $g$ as
+   its input's full B residual;
+3. every positive acquired suspended-alpha edge has the same three
+   features $f$ as its input's full A residual.
+
+Features are pulled back through the appropriate current-record renderer.
+These hypotheses concern the union of reachable returned configurations;
+they do not require a stationary actual-history row. Then
+
+$$
+\max\{R_{\mathrm{conf},p}(M)-\rho_p,
+       R_{\mathrm{conf},\beta}(M)-\rho_\beta\}\ge j_7>0.
+\tag{3.5}
+$$
+
+**Proof.** PAID Lemma 14.1 supplies one support-closed finite table,
+with the original acquired kernels, positive rows $\pi,\tau$ satisfying
+both unweighted balances, copied complete decoders, and all supported
+configuration losses bounded by those original risks. Its positive labels
+are reachable on the stated fibre. Deleting zero-row labels creates no
+new edge. Hence assumptions 1--3 survive this restriction exactly.
+
+Regular survival gives the copied laws (1.2). Push the same two acquired
+flows to these laws. The full same-update cylinder equations give (1.5),
+and both balances give (1.4). The feature equalities on each retained edge
+give $V=0$. Coincident descriptors cause no difficulty: equal input laws
+have the same residual feature values, so merging them preserves the edge
+equalities. Configuration-before-TV integrals are unchanged by this
+pushforward. Corollary 3.1 then gives (3.5).
+
+PAID's common rows arise from positive finite paid histories concentrating
+the posterior at each supported depth, followed by a Cesàro return-row
+limit. They are the same rows for all three targets. The records, both
+seeds, partial parses, original writes, permissions and matching Stop
+remain through the copied decoders and $I_c$. No synthetic continuation
+weight is inserted into those actual rows. $\square$
+
+The regularity hypothesis in Theorem 3.2 is explicit. Same-kernel clipping
+can change the selected own-law features, so an arbitrary observer with
+zero or unit emissions is not covered merely because it has the
+unclipped feature property. No preservation theorem for that property
+under clipping is asserted. There is no prescribed total-resource or
+hard marginalized-defect budget in (3.5).
+

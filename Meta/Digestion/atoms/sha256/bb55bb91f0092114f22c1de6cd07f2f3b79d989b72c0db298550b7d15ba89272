@@ -1,0 +1,59 @@
+**Proposition 20.1 (report axes, height zeros and fractional endpoints).**
+Under Assumption 17.1, every positive-weight actual point is a
+contact. It has $u\ne0$. No pure contact has height zero.
+Every actual point with $b_i>0$ has its same-direction saturated
+endpoint $(u_i,v_i,1)$ in contact. If $0<\xi_i<1$, both endpoints
+contact and $\eta_0\eta_1\ge0$, including weak endpoint signs.
+These conclusions do not split the actual label or change $p_i,b_i$.
+
+Proof. Integrating the globally nonnegative gap $d$ gives zero by
+(FC.54). It therefore vanishes at every positive atom, or almost
+everywhere for the admitted integral laws. This is exactly the
+support argument in Theorem 4.2. At each fixed $\xi$, all four
+signed gaps
+
+$$
+H_{\xi,\epsilon,\sigma}(x)
+=P_y+\xi\mathfrak c Q_y-\epsilon\lambda u
+ -\sigma(\ell+t\xi\mathfrak c f),\qquad
+\epsilon,\sigma\in\{\pm1\},
+\tag{FC.70}
+$$
+
+are globally nonnegative, smooth circle functions. At a contact
+with $u=0$, choose either maximizing height sign $\sigma$;
+both report-sign gaps vanish. Both angular derivatives must
+vanish at their minima, but their difference is $2\lambda u'$
+up to sign, and $u'\ne0$ at $(0,\pm1)$. This contradicts
+$\lambda>0$. This is the report-axis argument of Theorem 12.1
+and RC Proposition 70.2, applied also at fixed interior fractions.
+At a pure contact with $\ell=0$, both height-sign gaps vanish
+for a maximizing report sign. Subtracting their zero angular
+derivatives forces $\ell'=0$. Theorem 19.1's only two height
+zeros are simple, so neither can be a pure contact.
+
+For endpoints and fractions, reuse the exact triangle identity
+(FC.8) of Theorem 3.3:
+
+$$
+d(x,\xi)=(1-\xi)d(x,0)+\xi d(x,1)
+ +(1-\xi)|\eta_0|+\xi|\eta_1|
+ -|(1-\xi)\eta_0+\xi\eta_1|.
+\tag{FC.71}
+$$
+
+Every summand on the right is nonnegative. If $0<\xi<1$ and
+$d(x,\xi)=0$, both endpoint gaps vanish and the real triangle
+equality forces $\eta_0\eta_1\ge0$. The saturated endpoint
+is the original point itself when $\xi=1$. Since $t\mathfrak c>0$,
+$b_i>0$ is equivalent to $\xi_i>0$, giving all cases claimed.
+A pure endpoint has no height zero. Consequently an occupied
+strict fraction cannot have height zero either: two weakly
+same-sign endpoint heights with a zero strict convex combination
+would both be zero, contradicting the pure-endpoint exclusion.
+A saturated contact of zero height is still allowed by this
+argument and will be included in the weak negative-height branch
+below; no genericity assumption discards it. All directions are
+kept as directed points, including their separate antipodes and
+the allowed $v=0$ axes. $\square$
+

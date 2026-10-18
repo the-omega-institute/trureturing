@@ -1,0 +1,26 @@
+**Definition 1.1 (actual common-source model).** Put
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+U=JM=\begin{pmatrix}1&1\\0&1\end{pmatrix},\qquad
+L=MJ=\begin{pmatrix}1&0\\1&1\end{pmatrix}.
+$$
+A legal predetermined history has $A_0=I$ and $A_{i+1}=W_iA_i$, where each $W_i$ is a fixed finite word in $M,J$, possibly empty. Products act on the left and execute from right to left. Thus chronological $(M,J)$ implements $U$, and $(J,M)$ implements $L$. A scalar read advances the recorded index by one, including a read after an empty word. An unread atom does not advance that index.
+
+The effective source, observations, and recovery target are
+$$
+S=\begin{pmatrix}p&q\\r&s\end{pmatrix},\qquad
+p,q,r,s>0,\qquad ps=qr,
+$$
+$$
+z_i=(1+ki)\operatorname{tr}(A_iS)+D(i),\qquad
+k\in\mathbb R,\qquad \deg D\le d,
+\tag{1.1}
+$$
+$$
+\text{target }(S,k,D).
+$$
+Here the known upper degree is $d\ge0$, including smaller actual degrees and the zero polynomial. In original parameters $S=\alpha R$, $k=\beta/\alpha$, $\alpha>0$, $\beta\in\mathbb R$. Each run has a single positive rank-one relation $R$ and one fixed positive row. The constant-drift results below take $d=0$, write $D(\tau)=\delta$, and use exactly the indices $0,1,2,3,4$. The domain includes sampled gain zeros and negative gains.
+
+There is no reset, source copy, inverse acquisition, adaptive word choice, combination of unexecuted histories, independent lifted source, or additional acquisition clock.
+

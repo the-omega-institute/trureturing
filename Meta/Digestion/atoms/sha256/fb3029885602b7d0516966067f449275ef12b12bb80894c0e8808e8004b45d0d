@@ -1,0 +1,41 @@
+**Definition 12.1 (fixed filter and exact-time output).** Retain the
+experiment, common-input premise and complete metric of Definitions
+2.3, 3.1, 3.2 and 4.2, including all twelve actual histories. The
+existence of a minimizing
+common channel is already supplied by Theorem 8.4, and its error is
+strictly above $L_{\rm full}$ by Theorem 9.3. The scalar-live channel
+$\Phi_0$ remains the distinct processor of Proposition 10.1. In the
+ordered basis $(+,-,2)$ of $V$, put
+
+$$
+\begin{aligned}
+K_{\mathrm{ff}}&=\operatorname{diag}\left(1,\frac1{\sqrt2},
+                                  \sqrt{\frac{21}{32}}\right),\\
+D_{\mathrm{ff}}&=I_V-K_{\mathrm{ff}}^\dagger K_{\mathrm{ff}}
+       =\operatorname{diag}\left(0,\frac12,\frac{11}{32}\right),\\
+h_{\mathrm{ff}}(t)&=\frac2{(1+t)^2},\qquad
+w=(0,\tfrac14,\tfrac12,\tfrac14,0).
+\end{aligned}
+\tag{CG.87}
+$$
+
+For every complex matrix $A\in M_3(\mathbb C)$ define one linear map
+$\Phi_{\mathrm{ff}}$ by its live block and five original-mode failure measures:
+
+$$
+\begin{aligned}
+\Phi_{\mathrm{ff},\mathrm{live}}(A)&=K_{\mathrm{ff}} A K_{\mathrm{ff}}^\dagger,\\
+\Phi_{\mathrm{ff},i}(A)(dt)&=w_i\operatorname{tr}(D_{\mathrm{ff}}A)h_{\mathrm{ff}}(t)\,dt\,P_f
+                         \qquad(0\leq i\leq4).
+\end{aligned}
+\tag{CG.88}
+$$
+
+The output time is the exact $t\in[0,1]$, equivalently $6+t$.
+Modes $1$ and $3$ remain distinct, and mode index $4$ retains its original
+name $13$. The map assigns zero measure to all additional abort,
+rejection and other zero-ideal sectors. It has no singular time part.
+These are specifications of the entire output, not postselection rules.
+All coefficients are fixed before the specimen arrives; no coefficient
+uses its unknown history or its old-cut survival mass.
+

@@ -1,0 +1,28 @@
+## 19. 固定星域内标准 $E/\mathcal T$ 树正规形的障碍
+
+本节取下层 $m\ge6$、上层 $n=m+1$，令 $k=m-2$、$A=(a_1,\ldots,a_k)$。一个下层混合开关的两个 $E$ 顶点为
+
+$$
+e_x=(x,[y,A]),\qquad e_y=(y,[x,A]).
+$$
+
+其共享 $D$ bracelets 是 $S=[x,y,A]$、$R=[y,x,A]$，私有邻居为
+
+$$
+P_i=[y,a_1,\ldots,a_i,x,a_{i+1},\ldots,a_k],\qquad
+Q_i=[x,a_1,\ldots,a_i,y,a_{i+1},\ldots,a_k],\quad1\le i<k.
+$$
+
+固定域是这 $2m-4$ 个下层 bracelets 的完整上层零层星，含 $B=2m(m-2)$ 个上层 $D$ bracelets。候选 $E$ 池严格定义为：每个该域星的零层节点 $Z_U=(0,[U])$，以及 $e_x,e_y$ 的全部插零间隙提升
+
+$$
+\begin{aligned}
+X_-&=(x,[0,y,A]),&X_+&=(x,[y,0,A]),\\
+Y_-&=(y,[0,x,A]),&Y_+&=(y,[x,0,A]),\\
+X_i&=(x,[y,a_1,\ldots,a_i,0,a_{i+1},\ldots,a_k]),\\
+Y_i&=(y,[x,a_1,\ldots,a_i,0,a_{i+1},\ldots,a_k]),&&1\le i<k.
+\end{aligned}
+$$
+
+每个外部族有 $m-1$ 个节点。允许的 $\mathcal T$ 节点只由此池中共享两个 $D$ bracelets 的两个 $E$ 节点作标准融合得到；不同 $\mathcal T$ 必须使用互不相交的 $E$ 供应对，未配对的节点保留为完整 $E$ 开关。此定义没有声称穷尽该固定域内的一切交替多边形。
+

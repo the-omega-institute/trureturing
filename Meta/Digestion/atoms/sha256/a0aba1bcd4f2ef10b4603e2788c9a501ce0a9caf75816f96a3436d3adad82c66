@@ -1,0 +1,69 @@
+**Definition 7.2 (the credited positive binary cycle).** Fix $d\ge2$,
+put $B=|S_d|+2$, and use exactly the whole-block probability of
+[COK, Definition 21.1][GCBCOK]:
+
+$$
+\mu(\langle\alpha,\alpha\rangle)
+=\mu(\langle\beta,\beta\rangle)=2/B,\qquad
+\mu(x)=1/B\quad\text{on every other }x\in S_d.
+\tag{GCB.13}
+$$
+
+This is positive on the entire canonical alphabet. Set
+
+$$
+M=\begin{pmatrix}2&1\\1&2\end{pmatrix},\qquad
+\Phi(a,b)=M_{ab}/B.
+\tag{GCB.14}
+$$
+
+For an even $N\ge4$, indices are modulo $N$. Let the actual owner of
+bit $s_i$ be the $L$ reply of block $i$. At every block prescribe the
+complete native equations
+
+$$
+\Gamma_\varepsilon(x_i)=(0,0),\qquad
+\Gamma_{Lr}(x_i)=\Gamma_r(\operatorname{bit}(s_i)),\qquad
+\Gamma_{Rr}(x_i)=\Gamma_r(\operatorname{bit}(s_{i-1}))
+\quad(Lr,Rr\in W_d).
+\tag{GCB.15}
+$$
+
+Each nonconstant equation queries that indicated owner's actual $L$
+literal. On excluded donor replies branch and absent, its total decoder
+returns the corresponding full alpha-leaf factor. At the immediate
+owner target this factor has reply alpha, different from either excluded
+input. Thus the self equation guards the owner's reply to be alpha or
+beta; this is not an extra observation of its domain.
+
+The complete solution set is precisely
+
+$$
+\mathcal C_N=\{x(s):s\in\{0,1\}^N\},\qquad
+x_i(s)=\langle\operatorname{bit}(s_i),
+                   \operatorname{bit}(s_{i-1})\rangle.
+\tag{GCB.16}
+$$
+
+Indeed the root is branch, its guarded $L$ child is its owner leaf, and
+the immediate $R$ factor forces the indicated previous owner's leaf.
+These immediate equations force (GCB.16); conversely every such tuple
+satisfies all the suffix equations (GCB.15). Reading its actual $L$
+replies recovers its unique bit assignment. There are exactly $2^N$
+solutions, each seed occurs in two blocks, and each whole-block weight
+occurs once. This is the binary realization of Theorem 1.2 and the
+single alternating reciprocal-cover cycle of [COK, Proposition
+21.2][GCBCOK], with the cyclic blocks relabelled. The native realization,
+positive law and trace calculation are credited suppliers.
+
+In particular, the exact mass is
+
+$$
+Z_N=\sum_s\prod_i\Phi(s_i,s_{i-1})
+   =\frac{\operatorname{tr}(M^N)}{B^N}
+   =\frac{3^N+1}{B^N},
+\tag{GCB.17}
+$$
+
+since the eigenvalues of $M$ are $3$ and $1$.
+

@@ -1,0 +1,107 @@
+**Theorem 21.1 (response throughout the rectangle).** For the selected
+root define $\chi(t,\lambda)=\partial_\lambda k_u(t,\lambda)$.
+Then
+
+$$
+\frac3{1000}<\chi(t,\lambda)<10^6
+\quad(t\in I,\ 0\le\lambda\le10^{-12}).
+\tag{AC.112}
+$$
+
+Proof. Write $y=(p_0,\ldots,p_4,\phi_0,\ldots,\phi_4)$ and
+$J=D_y\sum p_i\Gamma_{\eta_i}(\phi_i)$. The pure five-moment
+rank argument of Lemma 10.2 and the independent two saturated
+failure directions still apply. Thus $J$ has rank eight. If $\gamma_i$
+is the current signed-gap curvature, put
+
+$$
+D_y=\operatorname{diag}(0_5,p_0\gamma_0,\ldots,p_4\gamma_4),
+\quad \mathscr H=N_T^TD_yN_T,\quad
+q_T=N_T^T\nabla_y k_u,
+\tag{AC.113}
+$$
+
+where the two columns of $N_T$ span $\ker J$. Theorem 20.1 gives
+$\gamma_i>0$ and independent weight columns. Zero quadratic form
+on $\ker J$ therefore first forces every angle velocity to vanish
+and then every weight velocity to vanish. Hence $\mathscr H\succ0$.
+Differentiating stationarity and the moment equations gives
+$D_yy_\lambda+J^Td_\lambda=\nabla_y k_u$ and $Jy_\lambda=0$,
+so
+
+$$
+\chi=q_T^T\mathscr H^{-1}q_T.
+\tag{AC.114}
+$$
+
+This expression is invariant under every invertible change of the
+tangent basis. It remains to prove and quantify $q_T\ne0$.
+
+Fix the two saturated atoms. For the three pure atoms put
+$A_p=(\sqrt{p_i}h_i)_{i=0}^2$, $S_p=A_p^TQA_p$. Its diagonal
+is zero and
+$(S_p)_{ij}=\sqrt{p_ip_j}[1-\cos(\phi_i-\phi_j)]>0$ for $i\ne j$.
+Choose the skew matrix with
+$\Omega_{10}=1/(S_p)_{01}$,
+$\Omega_{20}=-1/(S_p)_{02}$,
+$\Omega_{21}=1/(S_p)_{12}$. Then $\dot A_p=A_p\Omega$
+preserves the pure Gram and each null constraint to first order.
+This is an integrable constrained tangent: the pure live moment map
+has rank five on six variables, so its fixed-moment level is a smooth
+one-manifold. Alternatively the map
+$O\mapsto\operatorname{diag}(O^TS_pO)$ has constant-sum image
+and rank-two derivative at identity, giving the same local null curve.
+Positive first-row entries recover positive weights and normalized $h_i$.
+Every failure moment stays fixed.
+
+For $a=x_0$, $b=x_1$, $c=x_2$ define
+
+$$
+\rho_1=\frac{a-b}{1+ab},\qquad
+\rho_2=\frac{a-c}{1+ac},\qquad q_{12}=\frac{1+bc}{c-b}.
+\tag{AC.115}
+$$
+
+On the entire box $0.02<a<0.03$, $-0.30<b<-0.29$,
+$0.12<c<0.14$, all displayed denominators are positive, and
+
+$$
+0.31<\rho_1<0.34,\quad-0.12<\rho_2<-0.08,\quad
+0<q_{12}<2.44,\quad\cos\phi_0>0.99,\quad\tan\phi_0<0.061.
+\tag{AC.116}
+$$
+
+Direct half-angle substitution in $\dot A_p$ gives the three angular
+velocities
+$(\rho_1-\rho_2)/p_0$, $(\rho_1+q_{12})/p_1$,
+$(q_{12}-\rho_2)/p_2$. The preserved first live moment and pure
+report signs $(+,-,-)$ give the exact rational identity
+
+$$
+\dot k_u=2\cos\phi_0(\rho_1-\rho_2)
+ (\rho_1+\rho_2-\tan\phi_0)>9/100.
+\tag{AC.117}
+$$
+
+For example its lower bound follows from
+$2(0.99)(0.31+0.08)(0.31-0.12-0.061)>0.09$.
+This also supplies a direct algebraic check of the orientation signs.
+The weight bounds $p_0>2/5$, $p_1>9/50$, $p_2>3/10$ and
+curvatures $\gamma_0,\gamma_1<1/50$, $\gamma_2<7/100$ give
+
+$$
+\dot y^TD_y\dot y
+<\frac1{50}\frac{0.46^2}{0.4}
+ +\frac1{50}\frac{2.78^2}{0.18}
+ +\frac7{100}\frac{2.56^2}{0.3}<5/2.
+\tag{AC.118}
+$$
+
+Cauchy–Schwarz for the positive tangent metric in AC.114 now yields
+$\chi\ge\dot k_u^2/(\dot y^TD_y\dot y)>(0.09)^2/2.5>3/1000$.
+For the upper bound, AC.100 and the exact radii give
+$|p'_i|<5\cdot10^4$, $|x'_i|<10^5$. Since $\sum p_i=1$
+and $|\partial_xu_i|<4$ in these charts,
+$\chi<5(5\cdot10^4)+4\cdot10^5<10^6$.
+$\square$
+

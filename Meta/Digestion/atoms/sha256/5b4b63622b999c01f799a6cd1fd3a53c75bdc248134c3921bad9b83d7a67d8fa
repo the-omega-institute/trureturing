@@ -1,0 +1,22 @@
+**Definition 13.1 (the actual zero-fill cut family).** Fix a reached idle
+valid state with current source $t$, guard $h$ and reserve $K$, and an
+actual canonical strict Reserve($J$), $J>K$. The source, preparation
+$\xi$, original $H_0$ and acquired $u$ are the ones of that execution.
+Put $d=4(J-K)$. In Definition 3.3's Zero(16;$d$), after Last(bound) and
+Tail(16), let $c_z$, $0\le z\le d$, be the cut immediately before its
+bound-test RD after $z$ successful iterations. In particular $c_d$
+precedes the terminal-zero test, not the appended delimiter. Write
+$n_0=n(c_0)$ for its actual absolute primitive ordinal.
+
+Define $C_{\rm old}$ at these cuts to retain only the already acquired
+preinterval material: the actual protected controller table, persistent
+state, seed and saved return on 24–27 with their heads and rights; the
+previously acquired immutable archives, dependencies, sealed descriptors
+and handle meanings; and the common busy/Zero-test phase. It contains no
+producer work head, bound-cursor position, new arena cell, live meter,
+pulse counter or copy of the primitive ordinal. Previously acquired
+source-layout descriptors keep their original typed meanings; they grant
+no private-source read. This is a specified observation of old acquired
+material, not a claim that every conceivable retained-memory view omits
+a frontier.
+

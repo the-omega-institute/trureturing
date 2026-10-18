@@ -1,0 +1,28 @@
+**Theorem 10.1 (Exact energy for a disjoint phase matching).**
+On the same positive law and fixed parent, let $\mathcal M$
+be any matching of distinct mode pairs, and define
+$\chi(S)=\prod_{ij\in\mathcal M}z_{ij}^{s_is_j}$,
+with $|z_{ij}|=1$. The pairs need not be edges of the
+exclusion graph. Then
+
+$$
+\langle\psi_\chi,H\psi_\chi\rangle
+=\sum_{ij\in\mathcal M}|z_{ij}-1|^2
+\mu_{ij}(d_i+d_j).
+\tag{10.1}
+$$
+
+Proof. A deletion at site $i$ touches at most one phase
+factor, because the supplied pairs have disjoint endpoints.
+When its partner is occupied, the squared phase increment
+is $|z_{ij}-1|^2$; otherwise it is zero. All other factors
+have modulus one and disappear from the squared increment.
+Summing the occupied-endpoint form (6.2) proves (10.1).
+No independence between occupation events is assumed.
+$\square$
+
+Disjointness is material. If several pair phases share an
+endpoint, deleting it changes their product simultaneously;
+the squared increment then contains interference and is
+not the sum of the separate increments.
+

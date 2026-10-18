@@ -1,0 +1,35 @@
+**引理 2.2（Signed transport in the original coordinates）。** The value
+$k(C(s,t))$ depends only on $a=|s|,b=|t|$. Every list and exclusion for
+$(a,b)$ transfers to the corresponding signed point.
+
+Proof. Let $P$ exchange $e_1,e_5$ and let $R$ exchange any two middle
+coordinates. The outer-middle entries are constant across the middles, while
+a middle reflection reverses the skew cycle. Inspecting (1.2) gives
+
+$$
+P F(s,t)P^{\mathsf T}=F(-s,t),\qquad
+R F(s,t)R^{\mathsf T}=F(s,-t).
+\tag{2.3}
+$$
+
+Both fix the identity and commute with each other. A permutation sends a
+finite complex Gram sum to the Gram sum of the permuted vectors, preserves
+the number of nonzero original coordinates, and has the inverse
+permutation. This is a bijection of the entire competitor domains. If a
+parameter is zero either choice of its sign transport gives the same matrix.
+These maps construct vectors in the fixed original coordinates; they grant
+no physically available permutation or new basis for measuring support.
+$\square$
+
+For orientation, the inherited family formulas are
+$p=\operatorname{tr}\Gamma^2=(5+14a^2+6b^2)/25$ and
+$\mathcal N=(7a+3b)/5$. They are not extra classification premises. The first
+follows by squaring (2.1). For the second, partial transpose on the original
+second factor places each off-diagonal $C_{ij}$ in an orthogonal block
+$\left(\begin{smallmatrix}0&C_{ij}\\\bar C_{ij}&0\end{smallmatrix}\right)$
+with eigenvalues $\pm|C_{ij}|$, and leaves five diagonal blocks $1/5$.
+The ten two-dimensional blocks and five singletons exhaust dimension
+twenty-five. Its trace norm is $1+2\sum_{i<j}|C_{ij}|$, giving the stated
+negativity. This explains the parameter correspondence with the
+sharp-negativity owner without re-optimizing its result.
+

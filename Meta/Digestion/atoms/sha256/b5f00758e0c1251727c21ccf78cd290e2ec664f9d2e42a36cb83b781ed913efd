@@ -1,0 +1,103 @@
+**定理 2.1（四阶最优准备、乘积类分离与整数实现）。** 在定义 1.2–1.8 的不变合同下，以下六项成立。
+
+(A) 对每个固定 $n=3N$，存在 $\rho_n>0$ 和 $K_n<\infty$，使每个满足 $0\le x\le\rho_n$ 的原整数合同都有
+
+$$
+\left|\varepsilon_n^\star(L,q)-C_nx^2-Q_nx^4\right|
+\le K_nx^6.
+\tag{2.1}
+$$
+
+因此，每个允许的准备、有限参考、随机化协议和末端 POVM 的平均错误至少为
+
+$$
+C_nx^2+Q_nx^4-K_nx^6.
+$$
+
+常数与协议及参考维数无关，但可依赖固定 $n$。
+
+(B) 对每个整数合同，$\mathcal P_{\mathrm{prod}}$ 的优化分数等于单个平衡准备 $|+\rangle^{\otimes n}$ 在任意末端 POVM 下的优化分数。对固定 $n$ 和充分小的 $x$，
+
+$$
+\begin{aligned}
+\varepsilon_n^{\mathrm{prod}}(L,q)
+&=C_nx^2+(Q_n+\Delta_n)x^4+O_n(x^6),\\
+\beta_n(L,q)-\beta_n^{\mathrm{prod}}(L,q)
+&=\Delta_nx^4+O_n(x^6)>0.
+\end{aligned}
+\tag{2.2}
+$$
+
+严格正号用于充分小的正 $x$。这是两个已优化取得类的分离，两类都已充分优化联合解码器，不是两个固定接收器的比较。
+
+(C) 压缩到非负计算基振幅后，完整 Bayes 问题对充分小的 $x$ 有唯一最优概率分布 $\pi_\star(z,x)$。它实解析、关于 $x$ 为偶函数，满足 $\pi_\star(z,x)=\pi_\star(-z,x)$，并有对所有 $z$ 一致的展开
+
+$$
+\pi_\star(z,x)
+=2^{-n}\left[1-\frac{x^2}{4}\sum_{i=1}^{n-1}z_i z_{i+1}
++O_n(x^4)\right].
+\tag{2.3}
+$$
+
+唯一性仅指该压缩分布，不是模去交换相位或等价参考之后的物理态唯一性。显式分布
+
+$$
+\pi_{\mathrm{trial}}(z,x)
+=2^{-n}\left[1-\frac{x^2}{4}\sum_{i=1}^{n-1}z_i z_{i+1}\right]
+\tag{2.4}
+$$
+
+在 $(n-1)x^2<4$ 时严格为正。准备
+
+$$
+|\chi_x\rangle=\sum_z\sqrt{\pi_{\mathrm{trial}}(z,x)}\,|z\rangle,
+$$
+
+作规定的 $q$ 次调用，对完整输出态族使用 SRM，即得到平均错误
+
+$$
+C_nx^2+Q_nx^4+O_n(x^6).
+\tag{2.5}
+$$
+
+该实现不使用输入参考，仅用一个共同末端测量。式（2.4）没有被断言在有限正 $x$ 精确最优。
+
+(D) 完整五标签域
+
+$$
+B_3=\{000,100,010,101,001\}
+\longleftrightarrow\{\mathrm{null},2,3,2\ 5,5\}
+$$
+
+有 $M=e=5$、$s_3=1$、$e_2=2$，所以
+
+$$
+\begin{aligned}
+\varepsilon_3^\star&=\frac{x^2}{2}+\frac{3x^4}{40}+O(x^6),\\
+\varepsilon_3^{\mathrm{prod}}&=\frac{x^2}{2}+\frac{7x^4}{80}+O(x^6),\\
+\beta_3-\beta_3^{\mathrm{prod}}&=\frac{x^4}{80}+O(x^6).
+\end{aligned}
+\tag{2.6}
+$$
+
+五个原标签全部保留；这些是优化错误和成功优势的系数，不是数值样本。
+
+(E) 对每个固定 $n=3N$ 和固定整数 $r\ge1$，沿 $q=L-r$、$L\to\infty$，
+
+$$
+\begin{aligned}
+\varepsilon_n^\star(L,L-r)
+&=\frac{\pi^2r^2e_n}{8ML^2}
+-\frac{\pi^4r^4(e_n+6s_n)}{384ML^4}
++O_{n,r}(L^{-6}),\\
+\beta_n(L,L-r)-\beta_n^{\mathrm{prod}}(L,L-r)
+&=\frac{\pi^4r^4e_{n-1}}{512ML^4}
++O_{n,r}(L^{-6}).
+\end{aligned}
+\tag{2.7}
+$$
+
+对充分大 $L$，这些是 $0<q<L$ 的真正内部整数合同。第一式的 $L^{-4}$ 修正严格负且非零，不使用自由调节的物理角度。
+
+(F) $q=0$ 时两个 Bayes 准备类的成功率均为 $1/M$，$q=L$ 时均为 $1$。在定义 1.8 的有限终止和全部有限历史合同下，完整五窗索引服务及其指针版本具有相同的优化 Bayes 分数及四阶分离。本定理不推出 minimax 四阶结论或逐来源支配。
+

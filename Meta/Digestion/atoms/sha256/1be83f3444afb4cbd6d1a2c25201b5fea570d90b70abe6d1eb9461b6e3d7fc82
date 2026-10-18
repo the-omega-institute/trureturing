@@ -1,0 +1,186 @@
+**Theorem 3.1 (Same-law legal loss-cocycle construction).** Fix any
+$\theta\in\Theta_N$ whose actual law satisfies (2.1). For every finite
+interval $C$ of length $L$, almost every exterior satisfies
+
+$$
+p_C(0^L;y)\ge2^{-L},\qquad
+3^{-k(w)}p_C(0^L;y)\le p_C(w;y)\le p_C(0^L;y)
+\quad(y\in K_C(w)),
+\tag{3.1}
+$$
+
+and $p_C(w;y)=0$ for incompatible $w$. In particular, every compatible
+completion has conditional mass at least $2^{-L}3^{-k(w)}$.
+Every fixed finite legal replacement preserves $P$-null sets. Moreover,
+
+$$
+\mathbb E_P\sum_{i\in\mathbb Z}|\ell_i(X)-\ell_i(Z_CX)|
+\le L+2(1+2^{L/2})A_P.
+\tag{3.2}
+$$
+
+There is a Borel $P$-conull set $\Omega\subseteq\mathsf X$, invariant under
+shifts and saturated under all finite legal modifications, such that
+
+$$
+\Delta_P(x,z)=\sum_{i\in\mathbb Z}(\ell_i(x)-\ell_i(z))
+\tag{3.3}
+$$
+
+is absolutely defined whenever $x,z\in\Omega$ differ at finitely many
+coordinates. It is measurable on that relation, antisymmetric, shift
+invariant, and obeys $\Delta_P(x,z)=\Delta_P(x,u)+\Delta_P(u,z)$ for any
+three configurations in one such class. For any two choices of original
+posterior versions, the resulting cocycles agree on a common saturated
+conull set. The full construction uses neither visible finite memory nor
+a change of the actual joint law (1.2).
+
+Proof. First derive the fiber domination that will make evaluations of
+original versions after surgery legitimate. The supplied band, integrated
+against any $B\in\mathcal E_i$, gives
+
+$$
+\begin{aligned}
+P(B,X_i=0)&\ge\tfrac12P(B) &&(B\in\mathcal E_i),\\
+\tfrac13P(B,X_i=0)\le P(B,X_i=1)&\le P(B,X_i=0)
+&&(B\in\mathcal E_i,\ B\subseteq F_i).
+\end{aligned}
+\tag{3.4}
+$$
+
+These inequalities are used here as the existing band/insertion mechanism,
+not as a separate result. To pass them to $Y$-fibers, test against arbitrary
+$\{Y\in H\}$ and a specification of other coordinates of $C$. Such an
+event is external to $i$. Order the $L$ coordinates of $C$ and successively
+specify zero. At each step the first inequality of (3.4) costs at most
+$1/2$. Consequently $P(Y\in H,X_C=0^L)\ge2^{-L}\mu_C(H)$ for every $H$,
+which is the first inequality of (3.1) by conditional integration.
+
+Fix $w$ and restrict $H$ to $K_C(w)$. Starting from the zero block, insert
+its $k(w)$ ones in any order. For each insertion all other block positions
+are specified. Both neighbors of that insertion are zero: inserted ones
+are nonadjacent, and an endpoint neighbor outside $C$ is zero by
+compatibility. Thus the second pair of inequalities in (3.4) compares the
+two entire-block events, with the same exterior event $H$. Iterating gives
+$3^{-k(w)}P(Y\in H,X_C=0^L)\le P(Y\in H,X_C=w)
+\le P(Y\in H,X_C=0^L)$. Conditional integration gives (3.1).
+Incompatible completions have zero mass by legality. There are finitely
+many words at each interval and countably many intervals, so these
+conditional statements can be chosen simultaneously. This argument covers
+$L=1$, both endpoint ones when legal, and every zero or forced seam.
+
+For the zero replacement let $Q_C^0=(Z_C)_*P$. Disintegration against any
+nonnegative Borel function $v$ proves the density identity
+
+$$
+\int v\,dQ_C^0=\int v(0^Ly)\,d\mu_C(y)
+=\int v(x)\frac{\mathbf1_{\{x_C=0^L\}}}{p_C(0^L;x_{C^c})}\,dP(x),
+\qquad Q_C^0\le2^LP.
+\tag{3.5}
+$$
+
+All ratios are used only on the conull set where their denominators are
+positive; set them to zero elsewhere. For another word, the pushforward
+of $\mathbf1_{\{Y\in K_C(w)\}}P$ under replacement by $w$ is a
+subprobability $Q_C^w$ with
+
+$$
+\frac{dQ_C^w}{dP}(x)=
+\frac{\mathbf1_{\{x_C=w\}}\mathbf1_{K_C(w)}(x_{C^c})}
+{p_C(w;x_{C^c})},\qquad Q_C^w\le2^L3^{k(w)}P.
+\tag{3.6}
+$$
+
+The identity part of $R_{C,w}$ adds a measure bounded by $P$. Hence
+$(R_{C,w})_*P\ll P$, as do finite compositions of such maps. More
+generally, a measurable choice among these finitely many replacements is
+nonsingular by partitioning its domain according to the selected word.
+Neither $Q_C^0$ nor $Q_C^w$ is asserted stationary; these measures serve
+only to dominate integrals of the fixed original losses and predictors.
+
+Translate $C$ to $[1,L]$. For $i\le0$, let $a_i^C$ be a $[0,1]$ Borel
+version of $\mathbb E_P[X_i\mid\sigma(X_j:j\le0,j\ne i)]$; for
+$i\ge L+1$ use $\mathbb E_P[X_i\mid\sigma(X_j:j\ge L+1,j\ne i)]$.
+Each is a function of the indicated coordinates, so
+$a_i^C(Z_Cx)=a_i^C(x)$ pointwise. Stationarity identifies the exact defects
+
+$$
+\mathbb E_P(q_{-j}-a_{-j}^C)^2=e_R(j),\qquad
+\mathbb E_P(q_{L+1+j}-a_{L+1+j}^C)^2=e_L(j),\quad j\ge0.
+\tag{3.7}
+$$
+
+For example the left field retains the entire left half-line and exactly
+$j$ bits to the right of the site $-j$ before the cut. At $j=0$ it omits
+the right neighbor inside $C$. A full forced center therefore need not
+have zero reduced defect. Both terms at $j=0$ are retained in (3.7).
+
+For either exterior site write $e$ for its defect in (3.7). Cauchy–Schwarz
+under the probability $P$, then under the probability $Q_C^0$, gives
+
+$$
+\begin{aligned}
+\mathbb E_P|q_i-a_i^C|&\le\sqrt e,\\
+\mathbb E_P|q_i(Z_CX)-a_i^C(X)|
+&=\mathbb E_{Q_C^0}|q_i-a_i^C|
+\le\bigl(\mathbb E_{Q_C^0}(q_i-a_i^C)^2\bigr)^{1/2}
+\le2^{L/2}\sqrt e.
+\end{aligned}
+\tag{3.8}
+$$
+
+The exterior emitted bit is unchanged by $Z_C$. The elementary bound
+$|(x-u)^2-(x-v)^2|\le2|u-v|$ for $x\in\{0,1\}$ and $u,v\in[0,1]$
+therefore bounds that site's expected absolute loss difference by
+$2(1+2^{L/2})\sqrt e$. The $L$ interior sites each cost at most one.
+Tonelli's theorem and (2.1) now give (3.2), with all original offsets.
+In particular $V_C(x):=\sum_i|\ell_i(x)-\ell_i(Z_Cx)|$ is finite almost
+surely for every $C$.
+
+It remains to turn these individual almost-sure statements into one
+pathwise construction. Choose a Borel conull set $B$ on which every $V_C$
+is finite, the band and forced identities hold at every site, and all the
+countably many conditional-version agreements and support identities used
+above hold. Countable intersections are legitimate here. Let $\mathcal G$
+be the countable monoid of finite compositions generated by all $R_{C,w}$,
+the shifts $T,T^{-1}$ and the identity. Every member is nonsingular for
+$P$: this was proved for replacements and follows from stationarity for
+shifts. Thus
+
+$$
+\Omega=\bigcap_{G\in\mathcal G}G^{-1}B
+\tag{3.9}
+$$
+
+is Borel and conull. Closure of $\mathcal G$ under composition implies
+$G\Omega\subseteq\Omega$ for every generator. Since both shifts occur,
+$T\Omega=\Omega$. If $x\in\Omega$ and $z\in\mathsf X$ differs from it
+only in a finite interval $C$, then $z=R_{C,z_C}x$; hence $z\in\Omega$.
+This proves saturation under every finite legal modification, including
+ones whose location or replacement word was chosen from the configuration.
+
+For such $x,z$, $Z_Cx=Z_Cz$. The pointwise triangle inequality yields
+
+$$
+\sum_i|\ell_i(x)-\ell_i(z)|\le V_C(x)+V_C(z)<\infty.
+\tag{3.10}
+$$
+
+Thus (3.3) does not depend on a containing interval or an order of summation.
+Antisymmetry and additivity follow by termwise identities in absolutely
+convergent series; for a triple use an interval containing all changes.
+Our chosen versions satisfy $\ell_i(T^kx)=\ell_{i+k}(x)$ pointwise, so
+reindexing gives $\Delta_P(T^kx,T^kz)=\Delta_P(x,z)$. Symmetric finite
+partial sums of Borel functions converge to (3.3), proving measurability
+on the finite-modification relation restricted to $\Omega$.
+
+Finally any other actual posterior versions agree with these $P$-almost
+surely at every site. Add those countably many agreement sets to $B$ and
+repeat (3.9); nonsingularity preserves all agreements after every finite
+replacement. The two cocycles are then identical on the resulting relation.
+The same reasoning treats alternative actual reduced predictors and
+conditional-mass versions wherever used. This is independence for any
+fixed choices, not a claim of one null set accommodating an uncountable
+collection of every conceivable version. No values are transported from
+the posterior of a different law. $\square$
+

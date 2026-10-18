@@ -1,0 +1,11 @@
+**定义 76.5（finite rounding and loss acquisition operations）。** For a represented rational $x$, define nearest-integer rounding by $\lfloor x+1/2\rfloor$; half ties go toward positive infinity, including negative half ties. Define clipping by $[x]_0^1=\min(1,\max(0,x))$. Dot products, cross products, clips and comparisons are finite rational operations. For $0<x\leq1$, the dyadic scale selection is the least $h\geq0$ such that $2^{-h}\leq x$; it includes equality. Compare numerator and denominator bit lengths to find an initial integer, then adjust with exact dyadic comparisons until $2^{-h}\leq x<2^{1-h}$, unless $h=0$. No true logarithm is used.
+
+Given $K,h$ and sufficiently precise finite replies, put $p=K+10$, $d=2^{p+h}$, and form
+
+$$
+a=\min(d,\max(0,\lfloor d[1-\|y_1\|^2]_0^1+1/2\rfloor)),\qquad
+b=\min(d,\max(0,\lfloor d[1-\|y_2\|^2]_0^1+1/2\rfloor)).
+$$
+
+Let $z=y_2\times y_1$, multiply $z$ by the rational sign of $y_0\cdot z$ with sign zero equal to zero, and take the other two raw anchors to be $[\|y_2\|^2]_0^1y_1$ and $[\|y_1\|^2]_0^1[\|y_2\|^2]_0^1y_2$. Round each coordinate to the $2^{-p}$ grid using the same half-tie rule. Store the resulting thirteen fields and check §76.2. The interval search, final precision and proof that every valid acquired word passes those tests are in §79. The fixed-report version parses only one supplied triple, computes the same interval and scale, and rejects insufficient precision; it requests no further report.
+

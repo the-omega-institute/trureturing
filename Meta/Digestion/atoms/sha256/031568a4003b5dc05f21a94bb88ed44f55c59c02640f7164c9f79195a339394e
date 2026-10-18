@@ -1,0 +1,67 @@
+**Corollary 239.3 (Original cut and its exact relative scope).**
+Every complete feasible conic N allocation, of any finite mass, obeys
+
+$$
+\sum_{n=1}^m\gamma_n b_n\le\gamma_2+[(m+1)d-v]e.
+\tag{239.7}
+$$
+
+Every original N or O cap attainer obeys the same inequality with
+$a_n,c$ in place of $b_n,e$, at all positive closed caps and without
+requiring the chosen positions active. Indeed (237.5) with $Z$ gives
+zero on the right for a conic allocation. For an original attainer,
+§110.2 gives one full finite probability configuration. If its active
+horizon is below $m$, extend it by ignoring added bits. New first-zero
+classes have $a_n\le c$, correct probability zero and base and pair
+probability at least $1-c$; old rows persist. Pairing with $Z$ proves
+the cut. For $c\ge1$ it follows directly from amplitudes at most one.
+O uses its counted N completion. ∎
+
+At $m=7,\rho=3$ the counts are
+
+$$
+(d,u,v,s,T)=(24,11,5,40,19),\quad
+q_*=(0,13,20,23,24,24,24;187),\quad W=72.
+\tag{239.8}
+$$
+
+At the flat cap $e=5t/9$, (239.7) excludes both original classes
+when $117/217<t\le27/49$: its reading is $(217t-117)/9>0$.
+At the upper endpoint its lower error bound is
+$2819/9163=15/49+2/1309$.
+This displayed eliminated interval supplies no additional strength over
+the necessary cut in §240: its flat lower bound is stronger there by
+
+$$
+\frac{29t-2}{45}-\frac{128t-13}{187}
+ =\frac{211-337t}{8415}>0.
+\tag{239.9}
+$$
+
+This comparison concerns necessary cuts, and does not extend §240's
+attainment interval. The simultaneous replacement and the following
+signed-cone statement remain distinct from that eliminated-profile reading.
+
+Let $\mathcal C_{\rm old}$ be precisely the cone of the four reused
+$\rho=2$ directions $q_{k,2}^7$, $k=4,5,6,7$, and the direction
+$(0,0,4,8,7,8,8;63)$. Let
+$P_H=\{p:\sigma_{H_7}(p)\le0\}$.
+At $b_*=(27/49,\ldots,27/49;15/49)\in H_7$, their readings are
+$-54/49,-101/49,-95/49,0,0$, while $F_{q_*}(b_*)=2/7$.
+Therefore
+
+$$
+q_*\notin\mathcal C_{\rm old}+P_H.
+\tag{239.10}
+$$
+
+For $c>7/2$ any proposed $Q(V)\in\mathcal C_{\rm old}$ leaves
+residual reading at least $2c/7>1$ at that point. It cannot be paid by
+one $\theta\le1$. Nevertheless the unrestricted choice $cZ$ works.
+The same necessary cut proves $b_*\notin H_N$, so it is not an
+original separator. The restriction to $\mathcal C_{\rm old}$ belongs
+only to this relative comparison. The old $\rho=2$ family, its uniform
+prefix pullback in §§233–235, and zero-cost closure under finite sums
+are reused: adding these replacements to an already certified input
+preserves that input's one residual and budget, without a new closure claim.
+

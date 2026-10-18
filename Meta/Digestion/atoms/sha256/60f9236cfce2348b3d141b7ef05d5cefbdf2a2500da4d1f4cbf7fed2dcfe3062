@@ -1,0 +1,24 @@
+**Definition 2.4 (record-selected exact reanchoring).** Using only the
+declared accessible inputs, the controller selects a target
+$l_y\in(0,c)$ and a proposed finite positive endpoint duration $L_y$.
+For every $j\in S_y$, every $|z|=1$ and every signed $m$, the success
+specimen must be exactly $\psi(l_y,z,m)$ whenever success has positive
+probability. Zero success is allowed, but an incorrect live output is not
+called success. The controller has no hidden $j,z,m$ input.
+
+The common success map for each $y$ is CP and trace-nonincreasing on the
+joint specimen/assistance input. It may retain arbitrary success auxiliaries
+and use any finite adaptive processing. Unknown parameters cannot be passed
+to its intermediate selectors. The upper bound even grants exact parity
+classically to the processor for free; that is an explicit strengthening
+for impossibility, not a record-acquisition construction.
+
+This endpoint task specifies no Hamiltonian, speed or all-prefix gate law
+over $L_y$. An attaining abstract CP map does not by itself supply a timed
+physical implementation. A permitted executed attempt has success or a
+stopped specimen $f$ with its complete actual failure residue and record.
+Failure is absorbing. A known mismatch or missing permission gives an
+unexecuted visible rejection instead. The joint input promise is not an
+algorithm detecting every unflagged promise violation. There is no fresh
+specimen, reset, retry after failure or additional source port.
+

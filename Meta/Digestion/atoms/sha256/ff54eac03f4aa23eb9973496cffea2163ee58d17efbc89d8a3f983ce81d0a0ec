@@ -1,0 +1,56 @@
+**推论 32.2（统一三次平面族）。** 对每个实数 tau≥0，平面 V_tau=(t-6)span{1,t²+tau t} 满足定理 32.1 的全部充分条件。
+
+**plane and basis.**
+
+For every real tau>=0, let f=t-6, h=(t-6)(t^2+tau t), and V_tau=span{f,h}. The quotient polynomials 1 and t^2+tau t are independent because the latter has leading quadratic coefficient one. Multiplication by nonzero t-6 is injective in the real polynomial ring. Thus dim V_tau=2, both basis elements vanish at 6, and the degree bound is at most three.
+
+**determinant derivation.**
+
+For distinct i,j, Deltaij=(i-6)(j-6)[j^2+tau j-i^2-tau i]=(i-6)(j-6)(j-i)(i+j+tau). This follows by factoring the common evaluation factors, then the difference of squares and the linear difference. It is an identity for the entire parameter family.
+
+**all required factored values.**
+
+**Delta57.**
+
+-2(12+tau)
+
+**Delta24.**
+
+16(6+tau)
+
+**Delta13.**
+
+30(4+tau)
+
+**Delta15.**
+
+20(6+tau)
+
+**Delta35.**
+
+6(8+tau)
+
+**Delta02.**
+
+48(2+tau)
+
+**Delta04.**
+
+48(4+tau)
+
+**uniform nonvanishing.**
+
+Each displayed nonconstant factor is strictly positive for tau>=0, and each constant multiplier is nonzero. Therefore all seven required determinants are nonzero for every tau in the declared range. No finite parameter test or genericity assertion substitutes for this factor argument.
+
+**all worlds and both intercepts.**
+
+Every gain is g=(t-6)[A+B(t^2+tau t)] with (A,B) not both zero. Its intercept is -6A, so d=a0+6A. The entire nonzero-intercept branch A nonzero and the entire zero-intercept branch A=0,B nonzero are included, with all strict sources. For existence, f with d=a0+6 and h with d=a0 are independent legal gains for every tau,a0. For any 0<r<1 and b>0 set c=r(1-r)/b; these are actual strict trace-one rank-one sources for both gains. Taking r and 1-r retains both diagonal branches; for instance r=1/3 or 2/3, b=1,c=2/9 gives two such branches. The familiar r=1/2,b=1,c=1/4 is also an interior example. No boundary limit is needed.
+
+**degree and root check.**
+
+When B=0 a legal gain has A nonzero and degree one. When B is nonzero its cubic leading coefficient is B, so the degree is three. There is no degree-two nonzero member in this particular family, although the general theorem includes degree two whenever its V permits it. For tau=0 the zero-intercept gain h=t^2(t-6) has a repeated root at zero. Other permitted repeated roots are not filtered: the proof imposes neither a discriminant condition nor square-freeness.
+
+**source relative nonredundancy proof.**
+
+Every supplied initial-root plane has all gains zero at zero; f(0)=-6 shows V_tau is not one of them. The cubic member h shows it is not the physical affine plane. The common polynomial divisor of the whole plane is exactly t-6 up to a nonzero scalar: t-6 divides both basis elements and every common divisor divides the basis element f=t-6. If V_tau equaled H span{1,t}, its common divisor would be H up to scalar because gcd(1,t)=1. H would therefore be proportional to t-6. Canceling this nonzero polynomial would force span{1,t^2+tau t}=span{1,t}, which is impossible by the quadratic degree on the left. This excludes every alternative common-factor-times-affine presentation, rather than only one proposed H. This is source-relative distinction, without an external priority or novelty claim.
+

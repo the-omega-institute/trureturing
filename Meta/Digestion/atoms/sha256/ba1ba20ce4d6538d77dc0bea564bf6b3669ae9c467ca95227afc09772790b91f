@@ -1,0 +1,38 @@
+**Lemma 13.7 (classification of every literal on the witness family).**
+For $1\le i\le n$, the prefix query $p_i$ has the following replies:
+
+| Source condition | Reply at $p_i$ |
+| --- | --- |
+| $j<i$ | absent |
+| $j=i$ | $\lambda_e$ |
+| $j>i$, or source $t_*$ | branch |
+
+All other finite words are exhausted by these cases:
+
+1. The empty word gives branch, $L$ gives alpha, and a strict extension
+   of $L$ gives absent on every witness.
+2. A word first diverging from $p$ at position $i$, $2\le i\le n$,
+   has the form $p_{i-1}\overline{p[i]}z$, where the bar exchanges $L,R$.
+   For $z=\varepsilon$ its reply is alpha when $j\ge i$ or on $t_*$,
+   and absent when $j<i$. For nonempty $z$ its reply is always absent.
+3. A strict extension $pz$ gives alpha exactly when its source is $t_*$
+   and $|z|=1$. In every other case it gives absent.
+
+Consequently a word can distinguish the two labels of at most one
+pair $\{t_{j,0},t_{j,1}\}$: it does so exactly when it equals $p_j$.
+After discarding that possible pair, all other intact pairs receive at
+most two different replies, each reply common to both labels of its
+pair. The statement includes arbitrarily deep, off-path, empty and
+repeated words.
+
+Proof. Before $p_j$ the constructed path consists of branches; at it
+there is the stated leaf, and below it all positions are absent. At a
+first divergence the sibling exists exactly when its parent was before
+the terminal leaf, namely $j\ge i$, and that sibling is alpha. Its own
+strict descendants are absent. The terminal witness instead continues
+the path through $p$ and has just two alpha children there. These facts
+give the table and the three cases by literal navigation in the actual
+trees. Every word is a prefix, first diverges, or strictly extends $p$;
+the initial left branch and the root account for the remaining cases.
+No property of an imagined comparison oracle is used. $\square$
+

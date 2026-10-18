@@ -1,0 +1,10 @@
+## All vertex links
+
+The two ideal-vertex types stay separate under the full face maps. The center truncation triangle has angles (2π/9,2π/9,2π/9); every peripheral triangle has (π/4,π/4,2π/9). All truncation sides are paired because they lie on paired original hexagons. Their vertices have total angle 2π by the edge-link check. Thus each boundary component is a closed hyperbolic surface. Orientation is inherited from Γ<W⁺. Compactness and Gauss–Bonnet give genus at least two for every component.
+
+Collapsing each boundary component gives the end-compactification of the
+usual topological ideal triangulation of the interior of M. Removing the
+ideal vertices recovers the interior, while truncating them recovers M.
+The geometric tetrahedra are strictly hyperideal, not metric ideal.
+This proves every incidence/manifold hypothesis of the degree-(8,9) packet theorem.
+

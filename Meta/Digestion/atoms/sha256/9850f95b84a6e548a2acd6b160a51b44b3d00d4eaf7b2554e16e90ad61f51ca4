@@ -1,0 +1,22 @@
+**Lemma 11.1 (primitive-state arithmetic).** Complete and determinize the
+supplied automata and take their finite product. Write its state set as
+$Q$, leaf states as $q_\alpha,q_\beta$, and pair transition as
+$\delta:Q^2\to Q$. If $q_r$ is its state on $T_r=\rho^r\alpha$, then
+
+$$
+q_0=q_\alpha,\qquad q_1=q_\beta,\qquad
+q_{r+2}=\delta(q_{r+1},q_r).
+\tag{NCE.24}
+$$
+
+For each $s\in Q$, the predicate $q_r=s$ on $r\in\mathbb N$ is effectively
+Presburger.
+
+Proof. This is the primitive-state orbit of [NRF, Definition 4.1][NCE-NRF].
+The pair $(q_r,q_{r+1})$ follows a deterministic map on the finite set
+$Q^2$. Find its finite preperiod and positive period by the first repeated
+pair. Each state preimage is then a finite set together with finitely many
+arithmetic progressions. Their equalities, lower bounds and congruences
+are Presburger formulas. The recurrence evaluates the actual $T_r$,
+not a free unary-constructor encoding of its index. $\square$
+

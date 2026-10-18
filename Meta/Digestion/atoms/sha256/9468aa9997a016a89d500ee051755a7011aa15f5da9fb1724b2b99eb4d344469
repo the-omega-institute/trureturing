@@ -1,0 +1,13 @@
+**Definition 4.3 (value and original minimum count).** Let
+$\mathcal T(s,t)$ be the maximum actual acquisition-record height TV
+under (GC.5), and let $n(s,t)$ be the minimum **total** number of
+actually generated acquisition labels among its original optimal
+attainers. On empty classes $n$ and this optimal value are not defined.
+An infinite-budget limit is not a finite attainment. Terminal failure
+labels, hidden Kraus indices, static support rank and jointly acquired
+quantum dimension are different from $n$.
+
+By FA Theorem 90.1 and (GC.10), $n\le10$ throughout $\mathcal D_w$.
+By ST Theorem 8.2, $n=8$ on a nonempty ordinary open strict weak
+region. These two facts are reused at their published conditional scope.
+

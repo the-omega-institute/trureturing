@@ -1,0 +1,27 @@
+**Proposition 32.3 (The first correction dimensions).**
+The canonical degrees and the corrections in the first three
+odd lengths of this application are
+
+| Positions $n$ | Canonical generator degrees | $C_k(5)$ | $C_k(6)$ | $C_k(7)$ | $C_k(8)$ | $C_k(9)$ |
+| ---: | --- | ---: | ---: | ---: | ---: | ---: |
+| 7 | $3,5$ | 1 | 7 | 28 | 84 | 210 |
+| 9 | $3,5,7$ | 1 | 9 | 46 | 174 | 540 |
+| 11 | $3,5,7,9$ | 1 | 11 | 67 | 297 | 1068 |
+
+For all three rows, $C_k(m)=0$ for $0\le m\le4$.
+
+Proof. The canonical degrees are $2j+1$ for $1\le j\le k-1$;
+the quotient omits degree three. For seven positions its count is
+$\binom{m+1}{6}$. For nine positions it is
+$\binom{m+3}{8}+\binom{m+1}{8}$, and for eleven it is
+$\binom{m+5}{10}+\binom{m+3}{10}+\binom{m+1}{10}$.
+All terms use the homogeneous-degree convention of (32.2).
+For example at $m=7$ the three counts are respectively
+$28$, $45+1=46$, and $66+1+0=67$; at $m=9$ they are
+$210$, $495+45=540$, and $1001+66+1=1068$.
+At $m=8$ they are $84$, $165+9=174$, and $286+11=297$.
+The remaining displayed entries are the constant and linear face
+degrees, and the zero range precedes the first quotient generator.
+The first row is the correction already used in (29.5) and (30.16).
+$\square$
+

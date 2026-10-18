@@ -1,0 +1,71 @@
+**Theorem 5.3 (Exact all-history upper and actual attainment).** The cubic
+(5.3) has exactly one positive root $\lambda_{\rm J}$. The port (4.5)
+has
+
+$$
+e(T_{\rm J})=\lambda_{\rm J},\qquad
+l<\lambda_{\rm J}<u_*.
+\tag{5.10}
+$$
+
+Among the fifteen representatives in (5.1), exactly $\{2\}$ and
+$\{5\}$ attain this error. A pure input, wait zero, one complete read
+and Stop attain the full-history TV.
+
+**Proof.** The positive map $\mathcal A$ gives
+$H_{\{2\}}=\Pi_2-\mathcal A(\Pi_2)$, whose quadratic form is nonpositive
+on $e_2^\perp$. It has at most one positive eigenvalue, including
+multiplicity. Its $L$ block is nonpositive. By the sign change in
+(5.5), its $V$ block $C_2$ has a positive eigenvalue in $(l,u_*)$.
+It is therefore the unique positive eigenvalue and the unique positive
+root of $p$. By (5.8), every negative eigenvalue of $H_{\{2\}}$ is
+greater than $-1/2$. Since $l>1/2$, its operator norm is
+$\lambda_{\rm J}$. Swapping modes $2$ and $5$ fixes the projectors
+(2.3)–(2.4) under conjugation and hence conjugates
+$H_{\{2\}}$ to $H_{\{5\}}$ by (4.10). Their norms are equal.
+Every other representative has norm strictly below $z_0<l$ by Lemma
+5.2.
+
+For completeness, QMB's first-read identity in passive coordinates is
+
+$$
+e(T)=\sup_{t\geq0}\max_{J\subseteq\mathsf S}
+\|O(t)^T\Pi_JO(t)-S^\dagger(O(t)^T\Pi_JO(t))\|_{\rm op}.
+\tag{5.11}
+$$
+
+The reason it covers every finite adaptive history is that the first
+complete rank-one read resets the conditional quantum state to its
+outcome basis state. All subsequent common controls and reads are
+classical postprocessing of that first outcome, with the corresponding
+identical conditional laws. Stop without any read has no state-dependent
+history. Source-independent randomized controls give mixtures of these
+comparisons. Conversely a single actual read realizes the event tests.
+
+For the stationary channel of Lemma 4.3 the matrix inside (5.11) is an
+orthogonal conjugate of $H_J$. Since $\mathcal A(I)=I$, complementary
+events have opposite residuals. Empty/full events vanish, so all
+thirty-two subsets reduce to the fifteen singletons/pairs. The preceding
+norm calculation proves the upper in (5.10) for all complex density
+inputs and all actual finite histories, without using a reference
+measurement or a different norm.
+
+To give the attaining input explicitly, partition the actual exact matrix
+$C_2$ in $V=(2,3,5)$ as
+
+$$
+C_2=\begin{pmatrix}a&q^T\\q&B_2\end{pmatrix},\qquad
+v_0=\begin{pmatrix}1\\(\lambda_{\rm J}I_2-B_2)^{-1}q\end{pmatrix}.
+\tag{5.12}
+$$
+
+Here $B_2\leq0$, being the compression to $e_2^\perp$.
+Thus the inverse exists. The Schur-complement identity
+$p(\lambda_{\rm J})=0$ gives $C_2v_0=\lambda_{\rm J}v_0$.
+Normalize $v_0$, extend by zero on $L$ to a real unit vector $v$, and
+take the original input $\rho_{\rm J}=Dvv^TD^\dagger$.
+At the actual wait zero, the complete-read event $\{2\}$ has probability
+difference $v^TH_{\{2\}}v=\lambda_{\rm J}$. The full-read TV is at least
+this number and at most the proved bound. It equals
+$\lambda_{\rm J}$ and attains (5.10). $\square$
+

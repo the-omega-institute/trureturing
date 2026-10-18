@@ -1,0 +1,71 @@
+**Definition 30.1 (exact source and operational correspondences).**
+The native task and attained endpoints are [§§17--24 at the immutable
+native source][NARC-IP-parent]: Assumption 17.1 supplies the common
+acquired entry and services, Proposition 17.2 both directions of the
+exact actual fiber, Definition 17.3 the full target, and Definition
+5.3 the guarded native literals. Definitions 19.1 and 22.1 and their
+Proposition 19.2 and Theorem 22.2 supply the reused complete tables
+and first-halt traces. Assumptions 17.4 and 21.1 restrict their original
+competition to query/halt rows; Assumption 25.1 changes that restriction.
+Theorem 27.1 re-establishes forcing for internal paths and does not
+import Theorem 18.1's direct $R-A,R-B$ adjacency.
+
+The following suppliers match portions of the operational semantics;
+the ordinary correspondence keeps every intermediate complete word.
+
+| Supplier | Parameter and relation correspondence | Boundary |
+| --- | --- | --- |
+| [FIB §§26--27 and 45--47][FIB-RW] | Target $z=17-b$, source $s=Y_{a,b}$, and exact support $C_w$ consisting of the actual target-source pairs reaching $w$. A query has identity source transition and its native reply; an internal action has identity source transition and constant observation. Remaining primitive transitions to first halt give a rank on $(z,s,w)$. | Theorem 27.2 then counts all actions, including internal ones, not only Reads. Rank is proof data. Definition 45.1 itself excludes intermediate instructions; its immediate-edge criterion cannot be applied to contracted internal paths. Section 47's finite-history refinement can change both width and installed-state budgets. |
+| [DecoderOperationTrace][IP-Trace] | Take configuration type $C=W$ and input alphabet $I=\mathcal A$. Query $q$ maps to acquire with successor $o\mapsto(\delta(q,o),[])$; internal $i$ to internal with successor $\eta(i)$ and empty output batch; halt to stopped with a separate fixed terminal label $\lambda$. | Generate each source's adaptive actual reply sequence from its requested literals, extending only after first halt. Induction identifies the consumed reply with $\operatorname{Read}(Y_{a,b},\operatorname{addr}(q))$; an arbitrary external stream is not an extra source oracle. Every trace vertex is counted. Acquired-input and output fields are proof bookkeeping, not row arguments. |
+| [NativeExecutionTransport and its GuardedPhaseExecution import][IP-Transport] | Take control type $W$, addresses the literal words, replies $\mathcal A$, and $\operatorname{obs}(j,p)=\operatorname{Read}(Y_{a,b},p)$ independent of $j$. Query/internal/halt rows match read/update/halt, with terminal labels separate. | Exact instruction and observation compatibility under a control equivalence and address map permits run transport, including address collisions. The update epoch advances on internal updates; Read does not advance it. That proof epoch is neither unknown lag nor an accessible runtime clock. Word legality and costs require their own correspondence. |
+
+For the trace correspondence, step uniqueness and internal-drain
+acquisition invariance express determinism and absence of new input
+during processing. Stationary repeated-word consistency still uses
+the native-source correspondence of Lemma 25.3, not uniqueness for
+an arbitrary changing input stream. The supplier's `actual_cut_exists`
+requires unbounded output liveness on its selected streams. Finite
+first halts with empty operational output batches do not satisfy that
+hypothesis, so its liveness conclusion is not transferred.
+
+The classical encoding premises remain those attached to Theorems
+28.1--28.2: Fibonacci-cube degree roles and the Havel--Morávek
+adjacency-preserving cube obstruction. Neither induced nor isometric
+embedding is required. Generic tree refinements in FIB47 give
+existence at changed budgets, not a fixed-five-bit competitor.
+The arrival/output lemma is proved here under its actual-arrival
+and fixed-row hypotheses; it is not attributed to those graph papers.
+
+[Borodin--Cook, §2, p.289][BC-3R], *A Time-Space Tradeoff for Sorting
+on a General Sequential Model of Computation*, SIAM Journal on
+Computing 11(2), 287--297 (1982), DOI
+[10.1137/0211022](https://doi.org/10.1137/0211022), distinguishes
+input-access depth from logarithmic program-node capacity and expressly
+abstracts storage representation and manipulation between accesses.
+This is the relevant resource comparison: the present model instead
+charges internal rows and constrains every mutable transition. Their
+sorting lower bound, leveled directed acyclic graph and capacity
+measure do not supply the native frontier or authorize a free program
+counter. Unrolling actual paths need not preserve installed-state count.
+
+The new repo-derived conditional content is the internal-path rigidity,
+the consumed general last-Read entry/output lemma, and their enlarged
+controller exclusion and frontier consequences. The existing endpoint
+certificates and classical graph facts are reused. No global originality,
+new Lean evidence or physical interface realization is asserted.
+
+The exact eleven-state minimum applies at two Reads. Twelve words
+remain an attained three-Read count; no minimum-twelve theorem,
+optimal internal-step/write count, address optimum or immutable-storage
+optimum follows. All acquisition, stationarity, discard and service
+premises remain explicit. The target is one substitution lag on this
+fixed acquired fiber. The cut and entire later boundary row are already
+acquired, and equal lag outputs still merge distinct originals and
+hidden trees. Neither full spatial reconstruction, elapsed physical
+time nor a uniform result over other labels, rows, cuts or unbounded
+lags follows from (NARC.29.1).
+
+[NARC-IP-parent]: https://github.com/the-omega-institute/trureturing/blob/a005e8ce6a54bf153892e359522aaf436c54eb85/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ALPHA_RECUT_MEMORY_CONTINUATION.md
+[IP-Trace]: https://github.com/the-omega-institute/trureturing/blob/f5f62083edaef047ada3f01fd44fa94c0f03afd5/D5/S3/ConceptDynamics/Coding/DecoderOperationTrace.lean
+[IP-Transport]: https://github.com/the-omega-institute/trureturing/blob/6053f37a2c61f3ddb2c275b437184f623d4c06f0/D5/S3/ObserverMemory/Algorithms/NativeExecutionTransport.lean
+

@@ -1,0 +1,18 @@
+**Theorem 2.4 (binary closure preserves admissibility).** If $B$ is
+jointly admissible, then $B\subseteq J_2(B)$ and $J_2(B)$ is jointly
+admissible with the same chosen witnesses. Consequently every
+inclusion-maximal admissible set equals its binary projection join.
+
+**Proof.** Each chosen cross-coordinate equation for $B$ holds on its
+binary projection, so it holds on every tuple in $J_2(B)$. A self-donor
+equation or constant equation holds on the corresponding unary projection.
+Thus $J_2(B)$ satisfies all the selected witness equations and the same
+reader works there. The inclusion is immediate. Maximality gives equality.
+For $n=1$ the unary projection suffices. $\square$
+
+This is a statement about pairs of coordinates inside a relation. It does
+not say that pairwise compatibility of whole source rows determines
+admissibility of a set of rows. In particular it does not contradict
+FMR §7's higher-arity obstruction to a whole-source confusability graph.
+The join may have arbitrarily large connected components.
+

@@ -1,0 +1,35 @@
+**Corollary 10.5 (strict positive margin for a terminal span-four
+gap).** If $B=(n-4,n)$ is consecutive, then
+
+$$
+E_B-D_B\ge2,\qquad |Q_B|\ge |V_B|+2.
+\tag{SI.49}
+$$
+
+The only possible shared pair in this interval is
+
+$$
+(K-3,L-1),\qquad(K-1,L-3).
+\tag{SI.50}
+$$
+
+No attainment of the margin two is asserted.
+
+Proof. Here $d=n-3$ and $H=2$ in Lemma 10.3, so only its
+$AZ$ pair survives (SI.7); it is exactly (SI.50).
+These cells are valid because $K,L\ge3$. Let $s$ be their
+number of shared states, and let $e_j$ denote the three diagonal
+excesses defined in the proof of Theorem 10.4. Then $D_B=s$.
+If $s>0$, both cells have at least $s$ hosts, giving $e_1\ge2s-2$.
+For $s=0$ the same inequality is automatic. Consecutivity still
+gives $e_j\ge1$ for all three internal layers. Hence
+
+$$
+E_B-D_B\ge2+\max(1,2s-2)-s\ge2.
+\tag{SI.51}
+$$
+
+For $s=0$ the first bound is three; for $s=1$ it is two;
+for $s\ge2$ it is $s\ge2$. Equation (SI.33) completes
+the proof. $\square$
+

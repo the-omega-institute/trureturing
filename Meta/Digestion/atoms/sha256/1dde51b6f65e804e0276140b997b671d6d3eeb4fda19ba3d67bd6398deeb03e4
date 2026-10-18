@@ -1,0 +1,24 @@
+**Proposition 2.3 (supplied full-path correspondence).** Write
+$c_0=1/2-k/r$. At every prefix time of a lawful command, N, Theorem 9.3
+gives the following real phase lifts, followed by reduction modulo $2\pi$:
+
+$$
+\begin{aligned}
+\kappa_t&=k+a_t,\\
+\widetilde\alpha_t&=\alpha_0+b_t/2,\\
+\widetilde\beta_t&=\beta_0+c_0b_t-J_t/r.
+\end{aligned}
+\tag{2.5}
+$$
+
+Thus the full lifted state path is the image of the joint path
+$(a,b,J)$ under this affine map. This is a prefix application of the
+existing chronology, not a new chronological action.
+
+Proof. N's double-wall coefficients are
+$w_+=1/2-\kappa/r$ and $w_-=-\kappa/r$. Integrating them against $db$
+gives $u-u_0=b/2-(kb+J)/r$ and
+$v-v_0=-(kb+J)/r$. Subtracting and using (2.2) gives (2.5), with the
+negative phase convention unchanged. The guard is exactly N, Theorem 9.2.
+$\square$
+

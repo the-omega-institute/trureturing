@@ -1,0 +1,15 @@
+**The endpoint $d=48$.** Here $Q_2=0$, so (9.4) gives $L(2)=0$.
+If $L=0$, the nonzero-residual clocks zero, one and three require
+$F_0=F_1=F_3=0$. This is impossible for $BC$ since $F_3=2$,
+for $BD$ since $F_0=-5$, and for $CD$ since $F_1=4$.
+Thus $L$ is a nonzero multiple of $T-2$.
+Its values at zero and one have the same nonzero sign, and its value
+at three has the opposite sign. Equivalently, $Q_0F_0,Q_1F_1$
+have one sign and $Q_3F_3$ has the opposite sign.
+Because $Q_0,Q_1<0<Q_3$, the resulting requirement is that
+$F_0,F_1,F_3$ have the same nonzero sign.
+For $BC$, $F_3>0$ would require $\theta>6$ and $\theta<3$.
+For $BD$, $F_0<0<F_3$ already contradicts the requirement.
+For $CD$, $F_1>0$ would require $\theta<-3/2$ and $\theta>-1$.
+All three possibilities are excluded.
+

@@ -1,0 +1,18 @@
+**Construction 4.1 (monotone level scan).** Start at $h=0$. Generate
+all words of length $h$ in lexicographic order, $L$ before $R$, one
+materialized word at a time. Keep no whole level or query transcript.
+For each reply do the following:
+
+- Alpha: accept that word with label zero at this Read.
+- Beta: replace the saved beta address by this address.
+- Branch: continue.
+
+If the level finishes without alpha and no beta was seen, increase
+$h$ by one. If some beta was seen, reread the **chronologically latest**
+saved beta address. On beta accept it with label one at this reread.
+On branch increase $h$ by one. Clear the saved address at each new
+level. Alpha or absent at this beta reread, or absent in a level scan,
+is an invalid purported port history; it cannot arise under (AAR.1).
+All increases, enumeration, saving and acceptance use finite paid local
+steps. The program receives no bound on $h$ or on the updates.
+

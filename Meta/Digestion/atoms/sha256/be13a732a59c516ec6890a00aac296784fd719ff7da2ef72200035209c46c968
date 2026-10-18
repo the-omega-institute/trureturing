@@ -1,0 +1,59 @@
+**Theorem 98.1 (universal matching and count).** Under Assumption 93.1,
+for every point of the closed strip the family in §94 is globally optimal
+among all stipulated original competitors. Every such optimizer has at
+least five supported-nonzero actual low labels and at least six total actual
+labels, and the minimum is attained.
+
+**Proof.** Equation (FA.122)'s eight moments are exactly the full live Gram and full physical failure covariance: u²+v²=1 restores the omitted live v² moment; mu=alpha V+beta W restores the omitted failure v² moment. Thus
+
+$$
+\sum_i p_ih_ih_i^T=I_3,\quad
+\sum_i p_i\eta_i tc(h_i)n_in_i^T=M.
+$$
+
+Every weight is strictly positive. The sign checks give epsilon_i H_eta_i>0. The contact equations imply sum p_i |H_eta_i|=d.B(t). For every original competitor, apply (FA.126) to capacity endpoints and the convex chord inequality to its own b in [0,tc]. Integrating its complete live and physical failure moments gives low height <=tr(Y)+tr(Z_fM2)=d.B(t). FA69 and Theorem 87.2's reduction applies only to supported-nonzero low labels, but every supported-zero label has zero height difference and cannot evade this bound. Original competitor time laws have not been fixed to g. Adding the fixed positive high contribution H0 and dividing by two proves the universal upper bound (FA.120), matched by this one original construction. Jointly choosing orientations and failure allocation was allowed in that bound.
+
+The five projection lines are pairwise distinct: their normalized u,v determinant magnitudes exceed 0.04598 at the seed and remain nonzero over the whole strip. The three normalized pure vectors $(1,u_i,v_i)$ have determinant in $(1.5240677,1.5242904)$ on the strip; the invertible diagonal rescaling to $h_i$ preserves independence; the remaining pure live Gram is rank three. Thus this is not a fixed-allocation rank-two or maximum-contrast surrogate. A five-column minor of Gamma, using rows $(1,u,v,\eta\mathfrak c,\eta\mathfrak c u^2)$, lies in
+
+$$
+(-0.015477643822831680,-0.015475293534243875)
+$$
+
+on the strip. The five weights are therefore uniquely determined by their moments.
+
+For an arbitrary existing supported-nonzero low label let
+$C=t\mathfrak c(h)$, $v=b/C\in[0,1]$, and let $g_0,g_1$ denote the
+nonnegative pure and saturated absolute-value dual gaps. Its unhalved slack
+is exactly
+
+$$
+(1-v)g_0(h)+vg_1(h)+
+(1-v)|\ell(h)|+v|\ell(h)+Cf(h)|-|\ell(h)+bf(h)|\ge0.
+$$
+
+The last three terms are the convex chord loss. Integrating gives the
+already matched universal bound. At any optimizer, vanishing total slack
+forces vanishing slack in each existing positive outcome (almost everywhere
+in the stipulated integral version). A strictly interior b would require zero gaps at BOTH endpoints on the same direction by the convex chord decomposition. The certified pure and saturated zero sets are disjoint, so no such label exists. The only optimal supported directions and endpoint choices are the five listed. The nonzero minor and their positive matching weights require all five. FA69 and Theorem 87.2's actual-label rigidity forbids combining distinct directions into one low label, independently of hidden Kraus multiplicity. Positive high acquired mass requires at least one further actual high label. The construction below has exactly five low plus one high, including the complement, proving the exact minimum six here. This argument does not depend on an optional determinant test for Z_f +/- Delta over a broad interval.
+
+For a convergent countable alphabet the nonnegative slack sum vanishes
+only if each positive supported term has zero slack. In CG Convention
+21.3's stipulated integral model, the same conclusion holds almost everywhere
+for the supplied CP/Kraus densities, by vanishing integral of nonnegative
+slack. It restricts their supported directions to the same five rays and
+fixes their five aggregate coefficient masses. It does not construct a
+disintegration of an arbitrary instrument. A purported actual alphabet with
+fewer than five supported outcomes is finite and reduces to its finite
+positive CP-mass outcomes; it cannot support the five strictly positive
+aggregate masses. Positive nonatomic actual mass already has infinite
+alphabet. Hidden Kraus indices cannot replace actual outcomes.
+
+A supported-zero outcome may have a nonzero full-$M_5$ encoder and is admitted
+and counted, even though its supported height and contrast are zero. Such
+additional outcomes cannot lower these bounds. The complement in §100 is
+counted inside the one high outcome. Five low projection lines, two physical
+failure lines, the actual alphabet and the joint fibre dimensions
+$(2,2,2,2,2,5)$ are different quantities. The minimum statement holds only
+on this strip; optimal implementations may split a ray into several actual
+labels or add supported-zero outcomes. $\square$
+

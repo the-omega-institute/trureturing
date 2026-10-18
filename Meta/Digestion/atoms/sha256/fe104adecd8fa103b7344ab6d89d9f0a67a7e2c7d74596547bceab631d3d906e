@@ -1,0 +1,39 @@
+**Theorem 9.1 (full-domain critical lower estimate).** There are $C,s_0>0$ depending only on the fixed original data such that
+
+$$
+q_s^c[F]\ge-Cs^2\|F\|_2^2
+\quad(0<s<s_0,\ F\in\mathcal Q_s\text{ complex}).
+\tag{9.1}
+$$
+
+Thus, using the credited macroscopic direction,
+
+$$
+-C\le E_s<0,\qquad cs^8\le-\epsilon_c(s)\le Cs^2,
+\qquad c\le r_s\le Cs^{-6}.
+\tag{9.2}
+$$
+
+Proof. Fix one $\delta\in(0,\delta_*]$ and put $R=\delta/s$. For arbitrary $F\in\mathcal Q_s$ set $f=\mathcal T_sF$, and use the exact quadratic partition $\eta_R^2+\zeta_R^2=1$ from (2.11). Products preserve the native closed domain. The inner vector $u=\eta_R f$, zero extended, belongs to $\mathcal Q_E$ by native core approximation and strip norm equivalence. Since $Y$ differentiates neither cutoff, the exact horizontal IMS identity is
+
+$$
+\widetilde q_s^c[f]
+ =\widetilde q_s^c[\eta_Rf]+\widetilde q_s^c[\zeta_Rf]
+    -a\int(|\eta_R'|^2+|\zeta_R'|^2)|f|^2,
+\qquad \widetilde q_s^c=q_s^c\circ\mathcal T_s^{-1}.
+\tag{9.3}
+$$
+
+It holds first on the smooth native core, then on the entire complex domain by closure. Lemma 8.1 bounds the inner term below by $-Cs^2\|\eta_Rf\|_2^2$.
+
+For the outer term retain the exact nonnegative native free threshold form $aC_s$, transported by the shear, with both original Dirichlet faces. The actual height tail (2.7) gives
+
+$$
+\sup_{|r|\ge\delta/s}\widetilde U_s\le C_\delta s^5,
+\qquad
+\widetilde q_s^c[\zeta_Rf]\ge-C_\delta s^5\|\zeta_Rf\|_2^2.
+\tag{9.4}
+$$
+
+Using only $A_s\ge0$ and discarding its threshold subtraction would lose this stronger outer bound. Here no native height tail or moving-face region is omitted. The IMS integral is at most $C_\delta s^2\|f\|_2^2$. Summing, using the norm partition and unitarity, proves (9.1) for every native vector. Fixing $\delta$ makes its final constant a fixed-data constant. Infimizing gives $E_s\ge-C$; negative attainment from Proposition 75.2 and the one-sided estimate (3.8) give (9.2). This improves the supplied $O(s^{2/3})$ error in source Theorem 98.1. $\square$
+

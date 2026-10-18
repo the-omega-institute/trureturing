@@ -1,0 +1,9 @@
+**Boundary 8.2 (Unsettled return and budget frontiers).** Theorem 7.1
+settles only $q_3=1$. It does not determine the frontier at $q_3<1$,
+an optimum at a larger budget, an expected-paid-cost optimum, or a
+general stopping theorem. Selectively omitting leaves changes the
+subtree accounting. The auxiliary law remains specified and unchanged;
+ignoring it in the attainer does not settle selective event-availability
+questions for other return masses. Behavior outside $E_3$ remains
+unrestricted by the acquisition contract.
+

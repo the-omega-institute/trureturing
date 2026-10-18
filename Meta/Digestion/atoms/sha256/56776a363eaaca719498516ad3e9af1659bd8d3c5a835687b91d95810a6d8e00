@@ -1,0 +1,50 @@
+**Corollary 7.2 (same-fiber child projection is invalid).** A jointly
+admissible branch fiber need not have an admissible child projection.
+An ordinary incompatibility graph on pairs of canonical sources
+also cannot characterize native admissibility.
+
+Proof. Project (FMR.44) onto the left child set
+$X=\{x_0,x_1,x_2,x_3\}\subset S_2$. Its target $L$ has the same
+four distinct factors. Its exhaustive nonconstant native experiments
+are
+
+$$
+\begin{array}{c|cccc}
+\varepsilon&\alpha&\beta&\mathsf{branch}&\mathsf{branch}\\
+L&\mathsf{absent}&\mathsf{absent}&\alpha&\beta\\
+R&\mathsf{absent}&\mathsf{absent}&\alpha&\alpha.
+\end{array}
+\tag{FMR.45}
+$$
+
+All words of length at least two are absent. None of these experiments
+separates the four factors, so $X$ is not admissible. The parent
+fiber is admissible by the published off-target query.
+
+For the graph assertion, any two distinct canonical representatives
+differ at some boundary constructor: the full $W_D$ reply table
+uniquely determines its $S_D$ representative. A Read at a differing
+word distinguishes the two sources, and therefore suffices for
+every selected target on that two-element set. Thus all pairs are
+admissible, whereas the four-element $X$ is not. Pairwise
+incompatibility gives an edgeless graph and loses this higher-arity
+obstruction. $\square$
+
+The allowed transformations have precise scopes. Global normalization
+in Theorem 2.3 changes the whole encoder with no alphabet increase.
+Restriction in Theorem 6.3 keeps actual correlated fibers on a jointly
+realized slice and interprets every legal query there. Upper gluing
+constructs particular product fibers without constraining competitors.
+None of these statements authorizes replacing an existing joint fiber
+by independent child codes or replacing its query by a target prefix.
+
+**Source correspondence 7.3 (a retained predictive collision).** AAR
+Proposition 13.3 supplies another necessary distinction: at $p=RLL$,
+$\langle\alpha,\beta\rangle$ and
+$\langle\alpha,\langle\alpha,\alpha\rangle\rangle$ have different
+blocking positions but the same factor $(3,0)$. All definitions here
+use equality of $\Gamma$, rather than identifying it with the first
+leaf descriptor. The canonical normalization preserves the boundary
+needed to simulate experiments; it need not be the minimal passive
+predictive quotient.
+

@@ -1,0 +1,20 @@
+### 87.6. Exact scalar zero modes
+
+Suppose D*D=λI₂. If λ>0, D/√λ is an isometry into the new environment. The following records give an exact calibrated physical path for small t:
+
+\[
+ b_{f0}(t)=b_{f0}\oplus0,\qquad
+ b_{f1}(t)=\sqrt{1-\lambda t^2}\,b_{f1}\oplus tDb_{f1}.
+                                                               \tag{26}
+\]
+
+This is a qubit core with bit-marker overlap q(t)=√(1−λt²). Choose the A records to be the same conjugate qubit core with normalized bit markers whose real overlap is
+
+\[
+ \eta_A(t)={3\over4q(t)}.                                \tag{27}
+\]
+
+This is feasible and smooth for sufficiently small t, including at t=0; for example choose marker coordinates (√((1+η_A)/2), (−1)^i√((1−η_A)/2)). Every same-bit product Gram is unchanged, and every cross-bit product overlap is multiplied by η_A(t)q(t)=3/4. Hence the entire product Gram K, and therefore the original calibrated logical product channel, is exactly the base one. Its full-reference error remains exactly 1/4. For λ>0 and t≠0 small the B environment span is four-dimensional, so these are genuine higher-rank quarter-attainers. The case λ=0 is trivial.
+
+This explains the scalar zero in (7) by an actual physical family. It neither identifies all higher-order zero modes nor rules out higher-order anisotropic escape.
+

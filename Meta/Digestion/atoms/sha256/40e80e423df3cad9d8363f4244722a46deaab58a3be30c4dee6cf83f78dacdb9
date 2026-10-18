@@ -1,0 +1,28 @@
+**Attribution 7.2 (Reuse and the compound increment).** The
+`repo-derived` increment is Theorem 4.1's passage from preservation in
+the original spaces through finite classwise cocycle range to zero,
+and the exact placement of the unpaid square balance on (6.2).
+The calculus, Vandermonde independence and finite-range potential
+construction are classical support inside this argument. First-order
+localization, pair cancellation, finite rank and actual component
+reduction are reused. No worldwide priority or exhaustive literature
+absence is claimed.
+
+| Source | Exact contribution and limit |
+| --- | --- |
+| [Universal][U], Definitions 1.1–1.2 and 4.1, Proposition 4.2, Theorems 3.1, 5.1 and 6.2 | Original objective and entire producer domain, same actual $J_\theta/P_\theta$, necessary band/support, actual finite visible components and original separation equivalence. |
+| [Intrinsic][I], Theorem 2.2, Corollary 2.3 and §§3–4 | Exact collar, intrinsic annihilator and finite-realization framework; the existing dual residual and tail-qualified response norm remain separate consumers. |
+| [Cocycle][L], Theorems 3.1, 4.2 and 5.1 | Stated handwritten supplier for nonsingular legal replacements, saturated actual cocycle and its $L^1$ estimate, all-length conditional balance and the pair's pointwise interior balance. Our conclusions remain conditional on these inputs; no stronger proof status is attributed. |
+| [Two-word][W], Theorem 2.1 | Common actual exterior law and equality of exterior posterior restrictions for each positive intrinsic pair, including seams. No universal pair existence. |
+| [Balle–Panangaden–Precup][BPP], arXiv:1501.06841v3, §§2.2 and 3.1 | `literature-attested`: weighted finite realizations, Hankel rank and forward/backward factorization. Correspondence is $\Sigma=\{0,1\}$, $\alpha_0^{\mathsf T}=\lambda$, $A_x=M_x$, $\alpha_\infty=\mathbf1$. No minimality, SVD or approximation result is imported; the stationary cylinder series has total mass one at every length and is not an $\ell^1$ distribution over all finite words. |
+| [Dawid–Lauritzen–Parry][DLP], arXiv:1104.2224v2, §4.2, Example 4.4 and (14) | `literature-attested`: the binary conditional Brier summand is exactly $(x_i-q_i)^2$. The everywhere-positive full-product strict-propriety argument is not transferred to hard no11 or used to prove preservation under score powers. |
+| [Chandgotia–Meyerovitch][CM], arXiv:1305.0808v3, §2.2 and the main §3 before §3.1 | `literature-attested`: finite-modification equivalence, additive cocycles and reference-independent exponential normalization. Their Markov specification correspondence additionally requires finite-boundary dependence and uses conditional log ratios. Here (3.3) is proved directly for full exteriors; their global Markov/Gibbs existence conclusions are not imported. |
+
+[U]: FIB_LEGAL_EDGE_LOAD_UNIVERSAL_POSTERIOR_DEFECT_AND_FINITE_HIDDEN_SEPARATION.md
+[I]: FIB_LEGAL_EDGE_LOAD_INTRINSIC_NULL_KERNEL_DUAL_RESIDUAL_AND_PRESENTATION_OBSTRUCTION.md
+[L]: FIB_LEGAL_EDGE_LOAD_EXTERIOR_LOCALIZATION_AND_ACTUAL_LOSS_COCYCLE_BALANCE.md
+[W]: FIB_LEGAL_EDGE_LOAD_TWO_WORD_EXTERIOR_CANCELLATION_AND_VANISHING_CERTIFICATE.md
+[BPP]: https://arxiv.org/html/1501.06841v3 "Borja Balle, Prakash Panangaden and Doina Precup, A Canonical Form for Weighted Automata and Applications to Approximate Minimization"
+[DLP]: https://arxiv.org/html/1104.2224v2 "A. Philip Dawid, Steffen Lauritzen and Matthew Parry, Proper Local Scoring Rules on Discrete Sample Spaces"
+[CM]: https://arxiv.org/html/1305.0808v3 "Nishant Chandgotia and Tom Meyerovitch, Markov Random Fields, Markov Cocycles and The 3-colored Chessboard"
+

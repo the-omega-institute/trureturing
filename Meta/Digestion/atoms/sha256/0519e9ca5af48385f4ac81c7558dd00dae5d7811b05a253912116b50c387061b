@@ -1,0 +1,27 @@
+**Status 9.4 (mathematical evidence boundary).** The statements of this
+volume have ordinary proofs conditional on the named ordinary suppliers
+and the actual acquisition/handoff assumptions. Formal source inspection
+identifies existing interfaces; it is not a new compilation of their
+application. Structural document checks do not verify these proofs.
+No solver, experiment, receipt-producing physical run, independently
+verified realization or unconditional solution of the continuing
+minimal-relations programme is asserted.
+
+[ARH]: RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RELATION_HISTORY.md
+[NSF]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SIGNED_FEASIBILITY.md
+[NPL]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PROJECTION_LIMITEDNESS.md
+[JRF]: RECURSIVE_RELATIONAL_OBSERVATION_SERIAL_JOINT_RESOURCE_FRONTIER.md
+[TPO]: RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_TERM_POWER_OBSTRUCTION.md
+[BASE]: https://github.com/the-omega-institute/trureturing/tree/973aed8e8ab6d0517f5cc8b0d4b04abbffe9dfb6
+[D5-COMPACT]: https://github.com/the-omega-institute/trureturing/blob/973aed8e8ab6d0517f5cc8b0d4b04abbffe9dfb6/D5/S3/Observer/Completion/CompactLocalRealization.lean
+[D5-SIGNATURE]: https://github.com/the-omega-institute/trureturing/blob/973aed8e8ab6d0517f5cc8b0d4b04abbffe9dfb6/D5/S3/Observer/Prediction/CompactSignatureRealization.lean
+[D5-DEPTH]: https://github.com/the-omega-institute/trureturing/blob/973aed8e8ab6d0517f5cc8b0d4b04abbffe9dfb6/D5/S3/Arith/FibonacciAtomic/Observer/NativeDepthPatterns.lean
+[D5-CUT]: https://github.com/the-omega-institute/trureturing/blob/973aed8e8ab6d0517f5cc8b0d4b04abbffe9dfb6/D5/S3/Arith/FibonacciAtomic/Observer/NativeCutFibers.lean
+[D5-HISTORY]: https://github.com/the-omega-institute/trureturing/blob/973aed8e8ab6d0517f5cc8b0d4b04abbffe9dfb6/D5/S3/Arith/FibonacciAtomic/Observer/NativeHistoryCells.lean
+[D5-RECUT]: https://github.com/the-omega-institute/trureturing/blob/973aed8e8ab6d0517f5cc8b0d4b04abbffe9dfb6/D5/S3/Arith/FibonacciAtomic/Observer/NativeSymbolicRecutting.lean
+[FREE]: https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Algebra/Free.lean
+[COMPACT]: https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Topology/Compactness/Compact.lean
+[ONEPOINT]: https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Topology/Compactification/OnePoint/Basic.lean
+[SKETCH]: https://people.csail.mit.edu/asolar/papers/asplos06-final.pdf
+[KR]: https://arxiv.org/pdf/cs/0408015v1
+

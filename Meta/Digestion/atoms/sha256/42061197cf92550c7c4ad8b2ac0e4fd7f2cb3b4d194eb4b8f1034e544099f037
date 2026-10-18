@@ -1,0 +1,18 @@
+### 68.1 Universal entropy bound and equality criterion
+
+Consider exact finite physical LOSR implementation of F_(k,2) from §66, with fixed MC encodings and one common channel on every coherent input and passive reference. Let k≥3 and write k=3q+s, q≥1, s∈{0,1,2}. Set
+
+    p*=(3/k repeated q times, s/k if s>0),
+    H*=−q(3/k)log₂(3/k)−(s/k)log₂(s/k),                 (1)
+
+where the final term is zero when s=0. Every implementation has shared entropy at least H*. It has at least q+1_(s>0) product branches. Equality in the entropy bound holds only when the positive branch weights, up to permutation, are p*.
+
+Moreover, the following are equivalent:
+
+1. An exact finite physical implementation attains entropy H*.
+2. There is a real orthogonal k×k matrix whose rows are grouped into q blocks of three and, when s>0, one final block of s, with every column having squared norm 3/k in each triple and s/k in the final block.
+
+When these hold, one implementation simultaneously minimizes branch count and entropy. For s=0 this recovers the balanced-frame criterion of §67. The statement is an attainment criterion; it does not assert existence of these matrices for every k or a positive-error approximation result.
+
+Proof of the bound. Every weight is at most a=3/k by §66. Among finite probability vectors with that cap, the entropy-minimizing vector is p*. A direct argument avoids an assumed optimum dimension: if two positive coordinates x≤y are both strictly below a, transfer min{x,a−y} from x to y. Strict concavity of −u log₂u shows that entropy strictly decreases under this nonzero transfer. One coordinate becomes zero or the other reaches a. Repeating finitely many times leaves at most one nonzero unsaturated coordinate. The total mass then forces precisely q coordinates equal to a and, if nonzero, the residual s/k. The same argument proves that equality requires p*. The branch bound follows from the same cap, or §66's dimension bound.
+

@@ -1,0 +1,24 @@
+### Lemma 9.2. Approximate Bell gauges and exact-marginal comparison state
+
+Under the preceding small-deficit assumption set m=mu sqrt(Delta). Equation (2.6) gives ||rho_X-I_2/2||_F<=m for each party and |q(psi)|<=sqrt(2)m. Write the AB reduced state as
+
+$$\rho_{AB}=\frac16I_4+\frac13|v\rangle\langle v|+D_v,\qquad \|D_v\|_F\le s,$$
+
+where v is its top eigenvector. The Frobenius partial-trace inequality ||Tr_B D||_F<=sqrt(2)||D||_F gives a Bloch-vector bound for v:
+
+$$|r_v|\le3\sqrt2\,m+6s=:r_0. \tag{9.2}$$
+
+The same applies to the top eigenvector w of rho_CD. A two-qubit pure vector with Bloch length r has maximum overlap with a Bell vector equal to sqrt((1+sqrt(1-r^2))/2). Consequently its phase-adjusted vector distance to some Bell vector is at most r: use 2(1-sqrt((1+c)/2))<=1-c<=r^2 with c=sqrt(1-r^2).
+
+Choose Bell approximations v_0,w_0 and product one-qubit unitaries taking them to q_0. These are the allowed physical local gauges. In these gauges the actual top eigenvectors remain within r_0 of q_0. A plane rotation W sending a unit vector v to q_0, after aligning their phases, satisfies ||W-I||_op<=||v-q_0||_2. Apply these two comparison rotations to the state; their total vector error is at most 2r_0. They may be two-qubit operations and are used only to construct a nearby comparison vector, not to assert an allowed local preparation.
+
+Keep the resulting Schmidt vectors and replace their four Schmidt coefficients by sqrt(lambda_*). Since
+
+$$\sum_j(\sqrt{\lambda_j}-\sqrt{\lambda_{*,j}})^2\le6\sum_j(\lambda_j-\lambda_{*,j})^2\le6s^2,$$
+
+this adds at most sqrt(6)s to the vector error. We obtain a normalized comparison state phi whose AB and CD marginals are exactly R, with
+
+$$\|U_{\rm loc}\psi-\phi\|_2\le e:=6\sqrt2\,m+(12+\sqrt6)s. \tag{9.3}$$
+
+The spin bilinear is Lipschitz on the unit sphere: |q(u)-q(v)|<=2||u-v||_2, by expanding the difference and using ||sigma_y^{tensor 4}||_op=1. Therefore |q(phi)|<=sqrt(2)m+2e.
+

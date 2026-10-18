@@ -1,0 +1,18 @@
+**Theorem 2.1.** The constant in (2.3) exists and satisfies $\gamma>0$. For every allowed finite observer on every allowed prior with $\mu(\{k\ge3\})>0$, put $\varepsilon_s=R_{{\rm conf},s}-\rho_s\ge0$ and $e=\max(\varepsilon_p,\varepsilon_\beta)$. Then
+
+$$
+\gamma\le\frac{1183}{121}e+\frac6{11}\mathcal V(M).
+\tag{2.4}
+$$
+
+Consequently exact common conf/conf attainment requires
+
+$$
+\mathcal V(M)\ge\frac{11}{6}\gamma>0.
+\tag{2.5}
+$$
+
+For any sequence of allowed finite observers on such priors with $e\to0$, $\liminf\mathcal V\ge11\gamma/6$. State counts, tables and installed priors may vary, provided each prior retains the stated source contract and a supported nonendpoint. The theorem does not assert that any such sequence or exact optimizer exists.
+
+The rest of the article proves this one result. The finite comparison and sign lemmas are its ingredients.
+

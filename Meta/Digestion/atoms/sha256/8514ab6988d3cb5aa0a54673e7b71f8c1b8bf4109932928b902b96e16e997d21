@@ -1,0 +1,13 @@
+**Convention 11.2 (supplied literature, with conditional external scope).** The external antecedents below are credited as supplied in CG, JR, RE, IR and CA. Their external texts, versions and priority are not independently authenticated in this volume. None supplies an omitted source-specific proof.
+
+| Supplied reference | Relevant antecedent and boundary |
+| --- | --- |
+| Heinosaari–Jivulescu–Reeb–Wolf, *Extending quantum operations*, arXiv:1205.0641v3, Sections 2.1 and 6.1 | CP/TP and Choi/Kraus framework. A stated at-most-qubit compatibility condition is not a qutrit or continuous-time realization theorem. |
+| Terhal–Horodecki, *A Schmidt number for density matrices*, quant-ph/9911117v4; Chruściński–Kossakowski, *On partially entanglement breaking channels*, quant-ph/0511244v1 | Rank-constrained Choi decomposition antecedents. The present rank restriction comes from the entire actual joint fibre. |
+| Sekatski, *The bottleneck dimension of quantum operations*, arXiv:2608.25010v1, Section II.A | Classical-assisted bottleneck language, with acquired unnormalized mass and TNI supported live maps explicit here. No capacity law follows. |
+| Muñoz-Moller–Leppäjärvi–Heinosaari, *Adversarial Information Gain in Non-ideal Quantum Measurements*, arXiv:2602.20941v1, Definition 1 and Proposition 1 | Joint-operation antecedents; the exact live and separately labelled failure identities are proved above. |
+| Leppäjärvi–Sedlák, *Incompatibility of quantum instruments*, arXiv:2212.11225v2, Definition 8, Remark 3 and Proposition 7 | Finite postprocessing and dilation antecedents; an inaccessible port is not an acquired flag, and a continuous measure requires its own full identity. |
+| Nechita–Park, *Random covariant quantum channels*, arXiv:2403.03667v2, Section 5; de Vicente–Streltsov, *The power of the resource theory of genuine quantum coherence*, arXiv:1604.08031v2, Section II.2 | Covariance and the zero-transfer Schur subclass. Analytic averaging grants no physical sign operation and no exhaustive native Schur restriction. |
+
+These references delineate inherited methods; they support no literature-absence or worldwide novelty claim for the additional law. Nested library, source-proof, preparation, control, calibration and instrument antecedents remain conditional.
+

@@ -1,0 +1,94 @@
+**Theorem 333.1 (Attained nine-active optimum with an unequal head).**
+Let
+
+$$
+\frac12\le t\le\frac{51}{100},\qquad
+ t\le h\le t+\frac1{10},\qquad
+ e_*(t)=\frac{349t-15}{496},\qquad
+ a_1=h,\quad a_2=\cdots=a_9=t.
+\tag{333.1}
+$$
+
+Append any entire positive nonincreasing vanishing tail with
+$a_{10}\le e_*(t)$. Then
+
+$$
+\min_{A\in\mathcal N_2}e_a(A)
+ =\min_{A\in\mathcal O_2}e_a(A)=e_*(t).
+\tag{333.2}
+$$
+
+Both minima are attained by one stopped law and its counted
+same-seed $N$ completion. In either class a positive closed cap $c$
+is feasible if and only if $c\ge e_*(t)$. At the optimum the active
+length is exactly nine. Every actual first absence above nine has
+error exactly $e_*(t)$, including closed tail ties.
+
+**Proof.** First fix $d=h-t\in[0,1/10]$. At each endpoint of 332,
+classes $n=2,\ldots,9$ have correct mass $t-e_*$ and base mass at
+least $1-t$. Therefore the correct deficit is $e_*$, the base
+deficit is nonpositive, and the independent-union deficit is at most
+$e_*$. These are three separate inequalities on the same law.
+
+In class one let $\gamma=p_w(1)-(t-e_*)$. Its endpoint values are
+
+$$
+\gamma_- =\frac{109}{992},\qquad
+\gamma_+=\frac1{10},\qquad
+\frac1{10}\le\gamma_\pm\le e_\pm.
+\tag{333.3}
+$$
+
+Lemma 332.2 gives $\min p_w(0)=1-t-\gamma$. Hence
+$p_w(1)=t-e_*+\gamma\ge h-e_*$,
+$p_w(0)\ge1-h-e_*$ since $\gamma\le e_*+d$, and
+$p_w(0)+p_w(1)\ge1-e_*$. The positive-word base is $1-e_*$.
+Thus both endpoints satisfy all demands for this same $d$.
+
+For every real $t$ in (333.1), put
+
+$$
+\rho=100(t-1/2),\qquad P_t=(1-\rho)P^-+\rho P^+.
+\tag{333.4}
+$$
+
+This mixes whole complete laws. For fixed $d$, $t,h=t+d,e_*(t)$
+and every wordwise event demand are their same affine endpoint
+combinations. Therefore every independent row and normalization
+hold for the one law $P_t$, including the two endpoint weights
+zero and one. A partition of the same uniform seed first selects
+the endpoint and then its full table as in 332.1.
+
+Execute the selected increasing schedule on the original source,
+stopping on its first queried zero or exhaustion and handing off
+$\theta_j$. All seed events are Borel and every source/seed execution
+has finite handoff with at most two actual calls and zero advice.
+For the $N$ completion use the same source and seed, acquire both
+preselected replies and reconstruct that stopped output. The ignored
+reply after an early zero is still counted. Both constructions have
+the same output law; this is a coupling of these attainers only.
+
+For $n(x)\le9$, its actual word is covered by Lemma 332.2 and
+the affine argument. For $n(x)>9$, no output label equals $n(x)$
+and the positive base is $1-e_*(t)$. Equation (331.3) gives exact
+full-carrier error $\max\{e_*(t),a_{n(x)}\}=e_*(t)$.
+Every permitted tail, including a nonsummable tail and $a_{10}=e_*$,
+is included. Also $0<e_*<t$, so exactly nine amplitudes exceed it.
+
+For necessity reuse [XV, Theorem 272.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XV.md):
+for every original competitor, without a horizon or support restriction,
+
+$$
+11408e_a(A)\ge345a_2+676a_3+1072a_4+1242a_5
+ +1173(a_6+a_7+a_8+a_9)-345.
+\tag{333.5}
+$$
+
+Since $11408=23\cdot496$ and the amplitude coefficients sum to
+$23\cdot349$, its specialization is exactly
+$496e_a(A)\ge349t-15$. This is inherited necessity for every $t$
+in (333.1), independently of $h$ and of the permitted whole tail.
+Together with $P_t$ it proves both minima. The same attainer works
+at every larger cap; (333.5) excludes every smaller cap even if that
+cap activates more tail coordinates. $\square$
+

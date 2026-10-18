@@ -1,0 +1,10 @@
+**Corollary 4.2 (Attainment forces full gap support and the odds band).** If this same $P$ attains $c_\star$, then
+
+$$
+f(g)>0\quad(g\ge2),\qquad
+\frac13\le\frac{f(a)f(b)}{f(a+b)}\le1\quad(a,b\ge2).
+\tag{4.4}
+$$
+
+**Proof.** The legal word $1\,0^{g-1}1$ has probability $\iota f(g)$, which is positive by (2.4). Thus every $g\ge2$ has positive mass. For each $a,b\ge2$, $C_{a,b}$ is a positive-probability free-site event, and its posterior is the constant (4.2). The attained band (2.3) therefore applies to that constant. Taking its odds gives (4.4). Finite supports, missing lengths and arithmetic restrictions have been excluded by a necessary consequence of attainment, not removed from Definition 3.1. $\square$
+

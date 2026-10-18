@@ -1,0 +1,27 @@
+**Lemma 4.1 (strict source sign).** The conditional source implies
+$\chi=h_1b-h_0a>0$.
+
+Proof. The source box gives
+$.479<\lambda_{\rm src}<.480$,
+$1.412<\alpha_1<1.413$, $1.185<\alpha_2<1.186$,
+$.413<\beta_1<.414$, $.809<\beta_2<.810$.
+Positive multiplication gives
+$4.39<1+\alpha_1^2+\alpha_2^2<4.41$,
+$1.82<1+\beta_1^2+\beta_2^2<1.83$,
+$(A_5^{\rm src})_{01}<.185$ and
+$(A_{27}^{\rm src})_{01}<.097$. Therefore
+
+$$
+N_{01}^{\rm src}
+=\frac{(A_5^{\rm src})_{01}\sqrt{295}
+       +(A_{27}^{\rm src})_{01}\sqrt{999}}{128}<.051,
+\tag{QO.20}
+$$
+
+using $\sqrt{295}<18$ and $\sqrt{999}<32$.
+The rank-one adjugate gives
+$a/b=N_{01}^{\rm src}/(S_{01}^{\rm src})_{00}<.51$.
+Also $(h_1/h_0)^2>498/970>(7/10)^2$.
+Thus $h_0a/(h_1b)<(51/100)/(7/10)<1$.
+Only rational implications of the inherited source were used. $\square$
+

@@ -1,0 +1,53 @@
+### 95.1. Statement and exact parameter field
+
+Put
+\[
+\begin{split}
+Q(b)={}&36b^{16}+1153b^{14}-8163b^{12}+20457b^{10}-106407b^8\\
+       &+440883b^6-628641b^4+299619b^2-24057.
+\end{split}
+\]
+**Theorem 95.1.** For every real \(0<|b|<1\) with \(Q(b)=0\),
+there is no orthogonal triple of noncanonical original common-flat rays.
+Every common-flat input basis is the canonical basis up to phases and
+permutations. The fixed pair \((I_6,H_0(b))\) cannot belong to a quartet.
+There are exactly four parameters in this statement.
+
+Write \(Q(b)=P(b^2)\). The monic reduction of \(P\) modulo 7 is
+\[
+ B^8-2B^7-B^6+3B^5+2B^3+B^2-2B+2.
+\]
+Rabin's test gives \(B^{7^8}=B\) and
+\(\gcd(P,B^{7^4}-B)=1\), so \(P\) is irreducible over \(\mathbb Q\).
+The norm of its root is \(-24057/36<0\). A square has nonnegative
+rational norm, so this root is not a square in its degree-eight field.
+Thus \(Q\) is irreducible of degree sixteen. Exact Sturm division gives
+two positive roots in \((0,1)\), one in each rational interval
+\[
+\frac{(315813416603,315813418603)}{10^{12}},\qquad
+\frac{(897459468779,897459470779)}{10^{12}}.
+\]
+For the signed Sturm sequence beginning with \(Q,Q'\), replacing each
+negative remainder by its positive primitive integer multiple and omitting
+zero signs, the variation counts are
+
+~~~text
+0: 8
+1: 6
+315813416603/10^12: 8
+315813418603/10^12: 7
+897459468779/10^12: 7
+897459470779/10^12: 6
+~~~
+
+Their negatives are the other two roots in the puncture. The real
+embedding excludes \(i\), so \(Q\) is irreducible over \(\mathbb Q(i)\).
+All algebra below is over \(K=\mathbb Q(i)[b]/(Q)\).
+
+Use the good reduction \((p,b,i)=(137,66,37)\). Every rational field
+coefficient is reduced only after its denominator is checked nonzero.
+A nonzero residue proves a nonzero element of \(K\), hence nonvanishing
+at every complex embedding and all four real fibres. Matrix residues
+below certify characteristic-zero units or rank lower bounds; no modular
+solution count is identified with a real solution count.
+

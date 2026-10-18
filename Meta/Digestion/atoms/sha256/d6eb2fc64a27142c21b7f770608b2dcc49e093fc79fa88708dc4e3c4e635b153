@@ -1,0 +1,8 @@
+**定义 123.1（固定时域的路径电流）。** 在第122章的固定平稳模型中，令整数 $N\ge0$，合法路径 $\gamma=(x_0,\ldots,x_N)$ 的正向概率为
+
+$$
+\mathbb P_N(\gamma)=\frac15\prod_{j=0}^{N-1}P_{x_jx_{j+1}}.
+$$
+
+合法指所有路径转移具有正概率；$N=0$ 的空乘积为一。倒序映射 $\mathcal R\gamma=(x_N,\ldots,x_0)$ 保持合法路径集，反向比较律定义为 $\mathbb Q_N(\gamma)=\mathbb P_N(\mathcal R\gamma)$。令 $W(\gamma)$ 为正向方形步数减去反向方形步数，支路和自环贡献零；于是 $W(\mathcal R\gamma)=-W(\gamma)$。
+

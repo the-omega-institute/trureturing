@@ -1,0 +1,65 @@
+**Definition 2.1 (original source and real phases).** The original class
+in [AC, Definition 2.1][AC] has a valid base $b=(X,Y,Z)$ with
+$r=1-Z$, $0<Z<1$, $0<X,Y<r$, and
+
+$$
+\begin{aligned}
+J_b&=(\max(0,X+Y-r),\min(X,Y)),\\
+p_b(k)&=(r-X-Y+k,X-k,Z,Y-k,k),\\
+\mathbf d&=(1,-1,0,-1,1),\qquad
+ I_b(k)=\sum_{i\in\{0,1,3,4\}}p_b(k)_i^{-1},\\
+w_b(k)_i&=\frac{\mathbf d_i}{p_b(k)_i I_b(k)}.
+\end{aligned}
+\tag{CG.3}
+$$
+
+Index $4$ denotes original mode $13$ throughout. An original history has
+finite duration $T\geq0$, continuous real coordinates $k,\chi$, strict
+$k(t)\in J_b$, finite variation of $\chi$, and either both coordinates
+absolutely continuous or the source's finite-piecewise-$C^1$ alternative
+with derivative rates continuous on each closed piece. With the compatible
+common preparation lift $\theta$, the actual normalized live vector is
+
+$$
+\psi_i(t)=\sqrt{p_b(k(t))_i}\,e^{-i(\theta_i+H_i(t))},\qquad
+H_i(t)=\int_0^t w_b(k(s))_i\chi'(s)\,ds.
+\tag{CG.4}
+$$
+
+The real lift and signed integer winding in
+$\chi(T)-\chi(0)=2\pi m$ are retained. The catalogue (CG.2) selects
+particular lawful histories; it changes no original regularity, duration,
+signed-sector or domain permission.
+
+For the present double wall $b=(c,c,Z)$, $r=2c$, $J_b=(0,c)$,
+$p_b(k)=(k,c-k,Z,c-k,k)$ and
+
+$$
+w_b(k)=\left(\frac{c-k}{2c},-\frac{k}{2c},0,
+                    -\frac{k}{2c},\frac{c-k}{2c}\right).
+\tag{CG.5}
+$$
+
+Take the source's fixed preparation calibration $\theta=0$ and define
+orthonormal directions
+
+$$
+|+\rangle=\frac{e_0+e_4}{\sqrt2},\qquad
+|-\rangle=\frac{e_1+e_3}{\sqrt2},\qquad |2\rangle=e_2,
+\qquad V=\operatorname{span}\{|+\rangle,|-\rangle,|2\rangle\}.
+\tag{CG.6}
+$$
+
+Write $P_j=|j\rangle\langle j|$. The source's actual endpoint states are
+
+$$
+\begin{aligned}
+\psi_{x,\beta,m}&=\sqrt Z\,|2\rangle+
+ e^{-i\beta}\left(\sqrt{2x}\,|+\rangle+
+       (-1)^m\sqrt{2(c-x)}\,|-\rangle\right),\\
+\rho_{x,\beta,m}&=|\psi_{x,\beta,m}\rangle
+                         \langle\psi_{x,\beta,m}|.
+\end{aligned}
+\tag{CG.7}
+$$
+

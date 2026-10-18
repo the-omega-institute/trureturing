@@ -1,0 +1,50 @@
+**Proposition 24.2 (finite exact circulant instance).** At $n=8$, the
+circulant of Definition 20.2 has 16 actual shared edge bits. The following
+are exact finite counts and rational masses:
+
+| Object | Value |
+| --- | --- |
+| Common edge assignments | $65536$ |
+| Zero-syndrome assignments | $512$ |
+| Patterns at each star under the uniform zero-syndrome law | Eight, each with 64 preimages |
+| Assignments with either specified value of any one edge on that fiber | $256$ |
+| Induced-forest counts at sizes $0,1,2,3,4$ | $1,8,28,48,36$; none at larger sizes |
+| Raw partition numerator | $127952661067661312=2^8(64^8+62^8)$ |
+| Normalizing denominator | $619^8=21553866676575552390241$ |
+| Pointwise forest trial ratio $2^{\min_F\Psi_F(P_0)+8\log_2 A}/Z_G$ | $248155780267521/31238442643472$ |
+| Ratio $2^{\min U}/Z_G$ for the forest reweighting class | $15525373050625/1952402665217$ |
+| Complete attained names in the credited full-family realization | $52416803445683036$ |
+| Preparation Reads, maximum address length, submitted letters | $63,6,321$ |
+
+The cube of the displayed trial ratio exceeds $2^8$. In particular
+its log excess exceeds $8/3$ bits; this is a finite example, not the
+basis of the all-size theorem.
+
+Proof. The rank and star counts follow from Lemma 21.1. Exhausting
+the $256$ vertex subsets and testing each induced graph for a cycle
+gives the stated forest counts. A size-four forest is
+$\{0,1,3,4\}$, whose induced edges are the path $0$–$1$–$3$–$4$.
+Thus $\min_F\Psi_F(P_0)=16-4=12$. Equations (GDB.84) and
+(GDB.96) give the raw mass and the trial ratio
+$16\,63^8/(64^8+62^8)$, which reduces to the fraction in the table.
+Its cubed numerator is greater than $2^8$ times its cubed denominator,
+an exact integer comparison. For the separate reweighting optimum, the
+maximum forest size four gives $\sum_v\rho_v\le4$. Theorem 21.2 and
+Jensen give $U\ge16+8f(1/2)$. Equally mix the eight cyclic rotations
+of the displayed size-four forest. Each vertex appears with probability
+$1/2$, so the power tables $\Phi_v^2$ attain that bound. Its exact
+ratio is $16(63^2+1)^4/(64^8+62^8)$, the second ratio in the table.
+This calculation does not identify the entropy variational optimum.
+The recursion (GDB.5) gives
+$|S_6|=52416803445748571$; subtract $2^{16}-1$ and use (GDB.80)
+to obtain the names and preparation costs. All assignments can also
+be enumerated directly in this bounded domain. $\square$
+
+The same bounded common-coordinate enumeration at $n=5,6$ gives
+respectively $64,128$ zero-syndrome assignments and raw masses
+$63675988992,8033261588480$. Their induced-forest counts by size are
+$(1,5,10)$ and $(1,6,15,12)$. The finite counts test the representation
+and quantitative example. The unbounded claims rest on §§21–23's
+proofs, not empirical convergence. No experimental program or data
+is required as an additional source premise.
+

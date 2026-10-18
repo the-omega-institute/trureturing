@@ -1,0 +1,12 @@
+**数据 87.8（Finite corroboration on the original integers）。** Direct evaluation of the integer recurrence (87.2) through index $531$ verifies the matched cycle, every history (87.6), all full charge rows and inverses, the endpoint decoders and all literal seam sums. It jointly realizes and executes all $544$ successful INITIAL records on both displayed controllers, together with a separate initial-bottom realization. The successful source histories have lengths between $238$ and $462$. The record counts and emitted totals across these separate executions are
+
+| Actual INITIAL branch | Records | Adaptive blocks per record | GLOBAL blocks per record |
+| --- | --- | --- | --- |
+| Low root-positive phases $S$ | $392$ | $3$ | $5$ |
+| Low root-zero phases $\{1,15,16\}$ | $84$ | $3$ | $5$ |
+| High tails $14,15$ | $68$ | $1$ | $1$ |
+
+The adaptive executions issue $1496$ blocks and $20944$ bits in total; the GLOBAL executions issue $2448$ blocks and $34272$ bits. These aggregate sums concern separate actual sources, not one controller borrowing a combined archive. Initial bottom has acquisition fee zero. The actual worst individual fees remain three/five blocks and forty-two/seventy bits.
+
+A separate finite check of all $2^{14}=16384$ first literal words at the actual equal-value, equal-phase tail pair $13,14$ gives $12288$ first-zero mergers, $2048$ common absorptions and $2048$ surviving prefix-$110$ candidates. On each surviving root the full joined child label counts sum to seventeen, with intersection precisely $\{X,Y\}$. These finite results corroborate the target-specific ordinary obstruction; they do not enumerate arbitrary deeper policies or replace its all-action proof. The complete-row common-charge counts for the two adaptive suffixes are four and three, respectively, and the GLOBAL consecutive counts are seven, five, four and four. All directly evaluated seam sums are those displayed in (87.22), (87.29) and the pulse proof. No check program or dataset is delivered with the chapter, and no finite computation is claimed as a kernel proof or a universal all-parameter enumeration.
+

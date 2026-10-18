@@ -1,0 +1,60 @@
+**Convention 67.2 (immutable supplies and mathematical attribution).**
+The source links [CG], [JR], [CA], [IR], [OC], [OCC] and [CE] fix the
+same immutable snapshot. Their exact uses are as follows.
+
+| Source | Supplied statement and hypothesis boundary |
+| --- | --- |
+| CG Definitions 3.1–3.2, 13.1; §§13–17; Definitions 21.1–21.2 and Convention 21.3 | Original twelve states, complete HALF cq error, all-complex common input, conditional root/ranks/normalization/minimax, full-output endpoint saturation, and actual finite/countable/stipulated integral scope. |
+| JR Definitions 34.1 and 41.1; §§34–40 | Original contrast inequality and sharp worst-history joint acquisition cost, credited in full to those sections. |
+| JR Theorem 42.1, JR.44–JR.48 | All-error-optimizer sharp-cost supported rigidity and vanishing high nonlive mass; no full completion or per-label time-law uniqueness. |
+| JR Theorem 43.2, Proposition 44.2, Corollary 44.3 | Universal strong live-TV sum, finite actual spectral attainment and the already identified spectral-versus-coordinate gain $(L_f-d_f)/2$. |
+| JR Theorem 45.1, JR.58–JR.61 | Compact weak moment maximum, actual finite attainment and support-restricted zero-Rayleigh construction. No evaluation of a later residual branch is imported. |
+| CA Definitions 2.1–2.2, CA.7–CA.10; Lemma 3.1; Theorem 5.1 | Exact source dictionary, distinguish fixed completion, complex rank-one exclusion and the exposed real equality face. CA's prescribed full effects are not competitor hypotheses here. |
+| IR Lemmas 4.2 and 10.1, IR.57–IR.58 | Fixed-image rank-two realization and real zero-Rayleigh decomposition, used as intermediate supplies. |
+| OC §5.2, OC.19–OC.19b; OCC's `concatenate-original` statement | The particular full complex stopped instrument and original path regularity; geometric concatenation supplies no actuator. |
+
+The source-specific implications in Theorems 60.1, 62.1, 63.1–63.3,
+64.1 and 65.1, with their conditional decoder correspondence in §66,
+are `repo-derived`. Positive spectral deficits, row-space factorization,
+zero-Rayleigh decomposition, trace estimates and first-jump calculus are
+reused intermediate mathematical mechanisms, not new general theorems
+or a claim of worldwide novelty.
+
+For primary-literature scope, Leppäjärvi–Sedlák,
+[*Incompatibility of quantum instruments*, arXiv:2212.11225v2](https://arxiv.org/html/2212.11225v2),
+§3, §6.1 Definition 7, §6.2 Definitions 8–9 and
+[§6.3 Proposition 7](https://arxiv.org/html/2212.11225v2#Thmproposition7),
+treats finite-dimensional finite-outcome CP instruments whose outcome
+sums are TP. Its criterion is that $\mathcal J$ is compatible with
+$\mathcal I$ if and only if $\mathcal J$ is a postprocessing of
+$\mathcal I^C$ associated with any instrument dilation
+$(\mathcal H_A,W,\mathsf E)$. Here $W$ is an isometry and
+$\mathsf E$ is a normalized POVM; the complementary operation is
+$\operatorname{Tr}_{\mathcal K}[(\sqrt{\mathsf E(x)}\otimes I)
+W(\cdot)W^\dagger(\sqrt{\mathsf E(x)}\otimes I)]$.
+For each outcome $x$, the conditional postprocessing
+$\{\mathcal R_y^{(x)}\}_y$ must itself be an instrument:
+each operation is CP/TNI and $\sum_y\mathcal R_y^{(x)}$ is TP
+on the ENTIRE intermediate algebra. A TNI live operation alone is
+insufficient. The converse uses a minimal dilation and then Proposition 6
+to pass to any dilation. These finite-outcome statements supply neither
+readable discarded Kraus indices nor an extension to Borel outcomes;
+the latter identities used here are proved directly in §§61–66.
+Muñoz-Moller–Leppäjärvi–Heinosaari,
+[*Adversarial Information Gain in Non-ideal Quantum Measurements*,
+arXiv:2602.20941v2](https://arxiv.org/html/2602.20941v2),
+§4 Proposition 1, gives the conjugate-instrument meter criterion;
+its §3 Theorems 1–2 evaluate their specified noisy-qubit cases.
+These are `literature-attested` compatibility mechanisms, not supplies
+of source-specific $\mathsf C(s)$, $\mathcal T(s)$, $\gamma_f$,
+accessible discarded environments or acquisition permissions.
+Coppola–Karevski–Landi,
+[*Conditional no-jump dynamics of non-interacting quantum chains*,
+arXiv:2311.05515v1](https://arxiv.org/html/2311.05515v1),
+§II equations II.5–II.11 and II.17–II.21, gives the unnormalized
+no-jump and first-jump framework before its later Gaussian-chain
+specialization. This framework is `literature-attested`; the exact
+time-dependent instrument identities needed here are proved directly
+in JRH.54–JRH.59. No chain ansatz, semigroup universality, sampled
+timestamp or native measurement access is inferred from that paper.
+

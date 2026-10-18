@@ -1,0 +1,33 @@
+**Definition 2.2 (canonical blocks and ports).** For $d\ge1$, put
+
+$$
+C_0=\langle\alpha,\alpha\rangle,\qquad
+S_1=\{\alpha,\beta,C_0\},\qquad
+S_{d+1}=\{\alpha,\beta\}\sqcup
+\{\langle x,y\rangle:x,y\in S_d\}.
+\tag{RRN.6}
+$$
+
+Fix $n\ge1$, and let $V=[n]\times W_d$ be the set of ports.
+For $v=(i,q)$ and $x\in S_d^n$, write
+
+$$
+z_v(x)=\Gamma_q(x_i),\qquad y_v(x)=r_{x_i}(q),\qquad
+G_q=\Gamma_q[S_d].
+\tag{RRN.7}
+$$
+
+A complete native template chooses at every $v=(i,q)$ exactly one
+constant equation $z_v=\zeta_v\in G_q$, or one donor equation
+
+$$
+z_v=\delta_v(y_{p(v)}),\qquad
+p(v)=(j,a)\in V,\qquad \delta_v:\mathcal A\longrightarrow G_q.
+\tag{RRN.8}
+$$
+
+The tables are total. Donors can be self donors, off-target donors or
+members of cycles. Denote the simultaneous solution set in $S_d^n$
+by $C_\Theta$, allowing the empty set. Every occurrence of a port
+refers to the same actual coordinate of the same tuple.
+

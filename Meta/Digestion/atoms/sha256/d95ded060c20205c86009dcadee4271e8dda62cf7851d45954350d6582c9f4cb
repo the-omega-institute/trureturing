@@ -1,0 +1,117 @@
+**Proposition 5.4 (the uniquely selected later root).** The interval
+$I_s$ is nonempty, its radicals are positive, and (AS.18) has precisely
+one root there. It evaluates $V(s)$ by the middle line of (AS.19).
+
+Proof. At a later minimizer let $u=U+\alpha V$. Lemmas 5.2–5.3 give
+
+$$
+v=\frac{\sqrt{u^2-\beta^2}}{2\sqrt\alpha},\qquad
+R=\frac{\sqrt{\beta^2-d^2}}{2\sqrt\alpha}.
+\tag{AS.34}
+$$
+
+For $s<1$, $Z_s$ is positive definite. Since $Y$ and $X=Z_s-Y$
+are rank one, whitening $Y$ by $Z_s$ gives eigenvalues $1,0$.
+Equivalently $\operatorname{tr}(Z_s^{-1}Y)=1$, or
+$U+V-2sv=j$. In the variables of (AS.17) this reads
+
+$$
+a_0u-b_0\sqrt{u^2-\beta^2}=c_s(d).
+\tag{AS.35}
+$$
+
+The left side for $u\geq\beta$ has minimum $\beta\sqrt\Delta$ at
+$u=a_0\beta/\sqrt\Delta$. Thus $d\geq d_{\min}$. Its larger
+solution is exactly $u_s(d)$; it is genuine, since
+
+$$
+u_s\geq a_0\beta/\sqrt\Delta\geq\beta,\qquad
+a_0u_s-c_s=\frac{b_0(b_0c_s+a_0e_s)}\Delta>0.
+\tag{AS.36}
+$$
+
+Here $s>0$; at the lower discriminant endpoint the same last expression
+is positive. Some smaller roots of the squared equation need not solve
+(AS.35); only genuine smaller solutions are compared.
+
+For every $0\leq d\leq\beta$ with $c_s(d)\geq\beta\sqrt\Delta$,
+use the larger solution to set
+$U=(u_s+d)/2$, $V=(u_s-d)/(2\alpha)$ and the entries (AS.34).
+Then $U,V\geq0$, $Y\succeq0$, $\det Y=0$ and
+$\operatorname{tr}(Z_s^{-1}Y)=1$. Whitening therefore proves
+$0\preceq Y\preceq Z_s$, with $X=Z_s-Y$ rank-one PSD.
+This proves feasibility of the larger solution, including its
+unsquared sign. A smaller genuine solution has smaller $u$ and
+strictly greater cost because $w_A>0$.
+
+It remains to maximize, on the possible closed $d$ interval,
+
+$$
+\mathscr J_s(d)=w_Au_s(d)+w_Bd+n\sqrt{\beta^2-d^2},\qquad
+W=A+B-\mathscr J_s(d).
+\tag{AS.37}
+$$
+
+This maximization will now be evaluated. On $I_s$ direct
+differentiation gives
+
+$$
+\begin{aligned}
+u_s'&=\frac{1-\alpha}\Delta\left(a_0+\frac{b_0c_s}{e_s}\right),\\
+u_s''&=-\frac{b_0(1-\alpha)^2\beta^2}{e_s^3}<0,\\
+\mathscr J_s''&=w_Au_s''-\frac{n\beta^2}{(\beta^2-d^2)^{3/2}}<0.
+\end{aligned}
+\tag{AS.38}
+$$
+
+The exact identity
+
+$$
+c_s(\beta)^2-\Delta\beta^2
+=4\alpha j[\beta k+\alpha j]>0
+\tag{AS.39}
+$$
+
+gives $d_{\min}<\beta$ and finite $u_s'(\beta)$.
+Hence $\mathscr J_s'\to-\infty$ at the upper endpoint. If
+$d_{\min}\geq0$, it tends to $+\infty$ at the lower discriminant
+endpoint, including $d_{\min}=0$. If $d_{\min}<0$, it has at zero
+the positive bound
+
+$$
+\mathscr J_s'(0)\geq
+\frac{w_A(1-\alpha)}{1+\alpha}+w_B
+=\frac{A-B}{1+\alpha}>0.
+\tag{AS.40}
+$$
+
+Thus there is exactly one derivative root, and strict concavity makes
+it the unique global maximizer on the whole possible interval.
+Neither a discriminant-zero endpoint nor $d=0$ nor $d=\beta$ can
+minimize $W$. This proves (AS.18), the value formula, and
+$0<d_s<\beta$, $e_s(d_s)>0$, $R>0$.
+Since $b_0>0$, the larger solution has $u_s>\beta$, so $v>0$.
+Nonzero rank-one $X,Y$ with $R>0$ imply $P,Q,U,V>0$.
+Equation (AS.30) supplies $t\geq0$; strict positivity follows below.
+No variational problem remains in (AS.19). $\square$
+
+Proof of Proposition 3.3. On $I_s$, $c,e_s,r,d,N$ are positive and
+
+$$
+L\geq\frac{w_A(1-\alpha)}{1+\alpha}+w_B
+=\frac{A-B}{1+\alpha}>0,
+\tag{AS.41}
+$$
+
+because $\Delta\leq a_0^2$. Equation (AS.18) is
+$nd/r=L+Nc/e_s$, equivalently $e_s(nd-Lr)=Ncr>0$.
+Squaring once gives
+$\mathcal P(d)=2ndLr e_s^2>0$; squaring again gives (AS.21).
+Each term of $\mathcal P$ has degree at most four, so the carrier
+has degree at most eight. Conversely its positive $\mathcal P$ filter
+recovers $\mathcal P=2ndLr e_s^2$. Rearrangement gives
+$e_s^2(nd-Lr)^2=N^2c^2r^2$. The other filter $nd>Lr$ recovers
+$e_s(nd-Lr)=Ncr$, exactly the original equation. Both squarings
+are therefore reversible with the stated filters; Proposition 5.4
+proves uniqueness over their entire interval. $\square$
+

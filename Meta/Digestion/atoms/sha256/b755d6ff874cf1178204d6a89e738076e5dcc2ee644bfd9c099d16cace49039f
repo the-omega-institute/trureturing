@@ -1,0 +1,36 @@
+**Proposition 8.5 (the limitation is pair-specific).** The preceding
+example does not make $D^*$ invisible to every context certificate.
+Its complete row image has exactly three labels: $r_0,r_1$ and a third
+label $r_2$, with the same reached set and exterior and the all-distinct
+partition. Its source fiber is infinite. The pair $(r_0,r_2)$ does have
+a finite-context contact.
+
+Proof. Since $y\ne F(y)$, the only three possible partitions of
+$x,y,F(y)$ are the stated ones. The first two are attained by Lemma 8.2;
+the third is attained by the witnesses below. Increasing the size of
+$y$ in $U(y,y)$ gives infinitely many sources. The third exact stratum
+consists of the $U(x,y)$ with $x\ne y$ and $x\ne F(y)$. Consider
+
+$$
+C^\dagger=
+ \langle\square_1,
+   \langle\square_2,\langle\alpha,\square_3\rangle\rangle\rangle.
+\tag{NLC.29}
+$$
+
+For $m\ge4$, use $U(T_m,T_m)$ in $D_0^*$ and
+$U(T_{m+1},T_m)$ in the third stratum. The two atomic trees are
+unequal by ABC's rank injectivity. Also $T_{m+1}\ne F(T_m)$:
+the former has left child $T_m$, which is a branch, whereas the
+latter has left child $\alpha$. Thus the second source has exactly
+$r_2$, not merely a row different from $r_0$.
+
+Their three fillings of $C^\dagger$ are respectively
+$(T_m,T_m,T_m)$ and $(T_{m+1},T_m,T_m)$. By Lemma 3.1 all those
+minimum leaf depths tend to infinity. Lemma 5.3 proves contact at
+$C^\dagger[\Omega,\Omega,\Omega]$. Both witnesses retain the repeated
+$y$ enforced by the acquired link. Therefore Theorem 8.4 establishes
+incompleteness for the fixed pair $(r_0,r_1)$ only. It neither supplies
+a fiber escaping all row pairs nor a new undecidability theorem.
+$\square$
+

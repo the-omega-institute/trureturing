@@ -1,0 +1,34 @@
+**Proposition 83.2 (contact interface under an attained matching dual).**
+Use $\mathsf G,\mathsf B$ of FA.19. If an attained dual certificate
+$(Y,Z,\lambda)$ matches the primal optimum with zero gap, its slot
+slacks are
+
+$$
+\begin{aligned}
+h_{r,\epsilon,\eta}(\phi)
+={}&\operatorname{tr}(Y\mathsf G)
+ +\eta t\operatorname{tr}(Z\mathsf B)-\lambda r\mathsf G_{01}\\
+ &-\epsilon[\operatorname{tr}(N\mathsf G)
+                +\eta t\operatorname{tr}(\Delta\mathsf B)]\ge0,
+\qquad\lambda\ge0.
+\tag{FA.71}
+\end{aligned}
+$$
+
+Every positive atom of an optimal measure lies at a zero of its own
+slot slack; also $\lambda(\mathrm{contrast}-s)=0$.
+A nonzero slack has at most four distinct circle zeros. An identically
+zero slot has no such zero-count bound.
+
+**Proof.** Integrate FA.71 and use the primal moment equalities.
+Primal-dual equality writes the gap as a sum of these nonnegative
+integrals and the nonnegative contrast slack. All must vanish, proving
+contact. Each slack is a degree-at-most-four trigonometric polynomial;
+a nonnegative nonzero one has even multiplicity at every circle zero.
+Multiplication by $e^{4i\phi}$ gives a polynomial of degree at most
+eight, hence at most four distinct such zeros. The argument does not
+apply to the zero polynomial. This proposition assumes dual attainment
+and a matching value; it supplies no universal dual-attainment theorem
+at every finite-budget boundary. Static RC contacts alone are not a
+certificate for FA.71. $\square$
+

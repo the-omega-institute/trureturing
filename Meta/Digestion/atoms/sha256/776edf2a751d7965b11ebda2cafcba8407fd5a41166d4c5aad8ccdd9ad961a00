@@ -1,0 +1,53 @@
+**Proposition 11.10 (exact collective capacity balance).** Without
+any both-conflict hypothesis, put
+
+$$
+\begin{aligned}
+O_*&=\sum_{B\in\mathcal L_*}\sum_{q\in Q_B}
+                         (\lambda(q)-1)_+,\\
+S_*&=\sum_{B\in\mathcal L_*}\sum_{q\in Q_B}
+                         (1-\lambda(q))_+,
+\qquad x_+=\max(x,0).
+\end{aligned}
+\tag{SI.82}
+$$
+
+For this one complete graph the unrestricted comparison $m\ge G$
+is equivalent to
+
+$$
+O_*\le S_*+E_{\mathrm{cut}}+u+
+                  \sum_{B\in\mathcal A_*}(E_B-D_B).
+\tag{SI.83}
+$$
+
+Proof. Equation (SI.66) gives
+$D_B-E_B=\sum_{q\in Q_B}(\lambda(q)-1)$ for each remaining
+pool. Split positive and negative parts and substitute in the second
+inequality of (SI.59). The pools are disjoint by Theorem 9.3, so no
+state or surplus is counted twice. All the other terms on the right
+are the nonnegative supplied terms of SI9–SI10. $\square$
+
+Equation (SI.83), equivalently the original unrestricted (SI.59), is
+not proved for arbitrary competitors here. The class theorem forces
+$O_*=0$ by an explicit sufficient condition; arbitrary graphs can
+have overload. Neither a one-way pair nor an overloaded state by
+itself suffices for a strict saving. Its positive mass can be paid by
+underloaded states in the same or other remaining pools, by cut or
+other-pool excess, or by genuinely nonlive installed states. Requiring
+separate compensation in every long gap would be stronger than this
+collective target. No normalization of an arbitrary competitor into
+$\mathfrak C$ is supplied. The original general unrestricted-budget
+$H_{\min}$ retains its separate unresolved meaning.
+
+There are already complete above-grid overload suppliers. In PE
+Theorem 8.1 the shared state $V$ has actual histories (PE.35) of
+counts $(0,m+1)$ and $(m,1)$, giving
+$\lambda(V)\ge1+1/(m+1)>1$. In PCA Proposition 36.1 its state
+$V$ has histories (PCA.91) of counts $(0,3)$ and $(3,0)$, each of
+weight one, hence $\lambda(V)\ge2$. Their full tables satisfy both
+original caps and exceed the grid. These suppliers refute universal
+pointwise capacity. They do not refute (SI.59) or its equivalent
+(SI.83); a failure of the both-conflict sufficient condition is not
+a failure of collective compensation.
+

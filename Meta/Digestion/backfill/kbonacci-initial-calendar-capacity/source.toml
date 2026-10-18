@@ -1,0 +1,5 @@
+source_id = "kbonacci-initial-calendar-capacity"
+path = "docs/develop/theory/KBONACCI_INITIAL_CALENDAR_CAPACITY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

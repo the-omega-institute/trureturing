@@ -1,0 +1,25 @@
+**定理 5.2（局部源读出的固定与移动链式法则）。** 对可微概率路径和固定读出，规范分裂给出
+
+$$
+\begin{aligned}
+\dot\tau_K&=\langle K,L(\dot b)\rangle+\dot\kappa\,\Delta_{13}K,\\
+\dot h_{\mathsf H}&=\langle\mathsf H,L(\dot b)\rangle+\dot\kappa\,\Delta_{13}\mathsf H.
+\end{aligned}
+$$
+
+若 $K_\lambda$ 和 $\mathsf H_\lambda$ 在固定标签及固定值空间上可微，则完整公式为
+
+$$
+\begin{aligned}
+\frac{d}{d\lambda}\tau_{K_\lambda}(p_\lambda)
+ &=\langle K_\lambda,L(\dot b)\rangle
+   +\dot\kappa\,\Delta_{13}K_\lambda+\langle\dot K_\lambda,p_\lambda\rangle,\\
+\frac{d}{d\lambda}h_{\mathsf H_\lambda}(p_\lambda)
+ &=\langle\mathsf H_\lambda,L(\dot b)\rangle
+   +\dot\kappa\,\Delta_{13}\mathsf H_\lambda
+   +\langle\dot{\mathsf H}_\lambda,p_\lambda\rangle.
+\end{aligned}
+$$
+
+证明。有限求和的乘积法则给出读出变化项与概率变化项；对后一项使用定理 4.2 和四角配对。有限维链式法则是此处的标准前置，不构成新的微积分定理。特别地，固定概率律而移动读出可以产生非零响应，其来源是 $\dot K$ 或 $\dot{\mathsf H}$，不能归入 $\dot p$。∎
+

@@ -1,0 +1,35 @@
+**Definition 7.1 (Activity and complementary operators).**
+Fix $n\ge2$, positive activities $\lambda_i=a_i$ and the
+law of (1.1), and a site distribution $\omega$. Use the
+site projections of (5.2), and put
+
+$$
+\begin{aligned}
+q_i&=\frac{\lambda_i}{1+\lambda_i},&
+b_i&=\frac{\omega_i}{1+\lambda_i},&
+\rho_i&=\mathbb E_p s_i,\\
+Se_s&=(-1)^{|s|}e_s,&
+C_{\lambda,\omega}&=I-SH_{\lambda,\omega}S,&
+\delta&=\lambda_{\min}(C_{\lambda,\omega})=1-\Lambda(\omega).
+\end{aligned}
+\tag{7.1}
+$$
+
+Here $H_{\lambda,\omega}=\sum_i\omega_iK_i$ and
+$\Lambda=\lambda_{\max}(H_{\lambda,\omega}|_V)$.
+The zero ground mode does not change this maximum.
+Let $\Pi_i^{\rm blocked}$ project onto legal words
+with an occupied neighbor of $i$. For a physical path
+edge $e=\{i,j\}$ define
+
+$$
+d_e=\frac{\omega_i+\omega_j-
+\sqrt{(\omega_i-\omega_j)^2+4\omega_i\omega_jq_iq_j}}2,
+\qquad D_{\mathcal M}=\sum_{e\in\mathcal M}d_e,
+\tag{7.2}
+$$
+
+where $\mathcal M$ is a matching of the physical path.
+This is an operator comparison on the same legal
+carrier, with no additional measurement setting.
+

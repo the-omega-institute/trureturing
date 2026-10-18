@@ -1,0 +1,84 @@
+**Proposition 7.2 (credited paid witness realization, with its costs).**
+Finite representative covers in the exact RRN representation retain
+the original paid realization, as follows.
+
+For a full-family optimal canonical cover on $\mathcal F_D$, scan
+the literal words $Rq$, $q\in W_D$. It uses at most
+
+$$
+2^D-1\text{ Reads},\qquad
+Q_{\max}\le D,\qquad
+\text{letters}\le (D-1)2^D+1.
+\tag{COK.45}
+$$
+
+Export only the complete attained fixed-width cover name, and isolate
+the scanned array and all other acquired dependence through the
+declared paid service. [RRN, Theorem 7.1][RRN] preserves the exact
+optimum; it does not preserve an old preparation cost. Preserving
+exactly an arbitrary nonminimal original competitor's attained
+cardinality can instead use [RRN, Corollary 7.2][RRN]'s fuller scan:
+
+$$
+2^{D+1}-1\text{ Reads},\qquad
+Q_{\max}\le D+1,\qquad
+\text{letters}\le D\,2^{D+1}+1.
+\tag{COK.46}
+$$
+
+For public prefix-free present roots $Ra_i$, $|a_i|\le H$, of $n$
+actual blocks, [RRN, Proposition 7.3][RRN] gives
+
+$$
+\begin{aligned}
+\text{Reads}&\le n(2^d-1),\qquad Q_{\max}\le H+d,\\
+\text{letters}&\le
+n\bigl((H+1)(2^d-1)+(d-2)2^d+2\bigr).
+\end{aligned}
+\tag{COK.47}
+$$
+
+A nonconstant representative late query is the one original literal
+$Ra_jq_{\rm owner}$, selected before reply and count; a constant
+branch uses zero Reads.
+
+Proof of the correspondence used here. The scans acquire the
+boundary reply arrays by actual original-root Reads. Constructor
+reconstruction and canonicalization then compute the canonical
+tuple and its joint cover name, using source-independent tables.
+This does not independently recolor its children. Every seed is
+recovered only at its actual owner port. Its table gives the full
+requested factor after that one paid reply; (COK.5) answers all
+subsequent counts. For present occurrences, homomorphic substitution
+gives
+
+$$
+r_{\rho^kt}(Ra_iq)=
+r_{\rho^k(t|_{Ra_i})}(q)\qquad(k\ge0).
+\tag{COK.48}
+$$
+
+Here subtree notation is mathematical identification, not an input
+port. Presence is exactly the premise of
+original_present_transport in [NativeDepthPatterns][D5N].
+An absent root is not transported as a subtree. Artificial wrapper
+roots and their fixed left cones contribute public constants, and
+all actual queries are translated back to original literals.
+
+The suffix-length identity
+$\sum_{\ell=0}^{d-1}\ell2^\ell=(d-2)2^d+2$ gives (COK.47);
+the same count at the full-family root gives (COK.45) and (COK.46).
+When $H+d\le D$, all the block targets are permitted original
+targets. A cover serving those targets alone does not serve every
+other target of $\mathcal F_D$; the full-family statement uses the
+credited RRN theorem. $\square$
+
+Preparation work, installation and lookup storage, workspace, source
+isolation, lawful entry, handoff and authentic count input remain
+separate charged resources or declared services. All surviving
+source-dependent control and allocation are included in the export;
+the proof does not physically erase them for free. Separately a
+factor predictor needs at most
+$\lceil\log_2(2D+1)\rceil+1$ bits. None of these results bounds
+physical time or gives free total efficiency.
+

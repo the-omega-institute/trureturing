@@ -1,0 +1,86 @@
+**Proposition 8.2 (explicit attained full-family fibers).** Let
+$d=h+3$. For any core box $L_c$ there is a correct full-family
+preparation and reader on $\mathcal F_d$ whose canonical naming
+merges exactly $L_c$ and names every other $S_d$ state separately.
+Its complete attained alphabet is
+
+$$
+|S_d|-3^{2^h}+1.
+\tag{JPL.34}
+$$
+
+For $h\ge1$ there is likewise a code merging the four diagonal
+states $\{v_1,v_2,v_3,v_4\}$ and naming every other canonical state
+separately, with complete attained alphabet $|S_d|-3$. In both
+constructions, on every actual source,
+
+$$
+T_{\rm prep}\le2^d-1,\qquad Q_{\rm prep}\le d,\qquad
+A_{\rm prep}\le(d-1)2^d+1.
+\tag{JPL.35}
+$$
+
+The common late reader makes at most one original-root Read, of
+length at most $d$, chosen before any supplied count.
+
+Proof. Before any request, actually submit every $Rq$, $q\in W_d$,
+including absent replies. The finite acquired table determines
+$\pi_d(v)$. Its first-membership name is the merged name if the
+canonical state belongs to the stated set, otherwise that state's
+own fixed public name. Export only this fixed-width complete name.
+The public scan, allocation and padded finite computation schedule
+depend on $d$ alone; the paid isolation service removes every other
+source distinction, including the acquired table and membership
+workspace. There are $2^d-1$ submitted literals and their lengths
+sum to $(d-1)2^d+1$, proving (JPL.35).
+
+A core box has exactly $3^{2^h}$ distinct states. The four diagonal
+states are distinct. Every canonical state is an actual right subtree
+in $\mathcal F_d$, so all specified names are attained. This proves
+the complete cardinalities. The actual merged fibers on variable
+shapes are the inverse images under $\pi_d$, not an assertion that
+unread terminal labels have been distinguished.
+
+For a singleton canonical name, the tables determine every factor
+without a Read. For a core-box name, a permitted target above the
+frontier has constant branch factor. Any other target is $Ra_jq$,
+$q\in W_3$. Use its proper-core-subset witness from (JPL.12),
+implemented at the actual original-root word $Ra_jb$. That length
+is at most $1+h+2=d$. These choices require only the name, request
+and public tables. Canonicalization preserves the needed replies
+and factors on every original source assigned that name.
+
+For the four-state diagonal name, the $RL$ replies on
+$(u_1,u_2,u_3,u_4)$ are respectively absent, alpha, beta and branch.
+They identify the state on this named fiber. A nonconstant module
+target can therefore use $Ra_1RL$ at one fixed actual public module
+occurrence, regardless of which module contains the target. Its
+length is $d$. The equality of the module values is a proved property
+of this fiber, not an equality test or a copied-source port. Targets
+above the frontier are constants. The prefix $Ra_1$ is present in
+every source in this fiber because $\pi_d$ preserves the scaffold
+constructors. Hence all words are actual original-root literals on
+the same stationary source.
+
+In either construction the reply decoder produces $\Gamma_p(t)$,
+and (JPL.4) then supplies every subsequent authentic $k$ without
+Reads. The predictor can use $(b,c)$ with $b\le2d$, requiring at
+most $\lceil\log_2(2d+1)\rceil+1$ bits; its size is separate from
+the retained alphabet. Installed tables, membership work/control,
+temporary storage, post-request workspace, address generation,
+authentication and physical services remain separate resources.
+$\square$
+
+At $h=1,d=4$ the diagonal construction has exactly $15128$ attained
+names, with $15$ preparation Reads, maximum length $4$, and $49$
+submitted letters. This is an explicit deliberately nonoptimal code,
+not an assertion about $M_1(4)$. Neither (JPL.32) nor (JPL.33)
+improves the credited original interval
+
+$$
+\frac18\log_2(33/13)\le\lambda<\frac3{16},
+\tag{JPL.36}
+$$
+
+supplied by [NCE][NCE] and [D3][D3].
+

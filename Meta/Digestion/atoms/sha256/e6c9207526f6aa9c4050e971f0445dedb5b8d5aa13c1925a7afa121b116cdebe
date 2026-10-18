@@ -1,0 +1,17 @@
+**Definition 1.4 (physical record and semantic annotations).** Write $W(h)$
+for the actual finite tape words, all eight cell tracks, the finite encoded
+PC, latches and tokens, and the fixed port origins. All constructed cells,
+including erased cells, old versions, native/dynamic code, descriptors,
+archives, mailboxes, and partial destinations, occur in these words.
+Let $b\ge1$ be the fixed total number of finite register bits, including
+all symbol-latch subfields and finite control/permission bits. Unbounded
+integers, stacks, and names are tape material, not extra registers.
+
+Let $X(h)$ be the complete joint endpoint of AIF Definition 2.5. Decoded
+request/event/counter interpretations and occurrence provenance in $X$ need
+not be additional physical tapes: they are interpretations of retained
+material and the actual execution. During a busy overwrite $W$ contains the
+actual possibly invalid source bytes and actual phase. It contains no
+fictional valid current source tree. The full primitive prefix $h$ contains
+the actual operands and outcomes, including private ones mathematically.
+

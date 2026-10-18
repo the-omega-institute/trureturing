@@ -1,0 +1,72 @@
+**Theorem 312.2 (The complete 43-charge inequality).**
+Its invariants are
+
+$$
+\beta=(0,0,5,5,4,5,4),\quad K=43,\quad
+W=B_N=B_O=20,\quad\Delta_N=\Delta_O=0.
+\tag{312.1}
+$$
+
+For every $L\ge7$, ordered $3\le j_1<\cdots<j_5\le L$,
+real finite profile and one complete feasible allocation in either
+class of any finite mass,
+
+$$
+5b_{j_1}+5b_{j_2}+4b_{j_3}+5b_{j_4}+4b_{j_5}\le43e.
+\tag{312.2}
+$$
+
+Consequently every original competitor in either class satisfies
+
+$$
+43e_a(A)\ge5a_{j_1}+5a_{j_2}+4a_{j_3}+5a_{j_4}+4a_{j_5}.
+\tag{312.3}
+$$
+
+**Proof.** The union weights total 16, the correct weights total
+23, and $T=4$. Class summation gives the displayed $\beta$ and
+$K$. Both $R$ and constant-zero output earn all 16 union units
+and the four positive units, giving 20. Here is the full addition
+and maximum certificate, with all eight labels in every cell:
+
+| Pair | Maxima in $00,01,10,11$ |
+| --- | --- |
+| 12 | $(0,9,6,5)$ |
+| 13 | $(5,4,5,6)$ |
+| 14 | $(5,4,5,6)$ |
+| 15 | $(6,3,5,6)$ |
+| 16 | $(7,2,5,6)$ |
+| 17 | $(9,0,5,6)$ |
+| 23 | $(5,1,5,9)$ |
+| 24 | $(5,1,5,9)$ |
+| 25 | $(4,2,7,7)$ |
+| 26 | $(4,2,8,6)$ |
+| 27 | $(4,2,10,4)$ |
+| 34 | $(5,5,5,5)$ |
+| 35 | $(6,4,5,5)$ |
+| 36 | $(7,3,5,5)$ |
+| 37 | $(9,1,5,5)$ |
+| 45 | $(6,4,5,5)$ |
+| 46 | $(7,3,5,5)$ |
+| 47 | $(9,1,5,5)$ |
+| 56 | $(7,4,5,4)$ |
+| 57 | $(9,2,5,4)$ |
+| 67 | $(10,2,4,4)$ |
+
+Every quadruple sums to 20. Formula (309.5) specifies every one
+of the $21\cdot4\cdot8=672$ integer reward sums behind the table.
+Lemma 309.3 supplies the complete-catalog support at every horizon
+and embedding, including outside, earlier and unqueried labels.
+Pairing with the same allocation yields
+
+$$
+F_{QZ_{43}}=5b_{j_1}+5b_{j_2}+4b_{j_3}+5b_{j_4}+4b_{j_5}-43e
+\le M\Delta_N(Z_{43})=0.
+$$
+
+The stopped conclusion follows either from its catalog or its
+counted completion. The original implication and limit follow from
+309.3, even if a smaller proposed cap activates more tail addresses.
+At error one the weighted amplitude sum is at most $23<43$.
+This proves all assertions. $\square$
+

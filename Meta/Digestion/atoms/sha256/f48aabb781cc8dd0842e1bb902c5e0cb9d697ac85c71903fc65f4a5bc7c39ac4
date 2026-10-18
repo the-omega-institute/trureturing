@@ -1,0 +1,48 @@
+**Proposition 12.2 (actual full-family implementation of the frontiers).**
+For each $D,s,b,c$ as above there is a correct procedure on the entire
+original variable-shape $\mathcal F_D$ with exactly
+
+$$
+|S_D|-s^N+s^c
+\tag{RRN.49}
+$$
+
+complete attained names. Its restriction to the canonical slice has
+the fibers and late menus of Theorem 12.1. On every original source,
+sufficient preparation resources are exactly the public scan charges
+
+$$
+2^D-1\text{ Reads},\qquad
+\max|\text{literal}|=D,\qquad
+(D-1)2^D+1\text{ letters}.
+\tag{RRN.50}
+$$
+
+Its late reader uses zero Reads or one actual original-root literal of
+length $D$. The construction is a full-family consumer of the slice
+frontier, without an optimality assertion for (RRN.49).
+
+Proof. Use Theorem 7.1's paid scan of every $Rq$, $q\in W_D$,
+including absent words, to compute $u=\pi_D(v)$. Install the following
+finite public naming table on $S_D$. For $u=v_x\in\mathcal C_{s,D}$,
+assign the name consisting of its first $c$ slot symbols. Give every
+other $u\in S_D$ its own singleton name, disjoint from the slice
+names. The number of names is (RRN.49), and every one is attained
+because $\pi_D$ fixes $S_D$. Export only the complete fixed-width
+name; isolate the acquired array, membership tests and all other
+source-dependent workspace under Assumption 1.2. The number, maximum
+length and length sum of the submitted words are (RRN.50).
+
+At a singleton name the canonical state supplies every requested
+factor with zero late Reads. At a slice name use Theorem 12.1's reader.
+For every original source assigned that name, canonicalization preserves
+both its actual reply at the chosen boundary word and its requested
+factor. In particular an actual branch at a terminal slot need not
+have the unobserved children of $C_0$: its root trajectory is still
+constantly branch. Thus the reader works on the entire inverse image
+of its canonical fiber, for all original shapes, targets and authentic
+counts. Every source-bearing operation is a stated original-root Read;
+no actual subtree, shape tag, copied source or acquired selector is
+supplied as an input. Table generation, membership work and the paid
+services remain separate resources. $\square$
+

@@ -1,0 +1,38 @@
+**Definition 1.2 (one specimen and its original preparation).** Let the five original modes have basis $e_0,e_1,e_2,e_3,e_4$, with $e_4$ denoting original mode $13$. Put
+
+$$
+E=\left((e_0+e_4)/\sqrt2,\ (e_1+e_3)/\sqrt2,\ e_2\right),\qquad
+P_5=EE^\dagger,\quad Q_5=I_5-P_5,\quad V=\operatorname{ran}E.
+$$
+
+Supported coordinates $0,1,2$ mean $(+,-,2)$, independently of the original five failure labels $0,1,2,3,13$. The twelve normalized reached-old-live-cut states are
+
+$$
+p_y=\left(\frac y{128},\frac{64-y}{128},\frac12\right),\quad
+a_y=\sqrt{p_y},\quad U_{e,n}=\operatorname{diag}(e,n,1),\quad
+\rho_{y,e,n}=U_{e,n}a_ya_y^TU_{e,n}^\dagger,
+\qquad y\in\{5,16,27\},\ e,n=\pm1.
+\tag{PG.1}
+$$
+
+The actual sole input is $E\rho_{y,e,n}E^\dagger$. The original height is $x=y/256$, and the original history parameters satisfy
+$e=(-1)^{\beta_{\rm hist}/\pi}$, $n=e(-1)^m$, where $\beta_{\rm hist}\in\{0,\pi\}$ and $m\in\{0,1\}$. Hence $en=(-1)^m$ is original winding parity, not a newly supplied source label.
+
+The credited double-wall preparation has
+
+$$
+\begin{aligned}
+p(k)&=(k,1/4-k,1/2,1/4-k,k),\\
+w(k)&=\left(\frac{1/4-k}{1/2},-\frac{k}{1/2},0,-\frac{k}{1/2},
+                    \frac{1/4-k}{1/2}\right),\\
+\psi_i(t)&=\sqrt{p_i(k(t))}
+ \exp\left(-i\int_0^t w_i(k(v))\chi'(v)\,dv\right).
+\end{aligned}
+$$
+
+Starting at height $1/8$, its six unit-duration legs are: phase $0\to2\pi m$; descent to $1/16$; phase $2\pi m\to2\pi m+B_{\rm hist}$; ascent to $1/8$; phase return to $2\pi m$; height change to $x$, with $B_{\rm hist}=8\beta_{\rm hist}-4\pi m$. The residual phase vector is
+$(\beta_{\rm hist},\beta_{\rm hist}-\pi m,0,\beta_{\rm hist}-\pi m,\beta_{\rm hist})$.
+The reached cut is at absolute time six. Its earlier live masses $32/177,2/9,32/111$ are not priors, acquisition weights or new acceptance probabilities.
+
+The requested continuation is $k(t)=x+6t/256$ at fixed phase for elapsed $t\in[0,1]$, in the common legal command domain $(0,58/256)$. Original controls retain nonnegative finite duration, continuity, strict continuous height domain, signed real phase lifts of finite variation, the absolute-continuity or specified finite-piecewise-$C^1$ alternative, and literal chronological composition. Duration zero permits only a matching zero-displacement identity. Known denial, visible unexecuted rejection, source/epoch identity, calibrations, permissions, controller updates and clock alignment retain their original semantics. A partial command is not an unknown-height sensor.
+

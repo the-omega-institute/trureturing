@@ -1,0 +1,5 @@
+source_id = "fib-native-total-actual-acquisition-alphabet"
+path = "docs/develop/theory/FIB_NATIVE_TOTAL_ACTUAL_ACQUISITION_ALPHABET.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

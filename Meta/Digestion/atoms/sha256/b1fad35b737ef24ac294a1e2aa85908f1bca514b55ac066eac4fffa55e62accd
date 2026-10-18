@@ -1,0 +1,107 @@
+**Theorem 6.3 (sharp resources against both copies and adaptive updates).**
+For (GRS.20), put
+
+$$
+M=2^m,\qquad D=m+2+\lfloor N/2\rfloor.
+\tag{GRS.24}
+$$
+
+Its exact Pareto basis and every nonnegative rational same-run optimum are
+
+$$
+\boxed{\ \mathcal B_m=\{(M,0,MD)\},\qquad
+ W_\lambda^*=M\lambda_q+MD\lambda_\ell.\ }
+\tag{GRS.25}
+$$
+
+Every permitted correct comparator, regardless of how it adapts its
+updates and reads, satisfies the simultaneous accepting-run bounds
+
+$$
+q_A(u_g)\ge M,\qquad \ell_A(u_g)\ge MD.
+\tag{GRS.26}
+$$
+
+Proof of the upper bound. Let $k=\lfloor N/2\rfloor$. At static epoch
+$N$ submit, in any fixed order, the $M$ physical words
+
+$$
+RLwR^k\quad(w\in\Sigma^m).
+\tag{GRS.27}
+$$
+
+Compare every reply with $c_N(\alpha)$, equal to $\alpha$ for even $N$
+and $\beta$ for odd $N$. [SLH, Lemma 55.2 and Theorem 55.3][SLH]
+say that these are the delayed leaf certificate for the known template
+$g$ in the entire all-shape comparison domain $z\in\mathcal T$.
+The extra prefix $RL$ is the actual original occurrence of $z$ and has
+length two. Thus all replies match if and only if $z=g$, even when a
+comparison tree has a different shape or stops before a template leaf.
+Output the corresponding entire row from Proposition 6.2 and halt;
+one may stop on the first mismatch. Every path has at most $M$ reads
+and total length at most $MD$, with no updates. On $u_g$ all $M$ words
+are read. This proves simultaneous attainment from above.
+
+Proof of the universal same-run lower bound. For each $w\in\Sigma^m$
+let $g^{(w)}$ change only the leaf at $w$ of $g$ from $\alpha$ to $\beta$.
+Every $u_{g^{(w)}}$ is in the SAME full fiber (GRS.21), with a different
+entire row from $u_g$. There is no restriction to this finite test family
+in the theorem; these are admissible competitors used for its lower bound.
+
+At any actual epoch $j\ge N$, a difference between $u_g$ and
+$u_{g^{(w)}}$ is confined to the union of the two physical cones
+
+$$
+\mathcal D_w=RLw\Sigma^*\ \cup\ LLw\Sigma^*.
+\tag{GRS.28}
+$$
+
+Strict ancestors of these occurrences remain branches, and all other
+original components agree. In the first cone the two variable leaf
+images are $\rho^j\alpha,\rho^j\beta$; in the second they are
+$\rho^{j+1}\alpha,\rho^{j+1}\beta$. These are coupled changes of the
+same $z$ in both copies, not independent modifications.
+
+For any integer $n\ge0$, the two trees $\rho^n\alpha$ and
+$\rho^n\beta$ agree at every word of length less than $\lfloor n/2\rfloor$.
+This is part of the sharp leaf-separation supplier SLH55.2. It can also
+be checked from $T_i=\rho^i\alpha$, $T_0=\alpha,T_1=\beta$ and
+$T_i=\langle T_{i-1},T_{i-2}\rangle$ for $i\ge2$: a word of length
+$r<\lfloor n/2\rfloor$ has weight at most $2r\le n-2$; every prefix
+stays at an index at least two and both final replies are branches.
+Therefore every physical read separating this pair at epoch $j$ has
+length at least
+
+$$
+m+2+\lfloor j/2\rfloor\ \ge\ D;
+\tag{GRS.29}
+$$
+
+the second cone has the possibly larger bound with $j+1$.
+
+Now follow the actual accepting run of an arbitrary correct comparator
+on $u_g$. For every $w$, this run must contain a read that separates
+$u_g$ from $u_{g^{(w)}}$. Otherwise induction on its finite events gives
+the identical acquired replies, control, actual updates and halt on
+that alternative, producing the wrong full row. At the first separating
+read for that alternative both runs have the same epoch, so (GRS.29)
+applies even under adaptive updates. Different $w$ have disjoint unions
+$\mathcal D_w$: within each copy their length-$m$ words are incomparable,
+and the two copies start with different first letters. One read on the
+accepting run can therefore separate at most one of these alternatives.
+At least $M$ distinct actual read occurrences, each of length at least
+$D$, must occur on that ONE run. This proves (GRS.26).
+
+Nonnegative update counts and (GRS.26) put every worst vector above
+$(M,0,MD)$ and every same-run weighted supremum above the value in
+(GRS.25), including all zero weights. The static service attains both
+bounds. This proves the claimed full frontier and weighted optimum
+without restricting physical words, source size, local work or updates.
+$\square$
+
+The SLH certificate itself is supplied mathematics. The additional
+lower-bound step is the simultaneous packing of all $M$ alternative
+changes into disjoint unions of two physical cones on one accepting run,
+uniformly over every later actual epoch. Applying a one-copy static
+certificate theorem alone would not justify (GRS.26).
+

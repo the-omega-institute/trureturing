@@ -1,0 +1,98 @@
+## 3. Coordinates and the entire polynomial reduction
+
+Put $a=p+s$ and use the three linear source coordinates
+
+$$
+\chi=16p+6q+3r,\qquad t=6p+r,\qquad v=q-p.
+\tag{3.1}
+$$
+
+Their exact inverse is
+
+$$
+p=\frac{\chi-3t-6v}{4},\qquad
+q=\frac{\chi-3t-2v}{4},\qquad
+r=\frac{11t+18v-3\chi}{2}.
+\tag{3.2}
+$$
+
+For example, the first two numerators are $4p,4q$, and $t-6p$ gives the last formula. Thus the actual source domain is precisely positivity of these three expressions, followed by $s=qr/p$. In particular $\chi>0$. For fixed $\chi$, the permitted $(t,v)$ are an intersection of three open affine half-planes and form a convex set. At a midpoint the entries $p,q,r$ are their positive arithmetic means; its fourth entry is reconstructed as $qr/p$.
+
+Trace expansion gives
+
+$$
+\begin{aligned}
+\operatorname{tr}(IS)&=a,&
+\operatorname{tr}(L^2S)&=a+2q,\\
+\operatorname{tr}(QS)&=a+5p+5q+r,&
+\operatorname{tr}(TS)&=a+10p+6q+2r,\\
+\operatorname{tr}(BS)&=a+\chi.
+\end{aligned}
+$$
+
+In particular
+
+$$
+\begin{aligned}
+\operatorname{tr}((B-I)S)&=\chi,\\
+\operatorname{tr}((B-L^2)S)&=\chi-2q=(\chi+3t+2v)/2,\\
+\operatorname{tr}((B-Q)S)&=11p+q+2r=2t+v,\\
+\operatorname{tr}((B-T)S)&=6p+r=t.
+\end{aligned}
+\tag{3.3}
+$$
+
+The single polynomial
+
+$$
+P(\tau)=D(\tau)+(a+\chi)(1+k\tau)
+\tag{3.4}
+$$
+
+has degree at most $d$, since $d\ge1$. All final readings are actual values $z_j=P(j)$, $4\le j\le d+4$. Hence
+
+$$
+P(\tau)=\sum_{j=4}^{d+4}z_j
+\prod_{\substack{4\le h\le d+4\\h\ne j}}\frac{\tau-h}{j-h}.
+\tag{3.5}
+$$
+
+All denominators are fixed nonzero integers. The interpolation formula has the prescribed values at its distinct nodes. Uniqueness follows because successive division by distinct root factors makes a polynomial of degree at most $d$ with $d+1$ distinct roots identically zero. Lower actual degrees, cancellation, and $P=0$ are included.
+
+Form from the recorded data
+
+$$
+\begin{aligned}
+\chi&=P(0)-z_0,&R_1&=P(1)-z_1,& W&=2R_1-\chi,\\
+Y&=P(2)-z_2,& Z&=P(3)-z_3.
+\end{aligned}
+\tag{3.6}
+$$
+
+The data value $\chi$ agrees with (3.1). Equations (3.3) give
+
+$$
+(W,Y,Z)=F_\chi(t,v,k)
+=\bigl((1+k)(3t+2v)+k\chi,\ (1+2k)(2t+v),\ (1+3k)t\bigr).
+\tag{3.7}
+$$
+
+The first coordinate uses $2R_1=(1+k)(\chi+3t+2v)$. Every identity is undivided at gain zeros.
+
+The change from the complete data to $(P,\chi,W,Y,Z)$ is a linear isomorphism. Its inverse has $z_j=P(j)$ on the terminal block and
+
+$$
+z_0=P(0)-\chi,\qquad z_1=P(1)-(W+\chi)/2,\qquad
+z_2=P(2)-Y,\qquad z_3=P(3)-Z.
+\tag{3.8}
+$$
+
+Evaluating the decoded polynomial is not an added observation. Once $t,v,k$ are recovered, (3.2), $s=qr/p$, and
+
+$$
+D(\tau)=P(\tau)-(p+s+\chi)(1+k\tau)
+\tag{3.9}
+$$
+
+recover the entire original drift, with the declared degree bound.
+

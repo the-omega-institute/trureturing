@@ -1,0 +1,62 @@
+**Definition 2.1 (The complete finite problem).**
+For $L\ge3$ retain every word on $L$ bits, all labels $0,\ldots,L$, the positive word
+$+=1^L$, and every first-zero fibre
+$\Omega_n=\{w:w_1=\cdots=w_{n-1}=1,w_n=0\}$.
+A table $N(i,j;r_{00},r_{01},r_{10},r_{11})$ allows independent outputs
+on $00,01,10,11$. A table $O(i,j;r_0,r_{10},r_{11})$, $i<j$, uses
+stopped cells $0,10,11$. Include constants and singletons. Reversal
+permutes static cells; repetition gives singleton information without
+refunding an actual call. Earlier unqueried output labels remain legal.
+
+One normalized allocation is one $\lambda_D\ge0$ with
+$\sum_D\lambda_D=1$, supplying
+$p_w(\ell)=\sum_D\lambda_D[D(w)=\ell]$ at every word. Retain separately
+
+$$
+\begin{array}{c|c|c}
+\text{row}&\text{event probability on }w\in\Omega_n&\text{demand}\\\hline
+A&p_w(0)&1-b_n-e\\
+C&p_w(n)&b_n-e\\
+P&p_w(0)+p_w(n)&1-e
+\end{array}
+\qquad p_+(0)\ge1-e.
+\tag{2.1}
+$$
+
+Negative singleton demands remain literal. For $b_n\in[0,1]$, putting
+$c_n=p_w(n)$ and $D_n=1-p_w(0)-p_w(n)$ gives the exact TV
+
+$$
+\max\{c_n+D_n-b_n,\ b_n-c_n,\ D_n\}.
+\tag{2.2}
+$$
+
+The union row is independent. All unscored rows remain constraints.
+
+**Reused score 2.2 (The full nine-coordinate certificate).**
+XVIII 318.1–318.2 supplies the complete nonnegative score $Y_{128}$ with
+
+$$
+\beta=(0,16,88,104,104,96,88,88,88),\quad K=1024,\quad
+W=B_N=B_O=368,\quad\Delta_N=\Delta_O=0.
+\tag{2.3}
+$$
+
+Use its full support theorem directly, including every independent $N$
+cell output, every label, shorter and repeated schedules, and all ordered
+embeddings. Its 46-row certificate is not reproved here. For the same
+full feasible allocation it implies
+
+$$
+2b_2+11b_3+13b_4+13b_5+12b_6+11b_7+11b_8+11b_9
+\le2+128e.
+\tag{2.4}
+$$
+
+The supplied affine theorem also permits finite conic mass: with
+$R=O(1,2;1,2,0)$, $r=z_R=d((1,1,0,\ldots,0),0)$,
+$G_C=(z_D-r)_D$ and $h=d(b,e)-r$, its reused pairing is
+$Yh\le YG_C\lambda\le M\Delta_C(Y)=0$.
+Division by $M$ does not preserve an unchanged profile.
+All constructed probability laws below have mass one.
+

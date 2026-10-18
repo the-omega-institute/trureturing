@@ -1,0 +1,32 @@
+**Lemma 15.2 (heavy supports containing both parent leaves).**
+Every range-feasible $P$ with $A,B\in P$ and
+$w_{\rm a}(P)>C_{\rm a}$ has an own-unrecoverable
+nonempty target $q\in W_3$ for the entire finite-word menu,
+and for that target
+
+$$
+\sum_z A_{q,z}(P)^2
+\le4481982^2+6610764^2
+=63790363312020<C_{\rm a}^2.
+\tag{NCE.95}
+$$
+
+Proof. If there is at most one branch, its mass is at most
+$4481982+2959092+1347714=8788788<C_{\rm a}$.
+Thus choose two distinct branches. Lemma 3.2 gives a
+nonempty target $q$ distinguishing them. A root query merges
+those branches. Every nonempty query merges the parent leaves,
+both of which give absent, although
+$\Gamma_q(A)\ne\Gamma_q(B)$. Thus no finite query or
+constant experiment determines $q$.
+
+Lemma 3.2 also says that $A$ is alone in its $q$-cell:
+its factor differs from that of $B$ and of every branch.
+Equation (NCE.88) bounds the total branch mass by $3651672$,
+so all other cells together have mass at most
+$2959092+3651672=6610764$. For nonnegative cell masses,
+their squared sum is at most the square of their total.
+Separating the parent-$A$ cell proves (NCE.95). This includes
+every number and shape of branches, not just full rectangles.
+$\square$
+

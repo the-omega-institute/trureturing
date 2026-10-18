@@ -1,0 +1,19 @@
+**定义 6.2（可见熵矩与隐状态余量）。** 在同一实际律上设
+
+$$
+\begin{aligned}
+\mathcal P^-&=\sigma(X_j:j\leq-1),&
+h_k&=H_{P_\theta}(X_0\mid X_{-k:-1}),\\
+h&=H_{P_\theta}(X_0\mid\mathcal P^-),&
+a_k&=h_k-h\geq0,\\
+R_n&=\sum_{k\geq n}a_k,&
+T_{P_\theta}&=\sum_{k\geq0}(k+1)a_k=\sum_{n\geq0}R_n.
+\end{aligned}
+$$
+
+空块在 $k=0$ 时给出无条件熵。$\ell_n$ 使用 $J_\theta$ 的实际 $H_0$ 与 $\mathcal F_n=\sigma(X_{0:n-1})$。定义隐状态松弛量
+
+$$
+s_n=I_{J_\theta}(H_0;X_{n:\infty}\mid X_{-\infty:n-1})\geq0.
+$$
+

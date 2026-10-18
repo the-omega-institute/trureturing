@@ -1,0 +1,22 @@
+**约定 C-66.3（经典来源及其精确使用范围）。** 下列文献作为已知中间方法使用；版本、对象及条件均随引文给出。当前源特定应用由 C-59–C-66 的普通数学推导承担，不把经典恒等式、同义改写或参数代入作为独立的新内容。
+
+| 文献 | 实际使用范围与条件 |
+| --- | --- |
+| Alistair Sinclair、Piyush Srivastava、Yitong Yin，*Spatial mixing and approximation algorithms for graphs with bounded connective constant*，[arXiv:1308.1762v2](https://arxiv.org/abs/1308.1762v2)，§1.1、Theorem 1.1 | §1.1 的统一活动硬核独立集权为 $\lambda^{|I|}$。Theorem 1.1 要求连接常数至多 $\Delta$ 且统一活动 $\lambda<\lambda_c(\Delta+1)$。这里只取模型背景；非齐次恒等式及 $q_\Lambda$ 界由 C-60、C-63 的有限源证明给出。 |
+| Ferenc Bencs，*Christoffel-Darboux type identities for independence polynomial*，[arXiv:1409.2527v1](https://arxiv.org/abs/1409.2527v1)，Theorem 1.3、Corollary 1.5 | Theorem 1.3 对独立集多项式给含指定两点的诱导连通二分子图求和，项的符号由子图内部距离决定。Corollary 1.5 对二分图及正统一变量给符号结论。Theorem 1.1 是匹配多项式恒等式。该文还明确一般图的最短距离奇偶猜想不成立；本章不援引一般图奇偶法则。 |
+| Alejandro Edera、Facundo Bromberg、Federico Schlüter，*Markov random fields factorization with context-specific independences*，[arXiv:1306.2295v1](https://arxiv.org/abs/1306.2295v1)，Theorem 1、Auxiliary Lemma 1、Theorem 2 | 三处均要求正联合分布；Theorem 2 还要求各约化依赖模型 graph-isomorph 及 CSI-map 条件。硬排斥的全二值来源有零概率配置，不满足其正性前提。此文只用于定位适用边界，不承担双切口因子分解。 |
+| Nathalie Peyrard、Marie-Josée Cros、Simon de Givry、Alain Franc、Stéphane Robin、Régis Sabbadin、Thomas Schiex、Matthieu Vignes，[arXiv:1506.08544v2](https://arxiv.org/abs/1506.08544v2)，§§2.1–2.2、3.2 | v2 PDF 题名为 *Exact or approximate inference in graphical models: why the choice is dictated by the treewidth, and how variable elimination can be exploited*；摘要页题名为 *Exact and approximate inference in graphical models: variable elimination and beyond*。使用有限因子与分配律消元背景；§2.1 也讨论 Boolean $0/1$ 势。当前非负因子证明允许零，不调用正势反推定理，也不从一般稠密表复杂度推出本两项表示的存储下界。 |
+| Mathias Drton、Seth Sullivant，*Algebraic Statistical Models*，[arXiv:math/0703609v1](https://arxiv.org/abs/math/0703609v1)，§3.2 Example 16 | 离散条件独立的交叉乘积等式背景。对应这里底面二元表的行列式零判据；它不单独给活动恢复、路径符号、外部唯一性或衰减界。 |
+
+Bencs Theorem 1.3 的原式使用一个共同变量 $x$，明确为
+
+$$
+I(G-u,x)I(G-v,x)-I(G,x)I(G-u-v,x)
+=\sum_{H\in\mathcal B_{u,v}}
+(-1)^{d_H(u,v)+1}x^{|V(H)|}I(G-N[H],x)^2,
+$$
+
+其中 $\mathcal B_{u,v}$ 是包含 $u,v$ 的诱导连通二分子图族，$N[H]$ 是闭邻域。这是独立多项式差的先例定位，不把当前非齐次权强行代入其单变量陈述，也不把不同子图的符号用整个图的一条最短路径替换。
+
+仓内对应关系也逐项限定：C-7.1 的孤立三位正活动律提供局部计权，C-7.3 区分无条件协方差与底面残差，C-7.7–C-7.10 给四角系数及额外排斥边的区别；C-8.2–C-8.3 给路径矩阵与均匀闭式，C-8.7 给同边缘二元表的差；C-19.3 给共同指标与乘积分量的秩论证；C-26.11–C-26.12、C-26.22 给完整闭路迹及同源归一化。C-3.6、C-4.5–C-4.6 的 KL、Fisher 与对数四角坐标用于 C-61 的实际纤维。底面行列式与退化条件表另沿用《行列式、条件拼接与原生守卫接续》推导 4.2–5.2。它们都作为本应用的中间输入，不被重新命名为独立成果。
+

@@ -1,0 +1,19 @@
+**定理 36.3（Preset lower bound with early stopping and rejection）。** For either original alphabet, every correct preset controller with worst actual emitted fee $H$ satisfies
+
+$$
+H\ge D_g(\Lambda).
+\tag{36.6}
+$$
+
+If $\Gamma$ is nonconstant on successful INITIAL records, also $H\ge1$. These bounds hold for arbitrary words, attempted rejection, archive-dependent stopping and coincident labels. They do not assume that stopped sources execute a common suffix.
+
+Proof. Use the exact value join of Theorem 29.2 without increasing $H$. Restrict the joined controller to the actual joint sources $(0,-j,0)$ for $j\in P$. Under any one literal prefix their raw tails are identical, because the tail update depends on bits alone. Consequently their first rejecting block, if any, has an index $b$ independent of phase. Before that block all these sources, when continued as raw sources, succeed; their endpoint differences are exactly (36.3).
+
+At an actually reached archive in block $b$, all still-running tail-zero candidates reject to the same absorbing output. That output and every later output contain no further distinction among those candidates. Correctness therefore forces their joined labels already to be constant in their preceding archive. A source previously stopped on that archive forces every source with the same preceding observations to have stopped there as well. Thus the restricted decoder can stop every such archive before block $b$, retaining its label. This normalization only shortens the stopping times of this subprior; it does not add a rejection branch, issue a block or charge an unused suffix. It need not be a controller for the other INITIAL tails, which are used separately in the positive-fee lower bound.
+
+Let $q_t$ be the row (36.3) for $0\le t<\min(b,H)$, taking $b=+\infty$ if there is no raw rejection within the bound. Complete the matrix to $H$ rows with zero rows when $b<H$. The row for a fixed written word can be evaluated at phases that stopped earlier; this evaluation is an algebraic set calculation, not a further experiment on those sources. Every row has even total parity when $g=1$, by (36.4). Its columns therefore satisfy the XOR condition in (36.5).
+
+If two columns coincide, the corresponding sources have identical differences up to the earlier normalized stopping time, hence identical endpoint observations on the same free-value fibre. A deterministic stopping rule cannot stop and decode one differently from the other on that common archive. Their joined INITIAL labels must agree. This proves separation, including labels that occur at several stopping leaves. Thus a code family of length $H$ exists, giving (36.6). Padding each individual stopped column by zero was not used: such padding could destroy the row parity. The calculation instead retains the response of each common written row on the full original phase set.
+
+Finally, at fee zero one has only the free INITIAL value or bottom. The joined target is independent of that value, and the full joint successful prior contains every $(j,s)$. Zero fee is therefore possible exactly when $\Gamma$ is constant on those records. This proves the additional bound. Initial bottom remains its own free branch. ∎
+

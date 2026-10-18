@@ -1,0 +1,23 @@
+**Proposition 6.5 (One-way common-transfer refinement).** Keep the same original pair $M=(M_0,M_1)$ for all lengths. For nonnegative boundary vectors $a,b$ with positive normalizer, first form probabilities on the full binary cube,
+
+$$
+t_{a,b,n}(w)=\frac{aM_0M_wM_0b}
+{\sum_{z\in\{0,1\}^n}aM_0M_zM_0b},\qquad w\in\{0,1\}^n.
+\tag{6.8}
+$$
+
+Let $\mathscr T_n(M)$ be the closure of this family in that full simplex, intersected with probabilities supported on $B_n$ and band-compatible there. This compact family contains every actual $r_n^y$ almost surely and is contained in $\mathscr F_{N,n}^{0,0}$. Therefore
+
+$$
+\mathcal R_{N,n}\le
+\min_{r\in\mathscr T_n(M)}\mathcal D_{B_n}(\pi_n\Vert r)
+\le\mathcal B_n(P,\pi_n),
+\tag{6.9}
+$$
+
+and its middle quantity also obeys (6.7) under strong zero.
+
+Proof. In (6.2) take $a=\lambda M_u$, $b=M_v\mathbf1$. Actual legality makes the full binary denominator in (6.8) equal the legal denominator in (6.2). The limit (6.4) puts the actual conditionals in the closure; their band and support give membership in the intersection. For arbitrary $a,b$, the untruncated full-cube probabilities still factor as in (6.3), so (6.5) preserves all cut bounds through closure and intersection. This proves both inclusions and (6.9). $\square$
+
+The full-cube normalization in (6.8) is essential: arbitrary boundary vectors can give mass to paths invisible under the original stationary row. Deleting their illegal entries before normalization is not an operation known to preserve the factorization. Even the refined family only gives a necessary envelope; boundary vectors need not arise from one exterior process. The looser all-cut family guarantees neither a common nonnegative tensor representation with these state bounds, nor a stationary producer, nor common matrices across $n$. It is used only in the lower-bound direction.
+

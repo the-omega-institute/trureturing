@@ -1,0 +1,31 @@
+**Definition 5.6 (realized-body validation and data-dependence restriction).**
+On a supplied view body derive a candidate historical prefix using only
+that body, its identity binding and the fixed public code/layout:
+S or B first gives raw $Y$, selected M and extracted data; M gives those
+data directly; T gives its checked erasure/execution. Replay where needed,
+check seed validity at the original entrance, exact $k$, target source/origin
+binding, target activation when present and target phase, then re-encode that candidate's
+same view and require exact body equality. Binding checks follow actual
+referenced origin chains in this reconstructed description and compare
+their target fields to the selected completed-object record. Check its
+later-service fields separately as Definition 3.5 specifies. They are not a new live
+producer query. Full malformed-word authenticity is not inferred from
+self-consistency; the selected exclusive-writer/sealed-copy route supplies
+actual provenance.
+
+In a direct view branch the logical inputs to all these helpers are
+$(v,b,\mathsf{PublicCode})$ only. PublicCode contains original public
+$H,\xi$, descriptor/layout conventions, $D_0,L$, captured $\Delta(D_2)$
+and the corresponding fixed boot/compiler conventions. It excludes
+manifest seed contents, old-frame words and package reservoirs. The code
+may derive those data from $v$ when the view supplies them. The handler
+does not access `images`, image payloads or a package's replay reservoir
+to repair a failed direct decoder. Failure publishes InvalidView.
+
+Physical bank rebuilding still copies every persistent field, including
+the old service manifest. That incidental compiler copy is counted and
+retained. It is not a value used by a direct decoder: its word-level
+dependency graph reads only the three displayed arguments and its own
+temporaries. The old-image fallback exclusion is this explicit dependency
+property, not a claim that earlier source bytes cease to exist.
+

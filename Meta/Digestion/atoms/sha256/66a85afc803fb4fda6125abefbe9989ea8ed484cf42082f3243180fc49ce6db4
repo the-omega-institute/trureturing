@@ -1,0 +1,23 @@
+**Lemma 1.4 (Preparation rotations and metric multiplicities).** On all
+actual rays,
+
+$$
+y(k,\alpha,\beta)=D(A(k)U(\alpha),B(k)U(\beta)),\qquad
+D^{\mathsf T}D=4I_2\oplus I_2.
+$$
+
+Consequently $\|D(a,b)\|_2^2=4\|a\|_2^2+\|b\|_2^2$.
+
+Proof. The negative phase convention gives
+$\overline\psi_i\psi_j=\sqrt{p_ip_j}e^{i(\theta_i-\theta_j)}$.
+The expectation pair is twice its real and imaginary parts, namely
+$2\sqrt{p_ip_j}U(\delta_{ij}+h_i-h_j)$.
+The five increment differences are
+$\alpha,\beta,\alpha,-\alpha,-\alpha$. Since $U(-\alpha)=JU(\alpha)$,
+this is exactly $OD_0$ applied to the two stated planar vectors.
+The first vector occurs in four orthogonal output blocks and the second
+in one; there are no cross terms. The preparation rotations and $J$ are
+orthogonal. The Gram formula follows without changing the output metric.
+Also $A(k)\le H$ and $B(k)<2\sqrt{ZH}$, so $y$ is uniformly bounded.
+$\square$
+

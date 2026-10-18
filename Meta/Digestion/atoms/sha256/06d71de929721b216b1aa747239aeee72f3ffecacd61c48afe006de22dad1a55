@@ -1,0 +1,50 @@
+**Theorem 44.3 (Saturation and positive proposal tails below limit one).** Suppose $h>0$, $B<1$, and a design and reference attain $\rho_\nu=R$. Put $q=h/(2-B)$ and $M=\sup_y\nu(H_y)$. Then
+
+$$
+M=\nu(H_{x_*})=q.
+\tag{44.12}
+$$
+
+For the anchor finite-record cutoffs, with $m\ge1$,
+
+$$
+A_m=\{\theta\in H_{x_*}:\tau_{x_*}(\theta)\le m,\
+Q_{x_*}(\theta)\subseteq P_m,\ C_{x_*}(\theta)\le m\},
+\tag{44.13}
+$$
+
+where $P_m$ consists of the first $m$ primes, choose any one actual source $y_m$ matching the anchor's answers on $P_m$ and having $k_m=\Omega(y_m)>m$. Then
+
+$$
+\begin{aligned}
+\nu(H_{x_*}\setminus A_m)&\ge q\,[B-b(k_m)],\\
+\mu_{x_*}(H_{x_*}\setminus A_m)&\ge\nu(H_{x_*}\setminus A_m).
+\end{aligned}
+\tag{44.14}
+$$
+
+For a strict profile both masses are positive for every finite cutoff. Thus neither the anchor law nor the reference can be finitely supported at such an optimizer.
+
+**Proof.** Theorem 43.2 at $\delta=B$ gives $(1-B)M\le R$; the anchor event gives $h\le\nu(H_{x_*})+R\le M+R$. Since $R=(1-B)q$ and $q+R=h$, all these inequalities saturate, proving (44.12).
+
+For any source $y$ of target $k$, the signed-error event comparison (43.6)--(43.8), with its coefficient replaced by the single number $b(k)$, gives
+
+$$
+\nu(F_y)-b(k)\nu(H_y)\le\rho_\nu.
+\tag{44.15}
+$$
+
+This follows from the two disjoint false/correct event inequalities with coefficients $1-b(k)$ and $b(k)$ summing to one. It is valid on the original arbitrary measurable space, without a finite-space sum convention.
+
+Every source is persistent at constant advice by (37.1). The actual matching-source and finite-execution results of Sections 35--38 supply the stated $y_m$ for the whole event $A_m$, independently of its tapes, and give $A_m\subseteq F_{y_m}$. Therefore (44.15) and (44.12) yield
+
+$$
+\nu(A_m)\le b(k_m)q+R,
+\qquad q-\nu(A_m)\ge q[B-b(k_m)].
+\tag{44.16}
+$$
+
+The anchor TV comparison also gives $\mu_{x_*}(A_m)\le\nu(A_m)+R$. Subtracting from $h=q+R$ proves the second inequality in (44.14). These limits and inequalities concern fixed-anchor events; they do not pass the comparison laws or sources through a limit. The events $A_m$ increase to $H_{x_*}$ because each finite real proposal has finite execution length, a finite prime menu and a finite upper output cutoff. Negative real proposals are included as well.
+
+If a law is a finite point mixture, take a cutoff covering the finite records of all its tapes that propose at the anchor. Its mass on $H_{x_*}\setminus A_m$ is then zero. Strictness and (44.14) exclude this for either named law. The bound uses the actual finite $k_m$ of one matching source; it does not assert a cutoff-independent positive lower bound. $\square$
+

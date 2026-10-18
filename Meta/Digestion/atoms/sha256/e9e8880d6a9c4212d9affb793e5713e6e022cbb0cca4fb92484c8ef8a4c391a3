@@ -1,0 +1,47 @@
+**Theorem 13.1 (immutable-reader correspondence for same-run objectives).**
+Under Assumption 10.1 let $M_R$ be the set of all words installed in
+the fixed reader's running states, including unused states. Replace
+$M$ in (PCA.24) by $M\cup M_R$, obtaining a depth $b_R$ and basis
+$B_{b_R}$. This basis may depend on the fixed reader's observations,
+but is independent of the competing preparer and every budget.
+
+For every successful preparer there is a preparer on exactly its same
+states, partition, start and literal latches, with words in $B_{b_R}$,
+while the reader is entirely unchanged. For every actual $u$ there is
+one actual $u^\dagger$ in the original full fiber with the same code,
+complete entry and whole target such that
+
+$$
+\begin{aligned}
+q_{P'}(u)&=q_P(u^\dagger),&
+\ell_{P'}(u)&\le\ell_P(u^\dagger),\\
+q_R(u)&=q_R(u^\dagger),&
+\ell_R(u)&=\ell_R(u^\dagger).
+\end{aligned}
+\tag{PCA.34}
+$$
+
+The unchanged reader also follows the same ordered states and halt
+on $u$ and $u^\dagger$. Thus this basis preserves feasibility of
+uniform separate-coordinate bounds and same-run bounds such as
+$q_P(u)+q_R(u)\le T$ and $\ell_P(u)+\ell_R(u)\le A$ for all actual
+$u$, and their simultaneous imposition. More generally the same
+comparison works for a coordinatewise nondecreasing constraint on
+these four execution costs.
+
+Proof. Use Theorem 11.2 at depth $b_R$ and the maximum of the old
+preparer's installed word lengths. Its witness $u^\dagger$ has the
+same replies as $u$ at every installed reader word: if a reader word
+enters a hole, its suffix has length at most $b_R$ by definition;
+otherwise its reply is exterior-determined. The original entry is
+also unchanged. Induction through the fixed reader therefore gives
+its same state path and charges on $u,u^\dagger$.
+
+Apply (PCA.32) only to the preparation table. Lemma 12.2 compares its
+new run on $u$ with its old run on this very same $u^\dagger$, yielding
+the first line of (PCA.34). Combining the two lines uses one actual
+origin, not separate maximizers for preparation and reading. The
+reverse feasibility implication uses inclusion of basis words among
+native words. The argument does not compare the old and new
+preparation costs on the same $u$. $\square$
+

@@ -1,0 +1,26 @@
+**Definition 17.3 (proof coordinates and the lag target).** The fifteen
+distinct hidden ages and their visible-origin target function are
+
+$$
+\begin{aligned}
+D&=\{2,3,4,5,6,7,16,17,18,27,28,29,30,31,32\},\\
+\tau(n)&=
+\begin{cases}
+15,&2\le n\le7,\\
+1,&n=16,17,\\
+0,&n=18,\\
+32-n,&27\le n\le32,
+\end{cases}
+\qquad g(n)=17-\tau(n),\\
+D_L&=\{2,3,4,5,6,7,16,17,18\},\qquad
+D_U=\{29,30,31,32\}.
+\end{aligned}
+\tag{NARC.17.4}
+$$
+
+The required output is the complete numeric lag $g(n)$, with image
+$\{2,12,13,14,15,16,17\}$. Distinct $\tau$ values are exactly
+distinct required outputs. The coordinates $n,\tau$ parametrize
+actual histories for proofs; they are not observer inputs. In
+particular the task does not require identifying all fifteen ages.
+

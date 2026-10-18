@@ -1,0 +1,56 @@
+**Definition 27.3 (two exact microscopic transports and the full norm).** Let $c_j=c_\kappa^{(j)}(k_0)$, $j=0,1,2$, and $j_0=\varepsilon^4|\det(c_0,c_1,c_2)|>0$. For $\xi=(r,y,z,w)$ put
+
+$$
+\begin{aligned}
+\Xi_s\xi&=(k_0+\varepsilon sr,
+          sc_0y+\varepsilon s^2c_1z+\varepsilon^2s^3c_2w),\\
+\Omega_{s,b}&=(-b/s,L_0/(\varepsilon s)-b/s)\times\mathbb R^3,\\
+(\mathcal U_{b,s}\psi)(\xi)&=(j_0s^7)^{1/2}\psi(\Xi_s\xi),\\
+L_s&=\begin{pmatrix}1&\nu s&0\\0&1&2\nu s\\0&0&1\end{pmatrix},&
+\mathscr L_s(r,\mathbf z)&=(r,L_s\mathbf z),&
+\mathcal T_sF&=F\circ\mathscr L_s,\\
+U_{b,s}&=s^5W_{b,s^2}\circ\Xi_s,&
+\widetilde U_{b,s}&=U_{b,s}\circ\mathscr L_s,\\
+C^{\rm sh}_{b,s}&=s^2(\mathcal T_s\mathcal U_{b,s})S_b
+                              (\mathcal T_s\mathcal U_{b,s})^{-1}.
+\end{aligned}
+\tag{27.7}
+$$
+
+Here $\mathbf z=(y,z,w)$ is only the microscopic phase-coordinate vector. The chart has raw Jacobian $j_0s^7$. The shear has determinant one, fixes the source and both faces, and is unitary on $\mathcal H_{s,b}=L^2(\Omega_{s,b},d\xi;\mathbb C)$. Before zero extension,
+
+$$
+\begin{aligned}
+D(C^{\rm sh}_{b,s})&=(\mathcal T_s\mathcal U_{b,s})D(S_b),\\
+D((C^{\rm sh}_{b,s})^{1/2})&=(\mathcal T_s\mathcal U_{b,s})\mathcal Q_b,\\
+\|(C^{\rm sh}_{b,s})^{1/2}f\|_2^2
+ &=\int_{\Omega_{s,b}}
+ \left(|Xf|^2+(1+\nu sr)^{-2}|Yf|^2\right)d\xi
+       -\lambda s^2\|f\|_2^2,\\
+X&=\partial_r,&Y&=\partial_y+r\partial_z+(r^2/2)\partial_w.
+\end{aligned}
+\tag{27.8}
+$$
+
+This is the original nonnegative selfadjoint threshold-shifted operator and its entire closed form. In particular, the $-\lambda s^2$ shift is retained. If $P_{b,s}(t;\eta,\xi)=j_0s^7p_{s^2t}^{B_b}(\Xi_s\eta,\Xi_s\xi)$, the full field is equivalently
+
+$$
+\widetilde U_{b,s}(\xi)
+ =j_0^{-1}\int_1^\infty e^{\lambda s^2t}
+                       P_{b,s}(t;0,\mathscr L_s\xi)dt.
+\tag{27.9}
+$$
+
+The source factor $j_0^{-1}$ belongs to the transformed unit raw source, not to a replacement measure $dk\,dq/j_0$.
+
+For any $h>0$ use exactly J Definition 53.1's full positive operator and norm,
+
+$$
+\mathscr K_b(h)=\widetilde U_{b,s}^{1/2}
+        (C^{\rm sh}_{b,s}+h)^{-1}\widetilde U_{b,s}^{1/2},
+\qquad k_b(h)=\|\mathscr K_b(h)\|_{2\to2}.
+\tag{27.10}
+$$
+
+Its dependence on $s$ is suppressed as in §25; its field includes the original long part. Products and operator domains in (27.10) are taken on $\mathcal H_{s,b}$. Restriction and zero extension give the same norm on the common $L^2(\mathbb R^4)$, as in J §53.
+

@@ -1,0 +1,106 @@
+## 125. Consumed suppliers and the remaining acquisition boundary
+
+**Scope C-125.1 (What the construction closes).**
+The source-copy-to-channel service in C-121–C-124 is a conditional mathematical
+implementation of precisely the original four sources and their associated
+channels, with known $t,\eta$, one unknown persistent label, actual independent
+tensor copies and uniform complex-reference error. It quantifies part of the
+unknown-source access gap left in C-115.6 and C-120.2. It does not produce the
+copies from native histories, synthesize exact amplitudes from code names or
+make separated-party transport free. A declared joint CPTP processor by itself
+is not a separated-party communication protocol; C-124.4 supplies one paid route.
+No minimal physical acquisition cost, optimal positive-noise copy budget,
+asymptotic coding rate per source copy or improved channel capacity is asserted.
+The exact noisy one-use construction uses fresh independent program batches
+when invoked as independent channel uses. The shared-record block construction
+has the different law and bound (C124.5).
+
+The comparison with
+[Contextual spacetime arithmetic quantum, §§187 and 200](CONTEXTUAL_SPACETIME_ARITHMETIC_QUANTUM.md#187-一枚非交换程序消去固定经典设计的统一额外成本)
+is at the level of a fixed processor with an initially independent program.
+Section 187.1 permits a chosen program curve; its displayed optimal qubit
+curve is noncommuting, and §187.2 treats arbitrary commuting curves by their
+fixed-basis classical components. Section 200 concerns chosen two-dimensional
+program curves for a three-level Schur family and SLD equality/continuation,
+including a nonzero Bloch transverse coordinate. Those program carriers and
+optimization criteria are not the prescribed $\rho_{t,\eta}(X)^{\otimes m}$.
+Their chosen-program synthesis is therefore not an acquisition or tensor-copy
+supplier for this increment. Here commutativity is proved directly from the
+original matrices in (C121.4), and the copy distributions are fixed by them.
+
+Likewise
+[Acquisition Resources XVI, §§289–296](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XVI.md#289-a-four-address-payer-with-a-signed-residual-and-one-input-budget)
+uses original Boolean replies, finite decision trees, nonnegative allocations
+and signed residuals. Its actual four-address payers, finite-reader synthesis
+and restricted common-budget results retain those classical carriers. They
+supply neither this six-outcome quantum measurement nor its phase controls,
+quantum program copies or transmission links. The native heat-trace crossover
+uses scalar spectral measures and native clocks; it does not change this
+carrier boundary. These are explicit missing implementation bridges, not
+objections to the conditional mathematical channel construction.
+
+**Literature input C-125.2 (Primary ingredients and limits of their transfer).**
+The finite-dimensional CP/Kraus/Choi and distance ingredients are reused,
+including the actual declarations and private supporting closure of
+`D5/S3/Quantum/Foundation/FiniteKrausRepresentation.lean`,
+`FiniteKrausChannel.lean`, `FiniteTraceDistance.lean` and
+`FiniteDiamondDistance.lean`. In the actual `MatrixMap.choi_matrix` definition
+the index order is output/input and the Choi matrix is unnormalized; dividing
+by five gives the convention (C116.2). No displayed narrative convention is
+used to reverse these indices. `FiniteDiamondDistance.diamondDistance`
+uses the unhalved stabilized reference-state distance; its pure-input/reference
+reduction does not assert the new minimax computation here. The existing
+`QuantumChannels/CovariantPureProgramDimensionRefutation.lean` and
+`PureProgramQubitObstruction.lean` distinguish chosen mixed and pure programs;
+their four-target obstruction does not give a source-copy error formula.
+No new generic Kraus, CP criterion, norm theorem or decorative Lean application
+is needed for the ordinary source-specific proofs above.
+
+The mature comparison/programming ingredients are `literature-attested`:
+
+- Francesco Buscemi, [*Comparison of quantum statistical models: equivalent
+  conditions for sufficiency*, arXiv:1004.3794v4](https://arxiv.org/html/1004.3794v4),
+  §§4–8, especially the distinction between statistical morphisms and CPTP
+  extension and the abelian-output extension in Proposition 3. Merely matching
+  classical native tests does not establish a full-algebra quantum processor.
+  Here (C121.10) explicitly supplies that processor, and the converse uses
+  trace-distance contraction, rather than claiming a restricted-test criterion
+  gives the required quantum simulation.
+- Anna Jenčová, [*A general theory of comparison of quantum channels (and
+  beyond)*, arXiv:2002.04240v2](https://arxiv.org/html/2002.04240v2),
+  §3.1.5 and §3.2: diamond-norm comparison and admissible channel transformations
+  retain the ancillary-system quantifiers. We use that operational distinction;
+  no generic comparison theorem alone evaluates this prescribed four-program task.
+- Martina Gschwendtner, Andreas Bluhm and Andreas Winter,
+  [*Programmability of covariant quantum channels*, arXiv:2012.00717v2](https://arxiv.org/html/2012.00717v2),
+  §3.3, Proposition 24: its exact Choi-program teleportation construction assumes
+  an irreducible input representation $U$ of a compact group, with the stated
+  covariance. The original-basis phase symmetry here is reducible; no qualifying
+  irreducible common covariance is supplied. That proposition is not invoked
+  to turn one unknown original Choi state into its channel.
+- Stefano Pirandola, Riccardo Laurenza, Cosmo Lupo and Jason L. Pereira,
+  [*Fundamental limits to quantum channel discrimination*, arXiv:1803.02834v4](https://arxiv.org/html/1803.02834v4),
+  §II.2, Lemma 1 and §II.3: deterministic port-based teleportation gives a
+  generic common simulation from tensor powers of normalized channel Choi
+  states, with its own measurement and routing services and diamond-error
+  bound. This is a generic benchmark, not new content or an assertion of
+  exact finite-copy simulation at the coherent corner. C-122 evaluates the
+  unrestricted minimax for the original zero-noise subfamily more specifically.
+- Wassily Hoeffding, *Probability inequalities for sums of bounded random
+  variables*, Journal of the American Statistical Association 58, 13–30,
+  [DOI 10.1080/01621459.1963.10500830](https://doi.org/10.1080/01621459.1963.10500830),
+  Theorem 2 (bibliographic attribution; the primary article text was not
+  obtained here): for variables in $[-1,1]$, the one-sided sample-mean
+  deviation bound is $\exp(-m\alpha^2/2)$, with the two-sided factor two. The
+  needed estimate and its constants are supplied directly by the bounded-mgf
+  derivation in the proof of (C123.1), rather than by an unverified quotation.
+
+The simultaneous original-source response construction, attained zero-noise
+minimax, noisy interior exactness budget and their fresh/shared-record resource
+connection are `repo-derived` synthesis. The bounded comparison above does not
+assert exhaustive absence of an equivalent result in the literature or global
+originality. These are complete ordinary proofs; there is no exact scoped Lean
+application, accepted axiom-closure evidence or kernel claim for this increment.
+Physical/native preparation, exact calibration supply and cheaper lawful routes
+remain outside the proved acquisition result.
+

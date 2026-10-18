@@ -1,0 +1,15 @@
+**定义 36.1（分开的优化域）。** 局部关系层选择接口 $E$、运算与递归运输，约束为代数闭合、完整旋转相容及实际保关系；第八章的 $J(E)$ 是其中一个明示成本。全局边界层固定实际来源 $X$、全部合法上下文 $\mathcal C$ 和响应目标
+
+$$
+\mathcal R_{\mathcal C}(x)=\bigl(o(C[x])\bigr)_{C\in\mathcal C},
+$$
+
+其中保留域、失败、终止、共同来源与共享接缝。声明可取得的摘要族 $\mathfrak A$、资源函数 $\operatorname{Cost}$ 后，精确问题为
+
+$$
+\inf_{\eta\in\mathfrak A}\{\operatorname{Cost}(\eta):
+\mathcal E(\eta;\mathcal R_{\mathcal C})=\varnothing\}.
+$$
+
+近似问题改用声明的概率律、误差度量、视界及取得权限所定义的 $\operatorname{Risk}(\mathcal R_{\mathcal C}\mid\eta)\leq\epsilon$。空可行集取 $+\infty$，但没有取得该值的可行摘要；有限候选集若可行集非空则有最小值，紧致候选集若可行集非空、可行集闭且成本下半连续亦可取得，除此不预设最优存在。纯实维数、固定比特、标架维护、取得步数与物理能量分别定价，不用一个无单位数替代。
+

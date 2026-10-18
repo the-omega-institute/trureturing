@@ -1,0 +1,43 @@
+**Definition 1.1 (trees, literals and substitution).** Let
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\qquad
+\operatorname{ht}(\alpha)=\operatorname{ht}(\beta)=0,
+\qquad
+\operatorname{ht}(\langle u,v\rangle)
+=1+\max\{\operatorname{ht}(u),\operatorname{ht}(v)\}.
+$$
+
+Pairing is free and ordered. Every finite word in $L,R$, including
+$\varepsilon$, is a legal original-root literal. Its reply $r_t(a)$
+belongs to
+
+$$
+\mathcal A=\{\alpha,\beta,\mathsf{branch},\mathsf{absent}\}:
+$$
+
+it reports the addressed constructor, or absent if traversal passes a
+leaf. Define the homomorphic substitution by
+
+$$
+\rho\alpha=\beta,\qquad
+\rho\beta=\langle\beta,\alpha\rangle,\qquad
+\rho\langle u,v\rangle=\langle\rho u,\rho v\rangle.
+$$
+
+For public $D\ge1$, retain exactly
+
+$$
+\mathcal F_D=\{\langle\alpha,v\rangle:
+                         \operatorname{ht}(v)\le D\},\qquad
+W_D=\{q:|q|\le D-1\},\qquad
+\mathcal P_D=\{Rq:q\in W_D\}.
+\tag{RRN.1}
+$$
+
+The one actual initial source is stationary throughout preparation and
+late acquisition. The iterates $\rho^kt$ specify prediction targets.
+There is no subtree, equality, source-identity, age, reset, copying,
+navigation or advice port.
+

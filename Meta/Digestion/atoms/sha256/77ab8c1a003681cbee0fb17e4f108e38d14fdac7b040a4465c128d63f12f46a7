@@ -1,0 +1,59 @@
+**定理 C-109.8（实际菜单误差迫使匹配人口改变）。** 对每个 $q=1,2,3,4$，
+每个原 $T\in\mathfrak C_q$ 若满足额外 BP 合同，则
+
+$$
+e(T)>1-53q/250>u_q:=(5-q)/7.
+\tag{C109.20}
+$$
+
+同一个输入 $\rho_0=Dvv^TD^\dagger$、同一个实际等待 $t_0=2/3$、完整模式读数后 Stop，
+已经统一见证所有这些通道和所有这四个 $q$ 的第一个严格界。
+故任意原 $T\in\mathfrak C_q$ 若 $e(T)\le u_q$，则
+$(T_A\otimes\mathrm{id})(S)$ 至少一个非匹配联合人口严格为正。
+特别地，所有达到的原 minimizer 都改变这个匹配人口合同。
+
+证明。在 C-109.3 提供的同一个秩受限对角 Kraus 族写
+$M=\sum_a z_az_a^\dagger$、$|\operatorname{supp}z_a|\le q$、
+$\sum_a|z_a(s)|^2=1$。稀疏 Cauchy–Schwarz 给对任意复 $x$
+
+$$
+x^\dagger Mx=\sum_a|z_a^\dagger x|^2
+\le\sum_a q\sum_s|z_a(s)|^2|x_s|^2=q\|x\|_2^2,
+\qquad M\preceq qI_5.
+\tag{C109.21}
+$$
+
+这是必要方向，C-109.6 已排除逆向。被动对角 $D$ 不改变 BP 或 Schur 矩阵：
+$D^\dagger T(DXD^\dagger)D=M\circ X$；此为坐标恒等式，不增加未来相位控制。
+允许制备任意复输入使 $\rho_0$ 合法。$U(t_0)D v=D O(t_0)v=De_N=e_N$，
+所以未经替换的完整读数以概率一给 $N$。替换后的同一事件概率为
+
+$$
+F_T=\langle v|\widehat T(vv^T)|v\rangle
+=\sum_{s,t}p_sM_{st}p_t=p^TMp
+\le q\sum_sp_s^2<53q/250.
+\tag{C109.22}
+$$
+
+这是真实 Born 概率；因理想律为点质量，整个五结果读数的 TV 恰为 $1-F_T$。
+保留这一读数和 Stop 的历史即给 $e(T)\ge1-F_T$。
+没有用任意参考效果、diamond 范数或把两来源的边缘概率相乘。
+输入向量的定义使用 $O(t_0)^T$ 不表示实施反向等待；未来协议只等待 $2/3$。
+
+数值比较均为严格有理关系：
+
+$$
+\begin{array}{c|c|c}
+q&1-53q/250&u_q\\ \hline
+1&197/250&4/7\\2&72/125&3/7\\3&91/250&2/7\\4&19/125&1/7
+\end{array},\qquad
+1-53q/250-u_q=(500-121q)/1750>0.
+\tag{C109.23}
+$$
+
+若 $e(T)\le u_q$，逆否命题给非 BP。C-109.2 说明必有一个 $T(\Pi_s)\ne\Pi_s$。
+正性和迹一于是使某个 $r\ne s$ 的 $\langle r|T(\Pi_s)|r\rangle>0$；
+(C109.5) 在同一 $S$ 上给所述非匹配人口。QMB 定理 5.1 的紧性、达到性与显式
+$u_q$ 端口给每个原 minimizer 的误差至多 $u_q$，所以也在此结论内。
+这里没有算出任意 $q<5$ 的无约束最优值。证毕。
+

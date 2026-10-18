@@ -1,0 +1,58 @@
+**Theorem 20.3 (One rank-four approximation works across all cuts).**
+For every $n\ge2$, the single state $\Phi_n$ has Schmidt
+rank at most four at every cut and hence an exact open-chain
+matrix-product representation with bond dimensions at most
+four. It satisfies
+
+$$
+\langle\Psi_n,\Phi_n\rangle\ge\frac1{\sqrt{1+C_n}},\qquad
+\|\Psi_n-\Phi_n\|^2\le
+2-\frac2{\sqrt{1+C_n}}\le C_n.
+\tag{20.7}
+$$
+
+For the trace distance, with the factor-one-half convention,
+
+$$
+\begin{aligned}
+T_n&=\tfrac12\big\|
+|\Psi_n\rangle\langle\Psi_n|
+-|\Phi_n\rangle\langle\Phi_n|\big\|_1\\
+&\le t_n:=\sqrt{\frac{C_n}{1+C_n}}
+\le\sqrt{2\sqrt{a(1-a)}}\,
+\gamma^{\lfloor(n-1)/2\rfloor/2}.
+\end{aligned}
+\tag{20.8}
+$$
+
+The parameters $a,p,q$ and the bound four do not depend on
+n or on a chosen cut.
+
+Proof. Each component coefficient matrix has rank two by
+Proposition 19.3. At every cut the coefficient matrix of
+$v_n$ is their weighted sum, with rank at most four;
+normalization preserves that bound. Sequential Schmidt
+decompositions of this same vector give the stated
+matrix-product representation. Independent choices of
+approximant at different cuts are unnecessary.
+
+The norm of $v_n$ is $\sqrt{1+C_n}$. For every legal word,
+
+$$
+v_n(w)=\sqrt{aP_{p,n}(w)}+\sqrt{(1-a)P_{q,n}(w)}
+\ge\sqrt{aP_{p,n}(w)+(1-a)P_{q,n}(w)}=\Psi_n(w).
+\tag{20.9}
+$$
+
+Multiplying by $\Psi_n(w)$ and summing gives
+$\langle\Psi_n,v_n\rangle\ge1$, proving the overlap
+and the first distance bound. For $c\ge0$,
+$2-2/\sqrt{1+c}\le c$: with $s=\sqrt{1+c}\ge1$,
+$cs-2s+2=(s-1)^2(s+2)\ge0$. This proves (20.7).
+
+For normalized pure vectors u,v, diagonalizing the difference
+of the two projectors on their two-dimensional span gives
+$\tfrac12\||u\rangle\langle u|-|v\rangle\langle v|\|_1
+=\sqrt{1-|\langle u,v\rangle|^2}$.
+Apply (20.7), then Lemma 20.2, to obtain (20.8). $\square$
+

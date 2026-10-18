@@ -1,0 +1,30 @@
+**Definition 6.2 (canonical independent candidate selections).** Let
+$T_G$ be the tree of the ground scheme
+
+$$
+G=\mathsf{nd}\bigl(\alpha,
+       \mathsf{nd}(\beta,\mathsf p(G,G))\bigr).
+$$
+
+For each $t\in\mathcal T$ define its canonical finite selected-node
+set $S_t$ in $T_G$. It contains the root and the chosen path of
+choice nodes to the root constructor of $t$. An $\alpha$ chooses
+the first child of the outer choice. A $\beta$ chooses the second
+child, then the first child of the inner choice. A pair chooses
+the second child of both choices and includes both corresponding
+child selections. At ordinary pair nodes both children are kept;
+at leaves the selection ends. This recursively specifies one finite
+selection for every finite $t$. Contracting its selected choice
+nodes gives exactly $t$, and the constructor alternatives recover
+$t$ uniquely. Hence $\mathcal L(T_G)=\mathcal T$ with these
+canonical selections.
+
+A separated carrier has two fixed occurrences of $T_G$ below a
+fixed finite context. Its free selection tracks restrict to $S_s$
+in the first occurrence and $S_t$ in the second; all other tracks
+in those occurrences are empty or fixed independently of $s,t$.
+For a depth track add a third, disjoint subtree
+$T_{\mathrm{clk}}=\mathsf{clk}(T_{\mathrm{clk}})$ and let $H_h$
+be its first $h+1$ nodes. Context memberships and any other subtrees
+are fixed. Candidate choices do not change the carrier tree.
+

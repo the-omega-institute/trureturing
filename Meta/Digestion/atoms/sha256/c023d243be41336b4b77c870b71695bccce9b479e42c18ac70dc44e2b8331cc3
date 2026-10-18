@@ -1,0 +1,83 @@
+**Theorem 3.2 (persistent-source all-word lower bound).** Every
+admissible encoder $A$, with any allowed public installation, satisfies
+
+$$
+\mathbb E_{P_1}T_A\ge L_a,
+\qquad
+L_a=10a-\frac{2^{10a}-1-10a}{N}>10a-1.
+\tag{NCO.21}
+$$
+
+Proof. First, on each $t_{j,e,z}$ the encoder must actually Read
+$R^j$ before stopping. Flip only its leaf label. The resulting tree
+is $t_{j,1-e,z}$ in the same full family, with unchanged height,
+outer left alpha and every reply except at $R^j$. A deterministic run
+omitting that address has identical queries, local decisions,
+termination and complete handoff on both trees. At the common
+authentic count $k=2(n-j)$, formula (NCO.20) requires respectively
+alpha and beta. This contradicts (NCO.2). This is exactly the
+bounded-family actual-leaf evidence mechanism of AAR13.5 and
+[SLH, Lemma 43.2][SLH]; it remains necessary even when the initial
+target reply is absent.
+
+Now condition under $P_1$ on a complete fixed bank vector $z$ and a
+label $e$. The position $j$ is still uniform on $N$ possible values.
+This is a probability decomposition for the lower proof, not advice
+given to the executing encoder. Every reply during each execution
+continues to come from its one actual $t_{j,e,z}$.
+
+Consider arbitrary adaptive query histories up to the first Read of
+the actual $R^j$. The all-word table in Theorem 2.3 implies that, on
+any subset of still-unhit positions, a query has the following form:
+a right-prefix word can hit at most one position and leaves at most
+two nonhit reply groups; a later left-sibling word has at most two
+threshold reply groups and no hit; a bank word or outer constant has
+one reply group once $z,e$ are fixed. Arbitrarily long words, nested
+words, repeated words and absent replies are included in these cases.
+
+Let $K_q$ be a uniform upper bound on the number of candidate positions
+that any such adaptive continuation can first hit within $q$ further
+charged calls. A history fixes the next word, because all local state
+is determined by that history and the common installation. Cutting
+off a position when it is first hit gives
+
+$$
+K_0=0,\qquad K_q\le1+2K_{q-1},\qquad K_q\le2^q-1.
+\tag{NCO.22}
+$$
+
+The recurrence holds on any remaining subset, so no assumption that
+the encoder itself maintains intervals is needed. Constant queries
+have only one continuation; threshold queries have no added hit.
+Halting before a required hit is forbidden by the first paragraph.
+Source-free local computation adds no reply group. This proves the
+bound for every permitted adaptive word strategy, rather than just
+prefix-search strategies.
+
+If $\tau$ is the charged time of the compulsory first hit, then
+$T_A\ge\tau$ and, for all $q\ge0$,
+
+$$
+\Pr_{P_1}(T_A\le q\mid z,e)
+\le\Pr_{P_1}(\tau\le q\mid z,e)
+\le\min\left\{1,\frac{2^q-1}{N}\right\}.
+\tag{NCO.23}
+$$
+
+Since $3^7=2187>1024=2^{10}$, we have $N=3^{7a}>2^{10a}$.
+The elementary integer tail sum, truncated at $10a$, yields
+
+$$
+\begin{aligned}
+\mathbb E_{P_1}(T_A\mid z,e)
+&\ge\sum_{q=0}^{10a-1}\left(1-\frac{2^q-1}{N}\right)\\
+&=10a-\frac{2^{10a}-1-10a}{N}=L_a>10a-1.
+\end{aligned}
+\tag{NCO.24}
+$$
+
+This bound is uniform in the fixed $z,e$ and in $A$. Averaging over
+their actual joint law proves (NCO.21). The lower argument neither
+projects the source to a different tree nor draws a fresh bank for a
+later query. $\square$
+

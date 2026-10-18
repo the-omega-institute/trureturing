@@ -1,0 +1,46 @@
+**Convention 7.1 (original interface and credited carrier).** Retain the
+source, substitution, replies and complete paid-export contract of
+[NPC, Definitions 1.1 and 2.2 and Assumption 1.2][GCBNPC]. In particular,
+
+$$
+\mathcal F_D=\{\langle\alpha,v\rangle:h(v)\le D\},\qquad
+W_D=\{q:|q|\le D-1\},\qquad \mathcal P_D=\{Rq:q\in W_D\}.
+\tag{GCB.10}
+$$
+
+The source is stationary through source-blind preparation and later
+acquisition. Preparation terminates on every source and obtains source
+dependence only through charged original-root Reads. Its export contains
+every accessible surviving distinction. A public source-independent
+request arrives only after export; its reader makes at most one fresh
+original-root Read before the reply and before any authentic count, then
+predicts every subsequently supplied count without further Reads.
+Handoff, isolation, lawful entry, source continuity and authentication
+remain paid service premises.
+
+Write $\operatorname{bit}(0)=\alpha$ and
+$\operatorname{bit}(1)=\beta$. The canonical alphabets are
+
+$$
+C_0=\langle\alpha,\alpha\rangle,\qquad
+S_1=\{\alpha,\beta,C_0\},\qquad
+S_{d+1}=\{\alpha,\beta\}\sqcup\{\langle x,y\rangle:x,y\in S_d\}.
+\tag{GCB.11}
+$$
+
+Use the credited full temporal factor $\Gamma_q$ and its all-count
+decoder from [NPC, Convention 2.1][GCBNPC]. For the leaf factors used
+below, if $e\in\{0,1\}$ and $r$ is a suffix, this says explicitly
+
+$$
+\Gamma_r(\operatorname{bit}(e))=
+\begin{cases}
+(2-e,1-e),&r=\varepsilon,\\
+(\#L(r)+2\#R(r)+2-e,\mathbf1_{r\text{ ends in }R}),&r\ne\varepsilon.
+\end{cases}
+\tag{GCB.12}
+$$
+
+It covers initially absent suffixes. A branch endpoint has factor
+$(0,0)$. Equality of full factors is equality of all-count trajectories.
+

@@ -1,0 +1,20 @@
+**Convention 8.3 (exact native source correspondence).** The inspected
+`Source` and `substitution` definitions in
+[GenealogicalFiberTransport][D5G] are `FreeMagma Bool` and its lifted
+leaf substitution, with true for alpha and false for beta. The inspected
+`Address`, `Reply` and `readout` in
+[ActualTreeReadoutAcquisition][D5A] give Boolean words, false for $L$
+and true for $R$, and precisely the four replies of Definition 1.2.
+Its distinct-address recognition cost is not the per-invocation
+preparation cost of Definition 1.4.
+
+In [NativeDepthPatterns][D5N], `original_present_transport` assumes
+`subtree a u = some t` and transports that actually present occurrence
+through every iterate. Theorem 3.2 uses an actually present $Ra$ on
+each replacement source, and the constructions only use actual
+original-root literals. The same module's `original_prefix_locality`
+assumes equality of original replies through the requested length;
+canonical all-count preservation is reused via FMR/AAR with that
+boundary. Reading these declarations and their owning narratives is
+not a new compiled application or certification of this volume.
+

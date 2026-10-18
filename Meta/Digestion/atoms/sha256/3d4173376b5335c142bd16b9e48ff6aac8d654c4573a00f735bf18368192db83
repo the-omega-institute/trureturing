@@ -1,0 +1,64 @@
+**Definition 219.15 (Original source and separately selected laws).**
+The countable labeled source and its static replies are
+
+$$
+\begin{aligned}
+X&=\{(r,z):r\text{ prime},\ z\in\mathbb Z,
+       \ \lceil F_r/10\rceil\le z\le\lfloor F_r/5\rfloor\},\\
+F_0&=0,\quad F_1=1,\quad F_{r+2}=F_{r+1}+F_r,\\
+N(r,z)&=1+F_rz,\qquad q_i(x)=\mathbf1_{p_i\mid N(x)},
+\qquad n(x)=\min\{i:q_i(x)=0\}.
+\end{aligned}
+\tag{219.46}
+$$
+
+The full Borel tape carrier is
+$\Theta=\bigsqcup_{j\ge1}B_j\sqcup\bigsqcup_{j\ge1}P_j$,
+each block a copy of $(0,1)$. The unchanged consumer returns unknown
+on $B_j$ and proposes $j$ on $P_j$.
+The original nonatomic targets of
+[Source-Correlated Laws 67.5](KBONACCI_SELF_CALIBRATING_SOURCE_CORRELATED_LAWS.md#67-original-target-proportional-containment-and-unavoidable-nonatomic-ranges)
+remain
+
+$$
+\begin{aligned}
+t(x)&=\sum_{i\ge1}3^{-i}q_i(x),\qquad
+Z_t=\int_0^1e^{tu}\,du,\qquad
+\nu_x(du)=Z_{t(x)}^{-1}e^{t(x)u}\,du\text{ on }B_{n(x)},\\
+\mu_x&=(1-h_0)\nu_x+h_0\pi_{\Omega(x)},\qquad 0<h_0<1,
+\end{aligned}
+\tag{219.47}
+$$
+
+where $\pi_j$ is uniform on $P_j$ and $\Omega(x)$ counts distinct
+prime divisors of $N(x)$. The integral definition covers $t=0$.
+For distinct original marks $\theta_j=(B_1,1/(j+2))$, $j\ge0$,
+the separately selected laws are
+
+$$
+\lambda_x^a=(1-a_{n(x)})\delta_{\theta_0}
+                     +a_{n(x)}\delta_{\theta_{n(x)}},
+\qquad 1\ge a_1\ge a_2\ge\cdots>0,\quad a_n\longrightarrow0.
+\tag{219.48}
+$$
+
+They do not replace the original nonatomic targets or the consumer.
+Indeed any finitely marked law has TV distance one from each $\mu_x$:
+its finite support has probability one for that law and zero for
+$\mu_x$. Numerical table labels mean the actual marks in the original
+carrier; unrestricted competitors still have all Borel output events.
+
+Every scored finite pattern has an actual source witness.
+For finitely many arbitrary prime addresses, the entry-rank part of
+35.2 permits a prime $r$ large enough that $F_r$ is invertible modulo
+all indicated primes. Impose $z=-F_r^{-1}$ modulo a prime whose reply
+is prescribed one, and $z=0$ modulo a prime whose reply is prescribed
+zero. CRT gives a residue modulo their product. Choose $r$ with the
+original Fibonacci window longer than that product and take its first
+representative above the lower endpoint. It is still below the upper
+endpoint. Thus every multiple-zero pattern, every inactive gap and a
+positive prefix followed by a prescribed later zero has a witness
+fixed before seeds. No probability distribution on sources is introduced.
+Each actual integer has finite prime support; a finite all-one word
+represents actual later first zeros, rather than an infinite positive source.
+

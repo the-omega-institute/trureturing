@@ -1,0 +1,8 @@
+**数学引文 18.3（相邻正缺陷模型与结论边界）。** [混合相位缺陷达到][MDA] 的四标签机器保持相同原来源及每配置同更新生成，其定理3.1共同达到两个单独半径，但定理4.1的实际边缘更新缺陷为 $\Delta_{\rm all}=\Delta_4=D_*>0$。预测条件化会重加权标签，真实 Read 后的标签分布不作同一重加权；这正是本卷定义1.5第二项的区别。该机器不属于这里要求两项精确相容性的竞争类，不能用它反驳(16.1)，也不能把这里的零缺陷支配、预算互逆或资源结论搬给它。其新增标签和参数描述另有成本，联合质量—缺陷坐标与当前零缺陷预算弧不是同一个优化问题。
+
+外部有限记忆文献与通用 TV、几何和、单调消元、条件律及有理根定理提供成熟方法；本节的新关系是这个原共享深度停止源的全局双预算判据、完整有效弧、唯一代数单模式和限域预算—生成器恢复，标为 `repo-derived`，不主张文献原创优先权。仓内 `PredictiveStateUnifilarUpdate.unifilar_predictive_update` 给完整未来律按正柱条件化时的商状态更新，`DistinctRiskSharedOptimizer.distinct_risk_profiles_can_share_optimizer_profile` 区分风险读数与最优动作；这些通用陈述不供应(14.2)的来源特定质量或(16.1)的尖锐前沿。
+
+没有 $(D_\mu)$ 这个前提时，全 $\mathfrak F_\mu$ 的必要预算前沿与精确联合最小值不由定理16.1、17.1确定。有理单模式在精确最小点不达到，而有理循环及一般有理有限观察者的精确达到性仍未决定。固定状态预算、最小完整内存、实际历史平均风险及总资源最优也未决定。
+
+[MDA]: https://github.com/the-omega-institute/trureturing/blob/4c02a48d490528e6637c42f280e4d5972a2d3243/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_MIXED_PHASE_DEFECT_ATTAINMENT.md
+

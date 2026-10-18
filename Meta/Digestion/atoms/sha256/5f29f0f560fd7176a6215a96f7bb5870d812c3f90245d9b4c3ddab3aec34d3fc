@@ -1,0 +1,42 @@
+**Convention 2.1 (the exact all-count quotient).** Use AAR Definition
+12.2, Theorem 12.3 and Proposition 13.3. Put
+$s(r)=\#L(r)+2\#R(r)$ and $e(\alpha)=0,e(\beta)=1$. If $q$
+ends at an original branch, let $\Gamma_q(u)=(0,0)$. Otherwise its
+path has a first original leaf $\ell$ at $a$, and $q=ar$. Set
+
+$$
+\Gamma_q(u)=
+\begin{cases}
+(2-e(\ell),1-e(\ell)),&r=\varepsilon,\\
+(s(r)+2-e(\ell),\mathbf1_{r\text{ ends in }R}),&r\ne\varepsilon.
+\end{cases}
+\tag{PPF.7}
+$$
+
+The credited decoder on attained factors is
+
+$$
+\operatorname{Pred}((b,c),k)=
+\begin{cases}
+\mathsf{branch},&k\ge b,\\
+\beta,&b\ge1,\ k=b-1,\\
+\alpha,&c=1,\ k=b-2,\\
+\mathsf{absent},&\text{otherwise}.
+\end{cases}
+\tag{PPF.8}
+$$
+
+Here $c=1$ implies $b\ge2$. It equals $r_{\rho^ku}(q)$ for every
+$k\ge0$. Conversely the trajectory recovers $b$ as its first branch
+count and $c$ by whether an alpha stage occurs. Thus distinct factors
+mean distinct full trajectories, including initially absent targets.
+For the original wrapper,
+
+$$
+\Gamma_{Rq}(\langle\alpha,v\rangle)=\Gamma_q(v),\qquad
+r_{\rho^k\langle\alpha,v\rangle}(Rq)=r_{\rho^kv}(q).
+\tag{PPF.9}
+$$
+
+These are supplied temporal facts, not new factor or fixed-menu theorems.
+

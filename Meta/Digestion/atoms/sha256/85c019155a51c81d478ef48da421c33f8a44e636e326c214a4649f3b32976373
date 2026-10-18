@@ -1,0 +1,23 @@
+**Construction 8.4 (strong points).** For $s_0<s\leq1$ take the
+four low matrices and two high matrices TA.12, using the rank-two
+image encoders/full isometric decoders on each low label and the
+whole $M_3$ isometric decoder on each high label. Report $\sigma$
+on their respective low/high labels. The low determinant is zero
+and its lower-right minor is $u_sh_1h_2/4>0$. For each high matrix,
+
+$$
+\det H_\sigma=
+ \frac{h_0h_1h_2}{2\sqrt2}\sqrt{1-u_s}
+ [(1-u_s)-\theta(1-v_s)]
+ =\frac{h_0h_1h_2}{2\sqrt2}\sqrt{1-u_s}(1-\delta)>0.
+\tag{TA.47}
+$$
+
+Enlarge only the plus high label by Construction 8.2 and attach
+the whole complement there. Use precisely two scalar spectral failure
+labels, with arbitrary deterministic reports. The resulting alphabet
+has $4+2+2=8$ outcomes. Their signed winding coefficient is exactly
+the left side of TA.10, hence $s$. At $s=s_0$ the two high matrices
+are proportional copies of $D$ with no winding-bearing $T$ term;
+merging them recovers the seven-label weak endpoint construction.
+

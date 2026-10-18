@@ -1,0 +1,33 @@
+**Lemma 144.1 (Exact edge criterion and one-cut enumeration).** In each
+prefix polytope, distinct vertices $v,w$ form an edge exactly when the
+normals of their common active halfspaces have rank five. Cutting a prefix
+by one further halfspace produces precisely its retained vertices and the
+cut intersections of its positive-negative crossing edges.
+
+**Proof.** At an interior point of the open segment $(v,w)$, a previously
+imposed inequality is tight exactly when it is tight at both endpoints.
+The common tight inequalities therefore define the minimal face containing
+the segment. In a full-dimensional six-dimensional polytope its dimension
+is six minus their normal rank. Dimension one is exactly an edge; two
+distinct vertices cannot share rank six.
+
+Let a vertex $z$ after cutting not be an old vertex. If $z$ were strictly
+inside the new halfspace it would still be nonextreme in its old minimal
+face. Thus it is on the cutting plane. In the relative interior of its
+old minimal face $F$ of dimension $d\ge1$, a single new equality can leave
+an isolated point only when $d=1$: if $d>1$ its nullspace has a nonzero
+tangent direction in $F$, contradicting extremality. A plane containing
+$F$ also cannot isolate $z$. Thus $z$ lies on an old edge with endpoint
+slacks $s_v>0>s_w$. The intersection is
+
+$$
+z=\frac{s_v w-s_w v}{s_v-s_w}.
+\tag{144.1}
+$$
+
+If an endpoint is tight it is already retained; intersections at tight
+endpoints add nothing. Conversely an interior crossing of an edge has
+five independent common active normals and the independent cut equation,
+so is a new vertex. Old vertices on the permitted side remain vertices.
+This proves exact one-cut enumeration. $\square$
+

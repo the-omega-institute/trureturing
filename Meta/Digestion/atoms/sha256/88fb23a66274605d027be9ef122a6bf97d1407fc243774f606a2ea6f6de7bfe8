@@ -1,0 +1,11 @@
+**定义 1.6（完整乘积及局部参考准备类）。** 记 $\mathcal P_{\mathrm{prod}}$ 为以下受限准备类：给定一个与源无关的经典随机种子，准备态是各位点 $S_i\otimes R_i$ 上状态的张量积，再附一个与这些因子独立的有限辅助态。每个局部参考 $R_i$ 可任意且有限，每个局部状态可为混态；随机种子可保留给末端解码。末端 POVM 仍任意，允许跨全部寄存器的联合测量。仅在这个具名准备类中排除不同 $S_i\otimes R_i$ 因子之间的初始相干关联；共同经典种子的随机混合仍在类内。令
+
+$$
+\beta_n^{\mathrm{prod}}(L,q)
+=\sup_{\Pi\in\mathcal P_{\mathrm{prod}}}\frac1M\sum_b p_\Pi(b),
+\qquad
+\varepsilon_n^{\mathrm{prod}}(L,q)=1-\beta_n^{\mathrm{prod}}(L,q).
+$$
+
+该类的限制在准备，不在解码；它不能替代定义 1.3 的完整准备类。
+

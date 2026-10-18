@@ -1,0 +1,56 @@
+**Theorem 42.2 (fixed-risk expected Read lower order).**
+For each fixed $0<\delta<1/4$ there are positive constants $c_1,\eta_1$
+depending only on the fixed source data such that
+
+$$
+V(\eta,\delta)\ge c_1\eta^{-2}\log(1/\eta),
+\qquad 0<\eta<\eta_1.
+\tag{42.2}
+$$
+
+Proof. Choose $0<t_0<T$ so small that
+$\mathbb P(\tau\le t_0)\le1/8$; Brownian continuity at the strictly
+interior start permits this choice. A successful native tube with
+$\eta<\pi$, on $\{\tau>t_0\}$, implies the complete scalar tube
+$\sup_{t\le t_0}|b(t)-W^2_t|\le2\eta$. Its probability is at least
+$1-\delta-1/8>5/8$.
+
+If $\mathbb EM=\infty$ there is nothing to prove. Otherwise suppress
+all calls after $n=\max(1,\lceil8\mathbb EM\rceil)$, retaining the
+numerical continuation and any already determined clock operations.
+On $\{M\le n\}$ this changes no execution. Markov's inequality loses
+at most $1/8$ in probability. Thus the capped policy has scalar success
+probability at least $1/2$ on $[0,t_0]$. Its gaps obey Lemma 42.1 in
+the full filtration of $(U,W^1,W^2,C)$. In particular the extra area and
+central information in previous point records creates no independence
+assumption about past Brownian bridges: the argument uses only fresh
+increments after the beginning of each gap. It gives
+
+$$
+\frac12\le g_{\eta,n}^{\,n+1},\qquad
+ g_{\eta,n}=\mathbb P\{|G|\le2\eta\sqrt{(n+1)/t_0}\}.
+\tag{42.3}
+$$
+
+Here is an explicit check of the logarithmic implication. For $x\ge0$,
+integrating the standard normal density over $[x,x+1]$ and its negative
+reflection gives
+$\mathbb P(|G|>x)\ge c_2e^{-x^2}$, with
+$c_2=2e^{-1}/\sqrt{2\pi}>0$, because
+$(x+1)^2/2\le x^2+1$. Write $N=n+1$. If $N<\eta^{-1}$, then
+$g_{\eta,n}\le C\sqrt\eta\to0$. If
+
+$$
+\eta^{-1}\le N\le(t_0/16)\eta^{-2}\log(1/\eta),
+\tag{42.4}
+$$
+
+then $x^2=4\eta^2N/t_0\le\tfrac14\log(1/\eta)$ and
+$N(1-g_{\eta,n})\ge c_2\eta^{-3/4}\to\infty$.
+In both cases $g_{\eta,n}^N\to0$, contradicting (42.3).
+Since $n\le8\mathbb EM+1$, (42.2) follows after decreasing $\eta_1$.
+This proof applies to arbitrary admissible numerical profiles and
+adaptive Read schedules, including policies that stop reading on
+failure or own death. It has not priced a different scalar sampler.
+$\square$
+

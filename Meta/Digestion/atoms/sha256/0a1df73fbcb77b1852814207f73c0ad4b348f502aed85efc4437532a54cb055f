@@ -1,0 +1,12 @@
+**Definition 2.1 (a shortest word with prescribed weight and final edge).** Put $w(p)=\#_L(p)+2\#_R(p)$, and let $\omega(L)=1$, $\omega(R)=2$. For $t\ge\omega(e)$, define
+
+$$
+ Z_e(t)=R^{\lfloor(t-\omega(e))/2\rfloor}
+          L^{(t-\omega(e))\bmod2}e,
+ \qquad
+ h_e(t)=1+\left\lceil\frac{t-\omega(e)}2\right\rceil.
+\tag{JRF.2.1}
+$$
+
+Then $Z_e(t)$ ends in $e$, has weight $t$, and has length $h_e(t)$. Every nonempty word of weight $t$ ending in $e$ has length at least $h_e(t)$, since its preceding letters each have weight at most two. The displayed word attains this bound. For fixed $e$, $h_e$ is nondecreasing on its domain.
+

@@ -1,0 +1,18 @@
+## 5. 五、边界—体定理：AURIC 金字塔是局部边界读出
+
+把一个长度为 $n$ 的合法词
+
+$$
+w=a_1a_2\cdots a_n
+$$
+
+看成一条运输边：
+
+$$
+a_1\cdots a_{n-1}
+\longrightarrow
+a_2\cdots a_n.
+$$
+
+左端和右端就是两个 boundary separator。
+

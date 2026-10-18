@@ -1,0 +1,76 @@
+**Corollary 5.7 (Explicit precision and margin bounds).** For $x>0$ set
+$\log_+(x)=\max\{0,\log x\}$, and choose
+
+$$
+m=\left\lceil
+ \frac{\log_+\!\bigl(C/[\epsilon(1-q)]\bigr)}{\log(1/q)}
+ \right\rceil.
+$$
+
+This finite nonnegative integer gives uniform error at most $\epsilon$ and
+the sufficient feature dimension
+
+$$
+n=6\left\lceil
+ \frac{\log_+\!\bigl(C/[\epsilon(1-q)]\bigr)}{\log(1/q)}
+ \right\rceil+5.
+$$
+
+With the native boundary margin and a source constant
+
+$$
+\eta=\min\{a,H-b\}>0,\qquad C_0=\sqrt{H^2+ZH},
+$$
+
+the same choice satisfies
+
+$$
+n\le6\left\lceil
+ \frac H\eta\log_+\!\left(\frac{C_0H}{\epsilon\eta}\right)
+ \right\rceil+5.
+$$
+
+**Proof.** Since $0<q<1$, the denominator $\log(1/q)$ is positive.
+If $C/[\epsilon(1-q)]>1$, the ceiling gives
+$m\log(1/q)\ge\log(C/[\epsilon(1-q)])$, hence
+$q^m\le\epsilon(1-q)/C$. Theorem 5.6 bounds the error by
+$\epsilon q\le\epsilon$. If the ratio is at most one, $m=0$ and
+$Cq/(1-q)\le\epsilon q\le\epsilon$. This covers large tolerances
+and the smallest permitted degree as well as the small-tolerance regime.
+
+The inequalities $a<b$ imply $0<\eta<H/2$, and the band is contained
+in $[\eta,H-\eta]$. For its every point,
+
+$$
+g(k)-\eta(H-\eta)=(k-\eta)(H-\eta-k)\ge0.
+$$
+
+Consequently $g_{\min}\ge\eta(H-\eta)$ and $G\le H^2/4$, so
+
+$$
+1-q_A=\frac{g_{\min}}G
+ \ge\frac{4\eta(H-\eta)}{H^2}\ge\frac{2\eta}H,
+\qquad
+1-q_B=\frac ab\ge\frac\eta H.
+$$
+
+Taking the smaller gives $1-q\ge\eta/H$. Moreover $C\le C_0$ because
+$4G\le H^2$ and $b\le H$, and
+
+$$
+\log(1/q)=\int_q^1\frac{dt}{t}\ge1-q\ge\frac\eta H.
+$$
+
+Monotonicity of $\log_+$ now gives
+
+$$
+\frac{\log_+\!\bigl(C/[\epsilon(1-q)]\bigr)}{\log(1/q)}
+ \le\frac H\eta\log_+\!\left(\frac{C_0H}{\epsilon\eta}\right).
+$$
+
+Monotonicity of the ceiling proves the dimension bound. For fixed positive
+band and fixed source this is an $O(\log(1/\epsilon))$ sufficient dimension
+as $\epsilon\downarrow0$, with the displayed constants. This is an output
+tolerance estimate, not a bit-precision or conditioning estimate. No lower
+bound, optimal width or sharp margin rate is asserted. $\square$
+

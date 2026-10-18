@@ -1,0 +1,27 @@
+**Theorem 4.3 (full complex cone membership and six atoms).** A Hermitian
+$L$ belongs to $\mathcal C_2$ exactly when some Hermitian $2\times2$
+$W\succeq0$ makes
+
+$$
+X=L-JWJ^\dagger\succeq0
+\tag{CA.20}
+$$
+
+and the padded Takagi values of $A^TB_0A$, $X=AA^\dagger$, obey (CA.17).
+Every $L\in\mathcal C_2$ has a decomposition into at most six nonzero
+singular coefficient atoms.
+
+Proof. In a finite singular decomposition assign each atom on the plane
+to the plane part and the others to the quadratic part; intersection
+atoms may be assigned either way. The plane part is $JWJ^\dagger$ for
+$W\succeq0$, and Lemma 4.2 gives necessity for the remainder. Conversely
+Lemma 4.2 supplies at most four quadratic-null atoms for $X$. The spectral
+decomposition of $W$ supplies at most two plane atoms. Their sum gives
+$L$ and each nonzero atom yields a rank-two $K(z)$ by Lemma 3.1. Lemma
+4.1 proves factor independence. Zero $W$, zero $X$, singular $L$ and
+overlap of the components require no extra assumption. $\square$
+
+This is a spectral **lift** retaining four real parameters in the plane
+slack. It neither eliminates that slack nor evaluates the coherent-input
+resource minimum. It asserts no efficient computation.
+

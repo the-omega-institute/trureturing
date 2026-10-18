@@ -1,0 +1,39 @@
+**Theorem 2.4 (exact rational full-support completion).** Let $U_D$ be
+uniform on the entire family $\mathcal F_D$. For any rational
+$0<\epsilon<1$, put
+
+$$
+\mu_i^{\epsilon}=(1-\epsilon)P_i+\epsilon U_D
+\quad(i=0,1).
+\tag{NCO.17}
+$$
+
+These are rational full-support laws and
+$\mu_0^{\epsilon}\equiv_r^\partial\mu_1^{\epsilon}$, including every
+descriptor outside the core support.
+
+Proof. The number $b_h$ of labelled trees of height at most $h$ obeys
+$b_0=2$, $b_{h+1}=2+b_h^2$. The two summands distinguish leaves
+from ordered pairs of height-at-most-$h$ trees. Thus
+$|\mathcal F_D|=b_D<\infty$ and
+$\mu_i^{\epsilon}(t)\ge\epsilon/b_D>0$ for every actual source.
+All probabilities are rational.
+
+For any fixed word tuple and reply event $G$, Theorem 2.3 gives equality
+of the unnormalized probabilities $P_i(d,G)$ and of $P_i(d)$.
+Adding the identical $\epsilon U_D$ contribution preserves both
+equalities. Division by the resulting common positive descriptor mass
+proves conditional equality. Explicitly, if $b=P_0(d)=P_1(d)>0$, then
+
+$$
+\mu_i^{\epsilon}(G\mid d)=
+\frac{(1-\epsilon)bP_i(G\mid d)+\epsilon U_D(d,G)}
+     {(1-\epsilon)b+\epsilon U_D(d)}.
+\tag{NCO.18}
+$$
+
+If $b=0$, only the common $U_D$ component contributes. This includes
+first-position leaves and $B$, as well as all noncore shapes. The
+mixture is a law on actual sources sampled once, not a per-query
+mixture of replies. $\square$
+

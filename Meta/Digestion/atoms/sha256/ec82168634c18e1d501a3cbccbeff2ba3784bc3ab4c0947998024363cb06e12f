@@ -1,0 +1,17 @@
+# FIB 合法边调和负载：条件零响应与有限证书
+
+本卷只作普通数学陈述。可见空间、目标和隐藏生产者均保持原定义。令
+
+$$
+X=\{x\in\{0,1\}^{\mathbb Z}:x_ix_{i+1}=0\ (i\in\mathbb Z)\},\quad
+B_n=\{w\in\{0,1\}^n:w_iw_{i+1}=0\ (1\le i<n)\},\quad \mathcal E_i=\sigma(X_j:j\ne i),
+$$
+
+$$
+h(s,t)=\begin{cases}st/(s+t)&s+t>0,\\0&s=t=0,\end{cases}\qquad
+\Phi_n(\mu)=\sum_{\{b,c\}\in E(\Gamma_n)}h(\mu_b,\mu_c),\qquad
+\kappa_n=\max_{\mu\in\mathcal P(B_n)}\Phi_n(\mu).
+$$
+
+这里 $\Gamma_n$ 是完整开放路径词图：全零词、合法端点 $1$、所有接缝、强制单点和零总质量纤维都保留；不存在首尾相接约束。记 $c_\star=\lim_n\kappa_n/n$。$X_i$ 是坐标变量，$(Tx)_i=x_{i+1}$；$[w]_a$ 是从 $a$ 开始的词柱，$[w]=[w]_1$，$P_n$ 是 $P$ 在 $[1,n]$ 的实际边缘。
+

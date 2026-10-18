@@ -1,0 +1,31 @@
+**Corollary 9.3 (Inherited necessary budget for an attainer with a root sum).** For every finite $N$ and every $\theta\in\Theta_N$, if its actual law satisfies $d(P_\theta)=c_\star$ and $A_{P_\theta}<\infty$, then, for all $n\ge1$,
+
+$$
+\mathcal R_{N,n}
+\le(n+2)c_\star-\kappa_n-\tfrac1{24}
+\le2c_\star-\tfrac1{24}
+\le2(3-2\sqrt2)-\tfrac1{24}.
+\tag{9.4}
+$$
+
+**Proof and consumer attribution.** The band follows from [Universal, Theorem 3.1][U], and Theorem 1.5 supplies strong zero. Thus [Guarded, Corollary 6.4][G] applies with exactly its original hypotheses. To exhibit the quantities it compares, take $C=[0,n+1]$, $Y=X_{C^c}$ and define the actual guarded conditional
+
+$$
+g_C(y)=P(X_0=X_{n+1}=0\mid Y=y),\qquad
+r_n^y(w)=\frac{p_C(0w0;y)}{g_C(y)},\qquad
+\mathcal B_n=\mathbb E_{\mu_C}\mathcal D_{B_n}(\pi_n\Vert r_n^Y).
+\tag{9.5}
+$$
+
+The band supplies $g_C\ge2^{-(n+2)}$. Guarded's Theorem 6.2, using the original $N$-term nonnegative matrix factorization and the full-exterior conditional limit, gives $r_n^y\in\mathscr F_{N,n}^{0,0}$ almost surely. Therefore $\mathcal R_{N,n}\le\mathcal B_n$. Its Lemma 5.2 and Corollary 5.3 give
+
+$$
+G_n^{\rm guard}\ge\tfrac1{24},\qquad
+\mathcal B_n+G_n^{\rm guard}+E_n^{\rm ext}+O_n^{\rm ext}
+=(n+2)c_\star-\kappa_n.
+$$
+
+Dropping the other nonnegative penalties yields the first inequality in (9.4). The remaining inequalities use $\kappa_n\ge nc_\star$ and the supplied ceiling $c_\star\le3-2\sqrt2$ [Guarded, Definition 1.1][G]. This reuses the budget; it supplies no lower bound growing with $n$. $\square$
+
+A proved violation of (9.4) for a specified $N,n$ would exclude an attainer of dimension $N$ satisfying the root-sum premise. The disjoint-block and determinant consumers of [Guarded, §§7–9][G] still require their actual conditional-discrepancy lower bounds under one and the same finite optimizer. A single nonzero minor, positivity, or finite rank alone does not supply that growth. Conditionals of $\pi_n$ cannot be replaced by standalone smaller optimizers or by a stationary bulk limit without a further theorem.
+

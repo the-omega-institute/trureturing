@@ -1,0 +1,48 @@
+**Convention 1.3 (what is already supplied).** [ABC, Theorems 2.2–2.3][ABC]
+supply mutually inverse effective maps $B:\mathcal T\to\mathcal N$ and
+$E:\mathcal N\to\mathcal T$. A normal code is a finite ordered term over
+$F$ and natural primitive ranks $[r]$, with every primitive cherry
+$F([r+1],[r])$ forbidden. Put $T_r=\rho^r\alpha$. Then
+
+$$
+\begin{aligned}
+E([r])&=T_r,&E(F(X,Y))&=\langle E(X),E(Y)\rangle,\\
+J(X,Y)&=
+\begin{cases}[r+2],&X=[r+1],\ Y=[r],\\F(X,Y),&\text{otherwise},\end{cases}\\
+B(\rho^a u)&=\tau_aB(u),&
+E(J(X,Y))&=\langle E(X),E(Y)\rangle.
+\end{aligned}
+\tag{SFP.4}
+$$
+
+Here $a\in\mathbb N$ and $\tau_a$ adds $a$ to every rank. Its image
+consists exactly of normal codes with every rank at least $a$; subtraction
+on that image is its inverse. We never use a negative native iterate.
+
+[NSF, Sections 2–3][NSF] supply positive flattening, free-shape unification
+and the remaining scalar and whole-block offset equations. Its Section 4
+replaces residual shapes and ranks for existential witnesses. [NCE,
+Theorems 4.2 and 5.1][NCE] supply affine existential epoch support and
+one replaceable witness at each accepted tuple. NCE Corollary 5.3 and
+Theorem 6.2 already decide source-value and lag uniqueness. Those decisions
+are not new consequences claimed here.
+
+[NIC, Theorems 3.2–3.3][NIC] supply all-source positive fixed-shift images
+and native signed pullbacks. [PDC, Theorem 5.2][PDC] supplies injective
+all-source charts and its Theorem 6.2 supplies original-prefix
+correspondence. PDC's exact output grammar is
+
+$$
+A::=g\mid T_{r_j+c}\mid\rho^a(z_l)\mid\langle A,A\rangle,
+\qquad a,c\in\mathbb N\text{ fixed},
+\tag{SFP.5}
+$$
+
+with retained whole native negatives on the residual native parameters.
+Its $r_j$ are scalar coordinates; they do not make the residual exponent
+$a$ variable. The increment here is a source-preserving representation
+with affine unknown epochs and fully resolved negatives, at the price
+of explicit arbitrary shapes and a shape-dependent arithmetic dimension.
+No claim of injectivity of all coordinates, or of a uniform prefix
+modulus for them, is needed.
+

@@ -1,0 +1,40 @@
+**Theorem 29.2 (unchanged entire finite Read/width frontier).**
+For the same acquired fiber and the conditional services of Assumption
+25.1, the frontier is
+
+$$
+\boxed{
+L_{\rm int}(k)=
+\begin{cases}
+\infty,&k=0,1,\\
+6,&k=2,\\
+5,&\text{every finite integer }k\ge3.
+\end{cases}}
+\tag{NARC.29.1}
+$$
+
+In particular finite internal single-bit processing does not improve
+Definition 21.2's width frontier, and the minimum worst-case Read
+count at five bits remains exactly three.
+
+**Proof.** With zero Reads, all sources follow one common internal
+execution and produce one output. With at most one Read, common
+initial processing reaches one common query or halt. Each of that
+query's four replies selects an internal-only suffix to a fixed-output
+halt. At most four different outputs are possible, at every finite
+width. Seven outputs make both budgets impossible.
+
+At two Reads, Theorem 28.1 excludes every width at most five;
+the unchanged certificate of Definition 19.1 and Proposition 19.2
+gives width six. At every finite $k\ge3$, Theorem 29.1 excludes
+all widths at most four. Definition 22.1 and Theorem 22.2 give
+the complete five-bit, twelve-word certificate with at most three
+Reads. Taking $I=\varnothing$ makes it an unchanged member of
+$\mathfrak W_{\rm int}(k,5)$ for each larger at-most budget.
+These are exactly the existing attained endpoints, including their
+total rows and all fifteen same-source first-halt traces. They are
+reused without a new construction or duplicated table. The new
+lower bounds establish their robustness in the larger controller
+family. Comparison with (NARC.23.2) gives the stated equality of
+frontiers. $\square$
+

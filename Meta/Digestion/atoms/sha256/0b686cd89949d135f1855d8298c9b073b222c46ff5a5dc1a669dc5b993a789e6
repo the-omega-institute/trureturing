@@ -1,0 +1,26 @@
+**Definition 5.3 (the finite decision sentence).** For a chart tuple, scalar
+mask tuple and surviving code branch $\tau$, put
+
+$$
+\mathsf G_\tau\quad\Longleftrightarrow\quad
+\exists p\in\mathbb N^{d_\tau}\quad
+\left[
+ A_\tau(p)\ \land\
+ \forall M\in\mathbb N\ \exists (w_r)_{r\in B}\quad
+ \left(
+  \bigwedge_{r\in B}\Psi_{r,\tau}(p,w_r)
+  \ \land\ \bigwedge_{r\in B}\bigwedge_{j\in K_r} w_{r,j}\ge M
+ \right)
+\right].
+\tag{NAC.20}
+$$
+
+Let $\mathsf G(I,B)$ be the disjunction of these sentences over all finite
+chart choices, all scalar masks, and all surviving branches. There are
+finitely many of each. The tuple of divergent ranks is one simultaneous
+tuple in (NAC.20). In particular, a support $w_1=0\lor w_2=0$ does not pass
+its positive simultaneous lower bounds even though each marginal is
+unbounded. Empty tuples and empty conjunctions have their usual singleton
+and true meanings. With no divergent ranks the inner condition is ordinary
+finite support nonemptiness.
+

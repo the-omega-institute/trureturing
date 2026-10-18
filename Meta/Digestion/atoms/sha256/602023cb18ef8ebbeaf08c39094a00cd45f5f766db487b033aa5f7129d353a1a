@@ -1,0 +1,21 @@
+**Definition 5.1 (original pruning patterns).** For the fixed context
+$C$, define a finite family $\Gamma(C)$ recursively, with addresses
+inherited from $C$:
+
+$$
+\begin{aligned}
+\Gamma(\square_p)&=\{X_p\},\\
+\Gamma(\alpha)=\Gamma(\beta)&=\{\alpha,\beta\},\\
+\Gamma(\langle C_L,C_R\rangle)&=
+ \{\alpha,\beta\}\ \cup\
+ \{\langle S_L,S_R\rangle:S_L\in\Gamma(C_L),\ S_R\in\Gamma(C_R)\}.
+\end{aligned}
+\tag{NRF.15}
+$$
+
+Within a pattern, the variables $X_p$ are all distinct and occur once.
+A variable occurs at an actually present original position that is a
+hole of $C$. A pattern may instead stop at an original leaf above
+several eventual holes. Its ground leaves describe original leaves,
+not the concrete labels of the captured exterior.
+

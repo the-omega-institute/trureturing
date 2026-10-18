@@ -1,0 +1,112 @@
+**Theorem 16.1 (rational actual encoder, two kernel vectors and inverse trace).** In (R.55), take
+
+$$
+\beta=\frac9{25},\qquad a=w=\frac{16}{25},\qquad
+\cos\theta=\frac{12}{13},\qquad\sin\theta=\frac5{13}.
+$$
+
+The actual real matrices are
+
+$$
+\begin{aligned}
+K_0&=\frac{48}{65}(e_0\langle0|+e_1\langle1|)+\frac45e_4\langle2|,\\
+K_1&=\frac35(e_2\langle0|+e_3\langle1|+e_0\langle2|),\\
+K_2&=\frac4{13}(-e_1\langle0|+e_0\langle1|).
+\end{aligned}
+\tag{R.65}
+$$
+
+For this encoder there is $H\in\mathscr H(J)$ with
+
+$$
+H=\operatorname{diag}\left(\frac{169}{850},\frac{128}{425},\frac12\right),
+\qquad g_N^2\leq\frac{681}{850},\qquad
+\delta_N\geq\frac{169}{425}>\frac15=U(9/25),
+\tag{R.66}
+$$
+
+and the exact joint inverse trace is
+
+$$
+\operatorname{Tr}\left[\tau\left(\frac45I_3+H\right)^{-1}\right]
+=\frac{2352003}{2487004}<1.
+\tag{R.67}
+$$
+
+**Proof.** Theorem 14.1 gives actual original-class membership, not merely positivity of a proposed complementary block matrix. Its joint blocks in the unchanged real environment are
+
+$$
+\tau=\begin{pmatrix}
+2304/4225&0&-192i/845\\
+0&9/25&0\\
+192i/845&0&16/169
+\end{pmatrix},\quad
+C=\begin{pmatrix}
+0&72\sqrt2/325&0\\
+0&0&0\\
+0&6i\sqrt2/65&0
+\end{pmatrix},
+$$
+
+$$
+\sigma=\operatorname{diag}(16/25,9/25,0),\qquad
+S=\operatorname{diag}(16/25,0,0).
+\tag{R.68}
+$$
+
+In particular
+
+$$
+f(\tau,\bar\tau)=\frac{16}{25}\frac{119}{169}+\frac9{25}
+=\frac{137}{169}>\frac45,
+\qquad w=\frac{16}{25}>\frac12>w_c(9/25),
+$$
+
+and $C\ne0$, $\tau\ne\bar\tau$. This witness is outside all three prior sufficient exclusions in Theorems 3.2 and 4.3.
+
+Use the original-real reference density $q_0=(|0\rangle\langle0|+|2\rangle\langle2|)/2$. The phase reference density, using the transpose transport of Definition 11.1, is
+
+$$
+q_p=\begin{pmatrix}1/4&1/4&0\\1/4&1/4&0\\0&0&1/2\end{pmatrix}.
+\tag{R.69}
+$$
+
+It contains phase off-diagonal entries. For the kernel calculation use the same actual complement in its original-input Choi frame $J_0$. Its relevant blocks are
+
+$$
+\Gamma(P_0)=\operatorname{diag}(2304/4225,9/25,16/169),\quad
+\Gamma(P_2)=\operatorname{diag}(16/25,9/25,0),\quad
+\Gamma(|0\rangle\langle2|)=\frac{144}{325}|\epsilon_0\rangle\langle\epsilon_1|.
+\tag{R.70}
+$$
+
+Two orthonormal unit vectors in $\ker A_{q_0}$ are
+
+$$
+k=\frac{13|0,\epsilon_0\rangle-16|2,\epsilon_1\rangle}{\sqrt{425}},
+\qquad \ell=|2,\epsilon_2\rangle.
+\tag{R.71}
+$$
+
+Indeed the first kernel equation, after the common filter factor $1/2$, is
+
+$$
+\begin{pmatrix}2304/4225&144/325\\144/325&9/25\end{pmatrix}
+\begin{pmatrix}13\\-16\end{pmatrix}=0;
+$$
+
+there is no coupling of these two coordinates to any other coordinate of $A_{q_0}$. The second follows from the zero third diagonal entry of $\Gamma(P_2)$ and the displayed cross block. The filtered Choi matrix vanishes on the remaining reference direction $|1\rangle$, so no omitted input block changes these kernel equations.
+
+Take $Z_{q_0}=|k\rangle\langle k|+|\ell\rangle\langle\ell|$. It satisfies $0\preceq Z_{q_0}\preceq I-P_{q_0}$. In (R.41), $\sqrt{q_0}$ multiplies each displayed reference component by $1/\sqrt2$. The partial trace therefore gives exactly the diagonal $H$ in (R.66), whose minimum eigenvalue is $169/850$. Theorem 11.2 gives (R.66), and $169/425-1/5=84/425>0$.
+
+The inverse in (R.67) is diagonal, so only the three diagonal entries of the nonreal $\tau$ contribute to its trace. Exact substitution yields the displayed fraction, with $2487004-2352003=135001>0$. Thus the same joint data also pass (R.47); the minimum-eigenvalue bound in (R.66) is stronger for this particular $H$. Neither lower certificate is asserted to equal this encoder's exact recovery optimum.
+
+The direct contraction gives, independently,
+
+$$
+\mu(N)^2=\frac{50553}{105625},\qquad
+\delta_N\geq1-\frac{\sqrt{50553}}{325}>\frac15.
+$$
+
+For (R.17) at the same parameters the same-pair squared contraction is $2304/4225$, confirming the direction distinction in Theorem 14.2 while $w$ and $f(\tau,\bar\tau)$ agree. All comparisons are for actual original-class channels. $\square$
+

@@ -1,0 +1,8 @@
+**Remark 4.2 (Doubled real nodes).** For $b=0$, that is $z=(-a,-a)$ with $-1\le a<1$, one has $h_{t-1}(a,a)=ta^{t-1}$ and
+
+$$
+F_t(a,0)=t(1-a)\Bigl[(t-1)-\sum_{j=0}^{t-2}a^j\Bigr]\ge0,
+$$
+
+since each $a^j\le1$; this is the case $b=0$ of Theorem 4.1, where condition 3 always holds. The statement for doubled real nodes has a precedent: the source reports (Section 6) a theorem of Kallioniemi [H. Kallioniemi, *On bounds for the derivatives of a complex-valued function on a compact interval*, Math. Scand. 39 (1976) 295–314] that for a simple real grid $z_1<\dots<z_n$ in $[-1,1]$ the monomial $\frac{1}{n!}z^n$ is pointwise worst-case for the $k$-th derivative of the interpolation error on the segments $I_s$, the last of which is $I_{n-k}=[z_n,1]$ and contains the test point $1$; the first inequality at a doubled real node is the confluent limit of this bound at $1$: away from the excluded grid, $Q_t(z+1)$ is a rational function of the nodes with nonvanishing denominator $e_1(z+1)$, hence continuous, so the inequality for simple grids $z_1<z_2$ in $[-1,1)$ passes to the limit $z_1,z_2\to-a$; the direct computation above proves the doubled case independently. Stance: precedent: Kallioniemi's pointwise theorem for simple real grids (`literature-attested`, as reported in the source); the extension to doubled nodes by the confluent limit, and the direct proof given here, are `repo-derived`.
+

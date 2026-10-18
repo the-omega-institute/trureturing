@@ -1,0 +1,38 @@
+**Proposition 6.3 (retained cross-epoch links defeat this cap).** The
+coordinatewise cap theorem does not extend merely by adding equality
+links between hidden subtrees at independently varying epochs. This
+failure already occurs when the original source is uniquely fixed.
+
+Proof. Use three rows. The first has empty cut and full tree
+$t=\langle\beta,\alpha\rangle$. Each later cut is $\{L,R\}$,
+with a two-hole exterior and two distinct classes. These later rows
+hold for every epoch, since
+
+$$
+\rho^n t=\langle T_{n+1},T_n\rangle.
+\tag{NUE.22}
+$$
+
+For these row-only data, (NUE.5) gives thresholds $4,2,2$ and hence
+$B=4$. Add the extra retained relation
+
+$$
+(\rho^{n_1}t)|_L=(\rho^{n_2}t)|_R.
+\tag{NUE.23}
+$$
+
+Both endpoints are reached at every epoch. By (NUE.22), the exact
+extended fiber is
+$\{(0,n,n+1):n\ge0\}$. For every $n\ge4$, capping such a
+tuple gives $(0,4,4)$, whose linked values are $T_5$ and $T_4$,
+which differ. In fact any common finite cap fails on a sufficiently
+late tuple of this form. The initial full row fixes $t$, so changing
+an existential witness cannot rescue that capped tuple either.
+
+Relation (NUE.23) is not a partition bit within one capture. Capping
+changes the two epochs by different amounts; injectivity reflects
+equality after the same number of updates, not after unrelated
+numbers. This refutes this reduction for the enlarged language,
+not the decidability of that language. The displayed extended
+fiber itself has a simple linear description. $\square$
+

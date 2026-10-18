@@ -1,0 +1,82 @@
+## 8. 原树的顺序面积估值与不能删除的来源
+
+**定义 B-8.1（端点—面积估值）。** 另供定向实平面中的原子位移 $`u_\alpha=u`$、$`u_\beta=v`$。每片叶面积零，叶路径从零开始，按原树左叶到右叶读取；对其折线顶点 $`q_0=0,\ldots,q_m`$ 定义
+
+
+```math
+\mathbf{\text{𝐪}}=q_m,\quad A=\frac12\sum_{j=1}^m\det(q_{j-1},q_j),
+\quad G(T)=(\mathbf{\text{𝐪}},A).
+```
+
+
+末点到原点的数学补弦贡献零，不是实际逆门。开放折线、自交、重走可用此代数面积；无重数区域面积只用于简单闭边界。此估值及拼接归 [B-S7] §§160–162、175；经典面积群律见 [B-L5] §3式(13)、§4。
+
+**命题 B-8.2（被缩并记录实际消费的面积接缝）。** 若先走来源段 $`s`$ 再走平移后的段 $`t`$，则
+
+
+```math
+(\mathbf{\text{𝐪}},A)\star(\mathbf{\text{𝐫}},B)
+=(\mathbf{\text{𝐪}}+\mathbf{\text{𝐫}},A+B+\tfrac12\det(\mathbf{\text{𝐪}},\mathbf{\text{𝐫}})).
+```
+
+
+此估值结合，且 $`2A=\sum_{i\lt j}\det(\xi_i,\xi_j)`$，其中 $`\xi_i`$ 是依叶序的逐步向量。命题B-7.4的内部面积记录恰保存被弦替换遗忘的接缝。
+
+证明。把第二段每个顶点平移 $`\mathbf{\text{𝐪}}`$，面积新增
+
+
+```math
+\frac12\sum_j\det(\mathbf{\text{𝐪}},r_j-r_{j-1})
+=\frac12\det(\mathbf{\text{𝐪}},\mathbf{\text{𝐫}}).
+```
+
+
+三段拼接的两种括号相等，因为
+
+
+```math
+\det(\mathbf{\text{𝐪}},\mathbf{\text{𝐫}})+\det(\mathbf{\text{𝐪}}+\mathbf{\text{𝐫}},\mathbf{\text{𝐬}})
+=\det(\mathbf{\text{𝐫}},\mathbf{\text{𝐬}})+\det(\mathbf{\text{𝐪}},\mathbf{\text{𝐫}}+\mathbf{\text{𝐬}}).
+```
+
+
+取四点 $`0,\mathbf{\text{𝐪}},\mathbf{\text{𝐪}}+\mathbf{\text{𝐫}},\mathbf{\text{𝐪}}+\mathbf{\text{𝐫}}+\mathbf{\text{𝐬}}`$，其面积核的两种对角剖分恰给上述两边除二。因此在四点严格凸时，它是定义B-4.1的实际面积翻转；在其他域中仍是有向链恒等式，不授予不合法剖分。由 $`q_{j-1}=\sum_{i\lt j}\xi_i`$ 展开逐边面积，得叶对式。两步换弦丢失 $`\det(\xi_1,\xi_2)/2`$，恰是累计内部记录补回的量。此结合律只说明端点与面积不读括号，不授予对原树的重括号操作。∎
+
+**命题 B-8.3（规范 FIB 来源的面积修正）。** 令 $`T_n=\rho^n\alpha`$，$`G(T_n)=(\mathbf{\text{𝐪}}_n,A_n)`$，$`d=\det(v,u)`$。有
+
+
+```math
+\mathbf{\text{𝐪}}_0=u,\quad \mathbf{\text{𝐪}}_1=v,\quad A_0=A_1=0,
+\qquad \mathbf{\text{𝐪}}_{n+2}=\mathbf{\text{𝐪}}_{n+1}+\mathbf{\text{𝐪}}_n,
+```
+
+
+```math
+A_{n+2}=A_{n+1}+A_n+\tfrac12\det(\mathbf{\text{𝐪}}_{n+1},\mathbf{\text{𝐪}}_n),
+\qquad \det(\mathbf{\text{𝐪}}_{n+1},\mathbf{\text{𝐪}}_n)=(-1)^nd,
+```
+
+
+<table><tbody><tr><td>
+
+```math
+A_n=\frac d2\bigl(F_{n-2}+(-1)^n\bigr),\quad n\ge2.
+```
+
+</td></tr></tbody></table>
+
+
+证明。保持有序配对的替换给 $`T_{n+2}=\langle T_{n+1},T_n\rangle`$，应用命题B-8.2得到两个递推。下一行列式为 $`\det(\mathbf{\text{𝐪}}_{n+1}+\mathbf{\text{𝐪}}_n,\mathbf{\text{𝐪}}_{n+1})`$，是原值负数，从初值 $`d`$ 归纳。$`A_2=d/2,A_3=0`$ 与显式式相合；Fib 项满足齐次递推，交替项的二阶递推余量正好为 $`(-1)^nd/2`$，归纳证明全部 $`n\ge2`$。$`d=0`$ 时全部面积为零，端点递推仍成立。∎
+
+**命题 B-8.4（任意来源继续所需的计数）。** 对标准单位位移 $`u=(1,0),v=(0,1)`$，若组成为 $`(a,b)`$，原生替换的叶序是 $`\alpha\mapsto\beta,\beta\mapsto\beta\alpha`$，于是
+
+
+```math
+(a,b,A)\mapsto(b,a+b,-A-b/2).
+```
+
+
+一般任意校准的 $`(\mathbf{\text{𝐪}},A)`$ 不必足以继续 $`\rho`$；例如 $`u=v\ne0`$ 时，两原子估值相同，替换后的端点却为 $`v`$ 与 $`v+u`$。
+
+证明。标准坐标直接线性运输顶点 $`M`$ 使面积反号。每片旧 $`\beta`$ 的弦 $`(1,1)`$ 必须改为先 $`(0,1)`$ 后 $`(1,0)`$ 的两步折线，内部面积为 $`-1/2`$，共 $`b`$ 片，得到修正。这是 [B-S7] 定理162.2的同源范围。一般 $`u=v`$ 的两原子都给 $`(u,0)`$，而 $`\rho\alpha=\beta`$、$`\rho\beta=\langle\beta,\alpha\rangle`$ 的端点不同，故不存在仅凭此摘要的普遍更新。若菜单包括该替换，应保留组成或原来源，并供应实际运输合同；不能从规范序列的闭式推广出任意校准的闭包。∎
+

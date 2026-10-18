@@ -1,0 +1,31 @@
+**Definition 4.1 (minority mass and the two cutoffs).** In this section assume $a\ne b$. Let $d$ be the state in $\{2,4\}$ with larger holding probability and $f$ the other state. Put
+
+$$
+u=\min(a,b),\quad v=\max(a,b),\quad
+\theta=u/v\in(0,1),\quad \lambda=|\log\theta|,
+\quad\delta_k=\frac{\theta^k}{1+\theta^k}.
+$$
+
+Thus $d=2,f=4$ if $a>b$, and $d=4,f=2$ if $b>a$. Define $G_z=(1-z)F_d+zF_f$. The initial history $B^{k+1}$ has law $G_{\delta_k}$, and
+
+$$
+d(G_z,G_{z'})=|z-z'|.
+$$
+
+For $0<\epsilon<1/4$ set
+
+$$
+N_2=\min\{m\ge0:\delta_m\le2\epsilon\},\qquad
+N_1=\min\{m\ge0:\delta_m\le\epsilon\}.
+$$
+
+Both are finite positive integers. For $j=1,2$ their exact expressions are
+
+$$
+N_j=\left\lceil
+\frac{\log((1-j\epsilon)/(j\epsilon))}{\lambda}
+\right\rceil.
+$$
+
+The defining non-strict inequalities include cutoff ties; in particular $\delta_{N_j}=j\epsilon$ is permitted. They count indices beginning at zero, while an acquired startup word has length $k+1$.
+

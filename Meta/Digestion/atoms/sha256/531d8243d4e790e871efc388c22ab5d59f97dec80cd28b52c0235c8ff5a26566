@@ -1,0 +1,85 @@
+**Lemma 7.3 (one common hard source with two legal alternatives).** Put
+
+$$
+b_1=\langle\alpha,\alpha\rangle,\qquad
+b_2=\langle b_1,b_1\rangle,\qquad
+u_*=u(b_1,b_2),\quad
+u_x=u(\beta,b_2),\quad u_y=u(b_1,\beta).
+\tag{CRF.22}
+$$
+
+All three sources lie in the same entire fiber (CRF.19).
+Their full rows are different. For any legal correct service on
+that fiber, the actual run on $u_*$ contains two distinct reads,
+each of complete physical length at least $d_N$.
+
+Proof. The supplied clock satisfies
+$\kappa(\alpha)=0$, $\kappa(\beta)=1$,
+$\kappa\langle s,t\rangle=2+\kappa(t)$ and
+$\kappa(\rho t)=\kappa(t)+1$.
+For $(b_1,b_2)$ the four clocks of
+$x,y,\rho(x),\rho^2(y)$ are $2,4,3,6$;
+for $(\beta,b_2)$ they are $1,4,2,6$.
+They are pairwise distinct and hence verify $D_6$.
+For $(b_1,\beta)$ they are $2,1,3,3$; the only tied comparison is
+
+$$
+\rho(b_1)=\langle\beta,\beta\rangle
+ \ne\rho^2(\beta)
+   =\langle\langle\beta,\alpha\rangle,\beta\rangle.
+\tag{CRF.23}
+$$
+
+Thus it too satisfies all four inequalities. The two other old
+class inequalities and all guards follow from the exact
+two-direction supplier (CRF.20); no old condition has been
+discarded. All three sources have the fixed six-hole outside
+context in ARH (CE.23.11). Their six hole values are
+$x,y,\rho(x),\alpha,\rho^2(y),\beta$.
+On $u_*$ every class is a singleton; on $u_x$ holes $1,6$
+coincide; on $u_y$ holes $2,6$ coincide. In each case the retained
+inequalities exclude the other nonconstant comparisons, so
+these are different complete rows.
+
+Compare the runs on $u_*$ and $u_x$ until their first differing
+literal reply. Such a read must occur before the run on $u_*$
+halts. Otherwise common control, all replies and update choices
+would remain identical up to that halt, forcing the same output
+on sources whose required rows differ. In particular the epoch
+at their first differing read is common, say $n=N+a$.
+
+Only the $x$ occurrences can distinguish this pair. Their
+original-root cones are $LL\Sigma^*$ and $RLL\Sigma^*$.
+Every ancestor outside these cones has a fixed branch reply;
+every other subtree, including all expanded ground leaves,
+is the same for the two sources. Within $LL$ the two subtrees
+are $\rho^n b_1$ and $\rho^n\beta$; within $RLL$ they
+are $\rho^{n+1}b_1$ and $\rho^{n+1}\beta$.
+Lemma 7.2 forces a distinguishing word to have length at least
+
+$$
+2+\lceil n/2\rceil
+\quad\text{or}\quad
+3+\lceil(n+1)/2\rceil,
+\tag{CRF.24}
+$$
+
+respectively. Both are at least $d_N$. The actual run on $u_*$
+contains this read, regardless of any earlier reads or updates.
+
+Make the separate comparison of that same run on $u_*$ with
+the run on $u_y$. Before its first differing reply the epoch is
+again common for that comparison. A distinguishing word now
+must be in $LR\Sigma^*$ or $RRL\Sigma^*$, with compared
+exponents $n$ or $n+2$. Its minimum length is at least
+$2+\lceil n/2\rceil$ or $3+\lceil(n+2)/2\rceil$, again
+at least $d_N$. These cones are disjoint from the two $x$ cones.
+Thus the two required first-difference reads on the single
+$u_*$ run are distinct. Their individual comparison epochs
+need not coincide. Both lower bounds hold at every forward
+epoch, which proves the joint assertion.
+
+In particular this is not an addition of marginal worst cases:
+the one fixed $u_*$, independent of the service, pays both
+necessary lengths. $\square$
+

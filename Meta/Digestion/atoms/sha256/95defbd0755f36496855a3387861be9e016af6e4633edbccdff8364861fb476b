@@ -1,0 +1,205 @@
+**Theorem 72.6 (uniform local analytic constants for these varying chambers).**
+For the chambers in72.5 and $s\ge3$, let $A_{0,v}^\varepsilon$ be the
+mixed Laplacian, Dirichlet on the union $\Gamma_v^\varepsilon$ of its
+plates and Neumann on the remaining chamber boundary. Let
+$\Lambda_v^\varepsilon$ be the negative Dirichlet-to-Neumann operator
+on these plates: its quadratic form is minus the harmonic extension's
+Dirichlet energy. Its kernel consists of the single constant trace.
+Let $\Pi_v^\varepsilon:L^2(\Gamma_v^\varepsilon)\to L^2(Q_v^\varepsilon)$
+be the bounded extension of the zero-energy mixed harmonic lift. There
+are constants $C_A,C_\Pi,C_0>0$, independent of $\varepsilon$, such that
+
+$$
+ \|(A_{0,v}^\varepsilon)^{-1}\|\le C_A\varepsilon,
+ \qquad |\lambda_2(\Lambda_v^\varepsilon)|
+       \ge\frac1{C_0\varepsilon},
+ \qquad \|\Pi_v^\varepsilon\|\le C_\Pi.
+ \tag{72.10}
+$$
+
+The constants can be chosen simultaneously over this fixed finite
+double. They depend on $s$, its fixed reference volumes, degrees,
+angular margins and transition profiles. In particular there is no
+claim that they are uniform in $D$, $\delta$ or $s$.
+
+**Proof.** The radial functions of $K_v(t)$ have bounds
+$0<l\le F_{v,t}\le M$ and
+$\|\nabla_{\mathbb S^{s-1}}F_{v,t}\|_\infty\le M_1$ independent of
+$t$; truncation replaces a small cone cap by a plane with bounded radial
+slope, and(72.4) adds a fixed smooth function with coefficient $O(t^s)$.
+The elementary radial map from a ball to $K_v(t)$ and its inverse are
+therefore uniformly Lipschitz, with constants controlled by
+$l,M,M_1,s$. The ordinary Poincaré and Sobolev trace inequalities on a
+ball, transferred by these maps, give constants $C_P,C_T$ such that
+
+$$
+ \|u-\bar u\|_{L^2(K_v(t))}\le C_P\|\nabla u\|_{L^2(K_v(t))},
+ \qquad
+ \|\operatorname{Tr}u\|_{L^p(\partial K_v(t))}
+       \le C_T(\|u\|_2+\|\nabla u\|_2),
+ \quad p=\frac{2(s-1)}{s-2}.
+ \tag{72.11}
+$$
+
+Here $\bar u$ is the volume mean. To make the constants explicit in
+fixed local data, let $P_s,T_s$ be Poincaré and $H^1$-to-$L^p$ trace
+constants on the unit ball, set $L_+=M+M_1$ and
+$B_\partial=M^{s-2}\sqrt{M^2+M_1^2}$, and take
+
+$$
+ C_P=(M/l)^{s/2}P_sL_+,\qquad
+ C_T=B_\partial^{1/p}T_s l^{-s/2}\max\{1,L_+\}.
+ \tag{72.11a}
+$$
+
+Indeed the radial map $x\mapsto F_{v,t}(x/|x|)x$ has derivative
+norm at most $L_+$, volume Jacobian between $l^s$ and $M^s$,
+and surface Jacobian at most $B_\partial$. For Poincaré, pull back to
+the unit ball, subtract its volume mean, and then minimize over the
+constant in the physical body. For the trace inequality use the same
+change of variables and surface Jacobian. These are the standard
+ball trace/Poincaré results, with their exact use and dependence given
+by(72.11a); no derivative of the volume transport(72.9) is involved.
+If $k$ is the degree, the plates in $K_v(t)$ have total measure
+$k t^{s-1}$. Hölder's inequality in(72.11) yields
+
+$$
+ \|\operatorname{Tr}(u-\bar u)\|_{L^2(\Gamma_t)}^2
+      \le C_0 t\|\nabla u\|_2^2,
+ \qquad C_0=k^{1/(s-1)}C_T^2(1+C_P)^2.
+ \tag{72.12}
+$$
+
+For zero plate trace this implies
+$|\bar u|^2\le(C_0/k)t^{-(s-2)}\|\nabla u\|_2^2$.
+Using the orthogonal volume-mean decomposition, for $0<t\le1$,
+
+$$
+ \|u\|_2^2\le C_A t^{-(s-2)}\|\nabla u\|_2^2,
+ \qquad C_A=C_P^2+m_vC_0/k.
+ \tag{72.13}
+$$
+
+This proves the mixed inverse bound on $K_v(t)$. If instead the plate
+trace has integral zero, subtracting its volume mean can only increase
+its squared plate norm. Thus(72.12) gives
+$\|\operatorname{Tr}u\|_{L^2(\Gamma_t)}^2\le C_0t\|\nabla u\|_2^2$.
+The variational characterization of the first nonconstant Steklov mode,
+applied to its harmonic extension, gives its magnitude at least
+$1/(C_0t)$. Connectedness gives the one-dimensional constant kernel.
+
+Here is a local proof of the harmonic-lift bound that does not import
+an unproved global mixed $H^2$ estimate. For each conical tip let $A_i$
+be its untruncated apex. Choose a fixed collar wholly within its exact
+conical neighbourhood and a smooth cutoff equal to one near the
+truncated plate. In that collar set
+$X_i(x)=\chi_i(x)(A_i-x)$, and set it zero outside. Collars are disjoint.
+The sum $X$ satisfies, with a constant $C_X$ independent of $t$,
+
+$$
+ X\cdot\nu=qt\text{ on every plate},\qquad
+ X\cdot\nu=0\text{ on the remaining boundary},\qquad
+ \|X\|_\infty+\|DX\|_\infty\le C_X.
+ \tag{72.14}
+$$
+
+The second identity holds because $A_i-x$ is tangent to the cone wall
+and the cutoff vanishes before the wall ceases to be conical.
+For $w=A_0(K_v(t))^{-1}f$, the classical Rellich multiplier identity,
+with Dirichlet trace on the plates and Neumann trace elsewhere, gives
+
+$$
+ qt\|\partial_\nu w\|_{L^2(\Gamma_t)}^2
+   \le C_R\bigl(\|\nabla w\|_2^2
+                     +\|f\|_2\|\nabla w\|_2\bigr),
+ \tag{72.15}
+$$
+
+where one may take $C_R=(s+4)C_X$. Indeed, integrate the divergence
+of $X|\nabla w|^2-2\operatorname{Re}((X\cdot\nabla\bar w)\nabla w)$.
+On a Dirichlet plate its boundary integrand is
+$-(X\cdot\nu)|\partial_\nu w|^2$; on the Neumann part it is zero.
+The interior terms are bounded by the right side of(72.15), since
+$-\Delta w=f$.
+
+The identity is valid for this mixed problem without global $H^2$.
+For each fixed $t>0$ there are only smooth Dirichlet and Neumann faces
+and smooth codimension-two rims. In a transverse wedge of angle
+$\omega=\pi-\alpha$ the separated mixed angular modes have exponents
+$(j+1/2)\pi/\omega$, $j\ge0$; the least is
+$\lambda=\pi/(2\omega)>1/2$. The standard local mixed-edge
+regularity argument (straighten the smooth rim, localize, and use these
+angular modes with tangential Fourier localization) gives local
+$H^{1+\lambda-\eta}$ regularity for every
+$0<\eta<\lambda-1/2$, with the usual $H^2$ cap for the regular part.
+In particular the face normal derivatives are in $L^2$.
+For the primary three-dimensional mixed-edge spectrum and the
+localization framework, see Monique Dauge,
+[*Neumann and mixed problems on curvilinear polyhedra*](https://dauge.pages.math.cnrs.fr/publis/DaugeMixed92.pdf),
+Section3, especially Notation3.3, and the dihedral analysis in
+Sections8–10. The present rims have no conical vertices. In the local
+model for dimension $s$, replace the single tangential Fourier variable
+by $\xi\in\mathbb R^{s-2}$. The transverse equation contains the
+same angular operator and the additional nonnegative term $|\xi|^2$;
+its Mellin exponents at the rim are unchanged. The local weighted
+energy estimates therefore integrate over these tangential variables
+by Plancherel with the same admissible exponent interval. Flattening a
+smooth rim freezes this transverse principal part; on a sufficiently
+small chart its coefficient perturbation is absorbed in the strict
+exponent margin, and the lower order terms are controlled by the
+$H^1$ norm. For each fixed $t$ all chart coefficients are smooth and
+bounded. This gives the asserted local regularity in every fixed $s$;
+no uniform chart size as $t\downarrow0$ is needed.
+
+Removing tubes of radius $b$ about the rims in the multiplier identity
+and taking a sequence $b\downarrow0$ eliminates their boundary terms:
+the worst mixed singular contribution is of order $b^{2\lambda-1}$,
+with an arbitrarily small exponent loss if necessary, which tends to
+zero. Approximation gives the identity for $L^2$ right-hand sides.
+The regularity constants in this justification need only be finite for
+each fixed $t$; the uniform constant in(72.15) comes solely from(72.14).
+No uniform global $H^2$ estimate is asserted.
+
+By(72.13) and the energy identity,
+$\|\nabla w\|_2^2\le C_A t^{-(s-2)}\|f\|_2^2$.
+Consequently(72.15) implies
+
+$$
+ \|\partial_\nu A_0(K_v(t))^{-1}f\|_{L^2(\Gamma_t)}
+   \le C_\Pi t^{-(s-1)/2}\|f\|_2,
+ \qquad
+ C_\Pi^2=\frac{C_R}{q}(C_A+\sqrt{C_A}).
+ \tag{72.16}
+$$
+
+Green's identity identifies the adjoint of the harmonic lift with
+$-\partial_\nu A_0^{-1}$ on the plates. First use smooth traces, then
+density and(72.16); this defines the required bounded lift on all plate
+$L^2$ inputs and bounds its norm by $C_\Pi t^{-(s-1)/2}$.
+
+Under the physical dilation by $r$, the mixed inverse norm gains
+$r^2$, a Steklov eigenvalue gains $r^{-1}$, and the boundary-to-volume
+lift norm gains $r^{1/2}$. The three scale identities are
+
+$$
+ r^2t^{-(s-2)}=\varepsilon,\qquad
+ (rt)^{-1}=\varepsilon^{-1},\qquad
+ r^{1/2}t^{-(s-1)/2}=1.
+ \tag{72.17}
+$$
+
+They prove(72.10). The transverse Neumann gap of the fixed unit-area
+disk cross-section, dilated by $\varepsilon$, is also a fixed positive
+constant times $\varepsilon^{-2}$. For an edge's mixed problem
+(Dirichlet on both plates, Neumann on its side), separation in these
+transverse modes gives inverse norm at most $\pi^{-2}$. Its harmonic
+lift has, for transverse wave number $b>0$, the two scalar factors
+$\sinh(b(1-x))/\sinh b$ and $\sinh(bx)/\sinh b$; for $b=0$ these
+are $1-x$ and $x$. Each factor is between zero and one. Squaring,
+integrating and summing the orthonormal transverse modes therefore
+gives an edge lift norm at most $\sqrt2$, uniformly in $\varepsilon$.
+This supplies the full edge Poisson bound as well as the chamber bound.
+Rigid motions affect none of these estimates. Taking maxima of
+$C_A,C_\Pi,C_0$ over the finite vertex set makes them simultaneous.
+$\square$
+

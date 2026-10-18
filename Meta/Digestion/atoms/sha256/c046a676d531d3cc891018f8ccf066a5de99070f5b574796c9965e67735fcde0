@@ -1,0 +1,50 @@
+**Proposition 9.2 (restricted exact-input obstruction).** Every input
+and output in Definition 9.1's preparation class has Schmidt number
+at most three across specimen-side systems versus $R$. Therefore no
+source-preserving isometry or exact local preparation in that class
+identifies such a state with the RT81 input $|\Omega_{2k}\rangle$,
+whose Schmidt rank is $2k\ge4$. At $k=4$ the logical dimension eight
+also exceeds the original full specimen dimension five.
+
+Proof. Every pure vector in the support of $X$ has the form
+$\sum_{j=0}^2 Ee_j\otimes r_j$. Its coefficient matrix has rank
+at most three. A spectral decomposition of $X$ therefore gives a
+pure decomposition with that bound. Appending a local pure blank
+ancilla tensors each specimen vector with the same local vector and
+does not increase coefficient-matrix rank. Mixed independent blanks
+are handled by their own pure decompositions.
+
+For any local Kraus operator $A$, the coefficient matrix $M_\psi$
+of a pure component becomes $AM_\psi$. Since
+$\operatorname{rank}(AM_\psi)\le\operatorname{rank}M_\psi$, every
+nonzero resulting pure component has rank at most three. Sums over
+Kraus operators, classical branches and discarded local systems give
+mixtures of these components. Composition preserves the bound. In
+finite dimensions the set of states of Schmidt number at most three
+is closed: the normalized pure vectors of rank at most three form a
+compact set, as the rank condition is given by vanishing minors;
+its finite-dimensional convex hull is compact. Thus convergent sums
+and admitted integral limits preserve the bound as well. With an
+arbitrary reference, the same conclusion follows from the supported
+three-term decompositions and their trace-norm closure.
+
+In contrast, (PC.34) has $2k$ equal nonzero Schmidt coefficients.
+A pure state of Schmidt rank $2k$ cannot be decomposed into pure
+states of smaller rank: every positive summand of its rank-one
+density matrix has range in the same one-dimensional span.
+Consequently its Schmidt number is $2k$. Local isometries preserve
+the original nonzero Schmidt coefficients and cannot make this
+identification. Local CP preparation cannot do so by the preceding
+rank argument. Finally there is no isometry of an eight-dimensional
+logical input into the original five-dimensional ambient specimen;
+appending independent local blanks removes that elementary dimension
+obstruction but leaves the Schmidt bound. $\square$
+
+This proposition is restricted to supported original inputs and the
+specified passive-reference/local-operation class. It supplies no
+exclusion of a noisy encoding with a separately proved error
+inequality, a transfer using a different justified witness, or any
+future operational reduction with an explicit resource correspondence.
+Correlated entangled shares require their original joint accounting;
+they cannot be inserted into the proposition as independent blanks.
+

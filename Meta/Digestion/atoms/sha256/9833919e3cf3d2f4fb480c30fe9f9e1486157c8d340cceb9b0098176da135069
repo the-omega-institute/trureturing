@@ -1,0 +1,39 @@
+**Corollary 5.2 (bounded twelve-history example).** For the rational
+preparation of Proposition 3.1 take
+
+$$
+a=1/16,\quad b=3/16,\quad d=1/32,\quad L=1,\quad
+x_*=(\sqrt{21}-1)/32,\quad
+\delta_*=(5-\sqrt{21})/21.
+\tag{AC.13}
+$$
+
+Worst complete-output error on these twelve histories is at least
+$\delta_*>0$. The scalar survival-bit task on the whole interval
+$[a,b]$ attains this value with the effect
+
+$$
+E=\operatorname{diag}_{(+,-,2)}
+ \left(1,\frac5{21},\frac{29-2\sqrt{21}}{21}\right).
+\tag{AC.14}
+$$
+
+Proof. Substitution in (AC.11) gives $\delta_*$. All entries in (AC.14)
+lie in $[0,1]$, and its probability is
+$Q(x)=32x/21+(17-\sqrt{21})/21=\ell(x)+\delta_*$, independently
+of $\beta,m$. Theorem 5.1 proves the matching bit lower bound.
+This effect specifies only two outcome probabilities; it supplies no
+correct live quantum state, exact time/mode law or lawful acquired actuator.
+
+Every seven-unit witness has support at least $1/32$, height speed at most
+$1/16$, phase speed at most $8\pi$ and phase variation at most $16\pi$.
+Indeed the six prefix velocities are
+$(0,-1/16,0,1/16,0,x-a_0)$ and the requested velocity is $1/32$.
+The finite nuisance choices give $B\in\{0,-4\pi,8\pi,4\pi\}$.
+Both regularity alternatives hold. Formula (AC.6) gives $q_x\geq2/9$
+on this interval. If the original prefix is left unchanged and every old
+stopped archive retained, a history attaining the conditional lower bound
+has complete unconditional error at least $(2/9)\delta_*$. The prefix
+errors are zero and the live-block norm is multiplied by its actual $q_x$.
+$\square$
+

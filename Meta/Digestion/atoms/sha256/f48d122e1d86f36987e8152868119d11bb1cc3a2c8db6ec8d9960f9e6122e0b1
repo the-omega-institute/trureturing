@@ -1,0 +1,26 @@
+**Proposition 174.3 (A finite boundary core with slack tail error).**
+Take $m=2$, $A=(3/4,1/2)$, $e_0=1/2$, and $L=3$, $g_3=1/10$.
+There is a finite core with these parameters whose extension has
+
+$$
+a=(47/60,17/30,17/30),\qquad \varepsilon=7/15,
+\tag{174.3}
+$$
+
+followed by any permitted actual tail. Its exact uniform error is
+$7/15$, while $t_{\rm tail}=1/30$. In particular the head-to-late
+join need not be strict, and the core tail row need not be tight.
+
+**Proof.** Preselect $(1,2)$; on its first queried zero $n$, emit $n$
+with probability $A_n$ and zero otherwise, and emit zero on positive
+exhaustion. Predetermined partitions of one seed fix both cell outputs.
+The finite core equals its two-point target on every zero-containing
+word and has $q_{11}(0)=1$. It therefore satisfies (172.1), including
+$A_2=e_0$. The residual formulas give
+$W=2/15$, $E=1/30$, $r=13/15$, and (173.1) gives (174.3).
+Equation (173.12) gives $p_{111}(0)=29/30$ and
+$t_{\rm tail}=1/30$. Actual first absence three nevertheless has
+correct deficit $7/15$, as in (173.10). Every tail error is
+$\max\{1/30,a_n\}$, rather than an assertion of equality to the
+uniform cap on each tail. $\square$
+

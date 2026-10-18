@@ -1,0 +1,26 @@
+**Theorem 6.1 (one law, global bound and exact actual count).** Define
+
+$$
+k=\sum_i p_i|u_i|,\quad s(t,\lambda)=\frac{s_0}{\sqrt\alpha}k,\qquad
+\mathcal T_{\log(1+t)}(s(t,\lambda))=
+\frac{H_{\rm high}+Y\cdot B(t)-\lambda k}{2}.
+\tag{8}
+$$
+
+This is the original global optimum in the full competitor class of §2, with unique merged endpoint law and minimum actual total count eight.
+
+Proof. The first five exact equations give $\sum p=1$, zero first and mixed moments, $\sum pu^2=\alpha$, and $\sum pv^2=\beta$. Hence $\sum phh^T=I_3$. Put $b_i=\eta_i tc(h_i)$. The last three give $\sum pb_i=\mu$, $\sum pb_iz^2=V$, $\sum pb_izw=0$. Since $\alpha z^2+\beta w^2=1$ and $\mu=\alpha V+\beta W$, they also give $\sum pb_iw^2=W$. Congruence under $(z,w)\mapsto(dw/h_2,-bz/h_1)$ yields $\sum pb_in_in_i^T=M$, including its off-diagonal zero. These are joint live and failure constraints of one law.
+
+For any original competitor invoke (3) on its existing actual supported labels. Retain its original fractional $\xi=b_h/[tc(h)]\in[0,1]$. Convexity gives $|\ell+b_hf|\le(1-\xi)|H_0|+\xi|H_1|$. Integrating both whole-sheet inequalities (7) against that **same** split law gives
+
+$$
+2T_{\rm actual}\le H_{\rm high}+Y\cdot B(t)-\lambda\sum p|u|
+\le H_{\rm high}+Y\cdot B(t)-\lambda\sqrt\alpha s/s_0.
+$$
+
+It permits every original failure allocation, intermediate capacity, live decomposition, complex multi-Kraus implementation and admitted time law. There is no maximum-contrast-facet, fixed-allocation or two-failure-line restriction. At the selected exact root the signed heights, reports, contacts and common moments attain equality. The instrument in §9 realizes them simultaneously, giving (8). Evaluating its signed primal height on the contracted images gives the value enclosure in Theorem 1.1; every exact per-cell value bound is in Appendix C.
+
+At equality $\lambda>0$ forces contrast equality and all nonnegative dual slacks to vanish. This is pointwise on every positive-weight actual label and almost everywhere in the stipulated integrable extension. For $0<\xi<1$, both endpoint gaps at the same direction would have to vanish. Lemma 5.1 excludes that. Thus every optimal supported low label is one of the seven endpoints. The seven independent columns force the merged weights to be exactly the selected ones, all positive. Double rigidity in Convention 2.4 prevents distinct directions being combined inside one actual low label, even with discarded multi-Kraus representations. Hence seven low labels are necessary. The positive compulsory high acquired mass requires at least one more actual label. Section 9 uses precisely one high label, including its whole dimension-five complement, so eight are sufficient.
+
+This proves uniqueness of the merged endpoint law, not uniqueness of the CP instrument, Kraus representation, time law or arbitrary added supported-zero outcomes. Fractional capacities remained legal until equality excluded them on this exposed face. Endpoint splitting by itself is a value argument, not a minimum-actual-count closure proof. In any count-closure argument the original fractional coordinate must instead be retained. ∎
+

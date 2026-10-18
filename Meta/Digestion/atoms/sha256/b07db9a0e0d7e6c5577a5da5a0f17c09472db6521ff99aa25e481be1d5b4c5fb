@@ -1,0 +1,51 @@
+**Definition 2.1 (policy, data, loss and infima).** A policy and estimator
+share an independent prechosen seed $U$, independent of the whole source
+in (1.3). No density or nondegeneracy of its distribution is required.
+All decision maps are Borel maps of the seed and finite queried history;
+the same arguments apply to any independent seed realization with these
+measurability properties. Independent estimator randomization can be
+included in this seed.
+
+Set $T_0=0$, whose original phase is known. Immediately after query
+$j-1$, choose $T_j$ using only $U$ and the preceding queried timestamps
+and wrapped values $e^{iv_{T_i}}$, $i<j$. That next time is fixed before
+any intervening information is acquired. The policy makes $M$ actual
+positive-time queries, with
+
+$$
+1\le M\le n,\qquad 0=T_0<T_1<\cdots<T_M=\tau.
+\tag{2.1}
+$$
+
+The estimator receives exactly $U$ and this finite time/value record.
+Its target is the actual $K_\tau$, with squared loss under
+$\mathbf Q_\kappa$. Write
+
+$$
+\begin{aligned}
+\mathcal R_\kappa(\mathcal P,g)
+ &=\mathbf E_{\mathbf Q_\kappa}(g-K_\tau)^2,\\
+R^*_{n,\kappa}
+ &=\inf_{\mathcal P,g:\,M\le n}\mathcal R_\kappa(\mathcal P,g),\\
+R^{=}_{n,\kappa}
+ &=\inf_{\mathcal P,g:\,M=n}\mathcal R_\kappa(\mathcal P,g).
+\end{aligned}
+\tag{2.2}
+$$
+
+The known parameters, including $\kappa$, may enter both policy and
+estimator. Deterministic nonuniform, adaptive, randomized and
+variable-count policies are all included. For each fixed policy the
+Bayes estimator is the conditional mean and its risk is the expected
+posterior variance. Clipping any estimator to $[l,u]$ decreases loss,
+so all infima can be taken over such bounded estimators.
+
+There is no intermediate monitoring, unqueried-path hitting trigger,
+height, driver, bridge, unwrapped increment, winding, external stop tag,
+future-survival information, unknown-parameter oracle, extra phase or
+additional preparation in the data. The terminal count is the length
+of the queried record, not an independent observation. Each finite
+spacing must be strictly positive. Arbitrarily small positive real
+spacings are lawful; time precision has no charge in this query-count
+model. No extra actual query is free.
+

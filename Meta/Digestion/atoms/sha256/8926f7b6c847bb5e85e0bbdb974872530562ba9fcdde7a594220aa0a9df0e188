@@ -1,0 +1,60 @@
+**Theorem 8.1 (global weak platform structure).** Fix $t\ge t_0$ and
+write
+
+$$
+v_t(\tau)=2\mathcal T_{\log(1+t)}(s_0\tau)-H_0,
+\qquad 0\le\tau\le\tau_{\max}(t).
+\tag{AC.41}
+$$
+
+This function is concave, nonincreasing and continuous on its whole
+closed domain. Let $\mathscr O_t$ be the compact set of unconstrained
+height-maximizing moment measures and define
+
+$$
+\tau_c(t)=\max_{\zeta\in\mathscr O_t}\int|z|d\zeta.
+\tag{AC.42}
+$$
+
+Then $v_t(\tau)=v_t(0)$ exactly for $\tau\le\tau_c(t)$,
+and $v_t$ is strictly decreasing afterwards if that interval is
+nonempty. Every optimizer at $\tau>\tau_c(t)$ has $k=\tau$
+and actual requested contrast $\mathsf V(F)=s_0\tau$.
+In the strict-interior dual domain every attained optimal dual has
+$\lambda=0$ for $\tau<\tau_c(t)$ and $\lambda>0$ for
+$\tau>\tau_c(t)$. No generic multiplier assertion at
+$\tau=\tau_c(t)$ is included.
+
+Proof. On the compact set
+$\{(h,b):h\in\mathscr C,0\le b\le tc(h)\}$ the integrands of
+all live/failure moments, $k$ and $v$ are continuous. Their joint
+convex hull is compact. Fixing AC.11 gives a compact convex set of
+pairs $(k,v)$. Finite convex representation preserves these moments,
+$k$ and $v$ simultaneously; Proposition 2.3 then reconstructs an
+original instrument. A mixture uses an actually generated retained
+choice, not an unacquired integral control. Mixtures prove concavity
+of $v_t$; nesting of feasible sets proves monotonicity. Compactness
+proves attainment and upper semicontinuity. Concavity supplies lower
+limits at both endpoints by chords to any interior point, so
+continuity holds also at $t=t_0$ and at $\tau_{\max}(t)$.
+
+The maximum in AC.42 is attained. Its optimizer is feasible for every
+smaller request, while equality of heights above $\tau_c$ would put
+an optimizer in $\mathscr O_t$ with larger $k$, a contradiction.
+Concavity forbids a later flat segment below the top value. Explicitly,
+mixing a top optimizer with a hypothetical equal-valued pair beyond
+the platform gives a strictly higher feasible value at the lower
+request. If an optimizer after the platform had $k>\tau$, its same
+moments would be feasible at request $k$, contradicting strict decline.
+Finally $s_0\tau\le\mathsf V(F)\le s_0k$ gives actual equality.
+
+For $\tau<\tau_c$, a top optimizer with $k=\tau_c>\tau$
+forces every attained dual multiplier to vanish by complementarity.
+For $\tau>\tau_c$, a zero multiplier would certify the same upper
+bound for the unconstrained problem, contradicting the strictly lower
+value. $\square$
+
+AC.42 is a structural definition. It does not evaluate the entire
+finite frontier, threshold curve or optimizer partition. The platform
+along $s$ and strict growth along finite $A$ are different statements.
+

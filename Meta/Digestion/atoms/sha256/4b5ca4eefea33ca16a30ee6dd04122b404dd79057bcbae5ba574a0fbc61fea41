@@ -1,0 +1,53 @@
+**Theorem 99.1 (closed-strip margins and regular branch).** The family,
+its value and a fixed analytic choice of instrument factors depend real
+analytically on $t$ for $9999/10<t<10001/10$ and continuously at both
+endpoints. The optimum is constant in the requested $s$ on $[0,3/25]$.
+
+**Proof.** All five angular second derivatives of the appropriate gap are strictly positive. Their uniform strip enclosures are
+
+- contact 0: (0.01678263300596134647607184464176762, 0.01678644900066609033089675882945644).
+- contact 1: (0.01678141971097141399331153641316915, 0.01678766249897283262877500029544263).
+- contact 2: (0.06031133751310846247936672851294927, 0.06031655252590283334925811709277640).
+- contact 3: (17.23741444892271443501698377453156460, 17.24184281361076349586024173695675543).
+- contact 4: (0.85197496258990452305983215822696129, 0.85709731507883159868282892569297981).
+
+These are computed as P_i''/D_eta times ((1+x_i²)/2)^2 at the exact contact, using P_i=P_i'=0. Positive quotient certificates exhaust every zero; compactness supplies the strictly positive gap away from them. Weights and sign values have strict positive margins; physical contrast exceeds 0.12421255, above every requested s<=0.12. The weighted Jacobian norm bound proves nonsingularity after the gauge and removal of duplicate report constraints. Rational analytic equations with positive denominators and nonsingular Jacobian give analytic dependence on t by the implicit function theorem. Uniform contraction selects the same branch throughout the entire stated interval. Thus all seed, curvature, global-sign and independent-Jacobian hypotheses of the continuation argument hold on the specified branch.
+
+The root coordinates remain strictly inside their fixed boxes by §96.
+The equations are real analytic wherever their source radicals and
+denominators are positive, and their gauge-fixed Jacobian is invertible.
+The implicit function theorem therefore gives local analytic solutions;
+uniqueness in the common box identifies them on overlaps. Uniform contraction
+gives continuity at both closed endpoints. The sign reports stay fixed
+because none of the five $z_i$ crosses zero. Positive square roots in the
+constructor and analytic rank-two frame choices give an analytic instrument
+representative; this does not assert uniqueness of its full CP completion or
+time laws.
+
+The following outward enclosures hold uniformly on the strip:
+
+| Quantity | Strict enclosure |
+| --- | --- |
+| Physical contrast | $(0.12421255682840184212,0.12422087673167824425)$ |
+| Five-column moment minor | $(-0.01547764382283167927,-0.01547529353424387514)$ |
+| Pure normalized frame determinant | $(1.5240677194037333283,1.52429036518928477366)$ |
+| Every pairwise projection determinant magnitude | $>0.0459$ |
+| Original activity floor $t_0$ | $(264.80903138857747844055,264.80903138857747844386)$ |
+
+The positive weights, capacities and signed heights can also be enclosed
+without choosing sign branches after evaluation:
+
+| $i$ | $p_i$ | $\mathfrak c(h_i)$ | $\epsilon_iH_{\eta_i}(h_i)$ |
+| --- | --- | --- | --- |
+| 0 | $(0.403551820132,0.403570298116)$ | $(0.210664559785,0.210666270016)$ | $(0.010253268733,0.010253639963)$ |
+| 1 | $(0.183966169952,0.183970045178)$ | $(0.137635731409,0.137662212179)$ | $(0.010558500861,0.010560998242)$ |
+| 2 | $(0.320037200481,0.32005031)$ | $(0.190964924576,0.190971375137)$ | $(0.002967133478,0.002967450763)$ |
+| 3 | $(0.036142704793,0.036153562793)$ | $(0.183965805294,0.18396605267)$ | $(0.476464351917,0.476694506627)$ |
+| 4 | $(0.056270517038,0.056287371516)$ | $(0.080070287785,0.080070450066)$ | $(1.810181210942,1.810558411808)$ |
+
+In particular $p_i>0.03614270$, actual contrast $>0.12421255>3/25$,
+and $t_0<9999/10$. Both $s$ endpoints, including zero, and both $t$ endpoints
+are included. The smallest requested contrast is an inequality, not a
+requirement to alter the common atom law. The case $t=0$ remains empty by
+Theorem 87.2 and is outside this strip. $\square$
+

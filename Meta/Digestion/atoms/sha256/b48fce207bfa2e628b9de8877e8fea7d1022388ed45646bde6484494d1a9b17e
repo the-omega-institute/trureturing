@@ -1,0 +1,50 @@
+**Corollary 9.2 (Comparison to the selected unequal-nuisance experiment).** For small $s>0$ the inherited converse selects
+
+$$
+q_0=e^{-s},\qquad q_1=e^{-s+(a/90)s^2},
+$$
+
+with each source retaining its own stationary initializer. Write
+
+$$
+\pi_{i,q}(t)=S_{i,q}(t)/\mu_i(q),\qquad
+\Lambda_{i,q}(k,t)=f_{i,q}(k)/\mu_i(q)\quad(0\le t\le k),
+$$
+
+and $C(q_0,q_1)=D(\pi_{0,q_0}\Vert\pi_{1,q_1})$. Theorem 22.5 of the supplier proves
+
+$$
+\begin{aligned}
+D(f_{0,q_0}\Vert f_{1,q_1})&=\frac{a^2}{6480}s^2+O_H(s^3),\\
+I_{\rm proj}(s)&=\frac{D(f_{0,q_0}\Vert f_{1,q_1})}{\mu_0(q_0)}
+=\frac{a^2}{64800}s^3+O_H(s^4),\\
+0\le C(q_0,q_1)&\le D(\Lambda_{0,q_0}\Vert\Lambda_{1,q_1})
+=\frac{a^2}{8100}s^2+O_H(s^3).
+\end{aligned}
+$$
+
+For every integer cap $W\ge1$, its actual-history inequality is
+
+$$
+D(\mathsf P_{0,q_0}^W\Vert\mathsf P_{1,q_1}^W)
+\le C(q_0,q_1)+(W-1)I_{\rm proj}(s).
+$$
+
+A decision with both errors at most $\alpha\in(0,1/2)$ for this selected pair must therefore satisfy
+
+$$
+(1-2\alpha)\log\frac{1-\alpha}{\alpha}
+\le C(q_0,q_1)+(W-1)I_{\rm proj}(s).
+$$
+
+Early stopping and common independent randomization are included in that inherited inequality. The rate in this volume obeys
+
+$$
+\lim_{s\downarrow0}\frac{I^{\mathrm{paid}}_{i,m}(e^{-s})}{I_{\rm proj}(s)}
+=1-\frac4{5m-1},\qquad
+\lim_{m\to\infty}\lim_{s\downarrow0}
+\frac{I^{\mathrm{paid}}_{i,m}(e^{-s})}{I_{\rm proj}(s)}=1.
+$$
+
+Proof. The supplier's Lemma 20.6 gives the actual-history projection and Bernoulli-decision inequalities at unequal parameters; its Theorem 22.5 proves the displayed gap and initialization expansions. These are credited premises, not deductions from a common-$q$ bounded likelihood ratio. For small enough $s$, $s-(a/90)s^2>0$, so both selected parameters are legal. The fixed-block comparisons are exactly Corollary 6.3 after division by the positive leading coefficient of $I_{\rm proj}$. They compare attainable conditional information per paid read with that selected converse coefficient. They do not infer sharp stopping or deadline optimality from a rate ratio. $\square$
+

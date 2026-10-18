@@ -1,0 +1,37 @@
+**定义 1.1（完整世界与采集约定）。** 令
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix}.
+$$
+
+完整目标为 $W=(P,g,d)$，其中
+
+$$
+P=\begin{pmatrix}a&b\\e&1-a\end{pmatrix},\qquad
+0<a<1,\quad b,e>0,\quad be=a(1-a),\qquad
+0\ne g\in\mathbb R[Y],\quad\deg g\le3,\quad d\in\mathbb R.
+\tag{1.1}
+$$
+
+源严格逐项正、秩一、迹一，不要求对称，非对角元不设上界。增益是一个完整多项式，允许各符号、低次数、采样零与重根，漂移任意。按时间顺序执行 $E_1\cdots E_i$ 时，
+
+$$
+A_0=I_2,\qquad A_i=E_iA_{i-1},\qquad
+z_i(W)=g(i)\operatorname{tr}(A_iP)+d.
+\tag{1.2}
+$$
+
+只有一条不可重置、不可复制的轨迹；初读计数，每个单独 $M$ 或 $J$ 后立即读数，八次总读使用原时钟 $0,\ldots,7$。不增设跳读、未读复合动作或额外观测。确定性策略可依赖整个实际历史选择动作、停止并返回整个 $(P,g,d)$，不另加规则性假设。反事实响应只用于描述一个既定世界，不是同时取得的读数。
+
+固定字面常数与历史
+
+$$
+\begin{gathered}
+C=\frac{7560}{131}=\frac{37800}{655},\qquad X=\frac{39264}{655},\\
+H_3=(0,J,24,M,48,J,C),\qquad
+H_4=(0,J,24,M,48,J,C,M,X),\qquad H_5=(H_4,M,m).
+\end{gathered}
+\tag{1.3}
+$$
+

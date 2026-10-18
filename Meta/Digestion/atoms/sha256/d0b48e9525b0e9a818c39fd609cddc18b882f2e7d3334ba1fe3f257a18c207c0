@@ -1,0 +1,115 @@
+**定理 46.2（全部实际因果控制器的正噪声阻塞）。** 对每个 $0<\delta\le1$，
+每个 $\pi\in\mathcal P_\infty$ 都满足
+
+$$
+\mathcal E_\pi(\delta)\ge5\sqrt\delta.
+\tag{46.4}
+$$
+
+证明。固定控制器，在共同初态 $a=0$ 的首锚前分支上，每次实际Read报告零。
+式（46.2）使这时真实可见状态始终为零，所以全部报告都是合法的零误差；实际
+内部控制、Read选择和停止逐事件由这个共同记录确定。若永不执行锚，或者首锚前
+已经执行零内部控制，取
+
+$$
+b_-=20-15i,\qquad b_+=20+15i.
+$$
+
+两点范数25、实部20，均在来源中；隐藏区别不可见或已被零控制消去，全部记录
+可以相同。初态半距15，不小于 $5\sqrt\delta$。无限内部前缀而无锚也属于此分支。
+
+其余情形的首次锚发生在有限事件处。按定理40.2，首锚前有序积为
+$p\ne0$，$\lambda=|p|\le1$。写 $p=\sigma\lambda q$，其中
+$\sigma\in\{1,-1\}$，选择符号使单位四元数
+
+$$
+q=\alpha+\nu u,\quad \alpha\ge0,\quad
+\nu=\sqrt{1-\alpha^2},\quad |u|=1,\quad u\in E.
+\tag{46.5}
+$$
+
+$\nu=0$ 时任取 $u$；符号 $\sigma$ 始终保留在实际首锚读数中。
+沿用 $\tau=4/5$、$\kappa=3/5$。
+
+若 $\alpha\ge\kappa$，引理45.2(ii)给出两层相同投影的合法来源。当
+$\kappa\le\alpha<\tau$ 时，它们的距离满足
+
+$$
+\sqrt{25^2-r^2}-\sqrt{7^2-r^2}
+ =\frac{576}{\sqrt{25^2-r^2}+\sqrt{7^2-r^2}}\ge18;
+\tag{46.6}
+$$
+
+当 $\alpha\ge\tau$ 时距离恰为18。两点首锚后的实际状态完全相同，后续零误差
+记录相同，半距至少9，也不小于 $5\sqrt\delta$。
+
+设 $0\le\alpha<\kappa$，令
+
+$$
+\rho=\kappa\nu-\tau\alpha>0,\qquad
+K=\kappa\alpha+\tau\nu=\sqrt{1-\rho^2}.
+\tag{46.7}
+$$
+
+若 $\rho\ge\sqrt\delta/5$，使用引理45.2(i)的半径25两点。它们的初态距离
+$50\rho$，首锚后的状态完全相同，零误差共同记录给半距
+$25\rho\ge5\sqrt\delta$。
+
+余下 $0<\rho<\sqrt\delta/5\le1/5$。由
+$\alpha=\kappa K-\tau\rho$ 及 $K\ge1-\rho^2\ge24/25$，有
+
+$$
+\alpha\ge\frac{52}{125}>\frac25,
+\qquad \nu>\frac45.
+\tag{46.8}
+$$
+
+取同一半径25的两个固定初始来源
+
+$$
+\begin{aligned}
+t_\delta&=\sqrt{100\delta-4\delta^2},\\
+b_0&=(25u)q^{-1},\\
+b_1&=(t_\delta+(25-2\delta)u)q^{-1}.
+\end{aligned}
+\tag{46.9}
+$$
+
+$0<\delta\le1$ 保证所有根号有意义，并给
+$t_\delta\ge\sqrt{96\delta}$。两点范数均为25；其来源帽条件逐点为
+
+$$
+\operatorname{Re}b_0=25\nu\ge20,\qquad
+\operatorname{Re}b_1=\alpha t_\delta+\nu(25-2\delta)\ge20.
+\tag{46.10}
+$$
+
+第二个不等式由 $\alpha>2/5$、$\nu\le1$ 和
+$(2/5)\sqrt{96\delta}\ge2\delta$ 得到：
+$\alpha t_\delta\ge2\delta\ge2\nu\delta$，所以其左端至少 $25\nu$。
+此外
+
+$$
+|b_1-b_0|^2=t_\delta^2+4\delta^2=100\delta.
+\tag{46.11}
+$$
+
+此前全部真实可见读仍为零。首次锚后，两实际状态之差为
+$(-2\sigma\lambda\delta u,0)$：实数 $t_\delta$ 被锚消去，隐藏分量因
+共同 $a=0$ 而相同。此时两个差分量的范数分别不超过 $2\delta$。式（46.2）的
+内部动作分别在 $E$ 上作叉积收缩、在 $\mathbb H$ 上作右乘收缩；锚把差分量
+变为 $(\operatorname{Im}\Delta b,-\Delta a)$。所以“两差分量各不超过
+$2\delta$”在全部后续原动作下保持，任何后续实际Read的真实值之差至多
+$2\delta$。
+
+从首锚开始，每次Read共同报告两个真实值的中点，给两次实际运行使用相反的
+半差误差，每次范数都不超过 $\delta$。共同报告前缀迫使同一下一动作、Read选择
+和停止；这个递推覆盖任意重复Read、有限停止及可数完整记录。两初始来源在运行前
+各自固定，没有随历史换半径或换来源，中点也不必是合法初始来源。这里保持的是
+报告不可区分，不声称正误差下两个真实当前状态完全相同。
+
+每一分支都得到相同完整实际记录的两个合法 INITIAL。它们的共同 $W$ 值输出由
+三角不等式至少对其中一个有半距误差；在最后一分支该半距恰为
+$5\sqrt\delta$。若使用可数记录，其所有有限前缀已经相同，记录函数不会增添新
+事件或新信息。这证明（46.4），并未预设任何有限更新或Read上限。证毕。
+

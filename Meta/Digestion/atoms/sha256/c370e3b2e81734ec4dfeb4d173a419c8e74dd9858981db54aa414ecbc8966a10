@@ -1,0 +1,17 @@
+## 4. Lifting the separator to every original finite carrier in the class
+
+**Proof of Theorem 1.5.** Apply Mathematical citation 2.1 to the original observer. Its positive suspended support lies among the reachable configurations in Definition 1.4. Clipping therefore produces one regular stationary table with constant suspended emission $s\in[a,b]$, even when $s_0=0$ or $1$.
+
+For each endpoint, its expected configuration loss is at most $\rho_s+\widehat\varepsilon_s$. Convexity in the decoder gives the mean-law bounds (2.4) with $\epsilon_s=\widehat\varepsilon_s$. Theorem 3.1 and (2.2) imply
+
+$$
+\frac1{35200}<\widehat e\le\frac{61}{11}e(M),\qquad
+ e(M)>\frac{11}{61\cdot35200}=\frac1{195200}.
+$$
+
+The endpoint lower bounds ensure the excesses are nonnegative. Taking the infimum proves its non-strict lower bound. An exact common conf/conf attainer has $e=0$ and thus cannot satisfy Definition 1.4. A sequence with $e\to0$ is eventually below $1/195200$, so its late members also cannot satisfy that definition. ∎
+
+This proof retains arbitrary original transient modes and arbitrary original emission entries. It does not assume that every original configuration is recurrent: the supplied support inclusion is sufficient. No originally admissible history is removed. The fixed fibre supplies necessary bounds for the original full-domain suprema; it does not replace the domain by that fibre or by a finite set of probes.
+
+The comparison can enlarge or change counted resources. The conclusion is therefore a uniform lower bound over the stated class, not a budget-preserving reduction or a fixed-resource optimum. Exact per-configuration generation follows from the actual program before reduction and from the changed same-update program after clipping. Marginalized coherence is not inferred from either statement.
+

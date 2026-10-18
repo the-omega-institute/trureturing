@@ -1,0 +1,30 @@
+**Corollary 13.6 (Finite actual tests for the channel-level inequality).**
+For any rational $0<\eta<1$, let
+$h=\eta/48$, $n=\lceil153600/\eta^2\rceil$ and $H=nh$.
+For every original legal complex scalar port, some
+$s\in\{N,2,3,5\}$ and $t\in\{jh:0\le j\le n\}$, with
+input $DQ_s(t)D^\dagger$, actual wait $t$, a complete mode read
+and Stop, have
+
+$$
+\operatorname{TV}>1-F(L)-\eta
+\ge B_{\rm pop}-\frac{15}{8}\sqrt{\mathfrak R_{\rm pop}(L)}-\eta.
+\tag{13.17}
+$$
+
+There are $4(n+1)$ alternative tests, with
+$3200/\eta\le H\le3200/\eta+\eta/48$.
+
+Proof. In QEC Theorem 2.6's finite-Fourier argument replace the
+mean-survival upper by $\mathscr S(T)\le F(L)$ from (13.6).
+The uniform forward-mean error is $<800/H\le\eta/4$,
+and the survival derivative has modulus $<12$ on every allowed
+mode input. Some positive-weight mode in $[0,H]$ therefore has
+failure at least $1-F(L)-\eta/4$. Moving to a grid point within
+$h$ loses at most $\eta/4$, proving the strict threshold in
+(13.17). The second bound is (13.3); the ceiling gives the time
+bounds. These are actual finite alternative waits under Assumption
+1.1, not independent torus controls, a probability oracle or a
+sample/preparation/clock-cost theorem. The finite-wait mechanism is
+the credited QEC ingredient. $\square$
+

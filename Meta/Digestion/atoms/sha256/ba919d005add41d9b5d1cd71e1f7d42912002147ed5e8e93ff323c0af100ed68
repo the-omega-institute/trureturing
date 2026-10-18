@@ -1,0 +1,27 @@
+## 180. Actual residual-face closure
+
+The two C-axis faces of rho in (173.3) already lead to tau. Each residual
+face has labels {Z,M,Q}. Track the actual target Z slot.
+
+If Q=M, an axial target would require the forbidden repeated reservoir
+pair {M,M}. A transverse target has pair {Z,M}, hence owner rho.
+
+If Q=Z, an axial target has pair {Z,M}. A transverse target cannot
+have companion Z, and therefore again has pair {Z,M}. Both are rho.
+
+If Q=B in L, then B!=C by q>c. An axial target would have pair {M,B},
+which Section 179 excludes because its only possible owner tau has pair
+{M,C}. A transverse target either has pair {Z,M}, hence owner rho,
+or has pair {Z,B} and an axial M slot, which Section 179 excludes.
+
+These exhaust every slot-sensitive continuation, including repeated
+labels. Tau has one Z slot and both its faces lead to rho. Rho has two
+Z slots, or three if Q=Z, and every face incident to these slots leads
+to tau or rho. Thus their slots form the full connected normal circle
+of the original edge Z. It has at most four slots, contradicting the
+original minimum degree six. Self-pairings only change adjacency among
+these same slots and cannot increase that count.
+
+The contrary hypothesis is impossible. Hence some U outside {M,Z}
+has u>m-2; since c,d<m-2, it is outside all four escape labels. QED.
+

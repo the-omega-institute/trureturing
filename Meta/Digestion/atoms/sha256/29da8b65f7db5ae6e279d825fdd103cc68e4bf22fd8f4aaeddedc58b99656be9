@@ -1,0 +1,33 @@
+**Convention 2.2 (exact temporal compatibility and prescribed incidence).**
+Reuse [OCB, Theorem 2.2][OCB]. For
+$Q_0=\{(0,0),(2,1),(1,0)\}$ and $\ell_L=1,\ell_R=2$, put
+
+$$
+U((b,c))=\begin{cases}\star,&(b,c)=(0,0),\\b,&\text{otherwise},\end{cases}
+\quad
+D_e((b,c))=\begin{cases}\star,&(b,c)\in Q_0,\\b-\ell_e,&\text{otherwise}.
+\end{cases}
+\tag{GDB.9}
+$$
+
+The symbol $\star$ is distinct from every integer. A seed assignment is
+realizable exactly when
+
+$$
+U(z_{i,q}(s))=D_e(z_{i,qe}(s))
+\quad(q,qe\in W_d,\ e\in\{L,R\},\ i\in[n]).
+\tag{GDB.10}
+$$
+
+Ranges, actual owner guards and all these tests remain part of the model.
+Between distinct seeds a test is an equality of two unary functions;
+within a seed it is a unary condition. Constants remain constants.
+
+Define $I_c$ to be the set of original blocks with at least one port
+assigned to $c$, and $\nu(c)=|I_c|$. This counts prescribed incidence,
+including an assigned table that happens to be constant, and counts
+multiple occurrences within a block once. Let $\mathfrak N_{d,L}(n)$
+be the class with $\nu(c)\le L$ for every seed, as in
+[SIR, Definition 2.2][SIR]. Blocks, seeds and topology are not bounded
+in number by fixing $d,L$.
+

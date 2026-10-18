@@ -1,0 +1,122 @@
+**定理 82.4（Exact whole GLOBAL price with no extra seam test）。** For every target of Definition 82.3, under both original literal alphabets,
+
+$$
+\boxed{
+C_{\rm pre}(f)=C_{\rm pre}(F)=
+\begin{cases}
+h,&\mathsf K,\\
+h+1,&\neg\mathsf K.
+\end{cases}}
+\tag{82.16}
+$$
+
+Its exact worst emitted-bit fee is $m$ times this block fee. If $\mathsf K$ holds, every witnessing bijection in (82.15), through the inverse below, supplies one legal attaining stream. This theorem does not assign an adaptive optimum to arbitrary component tables.
+
+**证明（joint actual sources, immutable labels and all-action lower bounds）。** Every record in (82.12) is jointly actual. Use the credited original history [IC, (1.3); S1, Convention 1.3; S15, Section 1]: choose
+
+$$
+\begin{aligned}
+\ell&\equiv0\pmod m,&\ell&\equiv-j\pmod T,&\ell&\ge s+2,\\
+\eta&=\bigoplus_{i=\ell-s}^{\ell-1}\gamma_i,&
+w(v,j,s)&=(v\oplus\eta)0^{\ell-s-1}1^s.
+\end{aligned}
+\tag{82.17}
+$$
+
+Actual gcd one supplies arbitrarily large compatible $\ell$. This one legal history has value $v$, phase $-j$ and tail $s$ together, and splits into complete internally legal source blocks. Its separating zero prevents a forbidden run and its first bit compensates the terminal run's scalar contribution. The history $1^{2m}$ realizes initial bottom because its two individual blocks are internally legal and their seam rejects. The histories' lengths are unobserved and supply no INITIAL clock. The explicit pullback in (82.12) gives equality of record and history acquisition fees by [S1, Proposition 2.2].
+
+For either fixed free INITIAL value, at every phase the two actual tails $m-1$ and $m$ have unequal labels: a low label versus fresh $R$. Therefore no correct controller stops freely. A root beginning zero merges this pair at the first zero, with identical value and phase, so all later archives coincide on unequal INITIAL labels. A root with at least two leading ones, including $1^m$, rejects both before the first endpoint, and all their later outputs remain bottom. The credited first-zero and rejection losses [S1, Lemmas 4.2–4.3; S15, Proposition 4.2] thus force every correct root to begin $10$, irrespective of its horizon, subsequent actions or stopping rule.
+
+Such a root rejects exactly $s=m$. Every low tail $s<m$ survives the leading one since $s+1\le m<k$, reaches the second-bit zero and finishes safely. At a fixed phase the merger preserves the component INITIAL label in (82.12). All successful low sources then have common current tail, and each root-output archive has common current scalar. By [S10, Lemma 3.2], every later literal action, including waits, all-one words and attempted repairs, either succeeds on all candidates of such an archive or rejects all. Common rejection cannot resolve a nonconstant label because absorption is permanent; successful actions have at most two completed scalar outcomes, each again with common value and tail. A child with at most $a$ further paid blocks therefore has at most $2^a$ distinct-label leaves. This applies to arbitrary adaptive words and homogeneous endpoint stops, not only to the attaining constructions.
+
+For the GLOBAL lower bound use the credited exact preset value-join law [IC, Definition 29.1 and Theorem 29.2]. The joined full target has high label $(R,R)$, low table $\Lambda$, and independent initial bottom. Its preset price equals that of $f$, including stops and absorption. The law is a decoder symmetry on the same actual stream and its acquired endpoints, without a second experiment or borrowed observation. On either fixed scalar fibre there are $|L|=2^h$ actual low labels. The forced root gives at most two successful low children; each admits at most $2^{H-1}$ distinct labels when the whole worst fee is $H$. Hence $2^h\le2^H$, proving $C_{\rm pre}(f)\ge h$.
+
+**证明（necessity of the criterion at saturated fee）。** Suppose a correct GLOBAL joined controller finishes in $h$ blocks. Equality in the preceding binary count forces a complete binary low-label tree of depth $h$. More explicitly, its two root children each have $2^{h-1}$ labels with disjoint images; the same equality recurses at every child. An overlapping label image, an early homogeneous stop, a uniform rejecting action or a missing useful child would reduce the total number of distinct-label leaves below $2^h$. Thus every low source continues through all $h$ slots and succeeds in every issued word.
+
+The common literal stream induces a length-$h$ difference vector on every phase. Unequal low labels must have unequal vectors. All $2^h$ vectors are already required by the $2^h$ labels, so each label has exactly one vector: allowing two for one label leaves too few for the others. Consequently these actual differences give a bijection $c:L\to\mathbb F_2^h$.
+
+Since $m\equiv-2\pmod T$, the full path at chronological index $t$ misses only $e_0=z$ at $t=0$ and $e_t$ of (82.14) for $1\le t<h$. These latter phases belong to $A$ and are distinct. Indeed $2^h\ge2h+2$ for $h\ge4$ and $m\ge2^h-1$ give $e_{h-1}\ge2^h-2h+2\ge4$. Formula (82.3) therefore forces $c_0(\widehat C)=0$ and $c_t(\Gamma(e_t))=0$. The first two root bits $10$ force its charges at phases zero and one to be one, giving the other root conditions in (82.15).
+
+Each full arithmetic row is even on $W_t$ and zero at its missing vertex, so
+
+$$
+\bigoplus_{j=0}^{m+1}c(\Lambda(j))=0.
+\tag{82.18}
+$$
+
+The XOR of the whole $h$-cube is zero, because each coordinate has $2^{h-1}$ ones, an even number. In (82.18), positive even classes contribute zero and odd classes, including the singleton outside class, contribute their code once. Hence
+
+$$
+0=\bigoplus_{j=0}^{m+1}c(\Lambda(j))
+ =\left(\bigoplus_{y\in\mathbb F_2^h}y\right)
+       \oplus\bigoplus_{D\in E}c(D)
+ =\bigoplus_{D\in E}c(D).
+\tag{82.19}
+$$
+
+This gives the remaining condition of $\mathsf K$. Thus every fee-$h$ GLOBAL controller yields a witness of (82.15). All paid waits occupy those same chronological windows; arbitrary stops and attempted rejection were included in the saturation argument. If $\mathsf K$ fails, the integer fee is at least $h+1$.
+
+**证明（the actual $h$-block stream and its automatic strict seams）。** Suppose $\mathsf K$ holds and choose any witnessing $c$. On the full phase cycle put $\chi_t(j)=c_t(\Lambda(j))$. The cube XOR and (82.15) give (82.18) in the reverse direction, so every $\chi_t$ has even total charge. It is zero at the missing vertex of its actual $W_t$. The unique literal words are therefore
+
+$$
+B_{t,i}=\bigoplus_{a=0}^i
+              c_t(\Lambda(tm+a\bmod T)),
+\qquad 0\le t<h,\quad0\le i<m.
+\tag{82.20}
+$$
+
+Issue the single fixed stream $B_0|B_1|\cdots|B_{h-1}$. The root bits are $B_{0,0}=1$ and $B_{0,1}=1\oplus1=0$, so the root has exactly the lawful high-band rejection and low-tail preservation already proved. Each word is internally legal since its length is $m<k$.
+
+For every pair of consecutive coordinates $t-1,t$, the full cube contains exactly $2^{h-2}\ge4$ distinct vectors with both coordinates one. Bijection gives that many distinct low labels $D$ with $c_{t-1}(D)=c_t(D)=1$. Each label has at least one actual phase in the full low cycle, and distinct classes have disjoint phase sets. Consequently
+
+$$
+\bigl|\{j:\chi_{t-1}(j)=\chi_t(j)=1\}\bigr|
+\ge2^{h-2}\ge4.
+\tag{82.21}
+$$
+
+There is no counting of virtual phases or separate value optima here. These are the complete arithmetic rows of the very words (82.20) on the original reader.
+
+Inductively assume the preceding words have succeeded on a low source. Its actual incoming tail for $B_t$ is $\rho(B_{t-1})$, including the all-one case described in Definition 82.1. If its next seam rejected, Lemma 82.2 would bound the left-hand side of (82.21) by three, a contradiction. Thus every seam obeys
+
+$$
+\rho(B_{t-1})+\alpha(B_t)<m+1=k.
+\tag{82.22}
+$$
+
+This proves safety on all continuing low sources. It does not require a zero among the adjacent boundary bits: a boundary with two ones can have a short, strictly legal run. All-one and zero words are covered by the same argument. No clearing, waiting, repair or padding block is inserted.
+
+The controller's complete rule is as follows. Initial bottom returns $L_\bot$ freely. Root bottom returns $R$ at the completed paid root endpoint and stops; every remaining bit of that root has already been emitted into absorption. Every low source, including outside phase $z$, emits all $h$ words. Its own successive scalar endpoints $v_0,\ldots,v_h$ yield
+
+$$
+(v_1\oplus v_0,\ldots,v_h\oplus v_{h-1})
+   =c(\Lambda(j)).
+\tag{82.23}
+$$
+
+The inverse bijection returns the joined low label. If it is $\widehat C$, return $C$; otherwise return the component selected by the remembered free INITIAL value $v_0$. The same literal stream serves both values and all original tails. No phase is read, no other child's output is used, and the INITIAL target is unchanged. All low records are actual by (82.17), so some sources, indeed all low sources in this displayed rule, pay exactly $h$ blocks. Stopping at the final endpoint requires no cleanup. Together with the lower bound, this proves the first case of (82.16).
+
+**证明（the fully paid common fallback when the criterion fails）。** The $(h+1)$-block upper bound is credited reuse of Chapter 73, with its full-target connection as in Chapters 74 and 81. For completeness the actual words and stops are specified. Issue $P_m=(10)^{(m-1)/2}1$ at index zero. It rejects precisely high tails $s=m$, returning $R$ at its paid endpoint; all low tails survive its first zero with their INITIAL labels preserved. Its charge is one on $A$ and zero at $z$. Thus its successful zero-difference child is homogeneous $C$ and stops at fee one. Its positive child is exactly the actual archive of Definition 73.1 with full support $A$, common scalar, terminal tail one and joined table $\Gamma$.
+
+Here the child has $2^h-1\ge15$ labels. Lemma 73.3 supplies an injective code $b:\Gamma[A]\to\mathbb F_2^h$, with suffix coordinates $r=1,\ldots,h$, satisfying
+
+$$
+\begin{aligned}
+b_r(\Gamma(m+1-2r))&=0&&1\le r\le h,\\
+b_1(\Gamma(m))&=0,\\
+b_{r-1}(\Gamma(m+2-2r))b_r(\Gamma(m+2-2r))&=0
+&&2\le r\le h.
+\end{aligned}
+\tag{82.24}
+$$
+
+All these representatives are low phases since $h\le(m+1)/2$. At actual index $r$, let $\psi_r(j)=b_r(\Gamma(j))$ on $A$, and prescribe the already stopped outside vertex by
+
+$$
+\psi_r(z)=\bigoplus_{j\in A}b_r(\Gamma(j)),\qquad
+S_{r,i}=\bigoplus_{a=0}^i\psi_r(rm+a\bmod T).
+\tag{82.25}
+$$
+
+The unavailable low coordinate is zero by (82.24); the charge at $z$ makes the full row even. Thus (82.25) is the supplied actual inverse, not a second experiment at $z$. The first suffix begins zero because its first vertex is $m$. For every later suffix boundary the preceding last and next first vertex are the same $m+2-2r$, and their literal bits have product zero by (82.24). All these strict seams and the initial tail-one seam are safe by the credited Lemma 73.5. Every continuing positive source issues the same $P_m|S_1|\cdots|S_h$ and decodes $b(\Gamma(j))$ from its own suffix differences, returning its INITIAL-value component. Initial bottom stops freely; root bottom and root-zero have already stopped. Actual positive sources pay all $h+1$ blocks. This supplies no novel fallback-price claim and uses no unpaid wait or repair. It proves the second upper bound; necessity of $\mathsf K$ proves its matching lower bound. Multiplying every paid complete word by its actual width $m$ gives the emitted-bit assertion. ∎
+

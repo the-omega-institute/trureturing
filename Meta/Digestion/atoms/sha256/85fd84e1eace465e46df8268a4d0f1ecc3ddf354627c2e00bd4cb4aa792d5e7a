@@ -1,0 +1,51 @@
+**Theorem 5.2 (starting-tally and authenticated-target separation).**
+If $h\in\mathcal C_{\mathrm{gc}}$ has the original-interface certificate
+of Definition 5.1, then
+
+$$
+\forall k\in\mathcal C_{\mathrm{gc}},\qquad h\sim_Q k\ \Longrightarrow\ h=k.
+$$
+
+Consequently, on any $D\subseteq\mathcal C_{\mathrm{gc}}$ whose members
+have these certificates, for each $V\in\{S,B,M_J,T\}$ separately,
+
+$$
+V(h)=V(k)\quad\Longleftrightarrow\quad h=k
+\quad\Longleftrightarrow\quad h\sim_Q k,
+\qquad h,k\in D.
+$$
+
+There is no common fixed Ready or source-entry parameter in this
+conclusion. All original-interface requirements of Definition 5.1,
+including its uniform authenticity clause, remain hypotheses.
+
+Proof. Suppose $h\sim_Q k$. The one-node prefix of $E_N$ is defined
+and executed from $h$, so partial response equality forces the same
+executed kind from $k$. It cannot become undefined, unexecuted `none`
+or an executed refusal of a different kind. Requirement1 and equality
+of the complete original meter successors give
+
+$$
+N+1=n(k)+1,
+$$
+
+hence $n(k)=N$. This is a mathematical selection from a required response,
+not a permitted private-state branch of the experiment.
+
+Equality of the full partial maps also gives the identical defined
+response to $E_N$. The fixed extraction in requirement3 therefore
+returns identical bindings and bodies. Its uniform authenticity clause
+identifies genuine GENERAL publications for target tally $N$ on both
+actual continuations. Since each starting prefix already has length
+$N$, its continuation's prefix of length $N$ is precisely that starting
+prefix. The two authentic targets are thus $h$ and $k$, not a common
+older acquisition cut. GENERAL Theorem 6.3 identifies the two bodies
+with the same independently defined view of those respective targets.
+Their equality, followed by GENERAL Corollary 4.4, gives $h=k$.
+
+Identical histories of the fixed initialized apparatus have identical
+original partial response maps. GENERAL Corollary 4.4 gives the two
+directions involving each natural view. This proves the second
+assertion. Only $h$ needed a certificate to separate it from all $k$;
+no independent returnability assumption for $k$ was used. ∎
+

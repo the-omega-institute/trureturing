@@ -1,0 +1,17 @@
+**Proposition 248.3 (A charged earlier-label change on an actual source).**
+The actual source $(r,g)=(19,436)$ has $F_{19}=4181$,
+$N(r,g)=1822917$ and first-four reply word $0100$.
+The legal table $N(3,4;1,0,0,0)$ returns earlier unqueried label one
+there. Its repair returns zero. For this pure table the changed mass
+is one, and its defect at $L=4$ is two.
+
+Proof. The integer is divisible by three and by none of two, five,
+seven; $419\le436\le836$ is in the original Fibonacci window.
+The acquired pair $(3,4)$ sees $00$, whose original output is one.
+The repair uses its old $01$ output, zero. The original
+base/correct/pair vector is $(0,1,1)$ and the repaired vector
+$(1,0,1)$. Every sole-zero correct indicator is zero, while the positive
+base is one; hence (248.4) gives defect two. Its full probability mass
+is included in (248.2), exactly as required by (248.7).
+No pruning to base or queried labels is legitimate. ∎
+

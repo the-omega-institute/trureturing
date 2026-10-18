@@ -1,0 +1,71 @@
+**Lemma 64.5b (the source diagonal, a uniform fast-state bound and a trial lift).**
+Let $R_N$ restrict a producer vector to its atomic distinct-port coordinates,
+identified with $\mathscr H_{D,N}$; let $J_N=R_N^*$ be the atomic injection. For
+$N=2$ the ordered atomic values are
+$u(p,q)=f(\{p,q\})/\sqrt2$ for $p\ne q$, and $u(p,p)=0$.
+Then $\sum_{p,q}|u(p,q)|^2=\|f\|^2$. Write $K_{D,1}=L_D$ and take $K_{D,2}$
+literally from (62.2). For every form vector,
+\[
+k_{\delta,N}(F)\ge\langle R_NF,K_{D,N}R_NF\rangle,
+\qquad
+R_NZ=0\ \Longrightarrow\ \|Z\|^2\le9\delta k_{\delta,N}(Z).
+\tag{64.9}
+\]
+There is a linear symmetric form-domain lift $I_N$ with $R_NI_N=I$ such that
+\[
+\begin{aligned}
+k_{\delta,1}(I_1f)&=\langle f,L_Df\rangle,
+&\|I_1f-J_1f\|^2&\le\tfrac32\delta\|f\|^2,\\
+0\le k_{\delta,2}(I_2f)-\langle f,K_{D,2}f\rangle&\le18\delta\|f\|^2,
+&\|I_2f-J_2f\|^2&\le(3\delta+\tfrac94\delta^2)\|f\|^2.
+\end{aligned}                                                    \tag{64.10}
+\]
+All constants are independent of the finite source, cap, boundary and installed $D$.
+
+Proof. An interval with endpoint values $v,w$ has derivative energy at least
+$|v-w|^2$. Apply this to every slice, using zero at grounded ends and at an
+occupied endpoint. The resulting sum is exactly the symmetric compression of
+$L_D\otimes I+I\otimes L_D$: the hopping coefficient is $-1$ on every allowed
+move, while the diagonal is $d_p+d_q$. A blocked hop has a zero collision
+endpoint and contributes its killing energy; it does not disappear with the hop.
+Grounded stubs similarly retain every exterior contribution. This proves the
+first inequality, including the normalization factors. For $N=1$ the same
+argument gives the original $L_D$.
+
+For $R_NZ=0$, each slice has zero endpoints, so
+$\int|Z|^2\le\int|Z'|^2$ by the fundamental theorem of calculus and
+Cauchy--Schwarz. A same-cable function with zero traces on both diagonals glues
+to an $H^1$ function on the square; no derivative delta mass is introduced.
+On any square, choose its first cable's endpoint $v_e$, and use
+\[
+\int_{e\times f}|Z|^2\le
+2\int_f|Z(v_e,y)|^2dy+2\int_{e\times f}|\partial_x Z|^2dxdy.
+\]
+The boundary term is zero if $v_e$ is grounded. Otherwise a port is chosen at
+most three times, since its total incidence is at most three. Summing with mass
+$\delta^2$, and adding all slice masses $\delta$, bounds the norm by
+$(\delta+6\delta^2)$ times the slice derivative energy plus $2\delta$ times the
+cell part of (64.7). This is at most $9\delta k_{\delta,2}(Z)$ for $\delta\le1$.
+The one-particle bound is smaller. This proof counts every slice and cell, rather
+than assuming that the continuum modes have been removed.
+
+For the trial lift, interpolate every one-particle cable linearly. For two
+particles interpolate each atom/cable slice linearly from its atomic endpoints.
+On distinct-cable rectangles use bilinear interpolation of the four atomic corner
+values, treating ground and collision corners as zero. On a same-cable square
+with distinct port endpoints $p,q$, use
+\[
+(I_2f)_{ee}(x,y)=u(p,q)|x-y| .
+\]
+On a stub's same-cable square this is zero. The slice boundary values match,
+both collision traces vanish, and the lift is symmetric. It has the exact source
+slice energy just proved. For a rectangle with corners $v_{ij}$, convexity gives
+$\int|I_2f|^2\le\tfrac14\sum_{ij}|v_{ij}|^2$ and
+$\int|\nabla I_2f|^2\le2\sum_{ij}|v_{ij}|^2$. On a same-cable square the respective
+integrals are $|u(p,q)|^2/6$ and $2|u(p,q)|^2$, obeying the same upper bounds.
+A given ordered atomic corner occurs at most $d_pd_q\le9$ times. Each coordinate's
+slice norm is at most $\tfrac12\sum_{p,q}d_p|u(p,q)|^2\le\tfrac32\|f\|^2$.
+Summing these exact integrals proves both two-particle bounds. For one particle
+integration gives $I_1^*I_1=I+\delta(D_D/3+A_D/6)$, whose continuum Gram norm is
+at most $3/2$. $\square$
+

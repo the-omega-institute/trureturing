@@ -1,0 +1,17 @@
+**Proposition 9.2 (precise spectator scope).** On a promised history the
+specimen and helper are pure, so any further joint reference has product
+form with these two pure marginals, conditional on that history. The common
+constructed instrument tensored with identity therefore preserves any
+actual mixture of such history-correlated spectator states, along with
+their correlations with success/failure and residue.
+
+Proof. A positive matrix with a rank-one marginal has support in that
+one-dimensional marginal tensor the other space: expectations on the
+orthogonal marginal complement vanish, and positivity removes its cross
+blocks. Apply this successively to the pure specimen and pure helper.
+Then use linearity of each CP branch and identity on the spectator.
+This proves the claimed history-conditioned and mixed-history statement.
+It does not identify independently chosen spectator marginals or claim
+equality with a canonical instrument on arbitrary entangled inputs.
+$\square$
+

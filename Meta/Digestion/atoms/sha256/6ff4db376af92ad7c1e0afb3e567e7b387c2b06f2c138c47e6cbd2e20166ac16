@@ -1,0 +1,23 @@
+**Lemma 4.4 (Explicit primary chains, including every repeated root).** For Definition 2.1 and the factorization in Definition 4.1 set
+
+$$
+g_\lambda(z)=\frac{f(z)}{(z-\lambda)^{m_\lambda}},\qquad
+v_{\lambda,j}=(P-\lambda I)^j g_\lambda(P)e_0
+\quad(0\le j<m_\lambda).
+\tag{4.3}
+$$
+
+All the vectors in (4.3), over all $\lambda\in\Lambda$, form a basis of $V$. For each root they give one chain of length exactly $m_\lambda$. Consequently $P$ has exactly one block $J_{m_\lambda}(\lambda)$ at that root.
+
+Proof. Applying $P-\lambda I$ sends $v_{\lambda,j}$ to $v_{\lambda,j+1}$ until the last, and kills the last because $(P-\lambda I)^{m_\lambda}g_\lambda(P)=f(P)=0$.
+
+To prove independence, suppose a relation among all the displayed vectors holds. For each root form
+
+$$
+a_\lambda(z)=\sum_{j=0}^{m_\lambda-1}c_{\lambda,j}(z-\lambda)^j
+$$
+
+from its coefficients. Lemma 4.3 says that $f$ divides $\sum_\lambda a_\lambda g_\lambda$. Fix one root $\lambda$. Each summand indexed by a different root is divisible by $(z-\lambda)^{m_\lambda}$, as is the total sum. Hence this power divides $a_\lambda g_\lambda$. But $g_\lambda(\lambda)\ne0$, so $g_\lambda$ contains no factor $z-\lambda$; the entire power must divide $a_\lambda$. Since $\deg a_\lambda<m_\lambda$ unless it is zero, $a_\lambda=0$. This holds for every root, so all coefficients vanish.
+
+There are $\sum_\lambda m_\lambda=d$ independent vectors, giving a basis. In particular the last vector of each list is nonzero, and the chain has its asserted exact length. Reversing each list gives the specified Jordan convention. No simplicity of the roots has been assumed. $\square$
+

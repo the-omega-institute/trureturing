@@ -1,0 +1,4 @@
+**命题 46.2（相干程序与经典选择的区别）。** 对正交控制标签，$W_c=\sum_a|a\rangle\langle a|\otimes U_a$ 是合法受控酉；输入 $\sum_ac_a|a\rangle\otimes|\psi\rangle$ 输出 $\sum_ac_a|a\rangle\otimes U_a|\psi\rangle$。
+
+**证明。** 正交标签使 $W_c^\dagger W_c=W_cW_c^\dagger=I$，输出式由线性性得到。相干输出不等于一个已经记录的经典动作；读取控制寄存器须另指定仪器。该结构不提供任意指定测量结果的权限。$\square$
+

@@ -1,0 +1,8 @@
+**Mathematical citation 1.3 (reused native certificate).** [CNA, Theorem 2.2
+and §4][CNA], using [NDP] `original_present_transport`, supplies two facts:
+present addresses and branches persist; two equal leaf replies at one address
+enclose zero global updates. A left-only search from the root obtains such
+a leaf without knowing height. Branch and absent replies do not certify a
+quiet interval. This volume applies that existing guard to a different
+computation; it does not recreate the full-tree acquisition theorem.
+

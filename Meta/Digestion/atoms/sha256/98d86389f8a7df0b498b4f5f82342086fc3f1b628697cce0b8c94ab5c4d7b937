@@ -1,0 +1,116 @@
+**Theorem 4.1 (the entire original uniform frontier).** For Definition
+1.2's parameters and every integer triple $(H,p,L)$,
+
+$$
+\boxed{\quad
+\mathsf N_{A,k,r}(H,p,L)
+\ \Longleftrightarrow\
+\mathsf B_{c,k}(H-4-r,\ p-1,\ L-3).
+\quad}
+\tag{WTF.13}
+$$
+
+The native quantifier is over the entire unbounded original fiber.
+The Boolean model is exactly Definition 3.1, with paid repeats and
+arbitrary stationary sharing. This is an equivalence of simultaneous
+uniform upper-budget feasibility.
+
+Proof, projection. Start with a native witness and its actual runs on
+Supplier 2.1's cube. Retain one Boolean running state for each original
+selected state reached on at least one cube input, labeled $i$ when its
+word is in $E_i$. The two outputs retain their original zero/one labels.
+At an occurrence root use its beta/branch successors as Boolean
+zero/one successors; at a selected child use absent/beta instead.
+
+Bypass cube-constant states along their unique constant-reply
+successors, both from the old common start and after each realized
+selected edge. Such a realized chain is finite: a cube source realizing
+its incoming edge follows that whole constant chain, so a constant-state
+loop would contradict its actual termination. It reaches another retained
+selected state or the appropriate original-entry latch. The initial
+chain must reach a selected state, since otherwise every cube input
+would reach the same latch despite the nonconstant threshold.
+
+For a selected edge not realized by any cube input at its original
+state, give its Boolean successor any terminal. This defines a total
+static graph even if the unused original continuation loops or reaches
+an unused state. It does not assert that the unused edge is realizable.
+For each fixed $\theta$, induction from the common start follows
+exactly the selected-state subsequence of the old run on its one actual
+$u_\theta$. At each induction step its outgoing edge is realized by
+that same source, so no newly assigned impossible edge becomes
+reachable. The projected graph is correct and terminates on every
+Boolean input. No graph unfolding or leveling has occurred.
+
+Its installed running-state count is at most the original $M$, hence
+at most $H-4-r$ by Lemma 2.2. On each input its query count is precisely
+the number of selected visits of the old cube run. Its weighted charge
+is at most those visits' actual total length, since every $E_i$ word
+has length at least $c_i$. Its own old complete cube run separately
+contains the additional invocation of Lemma 2.2. Therefore
+
+$$
+q_B(\theta)+1\le q_P(u_\theta)\le p,\qquad
+L_B(\theta)+3\le\ell_P(u_\theta)\le L.
+\tag{WTF.14}
+$$
+
+These inequalities retain every repeated selected-coordinate visit.
+They prove Boolean feasibility at all three stated bounds together.
+
+Proof, full-fiber lift. Conversely take any qualifying Boolean graph.
+Install every one of its running states at the fixed native literal
+$a_{i(v)}=LLL L^{s_{i(v)}}R$, retaining even its unused states. Replace
+its terminals by the original $\widehat e_0,\widehat e_1$. At each
+running state install the Boolean-one successor for branch, and
+separately install the Boolean-zero successor for alpha, beta and
+absent. This is a fixed four-reply table, with no running indicator
+calculation, counter or computed address.
+
+Add the following two different profile states, start at $D$, and
+install all $r$ additional mandated latches:
+
+| Native state | Literal | alpha | beta | branch | absent |
+| --- | --- | --- | --- | --- | --- |
+| $D$ | $RLR$ | $\widehat e_1$ | Boolean start | $T$ | $\widehat e_0$ |
+| $T$ | $RRR$ | $\widehat e_1$ | $\widehat e_0$ | $\widehat e_0$ | $\widehat e_0$ |
+
+On every actual $u\in Z_{b_3}$, its arbitrary branch image $x_a$
+defines the static vector $\theta_i(x_a)$ of Definition 1.2. The
+all-address occurrence identity (WTF.10) makes each actual selected
+visit exactly that Boolean bit test under the installed four successors.
+Thus semantic termination and threshold correctness hold for every
+such branch image, including noncomb images, alpha replies and absent
+selected nodes. No vector, inverse or archive is given to the apparatus.
+
+The full profile partition proves correctness elsewhere. Alpha at $D$
+means $\Pi_3$ and latches one. Beta means precisely $Z_{b_3}$. When
+$D$ returns branch, the only remaining code-one profile is $\Pi_4$,
+detected by alpha at $T$; every other such profile requires zero.
+All four root successors are installed even when absence is unreachable.
+This exhausts every source in $\mathcal U_*$, and produces literally
+its original prescribed complete entry. The unchanged reader of
+Convention 1.3 then returns that same source's entire predecessor row,
+with repeated occurrences, canonical partition, disequalities and
+blocking guards. Nothing in the lift changes a source or a target.
+
+The installed preparation count is exactly $m_B+4+r$. On a selected
+route the two charged coordinates are exactly
+
+$$
+q_P(u)=1+q_B(\theta(x_a)),\qquad
+\ell_P(u)=3+L_B(\theta(x_a)).
+\tag{WTF.15}
+$$
+
+Other routes have at most two calls and six letters. Lemma 3.2 forces
+$p-1\ge n$ and $L-3\ge W$ whenever the Boolean premise is feasible.
+Since $n\ge3$ and $c_i\ge5$, these budgets dominate those other routes.
+Thus the lifted preparer fits the original $(H,p,L)$ simultaneously.
+The separate reader's eight states and fresh calls are unchanged.
+
+Finally, if a bound on either side is negative, its stated feasibility
+is false. If a shifted bound is negative while native bounds are
+nonnegative, the projection inequalities and (WTF.11) exclude a native
+witness as well. This covers all integer triples. $\square$
+

@@ -1,0 +1,40 @@
+**定义 1.2（目标的可行切口集）。** 对 $0\le r<h$，令
+
+$$
+H_r=\{0,m\}\times\{h-r,\ldots,h-1\},\qquad
+L_{j,r}=\{j\}\times\{0,\ldots,h-r-1\}.
+$$
+
+记 $\mathcal P_r$ 为 $H_r,L_{0,r},L_{m,r}$ 中全部非空集合组成的分割。特别 $\mathcal P_0$ 有两个相位胞，$r\ge1$ 时 $\mathcal P_r$ 有三个胞。定义
+
+$$
+\mathcal C_F=\{r\in\{0,\ldots,h-1\}:
+F\text{ 在 }\mathcal P_r\text{ 的每个胞上恒定}\}.
+\tag{AA.4}
+$$
+
+式（AA.4）就是原卷式（68.3）的切口条件，分别要求共同高尾带恒定、两个低相位带各自恒定。原定理68.2给出
+
+$$
+\Delta_v(F)=
+\begin{cases}
+0,&F\text{ 恒定},\\
+1,&F\text{ 非恒定且 }\mathcal C_F\ne\varnothing,\\
++\infty,&\mathcal C_F=\varnothing,
+\end{cases}
+\tag{AA.5}
+$$
+
+且非恒定目标至多有一个可行切口。每个可行 $r$ 的一块实现为
+
+$$
+B_r=
+\begin{cases}
+0^{h+1}1\,0^{m-h-2},&r=0,\\
+1^r0^{m-r},&1\le r<h.
+\end{cases}
+\tag{AA.6}
+$$
+
+这些是既有准确费用和动作供应；其无穷分支依据所有首动作的首零损失，不是有限深度搜索未命中。
+

@@ -1,0 +1,31 @@
+**Lemma 3.2 (A rational per-site variance ceiling).** Every reset site satisfies
+
+$$
+0\le v_i\le
+\frac{9(c_i-\tfrac14)(\tfrac12-c_i)}{49-13c_i}
+<\frac1{312}.
+\tag{3.3}
+$$
+
+Proof. Under $\pi_n(\cdot\mid E_i)$ set $Q=a_{n,i}$, with mean $c=c_i$. The pointwise inequality $(Q-\tfrac14)(\tfrac12-Q)\ge0$ gives
+
+$$
+\mathbb E Q^2\le\frac34c-\frac18,
+\qquad
+\operatorname{Var}(Q)\le(c-\tfrac14)(\tfrac12-c).
+\tag{3.4}
+$$
+
+This is the classical interval-variance inequality, here proved directly. Multiply by (3.1). For the strict rational ceiling, compute symbolically
+
+$$
+\begin{aligned}
+49-13c-2808(c-\tfrac14)(\tfrac12-c)
+&=2808c^2-2119c+400\\
+&=\frac{(5616c-2119)^2+2639}{11232}>0.
+\end{aligned}
+\tag{3.5}
+$$
+
+Since $49-13c>0$, (3.5) is exactly the strict comparison of the middle expression in (3.3) with $1/312$. If $c$ is either endpoint of its band, (3.4) already makes the variance zero. No sharpness is claimed. $\square$
+

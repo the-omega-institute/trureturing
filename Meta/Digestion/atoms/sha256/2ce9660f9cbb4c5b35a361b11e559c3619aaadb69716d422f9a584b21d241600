@@ -1,0 +1,39 @@
+**Lemma 4.2 (Ten pairs and the singleton $25$).** Every event $J$ in the
+next table satisfies $\|H_J\|_{\rm op}<37/70$.
+The entries are the exact maximum absolute row sums of the full affine
+matrix $H_J(x)$ from (4.1), where $x$ replaces $r$ only in that table.
+
+| $J$ | At $x=4$ | At $x=25/6$ |
+| --- | --- | --- |
+| $\{25\}$ | $937/1904$ | $1867/3808$ |
+| $\{N,2\}$ | $1313/2856$ | $463/1008$ |
+| $\{N,3\}$ | $1117/2856$ | $2213/5712$ |
+| $\{N,5\}$ | $1313/2856$ | $463/1008$ |
+| $\{N,25\}$ | $939/1904$ | $5669/11424$ |
+| $\{2,3\}$ | $983/1904$ | $17785/34272$ |
+| $\{2,5\}$ | $101/204$ | $151/306$ |
+| $\{2,25\}$ | $151/336$ | $1709/3808$ |
+| $\{3,5\}$ | $983/1904$ | $17785/34272$ |
+| $\{3,25\}$ | $2423/5712$ | $14405/34272$ |
+| $\{5,25\}$ | $151/336$ | $1709/3808$ |
+
+Proof. To obtain each entry, sum the chosen numerator rows of (4.1),
+subtract from $22848\Pi_J$, substitute the indicated rational endpoint,
+take entrywise absolute values and maximize the five row sums after
+scaling by $22848$. This specifies all 22 rational identities.
+For example the mode-$3$ row of $H_{\{2,3\}}$ at $x=25/6$ has
+entries $-1433/22848$, $1665/3808$, $1301/68544$ in columns $(2,3,5)$.
+Their absolute sum is $17785/34272$.
+Since $4<r<25/6$, each absolute row sum at $r$ is at most its convex
+interpolation between the endpoint row sums. Symmetry bounds operator
+norm by maximum absolute row sum. Every endpoint entry is at most
+$17785/34272$, and
+
+$$
+\frac{17785}{34272}<\frac{37}{70},\qquad
+37\cdot34272-70\cdot17785=23114>0.
+\tag{4.2}
+$$
+
+Thus all eleven events obey the claimed strict bound. $\square$
+

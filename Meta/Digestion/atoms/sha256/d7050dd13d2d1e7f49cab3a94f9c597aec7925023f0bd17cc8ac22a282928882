@@ -1,0 +1,37 @@
+**Proposition 22.1 (absolute integrands, constants and distinct tail powers).** Fix valid constants, for $\mathfrak d\ge1$,
+
+$$
+p\le C_p\mathfrak d^{-5},\quad |Yp|\le C_Y\mathfrak d^{-6},\quad
+V\le C_V\mathfrak d^{-5},\quad |q_*|\le M_q,\quad
+|V_j|\le\sqrt{K_jV},\quad V_{\rm t}\le\sqrt{K_{\rm t}V}.
+\tag{22.1}
+$$
+
+For $r_0\ge1$, the five complete tail bounds are
+
+$$
+\begin{aligned}
+\int_{\mathfrak d>r_0}r^2|Yp|^2
+ &\le\epsilon_A(r_0)=\frac{7v_d}{3}c_r^{-2}C_Y^2r_0^{-3},\\
+\int_{\mathfrak d>r_0}p^2q_*^2
+ &\le\epsilon_I(r_0)=\frac{7v_d}{3}C_p^2M_q^2r_0^{-3},\\
+\int_{\mathfrak d>r_0}|rV_1|p^2
+ &\le\epsilon_B(r_0)=\frac{14v_d}{9}c_r^{-1}\sqrt{K_1C_V}C_p^2r_0^{-9/2},\\
+\int_{\mathfrak d>r_0}|V_2|p^2
+ &\le\epsilon_2(r_0)=\frac{14v_d}{11}\sqrt{K_2C_V}C_p^2r_0^{-11/2},\\
+\int_{\mathfrak d>r_0}V_{\rm t}p^2
+ &\le\epsilon_T(r_0)=\frac{14v_d}{11}\sqrt{K_{\rm t}C_V}C_p^2r_0^{-11/2}.
+\end{aligned}
+\tag{22.2}
+$$
+
+Proof. The homogeneous ball law implies, for $\alpha>7$,
+
+$$
+\int_{\mathfrak d>r_0}\mathfrak d^{-\alpha}d\xi
+ =\frac{7v_d}{\alpha-7}r_0^{7-\alpha}.
+\tag{22.3}
+$$
+
+The five integrands in (22.2) are bounded by the stated constants times powers $-10,-10,-23/2,-25/2,-25/2$, respectively, using $|r|\le\mathfrak d/c_r$. Substitution in (22.3) proves every constant and power. In particular the $|rV_1|p^2$ and $|V_2|p^2$ tails have different powers. $\square$
+

@@ -1,0 +1,46 @@
+**Proposition 11.3 (base graph and original-root specialization).** For
+$G=K_{4,4}$, the minimum of $|\partial A|/|A|$ over its 162 nonempty
+vertex subsets of size at most four is two. At the associated
+$N=8,D=8$ original-root interface of Theorem 8.1, all $5^{16}$ edge
+assignments yield distinct sources in $\mathcal F_8$. For each one,
+the specified reader returns the correct prediction on all 255 permitted
+targets and every authentic $k\ge0$, with at most one fresh Read of
+length at most eight. The source-blind preparation on every
+$t\in\mathcal F_8$ uses exactly 511 Reads and 4097 submitted letters,
+with maximum address length nine.
+
+**Proof.** A subset containing $l$ vertices in one bipartition and $r$
+in the other, with $a=l+r>0$, has
+$|\partial A|=4a-2lr$. Since $lr\le a^2/4$, for $a\le4$ its ratio
+is at least $4-a/2\ge2$. Equality holds for $l=r=2$. The number of
+subsets is $\binom81+\binom82+\binom83+\binom84=162$.
+There are sixteen edges, and $h=3$, so the remaining assertions follow
+from Proposition 6.3 and Theorem 8.1 with
+$|\mathcal P_8|=\sum_{l=0}^7 2^l=255$,
+$2^9-1=511$ and $8\cdot2^9+1=4097$.
+The exact sums in that theorem hold for every depth, and its factor
+identity (NDR.36) holds for every count. $\square$
+
+[FMR]: RECURSIVE_RELATIONAL_OBSERVATION_LATE_TARGET_FRACTIONAL_MEMORY_RATE.md
+[NCM]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CORRELATED_MEMORY_LOWER.md
+[NCE]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CYCLIC_ENTROPY_LOWER.md
+[AAR]: RECURSIVE_RELATIONAL_OBSERVATION_ADAPTIVE_ACQUIRED_REFERENCE_FRONTIER.md
+[NBP]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_BIRTH_PROVENANCE.md
+[D5G]: ../../../D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.lean
+[D5A]: ../../../D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean
+[D5N]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeDepthPatterns.lean
+[D5T]: ../../../D5/S3/ConceptDynamics/SufficiencyQuotient/TargetFamilyMinimalQuotient.lean
+[D5C]: ../../../D5/S3/ObserverMemory/ProObjects/CompactObservationFactorization.lean
+[MSS]: https://arxiv.org/html/1304.4132
+[CGFS]: https://doi.org/10.1016/0097-3165(86)90019-1
+[MT]: https://arxiv.org/html/0901.0044v2
+[DR]: https://arxiv.org/html/1003.3879v4
+[GT]: https://arxiv.org/html/1512.01808v1
+[Z]: https://arxiv.org/html/1807.00169v2
+[DBZ]: https://arxiv.org/html/2404.16763v2
+[CLR]: https://arxiv.org/html/2407.02281v2
+[FLM]: https://arxiv.org/html/math-ph/0603001v2
+[GM]: https://www.brics.dk/RS/03/44/index.html
+[GHLPY]: https://arxiv.org/html/2609.18024v1
+[BD]: https://arxiv.org/html/2001.11442v3
+

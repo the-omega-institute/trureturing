@@ -1,0 +1,23 @@
+**Proposition 24.2 (cover charge is not common-law chain loss).**
+For the single reciprocal pair $m=1$ of §21, its actual Gibbs
+law is $p$ on $(a_1,b_1)$. Its common-law defect is zero, while
+the induced matching population has
+
+$$
+\mathcal I_{\rm cov}=I_0>0,\qquad
+\mathcal U=2\log_2c,\qquad
+\mathcal B=2\log_2c-I_0.
+\tag{COK.121}
+$$
+
+Proof. Its weight is proportional to $M_{ab}^2$, so the Gibbs
+law is $p$, with both incoming groups the entire other owned
+bit. Theorem 20.3 gives $\Delta=0$. At either block the
+incoming total correlation is zero because there is one group.
+In (COK.73), the empty subset contributes $I_0/2$ and the
+full subset zero. Summing the two blocks gives
+$\mathcal I_{\rm cov}=I_0$. Proposition 21.3 gives each
+local COK value $\log_2c$, and (COK.74) gives the last
+equality. Thus identifying the two losses would already
+contradict an actual reciprocal two-block example. $\square$
+

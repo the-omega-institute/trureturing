@@ -1,0 +1,20 @@
+**Definition 81.1 (the supplied limiting failure problem in these coordinates).**
+On the normalized ellipse put $d(\mathbf c)=(|z|-1)^2/2$ and write
+
+$$
+F_{\rm lim}(\zeta)=\max\left\{
+ \int|f(\mathbf c)|d\sigma:\ \sigma\ge0,\quad
+ \int nn^T d\sigma=M,\quad
+ \int\frac{d(\mathbf c)}{\mathfrak c(\mathbf c)}d\sigma\le\zeta
+ \right\}.
+\tag{FA.53}
+$$
+
+This is exactly JS Definition 4.1 under Convention 77.1:
+$F_{\rm lim}(\zeta)=d_f+2\Phi(\zeta)$, with the same covariance,
+cost and entire compact ellipse. JS Lemma 4.2 supplies compact
+attainment and at-most-five-atom representations preserving covariance,
+cost and objective, including axes and zero weights. Its feasibility
+domain is exactly $\zeta\ge\kappa_0$. These are reused results,
+not an additional limiting optimization or a scalar evaluation.
+

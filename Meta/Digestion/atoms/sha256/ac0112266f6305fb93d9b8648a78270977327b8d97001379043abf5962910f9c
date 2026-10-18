@@ -1,0 +1,68 @@
+**Theorem 4.2 (finite actual execution and joint invariant).** For every
+$u\in\mathcal T_H$, $L(u)$ is finite, each reached unfinished cut has exactly
+one prescribed next primitive, and at every cut from the entrance:
+
+$$
+r_h=\rho^{e_h}u,\qquad
+|\operatorname{receipts}(h)|=n_h,\qquad
+\#\mathsf U=e_h.
+\tag{NCR.1}
+$$
+
+Let $E(h)$ be the ordered completed semantic events of types `NativeRead`,
+`NativeRho`, `ArchiveFetch`, $A(h)$ the same events decoded from sealed
+producer rows, and $Q(h)$ either empty or the single completed event whose row
+is pending. Then
+
+$$
+E(h)=A(h)\mathbin{+\!+}Q(h),\qquad |Q(h)|\le1.
+\tag{NCR.2}
+$$
+
+Every readable receiver block equals its designated sealed sender block;
+references, ownership, busy phases, rows and source/epoch/type tags belong to
+this same execution. An admitted but not committed Fetch remains in pending
+work, rather than $E(h)$.
+
+Proof. The source producer theorem supplies termination, exact node preorder,
+and the returned actual $u$ with no source update. A finite acquired address,
+frame, subtree or row can be serialized by finite scans/appends. The inserted
+writer routines terminate by PR57.L1; they leave the saved producer
+continuation and source unchanged. Induction along the supplier's finite run
+therefore supplies the actual expanded acquisition run. Two subsequent source
+updates are finite primitives on finite trees. Each later round has finite
+address construction, two finite source calls, finite row writing and a Fetch
+on a fixed finite sealed prefix. The final two Fetches and final complete copy
+are finite for the same reason. There are exactly $J$ rounds. All earlier
+objects referenced by a new row already exist, so none of these loops acquires
+an increasing bound from its own work. Deterministic finite routines give a
+unique next core occurrence until terminal control.
+
+At the entrance the native epoch and both words are empty and $r=u$. A tape
+occurrence leaves $r,e$ unchanged and appends its one receipt. A Native Read
+returns $\operatorname{Read}(p,r)$, changes neither source nor epoch and appends
+one ordinary receipt. A Native update changes $(r,e)$ to $(\rho r,e+1)$ and
+appends one $\mathsf U$ receipt. These cases prove NCR.1 by induction, including
+cuts before a tape epoch numeral catches up.
+
+For NCR.2, a noncommitting admission or tape occurrence changes no completed
+semantic prefix. At source-call or Fetch response commitment, the actual
+response and its exact request are saved in the pending latch and the same
+event is appended to $E$; no new semantic call is admitted until its row is
+sealed. Partial row writes do not change $A$. Its final seal adds precisely
+that latched event to $A$ and removes it from $Q$. The source epoch fields are
+obtained from the already maintained old counter and the actual update flag;
+the new numeral is written before another source request. Rejection follows
+the same commitment/row protocol as success. Thus each row's fields describe
+the actual event, without reading the inaccessible native trace.
+
+For an ordinary append, `Base` and allocation supply the actual fresh interval
+and stored descriptor. A seal removes its write permission. During copying,
+only the designated sender owns the mailbox and only the receiver owns the
+inaccessible destination. The two loops copy each bit once, including framing
+and original identities; PR57.L4 gives equality at destination seal. Token
+handoffs and acknowledgement are the prescribed actual transitions. Induction
+also retains partially copied cells, pending latches, old counter versions and
+the appropriate unavailable flag. These are simultaneous invariants of the
+one run, rather than separate existence assertions. ∎
+

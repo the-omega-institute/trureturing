@@ -1,0 +1,16 @@
+### 63.1 Six unrestricted ray germs
+
+Return to the six noncanonical rays of (61.3), in the order
+\((u_0,u_1,u_2,\Theta u_0,\Theta u_1,\Theta u_2)\).
+To distinguish this representative from the canonical matrix in §62,
+write
+
+\[
+ V_{\rm nc}=U\operatorname{diag}(1,1,1,-\gamma,-\gamma,-\gamma)
+\]
+
+for its first-row-dephased unit-entry matrix. All its columns are
+orthogonal and common-flat for the actual central seed, as proved in
+§61.2. Here and throughout this section the parameter varies in the
+same actual real family \(M(b)=\sqrt6H_0(b)\).
+

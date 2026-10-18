@@ -1,0 +1,23 @@
+**Definition 165.1 (Closed necessary domain and distinguished prefix).**
+Write $S=\sum_{i=3}^La_i$ and set
+
+$$
+\begin{aligned}
+Q_L&=\{1\ge a_1\ge\cdots\ge a_L\ge e\ge0,
+          \ (L+1)e\le S,\ a_1+S-(L+1)e\le1\},\\
+\alpha&=(1,1,0,\ldots,0;0),\qquad H_L=Q_L\cap\{a_2=a_3\}.
+\end{aligned}
+\tag{165.1}
+$$
+
+The auxiliary boundary point $\alpha$ has a zero tail; it does not
+replace (164.1). Let $R$ preselect $(1,2)$, output $1$ on its first-zero
+cell, $2$ on its second-zero cell and $0$ on positive exhaustion. Put
+$r=z_R$, $\Delta_C(y)=B_C(y)-y\cdot r$ and
+
+$$
+K_{R,L}=\{y\ge0:\Delta_N(y)=0\},\qquad
+P_{R,L}=\{x\in Q_L:y\cdot(d(x)-r)\le0\text{ for every }y\in K_{R,L}\}.
+\tag{165.2}
+$$
+

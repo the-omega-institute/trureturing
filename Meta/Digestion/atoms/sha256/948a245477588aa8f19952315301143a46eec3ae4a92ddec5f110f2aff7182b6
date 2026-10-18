@@ -1,0 +1,8 @@
+**Corollary 6.3 (scope of the application).** Theorem 6.2 is a composition
+of the prior live-depth lemma with the prior actual-prefix restriction.
+It gives no cross-cone state disjointness, global levelization, unique
+support, unique residual or permission to sum overlapping cone counts.
+For $n=7,k=4$, a first-one cone has $N=6,q=3$ and a first-zero cone has
+$N=6,q=4=N-2$; each is covered separately, while sharing between those
+two cones remains an obligation. No new numerical optimum is asserted.
+

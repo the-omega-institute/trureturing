@@ -1,0 +1,60 @@
+### 91.6. A physical trine-qutrit family
+
+Let 0≤t≤1, let e₀,e₁,e₂ be an orthonormal basis of C³, and put ω=(−1+i√3)/2. For j=0,1,2 define
+
+\[
+ \begin{split}
+ u_j&=\sqrt{1-t}\,e_1+\sqrt t\,\omega^j e_2,\\
+ b_{j+1,0}&=(e_0+u_j)/\sqrt2,
+ &b_{j+1,1}&=(e_0-u_j)/\sqrt2,\\
+ b_{4,0}&=e_2,&b_{4,1}&=e_0,
+ \qquad a_{fi}=\overline{b_{fi}}.
+ \end{split}                                             \tag{22}
+\]
+
+Use the original isometries V_A|f,i〉=|f〉⊗a_fi and V_B|f,i〉=|f〉⊗b_fi. Each within-fibre pair is orthonormal, and different fibres have distinct output labels, so these are genuine CPTP maps C⁸→C⁴. They are calibrated by construction. Their record frame operators are
+
+\[
+ \sum_{f,i}b_{fi}b_{fi}^*
+      =\operatorname{diag}(4,3(1-t),1+3t),
+                                                               \tag{23}
+\]
+
+and the same matrix for a. For 0<t<1 the records span C³. A linear dependence among the three environment-indexed Kraus operators would annihilate every record; hence both local Kraus ranks are exactly three.
+
+The product Gram is real with entries K_fi,gj=|〈b_fi,b_gj〉|². Its diagonal blocks are I₂. For distinct outer fibres f,g≤3 and for f≤3 its remaining blocks are
+
+\[
+ \begin{split}
+ K_{fg}&=\begin{bmatrix}a&b\\b&a\end{bmatrix},
+ &a&=1-\tfrac32t+\tfrac34t^2,
+ &b&=\tfrac34t^2,\\
+ K_{f4}&=\begin{bmatrix}t/2&1/2\\t/2&1/2\end{bmatrix},
+ &K_{4f}&=K_{f4}^*.
+ \end{split}                                             \tag{24}
+\]
+
+These formulas specify the entire Gram. For example 〈u_j,u_k〉=1−t+tω^(k−j), and the outer entries are |1±〈u_j,u_k〉|²/4.
+
+Define outer plus and minus inputs c_f=(|f,0〉+|f,1〉)/√2 and d_f=(|f,0〉−|f,1〉)/√2, for f=1,2,3. In the full orthonormal ordered basis
+
+\[
+ (c_1,c_2,c_3,|4,0\rangle;
+                  d_1,d_2,d_3,|4,1\rangle)
+                                                               \tag{25}
+\]
+
+the complete matrix L=T−K becomes M⊕N, where
+
+\[
+ \begin{gathered}
+ M=\begin{bmatrix}r(J_3-I_3)&h\mathbf1_3\\
+                         h\mathbf1_3^*&0\end{bmatrix},
+ \qquad N=s(J_3-I_3)\oplus0,\\
+ r=\tfrac32t(1-t),\qquad h=(1-t)/\sqrt2,
+ \qquad s=\tfrac32t-1.
+ \end{gathered}                                           \tag{26}
+\]
+
+In particular all mixed plus/minus coefficients vanish. The decomposition is unitary and omits no input coordinate or cross block.
+

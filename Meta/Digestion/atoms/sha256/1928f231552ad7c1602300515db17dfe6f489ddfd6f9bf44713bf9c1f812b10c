@@ -1,0 +1,104 @@
+## 138. Resources, reuse and the ordinary-proof boundary
+
+**Proposition C-138.1 (Sufficient original-cut resource contract).**
+C-137.1 consumes or discards exactly the two supplied actual source
+copies and sends only classical messages across the original cut.
+A sufficient finite ancillary supply consists of a three-valued data
+sector pointer, two binary membership pointers at each party, a
+four-valued Bell pointer at Alice, and a five-valued real preparation
+register and five-dimensional output blank at Bob. Pointers may instead
+be reset and reused. There is at most one Bell measurement, after the
+accepted copy is selected. All used or unused program registers are
+discarded at the end. No imbit, extra entangled pair or transmitted
+quantum system is required by this mathematical protocol.
+
+One explicit message schedule is: Alice sends her three-valued sector;
+for each examined copy she sends her membership bit and Bob replies with
+the acceptance bit; on acceptance Alice sends her four-valued Bell
+outcome, and on total failure she sends her binary data coordinate.
+The singleton sector needs only the sector message. Thus at most six
+one-way messages, representable using at most eight binary bits in the
+longest branch, suffice; there is no imposed message-budget constraint
+or optimality claim about these counts.
+
+Proof. Sector and membership predicates are local computational
+projections. A Bell measurement is a real controlled bit flip and real
+Hadamard followed by computational measurement on the selected local
+pairs. The displayed $X_2,Z_2,R_2$ corrections and their full-space
+extensions are calibrated real local controls. The fallback probabilities
+are known functions of $\eta$ alone, so neither its controls nor the Bell
+corrections require $X$ or a measured sign. A real five-level rotation
+can prepare amplitudes $\sqrt{p_{r\mid\ell}}$ from a blank; computational
+measurement and conditional basis preparation give (C137.6).
+The singleton uses the analogous known probabilities. This is a
+specified finite local circuit using the supplied menu. Counting its
+pointers and messages gives the bounds above. Discard/reset and exact
+preparation of real blanks remain supplied dissipative services. QED.
+
+The source preparation, delivery of each original $A$ and $B$ half,
+conditional iid law, initial independence from all data/reference,
+fixed original basis identifications, exact known calibration, local
+joint access to Alice's data and either of her halves, local computational
+measurements, classical links and output acquisition remain explicit
+services. The result does not construct native hardware or prepare the
+unknown source from a classical description. The abstract finite circuit
+attains a mathematical menu optimum; no experimental physical realization,
+minimum acquisition cost or free all-copy law is asserted. Approximate
+controls or an imperfect source require additional error estimates.
+Fresh independent blocks can reuse the real classical settings; reusing
+these same two quantum copies does not establish independent channel uses.
+
+**Statement C-138.2 (Suppliers and claim ceiling).**
+The original source, target, full-complex reference convention,
+unrestricted value and exact response-channel norm are reused from
+[FIB noisy source programming minimax, Sections 1, 3 and 11](FIB_NOISY_SOURCE_PROGRAMMING_MINIMAX.md).
+C-129–C-133 supply the earlier real joint-processing and real-record
+boundaries. Their paid transfer of Bob's halves to Alice is not used in
+C-137.1, and their joint matching extraction is not assumed local here.
+The present converse is a channel/reference test with an explicit
+transpose-invariant Choi certificate, not a record-discrimination bound.
+The upper bound is an explicit local Bell instrument and its complete
+noise/failure accounting, not a Choi-only implementation assertion.
+
+[Wu et al., Communications Physics 7, 171](https://doi.org/10.1038/s42005-024-01649-y),
+Methods, “Properties of LRCC operations,” Eqs. (37)–(39), supply the
+mature local-transpose Choi condition and distinguish LRCC (both sides
+real) from LQRCC (Alice unrestricted). Their supplied-imbit real
+implementation, already cited in
+[the existing literature note](../../../Library/QuantumChannels/wu2024distributedimaginarity.md),
+is a different resource contract and is not an extra input here. The
+necessary Choi condition is re-established in C-135.1 for this map
+interface; it is not treated as sufficient for LOCC implementation.
+The six-vector certificate, its original-source decomposition and its
+matching simultaneous local channel construction are `repo-derived`
+ordinary mathematical synthesis. No literature-priority or global
+novelty clearance is claimed.
+
+[Pirandola, arXiv:1711.09909v3, Criterion 4](https://arxiv.org/abs/1711.09909v3)
+states teleportation simulation under the required covariance/correction
+hypotheses. The actual Bell contraction and sign-independent real
+corrections in C-137.1 provide the source-specific bridge used here.
+The bare identity of the full five-mode source with a channel Choi
+state would not provide that bridge.
+[arXiv:2603.12130v1](https://arxiv.org/abs/2603.12130v1) concerns
+entanglement-assisted bipartite channel discrimination and PPT tester
+relaxations; [arXiv:2604.06412v1](https://arxiv.org/abs/2604.06412v1)
+concerns local discrimination of five three-qubit pure states.
+Neither supplies the mixed-source programmable-channel optimum proved
+here. A separable/PPT relaxation may give a converse; an explicit legal
+protocol is still needed for attainment.
+
+The repository's finite Kraus/Choi and five-mode real-response suppliers,
+including the private real-pairing arguments in
+`D5/S3/Quantum/Fibers/FiveModeRealResponse.lean`, concern the mature
+interfaces and observation fibers. Its finite-sector channel-optimality
+modules concern a different sector encoding/target problem. The selected pinned
+mathlib positive-matrix and physlib Kraus/Choi interfaces are mature
+algebraic ingredients; no current compiled application of them to
+C-134–C-137 is claimed.
+These sections are complete ordinary finite-dimensional proofs with an
+explicit uncompiled ceiling. They make no Lean/kernel, formal-freeze,
+empirical hardware or exhaustive-search claim. They settle this precise
+two-copy spatial question and do not complete the continuing
+quantum-focused AURIC FIB ATOM research objective.
+

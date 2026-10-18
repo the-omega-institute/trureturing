@@ -1,0 +1,45 @@
+**Definition 27.2 (entire complex domains and the unchanged clock).** In $\mathcal H_b=L^2(I_b\times\mathbb R^3,dk\,dq;\mathbb C)$ let
+
+$$
+\begin{aligned}
+B_b&=-\varepsilon^2\partial_k^2
+                -(c_\kappa(k)\cdot\partial_q)^2,&S_b&=B_b-\lambda\ge0,\\
+B_\eta&=-\varepsilon^2\partial_k^2+|\eta\cdot c_\kappa(k)|^2,
+                &&\eta\in\mathbb R^3.
+\end{aligned}
+\tag{27.4}
+$$
+
+Use the unitary phase Fourier transform with factor $(2\pi)^{-3/2}$. With underlying $\mathcal H_b$ membership required, the domains are exactly
+
+$$
+\begin{aligned}
+\mathcal Q_b=\bigg\{\psi:\ &\widehat\psi(\cdot,\eta)\in H_0^1(I_b)
+                 \text{ for a.e. }\eta,\\
+ &\int_{\mathbb R^3}\!\int_{I_b}
+ (\varepsilon^2|\partial_k\widehat\psi|^2
+       +|\eta\cdot c_\kappa|^2|\widehat\psi|^2)dk\,d\eta<\infty\bigg\},\\
+D(S_b)=D(B_b)=\bigg\{\psi:\ &\widehat\psi(\cdot,\eta)
+          \in H^2(I_b)\cap H_0^1(I_b)\text{ for a.e. }\eta,\\
+ &\int_{\mathbb R^3}\|B_\eta\widehat\psi(\cdot,\eta)\|_{L^2(I_b)}^2d\eta
+                 <\infty\bigg\}.
+\end{aligned}
+\tag{27.5}
+$$
+
+Thus $\mathcal Q_b=D(S_b^{1/2})$. Both endpoint deaths and every real phase frequency are retained; no ordinary phase $H^1$, reality, parity or product-state condition is added.
+
+Let $p_t^{B_b}$ be the killed kernel in raw measure and set
+
+$$
+W_{b,\tau}(Y)=\int_\tau^\infty e^{\lambda t}p_t^{B_b}(o,Y)dt,
+\qquad
+E_{b,s}=\inf_{\substack{\psi\in\mathcal Q_b\\\|\psi\|_2=1}}
+\left\{a\|S_b^{1/2}\psi\|_2^2
+       -g_s\int W_{b,s^2}|\psi|^2dk\,dq\right\},
+\quad \tau=s^2,\quad g_s=\chi_cs^3.
+\tag{27.6}
+$$
+
+The field uses the $B_b$ clock independently of $a$, includes its full infinite-time integral and has no survival renormalization. The inherited fixed-positive-cutoff statements P Propositions 70.2 and 75.2 give boundedness of $W_{b,s^2}$ at each fixed $s>0$, the operator $aS_b-g_sW_{b,s^2}$ on exactly $D(S_b)$ and a finite negative attained bottom. An actual choice always means any normalized complex ground state $\psi_{b,s}\in D(S_b)$ of this operator, not a trial or a near-minimizer.
+

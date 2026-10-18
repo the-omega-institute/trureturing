@@ -1,0 +1,75 @@
+## 176. Two special-pair exclusions, without all-H witnesses
+
+There is no special edge with fixed pair {Z,M}, and none with fixed
+pair {Z,C}. Here are the complete dependencies of the existing weighted
+star arguments. All their owners are genuine because Z is transverse,
+and every other axis r satisfies r<1+z+a, a=m or c: an H axis is <=z,
+and a special axis has the same fixed pair and its strict barrier.
+
+For a special Q, group its complete star by distinct owners j and let
+w_j in {1,2} count its axial Q slots. Repeated-axis symmetry makes the
+Q angles equal when w_j=2. Then
+
+    n=sum w_j>=6, sum w_j*theta_j=2*pi.
+
+Every owner has exactly two slots of each reservoir, so weights w_j<=2
+are bounded by their actual reservoir-angle expenditure.
+
+For pair {Z,M}, put a=z,b=m,k=a+b and
+
+    kappa=(sqrt(a^2-1)+sqrt(b^2-1))/k,
+    lambda=kappa*sqrt((q-1)/(q+1)),
+    B_lambda(theta)=atan(lambda*cot(theta/2)).
+
+The transverse sum is 2*B_lambda(theta). This function is positive,
+decreasing and convex. Jensen and the complete M/Z capacity 3*pi give
+
+    12*B_lambda(pi/3)<=sum w_j*(beta_j+delta_j)<=3*pi.
+
+Thus lambda^2<=1/3. Since a,b>3, kappa^2>8/9, and hence 1<q<11/5.
+For each owner the axial cosine has denominator
+
+    D=q^2+a^2+b^2+2qab-1
+
+and numerator N=2ab+q(a^2+b^2)-(q^2-1)r. Using r<1+k gives 2N-D>P,
+where, writing a=3+s and b=3+t,
+
+    P=-3(5q-11)(q+1)+(6q+8-2q^2)(s+t)
+       +(2q-1)(s-t)^2+(2q+2)st>0.
+
+Therefore theta<pi/3. Put
+
+    L=k^2-(q-1)(r-1)>0, J=(q+1)(r+1)-(a-b)^2>0.
+
+The half-angle identity gives tan^2(theta/2)=((q-1)/(q+1))*J/L.
+The elementary bound kappa^2>(k-2)/k and r<1+k imply
+
+    kappa^2*L-J > k^2-2k(q+1)-4>44/5,
+
+because k>8 and q<11/5. Consequently beta+delta>pi/2. Thus every
+owner satisfies theta<(2/3)(beta+delta), and the weighted complete Q
+equation contradicts the M/Z capacity:
+
+    2*pi=sum w_j*theta_j
+         <(2/3)*sum w_j*(beta_j+delta_j)<=2*pi.
+
+For pair {Z,C}, first q>z-c-1. Otherwise the same increasing cosine
+numerator evaluated at the upper axis barrier makes every owner have
+two obtuse Z angles. There are at least three distinct owners in the
+Q star, contradicting the complete Z budget.
+
+Its positive response parameters obey
+
+    lambda_plus*lambda_minus
+       =((z-c)/(z+c))*((q-1)/(q+1))
+       >(z-c-2)/(z+c)>1/3,
+
+where the last inequality is z>2c+3. The transverse Z response
+f(theta)=B_lambda_plus(theta)+B_lambda_minus(theta) is positive,
+decreasing and convex, with f(pi/3)>pi/2. Weighted Jensen now gives
+
+    sum w_j*gamma_j>=n*f(2*pi/n)>=6*f(pi/3)>3*pi,
+
+while the complete Z budget bounds this weighted sum by 2*pi.
+This proves both special-pair exclusions with every repeated slot kept.
+

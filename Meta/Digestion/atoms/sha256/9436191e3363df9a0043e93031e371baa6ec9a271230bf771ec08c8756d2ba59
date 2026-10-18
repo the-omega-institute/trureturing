@@ -1,0 +1,62 @@
+**Definition 1.2 (the original input and output).** In the five ordered
+ambient modes $0,1,2,3,13$, let
+
+$$
+\begin{gathered}
+E=\big((e_0+e_{13})/\sqrt2,\ (e_1+e_3)/\sqrt2,\ e_2\big),
+\qquad P=EE^\dagger,\\
+a_y=\left(\sqrt{y/128},\sqrt{(64-y)/128},1/\sqrt2\right)^T,
+\qquad U_{\epsilon,\chi}=\operatorname{diag}(\epsilon,\chi,1),\\
+\rho_{y,\epsilon,\chi}
+=U_{\epsilon,\chi}a_ya_y^TU_{\epsilon,\chi}^\dagger,
+\quad y\in\{5,16,27\},\quad \epsilon,\chi\in\{\pm1\}.
+\end{gathered}
+\tag{PC.1}
+$$
+
+There is one unknown specimen with state
+$E\rho_{y,\epsilon,\chi}E^\dagger$, and no prior over the twelve
+histories. The ideal live vector has squared qutrit coordinates
+
+$$
+\left(\frac y{128},\frac{y(58-y)}{128(y+6)},
+                        \frac y{2(y+6)}\right),
+\tag{PC.2}
+$$
+
+with the same signs and embedding as (PC.1). The five separate
+failure-labelled Borel components have densities
+
+$$
+w_j\frac{6y}{(y+6a)^2}\,da\,P_f,\qquad
+(w_0,w_1,w_2,w_3,w_{13})=(0,1/4,1/2,1/4,0),\quad 0\le a\le1.
+\tag{PC.3}
+$$
+
+Both zero-target components remain separate. The error is the maximum
+over all twelve histories of HALF the trace norm of the complete
+stopped-cq output difference, as in GC Definitions 2.1–2.2. It includes
+live complex coherences, passive-reference conditional operators,
+singular-time, abort, wrong-support and zero-target sectors.
+
+Competitors remain common full complex CP acquisition instruments with
+all hidden Kraus multiplicities, admitted failure-time laws and
+full-output TP conditional decoders. The original minimax error,
+contrast request, sharp JOINT cost and activity constraints are (GC.5).
+The jointly future-accessible input-dependent fibre counts specimen,
+memory, controller, accessible environments and entangled shares
+together. Activity is the integral of the operator norm on each
+entire counted fibre, maximized over actually generated labels.
+Finite-budget survivors are strictly positive, survivor controls are
+TP, FIRST is the absolute time $6+a$, and no positive-carrier action
+follows failure. Later blank ancillas are independent; an entangled
+accessible share is not blank.
+
+Necessity has the original finite and convergent countable scopes and
+only the measurable finite-dimensional-fibre/Kraus/integrable-effect
+extension of GC Convention 2.3. Finite realizations use the existing
+GC Proposition 10.1 constructor with its counted coherent high fibre.
+No helper specimen, copy, history oracle, reset, retry, postselection,
+acceptance or survival division, quantum bypass or uncounted accessible
+share is allowed.
+

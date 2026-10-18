@@ -1,0 +1,29 @@
+### Corollary 48.5 (Finite-dimensional continuous-time test)
+
+For a single linear generator \(A\) and observation \(O\),
+
+\[
+Oe^{tA}d\equiv0
+\quad\forall t\ge0
+\]
+
+if and only if
+
+\[
+OA^kd=0,
+\qquad
+k=0,\ldots,n-1.
+\]
+
+#### Proof
+
+The forward implication follows by differentiating at \(t=0\). For the reverse implication, the Cayley–Hamilton theorem expresses every \(A^k\) with \(k\ge n\) as a linear combination of the first \(n\) powers. Therefore every coefficient in
+
+\[
+Oe^{tA}d
+=
+\sum_{k\ge0}\frac{t^k}{k!}OA^kd
+\]
+
+vanishes. ∎
+

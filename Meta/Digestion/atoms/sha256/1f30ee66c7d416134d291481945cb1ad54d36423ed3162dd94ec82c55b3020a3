@@ -1,0 +1,13 @@
+**Definition 363.3 (Finite complete catalogs).** For $L\ge0$ let
+$B_L=\{0,1\}^L$ and $J_L=\{0,\ldots,L\}$. Let $\mathscr N_L$ and $\mathscr O_L$ be the finite complete classes of [108.1](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION.md#108-common-probability-vector-kernels-and-stopped-schedules) and [II 140.2–140.3](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_II.md). A pair $i<j$ in $\mathscr N_L$ has four nonnegative output-mass vectors $X_{ij}^{00},X_{ij}^{01},X_{ij}^{10},X_{ij}^{11}$, all of the same mass $m_{ij}$. Its contribution is
+
+$$
+(1-w_i)(1-w_j)X_{ij}^{00}+(1-w_i)w_jX_{ij}^{01}
++w_i(1-w_j)X_{ij}^{10}+w_iw_jX_{ij}^{11}.
+\tag{363.4}
+$$
+
+A stopped pair has only cells $0,10,11$, with $X^{00}=X^{01}=X^0$. Include every empty and singleton schedule and every output label. Every cell of a singleton also has its owning schedule's mass. Empty, singleton and pair masses, each counted once, sum to one. Sorting a preselected pair and absorbing its order in the table does not change its information; deleting a repeated static query in the finite representation does not erase its charge in the original execution.
+
+Equivalently, each class is the convex hull of its finite catalog of deterministic schedules with all terminal tables. One uniform seed $U\in[0,1)$ realizes any such complete allocation: partition the interval into schedule masses, rescale within a selected interval, and use that same local coordinate in every cell's label quantile partition. Intersecting those partitions fixes the whole table before any reply. Cells are not normalized or randomized independently. This is the common-seed realization of [Source-Correlated Laws 45.1–45.3](KBONACCI_SELF_CALIBRATING_SOURCE_CORRELATED_LAWS.md#45-lawful-acquisition-through-one-inherited-seed).
+

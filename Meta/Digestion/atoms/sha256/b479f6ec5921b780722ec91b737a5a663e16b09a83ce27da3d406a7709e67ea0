@@ -1,0 +1,58 @@
+## 380. A joint budget for the transverse P/V residual family
+
+Keep the source inequalities
+
+    p>=m>1+c+d, v>1, c,d>1,
+    (m-1)(v-1)>=(c+d)^2,
+
+and let a genuine owner have axes C,D and transverse labels P,V,
+where the actual label P is one of M,Z,U, with shared cosh p.
+Assume p>v, as supplied by v<=m-2 in the low-sixth source normal form.
+The four labels remain distinct actual labels even when some numerical
+coshes of other labels agree. No incidence or receiver hypothesis is used.
+
+Write beta_P,beta_V for its original transverse angles. Then
+
+    2 beta_P > 2 arctan(2) > 2*pi/3,
+    2 beta_P + 2 beta_V > 4 arctan(2) > 4*pi/3.
+
+The repeated factors of two count the four original transverse slots.
+
+**Proof.**
+
+Set s=p+v, h=c+d and
+
+    L=s^2-(c-1)(d-1), J=(c+1)(d+1)-(p-v)^2.
+
+Genuineness supplies L,J>0. Source flatness and p>=m give
+
+    h^2 <= (p-1)(v-1) <= (s-2)^2/4.
+
+Thus h<=(s-2)/2, and h>2 gives s>6. By the elementary product
+bounds at fixed sum,
+
+    (c-1)(d-1) <= (h-2)^2/4 <= (s-6)^2/16,
+    (c+1)(d+1) <= (h+2)^2/4 <= (s+2)^2/16.
+
+Consequently
+
+    L/J >= (15*s^2+12*s-36)/(s+2)^2 > 9,
+
+since the numerator minus 9*(s+2)^2 is 6*(s-6)*(s+2)>0.
+Also
+
+    K=[sqrt(p^2-1)+sqrt(v^2-1)]/s
+      > (s-2)/s > 2/3.
+
+The standard genuine paired response therefore yields
+
+    S:=beta_P+beta_V=2 arctan(K sqrt(L/J))>2 arctan(2).
+
+Since p>v, the other paired-response identity gives
+
+    beta_P-beta_V
+       =2 arctan([sqrt(p^2-1)-sqrt(v^2-1)]/s * sqrt(L/J))>0.
+
+Thus beta_P>S/2>arctan(2). The displayed slot expenses follow.
+Finally arctan(2)>pi/3 because 2>sqrt(3).
+

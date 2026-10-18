@@ -1,0 +1,86 @@
+**Theorem 24.2 (The whole nonzero spectrum has a small boundary matrix).**
+Under Definition 24.1, all nonzero singular values of
+$A_{\ell,r}$, with multiplicities, equal those of
+the following $(\ell+1)\times(r+1)$ matrix:
+
+$$
+C_{\ell,r}=\sqrt\nu
+\begin{pmatrix}
+[\sqrt{\gamma_{i+j}}]_{0\le i<\ell,\,0\le j<r}
+ & [\sqrt{S_{i+r}}]_{0\le i<\ell}\\
+[\sqrt{S_{\ell+j}}]_{0\le j<r}
+ & \sqrt{R_{\ell+r}}
+\end{pmatrix}.
+\tag{24.5}
+$$
+
+In particular the squared singular values of (24.5)
+sum to one and give the entire nonzero cut spectrum,
+including its entropy, purity and Schmidt tails.
+
+Proof. Partition left words containing a one by their
+trailing zero count $i<\ell$. For such a word u define
+
+$$
+c_u=\nu S_{A(u)}\prod_{h\text{ internal in }u}\gamma_{g_h}.
+\tag{24.6}
+$$
+
+Partition right words containing a one by their leading
+zero count $j<r$, and define
+
+$$
+d_v=S_{B(v)}\prod_{h\text{ internal in }v}\gamma_{g_h}.
+\tag{24.7}
+$$
+
+Empty products are one. These factors are positive.
+The finite marginal probabilities are $P(u)=c_uS_i$
+and $P(v)=\nu S_jd_v$. The stationary event that a
+word ends in exactly i zeros after its last one has
+probability $\nu S_i$; summing over all earlier letters
+does not change that event. The reversed boundary event
+of exactly j initial zeros before a one has probability
+$\nu S_j$. Since all $S_i,S_j$ are positive, division
+gives the normalization identities
+
+$$
+\sum_{u:\,\text{trailing zeros}=i}c_u=\nu,\qquad
+\sum_{v:\,\text{leading zeros}=j}d_v=1.
+\tag{24.8}
+$$
+
+Define a left column $U_i$ on its i-th word class by
+$U_i(u)=\sqrt{c_u/\nu}$ and zero elsewhere. Add the
+column supported on the single word $0^\ell$.
+Define right columns $V_j(v)=\sqrt{d_v}$ on their
+j-th classes, plus the column supported on $0^r$.
+Their supports are disjoint and (24.8) normalizes
+each column. Thus $U^{\mathsf T}U=I$ and
+$V^{\mathsf T}V=I$.
+
+For two words containing ones, their adjacent boundary
+gaps concatenate to i+j, so (24.3) gives
+
+$$
+P(uv)=c_u\gamma_{i+j}d_v.
+\tag{24.9}
+$$
+
+The remaining cases are exactly
+
+$$
+P(u0^r)=c_uS_{i+r},\qquad
+P(0^\ell v)=\nu S_{\ell+j}d_v,\qquad
+P(0^{\ell+r})=\nu R_{\ell+r}.
+\tag{24.10}
+$$
+
+Taking positive square roots in (24.9)–(24.10)
+proves $A_{\ell,r}=UC_{\ell,r}V^{\mathsf T}$.
+Left and right multiplication by these isometries
+preserves all nonzero singular values. Normalization
+of the original cylinder law gives the final claims.
+The forbidden seam is included: $i=j=0$ has
+$\sqrt{\gamma_0}=0$. $\square$
+

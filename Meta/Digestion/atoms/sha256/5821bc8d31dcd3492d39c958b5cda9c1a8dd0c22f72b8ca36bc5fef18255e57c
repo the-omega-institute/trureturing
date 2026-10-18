@@ -1,0 +1,94 @@
+**Proposition 5.1 (four nonzero defects with a genuine own-law change).**
+Let $c=3/8$, and write $Q_r=P_{p,r}$, $W_r=P_{\beta,r}$. Take
+
+$$
+G_B=\delta_{(Q_a,W_c)},\qquad G_A=\delta_{(W_b,Q_c)}.
+\tag{5.1}
+$$
+
+All four quantities $e_B,e_A,m_\beta,m_p$ are positive. Theorem 3.1 gives
+the unique singleton balanced kernels on outgoing labels $Q_a,W_b$.
+Their generated laws are
+
+$$
+\begin{aligned}
+\widehat Q(w_{n,0})&=\frac13\left(\frac4{15}\right)^n,&
+\widehat Q(w_{n,1})&=\frac25\left(\frac4{15}\right)^n,\\
+\widehat W&=\frac35\delta_\beta+\frac25\alpha\widehat Q.
+\end{aligned}
+\tag{5.2}
+$$
+
+They retain the input emissions and attain the allowed p tail bound
+$\lambda^j$ for every $j$. In particular
+
+$$
+d_p(\widehat Q,Q_a)=\frac2{45}>0,
+\qquad d_\beta(\widehat W,W_b)\ge\frac2{75}>0.
+\tag{5.3}
+$$
+
+For this input the exact budgets are
+
+$$
+\begin{aligned}
+x&=\frac{239}{3375},&
+y&=\frac{468557036828959}{4777574400000000},\\
+D_p&=\frac{1314364652828959}{13138329600000000}<\frac19,&
+D_\beta&=\frac{694105734428959}{8758886400000000}<\frac1{12}.
+\end{aligned}
+\tag{5.4}
+$$
+
+Thus (3.6) gives nontrivial, simultaneous complete-target error bounds
+for data having both balance and compatibility defects.
+
+**Proof.** Native laws lie in (1.3), since $t_r\le6/25<4/15$.
+Their residuals are $\mathcal R_B(Q_r)=W_r$ and
+$\mathcal R_A(W_r)=Q_r$. Dirac-to-Dirac transport gives
+
+$$
+e_B=d_\beta(W_a,W_c),\quad m_\beta=d_\beta(W_c,W_b),\quad
+e_A=d_p(Q_b,Q_c),\quad m_p=d_p(Q_c,Q_a).
+\tag{5.5}
+$$
+
+The immediate alpha or beta coordinates prove positivity of every term.
+For $r<s$ in $\{a,c,b\}$, the p marker-0 masses increase with $r$ at
+every depth. The positive difference of marker-1 masses has exactly the
+indices $0\le n\le N_p(r,s)$, where
+
+$$
+N_p(a,c)=2,\quad N_p(c,b)=3,\quad N_p(a,b)=2.
+\tag{5.6}
+$$
+
+These thresholds follow by comparing
+$((1-r)/(1-s))^2$ with $(t_s/t_r)^n$: the latter is strictly increasing,
+and substitution at $N_p$ and $N_p+1$ gives the asserted threshold.
+At suspension the positive differences are beta and the alpha-prefixed
+marker-1 term with $n=0$ only for each of these three pairs, by the same
+comparison with coefficient $r(1-r)^2$. Finite geometric sums give
+
+$$
+\begin{aligned}
+d_p(Q_a,Q_c)&=\frac{11757103}{191102976},&
+d_p(Q_c,Q_b)&=\frac{239546586871}{6553600000000},\\
+d_\beta(W_a,W_c)&=\frac{599}{13824},&
+d_\beta(W_c,W_b)&=\frac{1759}{64000}.
+\end{aligned}
+\tag{5.7}
+$$
+
+Adding the appropriate terms and using (2.5) proves (5.4). After transport,
+each outgoing phase has one positive label; both repaired transitions are
+forced. Their emissions are $a,b$, and their return probability is
+$(1-a)b=4/15$, proving (5.2) and normalization.
+For $Q_a-\widehat Q$ the only strictly positive coordinate is $w_{0,1}$:
+its difference is $4/9-2/5=2/45$. Marker-0 coordinates agree at $n=0$
+and favour $\widehat Q$ at $n\ge1$; marker-1 coordinates favour it at
+$n\ge1$ because their successive ratio is multiplied by $6/5$.
+This proves the exact p TV. At the suspended atom $\alpha\alpha$,
+$W_b$ has mass $4/25$ and $\widehat W$ has mass $2/15$,
+proving the other lower bound. $\square$
+

@@ -1,0 +1,32 @@
+**Proposition 66.8 (an accepted graft obstructs exact full-data/full-norm inclusion).** Consider an actual accepted original Right$(v)$ graft with its supplied nonempty context $v$, or its Left analogue. The old occurrence injection is respectively $p\mapsto Lp$ or $p\mapsto Rp$. It relocates the old root to a nonroot port and adds a parent seam; it is not the same-address whole-rho injection. Identify the old seams and old grounded stubs with the corresponding seams/stubs in the relocated subtree, with their intrinsic coordinates unchanged. Suppose a candidate transfer is required to retain every old atomic and open-cable component literally under this injection, and to preserve its full norm in the new active producer space, without a separate retained carrier or repreparation. For any old form vector $F$ with nonzero old-root atomic value, no such transfer can belong to the new one-particle form domain. Consequently no transfer meeting these requirements works on the full joint $N=1/N=2$ state space.
+
+Proof. The retained old strata already contribute exactly $\|F\|^2$ to the new norm. Full-norm equality forces every new atomic and open-cable component to be zero in its $L^2$ space. In particular the newly added parent cable is zero almost everywhere. If its function is $H^1$, both endpoint traces are zero. The trace at the relocated old root must instead equal its retained nonzero atomic value. This contradicts the new form-domain equality. The argument uses orthogonal positive-mass strata and does not assume that the transfer is linear. Failure on one one-particle input also rules out a map satisfying the joint all-input requirement. Keeping only old atomic data instead of all old components is a different retention requirement and is not covered by this impossibility. $\square$
+
+This has a minimal actual fixed-cap witness. At $H=2$, initialize the genuine source $t=\alpha$ and supply the named context $v=\alpha$. The original Right$(\alpha)$ candidate $\langle\alpha,\alpha\rangle$ has two leaves and is accepted at equality. Its immutable INITIAL is still the one-leaf source. The old $X_{\{o\}}$ has two grounded stubs. Let $F(o)=c$, with $F_e(x)=c(1-x)$ on both stubs and
+
+$$
+|c|^2=(1+2\delta/3)^{-1}.
+$$
+
+Then $F\in\mathcal Q_{\{o\},1}$, $\|F\|=1$ and $k(F)=2|c|^2$. It is also a calibrated input: the harmonic lift is exactly $E_1e_o$, and normalization gives $W_{\{o\},1}e_o$. The retained old components alone have new norm one. The new parent cable from the current root to $L$ would require trace $c$ at $L$, which zero added norm cannot supply. This is an actually legal source/context pair, not an idle theorem counterexample or an unguarded hypothetical graft. The Left case uses the same construction at $R$.
+
+There is a quantitative boundary if one instead allows added norm but imposes finite kinetic budget. Let $h$ be the new parent-cable function, parameterized with its old-root endpoint at $1$, with $h(1)=c\ne0$, and suppose $\int_0^1|h'|^2\le E<\infty$. Setting $n=\int_0^1|h|^2$, the fundamental theorem and Cauchy--Schwarz give
+
+$$
+|c|^2\le n+2\sqrt{nE},\qquad
+n\ge\left(\sqrt{E+|c|^2}-\sqrt E\right)^2>0.        \tag{66.11}
+$$
+
+Indeed integrate $|h(1)|^2=|h(x)|^2+2\operatorname{Re}\int_x^1h'\overline h$ over $x$, and bound the last integral by $2\|h'\|_2\|h\|_2$. Solve the resulting quadratic in $\sqrt n$. Thus retaining all old components entails squared-norm increase at least $\delta(\sqrt{E+|c|^2}-\sqrt E)^2$, before accounting for any other new strata. Boundary layers can make this addition small only by relaxing exact norm or allowing increasing energy; they do not supply exact full-data/full-norm transfer at a fixed density. Rescaling the whole vector to recover its norm changes its retained old amplitudes and relative reference data.
+
+Even at the finite target level a graft is not the common compression of (62.7). With current-root degrees and field defined as in §55 on the new source, the relocated old root gains degree one, and its old field values become $\phi(Lp)=\phi(Rp)=\phi(p)/2$. For the one-particle occurrence injection $\iota$ this gives
+
+$$
+\iota^*L_{D'}\iota=L_D+|e_o\rangle\langle e_o|,
+\qquad
+\iota^*H_{D',1}\iota-H_{D,1}
+=a|e_o\rangle\langle e_o|+\tfrac g2 M_{\phi|D}.     \tag{66.12}
+$$
+
+Old seams persist, but current-root anchoring does not. If a different graft comparison retains the old physical root/field instead, it must declare that law and all added ports and boundary conditions; it cannot use (62.7) by renaming addresses. Likewise its common and killed pair targets need their own faithful identification/update, rather than importing (66.5). The moving-root realization of legacy §52 is a distinct field/boundary contract. Proposition66.8 is an obstruction to the stated active-space full-retention requirement, not a proof that every physical graft realization is impossible. An alternative would have to specify an actual joint retained carrier, its unknown-state isometric ingress, the location and continued accessibility of all old data, new active generator and field, reference phase, collision conditions, clock, acquisition rights and finite price, and prove its correspondence without copying or resetting the unknown state. That bridge remains unresolved here.
+

@@ -1,0 +1,51 @@
+**Corollary 3.3 (Parameter-dependent degree coercivity).** Let
+$\Pi_d$ be orthogonal projection in the original $L^2(p)$
+onto restrictions of multilinear polynomials of degree at most
+$d$. Write
+
+$$
+d_* = \min_i\frac{w_i}{1+\lambda_i}.
+\tag{3.7}
+$$
+
+For every real $f$ and integer $0\le d<\lceil n/2\rceil$,
+
+$$
+\langle f,H_{\rm cl}f\rangle_p
+\ge d_*(d+1)e^{-I_\lambda}\|f-\Pi_df\|_p^2,
+\qquad \gamma\ge d_*e^{-I_\lambda}.
+\tag{3.8}
+$$
+
+Proof. The maximal cardinality of a legal path configuration is
+$r=\lceil n/2\rceil$. Apply the published auxiliary estimate
+of [Miao–Yin, §3.2, equation (11)][MY] to (3.3)–(3.4).
+It uses the mean-normalized covariance condition for every
+positive pinning and only spectral stability and integrability
+to obtain
+
+$$
+\mathcal E_1(f,f)\ge(d+1)e^{-I_\lambda}\|f-\Pi_df\|_p^2,
+\qquad
+\mathcal E_1(f,f)=\sum_Sp(S)\sum_{i\in S}
+\bigl(f(S)-f(S\setminus\{i\})\bigr)^2.
+\tag{3.9}
+$$
+
+The actual form instead weights each deletion by $d_i$.
+It is therefore at least $d_*\mathcal E_1(f,f)$.
+This proves (3.8), with $d=0$ giving the gap bound.
+The unit-deletion estimate is an attributed intermediate
+ingredient; the path profile and clock comparison specify
+its application here. $\square$
+
+The source's later occupied-marginal lower bound is used for
+its polynomial norm and logarithmic-Sobolev estimates, not
+for the auxiliary equation (11). The insertion-ratio comparison
+in its equation (10) is also unnecessary once the actual
+minimum deletion rate is used in (3.8). The constants depend
+on the supplied activities and weights. No uniform constant
+over unrestricted positive vectors follows from $I_\lambda\le2M$,
+and a lower bound on $\gamma$ does not prove
+$\gamma\le W-\Lambda$.
+

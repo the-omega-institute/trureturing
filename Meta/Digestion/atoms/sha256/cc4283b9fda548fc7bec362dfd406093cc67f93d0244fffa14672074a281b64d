@@ -1,0 +1,15 @@
+**Definition 390.2 (Reserved stock and anchor depletion).** For $(k,x)\in\mathcal J_{\mathcal C}(M)$, form cell vectors $U$ on labels $0,\ldots,L$ by moving $x_s$ from label $0$ to label $L$ in $c_s^*$, leaving every other entry unchanged. This is one complete allocation with the same owning masses. The inequalities (390.3) pay its earlier base, union and positive-base losses; earlier correct coordinates are unchanged. No final-label demand is imposed in this definition.
+
+Let $R=O(1,2;1,2,0)$, in stopped-cell order, be the same anchor as in XXV 384.1. In the $N$ catalog its labels in cells $00,01,10,11$ are $1,1,2,0$. Since $L\ge3$, the distinguished cell of schedule $(1,2)$ is $11$. Put
+
+$$
+\tau_{\mathcal C}(k,x)=
+\begin{cases}
+\min\{k_{12,00}(1),\ k_{12,01}(1),\ k_{12,10}(2),\ k_{12,11}(0)-x_{12}\},&\mathcal C=N,\\
+\min\{k_{12,0}(1),\ k_{12,10}(2),\ k_{12,11}(0)-x_{12}\},&\mathcal C=O.
+\end{cases}
+\tag{390.5}
+$$
+
+Every term is nonnegative. A joint allocation is depleted when $\tau_{\mathcal C}(k,x)=0$. In lifted coordinates this means that at least one of the displayed anchor-label entries of $U$ is zero. In particular the last entry is the available base after reserving $x_{12}$, rather than the whole collapsed base entry.
+

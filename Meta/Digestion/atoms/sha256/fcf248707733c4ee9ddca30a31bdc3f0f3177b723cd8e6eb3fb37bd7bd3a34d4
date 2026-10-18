@@ -1,0 +1,50 @@
+**Theorem 9.3 (strict selected improvement and strict separation from all three known faces).** For every selected $h=(y,e,n)$,
+
+$$
+V^h_h=F_y<kA_y.
+\tag{RG.83}
+$$
+
+For every original height $z\in\{5,16,27\}$, the four-sign mean of $V^h$ strictly exceeds the known sharp value $g_z(s)=kA_z$ throughout $0\le s\le s_{\rm original}$. Thus these achieved Pareto vectors lie outside all three sharp-average equality faces.
+
+Proof. The signed selected Gram has $c_{01}=en\kappa q_y\ne0$. In the necessary matrix relaxation (RG.18), consider real $x$ close to zero and
+
+$$
+z(x)=(1,x,0)^T,\qquad
+H(x)=\frac{k\,z(x)z(x)^T}{1-\alpha x^2}.
+\tag{RG.84}
+$$
+
+Its denominator is positive for sufficiently small $x$, its $B$ trace is $k$, and $H(x)\preceq I$ exactly when
+
+$$
+\frac{k(1+x^2)}{1-\alpha x^2}\le1
+\quad\Longleftrightarrow\quad (k+\alpha)x^2\le\ell.
+\tag{RG.85}
+$$
+
+Its relaxed objective is
+
+$$
+\operatorname{tr}(CH(x))=
+ \frac{k(c_{00}+2c_{01}x+c_{11}x^2)}{1-\alpha x^2},
+\qquad \left.\frac d{dx}\operatorname{tr}(CH(x))\right|_{x=0}=2kc_{01}\ne0.
+\tag{RG.86}
+$$
+
+A sufficiently small opposite-signed $x$ strictly improves on $kc_{00}=kA_y$. Theorem 4.4 identifies $F(C)$ with the exact optimum of that relaxation, so $F_y<kA_y$. Theorem 6.3 independently realizes this same value in the original class, including at $s=0$ and throughout the common interval. The comparison did not assume that each relaxed trial $H(x)$ itself has a record-feasible implementation.
+
+For the second assertion, average (RG.81) over the four signs at height $z$. The average input is $\operatorname{diag}p_z$, so cross terms of $D,T,S$ have zero trace against it. Since $v_h$ is unit and $v_h^TBv_h=k$,
+
+$$
+\begin{aligned}
+\frac14\sum_{\epsilon,\eta}V^h_{z,\epsilon,\eta}
+ &=A_zv_D^2+B_zv_T^2+C_zv_S^2\\
+ &=kA_z+(\alpha A_z+B_z)v_T^2+(\beta A_z+C_z)v_S^2
+ >kA_z.
+\end{aligned}
+\tag{RG.87}
+$$
+
+All $A_z,B_z,C_z$ are positive. Equation (RG.36) says $v_T,v_S$ are not both zero, proving strictness at all three heights. Since $s_{\rm original}<\sqrt\ell$, (RG.56) gives $g_z(s)=kA_z$ on this entire interval. The old common diagonal vector has coordinate $kA_y$ at the selected history, while the new one strictly improves it and raises all three means above their sharp values. Together with Theorem 9.2 this proves the claimed additional Pareto points beyond that known face. It classifies neither a region nor the remaining frontier. $\square$
+

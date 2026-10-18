@@ -1,0 +1,63 @@
+**Definition 4.1 (literal current guard and evaluation strategy).** The
+following ordered probe recipe is part of the mechanism, repeated
+from scratch on every executing fine transition.
+
+1. Let $\mathcal F_\kappa$ be the finite ordered set of required
+   present native bit locations for the active-version/row-decoder,
+   mode/PC, source writer/availability and original receipt guard of
+   this installed EX site. Enumerate them in UAS's physical catalog
+   order, counting each physical bit once. Follow each fixed root
+   route $\pi_f$ and inspect its unary bit by the two child probes at
+   each of its two vertices and its one parent return. An absent
+   required bit or failed literal finite guard disables the rule.
+   These are original core guard locations, not all-owner tape data.
+2. Follow $\pi_{16}$ to the actual source origin, probe $\mathsf O_0$
+   to $a$, check $a.\mathsf H_0$ back to that origin, inspect the
+   complete old 23-vertex cell by both child probes and parent returns,
+   and follow $a.\mathsf P\mathsf R$ to $z$. Probe $z.\mathsf P$
+   to check this same external attachment. Test the old marked R byte.
+   Its byte is unchanged, even when the pending subtree is partial.
+3. Let $\mathfrak m$ be the supplier's fixed meter port, retaining its
+   actual numeric assignment in 56–63; it is not directory port 0.
+   Let $j_{\rm app}\in\{0,1\}$ name its actual fixed append lane;
+   the other lane is its read lane. Follow $\pi_{\mathfrak m}$ and
+   $\mathsf O_{j_{\rm app}}$, check the reached old append cell's
+   $\mathsf H_{j_{\rm app}}$ backlink, inspect
+   its full 23-vertex byte, and follow $\mathsf P\mathsf R$ to its
+   unchanged trailing terminal. Probe that terminal's $\mathsf P$,
+   L and R. Test its original append-marker/receipt eligibility.
+   Read-head marks and both original lane links retain their actual
+   values; this inspection neither moves nor merges them.
+4. Start another distinguished-root walk
+   $\pi_{16}\mathsf O_0\mathsf P\mathsf R$ to $z$. Inspect its whole
+   at-most-25-vertex component in left-first depth-first order.
+   Probe L/R at every vertex, P on each nonroot return, and all four
+   O/H slots at every vertex. Require exact agreement with one $P_j$,
+   $j<24$, including empty O/H slots and reciprocal parent returns.
+   This is bounded pattern inspection: stop and reject on an
+   unexpected extension, depth beyond five or a twenty-sixth vertex;
+   never inspect an arbitrarily large component to find a match.
+5. Evaluate the fixed finite table once. For the uniquely matched $j$,
+   follow the proper-parent path of $w_{j+1}$ from $z$, and reprobe
+   the final destination child slot. Require vacancy and perform
+   Definition 2.4. There is no native control or receipt update.
+
+The required finite fields are obtained by expanding the actual
+decoder and guards of this fixed original row; there is no branch on
+an encoded future capacity or on arbitrary source payload. This
+dependency description and UAS's fixed physical ordering specify the
+finite field/route list even if some fields share a parent component.
+Each listed route is still walked separately. Current original
+enabledness at the eligible entrance is a premise, not supplied by
+matching a historical certificate.
+
+Inspection and table evaluation are the bounded internal matching
+of Assumption 2.3. They are not an unpriced scan or individually
+observable microsteps. The O/H probes in step 4 are deliberate:
+matching only the child tree would not check the specified local
+access-slot emptiness. No endpoint is retained across fine cuts.
+As for the supplier's partial primitive relation, a failed guard has
+no executing transition or receipt. The executing-transition tariff
+below does not claim a physical zero-cost implementation of rejected
+matching attempts.
+

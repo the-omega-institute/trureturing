@@ -1,0 +1,88 @@
+**Proposition 84.2 (inhabited same-field energy certificate on the whole cap class).** For every $M>0$, $\mathcal C_M$ contains states in the original punctured smooth core $\mathcal D_0$. For every $\psi\in\mathcal H_H^1$,
+$$
+f_\psi:=\sqrt{m_\psi}\in H^1(\mathbb R^3),\qquad
+\|f_\psi\|_2=\|\psi\|_2,\qquad
+\|\nabla f_\psi\|_2^2\le T[\psi].
+\tag{84.5}
+$$
+For every $\psi\in\mathcal C_M$, define the finite projected integral
+$$
+J_\psi=\int_{\mathbb R^3}\frac{m_\psi(\xi)}{|\xi|}d\xi.
+$$
+Then the actual conditional field expectation in (82.16) obeys, for almost every $\xi\ne0$,
+$$
+0\le G_\psi(\xi):=\int_{\mathbb R}\Gamma(\xi,w)\rho_\psi(w\mid\xi)dw
+\le\frac{M}{4\pi|\xi|},\qquad
+V[\psi]=\int m_\psi G_\psi\,d\xi\le\frac{M}{4\pi}J_\psi<\infty.
+\tag{84.6}
+$$
+Consequently the same-field energy has the interval certificate and normalized lower bound
+$$
+\begin{gathered}
+aT[\psi]-\frac{gM}{4\pi}J_\psi\le q[\psi]\le aT[\psi],\\
+q[\psi]\ge-\frac{g^2M^2}{64\pi^2a}.
+\end{gathered}
+\tag{84.7}
+$$
+
+Proof. First choose $u\in C_c^\infty(\mathbb R^3\setminus\{0\})$ and $h\in C_c^\infty(\mathbb R)$ with both $\|u\|_2=1$ and $\|h\|_2=1$. For
+$$
+h_R(w)=R^{-1/2}h(w/R),\qquad R\ge\frac{\|h\|_\infty^2}{M},\qquad
+\psi(\xi,w)=u(\xi)h_R(w),
+$$
+we have $\|h_R\|_2=1$, $\|\psi\|_2=1$, $m_\psi=|u|^2$ and $|h_R|^2\le M$. The support avoids $e$. All horizontal derivatives are square integrable, including
+$X_2\psi=(\partial_yu)h_R+xu h_R'$, because $u$ has compact support. Thus $\psi\in\mathcal D_0\cap\mathcal C_M$.
+
+For a general compactly supported smooth $\psi$, fibre integration gives
+$$
+\partial_{\xi_i}m_\psi
+ =2\operatorname{Re}\int_{\mathbb R}\overline\psi X_i\psi\,dw.
+\tag{84.8}
+$$
+For $i=2$, the additional $x\partial_w$ contribution cancels because
+$$
+\operatorname{Re}\int\overline\psi\partial_w\psi\,dw
+ =\frac12\int\partial_w|\psi|^2dw=0.
+$$
+To include zeros of $m_\psi$, use $f_\varepsilon=\sqrt{m_\psi+\varepsilon^2}-\varepsilon$. Cauchy--Schwarz gives
+$$
+|\partial_{\xi_i}f_\varepsilon|^2
+ =\frac{|\operatorname{Re}\int\overline\psi X_i\psi\,dw|^2}{m_\psi+\varepsilon^2}
+ \le\frac{m_\psi}{m_\psi+\varepsilon^2}\int|X_i\psi|^2dw
+ \le\int|X_i\psi|^2dw.
+$$
+These $f_\varepsilon$ are bounded in $H^1$, satisfy $0\le f_\varepsilon\le\sqrt{m_\psi}$, and converge in $L^2$ to $\sqrt{m_\psi}$. Weak lower semicontinuity proves (84.5) for smooth states. Now approximate any $\psi\in\mathcal H_H^1$ by $\psi_n\in C_c^\infty(G)$ in the free form norm. The fibre $L^2$ reverse triangle inequality implies
+$$
+\|\sqrt{m_{\psi_n}}-\sqrt{m_\psi}\|_{L^2(\mathbb R^3)}
+ \le\|\psi_n-\psi\|_{L^2(G)}.
+\tag{84.9}
+$$
+Together with weak lower semicontinuity and $T[\psi_n]\to T[\psi]$, this proves (84.5) on the whole free form domain. No cap condition on the approximating sequence is used. The punctured core has the same free form closure: if $\chi\in C_c^\infty(G)$ equals one near $e$ and $\chi_\varepsilon=\chi\circ\delta_{1/\varepsilon}$, the $Q=5$ dilation gives
+$$
+\|\chi_\varepsilon\|_2^2=\varepsilon^5\|\chi\|_2^2,\qquad
+T[\chi_\varepsilon]=\varepsilon^3T[\chi].
+$$
+The product rule then gives $(1-\chi_\varepsilon)\psi\to\psi$ in the free form norm for each compactly supported smooth $\psi$.
+
+The Coulomb estimate used next is a mature intermediate of (82.4). Its integrability and constant can also be seen directly. For smooth compactly supported $f$, integrate against $v_\varepsilon(\xi)=\xi/\sqrt{|\xi|^2+\varepsilon^2}$, whose divergence is
+$$
+\operatorname{div}v_\varepsilon
+ =\frac2{\sqrt{|\xi|^2+\varepsilon^2}}
+   +\frac{\varepsilon^2}{(|\xi|^2+\varepsilon^2)^{3/2}}.
+$$
+Integration by parts and $|v_\varepsilon|\le1$, followed by Fatou, give
+$$
+J[f]:=\int\frac{|f|^2}{|\xi|}d\xi\le\|f\|_2\|\nabla f\|_2.
+\tag{84.10}
+$$
+Smooth $H^1$ approximation and Fatou extend the inequality to every $f\in H^1$. Applying it to differences of approximants also gives convergence in $L^2(|\xi|^{-1}d\xi)$. Thus the integration-by-parts identity extends without an unaccounted singular boundary term:
+$$
+a\|\nabla f\|_2^2-kJ[f]
+ =a\left\|\nabla f+\frac{k}{2a}\frac{\xi}{|\xi|}f\right\|_2^2
+   -\frac{k^2}{4a}\|f\|_2^2,\qquad k>0.
+\tag{84.11}
+$$
+For $f=f_\psi$ in the normalized class, (84.5) and (84.10) give $J_\psi\le\sqrt{T[\psi]}<\infty$.
+
+Apply the cap to the actual nonnegative $\Gamma$ and use Tonelli with its genuine marginal (82.10). This proves (84.6); $\xi=0$ is a Lebesgue null set, so its divergent fibre marginal contributes no extra term. Substitution in (84.4) yields the interval in (84.7). With $k=gM/(4\pi)$, (84.5) and (84.11) yield $q[\psi]\ge-k^2/(4a)$; equivalently $q[\psi]\ge aT[\psi]-k\sqrt{T[\psi]}\ge-k^2/(4a)$. This proves the stated constant. The calculation bounds the conditional expectation in (82.16); it never identifies that expectation with the unweighted marginal (82.10). $\square$
+

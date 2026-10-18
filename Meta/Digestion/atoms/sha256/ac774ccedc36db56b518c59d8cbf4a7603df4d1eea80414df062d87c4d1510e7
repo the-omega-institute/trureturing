@@ -1,0 +1,8 @@
+**Definition 2.3 (empty-bank prelude).** After ordinary boundary construction,
+append one F to each of 64 and 65. If $r$ is the syntactic register count,
+measure Base(64), construct $U(r)\mathsf{sep}$ on 67 by $r$ unrolled
+Append(1)s and Append(0), and seal that word. Append $r$ seps and F to 64,
+seal it, count the preceding descriptors on 68 and append its full
+actual descriptor. A CTL sets parity A. Every register is then empty.
+No compiled assignment occurs before this prelude.
+

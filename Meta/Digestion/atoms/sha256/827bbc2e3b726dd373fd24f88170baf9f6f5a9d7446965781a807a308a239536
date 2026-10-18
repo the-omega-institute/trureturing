@@ -1,0 +1,22 @@
+**Convention 10.3 (verification boundary).** All new statements in this
+volume are ordinary mathematics with the stated source, action and
+handoff assumptions. Source inspection, document structure and
+finite examples are separate from Lean kernel verification and from
+actual paid physical execution. No solver, experiment, new runtime
+observation mechanism or source-size promise accompanies the results.
+
+[ABC]: RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_BLOCK_CONJUGACY.md
+[ARH]: RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RELATION_HISTORY.md
+[NSF]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SIGNED_FEASIBILITY.md
+[NPL]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PROJECTION_LIMITEDNESS.md
+[NFO]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_FINITE_OBSTRUCTION.md
+[JRF]: RECURSIVE_RELATIONAL_OBSERVATION_SERIAL_JOINT_RESOURCE_FRONTIER.md
+[URR]: https://github.com/the-omega-institute/trureturing/blob/cdf8955c35033409ca3e51aa485794bf57a78723/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_UNIFORM_RESIDUAL_REALIZATION.md
+[DEPTH]: https://github.com/the-omega-institute/trureturing/blob/cdf8955c35033409ca3e51aa485794bf57a78723/D5/S3/Arith/FibonacciAtomic/Observer/NativeDepthPatterns.lean
+[GROUND]: https://github.com/the-omega-institute/trureturing/blob/cdf8955c35033409ca3e51aa485794bf57a78723/D5/S3/Arith/FibonacciAtomic/Observer/NativeGroundSeparation.lean
+[CUT]: https://github.com/the-omega-institute/trureturing/blob/cdf8955c35033409ca3e51aa485794bf57a78723/D5/S3/Arith/FibonacciAtomic/Observer/NativeCutFibers.lean
+[HISTORY]: https://github.com/the-omega-institute/trureturing/blob/cdf8955c35033409ca3e51aa485794bf57a78723/D5/S3/Arith/FibonacciAtomic/Observer/NativeHistoryCells.lean
+[RECUT]: https://github.com/the-omega-institute/trureturing/blob/cdf8955c35033409ca3e51aa485794bf57a78723/D5/S3/Arith/FibonacciAtomic/Observer/NativeSymbolicRecutting.lean
+[FREE]: https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Algebra/Free.lean
+[CL]: https://perso.ens-lyon.fr/pierre.lescanne/PUBLICATIONS/jsc-diseq.pdf
+

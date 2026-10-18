@@ -1,0 +1,38 @@
+**Assumption 1.1 (original source and certificate).** Use the original source,
+complete carriers, projections, outer domains and certificate system of
+[PAIR, Sections 2 and 16.5][PAIR]. In particular,
+
+$$
+a=\frac13,\qquad b=\frac25,\qquad
+\rho_p=\frac{1116529}{22781250},\qquad
+\rho_\beta=\frac{239}{6750},\qquad
+C=\frac{11758471}{22781250},\qquad H=\frac{5261}{6750}.
+\tag{1.1}
+$$
+
+The prior $\mu$ is any fixed finite or countable probability distribution
+with $\mu(1),\mu(2)>0$. Whenever the certificate is used for an original
+supported target, choose any $k_\star\ge3$ with $\mu(k_\star)>0$ and put
+$r_\star=F_{k_\star+1}/F_{k_\star+3}$. Here $F_0=0$, $F_1=1$ and
+$F_{n+2}=F_{n+1}+F_n$. The construction below works for every real
+
+$$
+r_\star\in I:=\left[\frac38,\frac5{13}\right],
+\tag{1.2}
+$$
+
+so it applies to every such supported Fibonacci ratio. It does not require
+$\mu(3)>0$ or a maximizing supported depth.
+
+The original source draws $K$ once, before the first paid Read. Its
+$(m,d,\ell,n)=(2,1,2,4)$ control, both seeds, paid rejections, partial
+parses, every finite return, marker triples, held records, third write
+before latch, fourth completion and matching Stop are those of [PAIR].
+Configuration TV precedes averaging. The compatible-law interpretation
+uses entire-descriptor conditioning and common **unweighted** acquired
+marginals, with the same acquired and synthetic kernels. COMPLETE includes
+the installed program, numerical representation, sampler states,
+workspace and persistent randomness. The measures constructed here are
+analytical measures on the certificate's original products; no observer
+installation or additional source operation is part of the construction.
+

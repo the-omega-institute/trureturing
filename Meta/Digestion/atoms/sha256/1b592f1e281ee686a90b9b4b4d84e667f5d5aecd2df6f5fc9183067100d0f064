@@ -1,0 +1,30 @@
+**Convention 11.3 (limits of the result).** At $s=0$ the binary law is
+fair; this does not force every finer flag to be input independent.
+At $s=\sqrt\ell$ the weak and strong formulas meet with $q=0$ and
+zero branches removed. At $s=1$ the original equality vector is a
+singleton. Replacing $s$ by $-s$ only exchanges records, so no additional
+resource formula is needed. Zero, singular, subnormalized and
+complement-supported test inputs use their unnormalized compression;
+the full constructed channels also handle arbitrary cross-support
+coherence and all passive references.
+
+The exact cone lift has plane slack and spectral variables; it is not a
+quantifier-free elimination or an efficient algorithm. A finite branch
+bound is not a bound on native synthesis cost, clock hardware or
+computational complexity. These results imply no communication capacity,
+generic neural-network theorem, empirical machine-learning claim,
+physical feasibility or physical impossibility. They do not authenticate
+the inherited algebraic source, discharge its nested premises, or
+complete the original native continuation investigation.
+
+The general coherent $\mathsf E_s$, the twelve individual closed minima,
+the rest of the full resource frontier and lawful native acquisition,
+storage, decoding and timing remain the continuing targets of Definition
+9.2 and Conventions 11.1–11.2, with the original experiment and full finite
+common class intact.
+
+[CG]: FIB_NATIVE_COMPLETE_CONTINUATION_DISTINGUISHABILITY_GAP.md
+[JR]: FIB_NATIVE_COMPLETE_CONTINUATION_JOINT_RECORD_PAYLOAD.md
+[RE]: FIB_NATIVE_FIXED_CHANNEL_RECORD_RESOURCE_ENVELOPE.md
+[IR]: FIB_NATIVE_INTERIOR_RECORD_RESOURCE_REDUCTION.md
+

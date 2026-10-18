@@ -1,0 +1,19 @@
+**Proposition 6.2 (the consumer is not an atomic-output anchor).** At fixed
+$c$, the masses of the finite sources (FNS.36)--(FNS.37) are unbounded as
+$q$ grows. Consequently no finite residual-free template family with a
+uniform constructor-mass bound can cover this consumer's all-depth witnesses.
+
+**Proof.** From (FNS.38), the two residual masses grow linearly with $q$ and
+the outer context adds a fixed positive amount. Any finite residual-free
+template made from fixed grounds, rank atoms and finitely many ordered pairs
+has a fixed mass bound: rank atoms have mass zero and each displayed pair adds
+at most one. A finite union has one common bound, whereas (FNS.36)--(FNS.37)
+exceed it. This is a sourcewise finite obstruction to an atomic-output anchor,
+not an undecidability or universal rank-free impossibility theorem. $\square$
+
+The completed solution of (FNS.34) is itself non-finite. Along the repeated
+right-pair path, its subtrees contain arbitrarily high atomic iterates
+$T_{c+2q}$, so native atomic-rank injectivity makes the contact non-rational.
+This observation explains why finite witnesses must be produced by guarded
+prefix lifting rather than by declaring the limit a finite source.
+

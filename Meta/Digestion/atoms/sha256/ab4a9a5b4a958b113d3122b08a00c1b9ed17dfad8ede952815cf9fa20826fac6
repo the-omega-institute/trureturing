@@ -1,0 +1,58 @@
+**Corollary 18.1 (The exact shared value and its parameter map).**
+Define $v(Z)=e_2^{\rm aff}(Z)=e_3^{\rm aff}(Z)$. Then
+
+$$
+v(Z)=
+\begin{cases}
+4H\sqrt{T_\tau},&0<Z<2/3,\\
+2\sqrt{ZH},&2/3\le Z<1,
+\end{cases}
+\qquad \tau=\frac{Z}{4H}\quad\text{in the first case}.
+\tag{18.1}
+$$
+
+Here $T_\tau$ is the unique root supplied by Theorem 7.4, with
+
+$$
+\tau<T_\tau<T_0=\frac{(1+\tau)^2}{4},
+$$
+
+$$
+\max_{0\le x\le1}
+\left\{\sqrt{x(1-x)}-\sqrt{T_\tau-\tau x}
+-T_\tau^{(1-x)/2}(T_\tau-\tau)^{x/2}\right\}=0.
+\tag{18.2}
+$$
+
+Below the transition,
+
+$$
+2\sqrt{ZH}<v(Z)<1-Z/2.
+$$
+
+The normalization and the optimal radial parameters are exactly
+
+$$
+x=\frac{k}{H},\qquad c=\frac{C}{2H},\qquad
+\lambda=\gamma H,\qquad
+\mathcal R_Z(C,\gamma)=16H^2\mathcal J(c,\lambda),
+$$
+
+$$
+C_*=2H\sqrt{T_\tau},\qquad
+\gamma_*=\frac{1}{2H}\log\frac{T_\tau-\tau}{T_\tau}<0.
+\tag{18.3}
+$$
+
+**Proof of Corollary 18.1.** Equation (17.2) has exactly the same
+radial objective, with exactly the same $A(k)$ and metric
+coefficient four, as Theorem 6.4. Lemma 7.2 identifies its
+normalization by the displayed substitution. Lemma 7.3 and Theorems 7.4–7.6
+then give (18.2), its unique root, the strict interval for that
+root, the exact value, and the parameters (18.3). At and above
+$Z=2/3$, Theorem 10.2 gives $e_2^{\rm aff}=2\sqrt{ZH}$;
+Theorem 17.2 transfers it to budget three. This reuses the
+published endpoint-log corridor, root, contact, and transition
+proofs without introducing a different scalar optimization.
+$\square$
+

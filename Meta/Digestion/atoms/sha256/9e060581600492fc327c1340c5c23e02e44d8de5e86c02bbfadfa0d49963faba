@@ -1,0 +1,32 @@
+**Lemma 3.3 (Component products and a fixed-label observation).** In
+phase $\phi$, a read at $2\ell+\phi$ is the XOR edge
+$\{\ell,\ell+1\}$ on the integer spin line; every other read is a
+separator. Distinct acquired active edges form finite disjoint paths.
+On a consistent labelled path its two spin assignments are complements,
+with their actual Bernoulli product weights. A zero-labelled component
+with $L$ edges has probability
+
+$$
+t_{L+1}=a^{L+1}+b^{L+1}\ge c^L.
+\tag{3.2}
+$$
+
+Disjoint components multiply. Adjoin the actual target vertex as a
+singleton if needed. If its component has $v$ vertices, the ratio of
+its two target-spin masses in either direction is at most $R^v$.
+If an almost-surely returning table has only one distinct halt label,
+its correct mass is at most $a/2$.
+
+Proof. An XOR on an edge fixes the next spin given the preceding spin.
+A finite path therefore has exactly its two complementary completions.
+For all-zero labels both are constant. For $L\ge1$, convexity gives
+$a\,a^L+b\,b^L\ge(a\,a+b\,b)^L=c^L$; the case $L=0$ is equality
+one. Independence of the original iid spins gives multiplication on
+vertex-disjoint components. Complementation exchanges each factor $a$
+with $b$, yielding the ratio bound. Phase-specific full-law masses have
+the factor $1/2$. Repeats add charges but no new edge; inconsistent
+labels give zero mass. The argument covers all integer locations and
+every target incidence. With one distinct halt label $h$, the output
+is $h$ almost surely, so correctness is $J_p(H_j=h)\le a/2$.
+Duplicate halt rows do not alter this observation. $\square$
+

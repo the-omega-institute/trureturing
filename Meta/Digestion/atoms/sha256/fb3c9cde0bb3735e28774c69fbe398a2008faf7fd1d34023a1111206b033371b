@@ -1,0 +1,13 @@
+**定义 76.1（self-delimiting natural and signed fields）。** For a natural number $n$, let $b(n+1)$ be the canonical binary expansion of $n+1$, of length $l$. Its gamma word is $l-1$ zero bits followed by $b(n+1)$. Its length is $2\lfloor\log_2(n+1)\rfloor+1$. Decoding counts the initial zeros, then reads the initial one and exactly that many additional binary digits, and subtracts one. A missing bit, a nonbinary symbol or an unfinished field is invalid. For an integer $z$, the natural signed field is $\zeta(z)=2z$ if $z\geq0$ and $\zeta(z)=-2z-1$ if $z<0$. Even fields invert to $n/2$ and odd fields to $-(n+1)/2$. These operations use only finite integers. Every field below uses this grammar; field boundaries are determined by the grammar, and the end of a word is part of its framing.
+
+The six disjoint eight-bit mode words are the following literal finite mathematical constants. A mode word counts toward the word's length.
+
+| Mode | Binary constant | Fields following the constant |
+| --- | --- | --- |
+| Sum-loss word | 10110100 | $K,h,a,b$, nine signed anchor integers |
+| Historical reply | 11001001 | Requested precision $b$, nine signed numerators |
+| Periodic rational word | 10110101 | Nine signed-numerator, positive-denominator pairs |
+| Exact-zero word | 10110110 | No field |
+| Evidence wrapper | 10110111 | Evidence length $M$, $M$ literal evidence bits, one core word |
+| Rational orientation word | 10111000 | Output precision $p$, reflection $\pi$, four signed quaternion integers |
+

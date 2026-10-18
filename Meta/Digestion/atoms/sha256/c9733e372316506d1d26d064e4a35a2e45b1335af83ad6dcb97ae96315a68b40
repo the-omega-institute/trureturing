@@ -1,0 +1,71 @@
+**Theorem 29.1 (both microscopic states and the exact orbit distance).** Under Definition 27.1, zero extend $f_s$ and $F_s$ of (28.1) to $\mathbb R^4$. For every fixed compact $K\subset\mathbb R^4$, there are finite constants depending on the fixed datum, $b,M_b,K$ such that, uniformly over actual normalized complex choices,
+
+$$
+\|f_s\|_{L^2(K)}^2=O_{b,K}(s^3),\qquad
+\|F_s\|_{L^2(K)}^2=O_{b,K}(s^3).
+\tag{29.1}
+$$
+
+In particular both converge locally strongly to zero and globally weakly to zero in complex $L^2(\mathbb R^4)$, while $\|f_s\|_2=\|F_s\|_2=1$. For the canonical normalized mode $p$ and $\mathbb T p=\{e^{i\theta}p:\theta\in\mathbb R\}$,
+
+$$
+\operatorname{dist}_{L^2}(\mathcal U_{b,s}\psi_{b,s},\mathbb T p)
+                    \longrightarrow\sqrt2.
+\tag{29.2}
+$$
+
+All conclusions hold along every prescribed sequence $s_n\downarrow0$ and every actual normalized complex choice along it.
+
+Proof. P Theorem 107.2, specifically (107.3)–(107.4), gives for this separately fixed admitted datum the full-field convergence
+
+$$
+\|\widetilde U_{b,s}-V\|_\infty\longrightarrow0,
+\qquad V(\xi)=j_0^{-1}\int_1^\infty p_E(t;0,\xi)dt>0.
+\tag{29.3}
+$$
+
+This is the original field with its long tail and clock. The positivity and positive-time kernel continuity are those retained in J (2.7)–(2.9a). They also give continuity of $V$: its finite-time integrals on $[1,T]$ are continuous, and their infinite-time tails tend uniformly to zero by J (2.9a). Thus, for a nonempty compact $K$,
+
+$$
+v_K:=\min_{\xi\in K}V(\xi)>0.
+\tag{29.4}
+$$
+
+Since $b>0$ is fixed and $L_0/\varepsilon-b>0$, both faces of $\Omega_{s,b}$ recede. Hence $K\subset\Omega_{s,b}$ eventually; by (29.3), $\widetilde U_{b,s}\ge v_K/2$ on $K$ for small $s$. Theorem 28.1 gives
+
+$$
+\int_K|f_s|^2d\xi\le\frac{2m_s}{v_K}
+       \le\frac{2C_*^2M_b}{v_Kd_b}s^3.
+\tag{29.5}
+$$
+
+The empty compact set needs no estimate. For a fixed complex test $v\in L^2(\mathbb R^4)$ and a compact $K$, Cauchy–Schwarz and the global unit norm imply
+
+$$
+|\langle v,f_s\rangle|
+ \le\|v1_K\|_2\|f_s1_K\|_2+\|v1_{K^c}\|_2.
+\tag{29.6}
+$$
+
+Choose $K$ large enough to make the last term arbitrarily small, and then let $s\downarrow0$ in the first term using (29.5). This proves global weak zero for $f_s$ without any additional compactness hypothesis on actual states.
+
+For the original unsheared state $F_s=\mathcal T_s^{-1}f_s$, the exact change of variables is
+
+$$
+\int_K|F_s|^2d\xi
+ =\int_{\mathscr L_s^{-1}K}|f_s|^2d\xi.
+\tag{29.7}
+$$
+
+The equality also holds for the zero extensions, since the shear preserves the height domain. The matrices $L_s^{-1}$ tend to the identity. For a fixed $K$ all sets $\mathscr L_s^{-1}K$ therefore lie in a single fixed compact $K'$ for small $s$. Apply (29.5) to $K'$ to prove the second local estimate in (29.1). Repeating (29.6) with $F_s$ and its unit norm proves its global weak zero. This uses an exact compact-set change of variables, not a norm estimate obtained by applying strong operator convergence to the varying vectors $f_s$.
+
+Finally, the unit-vector identity
+
+$$
+\operatorname{dist}_{L^2}(F_s,\mathbb T p)^2
+       =2-2|\langle p,F_s\rangle|
+\tag{29.8}
+$$
+
+and weak zero give (29.2). The estimates and compact-test argument are uniform in actual choices at each sufficiently small $s$, so apply to every stated sequence and every choice on it. Global strong convergence to zero is impossible because the norms remain one. $\square$
+

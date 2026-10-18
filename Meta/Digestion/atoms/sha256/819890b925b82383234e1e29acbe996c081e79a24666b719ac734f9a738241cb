@@ -1,0 +1,72 @@
+### 81.3 明确恢复静态对偶
+
+令
+
+$$
+H=F^TGF,\qquad c=F^TCF,\qquad q=F^TQF,
+$$
+
+$$
+\lambda(r)=
+\frac{H_{02}/q_{02}-H_{01}/q_{01}}
+{c_{01}/q_{01}-c_{12}/q_{12}}
+=\frac{2\psi'(r)}{h_{\rm fr}'(r)}.
+\tag{RC.130}
+$$
+
+引理 81.1 保证分母不为零。并且
+
+$$
+\lambda(r_\star)=0,\qquad
+\lambda(r)>0\quad(r_\star<r\le r_{\rm c}).
+$$
+
+定义对称矩阵
+
+$$
+\widehat{\mathcal Y}=
+\begin{pmatrix}
+-H_{00}-\lambda c_{00}
+&
+-H_{01}-\lambda c_{01}
+&
+-H_{02}-\lambda c_{02}
+\\
+*
+&
+H_{11}+\lambda c_{11}
+&
+H_{12}-\lambda c_{12}-2H_{02}q_{12}/q_{02}
+\\
+*
+&
+*
+&
+H_{22}-\lambda c_{22}
+\end{pmatrix},
+$$
+
+$$
+\mathcal Y(r)=F(r)\widehat{\mathcal Y}(r)F(r)^T.
+\tag{RC.131}
+$$
+
+这些都是显式矩阵运算。令
+
+$$
+D_r(h)=h^T\mathcal Y(r)h-\lambda(r)|z|.
+$$
+
+则
+
+$$
+D_r(h)\ge|\ell(h)|\qquad(h\in\mathscr C),
+\tag{RC.132}
+$$
+
+$$
+\operatorname{tr}\mathcal Y-\lambda h_{\rm fr}(r)
+=\operatorname{tr}G-2\psi(r).
+\tag{RC.133}
+$$
+

@@ -1,0 +1,27 @@
+**Definition 1.1 (one source and its original machine).** Let
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle s,t\rangle,\qquad
+\rho\alpha=\beta,\quad \rho\beta=\langle\beta,\alpha\rangle,\quad
+\rho\langle s,t\rangle=\langle\rho s,\rho t\rangle.
+$$
+
+Fix $H\ge1$, $N=2H-1$, one preparation identity $\xi$, and one actual
+$u\in\mathcal T_H=\{t:\lambda(t)\le H\}$. The original machine $M_0$
+is the canonical serial machine of AIF Definitions 2.1–2.6. Its entrance
+is the paid canonical $2N$-bit installation, followed by the supplied
+no-update acquisition of that same source and the seed's actual delivery.
+Write $a=a(u)$ for the acquisition fence's absolute primitive ordinal.
+The fixed native graph, literal boot encoding, descriptor conventions,
+port assignments and preparation data are denoted collectively by $v_0$.
+They are part of a replay specification, not runtime advice about $u$.
+
+Let $\mathcal R_H$ be the full lawful post-acquisition prefix class of
+that machine. Every finite address and every finite complete context tree
+is allowed. Whole-candidate capacity rejection does not remove an input
+from this class. At a source-frame IN, the lawful supplied bits are
+exactly those preserving extendibility to a canonical well-typed frame.
+Both raw physical bits still execute when physically supplied. A bit
+destroying that extendibility leaves $\mathcal R_H$; it is not a disabled
+IN and does not have the illegal-unexecuted result.
+

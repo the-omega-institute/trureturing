@@ -1,0 +1,95 @@
+**Theorem 34.1 (a complete two-parameter strict-failure family).** Let $T_*$ be the third-column matrix of (R.154). For every $(\beta,\theta)\in\mathcal D=(0,1/2]\times[0,\pi/4]$, take $A=A_{\beta,\theta}$ and put
+
+$$
+\begin{gathered}
+\alpha=\langle A,T_*\rangle_F
+=f(\sqrt a-\sqrt\beta)\cos\theta,\\
+\zeta=\langle JA,T_*\rangle_F
+=\tfrac{3f}{2}(\sqrt a-\sqrt\beta)\sin\theta,\\
+\widetilde T=T_*-\alpha A-\zeta JA,\qquad
+n=\|\widetilde T\|_F,\qquad T_{\beta,\theta}=\widetilde T/n.
+\end{gathered}
+\tag{R.160}
+$$
+
+This is defined on all of $\mathcal D$ and satisfies
+
+$$
+\begin{gathered}
+n^2=1-f^2(\sqrt a-\sqrt\beta)^2
+ (\cos^2\theta+\tfrac94\sin^2\theta)\geq\tfrac{53}{62}>0,\\
+T_{\beta,\theta}\in\mathcal T_{\beta,\theta},\qquad
+h^TT_{\beta,\theta}=(3f/n,0).
+\end{gathered}
+\tag{R.161}
+$$
+
+Use (R.149) with this $T$ to define $N_{\beta,\theta}$. Every member is an actual normalized two-Kraus CPTP channel, with rank $B=2$, $q=1$, and a combined Kraus map of rank five. Its kernel has a unique real representative with $u_2=0$, $v_2=1$, and this representative depends continuously on $(\beta,\theta)$.
+
+There is an $\varepsilon>0$ such that, for all
+
+$$
+\tfrac12-\varepsilon<\beta\leq\tfrac12,\qquad
+0\leq\theta<\varepsilon,\qquad (\beta,\theta)\in\mathcal D,
+\tag{R.162}
+$$
+
+the selected $u$ and $w=v-(u^Tv)u/\|u\|^2$ are nonzero, $\operatorname{rank}T=\operatorname{rank}C_{\rm out}=2$, $c_{\rm pl}>\sqrt a$, and
+
+$$
+\begin{gathered}
+\widehat u=u/\|u\|,\quad \widehat w=w/\|w\|,\quad
+X_\phi=e^{i\phi}|\widehat u\rangle\langle\widehat w|
+       +e^{-i\phi}|\widehat w\rangle\langle\widehat u|\in\mathcal H_0,\\
+\gamma(\beta,\theta):=\min_{\phi\in[0,2\pi]}
+ \tfrac12\|N_{\beta,\theta}(X_\phi)\|_1
+>\sqrt{1-\beta}.
+\end{gathered}
+\tag{R.163}
+$$
+
+In particular this relatively open failure neighborhood contains points with $\beta<1/2$, $0<\theta<\pi/4$, whose $B$ is not unitarily conjugate to canonical $B$.
+
+**Proof.** Multiplication of the displayed $A,T_*$ gives the two coefficients in (R.160), including the positive sign of $\zeta$. Since $A,JA$ are Frobenius orthonormal, subtracting those two components is the orthogonal projection onto their common perpendicular. Pythagoras gives the exact $n^2$. Here $(\sqrt a-\sqrt\beta)^2\leq1$ and $\cos^2\theta+(9/4)\sin^2\theta\leq9/4$, so the subtracted term is at most $9/62$. Normalizing the projection proves all three equations defining (R.148), and $A,JA$ have zero $h$ row, proving the last equation of (R.161). Theorem 32.1 now supplies the actual full TP sum, phase outputs and normalized common pair for every parameter, rather than merely a limiting block datum.
+
+The active first and second columns form, in the order $(b_1,g_1,b_2,g_2)$,
+
+$$
+M_{\beta,\theta}=[A_0,JA_0,A_1,JA_1]|_U
+=\begin{pmatrix}
+\sqrt a c&0&0&-\sqrt a s\\
+0&\sqrt a c&\sqrt a s&0\\
+0&-\sqrt\beta s&\sqrt\beta c&0\\
+\sqrt\beta s&0&0&\sqrt\beta c
+\end{pmatrix},\qquad \det M_{\beta,\theta}=a\beta>0.
+\tag{R.164}
+$$
+
+These columns span $U$ and $T_0$ has nonzero $h$ component, so the combined map has rank five on all of $\mathcal D$. Its $h$ equation forces $u_2=0$. A nonzero kernel vector cannot also have $v_2=0$, since (R.164) would make all four other coordinates zero. Hence scale uniquely to $v_2=1$. The remaining coordinates are explicitly
+
+$$
+\begin{pmatrix}u_0\\u_1\\v_0\\v_1\end{pmatrix}
+=-M_{\beta,\theta}^{-1}(T_{\beta,\theta,1}|_U),\qquad
+u=(u_0,u_1,0)^T,\quad v=(v_0,v_1,1)^T.
+\tag{R.165}
+$$
+
+All entries in (R.160), (R.164) and (R.165) are continuous, indeed real analytic wherever the positive square roots are defined. At $(\beta,\theta)=(1/2,0)$ the scaled pair is
+
+$$
+u=\tfrac3{\sqrt{31}}|0\rangle,\qquad
+v=\tfrac2{\sqrt{31}}|0\rangle+|2\rangle,\qquad w=|2\rangle.
+$$
+
+Thus $u\ne0$ locally. Because $u_2=0$ and $v_2=1$, orthogonalization leaves $w_2=1$, so $w\ne0$ wherever $u\ne0$. Normalization is consequently continuous nearby. The vectors $\widehat u,\widehat w$ are real orthonormal and $\widehat u_2=0$, which gives $X_{\phi,22}=0$, trace zero and input eigenvalues $1,-1,0$. This proves its membership in the full complex Hermitian $\mathcal H_0$ and its norm two.
+
+On a sufficiently small closed parameter neighborhood of the base point and the compact phase circle, $g(\beta,\theta,\phi)=\tfrac12\|N_{\beta,\theta}(X_\phi)\|_1$ is jointly continuous and hence uniformly continuous. In particular
+
+$$
+|\min_\phi g(p,\phi)-\min_\phi g(p_0,\phi)|
+\leq\max_\phi|g(p,\phi)-g(p_0,\phi)|\longrightarrow0
+\quad(p\longrightarrow p_0).
+$$
+
+Thus $\gamma$ is continuous. Theorem 33.1 gives the strictly positive base margin $\gamma(1/2,0)-1/\sqrt2=(1+\sqrt{10})/\sqrt{31}-1/\sqrt2$. Continuity of this margin after subtracting $\sqrt{1-\beta}$ proves (R.163) throughout a relatively open neighborhood. At the base, $T$ has rank two and $c_{\rm pl}=1>1/\sqrt2$; a nonzero minor and this strict plane inequality persist on a smaller neighborhood. Choose $\varepsilon<\min(1/2,\pi/4)$ so (R.162) lies inside it. The spectral assertion for its interior points follows from (R.146). This proves the two-parameter neighborhood analytically. It makes no global assertion about selecting kernel gauges for arbitrary $T\in\mathcal T_{\beta,\theta}$, or about contracting directions outside the selected plane. $\square$
+

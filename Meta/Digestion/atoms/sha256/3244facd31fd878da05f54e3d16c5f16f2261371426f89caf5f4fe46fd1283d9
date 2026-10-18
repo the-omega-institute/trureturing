@@ -1,0 +1,62 @@
+## 130. Fixed assumptions and previously proved inputs
+
+Take an actual finite ideal tetrahedron face pairing with complete edge links
+that are circles, and its actual global edge set E. All counts below count
+local edge occurrences, retaining repeated labels, distinct-face self-gluing,
+and repeated tetrahedra along an edge link. Assume every edge degree is at
+least six. Fix a partition E = H disjoint-union S. Every tetrahedron has a
+chosen vertex-induced frame with actual labels, in the standard order
+(12,13,14,34,24,23),
+
+    (R, A, B, O, A, B),       A,B in H, A != B.
+
+The labels R,O can belong to either part and can repeat. A local occurrence
+is called axial or transverse according to this fixed frame. These are roles
+of occurrences, not global roles assigned to H labels. Every S occurrence
+is necessarily axial.
+
+Suppose one common positive global generalized length field is given. Write
+x_e = cosh(ell_e)>1. All its original extended angle sums are exactly 2*pi.
+Positive-length classification says each tetrahedron is genuine, with all
+angles positive, or flat, with two opposite pi angles and four zeros.
+
+The following inputs are reused from this volume and the main
+[geometric-realization volume](CFMP_GEOMETRIC_REALIZATION.md):
+
+1. Section 95 of this volume and Section 50 of the main volume: a vector (r,a,b,o,a,b) is flat
+   in its axial pair precisely when
+
+       (r-1)(o-1) >= (a+b)^2.                         (A)
+
+2. Lemma 111.1: if the transverse a,a pair is selected by a flat block,
+
+       a>b,       a-b >= sqrt((r+1)(o+1)).           (T)
+
+   In particular, for one fixed reservoir pair only its strictly larger
+   numerical label can be selected transversely.
+
+3. Lemma 101.1 and Theorem 112.1: for every e in S its actual reservoir pair P(e)={A_e,B_e}
+   is constant along its complete star, and
+
+       x_e < 1+x_(A_e)+x_(B_e).                     (S)
+
+   This input uses all global angle equations and degree at least six. It
+   does NOT assume genuine witnesses for all H labels.
+
+4. Theorem 96.1: in a genuine block (r,a,b,o,a,b), if r>=1+a+b, and theta
+   is its r angle and beta,delta its transverse angles, then
+
+       2*theta+beta+delta > pi.                     (D)
+
+5. Section 95's six-length formula: in a genuine block
+   (z,m,c,d,m,c), the cosine at either m transverse occurrence has positive
+   denominator and numerator
+
+       N(z) = c(z+d)+m(zd+c^2-m^2+1).              (N)
+
+No additional assumption that H labels have genuine appearances is made.
+
+For any e let p_e be its number of flat pi occurrences. Nonnegative angles
+and the full edge equation imply p_e<=2. If p_e=2, e has no genuine
+occurrence. Conversely, an edge without a genuine occurrence has p_e=2.
+

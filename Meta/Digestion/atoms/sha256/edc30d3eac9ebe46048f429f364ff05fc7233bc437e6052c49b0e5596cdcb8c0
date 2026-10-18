@@ -1,0 +1,56 @@
+**Theorem 13.3 (unchanged accepted labels after omitting small leaves).**
+Analytically omit only the $r=1$ and $r=2$ range leaves from the
+grammar of Convention 12.1. The set of accepted rational triples
+$(d,\nu,C)$ is exactly unchanged. Consequently the infimum of
+accepted caps over rational laws at each depth is unchanged.
+
+Proof. Every nonleaf rule has one parent. Starting from either small
+range leaf, the initial cap is at least one by Proposition 13.2.
+A height-$h$ homogeneous scaffold satisfies
+$C\ge C_0^{2^h}\ge1$, including $h=0$; a stability node
+satisfies $C\ge C_0+\operatorname{TV}(\mu,\nu)\ge1$.
+Induction along any finite ancestry gives final cap at least one,
+whatever its heights and intervening rational law changes.
+
+Here is an exhaustive old ungrouped joint leaf at that identical
+final label $(d,\nu,C)$. Its data contain the full native reply and
+target tables. For every nonempty range-feasible
+$Q\subseteq\operatorname{supp}(\nu)$, include every hard target
+of Definition 2.1 and its exact joint cells. A target is listed as
+hard exactly when each of the finitely many boundary experiments,
+including a constant, has a reply cell containing two different
+target values. For each target outside that list, supply a determining
+experiment and the decoder given by its common target value on each
+attained reply cell, with any attained factor on unused replies.
+List all states in each resulting joint cell $D$,
+with rational mass $m_D=\sum_{x\in D}\nu(x)$. These prescriptions
+specify all the finite tables and all the required supports, with
+no selected-support omission. For every one of them,
+
+$$
+\sum_Dm_D^2
+\le\left(\sum_Dm_D\right)^2
+=\nu(Q)^2\le1\le C^2.
+\tag{RCE.44}
+$$
+
+Thus this very leaf satisfies every squared comparison at the
+original final cap. The same inequality holds directly on supports
+with declared zero-weight states, and Lemma 2.2 also justifies the
+old leaf's positive-support convention. The final rational law need
+not resemble the initial range law.
+
+One may replace each small range leaf in the finite certificate
+directly by the just described old leaf at its own identical label,
+since its cap is already at least one. All later labels, parent
+references and inequalities remain valid. Alternatively, follow the
+final unary ancestry: if its initial leaf is small, replace the whole
+ancestry by (RCE.44) at the final label; if not, that ancestry uses
+only retained rules. Unused list entries can be omitted. Either
+description gives a certificate using neither small range leaf for
+every previously accepted final label. The reverse containment holds
+because every retained rule was already in the original grammar.
+Taking the same infima over the same rational laws proves the last
+assertion. This equivalence leaves the $r=3$ and $r=4$ rules, their
+declared zero states and all their conditions intact. $\square$
+

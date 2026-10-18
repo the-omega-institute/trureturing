@@ -1,0 +1,22 @@
+**Lemma 3.2 (Legality, stationarity and actual visible memory).** The construction gives one normalized stationary law on $X$ of visible order at most $m=2T$. It need not have full support.
+
+Proof. Every payload is legal, its two neighboring guard bits are zero, every fixed $1$ has zero neighbors, and the last bit of a cell is zero before the next cell's initial $1$. Hence every concatenation is legal. The iid payload array and the independent finite uniform offset define a probability law, so all its cylinders are normalized and consistent.
+
+Shifting by one cycles $A$. When it wraps from $T-1$ to zero, it also shifts the iid cell indices by one; that array has unchanged distribution. Consequently the visible law is stationary at every integer shift.
+
+The marked zero run has length exactly $r$ and is flanked by fixed ones. Between consecutive fixed ones elsewhere, there are at most $L+2$ zeros, including when a payload is all zero. A fixed one separates each such interval from its neighbors. Therefore occurrences of $0^r$ are exactly the designated runs, one per cell, with their ending positions spaced exactly $T$ apart. There is only one length-$r$ occurrence inside each run of length exactly $r$.
+
+Consider the past positions $-m,\ldots,-1$. The most recent completed marked run ends at some $e\in[-T,-1]$, and starts at $e-r+1\ge-2T+1$, since $r\le T$. Thus the suffix contains a complete marked run. Its visible ending position determines the cell phase modulo $T$ uniquely. At a payload position, the suffix also contains that payload's entire already observed prefix, of length at most $L-1$.
+
+For a prefix $v$ of a payload, put
+
+$$
+\mu[v]=\sum_{\substack{b\in B_L\\b\text{ begins with }v}}\mu(b),
+\qquad \mu[\varnothing]=1.
+\tag{3.4}
+$$
+
+Given a supported past, the next-bit probability is either prescribed by the fixed cell positions or, inside the current payload, equals $\mu[vz]/\mu[v]$. Its denominator is positive for a prefix actually observed with positive probability. At the beginning of a new payload this uses the empty prefix. Independence of the other payloads makes earlier visible history irrelevant once the phase and this prefix are known.
+
+Both phase and prefix are functions of the last $m$ visible bits. The same conditional rule holds when conditioning on any finite longer past and on the whole past. Hence $S$ has actual visible order at most $m$. On zero-mass contexts one can complete the kernel, for example by appending zero deterministically. Its stationary context distribution remains $S_m$, and (2.1) applies. This proves the visible-memory claim directly. $\square$
+

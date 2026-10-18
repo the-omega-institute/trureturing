@@ -1,0 +1,177 @@
+**Theorem 6.3 (uniform normalized complete-configuration stability).**
+For every pair satisfying Assumption 6.1, both $r\in\{a,b\}$ and every
+integer $n\ge4$, one has
+
+$$
+E_r\le H_r\frac{e_{r,n}}{c_rz_r^n},\qquad
+H_a=\frac{9839648}{2657205},\qquad
+H_b=\frac{20723912}{5859375}.
+\tag{6.3}
+$$
+
+The same constants apply to every such pair and every word-return index.
+No finite-support, recurrence, deterministic-successor, reversibility,
+mixing or additional observation hypothesis is imposed.
+
+**Proof.** Marginal transport in (6.1) gives
+$\int B|f|\,d\nu_p=\int|f|\,d\nu_\beta$ and
+$\int A|h|\,d\nu_\beta=\int|h|\,d\nu_p$ for bounded Borel functions.
+A null set at either phase therefore has zero conditional mass from
+almost every input at the other phase. The kernels and their bounded
+positive weighted compositions act on functions modulo the respective
+marginal null sets. Coordinate equations and boxes hold simultaneously
+there because the complete carriers are countable; a countable union
+also accommodates every iterate below. Thus no conditional version at
+a null input affects an identity or inequality. The regular tail bounds
+force both infinite masses to zero by continuity from above, without
+removing those coordinates or conditioning on completion.
+
+Use the full-word recursion of [LATE, (6.4)--(6.5)][LATE15403], on
+these same quotients:
+
+$$
+\begin{gathered}
+P=BA,\qquad Lf=(1-u)B(vAf),\qquad
+ g=(1-u)B(1-v),\qquad w=L\mathbf1=1-u-g,\\
+q_j(Q):=Q(w_{j,1})=L^jg(Q),\qquad
+c_b\le g\le c_a,\qquad \nu_pP=\nu_p,\\
+\kappa Pf\le Lf\le\lambda Pf\quad(f\ge0),\qquad
+\kappa^j\!\int f\,d\nu_p
+ \le\int L^jf\,d\nu_p
+ \le\lambda^j\!\int f\,d\nu_p\quad(f\ge0).
+\end{gathered}
+\tag{6.4}
+$$
+
+The last comparison follows by positive-kernel iteration and
+$\nu_pP^j=\nu_p$, not by stationarity of $L$. Neither commutation of
+$P,L$ nor an invariant probability for $L$ is required.
+
+Fix $r,n$, and abbreviate $c=c_r,z=z_r$. Put $\sigma=1$ for $r=a$
+and $\sigma=-1$ for $r=b$, and define
+
+$$
+F=\sigma(c-g),\quad \Phi=\int F\,d\nu_p,\quad
+h_j=\sigma(q_j-cz^j),\quad V=\sigma(w-z).
+\tag{6.5}
+$$
+
+Here $F\ge0$. The ratio of the two native marker-one masses is
+$(81/100)(27/25)^j$, which exceeds one for $j\ge3$. The complete
+boxes therefore give $h_j\ge0$ for $j\ge3$ and
+$\int h_n\,d\nu_p=e_{r,n}$. In particular, the predecessor at
+$n-1\ge3$ and positivity of $L$ imply
+
+$$
+0\le Lh_{n-1}
+ =h_n-cz^{n-1}V,\qquad
+ V\le\frac{h_n}{cz^{n-1}}.
+\tag{6.6}
+$$
+
+This is an order bound on a possibly signed $V$; it asserts no
+nonnegativity of $V$.
+
+Use a block of exactly three returns, independently of $n$. Finite
+telescoping gives
+$L^3\mathbf1-z^3\mathbf1=\sum_{j=0}^2z^{2-j}L^j(w-z)$.
+Since $q_3=L^3g$, it follows that
+
+$$
+\begin{aligned}
+L^3F
+ &=c\sum_{j=0}^2z^{2-j}L^jV-h_3\\
+ &\le c\sum_{j=0}^2z^{2-j}L^jV\\
+ &\le z^{3-n}\sum_{j=0}^2z^{-j}L^jh_n.
+\end{aligned}
+\tag{6.7}
+$$
+
+The first inequality uses the actual index-three box $h_3\ge0$;
+the second applies the positive operators $L^j$ to (6.6).
+Apply (6.4) to the nonnegative $F$ and $h_n$ and integrate:
+
+$$
+\kappa^3\Phi\le\int L^3F\,d\nu_p
+ \le z^{3-n}\sum_{j=0}^2(\lambda/z)^j e_{r,n}.
+\tag{6.8}
+$$
+
+Only three powers of the lower comparison constant occur. This yields
+an estimate uniform in $n$ after division by the native word mass.
+
+To pass from $\Phi$ to the two entire configuration losses, reuse the
+complete-TV conversion of [LATE, (6.10)--(6.15)][LATE15403]. Its exact
+hypotheses are present here: normalization, both full boxes, both full
+residuals and the same unweighted marginal transport. More explicitly,
+the endpoint-a-positive events on the entire carriers are
+
+$$
+E_p=\{w_{0,1},w_{1,1},w_{2,1}\},\qquad
+E_\beta=\{\beta,\alpha w_{0,1}\}.
+\tag{6.9}
+$$
+
+Every other finite coordinate has the opposite endpoint ordering, and
+the infinite coordinates have zero difference. Inside the boxes, the
+signs of every coordinate difference from either endpoint are fixed.
+Normalization identifies complete TV with the corresponding signed
+event difference; (6.9) is not a truncation of the laws.
+
+For clarity, the conversion uses $x=|u-r|$, $y=|v-r|$ and the identities
+
+$$
+F=(1-r)x+(1-u)By=(1-r)By+B(1-v)x,
+\qquad F\ge(1-r)x,\quad F\ge(1-r)By.
+\tag{6.10}
+$$
+
+Writing $f_j=\sigma(cz^j-q_j)$ for $j=0,1,2$, its p identities are
+$\operatorname{TV}(Q,P_{p,r})=f_0+f_1+f_2$ and
+$f_{j+1}=Lf_j+cz^j(x-F)$ for $j=0,1$. As
+$c(x-F)\le zF$, these give the supplied pointwise bound
+
+$$
+\operatorname{TV}(Q,P_{p,r})
+ \le(1+z+z^2)F+(1+z)LF+L^2F.
+\tag{6.11}
+$$
+
+At suspension the exact conversion is
+$\operatorname{TV}(W,P_{\beta,r})=(1-c)y+vAF$.
+Consequently (6.4), (6.10) and both marginal transports give
+
+$$
+\begin{aligned}
+\int\operatorname{TV}(Q,P_{p,r})\,d\nu_p&\le M_r\Phi,\\
+\int\operatorname{TV}(W,P_{\beta,r})\,d\nu_\beta
+ &\le\left(\frac{1-c}{1-r}+b\right)\Phi\le M_r\Phi.
+\end{aligned}
+\tag{6.12}
+$$
+
+The middle suspended coefficient is $37/30$ for a and $22/15$ for b;
+its differences from $M_a,M_b$ are respectively $1763/4050$ and
+$1309/5625$. All TV expressions have thus been evaluated on complete
+configuration laws before taking expectations. Combining (6.8) and
+(6.12) gives exactly (6.3).
+
+Finally $M_a=3379/2025$, $M_b=9559/5625$, and the two three-term sums
+in (6.2) are $91/25$ and $271/81$. Thus the rational values in (6.3)
+follow from
+
+$$
+\begin{aligned}
+H_a&=\frac{3379}{2025}\frac49\,125
+           \left(\frac29\right)^3\frac{91}{25}
+       =\frac{9839648}{2657205},\\
+H_b&=\frac{9559}{5625}\frac9{25}\,125
+           \left(\frac6{25}\right)^3\frac{271}{81}
+       =\frac{20723912}{5859375}.
+\end{aligned}
+\tag{6.13}
+$$
+
+The proof treats both signs and all $n\ge4$ on one original pair.
+$\square$
+

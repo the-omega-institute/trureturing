@@ -1,0 +1,74 @@
+### 3. ReadoutSeparation
+
+给定读出族 $\mathscr R$，定义：
+
+$$
+\mathrm{Visible}(h)
+\Longleftrightarrow
+\exists R\in\mathscr R,\ R(h)\neq0.
+$$
+
+然后证明：
+
+$$
+\mathrm{FutureKernel}=
+\bigcap_{R\in\mathscr R}\ker R.
+$$
+
+这样就能把“基础元素之间隐藏关系”严格写成：
+
+$$
+\boxed{
+\text{隐藏关系}=
+\text{基础投影的核}
+\cap
+\text{未来读出族的共同核}.
+}
+$$
+
+最终，AURIC FIB ATOM 金字塔可以被理解为一种递归的关系编码：
+
+$$
+\boxed{
+\text{原子}
+\longrightarrow
+\text{合法组合}
+\longrightarrow
+\text{基础投影}
+\longrightarrow
+\text{隐藏纤维}
+\longrightarrow
+\text{环流}
+\longrightarrow
+\text{未来可见性}.
+}
+$$
+
+在三位窗口中，这条链的唯一非平凡坐标是
+
+$$
+\kappa=p_{13}.
+$$
+
+在 5040 乘法编码中，它变成
+
+$$
+\kappa=a_7.
+$$
+
+在 Golden ring 中，它变成
+
+$$
+\kappa=v_5(|N(U)|).
+$$
+
+在动态未来系统中，它变成
+
+$$
+\kappa
+\longmapsto
+J_{\mathscr L}\kappa.
+$$
+
+这四个表达式共同说明：$\kappa$ 不是某一套坐标系统里的偶然参数，而是基础投影与完整关系之间的一维缺失自由度。
+

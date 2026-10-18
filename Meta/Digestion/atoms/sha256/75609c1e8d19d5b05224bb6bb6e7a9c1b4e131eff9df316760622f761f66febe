@@ -1,0 +1,52 @@
+**Corollary 5.2 (one installed vector, residual seven).** For any
+$P\in\mathcal F_{c,k}$ in the full original parameter domain,
+every actual live prefix with exposed support $S$, $h$ ones and
+
+$$
+R=[n]\setminus S,\qquad |R|=7,\qquad k-h=4
+$$
+
+satisfies $m(R)\ge16$. Such a prefix exists whenever
+$\min(k,n-k+1)\ge4$.
+
+For a native preparer at caps $n+1,W+3$, let $M_i$ count its
+installed running states in the disjoint original selected-address
+classes
+
+$$
+E_i=\{p w_i v:p\in\{LLL,LRL\},\
+                    v\in\{\varepsilon,L,R\}\}.
+$$
+
+Every corresponding actual live cube prefix satisfies
+$M(R):=\sum_{i\in R}M_i\ge16$. All these assertions concern
+the same original vector $(m_i)$, or respectively $(M_i)$.
+
+Proof. [CP, Theorem 5.1][CP] freezes the actual old assignment and
+suppresses its fixed-coordinate chains. It gives a total residual
+threshold-four graph on $R$, with one input-independent running start,
+at most $m(R)$ installed running states and simultaneous caps $7,C_R$.
+Realized edges follow the original subsequences; unrealized edges do
+not become actual, and no state is copied. Reindexing the seven
+remaining original positions preserves their positive increasing
+integer costs. Apply Corollary 4.2 to obtain $m(R)\ge16$.
+
+In the middle range the live pair
+
+$$
+h=k-4,\qquad z=n-k-3
+$$
+
+is nonnegative and has depth $n-7$. SI Theorem 2.2 realizes it
+as an actual live history, proving existence of a qualifying prefix.
+For the native assertion use the same actual selected-state projection
+as in [CP, Corollary 5.2][CP]. It has $m_i\le M_i$ and both
+Boolean caps, so the Boolean result implies $M(R)\ge16$.
+All suppressed invocations remain paid in the original computation.
+
+No inequalities for different prefixes are summed as disjoint resource
+pools. In particular the statement concerns actual residual supports,
+rather than all seven-element subsets independently. It removes the
+inherited-cut condition from SI Theorem 10.8 for residual parameters
+$N=7,q=4$ only. $\square$
+

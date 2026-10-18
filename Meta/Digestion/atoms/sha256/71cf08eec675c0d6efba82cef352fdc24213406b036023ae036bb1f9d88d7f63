@@ -1,0 +1,37 @@
+**Convention 2.1 (the credited predictive factor).** Use the exact factor
+of [AAR, Definition 12.2, Theorem 12.3 and Proposition 13.3][AAR]. Put
+$s(r)=\#L(r)+2\#R(r)$ and $e(\alpha)=0,e(\beta)=1$. At an original
+branch endpoint $\Gamma_q(u)=(0,0)$. Otherwise let the first original
+leaf along $q$ have label $\ell$ at $a$, and write $q=ar$. Then
+
+$$
+\Gamma_q(u)=
+\begin{cases}
+(2-e(\ell),1-e(\ell)),&r=\varepsilon,\\
+(s(r)+2-e(\ell),\mathbf1_{r\text{ ends in }R}),&r\ne\varepsilon.
+\end{cases}
+\tag{NPC.4}
+$$
+
+On its attained image, $\Gamma_q(u)=(b,c)$ has decoder
+
+$$
+\operatorname{Pred}((b,c),k)=
+\begin{cases}
+\mathsf{branch},&k\ge b,\\
+\beta,&b\ge1,\ k=b-1,\\
+\alpha,&c=1,\ k=b-2,\\
+\mathsf{absent},&\text{otherwise}.
+\end{cases}
+\tag{NPC.5}
+$$
+
+Here $c=1$ implies $b\ge2$. This is $r_{\rho^ku}(q)$ for every
+$k\ge0$. The full trajectory recovers $b$ as the first branch count
+and $c$ as the indicator of an alpha stage. Equality of $\Gamma$ is
+therefore exactly equality of trajectories, including initially absent
+targets, and need not be equality of blocking-leaf descriptors. In
+the original wrapper $\Gamma_{Rq}(\langle\alpha,v\rangle)=\Gamma_q(v)$
+and $b\le2D$ for permitted requests. The last-edge guard in AAR's
+atomic law makes a nonempty $L$-ending suffix have no alpha stage.
+

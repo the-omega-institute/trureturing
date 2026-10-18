@@ -1,0 +1,18 @@
+**Definition 11.1 (accessible handoff).** Fix the public cut and the
+source-independent installed code. Let $H$ be everything in the
+observer that a later row consumer can access after Return, including
+readable banks, direction/phase, flags, response latches, operand and
+allocation metadata, pointers and service state. Row-only handoff
+requires a fixed function $h$ such that
+
+$$
+H=h(P,R)
+\tag{CWS.17}
+$$
+
+on every admitted returned history, with the declared row itself
+readable in $H$. Access excluded from $H$ is not a free resource:
+its storage remains charged while physically retained. Subsequent
+native observation of the live source, if allowed, is a new acquisition
+interface and is not part of this passive row-value handoff.
+

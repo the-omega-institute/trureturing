@@ -1,0 +1,4 @@
+**命题 75.1（全态读出保持与对偶固定）。** 对固定通道 $\mathcal T$，置 $\Phi=\mathcal T^\dagger$。对 Hermitian $O$，若 $\operatorname{tr}(O\mathcal T(\varrho))=\operatorname{tr}(O\varrho)$ 对全部密度算子成立，则 $\Phi(O)=O$；反向也成立。二元 $A$ 的结果效果为 $(I\pm A)/2$，所以保持全部输入的二元概率等价于固定 $A$。
+
+证明（75.1）。对偶把概率等式变成 $\operatorname{tr}((\Phi(O)-O)\varrho)=0$。差为 Hermitian；取其每个特征向量的纯态投影，得每个特征值为零，所以差算子为零。反向直接代入；通道对偶固定 $I$，故两个二元效果与 $A$ 的保持等价。$\square$
+

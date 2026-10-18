@@ -1,0 +1,55 @@
+**Theorem 3.2 (finite continuation and route-presentation compatibility).**
+Assume every required initial crossing and every reachable legal prefix has
+its declared lift, and the family of routes is closed under the resulting
+residual routes. Then the one-step contract (3.1) is equivalent to its
+finite-continuation contract: for each required word $u$, its matched word
+$u^e$ is simultaneously legal, has the stepwise transported complete trace,
+and, if legal, satisfies
+
+$$
+T_{u^e}H_ex=H_{e/u}T_ux.
+\tag{3.2}
+$$
+
+Illegal prefixes agree as rejected requests; executed failures follow their
+declared successors. The assertion includes the terminal observation
+transport, and applies only on the recursively declared actual crossing
+domain.
+
+For independence of a presentation of the route, additionally require that
+the lift respect units, composition and a generating family of *strict*
+route relations. On a composite route $ed$, the one-step composition laws are
+
+$$
+a^{ed}=(a^e)^d,\qquad
+(ed)/a=(e/a)(d/a^e),
+\tag{3.3}
+$$
+
+with composite dictionaries and exact restricted domains. For each generating
+relation $e\equiv e'$, matched names and dictionaries agree and
+$e/a\equiv e'/a$ on the same crossing domain. These conditions imply that
+all finite lifted continuations respect the compositional route congruence,
+including their exact domains and complete labels.
+
+**Proof.** Define $\epsilon^e=\epsilon$ and $e/\epsilon=e$. If $u$ has been
+lifted, append the name $a^{e/u}$ and set $e/(ua)=(e/u)/a$. The prefix
+hypothesis puts the related successors in the next crossing domain. Equation
+(3.1) there gives simultaneous legality, the next label dictionary and the
+new successor square; composing it with the induction hypothesis proves
+(3.2). At the first illegal request neither side has a successor and their
+rejection responses match. A legal failure remains an ordinary legal step
+in this induction. The empty word gives the initial observation equation;
+the length-one words recover (3.1), proving equivalence.
+
+For presentation independence, a replacement $e\equiv e'$ has equal actual
+route domains and, by hypothesis, equal crossing domains and one-step data.
+After the first legal action its residual routes are still related. Induction
+on word length gives the same lifted names, dictionaries and terminal
+coordinate map for every required finite word. Replacing the route inside
+prefix and suffix route contexts preserves these equalities by (3.3) and
+exact domain composition. A finite chain of such replacements preserves
+strict equality by transitivity. Process Geometry Theorem 1.4 supplies the
+underlying strict path congruence argument; the additional induction here
+ensures the residual lift respects that same presentation. $\square$
+

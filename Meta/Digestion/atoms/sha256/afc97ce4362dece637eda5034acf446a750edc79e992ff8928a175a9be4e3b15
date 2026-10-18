@@ -1,0 +1,11 @@
+**Open problem 9.3 (unchanged wider obligations).** These testing
+results do not determine optimized $M_1(D)$, uniformly control the
+all-size native component normalizers or cap extremum, supply an
+optimizer-cofinal all-size verifier, establish a uniform effective
+original length-error bridge, or determine sharp $\lambda$. The
+remaining weighted-global-completion obligation of OCC §9.4 is not
+resolved by this finite-family testing curve. Those broader questions
+remain outside the present result.
+
+[OCC]: https://github.com/the-omega-institute/trureturing/blob/ce2fe4a685b5a195b8b0a380616daf0151f576cb/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_OWNER_COMPONENT_COMPLETION.md
+

@@ -1,0 +1,46 @@
+**Theorem 3.4 (Positive-support limits differ from support restriction).**
+With the other activity fixed and positive, either $a\downarrow0$
+or $b\downarrow0$ gives
+
+$$
+\omega^*\longrightarrow(1/3,1/3,1/3),\qquad
+\gamma^*\longrightarrow1/3.
+\tag{3.31}
+$$
+
+At exactly $a=0$, restricting the phase experiment to its actual
+support $\{0,2\}$ instead gives optimal ratio one under center-only
+sampling. At exactly $b=0$, restricting it to
+$\{0,1,3,13\}$ instead gives optimal ratio $1/2$ under
+$(1/2,0,1/2)$.
+
+Proof. In either positive-activity limit,
+$(c_0,c_1,c_2)\to(1,0,0)$. The even matrix (3.14)
+therefore converges uniformly in $x\in[0,1/2]$ to
+$\operatorname{diag}(1-2x,x,2x)$, while the odd eigenvalue
+remains $x$. Its gap is $\min\{x,1-2x\}$, uniquely maximized
+at $x=1/3$ with value $1/3$. Continuity of the minimum eigenvalue
+and compactness imply convergence of the symmetric optimizers
+and values. Global symmetry for every positive activity pair was
+proved in Theorem 3.2.
+
+At $a=0$, the restricted endpoint projectors vanish and $K_2$
+is the sole rank-one projection on the nonconstant phase
+direction, so the restricted gap is $\omega_2$. At $b=0$,
+the restricted center projector vanishes and the endpoint
+operators act on the two independent hard-core endpoint bits.
+On the nonconstant directions their mixture has eigenvalues
+$\omega_1,\omega_3,\omega_1+\omega_3$, so its minimum is maximized
+by the stated weights. $\square$
+
+Positive-support minimax includes directions on rare states after
+normalization by their QFI. Removing those directions at zero
+support changes the parameter space. Theorems 3.2–3.4 concern
+the fixed reference-phase, recorded-site experiment. They establish
+no optimum over arbitrary quantum measurements, physical control
+availability or pair-interaction family with joint weight distinct
+from $a^2$.
+
+[DG3]: ../../../Library/Estimation/dettegrigoriev2014eoptimal.md
+[BDX3]: ../../../Library/Estimation/boyddiaconisxiao2004fastestmixing.md
+

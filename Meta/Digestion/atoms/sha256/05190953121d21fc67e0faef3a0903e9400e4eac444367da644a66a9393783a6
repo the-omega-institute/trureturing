@@ -1,0 +1,29 @@
+## 472. The complementary source run exceeds the actual capacity
+
+In the second alternative, the connected normal circle consists of
+this three-interval rho path and its complementary arc. The latter
+contains every other original Z interval, including tau. It has
+
+    n=degree(Z)-3>=3
+
+intervals. All are axial, because rho is the only transverse Z owner.
+Actual face transport along this axial arc preserves its pair; since
+it contains tau, that pair is {M,C}. In particular the complementary
+pair at either residual rho face, {A,B}, must equal {M,C}. If A=B,
+an axial receiver would be impossible and no complementary arc of
+positive length could exist; that case is excluded by the same degree
+and connectedness hypotheses, rather than by a frame assumption.
+
+Each owner along this complementary arc has exactly one Z occurrence:
+there is no transverse Z owner other than rho, and two axial Z slots
+with pair {M,C} fail the genuine factor in Section 469. Hence these n
+intervals have distinct actual owners, each different from rho, and
+the two transverse M angles charged in (469.1) are distinct original
+slots. Summing gives actual genuine M/Z expense strictly greater than
+n*pi>=3*pi, contradicting the total capacity at most 3*pi. No expense
+from rho is needed for this last strict contradiction.
+
+This proves (467.1). Every count is by original slots and intervals;
+loops, parallel face pairs, repeated labels, repeated visits and
+individual face-map orientation reversals are retained.
+

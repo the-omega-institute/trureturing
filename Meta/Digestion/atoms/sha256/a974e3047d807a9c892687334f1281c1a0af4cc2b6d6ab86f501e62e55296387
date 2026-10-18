@@ -1,0 +1,25 @@
+**Literature statement 8.2 (primary metadata and applicability).** The
+following primary texts support mature ingredients or a precise comparison.
+The source-specific three-height obstruction, pair filter, record-support
+capacity and actual-history application are `repo-derived` consequences
+proved here. No worldwide priority or complete literature-search claim is
+made.
+
+| Primary source | Verified hypotheses, use and non-transfer |
+| --- | --- |
+| Anthony Chefles, Richard Jozsa and Andreas Winter, [*On the existence of physical transformations between sets of quantum states*, quant-ph/0307227v1](https://arxiv.org/html/quant-ph/0307227v1), Theorems 2–3, Eqs. (7)–(9) | `literature-attested`: finite specified pure families admit deterministic or outcome-dependent probabilistic CP transformations subject to positive environment Gram factors/contributions; omitting failure gives a positive Gram remainder. The environment may depend on the source. This applies to the finite nine-state witness and the complete two-height constructions. It supplies neither an acquired helper/calibration nor a continuous-family phase-rigidity theorem; those source calculations are explicit above. |
+| Anthony Chefles and Stephen M. Barnett, [*Quantum State Separation, Unambiguous Discrimination and Exact Cloning*, quant-ph/9808018v1](https://arxiv.org/html/quant-ph/9808018v1), Eq. (18) and its surrounding discrimination conditions | `literature-attested`: the equiprobable known pure pair has maximum unambiguous conclusive probability $1-|\langle\eta_+,\eta_-\rangle|$, with an inconclusive branch. Proposition 4.2 uses its equal-probability construction and keeps the actual inconclusive successor. No helper acquisition or endpoint optimality for a nonorthogonal helper is attributed to it. |
+| Kai Liu and Deguang Han, [*Intermediate memory costs of quantum channel synthesis with a protected subsystem*, 2610.20536v1](https://arxiv.org/html/2610.20536v1), §V.1, Theorem 2, Eq. (40) | The stated finite controlled-channel task has a protected subsystem and a prescribed first-stage noncommutative graph. Feasibility requires the identity in every cross-Kraus span and supplies a simultaneous processor with finite nonorthogonal programmes. Its classical control source and programme relation are premises. No map from an unknown original waveform to that control/programme register is supplied here; its dimension or approximation conclusions are not transferred. |
+
+The literature comparison distinguishes a specified finite controlled
+channel from an actually acquired source-dependent programme. Source-family
+Gram criteria, Kraus/Stinespring representation, positivity of a pure
+marginal, circle geometry, matrix square roots and counting are mature
+mathematics. The proof does not import deterministic arbitrary-data unitary
+programming or sharp-observable programming hypotheses, nor an unconditional
+no-information interpretation of Koashi–Imoto. Searches of the pinned
+original-control/fiber surfaces for uncertain-height reanchoring and the
+public arXiv search for probabilistic pure-state transformations locate
+these relevant comparison frameworks; their bounded scope establishes no
+absence theorem or novelty claim.
+

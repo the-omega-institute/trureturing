@@ -1,0 +1,13 @@
+**Proposition 24.3 (phase discrimination and the exact extra frame conditions).** At $a=\beta=1/2$, $v=s_1=k=0$, $u=s_0=1/\sqrt2$, the ratios of $X_+$ and $X_-$ are respectively one and zero. Replacing $s_0$ by $-s_0$ exchanges them. Thus the real phase alone cannot replace the circle minimum in Theorem 24.2.
+
+In a canonical first-column frame $x_0=\sqrt a e_0$, $x_1=\sqrt\beta e_2$, write the two plane projections of the third column $t_1$ as $r_A=(t_{1,0},t_{1,1})$, $r_B=(t_{1,2},t_{1,3})$. The common $SO(2)$ rotation of these two coordinate pairs puts $t_1$ in the form $u e_0+v e_3$ if and only if
+
+$$
+\langle h,t_1\rangle=0,\qquad r_A\cdot r_B=0.
+\tag{R.120}
+$$
+
+Here a common output-plane rotation may be accompanied by the inverse input $01$-plane rotation to retain the displayed canonical first two columns. The criterion is for this specified frame freedom; it is not a classification under every possible parameter-dependent change of representation. Once this form of $t_1$ is obtained, TP forces $t_{0,0}=0$ and $t_{0,1}=-\sqrt{\beta/a}v$, leaving exactly the other coefficients in (R.115). The two conditions (R.120) are additional hypotheses, not consequences of TP.
+
+**Proof.** The first assertions follow from the explicit $w_\pm$. A common planar rotation preserves $r_A\cdot r_B$ and the $h$ component. If $r_A\ne0$, align it with the first axis; orthogonality puts $r_B$ on the second axis. If $r_A=0$ but $r_B\ne0$, align $r_B$ with the second axis. If both vanish nothing needs alignment. Signed $u,v$ include all orientations and zero projections. The $02$ TP equation becomes $\sqrt a t_{0,0}=0$; the $12$ equation becomes $\sqrt a t_{0,1}+\sqrt\beta v=0$. The remaining third-column norm is precisely (R.115). These equations impose neither condition on an arbitrary initial $t_1$. $\square$
+

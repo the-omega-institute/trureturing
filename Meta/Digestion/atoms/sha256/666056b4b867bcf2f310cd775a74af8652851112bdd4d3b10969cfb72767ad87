@@ -1,0 +1,39 @@
+**Definition 3.4 (whole-execution cost evaluation).** For every used native
+graph, expand sequence by joining successor edges, public tests by actual
+testing RD/CTL rows, and finite loops by their displayed rows. A native
+row occurrence has cost 1; an edge which is only its successor field has
+no separate cost. A separately executed CTL has cost 1. Parameter creation
+uses the actual tape routines: Append costs 3; an actual Home at distance
+$h$ costs $2h+1$; Seek costs $2h+3a+3$ plus positioning of its real address
+string; Allocate's displayed zero-fill loop costs $5k+1$ plus its actual
+positioning, one delimiter and descriptor construction. The explicit
+port-local graph of Definition 3.2 has its own complete count. Explicit
+loops around a body add their own testing and counter movement occurrences
+unless already included in that body.
+
+The cost of a sequence is the sum of its executed graph lengths, with each
+operand head taken at its actual entry location. A public branch selects
+its actually executed graph. A finite unary loop sums the graph at every
+actual iteration and its terminating test. Dynamic gate execution uses
+PR57.06 for every generated gate, plus its actual generator, positioning,
+initialization and terminal-header work. Rows, frames, references and
+numerals are constructed by these same graphs.
+
+Consequently the exact ordinal of any cut is
+
+$$
+n(h)=C_{\mathrm{boot}}+C_{\mathrm{acquire}}
+ +\sum_{\text{finished routines}}C_R
+ +C_{\text{current routine prefix}}.
+\tag{AIF.3}
+$$
+
+Each term is an actual finite graph evaluation with its actual inputs, not
+an unspecified allowance. In particular $n_-$ includes canonical source
+installation, fixed control encoding, paid seed acquisition, warm-up calls
+when used, their rows and delivery, and the preamble's Base/token work.
+It is common within a fiber, but is neither free nor asserted independent
+of $d$ or of the acquired seed across different fibers. AIF.1–2 compare
+full absolute clocks by adding that same actual paid prefix. No total
+source-service cost is replaced by a count of input triples or Boolean gates.
+

@@ -1,0 +1,43 @@
+**Theorem 7.3 (the same failure at the original native entry).** For
+$A=\{1,2,3,4,5,6\}$ and any $r\ge0$, installing the graph in
+Theorem 7.2 at the original selected literals and using the original
+two-state profile front gives a terminating native table with
+$14+r$ preparation states and uniform bounds of seven calls and
+$48$ letters on the full $\mathcal U_*$. It fails the prescribed
+entry requirement on an actual source in that fiber. In particular
+it is not a smaller feasible native preparer.
+
+Proof. Here $W=45$. Replace each coordinate-$i$ state by literal
+$a_i$, use the Boolean-one successor for branch and the Boolean-zero
+successor separately for alpha, beta and absent, and replace the two
+terminals by $\widehat e_0,\widehat e_1$. Install the profile states
+from the constructive direction of [WTF, Theorem 4.1][WTF]:
+
+| Profile state | Literal | alpha | beta | branch | absent |
+| --- | --- | --- | --- | --- | --- |
+| $D$ | $RLR$ | $\widehat e_1$ | $q_{0,0}$ | $T$ | $\widehat e_0$ |
+| $T$ | $RRR$ | $\widehat e_1$ | $\widehat e_0$ | $\widehat e_0$ | $\widehat e_0$ |
+
+Start at $D$ and include the $r$ further mandated latches. The ten
+selected states, two profile states and $2+r$ latches give $14+r$.
+Every source in $Z_{b_3}$ has a fixed indicator vector, even when its
+branch image is not a cube comb and selected addresses are absent.
+The occurrence identity makes the selected route exactly a run of
+Definition 7.1 on that vector. The preceding theorem therefore
+gives termination, at most $1+6=7$ calls and at most $3+45=48$
+letters on that same source. Every other profile terminates within
+two calls and six letters by the displayed profile front. These
+claims use only the execution part of the lift, whose threshold
+correctness hypothesis is absent here.
+
+By [WTF, Supplier 2.1][WTF], the vector $000011$ has an actual
+finite origin $u_\theta\in Z_{b_3}$ with all original repeated
+occurrences, disequalities and guards. Its first profile reply is
+beta, followed by (SI.26). It therefore latches
+$\widehat e_1$ after six calls and $38$ letters. Equation (SI.2)
+requires $\widehat e_0$ on this source. The original complete entries
+are distinct, so the pointwise prescribed-code condition fails.
+All installed states and calls remain charged; changing the required
+code or restricting the source family would change the problem.
+$\square$
+

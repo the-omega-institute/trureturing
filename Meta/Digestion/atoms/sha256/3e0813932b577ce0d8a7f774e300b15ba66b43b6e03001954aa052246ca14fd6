@@ -1,0 +1,26 @@
+**Definition 1.1 (trees, replies and complete rows).** Write
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\qquad
+\rho\alpha=\beta,\quad
+\rho\beta=\langle\beta,\alpha\rangle,\quad
+\rho\langle x,y\rangle=\langle\rho x,\rho y\rangle.
+\tag{GRS.1}
+$$
+
+All trees are finite, nonempty, free and ordered. Physical words are in
+$\Sigma^*$, where $\Sigma=\{L,R\}$; the root is $\varepsilon$.
+The reply $r_t(p)$ is in
+$\mathcal A=\{\alpha,\beta,\mathsf b,\bot\}$, with $\mathsf b$ meaning
+branch and $\bot$ meaning absent. The subtree $t|_p$ exists only when
+$p\in\operatorname{Pos}(t)$.
+
+For a finite prefix-free original cut $Q$, the complete row $R_Q(t)$ has
+the reached members of $Q$ in lexicographic order, the entire concrete
+outside with those subtrees replaced by numbered holes, and the partition
+of hole occurrences by equality of their complete ordered subtrees. Thus
+an absent cut makes no hole; the root cut gives one hole; the empty cut
+keeps the entire concrete tree. Repeated equal subtrees are distinct
+occurrences in the row and belong to the same partition class.
+

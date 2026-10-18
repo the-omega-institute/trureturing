@@ -1,0 +1,69 @@
+**Proposition 34.2 (the source-specific determinant parameters).** In
+addition to the signs already established in Proposition 29.2, $d>0$.
+Set
+
+$$
+\theta=\frac{ab}{h_0h_1},\qquad
+\omega=\frac{cd}{h_0h_2},\qquad
+\delta=\theta+\omega,\qquad k=1-\theta-\omega,\qquad
+v_0=\frac{\omega}{1-\theta},\qquad s_0=\sqrt\delta.
+\tag{JR.21}
+$$
+
+Then $\theta,\omega>0$, $\delta<18/695<1$, and $0<v_0<1$.
+For arbitrary COMPLEX coefficients $x,z,w$,
+
+$$
+\det(xD+zT+wS)
+ =h_0h_1h_2\,x\bigl(x^2-\theta z^2-\omega w^2\bigr).
+\tag{JR.22}
+$$
+
+For each original height write
+
+$$
+\begin{aligned}
+A_y&=\sum_i h_i^2p_{yi},\\
+B_y&=b^2p_{y0}+a^2p_{y1},\\
+C_y&=d^2p_{y0}+c^2p_{y2}.
+\end{aligned}
+\tag{JR.23}
+$$
+
+All three are positive and strictly increase as $y$ runs from $5$
+through $16$ to $27$.
+
+Proof. Only the sign of $d$ requires information beyond Proposition
+29.2. In the exact root box of [CG, Proposition 13.2], the coordinates
+of (CG.112) obey
+$\lambda<1/2$, $7/5<\alpha_1<3/2$, $\alpha_2>11/10$,
+$2/5<\beta_1<1/2$, and $0<\beta_2<5/6$.
+Consequently $\|v_5\|^2>4$ and $\|v_{27}\|^2<2$.
+The two contributions to $N_{02}$ in (CG.112) have opposite signs,
+and $\sqrt{p_{50}p_{52}}=\sqrt5/16$,
+$\sqrt{p_{27,0}p_{27,2}}=\sqrt{27}/16$. Using
+$\sqrt5<9/4$ and $\sqrt{27}>5$ gives
+
+$$
+N_{02}=-\frac{\lambda\alpha_1\sqrt5}{16\|v_5\|^2}
+       +\frac{(1-\lambda)\beta_1\sqrt{27}}{16\|v_{27}\|^2}
+ >-\frac{27}{1024}+\frac1{32}>0.
+$$
+
+Since $Q^{02}_{01}=\eta_2N_{02}=cd$, with $\eta_2,c>0$, this proves
+$d>0$. These rational comparisons use the credited box and do not
+recertify its root. By rank one and [CG, Theorem 22.1],
+$h_0h_1>695/1000$, $h_0h_2>796/1000$, and
+$\operatorname{tr}Q^{01}+\operatorname{tr}Q^{02}<36/1000$.
+The inequalities $2ab\leq a^2+b^2$ and $2cd\leq c^2+d^2$
+therefore give $\delta<18/695$. Expansion of the displayed three by
+three matrix proves (JR.22), without taking complex moduli or replacing
+squares by absolute squares.
+
+Finally, $A_y$ has slope $(H_{00}-H_{11})/128>0$ by the credited
+enclosures. The box has $\eta_1>19/100$, and (CG.115) has
+$(S_{01})_{00}>1/10$, so $b^2=(Q^{01})_{11}>19/1000$.
+The trace bound gives $a^2<17/1000$, hence $B_y$ has positive
+slope $(b^2-a^2)/128$. The slope of $C_y$ is $d^2/128>0$.
+Positivity of their coefficients proves their positivity. $\square$
+

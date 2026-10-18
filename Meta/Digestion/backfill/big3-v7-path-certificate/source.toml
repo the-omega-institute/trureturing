@@ -1,0 +1,5 @@
+source_id = "big3-v7-path-certificate"
+path = "docs/develop/theory/BIG3_V7_PATH_CERTIFICATE.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

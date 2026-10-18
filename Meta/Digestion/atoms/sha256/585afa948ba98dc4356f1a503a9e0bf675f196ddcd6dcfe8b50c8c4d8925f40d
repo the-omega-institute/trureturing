@@ -1,0 +1,39 @@
+**Theorem 6.2 (exact native admissible fibers).** A nonempty
+$B\subseteq[4]^n$ can serve as a common one-Read fiber for every
+late target exactly when every coordinate projection is proper:
+
+$$
+\forall i,\quad\pi_i(B)\ne[4].
+\tag{LTR.20}
+$$
+
+Arbitrary correlations within $B$ are allowed.
+
+Proof of necessity. The targets $Ra_iL$ are permitted, and their
+four factors are $(3,0),(2,0),(2,1),(1,0)$, respectively. Each
+target trajectory thus identifies its gadget state. Every word
+ending in the fixed scaffold or outer left cone is constant. A
+word entering one gadget has root replies
+$(\alpha,\beta,\mathsf{branch},\mathsf{branch})$, left-child replies
+$(\mathsf{absent},\mathsf{absent},\alpha,\beta)$, right-child replies
+$(\mathsf{absent},\mathsf{absent},\alpha,\alpha)$, or, at greater
+depth, constant absence. This is an exhaustive all-word classification
+on the same product family. Every fixed native query therefore has
+at most three replies, even in another gadget. On $B$, one reader
+query gives at most three distinct required trajectories, and zero
+Reads give at most one. Hence $|\pi_i(B)|\le3$ for every $i$.
+
+Proof of sufficiency. Choose one missing state $c_i$ per coordinate.
+If $c_i=0$ or $1$, Read the gadget's left child: its three replies
+distinguish the remaining three states. If $c_i=2$ or $3$, Read the
+gadget root: its three replies distinguish the remaining three states.
+For a late target ending strictly inside the scaffold the endpoint
+is a persistent branch, needing zero Reads. Otherwise its path
+enters one known gadget; select that coordinate's prescribed word,
+identify its actual gadget, and compute (LTR.3) at the residual path.
+This works for every target, including paths initially absent below
+a gadget leaf, and all later counts. It is one common rule using
+only the fiber's installed missing states and the late target.
+The submitted root or left-child word has length at most $D$.
+No correlation assumption is needed. $\square$
+

@@ -1,0 +1,39 @@
+**Definition 222.3 (Erasure of a score).** For any $E\subseteq[L]$,
+let $f_E(w)$ set the bits in $E$ to one. Define $T_EV$ rowwise.
+If the old first zero survives, move its $A,C,P$ coefficients to
+$f_E(w)$ without changing their types. If the old first zero is erased,
+discard its $C$ coefficient and move its $A+P$ coefficient to type $A$
+at $f_E(w)$ if that word has a zero, and to $T$ otherwise.
+The old $T$ persists; collisions add. This is a linear nonnegative
+operation on proof scores, with no change to source replies or an
+acquisition. Define two different constructor sets:
+
+$$
+\begin{aligned}
+\mathcal M_L(y)&=\left\{\sum_{E\subseteq[L]}t_ET_Ey:t_E\ge0\right\},\\
+\mathcal K_L(y)&=\left\{\sum_{E\subseteq\{3,\ldots,L\}}t_ET_Ey:
+ t_E\ge0,\ \sum_Et_E=1\right\}.
+\end{aligned}
+$$
+
+The first allows all early and late erasures and arbitrary conic scale;
+the second is the normalized convex interior-mask constructor.
+
+For interior $E$, $W_{T_Ey}=W_y$: an erased late row had anchor
+contribution $A+P$, exactly its new base or terminal contribution,
+while the discarded $C$ had zero anchor contribution. A retained first
+zero has the same class, including both early classes. Summing proves
+the identity for arbitrary full scores. Early erasure need not preserve
+$W$ in general.
+
+Both full supports contract under an individual erasure. Indeed, in a
+transformed table replace any output in $E$ by zero, fix every erased
+reply to one, and delete those queries. The remaining table is legal
+in the original class, including the stopped increasing class. At a
+word whose first zero survives, its transformed reward is its original
+reward. At an erased first zero, the transformed base reward $A+P$
+is available at original label zero, while discarded $C$ is nonnegative.
+Thus the resulting original table dominates the transformed reward
+wordwise. These facts explain conditional uses of masks; they do not
+assert that either constructor contains a certificate for every input.
+

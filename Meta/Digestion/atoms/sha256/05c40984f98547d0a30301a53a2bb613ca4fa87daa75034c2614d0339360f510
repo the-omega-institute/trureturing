@@ -1,0 +1,31 @@
+**Lemma 3.2 (marker models with retained scalar choices).** In a feasible
+branch, fix any solution of its scalar equations, disequations,
+nonnegativity and explicit-cherry conditions. There are constant-rank
+values for all block variables that, together with this scalar solution
+and the markers of Lemma 3.1, give an original solution for every
+$M\ge M_0$. The block constants can be chosen independently of $M$.
+
+Proof. NSF Lemma 4.2 computes potentials on each block equation
+component. Feasibility rules out a nonzero offset cycle and a
+same-component disequation with identical offsets. Every other
+same-component disequation is automatic. For different components,
+choose natural base constants successively above all nonnegativity
+bounds and outside the finitely many forbidden differences. This is a
+finite construction independent of the number of leaves. All blocks of
+one sort use that sort's marker; a block's assigned constant is placed
+at every leaf, with its required offset.
+
+Equal ranks at a marker cherry cannot have left rank one more than right
+rank, so each inserted block is normal. Its root is nonleaf, hence no
+primitive cherry can cross the boundary between the explicit template
+and an inserted marker. Every remaining primitive cherry is explicit
+and is normal by the retained scalar condition. Thus every entire named
+code is normal.
+
+Block and scalar constraints are separate by (NPL.6). Their equations
+reassemble all positive definitions. Selected scalar or block mismatches
+satisfy the identical-shape negative atoms; Lemma 3.1 satisfies all
+syntactically different-shape negative atoms by genuine shape difference.
+Expansion by $E$ therefore gives an original assignment of the full
+formula. The construction changes no conjunct or sign. $\square$
+

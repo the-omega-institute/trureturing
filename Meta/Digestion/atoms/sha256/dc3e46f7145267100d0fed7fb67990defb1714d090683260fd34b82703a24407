@@ -1,0 +1,64 @@
+**Theorem 10.4 (complete trace refinement and sharp encoded width).**
+For $T=0$ and every $h\ge1$, and for finite $T>0$ and even $h$, the
+installation above meets Definition 1.3 on the original all-shape
+parity task. It has
+
+$$
+L=O\bigl(h+\log_2(T+1)\bigr),\qquad U=0,
+\qquad
+L_{\min}=\Theta\bigl(h+\log_2(T+1)\bigr).
+\tag{10.4}
+$$
+
+The minimum is over complete encoded online mutable width under that
+definition, with immutable and physical storage separately billed.
+It includes online initialization. Erasure preserves every selected
+native row, exact literal, raw reply, source successor, routing Read,
+genuine Update and first fixed-bit Halt of the chosen native table.
+The receiver projection is (9.1) at every local cut, and the actual
+operand is fully materialized as (8.4) before each Read.
+
+Proof. Lemma 8.2 guarantees every installed native PUT sequence has
+only $R$ after position $H$ and length at most $P$. Each letter's
+bounded receipt routine terminates and acknowledges before the next
+PUT. Theorem 9.2 makes the sealed receiver word exactly the sequence
+of these actual arrivals. Proposition 8.4 then supplies exactly the
+original table literal in physical cells. This also handles every
+routing Read, whose frame delivers zero letters but still commits
+Read$(\varepsilon)$ and receives its real raw reply.
+
+The explicit simulation relation uses the unchanged source $y$ and
+the active macro-row bank before a source call. Source-free fetches,
+mailbox operations, counter carries and materialization preserve
+$(y,w)$. At actual receipt of $r$ it relates to
+$(y',\delta(w,r))$: until the new macro bank is completed, its value
+is determined by the fixed old bank and one-hot flag; afterwards by
+the completed new bank and continuation stage. The flag is cleared
+only in the latter case. Partial graph copies have their separate
+old-node stage and do not change this macro projection. Finite local
+cleanup arrives at the block of precisely $\delta(w,r)$. An Update
+block performs the same one genuine $\rho$, with only its original
+constant acknowledgement. Only the original Halt block's node zero
+selects its fixed Halt bit.
+
+Induction on native calls is therefore the simulation of Definition
+3.1, with identity address map and same-source action map. It gives
+the entire raw trace, not just equal parity. A single causal simulator
+executes the fixed local program and pauses for each raw reply only at
+its actual receipt, as in PR57.T3. All earlier labels and local fees
+are functions of the installation and acquired native prefix. No
+source-duration or source-work label is used. The native supplier's
+termination and parity theorem then give finite firstHalt. Its
+$\Delta=2$ choice has no reachable Update, and the $T=0$ choice also
+has none.
+
+Finally $k=O(h+\log(T+1))$, $\log W_*=2k+8$ and
+$P=O(h+T)$. The displayed expanded graph gives
+$\log(Z+1)=O(k+\log(P+\ell+2))=O(h+\log(T+1))$.
+Equation (10.1) proves the upper bound, counting both dirty banks,
+both arrays and every malformed valuation. Corollary 2.3 supplies
+the lower bound for this same complete autonomous interface, even
+allowing unrestricted genuine Updates. At $h=1,T=0$, $H=J=P=0$;
+arrays and the tail are empty, while counted control and response
+storage give a constant upper and the lower remains positive. ∎
+

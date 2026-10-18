@@ -1,0 +1,20 @@
+**Definition 179.3 (The unproved augmented-budget obligation).** A
+sufficient augmented route to the universal comparison would establish
+
+$$
+\rho_E(b)\le\max\{1,\rho_N(b)\}
+\quad\text{for every }b\in H_L\text{ with }\rho_N(b)<\infty.
+\tag{179.5}
+$$
+
+For an attained optimal $N$ mass $s=\rho_N(b)$, an $E_L$ allocation
+of mass at most $M=\max\{1,s\}$ would allow Proposition 179.2's
+probability padding. When $s\ge1$ this requires preserving the optimal
+budget; when $s<1$ it permits mass up to one. It suffices to lift the
+attained optimum, rather than every nonoptimal representation.
+Attainment and the radial equivalence are owned by Theorems 166.2 and
+167.2; the augmented inequality (179.5) is unproved. Its failure would
+be a method obstruction, since $E_L$ is a subcatalog of the full
+stopped class. A whole-class negative certificate must maximize its
+score over every table of $\mathcal D_O$, not only $E_L$ or $T_L$.
+

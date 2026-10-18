@@ -1,0 +1,19 @@
+**Proposition 7.2 (constant tasks and zero-age edges).** If $f\equiv c$,
+the selected entry has exactly $2^m$ histories with lag
+$\lambda_0+c$, and its frontier is $\{(0,0,0)\}$. Nevertheless
+the full independent cube still requires exactly $q=K+2$ retained
+labels for global lag recovery. In particular for $K=0$ the
+construction uses $H=1,q=2$, not a collapsed zero-age cube; at
+$\lambda_0=0$ the selected lag is zero and the first adjacent-age
+query may have an empty suffix.
+
+**Proof.** Nothing in the chain or fiber proofs requires a nonconstant
+task or attainment of the top value $K$. A constant output is a
+correct zero-query reader on the selected entry. The lower bound of
+Theorem 2.2 concerns all initial profiles and all legal lags, so it
+continues to apply. At $K=0$, $a(b)=v(b)$ is legal in the
+$\{0,1\}^r$ cube. At zero lag the first bit slot contains either
+$T_0=\alpha$ or $T_1=\beta$, and its canonical word is just
+$w_0$. The word still has $D\ge1$ letters and costs one invocation
+if used, though the constant task needs none. $\square$
+

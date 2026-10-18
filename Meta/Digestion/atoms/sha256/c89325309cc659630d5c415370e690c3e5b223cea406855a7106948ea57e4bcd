@@ -1,0 +1,29 @@
+**Definition 5.1 (spatial and boundary objects).** Let
+$\operatorname{Pos}(r)\subset\{L,R\}^{<\omega}$ be all actual node addresses,
+including the root, with their ordered prefix incidences. It is the whole
+finite ordered support, not a fixed-radius prefix or a leaf word. Let
+
+$$
+\operatorname{LeafPos}(r)=
+\{p\in\operatorname{Pos}(r):pL,pR\notin\operatorname{Pos}(r)\}
+$$
+
+be its terminal antichain. Both objects erase leaf colours. The frontier is
+the boundary where future literal descent ceases: a proper prefix of one of
+its elements is a branch, an element is an uncoloured terminal position, and
+any other address is absent. Its prefix closure is exactly the support.
+
+Use the already supplied $C(t)=\operatorname{sh}(\rho^2t)$ and its inverse $D$
+on $\mathcal G::=A\mid B\mid\langle\mathcal G,\mathcal G\rangle$, where
+$A=\langle\dot,\dot\rangle$ and $B=\langle A,\dot\rangle$. At $e\ge2$,
+
+$$
+\operatorname{sh}(\rho^eu)=C(\rho^{e-2}u),\qquad
+D(\operatorname{sh}(\rho^eu))=\rho^{e-2}u.
+\tag{NCR.3}
+$$
+
+Let $I$ denote the existing effective partial inverse of $\rho$ on its actual
+image. Recognition fails off that image; no physical inverse source action is
+introduced. The executed $e$ is not replaced by maximal intrinsic depth.
+

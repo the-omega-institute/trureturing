@@ -1,0 +1,123 @@
+**Theorem 4.1 (sharp full-fiber consumer).** Retain all of
+[ARH, Proposition 16.1][ARH]'s acquired input:
+
+$$
+\begin{gathered}
+P=\{LL,LR,RL,RR\},\quad
+C=\langle\langle\square_1,\square_2\rangle,
+          \langle\square_3,\square_4\rangle\rangle,\quad
+\pi=\{\{1\},\{2\},\{3\},\{4\}\},\\
+H_0=\{(0,LRL,\mathsf{absent}),(0,RR,\mathsf{branch})\},\\
+H_{\rm rel}=\{(0,LL,1,LR,=),(0,RL,1,RR,=),
+               (2,LL,0,RL,\ne)\},\\
+Q=\{LLL,LLR,RL,RR\},\qquad N\ge2.
+\end{gathered}
+\tag{SRF.14}
+$$
+
+Its entire non-product, non-orbit fiber, supplied by ARH, is
+
+$$
+ u_{b,t}=\langle\langle\rho(b),b\rangle,
+              \langle\rho(t),t\rangle\rangle,
+ \quad b\in\{\alpha,\beta\},\quad t\text{ any finite branch tree},
+ \quad t\ne\rho^2(b),
+\tag{SRF.15}
+$$
+
+subject to all six old inequalities
+
+$$
+ \rho(b)\ne b,\quad \rho(b)\ne\rho(t),\quad \rho(b)\ne t,
+ \quad b\ne\rho(t),\quad b\ne t,\quad \rho(t)\ne t.
+\tag{SRF.16}
+$$
+
+Both endpoint guards of every record remain required. Set
+$D_N=2+\lfloor N/2\rfloor$. The complete finite upper-budget Pareto basis
+and every rational nonnegative same-run price are exactly
+
+$$
+ \mathcal B=\{(1,0,D_N)\},\qquad
+ W_\lambda^*=\lambda_q+\lambda_\ell D_N.
+\tag{SRF.17}
+$$
+
+These claims compare with all original adaptive arbitrary-update services.
+They sharpen the supplied one-read count by the optimal address length,
+joint frontier and same-run price.
+
+Proof. Writing the four old values as $x,b,z,t$, the literals force $b$
+to be a leaf and $t$ a branch. The positive records, with their reached
+endpoints, force $x=\rho(b)$ and $z=\rho(t)$. The negative record becomes
+$\rho^3(b)\ne\rho(t)$, equivalently $t\ne\rho^2(b)$ by injectivity.
+The old partition supplies precisely (SRF.16). These implications reverse,
+including both guards, so (SRF.15) is the entire fiber. Its eligibility
+in $\mathfrak S$, legal paid acquisition and non-product/non-orbit scope
+are the supplied ARH16.1 result, not additional restrictions here.
+
+The two supplied whole rows are
+
+$$
+\begin{array}{c|c|c|c}
+b&\text{reached cuts in order}&\text{outside context}&\text{partition}\\ \hline
+\alpha&RL,RR&
+\langle\langle\beta,\alpha\rangle,
+                 \langle\square_1,\square_2\rangle\rangle&
+\{\{1\},\{2\}\}\\
+\beta&LLL,LLR,RL,RR&
+\langle\langle\langle\square_1,\square_2\rangle,\beta\rangle,
+                 \langle\square_3,\square_4\rangle\rangle&
+\{\{1\},\{2\},\{3\},\{4\}\}.
+\end{array}
+\tag{SRF.18}
+$$
+
+Indeed in the first case $LL$ is the leaf $\beta$; in the second its
+children are the distinct leaves $\beta,\alpha$, each unequal to the two
+branch values at $RL,RR$. The retained inequality between those branch
+values completes each displayed partition, for every legal $t$.
+
+Put $T_j=\rho^j\alpha$. The known original hole $LR$ currently contains
+$T_N$ or $T_{N+1}$. Submit the single physical word
+
+$$
+ p_N=LR\,R^{\lfloor N/2\rfloor}.
+\tag{SRF.19}
+$$
+
+For $N=2m$ the replies are respectively $\alpha,\beta$; for $N=2m+1$
+they are $\beta,\mathsf{branch}$. This follows from
+$T_j=\langle T_{j-1},T_{j-2}\rangle$ for $j\ge2$ and from
+$T_0=\alpha,T_1=\beta$. Thus (SRF.19), of length $D_N$, selects the
+whole row (SRF.18) on the entire fiber, with no updates.
+
+For the arbitrary-update lower bound, use the same legal
+$t_0=\langle\alpha,\alpha\rangle$ for both $b$ choices. Its image is
+$\langle\beta,\beta\rangle$; direct constructor comparison with
+$\rho\alpha=\beta$ and $\rho\beta=\langle\beta,\alpha\rangle$ verifies
+all six inequalities for both choices. Also $t_0\ne T_2,T_3$, so the
+negative record and both guards hold. These two actual sources have the
+different rows in (SRF.18).
+
+At any common epoch $N+a$, their root and $L$ are branches, and their
+whole $R$ subtrees agree because $t_0$ is common. A distinguishing word
+must therefore enter $LR$ or $LL$. In $LR$ it compares
+$T_j,T_{j+1}$ with $j=N+a$; in $LL$ it compares them with $j=N+a+1$.
+For any suffix of length $r<\lfloor j/2\rfloor$, its edge weight
+$w=\#L+2\#R\le2r\le j-2$. All prefixes therefore navigate through
+branches of both trees and the two final indices are at least two;
+both replies are branch. Hence a distinguishing suffix has length at
+least $\lfloor j/2\rfloor\ge\lfloor N/2\rfloor$, and its whole physical
+word has length at least $D_N$.
+
+Any correct deterministic source-total comparator must have a first
+read whose replies differ on this pair: otherwise common control, local
+work, forward updates and halt give the same output. Before that first
+difference the actual epoch is common, so the preceding bound applies,
+even if the comparator makes arbitrarily many updates or other reads.
+Both runs include that read. Thus on a same run $q\ge1$ and
+$\ell\ge D_N$, and $d\ge0$. In particular every worst-budget vector
+dominates $(1,0,D_N)$ and every weighted supremum is at least the value
+in (SRF.17). The one-read static service attains both bounds. $\square$
+

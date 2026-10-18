@@ -1,0 +1,35 @@
+**Theorem 385.1 (Final-label capacity equivalence).** For every finite $L\ge3$, $\mathcal C\in\{N,O\}$, finite real $M\ge0$, $b_j\ge0$ and $e\ge0$, complete $\mathcal C$ feasibility for (384.2) is equivalent to
+
+$$
+\nu_{\mathcal C}(b_{<L},e,M)\ge\delta,
+\qquad \delta=(b_L-e)_+.
+\tag{385.1}
+$$
+
+If $K_{\mathcal C}$ is nonempty, its capacity belongs to $[0,M]$ and is attained by one whole allocation and one stock vector.
+
+*Proof.* Start with a feasible allocation $p$. Move every label-$L$ entry in a cell other than $c_s^*$ to label $0$. Such a cell is never visited by the unique first-zero-$L$ word $w^*$. At every earlier zero word this leaves its correct coordinate unchanged and increases its base and union coordinates. The positive base also increases. Thus all rows remain feasible and every owning mass is unchanged.
+
+Let $t$ be the remaining label-$L$ mass at $w^*$. Its correct row and nonnegativity give $t\ge\delta$. If $t>0$, retain the fraction $\delta/t$ of every remaining label-$L$ entry and move the rest to base. If $t=0$, then $\delta=0$ and no division is needed. Earlier rows again improve. At $w^*$ the union is unchanged, the correct mass becomes $\delta\ge b_L-e$, and base increases, so feasibility persists.
+
+Collapse the remaining label $L$ into base and call the resulting allocation $k$. At $w^*$ its base is the preceding union, at least $M-e$, so $k\in K_{\mathcal C}$. Let $x_s$ be the label-$L$ entry just collapsed in $c_s^*$. Then $x_s\le a_s$ and $\sum_sx_s=\delta$. At an earlier word the allocation before collapse had base and union
+
+$$
+k_w(0)-\sum_sI_s(w)x_s,\qquad
+k_w(0)+k_w(n(w))-\sum_sI_s(w)x_s.
+$$
+
+Their two independent floors imply (384.4); the positive row gives its last inequality. This proves necessity with one common stock.
+
+Conversely, suppose a jointly admissible $(k,x)$ has stock total $t\ge\delta$. Use $x=0$ if $\delta=0$; otherwise $t>0$ and replace $x$ by $(\delta/t)x$. Every loss weakly decreases. In each $c_s^*$ move this stock from label $0$ to label $L$. The bound $x_s\le a_s$ preserves nonnegativity and every cell retains its owning mass. At earlier words correct coordinates are unchanged, while (384.4) pays both the base and union losses and the positive loss. At $w^*$ correct mass is $\delta$, union is $k_{w^*}(0)\ge M-e$, and base is at least
+
+$$
+M-e-\delta\ge M-b_L-e,
+$$
+
+since $\delta\le b_L$. These are all remaining rows, proving sufficiency.
+
+For attainment, write the constraints jointly in all cell entries, owning masses and stocks. They are finitely many closed linear equalities and inequalities. Every entry lies in $[0,M]$, and $\sum_sx_s\le\sum_sm_s=M$. If $K_{\mathcal C}$ is nonempty, $x=0$ is admissible; hence the joint set is nonempty and compact, and its linear objective attains its maximum. In particular this proves the outer maximum asserted in Definition 384.2. At $M=0$ every entry is zero, so the capacity is either $0$ or $-\infty$ and the same proof applies without division. When $b_L\le e$, feasibility means precisely $K_{\mathcal C}\ne\varnothing$; empty feasibility is not zero capacity.
+
+The transfers use the signed actual-slack principle of [XV 258](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XV.md#258-signed-event-transfer-actual-slack-and-universal-common-input-maps) and [XXIII 371](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XXIII.md#371-a-one-pass-normal-form-for-every-finite-complete-catalog). Unlike the fixed-complement calculation XXIII 372, the outer optimization here varies every complementary cell and mass. Completing stopped first cells into equal $00,01$ cells also gives $\nu_O\le\nu_N$, but the identical distinguished-cell incidence alone supplies no reverse inequality. $\square$
+

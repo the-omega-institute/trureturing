@@ -1,0 +1,300 @@
+**Theorem 11.4 (exclusion of every twelve-state interior).**
+No original nineteen-state graph can realize the thirteen cells in
+(52) on the twelve interior states of Proposition 10.6.
+
+**Proof.**
+Assume such a graph exists. By Theorem 9.1, Corollary 9.2 and
+Theorem 10.4, its sole long pool is $B=(2,7)$, and
+$D_B=E_B+1$. Work throughout on that one installed graph. Write
+$E=E_B$, $D=D_B$, and define the nonnegative integer excesses
+and their sums by
+
+$$
+\begin{gathered}
+a_0=e_{\mathsf a},\quad b_0=e_{\mathsf b},\quad
+c_0=e_{\mathsf c},\quad d_0=e_{\mathsf d},\quad
+\mu=e_{\mathsf M},\quad \nu=e_{\mathsf N},\\
+t=e_3,\quad f=e_6,\quad w=\mu+\nu,\qquad
+\ell=a_0+b_0,\quad \varrho=c_0+d_0,\\
+E=\ell+\varrho+t+f+w,\qquad D=E+1.
+\end{gathered}
+\tag{55}
+$$
+
+Here $\varrho$ is the endpoint-excess sum denoted by $r$ in (20);
+it is unrelated to the number of native mandated latches. The four
+internal depths are noncommon-support. Since axis excesses vanish,
+this gives
+
+$$
+t\ge1,\quad f\ge1,\quad
+a_0+c_0+\mu\ge1,\quad b_0+d_0+\nu\ge1,\quad E\ge4.
+\tag{56}
+$$
+
+Corollary 10.5 also gives $\ell+\varrho\ge1$.
+
+Let $A$ count shared states having an axis endpoint and let
+$N_{\rm sh}$ count shared states without one. Lemma 7.2 shows that
+a state hosts at most two distinct count cells, so
+
+$$
+D=A+N_{\rm sh}.
+\tag{57}
+$$
+
+Only $Z_3,Z_4,O_3$ can be axis endpoints inside this pool, and
+each has one host. Therefore $A\le3$. If $A=3$, all three axes
+participate in distinct shared states, with exactly one axis
+incidence at each state. In particular the $Z_3$ host cannot
+share with $O_3$: that would use two of the three available axis
+incidences at one state. Its only possible partners are then
+$\mathsf R$ or $\mathsf c$, by the full partner table in
+Convention 10.1. The excluded axis $O_2$ lies at the cut, outside
+the pool, and localization excludes cross-pool sharing.
+
+Let $X,Y,Z$ be the respective numbers of non-axis shared states
+of types $\mathsf a\mathsf c,\mathsf b\mathsf c,
+\mathsf b\mathsf d$. These are the complete non-axis possibilities,
+so
+
+$$
+\begin{gathered}
+N_{\rm sh}=X+Y+Z,\\
+X\le b_{\mathsf a},\quad
+Y+Z\le b_{\mathsf b},\quad
+X+Y\le b_{\mathsf c},\quad Z\le b_{\mathsf d},\\
+N_{\rm sh}\le2+\ell,\qquad
+N_{\rm sh}\le2+\varrho.
+\end{gathered}
+\tag{58}
+$$
+
+Whenever either final bound is an equality, every host on that
+endpoint side is used by a non-axis shared state. None of those
+hosts can also share with an axis cell, since it would host three
+distinct cells. This is a count of distinct installed states, not
+an addition of independently optimized witnesses.
+
+The actual-successor table in Convention 10.1 supplies the following
+implications on this graph. Every $\mathsf a\mathsf c$ host has its
+zero successor at a $\mathsf b\mathsf d$ host. A shared
+$Z_3,\mathsf R$ host has zero successor shared by $Z_4,\mathsf M$
+and one successor shared by $\mathsf a,\mathsf c$. A shared
+$Z_3,\mathsf c$ host has zero successor shared by $Z_4,\mathsf d$.
+All children in these implications are live. Each is realized
+separately by extending its actual parent history with the specified
+fresh reply. No injectivity of the successor maps is assumed.
+
+Put $s=\min(\ell,\varrho)$ and $H=\max(\ell,\varrho)$.
+Equations (55), (57) and (58) imply
+
+$$
+E+1\le A+2+s,\qquad
+H+t+f+w\le A+1\le4.
+\tag{59}
+$$
+
+Thus $H\le2$. The already established
+$\ell+\varrho\ge1$ excludes $H=0$. There are exactly the following
+two possible positive values.
+
+*Case 1: $H=2$.*
+The second inequality in (59), with $t,f\ge1$, forces
+
+$$
+A=3,\qquad t=f=1,\qquad \mu=\nu=0.
+\tag{60}
+$$
+
+In particular $\mathsf M,\mathsf N$ have one host each, and
+(55), (57) give
+$E=\ell+\varrho+2$ and $N_{\rm sh}=\ell+\varrho$.
+Lemma 10.2 excludes a shared $Z_3,\mathsf R$ host because
+$\nu=0$. Since $A=3$, the $Z_3$ host must therefore share with
+$\mathsf c$. Its actual zero successor shares $Z_4,\mathsf d$.
+
+These are two distinct axis shared states: coincidence would host
+more than two cells. They use one $\mathsf c$ host and one
+$\mathsf d$ host, neither of which can be a non-axis shared state.
+Counting all these upper-endpoint hosts on the same graph gives
+
+$$
+N_{\rm sh}+2\le b_{\mathsf c}+b_{\mathsf d}=2+\varrho.
+\tag{61}
+$$
+
+Together with $N_{\rm sh}=\ell+\varrho$, this forces $\ell=0$.
+Consequently $\varrho=2$ and $N_{\rm sh}=2$.
+
+The two lower-endpoint hosts, one at each of $\mathsf a,\mathsf b$,
+are both exhausted by non-axis sharing. The $\mathsf a$ host must
+be of type $\mathsf a\mathsf c$, and its zero successor is of
+type $\mathsf b\mathsf d$. These states are distinct by the
+two-cell limit. There are only two non-axis states in all, so
+
+$$
+X=Z=1,\qquad Y=0.
+\tag{62}
+$$
+
+The non-axis $\mathsf a\mathsf c$ host and the axis
+$Z_3,\mathsf c$ host require two distinct $\mathsf c$ hosts.
+The non-axis $\mathsf b\mathsf d$ host and the axis
+$Z_4,\mathsf d$ host likewise require two distinct
+$\mathsf d$ hosts. Their total available capacity is
+$2+\varrho=4$, so each cell has exactly two. In particular
+
+$$
+F_{\mathsf d}\subseteq F_{\mathsf b}\cup F_{Z_4}.
+\tag{63}
+$$
+
+But $\ell=0$ and $\mu=\nu=0$ make
+$\mathsf a,\mathsf b,\mathsf M,\mathsf N$ singleton-host,
+hence singleton-support, cells. Lemma 11.3 supplies an actual
+$\mathsf d$ host outside the union in (63), a contradiction.
+This excludes every $H=2$ possibility, including either orientation
+of its larger endpoint excess and the possibility
+$\ell=\varrho=2$.
+
+*Case 2: $H=1$.*
+Equation (59) implies $A\ge2$, so $A$ is two or three.
+
+*Case 2a: $A=2$.*
+Equation (59) forces $t=f=1$ and $w=0$.
+Then $E=\ell+\varrho+2\ge4$ and
+$0\le\ell,\varrho\le1$, so
+
+$$
+\ell=\varrho=1,\qquad E=4,\qquad N_{\rm sh}=3.
+\tag{64}
+$$
+
+Both endpoint sides have exactly three hosts, all in non-axis
+sharing by (58). Because $\mu=\nu=0$, (56) shows that the
+depth-four and depth-five excesses $a_0+c_0$ and $b_0+d_0$
+are each positive. Their sum is $\ell+\varrho=2$, so each is
+one. Endpoint saturation now gives
+
+$$
+b_{\mathsf a}=X,\quad b_{\mathsf b}=Y+Z,\quad
+b_{\mathsf c}=X+Y,\quad b_{\mathsf d}=Z,
+$$
+
+and hence
+
+$$
+2X+Y=3,\qquad Y+2Z=3,\qquad X,Z\ge1.
+\tag{65}
+$$
+
+The nonnegative integer solutions of these equations must have
+$X=Z=1$ and $Y=1$: the first gives $X\le1$ and the second
+gives $Z\le1$, after which both determine $Y$.
+Thus $\mathsf a$ and $\mathsf d$ have one host, as does
+$\mathsf M$. An $\mathsf a\mathsf c$ host exists, contrary to
+Lemma 11.2. No $A=2$ possibility survives.
+
+*Case 2b: $A=3$ and $\ell+\varrho=1$.*
+Here $s=0$, so $N_{\rm sh}\le2$.
+From $E+1=3+N_{\rm sh}$ and $E\ge4$ it follows that
+
+$$
+E=4,\qquad N_{\rm sh}=2,\qquad t+f+w=3.
+\tag{66}
+$$
+
+The sum of the depth-four and depth-five excesses is
+$\ell+\varrho+w=1+w$ and is at least two by (56).
+Together with $t,f\ge1$, this forces $w=1$, $t=f=1$.
+Each of those two layer excesses is exactly one.
+
+First suppose $\ell=1,\varrho=0$. The two upper hosts,
+one at each of $\mathsf c,\mathsf d$, are exhausted by the
+two non-axis states. The $Z_3$ host cannot partner $\mathsf c$,
+so it partners $\mathsf R$. Lemma 10.2 forces $\nu\ge1$;
+as $w=1$, this means $\nu=1,\mu=0$.
+The depth-five excess equation
+$b_0+d_0+\nu=1$, with $d_0=0$, gives $b_0=0$.
+Thus $\mathsf b,\mathsf d$ have one support each.
+The one successor of the $Z_3,\mathsf R$ host is an actual
+$\mathsf a\mathsf c$ host, so Lemma 10.3 forces $f\ge2$,
+contrary to $f=1$.
+
+Now suppose $\ell=0,\varrho=1$. The two lower hosts,
+one at each of $\mathsf a,\mathsf b$, are exhausted by
+non-axis sharing. The first must be an $\mathsf a\mathsf c$
+host, whose zero successor is a $\mathsf b\mathsf d$ host.
+Thus $X=Z=1,Y=0$. If $\nu=0$, then $\mu=1$.
+The depth-five excess equation gives $d_0=1,c_0=0$.
+Lemma 10.2 forbids the $Z_3,\mathsf R$ option, while the
+$Z_3,\mathsf c$ option would require an additional
+$\mathsf c$ host although its sole host is already the
+non-axis $\mathsf a\mathsf c$ state. Both possible partners
+are impossible. Therefore $\nu=1,\mu=0$.
+The depth-four excess equation now forces $c_0=1,d_0=0$.
+The cells $\mathsf a,\mathsf M,\mathsf d$ have one host,
+and an $\mathsf a\mathsf c$ host exists. Lemma 11.2 again
+gives a contradiction. This excludes both orientations in Case 2b.
+
+*Case 2c: $A=3$ and $\ell=\varrho=1$.*
+Now $N_{\rm sh}\le3$ and
+$E=N_{\rm sh}+2\ge4$. Thus $E$ is four or five.
+
+If $E=4$, (55) forces $t=f=1,w=0$, and
+$N_{\rm sh}=2$. Since $\nu=0$, Lemma 10.2 excludes
+$Z_3,\mathsf R$. As $A=3$, the axis host at $Z_3$
+must share with $\mathsf c$, and its zero successor shares
+$Z_4,\mathsf d$. These two distinct axis states, in addition
+to the two non-axis states, require four distinct upper-endpoint
+hosts. But $b_{\mathsf c}+b_{\mathsf d}=2+\varrho=3$.
+This contradiction excludes $E=4$.
+
+If $E=5$, then $N_{\rm sh}=3$, exhausting all three lower
+and all three upper hosts. The $Z_3$ host therefore cannot
+partner $\mathsf c$ and must partner $\mathsf R$.
+Lemma 10.2 gives $\nu\ge1$. Since
+$t+f+w=3$ and $t,f\ge1$, we obtain
+
+$$
+t=f=1,\qquad \mu=0,\qquad \nu=1.
+\tag{67}
+$$
+
+Endpoint saturation yields
+
+$$
+X=1+a_0,\quad Z=1+d_0,\quad
+X+Y=1+c_0,\quad Y+Z=1+b_0.
+$$
+
+With $a_0+b_0=c_0+d_0=1$, these imply
+
+$$
+a_0+d_0+Y=1.
+\tag{68}
+$$
+
+All three summands are nonnegative integers. If $Y=1$, then
+$a_0=d_0=0$ and $b_0=c_0=1$.
+An $\mathsf a\mathsf c$ host exists, while
+$\mathsf a,\mathsf M,\mathsf d$ have one host;
+Lemma 11.2 excludes it.
+If $a_0=1$, then $Y=d_0=b_0=0$ and $c_0=1$.
+The cells $\mathsf b,\mathsf d$ have one support and
+$X=2$ ensures an $\mathsf a\mathsf c$ host.
+Lemma 10.3 gives $f\ge2$, contradicting (67).
+If $d_0=1$, then $Y=a_0=c_0=0$ and $b_0=1$.
+Equation (67) gives $\mu=0$, so
+$a_0+c_0+\mu=0$, contrary to the noncommon depth-four
+requirement in (56). These are all possibilities in (68).
+Thus $E=5$ is impossible as well.
+
+The nonnegative integer partition is exhaustive: $H=0$ was excluded
+by R4, $H\ge3$ by (59), $H=2$ by Case 1, and $H=1$ by
+Cases 2a–2c, which cover every allowed $A,\ell,\varrho,E$.
+Every contradiction concerns actual histories or distinct installed
+hosts of the alleged original graph. Consequently the thirteen-cell
+interior cannot have twelve states. $\square$
+

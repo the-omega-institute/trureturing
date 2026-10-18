@@ -1,0 +1,14 @@
+**Definition 394.1 (Inherited resources and complete catalogs).** Retain the original source, static prime replies, full Borel disjoint-union tape carrier, distinct marks $\theta_j$, consumer and original nonatomic targets of [IX 207.1](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_IX.md) and [110.1–110.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION.md#110-exact-closed-cap-transport-on-the-original-countable-source). The separately selected marked targets are
+
+$$
+\lambda_x^a=(1-a_{n(x)})\delta_{\theta_0}+a_{n(x)}\delta_{\theta_{n(x)}},
+\qquad 1\ge a_1\ge a_2\ge\cdots>0,\qquad a_j\longrightarrow0.
+\tag{394.1}
+$$
+
+The original classes $\mathcal N_2,\mathcal O_2$ use zero advice, one source-independent common seed and measurable sourcewise almost-sure finite handoff. The seed fixes the whole schedule and all terminal outputs before replies. Class $\mathcal N_2$ acquires its entire preselected schedule; $\mathcal O_2$ preselects increasing addresses and stops at its first queried zero or exhaustion. At most two actual requests are allowed, including repeated requests and replies later ignored. Original competitors have arbitrary addresses and full-carrier outputs. There is no source distribution, supplied source label, free observation, reset, copy, second seed, reply-adaptive next address or mean-request relaxation. All positive ordered vanishing tails and all closed cap ties are retained. Every finite Boolean word has actual source witnesses by the source interface in IX 207.1; auxiliary word weights below supply no law on those sources.
+
+For finite $L\ge3$, put $B_L=\{0,1\}^L$, $J_L=\{0,\ldots,L\}$ and $n(w)=\min\{j:w_j=0\}$ for $w\ne1^L$. Use the complete finite catalogs of [XXIII 368.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XXIII.md#368-original-resources-complete-cells-and-signed-scores): every empty schedule, singleton and distinct pair $i<j$, with pair cells $00,01,10,11$ for $N$ and $0,10,11$ for $O$. The stopped cell $0$ merges $00$ and $01$. Each table assigns any label in $J_L$ to each cell, including earlier and unqueried labels. Sorting a static pair permutes its table; a repeated coordinate has singleton information, without erasing any actual request charge.
+
+A complete allocation has nonnegative cell vectors $U_{s,c}$ of a common owning mass $m_s$ within each schedule $s$, with $\sum_s m_s=M\ge0$. Its word vector is $p_w=\sum_s U_{s,c_s(w)}$, of mass $M$. At mass one, [109.1](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION.md#109-an-exact-coefficient-criterion-with-one-common-probability-budget) supplies the common-table realization using one seed fixed before replies. All words, multiple zeros, zero-mass schedules and zero coordinates remain in these definitions.
+

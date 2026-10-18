@@ -1,0 +1,81 @@
+**Lemma 19.1 (weighted perturbation margins).** On the entire source
+comparison box, $t\in I$ and $X\in\mathcal B_X$,
+
+$$
+\|R\partial_\lambda\mathcal F\|_\varrho<4\cdot10^9,
+\qquad
+\|R D_X\partial_\lambda\mathcal F\|_\varrho<10^6.
+\tag{AC.96}
+$$
+
+Proof. The following exact rational bounds use FA95's row and column
+order. In the last column $L_i>\sum_{j=8}^{17}|R_{ij}|$; the first
+eight rows of $\partial_\lambda\mathcal F$ vanish.
+
+| $i$ | Strict lower bound for $\varrho_i$ | $L_i$ |
+| --- | --- | --- |
+| $0$ | $6\cdot10^{-6}$ | $5$ |
+| $1$ | $10^{-5}$ | $70$ |
+| $2$ | $5\cdot10^{-6}$ | $32$ |
+| $3$ | $2\cdot10^{-7}$ | $2$ |
+| $4$ | $3\cdot10^{-7}$ | $3$ |
+| $5$ | $9\cdot10^{-6}$ | $1$ |
+| $6$ | $10^{-6}$ | $43$ |
+| $7$ | $6\cdot10^{-6}$ | $44$ |
+| $8$ | $5\cdot10^{-6}$ | $3/50$ |
+| $9$ | $8\cdot10^{-6}$ | $13/100$ |
+| $10$ | $8\cdot10^{-7}$ | $2$ |
+| $11$ | $6\cdot10^{-8}$ | $2$ |
+| $12$ | $2\cdot10^{-7}$ | $2$ |
+| $13$ | $8\cdot10^{-7}$ | $2$ |
+| $14$ | $2\cdot10^{-8}$ | $2$ |
+| $15$ | $3\cdot10^{-3}$ | $260$ |
+| $16$ | $2\cdot10^{-3}$ | $350$ |
+| $17$ | $10^{-3}$ | $160$ |
+
+Each last entry is obtained by summing ten absolute rational entries
+of the specified $R$; it involves no new inverse. The same radii give
+
+$$
+\begin{gathered}
+\max_{i<5}\varrho_i<2\cdot10^{-5},\qquad
+\max_{5\le i<10}\varrho_i<10^{-5},\\
+\sum_{i=10}^{14}\varrho_i<3\cdot10^{-6},\qquad
+\sum_{i=15}^{17}\varrho_i<8\cdot10^{-3}.
+\end{gathered}
+\tag{AC.97}
+$$
+
+For coefficient $\ell^1$ norms in each of the three needed charts,
+the positive-pivot source enclosures give
+
+$$
+\|D_c\|_1<1/2,\quad \|N_c\|_1<1/25,\quad
+\|L_c\|_1<3/10,\quad \|F_c\|_1<1/4.
+\tag{AC.98}
+$$
+
+These follow directly, for example, from the rational relaxations
+$0.98<h_0<0.99$, $0.70<h_1<0.71$, $0.80<h_2<0.81$,
+$0.065<a<0.066$, $0.145<b_{\rm src}<0.146$,
+$0.015<c_{\rm src}<0.016$, $0.098<d_{\rm src}<0.099$,
+$0.87<\alpha<0.88$, $0.12<\beta<0.13$,
+$0.125<s_0<0.126$ and $|G_{ij}|<0.003$.
+The coefficient norms of the first five moment numerators are at
+most four on the pure sheet and two on the saturated sheet; the last
+three saturated norms are at most $4/25$. Consequently
+$\|W_\eta\|_1\le4$, and for the contact coordinates $|x_i|<0.3$,
+
+$$
+|W_\eta|,|W'_\eta|<32,\qquad |W''_\eta|<224.
+\tag{AC.99}
+$$
+
+Indeed their degrees are at most eight and $|x|<1$; derivative
+coefficient sums give these conservative bounds. The weighted row
+bounds in AC.96 are bounded respectively by
+$\max_i32L_i/\varrho_i$ and
+$\max_i224L_i\max_{j<5}\varrho_j/\varrho_i$.
+Substitution of the displayed rational bounds proves AC.96.
+$\square$
+

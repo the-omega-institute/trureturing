@@ -1,0 +1,33 @@
+**Proposition 66.7 (Nonatomic infinite-dimensional full-source positive-profile input).** There is a full original-source family in Definition 66.1 with nonatomic likelihood information, infinite-dimensional target-density span, positive proposal probability at every source and an attained positive original value. Fix $0<c<1$, let $\Theta=I$ with its Borel sigma algebra, $\tau=\lambda$ and $t(u)=u$, and prescribe
+
+$$
+ \mu_y=f_{\Omega(y)}\lambda,\qquad
+ f_k(u)=c+(1-c)k u^{k-1}\quad(k\ge1).
+\tag{66.17}
+$$
+
+Fix the consumer that immediately proposes $\lfloor(1-u)^{-1}\rfloor$. Every original label is assigned its displayed target law. The target rows satisfy
+
+$$
+ h_y=1,\qquad d_y=z_y=0,\qquad
+ e_y=c(1-1/k)+(1-c)(1-1/k)^k
+ \quad(k=\Omega(y)),
+\tag{66.18}
+$$
+
+so the allowed constant profile $b(k)=c+(1-c)\exp(-1)<1$ holds. Every occupied cylinder has $\rho_\mu(C)=1-c$, and $R_\mu=1-c$ is attained by handing over a common $\lambda$ tape without querying the source.
+
+**Proof.** All $f_k$ are nonnegative, increasing and normalized. The actual anchor $x_*=(7,2)$ has $\Omega(x_*)=1$, so $f_1=1$ and $\mu_{x_*}=\tau$ as required. The common consumer is a measurable finite real-output rule on every tape in $I$, has no source input and terminates in one transition. Its false event at target $k$ is $u<1-1/k$. Integrating (66.17) over this event gives (66.18). The inequality $(1-1/k)^k\le\exp(-1)$, with the zero value at $k=1$, proves the profile bound. These are target laws and consumer events, not a target-dependent execution rule.
+
+Every occupied actual cylinder contains sources whose $k=\Omega(y)$ tend to infinity, by the exact finite prime-pattern theorem 35.2. For $A_a=(1-a,1)$, $0<a<1$, these targets satisfy
+
+$$
+ \mu_y(A_a)=ca+(1-c)\bigl(1-(1-a)^k\bigr)
+ \longrightarrow ca+1-c.
+\tag{66.19}
+$$
+
+For any original-tape probability center $v$, the event discrepancy therefore gives $\sup_{y\in C}\operatorname{TV}(v,\mu_y)\ge ca+1-c-v(A_a)$. Since $A_a\downarrow\varnothing$ as $a\downarrow0$ on the declared open carrier $I$, continuity from above gives $v(A_a)\to0$. Hence every cylinder radius is at least $1-c$. Conversely $\operatorname{TV}(\lambda,\mu_y)=(1-c)\operatorname{TV}(\lambda,k u^{k-1}\lambda)\le1-c$ for every source. This proves the asserted local radii, unchanged original value and zero-query attainment. The constant seed law is fixed independently of the source and the consumer remains unchanged.
+
+Unboundedly many actual $k$ give polynomials of arbitrarily large distinct degrees $k-1$; comparing highest degrees in each finite linear relation proves that their density span is infinite-dimensional. No claim that every positive integer $k$ is attained is needed. To verify that this is also nonatomic likelihood information in the sense of Section 59, form its positive target mixture $\sigma=s\lambda$. The anchor term gives $s\ge w_*>0$ almost everywhere, and integrability makes $s$ finite almost everywhere. Its likelihood densities include $1/s$ and $f_k/s$ for some actual $k>1$. Their ratio recovers the strictly increasing function $f_k(u)$, whose measurable inverse recovers $u$. Thus the likelihood sigma algebra is the full Borel sigma algebra modulo null sets; conversely every density is Borel. The equivalent probability $\sigma$ is nonatomic, so this family lies outside the atomic subclass of Section 60. The target-density span is infinite-dimensional, although Section 64 can also certify this example's constant optimum using the one-dimensional space $E=\operatorname{span}\{1/s\}$ in its $\sigma$-density coordinates. The example establishes nonvacuity of the common-rank input, not failure of that separate finite-dimensional certificate. It witnesses one allowed nonzero-error positive profile, without classifying other original profiles or rows. $\square$
+

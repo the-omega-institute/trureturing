@@ -1,0 +1,6 @@
+**Corollary 8.5 (Conditional dimension-two exclusion).** A strict threshold crossing $V_2(n)>\tau$ at any length, including one obtained from (7.16) or Corollary 7.5, excludes the simultaneous three premises in (8.10) for every $\theta\in\Theta_2$.
+
+Proof. Such a producer would satisfy $V_2(n)\le\mathcal R_{2,n}\le\tau$ by (8.9)--(8.10). This contradicts the stated strict crossing. The argument requires all three extra premises and does not turn their conjunction into a definition of the producer domain. $\square$
+
+Theorem 3.3 rules out the trigger of this particular consumer through length $98$. It does not exclude a different rank-discrepancy certificate at those lengths, and neither that theorem nor Corollary 8.5 establishes any trigger at a larger length.
+

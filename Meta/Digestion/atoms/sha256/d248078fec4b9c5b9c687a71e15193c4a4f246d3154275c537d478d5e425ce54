@@ -1,0 +1,27 @@
+**定理 13.3（十八方程消费者的必要性与充分性）。** The guarded system of Definition 13.2 has a solution if and only if, on the exact parent
+
+$$
+H_4(z)=\left(0,J,24,M,48,J,z,M,\frac{48z-672}{35}\right)
+$$
+
+with $z$ in (13.2), there is an unrestricted fifth M $L_2$ family whose terminal pairs are indexed by
+$(E,G)\in\{J,M\}^2$, with a possibly different pair for every final action.
+
+**证明（必要性）。** Assume the stated fifth M $L_2$ family. For each sixth action $E$, choose its actual response $h_E$ witnessing the $L_1$ clause. For each final action $G$, choose two different complete worlds in the corresponding $L_0$ leaf and label them $k=1,2$. Their source coordinates satisfy (13.8), their common fifth response is one $p_M$, and Theorem 12.2 gives (13.9)–(13.10). The actual trace table after the fifth M is
+
+$$
+\begin{array}{c|ccc}
+E&\text{sixth trace}&\text{final }J\text{ trace}&\text{final }M\text{ trace}\\ \hline
+J&n+r+t&n+u&n+4t-2-r\\
+M&n+2u&2n+t+2r&2n+3u .
+\end{array}
+\tag{13.16}
+$$
+
+Thus equal sixth responses give (13.12), equal final responses give (13.14), and
+distinct complete worlds give (13.15) by (12.21). No pair is forced to equal a pair under another final action; reuse is allowed precisely when the complete world itself is reused.
+
+**证明（充分性）。** Given a solution, (13.9)–(13.10) and Theorem 12.2 construct eight legal complete worlds, all with the same $H_4(z)$ and fifth M response $p_M$. Equations (13.12) make the four worlds under each sixth action share one actual response, and (13.14) makes the two designated worlds for each final action share its actual terminal response. Guard (13.15) and (12.21) make every designated pair different. Hence the two final-action leaves under each sixth action contain an $L_0$ pair, each sixth action supplies an $L_1$ child, and the fifth M arm supplies $L_2$. Different final actions may use different pairs; the union is a set of at most eight worlds because repeated slots can be the same complete world.
+
+The two E(z) worlds from Definition 13.1 supply the fifth J arm's $L_2$ at the same exact $z,Y$. Their union with the eight M worlds therefore supplies an $L_3$ family after the common $H_4$, using at most ten complete worlds. This is a conditional local construction: existence of a solution of the eighteen equations is not asserted. ∎
+

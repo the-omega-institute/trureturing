@@ -1,0 +1,10 @@
+**Corollary 7.2 (conditional inertia reduction).** Under the supplied
+FC34.3 dichotomy and the same finite jointly attained class, every
+face with $t\ge\max(t_0,2000000000)$ has indefinite $R_-$.
+
+Proof. FC34.3 leaves precisely an indefinite matrix or a nonzero
+rank-one negative-semidefinite matrix in this range. The latter is
+excluded by Theorem 7.1. This inference supplies neither a dual
+nor a jointly attaining law when those have not been supplied.
+$\square$
+

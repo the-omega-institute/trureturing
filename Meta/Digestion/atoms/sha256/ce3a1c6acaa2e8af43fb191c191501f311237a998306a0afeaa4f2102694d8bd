@@ -1,0 +1,18 @@
+### Theorem 6.1. Exact work-register condition for a clean period function
+
+Consider the normalized state
+
+$$|\Psi\rangle=\frac1{\sqrt Q}\sum_{a=0}^{Q-1}|a\rangle|f(a)\rangle|g_a\rangle,$$
+
+where f(a) are orthogonal computational labels and g_a are normalized work states. Tracing out the last two registers gives clock entries
+
+$$\rho_C(a,b)=\frac1Q\mathbf1_{f(a)=f(b)}\langle g_b|g_a\rangle. \tag{6.1}$$
+
+It equals the clean computation's clock matrix exactly if and only if g_a=g_b whenever f(a)=f(b), in the specified phase convention.
+
+Proof. Partial trace gives (6.1). For each equal-output pair the clean entry is 1/Q, so equality requires inner product one. Normalized vectors have inner product one exactly when their squared difference norm is zero. The converse is immediate. QED.
+
+Keeping g_a=|a> destroys every off-diagonal clock entry, giving I/Q and a uniform Fourier output even when f is perfectly periodic. A residual state depending only on f(a) causes no additional suppression. Merely proportional work states can still introduce relative phases, already covered by (6.1). Compute-copy-uncompute is the standard remedy when its reversible circuit is supplied.
+
+This refines the project's recorded-output distinction. A classical experimental label may need to be retained for inference; a quantum work register that distinguishes paths meant to interfere may need to be uncomputed before readout. Keeping all histories or deleting all histories is not a universal rule. The reduced state and the intended probability law decide which operation is valid.
+

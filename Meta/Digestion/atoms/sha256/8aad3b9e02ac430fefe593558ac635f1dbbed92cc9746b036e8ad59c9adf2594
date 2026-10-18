@@ -1,0 +1,36 @@
+**Definition 9.6 (Future-output factorization on a common domain).**
+Fix a nonempty open interval $I\subset J_b$ and use the same realized
+source
+
+$$
+\mathcal D=I\times(U_b/\Lambda_b).
+\tag{9.26}
+$$
+
+It is a subset of the reachable domain in Theorem 8.2, with the same
+fixed preparation phases. A command is common legal on $\mathcal D$
+when $I\subset D_\gamma$. Its future response is the original
+$10$-component vector $y(T_\gamma x)$ from (8.8). A shared fixed affine
+factorization of dimension $n<\infty$ would consist of one function
+$z:\mathcal D\to\mathbb R^n$ and, for each such command, constants
+$c_\gamma\in\mathbb R^{10}$ and
+$L_\gamma:\mathbb R^n\to\mathbb R^{10}$ satisfying
+
+$$
+y(T_\gamma x)=c_\gamma+L_\gamma z(x)
+\quad\text{for every }x\in\mathcal D
+\text{ and every common legal }\gamma.
+\tag{9.27}
+$$
+
+The encoder is arbitrary: no linearity, continuity, measurability,
+injectivity or computability is assumed. The decoder and offset may
+depend on the continuation, fixed means and fixed preparation, but
+not on the hidden current state or its producing history. Common
+legal commands need not return into $\mathcal D$ for this terminal
+query. The phase-only subfamily used below does preserve $\mathcal D$,
+so the same lower bound applies if that preservation is required.
+A finite sequence is a command by concatenation on its actual domain.
+The all-future fixed affine capacity is the least such $n$, or
+$+\infty$ if no finite $n$ exists.
+

@@ -1,0 +1,64 @@
+**Definition 4.3 (installed switching maps with an arbitrary old row).**
+Choose integers $k\ge1,m\ge2$, an installed finite ordered context $C$, and
+its prefix-free role frontier
+
+$$
+Q=\{p_{A_j}:1\le j\le k\}\cup
+  \{p_{X_i},p_{Y_i},p_{Z_i}:1\le i\le m\}.
+\tag{FNS.17}
+$$
+
+Here $P$ is still the arbitrary supplied old cut; the context $C$ is installed
+by actual literals and is not asserted to be the old exterior $C_R$.
+At $A_j$ retain its branch literal and the guarded record
+
+$$
+(1,p_{A_j}L,\ 0,p_{A_j},\ =).
+\tag{FNS.18}
+$$
+
+Each payload $E_i(\mathbf n,\mathbf y)$ is built from finite grounds,
+$T_{n_j+d}$, fixed $\rho$ powers of $Y$ roles and pairs. Install its displayed
+pairs and grounds by literals. A token $\rho^aY_\ell$ at position $q$ is
+linked by
+
+$$
+(0,p_{Z_i}q,\ a,p_{Y_\ell},\ =),
+\tag{FNS.19}
+$$
+
+and a token $T_{n_j+d}$ is linked to $A_j$'s right child at epoch $d$.
+Unknown tokens are not traversed by the installation skeleton. Additional
+finite records and the full old row remain part of the same input.
+The installation alone has raw source map
+
+$$
+U(\mathbf n,\mathbf x,\mathbf y)
+ =C[A_j:=T_{n_j+2},\ X_i:=x_i,\ Y_i:=y_i,\ Z_i:=E_i(\mathbf n,\mathbf y)].
+\tag{FNS.20}
+$$
+
+Indeed [ARH, Application 26.1][ARH] applied to (FNS.18) gives uniquely
+$A_j=T_{n_j+2}$ and its right child $T_{n_j}$. Payload induction gives
+$E_i$ using exactly (FNS.19) at its actual epochs. Conversely the atomic
+recurrence and payload induction verify every installed record and guard.
+This proves the installation map, before imposing the old row.
+
+Let $\Gamma_R(\mathbf n,\mathbf x,\mathbf y)$ be the **entire** pullback
+$R_P(U)=R$ together with all additional retained records. In particular it
+contains every old within-class equality as well as every cross-class
+inequality, exterior/reach fact and signed comparison. Then the exact whole
+fiber is
+
+$$
+D=\{U(\mathbf n,\mathbf x,\mathbf y):
+       \Gamma_R(\mathbf n,\mathbf x,\mathbf y)\}.
+\tag{FNS.21}
+$$
+
+The predicate $\Gamma_R$ can contain positive residual equations. It is
+never passed unchanged to URR or SLP. Lemma 4.2 instead normalizes the full
+acquired predicate, including these positives, to (FNS.21a). Atomic ranks
+may thereby be reparameterized; the raw installation coordinates are not
+silently reused as if normalization had left them independent.
+

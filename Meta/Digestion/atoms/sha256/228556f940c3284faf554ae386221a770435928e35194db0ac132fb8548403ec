@@ -1,0 +1,66 @@
+**Theorem 16.3 (bounded canonical completions and every-word classification).**
+For nonempty $K$ there is a projection $\pi_K$ on initial right subtrees
+that preserves every reply on $K$. It keeps a reached leaf and its label;
+at a reached branch it keeps children whose addresses belong to $K$
+and replaces every other child subtree by alpha. In particular an
+initial branch at a terminal vertex of $K$ becomes
+$\langle\alpha,\alpha\rangle$. Put
+$\widehat t=\langle\alpha,\pi_K(v)\rangle$. Then
+
+$$
+ \operatorname{height}(\pi_K(v))\le\operatorname{height}(v),
+ \qquad
+ \operatorname{height}(\pi_K(v))\le1+\max_{q\in K}|q|\le D,
+ \qquad B_K(\widehat t)=B_K(t).
+\tag{AAR.89}
+$$
+
+Every finite original-root word has the following reply on this
+projected actual family:
+
+| Original-root word | Reply on $\widehat t$ |
+| --- | --- |
+| $\varepsilon$ | branch |
+| $L$ | alpha |
+| A strict extension of $L$ | absent |
+| $Rq$, $q\in K$ | The preserved actual reply at $Rq$ on $t$ |
+| $Rad$, where $a\in K$, $d\in\{L,R\}$ and $ad\notin K$ | alpha if $a$ is branch in $v$; absent otherwise |
+| $Rad z$ with that same first exit and $z\ne\varepsilon$ | absent |
+
+Moreover all permitted boundaries on $K$ have simultaneous native
+realizations within the height bound. More precisely, let $I\subseteq K$
+be any downward-closed set in the prefix order, and put
+
+$$
+ \partial_K I=\{x\in K\setminus I:
+                    \text{every strict ancestor of }x\text{ belongs to }I\}.
+\tag{AAR.90}
+$$
+
+Assign an independent alpha or beta label to each member of
+$\partial_K I$. There is a canonical right subtree whose replies on
+$K$ are branch on $I$, the assigned labels on $\partial_K I$, and
+absent everywhere else. Its height is at most
+$1+\max_{q\in K}|q|$, so its paired source is in $\mathcal F_D$.
+Here downward-closed does not mean principal or directed.
+
+Proof. Replacing a child subtree by alpha does not increase height.
+All kept branch vertices are in $K$; their added alpha children are
+at depth at most $\max|q|+1$. At a leaf the construction stops, so
+positions initially absent in $K$ remain absent. This proves (AAR.89).
+For a suffix outside $K$, its longest prefix in $K$ is unique. Its
+first edge leaving $K$ reaches the added alpha exactly when that
+prefix is a branch. If the prefix is a leaf or absent, this child is
+absent. Any further edge is absent in either case. These alternatives
+exhaust arbitrary depths, rather than only words below the menu bound.
+
+For the realization statement, start at the known-present root. Make
+exactly the reached vertices in $I$ branches, stop with the prescribed
+label at each reached vertex outside $I$, and fill every child leaving
+$K$ by alpha. Downward closure makes this consistent: a vertex of $I$
+cannot lie below a stopping leaf. Its relevant stopping leaves are
+exactly (AAR.90); all other nonbranch vertices of $K$ are absent. The
+same depth bound applies. In particular terminal branches are feasible
+because the allowed menus leave one additional level in $v$. No
+completion pads beyond $D$. $\square$
+

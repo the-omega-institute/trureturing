@@ -1,0 +1,19 @@
+**Construction 2.4 (cheap continued use).** Keep the acquired literal
+$a$ and bit $e$. At a later call, submit $a,aR,aR^2,\ldots$ until an
+actual leaf is returned; extend only after a branch reply. Designate
+that leaf Read as $w$. Present-subtree and branch persistence exclude
+absence. Under finite interference the final finite subtree at $a$
+has finite right depth, so the search terminates. On every return
+(AAR.6) gives the exact lag, regardless of updates during earlier
+search or later local work.
+
+To attach a complete row for any cut $P$, retain this newly observed
+leaf as guard, execute exactly the CWS row body, and reread that same
+literal. Accept only the same leaf label. Otherwise discard the row
+candidate and restart the search from the still retained old anchor
+$a$. The final guard Read is the joint validation. Its equality makes
+the body stationary and preserves the new leaf value throughout the
+body; (AAR.6) applies at that final Read. This is a fresh proof of the
+modified entry/guard composition using the CWS body contract, not an
+application of CWS's routing theorem to a changed protected state.
+

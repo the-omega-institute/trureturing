@@ -1,0 +1,17 @@
+**Proposition 94.3 (separate Green conventions).** The finite native
+marginal in (92.7) and the infinite marginal in (94.1) concern different
+fields of the same free operator. Specifically $BG_\tau=p_\tau(o,\cdot)$,
+whereas $(B-\lambda)W_\tau=e^{\lambda\tau}p_\tau(o,\cdot)$.
+The finite tangent field in (94.4) is the cutoff field of the complete
+Heisenberg quotient, not the fibre integral of any fixed $U_s$.
+The finite-time heat convergence in Theorem 93.3 and the full-potential
+uniform convergence in (82.10) do not imply the contrary assertion.
+
+Proof. The two source equations are (92.7) and (75.4). Killing makes
+$\int_\tau^\infty\mathbb P(\zeta>t)dt$ finite, while the threshold
+shift cancels that height gap and (94.1) proves divergence on a single
+hidden line. The incompatibility with exchanging the fibre integral
+and microscopic limit is the explicit pair of iterated limits in
+Theorem 94.2. Thus it persists despite uniform convergence of the
+unintegrated fields. $\square$
+

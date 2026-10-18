@@ -1,0 +1,45 @@
+**Theorem 7.2 (finite-tree checking with actual terminal outputs).**
+For a supplied skeleton, every $D_t$ has decidable emptiness and,
+when nonempty, decidable constancy of the whole $R_Q$.
+If all nonempty leaves are constant, one can effectively install their
+correct row outputs, obtaining a source-total lawful service with exact
+cost $c_t$ on every source in $D_t$.
+
+Its exact worst-coordinate vector and exact same-source rational
+weighted worst value are computable, and a finite original source
+attaining each maximum can be returned.
+
+Proof. Each path adds only finitely many fixed literal tests.
+Theorem 5.2 decides its feasibility. Row nonconstancy is the
+two-source query
+
+$$
+\exists u,v\in D_t\quad R_Q(u)\ne R_Q(v),
+\tag{NSF.14}
+$$
+
+decided by Lemma 5.1. For each nonempty constant leaf take its returned
+finite source witness and compute that witness's full row. Equation
+(NSF.14)'s failure makes this the correct row on the entire $D_t$.
+Empty leaves receive an arbitrary fixed output.
+
+Induction on the actual reply sequence proves that execution follows
+the unique path whose fixed tests the actual source satisfies. Its
+epochs never decrease, every read uses its full literal original-root
+word, and a halt ends the execution. The finite tree is source-total;
+the actual source cannot reach an empty leaf. Its exact costs are
+(NSF.13). Consequently
+
+$$
+b(A)=\left(\max_{D_t\ne\varnothing} k_t,\
+\max_{D_t\ne\varnothing}(n_t-N),\
+\max_{D_t\ne\varnothing}\sum_{v\prec t}|p_v|\right),
+\qquad
+W_\lambda(A)=\max_{D_t\ne\varnothing}\lambda\cdot c_t .
+\tag{NSF.15}
+$$
+
+The saved mathematical witness for a maximizing leaf realizes that
+cost. It need not be the witness maximizing a different coordinate.
+No marginal source choices have been combined. $\square$
+

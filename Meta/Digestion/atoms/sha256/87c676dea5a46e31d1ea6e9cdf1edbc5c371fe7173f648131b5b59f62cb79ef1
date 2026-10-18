@@ -1,0 +1,70 @@
+**Theorem 5.2 (paid guard compilation).** Under Assumption 1.4,
+source-blind preparation can acquire (NVC.13) with $m$ additional
+actual Reads and exactly $\sum_{u\in P}|u|$ submitted letters.
+It exports only the complete joint name $(e(t),g(t))$ through the
+paid isolation/handoff service. Its exact attained alphabet is
+
+$$
+r_g=|\{(e(t),g(t)):t\in X\}|\le r2^m.
+\tag{NVC.14}
+$$
+
+There is an explicit public controller with at most $2^mK$
+installed states that reproduces the entire virtual output with
+exactly one actual Read per virtual Read and no larger submitted
+length on any visit. On a terminating run its call count is
+$n_0+n_+$ and its letters are
+
+$$
+\ell_g=\ell-
+\#\{\text{nonempty visits with }g(t)_{\operatorname{parent}(w)}=0\}
+\le\ell.
+\tag{NVC.15}
+$$
+
+The peak submitted length is at most the virtual peak. If a specified
+public effective function of the old complete entry gives the guard
+vector, no further source acquisition or retained-name distinction is
+required.
+No necessity of this particular vector, optimality of its price or
+improvement of $M_1(D)$ is asserted.
+
+Proof. Query each word in $P$ once, in public order, on the
+unchanged actual source. Retain only its branch bit. This acquires
+every source-bearing guard entry actually used and has exactly the
+stated call and letter charges; peak guard-acquisition length is
+$\max(\{0\}\cup\{|u|:u\in P\})$. All other accessible
+dependence from this acquisition must be isolated or counted in the
+complete joint name. Correlations between entry and guard are
+retained in its actual image (NVC.14), not replaced by a free product.
+
+Replicate the original $Q\sqcup H$ carrier for each possible bit
+vector on $P$. Keep the vector fixed through a run. At an empty
+word, Read that word and apply $F$. At a nonempty $w=ub$, if
+$g_u=1$, select $w$ before its reply and return $F$ of that
+reply: the acquired guard certifies its present parent branch. If
+$g_u=0$, select $u$ and use the alpha, beta and absent cases of
+(NVC.7). The branch reply on this latter edge is unreachable on a
+truthful acquired vector; define its table arbitrarily to make the
+controller total. Feed the computed virtual reply to the original
+$\operatorname{next}$, retaining the vector. At $(g,h)$ output
+the same complete $\operatorname{out}(h)$.
+
+Theorem 2.2 proves correctness at every request, so induction gives
+the same virtual path, termination and full output. The carrier is
+the declared product of all $2^m$ bit vectors and all $K$ original
+states, including unused states. Each visit now uses one actual
+call; it submits either the virtual word or its parent. This proves
+(NVC.15) and the peak bound. The entry is the injective image of
+the pair $(e(t),g(t))$, so its exact complete range is (NVC.14).
+If $g$ is a specified computable function of $e$, compute it
+locally from that actually acquired entry. Its joint range then has
+exactly $r$ values and no source call is needed to acquire it.
+$\square$
+
+The phrase “one Read” in this theorem includes the new acquired
+guards in its premises. It cannot contradict Theorem 4.1, whose
+entry is constant. The original target/count ordering and the
+complete guard acquisition have to be verified separately for any
+application to the all-count late-target task.
+

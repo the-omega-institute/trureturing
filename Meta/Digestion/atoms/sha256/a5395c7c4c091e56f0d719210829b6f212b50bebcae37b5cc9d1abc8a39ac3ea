@@ -1,0 +1,35 @@
+**定义 1.1（完整目标和逐原子时序）。** 令
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix}.
+\tag{1.1}
+$$
+
+来源域为
+
+$$
+\mathcal P=\left\{
+P=\begin{pmatrix}a&b\\c&1-a\end{pmatrix}:
+0<a<1,\ b,c>0,\ bc=a(1-a)\right\}.
+\tag{1.2}
+$$
+
+这恰是所有逐项严格正、秩一、迹一的实 $2\times2$ 矩阵：等式给出行列式零，正性排除零矩阵。完整目标域是
+
+$$
+\mathcal W_3=\{(P,g,\delta):P\in\mathcal P,
+\ 0\ne g\in\mathbb R[T],\ \deg g\le3,\ \delta\in\mathbb R\}.
+\tag{1.3}
+$$
+
+不对来源施加对称性、大小上界或共同因子条件。增益允许任意实际次数、系数符号、采样根及重根；漂移是任意实常数。按时间先后执行动作词 $E_1\cdots E_i$，其中每个动作单独取自 $\{M,J\}$，置
+
+$$
+A_0=I,\qquad A_i=E_iA_{i-1}=E_i\cdots E_1,\qquad
+z_i(P,g,\delta)=g(i)\operatorname{tr}(A_iP)+\delta.
+\tag{1.4}
+$$
+
+初读计数；每次单独动作后立即读数。总读数至多八次只使用原时钟 $0,\ldots,7$，只有一条不能重置、不能复制的轨迹。不能跳读、补空动作读数、把未读复合动作算作一次动作、重编号时钟或增加传感器。确定性协议可用全部实际历史选择动作、停止并返回完整的 $(P,g,\delta)$，不要求这些函数连续、可测或可计算。未选动作的数学响应不算实际取得的读数。
+

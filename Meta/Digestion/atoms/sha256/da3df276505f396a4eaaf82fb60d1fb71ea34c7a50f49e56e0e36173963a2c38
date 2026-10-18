@@ -1,0 +1,32 @@
+**Premise 8.4 (Credited reset and guarded-budget interfaces).** [Global/local rank compatibility, Lemmas 2.1--2.2 and Theorem 2.3][R] supplies the ordinary-rank-two reset necessity and the resulting lower bound
+
+$$
+\mathcal R_{2,n}\ge V_2(n).
+\tag{8.9}
+$$
+
+The mechanism is that rank at most two at every cut of a positive no11 law forces conditional independence across each occupied one. On $E_i$, its center posterior is therefore constant across the entire distant complement. Projecting the actual $a_{n,i}$ onto such a constant costs at least $v_i$. Nonnegative rank at most two implies the ordinary rank condition needed for this direction. No converse or realization equivalence is used.
+
+For the same actual $J_\theta/P_\theta$, [Guarded, Theorem 6.2] supplies the cut-rank bound for its guarded conditional kernels. [Guarded, Theorem 5.1 and Corollary 6.4] supplies
+
+$$
+\begin{gathered}
+\mathsf B(P_\theta),\quad A_{P_\theta}<\infty,\quad
+\mathsf Z_\Delta(P_\theta)\\
+\Longrightarrow\quad d(P_\theta)=c_\star,\qquad
+\mathcal R_{N,n}\le(n+2)c_\star-\kappa_n-\frac1{24}
+\le\tau\quad\text{for every }n.
+\end{gathered}
+\tag{8.10}
+$$
+
+Writing $P_{[1,n]}$ for the actual length-$n$ marginal, the density supplied by [Universal, (1.5)][U] is
+
+$$
+d(P)=\lim_{n\to\infty}\frac{\Phi_n(P_{[1,n]})}{n}
+=\mathbb E_P(X_0-q_0^P)^2\le c_\star.
+\tag{8.11}
+$$
+
+The finite $\pi_n$ used in (8.8)--(8.10) is unchanged. The guarded kernels come from the one actual producer law; they do not replace $\pi_n$ in the reset variances.
+

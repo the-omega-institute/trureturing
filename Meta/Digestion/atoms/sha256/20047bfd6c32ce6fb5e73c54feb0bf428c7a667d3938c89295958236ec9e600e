@@ -1,0 +1,37 @@
+**Theorem 4.1 (exact mixed-budget native feasibility).** Under
+Assumption 1.1, for every $K\in\mathbb N$ and
+$B=(B_q,B_a,B_\ell)\in\overline{\mathbb N}^{\,3}$,
+$\operatorname{Feas}_K(B)$ is decidable. A true answer extracts
+one literal table in $\mathcal C_K$ satisfying all finite bounds
+on every original source. A false answer excludes every such
+table, including arbitrarily long finite installations.
+
+Proof. If $K=0$, the answer is false. If every coordinate is
+infinite, apply [NPS, Theorem 4.2][NPS] directly, with the original
+fiber, $N,Q,K$ and the interfaces of Definition 1.4. Its exact
+unbounded support theorem supplies both totality and extraction;
+no action horizon is inserted into this case.
+
+Otherwise compute at least one available horizon from (NRF.13):
+$T_q(K,B_q)$ when $B_q$ is finite,
+$T_a(K,B_a)$ when $B_a$ is finite, and
+$T_\ell(K,B_\ell,N)$ when $B_\ell$ is finite. Use the minimum
+of the available horizons. Every successful candidate respecting
+the finite coordinates has that action bound on its unchanged
+table, by Definition 2.3. In Proposition 3.3 impose exactly
+
+$$
+\Psi_\pi=
+\bigwedge_{i\in\{q,a,\ell\}:\,B_i<\infty}
+                        (v_{\pi,i}\le B_i).
+\tag{NRF.17}
+$$
+
+That proposition is therefore necessary for every allowed
+comparator, as well as sufficient. Its true and false decisions
+terminate and its extraction preserves the prescribed states.
+The eight choices of finite-coordinate set are exhausted:
+the empty set uses NPS, and each of the seven nonempty sets
+uses its actual available horizon. Neither an infinite coordinate
+nor an unvisited word is silently capped. $\square$
+

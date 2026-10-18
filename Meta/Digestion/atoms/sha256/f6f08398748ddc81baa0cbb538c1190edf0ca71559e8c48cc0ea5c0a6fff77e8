@@ -1,0 +1,36 @@
+### 35.4. 所有低次数、采样零、重根、来源与除法分支
+
+**exhaustive branch tree.**
+
+For an arbitrary competitor, normalize bijectively and use the initial equation. In both cases first split b=1/2 versus its complement; the singular branch is inconsistent, without discarding an unresolved free-gain case. In its complement the even equations uniquely determine the entire gain and drift. A then splits b=1/4 versus every other positive b; B splits b=1/8 versus every other positive b. Each nonexceptional branch must satisfy its necessary cubic, whose entire positive-root set was established and then excluded by the source product contradiction. Each exceptional branch leaves a fully solved source quadratic with exactly two distinct legal roots. Each root gives exactly one entire triple. Thus the count two is a complete-world count, not a count of source representatives, gain labels or response values.
+
+**constant and affine competitors.**
+
+No assumption nu!=0 or mu!=0 entered the inverse. At every nonsingular positive b, A has mu=-2(b+2)/T!=0 and B has mu=-15/(4T)!=0, so constant competitors are excluded by the acquired equations themselves. In A an affine competitor would require nu=0, hence b=1; in B it would require b=3/4. Both lie in the nonexceptional branches already exhaustively excluded by the necessary cubic and source argument. No whole zero gain could be a legal survivor; the two retained gains have nu=1. Lambda may vanish in other formal candidates without invalidating any step. Low degree was allowed before being ruled out for these particular records.
+
+**zero samples and repeated roots.**
+
+A's first and fifth samples vanish in the retained legal branch; B's first and third samples vanish in its retained legal branch. They were kept as actual response equations, not inverted or ignored. In the other branches A never divides G(3), and B never divides G(5), so zeros there and simultaneous zero response offsets remain covered. All other possible sampled zeros, repeated gain roots, zero lower coefficients and signed coefficients enter the same whole polynomial equations. There is no discriminant, square-free or generic-nonzero-sample premise. The retained quadratics have distinct roots, but no such restriction was imposed on competitors.
+
+**divisions.**
+
+The response bijection divides only the fixed nonzero kappa; its inverse is explicit for both signs.
+
+The even derivation uses fixed nonzero rational constants and 1+2b>0. It checks b=1/2 before dividing 2-4b, uses b>0 to recover lambda, and therefore uses T only after proving T!=0.
+
+A divides G(1),G(5) only after the positive-factor factorizations and b!=1/4 prove them nonzero. It never divides G(3) in that branch. At b=1/4 it divides only the independently evaluated nonzero G(3)=-4.
+
+B divides G(1),G(3) only after the positive-factor factorizations and b!=1/8 prove them nonzero. It never divides G(5) in that branch. At b=1/8 it divides only the independently evaluated nonzero G(5)=8.
+
+The further rational denominators 40b+19,8b+19,7b+3,b+1 are positive. Eliminated equalities may be multiplied by negative nonzero 1-2b without an inequality issue. Every denominator used in an inequality is explicitly positive.
+
+The cubic reductions divide only b>0 and fixed nonzero constants. The source polynomials are factored without dividing their discriminants or 1-2r. No gain leading coefficient, nu, lambda, drift difference, sample zero, source determinant or unproved response coefficient is inverted.
+
+**source boundaries.**
+
+Both diagonal roots 1/2 and 3/4 are retained in each theorem. In particular the rank-one maximum at r=1/2 is legal and passed every response check; the rejected candidates violate a strict bc>1/4, so they cannot exploit equality. No symmetry, asymmetry, fixed ratio or finite source box is assumed. The strict domain excludes r=0,1,b=0,c=0; no limiting boundary matrix is used as a world. Potential additional illegal source roots would only be removed, and here the full retained quadratic has precisely the two already-checked interior roots.
+
+**necessity and sufficiency.**
+
+The eliminations are necessary for every entire-class competitor; the nonexceptional contradiction need not make every necessary cubic root sufficient. The retained source roots were separately checked for complete source and gain legality and every actual response, establishing survivor sufficiency. This direction distinction prevents formal roots from being mistaken for actual worlds.
+

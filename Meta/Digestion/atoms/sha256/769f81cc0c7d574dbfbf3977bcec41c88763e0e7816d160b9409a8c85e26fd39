@@ -1,0 +1,28 @@
+**Definition 9.3 (event geometry and norms).** Let $z_i^e=(\phi_i^e,\eta_i)$, $i=0,\ldots,6$, be OE's exact event contacts; $O=(0,1,2,3,5,6)$. Their endpoint, occupied-height and report signs, and their local half-angle bases, are
+
+| $i$ | $\eta_i$ | $\epsilon_i$ | $\sigma_i$ | local base |
+| --- | --- | --- | --- | --- |
+| $0$ | $0$ | $+1$ | $+1$ | $0$ |
+| $1$ | $0$ | $+1$ | $-1$ | $\pi$ |
+| $2$ | $0$ | $-1$ | $-1$ | $\pi$ |
+| $3$ | $0$ | $+1$ | $+1$ | $0$ |
+| $4$ | $1$ | $+1$ | $+1$ | $0$ |
+| $5$ | $1$ | $-1$ | $-1$ | $\pi$ |
+| $6$ | $1$ | $-1$ | $+1$ | $3\pi/2$ |
+
+At the event $p_i^e>0$ for $i\in O$, $p_4^e=0$, and
+$\pi_e=\sum_{i=0}^6p_i^e\delta_{z_i^e}$.
+The exact moments are $A_7p^e=B$ for
+$A_7=[\Gamma(z_0^e)\ \cdots\ \Gamma(z_6^e)]$, and
+$k_e=K(\pi_e)$, $J_e=J(\pi_e)$. The selected multiplier is $\lambda_e$.
+Use the exact weaker margins
+$$
+p_*=11/250,\qquad h_*=3/1000,\qquad
+u_*=79/100,\qquad \Delta=29/100,\qquad q_B=1/8000.
+$$
+The retained supplier inequalities give $p_i^e>p_*$ on $O$,
+$\epsilon_iH_{\eta_i}(\phi_i^e)>h_*$ and
+$\sigma_i\cos\phi_i^e>u_*$ at all seven contacts, and every pairwise chord distance is greater than $\Delta$, since $\Delta^2<0.08907$. Here $\Delta$ is a separation bound, not the density difference $\Delta_\rho$.
+
+All unspecified vector norms are Euclidean; matrix norms are the induced $2\to2$ norm. A multilinear derivative norm is its supremum on tuples of Euclidean unit vectors. A Lipschitz bound for a matrix-valued function uses this matrix norm. $d_{\mathbb T}$ is shortest angular distance in radians. Local angular coordinates are the lifts about the displayed $\phi_i^e$. The only scaled norm below is expressly denoted $\|\cdot\|_{r_b}$. Every finite bound chosen below may be enlarged to a rational bound at least one, except a positive lower singular-value bound. A lower singular-value bound means the smallest singular value on the column domain.
+

@@ -1,0 +1,50 @@
+**Definition 8.2 (exact per-row structural stencil).** At row $j$, use
+SSA Definition 8.1's ordered cell-role list $\mathcal C_j$, append-site
+list $\mathcal A_j$, old-graph head-slot walks
+$\mathcal J_{j,\rm old}$ and actual routing words. Repeated routes and
+roles are charged again. Add a fresh finite-slot root walk and its two
+child-slot probes for each fresh bit; call that list $\mathcal Z_j$.
+The root-to-register path has length $d_r$. Full inspection of the
+pre-row register tree costs $3(2q-1+4c_{j-1})-1$. Thus the exact probe
+prescription is
+
+$$
+\begin{aligned}
+p_j={}&d_r+6q+12c_{j-1}-4
+ +\sum_{x\in\mathcal C_j}(|\pi_x|+140)\\
+ &+\sum_{z\in\mathcal A_j}(|\pi_z|+2)
+ +\sum_{w\in\mathcal J_{j,\rm old}}|w|
+ +\sum_{z\in\mathcal Z_j}(|\pi_z|+2).
+\end{aligned}
+\tag{CSA.11}
+$$
+
+These are the supplier's register/cell/append/head inspections in that
+order, then the fresh-slot checks. New-vertex slot initialization is an
+assignment rather than an old-graph probe. Root-to-cell routes use the
+maintained head links and fixed adjacent-cell walks, never a free Seek
+to an unacquired numeric address.
+
+Let $e_j$ be the number of actual core-plus-receipt cell appends,
+$s_j$ the number of fresh finite bits, $t_j$ the number of designated
+already-existing bit targets after native alias combination, $r_j$ the
+number of retargeted head links and $a_j$ the number of first activations.
+Include finite native control assignments in $t_j$, but exclude the new
+bit constructed in $s_j$. Define
+
+$$
+\begin{aligned}
+v_j&=48e_j+4s_j,\\
+w_j&=4t_j+2e_j+2s_j+3r_j+2a_j+7v_j,\\
+g_j&=1+p_j+w_j+v_j.
+\end{aligned}
+\tag{CSA.12}
+$$
+
+The $2s_j+28s_j$ constructor assignments agree with Definition 3.3's
+30, without adding another four existing-bit assignments. The receipt
+is combined with the core in this single commitment. No-op designated
+writes remain charged. A standalone fresh-bit core, excluding native
+control/receipt, has four new vertices and 30 assignments; it is not an
+extra separately committed event in this execution.
+

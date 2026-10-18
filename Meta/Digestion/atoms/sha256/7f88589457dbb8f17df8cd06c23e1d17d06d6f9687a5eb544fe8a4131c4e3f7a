@@ -1,0 +1,17 @@
+**Corollary 4.2 (actual finite source sets and hidden witnesses).** Finiteness
+of any native existentially defined set
+
+$$
+X=\{\mathbf x:\exists\mathbf z\ \Psi(\mathbf x,\mathbf z)\}
+\tag{NPL.9}
+$$
+
+is decidable. A finite answer enumerates all $\mathbf x$ with a realizing
+$\mathbf z$ for each; an infinite answer produces pairwise distinct
+$\mathbf x_k$ with their witnesses. Taking the output to be the entire
+variable tuple decides finiteness of $\operatorname{Sol}(\Phi)$ itself.
+
+Proof. Designate $\mathbf x$ as the output and retain all variables
+$(\mathbf x,\mathbf z)$ and all of $\Psi$ in Theorem 4.1. The original
+assignments it returns contain the required hidden witnesses. $\square$
+

@@ -1,0 +1,24 @@
+**Lemma 4.2 (row-column classification).** If a one-residual support contains
+both $A$ and $B$, its branch states lie in one row or one column of the
+$3\times3$ child grid, and its residual optimum is
+
+$$
+R=\max\{a+T,\ b+T,\ a+b+c_{\max}\}.
+\tag{SRP.5}
+$$
+
+**Proof.** At least one side target, $L$ or $R$, is not the designated
+residual target. Its factors on $A,B$ differ, whereas every nonempty
+experiment gives absent on both leaves. Its own witness must therefore be
+the root reply. That reply merges all branch states, so the selected side's
+child must be fixed across them. This gives one row or one column, with at
+most three branches. The root target itself is always own-determined, so
+this argument also covers designation of the root as the residual target.
+
+By the credited depth-two local-set classification [NCM, (NCM.15)], a
+locally admissible subset either omits $B$, omits $A$, or retains both and
+at most one branch. Their maximum weights are the three terms in (SRP.5).
+If the designated residual is also own-determined, the whole support is
+locally admissible and the same formula gives its total weight. An empty
+branch part has $T=c_{\max}=0$. $\square$
+

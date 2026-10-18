@@ -1,0 +1,51 @@
+**Definition 13.1 (the retained family).** Fix an integer $m\ge6$ and
+put
+
+$$
+B_m=m(2m+2),\qquad D_m=B_m+1,\qquad N_m=2m+1.
+\tag{CAR.56}
+$$
+
+For $v\in\mathcal T$ set $G_0(v)=v$ and
+$G_{j+1}(v)=\langle\alpha,G_j(v)\rangle$. For $D\ge1$ write
+
+$$
+U_D(x,z,w)=\langle x,G_{D-1}(\langle z,w\rangle)\rangle,
+\qquad a=L,\quad b=R^{D_m}L,\quad c=R^{D_m}R.
+\tag{CAR.57}
+$$
+
+Take the old cut $P_m=\{a,b,c\}$ with this concrete outside and three
+distinct old classes $x,z,w$. Retain exactly the following literals:
+
+$$
+\begin{gathered}
+(0,a,\mathsf{branch}),\quad
+(0,aR^mL,\mathsf{absent}),\quad
+(0,bL,\mathsf{absent}),\\
+(0,c,\mathsf{branch}),\quad
+(0,cR^m,\mathsf{branch}).
+\end{gathered}
+\tag{CAR.58}
+$$
+
+Retain the positive relations
+
+$$
+(2,aR,0,a,=),\qquad(2,cR,0,c,=),
+\tag{CAR.59}
+$$
+
+and, for each odd $j\in\{1,3,\ldots,2m+1\}$, the negative relation
+
+$$
+(0,a,j,b,\ne).
+\tag{CAR.60}
+$$
+
+Every relation has the endpoint guards of (CAR.2). Entry is at authentic
+epoch $N_m$, which is at least every recorded epoch. The original target
+cut is $Q_m=\{a,c\}$. The full old row and these records, with the
+complete access cut of Assumption 1.1, define the domain; no additional
+atomic, parity or size promise is imposed.
+

@@ -1,0 +1,34 @@
+**Supplier 2.4 (exhaustive actual profiles and whole-target identity).**
+Apply NBP Propositions 9.3 and 15.2 on exactly (NRN.6). Write
+$g(j)=a$ for $j\in\{1,2\}$ and $g(j)=c$ for $j\in\{3,4\}$. The eleven
+nonempty disjoint sets partitioning the entire domain are
+
+$$
+\begin{aligned}
+\Pi_j:\quad&x_{b_j}=\alpha,\quad x_{g(j)}=\beta,
+       \quad\text{the other four values are in }\mathcal B
+       &&(1\le j\le4),\\
+Z_d:\quad&x_d=\beta,
+       \quad\text{the other five values are in }\mathcal B
+       &&(d\in\{a,c,b_1,b_2,b_3,b_4\}),\\
+Z_*:\quad&\text{all six values are in }\mathcal B.
+\end{aligned}
+\tag{NRN.9}
+$$
+
+Within each set, every choice of the indicated finite branch images is
+allowed subject to the original pairwise disequalities. Every such tuple
+has the actual finite origin $\delta(\mathscr S(x))$. Its whole target is
+$R_j$ on $\Pi_j$ and $R_0$ on every zero set $Z_d,Z_*$. The native image
+grammar forces the four depth-two blocks to be images; a nonimage child
+can only be the alpha in an $E$ block, with its forced beta partner.
+The complete partition permits at most one such right class. These are
+the supplied full-fiber facts, including their sufficiency and inverse,
+rather than new classification results.
+
+Every address shorter than three reads the common exterior branch. Every
+other address is uniquely $pw$ with $p\in P$ and has the actual reply
+$r_{x_{[p]}}(w)$ by (NRN.2). We call $[p]$ its queried class and $w$ its
+suffix. This accounts for all exterior, repeated-occurrence, arbitrarily
+deep and absent queries. Empty-suffix queries are class-root queries.
+

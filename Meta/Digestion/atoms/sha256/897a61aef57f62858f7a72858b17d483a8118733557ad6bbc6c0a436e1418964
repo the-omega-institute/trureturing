@@ -1,0 +1,35 @@
+## 349. Original capacities and the bad M/Z owner
+
+**Proof of Theorem 348.2.**
+
+All genuine original M slots together have total pi, and the same
+holds for V. All genuine D slots together have total 2*pi. These
+statements follow by subtracting sigma's contributions from the full
+angle sums. Nonnegativity bounds any subset by the same capacity.
+Self-gluings do not erase an original angle occurrence.
+
+Sigma is the only owner whose fixed transverse pair is {C,D}.
+Indeed such an owner's two distinct axes lie in {M,V,Z,U}. Since
+z,u>m>v, the smallest possible shifted axial product is
+(m-1)*(v-1). Its L is therefore at most
+
+    (c+d)^2-(m-1)*(v-1)<=0.
+
+It cannot be genuine, so the unique-flat premise makes it sigma.
+
+For eta with pair {V,C}, Theorem 332.1 applies with first axis Z and
+second axial cosh r=m. Its explicit hypotheses are exactly the
+relevant inequalities in (348.1), together with eta's strict L/J.
+It proves (348.3). Hence suppose instead
+
+    eta=(M,V,D,Z,V,D),
+    theta_M(eta)+theta_Z(eta)<=pi.                    (349.1)
+
+Tau and eta are distinct actual owners because tau has no V label.
+Their actual M slots give
+
+    2*beta_M(tau)+theta_M(eta)<=pi.                   (349.2)
+
+This includes eta's real axial M occurrence. It will never be removed
+from a budget or replaced by a zero charge.
+

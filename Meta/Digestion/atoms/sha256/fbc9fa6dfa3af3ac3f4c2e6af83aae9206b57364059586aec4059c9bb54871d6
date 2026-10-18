@@ -1,0 +1,36 @@
+**Definition 17.5 (optimization and actual supported edges).** Let
+$\mathfrak M_2$ be all tables satisfying Assumption 17.4's abstract
+contract on this exact entry. Let $\mathfrak W_2$ be those also
+satisfying its immediate-write contract, allowing arbitrary finite
+word lengths and counted state refinement. Define
+
+$$
+M_2=\min_{\mathcal K\in\mathfrak M_2}|K|,\qquad
+W_2=\min_{\mathcal K\in\mathfrak W_2}|K|,\qquad
+L_2=\min_{\mathcal K\in\mathfrak W_2}d(\mathcal K).
+\tag{NARC.17.5}
+$$
+
+In $L_2$ the number of installed states ranges over every finite
+budget. Write $L_{11}$ for the length minimum restricted to exactly
+eleven installed states.
+
+The actual support graph $G_{\mathcal K}$ has every installed state
+as a vertex. It has an undirected edge $\{s,t\}$, $s\ne t$, exactly
+when some allowed original uses that response transition on its own
+actual stationary run. Empty-support states remain vertices.
+For a writable table, its complete words give an injective
+edge-preserving map to
+
+$$
+\Gamma_d=
+\bigl(\{w\in\{0,1\}^d:w_iw_{i+1}=0\ (1\le i<d)\},
+       \{\{w,w'\}:d_H(w,w')=1\}\bigr).
+\tag{NARC.17.6}
+$$
+
+This is the exact-supported version of [FIB, Definitions 45.3 and
+Theorem 45.4][FIB-RW]. Neither induced nor isometric preservation
+is required. Ambient legal words without installed instruction rows
+are not installed states; adding such rows makes them count.
+

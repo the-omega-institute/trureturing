@@ -1,0 +1,24 @@
+**Lemma 8.1 (Feasible rank-two comparison).** The family $\mathscr F_{2,n}^{0,0}$ is nonempty for every $n$, and $\mathscr F_{2,6}^{1,1}$ is nonempty.
+
+Proof. Use the classical two-state visible Markov chain from [Universal, Proposition 7.1][U], with the same fixed number $a$ but a separate comparison law $Q$:
+
+$$
+B=\begin{pmatrix}1-a&a\\1&0\end{pmatrix},\qquad
+\rho=\left(\frac1{1+a},\frac{a}{1+a}\right),\qquad
+N_x=D_xB,\quad D_0=\operatorname{diag}(1,0),\quad D_1=\operatorname{diag}(0,1).
+\tag{8.1}
+$$
+
+The row is stationary, all legal transitions are positive, and its word probabilities factor through two states at every cut. Insertion ratios are
+
+$$
+a\quad(n=1),\qquad
+\frac{a}{1-a}\quad(\text{either endpoint},\ n\ge2),\qquad
+\frac{a}{(1-a)^2}\quad(\text{a free interior site}).
+\tag{8.2}
+$$
+
+At the first endpoint the stationary factor and first transition change together, giving $\rho_1B_{10}/(\rho_0B_{00})=a/(1-a)$; at the last endpoint only the final transition changes. At a free interior site the two transition products are $a$ and $(1-a)^2$. The ranges in (3.1) put all three ratios in $[1/3,1]$. Thus $Q_{[1,n]}\in\mathscr F_{2,n}^{0,0}$. Its positive eight-bit conditional given the first and last bits equal to one gives a member of $\mathscr F_{2,6}^{1,1}$: conditioning preserves the insertion ratios, and at each internal cut the conditional matrix is a selected submatrix of the corresponding eight-bit cut, divided by a positive event mass. Such restriction and scaling cannot increase nonnegative rank.
+
+This law is used only as a feasible competitor in a minimum. No conditional, risk or event mass belonging to the reference $P$ is taken from $Q$. $\square$
+

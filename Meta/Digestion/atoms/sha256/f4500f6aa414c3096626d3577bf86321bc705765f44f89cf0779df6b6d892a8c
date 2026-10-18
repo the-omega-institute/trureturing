@@ -1,0 +1,20 @@
+**Convention 6.3 (credited repair outside both restricted arguments).**
+[GDB, Theorem 23.1][GDB] permits arbitrary proper syndrome-row
+subsets in (WBF.28), rather than only forests, and evaluates their
+parity-symmetrized sums by rank. It proves the attained optimum
+
+$$
+U_{\rm rank}=2n+(n-1)\log_2
+                  \frac{A^{n/(n-1)}+B^{n/(n-1)}}2,
+\qquad 0\le U_{\rm rank}-\log_2 Z_G\le1.
+\tag{WBF.32}
+$$
+
+That supplied result uses the equal mixture of all one-row deletions
+and the actual common syndrome. It is a repair of this sector and is
+not a rule in Definition 2.1. Its availability prevents interpreting
+Theorem 5.2 as an impossibility of obtaining small loss on this
+carrier by richer methods. Proposition 6.2 only shows that the
+existing forest excess does not itself evaluate the Finner class;
+it is not a general ordering of the two methods on all instances.
+

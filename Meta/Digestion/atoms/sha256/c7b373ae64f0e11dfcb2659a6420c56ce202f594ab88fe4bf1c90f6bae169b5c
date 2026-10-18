@@ -1,0 +1,9 @@
+**Application 7.5 (time uniqueness without source identity).** Two
+root-cut rows linked by equality have exact support $\{(0,0)\}$
+and admit every $t\in\mathcal T$. Indeed a positive iterate raises
+the minimum primitive rank of $B(t)$, so cannot equal $t$.
+Changing the sign gives exactly the positive lags. A cyclic leafless
+infinite tree would invalidate this reasoning and admit positive
+equalities, which is why the finite-tree occurs check and the
+nonempty leaf sets in the proof cannot be omitted.
+

@@ -1,0 +1,140 @@
+### 104.4. Actual quotient, phase equation and complete scalar residual
+
+Return to (104.2)–(104.3). The same-normer argument in RT III §103.2 fixes the same principal norming pair \(\rho,W\) under conjugation followed by interchange of 3 and 4. It uses the unrestricted one-party best response and uniqueness of all principal normers; it does not assume a rank-preserving average. After choosing the kernel phase and a positive rescaling,
+\[
+a_S=(c,sm,z,\overline z),\qquad m\in\mathbb R\setminus\{0\},
+\quad z\ne0,\qquad
+W_{ij}=-\frac{\alpha a_i\overline{a_j}}{2\overline{H_{ij}}},\quad\alpha>0
+\tag{104.19}
+\]
+across different original fibres. Put \(A=c^2\), \(B=s^2\), \(d=A-B\), \(u=p+iq\), and \(h=A+B\overline u^2\). The delivered endpoint exclusions give \(dpq\ne0\). The original matrix-unit tests and \(|\mathsf R_{ij}|\le1\) give \(A,B>1/4\).
+
+For unit quotient records \(b_i\) with \(\mathsf R_{ij}=\langle b_i,b_j\rangle\), linear in the second argument, the weighted full-kernel relation is
+\[
+\begin{aligned}
+b_1+\overline z b_3+z b_4&=0,&
+mb_2+\overline u\,\overline z b_3+uzb_4&=0,\\
+b_3&=\frac{-ub_1+mb_2}{2iq\overline z},&
+b_4&=\frac{\overline u b_1-mb_2}{2iqz}.
+\end{aligned}
+\tag{104.20}
+\]
+Their equal unit norms imply that \(r=\mathsf R_{12}\) is real. If \(|r|=1\), the last two formulas make all four records collinear, contradicting \(\operatorname{rank}\mathsf R=2\). Thus \(-1<r<1\). The same formulas show that the actual \(\mathsf R,G_S,L_S\) have the antiunitary symmetry. The original diagonal coefficients vanish since \(L_{ii}=1-1\), so (104.5) applies with the positive density and invertible cross blocks supplied by §99.
+
+Set
+\[
+\begin{aligned}
+v&=-\Re z,&w&=-\Re(z\overline u),&z&=-v+i(pv-w)/q,\\
+v&=mg+2Bmp-Br,&w&=g+2Ap-Amr,\\
+\eta&=v-A,&\zeta&=w/m-B,&
+M_0&=\begin{pmatrix}\eta&g\\g&\zeta\end{pmatrix}\succ0.
+\end{aligned}
+\tag{104.21}
+\]
+These are the actual cross-stress identities of §103.4. Its same-witness commutator and the quotient unit norms give
+\[
+\begin{aligned}
+g[dm+p(B-Am^2)]+dmp-2ABp^2(m^2-1)&=0,\\
+4(v^2+w^2-2pvw)&=1+m^2-2mpr.
+\end{aligned}
+\tag{104.22}
+\]
+For every supported coordinate \(j\), substitution of (104.19) and the full equation \(Ga=0\) gives
+\[
+(LW)_{jj}=-\frac\alpha2\left[|a_j|^2+
+\overline{a_j}\sum_{\substack{i\in S\\i\text{ in a different fibre}}}
+\frac{T_{ji}a_i}{H_{ji}}\right].
+\tag{104.23}
+\]
+The product-term sum is restricted to supported coordinates in a different original fibre:
+\(\alpha\overline{a_j}\sum_{i\in S,\ i\notin f(j)}G_{ji}a_i/2=-\alpha|a_j|^2/2\),
+where \(f(j)\) is the original fibre containing \(j\). Same-fibre off-diagonal Gram entries vanish, and all outside kernel coordinates vanish. Hence no outside assumption is hidden in (104.23). The original dual gives \((LW)_{33}=t\pi/2>0\). Its imaginary and real parts are
+\[
+\begin{aligned}
+\Im\left[z(1+m\overline u)+\frac{z^2}{\overline h}\right]&=0,\\
+j:=-|z|^2-\frac12\Re\left[z(1+m\overline u)+\frac{z^2}{\overline h}\right]&>0,
+\qquad\pi=\alpha j/t.
+\end{aligned}
+\tag{104.24}
+\]
+The complex denominator is conjugated before taking the imaginary part.
+
+Write \(T_0=\eta+\zeta\), \(\lambda=(\zeta-\eta)/d\), \(\Delta=\eta\zeta-g^2\), \(R_z=|z|^2\), and \(H_0=|h|^2\). From (104.22),
+\[
+\eta=(T_0-d\lambda)/2,\quad\zeta=(T_0+d\lambda)/2,
+\quad g=p(T_0-\lambda)/2,\quad
+K_0=T_0-2pg>0.
+\tag{104.25}
+\]
+The last inequality traces \(M_0\) against \(\begin{pmatrix}1&-p\\-p&1\end{pmatrix}\succ0\).
+
+Within the real antiunitary coordinates, rotate the singleton plane so the complex error vector is multiplied by \(z/|z|\). This computes the same coefficient norm and preserves \(\pi I_2\); it is not a physical real gauge. In this basis define
+\[
+\begin{aligned}
+F_0&=\begin{pmatrix}-q\eta&g-p\eta\\-mqg&m(\zeta-pg)\end{pmatrix},
+&M_E&=F_0^TF_0/(2q^2R_z),\\
+Q_0&=-\frac{R_z}{2H_0}
+\begin{pmatrix}\Re h&\Im h\\\Im h&-\Re h\end{pmatrix},
+&w_0^2&=R_z^2/(4H_0),\\
+s_0&=R_zK_0/(2\Delta),&k&=-\lambda H_0/\Delta.
+\end{aligned}
+\tag{104.26}
+\]
+The actual cross shape is \(E^{-1}C_1=s_0I+kQ_0\), by the two-by-two inverse and (104.22), and
+\[
+s_0^2-k^2w_0^2=q^2R_z^2/\Delta>0.
+\tag{104.27}
+\]
+In particular it is positive definite. No division by \(\lambda\) or \(k\) has occurred.
+
+Let \(e_1=1/2-K_{13}\), \(e_2=1/2-K_{23}\), and \(\ell=1/2-K_{34}\), where here \(K=G_S\odot H_S\). Direct substitution of (104.20) gives
+\[
+ze_1=\frac{-\eta+i(p\eta-g)/q}{2},\qquad
+ze_2=\frac{m[-g+i(pg-\zeta)/q]}2.
+\tag{104.28}
+\]
+Put \(D_0=[p\eta+(m^2-1)g-pm^2\zeta]/(2q)\). The third kernel row and (104.24) yield the rotated actual singleton coefficient
+\[
+\ell_{\rm rot}=\frac h{R_z}
+\left[\frac{\eta+m^2\zeta}{2}-j+iD_0\right],\qquad
+J_0=\begin{pmatrix}\Re\ell_{\rm rot}&\Im\ell_{\rm rot}\\
+\Im\ell_{\rm rot}&-\Re\ell_{\rm rot}\end{pmatrix}.
+\tag{104.29}
+\]
+Indeed \(z(e_1+m\overline ue_2)=-(\eta+m^2\zeta)/2+iD_0\), while
+\(\overline\ell z^2/\overline h=-j-z(e_1+m\overline ue_2)\); conjugation gives (104.29).
+
+**Lemma 104.4.** On these actual data the complete prescribed Sylvester equation in (104.16) is equivalent to the two scalar equations
+\[
+\mathcal F_1=jks_E-4\operatorname{Tr}(M_EQ_0)=0,
+\qquad
+\mathcal F_2=j^2-s_E(js_0+4w_0^2)=0.
+\tag{104.30}
+\]
+
+**Proof.** Write \(B_0=F_0^TF_0\),
+\(b_c=(B_{0,11}-B_{0,22})+2iB_{0,12}\), and
+\(K_1=d(m^2+1)+m^2-1\). Expanding (104.25) gives
+\[
+D_0=-\lambda pK_1/(4q),\qquad
+\Im(b_c\overline h)=-pqK_1\Delta.
+\tag{104.31}
+\]
+For \(D_E=M_EY_0+Y_0M_E-J_0\), its traceless component perpendicular to \(Q_0\) vanishes: the corresponding imaginary part, after multiplying its complex coordinate by \(R_z\overline h\), is
+\(-k\Im(b_c\overline h)/(4q^2)-H_0D_0=0\).
+The anticommutator with \(Q_0\) contributes only a scalar and a multiple of \(Q_0\). Directly from (104.26) and (104.29),
+\[
+\operatorname{Tr}(M_ES)=\frac{\eta+m^2\zeta}{2},\qquad
+\operatorname{Tr}(J_0Q_0)=j-\frac{\eta+m^2\zeta}{2}.
+\tag{104.32}
+\]
+Thus
+\[
+D_E=-\frac{\mathcal F_1}{2j}I
+-\frac{\mathcal F_2}{2jw_0^2}Q_0.
+\tag{104.33}
+\]
+For its second trace, expand
+\(\operatorname{Tr}(D_EQ_0)=-k\operatorname{Tr}(M_EQ_0)+4w_0^2s_E/j-\operatorname{Tr}(J_0Q_0)\)
+and use \(\operatorname{Tr}(M_ES)=s_Es_0+k\operatorname{Tr}(M_EQ_0)\); the mixed terms cancel. Equations (104.31)–(104.32) prove (104.33), including \(\lambda=0\). Since \(I,Q_0\) are independent, (104.30) is equivalent to the whole residual being zero. Lemma 104.3 then applies, with the same original norm (104.17). \(\square\)
+

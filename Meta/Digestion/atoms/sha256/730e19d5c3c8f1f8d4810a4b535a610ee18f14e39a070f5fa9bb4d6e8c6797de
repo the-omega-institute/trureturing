@@ -1,0 +1,28 @@
+**Lemma 3.3 (Adjacent mixed triple).** Two distinct adjacent active
+edges with at least one one label have complementary assignment weights
+$a^2b=a\eta$ and $ab^2=b\eta$, total $\eta$. With at most one
+additional query their summed full-law correct mass is at most
+$a\eta/2$, for every target position and either acquisition order.
+
+Proof. For left and right labels $01,10,11$, the larger assignments are,
+respectively,
+
+$$
+(\sigma,\sigma,1-\sigma),\quad
+(1-\sigma,\sigma,\sigma),\quad
+(\sigma,1-\sigma,\sigma).
+\tag{3.3}
+$$
+
+Each has weight $a^2b$; its complement has weight $ab^2$. Reversing
+the acquisition order changes no weights. For an internal target the
+component odds are $R$, so a fresh-vertex extension gives no summed
+improvement by Lemma 3.1. A disjoint query, repeat or separator also
+gives no improvement. For an exterior target, joining its singleton to
+the triple gives
+$\max(a\eta,(a\eta)(a+b))=a\eta$ before the phase factor, by
+(3.2). A fresh-vertex query at the singleton leaves its majority
+probability $a$ unchanged, while a query among nontarget vertices only
+partitions the prefix probability $\eta$. These cases exhaust the last
+query and prove the bound. $\square$
+

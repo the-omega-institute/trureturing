@@ -1,0 +1,48 @@
+## 12. The remaining unbounded obligations
+
+**Open problem 12.1 (unrestricted prefix limitedness).** For arbitrary
+nonempty (NSF.3) outside supplied certificates, decide
+
+$$
+\exists h\ge0\quad\operatorname{PrefDet}(D,Q,h).
+\tag{NSF.29}
+$$
+
+Theorem 6.1 gives a terminating test for each supplied $h$, and
+enumeration of $h$ semidecides positive instances, with actual paid
+consumers. It gives no negative stopping rule on arbitrary inputs.
+The witness shapes of Theorem 4.3 depend on the finite formula,
+which here changes with $h$. They are not a uniform bound on the
+source fiber or on the sequence of bad-pair formulas.
+
+**Open problem 12.2 (unbounded physical words and general exact
+resources).** On the same arbitrary fiber, decide bounded $(q,a)$
+feasibility while physical words have no supplied length bound.
+Then supply the complete unrestricted effective Pareto frontier and
+the general rational weighted interface, including the zero-weight
+cases not covered by a separate argument or a recognized supplier.
+
+JRF's all-source cap already bounds useful actual update epochs.
+A bounded read count gives finitely many tree *shapes*, but their
+word labels still range over an infinite set. No quantifier over
+such words occurs in Theorem 4.3. Running Theorem 7.3 at
+$L=0,1,\ldots$ is a positive semidecision, not the requested NO
+decision. Existence of a finite minimal antichain supplies no
+effective discovery cutoff. Even a known successful finite consumer
+does not automatically bound every possible Pareto tradeoff.
+
+CAR, SRF, CRF and GRS already solve stronger resource questions
+on their respective recognized atomic, synchronous,
+constructor-elimination and fixed acquired-graph domains.
+Their scoped answers are reused when the entire input meets
+their premises. Arbitrary extra signed relations cannot be inserted
+into their source-language encodings without a new correspondence.
+No recognition failure here or in those suppliers implies
+undecidability or impossibility of recovery.
+
+The increment supplies one terminating source-feasibility producer
+and its finite-query consumers. It neither changes the original
+target to a finer observation nor regards a finite witness set as
+the entry domain. The unrestricted continuing relation/recovery
+programme is not completed by these results.
+

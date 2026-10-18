@@ -1,0 +1,23 @@
+**Theorem 8.1 (finite-box rational weighted minimax).** In any supplied
+finite box (NSF.16), one can decide feasibility and, when feasible,
+compute and attain the minimum of $W_\lambda$ among all its permitted
+services for every $\lambda\in\mathbb Q_{\ge0}^3$, including zero
+coordinates. One can also compute the minimal feasible worst-budget
+vectors within that box and an attaining service for each.
+
+Proof. For each successful tree in the finite enumeration of Theorem
+7.3 compute (NSF.15). Take the smallest weighted value, and separately
+the coordinatewise minimal exact worst vectors. The comparator
+unrolling in that theorem weakly decreases costs on each same source;
+hence it cannot increase a nonnegative weighted sum before its
+supremum. Conversely every enumerated successful tree is itself an
+allowed service with the computed costs. These two comparisons prove
+the weighted equality of minima and attainment.
+
+For worst vectors every feasible comparator is weakly dominated by
+one of these trees. A minimal feasible upper vector cannot strictly
+exceed the exact worst vector of its attaining tree, since that
+smaller vector would also be feasible. Thus the reported minimal
+vectors are exact. This assertion is confined to the supplied box.
+$\square$
+

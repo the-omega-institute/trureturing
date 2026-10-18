@@ -1,0 +1,40 @@
+**Lemma 7.2 (Symbolic value of the constant-prediction radius).**
+
+$$
+R_0=
+\begin{cases}
+1-Z/2,&0<Z<2/3,\\
+e_*,&2/3\le Z<1.
+\end{cases}
+$$
+
+For $Z<2/3$,
+
+$$
+R_0^2-e_*^2=\frac{(4H-Z)^2}{4}>0.
+$$
+
+**Proof of Lemma 7.2.** Complete the square in the original squared
+output norm:
+
+$$
+16k(H-k)+4Zk
+=-16\left(k-\frac{4H+Z}{8}\right)^2
++\frac{(4H+Z)^2}{4}.
+$$
+
+If $Z<4H$, its vertex lies in $(0,H)$, so
+$R_0=(4H+Z)/2=1-Z/2$. Subtracting $4ZH$ from its square gives
+the displayed positive excess. If $Z\ge4H$, use instead
+
+$$
+16k(H-k)+4Zk=4ZH+4(H-k)(4k-Z).
+$$
+
+The last term is strictly negative at every interior height and tends
+to zero as $k$ tends to $H$ from below. Thus the supremum is $4ZH$.
+At $Z=4H$ the difference is exactly $-16(H-k)^2$, so equality of
+the parameters is included. Finally $Z<4H=2(1-Z)$ is exactly
+$Z<2/3$. These scalar extrema do not require a source state at a
+missing endpoint. $\square$
+

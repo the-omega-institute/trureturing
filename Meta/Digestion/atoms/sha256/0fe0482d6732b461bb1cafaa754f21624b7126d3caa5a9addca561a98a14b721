@@ -1,0 +1,50 @@
+**Lemma 2.4 (the local multiplicative unit).** One has $c(U)=3$.
+
+Proof. The root construction of Lemma 2.3 proves the upper bound.
+For the lower bound, consider the first test with more than one
+attained reply in any admissible-terminal decision tree on $U$.
+Earlier constant tests do not reduce $U$. Such a test must occur:
+the set $U$ is not admissible, as follows from the four-tree witnesses
+below, which are already nonadmissible subsets.
+
+The empty word has three attained replies, and each word of length
+one has four. Either choice therefore requires at least three
+nonempty terminal leaves. Each word of length two has just alpha and
+absent replies. For a word starting with $L$, its absent cell contains
+
+$$
+B_L=\{\alpha,\beta,
+\langle\alpha,\alpha\rangle,
+\langle\beta,\alpha\rangle\}.
+$$
+
+At target $L$, their factors in this order are
+
+$$
+(3,0),\ (2,0),\ (2,1),\ (1,0).
+\tag{NPH.8}
+$$
+
+All four are distinct. No local literal separates them: the root
+and $L$ each have at most three reply values, $R$ has at most two,
+and every longer word is constantly absent. Hence $B_L$, and thus
+the absent cell containing it, is nonadmissible. That cell needs at
+least two terminal leaves; the other attained cell needs at least
+one.
+
+For a length-two word starting with $R$, use instead
+
+$$
+B_R=\{\alpha,\beta,
+\langle\alpha,\alpha\rangle,
+\langle\alpha,\beta\rangle\}.
+$$
+
+At target $R$ the four factors are
+$(4,1),(3,1),(2,1),(1,0)$. Again the root and $R$ have at most
+three replies, $L$ at most two, and longer words are absent. This
+is the same nonadmissibility argument on that actual cell. All words
+of length at least three are constantly absent on $U$, so cannot be
+the first informative test. These cases exhaust every literal word
+and prove the lower bound. $\square$
+

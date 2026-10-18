@@ -1,0 +1,34 @@
+**Boundary 13.3 (Atoms cannot be split by the selector).** The classical
+atomic/atomless decomposition makes the restriction explicit. Let
+$(C_\ell)$ be disjoint measurable atoms of positive masses
+$\alpha_\ell$, exhausting the atomic part modulo null sets, and let
+$r=1-\sum_\ell\alpha_\ell$ be the mass of the atomless remainder.
+There are at most countably many such atoms; they need not be singleton
+points. With $e_i$ the coordinate unit vectors,
+
+$$
+W_m(\nu)=
+\left\{r w+\sum_\ell\alpha_\ell e_{i_\ell}:
+ w\in\Delta_m,\ i_\ell\in\{1,\ldots,m\}\right\}.
+\tag{13.4}
+$$
+
+Each atom lies, up to null sets, wholly in one partition cell. Conversely
+allocate those whole atoms to the selected cells, and partition the
+atomless remainder with the proportions $w$, using DWW Lemma 2 for the
+restricted finite measure. This gives (13.4), including $r=0$, when
+the $w$ term vanishes. This is the usual one-measure decomposition
+underlying DWW Remark (c).
+
+For example, take $k=0$ and a one-atom probability space. The only
+possible return probabilities are zero and one: before any read the
+seed-measurable return indicator is constant almost surely. Immediate
+return of $a_0$ and immediate internal nonreturn are both legal, but
+their half-and-half mixture of $Z$ laws has return probability $1/2$
+and is unattainable on this space. Thus even the finite law region
+need not be convex. The obstruction already occurs without any address
+geometry. At larger budgets a deterministic tree can also obtain
+random replies from the original source; those replies are already
+included in its $v_i$, and do not authorize replacing the seed-partition
+restriction by an independent coin.
+

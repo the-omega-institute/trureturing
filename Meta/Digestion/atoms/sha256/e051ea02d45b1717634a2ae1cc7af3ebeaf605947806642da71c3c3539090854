@@ -1,0 +1,100 @@
+### 82.2. Correct-output contractions and an equality-sensitive support witness
+
+Choose Stinespring isometries for the original maps, taking the B environment to be C^2. For each fibre their correct-output blocks are contractions
+
+    A_f:C^2->E_A,   H_f:C^2->C^2,
+    A_f e_i=(<f| tensor I)V_A|f,i>,
+    H_f e_i=(<f| tensor I)V_B|f,i>.
+
+Define coefficient matrices, using the standard Hilbert--Schmidt inner product <Y,Z>=Tr(Y^*Z),
+
+    C_f=A_f H_f^T/sqrt(2),
+    D_f=A_f Z H_f^T/sqrt(2),   Z=diag(1,-1),
+    S=(1/4)sum_f C_f,   p=||S||_F^2,   a=4-4p,
+    t_f=Tr(A_f^* A_f)/2,   epsilon_A=sum_f(1-t_f).
+
+Coefficient matrices identify E_A tensor C^2 isometrically with its tensor-product vectors. Let
+
+    L_S={S X: X is 2-by-2 and Tr X=0},
+    Q=orthogonal projection onto L_S.
+
+For the actual product records x_fi=a_fi tensor h_fi, write their forward Gram as K. After changing each bit basis to |+>,|-> and ordering all plus coordinates first,
+
+    Khat=[[Cgram,X],[X^*,M]],  That=diag(J_4,I_4),
+    Cgram_fg=<C_f,C_g>, M_fg=<D_f,D_g>, X_fg=<C_f,D_g>.
+
+Here T has diagonal blocks I_2 and off-diagonal blocks J_2/2. The entire cross block X is retained.
+
+The pointwise inequality of section 81.2 can retain the A deficit:
+
+    ||(I-Q)D_f||_F^2 <= t_f+p-2 Re<S,C_f>.             (1)
+
+For completeness, take any unitary U replacing H_f, and set
+
+    C_U=A_f U^T/sqrt(2), D_U=A_f Z U^T/sqrt(2),
+    N_U=conjugate(U) Z U^T.
+
+The matrix N_U is traceless Hermitian unitary, D_U=C_U N_U, and ||C_U||_F^2=t_f. Thus
+
+    ||(I-Q)D_U||_F^2 <= ||D_U-S N_U||_F^2
+                     = ||C_U-S||_F^2
+                     = t_f+p-2 Re<S,C_U>.
+
+For H_f=L diag(s_1,s_2)V^*, 0<=s_j<=1, use the explicit unitary decomposition
+
+    U_eta=L diag(eta_1,eta_2)V^*,
+    q_eta=((1+eta_1 s_1)(1+eta_2 s_2))/4,
+    H_f=sum_(eta in {+1,-1}^2) q_eta U_eta.            (2)
+
+It is valid at zero or repeated singular values, after choosing any unitary SVD factors. Squared norm is convex and the overlap term is real-linear, proving (1). Summing gives
+
+    sum_f ||(I-Q)D_f||_F^2 <= a-epsilon_A.             (3)
+
+Let B_0:C^4->E_A tensor C^2 have columns D_f, let V have orthonormal columns spanning ker(QB_0), and set r=dim ker(QB_0), Pi=VV^*. Since dim L_S<=3, r>=1. For s=(1,1,1,1)^T/2 and Phat=diag(ss^*,Pi),
+
+    Tr Phat(Khat-That)
+       =-a+||B_0 V||_F^2-r
+       =-a+||(I-Q)B_0 V||_F^2-r
+       <=-a+||(I-Q)B_0||_F^2-r
+       <=-r-epsilon_A.                               (4)
+
+To apply this to the original maps, use the normalized reference input
+
+    |Omega>=(1/sqrt(8))sum_(f,i)|f,i>_R tensor |f,i>_logical.
+
+On the orthonormal joint reference/output support
+
+    {|f,i>_R tensor |ff>_output},
+
+the correct-output compression is K^T/8 and the target is T/8. The complementary actual block is positive of trace 1-TrK/8. Pinching into these two supports and positive-part duality imply
+
+    delta >= (||K-T||_1+8-TrK)/8
+          = Tr(T-K)_+/4
+          >= (r+epsilon_A)/4.                        (5)
+
+The physical Gram is transposed because K is the forward Gram. Transposition preserves the trace norm. This is a bound on the original leaking maps; no calibration or polar-replacement monotonicity is assumed.
+
+Assume henceforth delta=1/4. Since r>=1 and epsilon_A>=0, every inequality in (3)--(5) that enters (4) must be an equality, r=1, and epsilon_A=0. Thus every t_f=1. Positivity of I_2-A_f^*A_f gives
+
+    A_f^*A_f=I_2 for all f.                           (6)
+
+For each |f,i>, its correct-output component already has norm one. Since the original Stinespring map is isometric, all wrong-output components vanish. Hence the original A channel is fibre-calibrated.
+
+Rank(QB_0)=3, so rank Q=3. If rank S<=1, the space {S X:Tr X=0} has dimension at most two. Therefore
+
+    rank S=2.                                       (7)
+
+Let v be a unit vector spanning ker(QB_0), and write R_0=(I-Q)B_0. Equality in ||R_0 v||^2<=||R_0||_F^2 implies R_0(I-vv^*)=0. Set
+
+    W=B_0 v=R_0 v,   ||W||_F^2=a.
+
+Then the actual residual for fibre f is
+
+    W_f=(I-Q)D_f=conjugate(v_f) W.                    (8)
+
+Here W is again identified with its coefficient matrix. Since W is orthogonal to L_S,
+
+    S^*W=lambda I_2                                 (9)
+
+for some complex lambda: the orthogonal complement of all traceless 2-by-2 matrices is the scalar matrices.
+

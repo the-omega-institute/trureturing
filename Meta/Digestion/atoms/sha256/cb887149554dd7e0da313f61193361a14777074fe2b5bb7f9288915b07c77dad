@@ -1,0 +1,66 @@
+**Definition 1.1 (source, code and consumer).** Retain the original
+source and output of [WTF, Definitions 1.1–1.2][WTF]. In particular,
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\qquad
+\rho\alpha=\beta,\quad
+\rho\beta=\langle\beta,\alpha\rangle,\quad
+\rho\langle u,v\rangle=\langle\rho u,\rho v\rangle.
+\tag{CP.1}
+$$
+
+The current complete depth-three row $R_*$ has equality classes
+
+$$
+\{LLL,LRL\}=a,\quad \{LLR\}=b_1,\quad \{LRR\}=b_2,
+\quad \{RLL,RRL\}=c,\quad \{RLR\}=b_3,\quad \{RRR\}=b_4,
+\tag{CP.2}
+$$
+
+with whole-subtree disequality between every two different classes.
+The domain is the entire unbounded fiber
+$\mathcal U_*=\{u\in\mathcal T:R_P(\rho u)=R_*\}$ for
+$P=\{L,R\}^3$. The required whole predecessor row is $R_P(u)$,
+including the ordered exterior, reached occurrence holes, equality
+partition, every retained disequality and strict-prefix blocking guard.
+No bound on tree height, size or interior shape is imposed.
+The paid table queries the fixed current register $\rho u$ at its
+original-root addresses.
+
+Let $n\ge6$, $3\le k\le n-2$, $r\ge0$, and let
+$A=\{s_1<\cdots<s_n\}$ consist of positive integers. Put
+
+$$
+w_i=L^{s_i}R,\qquad a_i=LLLw_i,\qquad c_i=s_i+4,
+\qquad C_Q=\sum_{i\in Q}c_i,\qquad W=C_{[n]}.
+\tag{CP.3}
+$$
+
+Thus individual costs are distinct; disjoint subsets may nevertheless
+have equal sums. For a branch image $B$, set
+$\theta_i(B)=\mathbf1_{\{r_B(w_i)=\mathsf{branch}\}}$.
+The prescribed pointwise code remains exactly
+
+$$
+\sigma_{A,k}(u)=
+\begin{cases}
+0,&u\in\Pi_1\cup\Pi_2,\\
+1,&u\in\Pi_3\cup\Pi_4,\\
+\mathbf1_{\{\sum_i\theta_i(x_a)\ge k\}},&u\in Z_{b_3},\\
+0,&u\text{ is in any other zero profile}.
+\end{cases}
+\tag{CP.4}
+$$
+
+Here the eleven profiles and the actual class value $x_a$ are those
+of WTF Definition 1.1. On arbitrary branch images, alpha, beta and
+absent selected replies all contribute zero.
+
+Preparation must enter the original literal latch
+$\widehat e_{\sigma_{A,k}(u)}$. The current register is fixed during
+preparation and the original complete-entry reader of
+[WTF, Convention 1.3][WTF]. That reader has its separately counted
+eight states, at most two fresh queries and six submitted letters.
+Both original entries and their complete row outputs are fixed.
+

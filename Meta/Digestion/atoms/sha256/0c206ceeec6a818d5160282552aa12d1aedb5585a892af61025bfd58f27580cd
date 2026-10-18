@@ -1,0 +1,24 @@
+**definition 10.2 (The unresolved positive-noise problem).**
+The optimization remains (1.3), with all its original competitors
+and all $t,\eta\in[0,1]$. Outside the established equality regions,
+the results here specify only the interval (2.2). For $c>0$ and
+$0<\eta<\eta_F$, its positive width is proved in Theorem 8.3.
+Before positive-part clipping, the explicit majority coefficient
+misses the converse coefficient by $24uwn$, while first-hit misses
+it by $4u(h^2-u^2)$. Neither loss is proved unavoidable for arbitrary
+adaptive real LOCC. Feasibility for a transpose-invariant Choi
+relaxation or equality of separately bounded groups is not an actual
+local implementation. The necessary exactness threshold and the
+general positive-noise optimum therefore remain unresolved here,
+including the rational case (8.6).
+
+All channel identities concern one use with the actual initial
+independent batch and exact stated controls. They supply neither
+native preparation of that batch, exact physical calibration from
+a finite code name, nor a physical-efficiency or acquisition-cost
+bound. Reuse of classical settings is permitted; reuse of the same
+three quantum copies does not establish independent channel uses.
+Approximate sources or controls require their own error analysis.
+These are ordinary mathematical proofs, with no formal or kernel
+certification asserted.
+

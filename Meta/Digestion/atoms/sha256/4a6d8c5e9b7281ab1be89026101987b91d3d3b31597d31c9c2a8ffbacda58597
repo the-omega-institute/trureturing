@@ -1,0 +1,52 @@
+**Lemma 3.3 (All inverse moments through total order four).** Fix $m\ge2$ and nonnegative integers $\ell_1,\ldots,\ell_m$ with $L=\sum_j\ell_j\le4$. Then, for every legal total, the exact moment is a ratio of the polynomials of Lemma 3.1, and as $n\to\infty$,
+
+$$
+\begin{aligned}
+\mathbb E_{0,n}\prod_{j=1}^mK_j^{-\ell_j}
+&=\frac{P_{9-\ell_1,\ldots,9-\ell_m}(n)}{P_{9,\ldots,9}(n)}\\
+&=n^{-L}\left(M_\ell+O_m(n^{-1})\right),\\
+M_\ell&=\frac{(10m-1)!}{(10m-1-L)!}
+\prod_{j=1}^m\frac{(9-\ell_j)!}{9!}.
+\end{aligned}
+$$
+
+All these estimates can be bounded with constants valid on the entire set $n\ge m$. More specifically, for each coordinate $v$ and $0<\eta\le1/2$ there is a finite constant $C_{m,\ell}$ such that
+
+$$
+n^L\mathbb E_{0,n}\left[
+\prod_jK_j^{-\ell_j}\mathbf1_{\{K_v\le\eta n\}}\right]
+\le C_{m,\ell}\eta^{10-\ell_v}
+\quad(n\ge m).
+$$
+
+In particular
+
+$$
+\mathbb E_{0,n}K_v^{-4}
+=\frac{(10m-1)(10m-2)(10m-3)(10m-4)}{9\cdot8\cdot7\cdot6}\,n^{-4}
++O_m(n^{-5}).
+$$
+
+Proof. Multiplication by the inverse powers in the $G_0$ sum lowers its exponents from nine to $9-\ell_j\ge5$. The exact ratio follows directly, and both numerator and denominator have the full-domain polynomial description already proved. Their degrees are $10m-L-1$ and $10m-1$ respectively. Dividing their leading coefficients gives $M_\ell$. The positive leading denominator is at least $b_m n^{10m-1}/2$ for all sufficiently large $n$, which justifies the quotient remainder. Each of the finitely many remaining legal denominators is positive, so increasing the constants extends each bound to all $n\ge m$. At $L=0$ the ratio is exactly one.
+
+For the explicit endpoint estimate, by symmetry take $v=1$, and put
+
+$$
+D_{\rm rest}=\sum_{j=2}^m(10-\ell_j).
+$$
+
+The numerator restricted to $K_1\le\eta n$ is exactly
+
+$$
+\sum_{1\le k\le\eta n}k^{9-\ell_1}
+P_{9-\ell_2,\ldots,9-\ell_m}(n-k).
+$$
+
+The polynomial bound from Lemma 3.1 and its zero range give an upper bound $C_m n^{D_{\rm rest}-1}$ for the second factor, uniformly over these arguments. There is no term if $\eta n<1$. Otherwise the elementary bound for a sum of nonnegative powers gives $\sum_{k\le\eta n}k^{9-\ell_1}\le C_m(\eta n)^{10-\ell_1}$. The denominator is at least $c_m' n^{10m-1}$ on all legal integers, for some $c_m'>0$, by its positive leading coefficient and finitely many positive initial values. Since
+
+$$
+D_{\rm rest}-1+10-\ell_1=10m-L-1,
+$$
+
+division proves the stated endpoint estimate. The fourth-moment formula is the case $\ell_v=4$ and all other indices zero. Thus the endpoints are controlled quantitatively by finite sums; no weak-convergence substitution for an unbounded observable is used. $\square$
+

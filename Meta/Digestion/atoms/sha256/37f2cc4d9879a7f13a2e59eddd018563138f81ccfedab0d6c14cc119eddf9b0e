@@ -1,0 +1,60 @@
+**Theorem 85.5 (actual leakage and the centrally nonlocal compression).** For every finite $\Lambda>0$, there is
+$$
+0\ne\psi\in\mathcal H_\Lambda\cap D(L)\cap D(M_\Gamma)
+\quad\text{with}\quad
+(I-P_\Lambda)M_\Gamma\psi\ne0.
+\tag{85.15}
+$$
+Consequently the free spectral sector does not reduce actual multiplication by $\Gamma$. The band form retains the same actual expectation $V$, but its interaction response is compressed.
+
+Proof. Choose nonzero nonnegative $u\in C_c^\infty(\{\xi:R>\delta\})$ for some $\delta>0$ and nonzero nonnegative $b\in C_c^\infty((-\Lambda,\Lambda))$. In the symmetric gauge set
+$$
+\widetilde\Psi(\xi,\lambda)=u(\xi)b(\lambda),\qquad
+\Psi(\xi,s)=u(\xi)\frac1{2\pi}\int e^{i\lambda s}b(\lambda)d\lambda.
+\tag{85.16}
+$$
+The central factor is Schwartz, all derivatives of $u$ have compact support, and the coefficients of (85.7) are bounded on that support. The direct-integral operator, or smooth free-graph approximation, therefore gives $\psi\in D(L)$. On this support (85.13) bounds $\Gamma$ by $1/(8\delta^3)$, proving $\psi\in D(M_\Gamma)$ independently of the form argument. The exact product formula is
+$$
+\widetilde{\mathcal G\Psi}(\xi,\lambda)
+ =\frac{u(\xi)}{2\pi}\int_{B_\Lambda}K_\xi(\lambda-\eta)b(\eta)d\eta.
+\tag{85.17}
+$$
+Indeed $\mathcal G(\xi,\cdot)\in L^1\cap L^\infty$ for $R>0$, and $b\in L^1$, so insertion of Fourier inversion and Fubini are valid. The integral is strictly positive for every real $\lambda$ wherever $u(\xi)>0$. It is therefore nonzero outside $B_\Lambda$ on a set of positive $(\xi,\lambda)$ measure. Since $M_\Gamma\psi\in L^2$, this proves (85.15) in the actual Hilbert space.
+
+For a measurable fibre formulation let $\mathfrak h_\Lambda=L^2(B_\Lambda,d\lambda/(2\pi))$. For $R>0$ define
+$$
+(C_{\Lambda,\xi}b)(\lambda)
+ =\frac1{2\pi}\int_{B_\Lambda}K_\xi(\lambda-\eta)b(\eta)d\eta,
+\qquad\lambda\in B_\Lambda.
+\tag{85.18}
+$$
+These are measurable bounded nonnegative self-adjoint fibre operators: they are the compressions of the bounded positive multiplier $\mathcal G(\xi,\cdot)$. The kernel is measurable by (85.12), and Schur's estimate together with (85.13) gives
+$$
+\|C_{\Lambda,\xi}\|\le
+ \min\left\{\frac{\Lambda}{4\pi^2R},\frac1{8R^3}\right\}.
+\tag{85.19}
+$$
+Values on $\xi=0$ may be set to zero without affecting the direct integral. Fibre Fourier transformation identifies their positive direct-integral form with $V$ on its natural weighted domain. In particular for $\phi,\psi\in\mathcal F_\Lambda$,
+$$
+v(\phi,\psi)=\int_{\mathbb R^3}
+ \langle\widetilde\Phi(\xi,\cdot),C_{\Lambda,\xi}\widetilde\Psi(\xi,\cdot)\rangle_{\mathfrak h_\Lambda}d\xi.
+\tag{85.20}
+$$
+This identity extends from the fibre formula by weighted Cauchy--Schwarz, since both weighted norms are finite by (85.9). It does not require the general form state to belong to $D(M_\Gamma)$. When $\psi$ does belong to that multiplier domain, the form response is represented by $P_\Lambda M_\Gamma\psi$; on the common free operator and multiplier domain the form identity gives $A_\Lambda\psi=aL\psi-gP_\Lambda M_\Gamma\psi$. No converse domain assertion is made.
+
+The multiplier-domain distinction is substantive. Choose $u\in C_c^\infty(\mathbb R^3)$ equal to one near zero and a Schwartz central factor $h$ whose transform is nonnegative, nonzero and compactly supported in $(-\Lambda,\Lambda)$. Then $h(0)>0$, and $u(\xi)h(w)$ is in $\mathcal F_\Lambda\cap D(L)$ by the same product derivative calculation, but it is not in $D(M_\Gamma)$. Indeed its modulus is bounded below on a neighbourhood of $e$. For the homogeneous norm $N(\xi,s)=(R^4+s^2)^{1/4}$, positivity and homogeneity give $\Gamma\ge cN^{-3}$ there for some $c>0$, and $\int_{N<\epsilon}\Gamma^2d\mu=\infty$: on disjoint dyadic homogeneous annuli the integrals scale as $\rho^{5-6}=\rho^{-1}$ and have a positive base value. Thus finiteness of the actual potential form must not be promoted to multiplier-domain membership.
+
+The distinction is also explicit in the central coordinate. The projection kernel is
+$$
+p_\Lambda(s-s')=\frac{\sin(\Lambda(s-s'))}{\pi(s-s')},\qquad p_\Lambda(0)=\frac{\Lambda}{\pi}.
+$$
+For fixed $\xi\ne0$, the kernel of the compressed potential, initially acting on Schwartz functions of $s'$, is instead
+$$
+J_{\Lambda,\xi}(s,s')
+ =\int_{\mathbb R}p_\Lambda(s-u)\mathcal G(\xi,u)p_\Lambda(u-s')du.
+\tag{85.21}
+$$
+This integral converges absolutely because $p_\Lambda$ is bounded and $\mathcal G(\xi,\cdot)\in L^1$. Inserting the two projections justifies the formula by Fubini on Schwartz inputs. It defines a continuous kernel. Its diagonal is strictly positive, since $\mathcal G>0$ and $p_\Lambda^2$ is positive except at a discrete set. Continuity consequently gives nonzero off-diagonal values near every diagonal point, proving central nonlocality. The sinc alone is the projection kernel, not the kernel of the compressed potential.
+
+Thus equality of the band expectation with the same-field expectation does not identify the responses: (85.17) has an actual discarded component. The represented band Hamiltonian defines its own closed-form evolution on $\mathcal H_\Lambda$. No full-space singular interacting realization has been specified, and no reduction or invariance of such a realization follows from the free commutation or the equality of expectations. $\square$
+

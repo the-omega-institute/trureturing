@@ -1,0 +1,50 @@
+**Definition 29.1 (Actual source, unknown relative noise and the estimation task).** Fix known numbers $p_1,p_2,p_3,p_4>0$ with sum one. On the orthonormal memory basis $e_0,\ldots,e_4$ put
+
+$$
+c_k=\sqrt{p_k}e^{i\theta_k},\qquad
+x=c_4e_0+c_3e_1+c_2e_2+c_1e_3,\qquad
+Se_j=e_{j+1}\ (j<4),\quad Se_4=0,\qquad J=xe_4^\dagger.
+\tag{29.1}
+$$
+
+The internal vector $\theta\in\mathbb T^4$, $\mathbb T=\mathbb R/(2\pi\mathbb Z)$, is fixed throughout the experiment. A window starts immediately after its own actual monitored tick. The two monitored branches are $M\mapsto SMS^\dagger$ and $M\mapsto JMJ^\dagger$. Subsequent coherent uses apply the same stable accessible isometry
+
+$$
+V\psi=S\psi\otimes|0\rangle+J\psi\otimes|1\rangle.
+$$
+
+All chronological flags are retained. No inaccessible system distinguishes the coherent histories; there is no intermediate intervention and no terminal memory observation. All preparation records are ignored by the estimator. For $w=w_1\cdots w_n$, $K_w=K_{w_n}\cdots K_{w_1}$ with $K_0=S,K_1=J$, define
+
+$$
+\Omega_n[w,z]=\langle K_zx,K_wx\rangle,\qquad
+Q_n|w\rangle=|w|_1|w\rangle,\qquad U_n(\beta)=e^{i\beta Q_n}.
+\tag{29.2}
+$$
+
+Inner products are conjugate-linear in their first argument. For an ordered pair $(a,b)$, the two separately reheralded windows receive $U_a(\beta_1)$ and $U_b(\beta_2)$. The same unknown joint probability measure $\pi$ on $\mathbb T^2$ is used in every pair class. Its draw is independent of the flags, preparations and measurement settings, and fresh draws are iid between trials. Write
+
+$$
+\mu=\int e^{i(\beta_2-\beta_1)}\,d\pi,\qquad
+\rho_{ab}(\theta,\pi)=\mathcal D_{a+b}\left(
+\int U_a(\beta_1)\Omega_aU_a(\beta_1)^\dagger
+\otimes U_b(\beta_2)\Omega_bU_b(\beta_2)^\dagger\,d\pi\right),
+\tag{29.3}
+$$
+
+where $\mathcal D_{a+b}$ projects onto equal **total** tick counts. The statistical family has a known promise $0<v\le|\mu|\le1$. Exact-law statements also allow $\mu=0$. The nuisance law may differ between parameter points, but within either point it is fixed and common to all ordered pair classes. Its realized angles and all noise records are inaccessible. No calibrated external phase, third window, longer window or feedback is supplied.
+
+The target coordinates and loss are
+
+$$
+\begin{aligned}
+\phi_1&=\theta_1-2\theta_2+\theta_3,& u_1&=e^{i\phi_1},\\
+\phi_2&=\theta_1-\theta_2-\theta_3+\theta_4,& u_2&=e^{i\phi_2},\\
+d_{\rm ch}(u,\widehat u)&=\max\{|u_1-\widehat u_1|,|u_2-\widehat u_2|\}.
+\end{aligned}
+\tag{29.4}
+$$
+
+Uniform risk means $\Pr_{\theta,\pi}[d_{\rm ch}(u,\widehat u)\le\varepsilon]\ge1-\delta$ for every allowed $(\theta,\pi)$. Let $N_{33}^{\rm all}$ be the minimum pair count for this risk when arbitrary collective POVMs on the entire actual density $\rho_{33}^{\otimes N}$ are allowed. Let $N_{33}^{\rm term}$ be the minimum for a fixed iid experiment measuring each pair by terminal effects commuting with its total count, with its independently drawn setting retained. Thus $N_{33}^{\rm all}\le N_{33}^{\rm term}$. Every outcome and setting is counted; there is no postselection or use of herald records as side information.
+
+These are the source and access assumptions of §§23–27, with the iid unknown relative-noise interface of Definition 28.1. The results below are handwritten mathematical deductions in this specified family. Their assertion is conditional on the supplied coherent access and independence assumptions, and carries no Lean or physical-realization certificate.
+

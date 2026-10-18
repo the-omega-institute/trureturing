@@ -1,0 +1,22 @@
+**Corollary 6.3 (lawful closure and original services).** The structural
+image of $\mathcal R_H$ is closed under every prescribed non-IN successor
+and exactly the admissible IN successors. Every illegal-unexecuted original
+action has the same nonexecuting result, and every enabled noncanonical
+raw IN has its actual executing structural successor outside that image.
+Source-preserving queries and whole guarded modifications, including their
+complete semantic successors, retain their original meanings.
+
+Proof. AIF Lemma 2.7 specifies precisely the original lawful successors.
+Apply SSA.9 to each. The compiled row's guards and token checks are the
+original ones, so a disabled action has no executing patch. Both enabled
+physical IN bits still have their finite patch, but a bit leaving
+$\mathsf P$ has no same-image successor by AIF's necessity direction.
+It is not reassigned `none`. Composing SSA.9 along an original service
+fragment gives its actual source, response and successor. At busy source
+WR cuts this composition uses raw bytes; it never invokes a nonexistent
+tree decoder. At release the original whole-service theorem supplies the
+same accepted candidate or unchanged rejected tree, and the same literal
+or numerical response. The same composition transports every specified
+paid audit fragment with its actual owned descriptor and data. No new
+unframed choice or Fetch-index acquisition is supplied by the composition. ∎
+

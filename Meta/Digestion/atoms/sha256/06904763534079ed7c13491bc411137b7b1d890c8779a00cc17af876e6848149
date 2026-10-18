@@ -1,0 +1,73 @@
+### theorem 7.1: 定理 5：Fréchet 纤维稳定性
+
+有
+
+$$
+|\kappa_{q,+}-\kappa_{q,+}'|
+\le\varepsilon,
+$$
+
+以及
+
+$$
+|\kappa_{q,-}-\kappa_{q,-}'|
+\le3\varepsilon.
+$$
+
+因此两个隐藏区间的 Hausdorff 距离满足
+
+$$
+\boxed{
+d_H(I_q,I_q')\le3\varepsilon.
+}
+$$
+
+若宽度定义为
+
+$$
+w_q=
+\kappa_{q,+}-\kappa_{q,-}=
+\min(R_q,C_q,s_q-R_q,s_q-C_q),
+$$
+
+则
+
+$$
+\boxed{
+|w_q-w_q'|\le2\varepsilon.
+}
+$$
+
+#### 证明
+
+因为 $\min$ 和 $\max$ 都是 $1$-Lipschitz，
+
+$$
+|\min(R_q,C_q)-\min(R_q',C_q')|
+\le\varepsilon.
+$$
+
+又
+
+$$
+|(R_q+C_q-s_q)-(R_q'+C_q'-s_q')|
+\le3\varepsilon.
+$$
+
+再次使用 $\max(0,\cdot)$ 的 Lipschitz 性，得到下端点的 $3\varepsilon$ 上界。
+
+对于宽度，四个候选量的变化分别不超过
+
+$$
+\varepsilon,\quad
+\varepsilon,\quad
+2\varepsilon,\quad
+2\varepsilon.
+$$
+
+最小值的变化不超过最大变化量 $2\varepsilon$。证毕。
+
+这个结果的意义是：边界测量有小误差时，隐藏 $\kappa_q$ 不是任意跳跃的；其可行区间以显式常数稳定变化。
+
+---
+

@@ -1,0 +1,36 @@
+**Lemma 4.3 (weighted dependence, including correlated fibers).** Let
+$X_1,\ldots,X_n$ have the independent analytical measure $\mu$ of
+Lemma 4.2. Impose one equation per coordinate: either
+$x_i=f_i(x_{j(i)})$, where $f_i$ factors through one of the local
+native query partitions in that lemma, or $x_i$ equals a constant.
+The mass of the set satisfying all equations is at most $(5/7)^n$.
+
+Proof. Direct an arrow $i\to j(i)$ for every nonconstant equation;
+a constant vertex has no outgoing arrow. Each component of this
+finite graph ends either at one constant vertex or at one directed
+cycle. Trees attached to those terminal structures can be eliminated
+from their leaves toward the terminal structure. Conditional on a
+parent value, the eliminated coordinate is fixed, so its summed
+mass is at most $2/7$. This argument sums over an independent ambient
+measure; it assumes no conditional independence of an eventual code
+fiber.
+
+A constant terminal vertex has mass at most $2/7$. A one-vertex
+cycle imposes $x_i=f_i(x_i)$. Its fixed-point set contains at most
+one correctly identified state per native reply cell, giving mass
+at most $5/7$ by Lemma 4.2. For a cycle of length $k\ge2$, choose
+one cycle coordinate. Its value lies in the image of its defining
+map, of size at most four. Given this value, walking against the
+arrows uniquely determines every other cycle coordinate. Thus there
+are at most four satisfying cycle tuples, each with mass at most
+$(2/7)^k$. Since
+
+$$
+4(2/7)^k\le(5/7)^k\qquad(k\ge2),
+$$
+
+the required bound holds for each terminal structure. Every eliminated
+vertex contributes a factor at most $2/7\le5/7$. Distinct components
+use disjoint ambient coordinates, so their masses multiply. The full
+bound follows. $\square$
+

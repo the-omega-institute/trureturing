@@ -1,0 +1,25 @@
+**Theorem 6.1 (exact finite skew alphabet).** In the explicitly public
+variation $\delta(u)\in S$, where $S\subset\mathbb Z$ is nonempty and
+finite, the minimum number of joint supplementary retained values for
+the complementary-cut task is exactly $|S|$. The lower bound permits
+supplements at either capture and causal dependence on earlier retained
+data, counting every decoder-visible source-bearing field in their
+joint value. Fixed-width supplementary payload therefore costs exactly
+$\lceil\log_2|S|\rceil$ bits. The complete rows, framing, public encoding
+of $S$ and acquisition state are additional. Without a finite skew
+promise no uniformly finite supplemental alphabet suffices.
+
+Proof. Acquire $\delta$ by Theorem 5.3 and retain its index in the
+public set; the later row-only capture and (CAB.14) give attainment.
+For necessity choose $a=\max(0,1-\min S)$ and put
+$m_s=a+s-1\ge0$. First capture
+$X_s=\langle T_a,T_{m_s}\rangle$ quiescently at $\{R\}$.
+All complete first rows are $\langle T_a,H_R\rangle$, with singleton
+partition, and $\delta(X_s)=s$. Choose $B>\max_s m_s$ and perform
+$B-m_s$ genuine updates on each same root before its quiescent
+$\{L\}$ capture. All second rows are $\langle H_L,T_B\rangle$,
+again with singleton partition, yet the lags are distinct and positive.
+No omitted guard or equality bit distinguishes the rows. Equal joint
+supplement values would therefore force a wrong decoder output. Taking
+finite sets of arbitrary size gives the unbounded conclusion. $\square$
+

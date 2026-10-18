@@ -1,0 +1,16 @@
+**约定 2.2（An alternative exceptional scan）。** For $Q=2$ and odd $m$, a second useful scan is
+
+$$
+1^m\mid Z'_m,\qquad Z'_m=00(10)^{(m-3)/2}1.
+\tag{2.4}
+$$
+
+The second word has response support $\{m+2,\ldots,2m\}$, an even set of size $m-1$. It is safe from every surviving root tail because it starts zero. Its zero archive has exactly
+
+$$
+I\cup\{z\},\qquad z=m+1,
+\tag{2.5}
+$$
+
+rather than $I\cup\{k\}$. Phases $0,m,k$ have actually been excluded from this archive. All scan-positive sources still have label $A$. This is a direct literal instance of the screening construction, not an assertion of a different optimum. The terminal tail of $Z'_m$ is one.
+

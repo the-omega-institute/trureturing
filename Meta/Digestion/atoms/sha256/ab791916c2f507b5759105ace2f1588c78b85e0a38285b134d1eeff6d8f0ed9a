@@ -1,0 +1,24 @@
+### 101.1. Exact statements and scope
+
+**Theorem 101.1.**
+
+Let j>=2 and C be positive integers, N=3^j, and B_N=L_N²+3=D C² with D the full positive squarefree kernel. Assume every prime p dividing D satisfies (19/p)=+1. Actual support already gives p>5, (5/p)=1, D=19 modulo 120 and 19 not dividing B_N. For either root s_p of5 modulo p define
+
+ chi(p)=(8+3s_p / p).
+
+The value is nonzero and independent of the root, since (8+3s_p)(8-3s_p)=19 and (19/p)=1. Then
+
+ product_(p|D) chi(p)=+1.
+
+The product is over precisely the odd-depth primes, each once. No splitting assumption is imposed on primes occurring only in the square cofactor C.
+
+In particular, if B_N has exactly one prime Q of odd initial depth, then Q splits completely in the fixed field
+
+ F=Q(sqrt5,sqrt19,sqrt(8+3sqrt5)).
+
+Consequently the following explicit prime family is excluded from being that unique odd-depth prime at every j>=2:
+
+ Q=19 modulo 120, (19/Q)=1, chi(Q)=-1,
+
+where Q is prime and Q does not divide2*5*19. This abstract family has natural density 1/128 among rational primes, as proved separately below. The density assertion does not claim that any such prime has the exact original block period, is WSS, or survives all other known necessary conditions. It certifies a nonempty excluded candidate family; it does not supply an actual original block. No elliptic-rank, Selmer-dimension or Sha assumption occurs.
+

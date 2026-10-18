@@ -1,0 +1,66 @@
+**Theorem 4.1 (sharp literal price of initial height).** Fix $D\ge1$.
+Consider all deterministic source-blind procedures which terminate on every
+stationary $t\in\mathcal F_D$ and return exactly $h(t)$, with source
+information obtained only by actual original-root literal Reads. Charge
+every call, including repeated addresses. For a procedure $A$, let
+$T_A(t)$ be calls, $L_A(t)$ the sum of submitted word lengths, and
+$H_A(t)$ the maximum submitted length, with zero for an empty query list.
+Then
+
+$$
+\begin{aligned}
+\min_A\max_{t\in\mathcal F_D}T_A(t)&=2^{D-1},\\
+\min_A\max_{t\in\mathcal F_D}L_A(t)&=D2^{D-1},\\
+\min_A\max_{t\in\mathcal F_D}H_A(t)&=D.
+\end{aligned}
+\tag{ER.11}
+$$
+
+One procedure attains all three bounds simultaneously. At $D=0$ the
+height is the public value one and all three minima are zero. This prices
+the specified height function; it does not minimize acquisition over every
+possible reference attaining the alphabet minimum of Theorem 3.1.
+
+Proof of sufficiency. Reuse [PPF, Lemma 4.1][PPF], whose source-blind
+$\operatorname{Acquire}(a,d)$ acquires every reply at $aw$, $|w|\le d$,
+using at most $2^d$ actual calls, peak length $|a|+d$ and at most
+$(|a|+d)2^d$ submitted letters. Run
+$\operatorname{Acquire}(R,D-1)$ on the original stationary tree.
+
+If its attained table has a branch at relative depth $D-1$, the right
+subtree has height exactly $D$, using the height promise. Otherwise every
+actual path terminates at a labelled leaf by that depth: any deeper path
+would pass a branch at depth $D-1$. The greatest reached leaf depth is
+then the right-subtree height. Add one. The acquired table therefore gives
+the exact output and the upper bounds in (ER.11). It is obtained by actual
+full-word queries; no supplied subtree or full table is an input.
+Exporting only the height reference uses Assumption 1.3's paid isolation
+of the intermediate table, controls and other accessible distinctions.
+
+Proof of necessity. Let $v_0$ be the perfect all-$\alpha$ tree of height
+$D-1$, including the one-leaf case $D=1$. It has $2^{D-1}$ leaf
+addresses $a$, each of length $D-1$. For each such $a$, replace just that
+leaf by $\langle\alpha,\alpha\rangle$ to obtain $v_a$. Both
+$t_0=\langle\alpha,v_0\rangle$ and
+$t_a=\langle\alpha,v_a\rangle$ belong to $\mathcal F_D$, but their
+heights are respectively $D$ and $D+1$.
+
+All literal replies outside
+
+$$
+\mathcal C_a=\{Raw:w\text{ is a finite }L/R\text{ word}\}
+\tag{ER.12}
+$$
+
+agree on $t_0,t_a$. If the actual execution on $t_0$ never enters this
+cone, deterministic replay produces the same queries, replies, stopping
+decision and output on $t_a$: prove this successively through the finite
+run, since every next query is a function of the same acquired information.
+That contradicts the different required heights. Thus the one run on
+$t_0$ enters every $\mathcal C_a$. These cones are pairwise disjoint,
+and every word in them has length at least $D$. This single source
+forces at least $2^{D-1}$ calls, $D2^{D-1}$ letters and peak $D$.
+Arbitrary off-target queries, absent replies, long addresses and large
+workspace do not affect this argument. The zero-query $D=0$ case follows
+directly from (ER.2). $\square$
+

@@ -1,0 +1,27 @@
+**Corollary 12.3 (the original native lower consumer).** Let an
+original complete native preparer be correct on every
+$u\in\mathcal U_*$ at both caps $n+1,W+3$. If its particular
+Boolean projection supplied by [WTF, Theorem 4.1][WTF] satisfies
+Definition 12.1, its installed preparation count obeys
+
+$$
+H_P\ge k(n-k+1)+4+r.
+\tag{SI.92}
+$$
+
+Proof. That projection is one complete correct Boolean graph at both
+caps $n,W$, with $m\le H_P-4-r$. Apply Theorem 12.2. Membership
+is required of this projection; it is not inferred for arbitrary native
+competitors. The source, fixed pointwise code (SI.2), original latch
+output and literal complete $e_0,e_1$ entries are those of Definition
+1.1 and Convention 1.3. All finite original addresses and all four
+replies remain legal. The independent reader retains its three running
+states and five whole-row halts, hence its separately priced eight
+states and fresh bounds two queries and six letters. It returns the
+entire predecessor exterior, occurrences, canonical equality partition,
+repetitions, disequalities and strict-prefix guards. Every installed
+running, output, latch and unused state, and every actual constant,
+repeated or postcertificate invocation, retains its original charge.
+The services and resource distinctions in Convention 1.3 remain
+assumptions, not consequences of (SI.92). $\square$
+

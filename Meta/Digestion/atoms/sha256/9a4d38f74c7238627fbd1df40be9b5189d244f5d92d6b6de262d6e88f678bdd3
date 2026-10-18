@@ -1,0 +1,16 @@
+**Lemma 3.3 (Finite Sylvester equation).** Let $U,V$ be complex vector spaces, let $T:U\to U$ satisfy $T^H=0$ for an integer $H\ge1$, let $P:V\to V$ be invertible, and let $B:V\to U$ be linear. There is exactly one linear map $X:V\to U$ satisfying $XP-TX=B$, namely
+
+$$
+X=\sum_{j=0}^{H-1}T^jBP^{-j-1}.
+\tag{3.3}
+$$
+
+Proof. Every summand has domain $V$ and codomain $U$. Direct multiplication gives
+
+$$
+XP=\sum_{j=0}^{H-1}T^jBP^{-j},\qquad
+TX=\sum_{j=1}^{H}T^jBP^{-j}.
+$$
+
+Their difference is $B-T^HBP^{-H}=B$. If two solutions exist, their difference $Y$ satisfies $YP-TY=0$, hence $Y=TYP^{-1}$. Iterating this identity $H$ times gives $Y=T^HYP^{-H}=0$. The sum is finite and requires neither convergence nor diagonalizability. $\square$
+

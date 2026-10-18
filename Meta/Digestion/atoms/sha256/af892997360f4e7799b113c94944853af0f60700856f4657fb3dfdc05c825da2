@@ -1,0 +1,19 @@
+**Proposition 7.2 (checking only the full support is unsound).** Let
+$H=\{u_1,u_2,u_3,u_4\}$. The one-coordinate native set
+$\{\langle x,y\rangle:x,y\in H\}\subset T$ is locally admissible
+and has weight $20$. In particular $C=\sqrt{78}$ is not an all-length
+cap for the weight in Proposition 7.1, since $20^2=400>78$.
+
+**Proof.** The four $RL$ replies on $H$ are respectively absent, alpha,
+beta and branch. They identify its states, so determine every motif
+target. For a paired tree, prefix that one witness by the target module's
+side; the paired root target is constant. All $W_4$ targets therefore
+have one own-coordinate witness. There are sixteen paired states, four
+with weight two and twelve with weight one, giving mass twenty. This is
+a legal length-one counterexample to using the full-support value as a
+universal cap. Corollaries 2.3--2.4 retain every range-feasible support,
+and so include this smaller support. Explicitly, on the rational input
+$\mu=w/30$, $C=1/3$, checking only $T$ would pass $78\le100$;
+the smaller support fails $400\le100$ and the actual verifier rejects.
+$\square$
+

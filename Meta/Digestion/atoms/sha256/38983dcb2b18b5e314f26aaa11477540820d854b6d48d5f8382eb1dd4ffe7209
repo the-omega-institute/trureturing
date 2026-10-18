@@ -1,0 +1,23 @@
+**Theorem 2.4 (exact structural guards).** For every successfully recognized
+endpoint and every $j\in A_m$, $x,v,y\in\mathcal T$,
+
+$$
+p\in\operatorname{Pos}(\rho^e U(T_j,x,v,y)),\qquad
+(\rho^e U(T_j,x,v,y))|_p=E_{e,p}(j,x,v,y).
+\tag{CRE.11}
+$$
+
+Consequently every additional signed predicate is equivalent to its retained
+whole-tree negative, in both directions, on this entire parameter domain.
+
+**Proof.** Distribution is the actual pairing law in (CRE.1), not a change
+of signature. Atomic powers add to $j$; powers on residuals compose by adding
+fixed exponents. Induct through the finite address navigation. An explicit
+pair has both children reached for every assignment. Navigation in an
+evaluated ground tree has its exact finite subtree and guard. A stopped
+token is nonempty for every assignment. These cases prove (CRE.11) and
+termination: neither navigation nor power evaluation enters an unknown
+parameter. Applying (CRE.11) to both endpoints of each record proves the
+two signed directions. No missing endpoint is replaced by a disequality.
+$\square$
+

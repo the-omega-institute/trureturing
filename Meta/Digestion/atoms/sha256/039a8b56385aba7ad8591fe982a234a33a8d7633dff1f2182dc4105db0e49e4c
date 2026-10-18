@@ -1,0 +1,19 @@
+### 459.4 全实谱率的斜率中心加权预算与无约束逃逸
+
+现取任意固定 $0<a<b<\eta$，$m=(a+b)/2$、$\delta=(b-a)/2$，
+以及真实数据 $u=cB(a),v=cB(m),z=cB(b)$。令
+$$
+\tau=\frac{\log(u/z)}{2\delta}>0,
+\qquad d_G=v-\sqrt{uz}>0.
+\tag{SNC.22}
+$$
+对实轴有限 signed 测度 $\sigma$，明确要求三个指数核对其总变差可积。
+定义真实可积非负核
+$$
+q_\tau(t)=e^{-mt}\bigl[\cosh(\delta(t-\tau))-1\bigr]
+=\tfrac12e^{-\delta\tau}e^{-at}
+ +\tfrac12e^{\delta\tau}e^{-bt}-e^{-mt}.
+\tag{SNC.23}
+$$
+这三个实际核的线性式直接支付其可积性，不对未知测度求导。
+

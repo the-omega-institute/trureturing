@@ -1,0 +1,39 @@
+**Definition 11.1 (the still-open all-size obligation).** At each
+$d\ge1$, the original target remains a total computable predicate
+$V(d,\mu,C,\pi)$ on rational probabilities, positive rational caps
+and finite strings, such that acceptance implies
+
+$$
+\forall n\ge1\ \forall\Theta,\qquad
+\sum_{x\in C_\Theta}\prod_i\mu(x_i)\le C^n,
+\tag{GDB.47}
+$$
+
+and such that for every rational $\epsilon>0$ some accepted label
+satisfies $-\log_2C>\sigma_d-\epsilon$. The alternative sufficient
+bridge is a uniform effective length error
+
+$$
+\sigma_d\ge\frac{\log_2K_d(n)}n-\eta_d(n),\qquad
+\eta_d(n)\longrightarrow0,
+\tag{GDB.48}
+$$
+
+with effective control sufficient for terminating two-sided approximation
+of the same original $\lambda$. These are the unresolved [NPC, §8][NPC]
+and [SIR, §9][SIR] obligations. Exact finite evaluation, a finite alphabet,
+proof enumeration and semantic compactness do not close them.
+
+Theorem 3.2 permits exact forced-phase elimination with all original
+weights and counts retained; its quotient can have high incidence.
+Theorem 5.2 rejects mandatory universal raw positive-law analytic or
+mixing premises. Theorem 6.2 rejects the specified size-uniform all-one
+interpolation radius, with Corollary 6.3 retaining its precise floor
+dependence. Theorem 8.2 rejects uniform per-template approximation from
+the stated fixed neighborhood data. None supplies or disproves (GDB.47)'s
+optimizer-cofinality, proves (GDB.48), or proves noncomputability.
+Residual overlap after contraction and global realizability/entropy
+beyond fixed neighborhoods remain substantive requirements for a cap
+method. Feasible local marginals and positive soft assignments are
+analytical models, not actual global implementations.
+

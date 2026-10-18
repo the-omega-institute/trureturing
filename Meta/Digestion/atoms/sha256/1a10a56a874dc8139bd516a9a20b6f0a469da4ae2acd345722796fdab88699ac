@@ -1,0 +1,39 @@
+### 104.1 从单份 probe 到二份 product probe
+
+令单份 Hilbert 空间为有限维 \(H\)，令 \(v_i\in H\) 是归一化 probe。若以
+
+$$
+i\sim j\quad\Longleftrightarrow\quad \langle v_i,v_j\rangle\neq0
+$$
+
+生成非正交图的连通分量 \(C,D\)，并记
+
+$$
+V_C=\operatorname{span}\{v_i:i\in C\},\qquad
+V_D=\operatorname{span}\{v_j:j\in D\},
+$$
+
+则二份 product probe
+
+$$
+w_{(i,j)}=v_i\otimes v_j\in H\otimes H
+$$
+
+的 \(C\times D\) 分量满足
+
+$$
+\operatorname{span}\{w_{(i,j)}:(i,j)\in C\times D\}
+=V_C\otimes V_D,
+$$
+
+从而
+
+$$
+\dim(V_C\otimes V_D)=\dim(V_C)\dim(V_D).
+\tag{C104.1}
+$$
+
+这里需要保留三个条件：probe 家族必须确实包含所有 \((i,j)\) 的笛卡尔提升；端口必须对同一个二份输入域 \(H\otimes H\) 工作；保持概率的量词必须是对所有二份密度态成立。若只给一份实际来源、一个固定效果或有限校准样本，(C104.1) 不能推出端口维数下界。
+
+归一化使每个 probe 与自身的内积非零，因此在 product 图中可以固定一个坐标、沿另一坐标的连通路径移动；这正是 \(C\times D\) 而不是更小的孤立子集成为分量的原因。维数乘法来自张量积的基，而不是来自 \(\Delta\) 的数值。
+

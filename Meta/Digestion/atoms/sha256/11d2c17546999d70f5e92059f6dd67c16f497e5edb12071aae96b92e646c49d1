@@ -1,0 +1,23 @@
+**Convention 1.3 (literal complete entries and separate reader).**
+Keep exactly the reader fixed by [PCA, Supplier application 4.3 and
+Convention 23.2][PCA], using [NBP, Theorem 15.5][NBP] with
+$z=0$, positive codes $(0,0,1,1)$ and distinguished test $3$.
+Its complete entries are the original distinct $e_0,e_1$, with their
+original recoverable labels. Write $i_1,i_2$ for the fixed order of
+$\{1,2\}$ in its zero-entry chain. Its three running states have the
+following inherited form; $H_j$ is the halt bearing the entire $R_j$.
+
+| Reader state | Literal | alpha | beta | branch | absent |
+| --- | --- | --- | --- | --- | --- |
+| $e_0$ | $q_{i_1}R$ | $H_{i_1}$ | $H_0$ | $Q_2$ | $H_0$ |
+| $Q_2$ | $q_{i_2}R$ | $H_{i_2}$ | $H_0$ | $H_0$ | $H_0$ |
+| $e_1$ | $RLR$ | $H_3$ | $H_0$ | $H_4$ | $H_0$ |
+
+These are the fixed entries, table and whole outputs, not new choices.
+The five different whole-row halts and all three running states count
+in its separate $K=8$. Its fresh costs are $q_R\le2$, $\ell_R\le6$.
+Preparation must terminate at the literal latch
+$\widehat e_{\sigma_{A,k}(u)}$, and code-only handoff enters that same
+complete state on that same actual register. Returning merely $F(u)$,
+or substituting a different usable code, is insufficient.
+

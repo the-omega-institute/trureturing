@@ -1,0 +1,23 @@
+**Corollary 4.2 (all targets of the one installed prior).** The single
+repair in Theorem 3.1 satisfies
+
+$$
+|J(\widehat G)-J_0|\le\max\{D_p,D_\beta\}.
+\tag{4.3}
+$$
+
+For every original positive history, its normalized same-$K$ posterior
+mixture is also a permissible complete target in (3.6), with the original
+record renderer at that history. Formula (4.3) neither replaces the prior
+by three points nor identifies a history's actual configuration row with
+$\sigma_s$.
+
+**Proof.** Apply (3.6) simultaneously to all supported targets and use
+$|\sup f-\sup g|\le\sup|f-g|$, then the same inequality for the two-phase
+maximum. The baselines do not change. Every normalized posterior mixture
+is a probability law on the same complete carrier, so (3.6) applies
+directly; injectivity of $I_c$ supplies the full-record statement. The
+actual-history target and row are distinct objects, as in
+[NATIVE, `conditional_history_product` and `native_history_risk_transport`].
+$\square$
+

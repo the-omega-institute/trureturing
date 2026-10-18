@@ -1,0 +1,76 @@
+**定理 40.1（整个纤维上的增益消去与正系数）。** 对每个 $W\in\mathcal K(\mathcal H)$，有
+
+$$
+\begin{aligned}
+(b+4)\lambda&=4uG-\Theta,\\
+d&=\eta_{\mathcal H}(b)-k_bG,\\
+f_J&=\eta_{\mathcal H}(b)+h_b(r)G,\\
+f_M&=\eta_{\mathcal H}(b)+\ell_b(r)G,\\
+\ell_b(r)&>0,\qquad \ell_b(r)-h_b(r)=u-r>0.
+\end{aligned}
+\tag{40.5}
+$$
+
+证明。次数至多二多项式在节点 $0,4,6$ 的三个 Lagrange 基函数是
+
+$$
+\frac{(t-4)(t-6)}{24},\qquad
+-\frac{t(t-6)}8,\qquad
+\frac{t(t-4)}{12}.
+$$
+
+它们在这三个节点分别给坐标单位向量。因此
+
+$$
+g(t)=\lambda\frac{(t-4)(t-6)}{24}
+-g(4)\frac{t(t-6)}8+g(6)\frac{t(t-4)}{12}.
+\tag{40.6}
+$$
+
+两边之差次数至多二而有三个不同根，故恒为零。这一理由不要求恰二次、非零样本或单根；常数、仿射和重根都包括。在节点七，三个基值分别是 $1/8,-7/8,7/4$，所以
+
+$$
+8G=\lambda-7g(4)+14g(6).
+\tag{40.7}
+$$
+
+实际四、六式给 $ug(4)=x_4+\lambda$、$ug(6)=x_6+\lambda$。将式 (40.7) 乘 $u$，不约去任何样本，得到
+
+$$
+\begin{aligned}
+8uG
+&=u\lambda-7(x_4+\lambda)+14(x_6+\lambda)\\
+&=(u+7)\lambda+7(2x_6-x_4)\\
+&=2(b+4)\lambda+2\Theta.
+\end{aligned}
+\tag{40.8}
+$$
+
+最后用 $u+7=2(b+4)$，除固定非零二即得第一式。偶数坐标还给 $2x_6-x_4=2a+4C+4K$，证明式 (40.4) 中 $\Theta$ 的两种表达一致。
+
+因为 $b+4>0$，有 $\lambda=(4uG-\Theta)/(b+4)$。代入 $d=a_0-\lambda$ 得漂移式，再代入实际两个末函数得到 $f_J=\eta_{\mathcal H}+h_bG$ 与 $f_M=\eta_{\mathcal H}+(j+r+u-k_b)G$。由
+
+$$
+u-k_b=u\left(1-\frac4{b+4}\right)=\frac{bu}{b+4}
+$$
+
+知末 $M$ 系数正是 $\ell_b$。秩一关系给 $j=b+r(1-r)/b>0$；$j,r,bu/(b+4)$ 三项全正，故 $\ell_b>0$。相减则
+
+$$
+\ell_b-h_b=u-r=(1-r)+2b>0.
+\tag{40.9}
+$$
+
+证明没有使用 $G,\Theta,\lambda$、首项或任一采样值的非零性，故包含 $b=1/2$、全部降次、任意尺度符号和漂移。∎
+
+特别地，整个纤维上
+
+$$
+f_M=\eta_{\mathcal H}(b)\ \Longleftrightarrow\ G=0,
+\qquad
+\operatorname{sgn}(f_M-\eta_{\mathcal H}(b))=\operatorname{sgn}G.
+\tag{40.10}
+$$
+
+末 $J$ 只有 $f_J=\eta_{\mathcal H}(b)\Longleftrightarrow h_b(r)G=0$；$h_b$ 可以为零，不能消去它。
+

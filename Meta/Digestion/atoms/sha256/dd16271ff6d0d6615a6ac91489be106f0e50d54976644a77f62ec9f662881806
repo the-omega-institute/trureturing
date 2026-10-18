@@ -1,0 +1,23 @@
+**Corollary 12.3 (an unbounded prescribed-code premium).** For fixed
+$m=2$, $d=10$ and every $h\ge0$, the one special name of $E^\circ$
+requires exactly $2^{2^h}$ names in an original-task refinement.
+The full-family attained alphabets are respectively
+
+$$
+s_{h+10}-6^{2^h}+1,\qquad
+s_{h+10}-6^{2^h}+2^{2^h},
+\tag{LTR.39}
+$$
+
+and their exact additive difference is $2^{2^h}-1$.
+
+**Proof.** Substitute $m=2,n=2^h$ in Theorem 12.2. $\square$
+
+This difference counts additional attained names in the full alphabet.
+It is not a multiplicative ratio or a bit premium for that whole
+alphabet. The original-task lower on $X_{m,h}$ quantifies over all
+competitors; adding the outside-state names requires precisely the
+refinement hypothesis. A globally recolored full-family export may
+merge those old outside names, so (LTR.37) is not a lower bound for
+unrestricted $M_1(D)$ and determines no new optimum or rate endpoint.
+

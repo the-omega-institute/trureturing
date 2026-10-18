@@ -1,0 +1,31 @@
+**Correspondence and proof of the additional scope.** For a spectral
+unit vector $e=(e_1,e_2)$ set
+$a_e=\alpha V_fe_2^2+\beta W_fe_1^2$ and use JS.42's
+$z_e=-\sqrt{V_f}e_2/\sqrt{a_e}$,
+$w_e=\sqrt{W_f}e_1/\sqrt{a_e}$. Then
+$n(\mathbf c_e)=M_2^{1/2}e/\sqrt{a_e}$, so
+$b_\epsilon=a_e$, $z_e^2=x_\epsilon$ and
+$\mathfrak c(\mathbf c_e)=c_*(x_\epsilon)$.
+This proves that FA.59 is precisely JS.38 on the same physical
+whitening and full covariance domain. Applying JS.39–.45 with
+$F_{\rm lim}=d_f+2\Phi$ supplies the stated spectral equality
+cases, saturation recovery and qualitative transition; those proofs
+are reused, not repeated here.
+
+For the unbounded-product extension, fix this two-atom spectral
+failure measure. Apply JS.23–.27's exact finite repair for all
+sufficiently large $t_n$. Its finite cost is the fixed
+$\zeta_{\rm sp}$ and its contrast deficit obeys
+$t_ne_{t_n}=\zeta_{\rm sp}+O(t_n^{-1})$.
+Since $t_nq_n\to\infty$, eventually $e_{t_n}\le q_n$.
+The same finite whole-fibre family is therefore admissible and its
+height tends to $\mathcal T(s_0)$ by JS.28 / §86. For the reverse
+bound, FA.57 forces every competing coefficient law toward the four
+corners; the zero cross moments fix their masses to $1/4$.
+The live absolute sum tends to $j(1)$, and the whitened spectral
+bound gives failure absolute sum at most $L_f$ for every competitor.
+The triangle bound on the actual label sum in FA.37 therefore gives
+upper limit at most $(H_0+j(1)+L_f)/2=\mathcal T(s_0)$.
+This uses no uniform fixed-strength transfer, evaluates no rate and
+asserts no universal equality for nonoptimal instruments. $\square$
+

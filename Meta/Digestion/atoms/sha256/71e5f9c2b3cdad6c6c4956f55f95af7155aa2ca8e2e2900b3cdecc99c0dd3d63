@@ -1,0 +1,19 @@
+**定理 26.2（原全树的全时间线性上界）。** 在定理24.2的线性行，令 $M=\min(L,H)<1$、$K_0=\max(1,K(M))$，则对每个 $\varepsilon\ge0$，
+
+$$
+\Omega(\varepsilon)\le
+\min\left\{2M^2,\left(K_0+\frac{M}{(1-M)^2}\right)\varepsilon\right\}.
+$$
+
+证明。若 $L\le1$，由 $|u\times v|\le|u||v|$ 的结构归纳，任意非空原树 $u$ 满足 $|E_p(u)|\le L^{\#\text{叶}(u)}\le L$；每个替换树仍是这样的树。三读界又给 $q_0,q_1,q_2\le H$，故三锚的前两个范数至多 $M$，第三为 $q_1q_2\le M^2\le M$。若 $L>1,H<1$，直接由三读界得到相同结论。
+
+对 $[0,M]^2$ 上总次数为 $n$ 的非负单项式，逐个相减其 $n$ 个因子给大小至多 $M^n$、两值之差至多 $nM^{n-1}\varepsilon$；次数0的差为零。$q_1,q_2$ 的范数差均至多 $\varepsilon$。引理26.1的每个未来向量是一个这样的系数乘相应锚，锚差至多 $K_0\varepsilon$、锚范数至多 $M$，所以向量差至多
+
+$$
+(K_0M^n+nM^n)\varepsilon
+\le\left(K_0+\sum_{n\ge1}nM^n\right)\varepsilon
+=\left(K_0+\frac M{(1-M)^2}\right)\varepsilon.
+$$
+
+这个界同时覆盖所有 $j$、所有树和全部零／符号分支，未固定预测时刻或来源大小。正幅度递推还给每个 $j\ge3$ 的范数至多 $M^2$，于是另有 $2M^2$ 界。
+

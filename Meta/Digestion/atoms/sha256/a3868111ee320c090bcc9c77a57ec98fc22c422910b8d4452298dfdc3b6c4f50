@@ -1,0 +1,16 @@
+**Proposition 178.3 (Extreme suffixes do not determine base or pair rows).**
+The endpoint $(2,3;0,3,0)\in E_3$, in its first-zero-one class, has
+base probability one at words $000$ and $011$, but zero at $010$.
+Its correct probability at label one is always zero. Thus checking
+only the all-zero and all-one suffixes cannot enforce either the base
+or pair lower row at every suffix.
+
+**Proof.** Its base polynomial is $1-b_2+b_2b_3$, and it has no
+output label one. Direct substitution proves all three values.
+For example take $a_1=1/2$, $\varepsilon=1/4$ when testing this
+class's base and pair rows: the two extreme suffixes satisfy their
+lower bounds, but $010$ violates both. This is a counterexample to
+that suffix test, not a cap-feasible global kernel or a full-class
+separator. For larger $L$, append arbitrary suffix coordinates beyond
+three; the same indicator values remain. $\square$
+

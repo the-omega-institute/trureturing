@@ -1,0 +1,21 @@
+**Proposition 4.4 (right-guard storage and local work).** Theorem 4.2
+uses at most $4F$ row-candidate bits, $O(\log(H+2))$ stamp-candidate
+bits, $4(\max(H,2h_R)+1)$ operand bits, and
+$O(H+1+\log(K_P+2))$ auxiliary bits. Its immutable installation is
+$4K_P+I_{\rm code}+O(1)$. At a root cut the row has four cells and
+auxiliary search control can be $O(\log(h_R+2))$ bits, but its mutable
+flat operand still uses $O(h_R+1)$ bits. Retention consists only of
+the actual complete row and a framed gamma code of $z+1$.
+
+Proof. Generate each right power from a binary exponent, retaining only
+the two endpoints, current midpoint, leaf exponent and label. Other
+paths and row indices are RA's. Candidates are cleared before retry,
+so failed capacities do not accumulate. The fixed number of integers
+has logarithmic width. Add to [CWS, Proposition 4.5][CWS]'s row work at most
+$O(S_R(H+1+L^2)+L^2)$ elementary bit/cell operations per round for
+search, word generation, arithmetic and cleanup, where
+$L=1+\lceil\log_2(F+K_P+H+2)\rceil$. This deliberately loose finite
+bound charges literal construction and avoids a unit-cost integer.
+All other accounts follow by ownership transfer and canonical cleanup.
+$\square$
+

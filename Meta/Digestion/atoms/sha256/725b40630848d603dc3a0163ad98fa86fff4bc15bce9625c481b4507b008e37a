@@ -1,0 +1,88 @@
+**Corollary 3.2 (one simultaneous completion at every feasible rank).**
+For all $\mathbf n\in\mathbb N^k$,
+
+$$
+\exists\mathbf z\in\mathcal T^m\ D(\mathbf n,\mathbf z)
+\quad\Longleftrightarrow\quad D(\mathbf n,\mathbf z^\star).
+\tag{URR.10}
+$$
+
+Define the entire feasible-rank support and coordinate domain by
+
+$$
+S=\{\mathbf n:\exists\mathbf z\ D(\mathbf n,\mathbf z)\},
+\qquad X=\{(\mathbf n,\mathbf z):D(\mathbf n,\mathbf z)\}.
+\tag{URR.11}
+$$
+
+The map $\sigma:S\to X$, $\sigma(\mathbf n)=(\mathbf n,\mathbf z^\star)$,
+is a section of the rank projection: $\operatorname{pr}_1\sigma$ is
+the identity on **all** of $S$. It does not assert $X=\sigma(S)$.
+
+One can compute a Presburger formula $\Psi(\mathbf n)$ defining
+exactly $S$. For a Presburger rank condition $K$, the exact support of
+$K(\mathbf n)\land D(\mathbf n,\mathbf z)$ is
+$K(\mathbf n)\land\Psi(\mathbf n)$, and the same section restricts
+to that entire support.
+
+Proof. If a tuple satisfies all the negatives, no listed equality is
+universal in the residuals. By Theorem 3.1 none holds at
+$\mathbf z^\star$, so that one tuple satisfies all the negatives
+together. Conversely it is itself a finite witness. This is a joint
+argument for the conjunction, not a choice of different tuples for its
+different conjuncts.
+
+Equation (URR.10) proves the section identity on all of $S$.
+
+For the arithmetic formula, substitute the concrete finite tuple in
+every listed side. Each
+side becomes a finite pair template over $T_{n_j+c}$ and constant-rank
+atoms: expand fixed ground trees using $T_0=\alpha,T_1=\beta$.
+The residual substitutions and their fixed powers are finite ground
+trees and are treated in the same way.
+
+Apply the equality part of [CAR, Lemma 4.1][CAR]. For completeness of the
+parameter match, at each pair of primitive children $[r],[s]$ split
+into the Presburger cases $r=s+1$ and $r\ne s+1$. The former gives
+$[s+2]$, the latter retains $F([r],[s])$. A nonprimitive child forces
+the ordinary $F$ case. There are finitely many pair nodes. Each branch
+has a fixed normal shape and nonnegative affine primitive ranks.
+Two such normal codes are equal exactly when the shapes agree and all
+corresponding ranks agree. ABC's inverse maps make this native equality.
+
+Let $E_\ell(\mathbf n)$ be the resulting equality formula. Then
+
+$$
+\Psi(\mathbf n)=\bigwedge_{\ell=1}^s\neg E_\ell(\mathbf n)
+\tag{URR.13}
+$$
+
+is exact by (URR.10). In this grammar it can be expressed using Boolean
+combinations of affine rank equalities. No rank enumeration or finite
+rank cutoff is involved. Conjunction with $K$ proves the restricted
+statement. Presburger decisions and witness extraction use [CAR, §4][CAR].
+
+For this arithmetic step, projection alone does not require Theorem 3.1.
+The proof of [NSF,
+§§2–4, especially Lemma 3.2 and Theorem 4.3][NSF] already gives the
+following parameter extension. Leave designated atomic-leaf scalars
+$n_j$ free, allow a primitive definition $Z=[n_j+c]$, and carry the
+resulting offset constraints through the same finite branches. These
+primitive shapes are the same constant shape as NSF's other explicit
+scalar leaves. NSF's completeness proof retains the actual scalar ranks
+at explicit leaves when it replaces residual shape blocks. It therefore
+retains the designated $n_j$ as well. Its separation of scalar and block
+constraints prevents that replacement from silently changing a parameter.
+
+The resulting finite disjunction of scalar formulas, existentially
+quantified over the auxiliary ranks only, is already a Presburger
+projection in $\mathbf n$. Soundness expands the same normal codes;
+completeness keeps the same parameter values. This is the scalar-preserving
+projection supplied by NSF, alongside its native existential feasibility
+and supplied-depth consequences. Its residual replacement may depend on
+the scalar parameters; (URR.9)–(URR.12) use one fixed native tuple.
+
+For a non-Presburger policy $P$, the set is exactly $P\cap S$ and the
+same section restricts to it. No effective presentation of an arbitrary
+$P$ is inferred. $\square$
+

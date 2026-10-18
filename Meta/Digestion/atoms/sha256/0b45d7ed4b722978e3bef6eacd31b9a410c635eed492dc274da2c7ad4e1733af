@@ -1,0 +1,22 @@
+## 5. Paid full-family realizations of the counterexamples
+
+The counterexamples can be embedded in the original finite source family. For
+$n=2^H$ blocks, put the height-one states $u_{ab}$ at the frontier of the
+public perfect height-$H$ scaffold in the right subtree and take $D=H+2$.
+Every block literal is the full original-root word obtained by prefixing its
+public scaffold address. Internal scaffold targets are constants and terminal
+targets are the actual leaf literals used in (GCB.2).
+
+For the padded anti base use $n=4,D=4$ and merge exactly the eight native
+solutions into one canonical code name; all other canonical states receive
+separate names. Since $|S_4|=15131$, the attained alphabet is
+$15131-8+1=15124$. For its connected lift use $n=8,D=5$ and merge its
+$64$ solutions; since $|S_5|=228947163$, the attained alphabet is
+$228947163-64+1=228947100$. The preparation scans all $Rq$, $q\in W_D$, before
+the request, using at most $2^D-1$ charged Reads, maximum literal length $D$
+and $(D-1)2^D+1$ submitted letters. The merged name is isolated by the paid
+handoff; the reader chooses at most one fresh original-root Read before any
+authentic count and then uses the all-count decoder. These codes are attained
+constructions, deliberately nonoptimal, and carry no free source identity,
+subtree or navigation descriptor.
+

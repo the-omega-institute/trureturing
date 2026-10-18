@@ -1,0 +1,28 @@
+#### 27.4　张量交互与 k-wise 查询完备性
+
+前两节使用了一个特定乘积。下面给出它为何是一般阶数障碍的结构原因。
+
+在每个坐标上取函数空间 $L^2(\{-1,0,+1\},\operatorname{Unif})$ 的一组正交基：
+
+$$
+\phi_{i,0}=1,
+\qquad
+\mathbb E[\phi_{i,r}(U_i)]=0\quad(r=1,2).
+$$
+
+对多指标 $r=(r_1,\ldots,r_n)\in\{0,1,2\}^n$ 定义张量基
+
+$$
+\Phi_r(x)=\prod_{i=1}^n\phi_{i,r_i}(x_i),
+\qquad
+\operatorname{supp}(r)=\{i:r_i\ne0\}.
+$$
+
+任意实函数 $f:\{-1,0,+1\}^n\to\mathbb R$ 都有唯一展开
+
+$$
+f(x)=\sum_{r}c_r\Phi_r(x).
+$$
+
+<a id="claim-27-4-1"></a>
+

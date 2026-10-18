@@ -1,0 +1,66 @@
+### 3.2 同一个真实决策律的同时邻边约束
+
+先固定一个协议及其与源无关的随机种子。输入密度态可用额外有限参考纯化，原测量通过忽略该参考嵌入纯化协议，保持决策概率。记共同纯输入为 $\psi$、各源输出代表为 $\psi_b=(U_{s(b)}^q\otimes I)\psi$。相邻 $b,c$ 仅在位置 $i$ 不同，所以相对系统酉为 $\exp(\pm2iq\theta Z_i)$。复用 [Recovery][Recovery] 式（3.2）：
+
+$$
+\begin{aligned}
+\langle\psi_b,\psi_c\rangle
+&=\cos(2q\theta)
+\ \pm i\sin(2q\theta)\langle\psi,(Z_i\otimes I)\psi\rangle,\\
+\operatorname{Re}\langle\psi_b,\psi_c\rangle&=x.
+\end{aligned}
+\tag{3.2}
+$$
+
+$Z_i$ 的期望为实数。这对每个共同输入及其参考成立；固定酉代表的相位仅用于内积书写，没有授予对未知酉的 controlled 访问。
+
+设末端效果为 $(Q_j)_{j\in B_n}$。用显式等距映射和正交结果投影
+
+$$
+Vv=\sum_j|j\rangle\otimes\sqrt{Q_j}v,
+\qquad \Pi_j=|j\rangle\langle j|\otimes I.
+$$
+
+因为 $\sum_jQ_j=I$，有 $V^\dagger V=I$，内积和决策概率均保持。下文仍以 $\psi_b$ 记映射后的向量。令 $P(c\mid b)=\|\Pi_c\psi_b\|^2$、$\eta_b=1-P(b\mid b)$。把内积分成结果 $b$ 空间、结果 $c$ 空间及共同正交补，Cauchy–Schwarz 给出
+
+$$
+\begin{aligned}
+x&\le|\langle\psi_b,\psi_c\rangle|\\
+&\le\|\Pi_b\psi_b\|\,\|\Pi_b\psi_c\|
++\|\Pi_c\psi_b\|\,\|\Pi_c\psi_c\|\\
+&\quad+\|(I-\Pi_b-\Pi_c)\psi_b\|
+\,\|(I-\Pi_b-\Pi_c)\psi_c\|\\
+&\le\sqrt{P(b\mid c)}+\sqrt{P(c\mid b)}
++\sqrt{\eta_b\eta_c}.
+\end{aligned}
+\tag{3.3}
+$$
+
+前两项把正确空间的范数各界为一；共同补空间包含于每个来源的错误空间，所以最后一项有效。正交答案空间与重叠的这种估计方法来自 [Ambainis][Ambainis] §3、引理 1；此处保留同一协议全部条件决策概率的同时约束。
+
+现在对源无关种子平均。在每个种子下应用式（3.3），再用
+
+$$
+\mathbb E\sqrt{P}\le\sqrt{\mathbb EP},\qquad
+\mathbb E\sqrt{\eta_b\eta_c}
+\le\sqrt{(\mathbb E\eta_b)(\mathbb E\eta_c)},
+$$
+
+得到最终平均决策概率仍满足式（3.3）。这里没有交换种子平均和逐来源最大值；此后 $P,\eta$ 一律指同一个随机化协议的最终条件概率。
+
+置
+
+$$
+T_{c\leftarrow b}=\sqrt{P(c\mid b)}\quad(c\ne b),
+\qquad \delta=\max_b\eta_b.
+$$
+
+对每个 $b$ 有 $\sum_{c\ne b}T_{c\leftarrow b}^2=\eta_b$；每条合法边同时满足
+
+$$
+T_{c\leftarrow b}+T_{b\leftarrow c}\ge x-\delta,
+\tag{3.4}
+$$
+
+因为 $\sqrt{\eta_b\eta_c}\le\delta$。这些有向量属于同一个实际决策律，不能分别为不同边更换探针。
+

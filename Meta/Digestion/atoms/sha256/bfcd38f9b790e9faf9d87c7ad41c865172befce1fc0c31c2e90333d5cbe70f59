@@ -1,0 +1,39 @@
+**Corollary 5.3 (attained optimal experiment and total variation bound).**
+$E_t$ dominates every legal $k$-Read policy by a common probability
+kernel and is itself acquired by legal Reads. Therefore the optimal
+binary testing problem for that budget is exactly $E_t$. For any such
+policy the total variation of its complete transcript laws is at most
+$\operatorname{TV}(p_t,q_t)$, where
+
+$$
+\operatorname{TV}(p,q)=\sup_A|p(A)-q(A)|=\frac12\sum_y|p(y)-q(y)|.
+$$
+
+Proof. Proposition 4.3 acquires $E_t$ with $t\le k$ Reads.
+Conversely any decision from a policy transcript, composed with
+$S_\pi$, is a randomized decision from $E_t$ with the same two
+errors. This proves equality of optimal risks. For the stronger
+transcript bound, let $A$ be a transcript event. Its probability
+difference is
+
+$$
+\sum_y(p_t(y)-q_t(y))S_\pi(A\mid y).
+$$
+
+Each kernel entry lies in $[0,1]$. The signed masses $p_t-q_t$
+sum to zero, so their total positive mass equals their absolute total
+negative mass. The event consisting of the positive-difference outcomes
+attains that mass, and no event exceeds it; it equals both the event
+supremum and half the absolute-mass sum defining total variation.
+Weighting by numbers in $[0,1]$ bounds the displayed expression
+between the negative and positive of that value. Taking the supremum
+proves the bound. This is an attained comparison of experiment classes;
+it does not say that each weaker individual policy can recover $E_t$.
+$\square$
+
+The same proof applies to any policy confined to at most $s$ distinct
+gadgets, even with more local Reads: only $s$ phase coordinates are
+needed. Thus arbitrarily detailed observation of one stationary gadget
+has identical law under the two hypotheses, as also follows from
+Proposition 3.2.
+

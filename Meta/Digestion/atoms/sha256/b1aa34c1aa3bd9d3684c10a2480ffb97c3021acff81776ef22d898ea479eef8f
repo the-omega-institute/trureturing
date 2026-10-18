@@ -1,0 +1,38 @@
+### 命题 455.1（自匹配根的 CA 识别）
+
+若 $z$ 是严格稳定自匹配根，且
+
+$$
+N^-(z)=\exp z,
+\qquad
+\lambda(z)=\frac1{z\log z},
+$$
+
+则 $N^-(z)$ 是 CA 数；若取定理 111.4 的根列 $z_j$，则所得
+$N_j=N^-(z_j)$ 是一个无穷 CA 子列，并满足
+
+$$
+N_j\mid N_{j+1},\qquad N_j<N_{j+1}.
+\tag{455.2}
+$$
+
+**证明。** 定义 111.1 的压力最大性给出：对每个正整数 $n$，
+
+$$
+\mathcal P_{\lambda(z)}(n)
+\le
+\mathcal P_{\lambda(z)}(N^-(z)).
+$$
+
+由（455.1）指数化，得到
+
+$$
+\frac{\sigma(n)}{n^{1+\lambda(z)}}
+\le
+\frac{\sigma(N^-(z))}{N^-(z)^{1+\lambda(z)}}.
+$$
+
+又 $z>1$，故 $\lambda(z)>0$，这正是 CA 定义，取
+$\varepsilon=\lambda(z)$。定理 111.4 已给出根列无穷、严格递增及整除链，
+所以（455.2）随之成立。$\square$
+

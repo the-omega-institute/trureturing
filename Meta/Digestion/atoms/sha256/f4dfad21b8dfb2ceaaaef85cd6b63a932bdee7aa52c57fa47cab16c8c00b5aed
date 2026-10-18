@@ -1,0 +1,71 @@
+**Definition 16.2 (mathematical correspondences and separate resources).**
+The exact semantic suppliers remain those of Mathematical citation
+8.1 and Assumption 12.5. Their parameter correspondence here is
+two ordered slots, original offsets $0,q$, actual free-magma source
+$X_{a,b}$, substitution count $\ell$, literal original-root word,
+four-valued constructor reply, and complete cut exterior plus actual
+hole partition. The Lean source meanings are `Source` and
+`substitution` in GenealogicalFiberTransport; `Address`, `Reply` and
+`readout` in ActualTreeReadoutAcquisition; `rightClock`,
+`right_clock_iterate` and `right_clock_readout` in DelayedOriginalReadout;
+and `literalRecord`, `actualPartition` and `canonicalRow_record_iff`
+in ActualCutPartitionDecoder. Acquired visible-literal parsing computes
+$z$; it does not measure a hidden age. Theorem 9.2 supplies the
+ordered reference bound, Theorem 10.2 the exact finite/all-lag bridge,
+and Proposition 12.2 the stronger reconstruction boundary. None of
+these semantic correspondences identifies the new geometric statements
+with an existing kernel proof.
+
+The ordered-search representation is literature-attested in Bruno,
+De Prisco, De Santis and Vaccaro,
+[*Bounds and Algorithms for Alphabetic Codes and Binary Search Trees*,
+arXiv:2407.16443v1, §§I--II](https://arxiv.org/html/2407.16443v1).
+Their alphabetic trees preserve the order of searched symbols, and
+their comparison-search descriptions distinguish binary outcomes
+from ternary outcomes. Here the ordered symbols are $d$-indexed
+origins, terminal leaves are intervals, and the task is coordinate
+recovery. Their probability-weighted average costs do not supply
+our worst-depth-two four-reply capacity, two adjacent singleton cells,
+missing-$P_1$ boundary or a grid partition. The allowed-query
+distinction is also the primary point-test/dyadic-test comparison in
+Nowak, [*The Geometry of Generalized Binary Search*,
+arXiv:0910.4397v5, §V.A](https://arxiv.org/html/0910.4397v5),
+already used in Assumption 12.5. Its binary hypothesis framework
+does not authorize stronger native tests here.
+
+After reversing the second coordinate, saturated classes are chains
+in the coordinate-product order. The relevant primary definitions
+are Liu and West, [*Duality for semiantichains and unichain coverings
+in products of special posets*, §1 and Example 2.1](https://dwest.web.illinois.edu/pubs/semianch.pdf).
+A unichain there is constant in one coordinate throughout, whereas
+our saturated paths turn between coordinates. Its cover results do
+not produce a native six-triple exact cover. Greene--Kleitman
+$k$-saturation is equality between a chain partition's
+$\sum_C\min(k,|C|)$ and the largest union of $k$ antichains,
+as defined also in West, [*Poly-unsaturated Posets: The
+Greene-Kleitman Theorem Is Best Possible*, Journal of Combinatorial
+Theory A 41, 105--116](https://dwest.web.illinois.edu/pubs/polyuns.pdf).
+That is different from saturation of our native ordered leaves.
+Even ordinary equal-size chains are insufficient: the nineteen grid
+rows themselves partition the square into nineteen nineteen-point
+product-order chains, but have a constant coordinate and nineteen
+runs of the other coordinate, violating Theorem 13.2. No cited
+chain-cover or ordered-search theorem supplies the new native
+zero filter, unequal gates or fusion geometry. Those are repo-derived
+ordinary deductions under the stated contract; this correspondence
+makes no global novelty claim.
+
+The call resource is a chronological submission of one fully
+materialized finite word. A hidden $E$ costs one call. A $P_t$
+representative has whole-word length $1+\lceil t/2\rceil$, including
+the hidden-slot prefix. The displayed witness thresholds grow with
+the acquired clock. Initial and later whole-row acquisition, parsing
+and storage, retained-label representation, public tables, changing
+workspace, arithmetic, controller representation, address production
+and total submitted length, output size and physical time are separate
+resources. Two calls do not imply a uniform address bound or a finite
+uniform Moore implementation. Time here is the count of pure-$\rho$
+steps; space is ordered constructor structure; boundary is the supplied
+singleton cut; retained memory is the exported source-dependent label.
+These meanings do not assert a physical model.
+

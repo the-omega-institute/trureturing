@@ -1,0 +1,53 @@
+**Open obligation 11.3 (the unchanged all-correlated goal).** For the
+entire alphabet $S_d$, let
+
+$$
+\beta_d(\mu)=\sup_{n\ge1}\max_{\Theta}
+ \left(\sum_{x\in C_\Theta}\prod_i\mu(x_i)\right)^{1/n},\qquad
+b_d=\min_{\mu\in\Delta(S_d)}\beta_d(\mu)=2^{-\sigma_d},
+\tag{GCB.35}
+$$
+
+where $\Theta$ ranges over every complete native template, including
+arbitrary correlations, off-target donors, cycles, guards, repeated
+seeds and compatibility zeros. The semantic equality and attained
+minimum are credited [NPC, Theorems 5.3 and 6.2][GCBNPC]. Theorem
+9.1 concerns a specified fixed law and per-template norm class. It
+does not establish a separation after optimizing $\mu$, refute an
+optimizer-cofinal grammar, give a new $M_1(D)$ or $\lambda$ bound,
+or obstruct an effective error for the original $K_d(n)$.
+
+The precise excluded premise is that optimal same-pair compensation
+followed by this one direct SSSZ contraction has uniformly vanishing
+normalized log error on every original native instance. A method that
+requires that premise must replace the step, add a genuinely different
+cyclic relation, or prove that a sufficient optimizing family avoids
+these instances. No such optimizing-family theorem is assumed here.
+The underlying SSSZ inequality remains sound.
+
+The outstanding requirement is still a total computable finite verifier
+accepting only caps valid for every length and every complete template,
+with accepted endpoints optimizer-cofinal in the unchanged $\sigma_d$,
+as in [NPC, Definition 8.1][GCBNPC]; alternatively, a uniform effective
+length error yielding two-sided approximation of the original $\lambda$
+would suffice. Arbitrary full nonnegative joint block weights must
+remain owned once. Neither a per-input norm evaluation nor a different
+exact incidence representation supplies that missing bridge.
+
+The current credited endpoints, supplied by [NCE, Theorem 17.1 and
+Corollary 17.2][GCBCURRENTNCE] and the credited D3 construction, are
+
+$$
+\frac18\log_2\frac{7792603}{3038031}\le\lambda<\frac3{16},\qquad
+M_1(3)=4,\qquad M_1(6)\ge1874.
+\tag{GCB.36}
+$$
+
+General exact memory, sharp rate, effective all-size convergence and
+the minimal-relations/internal-observer mutual-recovery programme
+remain open. Under the paid interface the recoverable information is
+the requested temporal factor, equivalently its entire authentic-count
+trajectory, from the acquired complete name and at most one actual
+reply. No whole-source, unknown-age, hidden-history or physical
+space-time recovery follows.
+

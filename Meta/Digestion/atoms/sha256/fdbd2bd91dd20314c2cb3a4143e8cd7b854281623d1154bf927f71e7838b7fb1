@@ -1,0 +1,10 @@
+## 9. Exact original sign averages and a common Pareto point
+
+The sharp averages are JR Theorem 37.2's $P_y(s)$, attained by its
+§§38–39 instrument, with $P_y(s)=g_y(s)$ under Comparison 2.5.
+JR proves them for every error optimizer in its larger actual
+factorization class. Theorem 9.1 records their fixed-channel finite
+specialization. The Pareto point of Theorem 9.2 follows directly from
+these credited averages and is not additional knowledge. Neither result
+gives an individual coherent-history minimum or the whole frontier.
+

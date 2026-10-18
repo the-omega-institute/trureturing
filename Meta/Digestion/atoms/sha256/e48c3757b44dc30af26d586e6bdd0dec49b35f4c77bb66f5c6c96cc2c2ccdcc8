@@ -1,0 +1,13 @@
+#### 16.8　与既有理论和文献的关系
+
+本章与前述接口的区别如下：
+
+1. 它不讨论反向协议权限，因此没有把动力学可逆性当作反向干预程序；
+2. 它不讨论 Gaussian 样本预算，因此没有把时间响应折算为方向检验风险；
+3. 它不把平衡表的相同误写成潜在结果的共同配对；
+4. 它把缺失信息定位为动态稳定性和初态量词，而不是静态查询的另一种命名。
+
+公开文献核对得到的边界如下：Mooij、Janzing 与 Schölkopf 的 *From Ordinary Differential Equations to Structural Causal Models: the deterministic case*（[arXiv:1304.7920v1](https://arxiv.org/html/1304.7920v1)）已经区分动力学稳定性、标记平衡方程和因果语义，并明确指出不同动力学可能诱导同一 SCM。本章是一个具体反例族，不能宣称发现了这一区分。Simpson-Porco 与 Monshizadeh 的对角稳定工作（[arXiv:2105.09912v1](https://arxiv.org/html/2105.09912v1)）以及 Sun 的稳定性综述（[arXiv:2301.01272v1](https://arxiv.org/html/2301.01272v1)）提供已有的 Lyapunov、正对角缩放和主子矩阵背景；本章不把这些成熟工具冒称新理论。
+
+<a id="section-16-9"></a>
+

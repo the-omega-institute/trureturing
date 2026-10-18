@@ -1,0 +1,21 @@
+**Citation 3.1 (Scope of the supplied mathematics).** The source-specific synthesis of Theorem 2.1 is `repo-derived`: its stated tensor-sign promise, all-time archive fiber, exact Hamming geometry, arbitrary-probe block recovery curve and legal-service acquisition contract are the objects of its proof. The following supplied results are cited steps, with their own hypotheses; they are not separately presented as new theorems of this volume.
+
+| Mathematical source | Exact supplied step |
+| --- | --- |
+| [SIC Pauli-weight geometry][SIC], Convention 2.1, Definition 2.3, Lemma 3.1, Theorem 4.1, Corollary 6.2 and Remark 7.1 | Repository-supplied Pauli coordinates, normalized identity-target product-SIC scores, frame independence, weight functionals and hierarchy completeness. Their scope fixes Definition 1.2 and the cited steps in Section 2.1. |
+| [FIB ATOM and machine-learning whitebox theory][FIB], Sections 2, 6 and 8 | Repository-supplied five-window dictionary, no-adjacent counting recurrence, seam/terminal distinction and task-relative readout/domain/update condition. Section 2.6 uses these under its explicit finite-word code. |
+| A. N. Korotkov, [*Error matrices in quantum process tomography*][KOR], arXiv:1309.6405, Section II, equations (1)–(4) | `literature-attested`: the unnormalized Pauli-basis process-matrix convention and the unitary coefficient outer product used in Section 2.1. |
+| John Watrous, [*The Theory of Quantum Information*][WAT], Corollary 2.27 and Theorems 3.4, 3.52, 3.55 | `literature-attested`: channel-isometry dilations, Holevo–Helstrom binary testing, stabilized channel testing and absence of an ancilla advantage for two isometric channels. Sections 2.2 and 2.4 specialize those tools to the displayed spectrum and ordinary-call contract. |
+| Runyao Duan, Yuan Feng and Mingsheng Ying, [*Entanglement Is Not Necessary for Perfect Discrimination between Unitary Operations*][DFY], Phys. Rev. Lett. 98 (2007), 100503, Theorems 1–2, DOI: 10.1103/PhysRevLett.98.100503 | `literature-attested`: the shortest-eigenvalue-arc minimal-query principle for two unitary operations. The neighbor pair here has arc $\pi/L$; Section 2.4 gives the quantitative bound with the stated adaptive and stopping permissions. |
+| Abel Molina and John Watrous, [*Hedging bets with correlated quantum strategies*][MW], arXiv:1104.1140, Section 4 | `literature-attested`: maximum joint-outcome multiplicativity for independent interactive measurements. It supplies method credit in Section 2.3; the present proof bounds its whole-label probe class directly and does not infer arbitrary-controlled finite-error optimality. |
+| S. Greenaway, F. Sauvage, K. E. Khosla and F. Mintert, [*Efficient assessment of process fidelity*][GRE], Phys. Rev. Research 3 (2021), 033031, Sections II B and VI; K. Mayer, [*A short note on the 0-fidelity*][MAY], arXiv:2109.09629, Section I | `literature-attested`: the product-SIC hierarchy background and the frame independence of $F_0$. The exact normalization used here is [SIC], Definition 2.3, with its Remark 2.4 concerning the printed expansion; these articles do not replace that definition. |
+
+[SIC]: https://github.com/the-omega-institute/trureturing/blob/5224c87dd29457c7712c8f271d6d1f309826c348/docs/develop/theory/SIC_K_FIDELITY_PAULI_WEIGHT_GEOMETRY.md
+[FIB]: https://github.com/the-omega-institute/trureturing/blob/5224c87dd29457c7712c8f271d6d1f309826c348/docs/develop/theory/FIB_ATOM_MACHINE_LEARNING_WHITEBOX.md
+[KOR]: https://arxiv.org/abs/1309.6405
+[WAT]: https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf
+[DFY]: https://arxiv.org/abs/quant-ph/0601150
+[MW]: https://arxiv.org/abs/1104.1140
+[GRE]: https://arxiv.org/abs/2102.08101
+[MAY]: https://arxiv.org/abs/2109.09629
+

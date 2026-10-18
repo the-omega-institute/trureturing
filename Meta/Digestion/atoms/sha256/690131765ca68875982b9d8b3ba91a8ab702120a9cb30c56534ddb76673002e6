@@ -1,0 +1,57 @@
+**Definition 2.2 (Regular table risks).** A regular table satisfies (1.5), (2.2), positive retained rows and $u_x,v_y\in[a,b]$. Every synthetic return has probability at most $4/15$, so the complete laws are normalized, retain their legal infinite outcomes with mass zero, and require no conditioning on eventual completion. Set
+
+$$
+\bar Q=\pi Q,\qquad \bar W=\tau W,
+$$
+
+$$
+\mathcal R_p=\sup_{k:\mu(k)>0}\sum_x\pi_x\operatorname{TV}(Q_x,P_{p,r_k}),\qquad
+\mathcal R_\beta^{\rm law}=\sup_{k:\mu(k)>0}\operatorname{TV}(\bar W,P_{\beta,r_k}),
+$$
+
+$$
+e=\max\{\mathcal R_p-\rho_p,\mathcal R_\beta^{\rm law}-\rho_\beta\}\ge0.
+\tag{2.4}
+$$
+
+Nonnegativity follows already from the two endpoint targets and the triangle inequality. Table risks are analysis comparisons, not new source experiments. For extracted tables they are dominated by the corresponding original risks. A stationary source-independent latch realization gives the same fourth-phase risk bounds at all positive original histories by countable target convexity; its own resources must be counted separately [PAID, Lemma 2.1.1].
+
+Use the complete events
+
+$$
+E_p=\{w_{0,1},w_{1,1},w_{2,1}\},\qquad
+E_\beta=\{\beta,\alpha w_{0,1}\}.
+$$
+
+Their native masses are
+
+$$
+f(r)=(1-r)^2(1+\lambda_r+\lambda_r^2),\qquad
+h(r)=1-r+r(1-r)^2,
+$$
+
+$$
+f(a)=\frac{412}{729},\quad f(b)=\frac{7299}{15625},\quad
+h(a)=\frac{22}{27},\quad h(b)=\frac{93}{125}.
+\tag{2.5}
+$$
+
+These are the supplied endpoint-positive difference events [ST, Section 2.2]. Indeed, the second-to-first endpoint ratios for $w_{j,0}$ and $w_{j,1}$ are $(6/5)(27/25)^j$ and $(81/100)(27/25)^j$; only the latter, for $j=0,1,2$, is below one. At suspension the ratio for beta is $9/10$, that for $\alpha w_{j,0}$ is $(36/25)(27/25)^j$, and that for $\alpha w_{j,1}$ is $(243/250)(27/25)^j$, below one only for $j=0$. Since both laws are normalized, the two positive-difference events realize their respective complete endpoint TV distances. Let
+
+$$
+C_p=\frac{f(a)+f(b)}2=\frac{11758471}{22781250},\qquad
+C_\beta=\frac{h(a)+h(b)}2=\frac{5261}{6750},
+\qquad \kappa=\frac{h(a)-h(b)}{f(a)-f(b)}=\frac{806625}{1116529}<\frac34.
+\tag{2.6}
+$$
+
+Endpoint risks bounded by (2.4), together with convexity at p, imply
+
+$$
+|\bar Q(E_p)-C_p|\le e,\qquad
+|\bar W(E_\beta)-C_\beta|\le e.
+\tag{2.7}
+$$
+
+Indeed, projection to an event realizing an endpoint distance $2\rho$ places its predicted mass between the endpoint midpoint minus $e$ and that midpoint plus $e$. No individual configuration is assumed to be a minimax center.
+

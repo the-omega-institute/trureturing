@@ -1,0 +1,11 @@
+**Theorem 15.3 (complete heavy-target certificate).** Every
+range-feasible $P\subseteq S_3$ with
+$w_{\rm a}(P)>C_{\rm a}$ has a target which is
+unrecoverable by every own finite literal or constant experiment
+and whose squared cell-mass sum is at most $C_{\rm a}^2$.
+
+Proof. If a parent leaf is missing, Lemma 14.2 is exhaustive
+and Lemma 15.1 proves both required properties in each of its
+five classes. If both parent leaves occur, Lemma 15.2 proves
+them. These alternatives exhaust all supports. $\square$
+

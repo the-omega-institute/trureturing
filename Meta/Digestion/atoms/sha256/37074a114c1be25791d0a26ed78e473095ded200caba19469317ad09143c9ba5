@@ -1,0 +1,38 @@
+**Proposition 4.7 (Positive-support limit versus restricted support).**
+Fix $a,c>0$ and put $m=\min\{d,q\}=1-|d-1|>0$.
+As $b\downarrow0$ through positive laws,
+
+$$
+\omega^*\longrightarrow\frac{(1,m,1)}{2+m},\qquad
+\gamma^*\longrightarrow\frac m{2+m}.
+\tag{4.43}
+$$
+
+If the zero-probability center phase is first removed and
+the experiment is optimized on the remaining four-state
+support, $(1/2,0,1/2)$ is optimal with gap $m/2$.
+
+Proof. In the five-dimensional limit, $u\to-e_2$,
+$C_0\to1$ and $C_1,C_2\to0$. The symmetric spectrum on
+the complement of the ground ray becomes
+$\{y,qx,2x,dx\}$, so its minimum is $\min\{y,mx\}$.
+With $y=1-2x$ the unique symmetric maximizer satisfies
+$y=mx$, giving (4.43). Continuity of the finite matrices
+and eigenvalues is uniform over the compact weight
+simplex; their maxima therefore converge to this value.
+The finite positive maximizers are symmetric by Theorem
+4.2, so their limit is the stated symmetric maximizer.
+
+On restricted four-state support, $K_2$ vanishes. Reflection
+averaging preserves total endpoint budget and cannot lower
+the minimum eigenvalue. With that budget $s\le1$, the
+best symmetric allocation has gap $sm/2$, attained at
+$s=1$. This gives the restricted-support result. Since
+$m>0$, $m/(2+m)<m/2$. The difference comes from retaining
+or deleting a phase direction, rather than from changing
+the meaning of one sample. $\square$
+
+
+[ParentReadout]: FIB_LEGAL_EDGE_LOAD_INTRINSIC_NULL_KERNEL_DUAL_RESIDUAL_AND_PRESENTATION_OBSTRUCTION.md
+[BC8]: AURIC_FIB_ATOM_PYRAMID_BOUNDARY_CALCULUS.md
+

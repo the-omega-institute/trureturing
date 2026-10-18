@@ -1,0 +1,31 @@
+## 15. Mirror realization, exact residual, and unchanged endpoint bounds
+
+Conjugation by $J$ exchanges $E_{22}$ and $E_{11}$ and exchanges upper and lower entries. For an original history put $A'_i=JA_iJ$ and $K'=JKJ$. Then $A'_0=I$ and each multiplier is $JW_iJ$, a finite $M/J$ word, including the empty word when $W_i$ is empty. The six actual indices, traces, pencil ranks and safety are preserved under the source isomorphism $S'=JSJ$. Apply Sections 11–14 in the primed coordinates. To realize their collisions on the original history, set
+
+$$
+S_b=JS'_bJ,\qquad c_b=Jc'_b,\qquad\ell_b=\ell'_bJ,
+$$
+
+and keep $k_b,D_b$ unchanged. Both factors are strictly positive, fixed within their run, and multiply to $S_b$. Moreover $\operatorname{tr}(A_iS_b)=\operatorname{tr}(A'_iS'_b)$ at every original node. The original $M/J$ atoms preserve positivity throughout their unread states as well. Thus conjugation is a mathematical correspondence realizing sources on the original words, without requesting a conjugation acquisition or combining observations of two histories.
+
+Combining the results gives the following necessary restriction on the entire diagonal-kernel part of the surviving $d=1$ branch. Mixed positive diagonal generators are excluded by Theorem 11.1. For $E_{22}$, Theorem 11.2 gives the complete legal-chain normal form, Proposition 12.1 requires a final phase and $a\le3$, and Sections 12–14 exclude every $a=1$ list by actual different-slope collisions. Therefore a uniformly recovering diagonal-kernel history must have exactly
+
+$$
+a=2\quad\text{or}\quad a=3
+$$
+
+initial lower-shear readings $D_h$, including $A_0=I$. These are exactly its endpoints with $(A_i)_{12}=0$; no later endpoint can return to that zero entry. In the $E_{11}$ branch the corresponding number of initial upper-shear readings, or endpoints with $(A_i)_{21}=0$, is two or three. The initial shears may repeat $I$ or may be nontrivial; neither possibility is silently excluded. Section 10 separately excludes every recorded-$M/JMJ$ list under the common-safe-kernel hypotheses.
+
+The remaining $d=1$ diagonal residual is precisely the normal-form candidates with $a=2$ or $3$, still subject to every all-real-slope rank, transverse and quadratic necessary test and to exclusion of recorded $M$ or $JMJ$ for recovery. No global inverse or universal collision for these candidates is established. Every non-diagonal normalized safe generator remains in scope, with any off-diagonal entries and determinant allowed by the safe cone; those generators are not classified by the diagonal argument. Regular pencils remain for every degree, including the regular five-read $d=0$ branch. For $d\ge2$ the common safe signal has degree at most $d-1$, so the constant-hyperplane chain argument does not classify those histories. These residuals leave the original all-history endpoint goal unchanged.
+
+The credited numerical intervals are exactly
+
+$$
+5\le C_{\mathrm{fix}}(0)\le6,\qquad
+d+5\le C_{\mathrm{fix}}(d)\le d+6\quad(d\ge1).
+$$
+
+The goal remains to choose each endpoint over all predetermined finite-word cumulative histories and provide a matching legal history with a common-source inverse for every real slope, all zero and negative gain samples, and the entire degree-bounded drift; alternatively an endpoint obstruction must realize collisions for every remaining history. A legal normal form is not rank sufficiency, and rank or local nonsingularity is not global recovery sufficiency.
+
+The suppliers credited in Sections 2, 7 and 8 retain their original roles: the positive-secant and fixed-slope criteria, the exact drift quotient, the recorded-clock common-kernel theorem, the critical and quadratic necessary tests, the affine and polynomial recovery constructions, the fixed-prefix continuation optima, the six-read constant-drift result and the representation scales. Section 10's recorded-event classification and finite tail transfer are credited to the preceding recorded-stratum proposal. The mixed diagonal exclusion, complete diagonal legal-chain description, one-initial-zero-entry classification, all-slope inverse and finite collision in Sections 11–14 are credited to the preceding diagonal-stratum proposal named above. Their incorporation supplies proofs and the resulting precise residual in this owning volume; it is not a claim of new priority over those suppliers. No independent review, Lean verification, universal obstruction, improved numerical optimum, adaptive impossibility, optimal atom count, precision or noisy guarantee, physical or empirical claim, general neural-network conclusion, external priority or programme completion is asserted.
+

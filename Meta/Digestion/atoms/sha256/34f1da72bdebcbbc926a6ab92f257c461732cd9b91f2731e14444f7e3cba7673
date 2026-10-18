@@ -1,0 +1,27 @@
+**Definition 1.2 (Parameters).** Put
+
+$$
+\begin{gathered}
+a=\max(p,1-p),\quad b=\min(p,1-p),\quad
+\eta=ab,\quad c=a^2+b^2=1-2\eta,\quad d=a-b,\\
+\sigma=\begin{cases}1&p>1/2,\\0&p<1/2,\end{cases}
+\qquad R=a/b.
+\end{gathered}
+\tag{1.3}
+$$
+
+Thus $\mathbb P(S_\ell=\sigma)=a$, and
+
+$$
+\begin{gathered}
+a+b=1,\quad 0<b<1/2<a<1,\quad 0<\eta<1/4,\quad
+1/2<c<a<1,\quad b<c,\\
+d=2a-1>0,\quad a-c=bd,\quad c-b=ad.
+\end{gathered}
+\tag{1.4}
+$$
+
+For example $a-c=b(a-b)$ and $c-b=a(a-b)$ prove the comparisons
+with $a,b$; $c-1/2=(a-b)^2/2$ proves the remaining strict comparison.
+These identities cover the entire stated bias range.
+

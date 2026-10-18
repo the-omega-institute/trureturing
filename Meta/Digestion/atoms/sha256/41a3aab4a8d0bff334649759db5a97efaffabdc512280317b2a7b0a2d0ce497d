@@ -1,0 +1,72 @@
+**Theorem 3.1 (N1: polynomial-kernel clock collapse).** Let
+
+$$
+X(k)=\sum_{a=0}^m k^aX_a,\qquad 0\le m\le2,
+\qquad T_kX(k)=0\quad\hbox{for every real }k.
+$$
+
+No positivity or rank assumption is made on these matrices. For every coefficient there is a polynomial $Q_a\in\mathcal P_{d-1}$ such that
+
+$$
+\operatorname{tr}(A_iX_a)=Q_a(i)\quad(0\le i<n).
+\tag{3.1}
+$$
+
+In particular $BX_a=CX_a=0$ for every $a$.
+
+**Proof.** Interpolate the first $d+1$ sampled values as a polynomial in two variables:
+
+$$
+P(k,t)=\sum_{h=0}^d(1+kh)\operatorname{tr}(A_hX(k))
+ \prod_{\substack{0\le b\le d\\b\ne h}}\frac{t-b}{h-b}.
+\tag{3.2}
+$$
+
+It has degree at most $d$ in $t$ and at most $m+1$ in $k$. By $T_kX(k)=0$ and (2.2), for every real $k$,
+
+$$
+P(k,i)=(1+ki)\operatorname{tr}(A_iX(k))\quad(0\le i<n).
+\tag{3.3}
+$$
+
+All coefficients are real polynomials, so these are polynomial identities in $k$. Write $P(k,t)=\sum_{a=0}^{m+1}k^aP_a(t)$, allowing zero coefficients, and form
+
+$$
+R(t)=\sum_{a=0}^{m+1}(-1)^at^{m+1-a}P_a(t).
+\tag{3.4}
+$$
+
+For every actual noninitial recorded node $j=1,\ldots,d+4$, (3.3) gives
+
+$$
+R(j)=j^{m+1}P(-1/j,j)=0.
+$$
+
+The degree of $R$ is at most $d+m+1\le d+3$, smaller than these $d+4$ distinct roots. Hence $R=0$. This is where the consecutive endpoint clock enters; no extra observations have been introduced.
+
+To divide without inverting $t$, set
+
+$$
+Q_0=P_0,\qquad Q_a=P_a-tQ_{a-1}\quad(1\le a\le m),
+\qquad Q(k,t)=\sum_{a=0}^m k^aQ_a(t).
+$$
+
+Coefficient comparison gives
+
+$$
+P-(1+kt)Q=k^{m+1}(P_{m+1}-tQ_m),\qquad
+P_{m+1}-tQ_m=(-1)^{m+1}R=0.
+\tag{3.5}
+$$
+
+Thus $P=(1+kt)Q$ in $\mathbb R[k,t]$, including $t=0$. If $Q\ne0$, view it as a polynomial in $t$ over the integral domain $\mathbb R[k]$. Its nonzero leading coefficient is multiplied by $k$ in the new highest power of $t$, so multiplication by $1+kt$ raises its $t$-degree by exactly one. Consequently $\deg_tQ\le d-1$. If $d=0$, a nonzero $Q$ would give $\deg_tP\ge1$, which is impossible; hence $Q=P=0$. If $Q=0$ at any $d$, the desired degree statements hold by convention.
+
+At each recorded node, (3.3) and (3.5) imply
+
+$$
+(1+ki)\bigl[\operatorname{tr}(A_iX(k))-Q(k,i)\bigr]=0
+\quad\hbox{in }\mathbb R[k].
+$$
+
+The first factor is a nonzero polynomial, including the constant one at $i=0$. Cancellation in this integral domain gives $\operatorname{tr}(A_iX(k))=Q(k,i)$. Comparing coefficients proves (3.1), and every $Q_a$ has degree at most $d-1$. The sequences of its values and of $tQ_a$ are both annihilated by $\Lambda$, giving $BX_a=CX_a=0$. At $d=0$ both sequences are zero. This also covers $m=0$, $m=1$, vanishing leading coefficients, and $X=0$. ∎
+

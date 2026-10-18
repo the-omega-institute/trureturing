@@ -1,0 +1,15 @@
+**Lemma 6.1 (P5).** Every gap $0\le a\le m-2$ is impossible. At $a=m-1$, a candidate must satisfy $b\equiv m\pmod2$.
+
+**Proof.** We know $b\le m-1$. Let $s$ be the largest integer not exceeding $m-1$ with $s\equiv b\pmod2$. Then $s$ is $m-2$ or $m-1$, and $s\ge b$.
+
+If $a\le m-2$, then $s\ge a$. The $m$ exponents $s,\ldots,s+m-1$ are at most $K$. Taking their suffix occurrences in (1.9) gives the consecutive retained original clocks
+
+$$
+s+2,\ldots,s+m+1.
+\tag{6.1}
+$$
+
+Apply Lemma 5.2 with $H=R$ and $t_0=s+2$. The two repeated-state clocks $a$ and $a+2$ are both at most $t_0$. Strict monotonicity there contradicts $R(a)=R(a+2)$.
+
+If $a=m-1$ and $b\equiv m-1\pmod2$, choose $s=a$. The same argument uses the $m$ suffix clocks $a+2,\ldots,2m$ and again excludes the equal values at $a,a+2$. The only remaining parity is $b\equiv m\pmod2$. $\square$
+

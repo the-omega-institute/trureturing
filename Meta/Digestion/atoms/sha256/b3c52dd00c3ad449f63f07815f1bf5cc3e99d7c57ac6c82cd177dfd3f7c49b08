@@ -1,0 +1,13 @@
+**Theorem 8.2 (complete count fiber).** The fiber $\mathcal F_{A,B}$ is exactly the disjoint union, over $s\in\mathcal S_{A,B}$, of all retry words with $p_s$ copies of $X$ and $q_s$ copies of $Y$, and all triples $\mathbf j$ with sum $s$, inserted in (SC.1) with $\rho=1,b=100$. Consequently
+
+$$
+F(A,B):=|\mathcal F_{A,B}|
+=\sum_{s\in\mathcal S_{A,B}}
+\binom{p_s+q_s}{p_s}\binom{s+2}{2}.
+\tag{SC.8}
+$$
+
+It is nonempty exactly when $A,B\ge3$ and $A-3,B-3$ have the same parity.
+
+Proof. At this triple (SC.2) is $A=3+2p+s$, $B=3+2q+s$. Solving these integer equations gives precisely (SC.6), with no omitted retry kind or return placement. Normal-form uniqueness makes the union disjoint. For each $s$, retry order has $\binom{p_s+q_s}{p_s}$ possibilities and three nonnegative return counts have $\binom{s+2}{2}$ possibilities. If the excess counts have equal parity, choose $s=0$ when both are even and $s=1$ when both are odd. Conversely the equations force the stated parity and nonnegative excess. $\square$
+

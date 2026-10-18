@@ -1,0 +1,47 @@
+**Theorem 10.2 (Overlap matrix for the selected moments).** For a full-mode
+observation $I$ with law $p^\xi$, the reference score, as a column in
+$\mathbb R^r$, and its Fisher matrix are
+
+$$
+s(I)=\frac{D_{I,\cdot}^{\mathsf T}}{p^0_I},\qquad
+\mathbb E_0s=0,\qquad
+G=\mathbb E_0ss^{\mathsf T}=D^{\mathsf T}P^{-1}D>0.
+\tag{10.6}
+$$
+
+For any two of the selected sets $S,T$ their entry is
+
+$$
+G_{ST}=(-1)^{|S|+|T|}
+\sum_{I\subseteq S\cap T}\frac1{p^0_I}.
+\tag{10.7}
+$$
+
+In particular every entry is nonzero. If $S\cap T=\varnothing$ it is
+$(-1)^{|S|+|T|}/p^0_\varnothing$. At the uniform reference,
+
+$$
+G_{ST}=d_n(-1)^{|S|+|T|}2^{|S\cap T|},\qquad
+\operatorname{Corr}_0(s_S,s_T)
+=(-1)^{|S|+|T|}2^{-|S\mathbin{\triangle}T|/2}.
+\tag{10.8}
+$$
+
+Proof. Differentiating $\log p^\xi_I$ at zero gives (10.6). Its mean
+vanishes by the zero column sums of $D$. For $c\ne0$,
+$c^{\mathsf T}Gc=\sum_I(Dc)_I^2/p^0_I>0$ by full column rank and
+positivity. A summand in $G_{ST}$ can be nonzero only for
+$I\subseteq S\cap T$. On this intersection its numerator is
+$(-1)^{|S|+|T|-2|I|}=(-1)^{|S|+|T|}$. No cancellation occurs, and the
+empty subset always contributes. At $p^0_I=1/d_n$ there are
+$2^{|S\cap T|}$ terms. The diagonal entries are $d_n2^{|S|}$ and
+$d_n2^{|T|}$; their geometric mean yields (10.8). $\square$
+
+Here overlap is an inner product of two scores of the same probability
+experiment. The common empty-word term is a positive-probability event,
+not a zero-probability event. A change to orthogonal score coordinates,
+for example by $G^{-1/2}$, mixes the specified moment labels. Neither
+the nonzero entries nor such a change of coordinates defines a physical
+interaction between positions. Complex amplitudes and phase observations
+are additional structures, introduced in §10.6.
+

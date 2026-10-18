@@ -1,0 +1,65 @@
+**Proposition 77.2 (one common vector and both cap branches).** Let $K_2$ be the span of two selected leading eigenvectors of the supported center. The common-vector construction (S.68)–(S.71) gives one unit vector and one complex matrix
+
+$$
+\begin{gathered}
+\eta=(\ell_0,\ell_1,b_{\rm vec})
+\in\operatorname{ran}E\cap(\mathbb C^3\otimes K_2),\qquad
+L=[\ell_0,\ell_1],\quad G=LL^\dagger,\quad\Omega=\operatorname{diag}(s,t),\\
+\operatorname{Tr}G+\|b_{\rm vec}\|^2=1,\qquad
+q_2\geq t(1-\operatorname{Tr}G),\\
+z=L\psi,\qquad\kappa=\|z\|^2\leq1,\qquad q=z^\dagger\Omega z,\\
+0\preceq M_\psi\preceq B_\psi
+:=\bigl(\Omega-\sqrt\Omega zz^\dagger\sqrt\Omega\bigr)
+\oplus\omega_{\rm tail}.
+\tag{S.162}
+\end{gathered}
+$$
+
+The same $\eta,L$ apply to every complex direction. If $r_{\rm tail}=1-s-t$ and $b=\operatorname{Tr}B_\psi=1-q$, then throughout (S.160),
+
+$$
+H_a(B_\psi)^2\leq
+\beta b+(a-\beta)s+
+2\sqrt{a\beta}\sqrt{st(1-\kappa)+sr_{\rm tail}}.
+\tag{S.163}
+$$
+
+Proof. The intersection dimension is at least $(3k-5)+6-3k=1$. Choose $\eta$ once in this intersection. The proof of (S.71) uses the transpose-row compression $C_\psi=(\psi_0,\psi_1,0)\otimes I_k$, so that $C_\psi\eta=L\psi$ and $C_\psi EC_\psi^\dagger=Z_\psi Z_\psi^\dagger$. In particular the complex direction is not replaced by its conjugate. The row satisfies $C_\psi C_\psi^\dagger=I_k$, so $0\preceq C_\psi EC_\psi^\dagger\preceq I_k$. Since $E\succeq\eta\eta^\dagger$, positive compression and congruence give (S.162); the third compression gives its budget. For $k=2$, $\mathbb C^3\otimes K_2$ is the full six-dimensional supported space and $E$ has rank one. This proves the same construction on that boundary without compressing an unrelated larger projection. Positivity of the leading block follows from $\kappa\leq\operatorname{Tr}G\leq1$.
+
+Let $\mu\geq\nu\geq0$ be its two eigenvalues. The already computed trace and determinant in (S.69) give
+
+$$
+\mu+\nu=b-r_{\rm tail},\qquad
+\mu\nu=st(1-\kappa),\qquad \mu\leq s.
+$$
+
+Here $0\leq b\leq1$. If $b=0$, the left side of (S.163) is zero and its right side is nonnegative. Suppose $b>0$ and first $\mu\geq ab$. Since $a\geq1/2$, $\mu\geq b/2$; every tail eigenvalue is at most $r_{\rm tail}\leq b-\mu\leq\mu$. Thus $\mu$ is a largest eigenvalue of the whole $B_\psi$. The capped formula, including the equality boundary, reads
+
+$$
+H_a(B_\psi)^2
+=\beta b+(a-\beta)\mu+
+2\sqrt{a\beta}\sqrt{\mu(\nu+r_{\rm tail})}.
+$$
+
+Use $a-\beta\geq0$, $\mu\leq s$ and $\mu\nu=st(1-\kappa)$ to obtain (S.163).
+
+In the other case $\mu\leq ab$, the polynomial $x(b-r_{\rm tail}-x)$ is decreasing for $x\geq(b-r_{\rm tail})/2$. Both $\mu$ and $ab$ lie in this interval, in the stated order. Consequently
+
+$$
+\begin{aligned}
+\mu\nu&\geq ab(b-r_{\rm tail}-ab)
+=a\beta b^2-ab r_{\rm tail},\\
+\mu\nu+sr_{\rm tail}&\geq a\beta b^2+r_{\rm tail}(s-ab)
+\geq a\beta b^2.
+\end{aligned}
+$$
+
+The last sign uses $s\geq a$ and $b\leq1$. Thus the right side of (S.163) is at least
+
+$$
+\beta b+(a-\beta)s+2a\beta b
+=b+(a-\beta)(s-ab)\geq b\geq H_a(B_\psi)^2.
+$$
+
+This branch does not presume that the leading block contains the largest eigenvalue of $B_\psi$. The proof includes $a=\beta=1/2$, absent tails, $\kappa=1$, rank-one or zero leading blocks and the cap-branch equality. $\square$
+

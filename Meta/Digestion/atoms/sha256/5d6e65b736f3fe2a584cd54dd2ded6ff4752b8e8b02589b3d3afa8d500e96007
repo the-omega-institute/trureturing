@@ -1,0 +1,28 @@
+**对象。** 保持 §§441–446 的原完整素数前缀、下一素数时钟
+\(L=\log p\) 以及完整 \(J_z\) 和损失 \(\mathcal D_z\)。本节使用
+
+\[
+g(u)=\frac1{\zeta(1+u)},\qquad
+g_z(u)=E_z(1+u)(1-p^{-u})\quad(u>0).
+\]
+
+同时回到 §§384–385 的同一实际 Fibonacci 原子来源：
+
+\[
+0<q=\varphi_{\rm gold}^{-2}<2/5,\qquad
+\beta_d=\log(1-(-q)^d),\qquad
+\mathcal B(s)=\sum_{d\ge1}\beta_dd^{-s},\qquad e=\mu*\beta.
+\]
+
+这里 \(\varphi_{\rm gold}=(1+\sqrt5)/2\)，不与原轮廓
+\(\Phi=\exp(\operatorname{Ein})\) 混用。记 \(b=\beta_1=\log(1+q)>0\)，并定义
+
+\[
+\mathsf F(u)=\frac{\mathcal B(1+u)}{b\,\zeta(1+u)}
+=\frac1b\sum_{n\ge1}\frac{e_n}{n^{1+u}}\quad(u>0).
+\tag{PM.1}
+\]
+
+最后一个级数在每个 \(u>0\) 绝对收敛，来源正是（385.5）的原
+\(e_n\)，包括已校正的 \(e_1=b\)。
+

@@ -1,0 +1,82 @@
+**Theorem 19.1 (complete finite-charge region).** In Definitions 17.1–17.2
+the attainable pairs of live yield and Bayes-optimal live error mass are
+exactly
+
+$$
+\ell\leq P\leq1,\qquad
+\max\left\{\frac{\ell}{2},P-\frac12\right\}
+       \leq B_*\leq\frac P2.
+\tag{PR.68}
+$$
+
+Every point of this region is attained by a uniform binary seed, with
+equal live yield $P$ for each parity. Its decoder has the same conditional
+error for both parities. In particular the sharp lower boundary is
+
+$$
+R_*\geq
+\max\left\{\frac{\ell}{2P},1-\frac1{2P}\right\}.
+\tag{PR.69}
+$$
+
+This is also the optimum worst-parity conditional error among the
+specified acquisitions with common per-parity live yield $P$. It is
+not a minimax statement over all unknown original sources or all observers.
+
+Proof. Proposition 18.1 makes the two unnormalized live prior weights at
+seed $u$ equal to $\nu(u)q_0(u)/2$ and $\nu(u)q_1(u)/2$.
+Choosing the more likely parity minimizes error at that record; mixing
+decisions cannot reduce its smaller weight. Thus
+
+$$
+B_*=\frac12\sum_u\nu(u)\min\{q_0(u),q_1(u)\}.
+\tag{PR.70}
+$$
+
+The charge promise gives $\ell\leq q_\varepsilon(u)\leq1$, hence
+$\ell\leq P\leq1$. For numbers $x,y\in[\ell,1]$,
+
+$$
+\min(x,y)\geq\ell,\qquad
+\min(x,y)=x+y-\max(x,y)\geq x+y-1,\qquad
+\min(x,y)\leq(x+y)/2.
+$$
+
+Substitution in (PR.70) proves all inequalities in (PR.68).
+
+Conversely take any $(P,B)$ satisfying (PR.68), and put
+$q_{\rm lo}=2B$, $q_{\rm hi}=2P-2B$.
+Then $\ell\leq q_{\rm lo}\leq q_{\rm hi}\leq1$.
+Draw $U$ fairly in $\{0,1\}$ and prescribe
+
+$$
+q_\varepsilon(u)=
+\begin{cases}
+q_{\rm hi},&u=\varepsilon,\\
+q_{\rm lo},&u\ne\varepsilon.
+\end{cases}
+\tag{PR.71}
+$$
+
+Section 20 constructs actual original controls for each of these values.
+For each parity the yield is $(q_{\rm hi}+q_{\rm lo})/2=P$.
+The rule $d(u)=u$ is Bayes optimal, has error mass $q_{\rm lo}/2=B$
+for either parity considered separately, and hence conditional error
+$B/P$. In the equal-prior mixture its error mass is also $B$.
+For the lower boundary these parameters are equivalently
+
+$$
+(q_{\rm lo},q_{\rm hi})=
+\begin{cases}
+(\ell,2P-\ell),&P\leq(1+\ell)/2,\\
+(2P-1,1),&P\geq(1+\ell)/2.
+\end{cases}
+\tag{PR.72}
+$$
+
+If both parity yields equal $P$, the average of their conditional error
+probabilities for any decoder is its equal-prior error mass divided by
+$P$. Their maximum is at least that average, and (PR.70) bounds the
+average from below. The balanced construction attains it for both
+parities, proving the stated symmetric minimax claim. $\square$
+

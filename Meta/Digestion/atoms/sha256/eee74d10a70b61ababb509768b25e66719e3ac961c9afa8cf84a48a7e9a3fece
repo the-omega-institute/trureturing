@@ -1,0 +1,56 @@
+## Theorem 11. Native integral coordinates and signed time character
+
+Let \(q>0\), \(M_q=(\mathbb Z[C_2])^q\), and retain the original
+right-row transition \(T_q\) and stationary group \(G_q\) of Definition 1.
+For \(q=n+1\), define
+\[
+ P_q(y)=\bigl(y_1,\ldots,y_n,
+              y_0[\tau]-\sum_{j=1}^{n}y_j\bigr).
+\]
+Then \(P_qT_q=T_qP_q=\mathrm{id}\), and there is an integer-linear
+equivalence \(F_q:G_q\to M_q\) whose inverse is the original stage-zero
+map and which satisfies
+\[
+ F_q(\operatorname{of}_m(v))=P_q^m v,
+ \qquad F_q\Theta_q=T_qF_q.
+\]
+For odd \(q\), put \(\Lambda_q=\ell_qF_q\), with the primitive
+character \(\ell_q\) of Theorem 10. Then
+\[
+ \Lambda_q(\operatorname{of}_m(v))=(-1)^m\ell_q(v),\qquad
+ \Lambda_q\Theta_q=-\Lambda_q,
+\]
+and \(\Lambda_q:G_q\to\mathbb Z\) is surjective.
+
+Proof. Right multiplication by \([\tau]\) is involutive. The sum of the
+coordinates of \(P_qy\) is \(y_0[\tau]\), so the head of \(T_qP_qy\)
+is \(y_0\), and its remaining coordinates are \(y_1,\ldots,y_n\).
+Conversely, the first \(n\) coordinates of \(P_qT_qv\) recover the
+first \(n\) coordinates of \(v\); its last coordinate is the total sum
+minus that recovered prefix, hence \(v_n\). These statements also apply
+to the empty prefix at \(q=1\).
+
+The endomorphism identity
+\(P_q^jT_q^{j-i}=P_q^i\), for \(i\le j\), makes \(P_q^m\) a
+compatible family on the original forward stationary system. Its induced
+map is \(F_q\). It is inverse to stage zero because
+\[
+ \operatorname{of}_0(P_q^m v)
+   =\operatorname{of}_m(T_q^mP_q^m v)=\operatorname{of}_m(v).
+\]
+Since the two inverses commute, the same stage calculation proves the time
+intertwining. By Theorem 10,
+\(\ell_q(v+T_qv)=0\), so \(\ell_qT_q=-\ell_q\).
+Substitute \(P_qv\) to get \(\ell_qP_q=-\ell_q\), and iterate.
+Surjectivity follows from the surjectivity of \(\ell_q\) and \(F_q\).
+The universal property of the module direct limit and the first isomorphism
+theorem used here are the standard module constructions; the inverse and
+character formulas concern this specific original reset transition.
+
+This is an equivalence of integer modules, without a coordinatewise cone
+claim. For \(q=2\), the nonnegative row \((0,[1])\) is sent by \(P_2\)
+to \(([1],-[1])\). Moreover, an unsigned stage prescription cannot replace
+\(\Lambda_q\). At \(q=1\), \(T_1([1])=[\tau]\) and
+\(\operatorname{of}_0([1])=\operatorname{of}_1([\tau])\), whereas their
+unsigned finite characters are \(1\) and \(-1\).
+

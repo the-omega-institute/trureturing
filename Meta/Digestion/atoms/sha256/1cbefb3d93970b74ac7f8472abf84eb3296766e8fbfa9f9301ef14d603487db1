@@ -1,0 +1,16 @@
+### Theorem 2.1. Clean seven-pulse CY and twenty-one-pulse SWAP
+
+The native implementation of (2.1) restricts exactly to
+
+$$C_Y=|0\rangle\langle0|_c\otimes I_t+|1\rangle\langle1|_c\otimes Y_t.$$
+
+Moreover,
+
+$$\boxed{C_Y(a,b)C_Y(b,a)C_Y(a,b)=\operatorname{SWAP}_{a,b}.} \tag{2.2}$$
+
+Both native gates use only beta=0. They cost at most seven and twenty-one native pulses, respectively, and preserve the entire encoded space with all separators reset. The equalities hold for arbitrary encoded inputs, including inputs entangled with external systems.
+
+Proof. The identity R_x(-pi/4) Z R_x(pi/4)=Y proves (2.1), using the exact native CZ intertwiner. In (2.2), direct action on the four basis states fixes 00 and 11 and exchanges 01 and 10. The factors i and -i from controlled Y cancel, so no residual computational-state-dependent phase remains. Linearity gives the operator identity. Composing native intertwiners gives the all-input and clean-separator assertions. The costs are 1+5+1 and three times that number. QED.
+
+On three physical sites, the full native SWAP acts as minus one on the extra legal state 010. It need not be the identity outside the four-dimensional code. This extra phase is compatible with the phase-zero antiunitary restriction and is retained in Section 4's full five-state effect calculation.
+

@@ -1,0 +1,97 @@
+**Theorem 88.1 (zero-energy Birman--Schwinger equivalence and attainment).**
+The largest eigenvalue of $K_0$ is $C_*>0$ and is attained.
+There is a normalized strictly positive real vector
+$\Phi_c\in D(\mathcal E)$ with
+
+$$
+\mathcal E\Phi_c=C_*^{-1}V\Phi_c,\qquad
+H_c\Phi_c=0,\qquad
+\mu_c:=v[\Phi_c]>0,\qquad
+a b[\Phi_c]=\chi_c\mu_c.
+\tag{88.1}
+$$
+
+The following equalities and correspondence hold on the specified
+complex spaces:
+
+$$
+\begin{aligned}
+\ker H_c&=\mathbb C\Phi_c,\\
+\{f\in\mathcal Q_E:h_c[f]=0\}&=\mathbb C\Phi_c,\\
+\{f\in\mathcal Q_E:\|f\|_2=1,\ h_c[f]=e(\chi_c)\}
+ &=\{e^{i\theta}\Phi_c:\theta\in\mathbb R\},\\
+\ker(K_0-C_*I)&\underset{f\mapsto Mf}{\overset{u\mapsto C_*^{-1}Tu}
+ {\rightleftarrows}}\ker H_c.
+\end{aligned}
+\tag{88.2}
+$$
+
+The two displayed arrows are inverse linear bijections. In
+particular the extremizers of $v[f]/b[f]=C_*$, among nonzero
+$f\in\mathcal Q_E$, are exactly the nonzero multiples of $\Phi_c$.
+There is no restriction to real test vectors or to vectors with
+an ordinary phase gradient.
+
+Proof. By Theorems 84.1 and 87.2, $K_0$ is compact, selfadjoint,
+nonnegative and has norm $C_*>0$. The compact spectral theorem
+provides a top eigenvector $u\ne0$. It can be chosen nonnegative:
+the nonnegative integral kernels in (87.4) give
+$\langle |u|,K_0|u|\rangle\ge\langle u,K_0u\rangle
+=C_*\|u\|_2^2$, while the norm bound gives the reverse inequality.
+Equality in the Rayleigh bound for a nonnegative selfadjoint
+operator makes $|u|$ a top eigenvector. Moreover $Tu$ is strictly
+positive almost everywhere. For example, for nonzero $u\ge0$,
+each $P_tMu$ is strictly positive by (82.3), and its integral on
+$1\le t\le2$ is a positive lower bound for $Tu$.
+
+Put $f=C_*^{-1}Tu$. Theorem 87.2 gives $f\in D(\mathcal E)$,
+$Mf=u$, and
+
+$$
+\mathcal E f=C_*^{-1}Mu=C_*^{-1}Vf.
+\tag{88.3}
+$$
+
+In particular $f\ne0$ and $H_cf=0$. Normalize this positive
+vector to define $\Phi_c$. Bounded strict positivity of $V$
+proves $0<\mu_c<\infty$; pairing (88.3) with $f$ proves (88.1).
+
+Conversely if $f\in\ker H_c$, then
+$\mathcal E f=C_*^{-1}Vf$. Both $f$ and $C_*^{-1}TMf$
+are in $D(\mathcal E)$ and have the same image under
+$\mathcal E$, by (87.3). Its injectivity proved above implies
+$f=C_*^{-1}TMf$, hence $K_0Mf=C_*Mf$.
+The identities $MC_*^{-1}Tu=u$ on the top eigenspace and
+$C_*^{-1}TMf=f$ on the critical kernel prove the bijection.
+This also excludes a threshold Birman--Schwinger vector whose
+reconstruction would fail to be in $L^2$ or in the operator domain.
+
+Simplicity follows from the positive heat kernel argument in
+Theorem 84.1, now at the attained bottom zero. More explicitly,
+$S_t=e^{-tH_c}$ has a strictly positive kernel, since its
+bounded-potential Dyson series has nonnegative terms and contains
+$p_E(at;\eta,\xi)>0$. It is an $L^2$ contraction because
+$H_c\ge0$. If $u\in\ker H_c$, then
+$|u|=|S_tu|\le S_t|u|$ and contraction forces equality in
+$L^2$ norm, hence pointwise almost everywhere. Thus
+$S_t|u|=|u|$, and the spectral theorem puts $|u|$ in the same
+kernel. Equality in the integral triangle inequality with a
+strictly positive kernel makes the phase of a nonzero $u$
+constant almost everywhere. It also makes $|u|$ strictly positive.
+If the complex kernel had dimension at least two, subtracting
+a multiple of $\Phi_c$ would give a nonzero kernel vector
+orthogonal to $\Phi_c$. Its constant phase and strictly positive
+modulus make this impossible. The kernel is therefore exactly
+$\mathbb C\Phi_c$, and the bijection proves the same simplicity
+at the top of $K_0$.
+
+Finally the representation theorem for the nonnegative closed
+form $h_c$ gives
+$h_c[f]=\|H_c^{1/2}f\|_2^2$. Its vanishing on
+$\mathcal Q_E$ implies $f\in\ker H_c\subset D(H_c)=D(\mathcal E)$,
+by spectral calculus. Conversely a kernel vector has zero form.
+Since $e(\chi_c)=0$, these observations prove all of (88.2).
+The equality $v[f]=C_*b[f]$ is precisely $h_c[f]=0$;
+the nonzero denominators were proved in Theorem 84.1.
+$\square$
+

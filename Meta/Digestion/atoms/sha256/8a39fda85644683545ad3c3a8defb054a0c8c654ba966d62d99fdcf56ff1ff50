@@ -1,0 +1,52 @@
+### 216.8 Source correspondence and limits of comparison principles
+
+The full signed quotient, hull and single residual certificate are the
+objects of 199.1–199.4 and 213.1. The exact one-positive formula used
+for the endpoints and the separately funded comparison is 213.18,
+with its signed extension in 214.2. The head obstruction at 213.6,
+the feasible four-table law 213.30, the restricted law 205.3 and the
+complete unit-score supplier 205.4 retain their own hypotheses.
+Equations (216.23)–(216.24) use that unit supplier and a new signed
+surplus test; they do not count its existing construction a second time.
+The positive-cost constructor, alternate convertible core and sector
+generators share the one unsigned zero threshold (216.7). Their distinct
+uses are positive-cost attainment, signed conversion and the other
+sectors or sharp face, respectively.
+
+The following literature comparisons concern relations and hypotheses;
+none substitutes for the ordinary proofs or for 110.2's resource transport.
+In the experiment correspondence, a Boolean word is a state, a transcript
+cell an observation and a label an action. A common postprocessor must
+reproduce all state laws with one normalized kernel. In Xia's §3.4
+notation, the joint action sets are
+
+$$
+S_k(E)=\{E\Pi:\Pi\ge0,\ \Pi\mathbf1\le\mathbf1\},
+\qquad \Pi\in\mathbb R^{M\times k},
+$$
+
+with the leftover row mass assigned to one further action. The scalar
+set $S_1(E)$ cannot replace all these joint sets in a general multi-action
+decision comparison. Here the common output law must additionally obey
+the stopped schedule and hard request count. No source prior or scalar
+cost factorization supplies these extra requirements.
+
+| Source and precise correspondence | Limit of the correspondence |
+| --- | --- |
+| Blackwell, [Comparison of Experiments](https://digitalassets.lib.berkeley.edu/math/ucb/text/math_s2_article-08.pdf), §§2–5: comparison of attainable risk sets and randomization/sufficiency. One common decision rule, rather than separate eventwise optimizers, is the relevant object. | Abstract comparison does not supply a preselected stopped acquisition with two actual requests. |
+| Chen, [Experiments in the Linear Convex Order, v1](https://arxiv.org/pdf/2502.06530v1), §4.2 Theorems 1 and 3, §4.3 Definition 7 and Corollary 3: binary-action comparison and binary-decomposable value functions; the strategy conclusion in Corollary 3 has finite action space. | Whole-reward binary decomposability and resource-preserving realization have not been established here. Applying a binary theorem separately to A,C,P cannot produce their common full-score budget. |
+| Bertschinger and Rauh, [The Blackwell Relation Defines No Lattice, v1](https://arxiv.org/pdf/1401.3146v1), Lemma 10 and Example 18: binary/zonotope comparisons can hold without one normalized joint channel. | The example's unique nonnegative coefficient matrix has row sums $(2,2,2,0)$, so is not stochastic. This diagnoses normalization, not a separator in the present original source model. |
+| Zaev, [On the Monge–Kantorovich Problem with Additional Linear Constraints, v1](https://arxiv.org/pdf/1404.4962v1), §1 and duality theorem: all prescribed marginals and linear constraints belong to one joint measure. | Marginally feasible or separately optimized plans cannot be combined without joint feasibility. No transport-plan identification with the complete stopped catalog is assumed. |
+| Šámal, [Cubical Coloring—Fractional Covering by Cuts and Semidefinite Programming, v3](https://arxiv.org/pdf/0911.2589v3), fractional cut covers and their linear programs: one set of nonnegative weights covers all constraints. | The cycle in 216.3 uses explicitly verified stopped cells. A graph cut cover alone does not identify those cells, labels or their costs. |
+| Kaniewski, Lee and de Wolf, [Query Complexity in Expectation, v1](https://arxiv.org/pdf/1411.7280v1), Definition 8 and Theorem 9: nonnegative literal degree characterizes a scalar nonnegative output's expectation. | The reverse construction rescales scalar leaf outputs by total coefficient mass. It does not establish one normalized output-probability vector, stopped first-zero legality or all-Borel TV error. |
+| Gupta, Nagarajan and Singla, [Adaptivity Gaps for Stochastic Probing: Submodular and XOS Functions, v1](https://arxiv.org/pdf/1608.00673v1), model and Theorem 1.1: independent activations with known probabilities and expected monotone-submodular value under prefix-closed constraints give factor three. | The present source bits are deterministic conditional on each source, the comparison is uniform TV and the resource is an exact hard count. Neither the stochastic prior nor the objective correspondence is available. |
+| Xia, [Comparisons of Experiments in Moral Hazard Problems, v7](https://arxiv.org/pdf/2507.12476v7), Theorem 2: conic-span inclusion is equivalent to a nonnegative matrix factor and risk-neutral limited-liability cost comparisons. | A nonnegative factor need not be stochastic or satisfy the joint normalized output simplex and all acquisition constraints. Scalar conic inclusion does not establish the full shared-budget set. |
+| Fritz, Gonda, Perrone and Rischel, [Representable Markov Categories and Comparison of Statistical Experiments in Categorical Probability, v3](https://arxiv.org/pdf/2010.07416v3), Theorem 5.6 and Corollary 5.15: standard-Borel kernels with finite parameter space in 5.6, and discrete parameter objects in 5.15, admit common postprocessing characterizations. | A kernel factorization does not construct a two-request stopped query algorithm. The countable-source, uniform-error and exact-resource transport still requires 110.2. |
+| Wang et al., [Inferentially-Private Private Information, v2](https://arxiv.org/pdf/2410.17095v2), model and binary-secret result: a binary released state, fixed joint prior on state and secret, and inferential-privacy constraints govern Blackwell-optimal disclosure. | Neither this fixed-prior privacy model nor its optimality is the all-source original hard-two cap model. |
+| Huber and Marić, [Bernoulli Correlations and Cut Polytopes, v2](https://arxiv.org/pdf/1706.06182v2), Theorem 1 and agreement probabilities in §2: attainable symmetric Bernoulli correlations require one joint cube law. | Pairwise admissibility or a positive-semidefinite correlation matrix does not suffice. For three symmetric bits, correlations all $-2/5$ would give three agreement probabilities $3/10$; their sum $9/10<1$ contradicts the fact that every binary triple has an agreeing pair. This is a joint-realization analogy, not a hard-two separator. |
+| van Rooyen, [On Experiments, v2](https://arxiv.org/pdf/2508.08288v2), §3.1, Definition 25 and Theorem 26: finite basic sets, common postprocessing and prior-averaged directed deficiency. | A fixed-prior average is not the required uniform all-source bound; the postprocessor also needs an actual resource implementation. |
+
+These specified sources explain common normalization, joint feasibility
+and scope boundaries. They do not establish an exhaustive literature
+search, a formal-library result or worldwide novelty of the formulas.
+

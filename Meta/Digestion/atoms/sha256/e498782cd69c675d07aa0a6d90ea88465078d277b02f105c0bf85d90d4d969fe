@@ -1,0 +1,22 @@
+**Theorem 3.2 (Universal quantitative installed gap).** For every
+declared $p$, either fixed actual endpoint $j$, every unchanged
+independent seed law, and every table of Definition 2.1 with
+$|\mathcal K|\le8$ and $q_3=1$, its correct mass satisfies
+
+$$
+q_3-L_3\le S_3-\rho(p).
+\tag{3.3}
+$$
+
+Consequently, for every $1\le m\le8$,
+
+$$
+C_m\le S_3-\rho(p),\qquad
+S_3-C_m\ge\rho(p)\ge\frac{d^2b^7}{2}>0.
+\tag{3.4}
+$$
+
+The proof concludes in Section 9. No term of $\rho$, and no minimum
+of those terms, is asserted to be sharp or to have a matching
+middle-budget attainer.
+

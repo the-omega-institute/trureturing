@@ -1,0 +1,38 @@
+### 定义 29.1（对角嵌入）
+
+令
+
+\[
+H_\Sigma=\mathbb C^\Sigma
+\]
+
+具有标准基 \((|s\rangle)_{s\in\Sigma}\)。定义
+
+\[
+\iota_\Sigma:\Delta(\Sigma)\to\mathsf D(H_\Sigma),
+\qquad
+\iota_\Sigma(p)
+=
+\sum_{s\in\Sigma}p_s|s\rangle\langle s|.
+\]
+
+该映射把 FIB 概率律嵌入量子状态空间的对角子集。
+
+定义退相干映射
+
+\[
+\mathsf{Dec}_\Sigma(X)
+=
+\sum_{s\in\Sigma}
+\langle s|X|s\rangle
+|s\rangle\langle s|.
+\]
+
+它是 CPTP，并满足
+
+\[
+\mathsf{Dec}_\Sigma\circ\iota_\Sigma
+=
+\iota_\Sigma.
+\]
+

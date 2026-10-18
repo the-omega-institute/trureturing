@@ -1,0 +1,137 @@
+**Theorem 9.1 (one common attainment of every required identity).**
+Each construction in §8 is a normalized actual instrument with full
+TP decoders. Its forgotten complete five-mode channel is exactly
+$\widehat\Phi_*$ on every complex matrix and every passive reference,
+with each original labelled Borel-time measure preserved separately.
+It attains $E_*$, $\mathsf C(s)$, $\mathcal T(s)$ and the total
+alphabet asserted in TA.39 simultaneously.
+
+Proof. In the weak construction the low coefficient Gram is
+$\operatorname{diag}(\delta,1,1)$ and the single high matrix adds
+$\operatorname{diag}(1-\delta,0,0)$. In the strong construction,
+summing the four low and two high coefficient projectors in TA.12
+gives $I_3$: their three diagonal masses sum to one and all cross
+moments cancel. Each image decoder reconstructs its exact $K_i$.
+Absorption leaves its live product $K$ unchanged by TA.46.
+Consequently the full live map for every complex $A\in M_5$ is
+
+$$
+\Phi^L(A)=E[DA_VD^\dagger+TA_VT^\dagger+SA_VS^\dagger]E^\dagger.
+\tag{TA.48}
+$$
+
+The two spectral effects, including any absorbed $B_+$, sum to $M$.
+Construction 8.2 adds exactly the complement effect in the canonical
+failure sector. Thus for every Borel $B\subseteq[0,1]$ and every
+original $\ell\in\{0,1,2,3,13\}$,
+
+$$
+\Phi^f_\ell(A)(B)=
+ \left(\int_B\frac{2\,dt}{(1+t)^2}\right)
+ [w_\ell\operatorname{tr}(MA_V)
+    +\mathbf1_{\ell=2}\operatorname{tr}((I_5-P)A)]P_f.
+\tag{TA.49}
+$$
+
+The sums of encoder effects are exactly
+
+$$
+E(D^\dagger D+T^\dagger T+S^\dagger S+M)E^\dagger+(I_5-P)=I_5.
+\tag{TA.50}
+$$
+
+Absorption preserves this sum by TA.44–46. Individual finite effects
+are positive and bounded by $I_5$, hence each encoder is CP/TNI.
+Range decoders are TP on all $M_2$, ordinary high decoders on all
+$M_3$, the enlarged high decoder on all $M_4$, and the absorbed
+decoder on all $M_2$ by TA.46. Scalar failure decoders are TP because
+$\sum_\ell w_\ell=1$ and $\int_0^1g(t)dt=1$.
+
+These are identities of Kraus conjugations and trace functionals on
+complex matrix units. Cross-support operators between $P$ and $I-P$
+are killed by the specified encoder Kraus matrices; all extra-sector
+maps vanish. Original labels $1,2,3$ stay separate, labels $0,13$
+stay zero, and there is no singular or endpoint-atom addition.
+Common metadata keep their original fixed state. For a joint operator
+$X$ and arbitrary passive reference $R$, tensor all Kraus identities
+with $I_R$. The amplified live output is
+
+$$
+\sum_{K\in\{D,T,S\}}(EKE^\dagger\otimes I_R)X
+                              (EK^\dagger E^\dagger\otimes I_R).
+\tag{TA.51}
+$$
+
+The two traces in TA.49 become the exact conditional reference operators
+
+$$
+\Theta_M(X)=\operatorname{Tr}_5[(EME^\dagger\otimes I_R)X],\qquad
+\Theta_\perp(X)=\operatorname{Tr}_5[((I_5-P)\otimes I_R)X].
+\tag{TA.52}
+$$
+
+The amplified labelled output is
+$[\int_Bg]P_f\otimes[w_\ell\Theta_M(X)+\mathbf1_{\ell=2}\Theta_\perp(X)]$.
+No conditional reference state is replaced by an unconditional marginal.
+This proves every labelled Borel identity at every amplification.
+The actual $g$ has not replaced the ideal $f_y$: equality to the same
+complete approximate channel is what preserves all twelve original
+HALF full-cq errors and their maximum $E_*$.
+
+The actual laws are explicit for all twelve histories. An ordinary
+low label has mass $\|K_iU_{e,n}a_y\|^2$; an unabsorbed spectral
+label has mass $|b_\epsilon U_{e,n}a_y|^2$. At absorption their one
+merged label has the sum of these two masses with $\epsilon=+$.
+The weak high label has mass $(1-\delta)A_y$; the strong high labels
+have masses $\|H_\sigma U_{e,n}a_y\|^2$, summing to
+$(1-u_s)A_y+(1-v_s)B_y$. Complement contributions vanish on every
+one of these histories. TA.50 makes the laws sum to one.
+
+Only the declared high fibres have dimension at least three. On an
+arbitrary normalized five-mode density $\rho$ their total probability
+is
+
+$$
+\operatorname{tr}\!\left(
+ [E((1-u_s)D^\dagger D+(1-v_s)T^\dagger T)E^\dagger
+     +(I_5-P)]\rho\right).
+\tag{TA.53}
+$$
+
+This includes the entire complementary probability even though it
+later fails. On every original history it is
+$(1-u_s)A_y+(1-v_s)B_y$, independent of both signs and maximized
+at $y=27$. It equals the original sharp cost TA.9. The absorbed
+failure is genuinely on a dimension-two fibre; it has not been
+subtracted from any high acquisition mass.
+
+For the contrast, the supported scalar effects kill coordinate $0$.
+The weak high effect is diagonal. Thus arbitrary deterministic reports
+there change no $01$ coordinate. The weak low reports give contrast
+$\bar s\geq s$ on the initial plateau and exactly $s$ thereafter;
+TA.46 leaves this unchanged on absorption. The strong reports give
+TA.10, exactly $s$. Other effect coordinates are consequences of these
+constructions and are not restrictions on competitors.
+
+For height TV, the starting actual ray/spectral instruments have the
+credited optimal sum of absolute low/high/failure differences. The
+only coalescings are proportional high copies with positive height
+differences, complementary mass zero on both tested histories, and,
+at absorption, a strictly positive live difference with $\lambda_+>0$.
+Each preserves the sum of absolute differences exactly. In particular
+the scalar spectral labels give $|\lambda_+|+|\lambda_-|=L_f$;
+the weak low absolute sum is the credited optimizing $J(s/s_0)$,
+and the strong low/high absolute sum is JR43's exact expression.
+Thus the whole retained actual record attains $\mathcal T(s)$.
+
+All operations are common and fixed before receipt of the specimen.
+A normalized dilation may copy each acquired branch and inaccessible
+Kraus index into an orthogonal discarded environment and trace that
+environment permanently before the cut. Exactly the dephased actual
+label and its entire declared fibre remain accessible. Retaining any
+correlated share elsewhere changes the resource accounting; later
+independent blank ancillas for TP decoding do not. No inaccessible
+index is read or promoted to a free label. The counts in §8 are
+therefore actual total alphabets, including their full complementary
+completion, and match the lower bounds of Theorem 7.1. $\square$
+

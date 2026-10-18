@@ -1,0 +1,9 @@
+8. `M3:2>3/F1`
+
+Thus each actual edge has a circular normal link, with no endpoint reversal.
+The displayed cycles also cover every ordered-edge/exiting-face state: cyclic
+shifts choose each of the 48 local edges, reversing the ordered endpoints
+chooses either endpoint order, and reversing traversal chooses either exiting
+face. These four choices per local edge give all 192 states. Each has the
+same first-return length as its displayed cycle and no endpoint reversal.
+

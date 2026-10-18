@@ -1,0 +1,24 @@
+**定义 28.3.1（完整结果律的 Shapley 责任）。**
+
+$$
+\phi_i
+=
+\sum_{S\subseteq N\setminus\{i\}}
+w_{n,S}
+\bigl(\mu_{S\cup\{i\}}-\mu_S\bigr).
+$$
+
+$\phi_i$ 是 signed measure。对事件 $E$ 的责任为
+
+$$
+\phi_i(E)
+=
+\sum_{S\subseteq N\setminus\{i\}}
+w_{n,S}
+\bigl(v_E(S\cup\{i\})-v_E(S)\bigr).
+$$
+
+这一定义明确选择了「所有端排列等权」的协议。若某些联盟干预不合法，必须改用相应的合法排列分布，不能继续把这个等权数值冒称为唯一责任。
+
+<a id="section-28-4"></a>
+

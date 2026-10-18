@@ -1,0 +1,35 @@
+**定理 6.1（Six-label endpoint refinement）。** Fix $Q\ge2,m\ge3,k=Qm$, six pairwise distinct labels $A,B,C,D,E,R$, and a surjective $\lambda:I\to\{B,C\}$. Give every high INITIAL tail label $R$. On low tails give phase 0 label $D$, phase $m$ label $E$, band phase $j$ label $\lambda(j)$, and every other phase label $A$. Then
+
+$$
+C_{\rm ad}=C_{\rm pre}=Q+1+\mathbf1_{\{Q=2,\ m\text{ odd}\}}.
+\tag{6.1}
+$$
+
+The preset upper bound uses one common literal stream for both successful root children.
+
+Proof of lower bounds. At each phase the tails $k-m-1$ and $k-m$ have different labels, so the same first-zero argument forces root $1^m$. Its positive child now contains both $D$ at 0 and $E$ at $m$; its zero child contains the two band labels and the other outside phases. On the latter child the forced leading-zero and first-tour lower bounds of Theorem 2.1 apply unchanged, because they involve only its actual band sources and low outside sources. Thus at least $Q+1$ blocks are needed, and $Q=2$, odd $m$ leaves a fresh outside label $A$ alongside $B,C$, requiring $Q+2$. This is an all-adaptive lower bound for the refined target.
+
+For common-stream attainment use the ordinary scan when it removes all outside sources and the alternative scan (2.4) otherwise. The second block starts zero for both root children. On the positive child phase $m$ is the left endpoint of $W_1$ and has response zero; phase 0 is outside every remaining first-tour window. Hence both $D$ and $E$ have the same zero continuation differences through that tour, and remain available for the common final query. Their current tails after the second block are the same as on the other child.
+
+Choose band bits $b(B),b(C)$ differently, with $b(\lambda(H))=1$. At index $Q$, let
+
+$$
+F=\{j\in I:b(\lambda(j))=1\},\qquad
+E_Q=F\cup\{0\}\cup
+\begin{cases}
+\{k\},&|F|+1\text{ is odd},\\
+\varnothing,&|F|+1\text{ is even}.
+\end{cases}
+\tag{6.2}
+$$
+
+This has even charge inside $W_Q=[k,0,1,\ldots,H]$ in path order. It assigns phase 0 response one and phase $m$ response zero, distinguishing $D,E$ on the positive root child. On the zero root child it assigns the required band bits. Phase $k$ is an actual absent donor in both continuing archives: on the positive child it was excluded by the root, and on the zero child it was excluded by the ordinary successful scan or by (2.4). Phase 0 here is deliberately an observed source on one child, not an absent donor there. Its response is fixed to one; parity is compensated at $k$ instead.
+
+The inverse of (6.2) contains zero since its response at the interior vertex 0 is one, whereas a full-one word has only its two endpoint responses. Its leading run is zero or one: if the left endpoint $k$ is selected, the next response at 0 flips the next bit to zero. Its terminal tail may be nonzero and is retained. All seams after the scan are strictly legal.
+
+When the scan removed all outsiders, stop after this endpoint: the positive-root branch decodes $D$ on difference one and $E$ on zero, and the zero-root branch decodes $B,C$. Each scan-positive branch of the zero-root child returned $A$ earlier. This gives $Q+1$ actual blocks.
+
+When $Q=2$ and $m$ is odd, the alternative scan leaves outside phase $z=m+1$ on the zero-root child. Append the common block $110^{m-2}$ at index $Q+1$, with mask $\{H,z\}$. On that child its codes and labels are exactly those in (3.3): outsider $A$ gives $01$, bit-zero band label gives $00$, and bit-one band label gives $10$ or $11$. The positive-root child already stopped at the main endpoint, and requires no branch-specific action. Even if formally continued, the final word is safe from the common tail: leading two after a terminal run at most $m-1$ gives at most $m+1<k$. This one stream therefore realizes both root children within $Q+2$ blocks. Both free values use the same differences and stopping rules; the initial $\bot$ branch stops free. ∎
+
+Identifying $D=E=A$ coarsens this refinement to the fresh-outside-label case of Theorem 3.1. Its binary fee is reused there, not counted as another standalone theorem. The refined proof supplies the extra common-stream condition that cannot be obtained merely by taking the maximum of two separately optimal preset continuations; [S15, Proposition 4.2] explicitly preserves this distinction.
+

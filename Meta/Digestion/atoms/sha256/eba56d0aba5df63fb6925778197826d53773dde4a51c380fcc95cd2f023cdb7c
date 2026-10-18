@@ -1,0 +1,25 @@
+**Theorem 3.2 (guarded affinity reduction, retaining both mass directions).**
+Every $q_\pi$ is a strictly positive probability on $\mathcal S$.
+Pointwise $H=\prod_iG_i$. If $R$ is nonempty, $0<a_R\le1$, and
+
+$$
+Z_R=\left(\prod_iC_i\right)
+       \sum_{s\in R}H(s)\prod_iu_i(s)
+\le\left(\prod_iC_i\right)a_R.
+\tag{OOA.12}
+$$
+
+Keeping $R,H$ and the once-owned slacks gives the equality in both
+directions. Dropping slacks or enlarging $R$ gives an upper bound only.
+
+Proof. Generate the full owner tuples in order $\pi$. Every context
+is a function of earlier tuples and its row sums to one. Summing in
+reverse order gives $\sum_sq_\pi(s)=1$. In a uniform permutation,
+the relative order of $i$ and its $k_i$ distinct incoming owners is
+uniform. Exactly $A$ precede $i$ with probability $\gamma_{k_i}(A)$.
+Averaging $\log q_\pi(s)$ therefore gives $\log H(s)=\sum_i\log G_i(s)$.
+Substitution proves the equality in (OOA.12), using each $\Phi_i$ once.
+Pointwise geometric/arithmetic mean gives
+$H(s)\le(n!)^{-1}\sum_\pi q_\pi(s)$, so $\sum_{\mathcal S}H\le1$.
+Strict positivity proves $a_R>0$ for nonempty $R$. $\square$
+

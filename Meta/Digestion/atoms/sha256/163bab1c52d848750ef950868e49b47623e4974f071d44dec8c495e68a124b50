@@ -1,0 +1,32 @@
+**Proposition 142.3 (Loss compatible with every positive slack).** Put
+$\kappa_3=2+29e-2a_2-4a_3-5a_4-5a_5$.
+Every cap-feasible $N$ allocation obeys
+
+$$
+\begin{aligned}
+15-S_{C3}(p)
+ &=\sum_S(15-B^{(C3)}_S)w_S
+ +\sum_{S,c,r}(M^{(C3)}_{S,c}-h^{(C3)}_{S,c}(r))T_{S,c,r},\\
+0\le15-S_{C3}(p)&\le\kappa_3,\\
+2w_{\mathrm{deg}}+w_{(1,5)}+w_{(2,5)}+w_{(3,5)}&\le\kappa_3,
+\end{aligned}
+\tag{142.4}
+$$
+
+where $w_{\mathrm{deg}}$ is the sum of empty and singleton schedule masses.
+
+**Proof.** Subtract the full terminal expansion in (142.3) from
+$15\sum_Sw_S$ and insert the cell maxima. Every summand is nonnegative.
+The cap-score lower bound for $C3$ is $15-\kappa_3$.
+Its schedule totals are 13 for degenerate schedules, 14 for the three
+listed pairs and 15 for the remaining pairs. Discarding the nonnegative
+cell losses proves the final inequality. $\square$
+
+At $\kappa_3>0$ this permits positive deficient schedule or label masses;
+it does not force their removal. At $\kappa_3=0$ every positive mass must
+have zero relevant loss. The full model and lifts use the loss identity
+without importing a saturated mask into positive-$\kappa_3$ cases.
+The $C3,C2,K$ suppliers, $R1$, $R3$ and $R6$ scalars are attributed in
+Section 153; completeness of the projected feasible region and one
+simultaneous stopped lift is the result established here.
+

@@ -1,0 +1,22 @@
+**Open problem 13.6 (unrestricted compensation).** For
+$\min(k,n-k+1)\ge4$, retain the original alternatives: prove the
+unrestricted same-graph collective inequality (SI.59), equivalently
+(SI.83), at both original caps, or supply a complete correct
+strict-subgrid graph at those caps. No transformation of arbitrary
+competitors into Definition 13.1, no necessity of a representative
+injection for arbitrary competitors, and no general exclusion of
+incomparable cross-depth support reuse is supplied by Theorem 13.2.
+Proposition 13.3 has $M_{v,g}>G$; overload and prefix merging give no
+state saving. Minimum attainment for each fixed star partition or
+selector and the unrestricted-budget $H_{\min}$ remain separate
+questions. TC Theorem 9.1's universal state-shortage-to-actual-full-run
+obstruction is not discharged. No operation, numerical bound or
+acquisition permission from a distinct quantum, calibration, stochastic,
+analytic or expanded-storage contract is a premise of these results.
+Installed control, table representation, exported alphabet, acquisition,
+physical memory and elapsed time remain different quantities; the
+mathematical tables imply no physical realization bound.
+
+[PC2017]: https://doi.org/10.4230/LIPIcs.CCC.2017.4
+[SS2021]: https://doi.org/10.4230/LIPIcs.CCC.2021.17
+

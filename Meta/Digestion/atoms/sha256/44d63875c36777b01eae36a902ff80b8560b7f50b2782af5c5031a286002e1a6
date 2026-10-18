@@ -1,0 +1,77 @@
+**Lemma 5.2 (Simultaneous strict minor bounds).** For a matrix block in
+the fixed order $L$ or $V$, let $\Delta_k$ be the determinant of its
+leading $k\times k$ principal submatrix. Every entry in the next table
+is a strict lower bound, uniform over the indicated events and signs.
+
+| Events | Matrix | $\Delta_1(L)$ | $\Delta_2(L)$ | $\Delta_1(V)$ | $\Delta_2(V)$ | $\Delta_3(V)$ |
+| --- | --- | --- | --- | --- | --- | --- |
+| All ten pairs and $\{25\}$ | $I/2\pm H_J$ | $2/25$ | $1/500$ | $7/100$ | $3/10000$ | $1/10000$ |
+| $\{2\},\{3\},\{5\}$ | $(26213/50000)I\pm H_J$ | $7/20$ | $1/8$ | $1/250$ | $1/2500$ | $1/200000$ |
+| $\{N\}$ | $I/2+H_N$ | $1$ | $2/5$ | $1/3$ | $1/10$ | $9/250$ |
+
+Consequently the eleven events in the first row have norm below $1/2$,
+the three in the second row have norm below $26213/50000$, and
+$H_N\succ-I/2$.
+
+Proof. Here is a rational certificate for all $110+30+5=145$
+inequalities. Integer squaring gives
+
+$$
+r_-:=\frac{4123105}{1000000}<r<
+r_+:=\frac{2061553}{500000}.
+\tag{5.3}
+$$
+
+For $x=u+vr\in\mathbb Q(r)$, after reducing by $r^2=17$, put
+
+$$
+\mathcal L(x)=
+\begin{cases}u+vr_-,&v\ge0,\\u+vr_+,&v<0.\end{cases}
+\tag{5.4}
+$$
+
+This is a rational lower bound for $x$. Reduction precedes endpoint
+substitution; determinants at a fictitious physical source are not
+being used. Apply (2.13) and its two-dimensional version to (5.2).
+The exact minima of $\mathcal L(\Delta_k)$ over each row's events
+and signs, in the five-column order of the displayed minor table, are
+
+$$
+\begin{aligned}
+\mathbf m_1=\bigg(&
+\frac{2550986292187}{31589277600000},
+\frac{145634780064979}{72200452882560000},
+\frac{18550575484933}{252714220800000},\\[-2pt]
+&\frac{500320088596678933}{1330509945719815680000},
+\frac{134457340051112983}{1330509945719815680000}\bigg),\\
+\mathbf m_2=\bigg(&
+\frac{55370023301729}{157946388000000},
+\frac{2825499825261754314539}{22562641525800000000000},
+\frac{405047449671}{84238073600000},\\[-2pt]
+&\frac{20570908698283648019381}{41578435803744240000000000},
+\frac{2161305730306518257799809}{415784358037442400000000000000}\bigg),\\
+\mathbf m_3=\bigg(&
+\frac{64454182416593}{63178555200000},
+\frac{145178533822590539}{361002264412800000},
+\frac{17830251190997}{52648796000000},\\[-2pt]
+&\frac{452502063300490155889}{4157843580374424000000},
+\frac{17998076394403593139}{489158068279344000000}\bigg).
+\end{aligned}
+\tag{5.5}
+$$
+
+For clarity, the finite comparisons specified by (5.5) use all pairs
+$\{N,2\},\{N,3\},\{N,5\},\{N,25\},\{2,3\},\{2,5\},
+\{2,25\},\{3,5\},\{3,25\},\{5,25\}$; the first two rows
+include both signs. Matrix entries add and multiply as pairs by
+$(u,v)(u',v')=(uu'+17vv',uv'+vu')$.
+Together with (5.2), (2.13) and (5.4), this specifies every rational
+identity in (5.5). Each coordinate of $\mathbf m_i$ strictly exceeds
+its corresponding simple bound in the minor table, by cross multiplication
+of positive denominators. Thus all leading principal minors are positive.
+Sylvester's criterion on the real symmetric $2\times2$ and $3\times3$
+blocks gives the asserted strict Loewner inequalities, hence the norm
+bounds. This proof does not use the trace-zero singleton criterion:
+for this nonunital channel, $\operatorname{tr}\mathcal A(\Pi_s)$ need
+not equal one. $\square$
+

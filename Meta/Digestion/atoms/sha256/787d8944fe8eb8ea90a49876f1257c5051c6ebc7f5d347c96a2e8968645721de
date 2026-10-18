@@ -1,0 +1,28 @@
+**Corollary 333.3 (One actual allocation for every full score).**
+For every point of (333.1), $(b,e_*)=(h,t,\ldots,t;e_*)$ belongs
+to $H_9$. The single normalized stopped allocation of 333.1 obeys
+
+$$
+F_{Qy}(b,e_*)\le\Delta_O(y)\qquad\text{for every full }y\ge0.
+\tag{333.7}
+$$
+
+In particular, no full unit-$O$ score can have
+$F_{Qy}(b,e_*)>M$ for a full feasible $N$ allocation of mass $M\ge1$
+at one of these same profiles.
+
+**Proof.** The hull conditions of 229.3 have $b_2=b_3$ and
+
+$$
+E_b=\sum_{n=3}^9b_n-10e_*
+ =7t-10e_* =\frac{150-18t}{496}>0,\qquad
+h+E_b\le\frac{61}{100}+\frac{141}{496}<1.
+\tag{333.8}
+$$
+
+Order, $b_9>e_*>0$ and $b_1\le1$ also hold. Pair every $y$
+with that same mass-one allocation in (331.2). This proves (333.7)
+without optimizing a separate law for a score or splitting its
+budget. The assertion is regional; it does not supply a payer on
+all of $H_9$ or $H_N$. $\square$
+

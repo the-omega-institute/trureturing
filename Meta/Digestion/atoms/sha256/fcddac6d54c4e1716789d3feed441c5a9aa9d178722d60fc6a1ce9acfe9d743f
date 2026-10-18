@@ -1,0 +1,78 @@
+**Lemma 3.1 (strict six-pair device).** Under Assumption 1.1, put
+$d=n-4$ and define
+
+$$
+\begin{array}{ll}
+ A=(K-4,L-1),&C=(K-3,L-2),\\
+ Y=(K-2,L-3),&Z=(K-1,L-4),\\
+ U=(K-3,L-1),&V'=(K-1,L-3).
+\end{array}
+\tag{TS.12}
+$$
+
+The first four cells lie at depth $d$, the last two at $d+1$.
+Suppose one actual consecutive gap $I$ contains these two diagonals and
+at least two other internal diagonals. Suppose every pair of different
+cells sharing a state within $V_I$ is among
+
+$$
+AZ,\quad CZ,\quad AY,\quad UV',\quad AV',\quad ZU.
+\tag{TS.13}
+$$
+
+Then $E_I-D_I\ge1$. This is a conditional application lemma; (TS.13)
+is verified for the claimed applications, not imposed on arbitrary graphs.
+
+Proof. The relation (TS.13) is the four-cycle $A-Z-U-V'-A$, with pendant
+edges $C-Z$ and $A-Y$. It has no triangle. Three hosted cells at one state
+would require a triangle, so every state with multiple cell incidences has
+exactly two. Let $s$ count these states; then $D_I=s$. Regard each such
+state as an edge of a multigraph, retaining parallel edges for distinct
+states, and let $v\le6$ count its incident cells. At an incident cell,
+the host count dominates its degree, so incident excess is at least
+$2s-v$. The other internal diagonals are exclusive under (TS.13) and
+each has ambiguity excess at least one. Consequently
+
+$$
+E_I\ge4,\qquad E_I\ge2s-v+2\ge2s-4.
+\tag{TS.14}
+$$
+
+Assume $E_I\le D_I=s$. The two bounds force $s=E_I=4$, and then
+$v=6$. There are exactly four internal diagonals, each with excess one;
+any extra diagonal would make $E_I\ge5$. The two exclusive diagonals
+already contribute two. Every incident host count therefore equals its
+degree, and every other cell on the first two diagonals has one host.
+
+Write $x,y,z_*,u_*,v_*,w_*$ for the multiplicities of
+$CZ,AY,UV',AZ,AV',ZU$. Since the pendant cells are incident,
+$x,y\ge1$. A $CZ$ state has a common live zero reply whose actual
+successor hosts $U,V'$; an $AY$ state has a common live one reply with
+those same child cells. Thus $z_*\ge1$, without successor injectivity.
+Counting total edges and degrees on the two diagonals gives
+
+$$
+\begin{aligned}
+x+y+z_*+u_*+v_*+w_*&=4,\\
+2x+2y+2u_*+v_*+w_*-4&=1,\\
+2z_*+v_*+w_*-2&=1.
+\end{aligned}
+\tag{TS.15}
+$$
+
+Nonnegative integrality gives $z_*=1$, $v_*+w_*=1$, $x=y=1$ and
+$u_*=0$. If $v_*=1$, only $A$ on the first diagonal has multiple hosts.
+Thus $C,Y,Z$ have singleton support families; the adjacent actual forks of
+Convention 2.2 make all three supports equal. The existing $CZ$ state then
+hosts equal supports with unequal hits, impossible. If $w_*=1$, only $Z$
+has multiple hosts there; the same reasoning on $A,C,Y$ contradicts the
+existing $AY$ state. These exhaust $v_*+w_*=1$. Hence $E_I>D_I$;
+integer cardinalities give the asserted unit. $\square$
+
+The multigraph, actual-successor forks and singleton-support contradiction
+are the mechanism of [SI, Lemma 10.3 and Theorem 10.4][SI], also exposed in
+[SB, Lemma 5.3 and Theorem 5.4][SB]. Their span-four application has three
+ambiguous diagonals and proves nonnegative compensation. The change in
+(TS.14) is the fourth actual ambiguous diagonal; the strict unit and its
+applications below are the bounded extension.
+

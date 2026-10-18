@@ -1,0 +1,38 @@
+### Theorem 5.1 (every fixed path needs at least $d+5$ reads)
+
+For every $d\ge0$, no predetermined fixed cumulative $M/J$ path with fewer than $d+5$ exact scalar reads uniformly recovers $(S,\kappa,D)$ on the declared common-source model.
+
+#### Proof
+
+Let $n=d+5$ and use the actual parameter chart
+
+$$
+\mathcal V=(0,\infty)^3\times\mathbb R^{d+2}
+$$
+
+with coordinates $(p,q,r,\kappa,\delta_0,\ldots,\delta_d)$,
+
+$$
+S=\begin{pmatrix}p&q\\r&qr/p\end{pmatrix},\qquad
+D(t)=\sum_{h=0}^{d}\delta_h t^h.
+$$
+
+This is an injective chart of actual targets. Every chart point is physically realized by $\alpha=1$, $\beta=\kappa$, $R=S$, $c=(p,r)^{\mathsf T}$ and $\ell=(1,q/p)$.
+
+For any fixed list of $m$ recorded cumulative matrices $A_i$, the observation map $F:\mathcal V\to\mathbb R^m$ has components
+
+$$
+F_i=(1+\kappa i)\left((A_i)_{00}p+(A_i)_{10}q+(A_i)_{01}r+(A_i)_{11}\frac{qr}{p}\right)
+ +\sum_{h=0}^{d}\delta_h i^h.
+$$
+
+It is smooth on $\mathcal V$. Assume $m<n$, and let $\rho$ be the largest Jacobian rank attained on $\mathcal V$; then $\rho\le m<n$.
+
+If $\rho=0$, the derivative vanishes on a small convex ball and integration along line segments makes $F$ constant there, giving distinct actual targets with the same observations.
+
+Suppose $\rho>0$. Choose a point at which a $\rho\times\rho$ Jacobian minor is nonzero and a neighborhood on which it remains nonzero. By maximality, the rank is exactly $\rho$ throughout that neighborhood. Permute coordinates and output components so that this minor uses the first $\rho$ coordinates and first $\rho$ components. The implicit function theorem says that the level set of those first components through the chosen point is a smooth graph over an open ball in the remaining $n-\rho$ coordinates, which is nonempty because $n-\rho>0$.
+
+On this graph, the differentials of all remaining components of $F$ are linear combinations of the differentials of the first $\rho$ components, since the total rank is $\rho$. They therefore vanish on every tangent vector to the graph. Integrating along paths in a sufficiently small connected parameter ball makes every remaining component constant on the graph as well. The first components are constant by construction, so $F$ is constant on a graph containing distinct points of $\mathcal V$. The corresponding targets are different but have the same $m$ readings, contradicting uniform recovery.
+
+A fixed protocol that may stop earlier can be padded with empty words along its same predetermined sequence to its claimed uniform read limit. A collision for the padded observation map has identical history up to every stopping decision, so padding does not remove the collision. The argument is for fixed paths; it does not apply to adaptive word selection. ∎
+

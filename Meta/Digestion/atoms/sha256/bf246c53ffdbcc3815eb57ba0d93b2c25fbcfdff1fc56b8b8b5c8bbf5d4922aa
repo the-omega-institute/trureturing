@@ -1,0 +1,17 @@
+**Proposition 70.2 (axis and zero-height conditions).** If $\lambda>0$,
+no endpoint contact has $z=0$. At any contact of zero sheet height,
+the angular derivative of that height vanishes. Thus a simple zero of
+the height is excluded. Axes and multiple zeros are retained when not
+excluded by these statements.
+
+**Proof.** At $z=0$ both choices of $r$ have the same zero gap. Their
+angular derivatives would both vanish, but differ by
+$2\lambda z'$ times a positive sheet denominator; $z'\ne0$ at these
+points. This is impossible when $\lambda>0$. If a sheet height is zero,
+both choices of $\epsilon$ have zero gap for a maximizing $r$.
+Subtracting their zero derivative equations gives zero derivative of
+the height (the positive denominator has no effect at a zero).
+When $\lambda=0$ the report constraints coincide, so the first argument
+does not exclude $z=0$. No generic-simple-root assumption removes these
+cases. $\square$
+

@@ -1,0 +1,16 @@
+**约定 14.1（原始接口与复用边界）。** 本卷使用以下原始来源，而不把名称相似或线性张成当作恢复权限。
+
+| 14来源 | 承担的原前提与复用范围 |
+| --- | --- |
+| 14原语法：[Atomic](FIBONACCI_ATOMIC_RELATION_GENERATION.md) §§2–5、13；[Continuation](FIB_RELATIONAL_CONTINUATION_GEOMETRY.md) §1 | 非空有序树、原 $\rho$、结构解释、$M$ 与数量逆；复用基础，向量节点不换成加法 |
+| 14切面：[Boundary Geometry](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY.md) §§5、7、8 | 完整旋转合同与原生可达性分开；固定单位全树标签；八元数二生成切面及外部上下文边界 |
+| 14形式源：[GenealogicalFiberTransport](../../../D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.lean) 及 [Blueprint](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.md) | `FreeMagma Bool`，true对应 $\alpha$、false对应 $\beta$；非空组成纤维、形状与叶位、替换单射；零组成为空 |
+| 14上下文：[StrictOneHoleContexts](../../../D5/S3/ConceptDynamics/Observation/StrictOneHoleContexts.lean)、Continuation13.2 | 全部有限严格上下文、失败与正常零分开、实际联合合法域饱和；本卷固定制备子合同另有直接证明 |
+| 14线性观察：Boundary16–17；[ObservableKrylovGrowthBound](../../../D5/S3/ObserverMemory/Dynamics/ObservableKrylovGrowthBound.lean)、[MaximalUnobservableSubspace](../../../D5/S3/ObserverMemory/Dynamics/MaximalUnobservableSubspace.lean)、[ObservableKrylovPermanentStability](../../../D5/S3/ObserverMemory/Dynamics/ObservableKrylovPermanentStability.lean) | 线性初态、线性更新及线性观察；其维数、加法递推和稳定结论不实例化本卷非线性原树过程 |
+| 14Clifford：Atomic355–356 | 结合 Clifford 叶积，356的窗口来自同一原树的连续替换；其六周期和代数逆不移植到叉积或连续变量叶出现 |
+| 14已发表原生控制：[Process Geometry](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md) §44 | 固定单位制备的实际组成／方向像、原生控制及付费单历史取得；本卷直接复用单位机制，额外可变叶制备不由这些控制供应 |
+| 14外部仪器：Boundary37–43、Process44.15–44.18 | 所供 $W=E\oplus\mathbb H$ 初态、锚、仪器读／破坏性更新、公共校准，以及仿射或球帽／两半径层来源；不是本卷 $E_p(\rho^jt)$ 的原生变叶过程 |
+| 14算术来源估计：Atomic407–413 | Mellin／Abel 来源估计；不授原树制备、复制、逆或校准菜单 |
+
+Process44 已给固定单位制备的方向控制和取得结果，不能将本卷的单位标签、数量逆或相同单位特例另称未发表增量。Boundary43 的两半径初始来源及制备／读取误差合同与本卷额外叶对不同，其误差下界不回答下节的问题。Atomic19、375 的更宽操作或物理接口亦须逐项另外供应。读取既有 D5 原文只是复用接口，本卷不新增或声称运行其 Lean 核验。
+

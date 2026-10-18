@@ -1,0 +1,32 @@
+**Corollary 7.5 (The exact role of the fixed law).** A single
+positive-measure atom of weight one gives (4.4)–(4.5), including
+the constant-seed space. An atomless probability space gives
+$\mathcal Q_\nu=[0,1]$ and
+$\mathcal L_{2,\nu}=F$. For any fixed space and feasible mass,
+
+$$
+\mathcal L_{2,\nu}(q)\ge F(q).
+\tag{7.8}
+$$
+
+If equality is unavailable at a feasible mass, the difference is
+strictly positive between attained values, rather than a finite
+unattained infimum.
+
+Proof. The first two assertions substitute $d=0,\lambda_1=1$
+and $d=1$ respectively into Theorem 7.4. Every point of
+$\mathcal B_\nu$ is a convex combination of the finite pairs,
+with total weight $\sum_n\lambda_n+d=1$. It therefore has
+risk at least $F$ at its mass. If a fixed-law minimum equalled
+$F(q)$, its actual attainer from Theorem 7.4 would attain that
+value. Unavailability of equality thus forces a strict gap.
+$\square$
+
+For finitely many atoms, (7.6)–(7.7) involve finitely many atomic
+assignments and a finite linear optimization. With countably many
+atoms they are exact infinite weighted formulae and an existence
+theorem. They are not a uniform finite algorithm on arbitrary
+unencoded laws. Measurable selection of the optimal atom labels
+here means a partition of the original space; it makes no claim of
+an effective membership procedure or bounded-state implementation.
+

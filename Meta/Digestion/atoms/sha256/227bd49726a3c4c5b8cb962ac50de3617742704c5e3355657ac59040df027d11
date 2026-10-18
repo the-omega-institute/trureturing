@@ -1,0 +1,38 @@
+**Theorem 3.4 (Bounded affine observables are $\beta$-independent).**
+In any finite model of Definition 2.1, a fixed affine scalar observable
+of $E$ that is bounded on each phase torus at fixed height is independent
+of $\beta$. In particular every component of a finite-error decoder has
+this property. No such conclusion is imposed on unbounded hidden
+coordinates.
+
+**Proof of Theorem 3.4.** The surjection
+
+$$
+\pi_k:\mathbb C^{m+1}\to V,\qquad
+\pi_k(a)=a^{\mathsf T}F(k,\cdot)
+$$
+
+satisfies $\tau_{v(k,t)}\pi_k=\pi_kS_t^{\mathsf T}$.
+Its kernel is invariant under $S_t^{\mathsf T}$. A basis adapted to
+that kernel makes this matrix block triangular, with the translation on
+$V$ as its quotient block. Every eigenvalue of that translation
+therefore belongs to the finite spectrum of the one fixed matrix $S_t$.
+For a character from Lemma 3.2 this implies
+
+$$
+\chi_1(t/2)\chi_2((1/2-k/r)t)\in\operatorname{spec}(S_t)
+\quad(0<k<H).
+$$
+
+Set $t=1$. Since $1/2-k/r$ ranges over $(0,1/2)$, the homomorphism
+$x\mapsto\chi_2(x\bmod2\pi)$ has finite image on that interval.
+Lemma 3.3 makes it trivial, and every circle class has a real
+representative. All basis characters of $W$ are thus $\beta$-independent.
+
+At each height the observable belongs to $V$, and its stated boundedness
+puts it in $W$. For finite-error $q$, the bound
+$\|q(x)\|\le\operatorname{err}(E,q)+\sup\|y\|$ proves the requisite
+boundedness. Homogenization includes every affine offset, including
+dimension zero. Unbounded coordinates need not belong to $W$.
+$\square$
+

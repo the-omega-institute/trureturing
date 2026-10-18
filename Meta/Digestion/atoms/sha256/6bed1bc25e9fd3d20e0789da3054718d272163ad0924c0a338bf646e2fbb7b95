@@ -1,0 +1,34 @@
+**Definition 2.3 (whole-value selection).** Use the finite equations
+
+$$
+\begin{aligned}
+\mathsf{Gen}\,k
+&=\mathsf{nd}\,(k\,\mathsf A)
+  \bigl(\mathsf{nd}\,(k\,\mathsf B)
+                   (\mathsf{Gen}\,(\mathsf{Left}\,k))\bigr),\\
+\mathsf{Left}\,k\,x
+&=\mathsf{Gen}\,(\mathsf{Right}\,k\,x),\\
+\mathsf{Right}\,k\,x\,y
+&=k\,(\mathsf P\,x\,y).
+\end{aligned}
+$$
+
+The types are
+$\mathsf{Gen}:(V\to o)\to o$,
+$\mathsf{Left}:(V\to o)\to V\to o$ and
+$\mathsf{Right}:(V\to o)\to V\to V\to o$; their orders are $3$.
+For $m$ coordinates put
+
+$$
+\mathsf Q_m\,k
+=\mathsf{Gen}\bigl(\lambda x_1.
+   \mathsf{Gen}\bigl(\lambda x_2.\cdots
+   \mathsf{Gen}(\lambda x_m.k\,x_1\cdots x_m)\cdots\bigr)\bigr).
+$$
+
+Here $\mathsf Q_m:D_m$. A constructor choice finishes selecting its
+left child, then its right child, before passing their paired builder
+to its continuation. Consequently a value passed to the final
+continuation is a closed deterministic builder. Reusing that parameter
+does not copy an unresolved choice.
+

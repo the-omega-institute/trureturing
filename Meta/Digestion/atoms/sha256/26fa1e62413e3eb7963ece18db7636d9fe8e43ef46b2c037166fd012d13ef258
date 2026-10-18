@@ -1,0 +1,33 @@
+**Definition 1.3 (a forecast audit, distinct from own generation).** An
+actual observer is the finite COMPLETE same-update observer of [PAID,
+Definition 1.3]. Its actual acquired updates and synthetic decoder updates
+are identical; its actual own decoder at configuration $z$ is denoted
+$D_z^{\mathrm{own}}$. Separately, a supplied candidate forecast associates
+a complete law $\widetilde D_z$ to each returned original operation cut.
+A candidate need not be the observer's own law. Auditing that equality is
+the statistical task here; the candidate is not substituted into the
+observer's definition of its true decoder.
+
+For distinct phase descriptors $Q_i,W_j$, supplied rows $\pi,\tau$ and
+actual kernels $B,A$, define the acquired descriptor edges
+
+$$
+G_B=\sum_{i,j}\pi_iB_{ij}\delta_{(Q_i,W_j)},\qquad
+G_A=\sum_{j,i}\tau_jA_{ji}\delta_{(W_j,Q_i)}.
+\tag{1.5}
+$$
+
+Their defects are exactly the full-descriptor-conditioned quantities of
+[REPAIR, (2.3)]:
+
+$$
+e_B=\sum_i\pi_i\operatorname{TV}
+       \left(\mathcal R_B(Q_i),\sum_jB_{ij}W_j\right),\qquad
+e_A=\sum_j\tau_j\operatorname{TV}
+       \left(\mathcal R_A(W_j),\sum_iA_{ji}Q_i\right).
+\tag{1.6}
+$$
+
+The norm precedes the outgoing-descriptor average. These are analytical
+functionals of the actual edge laws, not supplied samples of those laws.
+

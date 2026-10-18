@@ -1,0 +1,26 @@
+**Theorem 10.2 (exact Presburger support with joint witnesses).** There is
+an effective construction of a Presburger formula $F_{G,\Phi}(\mathbf z)$
+such that, for every identical tuple $\mathbf z$,
+
+$$
+F_{G,\Phi}(\mathbf z)
+\quad\Longleftrightarrow\quad
+G(\mathbf z)\land
+\exists\mathbf x\in\mathcal T^r\ \Phi(\mathbf z,\mathbf x).
+\tag{NCE.23}
+$$
+
+At any accepted tuple the construction gives one simultaneous finite
+native assignment satisfying every atom and every repeated occurrence.
+It decides global nonemptiness and, in the nonempty case, gives a tuple
+and such an assignment. No epoch, tree-size or residual-depth bound is
+an input premise. The proof is given in Sections 11–12.
+
+The output may require congruences. It does not claim the stronger
+quantifier-free affine-polyhedral format of Theorem 4.2, nor a
+parameter-independent finite list of witness shapes. Theorem 4.2 remains
+the equation-only supplier. [SFP, Theorem 4.1][NCE-SFP] already preserves
+every source and every leaf rank using supplied arbitrary residual shapes;
+(NCE.23) instead decides existential support and may replace a realizing
+source even at one fixed tuple.
+

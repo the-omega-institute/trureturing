@@ -1,0 +1,24 @@
+## 299. The exact six-reservoir boundary
+
+The genuine escape tau=(Z,M,C,D,M,C) of Theorem134.1 witnesses four
+distinct reservoir labels. The upper-gap theorem of Section182 supplies
+another actual label U outside those four with u>T(m,z)>m-2. The theorem
+above witnesses U without using reservoir cardinality.
+
+For exactly six labels H={M,C,D,Z,U,V}, the only possibly unwitnessed
+label is therefore V, and it must satisfy v<=m-2. If V is unwitnessed,
+every transverse-selected flat owner must select V, since all five
+other labels are genuinely witnessed. There is at most one such actual
+owner. Every flat axial zero slot of any label belongs to that owner,
+if it exists. Transverse zero slots in axial-flat owners are still
+possible and are not discarded.
+
+This identifies the first five-label cardinality issue precisely:
+the witness of the upper-gap label does not require five labels, but
+Section187's conclusion that every reservoir is witnessed, and hence
+that every flat owner selects its axes, does not follow for six from
+this argument. Even if the sixth label is witnessed, its additional
+face roles remain outside the published five-label case analysis.
+No actual realization of the residual low-label pattern, six-label
+flat exclusion, or six-label geometric realization is claimed here.
+

@@ -1,0 +1,31 @@
+**Definition 1.1 (sources, epochs and complete rows).** Let
+
+$$
+\begin{aligned}
+\mathcal T&::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,\\
+\rho\alpha&=\beta,&\rho\beta&=\langle\beta,\alpha\rangle,&
+\rho\langle u,v\rangle&=\langle\rho u,\rho v\rangle.
+\end{aligned}
+\tag{SFP.1}
+$$
+
+All trees are nonempty, finite, full and ordered. Addresses are finite
+words in $L,R$, with root $\varepsilon$. A subtree is defined only at a
+reached address. For a finite prefix-free cut $P$, the complete row
+$R_P(u)$ retains the entire literal exterior, an addressed hole at each
+reached cut, and the entire equality partition of the hole values.
+Every pair of different classes asserts disequality. Every unreached
+cut retains its concrete blocking leaf at a strict prefix. A root cut
+has one hole; an empty cut retains the whole tree.
+
+Use exactly [NCE, Definition 1.2][NCE]. An input $I$ has $m\ge1$ proposed
+complete rows $(P_i,R_i)$ and a finite list of signed links
+$((i,p),(j,q),\epsilon)$ with $\epsilon\in\{=,\ne\}$. Validate finite
+ordered full exteriors, prefix-freeness, the address alphabet, every
+hole's own address and single occurrence, every blocked request, the full equivalence relation
+on precisely the holes, row indices and signs. Every link endpoint must
+be a reached hole of its proposed row. A failed validation gives the
+empty representation with a malformed-input indication. Inconsistency
+of a well-formed input instead means that its represented domain is empty.
+Neither sign assigns a default subtree to an absent endpoint.
+

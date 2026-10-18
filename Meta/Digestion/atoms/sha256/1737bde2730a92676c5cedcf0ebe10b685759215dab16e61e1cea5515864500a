@@ -1,0 +1,35 @@
+**定理 2.1（Full-block structural boundary）。** For every base target (1.4), every correct controller on either free-value fibre has root $1^m$. On its successful zero-difference archive, its next block begins with zero. All band sources have a common zero-difference archive through the first $Q$ paid blocks. Removing every low-tail outside source from that archive within those $Q$ blocks is possible exactly when
+
+$$
+m\text{ is even}\quad\text{or}\quad Q\ge3.
+\tag{2.1}
+$$
+
+For $Q=2$ and odd $m$, every correct controller retains an actual outside source on that archive. This assertion concerns source removal even if $A$ is also a band label.
+
+Proof. A root cannot stop, since both a low label and $R$ occur in the same free-value fibre. At any fixed phase, take the joint actual tails $k-m-1$ and $k-m$ with that free value. Their labels differ. If the root's first zero follows $\alpha<m$ ones, both survive to that zero and merge into the same current record. Their INITIAL distinction is then irrecoverable. This is precisely the first-zero loss principle of [S1, Lemma 4.3 and Theorem 5.2]. Thus the only possible root is $1^m$. It rejects exactly $s\ge k-m$; every lower tail survives, with current tail $s+m\le k-1$. Its response support is $\{0,m\}$, so its successful positive child has label $A$ and its zero child contains all band phases, all low tails, and excludes phases $0,m$.
+
+Choose two differently labelled band phases with INITIAL tail $k-m-1$. In the root's zero child both have actual current tail $k-1$, the same current value, and the same archive. A next block beginning with one rejects both before its endpoint and makes them permanently indistinguishable. Hence that next block starts zero. It succeeds for every remaining low-tail source and makes their current terminal tail common. Afterward a literal action's safety depends only on that common tail, not on phase. Uniform rejection cannot finish a node retaining different band labels. The band has zero response at every first-tour index $1\le t<Q$, since $W_t=[tm,(t+1)m]$ misses $I$. It cannot stop before a returning band window. Therefore these zero archives are actual and shared, even for an adaptive controller.
+
+If $Q=2$, only block 1 follows the root in the first tour. Its left response at $m$ is zero, since its first bit is zero. Every outside phase still in the root zero child is one of $m+1,\ldots,2m$, and must have response one to leave that archive. There are $m$ such phases. For odd $m$, this would give odd full-window charge, contradicting (1.6). At least one remains. Taking its INITIAL tail zero and the common free value gives its joint actual witness via (1.5). There is no phase-dependent rejection alternative after the compulsory leading zero.
+
+Here is a common literal scan proving all positive cases and identifying the exceptional support. Emit $1^m$ at index 0. At index 1 emit
+
+$$
+Z_m=(0,1,0,1,\ldots)\quad\text{of length }m.
+\tag{2.2}
+$$
+
+For even $m$, repeat $Z_m$ at indices $2,\ldots,Q-1$. Its response is one on every vertex of $W_t$ except the left endpoint. The previous row already removed that endpoint, starting with phase $m$ removed at the root. Thus every outside phase is removed by the tour's end.
+
+For odd $m$, $Z_m$ has response one exactly on the strict interior of $W_1$ and zero at its endpoints; in particular it leaves phase $2m$. At indices $2,\ldots,Q-1$ instead emit
+
+$$
+O_m=(1,0,1,0,\ldots,1)\quad\text{of length }m.
+\tag{2.3}
+$$
+
+Its response is one on its whole window. When $Q\ge3$, its first use removes the surviving frontier $2m$, and all later outside phases are also removed. When $Q=2$, the final zero archive has exactly $I\cup\{k\}$, with $k=2m$. In the other cases it has exactly $I$.
+
+The root rejects exactly the high tails. The index-1 word starts zero, so it is safe even from current tail $k-1$. Each subsequent word contains zero and has leading and terminal runs at most one. Every subsequent seam is strictly shorter than $k$. Root rejection returns $R$; every successful positive response in this scan returns $A$; all band responses are zero. Both free values use these same words and take successive endpoint differences. This proves (2.1) with actual paid blocks. ∎
+

@@ -1,0 +1,36 @@
+**Definition 9.2 (primary literature dependencies).** Anita Badyl and
+Paweł Parys, *Extending the WMSO+U Logic With Quantification Over
+Tuples*, [arXiv:2311.16607v1][BP], supplies the finite scheme model
+in §2, the full logic and finite compositional types in §3, and
+the model-checking, finite-output, reflection and transducer
+theorems cited in §§4 and 8 above. Its published counterpart is
+[CSL, article 2][BPDOI]. Luis Barguño, Carles Creus, Guillem Godoy,
+Florent Jacquemard and Camille Vacher, *Decidable Classes of Tree
+Automata Mixing Local and Global Constraints Modulo Flat Theories*,
+[arXiv:1302.6960][BCGJV], supplies the precise global-constraint
+semantics of §3 and the standalone emptiness statements of §5.
+François Nicolas, *(Generalized) Post Correspondence Problem and
+semi-Thue systems*, [arXiv:0802.0726][NICOLAS], supplies the binary
+codomain, nonempty solution convention and undecidability premise
+in §§1.1 and 1.3.
+
+The order-four synchronized native carrier and its exact accepted
+family correspondence, the order-two PCP filter construction, and
+the separated-selection obstruction with its complete acquired-fiber
+consumer are the deductions proved in this volume. The cited
+literature's general theorems are premises of those deductions,
+rather than claims of a new model-checking, automata-emptiness or
+PCP theorem. The generic and separated obstructions have exactly
+the hypotheses stated in Theorems 5.3 and 6.4.
+
+[NSF]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SIGNED_FEASIBILITY.md
+[NIC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_IMAGE_COVER_AND_PREFIX_COST.md
+[NIS]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_IMAGE_SATURATION.md
+[NLC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_LEAF_DEPTH_CONTACT.md
+[SPC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SIGNED_PRODUCTIVE_CONTACT.md
+[SPCEXT]: https://github.com/the-omega-institute/trureturing/blob/db23810980530aea4b6fc2a056615460c8cbecb9/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SIGNED_PRODUCTIVE_CONTACT.md
+[BP]: https://arxiv.org/html/2311.16607v1
+[BPDOI]: https://doi.org/10.4230/LIPIcs.CSL.2024.2
+[BCGJV]: https://ar5iv.labs.arxiv.org/html/1302.6960
+[NICOLAS]: https://ar5iv.labs.arxiv.org/html/0802.0726
+

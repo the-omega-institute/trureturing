@@ -1,0 +1,26 @@
+**Theorem 7.1 (necessity and matching attainment).** Every admitted original competitor in Definition 1.3 obeys, at every covered multiplier and strength,
+
+$$
+\mathcal T_A(s)\le\frac{H_{\rm high}+Y\cdot B-\lambda\sqrt\alpha\,s/s_0}{2}.
+$$
+
+At $s=s(\lambda)$ the selected law attains equality with the common instrument of §§9–10. Thus the inequality is global in the full original complex/multi-Kraus class, subject to Convention 1.1's antecedents.
+
+Proof. JR42 and FA69–72, at their actual-label scope, represent each existing supported-nonzero low label by $p>0$, a real ellipse direction $h$ and $0\le b\le1000\operatorname{cap}(h)$. This is a consequence of equality in the original error and sharp cost, not a restriction to real competitors or a permission to expose hidden Kraus indices. Its live product is $\sqrt p(s_0D+zT+wS)$ and its attached failure effect is $pb\,n_hn_h^T$. The complete covariance constraints and height expression are corrected RC.66. Supported-zero full encoders remain admitted and counted; their supported law, contrast and TV contributions vanish. A genuinely supported failure-only label cannot evade the reduction: trace balance at finite activity gives whole-fibre survivor effect at least $e^{-A}I$, and full-output TP terminal processing cannot give zero live trace from a nonzero surviving positive input.
+
+Set $r_b=b/(1000\operatorname{cap})$. Convexity gives
+
+$$
+|\ell+bf|\le(1-r_b)|H_0|+r_b|H_1|.
+$$
+
+Split each label by that fractional ratio only as a mathematical bound. The SAME endpoint-split law preserves all eight joint moments and $\sum p|u|$. Its full dual inequalities give
+
+$$
+\sum p|\ell+bf|\le Y\cdot B-\lambda k.
+$$
+
+The original contrast inequality forces $k\ge\sqrt\alpha\,s/s_0$. Since $\lambda>0$, corrected RC.66 gives the asserted upper bound after adding the fixed positive high contribution and dividing by two. Countable sums and the stipulated measurable extension follow by the same integrable positive moment identities. No competitor's time law is fixed in this argument.
+
+At the selected nonnegative law, the exact moments, certified occupied signs and contact equalities make all inequalities equalities, with reports $\operatorname{sgn}z_i$ and $s=s_0\sum p_i|z_i|$. Sections 9–10 enact this law on the sole original specimen with the same sharp cost and complete outputs. This proves the reverse bound and actual attainment. $\square$
+

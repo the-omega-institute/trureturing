@@ -1,0 +1,31 @@
+## 12. The unrestricted three-coordinate question and its inherited interface
+
+Sections 12–20 establish the dimension-three plateau
+$e_3^{\rm aff}(Z)=e_2^{\rm aff}(Z)$ on the same full native domain.
+The additional coordinate may be unbounded and may carry a nontrivial
+hidden phase action. The conclusion is domination in uniform readout
+error by a two-coordinate radial model, not a classification of all
+three-coordinate encoders. The proofs are ordinary handwritten
+mathematics, unverified by Lean.
+
+The source, preparation, and metric are exactly those of §§1–2. In
+particular, $0<Z<1$, $r=1-Z$, $H=r/2$, the fixed preparation is
+arbitrary, and every point of
+$\mathcal M=(0,H)\times\mathbb T^2$ is an actual current ray.
+The commands remain
+
+$$
+P_s(k,\alpha,\beta)=(k+s,\alpha,\beta),\qquad
+0<k,k+s<H,
+$$
+
+$$
+Q_t(k,\alpha,\beta)=
+\left(k,\alpha+t/2,\beta+(1/2-k/r)t\right),\qquad
+(k,\alpha,\beta)\in\mathcal M,
+$$
+
+for every signed real $s,t$. The first formula specifies the full
+partial domain of $P_s$; $Q_t$ has full domain. No phase control,
+height selector, endpoint ray, or history variable is added.
+

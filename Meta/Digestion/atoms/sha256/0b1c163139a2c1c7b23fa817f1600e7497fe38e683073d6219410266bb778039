@@ -1,0 +1,4 @@
+**Definition 13.1 (the long cover).** The following $203$ records are ordered by their exact parameter endpoints, beginning at $1/4$ and ending at $9/2$. Each record includes the complete predictor, radii, preconditioner, strict geometry, all eight whole-arc quotients and every covering Bernstein leaf. The notation is Definition 4.1. Consecutive endpoints are equal as rational numbers.
+
+Exact JSONL data (203 records): [section-13-six-band-uniform-cells.jsonl](https://github.com/the-omega-institute/trureturing-experiments/blob/08cfceafd9500530ffa128764313472b003a72ab/experiments/theory/fib-native-complete-continuation/connected-interval/section-13-six-band-uniform-cells.jsonl).
+

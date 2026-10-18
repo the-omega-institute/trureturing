@@ -1,0 +1,124 @@
+**Theorem 12.2 (Finite legal deterministic family).** For every $k$ and
+either $j$, there is a nonempty finite family
+$\mathcal D_{k,j}=\{\Pi_1,\ldots,\Pi_m\}$ of deterministic protocols of
+Definition 9.1, each ignoring the auxiliary variable, with the following
+properties. Every representative obeys the total cap $k$ on every formal
+binary reply branch, including branches of source probability zero, and
+all its addresses belong to one finite set $F_{k,j}\subset\mathbb Z$.
+For every deterministic protocol with a pathwise hard total budget $k$,
+one representative has exactly the same law of $Z$. A deterministic
+protocol with only an almost-sure hard total budget has the same law as
+a pathwise-capped representative as well. The family and $F_{k,j}$ may
+be chosen independently of $p$ throughout the stated parameter range.
+The equality holds under the original $J_p$, with neither a phase read
+nor a change of target or source.
+
+Proof. First discard the numerical values of finite internal delays,
+retaining their distinction from indefinite internal continuation.
+Keep the original next-event types, addresses and outputs; replace only
+their finite delays by fixed finite delays.
+Whenever the next event at a record of length $k$ would be another read,
+replace that event by indefinite internal continuation without that read.
+This gives a rule capped on every formal branch. On every execution
+already having $N\le k$, the boundary replacement changes no event;
+erasing finite delays changes only finite timing values. Thus this
+normalization preserves $Z$ on all such executions, and preserves its
+law under either hard-budget hypothesis.
+
+Unfold the normalized deterministic rule into its binary reply tree.
+A node at depth $n$ carries the acquired record of length $n$. It is
+either a read node, with two children indexed by the next reply, or a
+terminal labelled by one of the four return states or by $\bot$.
+A $\bot$ terminal means internal nonreturn with no further call.
+The tree has height at most $k$ and at most $2^k-1$ read nodes. Terminal
+depth is the actual paid count even at a $\bot$ terminal. Unreachable
+formal reply branches may be retained. This ordinary finite-horizon
+policy-tree unfolding is classical; it does not yet make the unbounded
+integer address labels finite.
+
+Here is the additional source-specific information needed for those
+labels. Fix a tree shape, its terminal labels, and the distinct node
+positions $v$ in that tree. Write $t_v\in\mathbb Z$ for the address at a
+read node, and $\epsilon_v\in\{0,1\}$ for its parity. For each phase
+$\phi\in\{0,1\}$ form a finite set of formal spin slots
+
+$$
+\mathcal I_\phi=\{*\}\ \cup
+\{(v,-),(v,+): v\text{ is a read node and }\epsilon_v=\phi\}.
+\tag{12.3}
+$$
+
+The distinguished slot $*$ represents the original target spin, whose
+index is $q_{j,0}=j$ and $q_{j,1}=0$, exactly as in (9.4). Assign integer
+indices to the other slots by
+
+$$
+\iota_\phi(*)=q_{j,\phi},\qquad
+\iota_\phi(v,-)=\frac{t_v-\phi}{2},\qquad
+\iota_\phi(v,+)=\frac{t_v-\phi}{2}+1.
+\tag{12.4}
+$$
+
+Record the equivalence relation on $\mathcal I_\phi$ given by equality
+of these indices. The signature consists of the tree shape and terminal
+labels, all node parities, and these two equivalence relations, with the
+distinguished slots retained. It refers to all read nodes in the whole
+tree at once, including nodes on incompatible reply branches.
+
+Conditional on phase $\phi$, the original iid realization assigns one
+independent Bernoulli$(p)$ spin to each equivalence class of
+$\mathcal I_\phi$. At an active node the potential reply $X_{t_v}$ is
+the XOR of its two class spins; at an inactive node it is zero. The
+target is $h_{j,\phi,s}$, the entry in (9.4) with phase $\phi$ and
+displayed spin $s$, where $s$ is the class spin of $*$.
+Consequently the signature determines the joint conditional law of
+
+$$
+\left(H_j,(X_{t_v})_{v\text{ a read node}}\right)
+\quad\text{given }\varphi=\phi.
+\tag{12.5}
+$$
+
+This uses only the original finite iid-spin products of Proposition 2.1.
+It includes every overlap and repetition: slots with the same actual
+spin index are identified, and all remaining class spins are independent.
+Disconnected and distant edges create no extra relation. Negative
+addresses obey the same integer formulas (12.4). For inactive nodes no
+spin is read or inferred from their compulsory zero. The two
+phase-conditional distributions are combined with their original masses
+$1/2,1/2$; no joint coupling between two different phase alternatives is
+needed. In particular this step does not splice independently optimized
+phase laws.
+
+The tree's execution is a deterministic function of its complete
+potential-reply array: start at the root, use the reply at each visited
+read node, and stop at its terminal. Its terminal label and depth give
+$(O,D,N)$. It follows from (12.5) that any two address assignments with
+the same signature have the same joint law of $Z$. Recording the
+whole array before applying this deterministic function ensures that
+adaptively chosen nodes retain their joint relations with the target.
+
+There are finitely many tree shapes and terminal labellings at the fixed
+height. For each there are finitely many parity assignments and finitely
+many equivalence relations on the finite slot sets. Some signatures
+cannot come from integer addresses with the distinguished target at its
+fixed original index; discard them. For each signature that is realized,
+choose one actual integer-address assignment realizing the entire
+signature in both phases simultaneously. Keep that labelled tree as a
+representative. This is a finite selection from realized signatures,
+not an assertion that arbitrary pairs of abstract incidence relations
+are geometrically realizable.
+
+Each selected tree is a legal protocol: make its specified actual reads,
+return its terminal state after finite internal waiting, or continue
+internally forever at its $\bot$ terminal. It makes at most $k$ calls
+on every formal branch. Its finite-event delays can, for example, all be
+one unit. Taking the union of the addresses in this finite collection
+gives the finite set $F_{k,j}$. The construction of signatures and the
+choice of an integer realization involve $k,j$ and integer geometry,
+not $p$; the same class-spin argument applies for every allowed $p$.
+The normalized input tree has one of these realized signatures, proving
+the assertions. When $k=0$ the trees are simply the four immediate
+returns and the immediate internal nonreturn, and $F_{0,j}$ may be empty.
+$\square$
+

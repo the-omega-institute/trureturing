@@ -1,0 +1,18 @@
+**Definition 2.5 (one permutation for each evaluated shape).** For a
+shape $s$ occurring in Lemma 2.4 define $\sigma_s$ on its leaves by
+
+$$
+\sigma_s(w)=
+\begin{cases}
+w,&|w|\le b,\\
+v\overline e,&w=ve,\ |w|>b.
+\end{cases}
+\tag{TPO.8}
+$$
+
+The second case is defined because its leaves come in sibling pairs.
+It is an involution. Its definition depends on the actual shape and
+$b$, not on a particular context presentation or expression producing
+that shape. In particular equal shapes always receive the same
+permutation.
+

@@ -1,0 +1,39 @@
+**Open problem 250.2 (The same original unrestricted goal).** For every
+entire positive nonincreasing vanishing actual amplitude sequence and
+every positive closed cap, the general implication remains
+
+$$
+\mathcal F_N(a,c)\ne\varnothing
+\ \Longrightarrow\
+\mathcal F_N(a,c)\cap\mathscr C_{L_a}\ne\varnothing.
+\tag{250.1}
+$$
+
+Its positive full-score obligation is still: for every $L\ge3$ and
+every actual full $y\ge0$ with $\Delta_O(y)\le1$, find one
+unrestricted full $V\ge0$ and one $\theta\in[0,1]$ with
+
+$$
+\Delta_N(V)+\theta\le1,\qquad
+\sigma_{H_L}(Q(y)-Q(V))\le\theta.
+\tag{250.2}
+$$
+
+No fixed law, anchor, unary profile, exact quotient, graph, mask,
+canonical decomposition or positive-only residual is imposed;
+nonzero zero-cost $V$ remains admissible at $\theta=1$.
+The negative alternative still requires the same actual $(b,e)\in H_N$,
+one full feasible $\lambda\ge0$ with $G_N\lambda\ge h(b,e)$ and
+$M=\sum\lambda\ge1$, and an actual full unit-O $y$ with strict
+$F_{Q(y)}(b,e)>M$, together with the original same-source/common-seed
+N attainer and the uniform lower bound against every arbitrary-address
+full-carrier O competitor, retaining positive actual tails and closed caps.
+
+The sufficient regions and the $D_b=0$ consequence shrink this gap in
+their exact scopes. Away from that face, (248.3) pays a positive repair
+allowance and (249.4) retains $K_y\min\{M,c_LD_b\}$. Neither term
+is an already paid signed residual in (250.2). Optional-constructor
+failure, exact-law obstruction and a point outside $H_N$ do not provide
+the negative alternative. No universal classification follows from
+these finite laws or bounded supplier comparisons.
+

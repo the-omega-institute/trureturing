@@ -1,0 +1,51 @@
+**Theorem 4.3 (matched inherited-representation comparison).** Instantiate
+the inherited five-occurrence switch representation on these same 74
+roles, the same optional finite slots and the same native occurrence
+word, with the identical role/route lists. Denote it by subscript 5.
+Then
+
+$$
+\begin{aligned}
+V_5&=147+2q+4c+48C,&L_5&=74+q+2c+24C,\\
+V_5-V_U&=3c+24C,&L_5-L_U&=2c+16C.
+\end{aligned}
+$$
+
+Writing $m_i=|\mathcal D_i|$, its matched stencil satisfies
+
+$$
+g_{5,i}-g_i
+ =9c_{i-1}+72m_i+t_i+192e_i+24s_i.
+$$
+
+The two actual storage images are mutually decodable and preserve native
+rows under their own rules. Whole-price superiority holds under this
+comparison exactly when the extra fixed apparatus price $\rho_U-\rho_5$
+is smaller than the summed foundation/stencil saving; no such apparatus
+price ordering is asserted.
+
+Proof. The inherited cell has 47 vertices and 24 terminals; its tape
+increment is 48. Its present optional bit adds four vertices and two
+terminals to its socket. Summing with $F_{75}$ proves the re-counted
+formulas. Both representations decode to the same raw record, so
+encoding after the other decoder gives inverse maps on their actual
+images. Using Definition 2.3's actual raw-pattern enumeration with the
+inherited four-assignment switch and 48-vertex append templates gives
+its own row square by the same opcode/effect cases as Theorem 2.4.
+Thus their row squares transport the same native edges; the old
+canonical-control theorem is not being broadened without this instance.
+This is not an installed migration between two live machines.
+
+Inherited cell inspection costs 140 and finite inspection
+$6q+12c-4$. All root/head/append routes stop at the same native roots,
+so their lengths agree. Probe saving is $9c+72m_i$; old-bit assignment
+saving is $t_i$. Inherited births are $48e_i+4s_i$ rather than
+$24e_i+s_i$. Their vertex-plus-initialization difference is
+$8(24e_i+3s_i)=192e_i+24s_i$. Old-root assignments and head terms
+agree. This proves the row difference. Foundation saving is
+$8(V_{5,0}-V_{U,0})=384+24c_0$ under the same convention. Add the
+actual fixed apparatus difference to obtain the stated necessary and
+sufficient inequality for that scalar price comparison. A packed-byte
+alternative changes both its cell-rewrite stencil and finite rules;
+fewer vertices alone do not compare its whole run with this one. ∎
+

@@ -1,0 +1,36 @@
+**Definition 3.1 (Finite support formula).** For $\lambda\in\mathbb R$
+put
+
+$$
+z=1-\eta=\frac{1+c}{2},\qquad
+u=1-\frac{3\eta}{2},\qquad v=\frac{1+c^2}{2},
+\tag{3.1}
+$$
+
+and define the following functions, all evaluated at $\lambda$:
+
+$$
+\begin{aligned}
+T&=\eta(a-\lambda)_+,\\
+H&=\eta(a^2-\lambda c)_+
+       +2\eta^2(1/2-\lambda)_+,\\
+U_I&=T,\qquad U_D=\max(T,H),\\
+Z_R&=(a/2-\lambda z)_+,\\
+Z_A&=(a/2-\lambda u)_++\frac\eta2(a-\lambda)_+,\\
+Z_I&=(a/2-\lambda v)_++\eta(a^2-\lambda c)_+,\\
+Z_D&=(a/2-\lambda v)_++\eta c(a-\lambda)_+,\\
+O_I&=(a^2/2-\lambda c)_++\eta(a-\lambda)_+,\\
+O_{DD}&=(ac/2-\lambda c)_++\eta(a-\lambda)_+,\\
+O_{DI}&=(a^2/2-\lambda c)_++\eta(1/2-\lambda)_+,\\
+V_I&=\max(Z_R,Z_A,Z_I,O_I),\\
+V_D&=\max(Z_R,Z_A,Z_D,O_{DD},O_{DI}),\\
+B(\lambda)&=\max\{0,a/2-\lambda,U_I+V_I,U_D+V_D\}.
+\end{aligned}
+\tag{3.2}
+$$
+
+The subscripts $I,D$ indicate whether the root's active edge is
+incident to, or disjoint from, its phase's actual target vertex.
+The letter $H$ here denotes a scalar function, distinct from the
+hidden coordinates $H_j$.
+

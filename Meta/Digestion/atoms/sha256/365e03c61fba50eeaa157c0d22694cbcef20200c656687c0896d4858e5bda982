@@ -1,0 +1,39 @@
+### 78.6. Exact real quotient and projective counting
+
+Let \(f=f_{1,20}\) in §78.A. The three printed numerator lists define
+\[
+(x,u,v)=(P_x,P_u,P_v)/f'(y).                              \tag{78.14}
+\]
+Exact homogeneous substitution and integer polynomial division show that
+(78.14) satisfies \(V_{15}=0\) and all four original numerator equations
+\(E_r,E_i,P_Y,P_D=0\). The elements \(\beta_0,a,F_8,A_Y\) are units in
+\(\mathbb Q[y]/(f)\): their norms modulo 97 are 7,36,26,17. Consequently
+\(v=-B_Y/A_Y\) and \(u=-(b_0v+c_0)/a\) are unique. Thus this RUR describes
+every remaining possible physical quotient point, in both directions.
+
+The eight rational intervals in §78.C each contain one simple root of
+\(f\), and the complete Sturm count is eight. Evaluate (78.14), then
+(78.6),(78.2),(78.4), by rational interval arithmetic: Horner evaluation
+for each coefficient list and its derivative, complex division via the
+positive squared modulus, and outward rounding after each real operation
+to multiples of \(2^{-512}\). The printed coarse enclosures are verified
+strict inclusions. In every interval \(\beta,C,D,Y_c\) have positive lower
+bounds for their squared moduli. Roots 0,1,2,5,6,7 satisfy the strict domain;
+root 3 has \(q>1\), and root 4 has \(\delta>0\). Hence there are exactly six
+physical selected-channel quotient points.
+
+For these six, the same enclosures give \(|C|^2-|D|^2\ne0\). Equal lower
+entries corresponding to two distinct upper roots would imply
+\((z_i-z_j)(C-D/(z_i z_j))=0\), and therefore \(|C|=|D|\), a contradiction.
+Both channels are three-distinct. Their means are nonzero by Theorem 75.2,
+so \(\Theta\) maps all thirty-six rays back into the selected chart. The
+complete classification makes this set \(\Theta\)-invariant.
+
+The six orders at each quotient point are distinct because the phase
+\(X=3t>0\) is unique and the three upper roots are distinct. Different
+quotient points cannot coincide projectively: means and interpolation
+recover \(G,C,D\), hence \(Z\), uniquely. These thirty-six rays are disjoint
+from the aligned set and the canonical zero-mean modes; the two constant
+canonical rays were separated from the eighteen nonconstant aligned rays
+in §77. The disjoint count is \(36+18+6=60\), proving Theorem 78.1.
+

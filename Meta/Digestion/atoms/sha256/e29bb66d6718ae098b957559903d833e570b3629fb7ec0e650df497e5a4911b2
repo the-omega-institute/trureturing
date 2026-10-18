@@ -1,0 +1,90 @@
+**Theorem 80.2 (The attained frontier for each fixed address horizon).** For
+$0<\varepsilon\le1$ and $m\ge0$, define
+
+$$
+\begin{aligned}
+\beta_m(\varepsilon)
+ &=\inf\{p\in[0,1]:S_m(\varepsilon+p)\le\varepsilon\}\\
+ &=\max\left\{0,\sup_{k\ge1}
+    \frac{\sum_{j=1}^k a_{m+j}-(k+1)\varepsilon}{k}\right\}.
+\end{aligned}
+\tag{80.6}
+$$
+
+Every $A\in\mathcal A_\varepsilon(a)$ obeys, for every actual $x\in H_m$,
+
+$$
+\mathsf P_A\{M_{A,x}>m\}\ge\beta_m(\varepsilon).
+\tag{80.7}
+$$
+
+For each fixed $m$ there is an acquisition attaining equality throughout
+$H_m$, and with $\mathsf P_A\{M_{A,x}>m\}=0$ outside $H_m$. In particular
+
+$$
+\min_{A\in\mathcal A_\varepsilon(a)}\sup_x
+     \mathsf P_A\{M_{A,x}>m\}=\beta_m(\varepsilon).
+\tag{80.8}
+$$
+
+Its $K$ and $M$ have a deterministic finite uniform bound. Also
+$\beta_m(\varepsilon)=0$ exactly when $\varepsilon\ge R_m$.
+The attaining acquisition in (80.8) may depend on $m$.
+
+**Proof.** For a competitor and a fixed actual $x\in H_m$, let $E_{x,m}$
+be the whole measurable finite-handoff event with every requested index
+at most $m$. Its mass is $1-p_x$, where
+$p_x=\mathsf P_A\{M_{A,x}>m\}$, by the nonhandoff convention. Finite
+execution transport gives one output submeasure $\rho_{x,m}$ on this
+event, dominated by every $\widehat\lambda_{A,y}$ for $y\in H_m$.
+Choose one fixed actual source in each occupied $D_n$, $n>m$; its
+output probability completes $\rho_{x,m}$ within cap $\varepsilon$.
+Theorem 80.1 gives $S_m(\varepsilon+p_x)\le\varepsilon$, so
+$p_x\ge\beta_m(\varepsilon)$. This uses a whole measurable event and
+fixed actual comparison sources; it makes no exact marked-output
+certificate assumption.
+
+For $p\in[0,1]$, equation (77.8) makes feasibility equivalent to
+
+$$
+\sum_{j=1}^k a_{m+j}\le(k+1)\varepsilon+kp
+\quad\text{for every }k\ge1.
+\tag{80.9}
+$$
+
+The resulting lower bound on $p$ is the second line of (80.6).
+It is at most $a_{m+1}\le1$, and $p=1$ is feasible. The feasible set
+is closed, since $S_m(\varepsilon+p)$ is a finite continuous sum on
+$[0,1]$. Its infimum is consequently feasible and proves (80.6).
+The case $p=0$ is feasible exactly when $S_m(\varepsilon)\le\varepsilon$,
+equivalently $\varepsilon\ge R_m$ by Theorem 77.2.
+
+For attainment fix this $m$ and take $p=\beta_m(\varepsilon)$ and the
+submeasure and completions (80.3). Put
+$L=\max(\{i:a_i>\varepsilon\}\cup\{0\})$. Initially query the first
+$m$ primes in order, stopping at the first negative answer. If one occurs
+at $n\le m$, hand a sample from the exact $\lambda_n$ and terminate.
+If all these answers are positive, use a seed branch of probability
+$1-p$ to sample $\rho/(1-p)$ and hand off, and a branch of probability
+$p$ for the residual part. A zero-mass branch needs no normalized
+probability and is omitted.
+
+On the residual branch, read the consecutive indices $m+1,\ldots,L$,
+stopping at the first absence $n$. If an absence is observed, sample
+$\theta_n$ with probability $q_n/p$ and otherwise sample $\theta_0$.
+If every index through $L$ is positive, emit $\theta_0$, since the actual
+first absence then has $a_{n(x)}\le\varepsilon$ and $q_{n(x)}=0$.
+When $p>0$, the zero-branch criterion fails, so $S_m(\varepsilon)>\varepsilon$;
+in particular $L>m$ and this branch always requests an index above $m$.
+When $p=0$, the common-probability sampler alone is used on $H_m$.
+
+The branch choice and output samples are fixed finite probability tables
+under coordinates of one common source-independent seed. They use only
+the actual prefix answers, with no restart or removal of a failure event.
+All records are finite measurable coordinate events, and both resources
+are bounded by $\max\{m,L\}$ at every source and seed. At a source
+in $H_m$ the law is exactly $\sigma_{n(x)}$ of (80.3), so its error is
+at most $\varepsilon$. Its tail probability at this horizon is exactly
+$p$. At a source outside $H_m$ the acquisition is exact and has
+$M\le m$. This proves (80.8) and its stated attainment. $\square$
+

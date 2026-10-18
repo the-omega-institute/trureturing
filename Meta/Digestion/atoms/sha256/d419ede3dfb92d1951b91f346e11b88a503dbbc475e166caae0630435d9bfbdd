@@ -1,0 +1,40 @@
+**Definition 7.2 (the inherited stability modulus).** To distinguish
+CG.204's scalar constant $C$ from the coefficient matrix $C$, call that
+same scalar $K$. Every quantity below is evaluated at $x_\star$.
+Let $P$ project onto $\ker S_\star$, and define
+
+$$
+\begin{aligned}
+s&=\min\{\nu>0:\nu\text{ is an eigenvalue of }S_\star\},\\
+c_f&=\zeta_{0,\star}-\lambda_\star p_{50},\qquad
+z_{\min}=\min_i\zeta_{i,\star},\\
+\mathcal B_0&=(1000\operatorname{adj}S_{0,\star})\oplus0\oplus0\oplus0,\\
+\mathcal B_1&=0\oplus\operatorname{adj}S_{01,\star}\oplus0\oplus0,\\
+\mathcal B_2&=0\oplus0\oplus\operatorname{adj}S_{02,\star}\oplus0,\\
+M_j&=\partial_{x_j}S(x_\star)\quad(1\leq j\leq6),\qquad
+L=\left(\sum_{j=1}^6\|M_j\|_{\rm op}^2\right)^{1/2},\\
+b&=\left(\sum_{k=0}^2\|\mathcal B_k\|_1^2\right)^{1/2},\qquad
+G=[\nabla g_0\ \nabla g_1\ \nabla g_2]_{x_\star},\\
+\sigma&=\min_{u\in\mathbb R^3,\ \|u\|_2=1}\|Gu\|_2,\qquad
+ a=2\sqrt{3/s},\\
+r_\lambda&=\lambda_\star^{-1}+(1-\lambda_\star)^{-1}
+                         +p_{50}/c_f+z_{\min}^{-1},\\
+r_z&=c_f^{-1}+z_{\min}^{-1},\\
+A&=\left(r_\lambda^2+r_z^2+
+       \frac{16\lambda_\star}{\|v_{5,\star}\|_2^2}+
+       \frac{16(1-\lambda_\star)}{\|v_{27,\star}\|_2^2}\right)^{1/2},\\
+K&=a+\frac b\sigma(A+La).
+\end{aligned}
+\tag{JG.43}
+$$
+
+These are exactly CG.204's constants, with no new evaluation. Its
+credited slack ranks $2,1,1,2$ make $s>0$. The credited margins give
+$c_f,z_{\min}>0$, $0<\lambda_\star<1$, and nonzero $\mathcal B_k$.
+The chart denominators and both $\|v_y\|_2$ are positive.
+Nonsingularity of the bordered Jacobian implies $G$ injective:
+$Gu=0$ would put $(0,u)^T$ in that Jacobian's kernel.
+Compactness of the unit sphere then gives $\sigma>0$.
+Thus (JG.43) is finite with $K>0$. The symbol $K$ here is a scalar
+modulus, not the source-indexed operator $K_x$ in (JG.6).
+

@@ -1,0 +1,68 @@
+**Definition 8.1 (evaluable stencil bill).** Fix the literal compiled rule
+table. The following prescription determines its charge without a
+source-dependent unspecified service constant. A component inspection of
+$v$ vertices probes its two child slots at every vertex and its parent slot
+on each nonroot return; its probe count is $3v-1$. Thus a cell inspection
+costs 140 probes and the full finite-register inspection costs $18b-4$.
+
+For an executing row let $\mathcal C$ be its ordered list of old cell
+roles: its core current cell, its moved-to neighbor when present, and its
+old meter append cell. A CTL seal uses its designated current cell in this
+list; rows without a tape core have just the meter cell. Repeated roles
+are retained as repeated probes. Their routes from the distinguished root
+are those of Definition 5.1. Let $\mathcal A$ list its cell-append sites
+(core first, meter second). Each site has the root-to-trailing-terminal
+route, with two child-slot probes to check its terminal. During the first
+boot append to an empty tape that route is the fixed tape-origin path.
+Let $\mathcal J$ list changed/activated head links in fixed port/lane
+order. For each such link probe the origin slot, old target slot if present,
+and new target slot, each by its root route followed by that slot probe.
+Repeated walks and probes are charged again. Appended new endpoints are
+known template occurrences and their checks are initialization assignments,
+not old-graph probes.
+
+Let $d_r$ be the fixed root-to-register-component path length. Execute, in
+order, the register route/inspection, each route and inspection in
+$\mathcal C$, each append-site route and its two terminal probes, and
+each old-graph endpoint probe in $\mathcal J$. Every route costs its word
+length. This is a complete finite prescription for the number $p_j$ of
+port probes. In particular, if $\mathcal J_{\mathrm{old}}$ is the list
+of the latter root-to-slot words, then
+
+$$
+p_j=d_r+18b-4
+ +\sum_{c\in\mathcal C}(|\pi_c|+140)
+ +\sum_{z\in\mathcal A}(|\pi_z|+2)
+ +\sum_{w\in\mathcal J_{\mathrm{old}}}|w|.
+\tag{SSA.12}
+$$
+
+Let $\mathcal F_j$ be the finite-register bit positions assigned by the
+original row, including its PC successor, and let $\mathcal D_j$ be the
+old cell/track positions assigned by its core/receipt rule. These are
+the original designated write fields, including value-preserving writes,
+not the positions whose values happen to change. Combine duplicate target
+positions as in Definition 5.1. Put $t_j=|\mathcal F_j|+|\mathcal D_j|$,
+$e_j=|\mathcal A|$, and let $r_j$ count retargeted links and $a_j$ initial
+activations. Then set
+
+$$
+\begin{aligned}
+v_j&=48e_j,\\
+w_j&=4t_j+2e_j+3r_j+2a_j+7v_j,\\
+g_j&=1+p_j+w_j+v_j.
+\end{aligned}
+\tag{SSA.13}
+$$
+
+Each original target bit incurs its four slot assignments even when
+unchanged; a read-only operand incurs probes and no gratuitous writes.
+Each append assigns the two
+slots of its old terminal and initializes all seven slots of each new
+vertex. The head terms are the exact three/two assignments of Definition
+5.1. Empty-slot initialization and repeated assignments remain charged.
+The old/new pattern and endpoint aliases determine the displayed integers
+by finite walks, not an unbounded matching operation. Every finite
+combinational selection or pattern-table entry belongs to the fixed
+primitive apparatus; no separate unbounded arithmetic service is assumed.
+

@@ -1,0 +1,21 @@
+**定义 3.2.1（确定性关系模型）。** 令 $S$ 是有限维实向量空间，动作字母表为有限集 $\mathcal A$。每个动作 $a$ 给出状态变换
+
+$$
+T_a:S\to S.
+$$
+
+对动作词 $w=a_1\cdots a_m$，约定
+
+$$
+T_w=T_{a_m}\circ\cdots\circ T_{a_1},
+\qquad T_\varepsilon=\operatorname{id}_S.
+$$
+
+令 $\pi:S\to Y$ 是已校准的观察接口。初态 $s$ 在词 $w$ 下的记录为
+
+$$
+\mathsf O_s(w)=\pi(T_w(s)).
+$$
+
+<a id="claim-3-2-2"></a>
+

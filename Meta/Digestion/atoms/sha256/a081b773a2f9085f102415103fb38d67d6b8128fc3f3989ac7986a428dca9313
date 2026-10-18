@@ -1,0 +1,32 @@
+**Theorem 44.4 (Finite-support infima, attainments and complete approximants).** Consider any one of these support classes on arbitrary measurable common carriers:
+
+1. every source law is finitely supported, and the reference is unrestricted;
+2. every source law and the reference are finitely supported;
+3. only the anchor law is required to be finitely supported;
+4. only the reference is required to be finitely supported.
+
+In each class the design infimum is $R$ of (44.4). If $h=0$ it is attained. If $h>0$, it is attained exactly when $b(K_0)=B$ at some finite index. These statements also hold with a common countable carrier. In particular, a strict profile with $h>0$ has no attainment in any of these four classes, even though its unrestricted radius minimum is attained.
+
+**Proof.** The universal lower bound is (44.5). If the profile reaches $B$, (44.7) has a finite support: $T_k=0$ for every $k\ge\max\{2,K_0\}$. The law $\alpha$ and the reference in (44.9) are then finitely supported, and (44.10) adds at most one tape at each actual source. Thus one full-source design simultaneously satisfies all four support permissions and attains $R$. Its common carrier remains countable, with no requirement that the union of these finite supports be finite. The common law for $h=0$ supplies that case.
+
+For a strict profile with $B<1$ and $h>0$, Theorem 44.3 prevents a finite anchor law or a finite reference at an optimizer. Each of the four classes requires at least one of these, so none attains $R$.
+
+For a strict profile with $B=1$, an exact optimizer would have radius zero. Equality of probability measures at event-TV zero would force $\mu_y=\nu=\mu_{x_*}$ for every source. If either the anchor law or reference were a finite point mixture, this would be a common finite point mixture on a finite list of tapes. Apply the finite-color selection in Theorem 42.3 to this list: choose one actual source matching every anchor proposal run in the list, beyond all their outputs, and with no correct proposal on the list. Under the common law its proposal mass is at least $h>0$ and every proposal is false. This violates $b(\Omega(y))<1$. The selection uses a finite auxiliary color relation only in the proof; it does not supply additional advice to the common procedure. Hence the zero minimum cannot be attained in any of the four classes.
+
+It remains to prove that the restricted infima really are $R$. For every integer $L\ge1$, put
+
+$$
+c_L=b(L),\qquad b_L(k)=\min\{b(k),c_L\},\qquad
+r_L=\frac{(1-c_L)h}{2-c_L}.
+\tag{44.17}
+$$
+
+This monotone profile reaches its limit $c_L<1$ by index $L$. Apply the explicit laws (44.6)--(44.10) with $b_L,c_L$ in place of $b,B$. Their proposal tail law has finite support, the anchor row is exactly $(h,d,z)$, the reference is finitely supported, and each source law is finitely supported. Their errors at target $k\ge2$ are $b_L(k)h/(2-c_L)$, and at target one are zero; hence they satisfy the original profile $b$ on all sources. Their actual radius is $r_L$. Finally $c_L\uparrow B$ gives $r_L\downarrow R$, with
+
+$$
+r_L-R=\frac{h(B-c_L)}{(2-c_L)(2-B)}.
+\tag{44.18}
+$$
+
+Thus these are complete lawful approximants in all four classes, including $B=1$, where their radii decrease to zero. The lower bound and these approximants establish an infimum, without asserting an unattained boundary reference exists. $\square$
+

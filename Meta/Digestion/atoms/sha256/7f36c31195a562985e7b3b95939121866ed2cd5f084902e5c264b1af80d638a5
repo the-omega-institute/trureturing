@@ -1,0 +1,25 @@
+**Definition 1.2 (the candidate finite boundary).** The observer receives
+one joint handoff after an unknown original past and before the next public
+request. All information that can assist a subsequent live operation must
+factor through one fixed finite classical–quantum algebra. Earlier acquired
+archives may have arbitrary joint dependence on height, phase and the entire
+signed winding. No later source-bearing input or interaction is available
+outside that algebra. Source-independent computation, blanks, randomness,
+clocks and exact continuous output recording are allowed. Section 4 states
+this access condition precisely, including every acquisition outcome.
+
+The following are distinct tasks and conclusions:
+
+| Task under that access condition | Result |
+| --- | --- |
+| One fixed positive horizontal request, exact on an interval of heights | Its failure CDFs have unbounded real linear span; no fixed finite handoff realizes them all exactly. |
+| The same request on $M$ heights and their full nuisance orbits | The ideal reduced output span has dimension exactly $M+5$; this gives a necessary operator-space dimension bound. |
+| The same request with nonzero complete-output error | Finitely many failure events give an explicit positive error floor for every fixed finite algebra. |
+| Phase requests with a fixed finite action bound | A finite-action packing inequality is necessary. The unrestricted-action constant is not asserted for this bounded menu. |
+| All phase requests of individually finite action | Uniform complete-output error is at least $\sqrt{Z(1-Z)}$, equal to $1/2$ at the balanced source. |
+| The phase-only task in a relaxed common-CPTP comparison class | Retaining the specimen and applying a common pinching attains that constant. No original-menu implementation is supplied. |
+
+These are necessary subconsumers of the full observer. None supplies
+unknown-past acquisition, a total unknown-height guard, all-prefix feedback,
+or an upper bound for the original full future menu.
+

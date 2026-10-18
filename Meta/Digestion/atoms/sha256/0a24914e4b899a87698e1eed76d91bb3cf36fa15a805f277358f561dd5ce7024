@@ -1,0 +1,36 @@
+## 319. The dominant-axis estimate
+
+For a genuine frame (r,a,b,o,a,b) with r>=1+a+b, write
+s=a+b, delta=a-b, T=(r-1)/(r+1),
+K=(sqrt(a*a-1)+sqrt(b*b-1))^2/s^2 and lambda=sqrt(K*T).
+Let theta be the r angle and S=beta_a+beta_b. The exact response is
+S=2*atan(lambda*cot(theta/2)). We claim 2*theta+S>pi.
+
+Define
+
+    F(r)=[2*(r-1)-T*delta^2]/s^2.
+
+The genuine half-angle square is
+T*[(r+1)*(o+1)-delta^2]/[s^2-(r-1)*(o-1)].
+It increases strictly with o wherever its denominator is positive,
+so tan(theta/2)^2>F(r), its value at o=1. This comparison remains
+valid when F(r) is negative. On r>=s+1, F increases because
+F'(r)=2*[1-delta^2/(r+1)^2]/s^2>0, and lambda increases.
+At r0=s+1, put D=s*(s+2) and H=a*a+b*b-2>0. Then
+
+    1-F(r0)=2*H/D,
+    lambda(r0)=(sqrt(a*a-1)+sqrt(b*b-1))/sqrt(D)>H/D.
+
+The strict inequality follows from D>H and
+sqrt(a*a-1)+sqrt(b*b-1)>=sqrt(H). Consequently
+F(r)+2*lambda>1 throughout the domain.
+
+If theta>=pi/2 the claimed estimate is immediate from S>0.
+Otherwise t=cot(theta/2)>1. If lambda>=1/2, then
+lambda*t>(t-1/t)/2=cot(theta).
+If lambda<1/2, the proved inequality gives
+F(r)>1-2*lambda>0 and t^2<1/F(r)<1/(1-2*lambda),
+which gives the same strict comparison. Thus
+atan(lambda*t)>pi/2-theta, proving 2*theta+S>pi.
+This establishes the per-owner estimate without an extra angle premise.
+

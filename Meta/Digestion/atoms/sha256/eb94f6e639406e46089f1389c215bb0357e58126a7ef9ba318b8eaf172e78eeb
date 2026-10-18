@@ -1,0 +1,21 @@
+**推论3.2（趋零缺陷不能买到共同近最优）。** 对任意一列允许状态数和核变化的合法有限模型，若两个指定相位风险趋于各自单独最小值，则
+
+$$
+\liminf\Delta_4\ge\frac\sigma{19}
+=\frac{2625336439247}{557829979875000000}>0.
+\tag{3.14}
+$$
+
+若 $\Delta_4\to0$，则
+
+$$
+\liminf\max(\epsilon_p,\epsilon_\beta)\ge\sigma/24.
+\tag{3.15}
+$$
+
+对单个模型且 $\Delta_4<\sigma/19$，还有
+$\max(\epsilon_p,\epsilon_\beta)>(\sigma-19\Delta_4)/24$。
+这些结论对 $\Delta_{\rm all}$ 同样有效。
+
+**证明。** 重排(3.1)，使用 $17\epsilon_p+7\epsilon_\beta\le24\max(\epsilon_p,\epsilon_\beta)$，再取下极限。证毕。
+

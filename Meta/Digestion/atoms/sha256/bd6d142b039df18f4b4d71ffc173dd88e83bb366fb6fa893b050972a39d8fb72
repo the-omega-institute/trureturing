@@ -1,0 +1,81 @@
+### 4.1 Response factorization and the fixed-loop operation contract
+
+For a circle character $\xi$, write
+
+$$
+q_\xi=(\sqrt2\cos\xi,\sqrt2\sin\xi)^{\mathsf T}.
+\tag{4.6}
+$$
+
+For every edge carrying $\xi$, its two coordinates are a fixed orthogonal
+rotation of $q_\xi$, multiplied by $a_e/\sqrt2$. If an edge carries
+$-\xi$, use the fixed reflection
+$J=\operatorname{diag}(1,-1)$ before that rotation. More explicitly, if
+$h_i-h_j=s_e\xi$ with $s_e\in\{+1,-1\}$, the corresponding two-by-two
+block of $D_b$ is
+$B_{e,\xi}=(a_e/\sqrt2)R_{\delta_e^0}J^{(1-s_e)/2}$, and all other
+blocks in that edge row are zero. At both walls the bottom edge block is the
+fixed column $a_e(\cos\delta_e^0,\sin\delta_e^0)^{\mathsf T}$ multiplying
+$\varepsilon$. Thus, in each symmetry regime, the ten outputs factor as
+
+$$
+y(h)=c_b+D_bq_b(h),
+\tag{4.7}
+$$
+
+where all entries of $D_b$ are fixed by $p$ and the initial phases. In
+generic position
+
+$$
+q_b=(q_\alpha,q_\beta,q_\gamma)\in\mathbb R^6,
+$$
+
+on a single wall $q_b=(q_\xi,q_\beta)\in\mathbb R^4$, where $\xi=\alpha$
+and $\gamma=\pm\alpha$, and at both walls
+
+$$
+q_b=(q_\beta,\varepsilon)\in\mathbb R^3,
+\qquad \varepsilon=(-1)^m.
+\tag{4.8}
+$$
+
+At both walls the four bottom-edge pairs are fixed vectors times
+$\varepsilon$, while the middle pair is the $q_\beta$ block; this is the
+meaning of the affine offset and decoder in (4.7).
+
+A prescribed later loop $\ell$ has residual increment $u$ and winding
+$m_u$. Concatenation adds residuals, so the same finite coordinates update
+by
+
+$$
+q_b(h+u)=T_b(u)q_b(h),
+\tag{4.9}
+$$
+
+where
+
+$$
+\begin{aligned}
+T_{\mathrm{gen}}(u)&=R_{u_\alpha}\oplus R_{u_\beta}\oplus R_{u_\gamma},\\
+T_{\mathrm{wall}}(u)&=R_{u_\xi}\oplus R_{u_\beta},\\
+T_{\mathrm{dbl}}(u)&=R_{u_\beta}\oplus[(-1)^{m_u}].
+\end{aligned}
+\tag{4.10}
+$$
+
+Here $R_t$ is the planar rotation through $t$, and the last scalar block
+multiplies the parity coordinate. The decoder known for the current task is
+$D_b$; the decoder for the prescribed future task is the explicitly updated
+$D_b[u]=D_bT_b(u)$. It is not required that one unchanged decoder serve
+all future outputs. For two prescribed loops $u,v$,
+
+$$
+T_b(v+u)=T_b(v)T_b(u),\qquad
+D_b[u][v]=D_bT_b(u)T_b(v)=D_bT_b(u+v),
+\tag{4.11}
+$$
+
+so the fixed-coordinate operation contract is closed under composition. The
+same statement applies to the fixed offset $c_b$; it is unchanged because
+all updates act on centered character coordinates.
+

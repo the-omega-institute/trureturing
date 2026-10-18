@@ -1,0 +1,14 @@
+## 4. An infinite family at $d+5$ reads
+
+Put
+
+$$
+L=MJ=\begin{pmatrix}1&0\\1&1\end{pmatrix}.
+$$
+
+For every integer $m\ge2$, define four tail matrices
+
+$$
+C_1=U,\qquad C_2=LU,\qquad C_3=U^2LU,\qquad C_4=L^mU^2LU.
+$$
+

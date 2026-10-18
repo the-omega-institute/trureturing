@@ -1,0 +1,91 @@
+**Definition 210.9 (Mathematical ownership and remaining domain).**
+The constructions above use the subset atoms of 201.2, threshold words
+and union bound of 203.2, signed hull of 198.5 and complete certificate
+of 199.3–199.6. Actual-input marginal and triple guards remain owned
+by 208.2. The fixed-projection identities 209.2–209.5, comparable
+submeasure constructions 209.7–209.11, and unary-preserving mixed-carrier
+conditions 209.12–209.15 retain their respective hypotheses. None is
+replaced by an unconditional pruning or by a presumed disjointness
+from every old convex, signed and zero-core consequence.
+
+The additional statements here are the four-late full-score inequality
+and specified relaxation obstruction, the all-certificate cylinder-mass
+minimum, the exact specified conditional moments and their finite-slot
+selectors, the nonuniform protected stock function, and the five-coordinate
+joint threshold with its constructive attainment. Their mathematical
+status is repository-derived ordinary proof; no literary priority or
+exhaustive novelty assertion is made. Classical cut counting, integer
+moment convexity and finite support separation are methods within these
+proofs, not separately advertised new theorems.
+
+The comparisons with 208.8 and 208.9 have concrete scope boundaries.
+At the shared five-slot data $\gamma_j=5,S=13,T=4,E=0$, 208.8
+gives support lower bound 18 and its relocated upper bound 23;
+its dominance condition is absent. This compares that displayed formula,
+not its entire certificate closure. The two-leading-class condition
+$\mu\ge\eta+d$ in 208.9 fails for positive-$d$ equal leading peaks.
+The heavy/light example (210.31) has a later heavy total outside its
+small-later-total condition. The general results of 209 likewise do
+not assert automatic existence of their required carrier or matching
+conditions for all profiles. Applications of these existing statements
+are used inside the foregoing proofs and comparisons.
+
+Scores, their conditional laws, and conic vectors of arbitrary mass
+are not probability-vector kernels. Only actual normalized finite kernels
+satisfying every event row can use
+[109.1 and 110.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION.md).
+The former requires the degree-at-most-two probability-vector domain
+and $c\ge H$, with the displayed scalar $\beta\le1$ implied under
+that normalization. For sufficiency, one source-independent uniform
+seed selects the entire schedule and terminal table before replies;
+different class configurations can use a common refinement of partitions
+of that same seed. Every executed schedule respects its actual request
+bound and hands off finitely. Apart from the normalized seven-table
+witness in 210.2, the constructions here are dual proof scores.
+
+The necessary direction of 110.2 retains arbitrary-address and
+full-carrier competitors: countability supplies a common probability-one
+seed event, the maximum address of the entire schedule has a vanishing
+seed tail, each finite Boolean pattern has an actual source witness by
+Boundaries 35.2, and sourcewise finite handoff permits finite witness
+cutoffs. The compact finite-catalog limit retains the exact closed cap.
+At $L_a=\max(\{j:a_j>\varepsilon\}\cup\{0\})$, every actual
+$n>L_a$ has exact error
+
+$$
+\operatorname{TV}\left(\sum_{j=0}^{L_a}p_{1^{L_a}}(j)\delta_{\theta_j},
+ (1-a_n)\delta_{\theta_0}+a_n\delta_{\theta_n}\right)
+ =\max\{1-p_{1^{L_a}}(0),a_n\}.
+\tag{210.41}
+$$
+
+Equality $a_n=\varepsilon$, small active lengths and the cap-one
+endpoint are included; for larger caps immediate base output suffices.
+Neither auxiliary $e=0$ nor a zero score coordinate changes a positive
+original amplitude. The source, full carrier, consumer, nonatomic
+targets, marked-law quantifier and common seed remain fixed.
+
+For every original positive monotone vanishing amplitude sequence and
+every positive closed cap, the universal implication
+
+$$
+\mathcal F_N(a,\varepsilon)\ne\varnothing
+ \quad\Longrightarrow\quad
+\mathcal F_N(a,\varepsilon)\cap\mathscr C_{L_a}\ne\varnothing
+\tag{210.42}
+$$
+
+remains unresolved. The four-late counterfamily is outside unit-$O$;
+the cylinder point is outside $H_N$; conditional selectors require
+their stated ratios and three peaks; protected necessity requires the
+fixed-terminal protected class; the exact five-coordinate necessity
+requires $E=0$ and $g\ge2d$. Arbitrary early credit, unordered and
+growing profiles and the remaining low-terminal regimes have no
+automatic certificate supplied here. A method obstruction is not
+$E_N$ nonmembership, and $E_N$ nonmembership without the original
+required feasible witnesses is not a separator. No original common-seed
+$N_2$ attainer with a uniform lower certificate against every full-carrier,
+arbitrary-address $O_2$ competitor is established here. The exact-law
+obstruction 112.2 continues to allow a different stopped law at the
+same cap.
+

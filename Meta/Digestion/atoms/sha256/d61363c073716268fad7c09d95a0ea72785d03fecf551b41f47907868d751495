@@ -1,0 +1,14 @@
+**Corollary 4.2 (square criterion at the candidate minimum).** For $d\ge1$ and $n=d+5$, consider
+
+$$
+T_j:(\Delta,Q)\longmapsto
+\bigl(\operatorname{tr}(A_i\Delta)-Q(i)\bigr)_{i\ne j},
+\qquad Q\in\mathcal P_{d-1}.
+$$
+
+Both spaces have dimension $d+4$. Its kernel projects injectively onto $\mathcal E_j$. A recovering history must have zero kernel or a one-dimensional kernel whose matrix generator belongs to $\mathcal C\cup(-\mathcal C)$. Nullity at least two, or a one-dimensional kernel with a matrix generator outside the union, gives the collision in Theorem 4.1.
+
+Proof. The domain dimension is $4+d$ and there are $n-1=d+4$ survivor equations. Projection has image exactly $\mathcal E_j$ by definition. If its matrix part is zero, $Q$ vanishes at $d+4$ distinct nodes despite having degree at most $d-1$, so the polynomial root argument gives $Q=0$. Projection is injective. The rest follows from Theorems 3.1 and 4.1. These dimensions express the proved positive-source criterion; they do not replace it. ∎
+
+For $d=0$ the surviving list includes $I$, so every $\Delta\in\mathcal E_j$ has trace zero. Proposition 2.2 then gives the inherited secant test. For $d\ge1$ the surviving polynomial can be nonzero, and the matrix difference need not have trace zero. A uniform full-target recovery path must pass all these tests, but passing them is not a sufficiency theorem for unknown slope.
+

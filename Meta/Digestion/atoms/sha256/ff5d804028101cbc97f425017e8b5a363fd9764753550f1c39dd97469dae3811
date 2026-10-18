@@ -1,0 +1,18 @@
+### 未来商
+
+两个历史若具有相同完整未来律：
+
+$$
+\mathscr L_h=\mathscr L_{h'}
+$$
+
+才可以被合并。
+
+这个商通常要求保留：
+
+$$
+(\mathrm{phase},A,B)
+$$
+
+以及 pending、delivered 等边界义务。
+

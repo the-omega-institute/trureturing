@@ -1,0 +1,36 @@
+### 58.2 Unrestricted all-product lower bound
+
+Use the fixed reference input Omega=sqrt(1/3)|0>_R|0>_L+sqrt(2/3)|1>_R|1>_L. On R tensor X tensor Y define the Hermitian witness H as follows. On the span of |0,00>,|1,11> its matrix is
+
+    [[1/3,2sqrt(2)/3],[2sqrt(2)/3,-1/3]].
+
+On |1,00> it is +1; on each of the other five computational basis vectors it is -1. The displayed block squares to identity, so ||H||_infty=1.
+
+For an arbitrary product channel A tensor B put
+
+    a0=<0|A(|0><0|)|0>, b0=<0|B(|0><0|)|0>,
+    a1=<1|A(|1><1|)|1>, b1=<1|B(|1><1|)|1>,
+    z_A=<0|A(|0><1|)|1>, z_B=<0|B(|0><1|)|1>.
+
+All four probabilities lie in [0,1]. Complete positivity, through a two-by-two Choi principal minor, gives |z_A|<=sqrt(a0 a1) and |z_B|<=sqrt(b0 b1). Directly expanding the reference output sigma=(id_R tensor [(A tensor B) composed with J])(|Omega><Omega|) gives
+
+    9 Tr(H sigma)
+      =4a0b0+12(1-a1)(1-b1)+4a1b1+8 Re(z_A z_B)-9.
+
+For example, the R=0 diagonal contribution is (4a0b0-3)/9; the R=1 contribution is [12(1-a1)(1-b1)+4a1b1-6]/9; and the two coherent terms give 8 Re(z_A z_B)/9. Thus leakage outside the code is included explicitly, not discarded.
+
+Put z=sqrt(a1b1). The nonconstant part of the preceding expression is at most
+
+    4[(sqrt(a0b0)+z)^2+3(1-a1)(1-b1)]
+      <=4[(1+z)^2+3(1-z)^2]
+      =16(1-z+z^2)<=16.
+
+Here a0b0<=1, and a1+b1>=2sqrt(a1b1) proves (1-a1)(1-b1)<=(1-z)^2. Finally 0<=z<=1. Consequently Tr(H sigma)<=7/9 for every product channel, and affinity gives the same bound for every finite LOSR mixture. The argument uses no code-support or calibration assumption.
+
+The ideal reference output has weights 1/3 on |0,00>, 2t/3 on |1,11>, 2(1-t)/3 on |1,00>, and coherent matrix entry sqrt(2t)/3 between the first two vectors. Therefore
+
+    Tr[H (id_R tensor T_t)(|Omega><Omega|)]
+      =7/9+(8/9)(sqrt(t)-t).
+
+Trace-norm duality with ||H||_infty=1 yields the claimed diamond lower bound. The one fixed input and witness apply to the whole allowed physical class.
+

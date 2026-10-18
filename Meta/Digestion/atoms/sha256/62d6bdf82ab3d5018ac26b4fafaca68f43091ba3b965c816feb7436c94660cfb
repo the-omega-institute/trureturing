@@ -1,0 +1,42 @@
+**Theorem 5.4 (Root isolation and the full event maximum).** The number
+$\lambda$ is the unique positive root of $p$, and
+
+$$
+\frac{52417656}{10^8}<\lambda<\frac{52417658}{10^8},\qquad
+\max_{J\in\mathcal J_{15}}\|H_J\|_{\rm op}=\lambda.
+\tag{5.8}
+$$
+
+Only the singleton $N$ reaches this event maximum.
+
+Proof. Subtracting the $N$ row of (5.1) from $m\Pi_N$ gives exactly
+$H_N|_L=C_N$; here $m=12D_0$. One has $a_0>0$, $b_0>0$, $c_0<0$,
+so $a_0c_0-b_0^2<0$. Thus $C_N$ has exactly one positive eigenvalue,
+the value in (5.7), and one negative eigenvalue.
+
+For a fully rational root certificate, let
+$l=52417656/10^8$, $u=52417658/10^8$. Substitution into (5.7),
+reduction by $r^2=17$, and the endpoint rule (5.3) give
+
+$$
+\begin{aligned}
+p(l)&\le\mathcal U(p(l))
+=-\frac{3988244642274334849666846412107}
+{901370379060576108500000000000000000000}
+<-\frac4{10^9},\\
+p(u)&\ge\mathcal L(p(u))
+=\frac{14693379189919334662338411340967}
+{1802740758121152217000000000000000000000}
+>\frac8{10^9}.
+\end{aligned}
+\tag{5.9}
+$$
+
+The unique positive root is therefore between $l$ and $u$.
+The $V$ block of $H_N$ is a compression of
+$-\mathcal A(\Pi_N)$, hence is nonpositive because the adjoint is
+positive. Lemma 5.2 puts every negative eigenvalue of $H_N$ above
+$-1/2$. Since $\lambda>l>1/2$, the positive $L$ eigenvalue is its
+norm. Every other event has norm below $52417/100000<l$ by the same
+lemma. This proves (5.8) for the same single channel. $\square$
+

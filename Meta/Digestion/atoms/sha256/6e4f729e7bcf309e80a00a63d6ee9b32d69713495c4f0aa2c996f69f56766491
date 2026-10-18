@@ -1,0 +1,109 @@
+**Theorem 12.3 (A finite-law filtering bridge with parameter-dependent rate).**
+Define the stationary classical covariance
+
+$$
+C(t)=\langle S_0,e^{-tH_{\rm cl}}S_0\rangle_p
+=\operatorname{Cov}(S(X_0),S(X_t)),\qquad t\ge0.
+\tag{12.10}
+$$
+
+Here $X_t$ is the stationary continuous-time heat-bath chain with
+generator $P-I$. Then $C(t)>0$ and
+
+$$
+-\lim_{t\to\infty}\frac1t\log C(t)=\gamma.
+\tag{12.11}
+$$
+
+If $H_{\rm cl}$ has a distinct eigenvalue above $\gamma$, let
+$\sigma$ be the separation to the next one. Its effective rate obeys
+
+$$
+0\le-\frac{d}{dt}\log C(t)-\gamma
+\le(\Lambda-\gamma)\frac{1-\eta}{\eta}e^{-\sigma t}.
+\tag{12.12}
+$$
+
+If there is no such eigenvalue, the left side is identically zero.
+For $n\ge2$, $\gamma<1$, and the nonzero polynomials
+$f_k=P^kS_0$ have legal degree at most $k+1$. Their Rayleigh
+quotients $R_k$ decrease to $\gamma$. When $\sigma$ exists,
+
+$$
+0\le R_k-\gamma
+\le(\Lambda-\gamma)\frac{1-\eta}{\eta}
+\left(\frac{1-\gamma-\sigma}{1-\gamma}\right)^{2k},
+\qquad k\ge1,
+\tag{12.13}
+$$
+
+and $\gamma\le\gamma^{(k+1)}\le R_k$.
+
+Proof. Write $a_\ell=\|\Pi_\ell S_0\|^2$ for the distinct positive
+eigenvalues $\ell$ of $H_{\rm cl}$. Theorem 12.2 gives
+$a_\gamma>0$ and $a_\gamma=\eta\operatorname{Var}_p(S)$.
+The finite spectral expansion is
+
+$$
+C(t)=\sum_\ell a_\ell e^{-\ell t}.
+\tag{12.14}
+$$
+
+Its leading term proves (12.11). In the logarithmic derivative,
+the excess over $\gamma$ is
+$\sum_{\ell>\gamma}(\ell-\gamma)a_\ell e^{-\ell t}/C(t)$.
+Use $C(t)\ge a_\gamma e^{-\gamma t}$,
+$\ell-\gamma\le\Lambda-\gamma$ and
+$\ell-\gamma\ge\sigma$ to obtain (12.12).
+
+For $n\ge2$, choose any centered singleton occupation $g$ and a
+different site $i$. Then $E_ig=g$ and
+$\langle g,Pg\rangle_p\ge\omega_i\|g\|^2>0$.
+Thus $P$ has a positive eigenvalue on the centered subspace,
+which implies $1-\gamma>0$. The gap component of $f_k$ is
+$(1-\gamma)^k\Pi_\gamma S_0$, so $f_k\ne0$.
+
+For a legal monomial $m_I$, a conditional update at $i\notin I$
+leaves it unchanged; at $i\in I$ it replaces it by
+
+$$
+q_i m_{I\setminus\{i\}}
+\prod_{j\in N(i)}(1-s_j).
+\tag{12.15}
+$$
+
+The open path has degree at most two at every site. Expansion
+and removal of illegal monomials show
+$P\mathcal P_d\subseteq\mathcal P_{d+1}$. Starting from the
+linear $S_0$ proves the degree bound.
+
+The quotient $R_k$ is the average of $\ell$ with nonnegative
+weights $a_\ell(1-\ell)^{2k}$. Multiplication by
+$(1-\ell)^2$, a decreasing function on $[0,1]$, decreases that
+average. Explicitly, for $b_\ell=a_\ell(1-\ell)^{2k}$ the
+difference of the two averages has numerator
+
+$$
+\frac12\sum_{\ell,r}b_\ell b_r(\ell-r)
+\bigl((1-r)^2-(1-\ell)^2\bigr)\ge0.
+\tag{12.16}
+$$
+
+The denominator is the positive product of the two weight sums.
+The ratio of all faster weight to gap weight is at most
+$((1-\gamma-\sigma)/(1-\gamma))^{2k}(1-\eta)/\eta$,
+proving (12.13), convergence and the variational comparison.
+For $n=1$, $\gamma=1$ and $PS_0=0$, so this power-iteration
+assertion excludes that endpoint. $\square$
+
+Theorem 10.2 and Theorem 12.2 concern different questions.
+A linear signal can have nonzero overlap with the slow eigenspace
+while its immediate Rayleigh quotient exceeds that of a joint
+phase. Filtering redistributes the spectral weights, and its
+polynomial degree increases. Neither (12.12) nor (12.13) supplies
+a uniform finite-time or uniformly bounded-degree result over
+all lengths and arbitrary positive parameters: their constants
+retain $p_{\min}$, $\eta$ and the distinct-eigenvalue separation.
+Whether a different argument gives such a resource guarantee
+remains a separate question.
+

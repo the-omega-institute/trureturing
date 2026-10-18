@@ -1,0 +1,70 @@
+**定理 C-114.4（全参考 minimax、唯一参考及所有有限最优系综）。** 对有限非空
+指标集 $\Lambda$，系综是 $p_\ell\ge0$、$\sum_\ell p_\ell=1$、
+$\rho_\ell\in\mathcal F_{t,\eta}$；零权重项删除，
+$\bar\rho=\sum_\ell p_\ell\rho_\ell$，
+$\chi=S(\bar\rho)-\sum_\ell p_\ell S(\rho_\ell)$。
+参考始终遍历全部环境复密度态。则
+
+$$
+\inf_R\mathcal V_{t,\eta}(R)
+=\max_{\text{有限系综}}\chi
+=\mathcal R_{t,\eta},\qquad
+\operatorname*{argmin}_R\mathcal V_{t,\eta}(R)=\{\Omega_\eta\}.
+\tag{C114.10}
+$$
+
+当 $b>0$，最优系综的充要条件为
+
+$$
+X_\ell\in\mathcal K_*\quad(p_\ell>0),\qquad
+\sum_\ell p_\ell X_\ell=0.
+\tag{C114.11}
+$$
+
+最小不同态字母表大小恰为二；所有二字母最优系综都是等权反足对
+$X_*,-X_*$。当 $b=0$，只有一个不同态，任意系综的 $\chi=0$，
+不存在两个不同态的非平凡字母表。
+
+证明。$\log\Omega_\eta$ 在 $P$ 上为 $\log a$，在 $Q$ 的正谱上为 $\log c$。
+纯虚反对称方向的迹为零，故对整个族精确有
+
+$$
+-\operatorname{tr}(\rho\log\Omega_\eta)=H_\eta,
+\qquad D(\rho\Vert\Omega_\eta)=H_\eta-S(\rho).
+\tag{C114.12}
+$$
+
+这使 $\mathcal V(\Omega_\eta)=\mathcal R$。
+另一方面取任何饱和反足对，两个态的熵均为 $h$，平均为 $\Omega_\eta$。
+对每个支持参考，直接展开迹给 Donald 恒等式在该系综上的应用
+
+$$
+\tfrac12D(\rho(X_*)\Vert R)+\tfrac12D(\rho(-X_*)\Vert R)
+=\mathcal R+D(\Omega_\eta\Vert R).
+\tag{C114.13}
+$$
+
+因此 $\mathcal V(R)\ge\mathcal R+D(\Omega_\eta\Vert R)$。
+不支持的参考已经被无限值排除。
+
+这里使用密度态散度非负且等号仅在两态相同的成熟事实。
+其有限维支持情形可直接核对：在 $\rho$ 的正本征基中写本征值 $r_i$，
+$q_i=\langle i|R|i\rangle>0$。对数严格凹性给
+$\langle i|\log R|i\rangle\le\log q_i$，故
+$D(\rho\Vert R)\ge\sum_i r_i\log(r_i/q_i)
+\ge-\log\sum_iq_i\ge0$。
+最后两步使用 $\sum_i r_i=1$、$\sum_iq_i\le1$ 和标量 Jensen。
+等号要求 $q_i=r_i$、$\sum_iq_i=1$；第一步等号使每个 $|i\rangle$
+为 $R$ 的本征向量，正性及剩余迹零排除其余支持，故 $R=\rho$。
+这证明 minimax 及其参考唯一性，包括单点端点。
+
+对任意有限系综，定理 C-114.2 给
+$\chi\le H-h$；等号恰要求平均态是唯一熵最大态，且每个正权重成员熵为 $h$。
+当 $b>0$，这正是 (C114.11)，反足对给达到。
+一个不同态的 $\chi=0<\mathcal R$；二态平均零要求
+$X_2=-p_1X_1/p_2$，两者算子范数均一迫使 $p_1=p_2=1/2$。
+$b=0$ 时直接退化为单态。一般 Donald 恒等式
+$\sum p_\ell D(\rho_\ell\Vert R)=\chi+D(\bar\rho\Vert R)$
+也由同一迹展开得到；正权重下每项支持都在平均支持中，故不把零权重的
+$0\cdot\infty$ 当作数。以上不需要交换两个非对易矩阵的对数。证毕。
+

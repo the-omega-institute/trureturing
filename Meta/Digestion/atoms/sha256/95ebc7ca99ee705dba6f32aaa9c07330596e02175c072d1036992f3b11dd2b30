@@ -1,0 +1,35 @@
+**Theorem 94.1 (endpoint acquisition through the declared archive).** Suppose the extra archive of [supplier Definition 76.3](RECURSIVE_RELATIONAL_OBSERVATION_PARAMETERIZED_CROSS_PRODUCT_RECOVERY.md) supplies the same three historical vectors and frame, with finite dyadic replies $y_i$ satisfying $\|y_i-x_i\|\leq2^{-b}$ simultaneously at every requested $b\geq1$. Replies may be correlated, off-image, nonorthogonal, zero, tiny or wrong in their computed sign. On every source of Definition 89.1, a finite interval selection terminates for every such valid name and yields either endpoint core with the semantic contract of Definition 92.1.
+
+**Proof.** Use discovery precisions $b=1,2,4,\ldots$, put $e=2^{-b}$ and $l_i=[1-\|y_i\|^2]_0^1$ for $i=1,2$. True read norms are at most one, so squared-norm error is at most $(2+e)e\leq3e$; clipping is nonexpansive. Therefore
+
+$$
+D\in[\mathrm{lo},\mathrm{hi}],\quad
+\mathrm{lo}=\max(0,l_1+l_2-6e),\quad
+\mathrm{hi}=\min(2,l_1+l_2+6e).
+$$
+
+Stop discovery only if $\mathrm{lo}>0$ and $\mathrm{hi}\leq2\mathrm{lo}$. Select $\sigma$ as the largest dyadic at most $\min(\mathrm{lo},1)$ by finite rational comparisons, including equality. If $\mathrm{lo}\leq1$, then $\sigma\leq\mathrm{lo}<2\sigma$, while $D\leq\mathrm{hi}\leq2\mathrm{lo}\leq4\sigma$; if $\mathrm{lo}>1$, then $\sigma=1$ and $D\leq2$. Thus the same factor-four bin holds. No exact true-bin equality or real logarithm is inferred from approximate data.
+
+Let $b_* =\max(1,\lceil\log_2(48/D)\rceil)$. For $b\geq b_*$, $e\leq D/48$, and the outward bounds give $\mathrm{lo}\geq D-12e\geq3D/4$ and $\mathrm{hi}\leq D+12e\leq5D/4$. Every valid name meets the guard there. The first successful doubling precision satisfies $b_c\leq2b_*$. Early success preserves the bin. Make exactly one final request at
+
+$$
+b_f=\max(b_c,h+14,28),
+$$
+
+even if a precision repeats. Then $e_f\leq\eta\sigma/16$ and $e_f\leq2^{-28}$. Round final clipped losses to the $\eta\sigma$ grid; their total error is less than $3e_f+\eta\sigma/2<\eta\sigma$.
+
+For the first anchor put $w'=y_2\times y_1$ and $Z=\operatorname{sgn}(y_0\cdot w')w'$, using only a finite rational comparison. Bilinearity gives $\|w'-w\|\leq3e$ and
+
+$$
+|y_0\cdot w'-x_0\cdot w|
+\leq e\|w\|+(q_0+e)3e\leq7e.
+$$
+
+If the sign is correct, anchor error is at most $3e$. If it is wrong or zero when the true sign is nonzero, the actual projection in 89.3 gives $q_2^2\leq|x_0\cdot w|\leq7e$ and $\|w\|=q_1q_2\leq\sqrt{7e}$. Hence
+
+$$
+\|Z-x_3\|\leq3e+2\sqrt{7e}\leq9\sqrt e.
+$$
+
+If the true scalar triple product is zero, the actual projection forces $q_2=0$, so $w=0$ and the same bound holds. This estimate is an ordinary proof; it requires no executable square-root or exact-real sign test. For the other raw anchors use $[\|y_2\|^2]_0^1y_1$ and $[\|y_1\|^2]_0^1[\|y_2\|^2]_0^1y_2$. Clipped-factor error at most $3e$ gives vector errors at most $4e$ and $7e$. At $b_f\geq28$ all three raw errors are less than $\eta$; nearest coordinate-grid rounding adds less than $\eta$. Thus every stored anchor error is less than $2\eta$, and the coordinate and significand bounds in 92.1 hold. Close the archive after compression; subsequent decoding uses only the complete word. $\square$
+

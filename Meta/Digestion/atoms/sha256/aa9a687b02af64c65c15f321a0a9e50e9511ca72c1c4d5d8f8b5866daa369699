@@ -1,0 +1,4 @@
+**Corollary 3.3 (the sign pair is not a relabeling).** The two signs $\theta=\pm\theta_0$ are not emission-preserving hidden-state relabelings of each other.
+
+**Proof.** The same emission table has distinct entries, so any emission-preserving relabeling fixes every index in each phase. But $B_{\theta_0}\ne B_{-\theta_0}$. $\square$
+

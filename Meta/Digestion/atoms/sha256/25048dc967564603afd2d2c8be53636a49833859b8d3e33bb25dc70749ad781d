@@ -1,0 +1,48 @@
+**定理 51.3（A block-boundary sharpening and every even-order width-two cut）。** In (51.1), if some eligible cut is $a=qm$, then $C_{\rm pre}(f)\le T-1=k$. For $m=2$ and every even $k=2p\ge4$, every eligible cut admits this bound, including cuts inside a block. Hence
+
+$$
+m=2,\ k\text{ even},\ C_{\rm pre}(f)<\infty
+\quad\Longrightarrow\quad C_{\rm pre}(f)\le k.
+\tag{51.11}
+$$
+
+At a boundary cut the sufficient $q+T$ bound is replaced by $T-1$, saving $q+1$ counted blocks. At even width two the supplied uniform $D+T=3p$ bound is replaced by $2p$. No sharp finite ceiling or individual minimum is asserted by these comparisons.
+
+**证明。** At a boundary cut use $q$ blocks $1^m$ and then
+
+$$
+L=0^{m-1}1\quad\text{at indices }q,\ldots,T-2.
+\tag{51.12}
+$$
+
+The first $L$ is the parent with leading run zero. Every subsequent $L$ starts zero, so every low INITIAL survivor safely reaches every endpoint; the terminal tail one is cleared by the next block. Earlier rejection bands are decoded as in Theorem 51.2.
+
+The actual charge of $L$ at index $t$ is $\{(t+1)m-1,(t+1)m\}\pmod T$. The complete cycle of these edges is again the physical adjacent cycle. In (51.12) its deleted edges have right endpoints $0,m,\ldots,qm$. Since $qm\le T-2$, the resulting components, in ordinary representatives, are
+
+$$
+\{0,\ldots,m-1\},\ \{m,\ldots,2m-1\},\ldots,
+\{(q-1)m,\ldots,qm-1\},\ \{qm,\ldots,T-1\}.
+\tag{51.13}
+$$
+
+At $q=0$ only the last component occurs. The already paid chords (51.7) connect consecutive components. Thus the actual $q+(T-1-q)=T-1$ rows form a spanning tree and identify every INITIAL phase, by the incidence argument in Theorem 51.2.
+
+Now let $m=2$, $k=2p$ and $T=2p+1$. An eligible cut is $a=2q+r$, $0\le q\le p-1$, $r\in\{0,1\}$. The case $r=0$ is (51.12). For $r=1$ use
+
+$$
+(11)^q\mid(10)^{T-1-q}.
+\tag{51.14}
+$$
+
+Its first $10$ has exactly the required leading one, and every later $10$ starts from tail zero and ends at tail zero. All low survivors reach its first parent zero since $s+2q+1<k$. All later seams have a one-run of length one. The actual $10$ edges are $\{2t,2t+1\}\pmod T$, $q\le t\le T-2$.
+
+For $q=0$ these are a spanning path, omitting just the cycle edge with left endpoint $2p-1$. For $q\ge1$ the omitted left endpoints are $0,2,\ldots,2q-2$ and $2p-1$. The components of the retained adjacent edges are
+
+$$
+\{2p,0\},\ \{1,2\},\ \{3,4\},\ldots,
+\{2q-3,2q-2\},\ \{2q-1,\ldots,2p-1\}.
+\tag{51.15}
+$$
+
+There are $q+1$ components; when $q=1$ the intermediate two-element sets are absent. The $q$ all-one chords $\{2t,2t+2\}$ connect them consecutively into a spanning tree. Its columns identify every phase. This uses the literal $10$ parent and its actual endpoint, rather than an abstract independent row. The same original rejection decoding and ordered value join finish the target at worst depth $T-1$. Both alphabets admit every displayed word. ∎
+

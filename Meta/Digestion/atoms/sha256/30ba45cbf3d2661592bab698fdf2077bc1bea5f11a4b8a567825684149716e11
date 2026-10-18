@@ -1,0 +1,11 @@
+**定义 A-8.1（有限域中的黄金根）。** 奇素数 $`p\ne5`$，在 $`\mathbb{\text{𝔽}}_{p^2}`$ 中取 $`\lambda_\pm=(1\pm\sqrt5)/2`$，满足和一、积负一。置 $`\epsilon_p=(5/p)`$。由相同初值及递归得到
+
+
+```math
+F_a=\frac{\lambda_+^a-\lambda_-^a}{\lambda_+-\lambda_-},\qquad
+L_a=\lambda_+^a+\lambda_-^a\quad\text{于该域， }a\ge0.
+```
+
+
+这些是 [A-L3，§2、Lemma 2.7] 的经典模数列中间表示；根的名称不供应量子相位操作。
+

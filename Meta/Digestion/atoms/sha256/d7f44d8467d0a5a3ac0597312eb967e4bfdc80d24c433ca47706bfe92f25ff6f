@@ -1,0 +1,114 @@
+**Theorem 5.2 (initial-vector criterion with actual missing-prefix
+witnesses).** Fix $D\ge1$, the entire family $\mathcal F_D$ and any
+public $P\subseteq A_D$, with $S=R^{-1}P$. The following are equivalent:
+
+1. A single-valued decoder from $I_S(v)$ and supplied $k$ gives every
+   future selected vector, for all $\operatorname{height}(v)\le D$
+   and all $k\ge0$.
+2. One total computable decoder has that property.
+3. For all $v,v'$ of height at most $D$,
+   $I_S(v)=I_S(v')$ implies $e_S(v)=e_S(v')$.
+4. $S$ is prefix-closed, including the empty case.
+
+For every $q\in S$ and every missing proper prefix $a\prec q$,
+there are explicit sources $t,t'\in\mathcal F_D$ with identical entire
+initial selected vectors and different future vectors at one common
+count $k<2D$. The theorem and the path-context construction are credited
+to [PRIOR, Theorem 7.2]; the independent constructive proof follows.
+
+Proof. Item 2 implies item 1. By (FM.3) and (FM.18), item 1 implies
+item 3: unequal normal forms give different required vectors at a
+common count, which a function of the same initial vector cannot
+return. We construct the effective reconstruction under item 4 and
+then construct witnesses when item 4 fails.
+
+Suppose first that $S$ is prefix-closed. For the empty menu, the empty
+vector determines its sole code and every empty future vector. If $S$
+is nonempty, it contains $\varepsilon$, and every nonempty child menu
+$S_L,S_R$ is prefix-closed. Indeed a prefix $b$ of $r\in S_L$ gives
+the prefix $Lb$ of $Lr\in S$, so $Lb\in S$ and $b\in S_L$;
+the right case is identical.
+
+The initial root coordinate distinguishes alpha, beta and branch.
+If it is alpha or beta, the entire tree is that leaf; its code is
+computed by (FM.17), and all selected strict descendants are initially
+absent. If it is branch, the entries indexed by $Lr\in S$ are exactly
+the initial $S_L$-vector of its actual left child, and likewise on the
+right. Induction on maximum menu depth reconstructs the two child
+codes; an empty child menu contributes zero without any observation.
+Combining them by the branch line of (FM.17) reconstructs $e_S(v)$.
+The base nonempty menu $\{\varepsilon\}$ has two empty child menus,
+so this induction terminates. It works for every finite actual tree,
+not only the height-bounded ones.
+
+This reconstruction also specifies an effective procedure on all
+finite input tuples: check that a declared leaf has absent entries
+at all its selected strict descendants, reject an absent root in any
+nonempty recursive menu, and propagate inconsistent recursive data as
+rejection. Missing or malformed tuple entries also cause rejection.
+Every check is finite; every attained vector passes. On success use
+Citation 4.4's representative decoder at $k$; on rejection return a
+fixed default vector of the required size. This is one total computable
+decoder, correct on every promised input. Reconstruction proves item 3,
+and composition proves item 2.
+
+Now suppose prefix closure fails. Choose any $q\in S$ and missing
+proper prefix $a\prec q$, and write $q=ar$, $r\ne\varepsilon$.
+Define a one-hole path context by
+
+$$
+C_\varepsilon[z]=z,\qquad
+C_{Lb}[z]=\langle C_b[z],\alpha\rangle,\qquad
+C_{Rb}[z]=\langle\alpha,C_b[z]\rangle.
+\tag{FM.21}
+$$
+
+Set
+
+$$
+v=C_a[\alpha],\qquad v'=C_a[\beta],\qquad
+ t=\langle\alpha,v\rangle,\quad
+ t'=\langle\alpha,v'\rangle.
+\tag{FM.22}
+$$
+
+These are actual full trees. Every strict ancestor of $a$ is a branch;
+the leaf at $a$ is their only difference. Their right-subtree heights
+are exactly $|a|\le|q|-1\le D-2$, so both original sources are in
+$\mathcal F_D$. If $a=\varepsilon$, the right subtrees are simply
+alpha and beta. Failure of prefix closure is impossible at $D=1$,
+whose only possible relative word is $\varepsilon$; thus the displayed
+bound creates no missing small-depth case.
+
+The complete initial vectors agree. A selected proper ancestor of $a$
+is branch in both trees. A selected strict descendant of $a$ is absent
+in both. A selected address incomparable with $a$ takes an unchanged
+side subtree and has the same value, including any absence, in both.
+The only address whose initial value changes is $a$ itself, and it is
+not selected. These cases exhaust every member of $S$.
+
+At the initially reached leaf $a$, the future subtrees are $T_k$ and
+$T_{k+1}$. Transport is used at $a$, not at the initially absent $q$.
+Take the common count
+
+$$
+k=s(r)+1.
+\tag{FM.23}
+$$
+
+Both final-letter cases of (FM.8)–(FM.9) give beta at $r$ in $T_k$
+and branch at $r$ in $T_{k+1}$. Thus the selected original target
+$Rq\in P$ has different replies in the two continuations. Moreover
+
+$$
+0\le k=s(r)+1\le2|r|+1\le2D-1<2D.
+$$
+
+Each source stays on its own register and undergoes exactly these $k$
+genuine updates; all public data and the supplied count agree. There
+is no change of source within a history. Consequently the common
+initial selected vector admits neither a correct single-valued decoder
+nor equal normal forms for this pair. Items 1 and 3 fail, hence item 2
+fails as well. This proves necessity for every missing proper prefix
+and completes all equivalences. $\square$
+

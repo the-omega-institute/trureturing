@@ -1,0 +1,80 @@
+**定义 51.1（完整原来源上的末读区间）。** 保持定义45.1、46.1、48.1的全部合同，固定
+
+$$
+W=E\oplus\mathbb H,\quad E=\operatorname{Im}\mathbb H,\quad C=P_E,\quad d=e_4,
+\qquad
+\mathcal D_2=E\times\{b:|b|\in\{7,25\},\ \operatorname{Re}b\ge(4/5)|b|\}.
+\tag{51.1}
+$$
+
+初始 $a\in E$ 独立、任意且无界；半径层不带标签。公开参数、标架、锚及控制身份
+精确供应，致动精确。一个当前寄存器只执行原菜单
+$A_c(a,b)=(c\times a,bc)$（$c\in E,\ |c|\le1$）及
+$A_d(a,b)=(\operatorname{Im}b,-a)$。实际Read返回 $Cz+e$、$|e|\le\delta$，
+不改状态；所有误差可联合对抗、相关及依赖历史。控制器共同初始化、源无关、确定，
+下一事件只依赖已见有限前缀，记录保留每次实际Read、动作身份和停止；每条合法有限
+或可数记录须给一个 $W$ 值估计。可数事件按自然数排列，没有极限事件。
+目标始终为同一个 INITIAL，损失是 $W$ 中欧氏距离，估计不必在来源内。
+$\mathcal E_\pi,R_N,R_\infty$ 仍按（46.3）定义，预算只计破坏性更新，Read数量不限。
+没有标签、复位、复制、混合控制、反事实读口、当前状态目标或另供的解码端口。
+
+对 $0<\delta\le1$，原样使用（46.13）–（46.16）：
+
+$$
+\begin{aligned}
+\rho&=\delta/10,&K&=\sqrt{1-\rho^2},\\
+\alpha&=(3/5)K-(4/5)\rho,&\nu&=(4/5)K+(3/5)\rho,\\
+q&=\alpha+\nu i,&c_1&=j,\quad c_2=-\alpha j+\nu k,\quad c_1c_2=q,\\
+h&=(4/5)\nu-(3/5)\alpha,&T&=(7+25h)/2.
+\end{aligned}
+\tag{51.2}
+$$
+
+实际词仍恰为初Read、$A_{c_1}$、Read、$A_{c_2}$、Read、$A_d$、Read、停止。
+保留全部四个报告 $(y_0,y_1,y_2,y_3)\in E^4$。对任意这些报告，置
+
+$$
+\begin{aligned}
+r&=|y_3|,\qquad
+t_R^- = \min\{R,\max(0,r-\delta)\},
+&t_R^+&=\min\{R,r+\delta\},\\
+\ell_R&=\sqrt{R^2-(t_R^+)^2},
+&u_R&=\sqrt{R^2-(t_R^-)^2},\\
+I_R(y_3)&=[\ell_R-2R\rho,u_R],
+&m_R(y_3)&=(\ell_R+u_R)/2-R\rho.
+\end{aligned}
+\tag{51.3}
+$$
+
+这里 $R\in\{7,25\}$ 仅为计算索引。$0\le t_R^-\le t_R^+\le R$，所以
+区间及其中点在整个 $E$ 上有定义，$m_R$ 对固定 $R$ 连续。
+区间只包围真实隐藏实部，不把球帽来源换成填充区间，也不宣称它是精确后验。
+记两个全报告分支解码器
+
+$$
+D_R(y_0,y_1,y_2,y_3)
+=\left(y_0,\bigl(m_R(y_3)+P_R(y_3)\bigr)q^{-1}\right)\in W
+\qquad(R\in\{7,25\}).
+$$
+
+令
+
+$$
+A=7+\delta,\qquad B=25h-\delta,
+\qquad \theta(r)=\min\left\{1,\max\left\{0,\frac{r-A}{B-A}\right\}\right\}.
+$$
+
+由下述间隙计算（51.6）得 $B-A=25h-7-2\delta>0$。全部报告上的解码器定义为
+
+$$
+\widehat x=\mathscr D(y_0,y_1,y_2,y_3)
+=(1-\theta(r))D_7(y_0,y_1,y_2,y_3)
+ +\theta(r)D_{25}(y_0,y_1,y_2,y_3).
+\tag{51.4}
+$$
+
+这里的凸组合在向量空间 $W$ 中取；它只混合两个估计值，不混合控制、来源或物理执行。
+截断函数、$m_R$、球投影 $P_R$ 及右乘 $q^{-1}$ 都在其全域连续，故 $\mathscr D:E^4\to W$
+在全部报告（包括不可由原来源产生的报告）上都有定义且连续。$y_3=0$ 用 $P_R$ 的第一分支，
+无除零。两个中间报告的数值不参与估计，但它们仍被实际取得并完整保留。
+

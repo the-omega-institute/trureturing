@@ -1,0 +1,43 @@
+**Theorem 3.2 (complete actual fiber and arbitrary-word tests).** For
+every such $D,e$, the map
+
+$$
+\{\langle\alpha,v\rangle\in\mathcal F_D:
+\pi_{D-1}(v)=e\}\longrightarrow U^{A_e},\qquad
+\langle\alpha,v\rangle\longmapsto(x_a)_{a\in A_e}
+\tag{CCF.10}
+$$
+
+is a bijection. Every finite original-root Read is either fixed by $e$,
+or belongs to exactly one cone $Ra\{L,R\}^{<\omega}$ and has this
+local form:
+
+| Suffix after $Ra$ | Reply as a function of $x_a$ |
+| --- | --- |
+| Empty | alpha, beta or branch, according to the root of $x_a$ |
+| $L$ or $R$ | absent when $x_a$ is a leaf; otherwise that child label |
+| Length at least two | absent |
+
+Thus each test has at most three attainable replies on the whole fiber.
+On the subfamily in which every $x_a$ is a pair, every nonconstant test
+has only two attainable replies. These statements concern arbitrary
+words, without restricting adaptive competitors to a prefix menu.
+
+Proof. The boundary fixes all reached constructors and labelled stopping
+leaves through depth $D-2$. At each branch at depth $D-2$, both children
+are present, and the height promise leaves each child subtree height at
+most one. Its possibilities are exactly (CCF.9). Conversely, replace the
+two artificial children of every such cutoff branch in $e$ by any chosen
+members of $U$. No choice intersects another, every ancestor remains a
+branch, and the resulting $v$ has height at most $D$ with the same
+$\pi_{D-1}(v)$. All other stopping leaves are already fixed. This gives
+both inverse maps in (CCF.10), including the singleton case $f=0$.
+
+The addresses $Ra$ are prefix-free. A word entering one such cone has
+exactly the local reply displayed, since $x_a$ has height at most one.
+A word entering no cone either stays in the fixed skeleton, passes a
+fixed earlier leaf, or lies in the fixed outer root/left cone. Its reply
+is fixed. In the all-pair subfamily, root replies are constant branch,
+child replies are binary labels, and longer replies are constant absent.
+This proves the full-word classifications. $\square$
+

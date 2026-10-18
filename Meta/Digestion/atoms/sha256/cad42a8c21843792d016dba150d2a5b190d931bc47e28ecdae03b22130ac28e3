@@ -1,0 +1,41 @@
+**Definition 248.1 (One decomposition, defects and a common repair).**
+Fix $L\ge3$ and any ordered finite data
+$1\ge a_1\ge\cdots\ge a_L\ge\varepsilon\ge0$.
+Let $p\in\mathscr N_L$ satisfy every row (237.1) at cap $\varepsilon$,
+and choose any common probability distribution $\pi$ on its complete
+N tables. Every label in $J_L$ remains allowed. Sorting two distinct
+queried indices merely permutes their acquired information cells;
+repeated static requests have singleton information. These representation
+operations do not exempt any actual repeated or ignored request from
+counting. Use empty, singleton and sorted distinct-pair forms below.
+
+Write $v^+=1^L$, let $v^i$ have its sole zero at $i$, and let $v^{ij}$
+have zeros exactly at $i<j$. Define
+
+$$
+\begin{aligned}
+\delta&=3-p_{v^+}(0)-\sum_{i=1}^L p_{v^i}(i),\\
+s_0&=p_{v^+}(0)-(1-\varepsilon),&
+s_i&=p_{v^i}(i)-(a_i-\varepsilon),\\
+D(a,\varepsilon)&=2-\sum_{i=1}^L a_i+(L+1)\varepsilon,\\
+B(p)&=\sum_{i=1}^{L-1}(L-i)s_i+3\delta,&
+c_L&=\max\{3,L-1\}.
+\end{aligned}
+\tag{248.1}
+$$
+
+On the same selected pair table
+$N(a,b;\ell_{00},\ell_{01},\ell_{10},\ell_{11})$, $a<b$, replace
+its four outputs by
+$(\ell_{01},\ell_{01},\ell_{10},\ell_{11})$. Execute this as the
+stopped table $O(a,b;\ell_{01},\ell_{10},\ell_{11})$.
+Keep all empty and singleton functions. Let $q$ be this pushforward of
+the one whole-table law, and put
+
+$$
+\mu=\pi\{\text{distinct-pair tables with }\ell_{00}\ne\ell_{01}\}.
+\tag{248.2}
+$$
+
+This is one changed-table seed event, common to every word.
+

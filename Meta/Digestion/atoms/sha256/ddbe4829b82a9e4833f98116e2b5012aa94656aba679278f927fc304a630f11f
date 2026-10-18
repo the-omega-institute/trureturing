@@ -1,0 +1,45 @@
+**Corollary 87.2 (Unbounded separation of the optimal hard resources).**
+Under (87.1), the supplied address formula is
+
+$$
+h_\varepsilon=
+\max\left\{0,\left\lceil\ell-
+              \frac{\varepsilon}{1-\varepsilon}\right\rceil\right\}.
+\tag{87.6}
+$$
+
+For every $\ell\ge2$, take
+
+$$
+\varepsilon=\frac{\ell-1}{\ell+1},\qquad
+ a_1=\cdots=a_\ell=1,\qquad
+ a_{\ell+j}=\frac{\varepsilon}{j}\quad(j\ge1).
+\tag{87.7}
+$$
+
+These are actual-source marked families with
+
+$$
+\kappa_\varepsilon=1,\qquad
+ h_\varepsilon=\left\lceil\frac{\ell+1}{2}\right\rceil.
+\tag{87.8}
+$$
+
+In particular $h_\varepsilon/\kappa_\varepsilon$ is unbounded over
+this family.
+
+**Proof.** For $0\le m\le\ell$,
+$S_m(\varepsilon)=(\ell-m)(1-\varepsilon)$. Its inequality
+$S_m(\varepsilon)\le\varepsilon$ is equivalent to
+$m\ge\ell-\varepsilon/(1-\varepsilon)$. Apply (78.1), restricting
+to nonnegative integer $m$; $m=\ell$ is feasible. This proves (87.6)
+as a specialization of the existing address theorem. The sequence in
+(87.7) is positive, nonincreasing and vanishes along its tail, so (73.3)
+holds. Equation (87.2) gives count one because
+$\ell-(\ell+1)\varepsilon=1$. In (87.6) the ratio
+$\varepsilon/(1-\varepsilon)=(\ell-1)/2$, giving (87.8).
+Its address value tends to infinity while its count value stays one.
+The comparison is between two separately optimized hard resources;
+it does not identify a query count with the address of that query.
+$\square$
+

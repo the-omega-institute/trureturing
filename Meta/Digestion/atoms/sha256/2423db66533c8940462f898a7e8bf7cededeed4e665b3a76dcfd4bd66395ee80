@@ -1,0 +1,69 @@
+**Lemma 38.4 (scoped reciprocal saturated-prefix balance).** Suppose two
+incomparable live histories end at one running state, with exposed sets
+S,T satisfying S ∖ T = {a}, T ∖ S = {b}, and nonempty common unread set
+U = [5] ∖ (S ∪ T). Suppose their respective residuals and private old
+values are
+
+$$
+AND({b} ∪ U),\quad a = 0,
+\qquad OR({a} ∪ U),\quad b = 1.
+$$
+
+Then their complete actual continuations under (PCA.93) force cₐ = c_b.
+The assertion concerns only this AND/OR geometry and these private
+polarities; it makes no cost-balance claim for other mergers.
+
+**Proof.** The OR history has exactly two old ones.
+Complete all its unread coordinates {a} ∪ U by zero. This is precisely its
+negative saturated extension from Theorem 34.3: it remains live until the
+last of these coordinates, reaches total weight two, and reads every
+selected coordinate once at an occurrence root. Its only other invocation
+is RLR, before its last selected query. After that query it goes directly
+to the original zero-entry latch, since its six paid calls are exhausted.
+The selected suffix from the common state therefore queries exactly
+{a} ∪ U, in whatever order its stationary table dictates, with all replies
+beta. It never queries T again and has no post-certification query.
+
+Now complete the AND history by giving U the same zeros and giving its
+unread b either value. Lemma 24.1 realizes this as an actual origin. From
+the common state it follows exactly the OR source's suffix: its old a is
+zero, its U replies are the same, and every nonselected cube reply is
+constant. Induction through the fixed successors gives the same complete
+suffix and terminal latch. Assignments on S ∩ T need not agree because
+this suffix never queries them. On this AND source the selected prefix
+queries S once, and the replayed suffix queries {a} ∪ U once. Thus it
+makes five selected invocations, repeats a, omits b, and has selected
+literal charge W_A + cₐ − c_b. This repeat can occur after that source is
+already certified zero; it is permitted and charged, not excluded by
+live-prefix freshness. Lemma 38.2 supplies on this very source at least
+one nonselected call of length at least three. Consequently
+
+$$
+3 + W_A + cₐ − c_b ≤ ℓ_P ≤ 3 + W_A,
+\qquad cₐ ≤ c_b.
+\tag{PCA.95}
+$$
+
+For the reverse inequality the AND history has exactly two old zeros:
+its threshold residual requires every unread coordinate. Complete its
+unread {b} ∪ U by one. Theorem 34.3's positive saturated extension stays
+live until the last such coordinate, has total weight three, queries all
+five selected coordinates once at their roots, and ends directly at the
+original one-entry latch with its single paid RLR already made. Replay
+that suffix on the OR history with U all one and its unread a arbitrary.
+The old b = 1 agrees with the fresh b = 1, and the suffix reads neither
+S ∩ T nor a. The same fixed-successor induction is therefore valid.
+This OR source repeats b, omits a, makes five selected invocations and
+pays selected charge W_A + c_b − cₐ. Its own mandatory nonselected call
+adds at least three letters. The literal cap gives c_b ≤ cₐ.
+
+Both charges concern complete runs on their respective actual sources;
+no costs from different executions are added. RLR need not have occurred
+at the same prefix position in the two histories. If replay would produce
+two nonselected calls, five selected calls already make that impossible
+under p_P ≤ 6; if it would produce none, Lemma 38.2 is contradicted.
+In every permitted replay its nonselected charge is at least three.
+By Lemma 2.3 a terminating replay cannot revisit a running state, so its
+repeated coordinate is queried at a distinct installed state; both states
+and both invocations count. The two inequalities prove the claimed equality. ∎
+

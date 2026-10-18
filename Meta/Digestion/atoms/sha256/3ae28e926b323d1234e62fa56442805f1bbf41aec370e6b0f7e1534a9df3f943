@@ -1,0 +1,94 @@
+**Definition 1.3 (the original native correspondence).** Retain the
+ordered free algebra and genuine substitution of [WTF, Definition
+1.1][WTF]:
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\qquad \rho\alpha=\beta,\quad
+\rho\beta=\langle\beta,\alpha\rangle,\quad
+\rho\langle v,w\rangle=\langle\rho v,\rho w\rangle.
+$$
+
+At the cut $\{L,R\}^3$, let $R_*$ have the perfect ordered exterior,
+equality classes
+
+$$
+\{LLL,LRL\}=a,\quad\{LLR\}=b_1,\quad\{LRR\}=b_2,
+\quad\{RLL,RRL\}=c,\quad\{RLR\}=b_3,\quad\{RRR\}=b_4,
+$$
+
+and whole-subtree disequality between different classes. The domain is
+the entire fiber
+
+$$
+\mathcal U_*=
+\{u\in\mathcal T:R_{\{L,R\}^3}(\rho u)=R_*\}.
+$$
+
+There is no bound on source size, height or branch interiors. A complete
+predecessor row retains its ordered exterior, occurrence holes,
+canonical equality partition, disequalities and strict-prefix blocking
+guards. Equal subtrees at different addresses retain their occurrences.
+Pairing, order, addresses and observations are model structure in
+addition to the two leaf atoms.
+
+Use the exhaustive eleven profiles of WTF Definition 1.1. On $\Pi_j$,
+$b_j$ is alpha, its left partner is beta and the other class roots are
+branches. On $Z_d$ only class $d$ is beta; on $Z_*$ all roots are
+branches. Define
+
+$$
+w_i=L^{s_i}R,\qquad a_i=LLLw_i,\qquad
+\theta_i(B)=\mathbf1_{\{r_B(w_i)=\mathsf{branch}\}}.
+$$
+
+Alpha, beta and absent each contribute zero. The required pointwise code
+is the fixed function
+
+$$
+\sigma_{A,k}(u)=
+\begin{cases}
+0,&u\in\Pi_1\cup\Pi_2,\\
+1,&u\in\Pi_3\cup\Pi_4,\\
+\mathbf1_{\{\sum_i\theta_i(x_a)\ge k\}},&u\in Z_{b_3},\\
+0,&u\text{ is in any other zero profile}.
+\end{cases}
+$$
+
+Preparation must reach the original literal latch
+$\widehat e_{\sigma_{A,k}(u)}$ and hand off to the corresponding
+original complete reader entry $e_{\sigma_{A,k}(u)}$, on the same
+stationary register $\rho u$. The reader fixed in WTF Convention 1.3
+has its separate eight installed states, at most two fresh calls and
+six fresh letters, and returns the entire predecessor row.
+
+A native preparer has one input-independent running start, one fixed
+absolute address and four fixed successors per running state, the two
+original-entry latches and $r\ge0$ further mandated distinct latches.
+All installed states count, including unused states. Every actual
+invocation is paid, including constant, root, absent, repeated and
+post-certificate invocations. Its current state is the whole mutable
+configuration. Keep the separate service hypotheses of WTF Assumption
+1.5: actual update and register binding, acquired and authenticated
+same-version row, lawful original-root permission, actual export,
+complete access isolation, paid code-only handoff, lawful complete
+entry, and stationary truthful service. Source acquisition, table and
+address representation, entry contents, service storage, acquired-term
+work, physical memory, elapsed time and energy retain separate prices.
+
+Write $\mathsf N_{A,k,r}(H,p,\ell)$ and
+$\mathsf B_{c,k}(m,t,J)$ for the exact feasibility predicates in WTF
+Definitions 1.4 and 3.1. The reused transfer is precisely
+
+$$
+\mathsf N_{A,k,r}(H,p,\ell)
+\ \Longleftrightarrow\
+\mathsf B_{c,k}(H-4-r,p-1,\ell-3).
+\tag{TC.1}
+$$
+
+Its proof is [WTF, Theorem 4.1][WTF], including its actual cube,
+all-address classification, mandatory profile charge, projection and
+full-fiber lift. Let $H_{\mathrm{exec}}(A,k;r)$ be the minimum native
+preparation count at simultaneous caps $n+1,W+3$.
+

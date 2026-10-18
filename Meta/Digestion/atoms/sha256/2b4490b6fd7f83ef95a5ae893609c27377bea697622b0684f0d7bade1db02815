@@ -1,0 +1,91 @@
+**Convention 10.1 (method and literature scope).** The quantitative
+cylinder, rounding and deficit arguments in §§5–8 are repo-derived
+conditional deductions at the original GC/FA/RC interface. The original
+joint moment and HALF normalizations, double rigidity, capacity and common
+constructor are reused with their owning premises. The new analytic
+estimates use elementary real absolute-value identities, Taylor's formula,
+compactness, Lipschitz bounds and finite-dimensional left inverses.
+
+Strict dual separation, curvature and full rank also occur in the
+nondegenerate certificate methods of Duval–Peyré, *Exact Support Recovery
+for Sparse Spikes Deconvolution*, [§3.1–§3.2, served
+arXiv:1306.6909v1](https://arxiv.org/pdf/1306.6909v1). Their support-recovery
+theorem requires a convolution setting, a minimal-norm nondegenerate dual
+certificate, the stated value/derivative sampling rank, and a specified
+noise-to-regularization regime. Those hypotheses are not a theorem about
+this constrained positive common law and fractional capacity cylinder.
+Likewise the dual-interpolant criterion and homogeneous M-system theorem
+of de Castro–Gamboa, *Exact Reconstruction Using Support Pursuit*,
+[Lemma 1.1 and Theorem 2.1, served
+arXiv:1103.4951v1](https://arxiv.org/pdf/1103.4951v1), require their own
+full-rank interpolation, strict off-support and moment-system conditions.
+No such M-system for the present two-sheet functions is assumed. These
+references supply methodological context at their stated served-text
+scopes, without a version-exact historical-byte premise. Neither result
+is invoked to obtain (QS.31), (QS.38), (QS.42), an original higher-contact
+seed or a universal compression theorem. No priority, exhaustive literature
+search or nonexistence assertion is made.
+
+**Open problem 10.2 (first missing higher-count certificate).** For an
+actual higher-count consequence, supply one eight-contact or nine-contact
+law at the same isolated original source together with its complete
+full-circle dual. Required data include exact source/root membership,
+all endpoint zeros and strict exclusion off that complete set, positive
+same-law weights solving every common moment and active contrast,
+nonzero height and report signs, positive angular curvatures and inward
+slopes, and independent $\Gamma$ columns for eight contacts or invertible
+$(\Gamma,k)$ columns for nine. To obtain a numerical actual TV deficit,
+one must additionally evaluate or rigorously bound $c_0,L,K,p_{\min}$
+and, in the nine-contact case, $\lambda$.
+
+Such an eight-contact seed would give the positive actual HALF-TV deficit
+(QS.38) for every competitor with at most seven supported low labels;
+such a nine-contact seed would give (QS.42) for every one with at most
+eight. No such actual seed or evaluated deficit constant is specified
+here. The conditional transfer from instruments to laws has been given
+before height optimization; another abstract compactness assertion is
+not the missing higher-count certificate. The original maximum minimum
+**total** alphabet remains, at [GC, Theorem 9.2][GC]'s conditional scope,
+
+$$
+M_{\max}\in\{8,9,10\}.
+\tag{QS.45}
+$$
+
+Neither a universal seven/eight-low theorem, a dense-seven-low theorem
+on the actual target lift, nor exclusion of strictly decreasing affine
+open rectangles follows. The necessary affine/coexistence implications
+of [GC, §§16–18][GC] retain their scope; an unverified sufficient criterion
+is not a realized seed. Corollary 8.3 gives no value of $M_{\max}$ in the
+absence of the additional contact data.
+
+**Open problem 10.3 (complete finite parameters, order and gluing).** The
+unchanged target is the evaluated finite-$(s,A)$ roof for **all** budgets
+and feasible contrasts, every common oriented failure allocation and all
+live-height decompositions, including those below maximum contrast at a
+fixed allocation. It still needs selected roots, positive common weights,
+evaluated contact ranges, universal necessity, global ordering, certified
+connected coverage and one simultaneous original attainer at every point.
+Exact strong optimal minimum counts remain separate from the inherited
+strong existence upper bound of eight total labels.
+
+The [connected-interval volume][CI]'s conditional range $t=1000$,
+$\lambda\in[1/4,23/5]$, and the [two-parameter strip and rectangle][TP]
+retain only their own source, signed-root and whole-circle scopes. An
+additional numerical target supplies no continuation or coverage. The
+connections below $1/4$, intervening and later events, transverse-budget
+coverage and maximal ranges remain unresolved; no event is designated
+chronologically next.
+
+All occupied and unused roots, multiplicities, report and height signs,
+axes, height-zero contacts, zero arcs, collisions, zero weights, moment
+ranks, capacities, and count transitions remain in the original domain.
+Floor, rising-boundary, strong and degenerate endpoint, threshold, budget
+and orientation gluing remain required. Regularity in Assumption 5.1
+does not settle those strata. The remaining precontact/contact $K(s)$,
+evaluated source parameters, physical orientations and coefficient gluing,
+limiting transition-root isolation, multiplicities, sign intervals and
+next terms, critical five-label/static-contact interpolation and uniform
+joint-limit rates retain the supplier boundaries recorded in [GC, §§11
+and 20][GC]. Limiting structure is not a finite-activity support theorem.
+

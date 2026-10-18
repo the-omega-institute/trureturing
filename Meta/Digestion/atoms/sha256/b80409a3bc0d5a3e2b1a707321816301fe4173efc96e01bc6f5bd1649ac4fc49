@@ -1,0 +1,51 @@
+**Corollary 9.2 (the same-effects pair with an explicit separation).** The
+particular instruments $\Phi_K,\Phi_D$ of CG19.1 satisfy
+
+$$
+E(\Phi_K)=E_\star,\qquad
+E(\Phi_D)\geq E_\star+\epsilon_{\rm q}>E_\star.
+\tag{ZG.49}
+$$
+
+To fix the pair without an implicit optimizer choice, at the credited point
+put $H=1000\eta_{0,\star}\operatorname{adj}S_{0,\star}$ and
+$Q^{0j}=\eta_{j,\star}\operatorname{adj}S_{0j,\star}$ for $j=1,2$.
+Their credited positive pivots define
+
+$$
+\begin{aligned}
+h&=He_0/\sqrt{H_{00}},
+&b^{0j}&=Q^{0j}e_0/\sqrt{Q^{0j}_{00}},\\
+K_0&=\operatorname{diag}(h),
+&K_{0j}&=b^{0j}_0|0\rangle\langle j|+b^{0j}_1|j\rangle\langle0|,\\
+D_0&=K_0,
+&D_{0j}&=b^{0j}_1P_0+b^{0j}_0P_j.
+\end{aligned}
+\tag{ZG.50}
+$$
+
+The live maps sum the three corresponding Kraus conjugations. Both have
+the same five failure densities
+$w_\ell h_0(t)\operatorname{tr}(M_fA)dt\,P_f$, where
+$h_0(t)=2/(1+t)^2$ and
+
+$$
+M_f=\operatorname{diag}(0,1-H_{11}-Q^{01}_{00},
+                           1-H_{22}-Q^{02}_{00}).
+\tag{ZG.51}
+$$
+
+Their credited joint normalization and positivity are CG15/CG19. Their
+five-mode completion compresses by $\iota$ and sends the full complementary
+support to original failure label $2$ with density $h_0$ in BOTH instruments.
+
+Proof. CG16 and CG19 supply the value for $\Phi_K$ and the same-effects
+identities, including identical unnormalized reference marginals in each
+corresponding branch on arbitrary joint inputs, and identical complete
+failure measures. All $D_a$ are diagonal, retaining their signed amplitudes,
+so $\Phi_D$ is zero-transfer. Apply Theorem 8.2 to it. Equality of effects
+is also transparent from $D_{0j}^\dagger D_{0j}=K_{0j}^\dagger K_{0j}$;
+it does not identify the live successor operations. The canonical live
+output sums over the internal live Kraus label, just as in CG.20. No bound
+for a changed task exposing that extra label is inferred. $\square$
+

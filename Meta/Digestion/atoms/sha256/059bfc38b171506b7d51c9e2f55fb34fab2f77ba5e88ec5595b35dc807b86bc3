@@ -1,0 +1,18 @@
+**Corollary 13.5 (A defined population-factorization obstruction).**
+There is no no-worse reduction of the original scalar-port problem
+to legal channels with $L=pq^T$. In particular, the TP branch of
+[QCB, Theorem 3.1](RECURSIVE_RELATIONAL_OBSERVATION_QUANTUM_CYCLE_COMPATIBILITY_AND_PPT_BOUNDARIES.md)
+under its specified planar saturation, positive rank-one $\Gamma$,
+pair saturation and cycle compatibility cannot contain an optimizer.
+
+Proof. Theorem 13.2 gives $e(T)\ge B_{\rm pop}>11/20$ on
+every rank-one-table port, regardless of its remaining coherences.
+The credited legal $T_{\rm mix}$ has error below $524176/10^6$,
+so it admits no no-worse representative in that class. QCB's specified
+compatible branch reconstructs its whole tuple from a single radial
+product seed. Its $\Lambda$ and hence $L$ are rank one, including
+after its TP normalization. The same bound excludes it. This uses
+QCB's conditional realization theorem; it does not repeat a cyclic
+PPT counterexample or infer that its hypotheses hold at an optimizer.
+$\square$
+

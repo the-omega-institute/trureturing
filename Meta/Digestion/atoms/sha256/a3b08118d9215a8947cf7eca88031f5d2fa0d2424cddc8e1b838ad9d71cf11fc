@@ -1,0 +1,47 @@
+**定理 5.2（五模式全域正性与严格全阶正性的共同阈值）。** 在 $0\le\tau\le1$ 内，以下三条件等价：
+
+$$
+\begin{aligned}
+&\mathcal F_\tau(r)>0\quad\text{对全部 }r>0;\\
+&(-1)^n\mathcal F_\tau^{(n)}(r)>0
+\quad\text{对全部 }r>0\text{ 和整数 }n\ge0;\\
+&\tau\le\tau_*.
+\end{aligned}
+\tag{5.2}
+$$
+
+临界值 $\tau=\tau_*$ 也保留全部严格不等式。
+
+证明。定理 3.2 及有限线性组合给
+
+$$
+\mathcal F_\tau(r)=\int_0^\infty e^{-rt}
+P(\tau e^{-\ell t})\omega(t)\,dt,
+\qquad P(z)=1-3z+z^2.
+\tag{5.3}
+$$
+
+对固定 $\tau$，$|P(\tau e^{-\ell t})|\le1+3\tau+\tau^2$；因此各阶导数仍可在积分内计算。因式分解
+
+$$
+P(z)=(1-\varphi^2z)(1-\varphi^{-2}z)
+$$
+
+表明，若 $0\le\tau\le\tau_*$，则 $P(\tau e^{-\ell t})>0$ 对每个 $t>0$ 成立。在临界处只在端点 $t=0$ 消失，故积分及其全部交替导数仍严格为正。
+
+反过来，式 (5.3) 中令 $v=rt$，命题 3.3 及共同控制
+
+$$
+2(1+3\tau+\tau^2)e^{-v}(1+v)\quad(r\ge1)
+$$
+
+给出
+
+$$
+\lim_{r\to\infty}r\mathcal F_\tau(r)
+=C_\infty(1-3\tau+\tau^2).
+\tag{5.4}
+$$
+
+当 $\tau_*<\tau\le1$ 时，该极限严格为负，所以存在 $R>0$，使全部 $r>R$ 都有 $\mathcal F_\tau(r)<0$。这排除了全域正性；而严格完全单调显然蕴含零阶正性，故三者等价。$\square$
+

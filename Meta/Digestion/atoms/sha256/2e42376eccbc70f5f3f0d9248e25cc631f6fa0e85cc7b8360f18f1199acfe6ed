@@ -1,0 +1,28 @@
+**Theorem 7.1 (one-update endpoint obstructions for all nonroot cuts).**
+Let $P\ne\{\varepsilon\}$. No deterministic initially source-blind
+read-only procedure, correct on all sources and terminating on
+quiescent inputs, can guarantee the invocation row if one hidden update
+before its first Read is permitted. In the same comparison class it
+cannot guarantee the separate Return-time row if one hidden update
+after its last Read and before Return is permitted.
+Each obstruction uses at most one writer update during the call.
+
+**Proof.** For every such $P$, the row on alpha is the concrete alpha
+tree with empty reached set and partition; the row on beta is the
+distinct concrete beta tree. This includes $P=\varnothing$.
+
+For invocation, compare entry alpha followed by a hidden update before
+the first Read with entry beta and no update. All later source observations
+and observer control agree, while the required invocation rows differ.
+Termination on the stationary beta input supplies the common finite
+response. A response before any Read is already impossible by the
+same all-source distinction.
+
+For Return, run the observer on stationary alpha until its finite response.
+Insert one update after its last Read and before the distinct Return.
+No later observation distinguishes the two histories; their output agrees
+but the required Return row changes from alpha to beta. If there was
+no Read, use the invocation-to-Return gap. The update may occur during
+source-free output preparation too. Both histories have fair extensions
+with the writer halted. $\square$
+

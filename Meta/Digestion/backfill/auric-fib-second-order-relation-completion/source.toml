@@ -1,0 +1,5 @@
+source_id = "auric-fib-second-order-relation-completion"
+path = "docs/develop/theory/AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

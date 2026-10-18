@@ -1,0 +1,85 @@
+**引理 87.5（One lawful five-block GLOBAL stream for both value fibres）。** The same full target has a single preset stream with worst fee five under both alphabets, including every low phase, both high tails and independent initial bottom.
+
+证明（a simultaneously available full-cycle code）。 Keep the root $P$ in (87.13). The following independent four-coordinate suffix table $Q$ is a code for acquiring phase, not a change to the target table $z$ in Definition 87.1.
+
+$$
+\begin{array}{c|rrrrrrrrr}
+j&0&1&2&3&4&5&6&7&8\\\hline
+Q(j)&0111&1100&1011&0110&1010&1100&0100&0101&1101
+\end{array}
+\tag{87.24}
+$$
+
+$$
+\begin{array}{c|rrrrrrrr}
+j&9&10&11&12&13&14&15&16\\\hline
+Q(j)&0011&1001&1110&0001&0010&1111&0000&0100
+\end{array}
+\tag{87.25}
+$$
+
+Coordinates are numbered $1,2,3,4$. On $S$, $Q$ is a bijection onto $\mathbb F_2^4\setminus\{0000,1000\}$. On its three-phase complement its values are $Q(1)=1100$, $Q(15)=0000$, $Q(16)=0100$. Each coordinate has eight ones on the full cube, so its cube XOR is zero; hence
+
+$$
+\bigoplus_{j\in S}Q(j)=1000,
+\qquad Q(1)\oplus Q(15)\oplus Q(16)=1000,
+\qquad \bigoplus_{j=0}^{16}Q(j)=0000.
+\tag{87.26}
+$$
+
+For suffix indices $t=1,2,3,4$, the exact omission pairs and their table values are
+
+$$
+\begin{array}{c|c|c}
+t&M_t&(Q(j):j\in M_t\text{ in increasing order})\\\hline
+1&\{12,13\}&(0001,0010)\\
+2&\{9,10\}&(0011,1001)\\
+3&\{6,7\}&(0100,0101)\\
+4&\{3,4\}&(0110,1010)
+\end{array}
+\tag{87.27}
+$$
+
+Both displayed vectors in each row have coordinate $t$ zero. Thus all four full rows $q_t(j)=Q_t(j)$ are even and simultaneously available at their actual chronological windows. No common partition or unrelated marginal realization is substituted for these rows. Applying (87.9) at the actual starts $14,11,8,5$ yields the one literal stream
+
+$$
+\begin{aligned}
+B_0&=11010101010101,\\
+B_1&=11110110111001,\\
+B_2&=11100101100101,\\
+B_3&=01100100011010,\\
+B_4&=00101001100011.
+\end{aligned}
+\tag{87.28}
+$$
+
+Its words are fixed independently of the free value and every subsequent reading.
+
+证明（actual seams, own-endpoint decoding and stops）。 The leading/trailing run pairs of these five words are respectively
+
+$$
+(2,1),\ (4,1),\ (3,1),\ (0,0),\ (0,2),
+\tag{87.29}
+$$
+
+giving consecutive actual seam sums $5,4,1,0$, all strictly less than sixteen. Every word has an internal zero and length fourteen. The root has exactly the already verified low preservation and high absorption; every low source then executes the other four words safely. The same complete concatenation proves compatibility of all the rows, including adjacent literal ones at its first two suffix boundaries. None is a separate feasible experiment on a copied or reset source.
+
+The five-bit vector
+
+$$
+Z_{\rm run}(j)=(\mathbf1_S(j),Q(j))
+\tag{87.30}
+$$
+
+is injective on all seventeen phases. On $S$ this follows from the fourteen distinct $Q$ entries; on $S^c$ the entries $1100,0000,0100$ are distinct; phases on opposite sides have different root bits. In particular the two occurrences of each repeated joined label acquire different full codes, as permitted in the lower bound.
+
+Each low source emits precisely (87.28). At its fifth completed endpoint its own six scalar readings, including the free one, give
+
+$$
+(v_1\oplus v_0,v_2\oplus v_1,v_3\oplus v_2,
+ v_4\oplus v_3,v_5\oplus v_4)=Z_{\rm run}(j).
+\tag{87.31}
+$$
+
+The inverse of the explicit finite table identifies $j$ from these observed differences. Return the entry $\lambda_{v_0}(j)$ of Definition 87.1, using the remembered free value. This is endpoint decoding of one source, not an intermediate phase observation. Initial bottom stops freely with $L_\bot$; a source absorbed by $B_0$ stops only at that word's paid completed bottom endpoint with $R$. All low sources stop at the fifth paid endpoint. No final clearing word is needed, and every bit of an absorbed root is charged. The actual witnesses (87.6) supply low sources reaching this worst fee. ∎
+

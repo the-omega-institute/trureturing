@@ -1,0 +1,6 @@
+**Open Question 9.1 (Actual-optimizer response and threshold).** Does some $n\ge99$ satisfy $V_2(n)>\tau$? In particular, do the actual responses $H_i$ admit probes for which the sum in (7.16) crosses its stated threshold, or a family meeting the positive-density premise of Corollary 7.5?
+
+No positive shortfall $d_i(f)$, no positive variance at a specified length $n\ge7$, and no uniform density of either are established here. The equations characterize the quantities to be controlled, but do not construct or evaluate an optimizer. The fixed-exterior comparison in §3 is an upper bound and cannot be used as a lower bound. The event floor in Lemma 7.3 supplies only event frequency. The mean and covariance identities supply neither independently prescribable anchor data nor an obstruction to every possible future growth proof.
+
+[Global/local rank compatibility, Theorems 4.4 and 5.1][R] exhibits one coherent comparison process whose independently fitted fixed-block defects vanish while its global rank-two discrepancy grows. Those results concern that process's marginals, not $\pi_n$. They warn against deducing accumulated defects from finite positivity. They do not answer this actual-optimizer question, prove a bulk limit for $\pi_n$, or disprove the global relaxation on $\pi_n$.
+

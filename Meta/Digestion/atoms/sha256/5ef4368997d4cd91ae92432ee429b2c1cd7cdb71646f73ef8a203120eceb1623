@@ -1,0 +1,118 @@
+**Theorem 5.1 (a complete five-mode dimension-two/dimension-three pair).**
+There are whole-complex five-mode CPTP channels with the same nonzero
+passing zero-transfer live map, the same effects of every original
+stopped sector and of the other sector, and identical original complete
+errors on every actual history, whose minimum maximal abstract fibre
+dimensions in Definition 4.1 are respectively TWO and THREE. The lower
+bounds also hold in the countable and specified integral versions.
+
+Proof. Fix $0<r<1$, let $\Delta(X)=\sum_iP_iXP_i$, and put
+
+$$
+C_b=(I+\mathbf1\mathbf1^\dagger)/2,\qquad
+C=rC_b,\qquad\Lambda_r(X)=\frac r2(X+\Delta(X)).
+\tag{JG.30}
+$$
+
+Its comparison is $r[(3/2)I-(1/2)\mathbf1\mathbf1^\dagger]$,
+which is PSD and singular. Its live Kraus matrices are
+$K_{ij}=\sqrt{r/2}(P_i+P_j)$, $i<j$.
+Their effect sum is $rI$, and every off-diagonal input coefficient
+is retained with factor $r/2>0$.
+
+Take an output direct sum consisting of the terminal live algebra,
+all five original exact-time stopped sectors, and an accessible quantum
+other block $Q\simeq\mathbb C^3$. Let $W:\mathbb C^3\to Q$ be a fixed
+isometry and $Q_0$ a fixed pure state in $Q$. All targets have zero
+other mass. On $M_3$ define
+
+$$
+\begin{aligned}
+\Phi_{g,L}(X)&=\Phi_{b,L}(X)=\Lambda_r(X),\\
+\Phi_{g,\ell}(X)&=\Phi_{b,\ell}(X)=0\quad(\ell=0,1,2,3,4),\\
+\Phi_{g,o}(X)&=(1-r)\operatorname{tr}(X)Q_0,\\
+\Phi_{b,o}(X)&=(1-r)WXW^\dagger.
+\end{aligned}
+\tag{JG.31}
+$$
+
+These are CP at every reference amplification; the live effect is $rI$,
+each stopped effect is zero, and the other effect is $(1-r)I$. Thus
+both are TP and all sector effects agree.
+
+The good channel factors through three dimension-two live tags given
+by $K_{ij}$ and (JG.25), and one scalar other encoder
+$X\mapsto(1-r)\operatorname{tr}X$ followed by $Q_0$ preparation.
+All full decoders are TP and their effects sum to $I$.
+A scalar-fibre factorization would give only rank-at-most-one live
+Kraus products. Zero transfer would make them diagonal, hence supported
+on single coordinates; their coefficient matrix would be diagonal.
+This contradicts its off-diagonals $r/2$. Thus its minimum maximal
+fibre dimension is exactly two.
+
+For the bad channel, compression to $Q$ followed by $W^\dagger$ gives
+$(1-r)\operatorname{id}_{M_3}$. Its Choi matrix is
+
+$$
+(1-r)|\Omega\rangle\langle\Omega|,\qquad
+|\Omega\rangle=|00\rangle+|11\rangle+|22\rangle.
+\tag{JG.32}
+$$
+
+In any positive rank-one decomposition of a nonzero rank-one positive
+matrix, testing the perpendicular complement forces every summand into
+its one-dimensional range. Every nonzero vector in this range reshapes
+to a rank-three matrix. An all-fibres-at-most-two factorization would
+instead yield rank-at-most-two products even after the $Q$ compression,
+a contradiction. The same support test applies termwise for countable
+sums and almost everywhere for the stipulated integrals. A dimension-three
+other encoder $\sqrt{1-r}W$ and identity decoding, besides the same
+three dimension-two live tags, realize the bad channel. Its minimum
+maximal dimension is therefore exactly three.
+
+Here is the FULL five-mode specification. Give both channels live output
+$\iota\Lambda_r(\iota^\dagger X\iota)\iota^\dagger$ and zero stopped
+measures, and set
+
+$$
+\begin{aligned}
+\widehat\Phi_{g,o}(X)&=\operatorname{tr}((I_5-r\Pi)X)Q_0,\\
+\widehat\Phi_{b,o}(X)&=(1-r)W\iota^\dagger X\iota W^\dagger
+                +\operatorname{tr}((I_5-\Pi)X)Q_0.
+\end{aligned}
+\tag{JG.33}
+$$
+
+These CP maps both have total effect $I_5$, other effect $I_5-r\Pi$,
+and the same specified zero cross-support images. The good other
+encoder is scalar; the bad other encoder uses its dimension-three
+supported branch and a scalar complementary-support branch. Live
+encoders compose with $\iota^\dagger$. Restricting to $V$ preserves
+the preceding lower obstructions, so their exact dimensions remain
+two and three on the full input algebra.
+
+Finally, for each original sign history at a fixed $y$, both channels
+have EXACT full error
+
+$$
+\frac12\left[
+ \left\|B_y-\frac r2(\rho_y+\operatorname{diag}(p_y))\right\|_1
+                    +(1-s_y)+(1-r)\right].
+\tag{JG.34}
+$$
+
+Live sign covariance gives the first term. The five ideal stopped
+measure norms sum to $\sum_\ell w_\ell\int f_y=1-s_y$, because both
+simulated laws there are zero. The positive other output has zero
+ideal target and trace $1-r$ in each channel, regardless of its quantum
+state. Thus their $E$ is the maximum of (JG.34) over $y=5,16,27$,
+with all twelve inputs, labels, exact times and the entire other mass
+counted. No branch normalization or changed readout occurs.
+
+The block $Q$ is accessible OUTPUT, not an additional input specimen or
+helper. If an interpretation traces it out, the interpreted channels
+coincide, but their full joint payload requirements differ. A passing
+live test together with equal effects and task errors therefore cannot
+certify the low-dimensional factorization of a particular full output.
+$\square$
+

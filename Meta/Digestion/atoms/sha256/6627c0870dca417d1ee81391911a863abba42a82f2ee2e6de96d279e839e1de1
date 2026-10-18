@@ -1,0 +1,31 @@
+### 103.3. A complete-norm commutator from the same witness
+
+Set
+\[
+U_J=\frac1{\sqrt2}\begin{pmatrix}1&i\\1&-i\end{pmatrix},
+\qquad U=\operatorname{diag}(I_2,U_J).
+\]
+After conjugating by \(U\), use real coordinates and write
+\[
+L=\begin{pmatrix}0&E\\E^T&J_0\end{pmatrix},\quad
+\rho=\operatorname{diag}(P,\pi I_2),\quad
+W=\begin{pmatrix}W_{FF}&C\\C^T&W_J\end{pmatrix},
+\quad P\succ0,\ \pi>0.
+\tag{7}
+\]
+The matrices \(E,C\) are real and invertible. Section 99 gives \(EC^T=tP/2\succ0\). For the fixed positive density, the unique optimal split is the positive spectral projector of \(\rho^{1/2}L\rho^{1/2}\), conjugated by \(\rho^{1/2}\); \(L\) is nonsingular because \(E\) is invertible. Consequently \(W\rho^{-1}W=W\). Taking its \(J\) block and using \(P=2EC^T/t\) gives
+\[
+\frac t2 S+\frac1\pi W_J^2=W_J,
+\qquad S:=E^{-1}C=C^T(EC^T)^{-1}C\succ0.
+\tag{8}
+\]
+In particular \([S,W_J]=0\). This identity uses the same original common \(W\), without selecting a different norming witness.
+
+In the original coordinates \(W_{33}=W_{44}=w_d\) by \(\Theta\) symmetry, and
+\[
+w_0:=W_{34}=-\frac{\alpha z^2}{2\overline h},\qquad
+W_J=w_dI_2+\begin{pmatrix}\Re w_0&\Im w_0\\\Im w_0&-\Re w_0\end{pmatrix}.
+\tag{9}
+\]
+Thus (8) says that \(S\) commutes with the displayed traceless matrix.
+

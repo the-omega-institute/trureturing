@@ -1,0 +1,40 @@
+**Definition 3.1 (Endpoint exponential and normalized objective).** Set
+
+$$
+\mathcal J(c,\ell)
+=\max_{0\le x\le1}\{(ce^{\ell x}-s(x))^2+\tau x\}
+\qquad(c\ge0,\ \ell\in\mathbb R).
+$$
+
+For a trial level $t>\tau$ let
+
+$$
+v_t(x)=\sqrt{t-\tau x},\qquad
+\lambda_t=\frac12\log\frac{t-\tau}{t},\qquad
+f_t(x)=\sqrt t\,e^{\lambda_t x}
+=t^{(1-x)/2}(t-\tau)^{x/2},
+$$
+
+$$
+g_t(x)=s(x)-v_t(x)-f_t(x),\qquad
+\Phi_\tau(t)=\max_{[0,1]}g_t.
+$$
+
+The substitution $c=C/(2H)$, $\ell=\gamma H$ in Theorem 2.3 gives
+
+$$
+4(Ce^{\gamma k}-A(k))^2+4Zk
+=16H^2\bigl((ce^{\ell x}-s(x))^2+\tau x\bigr).
+$$
+
+Continuity of this explicit formula on $[0,1]$ makes its maximum equal
+to its supremum on $(0,1)$. In particular, the zero amplitude has value
+$T_0$, because
+
+$$
+s(x)^2+\tau x=T_0-\left(x-\frac{1+\tau}{2}\right)^2.
+$$
+
+Every positive finite exponential has $\mathcal J(c,\ell)>\tau$,
+as its scalar limit at $x=1$ is $c^2e^{2\ell}+\tau>\tau$.
+

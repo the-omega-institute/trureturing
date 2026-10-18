@@ -1,0 +1,12 @@
+**Proposition 8.2 (exact pair preservation).** Every parameter pair in
+$B_{ij,h}$ gives finite original sources in $D$ with equal prefixes
+through $h$ and different complete rows. Conversely every such original
+source pair is the image of at least one of these parameter pairs.
+
+Proof. Soundness and the recutting identities are Theorem 5.2.
+For the reverse direction apply its coverage to each of the two
+original sources independently. Their actual rows and prefixes are
+unchanged by reconstruction, so their parameter pair satisfies
+(PDC.21). No coordinate comparison between two different charts is
+needed. $\square$
+

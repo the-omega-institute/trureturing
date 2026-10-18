@@ -1,0 +1,38 @@
+**Lemma 10.2 (automatic rank eight).** With
+$x=(p_0,\ldots,p_4,\phi_0,\ldots,\phi_4)$ and
+$J=\partial_x\sum p_i\Gamma_{\eta_i}(\phi_i)$, hypothesis
+$\mathrm M$ implies $\operatorname{rank}J=8$.
+
+Proof. The three pure weight/angle pairs span the five live moment
+differentials. Otherwise a nonzero degree-two trigonometric polynomial
+
+$$
+a_0+a_1\cos\phi+a_2\sin\phi+a_3\cos^2\phi
+ +a_4\cos\phi\sin\phi
+\tag{AC.49}
+$$
+
+would have value and derivative zero at three distinct points.
+After multiplication by $e^{2i\phi}$ it is a polynomial of degree at
+most four with six zeros counted with multiplicity. It must vanish
+identically, contradicting independence of these five circle functions.
+This argument includes any half-angle chart infinity.
+
+The two saturated physical effects sum to $M_2\succ0$, so their
+directions $\widehat n_3,\widehat n_4$ are independent. A symmetric
+physical matrix $Z$ annihilating the failure weight and angle
+differentials would satisfy, at each point,
+
+$$
+\widehat n_i^TZ\widehat n_i=0,\qquad
+(\widehat n_i')^TZ\widehat n_i=0.
+\tag{AC.50}
+$$
+
+The derivative of $c$ drops out after the first equality. Independence
+of $\widehat n_i,\widehat n_i'$ gives $Z\widehat n_i=0$;
+the two directions then give $Z=0$. The saturated failure
+differentials thus span all three failure moments. Pure variables
+change none of those moments, and can repair all five live
+differentials. The full rank is eight. $\square$
+

@@ -1,0 +1,107 @@
+**Theorem 10.3 (one finite source forces all three prices).** For every
+encoder and service of Definition 10.1 there is one finite
+$t_*\in\mathcal T_z$ such that the actual quiescent run at
+$\rho^e(t_*)$ submits at least $M$ literals of length at least $r$.
+Consequently, on this one history in the performance slice,
+
+$$
+T(t_*,e)\ge M,\qquad
+A(t_*,e)\ge rM,\qquad
+\Lambda(t_*,e)\ge r.
+\tag{AAR.32}
+$$
+
+Proof. Let $S=E(\mathcal T_z)$, so $|S|\le C$. For each $s\in S$
+consider the formal deterministic execution from entry data $(z,b,s)$
+in which every submitted Read receives branch. This is only a formal
+reply path. It is not presumed to describe a real tree, to terminate,
+or to satisfy the service's correctness contract. In particular it
+may stop, loop in local computation, make infinitely many short
+submissions, or submit words of unbounded length.
+
+Call a submission long if its length is at least $r$. From each formal
+path collect its first $M-1$ long submissions, or all its long
+submissions if it has fewer. Denote the resulting finite lists by
+$W_s$. Multiplicities are retained when counting submissions; repeated
+words can only reduce the number of distinct prefixes covered. Since
+$r\ge d$, every collected word has a length-$d$ prefix, and
+
+$$
+\left|\bigcup_{s\in S}
+ \{\operatorname{pref}_d(w):w\in W_s\}\right|
+\le C(M-1)<N.
+\tag{AAR.33}
+$$
+
+Choose a length-$d$ word $p_*$ outside this union. Define
+
+$$
+D=\max\left(\{0\}\cup
+ \{|w|:s\in S,\ w\in W_s\}\right),\qquad H=D+1.
+\tag{AAR.34}
+$$
+
+The zero in this maximum covers the empty collection. Every collected
+submission is a finite literal, and only finitely many are collected,
+so $D$ and $H$ are finite even when a formal path later uses unbounded
+lengths. No effective procedure for recognizing the end of a looping
+formal path is needed: the lower bound is an existence argument from
+its finitely many selected words.
+
+Construct one tree $t_*$ with a complete depth-$d$ skeleton. In slot
+$p_*$ put alpha when $e=0$ and beta when $e=1$. In every other
+length-$d$ slot put a perfect height-$H$ all-alpha tree. The distinguished
+leaf has score $2d+e=z$; every filler leaf has score $2(d+H)>z$ because
+$H\ge1$. Thus $t_*$ is finite, full and nonempty, and $m(t_*)=z$.
+This is a single common construction against all retained values. Only
+now set
+
+$$
+s_*=E(t_*).
+$$
+
+Consider $u_* = \rho^e(t_*)$. Every collected word, for every $s\in S$,
+returns branch on $u_*$. Indeed it misses $p_*$ at depth $d$ and enters
+a filler with suffix length at most $D-d<H$. Such a position is a
+branch before substitution, and remains a branch after substitution.
+Every word shorter than $r$ also returns branch on $u_*$. If $e=0$,
+it stops strictly inside the depth-$d$ skeleton. If $e=1$, it either
+stops there or has length $d$: the distinguished beta has become a
+branch, and all filler roots are branches. These arguments cover
+arbitrary absolute literals, not just a traversal's next child or a
+fixed ray.
+
+Until the $M$th long submission, the actual run from $(z,b,s_*)$ on
+$u_*$ therefore agrees, step by step, with its formal all-branch path.
+Every prior long submission is in $W_{s_*}$, and every intervening
+short submission has the branch reply just established. Determinism
+also identifies all intervening local computation and control.
+
+This actual run cannot halt before the $M$th long submission. If it
+did, use the same original $t_*$, the same acquired data and the same
+handoff, but insert one more update before the later invocation.
+The current register is then $\rho^{e+1}(t_*)$. Every branch observed
+in the alleged terminating transcript persists, so the complete
+transcript and output are identical in the two quiescent histories.
+The required outputs are $e$ and $e+1$, a contradiction. When $e=1$
+the second history has lag two; it need not belong to the performance
+slice because correctness was required for every lag.
+
+Nor can the actual run continue forever without that submission:
+$t_*$ is an actual finite source and the service is required to
+terminate on it. This excludes infinite local delay and infinitely
+many short or repeated submissions just as it excludes any other
+nonterminating continuation. Hence the $M$th long call is made. Its
+reply need not be branch and its word need not have been collected;
+its submission already supplies the last required cost. The preceding
+$M-1$ long calls and this call give (AAR.32) simultaneously.
+
+When $M=1$ the collection is empty, $D=0$ and $H=1$; the argument
+forces the first long call without requiring a nonempty padding
+maximum. When $d=0$, $N=M=1$, the distinguished word is the empty word
+and there are no filler slots. For $z=0$, $t_*=\alpha$ and $r=0$, so
+every call, including a root Read of length zero, is long. For $z=1$,
+$t_*=\beta$ and $r=1$; at lag one the root is branch, and the proof
+forces a nonempty operand. No case chooses a different source for
+each code or replaces the actual source during a run. $\square$
+

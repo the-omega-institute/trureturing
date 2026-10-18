@@ -1,0 +1,31 @@
+**Example 6.7 (full native symbolic two-copy instance).** Take $m=2$,
+any $d\ge2$, $\ell=2$ and $\epsilon=1/4$. For a gadget, order
+the phase-zero native tuples as $aa,ab,ba,bb$ and put $g_1$ last.
+Lemma 2.5 and the fair phase give its entire-tuple probabilities
+
+$$
+p=\frac1{1250}(81,144,144,256,625).
+$$
+
+For actual gadget rows $g,h$, the complete source tuple laws are
+
+$$
+P(g,h)=p(g)p(h),\qquad
+Q(g,h)=
+\begin{cases}
+\frac74p(g)p(h),&F(g)=F(h),\\
+\frac14p(g)p(h),&F(g)\ne F(h).
+\end{cases}
+$$
+
+Indeed the phase law of $Q$, in order $00,01,10,11$, is
+$(7/16,1/16,1/16,7/16)$; dividing by $P$'s phase probability
+$1/4$ gives those multipliers, while the conditional native kernel
+is unchanged. Two actual $x$-root Reads test phase equality. Their
+$P$-error is $1/2$, their $Q$-error is $1/8$, and their
+average error is $5/16$. Their total variation is $3/8$, with
+success advantage $3/16$. Zero or one Read has risk $1/2$; further
+Reads cannot improve $5/16$ for this two-gadget source. These are
+symbolic consequences of the full native laws, without numerical
+execution or enumeration.
+

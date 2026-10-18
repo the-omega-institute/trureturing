@@ -1,0 +1,19 @@
+**定义 9.1（已有局部 Bloch 输入及其范围）。** 消费 [SECOND] §66 的受保护二级接口，固定 Pauli
+
+$$
+X=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
+Y=\begin{pmatrix}0&-i\\i&0\end{pmatrix},\quad
+Z=\begin{pmatrix}1&0\\0&-1\end{pmatrix},
+\qquad \varrho_r=\frac12(I+r_xX+r_yY+r_zZ).
+$$
+
+所用局部计算如下。直接矩阵乘法给 $\sigma_i^2=I$、$XY=iZ=-YX$ 及循环式，$\operatorname{tr}(\sigma_i\sigma_j)=2\delta_{ij}$。故 $(r\cdot\sigma)^2=|r|^2I$，迹为零，使 $\varrho_r$ 特征值为 $(1\pm|r|)/2$。正性等价于 $|r|\le1$；无迹 Hermitian 关系块为三维实空间，密度态只是其中的仿射球体。
+
+归一化 Hilbert–Schmidt 内积 $\langle A,B\rangle=(1/2)\operatorname{Re}\operatorname{tr}(A^\dagger B)$ 在该块使 $X,Y,Z$ 正交单位；对密度态差有
+
+$$
+\|\varrho_r-\varrho_s\|_{\rm HS,norm}^2=\frac14|r-s|^2.
+$$
+
+这是算符关系几何，不是位置空间。$\operatorname{tr}(XY)=0$ 与 $XY=-YX$ 同时成立，说明正交不推出对易。每个 Pauli 方差为 $1-r_i^2$，总和为 $3-|r|^2\ge2$，所以同一态的三个 Pauli 不可能同时零方差。正交关系不提供在一份未知输入上同时无损取得三个参数的仪器。取得完整参数还需实际状态制备、测量菜单与重复权限。
+

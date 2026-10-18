@@ -1,0 +1,109 @@
+**定理 11.3（All finite histories and the complete invisible fiber, conditionally）。**
+Under Assumption 11.2, every state in (2.1) obeys
+
+$$
+P_{\Gamma(X)}^\pi=P_S^\pi\qquad\text{for every }\pi\in\mathcal M_{\mathrm{loc}}.
+\tag{11.4}
+$$
+
+Conversely, among all complex density states with populations (2.3), equality
+of all these laws with those of $S$ forces membership in (2.1). Thus the
+matrix theorem concerns the entire fiber under this interface. On the
+twenty-dimensional zero-diagonal Hermitian direction space, the menu has
+rank ten and kernel $i\operatorname{Skew}_5(\mathbb R)$ of dimension ten.
+With the original $Q$ constraint already known, its rank is nine on the
+nineteen-dimensional constrained direction space, with the same kernel.
+
+Proof. Define
+
+$$
+\eta_s=(D_\phi)_{ss}(D_\phi)_{f(s)f(s)},\qquad
+(\eta_0,\eta_1,\eta_2,\eta_3,\eta_{13})=(1,-1,-1,-1,1),\qquad
+Z=\operatorname{diag}(\eta_s).
+$$
+
+Direct multiplication gives $(D_\phi\otimes D_\phi)J=JZ$.
+Fix a random control seed and a complete adaptive history. Every chosen
+local action is now fixed. Operators on different factors commute, so its
+branch Kraus operator factors as
+
+$$
+M_h^{(1)}\otimes M_h^{(2)},\qquad
+M_h^{(j)}=D_\phi L_h^{(j)}D_\phi^\dagger,
+\qquad L_h^{(j)}\text{ real}.
+$$
+
+Each $L_h^{(j)}$ is the ordered product of the real waits and reading
+branches on that side. The empty product for an unread side is the
+identity. Hence each complete branch effect is
+
+$$
+D_\phi H D_\phi^\dagger\otimes D_\phi L D_\phi^\dagger,
+\qquad H,L\text{ real symmetric and positive semidefinite}.
+$$
+
+Its compressed matrix has entries
+
+$$
+\left[J^\dagger(D_\phi HD_\phi^\dagger\otimes
+ D_\phi LD_\phi^\dagger)J\right]_{sa}
+ =\eta_s\eta_aH_{sa}L_{f(s)f(a)},
+\tag{11.5}
+$$
+
+which are real symmetric. For any real symmetric matrix $B_0$ and real skew
+$X$,
+
+$$
+\operatorname{tr}(XB_0)
+ =\operatorname{tr}((XB_0)^T)
+ =-\operatorname{tr}(B_0X)=-\operatorname{tr}(XB_0)=0.
+\tag{11.6}
+$$
+
+The last equality uses characteristic zero. Thus the difference of each
+branch probability is $i\operatorname{tr}(XB_0)/5=0$. Nonnegative sums
+over events and integration over the same input-independent random seed
+preserve this equality. Unnormalized branch probabilities handle zero
+probability records without conditioning on them. This proves (11.4),
+including the stated random and adaptive closure.
+
+For the converse, independently preselected allowed single-side protocols
+can be run on the two sides. Their product effects have a real span containing
+the tensor product of the two single-side effect spans. In (11.5), choosing
+real symmetric representatives
+$H=E_{ss}$, $L=E_{f(s)f(s)}$ gives $E_{ss}$. For $s\ne a$, choosing
+
+$$
+H=E_{sa}+E_{as},\qquad
+L=E_{f(s)f(a)}+E_{f(a)f(s)}
+$$
+
+gives $\eta_s\eta_a(E_{sa}+E_{as})$. Each representative is a finite real
+linear combination of actual local effects by the inherited span contract;
+their products are consequently finite real linear combinations of actual
+product effects. These matrices span all of $\operatorname{Sym}_5(\mathbb R)$.
+Equality of actual laws therefore forces the real parts of every off-diagonal
+entry of $C-I_5/5$ to vanish. The diagonal is already zero by (2.3).
+Lemma 2.3 now gives exactly (2.1).
+
+There are ten complex off-diagonal pairs, hence twenty real directions;
+the menu retains exactly their ten real parts and kills their ten imaginary
+parts. Small multiples of every such Hermitian direction are legal since
+$I_5/5$ is positive definite on the matching support. This is not a count
+of purely illegal perturbations. The original $Q$ is real symmetric after
+compression and gives the nonzero real constraint
+
+$$
+\ell_Q(Y)=\frac12\left(
+\operatorname{Re}Y_{0,13}+\operatorname{Re}Y_{1,3}
+-\operatorname{Re}Y_{0,1}-\operatorname{Re}Y_{0,3}
+-\operatorname{Re}Y_{1,13}-\operatorname{Re}Y_{3,13}\right).
+\tag{11.7}
+$$
+
+For instance $Y=E_{0,13}+E_{13,0}$ gives $\ell_Q(Y)=1/2$.
+Knowing this constraint removes one visible real direction and no imaginary
+one, proving the rank-nine assertion. These rank and fiber statements are
+the inherited C-108 conclusions under its interface. $\square$
+

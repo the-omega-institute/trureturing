@@ -1,0 +1,23 @@
+**推论 24.3（Charged constructive bound）。** Any cut satisfying Theorem 24.2 gives
+
+$$
+C_{\rm pre}(f)\le q+1+L(k,m),
+\tag{24.8}
+$$
+
+where the supplied safe phase protocol [S1, Theorem 3.1] has
+
+$$
+L(k,m)=
+\begin{cases}
+0,&p=1,\\
+p-1,&m\ge2,\ p>1,\\
+2T,&m=1,\ T\text{ odd},\\
+2T+1,&m=1,\ T\text{ even},
+\end{cases}
+\qquad p=T/g.
+\tag{24.9}
+$$
+
+Proof. The construction (24.7) pays $q+1$ blocks and the stated recovery stream pays at most $L(k,m)$. Early stopping can reduce this fee. No optimality of the recovery bound or of the chosen cut is asserted. ∎
+

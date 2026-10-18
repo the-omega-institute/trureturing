@@ -1,0 +1,44 @@
+**Theorem 10.2 (Bias-independent feasibility and attained finite
+maximum).** The $q_3=1$ members of the menu in Theorem 10.1 form a
+nonempty finite menu independent of the interior bias $p$. For a
+deterministic member $i$ its correct mass $P_i(p)$ is a polynomial
+in $p$ of degree at most $2m+1$. For every stated $p,j$ and every
+unchanged independent seed law,
+
+$$
+C_m(p,j,\nu)=\max_{i\text{ feasible}}P_i(p).
+\tag{10.4}
+$$
+
+In particular the optimum is attained by constant initialization and
+is independent of $\nu$. The finite maximum need not be one polynomial
+over the whole parameter range.
+
+Proof. In either phase the number of equivalence classes in (10.1) is
+at most $1+2|K_{\rm R}|\le2m+1$. Every assignment to those classes
+has strictly positive probability for every $0<p<1$. Hence an actual
+fixed deterministic-start representative has $q_3=1$ exactly when
+every class-spin assignment in each phase halts within three calls.
+A failing assignment would have positive phase-weighted probability;
+if none fails, all source possibilities are covered. This support
+criterion is independent of $p$. It leaves all impossible reply vectors
+and their arbitrary cycles outside the support. An immediate halt shows
+that the feasible menu is nonempty.
+
+For a feasible member, sum over those assignments producing a correct
+label. An assignment to $s$ classes with $k$ ones has weight
+$p^k(1-p)^{s-k}$, with phase factor $1/2$. A finite sum of these
+terms in the two phases is a polynomial of degree at most $2m+1$.
+The menu has fixed literal labels, so it is independent of $p$ even
+when the maximizing member changes with the majority spin.
+
+Now take any original initialized table with $q_3=1$. Lemma 3.1
+makes each positive initialization cell a feasible deterministic start.
+Theorem 10.1 represents its law by a feasible menu member. Its averaged
+correctness cannot exceed the largest such member's correct mass.
+Conversely a maximizing member can be initialized constantly on the
+given unchanged seed space. This proves (10.4) and attainment. No
+convexification of seed weights has been used. The argument is a finite
+existence proof; it supplies no executed enumeration, effective address
+radius or procedure deciding arbitrary seed events. $\square$
+

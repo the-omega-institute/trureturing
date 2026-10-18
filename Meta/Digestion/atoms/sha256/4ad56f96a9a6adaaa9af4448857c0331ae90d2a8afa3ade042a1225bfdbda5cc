@@ -1,0 +1,84 @@
+**Theorem 272.2 (Uniform original necessity and arbitrary-mass necessity).**
+For every entire positive nonincreasing vanishing original sequence
+and every original $N_2$ acquisition $A$, hence also every $O_2$
+acquisition,
+
+$$
+11408\,e_a(A)\ge
+345a_2+676a_3+1072a_4+1242a_5
+ +1173(a_6+a_7+a_8+a_9)-345.
+\tag{272.2}
+$$
+
+No horizon or tail-cutoff assumption is required. Moreover, for any
+$L\ge9$, embed every score word by appending ones. For every full
+feasible $\lambda\ge0$ at the same $(b,e)$, irrespective of its mass,
+
+$$
+\sum_{n=1}^9\beta_nb_n-2070-68448e\le0,\qquad
+\beta=(0,2070,4056,6432,7452,7038,7038,7038,7038).
+\tag{272.3}
+$$
+
+**Proof.**
+Sum the displayed coefficients. They give
+$K=68448$, the stated $\beta$, and target event score
+$20286+\sum_n\beta_na_n$. In particular the union events are
+used directly as independent rows.
+By (272.1), a deterministic $N$ pair has reward at most the sum
+of the four maxima in its displayed row. Every such sum is at most
+22356. Empty and each singleton schedule have maximum 20286.
+Repeated schedules carry only singleton information; static reversal
+merely permutes cells. All output labels participate in every maximum.
+Consequently $B_N(Y_9)\le22356$.
+The legal stopped anchor $R$ attains 22356, so
+
+$$
+W_{Y_9}=B_O(Y_9)=B_N(Y_9)=22356,\qquad
+\Delta_O(Y_9)=\Delta_N(Y_9)=0.
+\tag{272.4}
+$$
+
+For one cap-feasible finite law, its score is at least
+$20286+\sum\beta_na_n-68448e$ and at most 22356.
+Subtracting and dividing by 6 gives (272.2).
+This argument uses the one complete probability-vector law,
+rather than wordwise favorable realizations.
+
+For $L>9$, every high coordinate is constant one on score support
+and every high output label has zero reward. Such a query can only
+leave an empty, singleton or low-pair scored partition after the
+constant reply is removed, so the same support bound holds.
+For this same full $\lambda$, nonnegative weak duality gives
+
+$$
+F_{Y_9}(b,e)\le Y_9\cdot G_N\lambda
+ =\sum_D\lambda_D(Y_9\cdot z_D-W_{Y_9})\le0.
+$$
+
+Since $\beta_1=0$ and $\alpha_2=1$, this is exactly (272.3).
+No mass division or change of allocation occurs.
+On the single ray $sY_9$, $s\ge0$, the score itself and
+$\theta=0$ give its zero-cost certificate.
+
+For arbitrary original competitors, consume the exact necessity of
+Theorem 110.2 and the dimension restriction and extension proved in
+Theorem 117.2. At any positive error bound $r\le1$, first select
+one finite cap-feasible representative at its active length.
+If that length exceeds 9, fix higher replies to zero, project labels
+above 9 to 0, and remove the fixed observations. Low zero targets
+remain fixed; the low positive target projects to the base target.
+If its length is below 9, add ignored coordinates; new first-zero
+classes have $a_n\le r$ and exact error
+$\max(1-p_+(0),a_n)\le r$.
+These operations retain all independent rows and a single common
+seed and preserve the complete class. They transport feasibility,
+without preserving an arbitrary initial full-carrier law.
+Thus the nine-bit necessary bound applies at every positive bound
+on the original error, with arbitrary original addresses and outputs.
+Error zero follows by taking all positive $r\downarrow0$; error
+one is included. A cap above one makes (272.2) automatic since its
+right side is at most $7682<11408$.
+Every actual positive tail and every closed tie is retained.
+$\square$
+

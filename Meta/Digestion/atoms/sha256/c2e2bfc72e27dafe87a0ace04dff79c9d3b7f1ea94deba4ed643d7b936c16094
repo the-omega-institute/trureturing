@@ -1,0 +1,38 @@
+### 定义 24.2（场势与边耦合）
+
+对每个节点给定局部势函数
+
+\[
+U_v:F_v\longrightarrow\mathbb R,
+\]
+
+对每条有向边 \(e=(u,v)\) 给定线性边读出
+
+\[
+L_e:\mathbb R^\Sigma\longrightarrow\mathbb R^{m_e},
+\qquad
+R_e:\mathbb R^\Sigma\longrightarrow\mathbb R^{m_e},
+\]
+
+以及正半定权矩阵 \(M_e\succeq0\)。定义场能量
+
+\[
+\mathcal E(\Phi)
+=
+\sum_{v\in V}U_v(p_v)
++
+\frac12
+\sum_{e=(u,v)\in E}
+\left\|
+L_ep_u-R_ep_v
+\right\|_{M_e}^{2},
+\]
+
+其中
+
+\[
+\|q\|_{M_e}^{2}=q^{\mathsf T}M_eq.
+\]
+
+第一项是节点势，第二项是相邻局部场之间的兼容成本。若 \(L_e=R_e=I\)，第二项就是普通图上的加权 Dirichlet 耦合。
+

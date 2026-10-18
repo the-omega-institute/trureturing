@@ -1,0 +1,74 @@
+**Theorem 8.1 (an exact conditional calculation on an actual network).**
+At $d=2$ write $\operatorname{bit}(0)=\alpha$,
+$\operatorname{bit}(1)=\beta$ and
+$u_{ab}=\langle\operatorname{bit}(a),\operatorname{bit}(b)\rangle$.
+On the full $S_2$ use the probability
+
+$$
+\mu(u_{ab})=
+\begin{cases}
+2/6,&a=b,\\
+1/6,&a\ne b,
+\end{cases}
+\qquad
+\mu(x)=0\quad\text{otherwise}.
+\tag{COK.49}
+$$
+
+Take two actual blocks. Seed $a$ is owned at the first block's
+$L$ port and seed $b$ at the second block's $R$ port. Both root
+factors are the constant branch factor, both $L$ factors are those
+of $\operatorname{bit}(a)$, and both $R$ factors those of
+$\operatorname{bit}(b)$. These are legal actual full-factor tables,
+with the owner reply identities. The seed values are the actual
+replies $\operatorname{bit}(a),\operatorname{bit}(b)$; $a,b$ are only
+their indices. The domains are $\{\alpha,\beta\}$ with the credited
+RRN guards in the inverse complete template. The complete solution set
+and its mass are exactly
+
+$$
+C_\Theta=\{(u_{ab},u_{ab}):a,b\in\{0,1\}\},\qquad
+Z=\sum_{a,b}\mu(u_{ab})^2=\frac5{18}.
+\tag{COK.50}
+$$
+
+Each block has one incoming actual owner group, so the two coefficients
+are $1/2$. For its owned bit $o$ and incoming bit $b'$ choose
+
+$$
+Q_\varnothing(o)=\frac12,\qquad
+Q_{\{1\}}(o\mid b')=
+\begin{cases}4/5,&o=b',\\1/5,&o\ne b'.\end{cases}
+\tag{COK.51}
+$$
+
+With $C_i=\sqrt{5/18}$ the pointwise conditional inequality is an
+equality. Thus its product bound is the exact $5/18$, whereas the
+owner-only local constants give $(2/3)^2=4/9$.
+
+Proof. The three depth-two ports prescribe precisely a branch with
+the two specified actual leaf labels, hence each block is $u_{ab}$.
+Conversely each of the four assignments satisfies every equation,
+and its owner replies recover its unique lift. In either block,
+for equal bits $\Phi_i^2=1/9$ and for unequal bits $\Phi_i^2=1/36$.
+Directly from (COK.51),
+
+$$
+\Phi_i^2=\frac5{18}\,Q_\varnothing(o)Q_{\{1\}}(o\mid b').
+\tag{COK.52}
+$$
+
+Taking square roots gives (COK.14). For the owner-only bound, at
+each owned bit the largest incoming weight is $1/3$; summing
+over the two owned bits gives $2/3$.
+
+The actual Gibbs law is proportional to $\mu(u_{ab})^2$:
+each equal pair has probability $2/5$, each unequal pair $1/10$.
+Both owned marginals are uniform and their actual conditional rows
+are exactly (COK.51). Each incoming tuple is the whole other owner
+tuple, so the chain-rule loss $\Delta$ is zero. The conditional
+relative entropies and the pointwise slack in (COK.22) are zero
+as well, confirming equality under one common law. Rational caps
+strictly above each algebraic $C_i$ give rational pointwise witnesses
+arbitrarily close to this network bound. $\square$
+

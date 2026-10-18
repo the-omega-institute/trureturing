@@ -1,0 +1,52 @@
+## 2. Live incidence and the supplied local facts
+
+For the critical instance set
+
+$$
+ n=8,\qquad k=4,\qquad K=4,\qquad L=5,\qquad
+ V=\{0,1,2,3\}\times\{0,1,2,3,4\},\qquad G=KL=20.
+$$
+
+A history is an actual finite run prefix immediately before a query. Its support $S$ is the set of queried coordinates; write $h$ for its number of exposed ones and $z$ for its number of exposed zeros. It is live exactly when $(h,z)\in V$. For $p\in V$, let $F_p$ be the set of installed states ending actual live histories of count cell $p$, and set
+
+$$
+ b_p=|F_p|,\qquad e_p=b_p-1.
+$$
+
+At depth $d$ write $V_d=\{(h,z)\in V:h+z=d\}$ and $e_d=\sum_{p\in V_d}e_p$.
+
+We use the following supplied interfaces, with their stated scope and attribution to PCA Theorems 34.3 and 35.1, PE Lemma 4.1, and WTF Convention 6.1 and Theorem 9.1:
+
+1. Every $F_p$ is nonempty; every live query is fresh; both axes have one support and one host, so $e_p=0$ whenever $h=0$ or $z=0$.
+2. At one installed state, equal-support histories with unequal hit counts cannot coexist, properly nested live supports cannot coexist, and distinct hosted count cells satisfy, after orienting $h<g$,
+   
+   $$
+   g-h\ge2,\qquad z-w\ge2. \tag{3}
+   $$
+
+3. A depth is common-support precisely when every cell at that depth has one support. A consecutive common-support cut interval $B=(a,b)$ has no common-support internal depth, hence $e_d\ge1$ for every $a<d<b$. Live sharing is confined to one such interior pool; cut hosts are disjoint from other count cells.
+4. For a consecutive interval $B=(a,b)$, let $D_B$ count duplicate count-cell incidences in the pool and let $E_B=\sum_{a<d<b}e_d$. Let $E_{\rm cut}$ be the sum of the excesses at all common-support cuts and let $u$ be the number of installed states that are not live in any count cell. The exact same-graph identity is
+
+   $$
+   m-G=E_{\rm cut}+u+\sum_B(E_B-D_B). \tag{4}
+   $$
+
+5. The supplied short-interval compensation gives $D_B\le E_B$ for every consecutive interval of span at most four. The supplied right-cut separation gives, for a shared pair in an interval ending at $b$,
+
+   $$
+   g-h\ge\max(2,9-b),\qquad z-w\ge\max(2,9-b). \tag{5}
+   $$
+
+   In particular $D_B=0$ whenever $b\le5$.
+
+These are interfaces about actual histories of one complete graph. They do not replace actual support by abstract count labels, do not delete certified traffic, and do not authenticate any nested supplier beyond its displayed conditional statement.
+
+For completeness, (4) is finite incidence counting. If $Q_{\rm live}=\bigcup_{p\in V}F_p$, put
+
+$$
+D=\sum_{q\in Q_{\rm live}}\bigl(|\{p:q\in F_p\}|-1\bigr),\qquad
+E=\sum_{p\in V}(b_p-1).
+$$
+
+Then $\sum_pb_p=|Q_{\rm live}|+D=G+E$ and $m=|Q_{\rm live}|+u$, so $m-G=E-D+u$. The common-support cut decomposition separates all these incidences into the cut pools and the interior pools, yielding (4).
+

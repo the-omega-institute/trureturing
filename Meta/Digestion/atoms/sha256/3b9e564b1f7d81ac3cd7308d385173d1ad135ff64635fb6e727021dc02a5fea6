@@ -1,0 +1,47 @@
+**Theorem 208.3 (Dense restricted asymptotic minimum).** Fix $s>0$
+and $0\le\delta_0\le s$. For $m\ge1$, let $S_m$ be the minimum
+pair mass among all complete input-family scores on $L=m+2$ with
+
+$$
+E=0,\qquad \gamma_j=s+\delta_0\quad(3\le j\le L),\qquad
+T=s,\qquad \Delta_O\le\delta_0.
+\tag{208.10}
+$$
+
+All correct suffixes and actual joint early pair measures are free,
+including early $00$. The minimum is attained and
+
+$$
+\Gamma_ms\le S_m\le4s,\qquad
+\lim_{m\to\infty}S_m=4s,\qquad
+\lim_{m\to\infty}(S_m+T)=5s.
+\tag{208.11}
+$$
+
+**Proof.** The head table in 208.2 forces
+$\Delta_O\ge\gamma_j-T=\delta_0$, so each feasible score has
+exact excess $\delta_0$. Apply 208.2 with $d=\delta_0$.
+For the upper witness, use the fair-suffix score of
+[Theorem 203.6](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_VII.md)
+with $\kappa_f=2s$ and terminal $s$. Its pair rows on $01x,10x$
+each have weight $2s/2^m$; class $j$ is uniform on all of its
+suffixes with total $s+\delta_0$. Its one actual product measure has
+$S=4s$. Since every late total is at most $2s$, 203.6 gives both
+complete excesses equal to $\delta_0$. That existing full-catalog
+supplier provides the upper witness, rather than an assumption that
+prescribed pair marginals can be glued.
+
+Restrict the feasible set to $S\le4s$. At fixed $m$ it is a closed,
+bounded set of finitely many nonnegative score coefficients: correct
+totals and $T$ are fixed, and every table inequality is closed.
+The set is nonempty by the witness, so $S$ attains its minimum.
+Choose integers $r\to\infty$ with $r=o(m)$. Then
+$q=\lfloor(m-1)/(r-1)\rfloor\to\infty$ and $\chi_r\to1/2$.
+The corresponding ratio in (208.3) tends to four. Each ratio is
+less than four since $\chi_r\ge1/2$, so $\Gamma_m\to4$ and
+(208.11) follows. The endpoints $\delta_0=0,s$ are included.
+This is an asymptotic minimum in (208.10), not an exact finite-$m$
+formula or a minimum over arbitrary signed representatives.
+The dense sufficient constructions of §206 and the fixed-projection
+minima of 207.17 retain their different fixed-data scopes. $\square$
+

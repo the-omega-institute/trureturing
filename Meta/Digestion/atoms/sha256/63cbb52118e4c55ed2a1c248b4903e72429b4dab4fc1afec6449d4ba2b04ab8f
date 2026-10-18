@@ -1,0 +1,29 @@
+**Convention 9.4 (mature mechanisms and inherited references).**
+Positive Choi support, Gram left inverses, Kraus mixing, finite
+CP/range factorization, PSD adjugates, whitening, complex triangle
+and Cauchy–Schwarz inequalities, real null decomposition, convexity
+and the analytic implicit-function theorem are mature tools.
+The supplied library attributions include
+UnitaryKrausMixingInvariance.unitary_kraus_mixing_invariance,
+FiniteKrausInstrumentBornMarginal.finite_kraus_instrument_born_marginal,
+FiniteKrausRepresentation, and
+AntidistinguishabilityGram.psd_summand_projection, with the supplied
+Physlib selection 6a09b2d1761a0d4430083045a247eb121d8da260
+and mathlib pin db584cd6d46c92f209a44c0f1c829460d327499d.
+These are inherited source references, not compiled applications here.
+Supplied literature credit to Sekatski's finite classical-assisted
+rank/image compression, Leppäjärvi–Sedlák and
+Muñoz-Moller–Leppäjärvi–Heinosaari's compatible instrument mechanisms,
+Uhlmann's affine-flat decomposition, and Xia–Wang–Sheu's equality
+S-lemma retains each source's hypotheses. They supply no original
+selected-input cost theorem, inaccessible environment or native
+actuator. No new external authentication is claimed.
+
+The supplied entropy identities, designated-subspace EOF refutation,
+Schur-channel distance statements, three-point positivity gate,
+orthostochastic obstruction and classical allocation score have no
+established target/resource-preserving conversion to (AS.12).
+The finite classical paid-query/support-incidence and joint-selection
+problems and the slot-plus-bypass UNHALVED diamond model likewise
+retain their own boundaries.
+

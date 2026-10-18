@@ -1,0 +1,36 @@
+**定义 1.1（采集域）。** 令
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix}.
+$$
+
+$\mathcal W_3$ 由完整世界 $W=(P,g,d)$ 组成，其中
+
+$$
+P=\begin{pmatrix}a&b\\e&1-a\end{pmatrix},\qquad
+0<a<1,\quad b,e>0,\quad a(1-a)=be,
+\qquad 0\ne g\in\mathbb R[T],\quad\deg g\le3,\quad d\in\mathbb R.
+\tag{1.1}
+$$
+
+这些源恰是严格逐项正、秩一、迹一的实 $2\times2$ 源；不假定对称，也不限制非对角元小于一。按时间排列的动作词 $E_1\cdots E_i$ 给出
+
+$$
+A_0=I,\qquad A_i=E_iA_{i-1},\qquad
+z_i(W)=g(i)\operatorname{tr}(A_iP)+d.
+\tag{1.2}
+$$
+
+初读计数，每个单独的 $M$ 或 $J$ 后立即读数。八次总读数使用原时钟 $0,\ldots,7$；只有一条不可重置、不可复制的轨迹，不允许跳读、空动作读数、未读复合动作、时钟平移或额外传感器。确定性协议可依赖全部实际历史选择动作、停止并返回整个 $(P,g,d)$，不附加连续性、可测性或可计算性假设。原问题保留所有低次数、正负增益、采样根、重根及任意漂移。
+
+严格正秩一的未归一矩阵 $R$ 与非零多项式 $H$ 表示
+
+$$
+\left(R/s,sH,d\right),\qquad s=\operatorname{tr}R>0,
+\qquad z_i=H(i)\operatorname{tr}(A_iR)+d.
+\tag{1.3}
+$$
+
+恰好 $(R,H)\mapsto(qR,H/q)$、$q>0$ 保持此完整目标；漂移不被这个缩放吸收。
+

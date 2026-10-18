@@ -1,0 +1,41 @@
+**Theorem 3.1 (finite native exposure without another input).** From each
+cut of Definition 2.1, the installed native continuation reaches a read
+of a differing retained70 symbol in finitely many non-IN rows, before
+payload parsing and without any further external input. Strictly before
+that first read, the row schedule and all $O^+$ effects agree. At that read,
+the actual ordinary latch4 becomes1 from $x_0$ and0 from $x_1$.
+
+Proof. The unfinished iteration executes its common EX70, WR70,6,
+MR70 and MR(length). The terminal RD(length,5) reads0 and exits.
+Appending F and sealing the frame are the existing EX/WR/MR/seal
+rows. These nine rows after the chosen cut have no payload-dependent
+branch. The last payload bit is now the same retained0 at $c+9$ and
+F is at $c+10$.
+
+RCA Definition 13.2 next constructs the whole-frame length from the
+already copied length word, counts the preceding descriptor Fs and
+writes the actual descriptor. Its base, length and creation count are
+the same in the two histories. These routines use the saved base and
+scratch66/67, descriptors68 and the bank compiler. They do not inspect
+the differing payload cells. Their finite closed scans and assignments
+terminate. GCA Definition 2.2 and GENERAL Definition 2.1 keep bank
+rebuilds on64–68 and preserve a positioned70 importer head.
+
+The subsequent import starts with the already installed LastBank70.
+RCA Definition 11.2 specifies Tail; ML; ML; then repeated RD/ML until
+the preceding F, followed by MR. Here Tail reaches R, the first ML
+reaches the terminal F, and the second reaches $c+9$. Its scan first
+reads the common final payload0. It then moves to $c+8$ and reads1
+for $w_0$,0 for $w_1$. No earlier operation after the chosen cuts
+has inspected $c+7$ or $c+8$. Thus this is the first differing-cell
+read. These public reads use latch4; the row's complete local successor
+already differs before any later finite test or bank assignment.
+
+The scan uses the existing $A$ ownership/current read authority and
+the just-completed frame seal. All its cells and delimiters actually
+exist. It does not borrow the producer's workspace, read an unsealed
+destination, revive a historical token or acquire the current flight
+through a historical Call. All work before this read depends on finite
+common data, so the read occurs at the same finite row position $d$
+in both continuations. ∎
+

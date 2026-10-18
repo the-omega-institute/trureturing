@@ -1,0 +1,24 @@
+**Definition 212.7 (The full fixed-star class).** On
+$I=\{3,\ldots,L\}$ choose arbitrary real numbers
+$a_\varnothing,a_i,\gamma_i,t\ge0$ and let
+
+$$
+\nu=a_\varnothing\delta_{0^I}
+                 +\sum_{i\in I}a_i\delta_{x^{(i)}},\qquad
+x^{(i)}_j=\mathbf1_{j=i},\qquad
+S=a_\varnothing+\sum_{i\in I}a_i.
+\tag{212.30}
+$$
+
+Thus the positive-coordinate events are pairwise disjoint under the
+one actual measure $\nu$. Let $\mathcal A(\nu,\gamma,t)$ contain
+all scores with $A=0$, no early correct mass, $P$ supported in
+$\Omega_1\cup\Omega_2$, late projection
+$P_{00x}+P_{01x}+P_{10x}=\nu(x)$, correct totals $\gamma_i$
+and $T=t$. Every early allocation, including prefix $00$, and every
+correct suffix is permitted. The only restrictions on $\gamma,t$
+are nonnegativity: they can be unordered, exceed the carrier stock,
+and have arbitrarily many nonzero classes. All these scores have
+$W=S+t$ and $Q=(\gamma,\sum_i\gamma_i+S+t)$, with early
+quotient coordinates zero.
+

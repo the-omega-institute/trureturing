@@ -1,0 +1,83 @@
+**Theorem 14.1 (Exact budgeted-return projection).** Use the same
+$p,j,\nu$ as in
+[Paid-return, Definitions 1.3 and 6.1][PR], and let
+$\mathcal R_{k,\nu}$ denote that source's attainable region of pairs
+$(q_k,L_k)$ over all protocols of Definition 9.1, with arbitrary behavior
+outside $E_k$. Then
+
+$$
+\mathcal R_{k,\nu}
+=\{(Q(v),\Lambda(v)):v\in\mathcal V_{k,j,p,\nu}\}.
+\tag{14.1}
+$$
+
+Consequently $\mathcal R_{k,\nu}$ is compact for every given seed law,
+and its infimum $\mathcal L_{k,\nu}(q)$ at each attainable mass is a
+minimum realized by a pathwise hard-total-budget-$k$ protocol with the
+same seed. For an atomless seed, (14.1) is the convex hull of the finite
+points $(Q(v_i),\Lambda(v_i))$; for an arbitrary seed the exact formula
+uses $w\in W_m(\nu)$.
+
+Proof. The supplier's Assumption 1.1 is the same realization (2.2),
+its target table (1.2) is (9.4), and its Definition 1.2 is precisely
+Definition 9.1. Its $q_k,L_k$ in Definition 1.3 are, respectively, the
+mass and joint error on $E_k=\{\tau<\infty,N\le k\}$; they impose no
+constraint on later-return or nonreturning paths. Thus the only extra
+restriction used in $\mathcal V_{k,j,p,\nu}$ is the hard total cap.
+
+Given any unrestricted protocol $\Pi$, define $\Pi^{[k]}$ by following
+its original next-event rule, except that at a record of length $k$ a
+next read is replaced by indefinite internal continuation with no
+further read. A next return at that record is kept, including its
+finite internal waiting, as is internal nonreturn. At shorter records
+all events are kept. The decision being replaced is a measurable
+function only of the seed and that acquired record, so this rule is
+legal and nonanticipating; it does not need to know the source's future
+or the outcome of an additional read.
+
+On the same source/seed sample the two rules agree until a replaced
+request. Hence, with the convention $\min(\infty,k)=k$,
+
+$$
+\begin{aligned}
+\{\tau^{[k]}<\infty\}&=E_k^\Pi,\\
+O^{[k]}&=\begin{cases}A^\Pi&E_k^\Pi,\\\bot&\text{otherwise},\end{cases}\\
+N^{[k]}&=\min(N^\Pi,k).
+\end{aligned}
+\tag{14.2}
+$$
+
+The count identity includes a nonreturn after fewer than $k$ calls,
+a nonreturn after more than $k$ calls, an infinite-read path, and a
+return originally after more than $k$ calls. When $k=0$, a zero-read
+finite return is kept and every first read is suppressed. The rule has
+a hard cap on every branch. It preserves $q_k,L_k$, including their
+joint dependence on the endpoint and seed on the retained return
+sections. Therefore every unrestricted pair belongs to the right side
+of (14.1), by Theorem 12.3. Conversely every hard-capped protocol is an
+unrestricted admissible protocol, and on it $E_k=\{D=1\}$, so the pair
+is $(Q(v),\Lambda(v))$. This proves (14.1).
+
+The continuous projection of the compact finite law region is compact.
+Its nonempty fixed-$q$ slice has a minimum second coordinate, or
+Corollary 13.4 may be applied directly. The same-seed converse supplies
+a legal hard-capped minimizer. The atomless and general partition
+formulas follow from Theorem 13.2. $\square$
+
+The projection argument does not preserve an unrestricted protocol's
+whole law or its whole paid cost. In (14.2), finite returns requiring
+more than $k$ calls become nonreturns and paid counts above $k$ become $k$.
+In particular
+
+$$
+\mathbb E_pN^{[k]}=\mathbb E_p\min(N^\Pi,k)\le\mathbb E_pN^\Pi,
+\tag{14.3}
+$$
+
+with all costs on newly nonreturning paths retained at their truncated
+counts. The full-law equality in Theorem 12.3 applies to hard-capped
+inputs; (14.1) for unrestricted inputs is only the stated two-coordinate
+projection. It gives no equality of attainable regions if an
+unrestricted total-cost coordinate or a constraint on later returns is
+also imposed without a separate proof.
+

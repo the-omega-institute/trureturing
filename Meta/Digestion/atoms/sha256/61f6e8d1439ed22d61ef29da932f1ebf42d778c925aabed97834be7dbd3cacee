@@ -1,0 +1,58 @@
+**Lemma 5.1 (tilted dual on both complex components).** For
+$\cos\theta\geq0$ let
+
+$$
+B_\theta=\begin{pmatrix}
+\cos\theta&i\sqrt\alpha\sin\theta&0\\
+-i\sqrt\alpha\sin\theta&-\alpha\cos\theta&0\\0&0&-\beta
+\end{pmatrix}.
+\tag{QO.26}
+$$
+
+Every $L\in\mathcal C_2$ has $\operatorname{tr}(B_\theta L)\leq0$.
+At $\theta_0$, $\mathcal S=C-\lambda B_{\theta_0}$ is PSD of rank
+two with kernel $\mathbb C h$, and every original competitor obeys
+$\operatorname{tr}(G_{\rm acq}E\rho E^\dagger)\geq
+\operatorname{tr}(CH)\geq F$. Equality in the latter forces $H=H_*$.
+
+Proof. For a quadratic-null vector put
+$x_0=|u|^2-\alpha|v|^2$, $y_0=2\sqrt\alpha\operatorname{Im}(u\bar v)$.
+Expansion gives $x_0^2+y_0^2=\beta^2|w|^4$.
+Its pairing with $B_\theta$ is
+$x_0\cos\theta+y_0\sin\theta-\beta|w|^2\leq0$.
+On the whole plane $u=0$ it is
+$-\alpha\cos\theta|v|^2-\beta|w|^2\leq0$.
+Finite positive sums prove the claim without discarding the plane.
+
+The definitions imply
+$A-\lambda c_0=d_{\rm cert}q/p$ and
+$\gamma-\lambda\sqrt\alpha\sigma_0=d_{\rm cert}\sqrt{q/p}$.
+Hence
+
+$$
+\mathcal S=
+d_{\rm cert}\begin{pmatrix}q/p&i\sqrt{q/p}&0\\
+-i\sqrt{q/p}&1&0\\0&0&0\end{pmatrix}
++(C_S+\lambda\beta)|S\rangle\langle S|.
+\tag{QO.27}
+$$
+
+This proves its rank and kernel. Since $I-H\in\mathcal C_2$,
+$\operatorname{tr}(B_{\theta_0}H)\geq\operatorname{tr}B_{\theta_0}
+=k_{\rm tilt}$. Direct multiplication gives
+$h^\dagger B_{\theta_0}h=k_{\rm tilt}$, so
+$F=\operatorname{tr}(CH_*)=Ap+Bq-2\gamma r_0>0$.
+The identity
+
+$$
+\operatorname{tr}(CH)-F
+=\lambda[\operatorname{tr}(B_{\theta_0}H)-k_{\rm tilt}]
+ +\operatorname{tr}(\mathcal S H)
+\tag{QO.28}
+$$
+
+has nonnegative terms. If both vanish, positivity gives
+$\operatorname{ran}H\subseteq\mathbb Ch$, so $H=aH_*$.
+The positive $B_{\theta_0}$ pairing fixes $a=1$.
+The acquisition inequality is Proposition 3.3. $\square$
+

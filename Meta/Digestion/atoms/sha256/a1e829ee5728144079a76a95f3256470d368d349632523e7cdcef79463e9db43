@@ -1,0 +1,12 @@
+**定理 446.1（完整阻尼损失的常数项）。** 沿用（CS.7）的完整正损失
+\(\mathcal D_z\)，有
+
+\[
+\boxed{
+\sup_{t\in[a,b]}
+\left|\frac{\mathcal D_z(tL^{-C})}{C_ztL^{-C}}
+-\big[(C-1)\log L-\log t+d_*\big]\right|\longrightarrow0.
+}
+\tag{CM.2}
+\]
+

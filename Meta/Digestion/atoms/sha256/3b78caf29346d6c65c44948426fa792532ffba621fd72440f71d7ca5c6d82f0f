@@ -1,0 +1,36 @@
+**proposition 9.1 (One-row and three-row attainers).** One installed
+row attains correct mass $a/2$, and three installed rows attain
+$S_1$ under $q_2=1$.
+
+Proof. For the first value initialize at the sole row
+
+| Row | Instruction | Reply zero | Reply one |
+| --- | --- | --- | --- |
+| $Z$ | $\operatorname{Halt}(h_0(\sigma))$ | — | — |
+
+It makes zero calls and has the prior correctness $a/2$.
+
+For $S_1$, initialize at $R$ and install
+
+| Row | Instruction | Reply zero | Reply one |
+| --- | --- | --- | --- |
+| $R$ | $\operatorname{Read}(2(j+2))$ | $Z$ | $P$ |
+| $Z$ | $\operatorname{Halt}(h_1(\sigma))$ | — | — |
+| $P$ | $\operatorname{Halt}(h_0(\sigma))$ | — | — |
+
+In phase zero the read is $S_{j+2}\oplus S_{j+3}$, independent
+of the actual target $S_j$. In phase one it is a separator and the
+target is $S_0$. The full-source terminal masses are
+
+| Record | Output | Source mass | Correct mass |
+| --- | --- | --- | --- |
+| $0$ | $h_1(\sigma)$ | $(1+c)/2$ | $a/2$ |
+| $1$ | $h_0(\sigma)$ | $\eta$ | $a\eta$ |
+
+On zero, success is exactly the phase-one majority-target event.
+On one, the actual phase-zero target is independent of the
+certifying edge, giving $\tfrac12(2\eta)a=a\eta$.
+Every input returns after one charged call. This is the inherited
+one-read attainer of Original and Endpoint, with all halt rows
+included in the installed cost. $\square$
+

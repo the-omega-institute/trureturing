@@ -1,0 +1,25 @@
+**Corollary 4.5 (joint successor transport on the lawful task domain).** On
+the actual key image of $\mathcal R_H$, a physically enabled prescribed
+non-IN primitive transports
+$K=(\operatorname{code}(u),I,n)$ to
+$(\operatorname{code}(u),I,n+1)$. At a prescribed IN, every
+$b\in\operatorname{Adm}(h)$ transports it to
+$(\operatorname{code}(u),Ib,n+1)$. Each transported key is in that same
+actual image, and its decoder gives the complete original joint successor
+and extended primitive prefix. These are all the raw IN successors that
+remain in this image. A physically enabled bit outside
+$\operatorname{Adm}(h)$ still executes its raw IN but has no such
+same-image extension. A physically disabled action executes no primitive.
+
+Proof. Decode the actual prefix and state by Theorem 4.4. Lemma 2.7 proves
+that appending each stated non-IN occurrence or admissible IN occurrence
+remains in $\mathcal R_H$, for every prefix in that full class. A non-IN
+adds no acquired bit; an IN appends exactly the same supplied $b$; either
+adds one to the actual count. The extended prefix therefore has exactly
+the displayed key. Theorem 4.4 applied to it gives its whole successor,
+including latches, work, permissions and receipts. Lemma 2.7 also proves
+that no other raw IN successor belongs to the class. In particular its
+`11` and `101` edges are executed exits from the lawful domain, not disabled
+actions. No future bit is predicted from $u$ or $n$, and no physical raw
+edge is removed by this transport statement. ∎
+

@@ -1,0 +1,77 @@
+**Definition 3.2 (initial signatures in the supplier's coordinates).**
+For any actual finite $u$ and literal $q$, let
+$r_q(u)=\operatorname{val}(q,u)$ and define
+
+$$
+(b_q,c_q)(u)=
+\begin{cases}
+(0,0),&r_q(u)=\mathsf{br},\\
+(2,1),&r_q(u)=\alpha,\\
+(1,0),&r_q(u)=\beta,\\
+(s(r)+2-e(u|_a),\ \mathbf1_{r\text{ ends with }R}),
+ &q=ar\text{ is absent, }a\text{ its blocking leaf},\ r\ne\varepsilon.
+\end{cases}
+\tag{FM.10}
+$$
+
+This is [DEV, Definition 12.2, (AAR.57)]. The blocking leaf is reached
+and unique. For every initially nonbranch reply, including a reached
+leaf at $a=q$, its branch count is
+$b_q(u)=s(q)-s(a)+2-e(u|_a)$.
+
+The signature $K_q(u)=(r_q(u),b_q(u))$ of [PRIOR, §3] contains exactly
+the same information on attained inputs. From it recover $c_q=1$
+precisely for an initial alpha or an initially absent final-$R$ target.
+Conversely (FM.10) gives an initial branch when $b=0$, beta when $b=1$,
+alpha when $(b,c)=(2,1)$, and absent in the remaining attained cases.
+An absent final-$R$ target has $b\ge3$, while an absent final-$L$
+target has $b\ge2$. These case correspondences preserve the
+alpha-versus-absence distinction at $b=2$.
+
+**Mathematical citation 3.3 (whole future and legal separation).**
+[DEV, Theorem 12.3, (AAR.59)–(AAR.61)] proves, for all finite $u$,
+all $q$ and all $k\ge0$,
+
+$$
+\operatorname{val}(q,\rho^k u)=
+\begin{cases}
+\mathsf{br},&k\ge b_q(u),\\
+\beta,&b_q(u)\ge1,\ k=b_q(u)-1,\\
+\alpha,&c_q(u)=1,\ k=b_q(u)-2,\\
+\mathsf{abs},&\text{otherwise}.
+\end{cases}
+\tag{FM.11}
+$$
+
+Here $b_q$ is the first branch count, $0\le b_q\le s(q)+2$, and
+$c_q=1$ implies $b_q\ge2$. An initial branch stays branch; alpha
+has phases alpha, beta, branch; beta has phases beta, branch. An
+initially absent target has beta at $b_q-1$, alpha at $b_q-2$ only
+when it ends in $R$, and absence at its other earlier counts.
+Transport in this formula is at the actual initial blocking leaf,
+never at an absent literal.
+
+Equality of the attained signatures is equivalent to equality of
+all future replies. In the $K_q$ notation a separator is $k=0$ if
+the initial replies differ, and otherwise
+$k=\min(b_q(u),b_q(u'))$ when the branch counts differ. At that
+count exactly one reply is branch. This explicit choice is a direct
+reading of the published formula, not an additional horizon theorem.
+
+For nonempty $S$ the exact menu threshold is
+
+$$
+B(S)=\max_{q\in S}(s(q)+2)
+     =\max_{p\in P}s(p)=H_P\le2D.
+\tag{FM.12}
+$$
+
+For the empty menu set $B(\varnothing)=H_\varnothing=0$. Theorem 12.3
+of [DEV] proves that every selected reply is branch for every
+$k\ge B(S)$, that this is the least uniform threshold over
+$\mathcal F_D$ when $P$ is nonempty, and that unequal future vectors
+are separated at some common $0\le k<B(S)\le2D$. Its common sharpness
+source is $\langle\alpha,\alpha\rangle$: every relative target $q$
+first becomes branch at $s(q)+2$ and is beta one count earlier.
+For the full menu $B(S)=2D$, including $D=1$.
+

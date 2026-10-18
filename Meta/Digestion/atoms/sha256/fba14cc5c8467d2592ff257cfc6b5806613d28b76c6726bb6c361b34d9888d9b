@@ -1,0 +1,19 @@
+**开放问题 5.4（增长规模与实际任务对应）。** 本定理未给出 $\rho_n,K_n$ 的数值，也未控制增长 $n$ 的一致余项、全部局部或 LOCC 类最优值、校准误差、噪声、记忆源及完整物理资源成本。原生 FIB 树、KBonacci 来源和训练网络与本量子承诺族的对象、来源、读出、合法域、更新及成本对应仍需独立证明；同名五标签或相同数值不是这种对应。
+
+[Recovery]: https://github.com/the-omega-institute/trureturing/blob/f833660337ac6264fc6f742d4b2114f25b4df6c8/docs/develop/theory/FIB_ATOM_WHITEBOX_CORRELATED_WORD_RECOVERY.md
+[Minimax]: https://github.com/the-omega-institute/trureturing/blob/f833660337ac6264fc6f742d4b2114f25b4df6c8/docs/develop/theory/FIB_ATOM_WHITEBOX_LEGAL_EDGE_MINIMAX.md
+[EF]: https://arxiv.org/abs/quant-ph/0005132
+[SG]: https://arxiv.org/abs/1407.5389
+[Tyson]: https://arxiv.org/abs/0907.1884v1
+[KM]: https://arxiv.org/abs/1705.08674
+[ActiveSet]: https://github.com/the-omega-institute/trureturing/blob/499d30d2085d31ecc46eee400f490c70e2434603/D5/S3/Quantum/Measurement/EquiprobablePgmActiveSetRefutation.lean
+[MathCFC]: https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/Matrix/HermitianFunctionalCalculus.lean
+[MathPosDef]: https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/Matrix/PosDef.lean
+[MathImplicit]: https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/Calculus/Implicit.lean
+[Stage]: https://github.com/the-omega-institute/trureturing/blob/db2dc3b9bd2ef965f2b91635b81e9e1f4fac9e1b/D5/S3/Arith/FibonacciAtomic/StageScalarAddressCertificate.lean
+[Pyramid]: https://github.com/the-omega-institute/trureturing/blob/499d30d2085d31ecc46eee400f490c70e2434603/docs/develop/theory/AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md
+[WJ]: https://github.com/the-omega-institute/trureturing/blob/499d30d2085d31ecc46eee400f490c70e2434603/Library/Estimation/wainwrightjordan2008graphical.md
+[Drton]: https://github.com/the-omega-institute/trureturing/blob/499d30d2085d31ecc46eee400f490c70e2434603/Library/Estimation/drtonsullivant2007algebraic.md
+[Shannon]: https://github.com/the-omega-institute/trureturing/blob/499d30d2085d31ecc46eee400f490c70e2434603/Library/Estimation/shannon1948communication.md
+[Sullivant]: https://github.com/the-omega-institute/trureturing/blob/499d30d2085d31ecc46eee400f490c70e2434603/Library/Estimation/sullivant2006toricfiber.md
+

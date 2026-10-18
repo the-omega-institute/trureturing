@@ -1,0 +1,37 @@
+**命题 C-99.3（小相干尺度与明确的渐近范围）。** 当 $\gamma_0\downarrow0$，
+
+$$
+d(\gamma_0^2)=\frac{\gamma_0^4}{2}+O(\gamma_0^8),
+\tag{C99.13}
+$$
+
+因此固定 $\alpha\in(0,1)$ 时，这个已构造规则满足
+
+$$
+\mathbb E\tau=O\!\left(\frac{\log(1/\alpha)}{w(r-w)\gamma_0^4}\right).
+\tag{C99.14}
+$$
+
+更一般，该上界对 $0<\alpha\le\alpha_*<1$ 一致成立，常数可依 $\alpha_*$；
+不声明对无限制的 $\alpha\uparrow1$ 一致。
+
+证明。由几何级数在任意紧子区间上的一致收敛，
+积分 $d'(\lambda)=\operatorname{artanh}\lambda$ 得
+
+$$
+d(\lambda)=\sum_{k\ge1}\frac{\lambda^{2k}}{(2k)(2k-1)}
+=\frac{\lambda^2}{2}+\frac{\lambda^4}{12}+O(\lambda^6).
+\tag{C99.15}
+$$
+
+例如 $0\le\lambda\le\lambda_*<1$ 时，首项以后的和至多
+$\lambda^4/[12(1-\lambda_*^2)]$，足以给式 (C99.13)。
+又 $d(\lambda)\ge\lambda^2/2$、$\log(1+\lambda)\le\lambda$。
+固定 $A=\log(1/\alpha)>0$ 时，$A+\lambda=O(A)$；
+若 $\alpha\le\alpha_*<1$，则 $A\ge\log(1/\alpha_*)>0$，同一估计一致成立。
+代入式 (C99.2) 得所述范围。
+若允许 $\alpha=\exp(-\gamma_0^6)$，则 $A=\gamma_0^6$，
+而 $\log(1+\gamma_0^2)$ 为 $\gamma_0^2$ 阶，不能吸收到统一常数乘 $A$ 中。
+事实上固定 $h>0$ 时式 (C99.14) 右侧尺度趋零而 $\tau\ge1$，
+所以这种不加限制的一致大 $O$ 断言确实错误。证毕。
+

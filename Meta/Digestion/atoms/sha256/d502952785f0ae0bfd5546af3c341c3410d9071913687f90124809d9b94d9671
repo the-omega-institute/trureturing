@@ -1,0 +1,34 @@
+**Proposition 8.3 (a paid full-variable-shape witness).** On the
+original $\mathcal F_3$, there is a jointly correct procedure with
+exactly $120$ attained names realizing the four-state fiber of
+Theorem 8.1. It uses seven preparation Reads, maximum address length
+three and seventeen submitted letters. This is a nonoptimal witness;
+the credited exact value is $M_1(3)=4$.
+
+Proof. $|S_2|=11$ and $|S_3|=2+11^2=123$. Merge the four canonical
+right subtrees $\langle u_{ab},u_{ab}\rangle$ into one code name and
+give each of the other $119$ canonical states its own name. Scan
+all $Rq$, $|q|\le2$, by the seven literal Reads in (COK.45).
+These replies compute $\pi_3(v)$ and its name for every original
+$v$ of height at most three. The scan letters total
+$1+2\cdot2+4\cdot3=17$. Canonicalization preserves every requested
+factor, so no variable shape is discarded. Every canonical state
+is attained by an actual source, giving exactly $120$ attained names.
+
+For the merged name, the targets $R,RL,RR$ have constant branch
+trajectories. For targets $RLL$ and $RRL$, make the one original
+query $RLL$ to obtain the actual owner reply for $a$. For targets
+$RLR$ and $RRR$, make the one query $RRR$ to obtain $b$. These
+queries are chosen from the name and request before their replies
+and before any count. Decode the leaf factor from the reply, then
+use (COK.5) for every authentic subsequent count. Singleton names
+already determine every full factor and use zero Reads.
+
+All scanned arrays, temporary selectors and other acquired
+distinctions are removed from accessible state by the paid isolation
+service. Fixed public control and installed tables are common.
+The complete retained alphabet is the displayed $120$ names, not
+an uncounted name plus a surviving scan buffer. No preparation-cost
+optimality, physical erasure theorem or free isolation is claimed.
+$\square$
+

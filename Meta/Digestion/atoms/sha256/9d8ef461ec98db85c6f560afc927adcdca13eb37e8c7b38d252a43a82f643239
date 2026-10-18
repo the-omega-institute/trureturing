@@ -1,0 +1,34 @@
+**定理 54.6（有限包络宽度与全部高预算夹界）。** 对每个 $0<\delta\le1/100$ 和每个整数 $N\ge3$，
+
+$$
+B(\rho_-,\delta)\le R_\infty(\delta)\le R_N(\delta)
+\le B(\rho_+,\delta),
+\tag{54.24}
+$$
+
+并且
+
+$$
+0\le B(\rho_+,\delta)-B(\rho_-,\delta)
+\le\frac{13}{100}\delta^2.
+\tag{54.25}
+$$
+
+证明。定理54.2、54.4和
+$\mathcal P_3\subseteq\mathcal P_N\subseteq\mathcal P_\infty$ 直接给（54.24），不需要预算极限与下确界交换。
+宽度的非负性由（54.11）给出。
+在 $\rho_-\le\rho\le\rho_+$ 上，$\rho\le\delta/11$，$t_{25}\ge9\sqrt\delta$，故
+
+$$
+0\le\partial_\rho t_{25}
+\le\frac{625\rho}{t_{25}}
+\le\frac{625}{99}\sqrt\delta\le\frac{125}{198},
+\qquad
+0\le\partial_\rho B
+=\frac{S_{25}}B\,\partial_\rho S_{25}
+\le\frac{25}2+\frac{125}{396}<13.
+\tag{54.26}
+$$
+
+在长度 $\rho_+-\rho_-=\delta^2/100$ 的区间上积分即得（54.25）。证毕。
+

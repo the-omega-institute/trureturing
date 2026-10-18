@@ -1,0 +1,17 @@
+**Lemma 6.2 (Insertion identity with both boundary-one losses).** For every $h,k,a,b\ge2$,
+
+$$
+\begin{aligned}
+V(a+b)+U(h,a+b)+U(a+b,k)
+={}&V(a)+V(b)\\
+&+U(h,a)+U(a,b)+U(b,k).
+\end{aligned}
+\tag{6.2}
+$$
+
+**Proof.** Specify four consecutive ones with gaps $h,a+b,k$. This finite cylinder has probability $\iota f(h)f(a+b)f(k)>0$, so it meets the saturated conull set of Corollary 5.2. In any configuration in that intersection, insert a one splitting the middle gap into lengths $a,b$. The insertion is legal since $a,b\ge2$ and remains in that set by saturation.
+
+The changed scores are exactly the old middle-gap zeros, the new middle-gap zeros and inserted one, and the two endpoint ones of the middle gap. Their old total is the left side of (6.2); their new total is the right side. Every score outside these endpoints sees the same nearest exterior ones as before, or remains a forced zero. Thus the cocycle has finite support here, and strong zero gives (6.2). This holds for each specified quadruple, because each has positive actual probability. In particular neither boundary-one loss may be omitted.
+
+Every finite legal modification on the two-sided-anchor set can also be realized by choosing outer ones beyond the changed region, deleting the interior ones that are to be changed, and inserting the desired ones. Each intermediate configuration is legal; if convenient all interior ones can first be deleted. Deletions invert (6.2). This explains why the insertion analysis respects the full legal finite-modification relation. $\square$
+

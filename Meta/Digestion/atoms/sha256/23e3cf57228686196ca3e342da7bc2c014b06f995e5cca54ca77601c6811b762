@@ -1,0 +1,45 @@
+**Definition 69.1 (recovery-shaped vectorization and transport).** For every $3\times5$ recovery-shaped matrix $A$ use logical-first row vectorization
+
+$$
+\operatorname{vec}_{3,5}(A)=\sum_{i=0}^2\sum_{y=0}^4A_{iy}|i\rangle_3|y\rangle_5,\qquad
+C_{\rho,N}=\sum_\alpha|\operatorname{vec}_{3,5}(\rho K_\alpha^\dagger)\rangle
+\langle\operatorname{vec}_{3,5}(\rho K_\alpha^\dagger)|.
+\tag{S.118}
+$$
+
+For a complex whole-output recovery with Kraus matrices $R_k$, put $J=\sum_k|\operatorname{vec}_{3,5}(R_k)\rangle\langle\operatorname{vec}_{3,5}(R_k)|$. Then $J\succeq0$, $\operatorname{Tr}_3J=(\sum_kR_k^\dagger R_k)^T=I_5$, and, for every complex Hermitian density $\rho$,
+
+$$
+\langle\operatorname{vec}_{3,5}(\rho K_\alpha^\dagger),\operatorname{vec}_{3,5}(R_k)\rangle
+=\operatorname{Tr}(\rho R_kK_\alpha),\qquad
+F_e(\rho,RN)=\operatorname{Tr}(C_{\rho,N}J).
+\tag{S.119}
+$$
+
+This is the same SDP as Theorem 7.1 of the first volume, in a transported convention. Explicitly, let $\mathsf S(|y\rangle_5|i\rangle_3)=|i\rangle_3|y\rangle_5$, and let $M_\rho=D_\rho D_\rho^\dagger$ be (R.29). Then
+
+$$
+C_{\rho,N}=\mathsf S\overline{M_\rho}\mathsf S^\dagger,\qquad
+X_{\rm out}=\mathsf S^\dagger\bar J\mathsf S,\qquad
+Y_{\rm out}=Y^T,\qquad
+C_{\rho,N}\preceq I_3\otimes Y
+\ \Longleftrightarrow\ M_\rho\preceq Y^T\otimes I_3.
+\tag{S.120}
+$$
+
+Indeed $\operatorname{vec}_{3,5}(\rho K_\alpha^\dagger)=\mathsf S\overline{\operatorname{vec}_{5,3}(K_\alpha\rho)}$. These are a whole tensor swap and full conjugation, equivalently full transpose of Hermitian matrices, together with transpose of the output dual. They are not a partial transpose. The real numerical certificate below is unchanged by the output transpose, but the general complex convention still requires it.
+
+The reused weak-dual and pure-target interfaces now read
+
+$$
+\begin{gathered}
+C_{\rho,N}\preceq I_3\otimes Y\quad\Longrightarrow\quad
+F_e(\rho,RN)\leq\operatorname{Tr}Y\quad\hbox{for every complex whole-output CPTP }R,\\
+\|(\mathrm{id}\otimes RN)(\Phi_\rho)-\Phi_\rho\|_1
+\geq2(1-F_e(\rho,RN)),
+\end{gathered}
+\tag{S.121}
+$$
+
+where $\Phi_\rho$ is any pure purification projector. The first implication follows by tracing against $J$; the second is the binary measurement onto $\Phi_\rho$. Both reuse Theorems 7.1 and 7.4, with the unhalved norm.
+

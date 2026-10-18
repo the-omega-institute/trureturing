@@ -1,0 +1,12 @@
+**Proposition 152.3 ($L=0$ vacuity).** For $L=0$, both finite classes have
+the same one-coordinate cap domain, $0\le e\le1$: their only label is zero
+and the empty schedule emits it. Hence noncontainment is impossible.
+
+**Proof.** There is one empty word and one label, with its single normalized
+probability equal to one. Its sole row is $1\ge1-e$.
+The two complete allocations and their parameter projections coincide.
+The strict-head formulation is therefore intentionally for $L\ge1$.
+For an original active-zero positive cap, immediate base output has tail
+error $a_{n(x)}\le e$. Caps at least one are trivial feasibility as well.
+$\square$
+

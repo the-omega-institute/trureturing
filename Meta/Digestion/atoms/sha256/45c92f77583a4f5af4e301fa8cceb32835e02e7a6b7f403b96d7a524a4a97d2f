@@ -1,0 +1,43 @@
+## The explicit degree-ten witness
+
+The 16-tetrahedron witness in CFMP_DEGREE10_STAR.md has edge degrees
+[8,8,8,8,8,8,10,38]. Its exact topology and heterogeneous box
+
+  [11/8, 2] on degree 8,
+  [11/10, 71/50] on degree 10,
+  [1009/1000, 21/20] on degree 38
+
+remain independent computed certificates.
+
+Its geometric-existence conclusion is also covered by Uemura Theorem 4.2
+after checking the actual occurrence data in Uemura's canonical box. For a
+degree-eight target, the possible adjacent-high/opposite patterns reduce to
+
+  (10,10;38), (10,38;38), (10,38;10), (38,38;38), (38,38;10).
+
+Using the exact endpoint expression
+
+  phi(2,b_n2,b_n3,gamma_m,b_n5,b_n6),
+
+rational Taylor enclosures from 333/106 < pi < 355/113 give strict
+lower-angle bounds (in the order of those five patterns)
+
+  28*pi/125, 31*pi/125, 32*pi/125, 7*pi/25, 29*pi/100.
+
+The six degree-eight edge stars in the explicit pairing have weighted sums
+of these bounds
+
+  (1037/500)*pi, (258/125)*pi, (1097/500)*pi,
+  (213/100)*pi, (1093/500)*pi, (113/50)*pi,
+
+all strictly greater than 2*pi. Theorem 4.2 then controls the degree-ten
+and degree-38 edges automatically. This is a finite corollary check of
+Uemura's criterion, not a claim that the heterogeneous box itself appears
+in Uemura.
+
+Accordingly, cite the explicit degree-ten theorem for its exact
+heterogeneous endpoint certificate and explicit topology, while recording
+its bare geometric-existence conclusion as independently re-verified by
+Uemura's later criterion. No historical theorem statement is changed and no
+priority claim is made against arXiv:2609.34108.
+

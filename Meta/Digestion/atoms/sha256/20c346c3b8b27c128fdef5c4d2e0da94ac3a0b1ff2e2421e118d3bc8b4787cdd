@@ -1,0 +1,28 @@
+**Proposition 247.3 (A strict eight-prefix comparison).** For each
+lower-head point of (245.6), $h\le11/12$, define
+
+$$
+J(a,c)=\sum_{n=3}^8a_n-9c-\tfrac45(1-a_2).
+\tag{247.4}
+$$
+
+Then $J=1/300>0$. The convex hull of the actual eight-prefix data from
+the families in Proposition 247.2 and their finite §173 extensions has
+$J\le0$.
+
+Proof. For the new continuum, $S-9e=1/12$, $1-a_2=1/10$.
+For every compared family $E\le4(1-a_2)/5$: the smaller ratios in the
+preceding proof suffice, §242 has ratio at most $4/5$, and saturated
+or unit data have $E=0$. Proposition 247.1 includes all five/six cores
+and §187. Section 174.2 preserves this inequality under residual
+extension. Every actual eight-prefix has $\sum_3^8a_n-9c\le E$.
+Thus all compared data have $J\le0$, and its affineness preserves this
+under convex mixtures. ∎
+
+These are comparisons with exactly the named supplier families and
+operations. They establish substantive additional feasible domains;
+the new points have actual stopped and N witnesses. They are neither
+original N/O separators nor exclusions from every semantic consequence
+of the library. The common terminal-coupling framework of §176 and the
+all-word base/pair minima of §178 remain the underlying framework.
+

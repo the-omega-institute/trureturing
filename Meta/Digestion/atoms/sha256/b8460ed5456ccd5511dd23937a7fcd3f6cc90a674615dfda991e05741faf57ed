@@ -1,0 +1,30 @@
+**两投影的中间谱计算（35）。** 令
+
+$$
+V(a,b)=\sum_i a_iP_i+\sum_jb_jQ_j.
+$$
+
+其 Gram 矩阵及另一乘积为
+
+$$
+V^\dagger V=\begin{pmatrix}I&B\\B^{\mathsf T}&I\end{pmatrix},
+\qquad VV^\dagger=\mathcal P+\mathcal Q.
+$$
+
+设 $B$ 的奇异值为 $1=s_1\geq s_2\geq\cdots\geq s_d$。双随机性将常数方向与其正交补分开，给 $s_2=\|B-J\|=\kappa$。上述 Gram 矩阵的特征值为 $1\pm s_j$。去掉矩阵空间的标量恒等方向后，$\mathcal P+\mathcal Q$ 的最大特征值至多 $1+\kappa$。因此对任意复矩阵 $C$，
+
+$$
+\langle C,\mathcal L(C)\rangle_{\mathrm{HS}}
+\geq\gamma\left(\|C\|_{\mathrm{HS}}^2-
+\frac{|\operatorname{tr}C|^2}{d}\right).
+\tag{35.1}
+$$
+
+这里将 $C=(\operatorname{tr}C/d)I+C_0$、$\operatorname{tr}C_0=0$ 代入即可。$\gamma>0$ 时，$\mathcal L(C)=0$ 当且仅当 $C\in\mathbb CI$。同时二分图归一化拉普拉斯
+
+$$
+L_G=I_{2d}-\begin{pmatrix}0&B\\B^{\mathsf T}&0\end{pmatrix}
+$$
+
+的谱为 $1\pm s_j$，第二小值恰为 $\gamma$；它不是绝对混合谱隙，二分性仍给邻接特征值 $-1$。
+

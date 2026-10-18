@@ -1,0 +1,31 @@
+**Theorem 4.3 (Exact spectrum on at most four coordinate sectors).**
+The nonzero singular values of $A_z$ are exactly those of
+
+$$
+B_z[(x,u),(y,v)]
+=\frac{\sqrt{L_{xu}R_{yv}}}{\sqrt{Z_G(\lambda)}}
+(1-xy)z^{uv}.
+\tag{4.4}
+$$
+
+Thus the full squared Schmidt spectrum is the nonzero spectrum
+of $B_zB_z^\ast$.
+
+Proof. In each retained left sector, normalize the vector of
+positive square-root activity amplitudes by $\sqrt{L_{xu}}$.
+Different sectors have disjoint tensor basis support and are
+orthonormal. Do the same on the right. Grouping every entry
+of (4.3) in these two orthonormal families gives (4.4).
+The two grouping maps are local isometries, so they preserve
+nonzero singular values. No legal string is removed. This is
+the positive block-factorization ingredient of Boundary Calculus
+§15.17 applied to the additional two selected coordinates.
+$\square$
+
+The representation is a correlator-product state in the
+established sense of [Changlani et al., equation (2)][CPS]:
+onsite factors $\lambda_h^{s_h/2}$, adjacent blockade factors
+$1-s_hs_{h+1}$, and one factor $z^{s_is_j}$. That general
+representation framework does not supply the following
+blockade-dependent branch calculation.
+

@@ -1,0 +1,33 @@
+**Theorem 82.1 (four labels on the entire activity floor).** At
+$A_0=\log(1+t_0)$, $0\le s\le s_0\tau_*$,
+
+$$
+n_{\rm feas}(s,A_0)=n_{\rm opt}(s,A_0)=4.
+\tag{FA.60}
+$$
+
+**Proof.** The equality class from Theorem 79.1 has failure-family mass
+$q_m$, pure-family mass $1-q_m$, and, writing $X=k$,
+
+$$
+p^F_{\sigma\upsilon}=\frac{q_m}{4}(1+\sigma k),\qquad
+p^R_\sigma=\frac{1-q_m}{2}(1-\sigma\zeta_0 k),\qquad
+\zeta_0=\frac{\sqrt{\mu_fV_f}}{\sqrt\alpha(W_f-V_f)}=k_z<1,
+\quad -1\le k\le1.
+\tag{FA.61}
+$$
+
+The failure ratio on the first family is $t_0c_f=W_f$; the second
+family has zero failure and $w=0$. These are all merged-ray weights,
+by the moment equations used in Theorem 79.1. Rank two of $M$ needs
+at least two failure-bearing labels. If there were only one pure label,
+its $z$ moment would have magnitude $(1-q_m)/\sqrt\alpha$, which
+exceeds the entire available opposing failure moment $q_m\sqrt{u_f}$
+since $\zeta_0<1$. Thus there must be at least two pure labels too.
+At $k=1$ or $-1$, exactly two failure and two pure weights are positive.
+These instruments have maximal floor contrast, hence satisfy every
+requested contrast on the segment. Their height is affine in $k$;
+Theorem 79.1 selects a maximizing endpoint, including a constant
+objective or tied endpoints. This proves both counts with the same
+actual instrument and includes $s=0$. $\square$
+

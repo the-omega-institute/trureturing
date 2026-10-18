@@ -1,0 +1,42 @@
+**Theorem 2.4 (expression-forest thinning and its exact limit).** Form
+an expression vertex for each unary function of a declared seed appearing
+in (OCB.13). Identify two vertices only if they are functions of the
+same seed agreeing pointwise on its domain, or are the same constant
+value. Draw one edge for each equality. Replacing each connected
+component by any spanning tree preserves all feasible seed assignments,
+actual tuples and every weighted mass (OCB.15), with $n$ unchanged.
+Different functions of one seed retain their common argument.
+
+For every $n\ge2$ there is an actual depth-two network whose
+nontrivial equalities form a cycle, for which a spanning tree suffices
+but deletion of any tree bridge changes the solution set.
+
+Proof. For any fixed seed assignment, equality on a tree makes all
+expression values in its component equal, and hence implies each
+removed edge. The converse follows because tree edges were original
+edges. Functions remain evaluated on the original shared seeds;
+transitivity does not make two different functions of that seed equal.
+Substitution in (OCB.15) proves every mass assertion.
+
+For the sharpness assertion let $s_i\in\{\alpha,\beta\}$ be owned
+at block $i$'s root. Prescribe the root factor of $s_i$, the $L$ factor
+of $s_{i+1}$, and the $R$ factor of $s_i$, with indices modulo $n$.
+These are actual attained tables, with root guards excluding branch.
+The only nontrivial adjacent conditions say $s_i=s_{i+1}$; hence the
+full solutions are the two constant leaf tuples. If a retained set
+of equality edges has components $\mathcal C$, the relaxed seed
+relation, mapped to its actual root-leaf tuples, has mass exactly
+
+$$
+\prod_{C\in\mathcal C}
+ \left(\prod_{i\in C}w_i(\alpha)+\prod_{i\in C}w_i(\beta)\right).
+\tag{OCB.16}
+$$
+
+Indeed one leaf label may be chosen independently per component,
+and the original block weights multiply on each choice. Unit weights
+give $2^{|\mathcal C|}$. A cycle edge is redundant, while deleting a
+tree bridge increases this number from two to four. This is a statement
+about these actual finite networks, not their optimality for pressure.
+$\square$
+

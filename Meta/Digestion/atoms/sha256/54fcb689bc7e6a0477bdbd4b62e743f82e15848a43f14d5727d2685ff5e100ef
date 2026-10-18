@@ -1,0 +1,99 @@
+### 定理24（黄金等待的实际边界辨别值与校准限制）
+
+在假设18及定义23下，取边界来源
+
+~~~math
+p_+=\tfrac12\delta_{s_0}+\tfrac12\delta_{s_{13}},\qquad
+p_-=\tfrac12\delta_{s_1}+\tfrac12\delta_{s_3}.
+~~~
+
+它们同属 $(X,Y,Z)=(1/2,1/2,0)$ 的纤维，$\kappa_+=1/2,\kappa_-=0$。在有序树 $\rho(\beta)$ 所赋的共同等待 $t=a+b=\varphi^2\Delta$ 处，令 $z=e^{-2\pi i\varphi}$，有
+
+~~~math
+\delta C=C_+(t)-C_-(t)=\frac12(1-z)^2,\qquad
+D_{\rm tr}(\varrho_+(t),\varrho_-(t))=\sin^2(\pi\varphi).
+~~~
+
+所供菜单中的 $M_{\arg\delta C}$ 已达到等先验二值分类成功率
+
+~~~math
+P_{\rm succ}=\frac{1+D_{\rm tr}}2.
+~~~
+
+模型值分别约为 $0.8686844390$ 和 $0.9343422195$。它们描述两种规定来源的单次概率分类；定理21对整条连续纤维的恢复仍以精确律或所声明的概率误差为输入。黄金时长在此供应一个非零响应的选择，不供应未知频谱的统一有限精度恢复。
+
+**证明。** 原树组成传输 $c(\rho u)=Mc(u)$、$M=\left(\begin{smallmatrix}0&1\\1&1\end{smallmatrix}\right)$ 的精确所有者是上述定理3.4，以及 [GeometryEntranceRatio 中已有的 private composition_transport](../../../D5/S3/Arith/FibonacciAtomic/Geometry/GeometryEntranceRatio.lean)。在这个应用中 $(1,\varphi)M=\varphi(1,\varphi)$，故 $d(\rho u)=\varphi d(u)$，尤其 $d(\rho\beta)=(1+\varphi)\Delta=\varphi^2\Delta$。这只应用既有组成传输，不另立时长递推定理。
+
+由 $\varphi^{-1}=\varphi-1$，$t/a=1+\varphi$、$t/b=1+\varphi^{-1}=\varphi$ 的两个相位均为 $z$，定理19给 $\delta C=(1-z)^2/2$。平均探针态一般是混合态；直接计算它们之差
+
+~~~math
+D=\varrho_+-\varrho_-
+=\frac12\begin{pmatrix}0&\overline{\delta C}\\\delta C&0\end{pmatrix},
+\qquad \operatorname{spec}(D)=\{+|\delta C|/2,-|\delta C|/2\}.
+~~~
+
+因此 $D_{\rm tr}=\tfrac12\|D\|_1=|\delta C|/2=|1-z|^2/4=\sin^2(\pi\varphi)$。设 $\theta=\arg\delta C$，则 $D=(|\delta C|/2)M_\theta$；允许的 $E_{\theta,+}$ 正是正特征空间投影。以正输出判 $p_+$，其等先验成功率为
+
+~~~math
+\tfrac12\operatorname{Tr}(E_{\theta,+}\varrho_+)
++\tfrac12\operatorname{Tr}((I-E_{\theta,+})\varrho_-)
+=\tfrac12+\tfrac12\operatorname{Tr}(E_{\theta,+}D)
+=\tfrac12+\tfrac14|\delta C|.
+~~~
+
+任意二值效应 $0\le E\le I$ 在 $D$ 的两个特征方向上的对角元均在 $[0,1]$，故 $\operatorname{Tr}(ED)\le|\delta C|/2$；上述菜单已达到上界，不借用未供应的测量。
+
+为限定这一黄金参数选择的校准含义，先按 [事件采样卷定理11.1](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md) 复用整数刻度别名：若 $\omega'-\omega=2\pi k/\Delta$，$k\in\mathbb Z$，则对任意非负整数序列 $n_j$ 有 $e^{-i\omega'n_j\Delta}=e^{-i\omega n_j\Delta}$，取 $n_j=F_j$ 仍成立。代数等式也适用于负整数，但本等待合同不使用它们。Fibonacci 采样索引并未提供第二种黄金时长。
+
+取 $F_0=0,F_1=1$。精确残差直接采用 [FibonacciErrorRatio 的 fibonacci_golden_residual](../../../D5/S1/Scale/FibonacciErrorRatio.lean)：
+
+~~~math
+F_n\varphi-F_{n+1}=(-1)^{n+1}\varphi^{-n}\quad(n\ge0).
+~~~
+
+把它用在定理21所区分的未知频率目标，令 $\omega_n=2\pi F_n/\Delta$。与零频率相比，第一时钟完全别名；第二时钟的弦长和有界混合等待误差为
+
+~~~math
+\bigl|e^{-i\omega_n\varphi\Delta}-1\bigr|=2\bigl|\sin(\pi\varphi^{-n})\bigr|,
+\qquad
+\bigl|e^{-i\omega_n(m\Delta+k\varphi\Delta)}-1\bigr|
+\le2\pi L\varphi^{-n},
+\quad m,k,L\in\mathbb Z_{\ge0},\quad 0\le k\le L.
+~~~
+
+这是将残差代入相位后用 $|e^{iu}-1|\le|u|$ 得到的消费步骤。残差式在 $n=0$ 仍成立，此时 $\omega_0=0$ 不是不同来源；非零频率比较和以下有理比需要 $n\ge1$。频率从 $n\ge2$ 起严格增加；把 $\varphi^{-n}$ 称为最近整数距离也必须 $n\ge2$，因为 $n=1$ 的残差为 $\varphi^{-1}>1/2$。该有限深度上界趋零，限制的是任意固定相位精度及第二时钟深度的统一分离，不否定无限精度唯一性或另供更多资源的估计。
+
+若实际校准改为 $\varphi_n=F_{n+1}/F_n$（$n\ge1$），同一残差所有者及其中 private fibonacci_convergent_error_eq 的指标平移给
+
+~~~math
+|\varphi-\varphi_n|=\frac{\varphi^{-n}}{F_n},\qquad
+\omega_n\Delta=2\pi F_n,\quad
+\omega_n\varphi_n\Delta=2\pi F_{n+1}.
+~~~
+
+两个采样相位此时完全重合，说明理想无理比不能由有限校准精度代替。此处比较的是零频率与 $\omega_n$ 的未知频谱目标，不将校准改变后的信号误作原固定五模式合同的结果。
+
+反向分离下界也须保留其准确前提。对非零整数第一时钟别名编号 $k$，选最近整数 $\ell$，置 $\delta=\ell-\varphi k$，故 $|\delta|\le1/2$。其二次范数机制来自 [GoldenHurwitzBound 的 private golden_form_ne_zero 及 golden_hurwitz_bound](../../../D5/S1/Depth/GoldenHurwitzBound.lean)；后者逐字给的是有理数 $q$ 的 $1/(\sqrt5\operatorname{den}(q)^2+\operatorname{den}(q))<|\varphi-q|$，不是下面的更强最近整数分母。此处所需的有域估计为
+
+~~~math
+N=\ell^2-k\ell-k^2
+=(\ell-\varphi k)(\ell+\varphi^{-1}k)
+=\delta(\sqrt5 k+\delta)\in\mathbb Z\setminus\{0\}.
+~~~
+
+非零性因为 $k\ne0$ 且两个根 $\varphi,-\varphi^{-1}$ 都无理；于是
+
+~~~math
+1\le|N|\le|\delta|(\sqrt5|k|+1/2),\qquad
+\operatorname{dist}(\varphi k,\mathbb Z)=|\delta|
+\ge\frac1{\sqrt5|k|+1/2}.
+~~~
+
+对 $0\le d\le1/2$，正弦在 $[0,\pi/2]$ 上的凹性给 $\sin(\pi d)\ge2d$，从而同一编号的第二时钟弦长满足
+
+~~~math
+|1-e^{-2\pi i\varphi k}|\ge\frac4{\sqrt5|k|+1/2}.
+~~~
+
+这只控制已限制别名编号的频率差，不是有界频率区间内任意不同频率的统一正分离；后者仍可任意接近。多原子权重趋零、支撑合并和时长/参照误差也不由该下界消除。因此黄金模型的边界分类值、已校准纤维逆式和未知频谱的有限精度问题各保留其来源、量词和资源条件。证毕。
+

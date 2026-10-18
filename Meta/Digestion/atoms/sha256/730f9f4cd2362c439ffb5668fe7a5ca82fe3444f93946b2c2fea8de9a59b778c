@@ -1,0 +1,39 @@
+### 93.5. Polynomial reduction of the nonreal branch
+
+Write c=X+iY with Y≠0. Substitution of (8) into the stationary equation for c gives
+
+\[
+ [B(2r+\lambda)-\lambda^2q]c-B\overline c=\lambda q.
+                                                                    \tag{10}
+\]
+
+Its imaginary and real parts imply respectively
+
+\[
+ r=\frac{\lambda^2q/B-\lambda-1}{2},\qquad
+ X=-\frac{\lambda q}{2B}.                                    \tag{11}
+\]
+
+The modulus of (8) and the determinant condition then yield
+
+\[
+ \begin{aligned}
+ B(1+\lambda^2r-B^2)-\lambda^2q&=0,\\
+ B^2(1-2q-r)+2q\lambda rB-\lambda q^2&=0.
+ \end{aligned}                                                 \tag{12}
+\]
+
+Substituting r from (11), the two left sides are exactly the following polynomials f and g:
+
+\[
+ \begin{aligned}
+ f&=-\frac12(\lambda^2+2\lambda+4q-2)V,\\
+ V&=4q^2+(-\lambda^2+4\lambda+2)q+\lambda^2+\lambda,\\
+ g&=-\frac12\bigl[-2\lambda^3q^2+3\lambda^3q-\lambda^3
+             +6\lambda^2q^2+2\lambda^2q-3\lambda^2\\
+  &\hspace{55mm}{}+18\lambda q^2-12\lambda q+16q^3-12q^2\bigr].
+ \end{aligned}                                                 \tag{13}
+\]
+
+All preceding divisions were by quantities already proved nonzero. It remains to examine both factors of f.
+

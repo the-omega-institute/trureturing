@@ -1,0 +1,12 @@
+**Convention 1.2 (Owned suppliers).** The harmonic duality, attained finite-volume maximum and growth constant are the results of [Growth], Theorems 3.2 and 5.2:
+
+$$
+\kappa_n=\max_{\mu\in\mathcal P(B_n)}\Phi_n(\mu),\qquad
+c_\star=\lim_{n\to\infty}\frac{\kappa_n}{n}
+=\inf_{n\ge1}\frac{\kappa_n}{n},\qquad
+c_\star n\le\kappa_n\le c_\star(n+1).
+\tag{1.2}
+$$
+
+Its Lemma 3.1 supplies continuity, concavity and nonnegative homogeneity of $h$ and hence of $\Phi_n$. The completed [TwoStep], §§2–3, supplies its coherent positive stationary pair law and full-word ratio grouping; its Theorem 4.1 owns the strict bulk separation from the one-activity comparator. These statements retain their source ownership. No numerical certificate from [Growth], §11, is needed.
+

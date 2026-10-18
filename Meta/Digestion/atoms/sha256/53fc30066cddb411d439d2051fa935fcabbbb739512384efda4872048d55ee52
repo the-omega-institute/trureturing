@@ -1,0 +1,181 @@
+## 4. The entire fixed-polynomial-shape class
+
+Fix a known $h\in\mathbb R[T]\setminus\{0\}$ of degree at most three.
+Define
+
+$$
+K_h=\{W\in\mathcal F(H):f=a h
+                         \text{ for some }a\in\mathbb R\setminus\{0\}\}.
+                                                                    \tag{4.1}
+$$
+
+The gain constraint specifies a fixed one-dimensional polynomial
+subspace with its zero element removed; both amplitude signs are
+included. The shape promise
+is information about known candidates, not information inferred from
+the observed ancestor. No drift or source is fixed, and the class
+has no cardinality bound.
+
+**Theorem 4.1.** The whole class $K_h$, and every known subset of it,
+has one fixed continuation with at most two further immediate
+readings recovering the complete target. In particular
+$\neg L_2(K_h,H)$. If exactly one of $h(0),\ldots,h(5)$ is zero,
+$K_h$ has at most one target. If at least three are zero, $K_h$ is
+empty.
+
+**Proof, affine containment.** For a world in $K_h$ lift its source to
+
+$$
+S=aP.
+$$
+
+Then $\operatorname{tr}S=a\ne0$, and $(S,d)$ determines the entire
+normalized world by
+
+$$
+P=S/\operatorname{tr}S,\qquad f=(\operatorname{tr}S)h .
+                                                                    \tag{4.2}
+$$
+
+There is no positivity requirement on $S$ itself when $a<0$; legality
+means precisely the original conditions on the reconstructed world.
+The ancestor equations become six linear equations in the five real
+coordinates $(S,d)$:
+
+$$
+h(i)\operatorname{tr}(A_iS)+d=c_i,\qquad 0\le i\le5.                \tag{4.3}
+$$
+
+If none of these six samples of $h$ vanishes, projecting the six rows
+onto their four matrix coordinates gives rank four by Lemma 2.1.
+The full system has rank at least four, and its affine solution space
+has dimension at most one.
+
+If a sample vanishes, its equation fixes $d=c_i$. For a nonempty
+legal class Theorem 3.1 permits at most two sampled zeros. At least
+four nonzero samples therefore remain, whose matrices have span
+dimension at least three. With $d$ fixed, the affine solution space
+for $S$ has dimension at most one. If exactly one sample vanishes,
+the remaining five matrices span all four dimensions, so $S$ and $d$
+are unique. If at least three vanish, Theorem 3.1 gives an empty
+legal class.
+
+Thus every nonempty legal class is injectively lifted into one affine
+line or one point. Rank one, positivity and nonzero trace only remove
+points from the containing affine solution space; they do not enlarge
+it.
+
+**Proof, joint separation of future responses.** Put $h_6=h(6)$ and
+$h_7=h(7)$. On the containing affine space define
+
+$$
+\begin{aligned}
+j_6(S,d)&=h_6\operatorname{tr}(JQS)+d,\\
+m_6(S,d)&=h_6\operatorname{tr}(MQS)+d,\\
+r_{EF}(S,d)&=h_7\operatorname{tr}(FEQS)+d,
+                         \qquad E,F\in\{J,M\}.
+\end{aligned}                                                       \tag{4.4}
+$$
+
+These are affine scalar functions. We prove that their joint vector
+
+$$
+(j_6,m_6,r_{JJ},r_{JM},r_{MJ},r_{MM})                              \tag{4.5}
+$$
+
+is injective on the legal class, including every future-zero case.
+
+If $h_7\ne0$, let
+
+$$
+X=h_7QS=\begin{pmatrix}u&v\\w&e\end{pmatrix}.
+$$
+
+Equations (2.2)–(2.3) recover $v,w,e$ from the terminal responses.
+For a legal world,
+
+$$
+e=h_7a(QP)_{22}\ne0,
+$$
+
+because $h_7\ne0$, $a\ne0$ and $QP$ is strictly entrywise positive.
+The rank-one identity recovers $u=vw/e$, then $d$, and finally
+$S=h_7^{-1}Q^{-1}X$. Equal terminal vectors therefore give the same
+$(S,d)$ and complete world. Neither $h_7$ nor $a$ is required to be
+positive. The only variable divisions here are by $h_7$ and $e$ in
+this explicitly nonzero case.
+
+If $h_7=0$ but $h_6\ne0$, suppose two legal worlds have the same
+vector (4.5). Every terminal response is its world's $d$, so
+$d_1=d_2$. Write $U=S_1-S_2$. Equality of the two sixth responses,
+with division by $h_6$ only in this case, gives
+
+$$
+\operatorname{tr}(JQU)=\operatorname{tr}(MQU)=0.
+$$
+
+Set
+
+$$
+\alpha=\operatorname{tr}U,\quad
+\beta=\operatorname{tr}(JU),\quad
+\gamma=\operatorname{tr}(LU),\quad
+\epsilon=\operatorname{tr}(CU).
+$$
+
+By (2.1), $\epsilon=\gamma/2$ and
+$\alpha=-2\beta-2\gamma$. Hence the six ancestor traces of $U$ are
+
+$$
+\bigl(-2(\beta+\gamma),\ \beta,\ \gamma,\
+                  \beta+\gamma,\ \gamma/2,\ -\gamma/2\bigr).
+                                                                    \tag{4.6}
+$$
+
+Since seven is a root of $h$, at most two of clocks zero through five
+can be further roots. Subtracting (4.3) for the two worlds therefore
+makes at least four entries of (4.6) zero. If $\gamma\ne0$, the
+entries at two, four and five are all nonzero, leaving at most three
+zero entries. If $\gamma=0$ and $\beta\ne0$, the entries at zero, one
+and three are all nonzero, again leaving at most three. Thus
+$\beta=\gamma=0$, and then $\alpha=\epsilon=0$. Nondegeneracy on the
+basis $I,J,L,C$ forces $U=0$. The worlds coincide.
+
+If $h_6=h_7=0$, equality of terminal responses again gives $d_1=d_2$.
+Six and seven are two distinct roots of $h$, so at most one ancestor
+clock is a root. The other at least five equations (4.3) force
+
+$$
+\operatorname{tr}(A_i(S_1-S_2))=0
+$$
+
+at five ancestor matrices. Lemma 2.1 gives $S_1=S_2$ and the same
+complete target. This case divides by neither future gain sample.
+The three cases exhaust all possible values at six and seven,
+including every multiplicity compatible with the degree bound.
+
+**Proof, one scalar for the whole class.** If $K_h$ has at least
+two worlds, its distinct lifts lie in the same one-dimensional affine
+solution space $\ell$. Joint injectivity of (4.5) implies that some
+coordinate in that vector is nonconstant on $\ell$. An affine scalar
+on a real line has the form $b+at$; if it is nonconstant, $a\ne0$ and
+it is injective on the whole line. It is therefore injective on all
+of $K_h$, including any infinite or disconnected legal subset.
+No interval or convexity assumption on the legal points is used.
+
+Choose the first nonconstant coordinate in the fixed order (4.5).
+This is one choice for the known shape and ancestor, independent of
+the unknown world. If it is $j_6$ or $m_6$, execute respectively $J$
+or $M$, immediately read at original clock six, and invert that
+coordinate on the known class. If it is $r_{EF}$, execute the fixed
+chronological word $EF$, immediately reading at both six and seven.
+The terminal value has one inverse on the entire known class. It
+recovers $S,d$, then (4.2) and (1.4) recover $P,g,\delta$.
+
+A known singleton can stop at clock five; an empty class is unreachable.
+Restriction of the same chosen inverse works on every known subset.
+There are at most $6+2=8$ total readings. This is an existence result
+for a deterministic inverse, with no cost, efficiency, numerical
+stability or effective class-recognition guarantee. Section 6 proves
+the asserted $L_2$ negation with all actual-child quantifiers. ∎
+

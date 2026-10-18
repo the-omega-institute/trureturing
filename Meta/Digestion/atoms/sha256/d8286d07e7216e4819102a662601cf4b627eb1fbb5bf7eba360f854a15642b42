@@ -1,0 +1,36 @@
+**定理 7.5.2（因果维数下界）。** 任意线性因果摘要满足
+
+$$
+\boxed{
+\dim W\ge d_{\mathrm{causal}}.
+}
+$$
+
+等号由定理 7.4.2 的商模型取得，因此 $\mathcal Z$ 是线性意义下的最小因果边界。
+
+**证明。**
+
+若 $\eta(x)=\eta(x')$，摘要无法区分两者，因而必须有 $x\sim_{\mathrm{op}}x'$。由定理 7.3.1，
+
+$$
+\ker\eta\subseteq\mathcal R\cap\mathcal N.
+$$
+
+由秩—零化度定理：
+
+$$
+\begin{aligned}
+\dim W
+&\ge \operatorname{rank}\eta\\
+&=\dim\mathcal R-\dim\ker\eta\\
+&\ge \dim\mathcal R-\dim(\mathcal R\cap\mathcal N)\\
+&=d_{\mathrm{causal}}.
+\end{aligned}
+$$
+
+商模型的摘要 $x\mapsto[x]$ 维数正好为 $d_{\mathrm{causal}}$，故下界可达。证毕。
+
+这里的「最小」带有明确量词：它针对所有 $x\in\mathcal R$、所有允许未来输入词和所有声明的未来读出成立。若只要求某个固定初态或某个有限实验词集合，所得维数可以更小，但那是换了任务。
+
+<a id="section-7-6"></a>
+

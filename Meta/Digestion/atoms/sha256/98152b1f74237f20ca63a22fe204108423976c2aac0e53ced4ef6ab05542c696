@@ -1,0 +1,89 @@
+**Theorem 69.2 (rank-one capacity, including the axes).** For nonzero
+$\mathbf c=(x,z,w)$ satisfying FA.1 define
+
+$$
+\begin{aligned}
+n(\mathbf c)&=(0,dw/h_2,-bz/h_1)^T,\\
+\mathcal D(\mathbf c)&=h_0^2x^2+b^2z^2+d^2w^2,\\
+\mathcal N(\mathbf c)&=h_1^2h_2^2x^2+a^2h_2^2z^2+c^2h_1^2w^2,\\
+\mathfrak c(\mathbf c)&=\mathcal N(\mathbf c)/\mathcal D(\mathbf c)>0.
+\end{aligned}
+\tag{FA.6}
+$$
+
+For an actual label with live product $K(\mathbf c)$, its pulled-back
+total failure effect necessarily has the form
+
+$$
+N_\alpha=\beta_\alpha n(\mathbf c)n(\mathbf c)^T,\qquad\beta_\alpha\ge0.
+\tag{FA.7}
+$$
+
+Writing $t_A=e^A-1$, the exact endpoint activity capacity is
+
+$$
+N_\alpha\preceq t_AK(\mathbf c)^\dagger K(\mathbf c)
+\quad\Longleftrightarrow\quad
+0\le\beta_\alpha\le t_A\mathfrak c(\mathbf c).
+\tag{FA.8}
+$$
+
+For every admitted absolutely continuous prescribed labelled CP time law
+on this label the minimum decoder activity is
+
+$$
+\mathfrak a_\alpha=\log(1+\beta_\alpha/\mathfrak c(\mathbf c)).
+\tag{FA.9}
+$$
+
+It is attained with its prescribed time law, when its terminal live map
+is retained, using only terminal isometry. Thus FA.8 is necessary for
+every competitor and sufficient for an actual finite-rate construction;
+it does not require every competitor's density to be $g(t)$.
+
+**Proof.** Put $G=K^\dagger K$. By Theorem 69.1,
+$\ker C=\ker K$, and every pulled failure subeffect kills this kernel.
+Since $N_\alpha\preceq M$, it also kills $|0\rangle$.
+These two independent null vectors leave precisely the line spanned by
+$n(\mathbf c)$; $n$ is real and nonzero even if $z=0$ or $w=0$.
+Positive rank at most one proves FA.7. The entry $G_{00}=\mathcal D>0$.
+Block elimination in coordinate zero gives
+
+$$
+G-\frac{G|0\rangle\langle0|G}{G_{00}}
+ =\mathfrak c(\mathbf c)n(\mathbf c)n(\mathbf c)^T.
+\tag{FA.10}
+$$
+
+For explicit algebra, $G_{01}=xz(h_0a+h_1b)$,
+$G_{02}=xw(h_0c+h_2d)$, $G_{11}=a^2z^2+h_1^2x^2$,
+$G_{22}=c^2w^2+h_2^2x^2$, $G_{12}=aczw$.
+Multiplying the $11,12,22$ residual entries by $\mathcal D$ and
+substituting $x^2=abz^2/(h_0h_1)+cdw^2/(h_0h_2)$ gives respectively
+$\mathcal N d^2w^2/h_2^2$,
+$-\mathcal N bdzw/(h_1h_2)$ and
+$\mathcal N b^2z^2/h_1^2$; the other entries are zero.
+For $t>0$ the Schur complement of the positive $00$ pivot in $tG-N$
+therefore proves FA.8. For $t=0$ both sides mean $N=0$, so the endpoint
+is included.
+
+Let $F$ be the decoder total failure effect, so
+$C^\dagger FC=N$, $C^\dagger(I-F)C=G$.
+Since $C|0\rangle\ne0$, $F C|0\rangle=0$ forces
+$\operatorname{rank}F\le1$ on its two-dimensional whole domain.
+Every time/label subeffect is dominated by $F$, hence has this same
+one-dimensional direction, including when its output CP density has
+several Kraus operators. Thus the accumulated effect path is
+$I-a(t)P_F$, with $a$ absolutely continuous increasing from $0$ to the
+nonzero eigenvalue $f<1$ of $F$. FA.2 integrates exactly to
+$-\log(1-f)$, independently of the admitted distribution among labels
+and times. Surjective congruence by $C$ makes
+$F\preceq t(I-F)$ equivalent to $N\preceq tG$.
+Its least such $t$ is $f/(1-f)=\beta/\mathfrak c$ by FA.10,
+proving FA.9. The live decoder has one Kraus matrix $B$, so its
+normalized terminal map is the isometry $B(I-F)^{-1/2}$.
+If $\beta=0$, $F=0$, every failure submap is zero and activity zero
+attains the live isometry. Signs of $x,z,w$ are unrestricted; a common
+phase and $x<0$ change none of the argument. The zero coefficient
+vector represents no supported branch and is omitted. $\square$
+

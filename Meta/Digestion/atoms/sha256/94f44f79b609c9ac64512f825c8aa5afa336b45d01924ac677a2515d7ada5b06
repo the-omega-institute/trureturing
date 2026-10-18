@@ -1,0 +1,27 @@
+## 458. 连续包络差的 Mertens—截断—取整三项分解
+
+§457 的连续包络仍把有限素数乘积和 Robin 预算放在同一个符号里。再引入
+
+$$
+\mathcal M(P)=\prod_{p\le P}(1-p^{-1})^{-1},
+$$
+
+$$
+\mathfrak m(P)
+=\log\frac{\mathcal M(P)}{e^\gamma\log P},
+$$
+
+以及连续指数造成的衰减
+
+$$
+\mathcal A_P(\varepsilon)
+=\log\frac{\mathcal M(P)}{\mathcal C_P(\varepsilon)}.
+$$
+
+因为 $p^{-1-\varepsilon}<p^{-1}$，有
+
+$$
+\boxed{\mathcal A_P(\varepsilon)\ge0.}
+\tag{458.1}
+$$
+

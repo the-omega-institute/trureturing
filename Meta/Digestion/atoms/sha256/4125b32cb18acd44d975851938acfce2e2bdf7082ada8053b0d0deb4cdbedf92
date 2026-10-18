@@ -1,0 +1,26 @@
+**Definition 1.3 (the 74-role assignment).** Keep every original port 0–63,
+owner, origin, mailbox route and source mask of CAP Definition 2.2. The
+following ten new ports all belong to the existing actor $A$.
+
+| Port | Physical role |
+| --- | --- |
+| 64 | Word bank A |
+| 65 | Word bank B |
+| 66 | Native Base, saved-distance and ordinal scratch |
+| 67 | Native length scratch |
+| 68 | RCA-format descriptor stream |
+| 69 | Installation fields and later native staging |
+| 70 | Retained outer choices and history ingress |
+| 71 | Immutable history archive and published sender blocks |
+| 72 | Dedicated history mailbox |
+| 73 | Dedicated history receiver |
+
+In particular CAP verifier 32–39, consumer 40–47 and their routes 50–51
+are occupied and remain unchanged. Port 33's native CAP descriptor origin
+is not port 65's bank origin. Original actor archive 28 and descriptors 29
+are the history module's old-data sources, not compiler scratch. No token
+for 0–23, 24–27, 32–63 is transferred to this compiler. Handler and client
+are installed phases of $A$. Their invocation-availability slots and the
+mailbox-availability slot are distinct finite slots; TOK between slots
+is executed even though the payload owner is the same principal.
+

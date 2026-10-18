@@ -1,0 +1,10 @@
+**Definition 293.1 (Embedding and reserve).**
+For any $L\ge7$ and $J=(j_1<\cdots<j_5)\subset\{3,\ldots,L\}$,
+embed the seven-bit rows of 292 on $(1,2,j_1,\ldots,j_5)$ and set
+every other bit to one. Map each correct label to its actual first-zero
+address. Set
+
+$$
+R_J=(46/5)e-\sum_{a=1}^5b_{j_a}.
+$$
+

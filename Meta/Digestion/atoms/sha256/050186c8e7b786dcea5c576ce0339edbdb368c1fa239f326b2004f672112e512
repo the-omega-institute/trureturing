@@ -1,0 +1,40 @@
+**命题 72.4（An infinite count obstruction and lawful attainments）。** For every integer $q\ge1$, take
+
+$$
+m=6q,\qquad k=11q-1,\qquad T=11q,\qquad g=q,\qquad
+J=q\{1,2,3,4,5,7,8,9,10\},\quad
+H=q\{2,3,4,5\},\quad O=q\{8,9,10\}.
+\tag{72.17}
+$$
+
+For four distinct labels $A,B,C,D$ define two tail-independent tables by the entire following actual phase table:
+
+| $j/q$ | $1$ | $2$ | $3$ | $4$ | $5$ | $7$ | $8$ | $9$ | $10$ |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| $\lambda^+(j)$ | $D$ | $A$ | $A$ | $B$ | $B$ | $D$ | $B$ | $C$ | $C$ |
+| $\lambda^-(j)$ | $D$ | $A$ | $A$ | $B$ | $B$ | $D$ | $C$ | $C$ | $D$ |
+
+Both have the same phase sets, exactly four labels on $J$, and image counts $|X|=|Z|=2$. Nevertheless their exact additional adaptive and child-preset fees are respectively two and three. Thus the three counts $(|\lambda[J]|,|\lambda[H]|,|\lambda[O]|)$, even together with these entire physical phase sets and parameters, cannot determine the fee. Their missed-set label intersection is indispensable for this proposed count-only test.
+
+An attaining paid root and shared suffix for $\lambda^+$ is
+
+$$
+1^{6q}\ \mid\ 0^q1^{2q}0^q1^{2q}\ \mid\ 1^q0^q1^{4q}.
+\tag{72.18}
+$$
+
+For $\lambda^-$ it is
+
+$$
+1^{6q}\ \mid\ 0^q1^q0^q1^q0^q1^q\ \mid\ 0^{3q}1^q0^{2q}\ \mid\ 0^q1^q0^{4q}.
+\tag{72.19}
+$$
+
+Encoding $A,B,C,D$ by $00,01,10,11$ and taking the two coordinate tables as $\lambda_0,\lambda_1$ in (72.15) gives full consumers with adaptive fee three in both cases and GLOBAL fees three and four respectively, with fresh common root labels $R_{\rm root},C_{\rm root}$ in the roles $R,C$ of (72.15), and arbitrary independent $L_\bot$.
+
+**证明。** Here $h=5q-1$, $a=q$, and the actual gcd is indeed $q$. The displayed sets follow from the ordered paths $W_1=[6q,12q]\pmod{11q}$ and $W_2=[q,7q]$. The first table has $X=\{A,B\}$ and $Z=\{B,C\}$, whose intersection has size one. The second has the same $X$ and $Z=\{C,D\}$, whose intersection is empty. Theorem 72.2 gives the distinct sharp lower bounds.
+
+In (72.18), the actual first suffix support is $\{q,7q,9q,10q\}$ and the second is $\{q,2q,3q,7q\}$. Both are even full-path supports. Their successive differences give codes $B\mapsto00$, $A\mapsto01$, $C\mapsto10$, $D\mapsto11$. The first suffix begins zero, clears all root survivors, and has terminal run $2q$. The second has leading run $q$, so their actual seam is $3q<11q-1=k$; it has terminal run $4q<k$ and stops at its complete endpoint. Both first children are live and use this same second word. No final clearing block is required.
+
+In (72.19), the three actual suffix supports are $\{q,7q,8q,9q,10q,0\}$, $\{4q,5q\}$ and $\{8q,9q\}$. The excluded zero in the first row is parity compensation. Their physical inverses are exactly the displayed words. The first suffix begins zero and ends with run $q$; the second and third begin zero and end zero, so both actual later seams are safe. First difference zero contains $A,B$, and first difference one contains $C,D$. Second difference one returns $B$ on the child whose first difference was zero; its other live first child has second difference zero because $C,D$ lie in $O$ or have second charge zero. On the continuing second-zero archives, the third difference selects $C$ versus $D$, while the archive whose first difference was zero returns $A$. Every occurrence of $C,D$ in $O$ actually pays the third suffix block. These rules use their remembered first difference and their own later endpoints, and never another child's output. The root-positive and rejecting archives of the full consumers already stop with their fresh common labels. Formula (72.16) gives the stated full fees because the joined $H$ image has two labels. Generalized-CRT histories supply every successful phase/tail and both free values in the family, including every $q\ge2$ with nontrivial gcd. ∎
+

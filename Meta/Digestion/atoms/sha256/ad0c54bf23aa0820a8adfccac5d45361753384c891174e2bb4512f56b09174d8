@@ -1,0 +1,82 @@
+**theorem 7.1 (Uniform actual tests with explicit error and horizon).**
+For rational $0<\delta<1$, set
+
+$$
+h=\frac\delta{48},\qquad
+N=\left\lceil\frac{153600}{\delta^2}\right\rceil,\qquad
+\mathcal W_\delta=\{jh:0\le j\le N\},\qquad W=Nh.
+\tag{7.1}
+$$
+
+For every legal complex port-one competitor, some $t\in\mathcal W_\delta$
+and $s\in\{2,5,25\}$ have actual TV greater than $L-\delta$ when input
+is $E_s(t)$ and the protocol is wait $t$, full mode read, Stop. There are at
+most $3(N+1)$ such alternative tests, all rational nonnegative waits, and
+
+$$
+\frac{3200}{\delta}\le W
+\le\frac{3200}{\delta}+\frac\delta{48}.
+\tag{7.2}
+$$
+
+Proof. The two-angle extension of
+$g(t)=\sum_sw_sf_s(t)$ is a trigonometric polynomial taking values in
+$[0,1]$, for every CPTP competitor. Each $O$ entry has Fourier degree one,
+each $Q_s$ degree two, and each $f_s$ degree four. Its Fourier support is
+therefore contained in $|k|+|l|\le4$, which has $40$ nonconstant indices.
+Every normalized Fourier coefficient has modulus at most one, since the
+function is bounded by one on the whole angle torus. Its constant coefficient
+is $S(T)$ by Lemma 6.2.
+
+All nonzero frequencies in this support have modulus greater than $1/10$.
+An exact elementary check is as follows. Squaring rational endpoints gives
+$411/100<\sqrt{17}<33/8$, and hence
+
+$$
+\frac{213}{100}<\omega_+<\frac{214}{100},\qquad
+\frac{66}{100}<\omega_-<\frac{67}{100}.
+\tag{7.3}
+$$
+
+Same-sign terms or terms with a zero index have modulus at least
+$\omega_->66/100$. For opposite signs with both indices nonzero,
+if $|k|\ge2$ then $|l|\le2$ and
+$|k|\omega_+-|l|\omega_->2(213/100)-2(67/100)>1/10$.
+If $|k|=1$ then $1\le|l|\le3$, and the smallest permitted difference
+is bounded below by $213/100-3(67/100)=12/100>1/10$.
+These cases exhaust the support.
+
+Integrating each nonconstant exponential as in (6.4) now gives, uniformly
+over all competitors,
+
+$$
+\left|\frac1W\int_0^Wg(t)\,dt-S(T)\right|<\frac{800}{W}.
+\tag{7.4}
+$$
+
+Since $W\ge3200/\delta$, (6.19) implies that the average weighted
+failure is at least $L-\delta/4$. Some $t\in[0,W]$ and a mode with
+$w_s>0$ have failure at least this large.
+
+For the discretization, $Q_s'= -AQ_s+Q_sA$ and
+$\|Q_s'\|_1\le2\|A\|_{\rm op}$. A CPTP map contracts the trace norm
+of Hermitian inputs: split such an input into positive and negative parts,
+use positivity and TP, and apply the triangle inequality. Differentiating
+$f_s(t)=\operatorname{tr}(Q_s(t)\widehat T(Q_s(t)))$ consequently gives
+
+$$
+|f_s'(t)|\le4\|A\|_{\rm op}<12,
+\tag{7.5}
+$$
+
+where $\|A\|=\omega_+<3$. Move the selected $t$ to a grid point in
+$\mathcal W_\delta$ within $h$. The failure decreases by at most
+$12h=\delta/4$. That grid test has TV at least $L-\delta/2>L-\delta$.
+The ceiling in (7.1) gives (7.2). $\square$
+
+This family gives a failing alternative experiment for each competitor;
+it does not identify an unknown channel from one sample. The pure inputs
+are allowed by the all-density preparation hypothesis. Their mathematical
+availability is not a physical state-preparation or clock-synthesis theorem.
+No protocol uses source copies, a probability oracle, or an infinite wait.
+

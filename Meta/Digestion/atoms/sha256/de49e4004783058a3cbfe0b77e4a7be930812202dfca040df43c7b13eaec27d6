@@ -1,0 +1,50 @@
+**Lemma 6.2 (Per-target clipping).** For every finite integer $L\ge1$, define
+
+$$
+\begin{aligned}
+\pi_i&=\sum_{k=1}^Lf_i(k),
+&J_i^L&=\pi_i^{-1}\sum_{k=1}^Lf_i(k)A^kC,\\
+V_i^L&=(1-\pi_i)^{-1}\sum_{k>L}f_i(k)A^kC,
+&\gamma_L&=1+\frac\delta{L+1}.
+\end{aligned}
+\tag{6.6}
+$$
+
+For target $i$ and opponent $j=1-i$, put
+
+$$
+W=\pi_jJ_j^L+(1-\pi_j)V_i^L.
+\tag{6.7}
+$$
+
+Every displayed kernel is stochastic and fixes both labels, and
+
+$$
+\begin{gathered}
+\|U_i(x,\cdot)-W(x,\cdot)\|_{\rm TV}\le\pi_i+\pi_j,\\
+\gamma_L^{-1}U_j(x,y)\le W(x,y)\le\gamma_L U_j(x,y).
+\end{gathered}
+\tag{6.8}
+$$
+
+Proof. Positivity of $f_i(k)$ for every $k\ge1$ gives $0<\pi_i<1$ at each interior $q$ and finite $L$. On $k>L$, let $t(k)=F_1(k)/F_0(k)$, which lies in $[1,\gamma_L]$. The conditional tail ratio is exactly
+
+$$
+\frac{f_1(k)/(1-\pi_1)}{f_0(k)/(1-\pi_0)}
+=\frac{t(k)}{\displaystyle\sum_{\ell>L}\frac{f_0(\ell)}{1-\pi_0}t(\ell)}.
+\tag{6.9}
+$$
+
+The denominator lies in the same interval. Thus both conditional tails are entrywise comparable by $\gamma_L$ in either direction. Their full $Z_i$ normalizers have cancelled. Averaging the common nonnegative entries of $A^kC$ proves that comparison for $V_0^L,V_1^L$. Adding the common nonnegative short term $\pi_jJ_j^L$ proves the second line of (6.8), and in particular gives $W$ and $U_j$ exactly the same support.
+
+For the first line, use $U_i=\pi_iJ_i^L+(1-\pi_i)V_i^L$ to write
+
+$$
+U_i-W=\pi_i(J_i^L-V_i^L)-\pi_j(J_j^L-V_i^L).
+\tag{6.10}
+$$
+
+Each difference of probability rows has variation at most one. The triangle inequality proves the claim. $\square$
+
+These are two comparisons with different roles: an additive comparison to the actual target and a multiplicative comparison to the opponent. The opponent's whole short term remains present in $W$. The comparison neither discards a paid gap nor supplies a tail-only operational source. No termination of $W$ from arbitrary states is claimed or needed.
+

@@ -1,0 +1,22 @@
+### 52.2 平衡相位纤维的完整分支
+
+反设 `|sum x|²=3`。循环正交给出 `alpha_x+alpha_y=0`，而 `|sum x|²=3+2 Re(alpha_x)`，所以 `alpha_x=in`，其中 `n` 为实数。
+
+对任意单位相位三元组 `z`，相邻比值 `e_j=conjugate(z_j)z_(j+1)` 的积为一，并且恰为下述多项式的三个根，按重数计：
+
+```math
+t^3-\alpha_z t^2+\overline{\alpha_z}t-1.
+```
+
+由于 `alpha_y=-alpha_x=conjugate(alpha_x)`，`y` 的相邻比值是 `x` 的相邻比值的共轭的一种排列。三个比值的偶排列是循环置换，积分后得到 `y=gamma S^m conjugate(x)`；奇排列则得到 `y=gamma Rx`，其中 `R` 是一个坐标换位。积分只留下同一个单位相位 `gamma`。因此全部可能性为
+
+```math
+y=\gamma Rx\quad(R\text{ 为三个换位之一}),
+\qquad
+y=\gamma S^m\overline x\quad(m=0,1,2),
+\qquad |\gamma|=1.
+\tag{52.1}
+```
+
+该推理也包括有重复比值的情形。下面逐类排除，始终保留输入和输出中的同一个 `gamma`。
+

@@ -1,0 +1,17 @@
+**Theorem 89.1.** For every \(0<|b|<1\) with \(G_*(b)\ne0\), all
+orthogonal pairs among the complete original noncanonical generic set
+satisfy (89.10)–(89.11). Its graph is a disjoint union of the four-regular
+bipartite \(6+6\) orbit-union graphs of §82. In particular there is no
+orthogonal triple of generic rays.
+
+Indeed the nonzero mean fixes the common phase and three distinct upper
+entries make the six synchronous permutations distinct. The two cosets
+are disjoint, since intersection would give \(|G|^2=-R\). The exact
+within-union theorem supplies four opposite-coset neighbors per vertex,
+and (89.11) excludes every cross-union edge. Such a \(6+6\) graph is
+connected: two components would each need at least four vertices on each
+side. Alternatively the triple exclusion follows directly because three
+nonzero spinors in \(\mathbb C^2\) cannot be pairwise orthogonal.
+The theorem retains all guard-zero fibres and makes no aligned-pair
+assertion; those are addressed separately next.
+

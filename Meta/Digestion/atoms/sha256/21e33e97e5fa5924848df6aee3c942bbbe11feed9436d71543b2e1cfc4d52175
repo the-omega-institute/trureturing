@@ -1,0 +1,11 @@
+**Corollary 7.5 (Conditional response-density consumer).** Suppose there are constants $\beta,\varepsilon>0$ and an unbounded set of lengths $n$ such that the actual $\pi_n$ at each of these lengths has at least $\beta n$ reset indices with one-coordinate probes satisfying $d_i(f_i)\ge\varepsilon$. At every such length,
+
+$$
+V_2(n)\ge\frac9{12544}\beta\varepsilon^2 n.
+\tag{7.18}
+$$
+
+It follows that some finite length has $V_2(n)>\tau$.
+
+Proof. Apply (7.15) separately at each of the stated lengths. Since the coefficient in (7.18) is positive and the set of lengths is unbounded, one exceeds $12544\tau/(9\beta\varepsilon^2)$. No convergence, stationarity, projectivity or independence of the sequence of optimizers is used. The premise asserts the quantitative response density; the conclusion does not establish that premise. $\square$
+

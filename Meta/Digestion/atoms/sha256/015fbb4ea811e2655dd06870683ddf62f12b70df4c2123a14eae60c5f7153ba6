@@ -1,0 +1,32 @@
+## 7. 七、隐藏纤维的稳定性定理
+
+当前项目对 return compatibility 和 response variation 的研究可以在 AURIC 层面转化为一个简单但重要的稳定性定理。
+
+对某个固定内部词 $q$，记：
+
+- $s_q$：总质量；
+- $R_q$：左端 $1$ 的质量；
+- $C_q$：右端 $1$ 的质量。
+
+则
+
+$$
+\kappa_{q,-}=
+\max(0,R_q+C_q-s_q),
+$$
+
+$$
+\kappa_{q,+}=
+\min(R_q,C_q).
+$$
+
+假设边界数据扰动为
+
+$$
+|s_q-s_q'|\le\varepsilon,
+\qquad
+|R_q-R_q'|\le\varepsilon,
+\qquad
+|C_q-C_q'|\le\varepsilon.
+$$
+

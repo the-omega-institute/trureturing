@@ -1,0 +1,80 @@
+**Proposition 7.3 (exact RC parameter match and auxiliary normalization).**
+On a sufficiently small positive RC endpoint segment the analytic
+parameter of Sections 3–6 is EXACTLY
+
+$$
+\begin{aligned}
+p(a)&=\frac2{\lambda_R(a)}
+     =-\frac{2a\ell_{1R}}{g_RD_R^2\sigma_R},\\
+\xi_R(a)&=\frac{2\beta a}{D_R},\qquad
+p&=\frac{2\beta}{R_1}\xi_R+O(\xi_R^2)
+  =\frac{4\beta^2}{\alpha R_1}a+O(a^2).
+\end{aligned}
+\tag{EP.48a}
+$$
+
+The four local contacts, masses and grouped matrices coincide with
+RC's $q_+,q_-,n_R/D_R,Z_R/(Z_R)_0$ and their coordinate-$0$-one
+weights, in corner order $(++),(+-),(-+),(--)$. In particular the
+multiplier in EP.9 is RC.23's normalized $\lambda$, not the CG
+multiplier, JR's spectral multiplier or a coefficient for a different
+objective. The corresponding positive multiplier for $\mathcal T$
+against $\tau$ is $\lambda/2$, and against physical $s$ it is
+$\lambda/(2s_0)$. Thus their respective endpoint corrections are
+$K_1$ and $K_1/s_0$.
+
+Proof. RC64 gives $k(0)=-B/(4R_1)$ and
+$\lambda_R\xi_R\to R_1/\beta>0$. Its formulas make
+$\lambda_R\xi_R$ analytic and nonzero at zero: the explicit $a$
+in the denominator cancels against $\xi_R$. Hence EP.48a extends
+analytically across zero, with the displayed strictly positive first
+derivative. It has an analytic local inverse. Both $R_1,R_2>0$ follow
+from the coarse rational comparisons in Proposition 7.2.
+
+To identify the FULL contact germ, use RC61's gauge
+$Y_R=G+\lambda_RC+S_A$ with
+$S_A=-2\lambda_RW_RW_R^T/(D_R^2\sigma_R)$. Then
+
+$$
+\frac p2(Y_R-G)=C-\frac{2W_RW_R^T}{D_R^2\sigma_R}=:A_R^{\rm raw}.
+\tag{EP.48b}
+$$
+
+This matrix is analytic at $a=0$, where its polynomial on $(1,u,v)$
+is $(1+u^2)/2$. If $b_{22}$ is its $22$ entry, add
+$(b_{22}/\beta)Q$. This removes the $v^2$ coefficient without
+changing any value on the null ellipse, its tangential derivatives,
+its trace, or any null moment pairing. The resulting polynomial has
+precisely the five monomials of Definition 3.1. On every RC contact,
+the corresponding PSD slack has zero quadratic form and zero
+tangential derivative. After multiplication by $p/2$, its scalar
+contact equation is $P=|u|+p[-f]_+$ with the same strict signs as
+EP.19. RC's normalized Gram gives all five moments EP.20; its
+coordinate-$0$-one weights tend to $1/4$. Consequently these
+polynomials, contacts and masses solve EP.20–21 analytically in $p$.
+Lemma 3.2's uniqueness identifies them with the local germ. This proves
+the exact match without inferring equality of instruments from agreement
+only on test states.
+
+The endpoint normalization in RC64 is essential. Its auxiliary vector
+$c_{\rm aux}=Z_R/(\beta D_R^5)$ tends to $-c_-/4$, where
+$c_-=(1,-1,-1)^T$, whereas the local contact is
+$\widehat c=Z_R/(Z_R)_0\to c_-$. RC.51 gives, for its
+$\mathcal H_R=C-W_RW_R^T/(D_R^2\sigma_R)$,
+
+$$
+\left.\frac{d}{d\xi_R}(\mathcal H_Rc_{\rm aux})\right|_0
+=\tfrac14(1-3k(0),\ 1-3\alpha k(0),\ \beta k(0))^T.
+\tag{EP.48c}
+$$
+
+The derivative for $\mathcal H_R\widehat c$ is $-4$ times this
+vector. Indeed $\widehat c=t c_{\rm aux}$ with $t(0)=-4$, and
+the product-rule term $t'\mathcal H_Rc_{\rm aux}$ vanishes at zero.
+No coefficient is transferred between those two vector normalizations
+without this factor. The scalar $k(0)$, $\lambda_R\xi_R$ and
+$\Gamma$ are unchanged. EP.48a and the contact identification show that
+EP.35 and Theorem 7.1 compute the next terms of the very same full
+RC curve. The objective conversion EP.14 proves the final multiplier
+scales stated above. $\square$
+

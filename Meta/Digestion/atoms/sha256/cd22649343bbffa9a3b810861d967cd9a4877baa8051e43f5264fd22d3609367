@@ -1,0 +1,67 @@
+**定理 10.10（恰为七维的闭包）。** 有
+
+$$
+\mathcal O_3=
+\operatorname{span}_{\mathbb R}\{I,n_A,n_B,n_C,J_{AB},J_{BC},T\},
+\qquad \dim_{\mathbb R}\mathcal O_3=7.
+$$
+
+证明。记 $\mathcal L_A(F)=i[h_{AB},F]$、$\mathcal L_B(F)=i[h_{BC},F]$。两生成元作用在全部七个基元素上的表为
+
+| $F$ | $\mathcal L_A(F)$ | $\mathcal L_B(F)$ |
+| --- | --- | --- |
+| $I$ | $0$ | $0$ |
+| $n_A$ | $J_{AB}$ | $0$ |
+| $n_B$ | $-J_{AB}$ | $J_{BC}$ |
+| $n_C$ | $0$ | $-J_{BC}$ |
+| $J_{AB}$ | $2(n_B-n_A)$ | $-T$ |
+| $J_{BC}$ | $T$ | $2(n_C-n_B)$ |
+| $T$ | $-J_{BC}$ | $J_{AB}$ |
+
+现给出表中所有类型的计算依据。单位项和远离支撑的占据项交换为零；占据项使用 $[R,n]=-R,[L,n]=L$。对 $X=R_AL_B$，
+
+$$
+XX^\dagger=n_A(I-n_B),\qquad
+X^\dagger X=(I-n_A)n_B,
+$$
+
+$$
+i[X+X^\dagger,-i(X-X^\dagger)]
+=-2[X,X^\dagger]=2(n_B-n_A).
+$$
+
+以 $Y=R_BL_C$ 代替 $X$ 得另一条同边流公式。混边部分由
+
+$$
+[X,Y]=F,\quad [X,Y^\dagger]=[X^\dagger,Y]=0,
+\quad [X^\dagger,Y^\dagger]=-F^\dagger
+$$
+
+得到 $\mathcal L_AJ_{BC}=T$ 以及 $\mathcal L_BJ_{AB}=-T$。最后，命题 10.7 证明中的 $[h_{AB},T]=Y-Y^\dagger$ 给 $\mathcal L_AT=-J_{BC}$。交换 $A,C$ 将 $h_{AB}$ 换成 $h_{BC}$，将 $Y-Y^\dagger$ 换成 $-(X-X^\dagger)$，而 $T$ 保持不变，故 $\mathcal L_BT=J_{AB}$。因此表没有遗漏的生成元作用。
+
+令右边七元素的张成空间为 $V_7$。表说明 $\mathcal L_A V_7\subseteq V_7$、$\mathcal L_B V_7\subseteq V_7$；有限维空间闭合于这两个线性算子的指数。因此 $e^{u\mathcal L_A},e^{v\mathcal L_B}$ 以及任意有限乘积都保持 $V_7$。初始测试属于 $V_7$，给第一个包含 $\mathcal O_3\subseteq V_7$。
+
+反向，轨道张成空间 $\mathcal O_3$ 在任一允许动作的共轭下仍不变：共轭一个词的拉回等于另一个合法词的拉回。它是有限维实向量空间，故拓扑闭。对于 $F\in\mathcal O_3$，差商
+
+$$
+\frac{e^{it h_{AB}}Fe^{-it h_{AB}}-F}{t}
+$$
+
+都属于 $\mathcal O_3$，其 $t\to0$ 极限 $\mathcal L_AF$ 也属于该空间；另一边同理。从空词的 $n_A,n_C$ 得到 $J_{AB},J_{BC}$，再由 $\mathcal L_AJ_{BC}=T$ 得 $T$。因此 $V_7\subseteq\mathcal O_3$。这个导数论证只用于观察空间的线性闭包；一般链的精确动作可达性将在下文另证。
+
+为证明维数，考虑七元素的一条实线性关系。取 $001\leftrightarrow100$ 的矩阵元，只有 $T$ 非零，故其系数为零；取 $010\leftrightarrow100$，只有 $J_{AB}$ 非零，故其系数为零；取 $001\leftrightarrow010$，只有 $J_{BC}$ 非零，故其系数也为零。剩余对角关系
+
+$$
+a_0I+a_An_A+a_Bn_B+a_Cn_C=0
+$$
+
+在 $000,100,010,001$ 上依次求值，给 $a_0=a_A=a_B=a_C=0$。七个算子线性独立，维数恰为七。证毕。
+
+若依次排列这七个算子为列 $F$，将表中的系数写成 $\mathcal L_jF_a=\sum_b L^{(j)}_{ab}F_b$，则状态记录 $r_a=\operatorname{Tr}(\rho F_a)$ 经一次动作满足
+
+$$
+r'=e^{tL^{(j)}}r.
+$$
+
+因为 $r'_a=\operatorname{Tr}(\rho e^{it h_j}F_ae^{-it h_j})$。按时间顺序乘这些实矩阵即可维护所有未来读数。$r_I=1$ 已知，余下六个数是任务的充分线性记录；该更新式不要求重建密度矩阵。
+

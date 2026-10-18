@@ -1,0 +1,81 @@
+**Theorem 7.2 (finite formulas for native operations on normal arguments).**
+For each fixed numeral $m$, each fixed finite physical word $p$ and each
+fixed finite cut $Q$, finite formulas in Definition 7.1 express the
+graphs of $\tau_m,J$, guarded $\nu_p$, root replies, $M_Q$ and
+$\operatorname{Same}_Q$, correctly whenever the input codes are normal.
+They also express the translated finite residual terms and cell
+conjunctions of §5 on normal valuations. No quantification over an
+arbitrary address, leaf-selection operation or recursive predicate is
+used by these formulas.
+
+Proof. For a supplied $m$, the graph of translation is the well-defined
+same-shape condition
+
+$$
+\mathsf{Shift}_m(X,Y)\ \Longleftrightarrow\
+\mathsf{sh}(X)=\mathsf{sh}(Y)=s\ \land\
+[y=x+m]^I_s(X,Y)=\mathsf{true}^I_s.
+\tag{ABC.7.1}
+$$
+
+Here $s$ is existentially quantified if not already named; $m$ is a
+numeral in a base formula, not an unprovided external scalar shared
+through a new leaf-selection port. The semantics in Figures 10–11
+make (ABC.7.1) exactly leafwise translation on any ambient term.
+
+Let $\mathsf{Pri}(X)$ be the primitive-term test. With primitive arguments,
+their common shape is the one-leaf shape, so lifting a Presburger relation
+and requiring its leafset to be full gives exactly that relation between
+their ranks. Define $\mathsf{Succ}(X,Y)$ in this way to mean that both
+are primitive and the rank of $X$ is the rank of $Y$ plus one. Then the
+graph of $J$ is
+
+$$
+\begin{aligned}
+\mathsf{Join}(X,Y,Z)\ \Longleftrightarrow\ &
+ [\mathsf{Succ}(X,Y)\land\mathsf{Shift}_2(Y,Z)]\\
+ &\lor[\neg\mathsf{Succ}(X,Y)\land Z=F(X,Y)].
+\end{aligned}
+\tag{ABC.7.2}
+$$
+
+On normal inputs it is precisely (ABC.2.2). The special first case is
+necessary even though $F$ itself is an available free constructor.
+Primitive numerals $[j]$ are definable by the primitive test and the
+lifted predicate $x=j$ at the one-leaf shape.
+
+A left-child graph is the disjunction of $X=F(Y,Z)$ with child $Y$, and
+the primitive case $x\ge2$, $y=x-1$. A right-child graph uses the same
+constructor case with child $Z$ and the primitive case $x\ge2$, $z=x-2$.
+Each arithmetic relation is Presburger. There is no child for primitive
+zero or one. Existentially composing $|p|$ such child graphs yields
+$\mathsf{Nav}_p(X,Y)$, with $\mathsf{Nav}_\varepsilon(X,Y)$ equal to
+$X=Y$. Its domain formula is $\exists Y\,\mathsf{Nav}_p(X,Y)$.
+Absence is the negation of that domain formula, not a distinguished tree
+value that can satisfy a disequality. Root replies use the primitive
+zero and one tests, or a constructor or primitive rank at least two.
+Existentially compose navigation and root tests for the other three
+literal replies.
+
+For masking, unroll the finite recursion of Definition 4.1. The empty-cut
+case is equality of input and output; the root-cut case sets output to
+$[0]$. The leaf case uses its primitive zero/one tests. In the branch
+case introduce its two native children, their two recursive masks, and
+one $\mathsf{Join}$ relation. Each recursive invocation uses a strictly
+smaller remaining cut depth; this is a finite formula construction from
+$Q$, not recursion inside the logical language. It retains unconstrained
+outside subtrees as term variables. Expand (ABC.4.3) using finitely many
+domain tests, mask graphs and guarded equality comparisons at the fixed
+members of $Q$. This gives a finite formula for whole-row equality even
+when its concrete exterior is unbounded.
+
+Finally unfold a finite residual expression using primitive constants,
+$\mathsf{Join}$ and the finitely many fixed-numeral shift graphs.
+Existential intermediate variables are uniquely determined by these
+graphs on normal arguments and remain normal. Code equality is ordinary
+term equality. Apply this to each conjunct of §5, keeping its original
+variable sharing and both guards for signed endpoints. Theorem 5.2 proves
+the meaning on normal valuations. None of these constructions asserts
+that unrestricted quantification over $\mathcal K$ already means
+quantification over $\mathcal N$. $\square$
+

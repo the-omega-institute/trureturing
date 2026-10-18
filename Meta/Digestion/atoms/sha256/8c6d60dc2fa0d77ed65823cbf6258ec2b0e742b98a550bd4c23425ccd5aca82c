@@ -1,0 +1,46 @@
+**Lemma 11.3 (the left-child obstruction and its precise test).** Fix
+any finite native tree $u$ and any nonempty address $p$. Choose any
+ray $\omega\in[pR]$ and put $x=h_u(\omega)$ and $s=s(p)$.
+If $p=aL$, also choose any $\eta\in[aR]$ and put $y=h_u(\eta)$.
+The exact literal reply is
+
+$$
+\operatorname{readout}(p,u)=
+\begin{cases}
+\mathrm{absent},&x<s,\\
+\mathrm{absent},&x=s,\ p=aL,\ y=s,\\
+\alpha,&x=s,\ p\text{ ends with }R,\\
+\alpha,&x=s,\ p=aL,\ y>s,\\
+\beta,&x=s+1,\\
+\mathrm{branch},&x\ge s+2.
+\end{cases}
+\tag{AAR.45}
+$$
+
+The listed cases exhaust all attained inputs. In particular sampling
+inside $[p]$ without the additional right step is not the stated test.
+
+Proof. If $p$ is a leaf, its whole cylinder has score $s$ for alpha
+and $s+1$ for beta. If $p$ is a branch, a ray in $[pR]$ reaches a leaf
+strictly below its right child, or at that child. Its score is at least
+$s+2$, regardless of all other branches or labels.
+
+If $p$ is absent, its unique blocking leaf $b$ is a strict prefix of
+$p$ and of $\omega$. Write $p=br$ with $r\ne\varepsilon$ and let its
+label bit be $e_b$. Then
+
+$$
+ x=s(b)+e_b,\qquad s(p)-x=s(r)-e_b\ge0.
+\tag{AAR.46}
+$$
+
+Equality holds exactly when $r=L$ and $e_b=1$, since every letter has
+positive weight and only the one-letter word $L$ has weight one.
+Thus the sole absent case with $x=s(p)$ is a beta at the parent $a$
+of a left child $p=aL$. Every ray in $[aR]$ then has the same score
+$s(a)+1=s(p)$. In contrast, if $p=aL$ is an actual alpha, $a$ is a
+branch and every ray in $[aR]$ has score at least
+$s(a)+2=s(p)+1$. This proves the additional test and all cases in
+(AAR.45). It also shows that the answer is independent of which rays
+in the required cylinders were selected. $\square$
+

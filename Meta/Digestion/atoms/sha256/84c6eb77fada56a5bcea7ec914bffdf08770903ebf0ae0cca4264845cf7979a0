@@ -1,0 +1,24 @@
+## 3. A single-world sign invariant
+
+**Theorem 3.1.** Every legal world on (1.2) with $f(7)=0$ satisfies
+
+$$
+f(4)f(5)<0\quad\Longrightarrow\quad f(3)f(6)<0.
+\tag{3.1}
+$$
+
+**Proof.** A sign change supplies a root $b\in(4,5)$ by continuity.
+If $f(3)=0$, the roots $3,b,7$ force a nonzero cubic proportional to
+the product in the first forbidden rectangle. If $f(6)=0$, the roots
+$b,6,7$ give the second rectangle. If both vanish there are already
+four distinct roots. Hence $f(3),f(6)$ are nonzero.
+
+Suppose their signs agree. If $f(4)$ has the opposite sign to $f(3)$,
+there is a root $a\in(3,4)$, yielding $a,b,7$ in the first rectangle.
+Otherwise $f(5)$ has the opposite sign to $f(6)$, giving a root in
+$(5,6)$ and the second rectangle. Three distinct roots of a nonzero
+polynomial of degree at most three force exactly the corresponding
+cubic factorization. Theorem 2.1 excludes each case. Thus the two
+nonzero samples have opposite signs. This argument imposes no extra
+degree or simplicity hypothesis. ∎
+

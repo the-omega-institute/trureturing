@@ -1,0 +1,22 @@
+**Uniform integral-multiple bound.** Ingram, *Multiples of integral points on elliptic curves*, Proposition 11, supplies effectively obtainable positive constants $c_3,c_4$, depending only on
+
+$$M(P)=\mathop{\mathrm{lcm}}_p\operatorname{ord}\bigl(P\bmod E_0(\mathbb Q_p)\bigr),$$
+
+such that, on a quasi-minimal short curve, $n>c_3$ and integrality of $nP$ imply
+
+$$n<c_4h(E)^{5/2}.\tag{91.4}$$
+
+See the [primary paper](https://arxiv.org/pdf/0802.2651), Proposition 11 and its proof. Its elliptic-logarithm estimate has an explicit constant $4\cdot10^{41}$ in equation (9), and its small-height adjustment is effective. In our family $h(E'_D)>2\pi\sqrt3$ already for $D\ge144$, so that adjustment is unnecessary for this application.
+
+There is a direct uniform bound on $M(P)$. The only prime where $j$ has negative valuation is $3$, with $v_3(j)=-2$. Multiplicative reduction can occur only there and has type $I_2$, whose component group has order at most $2$. Every additive Kodaira type has component-group order in $\{1,2,3,4\}$, and good reduction has trivial component group. Consequently every local order divides $12$, and
+
+$$M(P)\mid12.$$
+
+These component statements concern the intrinsic minimal model; using quasi-minimal short coordinates does not change the quotient groups. We may take maxima over the finitely many divisors of $12$ to obtain fixed effective constants $c_3,c_4$ for the entire family.
+
+Apply (91.4) to $|m|P$, which is integral whether $m$ is positive or negative. Equations (91.1)–(91.4) yield
+
+$$\sqrt D<|m|\le\max\left\{c_3,c_4(3\log D+\log945000)^{5/2}\right\}.\tag{91.5}$$
+
+If $|m|\le c_3$, the first alternative applies; otherwise (91.4) applies. Both constants are uniform in the original block and the point.
+

@@ -1,0 +1,31 @@
+**Theorem 102.2 (An attained exact-cap separation).** For every base
+sequence of Definition 102.1 there is $N\in\mathcal N_3$ with
+$e_a(N)=\varepsilon_0$, handing off everywhere with $K=3$ and $M\le7$.
+Moreover
+
+$$
+E_{\mathcal N}(3;a)\le\varepsilon_0
+< E_{\mathcal O}(3;a)=r_0,\qquad
+r_0-\varepsilon_0=\frac{11}{11400}.
+\tag{102.2}
+$$
+
+The $\mathcal O_3$ value is attained by an everywhere-finite rule with
+$M\le7$. For every $\varepsilon_0\le\varepsilon<r_0$,
+
+$$
+(\kappa^{\mathcal A}_\varepsilon,
+ \kappa^{\mathcal N}_\varepsilon,
+ \kappa^{\mathcal O}_\varepsilon)=(3,3,4).
+\tag{102.3}
+$$
+
+At $\varepsilon=r_0$ the tuple is $(3,3,3)$. The tail equality
+$a_8=\varepsilon_0$ is permitted.
+
+**Proof.** The explicit $N$ attainer is Theorem 103.2. The universal
+$\mathcal O_3$ lower bound is Theorem 104.1, and its endpoint attainer
+is Theorem 105.1. The hard-count conclusions follow from Theorem 106.1.
+These proofs concern existence at the displayed closed caps themselves.
+They do not assert an exact $\mathcal N_3$ optimum. $\square$
+

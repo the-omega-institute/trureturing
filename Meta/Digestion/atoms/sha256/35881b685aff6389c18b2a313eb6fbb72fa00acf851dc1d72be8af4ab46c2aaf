@@ -1,0 +1,39 @@
+**Definition 4.1 (one common design sentence).** For a graph $G$ and
+descriptor types as in §2, put
+
+$$
+\begin{aligned}
+\operatorname{Total}_G(\boldsymbol\delta)
+={}&\bigwedge_{\eta\in\mathcal A}\ \forall\mathbf n\quad
+ \operatorname{Adm}_\eta(\mathbf n)
+ \Longrightarrow\bigvee_{h\in E_H}
+                     H_{\eta,h}(\mathbf n;\boldsymbol\delta),\\
+\operatorname{Shared}_G(\boldsymbol\delta)
+={}&\bigwedge_{\eta,\theta\in\mathcal A,\ h\in E_H}
+ \forall\mathbf n\,\forall\mathbf m\quad
+ \left[
+ \begin{array}{l}
+ \operatorname{Adm}_\eta(\mathbf n)\land
+ \operatorname{Adm}_\theta(\mathbf m)\land\\
+ H_{\eta,h}(\mathbf n;\boldsymbol\delta)\land
+ H_{\theta,h}(\mathbf m;\boldsymbol\delta)
+ \end{array}
+ \right]
+ \Longrightarrow\operatorname{Same}_{\eta\theta}(\mathbf n,\mathbf m),\\
+\Phi_G={}&\exists\boldsymbol\delta\quad
+ V_G(\boldsymbol\delta)\land
+ \operatorname{Total}_G(\boldsymbol\delta)\land
+ \operatorname{Shared}_G(\boldsymbol\delta).
+\end{aligned}
+\tag{NPS.15}
+$$
+
+The implications in the first two lines are within their respective
+universal quantifiers. The tuple dimensions are those of their charts.
+Descriptor types have already been selected by a finite outer choice;
+all numeric descriptor variables in the third line precede every source
+quantifier. Phase cuts, path counts and terminal epochs occur only
+inside $H$. This uses the whole-domain and shared-halt construction of
+[CAR, Theorem 12.1][CAR], with exact unbounded support replacing its
+finite-horizon path formula.
+

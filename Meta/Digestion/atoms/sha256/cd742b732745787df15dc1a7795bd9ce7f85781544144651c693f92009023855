@@ -1,0 +1,24 @@
+**Theorem 7.1 (effective linear suffix contraction).** If $m\ge1$, there is a finite syntactic contraction of the common trie which preserves its complete root summary, retains every index and role, leaves all serving suffixes literally fixed, individually weakly shortens every preparer suffix, and puts every indexed endpoint at depth at most $b+6m$.
+
+Proof. Freeze every explicit trie node at depth at most $b$, not just serving endpoints. An essential node is one carrying an index or having two explicit children. Every trie leaf carries an index. If the trie has $\lambda$ leaves, $u$ unary nodes and $v$ binary nodes, counting its edges gives
+
+$$
+u+2v=\lambda+u+v-1,\qquad v=\lambda-1.
+\tag{BPS.19}
+$$
+
+There are at most $m$ marked nodes and $\lambda\le m$. Hence there are at most $2m-1$ essential nodes, even if a marked node is also binary.
+
+Below the frozen prefix, every nonessential node is unmarked unary. In each maximal consecutive run longer than two, replace the subtree at its first node by the subtree at its second-last node. Thus retain the bottom two nodes and their descendant subtree. Lemma 6.3 preserves that subtree's summary, and Lemma 5.3 propagates equality to the root. The incoming edge at the replacement position retains its original left or right orientation; the retained bottom nodes keep their own ordered child orientations. No orientation is reversed and no extra node is inserted. Deleted nodes carry no indices and have only unobserved side children, so no index or branch point is lost.
+
+Each replacement root is below depth $b$. Consequently frozen nodes never move and all serving endpoints, whose original depth is at most $b$, keep their exact words. Descendants that move only shorten, and a descendant moved under a below-$b$ replacement remains below $b$. Essential topology persists. These finite contractions leave at most two unary nodes in each remaining below-prefix run.
+
+Consider an endpoint now at depth $d>b$ and its tail from depth $b+1$ to that endpoint. Let $E'$ be the number of essential nodes on the tail. The endpoint itself is marked, so there are at most $E'$ unary runs preceding these essential nodes, including an initial tail run. Each contributes at most two nodes. Therefore
+
+$$
+d-b\le E'+2E'\le3(2m-1)\le6m.
+\tag{BPS.20}
+$$
+
+Endpoints within the frozen prefix already satisfy the bound. The construction is finite on an explicit trie and needs no successful execution, source bound or code certificate. $\square$
+

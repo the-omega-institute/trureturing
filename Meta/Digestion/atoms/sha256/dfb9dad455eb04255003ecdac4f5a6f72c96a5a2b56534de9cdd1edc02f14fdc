@@ -1,0 +1,9 @@
+**Definition 3.5 (a distinct boundary objective).** The weighted minimum
+$M(u)=\min_{p\in F(u)}(s(p)+e(u|_p))$ differs from $m(u)$.
+In $u=\langle\langle\alpha,\beta\rangle,\beta\rangle$, the unique
+weighted minimizer is $LL$ with score two, but the shortest leaf is
+$R$, with phase-sensitive score three. Thus minimizing the canonical
+boundary-density coordinate and minimizing literal terminal length are
+different objectives. No second minimum-acquisition algorithm is needed
+for the present continuation theorem.
+

@@ -1,0 +1,12 @@
+**定理 6.7.3（相对于初始观测的最粗稳定细化）。** 设 $\mathcal Q$ 是任意共同强 lumpable 分区，且 $\mathcal Q$ 比 $\mathcal P_0$ 更细。则 $\mathcal Q$ 也比每个 $\mathcal P_r$ 更细，因而比稳定分区 $\mathcal P_\infty$ 更细。换言之，$\mathcal P_\infty$ 是所有共同强 lumpable 且细于 $\mathcal P_0$ 的分区中最粗的一个。
+
+**证明。**
+
+对 $r$ 归纳。$r=0$ 是假设。若 $\mathcal Q$ 细于 $\mathcal P_r$，取同一 $\mathcal Q$ 块内的 $s,t$。它们同属某个 $\mathcal P_r$ 块。
+
+由于 $\mathcal Q$ 对每个动作强 lumpable，$s,t$ 对每个 $\mathcal Q$ 块的转移概率相同。一个 $\mathcal P_r$ 块是若干 $\mathcal Q$ 块的并，因此对每个 $\mathcal P_r$ 块的转移概率也相同。故 $s,t$ 在 $\operatorname{Ref}(\mathcal P_r)=\mathcal P_{r+1}$ 中仍等价。归纳完成。稳定后得到所述包含关系。证毕。
+
+该算法把“加入干预后需要保留多少隐藏记忆”变成有限的关系闭包计算。它给出的是最小稳定商相对于既定初始观测分区的结果，不宣称对所有可能未来仪器都最小。
+
+<a id="section-6-8"></a>
+

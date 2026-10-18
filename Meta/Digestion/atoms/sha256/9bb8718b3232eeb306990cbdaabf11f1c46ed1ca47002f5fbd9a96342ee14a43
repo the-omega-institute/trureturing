@@ -1,0 +1,41 @@
+**Lemma 6.1 (rounding comparison on the same actual flow).** In any regular stationary table, put
+
+$$
+I=\sum_y\tau_y\min\{v_y-a,b-v_y\}.
+$$
+
+Round $v_y$ to its nearer endpoint, choosing $a$ at a tie. Retain $u,B,A,\pi,\tau$ and regenerate both complete laws using these same updates. The new table has endpoint suspended emissions and maximal configuration excess at most
+
+$$
+e+15I/11.
+\tag{6.1}
+$$
+
+**Proof.** The actual rows and both acquired flows are unchanged. Let $d_p'$ and $d_\beta'$ be the row-averaged complete-law TV changes. Couple only the changed suspended emissions, using identical acquired update rows after a matched letter. Convexity, regular emissions and stationarity give
+
+$$
+d_p'\le\frac23d_\beta',
+\qquad
+d_\beta'\le I+\frac25d_p'.
+$$
+
+Consequently $d_p'\le10I/11$ and $d_\beta'\le15I/11$. The full coupling includes every return and the infinite outcome; both programs have geometric survival bounded by $4/15$ per return. At each same actual history the source target and acquired rows are identical in the two models. Applying the TV triangle inequality configuration by configuration gives (6.1); convexity gives the analogous same-model law-order comparisons. No hard defect or total-resource budget is preserved. $\square$
+
+**Proof of Theorem 1.3.** Use the common paid-history extraction in Citation 2.4 on the original observer. Retain the bounded nonnegative suspended-state function
+
+$$
+y\longmapsto\psi(v_y).
+$$
+
+Its extracted expectation is at most $\mathcal I(M)$: every positive p history has its positive suspended beta successor, and its unweighted acquired row is $\rho_hB$. The bound survives the paid-history row limits and Cesaro averaging exactly as other bounded state statistics in [MIXSEP, Lemma 2.1].
+
+Clip both emission vectors to $[a,b]$ as in (2.6). Projection to this interval leaves $\psi$ unchanged. Thus the clipped table has maximal excess at most $61e(M)/11$ and suspended endpoint distance at most $\mathcal I(M)$.
+
+Apply Lemma 6.1, without changing either acquired kernel or row. The rounded table is a finite regular stationary table with endpoint suspended emissions, on the same installed source and full original history domain. Its maximal configuration excess $e'$ satisfies
+
+$$
+11e'\le61e(M)+15\mathcal I(M).
+$$
+
+Theorem 5.2 gives $11e'>11\eta/300000$, proving (1.4). Setting $\mathcal I=0$, $e=0$, or taking a liminf gives (1.5)–(1.7), respectively. Infimum and limit statements remain distinct from an attained finite optimizer. $\square$
+

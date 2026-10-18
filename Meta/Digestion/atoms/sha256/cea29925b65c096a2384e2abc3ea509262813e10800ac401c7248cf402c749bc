@@ -1,0 +1,38 @@
+**Counterexample 1.6 (the direct physical-word convolution is different).**
+A finite constructor context does not make a physical-word track and a
+residual tree track recognizable in their direct same-root convolution.
+An input in $\mathfrak S$ already demonstrates the obstruction. Take
+$P=Q=\{L\}$, outside $\langle\square,\alpha\rangle$, one old class,
+empty histories and $N=0$. Its common depth is $h_0=2$, and one chart is
+$W[y,x]=\langle\langle\alpha,\langle y,x\rangle\rangle,\alpha\rangle$.
+Take its fixed section $y=\alpha$ and abbreviate it by $W[x]$. This
+section retains arbitrary $x$; the frontier at relative $RL$ has merely
+been fixed to a ground value. Let $C_0=\beta$ and
+$C_{n+1}=\langle\alpha,C_n\rangle$. For $n,m\ge1$,
+
+$$
+ r_{W[C_n]}(L R^{m+2})=\beta\quad\Longleftrightarrow\quad n=m.
+\tag{SRF.6}
+$$
+
+Proof. Fixing the $y$ coordinate to $\alpha$ is a finite-state template
+restriction; it contributes no domain below the root of the residual
+convolution. A recognizer for the full chart relation would therefore give
+one for this section by fixing and dropping that coordinate. The $x$
+residual occurs at $LRR$, leaving suffix $R^m$. In a direct
+same-root convolution of the physical path and $C_n$, the left branch
+contains the path continuation depending on $m$, while the right branch
+contains $C_{n-1}$ and no path continuation. In a deterministic finite
+bottom-up automaton two distinct $n,k\ge1$ give the same state on those
+right subtrees. Replace just that subtree in the accepted $n=m$ diagonal
+instance. The result is a valid convolution with residual $C_k$ and the
+unchanged physical word $LR^{n+2}$, accepted with the same root state,
+contradicting (SRF.6). Determinization gives the same contradiction for
+nondeterministic recognizability.
+
+In Lemma 1.3 the header is instead the fixed $c=LRR$, the marker is
+$z=R^m$, and (SRF.3) with $e=0$ tests $z\in X_\beta$. Its physical length
+is $3+m$. Both unbounded parts are now at the same suffix coordinates.
+This is an actual change of representation with the common-word proof
+above, not a closure claim for the direct encoding. $\square$
+

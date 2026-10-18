@@ -1,0 +1,64 @@
+**Convention 6.3 (The precise remaining event–atom–TP obligation).**
+The minimum in QRC Theorem 6.2 still has the whole independent-product
+cone and all three TP equations. The following specialization of conic
+slackness records how a matching certificate would have to couple them;
+it is not a new general duality theorem or an evaluated optimum.
+
+Use QRC's orthonormal $H_i=R_i/\sqrt{d_i}$ and six pairs
+$(F_{\nu1},F_{\nu2})$ from its Definition 4.1. Write
+$h_i(E)=\operatorname{tr}(H_iE)$ and
+$z_\nu(a)=(a^TF_{\nu1}a,a^TF_{\nu2}a)^T$, so
+$k(a,b)=(h(aa^T)h(bb^T)^T,(z_\nu(a)^Tz_\nu(b)/2)_\nu)$.
+Let one feasible tuple be
+$x=(M,\eta)=\sum_fw_fk(a_f,b_f)$, with real unit independent factors,
+$w_f\ge0$, $M^T\tau=\tau$, and
+$-zI\preceq H_J(x)\preceq zI$ for every $J\in\mathcal J_{15}$.
+Choose real PSD multipliers $A_J^\pm$ with
+$\sum_J\operatorname{tr}(A_J^++A_J^-)=1$, and put
+
+$$
+\begin{gathered}
+Z_J=A_J^+-A_J^-,\quad t_J=h(\Pi_J),\quad
+\beta=\sum_J\operatorname{tr}(Z_J\Pi_J),\quad
+C=\sum_J t_Jh(Z_J)^T,\\
+d_\nu=\sum_J\operatorname{tr}(Z_JP_\nu(\Pi_J)),\qquad y\in\mathbb R^3,\\
+B_y(a)=\sum_j[\|a\|^2y-C^Th(aa^T)]_jH_j
+-\frac12\sum_\nu d_\nu\sum_{k=1}^2z_{\nu k}(a)F_{\nu k}.
+\end{gathered}
+\tag{6.4}
+$$
+
+Here $P_\nu$ is the orthogonal projection onto QRC's $\nu$ plane,
+and $H_J(x)=\Pi_J-S_x^\dagger(\Pi_J)$ is that same tuple's residual.
+There is the exact identity
+
+$$
+\begin{aligned}
+z-(\beta-\tau^Ty)
+={}&\sum_J\operatorname{tr}\bigl[
+A_J^+(zI-H_J(x))+A_J^-(zI+H_J(x))\bigr]\\
+&+\sum_fw_fb_f^TB_y(a_f)b_f.
+\end{aligned}
+\tag{6.5}
+$$
+
+Indeed, expanding QRC's channel coefficients gives
+$L(x):=\sum_J\operatorname{tr}(Z_JS_x^\dagger(\Pi_J))
+=\langle C,M\rangle+\sum_\nu d_\nu\eta_\nu$.
+The first sum in (6.5) is $z-\beta+L(x)$. Unit preparation factors
+and the full TP equations give $\sum_fw_fh(b_fb_f^T)=\tau$;
+the second sum is therefore $\tau^Ty-L(x)$. Adding proves the
+identity, with all three marginal multipliers retained.
+
+If $B_y(a)\succeq0$ for every real $a$, every term in (6.5) is
+nonnegative. The resulting lower $\beta-\tau^Ty$ on the entire
+QRC class transfers to every original complex competitor by QRC's
+proved no-worse replacement. That replacement may change the channel.
+At equality every positive-weight atom must satisfy
+$B_y(a_f)b_f=0$, and each event multiplier is supported on its
+corresponding active residual eigenspace. An exposed support restriction
+thus requires global atom positivity and matching event–TP equality;
+the exhibited two-orbit support cannot be imposed on competitors in
+advance. This is the remaining matching-certificate obligation, not a
+certificate supplied by the present sufficient example.
+

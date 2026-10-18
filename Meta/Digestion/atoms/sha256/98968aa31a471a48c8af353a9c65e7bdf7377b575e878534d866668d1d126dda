@@ -1,0 +1,10 @@
+**Proposition 3.5 (final compression does not remove intermediate cost).**
+In the zero-lag histories on $U_a$, the two final rows and lag zero are
+identical for all $a$, but every universal protocol of Theorem 3.4 still
+needs its distinct $S_a$ at the intervening handoff.
+
+Proof. The protocol must also tolerate the unequal lawful future bursts
+used in that theorem. The future zero-lag restriction cannot be used
+before it is known. A final relative output may discard its baseline;
+this does not retroactively remove the acquired baseline state. $\square$
+

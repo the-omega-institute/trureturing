@@ -1,0 +1,38 @@
+**推论 22.6.1（等接受率停止门）。** 若停止事件在两个协议下有共同接受率
+
+$$
+A=A_\alpha^E=A_\beta^E>0,
+$$
+
+且 $0\le F_\alpha^E,F_\beta^E\le1$，并在 $\pi$ 的支撑上假设两者均为正，定义事件后的隐藏后验为
+
+$$
+\mu_j^E(u)=\frac{\pi(u)F_j^E(u)}A.
+$$
+
+则
+
+$$
+\operatorname{TV}(\mu_\alpha^E,\mu_\beta^E)
+\le
+\min\left\{
+\tanh(B_E/4),
+\frac{1-A}{A}
+\right\},
+$$
+
+其中
+
+$$
+B_E=\operatorname{osc}_u\log\frac{F_\alpha^E(u)}{F_\beta^E(u)}.
+$$
+
+**证明。** 这是单步门的投影总变差界与逐点不等式
+
+$$
+|F_\alpha^E(u)-F_\beta^E(u)|
+\le2-F_\alpha^E(u)-F_\beta^E(u)
+$$
+
+的合取。共同接受率把右侧的先验平均化为 $(1-A)/A$。证毕。
+

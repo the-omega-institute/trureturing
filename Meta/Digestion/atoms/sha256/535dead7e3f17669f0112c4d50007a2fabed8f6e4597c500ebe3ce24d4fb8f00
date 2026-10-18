@@ -1,0 +1,16 @@
+**定理 10.4（可访问剩余记录的全称恢复）。** 若另供原始树码，可定义有限多项式剩余记录
+
+$$
+\mathcal L(t)=\frac{z(t)-iH z(t)}C.
+$$
+
+从已访问的 $\Sigma z(t)$ 及 $\mathcal L(t)$，可唯一恢复 $z(t)$，从而恢复其全制备语义及全部编码上下文行为。
+
+证明。分子限制到 $C=0$ 为零，逐坐标准确整除。先由 $H\Sigma z(t)=\Theta Hz(t)$ 在实际 $\Theta$ 像上反演。对 $\Theta(P,Q,T)$，首坐标准确除以 $-B$ 得 $\mathfrak h_0(T)$，第二坐标为 $\mathfrak h_0(P)$，第三取负为 $\mathfrak h_0(Q)$。其单项式逆为
+
+$$
+A^uB^v\longmapsto A^{v-u}B^u\quad(v\ge u)
+$$
+
+且每个实际坐标都满足此像条件。引理10.2保证逆唯一。最后 $z(t)=iHz(t)+C\mathcal L(t)$。恢复的是全称语义记录，不是原树语法或物理制备。
+

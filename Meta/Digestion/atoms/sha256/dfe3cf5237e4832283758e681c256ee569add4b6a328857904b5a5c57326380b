@@ -1,0 +1,40 @@
+**Theorem 3.2 (finite deterministic indistinguishability and fixed-variation
+floor).** Fix $T>0$, $\delta,a>0$ as in Lemma 3.1, and
+$0<S=a\delta/r\leq\pi/4$. For every deterministic strategy with any finite
+budget $N$, there are two fixed actual histories of duration $T$ having
+identical complete sampled transcripts, endpoints, preparations and the
+exact variation totals in (3.2). Their complete ten-response vectors after
+every common permitted prescribed future sequence have separation
+
+$$
+4\sqrt{k_0Z}\sin S.
+\tag{3.3}
+$$
+
+Every transcript-only numerical predictor therefore has worst-case response
+error at least $2\sqrt{k_0Z}\sin S$, independently of $N$. The same claim
+holds for any $0<S\leq\pi/2$ if that larger parameter range is chosen.
+
+Proof. Follow the strategy's constant-value replies $(k_0,\chi_0)$, with
+the declared variation side information. Its finite set of distinct query
+times leaves an open interval. Insert the two pulses (3.1) there. Both are
+fixed functions after the strategy is specified; neither changes while it
+is being queried. Induction over the adaptive queries gives the same replies,
+times and stopping decision for both histories. Every finite prefix of this
+constant-value transcript is realizable by such a pulse, so the use of
+nonzero variation side information does not rely on an invalid oracle input.
+
+All four bottom characters agree. The $02$ characters are
+$\exp(i(\delta_{02}-S))$ and $\exp(i(\delta_{02}+S))$, so their chord has
+length $2\sin S$. Multiplication by $a_{02}$ proves (3.3). Composition with
+any common prescribed future loop adds the same actual residual to both
+histories. Its edge characters are unit rotations, preserving that distance;
+induction handles every finite sequence and every queried prefix. Legality
+and additional costs coincide by Definition 1.4. The triangle inequality
+gives half the separation for any common estimate. $\square$
+
+The witnesses each have finite speed and finite $\mathcal Q$. As the hidden
+interval shrinks their required speeds and quadratic energies grow. Theorem
+3.2 asserts no common bound on these quantities. Equal fixed variation and
+length cannot be silently strengthened to uniformly bounded energy.
+

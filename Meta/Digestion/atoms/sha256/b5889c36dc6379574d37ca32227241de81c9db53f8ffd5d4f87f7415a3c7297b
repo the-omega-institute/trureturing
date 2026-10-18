@@ -1,0 +1,53 @@
+**Lemma 6.3 (exact second moments).** For a uniformly enumerated balanced word,
+
+$$
+\mathbb E k_0^2=\frac{4s^2}{4s-1},\qquad
+\mathbb E k_1^2=\frac{8s^2}{2s+1},\qquad
+\mathbb E(k_0^2+k_1^2)<5s.
+\tag{DAF.16}
+$$
+
+Proof. Let $J_r$ indicate a beta at position $r\in\{0,\ldots,4s-1\}$.
+Then $k_0=\sum_r(-1)^rJ_r$. Uniform balanced enumeration gives
+$\mathbb E J_r=1/2$ and, for distinct $r,u$,
+$\mathbb E J_rJ_u=2s(2s-1)/(4s(4s-1))$. Since
+$\sum_r(-1)^r=0$, the off-diagonal sign sum is $-4s$. Expansion gives
+
+$$
+\mathbb E k_0^2
+=2s-\frac{2s(2s-1)}{4s-1}
+=\frac{4s^2}{4s-1}.
+$$
+
+For $k_1$, distribute the $N=2s$ betas into the $r=2s+1$ gaps before, between
+and after the alpha leaves. Each balanced word corresponds to exactly one weak
+composition $(b_0,\ldots,b_{r-1})$ of $N$, so these compositions are uniform,
+and $k_1=\sum_i(-1)^i b_i$. There are
+$W=\binom{N+r-1}{r-1}$ of them. Differentiating one or two factors in
+$\prod_i(1-z_i)^{-1}$ and then setting every $z_i=z$ gives the coefficient
+identities
+
+$$
+\begin{aligned}
+\mathbb E b_i&=N/r,\\
+\mathbb E[b_i(b_i-1)]&=2N(N-1)/(r(r+1)),\\
+\mathbb E[b_i b_j]&=N(N-1)/(r(r+1))\quad(i\ne j).
+\end{aligned}
+\tag{DAF.17}
+$$
+
+For example the corresponding total factorial moment is
+$2[z^{N-2}](1-z)^{-(r+2)}=2\binom{N+r-1}{r+1}$; divide by $W$ for the second
+line. Removing the factor 2 gives the mixed moment; one derivative gives
+$\binom{N+r-1}{r}/W=N/r$. The $r$ signs sum to 1, so their off-diagonal
+product sum is $1-r$. Expansion now yields
+
+$$
+\mathbb E k_1^2
+=N+\frac{N(N-1)}r
+=\frac{8s^2}{2s+1}.
+$$
+
+Finally the sum is
+$5s+s/(4s-1)-4s/(2s+1)<5s$ for every integer $s\ge1$.
+

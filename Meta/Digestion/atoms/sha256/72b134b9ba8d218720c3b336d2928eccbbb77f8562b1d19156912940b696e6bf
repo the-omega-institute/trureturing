@@ -1,0 +1,61 @@
+## 6. Mathematical scope, reuse and remaining questions
+
+The same fixed preparation and native negative-phase ODE underlie both
+parts. The full phase circles in Part B are already reachable current rays
+by Proposition 1.3; they do not enlarge the control menu. Its initialization
+may be at any such current ray in the band. If the original preparation
+height lies outside the band, a lawful original prefix can first produce
+that state. No band-confined probability path starting outside the band is
+asserted. The approximation theorem begins with an exact encoding of its
+specified initial current ray.
+
+The four-coordinate image $\mathscr Z$ and the larger feature image
+$\mathscr S_m$ both represent actual native states exactly. The approximate
+decoded vector $L_mE_m(x)$ need not itself lie in the exact output image
+$D\mathscr Z$. This is permitted by the positive output tolerance and does
+not change the state, its probability law, or its source-image guard.
+Corollary 4.5 rules out zero tolerance in every finite dimension even on
+the same closed band. Section 3 separately gives finite exact nonlinear
+realization, including every prescribed native continuation under its
+all-times guard.
+
+No affine closure or approximation theorem for phase legs or simultaneous
+phase/probability controls is included in Part B. No guarantee here concerns
+perturbed initialization, noisy measurement, floating-point updates,
+numerical conditioning, a chosen neural activation, implementation by a
+neural network, training, sample acquisition, runtime or memory cost.
+The feature dimension is an explicit sufficient dimension in exact real
+mathematics, not an optimal network width. The transparent formulas specify
+what a latent representation and its updates accomplish under a declared
+task; they do not themselves supply a learning or physical interface.
+
+The source-specific advance in Part A is the passage from the parent's
+particular four-coordinate obstruction to every finite arbitrary encoder,
+including encoders of histories and both affine offsets. Its engine is the
+classical finite-span argument and Vandermonde interpolation, proved locally
+in §4. Engert's finite-dimensional translation-invariant-space theory
+([doi:10.2140/pjm.1970.32.333](https://doi.org/10.2140/pjm.1970.32.333))
+provides related classical context; no global translation-space theorem,
+measurability assumption or external classification is used as a premise.
+
+Part B combines the same native output factorization with classical
+square-root power series, geometric tail estimates and polynomial closure
+under translation. Their needed statements and proofs are given in §5.
+The source-specific composition is the explicit $6m+5$ encoding, its exact
+native guard and source image, the original ten-output constant
+$\sqrt{4G+Zb}$, the displayed accuracy and margin bounds, and persistence
+for arbitrary finite valid probability sequences. These are ordinary
+mathematical proofs; no worldwide priority, exhaustive literature search or
+formal verification is claimed.
+
+The necessary or optimal approximation dimension, sharper margin estimates,
+other action menus with their full composition domains, and an extension
+of Part B to phase operations are not settled here. The separate original
+alternative of an attainer at some finite $N$ versus a strict gap for every
+finite $N$ remains open. No implication connecting that optimization
+alternative to this affine-realization contract has been established.
+Arbitrary finite sequence length in Theorem 5.8 is not finite-$N$
+attainment, and the all-finite affine obstruction is not a strict-gap proof
+for that other problem. The broader machine-learning white-box objective
+retains its unsupplied acquisition, implementation and task-transfer bridges.
+

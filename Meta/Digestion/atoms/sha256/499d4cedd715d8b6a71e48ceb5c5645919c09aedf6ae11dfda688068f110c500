@@ -1,0 +1,29 @@
+**例 220.11（Nonpointwise domination and failure of automatic affordability）。**
+At $L=4,k=2$ the complete nonzero rows, in $(A,C,P)$ order, are
+
+| Word | $A$ | $C$ | $P$ |
+| --- | --- | --- | --- |
+| 0000 | 0 | 1 | 0 |
+| 0001 | 1 | 0 | 0 |
+| 0010 | 1 | 0 | 0 |
+| 0011 | 0 | 1 | 0 |
+| 1000 | 1 | 0 | 0 |
+| 1011 | 1 | 0 | 0 |
+| 1100 | 0 | 2 | 0 |
+| 1110 | 0 | 2 | 0 |
+
+Take $T=1/3$. All unspecified rows vanish. Here
+$\beta=(0,-2,2,2)$, $K=31/3$, $W=7/3$.
+The complete $(B_N,B_O)$ supports are $(8,8)$ before pooling and
+$(19/3,6)$ after it. The retained common interval is
+$[25/3,31/3]$. Donor one's singleton marginals agree, and donor
+two's zero mass covers its suffix $00,11$ excess in D2.
+Thus D1–D2 hold although $C>A$ at $0000$ and $0011$.
+
+Scaling the original by $3/17$ gives an actual unit-$O$ score.
+Its canonical reconstruction has $N$ cost $12/17$, the same $Q$,
+and residual zero. However $x=(3/11)\rho_ky$ itself is unit $O$
+and $\Delta_N(J_kx)=12/11>1$. The operation alone is not automatically
+affordable, even inside $\mathcal D_k$. This says nothing against
+a different allocation or residual certificate for $x$.
+

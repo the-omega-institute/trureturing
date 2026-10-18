@@ -1,0 +1,36 @@
+**Lemma 4.4 (normality with no unlisted residual predicate).** Represent
+an $F$-rooted residual by $V_C=B(z_C)$, with $z_C\in\mathcal T$, and
+put the single whole native negative
+
+$$
+\rho^2z_C\ne\langle\rho z_C,z_C\rangle
+\tag{PDC.13}
+$$
+
+in the residual list. Then all named expressions are normal exactly
+when $K$ holds, on the stated root-sort branch. The root-sort condition
+on every residual is exactly (PDC.13); no further restriction on
+$z_C$ is required.
+
+Proof. [ARH, (4.4)][ARH], the first conjunct of
+[SourceTransportCentralizer, source_transport_centralizer][CENTRALIZER],
+states on all finite native trees that
+$\rho^2z=\langle\rho z,z\rangle$ if and only if $z=T_n$ for some
+$n\in\mathbb N$. By ABC, this is exactly the condition that $B(z)$ is
+primitive. Its negation is therefore precisely the other root sort.
+
+For any finite $z$, $B(z)$ is normal. A nonnegative translation
+preserves its interior normality and its root sort. Primitive tokens
+are normal. Induction up an expanded named expression now leaves
+exactly the explicit nodes with two primitive children; their necessary
+and sufficient root conditions are (PDC.12). Nodes with a nonprimitive
+child are normal once their children are normal. Applying this
+argument to every name proves sufficiency and necessity. It handles
+all insertion boundaries as well as all interiors.
+
+There is no recursive normality predicate left on a free ambient code:
+the residual variable is a native finite tree, and $B$ is used only
+in the proof. The translated final expressions in §5 use native
+pairing and $\rho$, so they are defined even on residual assignments
+that fail (PDC.13). $\square$
+

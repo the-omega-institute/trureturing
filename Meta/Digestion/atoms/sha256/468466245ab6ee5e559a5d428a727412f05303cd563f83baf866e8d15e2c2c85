@@ -1,0 +1,4 @@
+## 5. Normalized clipping and finite-path entropy
+
+Relative entropy uses natural logarithms: $D(p\|q)=\sum_x p(x)\log(p(x)/q(x))$, with zero mass contributing zero. For two finite laws write $\|p-q\|_{\rm TV}=\frac12\sum_x|p(x)-q(x)|$.
+

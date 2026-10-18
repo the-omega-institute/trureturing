@@ -1,0 +1,56 @@
+## 353. The opposite-V comparison for all three remaining axes
+
+Suppose any actual owner has fixed frame
+
+    rho=(W,V,D,C,V,D).                              (353.1)
+
+It is genuine and W in {M,Z,U}. Let r be its axial cosh. In all
+three cases r<u0:=z+m+1: this is immediate for r=m or z, and it
+is the explicit gap for r=u. The actual rho is strictly genuine.
+
+Write S=beta_V+beta_D at rho and eta. Define rho's scalar
+response for a varying first axis t by
+
+    Lr(t)=(v+d)^2-(t-1)*(c-1),
+    Jr(t)=(t+1)*(c+1)-(v-d)^2,
+    S_r(t)=2*atan(K*sqrt(Lr(t)/Jr(t))),
+    K=(sqrt(v^2-1)+sqrt(d^2-1))/(v+d)>0.
+
+At u0, writing Le=(v+d)^2-(m-1)*(z-1)>0, one has
+
+    Lr(u0)=Le+z*(m-c)-m*c+1>Le>0.                 (353.2)
+
+Indeed c<m/4<m/2 and z>m. Along [r,u0], Lr decreases but
+stays positive, and Jr increases from its positive actual value.
+The whole interpolation is therefore genuine and
+
+    d(Lr/Jr)/dt=[-(c-1)*Jr-(c+1)*Lr]/Jr^2<0.     (353.3)
+
+Choose r'=(max(m,r)+u0)/2. Then r<r'<u0 and m<r'.
+Apply the published scalar implication (322.2)--(322.5) with its
+independent rho-axis variable u assigned r'. Tau and eta, all their
+strict L/J conditions, (349.1), and the complete partial M budget
+(349.2) remain unchanged. The virtual rho is genuine by (353.2)--(353.3),
+and m<r'<z+m+1 supplies the old theorem's exact rho-axis order.
+Its scalar conclusion is
+
+    theta_D(tau)+2*S_r(r')+2*S(eta)>3*pi.
+
+Since S_r(r)>S_r(r'), we obtain at the actual rho
+
+    theta_D(tau)+2*S(rho)+2*S(eta)>3*pi.           (353.4)
+
+This is a local comparison of scalar responses. When W=M or Z,
+the virtual r' is not substituted for the global m or z anywhere
+else, and is not asserted to define a shared metric or an owner.
+The published result explicitly supplies this scalar implication;
+its separate actual-incidence corollary is not applied to virtual
+data. No receiver with axial label U is needed for this comparison.
+
+The actual owners tau,rho,eta are distinct: tau has no V, and rho
+has C whereas eta does not. The charge in (353.4) consists of tau's
+one D-axis slot, rho's two V and two D slots, and eta's two V and
+two D slots. Its actual capacity is at most pi+2*pi. Therefore
+(353.4) is impossible, and every owner of type (353.1) is globally
+absent under (349.1).
+

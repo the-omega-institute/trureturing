@@ -1,0 +1,104 @@
+**Theorem 4.2 (exact conditional Moore states and common attainment).**
+For Assumption 4.1 let $J(l,u)$ be (AOF.31). The exact minimum running
+and total state counts over arbitrary whole-tree literal controllers
+are respectively
+
+$$
+J(l,u),\qquad N+J(l,u).
+\tag{NARC.4.2}
+$$
+
+One such controller has exactly those counts, exactly $N$ fixed-output
+halts, the minimum fresh-call price $K(l,u)$, and the minimum physical
+whole-word peak
+
+$$
+\begin{cases}
+0,&N=1,\\
+1+M(l,u)=1+\left\lfloor\dfrac{u-1}{2}\right\rfloor,&N\ge2.
+\end{cases}
+\tag{NARC.4.3}
+$$
+
+These are the same conditional call and peak minima as Theorem 2.1,
+now simultaneously attained with the minimum counted state set and
+no external mutable input or decoding field. For $Q=\varnothing$ or
+$Q=\{R\}$, each fixed promised complete input instead has one initial
+fixed-lag halt, zero running states, zero fresh calls and zero peak.
+
+**Proof.** Use the exact whole-row/code fiber in Theorem 1.2 and the
+all-address identity (NARC.2.2) in Theorem 2.1. Every $n\in[l,u]$
+is realized by the one actual original $X_{a_0,z-(n-a_0)}$ and its own
+$n-a_0$ updates, with current tree
+$\langle T_n,T_{q+z}\rangle$. Every compatible history has exactly
+one of those ages. These are the supplied two fiber directions; no
+source or acquisition proof is replaced by a new scalar promise.
+
+For the state lower bound, take any successful installed whole-tree
+Moore table on this entire fiber. Its one fixed word at each running
+state is $\varepsilon$, $Rp$ or $Lp$. By Theorem 2.1 the first two
+forms have a constant reply $c_s$ over the fiber, determined by the
+fixed whole input. The third form returns exactly $r_{T_n}(p)$.
+Construct an interval table on the identical installed state set,
+partition and initial state. At an $Lp$ state store $p$ and keep its
+transition row. At a constant-reply state store the actual relative
+root word $E$ and set
+
+$$
+\operatorname{next}'(s,a)=\operatorname{next}(s,c_s)
+\quad(a\in\mathcal A).
+\tag{NARC.4.4}
+$$
+
+This interval state really performs one paid root query and ignores
+its reply through a constant table row; there is no free control step
+or runtime simulation register. Relabel each fixed halt output $v$
+by the fixed integer $a_0+v$. The shift is in the output table itself,
+not an after-halt arithmetic decoder. For each $n$, induction along
+the corresponding actual source's run gives exactly the same state
+path, number of invocations and halt, now outputting $n$. Thus this
+is an interval Moore controller of AOF Definition 10.1 with the same
+running and total state counts. Its correctness is on every $n$ of
+the supplied fiber, so AOF Theorem 10.2 gives (NARC.4.2)'s lower bounds.
+
+This is an application of the paid state-local recoding method of
+[NBP, Theorem 12.3 and (NBP.12.7)][NBP-NARC-Moore]. The required reply
+correspondence here is the actual all-address reduction of Theorem
+2.1, including every root query and arbitrarily deep or absent right
+query. It depends only on the installed state and fixed acquired input,
+so merging histories and cycles in the union of different source runs
+do not require copied states. Unused states remain counted. In the
+zero-origin case the two sources with hidden ages zero and one agree
+on root and right queries and on every $Lp$ with nonempty $p$. A
+successful table must therefore reach the physical word $L$, whose
+at most three actual replies supply precisely the root-arity defect
+of the interval lower bound.
+
+The same paid correspondence preserves call count, and hence transfers
+the interval call lower bound. It also makes the physical peak boundary
+explicit. If $N\ge2$, peak zero permits only the constant physical
+root and cannot recover all lags. For any physical peak cap $B\ge1$,
+the interval table above submits suffixes of length at most $B-1$;
+the replacement constant-query root has length zero. The interval peak
+bound therefore forces $B\ge1+M(l,u)$. These lower bounds are exactly
+those supplied in Theorem 2.1, now realized within the counted table
+contract rather than with an external simulation payload.
+
+For common attainment, take AOF Theorem 10.2's one interval table.
+Replace every stored word $p$ by the stored physical word $Lp$, keep
+every transition row and the initial state, and change the halt at
+age $n$ to the fixed complete lag output $n-a_0$. Equation (NARC.2.2)
+preserves every state path and call count on its corresponding actual
+history. No subtraction, address construction or access to $a_0$
+occurs during this run. The output constants and prefixes are already
+in the installed table. It has $J(l,u)$ running states and $N$ halts.
+For $N\ge2$, each submitted word has one more letter than its interval
+word, so its peak is exactly $1+M(l,u)$ and its calls exactly $K(l,u)$.
+A relative root read is the paid physical word $L$. For $N=1$ install
+the sole halt with the unique compatible lag, with no query. These
+witnesses meet all three minima together. When the cut displays the
+left slot, Theorem 2.1 already determines the unique lag from its
+genuinely acquired whole subtree and $a_0$. This computation supplies
+the one fixed-output halt before entry; it is not an online clock or
+an uncharged output decoder. $\square$
+

@@ -1,0 +1,38 @@
+**定义 52.1（初始规范来源与本次读出）。** 取 $t=\varphi^{-1}$、$\varphi=(1+\sqrt5)/2$，复用[来源完成卷定义 1.1、2.1 及第 37.1–37.2 节](FIB_SOURCE_COMPLETION_DYNAMICS.md)的
+
+$$
+D=\{b\in\{0,1\}^{\mathbb N}:b_jb_{j+1}=0,\ b\text{ 最终为零}\},
+\quad x(b)=\sum_{j\ge0}b_jM^j\alpha,
+\quad M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\quad
+\alpha=\binom10,\quad q=(2,3).
+$$
+
+初始实际来源为 $p_b=(b,\iota(x(b)))\in\Gamma$，不是任意独立算术坐标。外部单位位恒为零。指定的初始几何目标为正权低到高读出
+
+$$
+X(b)=\sum_{j\ge0}b_jt^{j+2}.                              \tag{52.1}
+$$
+
+等价地，在完整 Fibonacci 位串中置 $e_1=0$、$e_{j+2}=b_j$，权重为 $F_{i+1}$，则 $X(b)=\sum_{i\ge1}e_it^i$。这个几何任务指向初始来源；剥离后的当前坐标不替代它。它也不是[关系续接卷第 38.3–38.4 节](FIB_RELATIONAL_CONTINUATION_GEOMETRY.md)的有符号读出 $\kappa=\sum_j(-t)^jb_j=(1,-t)x(b)$。一般正原树组成、规范有限地址、固定 Fibonacci 替换的因子族和全部禁 $11$ 地址分别取自己的域。
+
+本节只用同一个来源依次进行总剥离 $\delta$，保留每次实际标量模读数。写 $\delta^jp_b=(\sigma^jb,z_j)$、$c_j=qz_j$，固定 $m\ge3,r\ge2$，记录为
+
+$$
+\tau=T_{m,r}(p_b)=(c_0,\ldots,c_r)\bmod m.               \tag{52.2}
+$$
+
+因此有 $r$ 次剥离和 $r+1$ 次读，不读取被删位、完整 $z_j$ 或 End。对非空实际记录纤维，来源卷定理 37.1 已给精确等价数据
+
+$$
+u=b|_r,\qquad \bar z=x(b)\bmod m.
+$$
+
+解码使用同轨残差 $c_j-c_{j+1}-c_{j+2}=2b_j+b_{j+1}$；合法对 $00,01,10$ 对应 $0,1,2$，模 $m$ 下互异。由相邻残差的一致重叠恢复 $u_0,\ldots,u_{r-1}$，并用
+
+$$
+\bar z=\begin{pmatrix}2&-3\\-1&2\end{pmatrix}
+\binom{c_0}{c_1+u_0}\pmod m                             \tag{52.3}
+$$
+
+恢复初始余数。这里恢复的是已记录读数的有限函数，不是额外来源端口。若实际记录还含源依赖费用、响应或校准约束，完整纤维须与那些条件相交；下面的等式针对 (52.2) 及不进一步删选来源的公共身份、固定动作身份和公共费用标签。
+

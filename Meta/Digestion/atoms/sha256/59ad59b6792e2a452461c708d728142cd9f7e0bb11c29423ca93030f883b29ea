@@ -1,0 +1,53 @@
+**Proposition 5.2 (Actual image, fibers and full affine hull).** Both
+$\nu_1,\nu_2$ are finite and negative, and
+$\nu_1-\nu_2=1+\varepsilon b>1/2$. The actual image is exactly
+
+$$
+\mathscr S_\varepsilon=
+\left\{(z_1,z_2):
+e^{\nu_2}<\|z_2\|<1,\quad
+z_1=\|z_2\|^{\nu_1/\nu_2-1}z_2\right\}.
+$$
+
+Its fibers are exactly the full $\beta$ circles at fixed $(k,\alpha)$.
+It is a two-dimensional smooth manifold, and its actual affine hull is
+the whole $\mathbb R^4$.
+
+Proof. The bounds on $\lambda,b,\varepsilon$ show negativity and
+finiteness. Since $-1<b<0$ and $0<\varepsilon\le1/2$, one has
+$\varepsilon b\ge b/2>-1/2$. Thus the exponents are distinct.
+
+For an encoded point, set $r_2=\|z_2\|=e^{\nu_2 x}$, where
+$x=k/H\in(0,1)$. Since $\nu_2<0$, this radius ranges bijectively
+over $(e^{\nu_2},1)$. Also
+
+$$
+z_1=e^{\nu_1 x}U(\alpha)
+=r_2^{\nu_1/\nu_2-1}z_2.
+$$
+
+Conversely, any point in the displayed set determines
+$x=(\log r_2)/\nu_2\in(0,1)$ and the unique circle direction
+$U(\alpha)=z_2/r_2$. It is the encoding of every actual ray with
+that $(k,\alpha)$ and arbitrary $\beta$. This proves both the image
+and the exact fibers. The parameterization by $(x,U(\alpha))$ has
+the smooth inverse just displayed, using a direction on the circle
+rather than a chosen angle branch. Thus its image is a smooth open
+cylinder of manifold dimension two.
+
+To determine the affine hull, replacing $\alpha$ by $\alpha+\pi$
+negates both blocks, so zero lies in the affine hull. If the hull were
+proper, some nonzero linear functional
+$(z_1,z_2)\mapsto p\cdot z_1+q\cdot z_2$ would vanish on it.
+For every interior $x$, varying $\alpha$ would then imply
+
+$$
+e^{\nu_1x}p+e^{\nu_2x}q=0.
+$$
+
+After division by $e^{\nu_2x}$, two distinct interior values of $x$
+give two distinct coefficients $e^{(\nu_1-\nu_2)x}$. Subtracting
+forces $p=0$, then $q=0$, a contradiction. The affine hull is
+$\mathbb R^4$. Its dimension is not reduced by the manifold
+parameterization. $\square$
+

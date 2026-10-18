@@ -1,0 +1,61 @@
+**Theorem 26.1 (common-witness mixture and exact zero-$k$ formula).** Let $N_0$ be (R.115) with $s_0=s_1=0$, $u^2+v^2/a+k^2=1$. Let $S|_U=J|_U$ and $Sh=h$, so $S$ is a real orthogonal matrix, rather than the singular extension $J$ itself. For $0\leq p\leq1$, the actual channel $N_p=pN_0+(1-p)\operatorname{Ad}_S N_0$ has the complete four-term list
+
+$$
+\sqrt p K_0,\quad \sqrt p K_1,\quad
+\sqrt{1-p}SK_0,\quad\sqrt{1-p}SK_1.
+\tag{R.127}
+$$
+
+For positive beta and $0<p<1$ its common blocks satisfy
+
+$$
+\begin{gathered}
+B_p=\operatorname{diag}(ap,a(1-p),\beta p,\beta(1-p),0),\\
+q=1,\quad \operatorname{rank}B_p=4,\quad
+c_{\rm pl}=|2p-1|,\qquad
+\operatorname{rank}C_{{\rm out},p}=4\ \Longleftrightarrow\ v\ne0.
+\end{gathered}
+\tag{R.128}
+$$
+
+For exactly the same $X_+$ of (R.117) in both summands,
+
+$$
+\begin{aligned}
+\frac{\|N_p(X_+)\|_1}{2}
+&\leq\frac{\|N_0(X_+)\|_1}{2}
+=\sqrt{a-\frac{\beta(a-\beta)u^2}{\beta+v^2}}
+\leq\sqrt a.
+\end{aligned}
+\tag{R.129}
+$$
+
+When $k=0$, this squared ratio is exactly
+
+$$
+\frac{\|N_p(X_+)\|_1^2}{4}
+=\frac{(1-2p)^2v^2+\beta^2u^2}{\beta+v^2}
+=a-\frac{\beta(a-\beta)u^2+4p(1-p)v^2}{\beta+v^2}.
+\tag{R.130}
+$$
+
+Both formulas include $p=0,1$, where $B_p$ has rank two and no rank-four conclusion is made. Equation (R.95) again gives $\delta_{N_p}\geq1-\sqrt a$. In the zero-$k$ formula, half beta, $v\ne0$ and interior $p$ make the squared ratio strictly less than $a$. The hard plane region here is exactly $|2p-1|>\sqrt a$.
+
+**Proof.** Orthogonality of $S$ makes (R.127) TP, and $SQ S^T=Q$, $SJ=JS$ preserve the actual phase-output relation. The displayed first-column matrix has four independent columns for positive beta and interior $p$, giving (R.128)'s $B$, $P_A=I_4$, and $q=1$. For $v\ne0$, consider the unscaled four third columns $t_0,t_1,St_0,St_1$. Their $e_3,e_2$ coordinates first distinguish $t_1,St_1$, respectively. After their coefficients vanish, their $e_1,e_0$ coordinates distinguish $t_0,St_0$, respectively, because $\sqrt{\beta/a}v\ne0$. Thus all four are independent, even for $k=0$ or $u=0$. If $v=0$, $t_0,St_0$ are both multiples of $h$, while $t_1,St_1$ are multiples of $e_0,e_1$, so rank is at most three. The full-column-rank $A$ transfers this exact rank statement to $C_{{\rm out},p}$. The diagonal difference gives $c_{\rm pl}$ as displayed.
+
+The input is fixed before taking either output norm:
+
+$$
+N_p(X_+)=pN_0(X_+)+(1-p)SN_0(X_+)S^T.
+$$
+
+Triangle inequality and orthogonal invariance bound its norm by $\|N_0(X_+)\|_1$. The explicit zero-$s_0,s_1$ case of (R.118) supplies (R.129); this is an application within the present four-term proof.
+
+When $k=0$, the $h$ row and column vanish. In the ordered split $(e_0,e_3)\mid(e_1,e_2)$ the output is $\left(\begin{smallmatrix}0&M\\M^T&0\end{smallmatrix}\right)$ with
+
+$$
+M=\frac1d\begin{pmatrix}(1-2p)v&p\beta u\\(1-p)\beta u&0\end{pmatrix}.
+$$
+
+Its trace norm is $2\|M\|_1$. If $\sigma_1,\sigma_2\geq0$ are the singular values of $M$, then $(\sigma_1+\sigma_2)^2=\operatorname{Tr}(MM^T)+2|\det M|$. Here $\det M=-p(1-p)\beta^2u^2/d^2$, so the terms in $u^2$ combine to $[p^2+(1-p)^2+2p(1-p)]\beta^2u^2/d^2=\beta^2u^2/d^2$. This proves the first expression in (R.130), including zero determinant and repeated singular values. Substitute $u^2+v^2/a=1$ to obtain the second. No sign of $u$ or $v$ was discarded. At $p=0,1$ just two first columns remain; the formulas are still defined because $\beta>0$. $\square$
+

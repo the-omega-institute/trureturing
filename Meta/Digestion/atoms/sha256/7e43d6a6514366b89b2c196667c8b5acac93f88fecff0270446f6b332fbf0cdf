@@ -1,0 +1,50 @@
+**Proposition 11.9 (equal two joint law flows and unequal return law measure).** Use precisely the compatible-flow definition of PAIRED42, Definition 11.2, and its finite-table map (11.24). Both tables of Definition 11.7 induce the same two joint probability measures
+
+$$
+\Gamma_B=\frac16\sum_{\sigma,i}\delta_{(Q_{\sigma,i},W_\sigma)},\qquad
+\Gamma_A=\frac16\sum_{\sigma,i}\delta_{(W_\sigma,Q_{\sigma,i})}.
+\tag{11.34}
+$$
+
+They satisfy both of that definition's full residual identities. In contrast, their three-stage actual-return law measures
+
+$$
+\Xi_s=\frac16\sum_{\sigma,i,j}(A_s)_{ij}
+\delta_{(Q_{\sigma,i},W_\sigma,Q_{\sigma,j})},\qquad s=0,1,
+\tag{11.35}
+$$
+
+are different. Thus the two-flow quotient preserves both phase-law distributions, both directional one-step law-pair distributions and all configuration losses against every complete target for this pair, but does not determine its actual return motion.
+
+Proof. The laws lie in the descriptor spaces $\mathcal K_p,\mathcal K_\beta$ of PAIRED42, (11.2): they are regular generated laws, whose complete return-tail bounds are $(4/15)^L$ at p and $(2/5)(4/15)^L$ at suspension. The finite-table map uses the unweighted flows $\pi_xB_{xy}$ and $\tau_yA_{yx}$, without synthetic continuation factors. Since $B=I$ and $W_{\sigma,i}=W_\sigma$, its first measure is the displayed $\Gamma_B$. For its second measure, aggregating the repeated input law gives, at $(W_\sigma,Q_{\sigma,j})$, the mass
+
+$$
+\sum_i\frac16(A_s)_{ij}=\frac16
+$$
+
+for each $s$, by the column sums. This proves equality of both joint measures, not merely equality of their marginals. The six p laws are distinct: $Q(\alpha)$ distinguishes $i$ within a block, and for equal $i$ in different blocks $Q(\beta\beta)=(1-u_i)(1-\sigma)$ distinguishes $\sigma$. The two suspended laws are distinguished by $W_\sigma(\beta)=1-\sigma$. Thus the atom calculation includes every identification in this quotient.
+
+The common marginals are $\nu_p=(1/6)\sum_{\sigma,i}\delta_{Q_{\sigma,i}}$ and $\nu_\beta=(1/2)\sum_\sigma\delta_{W_\sigma}$. The normalized residuals in PAIRED42, (11.3), satisfy
+
+$$
+\mathcal R_B(Q_{\sigma,i})=W_\sigma,\qquad
+\mathcal R_A(W_\sigma)=G_\sigma=\frac13\sum_iQ_{\sigma,i}.
+\tag{11.36}
+$$
+
+The first equality makes each integrand of the $B$ residual equation vanish. Conditional on $W_\sigma$, $\Gamma_A$ gives uniform mass to the three $Q_{\sigma,i}$; the second equality makes its conditional residual barycentre exactly $\mathcal R_A(W_\sigma)$. Therefore for every continuous input-descriptor test and every complete-word atom, including the infinite outcomes, both identities (11.7) of PAIRED42 hold. The condition is on the whole descriptor, as that definition requires.
+
+The measures $\Xi_s$ are the actual unweighted $\pi B A_s$ pushforwards, because $B$ carries $Q_{\sigma,i}$ to the suspended label $(\sigma,i)$ before $A_s$ is applied. Their first-two and last-two marginals are respectively (11.34). Fix either $\sigma$. At the triple $(Q_{\sigma,1},W_\sigma,Q_{\sigma,0})$ their masses are zero for $s=0$ and $1/18$ for $s=1$. Hence $\Xi_0\ne\Xi_1$, despite equality of both directional pair measures. Integrating $|u(Q)-u(Q')|$ or $\operatorname{TV}(Q,Q')$ against (11.35) gives the different values (11.28), by (11.33).
+
+For this finite pair the conditionally independent join of the two measures (11.34) is
+
+$$
+\frac1{18}\sum_{\sigma,i,j}
+\delta_{(Q_{\sigma,i},W_\sigma,Q_{\sigma,j})}=\Xi_1.
+\tag{11.37}
+$$
+
+Indeed the block has suspended mass $1/2$ and each of its incoming and outgoing conditional law distributions is uniform on three atoms. The join is not $\Xi_0$: in that table the middle suspended label retains information about the incoming p label which its repeated complete law does not distinguish. The finite law-atom realization of PAIRED42, Theorem 11.8, correspondingly has six p-law labels, two suspended-law labels, a deterministic $B$ to the appropriate suspended block, and a uniform $A$ to that block's three p laws. Its flows and laws are (11.34), and its return variation is $4/135$. It supplies the flow-preserving realization promised by that theorem, without preserving $A_0$'s hidden return coupling.
+
+For every complete target $T$, each configuration loss is an integral of $\operatorname{TV}(Q,T)$ or $\operatorname{TV}(W,T)$ against the respective phase marginal. These integrals are equal for the two tables, with TV still inside the integral. All integrals depending on either one of the two directional law pairs are also equal. The return integral depends on (11.35), whose equality was neither asserted by the quotient definition nor implied by its residual identities. This establishes the stated scope on this actual pair, without a general classification of quotient fibres. $\square$
+

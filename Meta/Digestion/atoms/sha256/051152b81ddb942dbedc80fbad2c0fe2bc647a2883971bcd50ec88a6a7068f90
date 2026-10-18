@@ -1,0 +1,48 @@
+**Definition 4.1 (one arithmetic case).** For a chart tuple, mode and
+matching case $\tau$, let $\mathbf p=(\mathbf c,\mathbf d)$ be the finite
+parameters. Let $\mathbf w$ be the actual finite values of *all* divergent
+rank coordinates, including companion and output-invisible coordinates.
+Set $\mathbf v_F=\mathbf c$ and $\mathbf v_A=\mathbf w$.
+
+In each companion substitute precisely the finite descriptions
+$Z_{r,j,\tau}(\mathbf p)$ into its entire $\Delta_{r,b}$, and leave all
+infinite visible descriptions and hidden residuals as free finite native
+variables. Every finite substituted description is a finite pair template
+over finite parameter atoms. Distribute its fixed powers; fresh natural
+indices and affine equations put it exactly in URR's grammar. Before its
+negatives, the remaining carrier is still the full Cartesian product.
+Thus [URR, Corollary 3.2][URR] computes an exact Presburger predicate
+$\Psi_{r,b,\tau}(\mathbf p,\mathbf w)$ for existence of one remaining
+finite tuple satisfying *all* these negatives together.
+
+Conjoin the matching guard, the anchor support, every companion policy,
+and every $\Psi$:
+
+$$
+\Phi_\tau(\mathbf p,\mathbf w)=
+ E_\tau(\mathbf p)\land S_b(\mathbf v_\ast)
+ \land\bigwedge_{r\ne r_\ast}
+   \bigl(P_{r,b_r}(\mathbf v_r)\land
+           \Psi_{r,b_r,\tau}(\mathbf p,\mathbf w)\bigr).
+\tag{PAC.11}
+$$
+
+This is the full joint support at the original ranks and the forced finite
+residuals. It is not a chosen representative support. URR's section proves
+and computes the existential projection; it does not replace the entire
+source domain or promise to preserve prescribed prefixes.
+
+Define the good finite-parameter locus by
+
+$$
+G_\tau=\left\{\mathbf p:
+\forall M\in\mathbb N\ \exists\mathbf w\in\mathbb N^A\quad
+\Phi_\tau(\mathbf p,\mathbf w)\land
+\bigwedge_{i\in A}w_i\ge M\right\}.
+\tag{PAC.12}
+$$
+
+The finite parameters precede every $M$ and every requested prefix depth.
+The lower bounds apply simultaneously to one tuple in the complete joint
+support. Zero dimensions have their literal singleton-product meanings.
+

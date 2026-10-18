@@ -1,0 +1,32 @@
+**Convention 1.5 (credited pressure and original-task bridge).** For
+uniform $w$ define
+
+$$
+A_n(w)=\max_\Theta\sum_{x\in C_\Theta}\prod_iw(x_i),
+\qquad
+\beta_d(w)=\sup_{n\ge1}A_n(w)^{1/n}.
+\tag{COK.10}
+$$
+
+The unrestricted cover number $K_d(n)$ and the native rate satisfy
+
+$$
+\begin{aligned}
+\sigma_d&=\inf_{n\ge1}\frac{\log_2K_d(n)}n
+       =-\log_2\min_{\mu\in\Delta(S_d)}\beta_d(\mu),\\
+\lambda&=\lim_{D\to\infty}2^{-D}\log_2M_1(D)
+       =\sup_{d\ge1}2^{-d}\sigma_d,\qquad
+0\le\lambda-2^{-d}\sigma_d\le2^{-d}\phi,
+\end{aligned}
+\tag{COK.11}
+$$
+
+where $U_0=1,U_{h+1}=1+U_h^2$ and
+$\phi=\lim_h2^{-h}\log_2U_h$. These are [FMR][FMR] and
+[NPC, Theorems 5.3 and 6.2][NPC], including one minimizing law valid
+for all sizes and templates. Semantic completeness does not give an
+effective all-size verifier. The new consumer here is [RRN, Open
+problem 8.2][RRN]: construct sound overlap-aware caps without
+discarding full joint potentials. Sections 2–6 construct one finite
+sound family and identify its remaining global gap.
+

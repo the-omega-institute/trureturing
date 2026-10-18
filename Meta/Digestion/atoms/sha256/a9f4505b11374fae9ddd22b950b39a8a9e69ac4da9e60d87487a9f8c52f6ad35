@@ -1,0 +1,16 @@
+#### 情形三：相干反射或相干吸收
+
+若挡板把射线映射到一个可控的记录系统：
+
+```math
+R[I]\otimes A_0
+\longrightarrow
+\mathrm{vac}\otimes A[I],
+```
+
+且 $`I\mapsto A[I]`$ 在目标集合上是单射，那么信息只是从 $`R`$ 搬到了 $`A`$。
+
+在量子系统中，如果保留完整相干自由度，光与物质之间的映射原则上可以是可逆的；实验上也有相干光—物质映射和再读取的接口。[www.nature.com](https://www.nature.com/articles/nature07607?utm_source=chatgpt.com)
+
+这时遮挡反而可能降低局部不可逆性，因为它创造了返回通道。
+

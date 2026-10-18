@@ -1,0 +1,82 @@
+**Theorem 10.13 (Quantum target matrix with all phase nuisances).**
+For a regular fixed POVM on $N$ identical independent copies of
+(10.40), every estimator satisfying (10.41) with finite covariance obeys
+
+$$
+\operatorname{Cov}_0\widehat\Phi\succeq\frac{G}{4N}.
+\tag{10.43}
+$$
+
+The same bound holds at any supplied phase reference, with the target
+and its local gradient evaluated there. If the global calibrated
+setting (10.34) is allowed, it attains the whole matrix (10.43) at the
+same-phase reference under the full nuisance condition (10.41).
+
+Proof. Let $a\in\mathbb R^r$ be nonzero and set
+$\ell=Da$, $f=P^{-1}\ell$, $A_\ell=\ell^{\mathsf T}P^{-1}\ell$.
+Then $\sum_Ip_If_I=\sum_I\ell_I=0$ and
+$\sum_Ip_If_I^2=A_\ell=a^{\mathsf T}Ga>0$.
+On the actual subpath $\theta=tf$,
+$a^{\mathsf T}\Phi(\theta)=tA_\ell$.
+The horizontal state derivative is $-i\sqrt p\,f$, with squared
+norm $A_\ell$. On $N$ copies the squared norm is $NA_\ell$ by
+the orthogonality of distinct differentiated factors.
+For any effect, the derivative has the form
+$2\operatorname{Re}\langle\Psi|M|\dot\Psi\rangle$.
+Inequality (10.27), with $\dot\Psi$ in place of $a_N$, bounds the
+scalar Fisher information by $4NA_\ell$, also for continuous
+outcomes by (10.30). Full local unbiasedness gives derivative
+$A_\ell$ for $a^{\mathsf T}\widehat\Phi$ along this subpath.
+The scalar score identity yields
+
+$$
+a^{\mathsf T}\operatorname{Cov}_0(\widehat\Phi)a
+\ge\frac{A_\ell^2}{4NA_\ell}
+=\frac{a^{\mathsf T}Ga}{4N}.
+\tag{10.44}
+$$
+
+If that scalar information is zero, its required nonzero derivative
+is impossible. The case $a=0$ is immediate. This proves (10.43)
+in every real direction. At another supplied phase reference the
+diagonal phase factors do not change the derivative norm or this proof.
+This is also the exact scalar application of Theorem 9.10 with its
+contrast $\ell=Da$, not only with individual columns $d_T$.
+
+To verify simultaneous attainment in the larger nuisance model,
+use $\psi_0=\sqrt p$ in (10.34). In an arbitrary phase direction $g$,
+write $c=p^{\mathsf T}g$. The state derivative decomposes as
+$-ic\psi_0-i\sqrt p\,(g-c\mathbf1)$.
+After $U_\star$ it is
+$-ic\psi_0+\sqrt p\,(g-c\mathbf1)$, so the mode score in that
+direction is $2(g_I-c)$. Thus the full phase score vector at outcome
+$I$ is $2(e_I-p)$. Use the statistic
+
+$$
+X(I)=\frac{D_{I,\cdot}^{\mathsf T}}{2p_I},\qquad
+\widehat\Phi=\frac1N\sum_{\nu=1}^N X(I_\nu).
+\tag{10.45}
+$$
+
+Its mean is $D^{\mathsf T}\mathbf1/2=0$ and its one-copy
+covariance is $G/4$. Its full expectation Jacobian is
+
+$$
+\sum_Ip_I\,\frac{D_{I,\cdot}^{\mathsf T}}{2p_I}
+\,2(e_I-p)^{\mathsf T}
+=D^{\mathsf T}-D^{\mathsf T}\mathbf1\,p^{\mathsf T}
+=D^{\mathsf T}.
+\tag{10.46}
+$$
+
+Independence proves the asserted covariance and all nuisance
+derivatives. At a different supplied reference, a fixed diagonal
+calibration reduces to the same calculation. $\square$
+
+When $p=p^0$, restriction of (10.41) to $\theta=W\Phi$ gives
+Jacobian $D^{\mathsf T}W=I_r$, and (10.45) becomes the phase-only
+instance of (10.37). Conversely, an identity Jacobian only along
+$W\Phi$ does not imply (10.41); the larger task needs (10.46).
+This explains why the two tasks have the same optimal covariance
+value without equating their nuisance spaces.
+

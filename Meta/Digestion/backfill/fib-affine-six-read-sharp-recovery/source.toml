@@ -1,0 +1,5 @@
+source_id = "fib-affine-six-read-sharp-recovery"
+path = "docs/develop/theory/FIB_AFFINE_SIX_READ_SHARP_RECOVERY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

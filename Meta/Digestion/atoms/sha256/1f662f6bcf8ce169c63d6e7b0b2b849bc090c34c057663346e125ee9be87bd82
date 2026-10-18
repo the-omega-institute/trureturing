@@ -1,0 +1,10 @@
+**Convention 4.1 (the precise literature hypotheses).** Vontobel's graph-cover
+identity identifies the optimized Bethe partition value with a limsup of
+averaged finite-cover partition functions; it is not domination of each
+individual cover. Ruozzi's upper comparison requires binary
+log-supermodular factors, a hypothesis violated by $F_-$. Bounds for
+permanents with a girth correction require a permanent support graph and a
+specified girth, neither of which is a native all-template hypothesis. These
+conditions explain why (GCB.7)--(GCB.9) are counterexamples to the proposed
+unrestricted substitutions only.
+

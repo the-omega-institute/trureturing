@@ -1,0 +1,20 @@
+**Convention 7.2 (resource and recovery ceiling).** The public scaffold,
+block ordering, template, membership table and decoding tables are
+installed source-independent data. Their generation, storage and lookup
+costs are finite but no useful total-efficiency bound is claimed.
+The phase descriptor is actually acquired if requested, and all its
+surviving distinctions are counted in (OCC.26). It is not an acquired
+reference provided by notation. The full scan can already obtain these
+phases; the lower bound does not charge them twice. All unexported
+source dependence is isolated by the declared service, not physically
+erased for free.
+
+The final temporal factor has $0\le b\le2D$ and $c\in\{0,1\}$,
+so $\lceil\log_2(2D+1)\rceil+1$ bits suffice for that factor
+alone. Post-request workspace, authentic count input, entry,
+authentication, submitted addresses and physical time remain separate.
+This deliberately prescribed, nonoptimal code neither bounds the phase
+cost of every optimizing code nor determines $M_1(D)$. Its operational
+content is exactly recovery of the requested full trajectory, and, for
+the prescribed refinement, recovery of all actual gadget phases.
+

@@ -1,0 +1,8 @@
+## Torsion-freeness and nonnormality
+
+Every finite-order element of a Coxeter group is conjugate into a finite standard parabolic. If the conjugator is orientation reversing, left-multiply it by a reflection in that finite parabolic to obtain an orientation-preserving conjugator without leaving the parabolic. Hence every finite-order element of W+ is W+-conjugate into one of D8, S3, C9.
+
+Any PSL2(F71) element fixing a projective point lies in a conjugate of the Borel B and has order dividing 2485. Every nonidentity element in the three finite images has order 2, 3, 4, or 9, so acts fixed-point-freely. Therefore Gamma is torsion-free.
+
+Gamma is genuinely nonnormal: conjugating the fixed point of P to infinity produces a nonidentity element of rho(W+) in B_infty; a normal point stabilizer in a transitive action would be the kernel and act trivially.
+

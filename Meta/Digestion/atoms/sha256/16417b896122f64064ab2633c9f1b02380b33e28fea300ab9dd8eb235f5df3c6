@@ -1,0 +1,56 @@
+**Proposition 3.1 (finite separation on the supported cone).** If
+$M(C)$ is not PSD, choose $q\geq0$ with $q^TM(C)q<0$ and phases
+$\theta_{ij}$ of unit modulus satisfying $C_{ij}=r_{ij}\theta_{ij}$;
+when $r_{ij}=0$ choose any unit phase. Set
+
+$$
+H_{ii}=q_i^2,\qquad H_{ij}=-q_iq_j\theta_{ij}\ (i<j),
+\qquad H_{ji}=\overline{H_{ij}},\qquad
+\delta=-\operatorname{tr}(HC)>0.
+\tag{JG.17}
+$$
+
+Then every two-coordinate positive sum $X$ has
+$\operatorname{tr}(HX)\geq0$, whereas
+$\operatorname{tr}(HC)=q^TM(C)q<0$. In particular
+
+$$
+\|C-X\|_1\geq\delta/\|H\|_{\rm op}.
+\tag{JG.18}
+$$
+
+Proof. A negative real quadratic-form vector exists for a non-PSD
+real symmetric $M$; replacing it by its absolute values cannot increase
+the quadratic form. Every two by two principal block of $H$ has
+nonnegative diagonal and determinant zero, since its off-diagonal
+modulus is $q_iq_j$. It is PSD, and therefore pairs nonnegatively with
+each supported rank-one term of $X$. The trace pairing with $C$ has
+cross terms $-2q_iq_jr_{ij}$, proving its stated value; this also fixes
+the complex conjugation convention. Trace/operator-norm duality gives
+(JG.18), with nonzero denominator because $\delta>0$.
+This witness is restricted to $\operatorname{range}S$. It is not asserted
+to be nonnegative on every unsupported Schmidt-two Choi vector: taking
+a matrix's diagonal part can increase its rank. The distance is in
+coefficient space and is not the original twelve-history error. $\square$
+
+For a valid CP zero-transfer $C$ failing the test, a negative $q$ has a
+finite coefficient construction. All $d_i>0$: otherwise positivity
+would remove a row and column, leaving a positive two-coordinate
+matrix, which passes. All one- and two-coordinate comparison blocks
+are PSD, so failure means $\det M<0$. Put
+
+$$
+a=d_1-r_{01}^2/d_0,\qquad c=d_2-r_{02}^2/d_0,\qquad
+b=r_{12}+r_{01}r_{02}/d_0.
+\tag{JG.19}
+$$
+
+Then $a,c\geq0$, $b>0$ and $ac-b^2<0$. If $a>0$, take
+$(q_1,q_2)=(b,a)$; if $a=0$, take $(q_1,q_2)=(c+b,2b)$.
+In either case put $q_0=(r_{01}q_1+r_{02}q_2)/d_0$.
+Completing the square in coordinate $0$ gives respectively
+$q^TMq=a(ac-b^2)<0$ and $q^TMq=-4b^3<0$.
+Every $q_i$ is positive, since a negative vector supported on at most
+two coordinates would contradict its PSD principal block. This supplies
+an obstruction also on singular pair boundaries, without optimization.
+

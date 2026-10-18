@@ -1,0 +1,58 @@
+**Proposition 90.2 (Law-preserving hard-count containment).** Every
+$\mathcal O_k$ output-law family is attainable in $\mathcal N_k$ using
+the same seed law and hard count bound. Consequently
+
+$$
+\begin{aligned}
+E_{\mathcal A}(k;a)&\le E_{\mathcal N}(k;a)
+                         \le E_{\mathcal O}(k;a),\\
+\kappa^{\mathcal A}_\varepsilon(a)&\le
+\kappa^{\mathcal N}_\varepsilon(a)\le
+\kappa^{\mathcal O}_\varepsilon(a).
+\end{aligned}
+\tag{90.3}
+$$
+
+Allowing early handoff in a preselected request schedule, while retaining
+the sourcewise hard bound $k$, does not enlarge its attainable law families
+beyond $\mathcal N_k$. Similarly, an increasing schedule required to
+continue until its first zero or exhaustion cannot have length greater
+than $k$ on a positive-probability seed event under this hard bound.
+These assertions preserve output laws and the hard bound, rather than
+sourcewise mean count or handoff time.
+
+**Proof.** For an $\mathcal O_k$ rule, acquire its entire preselected
+sequence, reconstruct the transcript up to its original first zero, and
+make its original output choice while ignoring the later replies. This
+is a lawful $\mathcal N_k$ rule. Equivalently, store the original chosen
+tape, finish the preselected questions, and hand off that tape. The seed
+and output on every original finite execution are unchanged, and at most
+$k$ requests are made. Since every $\mathcal N_k$ rule is an original
+adaptive rule, (90.3) follows.
+
+To justify schedule normalization, countability of $X$ supplies a common
+full-measure seed event $G$ on which every actual execution hands off
+finitely with $K\le k$. An early-stopping preselected rule can be
+simulated after acquiring the first $k$ entries of its schedule, or its
+whole schedule when shorter. On $G$, every reply needed by its original
+execution has been acquired, so the same finite computation produces
+the same tape. Any unused acquired replies are ignored. On the null
+complement the normalized rule can use a fixed immediate tape; this
+changes no source law. Measurability follows from the measurable schedule
+and the countable finite-record decomposition of the simulation.
+
+For an increasing first-zero-stop schedule with more than $k$ entries,
+partition the corresponding seed event by its first $k+1$ indices.
+There are countably many possible tuples. For each tuple, fix an actual
+source at which all those indices answer one, using Boundaries,
+Theorem 35.2. These witnesses are chosen independently of seeds. At a
+seed in $G$ with that tuple, the rule at its witness cannot stop at a
+zero or at exhaustion before making its $(k+1)$st request. It also
+cannot avoid that request by divergence, because $G$ includes finite
+handoff there. This contradicts the hard bound. Thus all these tuple
+events are null. The same argument covers a preselected infinite
+increasing list whose only stopping condition is a queried zero.
+Padding can increase $K$ and the maximum requested index at a particular
+source; no mean or sourcewise address-preservation claim follows.
+$\square$
+

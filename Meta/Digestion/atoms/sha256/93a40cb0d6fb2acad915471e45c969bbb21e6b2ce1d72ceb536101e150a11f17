@@ -1,0 +1,42 @@
+### 90.5. Complete final guard and mixed theorem
+
+Define \(H_*(b)\) by the following finite exact construction, with the
+same reduced numerator/denominator and conjugation convention as §89.3:
+
+1. Include the full \(G_*(b)\) construction and all its required scalars.
+2. Include \(b,1-b^2,1+b^2,R,r_0,r_2,\ell\), and
+   \(\operatorname{Res}_d(Q_5,dV)\) as required nonzero scalars.
+3. In the monic degree-five quotient construct \(U/V,A_a,C_a,K_a,J_a,F_a\)
+   and the two phase-norm denominators. Compute inverses by multiplication
+   adjugates, and include every inverted element's norm as well as all
+   seven norms in (90.13).
+4. Construct (90.12), the fixed tensor basis, (90.14), and the full
+   multiplication determinant \(h_m\). Include \(h_m\) as a required
+   nonzero scalar and retain the reduced denominator of every scalar entry
+   produced in these finite operations.
+5. Multiply the nonconstant reduced denominators, the numerators of all
+   required nonzero scalars, and their coefficient-conjugates. Clear
+   rational constant denominators and take the primitive integer part
+   with positive leading coefficient.
+
+Every factor is nonzero and regular/nonzero at \(b=1/2\), by the exact
+half bridges, the printed norms and minors, and the displayed exceptional
+polynomials. Consequently \(H_*\in\mathbb Q[b]\) is nonzero,
+\(H_*(1/2)\ne0\), and its real zero set is finite. These rules specify
+the polynomial exactly by finite operations on public data, rather than
+by an unspecified genericity condition. No zero of \(H_*\) is discarded.
+
+**Theorem 90.1.** For every \(0<|b|<1\) with \(H_*(b)\ne0\), every
+original noncanonical aligned ray is covered by (90.11), with all repeated
+positions and signs, and no such ray is orthogonal to any original
+noncanonical generic ray.
+
+The aligned coverage follows from the original Cramer argument, complete
+resultant strata and the rational shape identity. Generic coverage,
+including the original \(F_8=0\) obligation, is already complete under
+\(G_*\ne0\) by §89.4. Every mixed edge would annihilate \(N_m\),
+contradicting its invertible multiplication matrix. This proves the theorem
+without a numerical census or a presumption that candidate rays share an
+orbit union. The finite guard fibres, including all actual aligned poles,
+remain unresolved by this statement.
+

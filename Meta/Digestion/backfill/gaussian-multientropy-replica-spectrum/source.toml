@@ -1,0 +1,5 @@
+source_id = "gaussian-multientropy-replica-spectrum"
+path = "docs/develop/theory/GAUSSIAN_MULTIENTROPY_REPLICA_SPECTRUM.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

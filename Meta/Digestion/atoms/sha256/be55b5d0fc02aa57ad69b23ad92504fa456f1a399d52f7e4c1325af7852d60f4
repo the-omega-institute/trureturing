@@ -1,0 +1,99 @@
+**Theorem 32.2 (sharp fixed-channel phase compatibility).** Every
+factorization and binary record of Definition 32.1 satisfies
+
+$$
+\begin{aligned}
+|\operatorname{Re}F_{01}|&\leq\frac\kappa2,
+&|\Gamma_y(F)|&\leq\kappa q_y,\\
+\mathsf S_y&\leq\frac12+\kappa q_y,
+&\min_{y,e,n}\Pr_{y,e,n}(r=en)
+ &\leq\frac12+\kappa\frac{\sqrt{295}}{128}.
+\end{aligned}
+\tag{JR.15}
+$$
+
+The family of Definition 30.1 at $s=1$ attains all these ceilings
+simultaneously, at all three heights, with one history-independent
+instrument and the same complete channel. More generally every
+$\gamma\in[-\kappa,\kappa]$ is attained by that family, after a
+possible binary relabeling, with
+$\Pr_{y,e,n}(+)=1/2+\gamma enq_y$. No larger absolute common
+coefficient is compatible with the fixed channel, even if imaginary
+effect entries or arbitrary finite quantum fibres are permitted.
+
+Proof. Take the live branch Choi matrix $J_+$ of $\Psi_+$ restricted
+to $V$. Complete CP compatibility gives
+
+$$
+0\preceq J_+\preceq J_*
+ =\sum_{K\in\{D,T,S\}}|K\rangle\!\rangle\langle\!\langle K|.
+\tag{JR.16}
+$$
+
+This uses the actual full-channel identity; agreement of effects alone
+would not imply it. The three Choi vectors are nonzero and mutually
+orthogonal, because their matrix supports are diagonal, $01/10$ and
+$02/20$. Let $V$ be the matrix with these three columns, ordered
+$(D,T,S)$, and $G=V^\dagger V\succ0$. Positivity first implies
+$J_+$ vanishes on $\ker J_*$: on that kernel its nonnegative quadratic
+form is bounded above by zero, and a positive matrix with zero quadratic
+form kills the vector. The range of $J_+$ is therefore in
+$\operatorname{ran}V$. Consequently
+
+$$
+J_+=VZV^\dagger,\qquad
+Z=G^{-1}V^\dagger J_+VG^{-1},\qquad 0\preceq Z\preceq I_3.
+\tag{JR.17}
+$$
+
+For the last inequality, for any $u$ apply (JR.16) to $VG^{-1}u$.
+This is the finite Choi-support form of the standard CP domination
+argument, with the actual Gram matrix retained; the Kraus vectors
+have not been incorrectly declared orthonormal. Write $z=Z_{DT}$.
+Since $2Z-I$ is a Hermitian contraction, $|z|\leq1/2$.
+The live effect is
+$F^L=\sum_{i,j}Z_{ij}K_j^\dagger K_i$. Its $01$ entry receives
+contributions only from the $D,T$ pair, giving
+
+$$
+F^L_{01}=z\,bh_1+\overline z\,h_0a,
+\qquad \operatorname{Re}F^L_{01}=\kappa\operatorname{Re}z.
+\tag{JR.18}
+$$
+
+The COMPLETE failure contribution to the $+$ record has effect $F^f$
+satisfying $0\preceq F^f\preceq M$. To see this without replacing
+the task by a time marginal, apply both positive branch measures to
+the event consisting of every original failure label and time, and
+use their exact sum from Definition 32.1. The total event effect is
+$M$. Since $M|0\rangle=0$, positivity implies
+$F^f|0\rangle=0$, hence $F^f_{01}=0$. Additional zero-ideal sectors
+have zero branch maps by positivity; the fixed five-mode completion
+restricts to this same statement on $V$. Thus (JR.18) also controls
+the full effect $F$, proving the first inequality in (JR.15).
+The exact-time law is essential to the stipulated common channel;
+its integration here is merely a necessary consequence used in a bound.
+
+Expanding (JR.1) against a general Hermitian $F$, the four signs
+cancel every term of $\Gamma_y$ except the real $01$ coherence:
+
+$$
+\Gamma_y(F)=2q_y\operatorname{Re}F_{01}.
+\tag{JR.19}
+$$
+
+This proves the contrast bound. The minimum of the four correct-parity
+probabilities is no larger than their arithmetic mean, which is
+$1/2+\Gamma_y(F)\leq1/2+\kappa q_y$. This use of an arithmetic
+mean is a deterministic inequality, without an equal-prior premise.
+The function $y(64-y)$ is increasing at the three heights below $32$,
+so its minimum is $295$ at $y=5$. This proves the final ceiling.
+
+Equation (JR.9) shows that $s=1$ makes every correct-parity probability
+at a fixed $y$ exactly $1/2+\kappa q_y$; (JR.10) gives
+$\operatorname{Re}F_{01}=\kappa/2$. Theorem 30.2 supplies the same
+complete-channel identity for this actual finite factorization, including
+all exact-time measures. Varying $s$ and relabeling gives the full
+claimed coefficient interval. This proves mathematical attainment, not
+merely separately attained finite-test optima. $\square$
+

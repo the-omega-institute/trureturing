@@ -1,0 +1,176 @@
+**Theorem 94.1 (An attained unequal-amplitude example).** Retain any
+positive monotone vanishing tail with
+
+$$
+(a_1,a_2,a_3,a_4)=(1,3/4,1/2,1/4),\qquad a_5\le1/8.
+\tag{94.1}
+$$
+
+Then
+
+$$
+E_{\mathcal A}(2;a)=1/8,
+\qquad E_{\mathcal N}(2;a)=E_{\mathcal O}(2;a)=3/20.
+\tag{94.2}
+$$
+
+For $\varepsilon\in[1/8,3/20)$ the three hard-count optima are
+respectively two, three and three. At $\varepsilon=3/20$ they are all
+two. In particular the capability loss is not confined to equal
+secondary amplitudes.
+
+**Proof.** Choose the following five trees with their indicated
+probabilities. The notation is that of (92.7), but this is a separate
+kernel $V$:
+
+$$
+\begin{array}{c|c}
+\text{tree}&\text{probability}\\\hline
+[1;1,0]&1/8\\
+[1;1,[2;2,0]]&4/8\\
+[1;1,[2;2,3]]&1/8\\
+[3;[1;1,3],[4;4,0]]&1/8\\
+[3;[2;2,3],[1;1,0]]&1/8
+\end{array}
+\tag{94.3}
+$$
+
+Every path has at most two actual requests and indices at most four.
+Its complete law table has denominator eight:
+
+$$
+\begin{array}{c|rrrrr}
+b&8p_0&8p_1&8p_2&8p_3&8p_4\\\hline
+0000&0&7&1&0&0\\
+0001&0&7&1&0&0\\
+0010&0&7&0&0&1\\
+0011&1&7&0&0&0\\
+0100&0&7&0&1&0\\
+0101&0&7&0&1&0\\
+0110&0&7&0&0&1\\
+0111&1&7&0&0&0\\
+1000&1&0&6&1&0\\
+1001&1&0&6&1&0\\
+1010&2&0&5&0&1\\
+1011&3&0&5&0&0\\
+1100&5&0&0&3&0\\
+1101&5&0&0&3&0\\
+1110&6&0&0&1&1\\
+1111&7&0&0&1&0
+\end{array}
+\tag{94.4}
+$$
+
+For $b_1=0$, the first three trees contribute six eighths at mark 1,
+and one of the last two trees contributes one more eighth there:
+the fourth when $b_3=0$, the fifth when $b_3=1$. The remaining eighth
+is mark 2 or 3 when $b_3=0$, according to $b_2$, and mark 4 or base
+when $b_3=1$, according to $b_4$. For words beginning $10$, the second
+and third trees contribute five eighths at mark 2; the first gives
+base, the fourth gives mark 3 when $b_3=0$ and otherwise mark 4 or
+base, and the fifth gives mark 2 when $b_3=0$ and otherwise base.
+For $110*$ the outputs are base, base, mark 3, mark 3, mark 3 with
+the weights in (94.3). For $1110$ they are base, base, mark 3, mark 4,
+base; for $1111$ only the third tree emits a nonbase mark, namely 3.
+This proves every row of (94.4) from the stated trees.
+
+At first zero 1 the target is pure mark 1 and the error is $1/8$.
+At first zero 2, rows $100*$ have a base deficit $1/8$, while rows
+$101*$ have a correct-mark deficit $1/8$. At first zero 3, rows $110*$
+have a correct-mark deficit $1/8$. At first zero 4 the same deficit is
+$1/8$ at mark 4. In each case (92.9) shows that there is no additional
+negative discrepancy. At every actual tail source the last row has
+nonbase mass $1/8$ and no tail mark, so its error is
+$\max\{1/8,a_n\}=1/8$. Conversely Theorem 85.1 at $n=3$, $k=2$
+forces $(1/2-r)_+\le3r$, hence $r\ge1/8$ for any adaptive hard-two
+rule. This proves the adaptive equality in (94.2).
+
+For a restricted attainer, preselect one of the following increasing
+sequences and terminal rules. The three terminal labels in each row
+are respectively the output at a zero in the first position, a zero
+in the second position, and all-positive exhaustion:
+
+$$
+\begin{array}{c|ccc|c}
+\text{sequence}&\text{first zero}&\text{second zero}&\text{exhaustion}
+ &\text{probability}\\\hline
+(2,3)&0&3&0&3/20\\
+(1,2)&1&0&4&2/20\\
+(1,2)&1&2&0&11/20\\
+(1,2)&1&2&3&1/20\\
+(1,3)&1&3&0&3/20
+\end{array}
+\tag{94.5}
+$$
+
+The weights sum to one. The following exhaustive cases give its laws:
+at $0***$ the mass at mark 1 is $17/20$, with other mass totaling
+$3/20$; for all other words the full vectors are
+
+$$
+\begin{array}{c|rrrrr}
+b&20p_0&20p_1&20p_2&20p_3&20p_4\\\hline
+100*&5&0&12&3&0\\
+101*&8&0&12&0&0\\
+110*&11&0&0&7&2\\
+1110&17&0&0&1&2\\
+1111&17&0&0&1&2
+\end{array}
+\tag{94.6}
+$$
+
+Here each star independently means either bit. The first case follows
+because all four rows of (94.5) starting with index 1 emit mark 1 at
+its zero. At $100*$ the first and second rows emit base, the next two
+emit mark 2 and the last emits mark 3; at $101*$ the last instead
+emits base. At $110*$ the first and last emit mark 3, and the three
+middle rows give their exhaustion labels. At $111*$ all rows give
+exhaustion labels. Thus every multiple-zero word is included.
+
+At first absence 1 the error is $3/20$. At first absence 2, the target
+has masses $5/20$ at base and $15/20$ at mark 2, so both rows in
+(94.6) have error $3/20$. At first absence 3 its base and correct
+masses are $10/20,10/20$, giving correct-mark deficit $3/20$.
+At first absence 4 they are $15/20,5/20$, again giving deficit
+$3/20$. At every actual first absence $n>4$, the last row has error
+$\max\{3/20,a_n\}=3/20$. This is an $\mathcal O_2$ attainer;
+padding gives an $\mathcal N_2$ attainer. Theorem 91.1 gives the
+matching universal restricted lower bound
+$(1+1/2+1/4-1)/5=3/20$.
+
+Hard one is impossible throughout the asserted interval, since
+Theorem 85.1 at $n=2$, $k=1$ requires $r\ge1/4$. Three ordered
+requests suffice already at cap $1/8$: query $1,2,3$ until their first
+zero, sampling its exact original two-point selected law there. On
+three positive replies, emit $\theta_4$ with probability $1/8$ and
+otherwise $\theta_0$. At first absence 4 the error is $1/8$; at
+every later first absence it is $\max\{1/8,a_n\}\le1/8$.
+This proves all hard counts and the closed endpoint.
+
+All choices in (94.3), (94.5) and the three-request sampler use one
+source-independent seed; no output randomness is supplied by the
+source or newly introduced at handoff. Every execution is finite and
+measurable and hands an original mark to the original consumer.
+For a concrete positive tail one may take $a_{4+j}=1/(8j)$,
+$j\ge1$. Every low word is realized inside the original source
+family by Theorem 35.2. More explicitly, $F_{19}=4181$ and the
+permitted window is $419\le g\le836$. Since
+$4181\cdot11\equiv1\pmod{210}$, for any $b\in\{0,1\}^4$ the CRT
+residue $r_b\in\{0,\ldots,209\}$ specified by
+
+$$
+r_b\equiv
+\begin{cases}-11\pmod{p_i},&b_i=1,\\0\pmod{p_i},&b_i=0,
+\end{cases}
+\qquad 1\le i\le4
+\tag{94.7}
+$$
+
+has a representative
+$g_b=419+((r_b-419)\bmod210)$ between 419 and 628.
+The actual label $(19,g_b)$ consequently has precisely that four-bit
+static answer word. These fixed labels illustrate full low-pattern
+realization; the arbitrary-address lower bound still uses the separate
+families $x_{t,m}$ of Theorem 91.1. All real high tails, not just these
+sixteen labels, were covered in the output calculations. $\square$
+

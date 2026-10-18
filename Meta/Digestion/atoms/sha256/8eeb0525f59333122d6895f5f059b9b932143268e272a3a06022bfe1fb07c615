@@ -1,0 +1,167 @@
+## 9. The remaining pair maps on a closed drift interval
+
+**Theorem 9.1.** For every fixed $y,\zeta$ and
+$d\in[48,312/5]$, the maps $BC,BD,CD$ are injective on the entire
+$\mathcal K_{\mathbf c,d}$. In addition $BD$ is injective at $d=24$.
+
+**Difference certificates.** Put $w=\Delta a+\Delta e=\Delta(A-d)$
+and $\epsilon=\Delta e$. In a distinct $BC$ or $BD$ collision,
+$w=0$ would add $A$ and contradict $AB$ injection.
+In a distinct $CD$ collision it would contradict $AD$ injection.
+Hence $w\ne0$ before introducing $\theta=\epsilon/w$.
+
+Solving the terminal equalities gives the following full matrices
+and all six trace differences:
+
+$$
+\begin{array}{c|c|l}
+&\Delta X&(\Delta\sigma_0,\ldots,\Delta\sigma_5)\\ \hline
+BC&\begin{pmatrix}w-\epsilon&-w\\-w&\epsilon\end{pmatrix}
+ &(-6w+\epsilon,6w-2\epsilon,-4w+2\epsilon,2w,-3w+\epsilon,w)\\
+BD&\begin{pmatrix}w-\epsilon&-w\\-\epsilon&\epsilon\end{pmatrix}
+ &(-5w,5w-\epsilon,-3w+\epsilon,2w,-2w,w)\\
+CD&\begin{pmatrix}w-\epsilon&-\epsilon\\-w&\epsilon\end{pmatrix}
+ &(-3w-2\epsilon,4w,-3w+\epsilon,w+\epsilon,-2w,w).
+\end{array}
+\tag{9.1}
+$$
+
+Indeed $\Delta a=w-\epsilon$. The $BC$ equalities give
+$\Delta b=\Delta c=-w$; $BD$ gives $\Delta b=-w$,
+$\Delta c=-\epsilon$; $CD$ gives $\Delta c=-w$,
+$\Delta b=-\epsilon$. Substitution into each of the six rows of
+(5.4) proves all entries of (9.1). In units of $w$ the rows are
+
+$$
+\begin{aligned}
+F^{BC}&=(\theta-6,6-2\theta,2\theta-4,2,\theta-3,1),\\
+F^{BD}&=(-5,5-\theta,\theta-3,2,-2,1),\\
+F^{CD}&=(-3-2\theta,4,\theta-3,1+\theta,-2,1).
+\end{aligned}
+\tag{9.2}
+$$
+
+**Affine identity.** The common normalizations at six and seven imply
+
+$$
+h_2-h_1=R_2L,\qquad
+R_2=(T-6)(T-7)=T^2-13T+42,\qquad \deg L\le1,
+\tag{9.3}
+$$
+
+where $L$ may be zero. The complete coefficient row of $R_2$ is
+$(42,-13,1)$ and its sample row at $0,\ldots,7$ is
+$(42,30,20,12,6,2,0,0)$, directly from the product.
+For residuals $Q_j=c_j-d$, the exact identity is
+
+$$
+R_2(j)L(j)=-\frac{Q_jwF_j}{\sigma_{1,j}\sigma_{2,j}}
+                   \quad(0\le j\le5).
+\tag{9.4}
+$$
+
+The denominator is positive because this pair shares a terminal scalar.
+All six displayed $R_2(j)$ are positive.
+Thus $Q_jF_j=0$ gives $L(j)=0$ exactly, and otherwise
+
+$$
+\operatorname{sgn}L(j)
+=-\operatorname{sgn}(w)\operatorname{sgn}(Q_jF_j).
+\tag{9.5}
+$$
+
+A nonzero affine polynomial has at most one sign change on ordered
+nodes after zero samples are deleted: a nonconstant affine polynomial
+has only one real root, and a nonzero constant has none.
+The zero polynomial has no nonzero samples.
+
+**Interior signs.** When $48<d<312/5$, the first-four residual
+signs are $(-,-,-,+)$. The signs of $Q_jF_j$, $j=0,1,2,3$,
+are consequently the signs of the following linear factors:
+
+$$
+\begin{array}{c|cccc}
+BC&6-\theta&2\theta-6&4-2\theta&2\\
+BD&5&\theta-5&3-\theta&2\\
+CD&3+2\theta&-4&3-\theta&1+\theta.
+\end{array}
+\tag{9.6}
+$$
+
+All interval and equality cases are listed here.
+
+| Pair | $\theta$ | $\operatorname{sgn}(Q_0F_0,Q_1F_1,Q_2F_2,Q_3F_3)$ |
+| --- | --- | --- |
+| $BC$ | $\theta<2$ | $(+,-,+,+)$ |
+| $BC$ | $\theta=2$ | $(+,-,0,+)$ |
+| $BC$ | $2<\theta<3$ | $(+,-,-,+)$ |
+| $BC$ | $\theta=3$ | $(+,0,-,+)$ |
+| $BC$ | $3<\theta<6$ | $(+,+,-,+)$ |
+| $BC$ | $\theta=6$ | $(0,+,-,+)$ |
+| $BC$ | $\theta>6$ | $(-,+,-,+)$ |
+| $BD$ | $\theta<3$ | $(+,-,+,+)$ |
+| $BD$ | $\theta=3$ | $(+,-,0,+)$ |
+| $BD$ | $3<\theta<5$ | $(+,-,-,+)$ |
+| $BD$ | $\theta=5$ | $(+,0,-,+)$ |
+| $BD$ | $\theta>5$ | $(+,+,-,+)$ |
+| $CD$ | $\theta<-3/2$ | $(-,-,+,-)$ |
+| $CD$ | $\theta=-3/2$ | $(0,-,+,-)$ |
+| $CD$ | $-3/2<\theta<-1$ | $(+,-,+,-)$ |
+| $CD$ | $\theta=-1$ | $(+,-,+,0)$ |
+| $CD$ | $-1<\theta<3$ | $(+,-,+,+)$ |
+| $CD$ | $\theta=3$ | $(+,-,0,+)$ |
+| $CD$ | $\theta>3$ | $(+,-,-,+)$ |
+
+Each row follows by the roots of the four linear factors in (9.6).
+After deleting zeros every row has at least two sign changes and
+contains nonzero entries. Multiplication by the common sign in (9.5)
+does not alter the count. Thus neither nonzero affine $L$ nor $L=0$
+can realize any row. Values causing only a late $F_4$ or $F_5$ zero
+are already included in these exhaustive rows. This proves all three
+injections on the open interval.
+
+**The endpoint $d=48$.** Here $Q_2=0$, so (9.4) gives $L(2)=0$.
+If $L=0$, the nonzero-residual clocks zero, one and three require
+$F_0=F_1=F_3=0$. This is impossible for $BC$ since $F_3=2$,
+for $BD$ since $F_0=-5$, and for $CD$ since $F_1=4$.
+Thus $L$ is a nonzero multiple of $T-2$.
+Its values at zero and one have the same nonzero sign, and its value
+at three has the opposite sign. Equivalently, $Q_0F_0,Q_1F_1$
+have one sign and $Q_3F_3$ has the opposite sign.
+Because $Q_0,Q_1<0<Q_3$, the resulting requirement is that
+$F_0,F_1,F_3$ have the same nonzero sign.
+For $BC$, $F_3>0$ would require $\theta>6$ and $\theta<3$.
+For $BD$, $F_0<0<F_3$ already contradicts the requirement.
+For $CD$, $F_1>0$ would require $\theta<-3/2$ and $\theta>-1$.
+All three possibilities are excluded.
+
+**The endpoint $d=312/5$.** Now $Q_3=0$, hence $L(3)=0$.
+If $L=0$, the first three residuals force
+$F_0=F_1=F_2=0$. For $BD$ and $CD$ their nonzero constant entries
+exclude this, and for $BC$ it would require both $\theta=6$ and
+$\theta=3$. Thus $L$ is a nonzero multiple of $T-3$, and its
+values at zero, one and two have the same nonzero sign.
+All three corresponding residuals are negative, so
+$F_0,F_1,F_2$ must have the same nonzero sign.
+For $BC$, positivity requires $\theta>6$ and $\theta<3$;
+negativity requires $\theta>3$ and $\theta<2$.
+For $BD$, $F_0<0$ would require $\theta>5$ and $\theta<3$.
+For $CD$, $F_1>0$ would require $\theta<-3/2$ and $\theta>3$.
+These contradictions prove all endpoint injections.
+Extra parameter zeros are excluded by the nonzero affine samples,
+rather than silently discarded.
+
+**The additional $BD$ endpoint $d=24$.** Here $Q_1=0$ and $L(1)=0$.
+But $Q_0F_0=(-24)(-5)>0$ and
+$Q_3F_3=(312/5-24)2>0$ make $L(0)$ and $L(3)$ nonzero with the
+same sign $-\operatorname{sgn}w$. An affine polynomial vanishing
+at one must have opposite signs at zero and three unless it is zero;
+the nonzero samples exclude the latter case. This proves the
+additional injection and completes Theorem 9.1. ∎
+
+All sample-zero branches at the drift endpoints and every relevant
+$\theta$ equality are retained. Divisibility in (9.3) covers all
+lower degrees, repeated sixth roots, and zero slope or zero $L$.
+No ancestor gain, residual $Q_j$, sixth gain, root difference,
+leading coefficient or discriminant was divided out.
+

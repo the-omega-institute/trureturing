@@ -1,0 +1,26 @@
+## 4. Exact affine capacity of the fixed-base coherence menu
+
+Fix one full-support base point $b_{\mathrm{vis}}=(X,Y,Z)$, one
+$\kappa _0$ in the interior of its fiber, and the probability vector
+$p=p_{\kappa _0}$ in the mode order $(0,1,2,3,13)$. Prepare this same
+probability vector and the same initial phases before every history. The
+controls are exactly the admissible base/phase loops of Definition 3.1,
+including every integer winding. A readout is the ideal expectation, with no
+finite-sample or measurement-resource assertion.
+
+For an oriented edge $e=(i,j)$ in the menu of Theorem 3.12, put
+$a_e=2\sqrt{p_ip_j}$ and let $\delta_e^0$ be its fixed initial phase
+difference. The two readouts are
+
+$$
+y_e(h)=a_e\bigl(\cos(\delta_e^0+h_i-h_j),
+                 \sin(\delta_e^0+h_i-h_j)\bigr).
+\tag{4.1}
+$$
+
+The factor $2$ is part of the source convention: (4.1) is twice the real
+and imaginary parts of $\overline\psi_i\psi_j$, hence it is exactly the pair
+of ideal expectations in Theorem 3.12. In particular, the subsequent Gram
+coefficients use the doubled expectations and not the unscaled complex
+product.
+

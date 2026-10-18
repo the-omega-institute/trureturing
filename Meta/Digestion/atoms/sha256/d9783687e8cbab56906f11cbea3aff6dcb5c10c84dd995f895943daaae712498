@@ -1,0 +1,107 @@
+**Theorem 101.1 (phase-aligned quarter bound).**
+Under (1)--(3), \(\delta\ge1/4\).
+If any of \(c,s,p,q\) vanishes, or if \(\psi=\phi\), then
+\(\delta\ge1/2\).
+
+**Proof.**
+A zero coordinate in (2) makes the corresponding cross-fibre product zero,
+so its matrix unit gives the stronger bound. If \(\psi=\phi\), the actual
+original partner of coordinate 3 is orthogonal to both singleton \(H\) records;
+its cross-fibre product with coordinate 4 is zero, with the same consequence.
+Henceforth all coordinates are positive and the two records are distinct.
+Exchange the singleton labels if necessary so that
+\[
+\Delta=cq-sp>0,\qquad h=cp+sq>0. \tag{4}
+\]
+This exchange just orders their positive angles.
+
+Assume \(\delta<1/4\). Let \(o_3\) be the actual original partner of coordinate 3.
+Its projection onto the supported \(H\) span has row
+\(H_{o_3S}=\beta(-s,c,0,\Delta)\); the component outside that span is unrestricted.
+Here \(\beta\ne0\), since otherwise a cross-fibre matrix unit gives
+\(\delta\ge1/2\).
+The original equality \(G_{o_3,3}=0\) and the full kernel equation give
+\[
+r=(A/s,-B/c,d/\Delta),\qquad
+L_{o_3,\{1,2,4\}}r=\tfrac12\sum r. \tag{5}
+\]
+Indeed the corresponding sum of products \(G_{o_3j}H_{o_3j}r_j\) is
+\(\beta(-AG_{o_3,1}-BG_{o_3,2}+dG_{o_3,4})=0\).
+For \(P=A/s+d/\Delta>0\) and \(N=B/c>0\), (5) implies
+\[
+|P-N|\le2\delta(P+N)<\tfrac12(P+N).
+\]
+Thus \(P<3N\). The actual partner \(o_4\) has \(H\) row a nonzero scalar
+multiple of \((-q,p,-\Delta,0)\), and its corresponding vector is
+\(r'=(A/q,-B/p,-b/\Delta)\). Applying the same argument to its positive and
+negative groups yields
+\[
+3sB-cA>dcs/\Delta,\qquad 3pA-qB>bpq/\Delta. \tag{6}
+\]
+Both inequalities concern the original rows; no completion is replaced.
+
+Put \(D_0=9sp-cq\). Multiplying the first inequality in (6) by \(3p\)
+and the second by \(c\), then adding, gives \(D_0B>0\).
+Consequently \(D_0>0\), and
+\[
+\begin{pmatrix}-c&3s\\3p&-q\end{pmatrix}^{-1}
+=\frac1{D_0}\begin{pmatrix}q&3s\\3p&c\end{pmatrix}. \tag{7}
+\]
+Every entry on the right is positive. Therefore, coordinatewise,
+\[
+A>A_0=\frac{sq(dc+3bp)}{\Delta D_0},\qquad
+B>B_0=\frac{cp(3ds+bq)}{\Delta D_0}. \tag{8}
+\]
+
+The \(F\) block of \(Ga=0\) says
+\(G_{F,\{3,4\}}(b,d)^{\mathsf T}=(A,B)^{\mathsf T}\).
+Using Hermiticity in the singleton block of the same equation gives
+\[
+A^2+B^2=b^2+d^2+2bd\,\operatorname{Re}G_{34}. \tag{9}
+\]
+This permits complex \(G_{34}\) and complex cross blocks.
+Since \(H_{34}=h\), the matrix-unit bound
+\(\operatorname{Re}L_{34}>-1/4\) now implies
+\[
+A^2+B^2<b^2+d^2+\frac{3bd}{2h}. \tag{10}
+\]
+
+Here is the exact comparison with (8). Set \(x=s/c>0\), \(y=q/p>x\).
+The inequality \(D_0>0\) is \(y<9x\). With \(P_0=(y-x)(9x-y)>0\),
+\[
+\begin{pmatrix}A_0\\B_0\end{pmatrix}
+=M\begin{pmatrix}b\\d\end{pmatrix},\qquad
+M=\frac1{P_0}
+\begin{pmatrix}
+3xy\sqrt{1+x^2}&xy\sqrt{1+y^2}\\
+y\sqrt{1+x^2}&3x\sqrt{1+y^2}
+\end{pmatrix},\qquad
+h=\frac{1+xy}{\sqrt{(1+x^2)(1+y^2)}}. \tag{11}
+\]
+Define
+\[
+K=M^{\mathsf T}M-
+\begin{pmatrix}1&3/(4h)\\3/(4h)&1\end{pmatrix}. \tag{12}
+\]
+We prove entrywise nonnegativity of \(K\), which suffices because \(b,d>0\);
+positive semidefiniteness of \(K\) is not asserted.
+Write \(z=y/x\in(1,9)\), \(X=x^2>0\), \(m=(z-1)(9-z)>0\), so \(P_0=Xm\), and put
+\[
+\mathcal R=16z^2-m^2=(z-3)^2(4z+m)\ge0. \tag{13}
+\]
+Expansion gives the three square certificates
+\[
+\begin{aligned}
+P_0^2K_{11}&=X\bigl[z^2(3X-1)^2+\mathcal RX\bigr],\\
+P_0^2K_{22}&=X\bigl[(z^2X-3)^2+\mathcal RX\bigr],\\
+\frac{4(1+xy)P_0^2K_{12}}{3\sqrt{(1+x^2)(1+y^2)}}
+&=X\bigl[4z(zX-1)^2+\mathcal RX\bigr].
+\end{aligned} \tag{14}
+\]
+All prefactors are positive, so \(K_{11},K_{22},K_{12}\ge0\). Hence
+\[
+A_0^2+B_0^2\ge b^2+d^2+\frac{3bd}{2h}. \tag{15}
+\]
+The strict lower bound from (8) contradicts (10). This proves the theorem
+with the original arbitrary-reference, unhalved normalization. \(\square\)
+

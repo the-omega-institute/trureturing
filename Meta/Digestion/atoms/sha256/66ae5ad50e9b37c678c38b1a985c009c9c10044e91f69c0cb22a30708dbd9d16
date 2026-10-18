@@ -1,0 +1,11 @@
+**Definition 1.1 (unchanged source and legal cuts).** Fix $m=2,d=1,\ell=2,n=4$, and let $F_0=0,F_1=1,F_{j+2}=F_{j+1}+F_j$. A finite or countable prior $\mu$ on positive integers satisfies $\mu(1),\mu(2)>0$. A single $K$ is drawn before the first actual Read. Conditional on $K=k$, all actual letters are independent, each with $\alpha$ probability $r_k$ and $\beta$ probability $1-r_k$, where
+
+$$
+r_k=\frac{F_{k+1}}{F_{k+3}},\qquad r_1=\frac13,\quad r_2=\frac25,
+\qquad \frac38\le r_k\le\frac5{13}\quad(k\ge3).
+$$
+
+The same $K$ supplies paid seed rejection and every payload. Equal seed pairs are rejected; $\alpha\beta$ accepts seed 0 and $\beta\alpha$ accepts seed 1. In segment $p_i$, $\alpha$ completes marker 0 and $\beta$ enters $q_{\beta,i}$. In $q_{\beta,i}$, $\alpha$ returns to $p_i$ and $\beta$ completes marker 1. The third record is written before its latch. Records remain held thereafter. Fourth completion enters the original pendingStop, whose unique Stop enters deliveredStop. Neither terminal admits Read.
+
+The original finite control $C_0$ includes parser, seeds, selectors, bare fields, the complete marker tree, records, permissions, completion, pendingStop and deliveredStop. The history domain contains both seeds, every marker triple, all positive finite paid rejection histories and all positive finite payload return histories. $\mathcal H_3$ denotes the cut immediately after the third latch and before any fourth-segment Read; $\mathcal H_p$ and $\mathcal H_\beta$ are all positive finite fourth-segment p and suspended cuts after that latch. No source reset, new source query, future-event conditioning or post-Stop operation is admitted. These source conventions are those of [ST, §§1–2] and [FLOW, §2].
+

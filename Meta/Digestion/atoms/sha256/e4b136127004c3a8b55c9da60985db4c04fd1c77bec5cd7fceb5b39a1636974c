@@ -1,0 +1,44 @@
+**Proposition 252.3 (The factor four is sharp relative to $\kappa$).**
+For every $L\ge3$ and $0<t<1$, there is an original cap-feasible
+$N$ law for which
+
+$$
+\kappa=t/4,\qquad\mu=\nu=t,
+\qquad\sup_w\operatorname{TV}(p_w,\bar p_w)=t.
+\tag{252.3}
+$$
+
+**Proof.** Let $P$ be the uniform canonical triple law on
+$[L]\cup\{\infty\}$: query the two smallest numerical labels
+in the chosen triple and emit its third label on positive exhaustion,
+with $\infty$ meaning zero. Its inclusion marginal is
+$s=3/(L+1)$, so its correct probability is $s$ throughout every
+first-zero class and its positive base probability is $s$.
+Use the one law
+
+$$
+p=(1-t)P+tN(2,3;1,2,3,0),\qquad
+a_i=1\ (i\le L),\qquad e=1-(1-t)s.
+\tag{252.4}
+$$
+
+Every correct probability is at least $1-e=(1-t)s$, the union
+probability is at least the correct probability, the base demand
+is $-e$, and the positive base is $(1-t)s+t$. Thus every row holds.
+On a first-zero-one word with bits two and three positive, correct
+probability is exactly $(1-t)s$, so the uniform low-word error is
+exactly $e$. Append any positive monotone vanishing tail bounded
+by $e$. Formula (251.9) bounds its error by $e$.
+
+The exceptional table has fair score $11/4$, versus three for
+every triple. It is the only noncanonical or changed part. On a
+word with bits two and three zero the difference between old and
+repaired laws is exactly $t(e_1-e_2)$, proving (252.3).
+For comparison, this same law has
+$\delta=0$, $s_0=t$, $s_2=s_3=t$, all other $s_i=0$,
+$D=3t$ and $B=(2L-5)t$.
+Consequently the sharpness statement is about actual fair-score
+deficit $\kappa$. It asserts neither sharpness of $\mu/D$ nor
+sharpness of distance to the unrestricted $O$ class. That class
+already has a plateau law on this profile. $\square$
+

@@ -1,0 +1,8 @@
+### 99.7. Choice independence and Pfaffian consumer
+
+The primary pairing is alternating and independent of tangency points and local choices. Each calculation applies to all the stated primitive normalized certificates. Hence X,Y,Z, and the displayed diagonal signs, are individually invariant under those allowed choices; local approximation supplies certificates but cannot assign their characters freely.
+
+Converting multiplicative signs to additive bits gives exactly M. Its Pfaffian over F_2 is h_p h_q+x y: the third matching term is the lambda-lambda entry times z and is zero by the proved vanishing. A direct determinant expansion gives det M=(h_p h_q+x y)^2. Thus the stated criterion makes the pairing on the four-dimensional complement nondegenerate, even though z need not be zero. The pure Selmer space has dimension 5 and its remaining original rational class is in the radical, so its radical has dimension exactly1. The rational Kummer image modulo rational torsion lies in that radical and has dimension equal to the Mordell–Weil rank. This bounds the rank by 1; the actual original non-torsion point gives equality. Corollary 94.2 then excludes every stipulated repetition. ∎
+
+In particular, a single nonzero pairing entry would give only pairing rank at least 2 in this five-dimensional pure space. The determinant criterion is the additional requirement needed for rank 4. It depends on interactions of the two mixed directions and is not a reuse of the nullity-two rank argument. The mu-mu entry is evaluated fully, although the Pfaffian proves that its value does not affect this particular nondegeneracy test. No numerical actual support, sign realization, converse, or general higher-rank exclusion is asserted.
+

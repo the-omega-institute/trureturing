@@ -1,0 +1,93 @@
+**Theorem 8.2 (Open-prefix source manifold).** The exact set of pairs
+$(\kappa(T),h(T))$ of real lifted source coordinates obtainable from
+Definition 8.1 is $J_b\times U_b$. In particular the exact current-ray
+domain, with its inherited smooth structure, is
+
+$$
+\mathcal M_b\simeq J_b\times(U_b/\Lambda_b)
+\simeq J_b\times\mathbb T^g.
+\tag{8.3}
+$$
+
+| Fixed mean regime | Exact phase increment domain | Intrinsic current-ray dimension |
+| --- | --- | --- |
+| Neither wall | $\mathbb T^4$ | $5$ |
+| $E_-$ only | $\mathbb T^3$, with $h_0=h_{13}$ | $4$ |
+| $E_+$ only | $\mathbb T^3$, with $h_1=h_3$ | $4$ |
+| Both walls | $\mathbb T^2$, with both equalities | $3$ |
+
+Every point has an exact finite piecewise linear control realization. At
+most $g-1$ of the rectangles already supplied by Theorem 3.2, one
+fixed-height phase leg and one probability leg suffice. In the full-support
+fixed-mean model, the current-ray domain is three-dimensional if and only
+if $X=Y=r/2$.
+
+Proof. For the converse inclusion, $w(\kappa)\in U_b$ at every interior
+height by Theorem 3.2. Integrating the original ODE therefore gives
+$h(T)\in U_b$ for every admissible history, including absolutely
+continuous ones. The endpoint probability coordinate is in $J_b$ by
+admissibility. There are no further real constraints from a closing
+condition, because the query in Definition 8.1 imposes none.
+
+For sufficiency, prescribe any $\kappa_*\in J_b$ and $v\in U_b$. Set
+
+$$
+L_*=d^{\mathsf T}v,\qquad
+v_0=v-L_*w(\kappa_0).
+\tag{8.4}
+$$
+
+The identity $d^{\mathsf T}w=1$ gives $v_0\in V_b$. Theorem 3.2 supplies
+an exact zero-winding rectangle menu at $\kappa_0$ with residual $v_0$,
+using $g-1$ heights selected independently of $v$. Execute that menu,
+then at $\kappa_0$ increase the real control phase by $L_*$, and finally
+move $\kappa_0$ to $\kappa_*$ with control phase fixed. The phase leg adds
+$L_*w(\kappa_0)$ and the probability leg adds zero phase. Thus the final
+real increment is exactly $v$, and the final height is exactly
+$\kappa_*$. The control ends with real increment $L_*$, as required by
+the integrated ODE.
+
+Here the rectangle construction is consumed, not replaced by an
+accessibility or density argument. Its actual continuous realization is
+also supplied by
+[`finite_rectangles_realize`](https://github.com/the-omega-institute/trureturing/blob/c8dd0930fa71461d0d6ee93c10fb7075e3251a6e/D5/S3/Quantum/Fibers/FiniteRectangleTransport.lean).
+The correspondence is $b=(X,Y,Z)$, $k_0=\kappa_0$, and menu entries
+$(k,a)=(\kappa_j,a_j)$ from Theorem 3.2; its mode index $4$ is mode
+$13$ here. Its $\operatorname{phaseWeight}$ is exactly $w$, its
+$\operatorname{probability}$ is $p_\kappa$, and its residual is
+$\sum_j a_j(w(\kappa_j)-w(\kappa_0))$. Its initial zero phases are
+increments $h=0$ here. Translating its control phase by $\chi(0)$ and its
+state phase by $\theta^{\rm in}$ preserves the ODE because the
+coefficients depend only on $\kappa$. The supplier includes empty menus,
+negative or zero coefficients and both walls. The existence of the menu
+representing $v_0$ comes from Theorem 3.2, rather than from that supplier.
+
+The two extra legs obey Definition 3.1 directly. Each is an affine
+control leg; $w$ is constant on the phase leg and the phase derivative is
+zero on the probability leg. Every probability segment stays inside
+$J_b$ by convexity. The finite set of heights and finite real phase
+increments give a compact positive range and finite total phase
+variation. Concatenation consequently gives a lawful finite history,
+with no speed, time-budget or uniform variation bound asserted.
+
+It remains to justify that (8.3) describes rays rather than redundant
+phase representatives. In the middle-positive gauge the state is
+
+$$
+\psi_s(\kappa,h)=\sqrt{p_s(\kappa)}\,
+e^{-i(\eta_s+h_s)},\qquad \psi_2=\sqrt Z>0.
+\tag{8.5}
+$$
+
+Equality of rays forces equality of these representatives: their middle
+entries fix the common phase. Equality of moduli then gives equal
+$\kappa$, for example from $p_{13}=\kappa$, and equality of phases gives
+$h-h'\in\Lambda_b$. Conversely these conditions give the same ray.
+Each pole group has one independent real increment and one independent
+$2\pi$ period, so $U_b/\Lambda_b\simeq\mathbb T^g$. There is no further
+finite quotient. The inverse in the projective chart with nonzero middle
+coordinate recovers $\kappa$ and each phase circle smoothly from the
+nonzero component ratios. Thus (8.5) is a smooth embedding with the
+claimed dimension. The two wall equations hold together precisely when
+$X=Y=r/2$. $\square$
+

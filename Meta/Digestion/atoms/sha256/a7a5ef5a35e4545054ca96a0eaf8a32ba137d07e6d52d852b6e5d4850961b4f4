@@ -1,0 +1,29 @@
+**命题 45.2（原 root6 数据线的精确最大值）。** 沿
+
+$$
+\lambda(z)=(z,59z/45-16,z,z),\qquad b_z=\frac{13z-720}{2z},
+$$
+
+当 $z$ 充分接近所选 $s$ 时，约化图恰有 $\beta=b_z,\kappa=0$，且
+
+$$
+\begin{aligned}
+\phi(r,\lambda(z))&=\frac{K_6(z)}{2zb_z}-\frac{4z}{b_z}(r-1/2)^2,\\
+\rho(\lambda(z))&=1/2,\qquad
+\Psi_s(\lambda(z))=\frac{K_6(z)}{2zb_z},\\
+D\Psi_s(\lambda_s)(1,59/45,1,1)
+ &=\frac{446s-28152}{2sb_s}
+ =\frac{\varepsilon72\sqrt{1241}}{2sb_s}\ne0.
+\end{aligned}
+\tag{45.4}
+$$
+
+证明。此线上 $a=e=\omega=0$，$b=b_z,k=0$ 直接解 $F_2=F_3=0$；子系统唯一性给图的同一解。写 $j_z=9(z-24)/(4z)$、$c_z=j_z-b_z$，则
+
+$$
+F_1=4z\left(b_z+\frac{r(1-r)}{b_z}-j_z\right)
+=\frac z{b_z}(1-4b_zc_z)-\frac{4z}{b_z}(r-1/2)^2.
+$$
+
+式 (27.6) 给 $1-4b_zc_z=K_6(z)/(2z^2)$，得到精确最大值。求导时 $K_6(s)=0$，只剩式 (45.4) 的分子导数。两侧因此都出现相应的空纤维和两世界纤维；零界面本身给一世界。这个线上的一致性不限制其他三个独立数据的变化，也不将局部公式外推到邻域之外。∎
+

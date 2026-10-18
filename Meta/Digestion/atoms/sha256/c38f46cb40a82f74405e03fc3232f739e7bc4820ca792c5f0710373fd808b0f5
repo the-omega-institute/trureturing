@@ -1,0 +1,20 @@
+**References 10.1 (repository and pinned upstream interfaces).** The
+following interfaces give the precise correspondence to existing
+formal source; their source statements do not certify a new compiled
+application of this companion.
+
+| Source | Existing statement and applicability |
+| --- | --- |
+| [NativeDepthPatterns][DEPTH], `original_prefix_locality`, `depthEquiv`, private `fill_decompose` and `decompose_fill` | Reply locality at every common epoch from the original prefix through the physical word length; exact original finite-pattern/frontier reconstruction. These are the source and action interfaces in §§5–7. |
+| [NativeGroundSeparation][GROUND], including private `count_length`, `evaluated_length`, `compound_mass_ne`, `bounded_eval_injective` and public `simultaneous_ground_separation` | Equal-mass separation for finite Boolean free-magma terms with a fixed finite syntax bound. NSF supplies the distinct nonleaf one-constant shape markers used in Lemma 2.2; no new ground-separation theorem is claimed. |
+| [NativeCutFibers][CUT], `rowFiberEquiv`, private `recover_fill` and `fill_injective` | Both directions of the full old-row source correspondence, including shared classes and all class disequalities. A mathematical inverse on a supplied source is not an observer port. |
+| [NativeHistoryCells][HISTORY], `cell_feasibility_exact`, `historyCellEquiv`, private `syntax_iff_ground` and `feasible_history` | Exact literal-history cells. Its history is a list of epoch/address/reply records. Arbitrary signed whole-subtree comparison feasibility here comes from NSF, not from changing that formal history sort. |
+| [NativeSymbolicRecutting][RECUT], `symbolic_recut_exact`, private `termAt_fill` and `exterior_commute` | Full original reached order, exterior and pairwise partition after filling. These fields are all retained in the exact row strata. |
+| [Pinned mathlib, `FreeMagma`][FREE] | `of`, `mul`, decidable equality, `lift` and `length_pos` for free finite binary trees. The source parameters are $\alpha=\mathtt{of\ true}$, $\beta=\mathtt{of\ false}$ and pairing $\mathtt{mul}$; the native $\rho$ still requires its interpreted leaf laws. |
+
+The formal observer interfaces do not state a simultaneous minimum-depth
+alternative for arbitrary native QF signed constraints. Theorem 4.1's
+additional branch inference and Theorem 6.1's exact contact reduction
+are ordinary repo-derived results. Their all-solution direction is not
+inferred from the existence of a finite marker family.
+

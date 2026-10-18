@@ -1,0 +1,30 @@
+**Definition 17.1 (source, cut and accessible acquisition records).** Fix
+$0<c<1/2$, $Z=1-2c$, and distinct $a,l\in(0,c)$. Use the same positive
+preparation, base $(c,c,Z)$, calibrated directions (PR.3), negative
+state-phase convention and actual source family (PR.34). At the initial
+live cut the specimen is
+
+$$
+\psi_{a,\beta,m}=\sqrt Z e_2+e^{-i\beta}
+ \bigl(\sqrt{2a}U_++(-1)^m\sqrt{2(c-a)}U_-\bigr),
+\qquad \beta\in\mathbb R,\quad m\in\mathbb Z.
+\tag{PR.61}
+$$
+
+Write $\varepsilon=\pi(m)=m\bmod2\in\{0,1\}$, so that
+$(-1)^m=(-1)^\varepsilon$. This bit convention differs from the sign
+notation in (PR.8). The entire signed winding and real residual (PR.5)
+remain in the actual source history. Neither is an observer input.
+
+After the past and its actual reference/archive have been fixed, draw a
+finite public seed $U\in\mathcal U$ with $\nu(u)>0$ and
+$\sum_u\nu(u)=1$, independently of that entire past and joint quantum
+state. For every $(\varepsilon,u)$ the source executes a prescribed
+original control $k_{\varepsilon,u}$ of finite duration $T_u\geq0$,
+starting and ending at $a$, remaining strictly in $(0,c)$, and having
+constant relative phase. The duration is the same for both parities at
+each seed. Either original regularity alternative is allowed. Duration
+zero means the matching identity. The source uses the canonical complete
+stopped instrument and stops at its first failure.
+
+The dependence of this future programme on the old parity is an

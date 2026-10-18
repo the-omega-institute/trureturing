@@ -1,0 +1,25 @@
+**Theorem 2.2 (Exact nuisance cancellation on the paid history).** For a block of $m$ consecutive complete gaps after the actual first tick, write $K=(K_1,\ldots,K_m)$ and $T=\sum_{j=1}^mK_j$. Then
+
+$$
+\mathsf P_{i,q}(T=n)=\frac{C_{i,m}(n)q^n}{Z_i(q)^m},\qquad
+\mathsf P_{i,q}(K=k\mid T=n)=G_{i,m,n}(k).
+$$
+
+Every composition at every legal total has positive mass, and
+
+$$
+c_n=\mathbb E_{0,n}w_n,\qquad
+\frac{G_{1,m,n}(k)}{G_{0,m,n}(k)}=\frac{w_n(k)}{c_n},\qquad
+1\le w_n,c_n\le\mathcal R_m:=(1+\delta)^m.
+$$
+
+The block consumes exactly $T+m$ reads after its starting tick, whose expectation under label $i$ is $m\mu_i(q)$.
+
+Proof. Proposition 1.3 makes the joint mass of the observed gaps equal to
+
+$$
+\frac{\prod_{j=1}^mF_i(k_j)q^{\sum_j k_j}}{Z_i(q)^m}.
+$$
+
+Summation over ordered compositions of a given total yields its claimed mass, and division cancels $q^n/Z_i(q)^m$. Positivity follows from Definition 1.1. Summing over all totals gives one by the product of the $m$ nonnegative convergent series $Z_i(q)$. Replacing $F_1(k)$ by $r_kF_0(k)$ proves the two tilt identities. The envelope bounds each factor between one and $1+\delta$, and an expectation preserves those bounds. Finally the $m$ gaps contribute their zeros and $m$ closing ticks, hence $T+m$, with the stated expectation. Conditioning is a statistic of this acquired block, not a replacement acquisition method. $\square$
+

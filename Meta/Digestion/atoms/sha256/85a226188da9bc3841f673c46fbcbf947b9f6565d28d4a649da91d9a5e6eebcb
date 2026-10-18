@@ -1,0 +1,21 @@
+**Proposition 8.2 (equality designs cannot extend the plateau).** If any
+original finite design has acquired or live high cost $F$ on the
+selected state, its strength satisfies $s\leq s_*$.
+
+Proof. The certificate forces $H=H_*$. Since $H_+,H_-\succeq0$ sum
+to this rank-one matrix, each has range in $\mathbb C h$. Hence
+$\operatorname{Re}(H_+)_{DT}=0$. The $DT$ block of $I-H_*$ is
+
+$$
+A_L=\begin{pmatrix}1-p&i r_0\\-i r_0&1-q\end{pmatrix}>0,
+\qquad\det A_L=s_*^2,\quad\operatorname{Re}(A_L)_{01}=0.
+\tag{NP.53}
+$$
+
+The corresponding compression of $L_+$ lies between zero and $A_L$.
+Lemma 8.1 bounds its real off-diagonal entry by $s_*/2$.
+The necessary record equality gives
+$s/2=\operatorname{Re}(L_+)_{DT}\leq s_*/2$. This establishes equality
+nonexistence above the endpoint; the next theorem also excludes equality
+as an unattained infimum. $\square$
+

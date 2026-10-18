@@ -1,0 +1,22 @@
+**Definition 7.1 (a supplied spatial and temporal correspondence).** Let
+$\mathcal Z$ be the declared spatial interface addresses. Supply an
+effective assignment $z\mapsto\delta(z)$ to valid descriptors, with the
+same chosen literal $p(\delta(z))$ at every source. If the spatial task is
+finite, its required addresses form a supplied finite set. Supply a
+temporal correspondence $\tau:\mathbb N\to\mathcal T$ and physical or
+abstract configuration maps $\iota_j$ satisfying, on the same admitted
+original source,
+
+$$
+\iota_{j+1}(u)=U(\iota_j(u)),\qquad \iota_j(u)=U^ju,
+\qquad \text{progress after }d\text{ actual updates is }\tau(N+d).
+\tag{UDB.26}
+$$
+
+If a different carrier is used, replace the middle equality by a supplied
+representation map intertwining its actual update with $U$. The declared
+spatial reply at $(z,\tau(j))$ must equal
+$r_{U^ju}(p(\delta(z)))$. The temporal map need not be injective; recovering
+$j$ from its temporal label additionally requires an inverse on the
+relevant image. Neither a descriptor nor $\tau$ supplies a wall clock.
+

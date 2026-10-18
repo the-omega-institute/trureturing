@@ -1,0 +1,22 @@
+**Proposition 8.1 (Scope at boundaries).** The following conventions are part
+of the statements.
+
+1. $\tau=1$ is excluded from the trial and window; the credited transition
+   result handles $\tau\ge1$, and $a,c,b,L$ are not continued to $a=0$.
+2. $\tau=3/4$ is included in N4, including all overlap points $y=0,1/2,a,1$
+   and $u=1$.
+3. $\tau=1-\varepsilon_0$ is included because N3 is strict pointwise.
+4. $\Omega=2\pi$ is good; badness is strictly $\Omega>2\pi$, with arbitrary
+   common frequency.
+5. Zero coefficients, lower-order profiles, collisions, and confluent forms
+   remain in $\mathcal E_2$; no separate-coefficient bound near collisions is
+   assumed.
+6. Scalar endpoint evaluations are limits on the closed scalar interval and
+   do not add endpoint source rays or endpoint guards.
+
+**Proof.** Items 1 and 5 are part of Definitions 1.4 and Theorem 1.5. Item 2
+follows from the closed inequalities in Lemma 5.2 and Theorem 5.3. Item 3
+uses the strict inequality of Theorem 4.1. Item 4 follows from the exact
+period spacing in Lemma 2.2 and the credited guard criterion. Item 6 is
+Definition 1.4. $\square$
+

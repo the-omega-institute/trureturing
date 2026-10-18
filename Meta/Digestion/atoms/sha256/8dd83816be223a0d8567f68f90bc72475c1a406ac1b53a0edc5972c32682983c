@@ -1,0 +1,130 @@
+**Theorem 7.3 (Attained optimal error over every lawful winding sector).**
+For every source (7.1) and every comparison target $Q\in SO(3)$, put
+$z=Q_{33}\in[-1,1]$. Then
+
+$$
+\boxed{\mathcal E_p^*(Q)=4\lambda\bigl(1-\max(z,0)\bigr).}
+\tag{7.7}
+$$
+
+The infimum is attained by an actual finite loop in $\mathcal L_p$, fixed
+independently of $h$. More precisely, for each integer $m$, with the same
+balanced input law $\mu$ and only the prescribed loop's winding fixed,
+
+$$
+\min_{u\in\mathcal L_p:\ m_u=m}\mathcal E_p(u,Q)
+ =\begin{cases}
+ 4\lambda(1-z),&m\text{ even},\\
+ 4\lambda,&m\text{ odd}.
+ \end{cases}
+\tag{7.8}
+$$
+
+If $z>-1$, a minimizing angle in each sector is uniquely determined modulo
+$2\pi$ by
+
+$$
+(\cos\theta_*,\sin\theta_*)
+ =\frac{(Q_{11}+Q_{22},\ Q_{21}-Q_{12})}{1+z}.
+\tag{7.9}
+$$
+
+If $z=-1$, every angle minimizes in each sector. For the unrestricted
+minimum, the loop has even winding when $z>0$, odd winding when $z<0$,
+and either parity when $z=0$. These conditions on angle and parity describe
+all minimizing native actions, and every one of them has a finite lawful
+loop representative. In particular, the endpoint values are
+
+$$
+\begin{array}{c|ccc}
+z&\text{minimum in each even sector}&
+  \text{minimum in each odd sector}&\mathcal E_p^*(Q)\\ \hline
+-1&8\lambda&4\lambda&4\lambda\\
+0&4\lambda&4\lambda&4\lambda\\
+1&0&4\lambda&0
+\end{array}
+\tag{7.10}
+$$
+
+Zero error occurs exactly for the proper native targets
+$Q=R_\theta\oplus[1]$.
+
+**Proof.** Proposition 7.2 reduces the error to a trace on the exact native
+image. Write $A=(Q_{ij})_{1\le i,j\le2}$ and put
+$x=Q_{11}+Q_{22}$, $v=Q_{21}-Q_{12}$. With the rotation convention of
+(4.10),
+
+$$
+\operatorname{tr}\bigl((R_\theta\oplus[\sigma])^{\mathsf T}Q\bigr)
+ =x\cos\theta+v\sin\theta+\sigma z.
+\tag{7.11}
+$$
+
+Orthogonality gives
+$\|A\|_F^2=2-(Q_{13}^2+Q_{23}^2)=1+z^2$.
+Since $Q^{-1}=Q^{\mathsf T}$ and $\det Q=1$, its $(3,3)$ cofactor gives
+$\det A=z$. Consequently
+
+$$
+x^2+v^2=\|A\|_F^2+2\det A=(1+z)^2.
+\tag{7.12}
+$$
+
+Because $1+z\ge0$, the maximum of
+$x\cos\theta+v\sin\theta$ is $1+z$. For $z>-1$ equality holds exactly
+at (7.9); for $z=-1$ both coefficients vanish and every angle attains it.
+With $\sigma=(-1)^m$, (7.5) therefore gives the sector value
+
+$$
+\lambda\bigl(6-2(1+z+\sigma z)\bigr)
+ =4\lambda-2\lambda(1+\sigma)z,
+$$
+
+which is (7.8) at the matrix level. Maximizing over both signs replaces
+$\sigma z$ by $|z|$, so the maximum trace is
+$1+z+|z|=1+2\max(z,0)$. This proves the lower bound in (7.7) and the
+listed necessary and sufficient conditions on a minimizing native action.
+
+To realize every such action without passing to a closure, apply the
+finite reachability of §§3.2–3.3 and the area formula of Theorem 3.7 as
+follows. For the fixed source (7.1),
+
+$$
+X=Y=a+b,\qquad Z=8b,\qquad r=2(a+b),\qquad
+\kappa_0=a\in(0,a+b).
+$$
+
+Choose once and for all the second interior height $\kappa_1=a/2$.
+For any desired integer $m$ and any real representative $\theta$ of a
+desired angle, concatenate the signed winding-$m$ fixed-height circles
+at $\kappa_0$ with one of the zero-winding rectangles of Theorem 2.6,
+using probability heights $\kappa_0,\kappa_1$ and phase height
+
+$$
+\alpha=
+\frac{r(\pi m-\theta)-2\pi m\kappa_0}{\kappa_1-\kappa_0}.
+\tag{7.13}
+$$
+
+The circle part has signed area $2\pi m\kappa_0$ and the rectangle has
+signed area $\alpha(\kappa_1-\kappa_0)$. The total area is therefore
+$r(\pi m-\theta)$, so Theorem 3.7 gives $u_\beta=\theta$ and winding
+$m$. The rectangle is understood as the same relative control path appended
+at the terminal phase lift of the circles. Its phase increment is zero,
+so it does not change $m$.
+
+All probability heights traversed lie between $a/2$ and $a$, a compact
+subinterval of the positive fiber $(0,a+b)$. The denominator in (7.13) is
+nonzero, its numerator is finite, and the concatenation has finitely many
+piecewise linear legs and finite phase variation. It begins and ends at
+the original source. Its parameters depend only on $p,m,\theta$, not on
+$h$. Thus it is a Definition 3.1 loop realizing the desired matrix exactly.
+Taking the minimizing angles and parities proves attainment in every
+sector and in (7.7), rather than merely approximation by lawful matrices.
+
+The table follows by substitution. Finally (7.7) is zero exactly when
+$z=1$. Orthogonality then forces the third row and column to be
+$(0,0,1)$, while the upper block is in $SO(2)$ because $\det Q=1$.
+Hence $Q=R_\theta\oplus[1]$, and the constructed even-winding loops
+realize it. $\square$
+

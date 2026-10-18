@@ -1,0 +1,36 @@
+**引理 4.1（含零标量层的末端重建，复用 V 7.1）。** 令 $Q$ 为可逆、非负且无零行的累积矩阵。合法源使 $QP$ 严格正且秩一。在原时钟 $n$ 之后考虑四个长度二的续行，记
+
+$$
+X=g(n+2)QP=\begin{pmatrix}A&B\\C&D\end{pmatrix}.
+$$
+
+按时间顺序 $MM,MJ,JM,JJ$，时钟 $n+2$ 的四个响应函数是
+
+$$
+\begin{aligned}
+r_{MM}&=A+B+C+2D+\delta,&r_{MJ}&=A+C+D+\delta,\\
+r_{JM}&=A+B+D+\delta,&r_{JJ}&=A+D+\delta.
+\end{aligned}
+\tag{4.1}
+$$
+
+它们唯一确定 $X,\delta$，不要求增益为正或非零。
+
+证明。用 $M^2,JM,MJ,I$ 左乘 $X$ 取迹即得式 (4.1)，四条轨迹各自仍有中间动作的立即读数。响应差给出
+
+$$
+B=r_{JM}-r_{JJ},\quad C=r_{MJ}-r_{JJ},\quad
+D=r_{MM}-r_{JM}-r_{MJ}+r_{JJ}.
+\tag{4.2}
+$$
+
+若 $D\ne0$，行列式零给出 $A=BC/D$，再由 $r_{JJ}$ 得 $\delta=r_{JJ}-A-D$。若 $D=0$，由 $(QP)_{22}>0$ 得 $g(n+2)=0$，故整个 $X=0$，四响应均等于 $\delta$。这同时处理负标量、正标量与零标量层。若 $X\ne0$，还可恢复
+
+$$
+g(n+2)=\operatorname{tr}(Q^{-1}X)\ne0,\qquad
+P=\frac{Q^{-1}X}{\operatorname{tr}(Q^{-1}X)}.
+\tag{4.3}
+$$
+
+若两个目标在四响应上相同且此 $X\ne0$，它们有相同的 $P,\delta$。只要它们已经共享原时钟 $0,1,2,3$ 的读数，正的源迹便确定这四处的同一增益值；三次及以下插值确定整个同一 $g$，两目标遂相同。因而在本文的这些历史上，不同目标若共有四响应，必进入零标量层。以上是 [V，定理 7.1](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_V.md) 的末端论证的完整应用，不是新增一般重建定理。∎
+

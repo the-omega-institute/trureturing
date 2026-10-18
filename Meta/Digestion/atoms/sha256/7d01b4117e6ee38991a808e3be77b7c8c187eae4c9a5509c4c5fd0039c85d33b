@@ -1,0 +1,35 @@
+**定义 54.1（同一原生观察者与证据解码）。** 固定 $n\ge3$。观察者仍取 `ActualFiniteObserverAbsentElimination.Observer`：有限完整名义载体 $E$，一个来源无关初态 $e_0$，动作
+
+$$
+\operatorname{action}:E\longrightarrow\mathcal A+\{0,1\},
+\qquad\operatorname{transition}:E\times
+\{\alpha,\beta,\mathsf{br},\mathsf{abs}\}\longrightarrow E,
+\tag{JM.162}
+$$
+
+及地址无重复的原始缓存解码 $\operatorname{decoder}:E\to\operatorname{RawHistory}$。动作、初态、转移及解码均不依未知来源，外部记录不是额外控制输入。每次实际查询固定同一不可变来源、同一纪元；精确缓存命中返回存值，未命中才读取来源并在末尾追加该地址和完整原始回复。缓存不覆盖、不删除、不填入推断回复；重复查询和缺席回复保留在按时序的外部历史中，命中不再次支付。
+
+要求对每个 $U\in W_n$ 的全部实际前缀满足原 `Legal`，并从共同初态有限终止。其初始缓存为空；已有取得以实际前缀表示，不能借 $n$ 或 $W_n$ 把来源相关记录放入初态。若另要求原 `historyAction` 在全部有限历史上因子化通过 $\kappa_{\rm hist}$，保留该要求；下述下界对含这一附加条件的观察者也成立。因子化动作不删除缓存中的四值证据。
+
+对正成员任务，原 Boolean 停止端口必须满足 $b(U)=1\Longleftrightarrow\operatorname{Pos}(U)$，不更换为整数或二元组输出。对准确 $\nu$ 或 $Q$ 任务，另明定一个来源无关、只读已经保留证据的数学消费者
+
+$$
+\Delta_n:\{0,1\}\times\operatorname{RawHistory}
+\longrightarrow Z,\qquad
+\Delta_n(b(U),\operatorname{decoder}(f(U)))=\tau(U),
+\tag{JM.163}
+$$
+
+其中 $Z=\mathbb N_0$ 或 $\mathbb N_0\times\{0,1\}$。Boolean 停止口仍为（JM.162）；（JM.163）是额外指定的任务消费者，原成员正确性本身不供应它。也可让消费者输出 $(J,z)$，其中 $J$ 是实际缓存支持的子集、回复逐条取缓存存值，且对整个 $W_n$ 中匹配这些回复的来源都成立 $\tau(U)=z$。这明确规定证书验证域，不以终止标志代替目标证据。
+
+在 $T_n$ 上取任意实际前缀 $h_0$，末配置为 $e$。令
+
+$$
+J_0=\operatorname{paid}(h_0),\qquad
+R_n(h_0)=\{p\in P_n:S_p\cap J_0=\varnothing\},\qquad
+m_0=|R_n(h_0)|.
+\tag{JM.164}
+$$
+
+这里 $\operatorname{paid}$ 仅去重实际请求的字面地址。原 `actualPrefix_semantics` 保证 $\operatorname{decoder}(e)$ 正是 $h_0$ 的按时序首次出现缓存，故其支持准确为 $J_0$，全部值来自这一个来源。
+

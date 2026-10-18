@@ -1,0 +1,52 @@
+**Theorem 73.1 (strict gap and a projection-line lower bound).** On every
+point satisfying (RC.83),
+
+$$
+\mathcal T_A(s)>\mathcal T_A^{[2]}(s).
+\tag{RC.87}
+$$
+
+Consequently every globally optimal instrument in a nonempty original
+weak finite-budget class has at least three supported-nonzero low
+projection lines, that is, $|\mathscr L(\Phi)|\ge3$ regardless of any
+additional supported-zero actual labels.
+
+**Proof.** First the entire axis layer lies strictly inside the domain
+of Theorem 68.1. Indeed $c_w<c_f$ gives
+$t\ge W/c_w>W/c_f=t_0$. At $t=t_0$, write
+$\tau_*=\tau_{\max}(t_0)$. The identities in (RC.65) give
+
+$$
+\tau_*-\sqrt\alpha
+=\frac{\beta\sqrt{u_f}(1-\sqrt{\alpha u_f})}
+       {1-\alpha u_f}>0.
+\tag{RC.88}
+$$
+
+FA's maximum-contrast formula increases with $t$, so
+$\tau\le\sqrt\alpha<\tau_*<\tau_{\max}(t)$.
+If global and layer values were equal, the explicit table in Theorem
+72.4 would be globally optimal. Its two $z$ labels both satisfy
+$0<V<tc_z$. Their endpoint heights have opposite signs, respectively
+$+$ and $-$, by (RC.71), and both physical failure directions are the
+second axis of the two-dimensional failure support. Theorem 70.1
+applied to the same certificate would imply
+
+$$
+(Z-\Delta_f)e_2=0,\qquad (Z+\Delta_f)e_2=0.
+\tag{RC.89}
+$$
+
+This forces $\Delta_fe_2=0$, contradicting
+$\Delta_fe_2=((\sqrt{37}-\sqrt{59})/16,0)^T\ne0$.
+This proves the strict gap. One line cannot have rank-two projected
+live covariance, and any two-line optimizer would belong to the layer
+just excluded. The lower bound follows, including feasible parameters
+outside the layer. $\square$
+
+The argument uses a common dual and the supported-nonzero actual-label
+unsaturated kernel, with no maximum-contrast live-completion restriction. The conclusion
+is not an upper bound of three lines and is not TC's limiting
+failure-line theorem. It does not count quantum dimension or the
+number of readable labels.
+

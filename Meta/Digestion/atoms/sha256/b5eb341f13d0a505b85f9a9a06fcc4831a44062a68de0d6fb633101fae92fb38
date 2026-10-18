@@ -1,0 +1,18 @@
+### 34.3. 最终 J 的比例分离与最终 M 的组内分离
+
+**J separates ratios only.**
+
+At t=7 the odd trace is o(7)=j+3r, which is exactly the actual final-J trace. S(7)=(7-1)(7-3)(7-5)=48, so y7J=R(7)+48\*q\*e3. Different q values give different responses because e3!=0. Each nonexceptional group is already at most one world. Therefore every nonsingleton final-J fiber lies entirely in the alpha group and retains that group's entire eligible-root list, of size at most three. This is a prediction from the acquired record, not an extra measurement.
+
+**M on the entire exceptional group.**
+
+All members of one exceptional group have the same d and H. Since e(7)=1+7b/2>0, g(7)=H(7)/(1+7b/2). At alpha, j=alpha+alpha\*b/2 and r=alpha\*b, so the J trace is alpha(1+7b/2), yielding d+alpha\*H(7). The actual M trace is 1+2alpha\*b+4b+alpha-alpha^2\*b=1+alpha+(3+5alpha/2)b after using alpha^2=1-alpha/2. Thus y7M=d+H(7)\*[1+alpha+(3+5alpha/2)b]/[1+7b/2]. Every denominator is strictly positive.
+
+**independent difference factor.**
+
+Put A=1+alpha, B=3+5alpha/2 and C=7/2. Cross multiplication gives (A+B\*b1)(1+C\*b2)-(A+B\*b2)(1+C\*b1)=(B-A\*C)(b1-b2). Here B-A\*C=3+5alpha/2-7/2-7alpha/2=-1/2-alpha, which is nonzero. The difference of the rational factors is consequently (-1/2-alpha)(b1-b2)/[(1+7b1/2)(1+7b2/2)]. Hence H(7)!=0 makes M injective on the WHOLE exceptional group; H(7)=0 makes every exceptional world's J and M response equal to d.
+
+**global action boundary.**
+
+If every ratio group is a singleton, J separates the entire prefix fiber. If the exceptional group has multiple worlds and H(7)!=0, M separates that group, but a possible additional nonexceptional world must still be compared with every exceptional M prediction before M is called injective on the union. Pairwise existence of some separating action is not one action separating an arbitrary finite union. If H(7)=0 and the exceptional group contains at least two worlds, neither final action separates the entire fiber. These statements use the complete candidate fiber before choosing an action and claim no general successful quadratic policy.
+

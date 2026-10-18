@@ -1,0 +1,81 @@
+**引理 13.1（整个实际子纤维上的末端预测对单射）。** On each
+$\mathcal C_{x,d}$, the two normalized seventh predictions
+
+$$
+R=d+f(7)(k+1)\ell=d+\frac{p_7}{k},\qquad
+S=d+f(7)((k+2)\ell-r)
+\tag{13.1}
+$$
+
+jointly determine the complete world. They are respectively the
+seventh-$J$ and seventh-$M$ predictions after the actual fifth and
+sixth $J$ readings. No nonzero-terminal-gain premise is required.
+
+Proof. First exclude a world on $H_p$ with
+$f(4)=f(6)=f(7)=0$. A nonzero polynomial of degree at most three
+with these three distinct roots must be
+
+$$
+f(T)=a(T-4)(T-6)(T-7),\qquad a=d/168\ne0,
+\tag{13.2}
+$$
+
+where the initial reading gives the value of $a$. Put $j=u+v=k\ell$.
+The first three noninitial readings in (12.1) imply
+
+$$
+j=\frac{28(d-24)}{15d},\qquad
+\ell=\frac{21(d-48)}{5d},\qquad
+j+\ell=\frac{14(d-312/5)}{d}.
+\tag{13.3}
+$$
+
+Adding the first two and comparing with the third forces
+$d=1344/17$, then $j=13/10$ and $\ell=33/20$. Thus
+$u=\ell-1=13/20$ and $v=j-u=13/20$. But
+$uv=169/400>1/4$, whereas $r(1-r)\le1/4$, contradicting
+(12.18). Lower degrees cannot evade this argument because three
+distinct roots already force degree three. Hence the root set
+$\{4,6,7\}$ is impossible on this parent.
+
+Consider two worlds in the same $\mathcal C_{x,d}$ with equal
+$R,S$. Put $e=x-d$ and $h=R-d$. Another coefficient identity is
+
+$$
+3p_5+p_7=\frac{4(72-d)k+d-24}{5}.
+\tag{13.4}
+$$
+
+By $p_5=ek$ and $p_7=hk$ it gives
+
+$$
+3e+h=\frac{4(72-d)}5+\frac{d-24}{5k}.
+\tag{13.5}
+$$
+
+If $d\ne24$, equality of $x,R,d$ fixes $k$ uniquely, because
+$k>0$ and $d-24\ne0$. If $d=24$, the fifth equation alone is
+$e=-48k+144/5$, again fixing $k$ without a singular division.
+
+Suppose $d\ne0$. Equation (12.14) now fixes the same $\ell$,
+and (12.7) gives the same entire gain for both worlds. If
+$f(7)\ne0$, equality of $S$ in (13.1) fixes $r$. If $f(7)=0$,
+the preceding exclusion implies $f(4)\ne0$, so the common actual
+fourth reading fixes $r$ by (12.15). In either case the complete
+worlds agree. This includes the stratum where both terminal
+predictions themselves equal $d$.
+
+Suppose instead $d=0$. Lemma 12.3 gives $k=\kappa$,
+$r=b\ell-1$ and $f(7)=c_7/\ell$ with $c_7>0$. Consequently
+
+$$
+S=c_7\left(\kappa+2-b+\frac1\ell\right).
+\tag{13.6}
+$$
+
+This is injective in $\ell>1$; for distinct positive
+$\ell_1,\ell_2$, the response difference is
+$c_7(\ell_2-\ell_1)/(\ell_1\ell_2)\ne0$. Equal $S$ therefore
+fixes $\ell$, then $r$ and all of the target. Thus in this case
+even $S$ alone is injective. All cases prove the assertion. ∎
+

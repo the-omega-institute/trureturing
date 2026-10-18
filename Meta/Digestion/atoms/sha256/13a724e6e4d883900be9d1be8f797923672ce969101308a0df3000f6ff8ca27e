@@ -1,0 +1,30 @@
+**Proposition 29.7 (Compiler, deployed descriptor and initialization).** Let $B_{\rm in}$ be the total binary length of the supplied rational band and risk descriptions, including any unreduced or padded representation. Fixed-model preparation and rational compilation are outside the deployed bank and are separately paid. The compiler retains only a bounded compiled descriptor for deployment; it never copies an arbitrary input fraction into a $w$-only online word.
+
+Proof. Apply owner Proposition 22.6 explicitly as follows. Its fixed-degree preparation computes $A_i$, the polynomials (22.28), and the doubling certificate $T_0$; coefficient clearing supplies the four integer polynomials and the fixed $B$ here. If $B_{\rm mod}$ counts those fixed descriptions, that supplier charges the coefficient generation separately and the doubling search by
+
+$$
+O\!\left((1+\log(T_0+2))(B_{\rm mod}+\log(T_0+2))^2\right)
+$$
+
+bit work and $O(B_{\rm mod}+\log(T_0+2))$ workspace, up to its absolute fixed-degree constants. Thereafter its band preprocessing (22.57) applies with this input's $u,v,\rho$:
+
+$$
+K_{\rm pre}=O\!\left(B_{\rm mod}+(T_0+20)(B_{\rm in}+\log(T_0+2))+1\right),
+\qquad
+\text{work}=O\!\left((1+\log(T_0+2))K_{\rm pre}^2\right).
+\tag{29.15}
+$$
+
+The correspondence is exact: evaluate the same $G_{17}(u,T_0)$ and moment rational functions, compute $h$ by risk comparisons, and replace $R_\alpha$ by the identical rational expression $h+2+2\delta_9=R$. Equation (28.1) then uses the same positive-denominator rational operations and integer ceiling. From $W$ the compiler obtains $m$ by power-of-two comparisons, and then $b,P,L_0,\lambda,w$ by fixed integer operations. These extra shifts/comparisons and descriptor padding take $O(K_{\rm pre}^2)$ work and $O(K_{\rm pre})$ workspace after increasing the supplier's fixed constants: $h=O(B_{\rm in}+1)$ and the binary length of $W$ is already bounded by $K_{\rm pre}$. No logarithm of a real quantity is evaluated by an oracle. The existence choice of a rational surrogate is separate from these finite rational-input compilation costs.
+
+The deployed immutable description is the fixed local-transition schema and its static call graph, together with exactly 96 $w$-bit words: the eighty coefficient magnitudes and the sixteen compiled fields in Definition 29.4. Coefficient signs are fixed graph branches. The schema describes width and endpoint domains using the stored integer $w$; it is not an explicitly printed exponentially large transition table. The fixed schema can be encoded with a numerical constant $C_{\rm graph}=2^{48}$ bits: fewer than $2^{30}$ mode records, each of at most $2^{12}$ bits specifying its Boolean guards, at most four head/bit actions and its fixed successor labels, leave space for all graph headers and fixed coefficient-sign branches within that constant. Endpoint tests use the width symbol, whose integer value is in the compiled fields. Its description length therefore satisfies
+
+$$
+D_{\rm dep}\le C_{\rm graph}+96w.
+\tag{29.16}
+$$
+
+Here $C_{\rm graph}$ is independent of the band and risk, since the graph has the fixed bounds in Definition 29.4, fixed cell selectors and fixed polynomial degree. Width-dependent scalar fields are among the 96 words. Raw fractions, $d_{\min}$, moments and other compiler intermediates are discarded; their construction is charged by (29.15). A redundant long encoding of a fixed numerical band therefore affects preprocessing, without becoming hidden online storage.
+
+Initialization first clears the 256 cells by bounded sweeps. It then copies the 96 immutable words, one bit at a time, into their corresponding bank cells; its call sites for the 96 fields are unrolled. The descriptor address is a field in $\{0,\ldots,95\}$ and a bit position in $\{0,\ldots,w\}$, so it needs at most $7+\lceil\log_2(w+1)\rceil\le a$ bits, using an already counted initialization pointer. That pointer has an immutable-source role during copying, fixed by the mode; the destination pointer has the bank role. Thus no extra uncounted memory-kind selector is required. The fixed graph is selected by the counted 30-bit control label and is never addressed as mutable data. Each field's sentinel ends its copy before dereference. An optional serial descriptor counter is at most $96w<2^w$ and fits a reserved word. No raw input-description address is needed. The same head/selector budget covers clears, copies and resets; endpoint-dependent constants are read-only until copied, and every copied field fits because of (29.1), (29.10) and $w\ge128$. Finally set $M=v=1$, clear the logical cells and flags as in Lemma 29.5, and enter initial wait. Preparation of known word one or zero is a bounded sweep. This is the initialization already counted by $2^{34}w^3$; it uses the complete bank and heads of (29.14). The graph itself remains immutable and is charged in $D_{\rm dep}$, rather than copied to an uncounted program tape. After initialization no mutable descriptor address persists outside the bank and no descriptor access carries a source observation. $\square$
+

@@ -1,0 +1,112 @@
+**Theorem 316.2 (Complete support and eight-late necessity).**
+This score has
+
+$$
+\begin{gathered}
+\beta=(0,76,304,380,380,380,304,304,304,304),\quad K=3952,\\
+\sum P=912,\quad T=304,\quad
+W=B_N=B_O=1292,\quad\Delta_N=\Delta_O=0.
+\end{gathered}
+\tag{316.1}
+$$
+
+For every $L\ge10$, every ordered $3\le j_1<\cdots<j_8\le L$,
+every real finite profile $(b,e)$ and the same complete feasible
+$N$ allocation of any finite mass,
+
+$$
+b_2+4b_{j_1}+5b_{j_2}+5b_{j_3}+5b_{j_4}
+ +4b_{j_5}+4b_{j_6}+4b_{j_7}+4b_{j_8}\le1+52e.
+\tag{316.2}
+$$
+
+The same holds for $O$. No order, hull or normalization premise is
+imposed on this finite affine implication. For every entire sequence
+(315.2) and every original competitor in either class,
+
+$$
+52e_a(A)\ge a_2+4a_{j_1}+5a_{j_2}+5a_{j_3}+5a_{j_4}
+ +4a_{j_5}+4a_{j_6}+4a_{j_7}+4a_{j_8}-1.
+\tag{316.3}
+$$
+
+**Proof.** Summing correct rows by first zero and all weights gives
+the displayed $\beta,K$. The anchor earns all 912 union units, all
+304 positive units and the 76 class-2 correct units, totaling 1292.
+Here is the full integer cell certificate for (315.8). Each entry
+maximizes over all eleven labels, in cell order $00,01,10,11$.
+
+| Pair | Maxima in $00,01,10,11$ |
+| --- | --- |
+| 1,2 | $(76,384,452,380)$ |
+| 1,3 | $(228,232,380,452)$ |
+| 1,4 | $(228,232,380,452)$ |
+| 1,5 | $(304,156,380,452)$ |
+| 1,6 | $(380,80,380,452)$ |
+| 1,7 | $(320,140,304,528)$ |
+| 1,8 | $(198,262,418,338)$ |
+| 1,9 | $(369,91,315,447)$ |
+| 1,10 | $(333,127,367,389)$ |
+| 2,3 | $(228,224,380,460)$ |
+| 2,4 | $(228,224,380,460)$ |
+| 2,5 | $(304,148,380,460)$ |
+| 2,6 | $(380,72,380,460)$ |
+| 2,7 | $(226,232,328,436)$ |
+| 2,8 | $(350,110,304,498)$ |
+| 2,9 | $(241,219,437,327)$ |
+| 2,10 | $(367,85,333,431)$ |
+| 3,4 | $(228,304,380,380)$ |
+| 3,5 | $(304,228,380,380)$ |
+| 3,6 | $(380,152,380,380)$ |
+| 3,7 | $(320,212,304,456)$ |
+| 3,8 | $(388,144,304,456)$ |
+| 3,9 | $(439,93,315,445)$ |
+| 3,10 | $(434,136,304,418)$ |
+| 4,5 | $(304,228,380,380)$ |
+| 4,6 | $(380,152,380,380)$ |
+| 4,7 | $(320,212,304,456)$ |
+| 4,8 | $(379,162,304,447)$ |
+| 4,9 | $(398,174,315,404)$ |
+| 4,10 | $(399,206,304,383)$ |
+| 5,6 | $(380,228,380,304)$ |
+| 5,7 | $(320,288,304,380)$ |
+| 5,8 | $(388,220,304,380)$ |
+| 5,9 | $(450,158,304,380)$ |
+| 5,10 | $(472,136,304,380)$ |
+| 6,7 | $(320,364,304,304)$ |
+| 6,8 | $(388,296,304,304)$ |
+| 6,9 | $(450,234,304,304)$ |
+| 6,10 | $(472,212,304,304)$ |
+| 7,8 | $(388,160,304,440)$ |
+| 7,9 | $(450,98,304,440)$ |
+| 7,10 | $(472,76,304,440)$ |
+| 8,9 | $(450,166,304,372)$ |
+| 8,10 | $(472,144,304,372)$ |
+| 9,10 | $(472,206,304,310)$ |
+
+These values are specified by finite addition of the displayed row
+weights and a maximum over all eleven labels. For example, pair
+$(1,2)$ has sole class-1 scored union weight 76 in cell $00$,
+class-1 union total 384 in $01$, and the indicated maxima 452 and
+380 in the other two cells. Every quadruple sums to at most 1292.
+The anchor attains 1292, so the complete-support rule of 315.3
+proves both zero excesses, including all shorter, repeated, reversed,
+outside-query and outside-label cases at every ordered embedding.
+
+For the same complete $\lambda$, (315.6) now gives
+
+$$
+Yh=76\bigl[b_2-1+4b_{j_1}+5b_{j_2}+5b_{j_3}+5b_{j_4}
+ +4b_{j_5}+4b_{j_6}+4b_{j_7}+4b_{j_8}-52e\bigr]
+ \le M\Delta_N(Y)=0.
+$$
+
+Division by 76 proves (316.2). This uses the full row inequality,
+with negative singleton demands unchanged, and never divides by $M$.
+For original rules apply the exact closed-cap and prefix correspondence
+315.3, then decrease caps to the actual error. When the error is one,
+the weighted amplitude sum is at most 36, less than $1+52$; caps
+above one are likewise immediate. This proves (316.3) for arbitrary
+addresses, full-carrier outputs, inactive selected addresses and every
+actual positive tail. $\square$
+

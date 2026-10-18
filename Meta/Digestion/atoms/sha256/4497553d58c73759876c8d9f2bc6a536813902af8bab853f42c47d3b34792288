@@ -1,0 +1,8 @@
+**Corollary 4.3 (static/serial correspondence on this family).** For the
+all-negative fiber, the positive branch of Theorem 4.2 is equivalent to the
+existence of a uniformly finite-read serial service under the common-state
+contract. This is [ARH, (2.3)][ARH] applied after the exact cell and target
+analysis above; updates cannot supply an unlisted source distinction. The
+negative pumps are finite sources for the original target, not an assertion
+that an infinite model is required.
+

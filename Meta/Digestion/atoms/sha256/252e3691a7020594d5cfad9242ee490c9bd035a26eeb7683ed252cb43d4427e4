@@ -1,0 +1,27 @@
+**Convention 7.1 (two different joint retention tasks).** Sections 7–8
+concern exact current-height domain selection together with live-state
+recovery. Section 9 concerns retention of a received command until a later
+wait/execute choice. Their assistance and guard hypotheses differ. Neither
+task is the acquisition of an arbitrary original past or retention of its
+whole event archive. All conclusions are ordinary mathematical deductions;
+the source, canonical instrument and the rigidity calculation in §4 remain
+credited inputs. Repository suppliers for §§7–10 are selected at
+`773d4d43b91abd515be1059283d79dd6572fc174`.
+
+Use the double-wall source (QC.1)–(QC.4), one fixed positive preparation,
+the negative state-phase convention, and the actual family
+
+$$
+\psi_{k,\beta,m}=\sqrt Z e_2+e^{-i\beta}
+ \left(\sqrt{2k}U_++(-1)^m\sqrt{2(c-k)}U_-\right),
+\qquad 0<k<c,\quad \beta\in\mathbb R,\quad m\in\mathbb Z.
+\tag{QC.37}
+$$
+
+The entire signed integer is retained in the real source lift, although
+this specimen ray depends only on its parity. The original class still has
+arbitrary finite durations, including zero, strict positive support and
+both regularity alternatives of Definition 1.2. The finite controls below
+select members of that class, without imposing a common resource bound on
+all original histories.
+

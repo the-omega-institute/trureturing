@@ -1,0 +1,23 @@
+### 70.2 From actual output error to orthonormal records
+
+It suffices to rule out δ≤1/40000; larger errors already satisfy the lower bound. Fix such a competitor and Stinespring isometries U_A,U_B. For a logical basis state |f,i>, write
+
+    U_A|f,i>=|f>e_(f,i)+b_(f,i),
+
+where b_(f,i) is orthogonal to the output-|f> subspace; use analogous vectors h and c for B. The encoded output and its ideal pure state differ in trace norm at most δ. Since their difference has trace zero, its expectation against any effect has absolute value at most δ/2. Testing the effect |ff><ff| gives
+
+    ||e_(f,i)||² ||h_(f,i)||²≥1−δ/2.
+
+Both factors are at most one, so each is at least1−δ/2. In particular ||b_(f,i)||²,||c_(f,i)||²≤δ/2.
+
+For each fibre let E_f:C²→H_EA have columns e_(f,0),e_(f,1), and let B_f have columns b_(f,0),b_(f,1). Isometry of U_A restricted to that fibre gives
+
+    E_f* E_f=I_2−B_f*B_f,
+    0≤B_f*B_f≤δ I_2,
+
+where the second bound follows from its trace≤δ. Since δ<1, the polar-normalized frame V_f=E_f(E_f*E_f)^(-1/2) is an isometry and
+
+    ||E_f−V_f||op≤1−sqrt(1−δ)≤δ.                       (2)
+
+This proves existence of two orthonormal records in the actual environment, even if its dimension was not fixed in advance. On the other party obtain orthonormal frames W_f with the same bound. These auxiliary frames are used to obtain a geometric obstruction; no claim is made that rounding preserves the original physical channel.
+

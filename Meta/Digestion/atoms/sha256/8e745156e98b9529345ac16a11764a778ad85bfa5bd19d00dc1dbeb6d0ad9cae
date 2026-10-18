@@ -1,0 +1,4 @@
+**Limit 372.4 (A merger need not be affordable).** At $L=3$, take a mass-one $N$ pair $(2,3)$ with cell labels $(2,0,0,0)$ in $00,01,10,11$ order. Prescribe only $d_C(100)=1$ and $d_A(001)=1$, with all other demands zero. This complete allocation is feasible. Merging its first cells while keeping the complement fixed would require both $x(2)\ge1$ and $x(0)\ge1$, impossible at mass one. Nevertheless the stopped pair $(1,2)$ with labels $(0,2,0)$ meets those same demands. A failed merger is therefore not an all-$O$ obstruction, and Theorem 371.2 gives no universally successful merger order.
+
+Separate row affordability also cannot replace the common-vector test: $m=1$, $A=0$, $c_1=c_2=1/2$, $u_1=u_2=1$ has an affordable correct pair and an affordable union row for each label separately. Jointly (372.3) requires mass $3/2$. The same budget must fund all rows.
+

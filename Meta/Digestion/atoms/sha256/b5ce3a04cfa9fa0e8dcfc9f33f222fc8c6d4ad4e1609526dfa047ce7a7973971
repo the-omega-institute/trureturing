@@ -1,0 +1,13 @@
+## 5. Exact joint cofinal contact over the complete input
+
+Keep any input (FNS.2) and any supplied finite set $B$ of distinct attained
+complete $Q$-rows. Use the full normalized covers in (FNS.21a), allowing
+every piece its own dimensions and independent parameter names across rows.
+For each piece, compactify its scalar domain to
+$\overline{\mathbb N}^{k_b}$, where
+$\overline{\mathbb N}=\mathbb N\cup\{\infty\}$, finite values are isolated
+and neighborhoods of $\infty$ are lower bounds. Complete residual trees in
+$\widehat{\mathcal T}$. The continuous extended map
+$\widehat U_{r,b}$ replaces $T_{\infty+d}$ by $\Omega$; it evaluates pairs
+and fixed powers by their native completed laws.
+

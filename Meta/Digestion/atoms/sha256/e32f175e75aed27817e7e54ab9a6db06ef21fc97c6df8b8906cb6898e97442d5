@@ -1,0 +1,43 @@
+**定义 44.1（按实际半径制备的两层与区间来源）。** 沿用定义37.1、40.1的 $W=E\oplus\mathbb H$、$E=\operatorname{Im}\mathbb H$、$C=P_E$、固定单位锚 $d=e_4$ 和原菜单 $\Gamma_d$。公开、精确供应
+
+$$
+0<L<U,\qquad |n|=1,\qquad 0<\tau<1,\qquad
+\kappa=\sqrt{1-\tau^2},
+$$
+
+并分别声明初始实际来源
+
+$$
+\begin{aligned}
+\mathcal D_2(n,L,U,\tau)
+ &=E\times\{b:|b|\in\{L,U\},\ \langle b,n\rangle\ge\tau|b|\},\\
+\mathcal D_I(n,L,U,\tau)
+ &=E\times\{b:L\le|b|\le U,\ \langle b,n\rangle\ge\tau|b|\}.
+\end{aligned}
+\tag{44.1}
+$$
+
+这里角度约束使用每个实例自己的固定初始半径，不是把 $\tau|b|$ 换为 $\tau L$ 或 $\tau U$。可见 $a\in E$ 任意、无界且与 $b$ 独立；没有逐来源的半径标签。来源准备和公共 $n,L,U,\tau$ 的校准均另行供应，不是原生FIB或物理事实。限制仅施于初态，后继状态不要求留在 (44.1) 内。
+
+目标始终为同一个 INITIAL $x=(a,b)$，亦即由定理37.2分离的原完整有限词响应。精确致动及幅度合同为
+
+$$
+A_c(a,b)=(c\times a,bc),\quad c\in E,\ |c|\le1,
+\qquad A_d(a,b)=(\operatorname{Im}b,-a).
+\tag{44.2}
+$$
+
+Read 返回 $Cz+e$，$|e|\le\delta$、$\delta\ge0$，且不改变当前状态；$\delta=0$ 为精确Read。误差可联合对抗、相关并依赖全部历史，不供应独立读、重抽样或平均精度。控制器确定、因果、对所有来源有相同初始化，只从实际已取得的有限记录前缀决定下一Read、动作或停止。完整记录保留每个实际Read、动作身份及停止信息。只有一个被覆盖的当前寄存器，没有重置、初态副本、混合控制、反事实端口、逐源标签或极限Read。允许有限或可数事件序列；每条合法记录必须给出一个 $W$ 值初态估计，可数记录的函数不增添动作权限。
+
+按定义43.1的同一全记录合同，记至多 $N\in\mathbb N_0$ 次破坏性更新下的全初态欧氏风险为
+
+$$
+\mathcal R_N^J(\delta;n,L,U,\tau)
+ =\inf_\pi\sup_{x\in\mathcal D_J}
+   \sup_{|e_t|\le\delta}|\widehat x_\pi(M)-x|,
+\qquad J\in\{2,I\}.
+\tag{44.3}
+$$
+
+估计不必属于来源。近似目标是这个欧氏距离，没有把它替换为所有无界长度词响应的统一误差范数。
+

@@ -1,0 +1,45 @@
+**Proposition 253.4 (Conic division changes the auxiliary profile).**
+For the $\lambda$ in Theorem 253.2, the normalized law
+$p=\lambda/M$ is feasible at
+
+$$
+(x,e_x)=(1-M^{-1})\alpha+M^{-1}(b,e),\qquad e_x=e/M,
+\quad D_x=D_b/M.
+\tag{253.6}
+$$
+
+Its coordinates need not satisfy $x_2=x_3$, so it need not belong
+to $H_L$. Dividing need not give cap feasibility at the unchanged
+$(b,e)$.
+
+**Proof.** Affineness gives
+$Z_N(\lambda/M)=\mathbf r+G_N\lambda/M\ge
+\mathbf r+h(b,e)/M=d(x,e_x)$. The coordinates remain ordered
+between zero and one, so normalized repair theorems apply without
+requiring membership in $H_L$. The formula for $D_x$ uses
+$\sum_i\alpha_i=2$.
+
+For a full same-profile counterexample, take $L=5$, $b_i=1$,
+$e=1/2$, $T_*=O(3,4;3,4,5)$ and the anchor $R$.
+This point belongs to $H_5$. The conic vectors
+$\lambda_0=\tfrac12 e_{T_*}$ and
+$\lambda_1=\lambda_0+e_R$ have masses $1/2$ and $3/2$;
+both satisfy every full $N$ and $O$ demand at this same point.
+For first zero one or two their correct and pair column sums are
+$-1/2$, meeting demands $-1/2$, and their base column sum is zero,
+above $-1/2$. For first zero three, four or five the correct sum is
+$1/2$, the pair sum zero and the base sum $-1/2$, meeting demands
+$1/2,-1/2,-3/2$. The positive column sum is $-1/2$, its exact
+demand. These checks cover every suffix because $T_*$ always
+emits the actual first zero in classes three through five.
+The anchor column is zero, so adding it changes none of these sums.
+
+At the unchanged profile, division gives law errors one and $2/3$,
+respectively: early first-zero classes receive no correct mass from
+$T_*$, and $\lambda_1/(3/2)$ receives only $2/3$ from $R$.
+In contrast, padding $\lambda_0+\tfrac12e_R$ gives a mass-one
+law at cap $1/2$. Appending
+$a_{5+j}=\tfrac12 2^{1-j}$ retains positive vanishing actual tails.
+These are normalization facts about the same profile, not a strict
+separator: that profile has the padded stopped law. $\square$
+

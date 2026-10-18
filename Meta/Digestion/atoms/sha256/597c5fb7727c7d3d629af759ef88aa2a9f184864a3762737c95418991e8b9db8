@@ -1,0 +1,20 @@
+**Proposition 153.2 (An excluded profile is not a separator).** The
+profile $(a_1,a_2,a_3,a_4,a_5,e)=(17,17,17,9,9,5)/26$, with actual tail
+$a_{5+j}=5/(26j)$, $j\ge1$, is excluded from $N$ itself.
+
+**Proof.** It is positive, monotone and vanishing and has active length
+five, with $a_6=e$. For row $R4$ the left side minus right side in
+$3a_2+8a_3+6a_4+7a_5-45e\le3$ is $1/26$;
+for row $R6$ the corresponding excess over 4 is also $1/26$.
+Theorem 142.2 excludes every $N$ allocation, and Theorem 110.2 excludes
+every original $N_2$ cap witness. Thus it demonstrates incompleteness of
+a smaller old cut list, with no $N/O$ separation. $\square$
+
+For positive-$\kappa_3$ profiles, raw saturated $J5\le9$ is not used.
+As in Section 137, pair $(3,5)$ with $N$ labels
+$(00,01,10,11)\mapsto(0,0,5,0)$ has $C3=14$ and $J5=10$.
+The retained full cut $K5=C3+J5\le24$ gives
+$J5\le9+(15-C3)$, with compensation coefficient one sharp for that fixed
+score correction. This concerns the score, not unrestricted exact-law
+stopped realizability.
+

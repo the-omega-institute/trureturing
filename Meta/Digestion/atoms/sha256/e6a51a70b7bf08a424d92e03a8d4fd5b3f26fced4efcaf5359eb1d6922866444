@@ -1,0 +1,58 @@
+**Proposition 13.2 (a helper read preserving three scalar diagnostics can
+lower exact original continuation).** Use the actual source (PR.26), zero
+fixed preparation phases and the **supplied**, source-bound pure helper
+
+$$
+\eta_+=\frac{(2,1)}{\sqrt5},\qquad
+\eta_-=\frac{(1,2)}{\sqrt5},\qquad \mu=4/5.
+\tag{PR.45}
+$$
+
+Grant an additional helper-only computational-basis read whose sole
+accessible helper output is its classical outcome. No coherent old-helper
+bypass, accessible measurement environment or error flag is supplied.
+The read channel is
+$\rho\mapsto\sum_{y=0}^1\langle y|\rho|y\rangle|y\rangle\langle y|$,
+tensored with identity on the specimen and actual unread fields. Thus its
+complete source-conditioned output, rather than just a marginal score,
+is specified. The resulting accessible helper states are
+
+$$
+\tau_+=\operatorname{diag}(4/5,1/5),\qquad
+\tau_-=\operatorname{diag}(1/5,4/5).
+\tag{PR.46}
+$$
+
+Before and after the read, helper-alone trace distance is $3/5$, root
+fidelity $\|\sqrt{\rho_+}\sqrt{\rho_-}\|_1$ is $4/5$, and optimal
+equal-prior parity guessing probability is $4/5$. Nevertheless:
+
+| Required successful cuts | Supplied coherent helper | Only the acquired basis bit |
+| --- | --- | --- |
+| $k_H\to k_L$ | $3/7$ | $2/7$ |
+| $k_H\to k_L\to k_H$ | $11/35$ | $1/7$ |
+| $n$ complete excursions, $n\geq0$ | $1/5+(4/5)7^{-n}$ | $7^{-n}$ |
+
+The coherent column is the credited pure-helper optimum of Theorems 5.1
+and 8.1, not a new pure-helper result. The classical column is the sharp
+equal-support consequence above. These columns compare endpoint/checkpoint
+services, not canonical exact-time/five-mode output equality.
+
+Proof. The pure-density difference already equals
+$\operatorname{diag}(3/5,-3/5)$; dephasing leaves it unchanged.
+Its positive part has trace $3/5$, giving the stated trace distance and
+optimal binary guessing value $(1+3/5)/2$. Pure-state root fidelity is
+the modulus of the ket overlap, $4/5$. For (PR.46) it is
+$2\sqrt{(4/5)(1/5)}=4/5$ as well.
+
+Here $u=2/3,v=-1/6$. Substitution in the credited (PR.14) gives outbound
+value $3/7$ at $\mu=4/5$; (PR.27) gives the excursion column. Both
+post-read states are faithful on $\mathbb C^2$, so Theorem 12.4 gives
+the other column using $s_*(k_H,k_L)=2/7$ and
+$s_*(k_L,k_H)=1/2$. For example the actual $m=0$ and $m=1$ histories
+at the same $\beta$ both yield bit zero, with probabilities $4/5$ and
+$1/5$. That bit does not certify which exact target is required. Their
+specimens are not asserted identical: Theorem 12.2 bounds every common
+converter with those specimens present. An unheralded wrong guess cannot
+be relabelled as an executed failure. $\square$
+

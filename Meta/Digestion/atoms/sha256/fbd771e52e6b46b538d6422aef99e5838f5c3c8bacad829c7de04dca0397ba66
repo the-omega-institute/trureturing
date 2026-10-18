@@ -1,0 +1,26 @@
+**定义 6.4（实际完整反侧半线擦除字段）。** 对同一 $P_\theta$ 定义
+
+$$
+\begin{aligned}
+q&=\mathbb E_{P_\theta}[X_0\mid\sigma(X_j:j\ne0)],\\
+p_{L,r}&=\mathbb E_{P_\theta}[X_0\mid\sigma(X_{-r:-1},X_{1:\infty})],\\
+p_{R,r}&=\mathbb E_{P_\theta}[X_0\mid\sigma(X_{-\infty:-1},X_{1:r})],\\
+e_L(r)&=\mathbb E_{P_\theta}(q-p_{L,r})^2,\qquad
+e_R(r)=\mathbb E_{P_\theta}(q-p_{R,r})^2,\\
+\tau_{P_\theta}(R)&=\sum_{r\geq R}(e_L(r)+e_R(r)).
+\end{aligned}
+$$
+
+$r=0$ 的有限侧为空块。两条完整反侧半线均未缩短，字段未加入隐状态、分量标签或估计标签。
+
+沿用 [EWM] 的同律熵到完整半线擦除比较：
+
+$$
+e_L(r),e_R(r)\leq\frac12R_r,\qquad
+\tau_{P_\theta}(R)
+\leq\sum_{r\geq R}R_r
+=\sum_{k\geq R}(k-R+1)a_k.
+$$
+
+该支撑比较适用于任意实际双侧平稳二进制律，右侧可为无限量。它通过有限外部块的 Bernoulli KL 比较、向联合块的熵链式提升、条件投影极限及反向律相同的块熵差得到；其前提没有有限隐状态同步或正标记词。此处只复用该接口。
+

@@ -1,0 +1,44 @@
+**命题 40.3（模五组成读口的三个标量）。** 令
+
+$$
+\rho_5:\mathbb Z^2\longrightarrow\mathbb F_5,
+\qquad
+\rho_5(U,V)=U+3V\pmod5.
+$$
+
+它满射、核为 $\Lambda_5$，并满足
+
+$$
+\rho_5(MC)=3\rho_5(C),
+\qquad
+\rho_5(\mathsf RC)=3\rho_5(C),
+\qquad
+\rho_5(SC)=2\rho_5(C).
+$$
+
+因此 $\mathsf R$ 与 $M$ 在这个共同商上给出同一个操作，但在共同直线 $\ell_5$ 上的标量分别为二、三。
+
+证明。满射及核由定理 38.3 的同余定义得到。对任意整数组成，分别展开有
+
+$$
+\begin{aligned}
+\rho_5(MC)&=V+3(U+V)=3U+4V
+               =3(U+3V)\pmod5,\\
+\rho_5(\mathsf RC)&=-V+3U=3U-V
+               =3(U+3V)\pmod5,\\
+\rho_5(SC)&=(U+2V)+3(2U+3V)=7U+11V
+               =2(U+3V)\pmod5.
+\end{aligned}
+$$
+
+这里三个末端等式的整数差依次为 $-5V$、$-10V$、$5U+5V$，故各自同余成立。第三式也与 $3^3=2\pmod5$ 相符。
+
+由核与满射，$\rho_5$ 将 $\mathbb Z^2/\Lambda_5$ 识别为 $\mathbb F_5$，上面计算的正是商作用。另一方面，定理 38.3 已直接算出 $\mathsf R(2,1)=2(2,1)$、$M(2,1)=3(2,1)$，这是子空间 $\ell_5$ 上的作用。子空间与商空间的区分可由
+
+$$
+0\longrightarrow\ell_5\longrightarrow\mathbb F_5^2
+\xrightarrow{\ \rho_5\ }\mathbb F_5\longrightarrow0
+$$
+
+明确表示：中间映射的核是该直线，右端是商，并没有把二者认作同一份带作用空间。证毕。
+

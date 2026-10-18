@@ -1,0 +1,171 @@
+**Definition 13.2 (native ingress and import).** Port 38 has an F sentinel.
+Every subsequent ingress frame is one immutable binary block followed by
+F. From installed Ready execute the client-to-handler service-token TOK,
+then the reserve CTL, for source and service tags alike. Busy or missing-token
+attempts have no executed successor. Before its first IN, Base(38) records
+the actual next base. Each of three tag bits executes IN(latch 6); EX(38);
+WR(38,latch 6); MR(38). Length reception executes IN(6); EX(38);
+WR(38,6); RD(38,5); MR(38), repeating on 1 and ending on 0.
+Thus latch 6 survives its matching write, and RD's test latch is distinct.
+
+Use the recorded Base offset with the full Seek to the new frame, skip
+its three header cells, and copy the real $U(d)$ to length scratch. Seal
+that scratch word, position it by LastScratch, and Tail(38). For each
+leading 1 use RD(length,5); IN(6); EX(38); WR(38,6); MR(38);
+MR(length). The terminal RD(0) exits. This payload body has $6d+1$
+occurrences. It uses append initialization, rather than a preallocated
+AIF payload; hence $5d+1$ is not its price. The following F append and
+frame seal are four more occurrences.
+
+Construct $U(2d+4)$ on Base scratch 34, distinct from its source length
+word on 35. Tail(34); append four 1s; LastScratch(35,0); for each leading
+1 execute RD(35); Append(34,1); Append(34,1); MR(35), with the terminal
+RD(0) exiting; append 0, sep and seal on 34. Its body after the two
+positionings costs $8d+20$. Descriptor creation then counts port 36's
+preceding descriptor Fs, appending $U(c)$ on 34. No other Base-scratch
+word is appended in between. Its last three words are therefore base,
+measured frame length and creation ordinal: LastScratch offsets 2, 1 and
+0. Copy these to the descriptor with literal owner/port and flags 10;
+append F and seal. Its actual payload length is $2d+4$. In particular
+this length construction never tries to traverse and append on the same
+ordinary head. All source/length/scratch positions use §11's scans;
+no empty-port price is used.
+
+Import of this sealed frame uses LastBank(38), now scanning its binary
+payload between Fs. Clear a word register, RD at each payload cell; on
+0 or 1 choose the corresponding fixed cons assignment, then MR(38).
+At F stop and Reverse that register. Word assignments never touch port
+38, so their scans cannot lose this actual source position. The RD,
+finite bit test, complete bank assignment and MR are all paid. This
+specifies the import's expansion, rather than an instruction that reads
+a finite string in one step. Installation-manifest import uses the same
+routine on its actual sealed field blocks on port 37.
+
+At handler entry completed-frames still denotes exactly the completed
+predecessor frames. The current frame has already physically sealed on
+38, but is appended to that word only on common frame return. Thus Cover
+freezes the preceding Ready, before this frame's admission work, rather
+than a point selected later in its own computation. The entrance is the last post-acknowledgement Ready before its
+reserve/admission CTL, as specified in Definition 7.1.
+The distinction pays for admission and fixes its actual target boundary.
+
+A metadata word on scratch 34 or 35 is not imported while the bank
+compiler is changing that same scratch. Use the following native staging
+bridge whenever a physical descriptor/length must enter a word register.
+Port 37 is an append stream of immutable fields; its installation manifest
+is a frozen prefix, not a variable meaning its latest block.
+
+For `Stage34(e)`, Tail(34), Tail(37) and Base(37) append its new base to 34, thereby
+increasing the saved source word's backwards offset from $e$ to $e+1$.
+Tail(35); construct its actual bit length there as $1U(n)$, using one literal 1
+and a unary copy from that saved $U(n)$ on 34, then sep and seal.
+Reposition that saved word and copy it bitwise to 37; append F and seal.
+Count descriptors, then write this staged block's full descriptor with
+its new base at offset 1 on 34, length on 35 and ordinal at offset 0.
+For `Stage35(e)`, Tail(34); Base(37) again writes its base on 34, while the source
+word on 35 does not move to a different record. Construct $1U(n)$ on 34
+from that source by literal 1 plus unary copy; copy the original source
+to 37 and seal; append the creation ordinal on 34. Its base, length and
+ordinal now have offsets 2, 1 and 0, all on 34. Copy them to its descriptor.
+All source, count and destination ports in these recipes are distinct.
+
+Import the resulting latest sealed binary block from 37 with the same
+RD/cons/MR/Reverse loop used on 38. Assignment helpers never touch 37.
+At initialization use the following full-prefix graph `ManifestPrefix(37)`
+instead. Its input is the complete sealed installation prefix, before any
+staged fields have been appended. Its first ordinary cell is the actual F
+sentinel created by $L$, distinct from every field's following F. Initialize
+the output-list register by $f:=\epsilon;\ f:=0f$, the encoded empty list.
+Then execute **Home(37); MR(37); MR(37)**. Home ends at L; the first move
+reaches the sentinel and the second reaches the first field, its delimiter
+if empty, or R if there are no fields. Neither move performs a symbol test
+or a word assignment. The sentinel is never passed to the field loop.
+
+| Native label | Actual row/word expansion and successor |
+| --- | --- |
+| BeginField | RD(37,4), testing R. On R go to Done. Otherwise execute the compiled assignment $t:=\epsilon$, then go to FieldRead. |
+| FieldRead | RD(37,4), testing F. On F go to FinishField. Otherwise execute CTL testing latch 4 for 0; on 0 go to Bit0. Otherwise execute CTL testing that same latch for 1; on 1 go to Bit1, otherwise take internal-description failure. |
+| Bit0 / Bit1 | Execute the compiled literal assignment $t:=0t$ / $t:=1t$, then one MR(37) and return to FieldRead. |
+| FinishField | Reverse($t$) into a fresh word temporary; AppendItem($f$,that word) into $f$; execute one MR(37), then go to BeginField. |
+| Done | Execute the compiled copy $\mathrm{manifest}:=f$ and continue Initialize. |
+
+The CTLs in FieldRead have no ordinary-cell effect. Their successful bit
+branch selects a literal cons before any bank helper can overwrite latch 4.
+BeginField's latch is not reused after its clearing assignment: FieldRead
+performs its own new RD. Reverse and AppendItem have Definition 12.1's
+acyclic expansions, not native string instructions. Their finite exits,
+like the bit assignments' exits, carry the resulting actual bank parity.
+The compiler uses the finite product with that parity, not a return stack.
+
+Port 37 is not extended during this scan. There is no variable ordinal
+lookup before its record has been imported. The native fields have
+Definition 14.2's fixed order; lists within a field use their explicit
+wire grammar. The final saved-head-table field has its own F. A field's
+F always emits one word, including an empty word; only R at BeginField
+ends the list. The old-frame list itself uses its explicit terminal 0.
+Only after full import may channel staging append further blocks to 37.
+Manifest lookup thereafter is in the immutable bank word, not latest-37.
+The physical descriptor words have thereby entered actual word-register
+cells, with their provenance. No word assignment assumes a mathematical
+length or reads scratch through a head that its own bank rebuild moves.
+
+For channel positioning, save the sender, mailbox and receiver descriptor
+words as three native staged records on 37 immediately upon their creation,
+before the next Base or bank operation. A fixed finite backwards-F scan
+selects the third, second or last of those blocks. Within one descriptor,
+skip the fixed number of unary fields by RD; MR through its 0, and copy
+the desired base/length field to distinct scratch by the complete unary
+copy. Seek uses that actually copied base; a copy loop uses that actually
+copied length. These three records remain the latest three throughout the
+native setup/copy sequence; no bank assignment or other staging occurs
+inside it. Before mailbox allocation, read the sender staged descriptor's actual
+length field into 35; before receiver allocation, read that same field
+from what is then the second-last staged block. Thus staging's own measured
+wire length is never reused as the payload length. A staged descriptor
+itself is copied from the latest complete
+port-36 record, using the analogous backward-F scan, so measuring its
+new stage Base does not destroy its source fields. Staging has its own
+Base, measured payload length, full descriptor, F and seal. The last
+three rule specifies records in order sender, mailbox, receiver, not
+unacquired native addresses. After that native sequence, banks are
+unchanged and the word programme resumes at its preserved finite parity.
+The cost grammar of §11 applies to every one of these scans and appends.
+
+The native descriptor staging just used has a concrete two-pass body.
+Tail(34); Base(37) first records its destination base. Locate the latest
+port-36 descriptor by Tail(36); ML; ML and backward RD/ML until the
+preceding F or L; MR gives its first bit. Tail(35); scan its bits through
+but excluding its terminal F, appending one 1 on 35 per bit; append 0,
+sep and seal on 35. Reposition that same port-36 descriptor, Tail(37),
+and copy each bit by RD(36,4); Append(37,latch 4); MR(36); exit on F.
+Append F and seal on 37. Only now count the old descriptor Fs and append
+this staging block's full descriptor. Thus its descriptor source is
+unchanged throughout both passes; measuring the stage never moves its
+source through an overwritten scratch head. Staging a descriptor does
+not recursively stage its newly created staging descriptor.
+
+When allocating mailbox or receiver, flags 11 describe the initialized,
+still writable interval during copying. Those setup descriptors and their
+staged copies are historical placement records, not claims that a sealed
+receiver is currently writable. Before final availability the native
+controller appends a sealed completion record: copy the setup's actual
+owner/port/base/length/origin, its completed seal kind and flags 10.
+It uses the same native staged-field unary copies and literal appends,
+with no bank assignment. Completion records go on port 39 as tagged
+binary records with Base/length/descriptor/F/seal, after their own dry
+count and real copy. They are not new staging blocks on 37, so the three
+placement records retain their positions throughout both copy stages.
+The destination's live token/seal state has that same completed successor;
+no current permission is inferred from an older flag 11. These additional
+records, copies, tests and seals belong to the channel cost, beyond its
+$12l+6$ two-body subtotal.
+
+Before either payload copy, recover both endpoint bases from the three
+staged placement records and Seek each actual endpoint. Then copy the
+sender's payload length afresh from its staged record to 35 and position
+that latest word with LastScratch(35,0). Earlier allocations and descriptor
+staging changed this scratch, so its old head or latest value is never
+reused as though still the payload counter. The six-row body alone then
+advances its endpoints and this counter. No staging operation occurs
+inside it.
+

@@ -1,0 +1,17 @@
+**Definition 2.2 (Common design, complete configurations and compliance).** At each selected known common $q$, the observer has one finite transition table and one source-independent initialization used under both true labels. The design can depend on the public pair, $q$, $\alpha$ and the selected cutoff. The number of complete persistent configurations counts control, every simultaneously retained coordinate or category, retained random information and the two internally emitted labels. It counts all possible configurations, including ones arising on rare histories. Fresh transition coins are independent of the source and of earlier fresh coins; no retained random tape or seed is free.
+
+The fixed table, including arbitrary exact real transition probabilities, is immutable design information whose precision and design computation are unpriced. At runtime the table uses only the current counted configuration, the next actual bit and fresh randomness. It reads one uninterrupted consecutive history of (2.2). There is no external clock, age, read or gap counter, program state, archive, skipped bit, free gap, source reset, extra source, hidden source label, probability response or parameter query. The cost tally is not an input. The decision is emitted internally; no decoder from stopping time is available.
+
+If the read prefix is $X_0,\ldots,X_{T-1}$, its paid cost is $T$. This includes the stationary first wait, all read zeros and ones, and the terminal read. A compliant table satisfies all six conditions
+
+$$
+\begin{gathered}
+\mathsf P_0(D=1)\le\alpha,\qquad \mathsf P_1(D=0)\le\alpha,\\
+\mathsf P_0(T<\infty)=1,\qquad \mathsf P_1(T<\infty)=1,\\
+\mathbb E_0T<\infty,\qquad \mathbb E_1T<\infty.
+\end{gathered}
+\tag{2.3}
+$$
+
+These are pointwise obligations at the selected common $q$. They require neither one table independent of $q$ nor testing with an unknown nuisance parameter.
+

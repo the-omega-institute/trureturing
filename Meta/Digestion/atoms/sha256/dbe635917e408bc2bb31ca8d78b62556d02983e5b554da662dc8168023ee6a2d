@@ -1,0 +1,24 @@
+**Proposition 22.2 (strict comparisons at the selected mathematical width).** Put $d_0=a_s\varepsilon_0$. Its outward interval is
+
+$$
+1.4949062300940\cdot10^{-152}\le d_0\le
+1.4949062300941\cdot10^{-152}.
+$$
+
+For every $0<d<d_0$ all eight defining $d_*$ gates hold. In addition the frozen-Jacobian map satisfies its contraction and self-mapping bounds and both candidate solutions lie in its uniqueness ball.
+
+Proof. The selected-width upper endpoint is strictly below $1.84384149527\cdot10^{-152}$, the lower bound on $d_*$. For transparency, conservative outward comparisons obtained directly from the preceding tables are
+
+$$
+\begin{gathered}
+\beta_BL_BR_f\le\tfrac12,\qquad
+\beta_Bd_0<4.00\cdot10^{-140}<R_f/2,\\
+D_{\rm loc}d_0<7.320\cdot10^{-77}<9.02772587376\cdot10^{-77}\le R_x,\\
+C_{\rm joint}D_{\rm loc}d_0<8.402\cdot10^{-64}<R_f/2,\\
+C_{\rm br}d_0<1.094\cdot10^{-130}<R_f/2,\qquad
+A_wd_0<1.851\cdot10^{-111}<p_*/2.
+\end{gathered}
+$$
+
+The first inequality follows from the exact choice $R_f=1/(2\beta_BL_B)$; the others follow by multiplying the upper endpoints, and $R_f/2\ge8.2003997173\cdot10^{-21}$. The $k_e/2$ gate keeps $\kappa>0$. Branch derivative windows and the inherited boxes give positive old weights, occupied-height/report signs, and physical seven $p_4>0$ on the strict left side. The positive $c_e$, $\sigma$, $m_\mu$, $1-q_b$, $l_b,u_b$, source fractions and capacity/chart denominators have all been excluded from zero before use. The $R_x$ gate supplies full-column LICQ and positive active multipliers; the two joint-placement gates and $\beta_Bd\le R_f/2$ supply, separately, uniqueness-ball placement and self-mapping. None of these conclusions is inferred from a small residual alone. $\square$
+

@@ -1,0 +1,23 @@
+**Proposition 8.6 (Every nonzero rational multiple of $4\pi$).**
+Replace $Q_{4\pi}$ in Definition 8.1 by $Q_t$ with
+$t/(4\pi)\in\mathbb Q\setminus\{0\}$. The same nonexistence
+conclusion holds, even when that is the sole required command.
+
+**Proof.** Write $t/(4\pi)=\ell_0/d_0$ with
+$\ell_0\in\mathbb Z\setminus\{0\}$ and $d_0$ a positive
+integer. If $F$ represents $Q_t$ on all of $\mathcal M_{ab}$,
+then $G=F^{d_0}$ represents $Q_{4\pi\ell_0}$ there.
+Every rational-height ray is periodic under this source action,
+so its encoded image is a nonempty set of periodic points of
+$G$. Lemma 8.3 supplies an exponent $N$ fixing that image.
+
+Choose an interior prime-period height $k/H=m/p$ as in
+Lemma 8.2 with $p>N$ and $p>|\ell_0|$. For
+$Q_{4\pi\ell_0}$, the common circle shift is
+$-2\pi\ell_0m/p$, whose least period is $p$ because $p$
+divides neither $\ell_0$ nor $m$. Equivariance gives
+$E(Q_{4\pi\ell_0}^Nx)=G^N(E(x))=E(x)$, contradicting
+injectivity. Negative $\ell_0$ is included; all repetitions
+are finite and lawful. Arbitrarily small nonzero rational
+steps therefore still have this obstruction. $\square$
+

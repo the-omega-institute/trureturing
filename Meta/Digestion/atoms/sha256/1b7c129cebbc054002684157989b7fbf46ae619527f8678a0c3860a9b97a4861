@@ -1,0 +1,56 @@
+**Lemma 5.2 (a distributional limit with local mass control).** For $R\ge1$ let
+
+$$
+p_R(\xi)=R^5p(\delta_R\xi),\qquad
+f_R(\eta)=R^7f(\delta_R\eta).
+\tag{5.3}
+$$
+
+Then
+
+$$
+p_R\longrightarrow\gamma m\mathcal G
+\quad\text{in distributions on }\mathbb R^4,
+\qquad
+\sup_{R\ge1}\int_K p_R<\infty
+\quad\text{for every compact }K.
+\tag{5.4}
+$$
+
+Proof. The group automorphism $\delta_R$, its Haar Jacobian $R^7$, and the homogeneity of $\mathcal G$ turn (5.1) exactly into
+
+$$
+p_R(\xi)=\gamma\int\mathcal G(\eta^{-1}\xi)f_R(\eta)d\eta.
+\tag{5.5}
+$$
+
+The functions $f_R$ are nonnegative and have mass $m$. For each $\rho>0$,
+
+$$
+\int_{d_E(0,\eta)>\rho}f_R(\eta)d\eta
+ =\int_{d_E(0,\eta)>R\rho}f(\eta)d\eta\longrightarrow0.
+\tag{5.6}
+$$
+
+For a compact smooth test $\varphi$, define
+
+$$
+J_\varphi(\eta)=\int\mathcal G(\eta^{-1}\xi)\varphi(\xi)d\xi.
+\tag{5.7}
+$$
+
+It is bounded uniformly in $\eta$: on $d_E(\eta,\xi)<1$ use $\|\varphi\|_\infty$ times the first bound in (4.5), changing variables by left translation; on the complement use the second bound times $\|\varphi\|_1$. The same bounds apply to $|\varphi|$, justifying all pairings in (5.5).
+
+It is continuous as well. On a compact neighborhood of any $\eta$, change variables $\xi=\eta\zeta$. The supports of $\varphi(\eta\zeta)$ lie in one compact set of $\zeta$. Local integrability of $\mathcal G$ supplies an integrable majorant there, while continuity of $\varphi$ gives pointwise convergence. Dominated convergence proves continuity of (5.7). Therefore (5.6), boundedness and continuity at zero imply
+
+$$
+\langle p_R,\varphi\rangle
+ =\gamma\int f_RJ_\varphi\longrightarrow\gamma mJ_\varphi(0)
+ =\gamma m\langle\mathcal G,\varphi\rangle.
+\tag{5.8}
+$$
+
+For completeness, this follows by choosing a small fixed ball on which $J_\varphi-J_\varphi(0)$ is uniformly small, and bounding the complementary integral by its uniform bound times the mass in (5.6). Signed and complex tests are handled by the same absolute bounds. No source moment or pointwise far-field expansion is needed.
+
+Choose a nonnegative compact smooth $\varphi$ equal to one on $K$. Since $p_R\ge0$, (5.5) and the uniform bound on $J_\varphi$ give $\int_Kp_R\le\gamma m\|J_\varphi\|_\infty$ for all $R\ge1$. This proves the second claim. The dilated $p_R$ is not a normalized native eigenstate; (5.4) asserts neither a pointwise asymptotic nor global norm convergence. $\square$
+

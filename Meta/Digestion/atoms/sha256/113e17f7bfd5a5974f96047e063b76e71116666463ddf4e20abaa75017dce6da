@@ -1,0 +1,16 @@
+### 62.1. Model and explicit bounds
+
+Use the fixed MC encoding J(T)=VTV* with V|i>=|ii>, and the qutrit channel E_(p,q) of §61, where 0<q<1 and 0<p≤q(1−q). Competitors are all finite physical LOSR channels Φ=Σ_b w_b A_b⊗B_b on the two physical qutrits. They need not preserve the code. The error is the unhalved diamond norm
+
+    δ(Φ)=||Φ∘J−J∘E_(p,q)||_diamond,
+
+including arbitrary passive references. Then
+
+    [2p/(10+sqrt(100+38p))]^2 ≤ inf_Φ δ(Φ) ≤ p/2.
+
+At the explicit CPTP point p=1/4,q=1/2, this gives
+
+    [1/(2(10+sqrt(219/2)))]^2 ≤ inf_Φ δ(Φ) ≤ 1/8.
+
+The lower bound is strictly positive and explicit; the two bounds are not claimed equal or sharp. The upper bound is realized by one finite common physical channel on the whole qutrit input, not separate optimizers for different pairs.
+

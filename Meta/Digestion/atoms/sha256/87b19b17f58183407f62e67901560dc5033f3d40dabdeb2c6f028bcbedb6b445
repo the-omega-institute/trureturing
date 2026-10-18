@@ -1,0 +1,63 @@
+### 453.7 保留完整来源的反向补偿与精确缺口
+
+定义同一奇源截止的完整补集
+
+\[
+\mathscr C_x=\lim_{N\to\infty}
+\sum_{\substack{m\le N,\ m\text{ 奇}\\m\notin\mathcal P_x}}
+\mu(m)\mathscr D_x(m).
+\tag{DP.26}
+\]
+
+这是删除一个有限面板后的自然截止极限；（DP.16）证明它存在。它保留单位源、全部其余奇素数、所有合数源、\(m<x\)、面板两侧和全部远尾，以及每份奇源中的完整偶倍配对。通过（DP.13）–（DP.15），这些来源恢复同一个原 Mertens 配对，故没有遗失原首块或 β 运输补偿。精确身份是
+
+\[
+\boxed{I_\psi(x)=\Pi_x+\mathscr C_x=\mathscr C_x-\mathcal A_x.}
+\tag{DP.27}
+\]
+
+（DP.5）使存在有限 \(C_4\) 满足 \( |\psi(t)-t|\le C_4t/\log^4t\) 对全部 \(t\ge2\) 成立，因为 \(u^{5.515}e^{-0.8274\sqrt u}\) 在 \(u\ge\log2\) 上有界。直接在原核积分给
+
+\[
+|I_\psi(x)|\le C_4\left[\frac1{4\ell^4}+\frac1{5\ell^5}\right].
+\tag{DP.28}
+\]
+
+所以该同源补集已有必需反向主项
+
+\[
+\boxed{\displaystyle
+\mathscr C_x=\mathcal A_x+O(\log^{-4}x)
+=\frac{C_{\rm pair}}{\log^2x}+o(\log^{-2}x).}
+\tag{DP.29}
+\]
+
+这里先使用同一个完整身份取差，没有对补集逐项取 \(x\to\infty\) 的极限；也没有把其来源换成另一优化值。两份实际量在临界归一化下分别为
+
+\[
+\sqrt x\log x\,\Pi_x\sim-C_{\rm pair}\frac{\sqrt x}{\log x}\to-\infty,
+\qquad
+\sqrt x\log x\,\mathscr C_x\sim C_{\rm pair}\frac{\sqrt x}{\log x}\to+\infty.
+\tag{DP.30}
+\]
+
+因此，二倍配对已经发生，却没有单独把这个实际面板降至 Robin 临界尺度。完整补集确实产生反向抵消；（DP.28）的对数预算仍不支付它们差值的临界预算。面板负项不构成 \(I_\psi\) 的负下界。
+
+若原目标要求某个固定 \(B\ge0\) 的一侧临界下界，缺失的同源联合条件须对**精确面板值**写成
+
+\[
+\boxed{\displaystyle
+\mathscr C_x\ge\mathcal A_x-\frac B{\sqrt x\log x}
+\quad\text{对全部充分大实数 }x.}
+\tag{DP.31}
+\]
+
+这是（DP.27）下原下界的字面要求，不是新 RH 判据或已证结论。如果选用更强的绝对临界预算，则需要
+
+\[
+|\mathscr C_x-\mathcal A_x|\le B/(\sqrt x\log x).
+\tag{DP.32}
+\]
+
+（DP.24）的 \(o(\log^{-2}x)\) 或共同核账中的 \(O(\log^{-3}x)\) 都不能直接替代（DP.31）中的精确 \(\mathcal A_x\)：它们没有临界误差预算。与面板 \(C_{\rm pair}/\log^2x\) 相比，临界缺额的允许比例只有 \(O(\log x/\sqrt x)\)；一侧目标允许更大的正向补偿，不要求两侧相等。也不能把（DP.15）的固定 \(x\) 末项界用于未经支付的联合截止 \(N=N(x)\)。
+

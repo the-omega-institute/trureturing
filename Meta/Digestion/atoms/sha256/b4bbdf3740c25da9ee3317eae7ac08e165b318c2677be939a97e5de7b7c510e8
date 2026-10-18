@@ -1,0 +1,39 @@
+**Theorem 385.2 (Exact clipping of the remaining comparison).** Fix $L\ge4$, a real prefix and cap
+
+$$
+1\ge b_1\ge\cdots\ge b_{L-1}\ge e\ge0,\qquad b_2=b_3,
+$$
+
+and finite $M\ge1$. For the hull $H_L$ of XXIII (368.12), set
+
+$$
+S=\sum_{j=3}^{L-1}b_j,\qquad
+\ell=\max\{0,Le-S\},\qquad
+u=\min\{b_{L-1}-e,\ 1-b_1-S+Le\}.
+\tag{385.2}
+$$
+
+If $\ell\le u$, same-mass $N$-to-$O$ feasibility inclusion on this entire last-coordinate slice is equivalent to the scalar condition
+
+$$
+\nu_N\ge\ell\quad\Longrightarrow\quad
+\nu_O\ge\min\{\nu_N,u\}.
+\tag{385.3}
+$$
+
+If $\ell>u$, the slice is empty. For a fixed $L\ge4$, imposing (385.3) for every such real prefix, cap and finite $M\ge1$ is equivalent to the clipped affine comparison $\rho_O(b,e)\le\max\{1,\rho_N(b,e)\}$ on every $(b,e)\in H_L$ with finite $\rho_N$, where $\rho_{\mathcal C}$ is minimum literal affine mass, or $+\infty$ for infeasibility. The validity of (385.3) for all required parameters at $L\ge8$ remains an open assertion.
+
+*Proof.* Write $b_L=e+\delta$. Order gives $0\le\delta\le b_{L-1}-e$. The hull inequalities
+
+$$
+(L+1)e\le S+b_L,\qquad b_1+S+b_L-(L+1)e\le1
+$$
+
+give respectively $\delta\ge Le-S$ and $\delta\le1-b_1-S+Le$. Thus its exact last-demand interval is $[\ell,u]$. All remaining hull conditions concern only the fixed prefix and cap.
+
+By Theorem 385.1 the feasible demands in class $\mathcal C$ are exactly $\{\delta\in[\ell,u]:\delta\le\nu_{\mathcal C}\}$, empty when $\nu_{\mathcal C}=-\infty$. If $\nu_N<\ell$ there is nothing to transfer. Otherwise the greatest feasible $N$ demand is $t=\min\{\nu_N,u\}$ and is attained. Inclusion forces $\nu_O\ge t$; conversely this inequality and stock scaling transfer every feasible $N$ demand. At $t=0$ it still forces $K_O\ne\varnothing$. No capacity above $u$ has to be transferred.
+
+A finite minimum defining $\rho_{\mathcal C}$ is attained: bound the schedule mass by any feasible incumbent, making its finite complete-allocation set compact. Adding $tR$, $t\ge0$, raises mass by $t$ while preserving $z(p)-Mr$ and the same profile. Hence the clipped comparison supplies an $O$ witness of mass at most $M$ for every $N$ witness of mass $M\ge1$, and anchor padding makes its mass exactly $M$. Conversely pad a minimum-mass $N$ witness to $\max\{1,\rho_N\}$ and apply same-mass inclusion. This proves the claimed equivalence, including $\rho_N<1$ and $\rho_N=0$ without normalization.
+
+The existing full signed Farkas bridge [VI 199.3–199.4](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_VI.md) connects this fully quantified clipped comparison to unrestricted shared score certificates. This use neither proves (385.3) nor chooses its missing certificate. At $L=3$, Theorem 385.1 still holds, but the free-last-coordinate hull interval must additionally be intersected with $\{b_2-e\}$ because $b_3=b_2$. $\square$
+

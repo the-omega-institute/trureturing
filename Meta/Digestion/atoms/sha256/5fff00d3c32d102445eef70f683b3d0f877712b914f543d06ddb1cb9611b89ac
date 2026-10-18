@@ -1,0 +1,39 @@
+**Proposition 10.3 (regular infinite witness).** For every integer $h\ge4$, the legal endpoints
+$$
+I,\qquad J,\qquad L,\qquad
+A_3=\begin{pmatrix}7&2\\3&1\end{pmatrix},\qquad
+A_4=\begin{pmatrix}7&2\\3+7h&1+2h\end{pmatrix}
+\tag{10.3}
+$$
+have four independent survivors after deletion of any endpoint and an invertible $\mathsf B$, yet Theorem 10.1 supplies a finite collision.
+
+**Proof.** The third endpoint transition after $L$ can be $U^2L^2$, since $A_3=U^2L^3$; the final multiplier is $L^h$. Along with the initial $J,M$ transitions, this proves legality at precisely indices $0,1,2,3,4$. The entry cone holds because $x=3$ and $a=7\ge6$.
+
+The first four endpoint matrices are independent. In a relation among $I,J,L,A_3$, subtraction of the lower-right entry equation from the upper-left makes six times the $A_3$ coefficient zero. The upper-right equation then kills the $J$ coefficient, the lower-left kills the $L$ coefficient, and a diagonal equation kills the $I$ coefficient. The unique dependence on all five matrices, up to scale, has coefficients
+$$
+(15h,\ -2h,\ -22h,\ h-3,\ 3).
+\tag{10.4}
+$$
+The four corresponding entry sums are
+$$
+15h-22h+7(h-3)+21=0,\qquad -2h+2(h-3)+6=0,
+$$
+$$
+-2h-22h+3(h-3)+3(3+7h)=0,
+$$
+$$
+15h-22h+(h-3)+3(1+2h)=0.
+$$
+All five coefficients are nonzero for $h\ge4$. Any four-matrix dependence would extend to a five-matrix dependence with a zero coefficient, contradicting uniqueness. Thus even deletion of the initial endpoint leaves independent survivors.
+
+Here $E=2$, $F=8$, $\lambda=4$, and $c_*=3$, so
+$$
+N=\begin{pmatrix}1&0\\-3&-4\end{pmatrix}.
+$$
+The final quotient row on $N$ is
+$$
+\operatorname{tr}(A_4N)-\operatorname{tr}N
+=\bigl[7-6-4(1+2h)\bigr]-(1-4)=-8h\ne0.
+$$
+It removes (9.2)'s one-dimensional kernel, proving $\mathsf B$ invertible. Theorem 9.1's nonsingular finite construction applies, with different sources and slopes, a whole constant drift per run, and the original positive factors. This witness shows coverage beyond Lemma 2.1's erasure failure. The entire cone theorem, rather than this witness, is the uniform assertion. ∎
+

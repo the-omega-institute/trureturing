@@ -1,0 +1,40 @@
+**定理 235.1（One coefficient vector and one whole signed residual）。**
+At a fixed $L\ge4$, choose one nonnegative vector
+$(a_m)_{4\le m\le L}$ and any signed target $q$. Put
+
+$$
+V=\sum_{m=4}^L a_mZ_m^L,\qquad
+r_q=q-\sum_{m=4}^L a_mq_m^L,\qquad
+\theta=\max\{0,\sigma_H(r_q)\}.
+$$
+
+If $\theta\le1$, then $(V,\theta)$ is one full certificate.
+Writing $r_q=(\eta;K_r)$, $B_r=\eta_1+\eta_2$,
+$S_{r,k}=\sum_{n\le k}\eta_n$, $\kappa_r=K_r-S_{r,L}$,
+the condition is the single finite system
+
+$$
+\begin{gathered}
+0\le\theta\le1,\qquad -B_r\le\theta,\quad-\eta_2\le\theta,\\
+\frac{S_{r,k}}{k-1}-B_r\le\theta,\qquad
+\frac{3S_{r,k}-(k-2)\kappa_r}{k+1}-B_r\le\theta
+\quad(3\le k\le L).
+\end{gathered}
+\tag{235.1}
+$$
+
+Existence of this one vector with (235.1) is exact for certificates
+whose output score lies in the displayed cone. It is only a
+sufficient condition for unrestricted certificates.
+
+证明。 Subadditivity of complete support and linearity of the
+anchor give $\Delta_N(V)\le\sum_ma_m\Delta_N(Z_m^L)=0$;
+the anchor gives the reverse inequality. Linearity gives
+$Q(V)=\sum_ma_mq_m^L$. The full vertex formula then gives
+exactly (235.1) for the same $a_m$ in every row. All cancellations
+are made before taking this single maximum. Conversely every
+score in this cone is represented by one such vector and has
+these same residual inequalities. Neither optimizing different
+vertices with different vectors nor adding separately optimized
+residual charges gives this statement. $\square$
+

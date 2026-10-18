@@ -1,0 +1,12 @@
+### theorem 8.1: 定理 5：Auric FIB ATOM 隐藏 seam 的三层判据
+
+对五态 FIB ATOM，令
+
+$$
+\mathcal B=\operatorname{span}\{1,x,y,z\},
+\qquad
+\kappa=\mathbb E[xy].
+$$
+
+则隐藏关系有三个层次：
+

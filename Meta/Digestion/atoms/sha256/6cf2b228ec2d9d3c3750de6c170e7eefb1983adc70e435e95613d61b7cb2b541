@@ -1,0 +1,99 @@
+**Theorem 79.1 (finite absolute-value boundary formula).** Consider either
+$t=t_0$, $0\le\tau\le\tau_*$, or $t>t_0$,
+$\tau=\tau_{\max}(t)$. These are precisely all weak points with
+$A=A_{\min}(s)$. Use $q,u_R,v_f,v_R$ from FA.43–.44 and put
+$u_F=u_f$, $v_F=v_f$. For $i=F,R$ define
+
+$$
+\begin{gathered}
+\mathbf c_{i\sigma\upsilon}=(s_0,\sigma\sqrt{u_i},
+ \upsilon\sqrt{v_i}),\quad \sigma,\upsilon\in\{\pm1\},\\
+L_{F\sigma\upsilon}
+ =|\ell(\mathbf c_{F\sigma\upsilon})+tc_f f(\mathbf c_{F\sigma\upsilon})|,
+\quad L_{R\sigma\upsilon}=|\ell(\mathbf c_{R\sigma\upsilon})|,\\
+M_i=\tfrac14\sum L_{i\sigma\upsilon},\quad
+Z_i=\tfrac14\sum\sigma L_{i\sigma\upsilon},\quad
+Y_i=\tfrac14\sum\upsilon L_{i\sigma\upsilon},\\
+k_z=\frac{q\sqrt{u_f}}{(1-q)\sqrt{u_R}},\quad
+B_z=q\left(Z_F-\sqrt{u_f/u_R}Z_R\right).
+\tag{FA.45}
+\end{gathered}
+$$
+
+For $t>t_0$, also put
+$k_w=q\sqrt{v_f}/((1-q)\sqrt{v_R})$ and
+$B_w=q(Y_F-\sqrt{v_f/v_R}Y_R)$. Then
+
+$$
+\begin{gathered}
+\mathcal T_A(s)=\frac{H_0+qM_F+(1-q)M_R+P_{\rm bd}}2,\\
+P_{\rm bd}=
+\begin{cases}
+|B_z|,&t=t_0,\\
+\max\{|B_z|,|B_w|\},&t>t_0,\ k_w\le1,\\
+\displaystyle\max\left\{|B_z|,\frac{|B_w|}{k_w},
+ \frac{|B_z|(k_w-1)+|B_w|(1-k_z)}{k_w-k_z}\right\},
+ &t>t_0,\ k_w>1.
+\end{cases}
+\tag{FA.46}
+\end{gathered}
+$$
+
+All these are evaluated finite scalar expressions and are attained. They
+include both polygon regimes, the whole floor segment and its join,
+zero signed differences, ties, and vanishing optimal branch weights.
+
+**Proof.** Equality in the floor Jensen bound forces failure-carrying
+labels to $u=u_f$, saturated with $b=tc_f$, and remaining labels to
+$u=u_m$. For $t>t_0$, equality in FA.44 forces the first family to
+$u_f$ and the residual family to $u_R$: strict convexity fixes the
+failure mean, and residual Cauchy equality fixes its $u$. Since
+$u_f<1<u_R$, residual mass cannot remain on the failure direction;
+hence that direction is saturated. These conclusions are forced on
+all supported actual labels, up to proportional subdivision, not just
+on the sign-balanced witness.
+
+Zero failure off-diagonal forces the $\sigma\upsilon$ moment in the
+first family to vanish. For $v_R>0$, the total live $zw$ moment then
+forces it in the second family too. The general merged-ray weights are
+therefore
+
+$$
+p^F_{\sigma\upsilon}=\frac q4(1+\sigma X+\upsilon Y),\quad
+p^R_{\sigma\upsilon}=\frac{1-q}{4}
+ (1-\sigma k_zX-\upsilon k_wY).
+\tag{FA.47}
+$$
+
+The remaining live cross moments give exactly these $k_z,k_w$.
+Positivity is precisely
+$|X|+|Y|\le1$, $k_z|X|+k_w|Y|\le1$.
+One has $k_z<1$: its squared inequality is
+$q u_f<1-q$, which follows throughout $q\le q_m$ from FA.38
+and the source bounds. The objective's nonconstant part is
+$B_zX+B_wY$. Choose their signs to agree, and maximize on the
+intersection of the two first-quadrant triangles. If $k_w\le1$,
+the relevant vertices are $(1,0),(0,1)$. If $k_w>1$, they are
+$(1,0),(0,1/k_w)$ and
+$((k_w-1)/(k_w-k_z),(1-k_z)/(k_w-k_z))$.
+Their objective values give FA.46. Zero coefficients permit either
+sign; ties permit any maximizing edge. Zero weights are omitted.
+
+At $t=t_0$, $v_R=0$ and its two $\upsilon$ directions coincide.
+The live $w$ moment forces $Y=0$; there is no division by $v_R$.
+The weights become
+$q(1+\sigma X)/4$ and $(1-q)(1-\sigma k_zX)/2$ on the two pure
+rays, with $-1\le X\le1$. This gives $P_{\rm bd}=|B_z|$ and is
+also the collapsed limit of the polygon formulation. Absolute values
+in FA.45 are taken before multiplication by the weights, so a zero
+height difference causes no missing branch or sign assumption.
+
+A maximizing vertex gives a nonnegative finite family in FA.37 with
+contrast $s_0\tau_{\max}(t)$, hence the required inequality, and the
+common construction in §86. Proportional subdivisions of a fixed
+saturated or pure ray preserve its absolute-difference sum. Thus the
+universal equality class just derived has no additional record advantage,
+and the displayed maximum is the original-class value. This theorem
+does not evaluate height at weak points strictly above their minimum
+budget. $\square$
+

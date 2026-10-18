@@ -1,0 +1,214 @@
+**Proposition 36.1 (same-state different live residuals with both
+execution maxima attained).** For the existing prescribed code
+$\sigma_{A,4}$ with $A=\{1,2,3,4,5,6,7\}$, there is a full
+Convention 23.2 preparer with
+
+$$
+H=47+r,\qquad p=8,\qquad \ell=59=3+W_A.
+\tag{PCA.88}
+$$
+
+Two live actual cube histories reach one common running state,
+with the exposed data of (PCA.87). Their respective residuals
+on unexposed coordinates are
+
+$$
+\theta_3\theta_4\theta_6\theta_7
+\quad\hbox{and}\quad
+\theta_2\vee\theta_5\vee\theta_6\vee\theta_7.
+\tag{PCA.89}
+$$
+
+Some subsequent actual executions repeat previously exposed
+selected coordinates. All literals, successors, running states
+and latches are installed and counted. The construction is
+larger than the old grid, whose count here is $20+r$.
+
+Proof. Write $a_i=LLL L^iR$ and $c_i=|a_i|=i+4$.
+For every source in $Z_{b_3}$ put
+$\theta_i=\mathbf1_{\{r_{x_a}(L^iR)=\mathsf{branch}\}}$.
+These seven bits are proof notation on an arbitrary branch image,
+not a promise that it has a comb shape. Put
+
+$$
+X=\{2,5\},\quad Y=\{3,4\},\quad R=\{6,7\},\qquad
+c_X=c_2+c_5=15=c_3+c_4=c_Y,
+\quad c_1=5,\quad c_R=21,\quad W_A=56.
+\tag{PCA.90}
+$$
+
+Use the two original-entry latches, denoted $L_0=\widehat e_0$,
+$L_1=\widehat e_1$. Every selected-query state below installs
+the word $a_i$ in its indicated coordinate $i$. Its zero
+successor is installed separately for each of alpha, beta and
+absent; its one successor is installed for branch. Thus the two
+successor columns specify all four actual native edges.
+
+Four disjoint fallback blocks use only the selected-query part
+of Theorem 26.1's threshold grid, with the following supplied
+coordinate orders and thresholds. They share only $L_0,L_1$.
+
+| Block and its start | Ordered remaining coordinates | Required remaining hits | Installed running states |
+| --- | --- | --- | --- |
+| $G_1$ | $(3,4,5,6,7)$ | $3$ | $3(5-3+1)=9$ |
+| $G_2$ | $(3,4,6,7)$ | $3$ | $3(4-3+1)=6$ |
+| $G_3$ | $(2,4,5,6,7)$ | $3$ | $3(5-3+1)=9$ |
+| $G_4$ | $(2,5,6,7)$ | $2$ | $2(4-2+1)=6$ |
+
+In each block the pair $(h,m)$ names a separately installed grid
+state, reading the $(h+m+1)$st coordinate of that displayed list.
+Its branch successor advances $h$ or latches $L_1$ at its required
+hit count; its other three successors advance $m$ or latch $L_0$
+when too few hits remain possible. These are precisely the
+successors (PCA.62), with the block's list and threshold substituted.
+No counter or computed address is installed alongside these states.
+
+Install the following thirteen further selected-query states,
+all distinct from every fallback state.
+
+| State | Coordinate | Zero successor | One successor |
+| --- | --- | --- | --- |
+| $P_1$ | $1$ | $P_2$ | $P_3$ |
+| $P_2$ | $2$ | $P_5$ | $G_1$ |
+| $P_5$ | $5$ | $V$ | $G_2$ |
+| $P_3$ | $3$ | $G_3$ | $P_4$ |
+| $P_4$ | $4$ | $G_4$ | $V$ |
+| $V$ | $6$ | $V_0$ | $V_1$ |
+| $V_0$ | $7$ | $O_2$ | $J$ |
+| $V_1$ | $7$ | $J$ | $B_3$ |
+| $O_2$ | $2$ | $O_5$ | $L_1$ |
+| $O_5$ | $5$ | $L_0$ | $L_1$ |
+| $J$ | $1$ | $L_0$ | $L_1$ |
+| $B_3$ | $3$ | $L_0$ | $B_4$ |
+| $B_4$ | $4$ | $L_0$ | $L_1$ |
+
+The first five states form the head. The last eight form its shared
+continuation. Each table entry is a fixed state name; subscripts
+denote no auxiliary running memory.
+
+For completeness install the original two profile states, start at
+$D$, and use their unchanged four-successor table, replacing only
+the threshold-grid start by $P_1$.
+
+| State | Absolute literal | alpha | beta | branch | absent |
+| --- | --- | --- | --- | --- | --- |
+| $D$ | $RLR$ | $L_1$ | $P_1$ | $T$ | $L_0$ |
+| $T$ | $RRR$ | $L_1$ | $L_0$ | $L_0$ | $L_0$ |
+
+Every mandated additional latch is installed, unused, and counted.
+The Boolean symbols in the proof specify successor choices; handoff
+carries the original complete entry $e_0$ or $e_1$, not a new
+one-bit encoding.
+
+We first prove correctness for every Boolean vector of selected
+replies. The four fallback entries are reached with, respectively,
+
+$$
+(\theta_1,\theta_2)=(0,1),\quad
+(\theta_1,\theta_2,\theta_5)=(0,0,1),\quad
+(\theta_1,\theta_3)=(1,0),\quad
+(\theta_1,\theta_3,\theta_4)=(1,1,0).
+$$
+
+Their already acquired hit counts are respectively $1,1,1,2$.
+The displayed fallback thresholds are therefore exactly the
+remaining requirements for four hits, and their lists contain
+every unqueried coordinate once.
+
+There are exactly two other routes to $V$:
+
+$$
+\lambda:\ \theta_1=0,\ \theta_2=\theta_5=0,
+\qquad
+\mu:\ \theta_1=1,\ \theta_3=\theta_4=1.
+\tag{PCA.91}
+$$
+
+On $\lambda$, four hits require every bit in $Y\cup R$ to be
+one. On $\mu$, the remaining task is OR on $X\cup R$.
+Both are nonconstant on their cube completions, proving liveness
+and (PCA.89). The selected query at $V$ has not yet been made.
+
+For the correctness proof only, let $t=\theta_6+\theta_7$.
+The three scan states $V,V_0,V_1$ route $t=0$ to OR on $X$,
+$t=1$ to the single query $J$ of $\theta_1$, and $t=2$ to
+AND on $Y$. This is the fixed table above, not a runtime sum.
+On $\lambda$ the first two exits return zero because
+$\theta_X=00$ and $\theta_1=0$; the last exit computes exactly
+the necessary AND on $Y$. On $\mu$ the first exit computes
+the necessary OR on $X$; the other two return one because
+$\theta_1=1$ and $\theta_Y=11$. Thus every route computes
+the original four-hit predicate.
+
+This verification holds for every possible Boolean vector, hence
+for the seven branch indicators of every finite branch image in
+$Z_{b_3}$, regardless of interior shape, depth, leaf labels or
+absent selected nodes. The occurrence identity (NBP.9.7) identifies
+each $a_i$ reply with that actual indicator. Outside $Z_{b_3}$,
+$D$ directly handles $\Pi_3$. When $b_3$ is branch the only
+code-one remaining profile is $\Pi_4$, detected at $T$ by alpha
+at $b_4$. All other profiles on that route latch zero, exactly as
+in Theorem 26.1. These are all eleven original profiles.
+The root absent edges are installed even though those roots are
+reached on this domain. Each selected alpha, beta and absent reply
+uses its own installed zero edge. No finite address is removed
+from the native permission or replaced by a computed relative one.
+
+For the execution bounds, any fallback route reads an initial
+segment of distinct coordinates and then each remaining coordinate
+at most once, so it uses at most seven selected calls and $W_A$
+letters. On a shared route the head costs three selected calls.
+The $R$ scan costs two. The final OR or AND uses at most two
+more, and $J$ uses one. There are therefore at most seven selected
+calls. A $\lambda$ head has literal charge $c_1+c_X$ and a
+$\mu$ head has $c_1+c_Y$. Their scan adds $c_R$.
+Either two-query exit adds at most $c_X=c_Y$; the single-query
+exit adds $c_1\le c_X=c_Y$. Consequently every shared route
+also has selected literal charge at most $W_A$. This is where
+the balanced absolute-literal equality in (PCA.90) is needed:
+a repeat is paid by omitting a group of equal total length,
+not by treating that repeat as free.
+
+Adding $D$ gives at most eight calls and $3+W_A=59$ letters
+on a selected path. A nonselected profile route has at most two
+calls and six letters. Every route terminates; in fact this
+constructed installed graph is acyclic. Lemma 24.1's actual
+all-zero cube origin follows
+
+$$
+D,\ P_1,\ P_2,\ P_5,\ V,\ V_0,\ O_2,\ O_5,\ L_0.
+\tag{PCA.92}
+$$
+
+It has seven selected calls, including real repeats of coordinates
+$2,5$, and selected charge
+$c_1+2c_X+c_R=56$. This one genuine source attains both
+maxima in (PCA.88).
+
+There are $5$ head states, $8$ shared-continuation states and
+$9+6+9+6=30$ fallback states, hence $43$ selected-query
+states. Adding $D,T$, the two original-entry latches and all
+$r$ mandated latches gives exactly $47+r$. No uncounted selector,
+phase state, working register or stored source has been used.
+The original reader remains its separate eight-state apparatus,
+with all five complete canonical predecessor-row outputs, two
+fresh calls at most and six fresh letters at most. All original
+holes, equalities, different-class disequalities and blocking guards
+in those outputs remain as in Convention 23.2. The table generates
+the original prescribed entry on each identical source; it does
+not select another compatible encoder.
+
+Finally, Lemma 24.1 supplies actual cube origins for every
+completion of either history (PCA.91). The common state $V$
+therefore genuinely merges two live, different residuals on the
+original domain. On $\lambda$ with $\theta_6=0$, the predicate
+is already zero, whereas on $\mu$ with that same reply it still
+depends on $X$ and $\theta_7$. Both enter the same $V_0$.
+Replacing that state globally by the former history's zero latch
+would corrupt the latter history. The repeats in (PCA.92) belong
+to a suffix that is essential on other histories. This is a
+live merger before certification, rather than insertion of a
+disposable paid tail after a common certificate. Its larger count
+does not disprove a no-larger normalization theorem or the grid
+optimum; either assertion would require its own proof. $\square$
+

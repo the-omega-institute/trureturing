@@ -1,0 +1,70 @@
+**定义 50.1（来源、有限事件及公共参数）。** 来源仍恰为
+
+$$
+\mathcal D_2(1,7,25,4/5)
+=E\times\{b\in\mathbb H:|b|\in\{7,25\},\ \operatorname{Re}b\ge(4/5)|b|\},
+\qquad E=\operatorname{Im}\mathbb H.
+\tag{50.1}
+$$
+
+初始 $a$ 与 $b$ 独立，$a$ 任意且无界，包括零；半径没有标签，INITIAL始终为
+同一个 $(a,b)$。制备、共同定向标架、纯虚方向、单位锚 $d=e_4$ 和锚执行精确。
+公共 $\delta\ge0$、$0\le\eta<1$ 以及所有执行与读误差条件完全采用（47.2）：
+每次内部命令的实际参数为 $\gamma c$，$\gamma\in[1-\eta,1]$，同一 $\gamma$
+同时作用于可见槽及隐藏槽；不同次的增益不要求相同。所有联合对抗、相关及
+依赖历史的允许误差均保留，每次Read误差的欧氏范数至多 $\delta$。记
+
+$$
+m=(1-\eta)^2>0,\qquad J=[m,1],\qquad \zeta=1-m.
+\tag{50.2}
+$$
+
+先取一个公共设计容差 $0<p\le1$。它是解码所容许的隐藏投影误差上界，不是
+额外供应的执行精度证书。沿用（47.13）的方向参数，以 $p$ 代替 $D$：
+
+$$
+\rho=p/10,\quad K=\sqrt{1-\rho^2},\quad
+\alpha=\frac35K-\frac45\rho,\quad
+\nu=\frac45K+\frac35\rho.
+\tag{50.3}
+$$
+
+因此 $\alpha^2+\nu^2=1$，$1/2<\alpha<3/5$、$\nu>4/5$，并有
+$\rho=(3/5)\nu-(4/5)\alpha$、$K=(3/5)\alpha+(4/5)\nu$。
+例如 $K\ge1-\rho^2$、$0<\rho\le1/10$ 给
+$\alpha\ge(3/5)(99/100)-(4/5)(1/10)=257/500>1/2$；同一界给
+$\nu\ge4/5+\rho(3/5-(4/5)\rho)>4/5$。
+
+实际取得初读 $y_0=a+e_0$ 之后，才计算 $A=|y_0|$。在 $A>0$ 的分支上令
+$u=y_0/A$，以公共标架确定性选择单位 $v\perp u$。一种全定义选择为：在
+$i,j,k$ 中取 $|\langle e_\ell,u\rangle|$ 最小的第一项，并令
+
+$$
+v=\frac{e_\ell-\langle e_\ell,u\rangle u}
+        {\sqrt{1-\langle e_\ell,u\rangle^2}},\quad
+c_1=v,\quad c_2=-\alpha v+\nu(u\times v),\quad
+q=\alpha+\nu u.
+\tag{50.4}
+$$
+
+某项平方内积至多 $1/3$，故分母至少 $\sqrt{2/3}$；没有在此调用未知来源端口。
+两个命令均为单位纯虚元，而且 $c_1c_2=q$：纯虚乘积满足
+$vw=-\langle v,w\rangle+v\times w$，$v\times(u\times v)=u$。
+这是初读之后从原内部菜单选择方向，没有增加混合控制或额外探针。
+
+该分支实际按下列完整事件次序执行：
+
+$$
+\operatorname{Read}(y_0);\quad A_{\gamma_1c_1};\quad
+\operatorname{Read}(y_1);\quad A_{\gamma_2c_2};\quad
+\operatorname{Read}(y_2);\quad A_d;\quad
+\operatorname{Read}(y_3);\quad\operatorname{Stop}.
+\tag{50.5}
+$$
+
+操作记录中内部调用的名字与数值命令仍为 $c_1,c_2$；实际 $\gamma_jc_j$ 不被
+写成已取得字段。完整可访问记录保留四个报告、有序命令、操作种类、逐次公共区间
+和Stop，以及程序实际使用的公共参数与分支身份。下面的区间及解码量只是这个
+原记录的函数，附记它们不删除或替换任何实际事件。只有一个当前寄存器；没有
+先验遥测、附加标签、校准供方、复位、副本、独立重抽样或无限前缀之后的事件。
+

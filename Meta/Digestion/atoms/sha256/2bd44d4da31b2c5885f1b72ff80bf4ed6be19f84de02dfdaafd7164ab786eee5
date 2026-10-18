@@ -1,0 +1,56 @@
+**定理 12.4.1（精确响应与首个分辨时刻）。** 对任意 $t<L$，有
+
+$$
+\mu_{\theta,a}(t)=\frac12.
+$$
+
+对任意 $t\ge L$，有
+
+$$
+\boxed{
+\mu_{\theta,a}(t)
+=
+\frac{1+(2a-1)(-1)^\theta\alpha^L}{2}.
+}
+$$
+
+因此渐近干预对比
+
+$$
+C_\theta
+:=
+\lim_{t\to\infty}
+\bigl(\mu_{\theta,1}(t)-\mu_{\theta,0}(t)\bigr)
+=(-1)^\theta\alpha^L.
+$$
+
+并且两个模型的对比方向相反：
+
+$$
+C_0>0>C_1.
+$$
+
+令 $\pi$ 遍历所有有限窗策略，则两模型记录律首次可能不同的长度正好是 $L$：
+
+$$
+\min\{n:\exists\pi,\ \operatorname{Law}_{M_0^L}^\pi(H_n)
+\ne\operatorname{Law}_{M_1^L}^\pi(H_n)\}=L.
+$$
+
+在 $n=L$ 时，取 $A_0=1$ 即达到
+
+$$
+\sup_\pi
+\operatorname{TV}\left(
+\operatorname{Law}_{M_0^L}^\pi(H_L),
+\operatorname{Law}_{M_1^L}^\pi(H_L)
+\right)
+=\alpha^L.
+$$
+
+**证明。** 当 $t<L$ 时，端点仍含有一个独立均匀的初始单元，所以均值为 $1/2$。当 $t\ge L$ 时，端点等于最新的输入 $a\oplus\theta$ 与 $L$ 个独立噪声的异或。每个噪声的符号偏差是 $\alpha$，异或后的符号偏差为 $\alpha^L$，从而得到均值公式和 $C_\theta$。
+
+在 $t=L$，若首步动作是位命令，端点条件律在两个极性之间的 Bernoulli 参数差的绝对值为 $\alpha^L$；若首步是 `pass`，它仍是均匀位，差异为零。任意策略至多以概率一选择位命令，故总变差距离不超过 $\alpha^L$；恒定选择 $A_0=1$ 达到该界。结合定理 12.3.1，首个分辨长度正好为 $L$。证毕。
+
+<a id="section-12-5"></a>
+

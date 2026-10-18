@@ -1,0 +1,41 @@
+**Theorem 4.2 (exact return-word alias and first separation).** Define
+
+$$
+\gamma_q=(-1)^{q-1}\frac{(2q+1)!}{4^q}\eta^{2q+1}\ne0.
+\tag{4.5}
+$$
+
+For every $|\theta|\le\theta_0$,
+
+$$
+\begin{aligned}
+g_\theta&=g_0,\\
+L_\theta^j g_0&=L_0^j g_0 &&(0\le j\le q-1),\\
+L_\theta^j u&=L_0^j u &&(0\le j\le q),\\
+L_\theta^j U&=L_0^j U &&(0\le j\le q),\\
+L_\theta^q g_0&=L_0^q g_0+\theta\gamma_q Sz.
+\end{aligned}
+\tag{4.6}
+$$
+
+All identities concern the actual same-update synthetic generator (2.4), with no replacement of an acquired update by a synthetic conditioning row.
+
+**Proof.** Because $1-v$ is sampled from a degree-one polynomial, (4.1) gives $b^{\mathsf T}(1-v)=0$. Hence $g_\theta=g_0$. The only changed return operator is
+
+$$
+L_\theta-L_0=\theta Sz b^{\mathsf T}VA.
+\tag{4.7}
+$$
+
+For a sampled polynomial column $x=p[v]$ of degree at most $2q-1$, the polynomial representing $VAx$ has degree at most $2q<s$. Therefore $b^{\mathsf T}VAx=0$.
+
+For $x=L_0^j g_0$, (4.4) shows this cancellation whenever $j\le q-2$. Starting from the common $g_0$, induction gives equality of its powers through $j=q-1$. For $x=L_0^j u$ or $L_0^j U$, cancellation holds whenever $j\le q-1$, giving their power equalities through $q$.
+
+At the next g power, $L_0^{q-1}g_0$ has degree $2q$ and leading coefficient $\frac12(-\frac14)^{q-1}$. Applying $A$ halves that leading coefficient and multiplying by $v$ raises the degree to $s=2q+1$. Its new leading coefficient is $(-1)^{q-1}/4^q$. Citation 4.1 therefore gives
+
+$$
+b^{\mathsf T}VA L_0^{q-1}g_0=\gamma_q.
+$$
+
+Since the preceding g power is already exactly independent of $\theta$, applying (4.7) gives the final identity in (4.6), including its exact linear dependence on $\theta$. The changed term remains on the live proof path to the completed word $w_{q,1}$; it is not an unrelated dependency or a canceled auxiliary component. $\square$
+

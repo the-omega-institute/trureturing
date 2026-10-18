@@ -1,0 +1,62 @@
+**Definition 309.1 (Objects, rules and complete rows).**
+Use the actual source $X$ of 297.1, not a distribution on words:
+$F_0=0$, $F_1=1$, $F_{k+2}=F_{k+1}+F_k$,
+$N(r,g)=1+F_rg$, $r$ prime,
+$\lceil F_r/10\rceil\le g\le\lfloor F_r/5\rfloor$,
+$q_i=[p_i\mid N]$ and $n=\min\{i:q_i=0\}$.
+All finite reply patterns are actual by the Fibonacci-matrix and CRT
+argument in 297.3, which reuses 280.1. Every actual source has finite
+first absence. The full carrier remains
+$\Theta=\bigsqcup_{j\ge1}B_j\sqcup\bigsqcup_{j\ge1}P_j$, with each
+block a Borel copy of $(0,1)$. The unchanged consumer returns unknown
+on $B_j$ and proposes $j$ on $P_j$. Its original nonatomic targets
+$\mu_x^{\rm orig}$ remain exactly those in 297.1.
+
+The accuracy target here is the separately selected law
+
+$$
+\lambda_x^a=(1-a_{n(x)})\delta_{\theta_0}
+                 +a_{n(x)}\delta_{\theta_{n(x)}},\qquad
+\theta_j=(B_1,1/(j+2)),\qquad
+1\ge a_1\ge a_2\ge\cdots>0,\quad a_n\to0.
+\tag{309.1}
+$$
+
+An original competitor may use arbitrary query addresses and arbitrary
+Borel outputs in $\Theta$. It has zero advice, one source-independent
+common seed and sourcewise almost-sure finite handoff. The schedule
+in $\mathcal N_2$ is wholly fixed before replies and all its replies
+are obtained. In $\mathcal O_2$ the schedule is fixed increasingly
+before replies and execution stops at its first queried zero or
+exhaustion. The second address cannot depend on the first reply.
+The bound is two actual requests, including repetitions and ignored
+replies. No source distribution, bounded-address assumption, runtime
+bound or mean-request relaxation is introduced. Write
+$e_a(A)=\sup_{x\in X}\operatorname{TV}(\mathcal L(A(x)),\lambda_x^a)$.
+
+For every finite horizon $L\ge3$ retain all words $w\in\{0,1\}^L$ and
+all labels $0,\ldots,L$. If $n(w)$ is its first zero, the three
+independent event rows $A,C,P$ have events $\{0\},\{n(w)\}$,
+$\{0,n(w)\}$ and demands $1-b_{n(w)}-e,b_{n(w)}-e,1-e$.
+At $+=1^L$ retain the base event with demand $1-e$.
+Every unscored row and every negative singleton demand is retained.
+For a probability vector and $0\le b_n\le1$ the three TV deficits are
+
+$$
+1-b_n-p_w(0),\qquad b_n-p_w(n),\qquad
+1-p_w(0)-p_w(n).
+\tag{309.2}
+$$
+
+Their maximum is the TV distance. For arbitrary real $(b,e)$,
+feasibility refers to these linear demands, without claiming a
+probability target outside $0\le b_n\le1$.
+
+The complete $N$ catalog contains every four-cell table
+$N(i,j;u,v,s,t)$ on $00,01,10,11$, every constant and singleton,
+and all labels in every cell. The $O$ catalog contains every
+$O(i,j;u,s,t)$ on $0,10,11$, with $i<j$, and its shorter schedules.
+Repeated queries coarsen information without refunding a request;
+reversing static queries permutes cells. Earlier unqueried labels
+remain legal outputs.
+

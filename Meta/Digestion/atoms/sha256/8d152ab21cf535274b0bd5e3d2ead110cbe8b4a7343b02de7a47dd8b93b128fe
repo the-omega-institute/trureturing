@@ -1,0 +1,33 @@
+### 105.4. The lambda–lambda block and intersecting cuts
+
+**Theorem 105.3.** For every v,w in U0,
+
+ [<lambda_v,lambda_w>]=L(v,w),  L(v,w)=sum_i t_i v_i w_i.             (105.6)
+
+In particular this block vanishes on U24. On U0 it is alternating, since t^T v=0.
+
+**Proof.** The zero-vector case is immediate. Write d=d_v, f=d_w, e=D/d, and choose a primitive norm certificate a^2-d b^2=5D c^2 with c odd as above. At every p|f with p not dividing d, the d-cut gives that d is a p-adic square. There is a norm point beta=1, alpha=sqrt(d+5D), with both coordinates units. Weak approximation on the rational conic permits the certificate to have a,b,c all units at these finitely many primes, simultaneously with the 2-adic normalization. At p|d, b,c are automatically units by the preceding valuation argument.
+
+Use the rational tangency point (t0,z2,z3)=(c,2a,2b) on H1 and (c,b,a) on H3, with
+
+ L1=2a z2-2d b z3-20D c t0,
+ L3=a z2-d b z1-5D c t0.
+
+The second triple is (f,1,f), so the product is product_l (L1L3,f)_l. At infinity, 2, 3 and 5, f is a square because w is in U0. At any support prime not dividing f, the f-cut makes f a square. At every good odd prime the same primitive-tangent proof given above applies to H1 and H3, including primes of c; factors 2 in the H1 tangency point and tangent are units there. These contributions are all one.
+
+If p|f but p does not divide d, choose t0=1,z1=-beta,z2=alpha and the Hensel root z3=-beta modulo p. It exists since p divides e and beta is a unit. The tangent evaluations are units and satisfy
+
+ L1=4d b^2/c modulo p,  L3=2d b^2/c modulo p.
+
+Their product has residue character (8d^2 b^4/c^2/p)=(2/p). Since f has p-valuation one, the local Hilbert factor is precisely (2/p).
+
+If p divides both f and d, use the Hensel root z3=-2beta modulo p. The exact identity L3=2d b^2/c and the norm equation give
+
+ L1/d=8b^2/c modulo p,  L3/d=2b^2/c.
+
+Both tangents have valuation one. After removing their product's rational square factor d^2, its unit residue is 16b^4/c^2, a square. The Hilbert factor against f is therefore one. This overlapping-cut case is essential and uses no coprimality of d and f.
+
+The complete product is product_(p|f,p not dividing d)(2/p). Its additive bit is sum_i t_i w_i(1-v_i). As t^T w=0, this equals sum_i t_i v_iw_i, proving (105.6). ∎
+
+Thus the form (105.6), not pairwise Legendre positivity, is the exact condition needed for an isotropic lambda subspace. For a subspace U of U0 satisfying sum t_i v_iw_i=0 for all v,w in U, both Theorems 105.2 and 105.3 apply with zero lambda block. U24 is an explicit canonical such subspace. A different isotropic subspace may contain paired 13 modulo 24 primes; no square-multiplier restriction is introduced by doing so.
+

@@ -1,0 +1,15 @@
+### Derived
+
+以下结论由原始对象直接推出：
+
+1. CPTP 映射的复合和张量积闭包；
+2. FIB 概率律的对角量子嵌入；
+3. 随机核的 measure--dephase--prepare CPTP 提升；
+4. 有限 triangle quantum network 输出分布的归一化；
+5. 经典 triangle-local 分布作为对角量子网络子类；
+6. CPTP 对 trace-norm Dirichlet 能量的收缩；
+7. 量子层载体在满射 bonding 下的逆极限非空性；
+8. holonomy 缺陷的望远镜界；
+9. 有效电阻的度量结构；
+10. 有限 Hamiltonian 通道的静态性和能量守恒。
+

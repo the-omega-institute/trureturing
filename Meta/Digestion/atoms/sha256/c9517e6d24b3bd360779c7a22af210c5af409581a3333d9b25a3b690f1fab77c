@@ -1,0 +1,45 @@
+**定理 449.4（概率正对数导数仍有真实负算术事件）。** 虽然 §448 给
+\(\mathsf F'/\mathsf F>0\) 在全部 \(u>0\) 上成立，但（HT.4）的原
+算术系数在复合指标六处严格为负：
+
+\[
+\boxed{
+c_6=\frac{\log6}{b^2}
+\left(\beta_2\beta_3-b\beta_6\right)<0,\qquad
+\Lambda(6)+c_6=c_6<0.
+}
+\tag{HT.18}
+\]
+
+因此其自然累积读出 \(\psi_{\mathsf F}\) 在 \(t=6\) 向下跳跃。
+
+**证明：原精确系数与全部参数区间。** 有限 Dirichlet 逆递推给
+
+\[
+\gamma_1=1/b,\qquad
+\gamma_2=-\beta_2/b^2,\qquad
+\gamma_3=-\beta_3/b^2.
+\]
+
+在原 \(c=-(\beta\cdot\log)*\gamma\) 的 \(n=6\) 系数中保留全部四个约数：
+\(d=1\) 项因 \(\log1=0\) 消失，其余三项给
+
+\[
+c_6=-\frac{\beta_6\log6}{b}
++\frac{\beta_2\beta_3(\log2+\log3)}{b^2},
+\]
+
+即（HT.18）的精确公式。这里
+\(\beta_2,\beta_6<0\)、\(\beta_3,b>0\)，且经典对数积分界给
+
+\[
+|\beta_2|\beta_3\ge\frac{q^5}{1+q^3},\qquad
+b|\beta_6|\le\frac{q^7}{1-q^6}.
+\]
+
+对全部 \(0<q<2/5\)，
+\(q^2+q^5+q^6<3q^2<12/25<1\)，故
+\(1-q^6>q^2(1+q^3)\)。于是
+\(|\beta_2|\beta_3>b|\beta_6|\)，证明 \(c_6<0\)。
+六不是素数幂，所以 \(\Lambda(6)=0\)。证毕。
+

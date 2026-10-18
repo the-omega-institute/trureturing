@@ -1,0 +1,72 @@
+**Theorem 3.2 (all-comparator domination and exact local feasibility).**
+For every locally correct deterministic adaptive controller $A$ there
+is a finite $\mathcal A_\eta$ controller $B$ that halts at constant-lag
+sets and otherwise strictly splits the surviving histories. It has at
+most $|\mathscr H_\eta|-1$ Reads on a path. On each same actual
+$h\in\mathscr H_\eta$ its call count, summed literal lengths and
+peak literal length are no greater than those of $A$.
+
+A locally correct controller exists if and only if
+
+$$
+\forall h,h'\in\mathscr H_\eta:\quad
+\bigl(n_j(h)=n_j(h')\text{ for all }j\in I\bigr)
+\ \Longrightarrow\ \tau(h)=\tau(h').
+\tag{LQF.8}
+$$
+
+Thus a nonempty incompatible entry has an explicit two-history
+obstruction; it is different from the inconsistent empty case.
+
+Proof. Since the history set is finite and $A$ terminates on each
+member, the union of its finitely many finite executions unfolds to a
+finite reachable decision tree. No advance uniform bound on its word
+lengths, number of calls or local computations is required. Determinism
+ensures that a common actual transcript has one next action.
+
+Use Theorem 2.2 at each read. A shallow or displayed query has a known
+constant reply on the entry and can be simulated locally. At a hidden
+slot, retain $E$ as $w_j$. A $P_t$ or $S_t$ with $t>U_j$ is
+constantly absent and can also be simulated. Every remaining word has
+a shortest representative in $\mathcal A_\eta$ with the identical
+four-valued reply on every history and no greater length. Replace it
+by that one actual call. Induction through the old controller's choices
+preserves its simulated replies and output on each same history. A
+simulated known reply is local data, not a new receipt from the source.
+
+Now delete any query constant on its surviving set and follow its
+unique possible child. Halt immediately if that set has constant lag.
+These deletions preserve correctness and cannot increase any of the
+three path costs. Every remaining query has at least two nonempty
+reply cells; each child is a strict subset. Hence the depth is at most
+$|\mathscr H_\eta|-1$. Absence is one of these cells whenever it
+is attained. Repeated stationary queries have become constant and are
+deleted; their original invocations were nevertheless charged in $A$.
+The new source calls are all the materialized menu words. This proves
+the claimed pointwise domination, including early stopping.
+
+If (LQF.8) fails, the two histories have identical whole current trees
+by (LQF.1), and identical entries by definition. Equal transcripts force
+equal next words and equal replies, or the same halt. They cannot both
+receive their different required lags. This is NAR Theorem 16.3's
+indistinguishability argument on this particular attained fiber.
+
+Conversely, under (LQF.8), two histories with different lags differ in
+some current exponent. Displayed exponents are fixed, so that slot is
+hidden. Put $m$ equal to the smaller of the two exponents. At suffix
+$R^{\lfloor m/2\rfloor}$ the smaller age gives alpha or beta, and
+the larger gives a different reply by (LQF.5). This is $E$ if
+$m\le1$, otherwise $P_{2\lfloor m/2\rfloor}$, and belongs to
+the menu. Thus whenever a surviving set has nonconstant lag some
+menu query splits it. Query such a word and continue. Strict subset
+descent terminates; a constant-lag set gives the correct output.
+$\square$
+
+The finite-source pruning and same-source cost argument are established
+methods in [NPL §§7--8][NPL] and [AOF §§3--5][AOF]. Here the additional
+native correspondence is (LQF.2)--(LQF.8): the complete multi-slot
+origin-code fiber, all of its current word experiments, and the
+reply-preserving substitutions with nonincreasing literal length before
+pruning. No finite set of representative lags has been substituted for
+the actual joint histories.
+

@@ -1,0 +1,22 @@
+## 242. Exact target and inherited facts
+
+Retain all mixed-flat five-reservoir hypotheses and the four-owner
+interacting core K. Use the proved forced double-face return: both
+marked {M,Z,C} faces of tau=(Z,M,C,D,M,C) pair to one other owner rho.
+Write eta,xi for the other two core owners. Transverse labels in each
+chosen frame are distinct. All original edge links are complete circles
+of degree at least six, and all original edge angle sums hold.
+
+We reuse: m>1+c+d, c,d<m-2, z>1+m+c, u>m; the genuine M/Z capacity
+3*pi; no special edge has a fixed pair contained in P={M,Z,U}; and every
+high label occurring in K occurs in at least two distinct K owners.
+Marked faces, those with two distinct P labels, pair inside K. A nonempty
+closed set of original normal intervals for one actual edge is its whole
+normal circle, so a closed set of at most five slots is impossible.
+
+We prove rho has one of the following roles, up to the usual interchange
+of the transverse pair and axes:
+ (A) (M,Z,C,Q,Z,C), with Q arbitrary;
+ (B) (C,M,Z,U,M,Z).
+No exclusion of these two remaining roles is asserted.
+

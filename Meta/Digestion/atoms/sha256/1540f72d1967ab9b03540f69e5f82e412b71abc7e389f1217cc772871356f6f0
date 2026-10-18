@@ -1,0 +1,22 @@
+**Corollary 6.3 (infinite image excludes a finite length budget too).** If
+Theorem 5.3 returns INFINITE, every correct source-total full-row service
+has unbounded worst raw-read cost and unbounded worst literal-address
+sum. The analogous conclusion holds for the exterior task when its
+image is infinite. A uniform bound on updates alone is not excluded.
+
+Proof. Raw unboundedness is Lemma 6.1. JRF Lemma 3.2, restricted to the
+same entire signed domain as justified by NSF Proposition 7.4, removes
+repeated same-epoch reads and universally constant late root reads
+without increasing any same-source coordinate. Its resulting service
+satisfies $q(u)\le\ell(u)+\max(0,2-N)$. A finite length bound would thus
+imply a finite raw bound, a contradiction. The transformation preserves
+whatever output the original service computes; it makes no assumption
+on the source predicate. Nothing in this proof lower-bounds updates.
+$\square$
+
+Finite row image is now a decidable necessary condition for bounded
+full-row recovery on arbitrary signed fibers, and an exact condition for
+bounded recovery of their exterior field. The missing full-row condition
+is the uniform observation of the remaining partition, not a missing
+concrete output or an unenumerated row image.
+

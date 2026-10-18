@@ -1,0 +1,10 @@
+**Theorem 6.3 (global dual inequalities and exact zero sets).** At the event, throughout the seven section, and on the physical six side,
+
+$$
+Y\cdot\Gamma_\eta(u,v)\ge |H_\eta(u,v)|+\lambda|u|\qquad(\eta=0,1)
+$$
+
+on the entire circle. The zero sets on seven are exactly the seven contacts of Definition 4.1. At the event all seven are zeros, with $p_4=0$. On six above the event they are exactly the six occupied contacts; at the event contact 4 is an additional zero. On six below the event the unused direction violates the inequality, so that section is not a physical optimum there.
+
+Proof. Positive quotients and exact occupied double factors give nonnegativity of each polynomial on its assigned half-circle, with zeros only at its listed contacts. On the physical six side the unused constant is nonnegative by Theorem 5.3 and strictly positive above the event; the identity of Definition 6.1 handles its entire half-circle. On a report half-circle the other report sign has gap larger by $2\lambda|u|$. The two height signs handle the absolute height, including sign-changing points. At a report axis both signs agree, and positive quotients exclude additional zeros there. Dividing by the strictly positive clearing denominators proves the normalized inequalities. The negative unused value below the event proves the last statement. Strict signs at the contacts and separation exclude any merging of the pure and saturated zero sets. $\square$
+

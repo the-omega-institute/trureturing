@@ -1,0 +1,16 @@
+**Definition 4.1 (full feasible supports).** Define
+
+$$
+\begin{aligned}
+S_D&=\{j\in A_m:\exists x,v,y\in\mathcal T\quad
+                     y\ne T_j\ \land\ \Delta(j,x,v,y)\},\\
+S_i&=\{j\in A_m:\exists y\in\mathcal T\quad C_i(j,y)\}
+\quad(i=0,1).
+\end{aligned}
+\tag{CRE.18}
+$$
+
+These are the entire rank projections of $D,D_i$, respectively. A subset
+$S\subseteq\mathbb N$ is unbounded when
+$\forall b\in\mathbb N\ \exists j\in S\ (j>b)$.
+

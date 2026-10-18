@@ -1,0 +1,32 @@
+**Lemma 5.4 (finite geometry and exact partition tests).** For every
+valuation $\mathbf x$, the exterior of $\rho^r(S[\mathbf x])$ is
+$C$ exactly when $\gamma_{S,r}$ is true. In that case its actual
+hole values are (NRF.16). All their equality tests reduce to finite
+ground comparisons and tests of the forms
+
+$$
+x_p=x_q,\qquad x_p=h\quad(h\in\mathcal T\text{ explicitly known}).
+\tag{NRF.18}
+$$
+
+The reductions preserve truth and falsity, including every required
+disequality.
+
+Proof. Substitution preserves each explicit pair of $S$. At an
+explicit leaf its complete expansion is the finite ground term
+used in Definition 5.3. Every variable is at a cut position, so
+its transformed value is replaced by that hole without looking
+inside it. This proves geometry by induction on the pattern and
+the finite expanded leaves, including absence of early positions
+and concrete blockers.
+
+Two original-hole values compare by injectivity:
+$\rho^r x_p=\rho^r x_q$ if and only if $x_p=x_q$.
+Two born-hole values are known finite trees and compare literally.
+For a mixed pair, $\rho^r x_p=g$ is false if $\iota_r(g)$ is
+undefined, and otherwise is exactly $x_p=\iota_r(g)$.
+Taking the Boolean complement gives each disequality, not an
+approximation to it. A born filler itself need not have a
+predecessor; only its equality with an original-hole image is being
+tested. All comparisons refer to the same valuation. $\square$
+

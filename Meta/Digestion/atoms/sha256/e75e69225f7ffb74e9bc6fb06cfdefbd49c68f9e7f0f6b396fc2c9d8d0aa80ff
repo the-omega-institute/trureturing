@@ -1,0 +1,44 @@
+**定理 487.1（全部实数 $y\ge4096$ 的四倍区间计数）。** 有
+
+$$
+\#\{p\text{ 素数}:y<p\le4y\}>\frac{y}{3\log y}.
+$$
+
+**证明。** §486 的导数比较给 $L>2/3$。函数 $k(z)=(z-z^{-1})/2-\log z$ 满足 $k(1)=0$ 与 $k'(z)=(z-1)^2/(2z^2)>0$，故 $L<3/4$。
+
+在 $4y$ 使用下界、在 $y$ 使用上界，得到
+
+$$
+\vartheta(4y)-\vartheta(y)
+\ge2Ly-[L+\log(4y+2)]-4\sqrt y\log(4y).
+$$
+
+令 $g(y)=\log(4y)/\sqrt y$。当 $y\ge4096=2^{12}$ 时，$\log(4y)\ge14L>2$，故
+
+$$
+g'(y)=\frac{1-\tfrac12\log(4y)}{y^{3/2}}<0.
+$$
+
+因此
+
+$$
+4\sqrt y\log(4y)=4yg(y)
+\le\frac78Ly<\frac{21}{32}y<\frac34y.
+$$
+
+对 $u>0$，$\log u=2\log\sqrt u\le2\sqrt u-2$。又 $y\ge1$ 给 $\sqrt{4y+2}\le2\sqrt y+1/2$，所以
+
+$$
+L+\log(4y+2)\le4\sqrt y+L-1<4\sqrt y\le\frac y{16}.
+$$
+
+合并即得
+
+$$
+\vartheta(4y)-\vartheta(y)
+>\left(\frac43-\frac34-\frac1{16}\right)y
+=\frac{25}{48}y>\frac y2.
+$$
+
+两端素数和的准确相消给 $\vartheta(4y)-\vartheta(y)=\sum_{y<p\le4y}\log p$。各项不超过正数 $\log(4y)$，故区间计数严格大于 $y/[2\log(4y)]$。$y\ge16$ 还给 $\log(4y)\le(3/2)\log y$，从而得到所需计数。$\square$
+

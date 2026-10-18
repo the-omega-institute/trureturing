@@ -1,0 +1,43 @@
+**Corollary 47.1 (signed original-coordinate bounds).** For
+$\kappa\ne0$, set $J_\kappa=\operatorname{diag}(1,1,\kappa)$ and
+$y=(\theta,v,D)=J_\kappa q$. Both bounds of Theorem 42.2 hold
+after this phase pushforward, with their corresponding original
+targets and a uniform constant multiplier. The target covariance is
+$2\min(s,t)\widehat M_\kappa$, where
+
+$$
+\widehat M_\kappa=J_\kappa M_\kappa J_\kappa^{\mathsf T},\quad
+(\widehat M_\kappa)_{13}=\kappa(M_\kappa)_{13},\quad
+(\widehat M_\kappa)_{23}=\kappa(M_\kappa)_{23},\quad
+(\widehat M_\kappa)_{33}=\kappa^2(M_\kappa)_{33}.
+\tag{47.1}
+$$
+
+Its rank is three for every fixed nonzero parameter and
+$\det\widehat M_\kappa=\kappa^2\det M_\kappa$. These are signed
+formulas, not an assertion that either numerical cross covariance
+has the sign of $\kappa$ regardless of its other factor.
+
+Proof. DEV §39 identifies this exact map with the original winding
+lift, in the same clock and with the same killing and changes of
+law. Its operator norm is at most $C_J=\max(1,\kappa_*)$.
+Pushing both members of each coupling forward multiplies its cost
+by at most $C_J$ while retaining height. For weighted variation,
+an invertible measurable pushforward preserves the variation
+measure: push the positive and negative mutually singular parts
+forward, which remain mutually singular. Furthermore
+$1+|J_\kappa z|\le C_J(1+|z|)$. This proves the weighted bound
+uniformly through both signs. Covariance transforms by congruence,
+giving (47.1). The raw density transformation remains exactly
+
+$$
+\widehat\Gamma_{\kappa,b}(y)
+=|\kappa|^{-1}\Gamma_{\kappa,b}(J_\kappa^{-1}y),\qquad
+g_\kappa^{\rm orig}(t;k,k';J_\kappa r)
+=|\kappa|^{-1}g_\kappa^I(t;k,k';r).
+\tag{47.2}
+$$
+
+The absolute Jacobian in (47.2) does not remove signed cross terms
+and does not yield a uniform point-density rate at zero. $\square$
+

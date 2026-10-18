@@ -1,0 +1,29 @@
+**Proposition 17.3 (one law fixes both positive failure moments).**
+Under Assumption 17.1, define
+
+$$
+\begin{gathered}
+V=\frac{m_2h_1^2}{b_s^2},\quad
+W=\frac{m_1h_2^2}{d_s^2},\quad\mu=\alpha V+\beta W,\\
+m_u=\sum_i p_i b_i u_i^2=\alpha V>0,\qquad
+m_v=\sum_i p_i b_i v_i^2=\beta W>0,\qquad
+\sum_i p_i b_i u_iv_i=0,\\
+\mathcal R:=\frac{m_v}{m_u}
+=\frac{\beta W}{\alpha V}
+=\frac{c_s b_s h_2m_1}{a_s d_s h_1m_2}.
+\end{gathered}
+\tag{FC.58}
+$$
+
+Proof. These are the failure-moment consequences of GC Proposition
+12.2 and (FC.25), applied to the same actual law. In the present
+coordinates, the last three $\Gamma$ equations give
+$\sum p_i b_i=\mu$, $\sum p_i b_i u_i^2=\alpha V$ and
+$\sum p_i b_i u_iv_i=0$. Subtracting the second from the first,
+using $u_i^2+v_i^2=1$, gives $m_v=\beta W$. Strict positivity
+uses the stipulated positive source coordinates, $m_1,m_2$ and
+$\alpha,\beta$. Finally
+$\beta/\alpha=c_sd_sh_1/(a_sb_sh_2)$ cancels the factors in
+$W/V$ and gives the last expression. The integral equations follow
+identically. No marginal law is chosen or changed. $\square$
+

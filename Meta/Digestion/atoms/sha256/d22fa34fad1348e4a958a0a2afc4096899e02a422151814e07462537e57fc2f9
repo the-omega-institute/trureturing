@@ -1,0 +1,94 @@
+**Definition 41.1 (unchanged DEV realization).** Throughout this volume,
+DEV means [Native long-time phase diffusion on the complete winding
+cover](FIB_NATIVE_LONG_TIME_PHASE_DIFFUSION.md). Fix exactly its
+Definition 35.1 data: $0<Z<1$, $H=(1-Z)/2$, $I=(l,u)\Subset(0,H)$,
+$\varepsilon>0$, and its compact two-sided parameter interval
+$\mathcal K=[-\kappa_*,\kappa_*]$. The native coefficient family
+$c_\kappa=(A_\kappa,B_\kappa,b_\kappa)$ is precisely the family fixed
+there, with its original probabilities and controls. It is not chosen
+or fitted in this volume. On the all-real comparison cover
+$I\times\mathbb R^3$, with $q=(\theta,v,x)$, the original killed law is
+
+$$
+dK_t=\sqrt2\varepsilon\,dW_t^1,\qquad
+dq_t=\sqrt2c_\kappa(K_t)\,dW_t^2,\qquad
+\zeta=\inf\{t:K_t\notin I\},
+\tag{41.1}
+$$
+
+where $W^1,W^2$ are independent standard real Brownian motions. Both
+height endpoints kill the process. Time is the original time, the
+control covariance is $\operatorname{diag}(\varepsilon^2,1)$, and raw
+cover measure is $dk\,dq$. Write $L=u-l$ and set
+
+$$
+\phi(k)=\sqrt{2/L}\sin\frac{\pi(k-l)}L,\quad
+\lambda=\frac{\varepsilon^2\pi^2}{L^2},\quad
+\pi(dk)=\phi(k)^2dk,\quad J=\int_I\phi(k)dk,\quad
+\gamma=3\lambda.
+\tag{41.2}
+$$
+
+Here $\pi$ is a probability measure. The ground-state law
+$\mathbb Q_{k,q}^\kappa$ has height generator
+$\varepsilon^2\partial_k^2+2\varepsilon^2(\phi'/\phi)\partial_k$,
+the same phase equation as (41.1), and no height death at finite time.
+Denote its height semigroup by $Q_t$. The other probability law used
+below is exactly
+$\mathbb P_{k,q}^{\kappa,\tau}=\mathbb P_{k,q}^\kappa(\cdot\mid\zeta>\tau)$
+on the entire interval $[0,\tau]$.
+
+We use the following supplied DEV facts, retaining their conditional
+dependence on DEV's inherited G/C/N/F premises. The height semigroup
+is conservative and preserves $\pi$; its relative kernel satisfies
+
+$$
+Q_t f(k)=\int_I R_t(k,y)f(y)\pi(dy),\qquad
+\sup_{k,y\in I}|R_t(k,y)-1|\le C_R e^{-\gamma t}\quad(t\ge1).
+\tag{41.3}
+$$
+
+The coefficient and tensor bounds, uniform in $\kappa\in\mathcal K$,
+are
+
+$$
+|c_\kappa(k)|\le C_c,\qquad
+M_\kappa=\int_I c_\kappa c_\kappa^{\mathsf T}\,d\pi,\qquad
+0<m\,\mathrm{Id}\le M_\kappa\le M\,\mathrm{Id}.
+\tag{41.4}
+$$
+
+The coefficients are smooth on the fixed larger height interval and
+continuous in the parameter; consequently $M_\kappa$ is continuous.
+The exact Doob identity, with $S_k(t)=\mathbb P_k(\zeta>t)$, is
+
+$$
+\left.\frac{d\mathbb P_{k,q}^{\kappa,\tau}}
+{d\mathbb Q_{k,q}^\kappa}\right|_{\mathcal F_r}
+=\frac{e^{-\lambda r}\phi(k)S_{K_r}(\tau-r)}
+{\phi(K_r)S_k(\tau)},\qquad 0\le r\le\tau.
+\tag{41.5}
+$$
+
+Conditional on the complete height history, under either law the
+phase driver remains independent standard Brownian motion. Thus for
+$b>0$ fixed, $\tau=Tb$, and $X_T(s)=(q_{Ts}-q_0)/\sqrt T$, $0\le s\le b$,
+the conditional phase law is a continuous centered Gaussian law with
+independent increments and covariance
+
+$$
+\mathbb E[X_T(s)X_T(t)^{\mathsf T}\mid K]
+=\frac2T\int_0^{T\min(s,t)}c_\kappa(K_r)c_\kappa(K_r)^{\mathsf T}dr.
+\tag{41.6}
+$$
+
+The full history conditioned on here is $K|_{[0,\tau]}$. Facts
+(41.3)--(41.6) are DEV (37.9), (36.1), (37.5), and (38.5),
+respectively. They are credited inputs, as are DEV's coordinate and
+zero-leaf identifications in §39 and survival asymptotic (37.4).
+The quantitative concentration, coupling and cancellation arguments
+below supply the additional estimates. This is ordinary mathematical
+proof exposition, not a Lean-kernel certification of these premises
+or conclusions. Nested sources and the primary literature cited by
+DEV are not independently verified here.
+

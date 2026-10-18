@@ -1,0 +1,36 @@
+**Theorem 71.1 (the restricted Pauli norm identity and the base subcode bound).** For each complex unit $\xi$, the particular channel $\Lambda_\xi$ is Hilbert–Schmidt self-adjoint, TP and unital, and
+
+$$
+\|\Lambda_\xi-\mathrm{id}_2\|_\diamond
+=2(1-F_e(I_2/2,\Lambda_\xi)),\qquad
+\|R_\xi N_0\iota_\xi-\iota_\xi\|_\diamond
+\leq\frac{9-4\sqrt3}{8}.
+\tag{S.137}
+$$
+
+Proof. Every $N_\xi(X)$ is supported on $P_\xi$, also for off-diagonal matrix units. Thus the completion branch vanishes in the composite, which is
+
+$$
+\Lambda_\xi=N_\xi^\dagger\circ[X\mapsto H_\xi XH_\xi]\circ N_\xi,\qquad
+\Lambda_\xi(I_2)=\sum_\alpha L_\alpha^\dagger P_\xi L_\alpha=I_2.
+\tag{S.138}
+$$
+
+The sandwich is self-adjoint for the Hilbert–Schmidt inner product, hence so is this composite. TP follows from composition of CPTP maps. For a TP unital Hermiticity-preserving qubit channel write $T_{ij}=\operatorname{Tr}(\sigma_i\Lambda(\sigma_j))/2$ on the three Pauli matrices. The Bloch matrix $T$ is real; Hilbert–Schmidt self-adjointness makes it symmetric. The real spectral theorem supplies a diagonalizing orthogonal eigenbasis, including degeneracies. Flip one eigenvector if needed to choose a rotation in $SO(3)$. Lift that rotation to a qubit unitary $U$. Thus the simultaneous conjugation $\Lambda'=\operatorname{Ad}_{U^\dagger}\Lambda\operatorname{Ad}_U$ is Pauli diagonal. The same unitary is used on both sides, so the identity target is preserved.
+
+If its three eigenvalues are $\mu_1,\mu_2,\mu_3$, set
+
+$$
+\begin{aligned}
+p_0&=(1+\mu_1+\mu_2+\mu_3)/4,&p_1&=(1+\mu_1-\mu_2-\mu_3)/4,\\
+p_2&=(1-\mu_1+\mu_2-\mu_3)/4,&p_3&=(1-\mu_1-\mu_2+\mu_3)/4.
+\end{aligned}
+\tag{S.139}
+$$
+
+The normalized Choi matrix is diagonal in the Bell basis with these entries. CP makes every $p_j\geq0$ and TP gives $\sum_jp_j=1$, so $\Lambda'(X)=\sum_{j=0}^3p_j\sigma_jX\sigma_j$, with $\sigma_0=I_2$. The Kraus-trace formula gives $p_0=F_e(I_2/2,\Lambda')=F_e(I_2/2,\Lambda)$; simultaneous unitary conjugation preserves this fidelity.
+
+For every finite complex reference and every trace-class operator, unitary conjugation preserves its trace norm. Writing $\Lambda'-\mathrm{id}=\sum_{j>0}p_j(\operatorname{Ad}_{\sigma_j}-\mathrm{id})$ gives the diamond upper bound $2\sum_{j>0}p_j$. On a normalized Bell input the four Pauli branches are orthogonal Bell projectors, so the difference has eigenvalues $p_0-1,p_1,p_2,p_3$ and trace norm exactly $2(1-p_0)$. Unitary invariance of the diamond norm proves the first identity of (S.137). This argument applies to self-adjoint unital CPTP qubit channels; it supplies no fidelity–diamond equality for arbitrary channels or for optimized qutrit recoveries.
+
+Finally $R_\xi N_0\iota_\xi-\iota_\xi=\iota_\xi(\Lambda_\xi-\mathrm{id}_2)$. Output isometries preserve trace norm with any finite reference. Combining (S.135) with the first identity proves the second bound. $\square$
+

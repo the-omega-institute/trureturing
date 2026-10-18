@@ -1,0 +1,31 @@
+**Theorem 4.3 (two complementary certificates and necessary improving region).** At positive beta either $C=0$ or $f(\tau,\bar\tau)\leq\sqrt a$ implies
+
+$$
+\delta_N\geq1-\sqrt a,\qquad g_N^2\leq(1+\sqrt a)/2.
+\tag{R.20}
+$$
+
+Consequently any encoder actually improving the diamond benchmark must obey
+
+$$
+C\ne0,\quad f(\tau,\bar\tau)>\sqrt a,\quad
+w_c(\beta)<\operatorname{Tr}S<1,\quad
+0<2\operatorname{Tr}(C^\dagger\tau^+C)<1-w_c(\beta).
+\tag{R.21}
+$$
+
+**Proof.** First if orthogonal pure inputs $\eta_\pm$ have output distance at most $2m$, contraction and the triangle inequality give $\|RN-\mathrm{id}\|_\diamond\geq1-m$ for every same recovery. Let $p_\pm$ be its respective pure-target probabilities. A binary target measurement with the unused logical direction assigned to one outcome has sum of correct probabilities at least $p_++p_-$. Its optimum binary sum is $1+\|RN(\eta_+)-RN(\eta_-)\|_1/2\leq1+m$. Thus $\min p_\pm\leq(1+m)/2$, which gives the worst-input fidelity assertion for every recovery as well.
+
+If $C=0$, each Kraus third-output vector $t_\gamma$ is orthogonal to all $K_\alpha\chi_+$ and all $K_\alpha\chi_-$. Positive beta makes their span the entire active four-dimensional support, hence $V|2\rangle=h\otimes v$ with real unit $v$. For any complex unit $q$ in the original $0$–$1$ plane, $\Gamma(q)=|c_+|^2\tau+|c_-|^2\bar\tau$ on writing $q=c_+\chi_++c_-\chi_-$. Because $v$ is real, $v^T\tau v=v^T\bar\tau v\leq a$. Therefore
+
+$$
+N(|q\rangle\langle2|)=|z_q\rangle\langle h|,\quad z_q\perp h,
+\quad\|z_q\|^2=v^T\tau v\leq a.
+$$
+
+The inputs $(q\pm|2\rangle)/\sqrt2$ have output distance $2\|z_q\|\leq2\sqrt a$, proving (R.20) in this branch. At zero the outside space is three-dimensional, so this factorization is not asserted.
+
+For arbitrary $C$, put $X=N(|\chi_+\rangle\langle\chi_-|)$. Its left and right supports are orthogonal, so $\|X+X^\dagger\|_1=2\|X\|_1$. Trace-norm duality on the retained output, equivalently Uhlmann's purification formula, gives $\|X\|_1=f(\tau,\bar\tau)$. Since $|0\rangle\langle0|-|1\rangle\langle1|=|\chi_+\rangle\langle\chi_-|+|\chi_-\rangle\langle\chi_+|$, the actual $0,1$ output distance is exactly $2f(\tau,\bar\tau)$. Apply the preceding pair argument when this is at most $2\sqrt a$.
+
+Finally trace (R.4): $2\operatorname{Tr}(C^\dagger\tau^+C)=1-w$. The range condition implies this trace vanishes exactly when $C=0$, so $C=0$ iff $w=1$. Combining (R.20) and Theorem 3.2 proves (R.21). The conditions are necessary only; their satisfaction supplies no improved recovery. Theorem 4.2 shows the new exclusion is not contained in the two simpler regions. $\square$
+

@@ -1,0 +1,23 @@
+**命题 8.1（已发表半锚界的范围）。** 在 $\mathcal U$ 上，$0<\delta\le1$ 有
+
+$$
+R_\delta\le\min\{1,\tfrac12+\tfrac92\sqrt\delta\}.
+$$
+
+在每个固定参数平台上，令 $c=\sqrt{d_0}/L^2$，还可取
+
+$$
+R_\delta\le\min\{1,\tfrac12+8\delta/c\}.
+$$
+
+证明。PCR 第 54 节的普通半锚为 $(x_1/2,x_2/2,x_3/2)$；推论 3.4 使对应线段的误差至多 $1/2$。报告半锚 $(y_1/2,y_2/2,Z/2)$ 的前两中心误差至多 $\delta/2$，第三由引理 5.1 至多 $(9/2)\sqrt\delta$。
+
+固定主域的第三锚可用 PCR 定理 51.2 的 $16\delta/c$ 界，其单位实例也如下直接得到。错号分支若 $q_0<2\delta$，由 $|w|\le q_0$，总误差至多 $4\delta+(2+\delta)\delta$。若 $q_0\ge2\delta>0$，投影界给
+
+$$
+cq_0|w|\le\delta|w|+(q_0+\delta)(2+\delta)\delta
+\le q_0\delta+\tfrac32q_0(2+\delta)\delta.
+$$
+
+故 $2|w|+(2+\delta)\delta\le4(\delta+(2+\delta)\delta)/c\le16\delta/c$。正确符号和零尾的叉积界更小，$\delta=0$ 由准确式承担。半锚得 $8\delta/c$，零输出给上界 1。这些界对 $\mathcal U$ 和固定主域使用不同前提，不能混用。
+

@@ -1,0 +1,52 @@
+**Corollary 3.4 (Original lower bounds and actual ninth obstruction).**
+Put
+
+$$
+d_0=\frac{24u}{253},\qquad
+d_{256}=\frac{24u+3v}{256},\qquad
+d_{\rm sum}=\frac{11(u+v)}{128},\qquad E=5\tau+d_0.
+$$
+
+Every original competitor in either class has
+
+$$
+e_a(A)\ge5\tau+\max\{d_0,d_{256},d_{\rm sum}\}.
+$$
+
+When $253v>24u$, every competitor exceeds $E$ by at least
+$3(253v-24u)/(253\cdot256)>0$.
+
+Proof. The credited $253$ pairing gives
+$3b_2+27b_3+24b_4+27b_5+25b_6+24b_7+24b_8\le3+253e$.
+Its actual left side minus three is
+
+$$
+-33\tau+351\tau+240\tau+243\tau+200\tau+144\tau
+       +120\tau+24u=1265\tau+24u.
+$$
+
+The new inequality adds the actual $3a_9=15\tau+3v$, giving
+$256e\ge1280\tau+24u+3v$. Theorem 2.2 transfers both inequalities
+to every original rule at each positive met cap. Decreasing caps gives
+the error bounds, including exclusion of zero error. At error one
+these lower bounds are immediate since they are below one.
+
+The remaining lower is the credited complete $128$ theorem, DEV XVIII
+318.2–318.3:
+
+$$
+2b_2+11b_3+13b_4+13b_5+12b_6+11b_7+11b_8+11b_9
+ \le2+128e.
+$$
+
+Its forty-six-row score has total weight $1024$, full $N,O$ support
+and anchor reward $368$, and zero excess in both complete catalogs.
+That existing full theorem covers all ten labels, independent $N$
+cells, constants, singletons, repeats, reversals and ordered embeddings.
+Its original consequence uses the prefix transport proved in 2.2.
+The actual amplitude contribution is
+$-22\tau+552\tau+110\tau+11(u+v)=640\tau+11(u+v)$.
+This is use of the credited theorem, without a new $128$ certificate.
+Finally $d_{256}-d_0=3(253v-24u)/(253\cdot256)$.
+Actual $a_9$ has not been replaced by a cap. $\square$
+

@@ -1,0 +1,38 @@
+**Theorem 3.1.** For every such table, on every allowed installed prior, with $\varepsilon_s=R_{\rm conf,s}-\rho_s$,
+
+$$
+\frac{\mathbb E_\pi[Z(1-Z)]}{16}+h\mathcal E_C+cJ_-
+\le\frac{\varepsilon_p}{d_p}+\frac{\varepsilon_\beta}{d_\beta}+KJ_+.
+\tag{3.5}
+$$
+
+Only positive endpoint masses are needed for (3.5). A supported nonendpoint will enter in Section 5. The new term $cJ_-$ gives a positive calibration cost to the opposite direction, rather than charging both directions identically.
+
+Use the supplied endpoint-positive complete events
+
+$$
+E_p=\{w_{0,1},w_{1,1},w_{2,1}\},\qquad
+E_\beta=\{\beta,\alpha w_{0,1}\}.
+$$
+
+Their endpoint probabilities are $412/729,7299/15625$ and $22/27,93/125$, with midpoints $C_p=11758471/22781250$, $C_\beta=5261/6750$. If $a=\pi Q(E_p),b=\tau W(E_\beta)$, the endpoint configuration-risk bounds, projected to these events, give
+
+$$
+|a-C_p|\le\varepsilon_p,\quad |b-C_\beta|\le\varepsilon_\beta,
+\quad D:=\frac{412/729-a}{d_p}-\frac{22/27-b}{d_\beta}
+\le\frac{\varepsilon_p}{d_p}+\frac{\varepsilon_\beta}{d_\beta}.
+\tag{3.6}
+$$
+
+This uses a necessary event consequence of the configuration losses; it does not replace them by law-order losses.
+
+We use one explicit published input. For the **paired** table with p and suspended labels X, row $\pi$ in both phases, beta kernel C, alpha kernel identity, and both emissions u, denote its event means by $a^*,b^*$. The supplied stationary calibration-energy inequality [ALPHA, Section 5] states
+
+$$
+D^*:=\frac{412/729-a^*}{d_p}-\frac{22/27-b^*}{d_\beta}
+\ge\mathbb E_\pi[Z(1-Z)]/16+h\mathcal E_C.
+\tag{3.7}
+$$
+
+Its hypotheses are exactly finite stationarity and regular emissions; neither reversibility, irreducibility nor a native-mixture premise is required. This is a reused result, not a new energy theorem. The new proof must relate D to D* directionally; the absolute comparison in ALPHA does not do that.
+

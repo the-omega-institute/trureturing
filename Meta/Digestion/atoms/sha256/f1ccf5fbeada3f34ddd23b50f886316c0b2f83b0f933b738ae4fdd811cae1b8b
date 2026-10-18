@@ -1,0 +1,16 @@
+**Corollary 3.5 (enlarged causal observation correspondence).** One source-uniform
+prefix-causal simulator reconstructs every public primitive label from public
+initialization, actually supplied public input and the extended committed-response
+stream. It consumes a ReadE value, TagRead value or modification accept/reject
+only at that call's response release. Restricting requests to the old ports
+preserves their source responses and successors, with the extension's additional
+paid boot and journal overhead.
+
+**Proof.** Use PR57.T3's simulator for the original schedules and Theorem 3.4
+for TagRead. Before a release both use only the existing public prefix. At
+release conformance supplies the appropriate typed response, which determines
+all subsequent public response-dependent work. Induction on occurrences, with
+this single extension at each release, gives the simulator. Its restriction to
+any finite prefix is the same simulation truncated there. No representative
+source or future response is used. $\square$
+

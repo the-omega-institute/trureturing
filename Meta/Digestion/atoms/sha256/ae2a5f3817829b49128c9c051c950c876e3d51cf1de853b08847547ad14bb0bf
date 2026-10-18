@@ -1,0 +1,61 @@
+**Theorem 5.1 (Exact response Gram blocks for the actual menu).** In generic
+position, the latent pullback Gram in (5.4) is
+
+$$
+G_{\mathrm{lat}}
+ =\operatorname{diag}(\lambda_\alpha I_2,\lambda_\beta I_2,
+                       \lambda_\gamma I_2),
+\tag{5.5}
+$$
+
+where
+
+$$
+\lambda_\alpha=2(p_0p_1+p_3p_{13}),\qquad
+\lambda_\beta=2p_0p_2,\qquad
+\lambda_\gamma=2(p_0p_3+p_1p_{13}).
+\tag{5.6}
+$$
+
+For one symmetry wall the two blocks are
+
+$$
+\lambda_{\mathrm{bottom}}
+ =2(p_0+p_{13})(p_1+p_3),\qquad
+\lambda_{\mathrm{middle}}=2p_0p_2.
+\tag{5.7}
+$$
+
+At both walls the circle block is $2p_0p_2$ and the parity coordinate has
+scalar Gram coefficient
+
+$$
+\lambda_{\mathrm{parity}}
+ =4(p_0p_1+p_0p_3+p_1p_{13}+p_3p_{13}).
+\tag{5.8}
+$$
+
+The corresponding output covariance is always $C_{\mathrm{out}}=D_bD_b^{\mathsf T}$;
+its nonzero spectrum is the spectrum listed above, and its zero multiplicity
+is $10-6$, $10-4$, or $10-3$ in the three regimes. Under the
+zero-winding double-wall restriction, the bottom contribution is constant and
+is removed by centering, so the output covariance has rank two.
+
+**Proof.** Each edge block in (5.2) contributes
+$(a_e^2/2)I_2=2p_ip_jI_2$ to $D_b^{\mathsf T}D_b$. Distinct character
+blocks are orthogonal under normalized Haar, the standard character-orthogonality
+step in the Peter--Weyl theorem (Peter and Weyl, *Mathematische Annalen* 97
+(1927), 737--755, [doi:10.1007/BF01447892](https://doi.org/10.1007/BF01447892)),
+while repeated edges belonging to one character add in the same latent block.
+Equation (4.5) gives (5.6).
+On a single wall, the possible sign relation is implemented by the fixed
+reflection $J$, so all four bottom edges add to one block and give (5.7).
+At both walls the bottom response is a fixed vector times $\varepsilon$, and
+summing the four squared norms gives (5.8). Centering removes the constant
+$c_b$. Balanced parity has mean zero and variance one, so its random
+contribution remains in the centered response. Only in the restricted $m=0$
+task is parity deterministic, making its bottom contribution constant and
+removable by centering. The equality of the nonzero spectra of $D_bD_b^{\mathsf T}$
+and $D_b^{\mathsf T}D_b$ is the singular-value identity. No whitening or
+coordinate-independent metric is asserted. $\square$
+

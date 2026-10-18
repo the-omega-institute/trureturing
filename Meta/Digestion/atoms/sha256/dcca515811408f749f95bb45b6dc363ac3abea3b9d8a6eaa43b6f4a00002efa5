@@ -1,0 +1,14 @@
+### 定义 20.3（层级 Fisher 曲率）
+
+对 \(p\in\Pi_j^\delta\) 和质量守恒切向量 \(u=(u_{v,s})\)，定义
+
+\[
+\mathcal I_j(p;u)
+=
+\sum_{v\in V_j}\mu_j(v)
+\sum_{s\in\Sigma}
+\frac{u_{v,s}^{\,2}}{p_{v,s}}.
+\]
+
+当 \(u_{v,\cdot}=d\) 时，这就是每个局部 FIB seam 的加权总 Fisher 曲率。
+

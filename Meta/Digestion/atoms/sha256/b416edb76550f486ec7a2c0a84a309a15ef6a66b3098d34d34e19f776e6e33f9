@@ -1,0 +1,11 @@
+**Theorem 110.1.** If $\operatorname{Aut}_{\rm fib}(G)$ or $\operatorname{Aut}_{\rm fib}(H)$ acts transitively on $\Omega$, then
+
+$$
+\delta(A,B)\geq\sqrt2-1>\frac14.
+\tag{110.4}
+$$
+
+The opposite channel may be arbitrary and both channels may leak. The bound is sharp in this transitive-symmetry class, attained by a calibrated pair of local Kraus ranks $(3,3)$. Its infimum in each calibrated exact-rank class $(7,4)$ and $(7,5)$ with a unique full-support first kernel is also $\sqrt2-1$. The conclusion continues to hold if the stated symmetry appears after an original fibre-preserving relabeling and reciprocal diagonal unitary phases.
+
+The proof will produce a regular subgroup of the same matrix's full fibre-preserving symmetry group. It does not require a regular subgroup of an initially specified transitive subgroup. No positivity or Hermiticity will be needed for this finite matrix step.
+

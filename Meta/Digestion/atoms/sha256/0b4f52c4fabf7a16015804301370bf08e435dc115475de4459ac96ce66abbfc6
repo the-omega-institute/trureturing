@@ -1,0 +1,69 @@
+**Theorem 2.10 (Variable matrix reference and its exact rectangle).** Let
+$p(\xi)=p^{\rm ref}+D\xi\in\mathbb R^n$ be positive and normalized on an open
+parameter domain, where $D\in\mathbb R^{n\times k}$ has full column rank and
+$\mathbf1^{\mathsf T}D=0$. Define
+
+$$
+P=\operatorname{diag}(p),\qquad G=D^{\mathsf T}P^{-1}D,
+\qquad W=P^{-1}DG^{-1},\qquad \Phi=D^{\mathsf T}\theta.
+$$
+
+Use real lifted phase coordinates for arbitrary real $D$. Then
+
+$$
+D^{\mathsf T}W=I_k,\qquad p^{\mathsf T}W=0,
+$$
+
+and HRM's least-norm formula gives the pointwise optimal transport
+$d\theta=W(\xi)d\Phi$. For a rectangle moving from $\xi_0$ to
+$\xi_1=\xi_0+\delta\xi$ at fixed $\Phi$, then by $a$ in $\Phi$, then back in
+$\xi$, then by $-a$, the exact residual satisfies
+
+$$
+h=[W(\xi_1)-W(\xi_0)]a,\qquad D^{\mathsf T}h=0,
+\qquad p(\xi_0)^{\mathsf T}h=-\delta\xi^{\mathsf T}a.
+$$
+
+Proof. Full rank and positivity make $G$ positive definite. The identities
+follow by multiplication, with $p^{\mathsf T}P^{-1}=\mathbf1^{\mathsf T}$.
+The supplier's algebra is pointwise independent of a choice of cycle labels:
+for any residual $z$ with $D^{\mathsf T}z=0$,
+$(Wa)^{\mathsf T}Pz=a^{\mathsf T}G^{-1}D^{\mathsf T}z=0$.
+Thus it applies to the stated real matrix, including the mean-zero minimizer;
+only positivity, rank and normalization are used in this correspondence.
+
+Only the two $\Phi$ legs contribute to the integral. Finally
+$p(\xi_0)=p(\xi_1)-D\delta\xi$ gives
+
+$$
+p(\xi_0)^{\mathsf T}W(\xi_1)
+=-\delta\xi^{\mathsf T},\qquad
+p(\xi_0)^{\mathsf T}W(\xi_0)=0,
+$$
+
+which proves the rectangle identity. The straight probability legs stay
+positive whenever their two endpoints are positive, by convexity. $\square$
+
+If $\operatorname{im}D=\mathbf1^\perp$, then
+$\ker D^{\mathsf T}=\mathbb R\mathbf1$. Normalization of the initial
+probability therefore sharpens the residual to
+
+$$
+h=-(\delta\xi^{\mathsf T}a)\mathbf1,
+\qquad \psi_{\rm out}=e^{i\delta\xi^{\mathsf T}a}\psi_{\rm in}.
+$$
+
+In this case the ambient phase connection has a common geometric phase but
+its residual is trivial on rays. A proper subspace of normalized probability
+directions can leave relative phase, as Proposition 2.7 shows. Ambient curvature,
+projective holonomy and Riemannian curvature must consequently be separated.
+
+For arbitrary real $D$, $D^{\mathsf T}\theta$ is not automatically an angle
+on the standard phase torus: changing $\theta$ by $2\pi z$, $z\in\mathbb Z^n$,
+changes $\Phi$ by $2\pi D^{\mathsf T}z$. A map to the standard $k$-torus
+requires $D^{\mathsf T}\mathbb Z^n\subseteq\mathbb Z^k$, equivalently integral
+entries. Primitive lattice hypotheses are additionally needed for the
+associated kernel to be connected. More general period lattices require an
+explicit lattice map. SP §35.13 provides an integral relation-coordinate
+example; the real theorem here does not assume that every $D$ has that property.
+

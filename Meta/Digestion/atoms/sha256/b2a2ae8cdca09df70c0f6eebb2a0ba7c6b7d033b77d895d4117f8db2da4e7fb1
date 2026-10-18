@@ -1,0 +1,53 @@
+**Lemma 10.1 (real zero-trace decomposition).** Let
+$B_0=\operatorname{diag}(1,-\alpha,-\beta)$. Every real symmetric
+$L\succeq0$ with $\operatorname{tr}(B_0L)=0$ has a decomposition
+
+$$
+L=\sum_{j=1}^t z_jz_j^T,\qquad t\leq3,
+\qquad z_j^TB_0z_j=0.
+\tag{IR.57}
+$$
+
+All nonzero vectors here give genuine rank-two matrices
+$K(z_j)$. When $\Theta(L)\preceq I$, this decomposition gives
+actual CP/TNI low-fibre acquisition branches with the range encoders
+(IR.22) and full TP live decoders. The remaining branches of a complete
+design must still supply the complementary effect.
+
+Proof. Factor $L=BB^T$ using its real positive square root, allowing
+zero columns. The real symmetric matrix $A=B^TB_0B$ has trace zero.
+We claim it has an orthonormal basis with every diagonal Rayleigh
+value zero. If $A=0$, any basis works. Otherwise a real symmetric
+nonzero trace-zero matrix has positive and negative eigenvalues.
+For unit eigenvectors $e_+,e_-$ with eigenvalues
+$\lambda_+>0>\lambda_-$, the unit vector
+
+$$
+f=\frac{\sqrt{-\lambda_-}\,e_+
+ +\sqrt{\lambda_+}\,e_-}{\sqrt{\lambda_+-\lambda_-}}
+\tag{IR.58}
+$$
+
+has $f^TAf=0$. Extend it to an orthonormal basis. The compression to
+$f^\perp$ still has trace zero because the removed diagonal entry is
+zero. Induction on its dimension produces the claimed basis, also
+when an intermediate compression is the zero matrix. If $O$ has
+these basis columns, the columns $z_j$ of $BO$ give (IR.57).
+There are at most three, and zero columns are removed. This proves a
+finite decomposition, including rank-zero $L$.
+
+For a real null vector $(u,v,w)\ne0$, the identity
+$u^2=\alpha v^2+\beta w^2$ and $\alpha,\beta>0$ force $u\ne0$.
+Lemma 4.2 makes $K(z_j)$ rank exactly two. For each actual label $j$
+use encoder $U_{K(z_j)}^\dagger K(z_j)$ and TP decoder by
+$EU_{K(z_j)}$. Their coefficient sum is exactly $L$, their effects
+are $K(z_j)^\dagger K(z_j)$, and their complex/reference composite
+maps are exactly $\Lambda_L$. Their total encoder effect is
+$\Theta(L)$. Under the stated effect bound every individual positive
+effect is at most $I$, so these are lawful CP/TNI acquisition branches.
+The jointly normalized uses below supply all remaining branches. An
+arbitrary unbounded $L$ asserts only the algebraic decomposition, not
+a normalized acquisition instrument. The decomposition in its bounded
+uses is therefore turned into specified finite CP operations and
+acquired labels, rather than treated as a preexisting observable flag. $\square$
+

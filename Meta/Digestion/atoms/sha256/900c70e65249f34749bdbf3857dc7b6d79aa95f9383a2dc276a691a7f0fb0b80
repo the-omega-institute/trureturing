@@ -1,0 +1,13 @@
+若 \(A,B\) 的 weight 不超过 \(M\)，decoration 不超过 \(d\)，则
+\[
+\operatorname{eval}(\operatorname{separator}(m,M,d),A)
+=
+\operatorname{eval}(\operatorname{separator}(m,M,d),B)
+\]
+当且仅当
+\[
+\forall z:\mathrm{Fin}\ m\to\mathrm{Source},\quad
+\operatorname{eval}(z,A)=\operatorname{eval}(z,B).
+\]
+本陈述对应来源中的 NativeUniformResidualRealization.bounded_identity_reflection（commit cdb23e4374）；来源链接见定理 58.3。
+

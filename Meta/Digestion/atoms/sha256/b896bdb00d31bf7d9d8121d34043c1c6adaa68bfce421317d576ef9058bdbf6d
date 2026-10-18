@@ -1,0 +1,59 @@
+### 定理 53.6（triangle 网络的源信息预算）
+
+对任意参数速度 \(\dot{\boldsymbol\theta}\)，有
+
+\[
+\boxed{
+F_Q\left(\rho_{\boldsymbol\theta};
+\dot{\boldsymbol\theta}\right)
+\le
+\sum_{e\in E}
+\dot\theta_e^{\,2}
+F_Q\left(\omega_e;
+\partial_{\theta_e}\omega_e\right).
+}
+\]
+
+#### 证明
+
+先计算独立源的乘积态。每个边源的局部 SLD 记为 \(L_e\)。乘积态沿参数方向的全局 SLD 为
+
+\[
+L_{\Omega}
+=
+\sum_{e\in E}
+\dot\theta_e
+\,I_{\bar e}\otimes L_e.
+\]
+
+因为
+
+\[
+\operatorname{tr}(\omega_eL_e)
+=
+\operatorname{tr}(X_e)=0,
+\]
+
+不同边之间的交叉项在 \(\operatorname{tr}(\Omega L_\Omega^2)\) 中消失。因此
+
+\[
+F_Q(\Omega_{\boldsymbol\theta};
+\dot{\boldsymbol\theta})
+=
+\sum_{e\in E}
+\dot\theta_e^{\,2}
+F_Q(\omega_e;X_e).
+\]
+
+对网络信道 \(\mathcal N\) 应用定理 53.3，得到
+
+\[
+F_Q(\rho_{\boldsymbol\theta};
+\dot{\boldsymbol\theta})
+\le
+F_Q(\Omega_{\boldsymbol\theta};
+\dot{\boldsymbol\theta}),
+\]
+
+代入前式即得。证毕。
+

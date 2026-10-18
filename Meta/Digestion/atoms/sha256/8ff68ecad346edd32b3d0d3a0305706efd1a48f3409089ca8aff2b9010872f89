@@ -1,0 +1,58 @@
+**Corollary 6.2 (strict separation from the supplied baseline).**
+
+$$
+L_{\rm full}>\frac{53}{528}>\frac1{22},\qquad
+E_*-\frac1{22}>\frac{29}{528}.
+\tag{CG.42}
+$$
+
+Thus, in this fixed complete-output experiment, $1/22$ can neither be
+attained nor approached by the common CPTP comparison class.
+
+Proof. Every radical comparison below is between positive quantities, so
+squaring preserves order. The exact rational differences
+
+$$
+135-\left(\frac{58}{5}\right)^2=\frac{11}{25}>0,\qquad
+2183-\left(\frac{233}{5}\right)^2=\frac{286}{25}>0
+\tag{CG.43}
+$$
+
+imply $u>291/320>10/11$, the last inequality being $3201>3200$.
+Together with $u<1$ this yields
+
+$$
+\delta_{\rm in}<\frac{\sqrt{21}}{22}<\frac5{24},
+\qquad \left(\frac{55}{12}\right)^2-21=\frac1{144}>0.
+\tag{CG.44}
+$$
+
+For the other overlap,
+
+$$
+\left(\frac{77}{4}\right)^2-363=\frac{121}{16}>0,\qquad
+\left(\frac{163}{4}\right)^2-1643=\frac{281}{16}>0
+\tag{CG.45}
+$$
+
+imply $0<v<15/16$. Therefore
+
+$$
+49-45v^2>\frac{2419}{256}>9,\qquad
+\frac{2419}{256}-9=\frac{115}{256}>0,
+\tag{CG.46}
+$$
+
+and (CG.30) gives $\delta_{\rm out}>9/22$.
+It follows that
+
+$$
+L_{\rm full}=\frac{\delta_{\rm out}-\delta_{\rm in}}2
+ >\frac12\left(\frac9{22}-\frac5{24}\right)=\frac{53}{528}.
+\tag{CG.47}
+$$
+
+Since $1/22=24/528$, (CG.37) proves the claimed gap exceeding
+$29/528$. These positive rational squarings and the preceding norm
+identities are ordinary analytic arguments. $\square$
+

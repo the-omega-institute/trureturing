@@ -1,0 +1,24 @@
+### 61.2. A continuous qutrit counterexample family with explicit complete positivity
+
+Take d=3, 0<q<1 and 0<p≤q(1−q). Define the logical channel E_(p,q) by
+
+    E(11)=p11+(1−p)33,
+    E(22)=q22+(1−q)33,
+    E(33)=33,
+    E(12)=p12, E(23)=q23, E(13)=0,
+
+and by adjoints on reversed off-diagonal matrix units. Here ij denotes |i><j| on L; the input labels are1,2,3.
+
+This is CPTP. In the input-first Choi matrix, the block on |1,1>,|2,2>,|3,3> is
+
+    K=[[p,p,0],[p,q,q],[0,q,1]],
+
+and the only additional nonzero entries are the nonnegative diagonal entries1−p on |1,3> and1−q on |2,3>. Every principal minor of K is nonnegative: its diagonal entries are p,q,1; its two-by-two principal determinants are p(q−p),p,q(1−q); and its full determinant is p[q(1−q)−p]. Hence K≥0. The displayed diagonal outputs each have trace one and off-diagonal outputs have trace zero, so the map is trace preserving.
+
+At the concrete boundary point p=1/4,q=1/2, complete positivity and trace preservation can also be read directly from four Kraus matrices:
+
+    D1=diag(1/2,1/2,0), D2=diag(0,1/2,1),
+    L1=(sqrt(3)/2)|3><1|, L2=(1/sqrt(2))|3><2|.
+
+Their adjoint products sum to identity; their off-diagonal coefficients are1/4 on12,1/2 on23, and0 on13, as required. This example is a genuinely qutrit channel rather than three unrelated prescribed output states.
+

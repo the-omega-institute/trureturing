@@ -1,0 +1,18 @@
+**Corollary 10.2 (Logarithmic active alphabet is necessary).** If a family of common
+finite kernels satisfies, on a neighborhood or a specified subsequence,
+
+$$
+ u_Z\ge c_0s^{2r}\log(1/s)
+$$
+
+for one fixed $c_0>0$, then on that same eventual neighborhood or subsequence,
+
+$$
+ B_+\ge\frac{c_0}{C}\log(1/s).
+$$
+
+**Proof.** Divide the lower bound by the upper bound in Theorem 10.1. The constants were
+fixed before the kernel and alphabet, so they remain valid when $B$ grows arbitrarily with
+$1/s$. A coefficient tending to zero would be a different assertion and does not imply
+this fixed positive multiple. $\square$
+

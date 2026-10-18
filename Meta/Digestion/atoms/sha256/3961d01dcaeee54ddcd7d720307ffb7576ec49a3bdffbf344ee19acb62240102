@@ -1,0 +1,37 @@
+**Corollary 17.3 (a primitive-prefix replacement must avoid this entry).**
+A replacement of a Lemma 15.1 history sequence that is required to
+preserve its complete original physical endpoint cannot start at the
+same $P$, dispatch outer01, and stop anywhere from $e_P$ onward on the
+prescribed source path. This excludes unfinished source-entry work
+and every legal return formed from it, even when no original service
+has completed. There is no memory-size or history-length threshold.
+
+Proof. Complete physical endpoint equality requires equality of
+original constructed material and physical control, hence of the
+coordinates selected in Theorem 17.2. The theorem contradicts that
+necessary condition. Any growing supplementary material, or finite
+recoding of retained words or the independent $S,B,M_J,T$ expressions,
+may still be kept; it cannot remove actual cells on the fixed original
+ports or change the actual PC at an unfinished endpoint. Discarding
+those coordinates changes the stipulated physical response.
+
+For an explicit unfinished instance, use Proposition 16.1's first
+Ready and accepted AcquisitionOffset0 flight as $P,H,R$. On the
+alternative branch supply outer01, run the genuine header setup,
+Supply0 at its first header IN, and stop before EX13. This is a lawful
+prefix of ReadE's $000\,U(0)$, with no source event or journal completion.
+Its original work cells already exceed $R$'s by at least $b+2$.
+The locally neutral IN of Proposition 16.2 is therefore retained
+without changing the common starting cut of the comparison.
+
+All actual rows keep their own labels, output releases, full successors
+and receipts. Base has $b+2$ actual Appends, so its Appends alone cost
+$3(b+2)$ rows; the prefix through this first IN costs at least
+$3(b+2)+1$ rows in addition to any other required work. These are
+source bounds, not a measured running time or a complete bill. Every
+actual $L$-row comparison retains Convention 16.3's exact bill
+$(L,2L,\Delta b_{\mathrm{ctl}}+8\Delta A+8L)$, including all original
+and annex cells, retired material, copies and receipts, and GENERAL's
+separate incidence tariff and foundation. No extra row is hidden as
+a free setup, and no group of rows is renamed one Advance. ∎
+

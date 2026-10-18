@@ -1,0 +1,22 @@
+**Remark 21.3 (the exact supplier boundary).** ARH Theorem 22.1 already
+owns its constructor-elimination complete-row criterion, finite
+stabilization consumer and finite bad-source witnesses. Its eligibility
+grammar and full-row target are not silently enlarged to arbitrary
+code programs here. Application 21.2 uses its Lemma 21.4 at the explicit
+automaton interface, with (PCA.49)–(PCA.51) providing the native domain,
+code-disagreement and original-entry correspondence. No unknown chart
+selector is needed in this single six-class presentation.
+
+The repeated-class set of filled current trees is not asserted to be
+an ordinary regular tree language: copying the same coordinate at two
+different holes retains a global equality condition. Regularity is
+used on padded tuples of the six coordinates and their two-copy
+comparison. [NRF, Definitions 1.3–1.5 and Proposition 9.1][NRF] keeps
+its public finite automaton selector and constrained original-source
+presentation; [NAC, Definition 1.2][NAC] keeps its exact-cover
+mixed-template language. Neither supplier
+automatically admits an arbitrary additional code predicate. For a
+general total program the missing positive interface is precisely an
+explicit applicable finite description and its exact equivalence to
+the prescribed function. Semantic existence does not fill that gap.
+

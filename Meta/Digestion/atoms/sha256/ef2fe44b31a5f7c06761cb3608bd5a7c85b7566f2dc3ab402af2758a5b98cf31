@@ -1,0 +1,10 @@
+**定义 30.1（含失败的未来核塔）。** 使用固定有限字母集的带类型操作，按定义 3.1 将域错误、失败与终止状态总化，后续操作如何作用于这些状态也固定。词按定义 17.1 的次序执行，令
+
+$$
+q_h(x)=(o(T_wx))_{|w|\leq h},\quad
+R_h=\{(x,x'):q_h(x)=q_h(x')\},\quad
+R_\infty=\bigcap_{h\geq0}R_h.
+$$
+
+核在本章是等值关系。全部未来行为 $q_\infty$ 为所有有限词响应元组，$\ker q_\infty=R_\infty$。这是 [运输记忆完成 §2.1](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md) 的指定未来商与第三章上下文合同的相接；该源的逆边归根构造真正使用可执行逆边，本章未声明逆操作时不添加逆词。
+

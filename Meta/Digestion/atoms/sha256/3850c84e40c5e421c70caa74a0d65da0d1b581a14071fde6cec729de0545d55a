@@ -1,0 +1,26 @@
+**Definition 1.1 (model and recovery target).** Let
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+U=JM=\begin{pmatrix}1&1\\0&1\end{pmatrix}.
+$$
+
+The effective relation is one matrix
+
+$$
+S=\begin{pmatrix}p&q\\r&s\end{pmatrix},\qquad
+p,q,r,s>0,\qquad ps=qr.
+$$
+
+For a known integer $d\ge0$, the observations are
+
+$$
+z_i=(1+\kappa i)\operatorname{tr}(A_iS)+D(i),
+\qquad \kappa\in\mathbb R,\qquad \deg D\le d.
+$$
+
+The degree bound includes the zero polynomial. The target is exactly $(S,\kappa,D)$, including the entire polynomial $D$. In original parameters, $S=\alpha R$ and $\kappa=\beta/\alpha$, where $\alpha>0$ and $R$ is strictly positive of rank one.
+
+The initial cumulative matrix is $A_0=I$, and its read is counted. Between recorded reads one executes a predetermined finite word in $M,J$, possibly empty, on the left of the current cumulative matrix. A product is executed from right to left: the chronological pair $(M,J)$ has multiplier $JM=U$. Every recorded read advances the consecutive index $i$ once, including a repeat at an unchanged matrix. Unread atoms do not advance this clock. There is one object column and one fixed instrument row in each run. No reset, copy, inverse acquisition, extra clock, or data-dependent acquisition is allowed. Different candidate realizations may have different fixed rows.
+

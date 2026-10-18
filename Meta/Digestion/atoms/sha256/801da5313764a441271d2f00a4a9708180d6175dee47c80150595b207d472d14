@@ -1,0 +1,40 @@
+**Definition 2.2 (admission and physical Gram).** Choose $\tau_i>0$,
+$\sum_i\tau_i=1$, and $0<\xi<1$. Define
+
+$$
+\begin{aligned}
+A&=\sum_i h_i^2\tau_i,&B&=b^2\tau_0+a^2\tau_1,&
+C_S&=d_{\rm src}^2\tau_0+c^2\tau_2,\\
+c_0&=\frac{1-\xi^2}{1+\xi^2},&\sigma_0&=\frac{2\xi}{1+\xi^2},&
+\theta_0&=2\arctan\xi,\\
+\delta_0&=1-\alpha-\beta c_0,&
+Z_0&=\sqrt{\delta_0^2+\beta^2\sigma_0^2},&
+r_0&=\frac{\beta\sigma_0}{2\sqrt\alpha},\\
+p&=(Z_0+\delta_0)/2,&q&=(Z_0-\delta_0)/(2\alpha),&
+k_{\rm tilt}&=(1-\alpha)c_0-\beta,\\
+\lambda_0&=\frac{Ap-Bq}{c_0Z_0},&
+d_{\rm cert}&=B+\lambda_0\alpha c_0,&
+\gamma&=\lambda_0\sqrt\alpha\,\sigma_0+d_{\rm cert}\sqrt{q/p}.
+\end{aligned}
+\tag{AS.13}
+$$
+
+Admission is exactly
+
+$$
+p+q<1,\qquad k_{\rm tilt}>0,\qquad Ap>Bq,\qquad
+\gamma<\chi\sqrt{\tau_0\tau_1}.
+\tag{AS.14}
+$$
+
+For every such choice set
+
+$$
+\rho=\begin{pmatrix}\tau_0&i\gamma/\chi&0\cr
+-i\gamma/\chi&\tau_1&0\cr0&0&\tau_2\end{pmatrix},\quad
+C=\begin{pmatrix}A&i\gamma&0\cr-i\gamma&B&0\cr0&0&C_S\end{pmatrix},\quad
+h_*=(\sqrt p,i\sqrt q,0)^T,\quad H_*=h_*h_*^\dagger,\quad
+s_*=\sqrt{1-p-q},\quad F=\lambda_0 k_{\rm tilt}.
+\tag{AS.15}
+$$
+

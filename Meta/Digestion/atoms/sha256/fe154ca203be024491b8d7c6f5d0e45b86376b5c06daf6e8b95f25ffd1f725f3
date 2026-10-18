@@ -1,0 +1,91 @@
+**Theorem 3.1 (minimal boundary and conditional memory counts).** At a fixed
+public type $(k,d)$ the exact minimal boundary has cardinality
+
+$$
+|Q_{k,d}|=q^{\mu_d},\qquad
+\mu_d=d+r_A(k,d)+r_F(k)-r.
+\tag{3.1}
+$$
+
+The forward summary has image
+
+$$
+S_k=\operatorname{im}H_P^{(k)}\cap\operatorname{im}H_F^{(k)},\qquad
+|S_k|=q^{\mu_0},\qquad \mu_0=r_P(k)+r_F(k)-r.
+\tag{3.2}
+$$
+
+Each attainable forward summary $s$ has exactly
+
+$$
+q^{\lambda_d}\quad\text{boundary points above it},\qquad
+\lambda_d=d+r_A(k,d)-r_P(k)=\mu_d-\mu_0.
+\tag{3.3}
+$$
+
+Suppose a finite alphabet $M$ and a label map $L:U_k\to M$ are required to
+make $B_{k,d}(u)$ recoverable from $(H_P^{(k)}u,L(u))$ for every admissible
+prefix. The least possible $|M|$ is exactly $q^{\lambda_d}$. This is the
+supplement for the complete bounded-operation response, rather than a
+label for restoring every prefix or full codeword. All formulas count the
+full admissible carrier, with no initialized reachability restriction.
+
+Proof. Apply rank–nullity as an intermediate calculation to the linear map
+
+$$
+\Phi_d:C\longrightarrow Q_{k,d},\qquad
+(v,t,f)\longmapsto (H_A^{(k,d)}v+H_D^{(k,d)}t,t).
+\tag{3.4}
+$$
+
+It is onto by Definition 2.1. Its kernel is precisely
+
+$$
+\{(v,0,f):H_A^{(k,d)}v=0,\ H_F^{(k)}f=0\},
+\tag{3.5}
+$$
+
+of dimension $(k-d-r_A(k,d))+(n-k-r_F(k))$. Subtracting from
+$\dim C=n-r$ yields (3.1). Theorem 2.2 supplies sufficiency and minimality,
+so this is a minimal response count, not merely a projection cardinality.
+
+The intermediate forward separator in (3.2) is the classical effective
+state space of the past fragment: its trimmed projection is $U_k$, its
+cross-section is $\ker H_P^{(k)}$, and
+
+$$
+U_k/\ker H_P^{(k)}\cong S_k.
+\tag{3.6}
+$$
+
+This forward ingredient is the state-space theorem of G. David Forney Jr.,
+[*Codes on Graphs: Fundamentals*, arXiv:1306.6264v2, §§5.5 and 6.3](https://arxiv.org/html/1306.6264v2).
+The latter section requires a finite connected cycle-free normal linear
+or group realization and internal trimness and properness. The present
+past/future split uses its effective quotient; it does not import an
+arbitrary cyclic realization's minimality or any delete permission.
+Since $\operatorname{im}H_P^{(k)}+\operatorname{im}H_F^{(k)}=
+\operatorname{im}H$, the intersection has dimension $\mu_0$.
+The all-append separator (2.6) also identifies this forward behavior exactly.
+
+The projection $Q_{k,d}\to S_k$, $(s,t)\mapsto s$, is a linear surjection.
+Its fibers are affine translates of its kernel, of dimension
+$\mu_d-\mu_0=\lambda_d$. Thus every attainable $s$ has the same count (3.3).
+Equivalently, after fixing $s$, the allowable tails solve
+$H_D^{(k,d)}t\equiv s$ modulo $\operatorname{im}H_A^{(k,d)}$; this map has
+rank $r_P(k)-r_A(k,d)$, so its kernel has dimension $\lambda_d$.
+
+The maximum-fiber alphabet principle used in this last step is
+[MinimumRollbackAlphabet](../../../D5/S0/History/Coding/MinimumRollbackAlphabet.lean),
+declaration `minimum_rollback_alphabet`,
+applied to the finite carrier $X=Q_{k,d}$ and projection $X\to S_k$.
+For a label map defined on prefixes, pick one prefix representative of each
+of the $q^{\lambda_d}$ boundary points over a fixed $s$. Any sufficient
+$L$ must give them distinct labels, proving $|M|\ge q^{\lambda_d}$.
+For attainment, label the points separately in each fiber by a common
+alphabet of this size, and pull those labels back along $B_{k,d}$.
+The pair $(s,L(u))$ then determines the unique boundary point. Label reuse
+between different syndrome fibers is allowed. This is an exact finite
+alphabet statement, without a physical storage or acquisition model.
+$\square$
+

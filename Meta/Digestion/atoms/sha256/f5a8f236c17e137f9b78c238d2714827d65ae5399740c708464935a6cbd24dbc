@@ -1,0 +1,34 @@
+### 定理 54.4（谱隙和曲率证书的极限分层）
+
+在定理 54.3 的假设下，若存在统一 Poincaré 常数 \(\lambda_0>0\)，即
+
+\[
+\mathcal E_j(f)\ge\lambda_0\operatorname{Var}_{m_j}(f),
+\tag{54.8}
+\]
+
+并且常数核恰为 \(\mathbb R\mathbf1\)，则
+
+\[
+\operatorname{gap}(A)\ge\lambda_0.
+\tag{54.9}
+\]
+
+若还存在统一半群梯度证书
+
+\[
+\Gamma_j(P_t^{(j)}f)
+\le
+e^{-2Kt}P_t^{(j)}\Gamma_j(f),
+\tag{54.10}
+\]
+
+并且 \(\Gamma_j\) 在一个共同稠密 core 上收敛到 \(\Gamma\)，则
+
+\[
+\Gamma(P_tf)\le e^{-2Kt}P_t\Gamma(f).
+\tag{54.11}
+\]
+
+因此有限 \(CD_G(K,\infty)\) 的曲率下界要进入极限，除了 Mosco 和谱隙，还必须证明 \(\Gamma\) 或梯度半群不等式的收敛。点态 \(CD_G\) 本身不能替代这个稳定性假设。
+

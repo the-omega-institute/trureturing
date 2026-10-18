@@ -1,0 +1,69 @@
+### 107.3. The sharp parity-convolution inequality
+
+Introduce four probability distributions on \(\mathbb Z/4\mathbb Z\):
+\[
+ p_i=2g_{2i},\quad q_i=2g_{2i+1},\quad
+ r_i=2h_{2i},\quad s_i=2h_{2i+1},
+ \tag{107.10}
+\]
+and put
+\[
+ A=\sum_i p_i r_{-i},\qquad
+ B=\sum_i q_i s_{-i-1}.
+ \tag{107.11}
+\]
+Then \(c_0=(A+B)/4\). All other even target coefficients vanish, and both even total masses are \(1/2\). It follows that
+\[
+ E=2-A-B.
+ \tag{107.12}
+\]
+If \(E\ge1/2\), (107.3) is immediate. Suppose \(0\le E<1/2\). Since \(A,B\le1\), both exceed \(1/2\).
+
+For two probability distributions \(x,y\) with inner product \(a>1/2\), each maximum \(m=\max x\), \(n=\max y\) is at least \(a\), and hence unique. Their peaks have the same index. Otherwise, at the peak index \(i\) of \(x\) one has \(y_i\le1-n\), so
+\[
+ a\le m(1-n)+(1-m)n
+   =\tfrac12-2(m-\tfrac12)(n-\tfrac12)<\tfrac12,
+ \tag{107.13}
+\]
+a contradiction. At the common peak the remaining inner product is at most \((1-m)(1-n)\). Therefore
+\[
+ a\le mn+(1-m)(1-n),\qquad
+ m+n\ge1+\sqrt{2a-1}.
+ \tag{107.14}
+\]
+For the second inequality, \(2m-1\) and \(2n-1\) are nonnegative with product at least \(2a-1\), and their arithmetic mean is \(m+n-1\).
+
+Apply this observation to \(p_i,r_{-i}\) and to \(q_i,s_{-i-1}\). There are unique peak indices \(u,v\): the peaks of \(p,r,q,s\) occur at \(u,-u,v,-v-1\), respectively. Writing their maxima as \(m_p,m_r,m_q,m_s\), one obtains
+\[
+ m_p+m_r\ge1+\sqrt{2A-1},\qquad
+ m_q+m_s\ge1+\sqrt{2B-1}.
+ \tag{107.15}
+\]
+The odd coefficients satisfy
+\[
+ c_{2j+1}=\tfrac14[(p*s)_j+(q*r)_j].
+ \tag{107.16}
+\]
+The two peak contributions occur at \(j_1=u-v-1\) and \(j_2=v-u\). These are distinct modulo four: equality would give \(2(u-v)=1\pmod4\). For \(S=\{j_1,j_2\}\),
+\[
+ \sum_{j\in S}c_{2j+1}
+       \ge\tfrac14(m_p m_s+m_q m_r).
+ \tag{107.17}
+\]
+The odd target has total mass \(1/2\) and mass \(1/4\) on these two indices. Equal total masses imply that the sum of absolute differences is at least twice the signed excess on any subset. Equations (107.8) and (107.17), followed by \(xy\ge x+y-1\) for \(x,y\in[0,1]\), therefore give
+\[
+ \begin{aligned}
+ O&\ge m_p m_s+m_q m_r-1\\
+  &\ge m_p+m_s+m_q+m_r-3\\
+  &\ge\sqrt{2A-1}+\sqrt{2B-1}-1.
+ \end{aligned}
+ \tag{107.18}
+\]
+Put \(X=2A-1\), \(Y=2B-1\). Both lie in \((0,1]\), and \(X+Y=2-2E\). Since \((1-X)(1-Y)\ge0\), one has \(XY\ge X+Y-1\). Squaring nonnegative sides gives
+\[
+ \sqrt X+\sqrt Y\ge1+\sqrt{X+Y-1},\qquad
+ O\ge\sqrt{1-2E}.
+ \tag{107.19}
+\]
+All roots are defined in this branch, including \(E=0\). The minimum of \(\max(E,\sqrt{1-2E})\) on \([0,1/2]\) is its intersection value \(\sqrt2-1\). Equivalently, \(E<\sqrt2-1\) implies \(1-2E>(\sqrt2-1)^2\), forcing \(O>\sqrt2-1\). Equations (107.9) and (107.19) prove the calibrated bound for every rank and every complex phase allowed by the simultaneous-cyclic hypothesis.
+

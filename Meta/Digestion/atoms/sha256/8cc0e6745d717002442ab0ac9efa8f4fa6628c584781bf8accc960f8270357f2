@@ -1,0 +1,19 @@
+### 82.3. Equality through every positive SVD component
+
+Fix one fibre and its decomposition (2), retaining only positive weights. Equality in the pointwise bound (1) forces equality both in Jensen's inequality and in every positive-weight projection inequality. This can be seen directly by writing the pointwise slack as
+
+    sum_eta q_eta ||(I-Q)D_Ueta-(I-Q)D_f||_F^2
+      +sum_eta q_eta ||Q D_Ueta-S N_Ueta||_F^2.
+
+Both sums are nonnegative, and their sum is zero. Consequently every positive component U satisfies
+
+    (I-Q)D_U=W_f,   QD_U=S N_U,
+    D_U=S N_U+W_f,
+    C_U=S+W_f N_U.                                  (10)
+
+By (6), each such C_U satisfies
+
+    C_U^*C_U=I_2/2.                                 (11)
+
+These are equality identities for every component in the stated SVD decomposition. There is no arbitrary replacement of H_f by a polar unitary.
+

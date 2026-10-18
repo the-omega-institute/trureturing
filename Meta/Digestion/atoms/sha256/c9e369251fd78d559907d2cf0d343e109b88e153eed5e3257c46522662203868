@@ -1,0 +1,61 @@
+**Lemma 5.1 (Lawful clipping and its scalar entropy).** For a finite integer $L\ge1$, define
+
+$$
+\pi_i=\sum_{k\le L}f_i(k),\qquad
+J_i=\pi_i^{-1}\sum_{k\le L}f_i(k)B_k,\qquad
+V_i=(1-\pi_i)^{-1}\sum_{k>L}f_i(k)B_k.
+\tag{5.1}
+$$
+
+For target $i$ and $j=1-i$ put
+
+$$
+W_i=\pi_jJ_j+(1-\pi_j)V_i,\qquad
+\gamma_L=1+\frac{c}{(L+1)^r},\qquad
+\chi_{M,L}=\frac{\gamma_L^{M-2}-1}{\gamma_L^{M-2}+1}.
+\tag{5.2}
+$$
+
+These matrices are stochastic and fix both labels. The matrices $W_i,U_j$ have common support and are entrywise comparable by $\gamma_L$. Their hitting functions differ by at most $\chi_{M,L}$.
+
+Let $a_i^L$ be the law on $\{1,\ldots,L,\star\}$ with masses $f_i(k)$ and tail mass $1-\pi_i$, and put $D_i(s,L)=D(a_i^L\|a_j^L)$. Then $U_i,W_i$ also have common support, and for every configuration $x$,
+
+$$
+D(U_i(x,\cdot)\|W_i(x,\cdot))\le D_i(s,L).
+\tag{5.3}
+$$
+
+Proof. Positivity of every $f_i(k)$ gives $0<\pi_i<1$. On $k>L$, the conditional tail likelihood ratio is exactly
+
+$$
+\frac{f_1(k)/(1-\pi_1)}{f_0(k)/(1-\pi_0)}
+=\frac{1+c k^{-r}}{\displaystyle\sum_{\ell>L}
+\frac{f_0(\ell)}{1-\pi_0}(1+c\ell^{-r})}.
+\tag{5.4}
+$$
+
+Both numerator and denominator lie in $[1,\gamma_L]$. Averaging common nonnegative $B_k$ entries compares $V_0,V_1$ in both directions. Adding the opponent's entire short term $\pi_jJ_j$ gives the comparison of $W_i$ with $U_j$. Theorem 4.1 then supplies the hitting bound.
+
+Define the positive full mass
+
+$$
+\widetilde f_i^L(k)=
+\begin{cases}
+f_j(k),&k\le L,\\
+\dfrac{1-\pi_j}{1-\pi_i}f_i(k),&k>L.
+\end{cases}
+\tag{5.5}
+$$
+
+It sums to one and averages the $B_k$ to $W_i$. Directly,
+
+$$
+D(f_i\|\widetilde f_i^L)
+=\sum_{k\le L}f_i(k)\log\frac{f_i(k)}{f_j(k)}
++(1-\pi_i)\log\frac{1-\pi_i}{1-\pi_j}
+=D_i(s,L).
+\tag{5.6}
+$$
+
+In particular the tail normalizer is retained. The joint laws $f_i(k)B_k(x,y)$ and $\widetilde f_i^L(k)B_k(x,y)$ have this entropy. Marginalizing $k$ proves (5.3) by log-sum: for nonnegative lists with sums $A,B>0$, concavity of logarithm gives $\sum a_\ell\log(a_\ell/b_\ell)\ge A\log(A/B)$. Apply it at each output $y$ and sum. The countable sums are legitimate since scalar ratios are bounded at each fixed $s,L$. Both full masses are strictly positive, so the two averages have identical positive support, including zero entries. Label rows agree and have entropy zero. All comparison laws are analytical; no operational gap or source is replaced. $\square$
+

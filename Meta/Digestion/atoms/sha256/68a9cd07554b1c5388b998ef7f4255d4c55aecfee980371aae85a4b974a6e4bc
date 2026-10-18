@@ -1,0 +1,35 @@
+**Proposition 9.1 (a local boundary relation, not a global profile).** Let
+$\varphi=(1+\sqrt5)/2$. [NAR, Proposition 12.8] uses the canonical
+locally constant density $f_u$ on infinite binary rays, scale
+$W(u)$ and weighted cylinder mass $\varphi^{-s(p)}$ to give
+
+$$
+W(u)f_u(qR^\infty)=\varphi^{J^c_q(u)}.
+\tag{AAR.28}
+$$
+
+At an acquired leaf $(a,e)$ this relation has the constant value
+$\varphi^{s(a)+e}$ throughout $[a]$. Proposition 2.3 transports
+that locally acquired calibration through the growing native
+subtree. It supplies neither point access to an unknown global
+density nor a free selection of its cheapest cylinder. The
+phase-sensitive objective satisfies $m=J^c_a+\#_L(a)$ only
+at a certified minimizing leaf, retaining the distinction
+between letter length and the boundary weight.
+
+Proof. The supplied canonical-density formula is constant on
+every original leaf cylinder and has precisely that value after
+multiplication by $W$. Formula (AAR.5) advances the common local
+coordinate under the genuine history. The last equality is
+$2|a|=s(a)+\#_L(a)$ applied to the certified score. $\square$
+
+Even a retained local calibration and its scalar do not recover
+arbitrary geometry. For example
+$\langle\alpha,\beta\rangle$ and
+$\langle\alpha,\langle\beta,\beta\rangle\rangle$ have the same
+$m=2$, the same minimizing anchor $(L,0)$ and the same complete
+root-cut row, but different hidden finite trees. CAB's
+complementary-row reconstruction requires its own acquired
+calibration and complementary exterior hypotheses. Exact time
+recovery alone does not supply them.
+

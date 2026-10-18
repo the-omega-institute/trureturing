@@ -1,0 +1,36 @@
+## 5. The vertical outer edge: zero-sum triples and their budget
+
+On $a=A$, perform only the following diagonal algebraic transport:
+
+$$
+d_0=\frac{1+i\sqrt7}{2},\qquad
+D=\operatorname{diag}(d_0,1,1,1,\bar d_0),\qquad
+L=D M(A,b)D^\dagger.
+\tag{5.1}
+$$
+
+Here $|d_0|^2=2$, so $D$ is invertible. Put
+
+$$
+c_*=-\frac12-\frac{3i}{2\sqrt7},\qquad
+h_*=-\frac12+\frac{i}{2\sqrt7},\qquad
+\kappa=|c_*|=\frac2{\sqrt7}.
+\tag{5.2}
+$$
+
+The outer diagonals of $L$ are two, its middle diagonals one, and
+
+$$
+L_{15}=iA d_0^2=c_*,
+\qquad L_{1j}=iA d_0=h_*,
+\qquad L_{5j}=\bar h_*,
+\qquad L_{\rm mid}=I_3+ibK_3.
+\tag{5.3}
+$$
+
+Every row sums to zero since
+$2+3h_*+c_*=0$, $2+3\bar h_*+\bar c_*=0$, and
+$1+h_*+\bar h_*=0$. Thus $L\mathbf1=0$. Diagonal invertibility means that
+$D$ bijects decompositions of $M(A,b)$ and $L$ with each actual coordinate
+support unchanged.
+

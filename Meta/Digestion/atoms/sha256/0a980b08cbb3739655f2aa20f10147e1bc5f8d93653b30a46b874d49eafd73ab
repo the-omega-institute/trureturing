@@ -1,0 +1,11 @@
+**Definition 10.1 (one padded tolerance shape).** Let $\mathfrak S_{\mu,t}$ be the period-one regular tables with exactly $N_p(t),N_\beta(t)$ labels, allowing zero actual weights, on the same installed prior and original contract. Every smaller table pads to this single shape by adding labels of zero row weight, placing no transition from an active label into them, and choosing arbitrary stochastic rows and regular emissions for the new inactive labels. The padding changes no actual positive-history risk. It defines own-generated decoders on the inactive labels as well. Write
+
+$$
+J_t=\min_{M\in\mathfrak S_{\mu,t}}
+ \max\{R_{{\rm conf},p}(M)-\rho_p,
+        R_{{\rm conf},\beta}(M)-\rho_\beta\}.
+\tag{10.1}
+$$
+
+The minimum exists by the fixed-shape continuity and compactness in [CLIP, Proposition 6.3], with no defect restriction or optional exact-endpoint constraints. As in Corollary 5.3, $J_S$ denotes the infimum over all finite stationary shapes.
+

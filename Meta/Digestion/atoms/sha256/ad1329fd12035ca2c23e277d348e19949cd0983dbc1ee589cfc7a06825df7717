@@ -1,0 +1,50 @@
+**Definition 1.5 (canonical blocks and unchanged joint fibers).** Set
+$C=\langle\alpha,\alpha\rangle$ and
+
+$$
+S_1=\{\alpha,\beta,C\},\qquad
+S_{d+1}=\{\alpha,\beta\}\ \sqcup
+\{\langle x,y\rangle:x,y\in S_d\}.
+\tag{NCM.7}
+$$
+
+These are actual trees of height at most $d$. For integers $d,n\ge1$,
+following FMR Definition 6.1, a nonempty $B\subseteq S_d^n$ is jointly admissible
+when for every $i\in\{1,\ldots,n\}$ and $q\in W_d$ either
+$\Gamma_q(x_i)$ is constant on $B$, or there exist
+$j\in\{1,\ldots,n\}$ and $a\in W_d$ such that
+
+$$
+\forall x,y\in B,\qquad
+r_{x_j}(a)=r_{y_j}(a)
+\ \Longrightarrow\ \Gamma_q(x_i)=\Gamma_q(y_i).
+\tag{NCM.8}
+$$
+
+Both $j$ and $a$ may depend on $B,i,q$; $j=i$ is not required.
+The set $B$ need not be a product. A set $P\subseteq S_d$ is locally
+admissible when it satisfies this condition with $n=1$. Let $K_d(n)$
+be the least number of jointly admissible sets covering $S_d^n$.
+Let $Z_d(n)$ be the fractional cover optimum using that same entire
+family of joint sets: its nonnegative coefficients $c_B$ satisfy
+$\sum_{B\ni x}c_B\ge1$ for every $x\in S_d^n$, and its objective
+is $\sum_B c_B$.
+
+FMR Lemma 2.2 and Lemma 6.2 retain every finite native word in this
+definition. A word of length $d$ on $S_d$ returns alpha exactly when
+its parent at depth $d-1$ is branch, and absent otherwise; every longer
+word is absent. Thus one boundary experiment, followed by a public
+function of its reply, simulates any longer experiment within its
+original block. This neither projects a fiber nor changes the queried
+coordinate. FMR proves the paid native cover correspondence and the
+limits
+
+$$
+\sigma_d=\lim_{n\to\infty}\frac{\log_2 K_d(n)}n,
+\qquad
+\lambda=\lim_{D\to\infty}2^{-D}\log_2 M_1(D),
+\qquad
+\lambda\ge2^{-d}\sigma_d.
+\tag{NCM.9}
+$$
+

@@ -1,0 +1,28 @@
+**Corollary 9.1 (Same-law conditional equivalence).** For every stationary legal $P$ satisfying $\mathsf B(P)$ and $A_P<\infty$,
+
+$$
+d(P)=c_\star\quad\Longleftrightarrow\quad\mathsf Z_\Delta(P).
+\tag{9.1}
+$$
+
+**Proof.** The forward implication is Theorem 1.5. The reverse implication is [Guarded, Theorem 5.1][G]. Its exact consumption is as follows. Independently draw $W\sim\pi_n$ and $X\sim P$, and replace the block $[0,n+1]$ by $0W0$, obtaining $Z$. Guarded's Theorem 4.2 supplies an integrable difference of the same original losses and the identity
+
+$$
+\mathbb E\Delta_P(X,Z)
+=(n+2)d(P)-\kappa_n-\mathcal B_n-G_n^{\rm guard}-E_n^{\rm ext}-O_n^{\rm ext},
+\tag{9.2}
+$$
+
+Here $C=[0,n+1]$, $Q=\operatorname{law}(Z)$, and $\mathcal B_n$ is the mean conditional discrepancy (9.5). The other penalties, in the notation of the supplied identity, are
+
+$$
+\begin{aligned}
+b_i^C&=\mathbb E_P[X_i\mid\sigma(X_j:j\notin C,\ j\ne i)],&&i\notin C,\\
+G_n^{\rm guard}&=\mathbb E_Q(q_0^2+q_{n+1}^2),\\
+E_n^{\rm ext}&=\sum_{i\notin C}\mathbb E_P(q_i-b_i^C)^2,\qquad
+O_n^{\rm ext}=\sum_{i\notin C}\mathbb E_Q(q_i-b_i^C)^2.
+\end{aligned}
+$$
+
+All four penalties are finite and nonnegative by that theorem, with every predictor still from $P$. Strong zero makes the left side of (9.2) zero, since the finite replacement remains inside its saturated conull set. Thus $(n+2)d(P)\ge\kappa_n$ for every $n$. Letting $n\to\infty$ and using (1.5), (2.3) proves equality. Only scalar inequalities are passed to the limit. The auxiliary finite replacement in this reused converse is not asserted stationary and its scored predictors remain those of $P$. $\square$
+

@@ -1,0 +1,66 @@
+## 12. Mathematical suppliers and applicability limits
+
+**Mathematical correspondence 12.1 (credited ingredients and scope).**
+The native source and full-family margins are those of L Definitions
+35.1 and 55.1 and (55.3)--(55.5). Its ground-state conventions and
+exact source factors are L (37.2), (37.8) and Proposition 60.2.
+The supplied conditional Gaussian and wrapped likelihood, endpoint
+moment and wrapping argument are L (58.2)--(58.10). Its native
+bridge construction and Bayesian information comparison are
+L (59.2)--(59.12). Theorem 11.1 credits and retains the supplied
+uniform-grid result. The proofs here give the additional timing-class
+converse, the weighted sharp coefficient and the actual finite
+positive-spacing matching sequence at the original scope.
+
+Gaussian scale information and moments, Brownian endpoint/bridge
+disintegration, the Doob transform, strong Markov conditioning,
+martingale score orthogonality, clipping, Taylor expansion, dominated
+convergence and integration by parts are classical tools. The
+Bayesian information argument is of the van Trees type; compare
+R. D. Gill and B. Y. Levit, *Applications of the van Trees Inequality:
+A Bayesian Cramér--Rao Bound*, Bernoulli 1 (1995),
+[DOI 10.2307/3318681](https://doi.org/10.2307/3318681), already credited
+in L Section 61. Its hypotheses here are discharged by (5.2), the
+common Borel record domain, the positive-variance sequential kernels,
+the compact endpoint cutoffs and the integrability in (5.6)--(6.10).
+The information identity itself is proved above. Generic volatility
+estimation, endpoint clustering and these general methods are not
+claimed as new general results.
+
+The result is a source-specific repository-derived application with
+ordinary mathematical proofs. Its parameter uniformity is over the
+entire originally fixed $\mathcal K$, not the smaller calibration
+family used elsewhere. L Sections 62--68 concern a different experiment
+with unknown fixed calibration and ideal continuous histories.
+Their variation reconstructions, paired-sign posteriors and continuous
+extra-phase augmentations supply no data to a policy here. Known
+calibration is used only as stipulated in Definition 2.1.
+
+Every upper policy observes finitely many wrapped $v$ values. The
+revealed past, bridge and real increments occur only in a lower-bound
+comparison on the same probability; neither the source, target nor
+information port of the optimization is changed. The next query must
+be selected immediately from preceding queried data. An unqueried-path
+trigger or hidden height-dependent stopping tag would define a different
+experiment. Conversely, the present proof imposes no smoothness of
+feedback, no deterministic-timing restriction and no minimum positive
+spacing beyond the stated finite-policy order.
+
+All assertions fix the original interval, stationary prior, known
+parameters, clock, positive $\varepsilon$ and positive $\tau$. They
+are Bayes bounds under one probability, not minimax bounds over an
+unknown function class. They do not transfer unchanged to another
+height prior, a killed or terminal-survivor source, unknown calibration,
+continuous observations, a moving comparison zero coordinate or noisy
+measurement. Exact finite-budget optimization and optimizer existence
+remain as specified after Proposition 10.2.
+
+Time precision is uncharged, and the matching spacings decrease as
+$n^{-4}$. The theorem gives no physical time-resolution, finite-bit,
+CPU, shot, acquisition or empirical resource bound. It selects no
+physical spatial dimension or rotation symmetry, supplies no sensor,
+new native control, attraction or binding result, and makes no general
+neural-network or empirical machine-learning assertion. The statements
+are ordinary source-specific mathematics, with no formal-kernel or
+worldwide-priority certification implied.
+

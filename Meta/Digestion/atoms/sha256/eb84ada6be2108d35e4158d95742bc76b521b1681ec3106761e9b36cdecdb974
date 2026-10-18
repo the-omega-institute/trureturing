@@ -1,0 +1,8 @@
+### 10.2 From local affine identities to an abstract unipotent action
+
+Write $\mathscr H=\operatorname{aff}E(\mathcal M_I)$.
+Two affine maps agreeing on a set agree on its affine hull:
+an affine combination $\sum_i\lambda_i z_i$, $\sum_i\lambda_i=1$,
+has image $\sum_i\lambda_i F(z_i)$. This elementary principle will
+be applied only after the relevant lawful set is shown to span.
+

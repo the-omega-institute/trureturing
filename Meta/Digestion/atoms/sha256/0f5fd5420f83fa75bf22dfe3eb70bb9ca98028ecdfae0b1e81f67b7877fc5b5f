@@ -1,0 +1,45 @@
+**Definition 14.2 (actual source and common preparation).** Fix
+
+$$
+0<a<b,\qquad c=a+b<1/2,\qquad Z=1-2c>0,\qquad r=2c.
+\tag{AC.39}
+$$
+
+Use the double-wall base $(c,c,Z)$, the same positive preparation and
+actually supplied calibrated directions of (AC.3). At the reached live
+cut the unknown actual height $X$ is in $\{a,b\}$, and its specimen is
+$\psi_{X,\beta,m}$ for every $\beta\in\mathbb R$ and every signed
+$m\in\mathbb Z$. The real residual and entire signed winding remain in
+the source history. None is a controller input. Height is an actual
+classical control setting here; no action on coherent superpositions of
+different source settings is asserted.
+
+The common-preparation synthesis of Proposition 3.1 can be made symmetric:
+take $a_0=c/2$, auxiliary rectangle height $q_0=a$, and phase height
+
+$$
+B_{\beta,m}=\frac{2c(2\beta-\pi m)}{b-a}.
+\tag{AC.40}
+$$
+
+Its fixed-height signed phase leg, four rectangle legs and final arrival
+at $X$ give the desired endpoint in six units. Indeed the phase residual
+is $2\pi m\,w(a_0)+B_{\beta,m}(w(a)-w(a_0))$, which is exactly
+$(\beta,\beta-\pi m,0,\beta-\pi m,\beta)$; the arrival adds zero phase.
+The rectangle's horizontal survival factors are $c/(2b)$ and $2a/c$,
+and either final arrival has factor $c/(2b)$. Thus at both heights the
+preparation-to-cut live mass is
+
+$$
+q_{\rm cut}=\frac{ac}{2b^2}>0.
+\tag{AC.41}
+$$
+
+All pieces are affine, strict and in both original regularity classes.
+Their phase variation is $2\pi|m|+2|B_{\beta,m}|$, separately finite,
+without a common bound over the full nuisance family. This is a
+source-side realization of actual histories; its latent programme is not
+delivered to the later controller. Every earlier failure stays stopped.
+An equal height prior used below is therefore realizable both before
+preparation and at the cut, without survival changing that prior.
+

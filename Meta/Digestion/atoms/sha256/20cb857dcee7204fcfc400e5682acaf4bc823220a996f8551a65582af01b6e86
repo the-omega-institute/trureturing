@@ -1,0 +1,18 @@
+**Theorem 3.2 (one-sided curvature jump).** The selected original value is continuous and $C^1$ at $s_e$, analytic on each side, and not twice differentiable there. Its left-minus-right second derivative is
+$$
+\left.\frac{d^2\mathcal T_A}{ds^2}\right|_{s_e^-}
+-
+\left.\frac{d^2\mathcal T_A}{ds^2}\right|_{s_e^+}
+=
+\frac{\alpha}{2s_0^2}
+\left(\frac1{k_6'}-\frac1{k_7'}\right)>0.
+$$
+
+**Proof.** The seven section is physical on the lower-strength side and the six section on the higher-strength side. Proposition 3.1 gives the common value and first derivative. Theorem 2.3 gives $k_7'>k_6'>0$, so
+$$
+-\frac{\alpha}{2s_0^2k_7'}
++
+\frac{\alpha}{2s_0^2k_6'}>0.
+$$
+Thus the two analytic extensions have different second derivatives. The original full optimum equals the physical selected branch by the inherited dual and constructor interfaces in [OE]. $\square$
+

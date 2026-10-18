@@ -1,0 +1,80 @@
+**Theorem 8.1 (a finite sourcewise dominating service family).** Under
+Lemma 7.2's exact finite-domain hypothesis, one can effectively construct
+a finite nonempty family $\mathcal A_D$ of lawful full-$R_Q$ services
+such that for every legal adaptive comparator $A$ there is
+$B\in\mathcal A_D$ with
+
+$$
+\operatorname{out}_B(u)=R_Q(u),\qquad
+c_B(u)\le c_A(u)\quad\text{coordinatewise for every }u\in D.
+\tag{NPL.18}
+$$
+
+Every member of the family has monotone epochs in $[N,M]$, at most
+$d-1$ reads per path, and physical words in $\mathcal P_n$ at epoch $n$.
+In particular it lies in the computable box
+
+$$
+(q,a,\ell)\le(d-1,U,(d-1)H)
+\quad\text{on each source}.
+\tag{NPL.19}
+$$
+
+Proof. First construct the finite candidate family. Enumerate all finite
+four-reply tree shapes of read depth at most $d-1$, allowing early halts.
+Label every read vertex by a monotone epoch $n\in[N,M]$ and a word in
+$\mathcal P_n$. For each leaf compute its exact candidate subset by
+following the tabulated replies of every $u_i$. Accept the tree precisely
+when $R_Q$ is constant on each nonempty subset. Install that constant
+full row; give empty leaves arbitrary default outputs. Before each read,
+perform the nonnegative epoch difference from the previous actual epoch;
+a halt adds no actions. This realizes exactly the tabulated reply paths
+on the actual source. The finite tree terminates and is correct on all
+of $D$. The enumeration is finite, and Lemma 7.2 supplies at least one
+accepted tree. Every accepted tree has (NPL.19).
+
+For the other comparator direction, take any source-total $A$. Apply
+JRF Theorem 3.1's all-source cap, valid on this signed domain by NSF
+Proposition 7.4. It produces the same output on each same source with
+
+$$
+q^c(u)=q_A(u),\qquad a^c(u)=\min(a_A(u),U),\qquad
+\ell^c(u)\le\ell_A(u).
+\tag{NPL.20}
+$$
+
+All actual reads are now in $[N,M]$. Early epochs, including zero and
+one when available, are retained. Late simulated actions supply neither
+extra source access nor actual receipts.
+
+There are finitely many sources and the capped program terminates on
+each. Its finitely many finite actual executions can therefore be
+unrolled into a finite reachable reply tree, compressing deterministic
+local computations and update segments. No uniform local running-time
+premise is needed. At each node let $S$ be the nonempty subset of $D$
+that reaches it. If its next read has the same reply for all of $S$,
+supply that known reply locally and delete the actual call, following
+its unique reachable child. This is sound on each same source in $S$.
+In particular a read outside $\mathcal P_n$ is removed as universally
+absent. Keep any actual updates before subsequent informative reads;
+the simulated control retains the skipped replies without inventing
+receipts. Delete updates after the last retained read, retaining the
+computed output, since they supply no further information.
+
+Each retained read has at least two nonempty reply subsets of $S$.
+Every source proceeding past it therefore belongs to a strictly smaller
+candidate subset. There are at most $d-1$ retained reads on a path.
+Every retained word belongs to the finite menu at its actual epoch.
+The monotone update segments telescope to the final read epoch minus
+$N$; replacing segments between retained reads by that difference does
+not increase actual updates. All removed reads and terminal updates
+only decrease sourcewise costs. Correctness implies the remaining halt
+subsets have constant full rows.
+
+The resulting tree is one of the enumerated accepted services, with
+(NPL.18). This comparison proves existence for every allowed $A$; the
+finite synthesis procedure need not decide termination or analyze code
+of an arbitrary comparator. Conversely every enumerated service is an
+actual allowed comparator, already proved above. These are both paid
+comparison directions on the same original sources. $\square$
+

@@ -1,0 +1,44 @@
+**Proposition 5.1 (scan resource bounds).** For one completed scan let
+$b$ include updates through Return, $V=\rho^b u$, and $D=\mu(V)$.
+These are analysis parameters, not inputs. Put
+
+$$
+B_D=2^{D+1}+D.
+\tag{AAR.13}
+$$
+
+The scan satisfies
+
+$$
+T\le B_D,\qquad Q\le D,\qquad A\le DB_D.
+\tag{AAR.14}
+$$
+
+More precisely, if $E_h$ is the actually scanned initial segment
+of the length-$h$ lexicographic level and $I$ is the set of levels
+at which a beta reread was made, then
+
+$$
+T=\sum_h|E_h|+|I|,\qquad
+A=\sum_h h|E_h|+\sum_{h\in I}h.
+\tag{AAR.15}
+$$
+
+All failed beta rereads occur in these sums. Auxiliary writable
+state is $O(D+1)$ bits, excluding a separate $4(D+1)$-bit operand
+region and the returned payload. The common code has constant size
+independent of the source. A literal anchor uses $D_v$ letters, its
+one label bit and self-delimiting length/framing, where $D_v=|a|$;
+the scalar alone uses $O(\log(m(U_v)+2))$ bits with framing.
+
+Proof. Each level is scanned at most once and reread at most once,
+and no visited level exceeds $D$. Hence
+$\sum_{h=0}^D2^h+(D+1)=B_D$. Each operand has length at most $D$.
+Keep the current $h$-bit word, a saved beta word, binary length/head
+registers, one reply and finite control. Lexicographic increment
+uses the current word itself; it installs no exponential word table.
+The output scalar is computed from a paid length and label. All
+copies, operand construction and clearing can be implemented with
+$O((T+1)(D+1)[1+\log(D+2)]^2)$ local bit/cell operations, a loose
+bound which also charges arithmetic and framing. $\square$
+

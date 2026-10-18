@@ -1,0 +1,70 @@
+### 56.3 四维 Bernstein 系数与局部根界
+
+在闭盒
+\[
+\mathcal B=[0,1/2]\times[-1,1]^3
+\quad\text{的坐标 }(b,s,t,v)
+\tag{56.6}
+\]
+上，分别把 \(A_{R,c},B_{R,c}\) 转为张量 Bernstein 系数。两个图使用相同的固定多重次数：
+
+| R | \(\kappa_R\) | \(N_R=(N_b,N_s,N_t,N_v)\) |
+| --- | ---: | --- |
+| I | 3 | (12,8,8,2) |
+| H | 3 | (11,6,6,1) |
+| G | 4 | (14,8,8,2) |
+| L | 3 | (10,6,6,1) |
+
+基函数为 \(\beta_{i,N}(u)=\binom Ni u^i(1-u)^{N-i}\)，四维基取四个函数之积。对 \(b=u/2\)，幂到 Bernstein 系数的转换为
+\[
+M^{b,N}_{ij}=
+\begin{cases}
+2^{-j}\binom ij/\binom Nj,&i\ge j,\\
+0,&i<j.
+\end{cases}
+\tag{56.7}
+\]
+对 \(s,t,v=2u-1\) 各轴，使用式 (55.31) 的 \(M^{(N)}_{ij}\)。四次转换均为精确有理线性运算。每个子盒上的两组系数记作 \(a_\nu,b_\nu\)；这里下标 \(\nu\) 为四重指标，\(b_\nu\) 不表示种子参数。
+
+从整个闭盒开始，分割方向依次为 \(b,s,t,v,b,s,t,v,\ldots\)，每次在精确中点分割。分别对两组有理系数使用式 (55.33) 的 de Casteljau 正权递推。始终保留两个子盒。
+
+种子上
+\[
+h(b)=\sqrt{\frac{3-b^2}{1+b^2}},\qquad
+h'(b)=-\frac{4b}{h(b)(1+b^2)^2}\le0
+\quad(0\le b\le1/2).
+\tag{56.8}
+\]
+令 \(D_0=10^{20}\)。对任一有理 \(x\in[0,1/2]\)，定义唯一非负整数 \(k(x)\) 满足
+\[
+k(x)^2\le D_0^2\frac{3-x^2}{1+x^2}<(k(x)+1)^2.
+\tag{56.9}
+\]
+这些比较只需交叉相乘正整数。若某叶子盒的种子区间是 \([b_-,b_+]\)，置
+\[
+\underline h=\frac{k(b_+)}{D_0},\qquad
+\overline h=\frac{k(b_-)+1}{D_0}.
+\tag{56.10}
+\]
+式 (56.8)–(56.9) 给出整个闭子盒上的 \(\underline h\le h(b)\le\overline h\)。不要求端点是完全平方根，也不依赖小参数近似。
+
+对每个系数指标定义
+\[
+\ell_\nu=a_\nu+b_\nu
+ \begin{cases}\underline h,&b_\nu\ge0,\\\overline h,&b_\nu<0,\end{cases}
+\qquad
+u_\nu=a_\nu+b_\nu
+ \begin{cases}\overline h,&b_\nu\ge0,\\\underline h,&b_\nu<0.\end{cases}
+\tag{56.11}
+\]
+因为 Bernstein 基非负且和为一，在子盒上有
+\[
+\min_\nu\ell_\nu\le
+ A_{R,c}(b,s,t,v)+h(b)B_{R,c}(b,s,t,v)
+ \le\max_\nu u_\nu.
+\tag{56.12}
+\]
+这里先精确分割 \(A,B\) 的系数，再在每个叶子处使用其自己的 \(b\) 区间根界；没有在整盒上以一次全局误差代替种子关系。
+
+若叶子标记为 \(+R\)，间隙为 \(g=\min_\nu\ell_\nu\)；若标记为 \(-R\)，间隙为 \(g=-\max_\nu u_\nu\)。下列证书的每个间隙均严格为正，故相应必要式在该闭盒上不能为零。
+

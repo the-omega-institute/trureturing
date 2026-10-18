@@ -1,0 +1,153 @@
+**Theorem 4.1 (lawful full-fiber realization).** Under Assumption 3.1,
+the bit (NRE.12) is computable by a terminating finite computation on the
+acquired current data and has attained range $\{0,1\}$. It varies between
+actual sources with the same class roots and the same whole target.
+There is one reader for this bit with exactly four Read states and five
+whole-row Halt states, all actually reachable, correct on every
+$u\in\mathcal U_*$ with at most two actual native calls. Its worst-case
+call count is attained. Its complete installed table is
+
+| Read state | Actual literal | On $\alpha$ | On $\beta$ | On $\mathsf{branch}$ | On $\mathsf{absent}$ |
+| --- | --- | --- | --- | --- | --- |
+| $A$ | $LLR$ | $H_1$ | $B$ | $B$ | $B$ |
+| $B$ | $LRRR$ | $H_3$ | $H_0$ | $H_0$ | $H_2$ |
+| $C$ | $RLR$ | $H_3$ | $D$ | $D$ | $D$ |
+| $D$ | $RRR$ | $H_4$ | $H_0$ | $H_0$ | $H_0$ |
+
+Initialization is $\iota(0)=A$, $\iota(1)=C$. Each $H_j$, for
+$0\le j\le4$, stores and returns the entire $R_j$ of Definition 2.2.
+
+**Proof.** First make explicit the actual-fiber calculation supplied by
+the owning volume's Proposition 9.3. In $\mathscr S(x)$ the root and
+both depth-one nodes are branches whose right children are branches.
+They cannot be the special block $E$. The image grammar therefore forces
+all four depth-two subtrees at $q_j$ to be images. Each is either $E$
+or a pair of images. Consequently $x_a,x_c\in\mathcal I$ and either
+all six values are images, or one $x_{b_j}=\alpha$ with its left partner
+equal to $\beta$. There cannot be two such $j$, since the right classes
+are different. In the latter case, every other class value is an image
+different from the forced beta and hence a branch image.
+
+Conversely, any injective tuple of these forms has all four $q_j$ blocks
+in $\mathcal I$ and therefore has its entire filling in $\mathcal I$.
+Its inverse (NRE.3) is an actual finite origin in $\mathcal U_*$. This
+proves the exact necessary and sufficient conditions; it introduces no
+restriction on the remaining finite branch images. In the all-image
+case $h=0$, beta can occupy any one of the six classes or none. In a
+positive case $h=j$, the partner is the unique beta class, $b_j$ is
+the unique alpha class, and all four remaining classes are arbitrary
+distinct branch images avoiding those leaves. These are precisely the
+whole root fibers $Z_d,Z_*,\Pi_j$ of the owning Proposition 15.2.
+
+In the zero case the inverse has an old hole at every member of $P$.
+Its hole values are $\delta(x_d)$, so injectivity preserves all the
+equalities and disequalities; its whole row is $R_0$. In a positive
+case the selected $E$ block inverts to the concrete beta leaf at $q_j$.
+Each other depth-two block is a pair of images and inverts to a pair.
+The old holes are exactly $O_j$, with equality of their predecessor
+values equivalent to equality of their current values. Thus
+
+$$
+F(u)=R_{h(u)}\qquad(u\in\mathcal U_*).
+\tag{NRE.13}
+$$
+
+The other occurrence of the selected repeated partner belongs to a
+different block and stays an old hole. Its predecessor value can be
+alpha even though the newly concrete parent is beta. Definitions
+2.2's restricted partitions and concrete guards follow exactly from
+this occurrence distinction. Their different reached sets show that
+$R_0,\ldots,R_4$ are pairwise different. This recovers the native
+ingredients for the present proof and attributes them to Proposition
+9.3, rather than counting them as a new classification.
+
+The producer can compute $h$ by inspecting its four acquired right-class
+terms for the literal $\alpha$, then compare its acquired $x_{b_2}$ with
+the two fixed finite terms $\beta,E$. All these are terminating syntactic
+operations on finite acquired terms. When the acquired input is the
+lossless tree, local traversal of that already acquired tree at the six
+fixed representatives supplies the same terms. No unknown-value test,
+predecessor input or additional source invocation is used. Assumption
+3.1 supplies actual export of the resulting complete bit and its lawful
+entry. The different states $A,C$ recover that bit by the fixed entry
+map $A\mapsto0,C\mapsto1$, with no separate bit register after entry.
+
+To see actual attainments and structural variation, put $T_n=\rho^n\alpha$.
+Then $T_0=\alpha,T_1=\beta,T_2=E,T_3=\langle E,\beta\rangle$.
+All $T_n$ are different: an equality with unequal indices cancels by
+injectivity to put $\alpha$ in a positive image, which is impossible.
+For $n\ge2$, $T_n$ is a finite branch image. Therefore distinct branch
+fillings can always be chosen avoiding any fixed finite list.
+Every positive case is attained by assigning its forced leaves and
+four such distinct branch images. In particular $h=1$ attains code zero
+and $h=4$ attains code one.
+
+More concretely, in class order $(a,c,b_1,b_2,b_3,b_4)$ the two tuples
+
+$$
+(T_3,\beta,T_4,T_2,\alpha,T_5),\qquad
+(T_3,\beta,T_4,T_6,\alpha,T_5)
+\tag{NRE.14}
+$$
+
+are injective actual fillings in the positive case $h=3$. Their finite
+origins are obtained by $\delta\mathscr S$. They have exactly the same
+class roots and the same complete answer $R_3$. Since $T_2=E$ and
+$T_6\ne E$, their prescribed bits are zero and one respectively.
+Thus no implicit replacement by a root-factored code has occurred.
+
+Now fix an arbitrary original $u\in\mathcal U_*$. By (NRE.1), the
+literal $LRRR=p_{b_2}R$ at $B$ reads exactly $r_{x_{b_2}}(R)$.
+It is one actual invocation of the original port, including when the
+suffix does not exist. The exhaustive cases are as follows.
+
+If $h=1$, the bit is zero, $A$ reads alpha at $b_1$ and returns $H_1$
+after one call. If $h=2$, the bit is zero and $b_1$ is non-alpha, so
+$A$ enters $B$. Here $x_{b_2}=\alpha$; its $R$ continuation is absent.
+The second paid call takes $B$ to $H_2$.
+
+If $h=3$ and $x_{b_2}=E$, the bit is zero. The non-alpha reply at
+$A$ leads to $B$, whose actual reply is alpha by (NRE.4), giving $H_3$.
+If $h=3$ and $x_{b_2}\ne E$, the bit is one, and $C$ reads alpha
+at $b_3$ and gives $H_3$ in one call. This second subcase includes
+every other permitted branch shape at $b_2$.
+
+If $h=4$, the bit is one. The non-alpha at $b_3$ takes $C$ to $D$;
+the alpha at $b_4$ then gives $H_4$.
+
+Finally let $h=0$. If $x_{b_2}\notin\{\beta,E\}$, the bit is zero,
+and the non-alpha at $A$ takes the run to $B$. Since $x_{b_2}$ is an
+image different from beta and $E$, (NRE.4) gives beta or branch at its
+right child. Either transition returns $H_0$. If
+$x_{b_2}\in\{\beta,E\}$, the bit is one, and the two non-alpha
+representative replies at $C,D$ give $H_0$. This covers beta at $a$,
+at $c$, at any $b_j$, or nowhere, and every allowable finite branch
+filling in every zero profile. No internal shape or source-size bound
+has entered the argument.
+
+Every returned row is therefore exactly (NRE.13). From $A$ the next
+state is a halt or $B$, and from $C$ it is a halt or $D$; both $B,D$
+always lead to halts. Thus there are at most two calls. The sixteen
+transition entries in the table are all installed constants. The absence
+entries at representative roots are unattained, but the absence entry
+at $B$ is actually used in the case $h=2$ and is charged.
+
+All states are genuinely reached. Positive cases $h=1,2$ respectively
+reach $A,H_1$ and $A,B,H_2$. The first tuple in (NRE.14) reaches
+$A,B,H_3$. A zero-case injective tuple
+$(\beta,T_4,T_5,T_3,T_6,T_7)$ reaches $A,B,H_0$, since the right
+child of $T_3$ is beta. A positive case $h=4$, for example the actual
+tuple $(T_3,\beta,T_4,T_5,T_6,\alpha)$, reaches $C,D,H_4$.
+This reaches all four Reads and all five Halts and attains two calls.
+All nine installed states are counted. Each halt contains precisely
+its entire exterior, partition and guards in (NRE.9)--(NRE.10), with
+the displayed canonical names; no later decoder supplies those data.
+
+The words at $A,C,D$ have length three and that at $B$ has length four.
+Those address and submission costs, the representation of the table
+and all five fixed whole outputs, and the operations in Assumption
+3.1 remain separate from the nine-state and two-invocation bounds.
+The state transitions neither compute addresses nor retain any hidden
+phase or workspace. This proves the asserted realization under exactly
+the prescribed bit. $\square$
+

@@ -1,0 +1,33 @@
+**定理 14.3.1（同喷流的 Taylor 障碍）。** 设 $F,G:U\to\mathbb R^q$ 都是 $C^{r+1}$，在半径 $\varepsilon$ 的闭球上导数有界，并且 $F,G$ 在 $0$ 处 $r$ 阶局部等价。若
+
+$$
+M_{r+1}
+=
+\sup_{\|v\|\le\varepsilon}
+\bigl(\|D^{r+1}F(v)\|+\|D^{r+1}G(v)\|\bigr),
+$$
+
+则对 $\|u\|\le\varepsilon$：
+
+$$
+\boxed{
+\|F(u)-G(u)\|
+\le
+\frac{M_{r+1}}{(r+1)!}\|u\|^{r+1}.
+}
+$$
+
+**证明。**
+
+对 $F$ 和 $G$ 分别沿直线 $t\mapsto tu$ 作一元 Taylor 展开。因为它们在 $0$ 处的值和前 $r$ 阶导数相同，前 $r$ 阶多项式完全相消。两个余项分别满足
+
+$$
+\|R_F(u)\|\le \frac{\sup\|D^{r+1}F\|}{(r+1)!}\|u\|^{r+1},
+\qquad
+\|R_G(u)\|\le \frac{\sup\|D^{r+1}G\|}{(r+1)!}\|u\|^{r+1}.
+$$
+
+相加即得结论。证毕。
+
+<a id="claim-14-3-2"></a>
+

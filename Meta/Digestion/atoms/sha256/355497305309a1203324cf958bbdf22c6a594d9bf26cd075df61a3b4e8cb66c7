@@ -1,0 +1,22 @@
+**Proposition 96.2 (scalar spectral information for the scaled pair).**
+At every sufficiently small fixed $s$, and every $g_s>0$, the two vectors
+in (95.2) have different spectral probability measures for the actual
+operator $H_s=a(B-\lambda)-g_sW_{s^2}$. Their scalar heat
+self-correlations $\langle\psi_s^j,e^{-tH_s}\psi_s^j\rangle$ differ
+for all sufficiently small positive $t$ (the time interval may depend
+on $s,g_s$). This assertion supplies scalar full-operator future
+information, not a reduced-state future claim for that pair.
+
+Proof. Formula (95.3) is positive for all sufficiently small $s$.
+The vectors are in $D(H_s)$ and their energy expectations differ by
+$g_s(V_{s^2}[\psi_s^0]-V_{s^2}[\psi_s^L])>0$. The first moments of
+their spectral measures therefore differ. Since $H_s$ is bounded
+below, spectral calculus differentiates each scalar heat correlation
+at zero from the right, giving derivative
+$-\langle\psi_s^j,H_s\psi_s^j\rangle$.
+For example, after shifting $H_s$ to be nonnegative, the difference
+quotients are bounded in absolute value by the first spectral moment;
+that moment is finite for a vector in $D(H_s)$. The derivative of the
+difference is nonzero, proving the assertion. No uniform quantum-time
+limit or reduced-density conclusion is used. $\square$
+

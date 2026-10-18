@@ -1,0 +1,16 @@
+**Definition 1.4 (finite syntax validation).** A proposed boundary is
+$b=(P,C,\pi)$. It is *row-valid* when it satisfies [NUE, Definition 1.2][NUE]:
+$P$ is a finite prefix-free set; $C$ is a nonempty finite full ordered
+context; every hole has its true address, occurs once and belongs to
+$P$; every omitted member of $P$ is blocked by a concrete strict-prefix
+leaf; and $\pi$ is an equivalence relation on exactly the reached holes.
+It is *selection-valid* when additionally the hole set of $C$ equals
+$P$. Class names can be canonically ordered by least hole address.
+These are finite syntactic checks, not realizability promises.
+
+Malformed input denotes an empty selected relation. A row-valid input
+with blocked requested positions also denotes an empty selected
+relation, although its bare-row relation can be nonempty. An empty
+selected cut has ground $C$ and the empty partition. A root cut has
+one root hole and its singleton partition.
+

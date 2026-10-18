@@ -1,0 +1,86 @@
+**Theorem 91.1 (effective finite-exception theorem).** There is an effectively computable absolute constant $D_0$ with the following property. Let $j$ be a positive integer, let $N=3^j\ge81$, and suppose the actual block $D=B_N=L_N^2+3$ is squarefree and $E_D:Y^2=X(X+5D)(X-15D)$ has rational rank one. If $D>D_0$, then there are no odd integer $k>1$ and positive integer $c$ satisfying
+
+$$3\nmid k,\qquad B_{Nk}=Dc^2.$$
+
+Thus only finitely many squarefree rank-one original ternary blocks can have an admissible repeated full squarefree kernel, and their possible original indices are effectively bounded. The constant $D_0$ is not numerically computed here; in particular, no assertion that $B_{81}>D_0$ follows.
+
+**Proof.** We combine the first-return lower bound from §90 with an effective upper bound for integral multiples on a fixed quadratic-twist family.
+
+**The actual integral multiple.** For any repetition under the hypotheses, the proof of Theorem 90.1 supplies the integral points
+
+$$R=(5D^2,25D^2L_NF_N),\qquad
+K=(5DB_{Nk},25D^2L_{Nk}cF_{Nk})$$
+
+and an odd integer $m$ such that
+
+$$K=mR,\qquad |m|\ge3,\qquad |m|>\sqrt D.\tag{91.1}$$
+
+The full Kummer class removes the rational two-torsion term. The multiplier used below is this elliptic multiplier $m$, not the Lucas relative index $k$.
+
+**A fixed short twist family.** Make the integral change of coordinates
+
+$$x=9X-30D,\qquad y=27Y.$$
+
+Direct expansion gives
+
+$$E'_D:y^2=x^3-8775D^2x-236250D^3.\tag{91.2}$$
+
+This rational group isomorphism sends $R$ and $K$ to integral points $P$ and $mP$, and $P$ is nontorsion.
+
+The model (91.2) is quasi-minimal in Ingram's sense: its discriminant is minimal among integral short Weierstrass equations. Indeed, $8775=3^3\cdot5^2\cdot13$, and $D$ is squarefree and coprime to $15$. Every prime valuation of $8775D^2$ is less than $4$: at $3$ it is $3$, at $5$ it is $2$, at $13$ it is $1$ or $3$, and at other primes it is $0$ or $2$. An isomorphism between short equations in characteristic zero has no translation term and scales the coefficient of $x$ by a fourth power. A strict local decrease of the discriminant with integral short coefficients would require a prime fourth power dividing that coefficient, which is impossible.
+
+The base curve $E'_1$ is fixed, and $E'_D$ is its squarefree quadratic twist. Its invariant is
+
+$$j(E'_D)=35152/9.$$
+
+For $D\ge144$, Ingram's height convention therefore gives
+
+$$
+\begin{aligned}
+h(E'_D)
+&=\max\bigl(h(j),\log\max(4\cdot8775D^2,4\cdot236250D^3)\bigr)\\
+&=3\log D+\log945000.
+\end{aligned}\tag{91.3}
+$$
+
+Here $h(j)=\log35152$ is smaller than the displayed expression.
+
+**Uniform integral-multiple bound.** Ingram, *Multiples of integral points on elliptic curves*, Proposition 11, supplies effectively obtainable positive constants $c_3,c_4$, depending only on
+
+$$M(P)=\mathop{\mathrm{lcm}}_p\operatorname{ord}\bigl(P\bmod E_0(\mathbb Q_p)\bigr),$$
+
+such that, on a quasi-minimal short curve, $n>c_3$ and integrality of $nP$ imply
+
+$$n<c_4h(E)^{5/2}.\tag{91.4}$$
+
+See the [primary paper](https://arxiv.org/pdf/0802.2651), Proposition 11 and its proof. Its elliptic-logarithm estimate has an explicit constant $4\cdot10^{41}$ in equation (9), and its small-height adjustment is effective. In our family $h(E'_D)>2\pi\sqrt3$ already for $D\ge144$, so that adjustment is unnecessary for this application.
+
+There is a direct uniform bound on $M(P)$. The only prime where $j$ has negative valuation is $3$, with $v_3(j)=-2$. Multiplicative reduction can occur only there and has type $I_2$, whose component group has order at most $2$. Every additive Kodaira type has component-group order in $\{1,2,3,4\}$, and good reduction has trivial component group. Consequently every local order divides $12$, and
+
+$$M(P)\mid12.$$
+
+These component statements concern the intrinsic minimal model; using quasi-minimal short coordinates does not change the quotient groups. We may take maxima over the finitely many divisors of $12$ to obtain fixed effective constants $c_3,c_4$ for the entire family.
+
+Apply (91.4) to $|m|P$, which is integral whether $m$ is positive or negative. Equations (91.1)–(91.4) yield
+
+$$\sqrt D<|m|\le\max\left\{c_3,c_4(3\log D+\log945000)^{5/2}\right\}.\tag{91.5}$$
+
+If $|m|\le c_3$, the first alternative applies; otherwise (91.4) applies. Both constants are uniform in the original block and the point.
+
+**An effective cutoff.** For $s\ge\log144$, the function
+
+$$\frac{\exp(s/2)}{(3s+\log945000)^{5/2}}$$
+
+is increasing, since its logarithmic derivative is
+
+$$\frac12-\frac{15/2}{3s+\log945000}>0.$$
+
+It tends to infinity. We can therefore effectively choose $s_0\ge\log144$ such that
+
+$$\exp(s_0/2)>c_3,\qquad
+\exp(s_0/2)>c_4(3s_0+\log945000)^{5/2}.$$
+
+These strict inequalities persist for every $s\ge s_0$. Set $D_0=\lceil\exp(s_0)\rceil$. If $D>D_0$, (91.5) is impossible. The sequence $B_{3^j}$ is strictly increasing and effectively computable, so $D\le D_0$ leaves an effectively bounded finite set of possible original indices $j$. ∎
+
+This is eventual uniqueness within the actual squarefree rank-one stratum. It neither classifies the finite exceptions nor supplies a numerical cutoff or an additional exclusion at $N=81$. Higher-rank curves and nonsquarefree original blocks are outside the theorem. No infinitude of squarefree rank-one blocks or universal WSS exclusion is asserted.
+

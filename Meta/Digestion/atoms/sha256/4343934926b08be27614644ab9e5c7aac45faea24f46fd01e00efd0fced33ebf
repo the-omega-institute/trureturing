@@ -1,0 +1,85 @@
+### 52.4 Faithful spectral elimination keeps internal spectra and normalization
+
+The finite spectral calculation reuses [Atomic, the correctly titled §§366–367](FIBONACCI_ATOMIC_RELATION_GENERATION.md): “FIB 路径支撑上的渗流、首达输运与反应权重” and “FIB 路径生成函数、谱行列式与量子配分接口”. Its path existence, added propagation law, determinant recursion and exceptional spectra remain separate. Static minimization and dynamic hidden-state terms retain their meanings from this volume §§18–20 and 33.
+
+For any finite occurrence tree $v$, let $\mathcal H_v^{(k)}$ use (52.9) with an additional root killing seam of conductance $k$, where $k=0$ is closed and $k=1$ is attached/zero-exterior. Define the *polynomial* pair
+
+$$
+D_v^{(k)}(z)=\det(\mathcal H_v^{(k)}-zI),\qquad
+P_v(z)=\det(\mathcal H_v^{(k)}-zI)_{\widehat r}.
+\tag{52.14}
+$$
+
+Deleting the root makes $P_v$ independent of $k$. Leaves have $D_v^{(k)}=ak-g-z$ and $P_v=1$, the empty minor convention. For $v=\langle s,u\rangle$, the actual child matrices have $k=1$ because each child root remains incident to its parent seam. Thus the reused determinant recursion becomes
+
+$$
+\begin{aligned}
+P_v&=D_s^{(1)}D_u^{(1)},\\
+D_v^{(k)}&=(a(2+k)-g-z)D_s^{(1)}D_u^{(1)}
+-a^2P_sD_u^{(1)}-a^2D_s^{(1)}P_u.
+\end{aligned}
+\tag{52.15}
+$$
+
+These are polynomial identities at *all* $z$. Using the closed child matrices $\mathcal H_s^{(0)},\mathcal H_u^{(0)}$ would discard two actual parent killing terms and is not elimination of the specified parent matrix. In particular (52.15) applies to the tower via $U_{j+1}=\langle U_j,T_j\rangle$, with the inherited attachment included. Closed and D parent determinants differ by $aP_v$, not by a new choice of internal source.
+
+Off the internal spectra, the one-root energy-dependent Schur response is
+
+$$
+S_v^{(k)}(z)=a(2+k)-g-z
+-a^2\frac{P_s(z)}{D_s^{(1)}(z)}
+-a^2\frac{P_u(z)}{D_u^{(1)}(z)}.
+\tag{52.16}
+$$
+
+For a leaf the corresponding expression is $ak-g-z$. Where the full matrix is also invertible, the root resolvent is $G_v^{(k)}(z)=P_v(z)/D_v^{(k)}(z)$. These formulas do not identify a constant Schur value with a ground energy.
+
+For completeness, the classical finite block calculation used *inside* this source computation is as follows. If $J=\mathcal H_v-zI$ is partitioned into boundary and internal coordinates and $J_{II}$ is invertible, Gaussian congruence gives
+
+$$
+\det J=\det J_{II}\det S(z),\qquad
+n_-(J)=n_-(J_{II})+n_-(S(z))\quad(z\in\mathbb R).
+\tag{52.17}
+$$
+
+Indeed replacing $h$ by $h+J_{II}^{-1}J_{IB}b$ in the quadratic form yields $b^\dagger S(z)b+h^\dagger J_{II}h$ with a nonsingular coordinate change. Determinant and inertia follow. In this invertible-block case, the stationary internal value is an attained minimum for fixed $b$ exactly when $J_{II}>0$; a negative internal direction makes that fixed-boundary unrestricted energy unbounded below. This is the positivity condition in the existing [SchurMinimum](../../../D5/S3/Quantum/Matrix/SchurMinimum.lean), with static network context supplied by the [Dörfler–Bullo note](../../../Library/GraphInvariants/dorflerbullo2013kron.md). Their static network closure is not attributed to an arbitrary indefinite shifted matrix. The retained boundary here is a singleton; the directly calculated block identities do not invoke the preprint's $|\alpha|\ge2$ network-closure lemma for that singleton. Successive eliminations reuse the existing [SchurComplementAssociativity](../../../D5/S3/Weil/ZetaLinear/SchurComplementAssociativity.lean) only where its required inverses exist.
+
+At a real $z$ outside the internal spectrum with $S(z)b=0$, the corresponding full eigenvector and its normalization are
+
+$$
+\psi=(b,-(\mathcal H_{II}-zI)^{-1}\mathcal H_{IB}b),\qquad
+\|\psi\|^2=-b^\dagger S'(z)b,
+\quad
+S'(z)=-I-\mathcal H_{BI}(\mathcal H_{II}-zI)^{-2}\mathcal H_{IB}.
+\tag{52.18}
+$$
+
+The identity follows by differentiating the inverse and adding the two squared block norms. A boundary amplitude normalized to one is generally not a normalized full state.
+
+At an exceptional $z\in\sigma(\mathcal H_{II})$, inverse formulas are unavailable. Retain (52.15) and the original block equations. In particular an internal vector $h$ with $(\mathcal H_{II}-zI)h=0$ and $\mathcal H_{BI}h=0$ gives a full eigenvector $(0,h)$ invisible at the retained root. Other exceptional eigenvectors must satisfy both original block equations; they are not automatically hidden. The exceptional case can be solved without any inverse fiction. Put $K=\mathcal H_{II}-zI$, let $\Pi$ project onto $\ker K$, and let $K^+$ be the inverse on $(\ker K)^\perp$, zero on its kernel. All full eigenvectors at this $z$ are exactly
+
+$$
+\begin{aligned}
+\Pi\mathcal H_{IB}b&=0,\qquad
+h=-K^+\mathcal H_{IB}b+u,\quad u\in\ker K,\\
+(\mathcal H_{BB}-zI-\mathcal H_{BI}K^+\mathcal H_{IB})b
+ +\mathcal H_{BI}u&=0,\\
+\|(b,h)\|^2&=\|b\|^2+\|K^+\mathcal H_{IB}b\|^2+\|u\|^2.
+\end{aligned}
+\tag{52.18a}
+$$
+
+The internal equation has a solution precisely under the first compatibility condition; the orthogonal kernel decomposition gives the second line and norm. Its solution-space dimension is the full Hermitian eigenvalue multiplicity, agreeing with the zero order of $D_v^{(k)}$.
+
+The inertia contributions at an exceptional energy can also be retained without an inverse formula. Put $C_z=\Pi\mathcal H_{IB}$ and $A_z=\mathcal H_{BB}-zI-\mathcal H_{BI}K^+\mathcal H_{IB}$, and let $A_z|_{\ker C_z}$ mean the Hermitian compression to that subspace. Eliminating only the invertible restriction $K_R=K|_{(\ker K)^\perp}$ gives congruence to $K_R$ and the block $\left(\begin{smallmatrix}A_z&C_z^\dagger\\ C_z&0\end{smallmatrix}\right)$. If $r=\operatorname{rank}C_z$, then
+
+$$
+\begin{aligned}
+n_\pm(\mathcal H_v-zI)&=n_\pm(K_R)+r+n_\pm(A_z|_{\ker C_z}),\\
+n_0(\mathcal H_v-zI)&=\dim\ker K-r+n_0(A_z|_{\ker C_z}).
+\end{aligned}
+\tag{52.18b}
+$$
+
+To see this, split the boundary as $\ker C_z\oplus(\ker C_z)^\perp$ and the internal kernel as $\operatorname{ran}C_z\oplus\ker C_z^\dagger$. The coupled $2r$ block is nonsingular with $r$ positive and $r$ negative directions: after making its coupling the identity, a shear removes its boundary diagonal. Its inverse has zero boundary-to-boundary block, so eliminating its remaining coupling to $\ker C_z$ leaves exactly the displayed compression of $A_z$. The unused $\dim\ker K-r$ internal directions are zero. This proves (52.18b), including the zero-dimensional cases. Thus both hidden and boundary-visible exceptional eigenvectors, including their normalization and inertia, remain accounted for. Cancellation in the meromorphic root response must not delete their determinant multiplicity or inertia contributions. The polynomials $D,P$, internal spectral data and (when applicable) derivative normalization together supply the faithful finite spectral account. A static boundary matrix alone supplies none of the all-level compactness in Theorem 52.2.
+

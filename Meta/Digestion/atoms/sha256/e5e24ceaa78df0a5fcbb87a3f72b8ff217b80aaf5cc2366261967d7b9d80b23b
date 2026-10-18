@@ -1,0 +1,14 @@
+**Lemma 268.3 (An affine signed trace).**
+If $h_x=h_0+\sum_i a_ix_i$ consists of total-mass-zero signed
+measures on $S$, with $\|h_x\|_{\rm TV}\le\rho$ on the whole cube,
+then, for distinct $r_i$,
+$|\sum_i a_i(r_i)|\le4\rho$.
+
+**Proof.**
+For independent fair bits $X_i$, use the output test
+$H_X(r_i)=X_i-\tfrac12$, zero elsewhere. Its oscillation is at most
+one, so $|h_X(H_X)|\le\rho$. The constant term has mean zero, and
+$\mathbb E[X_j(X_i-\tfrac12)]=[i=j]/4$.
+Consequently $\mathbb E h_X(H_X)=\frac14\sum_i a_i(r_i)$.
+The asserted inequality follows. $\square$
+

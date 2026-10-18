@@ -1,0 +1,32 @@
+# Recursive relational observation: joint event error bounds
+
+For the original five-mode preparation and fixed scalar-port problem, this
+volume gives the common bracket
+
+$$
+\boxed{c\leq\varepsilon _1\leq\lambda_{\rm J}},\qquad
+c=
+\frac{1164818900643714322803106334310684065027405466845668603}
+{2222222197396449354330681466502460539165328075000000000},
+\tag{0.1}
+$$
+
+where $\lambda_{\rm J}$ is the explicitly specified algebraic number below and
+
+$$
+\frac{52416918331}{10^{11}}<\lambda_{\rm J}<
+\frac{52416918333}{10^{11}},\qquad
+0<\lambda_{\rm J}-c<\frac7{10^7}.
+\tag{0.2}
+$$
+
+The lower covers every original complex scalar port. The upper is the exact
+all-history error of one fixed fourteen-flag port and is attained at wait zero.
+These endpoints do not match. In particular, neither endpoint evaluates the
+original optimum.
+
+This is reference mathematics: ordinary proofs and finite exact arithmetic,
+without new Lean kernel certification. The volume uses the generic-v1 clause
+conventions and is append-only. Its premise contract and existing text remain
+fixed; corrections and extensions belong after the terminal append anchor.
+

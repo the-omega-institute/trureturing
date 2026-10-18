@@ -1,0 +1,42 @@
+**Theorem 4.4 (cellwise inverse and boundary inverse).** On the actual
+storage image, each of $S$ and $B$ alone determines $W$, $\Gamma(W)$,
+the full original $h$, and $X(h)$. The inverse includes source-invalid,
+live-latch, descriptor, authority, seal, and partial-copy states.
+
+Proof. In a bit component, the unique root child which has children is the
+fork. Its side distinguishes 0 and 1. The fixed three-level $F_8$
+therefore recovers each of the eight cell tracks without an external label.
+The right spine of a tape ends at its actual terminal; its successive left
+components recover exactly its finite cell word. A zero-length tape is
+recognized at that component's terminal. The 65 fixed outer socket paths
+and $F_b$ recover every tape and every finite register bit. All marks and
+tokens are recovered, so the access links are then uniquely recoverable.
+This proves $S\mapsto W\mapsto\Gamma(W)$ without first replaying a
+transcript to discover the byte values.
+
+For a finite full ordered tree every position extends a terminal position:
+follow children until termination, which holds by finiteness. Conversely
+every prefix of a terminal path is a tree position. Consequently
+
+$$
+\operatorname{Pos}(U)
+ =\{v:\exists w\in\operatorname{Leaves}(U),\ v\preceq w\}.
+\tag{SSA.6}
+$$
+
+Taking maximal elements of a full finite support gives exactly its leaves.
+Thus $B$ reconstructs $S$ by prefix closure, and $S$ reconstructs $B$ by
+maximality. The terminal antichain is that of the actual tree incidence,
+not a general interface asserted to determine an arbitrary graph interior.
+The head links are determined by the already recovered mark bits.
+
+No packet-validity premise was used: $G$ stores every byte. In particular,
+an IN changes the input-latch component immediately; the source's individual
+WRs change its actual raw cell components; and complete-but-unsealed copy
+bytes retain their unavailable seal/token state. Proposition 2.1 and AIF
+replay now recover the original history, complete semantic interpretations,
+and actual original occurrence identities. Fixed local template roles
+recover the auxiliary identities as well. This last provenance step is
+where canonical naming matters; arbitrary externally selected names would
+require additional acquired material. ∎
+

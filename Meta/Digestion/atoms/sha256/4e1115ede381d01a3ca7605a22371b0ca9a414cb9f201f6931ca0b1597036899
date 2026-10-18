@@ -1,0 +1,58 @@
+**命题 45.4（实际平方根尖锐对的完整见证）。** 较宽 $\mathcal D_H$ 上，下一向量模量与固定三读完整误差球风险具有平方根最坏阶；见证保留原括号和同一联合来源限制，不反驳固定 $L,d_0$ 的主域线性界。
+
+**证明。** 复用本卷定理 21.3，完整构造如下。固定 $h_0,h_1\in(0,H)$，取足够小 $s>0$，在正定向标准标架置
+
+$$
+\begin{gathered}
+r=\sqrt{h_1/s},\quad B=r^2,\quad\Delta=s^2,\quad
+C=\sqrt{h_0^2h_1/s^3-s^2},\\
+b=re_1,\qquad a=(C/r)e_1+(s/r)e_2.
+\end{gathered}
+$$
+
+选定理 37.2 的字面 $t_-$，得
+
+$$
+x_0=(s/r)(-se_1+Ce_2),\quad x_1=-h_1e_3,
+\quad x_2=-qe_2,\qquad q=rs^3=\sqrt{h_1}s^{5/2}.
+$$
+
+令 $\theta=2\arctan(s/C)$，另构造实际制备和反根树
+
+$$
+\begin{gathered}
+b'=r(\cos\theta e_1+\sin\theta e_2),\qquad K'=-se_3,\\
+N'=rs(\sin\theta e_1-\cos\theta e_2),
+\qquad a'=(C/B)b'+N'/B,\qquad t'=t_+.
+\end{gathered}
+$$
+
+$K'\times b'=N'$、$b'\perp N'$ 及 $b'\times(K'\times b')=BK'$ 给 $b'\times a'=K'$；两制备有相同 $A,B,C,\Delta$。半角恒等式
+
+$$
+\cos\theta=\frac{C^2-s^2}{C^2+s^2},\qquad
+\sin\theta=\frac{2Cs}{C^2+s^2}
+$$
+
+给
+
+$$
+U'=\frac{CN'-\Delta b'}B=(s/r)(se_1-Ce_2)=-U,
+\quad x'_0=x_0,\quad x'_1=x_1,
+\quad x'_2=q(\sin\theta e_1-\cos\theta e_2).
+$$
+
+两范数三元组均为 $(h_0,h_1,q)$，所以同时在 $\mathcal D_H$。记录距离与下一目标差精确为
+
+$$
+\begin{aligned}
+\varepsilon_s&=2q\sin(\theta/2)=2s^5/h_0,\\
+\|x_3-x'_3\|&=2h_1q\cos(\theta/2)
+=\sqrt2\,h_1^{3/2}\sqrt{h_0}\sqrt{\varepsilon_s}\cos(\theta/2).
+\end{aligned}
+$$
+
+这由平面单位向量弦长公式及实际相反符号得到：$x_3=-(x_2\times x_1)$、$x'_3=x'_2\times x'_1$，并非任意环境符号假设。$s\downarrow0$ 时 $\cos(\theta/2)\to1$，且 $\varepsilon_s$ 参数化每个足够小正距离，给完整小误差平方根下界；本卷定理 21.2 给匹配上界。记录距离 $2\zeta$ 的实际对共用中点含噪回复，本卷推论 20.3 的纤维论证给匹配风险下界。
+
+该对的叶范数 $\|a\|=h_0/s,\|b\|=\sqrt{h_1/s}$ 发散，$\Delta=s^2\to0$，因此不属于任意固定 $L,d_0$ 主域。两成员各是实际树／制备，不是任意环境数据，也不授予根反转或主动制备操作。证毕。
+

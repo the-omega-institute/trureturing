@@ -1,0 +1,2 @@
+**Definition 17.1 (exact auxiliary derivative centers).** The following ordered vectors are rational decimals in their branch variable order. With $J,F_\lambda,R,r$ as in §5 their residual error bounds are $\|R(Jv+F_\lambda)\|_r/(1-q)<28$ for seven and $<0.352$ for six. They are auxiliary centers for interval residual bounds, not asserted exact derivatives.
+

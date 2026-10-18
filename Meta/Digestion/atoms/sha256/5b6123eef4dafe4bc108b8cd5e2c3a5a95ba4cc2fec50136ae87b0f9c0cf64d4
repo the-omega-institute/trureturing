@@ -1,0 +1,22 @@
+**Definition 16.1 (precisely the proposed repair premise).** Let
+$\mathsf H_{\rm pin}$ assert the following. For every fixed $d,L$,
+strictly positive rational probability $\nu$ on the entire $S_d$
+and $\epsilon>0$, there is a finite budget
+$r=r(d,L,\nu,\epsilon)$, independent of network size. On every
+positive-mass actual network of incidence at most $L$, after the
+selected compatibility-phase contraction of §3, some deterministic
+adaptive decision tree revealing at most $r$ actual owner replies
+has
+
+$$
+\mathbb E_T\Delta(Q_T)\le\epsilon n.
+\tag{GDB.72}
+$$
+
+Here $Q$ is that network's actual Gibbs law, $T$ is its attained
+transcript, and $Q_T$ is the exact owner section with all original
+blocks and conditioned whole-block weights retained as in
+Definition 14.1. The strategy may depend on the full public network
+and $\nu$. This defines a possible repair mechanism; it does not
+attribute the premise to COK or to another author.
+

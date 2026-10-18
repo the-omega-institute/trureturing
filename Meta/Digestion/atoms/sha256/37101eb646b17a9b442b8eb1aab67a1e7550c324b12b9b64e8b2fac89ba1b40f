@@ -1,0 +1,13 @@
+## 5. Bounds on actual first-reply subtrees
+
+Fix a deterministic execution that returns within two calls almost
+surely and starts by reading $t=2\ell+\alpha$. Write
+$\beta=1-\alpha$, $e=\{\ell,\ell+1\}$ and $v=v_\alpha$.
+Let $D_x$ be its actual correct mass on first reply $x$, including
+an early return or all subsequent terminal leaves. At a fixed seed,
+any second address on that branch is fixed. Lemma 3.1 allows us to
+bound each terminal output by (3.2); there is no assumption that the
+leaf maxima are simultaneously attainable with a given row budget.
+When the branch makes a second call at $t_x$, write
+$C_{xy}=\{X_t=x,X_{t_x}=y\}$ for its acquired-cylinder section.
+

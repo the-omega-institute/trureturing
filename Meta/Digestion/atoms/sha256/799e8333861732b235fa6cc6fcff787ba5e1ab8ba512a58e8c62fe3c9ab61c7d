@@ -1,0 +1,31 @@
+**Theorem 5.2 (actual-fiber joining law for arbitrary old information).**
+Add one edge $x\to y$ between distinct old components $C$ and $F$,
+and let $G'=G\cup\{(x,y)\}$. On the fiber of Definition 5.1 the
+exact additional alphabet is
+
+$$
+J_b(C,F)=
+\left|\{u_F-u_C:u\in\Lambda_b\}\right|.
+\tag{SCC.23}
+$$
+
+For a single supplement serving all old fibers, its exact alphabet
+is $\max_b J_b(C,F)$. If $x,y$ are already in one component the
+answer is one. These conclusions apply to supplements acquired
+before erasure while the initial source is still available.
+
+Proof. The newly required difference is
+
+$$
+a_y-a_x=(v_y-v_x)+(u_F-u_C).
+\tag{SCC.24}
+$$
+
+The profile $v$ is fixed in the old fiber. Distinct values of
+$u_F-u_C$ therefore give distinct $Q_{G'}$ values; equal ones,
+together with the old calibration, give identical $Q_{G'}$ values.
+Theorem 3.1 gives exactly (SCC.23), with attainable per-fiber ranks
+and globally reusable labels. If the endpoints were already
+connected, their old differences already determine this edge.
+$\square$
+

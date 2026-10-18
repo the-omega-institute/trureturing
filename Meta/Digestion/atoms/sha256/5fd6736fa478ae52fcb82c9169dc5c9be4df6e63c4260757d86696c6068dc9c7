@@ -1,0 +1,71 @@
+**Proposition 4.1 (boxed compatible contact at depth three).** There is
+a nonnative compatible singleton pair satisfying both complete endpoint
+boxes with $d_3=c_bz_b^3$. It fails both original midpoint equations,
+and therefore is not a zero-level example.
+
+**Proof.** Use the supplied singleton parametrization
+[REV, (11.22)][REV], also used for depth-three contacts in
+[NATIVE, Proposition 4.1]. Choose
+
+$$
+t=\frac{23}{100},\quad g=c_b(z_b/t)^3=\frac{124416}{304175},\quad
+u=1-t-g=\frac{87839}{243340},\quad
+v=\frac{t}{t+g}=\frac{279841}{777505}.
+\tag{4.1}
+$$
+
+Take $Q(w_{j,0})=ut^j$, $Q(w_{j,1})=gt^j$ and
+$W=(1-v)\delta_\beta+v\alpha Q$, with zero infinite masses and unit
+flows on $(Q,W)$ and $(W,Q)$. Exact rational comparison gives
+$a<u,v<b$ and $z_a<t<z_b<\lambda$.
+The identities $(1-u)v=t$, $(1-u)(1-v)=g$ and $u+g=1-t$
+prove normalization and both complete residual equations.
+
+Here are all exceptional marker-one box inequalities as nonnegative
+rational slacks. The two columns subtract the smaller endpoint from the
+actual mass and the actual mass from the larger endpoint, respectively.
+
+| Phase and depth | Lower slack | Upper slack |
+| --- | ---: | ---: |
+| p, 0 | $14913/304175$ | $96956/2737575$ |
+| p, 1 | $2538/330625$ | $125576/26780625$ |
+| p, 2 | $324/359375$ | $81296/261984375$ |
+| p, 3 | $254584/2562890625$ | $0$ |
+| suspended, 0 | $2502/777505$ | $488164/524815875$ |
+| suspended, 1 | $110800888/118083571875$ | $340092/485940625$ |
+
+Every entry is obtained by positive-denominator subtraction in (4.1).
+For p the endpoint order is fixed from depth three by (2.5); for suspended
+marker one its endpoint ratio is $(243/250)(27/25)^j$, above one for
+$j\ge1$. From the last checked depth onward, actual masses multiply by
+$t\in[z_a,z_b]$, while lower and upper endpoints multiply by $z_a,z_b$.
+Induction proves all remaining marker-one bounds. The marker-zero bounds
+at all depths follow from $a\le u,v\le b$ and $z_a\le t\le z_b$:
+$a z_a^j\le ut^j\le b z_b^j$ and
+$a^2z_a^j\le vut^j\le b^2z_b^j$. Standalone beta is boxed as well.
+The exact complete tails are $t^j$ and $vt^j$, bounded by
+$\lambda^j$ and $b\lambda^j$ for every $j$. They even lie between the
+corresponding native endpoint tail masses. This accounts for every
+finite atom and both retained infinite outcomes.
+
+Finally,
+
+$$
+d_3=\frac{1944}{390625}=c_bz_b^3,\qquad
+c_bz_b^4-d_4=\frac{486}{9765625}>0.
+\tag{4.2}
+$$
+
+Thus the singleton is nonnative. With
+$E_\beta=\{\beta,\alpha w_{0,1}\}$ and $H=5261/6750$, its exact mean
+errors are
+
+$$
+Q(E_p)-C=\frac{95291623}{11087178750}>0,\qquad
+W(E_\beta)-H=\frac{8280311}{1049631750}>0.
+\tag{4.3}
+$$
+
+This proves sharpness in the boxed compatible class, independently of
+midpoint or zero-level feasibility. $\square$
+

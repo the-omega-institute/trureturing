@@ -1,0 +1,43 @@
+**Definition 244.1 (The capacity domain).** Retain the complete rows,
+full catalogs, scores and actual source of §§237 and 243. For an integer
+$m\ge5$ choose
+
+$$
+0<t\le1,\qquad a_2=a_3=t\ge a_4\ge\cdots\ge a_m>0.
+$$
+
+Put
+
+$$
+\begin{aligned}
+q&=\frac{1-t}{m-2},&S&=\sum_{n=3}^m a_n,&
+e&=\frac{S-(m-3)q}{m+1},\\
+H&=t+q,&R&=1-e-\binom{m-1}{2}q,&e_S&=\frac S{m+1},\\
+d_1=d_2&=t-e-(m-3)q,\\
+d_n&=a_n-e-(m-3)q&& (3\le n\le m-2),\\
+d_{m-1}&=a_{m-1}-e-(m-3)q-R,&d_m&=a_m-e-R.
+\end{aligned}
+\tag{244.1}
+$$
+
+The capacity hypotheses are exactly
+
+$$
+e>0,\qquad R\ge q,\qquad
+ a_n\ge t-\binom{n-2}{2}q\ (2\le n\le m),\qquad
+0\le d_n\le e\ (1\le n\le m).
+\tag{244.2}
+$$
+
+Choose any $h\in[t,1]$, set $a_1=h$ and define
+
+$$
+e_*(h)=\max\left\{e,\frac{S+h-1}{m+1}\right\}.
+\tag{244.3}
+$$
+
+Append any entire positive nonincreasing vanishing sequence of actual
+tail amplitudes with $a_{m+1}\le e_*(h)$. These are sufficient
+hypotheses on the selected marked targets, without restrictions on the
+original competitors.
+

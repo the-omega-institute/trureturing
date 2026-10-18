@@ -1,0 +1,54 @@
+**Definition 1.3 (credited factors and actual canonical blocks).** Use
+[AAR, Definition 12.2, Theorem 12.3 and Proposition 13.3][AAR]. Put
+$s(r)=\#L(r)+2\#R(r)$ and $e(\alpha)=0,e(\beta)=1$.
+At an original branch endpoint $\Gamma_q(u)=(0,0)$. Otherwise the
+first original leaf along $q$ has label $\ell$ at $a$, with $q=ar$,
+and
+
+$$
+\Gamma_q(u)=
+\begin{cases}
+(2-e(\ell),1-e(\ell)),&r=\varepsilon,\\
+(s(r)+2-e(\ell),\mathbf1_{r\text{ ends in }R}),&r\ne\varepsilon.
+\end{cases}
+\tag{SIR.3}
+$$
+
+On attained factors the credited decoder is
+
+$$
+\operatorname{Pred}((b,c),k)=
+\begin{cases}
+\mathsf{branch},&k\ge b,\\
+\beta,&b\ge1,\ k=b-1,\\
+\alpha,&c=1,\ k=b-2,\\
+\mathsf{absent},&\text{otherwise}.
+\end{cases}
+\tag{SIR.4}
+$$
+
+It equals $r_{\rho^ku}(q)$ for every $k\ge0$. Here $c=1$ implies
+$b\ge2$. The whole trajectory recovers $b$ as its first branch
+count and $c$ by the occurrence of an alpha stage. Initially absent
+targets remain included. Write $h(z)=\operatorname{Pred}(z,0)$.
+
+Set
+
+$$
+C_0=\langle\alpha,\alpha\rangle,\qquad
+S_1=\{\alpha,\beta,C_0\},\qquad
+S_{d+1}=\{\alpha,\beta\}\sqcup\{\langle x,y\rangle:x,y\in S_d\}.
+\tag{SIR.5}
+$$
+
+For $\operatorname{ht}(v)\le d$, the credited completion $\pi_d(v)$
+retains the constructors on $W_d$ and replaces a branch at depth
+$d-1$ by $C_0$. It fixes $S_d$ and preserves all these replies
+and factors. On $S_d$, a length-$d$ reply is alpha if its parent
+is branch and absent otherwise; longer words are absent. Thus every
+finite canonical probe is a function of one boundary reply in its
+original queried block, or a constant. These are [FMR, Lemma 2.2
+and Theorems 2.3–2.5][FMR]. The factor vector on $W_d$ uniquely
+determines a member of $S_d$, as in [CBN, Theorem 2.2][CBN] and
+[RRN, Lemma 2.4][RRN].
+

@@ -1,0 +1,125 @@
+**Proposition 10.8 (An actual-ray factor in four real coordinates).**
+Let $\sigma$ be any complex-field automorphism and define, for
+real $z$,
+
+$$
+f(z)=\operatorname{Re}\sigma(z)-z.
+$$
+
+Then $f$ is additive, vanishes on $\mathbb Q$, and is periodic
+with period one. Set $x=k/r$ and let
+$\nu=v/(2\pi)\in\mathbb R/\mathbb Z$. The formula
+
+$$
+E_\sigma(k,u,v)=
+ \left(x,\operatorname{Re}\sigma(x),
+           \operatorname{Im}\sigma(x),f(\nu)\right)
+ \in\mathbb R^4
+$$
+
+defines a finite affine factor on actual rays. Here $f(\nu)$
+means evaluation at any real representative. In shorthand write
+its coordinates as $(X,W,F)\in\mathbb R\times\mathbb C\times\mathbb R$.
+
+**Proof.** A field automorphism fixes the prime field $\mathbb Q$.
+Additivity of $\sigma$ and of real part gives additivity of $f$,
+and $f(q)=0$ for $q\in\mathbb Q$. In particular
+$f(z+m)=f(z)$ for all integers $m$.
+Changing the representative of $v$ by $2\pi m$ therefore
+does not change the encoding; changing $u$ has no effect at all.
+Proposition 10.2 identifies $k,u,v$ as actual ray coordinates
+relative to the fixed arbitrary preparation. Thus the encoder
+descends to the ray quotient without retaining a real phase lift.
+
+For a probability command set $\delta=s/r$. Use the affine map
+
+$$
+\mathcal A_s^\sigma(X,W,F)
+ =(X+\delta,W+\sigma(\delta),F).
+$$
+
+Its real linear part is the identity and its offset, in the
+four real coordinates, is
+
+$$
+(\delta,\operatorname{Re}\sigma(\delta),
+          \operatorname{Im}\sigma(\delta),0).
+$$
+
+On an encoded point, additivity of $\sigma$ gives exactly
+$E_\sigma(P_s(k,u,v))$ whenever $k+s\in I$.
+This includes both signs and the endpoint-to-endpoint commands.
+The same formula can be assigned when the source domain is empty.
+
+For a phase command set $\tau=t/(2\pi)$ and
+$\sigma(\tau)=A+iB$. Use the real linear map
+
+$$
+\mathcal B_t^\sigma(X,W,F)
+ =\bigl(X,W,F+\tau X-\operatorname{Re}(\sigma(\tau)W)\bigr).
+$$
+
+Its real matrix is
+
+$$
+\begin{pmatrix}
+1&0&0&0\\
+0&1&0&0\\
+0&0&1&0\\
+\tau&-A&B&1
+\end{pmatrix},
+$$
+
+with zero offset. Under the actual $Q_t$, the normalized second
+group angle changes by $\nu'=\nu-x\tau$ modulo integers.
+Hence
+
+$$
+\begin{aligned}
+f(\nu')
+ &=f(\nu)-f(x\tau)\\
+ &=f(\nu)+x\tau-
+       \operatorname{Re}\bigl(\sigma(x)\sigma(\tau)\bigr),
+\end{aligned}
+$$
+
+which is precisely the proposed update. The first group angle
+also changes according to its native equation; it is only the
+encoder that ignores that angle. All coefficients are fixed by
+the prescribed command, and every $Q_t$ is represented on the
+full source. No assumption that $\sigma$ fixes $r$ or $\pi$
+has entered: $\sigma(s/r)$ and $\sigma(t/(2\pi))$ are applied
+to those real numbers as whole arguments.
+
+The exact encoded source image is
+
+$$
+\mathscr S_\sigma=
+ \{(X,\sigma(X),F):
+       a/r\le X\le b/r,\ F\in f(\mathbb R)\}.
+$$
+
+Indeed all encoded points have this form; conversely any such
+$F$ has a representative $\nu$ with $f(\nu)=F$, and full
+native reachability realizes its phase at any indicated height.
+On this image the exact probability guard is
+$a\le rX+s\le b$, while the phase guard is the whole image.
+They are constant on encoder fibers. The verified identities
+prove image preservation on these guards and, by induction,
+exact encoded continuation after every finite valid word.
+
+For a common turn the first three coordinates stay fixed and
+
+$$
+E_\sigma(C_c(k,u,v))-E_\sigma(k,u,v)
+ =(0,0,0,f(c/(2\pi))).
+$$
+
+For the specified $\sigma(\sqrt2)=-\sqrt2$,
+$f(\sqrt2)=-2\sqrt2\ne0$. Thus the rays
+$(k,0,0)$ and $(k,2\pi\sqrt2,2\pi\sqrt2)$ have different
+encodings for every $k\in I$. They are distinct actual rays,
+and the finite rectangle construction reaches one from the
+other. This refutes full common-circle invariance for arbitrary
+finite affine factors. $\square$
+

@@ -1,0 +1,11 @@
+**Definition 8.2 (explicit consumer and unresolved interface problem).**
+The consumer is a prescribed finite-state observer or read/update/halt
+controller recovering a complete original relation row over an entire
+source family. It consumes finite chart and descriptor data, exact joint
+predicates and a reached-address monotonicity law. It can be a native
+controller, a finite relational register controller or another effectively
+presented task with these same interfaces. Its synthesis decision and
+positive literal extraction are independent of which qualifying chart
+presentation supplied them.
+
+The remaining project gap is to prove these interface hypotheses for

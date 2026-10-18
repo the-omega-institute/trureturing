@@ -1,0 +1,26 @@
+**Convention 11.1 (direct graph, equality lift and other certificate classes).**
+In Definition 7.3 the vertices are the actual shared owner bits and the
+edges carry their once-owned full pair potentials. The graph is $C_N$.
+An equality-incidence representation instead introduces an analytical
+factor tuple $y_i=(a,b)$ with atom measure $\Phi(a,b)$, keeps the
+one bit vertex per owner, and attaches the two equality indicators
+$\mathbf1_{y_{i,1}=s_i}$ and $\mathbf1_{y_{i,2}=s_{i-1}}$.
+Its bipartite graph is $C_{2N}$. Equality forces exactly one tuple
+$y_i=(s_i,s_{i-1})$ for each common bit assignment, with its potential
+owned once. This is the credited equality-aware identity of [CBN,
+Section 6][CBN] and [RRN, Theorem 5.2][GCBRRN]. The partition is
+unchanged, but the norm inequality is applied to equality edges and
+factor measures on different spaces. That lift is outside Definition
+7.3; Theorem 9.1 asserts no optimized norm identity for it.
+
+The cover comparison of Section 3 compares two different native
+instances; Definition 7.3 keeps one instance and optimizes its pair
+tables. The optimized Bethe substitution of Section 4 has its stated
+direction and loop restrictions; Proposition 7.4 is a sound upper.
+The whole-scope forest classes of [GDB, Sections 20--25][GCBGDB] mix
+proper whole-star submodels or their entropy completions. They are not
+the single contraction on all cycle edges optimized here. This theorem
+also places no restriction on additional range, joint, scaffold,
+stability, syndrome or recursive rules. Exact trace evaluation already
+bypasses the specified norm error on this cyclic family.
+

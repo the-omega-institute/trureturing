@@ -1,0 +1,28 @@
+## 3. Complementary components and final-query comparisons
+
+In a specified phase $\phi$, an active address $2\ell+\phi$ reads the
+edge $\{\ell,\ell+1\}$ of the integer spin line. The other parity is a
+separator. Conditional on that phase, distinct active queried edges form
+disjoint finite paths. Specified XOR labels determine each path up to
+complementation, so it has two assignment weights, each a product of
+$a$ and $b$. Vertex-disjoint components are independent. Their full
+probability factors must all be multiplied, including components outside
+the target component. An unqueried target is adjoined as a singleton
+with weights $a,b$. Passing from a phase-conditional mass to its full-law
+mass introduces the factor $1/2$.
+
+The analytic comparisons used below follow from
+
+$$
+\begin{gathered}
+\frac12<c<a,\qquad c<2a^2,\qquad c>b,\qquad a>\frac12,\\
+a-c=b\delta,\qquad 2a^2-c=\delta,\qquad c-b=a\delta,\\
+t_*:=a^3+b^3\le a^2,\qquad a^2-t_*=b\delta.
+\end{gathered}
+\tag{3.1}
+$$
+
+For example $c-1/2=\delta^2/2>0$; the other identities use
+$a+b=1$. Thus all comparisons hold throughout both biased parameter
+ranges, without a sampled parameter comparison.
+

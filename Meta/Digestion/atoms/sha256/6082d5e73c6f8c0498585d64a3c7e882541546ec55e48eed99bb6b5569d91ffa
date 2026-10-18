@@ -1,0 +1,29 @@
+**Proposition 3.5 (Independent column formula and polynomial inverse).** Under Definition 2.1 put
+
+$$
+Q(T)=\sum_{i=0}^H q_iT^i,\qquad
+R=q_0^{-1}\sum_{i=1}^H q_iT^i\quad\text{on }\mathcal N.
+$$
+
+Then
+
+$$
+Q(T)^{-1}=q_0^{-1}\sum_{a=0}^{H-1}(-R)^a,
+\qquad
+X_\theta e_j=T^jQ(T)^{-1}u_\theta\quad(0\le j\le H).
+\tag{3.7}
+$$
+
+In particular $X_\theta e_H=0$.
+
+Proof. The polynomial $R$ has zero constant term, so it has the form $T$ times a polynomial in $T$. The factors commute and $T^H=0$, hence $R^H=0$. Multiplication of the finite sum by $I+R$ on either side gives $I-(-R)^H=I$. Since $Q(T)=q_0(I+R)$ and $q_0>0$, this proves the inverse formula.
+
+Independently solve the columns of $XP-TX=B_\theta$. On $e_j$ for $j<H$, $B_\theta e_j=0$, and the equation is $Xe_{j+1}=TXe_j$. Writing $c=Xe_0$, this forces $Xe_j=T^jc$ for all $0\le j\le H$, so $Xe_H=0$. On the last column the equation becomes
+
+$$
+\sum_{i=0}^H q_iXe_i-TXe_H=u_\theta,
+\quad\text{that is,}\quad Q(T)c=u_\theta.
+$$
+
+The inverse just proved gives $c=Q(T)^{-1}u_\theta$. Conversely these columns satisfy all the equations, including the last one. Uniqueness in Lemma 3.3 identifies them with (3.4). This second construction again divides only by $p_H$. $\square$
+

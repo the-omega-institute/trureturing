@@ -1,0 +1,16 @@
+**Definition 3.3 (bounded SOME-preparer).** A preparer has a nonempty finite installed set $K_P=Q_P\sqcup H_P$, one common source-independent start $s_P\in K_P$, one fixed literal $a_P(q)$ per Read, four fixed successors $n_P(q,r)\in K_P$, and an original bit $o_P(h)\in\{0,1\}$ per Halt. The current state is its entire mutable memory. A Read costs one actual native call, including a repeat, absent query, leaf continuation, forced reply or $\varepsilon$. A Halt replaces the live control by its complete bit latch and makes no call. No independent live code register survives beside it. Distinct Halts bearing the same bit and all unused states still count.
+
+On actual $u$, preparation must halt with bit $\sigma(u)$. The paid handoff exports exactly that bit, hides all preparation material and enters the unchanged serving state $e_{\sigma(u)}$ on the same stationary $t_u$. The bit is recoverable from that complete entry at entry; it is not separately accessible later. For $N,P,L\in\mathbb N_0$, success means
+
+$$
+\begin{gathered}
+|K_P|\le N,\qquad \sigma[\mathcal U_*]=\{0,1\},\\
+\text{preparation halts within }P\text{ calls on every }u,\\
+T\text{ from }e_{\sigma(u)}\text{ halts with the entire }F(u)
+\text{ within }L\text{ calls on every }u.
+\end{gathered}
+\tag{BPS.9}
+$$
+
+Only the selected entry must succeed on a source. The unselected entry may be wrong, exceed $L$ or diverge. SAME budgets mean these original upper budgets, with no added states, calls or changed serving resources. SOME means no independently prescribed pointwise code must be preserved.
+

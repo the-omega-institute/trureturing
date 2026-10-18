@@ -1,0 +1,49 @@
+### Theorem 4.1 (three continuation reads are necessary for this prefix)
+
+Fix the prefix consisting of $B$ reads at $I$, then reads at $U$ and $U^2$. Among predetermined continuations, no protocol with at most two further reads recovers the full target uniformly. Thus the $B+5$ bound is sharp within this explicit prefix class. This does not assert global sharpness over other fixed paths.
+
+#### Proof
+
+It is enough to consider two further reads, since a shorter continuation can be padded by empty words. Let $j=B+2$ be the first additional index, and let $T=\begin{pmatrix}A&Beta\\C&E\end{pmatrix}$ be the cumulative matrix at the last additional read. It has nonnegative integer entries and determinant $1$ or $-1$.
+
+For a fixed $x>0$ consider
+
+$$
+S(s)=\begin{pmatrix}x-s&s(x-s)\\1&s\end{pmatrix},\qquad 0<s<x.
+$$
+
+Every such matrix is strictly positive, rank one, and has the actual factorization $c=(x-s,1)^{\mathsf T}$, $\ell=(1,s)$. Moreover
+
+$$
+\operatorname{tr}(S(s))=x,\qquad
+\operatorname{tr}(US(s))=x+1,\qquad
+\operatorname{tr}(U^2S(s))=x+2.
+$$
+
+Thus the entire prefix has identical unweighted signals on this fibre.
+
+The last unweighted signal is
+
+$$
+\operatorname{tr}(TS(s))=Ax+Beta+(E-A)s+Cs(x-s).
+$$
+
+If $C=0$, unimodularity and nonnegative integer diagonal entries force $AE=1$, hence $A=E=1$, so this signal is independent of $s$. Take $x=2$ and $s=2/3,4/3$.
+
+If $C>0$, choose
+
+$$
+x=1+\frac{|E-A|}{C},\qquad
+s_* =\frac{x+(E-A)/C}{2}.
+$$
+
+Then $0<s_*<x$. Two distinct points symmetric about $s_*$ give the same quadratic value; for example choose $\varepsilon=\frac12\min(s_*,x-s_*)$ and use $s_*-\varepsilon,s_*+\varepsilon$.
+
+Use the same actual gain parameters for the two sources,
+
+$$
+\alpha=1,\qquad \beta=\kappa=-1/j,\qquad D=0.
+$$
+
+The first additional read has gain $1+\kappa j=0$, so its observed value is zero for both sources. At the final index $j+1$, the gain is the common nonzero value $-1/j$, while the two final unweighted signals were chosen equal. All observations and operation histories therefore coincide although the effective sources differ. Both runs use one fixed positive instrument. The three-read continuation in Theorem 2.1 succeeds everywhere, so the prefix-specific optimum is exactly three continuation reads. ∎
+

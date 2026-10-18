@@ -1,0 +1,37 @@
+**Observation 2.4 (which information is lost).** A complete original
+finite-variation path $(a,b)$ already determines its ordinary $J$; it needs
+no separately chosen area. Its endpoints $(a_T,b_T)$ do not determine
+$J_T$. A terminal wrapped state loses still more information, including
+possible windings; for fixed $a_T,b_T$ its $\beta$ coordinate sees
+$J_T$ only modulo $2\pi r$. The bottom-observation state
+$\pi(q)=(k,\alpha)$ loses $J$ entirely.
+
+In contrast, an exact complete continuous wrapped state path with its
+starting point admits unique continuous phase lifts once initial real
+representatives are fixed. On such a path (2.5) recovers
+
+$$
+a_t=\kappa_t-k,\qquad
+b_t=2(\widetilde\alpha_t-\alpha_0),\qquad
+J_t=r\{c_0b_t-(\widetilde\beta_t-\beta_0)\}.
+\tag{2.6}
+$$
+
+This is a statement about complete paths, not about finite measurement
+resolution. In limits the difficulty is different: the operation
+$(a,b)\mapsto\int a\,db$ is not continuous for uniform convergence of
+the first-level paths. Section 6 proves this failure within a lawful
+native family. A joint law of endpoints, marginal area laws, or a
+first-level covariance matrix is not the required joint path law.
+
+For comparison with signed area, the source normalization is
+
+$$
+\Omega_t=\frac12\int_0^t(a\,db-b\,da)
+          =J_t-\frac12a_tb_t.
+\tag{2.7}
+$$
+
+An added drift $\lambda t$ in $J$ with unchanged first level adds the
+same drift in $\Omega$, not twice that drift.
+

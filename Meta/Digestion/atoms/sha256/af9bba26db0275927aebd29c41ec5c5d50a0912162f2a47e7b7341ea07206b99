@@ -1,0 +1,48 @@
+**Definition 1.2 (the two response functions).** Let $\mathcal T$ be
+the free ordered tree algebra with distinct leaves $\alpha,\beta$.
+Write $\langle u,v\rangle$ for pairing and put
+
+$$
+\rho\alpha=\beta,\qquad
+\rho\beta=\langle\beta,\alpha\rangle,\qquad
+\rho\langle u,v\rangle=\langle\rho u,\rho v\rangle.
+\tag{NVC.1}
+$$
+
+The actual port is the stationary original-root literal Read:
+$r_t(w)\in\mathcal A$, where
+
+$$
+\mathcal A=\{\alpha,\beta,\mathsf{branch},\mathsf{absent}\}.
+$$
+
+Every finite left/right word, including $\varepsilon$, is legal.
+An absent reply means the path passed a leaf; it is a completed
+observation with a successor. Define the *virtual one-substitution
+response* by
+
+$$
+V_t(w)=r_{\rho t}(w).
+\tag{NVC.2}
+$$
+
+Equation (NVC.2) is a mathematical target. The only actual source
+register in this volume is $t$, and it never changes. No actual
+$\operatorname{ApplyRho}$, copy, reset, subtree, cursor navigation,
+equality or source-identity operation is installed by (NVC.1).
+
+For comparison with the original task, retain
+
+$$
+\mathcal F_D=\{\langle\alpha,v\rangle:h(v)\le D\},\qquad
+\mathcal P_D=\{Rq:|q|\le D-1\}.
+\tag{NVC.3}
+$$
+
+Its preparation is source-blind and target-blind; after the complete
+export, $p$ arrives, at most one original-root Read is selected before
+its reply and every authentic $k$, and the final predictor answers
+$r_{\rho^kt}(p)$ for every later $k\ge0$ without more Reads.
+These are [PPF, Assumption 1.3][PPF]. A scalar request (NVC.2)
+with fixed substitution count one is a different task.
+

@@ -1,0 +1,66 @@
+**Theorem 7.5 (sharp total dimension for the guarded live component).**
+Under Definitions 7.3–7.4,
+
+$$
+D\geq3M.
+\tag{QC.42}
+$$
+
+If there are at most $2^b$ classical blocks and $d_\alpha\leq d$, then
+$b+\log_2d\geq\log_2(3M)$. The total-dimension bound is attained
+for the restricted live component in §8 by $M$ qutrit blocks. This is not
+a complete classical/quantum Pareto frontier; it gives no universal
+$d\geq3$ under arbitrary supplied assistance.
+
+Proof. For each $1\leq i<M$, request $s=M-i$. Its executed event
+induces an effect $0\leq E_i\leq I$ on $\mathcal H_B$. The guard
+specification gives
+
+$$
+\operatorname{tr}(E_i\sigma_{j,\beta,m})=
+ \begin{cases}1,&j\leq i,\\0,&j>i.\end{cases}
+\tag{QC.43}
+$$
+
+If a positive state has expectation zero on a positive effect, its support
+lies in the effect's kernel: diagonalize the state and use nonnegativity
+on every positive-weight eigenvector. Expectation one gives the same
+conclusion for $I-E_i$. Let $P_j$ be the span of the supports of all code
+states with height $k_j$. For $j<l$, take $i=j$ in (QC.43); then
+$P_j\subseteq\ker(I-E_j)$ and $P_l\subseteq\ker E_j$.
+Consequently the $P_j$ are pairwise orthogonal. These are alternative
+one-request tests. The proof performs no repeated trials or incompatible
+simultaneous observations on one specimen.
+
+At each fixed $k_j$, use the first three vectors of (QC.23):
+$\phi_1=p+v_+$, $\phi_2=p-v_+$ and $\phi_3=p-i v_-$.
+They have $(\beta,m)=(0,0),(\pi,0),(\pi/2,1)$ and are actual
+endpoints by Proposition 7.2. Their Gram determinant is
+
+$$
+\det\operatorname{Gram}(\phi_1,\phi_2,\phi_3)
+ =64Zk_j(c-k_j)>0.
+\tag{QC.44}
+$$
+
+Indeed the sum and difference of the first two recover $p$ and $v_+$;
+the third then recovers $v_-$. In the basis $(U_+,U_-,e_2)$ the
+absolute determinant of their column matrix is
+$4\sqrt{2k_j}\sqrt{2(c-k_j)}\sqrt Z$, proving (QC.44).
+
+For completeness, a CPTP map taking states supported in a subspace $P$
+to three independent pure output vectors needs $\dim P\geq3$, even
+if the input states were supplied with arbitrary assistance. Extend
+$\mathcal R$ from the direct-sum algebra to $M_D$ by first dephasing
+between its blocks. For each of the three input states choose a
+positive-weight eigenvector $x_l$. Purity and positivity force the
+decoder of $|x_l\rangle\langle x_l|$ to be the corresponding pure
+output. In a Stinespring isometry,
+$Vx_l=\phi_l\otimes\eta_l$ with $\|\eta_l\|=1$.
+Apply a linear functional dual to each independent $\phi_l$ to a
+putative linear relation among these products. Its coefficient must vanish
+because $\eta_l\ne0$. Hence the three $x_l$ are independent in $P$.
+Apply this argument in each $P_j$ using (QC.41). Orthogonality now gives
+$D\geq\sum_j\dim P_j\geq3M$. Finally
+$D\leq n d\leq2^bd$ gives the bit inequality. $\square$
+

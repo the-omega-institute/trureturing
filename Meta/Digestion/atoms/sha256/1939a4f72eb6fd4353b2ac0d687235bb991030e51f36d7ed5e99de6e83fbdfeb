@@ -1,0 +1,29 @@
+**Definition 3.1 (Bright D4 projectors and the comparison channel).**
+Let $P=I-R_0$, $c_0=(e_2+e_5)/\sqrt2$, and let
+$(f_1,f_2,f_3,f_4)=(e_N,e_3,e_{25},c_0)$ be an orthonormal basis
+of the bright real space $P\mathbb R^5$. For $1\le i<j\le4$ and
+$\epsilon\in\{1,-1\}$, put
+
+$$
+v_{ij,\epsilon}=\frac{f_i+\epsilon f_j}{\sqrt2},\qquad
+Q_{ij,\epsilon}=v_{ij,\epsilon}v_{ij,\epsilon}^T.
+\tag{3.1}
+$$
+
+Use these twelve preparation-equals-measurement atoms with weight
+$1/3$, and the atom $a=b=d$ with weight one. The frame channel is
+
+$$
+\mathcal B(X)=R_0\operatorname{tr}(R_0X)
++\frac13\sum_{i<j,\epsilon}Q_{ij,\epsilon}XQ_{ij,\epsilon}.
+\tag{3.2}
+$$
+
+The antipodal vectors underlying (3.1) are the classical $24$ roots
+of $D_4$ on the real sphere $S^3$. Their real spherical $5$-design
+property is literature-attested in
+[Cohn–Conway–Elkies–Kumar, §4](https://arxiv.org/html/math/0607447v3).
+That statement is an ingredient, not a complex projective-design
+claim. The finite tensor and complex channel identities needed here
+are derived in the following proof.
+

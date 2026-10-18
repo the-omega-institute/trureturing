@@ -1,0 +1,8 @@
+## 8. What transfers to fusion gates and what remains distinct
+
+For a finite fusion window with its specified algebra, any chosen legal unitary gate word has the spectral readout (4.1) if a representation, clock coupling and controlled powers are supplied. One must retain fusion-charge blocks and multiplicity spaces required by that algebra. A finite-dimensional unitary need not have finite order, so phase estimation does not automatically yield an integer period. An infinite-chain QCA further needs an actual finite-register boundary rule before this clock circuit is defined.
+
+The QCA volume distinguishes an abstract compatible automorphism from a finite-depth circuit in the allowed local algebra. This continuation does not bypass that distinction. It also does not infer a compilation of Fibonacci modular arithmetic into Fibonacci-anyon gates merely from their common Fibonacci name. The legal occupancy grammar, the fusion category and the modular recurrence are three explicitly different carriers.
+
+The common interface now has precise content: state encoding; allowed gate and work-register specification; monomial phase or general unitary spectrum; power implementation; clock effects; classical validation; and resource/error accounting. Every claimed transfer must supply those maps. This lets gate/state-machine research develop independently of any HS4 or many-body interpretation.
+

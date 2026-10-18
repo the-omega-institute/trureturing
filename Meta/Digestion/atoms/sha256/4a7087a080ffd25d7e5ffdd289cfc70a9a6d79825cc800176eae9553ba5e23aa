@@ -1,0 +1,47 @@
+**引理 2.2（positive deficit and the proof-only leaf bound）。** Suppose $q_0,q_1,q_2\le1$. Put
+
+$$
+\delta_j=1-q_j^2\quad(j\ge1),\qquad
+D=\delta_1+\delta_2,\qquad g(x,y)=x+y-xy.
+$$
+
+Then $q_2\le q_1\le1$, the future norms do not increase, and
+
+$$
+\delta_{j+2}=g(\delta_j,\delta_{j+1}),\qquad
+D/2\le\delta_3\le D,\qquad \delta_4\ge\delta_3 .
+$$
+
+If $d_0>1$ and the actual initial tree has at most $N$ leaves, then
+
+$$
+D\ge\frac{c_0}{N},\qquad c_0=1-\frac1{d_0}>0.
+$$
+
+Consequently $D>0$: a unit neutral history is absent in this domain. A bin
+$\sigma=2^{-h}$ satisfying $\sigma\le D\le4\sigma$, $h\ge0$, obeys
+
+$$
+h\le \max\left(0,\left\lceil\log_2\frac{4N}{c_0}\right\rceil\right).
+$$
+
+**证明。** Projection gives $q_2\le q_0q_1\le q_1$. The multiplicative recurrence proves monotonicity from index one. The identity for $\delta$ is direct multiplication of $1-\delta_j$. On $[0,1]^2$, $g$ lies between the larger input and their sum, proving the remaining elementary comparisons.
+
+For a nonzero label set $u=-\log q_1$ and $v=-\log q_2$, so $0\le u\le v$. Elimination from the two norm monomials gives the PCR §67 integer bridge
+
+$$
+Q\log s=nu-mv,\qquad Q=m^2+mn-n^2\in\mathbb Z\setminus\{0\}.
+$$
+
+For $n>0$, $Q=0$ would give a rational root of $X^2+X-1$; for $n=0$, $Q=m^2>0$. Also
+$|nu-mv|\le(m+n)v$. Thus
+$v\ge\log\sqrt{d_0}/(m+n)$, a weaker consequence of the stronger estimate in PCR §67.1. Hence
+
+$$
+D\ge1-q_2^2\ge1-\exp\!\left(-\frac{\log d_0}{m+n}\right)
+\ge\frac{1-1/d_0}{m+n}.
+$$
+
+The last step is the chord bound for the concave function
+$1-\exp(-t\log d_0)$ on $0\le t\le1$. A zero label has $D=2$ and satisfies the same bound directly. Finally $\sigma\ge D/4\ge c_0/(4N)$ proves the bin bound. Neither counts nor $N$ need to be available to the interpreter.
+

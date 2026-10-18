@@ -1,0 +1,120 @@
+**Theorem 206.7 (Optimized absorbing-chain support).**
+Fix all nonnegative data $\gamma_1,\ldots,\gamma_L,S,t$ of (206.7).
+Let $M_r$ be the sum of the $r$ largest late totals, padded with zeros
+if fewer than $r$ late coordinates exist. Thus $M_1=\mu$. Define
+
+$$
+\begin{aligned}
+q&=\max\{\mu,M_2-t\},\\
+c_0&=\min\{(E+S)/2,\ S+\min(\gamma_1,\gamma_2)\},\\
+d_0&=\max\{0,\mu-t,M_2-E-S,M_3-W,q-c_0\},\\
+s_1&=\min\{S,\max\{0,(\gamma_2+S-\gamma_1)/2\}\},
+\qquad s_2=S-s_1.
+\end{aligned}
+\tag{206.21}
+$$
+
+On $v_j^{\rm ch}=1^{j-1}0^{L-j+1}$ put $C=\gamma_j$.
+Put $P=s_1$ at $v_1^{\rm ch}$, $P=s_2$ at $v_2^{\rm ch}$ and $T=t$,
+with every other row zero. This score $V^{\rm ch}$ preserves $Q,W$
+and has the exact complete excess
+
+$$
+\Delta_N(V^{\rm ch})=\Delta_O(V^{\rm ch})
+ =D=\max\{d_0,q-E\}.
+\tag{206.22}
+$$
+
+Every input in the stipulated $A=0$, early-pair family with these
+fixed data has $\Delta_O\ge d_0$, and hence $\Delta_N\ge d_0$.
+
+**Proof.** Put $X_a=\gamma_a+s_a$ and
+$r_0=\max\{S,X_1,X_2\}$. For any nonnegative split of $S$,
+$\min(X_1,X_2)\le(E+S)/2$; also the smaller early total can increase
+by at most $S$, so this minimum is at most
+$S+\min(\gamma_1,\gamma_2)$. The clamped split in (206.21) attains
+the smaller of these bounds. Since $X_1+X_2=E+S$,
+
+$$
+E+S-r_0=\min\{E,X_1,X_2\}=\min\{E,c_0\}=:c.
+\tag{206.23}
+$$
+
+A chain word gives only $00,10,11$ at $i<j$; its $01$ cell is empty.
+For $i\ge2$, the three exact maxima are
+
+$$
+\max\{r_0,\max_{3\le n\le i}\gamma_n\},\qquad
+\max_{i<n\le j}\gamma_n,\qquad
+\max\{t,\max_{n>j}\gamma_n\}.
+\tag{206.24}
+$$
+
+For $i=1$ they are
+$X_1$, $\max\{X_2,\max_{3\le n\le j}\gamma_n\}$ and
+$\max\{t,\max_{n>j}\gamma_n\}$. Label zero, both early labels,
+and all late labels are included. These are also the stopped maxima.
+
+Their maximum over the catalog is exactly
+
+$$
+B=\max\{W,E+S+\mu,r_0+M_2,r_0+\mu+t,M_3,M_2+t\}.
+\tag{206.25}
+$$
+
+For the upper bound when $i\ge2$, an early or zero label in the first
+cell contributes at most $r_0$, followed by at most two distinct late
+labels or one late label and $t$. A late first-cell label permits at
+most three late labels or two late labels and $t$. If $i=1$ and the
+second cell chooses label $2$, the two early rewards total $E+S$,
+and the final cell is at most $\max(\mu,t)$. Otherwise the same
+$r_0$ bounds apply. This proves the upper bound for pairs and hence
+for shorter schedules.
+
+For attainment, $R$ supplies $W$, and
+$(1,2;1,2,j_*)$ with $\gamma_{j_*}=\mu$ supplies $E+S+\mu$.
+For two largest late classes at addresses $a<b$, the table
+$(2,a;\ell_0,a,b)$ supplies $r_0+M_2$, where
+$\ell_0\in\{0,1,2\}$ maximizes $r_0$. The table
+$(2,j_*;\ell_0,j_*,0)$ supplies $r_0+\mu+t$.
+The first two of three ordered largest late addresses, with the third
+as exhaustion label, collect $M_3$. Querying two largest late
+addresses and using exhaustion label zero collects $M_2+t$.
+If there is only one late coordinate, the padded terms $r_0+M_2$
+and $M_2+t$ are dominated by $r_0+\mu+t$, and $M_3$ by
+$E+S+\mu$. If there are two, $M_3=M_2\le r_0+M_2$.
+Thus no padded nonexistent address is queried. Ties, zero weights,
+$S=0$ and $\mu=0$ cause no exception. Subtracting $W$ gives
+
+$$
+\begin{aligned}
+B-W
+ &=\max\{0,\mu-t,M_2-t-c,\mu-c,M_3-W,M_2-E-S\}\\
+ &=\max\{d_0,q-E\},
+\end{aligned}
+$$
+
+using (206.23).
+
+For an arbitrary competitor with these same data, let its actual early
+pair totals be $p_a$, and put $Y_a=\gamma_a+p_a$.
+For each $a=1,2$, the legal stopped table $(a,j_*;a,j_*,0)$ collects
+at least $Y_a+\mu+t$. With two distinct largest late addresses
+$i<j$, the table $(a,i;a,i,j)$ collects at least $Y_a+M_2$.
+Subtracting $W=Y_1+Y_2+t$ and maximizing over $a$ proves
+
+$$
+\Delta_O\ge q-\min(Y_1,Y_2)\ge q-c_0.
+$$
+
+With one late coordinate $q=\mu$ and the first collection suffices.
+Changing only $R$'s final output gives $\Delta_O\ge\mu-t$.
+Collecting two largest late labels and zero gives
+$\Delta_O\ge M_2-E-S$; for one late coordinate the singleton table
+with outputs $j,0$ gives that padded bound. Three late labels give
+$\Delta_O\ge M_3-W$; with fewer labels a shorter collecting table
+supplies the padded bound, or it is dominated by the preceding ones.
+The anchor gives zero. All these bounds apply to the same competitor,
+so their maximum is $d_0$. The inclusion of stopped functions in $N$
+proves the $N$ lower bound as well. $\square$
+

@@ -1,0 +1,20 @@
+**Lemma 8.1 (explicit original Grams).** Put $\kappa_{02}=h_0c+h_2d$ and, for the unsigned height $y$, define
+
+$$
+\begin{gathered}
+A_y=\sum_i h_i^2p_{yi},\quad
+B_y=b^2p_{y0}+a^2p_{y1},\quad
+C_y=d^2p_{y0}+c^2p_{y2},\quad q_y=\frac{\sqrt{y(64-y)}}{128},\\
+C^{(y)}=\begin{pmatrix}
+ A_y&\kappa q_y&\kappa_{02}\sqrt y/16\\
+ \kappa q_y&B_y&ac\sqrt{64-y}/16\\
+ \kappa_{02}\sqrt y/16&ac\sqrt{64-y}/16&C_y
+\end{pmatrix}.
+\end{gathered}
+\tag{RG.57}
+$$
+
+Then $C(\rho_{y,e,n})=C_g C^{(y)}C_g$, where $C_g=\operatorname{diag}(1,en,e)$ commutes with $B$.
+
+Proof. The three vectors $Da_y,Ta_y,Sa_y$ have this Gram matrix: the $DT$ inner product is $(h_0a+h_1b)\sqrt{p_{y0}p_{y1}}$, the $DS$ product is $(h_0c+h_2d)\sqrt{p_{y0}p_{y2}}$, and the $TS$ product is $ac\sqrt{p_{y1}p_{y2}}$. Substituting (RG.2) gives the displayed entries. Also $U_{e,n}DU_{e,n}=D$, $U_{e,n}TU_{e,n}=enT$ and $U_{e,n}SU_{e,n}=eS$. Substitution in (RG.14) proves the congruence. $\square$
+

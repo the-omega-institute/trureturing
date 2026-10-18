@@ -1,0 +1,26 @@
+**Definition 29.1 (fixed data, common space and factor order).** Fix one admitted original datum of Definitions 1.1–2.2 before taking $s\downarrow0$. Retain the conditional analytic antecedents there, P §§76, 87–88, 97 and 104–107, R (8.3), and the mode decay of Entire-height response escape, Theorem 3.1. In particular these include the original positive-cutoff negative attainment, the both-face all-height heat bounds, the specified compact reconstruction and simple critical mode, and the common-bridge inverse-determinant moments. The signed nonzero $\kappa$, the jointly realized rational vector (1.2), its positive denominator margin on $\overline I$, both original Dirichlet faces, all real phase frequencies, raw unit source and $j_0$ remain fixed. Every native form and operator domain is exactly (1.5), transported by the original $\mathcal U_s$ and determinant-one $\mathcal T_s$. No actual state is restricted by parity or reality.
+
+Work on complex $L^2(\mathbb R^4,d\xi)$ by restriction to $\Omega_s$ followed by zero extension. In §§29–35 suppress tildes only on the sheared free operator, heat and field: thus $C_s$ here denotes $\mathcal T_s C_s\mathcal T_s^{-1}$ from (2.2), and its free form is (2.5). Put
+
+$$
+\begin{aligned}
+\gamma&=\chi_c/a,&T&=s^{-2},&Q_s(t)&=e^{-tC_s},&R_s(h)&=(C_s+h)^{-1},\\
+q_s(t;\eta,\xi)&=\text{the kernel of }Q_s(t),&
+F_s&=j_0^{-1}\int_1^Tq_s(u;0,\cdot)\,du,\\
+U_s^{>}&=s^5W_1\circ\Xi_s\circ\mathscr L_s,&
+\widetilde U_s&=F_s+U_s^{>},\\
+H_s&=\int_0^TQ_s(t)\,dt,&
+\mathcal N_s&=F_sH_s,&\mathcal B_s(h)&=R_s(h)\widetilde U_s.
+\end{aligned}
+\tag{29.1}
+$$
+
+A field in an operator product denotes multiplication. In particular multiplication is after the return in $\mathcal N_s$, and $`\mathcal B_s(h)^*=\widetilde U_sR_s(h)`$. P (104.9)'s sheared product is $H_sF_s$, whose adjoint is $\mathcal N_s$. The split is at original heat time one. Both integrals in (29.1) use the $B$ clock, with shifted factor $e^{\lambda s^2t}$; $a$ enters only through $\gamma$ and the actual spectral parameter
+
+$$
+h_s=-\epsilon_c(s)/a=r_ss^8/a.
+\tag{29.2}
+$$
+
+At zero parameter write $\mathcal N_0=K_{\rm rec}^*$, with precisely P (104.1)'s bounded specified reconstruction. The expression $\mathcal N_0g=V\int_0^\infty P_tg\,dt$ is used only where that integral or its bounded-adjoint interpretation is justified. It is not an inverse on arbitrary $L^2$ right sides.
+

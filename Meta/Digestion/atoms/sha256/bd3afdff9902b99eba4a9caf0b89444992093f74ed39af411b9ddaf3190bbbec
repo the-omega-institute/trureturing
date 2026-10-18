@@ -1,0 +1,57 @@
+**Proposition 8.3 (necessary structure if the gap bound is attained).**
+If a cover in Theorem 8.1 has $G(\mathcal C)=13$, then
+
+$$
+(\Gamma_a,\Gamma_b;N_9,M_9)
+\in\{(6,7;19,16),(7,6;16,19)\}.
+\tag{NAGC.8.5}
+$$
+
+On the central line with incidence nineteen, each of the nineteen
+classes occupies exactly one point. On the other central line,
+$C_9$ occupies exactly four points, fifteen other classes occupy
+one point each, and three classes are absent. Those four points
+are precisely the vertices of one complete pure triple of $C_9$
+containing its anchor. These are necessary conditions only.
+
+**Proof.** Let $Q_a,Q_b$ denote the two values of $Q$ in the
+applications of Lemma 7.2. Under $G=13$ the complete inequality
+chain is
+
+$$
+13=\Gamma_a+\Gamma_b
+\ge Q_a+Q_b
+\ge12+\frac{\eta_a+\eta_b}{3}
+\ge13.
+\tag{NAGC.8.6}
+$$
+
+Every inequality is an equality. In particular
+$\eta_a+\eta_b=3$, and (NAGC.7.3) says that both summands
+are nonnegative multiples of three. They must therefore be
+$(0,3)$ or $(3,0)$. In either order, the individual bounds force
+$\Gamma_a=Q_a=6+\eta_a/3$ and
+$\Gamma_b=Q_b=6+\eta_b/3$. This proves (NAGC.8.5), with
+equality in each axis's charge chain (NAGC.7.9) as well.
+
+Take first $N_9=19$ and $M_9=16$. The nineteen nonempty,
+disjoint intersections on $a=9$ partition its nineteen points,
+so all are singletons. In particular no $B$ edge of $C_9$ can
+be incident to $(9,9)$. At least one incident edge exists, so
+it is an $A$ edge. Thus $C_9$ has at least four points on $b=9$.
+The sixteen classes meeting this line use at least
+$4+15=19$ points; equality is forced by the line's cardinality.
+This gives four points for $C_9$, fifteen singleton intersections
+and exactly three absent classes.
+
+Because $b$ is nonincreasing along $C_9$, its four vertices on
+$b=9$ form one consecutive run. Its three internal edges are
+all $A$, and every maximal $A$ run is a concatenation of complete
+$AAA$ blocks. A run of exactly three edges is therefore one whole
+pure triple. For $N_9=16$, $M_9=19$, the same argument within
+the original cover exchanges the coordinate names: the four-point
+line is $a=9$ and the triple is $BBB$. This exchange in the proof
+does not require transposing a nonnegative-lag cover into another
+native-admissible cover. No existence of either configuration is
+inferred. $\square$
+

@@ -1,0 +1,44 @@
+**Corollary 6.2 (at most four pure-containing groups on the rank-one branch).**
+Under Assumptions 1.1 and 2.3, suppose
+$t\ge\max(t_0,30000)$ and $R_-$ is nonzero rank-one negative
+semidefinite. Then the complete inventory has at most four groups
+containing a pure endpoint. Its unique negative-height pure contact is
+the mandatory compatible kernel group of FC Theorem 34.3.
+A five-pure inventory in this budget range requires the indefinite
+branch of that theorem.
+
+Proof. The small-mass condition holds for every common representation,
+since $S_{\rm sat}<300/t\le1/100$. Reuse FC Theorems 34.1 and 34.3
+at this scope. They supply strictly positive negative-pure-coordinate
+mass and the dichotomy: $R_-$ is indefinite or nonzero rank-one
+negative semidefinite. On the stated rank-one branch, every negative
+pure contact lies on its kernel. The negative height requires $u<0$,
+so only one of the two directed points on that kernel line qualifies.
+Its saturated endpoint is also a contact with $\eta_1\le0$; the
+two belong to one compatible group $G_*$. Every representation has
+positive pure-coordinate mass there, satisfying the inherited bound
+
+$$
+p(1-\xi)\ell_-(x_*)>1/30000,
+\qquad \ell_-=\max(-\ell,0).
+\tag{PC.29}
+$$
+
+Theorem 5.2 gives at most three other, positive-height pure contacts.
+Each pure contact belongs to exactly one group, so there are at most
+four pure-containing groups. Corollary 5.3 would require two negative
+pure contacts for a five-pure inventory; hence that inventory is on
+the indefinite branch. $\square$
+
+**Open problem 6.3 (joint families retaining both mandatory types).**
+The bound four in Corollary 6.2 supplies no bound three on saturated
+singleton groups. In particular it does not imply a seven-group
+complete face or seven-low compression. The unresolved families
+include indefinite faces retaining reverse saturated singletons and
+sufficient negative pure-coordinate mass, and rank-one negative
+semidefinite faces retaining $G_*$ and their other saturated groups.
+At $t\ge800$ the positive patterns $(2,1)$ and $(1,2)$ remain possible
+under the stated restrictions; no existence assertion for either
+pattern follows from failure to exclude it. Theorem 4.1 excludes a
+family only when all of its pure columns satisfy its cap.
+

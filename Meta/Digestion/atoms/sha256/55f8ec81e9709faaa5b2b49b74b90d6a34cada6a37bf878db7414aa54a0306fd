@@ -1,0 +1,12 @@
+**Theorem 6.1 (bounds with their optimization order).** Define $\delta^*_{\mathcal C}(\beta)=\inf_{N^{\rm ph}\in\mathcal C_\beta}\delta(N^{\rm ph})$ and $\delta^*_{\mathcal R}(\beta)=\inf_{N^{\rm ph}\in\mathcal R_\beta}\delta(N^{\rm ph})$. Then both classes are nonempty and
+
+$$
+L(\beta)\leq\delta^*_{\mathcal C}(\beta)
+\leq\delta^*_{\mathcal R}(\beta)\leq U(\beta).
+\tag{P.20}
+$$
+
+Both infima are zero at $\beta=0$. At $\beta=1/2$ the interval is $[1/5,1-1/\sqrt2]$. For $\beta>0$, $0<L(\beta)<U(\beta)$.
+
+**Proof.** Theorem 3.1 supplies the per-encoder lower bound; class inclusion supplies the middle inequality; Theorem 4.1 supplies one actual real-class encoder and its optimum, proving nonemptiness and the upper inequality. At zero the bounds coincide. For $u=\sqrt{1-\beta}<1$, $L/U=2(1+u)/(3+2\sqrt2u)<1$. Theorem 5.1 prevents interpreting $U$ as an upper bound for every encoder. $\square$
+

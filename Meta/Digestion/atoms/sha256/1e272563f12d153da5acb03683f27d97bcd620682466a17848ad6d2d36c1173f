@@ -1,0 +1,4 @@
+**Corollary 7.1.1 (quality of one common clipped model).** Under Theorem 3.1, the same clipped table satisfies $W_j(\mathcal H_s;\widehat M)\ge W_j(\mathcal H_s;M)-T_s$ for both phases and both risk orders, with the simultaneous defect bound (3.5). These are semantic task coordinates on the same actual source and positive histories; they do not determine internal program structure.
+
+**Proof.** Subtract the simultaneous four risk bounds of Theorem 3.1 from one. The defect is that of the same clipped table. ∎
+

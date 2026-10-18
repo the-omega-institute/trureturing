@@ -1,0 +1,9 @@
+## 135. Combinatorial realization corollaries
+
+For a framed block sigma define its set of external axial H labels by
+
+       X_sigma = ({R_sigma,O_sigma} intersect H) \ {A_sigma,B_sigma},
+
+and put X=union_sigma X_sigma. These are sets of actual labels; repeated
+occurrences of the same external label are counted once in X_sigma.
+

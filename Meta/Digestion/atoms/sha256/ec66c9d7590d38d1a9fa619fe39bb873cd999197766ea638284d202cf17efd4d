@@ -1,0 +1,39 @@
+## 177. The companion-C return is impossible
+
+In the second frame of (173.2), genuineness requires
+
+    q>(z-c)^2/(m+1)-1>=m, hence q>m.
+
+Section 176 excludes special Q, and the contrary hypothesis leaves only
+Q=Z. Thus the proposed return is rho=(M,Z,C,Z,Z,C).
+
+Every owner with reservoir pair {Z,C} is genuine. Neither axis is
+special, by Section 176. If one axis is not Z, its value b is <=m, and
+the other value r is <=z. Since z>=1+m+c, the increasing transverse Z
+cosine numerator is nonpositive at r0=1+z+c and strictly negative at
+the actual r<r0; hence its two Z angles are obtuse. Only rho can have that property.
+
+The remaining possible axes are both Z, giving (Z,Z,C,Z,Z,C). Its four
+Z angles have the same cosine
+
+    z(c+1)/(2z^2+c-1)<1/2,
+
+because z>c+1. They consume more than 4*pi/3 of Z, which together
+with rho's two obtuse Z slots exceeds 2*pi. This alternative is excluded.
+Thus every owner with pair {Z,C} is rho.
+
+The two faces of rho at its M axis already lead to tau. Its residual
+faces have labels {Z,Z,C}. Following either actual target Z slot across
+one of them, an axial target has pair {Z,C}; a transverse target must
+have companion C and an axial Z. Either target owner is rho. This also
+covers rho's additional axial Z slot. Tau and rho therefore close the
+entire connected Z normal circle with only one plus three Z slots.
+This contradicts degree(Z)>=6.
+
+The return must consequently have companion M:
+
+    rho=(C,Z,M,Q,Z,M), Q in H, q>c.                    (173.3)
+
+Its other axis is M, Z, or a label of L different from C. The argument
+has not restricted that low label to D.
+

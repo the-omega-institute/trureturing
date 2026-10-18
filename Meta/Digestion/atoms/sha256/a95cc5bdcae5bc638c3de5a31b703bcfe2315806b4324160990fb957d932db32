@@ -1,0 +1,51 @@
+**Proposition 6.1 (B4: normalization and derivative identity).** The inverse radial map is
+
+$$
+\chi(x)=\frac{b_*x}{V-\ell x},\qquad V-\ell x\ge\beta W/\alpha>0\quad(0\le x\le U).
+$$
+
+For a feasible three-line contact put $u=x(q)$, $X=x(P)$. The radial positive-contact mass and baseline masses in the $zw>0$ and $zw<0$ sectors are respectively
+
+$$
+a_{\rm rad}=mA(P),\quad b_{{\rm rad},+}=\omega_-A(q),\quad b_{{\rm rad},-}=\omega_+A(q).
+\tag{TB.16}
+$$
+
+They sum to $\mu$, have radial moment $V$, and zero signed $zw$ moment. In particular
+
+$$
+a_{\rm rad}=\frac{\mu(r-u)}{X-u},\quad b_{{\rm rad},+}+b_{{\rm rad},-}=\mu-a_{\rm rad},\quad
+b_{{\rm rad},+}-b_{{\rm rad},-}=-\frac{a_{\rm rad}\sqrt{XY(X)}}{\sqrt{uY(u)}}.
+$$
+
+At any zero of $c(p)$ put $q=1-p$, $d_p=p-q$, $B=B(p,q)$, $\Delta=\Delta_J(p,q)$ and $B_{\rm rev}=d_p\Delta-B$. Define
+
+$$
+W_{\rm cross}=(-g''(p))B^2+g(p)[BJ''(p)-B_{\rm rev}J''(q)].
+$$
+
+Then
+
+$$
+c'(p)=-\frac{v(p)W_{\rm cross}}{B\Delta}.
+\tag{TB.17}
+$$
+
+Proof. Solving $x=Vp/(b_*+\ell p)$ gives $\chi$. Whitening gives $z^2=x(p)$, $w^2=W(1-p)/A(p)$ and $|zw|=\sqrt{VW}v(p)/A(p)$. The line $e_P$ has $zw>0$; $e_{Q+}$ has $zw<0$ and $e_{Q-}$ has $zw>0$. This reverses the baseline sign labels and proves (TB.16), since $d\nu=A(p)dm$. Total mass follows from $mA(P)+(2-m)A(q)=2b_*+\ell=\mu$, and the radial moment from $mP+(2-m)q=1$. The cross equation yields the displayed difference. These masses are not Born probabilities.
+
+For the derivative let $D_T(p)=T(p,1-p)$. At a zero $g'=g\Delta/B$. Thus
+
+$$
+D_T'=T_p-T_q=g''B-gJ''(p)+gJ''(q)B_{\rm rev}/B=-W_{\rm cross}/B.
+$$
+
+Differentiating $c=vD_T/\Delta$ at that zero proves (TB.17). Along the formal family, (TB.10) gives $\eta_3'>0$. At $m=1$,
+
+$$
+m'=-(1+P')/(p-q),\qquad D_T'=T_p(1+P').
+$$
+
+These are orientation identities, not a sign determination. $\square$
+
+A proof that $W_{\rm cross}>0$ at every actual-source zero would force exactly one simple downward crossover: opposite endpoint signs give a zero, and two downward simple crossings would require an intervening upward or nonsimple zero. That positivity is unproved here. Failure of this sufficient condition alone would not refute the original scalar target.
+

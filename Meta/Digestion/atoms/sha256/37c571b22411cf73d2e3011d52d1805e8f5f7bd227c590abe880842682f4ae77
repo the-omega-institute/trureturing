@@ -1,0 +1,26 @@
+## 400. At most two owners have four or five P slots
+
+In the six-label source application, every mixed four-P-slot owner
+has axes r,o in P={M,Z,U}, high transverse label p in P, and low
+transverse label q in {V,C,D}. The existing source inequalities give
+r,p,o>=m, 1<q<=m-2 and m>2+sqrt(5)>3. Genuine owners have strict L,J>0.
+Therefore the bound applies directly, with each original high slot
+counted exactly once: E=theta_r+theta_o+2*beta_p.
+
+Together with the double-P-pair refinement in Sections 390-394,
+this covers every genuine owner having at least four P slots: the
+four-slot double-P transverse class, the mixed four-slot class, and
+the five-slot class. If tau is a distinct three-P-slot genuine owner
+with P expense >pi and the total genuine P capacity is 5*pi, at most
+two such four-or-five-slot owners can coexist with tau. Indeed k of
+them would give total expense strictly greater than pi+k*(4*pi/3),
+so k<3. Repeated roles are separate owners; original slots retain
+their multiplicities.
+
+The mixed four-slot branch needs no maximum gap. The union still
+retains the five-slot branch requirements of Section 393: no gap for
+high axis M, z<u+m+1 for high axis Z, and u<z+m+1 for high axis U.
+Those gaps come from the complete-star theorem of Sections 318-321
+only under all of that theorem's original hypotheses. This local
+expense refinement alone is not a global six-edge exclusion.
+

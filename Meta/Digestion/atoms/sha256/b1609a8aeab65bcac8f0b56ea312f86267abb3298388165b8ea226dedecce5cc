@@ -1,0 +1,22 @@
+**Corollary 265.3 (The already balanced face with explicit reserves).**
+On the normalized feasible $D_b=0$ face, every decomposition is
+canonical and its full feasibility is exactly the triple system
+
+$$
+x_T\ge0,\quad\sum_Tx_T=1,\quad
+m_n=b_n-e,\quad m_\infty=1-e,\quad z_n\ge1-b_n.
+\tag{265.5}
+$$
+
+**Proof.** The inherited fair gap gives
+$0\le J_\lambda=D_b-S_\zeta\le D_b=0$.
+Every noncanonical column has positive fair deficit, so every
+positive-weight table is canonical. The correct and positive
+lower bounds sum to $3-D_b=3$; the triple marginals also sum to
+three. Each slack is nonnegative, so every marginal is exact.
+The pair inequality of (265.2) becomes $z_n\ge1-b_n$, which
+also implies its weaker base singleton inequality. Conversely
+(265.5) satisfies (265.2). This spells out the independent pair
+obligation on the existing balanced face of Section 249.
+$\square$
+

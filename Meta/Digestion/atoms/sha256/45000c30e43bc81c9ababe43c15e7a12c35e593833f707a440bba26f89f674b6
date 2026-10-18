@@ -1,0 +1,19 @@
+**Definition 2.2 (law coefficients).** Put
+
+$$
+\begin{gathered}
+\theta=ab/(h_0h_1),\quad\omega=cd/(h_0h_2),\quad
+\delta=\theta+\omega,\quad s_0=\sqrt\delta,\quad
+\alpha=\theta/\delta,\quad\beta=\omega/\delta,\\
+\Delta=\rho_{27}-\rho_5,\quad K=(D,T,S),\quad
+N_{ij}=\operatorname{tr}(K_i\Delta K_j^T),\quad
+G=\operatorname{diag}(s_0,1,1)N\operatorname{diag}(s_0,1,1),\\
+H_{\rm high}=(1-\delta)N_{00},\quad
+V_f=m_2h_1^2/b^2,\quad W_f=m_1h_2^2/d^2,\quad
+\mu=\alpha V_f+\beta W_f.
+\end{gathered}
+$$
+
+All amplitudes and $m_1,m_2,\theta,\omega$ are positive, $0<\delta<1$, $\alpha+\beta=1$ and $H_{\rm high}>0$. In particular $\Delta_{11}=-11/64$, $\Delta_{22}=0$ and
+$\Delta_{12}=\sqrt{37}/16-\sqrt{59}/16<0$. Appendix 12 gives exact nine-coordinate dyadic enclosures for these derived source inputs. The optimization multiplier $\lambda$ is distinct from $\lambda_{\rm CG}$.
+

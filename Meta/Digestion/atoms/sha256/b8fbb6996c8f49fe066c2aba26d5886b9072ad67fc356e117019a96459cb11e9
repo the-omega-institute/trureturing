@@ -1,0 +1,11 @@
+**Definition 66.4 (Original-target common-order cap fibers).** Under Definition 66.1, for a cap $\eta\in[0,1]$ put
+
+$$
+ K_{0,\uparrow}^{\eta}(q)
+ =\bigcap_{y\in X:\,[y]=q}
+       \{g\in\mathcal M:d_{\mathcal M}(g,f_y)\le\eta\}.
+\tag{66.15}
+$$
+
+Use exactly the distance-neighborhood refinement (54.4) and countable-ordinal intersections (54.5), with range $\mathcal M$, metric $d_{\mathcal M}$ and unchanged occupied neighborhoods $U_m(q)$. Denote the stable values by $K_{\infty,\uparrow}^{\eta}(q)$. These fibers are defined only by the fixed original targets, rank and actual occupied cylinders; they do not take a candidate prepared family as input. In particular all original labels with one signature occur in the intersection (66.15).
+

@@ -1,0 +1,52 @@
+**Corollary 26.2 (finite and interval capacity obstruction).** Suppose an
+actual acquisition at this live cut leaves the specimen in (OC.72) and
+delivers the complete joint handoff of Definition 24.2. Exact canonical
+continuation for $M$ distinct displayed heights requires
+$D\geq\sum_j\operatorname{rank}\tau_j\geq M$. No fixed finite $D$
+can support this exact continuation at every height of $[1/8,3/16]$ under
+that independence premise. For the three heights
+
+$$
+(x_1,x_2,x_3)=(1/8,5/32,3/16),\qquad
+(s_1,s_2,s_3)=(4/5,5/6,6/7),\qquad
+(b_1^2,b_2^2,b_3^2)=(3/5,5/9,3/7),
+\tag{OC.84}
+$$
+
+even three distinct pure programme rays in dimension two are insufficient.
+
+Proof. Proposition 26.1 supplies every tested phase and signed winding
+at each height with positive live probability and the same legal request.
+Apply Theorem 25.1. For an interval implementation apply it to a subset
+of $D+1$ distinct heights. The rational values in (OC.84) follow by
+substitution in (OC.73); in each case $s_j<1$ and $s_j>0$.
+$\square$
+
+The complete failure law is not replaced by (OC.84). Applying the credited
+CP densities (OC.57) to the actual orbit gives
+
+$$
+\begin{aligned}
+S_j(t)&=\frac{x_j}{x_j+vt},\qquad -S_j'(t)=f_j(t),\\
+\bigl(\Pr_j(\mathrm{fail},i,dt)\bigr)_{i=0}^4
+ &=(0,c,Z,c,0)f_j(t)\,dt.
+\end{aligned}
+\tag{OC.85}
+$$
+
+Indeed the middle input population is $Z$, while the minus population
+is $2(c-x_j)$, giving $Zf_j$ and
+$2(c-x_j)g_j/2=cf_j$ for each of modes $1,3$. Their sum is
+$(Z+2c)f_j=f_j$, so the total failure mass is $1-s_j$ and its
+integrated mode masses are $(0,c,Z,c,0)(1-s_j)$. This derives the
+ramp law from its CP maps, without extending the particular waveform
+example in Event Memory and Coarse Aliasing §3 by analogy.
+
+Every earlier failure retains its actual first time/mode, archive and
+absorbing $f$. Theorems 24.3–26.2 condition only on the positive-probability
+already-live cut. A later implementation cannot pay the loss in (OC.76)
+by silently adding failures: doing so changes the prescribed success mass
+and hence the complete joint instrument. These inequalities do not
+authorize an extra failure operation, reset, retry, reversal, extra copy,
+tomography or an accessible hidden Kraus index.
+

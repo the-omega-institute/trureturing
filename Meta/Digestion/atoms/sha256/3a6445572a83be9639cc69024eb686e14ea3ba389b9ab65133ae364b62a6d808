@@ -1,0 +1,56 @@
+**命题 5.2（接缝到移位周期、二次行列式及有符号尾的桥）。** 上节配置双射给
+
+$$
+C_N=\operatorname{tr}(Q^N)=F_{N-1}+F_{N+1}
+=\varphi^N+(-\varphi^{-1})^N,
+\qquad C_{N+2}=C_{N+1}+C_N.
+$$
+
+长度三、四、五、六分别有四、七、十一、十八种配置。以形式级数定义
+
+$$
+\mathfrak Z_{\mathrm{cyc}}(t)=
+\exp\left(\sum_{N\ge1}\frac{C_Nt^N}{N}\right),
+$$
+
+则在 $\mathbb Q[[t]]$ 内成立，并在 $|t|<\varphi^{-1}$ 内由绝对收敛给出解析等式
+
+$$
+\boxed{\mathfrak Z_{\mathrm{cyc}}(t)=\frac1{1-t-t^2}.}
+$$
+
+对任意 $|t|<\varphi^{-1}$、$r=\varphi|t|$、$J\ge0$，完整对数响应的余项满足
+
+$$
+\left|\sum_{N>J}\frac{C_Nt^N}{N}\right|
+\le\frac{2r^{J+1}}{(J+1)(1-r)}.
+$$
+
+若 $0\le t<\varphi^{-1}$，该尾还非负；复 $t$ 或负 $t$ 时只使用绝对值界。对重复加权块，记 $T=1+x+y+z$、$P=xyz$，则
+
+$$
+\det(I-tK)=1-Tt-Pt^2,
+\quad
+\exp\left(\sum_{L\ge1}\frac{\operatorname{tr}(K^L)t^L}{L}\right)
+=\frac1{1-Tt-Pt^2}.
+$$
+
+其解析域是 $|t|\rho(K)<1$；不能对任意加权块沿用 $\varphi^{-1}$。
+
+**证明。** 双向无限序列中禁用 $11$，移位 $N$ 步的固定点与有限循环词一一对应：由有限词作周期延拓；逆向取其标记起点开始的 $N$ 位。最后接缝保证跨期仍合法，长度一、二使用上一节约定。它正好满足 [Bowen–Lanford §2 Theorem 1](../../../Library/Dynamics/bowenlanford1970shift.md) 的有限禁词条件，其周期数为转移矩阵的迹，zeta 为逆行列式。此供应处理的是该接续图，不能直接应用于原始无反向边的展开树。FIB [式 (367.5)](https://github.com/the-omega-institute/trureturing/blob/78d2f7c423b15d01062f3ffacf4f75b8cee44f30/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md) 也已提供一般迹—行列式接口。
+
+坐标交换矩阵 $J=\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$ 给 $Q=JMJ$。由 $Q^2=Q+I$，乘 $Q^N$ 后取迹得递推；初值 $C_1=1,C_2=3$ 给 Fibonacci 与特征值两种表达。若暂定义代数值 $C_0=2$，仅供递推，不把它认作空圆周计数。
+
+为明确当前域，利用特征值直接计算
+
+$$
+\sum_{N\ge1}\frac{C_Nt^N}{N}
+=-\log(1-\varphi t)-\log(1+t/\varphi).
+$$
+
+形式对数常数项为零；解析时取从 $t=0$ 延伸的支，因为两级数在所述圆盘内绝对收敛。恒等式 $(1-\varphi t)(1+t/\varphi)=1-t-t^2$ 给所需逆行列式。Bowen–Lanford 扫描第45页例子末式的 $+t^2$ 与其矩阵和特征值不相容；这里应用一般定理并计算行列式，所得符号为 $-t^2$。
+
+由 $0\le C_N\le2\varphi^N$，尾绝对值至多 $2\sum_{N>J}r^N/N$，用 $N\ge J+1$ 和几何级数得到界。它保留全部剩余闭路，不将有限截断当作完整无穷响应。
+
+一般块的迹为 $T$、行列式为 $-P$，所以二维行列式为所列二次式，Cayley–Hamilton 给迹序列 $S_{L+2}=TS_{L+1}+PS_L$，$S_0=2,S_1=T$。迹—行列式供应再给形式恒等式。非负权重时逐路径与矩阵幂无相消，$|t|\rho(K)<1$ 足够绝对收敛。它压缩了重复块的闭路计数任务；任意非齐次块序列仍要保留各核的有序乘积，全部来源树也不由这两个标量恢复。证毕。
+

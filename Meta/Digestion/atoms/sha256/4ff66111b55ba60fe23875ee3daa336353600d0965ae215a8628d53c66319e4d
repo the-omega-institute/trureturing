@@ -1,0 +1,39 @@
+**Definition 12.2 (geometry, retained observations and the scope of recovery).**
+A public cut can cover every infinite ray while a finite source ends
+strictly before some of its addresses. The concrete leaf at such a stop
+is part of the observed boundary, not a hidden hole. Theorem 10.3 detects
+exactly this distinction at depth one: hiding both root children removes
+all changing branch-case exterior labels; any other nonroot cut exposes
+at least one possible changing child leaf. A first root observation also
+identifies the entire invocation source when it is a leaf. These two
+facts, together with the invariant hidden-child partition, explain the
+two positive cuts without identifying ray coverage with source reachability.
+
+On a restricted domain where a covering cut's every address is promised
+present at invocation, the exterior is its fixed cut skeleton and all
+hidden subtrees advance by the same injective $\rho^k$. The same transport
+calculation (CNA.20) makes the complete row constant along that trajectory,
+so the supplied coherent capture recovers the invocation row there.
+This is a consequence of the existing capture and transport suppliers,
+with an additional source-family promise. It excludes the early-blocking
+sources in (CNA.17) for every deeper covering cut and therefore cannot
+supply universal recovery under Assumption 10.1. For incomplete cuts,
+even that reachability promise need not fix the exterior outside the cut.
+
+The memory used by Definition 11.1 consists of the actually acquired root
+constructor and later finite capture records. It determines an earlier
+relational boundary for $\{L,R\}$ without determining how many intervening
+updates occurred. On a fixed invocation branch that row is constant for
+all update counts. This differs from the relative clock recovered from
+two retained full trees in Theorem 8.3, and from the overlap criterion
+for its strictly row-only interface. A retained full tree is a larger
+input than its row and must be charged and declared separately.
+
+The negative histories of Lemma 10.2 have identical complete observer
+records after their first Read and identical future source values.
+Thus retaining every later tree, certificate and local computation cannot
+repair their different entry rows. This impossibility already permits
+unbounded finite memory. It is stronger than an ambiguity created only
+by a later deliberate row-only retention cut, and says nothing about
+sharp minimum workspace on the positive cases.
+

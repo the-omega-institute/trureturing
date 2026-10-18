@@ -1,0 +1,34 @@
+**Convention 2.3 (strict scalar premises).** The coarse derived JR.86
+bounds are enough for every strict sign used in the local proof:
+
+$$
+\begin{gathered}
+12227/100000<\beta<12230/100000,\\
+1269/10^6<g_0<1270/10^6,\quad29222/10^7<g_1<29224/10^7,\quad
+16771/10^7<g_2<16773/10^7,\\
+2370/10^6<x<2372/10^6,\quad2207/10^6<y<2209/10^6,\quad
+-1017/10^7<z<-1016/10^7.
+\end{gathered}
+\tag{EP.18}
+$$
+
+These are conditional source inequalities, not fresh numerical
+certification. Expanding $f$ at each corner gives the complete strict
+sign comparisons
+
+$$
+\begin{aligned}
+f(1,1)&>.001269+.0029222+.0016771
+                       +2(.002370)+2(.002207)-2(.0001017)>0,\\
+f(1,-1)&>.001269+.0029222+.0016771
+                       +2(.002370)-2(.002209)+2(.0001016)>0,\\
+f(-1,1)&>.001269+.0029222+.0016771
+                       -2(.002372)+2(.002207)+2(.0001016)>0,\\
+f(-1,-1)&<.001270+.0029224+.0016773
+                       -2(.002370)-2(.002207)-2(.0001016)<0.
+\end{aligned}
+$$
+
+All terminating decimals here are exact rationals. In particular
+$\alpha,\beta>0$ and $\beta<1/2$.
+

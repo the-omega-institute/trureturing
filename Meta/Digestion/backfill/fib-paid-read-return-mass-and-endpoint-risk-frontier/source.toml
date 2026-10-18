@@ -1,0 +1,5 @@
+source_id = "fib-paid-read-return-mass-and-endpoint-risk-frontier"
+path = "docs/develop/theory/FIB_PAID_READ_RETURN_MASS_AND_ENDPOINT_RISK_FRONTIER.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

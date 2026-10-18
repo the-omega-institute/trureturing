@@ -1,0 +1,43 @@
+**Corollary 44.7 (Exact cap boundaries, endpoints and applicability).** For $0\le\eta\le1$, the exact attainable anchor-row regions under $\rho_\nu\le\eta$ are
+
+$$
+\begin{aligned}
+\mathcal C_{\mathrm{meas}}(b,\eta)
+&=\{(h,d,z)\in\mathscr S:(1-B)h\le(2-B)\eta\},\\
+\mathcal C_{\mathrm{fin}}(b,\eta)
+&=\{(h,d,z)\in\mathscr S:h\le2\eta\}.
+\end{aligned}
+\tag{44.29}
+$$
+
+The measurable formula also holds for common countable carriers. In each of the four finite-support classes of Theorem 44.4, the region is $\mathcal C_{\mathrm{meas}}(b,\eta)$ when the profile reaches its limit, and otherwise it is
+
+$$
+\mathcal C_{\mathrm{supp}}(b,\eta)
+=\{(h,d,z)\in\mathscr S:h=0\ \text{or}\ (1-B)h<(2-B)\eta\}.
+\tag{44.30}
+$$
+
+Thus the unrestricted and finite-common-carrier radius thresholds are closed and attained. At a strict profile the finite-support threshold is excluded for $h>0$ and every larger cap is feasible. A zero-proposal row is always attained at radius zero.
+
+**Proof.** Equations (44.29) follow from the two minima in Theorem 44.2. For a profile reaching its limit, the finite-support construction in Theorem 44.4 attains the same boundary. For a strict profile with $h>0$, that theorem excludes equality at $R$ and its explicit approximants have radius below every $\eta>R$. This proves (44.30), including $\eta=0$.
+
+At $B=0$ the profile is identically zero, all the design infima are $h/2$, and all are attained. A constant profile $b\equiv c<1$ reduces to Section 43: (44.7) is the single proposal tape $a_1$, the unrestricted minimum is $(1-c)h/(2-c)$ with finite source and reference supports, and the finite common-carrier minimum remains $h/2$. These are reused constant-budget cases, not additional constant-budget results.
+
+At $B=1$ the unrestricted minimum is zero for every simplex row, attained by (44.7)--(44.10) with one common infinitely supported proposal law whenever $h>0$. Every pointwise budget is still below one. Each of the four finite-support classes then has infimum zero, but at cap zero only rows with $h=0$ are feasible; at every positive cap every row is feasible. The finite common-carrier minimum stays $h/2$. Proposition 38.4 already establishes the possibility of sure finite output with pointwise budgets approaching one; the construction here adapts the common proposal tail to the prescribed profile and to the specified anchor row.
+
+For $h>0$ and $B>0$, the finite-common-carrier separation from the unrestricted minimum is
+
+$$
+\frac h2-R=\frac{Bh}{2(2-B)}>0.
+\tag{44.31}
+$$
+
+The split $d+z=1-h$ does not affect any radius formula or support classification. The constructions explicitly supply both literal divergence and finite nonproposal tapes, so they include $d=0$, $z=0$ and $(h,d,z)=(1,0,0)$. No conditional ratio is assigned when $h_y=0$.
+
+The positive tail statement (44.14) concerns the complement of a joint length, prime-menu and output cutoff. It implies neither an unbounded execution time nor a lower bound on query complexity. Indeed in the immediate-output attainer (44.7)--(44.10) every proposal is immediate and uses no prime query; for a strict profile its proposal tail is entirely in the unbounded integer output parameter. Divergent mass, when present, is a separate outcome and is not a long finite proposal. The real-output necessity still allows arbitrary finite real numbers, not only the integer proposals chosen for sufficiency.
+
+The source-specific profile attainer, saturation/support obstruction, fixed-family gap and limit-one counterexample are ordinary `repo-derived` deductions under (44.1)--(44.3). The reference-envelope and finite-color mechanisms are reused from Sections 42--43; the finite-record transport and actual matching-source selection are reused from Sections 35--40. The arithmetic input is the unchanged every-pattern theorem 35.2 and labeled source (36.1); its entry-rank interface is the identity (363.13) in [FIBONACCI_ATOMIC_RELATION_GENERATION](FIBONACCI_ATOMIC_RELATION_GENERATION.md). No exact realization of all positive integer target values is required. The standard TV normalization, triangle inequality and finite-space sum/dual formulas are those of Levin and Peres, with contributions by Wilmer, *Markov Chains and Mixing Times*, second edition, [Proposition 4.2, Remark 4.4 and Proposition 4.5, printed pp. 48--49](https://pages.uoregon.edu/dlevin/MARKOV/mcmt2e.pdf). The arbitrary-measurable proofs use the event definition directly, and the explicit countable transports compute TV by their equal positive and negative masses. These standard ingredients are not new general TV claims.
+
+All attainments and approximants specify probability laws on one common carrier and one common procedure on the full unchanged source. They supply no operation acquiring a source-dependent law from advice or prime responses, no effective exact sampler for arbitrary real probabilities, no magnitude promise or uniform execution horizon, and no physical, efficiency, literature-priority or Lean/kernel-verification claim. $\square$
+

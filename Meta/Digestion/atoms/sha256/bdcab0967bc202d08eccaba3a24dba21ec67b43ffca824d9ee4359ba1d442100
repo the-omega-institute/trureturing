@@ -1,0 +1,39 @@
+### A strict supremum paid by a common barrier
+
+Combining the strict bound on the original \(A\) with the two strict
+constant reserves gives
+\[
+ R=A-\Lambda(k)-m(k)
+ <-\frac16-\frac32\delta e^{-4}.
+\]
+The set \(\{K(t):t>0\}\) is nonempty (take \(t=1\)) and every member is
+bounded above by the same \(R\). Thus the conditional complete supremum
+satisfies
+\[
+ \boxed{\sup_{t>0}K(t)\le R
+ <-\frac16-\frac32\delta e^{-4}.}
+\]
+This is a genuine strict supremum estimate; pointwise strictness alone is
+not substituted for a uniform barrier.
+
+It strictly improves §447. The strict upper tangent \(\log2<1\) gives
+\(0<\delta<1/6\), and
+\((3/2)\delta e^{-4}>\delta e^{-6}\). Therefore
+\[
+ -\frac16-\frac32\delta e^{-4}
+ <-\delta(1+e^{-6}),
+\]
+recovering its advertised bound with strictly more reserve.
+
+This is a bound for the same original complete shoulder. The full Robin
+pairing and the remaining signed tail still require their own proofs; this
+section does not claim RH or an unproved bound for that tail.
+
+Provenance: §447 complete exponential-average construction; original
+\(A<1/2\) from PrimePrefixOriginalA; classical Euler-constant and exponential
+bounds from Mathlib; lower logarithmic tangent from Mathlib. The
+half-gamma substitution and stronger displayed reserve are the repo-derived
+simplification of that existing construction.
+
+This is a complete paper proof. It reports no new Lean acceptance.
+

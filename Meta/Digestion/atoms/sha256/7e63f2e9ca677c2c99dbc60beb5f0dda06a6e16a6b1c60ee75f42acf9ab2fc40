@@ -1,0 +1,25 @@
+### 65.1 Physical family and result
+
+Let m,n≥1. The logical input has disjoint orthonormal labels a_1,...,a_m and b_1,...,b_n; the logical output is a qubit. Fix input and output MC encodings J_in(T)=V_in T V_in*, V_in|x>=|xx>, and V_out|s>=|ss>. For Z∈C^(m×n), define E_Z by
+
+    E_Z(a_i a_k)=δ_ik 00,    E_Z(b_j b_l)=δ_jl 11,
+    E_Z(a_i b_j)=Z_ij 01,    E_Z(b_j a_i)=conj(Z_ij)10.
+
+Matrix units are denoted by their two labels. Define the compact convex set
+
+    S_(m,n)={W: Σ_j|W_ij|≤1 for every i,
+                  Σ_i|W_ij|≤1 for every j}.
+
+Then:
+
+1. E_Z is CPTP iff ||Z||op≤1.
+2. E_Z has an exact physical LOSR implementation on the whole MC code iff Z∈S_(m,n).
+3. For every CPTP E_Z, allowing arbitrary physical output populations, extra coherences and leakage,
+
+    inf_Φ ||Φ∘J_in−J_out∘E_Z||diamond
+       = min_(W∈S_(m,n)) ||Z−W||op.                      (1)
+
+Here Φ ranges over finite mixtures of product local CPTP maps C^(m+n)→C². The same physical channel acts on all inputs and reference extensions, and the diamond norm is unhalved. The minimum is attained by a finite common LOSR channel with at most mn+1 product branches. A single product branch need not suffice; an explicit example below has minimum branch count two.
+
+For n=1, S_(m,1) is the complex unit ℓ₁ ball and the operator norm is the vector ℓ₂ norm, recovering §64. For general m,n, (1) is an exact finite convex optimization, not a claimed elementary closed formula.
+

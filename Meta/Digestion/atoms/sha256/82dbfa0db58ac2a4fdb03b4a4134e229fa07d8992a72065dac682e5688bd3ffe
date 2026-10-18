@@ -1,0 +1,133 @@
+**Proposition 29.1 (same-law original interpretation of the new bounds).**
+Under Assumption 23.1, the endpoint comparison of Theorem 27.1 is a
+legal comparison in the original complete stopped-cq problem at its
+own fixed budget and request. It preserves the complete live Gram,
+physical failure covariance and achieved coefficient contrast $K$.
+Its increase in actual acquisition-record height is HALF its increase
+in $J_t$. Consequently every original full-height optimizer at a
+feasible weak request has the coefficient-mass property (FC.111);
+under the additional attained-face premises it also obeys
+Proposition 28.2 and the exclusions of Theorem 28.3. These assertions
+use the necessity map for each existing actual label and the finite
+constructor for the comparison law, with their inherited scopes.
+
+Proof. Put $z=u/\sqrt\alpha$, $w=v/\sqrt\beta$, and
+$h=(1,z,w)^T$. The first five moments give the complete live Gram; the last three,
+together with the ellipse identity, give the failure moments:
+
+$$
+\int hh^T\,d\pi=I_3,
+\qquad
+\int b_x\,d\pi=\mu,\quad
+\int b_xz^2\,d\pi=V,\quad
+\int b_xzw\,d\pi=0,\quad
+\int b_xw^2\,d\pi=W.
+\tag{FC.120}
+$$
+
+The last equality follows from the ellipse identity and
+$\mu=\alpha V+\beta W$. Thus, for
+$n_h=(0,d_{\rm src}w/h_2,-b_{\rm src}z/h_1)^T$,
+
+$$
+\int b_x n_hn_h^T\,d\pi=M.
+\tag{FC.121}
+$$
+
+Its two nonzero diagonals are
+$d_{\rm src}^2W/h_2^2=m_1$ and
+$b_{\rm src}^2V/h_1^2=m_2$, and its cross entry is zero.
+Every one of these identities uses the same $\pi$; the linear and
+cross live moments and the failure cross moment are retained.
+The endpoint pushforward, and then its exact finite representation
+in Theorem 27.1, preserve these full data, $K$ and the improved
+height. Pointwise $0\le b_x=t\mathfrak c\xi\le t\mathfrak c$
+is precisely the physical capacity condition.
+
+Apply GC Proposition 10.1 to that finite law, omitting zero weights.
+For specificity, for its occupied low atom $(p,h,b_x)$ choose the
+row-space isometry $J_h:\mathbb C^2\to\operatorname{ran}K_h^\dagger$
+and use the existing matrices
+
+$$
+\begin{gathered}
+Q_h=J_h^\dagger\big(pK_h^\dagger K_h+
+                         pb_x n_hn_h^T\big)J_h\succ0,\\
+C_h=Q_h^{1/2}J_h^\dagger E^\dagger,\quad
+B_h=\sqrt p K_hJ_hQ_h^{-1/2},\quad
+F_h=Q_h^{-1/2}J_h^\dagger(pb_x n_hn_h^T)J_hQ_h^{-1/2},\\
+B_h^\dagger B_h+F_h=I_2,\qquad I_2-F_h\succ0.
+\end{gathered}
+\tag{FC.122}
+$$
+
+Rank two, including ellipse axes, and the capacity identity are
+supplied by that constructor. Its failure odds are
+$b_x/\mathfrak c(h)$, and the supported acquisition effect is
+$pK_h^\dagger K_h+pb_xn_hn_h^T$, not $pI$.
+This is why the coefficient masses in (FC.101) and (FC.111) cannot
+be interpreted as acquisition or failure probabilities.
+
+Keep its one common sufficiency density
+$g(a)=2/(1+a)^2$ and $G_{\rm time}(a)=2a/(1+a)$. On the entire
+low fibre the first-event rate and its budget obey
+
+$$
+\begin{gathered}
+R_h(a)=g(a)F_h[I_2-G_{\rm time}(a)F_h]^{-1},\\
+\int_0^1\|R_h(a)\|\,da
+ =\log(1+b_x/\mathfrak c(h))\le\log(1+t)=A,\qquad
+I_2-F_h\succeq(1+t)^{-1}I_2>0.
+\end{gathered}
+\tag{FC.123}
+$$
+
+The pulled-back failure and survivor effects sum to identity at each
+cut, and terminal survivor processing is isometric/TP. Chronological
+FIRST is the absolute time $6+a$; failure receives no later
+positive-carrier action. Necessity still allows every admitted
+original time law, rather than restricting it to this sufficiency
+density. One coherent high actual fibre contains the supported-zero
+ambient complement; its entire joint dimension is five, its rate is
+zero, and its supported signed height is the fixed $H_0>0$.
+Its terminal Kraus multiplicity remains hidden, not extra readable
+acquisition labels.
+
+The preserved complete Gram and $M$ give the exact full-complex live
+CP map and each of the five separate Borel failure CP maps of
+(GC.53), including both zero-target components. Tensoring the live
+Kraus operators with a passive identity and retaining (GC.54) preserves
+all passive-reference conditional operators. Thus all twelve complete
+stopped-cq HALF errors remain those of the original minimax, including
+live coherences and all original sectors. The $5$ and $27$ errors
+equal $E_*$ and the $16$ error is smaller; there is no assertion
+that all twelve scalar errors are equal. Sharp worst-history JOINT
+cost, the separate unaveraged equality and full-complex multi-Kraus
+necessity remain the original suppliers, not consequences of using
+real coefficient directions in the comparison construction.
+
+For the corresponding original acquisition record,
+
+$$
+\begin{gathered}
+2T_{\rm actual}=H_0+J_t(\pi),\qquad
+2\mathcal T(s,t)=H_0+R_t(r),\qquad s=\frac{s_0}{\sqrt\alpha}r,\\
+\mathcal T(s,t)-T_{\rm actual}
+=\frac{\Delta_\pi}{2}
+\ge\frac1{20000}\int_T\min(\xi,1-\xi)\,d\pi.
+\end{gathered}
+\tag{FC.124}
+$$
+
+If $K>r$, this law meets the requested contrast with slack; it is
+not treated as optimal or made artificially active. At the attained
+positive-multiplier requests of §28, Theorem 4.2 instead forces
+$K=r$. Absolute values are taken after live and failure mass have
+been combined inside each actual low label. The comparison can change
+those label effects and their number, while preserving the forgotten
+output maps and $K$; its purpose is the unrestricted height comparison.
+There is one specimen and an instrument fixed before the unknown
+history, separately for each chosen law and request. No additional
+copy, retry, postselection or accessible uncounted share is used.
+$\square$
+

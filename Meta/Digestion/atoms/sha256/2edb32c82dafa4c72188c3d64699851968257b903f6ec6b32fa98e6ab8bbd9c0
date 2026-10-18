@@ -1,0 +1,25 @@
+**Proposition 12.2 (finite interpreted and parameterized descriptions).**
+The nonregular $K$ still has its finite interpreted specification
+$K=\langle\alpha,\rho(K)\rangle$. It also has the finite parameterized
+constructor specification
+
+$$
+H(a,b)=\langle a,H(b,\langle b,a\rangle)\rangle,\qquad
+K=H(\alpha,\beta).
+\tag{NLC.43}
+$$
+
+Proof. For any finite trees $a,b$, let $A_0=a$, $A_1=b$ and
+$A_{j+2}=\langle A_{j+1},A_j\rangle$. Define $H(a,b)$ to be the
+right-infinite spine with entire left subtree $A_j$ at $R^jL$.
+This defines all finite-address replies and satisfies the displayed
+recursion. Conversely each right step in that recursion fixes the
+next pair of parameters and the next complete tooth, so it uniquely
+specifies that tree. For $(a,b)=(\alpha,\beta)$, the atomic recurrence
+gives $A_j=T_j$ for every $j$; hence its output is exactly the $K$
+of (NLC.39), including absent replies below teeth. Its infinitely many
+different actual parameter values distinguish this specification
+from a finite system of nullary constructor-graph states. The first
+specification has the existence and uniqueness proof in Theorem 11.3.
+$\square$
+

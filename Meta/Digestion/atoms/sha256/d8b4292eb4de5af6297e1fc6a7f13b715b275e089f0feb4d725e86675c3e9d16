@@ -1,0 +1,4 @@
+## 5. Remaining mathematical questions and attribution
+
+**Open Problem 5.1 (Primitive residual moment).** For every positive-weight primitive marked block joint inherited from (1.1) by (2.10), determine whether $\sum_nR_n^{Q_c}<\infty$. A sufficient stronger route is $\sum_n\mathbb E_{J_c}D_{\mathrm{KL}}(p_{c,\infty}\Vert p_{c,n})<\infty$; this is the unresolved hypothesis (3.2), not a proved universal theorem. If that stronger route fails, the exact slack (3.1) still leaves the visible moment to be determined. No fixed lawful finite producer with divergent visible moment is established here.
+

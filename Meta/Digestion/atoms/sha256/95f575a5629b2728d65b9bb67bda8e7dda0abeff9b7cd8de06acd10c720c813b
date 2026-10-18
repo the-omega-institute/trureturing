@@ -1,0 +1,20 @@
+**Corollary 13.6 (the resource cap cannot also preserve specified state).**
+The sourcewise update cap (CAR.29) cannot in general be strengthened to
+preserve a specified complete native state budget, even if one allows
+the replacement to decrease its number of reads. For $m=6$, a five-state
+table has exact worst costs $(6,10,84)$, but no five-state zero-update
+table with worst length at most $84$ recovers the same whole target on
+the same entire fiber.
+
+Proof. Here $N_m=2m+1\ge5$, so (CAR.29)'s capped actual update count
+is zero. Theorem 13.3 supplies the five-state table. At $m=6$, (CAR.66)
+requires $2+\lceil11/3\rceil=6$ states for every static replacement
+with the stated length bound, independently of its read count. Any
+sourcewise length-nonincreasing replacement would satisfy that bound,
+so cannot also have at most five states. The lower bound grows with
+$m$ whereas the dynamic table always has five states. The positive
+static comparison in Proposition 13.5 exhibits recovery with reduced
+update and address costs and additional control states. This does not
+contradict (CAR.29), which prices those three physical coordinates and
+makes no complete-state guarantee. $\square$
+

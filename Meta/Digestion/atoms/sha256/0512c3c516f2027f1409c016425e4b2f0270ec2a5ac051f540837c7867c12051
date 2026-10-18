@@ -1,0 +1,84 @@
+**Theorem 15.1 (collective restriction with propagation correction).**
+One has
+
+$$
+\begin{aligned}
+\sum_{B\in\mathcal L_*}(D_B-E_B)
+&\le\sum_{B\in\mathcal L_*}(D_B-P_B-\mu_B),\\
+m-G&\ge R-\sum_{B\in\mathcal L_*}
+ \bigl(D_B-(\beta_B-1)-\Delta_B-\mu_B\bigr).
+\end{aligned}
+\tag{CL.58}
+$$
+
+Thus $m<G$ requires
+
+$$
+\sum_{B\in\mathcal L_*}
+ \bigl(D_B-(\beta_B-1)-\Delta_B-\mu_B\bigr)>R.
+\tag{CL.59}
+$$
+
+Proof. Sum (CL.50) over the disjoint late-long pools. Within each
+pool (CL.49) has already made every selected adjacent depth set
+disjoint, and the remaining depths supply their original $p_d$ once.
+Localization in Lemma 2.2 separates different pools and cuts. The exact
+identity remains
+$m-G=R-\sum_{B\in\mathcal L_*}(D_B-E_B)$, which gives (CL.58).
+A strict saving makes that exact deficit exceed $R$, proving (CL.59).
+Duplicate cell incidences stay in $D_B$. A state live on one input
+and certified on another stays in its live pool; it is not assigned
+to $u$. No differently restricted graph or independently optimized
+residual resource is combined with this one. $\square$
+
+For the exact remaining obligation put
+
+$$
+Z_B^{\rm rem}=E_B-P_B-\mu_B\ge0.
+$$
+
+Then the original comparison $m\ge G$ is exactly equivalent to
+
+$$
+\sum_{B\in\mathcal L_*}
+ \bigl(D_B-(\beta_B-1)-\Delta_B-\mu_B-Z_B^{\rm rem}\bigr)\le R.
+\tag{CL.60}
+$$
+
+Indeed $P_B+\mu_B+Z_B^{\rm rem}=E_B$, so the left side is the
+unchanged exact sum $\sum_{B\in\mathcal L_*}(D_B-E_B)$.
+This equivalence is bookkeeping, not a separate compensation proof.
+An empty $\mathcal L_*$ is already covered by the credited signs
+of Section 7.
+
+For a correct original full-fiber native preparer at both caps
+$n+1,W+3$, use its particular conditional Boolean projection in
+(CL.37). Here $r\ge0$ is the original additional-latch parameter
+of Section 9. That projection obeys both Boolean caps and
+$m\le H_P-4-r$, so (CL.58) gives
+
+$$
+H_P\ge G+4+r+R-\sum_{B\in\mathcal L_*}
+ \bigl(D_B-(\beta_B-1)-\Delta_B-\mu_B\bigr).
+\tag{CL.61}
+$$
+
+All right-hand data belong to that projection. This only applies the
+displayed conditional full-fiber correspondence; it supplies no new
+source or service bridge. The source remains the entire unbounded
+fiber (CL.35), with its original homomorphism, complete current row,
+eleven profiles, original positions and fixed pointwise code (CL.36).
+Preparation still returns the literal original latch and enters the
+complete original $e_0$ or $e_1$ on the same source. The four original
+replies and separately installed edges (CL.39), two paid profile states
+and all mandated latches keep their original meanings and charges.
+The independently priced eight-state reader still returns the whole
+predecessor row, including exterior, occurrences, canonical equality
+partition, repetitions, disequalities and strict-prefix guards, with
+at most two fresh calls and six letters. Every installed unused state
+and every actual repeated or certified visit remains paid. Binding,
+authentication, access, same-version data, export, isolation, code-only
+handoff and stationary service remain the separate source and service
+assumptions in Section 9. No acquisition, free history, clock, counter,
+selector, address computation or physical resource conclusion follows.
+

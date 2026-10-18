@@ -1,0 +1,34 @@
+## 3. A joint response envelope on the descriptor analysis path
+
+Define the supplied complete events and constants
+
+$$
+E_p=\{w_{0,1},w_{1,1},w_{2,1}\},\qquad
+E_\beta=\{\beta,\alpha w_{0,1}\},
+$$
+
+$$
+C=\frac{11758471}{22781250},\qquad
+H=\frac{5261}{6750},\qquad
+q_* = P_{p,b}(w_{3,1})=\frac{1944}{390625}.
+\tag{3.1}
+$$
+
+Here $C,H$ are the endpoint midpoint means. They are fixed by the original complete laws. For a general compatible pair put
+
+$$
+P=\int Q(E_p)\,d\nu_p,\quad
+T=\int W(E_\beta)\,d\nu_\beta,\quad
+q=\int Q(w_{3,1})\,d\nu_p,
+\quad S(c)=1+c+c^2,
+$$
+
+$$
+\begin{aligned}
+F(c,x)&=1+c-\frac52c(1+c)
+ \left(\frac{19}{15}-c-\frac{x}{S(c)}\right),\\
+G(c,x)&=\frac{xc^3}{S(c)}.
+\end{aligned}
+\tag{3.2}
+$$
+

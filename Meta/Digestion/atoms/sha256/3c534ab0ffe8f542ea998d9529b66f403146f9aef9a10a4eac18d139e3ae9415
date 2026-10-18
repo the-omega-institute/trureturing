@@ -1,0 +1,23 @@
+**Lemma 4.2 (Normalization and the actual full head).**
+The law is nonnegative and normalized, with one schedule budget per
+row. It is precisely the credited DEV XVIII 337–339 construction at
+the actual full head, with zero head transfer.
+
+Proof. Each terminal vector has mass $m$, and every entry is
+nonnegative for $0\le\kappa\le\tau/253$. In particular
+$\tau-216\kappa\ge37\tau/253>0$.
+The schedule-mass coefficients of $\tau$ total $8+6+2+2+5+1=24$;
+those of $\kappa$ total
+$-85-4+26+42-15-40+84-87+79=0$. Thus the core mass is $24\tau$
+and the anchor completes mass one. Summing $f(r)v(s)z(t)/m^2$
+over all three labels gives $m$; summing over two gives the remaining
+terminal vector. Counterfactual cell masses are each $m$ and their
+schedule mass is counted once.
+
+The supplied sufficient head interval is
+$a_2\le a_1\le1-7\tau-29\kappa$. Its upper endpoint exceeds the
+actual $a_1=a_2=1-11\tau$ by
+$4\tau-29\kappa\ge(4-29/253)\tau>0$. The optional transfer size
+$a_1-a_2$ is zero. Thus no head is lowered or substituted.
+$\square$
+

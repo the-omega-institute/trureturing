@@ -1,0 +1,40 @@
+**Proposition 5.1 (range feasibility does not supply the mass cap).**
+The actual six-state set
+
+$$
+P_0=\{A,B\}\cup
+\{\langle x,y\rangle:x,y\in\{A,B\}\}\subset S_3
+\tag{NCE.39}
+$$
+
+is range-feasible, has $w(P_0)=204>169$, and is locally insufficient
+for the native one-Read interface.
+
+Proof. In the order $\varepsilon,L,R,LL,LR,RL,RR$, the target
+range sizes are respectively
+
+$$
+(3,4,4,3,3,4,4).
+\tag{NCE.40}
+$$
+
+The root factors are $(2,1),(1,0),(0,0)$. At $L$ the root leaves
+give $(3,0),(2,0)$ and the branches give $(2,1),(1,0)$; at $R$
+they give $(4,1),(3,1)$ and $(2,1),(1,0)$. At $LL$ the union
+is $\{(4,0),(3,0),(2,0)\}$, and at $LR$ it is
+$\{(5,1),(4,1),(3,1)\}$. At $RL$ it is
+$\{(5,0),(4,0),(3,0),(2,0)\}$, and at $RR$ it is
+$\{(6,1),(5,1),(4,1),(3,1)\}$. These are obtained by the
+actual formula (NCE.5), so establish every range assertion.
+
+Its weight is $88+52+4\cdot16=204$. The target $L$ differs
+on $\langle A,A\rangle$ and $\langle B,A\rangle$, which
+the root experiment merges. Every nonempty experiment merges
+the two root leaves, whose $L$ factors differ. Thus no own
+experiment determines $L$, and a constant experiment cannot do
+so. In particular the larger range-feasible class cannot be
+bounded by simply multiplying projection masses at cap $169$.
+Theorem 2.2 uses the additional joint determination relation to
+charge the selected target's entropy.
+$\square$
+

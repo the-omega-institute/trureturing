@@ -1,0 +1,30 @@
+**Assumption 1.3 (complete preparation and late-reader contract).** Fix
+one deterministic effective pair $A$. Its preparation starts from
+public $D$ and common source-independent installed data, before any
+target is given. Source information enters only through paid Reads. It
+terminates on every $t\in\mathcal F_D$ and exports $E_A(t)$. Every
+accessible surviving source distinction belongs to this complete finite
+name: control, selectors, buffers, lengths, allocation, handles,
+counters and accessible timing. Other accessible fields factor through
+this name and public inputs. Handoff, isolation, lawful entry, source
+continuity and authentication are explicit separately paid services;
+inaccessible preparation material is not a reader input.
+
+After export an arbitrary public source-independent
+$p\in\mathcal P_D$ arrives. Using only the complete name and public
+inputs, the reader selects zero Reads or one arbitrary original-root
+Read, before its reply and before any authentic count. Its final
+predictor satisfies
+
+$$
+\operatorname{Dec}(Z,D,p,k)=r_{\rho^kt}(p)
+\quad\text{for every }t\in\mathcal F_D,
+\ p\in\mathcal P_D,\ k\ge0,
+\tag{NPH.2}
+$$
+
+with no further Read. All competitors and variable shapes in
+$\mathcal F_D$ remain in scope, including arbitrary correlated export
+fibers. This is [PPF, Assumption 1.3][PPF], not an additional task
+promise.
+

@@ -1,0 +1,12 @@
+**Corollary 95.2.** Under the hypotheses of Theorem 95.1, suppose exactly one prime dividing D is 3 mod 4. Form the graph on the primes of D whose edges are the pairs with Legendre symbol -1. If this graph is a tree, there is no admissible repeated kernel. The same conclusion holds when D has three prime factors and all three mutual symbols are -1.
+
+**Proof.** Quadratic reciprocity makes A symmetric. If the graph is a tree, take a leaf i with neighbor j. The i-th equation of Av=0 is v_i+v_j=0. Delete the leaf, substitute v_i=v_j in the neighbor equation, and obtain the Laplacian equations for the smaller tree. Induction proves that every coordinate is equal. Thus ker A consists only of constant vectors, and Theorem 95.1 excludes repetition.
+
+In the three-prime all-nonresidue case, A has zero diagonal and all off-diagonal entries one. Its kernel is the span of (1,1,1), so Theorem 95.1 again applies. ∎
+
+The latter character pattern can be stated with residue types (1,1,19) modulo 24 and 5-splitting; no assertion that an actual original block realizes it is needed for the conditional support criterion.
+
+For two primes the criterion reduces to the nonresidue case already treated in section 78. For three or more primes it applies to a support configuration not covered by that two-prime statement. Sections 83 and 84 evaluate a residue invariant after a directed singleton or composite cut is available. In the no-proper-cut case, every proper-cut test of section 84 is unavailable. A singleton satisfying the directed condition of section 83 would give a proper admissible cut: multiply reciprocity over the other primes to recover the other cut condition, since sum d_i=1 makes d_i sum_{j!=i}d_j=0. Hence no such singleton exists either when h>1. The new necessary condition requires a proper cut to exist before those higher residue tests can be applied. It does not assert that passing any or all cut tests produces a repetition.
+
+The Selmer matrix method is classical. Its application here is the original-orbit repetition obstruction obtained from the specialized reduction and Corollary 94.2. The existence of a proper admissible cut is not shown here to imply repetition or additional rational rank. No numerical original support realizing the graph patterns or infinitude of such original blocks is asserted. Repetition on supports with dim ker A>=2 remains open here, and this does not give a universal WSS exclusion.
+

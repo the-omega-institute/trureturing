@@ -1,0 +1,8 @@
+**Definition 3.1 (Replica datum and replica determinant).** A replica datum is a finite nonempty set $R$ with $m=|R|$, permutations $g_1,\dots,g_{\mathtt q}$ of $R$ and a weight vector $x$. Its twist average is $Q=\sum_kx_kM_{g_k}$, its Gram matrix is $G=Q^\top Q$, and its replica determinant is, for real $\varepsilon$,
+
+$$
+\Delta(\varepsilon)=\det\Big(\tfrac{(1+\varepsilon)^2}{4}I-\tfrac{(1-\varepsilon)^2}{4}G\Big).
+$$
+
+Write $c(\varepsilon)=(1-\varepsilon)^2/4$. Stance: definition.
+

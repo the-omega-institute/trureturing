@@ -1,0 +1,32 @@
+**Theorem 6.1 (identity-only final level).** For every prefix in Theorem 5.1, including its conjugate branch, and every legal final multiplier matrix $W$,
+$$
+\operatorname{tr}(WA_3N)=\operatorname{tr}N
+\quad\Longleftrightarrow\quad W=I.
+\tag{6.1}
+$$
+Consequently the full zero-slope quotient $\mathsf B$ has rank three exactly when the final multiplier matrix is $I$, and is invertible for every other final multiplier.
+
+**Proof.** First use the positive normal form. By (5.9),
+$$
+v_3=A_3f=\binom{c+d}{d+(h+1)c},\qquad (v_3)_2>2c.
+$$
+If the level is preserved, $Wv_3$ is a positive primitive integer vector with $\ell Wv_3=t$. The lattice equation gives $Wv_3=v_3+jr_0$ for an integer $j$. The coordinate sum cannot decrease along a positive column under a legal word, so $j\ge0$.
+
+If $j=0$, a realizing word can contain no $M$. Its matrix is $I$ or $J$. The coordinates of $v_3$ differ by $hc>0$, so $J$ does not fix it. Hence $W=I$. If $j\ge1$, Lemma 4.2 forbids the transition because its input second coordinate exceeds $2c$. Conversely $W=I$ plainly preserves the level. This proves (6.1) on the positive branch.
+
+For completeness, conjugation by $J$ sends every endpoint to $JA_iJ$, every multiplier to $JW_iJ$, and $N$ to $JNJ$. It preserves the level because
+$$
+\operatorname{tr}\bigl((JWJ)(JA_3J)(JNJ)\bigr)
+=\operatorname{tr}(WA_3N).
+$$
+It preserves rank and has $JWJ=I$ exactly when $W=I$. Theorem 2.1 or the explicit concatenation by $J$ proves legality of every conjugate multiplier. Thus the negative branch has exactly the same assertion and final-word quantifier.
+
+The first three rows of $\mathsf B$ have kernel $\mathbb RN$. Its last row removes that line exactly when
+$$
+\operatorname{tr}(A_4N)-\operatorname{tr}N\ne0,
+\qquad A_4=WA_3.
+$$
+By (6.1), this happens precisely for $W\ne I$. The full rank is then four; for $W=I$ it is exactly three. ∎
+
+Identity in Theorem 6.1 means the multiplier matrix. A nonempty literal word such as $JJ$ also has matrix $I$. The theorem covers it with the identity branch. Inverses in the monoid proof, signed vectors in the classification, and conjugations in the correspondence are proof devices. They add no inverse, conjugation, reset, copy, alternative-history combination, or extra read to an actual acquisition.
+

@@ -1,0 +1,39 @@
+## 10. Sources
+
+The stopped-source links below refer to the unchanged scientific supplier baseline; [LOCAL] refers to the current public comparison pin.
+
+- **MOTION:** [Actual-return forecast motion](https://github.com/the-omega-institute/trureturing/blob/adcffe6be4e7cf9793d92a79bfbd5365557a7852/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ACTUAL_RETURN_FORECAST_MOTION.md), §§1–8.
+- **ST:** [Randomized stopped-tail minimax](https://github.com/the-omega-institute/trureturing/blob/adcffe6be4e7cf9793d92a79bfbd5365557a7852/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_RANDOMIZED_STOPPED_TAIL_MINIMAX.md), §§1–3.
+- **E1:** [Full E1 scope extension](https://github.com/the-omega-institute/trureturing/blob/adcffe6be4e7cf9793d92a79bfbd5365557a7852/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_FULL_E1_SCOPE_EXTENSION.md), §2.
+- **PH:** [Phase-coherent full-tail minimax](https://github.com/the-omega-institute/trureturing/blob/adcffe6be4e7cf9793d92a79bfbd5365557a7852/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_PHASE_COHERENT_FULL_TAIL_MINIMAX.md), §§2,14–20.
+- **FOUR:** [Mixed-phase defect attainment](https://github.com/the-omega-institute/trureturing/blob/adcffe6be4e7cf9793d92a79bfbd5365557a7852/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_MIXED_PHASE_DEFECT_ATTAINMENT.md), §§1–3.
+- **SWITCH:** [Configuration-law switch attainment](https://github.com/the-omega-institute/trureturing/blob/adcffe6be4e7cf9793d92a79bfbd5365557a7852/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_CONFIGURATION_LAW_SWITCH_ATTAINMENT.md), §§1–6.
+- **NATIVE:** [Native-mixture recurrence obstruction](https://github.com/the-omega-institute/trureturing/blob/adcffe6be4e7cf9793d92a79bfbd5365557a7852/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_MIXTURE_RECURRENCE_OBSTRUCTION.md), §§3–7.
+- **CLIP:** [Risk-controlled emission moment feasibility](https://github.com/the-omega-institute/trureturing/blob/adcffe6be4e7cf9793d92a79bfbd5365557a7852/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_RISK_CONTROLLED_EMISSION_MOMENT_FEASIBILITY.md), §§2–5.
+- **PAID:** [Effective paid-history certificates](https://github.com/the-omega-institute/trureturing/blob/adcffe6be4e7cf9793d92a79bfbd5365557a7852/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_PAID_HISTORY_CERTIFICATES.md), §§2,9–11.
+- **MIXSEP:** [Uniform mixture separation](https://github.com/the-omega-institute/trureturing/blob/adcffe6be4e7cf9793d92a79bfbd5365557a7852/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_UNIFORM_MIXTURE_SEPARATION.md), §§2–5.
+- **KB:** [KBonacci self-calibrating boundaries](https://github.com/the-omega-institute/trureturing/blob/adcffe6be4e7cf9793d92a79bfbd5365557a7852/docs/develop/theory/KBONACCI_SELF_CALIBRATING_BOUNDARIES.md), §§16–21.
+- **LOCAL:** [Local reconstruction and loop correction](https://github.com/the-omega-institute/trureturing/blob/4d48962cafb2e5cc7cab08fbf490acdcd654dce2/docs/develop/theory/AURIC_FIB_ATOM_LOCAL_RECONSTRUCTION_AND_LOOP_CORRECTION.md), complete §§1–6.
+- **CK:** Taolue Chen and Stefan Kiefer, [On the Total Variation Distance of Labelled Markov Chains](https://arxiv.org/html/1405.2852v1), Theorem 7 and Corollary 8.
+- **Z:** Yixin Zhao, [Exact Local Optimality Does Not Compose: The Complexity of Chronological Realization](https://arxiv.org/html/2609.19707v1), §2.
+- **AZ:** Aznagulov, [Thermodynamic Realizability of Hidden Markov Processes: Attainment, Observable Certificates, and the Price of Architecture](https://arxiv.org/html/2609.14623v1), Theorem A and §§4–5.
+- **TS:** Hamed Taghavian and Jens Sjölund, [Minimal positive Markov realizations](https://arxiv.org/html/2502.21102v3), §§III–V.
+- **CJ:** Wojciech Czaja, Philippe Jaming and Máté Matolcsi, [An efficient algorithm for positive realizations](https://arxiv.org/html/math/0612551v2), §§2–4.
+- **MW:** Alex Monràs and Andreas Winter, [Quantum learning of classical stochastic processes: The Completely-Positive Realization Problem](https://arxiv.org/html/1412.3634v1), §§2,4,7.
+- **BOS:** Tomer Berg, Or Ordentlich and Ofer Shayevitz, [Statistical Inference with Limited Memory: A Survey](https://arxiv.org/html/2312.15225v1), §§2.3,6.1,7.3; [Binary Hypothesis Testing with Deterministic Finite-Memory Decision Rules](https://arxiv.org/html/2005.07445v1), §§I–IV.
+
+[MOTION]: https://github.com/the-omega-institute/trureturing/blob/adcffe6be4e7cf9793d92a79bfbd5365557a7852/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ACTUAL_RETURN_FORECAST_MOTION.md
+[ST]: https://github.com/the-omega-institute/trureturing/blob/adcffe6be4e7cf9793d92a79bfbd5365557a7852/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_RANDOMIZED_STOPPED_TAIL_MINIMAX.md
+[E1]: https://github.com/the-omega-institute/trureturing/blob/adcffe6be4e7cf9793d92a79bfbd5365557a7852/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_FULL_E1_SCOPE_EXTENSION.md
+[PH]: https://github.com/the-omega-institute/trureturing/blob/adcffe6be4e7cf9793d92a79bfbd5365557a7852/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_PHASE_COHERENT_FULL_TAIL_MINIMAX.md
+[NATIVE]: https://github.com/the-omega-institute/trureturing/blob/adcffe6be4e7cf9793d92a79bfbd5365557a7852/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_MIXTURE_RECURRENCE_OBSTRUCTION.md
+[CLIP]: https://github.com/the-omega-institute/trureturing/blob/adcffe6be4e7cf9793d92a79bfbd5365557a7852/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_RISK_CONTROLLED_EMISSION_MOMENT_FEASIBILITY.md
+[PAID]: https://github.com/the-omega-institute/trureturing/blob/adcffe6be4e7cf9793d92a79bfbd5365557a7852/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_PAID_HISTORY_CERTIFICATES.md
+[MIXSEP]: https://github.com/the-omega-institute/trureturing/blob/adcffe6be4e7cf9793d92a79bfbd5365557a7852/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_UNIFORM_MIXTURE_SEPARATION.md
+[KB]: https://github.com/the-omega-institute/trureturing/blob/adcffe6be4e7cf9793d92a79bfbd5365557a7852/docs/develop/theory/KBONACCI_SELF_CALIBRATING_BOUNDARIES.md
+
+[FOUR]: https://github.com/the-omega-institute/trureturing/blob/adcffe6be4e7cf9793d92a79bfbd5365557a7852/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_MIXED_PHASE_DEFECT_ATTAINMENT.md
+[SWITCH]: https://github.com/the-omega-institute/trureturing/blob/adcffe6be4e7cf9793d92a79bfbd5365557a7852/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_CONFIGURATION_LAW_SWITCH_ATTAINMENT.md
+
+[LOCAL]: https://github.com/the-omega-institute/trureturing/blob/4d48962cafb2e5cc7cab08fbf490acdcd654dce2/docs/develop/theory/AURIC_FIB_ATOM_LOCAL_RECONSTRUCTION_AND_LOOP_CORRECTION.md
+

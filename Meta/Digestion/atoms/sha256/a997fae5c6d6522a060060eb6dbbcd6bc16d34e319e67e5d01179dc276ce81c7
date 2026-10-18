@@ -1,0 +1,27 @@
+**Lemma 3.3 (Full-word harmonic packing bound).** The marked law satisfies
+
+$$
+\Phi_n(S_n)\ge\frac{L(n-L+1)}T\,\Phi_L(\mu)
+\quad(n\ge L),\qquad
+d(S)\ge\frac{L\Phi_L(\mu)}T.
+\tag{3.5}
+$$
+
+Proof. First condition on a particular offset $A=a$. For any complete payload contained in positions $1,\ldots,n$, fix all outside visible coordinates in that word. Their distribution is independent of this payload. For an original edge $\{b,c\}$ in $\Gamma_L$, the two full-word endpoint masses are consequently $\rho_\omega\mu(b)$ and $\rho_\omega\mu(c)$, with the same outside probability $\rho_\omega$.
+
+Both concatenations are legal. At a payload boundary the neighboring coordinate inside the observation, if present, is its zero guard; if absent, the original observation has an open endpoint. Thus this pairing includes every coordinate of the payload, including either endpoint and every legal endpoint one. Summing over outside completions, homogeneity and $\sum_\omega\rho_\omega=1$ give exactly $\Phi_L(\mu)$ for its payload-coordinate edges. Complete payloads use disjoint coordinates, so these contributions do not count any edge twice. Every other original edge remains in the objective and has a nonnegative contribution.
+
+There are $L$ payload-start residues in a period of length $T$. Under the uniform offset, each integer position has probability $L/T$ of being a payload start. A length-$L$ payload is wholly contained precisely when its start is in $1,\ldots,n-L+1$. The expected number of complete payloads is therefore $L(n-L+1)/T$.
+
+Write $S_n^a$ for the offset-conditioned cylinder vector, extended by zero on all other vertices of $B_n$. Concavity from [Growth], Lemma 3.1, gives
+
+$$
+\Phi_n(S_n)
+=\Phi_n\left(\frac1T\sum_{a=0}^{T-1}S_n^a\right)
+\ge\frac1T\sum_{a=0}^{T-1}\Phi_n(S_n^a)
+\ge\frac{L(n-L+1)}T\Phi_L(\mu).
+\tag{3.6}
+$$
+
+The first expression is evaluated at the average vector; the subsequent inequalities average objective values. The existence of $d(S)$ follows from Lemma 3.2 and Proposition 2.5. Taking the limit proves the second assertion. Marker, guard, seam and observation-end edges have only been omitted from the lower-bound sum, never from $\Phi_n$. Their coordinates are all charged in the length $T$. $\square$
+

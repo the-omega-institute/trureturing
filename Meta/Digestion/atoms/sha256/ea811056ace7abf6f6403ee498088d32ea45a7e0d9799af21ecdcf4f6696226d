@@ -1,0 +1,21 @@
+**Definition 42.1 (the precise surrogate).** For the same actual channel, define
+
+$$
+ U_N:=\max_{\omega\in\mathsf D(E)}
+ \min\left\{
+ f(\tau,\omega)^2,\ f(\bar\tau,\omega)^2,\
+ 1-\sup_{q\in\mathsf D(\mathbb C^3)}
+ \operatorname{Tr}\bigl[(q\otimes\omega)\Pi_{\ker A_q}\bigr]
+ \right\}.
+\tag{R.205}
+$$
+
+The symbol $U_N$ differs from the sharp diamond benchmark $U(\beta)=1-\sqrt a$. Here $A_q$ is the actual filtered original-frame Choi state in (R.186), $q$ is complex and may be singular, and the maximum uses one common complex center. The support measurement and the two actual phase-input restrictions in (R.44) give
+
+$$
+ g_N^2\leq U_N.
+\tag{R.206}
+$$
+
+Indeed the binary measurement onto $\ker A_q$ and its complement compares distributions $(0,1)$ and $(c_q,1-c_q)$, with $c_q=\operatorname{Tr}[(q\otimes\omega)\Pi_{\ker A_q}]$. Thus $h(\omega)^2\leq1-c_q$ for every $q$, and both phase tests also bound this same $h(\omega)^2$. Taking the infimum of those upper bounds and then the common-center maximum proves (R.206). The exact formula (R.199) makes the functions in (R.205) continuous on the compact center domain for this family.
+

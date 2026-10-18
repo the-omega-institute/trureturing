@@ -1,0 +1,6 @@
+# FourCycle: the shared zero-curvature vector (paper-level closure)
+
+This note isolates the remaining existence step after
+`fourcycle_curvature_box`.  It uses one variable for each global edge; no
+independent local copies or quotient/collar construction are introduced.
+

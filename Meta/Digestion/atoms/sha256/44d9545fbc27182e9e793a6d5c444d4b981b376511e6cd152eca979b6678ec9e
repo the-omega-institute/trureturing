@@ -1,0 +1,85 @@
+**引理 4.1（同一配对的早期等读关系）。**
+
+暂取 $B\ne0$，定义
+
+$$
+\omega=B/v\ne0,\qquad \rho=\frac{Av}{BD}.
+\tag{4.1}
+$$
+
+故
+
+$$
+A=\omega\rho D,\quad B=\omega v,\quad
+k=-\frac{\omega h(\rho+4)}4,\quad
+w=-\frac{\omega E(\rho+2)}3.
+\tag{4.2}
+$$
+
+对成员 $i$，以下 $j$ 总表示另一个成员。因为 $v/t_i=t_j$、$D/(h-2t_i)=h-2t_j$，有 $r_i=\omega t_j,c_i=\omega\rho(h-2t_j)$。代入式 (3.7) 得完整伴随样本行
+
+$$
+\frac{H_i(0..7)}{\omega}=\left(
+\frac72[h(3\rho-4)-(6+8\rho)t_j],\
+6h(\rho-1)-(10+15\rho)t_j,\
+\frac5{12}[h(7\rho-4)-(8+16\rho)t_j],\
+\rho(h-2t_j),\ t_j,\
+-\frac{\rho+2}{3}(h-t_j),\
+-\frac{h(\rho+4)}4,\ 0\right).
+\tag{4.3}
+$$
+
+这是一整个多项式的样本，不是八个独立拟合。
+
+令
+
+$$
+\sigma=x_1+x_2,\quad \pi=x_1x_2,\quad
+z=\sigma-h+1,\quad c_0=h-1-\pi.
+$$
+
+在两个根上把式 (3.4) 用 $x_i^2=\sigma x_i-\pi$ 化简，得 $t_i=c_0+zx_i$。不同 $x,t$ 给 $z\ne0$。定义
+
+$$
+\lambda=1+1/z,\qquad\beta=-1-c_0/z.
+\tag{4.4}
+$$
+
+同源早期三个迹化为
+
+$$
+\ell=\lambda t+\beta,\qquad
+s=(2\lambda-1)t+2\beta,\qquad
+j_R=(\lambda-4)t+h+\beta+1.
+\tag{4.5}
+$$
+
+又 $z=x_j-y_i<x_j$，所以
+
+$$
+z<\min(x_1,x_2)<1.
+\tag{4.6}
+$$
+
+对任意常数 $L_*,M_*,\alpha_*,b_*$，直接展开给
+
+$$
+\frac{(L_*-M_*t_2)(\alpha_*t_1+b_*)-
+(L_*-M_*t_1)(\alpha_*t_2+b_*)}{t_1-t_2}
+=L_*\alpha_*+M_*b_*.
+\tag{4.7}
+$$
+
+用式 (4.3)、(4.5) 在时钟零、二、一依次应用此式，取消的只有非零 $\omega,t_1-t_2$ 和固定非零有理数。全部三个早期等读条件为
+
+$$
+\begin{aligned}
+h(3\rho-4)(2\lambda-1)+(16\rho+12)\beta&=0,\\
+h(7\rho-4)\lambda+(16\rho+8)\beta&=0,\\
+6h(\rho-1)(\lambda-4)+(10+15\rho)(h+\beta+1)&=0.
+\end{aligned}
+\tag{4.8}
+$$
+
+这些条件只先使两世界读数相等；第 8 节还将逐个可逆地施加绝对值 $0,24,48$。
+

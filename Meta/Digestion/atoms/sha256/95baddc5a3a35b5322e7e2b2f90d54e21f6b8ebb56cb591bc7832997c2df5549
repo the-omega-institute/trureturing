@@ -1,0 +1,79 @@
+**Proposition 311.1 (A diagnostic excluded from complete feasibility).**
+Set
+
+$$
+e_0=\frac{501}{2400},\qquad
+(a_1,\ldots,a_9)=\frac{(1300,1300,1300,1000,900,800,600,507,507)}{2400},
+\qquad a_n=e_0\,2^{-(n-10)}\quad(n\ge10).
+\tag{311.1}
+$$
+
+This entire sequence is positive, nonincreasing and vanishes; its
+active horizon at $e_0$ is nine and $a_{10}=e_0$ is a closed tie.
+Its finite profile belongs to the hull $H_9$ of 300.2, passes precisely
+the older named necessary families $Y_1,Y_2,C$, 304.6 and 305.2 at
+all embeddings and finite disjoint sets allowed there, and violates
+(310.2) by $1/300$. It has no complete feasible $N$ or $O$
+allocation of any finite mass at $e_0$. Every original competitor
+for this sequence has error at least $3007/14400$.
+
+**Proof.** Recall the full hull definition
+
+$$
+H_L=\left\{(b,e):1\ge b_1\ge\cdots\ge b_L\ge e\ge0,
+\ b_2=b_3,\quad
+0\le\sum_{n=3}^Lb_n-(L+1)e\le1-b_1\right\}.
+\tag{311.2}
+$$
+
+Here the hull excess is $151/600$ and its sum with $a_1$ is
+$119/150<1$. All the remaining hull conditions follow directly
+from (311.1). The exact maximal left-minus-right readings of the
+specified old families are
+
+| Named family | Maximum reading |
+| --- | ---: |
+| $Y_1$ in 299.1 | $-139/800$ |
+| $Y_2$ in 299.1 | $-1/60$ |
+| $C$ in 299.1 | $-57/800$ |
+| 304.6 | $-17/1200$ |
+| 305.2 | $-1/150$ |
+
+These are finite rational sums over the 21 ordered five-subsets
+and seven ordered six-subsets of $\{3,\ldots,9\}$. For the fourth
+row, for each five-subset maximize over finite disjoint $I$ by taking
+all omitted positive residuals, and use
+$\max\{\max_{k\in I}(a_k-e_0)_+,\frac12\sum_{k\in I}(a_k-e_0)_+\}-s_J$.
+This describes the arithmetic calculation completely.
+
+It also proves the comparisons for unbounded address choices, as
+follows. All tail residuals from 10 on are zero. Every old cut with
+nonnegative late coefficients weakens when a selected address moves
+later. In 304.6, removing one selected amplitude and replacing it
+by a smaller one with difference $\delta\ge0$ increases the total
+omitted positive residual by at most $\delta$ and increases its
+maximum individual residual by at most $\delta$. Hence the maximum
+of the individual residual and half-sum increases by at most
+$\delta$, whereas $s_J$ increases by at least $4\delta$.
+Successively moving the ordered selected addresses later cannot
+increase that family's reading. This proves the claimed whole
+comparison, including every finite $I$, rather than extrapolating
+from a bounded scan.
+
+For $J=(3,\ldots,9)$, the new reading is $1/300$.
+Equivalently $s_J=1/60$, while
+$4[(a_8-e_0)+(a_9-e_0)]=1/50$. Theorem 310.2 excludes a
+complete feasible allocation at every finite mass. Its original
+inequality gives
+
+$$
+e_a(A)\ge e_0+\frac{1/300}{48}
+          =e_0+\frac1{14400}=\frac{3007}{14400}.
+\tag{311.3}
+$$
+
+This is a strict refinement relative to the displayed older basis
+and $H_9$, not relative to every historical consequence. There is
+no feasible $N$ witness here, no original $N/O$ separation and no
+claim that (311.3) is attained. $\square$
+

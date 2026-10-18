@@ -1,0 +1,18 @@
+**定义 10.9（开环动作词的未来空间）。** 令 $\mathcal W$ 为独立边动作 $e^{-iuh_{AB}},e^{-ivh_{BC}}$ 的所有有限词，包括空词。终端测试为 $n_A,n_B,n_C$，并保留已知的归一化测试 $I$。定义实线性空间
+
+$$
+\mathcal O_3=\operatorname{span}_{\mathbb R}
+\{I,W^\dagger n_jW:j\in\{A,B,C\},\ W\in\mathcal W\}
+\subseteq\operatorname{Herm}(8).
+$$
+
+量子拉回是 [Output-resolved §15][C10-output] 的逐动作拉回方法在此菜单的具体应用：$\mathcal U_W(\rho)=W\rho W^\dagger$，迹的循环性给
+
+$$
+\operatorname{Tr}(\mathcal U_W(\rho)F)
+=\operatorname{Tr}(\rho\,\mathcal U_W^*(F)),
+\qquad\mathcal U_W^*(F)=W^\dagger FW.
+$$
+
+若按时间先 $U_1$ 后 $U_2$，则态动作是 $U_2U_1$，拉回是 $U_1^\dagger U_2^\dagger F U_2U_1$。这是实际矩阵与迹配对的对应，不从经典子核自动取得量子操作许可。
+

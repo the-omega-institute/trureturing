@@ -1,0 +1,115 @@
+**Theorem 5.2 (exact supports and successful installation ray).** On
+the entire original $\mathcal D_m$, the eventual supports of this
+graph, in the coordinates (NPS.18), are
+
+$$
+\begin{aligned}
+H_{h_1}(n,h;t)
+ &\ \Longleftrightarrow\
+ n\text{ is odd}\ \land\ n+2m\le2t+1,\\
+H_{h_0}(n,h;t)
+ &\ \Longleftrightarrow\
+ n\text{ is even}\ \lor\
+       \bigl(n\text{ is odd}\ \land\ n+2m>2t+1\bigr).
+\end{aligned}
+\tag{NPS.20}
+$$
+
+These are the pullbacks of (NPS.11) along the supplied source
+identification. In particular the graph halts on every source for
+every $t\ge1$. There exist shared complete halt rows making it
+successful if and only if
+
+$$
+t\ge2m.
+\tag{NPS.21}
+$$
+
+For every such $t$, extraction in Theorem 4.2 installs $Y_0$ at $h_0$
+and $Y_1$ at $h_1$. Writing $n=2j$ or $2j+1$ with $1\le j\le m$,
+the actual successful table has
+
+$$
+q(n,h;t)=t-m-j+1,\qquad
+a(n,h;t)=2(t-m-j).
+\tag{NPS.22}
+$$
+
+Thus, even with $m$ fixed, five complete states on this fixed infinite
+nonconstant target task admit successful installations of arbitrarily
+large action duration. This does not assert that the shortest successful
+table for the task has a large duration.
+
+Proof. Compute the exact supports through Theorem 3.2. At a visit to
+$r$ after $a$ actual updates, the first $L$ of (NPS.19) enters the
+original $T_n$ coordinate. The remaining suffix $LR^t$ has weight
+$1+2t$ and last letter $R$. The supplied all-epoch atomic reply formula
+[CAR (CAR.23)][CAR] therefore has residual
+
+$$
+n+N_m+a-(1+2t)=n+2m-2t+a.
+\tag{NPS.23}
+$$
+
+Negative residual means actual absence, zero gives $\alpha$, one
+gives $\beta$, and at least two gives branch. A return from $r$ to
+$r$ while absence holds follows the actual three-edge path
+$r\to v_1\to v_2\to r$ and contributes exactly two updates. In the
+fixed-absence graph, the $P$ relation to successive read visits thus
+has update progression $2z$, and $X$ cuts that path at each intervening
+unit update. The phase description retains an intermediate reply
+change even when control then lies at $v_2$; it cannot read the
+intermediate reply there. By (NPS.12), expanding these paths and guards
+is exactly the actual polling trace, with no source-dependent loop
+choice.
+
+Write $n=2j+e$, $e\in\{0,1\}$, and put $L=t-m-j$. At the $z$th
+read visit the residual is $e+2(z-L)$. If $L\ge0$, it is negative
+precisely at the visits $0,\ldots,L-1$; at visit $L$ it is $e$.
+The resulting finite phase-path witness ends at $h_e$, after $L$
+two-update cycles, at epoch $N_m+2L$. If $L<0$, the first residual is
+at least two and the first read goes directly to $h_0$ at epoch $N_m$.
+These cases exhaust all admitted sources and all $t\ge1$.
+Theorem 3.2 gives both inclusions in (NPS.20): each displayed finite
+path is a satisfying halting-support witness, and its exactness excludes
+any other halt of the deterministic run. No value of $h$ was fixed or
+discarded in this calculation. For odd $n$, the condition $L\ge0$ is
+equivalent to $n+2m\le2t+1$, giving exactly (NPS.20).
+
+Now apply (NPS.15), with these exact unbounded supports, to the original
+joint source and full-row predicates. Totality holds for every $t$.
+Every even $n$ reaches $h_0$ and has full row $Y_0$; every source
+reaching $h_1$ has full row $Y_1$. The shared-halt clause at $h_0$
+therefore holds precisely when no odd $n$ in $[2,2m+1]$ satisfies
+$n+2m>2t+1$. Since the largest admitted odd value is $2m+1$, this
+is precisely (NPS.21).
+
+For a concrete negative witness when $t<2m$, the two actual original
+sources with $(n,h)=(2,2m+2)$ and $(2m+1,2m+2)$ both reach $h_0$
+by (NPS.20), but their complete rows are $Y_0$ and $Y_1$. They
+falsify $\operatorname{Shared}_G$, whatever literal row is installed
+there. These two witnesses reject a design on the entire infinite
+fiber; they do not replace the fiber by a sample. For $t\ge2m$ both
+parity supports are nonempty, and the positive extraction of Theorem
+4.2 gives exactly their complete rows. It uses the same five states
+and no parity buffer.
+
+The parameter family is expressible in the descriptor language used by
+that theorem. Split off the finitely many short words relative to the
+CAR common depth $H$. For the remaining $p_t$, their length-$H$ prefix
+is fixed once $t$ is sufficiently large, their last letter is $R$, and
+their suffix length and weight are affine functions of $t$. Hence this
+restriction is a finite union of Presburger descriptor conditions with
+$t$ a common design variable. Fixing $t$, or leaving it existential,
+uses exactly the decision sentence of §4; there is no cutoff on $t$.
+The calculation above evaluates its entire successful parameter set as
+the ray (NPS.21), rather than reporting a finite solver sample.
+
+For $t\ge2m$ all $L=t-m-j$ are nonnegative. There are $L$ absent
+reads followed by one terminal read and $2L$ updates, proving
+(NPS.22). The maximum of $q+a$ on this same original fiber is
+$3(t-m-1)+1$, attained at $n=2$ or $3$ with any admitted $h$.
+It tends to infinity with $t$ at fixed $m$ and fixed five-state graph.
+All words and both complete rows retain their separate installation
+cost. $\square$
+

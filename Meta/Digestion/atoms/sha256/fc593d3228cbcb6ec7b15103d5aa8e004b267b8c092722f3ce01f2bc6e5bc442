@@ -1,0 +1,29 @@
+**Theorem 11.1 (mirrored endpoint criterion and cone).** Conjugation by $J$ gives an exact mirror of Theorem 9.1 and every result of Section 10, with the same final-word quantifiers. In particular every legal prefix
+$$
+I,\qquad J,\qquad U,\qquad A_3=\begin{pmatrix}a&b\\x&e\end{pmatrix}
+$$
+with $b\ge3$ and $e\ge2b$, followed by every legal final word including the empty word, has a finite actual-source collision.
+
+Explicitly the mirrored general criterion is
+$$
+\widetilde E=x+a-1>0,\qquad
+\widetilde F=e+x-1,\qquad \widetilde\lambda=\widetilde F/\widetilde E>1,
+$$
+$$
+\widetilde\Delta=\widetilde F(b-3)+\widetilde E(e-2b+2)>0.
+\tag{11.1}
+$$
+The mirrored unrestricted-interior-word family has fourth endpoint $L^m\widetilde V L U^c$, where $\widetilde V$ is any legal word matrix, $c\ge3$, $m\ge2$.
+
+**Proof.** Conjugation preserves $I,J$ and exchanges $L,U$. For $A_3=(\begin{smallmatrix}a&b\\x&e\end{smallmatrix})$ its conjugate is $(\begin{smallmatrix}e&x\\b&a\end{smallmatrix})$. Substitution into (9.1) gives exactly (11.1), while substitution into (10.1) gives $b\ge3,e\ge2b$. Each multiplier becomes $JW_iJ$, a legal finite word; an empty multiplier becomes $JJ=I$. Thus all actual recorded indices are unchanged. Conjugation of (10.2) gives the stated family because $JVJ$ ranges over all legal word matrices whenever $V$ does.
+
+For either branch, take the full collision $S'_j,k_j,D_j$ of the conjugated history and set
+$$
+S_j=JS'_jJ,\qquad f_j=Jf'_j,\qquad\ell_j=\ell'_jJ.
+$$
+All factors are positive and $f_j\ell_j=S_j$. The row remains fixed within each original run. At every original index,
+$$
+\operatorname{tr}(A_iS_j)=\operatorname{tr}((JA_iJ)S'_j),
+$$
+so the same slopes and whole drifts give identical original observations. Proposition 1.2 proves positivity during every original unread atom. Invertibility and singularity are preserved by the invertible source-coordinate conjugation, so the singular same-slope construction and nonsingular distinct-slope construction both transfer. Conjugation also preserves independence of endpoint matrices, giving the mirrored regular witness. No conjugation acquisition is added to the original path. ∎
+

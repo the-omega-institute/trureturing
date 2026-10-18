@@ -1,0 +1,30 @@
+**Definition 1.1 (source and events).** Let $\mathcal T$ be all finite
+nonempty ordered full trees on leaves $\alpha,\beta$. The writer's only
+operation on its one register is the homomorphic substitution
+
+$$
+\rho\alpha=\beta,\qquad
+\rho\beta=\langle\beta,\alpha\rangle,\qquad
+\rho\langle x,y\rangle=\langle\rho x,\rho y\rangle.
+\tag{AAR.1}
+$$
+
+An atomic $\operatorname{Read}(p)$ takes the entire materialized literal
+$p\in\{L,R\}^*$ and returns alpha, beta, branch or absent. The empty
+literal addresses the root. A strict continuation past a leaf is absent.
+The writer can update between arbitrary observer events, including
+individual local computation steps, operand construction and Return.
+There is no reset, source replacement, rerooting, free navigation,
+subtree-equality port, snapshot, clock, source-size input or observation
+of the scheduler. There is no protected entry.
+
+One deterministic finite program starts source-blind and uses only
+declared public input, its actually acquired replies and its own paid
+state. Its storage may grow finitely on each finite execution; finite
+program does not mean a fixed finite configuration space. Safety means
+correctness on every legal history on which it returns. Liveness means
+termination whenever the pending call has finitely many writer updates
+in total, with no known bound, and every pending observer operation
+eventually executes. A returned record refers to its specified actual
+validation Read, not the later Return event.
+

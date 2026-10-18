@@ -1,0 +1,54 @@
+**Proposition 10.3 (Seven-row lower realization).** This complete
+table attains $W$:
+
+| Row | Instruction | Zero successor | One successor |
+| --- | --- | --- | --- |
+| $R$ | $L(2)$ | $S$ | $P$ |
+| $S$ | $L(0)$ | $A_0$ | $B$ |
+| $A_0$ | $L(4)$ | $Z_H$ | $P$ |
+| $B$ | $L(1)$ | $Q$ | $P$ |
+| $Z_H$ | $\operatorname{Halt}(h_1(\sigma))$ | — | — |
+| $P$ | $\operatorname{Halt}(h_0(\sigma))$ | — | — |
+| $Q$ | $\operatorname{Halt}(h_0(1-\sigma))$ | — | — |
+
+| Record | Output | Source mass | Correct mass | Calls |
+| --- | --- | --- | --- | --- |
+| $1$ | $h_0(\sigma)$ | $\eta$ | $a\eta$ | $1$ |
+| $000$ | $h_1(\sigma)$ | $(1+c^3)/2$ | $a/2$ | $3$ |
+| $001$ | $h_0(\sigma)$ | $c^2\eta$ | $a^2c\eta$ | $3$ |
+| $010$ | $h_0(1-\sigma)$ | $c\eta/2$ | $a^2\eta/2$ | $3$ |
+| $011$ | $h_0(\sigma)$ | $c\eta/2$ | $a^2\eta/2$ | $3$ |
+
+Proof. In phase zero its root pair starts at $j+2$ and is
+exterior to target $j$. After zero it reads the disjoint target
+pair beginning at $j$. On $00$ the last pair beginning at $j+4$
+is disjoint from both. Their masses are the indicated products.
+On $01$ the last edge $\{j+1,j+2\}$ joins the first two
+pairs. For joining replies zero and one the heavier completions
+in order $j,j+1,j+2,j+3$ are
+
+$$
+(1-\sigma,\sigma,\sigma,\sigma),\qquad
+(\sigma,1-\sigma,\sigma,\sigma).
+\tag{10.5}
+$$
+
+Each has weight $a^3b$, complement $ab^3$, giving whole
+source mass $c\eta/2$ and correct mass $a^2\eta/2$.
+The displayed labels are the actual target spins. Phase one sees
+only separators, and the all-zero output succeeds there with mass
+$a/2$. The source masses normalize by
+$\eta(1+c+c^2)+(1+c^3)/2=1$; the correct sum is
+$a/2+a^2c\eta+a^2\eta+a\eta=Z+a\eta=W$.
+All formal paths halt, with
+
+$$
+\mathbb P(N=1)=\eta,\qquad \mathbb P(N=3)=1-\eta,
+\qquad\mathbb E N=3-2\eta.
+\tag{10.6}
+$$
+
+There are four Read and three Halt rows. Both target endpoints,
+both biases and the unchanged seed are checked as in Proposition
+10.2. $\square$
+

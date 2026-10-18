@@ -1,0 +1,42 @@
+**Open problem 8.2 (overlap-aware effective all-size pressure).** At a
+fixed $d$, construct a total computable predicate
+$V(d,\mu,C,\pi)$ on rational probabilities, rational $C>0$ and
+finite strings, with the following two properties:
+
+1. Acceptance proves (RRN.23) for every $n\ge1$ and every owned-seed
+   network of Definition 5.1 with potentials formed from $\mu$.
+2. For every rational $\epsilon>0$, some accepted pair satisfies
+   $-\log_2C>\sigma_d-\epsilon$.
+
+Theorem 6.1 makes these exactly soundness and optimizer-cofinality
+for the unrestricted native-template pressure. No seed topology,
+block correlation, zero weight or full potential may be omitted.
+Theorems 4.2 and 5.2 prove neither condition for a proposed new
+certificate family. The existing sound joint/scaffold/stability
+calculus of [JTC, Definition 9.1 and Theorem 9.2][JTC] remains
+available; its optimizer-cofinality is unproved. The single-residual
+theorem in [SRP, Theorem 1.2][SRP] requires a specified one-residual
+support. The present elimination has no such support hypothesis,
+but retains the multi-seed block potentials that prevent that
+restricted tensorization argument from directly applying.
+
+At fixed depth there are finitely many local tables and every seed
+has at most four values. Neither bounds the number of seeds or
+eliminates the shared scopes of the $\Phi_i$. Computing one finite
+network sum proves no all-size upper. Nor does enumeration of finite
+proofs prove that accepted endpoints reach the optimizer.
+
+[NPC, §8][NPC] distinguishes finite refutations, increasing computable
+lower approximants to $\beta_d$, and the unproved upper certification
+needed for this problem. A proof of the two properties above, or a
+uniform effective error in
+
+$$
+\sigma_d\ge\frac{\log_2K_d(n)}n-\eta_d(n),\qquad
+\eta_d(n)\longrightarrow0,
+\tag{RRN.36}
+$$
+
+would address the unchanged effective lower-convergence gap. No
+such verifier, modulus or noncomputability result is supplied here.
+

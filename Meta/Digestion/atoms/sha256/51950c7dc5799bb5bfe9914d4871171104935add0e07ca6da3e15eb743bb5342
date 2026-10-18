@@ -1,0 +1,17 @@
+**Lemma 6.2 (all-address separation locality).** On the pair
+$(t_{u_0},t_{u_i})$, a differing actual reply can occur only at an
+address in $\mathcal C_i$.
+
+Proof. A word shorter than three is at the common branch skeleton.
+Every other word has a unique decomposition $p v$ with $p\in P$.
+If its class is not $a$, the entire class value is unchanged. If it
+enters either $a$ occurrence, NBP's actual occurrence identity reduces
+the reply to the suffix $v$ in $B_0,B_i$. Their sole replacement is
+at $w_i$. Outside its descendant cone the finite trees agree at every
+constructor and every blocking leaf. At a proper prefix of $w_i$ both
+have the context's branch. Therefore only $v=w_i z$ can differ.
+This argument includes nonexistent addresses, leaf continuations,
+both leaf labels and every finite deep suffix. It asserts necessity
+of the cone, not that all queries in that cone are informative.
+$\square$
+

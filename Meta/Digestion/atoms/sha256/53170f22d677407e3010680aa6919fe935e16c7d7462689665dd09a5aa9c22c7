@@ -1,0 +1,21 @@
+### Theorem 4.1. Recorded clock effects for an arbitrary unitary
+
+Given a unitary U with fixed phase convention, a clock size Q, controlled U^a for a=0,...,Q-1, and an inverse Q-point Fourier transform, define
+
+$$B_y=\frac1Q\sum_{a=0}^{Q-1}e^{-2\pi iay/Q}U^a,\qquad E_y=B_y^\dagger B_y.$$
+
+On any target density matrix rho the clock probabilities are
+
+$$\Pr_\rho(y)=\operatorname{Tr}(\rho E_y),\qquad \sum_y E_y=I. \tag{4.1}$$
+
+If U=sum_lambda lambda Pi_lambda, then
+
+$$\Pr_\rho(y)=\sum_\lambda\operatorname{Tr}(\rho\Pi_\lambda)
+\left|\frac1Q\sum_{a=0}^{Q-1}\lambda^a e^{-2\pi iay/Q}\right|^2. \tag{4.2}$$
+
+Proof. Prepare the uniform clock, apply the controlled powers, and expand its inverse Fourier amplitudes. Summing B_y^dagger B_y uses sum_y exp(2pi i(a-b)y/Q)=Q delta_ab. Spectral projectors eliminate cross terms in B_y^dagger B_y. This proves both the probability formula and normalization. QED.
+
+An arbitrary coherent target thus gives a mixture of spectral weights in this readout. The clock alone does not recover coherences between eigenvectors, all internal states, or every recorded future of a gate system. For U with U^Q=I, the E_y are its exact character projectors. A permutation-cycle basis state has weight 1/r on every cycle eigenphase; there is no need to prepare a uniform superposition over an unknown cycle beforehand.
+
+The original legal-edge quadrature measurements, sequential instrument records and these clock effects are different observations. A joint protocol may use all of them, but sufficiency must be proved for that actual menu rather than inferred from the word "Fourier".
+

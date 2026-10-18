@@ -1,0 +1,64 @@
+**Theorem 7.1 (uniform rank-one exclusion).** Under Assumption 1.1,
+there are no data in Assumption 1.3 with
+
+$$
+t\ge\max(t_0,2000000000),\qquad
+R_-=-\rho ww^T,\quad \rho>0,\quad\|w\|=1.
+\tag{RB.39}
+$$
+
+The quantifiers cover every finite positive multiplier, every finite
+entire-cylinder feasible dual and every finite common law jointly
+attaining the same $C_t(\lambda)$, throughout that finite range.
+
+Proof. Suppose such data exist. This range meets the small-mass,
+multiplier and denominator-absorption thresholds simultaneously.
+Propositions 4.1, 5.1 and 6.1 give
+
+$$
+\begin{aligned}
+M_P
+&<5+\frac{25}{2}(20000)
+       +\frac{150(64000000)}{2000000000}\\
+&=\frac{1250049}{5}=250009.8<250010.
+\end{aligned}
+\tag{RB.40}
+$$
+
+Now take the exact unit direction $x_\dagger=(24/25,7/25)$.
+FC11.1 applies to its positive first coordinate, so
+$\ell(x_\dagger)>0$. Its failure height, using both bounds in
+(RB.5), satisfies
+
+$$
+\begin{aligned}
+f(x_\dagger)
+&=\frac{336e-49d_*}{625}\\
+&>\frac{(3/200)168-(11/500)49}{625}
+=\frac{721}{312500}>\frac1{500}.
+\end{aligned}
+\tag{RB.41}
+$$
+
+At this direction the positive-report, positive-height saturated
+signed test is globally nonnegative, whether or not the direction
+is occupied in any primal law. Substituting (RB.6) in that test
+gives exactly
+
+$$
+\begin{aligned}
+P(x_\dagger)\ge{}&
+\ell(x_\dagger)+\lambda(24/25)
++\rho c(x_\dagger)(w\cdot x_\dagger)^2
++2t c(x_\dagger)f(x_\dagger)\\
+>{}&\frac{t}{6250}\ge320000.
+\end{aligned}
+\tag{RB.42}
+$$
+
+Here $c>1/25$, $f>1/500$, $\lambda>0$, and the squared term is
+nonnegative for both orientations of $w$. Since
+$P(x_\dagger)\le M_P$, (RB.42) contradicts (RB.40).
+No occupied, unused, reverse, negative or paired group was removed
+to obtain either bound. $\square$
+

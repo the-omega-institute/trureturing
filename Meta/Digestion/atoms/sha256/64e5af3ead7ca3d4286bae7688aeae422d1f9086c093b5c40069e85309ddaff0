@@ -1,0 +1,18 @@
+**Theorem 2.4 (finite-profile feasibility and synthesis).** If
+$\Xi_b(\mathbf c,\mathbf f)$ holds, then for every $M$ the compiler extracts
+one $\mathbf w$ with all $w_j\ge M$ and one finite $\mathbf z$ satisfying the
+entire conjunction (FNS.9). The source
+$U_b(\mathbf c,\mathbf w,\mathbf f,\mathbf z)$ is a finite native witness. If
+$\Xi_b(\mathbf c,\mathbf f)$ fails, some finite $M$ excludes every such source
+with that fixed $(\mathbf c,\mathbf f)$.
+
+**Proof.** Presburger witness extraction applied to (FNS.15) supplies the
+single simultaneous rank tuple. The URR section (FNS.13) supplies one finite
+residual tuple satisfying all whole disequalities together; evaluation of
+(FNS.8) preserves every shared occurrence. For an exact acquired chart, its
+source correspondence additionally preserves every original signed guard.
+The converse is projection
+of any finite source witness. Negating (FNS.11) gives the finite bound in the
+second statement. No uniform source-size, source-depth or read-cost bound
+follows. $\square$
+

@@ -1,0 +1,39 @@
+**例 24.2（两个正则碰撞的全部八读）。** A zero-drift pair from (23.5) is
+
+$$
+\begin{gathered}
+P_1=\begin{pmatrix}1/8&1/4\\7/16&7/8\end{pmatrix},\qquad
+P_2=\begin{pmatrix}2/11&9/11\\2/11&9/11\end{pmatrix},\\
+h(t)=\frac{24}{11}t(29-9t),\qquad
+g_1=\frac45h,\quad g_2=\frac{11}{20}h,\quad d_1=d_2=0.
+\end{gathered}                                                     \tag{24.4}
+$$
+
+The two positive trace-one sources have determinant zero. Their $\ell$ values are $5/4,20/11$, with common $q=11/20$, $\rho=13/20$, $a=1/10$. Their full JMJJJJJ arrays are both
+
+$$
+(0,24,48,468/55,-672/11,-1248/11,-3600/11,-18564/55).
+                                                                  \tag{24.5}
+$$
+
+Here $D_E=9984/11\ne0$. On the same clock-six prefix, final $M$ instead reads $-44268/55$ on both, by (24.2).
+
+A drift-$24$ pair from (23.11) is
+
+$$
+\begin{gathered}
+P_+=\begin{pmatrix}7/10&1/5\\21/20&3/10\end{pmatrix},\qquad
+P_-=\begin{pmatrix}1/2&1/5\\5/4&1/2\end{pmatrix},\\
+g(t)=2(t-1)(12-t),\qquad d=24.
+\end{gathered}                                                     \tag{24.6}
+$$
+
+Both sources are positive rank-one trace-one, with common $\ell=6/5$, $T=39/20$, $\rho=13/8$ and roots $r_+=7/10,r_-=1/2$ of (23.12). Their full JMJJJJJ arrays are both
+
+$$
+(0,24,48,471/5,408/5,666/5,96,141).
+                                                                  \tag{24.7}
+$$
+
+Here $D_E=-384/5\ne0$. Actual final $M$ at the common clock-six prefix reads $171,183$, respectively. Their difference is $-12=-60(1/5)$, as (24.3) predicts. Each example uses one fixed source, one entire quadratic gain and one drift through every ancestor and descendant. A collision of this prescribed word is not a certificate of $L_4$ at $H_z$.
+

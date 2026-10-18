@@ -1,0 +1,28 @@
+**Convention 52.1 (credit and hypotheses).** CG supplies the isolated
+source root, conditional channel, normalization, sharp worst-history
+cost and original minimax certificate. JR §§41--49 supplies the original
+height-record formulation, supported equality consequences, failure
+spectral readout, labelled-time identities and the strong-regime endpoint
+instrument. CA supplies the real exposed/null-decomposition mechanism,
+rank compression and finite realization facts. IR supplies the compatible
+finite CP-map and reference/Borel-measure identities. These mechanisms are
+reused with the frame substitutions (JR.107) and (JR.115); no generic
+S-lemma, flat-roof theorem or whole-channel uniqueness claim is counted as
+new mathematics here.
+
+The equality S-lemma of Xia--Wang--Sheu supports only the relation between
+an equality quadratic constraint and a scalar PSD certificate when its
+sign-changing hypothesis holds; (JR.103)--(JR.106) provide the concrete
+certificate here. Uhlmann's common flat decomposition for affine
+functionals is an antecedent for convex decompositions, not a proof of
+this real-null height-TV optimum. Leppäjärvi--Sedlák and
+Muñoz-Moller--Leppäjärvi--Heinosaari supply finite compatibility and
+conditional-measure mechanisms within their stated hypotheses. Sekatski's
+rank/image compression is used from subsection II.1, with its stated
+finite-dimensional scope; it supplies no original state-dependent
+acquisition-cost theorem. The latest nonreal-input plateau source has a
+selected-input resource objective and a different exact-effect model; its
+values are not transferred to (JR.84)--(JR.126). Calibration XXIV's
+proper-restriction obstruction supplies no quantum CP or resource
+correspondence and is not used here.
+

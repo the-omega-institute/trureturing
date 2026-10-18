@@ -1,0 +1,37 @@
+**Corollary 103.2 (a necessary actual energy scale for no mass loss).**
+For any prescribed sequence $s_n\downarrow0$ and any actual normalized
+complex ground-state choices on $g_n=\chi_cs_n^3$, strong convergence
+to the critical phase orbit implies
+
+$$
+\operatorname{dist}_{L^2}(F_{s_n},\mathcal O_c)\longrightarrow0
+\quad\Longrightarrow\quad
+r_{s_n}=\frac{-s_n^2E_{s_n^2}(\chi_cs_n^3)}{s_n^8}
+           \longrightarrow\infty.
+\tag{103.7}
+$$
+
+Proof. If the positive numbers $r_{s_n}$ did not tend to infinity,
+there would be a finite $B>0$ and a subsequence with $r_{s_n}\le B$.
+Theorem 103.1 would give the strictly positive lower bound (103.3)
+on that subsequence, a contradiction. This argument does not assume
+that $m_{s_n}\to0$ on the whole original sequence; that smallness
+is forced on the bounded-$r$ subsequence where it is needed.
+
+The conclusions are necessary restrictions on actual eigenstates,
+not sufficiency of $r_s\to\infty$. Proposition 100.1 supplies only
+$r_s\ge c\chi_c^2>0$ eventually; its trial upper bound on the negative
+energy is a lower bound on $r_s$, and cannot provide $r_s\le B$.
+Neither an actual bounded-$r_s$ sequence nor $r_s\to\infty$ is
+established here for the fixed original data. Thus (103.7) does not
+decide whether the actual exact-critical ground states converge to
+$\mathcal O_c$. The exact energy coefficient, a matching native
+energy-scale bound, a sufficient no-loss estimate, and the centered
+crossover remain unresolved. The finite-native resolvent used in
+(102.7) is distinct from the fixed-domain inverse in Theorem 87.2;
+no positive gap above the tangent zero mode is assumed. The
+original-coordinate change and coupling normalization remain (80.1).
+The observation and resource statements of §§92--96 supply none of
+the analytic-state preparation or physical-space correspondences
+needed to strengthen these analytic conclusions. $\square$
+

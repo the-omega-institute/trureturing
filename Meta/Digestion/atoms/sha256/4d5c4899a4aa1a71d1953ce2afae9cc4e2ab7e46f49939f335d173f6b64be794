@@ -1,0 +1,12 @@
+**Remark 10.6 (The surviving order-three and order-four constants).** Corollary 6.6 retains its full fixed-party-size scope when every implicit weight sum or product is party-indexed. Explicitly, with its $\sigma_2,\sigma_3,e_2,\tau_k$,
+
+$$
+\begin{aligned}
+K_3&=\frac1{12}\log\frac{4(N-1)\sigma_2^2}{3\sigma_3\prod_{k\in I}(N-N_k)},\\
+K_4&=\frac18\left(\log\frac{N-1}{N^2}-\log16-\sum_{k\in I}\log\frac{x_k(1-x_k)}4\right)
++\frac1{24}\sum_{k\in I}2\log\frac{e_2+\tau_k}{2}.
+\end{aligned}
+$$
+
+Indeed, for $n=3$ both off-line eigenvalues are $3e_2/4$, and $\prod_{k\in I}x_k(1-x_k)=\sigma_3\prod_{k\in I}(N-N_k)/N^6$, yielding the first expression from Theorem 10.3. For $n=4$ the six off-line eigenvalues are $(e_2+\tau_A)/2$, $(e_2+\tau_B)/2$, $(e_2+\tau_C)/2$, each occurring twice; substitution in Theorem 10.3 gives the second expression. The examples $K_3=\frac1{12}\log3$ for $(1,1,1)$ and $K_3=\frac16\log(5/3)$ for $(2,1,1)$ remain valid. A numeric-set interpretation inherited from Theorem 6.5 is superseded; the explicitly size-indexed $K_3$ expression itself is unchanged.
+

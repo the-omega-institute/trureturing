@@ -1,0 +1,22 @@
+**Proposition 8.3 (permission is outside a local shape).** For
+$0\le j<24$, two identical local $P_j$ components can be placed in
+exterior contexts with source writer availability respectively 1 and
+0, or with the required active PC and a different PC. Their local
+supports and terminal boundaries agree. With the remaining guard
+premises satisfied, only the appropriate current context enables the
+next birth. Thus local shape alone does not determine permission.
+
+Proof. Keep the local component, its exterior attachment and its
+ownership fixed. Choose the first exterior's finite guard fields to
+satisfy Definition 4.1 and Assumption 2.5; in the second change only
+the exterior availability field to its disabling value, or the PC
+to a value failing the installed-site test. Neither change alters
+any local child path or local terminal. In the first context the
+prefix test selects $j$ and Lemma 3.3 supplies the vacant next
+destination. In the second the current guard fails, so Definition
+4.1 enables no attachment. The disabled context is not an eligible
+point of $\mathcal H_C$. This is precisely why
+Theorem 5.2 holds exterior permission fixed, whereas Theorem 5.3
+uses the specified whole observations on $\mathcal H_C$. No step
+restores a historical permission. ∎
+

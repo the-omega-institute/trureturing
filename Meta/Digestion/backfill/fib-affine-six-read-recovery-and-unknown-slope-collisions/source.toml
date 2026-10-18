@@ -1,0 +1,5 @@
+source_id = "fib-affine-six-read-recovery-and-unknown-slope-collisions"
+path = "docs/develop/theory/FIB_AFFINE_SIX_READ_RECOVERY_AND_UNKNOWN_SLOPE_COLLISIONS.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

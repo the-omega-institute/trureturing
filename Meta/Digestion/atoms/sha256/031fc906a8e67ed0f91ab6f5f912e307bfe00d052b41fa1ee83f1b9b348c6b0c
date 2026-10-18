@@ -1,0 +1,26 @@
+**Proposition 5.5 (size bounds and absence of a final-update signal).**
+The analytical parameters also satisfy
+
+$$
+H_B\le H(u)+B,\qquad
+N_B\le (N(u)+1)2^B-1,\qquad A_B\le N_BH_B.
+\tag{CNA.10}
+$$
+
+There is no source-size bound from $B$ alone. Finiteness alone, or a
+positive budget without evidence that it is exhausted, does not exclude
+an update after successful validation. A zero remaining budget does
+exclude it.
+
+**Proof.** An update increases height by at most one and at most doubles
+the number of leaves. A full tree with $\ell$ leaves has $2\ell-1$ nodes.
+This gives the first two inequalities; the third is immediate.
+Already at $B=0$, the initial source may be arbitrarily large.
+For the last claim, when an unused update is still permitted, compare
+a successful prefix with itself followed by an update in the source-free
+response gap. Both have accepted the same certificate. The promise $B=0$,
+or evidence of $B$ distinct already spent updates, instead excludes more
+updates. For example, $B$ failed attempts provide such evidence by
+Theorem 5.2. A positive upper bound by itself is not a count of spent
+updates. $\square$
+

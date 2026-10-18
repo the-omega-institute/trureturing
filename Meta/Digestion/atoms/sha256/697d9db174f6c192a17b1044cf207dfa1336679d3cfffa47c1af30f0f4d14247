@@ -1,0 +1,74 @@
+## 21. 谱及 Fourier 表示与真正相干来源的边界
+
+**命题 A-21.1（秩事件的精确 Fourier 重写）。** 对 $`r\ge1`$、整数 $`a,b`$，$`\zeta_r=e^{2\pi i/r}`$，
+
+
+```math
+\frac1r\sum_{k=0}^{r-1}\zeta_r^{k(a-b)}=\mathbf{\text{𝟏}}_{a\equiv b\ (r)}.
+```
+
+
+所以 Fibonacci 整除指示等于 $`r_p^{-1}\sum_k e^{2\pi ika/r_p}`$，对所有素数适用；奇素数且偶秩的 Lucas 指示等于 $`r_p^{-1}\sum_k(-1)^ke^{2\pi ika/r_p}`$。
+
+证明。指数为秩倍数时每项一；否则公比 $`t\ne1`$ 且 $`t^r=1`$，有限几何级数 $`(1-t)\sum_{k=0}^{r-1}t^k=1-t^r=0`$。$`r=1`$ 单项一；Lucas 半周期移位给 $`e^{-\pi ik}=(-1)^k`$。奇秩 Lucas 事件恒零，二单独按第九节。单位根向量相消是经典算术表示，不供应相干准备、量子仪器或非对易操作。证毕。
+
+**命题 A-21.2（共同指标事件仍是经典可同时赋值）。** 有限指标集 $`J`$ 上，以 $`|j\rangle`$ 为基定义 $`P_p|j\rangle=E_p(j)|j\rangle`$，则所有 $`P_p`$ 对易；共同酉 $`U`$ 共轭后仍对易。
+
+证明。对角矩阵乘法逐点相乘，所以 $`P_pP_q=P_qP_p`$。$`[UP_pU^\dagger,UP_qU^\dagger]=U[P_p,P_q]U^\dagger=0`$。排斥 $`P_3P_7=0`$ 和包含 $`P_3P_{41}=P_{41}`$ 是同索引事件的约束，不是量子测量不对易。出现复数或更换标架也不能改变此结论。证毕。
+
+**约定 A-21.3（三份共同记录的接口）。** 另供共同复 Hilbert 载体和单位记录，内积共轭线性于第一槽、线性于第二槽。使用 [C 卷 §9](AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS.md#9-共同记录的圆盘与参考递归) 命题C-9.6的循环重叠 $`a,b,c`$、完整共同实现判据和秩条件；它们区别于模式均值、有限域根及可同时赋值的索引事件。原拥有范围仍为 [A-R6，§§68、109；A-L6 的经典内积背景]。
+
+**命题 A-21.4（算术成对事件与共同记录的不同边界）。** [C 卷 §9](AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS.md#9-共同记录的圆盘与参考递归) 命题C-9.7的 $`1/\sqrt2`$ 相位条件与 $`(1\pm i)/4`$ 例证明相同成对记录概率可以遗漏复闭环；命题C-9.3的 $`9/10,9/10,-9/10`$ 候选证明成对合法不足以共同实现。命题A-21.2的算术对角事件仍全部对易。共同记录与共同指标事件的来源、目标和允许取得分别定型，复相位本身不把算术事件变成量子测量。
+
+**定义 A-21.5（额外 Pauli 来源表示）。** 在 $`\mathbb{\text{ℂ}}^2`$ 上另供
+
+
+```math
+X_P=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
+Y_P=\begin{pmatrix}0&-i\\i&0\end{pmatrix},\quad
+Z_P=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\quad
+A=-iX_P,\quad B=-iY_P,
+```
+
+
+并置 $`U_\alpha=A,U_\beta=B,U_{\langle t,u\rangle}=U_tU_u`$，右因子先作用。取模二组成 $`(u,v)`$ 的 $`0,1`$ 代表，固定提升 $`\mathcal{\text{ℒ}}(u,v)=B^vA^u`$。[A-R6，§§101、102、106–110] 此酉表示不是原生树替换机制，矩阵结合性仍忘记括号。
+
+**命题 A-21.6（实际相位与通道的区别）。** $`AB=-BA`$，$`A^2=B^2=-I`$；固定提升的乘法为
+
+
+```math
+\mathcal{\text{ℒ}}(u,v)\mathcal{\text{ℒ}}(u',v')=(-1)^{uu'+vv'+uv'}\mathcal{\text{ℒ}}(u+u',v+v'),
+```
+
+
+其中右侧指数加法模二。$`M\bmod2`$ 保持此完整余循环，故原树同步 $`\rho`$ 保持中心符号。特别 $`t_L=\langle\langle\beta,\alpha\rangle,\alpha\rangle`$ 与 $`t_R=\langle\alpha,\langle\beta,\alpha\rangle\rangle`$ 同组成 $`(2,1)`$，$`U_{t_L}=-B,U_{t_R}=B`$，同步任意 $`\rho`$ 后仍差负号。
+
+证明。Pauli 乘法给反交换和平方；将 $`A^u`$ 移过 $`B^{v'}`$ 产生 $`uv'`$，两个同类指数进位分别给 $`uu',vv'`$，得全部符号，不只取反对称部分。对 $`M(u,v)=(v,u+v)`$ 展开余循环，两个 $`vu'`$ 项抵消，三个 $`vv'`$ 项留一个，仍得 $`uu'+vv'+uv'`$。叶替换分别 $`A\mapsto B,B\mapsto BA`$，与此自同构相容，结构归纳给同步中心符号不变。直接 $`BAA=-B`$，$`ABA=B`$。原语重相位 $`A'=e^{i\theta_\alpha}A,B'=e^{i\theta_\beta}B`$ 后，树多一个标量 $`e^{i(C_\alpha\theta_\alpha+C_\beta\theta_\beta)}`$，同组成两来源标量相同，相对符号保留。
+
+但 $`\mathrm{Ad}_U=\mathrm{Ad}_{-U}`$，因为对任意密度矩阵 $`\sigma`$，$`(-U)\sigma(-U)^\dagger=U\sigma U^\dagger`$。仅给两个通道名称不能取得相对负号；若实际供给共同控制位的 $`|0\rangle\langle0|\otimes U+|1\rangle\langle1|\otimes V`$、$`|+\rangle`$ 准备和 $`X_P`$ 读取，则 $`V=U`$ 或 $`-U`$ 分别给控制 $`|+\rangle`$ 或 $`|-\rangle`$，才可区分。若两支留下记录 $`e_0,e_1`$，非对角另乘 $`\langle e_1,e_0\rangle`$，不允许删除它。这是 [A-L7] 讨论的未知黑盒通道与额外物理实现的界线，不禁止已明确供应的相干比较。裸 FIB 没有自动供应这组条件。证毕。
+
+**命题 A-21.7（全历史相干不能由经典路径权代替）。** 若实际共同边界是
+
+
+```math
+\Omega_n=\sum_{h,k}|h\rangle\langle k|\otimes\Xi^{(n)}_{hk}\succeq0,
+\quad\mathrm{tr}\Omega_n=1,
+```
+
+
+并另供 $`V_n=\sum_{h,a}|h,a\rangle\langle h|\otimes K_{a|h}`$、$`\sum_aK_{a|h}^\dagger K_{a|h}=I`$，则
+
+
+<table><tbody><tr><td>
+
+```math
+\Xi^{(n+1)}_{ha,kb}=K_{a|h}\Xi^{(n)}_{hk}K_{b|k}^\dagger.
+```
+
+</td></tr></tbody></table>
+
+
+经典历史权为 $`\mathrm{tr}\Xi_{hh}`$，一般不确定非对角块或复用环境的未来。
+
+证明。不同 $`|h,a\rangle`$ 正交，故 $`V_n^\dagger V_n=I`$，共轭保持正性和迹；逐块展开得到式。具体反例是两历史的 $`|+\rangle\langle+|`$ 与 $`I/2`$：对角权均为 $`(1/2,1/2)`$，额外供应的共同 $`X_P`$ 比较却给均值一与零。亦可从同一相干输入出发，使两历史留下相同记录或正交记录；约化后的非对角分别乘一或零，仍有相同历史权。块载体必须包括会再次接入的环境、控制和记忆；若实际分支含隐藏 Kraus 指标，需保留共同等距实现及其环境，不能自行挑单个 Kraus 算子拼相干。此式复用 [A-R6，§110]，用具名来源说明共同实现的条件。证毕。
+

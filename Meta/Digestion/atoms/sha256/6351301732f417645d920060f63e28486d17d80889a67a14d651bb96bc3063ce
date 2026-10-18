@@ -1,0 +1,27 @@
+**Lemma 4.2 (all original finite cuts have a finite cover).** For every
+$h\in\mathcal R_H$, a finite original lawful extension reaches a closed
+flight $s\succeq h$. For every such completion,
+
+$$
+I(h)\preceq I(s)=J_s.
+\tag{RCA.3}
+$$
+
+The completion is conditional on actually supplying a finite canonical
+remainder when the current frame is unfinished.
+
+Proof. At ready take $s=h$. Otherwise the consumed current frame prefix
+has some finite canonical completion by the definition of $\mathcal R_H$.
+Choose and actually supply that remainder at its prescribed INs. Do not
+resupply a bit already held in the latch. LJA Theorem 4.5 and the tape and
+copy progress lemmas finish the finite parsing, generation, source work,
+counter work, row and acknowledged delivery. The same argument begins
+directly with the remaining prescribed work if ingress was already
+complete. Rejection retains the complete request and does not obstruct
+termination. At the resulting ready cut there is neither a current input
+frame nor an unsealed committed source event, so AIF's second residual
+identity gives $I(s)=F(A_P(s))=J_s$. Its first identity has empty $Q$.
+Input acquisition never retracts, giving the prefix relation. Authenticity
+and lawful access to the completed backing use the actual retention or
+LJA copy chain, not decoding of an arbitrary proposed transcript. ∎
+

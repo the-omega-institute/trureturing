@@ -1,0 +1,28 @@
+**引理 6.2（legal long prefixes with no input size oracle）。** Fix
+$L>1$ and $1<d_0<L^{2/\varphi^2}$. Choose a fixed $s$ with
+$\sqrt{d_0}<s<L^{1/\varphi^2}$ and put $z=\log s>0$. For sufficiently large positive multiples $k$ of six, let
+
+$$
+m=F_k,\qquad n=F_{k+1},\qquad
+t_k=\rho^{k+1}\alpha,\qquad
+a=s^{1+n/m}e_1,\qquad b=s^{-n/m}e_2 .
+$$
+
+This is one actual tree and one common preparation, with $N_k=F_{k+2}$ leaves, $\Delta=s^2>d_0$, legal leaf bounds and
+
+$$
+q_0=q_2=e^{-z/F_k},\qquad q_1=1,\qquad
+q_j=e^{-zF_{j-1}/F_k}\quad(j\ge1).
+$$
+
+For fixed $E_0<1/2$ there is a constant $c$ such that the targets
+$3\le j\le k-c$ all exceed $2E_0$, whereas the whole future tends to zero.
+
+**证明。** The leaf substitution matrix sends $(m,n)$ to $(n,m+n)$, so the counts of $\rho^{k+1}\alpha$ are $(F_k,F_{k+1})$ and their sum is $F_{k+2}$. Every substituted $\alpha$ has a nonzero oriented unit label. The preparation is orthogonal, its product of leaf norms is $s$, and
+$n/m\to\varphi$ gives $\|a\|\to s^{1+\varphi}=s^{\varphi^2}<L$; $\|b\|<1<L$. Orthogonal homogeneity gives $q_1=1$. Cassini's identity, obtained by induction from the Fibonacci recurrence, gives
+$m^2+mn-n^2=(-1)^{k+1}=-1$, and then $q_0=q_2=e^{-z/m}$. The norm recurrence proves the formula for every $j$.
+
+For two-step Fibonacci growth, $F_{\ell+2}\ge2F_\ell$. Choose $c$ sufficiently large that
+$z2^{-\lfloor(c+1)/2\rfloor}<-\log(2E_0)$, increasing it if necessary for the small initial indices. For $j\le k-c$,
+$F_{j-1}/F_k\le2^{-\lfloor(c+1)/2\rfloor}$, proving the strict prefix bound. Unbounded Fibonacci growth proves decay to zero.
+

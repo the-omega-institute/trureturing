@@ -1,0 +1,128 @@
+### 459.5 保持原 Möbius 有限配对的精确运输与缺口
+
+固定真实 $x\ge e$ 与整数 $N\ge\lceil8x\rceil$，保持同一实际阶乘核
+$$
+\eta(y)=\log(\lfloor y\rfloor!)-y\log y+y,
+\qquad w(t)=\frac{1+\log t}{t^2\log^2t},
+$$
+$$
+P_x^\eta(s)=\int_x^\infty\eta(t/s)w(t)dt,
+\quad J_x^\eta(n)=P_x^\eta(n)-P_x^\eta(n+1),
+\quad\mathscr D_x(m)=P_x^\eta(m)-P_x^\eta(2m)
+=\sum_{n=m}^{2m-1}J_x^\eta(n).
+\tag{SNC.29}
+$$
+§455.6 的真实有限读数是
+$$
+O(n)=\sum_{\substack{m\le n\\m\text{ odd}}}\mu(m),\qquad O(0)=0,
+\quad\mathcal L_x(n)=J_x^\eta(n)-J_x^\eta(2n)-J_x^\eta(2n+1),
+\quad\mathscr F_x(N)=\sum_{n=1}^NO(n)\mathcal L_x(n),
+$$
+其中 $O(N)$ 始终是这个真实奇 Möbius 前缀，不是 Landau 大 $O$ 记号；
+$$
+\mathscr T_x(N)=\sum_{\substack{m\le N\\m\text{ odd}}}\mu(m)\mathscr D_x(m)
+=\mathscr F_x(N)+O(N)\mathscr D_x(N+1)
+=\mathscr C_{x,N}-\mathcal A_x,
+$$
+$$
+I_\psi(x)=\mathscr T_x(N)+\mathscr R_x(N).
+\tag{SNC.30}
+$$
+这些已有等式包含单位 $m=1$、全部奇来源、每份完整偶倍纤维及完整余项。
+使用实际 $\eta$ 后，上游 $\beta_d$ 的完整运输已保留，未作新的 $\beta$ 截断。
+
+现在按每个系数的真实符号定义有限谱
+$$
+a_{x,m}=\mu(m)\mathscr D_x(m),\qquad
+\sigma_{x,N}=\sum_{\substack{m\le N\\m\text{ odd}}}a_{x,m}\delta_{\log m},
+$$
+$$
+L_{x,N}(s)=\int e^{-st}d\sigma_{x,N}(t)
+=\sum_{\substack{m\le N\\m\text{ odd}}}a_{x,m}m^{-s}.
+\tag{SNC.31}
+$$
+所有谱率都非负，且 $L_{x,N}(0)=\mathscr T_x(N)$ 精确成立。
+不同整数有不同谱位置，所以真实 Jordan 负质量为
+$$
+N_-(\sigma_{x,N})
+=\sum_{\substack{m\le N\\m\text{ odd}}}(-a_{x,m})_+.
+\tag{SNC.32}
+$$
+本式不把 $\mu(m)=-1$ 自动当成负部：必须同时保留真实
+$\mathscr D_x(m)$ 的符号。§453 的真实素数面板在其已付共同阈值后
+确有 $\mathscr D_x(p)>0$，它们对（SNC.32）贡献精确的 $\mathcal A_x$；
+这复用既有面板供应，不是全配对符号结论。
+
+这份实际有限谱还有真实截止 $0\le\log m\le\log N$。所以若未来支付
+（SNC.36）的 $o(h^2)$ 误差，而所选联合尺度满足
+$\log N\to\infty$、$h\log N\to0$，推论 459.4 会给
+$$
+\liminf (\log N)^2
+\sum_{\substack{m\le N\\m\text{ odd}}}(-\mu(m)\mathscr D_x(m))_+
+\ge2c/9.
+\tag{SNC.33}
+$$
+例如 $h=x^{-1/4}(\log x)^{-1/2}$ 与 $N\asymp x^A$（固定 $A>1$）
+满足这些截止条件；无截止的最优负原子则对应
+$m=e^{t_-}\asymp\exp(2\log2/h)$，远超该多项式截止。
+（SNC.33）仍明确条件于尚缺的逼近供应。既有真实素数面板本就支付了
+$1/\log^2x$ 级负来源，这个条件约束不是新的无条件全配对障碍。
+
+平方见证运输到同一实际有限配对后，得到无条件精确恒等式
+$$
+\begin{aligned}
+Q_{x,N}(h,r)
+&=L_{x,N}(2h)-2rL_{x,N}(3h/2)+r^2L_{x,N}(h)\\
+&=\sum_{\substack{m\le N\\m\text{ odd}}}
+a_{x,m}m^{-h}(m^{-h/2}-r)^2.
+\end{aligned}
+\tag{SNC.34}
+$$
+若 $r_*<r<1$，其正负源逐项给
+$$
+\sum_{a_{x,m}<0}|a_{x,m}|m^{-h}(m^{-h/2}-r)^2
+\ge-Q_{x,N}(h,r),
+$$
+$$
+-Q_{x,N}(h,r)\le (r^4/16)N_-(\sigma_{x,N}).
+\tag{SNC.35}
+$$
+有限和直接支付交换、核可积性和每个符号；这是忠实的谱运输。
+
+若未来在同一个 $x,N,h,c$ 上，对于 $0<h<h_0$ 与
+$0\le\varepsilon\le K_h$ 真正支付
+$$
+\max_{s\in\{h,3h/2,2h\}}|cB(s)-L_{x,N}(s)|\le\varepsilon,
+\tag{SNC.36}
+$$
+则定理 459.2 立即给同源负预算 $N_-(\sigma_{x,N})\ge n_\varepsilon$。
+上述 §§448–450、453–457 的既有供应尚未支付（SNC.36）。
+（SNC.30）只控制 $s=0$ 的真实读数；它既不是另外三个指数节点的身份，
+也没有把那些节点自动送到 $cB$。
+§449 的（HT.11）–（HT.17）支付的是实际 Fibonacci 对数导数尾
+$I_F$ 到原 $I_\psi$ 的完整临界运输，也没有提供（SNC.36）的局部曲率谱逼近。
+
+必须区分另一项已有真实谱：若
+$z\ge2$、$L=\log z$、$P_z=\prod_{p\le z}p$、
+$E_z(s)=\prod_{p\le z}(1-p^{-s})$、
+$F_z(s)=E_z(1+s/L)/E_z(1)$，有限 Euler 展开确有
+$$
+F_z''(s)=\frac1{E_z(1)}\sum_{d\mid P_z}
+\frac{\mu(d)}d\left(\frac{\log d}{L}\right)^2
+e^{-s\log d/L}.
+\tag{SNC.37}
+$$
+这个真实 finite primorial signed 曲率谱可以消费任何另行支付的
+$F_z''$ 对 $B$ 的节点误差。它的系数是
+$\mu(d)d^{-1}(\log d/L)^2/E_z(1)$、来源截止是 $d\mid P_z$，
+不是（SNC.31）的 $\mu(m)\mathscr D_x(m)$ 与自然截止 $m\le N$。
+特别是它的单位曲率系数为零，而（SNC.30）的原单位首块必须保留。
+因此（SNC.37）不是（SNC.36）的运输证明。
+同样，无权有限读出 $\sum_{m\le N,\ m\text{ odd}}\mu(m)m^{-s}$
+在零点等于 $O(N)$，并不等于实际 $\mathscr T_x(N)$。
+
+要把本节的逼近预算变成原 Robin 临界收益，还须支付（SNC.36）的
+同源逼近或提供另一条明确的同源正负核恒等式，并控制（SNC.30）的完整
+$\mathscr R_x(N)$。负谱不可缺少及其最小质量只说明必要抵消成本；
+它没有给原 $I_\psi(x)$ 的临界符号下界，也没有改变完整 RH 目标。
+

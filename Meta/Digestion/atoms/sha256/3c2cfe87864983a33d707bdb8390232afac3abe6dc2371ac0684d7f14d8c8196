@@ -1,0 +1,16 @@
+**命题 22.1（An empty terminal batch removes an even-total surcharge）。** Set $Q=2,m=3,r=2$, so $T=8,k=7,b=4,N=3$. On low tails let $\lambda(4)=\lambda(5)=B\ne A$, put $A$ at every other outside phase, and retain $\lambda(0)=D\ne E=\lambda(3)$. Give every high tail any label $R$ and initial rejection any label $L_\bot$. Then
+
+$$
+C_{\rm ad}(f)=C_{\rm pre}(f)=3.
+\tag{22.1}
+$$
+
+Proof. Here $K_1=\{4,5\}$, $K_2=\{7,1\}$, $O_1=K_1$, and $O_2=\varnothing$, with total batch size two. The empty terminal slot is the missing hypothesis in an unqualified even-total surcharge. More explicitly the common stream
+
+$$
+111\mid010\mid001
+\tag{22.2}
+$$
+
+has successive full charge supports $\{0,3\}$, $\{4,5\}$, $\{0,1\}$. Root rejection returns $R$. On the root-zero archive, the second difference selects exactly the $B$ phases; every other candidate there has label $A$, so both children stop by fee two. On the root-positive archive, the second word starts zero and gives no endpoint difference; the third selects zero and not three, returning $D,E$. The first bit of the second word clears every surviving INITIAL tail, and its isolated one and the final isolated one have strict seams. Initial $\bot$ is decoded separately for free. The endpoint lower bound (20.1) excludes every fee below three. This proves the full INITIAL target law, independently of the numerical parity observation. ∎
+

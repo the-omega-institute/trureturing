@@ -1,0 +1,38 @@
+### 454.3 截止不交换及精确边界
+
+对整数 \(N\ge\lceil8x\rceil\)，令 \(P_{\le N}f=f\,\mathbf1_{n\le N}\)。实际常值前缀给逐点恒等式
+\[
+\boxed{(I-T_2)(P_{\le N}\mathcal U_x)-\mathcal V_x
+=Q_x^\mathrm{p}\mathbf1_{N<n\le2N+1}.}
+\tag{BC.12}
+\]
+当 \(n\le N\)，两者恰相同；当 \(N<n\le2N+1\)，正商满足
+\(4x\le\lfloor n/2\rfloor\le N\)，故右侧恰为
+\(-\mathcal U_x(\lfloor n/2\rfloor)=Q_x^\mathrm{p}\)；
+当 \(n>2N+1\)，两份截止读出为零，而 \(\mathcal V_x(n)=0\)。
+这保留奇端点 \(2N+1\)，没有用连续区间代替真实整数商。
+
+记同一面板的有限前段及全尾为
+\[
+\mathscr H_x(N)=\sum_{n=1}^N\mathcal U_x(n)\mathcal L_x(n),\qquad
+\mathscr T_x(N)=\sum_{n>N}\mathcal U_x(n)\mathcal L_x(n).
+\]
+对（BC.12）配对并在有限边界块中望远镜，得到
+\[
+\boxed{\mathscr H_x(N)
+=-\mathcal A_x+Q_x^\mathrm{p}
+[P_x^\eta(N+1)-P_x^\eta(2N+2)]
+=-\mathcal A_x+Q_x^\mathrm{p}\mathscr D_x(N+1).}
+\tag{BC.13}
+\]
+§453（DP.11）已给固定 \(x\) 的 \(P_x^\eta(s)\to0\)。
+因此由（BC.7）及（BC.8）的绝对收敛，
+\[
+\boxed{\mathscr T_x(N)=-Q_x^\mathrm{p}\mathscr D_x(N+1),\qquad
+\mathscr H_x(N)+\mathscr T_x(N)=-\mathcal A_x.}
+\tag{BC.14}
+\]
+等价地，每个面板素数 \(p\) 在 \(\mathcal U_x\) 中留下完整阶跃，
+\(\sum_{n\ge p}\mathcal L_x(n)=\mathscr D_x(p)\)。
+原有限支撑被变成常值前缀的无限尾；上述完整边界支付后总配对仍相同。
+

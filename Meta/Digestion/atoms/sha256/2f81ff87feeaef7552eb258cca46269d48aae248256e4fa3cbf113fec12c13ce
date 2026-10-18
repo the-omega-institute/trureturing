@@ -1,0 +1,92 @@
+**Theorem 2.2 (all-word sufficiency and exact minimality).** For every
+$0\le d\le k\le n$, equality of $B_{k,d}$ is exactly $\simeq$. In fact it is
+already exactly equality of the sets of legal finite words. The boundary
+updates on their legal domains are
+
+$$
+\begin{aligned}
+\operatorname{append}_a: (k,d,s,t)
+ &\longmapsto
+ (k+1,d,s+h_{k+1}a,\operatorname{tail}_d(ta)),\\
+\operatorname{delete}_a: (k,d,s,(t_1,\ldots,t_d))
+ &\longmapsto
+ (k-1,d-1,s-h_ka,(t_1,\ldots,t_{d-1})).
+\end{aligned}
+\tag{2.3}
+$$
+
+The append guard is
+
+$$
+k<n\quad\text{and}\quad
+-(s+h_{k+1}a)\in\operatorname{im}H_F^{(k+1)};
+\tag{2.4}
+$$
+
+the delete guard is $d>0$ and $t_d=a$. For $d=0$ the append tail is the
+empty tuple and every delete edge is absent. All resulting tuples lie in
+the stated target images. Every exact representation of this full carrier
+has a unique surjection from its actual image onto $Q_{k,d}$ intertwining
+the representation maps; these surjections preserve the typed operations.
+Consequently $Q_{k,d}$ has the least number of exact states at this type.
+
+Proof. Equation (1.2) applied to $ua$ gives (2.4). Its new syndrome uses the
+column $h_{k+1}$, not $h_k$. Its last $d$ coordinates are obtained by adding
+$a$ to the existing tail and retaining the last $d$ entries. This remains
+valid when $d=0$ or $d=k$. For deletion, $d>0$ implies $k>0$, and $u_k=t_d$.
+Removing it changes the syndrome by $-h_ka$. The older block has unchanged
+length
+
+$$
+(k-1)-(d-1)=k-d,
+\tag{2.5}
+$$
+
+so the new tail is exactly $t_1,\ldots,t_{d-1}$; no forgotten older symbol is
+needed. If $uf\in C$, the shorter prefix can be completed by $u_kf$, so it
+is still admissible. Both operations preserve $0\le d\le k\le n$.
+These facts prove domain, label, root and successor descent on $Q$.
+Induction on word length then proves equality of every partial response:
+if a prefix has no edge, all its extensions remain absent, and otherwise
+the common successor boundary determines the next step.
+
+For necessity, let $u,u'\in U_k$ have syndromes $s,s'$. If $s\ne s'$, choose
+$f=(f_1,\ldots,f_{n-k})$ with $H_F^{(k)}f=-s$, and request
+
+$$
+\operatorname{append}_{f_1}\cdots\operatorname{append}_{f_{n-k}}.
+\tag{2.6}
+$$
+
+Every step is legal from $u$ because $uf\in C$. The entire word cannot be
+legal from $u'$, since at cut $n$ admissibility would imply
+$s'+H_F^{(k)}f=0$, contradicting $s'\ne s$. At its first missing edge the
+two legal-word sets differ. If $k=n$, every admissible syndrome is zero,
+so this case does not arise.
+
+If the syndromes agree but the tails differ, let $j\le d$ be the first
+position of disagreement counted from the CURRENT right end. Request
+
+$$
+\operatorname{delete}_{u_k}
+\operatorname{delete}_{u_{k-1}}\cdots
+\operatorname{delete}_{u_{k-j+1}}.
+\tag{2.7}
+$$
+
+It is legal from $u$. The first $j-1$ deletes also exist from $u'$, but the
+$j$th has a different current-last value there and is absent. Each request
+has remaining budget at least one; every shorter prefix is extendable.
+This gives a separator of length at most $d$. Thus no two distinct boundary
+points can merge, even if syndrome is omitted from the root readout and
+only type, labels and path existence are observed.
+
+Finally, if an exact representation $a$ assigns two prefixes the same
+value, strict descent along every word gives the same partial responses.
+The separating words force their $B$ values to agree. Define the map on
+$a(U_k)$ by $a(u)\mapsto B_{k,d}(u)$; it is well-defined, onto and unique.
+Equation (2.3) makes these maps commute with each legal operation, and the
+same argument preserves domain and label. This is the precise instance of
+the cited Process Geometry universal property. The explicit bounded
+separators and updates are the specialization to (1.4). $\square$
+

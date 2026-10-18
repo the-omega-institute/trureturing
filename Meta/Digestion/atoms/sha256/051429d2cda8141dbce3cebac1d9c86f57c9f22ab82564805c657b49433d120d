@@ -1,0 +1,77 @@
+**Theorem 5.2 (necessary and sufficient binary live criterion).** The
+possible supported plus live coefficient matrices of the entire
+original class are exactly
+
+$$
+0\preceq Z\preceq I_3,\qquad
+0\preceq N:=\frac{I_3+s\kappa X_{01}}2-\Theta(Z)\preceq M.
+\tag{IR.24}
+$$
+
+The minus live coefficient matrix is $I_3-Z$. This characterizes live
+maps, not unique binary-labelled time measures. Every such $Z$ has an
+actual finite full-output realization in the original class.
+
+Proof. The fixed supported live Choi matrix is
+$J_*=\mathcal V\mathcal V^\dagger$. A positive summand $J_+$
+satisfies $0\preceq J_+\preceq J_*$. If $z\in\ker J_*$,
+positivity gives $z^\dagger J_+z=0$, hence $J_+z=0$ by its
+positive square root. Its range is therefore in $\operatorname{ran}\mathcal V$.
+With $G=\mathcal V^\dagger\mathcal V\succ0$,
+
+$$
+Z=G^{-1}\mathcal V^\dagger J_+\mathcal VG^{-1},
+\qquad J_+=\mathcal VZ\mathcal V^\dagger.
+\tag{IR.25}
+$$
+
+Testing domination on $\mathcal VG^{-1}z$ proves $0\preceq Z\preceq I$.
+This keeps the correct nonunit Gram matrix.
+
+The total supported failure event has effect $M$. Its plus effect is
+$N$ because the full plus record effect is prescribed and its live
+effect is $\Theta(Z)$. Positivity of both binary failure measures gives
+$0\preceq N\preceq M$, including every label and time in that event.
+All extra zero-sector summands vanish by positivity. This proves
+necessity without requiring any particular time splitting.
+
+Conversely factor $Z$ and $I-Z$ into finitely many coefficient vectors.
+For each vector use its matrix $K(u,v,w)$ as encoder into $\mathbb C^3$
+and decode isometrically by $E$ into live. Range compression is also
+available for a singular vector. These give exactly $\Lambda_Z$ and
+$\Lambda_{I-Z}$. Both $N$ and $M-N$ kill $|0\rangle$: their quadratic
+forms there are bounded above by that of $M$, which is zero. Their
+ranks are at most two. For each positive eigenvalue $\lambda_j$ and
+unit eigenvector $v_j$ of $N$ or $M-N$, supply scalar encoder row
+$\sqrt{\lambda_j}\langle v_j|$, tagged with its binary record.
+Decode each scalar $z$ to all five measures
+$z w_\ell g(t)dt\,P_f$. This is a full TP decoder since
+
+$$
+\int_0^1g(t)dt=\left[-2/(1+t)\right]_0^1=1,
+\qquad \sum_\ell w_\ell=1.
+\tag{IR.26}
+$$
+
+It realizes failure effects $N,M-N$, with the same forgotten failure
+measure as (IR.10). Supported encoder effects sum to
+$\Theta(I)+M=I_3$. On five modes replace every row or matrix $C$ by
+$CE^\dagger$ and add scalar encoder $A\mapsto\operatorname{tr}(Q_5A)/2$
+for each binary record, decoded with measure $zg(t)dt\,P_f$ at label
+$2$ only. Their total effect is $P+Q_5=I_5$. Each positive individual
+effect is bounded by that sum. At fixed record, the supported effect
+is $\Theta(Z)+N$ or $\Theta(I-Z)+M-N$, which gives (IR.13).
+Every live decoder is TP on its whole fibre; so are all scalar decoders.
+
+All these identities are equalities of complex Kraus conjugations and
+trace maps. Tensoring with an arbitrary passive reference identity
+preserves them. Scalar rows retain their conditional reference operators;
+the complement branch retains
+$\operatorname{Tr}_5[(Q_5\otimes I)X]/2$ on a joint input $X$.
+On any Borel time set, multiply the appropriate operator by
+$\int_Bg(t)dt$, $P_f$ and its original label weight. Thus the forgotten
+full CP measures, cross-support zero action and zero extra sectors agree
+with (IR.10) at every amplification. The construction supplies actual
+finite labels and only their stated fibres; other dilation systems are
+permanently discarded. This proves full finite sufficiency. $\square$
+

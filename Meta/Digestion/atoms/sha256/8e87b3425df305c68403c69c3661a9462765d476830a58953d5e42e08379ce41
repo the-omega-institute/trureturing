@@ -1,0 +1,40 @@
+**Lemma 5.3 (positive difference and saturated tilt, globally).** At
+every later minimizer, $R\geq0$, $d>0$ and
+$d^2+4\alpha R^2=\beta^2$.
+
+Proof. Replacing negative $R$ by $|R|$ preserves all constraints
+and strictly reduces $W$, since $\gamma>0$.
+Suppose $d\leq0$. From $U\leq\alpha V$,
+$P-Q\geq(1-\alpha)(1-Q)\geq0$; equality requires $P=Q=1$,
+which would give $Y=0$, already excluded. Thus $P>Q$.
+Swapping $P,Q$ in $X$ while keeping its off-diagonal gives
+$X_{\rm swap}$ with both $X_{\rm swap}$ and $Z_s-X_{\rm swap}$ PSD:
+the diagonal products and off-diagonal moduli are unchanged.
+A mixture of size $\varepsilon>0$ decreases $W$ by
+$\varepsilon(A-B)(P-Q)>0$ and increases $d$ by
+$\varepsilon a_{\rm mix}$, $a_{\rm mix}=(1+\alpha)(P-Q)>0$.
+
+For $d<0$, small mixtures remain negative and retain the $R$ bound.
+For $d=0$ with $2\sqrt\alpha R<\beta$, feasibility follows by
+continuity. At $d=0$, $2\sqrt\alpha R=\beta$, also replace $R$ by
+$R(1-K\varepsilon^2)$, where
+$K>a_{\rm mix}^2/(2\beta^2)$ is fixed. Reducing $|R|$ improves the
+PSD inequalities; the new disk expression is
+
+$$
+\varepsilon^2a_{\rm mix}^2+\beta^2(1-K\varepsilon^2)^2
+\leq\beta^2
+\tag{AS.33}
+$$
+
+for sufficiently small positive $\varepsilon$. The cost correction is
+$2\gamma RK\varepsilon^2$, so the linear decrease persists. This
+excludes $d\leq0$ without extending a local positive-$d$ theorem to
+the whole cone.
+
+Now the outer bound is the disk $m=\sqrt{d^2+4\alpha R^2}\leq\beta$.
+If $m<\beta$, scaling $X$ to $(1-\varepsilon)X$ preserves
+$0\preceq X\preceq Z_s$ and, by continuity, the strict disk condition
+for small $\varepsilon$. Its positive cost decreases. Hence $m=\beta$.
+$\square$
+

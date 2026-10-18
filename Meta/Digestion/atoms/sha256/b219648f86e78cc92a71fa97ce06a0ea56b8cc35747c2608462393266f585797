@@ -1,0 +1,4 @@
+## 83. Transversal frame certificates and bilateral stability at quarter error
+
+The bounds in this section are dimension-free and apply to original CPTP maps, allowing output leakage and arbitrary Kraus ranks on both sides. They give an exact global best-response obstruction when either party is fixed at its corresponding channel in a section-82 quarter-error equality pair. There is also a quantitative bilateral stability estimate. Neither result rules out simultaneous changes of both parties producing error below 1/4.
+

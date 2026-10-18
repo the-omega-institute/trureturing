@@ -1,0 +1,9 @@
+**Proposition 5.3 (comparison count).** This graph performs exactly
+$4\min(x,y)+2$ primitives. It leaves both heads at the first unequal or
+joint terminating position.
+
+Proof. Exactly $\min(x,y)$ pairs of ones execute two reads and two moves.
+The next two reads determine the exit and execute no moves. The stated
+head positions and results follow from the unary encodings. This includes
+$x=0$, $y=0$ and equality. ∎
+

@@ -1,0 +1,14 @@
+### 96.1. The conditional quartic obstruction
+
+**Theorem 96.1.**
+
+Let j,C be positive integers, N=3^j>=81, and B_N=L_N^2+3=D C^2 with D the full positive squarefree kernel. Use the matrix A of Theorem 95.1, with off-diagonal entries [q_j/q_i] and zero row sums, and assume dim ker A=2. Let D=de be a proper admissible cut: d,e>1, (d/p)=1 for all p|e, and (e/p)=1 for all p|d. Assume every prime factor of d is 1 modulo 24.
+
+Define the rational quartic symbol (a/p)_4 for a nonzero quadratic residue modulo a prime p=1 mod4 by a^((p-1)/4) modulo p, interpreted as a sign. Then an admissible repetition B_(Nk)=D c^2, with k>1 odd, 3 not dividing k and c a positive integer, necessarily satisfies
+
+ product_{p|d} (-5e/p)_4 = +1.
+
+In particular, a negative product excludes every such repetition. The proof will establish the stronger rank bound rank E_D(Q)<=1 for a negative product; the actual original point makes this rank exactly one.
+
+This is a conditional proper-cut family. It includes section 79's two-prime type (1,19) when d is the first prime, but permits composite d or e and more than two prime factors. It assumes neither finiteness of Sha nor Mordell–Weil rank parity. A positive product does not settle repetition; cuts without the stated residue condition are outside this calculation.
+

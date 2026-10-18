@@ -1,0 +1,28 @@
+## 202. Exact response with the actual other-axis bound
+
+Suppose u<=m. Then z>m>=u>m-2>1. Let q be eta's other axis.
+If Q is a reservoir, q<=z, since all H values other than Z are <=m.
+If Q is special, its actual fixed pair {Z,U} gives q<1+z+u.
+Therefore in all cases
+ q<q0=1+z+u.
+
+Put k=z+u, h=z-u>0 and alpha=sqrt((m-1)/(m+1)).
+For the genuine owner eta define
+ L=k^2-(m-1)*(q-1)>0,
+ J=(m+1)*(q+1)-h^2>0.
+Its axial half-angle and transverse response are
+ tan(theta/2)^2=(m-1)/(m+1)*J/L,
+ gamma=atan(A*t)+atan(B*t), t=cot(theta/2)>0,
+ A/B=[sqrt(z^2-1) +/- sqrt(u^2-1)]/k*alpha.
+Both A and B are positive, and
+ A+B=2*sqrt(z^2-1)*alpha/k,
+ A*B=h/k*(m-1)/(m+1),
+ A*B*t^2=h/k*L/J.
+
+We will prove
+ A+B+A*B*t^2>1.
+This implies gamma>atan(t)=(pi-theta)/2. If gamma>=pi/2 this is
+immediate. Otherwise 1-A*B*t^2>0 and
+ tan(gamma)=(A+B)*t/(1-A*B*t^2)>t.
+It then contradicts the actual inequality theta+2*gamma<pi.
+

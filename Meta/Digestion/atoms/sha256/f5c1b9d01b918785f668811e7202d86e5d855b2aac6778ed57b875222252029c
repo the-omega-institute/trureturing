@@ -1,0 +1,12 @@
+**Lemma 4.2 (Support and independent blocks).** Each $a_i(j)$ is positive and
+$\sum_{j=1}^J a_i(j)=1$. Across successive source gaps the category blocks are iid and
+independent of the stationary first wait.
+
+**Proof.** Lemma 4.1 partitions all $k$, and $w_0(k)=0$ for $k\ge1$, so summing against
+$f_i$ gives normalization over $j=1,\ldots,J$. For any $j\ge1$, the event $K=j$ and
+success of the first $j$ level increments has probability
+$f_i(j)\prod_{\ell<j}p_\ell>0$ and yields level $j$, including $j=J$. The source gaps
+are iid, and fresh observer coins are independent across gaps and of $\tau$; hence the
+complete category blocks are iid. A proof-space continuation may sample potential
+future blocks after a stop, but the machine reads only the stopped prefix. $\square$
+

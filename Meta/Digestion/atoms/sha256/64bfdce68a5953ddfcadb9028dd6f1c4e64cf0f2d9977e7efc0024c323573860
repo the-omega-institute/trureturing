@@ -1,0 +1,12 @@
+### 69.2 Five fibres from one Fourier pair and its complement
+
+For j=0,...,4 put θ_j=2πj/5 and let T be the 2×5 real matrix with columns
+
+    sqrt(2/5)(cos θ_j, sin θ_j)^T.
+
+The finite Fourier sums Σ_j exp(iθ_j)=Σ_j exp(2iθ_j)=0 imply TT^T=I_2. Every column of T has squared norm 2/5. Choose any three orthonormal rows spanning the orthogonal complement of the row space of T and collect them in U. The stacked matrix O=[U;T] is a real orthogonal 5×5 matrix. Each full column has squared norm one, so every column of U has squared norm 3/5.
+
+Consequently O satisfies §68's equality criterion. Its first block gives unit Bloch vectors sqrt(5/3)U[:,j], with branch weight 3/5. Pad T[:,j] with a zero coordinate and multiply by sqrt(5/2) to obtain the other unit Bloch vectors, with branch weight 2/5. Choosing the eigenbases and their coordinatewise conjugates as in §66 supplies the asserted common two-product-channel implementation.
+
+The existence of an orthonormal complement here is ordinary finite-dimensional orthogonal completion. It is used only once, and its constant column norm follows from the full-column norm identity; no iterative constant-diagonal decomposition theorem is assumed.
+

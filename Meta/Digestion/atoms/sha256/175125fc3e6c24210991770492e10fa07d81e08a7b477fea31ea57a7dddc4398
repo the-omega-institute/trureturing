@@ -1,0 +1,17 @@
+**Proposition 7.4 (endpoint and certificate distinctions).**
+The validation event is a designated attainable observation endpoint,
+not the separate Return event. A successful finite certificate proves
+neither the invocation row nor absence of future updates.
+A fused validation-Read/Return primitive or a supplied quiet response
+gap would change the Return contract.
+
+**Proof.** Theorem 3.3 gives equality at its named Read in every
+compatible history. The first example in Proposition 3.4 gives identical
+accepted transcripts for an entry $\langle\alpha,\alpha\rangle$ with
+an early update and entry $\langle\beta,\beta\rangle$ without one.
+A subsequent unobserved update can change the source before Return,
+as in Theorem 7.1, without changing the earlier validated equality.
+A genuinely fused event has no intervening event position; a supplied
+quiet gap preserves the source. Either new premise transfers validation
+equality to Return. Neither is present in Definition 1.3. $\square$
+

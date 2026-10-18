@@ -1,0 +1,32 @@
+**Attribution 11.3 (credited premises and checked scope).** The original
+experiment, histories, common-input contract, full calibrated stopped
+law, endpoint distances and $L_{\rm full}$ are credited to §§2–7 and
+[AC] at the locations in Attribution 7.2. The middle-height survival
+defect used in (CG.79) is [AC, (AC.21)][AC]; its exact-time derivative
+and its application to the upper channel are displayed in full above.
+The supplied ordinary attainment/strict-gap/upper proposal and ordinary
+check are credited mathematical inputs to this exposition, not proof
+authorities. The joint-channel, rigidity and upper-error deductions here
+are ordinary, `repo-derived` results. They claim no new Lean verification.
+
+Choi's CP correspondence, Kraus/Stinespring dilation, Schmidt
+decomposition, finite group averaging, positive-effect comparison,
+trace-norm convexity and contractivity, Riesz–Markov representation and
+regular-measure variation duality are mature tools. Their needed
+applications, normalization and compatibility conditions are given in
+§§8–10. No external literature search or worldwide originality conclusion
+is asserted. Nonduplication is limited to the compared supplied theory
+bodies: these added results are not stated in their original CG §§1–7
+or in the supplied [current AC volume][ACR] §§1–20. The proposal and its
+check already contain the candidate package and are credited accordingly.
+
+In particular, [current AC][ACR] §§14–20 presuppose the extra source-bound
+calibrated actuator of its Definition 14.4. They optimize common relative
+returns at two mirrored heights and the record-only calibration score
+(AC.56), with finite-mixture nonattainment in Theorems 16.2–17.1.
+That class and score are distinct from the common-CPTP complete-output
+problem (CG.20). Their nonattainment does not contradict Theorem 8.4,
+and their approaching constructions neither implement $\Phi_0$ nor
+identify a CG.20 minimizer. No theorem is transferred between those
+optimization problems merely through their shared original source.
+

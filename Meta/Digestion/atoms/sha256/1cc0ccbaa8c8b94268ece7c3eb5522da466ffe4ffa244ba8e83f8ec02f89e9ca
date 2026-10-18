@@ -1,0 +1,68 @@
+## 456. CA 胞腔内的 floor residual 与 FIB 同余脱钩
+
+上一节把严格库存根识别成 CA 来源，但这仍没有说明 Vega 窗口中的分数部
+残差由什么决定。本节给出一个精确的局部接口：**在同一个 CA 指数剖面的
+稳定胞腔内，整数及其所有 FIB 同余保持不变，而 floor residual 严格变化。**
+这不是重复 CA 极值约化；它说明为什么同余观察本身不能支付 Vega 的残差义务。
+
+对素数 $p$ 和参数 $\varepsilon>0$，置
+
+$$
+Y_p(\varepsilon)
+=\frac{\log\!\left((p^{1+\varepsilon}-1)/(p^\varepsilon-1)\right)}{\log p}.
+\tag{456.1}
+$$
+
+有限几何和满足
+
+$$
+\frac{G_p(a)}{G_p(a-1)}
+=\frac{p^{a+1}-1}{p^{a+1}-p}.
+\tag{456.2}
+$$
+
+因此
+
+$$
+\frac{G_p(a)}{G_p(a-1)}>p^\varepsilon
+\iff
+a+1<Y_p(\varepsilon).
+\tag{456.3}
+$$
+
+在非事件参数（即没有 $Y_p(\varepsilon)\in\mathbb Z$）处，严格库存的
+指数恰为
+
+$$
+a_p^-(\varepsilon)=\left\lfloor Y_p(\varepsilon)\right\rfloor-1.
+\tag{456.4}
+$$
+
+在 $Y_p(\varepsilon)\in\mathbb Z$ 时，严格端点和含同价层的右端点相差一层；
+这正是 $N^-$ 与 $N^+$ 的事件区别，不能用一个 floor 公式掩盖。
+
+固定一个稳定胞腔，使指数向量 $a_p$ 和最大支撑素数 $P$ 不变。定义
+
+$$
+\mathcal S_P(\varepsilon)
+=\sum_{p\le P}Y_p(\varepsilon)\log p,
+\qquad
+\mathcal F_P(\varepsilon)
+=\sum_{p\le P}\{Y_p(\varepsilon)\}\log p,
+\qquad
+\vartheta(P)=\sum_{p\le P}\log p.
+$$
+
+由（456.4）得到 Vega 分解的精确版本
+
+$$
+\boxed{
+\log N
+=\mathcal S_P(\varepsilon)-\mathcal F_P(\varepsilon)-\vartheta(P).
+}
+\tag{456.5}
+$$
+
+它只是把同一个整数的 CA 指数逐素数展开；没有把 residual 当成新的独立
+权重，也没有把它误认为只由 $N$ 决定的量。
+

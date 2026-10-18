@@ -1,0 +1,6 @@
+### 77.5. Attribution and scope
+
+Unitary Schur decomposition is standard; see the [LAPACK Users’ Guide, Eigenvalues, Eigenvectors and Schur Factorization](https://www.netlib.org/lapack/lug/node50.html). Contraction positivity and Frobenius norms are standard matrix analysis; the channel normalization and Stinespring facts follow [Watrous, The Theory of Quantum Information, Chapters 1–3](https://cs.uwaterloo.ca/~watrous/TQI/). Sections 72 and 76 supply the existing calibration comparison and two-test spectral-deficit framework. The contraction calculation above proves the exact auxiliary support envelope, including explicit extremizers, and its amplitude-anchor application gives (2).
+
+Sharpness in (1) is local to one anchor and one Schmidt sign-pair. It neither proves simultaneous compatibility of all fibre extremizers nor supplies a channel attaining (2). Finite LOSR mixtures can realize the target exactly, so (2) is specifically a one-product obstruction, with arbitrary local environments and original leakage. No general RT recovery theorem or literature priority for the underlying classical matrix tools is asserted.
+

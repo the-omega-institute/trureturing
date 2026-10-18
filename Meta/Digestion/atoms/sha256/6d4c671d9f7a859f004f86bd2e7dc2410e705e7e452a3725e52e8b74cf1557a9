@@ -1,0 +1,55 @@
+**Theorem 2.2 (exact compatibility by temporal-summary equalities).**
+For every $d,n\ge1$ and every owned-seed network of Assumption 1.4,
+a seed assignment is realizable if and only if
+
+$$
+U(z_{i,q}(s))=D_e(z_{i,qe}(s))
+\quad(i\in[n],\ q,qe\in W_d,\ e\in\{L,R\}).
+\tag{OCB.13}
+$$
+
+There are $n(2^d-2)$ adjacent tests before removal of tautologies or
+redundancies, including zero at $d=1$. Each test is constant, unary,
+or a binary relation of the form $f(s_c)=g(s_b)$. On distinct seeds
+this is rectangular: its nonempty components are products of fibers
+of the two unary maps, with at most four attained labels on each side.
+It introduces neither auxiliary variables nor independent copies.
+
+Proof. At a branch endpoint $q$, its child $qe$ is initially present,
+so its factor is in $Q_0$. At any nonbranch factor $(b,c)$,
+extending the blocked path by $e$ gives
+
+$$
+\Gamma_{qe}=(b+\ell_e,\mathbf1_{e=R}).
+\tag{OCB.14}
+$$
+
+This follows directly from (OCB.4), including when $q$ is itself the
+original leaf. An initially absent child has second coordinate fixed
+by its last letter $e$ and cannot have a factor in $Q_0$.
+Consequently (OCB.13) is exactly the branch/present-child alternative
+or rule (OCB.14); it does not drop a free second-coordinate choice.
+The attained-range premise at $qe$ already fixes that coordinate.
+
+The root factor lies in $G_\varepsilon=Q_0$. Its $h$-image is
+nonabsent. Passing $h$ through the adjacent rules gives exactly the
+legal constructor-parent constraints: a branch has nonabsent children,
+and a leaf or absent port has absent children. Thus the prescribed
+replies reconstruct one canonical tree per block by CBN Theorem 2.2.
+At each present endpoint its factor is its unique value in $Q_0$.
+Induction along every path beyond a blocking leaf, using (OCB.14),
+then proves that every prescribed full factor equals that tree's
+actual $\Gamma$. A branch at the cutoff is completed by $C_0$.
+This proves sufficiency; the same local rules prove necessity.
+It also proves the assertion for constant prescriptions and the
+empty product of seeds. An empty domain gives no assignment on
+either side of the equivalence.
+
+The complete binary rooted menu has $2^d-1$ vertices and $2^d-2$
+edges. Pulling an equality of labels back through two unary seed
+maps gives the disjoint union
+$\bigcup_a f^{-1}(a)\times g^{-1}(a)$. This is the usual rectangular
+relation of [Dyer–Richerby, §3, Lemma 1][DR]. If both expressions use
+the same seed they are substituted on that same value and give a
+unary condition. $\square$
+

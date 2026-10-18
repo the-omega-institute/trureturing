@@ -1,0 +1,133 @@
+**Proposition 250.1 (Actual source and resource interpretation).** All
+laws and cap statements in §§244–249 concern the original selected
+marked laws of (243.2) on the actual labeled source (243.1), with no
+source prior. The full Borel carrier, unchanged consumer, and original
+nonatomic targets of §243.1 retain their definitions. Every displayed
+finite marked law has TV one from each original nonatomic target.
+The arbitrary-address/full-carrier necessity used for lower bounds is
+exactly §110.2; no restriction of competitors to the displayed finite
+marks, addresses or constructions is made.
+
+Proof. The marks $\theta_j=(B_1,1/(j+2))$ are actual distinct tapes.
+Any displayed complete law is one finite probability distribution on
+whole tables. A half-open interval partition of one source-independent
+$U\in[0,1)$ fixes its schedule and every potential output before any
+reply, including the product coupling in (244.7), all seventeen rows
+of §246 and any outer mixtures. The auxiliary interval construction
+for triple coefficients is integrated before this execution.
+There is no source-dependent coin or selection after a reply.
+An O execution follows its increasing preselected schedule to its first
+queried zero or exhaustion; N acquires its entire selected schedule
+and reconstructs the stopped output. Ignored post-stop replies and
+repeated requests are actual counted requests. The hard bound is two,
+not a bound on address, depth, runtime or expected count. The finite
+constructed rules hand off at every source and seed; original
+competitors retain sourcewise almost-sure finite handoff.
+
+The source supplier in §110.2, through Boundaries 35.2, realizes every
+finite pattern on arbitrary finite prime addresses fixed before seeds.
+Its entry-rank interface chooses a sufficiently large prime $r$ for
+which $F_r$ is invertible modulo all prescribed primes. CRT chooses
+$g=-F_r^{-1}$ at a desired positive address and $g=0$ at a desired zero;
+a sufficiently long original Fibonacci window contains that residue.
+This includes all multiple-zero words and any finite positive prefix
+followed by a later zero, without an infinite all-positive source.
+The entry-rank interface is the supplied classical hypothesis, not a
+new theorem here.
+
+For original necessity, countability gives one common conull seed event
+of finite handoff and hard request count. The maximum of the whole
+preselected schedule has vanishing seed tails. Actual witnesses for a
+finite family of comparison words and their finite execution cutoffs
+are fixed without inspecting seeds. Whole-execution replay on equal
+acquired transcripts, measurable projection of the full carrier onto
+low marks and base, and the vanishing common schedule/execution error
+produce finite same-class comparisons. Compactness of the one finite
+catalog simplex retains every row at the exact closed cap. These are
+§110.2's hypotheses and proof, without an asserted uniform runtime or
+address bound on original competitors.
+
+If a lower score uses a longer horizon than the strict active cutoff,
+ignore new coordinates in the finite kernel: new correct demands are
+nonpositive and the retained positive base pays base and pair rows.
+If it uses a shorter horizon, fix later finite replies zero and project
+later labels to base for the comparison, as in §§117.2 and 207.20.
+These are representation operations, not additional observations.
+The actual tail identity is always (243.3). The sharp constructions
+have positive base $1-e_*$ and hence error $e_*$ on every allowed
+actual tail; the repair preserves the full positive law and hence its
+old tail bound. Closed caps, zero schedule weights, repeated amplitude
+values and all tail ties remain included. Finite support has mass one
+under a marked law and zero under every original nonatomic target,
+proving the stated TV-one distinction. ∎
+
+The rank-three degree lemma is the classical hypersimplex or uniform
+matroid base-polytope fact; the interval proof in §244 supplies it
+without an additional hypothesis. Common terminal coupling is §§109,
+140 and 176, and coupled all-word base/pair minima are §178. Both
+sharp lower inequalities belong to §§113.2 and 117.2; their saturated
+supplier is §§113.3–114. The entire five- and six-active comparisons
+are §§148 and 161. The residual-extension identities are §§173–174,
+and the fixed sharp-five residual family is §187. These facts and the
+unit/flat-seven endpoints have their existing ownership. The capacity
+construction is one sufficient-family theorem; its near-unit domain
+and eight-coordinate examples are consequences of that construction.
+The unequal-seven region has the explicit noncontainment and bounded
+comparisons of §§246–247. The quantitative normalized-N repair supplies
+the additional N $00$ equality beyond the stopped face of §224.
+The score quotient, hull support and unrestricted one-residual pairing
+are §§198–199 and 229, without another duality claim.
+
+Blackwell, *Comparison of Experiments*, §§2–5, supplies the common
+normalized decision-kernel and risk comparison framework; it does not
+supply an increasing first-zero stopped schedule with two actual
+requests. Kaniewski, Lee and de Wolf, *Query complexity in expectation*,
+arXiv:1411.7280v1, Definition 8 and Theorem 9, concern nonnegative
+scalar outputs in expectation and worst-path query depth. Their scalar
+literal representation does not supply equal probability-vector masses
+in all stopped cells. Kaibel, *Basic Polyhedral Theory*,
+arXiv:1001.2161v1, Theorems 1, 8 and 10, supplies finite polyhedral
+background, without these acquisition constraints. These are bounded
+comparisons with the cited results. The elementary constructions and
+counting proofs above are ordinary mathematics; no exhaustive
+literature or repository nonderivability assertion is made.
+
+**Open problem 250.2 (The same original unrestricted goal).** For every
+entire positive nonincreasing vanishing actual amplitude sequence and
+every positive closed cap, the general implication remains
+
+$$
+\mathcal F_N(a,c)\ne\varnothing
+\ \Longrightarrow\
+\mathcal F_N(a,c)\cap\mathscr C_{L_a}\ne\varnothing.
+\tag{250.1}
+$$
+
+Its positive full-score obligation is still: for every $L\ge3$ and
+every actual full $y\ge0$ with $\Delta_O(y)\le1$, find one
+unrestricted full $V\ge0$ and one $\theta\in[0,1]$ with
+
+$$
+\Delta_N(V)+\theta\le1,\qquad
+\sigma_{H_L}(Q(y)-Q(V))\le\theta.
+\tag{250.2}
+$$
+
+No fixed law, anchor, unary profile, exact quotient, graph, mask,
+canonical decomposition or positive-only residual is imposed;
+nonzero zero-cost $V$ remains admissible at $\theta=1$.
+The negative alternative still requires the same actual $(b,e)\in H_N$,
+one full feasible $\lambda\ge0$ with $G_N\lambda\ge h(b,e)$ and
+$M=\sum\lambda\ge1$, and an actual full unit-O $y$ with strict
+$F_{Q(y)}(b,e)>M$, together with the original same-source/common-seed
+N attainer and the uniform lower bound against every arbitrary-address
+full-carrier O competitor, retaining positive actual tails and closed caps.
+
+The sufficient regions and the $D_b=0$ consequence shrink this gap in
+their exact scopes. Away from that face, (248.3) pays a positive repair
+allowance and (249.4) retains $K_y\min\{M,c_LD_b\}$. Neither term
+is an already paid signed residual in (250.2). Optional-constructor
+failure, exact-law obstruction and a point outside $H_N$ do not provide
+the negative alternative. No universal classification follows from
+these finite laws or bounded supplier comparisons.
+

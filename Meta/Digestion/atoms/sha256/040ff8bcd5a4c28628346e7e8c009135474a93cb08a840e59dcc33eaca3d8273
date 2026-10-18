@@ -1,0 +1,102 @@
+**Lemma 8.1 (a complete-output payoff witness).** Fix a real chart point
+$x$ with $0<\lambda<1$. Suppose a real diagonal matrix $\widehat Z$ satisfies
+
+$$
+\widehat Z-N(x)\succeq0,\qquad
+\widehat Z-D_f\succeq0,\qquad
+\widehat Z\succeq0,
+\qquad D_f=\lambda\operatorname{diag}(p_5).
+\tag{ZG.40}
+$$
+
+For every zero-transfer original common channel,
+
+$$
+E(\Phi)\geq\operatorname{tr}(A_5B_5)+\operatorname{tr}(A_{27}B_{27})
+                  +\frac6{11}\lambda-\operatorname{tr}\widehat Z.
+\tag{ZG.41}
+$$
+
+The same bound holds with $E_c$ for every zero-transfer triple (ZG.15).
+
+Proof. For each actual sign $U$ at height $5$, choose a mathematical
+output effect $M_{5,U}$ whose supported live part is $UR_5U^\dagger$,
+whose part on the ENTIRE canonical failure register is identity, and whose
+part on every other output is zero. For height $27$, use live part
+$UR_{27}U^\dagger$ and zero on all nonlive sectors. Give the four effects
+at each endpoint the weights $\lambda/4$ and $(1-\lambda)/4$ respectively.
+They are valid effects, their eight positive weights sum to one, and their
+weighted ideal payoff is
+
+$$
+I_{\rm ideal}=\operatorname{tr}(A_5B_5)
+             +\operatorname{tr}(A_{27}B_{27})+\frac6{11}\lambda.
+\tag{ZG.42}
+$$
+
+These are lower-bound coefficients, not supplied preparation priors,
+accessible input labels or extra observations. The height-$16$ histories
+remain in the original maximum.
+
+For an arbitrary full channel in the stated class, (ZG.14) describes its
+supported live map. Let $G_f$ be its positive input effect of the entire
+canonical failure register: it includes all five labels and all exact times,
+every stopped quantum support, atoms and singular-continuous mass there.
+Let $G_o=I-G_L-G_f\succeq0$. It includes every remaining outcome, including
+live mass outside $V$, aborts and rejections. These effects arise jointly
+from the SAME full channel on the whole complex input algebra. In particular
+they cannot be chosen separately for different histories.
+
+Schur form gives
+$\Lambda(U\rho_yU^\dagger)=U(C\odot\rho_y)U^\dagger$ for every actual sign.
+Entrywise tracing, with $A_y,\rho_y$ real symmetric, shows that the eight
+weighted simulated live payoffs sum to $\operatorname{tr}(N C)$, also when
+$C$ is complex. Averaging the four ACTUAL height-$5$ inputs gives
+$\operatorname{diag}(p_5)$, so the simulated failure payoff is
+$\operatorname{tr}(D_fG_f)$. Diagonality of $\widehat Z$ and
+$G_L=\operatorname{diag}(C_{ii})$ now gives the exact budget identity
+
+$$
+\begin{aligned}
+\operatorname{tr}\widehat Z-\operatorname{tr}(NC)
+                   -\operatorname{tr}(D_fG_f)
+={}&\operatorname{tr}((\widehat Z-N)C)
+ +\operatorname{tr}((\widehat Z-D_f)G_f)
+ +\operatorname{tr}(\widehat ZG_o)\geq0.
+\end{aligned}
+\tag{ZG.43}
+$$
+
+Indeed $\operatorname{tr}(\widehat ZC)=\operatorname{tr}(\widehat ZG_L)$,
+and $G_L+G_f+G_o=I$. Each trace on the right pairs positive Hermitian
+matrices. This proves the inequality on complex matrices without suppressing
+the transpose of a nondiagonal Choi multiplier.
+
+For every individual full normalized output difference $\Delta$, total
+trace is zero and any effect $M$ satisfies
+
+$$
+\operatorname{tr}(M\Delta)
+=\frac12\operatorname{tr}((2M-I)\Delta)
+\leq\frac12\|\Delta\|_{1,\rm cq}.
+\tag{ZG.44}
+$$
+
+The inequality follows because $2M-I$ is a Hermitian contraction. It also
+holds for arbitrary countably additive output measures, by integrating the
+same contraction inequality against a common dominating scalar measure.
+Subtract the simulated payoff, bounded above by (ZG.43), from (ZG.42),
+apply (ZG.44), and bound the positive weighted average of the eight errors
+by the unchanged twelve-history maximum. This proves (ZG.41).
+
+No exceptional output mass has been dropped: failure-register mass enters
+$G_f$ with its entire mass, other mass enters $G_o$, and ALL of it remains
+in the full norm used in (ZG.44). The proof makes no identification of that
+norm with a pooled failure probability.
+
+For a finite triple (ZG.15), use the same live effects, identity on its
+failure flag at height $5$, and zero on other. Choi positivity, zero transfer
+and the joint budget give exactly (ZG.14) and (ZG.43). Its full normalized
+finite output obeys (ZG.44), proving the same bound for EVERY such triple,
+without any lift assumption. $\square$
+

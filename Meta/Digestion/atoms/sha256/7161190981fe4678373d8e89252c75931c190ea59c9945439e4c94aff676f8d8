@@ -1,0 +1,36 @@
+**Definition 1.4 (Original ten outputs).** Keep edge order
+
+$$
+\mathcal E=((0,1),(0,2),(0,3),(1,13),(3,13)),\qquad
+\delta_{ij}=\theta_i^{\rm in}-\theta_j^{\rm in}.
+$$
+
+For each edge use the Hermitian observables
+
+$$
+A_{ij}=|i\rangle\langle j|+|j\rangle\langle i|,\qquad
+B_{ij}=-i|i\rangle\langle j|+i|j\rangle\langle i|.
+$$
+
+Their expectation pair is
+$2\sqrt{p_ip_j}U(\delta_{ij}+h_i-h_j)$, where
+
+$$
+U(a)=\binom{\cos a}{\sin a},\qquad
+R_a=\begin{pmatrix}\cos a&-\sin a\\\sin a&\cos a\end{pmatrix},\qquad
+J=\operatorname{diag}(1,-1).
+$$
+
+Concatenating the pairs defines $y:\mathcal M\to\mathbb R^{10}$.
+Every error below uses its original Euclidean norm, with no whitening or
+rescaling of outputs. Define
+
+$$
+A(k)=2\sqrt{k(H-k)},\qquad B(k)=2\sqrt{Zk},
+$$
+
+$$
+D_0(a,b)=(a,b,a,Ja,Ja),\qquad
+O=\bigoplus_{e\in\mathcal E}R_{\delta_e},\qquad D=OD_0.
+$$
+

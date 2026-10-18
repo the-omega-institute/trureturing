@@ -1,0 +1,37 @@
+**Definition 12.1 (mixed assistance and available ports).** At a cut of
+height $k$, supply calibrated finite-dimensional density operators
+$\tau_+,\tau_-$ and the accessible joint input
+
+$$
+|\psi_{k,\beta,m}\rangle\langle\psi_{k,\beta,m}|
+ \otimes\tau_\epsilon,\qquad \epsilon=(-1)^m.
+\tag{PR.35}
+$$
+
+The helper states are independent of $\beta$ and of the winding within
+parity. They include **all accessible history-bearing assistance jointly**:
+quantum memory, classical archives and source-bearing programmes, receiver
+shares, clock latches, calibration tokens and every input read by a guard,
+selector or update. Independent ancillary inputs can be absorbed into the
+common operation. An additional accessible purification, noise flag,
+programme field or source callback changes this premise.
+
+Actual unread reference/archive fields are retained, with the operation
+acting by identity on them. They may be correlated with the mixed helper;
+they are unavailable to the continuation protocol. Giving them access later
+requires a new joint-input analysis. No equality of independently selected
+marginals is used. Conditional on a history, purity of the specimen alone
+makes its joint state with all these other fields a product with its pure
+specimen projector; the helper and unread fields need not be a product.
+
+The allowed implementation is the additional endpoint/checkpoint CP service
+of Definitions 3.2–3.3, with all its declared input/output registers and
+permission. Each accepted specimen must be exactly (PR.34) at its requested
+height. Retain actual success auxiliaries and all recorded suboutcomes.
+Executed failure has absorbing $f$, its flag and full actual residue.
+A known source/epoch/height/calibration/permission mismatch instead gives
+the unexecuted visible rejection of Definition 3.3, with no specimen
+successor or successful answer. There is no detector here for an unflagged
+promise violation, no reset or post-failure original retry. This service
+supplies neither canonical failure times/modes nor physical gates or sensors.
+

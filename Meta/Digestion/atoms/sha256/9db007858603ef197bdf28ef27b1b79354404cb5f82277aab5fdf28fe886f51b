@@ -1,0 +1,66 @@
+**Theorem 10.2 (strict per-input improvement and no universal least
+vector).** On every original input,
+
+$$
+B(\rho_{y,e,n})<g_y,
+\qquad B(W\rho_{y,e,n}W^\dagger)=B(\rho_{y,e,n}).
+\tag{RE.64}
+$$
+
+No allowed factorization attains the pointwise envelope on both members
+of any original beta-pair. Hence none attains it on all twelve histories
+or on all supported inputs. The set of twelve-coordinate resource
+vectors has no universally least vector. This does not classify its
+complete Pareto frontier.
+
+Proof. On an original input the coefficients in (RE.42) satisfy
+
+$$
+\begin{aligned}
+C&=c^2/2+d^2y/128>0,\\
+U_r&=(h_0c+h_2d)e\frac{\sqrt y}{16}
++r ac n\frac{\sqrt{64-y}}{16}.
+\end{aligned}
+\tag{RE.65}
+$$
+
+Their sum over $r$ is
+$2(h_0c+h_2d)e\sqrt y/16\ne0$. At least one $U_r$ is therefore
+nonzero. For that record the derivative of the function being minimized
+in (RE.42) at zero is $-2\eta(0)U_r\ne0$. A sufficiently small step in
+the sign of $U_r$ stays in $I_R$ and strictly improves its value.
+For the other record minimization cannot increase its value at zero.
+Since the sum of the zero-design values is
+$u_0\sum_rA_r=\operatorname{tr}(G_1\rho)=g_y$, this proves the
+strict inequality. Under $W$, only the $U_r$ signs reverse; the symmetric
+interval in (RE.42) then gives equality of the two envelope values.
+
+If one design attained both pointwise minima, its pair sum would be
+$2B(\rho)<2g_y$, violating (RE.63). One can also see the obstruction
+in the high coefficients themselves. Equality in (RE.46), on an
+original input, forces $v_r=u_rx_r^2$ because $C>0$, and then
+$u_r=\eta(x_r)$ because the bracket is strictly positive by (RE.50).
+Equality at the minimum forces the unique $x_r^*(\rho)$ of (RE.48).
+Thus the actual high coefficient matrix must be
+
+$$
+\eta(x_r^*)
+\begin{pmatrix}1&-x_r^*\\-x_r^*&(x_r^*)^2\end{pmatrix}.
+\tag{RE.66}
+$$
+
+For at least one record $x_r^*$ is nonzero and reverses sign on the
+beta-mate. One fixed matrix cannot have those two opposite cross
+entries. Any extra high acquisition mass that later fails is nonnegative
+in (RE.19), and cannot repair equality.
+
+By Corollary 8.2, a design attaining $B$ at one member does exist. Its
+beta-mate must have high probability at least $2g_y-B(\rho)>g_y$.
+Its resource vector is therefore incomparable with the Pareto vector
+of Theorem 10.1. If a universally least vector existed, it would lie
+coordinatewise below that Pareto vector and hence equal it, by Theorem
+10.1. It would also have to lie below this per-input attainer, whose
+selected coordinate is strictly smaller. This is impossible. No
+scalarization or hidden distribution over histories enters the proof.
+$\square$
+

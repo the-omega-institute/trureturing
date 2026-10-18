@@ -1,0 +1,48 @@
+### 94.5. Consumer and retained boundary
+
+The complete §75 charts cover every noncanonical ray, including an aligned
+constant channel whenever present. All-generic triples are excluded above,
+all-aligned triples by uniform §§83–85, and a mixed triple contains an
+excluded mixed edge. A common-flat basis containing a canonical ray is
+canonical by §60; a basis without one would contain a forbidden triple.
+The exact input/output transport \(W=H_0^*B\) of §91 gives the fixed-pair
+quartet exclusion.
+
+The conclusion concerns only the four real punctured roots of the exact
+degree-96 polynomial \(Q\). Other retained guard fibres, the center and
+the endpoints are not covered by this argument. No density or continuity
+claim removes those remaining exceptions.
+
+The three sections give a combined strict improvement of the finite guard
+without changing the statement or proof of §91. Write
+\[
+ Q_{98}(b)=P_{93}(b^2),\qquad Q_{48}(b)=P_{94}(b^2),
+\]
+where \(P_{93}\) and \(P_{94}\) are the complete polynomials in §§93.7
+and 94.6. The irreducible polynomials \(L,Q_{98},Q_{48}\) have distinct
+degrees 32,196,96, so they are pairwise coprime. Their punctured real
+root sets are disjoint and have total cardinality \(2+6+4=12\).
+
+Let \(v_L,v_{98},v_{48}\) be the maximal nonnegative integers for which
+the corresponding powers divide the explicitly constructed \(H_*\) of
+§91. Each exponent is positive: the guard explicitly retains the leading
+coefficient of \(F\), and its component denominator resultant
+\(\operatorname{Res}_k(F,F_k)\) retains both discriminant factors
+certified in §§93–94. Define the exact nonzero polynomial
+\[
+ H_{\mathrm{reduced}}=
+ \frac{H_*}{L^{v_L}Q_{98}^{v_{98}}Q_{48}^{v_{48}}}.        \tag{94.3}
+\]
+For every \(0<|b|<1\) with \(H_{\mathrm{reduced}}(b)\ne0\), there is no
+noncanonical common-flat orthogonal triple, the complete common-flat
+basis is canonical, and \((I_6,H_0(b))\) cannot belong to a quartet.
+Indeed, away from the three displayed factors §91 applies; on any of
+them the corresponding section above applies. Maximality and irreducibility
+also show that \(H_{\mathrm{reduced}}\) is nonzero at every root of
+these three factors, so all twelve certified parameters are included.
+This argument neither
+expands \(H_*\) nor assumes that these twelve points exhaust its real
+zeros. All zeros of the remaining guard are retained as unresolved by
+this finite-fibre extension.
+
+

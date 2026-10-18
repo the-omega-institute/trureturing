@@ -1,0 +1,6 @@
+**定义 8.3（full evidence and supplier costs）。** If an interface mandates $M$ literal evidence bits, an evidence wrapper consists of mode $10110111$, gamma$(M)$, those $M$ bits and one core. Its exact extra word length is
+$M+8+2\lfloor\log_2(M+1)\rfloor+1$. Retaining evidence adds its actual length and framing to compact memory; mandatory verification adds its actual workspace, input and time, with no numerical-core bound asserted for them. Identities, certificates, logs required as evidence, public rational constants, rational denominators and source-dependent programs all pay their literal sizes when retained. Discarding an already received raw record or certificate is allowed only by that interface; it does not erase its acquisition charge.
+
+Source construction, representing the tree, preparing $a,b$, executing both substitutions, issuing and transporting the three original replies, producing fine archive digits, archive storage, authentication and truthful certificates remain supplier-side costs. An explicit $(m,n)$ tree's three literal evaluations use
+$(m+n-1)+(m+2n-1)+(2m+3n-1)=4m+6n-3$ cross products, in addition to syntax and substitution costs. The compressed predictive core does not claim these operations were free.
+

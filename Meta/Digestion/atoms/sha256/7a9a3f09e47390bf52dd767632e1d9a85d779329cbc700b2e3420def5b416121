@@ -1,0 +1,14 @@
+**Definition 58.2 (the remaining uniform problem).** The original problem keeps every actual channel of Definition 52.1, all $0<\beta\leq1/2$, every actual rank $r\leq9$, all admissible third columns, all complex whole-output CPTP recoveries and every finite complex reference. Its lower-bound target is
+
+$$
+\inf_{N\in\mathcal R_\beta}\ \inf_{R:M_5\to M_3\ {\rm CPTP}}
+\|RN-\mathrm{id}_3\|_\diamond\geq1-\sqrt{1-\beta},
+\tag{S.66}
+$$
+
+where $\mathcal R_\beta$ is the actual original-real passive class. Together with the existing matching upper construction this is the equality target of Definition 10.2 of the first volume. The complete half-beta actual-rank-two proof is already Theorems 44.2–45.1 there, and is not repeated here.
+
+Theorem 54.1 proves (S.15) only at its individual center subclass. Section 55 rules out an all-center proof by (S.14); Section 56 extends that method obstruction precisely to (S.47). Neither obstruction is an actual encoder counterexample to (S.66). They do not exclude direction-dependent weights or other matrix methods. No theorem locating all actual maximizing centers in the spread subclass is supplied.
+
+Uniform infeasibility of (S.59) at the remaining centers would suffice for (S.15). Its truth over the full remaining domain is unresolved. A feasible point of that relaxation requires the actual lifting of Definition 58.1 before it can challenge the common-contraction bound, and still does not supply a recovery with an improving full-reference diamond upper certificate. No such actual improving encoder/recovery pair or uniform joint infeasibility is supplied here. The arbitrary-rank target (S.66) remains unchanged.
+

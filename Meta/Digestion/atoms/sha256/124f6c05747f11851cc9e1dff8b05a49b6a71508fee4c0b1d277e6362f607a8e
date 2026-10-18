@@ -1,0 +1,13 @@
+## 3. A compatibility relation for nonconstant suspended emissions
+
+Set
+
+$$
+\chi=\frac{d_p}{d_\beta}=\frac{1116529}{806625},\qquad
+\zeta_0=\frac{412}{729}-\chi\frac{22}{27}
+        =-\frac{151298}{268875}.
+\tag{3.1}
+$$
+
+The same intercept is obtained from the other endpoint, and $C_p-\chi C_\beta-\zeta_0=0$.
+

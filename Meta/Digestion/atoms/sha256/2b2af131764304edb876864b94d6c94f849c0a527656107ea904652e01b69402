@@ -1,0 +1,55 @@
+**Proposition 6.3 (Rational difference-turn erasure on a line and its
+limit).** Under the same affine-hull hypothesis,
+
+$$
+E(k,\alpha+2\pi q,\beta)=E(k,\alpha,\beta)
+\qquad(q\in\mathbb Q).
+$$
+
+This conclusion does not force every such factor to ignore all phase
+distinctions. In ordinary set theory with choice there is a one-real-
+coordinate factor sensitive to an irrational difference-phase turn.
+
+**Proof of Proposition 6.3.** At $h=H/2$, the command $Q_{4\pi q}$
+shifts $\alpha$ by $2\pi q$ and $\beta$ by $\pi q$. It has finite
+order on this source torus: if $q=p/a$ with $a>0$ integral, $2a$
+repetitions return both circles. Lemma 6.1 fixes each encoded point
+already after one repetition. Theorem 3.4 removes the rational
+$\beta$ shift, and the same lawful transfer from $h$ to $k$ as in
+Theorem 6.2 proves the display. The singleton case again is immediate.
+
+For the example choose an irrational $\xi$. Under choice, extend the
+$\mathbb Q$-independent set $\{1,\xi\}$ to a basis of $\mathbb R$
+over $\mathbb Q$. Define a $\mathbb Q$-linear function
+$f:\mathbb R\to\mathbb R$ by $f(1)=0$, $f(\xi)=1$, and zero on
+the other basis elements. It is additive and vanishes on $\mathbb Q$.
+Set
+
+$$
+E_f(k,\alpha,\beta)=f(\alpha/(2\pi)),
+$$
+
+where any real representative of $\alpha$ may be used. Another
+representative adds an integer to the argument, so the value is
+unchanged. This is a function of the current ray, not a retained lift.
+Every probability command acts by the identity, and every phase
+command acts by the affine translation
+
+$$
+z\longmapsto z+f(t/(4\pi)).
+$$
+
+These assertions follow directly from the source formulas and
+additivity. The states with $\alpha=0$ and $\alpha=2\pi\xi$
+have different encodings. Moreover the values at
+$\alpha=2\pi j\xi$ are $j$ for integers $j$, so the phase image
+is unbounded. This construction provides no regularity or effective
+evaluation assertion. It ignores height and cannot recover probability
+guards. The zero readout makes it a finite-error model of Definition
+2.1, and Theorem 6.2 still supplies its minimax lower bound. For a
+prescribed path its exact translation is $z\mapsto z+f(L/(4\pi))$,
+where $L$ is the total phase increment in §8; this follows directly
+from the path's difference-phase equation. Thus even requiring those
+literal path identities does not justify full phase blindness.
+$\square$
+

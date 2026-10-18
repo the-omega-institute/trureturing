@@ -1,0 +1,39 @@
+**Proposition 60.3 (unique simple feasibility boundary).** The zero
+$a_\dagger$ in Definition 59.3 exists uniquely, with
+
+$$
+.2951251<a_\dagger<.2951252,
+\quad \omega(a)>0\ (0\leq a<a_\dagger),
+\quad \omega'(a)<-.9\ (7/25\leq a\leq37/125).
+\tag{RC.19}
+$$
+
+Proof. On the early rectangle $\Omega>0$ and $\mathscr D>0$.
+On the late rectangle the root lies in $(.39,.395)$, and
+$k'(a)=-\mathcal P_a/\mathcal P_k>0$. Thus (RC.18) gives
+$\omega'=\omega_a+\omega_k k'<-.9$ along it.
+The following exact comparisons complete isolation:
+
+| $a$ | Enclosure for $k(a)$ | Enclosure for $\omega(a)$ |
+| --- | --- | --- |
+| $.2951251$ | $(.393637406,.393637409)$ | $(1.2\cdot10^{-7},1.9\cdot10^{-7})$ |
+| $.2951252$ | $(.393637421,.393637424)$ | $(-1.9\cdot10^{-7},-1.2\cdot10^{-7})$ |
+
+For each $k$ bracket, evaluating $\mathcal P$ at its two endpoints gives
+respectively positive and negative intervals. To specify a stable finite
+comparison for the last column, evaluate $\Omega/\mathscr D$ at the
+bracket midpoint and enlarge by $6$ times its half-width using (RC.18).
+The resulting intervals are contained respectively in
+$(1.4257,1.6059)10^{-7}$ and $(-1.6746,-1.4945)10^{-7}$.
+Continuity, the two opposite signs, strict decrease on the late segment
+and positivity on the early segment prove (RC.19), including simplicity.
+Direct interval substitution in $Z_2/Z_1$ on these brackets also gives
+
+$$
+1.04172<\left.\frac{Z_2}{Z_1}\right|_{a_\dagger}<1.04179.
+\tag{RC.20}
+$$
+
+All these are rational comparisons with nonzero denominators, using
+(RC.9); no remaining matrix optimization is involved. $\square$
+

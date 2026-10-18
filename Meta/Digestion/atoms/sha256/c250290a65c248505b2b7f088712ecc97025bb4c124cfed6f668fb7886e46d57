@@ -1,0 +1,21 @@
+**Lemma 8.2 (six-capacity lifting in both directions).** Two common suffix arrangements with the same identified indices and roles and equal root summaries have the same attained joint relation, provided the occurrence prefixes and the short-word constant components are kept as in Definition 5.1. Each inclusion uses one actual source for the entire triple, with all class disequalities and repetitions.
+
+Proof. Start with any actual old valuation $x$. For each of its six distinct whole class values, record its type and its replies at every one of the $m$ suffix indices, including those assigned to other runtime roles. For any arrangement the cells
+
+$$
+\{y\in s:(r_y(w_i))_{i=1}^m=v\},
+\qquad s\in\{\mathsf A,\mathsf H,\mathsf I,\mathsf O\},\quad v\in\mathcal A^m,
+\tag{BPS.22}
+$$
+
+partition all finite trees. Their capacities are precisely the root summary. If $j$ of the six old class values occupy one cell, they certify capacity at least $j$, with $j\le6$. Equal summaries give $j$ different actual finite values in the corresponding new cell. Choose them there, and do this for each occupied cell. Distinct cells are disjoint, so every pair of chosen whole class values remains different. No childwise inequality or separate marginal feasibility is used.
+
+All six types persist, so Proposition 1.4 gives exactly the same one of the eleven profiles. Use the chosen $a$ value at both $a$ occurrences and the chosen $c$ value at both $c$ occurrences. The resulting one valuation $x'$ is injective, its whole filling is an image, and
+
+$$
+u'=\delta(\mathscr S(x'))\in\mathcal U_*.
+\tag{BPS.23}
+$$
+
+Proposition 2.3 gives the identical complete target, with its remaining partner hole, canonical restricted partition, disequalities and guards. For each installed observation index, project its class's full response vector to that index. Equation (BPS.2) gives its old reply at the fixed occurrence prefix. Thus this single $u'$ realizes the entire old preparer vector, serving vector and target together. Short words have their fixed common branch reply. This proves one inclusion. Starting with a new actual valuation and using the equal capacities in reverse gives one old actual origin for the complete reverse triple. $\square$
+

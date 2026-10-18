@@ -1,0 +1,38 @@
+**Proposition 12.3 (Same-source upper realization).**
+Definition 12.2 is legal for either original endpoint, either first
+parity, both bias directions and every specified unchanged independent
+seed law. It has $q_3=1$ and correctness $S_3$.
+
+Proof. The first edge is $\{T,T+1\}$, containing the actual
+phase-$\alpha$ target. Both second edges are $\{T+2,T+3\}$;
+the zero-zero third edge is $\{T+4,T+5\}$, disjoint from both.
+The $10$ edge $\{T+1,T+2\}$ joins the first two pairs; its
+heavier completions put the target at $1-\sigma$ and $\sigma$
+on joining replies zero and one. The $11$ edge
+$\{T-1,T\}$ is a fresh extension of the target's one pair;
+its two heavier triples put the target at $\sigma,1-\sigma$.
+These are precisely the first row of Proposition 11.1 with its unique
+labels. On $01$ the rule immediately halts with the allowed majority
+label. Therefore that proposition proves correctness $S_3$.
+
+Every formal binary execution halts after two reads on $01$ and
+three on every other first-two-reply prefix. Each actual instruction
+has finite duration, so in particular $q_3=1$. No artificial read
+refund is involved: the repeat on $01$ in Definition 6.1 is simply
+not made by this table. For $\alpha=0$ all other actual calls and
+outputs are those of that existing source attainer. For $\alpha=1$
+the same displayed integer literals are active edges in phase one
+and paid separators in phase zero; the equality verification uses
+the actual $T=v_1=0$, not a transported target. The all-zero output
+uses the other phase's actual $S_{v_\beta}$ and its original majority
+mass $a/2$.
+
+Explicitly $v_0=j$, $v_1=0$ and (1.3) give the required endpoint
+state for both $j=0,1$ in both phase alternatives. The majority
+convention uses $\sigma=1$ for $p>1/2$ and $\sigma=0$ for
+$p<1/2$, with no change of source law. Negative integer literals,
+including $2(T-1)+\alpha$ when negative, are legal and charged.
+Constant initialization consumes no property of the seed law and
+leaves it unchanged. All current-stage and output distinctions are
+exactly the installed states in the table. $\square$
+

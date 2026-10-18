@@ -1,0 +1,32 @@
+**定义 29.2（三位掩码、两个孩子及一个可实现位）。** 把 $P(H)$ 存成二叉前缀 trie，每个地址只存一个节点和其已存孩子的索引，不在每个节点重复保存整条地址。在 $x\in P(H)$ 保存
+
+$$
+\begin{aligned}
+a_x(b)&=\bigwedge_{i:\,x\preceq p_i}[\theta(n_i,b,p_i\setminus x)=c_i]\quad(b=0,1),\\
+g_x&=\bigwedge_{i:\,p_i=x}[c_i=\mathsf{branch}].
+\end{aligned}
+\tag{SLH.29.3}
+$$
+
+$p_i\setminus x$ 是去掉前缀后的字。空合取为真。$a_x(b)$ 的意义是假设**原来源在 $x$ 是该叶**时，$x$ 锥内全部已获证据是否相容；它不声称实际原来源已经到达 $x$。定义语法状态 $L_x$，并给每个未存孩子统一状态 $\star$：
+
+$$
+\begin{aligned}
+L_\star&=\mathcal T,\\
+L_x&=\{\lambda_b:a_x(b)=1\}
+\ \cup\ \{\langle v_L,v_R\rangle:g_x=1, v_d\in L_{xd}\ (d=L,R)\}.
+\end{aligned}
+\tag{SLH.29.4}
+$$
+
+式中未在 trie 的 $xd$ 读作 $\star$；$\star$ 可用常数个产生式 $\alpha,\beta,\langle\star,\star\rangle$ 表示，只接受有限树。选择叶产生式时，其已存后代状态不再展开。一个节点可以同时允许叶和分支，不能把不同备选的后代当作必须同时存在。
+
+令 $v_\star=1$，按 trie 的逆深度计算
+
+$$
+v_x=a_x(0)\vee a_x(1)\vee(g_x\wedge v_{xL}\wedge v_{xR}).
+\tag{SLH.29.5}
+$$
+
+证书 $\Sigma_H$ 是此 trie、掩码与可实现位，根状态为 $L_\varepsilon$。不需要把 $n_i$、重复事件或一份完整来源附在每个语法节点上。
+

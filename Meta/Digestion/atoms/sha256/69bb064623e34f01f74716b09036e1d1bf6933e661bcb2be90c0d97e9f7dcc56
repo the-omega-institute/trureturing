@@ -1,0 +1,49 @@
+**定理 13.1（保留两影子零层的修复）。** 在初始 $D$ 二因子上作支持不交的 $\mathcal T_g,\mathcal T_h$ 后，二十圈 $\mathcal R_v=(abcabcbabc)^2$ 是实际交替简单圈。它把受影响核心的两圈合为一圈，且兼容由支持不交的完整 $E$ 或 $\mathcal T$ 开关构成、在核心只接一次的关联树附件。其边集恒等式为
+
+$$
+\mathcal R_v=O_v\triangle O_g\triangle O_h,\qquad
+\mathcal T_g\triangle\mathcal T_h\triangle\mathcal R_v
+=\mathcal T_v\triangle\mathcal E_{ga}\triangle\mathcal E_{ha},
+$$
+
+其中 $O_z=(abcb)^2$，$\mathcal E_z$ 为完整 $E$ 开关。因此它把两个外部到影子 $\mathcal T$ 换为一个外部到外部 $\mathcal T_v$，并恢复两个影子的完整零层。
+
+**证明。** 两个共享 bracelets 为 $pD,qD$，切边分别为 $(p,pa),(r,rb)$ 及 $(s,sb),(q,qa)$。短路径是 $p\xrightarrow b v\xrightarrow a r$ 和 $q\xrightarrow b u\xrightarrow a s$，补路径各长 $2n-4$。外部八圈 $O_v$ 的顶点为 $v,r,rb,q,u,s,sb,p$；其 $p-b-v,q-b-u$ 仍在因子中，所以它本身不交替。用 $O_g,O_h$ 各自的另外七边替换这两条边，得到以下二十顶点，右列将左列的 $x,y$ 互换：
+
+| $i$ | $t_i$ | $t_{i+10}$ | 下一条边及切换前状态 |
+| --- | --- | --- | --- |
+| 0 | $(x,A,0,y)=v$ | $(y,A,0,x)=u$ | $a$，在 |
+| 1 | $(y,0,\bar A,x)=r$ | $(x,0,\bar A,y)=s$ | $b$，不在 |
+| 2 | $(A,0,y,x)=rb$ | $(A,0,x,y)=sb$ | $c$，在 |
+| 3 | $(0,\bar A,y,x)=q$ | $(0,\bar A,x,y)=p$ | $a$，不在 |
+| 4 | $(x,y,A,0)=qa$ | $(y,x,A,0)=pa$ | $b$，在 |
+| 5 | $(\bar A,y,x,0)=qab$ | $(\bar A,x,y,0)=pab$ | $c$，不在 |
+| 6 | $(y,A,x,0)=hab$ | $(x,A,y,0)=gab$ | $b$，在 |
+| 7 | $(x,\bar A,y,0)=ha$ | $(y,\bar A,x,0)=ga$ | $a$，不在 |
+| 8 | $(0,y,A,x)=h$ | $(0,x,A,y)=g$ | $b$，在 |
+| 9 | $(\bar A,y,0,x)=hb$ | $(\bar A,x,0,y)=gb$ | $c$，不在 |
+
+末标签先区分 $x,y,0$，零的位置及 $A$ 的不同首末标签再区分同组顶点，故二十顶点互异。每条边的状态由两条 $\mathcal T$ 的原始切边和长 $E$ 路径逐项给出；最后实际边为 $gb\xrightarrow c v$。这证明简单性和合法性，不能只用词的群值为一代替。
+
+删除十条原在边 $(t_{2j},t_{2j+1})$ 后，实际剩余路径的端点配对及完整词为：
+
+| 配对 | 路径词 |
+| --- | --- |
+| $(0,13),(3,10)$ | $b$ |
+| $(1,8),(11,18)$ | $Y$ |
+| $(2,15),(5,12)$ | $L$ |
+| $(4,7),(14,17)$ | $X$ |
+| $(6,9),(16,19)$ | $M$ |
+
+这里 $H=a(ba)^{n-1}$ 是 $b$ 切边的完整 bracelet 补路径，$X=c(Hc)^{n-3}$、$Y=c(Hc)^{n-4}$、$L=a(ba)^{n-3}$、$M=a(ba)^{n-2}$。影子长 $E$ 路径的 $n-3$ 个私有切边各展开为 $H$，给 $pa-X-ga,qa-X-ha$；外部长路径的最后一个 $bc$ 在共享 bracelet 处被切，剩 $g-Y-s,h-Y-r$ 及直接 $p-c-sb,q-c-rb$。共享 bracelet 的长补路径为 $pa-b-pab-L-rb$、$qa-b-qab-L-sb$；非共享 $gD,hD$ 的剩余长路给 $gab-M-gb,hab-M-hb$，另有 $p-b-v,q-b-u$。各私有 bracelet 只被切一次，共享两条已各划成短长两路，故十条路径内部不交并覆盖整个受影响核心。
+
+旧配对产生两个圈，边界顺序为 $(0,1,8,9,6,7,4,5,12,13,0)$ 与 $(2,3,10,11,18,19,16,17,14,15,2)$。新配对 $(t_{2j+1},t_{2j+2})$（模二十）给唯一完整顺序
+
+$$
+13,14,17,18,11,12,5,6,9,10,3,4,7,8,1,2,15,16,19,0,13.
+$$
+
+每个端口恰用一次，最后 $v\xrightarrow b p$ 是实际闭合边。所有修复顶点在四个核心 $E$ cosets 内。一个 $\mathcal T$ 在其每个 $E$ coset 占 $2n-4$ 个顶点，而 coset 总有 $2n-2$ 个；其他 $E$ 或 $\mathcal T$ 开关若支持与核心不交，就不能使用这四个 cosets。树附件只把剩余路径中的一条父边换为包含子圈的同端点路径，故不改变十个端点配对。两次返回核心的外部结构不在此论证范围内。
+
+最后复用 $\mathcal T_z=\mathcal E_z\triangle\mathcal E_{za}\triangle O_z$，且 $vE=gE,vaE=hE$，直接得到定理所列恒等式。恒等式本身不证明合圈，合圈由上述完整端点表承担。
+

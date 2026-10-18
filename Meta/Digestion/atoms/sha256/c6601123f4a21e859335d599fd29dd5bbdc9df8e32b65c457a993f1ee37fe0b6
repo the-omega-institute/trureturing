@@ -1,0 +1,10 @@
+**Corollary 6.3 (Guarded tolerance endpoint).** In the interval (6.1), the
+finite tolerance set of each guarded class is
+
+$$
+[4H\sqrt{T_4(\tau)},\infty).
+$$
+
+**Proof.** The endpoint is attained by Theorem 6.2, all four infima agree by
+Theorem 1.5, and smaller tolerances are infeasible. $\square$
+

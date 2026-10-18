@@ -1,0 +1,17 @@
+**Scale approaching zero.** For any chosen $0<\rho<1/3$ put
+
+$$
+\theta=\frac{1-3\rho}{8\rho}>0,\qquad
+S_*=\begin{pmatrix}1&\theta\\\theta&\theta^2\end{pmatrix},\qquad u_*=3+4\theta.
+$$
+
+Here $p_*/u_*>\rho$, because $1-3\rho-4\rho\theta=(1-3\rho)/2>0$. Set $a_i=\operatorname{tr}(A_iS_*)$; explicitly
+
+$$
+(a_0,\ldots,a_5)=(1+\theta^2,\ 1+\theta+\theta^2,
+4+4\theta+\theta^2,\ 4+4\theta+\theta^2,
+11+7\theta+\theta^2,\ 15+8\theta+\theta^2).
+$$
+
+For $\epsilon>0$ take $S_0=S_1=\epsilon S_*$, $k_0=0$, $k_1=1$, and $D_0=D_1=0$. Use $c_j=\epsilon(1,\theta)^{\mathsf T}$ and $\ell_j=(1,\theta)$. Each run has this one positive factorization. The observation difference at index $i$ is $\epsilon ia_i$, so its maximum norm is $5\epsilon a_5\to0$, while $|k_1-k_0|=1$. Both sources obey the same strict shape condition and $u=\epsilon u_*\to0$. A shape bound and bounded slopes therefore do not supply uniformly continuous slope recovery when scale can vanish.
+

@@ -1,0 +1,20 @@
+**Definition 4.1 (four disjoint types and cap six).** Partition all $\mathcal T$ into
+
+$$
+\mathsf A=\{\alpha\},\quad \mathsf H=\{\beta\},\quad
+\mathsf I=\mathcal B_I,\quad
+\mathsf O=\mathcal T\setminus(\mathsf A\cup\mathsf H\cup\mathsf I).
+\tag{BPS.10}
+$$
+
+The last type consists of the other branch trees. A pair has type $\mathsf I$ exactly for ordered child-type pairs in
+
+$$
+\mathcal C_I=\{(\mathsf H,\mathsf A),
+(\mathsf H,\mathsf H),(\mathsf H,\mathsf I),
+(\mathsf I,\mathsf H),(\mathsf I,\mathsf I)\}.
+\tag{BPS.11}
+$$
+
+Every other ordered child-type pair has type $\mathsf O$; a pair is never $\mathsf A$ or $\mathsf H$. Order is literal: $(\mathsf A,\mathsf H)$ is a nonimage case. For any set $X$ define $[X]_6=\min(6,|X|)$, using six for infinite sets. Write $u\oplus v=\min(6,u+v)$ and $u\otimes v=\min(6,uv)$ on $\{0,\ldots,6\}$. Unrestricted type capacities are $(1,1,6,6)$.
+

@@ -1,0 +1,25 @@
+**Observation 9.4 (finite local results).** The following exact finite
+domains have no counterexample to their specified checks. These are
+finite-model results, not a native consumer realization.
+
+| Domain | Result |
+| --- | --- |
+| All 63 binary reader words of lengths 0–5, every primitive cut | 1,416 prefix comparisons, including 258 IN-before-WR cuts; all equal to their selected replay prefixes. |
+| Every remaining binary suffix at those reader cuts | 9,240 comparisons; changing the unread suffix leaves the selected state equal. |
+| Unary values 0–20 | All 441 ordered comparisons satisfy $4\min(x,y)+2$; 21 copies and 21 increments satisfy the exact displayed body counts. |
+| Arenas with 0–8 existing cells, every entry head from L through R | All 54 Base entry cases satisfy (RCA.5), including nonempty arenas. |
+| All ordered bounds $a,b\in\{0,\ldots,8\}$ | All 81 intervals enumerate exactly $a,\ldots,b$, or nothing for $a>b$; the comparison/copy/increment bodies satisfy (RCA.6) without its separate positioning/framing terms. |
+| Reader-plus-return closed flights of 0–2 frames, payload lengths 0–2 | 57 flights, including the zero-frame boundary; sealed-frame exhaustion constructs their exact relative bound and 1,017 total prefix references without an ordinal input. |
+| Frozen reader packages and invalid selection | 1,416 frozen target checks remain equal under replacement of a separate latest-cover field; indices $-1,b+1,b+5$ are rejected for each of 63 flights, independently of later meter growth. |
+| All 31 binary copy words of lengths 0–4 | 681 single-stage phase checks satisfy $6\ell+3$; 151 complete-payload but unsealed states remain unavailable. |
+| Input-gated and earlier-service witnesses | A missing second bit blocks the next IN; service payloads 1010 and 1100 differ in the occupied latch at local cut 7 with equal source-only keys. |
+| Capacity-one two-bit source-write fixture | The explicit intermediate packet in $01\to11\to10$ is retained as raw unavailable data. |
+
+The closed-flight fixture is a reader-plus-return abstraction, not LJA's
+complete source/gate/record machine. The partial-source fixture specifies
+the two single writes, not their private guard/gate implementation.
+Negative mathematical indices test the validator's input domain; the
+physical unary API cannot encode a negative natural. Partial publication,
+source writes and earlier-service implementation cuts of a completed
+native decoder remain outside the executed finite models.
+

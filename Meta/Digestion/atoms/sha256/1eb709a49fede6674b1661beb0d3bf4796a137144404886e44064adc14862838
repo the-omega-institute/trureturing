@@ -1,0 +1,49 @@
+### 83.1. General transversal theorem for original channels
+
+Let k>=2 be an integer and let F_(k,2):C^(2k)->C^k be the uniform qubit-fibre target
+
+    F(|f,i><f,j|)=delta_ij |f><f|,
+    F(|f,i><g,j|)=(1/2)|f><g|  for f!=g.
+
+Fix the input and output MC encodings. For original CPTP maps A,B:C^(2k)->C^k, let
+
+    delta=||(A tensor B)J_in-J_out F_(k,2)||diamond,
+
+where the norm is unhalved and permits arbitrary references.
+
+A transversal sigma=(i_1,...,i_k) selects one bit i_f in {0,1} from each fibre. For any Stinespring presentations, define the correct-output environment records
+
+    a_f=(<f|_out tensor I)V_A|f,i_f>,
+    b_f=(<f|_out tensor I)V_B|f,i_f>,
+    G_sigma=(<a_f,a_g>)_(f,g),
+    H_sigma=(<b_f,b_g>)_(f,g).
+
+These are positive semidefinite Gram matrices, with diagonal entries at most one. Define
+
+    L_A,sigma=||G_sigma||op,  L_B,sigma=||H_sigma||op,
+    t_A,sigma=Tr G_sigma/k <=1,
+    t_B,sigma=Tr H_sigma/k <=1.
+
+These quantities are intrinsic to the original channels: the transposed Gram is the corresponding correct-output Choi compression, so changing or enlarging a Stinespring environment does not change them.
+
+**Transversal bound.** For every transversal sigma,
+
+    delta >= max{0,
+       (k+1)/k - (2/k^2) Tr(G_sigma^T H_sigma)}        (1)
+
+and consequently
+
+    delta >= max{0,
+       [k+1-2 L_A,sigma t_B,sigma]/k,
+       [k+1-2 L_B,sigma t_A,sigma]/k}.                (2)
+
+In particular, with
+
+    L_* = min_(sigma, party in {A,B}) L_party,sigma,
+
+one has
+
+    delta >= max{0, [k+1-2L_*]/k}.                  (3)
+
+The maximum with zero is explicit: a negative right-side expression is a vacuous certificate, not a negative error estimate.
+

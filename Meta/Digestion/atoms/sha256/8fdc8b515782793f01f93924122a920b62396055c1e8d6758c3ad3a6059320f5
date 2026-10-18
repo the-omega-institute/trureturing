@@ -1,0 +1,26 @@
+**Definition 50.1 (Actual local probability radii).** Fix the whole labeled source set $X$, the maps $N,\Omega$, the constant zero advice, the common consumer and its nonempty measurable tape carrier $(\Theta,\mathcal F)$ as in Definitions 44.1 and 45.1. Fix every target law $\mu_y$ before varying the preparation. Any profile or anchor-row requirement is a condition on this input family; it does not restrict the prepared laws to satisfy the same row. Write $I(\mu)$ for (46.15). All distances below use event-supremum TV.
+
+Enumerate the primes increasingly and put $C_0(x)=X$. For an occupied finite prime-prefix cylinder $C$, define
+
+$$
+\begin{aligned}
+\rho_\mu(C)&=\inf_{v\in\mathcal P(\Theta,\mathcal F)}
+                   \sup_{y\in C}\operatorname{TV}(v,\mu_y),\\
+r_\mu(x)&=\inf_{m\ge0}\rho_\mu(C_m(x)),\\
+R_\mu&=\sup_{x\in X}r_\mu(x).
+\end{aligned}
+\tag{50.1}
+$$
+
+The centers are probability laws on the original carrier. No local center is assumed to attain its infimum. The targets in a cylinder include every original label, including different labels with identical observations.
+
+For topological bookkeeping only, let
+
+$$
+Q=\left\{\big(\mathbf1_{p_i\mid N(y)}\big)_{i\ge1}:y\in X\right\}
+   \subseteq\{0,1\}^{\mathbb N}.
+\tag{50.2}
+$$
+
+Use its subspace topology. Write $[y]$ for the signature of $y$ and $r_\mu([y])=r_\mu(y)$; the latter is well-defined because all its cylinders depend only on that signature. This is the countable set of actual complete observation signatures, without adjoining any other bit stream. The cylinder topology on $X$ is its pullback. A TV-continuous law family factors through $Q$, since distinct probability measures are separated by TV. A target family need not factor through $Q$.
+

@@ -1,0 +1,86 @@
+**Theorem 1.3 (Activity-matched information spectrum).** Under
+Definitions 1.1–1.2, let
+
+$$
+H_\omega=\sum_i\omega_iK_i,\qquad
+\bar f=\sum_up_uf_u,\qquad
+g=D(f-\bar f\,\mathbf 1).
+\tag{1.5}
+$$
+
+For every real $f$,
+
+$$
+J_\omega[f]=4\langle g,H_\omega g\rangle,\qquad
+\mathcal Q_p[f]=4\|g\|^2.
+\tag{1.6}
+$$
+
+In particular, choose
+
+$$
+R=\sum_i(1+a_i),\qquad
+\omega_i=\frac{1+a_i}{R}.
+\tag{1.7}
+$$
+
+Then, writing $\Delta_{\rm loc}$ for the lowest eigenvalue of
+$H_{\rm loc}$ on $\psi_+^\perp$,
+
+$$
+\inf_{\mathcal Q_p[f]>0}\frac{J_\omega[f]}{\mathcal Q_p[f]}
+=\frac{\Delta_{\rm loc}}{R}.
+\tag{1.8}
+$$
+
+For the same choice (1.7), the entire generalized spectrum of the pair of
+information forms $(J_\omega,\mathcal Q_p)$ after quotienting the
+constant phase is the spectrum of $H_{\rm loc}|_{\psi_+^\perp}/R$.
+
+Proof. Orient an insertion edge at $i$ as $u_i=0,v_i=1$. The same law
+(1.1) supplies $p_v=a_ip_u$. On its two-dimensional block,
+
+$$
+K_i|_{\{u,v\}}
+=\frac1{p_u+p_v}
+\begin{pmatrix}
+p_v&-\sqrt{p_up_v}\\
+-\sqrt{p_up_v}&p_u
+\end{pmatrix}.
+\tag{1.9}
+$$
+
+The blocks at fixed $i$ are disjoint, and blocked words contribute zero.
+This proves the normalization in (1.2) and gives
+
+$$
+\langle Df,K_iDf\rangle=\mathcal E_i(f,f).
+\tag{1.10}
+$$
+
+The two resolved outcomes on this edge have, at the reference, masses
+$(p_u+p_v)/2$ and opposite derivatives
+$\sqrt{p_up_v}(f_v-f_u)$. Their total Fisher contribution is
+$4p_up_v(f_v-f_u)^2/(p_u+p_v)$, exactly as in Parent/Readout Theorem 8.11.
+The recorded, signal-independent site label weights this contribution
+by $\omega_i$, so $J_\omega[f]=4\sum_i\omega_i\mathcal E_i(f,f)$.
+The pure-state formula used in Parent/Readout Proposition 8.14 gives
+$\mathcal Q_p[f]=4\operatorname{Var}_p(f)$.
+
+Each $K_i$ annihilates $\psi_+$, so centering $f$ does not change the
+energy. This proves (1.6). The map $f\mapsto Df$ sends the real subspace
+$\{f:\sum_up_uf_u=0\}$ bijectively onto the real part of
+$\psi_+^\perp$, and $\|Df\|^2=\operatorname{Var}_p(f)$ there.
+For (1.7), $H_\omega=H_{\rm loc}/R$. The Rayleigh principle proves
+(1.8), and this same invertible change of variables proves the full
+generalized-spectrum statement. The parent is real symmetric, so its
+restriction has a real eigenbasis; restricting $f$ to real directions
+loses none of these eigenvalues. $\square$
+
+Theorem 1.3 is a concrete synthesis of the resolved experiment of Parent/Readout §8
+and the activity parent of Boundary Calculus §15.9. Its general tools
+are the classical stochastic-matrix-form correspondence below and the
+pure-state Fisher formula already attributed in Parent/Readout §8.13. The choice
+(1.7) matches the parent; it does not assert optimality among site
+distributions.
+

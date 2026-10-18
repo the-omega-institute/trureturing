@@ -1,0 +1,19 @@
+**Proposition 5.4 (paid journal access).** A sealed journal prefix, complete
+material references and its ownership token constitute callable finite memory:
+a caller can request the $i$th row or a complete prefix, obtain its complete
+typed payload, and continue with the same source/version binding. Invalid
+indices return a separately declared `no-row` result without a source event.
+
+**Proof.** Install a public scan routine driven by the constructed $U(i)$ and
+the already sealed end descriptor. Scan complete length-framed rows in order,
+advancing a paid unary counter and skipping each payload by its stored finite
+length. Stop at the requested row or the closed end. Copy a found row and its
+required material through a fresh allocated mailbox and destination using
+PR57.D7. Each loop consumes a sealed finite bound, so PR57.L1 gives termination;
+PR57.L4 and Theorem 5.3 preserve its bits and binding. The end case yields
+`no-row`, a memory-service outcome rather than TagRead absent. Its complete
+successor includes changed scan/work/copy/meter state. These service events
+are retained in the primitive history; they do not masquerade as Native locals
+or additional source calls. All scans, comparisons, allocations, copies and
+output writes are actual paid occurrences. $\square$
+

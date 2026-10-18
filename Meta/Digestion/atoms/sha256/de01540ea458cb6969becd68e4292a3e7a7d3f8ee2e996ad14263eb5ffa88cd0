@@ -1,0 +1,22 @@
+## 128. Native bounded preparers and the quantum boundary
+
+**Correspondence C-125.5 (Finite native synthesis is a separate carrier).**
+`FIB_BOUNDED_NATIVE_PREPARER_SYNTHESIS.md`, §§8–12 of the pinned source
+snapshot, defines an attained relation on finite trees and installed reader states. Its
+Theorem 8.3 preserves that relation under literal-only normalization, and
+Theorem 10.2 gives a terminating exact finite decision/synthesis procedure for
+the SOME-preparer question, with actual finite origins for both attained bits
+when the native budgets pass. The counted quantities are installed native
+states, literal reads, serving calls and finite-tree witnesses; the reader,
+original Boolean replies and serving table are part of that contract.
+
+This is a lawful supplier for a bounded classical/native preparer only when its
+finite-tree and serving-table premises and actual witnesses are supplied. It
+does not prepare a density operator, a phase reference, a complex amplitude,
+the six-outcome PVM, a CPTP response map, or a quantum wire. Its $N,P,L$ and
+six-capacity bounds cannot be renamed as the quantum copy count $m$, Hilbert
+space dimension, diamond error or communication cost. Acquired finite code
+terms in that volume likewise do not become native quantum source copies.
+The native result therefore sharpens the classical acquisition boundary while
+leaving the quantum tensor-copy supply open.
+

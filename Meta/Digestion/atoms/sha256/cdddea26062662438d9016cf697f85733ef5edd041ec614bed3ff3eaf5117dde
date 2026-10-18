@@ -1,0 +1,80 @@
+**Theorem 2.2 (global feasibility, exact selector and minimum labels).**
+For every choice in Assumption 1.1, (NTL.7) is computable from the
+genuinely acquired initial row, takes exactly $q$ attained values, and
+satisfies
+
+$$
+e_f^{-1}(0)=\{a(b):b\in\{0,1\}^m\}.
+\tag{NTL.8}
+$$
+
+It separates every nonzero common translation of initial ages. It
+therefore admits globally correct finite current-port lag recovery on
+the full cube, for every $S\in\mathcal M$ and every legal unbounded
+lag, under either convention. Among all encoders with that global
+recovery property on this cube, $q=K+2$ is the minimum attained
+source-summary alphabet. Its fixed-width representation uses
+$\lceil\log_2q\rceil$ bits, excluding the other resources in
+Definition 1.2.
+
+**Proof.** For each designated $v(b)$, $h(v(b))\le1$ and
+$0\le t_b\le K\le H-h(v(b))$. Thus $a(b)$ is a legal original
+profile. The reference coordinate of $v(b)$ is zero, so $\min v(b)=0$
+even when all bits are one. On its chain, distinct allowed $t$ lie
+in an integer interval of length at most $q$; residues $t-t_b$ modulo
+$q$ are distinct. Exactly $t=t_b$ receives label zero.
+
+The only normalized profile with $h(v)=0$ is the zero profile,
+which is designated by $b=0^m$. Every undesignated chain consequently
+has $h(v)\ge1$, hence at most $q-1$ members. Its labels $t+1$ lie
+in $\{1,\ldots,q-1\}$ and are distinct. This proves the range
+bound, separation along every chain, and (NTL.8). The zero-profile
+chain has $q$ members; its residue labels attain every element of
+$\{0,\ldots,q-1\}$. Two profiles differing by a common translation
+have the same normalized $v$, so the separation is precisely the one
+required by [NAR, Theorem 16.5][NAR].
+
+For actual acquisition, [NAR, Reuse 16.2][NAR] supplies the right clock
+$c(T_n)=n$ and the acquired factors
+$a_j=c(X_a|_{w_j})-jq$. Apply (NTL.5)--(NTL.7) to those parsed
+values, export the resulting label, and discard the other acquired
+distinctions as required. This is a finite computation on acquired
+data, not a free age input. No bound on its table size or work is used.
+
+To spell out the global use of the supplier, a visible slot gives
+$z_i=c(Y|_{w_i})-iq=\ell+a_i$. Every hidden exponent lies in
+
+$$
+[jq+\max(\lambda_0,z_i-H),\ jq+z_i+H],
+\tag{NTL.9}
+$$
+
+which contains at most $2H+1$ integers. NAR16.5's literal interval
+reader recovers these exponents with at most
+$(r-|S|)\lfloor\log_2(2H+1)\rfloor$ fresh calls. Visible
+exponents are already parsed. With the whole normalized current
+vector $x_j=a_j+\ell$, enumerate compatible $a'$ with the received
+code and $x=a'+\ell'\mathbf1$, $\ell'\ge\lambda_0$.
+Existence is supplied by the actual history. Two different lags would
+give a same-code nonzero common translation, which has been excluded.
+Return the unique lag. This proves global feasibility independently
+of the special-entry analysis below; the call bound is sufficient,
+not asserted optimal.
+
+Finally reuse [NAR, Theorem 16.3][NAR]. The $q$ originals
+$a=t\mathbf1$, $0\le t\le H$, with positive lags $q-t$ all have
+the identical whole current tree
+$\mathcal B_D[(T_{jq+q})_j]$. At any fixed allowed cut they have
+the same full later row and all-address replies, but different required
+lags. Any globally correct encoder must distinguish these $q$
+originals. These witnesses apply under both lag conventions, and they
+are in the unchanged independent cube. Together with the attained
+range of (NTL.7), they prove the exact minimum. $\square$
+
+The matching of a task selector with that minimum is the additional
+interface here. Coloring chains is the elementary finite separation
+method; the native lower bound, acquired clock and feasibility theorem
+are reused. In particular, declaring the reference age fixed throughout
+the source domain would remove the very obstruction used for the
+minimum; Assumption 1.1 does not make that change.
+

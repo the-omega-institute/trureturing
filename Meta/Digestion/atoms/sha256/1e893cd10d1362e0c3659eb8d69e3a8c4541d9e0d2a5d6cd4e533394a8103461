@@ -1,0 +1,31 @@
+### 68.3 Compactness in the ambient unitary space
+
+The fixed flat-input torus
+
+\[
+ \mathcal T=\{v\in\mathbb C^6:|v_r|^2=1/6\text{ for all }r\}
+\]
+
+is compact. If no positive radius made (68.3) true, there would be
+unitaries \(H_n\to H_\star\) and vectors
+\(v_n,w_n\in\mathcal F(H_n)\) with
+
+\[
+ \left|\,|v_n^*w_n|^2-\frac16\right|<\frac\delta{72}.
+\]
+
+Pass to convergent subsequences in \(\mathcal T\times\mathcal T\).
+Continuity of all output-modulus equations gives
+\(v_n\to v\), \(w_n\to w\) with
+\(v,w\in\mathcal F(H_\star)\). Continuity of the overlap gives
+
+\[
+ \left|\,|v^*w|^2-\frac16\right|\le\frac\delta{72},
+\]
+
+contradicting (68.2). This proves the ambient half-gap (68.3).
+No finiteness or regularity of nearby ray loci is assumed, and
+possible rays approaching canonical points are included.
+The argument supplies a positive radius by compactness, not a
+numerical matrix-radius estimate from the central overlap gap alone.
+

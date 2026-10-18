@@ -1,0 +1,12 @@
+**Openproblem 12.5 (Exact subtransition minimax evaluation).** For every
+$0<\tau<1$, determine the value of $T_4(\tau)$ by a globally
+justified exact formula, or a root/contact/global-feasibility
+description that actually determines it. The expression
+$\min_{\mathcal E_2}J_\tau$ is an exact full-class variational
+characterization and existence theorem, not this evaluation.
+Determine the global minimizing spectra and every asserted
+parameter-regime boundary, including distinct, confluent, real,
+complex and purely imaginary possibilities. A stationary point
+or an optimum within a selected real-exponential subfamily does
+not settle this problem.
+

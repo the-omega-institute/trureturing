@@ -1,0 +1,30 @@
+**Assumption 1.1 (The unchanged preparation and actual menu).** Use exactly
+QMB Assumption 1.1. The Hilbert space is $\mathbb C^5$, with ordered
+orthonormal basis $\mathsf S=(N,2,3,5,25)$ and
+$\Pi_s=e_se_s^\dagger$. Every complex density matrix is an allowed input.
+Fix
+
+$$
+K=\begin{pmatrix}
+0&1&1&1&0\\
+1&0&0&0&1\\
+1&0&0&0&0\\
+1&0&0&0&1\\
+0&1&0&1&0
+\end{pmatrix},\qquad U(t)=\exp(-itK),\quad t\ge0.
+\tag{1.1}
+$$
+
+The future menu consists precisely of nonnegative waits, the complete
+five-outcome rank-one Lüders instrument $X\mapsto(\Pi_sX\Pi_s)_s$,
+and Stop. All finite adaptive depths are included. Histories retain
+outcomes, controls and stops. Initial controls and allowed random controls
+are source-independent, and both comparisons use the same policy.
+Classical grouping of outcomes is postprocessing of this complete read.
+It is not a coarse-block Lüders instrument. Independent mode phases,
+arbitrary future unitaries, probability oracles, readable hidden Kraus
+records, source copies, resets and external quantum side information
+are absent. This preparation is an independent hypothesis, not a
+construction from the native $\alpha/\beta$ tree or a different
+tensor-cut source. The label $N$ denotes a unit basis vector.
+

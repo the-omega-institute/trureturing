@@ -1,0 +1,64 @@
+**Theorem 6.1 (normalized admissible correction).** Fix any real odd $u\in C_c^\infty(\mathbb R^4)$ and set $R_s=s^{-1/2}$,
+
+$$
+f_s=\eta_{R_s}p+\beta_su,
+\qquad Z_s=\mathcal T_s^{-1}f_s/\|f_s\|_2.
+\tag{6.1}
+$$
+
+For every sufficiently small original real $s>0$, $Z_s\in\mathcal Q_s$ is normalized and
+
+$$
+\frac{q_s^c[Z_s]}{s^2}\longrightarrow
+\nu^2\{K_{\rm base}+h[u]-2\ell(u)\}-\lambda D_{\rm clock}.
+\tag{6.2}
+$$
+
+In particular
+
+$$
+\limsup_{s\downarrow0}E_s\le C_{\rm resp}.
+\tag{6.3}
+$$
+
+Proof. Since $sR_s\to0$, both faces lie outside the height support in (6.1). The cutoff core argument after (2.11) proves native admissibility of the first summand; the second is a compact core vector. Its phase support need not restrict that of the first summand. Parity gives the exact norm identity
+
+$$
+\|f_s\|_2^2=\|\eta_{R_s}p\|_2^2+\beta_s^2\|u\|_2^2\to1.
+\tag{6.4}
+$$
+
+The weak critical equation gives $h(p,v)=0$ for every canonical form vector. For small $s$, the cutoff is identically one on the height support of $u$, so $h(\eta_{R_s}p,u)=h(p,u)=0$. The product identity
+$h[g p]=a\int|g'|^2p^2$, obtained by testing with $g^2p$, and (2.11) imply
+
+$$
+h[f_s]=\beta_s^2h[u]+o(s^2).
+\tag{6.5}
+$$
+
+On the support of the cutoff, $|\beta_sr|\to0$ uniformly. Expand the exact rational difference
+$(1+\beta_sr)^{-2}-1=-2\beta_sr+3\beta_s^2r^2+O(|\beta_sr|^3)$. Since $Y\eta_{R_s}=0$, parity removes its base linear term, and
+
+$$
+a\int\bigl((1+\beta_sr)^{-2}-1\bigr)|Yf_s|^2
+ =\beta_s^2\left(3aA-4a\int r(Yp)(Yu)\right)+o(s^2).
+\tag{6.6}
+$$
+
+For its base remainder use $C|\beta_s|^3R_s\int r^2|Yp|^2=o(s^2)$. The base quadratic integral converges by $rYp\in L^2$. The terms involving $u$ have fixed compact support; their remaining products are of smaller order by Cauchy–Schwarz.
+
+The complete field expansion (3.3) gives
+
+$$
+\int(\widetilde U_s-V)|f_s|^2
+ =\beta_s^2\left(C_2+2\int V_1pu\right)+\lambda s^2T+o(s^2).
+\tag{6.7}
+$$
+
+Here the base $V_1$ integral vanishes exactly by parity. Boundedness of the fields and convergence of the cutoff handle $C_2,T$; the compact cross terms give the displayed $V_1$ correction, and all other correction terms have higher powers of $s$. The remainder is bounded by $Cs^{5/2}\|f_s\|_2^2$. Finally the exact original subtraction is $-a\lambda s^2\|f_s\|_2^2$. Combine (6.5)–(6.7), then divide by (6.4). The numerator divided by $s^2$ has a finite limit, so a denominator tending to one suffices; no unproved second-order norm expansion is required.
+
+Each fixed $u$ gives an upper bound on $\limsup E_s$. Taking their infimum and using
+$\inf_u(h[u]-2\ell(u))=-D_{\rm resp}$ proves (6.3).
+
+A single normalized recovery family can also be chosen. Take odd compact $u_m\to\Psi$ in $h$. Choose decreasing positive thresholds $s_m\to0$ so that for every $0<s\le s_m$ the fixed-$u_m$ coefficient error in (6.2) is at most $1/m$, both-face admissibility holds, and $\beta_s^2\|u_m\|_2^2\le1/m$. Require also $|\|\eta_{R_s}p\|_2^2-1|\le1/m$. Use $u_m$ for $s_{m+1}<s\le s_m$ and normalize as in (6.1). The norm tends to one and stays positive; its normalized coefficient tends to $C_{\rm resp}$. This selects admissible vectors for every small $s$ on the prescribed original path. It never inserts $\Psi$ itself into an $L^2$ or operator domain. $\square$
+

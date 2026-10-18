@@ -1,0 +1,7 @@
+## 53. 配对 two-circulant 的 Fourier 交点及实际 cyclic completion 的两条边
+
+本节沿用正文 §51 和上节的实际向量方向。先对任意复参数的配对
+circulant 矩阵给出精确交点判据，再将它用于同时满足两组平坦性条件的
+cyclic triple。这里的 Hadamard 等价始终允许任意左右单位模对角矩阵
+与行列置换；Fourier union 指 Fourier family 及其转置族的等价类之并。
+

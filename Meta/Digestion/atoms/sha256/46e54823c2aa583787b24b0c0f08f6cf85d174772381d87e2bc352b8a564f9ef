@@ -1,0 +1,21 @@
+### 79.2. All coherent matrix units and the marker mechanism
+
+The vectors on the right of (1) are orthonormal over all input labels: different f have orthogonal output labels, and within a fibre the u_(f,j) are orthogonal. Thus both maps are isometries, including when marker vectors coincide. For f!=g the tetrahedral identity n_f dot n_g=-1/3 gives
+
+    |<u_(f,i),u_(g,j)>|^2
+       =(1+(-1)^(i+j) n_f dot n_g)/2
+       =1/3 if i=j, and 2/3 if i!=j.                 (4)
+
+The conjugate qubit records on the other party cancel the phases of these overlaps. With the convention that the output coefficient for |f,i><g,j| is the environment inner product in the order (g,j),(f,i), the retained coefficients are therefore
+
+    C_(f0,g0)=C_(f1,g1)=1/3,
+    C_(f0,g1)=2eta/3, C_(f1,g0)=2conj(eta)/3          (f!=g).
+
+For f=g the coefficient is delta_ij. The target has the same diagonal blocks I_2 and every off-diagonal block J_2/2. Consequently the difference kernel is
+
+    D=(J_4-I_4) tensor R_eta,
+    R_eta=[[-1/6, 2eta/3-1/2],
+           [2conj(eta)/3-1/2, -1/6]].                (5)
+
+This verifies every matrix unit, not only a selected input state. At eta=3/4 the unequal-bit coefficients match the target exactly, leaving R_eta=-I_2/6.
+

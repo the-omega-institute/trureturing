@@ -1,0 +1,29 @@
+### 108.4. One-party invariance, leakage and sharpness
+
+Suppose now that the calibrated Gram $G$ alone is invariant. Each translation permutes the four original fibres, fixes $T$ and bijects the full fixed witness domain in (107.7). Averaging only the other Gram gives
+
+$$
+ \overline H=\tfrac18\sum_{a\in\Gamma}P_aHP_a^*,
+ \qquad
+ F(G,\overline H)\le\tfrac18\sum_{a\in\Gamma}F(G,P_aHP_a^*)=F(G,H).
+ \tag{108.11}
+$$
+
+The inequality follows from convexity with $G$ fixed, and the equality from its invariance and witness-domain covariance. The average is positive semidefinite, calibrated and translation-invariant. Thus §§108.2–108.3 apply. Interchanging the parties covers the other possibility. The averaging may change rank.
+
+For arbitrary original leakage, complete both Grams by adding their positive semidefinite original fibre-block deficits, as in (107.23). An invariant $G$ has the same block $\left(\begin{smallmatrix}d&c\\c&d\end{smallmatrix}\right)$ on every fibre, with $c$ real. Its completion adds $(1-d)I-cP_h$, which is still invariant. The other completion needs no symmetry. The original product blocks satisfy $G_{ff}\odot H_{ff}\le I_2$, so $L-\widetilde L$ is positive semidefinite and fibre-block diagonal. The original tagged-reference bound of RT III §91 therefore gives $\delta\ge\mathcal B(L)\ge\mathcal B(\widetilde L)=F(\widetilde G,\widetilde H)$. Apply (108.11) to the completed pair. Reciprocal diagonal phases cancel in the full product, while a common fibre-preserving relabeling simultaneously reindexes $K,T$ and the witness domain. The actual original-channel operations in §107.7 prove the optional phase and relabeling statement with the same error.
+
+The cyclic attainer of §107.4 proves the first sharpness assertion. For the second, take $\Gamma=\mathbb Z/4\mathbb Z\times\mathbb Z/2\mathbb Z$, $h=(2,0)$, and identify its characters with pairs $(a,b)$, evaluated by $\chi_{a,b}(x,y)=i^{ax}(-1)^{by}$. Put $\chi=(1,0)$, $\psi=(1,1)$, and $m=1/\sqrt2$. Define
+
+$$
+ \begin{aligned}
+ G&=\tfrac12C_0+\tfrac m2C_\chi+\tfrac{1-m}{2}C_\psi,\\
+ H&=\tfrac12C_0+\tfrac m2C_{-\chi}+\tfrac{1-m}{2}C_{-\psi}.
+ \end{aligned}
+ \tag{108.12}
+$$
+
+The four odd characters $\chi,\psi,-\chi,-\psi$ are distinct. Both Grams are calibrated of rank three. The character records $(\sqrt{g_\eta}\eta(x))_\eta$, together with the correct output-fibre labels, give original Stinespring isometries because partner records are orthogonal. Here $A=1$, $B=m^2+(1-m)^2$, so $E_0=2m(1-m)=\sqrt2-1$. The odd coefficients at $\chi,-\chi$ are $m/4$, and those at $\psi,-\psi$ are $(1-m)/4$. Thus $O_0=2m-1=\sqrt2-1$. Equation (108.5) proves exact original complete-norm attainment. $\square$
+
+The character diagonalization and convex symmetry reduction are standard intermediate tools. The spectral-majorant technique is credited in §107.2 to Regula, Takagi and Gu; the original fibre normalization and probability estimate used here have been proved explicitly. No independent averaging of two varying Grams is justified by (108.11). These translation hypotheses remain substantive, and neither the general residual alternatives of Theorem 106.5 nor the unrestricted global quarter optimum are resolved.
+

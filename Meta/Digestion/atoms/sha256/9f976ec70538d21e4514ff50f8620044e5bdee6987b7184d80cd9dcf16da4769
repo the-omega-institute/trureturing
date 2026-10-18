@@ -1,0 +1,17 @@
+**Lemma 4.2 (finite PSD completion from the null cone).** If a real
+symmetric $R$ is nonnegative on $z^TQz=0$, then $R+\nu Q\succeq0$
+for some finite real $\nu$. If it is strictly positive on the unit
+null set, a completion can be positive definite.
+
+Proof. The convex cone $\mathcal D=\mathrm{PSD}+\operatorname{span}(Q)$
+is closed. Indeed, if $R_n=P_n+t_nQ$ converges with $P_n\succeq0$,
+test $P_n$ on one fixed $Q$-positive and one fixed $Q$-negative vector.
+These bound $t_n$ above and below. A convergent subsequence of $t_n$
+then gives a PSD limit $R-tQ$. If $R\notin\mathcal D$, finite-dimensional
+separation gives $X\succeq0$, $\operatorname{tr}(QX)=0$ and
+$\operatorname{tr}(RX)<0$. The rank-supported real-null decomposition
+in Proposition 2.2 contradicts this last inequality. Thus $R\in\mathcal D$,
+which proves the completion with the sign of $\nu$ adjusted. For the
+strict assertion compactness of the unit null set gives $e>0$ such that
+$R-eI$ is nonnegative there. Complete $R-eI$ and add $eI$. $\square$
+

@@ -1,0 +1,55 @@
+**Theorem 3.12 (Exact task quotient for endpoint histories).** Fix the same
+positive base probability $p_{\kappa_0}$ and the same initial pure-state
+phases for every history. Allow ideal real and imaginary coherence
+expectations on the five edges
+
+$$
+0\!-\!1,\quad 0\!-\!2,\quad 0\!-\!3,\quad
+1\!-\!13,\quad 3\!-\!13.
+$$
+
+Two admissible loop histories have all these endpoint statistics equal if and
+only if their residuals represent the same element of $\mathcal H_b$.
+Thus the exact endpoint history summary for this read menu is three circles,
+two circles, or a circle and parity in the respective symmetry regimes.
+
+Proof. On an oriented edge $i\!-\!j$ the two Hermitian observables
+
+$$
+A_{ij}=|i\rangle\langle j|+|j\rangle\langle i|,
+\qquad
+B_{ij}=-i|i\rangle\langle j|+i|j\rangle\langle i|
+$$
+
+have expectations $2\operatorname{Re}(\overline\psi_i\psi_j)$ and
+$2\operatorname{Im}(\overline\psi_i\psi_j)$, respectively. Since
+$|\overline\psi_i\psi_j|=\sqrt{p_ip_j}>0$, these determine the edge phase
+difference modulo $2\pi$. If two outputs have the same readings, let
+$\delta_s$ be their phase difference in $\mathbb T$. Every measured edge
+then gives $\delta_i=\delta_j$. The graph is connected: modes $1,2,3$ join
+$0$ directly and mode $13$ joins through $1$ or $3$. Therefore all
+$\delta_s$ are one common phase. In the middle-fixed gauge, both histories
+have the same unchanged middle phase, so $\delta_2=0$ and every $\delta_s=0$.
+Their residual classes are equal.
+
+Conversely, equal residual classes give identical complex amplitudes in this
+gauge from the common initial state, hence all the listed readings are equal.
+Theorem 3.3 identifies exactly which classes occur, and its constructive
+sufficiency ensures that each claimed history-summary value is realized.
+$\square$
+
+The proof would use any spanning tree of this graph, with four edges; the
+specified five-edge menu is valid without asserting a minimal physical
+instrument. Equality here concerns ideal probability laws or exact
+expectations. Distinct such laws need not be perfectly distinguishable from
+finitely many shots, and no perfect finite-shot discrimination is claimed.
+
+At the same base point, probabilities-only readings identify all loop
+histories, since every endpoint has that probability. Schmidt-spectrum-only
+readings for fixed partitions of the three declared position factors also
+identify all of them by Theorem 3.8. The full coherence menu instead recovers
+the compact group element, but not the path: a rectangle followed by its
+reverse is a nonconstant history with the same residual as the constant
+history. This summary is neither path reconstruction nor an online resource
+bound or a replacement for an unbounded counter in a different task.
+

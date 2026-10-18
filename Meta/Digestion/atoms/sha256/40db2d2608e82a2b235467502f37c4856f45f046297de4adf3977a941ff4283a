@@ -1,0 +1,29 @@
+**Theorem 3.3 (literal instrument, gate count and source preservation).** For
+every $H\ge1$, every valid installed block $x$, and every paid finite address $p$,
+Definition 3.2 has a finite execution and returns exactly
+$\operatorname{tag}(p,\operatorname{decode}(x))$. It leaves all installed source
+bits unchanged. Its Boolean tape has exactly
+
+$$
+G(H)=(2N+3)4^N+3
+$$
+
+gate records and one end header. This is a gate-record count, not a runtime,
+fee, code-length or workspace bound of $G(H)$.
+
+**Proof.** Induction on $i$ gives
+$e_{z,i}=1$ exactly when $z$ and $x$ agree on their first $i$ bits. Enumeration
+contains $x$ exactly once. Since $x$ is valid, that row's public locator gives
+the true literal tag by Lemma 2.3. The final OR accumulator at coordinate $j$
+is $\bigvee_z(e_{z,2N}\land b(z,p)_j)$; exactly the actual row can contribute.
+Thus it equals $b(x,p)_j$, including the all-zero alpha result. Invalid rows
+cannot equal the valid $x$ and cause no ambiguity.
+
+Three initial constants and, per row, one constant, $2N$ conjunction gates and
+two OR gates give the stated count. End-of-program is a header, not a gate.
+The enumerator has a fixed finite row count. Public parsing and the locator
+terminate, and each record has four finite constructed unary addresses. The
+generator writes each record through `Emit`/`AppendWord`; PR57.L1 and the literal
+interpreter then give finite execution of the finite tape. No gate writes a
+source cell, so all source bits are preserved. $\square$
+

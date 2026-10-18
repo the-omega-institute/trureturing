@@ -1,0 +1,17 @@
+**Proposition 207.10 (Integer moment cuts).** Let $\nu$ be an actual
+finite nonnegative measure on Boolean variables $Z_i\in\{0,1\}$, with
+$S=\int1$, $m_i=\int Z_i$, $q_{ij}=\int Z_iZ_j$. For all integers
+$a_i,r$,
+
+$$
+\sum_i a_i^2m_i+2\sum_{i<j}a_ia_jq_{ij}
+ -(2r+1)\sum_i a_im_i+r(r+1)S\ge0.
+\tag{207.26}
+$$
+
+**Proof.** $U=\sum_i a_iZ_i$ is integer at each atom. Hence
+$(U-r)(U-r-1)\ge0$ pointwise. Integrate and expand using $Z_i^2=Z_i$.
+The same argument applies separately to each nonnegative event or
+first-zero measure and to every projection. These are necessary cuts,
+not a sufficient characterization of the Boolean moment cone. $\square$
+

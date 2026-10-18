@@ -1,0 +1,16 @@
+**Affine convention 341.3 (Retaining the anchor).** For $L\ge2$ and event rows,
+write $d_{w,E}(b,e)=\eta_w(E)-e$ and
+$r_{w,E}=R_w(E)$, where $R=O(1,2;1,2,0)$ is the anchor table.
+A mass-$M$ affine comparison uses
+
+$$
+k_w(E)\ge d_{w,E}(b,e)+(M-1)r_{w,E}.
+\tag{341.13}
+$$
+
+Dividing (341.13) by $M$ does not keep the original profile demands.
+For $M>0$ its normalized profile is
+$b'=\alpha+(b-\alpha)/M$, $e'=e/M$, with
+$\alpha=(1,1,0,\ldots,0)$. Theorem 341.2 characterizes the
+mass cone; it does not remove this affine anchor.
+

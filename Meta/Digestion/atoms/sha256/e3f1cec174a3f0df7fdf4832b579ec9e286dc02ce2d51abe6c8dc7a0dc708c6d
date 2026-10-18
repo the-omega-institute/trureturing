@@ -1,0 +1,48 @@
+**Definition 4.1 (A common seed and one positive-product witness).**
+Use sector bases $\mathcal B_0=(d)$,
+$\mathcal B_+=(u_+,v_+)$ and $\mathcal B_-=(u_-,v_-)$. Put
+
+$$
+\begin{gathered}
+\mathcal Q_{ij}=\sum_{a\in\mathcal B_i,b\in\mathcal B_j}
+(ab^T+ba^T)\otimes(ab^T+ba^T),\qquad i<j,\\
+\mathcal T_j=\sum_{a=1}^2F_{2j,a}\otimes F_{2j,a},
+\qquad j\in\{+,-\},\\
+e(\xi)=\begin{pmatrix}1&\xi&1/\xi\\
+                         1/\xi&1&\xi\\
+                         \xi&1/\xi&1\end{pmatrix},\qquad \xi>0,\\
+Z_\xi=\sum_{i,j}e_{ij}(\xi)R_i\otimes R_j
+            +\mathcal T_++\mathcal T_-+\sum_{i<j}\mathcal Q_{ij},\\
+W=\sum_iR_i\otimes R_i
+       +R_0\otimes R_++R_+\otimes R_-+R_-\otimes R_0
+       -\tfrac12\sum_{i<j}\mathcal Q_{ij}.
+\end{gathered}
+\tag{4.1}
+$$
+
+All these are matrices on the original $\mathbb C^5\otimes\mathbb C^5$.
+The seed $Z_\xi$ is not TP. Its input marginal is
+$\sum_jm_jR_j$, where
+
+$$
+m_j=\sum_i n_ie_{ij},\qquad
+m=(1+2/\xi+2\xi,\ 2+\xi+2/\xi,\ 2+2\xi+1/\xi).
+\tag{4.2}
+$$
+
+Define the mathematical input congruence and paired witness by
+
+$$
+C_\xi=\sum_jm_j^{-1/2}R_j,\qquad
+Z'_\xi=(I\otimes C_\xi)Z_\xi(I\otimes C_\xi),\quad
+\chi'_\xi=Z'_\xi/5,\qquad
+W'_\xi=(I\otimes C_\xi^{-1})W(I\otimes C_\xi^{-1}).
+\tag{4.3}
+$$
+
+This is a construction of channel data, not a permitted future
+filter or a diagonal similarity theorem. In particular the
+diagonal invariance in
+[Nechita–Singh, 2007.11219v2, Lemma B.2](https://arxiv.org/pdf/2007.11219v2)
+is a congruence statement, not a diagonal similarity statement.
+

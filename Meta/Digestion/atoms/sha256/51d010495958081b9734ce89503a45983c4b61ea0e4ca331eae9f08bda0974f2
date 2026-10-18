@@ -1,0 +1,24 @@
+**定理 40.5（一个末增益为零的 M 碰撞必要式）。** 若实际 $Z,V\in\mathcal K(\mathcal H)$ 满足 $G_Z=0,G_V\ne0$ 且 $f_M(Z)=f_M(V)$，写 $b_Z,b_V$ 为两源元，则
+
+$$
+G_V=\frac{\Theta(b_V-b_Z)}{(b_Z+4)(b_V+4)\ell_{b_V}(r_V)},\qquad
+\Theta\ne0,\quad b_V\ne b_Z,
+\quad \operatorname{sgn}G_V=\operatorname{sgn}\bigl(\Theta(b_V-b_Z)\bigr).
+\tag{40.20}
+$$
+
+这是必要条件，不断言有这样的实际世界。
+
+证明。定理 40.1 在零端点给 $f_M(Z)=\eta_{\mathcal H}(b_Z)$。末 $M$ 相等便给
+
+$$
+\begin{aligned}
+\ell_{b_V}(r_V)G_V
+&=\eta_{\mathcal H}(b_Z)-\eta_{\mathcal H}(b_V)\\
+&=\Theta\left(\frac1{b_Z+4}-\frac1{b_V+4}\right)\\
+&=\frac{\Theta(b_V-b_Z)}{(b_Z+4)(b_V+4)}.
+\end{aligned}
+$$
+
+两个中心分母和 $\ell_{b_V}(r_V)$ 全严格正，除它们得到式 (40.20) 及符号方向。原左边在假设下非零，故 $\Theta$ 和 $b_V-b_Z$ 都非零。没有预先将它们作分母。证明包含普通／奇异混合比较与同类比较，排除了所有共同 $b$ 的一个末零端点 $M$ 碰撞。∎
+

@@ -1,0 +1,47 @@
+**定理 C-133.2（两条不随份数改善的精确前沿）。** 对每个 $n\ge1$、
+$\delta\in[0,1]$，无论取 $\mathcal N=\mathcal M_n(\mathcal F)$ 还是 $\mathcal M_n^{=}(\mathcal F)$，
+均有
+
+$$
+\begin{aligned}
+A_{\mathcal N}(\delta)&=\min\{1,4\delta/3\}
+&&\text{若 }\mathcal F=\mathcal F_{\rm all},\\
+A_{\mathcal N}(\delta)&=\min\{1,3\delta/2\}
+&&\text{若 }\mathcal F=\mathcal F_Q.
+\end{aligned}
+\tag{C133.2}
+$$
+
+达到效果分别为不限测量的 $tP^{\otimes n}$，以及承诺域可用的原生
+$tF_0^{\otimes n}$；$t=\min\{1,\delta/c\}$，缩放仍需 C-130.2 的一个独立最终硬币。
+
+证明。在全域取 $c=3/4$、$\tau=(P_C-P)/3$，在承诺域取
+$c=2/3$、$\tau=P_{e_2}$。两种 $\tau$ 都是与 $P$ 正交的正迹一态，且
+
+$$
+\sigma=cP+(1-c)\tau\in\mathcal F,\qquad
+\Omega_* = cP^{\otimes n}+(1-c)\tau^{\otimes n}
+\succeq cP^{\otimes n}.
+\tag{C133.3}
+$$
+
+$\Omega_*$ 为实际份间可分离态，全部边缘相同且恰为已展示的实际混态 $\sigma$。
+故它已属于较小的同边缘子域；任意集体效果均满足
+$\beta_{\mathcal N}(T)\ge c\alpha_n(T)$。
+这给 (C133.2) 的逆向界，且无需纠缠联合见证。
+
+另一方面，对于任意位置 $i$，
+
+$$
+P^{\otimes n}\preceq P_i\otimes I_{\ne i},\qquad
+\operatorname{Tr}(P^{\otimes n}\Omega)\le\operatorname{Tr}(P\Omega_i)\le c.
+\tag{C133.4}
+$$
+
+这里 $P_i$ 表示在第 $i$ 位置的单份投影。
+$\Omega_*$ 在全目标投影上的概率恰为 $c$，故此上界可达，缩放得第一种达到效果。
+承诺域同理有 $F_0^{\otimes n}\preceq(F_0)_i\otimes I_{\ne i}$，
+由零假设边缘给风险至多 $2/3$；又 $F_0\psi=\psi$、$F_0e_2=0$，
+所以同一 $\Omega_*$ 达到风险 $2/3$，目标通过概率一。
+一个独立最终硬币完成缩放。证毕。
+

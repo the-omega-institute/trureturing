@@ -1,0 +1,43 @@
+**Definition 2.2 (the exact $11m$-block gadget).** Indices $i$ are
+modulo $m$. Use Boolean variables $x_i,a_i,b_i$ and the two ordered
+positive exact-one clauses
+
+$$
+(x_i,a_i,b_i),\qquad (x_{i+1},a_i,b_i)
+\quad (i=1,\ldots,m).
+$$
+
+Boolean zero is the actual leaf $A$, and Boolean one is $B$. Each
+of the $3m$ variables has its own original owner block. Each of the
+$2m$ clauses has its own selector-owner block, with states
+$u_0=A,u_1=B,u_2=C_0$ for selected positions $0,1,2$. Each of the
+three positions of each clause has an original connector block. Hence
+there are $3m+2m+6m=11m$ original blocks and $5m$ actual root-owned
+seeds. A connector owns no seed.
+
+All factors of a variable-owner block are those of its leaf seed. All
+factors of a selector-owner block are those of $u_c$. A connector at
+position $h$ of a clause with selector $c$ and variable leaf $v$ has
+
+$$
+z_{\varnothing}=\Gamma_{\varnothing}(v),\qquad
+z_L=\Gamma_L(B\text{ if }c=h\text{, else }A),\qquad
+z_R=\Gamma_R(v).
+$$
+
+For $d>2$, every additional connector factor is $\Gamma_q(v)$;
+additional variable and selector factors also come from their same
+actual leaf or $u_c$. Each occurrence refers to its original owner,
+including the two distinct selector owners belonging to the two clauses
+at an edge. Occurrences are not independent variables.
+
+These are complete templates with attained-range total tables, not
+Boolean restrictions supplied through another source port. The Boolean
+root decoder fixes alpha and beta and sends branch and absent to the
+root factor of $A$. The selector root decoder fixes the three displayed
+states and sends absent to the root factor of $A$. Other off-domain
+table entries can be filled with attained factors. A fixed-point Boolean
+owner cannot have a branch root under its guard; a selector can have
+exactly its three stated roots. The inherited representation identifies
+these template solutions with their actual owned-seed lifts.
+

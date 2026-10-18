@@ -1,0 +1,30 @@
+**Definition 303.1 (The original unrestricted obligation).**
+With the complete score, quotient, hull and signed support conventions
+of 297.5 and 300.2, the positive universal assertion still requires:
+for every full $y\ge0$ with $\Delta_O(y)\le1$, there are one
+unrestricted full $V\ge0$ and one $\theta\in[0,1]$ such that
+
+$$
+\Delta_N(V)+\theta\le1,\qquad
+\sigma_H(Qy-QV)\le\theta,\qquad
+\sigma_H(q)=\max_{(b,e)\in H_L}F_q(b,e).
+\tag{303.1}
+$$
+
+The residual is signed; nonzero zero-cost $V$ at $\theta=1$ remains
+allowed. The alternative negative witness would require the same actual
+$(b,e)\in H_N$, one full feasible $\lambda\ge0$ of mass $M\ge1$,
+one full unit-$O$ score with $F_{Qy}(b,e)>M$, an actual original
+$N$ attainer and a uniform strict lower transport against **every**
+original arbitrary-address, full-carrier $O$ competitor. All the
+source, common-seed, zero-advice, finite-handoff, hard-two-actual-request,
+all-word, all-label, independent-union, positive-tail and closed-cap
+conditions remain in both alternatives.
+
+Neither alternative is established by the results here. Theorems 299.1
+are necessary relations, and Theorem 300.1 constructs equal attained
+optima on its specified contiguous ray and head domain. They give no
+one-budget replacement for an arbitrary full unit-$O$ input. All the
+strict comparison points in 301–302 lack a full feasible $N$ allocation,
+so cannot satisfy the required negative alternative.
+

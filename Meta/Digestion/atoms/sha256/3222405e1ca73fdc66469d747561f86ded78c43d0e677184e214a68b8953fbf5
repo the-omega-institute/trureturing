@@ -1,0 +1,4 @@
+**Proposition 11.2 (Every positive renewal or zero component forces strictness).** In every finite dimension, if any positive-weight actual hidden recurrent component has a proper renewal visible law, or the all-zero visible law, then $d(P_\theta)<c_\star$. In particular a presentation whose every positive component has a rank-one one-emission matrix, or emits only zeros, is excluded.
+
+**Proof.** The renewal component is strict by Theorem 10.3. The all-zero component has $d=0<c_\star$ by (2.1)–(2.2). Every other component has density at most $c_\star$. The actual affinity (11.1) and the positive weight of the strict component make the whole average strictly less than $c_\star$. Proposition 3.4 proves the assertion about rank-one components. $\square$
+

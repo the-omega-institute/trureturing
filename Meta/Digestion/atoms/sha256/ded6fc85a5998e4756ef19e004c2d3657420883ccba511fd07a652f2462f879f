@@ -1,0 +1,39 @@
+**Proposition 8.5 (paid arbitrary-length cycles with public padding).**
+For every $\ell\ge2$ choose $h$ with $2^h\ge\ell$, put
+$D=h+3$, select $\ell$ public frontier positions in the perfect
+scaffold, and place $B_\ell$ in these positions in any fixed cyclic
+order. Fill every other position with the fixed tree $u_0$. This
+relation of actual sources can also be one exact attained fiber on
+all of $\mathcal F_D$ under Assumption 8.1, with the acquisition
+bounds (CIT.41) and late Read length at most $D$.
+
+Proof. The variable positions use the successor $RL$ decoder for
+$LL$ and the local decoders for the remaining targets. They may
+query any other selected frontier position; adjacency in the scaffold
+is not required. Every target in a padding block has a publicly
+known factor, so uses no Read. Every target above the frontier is
+again a constant branch factor. These cases exhaust the permitted
+request lengths as in Theorem 8.3. A query in a padding block is
+source-independent on this fiber, so padding provides no hidden data
+port. It also contributes analytical weight one because
+$w_\theta(u_0)=1$.
+
+Acquire the whole source with the same paid literal array, assign
+one common fixed-width name to precisely this finite selected relation,
+and give all other sources singleton names. Export completely and
+apply the same paid isolation and lawful-entry services. The one
+common reader uses the displayed witnesses at the full literals
+$Ra_ja$ or zero Reads; singleton completion is unchanged. The
+actual block transport and temporal decoder prove correctness for
+every authentic subsequent count. Thus every cycle length is attained
+without asserting a length-one construction or a free operational
+subtree interface. $\square$
+
+Preparation work, temporary descriptions, membership computation,
+installed table generation and storage, literal lengths, submitted
+letters, predictor size, authentic-count representation, handoff,
+isolation and physical time remain separate resources. Equations
+(CIT.41)--(CIT.42) are sufficient counts for this particular
+full-family completion, without a claim of optimal acquisition or
+optimal retained alphabet.
+

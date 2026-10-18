@@ -1,0 +1,26 @@
+**Theorem 6.4 (Literal immutable-table description upper).** Number all
+$M_J$ configurations of Definition 3.2. A literal description of their
+two bit rows uses at most
+
+$$
+2M_J\left[2\lceil\log_2M_J\rceil+B+1\right]
+\tag{6.14}
+$$
+
+bits, plus a header specifying the format, dimensions and distinguished
+states. This is a description upper for an immutable dyadic table.
+It is neither a minimal encoding nor a lower bound on storage or on
+complete runtime configurations.
+
+Proof. Each row has at most two successor indices and one numerator
+in $\{0,\ldots,2^B\}$. Each successor needs
+$\lceil\log_2M_J\rceil$ bits and the numerator needs $B+1$ bits;
+its complementary probability is inferred. A deterministic row may
+repeat its successor. There are two rows per configuration, including
+the two labels, giving (6.14). The installed indices and probabilities
+already specify all midpoint-dependent consequences; $Q$, $P$ and the
+midpoint itself need not be runtime fields or additional row entries.
+This accounting makes no assertion that a direct stochastic row can
+be executed with serial coins without further configuration or time
+cost. $\square$
+

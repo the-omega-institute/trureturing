@@ -1,0 +1,13 @@
+**Corollary 8.4 (Completion of the full-class reduction).** The
+identity in Theorem 3.2 holds, and every scalar feasible profile
+supplies its claimed literal and prescribed-path upper bound.
+
+Proof. Sections 4–7 dominate each literal competitor by a profile
+in $\mathcal E_2$, with no greater original error. Proposition
+8.1 realizes every such profile and gives its exact error, and
+Proposition 8.3 gives every prescribed path. Taking infima gives
+both inequalities in
+$e_{4,\mathsf L}^2=16H^2\inf_{\mathcal E_2}J_\tau$; all errors
+are nonnegative, so squaring the infimum is legitimate. This
+finishes T1. $\square$
+

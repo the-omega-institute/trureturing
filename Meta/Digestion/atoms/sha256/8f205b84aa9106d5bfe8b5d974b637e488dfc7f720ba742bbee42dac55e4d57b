@@ -1,0 +1,19 @@
+**Proposition 6.3 (actual paid transfer after materialization).** If an
+authorized writer has actually materialized and sealed a payload of
+$\ell\ge1$ bits with the binding of Definition 6.1, the existing serial
+channel can deliver it to its authorized client. With the AIF six-row
+length-tested copy implementation, the two copy stages together have
+exactly $12\ell+6$ loop/test/seal/handoff primitives. All initialization,
+length preparation, descriptors and positioning remain additional actual
+graphs. Before the final receiver seal the destination is unavailable.
+
+Proof. At each stage a sealed immutable source, initialized distinct
+destination and actual $U(\ell)$ enter at their first payload/counter
+symbols. One iteration is counter RD, source RD, destination WR, source
+MR, destination MR, counter MR. The terminal counter RD, seal CTL and
+TOK add three per stage. Thus each stage costs $6\ell+3$. The first
+copy's seal and token enable the second; repositioning its actual source,
+destination and length heads is a separate graph. PR57.L4 proves bit and
+origin equality at the final seal. No zero-cost bulk copy, source alias or
+unsealed destination read occurs. ∎
+

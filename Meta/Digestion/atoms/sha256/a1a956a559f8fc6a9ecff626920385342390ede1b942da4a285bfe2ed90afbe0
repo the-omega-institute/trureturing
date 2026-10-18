@@ -1,0 +1,156 @@
+**Theorem 6.3 (a common paired signature does not determine the original p configuration risk).** Specialize to $q=3$, $N=8$ and the rational pair $\theta=\pm\theta_0=\pm1/1120$. Install either table on the original source with one prior supported exactly on $\{1,2\}$, assigning positive mass to both. Let $R_{{\rm conf},p}^{+},R_{{\rm conf},p}^{-}$ be their worst-positive-history p configuration risks on the full original fourth-segment domain. Then
+
+$$
+R_{{\rm conf},p}^{+}-R_{{\rm conf},p}^{-}
+=\frac{9}{219902325555200000000}>0.
+\tag{6.3}
+$$
+
+Their complete emissions, known suspended-alpha kernel, stationary rows, paired arrays and entire configured p transcript laws through seven Reads coincide. The source law, installed prior, actual source-history law, record renderer and permitted source actions are also the same. Thus those data do not determine this original risk coordinate even on a fixed finite table shape and one common prior. A risk interval guaranteed to contain the exact coordinate for both compatible tables must contain both values in (6.3), and therefore has width at least their stated difference. This does not exclude a larger conservative bound, supply an optimum or assert a common risk-excess gap.
+
+**Proof.** Write $G_j=L_0^jg_0$ and let $\theta$ denote either rational sign. All rows of $L_\theta$ have the same sums, because $b^{\mathsf T}v=0$ and $A\mathbf1=\mathbf1$. Explicitly their sum at index $i$ is
+
+$$
+(1-v_i)\left(\frac12v_i+\frac12\overline v\right),
+\qquad \overline v=\frac{579}{1600}.
+$$
+
+This quadratic decreases on the grid in (3.1). Its maximum and minimum are respectively $37059/160000$ and $588149/2560000$. In particular
+
+$$
+\frac{229}{1000}\mathbf1<L_\theta\mathbf1
+<\frac{29}{125}\mathbf1
+<\frac6{25}\mathbf1.
+\tag{6.4}
+$$
+
+Here and below the strict bounds apply componentwise. The rational products needed next have the following finite recurrence. Put $\overline v=579/1600$, $U_i=1-v_i$ and $\overline U=1-\overline v$. Starting from $(G_0)_i=U_i(U_i+\overline U)/2$, set, for $j=0,1,2$,
+
+$$
+m_j=\frac1N\sum_i(G_j)_i,\qquad t_{j,i}=\frac{v_i}{2}((G_j)_i+m_j),
+\qquad
+(G_{j+1})_i=\frac{U_i}{2}\left(t_{j,i}+\frac1N\sum_k t_{j,k}\right).
+\tag{6.4a}
+$$
+
+This is (3.2) applied successively as $A$, $V$, $B_0$, $S$. The eight specified rational entries give the following bounds; $G_0,G_1,G_2$ are independent of either sign by (4.6).
+
+$$
+\begin{aligned}
+\frac{19}{50}\mathbf1&<G_0<\frac{43}{100}\mathbf1,\\
+G_1&<\frac{12}{125}\mathbf1,\\
+\frac{107}{5000}\mathbf1&<G_2<\frac{219}{10000}\mathbf1.
+\end{aligned}
+\tag{6.5}
+$$
+
+For an exact arithmetic certificate for these bounds, the extrema of $G_0$ are $989451/2560000$ and $68541/160000$, the maximum of $G_1$ is $156450240111/1638400000000$, and the extrema of $G_2$ are $5768412442577330071/268435456000000000000$ and $366546084442811361/16777216000000000000$. These are the extrema of the eight specified entries, obtainable by the three finite products; no numerical approximation or limiting inference is used.
+
+Two further entries and one mean needed below are
+
+$$
+\begin{aligned}
+(G_3)_0&=\frac{864450516500225083407231}{171798691840000000000000000},\\
+(G_3)_1&=\frac{13816905172039405814835571}{2748779069440000000000000000},\\
+\pi f&=\frac{280762858243144502447}{536870912000000000000}.
+\end{aligned}
+\tag{6.6}
+$$
+
+Since $\theta_0|\gamma_3|\max U_i=297/17179869184000000000$, (4.6) and these fractions prove
+
+$$
+(L_{\pm\theta_0}^3g_0)_0,\ (L_{\pm\theta_0}^3g_0)_1>\frac1{200},
+\qquad
+\frac{209}{400}<\pi f<\frac{1047}{2000}.
+\tag{6.7}
+$$
+
+First compare with native endpoint $a=1/3$. Every marker-zero atom has predicted mass above its native mass: $u_i>a$ and the lower row bound (6.4) is larger than $a(1-a)=2/9$. The marker-one atoms for $j=0,1,2$ have predicted masses below their native masses, since the upper bounds in (6.5) are respectively below $4/9,8/81,16/729$. At $j=3$, (6.4) and the lower bound for $G_2$ give
+
+$$
+L_\theta^3g_0>\frac{229}{1000}\frac{107}{5000}\mathbf1
+>\frac{32}{6561}\mathbf1,
+$$
+
+which is the native marker-one mass at that index. The same lower row bound propagates this strict inequality to every $j\ge3$. Therefore the complete negative-difference event against $P_{p,a}$ is exactly $E_p$, and
+
+$$
+F_a^{\pm\theta_0}:=\frac1N\sum_i\operatorname{TV}(Q_i^{\pm\theta_0},P_{p,a})
+=\frac{412}{729}-\pi f<\frac{43}{1000}.
+\tag{6.8}
+$$
+
+Now compare with endpoint $b=2/5$. Every marker-zero atom has predicted mass below native, by $\max u_i<b$ and the upper row bound (6.4), which is smaller than $b(1-b)=6/25$. The marker-one masses for $j=0,1,2$ are all above native. For $j=1$, use $G_1> (229/1000)(19/50)\mathbf1>54/625\mathbf1$; the other two assertions follow immediately from (6.5). For $j\ge4$, use
+
+$$
+L_\theta^4g_0<\frac{219}{10000}\left(\frac{29}{125}\right)^2\mathbf1
+<\frac9{25}\left(\frac6{25}\right)^4\mathbf1
+$$
+
+and propagate with the upper row bound (6.4). Thus only the marker-one atom $j=3$ can add a positive-difference term beyond $E_p$. Let $c_3=(9/25)(6/25)^3$. The full, rather than truncated, configuration loss at this endpoint is consequently
+
+$$
+F_b^\theta=\pi f-\frac{7299}{15625}
++\frac1N\sum_i\max\{(L_\theta^3g_0)_i-c_3,0\}.
+\tag{6.9}
+$$
+
+For indices other than zero and one the last summands agree at the two signs by (4.6). At zero and one both arguments are positive by (6.7), since $1/200>c_3$. Theorem 4.2 therefore gives
+
+$$
+F_b^{+\theta_0}-F_b^{-\theta_0}
+=2\theta_0\gamma_3\frac{U_0-U_1}{8}
+=2\theta_0\gamma_3\frac{1/160}{8}
+=\frac{9}{219902325555200000000}.
+\tag{6.10}
+$$
+
+Moreover (6.7) gives $F_b^\theta>\pi f-7299/15625>11/200$, so the b endpoint dominates (6.8) for both signs. To verify the original full-history supremum directly, at every actual p history use the same uniform row from Theorem 6.1. For either sign, convexity in the target gives
+
+$$
+e_{{\rm conf},p}(h)\le\nu_h(1)F_a^\theta+\nu_h(2)F_b^\theta
+\le\max(F_a^\theta,F_b^\theta).
+\tag{6.11}
+$$
+
+For the reverse inequality consider the legal paid histories
+
+$$
+h_{a,n}=(\beta\beta)^n\beta\alpha\mid\beta\beta\alpha\alpha,
+\qquad
+h_{b,n}=(\alpha\alpha)^{2n}(\beta\beta)^{3n}
+ \beta\alpha\mid\beta\beta\alpha\alpha.
+\tag{6.12}
+$$
+
+The equal pairs are actual rejected seed pairs. The same suffix accepts seed 1 and completes marker 100, with the original third write and latch; every word ends at an actual fourth-segment p cut on the same held-record fibre. Every finite word has positive probability under both installed depths. The common suffix has three alpha and three beta letters. Along $h_{a,n}$ the posterior odds are
+
+$$
+\frac{\nu_{h_{a,n}}(2)}{\nu_{h_{a,n}}(1)}
+=\frac{\mu(2)}{\mu(1)}\left(\frac{27}{25}\right)^3
+ \left(\frac9{10}\right)^{2n}\longrightarrow0.
+\tag{6.13}
+$$
+
+Along $h_{b,n}$ these odds are
+
+$$
+\frac{\nu_{h_{b,n}}(2)}{\nu_{h_{b,n}}(1)}
+=\frac{\mu(2)}{\mu(1)}\left(\frac{27}{25}\right)^3
+ \left[\left(\frac65\right)^4\left(\frac9{10}\right)^6\right]^n,
+\qquad
+\left(\frac65\right)^4\left(\frac9{10}\right)^6
+=\frac{43046721}{39062500}>1.
+\tag{6.14}
+$$
+
+The same original conditional target approaches $P_{p,a}$ along $h_{a,n}$ and $P_{p,b}$ along $h_{b,n}$, in TV after the same record renderer. The uniform actual label row is unchanged on both sequences. Since TV loss is 1-Lipschitz in its target, the corresponding actual configuration losses approach $F_a^\theta$ and $F_b^\theta$. Combining with (6.11) proves
+
+$$
+R_{{\rm conf},p}^\theta=\max(F_a^\theta,F_b^\theta)=F_b^\theta.
+\tag{6.15}
+$$
+
+This is also the exact instance of the supplied formula [PAID, equation (2.3); CLIP, Proposition 2.3]. It establishes (6.3) using positive finite histories of the same installed prior, including every paid rejected pair and the original records. No limit history is added to the domain, and neither observer changes its table along these histories. $\square$
+

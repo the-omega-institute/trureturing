@@ -1,0 +1,14 @@
+**total** alphabet remains, at [GC, Theorem 9.2][GC]'s conditional scope,
+
+$$
+M_{\max}\in\{8,9,10\}.
+\tag{QS.45}
+$$
+
+Neither a universal seven/eight-low theorem, a dense-seven-low theorem
+on the actual target lift, nor exclusion of strictly decreasing affine
+open rectangles follows. The necessary affine/coexistence implications
+of [GC, §§16–18][GC] retain their scope; an unverified sufficient criterion
+is not a realized seed. Corollary 8.3 gives no value of $M_{\max}$ in the
+absence of the additional contact data.
+

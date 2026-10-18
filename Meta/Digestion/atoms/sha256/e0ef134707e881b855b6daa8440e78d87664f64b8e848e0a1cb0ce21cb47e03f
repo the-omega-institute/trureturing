@@ -1,0 +1,30 @@
+**Assumption 17.1 (original source and joint attainment).** Retain
+Assumptions 1.1 and 10.1, including the same isolated root's membership
+in all nine $2^{224}$ source rows of GC Definition 6.1. The source
+amplitudes and $m_1,m_2$ are those of that one root. Source existence,
+isolation, rank and root TP, the original complete stopped-cq minimax,
+sharp worst-history JOINT cost, JR42's separate unaveraged equality
+face, FA69's full-complex multi-Kraus necessity, the physical capacity
+and common constructor remain inherited premises. Enclosure arithmetic
+below does not discharge them.
+
+For an arbitrary finite $t\ge t_0>0$, arbitrary $\lambda>0$ and arbitrary
+finite $y\in\mathbb R^8$, require the entire-cylinder inequality
+(FC.5) and a common original law $\pi$ with
+
+$$
+\int_X\Gamma\,d\pi=B(t),\qquad
+J_t(\pi)+\lambda K(\pi)=y\cdot B(t).
+\tag{FC.54}
+$$
+
+Thus the law and dual jointly attain the same value; the finite-law
+notation is $\pi=\sum_i p_i\delta_{(u_i,v_i,\xi_i)}$, with every retained
+$p_i>0$. The admitted countable and stipulated measurable extensions
+have the same integral meaning. These are the original coefficient
+weights, directions and fractions, not independently optimized live
+and failure marginals. By weak duality (FC.54) also implies
+$y\cdot B=C_t(\lambda)$. No particular displayed dual, odd orientation
+$L_o$, or $w_o$ condition is imposed. Existence of such finite duals at
+all boundary requests is not part of this assumption.
+

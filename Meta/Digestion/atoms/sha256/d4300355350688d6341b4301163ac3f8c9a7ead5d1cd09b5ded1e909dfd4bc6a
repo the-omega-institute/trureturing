@@ -1,0 +1,26 @@
+**Corollary 10.3 (finite polynomial certificates and their positive-gap completeness).** On the padded shape of Definition 10.1, let $j_{t,T}$ be the finite pure-target partition minimum of [CLIP, Proposition 6.3], with future level $T$ independent of the aggregation level $L$. Use the whole supported parameter set for finite support. For infinite support use its finite set $S_T$ including the limiting parameter, as in [CLIP, Proposition 5.3]. With $b_0=6/25$, put
+
+$$
+e_T=\max\{b_0^T+\zeta_{p,T},(2/5)b_0^T+\zeta_{\beta,T}\},
+\tag{10.6}
+$$
+
+where $\zeta_{s,T}=0$ for finite support and the supplied support-net errors apply otherwise. Omitting all defect restrictions and optional exact-endpoint constraints, one has
+
+$$
+\max\{0,j_{t,T}-a(t)\}\le J_S\le j_{t,T}+e_T,
+\tag{10.7}
+$$
+
+$$
+\frac{11}{61}\max\{0,j_{t,T}-a(t)\}
+\le J(\mathfrak M_\mu)\le j_{t,T}+e_T.
+\tag{10.8}
+$$
+
+A strictly positive full-class gap exists if and only if some $t,T$ satisfy $j_{t,T}>a(t)$. The same equivalence holds with $k_{n,t}>a(t)$ for some $n,t$ and the certificate sequence of Corollary 5.3. For a supplied finite exact support, finite polynomial minima and these brackets give a computable stationary infimum $J_S$, and a semidecision of a positive full-class gap. They give no decision between finite endpoint attainment and an unattained zero infimum.
+
+Proof. The fixed-shape supplier gives $0\le J_t-j_{t,T}\le e_T$. Combining this with (10.2) proves (10.7), and (2.6) proves (10.8). Because $G\ge(2L+2)/t$, $\xi\le t/(2L+2)\le t/4$; hence $a(t)\to0$ as $t\downarrow0$. If $J(\mathfrak M_\mu)>0$, (2.6) gives $J_S>0$. Choose $t$ with $a(t)<J_S/3$ and then $T$ with $e_T<J_S/3$. The supplier implies $j_{t,T}\ge J_t-e_T\ge J_S-e_T>a(t)$. Conversely $j_{t,T}>a(t)$ gives a positive lower bound in (10.8). Replacing $e_T,j_{t,T}$ by $c_n,k_{n,t}$ and using $k_{n,t}\ge K_n\ge J_S-c_n$ proves the second equivalence.
+
+For a finite supplied support the target parameters are rational Fibonacci ratios. Each table's finite-word probabilities are finite products of the same flow and emission variables. Absolute values in the finite configuration losses can be represented by bounded auxiliary variables, so the compact minimization is a finite semialgebraic problem with rational coefficients, exactly as in [CLIP, Definition 6.1 and Proposition 6.3]. Decision and elimination over real closed fields give rational enclosures for its minimum to any prescribed accuracy. Choosing $a(t)+e_T$ below that accuracy makes (10.7) an approximation of $J_S$. The enumeration of positive rational tolerances, future levels and increasingly precise enclosures detects a positive full-class gap by the proved equivalence. Positive masses at all supplied support points suffice; their numerical values are not used in this pure-target functional, by (2.3). For an opaque countable support, the semantic inequalities remain valid, but numerical use requires effective certified support nets or the represented actual-history targets of (10.3). Neither is supplied by an unspecified prior. This is not a practical running-time bound, nor an effective sampler assertion for arbitrary real minimizing entries. ∎
+

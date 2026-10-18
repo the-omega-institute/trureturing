@@ -1,0 +1,17 @@
+# Constructor-elimination fibers and their complete paid resource frontier
+
+This volume supplies the paid-resource interface for the entire family
+$\mathcal E_{\rm CE}$ of [ARH, Definition 20.2][ARH]. Its residual
+coordinates remain arbitrary nonempty finite ordered trees. The new
+logical bridge first quantifies complete sources in the aligned tree
+presentation, and then synchronizes the remaining finitely many
+observation positions as words. It permits one original-root physical
+action to serve charts with different constructor offsets.
+
+The results are ordinary mathematical proofs, not Lean kernel
+verification. The source and service interfaces are those of ARH
+Assumption 1.3. Acquisition, full accessible-state handoff and certified
+epoch are hypotheses; none is provided for free by the decision
+procedure. The unrestricted arbitrary signed-fiber problem remains open
+at the boundary stated in §9.
+

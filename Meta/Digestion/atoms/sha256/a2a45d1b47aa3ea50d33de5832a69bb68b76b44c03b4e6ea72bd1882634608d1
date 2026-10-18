@@ -1,0 +1,49 @@
+**Definition 3.2 (fixed-code stationary Moore readers).** A reader has
+one finite installed disjoint set $\mathcal K=Q\sqcup H$, a fixed
+address $\operatorname{addr}(k)\in\{L,R\}^{*}$ for each $k\in Q$,
+and fixed functions
+
+$$
+\begin{aligned}
+\operatorname{next}&:Q\times
+ \{\alpha,\beta,\mathsf{branch},\mathsf{absent}\}\longrightarrow\mathcal K,\\
+\operatorname{out}&:H\longrightarrow\{\text{complete rows at }P\},\\
+\iota&:\sigma[\mathcal U_*]\longrightarrow\mathcal K.
+\end{aligned}
+\tag{NRE.11}
+$$
+
+The table is common to every source. The initial state is
+$\iota(\sigma(u))$, and the complete prescribed bit is recoverable on
+its attained range. At a Read state $k\in Q$, exactly one actual call
+at its installed literal is made, and the reply $z$ replaces the state
+by $\operatorname{next}(k,z)$. At a Halt $k\in H$, the fixed entire row
+$\operatorname{out}(k)$ is returned without another call. Every Read
+has all four installed successors, including unattained ones.
+
+The current state is the entire mutable accessible memory after entry.
+There is no surviving code register, free output decoder, computed address,
+extra program counter, phase, reply register, history, counter, clock, seed,
+age, archive or source-dependent table selector. There is no free control
+transition between two states. Every installed state counts, including
+unused states, duplicate-output halts and states reached only on some
+origins. Each running visit counts one invocation. Sharing, repeated
+queries, early halts and cycles in a union of different-source paths
+are allowed, subject to termination on each actual source.
+
+An arbitrary-literal reader may install any finite native words. A
+representative-root-only reader may install only $p_d$ for $d\in D$.
+Both use this identical contract and the identical pointwise code
+$\sigma$; the producer is not allowed to recode it for the root reader.
+This is the fixed-code restriction of the owning volume's Definitions
+11.1 and 15.1, with the state upper bound left as a parameter.
+
+The optimized quantities below are installed abstract state cardinality
+and worst-case fresh invocation count. First-phase acquisition and local
+computation, table installation, fixed whole-output representation,
+address construction, storage and transmission, export, authentication,
+isolation, entry, transition work and physical service have separate
+costs. The finite tree sizes are unbounded across the domain. Neither
+the producer's work nor its workspace is bounded by the reader's state
+cardinality or call bound.
+

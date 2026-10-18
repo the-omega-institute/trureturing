@@ -1,0 +1,12 @@
+### 53.1 任意复参数的平方行列对判据
+
+下标属于 \(\mathbb Z/3\mathbb Z\)。对 \(x,y\in\mathbb T^3\)，置
+\[
+\alpha(z)=\sum_{t=0}^2\overline{z_t}z_{t+1},\qquad
+X_{ij}=x_{i-j},\quad Y_{ij}=y_{i-j},\qquad
+M(x,y)=\begin{pmatrix}X&-Y^*\\Y&X^*\end{pmatrix}.
+\]
+称两个不同行或不同列构成**平方比例对**，是指两向量逐项平方后成比例。
+因为所有条目非零，这等价于相应两个平方向量的全部 \(2\times2\) 子式为零。
+比例常数必为单位模。左右 monomial 等价保持相应类型的平方比例对是否存在。
+

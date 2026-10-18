@@ -1,0 +1,46 @@
+**定理 34.5.1（自适应记录的共同模拟器）。** 对每个满足定义 34.3.4 的策略 $\pi$，存在
+一个不依赖 $\theta$ 的 Markov 核 $K_\pi$，使对两个方向同时成立：
+
+$$
+\operatorname{Law}_\theta
+\bigl(R,A_1,H_1,\ldots,A_n,H_n,\delta\bigr)
+=
+K_\pi\left(\operatorname{Law}_\theta(W_1,\ldots,W_n)\right).
+$$
+
+因此，把动作标签、策略随机种子和终端随机化都纳入记录后，任意自适应策略仍不能
+比 canonical 实验包含更多关于 $\theta$ 的信息。
+
+**证明。**
+
+先设 $k_*>0$。在模拟器内部独立取 $E_t\sim N(0,1)$，并递归运行策略：利用 $R$
+和已经生成的模拟历史选择 $(u_t,v_t)$，计算 $c_t=c(u_t,v_t)$、
+$k_t=k(u_t,v_t)$、$q_t=|k_t|$ 及 $s_t=1$（当 $k_t\ge0$）或 $-1$（当
+$k_t<0$）。由定理 34.4.1，$0\le q_t\le k_*$。令
+
+$$
+V_t=\frac{q_t}{k_*}W_t+
+\sqrt{1-\left(\frac{q_t}{k_*}\right)^2}\,E_t,
+\qquad
+\widetilde H_t=c_t+\sigma s_tV_t.
+$$
+
+条件于已生成的历史，$W_t$ 仍是新的 $N(\theta k_*,1)$，而 $E_t$ 是独立标准正态；
+故 $V_t\sim N(\theta q_t,1)$，从而
+
+$$
+\widetilde H_t\sim N(c_t+\theta\sigma k_t,\sigma^2).
+$$
+
+由于 $c_t+\sigma k_t=\rho u_t$ 且 $c_t-\sigma k_t=\rho v_t$，这正是定理 34.3.2
+的两个条件核。归纳于 $t$，可得完整的动作—读数—种子联合律相同；终端判向器是
+记录的可测函数，所以也一同相同。模拟器的公式和内部随机性均不使用 $\theta$。
+
+若 $k_*=0$，定理 34.4.1 强迫所有可行动作满足 $k_t=0$，两个方向的每一步条件核
+相同，直接取同一记录律即可。证毕。
+
+这一定理的量词很关键：对每个固定策略存在一个同时适用于两个方向的模拟器。它不是
+声称存在一个对所有策略都相同的模拟器，也不是把动作的选择权交给了未知方向。
+
+<a id="section-34-6"></a>
+

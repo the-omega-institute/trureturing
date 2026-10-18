@@ -1,0 +1,21 @@
+**Lemma 4.3 (Finite quadrature and the actual walk).** The finite channel
+(4.5) equals the independent two-plane torus average of its two seed
+product tensors and commutes with $O(t)$ on all complex matrices.
+
+**Proof.** In branch $A$, the coefficient tensor
+$a_fa_f^T\otimes b_fb_f^T$ has plane bidegrees
+$(4,0),(3,1),(2,2),(1,3),(0,4)$.
+On a circle, a homogeneous even degree two or four has only even
+Fourier modes of absolute value at most four. Three equally spaced
+points integrate those modes exactly. In bidegrees $(3,1)$ and $(1,3)$,
+the degree-one factor has zero three-point average; it kills the
+degree-three alias as well. This proves exact three-by-three quadrature.
+In branch $B$, all Fourier frequencies have absolute value at most four,
+so five equally spaced points integrate them exactly. The independent
+radial coefficients in (4.3)–(4.4) do not change this argument.
+The equality is of full coefficient tensors, hence of superoperators
+on complex matrices. The torus average is covariant under both
+rotations, in particular under the actual $O(t)$. These quadratures
+specify fixed apparatus coefficients; they add no future control or
+flag visible to the policy. $\square$
+

@@ -1,0 +1,47 @@
+**Convention 1.4 (credited finite factors).** Write
+
+$$
+A=\alpha,\quad B=\beta,\quad C_0=\langle A,A\rangle,\qquad
+S_1=\{A,B,C_0\},\qquad
+S_{d+1}=\{A,B\}\sqcup\{\langle u,v\rangle:u,v\in S_d\}.
+\tag{OCC.3}
+$$
+
+Use the full temporal factor of [AAR, §§12–13][AAR]. If $q$ ends
+at an original branch, $\Gamma_q(u)=(0,0)$. Otherwise let $a$ be
+the first original leaf on its path, labeled $\ell$, and write
+$q=av$. With $e(A)=0,e(B)=1$,
+
+$$
+\Gamma_q(u)=
+\begin{cases}
+(2-e(\ell),1-e(\ell)),&v=\varepsilon,\\
+(\#L(v)+2\#R(v)+2-e(\ell),\mathbf1_{v\text{ ends in }R}),&v\ne\varepsilon.
+\end{cases}
+\tag{OCC.4}
+$$
+
+For attained factors the decoder is
+
+$$
+\operatorname{Pred}((b,c),k)=
+\begin{cases}
+\mathsf{branch},&k\ge b,\\
+\beta,&b\ge1,\ k=b-1,\\
+\alpha,&c=1,\ k=b-2,\\
+\mathsf{absent},&\text{otherwise}.
+\end{cases}
+\tag{OCC.5}
+$$
+
+It equals $r_{\rho^ku}(q)$ for every $k\ge0$. Conversely the whole
+trajectory recovers $b$ as its first branch count and $c$ by its alpha
+stage. Put $h(z)=\operatorname{Pred}(z,0)$ and
+$G_q=\Gamma_q[S_d]$. The factor vector on $W_d$ separates $S_d$.
+The credited completion $\pi_d$ preserves all these factors and replies
+on every finite tree of height at most $d$ and fixes $S_d$. Every
+arbitrary finite probe on a canonical block is a function of one actual
+$W_d$ reply in that same block, or a constant. These are [FMR, Lemma
+2.2 and Theorems 2.3–2.5][FMR], including variable shapes and initially
+absent targets.
+

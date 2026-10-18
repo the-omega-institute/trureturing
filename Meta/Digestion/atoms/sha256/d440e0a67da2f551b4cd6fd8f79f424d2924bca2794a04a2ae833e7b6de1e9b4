@@ -1,0 +1,32 @@
+**Definition 2.5 (admission and decoding).** A finite output description
+is a finite list of schemes. Its coordinates are
+
+$$
+a=(b,\mathbf K,\boldsymbol\eta,\mathbf n,\mathbf b),
+\qquad
+\boldsymbol\eta\in M_b(\mathbf K),\quad
+A_{b,\mathbf K,\boldsymbol\eta}(\mathbf n,\mathbf b).
+\tag{SFP.12}
+$$
+
+Here $b$ is a scheme index, distinct from the component bases $b_C$.
+Admission first checks the finite shapes and mismatch addresses, constructs
+the graph and (SFP.10), and evaluates its affine relations. It never
+calls the original predicate (SFP.2) or (SFP.3).
+
+To decode, label every leaf of $H_v$ by (SFP.11), replace $c$ with that
+primitive $[r_u]$ and $f$ with $F$, obtaining $X_v$. Expand designated
+outputs by $E$ and retain the supplied $\mathbf n$ unchanged. The local
+inequalities (SFP.9) make each $X_v$ normal. Expansion is a terminating
+operation on finite supplied ranks and shapes.
+
+The shape tuple is unrestricted in (SFP.6); admission can subsequently
+exclude a shape tuple through an empty arithmetic fiber. There is no
+fixed-dimensional semilinear claim about the whole coordinate space.
+For a fixed shape tuple there are finitely many mismatch choices and
+finite-dimensional arithmetic fibers; their dimensions and number can
+grow with that tuple. The finite description precedes both the residual
+shape assignments and all numerical epochs. Its bounded traversals
+are specified above, so it is more specific than an arbitrary program
+that tests a source predicate.
+

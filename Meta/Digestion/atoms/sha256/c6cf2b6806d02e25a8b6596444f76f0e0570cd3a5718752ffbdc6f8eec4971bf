@@ -1,0 +1,33 @@
+**Theorem 3.2 (three one-first zero bands).** All the states
+
+$$
+\{v_O(h,z):0\le h\le k-1,\ 0\le z\le2\}
+\tag{CP.11}
+$$
+
+are pairwise distinct in the original installed table.
+
+Proof. Use the same suppliers (CP.9)–(CP.10). A collision of different
+pairs in (CP.11) must be between $O(h,2)$ and $O(g,0)$ with
+$g\ge h+2$. Their supports $S,T$ must be incomparable. The first
+$h$ one exposures are a common history. Every one of the first
+history therefore belongs to $S\cap T$, so its private set
+$X=S\setminus T$ is all zero. The second history is entirely one,
+so $Y=T\setminus S$ is all one. Equation (CP.10) gives equal
+private cardinalities and costs. Equal private cardinalities imply
+$|S|=|T|$, hence
+
+$$
+h+2=g.
+\tag{CP.12}
+$$
+
+At the first selected query after the common $h$-one history, the
+first history supplies zero while the second supplies one. This is
+another coordinate in $S\cap T$, distinct from the first $h$
+coordinates. Consequently the second history has at least $h+1$
+ones in the intersection and only $g=h+2$ ones altogether. Its
+nonempty all-one private set $Y$ has at most one element. Again
+(CP.10) gives disjoint equal-cost singletons, contradicting (CP.3).
+$\square$
+

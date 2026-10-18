@@ -1,0 +1,4 @@
+**B1 all interpolant coefficients.**
+
+The four even readings give E=d+H by interpolation uniqueness, so e3=kappa!=0. Put s=u+v-7 and p=uv-7(u+v). Expanding only as a symbolic identity, H=kappa\*[t^3+s\*t^2+p\*t-7uv]. Thus e0=d-7\*kappa\*u\*v=a0, e1=kappa\*p, e2=kappa\*s, e3=kappa. Since H-kappa\*S has degree at most two and agrees with H at the odd nodes, R=d+alpha\*(H-kappa\*S). Its coefficients are o0=d+alpha\*kappa\*(15-7uv), o1=alpha\*kappa\*(p-23), o2=alpha\*kappa\*(s+9). These are forced by the actual acquired record; they are not additional data or adjustable parameters. The degree argument already excludes all constant and affine competitors within the entire declared class.
+

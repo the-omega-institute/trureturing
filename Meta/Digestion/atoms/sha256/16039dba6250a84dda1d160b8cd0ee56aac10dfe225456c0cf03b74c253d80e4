@@ -1,0 +1,27 @@
+**定义 1.1（完整三次采集域）。** 取
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix}.
+$$
+
+$\mathcal W_3$ 的元素是完整目标 $W=(P,g,\delta)$：$P$ 为严格逐项正的实 $2\times2$ 矩阵，$\det P=0$，$\operatorname{tr}P=1$；$g\in\mathbb R[T]$ 非零且 $\deg g\le3$；$\delta\in\mathbb R$。不要求 $P$ 对称，不限制非对角元小于一。对按时间排列的动作 $E_1\cdots E_i$，定义
+
+$$
+A_0=I,\qquad A_i=E_iA_{i-1},\qquad
+z_i(W)=g(i)\operatorname{tr}(A_iP)+\delta,\quad E_i\in\{M,J\}.
+\tag{1.1}
+$$
+
+初读计数，每个单独动作后立即读数。八次总读数使用原时钟 $0,\ldots,7$。只有一条轨迹，不允许重置、复制、跳读、空动作读数、未读的复合动作、时钟平移或重新编号，也没有额外传感器。确定性协议可按整个实际历史任意选择动作、停止与完整返回值，不加连续性、可测性等限制。所有非零三次及以下增益、两种系数符号、实际次数下降、采样根、重根和任意常数漂移均在此域中。
+
+未归一的严格正秩一矩阵 $R$ 与非零多项式 $H$ 表示
+
+$$
+(P,g,\delta)=\left(\frac R{\operatorname{tr}R},\ (\operatorname{tr}R)H,\ \delta\right),
+\qquad z_i=H(i)\operatorname{tr}(A_iR)+\delta.
+\tag{1.2}
+$$
+
+正的归一因子保留增益的次数、根与符号；$(R,H)$ 与 $(qR,H/q)$ 在且仅在 $q>0$ 的这种缩放下表示同一完整目标。以下返回值始终包含 $P,g,\delta$，而不只是某个因子或增益射线。
+

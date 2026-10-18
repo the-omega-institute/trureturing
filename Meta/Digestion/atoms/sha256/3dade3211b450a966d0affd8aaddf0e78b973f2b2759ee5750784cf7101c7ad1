@@ -1,0 +1,10 @@
+**定义 5.7.1（有限量子过程响应）。** 令 $\mathcal I_u$ 为过去仪器词 $u$ 诱导的完全正迹不增映射，令 $F_v$ 为未来测试的效果。过程响应写作
+
+$$
+K(v\mid u)=\operatorname{Tr}\bigl[F_v\,\mathcal W(\mathcal I_u)\bigr],
+$$
+
+其中 $\mathcal W$ 表示从切口到未来的有限过程映射；若 $\mathcal I_u$ 已归一化，则右侧为条件概率。
+
+<a id="claim-5-7-2"></a>
+

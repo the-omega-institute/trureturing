@@ -1,0 +1,13 @@
+### 60.5 The finite minor and source identity
+
+Let \(\rho=(\rho_1,\ldots,\rho_{405})\) and
+\(\kappa=(\kappa_1,\ldots,\kappa_{405})\) be the ordered integer lists
+in §60.8. The entries of each list are distinct, and the entries of
+\(\kappa\) are exactly \(\{0,\ldots,405\}\setminus\{385\}\).
+Define
+
+\[
+ V=\mathcal B[\rho,\kappa],\qquad w=\mathcal B[\rho,385].
+\tag{60.8}
+\]
+

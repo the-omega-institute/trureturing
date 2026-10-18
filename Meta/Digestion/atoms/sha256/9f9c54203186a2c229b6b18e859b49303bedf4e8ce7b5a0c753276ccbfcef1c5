@@ -1,0 +1,49 @@
+**Theorem 15.1 (nonempty exclusions inside the prior remaining region).** For each fixed $0<\beta\leq1/2$, the original class has a nonempty relatively open subset on which
+
+$$
+C\ne0,\quad\tau\ne\bar\tau,\quad
+\sqrt a<f(\tau,\bar\tau)<1,\quad
+w_c(\beta)<w<1,\quad\delta_N>U(\beta).
+\tag{R.60}
+$$
+
+Here $w_c$ is the exact threshold (R.16). The subset is relative to the whole actual original class at that beta, without a Kraus-rank restriction.
+
+**Proof.** Choose a center $N_0$ in (R.55) with
+
+$$
+w=a,\qquad0<\sin^2\theta<\frac{1-\sqrt a}{2a}.
+\tag{R.61}
+$$
+
+The upper endpoint is positive and below $1/2$, so an allowed $0<\theta<\pi/4$ exists. Formula (R.56) gives $\sqrt a<f(\tau,\bar\tau)<1$. Also $w_c<1/2\leq a<1$, $C\ne0$, and $\tau_{02}=-ia\cos\theta\sin\theta\ne0$. Thus the center satisfies all prior remaining conditions (R.21). Formula (R.59) is strictly positive: if $a>\beta$ its first term is positive, and at $a=\beta=1/2$ its second term is still positive. Hence $\mu(N_0)<\sqrt a$ and (R.57) gives the strict bound.
+
+For the same fixed pair $\psi_\pm$ define $\mu(N)=\|N(P_{\psi_+}-P_{\psi_-})\|_1/2$ for any channel. Since the input difference has trace norm two,
+
+$$
+|\mu(N)-\mu(M)|\leq\|N-M\|_\diamond.
+\tag{R.62}
+$$
+
+The same contraction proof gives $\delta_N\geq1-\mu(N)$ for every neighboring channel, independent of its Kraus rank. Therefore the diamond ball
+
+$$
+\|N-N_0\|_\diamond<\sqrt a-\mu(N_0)
+\tag{R.63}
+$$
+
+consists of strict exclusions whenever $N$ remains in the original class.
+
+The remaining inequalities can also be expressed continuously without choosing a continuous environment or Kraus list. Put $A=N(\chi_+)+N(\chi_-)$. On this fixed positive-beta class its eigenvalues are $a,\beta,a,\beta,0$, so
+
+$$
+\Pi=\frac{A(I_5-A)}{a\beta},\qquad
+w=\operatorname{Tr}[(I_5-\Pi)N(|2\rangle\langle2|)],\qquad
+f(\tau,\bar\tau)=\|N(|\chi_+\rangle\langle\chi_-|)\|_1.
+\tag{R.64}
+$$
+
+The first identity is the spectral polynomial, valid also at the repeated half-weight eigenvalue. The second is Theorem 2.1; the last is the cross-partial-trace identity in Theorem 4.3, equivalently Watrous, Corollary 3.23, (3.148), printed p.152. They are continuous functions of the actual channel. Thus the conditions $w_c<w<1$ and $\sqrt a<f<1$ define a relatively open set containing $N_0$. The first ensures $C\ne0$ by the traced Schur identity; the second ensures $\tau\ne\bar\tau$, since normalized states have root fidelity one exactly when equal. Intersecting this set with (R.63) proves (R.60).
+
+No three-Kraus restriction is imposed on this intersection. At beta zero the denominator in (R.64) vanishes and the actual phase-support rank changes; this polynomial and the positive-beta open-set claim are not extended there. The kernel certificates of Sections 11–13 remain valid there, while the benchmark lower bound is just zero. $\square$
+

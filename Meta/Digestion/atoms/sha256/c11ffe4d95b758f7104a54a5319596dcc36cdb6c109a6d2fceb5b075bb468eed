@@ -1,0 +1,12 @@
+**Theorem 57.2 (Attained comparison with the same row, profile and sharp value).** For every (56.1) and every prescribed profile, a fixed full-source family with row (56.2) and sharp value $r$ also exists that attains $r$. It may use the same carrier and consumer as Theorem 57.1, with every target supported on at most three tapes. Thus the all-source row, profile and sharp scalar together do not decide endpoint attainment.
+
+**Proof.** On the same $\Theta^+$ choose $o=0\in Z$ and replace only the base specification in (57.3) by the fixed point law $\delta_o$:
+
+$$
+\mu_y^{\mathrm{att}}=\alpha\delta_o+t\delta_{a_{c(y)}}
+                                      +h\delta_{p_{\Omega(y)}}.
+\tag{57.10}
+$$
+
+This is a separately prescribed optimization problem: its family stays fixed while preparation varies. The calculation (57.5)--(57.7), with $\nu_y=\delta_o$, proves the same lower bound $r$ for every continuous, hence every lawful family, even though preparations may use any tape in the unchanged carrier. The constant law $\alpha\delta_o+(\beta/k)\sum_i\delta_{a_i}$ has exact error $r$ by the same signed-mass calculation. Handing its tape over in one transition from its finite positive-weight categorical seed support acquires it lawfully at every source. This proves attainment and, by Theorem 50.2, the unchanged sharp value formula. The three target families in Theorems 56.2, 57.1 and this theorem exhibit both failure mechanisms and attainment under exactly the same strictly positive row and every allowed profile, including the boundary $h=r$. $\square$
+

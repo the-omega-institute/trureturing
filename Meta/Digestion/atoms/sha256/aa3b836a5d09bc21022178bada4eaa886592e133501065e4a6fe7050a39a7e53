@@ -1,0 +1,47 @@
+**Theorem 8.4 (Current-ray observability over variable probability).**
+The ten doubled coherence outputs of Theorem 3.12 separate every pair of
+current rays in $\mathcal M_b$. The resulting output map is a smooth
+embedding, including on either individual wall and their intersection.
+
+Proof. Keep the oriented edge order
+
+$$
+\mathcal E=((0,1),(0,2),(0,3),(1,13),(3,13)).
+\tag{8.7}
+$$
+
+For $e=(i,j)$ let $\delta_e^0=\theta_i^{\rm in}-\theta_j^{\rm in}$.
+The original output pair, with the original factor of two, is
+
+$$
+y_e(\kappa,h)=2\sqrt{p_i(\kappa)p_j(\kappa)}
+\begin{pmatrix}
+\cos(\delta_e^0+h_i-h_j)\\
+\sin(\delta_e^0+h_i-h_j)
+\end{pmatrix}.
+\tag{8.8}
+$$
+
+Its middle-reference block recovers the probability coordinate directly:
+
+$$
+\|y_{02}\|^2=4Z(r-X-Y+\kappa),\qquad
+\kappa=\frac{\|y_{02}\|^2}{4Z}-(r-X-Y).
+\tag{8.9}
+$$
+
+The strict condition $Z>0$ is used here. Once $\kappa$ is known, all
+edge amplitudes in (8.8) are known and nonzero. Normalizing each pair and
+removing its fixed preparation phase gives $e^{i(h_i-h_j)}$. Reuse the
+connected graph of Theorem 3.12: the $02$ edge fixes $h_0$ relative to
+$h_2=0$; edges $01$ and $03$ then fix $h_1,h_3$; edge $1,13$ fixes
+$h_{13}$. These are precisely the current phase classes, with any group
+equalities already imposed. No new observable has been introduced.
+
+Equation (8.9) and these circle-valued phase reconstructions are smooth
+on the positive domain; division is only by nonzero amplitudes. They give
+a smooth inverse on the output image, proving the embedding assertion.
+The reconstruction is of ideal expectations on the same source; it is
+neither recovery of the producing history nor an assertion about exact
+finite-shot acquisition. $\square$
+

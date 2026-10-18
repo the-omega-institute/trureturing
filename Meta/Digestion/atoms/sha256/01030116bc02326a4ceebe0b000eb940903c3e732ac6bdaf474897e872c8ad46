@@ -1,0 +1,30 @@
+## 278. Actual setting and conclusion
+
+Retain the original mixed-flat five-reservoir hypotheses and all public
+reductions through Section 277 of the return continuation. In particular
+all edge labels carry shared positive lengths, every original edge has
+a connected circular normal link of degree at least six, and chosen
+paired frames have two distinct transverse labels. Original face and
+edge occurrences, rather than neighboring owner names, are counted.
+Repeated axes, repeated neighbors and distinct-face self-gluings remain
+allowed.
+
+Write P={M,Z,U} and K={tau,rho,eta,xi} for the four distinct interacting
+genuine owners. Every face containing two distinct P labels is marked
+and pairs inside K. The source and forced common return are
+ tau=(Z,M,C,D,M,C), rho=(M,Z,C,U,Z,C).
+Tau's two {M,Z,C} faces pair to rho's two M-incident faces. The remaining
+tau faces are {M,C,D}, unmarked. The two unused rho faces are {U,Z,C},
+both incident to its unique U axis. The newly proved no-extra-core-M
+exclusion says at least one of eta,xi contains M.
+
+We prove that rho's two unused face occurrences pair to different
+owners eta and xi. Thus their common-return alternative is completely
+excluded. The surviving split return is not excluded here; this is not
+a proof of five-reservoir realization.
+
+The two rho faces cannot self-pair, since that would close rho's single
+U normal interval and force degree(U)=1. They cannot meet tau's unused
+faces. As they are marked, they must meet eta or xi. Suppose for
+contradiction that both meet eta. We separate whether eta contains M.
+

@@ -1,0 +1,81 @@
+## 11. Exact alphabet-order match
+
+For the dyadic category, every completed gap has one of the positive outputs
+$1,\ldots,J$. Thus its active output alphabet has
+
+$$
+B_{\rm active}=J.
+$$
+
+The observer register has the additional reset value $0$, so its level-register size is
+$J+1$; the zero value has no completed positive-gap mass. Padding the output alphabet by
+that empty value changes neither its order nor Theorem 10.1.
+
+With the endpoint cap of Corollary 9.3,
+$J=\Theta(\log(1/s))$ and Theorem 6.2 gives
+
+$$
+ u(s,J)=\Theta\!\left(s^{2r}\log(1/s)\right).
+$$
+
+Corollary 10.2 therefore forces $B_{\rm active}=\Omega(\log(1/s))$ for any common finite
+completed-gap kernel that retains a fixed positive multiple of this critical logarithmic
+gain. The dyadic category attains the same active-alphabet order. This is an order match
+for one completed-gap output alphabet only. It does not lower-bound the full sequential
+controller, its evidence register, its product count, its paid reads, or any arbitrary
+observer whose information has not been reduced to a completed-gap kernel.
+
+For comparison, [Critical multiscale renewal attainment](FIB_CRITICAL_MULTISCALE_RENEWAL_ATTAINMENT.md),
+Theorem 9.2, uses an exact-length category with $L+2$ level values and
+$M=3+(2H-1)(L+2)$. For each fixed $0<\theta\le1$, it gives a sufficient budget
+$M_{\rm exact}\le C_\theta F_\theta(s)$, where
+
+$$
+F_\theta(s)=\frac{s^{-(r+\theta)}}{\sqrt{\log(1/s)}},\qquad
+F_{\rm dyadic}(s)=s^{-r}\sqrt{\log(1/s)}.
+$$
+
+Corollary 9.3 gives the sufficient budget $M_{\rm dyadic}\le C F_{\rm dyadic}(s)$.
+On the intersection of their fixed neighborhoods, both constructions have a paid-mean
+upper bound of order $s^{-(2r+1)}/\log(1/s)$, with constants allowed to depend on the
+fixed $(r,c,\alpha,\theta)$. The quotient of these displayed sufficient-budget scale
+functions is
+
+$$
+\frac{F_{\rm dyadic}(s)}{F_\theta(s)}=s^\theta\log(1/s)\longrightarrow0
+\qquad(s\downarrow0)
+$$
+
+for every fixed $\theta>0$. This comparison concerns explicit sufficient-budget scales
+under the same paid model. It takes no ratio of $O$-classes and gives no ratio of actual
+configuration costs, total-memory lower bound, or strict comparison of minimum costs.
+The predecessor's exact rounded-lattice, drift, risk, and predictable-payment ideas are
+reused only after the dyadic kernel and its normalized affinity have been derived here.
+
+The supplied [Critical renewal observation: a counted logarithmic frontier](RECURSIVE_RELATIONAL_OBSERVATION_CRITICAL_RENEWAL_LOGARITHMIC_FRONTIER.md)
+has a stronger sufficient controller under the same fixed pair, known common $q$, and
+complete paid contract. Its Theorem 5.1 gives $O(2^{rJ})$ complete configurations and
+both paid means $O(s^{-(2r+1)}/J)$ for all its permitted caps, with its own fixed cap
+constant and neighborhood. At the full-scale cap, its Corollary 7.2 gives sufficient
+$O(s^{-r})$ configurations with the same logarithmic paid order. Thus the present
+$O(s^{-r}\sqrt{\log(1/s)})$ sufficient controller is weaker. This compares sufficient
+constructions; the active-alphabet bound here retains its separate scope.
+
+The supplied volume's Theorem 6.1 and Corollary 6.2 give matching order
+
+$$
+\frac{s^{-(2r+1)}}{1+\log\min\{M,1/s\}}
+$$
+
+up to fixed $(r,c,\alpha)$ constants, for the two separate compliant paid-mean infima
+and the infimum of the common-table maximum, uniformly over every finite $M\ge M_0$
+on one neighborhood chosen before the budgets. Its lower uses its credited converse. Its Theorem 7.1 characterizes attainment
+of the full logarithmic paid order under the complete contract by the eventual condition
+$\log(1+M(s))\ge\varepsilon\log(1/s)$ for some fixed $\varepsilon>0$, for finite
+integer-valued budget families $M(s)\ge2$ without regularity assumptions. The paid upper
+constant may depend on the budget family. In particular every fixed positive polynomial budget exponent
+suffices, and a subpolynomial budget does not; the exponent $r$ is not necessary
+(Corollary 7.2). The all-sufficient-budget order frontier is therefore supplied there.
+These are credited ordinary mathematical results, not kernel validation. They do not
+supply the arbitrary stochastic-kernel active-alphabet theorem proved here.
+

@@ -1,0 +1,59 @@
+### 453.6 真实素数面板的严格主项
+
+对于同一实数 \(x\)，令
+
+\[
+\mathcal P_x=\{p\text{ 素数}:2x<p\le4x\},\qquad
+\mathcal A_x=\sum_{p\in\mathcal P_x}\mathscr D_x(p),\qquad
+\Pi_x=\sum_{p\in\mathcal P_x}\mu(p)\mathscr D_x(p)=-\mathcal A_x.
+\tag{DP.21}
+\]
+
+因为 \(x\ge e\)，面板中每个素数均为奇数，真实系数精确为 \(\mu(p)=-1\)。对于任何 \(N\ge\lceil8x\rceil\)，这些素数源都已经在（DP.13）中触发完整纤维，因为 \(2p-1\le N\)。\(2x\) 的严格下端和 \(4x\) 的闭上端不被改变。
+
+经典 PNT 在全部 \(u\in[2,4]\) 上共同给
+
+\[
+F_x(u):=\frac\ell x[\pi(ux)-\pi(2x)]\longrightarrow u-2.
+\tag{DP.22}
+\]
+
+这也可直接由（DP.5）导出：素幂余项 \(\psi(t)-\vartheta(t)=O(\sqrt t\log^2t)\) 给 \(\vartheta(t)=t+o(t)\)，再对 \(\vartheta\) 有限 Abel 求和得到 \(\pi(t)\sim t/\log t\)。共同性来自 \(ux\ge2x\to\infty\) 及 \(\ell/\log(ux)\to1\) 于固定紧区间共同成立；未调用短区间 PNT。
+
+对 \(k_2\) 有限 Abel 求和，保留 \(F_x(2)=0\)，得到
+
+\[
+\frac\ell x\sum_{p\in\mathcal P_x}k_2(p/x)
+=k_2(4)F_x(4)-\int_2^4F_x(u)k_2'(u)du
+\longrightarrow C_{\rm pair}:=\int_2^4k_2(u)du>0.
+\tag{DP.23}
+\]
+
+PNT 还给 \(\#\mathcal P_x=O(x/\ell)\)。因此（DP.19）在整个面板求和的核误差为 \(O(\ell^{-3})+O((x\ell^2)^{-1})=O(\ell^{-3})\)，从而
+
+\[
+\boxed{\displaystyle
+\mathcal A_x=\frac{C_{\rm pair}}{\log^2x}+o(\log^{-2}x),\qquad
+\Pi_x=-\frac{C_{\rm pair}}{\log^2x}+o(\log^{-2}x).}
+\tag{DP.24}
+\]
+
+常数具有完全指定的正积分和闭式。积分原函数给
+
+\[
+k_2(u)=\frac1{2u}\left[1+\gamma_1-L-\frac{L^2}2
++(1-L)\log u+\frac{\log^2u}2\right],
+\]
+
+故
+
+\[
+\boxed{\displaystyle
+C_{\rm pair}=\int_2^4\int_u^{2u}
+\frac{\tfrac12\log^2v+\gamma_1}{v^2}\,dv\,du
+=\frac{(1+\gamma_1)L}{2}+\frac{L^2}{4}-\frac{5L^3}{12}>0.}
+\tag{DP.25}
+\]
+
+正性由（DP.20）证明，不依赖闭式小数求值。
+

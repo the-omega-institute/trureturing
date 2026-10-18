@@ -1,0 +1,66 @@
+**Theorem 189.1 (Same-seed handoff, every actual tail and closed caps).**
+Every probability allocation produced in Sections 184--187 has
+original $O_2$ and $N_2$ realizations using the identical common
+seed and original marked tapes. Every word and actual tail row
+proved above holds uniformly on $X$. Theorem 110.2 supplies the
+existing exact closed-cap transport, with full-carrier arbitrary-address
+competitors retained.
+
+**Proof.** Partition one source-independent uniform $U\in[0,1)$
+into the finitely many whole-table masses; omit zero masses and
+combine duplicate coordinates once. The chosen interval fixes its
+entire schedule and terminal labels before replies. For a general
+finite core, use its full stopped complete-table refinement, as in
+Proposition 140.3. Alternatively its predetermined cell partitions
+use the same rescaled $U$; they are fixed source-independently.
+No new independent randomness is needed.
+
+Execute that preselected increasing schedule as actual prime
+requests, stopping at its first queried zero or exhaustion, and
+hand off the chosen original tape $\theta_j$. Each execution is
+measurable and finite and uses at most two actual requests. With
+the identical $U$, the $N$ rule completes the same schedule and
+reconstructs the stopped cell, ignoring replies after that cell while
+counting those actual requests. Static replies make its output
+identical for every source and seed. Original tapes remain in the
+full measurable carrier; the original consumer and nonatomic targets
+have not changed. Explicit stopped tables give membership in
+$\mathscr C_L$ by Theorem 109.1, whose exact coefficient criterion
+is $c\ge H$.
+
+The complete cap rows include every $u\in B_L$, not only chain
+words, and keep the separate pair row. Every actual $n(x)>L$
+sees $1^L$, so for any such finite law its exact TV is
+
+$$
+\max\{1-p_{1^L}(0),a_{n(x)}\}.
+\tag{189.1}
+$$
+
+This is the supplied identity (110.9). The all-positive row bounds
+the first entry by the cap, and the retained original tail bounds
+the second. For Section 186 the first entry is $t_{\rm tail}$;
+for the tight core in Section 187 it is $\varepsilon$.
+No infinite all-positive actual source is presumed. There is no
+restriction on actual later zeros. Equality $a_{L+1}=\varepsilon$
+and every other non-strict endpoint are included.
+
+For the radial law of Section 184, an original extension at scale
+$t>0$ uses the whole-sequence identity of Theorem 170.1:
+first-two amplitudes are $1-t(1-b_i)$, and all amplitudes $i\ge3$,
+including every actual $i>L$, are $tb_i$, with cap $te$.
+That supplier preserves order, positivity, vanishing and the actual
+tail comparisons when applied to its original positive domain.
+Original tail marks are not replaced by zero in that target identity;
+the finite all-positive row is only the transport device.
+
+Finally use Theorem 110.2 rather than a new projection or shortening
+claim. It transports necessity for arbitrary original addresses,
+repetitions and full-carrier outputs and sufficiency for the explicit
+finite probability laws at the exact closed cap. If $g_L=0$, the
+auxiliary law may still use labels through $L$; (189.1) and the
+all-word proof give its original feasibility, while applying that
+transport at the actual active length uses its established projection.
+No competitor is assumed to be an $E_L$ or sparse-table mixture.
+$\square$
+

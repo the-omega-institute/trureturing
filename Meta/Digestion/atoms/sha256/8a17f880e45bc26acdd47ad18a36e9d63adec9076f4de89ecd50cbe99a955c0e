@@ -1,0 +1,82 @@
+**Proposition 205.11 (Pairwise positive cells without a positive atom).**
+For contiguous $J=\{3,\ldots,L\}$, $m\ge4$, take the construction of
+205.10 with $s=3$, all $\gamma_j=4$, $E=0$, $t=3$ and
+
+$$
+S=3c_m,\qquad B=W=3(c_m+1).
+\tag{205.29}
+$$
+
+Its complete excesses are one. It need not have any all-positive pair
+atom. In this family the entire fixed scaled-projection zero-core
+method, with pair measure $a\nu$, $T=3a$, $0\le a\le1$, no early
+correct or base rows, and extracted totals at most four, has best
+nonnegative residual support
+
+$$
+\min_{0\le a\le1}\max\left\{
+ \frac{m(4-3a)}{m+1},
+ \frac{m(12-B+(B-9)a)}{m+3},\ 0\right\}
+ =\frac{mB}{B(m+1)-6m}>1.
+\tag{205.30}
+$$
+
+Thus this method fails even though the joint positive-budget score
+itself succeeds.
+
+**Proof.** Here $\kappa=\pi=1$ and
+$\zeta=3(c_m-3)\ge1$, so 205.8 gives the asserted support. At $m=4$
+every two- or three-element zero subset has $\nu$ mass one. Hence
+$S=10$, $W=13$, $K=29$, and both full supports are 14. Every pair has
+positive-cell mass one, but no atom has all active bits one. The pair
+words are $w(\{a\}\cup Z)$ with weight $1/2$ for $a=1,2$ and
+$|Z|=2,3$; each correct class has weight three at its sole-zero word
+and weight one at its active absorbing suffix, with coincident weights
+added; $T=3$. This specifies the score without relying on totals alone.
+For general $m$ the coefficients are exactly those of 205.10.
+
+For a zero-cost core with the stipulated scaled data, the stopped
+$(1,2)$ guard forces each correct total to be at most $3a$.
+All these totals are simultaneously attainable: the scaled marginals
+are $6a$, directed capacities $3a$ and tail $3a$, so 204.2's box
+conditions hold. Increasing any extracted total lowers the residual
+pointwise, because $b_j-e\ge0$. Thus these maximal totals minimize the
+residual within the stated family. Write $r=4-3a$. At the hull vertices,
+$o,p$ give zero, and the two prefix values are
+
+$$
+\frac{(k-2)r}{k-1},\qquad
+\frac{(k-2)[3r-(1-a)B]}{k+1}.
+$$
+
+Their nonnegative maximum occurs at $k=L$, giving (205.30)'s two lines.
+The first decreases, the second increases since $B>9$, and their
+intersection is
+
+$$
+a=\frac{(B-8)m+B}{(B-6)m+B}\in[0,1].
+$$
+
+Substitution gives the stated minimum. It exceeds one because
+$6m>B$ for $m\ge4$ and $B<15$. At $m=4$, the intersection is $33/41$
+and the cost $52/41$.
+
+For clarity about overlap, this score fails the old sum test
+$\kappa+\pi=2$, the fair-suffix threshold $W\ge15$, and the
+terminal-product budget-one test: the latter has two simultaneous
+interior gains $2\mu(2\mu/u-1)_+$, requiring $u\ge64/9$ at $\mu=4$,
+and $\tau\ge3$, hence $W\ge155/9$. Write
+$\widehat c_m=4-2/\lceil m/2\rceil$ for the shared-terminal coefficient
+of 201. The 201 and 202.6 displayed bounds are
+$4\widehat c_m+3$ and $4+(7/2)\widehat c_m$, both larger than
+$3(c_m+1)$ (substitute $m=2q$ or $2q-1$). The unscaled 204.2
+capacities equal three and give $3m/(m+3)>1$; $V=0$ fails already
+at $u_L$, where $F_y=4m/(m+1)>1$. There are more than two positive
+classes, and the terminal-dominant condition $2\eta\le\mu+1$ of
+204.7 fails since $\eta=\mu=4$. Full-projection terminal completion
+204.8 spends $1+(L-2)/(L+1)>1$.
+These are comparisons with named tests and specified families, not
+separation from every consequence of earlier results. The construction
+and exact excess allow inactive gaps; the displayed prefix optima
+and comparisons here use the stated contiguous addresses. $\square$
+

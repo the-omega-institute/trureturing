@@ -1,0 +1,57 @@
+**引理 6.1（Determinant and parity obstruction）。** Let $T$ be any real skew
+$5\times5$ matrix with all ten upper entries in $\{-1,1\}$. If its skew
+singular parameters are $\alpha\ge\beta\ge0$, then
+
+$$
+\alpha^2+\beta^2=10,\qquad
+\alpha^2\beta^2\in\{5,13,21\},\qquad
+\alpha^2\ge7,\quad0<\beta^2\le3.
+\tag{6.1}
+$$
+
+The membership assertion is a necessary restriction, not a claim that every
+listed product is realized.
+
+Proof. Lemma 4.1 and the ten squared unit upper entries give
+$\alpha^2+\beta^2=10$. For a skew $4\times4$ matrix with lexicographically
+ordered upper entries $(a,b,c,d,e,f)$, determinant expansion is
+
+$$
+\begin{aligned}
+\det\begin{pmatrix}
+0&a&b&c\\-a&0&d&e\\-b&-d&0&f\\-c&-e&-f&0
+\end{pmatrix}
+ &=a^2f^2+b^2e^2+c^2d^2-2abef+2acdf-2bcde\\
+ &=(af-be+cd)^2.
+\end{aligned}
+\tag{6.2}
+$$
+
+For each principal four-coordinate submatrix of $T$, the three summands
+inside the square are signed units. Their sum is $\pm1$ or $\pm3$, so
+its determinant is $1$ or $9$.
+
+The coefficient of $z$ in $\det(zI_5-T)$ is the sum of these five principal
+determinants. Indeed, choosing one diagonal $z$ in the determinant expansion
+leaves the determinant of the complementary four-coordinate submatrix of
+$-T$; the even dimension makes this equal to the corresponding determinant
+of $T$. On the other hand the normal form gives
+
+$$
+\det(zI_5-T)=z(z^2+\alpha^2)(z^2+\beta^2).
+$$
+
+If $k$ of those five determinants are $9$, comparison yields
+$\alpha^2\beta^2=5+8k$. The nonnegative parameters with sum of squares ten
+satisfy $\alpha^2\beta^2\le25$, so the integer $k$ is at most two.
+In particular the product is at least five, hence $\beta>0$, and is at most
+twenty-one. Since $\alpha^2\ge5$,
+
+$$
+(\alpha^2-5)^2=25-\alpha^2\beta^2\ge4
+$$
+
+forces $\alpha^2\ge7$. The sum identity gives $\beta^2\le3$.
+This proves the obstruction for every sign pattern without enumeration.
+$\square$
+

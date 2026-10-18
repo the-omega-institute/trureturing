@@ -1,0 +1,17 @@
+**Corollary 10.4 (extension of the inherited selected Pareto vectors).** For a selected original history $h=(y,e,n)$ put $v_h=C_gv_y$ and retain the inherited vector
+
+$$
+V^h_{h'}=\operatorname{tr}(\Theta(v_hv_h^T)\rho_{h'})
+        =\|K(v_h)U_{e',n'}a_{y'}\|^2
+\quad(h'=(y',e',n')).
+\tag{PG.58}
+$$
+
+For every $s\le s_y^{\max}$ this entire vector is attained by one design selected by $h$. It is coordinatewise least among all resource vectors of designs minimizing coordinate $h$ at that strength. It is their unique Pareto vector and is globally Pareto against the entire finite complex class.
+
+Proof. The construction (PG.38) has acquired effect $E\Theta(v_hv_h^T)E^\dagger$ independently of strength, so it attains (PG.58) on all twelve inputs. Any selected acquired minimizer has high coefficient $P=v_hv_h^T$ by the scalar certificate. Lemma 3.1 forces its full acquired effect to dominate that supported effect, so every original coordinate is at least $V^h$. This proves leastness. Any design weakly lowering the entire vector must still minimize coordinate $h$; the same domination forbids a strict decrease elsewhere. This proves global Pareto status without asserting that all selected minimizers have the same acquired operator.
+
+These are RG's existing vectors with enlarged attainment intervals. RG's separate assertion that they lie outside all three sharp-average equality faces retains its original interval
+$\min\{\sqrt\ell/2,s_5^{\rm RG},s_{16}^{\rm RG},s_{27}^{\rm RG}\}$,
+where each $s_y^{\rm RG}$ is its saturated sufficient cap with $1/2$ instead of the first entry $1$ in (PG.36). No extension of that separation statement is made here. Equality of twelve separately optimized values cannot assemble twelve different selected instruments into one simultaneous optimizer. $\square$
+

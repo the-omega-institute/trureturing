@@ -1,0 +1,72 @@
+## 12. Suppliers, mature attribution, checks and nonduplication
+
+**Source statement 12.1 (credited original-control results).** All entries
+below refer to the public revision in §1; their internal historical source
+citations are not replaced by newer uninspected branches.
+
+| Supplier | Exact use and unchanged boundary |
+| --- | --- |
+| [FRT][FRT], [its Scribe][FRTB], [OCC][OCC], [its Scribe][OCCB] | `ValidBase`, strict `probability`, signed `phaseWeight`, `weight_compatible`, `finite_rectangles_realize`, `OriginalControl`, `FiniteC1Control`, `concatenate_original`; actual source, all signed lifts, both regularities and literal finite/zero-duration joins. |
+| [IB][IB] §§4–5.2, 9–15, 17–27 | Complete canonical instrument, law classification and marked-CDF inverse, signed/order witnesses, joint finite continuation, supplied programmable processors, mixed-support inequality, saturated algebraic directness and rank-sum capacity. Orthogonality is not promoted to a necessity. Whole-law access and supplied sectors are not acquired sensors/programmes. |
+| [IS][IS] §§1, 5–6 | Complete metrics, conditional inverse stability, forward discontinuity and sufficient strong error data. No new sample/noise certificate or acquired strong derivative data are asserted. |
+| [QCM][QCM] §§1, 7–9 | Exact live qutrit correspondence, separately scoped unassisted minima, actual known-anchor labels and already-received-command capacity. Its correlated-archive upper and assistance-restricted lower retain different contracts. |
+| [RA][RA] §§1–12, 13–17 | Query obstructions, paid conditional certificates, and the extra authenticated producer phase port with sharp binary action and complete guarded continuation. Its blank-probe route is an additional service excluded from §4's later access. |
+| [SCI][SCI] §§2–3, 7–8 | Finite simultaneous tables and instrument certificates under named regularity promises; whole-programme recording and joint sensor law (SC.23) are extra premises. None is acquired by the CDF formula here. |
+| [EMA][EMA] §§2, 4–6 | Same-event finite-memory bounds and coarse CP aliases; known-programme law resampling differs from preserving the actual event. Our input is before the future event, with unrestricted future recording granted. |
+| [PRT][PRT] §§3, 12–15, 17–23 | Supplied helpers, actual mixed-helper updates, live exclusive-record limits, and the attained return-charge/yield/error region under the extra source-owned parity/programme relation. In particular yield $4/7$, error $1/8$, exact tail $8/21$, preparation-to-tail $8/63$ retain that contract; a finite-error guess is not exclusive decoding. |
+| [RB][RB] §§2–8 | Phase-preserving uncertain-height reanchoring and the additional two-height endpoint service. No new reanchoring or helper construction is inferred. |
+| [AC][AC] §§1–13 | Twelve actual histories, equal specimen mixtures, ideal discrepancy $1/11$, live $1/22$, unchanged-prefix $1/99$, and arbitrary-joint $\kappa+2\varepsilon\geq D_{\rm defect}$. All acquisition outcomes count. Those lower bounds are not full-instrument minimax values. |
+
+Theorem 6.2 removes the phase/winding-independence premise of IB §§24–27
+by accepting a weaker operator-space bound and testing the exact-time
+failure law of one request. It does not reproduce support directness.
+Theorem 7.1 grants arbitrary actual incoming joint states; it assumes no
+equal-mixture identity like AC. Its finite inverse norm is a complete-output
+certificate for this source, with conditioning explicitly quantified.
+
+[Probability/Phase Transport][PP] Theorem 9.8 already excludes a finite
+shared affine encoder for the whole future expectation menu, including
+arbitrarily many bounded phase choices. That exact result is credited.
+Section 6 applies the mature span principle to different failure-time events
+of one fixed complete stopped request. Section 8 supplies a quantitative
+uniform approximation constant for arbitrary finite quantum/classical
+joint handoffs and nonlinear source encodings; §9 proves its relaxed
+phase-only attainment. The unbounded-action hypothesis of that constant
+must not be confused with PP's stronger exact bounded-menu conclusion.
+
+**Literature statement 12.2 (primary scope and mature principles).** Real
+observable-span bounds, Cauchy-kernel independence and its determinant,
+finite-dimensional compactness, trace-distance contraction, two-sector
+pinching, and norm-ball volume packing are mature mathematics. Their
+proofs and source correspondence are explicit above. No generic part or
+source-specific synthesis is claimed as worldwide original.
+
+| Primary source | Inspected result and transfer boundary |
+| --- | --- |
+| M. M. Wolf and D. Perez-Garcia, [*Assessing dimensions from evolution*, arXiv:0901.2542v1](https://arxiv.org/pdf/0901.2542v1), §II, Eq. (4), and §V | `literature-attested`: delayed observable spans for fixed $\rho,A$ and one time-homogeneous CPTP $T$, with $\dim\mathcal C+\dim\mathcal V\leq d^2+1$. No time-homogeneous dynamics, sensor, noise data or sample cost is transferred; §§5–7 prove the present one-request map directly. |
+| A. Monràs and A. Winter, [*Quantum learning of classical stochastic processes: The Completely-Positive Realization Problem*, arXiv:1412.3634v1](https://arxiv.org/html/1412.3634v1), Theorem 21 | `literature-attested`: finite CP realization requires a compatible structured SDR mapping cone and common quotient/lifting, with its specified positive initial/final data. Finite linear dimension by itself is not sufficient, and an existing realization is not original-source acquisition. |
+| A. Jenčová, [*Comparison of quantum channels and statistical experiments*, arXiv:1512.07016v2](https://arxiv.org/pdf/1512.07016v2), §4, Theorems 3–4 | `literature-attested`: Theorem 3 is classical. The quantum Theorem 4 uses auxiliary block-diagonal ensembles and one common CPTP randomization, with trace norm at most $2\varepsilon$. This motivates the source-experiment comparison, without supplying its missing handoff or actuator. |
+| M. Hillery, M. Ziman and V. Bužek, [*Approximate programmable quantum processors*, quant-ph/0510161v1](https://arxiv.org/pdf/quant-ph/0510161v1), §V, Eqs. (5.2)–(5.9) | `literature-attested`: the phase programme (5.4) contains the desired $\theta$, or a readable bin programme (5.8) is supplied; accuracy is process fidelity. Neither supplies unknown $x\alpha/r$, a source-bound acquisition law or the present complete stopped metric. |
+| S. Lahiry, [*Classical Sufficiency in Quantum Statistical Experiments*, arXiv:2609.29348v1](https://arxiv.org/html/2609.29348v1), §3.4.2, Definition 7 | Recent scope comparison: restricted classical measurement sufficiency and recovery of a quantum experiment by one channel have different demands. Neither is inferred from one CDF event or a parity score. |
+| Liu and Han, [*Intermediate memory costs of quantum channel synthesis with a protected subsystem*, arXiv:2610.20536v1](https://arxiv.org/html/2610.20536v1), classically controlled synthesis | A readable finite input branch register can be measured and prepared into branch programmes by $\Lambda(X)=\sum_s\langle s\vert X\vert s\rangle\rho_s$. This uses an already supplied register; it does not acquire it from an original unknown past. Its protected-subsystem/graph conditions are not identified with this observer. |
+
+These inspected primary statements supply no verified directly sufficient
+original acquired observer under the specified single-specimen, absorbing
+menu. This is a bounded literature comparison, not an absence theorem or
+an originality argument. No dimension, service or cost is imported merely
+because two models use similar terminology.
+
+**Verification boundary 12.3 (exact finite arithmetic).** Rational
+arithmetic verifies the source residual in (FH.4), the rectangle survival
+product, ramp amplitude/population and total-mass identities, the Cauchy
+determinant and inverse in (FH.24), and the determinant identity, inverse
+and all cube vertices for (FH.25). Rational cross-block squared norms
+$Z(1-Z)$ check the pinching eigenvalue calculation at
+$Z\in\{1/5,1/2,4/5\}$ and bottom population fractions
+$\{1/4,1/2,3/4\}$. Gaussian-rational arithmetic also verifies all five Fourier identities
+(FH.21) at $Z=1/9$, $x=d=1/9$, where the terminal amplitudes are
+$2/3,2/3,1/3$ and $s_x=1/2$. Universal statements rely on the ordinary proofs;
+these bounded checks establish neither an all-parameter theorem nor
+physical or kernel verification. No retained experiment is required for
+these identities.
+

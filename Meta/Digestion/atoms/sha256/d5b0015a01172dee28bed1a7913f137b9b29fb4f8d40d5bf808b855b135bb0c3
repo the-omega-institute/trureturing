@@ -1,0 +1,23 @@
+**定义 58.1（剩余见证族）。** 在实际 $T_n$ 上取定义54.1的任意实际前缀 $h_0$，令 $J_0=\operatorname{paid}(h_0)$，保留其全部四值缓存和原时序历史。对 $p\in E_a$ 置
+
+$$
+d_X(p,J_0)=\mathbf1_{J_0\cap pH_X=\varnothing}.
+\tag{JM.175}
+$$
+
+对 $p\in E_b$，令 $\mathcal U_p(J_0)=\{i\in\{1,2,3\}:J_0\cap pH_i=\varnothing\}$，并置
+
+$$
+d_Y(p,J_0)=
+\begin{cases}
+0,&\mathcal U_p(J_0)=\varnothing,\\
+2,&\mathcal U_p(J_0)=\{1,2,3\},\\
+1,&\text{其余情形},
+\end{cases}
+\qquad
+L_n(J_0)=\sum_{p\in E_a}d_X(p,J_0)+\sum_{p\in E_b}d_Y(p,J_0).
+\tag{JM.176}
+$$
+
+引理56.3说明 $d_Y$ 恰是尚未被旧证据排除的三个指定比较者所需的新地址命中数。$L_n$ 只声称这些比较者给出的必要余额，不声称已经描述整个相容词纤维。
+

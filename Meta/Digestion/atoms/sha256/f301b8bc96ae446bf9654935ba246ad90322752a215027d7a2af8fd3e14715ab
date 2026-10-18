@@ -1,0 +1,78 @@
+**定理 3.1（Universal bounds and full joint attainment）。** For every state in
+(2.1),
+
+$$
+0\le s\le2,\qquad p=\frac15+\frac{2s}{25},\qquad
+\mathcal N=\frac{L}{5}.
+\tag{3.1}
+$$
+
+At each $s\in[0,2]$, the exact lower and upper negativities are
+
+$$
+\mathcal N_{\min}(s)=
+\begin{cases}
+\sqrt{s}/5,&0\le s\le1,\\
+(1+\sqrt{s-1})/5,&1\le s\le2,
+\end{cases}
+\tag{3.2}
+$$
+
+$$
+\mathcal N_{\max}(s)=
+\begin{cases}
+\sqrt{10s}/5,&0\le s\le10/7,\\
+(\sqrt7+\sqrt{3(s-1)})/5,&10/7\le s\le2.
+\end{cases}
+\tag{3.3}
+$$
+
+Equivalently, in whole-state purity,
+
+$$
+\mathcal N_{\min}(p)=
+\begin{cases}
+\sqrt{(5p-1)/10},&1/5\le p\le7/25,\\
+\bigl(1+\sqrt{(25p-7)/2}\bigr)/5,&7/25\le p\le9/25,
+\end{cases}
+\tag{3.4}
+$$
+
+$$
+\mathcal N_{\max}(p)=
+\begin{cases}
+\sqrt{5p-1},&1/5\le p\le11/35,\\
+\bigl(\sqrt7+\sqrt{3(25p-7)/2}\bigr)/5,&11/35\le p\le9/25.
+\end{cases}
+\tag{3.5}
+$$
+
+The entire joint attainable set is exactly
+
+$$
+\left\{(p,n):\frac15\le p\le\frac9{25},\quad
+ \mathcal N_{\min}(p)\le n\le\mathcal N_{\max}(p)\right\}.
+\tag{3.6}
+$$
+
+In particular both endpoints and every intermediate $n$ at each fixed $p$
+belong to actual states $\Gamma(X)$ with those same two coordinates. The
+unrestricted maximum within this fiber is
+
+$$
+\max_{\Gamma\in\mathfrak I}\mathcal N(\Gamma)
+ =\frac{\sqrt7+\sqrt3}{5}.
+\tag{3.7}
+$$
+
+Every maximizer has purity $9/25$ and rank three, with compressed nonzero
+eigenvalues $2/5,2/5,1/5$. This is not a maximum over arbitrary bipartite
+$5\times5$ density matrices.
+
+Proof. Section 4 proves (3.1) with its full positivity condition. Section 5
+proves (3.2) and realizes each lower endpoint. Sections 6–8 prove (3.3) for
+every legal matrix and realize each upper endpoint. Section 9 constructs a
+legal path at fixed $s$ filling the interval, proving (3.6). The substitution
+$s=(25p-5)/2$ gives (3.4)–(3.5). Section 10 proves the crossovers, maximum,
+equality and rank statements. All component proofs are given below. $\square$
+

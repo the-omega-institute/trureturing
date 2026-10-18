@@ -1,0 +1,50 @@
+**Lemma 29.5 (All reachable histories and transient widths).** From the initialization below, every legitimate no11 stream has the exact read/score semantics of Definition 28.2. Every transient arithmetic configuration obeys the primitive preconditions in its counted bank; every run halts after at most $W$ paid reads and finite internal work, even on an infinite all-zero stream.
+
+Proof. Initialization sets $r=z=k=l=t=j=p=c=\sigma=0$, $M=v=1$, both source-history flags false, and output empty. Induct on the number of paid reads, inserting the terminating primitive inductions of Lemma 29.3 between reads. At every active read-enabled state, stored $j$ counts the already scored pairs, $p=p_j$ and $v2^{-p}=G_j$; initialization supplies this at $j=0$. Before the first observed one no zeros contribute to a complete-gap statistic. After that one, $z$ is exactly the number of zeros actually read since the last observed one. In first-gap collection no old $k,l,t$ is consumed. Its closing one finishes the copy of $z$ to $k$ before setting retention and entering second-gap collection; subsequent reads protect $k$. The second closing one finishes the copy to $l$ before resetting $z$ and entering pair-sum production. Thus its $k,l$ are the next two exact positive gap lengths. The retention flag determines which, so no partial or discarded interval is substituted for a complete gap. The bookkeeping counter is exactly $r$, with $0\le r\le W$. At every read-enabled state it is below $W$, and every current or completed gap count is at most $W$.
+
+Let $\nu$ denote the current pair's index in this induction; before the precision-stage increment the stored $j$ is $\nu-1$. This is a proof index, with no additional stored coordinate. At the pair-sum addition, $k+l\le2W<2^m<2^w$. Its partial-output invariant is precisely $k\bmod2^s+l\bmod2^s=\sigma\bmod2^s+2^sc_s$ from (29.3). At $s=w$ there is zero final carry, so its completed output is the exact $k+l$. The next copy has the invariant that its written digits of $t$ equal the corresponding digits of that protected $\sigma$; only its completed exit enables Horner. Consequently, at every polynomial-argument consumer,
+
+$$
+k=K_{2\nu-1},\qquad l=K_{2\nu},\qquad t=\sigma=k+l,\qquad 2\le t\le2W<2^m.
+$$
+
+No read or deadline edge can intervene in these producer paths, and the bank partition prevents scratch from changing $k,l,t$ afterward. This proves the argument invariant for every completed pair, including one closing when $r=W$; it imposes no assertion on an unused stale $t$ between pairs. The subsequent index increment gives stored $j=\nu\le W$ before its precision consumers, while $v,p$ still encode $G_{\nu-1}$. An active score commitment restores $p=p_\nu$, $v2^{-p}=G_\nu$ before any next read. These statements hold on every legitimate stream, irrespective of its probability.
+
+For an argument $1\le x<2^m$, every signed Horner suffix and each multiplication just before coefficient addition have magnitude bounded by
+
+$$
+20\,2^B(2^m)^{19}<2^{L_0}.
+\tag{29.10}
+$$
+
+This bound follows by expanding at most twenty terms, and also bounds a prefix of the Horner recurrence before adding its next coefficient; the maximum exponent reached is nineteen. Same-sign additions and intermediate magnitudes in a signed subtraction satisfy the same envelope. All six positive evaluation outputs are below $2^{L_0}$. The two-factor partial products and the three-factor outputs in (29.8) are positive and below $2^{3L_0}<2^\lambda$. The multiplication primitive's selected rows and accumulated sums are bounded by these exact products. Subtractor partial words need only the full $w$-bit bound, and their borrow is explicitly retained; no assertion that each partially written word satisfies the final polynomial envelope is needed.
+
+The precision induction in Definition 29.4, after producing $J=j+1\le W+1<2^m$, proves $c\le m$, $M\le2^m$, $p_{\rm new}\le P$. Each exponent word is produced before its power shift. The stored $p$ is the previous precision, so its subtraction gives $\Delta p\ge0$; the old score numerator $v$ is still protected at that shift. Initially $p=0,v=1$. Before a later active update $G=v2^{-p}<2^b$, so after the exact precision shift $0<v_s<2^{b+P}$. Thus
+
+$$
+0<A=2v_sn+d<2^{b+P+\lambda+2}<2^w,
+\qquad 0<V=2d<2^{\lambda+1}.
+\tag{29.11}
+$$
+
+The rounding product and its partial accumulations fit the same slack. Division restores $0\le r_{\rm div}<V=2d$ after every digit, and its shifted transient satisfies
+
+$$
+0\le2r_{\rm div}+\xi<2V=4d<2^{\lambda+2}<2^w.
+\tag{29.12}
+$$
+
+In particular the restored remainder need not be below $d$. This divisor-specific invariant includes $n=d$, where the final remainder in (29.9) is $d$. The quotient prefix and its append operations fit since the final quotient is at most $A<2^w$.
+
+For the deciding score as well as an active one, nearest rounding and $U<2$ give the safe bound with its additive slack
+
+$$
+G_j\le G_{j-1}U+2^{-p_j-1}
+<2^{b+1}+2^{-p_j-1}<3\cdot2^b.
+\tag{29.13}
+$$
+
+Hence $v_{\rm new}<3\cdot2^{b+P}<2^{b+P+2}<2^w$. The thresholds have exponents $p_j\pm b$ in $[0,P+b]$, strictly below $w$; the first update has $p_j\ge b$, so no negative shift occurs. All shift counts, precision sums and subtraction operands consequently meet their primitive contracts. Loop words and head positions are at most $w$; $w$, $w^2$, $256w$ and the fixed allocation/selector constants are below $2^w$ for the chosen $w\ge128$. All copies, arithmetic scratch, signs and pending carries are therefore within their complete coordinate domains.
+
+Protected cells are not overwritten until the corresponding exact output has been proved. In the producer order of Definition 29.4, the current pair's six evaluation outputs are all positive by the just-established $k,l\ge1,t\ge2$ invariant and the owner's defining sums. Hence both products $n,d$ are positive before their dividend/divisor consumers, and division receives the promised positive $V=2d$, rather than an initialized or previous pair's word. The temporary $\sigma,J,e_+,e_-$ fit their bounds above; their fixed cells lie outside primitive scratch. The primitive scratch and pointer partition preserves all suspended caller data. This proves composition by induction on graph edges, not by assuming that membership in a Cartesian set implies correctness. All primitive loops terminate by their scan/repetition bounds. A completed pair's exact quotient (29.9) and threshold tests are precisely Definition 28.2. No arithmetic return edge is read-enabled. Finally, when the last read closes a second gap, its gap copies, sum production, six evaluations, factor products, precision, division and both ordinary comparisons all finish before the deadline consumer; a crossing emits its ordinary label, otherwise the score commit leads to default zero. A last read in any other phase reaches default only after its prescribed bookkeeping. Thus $r=W$ forces a label and no next-read edge is reachable, even on a history with no first tick or no closing pair. $\square$
+

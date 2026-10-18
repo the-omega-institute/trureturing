@@ -1,0 +1,36 @@
+**Definition 2.1 (normal codes, shapes and decorations).** Reuse the
+bijection $B:\mathcal T\to\mathcal N$ with inverse $E$ from [ABC,
+Theorems 2.2–2.3][ABC]. Its normal codes are finite terms over $F$ and
+primitive ranks $[r]$, $r\in\mathbb N$, subject to
+
+$$
+F(X,Y)\in\mathcal N
+\quad\Longleftrightarrow\quad
+X,Y\in\mathcal N\ \land\
+\neg\exists r\ge0\ (X=[r+1]\land Y=[r]).
+\tag{NPL.5}
+$$
+
+Every primitive is normal. Expansion sends $[r]$ to $T_r=\rho^r\alpha$.
+Native pairing is the smart constructor $J$, which replaces exactly
+$F([r+1],[r])$ by $[r+2]$ and otherwise keeps $F$. A native iterate
+$\rho^k$ is translation $\tau_k$ of every primitive rank by $k$.
+Its image consists exactly of normal codes with all ranks at least $k$.
+Normal codes, rather than arbitrary ambient terms, are essential for
+injectivity of expansion.
+
+Apply the finite reduction of NSF §§2–3 to $\Phi$, including all output
+expressions as named subexpressions with positive defining equations.
+An output name is not constrained to any preselected value. The
+reduction distributes Boolean branches, chooses collapse/noncollapse
+cases for every $J$, and solves positive **shape** equations by ordinary
+finite-tree unification with the occurs check. Primitive shape is $c$;
+the binary shape constructor is $f$. On a successful branch each name
+$Z$ has a shape term $S_Z$ over $c,f,w_1,\ldots,w_m$.
+
+Each explicit $c$ occurrence has a scalar rank variable. Each residual
+$w_j$ occurrence has its own block variable, denoting a rank function on
+the same nonempty finite shape assigned to $w_j$. Repeated uses of a
+name reuse its decorated template. Different occurrences of a residual
+shape can have different rank functions.
+

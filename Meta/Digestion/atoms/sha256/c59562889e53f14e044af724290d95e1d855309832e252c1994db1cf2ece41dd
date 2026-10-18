@@ -1,0 +1,10 @@
+8. `P4:1>4/F2`
+
+Each transition is directly obtained from Section 455. Label preservation
+prevents different lists from joining; the lists are disjoint and exhaust
+all sixty original local edge occurrences. Thus each displayed color is one
+actual global edge class, not a union of several unresolved classes. Its
+normal quotient is one circle of the displayed degree. The ordered endpoint
+return rules out an edge-reversal monodromy. Reversing the orientation gives
+the opposite traversal of the same normal circle, not an extra edge class.
+

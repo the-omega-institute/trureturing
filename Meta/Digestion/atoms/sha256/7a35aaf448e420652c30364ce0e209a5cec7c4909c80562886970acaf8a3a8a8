@@ -1,0 +1,38 @@
+## 193. The one-owner return core and special exclusions
+
+Here every H value is <=z, because u<=m<z and c,d<m. The maximal axial
+Z run through tau has pair {M,C}. All its owners are genuine and distinct:
+two axial Z slots in an owner with this pair would force axial flatness
+since z>=1+m+c. For each such owner, the exact response gives
+
+ theta_Z+2*beta_M>pi.
+
+Indeed its positive parameters have squared sum
+4(m^2-1)/(m+c)^2 * (z-1)/(z+1) > (m+1)^2/((m-1)(m+3)) >1,
+using c<m-2,z>m+2. The arctangent argument of Section 175 proves the
+stated angle inequality. If the whole Z circle were axial, its at least
+six distinct owners would exceed the complete M/Z capacity 3*pi.
+
+At either boundary of this proper run, the frame is (B,Z,A,Q,Z,A),
+with {A,B}={M,C}. Every possible other axis obeys q<1+z+a: H axes are
+<=z and special axes obey their fixed-pair barrier. The transverse Z
+cosine numerator is strictly increasing and
+
+ N(1+z+a)=[a+z(1+z+a)]*(1+a+b-z)<=0.
+
+Both boundary angles are therefore obtuse. Two different owners with
+this property would exceed the complete Z budget. Hence both boundary
+slots belong to one actual owner rho, whose two Z angles sum to more
+than pi. The run's axial Z angle sum is consequently <pi, and its
+transverse M expenditure is <=pi. The displayed per-owner inequality
+then gives g*pi<2*pi. Thus g=1 and the run consists of tau alone.
+The return is either (C,Z,M,Q,Z,M) or (M,Z,C,Q,Z,C).
+
+Section 176's complete special-star arguments exclude every special
+edge with fixed pair {Z,M} or {Z,C} under these hypotheses. Their
+premises are exactly the genuine owners with transverse Z, minimum
+six for the special edge, the M/Z budgets pi and 2*pi, z,m>3,
+z>2c+3, and the bound on every other axis r<1+z+a. All have been
+verified here. The arguments do not need u<=m-2 or any smaller bound
+on another H axis.
+

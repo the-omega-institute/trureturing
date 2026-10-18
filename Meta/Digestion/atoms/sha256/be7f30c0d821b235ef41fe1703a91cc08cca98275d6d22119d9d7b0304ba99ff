@@ -1,0 +1,64 @@
+**Definition 140.1 (Actual source and selected comparison laws).** Retain
+[Acquisition Resources, Definition 90.1](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES.md#90-adaptive-preselected-and-increasing-first-zero-stop-acquisitions)
+and [Continuation, Definition 110.1](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION.md#110-exact-closed-cap-transport-on-the-original-countable-source).
+In explicit notation,
+
+$$
+\begin{aligned}
+F_0&=0,\quad F_1=1,\quad F_{r+2}=F_{r+1}+F_r,\\
+X&=\{(r,g):r\text{ prime},\ g\in\mathbb Z,
+       \lceil F_r/10\rceil\le g\le\lfloor F_r/5\rfloor\},\\
+N(r,g)&=1+F_rg,\quad q_i(x)=\mathbf1_{p_i\mid N(x)},\quad
+n(x)=\min\{i\ge1:q_i(x)=0\},
+\end{aligned}
+\tag{140.1}
+$$
+
+where $p_1<p_2<\cdots$ are the primes. The labels $(r,g)$, $N(x)$ and
+$n(x)$ are not supplied observations. The prime answers are static.
+The source is the actual countable set $X$, with finite prime support
+at each source, and $n(x)$ is finite. Actual occupancy of every finite
+answer pattern is supplied by
+[Boundaries, Theorem 35.2](KBONACCI_SELF_CALIBRATING_BOUNDARIES.md#35-exact-finite-divisibility-fibres-in-canonical-fibonacci-windows).
+It is not an independent Boolean source or a probability distribution on sources.
+
+The original carrier is
+$\Theta=(\bigsqcup_{j\ge1} B_j)\sqcup(\bigsqcup_{j\ge1}P_j)$,
+with every block a copy of $(0,1)$ and its disjoint-union Borel sigma algebra $\mathcal F$.
+The unchanged consumer is unknown on $B_j$ and proposes $j$ on $P_j$;
+its original nonatomic targets $\mu_x$ remain fixed. Distinct measurable
+marks are $\theta_r=(B_1,1/(r+2))$, $r\ge0$.
+For an entire sequence
+
+$$
+1\ge a_1\ge a_2\ge\cdots>0,\qquad \lim_{i\to\infty}a_i=0,
+\tag{140.2}
+$$
+
+separately declare the selected laws
+$\lambda_x^a=(1-a_{n(x)})\delta_{\theta_0}+a_{n(x)}\delta_{\theta_{n(x)}}$.
+They are the comparison targets here. Define
+
+$$
+e_a(A)=\sup_{x\in X}\operatorname{TV}(\widehat\lambda_{A,x},\lambda_x^a),
+\qquad
+\operatorname{TV}(\nu,\lambda)=\sup_{E\in\mathcal F}|\nu(E)-\lambda(E)|.
+\tag{140.3}
+$$
+
+A source-independent common seed fixes one rule for all actual sources.
+There is zero advice, no extra observation and sourcewise almost-sure
+finite handoff. $\mathcal N_2$ preselects a sequence of at most two
+actual requests and obtains its replies; addresses can be arbitrary
+and can repeat. $\mathcal O_2$ preselects a strictly increasing sequence
+of at most two and stops at its first queried zero or exhaustion.
+A queried zero need not be the actual first absence, and an output need
+not be its mark. Every actual request, including an ignored or repeated
+request, counts. All original competitors may output any original tape.
+Neither address, depth of an unexecuted computation, runtime, expected
+count nor a distribution on $X$ replaces this resource.
+
+At an original positive cap $0<e\le1$ its active length is
+$L=\max(\{i:a_i>e\}\cup\{0\})$, finite by (140.2).
+All original amplitudes after that length are retained.
+

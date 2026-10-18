@@ -1,0 +1,43 @@
+**Theorem 5.2 (Every length and both open endpoints).** For every $n\ge1$, every legal insertion edge $u\to w$ in $B_n$ satisfies
+
+$$
+\frac13\mu_n(u)\le\mu_n(w)\le\mu_n(u).
+\tag{5.4}
+$$
+
+Proof. There are four distinct cases.
+
+For $2\le i\le n-1$, both neighbors belong to
+$\mathcal G_{n,i}=\sigma(X_j:1\le j\le n,\ j\ne i)\subseteq\mathcal E_i$.
+The actual finite posterior is
+$p_{n,i}=\mathbb E_P[q_i\mid\mathcal G_{n,i}]$.
+On a free finite complement $F_i$ is measurable in this field, so Theorem 5.1 gives $1/4\le p_{n,i}\le1/2$. The corresponding insertion odds lie in $[1/3,1]$. A neighbor one instead gives a forced zero fiber. Positivity of each legal word makes these conclusions valid on every supported finite complement.
+
+At the right endpoint for $n\ge2$, a legal insertion has a prefix ending in zero. Its normalized hidden row
+
+$$
+\alpha=\frac{\lambda M_{\text{prefix}}}{\lambda M_{\text{prefix}}\mathbf1}
+\tag{5.5}
+$$
+
+has $\alpha_R=0$, because $M_0$ has zero column $R$. Thus the terminal probability of one is $a\alpha_U+b\alpha_V\in[a,b]$. The insertion ratio belongs to
+
+$$
+\left[\frac{a}{1-a},\frac{b}{1-b}\right]
+\subset(1/2,3/5)\subset[1/3,1].
+\tag{5.6}
+$$
+
+A prefix ending in one forces the endpoint zero.
+
+At the left endpoint for $n\ge2$, reverse both words of the insertion edge. Their probabilities are unchanged by Lemma 4.3, and the reversed edge is exactly a right-endpoint edge. This proves the left-endpoint bound without inserting an unobserved exterior zero.
+
+At $n=1$ the only edge is $0\to1$, and (4.7) gives its ratio
+
+$$
+\frac{\mu_1(1)}{\mu_1(0)}=\frac1{p/a+c/b}\in[a,b]\subset(1/3,3/8).
+\tag{5.7}
+$$
+
+There is no neighbor in this last calculation. These cases prove (5.4). $\square$
+

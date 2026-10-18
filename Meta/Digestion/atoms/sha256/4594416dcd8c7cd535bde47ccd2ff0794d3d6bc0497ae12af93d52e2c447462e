@@ -1,0 +1,22 @@
+### 70.5 A common product attainer for the upper bound
+
+Choose four unit tetrahedral vectors n_f in R³, so n_f·n_g=−1/3 for f≠g; for example use (1,1,1),(1,−1,−1),(−1,1,−1),(−1,−1,1), divided by sqrt3. Let e_(f,i) be eigenvectors of n_f·σ with eigenvalues(-1)^i. Define local isometries
+
+    |f,i>→|f>e_(f,i),
+    |f,i>→|f>conjugate(e_(f,i))
+
+on the two parties. They are isometric because within a fibre the records are orthonormal, and different fibres have orthogonal output labels. The product output lies in the MC code, with the correct basis populations and within-fibre units. For f≠g its logical coefficient is
+
+    |<e_(g,j),e_(f,i)>|²
+      =1/2−(-1)^(i+j)/6.
+
+To compute its full diamond error, define |f,±>=(|f,0>±|f,1>)/sqrt2 and a CPTP logical compression C with Kraus operators
+
+    K=Σ_f |f><f,−|,    K_f=|f><f,+|  (one for each f).
+
+Their adjoint products sum to I_8. Let D be dephasing in the four output labels and O=id−D. Directly on all matrix units, the difference between this product channel's logical action and F is
+
+    −(1/3) O∘C.
+
+The diamond norm of O is3/2. For the upper bound, let Z=diag(1,i,−1,−i); then D=(1/4)Σ_(j=0)^3 Ad_(Z^j), so the channel triangle inequality bounds ||O||diamond by3/4+3/4=3/2. The uniform pure output state attains3/2, since its difference from I_4/4 has eigenvalues3/4,−1/4,−1/4,−1/4. The normalized input (1/2)Σ_f|f,−> is mapped by C to that uniform pure state. Therefore the product channel's error is exactly1/2, including arbitrary-reference upper control. Isometric MC output encoding preserves this norm.
+

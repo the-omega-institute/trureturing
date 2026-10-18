@@ -1,0 +1,25 @@
+**Proposition 3.3 (the two exact task partitions).** On the fiber
+(CCF.10), two sources have the same entire original prediction menu at
+all counts if and only if their constructor vectors
+
+$$
+z=(z_a)_{a\in A_e},\qquad z_a=r_v(a)\in
+\{\alpha,\beta,\mathsf{branch}\}
+\tag{CCF.11}
+$$
+
+agree. They have the same stationary literal-response function if and
+only if their entire $x$-vectors agree. There are exactly $3^f$ prediction
+classes and $6^f$ literal classes.
+
+Proof. The vector $z$ together with $e$ reconstructs $\pi_D(v)$:
+retain a leaf constructor and replace a branch constructor at each $a$
+by $C_0$. Equation (CCF.4) supplies every original target and count.
+Conversely the original permitted targets include each $Ra$; at count
+zero their replies recover $z$. Each trit vector is attained by choosing
+$\alpha,\beta,C_0$ independently in (CCF.10), so the class count is
+$3^f$. For literals, equality of $x$ gives the same actual source.
+Distinct elements of $U$ differ at their root or a child, so one of
+$Ra,RaL,RaR$ distinguishes any different coordinate. All $6^f$ vectors
+are attained. $\square$
+

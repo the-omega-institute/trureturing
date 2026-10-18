@@ -1,0 +1,41 @@
+**Definition 11.1 (the full singular coefficient cone).** Let
+
+$$
+\begin{aligned}
+\mathcal C_2=\Bigl\{\sum_{j=1}^t z_jz_j^\dagger:
+&t<\infty,\ z_j=(u_j,v_j,w_j)\in\mathbb C^3,\\
+&u_j(u_j^2-\alpha v_j^2-\beta w_j^2)=0\Bigr\}.
+\end{aligned}
+\tag{IR.68}
+$$
+
+The empty sum is zero. This cone includes all complex phases and the
+entire plane $u=0$. The real zero-trace cone of Lemma 10.1 is useful
+for the explicit perturbation, but is not substituted for $\mathcal C_2$.
+Let $\mathcal K_s$ be the set of four Hermitian coefficient matrices
+satisfying
+
+$$
+\begin{gathered}
+H_+,H_-\succeq0,\qquad L_+,L_-\in\mathcal C_2,\\
+H_++H_-+L_++L_-=I_3,\\
+0\preceq N:=\frac{I_3+s\kappa X_{01}}2
+ -\Theta(H_++L_+)\preceq M.
+\end{gathered}
+\tag{IR.69}
+$$
+
+For a positive supported test input $\rho$ define the finite variational
+quantity
+
+$$
+\mathsf E_s(\rho)=\min_{\mathcal K_s}
+ \operatorname{tr}\bigl(\Theta(H_++H_-)\rho\bigr).
+\tag{IR.70}
+$$
+
+Existence of the displayed minimum is proved below. The notation
+$\mathsf E_s$ is a resource quantity, distinct from the complete-output
+error $\mathcal E$ in (IR.6). Formula (IR.70) is an exact characterization,
+not an evaluated closed law for general coherent inputs.
+

@@ -1,0 +1,22 @@
+## 408. Paired-angle reduction for compensation
+
+Set
+
+    x=sqrt(L/J), A=sqrt((r-1)/(r+1)),
+    K=(sqrt(v^2-1)+sqrt(a^2-1))/(v+a),
+    t=tan(theta/2)=A/x,
+    lambda=A*K.
+
+Then t>0, 0<lambda<1, and the transverse sum satisfies
+
+    S:=beta_v+beta_a=2*atan(K*x)
+      =2*atan(lambda/t)
+      =pi-2*atan(t/lambda).                         (408.1)
+
+All inverse tangents use their ordinary real branches. The hypothesis
+theta<=pi/3 is exactly t<=1/sqrt(3).
+
+We first establish the strict algebraic inequality
+
+    2*lambda^2+t^2>1.                              (408.2)
+

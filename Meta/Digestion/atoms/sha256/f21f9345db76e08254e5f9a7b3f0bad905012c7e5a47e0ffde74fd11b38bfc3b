@@ -1,0 +1,15 @@
+## 来源与文献范围
+
+来源快照与数学参考只支持表中列出的范围；不支持任何未经桥接的 FIB 动作、物理时钟、引力或生命解释。不可变来源范围采用已提供的专项阅读结论，阅读证明源码与当前编译核验是两件事。
+
+| 参考 | 精确范围与适用边界 |
+| --- | --- |
+| [CStarNovak.lean，96e0ba0 不可变来源](https://github.com/the-omega-institute/trureturing/blob/96e0ba0ecebaa879b1e01d4789272761d506186c/D5/S3/Quantum/Algebra/CStarNovak.lean)；blob `ab31823846492be7ab55a0eac5faad76e2467f71` | 提供的源码阅读覆盖 `ncos`、`novakEntry`、`IsPositiveMatrix`、`claim`、私有标量平方/余弦及见证辅助项、`result : ¬ claim`。只承担 Q5 的特定反驳范围；没有当前重编译。 |
+| K. Mahesh Krishna，[arXiv:2108.06662v1](https://arxiv.org/pdf/2108.06662v1)，§2、p. 10 Conjecture 4.3 与 Theorem 4.4；[不可变来源说明](https://github.com/the-omega-institute/trureturing/blob/96e0ba0ecebaa879b1e01d4789272761d506186c/Library/QuantumBounds/krishna2021cstarnovak.md)，blob `909b173785b0734ecfd0af546bd47e1bcfeb85d7` | `literature-attested`：幺 $C^\ast$-代数值正性猜想及交换情形的余弦差/Schur 乘积证明。不能作为 FIB 或物理转移定理。 |
+| [取得核盲方向来源，4da8b2e](https://github.com/the-omega-institute/trureturing/blob/4da8b2e9c9c6439548fbbc5bea42df65ec2ae2ba/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_KERNEL_BLIND_DIRECTIONS_AFTER_PAIRED_CALIBRATION.md)；blob `245489ffba0928a620ac3299c563214e75671848`，约定、Definition 3.1、Theorems 4.2/5.1、Corollary 5.2、Proposition 6.2、§8 | 开放理论散文中的来源专项构造；改变取得核且状态规模增长，范围见 Q6，不是固定五态 kernel 定理。 |
+| [静态 seam 与未来商来源，60ebb51](https://github.com/the-omega-institute/trureturing/blob/60ebb51c87e6496e0cab67c899c3b687ef8fd001/docs/develop/theory/AURIC_FIB_ATOM_SEAM_BILINEAR_CURVATURE_AND_OUTPUT_FUTURE_QUOTIENT.md)；blob `1933b03dfb8963a1f0a16cb867cc8850d7d74cec`，参考边界 Q1–Q9、§4、§9 | 有限定的开放参考；拟议 `FIBNativeBridge.lean` 是实现义务，不是已有声明或动作等价。 |
+| [输出分辨仪器来源，60ebb51](https://github.com/the-omega-institute/trureturing/blob/60ebb51c87e6496e0cab67c899c3b687ef8fd001/docs/develop/theory/AURIC_FIB_ATOM_OUTPUT_RESOLVED_INSTRUMENT_CLOSURE.md)，编者限定 Q1–Q13、有限状态 horizon 上界 | 提供的独立阅读定位输出子核、完整记录及固定有限载体条件；适用边界见 Q6、Q11。 |
+| Keith Conrad，[Bilinear Forms](https://kconrad.math.uconn.edu/blurbs/linmultialg/bilinearform.pdf)，§1 定理 1.7，p. 3 | `literature-attested`：特征不为二的双线性形式对称/反对称唯一分解，适用对象及推广见 Q1。 |
+| Gian-Carlo Rota，[On the Foundations of Combinatorial Theory I. Theory of Möbius Functions](https://doi.org/10.1007/BF00531932)，§3 | `literature-attested`：已提供独立文献阅读定位的包含关系反演与 Boolean 区间系数；书目定位不替代 Q8 的应用条件与散文推导。 |
+| Connor Ahlbach、Jeremy Usatine、Nicholas Pippenger，[Efficient Algorithms for Zeckendorf Arithmetic，arXiv:1207.4497v1](https://arxiv.org/pdf/1207.4497v1)，§1 | `literature-attested`：从 $\operatorname{Fib}_2=1$ 起的经典非相邻表示唯一性。本卷从 $2$ 起的子集编码范围与归纳见 Q9，不声称全自然数满射或原创。 |
+

@@ -1,0 +1,83 @@
+**Theorem 9.4 (compensation for every gap of at most three).** For
+every $B=(a,b)\in\mathcal B$ with $b-a\le3$,
+
+$$
+D_B\le E_B,\qquad |Q_B|\ge|V_B|.
+\tag{SI.34}
+$$
+
+The other intervals may have arbitrary lengths. For lengths one and
+two, $D_B=0$. For length three, every shared live host in the interval
+belongs to exactly two cells at depth $a+1$. They must be the unique
+possible pair on that diagonal consisting of a cell with $z=L-1$
+and a cell with $h=K-1$. This is a necessary classification of
+sharing, not an assertion that the pair or a sharing state exists.
+
+Proof. Length one has no internal cells. At length two put
+$X_B=\{x,y\}$. Every internal support is either
+$T_a\cup\{x\}$ or $T_a\cup\{y\}$. By (SI.31), its next
+fixed label must be the other member of $X_B$. Distinct supports
+therefore cannot share a state; equal supports at distinct cells cannot
+share by the equal-support/unequal-hit exclusion. Thus $D_B=0$.
+
+Now let $b-a=3$, so $|X_B|=3$. At the last internal depth
+$a+2$, each support consists of $T_a$ and two members of $X_B$.
+Its next fixed label is the unique omitted member. Different supports
+require different labels, while equal supports in different cells have
+unequal hits. Hence no state at that depth hosts different cells.
+
+There is also no sharing between depths $a+1$ and $a+2$.
+Their supports have the form $T_a\cup\{x\}$ and
+$T_a\cup\{y,z\}$ with $y\ne z$. If $x\in\{y,z\}$,
+they are properly nested, which excludes sharing. Otherwise their
+union is $T_b$. A shared host would have to query a label in
+$T_b$ fresh for both supports, by (SI.31), which is impossible.
+
+All duplicate incidences are therefore at depth $d=a+1$. For a
+host $q$ there, let $\mathcal H(q)\subseteq V_d$ be its set of
+hosted cells, and for each $p\in\mathcal H(q)$ let
+
+$$
+L(p)=\{\varepsilon\in\{0,1\}:p_\varepsilon\in V\}.
+$$
+
+Here $d\le n-2$, so every $L(p)$ is nonempty. If the same
+reply $\varepsilon$ belonged to $L(p)$ and $L(p')$ for distinct
+hosted cells, (SI.8) would put both distinct child cells at the one
+fixed successor $\delta(q,\varepsilon)$. Those children are at
+depth $a+2$, where such sharing has just been excluded. Thus the
+nonempty sets $L(p)$ are pairwise disjoint subsets of $\{0,1\}$.
+A shared host has exactly two cells, with opposite singleton live-reply
+sets. Since zero remains live exactly when $z<L-1$, and one remains
+live exactly when $h<K-1$, the cells must be
+
+$$
+p_-=(d-(L-1),L-1),\qquad
+p_+=(K-1,d-(K-1)).
+\tag{SI.35}
+$$
+
+If either displayed cell is outside $V_d$, sharing is impossible.
+The exclusions (SI.7) still apply whenever the pair is hosted together.
+
+Let $s_B$ be the number of shared states in this interval. Each has
+exactly two cell incidences, and all other hosts have one, so
+$D_B=s_B$. If $s_B\ge2$, both cells in (SI.35) have at least
+$s_B$ hosts. Therefore the excess on their diagonal is at least
+$2s_B-2\ge s_B$. If $s_B=1$, use that $a,b$ are consecutive
+in the complete cut list: depth $a+1$ is not common-support. By
+Definition 9.1 some cell on this diagonal has $a_p>1$, and
+Theorem 2.2 gives $b_p\ge a_p\ge2$. The excess on this diagonal
+is at least one. If $s_B=0$ there is nothing to compensate. In all
+cases,
+
+$$
+D_B=s_B\le\sum_{p\in V_{a+1}}(b_p-1)\le E_B.
+\tag{SI.36}
+$$
+
+Equation (SI.33) gives the host lower bound. The fixed-successor
+argument uses two actual live children with the same reply whenever
+both are live. It imposes no restriction on a certified child or its
+subsequent paid continuation. $\square$
+

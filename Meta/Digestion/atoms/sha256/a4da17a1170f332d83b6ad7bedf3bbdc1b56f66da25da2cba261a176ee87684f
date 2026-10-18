@@ -1,0 +1,27 @@
+**Theorem 68.1 (repo-derived central gap and ambient exclusion).**
+The exact central minimum is
+
+\[
+ \min_{v,w\in\mathcal F(H_\star)}
+ \left|\,|v^*w|^2-\frac16\right|
+ =\frac\delta{36}=\frac{9\sqrt7-21}{504}.
+\tag{68.2}
+\]
+
+The minimum includes equal rays and both orderings. Moreover there
+exists \(r>0\) such that, for every unitary \(H\) with
+\(\|H-H_\star\|_{\mathrm F}<r\) and every
+\(v,w\in\mathcal F(H)\),
+
+\[
+ \left|\,|v^*w|^2-\frac16\right|
+ \ge\frac\delta{72}=\frac{9\sqrt7-21}{1008}>0.
+\tag{68.3}
+\]
+
+Thus no two such common-flat vectors are mutually unbiased. In
+particular no complex Hadamard unitary in this ambient neighborhood
+can occur with \(I_6\) in a quartet of mutually unbiased bases.
+The neighborhood includes the central point and is not restricted
+to the one-parameter family. No numerical value of \(r\) is asserted.
+

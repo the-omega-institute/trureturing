@@ -1,0 +1,45 @@
+**Proposition 1.3 (Exact reachability and all signed straight commands).**
+The current-ray domain from the fixed preparation is exactly
+
+$$
+\mathcal M=(0,H)\times\mathbb T^2.
+$$
+
+For every real $s,t$, the native straight commands are
+
+$$
+P_s(k,\alpha,\beta)=(k+s,\alpha,\beta),\qquad
+\operatorname{dom}P_s=\{(k,\alpha,\beta)\in\mathcal M:0<k+s<H\},
+$$
+
+$$
+Q_t(k,\alpha,\beta)=
+\left(k,\alpha+t/2,\beta+(1/2-k/r)t\right),\qquad
+\operatorname{dom}Q_t=\mathcal M.
+$$
+
+Every point of $\mathcal M$ has a finite lawful producing history.
+
+**Proof of Proposition 1.3.** Integrating Lemma 1.2 along a probability
+leg at fixed $\chi$ and a phase leg at fixed $k$ gives these formulas.
+The entire straight probability segment is interior exactly when its
+endpoint is interior, by convexity. The real command $t$ itself is not
+reduced modulo a period.
+
+Choose $k_1\ne k_0$ in $(0,H)$ and put $d_k=k_1-k_0$.
+The chronological rectangle $P_{d_k},Q_t,P_{-d_k},Q_{-t}$ adds
+$-d_kt/r$ to both $u,v$, hence fixes $\alpha$ and adds that number
+to $\beta$. For target representatives $\alpha_*,\beta_*$ set
+
+$$
+L=2\alpha_*,\qquad
+q=\beta_*-(1/2-k_0/r)L,\qquad t=-rq/d_k.
+$$
+
+Execute this rectangle, then $Q_L$ at $k_0$, then $P_{k-k_0}$.
+The final coordinates are exactly $(k,\alpha_*,\beta_*)$ on the
+two circles. Every probability segment joins interior endpoints; every
+phase variation and every history is finite. Lemma 1.2 gives the converse
+and the exact equality of states. Reachable independent phase coordinates
+have not been added as independent source controls. $\square$
+

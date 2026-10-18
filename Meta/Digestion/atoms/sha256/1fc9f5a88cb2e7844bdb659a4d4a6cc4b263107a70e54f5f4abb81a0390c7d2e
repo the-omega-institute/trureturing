@@ -1,0 +1,16 @@
+**Corollary 7.4 (Full cap and sufficient exponents).** With sufficient
+precision, the full cap $J_s=\lfloor\log_2(\eta/s)\rfloor$ has exactly
+$M_{J_s}$ listed configurations, at most $K_{\rm count}(\eta/s)^r$,
+and both paid means of order at most
+$s^{-(2r+1)}/\log(\mathrm e/s)$. Every fixed positive polynomial budget
+exponent also suffices for this paid order, with a constant depending
+on that exponent; the construction's exponent $r$ is not necessary.
+
+Proof. The count follows from Theorem 4.1 and $2^{J_s}\le\eta/s$;
+$J_s\asymp\log(\mathrm e/s)$ gives its paid upper. For any
+$\zeta>0$, $M(s)=\lceil s^{-\zeta}\rceil$ satisfies condition 3 of
+Corollary 7.3, for example with any fixed $0<\varepsilon_*<\zeta$.
+Its budget-selected cap, not necessarily its full cap, therefore gives
+the same paid order. This reuses [C, Corollary 7.2] with the added
+precision provision. $\square$
+

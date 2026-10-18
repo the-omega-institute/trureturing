@@ -1,0 +1,26 @@
+**Definition 8.1 (two actual source families and the requested bit).** Fix
+$c=1/4$, $Z=1/2$, $a=1/16$, $b=c-a=3/16$. Both height families
+$\rho_{x,\beta,m}$, $x\in\{a,b\}$, $\beta\in\mathbb R$,
+$m\in\mathbb Z$ have the six-unit common-preparation realization of §3.
+Their arrival live probabilities are both $2/9$, independent of nuisance
+parameters. No height or nuisance label is delivered.
+
+For $0<d<a$ the positive return request is
+
+$$
+k_{x,+}(t)=
+\begin{cases}x+dt,&0\leq t\leq1,\\x+d(2-t),&1\leq t\leq2,
+\end{cases}
+\qquad \chi(t)-\chi(0)=0.
+\tag{AC.28}
+$$
+
+The negative mirror replaces $d$ by $-d$. Both requests are legal at
+both heights and return to the same actual height and real phase. The
+target survival bit is whether the entire canonical excursion finishes
+live. A binary simulator may use any effect $0\leq E\leq I_V$;
+its error is the supremum over the stated two full nuisance families of
+the absolute survival-probability error. Full-instrument error dominates
+this bit error. Attainment of the binary task grants no correct quantum
+successor or marked failure archive.
+

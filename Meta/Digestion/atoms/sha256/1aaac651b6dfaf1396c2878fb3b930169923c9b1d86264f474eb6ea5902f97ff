@@ -1,0 +1,25 @@
+**Theorem 4.1 (causal two-height programming criterion).** For every source,
+pure programme pair and monotone original relative control of Definitions
+2.1, 2.3 and 3.1, an exact causal realization of Definition 3.3 exists if and
+only if, almost everywhere on $[0,T]$,
+
+$$
+\boxed{\begin{aligned}
+\mu^2\left[\left(\frac{\lambda_1+\lambda_2}{2}\right)^2+\delta^2\right]
+   &\le\lambda_1\lambda_2,\\
+\mu^2\left(\frac{\gamma_1+\gamma_2}{2}\right)^2
+   &\le\gamma_1\gamma_2.
+\end{aligned}}
+\tag{CP.10}
+$$
+
+Necessity requires correctness only on the actual full $\beta,m$ families
+(CP.4), with their prescribed canonical survival at every cut. It imposes no
+programme-return assumption or finite memory dimension. Sufficiency supplies
+the whole exact-time/five-mode CP instrument on every $M_3$ input with every
+unchanged reference. The attaining process returns $r_j$ unchanged and
+uncorrelated on every live branch. Programme return on failure is not claimed.
+
+The inequalities are undivided: zero rates are included. The proof of necessity
+is below, and Section 5 proves sufficiency and the complete joint successor.
+

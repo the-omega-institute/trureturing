@@ -1,0 +1,12 @@
+**Mathematical citation 9.2 (endpoint scope).** The designated validation
+point in Theorem 9.1 remains an in-call point, distinct from invocation
+and Return. [CNA, Theorem 7.1][CNA] supplies the invocation-row and
+separate Return-row obstructions for nonroot cuts in the source-blind
+read-only comparison class. Its indistinguishable histories still apply
+to the routed observer: place the entry update before all observer
+actions, or the final update after its last Read, including all routing
+Reads, but before the separate Return. The root cut retains its
+constant-row exception from Definition 1.2. Finite-service progress
+removes routing divergence; Theorem 9.1 makes no liveness assertion
+under infinitely many writer updates.
+

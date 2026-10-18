@@ -1,0 +1,31 @@
+**Lemma 67.3 (actual operator domain and the atom-only displacement defect).** For each finite commission the self-adjoint semibounded operator $\mathbb M_D$ is defined on
+
+$$
+\operatorname{Dom}(A_D\otimes I)\cap
+\operatorname{Dom}(I\otimes\mathsf n).
+\tag{67.8}
+$$
+
+Its form domain is the intersection of the full Fock-valued particle form domain of Definition64.5 with $\operatorname{Dom}(I\otimes\mathsf n^{1/2})$. All interval endpoint, slice/cell, ground and collision traces are equalities in field/auxiliary Hilbert norm. This domain, including its literal symmetry and collision conditions, is preserved by its full unitary evolution. No assumption that $m_p$ preserves the particle domain is required.
+
+Proof. Put $B=(\mathsf n+I)^{1/2}$. The usual creation and annihilation estimates give, for each real bank vector $z$,
+
+$$
+\|q(z)\psi\|\le\sqrt2\|z\|\,\|B\psi\|,
+\qquad q(z)=\sum_pz_pq_p.
+\tag{67.9}
+$$
+
+At every particle configuration $\|z\|^2=\sum_pm_p\le2$. Apply (67.9) fibrewise, including mixed and cell strata, and integrate their actual measures. It follows that
+
+$$
+\left\|\sum_pm_p\otimes q_p\,\Xi\right\|\le2\|B\Xi\|,
+\qquad
+\left\|\sum_pn_p\otimes q_p\,\Psi\right\|\le2\|B\Psi\|.
+\tag{67.10}
+$$
+
+There is no number-of-sites factor. The positive tensor sum $A_D\otimes I+I\otimes\Omega h_D$ has the intersection domain in (67.8), since its summands strongly commute and $\lambda\mathsf n\le h_D\le6\mathsf n$. The square-root estimate (67.10) makes the linear coupling infinitesimally operator-bounded relative to that sum. The other two multipliers in (67.5) have combined norm at most $M=2g+\nu/\lambda$. Kato–Rellich therefore gives (67.8); the corresponding infinitesimal form bound gives the stated form domain with equivalent shifted form norm. Semiboundedness also follows fibrewise from (67.7), the positive displaced field energy and the bounded complete pair multiplier. The positive shifted square root of $\mathbb M_D$ commutes with its unitary group, so this actual form domain is invariant. The source particle trace constraints, including both collision traces in a same-cable cell, are part of that domain. $\square$
+
+The distinction between relative boundedness and domain preservation matters. On the legal singleton, take the one-particle form vector with atomic value $c\ne0$ and each grounded stub function $c(1-x)$, tensor any field vector changed by $D(\alpha_{e_o})$. An atom-only displacement changes the atomic field vector while leaving the open-stub endpoint vector unchanged. The trace equality fails. Similarly, $m_oF$ has zero cable traces and atomic value $c$; it belongs to the particle form domain only if $c=0$. Thus no dense subdomain of $\operatorname{Dom}(A)$ invariant under $m_o$ exists: it would lie in the closed subspace with zero mass-one atomic coordinate. This rules out that particular invariant-domain hypothesis in Suzuki's unbounded-system scaling theorem; it does not rule out the relative-bound construction (67.8).
+

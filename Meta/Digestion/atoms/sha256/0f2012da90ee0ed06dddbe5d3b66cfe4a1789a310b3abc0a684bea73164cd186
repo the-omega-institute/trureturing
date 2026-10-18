@@ -1,0 +1,61 @@
+**Proposition 9.4 (A seven-site collective certificate).** Take
+$\lambda_i=100$ and
+
+$$
+\omega=\frac1{304}(1,100,1,100,1,100,1),
+\qquad T=\{1,3,5,7\},
+\qquad \mathcal M=\{12,34,56\}.
+\tag{9.8}
+$$
+
+Then the collective certificate succeeds, while every certificate
+of the form $U\le D_{\mathcal M'}$ fails.
+
+Proof. Recurrence (9.7) gives
+
+$$
+Z=110150701,\qquad Z_T=1030301,
+\qquad
+\kappa_T=\frac{55620651}{845984272304}<\frac1{15000},
+\tag{9.9}
+$$
+
+and direct substitution in (9.6) gives
+
+$$
+\sum_{ij\in\mathcal M}r_{ij}
+=\frac{15075}{78302876}>\frac1{6000}.
+\tag{9.10}
+$$
+
+Hence $\gamma<\delta$ and $\gamma+\Lambda<1$. On the other hand,
+the actual constrained marginals give
+
+$$
+U=\frac{1090601}{1857622704}>\frac1{2000}.
+\tag{9.11}
+$$
+
+All adjacent edges have the same $d$. Its root identity and
+$d\le1/304$ imply
+$d\le(1/304)(1-(100/101)^2)=201/3101104$.
+Every matching has at most three edges, so
+
+$$
+\max_{\mathcal M'}D_{\mathcal M'}
+\le\frac{603}{3101104}<\frac1{5000}<U.
+\tag{9.12}
+$$
+
+There is also no equal-weight adjacent pair. Thus the sufficient
+tests of Theorem 7.3 do not establish this instance, whereas
+Theorem 9.2 does. $\square$
+
+All separations in this proof are strict. The partition functions,
+$U$, $\kappa_T$ and the finitely many matching bounds are continuous
+on positive activities and the interior weight simplex. Therefore
+a nonempty relatively open neighborhood of (9.8) has the same
+strict separation. It contains fully nonuniform activity and
+weight vectors. This is an enlargement of sufficient conditions
+for the conjecture, not a violation of the conjecture.
+

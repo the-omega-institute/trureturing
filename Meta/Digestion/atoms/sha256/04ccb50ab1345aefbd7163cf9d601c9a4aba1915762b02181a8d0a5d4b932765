@@ -1,0 +1,28 @@
+**Definition 4.1 (the fixed-prefix continuation task).**
+Fix a public ordered list of $k$ distinct addresses, $0\le k\le t$,
+with set $K\subseteq A$. Actually execute those $k$ reads and retain
+their all-zero record $h_K$. The original source is then in
+
+$$
+X_K=\{b\}\sqcup\{(n,J):K\subseteq J,\ |J|=t,\ n\ge1\}.
+\tag{4.1}
+$$
+
+It is not redrawn from this set. Continuations may read addresses in
+$U=A\setminus K$ and use independent, source-independent fresh
+randomness. They use one common program with public $K,h_K$ and their
+own acquired continuation records; neither the original hidden source
+nor extra information about it is supplied. Their initial retained
+configuration is the same at every member of $X_K$.
+The continuation task has no access to a source-correlated prefix tape.
+It counts at most $r$ distinct new addresses per execution, terminates
+and produces a finite real proposal almost surely at every original
+source in $X_K$, and tests that proposal against the original $g(x)$.
+
+Reads of $K$ are not allowed in this remaining-address interface.
+A different interface that permits such repeated reads must charge
+those calls; obtaining their known zero values from retained memory is
+not an actual query. The prefix already has charges $D=R=B=k$.
+Its execution transitions and memory are also retained in the total
+accounting.
+

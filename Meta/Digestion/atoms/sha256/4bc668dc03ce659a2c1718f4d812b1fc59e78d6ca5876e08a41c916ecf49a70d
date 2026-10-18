@@ -1,0 +1,26 @@
+**Convention 1.3 (native correspondence and separate services).**
+The supplied [WTF, Theorem 4.1][WTF] identifies native uniform
+feasibility with the Boolean model by
+
+$$
+\mathsf N_{A,k,r}(H,p,\ell)
+\quad\Longleftrightarrow\quad
+\mathsf B_{c,k}(H-4-r,p-1,\ell-3).
+\tag{SI.5}
+$$
+
+Its lift installs the Boolean graph unchanged at the shortest literals
+$a_i$, adds the two profile states and the original-entry latches, and
+works on every source in $\mathcal U_*$. Its projection follows actual
+selected-state subsequences. Neither direction asserts read-once or
+grid normalization. A Boolean graph with $m$ running states has $m+2$
+states including its terminals, and the native lift has $m+4+r$
+preparation states. The terminals are not charged a second time.
+
+Actual source binding, the fixed register, acquired same-version row,
+authentication, permission, export, access isolation, code-only handoff,
+lawful complete entry and stationary service remain the supplied
+assumptions of [WTF, Assumption 1.5][WTF]. Installed-state count,
+retained export alphabet, table and address representation, workspace,
+elapsed time and physical memory are distinct resource quantities.
+

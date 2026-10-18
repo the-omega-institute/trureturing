@@ -1,0 +1,36 @@
+**Theorem 8.3 (one-time acquired invariant menu calibration).** Suppose
+instead that every $S_i$ is nonempty and the entire finite menu is
+public before the first capture. Choose $w_C\in S_{r_C}$, including
+$w_*\in S_0$. During the first row's guard interval acquire
+
+$$
+\kappa_C=J_{w_C}(U_{v_0})-J_{w_*}(U_{v_0})\qquad(C\ne C_*).
+\tag{CAB.23}
+$$
+
+Only the row and these signed integers survive the first acquisition;
+all later captures retain just their complete rows. This is possible
+with native Reads under unknown finite interference. The final decoder
+recovers every relative epoch, even across disconnected components.
+
+Proof. The anchor $J_{w_*}$ factors through the first complete row.
+For each other endpoint, follow its prefixes from the root until a
+leaf or the endpoint is reached. A blocking leaf gives its weighted
+prefix length plus label bit. At a reached endpoint acquire its right
+clock by Definition 4.1 and add the prefix weight. Do this sequentially
+inside the saved leaf's interval, aborting on INVALID, and then perform
+the final guard Read. Persistence makes all reached bases lawful. On
+acceptance the interval is stationary and gives exactly (CAB.12),
+including initially absent endpoints. Each subroutine is finite under
+the final height; a failed attempt requires an update in its guard
+interval. The previous disjoint-interval argument proves termination.
+
+Let $q_C$ be the exposed $J_{w_C}$ computed from representative row
+$r_C$, and let $q_*=J_{w_*}(U_{v_0})$ be computed from row zero.
+Advancement gives
+$q_C-\kappa_C-q_*=n_{r_C}$. Combine these with Definition 8.1's
+row-only offsets. The constants (CAB.23) are invariant along the
+orbit, but their later use includes advancing coordinates exposed by
+actual rows. No future source value is obtained by the initial
+calibration alone. $\square$
+

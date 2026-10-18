@@ -1,0 +1,13 @@
+**Boundary 6.3 (Compact separation requires no stronger continuity).** [Universal, Theorem 6.2][U] and [Renewal, §1.3][R] use continuous $D_r$ and upper-semicontinuous $d=\inf_rD_r$, not continuity of $d$ or uniform convergence of $D_r-d$. The upward jump (5.1) is consistent with upper semicontinuity. On the complete compact $\Theta_N$, their conclusions remain
+
+$$
+C_N:=\max_{\theta\in\Theta_N}d(P_\theta)
+=\inf_{r\ge1}U_{N,r},\qquad
+U_{N,r}:=\max_{\theta\in\Theta_N}D_r(P_\theta).
+\tag{6.2}
+$$
+
+The same supplied compact decreasing-window argument on the curve $p\in[0,1]$ gives $\max_pD_r(P_p)\downarrow1/8$, even though (5.5) holds. Indeed a convergent subsequence of maximizing parameters leaves every fixed $D_k$ above the limiting maxima; taking $\inf_kD_k$ bounds that limit by $\max_pd(P_p)=1/8$, and the reverse bound is immediate. Thus nonuniform approximation errors do not obstruct this compact maximum argument.
+
+Every member already has $P_p([1001])=0$, because the two ones would have opposite parities. [Universal, Theorem 3.1][U]'s full-support necessity already excludes the entire family from attainment. The supplied bound $c_\star>1/7>1/8$ in [Renewal, §1.2][R] also separates its exact risks, and the preceding compact argument yields some finite strict-risk separation for this restricted curve. These are reuse of existing exclusions and compactness, with no new attaining-law coverage or effective radius.
+

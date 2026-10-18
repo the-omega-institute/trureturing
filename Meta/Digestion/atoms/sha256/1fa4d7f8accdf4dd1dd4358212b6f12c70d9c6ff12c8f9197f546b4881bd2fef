@@ -1,0 +1,26 @@
+**Definition 2.1 (all original ordered trees and literal reads).** Let
+
+$$
+\mathcal T::=\alpha\mid\beta\mid(s,t),\qquad
+\rho\alpha=\beta,\quad \rho\beta=(\beta,\alpha),\quad
+\rho(s,t)=(\rho s,\rho t).
+\tag{IDC.2.1}
+$$
+
+The domain contains all nonempty finite free ordered full binary trees.
+There is no identification of brackets, left and right, or equal labelled
+occurrences, and no common bound on word, size, shape or intrinsic depth.
+The address alphabet is $\Sigma=\{L,R\}$; its empty word $\varepsilon$ is the
+root. For $y\in\mathcal T$, every finite word $q$ is a legal
+$\mathsf{Read}(q)$ request. Its authentic reply $r_y(q)$ is
+$\alpha,\beta,\mathsf{br}$ or $\mathsf{abs}$ according as the addressed
+constructor is an alpha leaf, a beta leaf, a pair or absent. A nonempty
+suffix below a leaf is absent. Pairing and $\rho$ describe mathematical
+sources; they are not source operations granted to this consumer.
+
+Write $\ell(u)$ for the number of leaves and $\mathsf{Addr}(u)$ for all
+actually present node addresses. The length $|q|$ counts literal letters
+in a submitted address, rather than bits in an index describing that word.
+The right-spine subinterface consists exactly of the requests
+$\mathsf{Read}(R^j)$, $j\in\mathbb N_0$, including $j=0$.
+

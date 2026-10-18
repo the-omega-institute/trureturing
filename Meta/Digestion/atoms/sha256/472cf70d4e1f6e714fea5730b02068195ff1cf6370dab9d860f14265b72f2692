@@ -1,0 +1,31 @@
+**定义 12.2（完整插值与根六系数）。** For the coordinates (12.3), the
+first four normalized readings give the gain samples
+
+$$
+(\alpha_0,\alpha_1,\alpha_2,\alpha_3)
+=\left(-d,\frac{24-d}{k\ell},\frac{48-d}{\ell},
+                      \frac{312/5-d}{(k+1)\ell}\right).
+\tag{12.7}
+$$
+
+The gain is the unique polynomial of degree at most three with these
+values at $0,1,2,3$: $f(T)=\sum_{i=0}^3\alpha_i\ell_i(T)$, with
+the basis (8.4). This is standard Lagrange interpolation, as in
+[NIST DLMF, §3.3(i), equation (3.3.1)](https://dlmf.nist.gov/3.3.E1),
+with $n=3$, nodes $z_i=i$ and sample values $\alpha_i$. It is used
+inside the following deductions, not asserted as a new result.
+All denominators in (12.7) are positive. The interpolant cannot be
+zero, since the normalized readings at zero and one are different.
+
+Set $D=\ell k(k+1)>0$, and define
+
+$$
+\begin{aligned}
+N&=(2160-45d)k^2+(48+11d)k+36d-864,\\
+p_4&=\frac32(d-48)k^2+\frac{624-9d}{10}k+\frac{48-2d}{5},\\
+p_5&=2(d-48)k^2+\frac{216-3d}{5}k+\frac{72-3d}{5},\\
+p_7&=6(48-d)k^2+(d-72)k+2d-48.
+\end{aligned}
+\tag{12.8}
+$$
+

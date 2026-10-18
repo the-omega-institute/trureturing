@@ -1,0 +1,22 @@
+**Lemma 2.1 (actual extension and envelopes; SI Lemma 9.2).** Every live
+history extends to every specified later live depth up to $n-1$. Common
+supports form a strictly increasing chain with $|T_a|=a$. At any live
+occurrence of depth $a\le d<b$ in the range of $B=(a,b)$,
+
+$$
+T_a\subseteq S\subsetneq T_b,\qquad
+i(q)\in T_b\setminus S\subseteq X_B.
+\tag{CL.9}
+$$
+
+Proof. Before depth $n-1$ a live cell is not $(K-1,L-1)$, so at least
+one reply has a live child. Repeated use of (CL.6) gives the desired
+extension, with a completion of each resulting fresh-coordinate
+assignment realizing the entire prefix. A live ancestor at depth $a$
+gives $T_a\subseteq S$. If $b<n$, extend through depth $b$; this
+includes the next query and gives the other assertions. If $b=n$,
+freshness and $T_n=[n]$ give them directly. Applying this to common
+depths proves containment of their supports, and their different
+cardinalities make containment strict. There is no live occurrence at
+the formal endpoint $n$. $\square$
+

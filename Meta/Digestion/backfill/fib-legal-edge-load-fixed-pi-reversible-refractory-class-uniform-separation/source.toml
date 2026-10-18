@@ -1,0 +1,5 @@
+source_id = "fib-legal-edge-load-fixed-pi-reversible-refractory-class-uniform-separation"
+path = "docs/develop/theory/FIB_LEGAL_EDGE_LOAD_FIXED_PI_REVERSIBLE_REFRACTORY_CLASS_UNIFORM_SEPARATION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

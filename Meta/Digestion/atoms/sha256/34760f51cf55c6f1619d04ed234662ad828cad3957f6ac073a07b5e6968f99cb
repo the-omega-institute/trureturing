@@ -1,0 +1,27 @@
+**Definition 8.1 (view kernel and transport condition).** A view $q$ has
+the task kernel when
+
+$$
+\ker(q)=\ker(\Phi_{\mathcal U})
+\quad\text{on }X_{\mathsf C}.
+\tag{8.2}
+$$
+
+It has a transport action for $a$ when there are induced legal domains,
+response labels and a successor $\overline T_a$ satisfying
+
+$$
+\begin{aligned}
+x\in D_a&\Longleftrightarrow q(x)\in\overline D_a,\\
+\operatorname{step}_a(x)&=\overline{\operatorname{step}}_a(q(x)),\\
+q(T_a x)&=\overline T_a(q(x))\qquad(x\in D_a),\\
+\operatorname{sel}(x)&=\overline{\operatorname{sel}}(q(x)),\qquad
+\operatorname{ns}(x)=\overline{\operatorname{ns}}(q(x))
+\quad\text{when these are in the contract}.
+\end{aligned}
+\tag{8.3}
+$$
+
+For an inherited meter, (8.3) is imposed on the pair $(x,m)$; for a fresh
+suffix it is imposed on the residual state with the fresh identity meter.
+

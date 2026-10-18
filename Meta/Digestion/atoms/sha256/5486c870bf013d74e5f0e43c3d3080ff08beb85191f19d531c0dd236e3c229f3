@@ -1,0 +1,39 @@
+**Definition 5.1 (local access and elementary patch templates).** The core
+uses the fixed outer path to a tape origin followed by its head link to
+reach the current cell root. From a current cell root, the next cell root
+is reached by $\mathsf P\mathsf R\mathsf L$, and the previous cell root
+by $\mathsf P\mathsf P\mathsf L$ when the original move is enabled.
+The trailing terminal after a final cell is reached by
+$\mathsf P\mathsf R$. These use actual parent endpoint slots; they are
+not searches for an incoming edge.
+
+There are four elementary templates, all within the atomic patch:
+
+1. Inspect a finite component by depth-first traversal of its
+   $\mathsf L,\mathsf R$ edges, probing both child slots at each vertex
+   and its parent slot on each return. Decode switch side as in Theorem 4.4.
+2. Assign each bit in the original row's designated symbol, mark, latch,
+   control, or token field by the four endpoint assignments of Definition
+   4.1. A whole byte assignment uses eight such assignments when that is
+   the original field. An originally assigned bit is assigned even if its
+   value is unchanged. Other fields, particularly immutable read operands,
+   receive no slot assignment merely because they were inspected.
+3. Append a cell by expanding the existing trailing terminal $z$ into
+   $\langle G(c),z'\rangle$. Create the 47 cell vertices and new terminal
+   $z'$, initialize all seven slots of each, and assign $z.\mathsf L$
+   and $z.\mathsf R$. New child parent slots are part of initialization.
+4. Retarget a head link by clearing its old target's head slot, assigning
+   the origin slot, and assigning the new target's head slot. An initial
+   activation has only the latter two assignments. The respective head
+   mark bits are assigned in their cell templates. The distinct meter
+   head slots prevent an alias when both meter heads occupy the same cell.
+
+The assignments are evaluated on the pre-patch values, with the original
+core/receipt combination determining each final byte and its designated
+target tracks. If two named cell roles denote the same occurrence,
+combine their original target fields on that one physical cell. Assign
+only those target bits to their combined final values. This is a bounded equality check on reached
+endpoints, not matching over the tape. The three retarget assignments are
+a charged ordered list inside one atomic patch; an unchanged target still
+has its final head slot restored. There is no cut after its clearing.
+

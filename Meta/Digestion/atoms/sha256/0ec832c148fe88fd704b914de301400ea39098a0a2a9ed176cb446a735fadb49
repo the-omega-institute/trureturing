@@ -1,0 +1,22 @@
+**Theorem 6.3 (source normal-form bijection).** Put $X=\alpha\alpha$, $Y=\beta\beta$, $s_0=\alpha\beta$, $s_1=\beta\alpha$, $c_0=\alpha$, $c_1=\beta\beta$. The map
+
+$$
+(\rho,b,u,\mathbf j)\longmapsto
+h=u\,s_\rho\mid
+\prod_{i=1}^{3}(\beta\alpha)^{j_i}c_{b_i},
+\qquad
+\rho\in\{0,1\},\quad b\in\{0,1\}^3,\quad
+u\in\{X,Y\}^{*},\quad \mathbf j\in\mathbb N^3
+\tag{SC.1}
+$$
+
+is a bijection onto $\mathcal H_3(\mu)$. The displayed delimiter and segment boundaries are determined by the original parser; they are not inputs from another execution. If $p=|u|_X$, $q=|u|_Y$, $s=j_1+j_2+j_3$, and $w=b_1+b_2+b_3$, its from-zero raw counts are
+
+$$
+A=4-w+2p+s,\qquad B=1+2w+2q+s,\qquad
+N=A+B=5+w+2(p+q+s).
+\tag{SC.2}
+$$
+
+Proof. In the seed control, each equal pair is rejected and every first unequal pair accepts exactly its displayed seed. Thus the prelude uniquely yields $u,s_\rho$. In segment $i$, each $\beta\alpha$ returns to its initial phase, while $\alpha$ there completes zero and $\beta\beta$ completes one. Reading until each of the first three completions uniquely yields $j_i,b_i$; no earlier delimiter or replay is needed. Conversely every tuple follows these exact transitions and first reaches the third completion at the final letter of (SC.1). Every letter has positive probability at every supported depth, so every tuple has positive common-prior mass. Parsing and concatenating are inverse, not just mutually compatible descriptions. The accepted seed contributes one letter of each kind, each reject contributes two of its kind, each return contributes one of each, and the three completion suffixes contribute $3-w$ alphas and $2w$ betas. This proves (SC.2). $\square$
+

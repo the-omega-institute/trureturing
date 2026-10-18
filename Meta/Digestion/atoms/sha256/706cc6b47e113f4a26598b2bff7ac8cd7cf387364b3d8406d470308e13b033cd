@@ -1,0 +1,20 @@
+**Definition 2.1 (trees and literal calls).** Let
+$\mathcal T::=\alpha\mid\beta\mid\langle t,t\rangle$ be nonempty finite ordered
+trees. Equality retains every bracket, left/right occurrence and leaf colour.
+An address is a finite word over $L,R$. Literal $\operatorname{Read}(p,r)$ returns
+$\alpha$, $\beta$, $\mathsf{branch}$ or $\mathsf{absent}$ according to the node
+at $p$. Every finite address is a legal Native request, including one below a
+leaf. Define the same actual substitution as the suppliers:
+
+$$
+\rho\alpha=\beta,\qquad
+\rho\beta=\langle\beta,\alpha\rangle,\qquad
+\rho\langle s,t\rangle=\langle\rho s,\rho t\rangle.
+$$
+
+Fix public integers $H,J\ge1$, a fixed preparation-occurrence identity $\xi$,
+and one installed deterministic program $P_{H,J}$, identical on every initial
+$u\in\mathcal T_H$. All comparisons below fix these public parameters and the
+same port origins and initial owner assignments. Across different preparations,
+their complete identity tags must instead be retained in every view.
+

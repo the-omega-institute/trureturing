@@ -1,0 +1,20 @@
+**Proposition 7.3 (Credited finite exactness budget).** If $c>0$ and $\gamma=s-c>0$, a sufficient integer budget for simultaneous exactness is
+
+$$
+m\ge\left\lceil\frac{25}{2c^2}\log\frac{2s}{\gamma}\right\rceil.
+\tag{7.4}
+$$
+
+The logarithm is natural. This existing sufficient budget certifies the fixed-diagonal processor, hence N1 as well. It is not the minimum (4.9); the all-parameter theorem also gives the sufficient bound (4.10).
+
+Proof. On one measured copy put $G_a=1,-1,0$ at $a_+,a_-$ and all other outcomes. Under opposite $a$ labels its means are $2u,-2u$. To obtain the needed bounded-variable estimate directly, for any $V\in[-1,1]$ let $F(\lambda)=\log\mathbb E\exp(\lambda(V-\mathbb EV))$. Its second derivative is the variance under a tilted probability law, at most one. Since $F(0)=F'(0)=0$, integration gives $F(\lambda)\le\lambda^2/2$. For independent copies, exponential Markov applied to the centered sum and the choice of tilt magnitude $\alpha$ give each one-sided deviation bound $\exp(-m\alpha^2/2)$.
+
+At $\alpha=2u$, the sign test, breaking ties fairly, has equal-prior error at most $\exp(-2mu^2)$. For two classical laws the optimal equal-prior error is $(1-D)/2$: outcome by outcome choose the larger probability, leaving one half the sum of the smaller probabilities. This applies to the full commuting experiment of Section 2. Therefore
+
+$$
+D_m\ge1-2\exp(-2mc^2/25).
+\tag{7.5}
+$$
+
+Budget (7.4) makes the right-hand side at least $1-\gamma/s=c/s$. Since $K_m\ge s$, this gives $c\le K_mD_m$, and (7.2) proves exactness. The inequality (7.5) may be negative for small $m$ and is only a lower estimate; the exact quantity remains (2.2). The expression $\gamma=(1-\eta)(1-t)+\eta/5$ vanishes only at $(t,\eta)=(1,0)$, so this establishes finite-copy exactness at every other point with $c>0$, including all positive-noise points with distinct targets. No perfect label readout is needed. QED.
+

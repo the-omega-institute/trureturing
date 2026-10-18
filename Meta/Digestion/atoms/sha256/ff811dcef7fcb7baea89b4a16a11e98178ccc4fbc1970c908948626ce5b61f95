@@ -1,0 +1,58 @@
+**Proposition 19.4 (exact charts and paid observable identity).** For either
+cover there is a bijection
+
+$$
+\coprod_\eta\{v:X_\eta\to\mathcal T:\Phi_\eta(v)\}
+ \longrightarrow U,\qquad (\eta,v)\longmapsto W_\eta[v].
+\tag{CE.19.3}
+$$
+
+The chart is determined by a bounded finite original prefix. It can be
+selected by at most $2M_0$ actual current reads at any certified $N$.
+Within a chart, recutting and filling commute:
+
+$$
+I_Q(W_\eta[v])=J_\eta,\quad
+C_Q(W_\eta[v])=E_\eta[v],\quad
+(W_\eta[v])|_q=T_{\eta,q}[v].
+\tag{CE.19.4}
+$$
+
+Proof. Each shared split is the exhaustive, disjoint root classification
+of one finite original subtree. A paired split records its two unique
+finite children. Induction on the finite decision tree gives unique
+patterns and unique frontier assignments; the uniform construction is
+the same argument performed to a fixed depth. Recover each variable by
+its representative original subtree. By the old-row correspondence of
+[SLH, Theorems 59.4 and 60.2][SLH], all old inequalities together are
+exactly what makes the retained partition correct, including off-task
+classes and repeated occurrences.
+
+Induction along every endpoint navigation gives its exact value under
+that assignment. Expanding a known original leaf uses its actual finite
+image, so an originally absent endpoint may be reached at its recorded
+epoch, while an endpoint absent at that epoch rejects either relation
+sign. Repeated literal requests impose repeated, consistent conditions.
+Thus $\Phi_\eta$ imposes precisely the remaining retained predicates.
+Conversely every finite assignment satisfying it fills the old pattern,
+preserves every old inequality and satisfies every guarded record. This
+proves both directions of (CE.19.3), not just satisfiability preservation.
+Original absent $P$ addresses remain blocked by the old concrete context.
+
+The finite selector asks only original constructor questions at fixed
+representative addresses. Different charts first differ at one such
+question. Each can be recovered from the current register by [SLH,
+Theorem 2.2][SLH] in at most two actual reads, including absent relative
+replies. In the uniform cover, asking all relative $|s|<d$ questions per
+old class gives the same bound. The maximum address length in this finite
+selector is an effective original-prefix bound. These observations prove
+selection without an uncharged semantic test.
+
+No $Q$ navigation continues into an unresolved variable. Replacing that
+variable by any nonempty tree cannot change a reached endpoint, its
+numbering, or an absent endpoint already blocked by an original leaf.
+Recutting therefore commutes with filling, which proves (CE.19.4).
+For empty $Q$ the entire $W_\eta[v]$ is exterior; for $Q=\{\varepsilon\}$
+the exterior is one numbered hole and its partition is one class.
+These cases are included. $\square$
+

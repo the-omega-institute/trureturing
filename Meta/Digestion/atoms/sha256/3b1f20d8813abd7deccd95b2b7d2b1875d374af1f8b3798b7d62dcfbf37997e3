@@ -1,0 +1,62 @@
+**Calibration 372.3 (The inherited $p_t$ family).** Use the complete family of [XXII 364.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XXII.md#364-a-complete-perturbation-at-the-inherited-optimal-profile), at
+
+$$
+b=(43,34,34,29,27,25,22)/64,\qquad e=15/64,\qquad 0\le t\le5/64.
+\tag{372.8}
+$$
+
+Its pair $23$ has mass $7/64$, first cells
+
+$$
+X^{00}=(5/64-t)e_0+(2/64+t)e_2,\qquad
+X^{01}=(5e_0+2e_2)/64,
+\tag{372.9}
+$$
+
+and all other pairs already have coincident first cells. The whole law satisfies
+$p_t=p_*+t(1-w_2)(1-w_3)(e_2-e_0)$, where $p_*$ is the stopped law of XIX 346.1. Removing the actually visited vector in (372.9) cancels the entire $t$ term from $k_w$ on $\mathcal C=\{w:w_2=0\}$. Thus the fixed complement is the same for every real $t$ in the full closed interval.
+
+For completeness, the residual thresholds can be obtained without assuming a merger outcome. On $\mathcal C$ the first zero is $1$ or $2$. The inherited table gives
+
+$$
+p_*(w)(1)=28/64\quad(n=1),\qquad
+p_*(w)(2)=19/64\quad(n=2).
+\tag{372.10}
+$$
+
+The minimum base coordinates on these two restricted word sets are respectively $21/64$ and $30/64$. Here is a direct check from the explicit polynomial XXII (364.6). Put $u=w_4,v=w_5,z=w_6,r=w_7$. For $w_1=w_2=0$, its base numerator is
+
+$$
+34-11w_3-6u-6v-2z+4w_3u+4w_3v+2w_3z
+       +4uv+2uz+2vz+2zr.
+\tag{372.11}
+$$
+
+For $w_1=1,w_2=0$, add $7w_3+2u+2v$. Minimize first over $r$, whose coefficient is nonnegative, then over $z$ and the four possibilities for $(u,v)$. The minima are
+
+| $w_3$ | $64p_*(w)(0)$, $w_1=w_2=0$ | $64p_*(w)(0)$, $w_1=1,w_2=0$ |
+| ---: | ---: | ---: |
+| 0 | 26 | 30 |
+| 1 | 21 | 30 |
+
+Thus the two claimed minima hold over every affected suffix; $0011001$ and $1011001$ attain them. Subtracting the shared vector $(5e_0+2e_2)/64$ gives
+
+$$
+\begin{array}{c|c|c|c|c}
+n&d_C&k_w(n)&\min k_w(0)&d_A\\ \hline
+1&28/64&28/64&16/64&6/64\\
+2&19/64&17/64&25/64&15/64
+\end{array}
+\tag{372.12}
+$$
+
+The independent union demand is $49/64$ for both classes. Therefore (372.2) gives exactly
+
+$$
+A=0,\qquad(c_1,c_2)=(0,2/64),\qquad
+(u_1,u_2)=(5/64,7/64).
+\tag{372.13}
+$$
+
+Its required mass is $2/64+\max\{0,5/64,5/64\}=7/64$. The shared selector is consequently $(5e_0+2e_2)/64$. Within this fixed-complement problem it is forced: $x(0)+x(2)\ge7/64$ exhausts the available mass, so all other labels vanish; the first-zero-$1$ union requires $x(0)\ge5/64$, and the correct row requires $x(2)\ge2/64$. Both are equalities. Replacing the two first cells therefore recovers exactly the inherited $p_*$ for every $t$, with every owning mass unchanged. Its profile, optimum and original attainer remain those of XIX 346.1 and XXII 364.2. This is an application of a reused tool, not a new attainment result.
+

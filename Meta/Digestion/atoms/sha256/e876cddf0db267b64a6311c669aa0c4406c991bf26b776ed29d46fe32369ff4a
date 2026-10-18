@@ -1,0 +1,49 @@
+### 定理20（单时钟整纤维盲性与共同混合等待的分离）
+
+对所有 $m,n\in\mathbb Z_{\ge0}$，
+
+~~~math
+J(ma)=J(nb)=0.
+~~~
+
+所以单独 $a$-时钟或 $b$-时钟在所有非负整数刻度的终端密度矩阵和所供二值律均与 $\kappa$ 无关。该密度矩阵相等也使任何另行供应的同一终端 POVM 律相等，但不确定任意多时刻仪器记录。
+
+对 $t\ge0$，$J(t)\ne0$ 当且仅当 $t/a,t/b$ 都不是整数。特别地，
+
+~~~math
+J(a+b)=\bigl(1-e^{-2\pi i b/a}\bigr)\bigl(1-e^{-2\pi i a/b}\bigr)\ne0
+\quad\Longleftrightarrow\quad b/a\notin\mathbb Z\ \text{且}\ a/b\notin\mathbb Z.
+~~~
+
+若 $b/a=p/q$ 为既约正整数比，则条件等价于 $p,q>1$，例如 $3/2$ 已足够；无理比不是此处必要条件。对一般 $t=ma+nb$，判据为 $nb/a,ma/b$ 都不是整数。若 $p=1$ 或 $q=1$，每个这种混合等待仍盲。对含至少两个点的可行区间，在任一 $J(t)\ne0$ 处，每对 $\kappa\ne\kappa'$ 都满足
+
+~~~math
+C_\kappa(t)-C_{\kappa'}(t)=(\kappa-\kappa')J(t)\ne0.
+~~~
+
+**证明。** 第一时钟的因子在 $ma$ 为零，第二时钟的因子在 $nb$ 为零；其余判据来自 $e^{-2\pi i u}=1\iff u\in\mathbb Z$。定理19把这些等式落实为实际密度矩阵及概率律的等式；非零响应则至少被一个所供赤道方向检测。
+
+为解释这条纤维为何不能靠增加同种刻度解除盲性，在本证明中消费既有单时钟所有者 [事件采样卷定理11.1](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md) 和 [有限 Vandermonde 所有者](../../../D5/S3/Analytic/GoldenTomography/FiniteVandermondeTomography.lean) 的 finite_moment_readout_injective、finite_moments_eq_iff。取任一固定步长 $h>0$（本应用取 $a$ 或 $b$），将实际频率测度 $\mu_\kappa=\sum_s p_\kappa(s)\delta_{\omega(s)}$ 中相同节点 $z=e^{-i\omega h}$ 合并，删去零质量，得到 $q$ 个不同节点及正质量 $P_j$。两份有限测度的全部单时钟响应相等，恰等于每个相位类的总质量相等：在两者节点的并集上，最初若干矩给出上述所有者的单射映射。这里的别名关系是 $(\omega-\omega')h\in2\pi\mathbb Z$，并非模式标签相等。
+
+同一正质量分解给出本实际来源的记录矩阵
+
+~~~math
+G^{(h)}_\ell=\bigl[C_\kappa((n-m)h)\bigr]_{m,n=0}^{\ell},\qquad
+G_{mn}=\sum_{j=1}^q P_j\overline{z_j^m}z_j^n,
+\qquad G^{(h)}_\ell\succeq0,\quad
+\operatorname{rank}G^{(h)}_\ell=\min(\ell+1,q).
+~~~
+
+这是特征列 $(\sqrt{P_j}z_j^n)_j$ 的 Gram 矩阵；秩等式直接消费同一所有者的 vandermonde_det_ne_zero_of_injective，正质量不改变特征矩阵的秩。负参数项仅由 $C(-t)=\overline{C(t)}$ 填入，实际等待仍为非负。故无限多同刻度记录和有限 Gram 秩都只描述采样相位类，不能超出定理的盲性边界。
+
+此机制不应转给前述实衰减模型：若另有 $M(t)=\sum_{j=1}^q w_j e^{-\lambda_jt}$，$w_j>0$、互异 $\lambda_j>0$，则 $x_j=e^{-\lambda_jh}$ 互异。对 $R,C\ge1$，从零开始的矩形 Hankel 块为
+
+~~~math
+H_{mn}=M((m+n)h),\quad 0\le m<R,\ 0\le n<C,
+\qquad \operatorname{rank}H=\min(R,C,q).
+~~~
+
+应用同一 Vandermonde 所有者于实节点，分解 $H=V_R\operatorname{diag}(w)V_C^T$ 给秩上界；令 $d=\min(R,C,q)$，左上 $d\times d$ 块是正权 Gram 矩阵，$V_d$ 行满秩给下界。全秩 $q$ 需要两边尺寸都至少 $q$。实指数单射排除周期性精确别名，不能排除有限精度病态。
+
+经典采样边界的文献定位为 [Yue、Thunberg、Goncalves，arXiv:1605.06973v1，§II.A 定理1、定义5及§III.A](../../../Library/Dynamics/yue2016systemaliasing.md)。其主对数使用严格开条带 $-\pi<\operatorname{Im}z<\pi$；对采样矩阵 $e^{hA}$ 使用时，生成元的对应条件是 $-\pi<h\operatorname{Im}\lambda(A)<\pi$。本文不导入端点唯一性，也不由该引用取得本五模式实验的实现。证毕。
+

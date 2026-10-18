@@ -1,0 +1,10 @@
+**定义 A-26.1（固定支撑的秩族）。** 固定非空有限素数集 $S$，记 $s=|S|$，并令
+
+```math
+\mathcal H_S=\left\{\prod_{r\in S}r^{e_r}:e_r\in\mathbb Z_{\ge0}\right\},
+\qquad
+N_S(x)=\#\{p\le x:p\text{ 为素数且 }z(p)\in\mathcal H_S\}.
+```
+
+等价地，$N_S(x)$ 要求 $\operatorname{supp}z(p)\subseteq S$；$1\in\mathcal H_S$。以下 $\log$ 为自然对数，$O_S$ 的常数只依赖固定的 $S$。
+

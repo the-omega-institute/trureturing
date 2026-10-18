@@ -1,0 +1,19 @@
+## 232. A high label cannot occur in only one core owner
+
+Suppose a high label X occurs in exactly one member omega of K.
+If X is axial and not transverse in omega, its pair must contain a
+high label: otherwise its pair is {C,D}, and the other high required
+by membership in K is the other axis, the excluded genuine flat case.
+All faces incident to X are then marked and contain X. Their partners
+must remain in omega, the only core owner containing X. There are at
+most two X slots, giving a forbidden closed link subset.
+
+If X is transverse with another high label, every face incident to X
+is marked. The same reasoning closes at most four X slots in omega.
+If X is transverse with a low label, some axis carries a distinct high
+label Y. Every face incident to an axial Y slot is marked and contains
+X. Its partner must again stay in omega. Y is not transverse in this
+case, so at most two Y slots form a forbidden closed link subset.
+These cases exhaust the paired frame. Hence every high label occurring
+in K occurs in at least two distinct actual owners of K.
+

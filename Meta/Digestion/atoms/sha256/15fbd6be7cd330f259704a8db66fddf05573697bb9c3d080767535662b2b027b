@@ -1,0 +1,24 @@
+**Definition 4.1 (original losses before repair).** With
+$t_r=r(1-r)$, the native complete laws are
+
+$$
+P_{p,r}(w_{n,0})=rt_r^n,\qquad
+P_{p,r}(w_{n,1})=(1-r)^2t_r^n,\qquad
+P_{\beta,r}=(1-r)\delta_\beta+r\alpha P_{p,r}.
+\tag{4.1}
+$$
+
+Set $\rho_p=1116529/22781250$ and $\rho_\beta=239/6750$,
+the original endpoint radii [PAIR, §§2, 11]. Define
+
+$$
+J_0=\max_{s=p,\beta}
+ \left\{\sup_{k:\mu(k)>0}\int d_s(D,P_{s,r_k})d\sigma_s(D)-\rho_s\right\}.
+\tag{4.2}
+$$
+
+The repaired functional $J(\widehat G)$ is the same expression with
+$\widehat\nu_s=(F_s)_\#\sigma_s$. Configuration TV remains inside
+every integral. Endpoint triangle inequality gives $J_0\ge0$ without
+assuming compatibility of the input edges.
+

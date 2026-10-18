@@ -1,0 +1,4 @@
+**Lemma 4.1 (the positive generalized root).** Let $C$ be real symmetric positive definite. There is exactly one positive root $\lambda_0$ of $\det(C-\lambda B)=0$. Its slack is positive semidefinite of rank two. Let $v_0$ be its real unit kernel vector with positive $D$ coordinate. Then $b_0=v_0^TBv_0>0$.
+
+Proof. Congruence gives $C^{-1/2}BC^{-1/2}$ inertia $(+, -,-)$: the invertible change of variables preserves maximal positive and negative subspace dimensions of the quadratic form of $B$. It has one positive eigenvalue $\gamma$ and two negative ones. Thus $C-\lambda B=C^{1/2}(I-\lambda C^{-1/2}BC^{-1/2})C^{1/2}$ has its unique positive determinant root at $\lambda_0=1/\gamma$, with two positive eigenvalues and one zero in the middle factor. The kernel is real and one dimensional. The identity $v_0^TCv_0=\lambda_0b_0>0$ proves $b_0>0$; hence its $D$ coordinate is nonzero and fixes its sign. $\square$
+

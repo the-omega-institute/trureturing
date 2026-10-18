@@ -1,0 +1,21 @@
+**Corollary 4.4 (totality, soundness and its exact completeness scope).**
+The specification is a total decidable predicate on rational finite
+inputs. Acceptance implies $A_n(w)\le C^n$ for every $n$ and every
+complete native template. At fixed rational $w$ its accepted rational
+caps have infimum $\Omega_d(w)$, and every rational $C>\Omega_d(w)$
+has a certificate.
+
+Proof. There are finitely many types, assignments and rational powers.
+Every parsing, normalization and inequality test terminates. Taking
+the positive $r$-th root of (COK.26) gives (COK.14); Theorem 3.1
+proves soundness. Theorem 4.2 proves the infimum and density assertions.
+They concern the finite local outer relaxation alone. $\square$
+
+This is a mathematical verifier specification, not a modified or
+implemented repository judge. The support tests depend on
+$F=\operatorname{supp}w$. Removing zero-weight rows before logarithms
+is valid for the present mass bound; it does not permit shrinking a
+declared structural support in a different supplier theorem. No
+continuity, rational optimizer approximation or effectiveness theorem
+for support-varying minimization of $\Omega_d$ has been proved here.
+

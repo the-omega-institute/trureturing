@@ -1,0 +1,13 @@
+**定义 1.2（完整合法词与同一未知源）。** 固定整数 $N,L\ge1$，令 $n=3N$、$\theta=\pi/(4L)$。系统为 $\mathcal K=(\mathbb C^2)^{\otimes n}$，因子标签、带符号的计算基及 $X,Y,Z$ 标准已知。置
+
+$$
+\begin{aligned}
+B_n&=\{b\in\{0,1\}^n:b_i b_{i+1}=0\quad(1\le i<n)\},\\
+s_i(b)&=(-1)^{b_i},\\
+U_b&=\bigotimes_{i=1}^n\exp(i s_i(b)\theta Z),\\
+\Lambda_b(\rho)&=U_b\rho U_b^\dagger.
+\end{aligned}
+$$
+
+未知 $b$ 选定一次，实验始终使用这个理想、无噪声、无记忆、已校准的源。一次普通调用对整个 $n$ 量子位系统施加 $\Lambda_b$，对参考及工作空间施加恒等。来源域包括全零词、尾部 null 窗和每一个跨窗接缝；没有额外标签建议，没有 canonical $\mathrm{End}$。
+

@@ -1,0 +1,25 @@
+**Definition 8.1 (mathematical provenance of the interface).** Repository
+references below use the immutable snapshot
+[`e8891b5bc48c50f494096810d09453c8ec81020f`][BASE]. The ordinary
+native deductions in Theorems 2.2--6.1 and Proposition 7.2 are
+`repo-derived`, with the following existing content retained as suppliers.
+
+| Supplier | Exact mathematical use and boundary |
+| --- | --- |
+| [NAR §§16.1--16.10][NAR] | Actual age-cube sources, acquire/export/discard contract, complete row equality, whole-current collisions, global encoder feasibility and fallback, and the explicit remaining all-word/address gap. |
+| [SLH §§6.2--6.3 and §13][SLH] | Guarded atomic replies for every finite word, odd/even threshold representatives, limitations of right-ray querying, and finite same-source reply games. These formulas and methods are not new here. |
+| [AOF §§3--5 and §§8--9][AOF] | All-comparator normalization, Pareto combination and separate same-run prices; the zero-origin $E/P/S$ interface, shortest words, interval call/peak results and the $[2,5]$ mixed-word example. |
+| [NARC §§1--3 and §24.3][NARC] | The already exact two-slot complete fibers and whole-address call/peak reduction. The present multi-slot three-price result does not optimize the separately constrained mutable-state controllers of §24.3. |
+| [NPL §§7--8][NPL] and [JRF §2.1 and §6][JRF] | Finite physical menus, sourcewise domination, shortest words, and joint histories rather than marginally realizable tests. |
+| [GenealogicalFiberTransport][GFT], `Source`, `substitution` | Actual finite ordered trees and the homomorphic native operation used in (LQF.1). |
+| [ActualTreeReadoutAcquisition][ATR], `Address`, `Reply`, `readout` | Literal addresses and the four-valued constructor/absence port; not a clock or subtree oracle. |
+| [DelayedOriginalReadout][DOR], `rightClock`, `rights`, `right_clock_iterate`, `right_clock_readout` | The acquired visible clocks and the actual right-word replies used for separators. Its certified-epoch original decoder does not supply the unknown lag in this contract. |
+| [ActualCutPartitionDecoder][ACP], `literalRecord`, `canonicalRow_record_iff` | Complete literal exterior and hidden equality/disequality information. The private `eraseClasses` and `eraseClasses_literal` explain the exterior representation, rather than justify ignoring part of the row. |
+| [NativeDepthPatterns][NDP], `original_present_transport`, `original_prefix_locality`, `Pattern`, `fill` | Reached original slots and their transported subtrees. Here the pattern is the complete depth-$D$ skeleton. |
+| [ActualFibonacciSupportChain][AFS], `actual_fibonacci_support_chain` | A related bounded-address presence result. Presence equivalence is weaker than the full-reply equality used in Theorem 5.1; (LQF.5) supplies the latter. |
+| [PassivePolicyNormalization][PPN], `execute`, `candidates`, `execute_transfer`, `result` | Deterministic transcript and finite-candidate pruning interfaces. Its packaged `result` includes finite-query and stopping-legality hypotheses; it is not asserted as a compiled three-price application to arbitrary literal words. The native reduction precedes the finite recursion here. |
+
+The statements in this volume are ordinary conditional mathematical
+proofs. They are not new Lean declarations or kernel-verified applications
+of the listed source declarations.
+

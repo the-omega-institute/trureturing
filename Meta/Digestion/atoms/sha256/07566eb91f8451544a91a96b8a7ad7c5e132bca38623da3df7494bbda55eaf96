@@ -1,0 +1,27 @@
+**Definition 1.2 (raw source, clock and actual units).** For the killed heat kernel $p_t^B$ relative to raw measure and pole $o=(k_0,0)$, retain
+
+$$
+\begin{aligned}
+W_\tau&=\int_\tau^\infty e^{\lambda t}p_t^B(o,\cdot)dt,&
+\rho_\tau&=e^{\lambda\tau}p_\tau^B(o,\cdot),&SW_\tau&=\rho_\tau,\\
+\int\rho_\tau dY&=e^{\lambda\tau}\mathbb P_{k_0}(\zeta>\tau),&
+\int\phi(k)\rho_\tau(k,q)dk\,dq&=\phi(k_0),\\
+\mathfrak e_{g,\tau}[\psi]
+ &=a\|S^{1/2}\psi\|_2^2-g\int W_\tau|\psi|^2dY,&
+E_\tau(g)&=\inf_{\psi\in\mathcal Q,\ \|\psi\|_2=1}\mathfrak e_{g,\tau}[\psi].
+\end{aligned}
+\tag{1.5}
+$$
+
+The raw and $\phi$-weighted source charges differ. Neither is divided by a survival probability. The field clock is $B$, independently of $a$. P Propositions 70.2 and 75.2 supply, separately at each positive $g,\tau$, boundedness of the multiplier, operator domain exactly $D(S)$ for $aS-gW_\tau$, essential spectrum $[0,\infty)$ and a finite negative attained bottom. This supplies no uniform bound at zero cutoff.
+
+The original actual path and units remain
+
+$$
+\tau=s^2,\quad g_s=\chi_cs^3,\quad E_s=E_{s^2}(\chi_cs^3),\quad
+\epsilon_c(s)=s^2E_s<0,\quad r_s=-\epsilon_c(s)/s^8=-E_s/s^6>0.
+\tag{1.6}
+$$
+
+Actual-state statements mean every prescribed sequence $s_n\downarrow0$ and every choice of actual normalized complex ground states $\psi_{s_n}\in D(S)$.
+

@@ -1,0 +1,64 @@
+**定理 20.1（Every arbitrary-table first-return deadline）。** For every parameter and table in Definition 19.1, under either original literal alphabet,
+
+$$
+C_{\rm ad}(f)\ge N,\qquad C_{\rm pre}(f)\ge N,
+\tag{20.1}
+$$
+$$
+C_{\rm ad}(f)=N
+\quad\Longleftrightarrow\quad
+\text{some literal-admissible array satisfies (19.8)},
+\tag{20.2}
+$$
+$$
+C_{\rm pre}(f)=N
+\quad\Longleftrightarrow\quad
+\text{some literal-admissible array satisfies (19.8) and (19.9)}.
+\tag{20.3}
+$$
+
+These are separate existence statements: the preset array need not be the adaptive array first found. Failure of the respective test means only $C_{\rm ad}(f)>N$ or $C_{\rm pre}(f)>N$. It supplies no uniform next optimum and no unattainability conclusion.
+
+Proof. First reuse the global first-zero comparison and endpoint-return obstruction of [S1, Lemmas 4.2–4.3] and [S20, Theorem 3.1], integrated in Theorem 2.2. Their lower-bound argument does not use the constant outside table of that theorem. At least one of $D,E$ differs from $R$. At that endpoint and a fixed free value, the actual INITIAL tails $b-1,b$ have different labels. Every root with a zero after $a<m$ leading ones lets both reach that zero, since $b+a\le k-1$, and merges them with the same acquired archive. No continuation can recover their different INITIAL labels. A free stopping root is likewise impossible. Thus every correct root among all $2^m$ words is $1^m$, even with nonfresh $R$ or further adaptive actions.
+
+The root rejects exactly the high tails, which return $R$ at fee one. Every low tail survives; its root difference is one precisely at $H$. The two successful root archives are therefore the whole low-tail supports $H$ and $Z$, not marginal phase supports borrowed from another branch. On $H$, take the two actual low sources at INITIAL tail $b-1$. They have the same current value and current tail $k-1$. Every second block beginning one rejects both at its first bit, irreversibly merging distinct endpoint labels. Hence this block starts zero.
+
+Before absolute emitted position $T-1$, the phase-zero source's only active position is zero, and the phase-$m$ source's only active positions are $m-1,m$. The root gives each one unit of difference; the compulsory zero at position $m$ suppresses the second source's next opportunity. For total fee $d<N$, the last emitted position is $dm-1<T-1$. The two endpoint archives therefore stay identical, with the same actions, stopping decisions and later rejection if any. This proves (20.1) for every adaptive tree, and thus for every preset stream. In the deadline $N$, the only later window permitting a nonzero charge on $H$ is $W_Q$, which contains zero and not $m$. Consequently every successful preset stream of fee $N$ must satisfy $e_Q(0)=1$.
+
+On a nonconstant $Z$ archive, choose every phase at INITIAL tail $b-1$. All now have tail $k-1$ and the same root value. A second block beginning one would merge all of them in rejection, including two different labels. It must therefore start zero. If $\lambda[Z]$ is constant, stop this archive at the root; for a deadline array it may instead be extended formally by zero blocks. This covers the constant case without excluding any correct controller.
+
+The clearing bit at absolute position $m$ has a useful stronger consequence. Up to fee $N$, there are only
+
+$$
+(Nm-1)-m=Qm-1<k
+\tag{20.4}
+$$
+
+positions after it. Every later literal choice is safe, even if all those positions are ones. The clearing bit also makes the current tail common within each acquired archive, independently of the INITIAL tail. Thus there is no additional run or cross-block rejection shortcut after this point in the deadline. For $g>1$, compensation on a nonactual vertex affects the literal word but cannot introduce a nonexistent source. All words considered here are in both alphabets since $m<k$.
+
+For adaptive necessity take the actions on the $Z$ archive's chronological zero-difference continuation. If it stops early, its labels are constant, so extend that leaf by actual zero blocks to index $Q$. These words give a literal-admissible array. At the positive child of index $t<Q$, the actual phase support is exactly $A_t$. By (19.4)–(19.5), the phases in $X_t$ have no further window opportunity before the deadline. Only $h_t$ can appear again, and only at index $t+1$. Two sources in $X_t$ follow identical subsequent outputs under any actions on this child, since their current values and tails are common and every future charge is zero. They must have the same INITIAL label. The same reasoning at $t=Q$ makes $\lambda[A_Q]$ constant, and the all-zero terminal archive makes $\lambda[U_{Q+1}]$ constant. This proves (19.8). It is a collapse forced by this reader's one-tour geometry, not a generic belief-tree recursion.
+
+For adaptive sufficiency invert the array into literal words and issue them along the continuing zero-difference archive after the root. At a positive child $A_t$, if $X_t$ is empty, its sole possible phase is $h_t$, so return its label. If $X_t$ is nonempty with label $L_t$, and $h_t$ is absent or has that same label, return $L_t$ immediately. At a repair obligation issue, on this child alone, the next complete block
+
+$$
+10^{m-1}.
+\tag{20.5}
+$$
+
+Its full-path support at index $t+1$ is $\{h_t,h_t+1\}$; the latter phase was never in $A_t$. It gives difference one on $h_t$ and zero on $X_t$. Return $\lambda(h_t)$ or $L_t$ accordingly. This is exactly one paid repair block, finishing at total fee $t+2\le Q+1=N$. It is safe by (20.4), including a seam whose preceding word ends in ones. At index $Q$, return the unique label of $A_Q$ or $U_{Q+1}$ on the respective nonempty child. All decoding refers to the acquired original labels.
+
+The endpoint archive uses its own actual continuation: zero blocks at indices $1,\ldots,Q-1$, followed at index $Q$ by
+
+$$
+0^{r-1}1\,0^{m-r}.
+\tag{20.6}
+$$
+
+The pulse is at absolute position $T-1$ with support $\{T-1,0\}$. On $H$ it selects only zero, so difference one returns $D$ and difference zero returns $E$. All waits are emitted and charged. The first wait clears tail $k-1$; the pulse is isolated, so every INITIAL low tail succeeds. The initial rejection reading returns $L_\bot$ freely. Both free values use their own successive endpoint differences, not another fibre's outputs. This realizes (20.2) with actual worst fee $N$, attained on the endpoint sources.
+
+For preset necessity, the one stream supplies a single full array even on sources stopped early. It starts zero at index one because its $H$ archive still needs to continue. The safety bound (20.4) permits formal continuation of the whole low support through all $N$ blocks. The same retirement argument gives (19.8). At a repair obligation the sources in $X_t$ and $h_t$ share their acquired archive through index $t$ and have different labels. Only $h_t$ can have any further nonzero charge; its sole remaining opportunity is index $t+1$. Hence that same global row must have $e_{t+1}(h_t)=1$. Together with the endpoint constraint already proved, this is (19.9). Early stopping cannot remove an obligation at a nonconstant acquired archive.
+
+For preset sufficiency, invert these very same rows on their full physical paths and use $1^m$ followed by the resulting $Q$ words as one fixed literal stream. The $Z$ decoder follows the cases in the adaptive construction. At a repair obligation it reads the next block of this common stream: (19.9) selects $h_t$, and all of $X_t$ is outside that next window, so the same two labels are separated. No word is substituted from a different branch. On $H$, the index-one first zero suppresses the charge at $m$, all intermediate windows miss both phases, and the final row selects zero by (19.9). The endpoint decoder therefore returns $D,E$ at fee $N$. Bound (20.4) simultaneously proves every seam safe on all continuing low sources. The high and initial rejection leaves are the ones already specified. This proves (20.3), including empty $X_t$, an empty zero-continuation support, empty $F$, repeated adjacent-boundary labels, all allowed coincidences, and both alphabets. ∎
+
+The distinction between a deadline failure and unattainability is substantive. The supplied safe phase-recovery interface [S1, Theorem 3.1] applies after the paid parent and a paid zero-clearing block, since every successful same-phase merged fibre now has one INITIAL label. For example its safe pulse method can be used with blocks $0^{m-1}1$ for a complete $p=T/g$-step phase tour. On actual phases when $g>1$, the support $\{(t+1)m-1,(t+1)m\}$ restricts to the singleton $(t+1)m$, and these singletons traverse $P$. When $g=1$, the full $T$-step responses traverse a translated adjacent pair; two different phases cannot give identical full patterns, since an adjacent pair on a cycle of length $T\ge8$ has no nonzero translation stabilizer. Each block starts zero and has tail one, so its seams are strict. This is a reused finite-attainment construction with a total upper bound $p+2$, not a claimed optimum following a failed deadline test.
+

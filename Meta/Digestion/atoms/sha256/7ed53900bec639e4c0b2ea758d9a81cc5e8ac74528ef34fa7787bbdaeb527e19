@@ -1,0 +1,111 @@
+**Theorem 3.2 (Exact comparison port and full event table).** The channel
+$X\mapsto D\mathcal B(D^\dagger XD)D^\dagger$ is a legal fixed
+thirteen-flag scalar port with whole-block TP decoding. On every
+complex matrix,
+
+$$
+\mathcal B(X)=R_0\operatorname{tr}(R_0X)
++\frac{\operatorname{tr}(PX)P+P(X+X^T)P}{6}.
+\tag{3.3}
+$$
+
+It is stationary and reflected, and its fifteen event norms are
+
+| Events $J$ | $\|H_J(\mathcal B)\|_{\rm op}$ |
+| --- | --- |
+| $\{N\},\{3\},\{25\},\{2,5\}$ | $1/2$ |
+| $\{N,3\},\{N,25\},\{3,25\}$ | $1/3$ |
+| $\{2\},\{5\}$ | $(1+\sqrt{17})/8$ |
+| $\{N,2\},\{N,5\},\{2,3\},\{3,5\},\{2,25\},\{5,25\}$ | $(1+\sqrt{145})/24$ |
+
+Consequently $e(\mathcal B)=b_*:=(1+\sqrt{17})/8$, attained at
+actual wait zero. Its exact QRC coordinates are
+
+$$
+M_{\mathcal B}=\begin{pmatrix}1&0&0\\0&2/3&1/3\\0&1/3&2/3\end{pmatrix},
+\qquad \eta_{\mathcal B}=(0,0,1/3,1/3,1/3,1/3),
+\qquad M_{\mathcal B}^T\tau=\tau.
+\tag{3.4}
+$$
+
+Proof. The pair sum
+$Q_{ij,+}+Q_{ij,-}=f_if_i^T+f_jf_j^T$ gives
+$\sum Q_{ij,\epsilon}=3P$, since each coordinate occurs in three
+pairs. Together with $R_0$ this normalizes the encoder exactly.
+For an atom $(v,w)$ take encoder row $\sqrt w\,v^TD^\dagger$ and
+decoder column $Dv$. Every column has squared norm one, and
+the composite $\sqrt w\,Dvv^TD^\dagger$ has rank one. Matrix
+sandwiches prove CP on all reference extensions, while the row sum
+and column norm prove whole-domain TP. The flag is consumed.
+
+Here are the finite moments without a spherical-to-complex inference.
+In the bright basis, $v_{ij,\epsilon}$ has two entries
+$1/\sqrt2,\epsilon/\sqrt2$. The weighted fourth-coordinate sum is
+
+$$
+\frac13\sum_{i<j,\epsilon}
+(v_{ij,\epsilon})_a(v_{ij,\epsilon})_b
+(v_{ij,\epsilon})_c(v_{ij,\epsilon})_d
+=\frac{\delta_{ab}\delta_{cd}+\delta_{ac}\delta_{bd}
++\delta_{ad}\delta_{bc}}6.
+\tag{3.5}
+$$
+
+Indeed, with all four indices equal there are six nonzero terms,
+each $1/4$ before the factor $1/3$, giving $1/2$. With two distinct
+indices each repeated twice there are two terms giving $1/6$.
+Odd repetitions cancel between the two signs, and three or four
+distinct indices give zero. These exhaust the tensor components.
+Contracting (3.5) with an arbitrary complex matrix gives (3.3).
+Equivalently a bright diagonal matrix unit maps to half itself and
+one sixth of each other diagonal unit; an off-diagonal $E_{ij}$ maps
+to $(E_{ij}+E_{ji})/6$. Thus the formula is a complex-linear identity
+on every matrix unit. CP follows from the finite Kraus sum, not from
+asserting CP of transpose.
+
+Formula (3.3) is covariant under every real orthogonal transformation
+preserving $R_0$. In particular it commutes with $O(t)$ and
+$\mathsf J$. This is a symmetry of this one channel; it neither
+enlarges the actual menu nor restricts competing channels to an
+orthogonally invariant class. The map is self-adjoint, so (3.3) is
+also its effect map.
+
+If $\Pi_J$ commutes with $R_0$, write
+$\Pi_J=\epsilon_0 R_0+E$ with $E$ a bright orthogonal projection of
+rank $k$. Its residual is
+
+$$
+H_J(\mathcal B)=\frac23E-\frac k6P.
+\tag{3.6}
+$$
+
+The dark eigenvalue is zero. For the seven representatives in the
+first two table rows, $k=1$ or $2$, giving exactly their stated norms.
+
+For an event containing exactly one of $2,5$ and $k$ modes from
+$\{N,3,25\}$, the residual on $\operatorname{span}(c_0,d)$ is
+
+$$
+\begin{pmatrix}(3-2k)/12&\pm1/2\\\pm1/2&0\end{pmatrix}.
+\tag{3.7}
+$$
+
+On the included bright axes perpendicular to $c_0$ its eigenvalue
+is $(7-2k)/12$, and on excluded such axes it is $-(2k+1)/12$.
+The fifteen representatives require only $k=0,1$. For $k=0$ the
+two block eigenvalues are $(1\pm\sqrt{17})/8$, with three other
+eigenvalues $-1/12$. For $k=1$ they are
+$(1\pm\sqrt{145})/24$, together with $5/12,-1/4,-1/4$.
+The positive block eigenvalue dominates in each case. Moreover
+$\sqrt{145}<2+3\sqrt{17}$, so the singleton split norm is larger.
+This proves the entire table and, by (1.8), the original error.
+A top eigenvector for event $2$, transported by $D$, attains it with
+wait zero, a complete read and Stop.
+
+Finally the map is the identity on $H_0=R_0$. On
+$(H_+,H_-)=(R_+/\sqrt2,R_-/\sqrt2)$ its matrix is
+$\left(\begin{smallmatrix}2/3&1/3\\1/3&2/3\end{smallmatrix}\right)$.
+It vanishes on the two dark/bright planes and has coefficient $1/3$
+on each bright traceless plane. This proves (3.4), including all
+three TP equations. $\square$
+

@@ -1,0 +1,103 @@
+## 2. Source, legal execution, complete laws and resources
+
+Fix $F_0=0,F_1=1,F_{j+2}=F_{j+1}+F_j$ and $m=2,d=1,\ell=2,n=4$. Before the first actual Read draw one K from one installed finite or countable prior $\mu$, with $\mu(1),\mu(2)>0$. Given this same K=k, all seed and payload Reads are independent, with alpha probability
+
+$$
+r_k=F_{k+1}/F_{k+3},\quad r_1=1/3,\quad r_2=2/5,
+\quad r_k\in I_0=[3/8,5/13]\quad(k\ge3).
+$$
+
+The source parameter is never reset. Equal seed pairs are rejected and both Reads are paid; alpha-beta accepts seed 0 and beta-alpha accepts seed 1. Payload p emits a completed marker 0 after alpha and suspends after beta. Suspension returns to p after alpha and completes marker 1 after beta. The first three completions advance segments. The third record write precedes its latch. Fourth completion enters the matching original pendingStop; its unique Stop delivers once. Pending and delivered states admit no Read.
+
+Retain the complete original finite control $C_0$: both seeds, selectors, bare fields, parser, full marker tree, held $B,Q^+,Z$ records, write/latch flags, permissions, completion and delivery. The full-tree relation writer uses the old completed-marker count t and old one-count j. Its first and second zeros are events a,c; its first and second ones are b,d. For old t<3 it appends each recognized event to containing scopes $S_1^+=\{a,c,d\}$, $S_2^+=\{b,c\}$. It writes Z only at the first marker. Unmatched ordinal events, seed retries, returns, partial parses and later completions hold these fields. At old t=2 it completes the third write before latching B; afterward the held fields remain while the fourth parser and Stop continue. Both seeds, all 16 marker words and their prefixes, every finite paid rejection history and every finite return history remain in the domain. There is no future-E1 conditioning, controller port, clock, source copy or extra observation [ST, E1, PAID].
+
+Let $\mathcal H_3$ contain the first p cut after that latch. Let $\mathcal H_p,\mathcal H_\beta$ contain all positive finite fourth-segment p and suspended histories, including arbitrary returns. These domains are distinct. Put
+
+$$
+a_r=r(1-r),\qquad w_{j,0}=(\beta\alpha)^j\alpha,
+\qquad w_{j,1}=(\beta\alpha)^j\beta\beta.
+$$
+
+The complete raw p carrier consists of these words and its unique infinite noncompletion word. The suspended carrier consists of beta, $\alpha w_{j,b}$, and its infinite noncompletion word. Their source laws are
+
+$$
+P_{p,r}(w_{j,0})=ra_r^j,\quad P_{p,r}(w_{j,1})=(1-r)^2a_r^j,
+$$
+
+$$
+P_{\beta,r}(\beta)=1-r,\quad
+P_{\beta,r}(\alpha w_{j,0})=r^2a_r^j,\quad
+P_{\beta,r}(\alpha w_{j,1})=r(1-r)^2a_r^j.
+\tag{2.1}
+$$
+
+The infinite-word masses are zero. The original measurable bijection $I_c$ retains each future Read and inserts its complete deterministic original event block, records, permissions, completion and Stop. Its inverse reads the letters back. It preserves TV and commutes with removal of the next operation and its original block. The already acquired suspended beta is not another future Read.
+
+A legal acquired operation list, with only Stop deleted, is exactly its ordered raw-prefix cylinder. Induction proves this: each Read consumes the next raw letter and applies the original deterministic block; Stop consumes no letter and delivery ends execution. Rejections, accepted seed letters, early payloads, returns and partial pairs are all retained. Thus, with counts over **all** acquired Reads,
+
+$$
+\nu_h(k)=\frac{\mu(k)r_k^{A(h)}(1-r_k)^{B(h)}}
+ {\sum_i\mu(i)r_i^{A(h)}(1-r_i)^{B(h)}},\qquad
+T_h^\mu=(I_{C_0(h)})_*\sum_k\nu_h(k)P_{s,r_k}.
+\tag{2.2}
+$$
+
+The denominator is strictly positive; the countable sums are dominated by the summable prior masses. Conditional on each supported K, the unread tail remains independent with the same parameter. No completion condition enters (2.2). Counts and posterior rows are analysis quantities.
+
+An observer has one fixed finite COMPLETE carrier, source-independent initialization, fixed time-homogeneous source-independent acquired-letter stochastic updates, and a decoder reading one actual configuration. COMPLETE includes $C_0$, private labels, installed constants and tables, program selectors, workspace, addresses, output indices and persistent randomness. It has no uncounted tape, continuous register, correlated source seed, readable distribution vector, clock, archive or advice. Each decoder is exactly the complete law of its own synthetic generator, using its synthetic emissions and these **same** acquired-letter kernels. A finite law description, such as the installed generator and current configuration index, is the output contract; an infinite table or exact posterior service is not supplied.
+
+More precisely, let $P_o(z,z')$ be the installed acquired-operation kernel. For every future event E after removal of o and its prescribed block, exact own-configuration generation means
+
+$$
+D_z(oE)=q_z(o)\sum_{z'}P_o(z,z')D_{z'}(E).
+\tag{2.5}
+$$
+
+The prefix oE includes that entire original block. This identity uses the same $P_o$ on acquired and synthetic execution. It remains valid when $q_z(o)=0$; the actual kernel is still defined. It is an individual cylinder identity, stronger than any assertion about a marginalized report.
+
+At the same actual history put
+
+$$
+Q_h=\sum_z\rho_h(z)D_z,\quad
+e_{\rm law}(h)=\operatorname{TV}(Q_h,T_h^\mu),\quad
+e_{\rm conf}(h)=\sum_z\rho_h(z)\operatorname{TV}(D_z,T_h^\mu).
+\tag{2.3}
+$$
+
+TV is the supremum of the absolute event-probability difference. On the fourth-segment carriers it is half the countable $\ell^1$ distance, including the infinite outcome. Each $R_{j,s}$ is the supremum over all positive histories in $\mathcal H_s$. Actual-history-average loss is different. The supplied separate full-tail minimax radii are $\rho_p=1116529/22781250$, $\rho_\beta=239/6750$; the terminal values $13/266,9/266$ do not replace them.
+
+For a positive actual legal history h and one of its legal next operations o, let $[o]$ be the corresponding complete-future cylinder and $q_h(o)=Q_h([o])$. When $q_h(o)>0$, let $\operatorname{res}_o Q_h$ be the conditional law on that cylinder pushed forward by deletion of o and its original event block. The retained marginalized conditioning/update defect is
+
+$$
+\delta(h,o)=
+\begin{cases}
+\operatorname{TV}(\operatorname{res}_o Q_h,Q_{ho}),&q_h(o)>0,\\
+0,&q_h(o)=0.
+\end{cases}
+\tag{2.4}
+$$
+
+The second case defines no conditional law. It does not remove the positive actual successor or its risk. Let $\Delta_4$ be the supremum over legal operations at positive fourth-segment active or pending cuts, and $\Delta_{\rm all}$ the supremum over legal operations at all positive original cuts, including seed rejection and early payload parsing. PendingStop has zero defect; the delivered empty supremum is zero. Individual same-update generation remains exact. No defect budget or zero-defect recovery is imposed; the relaxation concerns only these marginalized comparisons. For a fixed installed prior, the achievable set consists of the tuples $(R_{\rm law,p},R_{\rm conf,p},R_{\rm law,\beta},R_{\rm conf,\beta},\Delta_4,\Delta_{\rm all})$ produced by one allowed observer, with its one counted resource allocation. A comparison must be witnessed by one such tuple, or by the explicit comparison construction in its stated resource class. Separate attainable coordinates do not assert an attainable joint tuple.
+
+The supplied finite-history lower witnesses [ST, Theorem 2.1] remain applicable. In the two-depth source, for every fixed finite competitor and $0<\epsilon<1$, $0<\zeta<1/2$, positive paid histories on the same original control fibre have configuration-row TV at most $\epsilon$ and opposite endpoint posterior errors at most $\zeta$; their phase configuration-loss maximum is at least $((1-2\zeta)d_s-\epsilon)/2$. Its explicit paid-length bound is retained as follows. If $S_M$ is the complete competitor size, put $a_*=36/25$, $b_*=81/100$, $c_p=(\mu(2)/\mu(1))(19683/15625)$, $c_\beta=9c_p/10$, and for the chosen phase $c=c_s$ set
+
+$$
+\begin{aligned}
+q_g&=\lceil S_M/(2\epsilon)\rceil,&N_g&=(q_g+1)^{S_M},\\
+D_g&=\left\lceil\frac{2\log((1-\zeta)/\zeta)+|\log b_*|}{\log a_*}\right\rceil,
+&i_0&=\max\{0,\lceil-\log c/\log a_*\rceil\},\\
+J_g&=i_0+N_gD_g,&T_g&=\left\lceil\frac{\log c+J_g\log a_*}{|\log b_*|}\right\rceil.
+\end{aligned}
+$$
+
+Those p witnesses have at most $2J_g+2T_g+6$ paid Reads; suspension adds one. This is a finite certificate length, not an execution deadline or minimum resource price. Full-posterior endpoint exposure with additional finite or countable depths gives $(d_s-2\zeta-\epsilon)/2$ [ST, Section 3.3]. These are actual-history lower witnesses, not reset experiments. They justify the endpoint radii and nonnegative excesses used below.
+
+Finally, source and observer likelihoods factor along a fixed acquired word. At a suspended cut,
+
+$$
+\Pr(K=k,Y_h=y,\text{next actual alpha},X_{h\alpha}=x\mid h)
+=\nu_h(k)\rho_h(y)r_kA_h(y,x).
+$$
+
+Dividing the sum over k by $\sum_k\nu_h(k)r_k>0$ gives precisely the edge weights in (1.2), without synthetic-emission tilting.
+

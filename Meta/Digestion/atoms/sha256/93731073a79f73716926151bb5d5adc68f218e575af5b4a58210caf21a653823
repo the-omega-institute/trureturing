@@ -1,0 +1,62 @@
+**Lemma 4.3 (Disjoint zero/one continuation, with all instructions).**
+After vertex-disjoint active zero and one pairs, in either acquisition
+order, the phase is certified. The cap with at most one further call
+is $K=a^2\eta$. Its complete instruction and label rules for
+attaining that cap are:
+
+| Target position | Instructions attaining $K$ and their positive-section labels |
+| --- | --- |
+| In the zero pair | Halt, or make any last actual call; always output $h_\alpha(\sigma)$ |
+| In the one pair | Read the joining edge between the two pairs; its replies have unique opposite preferred target spins |
+| Outside both pairs | Read the edge joining the target singleton to the zero pair; output target spin $\sigma$ on zero and $1-\sigma$ on one |
+
+In either of the last two rows every alternative instruction, including
+an early halt, has correct mass at most $ac\eta$. It therefore
+loses at least
+
+$$
+K-ac\eta=a\eta(a-c)=a\eta bd\ge g_5.
+\tag{4.3}
+$$
+
+Proof. The pair weights are $(a^2,b^2)$ and $(\eta,\eta)$.
+If the target is in the zero pair, its no-read best full-law mass is
+$a^2\eta$. A fresh extension changes its odds $R^2$ to $R^3$
+or $R$, both greater than one. A join to the tie pair preserves the
+preferred orientation. A repeat, separator or query elsewhere only
+partitions common factors. Thus every last call has the same best
+summed mass, and the target is uniquely $\sigma$ on each positive
+section. Halting with that label also attains it.
+
+For a target in the one pair, no read gives $c\eta/2$. A fresh
+extension gives $ac\eta$. A join to the zero pair gives
+$a^2\eta$ by (4.1). Every other operation leaves at most
+$c\eta/2\le ac\eta$, including a query extending the nontarget
+zero pair. These exhaust the moves. For the required join, the zero
+pair is constantly $\sigma$ in either heavier four-spin completion.
+Each heavier completion has weight $a^3b$, versus complementary
+$ab^3$. If the joining reply is $z$, the adjacent vertex of the
+one pair is $\sigma\oplus z$, and its other vertex is the
+complement. Either target position therefore has unique opposite
+preferred values on the two replies. Each best full-law mass is
+$a^3b/2=a^2\eta/2$.
+
+For an exterior target the singleton weights are $a,b$. Joining it
+to the zero pair gives the conditional best sum $a^2$ on their
+combined component; the independent one pair and phase factor give
+$a^2\eta$. A join to the tie pair, a fresh edge at the target,
+or a query missing the target gives at most $ac\eta$. This last
+category includes a join of the two nontarget pairs, which leaves the
+target independent. An early halt has exactly $ac\eta$ at best.
+On the required join to the zero pair, the heavier target is
+$\sigma$ on zero and $1-\sigma$ on one. Its two best full-law
+masses are $a^3\eta$ and $a\eta^2$, whose sum is $K$,
+using $a^3\eta+a\eta^2=a^2\eta(a+b)$.
+
+Both replies of a new joining edge have positive product weights.
+Strictness of $a>b$ gives the stated unique labels. If the required
+line join does not exist, only the losing alternatives are available.
+Finally (4.3) follows from $a-c=bd$ and $c<1$. Minority and
+wrong-phase labels cannot exceed the maxima just computed.
+$\square$
+

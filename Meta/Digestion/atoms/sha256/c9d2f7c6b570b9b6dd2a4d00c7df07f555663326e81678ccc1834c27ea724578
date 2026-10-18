@@ -1,0 +1,81 @@
+**Theorem 7.1 (Exterior-centered response).** Assume $d(P)=c_\star$ and $A_P<\infty$. For every finite interval $C$ and every bounded cylinder $h$, let
+$g=h-\mathbb E_P[h\mid\mathcal H_C]$. Then
+
+$$
+\sum_{i\in\mathbb Z}|\mathbb E_P[g\ell_i]|<\infty,
+\qquad S_P(g):=\sum_{i\in\mathbb Z}\mathbb E_P[g\ell_i]=0.
+\tag{7.1}
+$$
+
+In particular the tests need not be intrinsic-null functions of the block word alone.
+
+**Proof.** Attainment supplies the band, so Conventions 2.2 and Proposition 5.1 apply. For every individual $i$, the function $\ell_i\circ Z_C$ is $\mathcal H_C$-measurable. Exterior centering therefore gives
+
+$$
+\mathbb E_P[g\ell_i]
+=\mathbb E_P[g(\ell_i-\ell_i\circ Z_C)].
+$$
+
+Subtracting this term before any infinite summation, (2.7) proves
+
+$$
+\sum_i|\mathbb E_P[g\ell_i]|\le\|g\|_\infty\mathbb E_PV_C<\infty.
+\tag{7.2}
+$$
+
+Let $r_k=\mathbb E_P[g\ell_k]$. This scalar sequence is absolutely summable.
+
+Form the spatial test $G_n$ of (6.1). Multiply the finite identity (3.3) by $G_n$ and integrate. Its mean is zero because $\mathbb E_Pg=0$, so the constant $\kappa_n$ drops out. Conditioning each residual on $\mathcal E_i$ gives
+
+$$
+\mathbb E_P\left[G_n\sum_{i=1}^n\ell_i\right]
+=2\sum_{i=1}^n\mathbb E_P[v_{n,i}c_i(G_n)]-\mathbb E_P[G_n\Xi_n].
+\tag{7.3}
+$$
+
+Translation of conditional expectation under stationary $P$ and the fixed translated posterior versions yields
+
+$$
+c_i(g\circ T^j)=c_{i-j}(g)\circ T^j
+\quad\text{as }L^2(P)\text{ classes}.
+$$
+
+This follows by testing against a translated $\mathcal E_i$ event and changing variables by the invertible measure-preserving shift. Linearity and (5.3) imply
+
+$$
+\|c_i(G_n)\|_2
+\le\sum_{j=1}^n\|c_{i-j}(g)\|_2\le W(g).
+\tag{7.4}
+$$
+
+Cauchy–Schwarz over the sites and the probability space, followed by (3.5), gives
+
+$$
+\left|2\sum_{i=1}^n\mathbb E_P[v_{n,i}c_i(G_n)]\right|
+\le2(\mathbb E_P\Xi_n)^{1/2}
+\left(\sum_{i=1}^n\|c_i(G_n)\|_2^2\right)^{1/2}
+\le2W(g)\sqrt{nc_\star}.
+\tag{7.5}
+$$
+
+After division by $n$ this tends to zero. Equations (3.4)–(3.5) supply exactly (6.2) with $Z_n=\Xi_n$ and $K=c_\star$. Hence Lemma 6.1 also gives
+
+$$
+\frac1n|\mathbb E_P[G_n\Xi_n]|
+\le\frac1n\mathbb E_P[|G_n|\Xi_n]\longrightarrow0.
+\tag{7.6}
+$$
+
+On the other hand, stationarity and a finite rearrangement show
+
+$$
+\frac1n\mathbb E_P\left[G_n\sum_{i=1}^n\ell_i\right]
+=\frac1n\sum_{j=1}^n\sum_{i=1}^nr_{i-j}
+=\sum_{|k|<n}\left(1-\frac{|k|}{n}\right)r_k.
+\tag{7.7}
+$$
+
+Absolute summability in (7.2) permits dominated convergence of this scalar series. Its limit is $S_P(g)$. Equations (7.3), (7.5) and (7.6) make that limit zero, proving (7.1). $\square$
+
+The discrepancy paid in (7.6) belongs to the actual law through the pointwise optimizer score. No posterior limit of $\pi_n$ is taken, and $G_n$ is not a density or a modification kernel. The argument does not assign the fixed-$P$ loss to the Bayes risk of another law.
+

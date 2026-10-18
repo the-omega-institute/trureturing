@@ -1,0 +1,53 @@
+**Theorem 56.5 (exact own risk and its actual maximum).** For every $\rho\in(\rho_*,\rho_+]$, the lawful finite policy in Definition56.4 has exactly three original updates and four actual Reads, and
+
+$$
+\mathcal E_{\pi_\rho}(\delta)=B(\rho,\delta).
+\tag{56.14}
+$$
+
+Its worst loss is realized by explicit original sources and legal errors. At the common witness report its output is also the unique Chebyshev center of that report's full INITIAL candidate fiber.
+
+Proof. The sole additional condition needed to reuse the original upper-bound proof is strict layer separation. Proposition56.2 gives
+$g(\rho)>g(\rho_*)=2\delta$.
+For any actual original source $bq=s+w$, the unchanged cap estimates from §45 and Theorem54.4 give
+$s\ge-R_0\rho$, $R_0h\le|w|\le R_0$, $R_0=|b|$.
+Thus the actual fourth report obeys
+
+$$
+R_0=7\ \Longrightarrow\ r\le7+\delta<T,\qquad
+R_0=25\ \Longrightarrow\ r\ge25h-\delta>T.
+\tag{56.15}
+$$
+
+The decoder selects the true layer on every legal history.
+Apply exactly the original scalar interval estimates (54.17)–(54.19) to this same report and the true $R_0$: they imply
+$|\widehat s-s|\le S_{R_0}(\rho,\delta)\le S_{25}(\rho,\delta)$.
+In particular the allowed-negative-sign branch still uses its own report condition $r\ge R_0K- \delta$; no independently optimal radial endpoints are combined.
+The unchanged ball-projection estimate gives $|\widehat w-w|\le\delta$, and the actual initial Read gives $|y_0-a|\le\delta$ for every unbounded initial $a$.
+Their orthogonal INITIAL error decomposition (54.20) proves the upper bound $B(\rho,\delta)$ on the whole source and all jointly adversarial errors. No statistical independence is used.
+
+For equality instantiate the published witness (54.22) at this $\rho$:
+
+$$
+x_0=(\delta j,(-25\rho+25Ki)q^{-1}),\qquad
+x_1=(-\delta j,(t_{25}(\rho,\delta)+(25K-2\delta)i)q^{-1}).
+\tag{56.16}
+$$
+
+The existing cap check (54.9) applies throughout this parameter interval. The actual four errors are respectively
+$(-\delta j,0,0,-\delta i)$ and $(\delta j,0,0,\delta i)$.
+The first $j$ action kills both visible states, the next internal action keeps them zero, and the anchor exposes the two specified imaginary parts. All four actual reports, actions and Stop are common:
+
+$$
+(y_0,y_1,y_2,y_3)=(0,0,0,(25K-\delta)i).
+\tag{56.17}
+$$
+
+This report is in the radius25 branch by (56.15). As in original Proposition54.5,
+$d_{25}^-=25K-2\delta$, $d_{25}^+=25K$,
+$\ell_{25}=25\rho$ and $u_{25}=t_{25}(\rho,\delta)$.
+The equality branch in (56.13) therefore outputs the exact Euclidean midpoint of $x_0,x_1$. Their full INITIAL half-distance is $B(\rho,\delta)$ by (54.10), and each endpoint has that loss. The upper bound is consequently an attained maximum for this individual policy, not just a supremum approached by examples.
+
+For any legal report of this finite word the full candidate fiber is compact: $y_0$ confines $a$ to a closed ball of radius $\delta$, both $b$ caps are compact, and all four exact-menu/error constraints are closed. Classical finite-dimensional minimax-center existence applies in $W$; it supplies an output center, not another event or source port. The explicit decoder uses centers of enclosing scalar intervals and is not claimed to minimize every report's exact fiber radius. At (56.17), however, the upper bound encloses the entire fiber in its midpoint ball of radius $B(\rho,\delta)$, while the two actual endpoints force that radius. A ball of this radius containing two points at distance $2B(\rho,\delta)$ has their midpoint as its unique center. Thus the asserted local center attainment follows.
+Any alternative decoder for the same finite word also faces those endpoints; its risk cannot be smaller than $B(\rho,\delta)$. None of these decoder or maximum attainments asserts attainment of the infimum over policies. □
+

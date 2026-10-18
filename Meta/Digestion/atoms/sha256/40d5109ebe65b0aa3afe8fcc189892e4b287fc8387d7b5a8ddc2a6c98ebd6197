@@ -1,0 +1,94 @@
+**Definition 20.1 (the paid interface of the optimal construction).**
+An implementation of Theorem 17.1 retains the public cut trie and covering
+sequence, current index and candidate interval, and the ordered list
+$\tau=((a_j,r_j))_{j=1}^{r}$ of its actual protected Reads. On Release
+it also retains its mode and, in leaf mode, the selected record's index.
+Every derived branch assertion is justified by a recorded branch at a
+descendant. The mode, transcript, address strings, counters and installed
+sequence occupy actual storage. In the lower bound all of them, including
+arbitrarily richer source-dependent state, agree between the paired
+executions.
+
+For complete $P$, put $D=\max_{p\in P}|p|$, $M=|P|$ and
+$L=\sum_{p\in P}(|p|+1)$. If $E=\sum_j|a_j|$ is the actual protected
+letter traffic, then
+
+$$
+r\leq q(P),\qquad E\leq q(P)\max\{D-1,0\}.
+\tag{CNA.36}
+$$
+
+The stored public trie costs $O(L)$ characters and node cells; the
+materialized sequence and full protected transcript cost
+$O(q(P)(D+1))$, with index widths additionally charged. A trie implementation
+can construct and process the protected addresses and intervals in
+$O(L+q(P)(D+1))$ logical operations after the public schedule is selected.
+Literal delivery remains from the root on every Read. Pointers within
+retained public records do not become handles into the source register.
+
+Let $W_{\rm opt}(P)$ and $S_{\rm opt}(P)$ be the actual work and peak
+storage used by a chosen implementation of the finite public optimization
+(CNA.32). If it is run during the call, those are additional costs even
+though it makes no Read and is source-blind. If precomputed, charge its
+installation work and stored literals/control instead. Dependence on
+public $P,k$ is allowed; dependence on unknown source or later interference
+is not. The formula for $q$ does not certify a minimal or free optimizer.
+
+**Mathematical consequence 20.2 (composition with the paid CNA capture).**
+Use the actual-history analytical parameters $B,N_B,H_B,A_B$ of
+Definition 5.1, still measured from the invocation source. They are not
+runtime inputs. If capture makes $J$ attempts, its exact additional
+Read and letter bills are
+
+$$
+\sum_{j=1}^{J}(N_j+1),\qquad
+\sum_{j=1}^{J}(A_j+d_j),\qquad J\leq B+1.
+\tag{CNA.37}
+$$
+
+Here $d_j$ denotes that attempt's validation-leaf depth as in Definition
+5.1, not the ancestor contribution in (CNA.24). Every repeated capture
+root, failed validation, discarded traversal and successful validation
+is included. The total bills add $r$ and $E$, respectively, and are at
+most $q(P)+(B+1)(N_B+1)$ Reads and
+$q(P)\max\{D-1,0\}+(B+1)(A_B+H_B)$ letters.
+The root shortcut has neither sum.
+
+In leaf mode the computed lag is at most $B$. A direct parser using a
+working copy of the retained tree performs at most $O(BN_B)$ additional
+logical work and uses $O(N_B)$ additional node storage. It never enlarges
+the saved tree during inversion. Retaining the validation tree and the
+working predecessor at once pays for both. Computing the clock and
+locating the retained address are finite tree traversals, included in
+the same bounds with the acquisition terms when $B=0$.
+
+The complete-row output uses the cut trie, structural comparisons and an
+explicit equality matrix, including every false entry. The work and
+storage accounting of Theorem 5.4 therefore gives the conservative bounds
+
+$$
+\begin{aligned}
+W={}&O\bigl(W_{\rm opt}(P)+(B+1)(N_B+A_B+H_B+1)\\
+ &\hspace{23mm}+L+q(P)(D+1)+BN_B+M^2N_B\bigr),\\
+S={}&O\bigl(S_{\rm opt}(P)+N_B+A_B+L+q(P)(D+1)+M^2\bigr).
+\end{aligned}
+\tag{CNA.38}
+$$
+
+If the optimizer is discarded before capture, the displayed sum for
+peak space can be replaced by the corresponding maximum; no sharp bound
+is asserted. These are character and bounded-index-cell counts in the
+model of Definition 5.1. Bit accounting additionally charges each growing
+address index, count, public optimization state and matrix index at its
+actual width; it does not assume a source-dependent machine word for free.
+Source-register storage and the writer's global substitutions are separate
+costs. Any retained transcript, validation tree or output kept after Return
+continues to occupy its actual storage.
+
+For the adaptive search of Proposition 19.4, retaining its entire prefix
+transcript takes $O((h+1)^2)$ characters; discarding previous replies and
+keeping the authentic final address/label and required control uses
+$O(h+1)$ characters plus indices before capture. Both charge all $h+1$
+Reads and all submitted letters. This optional retention change is not
+a claim of minimum bits or minimum total workspace.
+

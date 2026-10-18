@@ -1,0 +1,13 @@
+**供应推导 9.2（下降的必要且充分条件）。** [《FIB关系延拓几何》第3节](FIB_RELATIONAL_CONTINUATION_GEOMETRY.md)供应的纤维下降在此保留部分动作：存在只依摘要的菜单、enabled 域、输出和合法后继，当且仅当同纤维点对每个动作 $a$ 满足
+
+$$
+\eta(\omega)=\eta(\omega')\Longrightarrow
+\begin{cases}
+o(\omega)=o(\omega'),\quad O(\omega)=O(\omega'),\\
+\omega\in D_a\ \Longleftrightarrow\ \omega'\in D_a,\\
+\eta(T_a\omega)=\eta(T_a\omega')\quad(\omega,\omega'\in D_a),
+\end{cases}
+$$
+
+并且所声明拒绝、失败分支也有相同标签和摘要后继。必要性由下降式代入共同摘要。充分性是在每个非空纤维上用代表定义读出、菜单及更新；同纤维条件使其与代表无关，后继仍在有效像内。不对像外任意补动作，也不因失败总化授予原来没有的操作。策略若只靠摘要执行，其选择和停止也须下降。这是一般工具；下面给出它不能替代的具体联合响应计算。
+

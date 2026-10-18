@@ -1,0 +1,7 @@
+**开放问题 5.2（增长与常数项）。** 增长常数卷定理 5.2 给出 $c_\star=\lim_n\kappa_n/n$ 和 $\theta_n=\kappa_n-c_\star n\in[0,c_\star]$。$c_\star$ 的精确值、$\kappa_n$ 的闭式、$\theta_n$ 的收敛或奇偶子列收敛仍未由本卷确定。各有限长度最大点的唯一性与正性不提供这些渐近结论。
+
+[Growth]: FIB_LEGAL_EDGE_LOAD_GROWTH_CONSTANT.md
+[CD]: https://arxiv.org/html/1211.2251v1
+[Hsu]: https://doi.org/10.1109/71.205649
+[Sion]: https://doi.org/10.2140/pjm.1958.8.171
+

@@ -1,0 +1,93 @@
+**定理 3.2（原始有符号高段的正谱表示）。** $\omega$ 在 $(0,\infty)$ 连续，并满足
+
+$$
+0<\omega(t)<2(1+t),
+\qquad
+\omega(t)=1-\frac1{t^2}-\zeta'(1+t).
+\tag{3.2}
+$$
+
+式 (1.1) 的同一高段函数具有绝对收敛表示
+
+$$
+h(r)=\int_0^\infty e^{-rt}\omega(t)\,dt,
+\tag{3.3}
+$$
+
+而且对每个 $n\ge0$，
+
+$$
+(-1)^nh^{(n)}(r)=\int_0^\infty t^ne^{-rt}\omega(t)\,dt>0.
+\tag{3.4}
+$$
+
+证明。首先，式 (1.2) 给出
+
+$$
+\int_1^\infty\frac{|\eta(y)|}{y^2}\,dy
+\le\int_1^\infty\frac{1+\log y}{y^2}\,dy=2.
+\tag{3.5}
+$$
+
+这同时保证式 (1.1) 绝对收敛、$C$ 局部绝对连续和 $|C|\le2$。为明确与原来源的等式，置
+
+$$
+B_r(y)=\frac1{r+\log y}+\frac1{(r+\log y)^2}.
+$$
+
+在 $[1,R]$ 上分部积分；$C(1)=0$ 且 $C(R)B_r(R)\to0$。由于
+
+$$
+-B_r'(y)=\frac1y\left[\frac1{(r+\log y)^2}
++\frac2{(r+\log y)^3}\right]
+$$
+
+绝对可积，令 $R\to\infty$ 并代入 $y=e^u$，即恢复式 (1.5)。这里没有把 $\eta$ 换成正函数。
+
+对式 (1.5) 使用经典 Gamma 积分的 $\nu=2,3$ 情形（[NIST DLMF 5.9.1](https://dlmf.nist.gov/5.9.E1)，$\mu=1$）：
+
+$$
+\frac1{(r+u)^2}=\int_0^\infty te^{-(r+u)t}\,dt,
+\qquad
+\frac2{(r+u)^3}=\int_0^\infty t^2e^{-(r+u)t}\,dt.
+$$
+
+全部被积项非负，Tonelli 定理给式 (3.3)。式 (3.1) 的严格正性及上界来自 $0<A(u)<2$。在任意 $t\ge\varepsilon>0$ 的紧区间上，$2e^{-\varepsilon u}$ 是共同可积控制，故 $\omega$ 连续。
+
+又因 $A$ 局部绝对连续，几乎处处有 $A'(u)=\eta(e^u)e^{-u}$。式 (1.2) 给
+
+$$
+\int_0^\infty |A'(u)|e^{-tu}\,du
+\le\int_0^\infty(1+u)e^{-(1+t)u}\,du<\infty.
+$$
+
+利用 $A(0)=0$、$A(u)e^{-tu}\to0$ 分部积分，得到
+
+$$
+\omega(t)=(1+t)\int_1^\infty\eta(y)y^{-t-2}\,dy.
+\tag{3.6}
+$$
+
+对固定 $t>0$，阶乘部分非负，Tonelli 定理给
+
+$$
+\int_1^\infty\log(\lfloor y\rfloor!)y^{-t-2}\,dy
+=\frac1{t+1}\sum_{j=2}^\infty\frac{\log j}{j^{1+t}}<\infty.
+$$
+
+其余连续部分也绝对可积，且
+
+$$
+\int_1^\infty(1-\log y)y^{-t-1}\,dy=\frac1t-\frac1{t^2}.
+$$
+
+在 $\Re s>1$ 内，[DLMF 25.2.1](https://dlmf.nist.gov/25.2.E1) 的 Dirichlet 级数可逐项求导：任意 $\Re s\ge1+\varepsilon$ 上，导数项由可求和的 $(\log j)j^{-1-\varepsilon}$ 控制。因此
+
+$$
+-\zeta'(1+t)=\sum_{j=2}^\infty\frac{\log j}{j^{1+t}},
+$$
+
+代入式 (3.6) 即得式 (3.2)。所有拆分在 $t>0$ 内绝对收敛；没有在 $t=0$ 直接拆开两个发散项。
+
+最后，对任意 $r_0>0$，在 $r\ge r_0/2$ 的邻域内，各阶导数被积函数由 $2t^n(1+t)e^{-r_0t/2}$ 控制，其积分有限。逐阶支配微分给式 (3.4)，严格正性来自 $\omega(t)>0$。这只是在本阶乘密度上使用 Laplace 积分的经典微分法则。$\square$
+

@@ -1,0 +1,5 @@
+source_id = "recursive-relational-observation-native-virtual-substitution-compiler"
+path = "docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_VIRTUAL_SUBSTITUTION_COMPILER.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

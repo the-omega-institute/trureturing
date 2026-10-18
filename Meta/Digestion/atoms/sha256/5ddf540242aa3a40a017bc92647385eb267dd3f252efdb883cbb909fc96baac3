@@ -1,0 +1,40 @@
+**Corollary 466.1.** If M is a maximal-valued label selected by a flat
+pi slot and Z is the upper label in its source reduction of Sections
+132-134, there is a second actual label U distinct from Z with u>m.
+In particular M,Z,C,D,U are five distinct actual labels.
+
+**Proof.** Sections 132-134 supply M,Z,C,D,tau and (459.1), with
+p_M=1 and p_Z=0. Sections 304-307 of the five-reservoir return volume
+make every actual label genuinely witnessed and every
+flat axial-selected. The arbitrary upper-witness theorem excludes flat
+transverse Z occurrences, since z>m-2. Axial Z cannot be flat either,
+because p_Z=0 and every flat selects its axes. Thus its entire star
+is genuine. Its complete angle budget is 2*pi, and the genuine M
+budget is pi. All hypotheses of the direct theorem hold if every
+label other than Z is at most m, so that supposition is impossible.
+
+Therefore some actual label U different from Z satisfies u>m.
+It differs from M,C,D as well because c,d<m-2. This is the
+second-upper-label conclusion of Sections 314-316
+with repeated axes allowed. It does not assert the further source-pair
+conclusions of Section 317. QED.
+
+In particular the source flat's other axis is no longer automatically
+the sixth label V: it may coincide with C or D. Its repetition of M
+is impossible because that would use two M pi slots, but repetition
+of a transverse C or D is not excluded by this proof. The at-most-two-flat
+theorem of Sections 309-313 of the five-reservoir return volume still
+applies; unique flatness and uniqueness of a CD-pair owner do not yet follow. The
+360-word census and subsequent six-edge closure cannot simply be
+reused for these repeated-label owners.
+
+For seven reservoirs, Sections 304-307 and the at-most-two-flat theorem
+do not apply: two reservoir labels may remain unwitnessed after the
+arbitrary upper-witness step. A high label can then have axial flat
+zero slots. The hypotheses above do not supply a wholly genuine Z star
+in that setting. For six reservoirs plus special actual edges, the
+hypothesis (459.3) bounds all actual values, including special axes;
+no such bound is silently inferred from a bound on reservoirs only.
+Thus Theorem 459.1 and Corollary 466.1 give no flat-exclusion or
+realization conclusion for either of these larger classes.
+

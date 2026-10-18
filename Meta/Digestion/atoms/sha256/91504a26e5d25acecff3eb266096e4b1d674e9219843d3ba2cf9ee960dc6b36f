@@ -1,0 +1,52 @@
+**Notation 6.2 (one incomparable collision).** Suppose two actual live
+histories reach one original installed selected state, with incomparable
+supports $S,T$ and hits $h<g$. Put
+
+$$
+\begin{gathered}
+I=S\cap T,\quad X=S\setminus T,\quad Y=T\setminus S,\quad
+U=[n]\setminus(S\cup T),\\
+a=|X|>0,\quad b=|Y|>0,\quad u=|U|,\quad
+q=k-h,\quad v=k-g,\quad \Delta=g-h=q-v,\\
+\xi=|\{i\in X:\eta_S(i)=1\}|,\qquad
+\eta=|\{i\in Y:\eta_T(i)=1\}|,\\
+D_I=\{i\in I:\eta_S(i)\ne\eta_T(i)\},\qquad
+\delta=\Delta+\xi-\eta.
+\end{gathered}
+\tag{WTF.18}
+$$
+
+Every set and count here is a proof index, never an accessible register.
+The next selected coordinate must be fresh for both histories, hence
+belongs to $U$; in particular $u\ge1$.
+
+The supplied interval exclusion is
+
+$$
+[0,u]\cap[q-b,q-1]\cap[v-a,v-1]\cap\mathbb Z=\varnothing.
+\tag{WTF.19}
+$$
+
+Its two clipped intervals are nonempty by liveness. Their upper
+endpoints are ordered because $q>v$. Disjointness therefore places the
+$v$ interval strictly below the $q$ interval. The latter's lower
+endpoint is positive, hence $q-b$, and the former's upper endpoint is
+below $u$, hence $v-1$. This recovers PE (PE.6):
+
+$$
+q\ge b+1,\qquad v\le u,\qquad \Delta\ge b.
+\tag{WTF.20}
+$$
+
+Moreover $\delta$ is the difference of old hit counts on $I$, namely
+$(g-\eta)-(h-\xi)$. Since
+
+$$
+\delta=(\Delta-b)+\xi+(b-\eta)\ge0,
+\tag{WTF.21}
+$$
+
+equality means precisely $\Delta=b,\ \xi=0,\ \eta=b$.
+Thus every private-polarity defect, meaning $\xi>0$ or $\eta<b$,
+has $\delta>0$.
+

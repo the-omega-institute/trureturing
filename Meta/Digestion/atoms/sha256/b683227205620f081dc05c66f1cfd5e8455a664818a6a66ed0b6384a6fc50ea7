@@ -1,0 +1,8 @@
+### 68.3 Exact infinite family from scalar Hadamard matrices
+
+Suppose a real Hadamard matrix H of order k is given. The normalized matrix H/sqrt(k) is orthogonal and every entry has squared modulus 1/k. Grouping rows into triples and a final s-row block immediately satisfies condition2. Hence F_(k,2) has exact branch minimum ceil(k/3) and exact entropy minimum H*.
+
+In particular, for every k=2^j with j≥2, the classical Sylvester recursion supplies H, so this is an infinite family in which k need not be divisible by three. For k=4 the optimal weights are (3/4,1/4), and for k=8 they are (3/8,3/8,1/4). These weights attain the stated exact coherent-channel targets. They improve on a uniform distribution over the minimum number of branches whenever s>0: strict entropy concavity makes H*<log₂ceil(k/3).
+
+The construction uses a scalar Hadamard matrix of order k followed by row grouping. It neither asserts a Hadamard matrix of order ceil(k/3) nor forms a tensor product of two three-dimensional Bloch frames. When no suitable matrix is supplied, (1) remains a lower bound and the equality criterion remains conditional.
+

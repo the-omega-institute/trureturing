@@ -1,0 +1,23 @@
+### 67.1 Exact equality criterion for qubit fibres
+
+Use the uniform multi-fibre compression channel F_(k,2) and fixed MC input/output encodings of §66. A physical branch is an arbitrary product of local CPTP maps; branch count and Shannon entropy refer to an exact finite LOSR decomposition, with positive weights and one common channel on all coherent inputs and passive references.
+
+For every integer r≥1, the following are equivalent:
+
+1. F_(3r,2) has an exact implementation using r product branches.
+2. There exists a real orthogonal matrix O of size 3r whose rows are grouped into r consecutive blocks of three, such that the restriction of every column to every block has squared norm 1/r.
+
+When these conditions hold, the minimum branch count is r and the minimum shared entropy is log₂r. Every r-branch implementation has uniform weights. The balanced-block condition concerns Euclidean norms, not equal magnitudes of all individual entries; it is weaker than a real Hadamard construction.
+
+Proof. By the physical equality analysis of §66, each positive branch supplies a family of qubit orthonormal bases in one common two-dimensional environment. Write its rank-one projectors as
+
+    P_(t,f,i)=[I+(-1)^i n_(t,f)·σ]/2,
+
+where n_(t,f)∈R³ is a unit Bloch vector. Averaged unbiasedness is equivalent to
+
+    Σ_t w_t n_(t,f)·n_(t,g)=0  for f≠g.
+
+Thus the 3r vectors with t-th block sqrt(w_t)n_(t,f) are orthonormal columns in R^(3r). They form a square orthogonal matrix O. Its t-th three-row block has total squared Frobenius norm three, while summing its 3r column-block norms gives 3r w_t. Consequently w_t=1/r, and every column-block norm is 1/sqrt(r).
+
+Conversely, from such O define n_(t,f)=sqrt(r) times its t-th column block, and choose the corresponding qubit eigenbases. Orthogonality of distinct columns gives average Bloch inner product zero with weights 1/r. Using conjugate records on the second party, the common physical construction in §66 implements every encoded matrix unit exactly. Its branch lower bound and weight/entropy lower bound give the stated minima. This is an equality criterion for the physical resource problem, with arbitrary original local environments already covered by §66.
+

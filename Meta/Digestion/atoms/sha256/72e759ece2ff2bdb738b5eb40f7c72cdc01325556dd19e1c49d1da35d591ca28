@@ -1,0 +1,13 @@
+## 17. Finite canonical return acquisition and its promised joint source
+
+The consumer in §§17–23 is the exact phase-preserving height continuation
+of §§2 and 12, after an actual canonical acquisition on the same still-live
+specimen. The additional result is the attained finite-charge region for
+live yield and classical parity-calibration error. Scalar return factors,
+full-phase rigidity and the shared-support obstruction are credited
+ingredients, rather than new claims.
+
+All repository references in these sections select the immutable public
+revision 1f58736f50945c7cfeca93ce160eb9b46a3a7e7e. The results are ordinary
+mathematical proofs, without a new Lean certificate or physical implementation.
+

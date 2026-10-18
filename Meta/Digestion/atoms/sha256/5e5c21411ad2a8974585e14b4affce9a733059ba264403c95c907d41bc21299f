@@ -1,0 +1,77 @@
+**Proposition 10.7 (Canonical form and reference tangent matrices).**
+The actual relation angles in (10.21) are
+$D^{\mathsf T}\theta=\Phi$. For the negative-phase normalization
+
+$$
+\lambda=\sum_Ip_I\,d\theta_I,\qquad
+\Omega=-d\lambda=\sum_I d\theta_I\wedge dp_I,
+\tag{10.22}
+$$
+
+the pullback on all of $\mathcal U$ times the local angle chart is
+$\sum_{j=1}^r d\Phi_j\wedge d\xi_j$. At the reference, the columns of the
+probability and phase derivative matrices are
+
+$$
+A=\tfrac12P^{-1/2}D,\qquad
+C=-iP^{-1/2}DG^{-1}.
+\tag{10.23}
+$$
+
+They are horizontal to $\psi_0=(\sqrt{p^0_I})_I$. Their Hermitian Gram
+matrix and symmetric logarithmic derivative quantum Fisher matrix are
+
+$$
+\begin{pmatrix}
+A^\dagger A&A^\dagger C\\C^\dagger A&C^\dagger C
+\end{pmatrix}
+=
+\begin{pmatrix}
+G/4&-iI_r/2\\iI_r/2&G^{-1}
+\end{pmatrix},\qquad
+H=4\operatorname{Re}
+\begin{pmatrix}
+A^\dagger A&A^\dagger C\\C^\dagger A&C^\dagger C
+\end{pmatrix}
+=
+\begin{pmatrix}G&0\\0&4G^{-1}\end{pmatrix}.
+\tag{10.24}
+$$
+
+Proof. Formula (10.15) gives $D^{\mathsf T}W\Phi=\Phi$.
+Since $dp=D\,d\xi$ and $d\theta=W\,d\Phi$, substitution in (10.22)
+gives the coefficient $W^{\mathsf T}D=I_r$ for the pullback.
+This computation is valid throughout the positive chart and does not
+differentiate $W$. At the reference, differentiation of square roots
+and exponentials gives (10.23).
+The inner products with $\psi_0$ are
+$\tfrac12\mathbf1^{\mathsf T}D=0$ and
+$-i\mathbf1^{\mathsf T}DG^{-1}=0$, respectively.
+Multiplication gives all four Gram blocks in (10.24).
+For a normalized pure state with horizontal derivatives $v_a$,
+$\partial_a\rho=|v_a\rangle\langle\psi|+|\psi\rangle\langle v_a|$.
+The symmetric logarithmic derivative
+$2(|v_a\rangle\langle\psi|+|\psi\rangle\langle v_a|)$
+therefore gives $H_{ab}=4\operatorname{Re}\langle v_a|v_b\rangle$,
+which proves the last identity. $\square$
+
+The sign and scale in (10.22) consume [Symplectic, Definition 35.12 and
+Proposition 35.13][Symplectic10]: its $\Gamma_n$ is $B_n$, its $D_T$
+is $d_T$, its moment $\mu_{T_j}$ is $\mu_{T_j}(p^0)+\xi_j$ and its
+angle $\Phi_{T_j}$ is the actual $j$th component of $D^{\mathsf T}\theta$.
+All other moments are fixed; other relation angles can vary as dictated
+by the chosen lift $W\Phi$. The supplier uses $\exp(-i\theta_I)$ and
+projective-line symplectic area $2\pi$, exactly the convention above.
+Its full phase-torus coordinates are not identified with an arbitrary
+globally periodic $W$ lift.
+
+The pure-state tangent formalism is the one in Keiji Matsumoto,
+*A new approach to the Cramer-Rao type bound of the pure state model*,
+[§3, equations (7)–(16), and Theorem 5][Matsumoto10].
+His horizontal SLD lifts $l_a$ map here to twice the columns of
+$(A,C)$; his $J^S=\operatorname{Re}L^\dagger L$ maps to $H$.
+The purely imaginary cross block is relevant to joint estimation;
+it is not a cross block of classical Fisher information for every
+measurement. Inverting $H$ uses the full matrices $G^{-1}$ and $G/4$,
+rather than reciprocals of their separate diagonal entries.
+

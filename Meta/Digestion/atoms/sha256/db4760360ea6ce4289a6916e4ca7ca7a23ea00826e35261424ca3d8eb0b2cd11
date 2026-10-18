@@ -1,0 +1,4 @@
+## 25. Exact unit-width envelope for arbitrary two-value targets
+
+Fix $m=1$, $k\ge2$, $T=k+1$. All phases are actual. Write the INITIAL phase as $-j$ with $0\le j\le k$. At absolute issued-bit position $t$, a successful one changes the value precisely for $j\in\{t,t+1\}\pmod T$; a zero changes no value and clears the tail. Each bit is one paid complete block. These are chronological endpoint comparisons on one actual source.
+

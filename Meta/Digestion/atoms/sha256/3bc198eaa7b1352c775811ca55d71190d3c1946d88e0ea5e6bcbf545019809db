@@ -1,0 +1,30 @@
+**Provenance and evidence boundary.** This is a single-author ordinary
+mathematical synthesis under the formal-thinking-and-answer, sshx and
+theory-volume-template instructions, using supplied predecessor theory,
+completed advisory research conclusions, and the stated literature.
+Definitions and proofs here fix one formulation; advisory alternatives
+are not silently identified with it. There is no fresh Lean or kernel
+proof, no retained bind-only declaration, no solver implementation or
+complexity claim, and no independent approval asserted by this text.
+
+The unchanged general question is to decide
+$\exists h\,\operatorname{PrefDet}(U,Q,h)$ on **arbitrary** guarded coupled
+mixed-epoch relation inputs, with arbitrary original cuts and all the
+same paid/full-state conditions. Failed membership in $\mathfrak S$
+leaves that question unresolved. A future extension must handle genuinely
+shifted coupled terms with both directions of source correspondence,
+full-row disagreement correspondence and a terminating test for arbitrarily
+deep **finite admissible** counterpairs. Merely deciding satisfiability,
+constructing a witness, or listing prefix candidates is insufficient.
+
+Effective minimum raw budgets for arbitrary coupled relation histories,
+joint resource optima, the original stochastic $j_c$ alternative, common
+full-law calibration, exact finite stochastic optimum and effective
+charged attainment remain unresolved here. The literal-only SCR prices
+and the example-specific one-read minimum in Proposition 16.1 do not
+supply those general conclusions. This extension advances the persistent
+self-calibration programme without completing or replacing it.
+
+[ST-DFA]: https://cdn.jsdelivr.net/gh/leanprover-community/mathlib4@db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Computability/DFA.lean
+[ST-NFA]: https://cdn.jsdelivr.net/gh/leanprover-community/mathlib4@db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Computability/NFA.lean
+

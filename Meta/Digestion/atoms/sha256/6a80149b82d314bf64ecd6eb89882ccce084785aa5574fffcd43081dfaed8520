@@ -1,0 +1,28 @@
+**Theorem 8.1 ($C^1$ and not $C^2$ in original strength).** The two physical branches have the same value and first strength derivative at the event, and different second strength derivatives.
+
+Proof. Write $V_{\rm low}=\sum p_i|H_i|$. Differentiating moments and occupied contact values gives
+
+$$
+\begin{aligned}
+V_{\rm low}'&=\sum p_i'|H_i|+\sum p_i\epsilon_iH_{i,\phi}\phi_i'\\
+&=Y\cdot\frac d{d\lambda}\sum p_i\Gamma_i
+-\lambda\frac d{d\lambda}\sum p_i\sigma_iu_i=-\lambda k'.
+\end{aligned}
+$$
+
+Use $s=s_0\tau$, $\tau=k/\sqrt\alpha$, and $\mathcal T_A=(H_{\rm high}+V_{\rm low})/2$. The strict response of §6 gives the analytic strength inverse on each side and
+
+$$
+\mathcal T_s=-\frac{\lambda\sqrt\alpha}{2s_0},\qquad
+\mathcal T_{ss}=-\frac{\sqrt\alpha}{2\delta\tau_\lambda}.
+$$
+
+The event law and multiplier are common. The implicit tangent data in §16 yield positive disjoint one-sided response intervals
+
+$$
+.0003369635<\tau'_{\rm six}<.0003369647,\qquad
+.0003793181<\tau'_{\rm seven}<.0003793185.
+$$
+
+For the response records use the unweighted norm, $q=\|I-RJ\|_\infty<1$, $v=-RF_\lambda$, and $|X'_i-v_i|\le q\|v\|_\infty/(1-q)$. Their field `error` bounds this last expression and `Xprime` encloses each exact derivative. Applying the derivative of $k/\sqrt\alpha$ gives `tau_prime`. The six record uses the augmented $21$-variable order, the seven record the $22$-variable physical order, both on the exact event box with $p_6=0$ in the seven embedding. Therefore the values and first derivatives match, while the one-sided second derivatives differ. Continuity of branch derivatives to the event proves $C^1$ and failure of $C^2$. $\square$
+

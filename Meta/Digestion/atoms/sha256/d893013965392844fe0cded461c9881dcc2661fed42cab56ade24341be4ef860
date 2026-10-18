@@ -1,0 +1,38 @@
+**Lemma 2.2 (modulus minimizer and weak eigen-equation).** There exists a
+real nonnegative $v\in\overline{\mathcal F}$ with
+
+$$
+\|v\|_2=1,\qquad \overline q_g[v]=E_{\rm base}=:E,
+\qquad
+\overline q_g(v,z)=E\langle v,z\rangle
+\quad(z\in\overline{\mathcal F}).
+\tag{2.5}
+$$
+
+The modulus of any normalized restricted minimizer has these properties.
+
+Proof. Start with a complex minimizer $u$ from Theorem 2.1. The
+regularized modulus
+$F_\tau(u)=\sqrt{|u|^2+\tau^2}-\tau$ has zero height trace and obeys
+the weak derivative inequalities
+$|\partial_kF_\tau(u)|\le|\partial_ku|$ and
+$|\partial_\alpha F_\tau(u)|\le|\partial_\alpha u|$.
+These follow by applying the chain rule to the two real components of
+$u$; the differential of $F_\tau$ has norm at most one.
+As $\tau\downarrow0$ these functions converge to $|u|$ in $L^2$ and
+are bounded in the base Sobolev norm. Weak compactness and lower
+semicontinuity therefore give
+
+$$
+v=|u|\in\overline{\mathcal F},\qquad
+\overline T[v]\le\overline T[u].
+\tag{2.6}
+$$
+
+The norm and potential integral are unchanged by the modulus, so
+minimality forces $\overline q_g[v]=E$ and $\|v\|_2=1$.
+For every $z$ differentiate the Rayleigh quotient of $v+tz$ at $t=0$.
+Real $t$ gives the real part of (2.5); replacing $z$ by $iz$ gives its
+imaginary part. All pairings are continuous by (2.4) and its restriction.
+This establishes the weak equation on the whole form domain. $\square$
+

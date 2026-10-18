@@ -1,0 +1,51 @@
+**Convention 77.2 (limiting selection and current native interfaces).**
+The selected limiting-interpolation construction in [JS, §§11–18][JS67]
+supplies every limiting budget by its unique clamped scalar root and
+strictly monotone inverse. That global budget selection coexists with
+[TB][TB67]'s local bands and selected-branch regularity, whose hypotheses
+remain local. It is not necessary to re-open the scalar selection as a
+missing result. The transition-root inventory, isolation, ordering,
+multiplicity and sign changes still need proof; neither this limiting
+selection nor the local bands evaluate the full finite-$(s,A)$ frontier.
+JS14 already supplies the every-instrument critical strip and the
+sub-spectral uniform $O(t^{-1})$ value estimate. JS15 supplies finite
+Gram stability and zero-corner handling; JS16 supplies the compact-uniform
+spectral product/value layer, with JS17's common original realization.
+Only the other uniform regimes and next terms remain outstanding. These
+are asymptotics, not exact finite-frontier values. The source is
+mathematical input independently of any publication status.
+
+The JS/TB dictionary is $d_0^{\rm TB}=d_f$,
+$\zeta^{\rm TB}=b_{\rm off}=-z_f$, $\gamma^{\rm TB}=\gamma_f$,
+$A^{\rm TB}(p)=a(p)$, $B^{\rm TB}(p,q)=D_J(p,q)$ and
+$g^{\rm TB}=g_+$. The clamped-edge derivative test has
+$\phi_\varpi'(x_+)=-E_{\rm edge}/P_{+,y}$ with $P_{+,y}>0$;
+TB's $c(p)=-v(p)E_{\rm edge}/C'$ has $C'>0$. Thus the two edge
+criteria coincide, while interior stationarity is the same
+$T(p,q)=0$. TC uniqueness and the common global certificate identify
+both selections wherever TB's local bands apply. The changed-cost
+counterexample to a decreasing-curvature shortcut in TB does not refute
+JS's convex contour selection, which does not assume that shortcut.
+No single-transition or global $C^2$ conclusion follows.
+
+The current [AURIC control construction, §§35–36, Definition 55.1,
+Assumption 55.2, Proposition 55.3 and Theorem 56.1][AO67]
+uses independently driven drift-free local PXP flips, its specified
+reusable phase at positions $(1,3)$, and supplied encoding and
+initialization. Those controls are not granted by the original fixed
+sum waiting menu. Even approximate unitary universality at that
+contract does not grant this specimen's acquisition, calibrated
+$D,T,S$, joint resource counting or FIRST services. The
+[self-calibrating relation theorem, §39][CAL67] assumes a positive
+rank-one relation, nonzero common polynomial gain of degree at most
+$k$, drift of degree at most $d$, and the exact integer sequence clock.
+Its $3k+d+5$ reads recover the normalized relation and gain product;
+individual zero gain positions are allowed, identically zero gain is
+excluded. It is not unknown-clock or physical apparatus calibration.
+The [general-target incidence-cycle theorem, §§1 and 10][GT67] assumes
+canonical beta initialization, completed predecessors, separately
+authorized boot, strong atomic patch primitives and a paid foundation.
+It does not implement those primitives through the lower engine or
+complete the raw original task. These explicit contracts have no proved
+common quantum operation/resource realization bridge to §75.
+

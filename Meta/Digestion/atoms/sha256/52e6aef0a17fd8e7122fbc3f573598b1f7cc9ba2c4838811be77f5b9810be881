@@ -1,0 +1,26 @@
+### 63.6 完成 zeta 的概率特征函数接口
+
+Nakamura 定义
+
+\[
+\Xi_\sigma(t)
+=
+\frac{\xi(\sigma-it)}{\xi(\sigma)}.
+\]
+
+他证明 \(\Xi_\sigma\) 对任意实 \(\sigma\) 都是某个概率分布的特征函数，并证明 RH 等价于对所有 \(1/2<\sigma<1\)，这些特征函数具有其定义的 pretended-infinitely-divisible 结构。参见 [arXiv:1504.03438](https://arxiv.org/abs/1504.03438)。
+
+这给出了比“观察到概率相似”更强的目标：
+
+\[
+\text{FIB 场}
+\longrightarrow
+\text{正定特征函数}
+\longrightarrow
+\text{无限可分性}
+\longrightarrow
+\mathrm{RH}.
+\]
+
+有限 Fisher 场、正定二次型、粗粒化和局部素数场尚未给出有限截断的 characteristic-function field；该桥还依赖其 Toeplitz moment matrix 的半正定性，以及截断到全局 $\Xi_\sigma$ 的极限关系。
+

@@ -1,0 +1,58 @@
+### 定理 38.4（独立量子边的张量化）
+
+对有限边指标集 \(E\)，令
+
+\[
+H=\bigotimes_{e\in E}H_e,
+\qquad
+\sigma=\bigotimes_{e\in E}\sigma_e.
+\]
+
+每个边生成元 \(\mathcal L_e\) 在 \((H_e,\sigma_e)\) 上满足 \(QCD(K_e)\)。将其提升为
+
+\[
+\widehat{\mathcal L}_e
+=
+I_{\bar e}\otimes\mathcal L_e,
+\qquad
+\mathcal L_{\mathrm{net}}
+=
+\sum_{e\in E}\widehat{\mathcal L}_e.
+\]
+
+则 \(\mathcal L_{\mathrm{net}}\) 满足
+
+\[
+QCD\left(\min_{e\in E}K_e\right).
+\]
+
+#### 证明
+
+不同边作用在不同张量因子上，因此 \(\widehat{\mathcal L}_e\) 两两交换，并且在乘积 GNS 内积下自伴。有限维谱定理给出共同特征基。共同特征向量的 \(-\mathcal L_{\mathrm{net}}\) 特征值为
+
+\[
+\lambda_{\mathrm{net}}
+=
+\sum_{e\in E}\lambda_e,
+\]
+
+其中每个 \(\lambda_e\) 非负。若共同特征向量不在常数方向，则至少一个 \(\lambda_e>0\)，故
+
+\[
+\lambda_{\mathrm{net}}
+\ge
+\min_{e\in E}K_e.
+\]
+
+对共同特征基逐项应用
+
+\[
+\lambda_{\mathrm{net}}^2
+\ge
+\left(\min_eK_e\right)\lambda_{\mathrm{net}}
+\]
+
+并线性延拓，得到 \(QCD(\min_eK_e)\)。证毕。
+
+这个张量化结果与 triangle quantum network 的源积结构相容。它只处理独立边生成元的乘积模型。一般节点 CPTP 信道会引入非交换耦合，除非额外证明 detailed balance、共同不变状态和相应二阶型不等式，否则不能使用该定理。
+

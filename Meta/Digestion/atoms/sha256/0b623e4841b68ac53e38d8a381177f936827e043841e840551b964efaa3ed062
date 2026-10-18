@@ -1,0 +1,30 @@
+**Definition 10.1 (the precise same-template gate).** At $d=2$ let
+$\mathcal T_2(n)$ consist of complete templates together with a
+specified valid owned-seed representation on $n$ original blocks,
+whose block-seed incidence graph is a connected tree and whose seed
+incidence is at most two. The representation, domains, guards and
+whole-block potentials are part of this description. For
+$\star\in\{\mathrm{def},\mathrm{ker},\mathrm{fl}\}$, use respectively
+the underlying template's actual-tuple carrier, its uniform
+owner-kernel carrier, or its floor carrier. For a probability $\mu$
+let $\mathsf{Rel}_\star(\mu)$ mean that there exists a function
+$e_\mu:(0,1]\to[0,\infty)$ with
+$\lim_{\varepsilon\downarrow0}e_\mu(\varepsilon)=0$ such that
+
+$$
+\frac1n\log_2\frac{Z^\star_{\mathcal N,\varepsilon}(\mu)}
+                         {Z_{\mathcal N}(\mu)}
+ \le e_\mu(\varepsilon)
+\quad\text{for every }n,\ (\Theta,\mathcal N)\in\mathcal T_2(n)
+\text{ with }Z_{\mathcal N}(\mu)>0.
+\tag{SCP.36}
+$$
+
+No computability of $e_\mu$ is assumed. A mandatory-relative-gate
+cap method is any sound native cap verifier for which every accepted
+label $(2,\mu,C)$ with $C<1$ must also imply
+$\mathsf{Rel}_\star(\mu)$ for one fixed chosen carrier. All other
+proof rules are unrestricted, but there is no bypass of this gate
+for an accepted $C<1$. Soundness retains NPC Definition 8.1's
+universal bound for all original complete templates, not just trees.
+

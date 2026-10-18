@@ -1,0 +1,40 @@
+**定义 69.3（在同一后缀骨架上表示完整关系）。** 每个 $b\in B$、$0\le n\le N$ 使用定义11.1的三个有限标签集合 $X_{b,n}$，其共同地址宇宙是从孔根开始的 $\mathcal P=\{L,R\}^*$。记三个分量为 $X^\alpha,X^\beta,X^{\mathsf{branch}}$，置
+
+$$
+\operatorname{Eq}(X,Y)
+  :=\bigwedge_{e\in\{\alpha,\beta,\mathsf{branch}\}}X^e=Y^e.
+\tag{SLH.69.4}
+$$
+
+集合等式按逐地址成员等价展开；它不只比较一个有限预定窗口。用定义60.1的完整 $H_b,o_C(H)$ 和引理11.2的 $\operatorname{Chain}_N$，定义
+
+$$
+\begin{aligned}
+\operatorname{Adm}_{R,H,N}(X):={}&o_C(H)\ \land
+ \bigwedge_{b\in B}\operatorname{Chain}_N(X_{b,0},\ldots,X_{b,N})\\
+&\land\bigwedge_{b<b'}\neg\operatorname{Eq}(X_{b,0},X_{b',0})\\
+&\land\bigwedge_{b\in B}\ \bigwedge_{(n,s,c)\in H_b}
+           \operatorname{Reply}_c(X_{b,n},s).
+\end{aligned}
+\tag{SLH.69.5}
+$$
+
+不同类的集合可在后缀骨架上重叠；只要求单棵树内部的三个标签集合两两不交。每对不同类的整个原树不等式均保留，包括没有任务落入的类。重复字面项按合取保留。$o_C(H)$ 是可计算真值常量，不是额外的未知输入。
+
+对固定任务 $i$ 和回复 $c\in\mathcal A$，定义
+
+$$
+T_{i,c}(X)=
+\begin{cases}
+\operatorname{Reply}_c(X_{b_i,m_i},s_i),&q_i=p_j s_i,\\
+[\chi_C(m_i,q_i)=c],&q_i\text{ 无孔前缀},
+\end{cases}
+\qquad
+\operatorname{Same}_F(X,Y)=
+\bigwedge_{i=1}^a\ \bigvee_{c\in\mathcal A}
+       (T_{i,c}(X)\land T_{i,c}(Y)).
+\tag{SLH.69.6}
+$$
+
+以上是有限 WS2S 公式：一阶变量取任意有限后缀，弱二阶变量取任意有限地址集合，所有公共后缀是闭项。$B,N,H,F$ 决定有限的变量数和公式长度；没有限制被量化集合的大小。
+

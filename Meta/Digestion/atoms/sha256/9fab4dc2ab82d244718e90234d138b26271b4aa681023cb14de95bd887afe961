@@ -1,0 +1,60 @@
+## 5. Terminal response identities and pair quantifiers
+
+For any world set
+
+$$
+X=f(7)QP=\begin{pmatrix}a&b\\c&e\end{pmatrix}.
+$$
+
+Multiplying the two terminal atoms gives the complete table
+
+$$
+\begin{array}{c|c|c}
+\text{chronological word}&FE& r_{EF}\\ \hline
+JJ&I&a+e+d\\
+JM&MJ=\begin{pmatrix}1&0\\1&1\end{pmatrix}&a+b+e+d\\
+MJ&JM=\begin{pmatrix}1&1\\0&1\end{pmatrix}&a+c+e+d\\
+MM&M^2=\begin{pmatrix}1&1\\1&2\end{pmatrix}&a+b+c+2e+d
+\end{array}                                                       \tag{5.1}
+$$
+
+In particular the gap between terminal responses after sixth $J$ is
+$b$, and the gap after sixth $M$ is $b+e$. If $f(7)\ne0$, positivity
+of $QP$ makes $b,e$ nonzero and of the same sign. Consequently
+
+$$
+|b+e|>|b|>0.                                                 \tag{5.2}
+$$
+
+For completeness, the terminal reconstruction identities are
+
+$$
+b=r_{JM}-r_{JJ},\quad c=r_{MJ}-r_{JJ},\quad
+e=r_{MM}-r_{MJ}-r_{JM}+r_{JJ}.                               \tag{5.3}
+$$
+
+If $e\ne0$, rank one gives $a=bc/e$ and then
+$d=r_{JJ}-a-e$. If $e=0$, strict positivity of $(QP)_{22}$ forces
+$f(7)=0$, so $X=0$ and every terminal response is $d$. The
+reconstruction mechanism is credited in VII, equation (4.2), to
+V, Theorem 7.1; (5.1)–(5.3) supply all its calculation needed here.
+No unseen proof from V is required for these identities.
+
+A two-world child has $L_1$ exactly when its two terminal responses
+agree under each of the two possible next atoms. Indeed the only
+response child with at least two worlds is the whole pair. Applying
+the same observation one level earlier gives, for a distinct pair
+$G=\{W_1,W_2\}$ on $H$,
+
+$$
+\begin{aligned}
+L_2(G,H)\quad\Longleftrightarrow\quad
+&v_J(W_1)=v_J(W_2),\quad v_M(W_1)=v_M(W_2),\\
+&r_{EF}(W_1)=r_{EF}(W_2)\quad\text{for every }E,F\in\{J,M\}.
+\end{aligned}                                                       \tag{5.4}
+$$
+
+On three-world children the terminal collision pair may depend on
+the last atom. None of the following arguments replaces that
+possibility by (5.4) for an arbitrarily chosen pair.
+

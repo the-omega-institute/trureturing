@@ -1,0 +1,28 @@
+**Definition 2.4 (operation and failure menu).** The source ports are exactly
+the adapter's TagRead($p$), ReadE, guarded Rho, Left($v$) and Right($v$).
+TagRead and ReadE preserve the source. Rho accepts precisely when
+$\lambda(\rho t)\le H$; Left and Right test their whole actual candidates
+$\langle v,t\rangle$ and $\langle t,v\rangle$. An accepted modification
+installs that candidate. A rejected modification retains the old tree and
+still performs its prescribed work, response commitment and journal service.
+
+The operative distinctions are as follows.
+
+| Situation | Result and successor convention |
+| --- | --- |
+| Legal admitted source service, including rejection | `some(label, complete original successor)`; rejection changes work, receipts and records even when it preserves the tree |
+| Physically enabled raw IN whose bit leaves $\mathsf P$ | Executed latch/control/receipt successor; outside $\mathcal R_H$ and the task-input domain, not `none`; later malformed-frame behavior is unspecified |
+| Literal descent beyond a leaf | An executed TagRead with response `absent` |
+| Busy second semantic call, missing permission, or read of an unavailable destination | Illegal and unexecuted `none`; no new event or row |
+| Paid row lookup at a sealed owned prefix, index outside that prefix | Executed typed `no-row`, with the actual scan/work/meter successor |
+| Uninstalled or invalid preparation | No valid-source service permission; outside the valid-boot domain |
+| Bounded evaluator misses in an optional effective interpreter | Local work, distinct from executed source reject |
+| Completed dispatcher termination, if a terminal routine is installed | A typed terminal output; distinct from illegality |
+
+The archive menu is the adapter's paid lookup of a complete row or complete
+prefix using its existing descriptor, material references and ownership
+token. A row's submitted address is its request field. It is not the index
+or descriptor argument of Fetch. A receiver can read a destination only
+after its final seal; a sealed immutable sender and, after its seal, a
+mailbox can have their own continuing authorized reads.
+

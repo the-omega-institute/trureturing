@@ -1,0 +1,45 @@
+**定理 8.1（同源黄金响应的远端衰减）。** 对 $0\le\tau<\tau_*$，
+
+$$
+r\mathcal F_\tau(r)\longrightarrow
+C_\infty(1-3\tau+\tau^2)>0.
+\tag{8.1}
+$$
+
+临界响应具有算子分解
+
+$$
+\mathcal F_{\tau_*}=(I-T_\ell)(I-\varphi^{-4}T_\ell)h,
+\tag{8.2}
+$$
+
+并满足
+
+$$
+r^2\mathcal F_{\tau_*}(r)\longrightarrow
+C_\infty\ell(1-\varphi^{-4})>0.
+\tag{8.3}
+$$
+
+证明。式 (8.1) 是式 (5.4) 在所列范围的直接使用。恒等式 $3\varphi^{-2}=1+\varphi^{-4}$ 给
+
+$$
+1-3\tau_*z+\tau_*^2z^2=(1-z)(1-\varphi^{-4}z),
+$$
+
+故得式 (8.2)。临界谱乘子为
+
+$$
+(1-e^{-\ell t})(1-\varphi^{-4}e^{-\ell t})
+=\ell(1-\varphi^{-4})t+O(t^2)\quad(t\downarrow0).
+$$
+
+在谱积分中令 $v=rt$，则 $r^2\mathcal F_{\tau_*}(r)$ 的被积函数为
+
+$$
+e^{-v}r(1-e^{-\ell v/r})
+(1-\varphi^{-4}e^{-\ell v/r})\omega(v/r).
+$$
+
+对 $r\ge1$，由 $r(1-e^{-\ell v/r})\le\ell v$，其绝对值不超过 $2\ell v(1+v)e^{-v}$，可积。点态极限为 $C_\infty\ell(1-\varphi^{-4})ve^{-v}$，而 $\int_0^\infty ve^{-v}dv=1$，故支配收敛给式 (8.3)。这消去的是 $1/r$ 主项；定理 5.2 保证临界响应自身及全部交替导数仍严格为正。$\square$
+

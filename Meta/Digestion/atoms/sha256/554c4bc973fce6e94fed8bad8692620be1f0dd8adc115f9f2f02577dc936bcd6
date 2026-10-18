@@ -1,0 +1,27 @@
+**Definition 1.3 (validation and accessible interfaces).** A capture at
+$v$ is an actual observation on the same root/register that supplies
+its claimed data. Between two designated captures $v\le w$ the genuine
+history premise is $U_w=\rho^k U_v$, where $k$ is the number of actual
+updates between those events. The premise supplies neither $k$ nor an
+identified original tree. A passive decoder receives exactly the
+ordered data declared in its theorem and has no fresh hidden-source
+access. A later acquisition service, when present, is a different paid
+phase, whose actual native queries are specified.
+
+Every source-bearing distinction accessible across a handoff belongs
+to its retained state: descriptors, scalars, rows, calibration, prior
+outputs, reply latches, control, query or retry histories, pointers,
+region identities, capacities, allocation metadata and readable length
+fields. A strict scalar-only interface requires all other accessible
+state to be a fixed function of the scalar and declared public inputs.
+Merely erasing an address variable does not establish that interface.
+Positive constructions use fixed output-region identities, canonical
+extents determined by the output bytes, and paid clearing and retraction
+of all other regions and controls. If a host retains other accessible
+information, the scalar-only lower bound is not being applied to it.
+Physically retained but inaccessible storage is still a storage cost.
+
+Clock agreement does not authenticate a history. No theorem below
+recovers physical duration, the placement of unobserved events or an
+external origin before the first validation.
+

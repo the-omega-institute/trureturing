@@ -1,0 +1,8 @@
+## 3. Source constants fixed before the cap
+
+For nonnegative integers $m$ write
+
+$$
+R_m(s)=\sum_{k\ge1}k^m e^{-sk}.
+$$
+

@@ -1,0 +1,62 @@
+**Theorem 59.2 (height equality, positive decoders and clock).**
+With Convention 59.1, define
+
+$$
+\begin{gathered}
+d_f=11m_1/64,\quad
+z_f=\frac{\sqrt{m_1m_2}}{16}(\sqrt{37}-\sqrt{59})<0,\quad
+L_f=\sqrt{d_f^2+4z_f^2},\\
+t_f=\frac{-2z_f}{d_f+L_f},\quad
+b_-=(0,\sqrt{m_1},t_f\sqrt{m_2})^T,\quad
+B_-=\frac{b_-b_-^\dagger}{1+t_f^2},\quad
+\gamma_f=\frac{L_f-d_f}{2}>0,\\
+v^\dagger=\frac{m_2d^2h_1^2}{m_1b^2h_2^2},\qquad
+s^\dagger=\mathfrak f(v^\dagger).
+\end{gathered}
+\tag{JRH.7}
+$$
+
+Every original optimizer with actual height TV $\mathcal T(s)$ has
+$Z_{\rm cf}\succeq B_-$ for every $0\le s\le1$; $B_-$ is
+nonzero rank one and positive only on its support. For $s\ge s_0$
+one has the stronger identity $Z_{\rm cf}=M$. Each history satisfies
+
+$$
+p_{\rm cf}(y,e,n)\ge
+\frac{\left(n\sqrt{m_1(64-y)/128}+t_f\sqrt{m_2/2}\right)^2}
+ {1+t_f^2}>0.
+\tag{JRH.8}
+$$
+
+In the strong range its exact value is
+$m_1(64-y)/128+m_2/2$, with sharp worst value
+$59m_1/128+m_2/2$.
+
+The finite positive-decoder class has precisely the following values:
+
+| Original contrast requirement | $\mathfrak P_s$ | Height-TV supremum | Attained |
+| --- | --- | --- | --- |
+| $0\le s<s_0$ | nonempty | $\mathcal T(s)$ | no |
+| $s\in[s_0,1]\setminus\{s^\dagger\}$ | empty | — | — |
+| $s=s^\dagger$ | nonempty | $\mathcal T(s^\dagger)-\gamma_f$ | no |
+
+One has $v_0<v^\dagger<1$, so $s_0<s^\dagger<1$. All
+nonempty cases have explicit finite approximants with the original
+error, contrast inequality and sharp joint cost, complete complex
+supported maps, arbitrary passive references, all five separately
+labelled Borel measures and a lawful coherent counted complement.
+Their decoders admit the conditional same-clock first-absorbing-failure
+synthesis of §66. Each member has finite integrated absorption;
+the supplied approximating families have diverging activity.
+
+For the declared finite-label finite-dimensional decoder class with
+positive absorbing $R_\alpha(t)$, TP controls on not-yet-failed carriers,
+$\int_0^1\|R_\alpha(t)\|dt<\infty$, no forced singular or terminal
+absorption and no later positive-carrier action, the simultaneous
+equalities $E=E_*$, $\mathsf V\ge s$,
+$\mathsf W=\mathsf C(s)$, TV $=\mathcal T(s)$ are impossible
+for every $s$. Independently of this decoder class, every admitted
+original error optimizer has no singular canonical-failure CP mass on
+the supported algebra. This concerns all five measures before selecting
+any density for a construction. The proof is given in §§60–66.
+

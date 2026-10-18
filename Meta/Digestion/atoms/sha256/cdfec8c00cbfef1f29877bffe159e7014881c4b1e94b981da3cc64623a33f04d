@@ -1,0 +1,73 @@
+**Theorem 3.2 (termination, whole-fiber bijection and prefix directions).**
+Cycle coverage is decidable. For a cycle-covered input there is an
+effectively obtained finite list of coordinate domains
+
+$$
+S_\eta\subseteq\mathbb N^{Y_\eta},\qquad
+\Theta_\eta(\mathbf n)=F_\eta[(T_{n_y})_{y\in Y_\eta}],
+\tag{CAR.12}
+$$
+
+with finite dimensions and possibly infinite cardinalities. The map
+
+$$
+\coprod_\eta S_\eta\ \longrightarrow D,
+\qquad (\eta,\mathbf n)\longmapsto\Theta_\eta(\mathbf n)
+\tag{CAR.13}
+$$
+
+is a bijection. Its inverse on a concrete source selects its unique
+original-prefix chart and reads the unique atomic indices at the remaining
+original representatives. This inverse is effective on a supplied finite
+source; it is not a free observer operation.
+
+Write $u\equiv_h v$ when all original replies at $|p|<h$ agree. Put
+$A_\eta=\max(\{0\}\cup\{|a_{\eta,y}|:y\in Y_\eta\})$. Then
+
+$$
+\begin{aligned}
+(\forall y\ T_{n_y}\equiv_h T_{m_y})
+ &\Longrightarrow
+ \Theta_\eta(\mathbf n)\equiv_h\Theta_\eta(\mathbf m),\\
+\Theta_\eta(\mathbf n)\equiv_{A_\eta+h}\Theta_\eta(\mathbf m)
+ &\Longrightarrow
+ (\forall y\ T_{n_y}\equiv_h T_{m_y}).
+\end{aligned}
+\tag{CAR.14}
+$$
+
+A finite computable original-prefix depth separates distinct surviving
+charts. The chart selector uses actual current reads, with the two-read
+historical decoder for each of its finitely many original questions.
+
+Proof. The core choices are finite. Both cover constructions terminate
+by the explicit split bound in ARH Definition 19.3. Each permitted
+substitution removes a variable; its choices and factoring tests are
+finite. Thus the complete search of schedules has finite depth and
+branching. Pair cancellation, graph construction and reachability are
+finite operations. This proves recognition termination independently of
+a general cyclic unification decision.
+
+The supplied cover and substitution propositions give a bijection from
+finite assignments satisfying the core constraints to its entire source
+fiber. Theorem 2.2 forces every remaining coordinate to be atomic in every
+such assignment. Atomic index injectivity makes its tuple unique.
+
+Define $S_\eta$ to impose the substituted core constraints together with
+*every* original retained predicate, evaluated on $\Theta_\eta(\mathbf n)$
+as in (CAR.2)–(CAR.3). An original $u\in D$ belongs to its unique core
+chart and reconstructs all its finite coordinates, hence its unique index
+tuple lies in $S_\eta$. Conversely a tuple in $S_\eta$ expands to a finite
+source satisfying the exact old row and every retained predicate. In
+particular no missing endpoint can satisfy a signed record. This proves
+both inclusions and injectivity in (CAR.13). No source is replaced by an
+independently selected marginal realization.
+
+ARH Proposition 20.3 retains, at $a_{\eta,y}$, the original subtree
+literally equal to the surviving coordinate $y$. Its Proposition 20.4
+therefore applies with $y=T_{n_y}$ and proves both lines of (CAR.14).
+Its argument only uses template prefix preservation and these literal
+representatives, not synchronous residuals. The cover selector and the
+finite separation depth are supplied by ARH Proposition 19.4 and remain
+valid on the restricted sets $S_\eta$. $\square$
+

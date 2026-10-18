@@ -1,0 +1,88 @@
+**Theorem 6.2 (Optional $s$-input accuracy at a fixed design cap).** Keep
+$c$ fixed and exact. Use $B_m=\mathrm e(m+1)!2^{m+1}$ from [C,
+Theorem 3.2, equation (3.4)] and $z_-$ from its equation (2.3). Define
+
+$$
+\begin{aligned}
+C_K&=\frac{(1+c)B_{2r}}{z_-(1-2^{-(r+1)})},\\
+C_{\rm cal}&=(3/2)^{2r-1}
+ \left[C_1C_\mu+(3\eta/2)C_K\right],\\
+\rho&=\min\left\{\frac s2,
+ \frac{D_0sJ}{16\mathrm e C_{\rm cal}L^r}\right\}.
+\end{aligned}
+\tag{6.5}
+$$
+
+For any $\widehat s>0$ with $|\widehat s-s|\le\rho$,
+
+$$
+|\theta(\widehat s,J)-\theta(s,J)|\le\frac{D_0I}{16\mathrm e}.
+\tag{6.6}
+$$
+
+If an approximation to $\theta(\widehat s,J)$ has additional absolute
+error at most $D_0I/(16\mathrm e)$, clipping it to $[0,2^{-r}]$ gives
+total midpoint error at most $D_0I/(8\mathrm e)$. Combined with $B_0$
+this meets Theorem 4.1. The cap $J$, error budgets and allowed-cap
+condition here are stated in terms of the true $s$; this assertion
+alone does not certify a design that chooses all its caps, budgets or
+constants from uncertain input.
+
+Proof. The upper occupation proof in [C, Theorem 3.2, equations
+(3.9)–(3.10)] drops $e^{-uk}$. Consequently its upper
+
+$$
+A_j^{(m)}(u)\le B_m2^{j(m+1)}
+\tag{6.7}
+$$
+
+holds for every $u>0$, regardless of $u2^J\le\eta$. This cutoff-free
+upper, $F_i(k)\le(1+c)k^{2r-1}$ and the normalizer lower in [C,
+equation (2.3)] imply, for every $0<u<s_*$ at this fixed $J$,
+
+$$
+\begin{aligned}
+m_i(u,J)&\le C_1u^{2r}L^r,\\
+\mathbb E_{i,u}[VK]
+ &\le\frac{1+c}{z_-}u^{2r}
+    \sum_{j=1}^J2^{-rj}B_{2r}2^{j(2r+1)}
+ \le C_Ku^{2r}L^{r+1}.
+\end{aligned}
+\tag{6.8}
+$$
+
+The first constant is the same $C_1$ in [C, equation (4.10)]; its
+proof uses only this upper, so the extension does not assert a contrast
+lower beyond the permitted cutoff. The second geometric sum is at most
+$L^{r+1}/(1-2^{-(r+1)})$. Differentiation of the normalized source law
+at fixed $J$ gives
+
+$$
+\frac{d}{du}m_i(u,J)
+ =-\mathbb E_{i,u}[VK]+m_i(u,J)\mathbb E_{i,u}K.
+\tag{6.9}
+$$
+
+Indeed the unnormalized terms have derivative $-k$ times themselves,
+and differentiating the denominator supplies the second term. All such
+derivatives are justified by locally dominated polynomial-geometric
+sums. The phase law conditional on $K$ is fixed as $u$ varies.
+Using $\mathbb E_{i,u}K\le\mu_i(u)\le C_\mu/u$ in (6.8) yields
+
+$$
+\left|\frac{d}{du}m_i(u,J)\right|
+ \le u^{2r-1}L^r\left[C_1C_\mu+C_KuL\right].
+\tag{6.10}
+$$
+
+The same bound holds for the midpoint derivative, by averaging the two
+absolute bounds. For every intermediate $u$ between $s$ and $\widehat s$,
+$s/2\le u\le3s/2<s_*$ by (2.1), and $uL\le3\eta/2$.
+Equation (6.10) is therefore at most
+$C_{\rm cal}s^{2r-1}L^r$. Integrating over an interval of length at
+most $\rho$ proves (6.6). Adding the evaluation error gives twice the
+right side. Clipping cannot increase distance to $\theta(s,J)$, which
+lies in the clipping interval. This proves the total-error assertion.
+It uses (5.3) directly and does not identify that split error budget
+with the separate exact-midpoint $Q$-bit prescription. $\square$
+

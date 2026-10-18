@@ -1,0 +1,54 @@
+**Proposition 5.5 (All real probability displacements).** For every real
+$s$, define one affine map $U_s$ on the entire feature space by
+
+$$
+\begin{aligned}
+K'&=K+s,\\
+\mathbf a_j'&=\sum_{\ell=0}^j\binom j\ell s^{j-\ell}\mathbf a_\ell
+                       &&(0\le j\le2m),\\
+\mathbf b_j'&=\sum_{\ell=0}^j\binom j\ell s^{j-\ell}\mathbf b_\ell
+                       &&(0\le j\le m).
+\end{aligned}
+$$
+
+Its coefficients are independent of the current state; its only affine
+offset is $s$ in the $K$ coordinate. The exact lawful source guard is
+
+$$
+\mathscr G_{m,s}=\{z\in\mathscr S_m:a\le K+s\le b\}.
+$$
+
+For every $(k,\alpha,\beta)\in\mathcal M_{ab}$ with $k+s\in[a,b]$,
+
+$$
+U_sE_m(k,\alpha,\beta)=E_m(k+s,\alpha,\beta)
+$$
+
+exactly. In particular $U_s$ preserves the actual source image on this
+guard, and $U_{-s}$ returns the original encoded state.
+
+**Proof.** Expand $(k+s)^j$ by choosing which $\ell$ of its $j$ factors
+contribute $k$ and which contribute $s$. There are $\binom j\ell$ such
+choices, so substitution of the encoded features gives
+
+$$
+\mathbf a_j'=(k+s)^jU(\alpha),\qquad
+\mathbf b_j'=(k+s)^jU(\beta).
+$$
+
+The height update is also exact, which proves the identity. This finite
+binomial expansion has no truncation error: translation preserves the
+stored polynomial degree.
+
+On $\mathscr S_m$ the current height already lies in $[a,b]$. The
+original segment $K+ts$ stays in that closed interval for every
+$0\le t\le1$ if and only if $K+s\in[a,b]$, by convexity and endpoint
+necessity. This proves precisely the stated guard. Since $a>0$ and $b<H$,
+every such segment has full native support. It includes both band boundaries,
+both displacement signs and the endpoint-to-endpoint legs. For
+$|s|>b-a$ the guard is empty; the affine formula still exists. There is no
+finite-menu restriction. The identity and its counterpart for $-s$ prove
+image preservation and return. The guard is a guard on the characterized
+source image, not a claim that an arbitrary off-image feature vector is a
+native state. $\square$
+

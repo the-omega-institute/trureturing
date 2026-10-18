@@ -1,0 +1,13 @@
+**Theorem 19.3 (prefix sharpness and no larger earlier data alphabet).** Fix a nonempty $\mathcal P_\kappa(A,B)$. Relative to Hypothesis 18.1's provided boundary, any deterministic observer that must recover $H_3$ on every positive finite completion must have at least $G_\kappa(A,B)$ distinct supplementary persistent configurations on this prefix fiber. The rank attains this number. Along every actual history completing at $L_{\rho,v}$ with terminal size $F_v=G_{L_{\rho,v}}(A_3,B_3)$,
+
+$$
+G_{\kappa_j}(A_j,B_j)\le F_v\qquad(0\le j\le A_3+B_3).
+\tag{SC.48}
+$$
+
+Consequently no earlier committed rank on that history needs more than $\lceil\log_2F_v\rceil$ data bits, although final counts and $F_v$ are not available early.
+
+Proof. Every pre-latch tag admits a common finite legal completion: finish a pending seed with an unequal letter if necessary, then complete remaining markers by a fixed choice; in a pending payload phase use a completing $\beta$ or a returning $\alpha$ before that choice. This choice depends only on the tag. All prefixes in one dictionary have the same length and parser/finite-record fields; appending the same completion leaves their raw targets distinct and gives common terminal counts and marker records. If two supplementary configurations were identical, determinism on this common continuation would leave them identical. They could not both reconstruct their different $H_3$, even after the same positive original fourth future. Any other persistent distinction used to avoid this collision is itself supplementary state in this contract. A larger supplied past boundary is a different conditional question.
+
+For (SC.48), appending any actual next letter injects the entire current dictionary into its next dictionary, not merely its realized member. The actual remaining suffix likewise gives an injection into the terminal dictionary. This proves monotonicity and the terminal upper bound without early knowledge of that suffix. The rank bijection supplies sharpness. $\square$
+

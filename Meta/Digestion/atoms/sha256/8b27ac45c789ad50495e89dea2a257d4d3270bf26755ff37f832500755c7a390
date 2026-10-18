@@ -1,0 +1,35 @@
+**Definition 7.3 (realization certificate for repeated service).** A
+candidate graph $G$ for Definition 7.1 has a repeated-service certificate
+when it satisfies all of the following concrete properties.
+
+1. Its finite literal code and canonical boot are fixed independently of
+   the source. Its true finite description is acquired and retained as
+   public data when needed for replay. Code description and installation
+   are paid; the interpreter need not contain a literal copy of itself.
+2. Its primitive transition simulator executes one represented native row
+   at a time, including represented receipts, dynamic code, descriptors,
+   copies and permissions. A represented IN reads the next retained input
+   bit by paid local RD. No simulated Call invokes a semantic recovery
+   oracle or an actual live source operation.
+3. Every new frame is retained as in Definition 7.1. The graph implements
+   the displayed handler algorithms, with unique prescribed successors.
+   Its elementary bounded scans, unary arithmetic, finite representation
+   updates, allocation, delivery and return helpers terminate on their
+   declared finite inputs. Termination of a whole handler containing
+   boundary-stopped replay is not assumed in this item.
+4. A Cover refers only to the complete predecessor prefix. Every accepted
+   target is at or before that frozen bound, and every invoked package
+   was already published. The historical cutoff is strictly before the
+   service fragment computing its recovery.
+5. All actual ownership, placement, entry heads, field lengths, seals and
+   numeric identifiers satisfy the contracts of the chosen primitive
+   routines, with complete current successors and an opcode accounting.
+   Handler reads are of acquired public material and handler writes are
+   to its owned work/record/output intervals. It exercises no live
+   private-source port and grants no live token from represented data.
+
+Items 2, 3 and 5 require the actual graph and its proofs. They are not
+inferred from the abstract handlers in Definition 7.1. Definition 6.4 is
+part of this certificate. Sections 11–16 construct a graph satisfying it
+for the explicitly installed extension.
+

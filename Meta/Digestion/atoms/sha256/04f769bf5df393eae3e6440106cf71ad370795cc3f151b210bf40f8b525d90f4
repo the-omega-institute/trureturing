@@ -1,0 +1,34 @@
+**Theorem 4.4 (individual-bijection terminality).** No nontrivial
+individual adjacent temporal test of $\mathcal T_{m,d}$ is a total
+bijection between its two distinct seed domains. This remains true after
+restricting every domain to its globally attained values. Thus the
+individual-test contraction of [GDB, Definition 3.1 and Theorem 3.2][GDB]
+performs no nontrivial merge on this witness.
+
+Proof. In a variable or selector owner, every factor is a function of
+its one own seed, so adjacent tests are unary tautologies. In a
+connector, a distinct-seed test can only compare its Boolean variable
+with its clause selector, and its nontrivial condition is exactly
+
+$$
+v=\mathbf1_{\{c=k\}},\qquad v\in\{0,1\},\quad c\in\{0,1,2\}.
+\tag{OCC.17}
+$$
+
+For the root-to-left test this follows directly from the two distinct
+leaf left factors. At larger depth, the tests from $L$ to $LL,LR$
+give the same condition: a leaf factor extended by $e$ has first
+coordinate increased by one for $L$ and two for $R$; hence it
+matches the prescribed actual variable suffix exactly when those leaf
+labels agree. All remaining adjacent tests use one seed. This also
+follows from the exact temporal-summary tests of [OCB, Theorem 2.2][OCB].
+
+Relation (OCC.17) has three allowed pairs on a two-value domain and a
+three-value domain. It is not the graph of a total bijection. Theorem
+4.2 says all these values occur globally, so attained-value restriction
+does not shrink either domain. No distinct Boolean-Boolean or
+selector-selector test is present. This proves terminality for the
+specified individual-test operation. Joint elimination can discover
+additional relations, including $x_i=x_{i+1}$; that operation is not
+excluded by the theorem. $\square$
+

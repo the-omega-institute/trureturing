@@ -1,0 +1,96 @@
+**Theorem 81.2 (finite feasibility expansion and supplied height limit).** Set
+
+$$
+\kappa_0=\frac{\nu(1-\sqrt{u_f})^2}{2}>0,\qquad
+\kappa_1=\frac{\nu^2(1-u_f)^2}{8}>0.
+\tag{FA.54}
+$$
+
+Here $\kappa_0=C_{\rm end}$ is WE.28's credited endpoint constant.
+The entire threshold FA.41–.44 gives the more precise expansion
+
+$$
+1-\tau_{\max}(t)=\kappa_0/t+\kappa_1/t^2+O(t^{-3}).
+\tag{FA.55}
+$$
+
+For $t_n\to\infty$, $q_n=1-\tau_n>0$, $q_n\to0$ and
+$t_nq_n\to\zeta<\infty$, $\zeta<\kappa_0$ is eventually
+infeasible and $\zeta>\kappa_0$ eventually feasible. At equality
+the exact condition $\tau_n\le\tau_{\max}(t_n)$ is still required;
+in particular $q_n=\kappa_0/t_n$ is eventually infeasible. No
+monotonicity of the prescribed sequence is required.
+
+Along every such eventually feasible sequence, with
+$s_n=s_0\tau_n$ and $A_n=\log(1+t_n)$, the published finite-product
+limit JS Theorem 7.1 and credited critical law give
+
+$$
+\mathcal T_{A_n}(s_n)\longrightarrow
+ \mathcal T(s_0)-\frac{L_f-F_{\rm lim}(\zeta)}2,
+\qquad F_{\rm lim}(\kappa_0)=d_f.
+\tag{FA.56}
+$$
+
+At $\zeta=\kappa_0$, WE Theorem 6.2, also credited in JS Theorem
+9.1, gives this $\mathcal T(s_0)-\gamma_f$ limit for **every**
+sequence of admitted actual instruments retaining its full generated
+acquisition labels, including nonoptimizers. A coarsened record has
+only the upper-limit bound. For $\zeta>\kappa_0$, FA.56 is an
+optimal-value statement with a recovering common-instrument sequence;
+it is not a universal equality for arbitrary competitors.
+
+**Proof of the additional threshold assertion and application of suppliers.**
+Expanding the explicit FA.44 at $q=\nu/t=0$ gives FA.55, with a
+bounded third-order remainder. FA.41 then proves the strict-side
+feasibility assertions. Positivity of $\kappa_1$ proves the
+claimed equality-path exclusion; retaining only the leading product
+would not decide this finite feasibility question.
+
+For the supplied limit, the exact normalization identity is
+
+$$
+1-\int|z|dp=\int\frac{(|z|-1)^2}{2}dp
+\quad\text{when }\int dp=\int z^2dp=1.
+\tag{FA.57}
+$$
+
+It is JS.11's deficit. Its failure-weighted cost has the supplied
+strict lower bound and equality structure of WE.17–.18 / JS.15:
+
+$$
+\int d/\mathfrak c\,d\sigma
+ =\frac{\mu_f}{2}\int h_1(u)d\lambda\ge\kappa_0,
+\quad d\lambda=d\sigma/\mu_f,\quad\int u\,d\lambda=u_f.
+\tag{FA.58}
+$$
+
+Here $h_1$ is FA.39 with its parameter set to one. Equality forces
+$z^2=u_f,w^2=v_f$; the two opposite $zw$ failure lines have
+coefficient mass $\mu_f/2$ each, physical effects $W_+/2,W_-/2$
+of Theorem 71.1, and both height differences negative. Thus their
+absolute failure height is $d_f$, as in JS.18–.19. This identifies
+the critical objective and all cost parameters of the supplied law.
+
+For every finite $\zeta>\kappa_0$, apply JS Theorem 7.1 with
+$\lambda=\zeta$ and its prescribed $q_n,t_n$. JS Theorems 4.3,
+5.1 and 6.1 already provide the whole-class upper bound and exact
+finite recovery. In particular JS.23–.27 supplies the four positive
+pure-live repair labels for the residual Gram $I-\mathsf U/t$,
+with deficit $C_\sigma/t+O(t^{-2})$; JS.36–.37 supplies the
+vanishing strict-cost perturbation when the limiting optimizer has
+no cost slack. Its failure covariance is exact at every finite index.
+The rare atoms have live weights $a_i/[t\mathfrak c(\mathbf c_i)]$
+and failure effects $a_i n_i n_i^T$, including their nonvanishing
+acquired failure mass. They are actual generated labels, realized
+by §86 with the same full-complex, passive-reference, five-Borel,
+whole-fibre and FIRST-clock identities. No TV-preserving balancing
+or readable discarded Kraus index is used.
+
+The objective map $B_0+\Phi(\zeta)=\mathcal T(s_0)-
+[L_f-F_{\rm lim}(\zeta)]/2$ now gives FA.56 directly, including
+threshold saturation recovery. At $\zeta=\kappa_0$ apply the
+credited every-instrument critical law to the attained maximizers
+of Theorem 72.1. This also covers arbitrarily small feasible edge
+slack; no new critical-limit proof is needed. $\square$
+

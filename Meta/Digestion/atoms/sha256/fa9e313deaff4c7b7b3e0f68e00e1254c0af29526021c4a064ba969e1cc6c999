@@ -1,0 +1,14 @@
+### 100.2. Full Selmer basis and source convention
+
+**Proof.**
+
+Theorem 95.1 applies to the full actual squarefree kernel, not just its primes of odd exponent in an incomplete factorization. Here the zero-row-sum Legendre matrix A is identically zero. Its nullity is s+1, the full 2-Selmer dimension is 2s+3 and the pure quotient by rational torsion has dimension 2s+1. In the prime order (p_0,p_1,...,p_s), the auxiliary vectors delta=[-1/p_i] and t=[2/p_i] both equal e_0.
+
+In the parameter convention (y0,x,y) of Theorem 95.1, the actual golden class S=(-15,5) is (1,0,0), and the two rational torsion generators are (0,1,0) and (1,0,1), with 1 the all-one vector. For i>=1 the vectors (0,e_i,0) and (0,0,e_i) give exactly
+
+ lambda_i=(p_i,1), mu_i=(1,p_i)
+
+in pair order (X,X+5D). No sign or factor 5 is omitted: delta and t vanish on every e_i with i>=1. Since 1,e_1,...,e_s form a basis of F_2^(s+1), these 2s+3 classes form a full Selmer basis. Modulo rational torsion, S and all lambda_i,mu_i form a pure basis.
+
+Use Shukla–Stoll, arXiv:2302.01640v1, section 3.2 equations (3.9)–(3.10), Theorem 5.6 and the rational-image inclusion on printed page 2, as in sections 96–99. Source: https://arxiv.org/pdf/2302.01640 . The multiplicative convention is (-1)^(2 times the additive Cassels pairing). The rational Kummer image is in the radical without a Sha-finiteness hypothesis. The translation x=X-10D/3 to roots -10D/3,-25D/3,35D/3 preserves all Kummer coordinates and root differences. Theorem 85.1 supplies exact rational torsion E_D[2] and the actual non-torsion original point, so S has zero pairing with all Selmer classes.
+

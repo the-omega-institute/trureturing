@@ -1,0 +1,8 @@
+**Theorem 83.1.** For fixed \(0<|b|<1\), an aligned common-flat
+input in (83.2) is uniquely determined by \((g,z/r)\).
+
+This is a fiber statement, with no assumption about the number of rays.
+The same-position pair classification will follow in §84, and the
+all-aligned triple obstruction across different symmetry unions in §85.
+The generic-containing triple problem remains outside these conclusions.
+

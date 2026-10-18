@@ -1,0 +1,16 @@
+### Q7. 量子恢复、no-hiding 与探测背景（原文六、七）
+
+量子通道须明确码空间、初始辅助态、吸收体及残余物的归属，并将所有输出自由度分成可访问 $A_{\rm acc}$ 与其补系统 $B_{\rm env}$。若用等距扩张表示，纯化后的形式为 $V:\mathcal H_C\to\mathcal H_{A_{\rm acc}}\otimes\mathcal H_{B_{\rm env}}$；吸收体自由度须包含在相应因子内，不能既作为记录又从扩张中遗漏。精确量子恢复要求一个完全正保迹（CPTP）的物理通道 $\mathcal R$，对声明码上的所有目标密度算符满足
+
+```math
+\mathcal R\circ\mathcal N_{A_{\rm acc}}(\rho)=\rho.
+```
+
+仅在一组状态上有集合论单射性不足以保证这种 CPTP 左逆。原文的相干转移箭头需在指定模式和输入族上保留内积、相干性及相关自由度；有光—物质记忆接口的例子不确定此处的 FIB 实现。保持 $A[I]$ 同时产生 $E[I]$ 的乘积箭头只可示意适当的经典或正交记录，不描述任意未知非正交量子态的复制。温度粗粒化的多对一性与量子退相干也不是同一命题；要讨论退相干须给出量子态、系统—环境耦合及局部约化。
+
+两个输入满足 $\mathcal N_A(\rho_0)=\mathcal N_A(\rho_1)$，只推出任何共同局部后处理仍不能区分这两个输出。no-hiding 的适用前提更强：在指定的整个输入空间上，局部输出对每个输入态均为同一个固定态，并有包含辅助态纯化的等距或幺正扩张；在这些前提下，输入信息可由补系统恢复，不仅藏在两部分的相关中。环境能否被当前观察者取得是另一问题。该前提不是一对输出相等、一般温度读数相等或任意吸收事件。
+
+这里所引定理原始来源为 Samuel L. Braunstein 与 Arun K. Pati，*Quantum information cannot be completely hidden in correlations: implications for the black-hole information paradox*，Phys. Rev. Lett. **98**, 080502，[DOI 10.1103/PhysRevLett.98.080502](https://doi.org/10.1103/PhysRevLett.98.080502)，[gr-qc/0603046](https://arxiv.org/abs/gr-qc/0603046)。原文保留的 [1004.5073](https://arxiv.org/abs/1004.5073) 是 Jharana Rani Samal、Arun Kumar Pati 与 Anil Kumar 的 *Experimental Test of Quantum No-Hiding Theorem*，不是原始定理出处。
+
+原文的 NIST 材料、光锥说明、[nature07607](https://www.nature.com/articles/nature07607) 光学记忆例及 Schlosshauer 的退相干综述只支持各自限定的物理背景；它们没有把 $q,\chi,\kappa$ 认证为能量、射线或实际吸收体的输出。探测器噪声、可达模式、因果路径与有效记录各须另行建模；本卷不从这些文献推出遮挡的一般可逆性或 FIB 的物理定律。
+

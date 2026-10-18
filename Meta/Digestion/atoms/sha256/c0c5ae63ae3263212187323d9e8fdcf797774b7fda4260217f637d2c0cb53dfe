@@ -1,0 +1,4 @@
+**A7 exhaustion and world count.**
+
+Every compatible world has a unique positive ratio root of F. The exhaustive dichotomy is eta!=0, treated in A5, or eta=0, whose sole positive possibility alpha is treated in A6. Both directions of each reconstruction were proved, so their filtered union is exactly the entire prefix fiber. Without alpha there are at most two worlds. With alpha there are at most three worlds in that group and at most one other root of F, which contributes at most one world. Thus the bound is four. A repeated F root at alpha leaves no second ratio. No count uses unfiltered formal roots as worlds, and no finite bound is assumed generically. The count is of distinct full triples, not readings, sources alone, labels or algebraic multiplicities. The proof precludes an infinite fiber only in the stated e3!=0 branch. It does not claim the upper bound is attained.
+

@@ -1,0 +1,33 @@
+**Corollary 306.3 (Attained optima throughout the declared strip).**
+For the ordered heads and fixed late amplitudes (306.1), set
+
+$$
+d_* =\max\left\{0,\frac{a_1+7\tau-1}{17},\
+                       \frac{a_2+11\tau-1}{40}\right\}.
+\tag{306.13}
+$$
+
+If $d_*\le\tau/40$ and the entire positive nonincreasing vanishing
+tail satisfies $a_8\le5\tau+d_*$, both original marked-target
+optima are attained and equal $5\tau+d_*$. All positive closed
+caps in either class are feasible exactly when they are at least this
+value.
+
+**Proof.** Apply 306.1 with $\delta=d_*$. For every original $N$
+competitor, the reused five-late score 281.2 and the two head cuts give
+
+$$
+e_a(A)\ge\max\left\{5\tau,
+ \frac{a_1+92\tau-1}{17},
+ \frac{a_2+211\tau-1}{40}\right\}=5\tau+d_*.
+\tag{306.14}
+$$
+
+To justify the bound even if a proposed competitor has a different
+active horizon, apply 297.3 at every positive cap above its error,
+then use the one finite prefix representative for all three scores.
+Decrease those caps to its error; this also excludes zero error.
+Counted completion gives the same lower bound for $O$. The displayed
+law attains it, and that same law is feasible at every larger cap,
+regardless of the new cap's active horizon. $\square$
+

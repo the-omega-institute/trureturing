@@ -1,0 +1,62 @@
+**Definition 8.2 (overlap and primary literature).** NCC at
+`0487ddfee131db56e40b654fad5a69689948e3c7`, Theorems 3.2–3.3 and 4.1,
+already treats prefix-substitution conservativity, negative density and
+supplied-coordinate closure. NGE at
+`c0f820f0b4800326b5c9d06b23f11ce925b404fb`, Assumption 1.2 and its
+guarded-description equality development, treats equality of supplied
+nullary descriptions. These are attributed overlapping manuscripts;
+neither is an accepted axiom or an assumed producer correspondence.
+No premise is taken from PDC at
+`5f6e4c682e3e92206e00b81be891b30e35a25f1b`.
+
+[Comon–Lescanne, *Equational Problems and Disunification*, Journal of
+Symbolic Computation 7 (1989), 371–425][CL], §2.1 Theorem 1, attributes the unique rational
+solution of finite functional systems with distinct left variables and
+non-variable right sides in a free signature to Huet. Its §3.2 Lemma 1
+and Appendix B.3 concern nontrivial syntactic disequations with infinite
+sort carriers. Section 6.2 explicitly excludes general nontrivial
+equational theories from the preceding completeness results. Those
+free-signature results are literature-attested background. They do not
+supply the interpreted native root-shift argument, the negative density
+bridge, or the source/row fidelity here; finite native equations can
+have infinite atomic solution families.
+
+[Milius–Moss, *The Category Theoretic Solution of Recursive Program
+Schemes*, arXiv:0904.2385v2][MM], §7.3 and Theorem 7.15, treats guarded recursive
+program schemes for contracting functors on nonempty complete metric
+algebras, with the required iterative/Elgot structure. This is
+literature-attested guarded-recursion background. Our pair-guarded map
+is verified directly by one-level prefix gain; bare $\rho$ is
+nonexpanding and has not been assumed to be a contracting free
+operation. No general recursive-scheme synthesis or description
+completeness theorem is imported.
+
+The repository-derived increment is the complete functional-input
+canonical test, its forced-finite-coordinate converse, effective signed
+finite-source synthesis, and its exact acquired consumer. The accepted
+negative separation and the overlapping prefix-conservativity argument
+are intermediate ingredients, not a newly claimed general theorem.
+The source comparison is limited to the named mathematical suppliers,
+the listed public/private declarations and these primary texts. It is
+not an exhaustive literature or third-party-library search and supports
+no external-priority claim.
+
+[ARH]: RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RELATION_HISTORY.md
+[NSF]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SIGNED_FEASIBILITY.md
+[NIC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_IMAGE_COVER_AND_PREFIX_COST.md
+[URR]: RECURSIVE_RELATIONAL_OBSERVATION_UNIFORM_RESIDUAL_REALIZATION.md
+[ABC]: RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_BLOCK_CONJUGACY.md
+[SPC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SIGNED_PRODUCTIVE_CONTACT.md
+[NPL]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PROJECTION_LIMITEDNESS.md
+[SLH]: RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT.md
+[NCC]: https://github.com/the-omega-institute/trureturing/blob/0487ddfee131db56e40b654fad5a69689948e3c7/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CHART_CLOSURE.md
+[NGE]: https://github.com/the-omega-institute/trureturing/blob/c0f820f0b4800326b5c9d06b23f11ce925b404fb/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_GUARDED_EQUALITY.md
+[DEPTH]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeDepthPatterns.lean
+[CUT]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeCutFibers.lean
+[CELLS]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeHistoryCells.lean
+[RECUT]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeSymbolicRecutting.lean
+[NGS]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeGroundSeparation.lean
+[DECODER]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/DelayedOriginalReadout.lean
+[CL]: https://perso.ens-lyon.fr/pierre.lescanne/PUBLICATIONS/jsc-diseq.pdf
+[MM]: https://arxiv.org/abs/0904.2385v2
+

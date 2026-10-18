@@ -1,0 +1,16 @@
+**定义 B-27.1（固定目标的两个包络）。** 对 &#x1D45A;&#x3D;&#x28;&#x1D44B;&#x2C;&#x1D44C;&#x2C;&#x1D44D;&#x29;&#x2208;&#x1D4AB;，令
+
+```math
+\mathcal F_m=\{p\in\Delta_\Sigma:\sum_Ip_Iv_I=m\}.
+```
+
+这是命题A-2.2已完整描述的相容来源律集合。固定有限实值目标 &#x1D453;&#x3A;&#x3A3;&#x2192;&#x211D;，定义
+
+```math
+\underline f(m)=\min_{p\in\mathcal F_m}\sum_Ip_If_I,
+\qquad
+\overline f(m)=\max_{p\in\mathcal F_m}\sum_Ip_If_I.
+```
+
+相容律集合非空，且是有限维紧单纯形的闭子集，所以紧。线性目标连续，最小值和最大值均被实际相容律达到。&#x1D45A;&#x2209;&#x1D4AB; 时纤维为空，本节不把它当成一个具有有限目标区间的读数。
+

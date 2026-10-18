@@ -1,0 +1,22 @@
+**Definition 11.7 (the two rational six-label tables).** At each phase use labels $(\sigma,i)$ with $\sigma\in\{7/20,23/60\}$ and $i\in\{0,1,2\}$. Put $\pi=\tau=(1/6,\ldots,1/6)$, $B=I$, and
+
+$$
+u_{\sigma,0}=\frac13,\quad u_{\sigma,1}=\frac{11}{30},\quad
+u_{\sigma,2}=\frac25,\qquad v_{\sigma,i}=\sigma.
+\tag{11.26}
+$$
+
+There are no cross-block transitions. Within each block choose either
+
+$$
+A_0=\begin{pmatrix}
+1/2&0&1/2\\0&1&0\\1/2&0&1/2
+\end{pmatrix},\qquad
+A_1=\begin{pmatrix}
+1/3&1/3&1/3\\1/3&1/3&1/3\\1/3&1/3&1/3
+\end{pmatrix}.
+\tag{11.27}
+$$
+
+The subscripts 0 and 1 distinguish the two tables, with the same choice in both blocks. Write $m=11/30$, $q=19/30$, $t_\sigma=q\sigma$.
+

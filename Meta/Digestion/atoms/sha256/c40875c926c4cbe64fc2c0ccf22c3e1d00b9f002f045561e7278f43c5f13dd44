@@ -1,0 +1,43 @@
+**Definition 2.2 (credited canonical complete instrument).** For the
+prescribed original control set
+
+$$
+\begin{aligned}
+\lambda&=\frac{(k')_+}{k}+\frac{(-k')_+}{c-k},&
+S(t)&=\exp\left(-\int_0^t\lambda\right),\\
+H_i(t)&=\int_0^t w_i(k)\chi',&
+g_i&=\lambda-(\log p_i(k))',\\
+G_i(t)&=\int_0^t g_i,&
+u_i(t)&=e^{-G_i(t)},\qquad m_i(t)=g_i(t)u_i(t).
+\end{aligned}
+\tag{SC.4}
+$$
+
+The rates $g_i$ are nonnegative and integrable by the canonical construction.
+The credited no-failure operator can be written
+
+$$
+K_t=\operatorname{diag}_i(e^{-G_i(t)/2-iH_i(t)}),\qquad
+e^{-G_i(t)}=\frac{S(t)p_i(k(t))}{p_i(a)}.
+\tag{SC.5}
+$$
+
+This rewriting retains the initial normalization. With arbitrary unchanged
+quantum reference $R$, the failure density in mode $i$ on a joint input is
+
+$$
+|f\rangle\langle f|\otimes m_i(t)\rho^R_{ii},\qquad
+\rho^R_{ii}=\langle i|\rho_{LR}|i\rangle.
+\tag{SC.6}
+$$
+
+The output includes success with unnormalized state $K_T\rho K_T^*$, or
+exact first failure time $t\in(0,T]$, original mode $i$, and absorbing $f$.
+Every Borel time event and each of the five mode names remain available.
+On the supplied six-dimensional extension the no-new-failure operator is
+$K_T\oplus1_f$ and jumps annihilate $f$. Existing stopped status is retained;
+it is not a new successful trial. No reset, reverse execution, fresh specimen,
+post-failure original trial, hidden Kraus-index access or environment port is
+added. Calibrated Kraus operations, blank ancillas, prescribed waveform
+execution and exact time/mode recording are conditional ideal services.
+

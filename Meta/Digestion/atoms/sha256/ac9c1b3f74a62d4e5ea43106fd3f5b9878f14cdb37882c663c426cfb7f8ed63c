@@ -1,0 +1,17 @@
+**Example 359.2 (Complete original consumer of the strictness family).** Set
+
+$$
+e=1-3\sigma,\qquad a_1=\cdots=a_5=1-\varepsilon/2,
+\qquad 0<a_{n+1}\le a_n,\quad a_n\longrightarrow0,\quad a_6\le e.
+\tag{359.5}
+$$
+
+Both preparations in Proposition 359.1 satisfy the complete original selected-law cap $e$ for every such tail. The input preparation attains this cap. For example $\varepsilon=1/100$ gives $a_i=199/200$ for $i\le5$, $e=497/500$, and the strictly positive all-representation margin $89/500$ in (359.4).
+
+*Proof.* Let $S=w_1-w_2+w_3-w_4+w_5$ and $\Psi=S(1-S)/2$. The pair contribution to $p_0$ is $6\tau+2\tau\Psi$ and that to $q_0$ is $6\tau+\tau\Psi$. The possible values of $\Psi$ are $0,-1,-3$; the last occurs exactly at $01010$ and $10101$. On a first-zero-$n$ word with $n<5$, singleton contributions to the union $\{0,n\}$ total $\sigma(\#\text{ones}+1)$. At those two exceptional words this is respectively $3\sigma$ and $4\sigma$. At every other word the pair base is at least $4\tau>3\sigma$. For $n=5$, all pair outputs and all singleton outputs belong to $\{0,5\}$. Thus every union mass is at least $3\sigma=1-e$. Every correct mass is at least $\sigma\ge a_n-e=\sigma/2$. The base demand $1-a_n-e=-1+11\varepsilon/10<0$ is satisfied literally. The positive base is $6\tau+5\sigma\ge3\sigma$. The stopped law inherits every row from Theorem 358.2.
+
+Every execution uses the original seed and actual prime calls described in Corollary 358.3. For actual $n>5$, the shared positive law has exact error $\max\{4\tau,a_n\}\le e$, including tail equality. At $01010$ the input union mass is exactly $3\sigma$, so its error is $e$. This word is actual: $F_{19}=4181$, $g=430$ lies in $[419,836]$, and $1+4181\cdot430=1797831$ has replies $01010$ at $2,3,5,7,11$. The other exceptional word is also actual, using $g=659$ and $N=2755280$. All other finite words use Boundaries 35.2.
+
+This profile already has simpler stopped attainments: the constant law
+$(1-\varepsilon/2)e_0+(\varepsilon/10)\sum_{i=1}^5e_i$ meets the same prefix cap and every stated tail. The result concerns certificate coverage of the specified whole kernel, not a new profile or an $N$ versus all-$O$ separator. No optimality among all preparations is asserted. $\square$
+

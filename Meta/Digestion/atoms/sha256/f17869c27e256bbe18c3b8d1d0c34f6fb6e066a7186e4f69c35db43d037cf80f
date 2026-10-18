@@ -1,0 +1,22 @@
+**Theorem 10.2 (exact SAME-budget SOME-preparer decision and construction).** Given any explicit finite serving table, fixed distinct original entries, and $N,P,L\in\mathbb N_0$, there is a terminating finite exact mathematical decision/synthesis procedure for Definition 3.3 on the full original domain. It requires no initial literal-depth bound or determining certificate for a code. A positive result specifies a literal native preparer and two actual finite origins attaining its two original bits. A negative result has exhaustive finite coverage as specified below.
+
+Proof. Compute $q_T,b$ from every installed serving Read and set
+
+$$
+D_0=3+b+6(q_T+N),\qquad
+W_{D_0}=\{v\in\mathcal W:|v|\le D_0\}.
+\tag{BPS.26}
+$$
+
+Enumerate the labeled nonempty state sets $\{1,\ldots,n\}$, $1\le n\le N$, their Read/Halt partitions, common starts, four-successor tables, original bit assignments to all Halts, and literal assignments $Q_P\to W_{D_0}$. These are finite choices. No serving record is enumerated or modified. If an exact preparer skeleton, start and Halt labels are prescribed, enumerate just its word assignments instead; Theorem 8.3 proves the same completeness on that skeleton.
+
+For each candidate construct exactly its attained joint relation by Lemma 10.1. On each attained triple follow preparation from its fixed common start. Inspect a Halt before a call and accept that phase only if a bit Halt is reached in at most $P$ Read visits. At a Read with fewer than $P$ calls used, take the installed successor for the indexed reply and add one call. Inspect the successor immediately, also after the $P$th call. A Read still present at the limit fails; a final-call Halt succeeds. There is no extra termination probe.
+
+From the actual resulting bit $z$, follow the unchanged $T$ at $e_z$ using that very triple's serving vector and target. Apply the same initial/final-call convention with limit $L$. A Halt accepts exactly when its complete output equals the triple's entire row. Compare exterior, occurrence partition, recomputed canonical names and guards; merely returning an index or a matching partial row is insufficient. A wrong early Halt fails. A Read left at the limit fails, even on a zero-length word. No test is imposed on the other entry. Require success for every attained triple, and require at least one attained triple for each preparation bit. These finitely bounded checks terminate even when graphs contain cycles.
+
+A passing candidate is installed literally. Every original source has an attained triple, so induction on actual states gives its checked preparation, truthful generated bit, faithful serving entry and complete correct output within the original budgets. Lemma 10.1 realizes each of the two bit witnesses by a single actual finite origin. Runtime uses just paid native Reads and the current counted state; it never receives the profile, a response tuple, the witness origin, an image test or the mathematical search inventory.
+
+Conversely suppose any arbitrary-finite-address preparer meets the original budgets. Theorems 8.3 and 9.1 yield one on the identical installed graph with every literal in $W_{D_0}$, no extra states or calls, the same Halt bits and both bits attained. Relabeling its states places it among the candidates; in the fixed-skeleton version no relabeling is needed. Exactness of Lemma 10.1 makes it pass. Thus finite failure excludes every original finite word assignment, not just assignments from an assumed menu.
+
+An exhaustive negative certificate specification regenerates the full finite labeled candidate inventory and, for each candidate, its exact summaries, eleven-profile/full-vector assignments, capacity tests and projected attained relation. Each candidate must have a failing attained triple with its finite origin and bounded path, or a successful-on-all-triples check whose attained bit set misses an original bit. Every exclusion is checked against this regenerated inventory; a sample of candidates or feasible sources is insufficient. For a path failure the supplied origin realizes preparation replies, serving replies and whole target together. For missing-bit failure the exhaustive attained relation establishes the absence. Empty candidate inventory, in particular $N=0$, is also decidable. Since every finite loop here has a finite explicit range, the full positive or negative specification terminates. This is a mathematical procedure and verifier contract; none of its searches is used as executed evidence. $\square$
+

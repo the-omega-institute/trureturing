@@ -1,0 +1,46 @@
+**定理 67.1（The consumed $k=4,m=3$ full-source optimum）。** Take $k=4,m=3,T=5$ and pairwise distinct $A,B,C,R$. On both free-value fibres put
+
+$$
+f(v,-j,s)=
+\begin{cases}
+R,&s=3,\\
+A,&s=0,1,2,\ j=1,3,\\
+B,&s=0,1,2,\ j=0,2,\\
+C,&s=0,1,2,\ j=4,
+\end{cases}
+\qquad f(\bot)=L_\bot,
+\tag{67.1}
+$$
+
+with arbitrary independent $L_\bot$. Under either original alphabet the exact minimum whole-target fees are
+
+$$
+\boxed{C_{\rm ad}(f)=C_{\rm pre}(f)=3.}
+\tag{67.2}
+$$
+
+The GLOBAL stream is $101\mid000\mid110$, with endpoint stopping; the lower bound excludes every depth-two adaptive controller on either free-value fibre.
+
+**证明（all-action INITIAL lower bound）。** Fix either free initial value $v$. The target on its complete INITIAL fibre is nonconstant, so a fee-zero stop is impossible. The joint sources in (1.3), used in Theorem 66.1, realize every record compared below on one original history with the specified value, phase and tail.
+
+Any root beginning zero merges, at each fixed phase, the actual INITIAL tails two and three. Both survive that zero and the remaining at most two bits; their current records and all acquired endpoint outputs are identical, while their INITIAL labels are the phase label $A$, $B$ or $C$ and the distinct $R$. Deterministic future actions and stops then remain identical. Such a root cannot occur in any correct controller, regardless of its later depth.
+
+Any root with at least two leading ones, including $111$, sends both a tail-two source and a tail-three source at a fixed phase to absorbing rejection. Their labels are again distinct. Their rejection times within the block are unobserved, and the endpoint is the same bottom, so later actions cannot repair the loss. These roots also cannot occur in any correct controller. The only remaining length-three roots are $100$ and $101$. This exhausts all eight literal actions in both alphabets, without a favourable-root restriction.
+
+After $100$, rejection identifies $R$. Its successful charge support is $\{0,1\}$, so its zero-difference child contains precisely phases $2,3,4$, with labels $B,A,C$ and common current tail zero. It is nonconstant and cannot stop at that endpoint. Any next word either rejects this whole common-tail child or gives at most two successful scalar endpoints. Neither possibility separates its three distinct INITIAL labels in one more block. Thus this root cannot support a correct controller of worst fee at most two.
+
+After $101$, rejection identifies $R$, its zero-difference child identifies $C$, and its positive child has phases $0,1,2,3$ with labels $B,A,B,A$ and actual tail one. This is the $m=3$ exception of Theorem 65.2. Explicitly its next ordered window is $3,4,0,1$. Unavailable phase two has label $B$ and forces response zero for $B$; hence a separating word must have charges one at phase three, zero at phase zero, and one at phase one. The literal path equations are
+
+$$
+x_0=1,\qquad x_1\oplus x_2=0,\qquad x_2=1.
+\tag{67.3}
+$$
+
+They force $x_0=x_1=x_2=1$; the missing phase four supplies no alternative word. This forced $111$ rejects every candidate because its seam is $1+3=4=k$. Every other word either fails the required label split or rejects uniformly. Therefore this root also cannot support fee two.
+
+Every root and its relevant next action has been included. The argument holds separately for each free INITIAL value; using different adaptive policies on the two fibres does not avoid either lower bound. It uses actual shared archives and absorbing rejection, rather than a lower bound on only the displayed stream. Thus $C_{\rm ad}(f)\ge3$, and $C_{\rm pre}(f)\ge3$ because a GLOBAL preset controller is an adaptive controller.
+
+**证明（one GLOBAL stream and lawful stopping）。** Apply Theorem 66.1 with $m=3$, $L=A$ and $M=B$. It supplies the full INITIAL target (67.1), the same literal stream $101\mid000\mid110$ on both free values, and its jointly realized source histories. At the first endpoint return $R$ on bottom and $C$ on zero difference. Only the positive child continues; its tail one is cleared by the whole paid $000$, whose difference is zero. The third actual window starts at $2m=1\pmod5$. The word $110$ has charge $\{1,3\}$, so its difference one returns $A$ and difference zero returns $B$.
+
+Each surviving root seam has $s+1\le3<4$; clearing starts zero; the final leading run two starts from tail zero and is below four. The last endpoint is legal, so no subsequent cleanup is issued or charged. Both $A$ and $B$ histories exist and emit all three complete words. Already stopped $R$, $C$ and initial-bottom histories emit no later words. This gives a correct one-GLOBAL-stream preset controller of worst actual fee three. Combined with the all-action adaptive lower bound it proves (67.2). ∎
+

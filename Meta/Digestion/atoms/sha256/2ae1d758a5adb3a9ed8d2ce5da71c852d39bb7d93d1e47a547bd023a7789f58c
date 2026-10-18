@@ -1,0 +1,24 @@
+**Proposition 8.5 (finite stock and helpers).** With $B=a=1$, the
+production and retention conditions admit event-count sequences of
+arbitrary finite length with exactly one birth per event, used as
+that event's distinct retained stamp, and no additional required
+nonreceipt data. Their surplus is zero
+and $D$ stays bounded. Further stamp-producing helper events consume
+their own one-vertex production allowances. A finite initial arena
+is already credited in $R_0$ and does not change the zero slope.
+
+Proof. Fix an initial stock of $R_0$ vertices containing the required
+nonreceipt material, of size $D_0\le R_0$. For any finite $m$, take
+$m$ distinct fresh vertices, disjoint from that stock, one per event,
+and use each as that event's retained singleton receipt. At every
+prefix $k\le m$, the production and retention counts are
+$A(k)=r(k)=k$ and $D(k)=D_0$. The receipt blocks are disjoint and
+$r(k)+D_0=k+D_0\le R_0+k$, so all these resource conditions hold,
+even with $L=0$. This supplies a witness for the counting conditions
+at every finite length; it supplies no operational controller or
+original-task realization. Each added helper with one birth and its
+own retained one-vertex stamp has increment $\beta_i-a=0$, so it
+adds no surplus in Theorem 7.3. Substituting $B=a=1$ there gives
+$D(k)\le R_0+L$ regardless of the number of helpers; enlarging the
+fixed initial arena changes only $R_0$, not that zero slope. ∎
+

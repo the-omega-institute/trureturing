@@ -1,0 +1,42 @@
+**Definition 2.2 (checkable source certificate).** Exactness in
+Definition 2.1 is accompanied by a finite derivation with distinguished
+free source $u$, from the predicate $u\in D_r$ to
+
+$$
+\bigvee_c\exists\mathbf z\quad
+u=\Theta_{r,c}(\mathbf z)\ \land\ \Delta_{r,c}(\mathbf z).
+\tag{FJC.8}
+$$
+
+The following are lawful certificate steps, with their stated domains.
+Finite Boolean rearrangements, renaming and existential distribution use
+ordinary first-order logic with syntactically checked freshness.
+A fresh definition $x=A$ can be introduced; a variable defined by an
+expression not containing it can be eliminated by substitution, with
+its reconstruction retained. Native powers distribute through pairs,
+compose by addition, and act on supplied grounds by (FJC.1). Native
+pair cancellation is valid; cancellation of equal fixed powers uses
+finite-native injectivity from [ARH, Lemma 19.2][ARH].
+
+Fixed navigation, guards and rows may first be expanded into the exact
+finite original-prefix cases of [NSF, Lemma 5.1][NSF]. The case inverse
+uses the actual reached frontier subtrees. Masks retain every uncut
+subtree, and row comparisons retain every partition bit. A
+quantifier-free conjunct may be removed under the remaining
+quantifier-free conditions only when the counterquery is empty by
+[NSF, Theorems 4.3 and 5.2][NSF]. This is a terminating native finite
+query, including complements of guards after reach is evaluated.
+
+Each rule preserves the predicate for each fixed $u$; definitions and
+prefix cases preserve the same source with explicit witnesses.
+The finite sequence and its side conditions are effectively checkable.
+No rule licenses forgetting a guard or substituting a bound on source
+size. The direct correspondences proved in §6 give such certificates:
+constructor decomposition, positive substitution, and removal of
+universally redundant negative conjuncts are their steps.
+
+[NIC, Theorems 3.2–3.3 and 4.3][NIC] provides general exact mixed
+covers with natural-rank coordinates. Such a cover is usable here only
+when its elimination into (FJC.8) is actually justified. Its existence
+does not justify dropping those coordinates.
+

@@ -1,0 +1,33 @@
+**Proposition 60.11 (finite tape execution and catalog prices).** Let $\mathcal G$ be the actual number of generated flag gates, $\mathcal G\le G_{\rm flag}(H)$, and $R=2+2N+\mathcal G$. All four gate references are less than $R$. The complete instruction length has the concrete bound
+
+$$
+B_{\rm flag}=1+\sum_{g=1}^{\mathcal G}(13+d_g+a_g+b_g+c_g)
+\le1+\mathcal G(13+4R).
+\tag{60.19}
+$$
+
+The interpreter can keep four append-only field-cache tapes and four public descriptor tapes. Before copying a field, position its descriptor tape at its existing right marker by `Tail`, then execute `Base` on its cache, appending a separator and the actual resulting $U(b)$ to its descriptor tape. Copy every field bit by `RD(code); EX(cache); WR(cache,bit); MR(cache); MR(code)`, including its terminal zero. Position its descriptor's latest block by the paid reverse separator scan of Lemma60.10, then execute the ordinary `Seek(cache,U(b))`. Its head is now at the actual newly cached field; the ordinary workspace seek consumes that literal field. Private operand latches survive these public scans exactly as in PR57.5. All previous fields/descriptors remain constructed. This uses the original gate encoding and interpreter operations; the reverse scan merely makes its allowed descriptor positioning explicit.
+
+Let $A_0$ count the apparatus ordinary cells already constructed before this compiler version, excluding its constant boundary/control foundation. Put $M=A_0+\mathcal G(R+1)$. Each cache has at most $M$ cells, and each cached-base descriptor has magnitude at most $M$. The total ordinary cells after code, workspace and these eight tapes, with input-copy/save tapes separately added, are bounded by
+
+$$
+A_{\rm flag}\le A_0+B_{\rm flag}+R+4\mathcal G(R+1)
+ +4\mathcal G(M+2).
+\tag{60.20}
+$$
+
+Their gate-interpreter core count, including all Base scans, field copies, descriptor positions, operand/result seeks and the terminal header/exit, satisfies
+
+$$
+E_{\rm flag}\le200\mathcal G\bigl(M+R+10\bigr)+2.
+\tag{60.21}
+$$
+
+These are bounds for this particular deliberately inefficient interpreter, not a native one-tick Boolean model. Code writes cost $3B_{\rm flag}$ append occurrences before their actual generator reads, frame/reference creation and public arithmetic; workspace allocation and all input copies are additional. A generator traverses the finite expression forest in the order specified in Lemma60.10, storing its frames and references and emitting each full record. Its work is the sum of PR57.D9's actual `Base`, `Allocate`, unary increment/copy, frame push/pop and `AppendWord` event words for those finite visits. This sum, together with (60.21) and the source-cursor routine, gives a total finite classical price for a compiler version; it is not replaced by $\mathcal G$. Public parameter arithmetic, all original services and record copies are added by the same disjoint event recurrence. There is no history-independent bound on arbitrary effective policy/parameter-supply computation.
+
+For an interaction run with common exponent set of size $J$, its literal local catalog has $2FJ$ signed wire entries: $2KJ$ phase entries and $2(K-1)J$ hopping entries. Each entry specifies its public wire, kind, sign and dyadic exponent, with its exact matrix (60.2). Its control description is installed by finite bit writes and remains in the control/tape storage coordinate. The endpoint descriptions and every entry are retained material. Preparation adds the root-to-mode wires it actually uses, their signed angle catalogs, the bit flip, balanced gate and fixed phase conjugations; these are separate from the $2FJ$ interaction entries. A reference qubit is one of the $K+1$ constructed/retained modes, and a reference preparation/effect is charged in $G_P,G_R$ and their descriptions. No unknown-state reference attachment is implemented by this catalog.
+
+Proof. Record length is PR57.05. There are at most $\mathcal G$ new fields on each cache, each of length at most $R+1$, in addition to at most $A_0$ previously constructed cells. Workspace reuse keeps its literal signal references at offsets less than $R$; cache/descriptor offsets are separately constructed by Base and may grow across versions. A descriptor has at most $M$ leading ones, one separator and one terminal zero. This gives (60.20). `Base` costs at most $7M+20$ with its positioning, separator and descriptor-tail positioning (the previous descriptor head is at its last terminal zero); a field copy costs at most $5(R+1)$. Locating its latest descriptor, seeking its cache and then its workspace costs at most $7M+5R+30$. There are four of each per gate, plus 18 header/table occurrences, four data reads/writes and one BF. Their sum is below the allowance in (60.21). Native code installation and generation precede execution and are counted separately, so these bounds omit no instruction supply by treating it as a primitive. All generated forest visits and public loops have finite sealed bounds, and PR57.L1–L3 supplies each visit's finite expanded event word. Sequence adds those words; this proves effective finiteness of the entire producer, including its generator, rather than assuming runtime access to source flags.
+
+Every enabled digit fetch selects one installed entry by public position and sign. Its private enable is only an argument of a finite local quantum transition, never a port/address selector. A catalog entry is a new exact apparatus permission for its full local matrix, including identity on vacuum/double excitation; an equality only up to a scalar phase is insufficient. Catalog construction/control, command digits and their reads, and the quantum events are different charged occurrences. The actual ideal executed angle is therefore exactly the signed sum of all fetched enabled dyadic digits. Since the local generator is the same within a block, commuting its finite digit factors proves its exact commanded block matrix. Rounding affects that angle by the certified $2^{-b}$; a physical departure from a catalog entry instead requires the elementary $\zeta_j$ certificate of (60.12). Neither certificate is a native Clifford Read. $\square$
+

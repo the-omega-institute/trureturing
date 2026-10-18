@@ -1,0 +1,38 @@
+**Definition 26.1 (Prepared windows, their complete datum and horizon completeness).** Use the supplied family of Definition 25.1, with $H\ge2$, $H\in K\subseteq\{1,\ldots,H\}$, known $p_k>0$ on $K$ and $\sum_{k\in K}p_k=1$. On $\mathbb C^{H+1}$ the coefficients, normalized reset vector and operators are
+
+$$
+c_k=\sqrt{p_k}e^{i\theta_k},\qquad
+x_\theta=\sum_{k\in K}c_ke_{H-k},\qquad
+Se_j=e_{j+1}\ (j<H),\quad Se_H=0,\qquad
+J_\theta=x_\theta e_H^*,\qquad \theta\in\mathbb T^K,
+\quad \mathbb T=\mathbb R/(2\pi\mathbb Z).
+$$
+
+Coefficients outside $K$, including $c_0$, are zero. The two CP branches are $`M\mapsto SMS^*`$ and $`M\mapsto J_\theta M J_\theta^*`$; their trace-preserving sum is $\mathcal E_\theta$. An actual observed tick prepares $`x_\theta x_\theta^*`$ by (23.3). A prepared post-tick window consists of $n$ subsequent applications of the accessible isometry
+
+$$
+V_\theta\psi=S\psi\otimes|0\rangle+J_\theta\psi\otimes|1\rangle,
+$$
+
+with the same stable branch representatives throughout the window and the trials. The chronological flags are retained coherently, no inaccessible system distinguishes their paths, and there is neither an intermediate intervention nor a terminal memory measurement. Every terminal effect commutes with the flag count $Q_n$ of (25.3), and arbitrary effects within each count sector are available. With $K_0=S$, $K_1=J_\theta$ and $K_w=K_{w_n}\cdots K_{w_1}$, the complete permitted datum is exactly the density $T_n(\theta)$ of (25.3):
+
+$$
+\begin{aligned}
+|\Psi_n(\theta)\rangle&=\sum_{w\in\{0,1\}^n}K_wx_\theta\otimes|w\rangle,\qquad
+\Omega_n(\theta)=\operatorname{Tr}_{\rm mem}|\Psi_n(\theta)\rangle\langle\Psi_n(\theta)|,\\
+T_n(\theta)&=\sum_{m=0}^n P_m^{(n)}\Omega_n(\theta)P_m^{(n)},\qquad
+Q_n|w\rangle=|w|_1|w\rangle,\qquad T_0=1.
+\end{aligned}
+$$
+
+Here $P_m^{(n)}$ is the count-$m$ projection, and inner products are conjugate-linear in the first entry. Equality of $T_n$ is equality of every permitted terminal probability law. Write $\Gamma_K$ and $L_K$ for the affine subgroup and full integer kernel of (25.4):
+
+$$
+\Gamma_K=\{(\lambda+\nu k)_{k\in K}:\lambda,\nu\in\mathbb T\},\qquad
+L_K=\left\{z\in\mathbb Z^K:\sum_k z_k=0,\ \sum_k k z_k=0\right\}.
+$$
+
+A horizon is complete if, for every two phases in this fixed $H,K,p$ family, equality of its $T_n$ is equivalent to memory-unitary equivalence of the averaged channels, with the meaning of Definition 24.1. Outcome-labeled instrument equivalence has that definition's fixed labels and one common memory unitary for both CP branches; scalar phases of Kraus representatives are allowed.
+
+Repeated access in this class means separately prepared windows, each ending in a count-commuting measurement and a classical readout. A setting or window length may depend on previous terminal settings and outcomes. Conditional on that choice, the next window has the prescribed post-tick preparation and no quantum system from a preceding window is coupled to it. The record used for the horizon lower bounds consists of these terminal settings and outcomes. Heralding supplies the preparation; its waiting-time record is not an additional identification datum in this class. Joint measurements across trials subject only to a global count constraint, or additional observations of the preparation process, define different data. Completeness concerns exact probability laws, rather than exact inference of a continuous phase from a finite record.
+

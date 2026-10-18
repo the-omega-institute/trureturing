@@ -1,0 +1,28 @@
+**定义 1.1（完整目标和取得规则）。** 令
+
+$$
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+W=(P,g,d),\qquad P=\begin{pmatrix}r&b\\c&1-r\end{pmatrix},
+$$
+
+其中
+
+$$
+0<r<1,\quad b,c>0,\quad bc=r(1-r),\qquad
+0\ne g\in\mathbb R[s],\quad\deg g\le3,\quad d\in\mathbb R.
+\tag{1.1}
+$$
+
+源严格逐项正、秩一、迹一，允许不对称，两个非对角元都不设上界。增益是贯穿所有续行的一个固定整个实多项式；任意系数符号、次数下降、常数非零增益、采样零和重根都属于原域。恢复目标是整个 $(P,g,d)$，不是只恢复来源或一个增益样本。
+
+按时间选择 $E_i\in\{J,M\}$，置
+
+$$
+A_0=I,\qquad A_i=E_iA_{i-1},\qquad
+z_i(W)=d+g(i)\operatorname{tr}(A_iP).
+\tag{1.2}
+$$
+
+初读计数，八次总读恰使用原时钟 $0,\ldots,7$；每个单独动作后立即读取。只有一条不可重置、不可复制的轨迹，不跳读、不插空动作、不重编号、不增加端口。确定性策略可依赖完整实际历史选择动作或提前停止，不附连续、可测或可计算性限制。未选动作的预测仅用于比较已固定世界，不额外取得观察。
+

@@ -1,0 +1,18 @@
+**Theorem 93.2 (finite numerical head and the entire tail).** Installation constructs the actual finite integer $T=32\cdot2^h$ and a Fibonacci list through the least $J\geq6$ with $F_{J-2}\geq2T+2$. For every $j\geq J$ return zero. For $3\leq j<J$, evaluate the represented coefficient by downward-rounded binary powers on a grid with $w=h+30$ fractional bits, multiply by the represented anchor, and round each output coordinate to the $\eta$ grid with half ties toward positive infinity. This fixed finite procedure has error less than $1/32$, hence less than $1/2$, for every required query.
+
+**Proof.** For every $j\geq J$, $R\geq(F_{j-2}-2)/2\geq T$. Since $UV\leq1-D/2$ and $S\geq R$, the true vector norm is at most
+
+$$
+(UV)^R\leq e^{-RD/2}\leq e^{-16}<1/32.
+$$
+
+This controls the entire tail, not a finite sample. For the head, minimality gives $F_{J-2}<4T+4$ and the safe bound $R+S+1<8T+16<2^{h+9}$. Both represented bases are exact on the $2^{-w}$ grid, since their denominators divide $2^{h+10}$. A grid product of numerators $X,Y$ is $\lfloor XY/2^w\rfloor$, with downward error less than $2^{-w}$. Binary repeated squaring uses finitely many such products. Degree zero returns exactly one, including $0^0=1$.
+
+Induction on multiplication degree bounds a degree-$n$ power error by $\max(n-1,0)2^{-w}$. Squaring adds twice the prior error and one rounding unit; multiplying positive-degree factors adds their errors and one unit, while multiplication by the exact unit creates no error. Products and rounded approximants remain in $[0,1]$. The combined two-power scalar error is at most $(R+S+1)2^{-w}<2^{-21}$. Represented anchors have norm less than two, and final vector grid rounding adds less than $\eta$. Lemma 93.1 therefore bounds head error by
+
+$$
+15\eta+2^{-20}<1/32<1/2.
+$$
+
+At $j=3,4,5$ the scalar is exactly one; zero bases, tiny anchors and all signs are included. Every operation is on finite integers or dyadics. No real logarithm, square root, sign, equality or orientation oracle is part of evaluation. $\square$
+

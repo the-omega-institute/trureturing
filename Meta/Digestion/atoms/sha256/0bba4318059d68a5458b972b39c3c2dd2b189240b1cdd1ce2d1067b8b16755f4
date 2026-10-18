@@ -1,0 +1,75 @@
+**Theorem 5.2 (boundary factorization and task correctness).** Under the
+interface hypotheses, the source-context interface $\mathfrak e$ is
+dynamically sufficient on admitted execution histories. For every
+prescribed instruction action $a$, including absorbing stop, there is
+a well-defined boundary transition satisfying
+
+$$
+\mathfrak e(T_a(s))=\overline T_a(\mathfrak e(s))
+\tag{UDB.22}
+$$
+
+whenever that instruction is enabled. Equivalently, for each fixed
+original coordinate $\lambda$, the four-field observable boundary satisfies
+$b(T_a(s))=\overline T_{a,\lambda}(b(s))$. For a table satisfying Total and
+Shared, whose halt outputs are reachable-witness-installed in the sense of
+(UDB.22a), the decoder $\mathsf{Done}(Y)\mapsto Y$ returns the complete
+$R(u)$ on every terminal admitted history.
+
+The observable form $b$ alone admits a single autonomous factorization
+$bT_a=\overline T_a b$ across all original sources **if and only if** it
+has the following successor-consistency property:
+
+$$
+\begin{aligned}
+\forall s,t\in\mathcal X\quad b(s)=b(t),\ e(s)\in E_U
+\ \Longrightarrow\
+V_{\Theta(\lambda(s))}(j(s)+1)
+=V_{\Theta(\lambda(t))}(j(t)+1).
+\end{aligned}
+\tag{UDB.23}
+$$
+
+This iff is for the instruction and accumulator convention in Definitions
+2.1 and 5.1. If additional actions have source-dependent permission or
+effects, their enable predicates, declared response observations and
+successor boundaries must also be constant on $b$-fibers. That is the
+exact additional condition, rather than a claim that all summaries work.
+
+Proof 5.2. With $\lambda$ fixed, Reply determines the vector at every
+epoch. A read at $e$ uses $v(e)$, takes $s_R(e,v(e))$, leaves $j$ and $v$
+unchanged, and sets the accumulator to its new state's value. An update
+takes $s_U(e)$, increments $j$ by one, uses the same $\lambda$ to determine
+the new vector by exact Reply, and sets the new accumulator. An absorbing
+stop leaves all fields fixed. The same boundary and coordinate therefore
+have the same enabled instruction, response and successor. These rules
+define $\overline T_a$ and prove (UDB.22) on the actual image of
+$\mathfrak e$. They remove the full history and transported register
+representation; they keep the source dependency of future responses.
+
+If $b(s)=b(t)$ without requiring equal source coordinates, reads still
+have the same current vector and successor, and absorbing stops still
+agree. At an update all successor fields other than the new vector are
+already determined by the common old fields and table. Hence (UDB.23)
+is sufficient for equality of complete successor boundaries. Define
+$\overline T_a(b(s))=b(T_a(s))$; that equality makes the definition
+independent of representative. Conversely, any such autonomous map forces
+equality of successor boundaries and therefore of their new vector
+components, proving (UDB.23). Induction on a common enabled continuation
+then preserves all subsequent boundary observations.
+
+For a partial-action extension, the same construction requires enable
+predicates to agree on each fiber before a successor is defined, and
+requires declared observations and successor images to agree there.
+Necessity follows by taking one action; sufficiency follows by defining
+on representatives and inducting on action words. This is the operational
+fiber criterion used in [Context Geometry, §3][CG], here with exact
+same-source arithmetic response and output data. Finally Theorem 3.4 gives
+actual termination from Total. The factorization claims use no
+installed-output condition. For terminal decoding, (UDB.22a) applied to the
+actual first halt gives $Y_h=R(u)$; in the extracted tables of Theorem 4.2,
+the reachable-witness construction establishes this condition. Shared and
+exact Same by themselves only identify the rows of sources that reach one
+halt with one another; they do not identify an arbitrary preinstalled $Y_h$
+with that common row. $\square$
+

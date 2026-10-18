@@ -1,0 +1,15 @@
+**Convention 1.1 (suppliers and status).** Write
+[UAS](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_GROWING_UNARY_STORAGE_ATLAS.md)
+for growing unary storage,
+[SSA](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_STRUCTURAL_STORAGE_ATLAS.md)
+for structural storage,
+[ARC](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ACTOR_LOCAL_RESERVE_RECOVERY.md)
+for actor-local Reserve recovery,
+[CAP](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CAPACITY_COHERENCE_AND_GROWTH.md)
+for the original capacity source, and
+[PR57](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md)
+for the constructed-tape primitive specification in its §57.
+All new statements here are repo-derived ordinary deductions. Standard
+tree inversion, deterministic native replay and allocation conservation
+are reused ingredients, without a worldwide novelty claim.
+

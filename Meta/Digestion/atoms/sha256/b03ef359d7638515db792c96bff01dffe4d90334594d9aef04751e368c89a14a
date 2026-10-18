@@ -1,0 +1,61 @@
+**Definition 3.1 (work-word representation and elementary graphs).** A work
+port is an append-only sequence of finite bit words, each followed by one
+$\mathsf{sep}$. Its newest completed word is the current value of that finite
+port role. Empty words are permitted; unary words are nonempty. No field
+descriptor is needed to find the newest word. The following graphs fix all
+new positioning and copying used below. Each named arrow is a primitive; its
+last row has the stated next routine as successor.
+
+Home and Tail are PR57.D2's boundary-only RD/move loops. Append($d,b$), with
+$d$ at R, is EX($d$); WR($d,b$); MR($d$), including for a separator.
+Last($d$) executes Tail($d$); ML; ML, then repeatedly RD; on an ordinary bit
+ML and repeat, on sep or L execute MR and return. Its precondition is that
+at least one complete word exists. It returns at the newest word's first bit,
+or its sep if empty. If its newest word has $k$ bits, its cost is exactly
+Tail's actual boundary distance cost plus $2k+4$.
+
+New($d$) executes Tail($d$). Finish($d$) appends sep, then Last($d$). A fixed
+literal word is New, one Append per literal bit, Finish. Copy($s,d$), for
+distinct ports, is Last($s$); New($d$), then RD($s$,4); on sep exit the loop,
+otherwise Append($d$,latch4); MR($s$) and repeat; finally Finish($d$).
+On a $k$-bit word its copy loop has exactly $5k+1$ occurrences, before Finish.
+The terminal test is present even for the empty word. The return has the
+source head on sep and destination head at the new word's first bit.
+
+For a native metadata field whose head already points to its first bit,
+CopyField uses the identical loop without Last($s$). It stops at that field's
+actual sep. SkipField repeatedly RD; on sep MR and return; otherwise MR and
+repeat. On $k$ bits it costs $2k+2$. All source heads and destination tails
+in these calls are those actual marked cells. No mathematical offset is used
+as an unexecuted stopping test.
+
+WriteField($s,d$) is Last($s$), FieldBody($s,d$), Append($d$,sep),
+with destination already at R. It writes precisely $w\mathsf{sep}$ for
+the complete source word $w$ and returns source on its own sep, destination
+at R. ReadField($s,d$) is CopyField($s,d$) followed by **MR($s$)**.
+It enters at the first field bit, including at sep for an empty field, and
+returns source immediately *after* that sep, destination at its newest
+word's first bit. SkipField has this same source exit. These are the shared
+metadata writer/reader contracts; CopyField alone deliberately keeps its
+on-sep exit. A framed bit payload is decoded by Definition 6.1, never by
+applying a sep scanner to its concatenated frames.
+
+Equivalently, FieldBody is just that sep-terminated $5k+1$ loop, entered
+with source at its first bit and destination at R, returning with source at
+sep and destination at R. CopyField is New(destination), FieldBody, Finish;
+Copy additionally positions the source with Last. A native field writer uses WriteField. A bit-row writer uses Frame,
+whose payload part calls FieldBody without a separator; it appends its
+one physical sep/status only after all frames. Neither is CopyField's
+work-word Finish on a mixed stream. UnaryBody copies a complete
+$U(a)$ using RD(source); EX(destination); WR(destination,read-bit);
+MR(destination); MR(source) for every bit, including its terminal 0. The
+RD successor repeats on 1 and returns after those same four remaining
+occurrences on 0. Its cost is $5(a+1)$; source returns one cell past the 0
+and destination at R. The raw zero-copy calls below mean this graph, with
+their explicitly stated source positioning and destination already at R.
+All word/field routines may overwrite latch 4; they preserve input latch 5
+and private operand/result latches 0–3. Their callers retain no return data
+in latch 4 across a positioning call. Each payload RD's bit survives through
+its immediately following Append/WR; Finish's later tests may overwrite it.
+The channel uses a distinct data latch, as specified in Definition 6.3.
+

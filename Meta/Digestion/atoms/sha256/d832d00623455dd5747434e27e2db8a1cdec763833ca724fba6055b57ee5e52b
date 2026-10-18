@@ -1,0 +1,24 @@
+**Definition 3.3 (the complete objective).** For normalized complete cq
+outputs use $\operatorname{dist}(\omega,\eta)=\|\omega-\eta\|_{1,\rm cq}/2$.
+If both have densities in the canonical sectors, the norm is the live trace
+norm plus the sum of the five integrated stopped trace norms, together with
+all other sector contributions. For arbitrary countably additive simulated
+measures, choose a common dominating scalar measure in each sector and
+integrate the trace norms of their Radon–Nikodym densities. This includes
+atomic and singular-continuous time mass. Every wrong-support, extra,
+abort and rejection contribution is counted, even when its ideal mass is
+zero. Fixed common interpretation may forget extra record fields but never
+delete an outcome or divide its mass by success probability.
+
+The objective and benchmark are exactly CG.20:
+
+$$
+E(\Phi)=\max_{y\in\{5,16,27\},\ e,n\in\{\pm1\}}
+ \frac12\|\Omega_{y,U}-\Phi(U\rho_yU^\dagger)\|_{1,\rm cq},
+\qquad E_\star=\inf_{\Phi\ {\rm common\ CPTP}}E(\Phi).
+\tag{ZG.12}
+$$
+
+All twelve targets remain in this maximum. This is a source-indexed target
+experiment, not a demand that source-dependent instruments act as one map.
+

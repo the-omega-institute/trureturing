@@ -1,0 +1,33 @@
+**Proposition 13.1 (Uniform band correspondence).** Let $0<\varepsilon<1/4$ be rational, $I_\varepsilon=[1-2\varepsilon,1-\varepsilon]$, and $q\in I_\varepsilon$. With $x=1-q$ and $s=-\log q$,
+
+$$
+\varepsilon\le x\le2\varepsilon,
+\qquad x\le s\le\frac{x}{1-x}\le2x,
+\qquad \varepsilon\le s\le4\varepsilon.
+\tag{13.1}
+$$
+
+Consequently, uniformly on the whole band,
+
+$$
+s^{-3}\le\varepsilon^{-3}\le64s^{-3},
+\qquad
+\log_2(1/s)\le\log_2(1/\varepsilon)
+\le\log_2(1/s)+2.
+\tag{13.2}
+$$
+
+Two such bands containing the same $q$ have widths within a factor two. Every sufficiently small $x>0$ admits a dyadic rational width with $x/2<\varepsilon\le x$, so these supplied bands cover the endpoint as an existence family.
+
+Proof. The first inequalities are the definition of the band. Since $x\le2\varepsilon<1/2$,
+
+$$
+s=\int_0^x\frac{du}{1-u},
+\qquad x\le s\le\frac{x}{1-x}\le2x.
+\tag{13.3}
+$$
+
+These prove (13.1), and reciprocation and logarithms give (13.2). Any width whose band contains $q$ lies in $[x/2,x]$, proving the factor-two comparison. For coverage choose an integer $j$ with $2^{-j}\le x<2^{-j+1}$ and take $\varepsilon=2^{-j}$. Such an integer exists by the Archimedean property; the chosen width is rational and has the asserted inequalities. $\square$
+
+The logarithm and this dyadic selection are mathematical scale correspondences. They are not instructions to a running observer. A band and risk fraction are supplied before deployment; an existence choice of a comparable band at a given $q$ supplies no mechanism for discovering an unknown $q$. One compiled observer below serves every $q$ in its supplied band and receives neither $q$ nor $s$ as an online input. Likewise this family does not assert the existence of a single finite-width controller with cubic means over all bands simultaneously.
+

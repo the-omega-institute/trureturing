@@ -1,0 +1,26 @@
+## 389. Strict receiver ordering and the surviving scope
+
+Write either receiving owner with axes p,b and pair v,a, where
+{a,b}={c,d} and p is one of m,z,u. Then p>=m. Put
+
+    F=(p-1)*(v-1)-(a+b)^2 >= 0,
+    L=(v+a)^2-(p-1)*(b-1) > 0,
+    f(x)=(x+a)^2*(x-1).
+
+The exact identity
+
+    f(v)-f(b)=(v-1)*L+(b-1)*F>0                      (389.1)
+
+retains strictness even when F=0. Since
+f'(x)=(x+a)*(3*x+a-2)>0 for a,x>1, it follows that v>b.
+For A(P) the opposite low axis is D, giving v>d; for B(P) it is C,
+giving v>c. Numerical equality with that opposite label is excluded.
+This proves Theorem 386.1.
+
+In particular v<=c and v<=d is impossible under the weaker hypotheses
+of Section 386. In the middle-V region, one family is forced at both
+source faces, but the two partners may still be the same actual owner.
+If v exceeds both c and d, either family remains possible. These
+statements do not exclude those remaining regions, establish a complete
+quotient there, or assert full six-edge flat exclusion.
+

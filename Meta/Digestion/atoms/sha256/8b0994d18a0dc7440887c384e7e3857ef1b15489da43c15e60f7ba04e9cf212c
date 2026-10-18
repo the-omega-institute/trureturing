@@ -1,0 +1,21 @@
+**定义 25.1（记忆缺口、风险与信息净变）。** 在各自假设下定义
+
+$$
+d_{\mathrm{mem}}=\dim\ker C-\dim N_\infty,\qquad
+R_n^*(\varepsilon)=\min(L,\varepsilon|\lambda|^{-n}),
+$$
+
+$$
+\Delta H(Z\mid M)=L_Z-G_Z.
+$$
+
+第一量为补充线性维数，第二为指定访问和误差下的历史恢复风险，第三为指定概率律与固定目标的信息净变。含这些数据的观察者结构可写为
+
+$$
+\mathfrak T_{\mathcal O}
+=\left(\text{事件依赖},\text{路径钟},\text{相容性},
+\text{记忆缺口},\text{取证与遗忘},\text{恢复精度}\right).
+$$
+
+只在相应线性、概率或误差条件具备时采用该分量。
+

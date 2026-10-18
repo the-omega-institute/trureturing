@@ -1,0 +1,17 @@
+## 10. Finite affine factors of native continuation
+
+The full native command menu determines an exact universal information
+loss even when the encoder is an arbitrary function. Every finite affine
+factor erases rational common turns. For each specified irrational common
+turn there is a four-real-coordinate factor that distinguishes it, using
+a complex field automorphism and choice. Continuous factors, and more
+generally factors bounded on each common-phase orbit, erase the whole
+common circle. The full difference circle remains available.
+
+The structural statement underlying these conclusions is an **abstract
+circle action by unipotent affine automorphisms** on the affine image
+hull. Unipotence refers to the homogenized matrices. Neither regular
+dependence on the circle parameter nor a Zariski-closed image is part of
+this statement. A proper infinite translation subgroup below shows why
+the latter property cannot be added in general.
+

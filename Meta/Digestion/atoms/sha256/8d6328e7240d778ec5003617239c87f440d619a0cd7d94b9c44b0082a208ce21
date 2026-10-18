@@ -1,0 +1,4 @@
+## 84. Two chronological omissions and an exact original-reader GLOBAL family
+
+At original order $k=m+2$, a complete arithmetic row misses two phases, and consecutive windows move by three phases. A successful all-one word can inherit tail one, so its outgoing tail need not equal its literal trailing run. The physical bound below retains that inherited tail. It makes a nearly full phase code automatically safe at $h\ge5$, while allowing different codes within one label class. A specified placement then realizes different free-value tables with exact whole-target GLOBAL fee $2d$ at every $d\ge3$. Its adaptive fee is bounded, not classified exactly.
+

@@ -1,0 +1,40 @@
+**Theorem 11.6 (exact undominated-vector correspondence).** Define the
+compact coefficient image
+
+$$
+\mathscr W_s=\left\{
+ \left(\operatorname{tr}(\Theta(H_++H_-)\rho_{y,e,n})\right)_{y,e,n}
+ : (H_+,H_-,L_+,L_-)\in\mathcal K_s\right\}\subset\mathbb R^{12}.
+\tag{IR.75}
+$$
+
+The Pareto frontier of original acquired-high twelve-vectors is exactly
+the undominated part of $\mathscr W_s$. Every such frontier vector has
+an actual realization with at most thirty branches, dimensions at most
+three and only genuinely rank-three high branches.
+
+Proof. The image is compact by Lemma 11.2 and continuity. Its literal
+realizations in Theorem 11.4 show every vector in $\mathscr W_s$ is
+an original achievable vector. Theorem 11.3 gives, below every original
+vector, a vector of $\mathscr W_s$. If an original vector is
+undominated, this dominator must equal it, and it must be undominated
+in the smaller set too. Conversely if an undominated member of
+$\mathscr W_s$ were strictly dominated by an original design, that
+design would have its own coefficient dominator in $\mathscr W_s$,
+a contradiction. This proves both directions without scalarizing
+resource coordinates.
+
+A singular high spectral atom can be reassigned as above, decreasing
+all coordinates weakly. Its nonzero effect $K^\dagger K$ strictly
+decreases at least one original coordinate: at any height
+$\operatorname{diag}(p_y)\succ0$, and
+$\frac14\sum_{e,n}\operatorname{tr}(K^\dagger K\rho_{y,e,n})
+=\operatorname{tr}(K^\dagger K\operatorname{diag}(p_y))>0$.
+Thus an undominated coefficient vector cannot retain any nonzero
+singular atom in its spectral high realization: reassignment would
+produce a strict coefficient dominator. Theorem 11.4 therefore gives
+the asserted genuine finite frontier realization. This is an exact frontier correspondence,
+not a classification of which feasible matrices are undominated.
+The common point in §9 is one member; absence of a least vector does
+not preclude the other minimal vectors. $\square$
+

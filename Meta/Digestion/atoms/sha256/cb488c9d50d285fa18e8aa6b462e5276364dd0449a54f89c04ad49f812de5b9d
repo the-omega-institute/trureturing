@@ -1,0 +1,16 @@
+**定义 1.3（完整中心矩约定）。** 正词路径的顶点为 $q_0=0,q_1,\ldots,q_N=q=(u,v)$。依 Auric 定义169.1设
+
+$$
+a_j=\frac{\det(q_{j-1},q_j)}2,\qquad
+g_j=\frac{q_{j-1}+q_j}{3},\qquad
+A=\sum_j a_j,\qquad S=\sum_j a_jg_j,
+$$
+
+$$
+\mathbf m=S-\frac{Aq}{2},\qquad
+D=2A,\quad E=12\mathbf m_x,\quad F_m=12\mathbf m_y,\quad
+G=(u,v,D,E,F_m).
+$$
+
+这不是重心 $S/A$；$A=0$ 时仍有定义。空贡献的五量为零。后文所有矩来自这一个定义和同一正词，不将一般实折线或环境中的整数五元组当成正词代表。
+

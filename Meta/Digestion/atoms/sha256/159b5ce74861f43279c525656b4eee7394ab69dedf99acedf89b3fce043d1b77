@@ -1,0 +1,35 @@
+**Proposition 6.4 (The additive constant is the actual bit density).** The constant in (6.3) satisfies
+
+$$
+c=d(P)=c_\star.
+\tag{6.5}
+$$
+
+**Proof.** Assign each site to its preceding visible one, including that one and stopping just before the next one. This defines a shift-compatible partition almost surely. For any nonnegative shift-compatible mass $m(i,j)$, stationarity and Tonelli give
+
+$$
+\mathbb E_P\sum_jm(0,j)=\sum_j\mathbb E_Pm(-j,0)
+=\mathbb E_P\sum_im(i,0).
+\tag{6.6}
+$$
+
+First send mass one from each site to its assigned one. Under the Palm law, the incoming mass at a one is its next gap $G$, so
+
+$$
+1=\iota\,\mathbb E_{P^1}G.
+\tag{6.7}
+$$
+
+This is the stationary mass-transport form of the renewal intensity identity; finite mean also follows from Lemma 3.3. Next send the actual loss $\ell_i$ from each site to its assigned one. Its expected outgoing mass is $d(P)$ by (2.2). With $G_-,G_+$ the preceding and following Palm gaps, the incoming reward is $U(G_-,G_+)+V(G_+)$. The two gaps have the same actual law $f$ and are independent under $P^1$. Thus (6.3), (6.6) and (6.7) give
+
+$$
+\begin{aligned}
+d(P)&=\iota\,\mathbb E_{P^1}\bigl[U(G_-,G_+)+V(G_+)\bigr]\\
+&=\iota\,\mathbb E_f\bigl[V(G)+2v_G\bigr]
+=\iota c\,\mathbb E_fG=c.
+\end{aligned}
+\tag{6.8}
+$$
+
+The rewards are nonnegative and bounded by the number of sites in the gap, so the expectations are legitimate. This computes density on the original emitted-bit clock for the same $P$. Hypothetical attainment supplies the final equality to $c_\star$. $\square$
+

@@ -1,0 +1,59 @@
+**Example 12.1 (A legal irreducible four-state nonrenewal law).** Choose exact reals $0<p,q<1$ with $p\ne q$. In this example $p,q$ are parameters. Put
+
+$$
+M_0=\begin{pmatrix}
+1-p&0&0&0\\
+0&1-q&0&0\\
+0&1&0&0\\
+1&0&0&0
+\end{pmatrix},\qquad
+M_1=\begin{pmatrix}
+0&0&p&0\\
+0&0&0&q\\
+0&0&0&0\\
+0&0&0&0
+\end{pmatrix},
+\tag{12.1}
+$$
+
+$$
+Z=\frac1p+\frac1q+2,\qquad
+\lambda=\frac1Z\left(\frac1p,\frac1q,1,1\right).
+\tag{12.2}
+$$
+
+These parameters belong to $\Theta_4$, with irreducible $A=M_0+M_1$, $M_1^2=0$ and $\operatorname{rank}M_1=2$. Their actual visible law is not renewal.
+
+**Proof.** Every row of $A$ sums to one. The positive cycle $1\to3\to2\to4\to1$ connects all states, proving irreducibility. The four stationary coordinate equations are
+
+$$
+\begin{aligned}
+(\lambda A)_1&=Z^{-1}\bigl((1-p)/p+1\bigr)=1/(pZ),\\
+(\lambda A)_2&=Z^{-1}\bigl((1-q)/q+1\bigr)=1/(qZ),\\
+(\lambda A)_3&=Z^{-1}(p/p)=1/Z,\qquad
+(\lambda A)_4=Z^{-1}(q/q)=1/Z.
+\end{aligned}
+\tag{12.3}
+$$
+
+The matrix $M_1$ has nonzero rows only at states $1,2$ and nonzero columns only at states $3,4$, where its rows are zero. Thus $M_1^2=0$. Its two nonzero rows are independent, so its rank is two.
+
+Each of the two one-emitting edges has stationary flow $1/Z$. Under the Palm law at a one, their phases therefore have equal weights. After a one along $1\to3$, the next bit is a forced zero along $3\to2$, followed by zeros in state $2$ until a one with probability $q$ at each trial. After a one along $2\to4$, the forced zero leads to state $1$, where the waiting parameter is $p$. The phases alternate at successive ones. Conditional on the phase, the successive waits use fresh Markov transitions and have gap laws
+
+$$
+f_p(g)=p(1-p)^{g-2},\qquad
+f_q(g)=q(1-q)^{g-2},\qquad g\ge2.
+\tag{12.4}
+$$
+
+Consequently a Palm gap has $P^1(G=2)=(p+q)/2$, whereas two successive Palm gaps satisfy
+
+$$
+P^1(G_1=2,G_2=2)=pq,
+\qquad
+pq-\left(\frac{p+q}{2}\right)^2=-\frac{(p-q)^2}{4}<0.
+\tag{12.5}
+$$
+
+The gaps are not independent, so the visible law is nonrenewal. This is an exact symbolic dependence calculation within (1.4). It asserts no attainment or nonattainment for this example; its purpose is to show that scalar legality and classwise square-zero do not force the rank-one renewal reduction in size four. $\square$
+

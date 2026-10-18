@@ -1,0 +1,12 @@
+**Corollary 7.2 (quality on the same common source).** Let $W_{j,s}=1-R_{j,s}$. A certificate for one table consisting of its complete finite generative description, (3.1), the original acquired words (4.2), and its level-$L$ same-model partition comparisons yields
+
+$$
+1-A_{j,s,L}-E_s-c_s(6/25)^L\le W_{j,s}\le1-A_{j,s,L},
+\qquad c_p=1,\quad c_\beta=2/5,
+\tag{7.1}
+$$
+
+and $D_L\le\Delta_{\rm all}\le D_L+(4/15)^L$. This certifies task-relative semantic quality and marginalized coherence of one model, with individual generation already supplied by its program. It does not recover that program from the semantic coordinates or classify trained networks.
+
+**Proof.** Subtract the common-model bounds (5.1) from one and apply (5.2). ∎
+

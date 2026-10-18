@@ -1,0 +1,34 @@
+**Definition 2.2 (incidence and the auxiliary restricted family).** Put
+
+$$
+\nu_{\mathcal N}(c)=
+ |\{i:\text{at least one port }(i,q)\text{ is assigned to }c\}|.
+\tag{SIR.12}
+$$
+
+This is prescribed incidence in original blocks. Several occurrences
+in one block count once, even for a constant table or a zero potential.
+For an integer $L\ge1$, let $\mathfrak N_{d,L}(n)$ be all networks
+of Definition 2.1 with $\nu_{\mathcal N}(c)\le L$ for every seed.
+All actual-tree compatibility conditions, guards, full block weights,
+network lengths, components and correlations remain allowed.
+
+Write $A_{d,L,n}(w_1,\ldots,w_n)$ for the maximum of (SIR.11)
+over this class and
+
+$$
+\beta_{d,L}(w)=\sup_{n\ge1}A_{d,L,n}(w,\ldots,w)^{1/n}.
+\tag{SIR.13}
+$$
+
+Let $K_{d,L}(n),Z_{d,L}(n)$ be integral and fractional covers of
+$S_d^n$ by its nonempty full solution sets. A solution set belongs
+to this family if it has at least one such witness; no assertion
+is made about all its possible witnesses. These are auxiliary
+quantities, while $\sigma_d,\lambda,M_1(D)$ retain Definition 1.5.
+
+At fixed $d,n$, these maxima and cover optima exist. Distinct owners
+give at most $nm_d$ seeds. Up to seed renaming there are finitely
+many domain, owner and table choices. Every singleton tuple is a
+constant network with no seeds, so the covers are feasible.
+

@@ -1,0 +1,26 @@
+**Theorem 3.1 (positive-lift exclusion for rational quadratic factors).** Let
+$q\in\mathbb Q[X,Y]$ be absolutely irreducible of total degree two. Suppose
+$q$ divides $F_{\boldsymbol e}$ or $G_{\boldsymbol e}$ for primitive positive
+exponent triples as in Definition 2.2. Then no point $(a,b)$ on $q$ can be the
+first two coordinates of a positive lift with a common positive integer root
+$c$, pairwise distinct coordinates, and pairwise multiplicative independence
+in both the unshifted and shifted triples.
+
+The conclusion is only a positive-lift exclusion. It does not say that every
+such $q$ is absent from the resultant.
+
+**Proof.** Write
+
+$$
+q=A X^2+BXY+C Y^2+D X+E Y+F_0.
+$$
+
+The boundary calculation in Section 4 leaves only the rational family
+$q_e$ and the two indefinite conics recorded in Section 7. All other entries
+are excluded directly at positive integer coordinates. The family and the
+two exceptional conics are treated uniformly over their rational function
+fields in Sections 5--7. Those arguments use only primitive divisibility,
+nonzero poles, separability in characteristic zero, and exact local orders.
+They show that a positive lift cannot occur on any survivor. This proves the
+theorem. $\square$
+

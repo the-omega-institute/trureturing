@@ -1,0 +1,43 @@
+**Definition 3.2 (fixed images and retained native ranks).** On finite
+values the actual level-$k$ image is
+$L_k^{\mathrm{fin}}=\rho^k[\mathcal T]$. Use [NIS, Lemma 2.2][NIS]
+at its finite-tree restriction: it is the regular language generated
+by the two ground alternatives $T_k,T_{k+1}$ and recursive pairing.
+Membership is computed by recursively testing these ground
+alternatives and pairing; equivalently, use the finite tree grammar
+
+$$
+Z_k\longrightarrow T_k\mid T_{k+1}\mid\langle Z_k,Z_k\rangle.
+$$
+
+Ground alternatives are finite syntax, not new scalar terminals.
+This language includes images of the two finite leaves. It is not
+the language of trees exceeding a minimum leaf depth.
+
+For the normal rank coordinates of [NIC, Assumption 2.1][NIC], use
+the supplied canonical normal code $B(u)$. It is computed bottom-up:
+the leaves have codes $[0],[1]$; a pair of primitive codes
+$[r+1],[r]$ collapses to $[r+2]$; every other pair is retained as
+the ordered normal constructor. Thus any retained fixed rank test
+is evaluated on the actual code of its named native value. In
+particular, if $\kappa(u)$ is the minimum primitive rank in $B(u)$,
+the supplied shift identity gives
+
+$$
+u\in L_k^{\mathrm{fin}}\iff\kappa(u)\ge k,
+\qquad
+\kappa(u)=k\iff
+u\in L_k^{\mathrm{fin}}\setminus L_{k+1}^{\mathrm{fin}}.
+$$
+
+These fixed thresholds have the indicated image semantics. A primitive
+rank correlation arising in a NIC piece remains its entire affine
+condition together with its native templates and shared residuals.
+It is not replaced by independent choices of numbers or independent
+threshold tests. On original-source payloads those correlations are
+retained by checking the original native equations from which the
+cover was obtained. The equivalence is the two-direction cover and
+signed pullback of [NIC, Theorems 3.2–3.3 and 4.3][NIC], rather than
+an assertion that arbitrary variable-rank relations are regular.
+No arbitrary arithmetic predicate is added to the acquired vocabulary.
+

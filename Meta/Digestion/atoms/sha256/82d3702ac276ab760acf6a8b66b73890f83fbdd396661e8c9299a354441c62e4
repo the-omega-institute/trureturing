@@ -1,0 +1,133 @@
+**Proposition 12.4 (rational closure retaining every middle edge label).** Let $F$ be either table constructed in Theorems 12.2–12.3, with balanced probability tensor $t_{ijk}$, incoming-pair labels $(i,j)$, and emissions in $[a,b]$. For every $0<\delta\le1$ and $\rho>0$ there is a rational balanced tensor $t^r$ with exactly the same positive labelled support, and a rational regular table $F^r$ of the same label shape, such that
+
+$$
+\operatorname{TV}(t,t^r)\le\delta,\qquad
+\max_i|u_i-u_i^r|\le\rho,\qquad
+\max_{i,j}|v_{ij}-v_{ij}^r|\le\rho.
+\tag{12.21}
+$$
+
+It uses (12.6) with the new tensor, not independent rounded update rows. Its own actual triple is admissible. There is a coupling of $\Xi_F,\Xi_{F^r}$ with
+
+$$
+\mathbb E d_\Sigma\le\frac{71\rho+109\delta}{11}.
+\tag{12.22}
+$$
+
+For every complete target simultaneously,
+
+$$
+\begin{aligned}
+|\mathcal L_p^{\Xi_{F^r}}(T)-\mathcal L_p^{\Xi_F}(T)|
+ &\le\frac{25\rho+39\delta}{11},\\
+|\mathcal L_\beta^{\Xi_{F^r}}(T)-\mathcal L_\beta^{\Xi_F}(T)|
+ &\le\frac{21\rho+31\delta}{11},\\
+|V_{\Xi_{F^r}}-V_{\Xi_F}|&\le2\rho+\frac{\delta}{15}.
+\end{aligned}
+\tag{12.23}
+$$
+
+These bounds contain no inverse minimal positive row mass.
+
+**Proof.** Regard each positive $t_{ijk}$ as a directed edge $i\to k$ bearing its middle label $j$. Parallel edges with different $j$ remain different edges. The equality of the first and third marginals is exactly balance at every vertex. The finite cycle deletion used in PAIRED, Lemma 11.6, applies to this labelled multigraph, including loops. Follow positive edges until a vertex repeats; balance prevents a dead end. Subtract the smallest edge mass on the resulting simple cycle. At least one positive edge disappears and balance remains. Repetition terminates after at most $|\operatorname{supp}t|$ subtractions, giving
+
+$$
+t=\sum_{c=1}^{M}w_c z_c,\qquad
+w_c>0,\quad \sum_cw_c=1,\quad
+z_c=\frac1{\ell_c}\mathbf1_{\{\text{labelled edges of cycle }c\}},
+\quad M\le|\operatorname{supp}t|.
+\tag{12.24}
+$$
+
+Indeed, if the subtracted edge amount is $h_c$, its contribution to total mass is $w_c=\ell_ch_c$. Every $z_c$ is a rational balanced probability tensor on the original labelled edges. This argument needs no irreducibility, recurrence estimate or inverse stationary mass; reducible closed classes are handled by the same deletion.
+
+Choose an integer $D\ge M/\delta$ and define
+
+$$
+n_c=\lfloor Dw_c\rfloor+1,\qquad
+N=\sum_cn_c,\qquad r_c=n_c/N,\qquad
+t^r=\sum_cr_c z_c.
+\tag{12.25}
+$$
+
+For $b_c=n_c-Dw_c$ one has $0<b_c\le1$. With $S_0=\sum_cb_c\le M$, $N=D+S_0$ and
+
+$$
+\operatorname{TV}(w,r)
+ =\frac1{2(D+S_0)}\sum_c|b_c-S_0w_c|
+ \le\frac{S_0}{D+S_0}\le\frac MD\le\delta.
+$$
+
+Contraction through the finite probability kernel $c\mapsto z_c$ proves the first part of (12.21). Every $r_c$ is positive, so the positive edge support is exactly unchanged. In particular both end marginals $\pi^r$ coincide, every retained $\tau_{ij}^r$ is positive, and (12.6) gives rational stochastic $B^r,A^r$ satisfying both balances exactly. The label $j$ has not been summed away in (12.24). Performing this construction on $\sum_jt_{ijk}$ alone would not determine, and need not approximate, the prescribed triple.
+
+Choose an integer $H$ with $1/(15H)\le\rho$ and round each emission downward on the grid with denominator $15H$ between $5H/(15H)=a$ and $6H/(15H)=b$. This proves the remaining parts of (12.21), with both endpoints retained.
+
+We need an average conditional-row estimate. If $f_{xy},g_{xy}$ are two probability arrays with the same positive row support and row masses $p_x,p_x^r$, then
+
+$$
+\begin{aligned}
+\sum_xp_x\operatorname{TV}
+ \left(\frac{f_{x,\cdot}}{p_x},
+       \frac{g_{x,\cdot}}{p_x^r}\right)
+ &=\frac12\sum_{x,y}
+       \left|f_{xy}-\frac{p_x}{p_x^r}g_{xy}\right|\\
+ &\le\operatorname{TV}(f,g)+\operatorname{TV}(p,p^r)
+ \le2\operatorname{TV}(f,g).
+\end{aligned}
+\tag{12.26}
+$$
+
+In the middle inequality the added scaling term has $\ell^1$ norm
+$\sum_x|p_x-p_x^r|$; there is no division bound by a small row mass. For $B$, the joint array is the pushforward of $t$ to $(i,(i,j))$, with masses $\tau_{ij}$. For $A$, it is the pushforward to $((i,j),k)$, with masses $t_{ijk}$. Thus (12.21) and contraction give
+
+$$
+\sum_i\pi_i\operatorname{TV}(B_i,B_i^r)\le2\delta,\qquad
+\sum_{i,j}\tau_{ij}\operatorname{TV}(A_{ij},A_{ij}^r)\le2\delta,
+\quad
+\operatorname{TV}(\pi,\pi^r),\operatorname{TV}(\tau,\tau^r)\le\delta.
+\tag{12.27}
+$$
+
+Let $q_i^g,w_{ij}^g$ and $q_i^r,w_{ij}^r$ be the two tables' own normalized complete laws. Set
+
+$$
+X=\sum_i\pi_i\operatorname{TV}(q_i^g,q_i^r),\qquad
+Y=\sum_{i,j}\tau_{ij}\operatorname{TV}(w_{ij}^g,w_{ij}^r).
+$$
+
+Changing one Bernoulli emission costs at most $\rho$. Compare the two successor mixtures first with the old row and changed laws, and then with the changed row and new laws. TV convexity gives the pointwise bounds
+
+$$
+\begin{aligned}
+\operatorname{TV}(q_i^g,q_i^r)
+ &\le\rho+\frac23
+   \left(\sum_jB_{i,(i,j)}\operatorname{TV}(w_{ij}^g,w_{ij}^r)
+                       +\operatorname{TV}(B_i,B_i^r)\right),\\
+\operatorname{TV}(w_{ij}^g,w_{ij}^r)
+ &\le\rho+\frac25
+   \left(\sum_kA_{(i,j),k}\operatorname{TV}(q_k^g,q_k^r)
+                       +\operatorname{TV}(A_{ij},A_{ij}^r)\right).
+\end{aligned}
+$$
+
+Averaging uses the old exact balances, not a changed row requiring a new mass comparison. Equations (12.27) therefore imply
+
+$$
+X\le\rho+\frac23Y+\frac43\delta,\qquad
+Y\le\rho+\frac25X+\frac45\delta.
+$$
+
+Solving with factor $11/15$ yields
+
+$$
+X\le\frac{25\rho+28\delta}{11},\qquad
+Y\le\frac{21\rho+20\delta}{11}.
+\tag{12.28}
+$$
+
+The complete stopping construction justifies these comparisons on the normalized full laws, including noncompletion, rather than only a truncated prefix.
+
+On an old label triple with law $t$, changing its three descriptors costs on average $2X+Y$: both p marginals are $\pi$ and the middle marginal is $\tau$. Couple the label probabilities $t,t^r$ maximally. The unmatched probability is at most $\delta$, and the cost (12.3) between any two descriptor triples is at most $3$. Thus a coupling between the two generated triples costs at most $2X+Y+3\delta$, which is (12.22). This construction remains valid under descriptor collisions, since label triples are coupled before their pushforward.
+
+For a fixed target, the loss-wise reverse triangle inequality gives $X$ or $Y$, and replacing the row by its new row adds at most $\delta$, because the remaining loss function takes values in $[0,1]$. This proves the first two bounds of (12.23). Finally the own p emissions equal the installed $u_i,u_i^r$. On a fixed label triple, the change in $|u_i-u_k|$ is at most $2\rho$; the new function $|u_i^r-u_k^r|$ lies in $[0,1/15]$, so changing $t$ to $t^r$ adds at most $\delta/15$. This proves the last bound. Its own descriptor identities follow from (12.9), with no injectivity condition. $\square$
+

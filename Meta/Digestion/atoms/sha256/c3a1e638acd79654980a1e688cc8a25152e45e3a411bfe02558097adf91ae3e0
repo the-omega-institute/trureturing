@@ -1,0 +1,56 @@
+**Lemma 2.1 (Source sections and two-call representation).** At a fixed
+seed, a consistent finite acquired record $r$ has exactly the source
+section
+
+$$
+\mathcal C(r)=\{X_{t_i}=x_i:1\le i\le n\}.
+\tag{2.1}
+$$
+
+An inconsistent record has empty section. For computing $(q,C)$, a
+fixed-seed protocol can be represented by one of the following:
+immediate return, complete rejection, or a depth-two binary tree with
+root address $t$, second address $t_x$ after first reply $x$, and a
+return/reject decision with a fixed output on each leaf. All calls in
+this representation are actual paid calls. The original protocol is
+not required to have two calls on paths outside $E_2$.
+
+Proof. At a fixed seed and acquired prefix the next-event rule and its
+internal delay are fixed. If the next action requests $t$, adjoining
+reply $x$ intersects the preceding section with $\{X_t=x\}$.
+A finite return adds no source restriction. Internal continuation
+forever is also identical on that whole section. Induction proves
+(2.1) for arbitrary adaptive choices, including repeated addresses;
+contradictory repeated replies give empty sections. This is the
+finite-section interface of Original, Theorems 9.2–10.1.
+
+Any branch which will not return within two actual calls contributes
+zero to both $q$ and $C$. In the representation mark it rejected,
+irrespective of its later behavior. A branch returning after one call
+can instead make a second actual call at the same address, ignore
+the deterministic repeated reply, and retain its original output.
+This paid padding preserves its source section, $q$ and $C$. A
+short rejected branch may likewise be padded with actual repeats
+and rejected. Once a root address is requested, the two possible
+first replies have independently specified continuations, so these
+operations give the stated tree. If there is no first read, the
+first finite action is a zero-read return or there is internal
+nonreturn; these are the other two cases.
+
+This representation changes neither the values being bounded nor
+the original class over which the bound is asserted. It makes no
+claim about preserving expected cost or later behavior. $\square$
+
+For a leaf section $D$, write
+
+$$
+W=J_p(D),\qquad M=\max_{h\in\mathcal A}J_p(D,H_j=h).
+\tag{2.2}
+$$
+
+A deterministic output has correct mass at most $M$. For a fixed real
+$\lambda$, this leaf's best contribution to $C-\lambda q$ is
+$(M-\lambda W)_+$: return a maximizing state or reject. Null leaves
+contribute zero. A zero-read return has $q=1$ and $C\le a/2$;
+complete rejection has $q=C=0$.
+

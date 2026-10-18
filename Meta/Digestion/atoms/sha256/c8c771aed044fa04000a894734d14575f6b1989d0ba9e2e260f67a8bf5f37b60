@@ -1,0 +1,84 @@
+**定理 C-94.4（五模式测量的压缩、四符号概率及纯度字典）。** 在假设 C-94.3 下，
+令 $\mathcal P=\operatorname{Tr}\sigma^2$、
+$\mathcal P_A=\operatorname{Tr}\sigma_A^2$、$\mathcal P_B=\operatorname{Tr}\sigma_B^2$。
+上述实际测量满足
+
+$$
+q_{st}=\frac{r^2}{4}(1+s\mathcal P_A+t\mathcal P_B+st\mathcal P),\qquad
+\sum_{s,t}q_{st}=r^2,\quad q_{\mathrm f}=1-r^2.
+\tag{C94.11}
+$$
+
+并且 C-91.2 的归一化向量
+
+$$
+|\Omega\rangle=\tfrac12(|0,13\rangle+|13,0\rangle-|1,3\rangle-|3,1\rangle)
+\tag{C94.12}
+$$
+
+满足 $Q_{--}=|\Omega\rangle\langle\Omega|$，从而 $q_\Omega=q_{--}$。
+
+证明。首先按实际输入作双侧压缩：
+
+$$
+\begin{aligned}
+&(P_{\mathrm b}\otimes P_{\mathrm b})(\rho\otimes\rho)
+(P_{\mathrm b}\otimes P_{\mathrm b})\\
+&\hspace{12mm}=(P_{\mathrm b}\rho P_{\mathrm b})\otimes(P_{\mathrm b}\rho P_{\mathrm b})
+=r^2J(\sigma\otimes\sigma)J^\dagger.
+\end{aligned}
+\tag{C94.13}
+$$
+
+取迹给两份都在底面的概率 $r^2$，取各 $Q_{st}$ 的迹给
+$q_{st}=r^2\operatorname{Tr}[\Pi_{st}(\sigma\otimes\sigma)]$。
+这一步没有交换 $\rho$ 与 $P_{\mathrm b}$，所以没有假设
+$[\rho,P_{\mathrm b}]=0$；任意底面—中位相干都已被实际投影正确处理。
+
+二元交换的反对称空间是一维，由
+$|\varepsilon\rangle=(|01\rangle-|10\rangle)/\sqrt2$ 张成。
+因此 $R\Pi_{--}R^\dagger$ 是
+$|\varepsilon\rangle_{AA'}\otimes|\varepsilon\rangle_{BB'}$ 的秩一投影。
+将其四项逆重排并用 $J$ 嵌入，依次得到
+$\tfrac12(|0,13\rangle-|3,1\rangle-|1,3\rangle+|13,0\rangle)$，正是 $\Omega$。
+四个不同有序基向量正交，所以其范数平方为 $4/4=1$。
+
+为展开每个交换迹，令矩阵元为 $\sigma_{ab,cd}$，所有指标遍历 $\{0,1\}$。
+按定义直接有
+
+$$
+\begin{aligned}
+\operatorname{Tr}[F_A(\sigma\otimes\sigma)]
+&=\sum_{a,b,c,d}\sigma_{cb,ab}\sigma_{ad,cd}
+=\sum_{a,c}(\sigma_A)_{ca}(\sigma_A)_{ac}=\mathcal P_A,\\
+\operatorname{Tr}[F_B(\sigma\otimes\sigma)]
+&=\sum_{a,b,c,d}\sigma_{ad,ab}\sigma_{cb,cd}
+=\sum_{b,d}(\sigma_B)_{db}(\sigma_B)_{bd}=\mathcal P_B,\\
+\operatorname{Tr}[F_AF_B(\sigma\otimes\sigma)]
+&=\sum_{a,b,c,d}\sigma_{cd,ab}\sigma_{ab,cd}=\mathcal P,\\
+\operatorname{Tr}(\sigma\otimes\sigma)&=1.
+\end{aligned}
+\tag{C94.14}
+$$
+
+$F_AF_B$ 在第三式中交换完整的两份底面。把
+$\Pi_{st}=(I+sF_A+tF_B+stF_AF_B)/4$ 代入即得
+
+$$
+\begin{aligned}
+q_{--}&=\tfrac{r^2}4(1-\mathcal P_A-\mathcal P_B+\mathcal P),\\
+q_{-+}&=\tfrac{r^2}4(1-\mathcal P_A+\mathcal P_B-\mathcal P),\\
+q_{+-}&=\tfrac{r^2}4(1+\mathcal P_A-\mathcal P_B-\mathcal P),\\
+q_{++}&=\tfrac{r^2}4(1+\mathcal P_A+\mathcal P_B+\mathcal P).
+\end{aligned}
+\tag{C94.15}
+$$
+
+相加只余 $r^2$，其补数就是失败概率。证毕。
+
+本推导消费经典交换—纯度恒等式。Mintert–Buchleitner，
+*An observable entanglement measure for mixed quantum states*，
+[quant-ph/0605250v3](https://arxiv.org/abs/quant-ph/0605250v3)，式 (1)–(3)，
+分别给纯态 $4P_-^A\otimes P_-^B$、混态 concurrence 下界和整体—局部纯度差；
+这里的 $J$、五维效果及 $r^2$ 因子明确了这些中间结构在当前来源中的参数。
+

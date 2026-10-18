@@ -1,0 +1,112 @@
+### 79.2 两个物理谱效应
+
+在原坐标 $(1,2)$  上令
+
+$$
+M_2=\operatorname{diag}(m_1,m_2),
+$$
+
+$$
+\Xi=M_2^{1/2}\Delta_{\{1,2\}}M_2^{1/2}
+=
+\begin{pmatrix}-d_f&z_f\\z_f&0\end{pmatrix},
+$$
+
+$$
+d_f=\frac{11m_1}{64},\qquad
+z_f=\frac{\sqrt{m_1m_2}(\sqrt{37}-\sqrt{59})}{16}<0,
+\qquad
+L_f=\sqrt{d_f^2+4z_f^2}.
+$$
+
+取
+
+$$
+\lambda_\epsilon=\frac{-d_f+\epsilon L_f}{2},\qquad \epsilon=\pm1,
+$$
+
+$$
+t_f=\frac{-2z_f}{d_f+L_f},\qquad
+e_-=\frac{(1,t_f)^T}{\sqrt{1+t_f^2}},\qquad
+e_+=\frac{(t_f,-1)^T}{\sqrt{1+t_f^2}},
+$$
+
+$$
+B_\epsilon^{\rm sp}
+=M_2^{1/2}e_\epsilon e_\epsilon^TM_2^{1/2},
+\tag{RC.110}
+$$
+
+并在坐标零上补零。于是
+
+$$
+B_+^{\rm sp}+B_-^{\rm sp}=M,\qquad
+\operatorname{tr}(\Delta B_\epsilon^{\rm sp})=\lambda_\epsilon.
+$$
+
+定义
+
+$$
+V_f=\frac{m_2h_1^2}{b^2},\qquad
+W_f=\frac{m_1h_2^2}{d^2},
+$$
+
+$$
+\chi_\epsilon
+=\alpha V_f(e_\epsilon)_2^2+\beta W_f(e_\epsilon)_1^2.
+$$
+
+选定 $z>0$  的基准取向：
+
+$$
+z_\epsilon=
+\frac{\sqrt{V_f}|(e_\epsilon)_2|}{\sqrt{\chi_\epsilon}}>0,
+$$
+
+$$
+w_\epsilon=
+-\frac{\operatorname{sgn}((e_\epsilon)_2)\sqrt{W_f}(e_\epsilon)_1}
+{\sqrt{\chi_\epsilon}},
+$$
+
+$$
+h_{\epsilon,o}=(1,o z_\epsilon,o w_\epsilon)^T,\qquad o=\pm1.
+\tag{RC.111}
+$$
+
+因此 $w_+>0>w_-$，并且
+
+$$
+B_\epsilon^{\rm sp}
+=\chi_\epsilon n_{h_{\epsilon,o}}n_{h_{\epsilon,o}}^T.
+$$
+
+最后置
+
+$$
+\nu_\epsilon=
+\frac{\chi_\epsilon}{\operatorname{cap}(h_{\epsilon,+})}>0.
+\tag{RC.112}
+$$
+
+承载整个 $B_\epsilon^{\rm sp}$  的预算饱和 live mass 正是
+
+$$
+p_\epsilon=\eta_A\nu_\epsilon.
+\tag{RC.113}
+$$
+
+其最小整个 fibre 活动量为
+
+$$
+\log\!\left(1+\frac{\nu_\epsilon}{p_\epsilon}\right)=A.
+$$
+
+所有白化均发生在物理 failure support 上；特别是下面使用
+
+$$
+q_\epsilon(h)=
+\left|e_\epsilon^TM_2^{-1/2}(n_h)_{\{1,2\}}\right|^2.
+\tag{RC.114}
+$$
+

@@ -1,0 +1,22 @@
+**Convention 10.2 (supplied literature and unverified external scope).**
+The literature credit below is inherited from the supplied CG, JR and IR
+texts. No external version, theorem statement or priority claim is
+independently authenticated here. These antecedents motivate the mature
+framework; none silently supplies a source-specific conclusion missing
+from the proofs above.
+
+| Supplied reference | Relevant mature framework and limitation |
+| --- | --- |
+| Heinosaari–Jivulescu–Reeb–Wolf, *Extending quantum operations*, arXiv:1205.0641v3, §§2.1 and 6.1 | Finite CP/TP and Choi/Kraus methods. An at-most-qubit compatibility statement is not a qutrit compatibility test or a continuous-time implementation theorem. |
+| Terhal–Horodecki, *A Schmidt number for density matrices*, quant-ph/9911117v4; Chruściński–Kossakowski, *On partially entanglement breaking channels*, quant-ph/0511244v1 | Rank-constrained Choi decompositions and partial entanglement breaking antecedents. Here ranks concern products through the actual jointly counted fibre. |
+| Sekatski, *The bottleneck dimension of quantum operations*, arXiv:2608.25010v1, §II.A | Classical-assisted bottleneck language. The present acquired unnormalized mass and TNI supported-live submaps are kept explicit; no capacity interpretation is inferred. |
+| Muñoz-Moller–Leppäjärvi–Heinosaari, *Adversarial Information Gain in Non-ideal Quantum Measurements*, arXiv:2602.20941v1, Definition 1 and Proposition 1 | Joint-operation antecedents. Live Choi domination and separately labelled failure CP measures here are proved explicitly. |
+| Leppäjärvi–Sedlák, *Incompatibility of quantum instruments*, arXiv:2212.11225v2, Definition 8, Remark 3 and Proposition 7 | Finite postprocessing and dilation antecedents. No inaccessible environment port becomes an actual acquired flag, and no continuous-outcome extension is assumed without its own identity. |
+| Nechita–Park, *Random covariant quantum channels*, arXiv:2403.03667v2, §5; de Vicente–Streltsov, *The power of the resource theory of genuine quantum coherence*, arXiv:1604.08031v2, §II.2 | Covariance and the stated zero-transfer Schur subclass. Analytic sign averaging does not make Schur maps an exhaustive native menu or authorize physical sign gates. |
+
+The terms “additional” and “source-specific” distinguish these deductions
+from the supplied current results. They make no world-originality claim.
+All theorems in this volume are ordinary conditional mathematics; no
+Lean/kernel verification, frozen declaration, machine admission or
+experimental validation is asserted.
+

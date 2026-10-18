@@ -1,0 +1,173 @@
+**Proposition 6.1 (explicit correspondence with JS).** For every fixed
+finite $\lambda>C_{\rm end}$ and every prescribed sequence
+$q_n>0$, $q_n\to0$, $t_n=e^{A_n}-1$, $q_nt_n\to\lambda$, define
+
+$$
+\mathcal R(\lambda)=\lim_n\mathcal T_{A_n}(s_0(1-q_n)).
+\tag{SC.38}
+$$
+
+Under Convention 1.1 this limit exists, the classes are eventually
+nonempty, and JS Theorem 7.1 gives $\mathcal R(\lambda)=B_0+\Phi(\lambda)$.
+Consequently the new original-objective conclusions include
+
+$$
+\mathcal R(C_{\rm sat}-h)=T_0-K_{\rm sat}h^2+O(h^3),\qquad
+\mathcal R(\lambda)>B_0+
+\gamma\frac{\lambda-C_{\rm end}}{C_{\rm sat}-C_{\rm end}}
+\quad(C_{\rm end}<\lambda<C_{\rm sat}).
+\tag{SC.39}
+$$
+
+The support obstruction concerns limiting optimizing failure measures.
+The expansion is iterated: first the original $q_n$ limit at a fixed
+finite $\lambda$, then $h=C_{\rm sat}-\lambda\downarrow0$.
+
+Proof. Here is the theorem and parameter correspondence, including why
+it covers the original class. In JS Lemma 2.1 the variables
+$(q,t,\mathcal F,c_*,\nu,k,\Phi)$ are exactly those of (SC.4)--(SC.7),
+with $q=1-s/s_0$ and $t=e^A-1$. JR Theorem 42.1 fixes supported live
+map $\Lambda_*=D(\cdot)D^\dagger+T(\cdot)T^\dagger+S(\cdot)S^\dagger$,
+failure effect $M$, zero other effect, zero high failure and weak low
+coefficient Gram $\operatorname{diag}(\delta,1,1)$. These are conditional
+all-complex equality consequences, not a static support restriction.
+
+For any admitted TP survivor controls trace balance gives
+$p'(u)\ge-\|R(u)\|p(u)$, hence whole-fibre live effect at least
+$e^{-A}I$. FA Theorem 69.1 applies to each actual low label: a nonzero
+null live product has rank two, so its encoder has an onto Kraus matrix
+and its live decoder an injective one. The kernels of $xD+zT+wS$ and
+its adjoint are
+
+$$
+\mathbb C(1,-bz/(h_1x),-dw/(h_2x))^T,\qquad
+\mathbb C(1,-az/(h_1x),-cw/(h_2x))^T.
+\tag{SC.40}
+$$
+
+A common image or kernel fixes both ratios. Fixing the injective decoder
+matrix makes all encoder matrices proportional; fixing the onto encoder
+makes all live-decoder matrices proportional. Zero products with those
+fixed matrices force zero factors. Thus the double rigidity concerns the
+existing actual label and exposes no Kraus index. Its matrices are
+$\sqrt\pi K(z,w)$ and attached failure $\pi vnn^T$. Failure kills both
+coordinate zero and the live kernel. FA Theorem 69.2's Schur complement
+
+$$
+K^\dagger K-
+\frac{K^\dagger Ke_0e_0^TK^\dagger K}{(K^\dagger K)_{00}}
+=c_*(z^2)nn^T
+\tag{SC.41}
+$$
+
+pulls the survival bound back to $0\le v\le tc_*(z^2)$, including axes.
+Full decoder TP makes its acquisition effect
+$\pi(K^\dagger K+vnn^T)$. On the actual labels let $P$ have masses
+$\pi$ and $d\nu=v\,dP$. Their exact identities are
+
+$$
+\int hh^TdP=I_3,\quad \int nn^Td\nu=M,\quad
+\int H(z^2)dP=1-\int|z|dP\le q,\quad C_\nu\le tq.
+\tag{SC.42}
+$$
+
+Their full actual-label TV is exactly
+$\tfrac12[H_{\rm live}+\int|f+vk|dP]$. As $q\to0$, the $P$ laws
+concentrate at the four corners, with weights $1/4$ fixed by their zero
+first and mixed moments. The fixed-mass failure measures on the compact
+ellipse have subsequential limits preserving covariance and cost
+$\le\lambda$. Since $\int k\,d\nu=-d_f$, the triangle inequality gives
+JS Theorem 4.3's bound $\limsup T_{\rm instr}\le B_0+\Phi(\lambda)$.
+This uses no special time law and includes all admitted noncommuting
+controls. Compactness is used for $\nu$, not for $tP$ or unbounded
+label multipliers.
+
+For the matching direction use JS Theorems 5.1, 6.1 and 7.1 with an
+optimizing $\nu_*$ and the covariance measure $\nu_0$ of masses
+$\mu/2$ at $(\sqrt r,\pm\sqrt{W/\mu})$, of cost $C_{\rm end}$.
+For strict-interior $\lambda$, Theorem 3.3 permits $\nu_*$ on at most
+four lines. Choose one ellipse point per line. With
+$c_{\min}=\min c_*>0$, set
+
+$$
+B=\frac{\mu(1+U+1/\beta)}{c_{\min}},\quad K_B=B^2/4,\quad
+\epsilon_n=\frac{2(|q_nt_n-\lambda|+K_B/t_n)}{\lambda-C_{\rm end}},\quad
+\nu_n=(1-\epsilon_n)\nu_*+\epsilon_n\nu_0.
+\tag{SC.43}
+$$
+
+For large $n$ these measures have exact covariance and a strict finite
+cost margin. JS.23--JS.27 generates rare capacity-saturated labels with
+weights $a_i/(t_nc_i)$ and attached effects $a_in_in_i^T$, where
+$c_i=c_*(z_i^2)$, and repairs their six live moments by four pure-live
+labels. In particular, if
+$\mathsf U=\sum_i(a_i/c_i)h_ih_i^T=(b_{ij})$, with
+$b_0=b_{00}$ and $b_{11}$ its second diagonal entry, that exact repair
+has normalized deficit
+
+$$
+e_t=\frac{C_{\nu_n}}t+
+\frac{(b_0-b_{11})^2}
+{4t^2[1-(b_0+b_{11})/(2t)+\sqrt{(1-b_0/t)(1-b_{11}/t)}]}.
+\tag{SC.44}
+$$
+
+The trace of $\mathsf U$ is at most $B$. JS's uniform positivity and
+moment identities hold for $t_n\ge16B$, and
+$t_ne_{t_n}\le C_{\nu_n}+K_B/t_n\le q_nt_n$ by (SC.43).
+Thus the same finite instrument satisfies the original contrast
+inequality at every sufficiently large $n$; cost equality of a limiting
+measure is never substituted for a finite margin. Its actual-label
+absolute differences converge to $S_{\rm corner}+\int|k|d\nu_*$,
+plus the high contribution. This proves common recovery of
+$B_0+\Phi(\lambda)$, not a gluing of separately optimal marginals.
+
+The whole-fibre constructor is precisely JS Theorem 6.1 (FA70/75).
+It uses row-space encoding for each rank-two $K$, effect $K^\dagger K+N$,
+positive terminal survival and a whole-fibre TP first-event decoder
+with activity $\log(1+v/c_*)$. Add the fair high pair
+$\sqrt{(1-\delta)/2}\,DE^\dagger$, and the fair coherent counted
+complement $W_\perp^\dagger/\sqrt2$ with isometric decoder $EJ_0$.
+Their total encoder effect is $I_5$. This freely chosen complement
+preserves the complementary qubit and is distinct from the fixed
+certain-failure completion. For every complex $A\in M_5$, with
+$A_V=E^\dagger AE$, its forgotten maps are exactly
+
+$$
+\begin{aligned}
+\Phi^L(A)&=E[DA_VD^\dagger+TA_VT^\dagger+SA_VS^\dagger
++J_0W_\perp^\dagger AW_\perp J_0^\dagger]E^\dagger,\\
+\Phi_\ell^f(\mathcal B)(A)&=
+ w_\ell\left(\int_{\mathcal B}\frac{2\,du}{(1+u)^2}\right)
+ \operatorname{tr}(EME^\dagger A)P_f,
+\qquad \ell\in\{0,1,2,3,13\}.
+\end{aligned}
+\tag{SC.45}
+$$
+
+These equalities follow from the exact live Gram and attached failure
+sum, on all complex matrix units and every Borel $\mathcal B$.
+Cross-support terms vanish; complementary coherences remain. Labels
+$0,13$ are separately zero and no extra or singular sector is added.
+For every passive reference the live conjugating matrices tensor with
+$I_R$, and the failure map is exactly
+
+$$
+w_\ell\left(\int_{\mathcal B}g(u)du\right)P_f\otimes
+\operatorname{Tr}_5[(EME^\dagger\otimes I_R)X].
+\tag{SC.46}
+$$
+
+All twelve original outputs therefore preserve their HALF full-cq
+errors: conditionally $e_5=e_{27}=E_*$ and
+$e_{16}<71/484<37/250<E_*$. Only the high pair has dimension at
+least three; its acquired mass on each history is $(1-\delta)A_y$,
+where $A_y=\sum_i h_i^2p_{yi}$, maximized at $27$ and equal to JR's
+sharp $\mathsf C(s)$ on the weak plateau. Low probabilities include
+all $N$ mass, even when it later fails. All matrices and labels are
+fixed before the sole specimen arrives. The chosen chronological
+recovery has actual mathematical first events, no deadline atom and
+no action after absorption. Necessity allowed every FA67.2 path.
+This verifies the hypotheses and common realization needed to apply
+JS Theorem 7.1; (SC.22) and (SC.34) now give (SC.39). $\square$
+

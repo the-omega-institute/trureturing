@@ -1,0 +1,42 @@
+**Definition 25.1 (Sparse family, actual preparation and count-preserving access).** Let $H\ge2$, let $K\subseteq\{1,\ldots,H\}$ contain $H$, put $r=|K|$, and fix strictly positive numbers $p_k$ with $\sum_{k\in K}p_k=1$. All phases belong to $\mathbb T=\mathbb R/(2\pi\mathbb Z)$. On $\mathbb C^{H+1}$ define
+
+$$
+c_k=\sqrt{p_k}e^{i\theta_k},\qquad
+x_\theta=\sum_{k\in K}c_ke_{H-k},\qquad
+Se_j=e_{j+1}\ (j<H),\quad Se_H=0,\quad
+J_\theta=x_\theta e_H^*.
+\tag{25.1}
+$$
+
+The branches are $A\mapsto SAS^*$ and $A\mapsto J_\theta A J_\theta^*$. This is Definition 23.1 with $H\ge2$; all probabilities are fixed and known. Use the chronological convention and conjugate-linear-first inner product of Definition 24.1. Replace its memory $\mathbb C^4$ by $\mathbb C^{H+1}$ and its three-coordinate support by $K$. An actual observed tick has posterior $x_\theta x_\theta^*$ by (23.3). The additional observation resources are exactly those of Definition 24.1, now for this memory: repeated coherent applications of the same isometry
+
+$$
+V_\theta\psi=S\psi\otimes|0\rangle+J_\theta\psi\otimes|1\rangle,
+\tag{25.2}
+$$
+
+stable branch phases, no inaccessible record distinguishing the coherent histories, retention of the flags, and arbitrary terminal flag POVMs commuting with their total count. There is no intervention during the coherent run and no terminal memory measurement. The arbitrary within-count-sector terminal POVMs of Definition 24.1 remain available. These resources are hypotheses in addition to the classical instrument: (24.18), with the present $S,J_\theta$, still supplies the same CP branches while inaccessible orthogonal records remove history coherences. Thus neither a classical output law nor an occupation-phase quotient alone supplies this access.
+
+For a chronological binary word $w=b_1\cdots b_n$, set $K_w=K_{b_n}\cdots K_{b_1}$, where $K_0=S$, $K_1=J_\theta$. Write
+
+$$
+\begin{aligned}
+|\Psi_n(\theta)\rangle&=\sum_{w\in\{0,1\}^n}K_wx_\theta\otimes|w\rangle,\\
+\Omega_n(\theta)&=\operatorname{Tr}_{\rm mem}|\Psi_n(\theta)\rangle\langle\Psi_n(\theta)|,\\
+Q_n|w\rangle&=|w|_1|w\rangle,\\
+\mathcal D_n(B)&=\frac1{2\pi}\int_0^{2\pi}e^{itQ_n}Be^{-itQ_n}\,dt,\qquad
+T_n(\theta)=\mathcal D_n(\Omega_n(\theta)).
+\end{aligned}
+\tag{25.3}
+$$
+
+Take $T_0=1$. This $Q_n$ is Definition 24.1's total tick-count operator $N_1$, and $\mathcal D_n=\mathcal T_n$ in (24.3). Here (23.11) gives $S^*S+J_\theta^*J_\theta=I$, so the states are normalized. The integral is the usual $U(1)$ projection onto equal-charge blocks: [Bartlett–Rudolph–Spekkens, *Reference frames, superselection rules, and quantum information*, arXiv:quant-ph/0610030v3, §II.B, equations (7)–(10)](https://arxiv.org/html/quant-ph/0610030v3) uses total photon number; the present integer-valued charge is total tick count. Spectral expansion gives the same block projection here. For every allowed effect $E$, $\operatorname{Tr}(E\Omega_n)=\operatorname{Tr}(ET_n)$. Conversely all effects within each count block are allowed, so equality of $T_n$ is precisely equality of all allowed terminal measurement laws at that horizon.
+
+Define the affine phase subgroup and the integer relation lattice by
+
+$$
+\Gamma_K=\{(a+bk)_{k\in K}:a,b\in\mathbb T\},\qquad
+L_K=\left\{z\in\mathbb Z^K:\sum_kz_k=0,\ \sum_k kz_k=0\right\}.
+\tag{25.4}
+$$
+

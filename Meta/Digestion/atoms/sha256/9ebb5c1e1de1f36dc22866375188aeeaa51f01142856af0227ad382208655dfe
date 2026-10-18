@@ -1,0 +1,13 @@
+#### 34.5　统一的自适应 transcript 模拟
+
+令 $W_1,\ldots,W_n$ 是 canonical 实验，在方向 $\theta$ 下独立服从
+
+$$
+W_t\sim N(\theta k_*,1).
+$$
+
+它对应每轮都执行最大分离动作 $(u_*,v_*)$。下一定理说，任意可行自适应策略的
+完整记录都是这个 canonical 实验的一个与 $\theta$ 无关的 garbling。
+
+<a id="claim-34-5-1"></a>
+

@@ -1,0 +1,29 @@
+**定义 1.2（The same actual dense family）。** For real $s,t$, let
+
+$$
+F(s,t)=
+\begin{pmatrix}
+0&s&s&s&s\\
+-s&0&t&-t&s\\
+-s&-t&0&t&s\\
+-s&t&-t&0&s\\
+-s&-s&-s&-s&0
+\end{pmatrix},
+\qquad
+M(s,t)=I_5+iF(s,t),\qquad C(s,t)=\frac{M(s,t)}5.
+\tag{1.2}
+$$
+
+Set
+
+$$
+A=\frac1{\sqrt7},\qquad B_0=\frac1{\sqrt3},\qquad
+\mathcal R=[-A,A]\times[-B_0,B_0],
+\qquad \Gamma(s,t)=JC(s,t)J^\dagger.
+\tag{1.3}
+$$
+
+The symbol $B_0$ is a scalar bound and is distinct from the ordered basis $B$.
+No sign, axis, rank, strict-positivity, or unequal-eigenvalue restriction is
+imposed.
+

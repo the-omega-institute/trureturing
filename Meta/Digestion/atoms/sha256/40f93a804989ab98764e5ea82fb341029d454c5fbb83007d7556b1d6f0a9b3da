@@ -1,0 +1,86 @@
+**Application 26.5 (Theorems 5.2–6.1: the entire-exterior condition).** On the
+family $(u_j)_{j\ge0}$, or on any infinite retained tail of it, the entire
+exterior $E_j^Q$ is eventually constant if and only if $Q$ covers every
+infinite binary branch. Equivalently,
+
+$$
+\sum_{q\in Q}2^{-|q|}=1.
+\tag{CS.26.14}
+$$
+
+If this holds and $Q\ne\{\varepsilon\}$, define
+
+$$
+B_Q=\max\bigl(\{0\}\cup\{g(q):q\in Q\}\bigr).
+\tag{CS.26.15}
+$$
+
+For every $j\ge B_Q$ the *actual fixed row* is
+
+$$
+\left(Q,\operatorname{Trie}(Q),\pi_Q\right),\qquad
+q\sim_{\pi_Q}q'\Longleftrightarrow h(q)=h(q').
+\tag{CS.26.16}
+$$
+
+Here $Q$ is ordered lexicographically and $\operatorname{Trie}(Q)$ is the
+finite full binary trie with a pair at every proper prefix and its
+numbered holes at the cut addresses. It contains no $j$, no $T_j$ and no
+unfilled source variable. For the root cut set $B_Q=0$ and use its fixed
+one-hole row from Application 26.4.
+
+Calculation. This is Definition 5.1's completeness test and the constant
+trie case in Theorems 5.2–6.1, using the guards $g(q)$ and equality keys
+$h(q)$ from Application 26.4. Equivalently, at depth
+$M=\max(\{0\}\cup\{|q|:q\in Q\})$, the disjoint extensions of the cut
+words cover exactly $\sum_{q\in Q}2^{M-|q|}$ of the $2^M$ words. This
+gives (CS.26.14), including empty and root cuts. Above $B_Q$ all cuts
+are reached, so the complete-trie calculation gives (CS.26.16).
+
+For the converse it is useful to make all surviving exterior cones
+explicit. If $Q$ is nonempty and has no root cut, let $M_Q$ consist of
+the missing children of its trie: addresses $p a$ where $p$ is a proper
+prefix of a member of $Q$, $a\in\{L,R\}$, and $p a$ is a prefix of no
+member of $Q$. Set $M_\varnothing=\{\varepsilon\}$ and
+$M_{\{\varepsilon\}}=\varnothing$. Then
+
+$$
+F_Q=Q\cup M_Q
+\tag{CS.26.17}
+$$
+
+is a finite complete prefix-free frontier. Every member of $M_Q$ is
+incomparable with every member of $Q$. Indeed a branch in the finite trie
+either first hits a cut leaf or first takes a missing child; these are
+exactly its first hits in $F_Q$. This proves all the assertions, including
+that $M_Q$ is nonempty exactly when $Q$ is incomplete.
+
+For a sufficiently large explicit threshold, take
+$B_{F_Q}=\max(\{0\}\cup\{g(p):p\in F_Q,\ p\ne\varepsilon\})$.
+At every $j\ge B_{F_Q}$ the full exterior can equivalently be computed by
+the finite trie of $F_Q$: put the numbered $Q$ holes at $Q$ and put at each
+$m\in M_Q$ the *complete finite tree*
+
+$$
+\begin{cases}
+u_j,&m=\varepsilon,\\
+T_{j+2-h(m)},&m\ne\varepsilon.
+\end{cases}
+\tag{CS.26.18}
+$$
+
+Expand these finite trees when forming the actual row. Every exterior
+node is included by this construction. No $Q$ cut enters or removes an
+$M_Q$ cone, and all its ancestors are pairs. If $m\ne\varepsilon$, its
+surviving subtree changes at every distinct index by distinctness of
+the $T_n$. If $m=\varepsilon$, then $Q$ is empty and the whole $u_j$
+changes; its left subtree already distinguishes its index. Thus an
+incomplete $Q$ has different concrete exteriors at any two distinct
+indices beyond this threshold, including on every retained tail.
+It cannot have an eventually fixed row. $\square$
+
+Formula (CS.26.18) is an evaluation rule for a changing exterior, not a
+claim that a symbolic family is one row. In the complete case (CS.26.16)
+is literally a single finite tuple after its threshold. For finite
+retained $S$, eventual behavior along an infinite tail is not invoked.
+

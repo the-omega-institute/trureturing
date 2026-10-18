@@ -1,0 +1,52 @@
+**Lemma 6.1 (Quadratic posterior remainder).** For the family of Lemma 5.2 there is a finite constant $C\ge1$, depending on $Q$ and the chosen direction, such that for $|t|\le\alpha/4$ and every legal exterior,
+
+$$
+|p_{Q_t}(x)-p_Q(x)|\le C|t|.
+\tag{6.1}
+$$
+
+Consequently
+
+$$
+d(Q_t)\ge d(Q)+\delta t-C^2t^2.
+\tag{6.2}
+$$
+
+**Proof.** The kernel in (5.2) is a rational function of $t$ whose denominators $\pi_{f_t}(u)$ are positive throughout this compact interval. Formula (5.3) makes every legal $(2M+1)$-word probability a positive rational function of $t$. For each radius-$M$ exterior permitting both center choices, the posterior is the probability of the center-one word divided by the sum of its two word probabilities. Its denominator is positive, so this posterior and its derivative are continuous on the interval. There are finitely many such exterior contexts. In a forced-zero context the posterior is identically zero.
+
+At $t=0$ these posteriors equal $p_Q$ in every legal radius-$M$ context: Proposition 2.2 applied to $Q$ shows that conditioning on a larger exterior window leaves its radius-$r$ posterior unchanged. Choose $C$ to be at least one and at least the maximum absolute derivative over the finite contexts and the compact interval. The mean-value theorem gives (6.1). This is a uniform bound over contexts for this fixed law, not a bound over different kernels.
+
+Lemma 2.5, applied with $P=Q_t$, and (5.5) give the exact equality
+
+$$
+d(Q_t)=d(Q)+\delta t
+-\mathbb E_{Q_t}[(p_{Q_t}-p_Q)^2].
+\tag{6.3}
+$$
+
+Using (6.1) proves (6.2), including all forced-zero contexts. $\square$
+
+**Proof of Theorem 1.5.** Fix arbitrary $m\ge1$ and a permitted $Q$ of visible order at most $m$. Its least order $r$ lies in $[1,m]$. Lemma 2.4 gives existence of $d(Q)$, and Proposition 4.1 supplies a direction with $\delta>0$. Lemma 5.2 produces the same-domain stationary family with visible order $M=2r\le2m$. Set
+
+$$
+\varepsilon_Q=\min\left\{\frac\alpha4,\frac{\delta}{2C^2}\right\}>0.
+$$
+
+For every $0<t<\varepsilon_Q$, Lemma 6.1 gives
+
+$$
+d(Q_t)\ge d(Q)+\delta t-C^2t^2
+>d(Q)+\frac{\delta t}{2}>d(Q).
+\tag{6.4}
+$$
+
+For each one of these fixed laws, every actual marginal $(Q_t)_n$ belongs to the entire original simplex $\mathcal P(B_n)$. Thus [Growth], Theorem 3.2, gives
+
+$$
+\Phi_n((Q_t)_n)\le\kappa_n\qquad(n\ge1).
+$$
+
+Lemma 2.4 applied at order bound $M$ supplies its density limit, and [Growth], Theorem 5.2, supplies the right-hand limit. Dividing by $n$ and taking $n\to\infty$ yields $d(Q_t)\le c_\star$, which proves (1.4) and $d(Q)<c_\star$.
+
+The family, its parameter and its visible order are fixed before any length limit. Only finite cylinder probabilities and conditional tables were differentiated in bounding (6.1); there is no interchange of a derivative with a thermodynamic limit. Both density limits also hold along the original subsequence $n=3N$. $\square$
+

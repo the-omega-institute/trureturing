@@ -1,0 +1,112 @@
+**Theorem 208.2 (All-threshold spread and joint stock bounds).** Set
+$d=\delta+E$. For $s>0$ let
+$J_s=\{j\ge3:\gamma_j\ge d+s\}$ and $m=|J_s|$. Define
+
+$$
+\chi_r=\frac{2\lfloor r^2/4\rfloor}{r(r-1)}\quad(r\ge2),\qquad
+\Gamma_1=2,\qquad
+\Gamma_m=\max\left\{3,\
+ \max_{2\le r\le m}\frac{2(q+1)}{1+q\chi_r}\right\}\quad(m\ge2),
+\quad q=\left\lfloor\frac{m-1}{r-1}\right\rfloor.
+\tag{208.3}
+$$
+
+On the same actual measure (208.2),
+
+$$
+m_j\ge2s\quad(j\in J_s),\qquad
+d_{ij}\ge s\quad(i<j,\ i,j\in J_s).
+\tag{208.4}
+$$
+
+For any $r\ge2$ selected events, the range $R$ of their marginal
+masses satisfies $R\ge2s-\chi_rS$. More generally, if $n\ge2$
+selected marginal masses lie in an interval of length $R_0$, then
+
+$$
+R_0\ge q(2s-\chi_rS),\qquad
+2\le r\le n,\quad q=\left\lfloor\frac{n-1}{r-1}\right\rfloor.
+\tag{208.5}
+$$
+
+Consequently every input satisfies, simultaneously at every such
+threshold,
+
+$$
+\begin{aligned}
+t&\ge(\mu-\delta)_+,\qquad S\ge\Gamma_ms &&(m\ge1),\\
+S+t&\ge4s+d &&(m\ge3),\\
+(1+q\chi_r)S+t&\ge2(q+2)s+d
+ &&\left(m\ge4,\ 2\le r\le m-2,\
+ q=\left\lfloor\frac{m-3}{r-1}\right\rfloor\right).
+\end{aligned}
+\tag{208.6}
+$$
+
+These are necessary conditions on complete $O$ inputs, without
+independence, exchangeability or a condition on a replacement measure.
+
+**Proof.** Delete only the early correct rows, obtaining $y_c$.
+Its support cannot increase and its anchor decreases by $E$, so
+$\Delta_O(y_c)\le\delta+E=d$. Constant output zero on this score
+earns $S+t$. For $a=1,2$, the legal stopped table $(a,j;0,j,0)$
+changes only cell $10$ and gains
+
+$$
+\gamma_j-P\{w_a=1,w_j=0\}.
+\tag{208.7}
+$$
+
+The two loss sets are disjoint on $\Omega_1\cup\Omega_2$ and their
+union is contained in $Z_j$. Prefix $00$ belongs to neither loss
+set. Hence $m_j\ge2(\gamma_j-d)_+$. The table
+$(i,j;0,j,0)$ similarly gives $d_{ij}\ge(\gamma_j-d)_+$.
+This proves (208.4), charging the deleted $E$ once.
+
+For an original-order pair $i<j$ among $r$ selected events,
+
+$$
+\nu(Z_i\mathbin{\triangle}Z_j)
+ =2\nu(Z_j\setminus Z_i)+m_i-m_j\ge2s-R.
+\tag{208.8}
+$$
+
+At a point where exactly $k$ of the $r$ events occur, exactly
+$k(r-k)\le\lfloor r^2/4\rfloor$ unordered pairs disagree.
+Integrating on this one measure yields
+$\binom r2(2s-R)\le S\lfloor r^2/4\rfloor$, proving the range
+bound. This is the classical cut-count argument; see Robert Šámal,
+[*Cubical coloring — fractional covering by cuts and semidefinite
+programming*](https://arxiv.org/pdf/0911.2589v3), Lemma 2.1 and
+Corollary 2.2, for the fractional-cut counting principle. Here its
+inputs are the actual directed losses (208.7).
+
+Sort only the $n$ numerical marginal masses. Take $q$ consecutive
+blocks of $r$ numbers, consecutive blocks sharing one endpoint.
+Their ranges telescope and each obeys (208.8), independently of the
+original address order. Their total range is at most $R_0$, which
+proves (208.5), also when its right side is negative. For all $m$
+events the range is at most $S-2s$, so
+$(1+q\chi_r)S\ge2(q+1)s$. If $m\ge2$, the disjoint sets
+$Z_i$ and $Z_j\setminus Z_i$ also force $S\ge3s$; for $m=1$
+use $S\ge2s$. This proves the $\Gamma_m$ bound. Sorting the
+marginal numbers has not relabeled any query address.
+
+In the original score, $(1,2;1,2,j_*)$ collects all $E+S$ and
+$\mu=\gamma_{j_*}$, forcing $t\ge\mu-\delta$. For late $i<j<k$,
+the one stopped table $(i,j;0,j,k)$ collects at least
+$m_i+\gamma_j+\gamma_k$. Its exhaustion label $k$ is legal even
+though unqueried. Thus
+
+$$
+m_i+\gamma_j+\gamma_k\le S+t+d.
+\tag{208.9}
+$$
+
+Retain the first $m-2$ addresses of $J_s$ and use its last two
+addresses as $j,k$. The retained marginal masses lie in
+$[2s,S+t-2s-d]$. Nonemptiness gives the second line of (208.6).
+For $m\ge4$, apply (208.5) to their range, at most $S+t-4s-d$,
+and rearrange. No sum of separately attainable support gains occurs.
+$\square$
+

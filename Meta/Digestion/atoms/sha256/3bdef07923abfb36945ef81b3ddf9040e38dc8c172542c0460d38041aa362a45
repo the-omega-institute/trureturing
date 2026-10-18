@@ -1,0 +1,19 @@
+**Proposition 27.3 (the comparison has no count invariance).** Splitting
+in Theorem 27.1 preserves the full $\Gamma$ vector and $K$,
+generally increases $J_t$, and can increase the number of positive
+actual low labels. In the strict reversal region, a positive strict
+fraction has positive height gain and produces two positive endpoints.
+
+Proof. Affinity and the exact defect are (FC.108)–(FC.109). If
+$p>0$ and $0<\xi<1$, both endpoint weights are positive. In a
+compatible group on an attained face, the earlier Theorem 3.3 instead
+uses weakly same-sign endpoints and zero triangle loss; that is its
+separate count mechanism. Here strictly opposite signs prevent that
+merge. As a scalar illustration of the defect, with
+$\eta_0=1/100$, $\eta_1=-1/50$ and $\xi=1/3$, the original
+height is zero and the endpoint height is $1/75$. One fractional
+label has become two endpoint labels. These abstract scalar values
+illustrate the identity, not an additional feasible original source
+law. Neither this illustration nor finite convex-hull representation
+bounds the new alphabet by the old one. $\square$
+

@@ -1,0 +1,18 @@
+**Convention 10.18 (Scope of the mathematical applications).** The
+preceding results use the following exact correspondences. Existing
+inverse transforms, scalar target bounds and classical matrix structures
+retain their indicated sources; the relation-specific conclusions are
+the combinations proved above.
+
+| Source | Objects and hypotheses used here | Consequence and limit |
+| --- | --- | --- |
+| [Correlation §23.2][Correlation10] | $\Gamma_n=B_n$, $D_{T'}=d_T$, $\mu_{T'}=\mu_T$, all legal subsets including $\varnothing$; its named HiddenRelations C-28 suppliers give the complete inverse. | (10.2)–(10.5), independent columns and the legal-set count; no phase experiment follows from this classical inverse. |
+| [Symplectic §35.13][Symplectic10] | $\psi_I=\sqrt{p_I}e^{-i\theta_I}$, $\mu_{T_j}=\mu^0_{T_j}+\xi_j$, $\Phi_{T_j}=d_{T_j}^{\mathsf T}\theta$; positive chart and symplectic area $2\pi$. | The sign and scale in (10.22), restricted by $\theta=W\Phi$; the supplier's complete torus is distinct from this local chosen lift. |
+| This volume, Definition 9.7, (9.42) and Definition 9.14 | $n=3$, $T=\{1,3\}$, $(\varnothing,1,2,3,13)$, $d=(1,-1,0,-1,1)$, $\xi=\kappa-\kappa_0$, $p^0=\bar p$, $G=I_0$, $W_I=d_I/(\bar p_I I_0)$, $\Phi=\chi$. | The existing fixed-fiber score, residual and negative-phase conjugate model are the scalar instance of (10.14) and (10.21). Several targets require $G^{-1}$. |
+| This volume, Proposition 8.13, Definition 9.1, Proposition 9.2 and Theorem 9.4 | Same full positive $p$, site-$i$ legal fibers, resolved signs and blocked modes, fixed recorded $\eta$, full nuisance gradient, same iid count $N$. | $J_\eta=4L_\eta$, the conditional-variance identity, component balance and exact reference-score saturation used in (10.49) and (10.56); no erased record is substituted. |
+| This volume, Theorems 9.10 and 9.13 | Scalar contrast $\ell=Da$ for arbitrary real $a$, or $\ell=d_T$ for a single nonempty target; regular POVMs on independent pure copies. | (10.44) consumes the arbitrary-contrast bound; the one-site sufficiency is extended to the support iff and common-port iff, keeping all phase nuisance directions. |
+| Fikioris, [Theorem 2.1(i)][KMS10] | Matrix order $m=k+1\ge2$, $\rho=1/2$, external scale $d_n2^k$. | The classical tridiagonal inverse in (10.10); its indices label maximum relations, not the sites of the legal path. |
+| Matsumoto, [§3 and Theorem 5][Matsumoto10] | Smooth local pure model, SLD lifts $l_a=2\partial_a\psi$ at the horizontal reference, $J^S=H$; full model parameters number $2r$. | Pure tangent/QFI and imaginary-Gram compatibility background. Phase-only derivatives have real Gram; the probability–phase family has the imaginary cross block (10.24). |
+| Gill–Massar, [Theorem I and §V.A–B][GM10] | Ambient dimension $d_n$, $N$ identical independent pure states, possibly collective measurements. | Information tradeoff background; (10.26)–(10.30) separately prove the stronger directional statement required here. No collective mixed-input extension is used. |
+| Li–Ferrie–Gross–Kalev–Caves, [equation (18), Supplemental §II][FisherSymmetric10] | $d=d_n$, fiducial $\psi_0$, positive overlaps $\sqrt{p^0_I}$, two real/imaginary quadratures, setting probabilities $t,1-t$. | The two-basis construction underlies (10.34)–(10.38); arbitrary finite $N$ with real $t$ uses recorded random settings. It does not establish availability within the restricted site menu. |
+

@@ -1,0 +1,21 @@
+**Corollary 16.2 (conditional original minimum counts on this branch).**
+Under Theorem 16.1's hypotheses and the inherited GC actual-count
+suppliers, for each $r\in[r_-,r_+]$ there is a finite original
+height-optimal weak instrument with at most eight supported-nonzero
+low actual labels. Under GC (GC.10)'s equality of minima,
+
+$$
+n_{\rm tot}(s,t)=1+n_t(r)\le9,\qquad s=s_0r/\sqrt\alpha.
+\tag{IC.73}
+$$
+
+Proof. Merge a law realizing (IC.71) within each compatible complete
+group. GC Proposition 12.2 supplies exactly the common live Gram,
+full failure covariance and pointwise capacity premises of GC
+Proposition 10.1. That constructor supplies the finite original
+instrument, with one low label per occupied group and its counted
+coherent high completion. GC.10 then gives the stated bound on the
+minimum total count. It is not a total-count identity for every
+instrument, does not give an exact minimum of nine, and does not
+supply seven-low compression. $\square$
+

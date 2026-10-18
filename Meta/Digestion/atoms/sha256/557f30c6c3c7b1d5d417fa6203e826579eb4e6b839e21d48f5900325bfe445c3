@@ -1,0 +1,26 @@
+**Theorem 1.3 (no uniform finite correlation-order sufficiency).** For
+every finite integer $r\ge1$ there exist admissible $D,p$ and rational
+laws $\mu_0,\mu_1$, strictly positive on every source in the unchanged
+family $\mathcal F_D$, such that
+
+$$
+\mu_0\equiv_r^\partial\mu_1,
+\qquad V_{D,p}(\mu_0)<V_{D,p}(\mu_1).
+\tag{NCO.6}
+$$
+
+The construction in §2 and the all-competitor bounds in §3 prove this
+statement. Both laws use exactly the same $D,p$, family, four-reply
+operation and correctness domain. They can even have the same entire
+hint-bank marginal before full-support completion. The asserted price
+gap is between optimized infima; no exact optimum is asserted.
+
+Proof. Choose the parameters and laws of Definitions 2.1–2.2 for the
+given $r$. Theorem 2.3 realizes them on actual sources of (NCO.1) and
+proves the native all-word conditional equalities. Theorem 2.4 with
+$\epsilon=1/100$ makes both laws rational and strictly positive on the
+entire same family while preserving those equalities. Theorems
+3.1–3.3 give an admissible upper strategy and a lower bound uniform
+over every admissible competitor, with positive difference (NCO.25).
+These are precisely the two assertions of (NCO.6). $\square$
+

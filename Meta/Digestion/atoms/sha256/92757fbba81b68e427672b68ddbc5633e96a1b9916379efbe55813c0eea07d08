@@ -1,0 +1,39 @@
+**Reuse 2.2 (unique primitive-ray decomposition and effective parsing).**
+The exact supplier is [JM, Reuse 36.2 and Theorem 36.3][JM]. Put
+
+$$
+I_1=\rho[\mathcal T],\qquad \mathcal P=\mathcal T\setminus I_1.
+$$
+
+Every $u\in\mathcal T$ has a unique decomposition
+
+$$
+u=\rho^{\nu(u)}p(u),\qquad p(u)\in\mathcal P,
+\qquad \nu(u)=\max\{n\ge0:u\in\rho^n[\mathcal T]\}.
+\tag{IDC.2.2}
+$$
+
+In particular, for every $k\ge0$,
+
+$$
+p(\rho^k u)=p(u),\qquad \nu(\rho^k u)=\nu(u)+k.
+\tag{IDC.2.3}
+$$
+
+The effective representation is a complete finite native tree description.
+One-step image parsing uses the disjoint cases
+
+$$
+I_1::=\beta\mid(\beta,\alpha)\mid(I_1,I_1).
+\tag{IDC.2.4}
+$$
+
+The inverse sends these cases respectively to $\alpha$, $\beta$, and the
+pair of the two parsed inverses. The special pair is disjoint from the
+last case because $\alpha\notin I_1$. Image membership and the inverse
+on its domain are decidable by finite subtree recursion. Repeating the
+existing inverse until image membership fails computes $p(u),\nu(u)$;
+[JM, §36][JM] supplies termination and uniqueness, and [JM, §65.1][JM] explicitly
+uses this finite computation. This is computation on an acquired description,
+not inverse action on the source or an unexplained termination oracle.
+

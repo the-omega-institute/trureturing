@@ -1,0 +1,27 @@
+### 82.1. Two graph types and their scope
+
+Continue with \(0<|b|<1\), and define
+\[
+ \Theta(x,y)=(-\bar y,\bar x),\qquad
+ S(x_0,x_1,x_2)=(x_1,x_2,x_0).
+\]
+The synchronous \(S_3\) action and \(\Theta\) preserve common-flat
+rays. For a noncanonical ray \(w\), let \(\Gamma(w)\) be the
+orthogonality graph induced on
+\(S_3w\cup S_3\Theta w\), with projective duplicates identified.
+
+**Theorem 82.1.** Exactly one of the following holds.
+
+1. Both channels have at most two distinct entries. Then \(w\) is aligned,
+   the two disjoint \(S_3\) orbits have three rays each, and
+   \(\Gamma(w)=K_{3,3}\).
+2. At least one channel has three distinct entries. Then the two disjoint
+   \(S_3\) orbits have six rays each, and \(\Gamma(w)\) is four-regular
+   bipartite. Its vertices \(Pw,Q\Theta w\), for \(P,Q\in S_3\), are
+   adjacent exactly when \(P^{-1}Q\) is the identity or a transposition.
+
+In particular there is no orthogonal triple within any such symmetry union.
+The theorem does not classify edges between different unions. Arbitrary
+noncanonical triples and whole-branch canonical-basis uniqueness are not
+consequences of this statement.
+

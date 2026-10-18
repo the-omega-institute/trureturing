@@ -1,0 +1,18 @@
+**定理 57.2（Exact spine reduction, including waits and seams）。** At every actual archive of Definition 55.1,
+
+$$
+D_{\rm ad}(b,S,\sigma,\lambda)
+=\min_{\text{priced literal spines}}(\Pi-b).
+\tag{57.3}
+$$
+
+Every minimum is attained by a lawful adaptive policy whose choices after the first positive response are a fixed literal stream on that child. For every nonempty starting archive, each certificate realizes exactly the worst actual depth $\Pi$. The zero path and its side streams need not agree after branching.
+
+**证明。** Construct the policy by issuing the next written spine word when all differences acquired since this starting archive have been zero. Safety and (57.1) describe its actual success outputs and common tails. On its first positive response stop for a constant $A_t$; otherwise run the literal continuation of Theorem 55.3 and decode that child's own endpoints. On the terminal zero archive stop with its common label. The support and tail calculations hold inductively on every executed source. A common-tail rejection never occurs. The old zero and all new words belong to this same source's chronological archive.
+
+For each nonempty $A_t$, actual candidates reach that child and its least price is attained, giving a branch of paid depth $t+1+\delta$. If $S_L$ is nonempty, candidates in it traverse every spine word and stop at depth $L$. If $S_L$ is empty and $L>b$, the last nonempty $S_{L-1}$ is wholly sent to the positive child, so some source still reaches and pays the last block at depth $L$. Hence (57.2) is the actual maximum. Zero-charge $00$ rows and every bit of the repair or return words are charged when reached; there is no nominal word counted after stopping.
+
+Conversely, take any finite correct adaptive continuation, stopping a homogeneous archive immediately. At every nonconstant common-tail node its action must be safe by Lemma 55.2. Follow its zero-difference path until it stops or its support becomes empty, retaining those whole words and tails. At each positive child, Theorem 55.3 supplies an exact all-action lower bound for its further subtree. Replace that subtree by its fixed attaining continuation. Its new maximum does not exceed the old maximum. The retained zero path satisfies (57.1), and its terminal support is homogeneous or empty. This yields a priced spine with $\Pi-b$ no greater than the original continuation fee. Both inequalities prove (57.3).
+
+For existence of a finite continuation, use $T-1$ successive $01$ blocks starting at index $b$. Every one starts zero and safely clears any incoming tail. Their actual charge edges $\{2t+1,2t+2\}\pmod T$ are all edges but one of the physical $T$-cycle, because multiplication by two permutes its residues. They form a spanning path. Its incidence columns are distinct on $T\ge5$ vertices: equal nonzero columns at distinct vertices would require a component on those two vertices, and a zero column would require an isolated vertex. Thus these own-archive differences identify $j$ and return $\lambda(j)$, also after restriction to $S$. This is the safe phase-recovery mechanism already supplied by [S1, Theorem 3.1] and the incidence argument of Theorem 52.3. An optimal finite fee is an attained nonnegative integer. The extraction and replacement just proved supply an attaining priced spine. No equality to a single GLOBAL-preset stream is inferred. ∎
+

@@ -1,0 +1,14 @@
+## 178.99. 供应范围与仍未建立的实际桥
+
+本章在固定版本的普通论文陈述中使用：第130章同一十五边正交记录仪器、初始化和逐路径权重；第131章逐边相位因子化；第132章完整逻辑因子及参考保持；第134章任务更新、具名平稳比较量和独立全历史域下界。精确支持 (178.4)–(178.5)、固定根两通道的 Choi 方向、原记录中的加权方向和后验误配是这些供应结果在本合同内的具体连接，不以检索未命中作全球原创性证据。
+
+比较源 [RECURSIVE_RELATIONAL_OBSERVATION_MINIMAL_RECORD_DILATIONS，同一固定版本，第1–7章](https://github.com/the-omega-institute/trureturing/blob/c32e033a62a0a4a3bd63ab6b7af1d1ea59059651/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_MINIMAL_RECORD_DILATIONS.md) 优化的是完整十维输入上不同的单轮未读或边可读合同，得到 $2,4,15$，并给 $4^N$ 有序记录加末端的全路径上界。它的 $V_2,V_4$ 未读通道不是本章指定的正交边通道；不能用其较小维数替换本章仪器。其第7.4–7.5条保留独立历史域与有限历史最优值的边界，本章只解决所列固定根任务和末端合同。
+
+比较源 [RECURSIVE_RELATIONAL_OBSERVATION_MEASUREMENT_RELATIVE_QUANTUM_BOUNDARY，同一固定版本，第1–5章](https://github.com/the-omega-institute/trureturing/blob/c32e033a62a0a4a3bd63ab6b7af1d1ea59059651/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_MEASUREMENT_RELATIVE_QUANTUM_BOUNDARY.md) 的来源是 $\mathbb C^5$ 上的指定等待和五个秩一模式读，其首读约化依赖秩一坍缩；这里每条边保留任意 $\mathbb C^2$ 内部输入，合同不同。该源的端口 minimax 常数不进入本章。本卷第168–177章的面积位置、五量及三阶签名另有正叶路径和操作菜单，未把它们识别为此处的 $W$ 或边记录。
+
+有限维通道工具采用 John Watrous, *The Theory of Quantum Information*, Cambridge University Press, 2018，[第2章，定理2.22、推论2.27及 §2.5](https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf)：输入与输出为有限复 Euclidean 空间，Choi 使用未归一化 $\operatorname{vec}(I)$，完全正算子和与环境等距表示匹配，最小 Kraus 数及纯环境维数为 Choi 秩。本章所有 Choi 秩计算均依这一约定；归一化 Choi 只乘正标量，不改变秩。其原始供应出处分别为 M.-D. Choi, [“Completely positive linear maps on complex matrices”, *Linear Algebra and its Applications* 10 (1975), 285–290](https://doi.org/10.1016/0024-3795(75)90075-0)；K. Kraus, [“General state changes in quantum theory”, *Annals of Physics* 64 (1971), 311–335](https://doi.org/10.1016/0003-4916(71)90108-4)；W. F. Stinespring, [“Positive functions on $C^*$-algebras”, *Proceedings of the American Mathematical Society* 6 (1955), 211–216](https://doi.org/10.1090/S0002-9939-1955-0069403-4)。这里复用其成熟有限维结论，不另交付一般 Kraus、Choi 或 Stinespring 定理；本章陈述和证明均为普通数学，未声称 Lean 核验。
+
+固定根和严格正参数是本章的边界。任意相干初始配置、多根初始化、零概率边或任意完整控制历史，不由这些数值直接运输。$W\log(p/q)$ 仍只表示第134章限制到固定根的具名平稳正反比较量，不是 $\delta_0$ 起始律自身的倒序似然；$p=q$ 时该量为零不合并实际 $W$ 标签。未知内部态、未触及参考和原 Pauli 相位没有被经典标签替换。
+
+仍需的实际桥是：在所供原生菜单中取得并维护这些边权、内部运输、新纯记录、相位参照与所需共同记录访问；合法实现加权重编码、经典后验制备、联合逆和任何档案擦除；在控制、标定、钟及允许未来任务也计费时证明相应最小资源。本章没有供给新的 native port、任意相位门、复位、免费时钟或历史访问，没有热力学或空间维数结论，也没有给出任意独立相干历史输入上的新压缩最优值或无界固定总预算。
+

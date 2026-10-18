@@ -1,0 +1,27 @@
+**Definition 1.1 (native algebra and inclusive observation).** Let
+
+$$
+\begin{aligned}
+\mathcal T&::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,\\
+\rho\alpha&=\beta,&\rho\beta&=\langle\beta,\alpha\rangle,&
+\rho\langle s,t\rangle&=\langle\rho s,\rho t\rangle,\\
+T_j&=\rho^j\alpha\qquad(j\in\mathbb N).
+\end{aligned}
+\tag{CRE.1}
+$$
+
+Sources are nonempty finite free ordered trees. There is no common size, depth
+or rank bound. The operation $\rho$ is interpreted by (CRE.1), not a free unary
+constructor. An address is a word over $\{L,R\}$, with root $\varepsilon$.
+The reply $r_u(p)$ is $\alpha,\beta,\mathsf{branch}$ or $\mathsf{absent}$;
+strict descendants of a leaf are absent. Write
+
+$$
+p_h(u)=(r_u(p))_{|p|\le h},\qquad
+u\equiv_h v\Longleftrightarrow p_h(u)=p_h(v).
+\tag{CRE.2}
+$$
+
+Every occurrence of a named argument has the same value. Sharing a value does
+not quotient the ordered source tree or discard any occurrence.
+

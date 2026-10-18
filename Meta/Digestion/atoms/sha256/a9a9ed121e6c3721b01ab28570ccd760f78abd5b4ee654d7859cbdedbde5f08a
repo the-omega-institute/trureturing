@@ -1,0 +1,31 @@
+若边容量 \(c_e\) 由局部量子态或边熵生产率决定，例如
+\[
+c_e'=F_e(\Sigma_e),
+\]
+则定理 65.2 给出
+\[
+\frac{d}{ds}R_s[b]
+=
+-\sum_eF_e(\Sigma_e)
+\bigl(q_e^{\mathsf T}\phi_s\bigr)^2.
+\]
+
+因此同一网络中的局部量子熵流同时产生两类派生量：
+
+\[
+\boxed{
+\begin{aligned}
+\text{静态空间响应}
+&=
+b^{\mathsf T}L_c^+b,\\
+\text{热时间账本}
+&=
+D(\rho_0\Vert\sigma)-D(\rho_t\Vert\sigma).
+\end{aligned}
+}
+\]
+
+空间响应描述源扰动在网络中的几何传播，熵时间描述网络状态沿不可逆方向积累了多少信息损失。两者可以由同一组边局部量 \((c_e,\mathcal L_e,\Sigma_e)\) 联立计算。
+
+
+

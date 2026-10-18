@@ -1,0 +1,12 @@
+**Definition 6.1 (source, cut and acquired information).** Keep Definition 1.1's $m=2,d=1,\ell=2,n=4$, paid seed extractor, original parser, common hidden $K$, and unique original Stop. Install one fixed finite or countable depth prior $\mu$ before the first Read; a fixed depth is its point-mass case. Given $K=k$, every legal Read uses the same $r_k=F_{k+1}/F_{k+3}$ and is conditionally fresh. Let $\mathcal H_3(\mu)$ be the positive finite histories at the third-marker latch, before any fourth-segment Read. Conditioning uses only the actually acquired filtration of [Future Response Sufficiency](RECURSIVE_RELATIONAL_OBSERVATION_FUTURE_RESPONSE_SUFFICIENCY.md) §§9,15. It does not include $E_1$, a fourth marker or an undelivered Stop. The paid Read index $N(h)$ is an analysis variable, not a clock port. Infinite retry/return paths have no completed third-latch record.
+
+Use the finite marker-record supplier [Full E1 Scope Extension](RECURSIVE_RELATIONAL_OBSERVATION_FULL_E1_SCOPE_EXTENSION.md) §2:
+
+$$
+S_1^+=\{a,c,d\},\qquad S_2^+=\{b,c\},
+$$
+
+where $a,c$ are the first two zeros and $b,d$ the first two ones. Third occurrences of one kind have no identity in these scopes. The records $Q^+=(r_1^+,r_2^+)$ are written only at completed markers with old $t<3$, and $Z$ holds the first marker. Both seed values use the same writer. The original bare weight field at the latch is denoted $w=\beta(b_1b_2b_3)$; the raw-letter count $B$ below is a different object.
+
+This supplier is not silently identified with Definition 2.1's old $Q$. If only the old scopes are installed, add and pay for the actual incidence $d\in S_1^+$ with that supplier's writer. The first retained local alphabet changes from $\varnothing,a,ac$ to $\varnothing,a,ac,d,ad,da$; the second remains $\varnothing,b,c,bc,cb$. The added occurrence has ordinal identity supplied by old $(t,\beta)$, with no timestamp. This explicitly retained finite incidence, its routing and its writes are part of the recovery contract.
+

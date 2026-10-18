@@ -1,0 +1,40 @@
+**Corollary 14.5 (an exact-three-pure antipodal obstruction at the original target).**
+For any finite nonnegative same-$B(t)$ endpoint law, if its pure
+support consists of exactly three distinct points and contains an
+antipodal pair, then
+
+$$
+m<2S\le\frac{2\mu}{tc_{\min}}.
+\tag{IC.65}
+$$
+
+Consequently such a pure pattern is impossible whenever
+$2\mu/(tc_{\min})\le m$, including equality in this sufficient
+condition. No contact or optimality premise is needed.
+
+Proof. Write the pure points as $x,-x,y$, with strictly positive
+masses $a,b,c$ and $y\ne\pm x$. Choose a unit $n\perp x$.
+The original zero first moments and angular covariance give
+
+$$
+ c\,n\cdot y=-\int n\cdot z\,d\rho_1(z),\qquad
+ n^T\operatorname{diag}(\alpha,\beta)n
+ =c(n\cdot y)^2+\int(n\cdot z)^2\,d\rho_1(z).
+$$
+
+Without the failure rows, $|\int n\cdot z\,d\rho_1|\le S$
+and $|n\cdot y|\le1$ would give only $m\le2S$.
+Here (IC.60) is positive definite. In particular $S>0$, and
+$\int(n\cdot z)^2\,d\rho_1<S$: equality would put the
+entire saturated measure on $\{n,-n\}$, forcing its positive
+capacity-weighted covariance in (IC.60) to have rank at most one.
+Cauchy–Schwarz for $\rho_1$ now gives
+$|\int n\cdot z\,d\rho_1|<S$, hence also
+$c(n\cdot y)^2<S$. Adding the two strict bounds proves
+$m<2S$ and (IC.61) completes (IC.65). If $S=0$ the finite
+original positive failure covariance already fails, rather than
+giving an equality exception. Zero pure masses are outside the
+exact-three-positive premise; coincident points are collected first.
+No synthetic angular example is asserted to be an original attained
+face. $\square$
+

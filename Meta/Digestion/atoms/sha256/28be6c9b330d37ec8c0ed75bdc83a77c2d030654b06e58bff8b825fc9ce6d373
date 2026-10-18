@@ -1,0 +1,94 @@
+**Theorem 57.1 (Positive-row common-submeasure failure).** For the same parameter range (56.1) and every allowed profile, there is a fixed full-source target family on a standard Borel carrier with row (56.2), sharp value $r$ and feasible caps exactly $(r,1]$. Exactly one TV-continuous family achieves uniform error at most $r$, and that family cannot be lawfully acquired.
+
+**Proof.** Reuse the unchanged dyadic-hole probability family $\nu_y$ of Proposition 46.5 on $Z=[0,1]$ with its Borel sigma algebra. Its map is TV-continuous, and in every anchor prefix cylinder its greatest common submeasure is zero. For any level $n$ beyond the prefix, Theorem 35.2 realizes every level-$n$ hole there; a common submeasure vanishes on each dyadic interval, and domination by the anchor's Lebesgue law also excludes endpoint mass. These are the existing actual-source properties of that family.
+
+Choose an integer $k\ge2$ with $r<1-1/k$ and set
+
+$$
+\beta=\frac{r}{1-1/k}<1,
+\qquad \alpha=1-\beta>0,
+\qquad t=\beta-h\ge\beta/k>0.
+\tag{57.1}
+$$
+
+Color all actual classes of $Q$ with $k$ colors retaining property (56.4). On the disjoint-union standard Borel carrier
+
+$$
+\Theta^+=Z\sqcup\{a_1,\ldots,a_k\}\sqcup\{p_j:j\ge1\},
+\tag{57.2}
+$$
+
+use the consumer of Definition 56.1 and prescribe, before optimizing,
+
+$$
+\mu_y^+=\alpha\nu_y+t\delta_{a_{c(y)}}
+                              +h\delta_{p_{\Omega(y)}}.
+\tag{57.3}
+$$
+
+Normalization follows from $\alpha+t+h=1$. The sole proposal is correct, so every target has exactly row (56.2). The family
+
+$$
+\kappa_y=\alpha\nu_y+\frac\beta k\sum_{i=1}^k\delta_{a_i}
+\tag{57.4}
+$$
+
+is TV-continuous. Its positive signed discrepancy from (57.3) is $r$ on the off-color tags; its negative discrepancies are $r-h$ at the actual-color tag and $h$ at the proposal tape. The base restrictions agree, giving $d(\kappa_y,\mu_y^+)=r$ at every source.
+
+For the lower bound and uniqueness let $\lambda$ be any continuous family of uniform error at most $\varepsilon$, and fix an actual $z$. Write
+
+$$
+\begin{aligned}
+a&=\lambda_z(Z),& P_0&=\lambda_z(\{p_j:j\ge1\}),\\
+p_i&=\lambda_z(\{a_i\}),& L&=\sum_i p_i=1-a-P_0,\\
+s&=\sup_{A\subseteq Z\text{ Borel}}
+                     \big(\lambda_z(A)-\alpha\nu_z(A)\big)
+                         \ge(a-\alpha)_+.
+\end{aligned}
+\tag{57.5}
+$$
+
+For each color $i$, use (56.4) to choose actual $y_\ell\to z$ in the signature topology with that color and $j_\ell=\Omega(y_\ell)\to\infty$. Apply the cap to the single measurable event
+
+$$
+A\sqcup\{a_j:j\ne i\}\sqcup
+          \big(\{p_j:j\ge1\}\setminus\{p_{j_\ell}\}\big).
+\tag{57.6}
+$$
+
+Its target mass is $\alpha\nu_{y_\ell}(A)$. Continuity of $\lambda$ and $\nu$, together with (56.5), passes the upper signed-difference inequality to $\lambda_z(A)-\alpha\nu_z(A)+L-p_i+P_0\le\varepsilon$. Taking the supremum over $A$, then averaging over $i$, gives
+
+$$
+\varepsilon\ge s+(1-1/k)L+P_0
+       =(1-1/k)(1-a)+s+P_0/k\ge r.
+\tag{57.7}
+$$
+
+For completeness, if $a\le\alpha$ the middle expression is at least $r+(1-1/k)(\alpha-a)+P_0/k$; if $a\ge\alpha$ it is at least $r+(a-\alpha)/k+P_0/k$. At $\varepsilon=r$ these inequalities force $a=\alpha$, $P_0=0$ and $s=0$. Then $L=\beta$, and the individual color inequalities force $p_i\ge\beta-r=\beta/k$; summing gives equality for each tag. The assertion $s=0$ means $\lambda_z|_Z\le\alpha\nu_z$ on every Borel event. Equal total mass makes these restrictions equal. Consequently $\lambda_z=\kappa_z$ for every actual $z$. This proves both the continuous lower bound and the uniqueness of its optimum without assuming component-weight preservation.
+
+A lawful attainer would be continuous by Lemma 45.3, hence would acquire (57.4) exactly. In every anchor prefix cylinder, its greatest common submeasure is
+
+$$
+\ell^\kappa_{C_m(x_*)}=\frac\beta k\sum_i\delta_{a_i},
+\qquad
+\ell^\kappa_{C_m(x_*)}(\Theta^+)=\beta<1.
+\tag{57.8}
+$$
+
+Indeed the base restriction of any common submeasure is zero by the dyadic-hole property, its proposal restriction is zero because all $\kappa_y$ give those tapes zero mass, and each tag mass is at most $\beta/k$. The displayed measure is itself dominated by every law. The necessary condition of Theorem 46.4 now excludes exact acquisition, so no lawful cap-$r$ preparation exists.
+
+For every $\delta>0$, Theorem 46.6 supplies a lawful preparation of the unchanged $\nu$ family with laws $\widetilde\nu_y$ and uniform error at most $\delta$. Include its seed and an independent finite selector in one common product seed. On an initial branch of probability $\alpha$, run that preparation on the same source and hand over its base tape; on each branch of probability $\beta/k$, immediately hand over $a_i$. These are initial seed branches, with no restart or success conditioning. They terminate sourcewise almost surely, and their finite records and output events are measurable inherited events and finite unions of them. The resulting normalized law is
+
+$$
+\widetilde\kappa_y=\alpha\widetilde\nu_y
+                             +\frac\beta k\sum_i\delta_{a_i},
+\qquad
+ d(\widetilde\kappa_y,\mu_y^+)
+           =r+\alpha d(\widetilde\nu_y,\nu_y).
+\tag{57.9}
+$$
+
+For the equality, the fixed positive tag mass is $r$, the negative tag/proposal mass is $r$, and the signed base measure has total mass zero. Positive base events approaching its supremum, together with all off-color tags, approach the positive discrepancy $r+\alpha d(\widetilde\nu_y,\nu_y)$; every measurable event has discrepancy bounded by this number. Complements give the same negative supremum. No event attaining the base supremum is assumed. Taking $\delta<(\eta-r)/\alpha$ makes every $\eta>r$ feasible. The lower bound gives $I(\mu^+)=r$, and Theorem 50.2 gives $R_{\mu^+}=r$ with its original order of quantifiers.
+
+The countable product and Radon--Nikodym inputs in Theorems 46.4 and 46.6 have their same hypotheses here: countably many actual labels, probability measures on the declared measurable tape carrier, a finite dominating measure given by a countable mixture on tapes, and countably many measurable coordinate laws. In (50.6), every $\lambda_{x_i}$ is absolutely continuous with respect to the probability measure $\sigma_\lambda=\sum_i2^{-i}\lambda_{x_i}$; countability makes the simultaneous density infima measurable and permits one countable union of exceptional null sets. This mixture is not a law on sources. The countable product is defined on the product sigma algebra, with no standard-Borel sampling representation required. These are the reused interfaces `Measure.infinitePi` in [pinned Mathlib ProductMeasure](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Probability/ProductMeasure.lean) and `withDensity_rnDeriv_eq` under absolute continuity and Lebesgue decomposition in [pinned Mathlib RadonNikodym](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/MeasureTheory/Measure/Decomposition/RadonNikodym.lean). Gallo, Lerasle and Takahashi, [*Markov approximation of chains of infinite order in the $\bar d$-metric*, Section 3, Lemma 3.1](https://arxiv.org/html/1107.4353v2), supplies the existing range-partition/lower-envelope reference frame. Its conditional-past, stationary-chain and coalescence assertions are not applied to these static sources. The positive-proposal result is the full-source moving-event deduction above, not a new product-measure or chain theorem. $\square$
+

@@ -1,0 +1,36 @@
+**Corollary 13.1 (finite acquired record and error-free mass).** Suppose a
+finite actually obtained classical record $Y$ has conditional laws
+$q_\epsilon(y)$ independent of $\beta$, leaves the specimen unchanged,
+and is all accessible history assistance. Its calibrated laws and label
+meaning are part of this input promise. Define
+
+$$
+a_\epsilon=\sum_{y:q_{-\epsilon}(y)=0}q_\epsilon(y).
+\tag{PR.43}
+$$
+
+For the fixed programme of Theorem 12.4, the sharp simultaneous survival
+pair is
+
+$$
+p_\epsilon=a_\epsilon+(1-a_\epsilon)S_L.
+\tag{PR.44}
+$$
+
+Attainment requires an executable certified distinction between exclusive
+and shared labels, and permission for the calibrated fixed-parity endpoint
+unitaries of Instrument Boundaries §4.2. Without those extra implementation
+premises, (PR.44) is an upper bound and an abstract attainable value in the
+added endpoint operation class.
+
+Proof. On a label with both probabilities positive, the one-dimensional
+helper promises both complete phase families. Theorem 12.4 bounds its
+all-checkpoint survival by $S_L$, regardless of their unequal likelihoods.
+An exclusive label has survival at most one. Integration gives the upper
+bound. Select the credited parity-specific unitary at every cut on an
+exclusive label, and the unassisted optimal filters on a shared label.
+The same label-based protocol attains both expressions and has the
+complete failure completion already described. Labels of zero probability
+for both inputs require no normalized branch. Observed zero counts do not
+certify a zero law probability or supply this decoder. $\square$
+

@@ -1,0 +1,46 @@
+### 94.4. Arbitrary generic pairs and all mixed edges
+
+The radial involution fixes \(k,t(k)\) and sends
+\[
+ X\longmapsto t/(1+k^2)-X,\qquad G\longmapsto-R/\bar G.
+\]
+It preserves the square-zero ideal and descends to (94.1). The complete
+normalized Theta identities specialize first in the full algebra by the
+preceding unit argument, and then descend to (94.1).
+
+Evaluate the all-six-order generic overlap norm \(N\) of §§79,89 in
+\(\mathcal A_{\rm red}\otimes\mathcal A_{\rm red}\).
+For the onto map \(\rho(a\otimes c)=a\iota(c)\), the transported identity
+\(\rho(N)=0\) bounds multiplication rank by \(18^2-18=306\).
+In the power basis \(y^r\otimes y^s\), indexed by \(18r+s\),
+the leading 306-by-306 principal minor has residue **66 modulo 113**.
+Hence in characteristic zero the image ideal of \(N\) equals \(\ker\rho\).
+Every original orthogonal generic pair has orthogonal mean spinors;
+full lift uniqueness then places its second ray in \(S_3\Theta\) of the
+first, with all six relative orders retained. The uniform
+within-union bipartite theorem excludes all-generic noncanonical triples.
+
+Use the complete original aligned quintic and shape lift of §90.
+At the same good map the scalar cofactor resultants \(r_0,r_2\), quintic
+leading coefficient and actual pole factor have residues respectively
+\[
+ 96,\quad1,\quad26,\quad15.
+\]
+Thus all their exceptional charts are resolved by nonvanishing at every
+root of \(Q\). All finite rank, constant-channel and phase cases remain
+covered by the original aligned classification. Its norm residues are
+
+~~~text
+d:78; V:35; K_a:5; J_a:68; F_a:112;
+(2-id)^2+K_a:1; (2+id)^2+K_a:64.
+~~~
+
+The complete mixed norm of §90.4 in the 180-dimensional algebra
+\[
+ \mathcal A_{\rm red}\otimes K_Q[d,S]/(Q_5,S^2-K_a)
+\]
+has full multiplication determinant **77 modulo 113**.
+The construction retains both signs of \(S\), every aligned position,
+all generic orders and the original input normalization. It is a unit
+in characteristic zero, so no generic–aligned orthogonal edge exists.
+

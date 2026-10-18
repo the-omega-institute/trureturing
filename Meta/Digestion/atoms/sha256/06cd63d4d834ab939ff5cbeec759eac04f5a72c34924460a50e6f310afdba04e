@@ -1,0 +1,68 @@
+### 97.5. Exhausting all original support patterns
+
+First suppose all four fibres are occupied. If one is full, call its coordinates 1,2 and choose one coordinate 3,4,5 from each other fibre. Applying (26) with all three pairs from {3,4,5} gives
+
+\[
+ h_{13}+h_{14}=0,\qquad h_{13}+h_{15}=0,\qquad
+ h_{14}+h_{15}=0,                                           \tag{27}
+\]
+
+forcing those nonzero entries to vanish. This covers all four-fibre supports of sizes five through eight. If all four fibres are singletons, keep coordinate 1 first and choose its omitted partner successively as 2,3,4. The resulting equations h₁₃+h₁₄=h₁₂+h₁₄=h₁₂+h₁₃=0 give the same contradiction.
+
+For three occupied fibres, retain (1,1,1,0) temporarily. The other possibilities, up to permutation, are (2,1,1,0), (2,2,1,0), and (2,2,2,0). In the first, take {1,2} full and 3,4 singleton. Equations (22),(26) give 0=d₁+h₁₃+h₁₄=d₁>0.
+
+For (2,2,1,0), take {1,2},{3,4} full and 5 singleton. Apply (26) to the first full fibre and pairs (3,5),(4,5). For i=1,2, it gives h_i3=h_i4=−h_i5, so row i forces h_i5=d_i>0. Reversing the two full fibres gives h_j5=d_j>0 for j=3,4. Only now using Hermiticity, the singleton row contradicts
+
+\[
+ 0=d_5+\sum_{i=1}^4h_{5i}=\sum_{i=1}^5d_i>0.              \tag{28}
+\]
+
+No positive or real gauge was assumed. For (2,2,2,0), label the fibres {1,2},{3,4},{5,6}. Apply (26) to (1,2,3,5) and (1,2,4,6). The first kernel row becomes 0=d₁+(h₁₃+h₁₅)+(h₁₄+h₁₆)=d₁>0. In particular no earlier bound n≤5 is needed for this exhaustion.
+
+It remains to check supports on at most two fibres. A one-fibre principal Gram is an identity matrix and cannot have rank n−1. Two-fibre occupancies are (1,1), (2,1), or (2,2). In (1,1), rank Q=1 makes its cross entry have modulus one, giving |1/2−Q₁₂²|≥1/2. Occupancy (2,1) is excluded by the exact common-witness objective in section 96.2, with its zero within-fibre target.
+
+For (2,2), write Q=[[I₂,C],[C*,I₂]]. Rank three makes the singular values of C equal to 1 and σ<1. Choose unit u,v with Cv=u,C*u=v, and rescale the fixed kernel vector a so that a=(−u,v); this multiplies q by a positive factor and keeps every α_W positive. Every component of u,v and every entry of C is nonzero. The algebraic form (21) is invariant under simultaneous diagonal unitary changes Q↦E*QE, a↦E*a, D↦E*DE. This is solely a change of variables in the fixed form, not a physical same-phase gauge preserving the target. We may calculate with
+
+\[
+ \begin{gathered}
+ u=(p,q),\quad v=(r,l),\quad p,q,r,l>0,\quad
+ p^2+q^2=r^2+l^2=1,\\
+ x=(-q,p),\quad y=(-l,r),\qquad
+ C=uv^{\mathsf T}+zxy^{\mathsf T},\quad |z|<1.
+ \end{gathered}                                                   \tag{29}
+\]
+
+The Hermitian D with cross block wxyᵀ, w∈C, has zero fibre blocks and Da=0. Substitution in (21) gives q(D)=2Re(w²A), where
+
+\[
+ A=pqrl\left(\frac{ql}{C_{11}}+\frac{qr}{C_{12}}
+                       +\frac{pl}{C_{21}}+\frac{pr}{C_{22}}\right).
+                                                                    \tag{30}
+\]
+
+With b=q/p>0 and d=l/r>0, the bracket is exactly
+
+\[
+ \begin{aligned}
+ &\frac{bd}{1+zbd}+\frac b{d-zb}+\frac d{b-zd}+\frac1{bd+z}\\
+ &\qquad=
+ \frac{bd(1+b^2)(1+d^2)(1-z^2)}
+ {(1+zbd)(d-zb)(b-zd)(bd+z)}.
+ \end{aligned}                                                   \tag{31}
+\]
+
+The denominator is nonzero by the entrywise nonvanishing of C; the numerator is nonzero because b,d>0 and |z|<1. Thus A≠0, and a phase choice of w makes q(D)<0. Theorem 97.1, rather than an unsupported affine opposite-face path, supplies feasibility.
+
+Only three singletons remain. Then Q is a complex PSD unit-diagonal rank-two matrix. The sharp theorem of section 93 and the original uniform density on S give
+
+\[
+ \begin{aligned}
+ E&:=\sum_{i<j}|1/2-Q_{ij}^{\,2}|^2
+                  \ge\frac{21-9\sqrt[3]{9}}{16},\\
+ t&\ge\frac{\|T_S-Q\odot Q\|_1}{3}
+                  \ge\frac{2\sqrt E}{3}\ge\kappa.
+ \end{aligned}                                                   \tag{32}
+\]
+
+For the middle inequality, the coefficient has trace zero and squared Frobenius norm 2E. If its positive and negative spectral masses are each m, their squared sums are at most m² each, so ∥T_S−Q⊙Q∥₁=2m≥2√E. The density I₃/3 and its positive-part witness extend by zero to the original domain. The strict κ>1/4 follows from 9<(25/12)³. This proves Theorem 97.3 with the complete unhalved normalization. ∎
+

@@ -1,0 +1,31 @@
+## 6. `soft-to-rigid` 的几何参数化
+
+`soft-to-rigid` 的核心形状可写成如下形式。对一个单位边长的正 $k$ 边形 $P_k$，其内切圆半径为：
+
+$$
+\rho_k=
+\frac{1}{2\tan(\pi/k)}.
+$$
+
+令 $D$ 为单位圆盘，定义软化形状：
+
+$$
+\boxed{
+S_{\gamma,\tau}=
+\gamma\left[(1-\tau)P_k\oplus\tau\rho_kD\right],
+\qquad
+0\le\tau\le1.
+}
+$$
+
+其中：
+
+- $\tau=0$：刚性正多边形；
+- $\tau=1$：内切圆盘；
+- $\gamma$：整体尺度；
+- $\oplus$：Minkowski 和。
+
+源代码中的具体实现见 [`engine2d.js`](https://github.com/yoheinakajima/soft-to-rigid/blob/07e3cbd3c4855e5e19344885fbf672c3d7a0f039/engine/engine2d.js)，项目说明见 [`soft-to-rigid README`](https://github.com/yoheinakajima/soft-to-rigid/blob/07e3cbd3c4855e5e19344885fbf672c3d7a0f039/README.md)。
+
+---
+

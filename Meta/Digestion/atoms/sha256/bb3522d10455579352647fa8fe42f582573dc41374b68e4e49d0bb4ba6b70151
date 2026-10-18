@@ -1,0 +1,26 @@
+**Theorem 8.2 (fixed finite menu and a floor on every supported mass give uniform existence).** Fix the entire published PH37.1–37.2 category $\mathfrak D_\mu(B)$ on its fixed binary architecture, an integer budget $B$, a finite depth menu $S$ containing 1 and 2, and $b>0$. On the compact simplex
+
+$$
+\mathcal P_{S,b}=\{\mu:\operatorname{supp}\mu=S,\ \mu(k)\ge b\ (k\in S),\ \sum_{k\in S}\mu(k)=1\},
+$$
+
+for every $\epsilon>0$ there is some finite uniform acquired-history cap $H$ such that $\Phi_\infty-\Phi_H\le\epsilon$ for every admissible at-most-$B$ observer, every prior in this simplex and all four objectives. This assertion is finite existence, not total computability of $H$ from $(B,S,b,\epsilon)$.
+
+**Proof.** If the simplex is empty the claim is vacuous. Otherwise take two priors in it and any positive actual likelihood vector $L_k$. Write $d=\|\mu-\widetilde\mu\|_\infty$ and $Z=\sum_k\mu(k)L_k\ge b\sum_kL_k$. Expanding both normalizations and using $|Z-\widetilde Z|\le\sum_k|\mu(k)-\widetilde\mu(k)|L_k$ gives
+
+$$
+\begin{aligned}
+2\operatorname{TV}(\nu_h^\mu,\nu_h^{\widetilde\mu})
+&\le\frac{\sum_k|\mu(k)-\widetilde\mu(k)|L_k}{Z}
++\frac{|Z-\widetilde Z|}{Z}\\
+&\le2d/b.
+\end{aligned}
+\tag{8.3}
+$$
+
+This bound is uniform over every finite acquired word and its length. The same contraction and fixed-row argument as Theorem 7.2 makes both history errors and all capped/uncapped objectives $1/b$-Lipschitz in this norm. That holds for randomized holding as well as this construction. The laws remain the full residual laws.
+
+Take a finite prior net of radius $b\epsilon/4$ in the compact simplex. Fix one bounded program and one of the four objectives. At each net point, Definition 2.2's pointwise increasing convergence supplies a finite cap with gap at most $\epsilon/2$. Take the maximum of these caps over the finite net, the four objective pairs, and the finite set of complete program/data descriptions of budget at most $B$. Monotonicity preserves each net-point inequality. Moving to an arbitrary prior changes the uncapped and capped value by at most $\epsilon/4$ each, proving the claimed $\epsilon$ gap.
+
+The pool may be restricted to admissible descriptions. Their exact compatibilities concern source-independent rows, reports, common legal histories and predicted prefixes, so are prior-independent on this domain. Even if a separately declared class additionally restricts the risk of an input at a particular prior, the proof can cover the larger finite pool of well-defined original-interface programs before applying that extra restriction. It does not assume that such semantic admissibility can be decided. Finiteness uses the charge for code, constants and all output providers: allowing an uncharged prior-specific decoder or real constant would invalidate this step. $\square$
+

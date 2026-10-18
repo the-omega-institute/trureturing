@@ -1,0 +1,28 @@
+**Theorem 4.3 (two exact budget decision procedures).** Under GB, for every $k,d,L\in\mathbb N$ it is decidable whether there is a correct service with
+
+$$
+ \sup_D q_A\le k,\quad\sup_D d_A\le d,
+\tag{JRF.4.3}
+$$
+
+and it is decidable whether there is a correct service with
+
+$$
+ b(A)\le(k,d,L).
+\tag{JRF.4.4}
+$$
+
+In each true case a finite actual attaining-within-budget service is effectively constructible. The first decision leaves address lengths entirely unbounded. These decisions cover every comparator in Definition 1.2, including arbitrary reply-dependent serial schedules and pointwise finite local work.
+
+Proof. First consider (JRF.4.3). Enumerate the finitely many skeleton shapes of read depth at most $k$, class labels, and monotone epochs at most $N+\min(d,U)$. For each, existentially quantify its finitely many $s_v$ in (JRF.4.2). The resulting finite disjunction is a WS2S sentence. No length comparison between address variables is used. It is decidable by the logic suppliers in §10.
+
+For necessity, take any comparator satisfying (JRF.4.3), apply Theorem 3.1 and Lemma 3.4, and remove terminal updates after the last read by computing the same output locally before halting. These changes preserve correctness and do not increase either budget. At each reachable reply prefix, the subsequent local work, simulated events, and actual updates up to the next read or halt form one fixed finite segment. It is fixed because all source-dependent acquired inputs agree; it is finite because at least one source reaches that prefix and the comparator terminates there. There are at most $1+4+\cdots+4^k$ reply prefixes. Thus its reachable control unrolls to a finite skeleton with fixed finite suffixes and legal monotone epochs. This is an existence argument for an arbitrary program; it does not assume an algorithm deciding reachability in arbitrary code.
+
+At a reachable early halt, retain a halt. At an unreachable reply child, install an immediate halt. No padding is necessary. Two sources reaching the same halt must have the same full output, so (JRF.4.2) holds. All source assignments in that formula correspond to actual sources in $D$, with every old guard, repetition, and disequality still present. Hence the sentence is true.
+
+For sufficiency, extract a satisfying skeleton and finite suffix tuple. This is effective: after a positive decision, enumerate finite tuples and test (JRF.4.2) with the suffixes fixed until a witness is found. Every test terminates and a witness exists. Alternatively, extract singleton-marked address witnesses from its finite tree automaton. For each leaf, add its chosen physical epoch/address/reply constraints to the whole original $R,H$. SLH Theorem 61.1 decides reachability and, when nonempty, supplies a finite source witness. Compute that witness's full $Q$ row. Equation (JRF.4.2) makes the row independent of the witness, so it is the correct constant terminal output. Unreachable leaves receive any fixed output.
+
+Install this finite table. Execute the actual nonnegative epoch differences and actual physical reads in order. Induction on the reply path shows that the actual source satisfies its path formula and reaches a nonempty leaf, where the output is its original row. Every run has at most $k$ reads and at most $d$ updates and is finite. Hypothetical chains and leaf witnesses are used to construct the program; they are not extra accessible source registers or knowledge of the actual source.
+
+For (JRF.4.4), use the same necessity construction, which also does not increase length by Lemmas 2.2 and 3.4. In every reachable read, $\delta_{b_v}+|s_v|\le L$. Enumerate these finitely many literal suffixes and skeletons, rather than unrestricted variables. Test correctness and require $L_t\le L$ on each reachable leaf, using the same joint reachability decision. Unreachable branches impose no cost constraint. Conversely a passing tree implements the displayed costs exactly on each reachable path. This is a finite decision procedure and constructs a service. If $B=\varnothing$, $D=\{C\}$ and a zero-cost root halt settles both tests directly. $\square$
+

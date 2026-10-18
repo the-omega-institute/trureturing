@@ -1,0 +1,16 @@
+### 联合代数层
+
+对 $f,g\in\mathcal B$，联合读出
+
+$$
+\mathbb E[fg]
+$$
+
+对 $\kappa$ 敏感，当且仅当
+
+$$
+\Omega(f,g)=
+a_1b_2+a_2b_1
+\neq0.
+$$
+

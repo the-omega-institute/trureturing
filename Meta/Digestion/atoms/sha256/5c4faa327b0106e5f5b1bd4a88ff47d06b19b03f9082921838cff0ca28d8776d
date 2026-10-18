@@ -1,0 +1,16 @@
+**Proposition 2.3 (the role of the hypotheses).** Theorem 2.2 does not give a
+diagonal kernel for the public-output-only task, for a dispatcher with
+unrecorded external choices, or for an arbitrary absorbing terminal
+extension.
+
+Proof. Its predecessor argument reads retained coordinates from a complete
+successor, which is absent from the public-output-only response. If two
+unrecorded choices can reach the same retained record at the same ordinal,
+SSA.1 does not distinguish their histories and the cited replay premise no
+longer applies. For an absorbing terminal extension with a single fixed
+terminal output and all nonempty actions disabled, any two different
+terminal endpoints have the same task response map. Thus the progress step
+used in Theorem 2.2 is essential. These observations delimit the proof;
+they do not assert that the public-output-only kernel of the present
+runtime has any particular unidentified pair. ∎
+

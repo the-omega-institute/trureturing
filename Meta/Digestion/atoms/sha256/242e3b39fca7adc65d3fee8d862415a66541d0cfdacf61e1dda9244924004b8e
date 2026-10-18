@@ -1,0 +1,60 @@
+**Definition 11.1 (parameters, cells and certificate packs).** Fix an
+integer $M\ge2$ and put
+
+$$
+n=3M+5,\qquad k=M+4,\qquad
+[n]=\{t\}\sqcup X\sqcup Y\sqcup R\sqcup
+       \{u_1,\ldots,u_M,v_1,\ldots,v_M\},
+\tag{WTF.36}
+$$
+
+where $X=\{x,x'\}$, $Y=\{y,y'\}$ and
+$R=\{r_1,\ldots,r_M\}$. Set
+$U_j=\{u_{M-j+1},\ldots,u_M\}$ and
+$I_j=[n]\setminus(X\cup Y\cup U_j)$, for $1\le j\le M$.
+Use original costs $c_i=s_i+4$ with distinct positive integer positions
+$s_i$, and assume the four inequalities of PE (PE.16):
+
+$$
+c_t\le c_{x'},\qquad c_t\le c_{y'},\qquad
+c_x+c_t\le C_Y,\qquad c_y+c_t\le C_X.
+\tag{WTF.37}
+$$
+
+One permitted input is $c_i=5\,3^{i-1}$, $s_i=c_i-4$, with
+$t,x,y,x',y'$ at indices $1,2,3,4,5$, and the other coordinates
+assigned the remaining indices in the displayed order. Its five costs
+are $5,15,45,135,405$, so (WTF.37) holds. The positions are strictly
+increasing and positive. Its subset sums are distinct: the greatest
+term at which two subsets differ exceeds the sum of all earlier terms.
+This is the permitted input choice of PE Proposition 5.2 extended to
+$n$ coordinates; after fixing it the pointwise code of Definition 1.2
+is held fixed.
+
+For a table of Definition 3.1 at caps $(n,W)$, write
+
+$$
+\mathcal D_{n,k}=\{(h,z):0\le h\le k-1,\ 0\le z\le n-k\}.
+$$
+
+A live-cell representative system chooses, for each cell in
+$\mathcal D_{n,k}$, an actual live history with those exposed one and
+zero counts, ending before a running invocation. Its state map is
+$f:\mathcal D_{n,k}\to Q_B$, where $Q_B$ is the installed running
+set. The chosen histories are part of the system. A collision is a
+pair of distinct cells with the same representative state; a collection
+of collisions is cell-disjoint when no cell belongs to two pairs.
+This uses the representative notion in PE Theorem 4.2, without
+requiring $f$ to be injective or a state to determine a residual.
+
+For fixed colliding histories satisfying Theorem 7.1, an allowed
+completion means its exact cross-fill: retain each history's own $I$
+values, use the old $S$ values on $X$ and old $T$ values on $Y$ on
+both inputs, and choose any $\omega$ in its conflict band on $U$.
+Its first separator is the first common-suffix state with different
+replies. Its certificate pack consists of that state and the first
+new zero and one exposures completing the two certificates in
+(WTF.23). In the collisions below $\lambda=v=1$, so this is an
+unambiguous three-state pack. Here $v$ denotes the residual count of
+Notation 6.2, not a coordinate $v_i$.
+

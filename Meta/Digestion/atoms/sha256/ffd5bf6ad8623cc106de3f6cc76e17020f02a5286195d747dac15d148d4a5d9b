@@ -1,0 +1,7 @@
+## 84. 随长度增强的邻角容量条件
+
+对 $B\ge3$，置
+
+$$\Theta_B=\arccos\frac{3-B}{B+1}\in[\pi/2,\pi),\qquad
+c_B=\frac\pi{\Theta_B}\in(1,2].$$
+

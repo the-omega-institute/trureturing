@@ -1,0 +1,54 @@
+**Theorem 6.1 (branch saturation and disjoint complete-row trajectories).**
+For every $u\in\mathcal T$ and $d\ge0$, $\rho^{2(d+1)}u$ has branch
+at every address of length at most $d$, and those replies persist.
+For every finite prefix-free $P\ne\{\varepsilon\}$ there are finite
+$x_P,y_P$ such that
+
+$$
+\{R_P(\rho^a x_P):a\ge0\}
+\ \cap\
+\{R_P(\rho^b y_P):b\ge0\}
+=\varnothing.
+\tag{CNA.11}
+$$
+
+Separation holds even across different epochs.
+
+**Proof.** Within two updates every current leaf becomes a branch with
+two nonempty children. Minimum terminal depth therefore increases by
+at least one every two updates. After $2(d+1)$ updates it exceeds $d$,
+so every address through depth $d$ is a branch. Persistence follows
+from Theorem 2.2.
+
+For separation suppose first $|P|\ge2$. Complete its finite prefix trie
+to a full binary skeleton by adding missing sibling leaves. Every
+$p\in P$ is a skeleton leaf. Fill those leaves with alpha for $x_P$;
+use identical other leaves for $y_P$, changing exactly one selected
+$P$-leaf to beta. All cut addresses are reached at every epoch.
+Every $x_P$ row has all hidden subtrees equal. Every $y_P$ row has its
+selected hole unequal to every other hole, because $\rho$ is injective.
+Native injectivity is supplied by [SourceTransportCentralizer][STC]
+and the internal injectivity proof in [GenealogicalFiberTransport][GFT];
+it concerns literal trees, not leaf counts. Thus the complete partitions
+separate every cross-epoch pair. Exterior evolution cannot remove that
+separation.
+
+For $P=\varnothing$, take $\alpha$ and $\langle\alpha,\alpha\rangle$.
+Both are primitive: alpha is never a root image; a pair of alphas is
+neither $\rho\beta=\langle\beta,\alpha\rangle$ nor the image of a pair,
+since alpha has no predecessor. If iterates of these two trees coincided,
+cancel the common smaller exponent using injectivity. Equal exponents
+would identify the distinct trees; unequal exponents would put one
+primitive tree in the image. This is the primitive-orbit uniqueness
+supplied, including private *primitive_index* and *normal_root*
+arguments, by [IntrinsicSubstitutionCoordinates][ISC].
+Empty-cut rows are the entire trees.
+
+For $P=\{p\}$ with $p\ne\varepsilon$, let $q$ be the root child opposite
+the first letter of $p$. Use the same other child in both sources,
+and put alpha at $q$ in one and $\langle\alpha,\alpha\rangle$ there
+in the other. The whole $q$-subtree stays visible outside $P$.
+Homomorphism and the disjoint primitive orbits separate it at any
+pair of epochs. Prefix freedom leaves only these cases and the excluded
+root singleton. $\square$
+

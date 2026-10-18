@@ -1,0 +1,8 @@
+**约定 2.3（实际制备域）。** 若可取得的概率律仅属于 $\mathcal C\subseteq\mathcal D$，则实际固定观察纤维为 $\mathcal C\cap\mathcal F_b$，实际差异集为
+
+$$
+D_{\mathcal C,b}=\{p-q:p,q\in\mathcal C\cap\mathcal F_b\}.
+$$
+
+线性空间 $N$ 不声明每个形式方向都有实际制备。以下关于整条 $\mathcal F_b$ 的结论使用整个数学单纯形；限制制备域时，应把相应量词限制到 $\mathcal C$。
+

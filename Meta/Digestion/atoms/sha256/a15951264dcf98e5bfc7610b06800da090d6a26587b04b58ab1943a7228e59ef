@@ -1,0 +1,9 @@
+**Corollary 4.1.** No complete zero-sixth world on $H_*$ has
+$d\in[48/5,24]$. This holds also for sources in $\mathcal N_1$
+and without assuming $f(7)\ne0$.
+
+Indeed the actual fourth equation would give
+$f(4)=(48/5-d)/t_4\le0$, contradicting Theorem 3.1.
+The sampled fourth root at $d=48/5$ and sampled first root at $d=24$
+are both covered.
+

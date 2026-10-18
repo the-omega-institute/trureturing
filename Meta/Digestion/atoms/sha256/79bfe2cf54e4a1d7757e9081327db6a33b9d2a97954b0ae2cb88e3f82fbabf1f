@@ -1,0 +1,50 @@
+## Proposition 2. The exact integral arithmetic kernel
+
+For \(q\ge2\), let \(\beta\in(1,2)\) be the positive root of
+\(X^q-\sum_{j<q}X^j\), put \(p=\beta^{-1}\), and define
+\[
+h_i=\sum_{a=0}^{q-i-1}p^{a+1}.
+\]
+The compatible state on the native integer group is
+\[
+\Phi_q(\operatorname{of}_n(v))
+ =p^n\sum_i\bigl(\operatorname{coeff}_1(v_i)
+                 +\operatorname{coeff}_\tau(v_i)\bigr)h_i.
+\]
+It satisfies
+\[
+\ker\Phi_q=\operatorname{range}(\mathrm{id}-\sigma_q)
+          =\ker(\mathrm{id}+\sigma_q).
+\]
+
+Proof. The scalar polynomial is irreducible over \(\mathbb Q\), so
+\(1,\beta,\ldots,\beta^{q-1}\) are linearly independent over \(\mathbb Q\).
+The expansion
+\(h_i=\beta^i-\sum_{j<i}\beta^j\) is triangular with diagonal one;
+the \(h_i\) are therefore linearly independent as well. The relations
+\(h_0=1\), \(\beta h_i=1+h_{i+1}\) for \(i<q-1\), and
+\(\beta h_{q-1}=1\), together with the row formula, give
+\(\ell_q(T_qv)=\beta\ell_q(v)\), where
+\(\ell_q(v)=\sum_i(a_i+b_i)h_i\) for
+\(v_i=a_i[1]+b_i[\tau]\). This proves compatibility of the stage formula.
+
+Since \(p^n\ne0\), a stage class has zero state exactly when every
+\(a_i+b_i\) vanishes. Then
+\[
+v_i=a_i([1]-[\tau])
+   =(\mathrm{id}-L_\tau)(a_i[1]),\qquad L_\tau v=-v.
+\]
+This gives an integral witness, with no division by two. Conversely,
+complement preserves each coefficient sum, so the displayed range lies in
+the state kernel.
+
+For the remaining inclusion, suppose
+\(x=\operatorname{of}_n(v)\) and \(x+\sigma_qx=0\). Eventual equality in
+the direct limit gives a later stage \(m\ge n\) where
+\(T_q^{m-n}(v+L_\tau v)=0\). Put \(u=T_q^{m-n}v\). Commutation yields
+\(u+L_\tau u=0\), hence each pair of coefficients of \(u_i\) sums to
+zero. The same integral witness works at stage \(m\). No injectivity of
+stage maps or torsion-free hypothesis is required. The irreducibility and
+weight identities used here are the scalar arithmetic inputs; they are
+not assertions about the characteristic polynomial of the expanded graph.
+

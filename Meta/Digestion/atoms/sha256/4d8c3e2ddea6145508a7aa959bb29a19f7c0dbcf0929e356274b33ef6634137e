@@ -1,0 +1,4 @@
+## 10. Party multiplicities in the tripartite Gaussian formulas
+
+The explicit numeric-set sums in Theorems 6.4 and 6.5 are superseded by the party-indexed formulas below. Equal weights do not identify parties or bipartitions. Every unqualified $\sum_p$ or $\prod_p$ in the tripartite formulas and proofs of Theorem 6.5 and Corollary 6.6 means one term for each of $A,B,C$, including repeated values. In particular, the tree expression in Theorem 6.5 has three denominator factors. The party-indexed determinant factorization of Corollary 5.4 is unchanged.
+

@@ -1,0 +1,46 @@
+**Lemma 5.2 (simultaneous finite branch-image separation).** Let a
+finite collection of free ordered alpha/beta terms have height at
+most $h$, treating each variable as a leaf. For every finite
+$L\ge0$, all its syntactically unequal term pairs can be kept unequal
+by one assignment of finite branch images to the variables, each
+with minimum leaf depth greater than $L$.
+
+Proof. List the distinct variables $z_1,\ldots,z_m$. Let
+$B_0=\beta$ and $B_{n+1}=\langle B_n,B_n\rangle$. Each $B_n$
+is an image, by (TCR.3), and for $n\ge1$ it is a branch whose
+leaves all have depth $n$. Assign $z_i=B_{N_i}$, where, for example,
+
+$$
+N_i=L+1+(h+1)(i+1)\qquad(1\le i\le m).
+\tag{TCR.18}
+$$
+
+All $N_i$ exceed $h$ and $L$, are positive, and have pairwise
+gaps greater than $h$. The height of an evaluated free term is the
+maximum of the depths of its concrete leaves and of
+$N_i+$ the depth of an occurrence of $z_i$. This follows by
+induction on the free term.
+
+Consider two different terms and descend through equal pair
+constructors until the first syntactic mismatch. Unequal concrete
+constructors remain unequal. Two different variables have different
+assigned heights. It remains to compare a variable $z_i$ with a
+nonvariable subterm $A$ of height at most $h$. If $A$ has no variable,
+its evaluated height is at most $h<N_i$. Otherwise let $N_k$ be
+the largest assigned height among its variables. If $N_k<N_i$,
+the evaluated height is at most $\max(h,N_k+h)<N_i$. If
+$N_k>N_i$, it is at least $N_k>N_i$. If $N_k=N_i$, $A$ has a
+pair root and that variable occurs at positive depth, so its
+evaluated height is greater than $N_i$. A literal-root $A$ cannot
+contain a variable. These cases exclude equality at the mismatch.
+Injectivity of the ordered pair constructor then excludes equality
+of the original terms. The one assignment separates every listed
+pair simultaneously. With no variables, the empty assignment suffices
+for unequal ground terms. All assigned trees have the required
+minimum leaf depth. $\square$
+
+This elementary finite-term specialization supplies the simultaneous
+filling needed here. PCA Theorem 11.2 already owns exact actual
+image-profile attainment; no new general prescribed-rank filling
+theorem is asserted.
+

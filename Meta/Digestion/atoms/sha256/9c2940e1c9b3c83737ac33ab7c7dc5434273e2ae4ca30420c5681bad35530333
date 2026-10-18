@@ -1,0 +1,25 @@
+**Proposition 6.5 (component comparison and scoped optimality).** The
+24-birth path attains the least number of executing steps among
+components that start with this same carrier, end with this same
+24-vertex increase and create at most one vertex per executing step,
+with no external prebuilt material ingress. This is not a minimal
+complete primitive basis or total-price theorem.
+
+Proof. A path of $m$ such steps can increase the retained vertex
+count by at most $m$; deletion only lowers that increase. Hence
+$m\ge24$. Theorem 3.4 attains 24 in the stated endowed matching
+basis. It says nothing about subdividing that basis's internal
+probes/evaluation/initializations, or about an actual material
+implementation.
+
+For a narrower data-only comparison, the old atomic append has
+one commitment, $7\cdot24+2=170$ assignments and 24 births, subtotal
+195. The present path has 24 commitments, 192 assignments and 24
+births, subtotal 240, before probes and evaluation. The 22 additional
+assignments arise because new parents' child slots are first
+initialized empty and later assigned by subsequent births; the
+old $z$ supplies the other two parent assignments. The 23 additional
+commitments give the remaining difference, for a subtotal increase
+of 45. This comparison holds only for those same data coordinates.
+It does not subtract or reuse an original whole-row bill. ∎
+

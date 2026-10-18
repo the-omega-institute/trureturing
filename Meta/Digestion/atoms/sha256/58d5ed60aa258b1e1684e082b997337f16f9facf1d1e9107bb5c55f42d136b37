@@ -1,0 +1,33 @@
+**Corollary 2.3 (Law invariance and existing consumers).** If finite
+presentations $\theta$ and $\theta'$ generate the same $P$, then for every
+$L\ge1$ their collar kernels and annihilators coincide:
+
+$$
+\ker E_{\theta,L}=\ker E_{\theta',L}=\mathcal K_L(P),\qquad
+\operatorname{range}(E_{\theta,L}^{\mathsf T})
+=\operatorname{range}(E_{\theta',L}^{\mathsf T})=\mathcal K_L(P)^\perp.
+\tag{2.3}
+$$
+
+Proof. Theorem 2.2 identifies each kernel with the same actual conditional
+identity. The finite-dimensional annihilator identity gives the row spaces.
+$\square$
+
+The matrices and collar sizes can differ. The equation $K_f=0$ remains
+a sufficient, presentation-dependent subspace of this kernel. In contrast,
+every $E_{\theta,L}$-null direction is accepted by [Conditional Response,
+Theorem 3.1 and §4][R]. In particular its already supplied argument gives,
+with $F=\|f\|_\infty$, under hypothetical same-law attainment,
+
+$$
+\left|\sum_{i=1}^L\mathbb E_P[f_C(X_i-q_{r,i})^2]\right|
+\le Fc_\star+2LF\sqrt{c_\star/(r+1)}.
+$$
+
+This is an application of that consumer, with exact nullity supplied by
+(2.1). The collar bound tests a specified $f,L$; it gives no posterior
+localization, finite visible memory, smallest collar, efficient productive
+radius or hidden-state minimality. For example the permitted $N=1$
+all-zero law has the empty collar; its kernel simply requires
+$f(0^L)=0$. Unsupported words remain coordinates with no actual loss.
+

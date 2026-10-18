@@ -1,0 +1,62 @@
+**Convention 2.2 (credited local and native suppliers).** The following
+facts are used at their supplied scopes, rather than asserted as new
+results of this interval-cover argument.
+
+[SI, Theorem 2.2][SI] gives nonempty $F_v$, freshness of every live
+query, query depth $h+z$ at a live history, and the actual fixed-label,
+fixed-successor support law. Earlier prefixes of a live history are live.
+Every completion of an exposed assignment follows the same prefix.
+[PCA, Theorem 35.1][PCA] excludes equal live supports with unequal
+hit counts at one host. [PE, Lemma 4.1][PE] excludes properly nested
+live supports at a common host.
+
+For incomparable supports $S,T$ of two actual live histories at one
+host, with respective hit counts $h<h'$, [PE, Theorem 3.1][PE] supplies
+two different necessary implications:
+
+$$
+\begin{aligned}
+\eta_S|_{S\setminus T}=0
+&\ \Longrightarrow\ C_{S\setminus T}\le C_{T\setminus S},
+&&\text{PE Theorem 3.1(1)},\\
+\eta_T|_{T\setminus S}=1
+&\ \Longrightarrow\ C_{T\setminus S}\le C_{S\setminus T},
+&&\text{PE Theorem 3.1(2)}.
+\end{aligned}
+\tag{IC.10}
+$$
+
+The old assignments on $S\cap T$ need not agree. To apply these
+native suppliers to a Boolean graph in Definition 2.1, use the
+full-fiber lift of [WTF, Theorem 4.1][WTF] on that same complete
+graph. It installs every coordinate-$i$ state at $a_i$, has the
+original code and reader, and satisfies both native caps $n+1,W+3$.
+Every actual Boolean history becomes its actual cube history after the
+paid profile front. Thus both implications (IC.10), including their
+complete-run and postcertificate charges, apply here. There is no
+new assumption that a state has a unique residual.
+
+The same WTF theorem gives, for simultaneous uniform budgets,
+
+$$
+\mathsf N_{A,k,r}(H,q,\ell)
+\quad\Longleftrightarrow\quad
+\mathsf B_{c,k}(H-4-r,q-1,\ell-3).
+\tag{IC.11}
+$$
+
+Here $\mathsf N$ is full-original-fiber native feasibility under
+Assumption 1.3, and $\mathsf B$ is the unrestricted Boolean model of
+Definition 2.1 with the indicated bounds. The specific projection keeps
+reached selected states on the supplied actual cube, bypasses only
+cube-constant chains, and fills impossible edges without making them
+actual. It has $m\le H-4-r$. No time unrolling, source operation or
+read-once normalization is part of this correspondence.
+
+Finally [SI, Theorem 5.2][SI] supplies the exact identity
+
+$$
+|Q_{\rm live}|=G+E-D,\qquad m-G=E-D+u.
+\tag{IC.12}
+$$
+

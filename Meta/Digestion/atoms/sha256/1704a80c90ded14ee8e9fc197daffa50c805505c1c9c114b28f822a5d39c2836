@@ -1,0 +1,24 @@
+**Definition 2.3 (actual clocks, not free numerals).** At a primitive cut $h$,
+let $n_h$ be the length of its actually constructed receipt chain from the
+declared entrance and $e_h$ its number of $\mathsf U$ receipts. These are
+mathematical coordinates of acquired finite material. They are not elapsed
+physical time, an update-only chronology, or automatically accessible binary
+integers. The tape epoch counter can lag $e_h$ while its new version is being
+written. All such versions and their phase flags remain in the joint state.
+
+An ordinary fence closes a receipt prefix. PR57.D3's paid scan produces its
+actual unary length. Counting the $\mathsf U$ symbols in that same fixed prefix
+by paid increment produces the actual epoch there. These scans terminate at
+the old fence although their own work adds later receipts. If a reader is
+authorized to fence immediately after a target primitive cut, its fence has
+ordinal length $n_h+1$; paid subtraction of one reports $n_h$, and that fence
+does not change $e_h$. Such instrumentation is a readout of a named old cut,
+not a new free live clock or an operation silently inserted into $P_{H,J}$.
+
+The four views below are functions of all actual primitive cuts. Paid
+materialization and recovery consume acquired data for a named closed cut.
+They do not produce an instantaneous full snapshot without work, and their
+execution is not included recursively in the old cut they describe. Allowing
+arbitrarily interleaved diagnostic calls inside the controller would add
+independent input and is outside the fixed-flight theorem.
+

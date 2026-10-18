@@ -1,0 +1,61 @@
+## 15. Sources and boundaries of the finite-budget representation
+
+The original-law suppliers are Proposition 2.1 and (2.2), the fixed
+endpoint table (9.4), and the finite-record semantics of Theorems
+9.2--11.4. Their likelihood inequalities, sharp selective witnesses,
+zero-record coefficients and one-read guaranteed-return optimum are
+retained as existing results. The finite whole-tree spin-slot signature
+in Theorem 12.2 supplies the additional arbitrary-address reduction;
+Theorem 12.3 supplies its measurable same-given-seed and joint-law
+form. These are repo-derived ordinary mathematical consequences of
+the original XOR realization, without a worldwide originality claim.
+
+Kaelbling, Littman and Cassandra, *Planning and Acting in Partially
+Observable Stochastic Domains*, Artificial Intelligence **101**,
+99--134, Sections 2.1 and 4.1, pp. 101--102 and 108--110 [KLC], provide
+the classical finite-horizon policy-tree background. Their finite
+state/action model and scalar value-function representation alone do
+not reduce this contract's unbounded integer addresses, give its full
+joint target/output/return/count law, or discharge its fixed-seed
+partition requirement. The finite tree unfolding is reused as ordinary
+background; the simultaneous two-phase integer-realizable signature
+and original-target relation are established in Section 12.
+
+Dvoretzky, Wald and Wolfowitz [DWW], Section 1 and Section 3, Theorem 4,
+Lemma 2 and Remark (c), supply exactly the classical partition-range
+facts used in Section 13. Their single finite measure here is the given
+seed law, not the source law or a newly introduced randomizer. The
+finite family is selected before applying those facts. Compactness
+for atomic seeds and unrestricted simplex weights for atomless seeds
+are different conclusions with different hypotheses. The partition
+image, compact projections and continuous minima are applications of
+these classical results, not new general vector-measure theorems.
+
+The consumer [Paid-return, Definitions 1.3 and 6.1 and Theorem 4.1][PR]
+already owns its return-mass coordinates, one-read lower curve and exact
+equality gate. The additional link is (14.1), which justifies minimum
+attainment for that region under every given seed, and the strict
+qualitative gap in Corollary 14.2 when a gate is absent. A finite
+representative family is not a closed-form numerical frontier. No
+general larger-budget optimum, optimal adaptive rule, minimal dictionary,
+sharp address radius or algorithm for arbitrary seed laws is supplied.
+
+All statements fix a finite total hard budget when preserving the full
+law. They assert neither an effective compiler nor bounded memory,
+finite precision, bounded internal work, a physical implementation, or
+an online quotient valid for unbounded histories. No compactness
+uniform in $k$, exchange of an unbounded-budget limit with optimization,
+or unbounded expected-paid-cost optimum follows. Internal nonreturn
+costs stay in (13.7); the restricted cost change in (14.3) is explicit.
+The fixed public bias, original stationary law, both original endpoints,
+all paid calls and unchanged independent seed remain as in Definition
+9.1. Neither the fair parameter nor the parameter endpoints are added
+to that contract. Renewal constructions, native and quantum control
+models, and Green-function sources concern different operations and
+supply no transfer to the original XOR acquisition problem here.
+Open Problem 6.4 remains unchanged.
+
+[DWW]: https://msp.org/pjm/1951/1-1/pjm-v1-n1-p06-s.pdf
+[KLC]: https://people.csail.mit.edu/lpk/papers/aij98-pomdp.pdf
+[PR]: FIB_PAID_READ_RETURN_MASS_AND_ENDPOINT_RISK_FRONTIER.md
+

@@ -1,0 +1,15 @@
+**数学反例 34.4（The width-two seam and the unchanged coprime joint archive）。** The sparse suffix realization in Lemma 32.1 depends on $m\ge3$. At $k=3,m=2$, $T=4$ and $g=2$, prescribe response one on both actual vertices of each of two successive windows. Each row forces word $11$, since the two actual endpoints directly prescribe its first and last bits. Their common concatenation is $1111$, which rejects on its third one even from tail zero. Hence independent row support conditions do not alone give legal width-two continuation. This example does not alter the INITIAL prior or confer a width-two exact law.
+
+A separate global-compatibility falsifier is the supplied coprime archive [S15, Theorem 8.1] at $k=8,m=4$. Its actual support and immutable labels are exactly
+
+$$
+S=\{0,1,3,4,5,6,8\},\qquad
+\lambda(0)=B,\quad\lambda(4)=C,\quad\lambda(8)=D,\qquad
+\lambda(1)=\lambda(3)=\lambda(5)=\lambda(6)=A,
+\tag{34.5}
+$$
+
+where $A,B,C,D$ are four distinct labels. The paid acquisition consists of nine complete blocks: block index four is $1111$ and all other blocks are $0000$, conditioned on the actual all-zero difference archive. Its one nonzero mask excludes precisely phases $7,2$; preceding zero blocks clear the INITIAL tails, the all-one block is safe from tail zero, and later zeros leave tail zero. Since $9m\equiv0\pmod9$, the acquired offset is the stated one. Every member of this seven-phase archive therefore has an actual jointly realized history and that exact shared continuation; its acquisition fee is already paid and is not folded into its additional fee.
+
+The first extra word $1111$ separates $B,C$ from $A,D$. The former child is completed by $1000$, and the latter by $0001$, each with one further paid block and a legal seam. This gives additional adaptive fee two. A single common two-block stream, however, would need the four two-bit label codes $A=00,B=10,C=11,D=01$: actual $A$ phases occur exclusively in each of the two windows and force its code zero in both positions. The first window misses only phase $2$, and the second only phase $7$; each unique full-path completion for the required row is $1111$. Their joint seam reaches $k=8$, so all still-running sources reject in the second block. Both first children contain two different labels, hence neither may stop early. The source's single preset stream $0000\mid1111\mid1000$ attains additional fee three. Thus the supplied sibling fee maxima two cannot replace a simultaneous global stream, while the actual preset optimum is three. The seven phases and four labels in (34.5) are essential data. Here $g=1$, outside (31.1); the example supplies a boundary, not a counterexample to Theorem 33.2.
+

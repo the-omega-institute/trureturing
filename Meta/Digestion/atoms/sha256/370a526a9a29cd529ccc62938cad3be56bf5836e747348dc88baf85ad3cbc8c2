@@ -1,0 +1,23 @@
+**Proposition 5.2 (attaining acquisition and completion charges).** After
+the credited acquisition of $e$, the constructions above have these
+sufficient additional charges, with $f=|A_e|$:
+
+| Task and phase | Reads | Submitted letters | Peak length when calls occur |
+| --- | ---: | ---: | ---: |
+| Prediction refinement preparation | $\max\{f-q,0\}$ | $D\max\{f-q,0\}$ | $D$ |
+| Prediction fresh completion | $\min\{f,q\}$ | $D\min\{f,q\}$ | $D$ |
+| Literal refinement preparation | at most $2f$ | at most $2f(D+1)$ | at most $D+1$ |
+| Literal fresh completion | $\min\{2f,q\}$ | at most $(D+1)\min\{2f,q\}$ | at most $D+1$ |
+
+All charges are zero for a phase with no calls. Literal preparation can
+skip every position with no surviving field; its displayed uniform bound
+is sufficient, not an optimum. No submitted-letter optimum is asserted
+for these literal refinement/completion constructions.
+
+Proof. The prediction queries are the specified roots $Ra$, all of
+length $D$. Lemma 4.2 uses only $RaL,RaR$ of length $D+1$ and,
+on its leaf branch, $Ra$ of length $D$. Preparation uses at most two
+calls per position with a surviving value or bit. The fresh call counts
+were computed in the attaining proofs. Summing word lengths and taking
+their maximum gives the stated bounds. $\square$
+

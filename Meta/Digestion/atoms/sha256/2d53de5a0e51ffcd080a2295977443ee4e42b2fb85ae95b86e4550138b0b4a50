@@ -1,0 +1,7 @@
+**Example 10.4 (exact order fibers).** Four distinct Reads and two updates
+give $6!/2!=360$ command histories with one source-recovered spatial base,
+requiring nine conditional fixed-width bits. If their complete epoch records
+fix Read counts $(2,0,2)$, four within-epoch orders remain, requiring two bits.
+Zero Reads gives one order, and a single Read with $b$ updates gives $b+1$
+orders before epoch assignment is supplied.
+

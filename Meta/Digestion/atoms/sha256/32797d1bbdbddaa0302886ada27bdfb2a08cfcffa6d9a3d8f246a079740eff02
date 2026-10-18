@@ -1,0 +1,44 @@
+**Definition 10.2 (one joint performance slice).** For a fixed admissible
+encoder and service, let $w_1,\ldots,w_n$ be the literals actually
+submitted on $(t,k)$, counting each invocation, including repetitions.
+Set
+
+$$
+\begin{aligned}
+T(t,k)&=n,\\
+A(t,k)&=\sum_{i=1}^n|w_i|,\\
+\Lambda(t,k)&=\max\bigl(\{0\}\cup\{|w_i|:1\le i\le n\}\bigr).
+\end{aligned}
+$$
+
+All three suprema below belong to that same encoder and that same
+service:
+
+$$
+(q,a,\ell)=
+\left(
+\sup_{\substack{t\in\mathcal T_z\\k\in\{0,1\}}}T(t,k),\quad
+\sup_{\substack{t\in\mathcal T_z\\k\in\{0,1\}}}A(t,k),\quad
+\sup_{\substack{t\in\mathcal T_z\\k\in\{0,1\}}}\Lambda(t,k)
+\right).
+\tag{AAR.30}
+$$
+
+These suprema may be infinite. They are not separately optimized over
+different services. Write uniquely
+
+$$
+\begin{gathered}
+z=2d+e,\qquad e\in\{0,1\},\qquad
+r=d+e=\left\lceil\frac z2\right\rceil,\\
+N=2^d,\qquad C=2^b,\qquad
+M=\left\lceil\frac NC\right\rceil=2^{\max(d-b,0)}.
+\end{gathered}
+\tag{AAR.31}
+$$
+
+Here $e$ is the parity of $z$; on a minimizing leaf it agrees with the
+label function in (AAR.29). These parameters and this section's budget
+letters have their local meanings, independently of the earlier
+per-execution notation (AAR.3).
+

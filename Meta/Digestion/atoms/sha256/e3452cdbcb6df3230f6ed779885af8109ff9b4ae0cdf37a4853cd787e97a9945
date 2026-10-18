@@ -1,0 +1,135 @@
+**Theorem 8.7 (Observable commutator direction of the original law).**
+On the actual three-dimensional domain
+$\mathcal M_b=(0,r/2)\times\mathbb T^2$ of the double wall, the original
+two controls have rank-two distribution
+
+$$
+\mathcal D=\operatorname{span}\{P,Q\},\qquad
+P=\partial_\kappa,\qquad
+Q=\left(\frac12-\frac\kappa r\right)\partial_u
+       -\frac\kappa r\partial_v.
+\tag{8.22}
+$$
+
+Their commutator
+
+$$
+C=[P,Q]=-\frac1r(\partial_u+\partial_v)
+\tag{8.23}
+$$
+
+is a third independent source tangent direction at every interior point.
+Finite legal control rectangles realize its flow exactly. This direction
+is visible in the original $02$ coherence pair, even though the reduced
+relation phase does not change along it.
+
+Proof. Theorem 3.7 supplies the affine double-wall formula for $w$.
+Without imposing loop closure, the same pointwise formula gives
+
+$$
+\dot u=\left(\frac12-\frac\kappa r\right)\dot\chi,
+\qquad\dot v=-\frac\kappa r\dot\chi.
+\tag{8.24}
+$$
+
+Thus the two independent real control velocities multiply $P$ and $Q$.
+Differentiating the coefficients gives (8.23). The determinant of the
+two phase columns $Q,C$ in $(u,v)$ coordinates is $-1/(2r)$, which is
+nonzero. Together with $P$ they span the tangent space. This is a
+statement about the actual source coordinates of Theorem 8.2.
+
+To realize the commutator rather than infer lawfulness from its name,
+choose any nonzero $s$ with $\kappa+s\in(0,r/2)$ and any finite real
+$A$. Execute the probability leg from $\kappa$ to $\kappa+s$, a phase
+leg of increment $A$, the returning probability leg, and a phase leg
+of increment $-A$. The supplied rectangle identity of Theorem 2.6 and
+the affine formula for $w$ give exactly
+
+$$
+\Delta u=\Delta v=-\frac{sA}{r},\qquad
+\Delta\kappa=0,\qquad\Delta\chi=0.
+\tag{8.25}
+$$
+
+This is the time-$sA$ flow of $C$, with no limiting approximation.
+For any desired common phase increment $t$, set $A=-rt/s$. All four
+legs are legal and finite; neither sign of $A$ is excluded. Small
+rectangles also give arbitrarily small nonzero local displacements.
+The finite paths in Theorem 8.2 already prove the full global reachable
+domain, so no general bracket-accessibility theorem is needed.
+
+In the observable coordinates (8.17), $C\alpha=0$ and
+$C\beta=-1/r$. At fixed $\kappa$ the $02$ output is
+$2\sqrt{\kappa Z}\,R_{\delta_{02}^0}\upsilon(\beta)$, so its derivative
+along $C$ has norm
+
+$$
+\|C y_{02}\|=\frac{2\sqrt{\kappa Z}}r>0.
+\tag{8.26}
+$$
+
+Consequently the new tangent direction is not removed by the ray gauge
+or by the declared read menu. The pure probability direction changes
+(8.9), while $Q$ changes $\alpha$ at rate $1/2$; these and (8.26)
+also exhibit the three independent directions in the same output map.
+The commutator changes the phase of the four bottom modes relative to
+the positive middle reference. It is not common phase on all five modes.
+
+The contact description is a consumed explanation of this distribution.
+The one-form obtained from the actual probability-weighted phase is
+
+$$
+\lambda=2\kappa\,du+(r-2\kappa)\,dv,\qquad
+\ker\lambda=\mathcal D,\qquad
+\lambda\wedge d\lambda=2r\,d\kappa\wedge du\wedge dv\ne0.
+\tag{8.27}
+$$
+
+Both vector fields in (8.22) annihilate $\lambda$, and their independence
+gives its entire two-dimensional kernel. The displayed exterior
+derivative verifies the contact criterion directly in this domain.
+The form uses the given probabilities and phase convention, with no
+new metric imposed.
+
+To connect this precisely to the classical two-amplitude model, define
+the fixed orthonormal vectors incorporating all preparation phases by
+
+$$
+|+\rangle=\frac{e^{-i\eta_0}|0\rangle+
+                         e^{-i\eta_{13}}|13\rangle}{\sqrt2},\qquad
+|-\rangle=\frac{e^{-i\eta_1}|1\rangle+
+                         e^{-i\eta_3}|3\rangle}{\sqrt2}.
+$$
+
+Then the same source representative (8.5) is exactly
+
+$$
+|\psi\rangle=\sqrt r\,(z_+|+\rangle+z_-|-\rangle)+\sqrt Z\,|2\rangle,
+\qquad
+z_+=\sqrt{\frac{2\kappa}{r}}e^{-iu},\quad
+z_-=\sqrt{1-\frac{2\kappa}{r}}e^{-iv}.
+\tag{8.28}
+$$
+
+This parametrizes precisely
+$\{(z_+,z_-)\in\mathbb C^2:|z_+|^2+|z_-|^2=1,\ z_+z_-\ne0\}$,
+the part of the unit three-sphere with both amplitudes nonzero. John
+Etnyre's
+[*Introductory Lectures on Contact Geometry*, §2, Example 2.12, equation (7)](https://arxiv.org/abs/math/0111118v2)
+uses the form
+$\alpha_{\rm std}=\sum_{j=1}^2(x_j\,dy_j-y_j\,dx_j)
+=\operatorname{Im}(\overline z_+\,dz_++\overline z_-\,dz_-)$
+on the unit sphere. Under (8.28) its pullback is $-\lambda/r$.
+The sign follows from the negative exponential convention, and the
+nonzero constant does not change the kernel. Etnyre's criterion
+$\alpha\wedge d\alpha\ne0$ therefore describes exactly the native
+distribution already verified in (8.27).
+
+The simultaneous phase of $(z_+,z_-)$ is the circle direction ordinarily
+removed in the Hopf quotient. Here it is measured against $\sqrt Z|2\rangle$;
+removing it would erase precisely the direction detected in (8.26).
+The correspondence is with this open source domain and this plane field.
+It supplies no free $SU(2)$ control on the two amplitudes, no free
+$SO(3)$ action on observations, and no identification with physical
+position space. $\square$
+

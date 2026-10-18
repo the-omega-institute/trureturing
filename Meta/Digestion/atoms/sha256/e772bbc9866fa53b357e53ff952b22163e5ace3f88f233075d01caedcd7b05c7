@@ -1,0 +1,31 @@
+**The numerical cutoff.** By (93.1) and (93.6),
+
+$$e^s<10^{60}s^5. \tag{93.7}$$
+
+Positive exponential-series partial sums give exact certificates
+
+$$e^{5/2}>\sum_{h=0}^{4}\frac{(5/2)^h}{h!}=\frac{4169}{384}>10,\qquad
+e^6>\sum_{h=0}^{6}\frac{6^h}{h!}=\frac{1223}{5}>200.$$
+
+Hence $\log10<5/2$ and $\log200<6$. At $s=200$,
+
+$$60\log10+5\log200<150+30=180<200.$$
+
+The function $s-60\log10-5\log s$ has positive derivative for $s\ge200$, so (93.7) forces $s<200$.
+
+For completeness, $e<3$ follows from $h!\ge2^{h-1}$ for $h\ge1$, strict for $h\ge3$, and summing the geometric majorant. Thus $e^2<9<10$, giving $\log10>2$.
+
+For odd $v$, the identity $L_{3v}=L_v^3+3L_v$ gives the exact chain
+
+$$L_1=1,\quad L_3=4,\quad L_9=76,\quad L_{27}=439204,$$
+
+$$L_{81}=84722519070079276,$$
+
+$$L_{243}=608130213374088941214747405817720942127490792974404>10^{50}.$$
+
+Each entry is the preceding entry cubed plus three times that entry. Consequently
+
+$$B_{243}=369822356418414944143680173221426891716916679027557977938929258031490127514207143830378340325399155219>10^{100}.$$
+
+It follows that $\log B_{243}>100\log10>200$. Since the Lucas sequence is strictly increasing at these positive indices, every $j\ge5$ contradicts $s<200$. The hypothesis $N\ge81$ leaves only $j=4$. $\square$
+

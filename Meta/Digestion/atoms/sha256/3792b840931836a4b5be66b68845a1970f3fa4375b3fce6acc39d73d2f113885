@@ -1,0 +1,30 @@
+**Convention 9.2 (the separately priced complete reader).** Put
+$(q_1,q_2,q_3,q_4)=(LL,LR,RL,RR)$. Let $R_0=R_*$; let $R_j$
+replace the two sibling holes $q_jL,q_jR$ by concrete beta at $q_j$,
+canonically restricting the surviving occurrence partition and retaining
+all surviving disequalities and guards. The other occurrence of the
+repeated left class remains a hole. Injectivity of the image inverse
+preserves equality and disequality of surviving holes, so these are the
+complete predecessor rows on the respective profiles.
+
+For the fixed supplied order $i_1,i_2$ of $\{1,2\}$, the original
+reader is literally
+
+| Running entry | Literal | alpha | beta | branch | absent |
+| --- | --- | --- | --- | --- | --- |
+| $e_0$ | $q_{i_1}R$ | $H_{i_1}$ | $H_0$ | $Q_2$ | $H_0$ |
+| $Q_2$ | $q_{i_2}R$ | $H_{i_2}$ | $H_0$ | $H_0$ | $H_0$ |
+| $e_1$ | $RLR$ | $H_3$ | $H_0$ | $H_4$ | $H_0$ |
+
+Halt $H_j$ returns the whole $R_j$, not merely a root-type summary.
+The profile classification verifies each row: the possible alpha right
+child identifies the collapsed parent, while the prescribed code chooses
+the appropriate entry group. On $Z_{b_3}$ either entry yields the zero
+row, but (TS.34) still prescribes which literal entry must be prepared.
+Preparation first ends at $\widehat e_\sigma$; the separately supplied
+paid code-only handoff then enters exactly $e_\sigma$ on the same register.
+The three running states and five complete-row halts are eight installed
+reader states, with at most two fresh calls and six fresh letters, all
+separate from preparation. No reader entry is a preparation latch.
+This is the complete reader of [SB, Remark 1.5][SB], reused unchanged.
+

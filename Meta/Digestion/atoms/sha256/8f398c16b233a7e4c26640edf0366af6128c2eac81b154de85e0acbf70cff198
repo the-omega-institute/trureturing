@@ -1,0 +1,29 @@
+**Theorem 3.1 (arbitrary-drift proper-pair restriction).** Let
+$K=\{W_1,W_2,W_3\}\subseteq\mathcal F^{\ne0}_7(H)$ consist of
+three distinct complete worlds. Suppose $L_2(K,H)$ and neither
+sixth action has a response shared by all three. Then the two losing
+sixth children are different proper pairs. All three terminal gains
+$g_i(7)$ have one common sign. In particular differing terminal
+signs force a shared-three sixth response for at least one action,
+without a common-drift hypothesis.
+
+Proof. A sixth child witnessing $L_1$ has at least two worlds.
+On a three-world set without a shared-three response, this is the
+unique colliding pair for that sixth action; the remaining world
+has a different response. A two-world child has $L_1$ exactly when
+its two worlds agree in both terminal columns for that branch.
+The $J$ pair therefore agrees in $A,B$, and the $M$ pair in $C,D$.
+If those pairs were the same, they would agree in all four terminal
+columns, contradicting distinctness by Lemma 2.3. Relabel so that
+the $J$ pair is $\{1,2\}$ and the $M$ pair is $\{1,3\}$.
+
+Equality of $A,B$ gives $b_1=b_2$. Since $b_i=t_ix_i$ and $x_i>0$,
+the terminal chart gains $t_1,t_2$ have the same sign. Equality of
+$C,D$ gives $b_1+e_1=b_3+e_3$. Since
+$b_i+e_i=t_i(x_i+1)$ with $x_i+1>0$, $t_1,t_3$ have the same sign.
+The two different pairs connect all three worlds. Since
+$f_i(7)=T_{i,0}t_i$ with $T_{i,0}>0$, and the single common scale
+$\lambda$ multiplies every $f_i$, all original $g_i(7)$ have the
+same sign. No drift equality or sixth-gain nonvanishing was used.
+Every equation concerns these same three worlds on (1.3). ∎
+

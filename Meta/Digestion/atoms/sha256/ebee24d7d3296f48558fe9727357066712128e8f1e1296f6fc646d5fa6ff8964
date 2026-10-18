@@ -1,0 +1,117 @@
+**Mathematical citation 21.1 (precise source reuse).** The native alphabet,
+free ordered pairing and substitution are [GFT] *Source* and
+*substitution*. [ACQ] *Address*, *Reply* and *readout* implement exactly
+the finite literal/four-reply interface: true/false source labels denote
+alpha/beta, while false/true address letters denote left/right. The row
+is [ACPD] *literalRecord*, with its complete *actualPartition* and
+*canonicalRow_record_iff*. No constructor-only surrogate is used.
+
+The transported address in Lemma 15.1 is supplied by [NDP]
+*original_present_transport*. Its clock is [DOR] *rightClock* and
+*right_clock_iterate*, whose private *clock_step* establishes the native
+increment. The inverse is [NPR] *delta*, using its private
+*sigma_not_alpha* and *delta_sigma* on actual images. Native injectivity
+is supplied through [STC] *source_transport_centralizer*; [ISC]'s private
+*substitution_injective*, *intrinsic_coordinates* and *pair_image*
+expose the corresponding ancestry and image boundaries. Primitive
+ancestry alone is not an invocation timestamp.
+
+The finite full-tree padding pattern has existing suppliers [NCRP]
+private *pad*, *pad_reply* and *padded_values*. Those declarations concern
+their specified row/class assignments. Lemmas 16.4 and 18.1 explicitly
+construct and justify the adaptive protected-phase finite realizations;
+they do not claim that the existing class-root theorem already handles
+an independent writer or this origin target. Likewise [NSD]'s private
+replay/descriptor arguments, *bounded_read_support* and *transfer*, and
+[SPR]'s private chronology arguments and public parity lower bounds retain
+their serial Run, installed-family and recorded-epoch hypotheses.
+
+The actual later acquisition, validation equality, finite-interference
+termination and resource bills are Theorems 3.3 and 5.2–5.4 of this volume.
+The endpoint results in §§7 and 10–13 remain suppliers; in particular the
+one-protected-Read classification is not a new contribution here.
+[NBP, Assumption 1.3 and Theorems 2.2, 4.3][NBP] require their authentic
+origin, old support/birth records and authenticated lag. [NAR, §§11–12][NAR]
+requires its truthful same-history row inputs. The protected-leaf bridge
+actually acquires an origin calibration; it does not silently assume
+those richer inputs. Source inspection supplies the stated correspondence,
+not a new Lean compilation or kernel certificate.
+
+**Mathematical citation 21.2 (search, prefix codes and concurrent histories).**
+Bose, Cardinal, Iacono, Koumoutsos and Langerman, *Competitive Online Search
+Trees on Trees*, [author preprint, introduction and search-tree model,
+arXiv:1908.00848v1](https://arxiv.org/pdf/1908.00848v1), defines a vertex
+query which succeeds or names the remaining connected component. On a
+path this is ordered binary search. The candidate chain after an absent
+Read has precisely the success/shallower/deeper comparison structure,
+with a paid alpha/beta observation required for success. The paper's
+online rotations, unit-cost pointer moves and general component oracle
+are not this native port. Its competitive results do not imply (CNA.30).
+The arbitrary-literal reduction in Lemma 18.1 supplies the missing
+correspondence before that comparison capacity is used.
+
+Huffman, *A Method for the Construction of Minimum-Redundancy Codes*,
+[primary paper, p. 1098, restriction (b) and its explanation](https://compression.ru/download/articles/huff/huffman_1952_minimum-redundancy-codes.pdf),
+requires that no message code occur as the initial digits of a longer
+message code. On a binary alphabet, $0\mapsto L$, $1\mapsto R$ gives
+the prefix-free words whose prefixes form the public trie in Definition
+14.3. The same page defines the probability-weighted mean length in its
+equation (2). That coding objective supplies neither a source probability
+law here nor a worst-case native Read budget. A terminal code word also
+does not promise that its address exists in an arbitrary finite native
+tree; the early blockers in (CNA.27) are separate actual-source data.
+
+Herlihy and Wing's history and linearization definitions, [primary paper,
+§2](https://cs.brown.edu/~mph/HerlihyW90/p463-herlihy.pdf), distinguish
+invocation from a valid observation instant between invocation and
+response. Theorem 3.3 supplies the latter. Formula (CNA.25) or invariant
+(CNA.26), with actual protected evidence, is needed to recover the former.
+
+Afek, Attiya, Dolev, Gafni, Merritt and Shavit, *Atomic Snapshots of Shared
+Memory*, [authors' manuscript, §§2–3](https://www.cs.tau.ac.il/~afek/papers/snapshot.ps),
+uses sequence numbers to detect movement between collects, and stored
+writer views for wait-free completion. Neither those fields nor that
+writer cooperation exists here. Its specification and double-collect
+argument motivate separating endpoint safety from completion, but provide
+no native protection interval or invocation snapshot. The finite-total-
+interference premise here is weaker than wait-free termination against
+arbitrary ongoing writers.
+
+Fischer, Lynch and Paterson, *Impossibility of Distributed Consensus with
+One Faulty Process*, [primary paper, §2 and Lemma 2](https://groups.csail.mit.edu/tds/papers/Lynch/jacm85.pdf),
+uses deterministic configurations and schedules, including runs with
+identical observable evolution from suitably differing initial states.
+Lemma 16.1 uses that indistinguishability method with its own explicit
+same-register histories. No consensus, failed-process, message-channel
+or bivalence theorem is imported into the present model.
+
+**Mathematical consequence 21.3 (geometry, origin memory and relative time).**
+The geometric quantity $d_i$ has two simultaneous meanings: a branch
+reply certifies that many new ancestor vertices, whereas absent leaves
+$d_i-1$ possible exposed origin blockers. Later information can settle
+the complete row once either the real blocker label has calibrated the
+origin or every public exterior vertex has been certified branch.
+The ordered capacities record this tradeoff. They depend on how ancestor
+chains overlap and on when they are queried, rather than on cut size,
+maximum depth or width separately.
+
+In the leaf continuation, the actual retained origin relation and a later
+finite acquired tree recover the invocation source and the relative
+number of updates. In the cover continuation the row is recoverable
+without either of those stronger identifications. An extra retained
+clock, guard or whole tree changes the available interface: the strictly
+row-only necessity conditions of §8 cannot be transferred to it. The
+complete row itself continues to mean an exterior and a full relation
+on hidden occurrences, including concrete early guards and disequalities.
+
+These are repo-derived ordinary proofs of the protected multi-Read bridge,
+the finite-realization capacity bound and the all-cut optimum. Classical
+search, prefix geometry, native transport, inversion and CNA acquisition
+are antecedents, not claimed inventions. No worldwide originality, new
+Lean verification, physical spacetime identification or completion of
+the broader RRO program is asserted. The unknown event positions,
+physical duration and pre-invocation provenance are not recovered by
+knowing the relative update count. Sharp total workspace and address/
+retention tradeoffs, and a physical realization of protection, remain
+separate questions.
+

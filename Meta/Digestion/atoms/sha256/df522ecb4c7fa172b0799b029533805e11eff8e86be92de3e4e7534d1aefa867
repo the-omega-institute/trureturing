@@ -1,0 +1,15 @@
+**Assumption 6.1 (authentic acquired input).** For a nonempty fiber $U$
+of (URR.20), impose exactly [ARH, Assumption 1.3][ARH]. The specified
+row and all records have been acquired by paid operations. The actual
+single original-root register is $\rho^N u$, for an authenticated
+$N$ at least every recorded epoch. The complete accessible state is a
+fixed function of the retained input and common parameters and recovers
+that input. Its original-source fiber is exactly $U$.
+
+All still accessible source-bearing caches, addresses, traversal lengths,
+counts, control positions, timing fields, handles, permissions, outputs
+and archives belong to that complete state. No unlisted field retains a
+distinction among sources in $U$. This is an access-cut assumption, not
+a claim that mathematics erases physical information. A merely plausible
+list of signs without its actual acquisition does not meet the assumption.
+

@@ -1,0 +1,57 @@
+## 16. Dependent-part reduction already supplies qualitative entropy minimality
+
+Salvail, Schaffner and Sotáková,
+[*Quantifying the Leakage of Quantum Protocols for Classical
+Two-Party Cryptography*, arXiv:1501.01549v1](https://arxiv.org/abs/1501.01549v1),
+§4.1, Theorem 4.5 and its proof, supplies a precise predecessor
+for qualitative minimum entropy. For deterministic maps
+$L'=f(L),R'=g(R)$ satisfying
+
+$$
+L\leftrightarrow L'\leftrightarrow R,
+\qquad L\leftrightarrow R'\leftrightarrow R,
+\tag{16.1}
+$$
+
+minimum regular-embedding leakage for the full classical
+law is no smaller than that for the reduced law. In a
+regular embedding leakage is the reduced-state entropy
+minus the fixed classical mutual information; the proof
+also establishes that this mutual information is unchanged
+under (16.1).
+
+For the present path Gibbs law, the left and right boundary
+occupations are the dependent parts. Full words with the
+same boundary bit give the same opposite-side conditional
+law, and the two different bits give distinct conditional
+laws under strict positive support. Their joint law has
+only three positive sectors, $00,01,10$. Its bipartite
+support graph is a tree, so every phase on these three
+entries is removable by row and column phases. The positive
+full-word reference is a local isometric image of this
+positive two-by-two sector coefficient matrix.
+
+These correspondences instantiate the cited reduction:
+all reduced embeddings have the same entropy as the positive
+reduced reference, and that entropy equals the full positive
+reference entropy. Thus the source theorem already implies
+qualitative entropy minimality for the full-word phase
+family. The equality-orbit classification, full spectral
+majorization, mirror rank stratification and quantitative
+orbit estimates retain their separate deductions above.
+The general dependent-part principle and this qualitative
+consequence are not claimed as new results.
+
+The same primary source, §6, Conjecture 6.1, proposes
+canonical-embedding minimum leakage for every classical
+joint law, while explicitly warning that pairwise overlap
+ordering need not order entropy in dimension at least three.
+Proposition 11.3 maps to its stated general claim: the two
+coefficient matrices have identical classical probabilities,
+so their classical mutual information cancels in the leakage
+difference. This is a mathematical correspondence to the
+published formulation. The subsequent literature status of
+that conjecture and priority for its counterexamples are not
+established here; no new external open-problem settlement is
+claimed.
+

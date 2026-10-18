@@ -1,0 +1,39 @@
+**Proposition 18.2 (no exact separating guard from finite live records).**
+Every finite live seed of a protocol in Definition 14.3 has positive
+likelihood at both heights. Thus this record cannot certify which height
+is present, even with an inconclusive option. In particular, it cannot
+authorize an exact executed-versus-unexecuted handler for the unit
+positive ramp of displacement $c/2$, whose domain $(0,c/2)$ contains
+$a$ and excludes $b$.
+
+Proof. The two likelihoods are $\nu(u)q_a(u)>0$ and
+$\nu(u)q_b(u)>0$. Any randomized conclusive label with positive
+probability at this live seed also occurs under the competing height;
+zero-error conclusiveness forces zero probability for both labels.
+No finite record produces an exclusive height event. $\square$
+
+The same conclusion survives an unrestricted terminal specimen effect
+under the full nuisance family, although such a read is outside the
+score's operation class. At each height the four actual vectors with
+$(\beta,m)\in\{0,\pi\}\times\{0,1\}$ span $V$: their sums and
+differences isolate $|2\rangle$, $|+\rangle$ and $|-\rangle$,
+all with nonzero coefficients. At a fixed live seed an error-free
+label-$a$ positive effect must have zero expectation on all four
+height-$b$ vectors. Positivity makes it annihilate their span $V$,
+so it cannot identify height $a$ either; interchange the heights for
+the other label. This is the credited positive-effect/support
+principle instantiated on the acquired record, rather than a new
+general discrimination theorem.
+
+After a live return the actual height, old real phase, signed winding
+and conditional joint specimen/reference state are unchanged.
+Any separately supplied and permitted matching tail known legal at
+both candidate heights can be selected using the actual seed and updates.
+Its chronological real lift is
+$\chi(T+u)=\chi(T)+\chi_{\rm tail}(u)-\chi_{\rm tail}(0)$;
+the old lift is not read. Complete canonical failures retain the
+first failure and absorbing successor. A finite-error height guess
+never grants permission for the separating ramp. This is a restricted
+consumer of the existing lawful menu, not a total-domain guard or
+height-selected full observer.
+

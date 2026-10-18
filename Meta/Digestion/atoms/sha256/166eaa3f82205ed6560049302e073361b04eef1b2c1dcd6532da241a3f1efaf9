@@ -1,0 +1,21 @@
+**Lemma 5.2 (Elementary exponential bounds).** For $u\ge0$,
+
+$$
+(1-e^{-u})^2\le u/2,
+\tag{5.2}
+$$
+
+for $0\le u\le1$, $1-e^{-u}\ge u/2$, and for $u\ge1$,
+$1-e^{-u}>1/2$.
+
+**Proof.** For $g(u)=(1-e^{-u})^2$,
+
+$$
+g'(u)=2e^{-u}(1-e^{-u})\le1/2
+$$
+
+because $t(1-t)\le1/4$ on $[0,1]$; integration from $0$ proves
+(5.2). Also $e^{-v}\ge1-v$, so
+$1-e^{-u}=\int_0^u e^{-v}\,dv\ge u-u^2/2\ge u/2$ for $u\le1$.
+The $u\ge1$ claim follows from $1-e^{-u}\ge1-e^{-1}>1/2$. $\square$
+

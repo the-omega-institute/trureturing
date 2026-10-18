@@ -1,0 +1,86 @@
+**Proposition 5.2 (automatic entire-source reduction and full rows).**
+For this pattern the exact whole fiber is
+
+$$
+D=\{V(T_n,x,w):n\ge0,\ x,w\in\mathcal T,\
+ w\ne T_n,\ w\ne T_{n+1},\ H(n,x,w)\},
+\tag{TOS.10}
+$$
+
+where $H$ is the entire pulled-back additional negative conjunction.
+There are at most four full target rows. They have the same reached set
+$Q$ and exterior
+
+$$
+\langle\square_1,\langle\square_2,\langle\square_3,
+                            \langle\square_4,\square_5\rangle\rangle\rangle\rangle.
+\tag{TOS.11}
+$$
+
+Their possible partitions and exact chart substitutions are
+
+| Row | Complete partition | Substitution and remaining whole negatives |
+| --- | --- | --- |
+| $r_0$ | $\{\{1,2,5\},\{3\},\{4\}\}$ | $x=T_n$; $w\ne T_n,T_{n+1}$ and $H(n,T_n,w)$ |
+| $r_1$ | $\{\{1,5\},\{2,4\},\{3\}\}$ | $x=T_{n+1}$; $w\ne T_n,T_{n+1}$ and $H(n,T_{n+1},w)$ |
+| $r_w$ | $\{\{1,5\},\{2,3\},\{4\}\}$ | $x=w$; $w\ne T_n,T_{n+1}$ and $H(n,w,w)$ |
+| $r_d$ | $\{\{1,5\},\{2\},\{3\},\{4\}\}$ | $x\ne T_n,T_{n+1},w$; $w\ne T_n,T_{n+1}$ and $H(n,x,w)$ |
+
+These are whole-stratum correspondences in both directions. Exact URR
+support removes precisely the empty rows and produces finite realizing
+sources for the others. For every attained $B$ these computed charts
+pass terminal recognition, so Theorem 4.3 applies automatically.
+
+**Proof.** The four literals uniquely write any admitted original as
+$\langle t,\langle x,\langle w,\langle a,b\rangle\rangle\rangle\rangle$.
+Every listed endpoint follows this skeleton and is originally reached.
+Original branches persist under $\rho$, so the first two positive
+records give $a=\rho t$ and $b=t$. The third gives
+$\rho^2t=\langle\rho t,t\rangle$. The exact finite stability
+classification [ARH, (ARH.4.4)][ARH], supplied by
+`SourceTransportCentralizer.source_transport_centralizer`, says precisely
+$t=T_n$ for some $n\ge0$. This is an acquired constraint on an interior
+subtree, not a whole-source atomic promise. The two negatives become
+exactly the displayed inequalities for $w$. Each additional record is
+evaluated at its own actual epoch on this same expression, yielding
+$H$ with every repeated name retained.
+
+Conversely every finite tuple in (TOS.10) has all four literals and the
+entire root old row. Atomic recurrence gives
+$\rho^2 T_n=\langle T_{n+1},T_n\rangle$, proving all three positive
+records. Both endpoints of every base and additional record are reached
+and persist, so their signs are precisely the stated whole negatives.
+Thus (TOS.10) reconstructs the same original and proves the reverse
+source inclusion, with no omitted guard.
+
+The five reached hole values are $T_n,x,w,T_{n+1},T_n$.
+The atomic indices are distinct, and $w$ differs from both atomic
+values. Therefore $x$ equals exactly one of $T_n,T_{n+1},w$, or differs
+from all three. These four alternatives exhaust all full partitions.
+Substitution yields each table row; conversely its complete partition
+forces that substitution and every remaining distinct-class comparison.
+The other rows remain in $D$ when selecting $B$. All residuals before
+the negatives range over their full independent carrier. Whole negative
+expressions stay mixed after each substitution, so URR gives exact
+support and finite attainment rather than a witness-only cover.
+
+This is a finite procedure on the acquired pattern: skeleton
+decomposition, positive variable substitution, the supplied stability
+classification, full partition enumeration and exact support tests.
+For any tuple of its row charts, whole output cancellation leaves only
+comparisons among $T_n,T_{n+1}$ and its residual names. Every occurrence
+uses its chart's same $n$ and repeated residuals. All comparisons are
+terminal. Thus class membership and the entire covers are established
+from $I$, without a supplied functional or completed presentation.
+$\square$
+
+[ARH, Proposition 2.1][ARH] supplies an actual public paid producer for
+precisely these coordinates: obtain the whole old row, traverse the
+endpoint subtrees at epochs zero, one and two and any additional epochs,
+compare their paid descriptions, advance the same register to $N$, and
+perform the stipulated complete cut. Every source in (TOS.10) produces
+this retained successful input, and every source producing it belongs to
+(TOS.10), conditional on Assumption 1.3. Invalid endpoints have a
+different producer outcome. Traversal lengths and descriptions are
+paid acquisition fields; none survives as an undeclared selector.
+

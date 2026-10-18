@@ -1,0 +1,52 @@
+**Theorem 45.1 (one threshold input for all recoveries).** For every encoder of Definition 44.1, there is one actual original-real density
+
+$$
+\rho=\begin{pmatrix}x&z&0\\z&y&0\\0&0&1-x-y\end{pmatrix},
+\qquad x,y\geq0,\quad x+y\leq1,\quad z^2\leq xy,
+\tag{R.231}
+$$
+
+such that $p(\rho)\leq T$. Hence $F_e(\rho,RN)\leq T$ holds at this same input simultaneously for every complex CPTP whole-output recovery. For this $\rho$, the fixed-input dual (R.31) attains a matrix $Y\succeq0$ with $\operatorname{Tr}Y\leq T$, and
+
+$$
+\delta_N\geq1-\frac1{\sqrt2}.
+\tag{R.232}
+$$
+
+**Proof.** Let $\mathcal S$ be all complex densities block diagonal with respect to $\mathcal C\oplus\mathbb C|2\rangle$. For a fixed center, $f_\omega(\rho)$ in (R.223) is continuous and convex in $\rho$, being a maximum of real affine functions. For fixed $\rho$ it is continuous and concave in $\omega$: it is root fidelity between the fixed purified complementary output and the state $\rho_R\otimes\omega$, affine in the center. Both $\mathcal S$ and the environment density set are nonempty compact convex sets. The continuous convex-concave minimax theorem therefore exchanges their minimum and maximum. For each fixed $\omega$, the affine pairing in (R.223) also permits minimax on $\mathcal S$ and the compact convex rectangular-contraction ball. These two justified exchanges give
+
+$$
+\begin{aligned}
+\min_{\rho\in\mathcal S}\sqrt{p(\rho)}
+&=\min_{\rho\in\mathcal S}\max_\omega f_\omega(\rho)
+=\max_\omega\min_{\rho\in\mathcal S}f_\omega(\rho)\\
+&=\max_\omega\max_{\|U\|\leq1}
+\min_{\rho\in\mathcal S}\operatorname{Re}\operatorname{Tr}(\rho A_{\omega,U})
+\leq\sqrt T.
+\end{aligned}
+\tag{R.233}
+$$
+
+The last step is (R.230): all its test projectors belong to $\mathcal S$. Compactness and continuity attain one $\rho\in\mathcal S$ with $p(\rho)\leq T$ before any recovery is selected. The minimax conditions used here are those of [Watrous, *The Theory of Quantum Information*, Theorem 1.12](https://cs.uwaterloo.ca/~watrous/TQI/TQI.1.pdf), already used in Definition 10.1.
+
+In the original real input basis, $p(\bar\rho)=p(\rho)$ and $p$ is convex, by the squared trace formula (R.30) and maximization over all recoveries. Thus $\rho_{\mathbb R}=(\rho+\bar\rho)/2$ remains in $\mathcal S$ and satisfies $p(\rho_{\mathbb R})\leq p(\rho)$. It has exactly (R.231). This averaging is in the original input basis; in phase coordinates the antiunitary is (R.33). The real output coordinate change used in (R.221) does not change this input basis.
+
+Apply the existing attained dual (R.31) to this one input, with the actual two-column $D_\rho$ of (R.29). It supplies
+
+$$
+Y\otimes I_3\succeq D_\rho D_\rho^\dagger,\qquad
+Y\succeq0,\qquad\operatorname{Tr}Y=p(\rho)\leq T.
+\tag{R.234}
+$$
+
+Strict primal and dual feasibility in Theorem 7.1 supplies attainment even when $\rho$ or $Y$ is singular; neither is assumed positive definite. This is existence of threshold witnesses in a three-real-parameter family, not a closed formula for $\rho,Y$ at every point of (R.221), nor an equality between restricted and unrestricted input optima.
+
+Choose one purification $|\Psi\rangle$ of this $\rho$ with a complex reference of dimension at most three. For every allowed $R$, the state $\Omega_R=(RN\otimes\mathrm{id})(|\Psi\rangle\langle\Psi|)$ has overlap $\langle\Psi|\Omega_R|\Psi\rangle=F_e(\rho,RN)\leq T$. The binary measurement onto $|\Psi\rangle$ and its orthogonal complement gives
+
+$$
+\|\Omega_R-|\Psi\rangle\langle\Psi|\|_1
+\geq2(1-F_e(\rho,RN))\geq2(1-T).
+$$
+
+This one reference witness lower-bounds the full diamond supremum. Taking $\inf_R$ gives $\delta_N\geq2(1-T)=1-1/\sqrt2$, consistently with (R.35). Schmidt compression bounds the dimension needed for this witness and does not restrict the permitted finite complex references. The pure vectors in (R.226) were linear-overlap tests inside the common contraction interface; the norm bound here uses the complete reference–output state. $\square$
+

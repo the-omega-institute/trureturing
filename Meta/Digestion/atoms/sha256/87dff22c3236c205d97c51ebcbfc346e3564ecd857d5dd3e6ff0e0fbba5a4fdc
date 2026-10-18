@@ -1,0 +1,56 @@
+**Theorem 5.3 (whole-row image decision with actual original witnesses).**
+For every fiber (NPL.3), including an empty fiber when testing consistency,
+there is a terminating decision whether $R_Q(D)$ is finite. In the finite
+case it returns its exact row list and an original source in $D$ realizing
+each row. In the infinite case it returns an effective sequence
+$u_k\in D$ with pairwise distinct complete original rows and pairwise
+distinct masks within one fixed reached-set case.
+
+Moreover the following are equivalent:
+
+$$
+|R_Q(D)|<\infty
+\quad\Longleftrightarrow\quad
+|\operatorname{Ext}_Q(D)|<\infty
+\quad\Longleftrightarrow\quad
+|m_Q(D)|<\infty.
+\tag{NPL.12}
+$$
+
+Proof. The reached sets range over the finite powerset of $Q$. For a
+fixed reached set the possible equality partitions form a finite set.
+Together with the mask these fields determine the complete row, by
+ABC Theorem 4.2. Conversely each row determines its mask and exterior.
+These observations prove (NPL.12); no recovery service is used in them.
+
+Apply Theorem 4.1 to $(\Phi_i,m_i)$ in each cell of Lemma 5.2. An infinite
+case supplies assignments with distinct native masks. Filling them by
+$W_i$ gives sources in the original $D$; their different masks force
+different full rows. This proves the infinite answer with its original
+witness family.
+
+If all cases have finite mask image, retain the exact lists. For each
+case, each listed mask $m$, and each equivalence partition $\pi$ of
+$I_i$, decide
+
+$$
+\exists\mathbf x\quad
+\Phi_i(\mathbf x)\ \land\ m_i(\mathbf x)=m\ \land\
+\bigwedge_{q,r\in I_i}
+\begin{cases}
+h_{i,q}(\mathbf x)=h_{i,r}(\mathbf x),&q\sim_\pi r,\\
+h_{i,q}(\mathbf x)\ne h_{i,r}(\mathbf x),&q\not\sim_\pi r.
+\end{cases}
+\tag{NPL.13}
+$$
+
+This is NSF's finite existential syntax. Every positive decision gives
+an original source $W_i(\mathbf x)$ realizing the full row described by
+$I_i,m,\pi$. Every original source occurs in its own case with its
+actual mask and complete partition, so its row passes one such query.
+Remove duplicate rows and retain a realizing source for each. Every
+list and every query is finite and each decision terminates.
+
+A realizing source certifies a possible output offline. It is not the
+actual source and gives no runtime test of which row holds. $\square$
+

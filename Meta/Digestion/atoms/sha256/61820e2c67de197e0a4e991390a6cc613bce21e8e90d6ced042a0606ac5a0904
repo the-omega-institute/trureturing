@@ -1,0 +1,23 @@
+**Definition 211.11 (Balanced stock and an exact positive selector).**
+For $L\ge4$, a balanced stock is any full nonnegative score $Z$ with
+$Q(Z)=(0,\ldots,0;3)$. Thus the aggregate $A$ and $C$ masses agree
+separately in each first-zero class. No support, early-credit, pair-row
+or terminal restriction is imposed. For $j=3,4$, let $U_j$ be any
+pure correct score of total one on $\Omega_j$, with arbitrary suffixes.
+Write $e_j$ for the $j$th unit vector in $\mathbb R^L$ and put
+
+$$
+\mathcal Q_L^+=\{(\gamma,K):\gamma\in\mathbb R_+^L,
+                                      \ K\ge\sum_j\gamma_j\},\qquad
+q_j=(e_j,4).
+\tag{211.34}
+$$
+
+A positive linear exact-$Q$ selector is a linear map
+$\mathcal S:\mathbb R^{L+1}\to\mathbb R^{3(2^L-1)+1}$ with
+$\mathcal S(q)\ge0$ and $Q(\mathcal S(q))=q$ for every
+$q\in\mathcal Q_L^+$. The output may use arbitrary independent
+$A,C,P,T$ on every word. Positivity is on this entire parameter cone.
+An affine selector has the same properties and may initially have a
+constant offset.
+

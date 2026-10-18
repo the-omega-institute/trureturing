@@ -1,0 +1,45 @@
+### 55.6 四个实多项式的完整系数定义
+
+以下共轭是在实变量 \(h,b,s,t,\tau\) 上逐系数作复共轭。用式 (55.12) 的 \(l,m,\lambda,\mu\)，置
+\[
+\begin{aligned}
+D&=2\lambda m,\qquad
+B_N=l(\mu-\lambda+i\tau),\qquad
+C_N=-\bar l(\lambda+\mu-i\tau),\\
+A_N&=(s+it)D-B_N-C_N,\\
+T_N&=\bar A_NB_N+A_N\bar C_N+3B_N\bar C_N,\\
+K_N&=P\{3(1+\bar\zeta)D\bar D+\bar Q\bar A_ND\}
+     +3QB_N(1+\bar\zeta)\bar D
+     +3\bar Q\bar C_N(1+\zeta+P)D,\\
+J_N&=\bar B_NK_N-dT_N\bar D.
+\end{aligned}
+\tag{55.24}
+\]
+定义四个实多项式
+\[
+\begin{aligned}
+P_I&=A_N\bar A_N+3nB_N\bar B_N+3(T_N+\bar T_N),\\
+P_H&=(J_N+\bar J_N)/\lambda^2,\qquad
+P_G=(J_N-\bar J_N)/(2i\lambda),\\
+P_L&=\lambda^{-1}\{6(1+\zeta)(1+\bar\zeta)D\bar D
+ +2[(1+\bar\zeta)QA_N\bar D+(1+\zeta)\bar Q\bar A_ND]\\
+ &\hspace{32mm}+n[dB_N\bar D+\bar d\bar B_ND]+2(K_N+\bar K_N)\}.
+\end{aligned}
+\tag{55.25}
+\]
+在这些多项式定义中保留 \(\lambda+\mu\)，不先用种子关系把它替换为 \(12n\)。式 (55.25) 的除法在 \(\mathbb Q(i)[h,b,s,t,\tau]\) 中都是精确多项式整除；验证时不需要先施加种子关系。式 (55.24) 还给出
+\[
+A_0=A_N/(3D),\ B=B_N/D,\ C=C_N/D,\quad
+T=T_N/(3D\bar D),\ K=K_N/(3D\bar D),\
+J_1=J_N/(3D\bar D^2).
+\]
+因此直接清分母得到
+\[
+\boxed{P_I=6\lambda^2\mu I,\quad
+P_H=48\lambda\mu H_1,\quad
+P_G=24\lambda^2\mu G_1,\quad
+P_L=8\lambda\mu L_1.}
+\tag{55.26}
+\]
+特别注意 \(P_G\) 的乘子含 \(\lambda^2\)。这完整指定了证书的有理系数，无须另给展开系数表。四式的 \(\tau\) 次数分别至多为 \((2,1,2,1)\)；\(P_H,P_L\) 的二次项在使用种子关系之前即相消。每个实际解必为这四个多项式的公共零点。
+

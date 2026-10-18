@@ -1,0 +1,66 @@
+**Theorem 32.2 (The finite band of trace errors measured by the canonical
+quotient).** For every integer $m\ge0$,
+
+$$
+\begin{aligned}
+C_k(m)
+&=\sum_{j=2}^{k-1}\dim(A_k)_{m-2j-1}\\
+&=\sum_{j=2}^{k-1}\binom{m+2k-2j-1}{2k}\\
+&=E_k(m-3)-E_k\bigl(m-(2k-1)\bigr).
+\end{aligned}
+\tag{32.2}
+$$
+
+Each binomial is the corresponding homogeneous polynomial-space
+dimension and is zero when $m<2j+1$. In particular for $m\ge3$,
+
+$$
+L_n^\circ(m)=L_n(m-3)+C_k(m),\qquad
+H_{\mathcal C_k}(t)=
+\frac{t^5+t^7+\cdots+t^{2k-1}}{(1-t)^{2k+1}}.
+\tag{32.3}
+$$
+
+The two-scale difference has a bijection proof: after subtracting
+$\mathbf1$ from an interior occupancy vector and three from its
+degree, the quotient keeps exactly excesses $1,\ldots,k-2$ above
+the global bound. The remaining excess tail is a translate of the
+entire local trace error in degree $m-(2k-1)$.
+
+Proof. The exact sequence (31.6) in degree $m$ gives
+$\dim(\omega_{R_k})_m=\dim(R_k)_{m-3}+C_k(m)$.
+The first term counts interior monomials, and standard grading and
+the integer decomposition identify the second term with $L_n(m-3)$.
+The $A_k$-basis in that theorem gives the first sum in (32.2).
+Stars and bars in its $n=2k+1$ degree-one variables gives
+$\dim(A_k)_d=\binom{d+2k}{2k}$ for $d\ge0$, and zero otherwise.
+This proves the binomial sum and the Hilbert series. No splitting of
+$R_k$-modules has been used in taking these dimensions.
+
+For the trace comparison use the slack/excess bijection already proved
+in Theorem 28.2. A tuple counted by the error in degree $q\ge0$
+has excess $\ell=\sum b_i-kq>0$ and slack
+$a_i=q-b_i-b_{i+1}\ge0$. Its exact parameters and inverse are
+
+$$
+1\le\ell\le\lfloor q/2\rfloor,\qquad
+|a|=q-2\ell,\qquad b_i=B_i(a)+\ell.
+\tag{32.4}
+$$
+
+The forward and inverse nonnegativity and odd-cycle uniqueness are
+the statements of (28.11)–(28.12), now with $j=\ell$, $m=q$ and
+the zero-based indices of (31.1). Thus, as the supplied trace-error
+formula in this notation,
+
+$$
+E_k(q)=\sum_{\ell=1}^{\lfloor q/2\rfloor}
+\binom{q-2\ell+2k}{2k},\qquad
+H_{E_k}(t)=\frac{t^2}{(1-t^2)(1-t)^{2k+1}}.
+\tag{32.5}
+$$
+
+These formulas retain their original domain of locally feasible
+tuples failing the global inequality. The new comparison is which
+part of that domain becomes the interior quotient.
+

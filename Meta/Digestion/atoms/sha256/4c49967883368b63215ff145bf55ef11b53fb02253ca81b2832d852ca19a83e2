@@ -1,0 +1,51 @@
+**References 9.2 (primary literature and admissible transfer).** The
+following primary statements delimit the arithmetic and alternative
+routes. Each is `literature-attested` in the indicated scope; the
+native bridge is the argument of Sections 2--5.
+
+| Primary source | Exact use or missing correspondence |
+| --- | --- |
+| Ginsburg and Spanier, *Semigroups, Presburger Formulas, and Languages*, Pacific Journal of Mathematics 16(2), 285--296, Theorems 1.2--1.3, [publisher text][GS] | Decidability of natural-number Presburger sentences and effective conversion between Presburger and semilinear descriptions. These supply arithmetic decision and conversion after (NCE.10), not elimination of native trees. |
+| Marshall, Meadows and Narendran, *On Unification Modulo One-Sided Distributivity: Algorithms, Variants and Asymmetry*, arXiv:1503.06687v2, Sections 4--5, Theorems 4.4 and 5.8, [primary text][MMN] | The typed single-homomorphism theory and its subterm-collapse-free cycle arguments have their stated laws. Native $\rho\beta=\langle\beta,\alpha\rangle$ supplies additional interpreted behavior. No raw native occurs-check rule is imported; only ordinary free-shape unification is used after collapse splitting. |
+| Cerna, *Schematic Unification*, arXiv:2306.09152v7, Definitions 2--6 and Section 6, [primary text][CERNA] | Indexed-variable substitution schemas ask whether all iterated schematic instances are unifiable; the sound terminating algorithm has completeness under infinity-stability. That quantifier order and premise do not supply existential joint finite native epochs and one ground original. |
+| Kuncak and Rinard, *On the Theory of Structural Subtyping*, arXiv:cs/0408015v1, Sections 6.1--6.4, Theorem 90 and Corollary 91, [primary text][KR] | Term-power quantifier elimination and decision concern the exact Figure 9 language with Figures 10--11 semantics. No unproved native-normal-domain predicate or outer scalar/selected-leaf operation is added. Formula-dependent existential markers avoid, rather than solve, the interpretation obstruction in TPO. |
+| Barguñó, Creus, Godoy, Jacquemard and Vacher, *Decidable Classes of Tree Automata Mixing Local and Global Constraints Modulo Flat Theories*, arXiv:1302.6960v2, Section 2.4 and Theorem 5.22, [primary text][BCGJV] | Flat equations have equal side heights at most one and the same variable support; the stated automaton emptiness theorem uses its own computable run-height bound. Neither interpreted native substitution nor existential iteration parameters have been encoded into that grammar here. It is not a black-box native support solver. |
+| Atserias and Kolaitis, *Consistency, Acyclicity, and Positive Semirings*, arXiv:2009.09488v1, Theorems 3--4, [primary text][AK] | Local-to-global consistency for positive-semiring relations is characterized by acyclicity of the attribute hypergraph. Separate nonempty native pair witnesses are not its marginal-consistency premises. A binary source tree or a connected comparison graph does not establish the required schema condition. |
+
+This is a limited comparison with homomorphism unification, symbolic
+iteration, term powers and local/global tree constraints, not an
+exhaustive absence or novelty claim. No inaccessible or unread paper
+is a premise. The construction's exact source and quantifier
+correspondence is proved in this volume; generic decidability results
+are not invoked with enlarged languages.
+
+[NUE]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_UNKNOWN_EPOCH_GLUING.md
+[NSF]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SIGNED_FEASIBILITY.md
+[ABC]: RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_BLOCK_CONJUGACY.md
+[NIC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_IMAGE_COVER_AND_PREFIX_COST.md
+[NIS]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_IMAGE_SATURATION.md
+[TPO]: RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_TERM_POWER_OBSTRUCTION.md
+[ARH]: RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RELATION_HISTORY.md
+[CUT]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeCutFibers.lean
+[CUT-S]: ../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeCutFibers.scribe.cs
+[ROW]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionDecoder.lean
+[ROW-S]: ../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionDecoder.scribe.cs
+[DEPTH]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeDepthPatterns.lean
+[DEPTH-S]: ../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeDepthPatterns.scribe.cs
+[CELL]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeHistoryCells.lean
+[CELL-S]: ../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeHistoryCells.scribe.cs
+[BACK]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativePredecessorRowRecovery.lean
+[BACK-S]: ../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativePredecessorRowRecovery.scribe.cs
+[INTR]: ../../../D5/S3/Arith/FibonacciAtomic/SourceCoordinates/IntrinsicSubstitutionCoordinates.lean
+[INTR-S]: ../../../Blueprint/D5/S3/Arith/FibonacciAtomic/SourceCoordinates/IntrinsicSubstitutionCoordinates.scribe.cs
+[ACTIVE]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeActiveParityExecution.lean
+[ACTIVE-S]: ../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeActiveParityExecution.scribe.cs
+[ROOT]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeClassRootSimulation.lean
+[ROOT-S]: ../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeClassRootSimulation.scribe.cs
+[GS]: https://msp.org/pjm/1966/16-2/pjm-v16-n2-p09-s.pdf
+[MMN]: https://arxiv.org/html/1503.06687v2
+[CERNA]: https://arxiv.org/html/2306.09152v7
+[KR]: https://arxiv.org/pdf/cs/0408015v1
+[BCGJV]: https://arxiv.org/pdf/1302.6960v2
+[AK]: https://arxiv.org/html/2009.09488v1
+

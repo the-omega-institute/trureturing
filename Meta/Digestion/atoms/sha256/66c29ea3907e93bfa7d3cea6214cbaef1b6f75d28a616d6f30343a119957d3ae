@@ -1,0 +1,9 @@
+**定义 109.1（同一等距记录的相关矩阵）。** 对非空有限历史集 $H$，使用同一环境的单位向量 $e_h$，定义
+
+$$
+\Gamma_{hk}=\langle e_k|e_h\rangle,
+\qquad T|h\rangle=|h\rangle\otimes e_h.
+$$
+
+$\Gamma$ 是通常以 $\langle e_h|e_k\rangle$ 为元素的 Gram 矩阵的转置。系统密度矩阵的退相干因子按本约定为 $\Gamma$，避免将两个索引次序混用。
+

@@ -1,0 +1,20 @@
+### 68.2 Physical saturation and a rectangular-frame equality analysis
+
+The physical normal form of §66 supplies unit Bloch vectors n_(t,f)∈R³ for each branch and fibre. If w_t are the branch weights, the k vectors
+
+    v_f=(sqrt(w_t)n_(t,f))_t
+
+are orthonormal in R^(3r), where r is the number of positive branches. This conclusion holds for arbitrary original product CPTP factors and local environments: exact pure basis outputs and the saturated cross-coherence equations force the common-span basis structure first.
+
+Suppose entropy H* is attained. The preceding equality condition gives r=q+1_(s>0), with q weights 3/k and an optional last weight s/k. Let V be the matrix whose columns are v_f and P=VV*, an orthogonal projection. For a branch t of weight 3/k, the corresponding 3×3 diagonal block P_tt has trace
+
+    Σ_(f=1)^k w_t ||n_(t,f)||²=3.
+
+Since 0≤P_tt≤I_3, it equals I_3. Positivity of I−P then forces all off-diagonal blocks incident to this block to vanish: a positive matrix with a zero diagonal compression has zero cross compression, by Cauchy–Schwarz for its positive quadratic form. Therefore, if s>0,
+
+    P=I_(3q) ⊕ P_tail,
+
+where P_tail is an orthogonal projection of rank s in R³; if s=0, P=I_k. An orthogonal rotation of the last three Bloch coordinates diagonalizes P_tail to I_s⊕0. This rotation preserves every column-block norm. Discarding the resulting zero rows gives a square orthogonal k×k matrix with exactly the asserted block norms. The rotation is a change in the real frame used for the existence proof; no unsupported claim that every such rotation is a local unitary is needed.
+
+Conversely, from a matrix as in condition2, divide each column block by the square root of its assigned weight, padding the s-row block with zeros to make three coordinates. These are unit Bloch vectors. Orthogonality of the original columns gives averaged unbiasedness with weights p*. Pick qubit eigenvectors for each direction and coordinatewise conjugate records on the second party. The construction in §66 defines one product channel per branch and realizes every encoded matrix unit. Its branch count and entropy attain both bounds. All environments can have dimension two. The choice of channel is simultaneous over all fibres, rather than optimized separately for each pair.
+

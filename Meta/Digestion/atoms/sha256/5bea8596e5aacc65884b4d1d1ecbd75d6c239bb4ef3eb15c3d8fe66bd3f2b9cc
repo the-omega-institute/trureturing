@@ -1,0 +1,51 @@
+**Proposition 8.8 (Collapsed band and probability-only lossless action).**
+On an inherited full phase torus at one positive height $k_*$,
+all phase commands have an injective four-real-coordinate
+linear realization. On the full positive-width band,
+probability commands alone, together with $Q_0$, have an
+injective five-real-coordinate affine realization.
+
+**Proof.** At the collapsed band use
+
+$$
+E_{\rm tor}(u,v)=(U(u),U(v)).
+$$
+
+This is injective on $\mathbb T^2$, and $Q_t$ is represented
+by
+
+$$
+R_{(1/2-k_*/r)t}\oplus R_{-k_*t/r}.
+$$
+
+Both angles are fixed numbers for the prescribed command.
+Only the zero probability displacement has a nonempty band
+domain, and its map is the identity. The construction works
+on the full initialized torus or any subset reachable when
+generation is itself confined to that height. It does not
+identify those two generation domains. The exact affine
+readout construction at one height is separately given in
+Proposition 7.13.
+
+For the full band use
+
+$$
+E_0(k,u,v)=(k,U(u),U(v))\in\mathbb R^5.
+$$
+
+Equality of these coordinates gives equality of $k$ and both
+circle classes, hence of rays. For every $s$, the affine
+translation
+
+$$
+(\xi,\mathbf u,\mathbf v)\longmapsto
+ (\xi+s,\mathbf u,\mathbf v)
+$$
+
+represents $P_s$ exactly on $a\le\xi+s\le b$ in the actual
+image, and the identity represents $Q_0$.
+No output decoder was required in this probability-only
+contract. In particular this construction does not contradict
+the exact affine-readout obstruction in Corollary 4.5.
+$\square$
+

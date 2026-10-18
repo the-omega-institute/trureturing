@@ -1,0 +1,34 @@
+### 104.1. The actual support and the complete statement
+
+**Theorem 104.1.** Let N=3^j>=81 and B_N=L_N^2+3=D C^2 with arbitrary C>0 and full positive squarefree kernel D=p_0...p_s, s>=1. Assume p_0=19 modulo 24, every p_i for i>=1 is 1 modulo 24, and every mutual Legendre symbol is +1. Actual support retains p_i>5, (5/p_i)=1, rho(p_i)=tau_(p_i)=6N, and order 3N for the squared golden unit. Let H be the mixed matrix of §100 and write [epsilon]=(1-epsilon)/2 for a sign.
+
+For I a subset of {1,...,s}, put
+
+ d_I=product_(i in I) p_i, e_I=D/d_I,
+ W_I=product_(i in I) (-5e_I/p_i)_4, W_empty=+1.
+
+If x_I is its indicator, then
+
+ x_I^T H x_I=[W_I].                                    (104.1)
+
+In particular, for distinct i,j,
+
+ H_ij+H_ji=[(p_j/p_i)_4]+[(p_i/p_j)_4].                 (104.2)
+
+All quartic symbols have nonzero quadratic-residue arguments. Thus the known quadratic form q(x)=x^T H x is
+
+ q(x)=sum_i h_i x_i+sum_(i<j) t_ij x_i x_j,
+ h_i=[(-5(D/p_i)/p_i)_4],
+ t_ij=[(p_j/p_i)_4]+[(p_i/p_j)_4].                      (104.3)
+
+If w(q) is the largest dimension of a totally singular subspace for q, then
+
+ rank E_D(Q)<=1+2 dim ker H<=1+2w(q).                   (104.4)
+
+For s=2, if
+
+ (p_1/p_2)_4 (p_2/p_1)_4=-1,
+ (-5p_0 p_2/p_1)_4=(-5p_0 p_1/p_2)_4=-1,              (104.5)
+
+then det H=1 and rank E_D(Q)=1. Consequently no B_(Nk)=D C'^2 occurs with k>1 odd, 3 not dividing k and C'>0 an integer.
+

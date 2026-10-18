@@ -1,0 +1,38 @@
+**Theorem 2.1 (Common exterior law and actual posterior restrictions).** Let $P$ be any law on $X$, without stationarity or hidden-state assumptions. Take distinct $a,b\in B_L$ with events $E_a=\{X_C=a\}$, $E_b=\{X_C=b\}$ of positive probability, and $\alpha,\beta>0$. Define $f(a)=\alpha$, $f(b)=-\beta$, and $f(w)=0$ on every other $w\in B_L$. Suppose
+
+$$
+f_C=\alpha\mathbf1_{E_a}-\beta\mathbf1_{E_b},\qquad
+\mathbb E_P[f_C\mid\mathcal H_C]=0.
+\tag{2.1}
+$$
+
+Then the full exterior laws conditioned on $E_a$ and $E_b$ coincide, and
+
+$$
+\mathbb E_P[f_C\ell_i]=0\quad(i\notin C),\qquad
+S_P(f)=\sum_{i=1}^L\mathbb E_P[f_C\ell_i],\qquad
+\sum_{i\in\mathbb Z}|\mathbb E_P[f_C\ell_i]|\le LJ,
+\quad J:=\alpha P(E_a)=\beta P(E_b)>0.
+\tag{2.2}
+$$
+
+**Proof.** For every $H\in\mathcal H_C$, (2.1) gives $\alpha P(E_a\cap H)=\beta P(E_b\cap H)$. Taking $H=X$ proves the balance defining $J$. Division by the two positive masses proves equality of the exterior pushforward measures of $P(\cdot\mid E_a)$ and $P(\cdot\mid E_b)$; denote their common probability law by $\nu$ on exterior records $Y=(X_j)_{j\notin C}$.
+
+Fix $i\notin C$ and set $\mathcal H_i^{\rm ext}=\sigma(Y_j:j\notin C,j\ne i)$. On either block event the block coordinates are constants, so the trace of $\mathcal E_i$ is exactly the field of the other exterior coordinates. Thus the restrictions of $q_i$ are represented by $\mathcal H_i^{\rm ext}$-measurable functions $q_i^a,q_i^b$ of $Y$. For every $G\in\mathcal H_i^{\rm ext}$, the actual defining conditional-expectation identity, tested on $E_a\cap\{Y\in G\}\in\mathcal E_i$, gives
+
+$$
+\int_G(Y_i-q_i^a)\,d\nu
+=\frac1{P(E_a)}\int_{E_a\cap\{Y\in G\}}(X_i-q_i)\,dP=0.
+$$
+
+The same identity holds with $b$. Both restrictions are therefore versions of $\mathbb E_\nu[Y_i\mid\mathcal H_i^{\rm ext}]$. Uniqueness under the same $\nu$ gives $q_i^a=q_i^b$ almost surely, hence
+
+$$
+\mathbb E_P[\ell_i\mid E_a]=\mathbb E_P[\ell_i\mid E_b],\qquad
+\mathbb E_P[f_C\ell_i]=J\bigl(\mathbb E_P[\ell_i\mid E_a]-\mathbb E_P[\ell_i\mid E_b]\bigr)=0.
+$$
+
+This includes $i=0,L+1$, regardless of the selected endpoint bits. It does not assert that $\ell_i$ is globally $\mathcal H_C$-measurable. Positive-event conditioning preserves every $P$-null exception; the common exterior pushforwards preserve the corresponding $\nu$-null exceptions. Countably many sites admit a simultaneous conull choice. For each interior site, $0\le\ell_i\le1$ gives $|\mathbb E_P[f_C\ell_i]|\le J$. Only $L$ terms remain, proving absolute convergence and (2.2). $\square$
+
+The proof works unchanged for arbitrary binary laws on the countable product space; legality is needed for the FIB consumer, not for this probability identity. If a selected word has zero mass, (2.1) with positive coefficients forces both weighted masses to be zero. Then $f_C=0$ almost surely and cannot be productive. Equality of finite exterior laws suffices only because finite cylinders generate the entire exterior field and the measures extend uniquely.
+

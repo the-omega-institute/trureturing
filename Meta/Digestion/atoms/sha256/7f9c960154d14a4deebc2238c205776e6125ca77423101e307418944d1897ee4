@@ -1,0 +1,61 @@
+**Definition 7.3 (the finite three-stage client).** The following entries
+are distinct installed labels. They have a finite product with bank parity;
+they create no native return stack. Manifest, frozen $M$, selector,
+cover/package lists and the stated bindings are persistent bank fields.
+Serialization and export copy unchanged persistent fields through every
+bank assignment. After those operations the native channel/print sequence
+contains no word assignment and preserves the active bank parity. Word
+assignments at callbacks likewise copy unchanged persistent fields.
+
+| Entry | Actual work, live fields and successor |
+| --- | --- |
+| Recover | Retain the acquired selector; freeze predecessor $M$. Run Boundary74; construct the actual list-cardinality ID $c$ and append immutable cover record $(c,\text{manifest},M,a,b)$ on 71 and in the bank. Publish CoverRef$(c,a,b)$; full receiver print/check/ACK; TOK handler slot to client; CTL to ClientCover. |
+| ClientCover | Clear the internal cover-number temporary. Import and parse the actual received CoverRef by Definition 7.2; retain acquired $c$ and its binding. TOK client slot to binding handler; CTL to Bind. |
+| Bind | Resolve $c$ by its immutable list/backing, parse the retained selector, and perform §8's actual occurrence/ordinal computation. Require $a\le k\le b$. Run Issue$(c,k)$ below; Publish PackageRef$(p,c,k,\varrho)$; print/check/ACK; TOK handler to client; CTL to ClientIssue. |
+| ClientIssue | Clear the internal package-number temporary. Import the actual sealed PackageRef, check $\xi,c,k,\varrho$ and current invocation slot. Retain this acquired $p$. TOK client to Call handler; CTL to Call. |
+| Call | Resolve that immutable $p$, run Prefix74 on its own copied manifest/$I_k$/$k$, serialize its exact raw HistoricalImage on 71, and Publish Image$(p,c,k,\varrho,\text{image})$ through receiver seal/print; TOK handler slot to client and CTL to ClientImage. |
+| ClientImage | After print, import/check the received finite codec and all binding fields, ACK, return mailbox availability, append the complete history cycle to $M$, TOK invocation slot to outer client, CTL Ready with successor $R_r$. |
+
+Cover and Package publication perform their channel completion check,
+ACK and mailbox-availability return before the fixed reference callback;
+the sealed receiver read token remains retained. Image publication hands
+the invocation slot to ClientImage after receiver completion/print; that
+client checks before its ACK and mailbox return. No handler entry is
+enabled during either check. A subsequent Bind or Call stage obtains its
+live invocation slot only after the preceding receiver completion/ACK. No external copying of $c$ or $p$ is requested.
+The same principal owns all these backing intervals; knowing a numeral
+without the phase token still provides no entry. Unknown cover/package
+with its token yields paid NoCover/NoPackage and a full rejection return;
+without the token there is no executed successor. Finite tuple/description
+parse failure likewise takes a typed rejection route, not an inferred
+original source answer.
+At every such reached failure retain its literal reason and actual raw
+request. From ClientCover or ClientIssue first TOK its invocation slot
+back to the handler; their preceding channel ACK has already returned
+mailbox availability. From a handler failure that slot is already held.
+Publish Rejection through the same initialized channel and print,
+then TOK the handler invocation slot to ClientImage and take that fixed
+label's rejection branch. It imports/checks the Rejection fields against
+the retained reason/request, then executes its same ACK, mailbox return,
+completed-cycle append, invocation return and Ready rows. The Image branch
+instead checks its image codec and $p,c,k,\varrho$. This finite type test
+adds no callback or external choice. The first detecting parser failure
+selects the reason; checks are performed in their written order.
+An unexpected ClientImage binding/codec failure takes a distinct finite
+refusal branch: retain the literal binding-failure reason, append its
+tagged fault record on 71, perform this channel's ACK/mailbox return,
+and append the failed cycle before invocation/Ready return. It does not
+claim successful recovery or attempt a new mailbox setup while this
+one is busy. On an authentic publication the channel equality and tuple
+writer make that branch unreachable, for both Image and Rejection.
+
+Issue runs Prefix74 on its immutable cover at $k$, obtains exactly $I_k$,
+and copies manifest, code lineage, $\xi,c,k,\varrho,z,s,I_k$ into a new
+sealed package on 71 and its bank list. Its creation number is the actual
+list cardinality word. The package never points to latest cover or
+current capacity. Call's HistoricalImage is RCA Definition 12.2's full
+raw physical/history codec with 74 ports and the target's actual active
+version/partial-installation tag. Simulator bookkeeping is separate from
+that physical projection. Serializer work and its new bank/archive cells
+are actual later work, outside the selected older endpoint.
+

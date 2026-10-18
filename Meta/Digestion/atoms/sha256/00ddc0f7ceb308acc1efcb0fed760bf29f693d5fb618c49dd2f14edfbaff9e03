@@ -1,0 +1,50 @@
+**Theorem 85.3 (subcritical disappearance and the critical weak limit).**
+Under (85.1), let $\psi_n$ be any normalized complex native
+sequence satisfying (85.5).
+If $0<\chi_0<\chi_c$, then, for every compact $K\subset\mathbb R^4$,
+
+$$
+\int_{\Xi_{s_n}(K)\cap\mathcal C}|\psi_n|^2dY\longrightarrow0,
+\qquad b_{s_n}[\mathcal U_{s_n}\psi_n]\longrightarrow0.
+\tag{85.9}
+$$
+
+At $\chi_0=\chi_c$, $e(\chi_c)=0$ and $H_{\chi_c}\ge0$.
+The rescaled vectors are bounded in kinetic energy and every
+subsequence has a further subsequence converging weakly globally
+and strongly locally to an $f\in\mathcal Q_E$ such that
+
+$$
+\|f\|_2\le1,\qquad
+h_{\chi_c}[f]=0,\qquad f\in\ker H_{\chi_c}.
+\tag{85.10}
+$$
+
+Along that subsequence the potential forms converge as in (83.2)
+and the kinetic energies converge to $b[f]$. In particular, if
+the tangent critical operator has no nonzero $L^2$ zero mode,
+(85.9) also holds at criticality. No existence or absence of such
+a critical zero mode, nor selection of a nonzero critical weak
+limit, is asserted here.
+
+Proof. In both cases Theorem 85.1 and (85.5) give $q_n[f_n]\to0$.
+The compactness argument again applies, and its lower inequality
+is $0\ge h_{\chi_0}[f]\ge0$. Below threshold (84.8) forces
+$b[f]=0$, whence $f=0$. Every local subsequential limit is zero;
+local compactness therefore proves the first assertion of (85.9)
+for the whole sequence. The potential convergence in (83.2) then
+makes its potential energy tend to zero. The exact identity
+(83.5) implies $b_{s_n}[f_n]\to0$, proving the second assertion.
+
+At criticality the same argument gives (85.10)'s form equality.
+For a nonnegative selfadjoint operator this equality is
+$\|H_{\chi_c}^{1/2}f\|_2^2=0$, which implies membership in its
+operator kernel. Combining $q_n[f_n]\to0$ and potential convergence
+with (83.5) gives
+$a b_{s_n}[f_n]\to\chi_c\int V|f|^2=a b[f]$.
+If that kernel is trivial all local limits are zero, and the
+preceding subcritical argument applies. Without deciding the
+kernel, (85.10) allows both a zero weak limit and lost mass; it
+does not force strong convergence or a normalized limiting profile.
+$\square$
+

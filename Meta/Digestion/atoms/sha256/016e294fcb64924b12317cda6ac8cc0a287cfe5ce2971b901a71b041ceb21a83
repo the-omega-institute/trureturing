@@ -1,0 +1,59 @@
+**Theorem 4.3 (All deterministic masses and their minimum risks).**
+Let the finite index set and its associated pairs be
+
+$$
+\begin{gathered}
+K=\{I,D\}\times\mathcal R\times\mathcal S,\\
+q_k=r+s,\qquad
+\ell_k=r+s-U_\rho(r)-V_\rho(s),\qquad k=(\rho,r,s).
+\end{gathered}
+\tag{4.3}
+$$
+
+There are at most $2\cdot5\cdot8=80$ indexed policies. Numerical
+duplicates may be retained. The deterministic feasible masses are
+exactly
+
+$$
+\mathcal Q_{\rm det}=\mathcal R+\mathcal S,
+\tag{4.4}
+$$
+
+and for each such $q$ the attained minimum risk is
+
+$$
+\mathcal L_{\rm det}(q)
+=q-\max_{\substack{\rho\in\{I,D\},\ r\in\mathcal R,\ s\in\mathcal S\\r+s=q}}
+\bigl[U_\rho(r)+V_\rho(s)\bigr].
+\tag{4.5}
+$$
+
+Every deterministic original protocol has a $K$ policy of the same
+mass and weakly smaller risk. Formula (4.5) maximizes over all
+decompositions, including collisions of different $r+s$ as $p$
+varies.
+
+Proof. For a protocol starting with a read, Lemma 2.1 reduces the
+calculation to a depth-two tree. Its root has one of the two types.
+Theorems 3.2–3.3 give $r\in\mathcal R$, $s\in\mathcal S$,
+and $C\le U_\rho(r)+V_\rho(s)$. Proposition 4.2 supplies
+a same-mass representative achieving that upper bound.
+
+Initial internal nonreturn is represented by $r=s=0$. Initial
+zero-read return has $q=1$ and $C\le a/2$. The type-$I$ policy
+$r=\eta$, $s=z$ has $q=1$ and
+
+$$
+C=\frac a2+a\eta+a^2\eta>\frac a2,
+\tag{4.6}
+$$
+
+so it dominates this case too. Thus no mass has been lost by treating
+early returns, and each claimed representative is actually paid.
+Conversely every pair in (4.3) is realized by Proposition 4.2.
+The finite maximum therefore gives (4.4)–(4.5) and is attained.
+The strict inequalities inside (3.3) do not imply that different
+total sums $r+s$ are distinct. Retaining the indices in (4.5)
+handles every such equality without a generic-parameter assumption.
+$\square$
+

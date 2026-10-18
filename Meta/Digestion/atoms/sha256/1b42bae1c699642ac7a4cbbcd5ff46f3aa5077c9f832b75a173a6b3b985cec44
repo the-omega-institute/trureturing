@@ -1,0 +1,13 @@
+**Corollary 7.3 (exact costs and common-source witnesses).** For a finite
+service constructed in Theorem 7.2, exact coordinatewise worst budgets
+and every rational same-source weighted worst cost are computable.
+Each finite maximum has an actual source witness. The maximizing sources
+for different coordinates can differ.
+
+Proof. Decide (CAR.27) for each of its finitely many leaves. Every
+nonempty leaf has the fixed cost (CAR.25) and a finite source witness;
+all sources follow one such leaf. Maximize coordinates separately for
+$b$, or first sum the three coordinates on each leaf and then maximize
+for $W_\lambda$. Nonemptiness of $D$ ensures a nonempty set of reachable
+leaves. $\square$
+

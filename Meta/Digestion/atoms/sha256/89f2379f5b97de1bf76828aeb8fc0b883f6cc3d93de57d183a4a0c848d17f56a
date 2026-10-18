@@ -1,0 +1,30 @@
+**Definition 62.1 (commissioned occupation sectors and the original source).** Use the actual PR57 source, INITIAL occurrence, fixed leaf cap $H$, complete candidate guard and chronological original records of Definition60.1. Write $M=2H-1$ for its packet-slot count and $K=2^H-1$ for the address-bank size; neither is the particle count. The inherited occurrence seams, counting measure, root $o=\varepsilon$, $L$, $L_D$, $\phi(p)=2^{-|p|}$ and $\lambda=3-2\sqrt2$ are exactly §§55.1–55.3. For an authentic current domain $D=\operatorname{Pos}(s)$ and a commissioned integer $1\le N\le |D|$, set
+
+$$
+\mathcal C_N(D)=\{S\subset D:|S|=N\},\qquad
+\mathscr H_{D,N}=\ell^2(\mathcal C_N(D)).
+\tag{62.1}
+$$
+
+Different equal-valued occurrences remain different sites. The occupation is zero or one at each site. Adjoin three explicitly supplied computational qubits $c,u,v$, initially zero, to §60's $K$ address qubits and reference qubit $r$. Thus the retained quantum carrier has $K+4$ qubits. The additional wires connect $c$ to every public address and to $u,v$; the old parent–child wires are retained. These are computational wires with construction and control prices, not new occurrence seams, distances or displacements. The supplied interaction matrices are still exactly $P$ and $B$ of (60.2) on their full two-/one-qubit spaces. A private classical enable is not a quantum control or a public observation.
+
+Let $b_p=|0\rangle\langle1|_p$ and $n_p=b_p^*b_p$. The target isometry $E_{D,N}$ sends $e_S$ to the bit string occupied at $S$, with $c,u,v,r$ zero and all inactive addresses zero. A separately supplied reference vector has $r=1$ and every other qubit zero; it is fixed by the interaction. A commissioned coherent reference/target input must itself be supplied with its preparation contract. For $N>1$ these two branches have different total excitation numbers; no number-conserving gate is alleged to attach that reference to an unknown input. The default known preparations below need no such superposition.
+
+There are two pair prescriptions, both retaining the original one-body potential:
+
+$$
+\begin{aligned}
+G^{\rm c}_D(p,q)&=\langle e_p,L^{-1}e_q\rangle,\\
+G^{\rm k}_D(p,q)&=\langle e_p,L_D^{-1}e_q\rangle,\\
+H^\diamond_{D,N}&=
+aK_{D,N}-g\sum_{p\in D}\phi(p)n_p
+-\nu\sum_{\{p,q\}\subset D}G^\diamond_D(p,q)n_pn_q,\qquad \diamond\in\{\mathrm c,\mathrm k\},\\
+K_{D,N}&=\left.\left[\sum_{p\in D}d_pn_p-
+\sum_{\{p,q\}\text{ actual seam in }D}(b_p^*b_q+b_q^*b_p)\right]\right|_{\mathscr H_{D,N}},
+\qquad d_o=2,\quad d_p=3\ (p\ne o).
+\end{aligned}
+\tag{62.2}
+$$
+
+Here $a,g>0$ and $\nu\ge0$ are commissioned Hamiltonian parameters, independent of the hidden source and original actor initialization. This $a$ imposes no condition on the original $\mathcal D_2$ actor variable. The notation in (62.2) transports the qubit operators through the occupation isometry. The new charge strength and supported occupation sector are commissioned premises. At $N=1$ the pair term vanishes and the target is literally $aL_D-gM_\phi$ of §60, for both prescriptions. The killed prescription re-solves only the pair coefficients; it does not replace $\phi$ by $\phi_D^0$.
+

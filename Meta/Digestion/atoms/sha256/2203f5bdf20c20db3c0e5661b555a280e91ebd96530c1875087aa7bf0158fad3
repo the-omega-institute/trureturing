@@ -1,0 +1,13 @@
+**数学引文 23.3（供应对应与数学范围）。** 定理20.2的承重增量是原停止词三个饱和事件到全部有限循环核的等号分类；定理21.2、22.1的承重增量是有理有限链极限、实际全可数后验和两项精确相容性共同给原有理完整类的提取与不达到。这些标为 `repo-derived`。单模式最小值、唯一性、端点完整尾及有理精度分别复用本卷§§14–17、[ST] §§2.1–2.2、3.1、3.3、定理10.2–11.3；第19节的 unrestricted-real 条件边界仍保留。有限链平稳及周期收敛消费 [MC] 的成熟事实；[有理有限链][RMC] Theorems1.1、1.3分别陈述有理转移下平稳行与吸收概率的有理性及分母界，(21.2)在此只消费其成熟线性算术，不另主张这些通用事实的新颖性。
+
+[标记链 TV][LMC] Proposition12给有理描述却具有非有理 TV 的例子；因此这里的算术障碍来自强制的生成核或有限乘积，不能从“最小风险非有理”单独推出。定理23.1的有限吸收与有效代数区间比较也只是该来源表示边界的中间步骤。文献没有被用作当前 stopped-tail、paid-Read、同历史双相位预算定理的替代；所列出处不构成穷尽检索、原创优先权或精确物理随机性结论。
+
+[MDA] 定理4.1的四标签有理机器有 $\Delta_{\rm all}=\Delta_4=D_*>0$；其条件化重加权预测标签，实际更新不作同样重加权，违反定义1.5第二项。[ACP, 命题2.2]明确区分这两项义务以及零预测柱的范围。因此这些正缺陷达到器不属于定义21.1。只查询 $\mathcal H_3$ 的 [SC] 起点例外也不属于这里的全返回域问题。仓内 `PredictiveStateUnifilarUpdate.unifilar_predictive_update` 供应正柱条件化的商状态更新，`DistinctRiskSharedOptimizer.distinct_risk_profiles_can_share_optimizer_profile` 区分风险与最优动作；`CausalRepairEnvelopes.result` 处理有限时域的因果响应表修复，不供应有理同源的无界停止尾提取。选择演算 [SEL] §§8、11、12中的单窗口坐标恢复及§12.4的缺失联合相关性，同样不提供本源的两项相容生成。上述源码对应只按声明及来源使用，不承担新的形式核验。
+
+任意实数全类的 $(D_\mu)$、其他精确有理预算上的单模式支配、固定完整状态或精度预算的最优值、真实历史平均风险及总资源最优仍没有由本节证明。普通证明及有限精确算术证书不等于 Lean kernel 认证，不推出物理时空、实际训练网络或持续研究目标的全局完成。
+
+[RMC]: https://arxiv.org/html/2109.04976v1
+[LMC]: https://arxiv.org/html/1405.2852v1
+[ACP]: https://github.com/the-omega-institute/trureturing/blob/6b73c7c90b47776750612668de24e3070bdb5b98/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_APPROXIMATE_COHERENCE_PRICE.md
+[SEL]: https://github.com/the-omega-institute/trureturing/blob/4b4a9316696111a879b0b72a07f7586b2a7fc6bc/docs/develop/theory/AURIC_FIB_ATOM_SELECTION_CALCULUS.md
+

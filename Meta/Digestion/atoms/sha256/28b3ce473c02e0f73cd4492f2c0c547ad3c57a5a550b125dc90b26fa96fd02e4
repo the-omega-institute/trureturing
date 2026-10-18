@@ -1,0 +1,41 @@
+**Definition 76.1 (the commissioned template and its quantifiers).** Retain an
+authentic nonempty finite ordered full binary source $D$ from
+Definitions55.1,60.1,66.1 and67.1 of the
+[first continuation](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION.md).
+Every label, bracket, left/right address and distinct occurrence remains part
+of the source. Write $o$ for its current root and put
+
+$$
+\ell(D)=\#\operatorname{Leaf}(D),\qquad
+h(D)=\max_{p\in D}|p|.
+\tag{76.1}
+$$
+
+Here $|p|$ counts inherited source seams from the current root; ground stubs
+do not contribute to $h(D)$. The skeleton has precisely those seams and two
+distinct stubs at **every** current leaf. Its total incidence is two at the
+root and three at every nonroot source vertex; each ground tip has incidence
+one. There are no further edges or identifications.
+
+For an integer $s\ge1$, let $E_s(D)$ mean an injective placement of all source
+vertices and ground tips in $\mathbb R^{s-1}\times\mathbb R$, with height
+coordinate $y$, satisfying the following complete spatial contract. Every
+source vertex has $1/4<y_p<3/4$. Every inherited seam and each of the two
+stubs at every leaf is a straight Euclidean segment of length exactly one.
+All ground tips are globally distinct and lie in the height-zero hyperplane
+$\{y=0\}$. Segments intersect only at the images of their prescribed common
+graph endpoints, and no vertex lies on a nonincident segment. The placement
+has positive minimum incident-ray angle and positive clearance between
+nonincident compact segments and vertices, with margins allowed to depend
+on this finite source and placement. Thus the ground locus is a line for
+$s=2$ and a plane for $s=3$.
+
+These are precisely the straight skeleton conditions of Proposition72.3,
+with its finite separation margins. The height band is commissioned spatial
+data, not a consequence of literal substitution or a native necessity.
+Universality means a separate placement for each authentic finite current
+source at its separately legal, predeclared fixed cap. It supplies neither
+one apparatus for all sources and histories nor a source- or cap-uniform
+clearance or angle bound. The new assertion is finite exact geometry; it
+has no thinning parameter, spectral limit, clock or precision regime.
+

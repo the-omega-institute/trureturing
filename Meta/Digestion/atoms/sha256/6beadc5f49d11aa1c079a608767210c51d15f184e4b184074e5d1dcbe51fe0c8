@@ -1,0 +1,34 @@
+**Theorem 6.3 (individual exact task kernels, including nonredundancy).** For
+each individual $V\in\{S,T,B,M\}$, and all $h,h'\in\mathscr H_{H,J}$,
+
+$$
+V(h)=V(h')\quad\Longleftrightarrow\quad h\mathrel{K_{\mathcal V}}h'.
+\tag{NCR.7}
+$$
+
+In fact their common kernel is equality of $(u,n)$ on this actual domain.
+
+Proof. For $S$ and $B$, equal expressions give equal seeds by NCR.6 and equal
+primitive positions from their clock coordinate. For $T$, equal words give
+equal truthful acquisition and equal total primitive length. For $M$, this is
+equality of its acquired seed and length. Thus each map separately determines
+$(u,n)$, and by Theorem 5.3 equal values give equal original joint states.
+Deterministic continuation therefore gives equal enabledness, labels,
+success/rejection, complete outputs, original successors and all archive,
+writer, reference and permission changes at every finite continuation. This
+proves $\ker V\subseteq K_{\mathcal V}$ for each $V$.
+
+Conversely, full task equivalence implies equality of the separating subtask
+in Lemma 6.2, hence equal $u,n$. A common seed and position give the same
+actual execution prefix, so $r,e$, support, frontier, event word and acquired
+memory all agree. This proves $K_{\mathcal V}\subseteq\ker V$ separately
+for all four views. The reverse direction uses an actual continuation
+separation, not mutual recoverability. ∎
+
+The theorem is exact sufficiency and nonredundancy for this task. It is not
+minimum bit length, a claim that each tuple coordinate is indispensable, or
+minimality for every conceivable observation task. For example $e$ is derived
+from $(u,n)$, but it is required in the stated direct support decoder rather
+than being unpriced advice. A task erasing the final archive or primitive
+termination timing can have a coarser kernel.
+

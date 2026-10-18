@@ -1,0 +1,99 @@
+**Theorem 8.1 (the omitted-$U^2$ family fails for every $d\ge1$).** For every $d\ge1$ and every integer $B\ge1$, the $B+4$-read history of §6 has a collision with positive gain samples and drift polynomials of degree at most one. Taking $B=d+1$ excludes a $d+5$-read candidate. Extra initial $I$ reads do not repair this tail family.
+
+Proof. Write $m=B-1$ and choose
+
+$$
+0<h<\min\left(\frac1{20},\frac1{2(m+1)}\right),\qquad
+\varepsilon=\frac h{1-mh}>0.
+$$
+
+In fact $mh<1/2$, so the denominator is positive. The coefficient $39-91h$ is positive. The quadratic
+
+$$
+(39-91h)T^2-(28+823h)T-(267+1167h)=0
+$$
+
+has negative constant term and positive leading coefficient, so its roots are real of opposite signs and its positive root is unique. It is
+
+$$
+T=\frac{28+823h+\sqrt{(28+823h)^2+4(39-91h)(267+1167h)}}{2(39-91h)}.
+$$
+
+Its polynomial takes the value $-4455h<0$ at $T=3$, hence this positive root satisfies $T>3$.
+
+Set
+
+$$
+S_1=\begin{pmatrix}7&7T\\3&3T\end{pmatrix},\qquad
+L\begin{pmatrix}p&q\\r&s\end{pmatrix}
+=\begin{pmatrix}4p+q+13r+2s&5q+18r+6s\\r&-q-5r\end{pmatrix},
+$$
+
+$$
+L(S_1)=\begin{pmatrix}67+13T&54+53T\\3&-15-7T\end{pmatrix},\qquad
+S_0=\frac{S_1+hL(S_1)}{1-mh}.
+$$
+
+The first source is strictly positive rank one. The numerator of $S_0$ has positive first three entries. Its bottom-right entry is
+
+$$
+T(3-7h)-15h>9-36h>0,
+$$
+
+since $T>3$ and $h<1/20$. Direct two-by-two expansion gives mixed determinant coefficient $39T^2-28T-267$ and
+$\det L(S_1)=-91T^2-823T-1167$. More explicitly these are
+
+$$
+7(-15-7T)+3T(67+13T)-21T-3(54+53T),
+$$
+
+and
+
+$$
+(67+13T)(-15-7T)-3(54+53T),
+$$
+
+respectively. Therefore
+
+$$
+\det(S_1+hL(S_1))
+=h\bigl[(39-91h)T^2-(28+823h)T-(267+1167h)\bigr]=0.
+$$
+
+The positive denominator preserves positivity and rank one of $S_0$.
+
+The four residual identities are
+
+$$
+\begin{aligned}
+V_1(L(S))&=r=V_1(S),\\
+V_2(L(S))&=2q+6r+6s=2V_2(S),\\
+V_3(L(S))&=3q+12r+6s=3V_3(S),\\
+V_4(L(S))&=4p+4q+28r+8s=4V_4(S).
+\end{aligned}
+$$
+
+They follow by substituting the displayed entries of $L$ into $V$. Since
+
+$$
+S_0=S_1+\varepsilon\bigl(mS_1+L(S_1)\bigr),
+$$
+
+these identities give
+
+$$
+V_k(S_0)=[1+\varepsilon(m+k)]V_k(S_1),\qquad1\le k\le4.
+$$
+
+Let $a_b=\operatorname{tr}S_b$. Give run $0$ the parameters
+$\kappa_0=0,D_0(t)=-a_0$ and run $1$ the parameters
+$\kappa_1=\varepsilon,D_1(t)=-a_1(1+\varepsilon t)$, again with $\alpha=1$. Every initial $I$ reading is zero in both runs, including the actual indices $0,\ldots,B-1$. At tail index $i=B+k-1=m+k$, their observations are respectively
+
+$$
+V_k(S_0),\qquad (1+\varepsilon i)V_k(S_1),
+$$
+
+which agree by the preceding identity. Gains are $1$ or $1+\varepsilon i>0$ at every recorded index. Both drifts have degree at most one, and thus at most $d$. The targets differ in slope. Proposition 1.1 supplies actual positive factors and fixed instruments throughout the nine-operation history. ∎
+
+The results in §§6–8 are the positive-gain omitted-calibration family. They concern the specific tail $U,F,G,H$; they do not exclude arbitrary four-tail choices.
+

@@ -1,0 +1,38 @@
+**Corollary 10.2 (strict comparison and finite consequences).** The
+lower endpoint in (NCE.72) strictly exceeds that of Theorem 6.2:
+
+$$
+6407\cdot13-2499\cdot33=824>0,
+\qquad
+\frac18\log_2\frac{6407}{2499}
+>\frac18\log_2\frac{33}{13}.
+\tag{NCE.75}
+$$
+
+In particular the certified finite ceilings from (NCE.71) are
+$3,7,44,1867$ for $D=3,4,5,6$, respectively. The exact values are
+not asserted, except for the separately credited $M_1(3)=4$ from
+[D3, Theorem 2.3][D3j]. Combining with its paid rate upper
+(Theorem 4.1) gives the valid interval
+
+$$
+\frac18\log_2\frac{6407}{2499}\le\lambda<\frac3{16}.
+\tag{NCE.76}
+$$
+
+Proof. Strict monotonicity of the logarithm gives (NCE.75).
+For $n=1,2,4,8$, if $m=3,7,44,1867$ respectively, exact integer
+powering gives
+
+$$
+(m-1)2499^n<6407^n\le m2499^n.
+\tag{NCE.77}
+$$
+
+These are precisely the four ceiling assertions. D3 supplies its
+upper and its finite optimum independently of the chosen dual law.
+The numerical display
+$\frac18\log_2(6407/2499)\simeq0.16978726113469447$
+is explanatory; strictness and all finite conclusions use the exact
+rational expressions above. $\square$
+

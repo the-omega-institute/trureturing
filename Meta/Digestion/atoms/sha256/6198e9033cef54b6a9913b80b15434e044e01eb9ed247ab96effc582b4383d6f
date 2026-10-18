@@ -1,0 +1,13 @@
+**Definition 1.4 (Separate resource coordinates).** The complete
+configuration count $M$, installed probability precision $B$, immutable
+table description length, offline midpoint accuracy and paid time $T$
+are distinct quantities. An offline midpoint of dyadic precision $Q$
+and an offline parameter input of precision $P$ do not become runtime
+registers. Thresholds, grid spacing and integer jump destinations are
+fixed table-design data. If a different realization retains a precision
+counter, arithmetic workspace, calibration value, residual, horizon,
+seed, coin buffer or pending action, all its resulting complete
+configurations must be counted separately. The direct stochastic-row
+model does not supply a serial fair-coin realization or a physical
+storage theorem.
+

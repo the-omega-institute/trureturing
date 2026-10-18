@@ -1,0 +1,20 @@
+**Definition 1.3 (all-finite-word response).** Let $\Sigma$ be the finite
+alphabet of action names in Definition 1.2. A word $w\in\Sigma^*$ is legal
+from a state $z$ exactly when every requested edge exists in succession.
+Write $T_wz$ for its terminal state when legal. Define the partial response
+$R_z(w)$ to be the terminal root readout together with the successful edge
+labels when $w$ is legal, and to be undefined otherwise. The empty word is
+legal. Undefined means absence of the requested path, not a failure
+transition. Since every prefix of a word is also a word, equality of these
+partial response functions includes every intermediate root readout and the
+first missing edge.
+
+States of different public types are not compared. At the same type write
+$z\simeq z'$ when $R_z(w)=R_{z'}(w)$ for every finite word. An exact boundary
+is a representation on its actual image preserving root readout, every
+edge's domain, its label and its successor. The strict descent and minimal
+residual universal properties used here are those of
+[Process Geometry, Theorems 3.2–3.3 and 6.2](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md).
+They preserve missing edges and types; they do not enlarge the source
+carrier to a free product or supply unperformed observations.
+

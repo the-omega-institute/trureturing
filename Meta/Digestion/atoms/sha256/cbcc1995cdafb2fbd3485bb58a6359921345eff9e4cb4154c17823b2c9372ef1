@@ -1,0 +1,22 @@
+**Proposition 155.2 (Exact TV inequalities).** For a probability vector
+$p$ and a word with first zero $n$,
+
+$$
+\operatorname{TV}(p,(1-a_n)e_0+a_ne_n)
+=\max\{0,1-a_n-p(0),a_n-p(n),1-p(0)-p(n)\}.
+\tag{155.2}
+$$
+
+Consequently the cap is equivalent to all rows
+$p_{b_j}(E_j)\ge d_j(x)$, including the pair row. At $1^6$ it is
+$p_{1^6}(0)\ge1-e$.
+
+**Proof.** TV is the largest target deficit over events. Removing labels
+outside the two-point target support can only increase that deficit.
+The four possible subsets of the support give exactly (155.2).
+For the one-point target only its singleton can have a positive deficit.
+There are $3\cdot63+1=190$ rows. A negative singleton demand is legal
+and redundant, but it is retained in the indexed system. The pair demand
+cannot be recovered merely by adding the two singleton demands, which
+would lose another allowance $e$. $\square$
+

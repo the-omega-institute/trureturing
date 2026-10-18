@@ -1,0 +1,10 @@
+**定义2.1（同源读取）。** 固定 $m=2,d=1,\ell=2,n=4$。固定有限或可数先验 $\mu$，其中 $\mu(1),\mu(2)>0$。第一笔实际 Read 前仅抽取一次 $K$；全部付费提种拒绝和四段载荷共享这个 $K$。给定 $K=k$，实际 Read 条件独立，返回 $\alpha$ 的概率为
+
+$$
+r_k=\frac{F_{k+1}}{F_{k+3}},\quad r_1=1/3,\quad r_2=2/5,\qquad
+3/8\le r_k\le5/13\quad(k\ge3).
+\tag{2.1}
+$$
+
+提种器接受 $\alpha\beta$ 为种子0、$\beta\alpha$ 为种子1，相等对拒绝并继续付费。在 $p_i$，$\alpha$ 完成标记0、$\beta$ 进入 $q_{\beta,i}$；悬置时 $\alpha$ 返回 $p_i$、$\beta$ 完成标记1。前三次完成进入下一段；第三次记录先写完再锁存。第四次完成进入原 pendingStop，只执行唯一原 Stop 后进入 deliveredStop；两个终端均无 Read 权限。
+

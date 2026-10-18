@@ -1,0 +1,19 @@
+## Exact checks
+
+The following factorizations and residue checks use only integer
+arithmetic (the factorizations are displayed to make the depth exponents
+auditable):
+\[
+\begin{array}{c|r|l|c|c}
+j&r_j&B_j&u_j\bmod27&\sum h_pb_{p,j}\bmod27\\ \hline
+1&9&19&1&1\\
+2&27&5779=5779&26&26\\
+3&81&192900153619=3079\cdot62650261&1&1\\
+4&243&7177905237579946589743592924684179
+ =59779\cdot120074026624398979403194983601&26&26
+\end{array}
+\]
+All displayed factors are prime, and each is \(1\bmod 2r_j\). The
+table checks both the recurrence residue and the depth-weighted product
+for the first four blocks; it is not used in the proof.
+

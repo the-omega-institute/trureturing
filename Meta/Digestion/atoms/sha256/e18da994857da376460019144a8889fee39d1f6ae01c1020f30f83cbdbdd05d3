@@ -1,0 +1,46 @@
+**Proposition 24.4 (when $B$ is canonical and actual instances outside the family).** For $a\ne\beta$, the additional condition $[B,Q]=0$ is sufficient to put any feasible rank-two $B$ of (R.108) in the canonical form (R.116) by $J$-preserving orthogonal plane frames. At $a=\beta=1/2$, every feasible rank-two $B$ has a $J$-preserving canonical frame. Neither assertion supplies (R.120).
+
+There are also actual noncanonical rank-two examples in the region $c_{\rm pl}>\sqrt a$. An exact one is obtained with $\beta=1/5$, $a=4/5$, $t=1/5$, $c=2\sqrt6/5$, and
+
+$$
+\begin{gathered}
+x_0=\sqrt a c e_0-\sqrt\beta t e_3,\qquad
+x_1=-\sqrt a t e_1+\sqrt\beta c e_2,\\
+t_0=h/\sqrt2,\qquad
+t_1=\frac{\sqrt\beta c e_0-\sqrt a t e_3}
+                {\sqrt{2(\beta c^2+a t^2)}},\qquad
+K_j=(x_j,Jx_j,t_j)\quad(j=0,1).
+\end{gathered}
+\tag{R.121}
+$$
+
+It has $q=1$, $\operatorname{rank}B=\operatorname{rank}C_{\rm out}=2$, $[B,Q]\ne0$, and
+
+$$
+\begin{gathered}
+\operatorname{spec}_{>0}B=(97/125,28/125)\ne(a,\beta),\\
+c_{\rm pl}^2=1-(a-\beta)^2(2ct)^2
+             =\frac{14761}{15625}>
+               \frac{12500}{15625}=a.
+\end{gathered}
+\tag{R.122}
+$$
+
+Canonical $B$ also allows third columns outside (R.120). For any positive beta, $t_0=e_2/\sqrt2$, $t_1=h/\sqrt2$ is actual with a forbidden $h$ component. At $\beta=1/5$, the alternative
+
+$$
+t_1=(e_0+e_2)/2,\qquad
+t_0=-\tfrac12\sqrt{\beta/a}\,e_0
+       +\sqrt{\tfrac12-\tfrac{\beta}{4a}}\,h
+$$
+
+is actual with $r_A\cdot r_B=1/4$. Both have $q=1$, $c_{\rm pl}=1$ and $\operatorname{rank}C_{\rm out}=2$. These instances show missing hypotheses in a proposed exhaustive use of (R.115); they assert no impossibility of finding other witnesses.
+
+**Proof.** If $[B,Q]=0$ and $a\ne\beta$, $B$ splits over the two distinct two-dimensional eigenspaces of $Q$. The identity $B+JBJ^T=Q$ gives block traces $a,\beta$. Both blocks are nonzero PSD, so total rank two makes each rank one. Rotating an eigenvector within each oriented $J$ plane makes the two blocks $\operatorname{diag}(a,0)$ and $\operatorname{diag}(\beta,0)$. At half beta, $B\preceq aI$ on $U$, $\operatorname{Tr}B=2a$ and rank two force both positive eigenvalues to be $a$. Thus $B=aP_L$, where $L$ has dimension two, and $JP_LJ^T=I_U-P_L$. In particular $JL=L^\perp$; an orthonormal basis of $L$ followed by its $J$ images gives the claimed canonical frame. Third columns have not entered either argument.
+
+For (R.121), the summed first-column norm is $a+\beta=1$, and $x_j^TJx_j=0$. The two $02$ products vanish. The only possible nonzero $12$ product is $(Jx_1)^Tt_1$, whose two terms $\sqrt{a\beta}tc$ cancel. The third-column squared norms are $1/2,1/2$. Thus TP holds. The complex phase coefficients in (R.8) can be taken as the rows $(\sqrt a c,i\sqrt a t)$ and $(i\sqrt\beta t,\sqrt\beta c)$; their Hermitian cross product is zero and their squared norms are $a,\beta$. Hence this is an actual original-class channel. Both $A$ and $T$ have independent columns, giving the stated ranks and $q=1$.
+
+The two $x$ vectors have disjoint coordinate supports; their squared lengths are $ac^2+\beta t^2$ and $at^2+\beta c^2$, giving (R.122)'s spectrum. The $03$ entry of $B$ is $-\sqrt{a\beta}ct\ne0$, while those two $Q$ entries differ, so the commutator is nonzero. In the $(e_0,e_3)$ block, $B-JBJ^T$ has diagonal entries $a(c^2-t^2),-\beta(c^2-t^2)$ and off-diagonal entry $-2\sqrt{a\beta}ct$. Its determinant is $-a\beta$ and its trace is $(a-\beta)(c^2-t^2)$. The other block has the opposite eigenvalues. Thus the half trace norm squared is $(a-\beta)^2(c^2-t^2)^2+4a\beta=1-(a-\beta)^2(2ct)^2$, proving the exact strict inequality.
+
+For the two canonical counterinstances, use the first two columns of (R.115) and the specified third columns. Their two summed cross inner products vanish: in the second instance the $02$ terms are $-\sqrt\beta/2$ and $+\sqrt\beta/2$. Their total third squared norms are one. The third columns are independent, so the full-column-rank $A$ again gives $q=1$ and rank two for $C_{\rm out}$. The $h$ component and dot product are exactly those stated. $\square$
+

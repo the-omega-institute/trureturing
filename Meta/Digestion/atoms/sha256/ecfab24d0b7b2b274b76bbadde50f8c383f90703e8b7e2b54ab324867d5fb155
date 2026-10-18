@@ -1,0 +1,44 @@
+**Definition 2.2 (The actual stationary history).** For $i\in\{0,1\}$ and $q\in(0,1)$ define
+
+$$
+\begin{aligned}
+Z_i(q)&=\sum_{k\ge1}F_i(k)q^k,
+& f_{i,q}(k)&=\frac{F_i(k)q^k}{Z_i(q)}\quad(k\ge1),
+& f_{i,q}(0)&=0,\\
+S_{i,q}(b)&=\sum_{k\ge b}f_{i,q}(k)\quad(b\ge0),
+&\mu_i(q)&=\sum_{k\ge1}(k+1)f_{i,q}(k),\\
+\beta_i(q)&=\frac{\sum_{k\ge1}k(k+1)f_{i,q}(k)}{2\mu_i(q)}.
+\end{aligned}
+\tag{2.4}
+$$
+
+All indices in these sums are integers. At each interior $q$ the polynomial-geometric sums are finite, $Z_i>0$, and every $f_{i,q}(k)$ for $k\ge1$ is positive. In particular $S_{i,q}(0)=S_{i,q}(1)=1$.
+
+The law $\mathsf P_{i,q}$ first draws a tick time $\tau$ with
+
+$$
+\mathsf P_{i,q}(\tau=b)=\frac{S_{i,q}(b)}{\mu_i(q)}
+\quad(b=0,1,\ldots).
+\tag{2.5}
+$$
+
+It places zeros before $\tau$ and a one at $\tau$. Independently of $\tau$, subsequent zero counts $K_1,K_2,\ldots$ are iid with law $f_{i,q}$. The further tick times are
+
+$$
+\tau_0=\tau,\qquad
+\tau_n=\tau+\sum_{r=1}^n(K_r+1)\quad(n\ge1),
+\tag{2.6}
+$$
+
+and every other bit of $X_0,X_1,\ldots$ is zero. Thus $K_r$ counts zeros; $K_r+1$ is a full post-tick interval through its next tick. The first wait is survival-normalized, not a draw from $f_{i,q}$.
+
+The supplied stationary normalization and mean identities are
+
+$$
+\sum_{b\ge0}S_{i,q}(b)=\mu_i(q),\qquad
+\mathbb E_{i,q}\tau=\beta_i(q).
+\tag{2.7}
+$$
+
+Their parameter correspondence is exact: a fixed $k$ contributes to the survival sum for $b=0,\ldots,k$, with total multiplicity $k+1$, and contributes total first-moment weight $k(k+1)/2$. These identities are part of fixed-observer-source Definition 23.2, equations (23.4)–(23.6), and Definition 2.2 of the lower and uniform sources. They specify the history without giving its unobserved age to an observer.
+

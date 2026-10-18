@@ -1,0 +1,116 @@
+**Theorem 24.1 (uniform unconditional branch-mass necessity).** Suppose
+an ACTUAL tagged factorization in Definition 21.2 or Convention 21.3
+realizes a common processor attaining $E_*$. Let
+$A_{\geq3}=\{\alpha:d_\alpha\geq3\}$ and define
+
+$$
+\begin{aligned}
+\Lambda_H&=\sum_{\alpha\in A_{\geq3}}
+                 \mathcal R_\alpha^L\mathcal E_\alpha,\\
+p_H^{\rm acq}(\rho)&=\sum_{\alpha\in A_{\geq3}}
+                         \operatorname{tr}\mathcal E_\alpha(\rho),
+&p_H^L(\rho)&=\operatorname{tr}\Lambda_H(\rho).
+\end{aligned}
+\tag{CG.193}
+$$
+
+Use the corresponding integrals in the integral model. Then, for EVERY
+normalized $\rho\in M_3$, and thus for each of all twelve original
+inputs individually,
+
+$$
+p_H^{\rm acq}(\rho)\ \geq\ p_H^L(\rho)
+ \ \geq\ \frac{\delta_*^2}{24}
+ \ >\ \frac{361}{2400}\ >\ \frac3{20}.
+\tag{CG.194}
+$$
+
+The probability is measured on the original normalized reached-cut
+specimen, before any new postselection. The stronger middle quantity
+counts branches that both traverse a high-dimensional acquisition block
+and later contribute to the canonical supported live output. No source
+prior, external entangled test preparation or observed extra flag is
+required for this bound.
+
+Proof. Decompose the actual live channel into the low- and high-block
+contributions $\Lambda=\Lambda_L+\Lambda_H$. Their Choi matrices are
+positive, and (CG.191) puts $J_L$ in $\mathfrak S_2$. Equations
+(CG.185)–(CG.186) give
+
+$$
+\delta_*\leq\operatorname{tr}(W_3J_H).
+\tag{CG.195}
+$$
+
+The high-block contribution is a finite-dimensional CP submap even if
+the supplied classical alphabet is infinite. Choose any finite Kraus
+representation $\Lambda_H(A)=\sum_s L_s A L_s^\dagger$ of this aggregate
+map. It need not be the observed encoder record. Full TP of the processor
+and positivity of the other output branches imply
+
+$$
+\Lambda_H^\dagger(I)\preceq I_3,\qquad
+t_H:=\sum_s\|L_s\|_F^2=\operatorname{tr}J_H\leq3.
+\tag{CG.196}
+$$
+
+For a unit vector $\psi$, let $P=|\psi\rangle\langle\psi|$,
+$Q=I-P$, and set
+
+$$
+\begin{aligned}
+p&=\sum_s\|L_s\psi\|^2=p_H^L(P),\\
+a_s&=\operatorname{tr}(QL_s),
+&b_s&=\operatorname{tr}(PL_s)=\langle\psi|L_s|\psi\rangle.
+\end{aligned}
+\tag{CG.197}
+$$
+
+Hilbert–Schmidt Cauchy–Schwarz on the rank-two projection $Q$, and
+then on the unit vector $\psi$, give
+
+$$
+\sum_s|a_s|^2\leq2(t_H-p),\qquad
+\sum_s|b_s|^2\leq p.
+\tag{CG.198}
+$$
+
+For the first inequality, take an orthonormal basis with first vector
+$\psi$: the squared modulus of the sum of the other two diagonal entries
+is bounded by twice the squared Frobenius norm of the other two columns. Equivalently
+$\|L_sQ\|_F^2=\|L_s\|_F^2-\|L_s\psi\|^2$.
+Trace and Frobenius norm are invariant under this simultaneous basis
+change. Thus the calculation includes all complex phases, not just real
+matrix entries or the sign-invariant subfamily.
+
+Since $\operatorname{tr}L_s=a_s+b_s$, another Cauchy–Schwarz inequality
+over $s$ yields
+
+$$
+\begin{aligned}
+\operatorname{tr}(W_3J_H)
+ &=\sum_s|a_s+b_s|^2-2t_H\\
+ &\leq2(t_H-p)+p+2\sqrt{2(t_H-p)p}-2t_H\\
+ &=2\sqrt{2(t_H-p)p}-p
+ \leq2\sqrt{6p}.
+\end{aligned}
+\tag{CG.199}
+$$
+
+Here $0\leq p\leq t_H\leq3$. Combining (CG.195) with (CG.199)
+and squaring nonnegative quantities gives $p\geq\delta_*^2/24$.
+For any mixed normalized input, a spectral decomposition and linearity
+of $p_H^L$ give the same lower bound. Finally,
+$\mathcal R_\alpha^L$ is TNI, so summing its trace inequalities gives
+$p_H^L\leq p_H^{\rm acq}$. The strict arithmetic in (CG.194) follows
+from $\delta_*>19/10$ and
+$(19/10)^2/24=361/2400>3/20$.
+
+All sums defining low/high submaps are positive CP sums; in (CG.183)
+they are integrals over the measurable dimension sets. Closedness of
+$\mathfrak S_2$, integrable effects and the finite input/output live
+algebras justify the same split and finite Kraus representation of the
+aggregate high submap. This proves the countable and specified integral
+versions without interpreting a limiting virtual split as an actual flag.
+$\square$
+

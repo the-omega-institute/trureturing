@@ -1,0 +1,30 @@
+**Definition 3.2 (a finite component walker).** A work item is a tuple
+`[kind,argument,path]`, with kind one of `Outer`, `Finite`, `Tape`, `Cell`,
+`Track`, `Terminal`. `argument` is a raw finite list/cursor or a framed
+unary scaffold size. A second work list holds continuations when needed.
+At each pop, perform the following fixed case, using copied finite cursors:
+
+| Component | Children, in left/right order |
+| --- | --- |
+| Scaffold $F_m$, $m>1$ | $F_{\lfloor m/2\rfloor}$ on the first consecutive socket slice, $F_{\lceil m/2\rceil}$ on the remainder, using Half and TakeItems. |
+| Scaffold $F_1$ | The supplied socket component itself; no additional vertex. |
+| Nonempty Tape$(c::w)$ | Cell$(c)$, Tape$(w)$. |
+| Empty Tape | No children. |
+| Cell$(c)$ | $F_8$ applied to its eight track sockets, using the same scaffold case. |
+| Present Track/finite bit 0 | One left Terminal; right absent. |
+| Present Track/finite bit 1 | Left absent; one right Terminal. |
+| Absent finite socket/Terminal | No children. |
+
+`Outer` expands $F_{75}$ with the actual ordered tape/finite components.
+Before emitting a vertex normalize aliases: Outer to its scaffold, Finite
+to its scaffold, Cell to its F8 scaffold, and F1 to its supplied socket
+component. No alias emits a second vertex. Every normalized component,
+including Empty Tape and absent finite sockets, then emits exactly once
+and pushes its actual children. Thus a cell root is the F8 root itself, and
+an outer socket is its component root, without an extra wrapper vertex.
+At a visited vertex emit its path and child-mask as required; push right
+then left to visit left first. Paths are Cat with literal 0/1. Frame sizes,
+socket slices and tape tails are actual words. A scaffold expansion
+decreases its positive size until one; a tape traversal consumes its closed
+cell cursor. No future capacity is in this finite case table.
+

@@ -1,0 +1,37 @@
+**Theorem 8.1 (count closure with fractional capacities).** For each
+integer $k$, the set
+$$
+\{(s,t)\in\mathcal D_w:n(s,t)\le k\}
+\tag{GC.35}
+$$
+is relatively closed. Consequently $n$ is lower semicontinuous on
+the entire finite weak domain. Neither optimizer continuity nor
+continuity of the count is asserted.
+
+Proof. Suppose $(s_j,t_j)\to(s,t)$ in $\mathcal D_w$ and
+$n(s_j,t_j)\le k$. By the minimum-count identity (GC.10), choose an
+optimal supported low family with at most $k-1$ actual labels.
+Keep each original fractional-capacity coordinate
+$$
+\xi_{ji}=\frac{b_{ji}}{t_j\mathfrak c(h_{ji})}\in[0,1].
+\tag{GC.36}
+$$
+Do **not** split it into pure and saturated labels: that can increase
+the actual count. Pad to $k-1$ labels with zero weights. The simplex,
+ellipse and interval $[0,1]$ are compact. A subsequence has a joint
+limit of all weights, directions and fractions.
+
+Set $b_i=t\mathfrak c(h_i)\xi_i$ in the limit. Equation (GC.9) and
+the contrast inequality pass to the limit continuously. The absolute
+height sum converges without a sign assumption. By Theorem 7.3 its
+value is $\mathcal T(s,t)$, so the limit is optimal. Omitting zero
+weights leaves at most $k-1$ supported low labels. The constructor
+in §10 supplies one high label, hence $n(s,t)\le k$.
+
+Colliding directions can only reduce the needed count. Supported-zero
+full labels do not obstruct this argument because (GC.10) concerns
+minima and provides the one-high completion. Thus the proof is about
+original fractional-capacity actual atoms, not only endpoint atoms.
+Relative closedness of (GC.35) is equivalent to lower
+semicontinuity for the integer-valued function $n$. $\square$
+

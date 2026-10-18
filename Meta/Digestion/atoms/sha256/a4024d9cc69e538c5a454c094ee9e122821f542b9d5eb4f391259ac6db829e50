@@ -1,0 +1,25 @@
+## 479. The upper sixth-label subcase
+
+If v>m-2, V cannot occur transversely in any flat. Since phi has pair {B,Q}, its largest axis A must therefore be V. Only the second and fourth rows remain:
+
+    sigma axes {M,C}, phi axes {V,D}, both fixed pair {C,D};
+    sigma axes {M,D}, phi axes {V,C}, both fixed pair {C,D}.
+
+The exact source and second-flat products are respectively
+
+    (m-1)*(c-1)>=(c+d)^2, (v-1)*(d-1)>=(c+d)^2,
+
+or the same display with C,D exchanged. No exchange of the genuine source tau is made: it retains transverse pair {M,C} and other axis D. Thus C/D symmetry here belongs only to the two flat products.
+
+There is a further useful restriction on genuine CD-pair owners. In the first case, any such owner's unordered axes must be among
+
+    {C,C}, {C,D}, {D,D}, {V,C}.                (479.1)
+
+In the second case the list is
+
+    {C,C}, {C,D}, {D,D}, {V,D}.                (479.2)
+
+The lists are necessary possibilities, not sufficient genuine tests. To prove (479.1), put T=(c+d)^2. Every pair containing M and another label is flat: the other axis C gives the source product; the other axis D gives (m-1)*(d-1)>=(v-1)*(d-1)>=T; every other value is at least min(m,v), and m>=v>c,d by the two flat inequalities, so the product is also at least T. Replacing M by Z or U only increases that product. Thus no genuine CD-pair owner has an M,Z,U axis. Among C,D,V axes, {V,D} is flat by the second product and {V,V} is flat because v>d+2*c+2>c+d+1. The four remaining unordered pairs give (479.1). The proof of (479.2) interchanges C,D only in these product comparisons.
+
+A genuine owner of pair CD can therefore remain; uniqueness of the source CD owner is not a consequence. No scalar counterexample or compatible face quotient is asserted. This role reduction alone leaves the global exclusions unresolved. Sections 480-494 exclude the upper-v two-flat branch; the one-flat and low-v two-flat branches remain open.
+

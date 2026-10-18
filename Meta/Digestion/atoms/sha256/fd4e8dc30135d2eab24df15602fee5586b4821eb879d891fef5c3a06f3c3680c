@@ -1,0 +1,34 @@
+**Definition 10.1 (three different transition contracts).** Fix $P$ and
+put $\mathcal C_P=\bigcup_{N\ge1}\mathcal C_{P,N}$, with edge domain
+$\mathcal C^-_P=\bigcup_{N\ge1}\mathcal C^-_{P,N}$. A supplemental
+encoding is any function $z:\mathcal C_P\to Z$, even one chosen with
+full mathematical knowledge of a concrete cut. Its augmented state is
+$\eta(s)=(O^+(s),z(s))$. An exact deterministic realization supplies
+one update $T$ on the realized edge domain satisfying
+
+$$
+T(\eta(s))=\eta(Fs),\qquad s\in\mathcal C^-_P.
+$$
+
+The update receives only that augmented state and represents one native
+row. In particular it receives no omitted annex contents or external
+history. Arbitrary computation within this mathematical update is
+allowed. Actual row labels may additionally be retained; the obstruction
+already holds for the weaker demand displaying just $O^+$ successors.
+
+For a nondeterministic realization, require **exact projected response
+sets**: from $\eta(s_{N,m,k})$, for every horizon
+$0\le h\le D_{P,N}-k$, the set of projected successor sequences of
+length $h$ is exactly the singleton
+
+$$
+\left\{\bigl(O^+(s_{N,m,k+1}),\ldots,
+                  O^+(s_{N,m,k+h})\bigr)\right\}.
+$$
+
+This includes existence, excludes spurious sequences and retains every
+intermediate successor. Requiring only that each actual projected
+sequence is included is **permissive forward inclusion**, a weaker
+contract. These definitions concern native projected dynamics, not
+the original $Q$ or its action-admission relation.
+

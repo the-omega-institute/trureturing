@@ -1,0 +1,29 @@
+**Theorem 13.3 (both-table-design correspondence on the certificate basis).**
+Under Definition 13.2, the smaller basis $B_b$ of (PCA.24), depending
+only on the row and the code certificate, preserves the whole joint
+upper-budget region of both table designs. Both tables may be restricted
+to words in $B_b$ without changing either installed alphabet,
+partition, the common preparation start, any literal entry value or
+any whole-row halt label. The preserved execution objectives include
+all separate call/literal coordinates and the same-run total call and
+literal bounds in Theorem 13.1.
+
+Proof. Take any feasible pair of tables. Let $L$ be the maximum length
+of all installed running words in both phases, including unused words.
+For each actual $u$ use the single $u^{\eta,L}$ of Theorem 11.2.
+Apply (PCA.32) to both running tables, retaining their alphabets,
+partitions, starts, latches, entry map and reader halt labels.
+Lemma 12.2 and induction give the same preparation state path on the
+new $u$ as on the old $u^{\eta,L}$. Its latch is the literal original
+$s(u)$ because that code is certificate-determined. After the supplied
+handoff, the two reader entries are the same. The same induction gives
+the reader state path on the new $u$ as on the old $u^{\eta,L}$.
+
+The final halt retains its entire fixed row, which equals
+$F(u^{\eta,L})=F(u)$ by NBP Theorem 10.4. Both call counts are equal
+on this comparison and both literal sums weakly decrease, with each
+forced constant query still paid. Thus every simultaneous upper bound
+of the stated forms transfers on one actual origin. Sufficiency is
+literal native installation of the two finite word tables on the
+original full domain. No new code or entry is selected. $\square$
+

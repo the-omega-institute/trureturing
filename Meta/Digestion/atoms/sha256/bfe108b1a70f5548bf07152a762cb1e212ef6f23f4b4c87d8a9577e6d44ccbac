@@ -1,0 +1,42 @@
+**Proposition 9.1 (the three distinct optimization quantifiers).**
+The following conclusions have different quantifiers and remain distinct.
+For each public positive test input, (CA.32) has a common instrument
+attainer. The known instrument (CA.43) or (CA.44) simultaneously attains
+all positive diagonal minima, all three original means and the
+worst-history optimum. Theorem 8.1 determines every resource vector
+attaining any one of those means. None of these assertions evaluates
+$\mathsf E_s(\rho)$ for every coherent $\rho$, or classifies the rest of
+$\mathscr W_s$'s undominated boundary.
+
+Proof. The first assertion is Corollary 6.4, whose design may depend on
+the public test matrix but whose executed maps must work on every
+unknown input. Proposition 7.3 gives the second assertion with one common
+design; it concerns diagonal costs and original averages rather than all
+individual coherent-state minima. Theorem 8.1 gives the third assertion
+without restricting the original class. The matrix optimization (CA.28)
+retains complex off-diagonal costs, two cone memberships and their plane
+slacks. No preceding proof removes those variables or solves that
+optimization on all coherent inputs. Likewise the sharp-average
+condition cuts out only a specified part of the full resource frontier.
+
+There is a concrete incompatibility with a simultaneous individual
+minimizer at every exceptional strength. If a design minimized all twelve
+original costs simultaneously, its vector would weakly dominate every
+vector in the exceptional segment. Each segment point is undominated by
+Corollary 8.4, so this vector would have to equal every segment point.
+The segment has positive length and distinct vectors, a contradiction.
+This is an obstruction to a least twelve-vector, not to the existence
+of its separate coordinate minima. RE and IR's other pointwise/common
+and nonleast results keep their respective stated hypotheses and ranges;
+no larger range is inferred from this exceptional-strength argument.
+$\square$
+
+Within an exceptional equality segment the original worst-history cost
+is strictly larger than $g_{27}(s)$ when $\theta\ne0$: one of the two
+parities at height $27$ has cost
+$g_{27}(s)+4|\theta|t\kappa\sqrt{27(64-27)}/128$.
+Thus sharp means alone do not enforce sharp worst-history performance.
+The $\theta=0$ common attainer retains current JR's sharp worst-history
+law. This observation concerns the new equality vectors, not a new
+worst-history optimum.
+

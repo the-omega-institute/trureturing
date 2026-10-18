@@ -1,0 +1,42 @@
+**Lemma 3.3 (finite closure and preservation of every solution).**
+This closure terminates. Every rejection just described excludes all
+solutions of that branch in $\mathcal K_{\mathbb Z}$. Every edge added
+preserves its entire solution set. In a nonrejected final system,
+one chosen $F$ definition per defined component implies all its
+other $F$ definitions.
+
+Proof. Translation preserves the finite shape and adds its offset to
+the minimum of the nonempty finite set of leaf labels. Thus
+$X=\tau_dX$ forces $d=0$. Ground and primitive/$F$ conflicts have the
+stated immediate necessary consequences. Free ordered $F$ injectivity,
+together with its commutation with $\tau_d$, proves (PDC.9) from the
+two parent definitions. Conversely (PDC.9) and either parent definition,
+with their already imposed parent offset, recover the other.
+
+Let $v$ be the number of names and $f$ the number of retained $F$
+definitions. There are at most $\max(0,v-1)$ strict component merges.
+Two already connected names have a fixed relative offset; any later
+incompatible requirement rejects instead of changing it. Mark each
+unordered pair of $F$ definitions when its connected parents are
+inspected. At most $\binom f2$ such inspections add two edges apiece.
+The initial edge list is finite. Scanning the finite uninspected list
+after a merge, and stopping when no connected uninspected pair remains,
+therefore terminates. These counts prove termination of a finite
+symbolic construction, not a complexity bound.
+
+For the last rejection, let $s(X)$ count $F$ nodes of an integer code.
+It is invariant under translation, whereas
+$s(F(A,B))=1+s(A)+s(B)$ is strictly larger than either child's count.
+Along every component-to-child edge the count strictly decreases.
+A directed cycle is impossible in a finite-code solution.
+
+At termination two parent definitions in a component have been compared.
+Their corresponding children are in the same respective components
+with the exact offset (PDC.9). Hence their defining expressions for
+$S_C$ coincide under (PDC.8). One definition therefore suffices without
+dropping the force of any other. $\square$
+
+This finite-tree check is performed after the exhaustive native collapse
+choices. It is not a free-constructor occurs check on an unprocessed
+equation involving $\rho$.
+

@@ -1,0 +1,12 @@
+### 命题 12.4（概率律的纤维等价）
+
+对任意 $X,Y,Z\in\mathbb R$ 及满足 $\operatorname{Prob}(p)$ 的 $p\in\mathcal L$，
+
+$$
+p\in\mathcal F_{X,Y,Z}
+\ \Longleftrightarrow\
+\exists\kappa\in\mathbb R,\ p=R(X,Y,Z,\kappa).
+$$
+
+证明：正向取 $\kappa=p_{25}$，用定理 1.2。反向将重构式代入 $V$ 得 $(X,Y,Z)$，再用已假定的 $\operatorname{Prob}(p)$。右侧未另加 $\kappa$ 的区间假设；其合法界已由 $p$ 的非负性推出。证毕。
+

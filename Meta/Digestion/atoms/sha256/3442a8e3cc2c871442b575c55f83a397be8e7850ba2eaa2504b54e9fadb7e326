@@ -1,0 +1,15 @@
+**Definition 1.4 (exact attained fiber).** For a fixed attained $R,h$, let
+
+$$
+D(R,h)=\{u:\text{the canonical producer outputs }R\text{ and its common controller attains }h\}.
+$$
+
+Specializing [SLH, Theorem 62.2][SLH] to stationary epoch zero gives
+
+$$
+D(R,h)=\{u\in U_R:r_u(q)=c\text{ for every read }(q,c)\text{ in }h\}.
+\tag{LRD.3}
+$$
+
+The non-read events must also pass the common replay condition. Here that condition holds because $h$ is attained. The forward direction records actual replies. Conversely, membership on the right first runs the same actual row producer by (LRD.2); induction over the events of $h$ then gives the same next query, reply, local result and stop decision. This converse neither decides controller termination on unrelated records nor equates arbitrary literal lists with actual runs. All later witnesses below use this converse on the declared common entry.
+

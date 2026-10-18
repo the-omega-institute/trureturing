@@ -1,0 +1,21 @@
+**Corollary 10.3 (Finite-precision joint selection).** Under the centered
+whitened source law and the equivariant orthogonal compression class of
+Theorem 9.4, let
+
+$$
+\lambda_1^{\mathcal W}\ge\cdots\ge\lambda_m^{\mathcal W}\ge0
+$$
+
+be the complete spectrum of $A_{\mathcal W}$. Retaining $r$ complete
+three-component multiplicity groups has minimum joint response error
+
+$$
+\boxed{
+3\sum_{i=r+1}^{m}\lambda_i^{\mathcal W},\qquad 0\le r\le m.
+}
+\tag{10.4}
+$$
+
+Thus path addition changes the finite-precision budget through the spectrum of
+the summed Gram matrix, not through a separate per-path dimension count.
+

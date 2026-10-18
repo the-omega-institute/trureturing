@@ -1,0 +1,101 @@
+**Lemma 78.1 (the all-beta coefficient bound).** Throughout the hypothetical-feasibility region (S.160), (S.164), set
+
+$$
+A_u=\frac12+\frac{u}{1+u}.
+$$
+
+Then
+
+$$
+f_\beta(s,t)>t-A_u\varepsilon.
+\tag{S.168}
+$$
+
+Proof. Equations (S.164)–(S.165) give the exact expression
+
+$$
+\begin{aligned}
+f_\beta(s,t)&=t-\varepsilon\mathcal F,\\
+\mathcal F&=\left(u-\frac{\varepsilon}{2\beta}\right)
+\left[\frac1{u(1+u)-\varepsilon}
++\frac{t}{s(2at+C_0)}\right].
+\end{aligned}
+\tag{S.169}
+$$
+
+The prefactor is positive because $\Delta>0$. The first denominator equals $2as+C_0>0$. At fixed $s,u$, the derivative of the second summand in brackets with respect to $t$ is $C_0/[s(2at+C_0)^2]>0$. Replacing $t$ by its upper bound $1-s=d+\varepsilon$ is therefore an upper bound for $\mathcal F$.
+
+Normalize only at $\beta>0$, so $u<1$, and put
+
+$$
+\begin{gathered}
+\xi=\frac{\varepsilon}{1-u}\in(0,1),\qquad p=u(1+u),\qquad e=1-u,\\
+A=p-e\xi,\qquad
+B=(1+u-2e\xi)(2u+1)\bigl(u+(2u-1)\xi\bigr),\qquad
+C=2p-\xi.
+\tag{S.170}
+\end{gathered}
+$$
+
+All three are strictly positive on the larger closed rectangle $h\leq u\leq1$, $0\leq\xi\leq1$. In fact $A\geq u^2+2u-1>0$, the three factors of $B$ are respectively at least $3u-1>0$, $2u+1>0$ and $u>0$, and $C\geq2u>0$. Substitution of $s=T-(1-u)\xi$, $\beta=(1-u)(1+u)$ in the upper replacement gives
+
+$$
+\begin{aligned}
+\mathcal F&\leq\widehat F(u,\xi)
+=\frac{C}{2(1+u)}\left(\frac1A+\frac{1+2\xi}{B}\right),\\
+A_u-\widehat F(u,\xi)
+&=\frac{\mathscr D_u(\xi)}{2(1+u)AB},\\
+\mathscr D_u(\xi)&=(1+3u)AB-C\bigl[B+A(1+2\xi)\bigr].
+\end{aligned}
+\tag{S.171}
+$$
+
+Every denominator cleared here is positive. The numerator is a cubic in $\xi$, with the complete exact Bernstein expansion
+
+$$
+\begin{aligned}
+\mathscr D_u(\xi)
+&=\sum_{j=0}^3 b_j(u)\binom3j\xi^j(1-\xi)^{3-j},\\
+b_0&=(6u^2+u-3)p^2,\qquad
+b_1=\frac p3\pi_1(u),\qquad
+b_2=\frac13\pi_2(u),\qquad b_3=\pi_3(u),\\
+\pi_1(u)&=42u^4+25u^3-22u^2-17u+4,\\
+\pi_2(u)&=90u^6+111u^5-49u^4-70u^3-6u^2+15u-1,\\
+\pi_3(u)&=54u^6+81u^5-87u^4-26u^3+14u^2+9u-3.
+\end{aligned}
+\tag{S.172}
+$$
+
+The identity follows by expanding (S.171) in powers of $\xi$; the four power coefficients are $b_0$, $3(b_1-b_0)$, $3(b_0-2b_1+b_2)$ and $-b_0+3b_1-3b_2+b_3$, respectively. The signs of all four Bernstein coefficients admit the following exact proof over the whole rectangle.
+
+For $b_0$, $6u^2+u-3\geq u>0$. For the first two polynomials,
+
+$$
+\begin{aligned}
+\pi_1(h)&=\frac{7-9h}{2}>0,\\
+\pi_1'(u)&=u(168u^2-44)+75u^2-17
+\geq40u+\frac{41}{2}>0,\\
+\pi_2(h)&=\frac{31h-20}{4}>0,\\
+\pi_2'(u)&=u^3(540u^2-196)+u^2(555u^2-210)+15-12u\\
+&\geq74u^3+\frac{135}{2}u^2+3>0.
+\end{aligned}
+\tag{S.173}
+$$
+
+For the remaining polynomial,
+
+$$
+\begin{aligned}
+\pi_3(h)&=\frac{65h-44}{4}>0,\qquad
+\pi_3'(h)=\frac{285-260h}{4}>0,\\
+\pi_3''(h)&=654h-89>0,\\
+\pi_3^{(3)}(u)&=u(6480u^2-2088)+4860u^2-156
+\geq1152u+2274>0.
+\end{aligned}
+\tag{S.174}
+$$
+
+The derivative lower bounds use only $u^2\geq1/2$ and $u\leq1$. Every endpoint sign follows from $h^2=1/2$ and the positive-root comparisons $7/10<h<3/4$: for example $7-9h>1/4$, $31h-20>17/10$, $65h-44>3/2$, $285-260h>90$, and $654h-89>1844/5$. Thus $\pi_1,\pi_2$ stay positive; successively $\pi_3''$, $\pi_3'$ and $\pi_3$ stay positive too. Since $p>0$, every $b_j$ is strictly positive on $[h,1]$.
+
+The Bernstein basis functions are nonnegative on $[0,1]$ and sum to one. Equation (S.172) therefore proves $\mathscr D_u(\xi)>0$ throughout the closed rectangle, including its edges. Equation (S.171) gives $\mathcal F\leq\widehat F<A_u$. Since $\varepsilon>0$, (S.169) proves (S.168). This is a universal polynomial sign proof, without sampled signs. The polynomial statement includes $u=1$; the normalization and every application containing $1/\beta$ or $1/(1-u)$ use $\beta>0$. $\square$
+

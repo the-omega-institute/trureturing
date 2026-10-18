@@ -1,0 +1,11 @@
+**Remark 12.3 (why the new membership step is necessary).** The constant
+rank-field replacement of Lemma 3.3 is an equation-only supplier, not a
+membership-preserving operation. The singleton regular language
+$\{\langle\alpha,\beta\rangle\}$ requires the normal code
+$F([0],[1])$. A constant field on that residual shape cannot represent
+this member. Lemma 11.3 keeps the two ranks jointly, and in general keeps
+all finite native states and separately located mismatch witnesses.
+Conversely $x=y\land x\ne y$, and
+$x,y\in\{\alpha\}\land x\ne y$, still have no joint solution.
+No independent witness per record or equality-by-state shortcut is used.
+

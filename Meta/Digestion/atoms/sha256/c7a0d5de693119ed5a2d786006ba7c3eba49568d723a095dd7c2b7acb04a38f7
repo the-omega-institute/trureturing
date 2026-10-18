@@ -1,0 +1,35 @@
+**Theorem 5.2 (exact terminal extraction).** Let
+$\rho=\mathbf1_{\{I_5\in\mathcal I\}}$, and define
+
+$$
+\eta_5=
+\begin{cases}
+E_{I_5}-D_{I_5}-1,&\rho=1,\\
+0,&\rho=0.
+\end{cases}
+$$
+
+Then $\eta_5\ge0$, and on every graph of Assumption 1.1,
+
+$$
+m-G=R+\rho+\eta_5
+-\sum_{I\in\mathcal L_*\setminus\{I_5\}}(D_I-E_I).
+\tag{TS.20}
+$$
+
+Consequently the original comparison $m\ge G$ is equivalent to
+
+$$
+\sum_{I\in\mathcal L_*\setminus\{I_5\}}(D_I-E_I)
+\le R+\rho+\eta_5.
+\tag{TS.21}
+$$
+
+Proof. If present, $I_5$ belongs to $\mathcal L_*$ and Theorem 4.1
+gives its exact nonnegative excess $1+\eta_5$. Extract that actual summand
+from (TS.19). If absent, both new terms are zero and the original identity
+is unchanged. Rearranging proves the equivalence. A terminal span-four gap
+cannot coexist with $I_5$, since consecutive gaps cannot overlap; retaining
+$\tau$ in the formula therefore charges no second terminal margin.
+$\square$
+

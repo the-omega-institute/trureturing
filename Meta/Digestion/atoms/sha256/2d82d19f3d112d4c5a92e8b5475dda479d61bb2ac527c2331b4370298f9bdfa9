@@ -1,0 +1,24 @@
+**Definition 1.2 (Entire exact-real edge-emission domain).** For each finite $N\ge1$, $\Theta_N$ consists exactly of the triples $\theta=(\lambda,M_0,M_1)$ satisfying
+
+$$
+\begin{gathered}
+\lambda\ge0,\quad\lambda\mathbf1=1,\quad M_0,M_1\ge0,\qquad
+A=M_0+M_1,\quad A\mathbf1=\mathbf1,\quad\lambda A=\lambda,\\
+\lambda M_1^2\mathbf1=0.
+\end{gathered}
+\tag{1.3}
+$$
+
+Here $\lambda$ is a row, $M_0,M_1$ are $N\times N$ matrices with arbitrary exact-real entries, and $\mathbf1$ is the all-one column. Structural zeros, zero stationary masses, reducibility, periodicity and nonminimal representations are allowed. The final condition is scalar stationary no11 legality; it does not impose entrywise $M_1^2=0$ on the entire matrix.
+
+Write $[w]_a$ for the cylinder beginning at coordinate $a$, $[w]=[w]_1$, $M_w=M_{w_1}\cdots M_{w_n}$ and $M_\varepsilon=I$. The actual stationary joint law is
+
+$$
+\begin{aligned}
+&J_\theta(H_a=h_a,\ldots,H_{b+1}=h_{b+1},X_a=x_a,\ldots,X_b=x_b)\\
+&\hspace{20mm}=\lambda_{h_a}\prod_{i=a}^bM_{x_i}(h_i,h_{i+1}),\qquad
+P_\theta([w]_a)=\lambda M_w\mathbf1.
+\end{aligned}
+\tag{1.4}
+$$
+

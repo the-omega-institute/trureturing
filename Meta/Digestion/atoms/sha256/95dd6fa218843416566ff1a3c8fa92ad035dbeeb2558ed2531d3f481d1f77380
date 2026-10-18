@@ -1,0 +1,38 @@
+### 命题 445.1（高阶库存给出 Fibonacci rank 分整除）
+
+令 $t\ge243$，$B=t+t^{4/5}$，并假设 $U=F_m>0$ 满足严格库存律。若 $q$ 为素数、
+$k\ge2$ 且
+
+$$
+t<q^k\le B,
+$$
+
+则
+
+$$
+q^k\mid U,
+\qquad q\mid F_m,
+\qquad z(q)\mid m.
+\tag{445.1}
+$$
+
+若 $q$ 为素数且
+
+$$
+t<q\le B,
+$$
+
+则
+
+$$
+q\nmid F_m,
+\qquad z(q)\nmid m.
+\tag{445.2}
+$$
+
+**证明。** 第一组结论直接取严格库存定理的高阶分支；由 $q^k\mid U=F_m$
+得到 $q\mid F_m$，再用 Fibonacci 入口等价得到 $z(q)\mid m$。第二组由库存定理的
+首层分支给 $U$ 在 $q$ 处的赋值为零，因此 $q\nmid U=F_m$，再用同一入口等价的逆向得到
+$z(q)\nmid m$。这里的论证只运输同一个 $U$；没有把不同候选整数的局部极值拼在一起。
+$\square$
+

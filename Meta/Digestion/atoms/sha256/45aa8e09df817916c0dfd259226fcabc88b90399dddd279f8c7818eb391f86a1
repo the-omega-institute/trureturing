@@ -1,0 +1,14 @@
+### 锚点 36.1（量子 inflation）
+
+Smith、Wolfe 和 Spekkens 的 *Fully quantum inflation: quantum marginal problem constraints in the service of causal inference*（arXiv:2501.12320）把 inflation 方法推广到量子边缘问题，用量子边缘约束检验给定多方量子态是否兼容指定的量子因果结构，并专门讨论了 triangle scenario。
+
+它支持本卷的类型分离：
+
+\[
+\text{经典 triangle-local 分布}
+\subsetneq
+\text{量子 triangle-network 输出}.
+\]
+
+相应的量子 inflation 证书依赖定义 30.1--30.2 的有限源状态、局部 CPTP 映射以及复制网络的量子边缘约束。后者及其证书在此尚未给出，因此不能从有限 CPTP 定义直接推出量子三角兼容性判定。
+

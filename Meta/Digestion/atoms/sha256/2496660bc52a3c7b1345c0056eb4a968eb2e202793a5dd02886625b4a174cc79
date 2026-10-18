@@ -1,0 +1,26 @@
+#### 17.1.1 Mosco 型桥接的标准记账
+
+令每一层图场空间经过线性嵌入进入共同 Hilbert 空间 \(\mathcal H\)，记嵌入后的能量为
+
+\[
+\mathcal Q_j:\mathcal H\to(-\infty,+\infty].
+\]
+
+称 \(\mathcal Q_j\) Mosco 收敛到 \(\mathcal Q\)，如果满足：
+
+1. 弱下极限条件。若 \(u_j\rightharpoonup u\) 弱收敛，则
+   \[
+   \mathcal Q(u)\leq \liminf_{j\to\infty}\mathcal Q_j(u_j).
+   \]
+
+2. 强恢复条件。对每个 \(u\in\mathcal H\)，存在 \(u_j\to u\) 强收敛，使
+   \[
+   \limsup_{j\to\infty}\mathcal Q_j(u_j)\leq \mathcal Q(u).
+   \]
+
+闭、非负二次型还必须满足 Markov 收缩性质，才能称为 Dirichlet 形式：对 \(C(t)=\min(1,\max(0,t))\)，要求
+\[
+\mathcal Q(C\circ u)\leq\mathcal Q(u).
+\]
+因此该桥需要同时验证极限定义域在 \(\mathcal H=L^2(X,\mu)\) 中稠密，以及 Markov 性在选定嵌入和收敛下传递。Mosco 的两条条件本身不要求等度量紧性；紧性用于从序列抽取极限或进一步证明离散谱收敛。有限层逆极限本身不提供这些分析条件。
+

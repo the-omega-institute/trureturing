@@ -1,0 +1,300 @@
+## 62. 有限整数参考实现
+
+以下完整代码保存为 `reference.py`，仅使用 Python 整数和标准库 `fractions.Fraction`。代码不调用未知源；配置函数只校验其有限数值关系，传感误差及真实来源证书按第49、59节的供方合同承担。`stable_query` 也承担逐实例截尾配置；`plateau_query` 对多项式库与加权库使用同一相位协议。`rational_kernel` 只用于准确有限有理回复；`named_query` 的回调只属于另供的无限信息名字扩展。返回的三整数和公共分数位数必须按第60节支付保留、缓冲及实际发射位长。
+
+```python
+"""Finite-word arithmetic reference. No source calls are made by this module."""
+from fractions import Fraction as Q
+
+def isqrt(n):
+    assert n >= 0
+    if n < 2:
+        return n
+    lo, hi = 0, 1 << ((n.bit_length()+1)//2)
+    while lo+1 < hi:
+        mid = (lo+hi)//2
+        if mid*mid <= n:
+            lo = mid
+        else:
+            hi = mid
+    return lo
+
+def add(x, y):
+    b = max(x[1], y[1])
+    return ((x[0] << (b-x[1])) + (y[0] << (b-y[1])), b)
+
+def neg(x):
+    return (-x[0], x[1])
+
+def mul(x, y):
+    return (x[0]*y[0], x[1]+y[1])
+
+def power(x, n):
+    assert n >= 0
+    z = (1, 0)
+    while n:
+        if n & 1:
+            z = mul(z, x)
+        n >>= 1
+        if n:
+            x = mul(x, x)
+    return z
+
+def dot(x, y):
+    z = (0, 0)
+    for a, b in zip(x, y):
+        z = add(z, mul(a, b))
+    return z
+
+def cross(x, y):
+    return tuple(add(mul(x[i], y[j]), neg(mul(x[j], y[i])))
+                 for i, j in ((1,2), (2,0), (0,1)))
+
+def scale(c, x):
+    return tuple(mul(c, a) for a in x)
+
+def anchors(nums, b):
+    assert len(nums) == 9 and b >= 0
+    y = tuple(tuple((nums[3*i+k], b) for k in range(3)) for i in range(3))
+    w = cross(y[2], y[1])
+    d = dot(y[0], w)[0]
+    s = (d > 0) - (d < 0)
+    return y[1], y[2], scale((s, 0), w)
+
+def fib(n):
+    assert n >= 0
+    a, b = 0, 1
+    for _ in range(n):
+        a, b = b, a+b
+    return a
+
+def kernel(nums, b, j):
+    assert j >= 3
+    y1, y2, z = anchors(nums, b)
+    u, v = dot(y1,y1), dot(y2,y2)
+    a, c = fib(j-2), fib(j-1)
+    phase = j % 3
+    if phase == 1:
+        m, n, anchor = (a-1)//2, c//2, y1
+        assert a % 2 == 1 and c % 2 == 0
+    elif phase == 2:
+        m, n, anchor = a//2, (c-1)//2, y2
+        assert a % 2 == 0 and c % 2 == 1
+    else:
+        m, n, anchor = (a-1)//2, (c-1)//2, z
+        assert a % 2 == 1 and c % 2 == 1
+    return scale(mul(power(u,m),power(v,n)), anchor)
+
+def round_num(x, p):
+    """Nearest p-fractional-bit word; exact ties go away from zero."""
+    n, b = x
+    if b <= p:
+        return n << (p-b)
+    d = 1 << (b-p)
+    r = (2*abs(n)+d)//(2*d)
+    return r if n >= 0 else -r
+
+def round_vec(x, p):
+    return tuple(round_num(a,p) for a in x)
+
+def parse(bits, cap):
+    """One canonical binary token, ended by iterator exhaustion; no query buffer."""
+    assert cap >= 3
+    v, phase, seen = 0, 0, False
+    for digit in bits:
+        if digit not in ('0','1') or (not seen and digit != '1'):
+            raise ValueError('invalid binary query')
+        seen = True
+        d = int(digit)
+        v = min(cap, 2*v+d)
+        phase = (2*phase+d) % 3
+    if not seen or v < 3:
+        raise ValueError('future query must be at least 3')
+    return v, phase
+
+def output_precision(budget):
+    assert budget > 0
+    p, h = 0, Q(1)
+    while h > budget:
+        p, h = p+1, h/2
+    return p
+
+def producer_precision(e_star):
+    # A paid finite sensor approximation must separately guarantee sigma <= e_star/2.
+    return output_precision(e_star/2)
+
+def setup_stable(hbar, rho, E, conditioned_c=None):
+    hbar, rho, E = Q(hbar), Q(rho), Q(E)
+    assert hbar >= 1 and 0 <= rho < 1 and E > 0
+    R = (1+rho)/2
+    P = 3*hbar*hbar + 3*hbar + 1
+    Cs = 2*hbar+1 + 2*hbar*P
+    if conditioned_c is None:
+        K = Cs + R/(1-R)**2
+        e_star = min(Q(1),(1-rho)/2,(E/(2*K))**2)
+    else:
+        c = Q(conditioned_c)
+        assert 0 < c <= 1
+        C = 4*(hbar*hbar+2*hbar+1)/c
+        K = C + R/(1-R)**2
+        e_star = min(Q(1),(1-rho)/2,E/(2*K))
+    T, rpower = 0, Q(1)
+    while rpower > E/2:
+        T, rpower = T+1, rpower*R
+    J, a, c = 3, 1, 2
+    while c < T:  # c = F_J
+        J, a, c = J+1, c, a+c
+    return {'J':J, 'T':T, 'p':output_precision(E/2),
+            'b':producer_precision(e_star), 'e_star':e_star, 'K':K, 'R':R}
+
+def stable_query(nums, b, cfg, bits):
+    j, _ = parse(bits, cfg['J'])
+    if j == cfg['J']:
+        return (0,0,0), cfg['p']
+    return round_vec(kernel(nums,b,j),cfg['p']), cfg['p']
+
+def setup_plateau(nums, b, tau):
+    tau = Q(tau)
+    assert tau > 0
+    e_star = min(Q(1),(tau/31)**2)
+    p = output_precision(tau/2)
+    y1, y2, z = anchors(nums,b)
+    u, v = dot(y1,y1), dot(y2,y2)
+    bank = (scale((1,1),z), scale(mul((1,1),v),y1),
+            scale(mul(mul((1,1),u),v),y2))
+    return {'words':tuple(round_vec(x,p) for x in bank), 'p':p,
+            'e_star':e_star, 'required_b':producer_precision(e_star)}
+
+def plateau_query(cfg, bits):
+    _, phase = parse(bits, 3)
+    return cfg['words'][phase], cfg['p']
+
+def norm_interval(vector, p):
+    """Exact dyadic floor norm and upper enclosure of width 2**(-p)."""
+    sq = dot(vector,vector)
+    n, b = sq
+    assert n >= 0 and 2*p >= b
+    t = isqrt(n << (2*p-b))
+    return (t,p), (t+1,p)
+
+def setup_weighted(nums, b, norm_p, out_p):
+    assert norm_p >= b and out_p >= 0
+    y1, y2, z = anchors(nums,b)
+    u = norm_interval(y1,norm_p)[0]
+    v = norm_interval(y2,norm_p)[0]
+    # Floor norms are nonnegative; clipping to 1 is an exact integer comparison.
+    u = (min(u[0],1 << norm_p),norm_p)
+    v = (min(v[0],1 << norm_p),norm_p)
+    bank = (scale((1,1),z), scale(mul((1,1),v),y1),
+            scale(mul((1,1),u),y2))
+    return {'words':tuple(round_vec(x,out_p) for x in bank),'p':out_p,
+            'norm_p':norm_p}
+
+def setup_weighted_budget(nums, b, tau, conditioned_c=None):
+    tau = Q(tau)
+    assert tau > 0
+    if conditioned_c is None:
+        e_star = min(Q(1),tau/4,(tau/9)**2)
+    else:
+        c = Q(conditioned_c)
+        assert 0 < c <= 1
+        e_star = min(Q(1),tau/4,c*tau/16)
+    cfg = setup_weighted(nums,b,max(b,output_precision(tau/4)),
+                         output_precision(tau/2))
+    cfg.update({'e_star':e_star,'required_b':producer_precision(e_star)})
+    return cfg
+
+def verify_conditioned_certificate(L_upper, d_lower, c_lower):
+    L,d,c = Q(L_upper),Q(d_lower),Q(c_lower)
+    # Arithmetic validation only; physical leaf/Gram promises are supplier owned.
+    return L > 0 and d > 0 and 0 < c <= 1 and c*c*L**4 <= d
+
+def verify_zero_certificate(L_upper, d_lower, H_upper):
+    L,d,H = Q(L_upper),Q(d_lower),Q(H_upper)
+    # Sufficient rational certificate, not an arbitrary-real regime classifier.
+    return L > 1 and d >= L and H > 0 and H*H < d
+
+def zero_query(bits):
+    # Invoke only after a valid paid all-zero regime/source-class certificate.
+    parse(bits,3)
+    return (0,0,0),0
+
+def setup_instance(kappa, E):
+    kappa, E = Q(kappa), Q(E)
+    assert 0 <= kappa < 1 and E > 0
+    T, rpower = 0, Q(1)
+    while rpower > E/2:
+        T, rpower = T+1, rpower*kappa
+    J = 3
+    while fib(J-2) < T:
+        J += 1
+    N = fib(J)
+    B = Q(2)**(N+1)*(9+N)
+    e_star = min(Q(1),(E/(2*B))**2)
+    return {'J':J,'p':output_precision(E/2),'b':producer_precision(e_star),
+            'e_star':e_star,'N':N}
+
+def finite_guard_round(raw_integer, b):
+    # raw_integer is the paid (b+4)-fractional-bit coordinate approximation.
+    return round_num((raw_integer,b+4),b)
+
+def parse_unbounded(bits):
+    j, seen = 0, False
+    for digit in bits:
+        if digit not in ('0','1') or (not seen and digit != '1'):
+            raise ValueError('invalid binary query')
+        seen = True
+        j = 2*j+int(digit)
+    if not seen or j < 3:
+        raise ValueError('future query must be at least 3')
+    return j
+
+def rational_kernel(replies, j):
+    # Same squared-norm polynomial on the EXACT finite rational presentation class.
+    assert len(replies) == 3 and all(len(v) == 3 for v in replies) and j >= 3
+    y0,y1,y2 = (tuple(Q(c) for c in v) for v in replies)
+    def dq(x,y):
+        return sum((a*b for a,b in zip(x,y)),Q(0))
+    w = tuple(y2[i]*y1[k]-y2[k]*y1[i] for i,k in ((1,2),(2,0),(0,1)))
+    d = dq(y0,w)
+    s = (d > 0)-(d < 0)
+    z = tuple(s*c for c in w)
+    u,v = dq(y1,y1),dq(y2,y2)
+    a,c = fib(j-2),fib(j-1)
+    if j % 3 == 1:
+        m,n,anchor = (a-1)//2,c//2,y1
+    elif j % 3 == 2:
+        m,n,anchor = a//2,(c-1)//2,y2
+    else:
+        m,n,anchor = (a-1)//2,(c-1)//2,z
+    coefficient = u**m*v**n
+    return tuple(coefficient*x for x in anchor)
+
+def setup_name_query(hbar, j, E):
+    # ONLY the separately paid reusable Cauchy-name extension.
+    hbar,E = Q(hbar),Q(E)
+    assert hbar >= 1 and j >= 3 and E > 0
+    R = hbar+1
+    P = 3*hbar*hbar+3*hbar+1
+    Cs = 2*hbar+1+2*hbar*P
+    N = fib(j)
+    B = R**(N+1)*(Cs+N)
+    e_star = min(Q(1),(E/(2*B))**2)
+    return {'j':j,'b':output_precision(e_star),'p':output_precision(E/2),
+            'e_star':e_star,'N':N,'B':B}
+
+def named_query(read_name, bits, E):
+    # read_name(b) is a CHARGED finite access to the three already supplied names.
+    # Its nine integers certify simultaneous vector error <= 2**(-b).
+    # This callback does not exist in the original stopped finite-record interface.
+    j = parse_unbounded(bits)
+    coarse = read_name(0)
+    assert len(coarse) == 9
+    hbar = max(1,max(sum(abs(coarse[3*i+k]) for k in range(3))+1
+                     for i in range(3)))
+    cfg = setup_name_query(hbar,j,E)
+    nums = read_name(cfg['b'])
+    assert len(nums) == 9
+    return round_vec(kernel(nums,cfg['b'],j),cfg['p']),cfg['p']
+```
+

@@ -1,0 +1,31 @@
+**Definition 333.1 and hypotheses.** Let lower-case letters be shared coshes, with
+
+    c,d,v>1, m>1+c+d, 1<v<=m-2,
+    z>1+m+c, u>m,
+    (m-1)*(v-1)>=(c+d)^2.                         (333.1)
+
+Consider three distinct genuine paired owners with these precise roles:
+
+    tau=(Z,M,C,D,M,C),
+    rho=(W,V,D,C,V,D), W in {M,Z,U},
+    eta=(Z,V,D,U,V,D).                            (333.2)
+
+Denote W's value by r. Thus r is one of m,z,u. All four labels in each
+frame are distinct. Require all strict genuine inequalities:
+
+    Lt=(m+c)^2-(z-1)*(d-1)>0,
+    Jt=(z+1)*(d+1)-(m-c)^2>0,
+    Lr=(v+d)^2-(r-1)*(c-1)>0,
+    Jr=(r+1)*(c+1)-(v-d)^2>0,
+    Le=(v+d)^2-(z-1)*(u-1)>0,
+    Je=(z+1)*(u+1)-(v-d)^2>0.                    (333.3)
+
+Retain the following actual partial M and V budgets:
+
+    2*beta_M(tau)<=pi,
+    2*beta_V(rho)+2*beta_V(eta)<=pi.              (333.4)
+
+Assume, for contradiction, the bad-eta condition
+
+    theta_Z(eta)+theta_U(eta)<=pi.               (333.5)
+

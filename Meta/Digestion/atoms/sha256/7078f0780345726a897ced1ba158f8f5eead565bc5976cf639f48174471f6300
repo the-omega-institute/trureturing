@@ -1,0 +1,46 @@
+**Proposition 2.1 (extraction from retained material).** On the actual image
+of $\mathcal R_H$, there is a finite mathematical extraction
+
+$$
+\mathcal E(W(h))=K(h)
+ =\bigl(\operatorname{code}(u),I(h),n(h)\bigr),
+\tag{SSA.1}
+$$
+
+where $I$ is the actual consumed post-acquisition input and $n$ is the
+absolute original primitive ordinal. Together with AIF Theorem 4.4, this
+makes both $W(h)$ and $X(h)$ determine $h$. The extraction does not constitute
+a callable handle or an authorized all-owner scan.
+
+Proof. The acquisition is a no-update run on the actual installed $u$.
+Its truthful addressed preorder TagRead replies are in authentic completed
+producer rows before $a(u)$; those rows and their origin chain are immutable
+under Literal Journal Adapter (LJA), Definitions 5.1–5.2 and Theorem 5.3.
+They survive later overwrites of the current-source block. Reading the
+acquisition segment in its actual order and applying the supplied preorder
+decoder reconstructs $u$. The materialized lossless delivered seed is
+another witness while retained; persistence of a temporary output is not
+needed in place of the immutable acquisition rows. The initial acquisition
+segment is identified by its original phase/template and fence chain, not
+by a chosen later source value. Its read projection is the production trace
+of `NativeFullSourceProducer.native_source_producer`. No subtree used as a
+parameter in that theorem's private proof invariant is runtime input.
+
+AIF Definition 2.3 retains earlier consumed frame blocks and their actual
+chronological descriptors. Their written concatenation is $L(h)$. The
+current input latch contributes a singleton only in its occupied IN-to-WR
+phase; otherwise it contributes the empty word. Thus a stale physical
+latch outside that phase is ignored. AIF Theorem 4.2 gives
+$I(h)=L(h)\mathbin{+\!+}Q_{\mathrm{in}}(h)$ with
+$|Q_{\mathrm{in}}(h)|\le1$. References must be followed to retained
+payloads; their printed names alone do not perform this extraction.
+
+Finally count the original meter's receipt cells. PR57.D1 constructs exactly
+one receipt per primitive from its irreducible entrance, so this count is
+$n(h)$, including boot and acquisition. This is a finite inspection, not a
+free stored integer. These three operations give SSA.1. AIF Theorem 4.4
+then recovers the full actual prefix and endpoint with the fixed canonical
+installation and actual occurrence names. A complete $X$ contains $W$, so
+the same argument applies to $X$. No physical source query, private-latch
+read by a new actor, or receipt-index acquisition has been introduced. ∎
+

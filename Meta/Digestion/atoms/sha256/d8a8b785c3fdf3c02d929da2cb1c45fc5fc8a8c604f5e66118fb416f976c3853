@@ -1,0 +1,127 @@
+**Theorem 103.2 (The hard-three preselected attainer).** The following
+integer blocks, with $D=1425$, define an everywhere-finite $N$ with
+$K=3$, $M\le7$ and $e_a(N)=248/1425$ for every base sequence.
+
+| Schedule $S$ | Block $w$ | 000 | 001 | 010 | 011 | 100 | 101 | 110 | 111 |
+|---|---:|---|---|---|---|---|---|---|---|
+| 1,2,3 | 644 | (0:21,1:623) | 1 | (0:102,1:542) | (0:81,1:563) | (0:102,2:542) | 2 | 3 | (0:447,4:105,6:92) |
+| 1,2,4 | 145 | 1 | 1 | 1 | 1 | 2 | 2 | 4 | 0 |
+| 1,2,5 | 77 | 1 | 0 | 1 | 1 | (0:15,2:62) | 2 | 5 | 0 |
+| 1,2,6 | 4 | 1 | 0 | 1 | 1 | 2 | 2 | 6 | 0 |
+| 1,3,4 | 113 | 1 | (0:33,1:80) | (0:21,1:92) | 1 | (0:54,3:59) | 3 | 4 | 0 |
+| 1,3,5 | 11 | 1 | 1 | 1 | 1 | 3 | 3 | 5 | 0 |
+| 1,4,5 | 33 | 0 | 0 | 1 | 1 | (0:22,4:11) | 4 | 5 | 0 |
+| 2,3,4 | 113 | (0:7,2:106) | 2 | 2 | (0:102,2:11) | 3 | 3 | 4 | 0 |
+| 2,3,5 | 11 | 2 | 2 | 0 | 2 | 3 | 3 | 5 | 0 |
+| 2,4,5 | 33 | (0:11,2:22) | (0:11,2:22) | 2 | 0 | (0:22,4:11) | 4 | 5 | 0 |
+| 3,4,5 | 62 | 3 | (0:55,3:7) | 0 | 0 | 4 | (0:44,4:18) | 5 | (0:11,6:51) |
+| 3,4,6 | 47 | 3 | 3 | 0 | 0 | 4 | 4 | 6 | 0 |
+| 3,5,6 | 4 | 0 | 0 | 0 | 0 | 5 | 5 | 6 | 0 |
+| 4,5,6 | 91 | 0 | 0 | 0 | 0 | 5 | 5 | 6 | 0 |
+| 5,6,7 | 37 | 0 | 0 | 0 | 0 | (0:4,6:33) | (0:4,6:33) | 7 | 0 |
+
+**Proof.** The block sizes sum to $1425$. The cell definitions assign
+every local position once, so (103.1) gives nonnegative probabilities
+summing to one on every word. Actual requests are the three primes
+$p_{i_1},p_{i_2},p_{i_3}$ in that row. After their replies the indicated
+original tape is handed off. All records and outputs are measurable
+finite seed subsets, and the rule uses no information about $x$ other
+than these replies. In particular the cells labeled $4$ or $6$ on
+schedule $1,2,3$ are fixed tape choices, not uncounted observations.
+
+Here is a complete arithmetic reduction of (103.1). For the first
+$112$ words, let $h=b_1b_2b_3b_4$ be one of the following fourteen
+prefixes, let $n$ be its first zero, and put $u=b_5,v=b_6,z=b_7$.
+The two middle columns are the exact integer polynomials
+$F_h=Dp_b(0)$ and $G_h=Dp_b(n)$. The final column gives
+$(\min F_h,\min G_h,\min(F_h+G_h))$ over all eight $(u,v,z)$.
+
+| Prefix $h$ | $F_h$ | $G_h$ | Three minima |
+|---|---|---|---|
+| 0000 | $204+4v+99u-4uv+37uvz$ | $973-77u-4v$ | 204,892,1177 |
+| 0001 | $204+4v+77u+87uv+37uvz$ | $973-77u-4v$ | 204,892,1177 |
+| 0010 | $204+4v+77u+37uvz$ | $973-77u-4v$ | 204,892,1177 |
+| 0011 | $150+51v+77u+91uv+37uvz$ | $1027-77u-4v$ | 150,946,1177 |
+| 0100 | $289-4uv+37uvz$ | $892$ | 285,892,1177 |
+| 0101 | $285+87uv+37uvz$ | $892$ | 285,892,1177 |
+| 0110 | $285+37uvz$ | $892$ | 285,892,1177 |
+| 0111 | $231+47v+22u+91uv+37uvz$ | $946$ | 231,946,1177 |
+| 1000 | $343-15u-4uv+37uvz$ | $892+15u$ | 324,892,1231 |
+| 1001 | $267+18u+87uv+37uvz$ | $910-18u$ | 267,892,1177 |
+| 1010 | $187-26u+37uvz$ | $990+26u$ | 161,990,1177 |
+| 1011 | $278+47v+29u+91uv+37uvz$ | $899-7u$ | 278,892,1177 |
+| 1100 | $230+4v+55u-4uv+37uvz$ | $947-55u$ | 230,892,1177 |
+| 1101 | $295+4v+110u+87uv+37uvz$ | $892$ | 295,892,1187 |
+
+These identities follow by selecting the eight terminal columns in
+(103.1), with the specified four-bit prefix. Each polynomial has the
+form $c+\alpha u+\beta v+\gamma uv+37uvz$; its minimum is
+$\min\{c,c+\alpha,c+\beta,c+\alpha+\beta+\gamma\}$, since the
+coefficient of $uvz$ is nonnegative. The same calculation applies to
+$F_h+G_h$, and $G_h$ is affine in $u,v$. Thus the displayed minima
+are exact identities on all eight suffixes, including every
+multiple-zero suffix. For example at $h=0000$,
+$F_h+G_h=1177+22u-4uv+37uvz\ge1177$, while at $h=1000$ it is
+$1235-4uv+37uvz\ge1231$.
+
+The remaining first-zero classes have the following exact pairs:
+
+$$
+\begin{array}{c|c|c}
+n&Dp_b(0)&Dp_b(n)\\\hline
+4&619+66b_5+4b_6+37b_5b_6b_7&607\\
+5&855+51b_6&322\\
+6&998&322\\
+7&1140&37
+\end{array}
+\tag{103.2}
+$$
+
+There are respectively $8,4,2,1$ words in these classes. Combining
+these identities gives the following three minima over each entire
+class $1^{n-1}0\{0,1\}^{7-n}$; each minimum is taken separately.
+
+| First zero $n$ | Minimum $Dp_b(0)$ | Minimum $Dp_b(n)$ | Minimum $D(p_b(0)+p_b(n))$ |
+|---|---:|---:|---:|
+| 1 | 150 | 892 | 1177 |
+| 2 | 161 | 892 | 1177 |
+| 3 | 230 | 892 | 1177 |
+| 4 | 619 | 607 | 1226 |
+| 5 | 855 | 322 | 1177 |
+| 6 | 998 | 322 | 1320 |
+| 7 | 1140 | 37 | 1177 |
+
+At cap $248/D$, the required base and correct-mark numerators in
+(84.1) are respectively
+
+$$
+\begin{aligned}
+D(1-A_n-\varepsilon_0)&=(37,37,37,322,607,607,892)_n,\\
+D(A_n-\varepsilon_0)&=(892,892,892,607,322,322,37)_n,\\
+D(1-\varepsilon_0)&=1177.
+\end{aligned}
+\tag{103.3}
+$$
+
+All three inequalities hold by the tables. In particular the pair
+inequality is checked independently; it does not follow by adding
+singleton minima. The supplied full TV identity (84.2) proves the
+cap on all $127$ words with a zero.
+
+On $1111111$, (103.1) gives
+
+$$
+D(p_b(0),\ldots,p_b(7))=(1177,0,0,0,105,0,143,0).
+\tag{103.4}
+$$
+
+At every actual $x$ with $n(x)>7$, these are the acquired low replies,
+and no $\theta_{n(x)}$ is emitted. Formula (83.9) therefore gives
+$\operatorname{TV}(\nu_b,\lambda_x^a)=\max\{248/D,a_{n(x)}\}
+=248/D$. This covers every actual tail source; it uses no infinite
+all-positive source. Finally, at the realizable word $1111110$,
+$p_b(0)=1140/D=1-A_7$ and $p_b(7)=37/D$. Its correct deficit is
+$(285-37)/D=248/D$. Occupation by Boundaries, Theorem 35.2 supplies
+an actual source realizing this equality. Hence $e_a(N)=248/D$.
+$\square$
+

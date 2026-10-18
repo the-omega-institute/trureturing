@@ -1,0 +1,27 @@
+**Convention 28.1 (reused content and the new relation).** The quantitative
+link (CG.206), the resource bound (CG.223) and penalties (CG.225) are
+`repo-derived` ordinary results. They reuse the exact point, ranks,
+strict margins and nonsingular Jacobian of §§13–16, the equality
+identification in §17, and the homogeneous witness and every-input
+estimate in §§22–24. Those results are not reclassified as new content.
+The added step is a controlled distance from near-optimal original
+performance to the complementary live face and then to its unique
+credited coefficients. No unchanged minimax solve, root isolation or
+certificate recertification enters this deduction.
+
+The existing `TraceClassCompression.norm_sub_compress_le` supplies (CG.211)
+after trace rescaling and an adapted finite Hilbert basis. Its actual
+private helpers `compress_norm_le`, `sqrt_column` and
+`finiteSpan_projection_basis` address positive compression and its basis
+calculation; they are not assumed absent because of visibility.
+`TraceClass.norm_tracePairingLinearMap_apply_le` supplies the
+operator/trace-norm pairing. `FiniteKrausRepresentation` supplies the
+general finite Choi/Kraus mechanism, while `CoherentFlagPort` and its
+private normalization and scalar-component helpers concern actual
+flagged ports with exact probe-preservation hypotheses. Those latter
+hypotheses do not assert the near-optimal objective here. The pinned
+mathlib finite-dimensional injective-map norm principle is sufficient
+for the positive modulus in Definition 26.2; it does not assert
+source-specific error stability. No new generic interface or duplicate
+Lean declaration is needed for these ordinary applications.
+

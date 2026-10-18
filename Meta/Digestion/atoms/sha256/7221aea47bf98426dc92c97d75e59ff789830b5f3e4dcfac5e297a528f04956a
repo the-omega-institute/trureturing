@@ -1,0 +1,83 @@
+**Theorem 14.1 (One seed, counted requests and every actual continuation).**
+The finite law $K$ has original realizations in both classes satisfying
+(10.2), with actual error attainment.
+
+Proof. Partition one source-independent uniform seed in $[0,1)$
+into half-open intervals of the complete-table weights in 11.2.
+Omit zero intervals. Equivalently use the common-cell partition
+(11.1) before splitting any row. Before replies this single seed
+fixes the whole schedule and every counterfactual label.
+
+On a selected pair $O(i,j;f,m,z)$, the stopped rule executes
+its preselected increasing schedule until the first queried zero
+or exhaustion and emits the corresponding actual mark $\theta_\ell$,
+where $\ell$ is the selected output label.
+The constant-zero branch emits $\theta_0$ with no requests.
+For clarity, an output label need not be a queried address.
+The counted $N$ realization requests both actual addresses on
+that same source and seed, even if the first reply is zero.
+It emits $f$ on $00$ or $01$, $m$ on $10$, and $z$ on
+$11$. Every acquired reply, including an ignored second reply,
+counts as an actual request. Both rules make at most two actual
+requests, have zero advice and finite measurable handoff for every
+source and seed, and use the unchanged consumer.
+They have identical laws. This is a construction of these two rules,
+without converting an arbitrary competing $N$ law to $O$.
+
+Every actual first absence $n\le8$ gives a Boolean word covered
+by Theorem 13.1; all higher replies are ignored.
+For actual $n>8$, the finite eight-prefix is positive and no
+emitted mark is $\theta_n$. Put $r=1-K_+(0)=h$.
+Splitting the signed measure into the mark zero, mark $n$, and
+the other emitted marks gives the exact full-carrier identity
+
+$$
+\operatorname{TV}\left(
+ \sum_{j=0}^8K_+(j)\delta_{\theta_j},
+ (1-a_n)\delta_{\theta_0}+a_n\delta_{\theta_n}\right)
+ =\frac{|a_n-r|+a_n+r}{2}
+ =\max\{a_n,h\}.
+\tag{14.1}
+$$
+
+Actual $a_9$ is $5\tau+v$ and all $a_n$ for $n\ge10$
+are at most $5\tau\le h$. Therefore the uniform error is at most
+$\max\{h,5\tau+v\}$ for every allowed positive, nonincreasing,
+vanishing continuation, including $a_{10}=5\tau$, all later
+ties, nonsummable tails and arbitrarily slow decay.
+
+The bound is attained on actual sources. A fixed explicit source
+with first absence two is $(r,g)=(19,419)$, verified in 15.1.
+Its correct deficit in (13.1) is $h$ for every $\tau,u$.
+If $v\le22u/217$ this already attains the claimed maximum.
+If $v>22u/217$, an actual source with first absence nine
+attains $5\tau+v$ by (14.1).
+
+Recall the credited finite-pattern argument in full to justify this
+last actuality. Modulo a prime $p$, the invertible Fibonacci matrix
+$M=\left(\begin{smallmatrix}1&1\\1&0\end{smallmatrix}\right)$
+has
+$M^k=\left(\begin{smallmatrix}F_{k+1}&F_k\\F_k&F_{k-1}\end{smallmatrix}\right)$
+and is scalar exactly when $p\mid F_k$.
+Its projective class has finite order $z(p)\ge3$, since
+$F_1=F_2=1$, so $p\mid F_k$ iff $z(p)\mid k$.
+For a finite set of specified primes of product $D$, choose a
+prime index $r$ larger than all these orders, with
+$F_r\ge10(D+2)$. None of these orders divides $r$, so $F_r$
+is invertible modulo $D$. Prescribe $g=-F_r^{-1}\pmod p$
+at desired ones and $g=0\pmod p$ at desired zeros.
+CRT gives a residue modulo $D$. The actual interval
+$[\lceil F_r/10\rceil,\lfloor F_r/5\rfloor]$ has length at least
+$F_r/10-2\ge D$ and contains a representative.
+Every finite word, including $1^8 0$ and every multiple-zero
+word, is actual. Each actual positive integer $N(r,g)$ has finite
+prime support, hence finite first absence.
+
+Thus (14.1) attains the larger tail value when required.
+At $v=0$ the actual ninth amplitude remains $5\tau>0$;
+every actual later first absence has error exactly $h$.
+A positive eight-prefix is a finite reply pattern, not an infinite
+all-positive source. The acquisition obtains only its selected
+schedule, without observing the full prefix or $r,g,N,n$.
+This proves the exact original error (10.2). $\square$
+

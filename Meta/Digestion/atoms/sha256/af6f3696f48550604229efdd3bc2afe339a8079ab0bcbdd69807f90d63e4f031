@@ -1,0 +1,18 @@
+**Corollary 152.2 (Finite certificate completeness, with no supplied separator).**
+For each fixed $L\ge1$, failed containment $\Pi_{N,L}\not\subseteq\Pi_{O,L}$
+is equivalent to existence of the strict rational profile, rational full
+$N$ allocation and nonnegative integer full-row score with $\Delta>0$
+in Theorem 152.1.
+
+**Proof.** The forward implication is the theorem. Conversely such an
+allocation puts its parameter point in $\Pi_{N,L}$, and its strictly
+violated exact full $O$ support inequality excludes that point from
+$\Pi_{O,L}$. $\square$
+
+An actual refutation must still supply a concrete $L$, every rational
+head/cap coordinate, every mass and terminal entry of a complete feasible
+$N$ lift, the full indexed integer $y$, and its exact support $B$ and
+strict rational $\Delta$. None is asserted by the conditional proof.
+It yields no uniform encoding-size bound, efficient search, integer
+allocation, total-unimodularity result or first failing $L$.
+

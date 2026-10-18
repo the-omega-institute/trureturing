@@ -1,0 +1,76 @@
+**Definition 25.1 (attribution and limits of the native conclusions).**
+The source correspondence is N, Definitions 3.1 and 9.1, Theorems
+9.2–9.3 and Definition 10.1; O, Definitions 1.1–1.3; and G,
+Definition 4.1, at the fixed revision in Source convention 1.1.
+The whole-height guard is reused exactly, not replaced by an endpoint
+test. Brownian strong Markov, Gaussian densities, reflection and
+Borel–Cantelli are `literature-attested` suppliers used inside the
+native proofs. The finite-issuer obstruction with its interruption
+endpoints, its cemetery consequence and the two guarded lifetime
+constructions are `repo-derived` ordinary applications. No literature
+priority or new general strong Markov theorem is claimed.
+
+Lifshits–Setterqvist, *Energy of Taut Strings Accompanying Wiener
+Process*, [arXiv:1405.1651v1](https://arxiv.org/pdf/1405.1651v1), §4.2,
+interpolates between random knots using both endpoint values. A knot
+being a stopping time does not make that interpolation known at the
+previous knot. Its §5 instead studies an observation-dependent
+velocity $x'(t)=b(x(t)-W(t))$, a continuous feedback class. The
+numerical-profile assumption in Definition 20.2 is not a theorem
+excluding that class, and the scalar pursuit result does not supply
+native chronological tracking or exact native own death.
+
+Friz–Victoir, *Approximations of the Brownian rough path with
+applications to stochastic analysis*, Ann. IHP 41 (2005), 703–724,
+[primary text](https://www.numdam.org/item/AIHPB_2005__41_4_703_0.pdf),
+§5.1, Proposition 26 and Corollary 27 supply the enhanced polygonal
+approximation cited in §§10 and 19. A qualification is needed for
+using the literal displayed interpolation in Corollary 28, p. 718:
+with mesh $h=2^{-n}$ and $B_0=0$, that display is zero on $[0,h)$
+but has value $B_h$ at $h$. Thus it is not a continuous delayed
+polygonal path; its proof's description as a time-shift does not
+validate that literal display. None of the proofs in §§20–24 uses
+it. A continuous one-step delayed polygonal rule would instead be
+zero on $[0,h]$ and, for $j\ge1$ and $t\in[jh,(j+1)h]$, be
+
+$$
+B_{(j-1)h}+\frac{t-jh}{h}(B_{jh}-B_{(j-1)h}).
+\tag{25.1}
+$$
+
+The two cell endpoint values are $B_{(j-1)h}$ and $B_{jh}$; the
+next cell starts at the latter, and all its numerical data are
+known at $jh$. These elementary checks specify which continuous
+adapted interpolation is meant. Formula (25.1) alone makes no
+stopped-native enhancement, lifetime or tube assertion here.
+
+Friz–Oberhauser, *Non-standard approximations of the Itô-map*,
+[arXiv:0808.0337v1](https://arxiv.org/html/0808.0337v1), §1.2 explicitly
+distinguishes access to a Brownian path and its Lévy area from
+approximations using finitely many first-level observations. Its
+§2.1 Theorem 1 and §2.2.1 concern enhanced approximation and central
+perturbations. They do not supply the information-at-issuance premise
+or an exact native-death conclusion, and no general rough differential
+equation theorem is invoked in §§20–24.
+
+Theorem 18.1 and the attained offline cost powers in §19 retain their
+original information contract and are not contradicted by (21.1).
+The lower bounds in §§12–15 retain their stated approximation
+hypotheses, whether or not an approximating policy is causal. Neither
+the lifetime-only construction in §23 nor that in §24 satisfies those
+full tracking hypotheses. No conclusion here changes the known
+offline powers, proves optimal causal powers, or supplies a full
+native causal held tube or a $J_1$ approximation of the full killed
+state. Such questions require joint control/area estimates and their
+own original-clock cost analysis. General continuous feedback,
+other classes of accumulating issuances, optimal or expected costs
+of the lifetime-only boundary witness, and acquisition cost require
+separate analyses. Theorem 23.1 settles existence in its stated
+accumulating-issuance class; it does not classify continuous-feedback
+laws or other accumulation interfaces. The supplied comparison
+observations are not a physical
+source sensor or a cost-free physical implementation. Finally no
+statement selects $\lambda$, calibrates physical energy, or identifies
+the native ray dimension, bracket growth or volume exponent with
+three physical spatial directions.
+

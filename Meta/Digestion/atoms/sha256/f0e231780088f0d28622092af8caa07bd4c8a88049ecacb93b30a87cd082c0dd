@@ -1,0 +1,100 @@
+**Theorem 10.1 (Row-preserving finite representatives).** For every
+finite $m\ge1$ and either fixed endpoint $j$, there is a finite menu
+of deterministic-initialized actual installed controllers with at most
+$m$ rows, chosen independently of $p$ and $\nu$, with these properties.
+Every deterministic start in any table of at most $m$ rows has a menu
+representative with the same joint law of the actual $H_j$, output or
+nonreturn, finite-return indicator, and exact $N$, including $N=\infty$.
+The representation preserves all installed row identities, instruction
+types, halt labels and fixed successors; only the integer address
+literals may change.
+
+More strongly, for an arbitrarily seed-initialized table there is one
+representative table with the same rows and the same initialization
+map under the row identification, preserving the joint law with every
+measurable seed event. No hard read cap or return assumption is needed
+for these preservation assertions. They preserve neither literal address
+names nor numerical return times.
+
+Proof. Label a table's $n\le m$ installed rows by $1,\ldots,n$,
+keeping all rows, including unused, duplicate and null-path rows.
+There are finitely many choices of each row's read/halt type, each
+halt's four-state label, and each read's two successors. Fix such a
+combinatorial table. Its remaining infinite choices are the integer
+read literals $t_r$.
+
+Record the parity $\epsilon_r$ of each read row. For each phase
+$\phi$ introduce the finite slot set
+
+$$
+\mathcal I_\phi=\{*\}\cup
+\{(r,-),(r,+):r\in K_{\rm R},\ \epsilon_r=\phi\}.
+\tag{10.1}
+$$
+
+An actual address assignment gives these slots the spin indices
+
+$$
+\iota_\phi(*)=v_\phi,\quad
+\iota_\phi(r,-)=\frac{t_r-\phi}{2},\quad
+\iota_\phi(r,+)=\frac{t_r-\phi}{2}+1.
+\tag{10.2}
+$$
+
+Its signature consists of the labelled combinatorial table, all read
+parities and the two equivalence relations of equality of these actual
+indices, with each target slot distinguished. There are finitely many
+signatures: each slot set is finite and has finitely many partitions.
+Retain only signatures realized by one joint assignment of actual
+integer literals in both phases with the actual fixed $v_0,v_1$.
+For each retained signature choose one such joint realization.
+This is a finite selection from nonempty realization sets. It does not
+assume that arbitrary pairs of abstract partitions can be embedded in
+the integer line. Realizability and the choice involve integer geometry,
+$m,j$, not $p$ or the seed law.
+
+Conditional on phase $\phi$, assign one independent Bernoulli$(p)$
+spin to each equivalence class of $\mathcal I_\phi$. The target is
+$h_\phi$ of the star-class spin. At a read row of parity $\phi$
+the static potential reply is the XOR of its two class spins; at every
+other read row it is zero. Therefore the signature determines the joint
+conditional law of the actual target and all installed read rows'
+potential replies, including replies at rows on incompatible paths.
+Equal spin indices are identified, and distinct ones use the original
+iid law. This is precisely the distribution of (1.1), even for remote
+or negative indices. Combine the two phase alternatives with their
+original weights $1/2$. The representative uses the same single joint
+integer placement that realizes both relations; no independently
+optimized phase placements are spliced.
+
+For a fixed potential-reply vector, the installed successor map and
+initial row determine the whole state trajectory. Either it reaches a
+halt, fixing its output and exact number of calls, or it reads forever.
+Repeated visits still incur calls and use the same potential reply.
+Thus the joint law of target and the vector determines the entire
+stopped law claimed in the theorem. The selected representative retains
+the same labelled rows, successor map and halt labels, so it preserves
+that law from every possible initial row simultaneously. In particular
+it does not unfold a row into separate occurrences, merge equal literal
+instructions, delete an unused row, or add a program position.
+
+To state the seed assertion precisely, put $O=A$ on return and
+$O=\bot\notin\mathcal A$ on nonreturn, and let
+$D_0=\mathbf1_{\{\tau<\infty\}}$. Denote the common deterministic
+start law at row $r$ by $v_r$. For every $B\in\mathcal U$ and
+every subset $G$ of the countable alphabet of $(H_j,O,D_0,N)$,
+
+$$
+\mathbb P\bigl(u\in B,(H_j,O,D_0,N)\in G\bigr)
+=\sum_{r\in K}\nu(B\cap c_{\rm init}^{-1}\{r\})v_r(G).
+\tag{10.3}
+$$
+
+Independence and seed use only at initialization prove this identity.
+Keeping the initialization map and all common $v_r$ proves joint
+preservation with the original seed. No atomlessness, added coin or
+disintegration on singleton seeds is involved. Lastly include each
+possible deterministic initial row for each finite selected table in
+the menu. It is finite and proves the deterministic assertion as well.
+$\square$
+

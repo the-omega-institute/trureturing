@@ -1,0 +1,19 @@
+# Native finite obstructions for prescribed physical recovery budgets
+
+This volume gives a terminating decision for each prescribed read and
+update budget on the entire acquired signed fiber. Physical addresses
+remain arbitrary finite words. A positive answer supplies a lawful finite
+whole-fiber consumer; a negative answer supplies finitely many original
+sources defeating every comparator within that budget, even when its
+correctness requirement is relaxed to those sources alone.
+
+The additional inference is a native finite-obstruction theorem, followed
+by a two-sided effective search using native signed feasibility. Its
+weighted application uses sums on each same source. Given a successful
+finite consumer, it also supplies the missing logical input to the joint
+resource frontier construction. Existence of some successful finite
+budget, without such a witness, remains a separate obligation.
+
+All proofs are ordinary mathematics. No Lean verification, implemented
+decision procedure, complexity estimate or physical execution is asserted.
+

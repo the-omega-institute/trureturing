@@ -1,0 +1,14 @@
+**Lemma 3.2 (Normal form within the same state budget).** At a fixed $q$, the read-ready reduction of the continuation's Lemma 23.4 gives a row distribution $\eta$ and row-stochastic zero and one matrices $A,C$ on a state set $\mathcal S$ with $|\mathcal S|\le M$. It has two absorbing labels $d_0,d_1$ fixed by both matrices. Each other state is ready for its next paid read. This preserves $(T,D)$ under both source laws.
+
+Proof. Compose initialization with the ensuing current-state read/stop choice. Following a read, compose the bit update with the ensuing read/stop choice. Send all stopping probability to its actual label; merge terminal configurations carrying the same label. The remaining read configurations are the existing active configurations, and all retained control and random information is already counted. Thus composition adds no persistent state. The same $\eta,A,C$ serve both hypotheses at this fixed $q$. Fixing a label on subsequent bits supplies only an analytical continuation after the actual stop, with no change to the paid actions or emitted label. This is the source's normal-form argument applied pointwise to the retuned machine. $\square$
+
+Use total variation $\|u-v\|_{\rm TV}=\tfrac12\sum_x|u(x)-v(x)|$. Suppress $q$ in the matrices and in $f_i,S_i$ when no ambiguity arises. The analytical completed-gap and stationary initial rows are
+
+$$
+U_i=\sum_{k\ge1}f_i(k)A^kC,
+\qquad \nu_i=\sum_{b\ge0}\frac{S_i(b)}{\mu_i}\eta A^bC.
+\tag{3.2}
+$$
+
+They are stochastic averages including the absorbing rows. All subsequent comparisons use the same actual $\eta,A,C$ at the selected $q$.
+

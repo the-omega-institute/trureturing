@@ -1,0 +1,17 @@
+## 1. The unchanged question and the new necessary relation
+
+The statements below concern complete stopped probability laws and one common acquired circulation. They retain the original source and configuration-loss contract. Their scope is a necessary response relation and a restricted positive gap, rather than a decision of the unrestricted common-flow problem.
+
+Fix one original prior supported on $\{1,2,3\}$, with all three masses positive. The complete common-flow problem is exactly [PAIR, Section 11]: both full endpoint coordinate boxes, both midpoint event means, both depth-3 configuration-loss bounds and both conditional residual equations must hold on the same phase marginals. Its zero-versus-positive decision remains unresolved here.
+
+The new result concerns the probability weight attached to one synthetic noncompleting pair on an actual p-to-suspended edge. If the p emission is $u$ and that edge's suspended emission is $v$, this weight is $(1-u)v$. This is a property of the predictor and its acquired update, not the probability of the actual source returning. Define its mean absolute deviation on the one unweighted acquired edge flow as $D$. For every compatible pair in [PAIR, Definition 11.2], with its original three-depth objective $\mathcal J$,
+
+$$
+19\mathcal J+D>\frac9{160000}.
+\tag{1.1}
+$$
+
+Thus a zero-level pair, if one exists, must have $D>9/160000$. This necessity holds for nonatomic as well as finite atomic pairs. The class in which the synthetic return weight is constant on its entire positive edge support has a positive common gap, even when both emission vectors vary and the actual return changes the p forecast. Its gap is not an unrestricted gap.
+
+The proof gives a joint finite-word response relation before assuming any endpoint calibration. It uses the same stationary acquired path for the complete p words and the suspended event. This distinguishes it from the published constant-suspended-emission separator [HET] and the return-conserved-p-emission restriction [RETURN]. No additional independence between the path weights and completion weights, reversibility, irreducibility, mixing rate or fixed resource budget is assumed.
+

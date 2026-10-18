@@ -1,0 +1,37 @@
+**Proposition 1.3 (using the complete-row filling supplier on proposed
+data).** Validation in Definition 1.2 characterizes the rows that can
+occur individually. For a valid row, let $\mathcal B=H/\pi$, and let
+$C[\mathbf z]$ replace each hole $p$ by $z_{[p]}$. The supplied
+complete-row filling equivalence becomes
+
+$$
+R_P(u)=R
+\quad\Longleftrightarrow\quad
+\exists (z_b)_{b\in\mathcal B}\in\mathcal T^{\mathcal B},\qquad
+u=C[\mathbf z]\ \land\
+\bigwedge_{b\ne c}z_b\ne z_c.
+\tag{NUE.2}
+$$
+
+For a fixed $u$, the displayed class valuation is unique. When there
+are no holes, the valuation is the unique empty tuple.
+
+Proof. An actual row has the stated syntax and blockers by its
+definition. Conversely choose distinct finite trees for the finitely
+many classes, for example distinct $T_j$, and fill $C$. Every hole
+is then reached at its stated cut address. Every other cut address
+remains blocked by its stated strict-prefix concrete leaf. The exterior
+is exactly $C$, and the chosen distinct class values give exactly
+$\pi$. Thus validation supplies an individual representative, without
+an assumption that different rows share a representative.
+
+Now apply the existing filling correspondence [NAR, (NAR.1.4)][NAR]
+or [NativeCutFibers, `rowFiberEquiv`][CUT] to this representative.
+Its hypotheses include all different-class disequalities. The inverse
+reads the value at a representative hole of each class. This is a
+mathematical inverse on supplied trees, not an extra observation port.
+The independent addressed record is identified with canonical row
+syntax by [ActualCutPartitionDecoder, `canonicalRow_record_iff`][ROW].
+No new filling theorem is needed beyond this proposed-data validation.
+$\square$
+

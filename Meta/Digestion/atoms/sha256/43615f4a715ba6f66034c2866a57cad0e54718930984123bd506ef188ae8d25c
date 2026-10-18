@@ -1,0 +1,76 @@
+**Lemma 3.3 (Full twenty-five-dimensional block identity).** Define
+
+$$
+p_{si}=e_s^TR_ie_s,\quad
+q_{si}=\frac{v_s^TR_iv_s}{v_s^Tv_s},\quad
+h_{sij}=\frac{(e_s^TR_iv_s)(e_s^TR_jv_s)}{v_s^Tv_s},
+$$
+
+$$
+a_{ij}=\ell_j-\sum_s\frac{w_sp_{si}q_{sj}}{n_in_j},
+\quad
+d_j=\frac12\sum_sw_sp_{sj}q_{sj}\ (j=\pm),
+\quad
+g_{ij}=-\sum_s\frac{w_sh_{sij}}{n_in_j}\ (i<j).
+\tag{3.6}
+$$
+
+Let $N$ be the symmetric matrix with
+
+$$
+N_{00}=a_{00},\quad
+N_{jj}=\frac{a_{jj}-d_j/2-t_j}{2}\ (j=\pm),\quad
+N_{ij}=g_{ij}-U_{ij}\ (i<j),
+\tag{3.7}
+$$
+
+and let
+
+$$
+D_{ij}=
+\begin{pmatrix}a_{ij}&g_{ij}+U_{ij}\\g_{ij}+U_{ij}&a_{ji}\end{pmatrix}.
+\tag{3.8}
+$$
+
+The blocks of $P$ consist of:
+the three-dimensional trace block
+$\operatorname{diag}(\sqrt n)\,N\,\operatorname{diag}(\sqrt n)$;
+$D_{ij}$ repeated $n_in_j$ times for every $i<j$;
+$a_{jj}+t_j$ repeated twice for each $j=\pm$;
+and $a_{jj}+d_j/2-t_j$ once for each $j=\pm$.
+These blocks exhaust $3+16+4+2=25$ dimensions. Moreover
+
+$$
+W=\frac12(P+P^\Gamma).
+\tag{3.9}
+$$
+
+**Proof.** Each $e_s$ and its corresponding $v_s$ lie in the same one of
+$L,V$. In each nonzero two-dimensional sector the intersections with $L$
+and $V$ are one-dimensional. Therefore $R_je_s$ and $R_jv_s$ are
+collinear, including the possibility of a zero vector. Circle second
+moments are $I_2/2$, while fourth moments give
+$(I_2\otimes I_2+F+|\operatorname{vec}I_2\rangle
+\langle\operatorname{vec}I_2|)/8$. Independent rotation of the two planes
+therefore gives the exact identity
+
+$$
+W=\sum_{i,j}a_{ij}R_i\otimes R_j
++\sum_{j=\pm}\frac{d_j}{4}(I_j-F_j-E_j)
++\sum_{i<j}g_{ij}(F_{ij}+E_{ij}).
+\tag{3.10}
+$$
+
+The signed products $h_{sij}$ are essential; they are not replaced by
+their absolute values. On the span of $\eta_i/\sqrt{n_i}$, (3.10) and
+(3.5) give (3.7). On
+$(R_i\mathbb R^5\otimes R_j\mathbb R^5)\oplus
+(R_j\mathbb R^5\otimes R_i\mathbb R^5)$, paired by the swap, they give
+(3.8). In either two-dimensional sector, the remaining symmetric
+traceless subspace has dimension two, $F_j=1$ and $E_j=0$; the
+antisymmetric subspace has dimension one, $F_j=-1$ and $E_j=0$.
+This gives the scalar blocks and the dimension count. Finally every
+integrand in (3.2) is a product of real symmetric matrices, so
+$W^\Gamma=W$. Partial transpose exchanges $F_i,E_i$ and
+$F_{ij},E_{ij}$. Applying it to (3.5) proves (3.9). $\square$
+

@@ -1,0 +1,10 @@
+**Example 10.2 (epoch and chronology are different acquired relations).**
+$\alpha$ after four actual updates and $\rho^2\alpha$ after two have the same
+current tree. The absolute executed epoch is not recoverable from that tree
+alone. At two warm-up updates, the initial seed $\alpha$ gives a leaf reply
+at $L$ in the first round, whereas $\langle\alpha,\beta\rangle$ gives branch
+there; the programmed Fetch therefore chooses success versus executed
+rejection. For every source, the final two Fetches supply both outcomes.
+A literal Read below a leaf returns executed $\mathsf{absent}$ and is a
+successful source observation, regardless of the archive index outcome.
+

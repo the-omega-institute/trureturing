@@ -1,0 +1,43 @@
+**Definition 7.5 (the remaining simultaneous error constraints).** The
+finite necessary optimization uses ONE $C,G_f,G_o$ satisfying (JG.10)
+and (JG.15), and all twelve errors
+
+$$
+\begin{aligned}
+E_c=\max_{y,U}\frac12\bigl(&\|UB_yU^\dagger
+                       -C\odot(U\rho_yU^\dagger)\|_1\\
+ &+|1-s_y-\operatorname{tr}(G_fU\rho_yU^\dagger)|
+                    +\operatorname{tr}(G_oU\rho_yU^\dagger)\bigr).
+\end{aligned}
+\tag{JG.49}
+$$
+
+This is an exact finite description of the simultaneous live feasible
+set in CG.155. It supplies constructions or obstructions for proposed
+coefficients; it does not lift a finite-test optimizer to an optimal
+complete exact-time channel.
+
+For a reduced FULL candidate there must instead be ONE positive
+countably additive effect measure $E$ on $K$ of (JG.28), with
+$E(K)=I-\operatorname{diag}(d)$. Put
+$\mu_{y,U}(B)=\operatorname{tr}(E(B)U\rho_yU^\dagger)$.
+At a proposed error $e$, the exact full constraints are, for EVERY
+$y=5,16,27$ and all four actual $U$,
+
+$$
+\frac12\left[
+ \|UB_yU^\dagger-C\odot(U\rho_yU^\dagger)\|_1+
+ \sum_{\ell=0}^4\|\mu_{\ell,y,U}-w_\ell f_y(t)dt\|_{\rm TV}
+                         +\mu_{o,y,U}(\{o\})\right]\leq e.
+\tag{JG.50}
+$$
+
+Every atom, singular-continuous part, zero-target label and other
+mass is included. A general unreduced output uses the full quantum
+cq norm (JG.7). The target-fixing canonical contraction CG8.2 keeps
+$C\odot X$ and contracts all errors. Conversely the reduced law is
+itself an abstract full candidate. Theorem 4.3 concerns the specified
+reduced channel, not the additional accessible quantum records erased
+by such a contraction. In particular neither (JG.18) nor (JG.36) substitutes
+for the complete twelve-history objective (JG.50).
+

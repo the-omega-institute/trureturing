@@ -1,0 +1,63 @@
+**Proposition 8.3 (constant, empty-cut and zero-budget cases).** The
+following cases remain within the preceding decisions.
+
+1. $K=0$ is feasible exactly when the full $R_Q$ is constant on $D$,
+   independent of $A$. NSF decides constancy and returns its row, or
+   two original sources with different rows.
+2. $Q=\{\varepsilon\}$ always has its constant one-hole row and cost
+   $(0,0,0)$. $Q=\varnothing$ demands the entire original source;
+   NPL Theorem 7.1 already decides bounded recovery there by exact
+   finiteness of $D$.
+3. $A=0$ permits only static reads at the actual epoch $N$. No cap
+   construction forces an early update. Absent words, born positions,
+   repeated old classes and every retained off-task condition stay
+   covered by the native path predicate.
+4. The logical procedures can reject an inconsistent input as empty
+   using NSF. An empty mathematical comparison set is vacuously feasible;
+   it is not an actual entry and is outside the nonempty service promise.
+
+Proof. Without a new read, common control and nonobservational updates
+give no new source distinction, so a terminating output is constant.
+A constant row is supplied by one native witness and a root halt.
+The second assertion is the full original-row definition and the named
+NPL theorem. The third follows from the epoch interval in the finite
+skeleton and from NSF's exact guard handling. The fourth follows from
+native feasibility and elementary empty-domain quantification.
+$\square$
+
+**Open problem 8.4 (unrestricted existence and its unresolved classifications).**
+On arbitrary nonempty (NFO.2), retain the question
+
+$$
+\exists K\ \operatorname{Win}_D(K,U)
+\quad\Longleftrightarrow\quad
+\exists h\ \operatorname{PrefDet}(D,Q,h).
+\tag{NFO.25}
+$$
+
+The equivalence uses the all-source cap and ARH (2.3); it is an existence
+correspondence, not a decision procedure. Theorem 4.2 decides each fixed
+$K$, so YES instances of (NFO.25) can be found by enumeration. It supplies
+no stage at which successive NO answers prove that every later $K$ is
+also NO. Proposition 8.1 rules out a finite-source certificate with that
+stronger all-budget meaning.
+
+For positive observation weights, (NFO.7) and ARH's correspondence show
+that some finite weighted threshold is feasible exactly when (NFO.25)
+holds. Hence the general decision whether the Pareto set is empty, or
+whether the optimum for positive observation weights is infinite,
+remains subject to the same unresolved obligation. Theorems 6.3 and 7.1
+are conditional on a supplied success; they do not classify failure
+unconditionally. Each fixed weighted threshold is decidable, including
+zero weights, but searching larger thresholds does not decide an
+infinite optimum. If both observation weights vanish, the unconditional
+zero optimum is already covered by Theorem 5.2 and is no exception to
+this stated positive-observation boundary.
+
+NPL's infinite-image classification, exact finite-source classification,
+and the established recognized-family CAR, SRF, CRF and GRS decisions
+retain their own stronger conclusions at their original premises.
+Finite row image by itself does not settle (NFO.25). No global native
+undecidability, new uniform source bound, or finite all-budget obstruction
+is claimed.
+

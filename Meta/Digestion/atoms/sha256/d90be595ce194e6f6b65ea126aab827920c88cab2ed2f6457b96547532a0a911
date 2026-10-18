@@ -1,0 +1,27 @@
+### 96.5. Consumer and precise remaining boundary
+
+For either parameter field, a noncanonical orthogonal triple is all
+generic, mixed, or all aligned. The generic case is excluded by (96.4) and
+the uniform within-union bipartite theorem. Every mixed possibility has
+been covered by the finite quartic and the applicable exceptional pair.
+The all-aligned case is excluded by the uniform original Gram argument
+of §85, including constant channels, all poles and both parameter signs.
+
+A common-flat basis containing a canonical ray is canonical by §60.
+A basis containing none would contain a forbidden noncanonical triple.
+This proves basis uniqueness at the four roots of (96.1).
+If \(B\) is an output basis unbiased to \(I_6\) and \(H_0\), then \(W=H_0^*B\) is a
+common-flat input basis; the transformation is unitary and preserves
+orthogonality and pairwise unbiasedness. Two additional output bases
+would both transport to the same canonical input basis up to phases and
+permutation, and therefore could not be mutually unbiased. This proves
+the stated fixed-pair quartet exclusion.
+
+The source, lift and rank-upper assertions are characteristic-zero
+arguments. The residue matrices certify only the explicitly named units
+and rank lower bounds. In particular no constant physical ray count,
+continuation through a vanished chart denominator, or equality of
+modular and real solution sets is assumed. Every other zero of the
+previous finite guard retains its prior status.
+
+

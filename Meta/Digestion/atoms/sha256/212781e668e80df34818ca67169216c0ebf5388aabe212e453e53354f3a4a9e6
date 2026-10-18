@@ -1,0 +1,63 @@
+**Proposition 9.18 (Two resolved settings and their information).**
+In (9.44) one full mode measurement has information
+$\operatorname{diag}(I_0,0)$ at the reference.
+One site-$1$ endpoint quadrature measurement with all outcomes
+retained has information $\operatorname{diag}(0,4/I_0)$.
+Independently selecting the first setting with a fixed known
+probability $t\in[0,1]$, and recording that selection, gives
+
+$$
+F_t=\begin{pmatrix}tI_0&0\\0&(1-t)4/I_0\end{pmatrix}
+\tag{9.60}
+$$
+
+per preparation.
+
+Proof. Full mode probabilities are $p_s(\kappa)$ and are
+independent of $\chi$, so their reference scores are
+$(d_s/\bar p_s,0)$; summing their squares gives the first
+matrix. For the endpoint quadrature, each observed pair
+has $d_u+d_v=0$ and the blocked word $2$ has $d_2=0$.
+Differentiate its likelihood
+
+$$
+q_{\kappa,\chi}(e,\pm)
+=\frac{p_u(\kappa)+p_v(\kappa)}2
+ \pm\sqrt{p_u(\kappa)p_v(\kappa)}
+       \sin\bigl(\chi(a_v-a_u)\bigr).
+\tag{9.61}
+$$
+
+At $(\kappa_0,0)$ the $\kappa$ derivative vanishes in every
+outcome: the derivative of the total pair mass is zero and
+the amplitude derivative multiplies $\sin0$. This uses the
+fixed $a$ of (9.42). The $\chi$ derivative is
+$\pm\sqrt{\bar p_u\bar p_v}(a_v-a_u)$, and
+
+$$
+a_v-a_u
+=-\frac{d_u}{I_0}
+  \left(\frac1{\bar p_u}+\frac1{\bar p_v}\right).
+$$
+
+Thus that pair's $\chi$ information is
+
+$$
+4\frac{\bar p_u\bar p_v}{\bar p_u+\bar p_v}(a_v-a_u)^2
+=\frac4{I_0^2}
+ \left(\frac1{\bar p_u}+\frac1{\bar p_v}\right).
+$$
+
+The pairs $(0,1)$ and $(3,13)$ cover all four nonzero
+coefficients, so their sum is $4/I_0$.
+The blocked outcome has both derivatives zero.
+The cross information is zero because the $\kappa$ score
+is zero throughout this setting.
+
+For recorded setting $A$ or $B$, the joint probabilities are
+$tq_A$ and $(1-t)q_B$. The setting law is independent of the
+parameters, so its logarithmic derivative is zero, and the
+Fisher matrix is the weighted sum of the two conditional
+matrices. This proves (9.60). At $t=0$ or one the unused
+setting is removed from the alphabet. $\square$
+

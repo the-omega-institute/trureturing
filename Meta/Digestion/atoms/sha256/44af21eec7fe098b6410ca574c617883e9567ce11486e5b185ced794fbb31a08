@@ -1,0 +1,64 @@
+### 23.5 固定荷纤维、边系数与正则面积
+
+取整数
+
+$$
+m\ge0,\quad 0\le W\le m,\quad R=m-W,\quad 0\le U,V\le R.
+$$
+
+固定这四个荷的空间记为 $\mathcal H_{m;U,V,W}$。消费《基础公式与关系》§12.1–§12.3 的占位提升，取 $k=n_{13}$ 得到完整基
+
+$$
+|k\rangle=|R-U-V+k,\ U-k,\ W,\ V-k,\ k\rangle,
+$$
+
+$$
+k_- =\max(0,U+V-R),\qquad k_+=\min(U,V),
+\qquad k_-\le k\le k_+.
+$$
+
+此区间非空，维数 $D=k_+-k_-+1$。直接应用产生、湮灭的平方根系数，得
+
+$$
+B|k\rangle=t_k|k+1\rangle,\qquad
+ t_k=\sqrt{(U-k)(V-k)(k+1)(R-U-V+k+1)}.
+$$
+
+每条内部边 $k_-\le k<k_+$ 的四个因子都正；边界外的项为零。因此扇区矩阵连通，且
+
+$$
+\begin{aligned}
+\langle k|\widehat H|k\rangle&=(U-k)(V-k)+k(R-U-V+k),\\
+\langle k+1|\widehat H|k\rangle&=-t_k.
+\end{aligned}
+$$
+
+只有 $m>0$ 时归一化 $X=U/m,Y=V/m,Z=W/m$ 和 $\kappa=k/m$。此时无论是否正则，区间反演都给精确式
+
+$$
+D=1+m(\kappa_+-\kappa_-).
+$$
+
+面积解释另有条件。本章采用射影直线积分为 $2\pi$ 的 Fubini–Study 形式及与之相容的度量，度量是《隐藏关系》C-14.1–C-14.2 约定的两倍。固定均值的三占位环面作用，在
+
+$$
+0<Z<1,\quad 0<X,Y<r=1-Z,\quad X\ne Y,\quad X+Y\ne r
+$$
+
+时给正则约化球面；正的五模式支撑保证内部自由作用，末两条排除上下端的双零概率。其内部坐标及形式为
+
+$$
+\omega_{\rm red}=d\chi\wedge d\kappa,\qquad
+ g_{\rm red}=\frac{I(\kappa)}2\,d\kappa^2+
+ \frac2{I(\kappa)}\,d\chi^2.
+$$
+
+这里相位对应 $\Phi^{\rm old}=-\chi$，两倍度量把原面积 $\pi(\kappa_+-\kappa_-)$ 变为
+
+$$
+\operatorname{Area}_{\rm red}=2\pi(\kappa_+-\kappa_-),\qquad
+ D=1+\frac{m\operatorname{Area}_{\rm red}}{2\pi}.
+$$
+
+形式的符号也可从归一化振幅核对：$\psi_s=\sqrt{p_s}e^{-i\theta_s}$ 给 $\sum_s d\theta_s\wedge dp_s$，而纤维上 $dp_s=d_s\,d\kappa$，故余项是 $d\chi\wedge d\kappa$。单零端点收缩相位圆而光滑封口；双零端点的锥角已由 C-14.3 给出，所以正则面积式不被用来宣告所有边界约化都是光滑球面。$m=0$ 只有一份零占位，不定义归一化位置。以上 $D$ 数的是占位扇区维数，不是原生有序历史数。
+

@@ -1,0 +1,25 @@
+**Theorem 2.1 (same-dilation identity at all endpoints).** Let $\Pi$ be the sum of the two actual phase support projections. It is real, of rank four for $\beta>0$ and rank two for $\beta=0$. Then
+
+$$
+w:=\operatorname{Tr}[(I-\Pi)\sigma_2]=\operatorname{Tr}S\in[0,1].
+\tag{R.10}
+$$
+
+For positive beta $S=vv^T$, where $v=(\langle h|\otimes I)V|2\rangle$ in a real unit direction $h\in\ker\Pi$. At zero $S=HH^T$ for the three outside-output columns $H$, so rank three is permitted.
+
+**Proof.** Choose a real output basis adapted to the actual $\Pi$. If its rank is $d_\Pi=2\operatorname{rank}\tau$, the actual Gram factor of $J_p$ obtained by contracting $V$ with these output basis vectors has the form
+
+$$
+J_p=\begin{pmatrix}AA^\dagger&AB^\dagger\\BA^\dagger&BB^\dagger+HH^T\end{pmatrix},
+\quad AA^\dagger=\operatorname{diag}(\tau,\bar\tau),\quad
+AB^\dagger=(C;\bar C).
+$$
+
+The first $d_\Pi$ columns form $A$; the outside columns have zero upper blocks, and their bottom blocks form the real matrix $H$. Since $\operatorname{rank}AA^\dagger=d_\Pi$, $A$ has full column rank. Singular-value decomposition on its nonzero singular values gives $A^\dagger(AA^\dagger)^+A=I_{d_\Pi}$. Consequently the actual Schur residual is
+
+$$
+S=BB^\dagger+HH^T-BA^\dagger(AA^\dagger)^+AB^\dagger=HH^T.
+$$
+
+Its trace is the squared norm of $((I-\Pi)\otimes I)V|2\rangle$, exactly the Born probability in (R.10). There is one outside direction at positive beta and three at zero. All third-output coherences remain in $B$ and $V|2\rangle$; no arbitrary residual is assigned to an unrelated channel. Real output rotations here calculate the same object and supply no extra native control. $\square$
+

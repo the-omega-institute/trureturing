@@ -1,0 +1,81 @@
+**Proposition 5.1.** With a supported nonendpoint, $G_+>\kappa$, and consequently
+
+$$
+25\max(\varepsilon_p,\varepsilon_\beta)+30J_+>\kappa.
+\tag{5.1}
+$$
+
+**Proof.** Theorem 3.1 gives $\mathcal E_C\le G_+/h$, $\mathbb E Z(1-Z)\le16G_+$, $J_-\le G_+/c$, while $J_+\le G_+/K$.
+
+We spell out the needed complete-law comparisons. Comparing the original generator with the paired generator, the suspended emission discrepancy on a presampled edge is $|v_y-u_z|$. The coupling used in Lemma 4.1 now gives
+
+$$
+\sum_x\pi_x\operatorname{TV}(Q_x,Q_x^*)\le\tfrac{10}{11}(J_++J_-).
+\tag{5.2}
+$$
+
+The supplied source-law bound is $\operatorname{TV}(P_{p,u},P_{p,t})\le L_p|u-t|$, $L_p=125/57$. Its coupling follows the two iid letter generators until the first discrepancy, through the original parser; the expected p Read count is $(2-u)/(1-u(1-u))\le L_p$. Summing discrepancy hazards proves the full-law bound, with both legal infinite outcomes retained.
+
+Put $d_x'=\operatorname{TV}(Q_x^*,P_{p,u_x})$. Couple the paired suspended emission $u_z$ with the constant source emission $u_x$, and use that Lipschitz bound after a matched return. Then
+
+$$
+d_x'\le(1-u_x)\sum_zC_{xz}
+ \{(1+u_zL_p)|u_z-u_x|+u_zd_z'\}.
+$$
+
+Averaging and using stationarity yields
+
+$$
+\pi d'\le k\sqrt{2\mathcal E_C},\qquad k=1070/627.
+\tag{5.3}
+$$
+
+Indeed the continuation coefficient is at most $\lambda=4/15$, the discrepancy coefficient after division by $1-\lambda$ is $(10/11)(1+(2/5)L_p)=k$, and Cauchy bounds $\sum\pi_xC_{xz}|u_x-u_z|$ by $\sqrt{2\mathcal E_C}$.
+
+Round u to its nearer endpoint $t_x\in\{1/3,2/5\}$, taking the lower on ties. Since $|u_x-t_x|\le(2/15)Z_x(1-Z_x)$, (5.2)–(5.3) give
+
+$$
+d_0:=\sum_x\pi_x\operatorname{TV}(Q_x,P_{p,t_x})
+\le\tfrac{10}{11}(J_++J_-)+k\sqrt{2\mathcal E_C}+\tfrac{800}{171}G_+.
+\tag{5.4}
+$$
+
+These endpoint laws are proof comparisons, not replacement decoders. If $w=\pi\{t_x=1/3\}$, endpoint event calibration gives $d_p|w-1/2|\le\varepsilon_p+d_0$.
+
+For every $r\in I_0$, the complete word $w_{3,1}$ has source mass $r^3(1-r)^5$, exceeding both endpoint masses by at least eta. Its derivative has sign $3-8r$, so its smallest value on $I_0$ is at 5/13; subtracting the larger endpoint value gives (1.1). The supplied coordinate triangle identity, including the infinite atom, gives
+
+$$
+\frac{\operatorname{TV}(P_{p,1/3},P_{p,r})+
+\operatorname{TV}(P_{p,2/5},P_{p,r})}{2}\ge\rho_p+\eta/2.
+$$
+
+For completeness that identity is the sum, divided by two, of
+$|d-a|+|d-b|-|a-b|=2\operatorname{dist}(d,[a\wedge b,a\vee b])$ over the countable carrier. The word outside the endpoint interval contributes at least eta. Reverse triangle bounds the change from fair endpoint weights by $d_p|w-1/2|$. Therefore, on the same row,
+
+$$
+\sum_x\pi_x\operatorname{TV}(Q_x,P_{p,r})
+\ge\rho_p+\eta/2-\varepsilon_p-2d_0.
+$$
+
+Choose one supported nonendpoint, whose pure-target configuration loss is at most $\rho_p+\varepsilon_p$. Comparing these two inequalities yields
+
+$$
+\eta/4\le\varepsilon_p+d_0.
+\tag{5.5}
+$$
+
+All losses here use this one table, row, prior and target. This is precisely where configuration-before-TV is essential.
+
+Since $\varepsilon_p\le d_pG_+$, substitution in (5.4)–(5.5) gives
+
+$$
+\eta/4\le A_+G_++B_0\sqrt{G_+},\quad
+A_+=d_p+800/171+\tfrac{10}{11}(1/K+1/c)<6,
+$$
+
+$$
+B_0^2=2k^2/h=\frac{12220682338076}{12476288085327}<1.
+$$
+
+The exact value of $A_+$ is $2540417332337410742197/480176818797590578125$. If $G_+\le\eta^2/64$, the right side is strictly below $6\eta^2/64+\eta/8<\eta/4$, since $0<\eta<4/3$. This contradicts (5.5). Finally $1/d_p+1/d_\beta<25$ and K<30 give (5.1). ∎
+

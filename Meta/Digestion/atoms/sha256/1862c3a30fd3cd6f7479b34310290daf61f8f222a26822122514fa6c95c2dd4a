@@ -1,0 +1,68 @@
+**Definition 1.2 (the unchanged Borel domain).** Put
+
+$$
+w_{j,0}=(\beta\alpha)^j\alpha,\qquad
+w_{j,1}=(\beta\alpha)^j\beta\beta,\qquad t_r=r(1-r).
+$$
+
+The countable complete carrier $\Omega_p$ contains these words and
+$\infty_p$. The carrier $\Omega_\beta$ contains beta, all
+$\alpha w_{j,c}$ and $\infty_\beta$. All subsets are measurable. The native
+probability laws are
+
+$$
+P_{p,r}(w_{j,0})=rt_r^j,\quad
+P_{p,r}(w_{j,1})=(1-r)^2t_r^j,\quad
+P_{\beta,r}=(1-r)\delta_\beta+r\alpha P_{p,r},
+\tag{1.1}
+$$
+
+with zero infinite masses. With $\lambda=4/15$, set
+
+$$
+\begin{aligned}
+T_p(j)&=\{w_{n,c}:n\ge j,\ c=0,1\}\cup\{\infty_p\},\\
+T_\beta(j)&=\{\alpha w_{n,c}:n\ge j,\ c=0,1\}\cup\{\infty_\beta\},\\
+\mathcal K_p&=\{Q\in\operatorname{Prob}(\Omega_p):
+ a\le Q(\alpha)\le b,\ Q(T_p(j))\le\lambda^j\ (j\ge0)\},\\
+\mathcal K_\beta&=\{W\in\operatorname{Prob}(\Omega_\beta):
+ a\le1-W(\beta)\le b,\ W(T_\beta(j))\le b\lambda^j\ (j\ge0)\}.
+\end{aligned}
+\tag{1.2}
+$$
+
+These are the compact metric complete-law spaces of [PAIR, Lemma 11.1],
+with TV topology. Their infinite masses vanish by the tail bounds;
+infinite coordinates are nevertheless retained. Write
+
+$$
+u(Q)=Q(\alpha),\quad v(W)=1-W(\beta),\quad
+\mathcal R_B(Q)=\frac{Q(\beta\,\cdot)}{1-u(Q)},\quad
+\mathcal R_A(W)=\frac{W(\alpha\,\cdot)}{v(W)}.
+\tag{1.3}
+$$
+
+A compatible pair consists of Borel probability measures $\Gamma_B$ on
+$\mathcal K_p\times\mathcal K_\beta$ and $\Gamma_A$ on the reversed
+product, with the same unweighted phase marginals
+
+$$
+(\Gamma_B)_1=(\Gamma_A)_2=\nu_p,\qquad
+(\Gamma_B)_2=(\Gamma_A)_1=\nu_\beta.
+\tag{1.4}
+$$
+
+Their disintegrations satisfy, almost surely at the respective inputs,
+
+$$
+\mathcal R_B(Q)=\int W\,B(Q,dW),\qquad
+\mathcal R_A(W)=\int Q\,A(W,dQ).
+\tag{1.5}
+$$
+
+These are full measure equalities conditioned on the entire input
+descriptor, equivalently coordinate equalities against every bounded
+Borel input test, including the infinite coordinate. Denote this original
+domain by $\mathfrak C$. The factors $1-u,v$ belong to synthetic residuals,
+not to the marginals in (1.4).
+

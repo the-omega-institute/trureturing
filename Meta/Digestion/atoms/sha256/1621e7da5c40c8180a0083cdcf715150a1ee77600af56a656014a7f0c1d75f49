@@ -1,0 +1,103 @@
+**Proposition 7.1 (one read on an entire acquired relation fiber).** Take
+
+$$
+\begin{gathered}
+P=\{L,R\},\quad C=\langle\square_1,\square_2\rangle,
+\quad \pi=\{\{1\},\{2\}\},\quad H_0=\varnothing,\\
+H_{\rm rel}=\{(0,\varepsilon,1,L,=)\},\quad
+Q=\{LL,LR,RL,RR\},\qquad N\ge1.
+\end{gathered}
+\tag{ARH.7.1}
+$$
+
+The entire input fiber is $U_\star=\{T_j:j\ge2\}$. Its complete original
+$Q$ row is one of the following three rows:
+
+$$
+\begin{array}{c|c|c|c}
+j&\text{reached original cuts}&\text{outside context}&\text{partition}\\
+\hline
+2&\varnothing&\langle\beta,\alpha\rangle&\varnothing\\
+3&LL,LR&\langle\langle\square_1,\square_2\rangle,\beta\rangle
+ &\{\{1\},\{2\}\}\\
+\ge4&LL,LR,RL,RR
+ &\langle\langle\square_1,\square_2\rangle,
+                 \langle\square_3,\square_4\rangle\rangle
+ &\{\{1\},\{2,3\},\{4\}\}.
+\end{array}
+\tag{ARH.7.2}
+$$
+
+For each allowed $N$, both static and serial minimum new-read budgets
+for this particular complete-row task are exactly one. Removing the
+relation record, while keeping the same old row and same $Q$, leaves
+no uniform finite-read service.
+
+Proof. Theorem 4.2 gives $j\ge1$ before the old-row intersection.
+$T_1$ is a leaf and fails that old row; for every $j\ge2$, the root
+children are $T_{j-1},T_{j-2}$, which are distinct. Thus exactly
+$j\ge2$ remain. In particular the old disequality has been enforced,
+not dropped. Proposition 2.1 gives a legal paid acquisition: retain the
+acquired epoch-zero root description until after one real update, acquire
+the whole current subtree at $L$, compare the two descriptions, and
+then perform the stipulated full cut. Continuing to $N$ adds actual paid
+updates. Neither $j$ nor either tree description is retained.
+
+For $j=2$, both original children are leaves, so every $Q$ address is
+absent. For $j=3$, only the original left child is a pair and the right
+child is $T_1=\beta$. For $j\ge4$ all four cuts are reached, and their
+whole values in the displayed order are
+
+$$
+T_{j-2},\quad T_{j-3},\quad T_{j-3},\quad T_{j-4}.
+\tag{ARH.7.3}
+$$
+
+Index injectivity gives the full partition in (ARH.7.2), including the
+cross-parent repeated class. This proves the three complete rows.
+
+At the actual current tree $T_{N+j}$, read just
+
+$$
+R^{\lceil(N+2)/2\rceil}.
+\tag{ARH.7.4}
+$$
+
+If $N$ is even, replies $\alpha,\beta,\mathsf{branch}$ select,
+respectively, the first, second and third rows of (ARH.7.2); absent is
+unreachable. If $N$ is odd, absent selects the first, $\alpha$ the
+second, and $\beta$ or branch the third. This table is the direct
+substitution of the address exponent into (ARH.6.1), so it is valid for
+all $j\ge2$, not just the first few sources. The actual read selects a
+whole row, not merely an equality bit. Its address length and all local
+row construction/output work remain paid.
+
+Zero new reads leave the same deterministic control on $T_2$ and $T_3$,
+even if real updates are executed without observations. Their required
+complete rows differ, excluding zero reads in both service classes.
+Together with (ARH.7.4) this proves the asserted example-specific minimum.
+
+Finally remove the relation. For any $h$, choose distinct finite trees
+$z,z'$ with the same original replies through depth $h$. Such a pair is
+obtained by a full binary tree with leaves deeper than $h$ and a change
+of one deepest label. The two original sources
+
+$$
+u=\langle\langle z,z\rangle,\alpha\rangle,
+\qquad v=\langle\langle z,z'\rangle,\alpha\rangle
+\tag{ARH.7.5}
+$$
+
+have that same two-hole old row: the original left child is a pair and
+therefore differs from the right leaf. They agree through original depth
+$h$. Their only reached $Q$ cuts are $LL,LR$; these are equal in $u$
+and unequal in $v$, with the same concrete right outside $\alpha$.
+Thus their complete rows differ. [SLH, Theorem 74.4][SLH], or its inherited
+prefix obstruction in §2, excludes a uniform finite serial budget on
+this whole basic fiber. Its full target image is nevertheless finite: each
+original root child is either one of two concrete leaves or a pair whose
+two children are holes; there are finitely many such contexts and
+partitions of at most four holes. Thus finite target image alone does not
+suffice. The change in solvability comes from the actually retained
+relation while the full-row task is unchanged. $\square$
+

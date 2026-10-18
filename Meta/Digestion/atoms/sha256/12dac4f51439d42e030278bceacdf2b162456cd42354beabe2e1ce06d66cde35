@@ -1,0 +1,50 @@
+**Lemma 5.2 (Additive target perturbation and multiplicative opponent comparison).** For an integer $L\ge1$, put
+
+$$
+\begin{aligned}
+\pi_i&=\pi_i(q,L)=\sum_{k=1}^Lf_i(k),\\
+\mathcal J_i^L&=\pi_i^{-1}\sum_{k=1}^Lf_i(k)A^kC,
+&\mathcal V_i^L&=(1-\pi_i)^{-1}\sum_{k>L}f_i(k)A^kC,\\
+\gamma_L&=1+\frac\delta{L+1}.
+\end{aligned}
+\tag{5.5}
+$$
+
+For a chosen target $i$ and opponent $j=1-i$, define the analytical comparison matrix
+
+$$
+W=\pi_j\mathcal J_j^L+(1-\pi_j)\mathcal V_i^L.
+\tag{5.6}
+$$
+
+Then, for every row and every entry respectively,
+
+$$
+\|U_i(x,\cdot)-W(x,\cdot)\|_{\rm TV}\le\pi_i+\pi_j,
+\qquad
+\gamma_L^{-1}U_j(x,y)\le W(x,y)\le\gamma_L U_j(x,y).
+\tag{5.7}
+$$
+
+Proof. Positivity of all $f_i(k)$ at an interior $q$ gives $0<\pi_i<1$ for finite $L$, so all matrices in (5.5) are stochastic and preserve both label rows. On $k>L$, let $t(k)=F_1(k)/F_0(k)$. Premise (2.3) places $t(k)$ in $[1,\gamma_L]$. The ratio of the two conditional tail laws is
+
+$$
+\frac{f_1(k)/(1-\pi_1)}{f_0(k)/(1-\pi_0)}
+=\frac{t(k)}{\displaystyle\sum_{\ell>L}\frac{f_0(\ell)}{1-\pi_0}t(\ell)}.
+\tag{5.8}
+$$
+
+The denominator also lies in $[1,\gamma_L]$. Thus the conditional tails are comparable by $\gamma_L$ in both directions; their $Z_i$ normalizations have cancelled. Averaging common nonnegative entries of $A^kC$ preserves this comparison for $\mathcal V_i^L$ and $\mathcal V_j^L$. Adding the common short term $\pi_j\mathcal J_j^L$ gives the entrywise inequalities in (5.7). In particular $W$ retains the entire support of $U_j$, including zeros in the transition matrices.
+
+For the other comparison use $U_i=\pi_i\mathcal J_i^L+(1-\pi_i)\mathcal V_i^L$. Subtraction gives
+
+$$
+U_i-W=\pi_i(\mathcal J_i^L-\mathcal V_i^L)
+-\pi_j(\mathcal J_j^L-\mathcal V_i^L).
+\tag{5.9}
+$$
+
+Each difference of probability rows has total variation at most one. The triangle inequality proves the first part of (5.7). $\square$
+
+The matrix $W$ is a proof object for one target. It does not supply a new operational source, skip any actual short gap, or acquire any tail gap for free. A tail-only replacement can lose transitions enabling absorption; no termination claim about that replacement is used. Keeping the opponent's short term gives the support comparison needed by Lemma 4.1.
+

@@ -1,0 +1,63 @@
+**Definition 13.6 (actual consumer and unproved full-row interface).**
+The exact consumer is Definition 5.1(2). Map $r,f,t,v_0,v_1$ to its
+designated field's actual template occurrences, $x$ to the current fork
+side, and $b$ to the original row's actual immediate or authorized operand.
+For AIF Definition 3.1's
+$\operatorname{WR}(\text{payload},\text{input-latch})$, the original head
+link and fixed cell-track path must reach the writable payload bit; $b$
+is the bit already consumed by its IN and still held in the distinct
+input latch. Theorem 13.2 supplies that bit's data-effect path, including
+unchanged writes. It supplies neither the preceding acquisition nor the
+row's PC transition or receipt.
+
+The same algebra is available for other symbol, latch, mark, control and
+token fields only under their actual authority/operand conditions.
+Transient mark bits need not satisfy the old canonical mark decoder,
+although the physical access link has not changed. Transient token/PC
+encodings do not define fine authorization or dispatch. No head/access or
+authority coherence follows by applying the algebra to every field.
+
+The full bridge remains unproved: initialized finite control with an
+actual row/operand/phase binding and implemented continuing maintenance
+permit; the same private preparation, installed source and acquired seed;
+pending-input preservation; progressing fragments for every original row;
+all access, owner/token, receipt and partially constructed cell/edge/
+descriptor effects; and a same-run public-observation and price account.
+It must retain rejected/aborted candidates, dead material, unsealed
+archives, both meter heads and both copy stages. Fixed-vertex relocation
+cannot create PR57.D1's receipt cells. A declared bounded constructor or
+control/receipt coeffect is legitimate possible additional atomicity, but
+is not constructed here.
+
+The target remains all $\mathcal R_H$ of Definition 1.2 for every finite
+$H\ge1$, arbitrary finite canonical frames and all lawful busy cuts.
+Noncanonical raw IN still executes and leaves that lawful task domain;
+it is not disabled. The local premises do not redefine full completion
+around this component. Source installation, actual input/acquisition,
+addressing, validation, rejects, archives and simultaneous copies remain
+payable; AIF Theorem 6.4's two-stage copy body remains $12\ell+6$ original
+primitives plus actual setup/positioning.
+
+No initialized global fine task is constructed, and neither inclusion of
+any individual global equality
+
+$$
+\ker S_{\rm fine}=\ker Q_{\rm fine},\quad
+\ker B_{\rm fine}=\ker Q_{\rm fine},\quad
+\ker T_{\rm fine}=\ker Q_{\rm fine},\quad
+\ker M_{\rm ret,fine}=\ker Q_{\rm fine}
+\tag{SSA.20}
+$$
+
+is proved here. Local incidence inversion does not supply an
+intersection-of-kernels substitute. Original replay or trace erasure does
+not automatically recover fine clocks and receipt histories. Installed
+table size, local work, original events/fees, fine elapsed events, output
+and peak/retained storage remain distinct coordinates. Mathematical
+recovery grants no new owner's read, named-cut acquisition or callable
+memory. Full internal-observer four-expression recovery, cross-capacity
+and named-cut integration, coherent infinite source, stationary late-target
+and sharp/effective certification retain their outstanding obligations.
+This is a reusable component, not a complete weaker basis, physical
+realization, total-cost improvement or new Lean verification.
+

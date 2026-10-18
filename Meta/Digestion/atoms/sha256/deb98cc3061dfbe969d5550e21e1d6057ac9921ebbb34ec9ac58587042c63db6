@@ -1,0 +1,44 @@
+## 六、均值、瞬时变化率和完整等待分布不是同一个读数
+
+假设只保留每个状态等待时间的均值：
+
+~~~math
+m_s=E[T\mid s].
+~~~
+
+定义：
+
+~~~math
+\operatorname{Curv}_m
+=
+m_{s_0}-m_{s_1}-m_{s_3}+m_{s_{13}}.
+~~~
+
+则：
+
+~~~math
+E[T]
+=
+(1-X-Y-Z)m_{s_0}
++Xm_{s_1}
++Zm_{s_2}
++Ym_{s_3}
++\kappa\operatorname{Curv}_m.
+~~~
+
+所以均值能够识别 $\kappa$ 的条件是：
+
+~~~math
+\operatorname{Curv}_m\neq0.
+~~~
+
+但是：
+
+~~~math
+\operatorname{Curv}_m=0
+~~~
+
+并不意味着完整局部等待分布也看不见 $\kappa$。
+
+---
+

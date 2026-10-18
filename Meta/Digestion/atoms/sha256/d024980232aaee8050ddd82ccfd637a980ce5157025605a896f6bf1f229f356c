@@ -1,0 +1,54 @@
+**Proposition 6.1 (two existing flights contain and retrieve a mode cut).**
+Let $P$ be any authentic reached Ready as in Definition 2.1. Use its
+existing gate1 and HistoryMode1, and let $h_P$ be the cut immediately
+after the mode IN6, before EX70. Put $N=n(h_P)$. Under Assumption 1.2's
+actual finite supply and completion premises, the following is a finite
+native continuation of this one apparatus: complete the current request
+with AcquisitionOffset0, return to Ready, then request
+AcquisitionOffset$(N-a)$. The second request retrieves $h_P$ and
+completes the existing received-body cycle. This proposition is about
+the native route; its interpretation as the original experiment in
+Definition 5.1 additionally requires that definition's unverified
+original admission, response, output-extraction and uniform-authenticity
+hypotheses.
+
+Proof. The first next row is exactly GCA Definition 3.1's EX70. It is
+followed by WR70,6, MR70 and the unchanged-latch mode test. Complete
+the existing mode seal/descriptor/import, then actually supply
+
+$$
+F_0=111\,U(2)\,0U(0).
+$$
+
+Its target is $a$, which belongs to the authentic predecessor's
+$[a,b_P]$. GENERAL Lemma 8.1 and Theorem 8.2 give finite authenticated
+conversion, all checks/ACKs, one completed item and actual Ready $P'$.
+The history through $P'$ contains $h_P$, and $b'=n(P')>N\ge a$.
+
+At $P'$ supply the existing gate1, separate mode1 and frame
+
+$$
+F_N=111\,U(t+2)\,0U(t),\qquad t=N-a.
+$$
+
+Its payload length is $1+(t+1)=t+2$. The actual completed predecessor
+now satisfies $0\le t\le b'-a$, so the unchanged GCA binder used by
+GENERAL selects $a+t=N$. Its unique actual prefix at that tally is
+$h_P$. GENERAL Theorems 6.3 and 8.2 and Lemma 7.3 give the authentic
+bodies and complete checked return. The first and second flights retain
+their distinct covers, packages, origins, bindings and receipt intervals.
+There is no selection of the unfinished first flight by its own cover. ∎
+
+This continuation starts after an added input and can follow arbitrarily
+different finite earlier completed histories. It needs no annex70 field
+inside an original successor for Theorem 5.2: the first original response
+would need only the existing actual meter. The second flight, however,
+must be observable through a genuinely original finite experiment with
+the authenticity in Definition 5.1. Native returnability alone does not
+establish that condition. In particular the following cases remain to
+be derived from the textual installed entries: original Advance at the
+first EX70; the actual original status and lawful domains of later
+gate/mode/history Supplies; the intervening Advance/semantic entries;
+and which existing original released outputs identify the positioned
+checked view publication uniformly across starting histories.
+

@@ -1,0 +1,25 @@
+**Corollary 14.2 (The exact refutation quantifiers).**
+For every $0<\tau\le1/24$ and $0<u\le\tau$,
+the universal original complementary plane (9.2) fails at the
+allowed member $v=0$ for every allowed actual continuation.
+For this same law and arbitrary allowed $v$, strict improvement
+over the old complementary plane holds exactly for $v<22u/181$.
+
+Proof. The exact difference at $v=0$ is
+
+$$
+\left(5\tau+\frac{22u}{181}\right)-h
+ =\frac{792u}{181\cdot217}>0.
+\tag{14.2}
+$$
+
+Moreover $181v=0<75u$, so this is a member of the strict
+complementary region. For general $v$ and $u>0$, (10.2)
+is less than $5\tau+22u/181$ iff
+$\max\{22u/217,v\}<22u/181$, which is exactly the condition
+stated. Such a $v$ automatically satisfies $181v<75u$.
+At $u=0$ necessarily $v=0$ and there is no strict improvement.
+Theorem 5.2 still evaluates its own old law correctly;
+(9.2), proposed as a full-class necessary relation, is the
+assertion refuted here. $\square$
+

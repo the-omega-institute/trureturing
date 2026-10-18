@@ -1,0 +1,53 @@
+### 41.1 Actual source witnesses and the unique literal inverse
+
+For any $v\in\mathbb F_2$, $j\in P$ and $0\le s<k$, coprimality gives arbitrarily large $N$ satisfying
+
+$$
+N\equiv0\pmod m,\qquad N\equiv-j\pmod T,\qquad N\ge s+2.
+$$
+
+Put $a=\bigoplus_{i=N-s}^{N-1}c_i$, with empty XOR zero, and use the one history
+
+$$
+w=(v\oplus a)\,0^{N-s-1}1^s.
+\tag{41.10}
+$$
+
+Its first factor is one bit and has coefficient $c_0=1$. The intervening zeros separate it from the terminal run $s<k$. Its first bit contributes $v\oplus a$, its terminal run contributes $a$, its phase is $-j$, and its tail is exactly $s$. Its length is divisible by $m$, and each length-$m$ block is available under either original alphabet. This single legal history therefore realizes the entire INITIAL record $(v,-j,s)$. The two-block all-one history $1^{2m}$ realizes bottom: its individual blocks are available because $m<k$, while their accumulated run reaches $k$. The unobserved witness lengths are not controller inputs or added continuation fees. These are the joint witnesses credited to Lemma 15.1 and (25.3), in the present parameters.
+
+For a first word $X$ that succeeds from an INITIAL source, its scalar increment is
+
+$$
+q_X(j)=\bigoplus_{i=0}^{m-1}X_i c_{-j+i}.
+\tag{41.11}
+$$
+
+The ordered first path is $W_0=\{0,1,\ldots,m\}$. Substitution of the two coefficient residues in (41.2), using $T=2m-1>m$, gives the supplied path identity
+
+$$
+\begin{aligned}
+q_X(0)&=X_0,\\
+q_X(j)&=X_{j-1}\oplus X_j\qquad(1\le j<m),\\
+q_X(m)&=X_{m-1},\\
+q_X(j)&=0\qquad(m<j<T).
+\end{aligned}
+\tag{41.12}
+$$
+
+Every bit occurs twice in the XOR over $W_0$, so its total charge is even. Conversely the first $m$ equations recursively force
+
+$$
+X_i=\bigoplus_{h=0}^i q_X(h)\qquad(0\le i<m).
+\tag{41.13}
+$$
+
+The final endpoint equation holds exactly when the total charge is even. Thus an even charge assignment on the whole path has one unique literal inverse, with zero charge outside it. In particular, for an even $H\subseteq U$ the supplied inverse is
+
+$$
+\mathcal B_0(H)_i=\bigoplus_{h=0}^i\mathbf1_H(h),
+\qquad 0\le i<m.
+\tag{41.14}
+$$
+
+It starts zero because $0\notin H$, and ends zero because $|H|$ is even and $m\notin H$. These identities are Interface 1.4, equations (1.4)–(1.5), of the [INITIAL target-cost volume](KBONACCI_INITIAL_TARGET_COST_THEORY.md#1-one-reader-one-joint-prior-and-one-fee), also used in (27.4)–(27.5). The inverse is a literal action, not an arbitrary parity oracle; its old-tail safety must still be checked.
+

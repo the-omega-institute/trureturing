@@ -1,0 +1,22 @@
+### 6.1 The complete positive-spectrum classification
+
+Write
+
+$$
+\lambda_\alpha=2(p_0p_1+p_3p_{13}),\qquad
+\lambda_\beta=2p_0p_2,\qquad
+\lambda_\gamma=2(p_0p_3+p_1p_{13}).
+\tag{6.1}
+$$
+
+In generic position, Theorem 5.1 gives the active Gram
+$\operatorname{diag}(\lambda_\alpha I_2,\lambda_\beta I_2,
+\lambda_\gamma I_2)$. On one wall it gives two positive $2\times2$ blocks,
+and at both walls it gives a circle block with coefficient
+$\lambda_{\mathrm{circ}}=2p_0p_2$ and a parity coefficient
+
+$$
+\lambda_{\mathrm{par}}=4(p_0p_1+p_0p_3+p_1p_{13}+p_3p_{13}).
+\tag{6.2}
+$$
+

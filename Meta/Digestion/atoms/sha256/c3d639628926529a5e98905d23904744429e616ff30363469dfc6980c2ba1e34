@@ -1,0 +1,49 @@
+**Theorem 6.4 (qualified exact minima with retained slack).** Every
+graph in $\mathfrak C_5$, hence every graph in $\mathfrak A_5$, satisfies
+
+$$
+\begin{aligned}
+m&\ge G+R+\rho+\eta_5
+ \ge G+\nu+E_{\rm reg}+b_{\rm short}+2\tau+\rho,\\
+|Q_{\rm live}|&\ge
+G+(R-\nu)+\rho+\eta_5.
+\end{aligned}
+\tag{TS.29}
+$$
+
+For every original $n,k,A$, the minimum $m$ in either class at both
+caps is exactly $G$. The subclass forced to have $I_5$ has at least one
+additional state, without an asserted attained minimum. The class
+$\mathfrak C_5$ contains $\mathfrak C$ and $\mathfrak A_5$.
+The inclusion $\mathfrak C\subseteq\mathfrak C_5$ is strict across the
+original parameter family; no strictness claim is made separately at every
+fixed parameter instance.
+
+Proof. SI11 capacity makes each other late contribution $E_I-D_I$
+nonnegative. Theorem 4.1 treats $I_5$ without a conflict condition.
+Substitute in (TS.20) and remove $\nu$ for the live count. A graph in
+$\mathfrak A_5$ has no other late pool, so meets the condition vacuously.
+The fixed-order grid has one state $q_{h,z}$ per cell, label $h+z+1$,
+zero successor $q_{h,z+1}$ unless $z=L-1$, when it is $\mathsf0$,
+and one successor $q_{h+1,z}$ unless $h=K-1$, when it is $\mathsf1$.
+It starts at $q_{0,0}$. The actual counts are its invariant; it reads a
+prefix of $1,\ldots,n$ and is correct at both caps. An input with
+$K-1$ ones and $L-1$ zeros before the last query pays $n,W$ together.
+Every depth has one common support and every cell one host, so all gaps
+have span one and all slack vanishes. This gives equality in both classes.
+Inclusion of $\mathfrak C$ is immediate by dropping only its condition
+on $I_5$. Proposition 7.2 supplies a complete graph in
+$\mathfrak C_5\setminus\mathfrak C$, proving strictness. $\square$
+
+The plain terminal-only class $\mathfrak A_5$ is not a superset of SI11's
+$\mathfrak C$. Over the complete original parameter family the two are incomparable.
+Proposition 7.2 is in
+$\mathfrak A_5\setminus\mathfrak C$. In the other direction, the already
+proved [SI, Proposition 11.8][SI] at $v=4$ gives $n=12,k=6,s_i=i$,
+belongs to $\mathfrak C$, and has the sole late terminal gap $(6,12)$
+of span six, so is outside $\mathfrak A_5$. That existing interacting
+family has unbounded late spans and is above-grid. Its $v=3$ member
+already has terminal span five inside $\mathfrak C$. The additional
+content of Theorem 4.1 is unconditional strict local compensation,
+including graphs outside that sufficient class.
+

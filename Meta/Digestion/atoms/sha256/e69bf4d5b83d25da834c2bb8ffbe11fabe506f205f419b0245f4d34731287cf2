@@ -1,0 +1,37 @@
+**Theorem 2.4 (finite cross-entry disclosure).** For each
+$h\in\mathcal H_{\mathrm{mode}}$ and every
+$k\in\mathcal H_{\mathrm{mode}}$, if $k$ has $d(h)$ consecutive existing
+non-IN rows and their native row records equal $R(h)$, then $k=h$.
+Consequently the variable-length record $R(h)$ has a mathematical inverse
+on its realized image. That inverse recovers $P,\mu$ and $h(P,\mu)$;
+it needs neither a target numeral nor two returning flights.
+
+Proof. The code and hygienically expanded call-site/parity identities
+locate the dry-pass Field/LastBank in the matching record. Its RD, ML and
+exit occurrences are distinct actual rows; matching all control records
+aligns its entry, each loop iteration and its final F/MR exit. An earlier
+IN, a different exit or a different number of backward iterations would
+already break the criterion. Matching latch4 at its RD occurrences gives
+the identical word $\operatorname{rev}(u_h)\mathsf F$ for $k$. Reverse
+this finite mathematical word and apply RCA's existing fixed-field bank
+interpretation. The complete field vectors, and hence their manifest and
+completed $M$, are equal. This is postprocessing of executed reads; no
+additional native import or parser is executed.
+
+Membership in $\mathcal H_{\mathrm{mode}}$ and Lemma 2.2 identify those
+fields as authentic completed predecessor data on both runs. GENERAL
+Lemma 8.1, using GCA Theorem 4.2 and ARC's completed input-site recovery,
+already reconstructs the unique reached outer predecessor from that
+manifest and ordered $M$ on this fixed initialization. Apply that result
+directly to obtain equal $P$. This application includes empty $M$, repeated
+equal requests, earlier successful conversions and completed typed history
+rejections; no deduplication or fresh source is permitted.
+
+The first EX70 successor additionally gives equal latch6, hence equal
+$\mu$. From the same actual $P$, gate1 and that mode bit have a unique
+finite native suffix ending just after the mode IN. Therefore $k=h$.
+The same argument constructs the inverse on the realized records.
+GENERAL Corollary 4.4 can subsequently recover each independently defined
+$S,B,M_J,T$ from this recovered prefix; those history kernels are reused
+results. ∎
+

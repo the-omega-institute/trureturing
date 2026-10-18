@@ -1,0 +1,27 @@
+**Corollary 6.3 (no uniformly sublinear error for arbitrary completion).**
+Fix $r\ge1$ and $d\ge2$, and choose one $m\ge2$ with $4m>r$.
+For the fixed positive law (OCC.18), replacing its actual Gibbs law by
+an arbitrary globally compatible completion that matches all COK local
+laws and all full conditionals for at most $r$ owners cannot be
+justified by a uniform additive $o(n)$ free-energy error. This remains
+true with incidence at most four and terminal individual-bijection
+witnesses.
+
+Proof. Use Theorem 5.3 with this fixed $m$, $\epsilon=1/4$, and
+$\ell\to\infty$. All those data match exactly, but the deficit is
+at least $3\ell/4-7/4$ on $n=11m\ell$ blocks. Its liminf per
+original block is at least $3/(44m)>0$. The actual witnesses have
+the claimed incidence and terminality by Theorems 4.2 and 4.4.
+$\square$
+
+The connected family in §4 supplies the linear move barrier; the
+extensive ambiguity in §5 uses disjoint copies of it. No assertion of
+an extensive ambiguity in one connected growing gadget is needed.
+Joint elimination, direct component summation, other global relations,
+lawful finer recuts, global recoloring and unrestricted cap verifiers
+remain available. [SCP][SCP]'s analytical soft carriers change the
+support being summed and require their own estimates; they are not
+counterexamples to this hard-support statement. This boundary neither
+contradicts COK soundness nor proves noncomputability or failure of
+unrestricted optimizer-cofinality.
+

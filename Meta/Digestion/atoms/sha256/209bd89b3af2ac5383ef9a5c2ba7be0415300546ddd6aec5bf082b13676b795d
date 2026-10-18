@@ -1,0 +1,68 @@
+**Proposition 8.4 (exact bilinear mass tables).** For the weights
+(NCE.51), every range-feasible $P$ missing at least one parent leaf
+has $w_{\rm j}(P)\le9996$. If both parent leaves occur, its branch
+mass is at most $3980$.
+
+Proof. Because $M$ is entrywise nonnegative,
+
+$$
+\sum_{(x,y)\in T}M_{c(x),c(y)}
+\le n(X)^{\mathsf T}Mn(Y)
+\le u^{\mathsf T}Mv
+\tag{NCE.60}
+$$
+
+whenever $u,v$ dominate the respective count vectors. The first
+inequality enlarges a nonnegative sum to $X\times Y$. It makes no
+claim about admissibility of that product. The four complete finite
+tables below use the family orders of (NCE.54). Include the indicated
+parent-leaf weight in the first three tables:
+
+$$
+\left(u^{\mathsf T}Mv\right)_{
+ u\in\mathcal F_4,\ v\in\mathcal F_4}
+=\begin{pmatrix}
+9452&9996&8976\\
+9996&9996&9996\\
+8976&9996&8892
+\end{pmatrix},
+\tag{NCE.61}
+$$
+
+$$
+\left(4947+u^{\mathsf T}Mv\right)_{
+ u\in\mathcal F_3,\ v\in\mathcal F_3}
+=\begin{pmatrix}
+9240&9294&8988&9996\\
+9294&8244&8958&8874\\
+8988&8958&9128&9996\\
+9996&8874&9996&9996
+\end{pmatrix},
+\tag{NCE.62}
+$$
+
+$$
+\left(3264+u^{\mathsf T}Mv\right)_{
+ u\in\mathcal F_{4A},\ v\in\mathcal F_3}
+=\begin{pmatrix}
+9996&8976&9520&9996\\
+9744&8640&9660&9996
+\end{pmatrix},
+\tag{NCE.63}
+$$
+
+$$
+\left(u^{\mathsf T}Mv\right)_{
+ u\in\mathcal F_X,\ v\in\mathcal F_Y}
+=\begin{pmatrix}
+3980&1920&3076&2032\\
+3444&1848&2562&1932\\
+3076&1692&1964&1160
+\end{pmatrix}.
+\tag{NCE.64}
+$$
+
+Each entry is the displayed integer bilinear expression. Their maxima
+are respectively $9996,9996,9996,3980$. Lemma 8.3 and (NCE.60) prove
+the assertions for every such $P$. $\square$
+

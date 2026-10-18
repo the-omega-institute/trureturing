@@ -1,0 +1,24 @@
+**Definition 1.2 (Native acquired residual).** Let $X,Y$ be finite p and suspended carriers on one held-record fibre, with actual noncompleting kernels $B:X\to Y$ and $A:Y\to X$. Write their own-generated complete raw laws as $Q_x,W_y$, and their synthetic alpha probabilities as $u_x,v_y$. Thus
+
+$$
+Q_x=u_x\delta_\alpha+(1-u_x)\beta\sum_yB_{xy}W_y,
+\qquad
+W_y=(1-v_y)\delta_\beta+v_y\alpha J_y,
+\qquad J_y:=\sum_xA_{yx}Q_x.
+\tag{1.5}
+$$
+
+Here $\delta_w$ is the Dirac law at the complete raw word $w$, and prefixing a letter to a law means its pushforward by concatenation. $J_y$ is the law of the actual alpha-successor configuration, averaged only over that one acquired update. It is defined even if $v_y=0$. It is not the observer-randomness-marginalized forecast after conditioning on a synthetic alpha.
+
+Let
+
+$$
+\mathcal N_p(I)=
+\left\{\int_I P_{p,r}\,\nu(dr):\nu\text{ is a Borel probability measure on }I\right\}.
+\tag{1.6}
+$$
+
+A table has native acquired residuals if every positive-row suspended label has $J_y\in\mathcal N_p(I)$. This imposes no native-mixture condition on the individual $Q_x$, no constancy of $v$, no redraw kernel and no equality of different $J_y$.
+
+The measures in (1.6), stationary rows and matrix powers below are mathematical analysis objects. Neither a continuous mixture measure nor a row vector is made readable by the finite running observer.
+

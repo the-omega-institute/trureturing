@@ -1,0 +1,201 @@
+**Theorem 28.2 (The common-copy observation fixes the seam contraction
+and its odd-cycle loss).**
+For the observation (28.1), open realizability is equivalent to
+
+$$
+0\le c_i\le m,\qquad c_i+c_{i+1}\le m\quad(1\le i<n).
+\tag{28.3}
+$$
+
+Define the $(m+1)$-by-$(m+1)$ matrix and all-ones column by
+
+$$
+T_m(a,b)=\mathbf1_{\{a+b\le m\}},\quad 0\le a,b\le m,
+\qquad \mathbf e=(1,\ldots,1)^{\mathsf T}.
+\tag{28.4}
+$$
+
+Then
+
+$$
+L_n^{\mathrm{op}}(m)=\mathbf e^{\mathsf T}T_m^{n-1}\mathbf e.
+\tag{28.5}
+$$
+
+Joining an open left segment of length $a\ge1$ and an open right segment
+of length $b\ge1$ across an edge, while keeping their two end positions
+distinct, contracts their endpoint-resolved counts as
+
+$$
+L_{a+b}^{\mathrm{op}}(m)=\ell^{\mathsf T}T_m r,
+\quad
+\ell_j=\#\{\text{left totals with last total }j\},
+\quad r_j=\#\{\text{right totals with first total }j\}.
+\tag{28.6}
+$$
+
+The pairing on arbitrary boundary data has rank $m+1$ and determinant
+$(-1)^{m(m+1)/2}$. An exact factorization of this bilinear pairing through
+a vector space of dimension $d$ requires $d\ge m+1$.
+
+For a closed word of even length, the cyclic versions of the local
+inequalities in (28.3) are sufficient. For $n=2k+1$ odd they are
+sufficient precisely after adding
+
+$$
+\sum_{i=1}^n c_i\le km.
+\tag{28.7}
+$$
+
+These descriptions give the lattice points of $mQ_n$, each realized by
+$m$ common closed histories. In particular,
+
+$$
+L_n^{\mathrm{cyc}}(m)=
+\begin{cases}
+\operatorname{Tr}(T_m^n),&n\text{ even},\\[2mm]
+\displaystyle\operatorname{Tr}(T_m^n)
+-\sum_{j=1}^{\lfloor m/2\rfloor}
+ \binom{m-2j+n-1}{n-1},&n=2k+1.
+\end{cases}
+\tag{28.8}
+$$
+
+Thus an aggregate trace closes the local inequalities, while the second
+line removes exactly the observations that have no common-copy lift.
+
+Proof. The path feasibility used in Theorem 27.2 applies to these same
+columns. Its following explicit version also includes $n=1$ and fixes
+the row convention. In each odd column occupy the first $c_i$ rows,
+and in each even column occupy the last $c_i$ rows. Neighboring occupied
+row sets are disjoint by (28.3), so every row is an open history.
+Conversely, adjacent ones in a row are forbidden, giving each inequality
+by summation. For $n=1$ the bound $c_1\le m$ is essential; for $n\ge2$
+each coordinate has a neighbor and the local edge bounds already imply
+it. With $m=0$, the construction means the empty array.
+
+Expanding the product of matrix entries in (28.5) counts one for each
+sequence of totals satisfying (28.3). For reference,
+
+$$
+T_1=\begin{pmatrix}1&1\\1&0\end{pmatrix},\qquad
+T_2=\begin{pmatrix}1&1&1\\1&1&0\\1&0&0\end{pmatrix}.
+\tag{28.9}
+$$
+
+For (28.6), choose a left and a right total sequence. The sole new
+inequality is between their endpoint totals. Every allowed pair has a
+common array by the preceding construction on the whole path. This
+establishes the contraction for counts of observations, without claiming
+that it preserves two separately prescribed arrays. It is an edge join,
+not identification of the two boundary positions.
+
+Let $J_m$ reverse the $m+1$ columns. Then
+$(T_mJ_m)_{a,b}=\mathbf1_{\{a\le b\}}$ is upper triangular with diagonal
+one. The reversal has $m(m+1)/2$ inversions, proving the determinant
+and rank. If $\ell^{\mathsf T}T_mr=(U\ell)^{\mathsf T}K(Vr)$ for all
+$\ell,r$ and maps into $d$-dimensional spaces, then
+$T_m=U^{\mathsf T}KV$ and $m+1=\operatorname{rank}T_m\le d$.
+The same argument applies to an arbitrary bilinear form on a
+$d$-dimensional intermediate space. This is a linear factorization
+bound for arbitrary boundary data. It makes no computational lower-bound
+claim for unrestricted encodings, nor a minimal-realization assertion
+from the unmarked scalar sequence (28.5) alone.
+
+The arithmetic consequence for two length-three pieces is
+
+| $m$ | $L_3^{\mathrm{op}}(m)$ | Independent product $(L_3^{\mathrm{op}}(m))^2$ | Sewn $L_6^{\mathrm{op}}(m)$ |
+| ---: | ---: | ---: | ---: |
+| 1 | 5 | 25 | 21 |
+| 2 | 14 | 196 | 157 |
+| 3 | 30 | 900 | 707 |
+
+To obtain the entries directly, start with $v_1(j)=1$ and use
+$v_{s+1}(j)=\sum_{i=0}^{m-j}v_s(i)$; summing $v_3$ or $v_6$ gives the
+indicated counts. For $m=3$ the vectors $v_3=(10,9,7,4)$ and
+$v_6=(246,216,160,85)$ give $30$ and $707$.
+The product counts all pairs before imposing the extra edge. In the
+index realization of chapter 27, an index equals the corresponding
+sector count under that chapter's hypotheses; multiplying these two
+indices before retaining and contracting their seam data would instead
+give the middle column.
+
+For an even ring the odd/even row construction works also across the
+last edge, since its endpoints have opposite parity. For an odd ring
+$n=2k+1$, every independent set has at most $k$ vertices: its occupied
+vertices have distinct unoccupied cyclic successors. Summing this bound
+over $m$ rows proves (28.7).
+
+Here is the integral sufficiency argument, including zero coordinates.
+Proceed by induction on $m$. The case $m=0$ is immediate. If some $c_i=0$,
+delete that vertex. The remaining cycle becomes a path, or its nonzero
+support becomes disjoint paths. Color each such path alternately and
+use the first/last-row construction on the same set of $m$ row indices.
+Put zeros in deleted columns. Edges touching those columns impose no
+further condition, and all rows are closed histories.
+
+Otherwise every $c_i\ge1$. There is a slack edge $\{i,i+1\}$ with
+$c_i+c_{i+1}\le m-1$: if all edges were saturated, summing them would
+give $2\sum c_i=nm>2km$. Choose the independent set
+
+$$
+I=\{i+2,i+4,\ldots,i+2k\}\pmod n.
+\tag{28.10}
+$$
+
+It has size $k$, meets every edge once except $\{i,i+1\}$, and all its
+chosen coordinates are positive. Subtracting $\mathbf1_I$ leaves
+nonnegative coordinates; every met edge now has sum at most $m-1$,
+and the one unmet edge already did. The total drops by $k$ and is at
+most $k(m-1)$. Induction realizes the remainder by $m-1$ rows, to which
+we append $I$. This proves the integer decomposition property in the
+exact degree used in (28.1), not only fractional realizability.
+
+To identify the real polytope as well, let $P$ be the bounded rational
+polyhedron given by the local inequalities at $m=1$, with (28.7) when
+$n$ is odd. It contains $Q_n$. Any rational point of $P$ has a common
+denominator $d>0$; the integer construction expresses its multiple as
+$d$ independent sets and therefore puts that point in $Q_n$.
+Rational points are dense in $P$, since a bounded rational polyhedron
+is the convex hull of its rational vertices. The polytope $Q_n$ is
+closed, so $P\subseteq Q_n$. This proves equality and (28.2)'s
+interpretation in every degree. These stable-set descriptions are the
+classical cycle descriptions, recorded in [Miyazaki, §2][MI28]; their
+role here is the lift of the specified occupancy observation.
+
+Finally, expand the trace in (28.8). It counts tuples
+$(c_1,\ldots,c_n)$ with $c_i+c_{i+1}\le m$, including the last-first
+edge, once per tuple with its fixed position labels. It does not divide
+by rotations. For odd $n$, partition the tuples violating (28.7) by
+
+$$
+\sum_i c_i=km+j,\qquad
+1\le j\le\lfloor m/2\rfloor.
+$$
+
+The upper bound follows by summing the edge inequalities. Set
+
+$$
+a_i=m-c_i-c_{i+1}\ge0,\qquad \sum_i a_i=m-2j.
+\tag{28.11}
+$$
+
+There is a bijection between such tuples and weak compositions of
+$m-2j$ into $n$ parts. Its inverse is
+
+$$
+c_i=j+\sum_{r=0}^{k-1}a_{i+1+2r}.
+\tag{28.12}
+$$
+
+Indeed, the summands in $c_i+c_{i+1}$ cover every $a$ except $a_i$;
+thus that sum is $2j+\sum a-a_i=m-a_i$. Also each $a_i$ occurs $k$
+times in the sum of (28.12), giving $\sum c_i=km+j$.
+The coordinates are nonnegative and the edge equations bound them by
+$m$. Uniqueness follows because a difference solving
+$d_i+d_{i+1}=0$ alternates sign and, on an odd ring, returns with
+opposite sign, hence is zero. Stars and bars counts the compositions
+as $\binom{m-2j+n-1}{n-1}$, proving (28.8). This proof exhibits the
+missing common-copy constraint in the same coordinates as the mode map.
+$\square$
+

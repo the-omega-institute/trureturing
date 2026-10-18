@@ -1,0 +1,75 @@
+## 9. The $JJ$ family and the exceptional-source bridge
+
+Fix the word
+
+$$
+w_a=M^aJJM^{2m-2-a},\qquad 0\le a\le2m-2.
+$$
+
+Let $r=a+1$ and $T=\{0,\ldots,2m\}\setminus\{r\}$. Then
+
+$$
+A_r=JM^a,\qquad A_i=M^{k_i}\ (i\in T),\qquad
+k_i=\begin{cases}i&i\le a,\\i-2&i\ge a+2.\end{cases}
+\tag{9.1}
+$$
+
+In particular the same matrix $M^a$ is read at the two different original clocks $a$ and $a+2$.
+
+**Theorem 9.1.** An all-input countable palette on $w_a$ exists if and only if there is a universal identity whose functional, after nonzero scalar normalization, is
+
+$$
+L=\rho I+M,\qquad \rho>0.
+\tag{9.2}
+$$
+
+In that event one matrix succeeds everywhere, with scale $\rho+\operatorname{tr}(MP)>0$.
+
+**Proof.** Every identity has $Ce_r=0$ and $L\in\operatorname{span}\{I,M\}$. The attainable functionals form a linear subspace $\Lambda$ of this plane, since the defining equations are linear in $(C,L)$. Its dimension is at most one. Two independent functionals would span the plane and, by taking the same linear combination of their matrices, yield functional $I$, prohibited by Theorem 4.1 because $A_0=I$. If $\Lambda=0$, Lemma 3.2 applies.
+
+Otherwise write its line as $L=uI+vM$. Both coefficients are nonzero, because $I$ and $M$ occur among the $A_i$ and proportionality to either is prohibited. Put $t=\operatorname{tr}(MP)=b+c+\theta>0$. If $uv>0$, scaling gives (9.2), and its identity succeeds everywhere.
+
+Suppose instead $uv<0$, and put $t_0=-u/v>0$. We prove that the entire stratum $t=t_0$ cannot be rescued by a countable palette. It is realized by positive sources: choose sufficiently small $\theta>0$, and take $b,c$ to be the positive roots with
+
+$$
+b+c=t_0-\theta,\qquad bc=\theta(1-\theta).
+\tag{9.3}
+$$
+
+For a small interval of such $\theta$, the sum is positive and the discriminant $(t_0-\theta)^2-4\theta(1-\theta)$ is positive, by its positive limit $t_0^2$ as $\theta$ tends to zero. Both roots are positive, so (9.3) gives actual legal sources. Choose either continuous root branch on a small interval.
+
+On $T$ all factors are the fixed positive numbers
+
+$$
+\alpha_i=F_{k_i-1}+F_{k_i}t_0.
+\tag{9.4}
+$$
+
+Positivity also follows directly because each $M^{k_i}$ is nonzero and entrywise nonnegative and $P$ is strictly positive. Let $C_0$ be a nonzero universal identity on the line $\Lambda$. Its restriction $C_{0,T}$ has rank $m$, since the exceptional column is zero. At $t=t_0$ it annihilates
+
+$$
+B=\operatorname{diag}(\alpha_i)_{i\in T}V_T,
+$$
+
+whose image has dimension $m$. This image is precisely its $m$-dimensional kernel. Drift annihilation therefore gives
+
+$$
+\mathbf1_T=B\gamma\quad\text{for a fixed }\gamma\ne0.
+\tag{9.5}
+$$
+
+This is a drift ambiguity on the whole realized $t_0$ stratum, not just at one source.
+
+The outlier factor $q=\operatorname{tr}(JM^aP)$ varies over an interval there. For $a=0$, it is $t_0-\theta$. For $a\ge1$, (2.3) gives
+
+$$
+q=F_{a-1}(t_0-\theta)+F_a(1+c).
+\tag{9.6}
+$$
+
+It cannot be constant on a $\theta$ interval. Constancy would make $c=s\theta+h$, with rational slope $s=F_{a-1}/F_a$. Substitution in $c(t_0-\theta-c)=\theta(1-\theta)$ and comparison of quadratic coefficients gives $s^2+s=1$. Its roots $(-1\pm\sqrt5)/2$ are irrational, a contradiction. Thus continuity and the intermediate value property give a nonempty open interval $Q_0$ of realized $q$ values. No choice of a source section over $Q_0$ is needed; every value is realized and the observations depend only on $q,t_0,\beta,\delta$.
+
+Now suppose any fixed $C$ is collinear for every $q\in Q_0$, every $\beta\ne0$, and every drift. Again $C\mathbf1=0$ and its coefficient map is scalar. Comparing two $q$ values shows $(Ce_r)v_r^{\mathsf T}$ is scalar of rank at most one, hence zero. Thus $Ce_r=0$ and $C_TB=\lambda I_m$. Applying this to (9.5) gives $\lambda\gamma=C_T\mathbf1_T=0$, so $\lambda=0$. Such a $C$ has zero output throughout the stratum.
+
+The observations are polynomial in $(q,\beta,\delta)$ on $Q_0\times(\mathbb R^m\setminus\{0\})\times\mathbb R$. The restricted covering principle now excludes every countable palette, including maps that are not global identities. The zero-line, positive-sign, and opposite-sign cases exhaust $\Lambda$, proving the equivalence. $\square$
+

@@ -1,0 +1,40 @@
+**Definition 1.3 (an autonomous delivery frame).** Fix one immutable
+installation, independent of the actual source. A complete composite
+configuration $c\in\mathcal C$ includes all persistent sender,
+mailbox, receiver, control, workspace, instruction and return counters,
+ROM and work head positions, payloads, length fields, stage flags,
+response latches and continuations. Immutable data contain bits, not
+an advancing head or a source-dependent position. $S_{\rm inst}$ is
+$|\mathcal C|$, including installed but unreachable configurations.
+If configurations are encoded in $L_L$, then
+$S_{\rm inst}\le F_{L+2}$, with $F_0=0,F_1=1$.
+
+A Read frame starts at a returned macro cut with a selected original
+Read. Until its final source-facing Read it is deterministic,
+time-homogeneous and source-quiescent. Every step is selected by the
+current counted configuration and the fixed installation. Local steps
+can inspect only this configuration and installed bits. A transport
+step carries at most one address letter. Delimiters, handoffs, local
+work, initialization and any allocation are paid occurrences, too.
+There is no external scheduler, advancing ROM head, clock or input
+word position. No source reply, including a reply to a proper prefix,
+occurs before commitment.
+
+For an original Read$(p)$, the concatenation of address letters actually
+arriving at the final receiver must be exactly $p$, in order. A compressed
+wire program does not count as those letters: its local expansion and
+subsequent literal arrivals must occur within the counted frame.
+The receiver has an actual accumulated payload and a completed frame
+boundary. A decoding of this receiver-owned information gives the
+committed literal. At commitment that literal must equal the original
+macro literal. A source-row name may select the sender's data; it may
+not replace the received payload at the final call. The source sees
+exactly one original Read after this frame. Updates and Halt have
+finite local preparation followed by exactly their original operation.
+
+This is a minimal sufficient interface contract, not an assertion of a
+unique smallest machine. It permits compressed receiver representations
+if they represent the actually arrived prefix and their updates,
+decoding, persistent fields and final materialization are paid and counted. A nonreceiving output trace is not such a receiver.
+A source-walk interface would be a different source contract.
+

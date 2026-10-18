@@ -1,0 +1,50 @@
+## 172. Realization of the paired class with at most four reservoirs
+
+**Theorem 172.1.** Let the actual finite ideal face-pairing triangulation
+satisfy the original manifold hypotheses: its truncation is a connected
+orientable compact 3-manifold with nonempty boundary, and every boundary
+component is a closed
+surface of genus at least two. Suppose every actual edge has degree at
+least six. Partition its actual global edge set as E=H disjoint union S,
+with |H|<=4. In every tetrahedron choose a fixed actual vertex frame
+whose edge labels, in order (12,13,14,34,24,23), are
+
+ (R,A,B,O,A,B),  A,B in H, A!=B, R,O in E.
+
+Then this same original triangulation has a genuine nondegenerate
+hyperideal realization with totally geodesic boundary. The reservoir pair
+may vary between tetrahedra; axes may repeat or also belong to H.
+
+**Proof.** The original volume's Theorem 42.2 gives a strictly positive
+hyperideal angle structure under precisely these manifold and minimum-six
+hypotheses. Its face-transport argument handles vertices incident only to
+six-degree edges; strictness is not assumed from the unmodified assignment
+2*pi/d(e). The original volume's Corollary 43.1, applying Luo--Yang,
+*Volume and rigidity of hyperbolic polyhedral 3-manifolds*,
+arXiv:1404.5365v2, Theorems 1.4 and 6.3, supplies a common positive global
+generalized length vector producing the volume-maximizing angle structure.
+All original edge-angle sums are 2*pi; each tetrahedron is genuine or is
+the standard flat type with two opposite pi angles and four zero angles.
+
+For |H|<=3, the existing seed-free result of Sections 130--136 excludes
+flats. For |H|=4, Section 171 excludes them. Hence every tetrahedron is
+genuine. The shared original lengths make paired right-angled hexagonal
+faces isometric. The original complete edge equations remove cone defects;
+the truncation triangles glue to totally geodesic boundary. Thus the
+metric realizes the given face pairing itself.
+
+**Scope and provenance.** The positive-angle construction and the
+Luo--Yang variational existence theorem are reused inputs. The new
+conclusion is the removal of all four-reservoir flat returns by complete
+angle budgets and actual face transport. No two-copy seed, additional
+H-witness condition, dual-girth bound, prohibition of parallel face pairs,
+role balance, or tetrahedron-transitivity hypothesis is imposed. Distinct
+local edge slots remain distinct in every budget even if their global
+labels coincide. This is a paper proof; no Lean certification is claimed.
+The hypotheses still require the fixed paired frame in every tetrahedron;
+this does not establish unrestricted CFMP or claim an example separating
+this class from every earlier realization criterion. An abstract face
+pairing without the stated manifold and boundary hypotheses does not
+inherit the variational existence step from this theorem.
+
+

@@ -1,0 +1,47 @@
+**Proposition 8.3 (what spatial structure plus one Read recovers).**
+Under the paid interface, Theorem 3.4 turns a target-blind retained
+relation and one same-source observation into the exact selected
+temporal trajectory for every late spatial address. That trajectory
+and its factor determine each other on attained inputs. The code
+alone need not predict the trajectory, identify the first leaf,
+or recover the whole tree or spatial boundary.
+
+Proof. The construction's selector and decoder give the factor
+by Theorem 3.3; Convention 2.1 gives the attained bijection with
+the trajectory. At $D=2$ its code $0$ contains both right-root
+leaves alpha and beta, with different trajectories at $R$. Thus
+the code alone is not sufficient even for that target. AAR's
+descriptor collision shows why the factor need not identify its
+blocking position, and branch factors ignore arbitrary descendants.
+An exact prediction at supplied $k$ produces no authentic Read
+event on $\rho^k t$; source continuity and the authentic count remain
+assumptions. $\square$
+
+**Open problem 8.4 (the unchanged full-family optimum).** Determine
+$M_1(D)$ for arbitrary finite $D$ by a non-tautological native
+structural characterization with an exact recurrence, or close the
+alphabet-scale gap with rigorously matching bounds. In particular,
+determine the sharp leading alphabet rate, including whether
+
+$$
+\lim_{D\to\infty}\frac{\log_2 M_1(D)}{2^{D-2}}
+$$
+
+exists and what its value is. The present bounds place any such
+limit between $\log_2(7/5)$ and $1$. The exact value at $D=3$
+also remains between $3$ and $4$.
+
+The missing relation is a global coloring or optimal-fiber theorem
+on the full variable-shape family that preserves all late targets
+and all native words on each jointly attained code fiber. Lemma 2.2
+names that interface but is only a generic partition criterion.
+The exact restricted theorem does not extend its box fibers to the
+whole family; Theorem 7.1 excludes a general unchanged-fiber
+prefix reduction, and $C_2=3$ excludes multiplying independent
+local minimum code counts. Finite source-table enumeration, small
+depth checks and selected scaffold families do not discharge this
+general obligation. The retained-bit order is a partial result
+within the full minimal-relations and mutual-recovery programme,
+whose physical realization and broader recovery questions remain
+open as well.
+

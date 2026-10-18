@@ -1,0 +1,11 @@
+**定义 5.4（累计盲空间）。** 在五态应用中保留基线 $P$，一般模型可将其替换为指定的当前线性摘要。定义
+
+$$
+\begin{aligned}
+K_m&=\ker P\cap\bigcap_{h\in\mathcal L_o,\ |h|\le m}\ker A_h,\\
+K_\infty&=\bigcap_{m\ge0}K_m.
+\end{aligned}
+$$
+
+空词读口 $A_\varepsilon$ 计入 $K_0$；$P$ 的保留不假定它在每个未来端点都能重新测量。由累计族的包含关系，$K_{m+1}\subseteq K_m$，与端点维数是否变化无关。
+

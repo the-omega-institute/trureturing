@@ -1,0 +1,15 @@
+## 13. Spectral decimation is not an ambient dimension
+
+The latest DEV also contains an exact Riesz/CMV decimation package. Its
+relevant facts are spectral: the moment form makes Laurent monomials with
+different residues modulo four orthogonal, the exponent map
+
+$$
+J(T^i)=T^{4i}
+\tag{13.1}
+$$
+
+is an isometry between the corresponding moment forms, and the associated
+projection norms agree across the scale-four replacement. These facts
+describe a graded spectral address, not four local spatial axes.
+

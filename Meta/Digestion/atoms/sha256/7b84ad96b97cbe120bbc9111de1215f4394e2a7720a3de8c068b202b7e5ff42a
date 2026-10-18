@@ -1,0 +1,5 @@
+**Machine contract.** This is a `generic-v1` theory reference volume.
+> Its locators depend on its own bytes. Merged text and append anchors are
+> preserved; corrections and extensions belong in numbered sections after
+> the terminal append anchor, followed by another append anchor.
+

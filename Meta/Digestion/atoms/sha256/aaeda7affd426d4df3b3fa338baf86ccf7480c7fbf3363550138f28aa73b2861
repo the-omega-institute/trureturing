@@ -1,0 +1,22 @@
+**定义 50.1（固定的精确种子）。** 所引根卷第 14–16 节的源采用其 [固定文本的第 15 节](https://github.com/the-omega-institute/trureturing/blob/e797d4c6511927b143f95498188c318e5d04ef5a/docs/develop/theory/FIB_SAMPLED_ROOT_COLLAPSE_AND_SAME_PARENT_FAILURE_CORE.md#15-联合零点的完整有理闭盒证书)：$x_0$ 是该节依式 (14.1) 排列的完整十二维有理中心，$C_s=10^{-12}N_s$ 是该节的完整十二阶整数矩阵，$Q_s=\{x:\|x-x_0\|_\infty\le10^{-10}\}$。其有限区间尺度为 $10^{40}$，不是本增补的 $B$。原种子始终指
+
+$$
+x_\dagger=\lim_{n\to\infty}x^{(n)},\qquad x^{(0)}=x_0,\quad x^{(n+1)}=x^{(n)}-C_sG_{7/15}(x^{(n)}). \tag{50.1}
+$$
+
+该处的全部十二行导数界和中心区间给 $q_s\le300624528/10^{12}$、$\eta_s\le232712/10^{40}$，故 $x_\dagger$ 是 $Q_s$ 内唯一零点，$\|x_\dagger-x_0\|_\infty\le\eta_s/(1-q_s)<2\cdot10^{-30}$。这复用的是原极限及原矩阵，绝非以 $x_0$ 代替根。
+
+由第 49 节首行与该 $x_0$ 的精确有理数据直接相减，有
+
+$$
+\|x_0-P_0(7/15)\|_\infty+2\cdot10^{-30}<10^{-11}. \tag{50.2}
+$$
+
+令 $\mathcal I=[\widehat v_1-R,\widehat v_1+R]$，$\widehat x=(\widehat v_2,\ldots,\widehat v_{12},\widehat v_{25})$。末行数据和第 48 节中心给
+
+$$
+\mathcal I\subset\operatorname{int}I_{99},\qquad \sup_{\theta\in\mathcal I,\ \|x-\widehat x\|_\infty\le R}\|x-P_{99}(\theta)\|_\infty<10^{-11}. \tag{50.3}
+$$
+
+式 (50.3) 的有限包含具体按 $\delta=[\widehat v_1-\theta_{99}-R,\widehat v_1-\theta_{99}+R]$、第 49 节末行二次式和式 (48.1) 求端点；对十二分量取端点绝对值最大值。式 (50.2) 使用所引完整中心而无其他隐含输入。
+

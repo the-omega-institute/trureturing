@@ -1,0 +1,17 @@
+**Theorem 7.3 (the value is locally $C^1$ and not $C^2$).** At fixed $A=\log1001$, the original global value across this local seam is $C^1$, has different finite one-sided second derivatives, and therefore is not $C^2$.
+
+Proof. On either analytic branch let $V_{\rm low}=\sum p_i\epsilon_iH_i$. Differentiate its moment equation at fixed $t$, giving $\sum(p_i'\Gamma_i+p_i\Gamma_i'x_i')=0$. Contact values give $\epsilon_iH_i=\mathbf d^T\Gamma_i-\lambda\sigma_iu_i$, and contact stationarity gives $\epsilon_iH_i'=\mathbf d^T\Gamma_i'-\lambda\sigma_iu_i'$. Substitution into the differentiated height yields
+
+$$
+\frac{dV_{\rm low}}{d\lambda}=-\lambda\frac{dk}{d\lambda}.
+$$
+
+As $s=s_0k/\sqrt\alpha=s_0\tau$, the globally attained value satisfies
+
+$$
+\mathcal T_s=-\frac{\lambda\sqrt\alpha}{2s_0},\qquad
+\mathcal T_{ss}=-\frac{\sqrt\alpha}{2\delta\tau_\lambda}.
+$$
+
+At the seam both laws have the same six positive weights and zero seventh, the same multiplier and dual values; their values and first derivatives agree. The analytic one-sided extensions and this agreement give $C^1$. The strictly positive, disjoint derivative intervals in Theorem 7.2 give distinct one-sided second derivatives by the last formula. Thus no common second derivative exists there. This is a local statement about the global optimum, not a claim that an entire branch or plane is everywhere $C^1$. $\square$
+

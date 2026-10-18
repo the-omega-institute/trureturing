@@ -1,0 +1,13 @@
+**Lemma 52.2 (remainders and absolute convergence).** The kernels in (52.1) satisfy
+
+$$
+\Pi_\chi(o,Y)=\Pi_\chi(Y,o)=P_\chi(Y),\quad
+R_\chi(Y)=O(r(Y)^4),\quad
+\mathcal R_\chi(A,Y)=O((r(A)+r(Y))^4)
+\tag{52.2}
+$$
+
+near the source and source pair respectively, and $\mathcal R_\chi$ is globally bounded. The integral defining $I_\chi$ is absolutely convergent.
+
+Proof. Lemma 43.1 gives boundedness of $\Lambda$ and joint smoothness near $(o,o)$. Its symmetry gives both endpoint restrictions in (52.2), since setting one endpoint to zero in the joint polynomial leaves exactly $\mathcal T_3f$. Ordinary Taylor through Euclidean degree three has remainder bounded by the fourth power of the Euclidean distance. In a small Engel ball, each coordinate of weight $j$ is $O(r^j)$. Every discarded monomial has weighted degree at least four, and the ordinary remainder is also $O(r^4)$. Apply the same argument in the endpoint product, with radius $r(A)+r(Y)$. The cutoffs are one there and the polynomial-cutoff products are compactly supported and bounded, proving the other assertions. Near $o$, (51.4) bounds the absolute integrand of $I_\chi$ by $Cr^{-6}$; outside a fixed source ball it is bounded by $Cr^{-10}$, using bounded $f,P_\chi$. The respective radial upper integrals are $C\int_0^\epsilon 1\,dr$ and $C\int_\epsilon^\infty r^{-4}dr$. These include the complete output and all remote phases. $\square$
+

@@ -1,0 +1,45 @@
+## 3. 三、热力学作用量：$\Delta$ 是 $\kappa$ 的内部驱动力
+
+固定 $(X,Y,Z)$ 后，概率律由 $\kappa$ 决定：
+
+$$
+p(\kappa)=
+\left(
+1-X-Y-Z+\kappa,\,
+X-\kappa,\,
+Z,\,
+Y-\kappa,\,
+\kappa
+\right).
+$$
+
+条件独立点为：
+
+$$
+\kappa_0=\frac{XY}{1-Z}
+$$
+
+在 $Z<1$ 时成立。
+
+定义相对于最大熵截面的 KL 作用量：
+
+$$
+\mathcal A(\kappa)=
+D_{\mathrm{KL}}
+\left(
+p(\kappa)\,\middle\|\,p(\kappa_0)
+\right).
+$$
+
+显式写为：
+
+$$
+\mathcal A(\kappa)=
+\sum_{i\in\{0,1,2,3,13\}}
+p_i(\kappa)
+\log
+\frac{p_i(\kappa)}{p_i(\kappa_0)}.
+$$
+
+---
+

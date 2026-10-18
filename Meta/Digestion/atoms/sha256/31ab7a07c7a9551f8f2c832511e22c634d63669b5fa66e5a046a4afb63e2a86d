@@ -1,0 +1,78 @@
+**Theorem 12.2 (equal-support factorization and sharp one-cut value).**
+Fix $k,l\in(0,c)$ and (PR.35). Suppose
+$\operatorname{supp}\tau_+=\operatorname{supp}\tau_-=S$. Define the
+positive invertible operator on $V$
+
+$$
+D U_+=\sqrt{l/k}\,U_+,\qquad
+D U_-=\sqrt{(c-l)/(c-k)}\,U_-,\qquad De_2=e_2,
+\qquad s=\|D\|^{-2}=s_*(k,l).
+\tag{PR.36}
+$$
+
+For every common trace-nonincreasing CP success operation satisfying the
+exact target requirement for every $\beta,m$, its successful Stinespring
+contraction, with all actual auxiliaries and a proof environment included
+in $E$, restricts to
+
+$$
+B|_{V\otimes S}=D\otimes A,
+\qquad A:S\longrightarrow E,\qquad A^\dagger A\leq sI_S.
+\tag{PR.37}
+$$
+
+Consequently its success probability is phase independent and obeys
+
+$$
+p_\epsilon=\operatorname{tr}(A^\dagger A\tau_\epsilon)\leq s.
+\tag{PR.38}
+$$
+
+No common-probability hypothesis is required; zero success is allowed.
+The bound is attained simultaneously for both parities, leaving the helper
+and its unread correlations unchanged on success. All these statements are
+for exact targets.
+
+Proof. Spectrally decompose $\tau_\epsilon$ on $S$. Every eigenvalue
+there is positive. For fixed $\beta,\epsilon$, project each successful
+dilation vector onto the orthogonal complement of the required specimen
+ray. The squared norms, weighted by those positive eigenvalues, sum to
+zero, because the required specimen marginal is rank one or zero.
+Each projected vector therefore vanishes. By linearity, for **every**
+$u\in S$, $B(\psi_{k,\beta,m}\otimes u)$ lies in
+$\mathbb C\psi_{l,\beta,m}\otimes E$. The same $u$ is available for
+both parities, since both states are faithful on the same $S$.
+
+Fix $u$ and a bra on $E$. Projecting $B(\,\cdot\,\otimes u)$ onto that
+bra gives a linear specimen map which sends both full phase families into
+the corresponding target rays. After harmless scalar normalization it is
+a contraction. Instrument Boundaries Theorem 4.1, the credited
+successful-Kraus rigidity on the active span, says it is a scalar multiple
+of $D$. Applying this to a basis of $E$ shows that
+$B(v\otimes u)=Dv\otimes A(u)$ for every $v\in V$. The coefficients
+are linear in $u$, so $A$ is linear. This reuses the full-family rigidity;
+a single fixed-phase pair would not justify the conclusion.
+
+Contractivity on $V\otimes S$ yields
+$D^\dagger D\otimes A^\dagger A\leq I$. Evaluating on a unit
+eigenvector for the largest eigenvalue of $D^\dagger D$ gives
+$A^\dagger A\leq\|D\|^{-2}I$. Also
+$D\psi_{k,\beta,m}=\psi_{l,\beta,m}$ is normalized, proving (PR.38).
+Spectral vectors and the proof environment are proof devices, not supplied
+purification ports.
+
+For attainment use $B=\sqrt{s}D\otimes I_S$ on $V\otimes S$, extended
+by zero on its orthogonal complement. With
+$F=(I-B^\dagger B)^{1/2}$ the whole-domain isometry is
+
+$$
+\zeta\longmapsto(B\zeta)_{\mathsf s}
+       \oplus(f\otimes F\zeta)_{\mathsf f}.
+\tag{PR.39}
+$$
+
+Its two effects sum to identity. Keep the failure flag, residue and $f$;
+keep the actual helper on success. Tensoring with identity on unread fields
+gives their actual joint output, including correlations with the failure
+residue. This is an endpoint completion, not (OC.19b). $\square$
+

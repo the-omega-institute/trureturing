@@ -1,0 +1,26 @@
+**Lemma 3.4 (literal recovery at a known pure-update epoch).** Suppose the
+current tree is exactly $\rho^eU_x$ for known $e\ge0$. Then
+
+$$
+\operatorname{Lit}(\rho^eU_x,p_iLR^{\lfloor e/2\rfloor})=
+\begin{cases}
+\alpha,&x_i=0,\ e\text{ even},\\
+\beta,&x_i=0,\ e\text{ odd},\\
+\mathsf{branch},&x_i=1.
+\end{cases}
+\tag{DAF.4}
+$$
+
+Proof. Put $T_j=\rho^j\alpha$. Then $T_0=\alpha$, $T_1=\beta$ and
+$T_{j+2}=\langle T_{j+1},T_j\rangle$. The left subtrees of the two updated
+gadgets are $T_e$ and $\langle T_e,T_e\rangle$. Following $\lfloor e/2\rfloor$
+right edges in $T_e$ ends at $T_0$ or $T_1$. In the other left subtree, if
+$e=0,1$ no right edge is taken and its root is a branch. For $e\ge2$ the first
+right edge enters $T_e$, and the remaining edges end at $T_2$ or $T_3$, both
+branches. The preserved scaffold supplies the prefix $p_iL$.
+
+Under the more general invariant (DAF.3), prepend the known $c_h$ to the same
+address. Its length is $|c_h|+d_i+1+\lfloor e_h/2\rfloor$. That is an explicit
+possible address cost, not an optimal post-update length theorem. Native updates
+are unconditional; guarded TM57 updates count toward $e_h$ only on accept.
+

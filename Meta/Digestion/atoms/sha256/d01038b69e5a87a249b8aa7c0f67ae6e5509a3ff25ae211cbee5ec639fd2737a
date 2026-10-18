@@ -1,0 +1,121 @@
+**Proposition 32.1 (simultaneous reconstruction).** The laws in
+Theorems 29.1 and 31.2 have one common instrument at each parameter
+point satisfying all original interfaces in Convention 26.1.
+
+Proof. Use only occupied endpoints and put
+$K_j=\sqrt{p_j}(s_0D+z_jT+w_jS)$,
+$N_j=p_j\eta_j1000c(h_j)n_jn_j^T$. Choose
+$J_j:\mathbb C^2\to\operatorname{ran}K_j^\dagger$ isometric and set
+
+$$
+\begin{gathered}
+Q_j=J_j^\dagger(K_j^\dagger K_j+N_j)J_j,\quad
+C_j=Q_j^{1/2}J_j^\dagger E^\dagger,\quad
+B_j=K_jJ_jQ_j^{-1/2},\\
+F_j=Q_j^{-1/2}J_j^\dagger N_jJ_jQ_j^{-1/2},\qquad
+L_{{\rm dec},j}=B_j^\dagger B_j=I_2-F_j\succ0.
+\end{gathered}
+\tag{AC.150}
+$$
+
+The rank-two row space contains $N_j$ and makes $Q_j\succ0$.
+Direct multiplication yields $B_jC_j=K_jE^\dagger$,
+$C_j^\dagger F_jC_j=EN_jE^\dagger$ and
+$B_j^\dagger B_j+F_j=I_2$. These are the reused FA70 identities,
+now with the selected exact moments of AC.139. $L_{{\rm dec},j}$
+is the terminal live CP-map effect on the entire qubit; it is distinct
+from the coefficient rescaling matrix $L=\operatorname{diag}(s_0,1,1)$.
+
+For elapsed time $q$ take $g(q)=2/(1+q)^2$,
+$G_{\rm time}(q)=2q/(1+q)$, $Z_j(q)=\sqrt{I-G_{\rm time}(q)F_j}$
+and $R_j(q)=g(q)F_j[I-G_{\rm time}(q)F_j]^{-1}$.
+For each original failure label $\ell$ the current-survivor jump is
+
+$$
+Y\longmapsto w_\ell g(q)
+ \operatorname{tr}(F_jZ_j(q)^{-1}YZ_j(q)^{-1})P_f.
+\tag{AC.151}
+$$
+
+Pullback through $Z_j$ gives $w_\ell g(q)\operatorname{tr}(F_jY)P_f$.
+At every cut $Z_j^\dagger Z_j+G_{\rm time}F_j=I_2$.
+At the end apply only to survivors the isometry
+$EB_j(I-F_j)^{-1/2}$, whose composition with $Z_j(1)$ is $EB_j$.
+A pure label has zero rate/activity; a saturated label has failure
+eigenvalue $1000/1001$, least terminal live eigenvalue $1/1001$,
+and whole-fibre activity $\log1001$. Survivors stay positive; failure
+is an actual first chronological event at absolute time $6+q$.
+There is no terminal absorption atom or subsequent positive-carrier action.
+The choice of $g$ is a sufficiency witness; necessities retained every
+admitted competitor law, including the prescribed-path qualifications
+of FA68. Endpoint coercivity alone is not asserted sufficient for an
+arbitrary noncommuting prescribed time law.
+
+Choose $W_\perp:\mathbb C^2\to P^\perp$ and
+$J_0:\mathbb C^2\to\mathbb C^3$ isometric. The single high encoder is
+
+$$
+C_H=\begin{pmatrix}\sqrt{1-\delta}DE^\dagger\\W_\perp^\dagger\end{pmatrix}
+ :\mathbb C^5\longrightarrow\mathbb C^3\oplus\mathbb C^2.
+\tag{AC.152}
+$$
+
+Its entire jointly accessible fibre has dimension five, including the
+complement; its rate is zero and report deterministically plus.
+The two hidden terminal Kraus matrices $E[I_3\ 0]$, $EJ_0[0\ I_2]$
+have effects summing to $I_5$ on that fibre. This is a general TP
+terminal map, while the low terminal maps are isometric. It is the
+allowed free coherent JR completion, distinct from fixed CA10's
+certain-failure complement. No complementary quantum share is uncounted.
+
+The live Gram and physical failure sum of §29, together with root TP,
+give total encoder effect $I_5$. On every complex $X\in M_5$ the
+complete forgotten outputs are
+
+$$
+\begin{aligned}
+\Phi^L(X)&=E[\Lambda_*(E^\dagger XE)
+ +J_0W_\perp^\dagger XW_\perp J_0^\dagger]E^\dagger,\\
+\Phi^f_\ell(\mathcal B)(X)&=
+ w_\ell\int_{\mathcal B}g(q)dq\,
+ \operatorname{tr}(EME^\dagger X)P_f.
+\end{aligned}
+\tag{AC.153}
+$$
+
+For an arbitrary passive reference the failure output is exactly
+
+$$
+w_\ell\int_{\mathcal B}g(q)dq\,P_f\otimes
+ \operatorname{Tr}_5[(EME^\dagger\otimes I_R)X],
+\tag{AC.154}
+$$
+
+and live Kraus conjugations amplify by $I_R$. These are per-component
+CP/Borel identities for the same instrument, including both individually
+zero components and three distinct positive measures with weights
+$(0,1/4,1/2,1/4,0)$. The conditional reference operator is retained,
+not replaced by the unconditional marginal. Expanding the exact Gram
+on complex matrix units proves the live identity, and the pulled jump
+sum proves every Borel identity, rather than checking only output effects.
+
+All twelve inputs lie in $P$ and have zero complementary probability.
+Thus their outputs are the same original simulator, compared against
+the original ideal coherent blocks and ideal $f_y$ of AC.3, not against
+$g$. Under the inherited complete-output minimax identification,
+$e_{5,e,n}=e_{27,e,n}=E_*$ and $e_{16,e,n}<E_*$ for each of the four
+sign pairs. No assertion that all twelve errors equal $E_*$ is made.
+
+Give low labels report $\operatorname{sgn}z_j$. Their $01$ acquisition
+effects and exact first moment give actual contrast $C_sk_u=s$.
+Every acquisition probability uses $K_j^\dagger K_j+N_j$, including
+mass that later fails. Only the high fibre has acquired dimension at
+least three, with probability $(1-\delta)A_y$ and worst history $27$;
+JR's original sharp identity makes its maximum $\mathsf C(s)$.
+All quantum shares accessible later are inside the declared fibres.
+No discarded Kraus index becomes readable, and no prior, extra copy,
+retry, reset, postselection or acceptance division is introduced.
+This proves simultaneous mathematical attainment with dimensions
+$(2,2,2,2,2,2,5)$ at $S$ and on the local upper side, and
+$(2,2,2,2,2,5)$ at $D$ and on the local lower side. $\square$
+

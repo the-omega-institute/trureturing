@@ -1,0 +1,29 @@
+**Convention 18.2 (separate costs and the observer's recovery).**
+Common table generation and installation, preparation work,
+control and temporary storage, address generation, post-request
+workspace, final predictor size, authentic-count representation,
+lawful entry, handoff, isolation, source continuity,
+authentication and physical time remain separate resources.
+No physical erasure theorem or preparation-cost optimum is
+inferred. The factor alone still fits in
+$\lceil\log_2(2D+1)\rceil+1$ bits, since $0\le b\le2D$
+and $c\in\{0,1\}$.
+
+Under those paid services the operational relation is exactly
+
+$$
+(E(t),D,p,\text{zero or one actual literal reply})
+\longrightarrow\Gamma_p(t)
+\longleftrightarrow\bigl(r_{\rho^kt}(p)\bigr)_{k\ge0}.
+\tag{NCE.109}
+$$
+
+The inverse reads the first branch count and the existence
+of an alpha stage. The converse (NCE.101) lower-bounds
+every complete retained alphabet permitting this recovery
+with the prescribed timing. It recovers neither an
+arbitrary whole source, an unknown age, hidden history,
+nor physical space and time. The scan and the late Read
+act on the same stationary source without navigation,
+reset, copying, equality, source identity or advice ports.
+

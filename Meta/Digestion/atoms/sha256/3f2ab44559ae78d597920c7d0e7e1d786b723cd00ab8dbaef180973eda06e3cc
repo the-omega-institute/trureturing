@@ -1,0 +1,12 @@
+**Assumption 1.3 (one policy and an exact source-total target).** For a fixed $C$, a deterministic acquisition policy receives $C$, common installed parameters, and its own finite chronological history
+
+$$
+h=((q_1,y_1),\ldots,(q_j,y_j)).
+$$
+
+Its next action is either to request a finite address or to halt with an ordered labelled tree. Every request receives $y=r_T(q)$ from the same $T\in\mathcal U_C$. The same policy and the same source-independent initialization, conditional on $C$, are used on every completion. On every $T\in\mathcal U_C$ it halts after finitely many requests and returns exactly $T$. Denote the class of these policies by $\mathcal A_C$. Arbitrary deep probes, arbitrary query order and repeated requests are allowed. Neither $M_C(T)$ nor the hidden hole values are initial inputs.
+
+A policy is a history selector; source-dependent response timing or service state is not another selector input. An effective policy may keep growing finite working state, provided that state is generated from these inputs. Local computation and storage are separate resources. The lower bound below applies to all such deterministic selectors; the matching policy is effective.
+
+The original `ActualTreeReadoutAcquisition.Policy` and `Strategy` have a Boolean return target, namely membership in the third substitution image. Assumption 1.3 specifies a different, full-tree return target. Only their native reply contract, reconstruction supplies and history pricing are reused; their Boolean correctness hypothesis is not interpreted as full-tree correctness.
+

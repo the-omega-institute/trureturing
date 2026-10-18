@@ -1,0 +1,23 @@
+**定义 2.2（奇偶修正深度）。** 对有限非空 $P$ 上的标签函数 $\lambda$，令 $n=|\lambda[P]|$，定义
+
+$$
+e_g(\lambda)=
+\begin{cases}
+0,&n=1,\\
+2,&g=1, n=2,\ \lambda^{-1}(y)\text{ 的两个胞大小均为奇数},\\
+\lceil\log_2 n\rceil,&\text{其余情形}.
+\end{cases}
+\tag{2.3}
+$$
+
+第二行必有偶数 $T=|P|\ge4$。它只看原始尾零来源上的两个标签胞，不看整个 $P\times\{0,\ldots,k-1\}$ 的标签数量。最后令
+
+$$
+D_v=
+\begin{cases}
+0,&f_v\text{ 在 }P\times\{0,\ldots,k-1\}\text{ 上恒定},\\
+\max\{1,e_g(\lambda_v)\},&\text{否则}.
+\end{cases}
+\tag{2.4}
+$$
+

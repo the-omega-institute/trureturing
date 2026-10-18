@@ -1,0 +1,26 @@
+# FIB three reads: a quantitative installed-state correctness gap
+
+> This reference volume uses the `generic-v1` theory convention. Its
+> numbered claims and proofs are ordinary mathematical input; they are
+> not machine status declarations. Once incorporated, existing text is
+> retained and subsequent additions begin after the final append anchor.
+
+For the original stationary biased XOR source, every complete controller
+with at most eight installed rows and almost-sure return within three
+paid calls has correct classification mass at most
+
+$$
+S_3-\rho(p),\qquad
+S_3=\frac a2+3a^2\eta+2\eta^3,
+\qquad \rho(p)\ge\frac{d^2b^7}{2}>0.
+$$
+
+Here $a=\max(p,1-p)$, $b=\min(p,1-p)$, $\eta=ab$ and
+$d=a-b$, for every fixed $0<p<1$, $p\ne1/2$. Section 3 defines
+$\rho$ as the minimum of seven explicit positive losses. The proof
+quantifies the inherited optimal geometry, then forces six distinct
+actual Read rows and three distinct actual Halt rows whenever the loss
+is smaller than that minimum. No finite-menu or nonattainment argument
+is used to infer the numerical gap. The exact values at six, seven
+and eight installed rows remain unresolved.
+

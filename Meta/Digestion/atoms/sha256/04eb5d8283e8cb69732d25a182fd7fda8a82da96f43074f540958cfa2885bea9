@@ -1,0 +1,59 @@
+**Theorem 5.3 (The criterion's exact fixed-port and all-history meaning).**
+Let $x\in\mathcal F$ be represented using (2.2), and define
+$z_x=\max_{J\in\mathcal J_{15}}\|H_J(x)\|_{\rm op}$.
+The finite port (2.9) has worst-case error $e(T_x)=z_x$, with the
+suprema ranging over all original complex inputs and all actual
+finite adaptive histories. Some pure
+input, actual wait zero, one complete mode read and Stop attain
+that error. If the common multipliers of Theorem 5.2 also give
+$\beta-\tau^Ty=z_x$, they certify the original unrestricted
+$\varepsilon_1=z_x$ and a legal attaining port.
+
+Proof. Theorems 2.2 and 2.3 preserve the whole coefficient tuple and
+give a legal finite port. Its adjoint residual at actual time $t$ is
+
+$$
+Q_J(t)-S_x^\dagger(Q_J(t))=O(t)^TH_J(x)O(t),
+\tag{5.6}
+$$
+
+because $S_x$ is stationary. The norm is independent of $t$.
+TP gives $S_x^\dagger(I)=I$, so complementary event residuals
+are negatives and empty/full residuals vanish. The fifteen singleton
+and pair events exhaust all event norms by complementation.
+
+The actual-history step is exactly QMB's credited first-read argument.
+Before the first read a deterministic policy either stops, with no
+input-dependent record, or has waits summing to one nonnegative $t$.
+For first result $s$, the two unnormalized post-read states are
+$p_s\Pi_s$ and $p_s'\Pi_s$. The rest of the common finite protocol
+defines a probability kernel $L_s$ with mass one, including its
+controls and Stop. This kernel is defined by the state $\Pi_s$ even
+when $p_s$ or $p_s'$ vanishes; no conditioning on a zero-probability
+event is needed. With the first outcome retained, the two history
+laws on its disjoint blocks are $p_sL_s$ and $p_s'L_s$, so their
+TV equals $\tfrac12\sum_s|p_s-p_s'|$. Subsequent common
+coarsening cannot increase it. Source-independent random control
+mixes these comparisons under the same law, even when the random
+control record is retained. This proves the upper for all finite
+depths, not a bounded protocol family.
+
+For arbitrary complex density inputs the event difference is the
+expectation of the Hermitian residual in (5.6). Its largest absolute
+expectation is its operator norm. Choose a maximizing $J$ at zero
+and a real unit eigenvector $v$ of $H_J(x)$ with eigenvalue $\lambda$
+satisfying $|\lambda|=z_x$. The allowed physical pure input
+$Dvv^TD^\dagger$, followed by the actual wait-zero complete read
+and Stop, has event difference $\lambda$. Its full-read TV is at
+least $|\lambda|$ and at most the upper already proved, hence equals
+$z_x$. If $z_x=0$, any pure input realizes equality. Grouping
+the read's outcomes into $J$ is classical postprocessing, not a new
+instrument. No inaccessible torus angle or limiting wait is needed.
+
+Finally Theorem 5.2 supplies a lower on every original competitor,
+while this one fixed legal port supplies the equal upper. This
+proves the conditional matching statement. The all-history
+correspondence itself is the credited QMB/QRC ingredient; the new
+application is to the complete split generators and criterion (3.5).
+$\square$
+

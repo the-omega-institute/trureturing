@@ -1,0 +1,37 @@
+**Theorem 4.1 (all-original-competitor mass and pressure comparison).**
+For every $d,n,L\ge1$ and arbitrary nonnegative whole-block weights,
+
+$$
+A_{d,L,n}(w_1,\ldots,w_n)
+\le A_n^{(d)}(w_1,\ldots,w_n)
+\le Q_{d,L,n}A_{d,L,n}(w_1,\ldots,w_n).
+\tag{SIR.19}
+$$
+
+Consequently, for every nonnegative $w$,
+
+$$
+\beta_{d,L}(w)\le\beta_d(w)
+\le4^{m_d/(L+1)}\beta_{d,L}(w).
+\tag{SIR.20}
+$$
+
+At a finite length $n\le L$ the two maxima in (SIR.19) are equal.
+
+Proof. The inverse RRN correspondence makes every restricted network
+an original complete template, proving the first inequality. In the
+other direction, normalize any original complete template using RRN,
+preserving exactly its actual solution set, its $n$ blocks and its
+weight. Theorem 3.2 partitions that set into at most $Q_{d,L,n}$
+restricted solution sets. Theorem 3.1 preserves their masses exactly;
+each is bounded by the restricted maximum. Sum and then maximize.
+This covers arbitrary donors, cycles, guard restrictions and original
+fiber correlations. The same argument applies to any nonnegative
+tuple weight $W$ if both finite maxima are defined using that $W$.
+
+For identical weights, take $n$th roots and use
+$Q_{d,L,n}^{1/n}\le4^{m_d/(L+1)}$, then take the supremum over
+all $n$. This proves both directions of (SIR.20), including $w=0$.
+When $L\ge n$, every seed of every network has incidence at most
+$n$, so the classes already coincide. $\square$
+

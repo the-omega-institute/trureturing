@@ -1,0 +1,23 @@
+**Lemma 8.1 (Finite gap stop).** Under either source,
+
+$$
+\mathbb E_iN\le\frac{B}{2u}<\infty,
+\qquad \mathsf P_i(N<\infty)=1.
+$$
+
+**Proof.** Let the proof filtration contain the initial wait and the first complete
+potential gaps with their observer coins. On $\{N>n\}$ the next increment is independent
+of the past. Sign the score positively under source one and negatively under source zero.
+For every finite $m$, direct conditional summation gives
+
+$$
+\mathbb E_i[\operatorname{sgn}_i S_{N\wedge m}]
+ =D_i\sum_{n=0}^{m-1}\mathsf P_i(N>n)
+ =D_i\mathbb E_i(N\wedge m),
+$$
+
+where $\operatorname{sgn}_0=-1$ and $\operatorname{sgn}_1=1$. The left side is at most
+$B$, so $\mathbb E_i(N\wedge m)\le B/D_i\le B/(2u)$. Monotone convergence proves the
+bound and hence almost-sure finiteness. This finite-horizon identity does not use
+unbounded optional stopping or assume absorption in advance. $\square$
+

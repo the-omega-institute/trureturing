@@ -1,0 +1,32 @@
+**引理 463.7（两个完整预算的合并）。** 对 r1,r2,m1,m2>0，
+
+$$
+\mathcal F(r_1,m_1)+\mathcal F(r_2,m_2)
+\ge\mathcal F(r_1+r_2,m_1+m_2).
+\tag{RVF.30}
+$$
+
+等号恰在 m1/r1=m2/r2 成立。
+
+**证明。** 对权重 $r_i/(r_1+r_2)$ 使用实 log 的严格凹性：
+
+$$
+\frac{r_1}{r_1+r_2}\log\frac{m_1}{r_1}
++\frac{r_2}{r_1+r_2}\log\frac{m_2}{r_2}
+\le\log\frac{m_1+m_2}{r_1+r_2}.
+$$
+
+乘以负数 $-(r_1+r_2)$ 得 RVF.30。
+两权重严格正，故严格凹性的等号条件正是所列均值条件。证毕。
+
+还需要一个不依赖 r 与 m 比值的完整界：
+
+$$
+\mathcal F(r,m)\ge-\frac m e\qquad(r,m>0).
+\tag{RVF.31}
+$$
+
+事实上 q=r/m>0 给 $\mathcal F=mq\log q$，而经典
+$q\log q\ge-1/e$ 可由 log 切线支付：将
+$\log y\ge1-1/y$ 用于 y=eq，再减去 1 并乘以 q。
+

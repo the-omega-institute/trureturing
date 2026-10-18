@@ -1,0 +1,12 @@
+### 107.6. Ideal classes and cubic Frobenius
+
+By (b), (c), and the all-place calculation, subtracting the exponents 1,2 above 2 and 1,2 above 3 leaves valuations divisible by 3 everywhere. Thus the fractional ideal a in (d) exists. At the conjugate prime over 3 the residual exponent is 3j+3, also divisible by 3.
+
+Since p_l bar(p_l)=(l), their ordinary ideal classes are inverse. Taking ideal classes in the principal-ideal identity gives
+
+ 1=[p_2]^-1 [p_3]^-1 [a]^3,
+
+which is the exact stated relation. Changing either marked prime to its conjugate changes that class's sign in the F_3 quotient; hence the orientation-free formulation follows. This does not assert that Cl(K) has a nonzero 3-primary quotient: if cubing is an automorphism of Cl(K), the relation imposes no further class-group restriction. This argument supplies no assertion that 3 divides the class number: the descent class has valuations at 2 and 3 that are not multiples of 3, so it is not an unramified class-group construction.
+
+For an everywhere-unramified cyclic cubic extension, the ideal-class Artin map takes cubes to the identity, by the ordinary unramified class-field correspondence in [Milne, Class Field Theory, Introduction, Theorem 0.4](https://www.jmilne.org/math/CourseNotes/CFT.pdf). Applying it to the class relation gives (e). There is no additional ramification issue at infinity for an odd-degree cyclic extension of a real field. This is precisely the ordinary unramified ideal-class correspondence, not a ray-class claim with omitted local conditions. ∎
+

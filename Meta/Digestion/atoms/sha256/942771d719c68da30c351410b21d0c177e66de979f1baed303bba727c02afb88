@@ -1,0 +1,50 @@
+## 7. Ownership and exact remaining targets
+
+The native interface, core and hash family, support-complete $J$, its tensorization, old-grammar collapse and range-leaf soundness belong to [RCE][RCE]. The exact restricted-core and diagonal/separable-language results belong to [JPL][JPL]. The additions here are the actual tagged product, exact rectangular theorem for arbitrary correlated whole-block weights, exact $V_{\mathrm{rec+range}}$ threshold, unbounded pointwise ratio, same-alphabet full-support separation, and charged nine-state realization and transport. Section 8 specifies which hypotheses permit each reuse.
+
+The optimized quantities remain open. Define
+
+$$
+ c_+(d)=\inf\{C:\text{some rational probability on }S_d
+ \text{ has a finite }V_{\mathrm{rec+range}}\text{ certificate at cap }C\},
+$$
+
+Here the infimum is over rational $C>0$ as well. Let $K_d(n)$ be the least number of admissible sets covering $S_d^n$, and define
+
+$$
+\sigma_d=\inf_{n\ge1}\frac{\log_2K_d(n)}n,\qquad
+b_d=\min_{\nu\in\Delta(S_d)}\beta_d(\nu)=2^{-\sigma_d},\qquad
+\lambda=\lim_{D\to\infty}2^{-D}\log_2M_1(D)
+       =\sup_{d\ge1}2^{-d}\sigma_d.
+$$
+
+Here $\Delta(S_d)$ is the simplex of all probabilities, including irrational ones; logarithms are base two. The attained pressure minimum and rate identities are credited in [RCE, Convention 1.4][RCE]. Soundness gives $b_d\le c_+(d)$; singleton supports also give $b_d\ge1/|S_d|>0$, so the logarithms below are defined. The bad tagged probabilities do not prove $c_+(d)>b_d$, since optimization may select another probability. The exact fixed-depth question $c_+(d)=b_d$ for every $d$, or a genuine optimized counterexample, remains **open**.
+
+Writing
+
+$$
+L_+(d)=-2^{-d}\log_2c_+(d),
+$$
+
+the exact gap decomposition is
+
+$$
+\lambda-L_+(d)
+=\bigl(\lambda-2^{-d}\sigma_d\bigr)
+ +2^{-d}\log_2\frac{c_+(d)}{b_d}.
+$$
+
+For $U_0=1$, $U_{r+1}=1+U_r^2$, and $\phi=\lim_r2^{-r}\log_2U_r\in[0,1]$, the inherited first term lies in $[0,2^{-d}\phi]$. Both terms are nonnegative. Thus $L_+(d)\to\lambda$ holds exactly when the normalized certificate gap $2^{-d}\log_2(c_+(d)/b_d)$ tends to zero. That convergence remains **open**; terminating two-sided original-rate approximation additionally requires effective error control. Pointwise incompleteness supplies neither obligation. Sharp $\lambda$, general exact $M_1(D)$ and that effective approximation remain **open**. The unchanged inherited numerical results, credited in [RCE, §9][RCE] and [JPL, §8][JPL], are
+
+$$
+\frac18\log_2(33/13)\le\lambda<\frac3{16},\qquad M_1(3)=4.
+$$
+
+No conclusion is drawn about native noncomputability, every possible certificate language, global recoloring, hidden-history recovery, physical storage, empirical machine learning, general neural or kernel conclusions, or completion of the broader internal-observer programme. The operational conclusion remains the one stated in [RCE, Open problem 10.2][RCE]:
+
+$$
+(E(t),D,p,\text{at most one actual reply})
+\longrightarrow \Gamma_p(t)
+\longleftrightarrow (r_{\rho^kt}(p))_{k\ge0}.
+$$
+

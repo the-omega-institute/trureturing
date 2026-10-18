@@ -1,0 +1,21 @@
+**Corollary 150.2.** In an actual finite ideal face pairing with complete
+circular edge links, minimum degree six, and the same fixed paired
+framework with |H|<=4, if no two distinct tetrahedra are joined by two different face pairings, every
+common positive zero-curvature generalized length field is genuine.
+Dual triangles and self-loops elsewhere are allowed.
+
+For |H|=4 this is the contrapositive of Theorem 150.1. For |H|<=3 it is
+already implied by the maximal-selected four-label escape theorem.
+
+For a finite connected orientable ideal triangulation of a compact
+3-manifold whose every boundary component has genus at least two, the existing
+strict-angle-structure and Luo--Yang existence inputs give such a common
+positive zero-curvature field. Corollary 150.2 makes it genuine, yielding
+a hyper-ideal realization of the original triangulation with totally
+geodesic boundary. This reuses the established existence transfer; it
+does not claim that the naive 2*pi/degree assignment is itself strict
+at every degree-six vertex.
+
+The theorem does not eliminate the possible parallel-face configurations.
+It is independent of whether rho's other axis lies in H or S.
+

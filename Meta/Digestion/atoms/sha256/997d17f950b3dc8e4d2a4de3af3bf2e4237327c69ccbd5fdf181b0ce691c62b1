@@ -1,0 +1,21 @@
+**Lemma 3.3 (Actual finite phase-type gaps).** If $P=P_\theta$ is proper renewal for some $\theta\in\Theta_N$, put
+
+$$
+B=M_0,\qquad b=M_1\mathbf1,\qquad
+\alpha=\frac{\lambda M_1}{\iota},\qquad \iota=\lambda M_1\mathbf1.
+\tag{3.3}
+$$
+
+Then $\alpha$ is the actual law of $H_1$ given $X_0=1$, and
+
+$$
+\alpha\mathbf1=1,\qquad B\mathbf1+b=\mathbf1,\qquad
+f(g)=\alpha B^{g-1}b\ (g\ge1),\qquad
+f(1)=0,\quad\sum_{g\ge2}f(g)=1.
+\tag{3.4}
+$$
+
+In particular the actual gap law has a finite nonnegative discrete phase-type representation and finite mean.
+
+**Proof.** Formula (1.4) gives the post-emission row $\lambda M_1/\iota$. Starting from this row, a next one at distance $g$ means zeros at positions $1,\ldots,g-1$ followed by one at $g$, giving $\alpha B^{g-1}b$. Scalar legality gives $\alpha b=\lambda M_1^2\mathbf1/\iota=0$. Properness makes the next one finite almost surely, so these masses sum to one. Moreover $\lambda M_1\le\lambda A=\lambda$ entrywise, so $\alpha$ is supported on the same positive stationary classes. Lemma 3.2 bounds the chance of at least $j$ initial zero emissions after a one by $(1-\varepsilon)^{\lfloor j/K\rfloor}$. Summing this tail gives finite mean. The same bound proves transience of the zero-emission matrix on those closed classes; unused original coordinates may remain nontransient. Thus the phase-type absorption law is proper from the actual row $\alpha$. This derives $f$ from the same $J_\theta$; it does not assign a separate renewal model. $\square$
+

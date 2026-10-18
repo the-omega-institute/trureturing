@@ -1,0 +1,23 @@
+**Corollary 15.2 (the exact-four-pure critical restriction).**
+Under Assumptions 1.1 and 1.4 with $t>T_3$, a canonical
+FC6.1 representation at $r\notin U_8$ having exactly four pure
+coordinates has at most one occupied pure coordinate belonging to
+a compatible paired group.
+
+Under the additional indefinite premise of Corollary 9.1 and its
+budget range, the complete paired inventory has at most two directed
+antipodal groups. The two allowed groups cannot both be occupied at
+their pure coordinates in such an exact-four-pure critical support.
+
+Proof. Two such occupied pure parents give the two available zero
+companions in Theorem 15.1, since the canonical positive coordinates
+are in distinct groups. Its deletion contradicts $r\notin U_8$
+by FC Theorem 5.2. Corollary 9.1 supplies the separate common-kernel
+cap on the indefinite branch. The restriction concerns pure-parent
+occupancy: it places no analogous restriction on occupying two paired
+groups only at saturated coordinates, and it supplies no deletion
+for an exact-five-pure support. Losing two of five pure coordinates
+would still leave three, so that proof's contradiction is absent.
+Neither zero-paired nor one-paired exact-four supports are excluded.
+$\square$
+

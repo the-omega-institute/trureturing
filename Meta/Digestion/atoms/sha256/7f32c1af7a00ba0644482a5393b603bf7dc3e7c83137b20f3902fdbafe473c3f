@@ -1,0 +1,34 @@
+### 106.1. Original domain and a kernel-support path
+
+Retain the original calibrated \(\mathbb C^8\to\mathbb C^4\) channels, the four two-coordinate fibres, fixed correlated encoding and unhalved arbitrary-reference error \(F\) of (104.1). Thus
+\[
+\mathcal E=\{G\in\operatorname{Herm}(8):G\succeq0,\ G_{ff}=I_2\},
+\qquad
+F(G,H)=\max_{(\rho,W)\in\mathcal C}
+                 2\operatorname{Tr}[(T-G\odot H)W],
+\tag{106.1}
+\]
+where \(\mathcal C\) is the original fibre-block density and witness domain. Local minimality always refers to the full domain \(\mathcal E^2\). No external rank constraint is imposed.
+
+For a coordinate set \(S\subseteq\{1,\ldots,8\}\), put \(O=S^c\), \(n=|S|\) and \(o=|O|\). Vectors in \(\mathbb C^S\) are extended by zero on \(O\). Suppose \(G,H\in\mathcal E\) and
+\[
+\ker G\subseteq\mathbb C^S,
+\qquad h=\operatorname{rank}H_S.
+\tag{106.2}
+\]
+The inclusion concerns the entire kernel, including when it has dimension greater than one. In the \(S,O\) partition define
+\[
+B_H=\begin{pmatrix}H_S&0\\0&I_O\end{pmatrix},\qquad
+D_{ij}=\begin{cases}
+G_{ij},&i\ne j\text{ and }\{i,j\}\cap O\ne\varnothing,\\
+0,&\text{otherwise},
+\end{cases}
+\tag{106.3}
+\]
+and, for \(\tau\ge0\), set
+\[
+G_\tau=G+\tau D,\qquad
+H_\tau=\frac{H+\tau B_H}{1+\tau}.
+\tag{106.4}
+\]
+

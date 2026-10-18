@@ -1,0 +1,22 @@
+**Proposition 8.3 (Path lawfulness is additional to its endpoint map).**
+All prescribed-path guards are recoverable exactly when height is
+constant on encoder fibers, provided straight probability guards are
+included. An affine endpoint map alone does not determine these guards.
+
+**Proof of Proposition 8.3.** If height is constant on fibers,
+Proposition 7.1 defines $K_E$ and the path guard is precisely
+$K_E(z)+\min\rho>0$, $K_E(z)+\max\rho<H$. Conversely the larger
+guard contract contains all straight probability guards, so
+Proposition 7.1 gives height recovery.
+
+For the endpoint distinction, compare the stationary path with a
+probability excursion from relative displacement zero to $a$ and back,
+where $0<a<H$, while $\chi$ stays fixed. Both have
+$(\Delta,L,C)=(0,0,0)$ and identity endpoint maps in all three
+witnesses. The stationary path is lawful at every interior height;
+the excursion is lawful only for $0<k<H-a$. Thus the prescribed
+path's full guard must accompany the endpoint map. Native rectangles
+also need not be ray-trivial: they change $\beta$ by $-st/r$ even
+though the annular matrices commute. Equal encoded maps do not equate
+native commands or their partial domains. $\square$
+

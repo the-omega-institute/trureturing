@@ -1,0 +1,8 @@
+**Remark 3.11 (The four-party genuine multi-entropy).** For $\mathtt q=4$, Akella, Iizuka and Miyata define (their Eq. (5))
+
+$$
+\mathrm{GM}^{(4)}_3=S_3^{(4)}-\frac13\sum_{\pi\in\Pi_3(4)}S_3^{(3)}(\pi)+\frac13\sum_{|X|=1}S_3^{(2)}(\{X,Y\})-a\,I_3,
+$$
+
+with $I_3=\sum_{|X|=1}S_3^{(2)}(\{X,Y\})-\sum_{|X|=|Y|=2}S_3^{(2)}(\{X,Y\})$ and a real parameter $a$. For $L=\mathrm{GM}^{(4)}_3+(a-\tfrac19)I_3$ the weights of Proposition 3.10 are: for $\sigma\in\Pi_3(4)$, $w_\sigma=\tfrac19-\tfrac13\cdot\tfrac13=0$; for a cut with $|X|=1$, the refinements are the finest partition, three three-block partitions and $\sigma$ itself, so $w_\sigma=\tfrac19-3\cdot\tfrac19+\tfrac13-a+(a-\tfrac19)=0$; for a cut with $|X|=|Y|=2$, $w_\sigma=\tfrac19-2\cdot\tfrac19+a-(a-\tfrac19)=0$. Proposition 3.10 therefore gives an independent derivation of the identity $\mathrm{GM}^{(4)}_3=-(a-\tfrac19)I_3$ for all normalized pure qubit stabilizer states. Akella, Iizuka and Miyata state this identity as their Eq. (3), support it numerically on $10^5$ randomly sampled stabilizer states (their §III), and pose in their §VI whether a counting argument exists for $n=3$ as an open question. Here the identity for all pure qubit stabilizer states is derived from Proposition 3.10 and the cited replica rank formula; a proof also exists in prior work of this project. Stance: literature-attested for the definition (their Eq. (5), §II); the identity for all stabilizer states is repo-derived (used as a cited step; not a load-bearing item of this volume); the vanishing of the weights $w_\sigma$, and hence the derivation through Proposition 3.10, is repo-derived.
+

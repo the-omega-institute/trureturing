@@ -1,0 +1,28 @@
+**Theorem 353.1 (Cancelling forks with compatible minima).** On each block set
+
+$$
+\rho_a=w_a,\qquad \rho_b=w_aw_b,\qquad \rho_d=w_bw_d\quad(d\in C).
+\tag{353.3}
+$$
+
+Then
+
+$$
+ h(\rho(w))=c+\sum_{(a,b,C)}\left(Aw_a+Bw_aw_b+\sum_{d\in C}C_dw_bw_d\right)+\sum_{i\in I}\ell_iw_i.
+\tag{353.4}
+$$
+
+If the full kernel is $k=k_0+h$ of mass $M$, where $k_0\ge0$ is an already stopped kernel satisfying $k_0(\rho(w))=k_0(w)$, and $k$ satisfies (348.4), then $k(\rho(w))$ has one complete stopped allocation of the same mass $M$ and satisfies the same literal rows. At $M=1$ this is an original same-cap replacement; for $M>1$ it is only an affine mass-$M$ statement.
+
+*Proof.* The two fork terms become
+$D_dw_aw_bw_d$ and $-D_dw_aw_bw_d$ and cancel. The $E$ and $\ell_b$ terms combine into $Bw_aw_b$, and the leaf terms become $C_dw_bw_d$, proving (353.4). For one label, the minimum of the block is
+$-\max\{u_r,v_r+d_r\}$. The compatibility condition makes this
+$-\max\{u_r,v_r\}-d_r$. Thus the coordinate thresholds are
+$U_a=\max\{u,v\}$, $U_b=d$, $U_d=0$, and an isolated coordinate contributes $(-\ell_i)_+$. The coordinates of distinct blocks are disjoint, so these minima can be attained simultaneously for each label. Since $h(\rho(w))\ge0$, its constant vector dominates the sum of all thresholds.
+
+Apply the 109.1 inverse to the transformed coefficients. With
+$V_i=\sum_{j>i}(-Q_{ij})_+$ and $U_i=(V_i-\ell_i)_+$, the coordinate reserve is $c\ge\sum_iU_i$. Zero-sum coefficient masses give
+$m(U_i)\ge\sum_{j>i}m((-Q_{ij})_+)$, so the same coordinate and scalar budgets hold. Use pair vectors in cells $0,10,11$, singleton vectors for the residuals and one empty vector; omit a zero-mass schedule instead of dividing by zero. Mix this allocation with the supplied invariant $k_0$ allocation. Every transformed coordinate is an original bit times an earlier bit, so the first zero and the positive word are fixed. The three independent rows, including the union row, are therefore inherited by the one resulting allocation. A common seed fixes all schedule cells in advance and uses at most two actual calls. $\square$
+
+The C statement keeps every zero coefficient in the polynomial and every literal affine demand. It does not divide a mass-$M$ witness, invoke the mass-one H7 equality slice of XIX 345, or preserve an arbitrary input law. The compatibility condition is a sufficient method condition; failure is not an original obstruction. The cubic term produced by applying (353.3) to an unrelated interaction $Q_{ac}\ne0$ is a degree-three remainder, so the map simply falls outside its stated domain.
+

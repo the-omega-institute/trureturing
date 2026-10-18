@@ -1,0 +1,46 @@
+**Theorem 6.1 (every deep joint witness escapes both rank bounds).** For
+every $M\ge2$ and any legal $\Theta_0(j_0,y_0)\in D_0$,
+$\Theta_1(j_1,y_1)\in D_1$,
+
+$$
+\Theta_0(j_0,y_0)\equiv_{M+4}\Theta_1(j_1,y_1)
+\quad\Longrightarrow\quad j_0>M\ \land\ j_1>M.
+\tag{CRE.24}
+$$
+
+This holds with completely unrestricted finite residual choices before
+their negatives. It concerns every witness, not a chosen witness sequence.
+
+**Proof.** Write $H=M+4$. The addresses $q_x,q_v$ have lengths two and
+three. Agreement through $H$ gives
+
+$$
+y_0\equiv_{H-2}F_{T_{j_1}}(y_1),\qquad
+y_0\equiv_{H-3}G_{T_{j_1}}(y_1).
+\tag{CRE.25}
+$$
+
+Restriction and transitivity give $F_{T_{j_1}}(y_1)\equiv_{H-3}
+G_{T_{j_1}}(y_1)$. Their inner left address is $RL$, of length two;
+its two whole values are $T_{j_1},T_{j_1+1}$. Hence
+
+$$
+T_{j_1}\equiv_{H-5}T_{j_1+1}.
+\tag{CRE.26}
+$$
+
+At $L^{j_1-1}$ these atoms reply $\beta$ and branch respectively.
+If $j_1\le M$, that word has length at most
+$M-1=H-5$, contradicting (CRE.26). Thus $j_1>M$.
+
+If instead $j_0\le M$, the length-one address $q_a$ gives
+$T_{j_0}\equiv_{H-1}T_{j_1}$. The height of $T_j$ is $j-1$ for
+$j\ge1$, by the atomic recurrence. A finite tree is determined by an
+inclusive prefix containing all its leaves: the observed leaf labels
+forbid further branches, including all absent descendants. Since
+$H-1=M+3>j_0-1$, this agreement forces $T_{j_1}=T_{j_0}$.
+Rank injectivity gives $j_1=j_0\le M$, the contradiction already obtained.
+All comparisons use only the actual original addresses and shared
+coordinates. Neither a residual bound nor any sign at a limit is used.
+$\square$
+

@@ -1,0 +1,29 @@
+**Convention 1.3 (Parameters).** Throughout this volume set
+
+$$
+\begin{gathered}
+a=\max(p,1-p),\quad b=\min(p,1-p),\quad
+\eta=ab,\quad c=a^2+b^2=1-2\eta,\quad d=a-b,\\
+R=a/b,\qquad
+\sigma=\begin{cases}1&p>1/2,\\0&p<1/2.\end{cases}
+\end{gathered}
+\tag{1.3}
+$$
+
+Thus $\mathbb P(S_\ell=\sigma)=a$. The following identities and
+comparisons will be used over the entire declared range:
+
+$$
+\begin{gathered}
+a+b=1,\quad 0<b<1/2<a<1,\quad 0<d<1,\quad 0<\eta<1/4,\\
+1/2<c<a,\quad c>b,\quad a-c=bd,\quad c-b=ad,\\
+2a^2-c=d,\qquad c-1/2=d^2/2,\\
+t:=a^3+b^3=1-3\eta,\qquad a^2-t=bd>0.
+\end{gathered}
+\tag{1.4}
+$$
+
+These follow by substituting $b=1-a$; for example
+$c-1/2=(a-b)^2/2$ and $a^2-(a^3+b^3)=b(a-b)$.
+They justify the strict directions below for either bias direction.
+

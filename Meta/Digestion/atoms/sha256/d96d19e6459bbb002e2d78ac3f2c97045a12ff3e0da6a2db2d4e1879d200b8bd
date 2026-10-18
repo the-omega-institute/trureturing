@@ -1,0 +1,59 @@
+**Proposition 151.1 (Nonnegative rational then integer normal).** At the
+strict rational profile in Proposition 150.3 there is a nonzero
+$y\in\mathbb Z_{\ge0}^{m_L}$ such that
+
+$$
+\Delta=y\cdot d(a,e)-B_{O,L}(y)>0.
+\tag{151.1}
+$$
+
+**Proof.** $O$ infeasibility is $d=d(a,e)\notin U_{O,L}$.
+For the nonempty closed convex set $U_{O,L}$ choose a nearest point $u$.
+Existence follows by restricting a minimizing sequence to a sufficiently
+large bounded closed ball and taking a subsequence. Put $\alpha=d-u\ne0$.
+Minimizing squared distance along the segment from $u$ to any
+$z\in U_{O,L}$ gives
+
+$$
+\alpha\cdot(z-u)\le0.
+\tag{151.2}
+$$
+
+Taking $z=u-se_j$ for $s\ge0$ proves $\alpha_j\ge0$ for every row.
+Downward closure and nonnegativity therefore give
+
+$$
+\sup_{z\in U_{O,L}}\alpha\cdot z
+ =\max_{v\in R_{O,L}}\alpha\cdot v=\alpha\cdot u,
+\qquad
+\alpha\cdot d-\max_v\alpha\cdot v=\|\alpha\|^2>0.
+\tag{151.3}
+$$
+
+The event image is compact, although its downward closure is not.
+This is the repository's downward-closure separation mechanism of
+Acquisition Resources, Theorem 84.3, applied to the complete stopped
+catalog rather than an unrestricted adaptive catalog.
+
+Write $\delta_\alpha=\|\alpha\|^2$ and choose
+$0<\varepsilon<\delta_\alpha/(4m_L)$.
+Approximate $\alpha$ within $\varepsilon$ in the infinity norm by one
+nonnegative rational vector $\rho$. The nonnegative rational orthant is
+dense in the nonnegative real orthant, including its zero-coordinate
+boundaries. Here $d_j\in[-1,1]$ and every $v_j\in[0,1]$, so
+
+$$
+|(\rho-\alpha)\cdot(d-v)|\le2m_L\varepsilon
+\quad\text{uniformly for }v\in R_{O,L}.
+\tag{151.4}
+$$
+
+Consequently $\rho\cdot(d-v)>\delta_\alpha/2>0$ for every $v$.
+Multiply $\rho$ by a common positive denominator to obtain a nonzero
+nonnegative integer vector $y$. This preserves strict separation and
+all signs. It does not assume an arbitrary nearest-point normal was
+rational. Proposition 151.2 supplies exactly
+$\max_{v\in R_{O,L}}y\cdot v=B_{O,L}(y)$ and hence (151.1).
+The finite integer vector is indexed by the complete row system,
+including every zero-weight row. $\square$
+

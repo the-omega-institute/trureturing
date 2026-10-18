@@ -1,0 +1,67 @@
+### 65.2 Explicit rays, stabilizers, and distinctness
+
+Use the constants and seed rays from §61:
+
+\[
+ \begin{gathered}
+ \omega=\frac{-1+i\sqrt3}{2},\qquad
+ \gamma=-\frac{\sqrt3+5i}{2\sqrt7},\\
+ t=-\frac12-\frac{3\sqrt{21}}{28}
+       +i\left(-\frac{\sqrt3}{4}+\frac{3\sqrt7}{14}\right),
+ \qquad \delta=-\frac{3+i\sqrt7}{4},\\
+ \tau=\omega^2t,\quad \sigma=\omega^2\delta,\quad
+ f_m=(1,\omega^m,\omega^{2m}),\\
+ u_m=((1,1,\tau)\odot f_m,(\gamma,\gamma,\sigma)\odot f_m).
+ \end{gathered}
+\tag{65.2}
+\]
+
+For \(p=(p_0,p_1,p_2)\), define
+\(R_p(x,y)=((x_{p_0},x_{p_1},x_{p_2}),
+(y_{p_0},y_{p_1},y_{p_2}))\). Put
+
+\[
+ \begin{aligned}
+ \mathcal P_0&=((0,1,2),(0,2,1),(2,0,1)),\\
+ \mathcal P_1&=((0,1,2),(0,2,1),(1,0,2),
+                  (1,2,0),(2,0,1),(2,1,0)),\\
+ z_{s,p,e,c}&=d(X^c\Theta^eR_pu_s),\qquad d(v)=v/v_0,
+ \quad s=0,1,\quad p\in\mathcal P_s,\quad e,c\in\{0,1\}.
+ \end{aligned}
+\tag{65.3}
+\]
+
+Order this list lexicographically by \((s,p,e,c)\) and index its
+entries by \(0,\ldots,35\). Here the permutation order is exactly
+the displayed order in each \(\mathcal P_s\).
+
+The six-ray construction of §61 proves common flatness of \(u_0,u_1\).
+The symmetries and (65.1) prove it for every entry of (65.3).
+Distinctness can be checked without a numerical comparison. Both seeds
+have channel-ratio triple
+
+\[
+ (y_j/x_j)_{j=0}^2=(\gamma,\gamma,q),
+ \qquad q=\sigma/\tau=\frac{\sqrt3+2i}{\sqrt7}\ne\gamma.
+\tag{65.4}
+\]
+
+The unique repeated ratio is \(\gamma\). Under \(\Theta,X,X\Theta\)
+it becomes respectively \(-\gamma,\bar\gamma,-\bar\gamma\).
+These four values are distinct. Hence an element
+\(X^c\Theta^eR_p\) mapping one seed to either seed projectively must
+have \(e=c=0\), and then \(p\) fixes the unique \(q\)-position.
+The only possibilities are the identity and the transposition
+\((0\ 1)\). Both fix \(u_0\); only the identity fixes \(u_1\), since
+its first two upper coordinates are \(1,\omega\). Neither maps one
+seed to the other, since the upper-coordinate ratio on the repeated
+pair is one for \(u_0\) and is \(\omega\) or \(\omega^2\) for \(u_1\).
+
+Projectively these transformations form a group of order 24:
+\(S_3\) commutes with \(X,\Theta\), while
+\(\Theta^2=-I\), \(X^2=I\), and \(X\Theta=-\Theta X\).
+The two disjoint orbits therefore have sizes 12 and 24, and (65.3)
+selects them without repetition. Their ratio triples are nonconstant,
+whereas every central canonical ray has all three ratios equal to
+\(i\) or \(-i\). This also proves noncanonicity.
+

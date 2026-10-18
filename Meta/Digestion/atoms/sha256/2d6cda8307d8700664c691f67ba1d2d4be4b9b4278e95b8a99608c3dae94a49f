@@ -1,0 +1,31 @@
+## 268. Both opposite labels low is impossible in the balanced range
+
+It remains to consider b<=a<2*b+1 and suppose both R_i are C or D.
+Each opposite value r_i is then at least b. We prove for every such
+owner that theta_M(A_i)>pi/3, contradicting (266.3).
+
+The exact axial cosine has positive denominator
+ D=m^2+a^2+b^2+2*m*a*b-1
+and numerator
+ N(r)=2*a*b+m*(a^2+b^2)-(m^2-1)*r.
+Since r>=b and m>1, D-2*N(r)>=D-2*N(b).
+Put h=m-a-b-1>0. Direct expansion gives
+ D-2*N(b)
+ =2*(a+1)*(a+b)*(2*b+1-a)
+  +2*[(a-b)*(2*b+1-a)+3*b^2+4*b+1]*h
+  +(1+2*b)*h^2.
+All terms are nonnegative in b<=a<=2*b+1, and the coefficient of h
+is strictly positive. Therefore D-2*N(r)>0. It follows that
+ cos(theta_M(A_i))=N(r)/D<1/2,
+so its principal genuine angle exceeds pi/3. The two distinct A_i
+then contribute more than 2*pi/3, contrary to (266.3).
+
+The both-low case is thus excluded in the balanced range, while Section
+267 already excluded the unbalanced range with any opposite-axis roles.
+Every surviving no-extra-core-M configuration must have balanced low
+values and at least one special R_i. This is an actual subcase exclusion
+under the unchanged original hypotheses, not a claim that the strengthened
+special-star scalar inequalities or the entire residual family are
+inconsistent. The complete special-axis stars remain required in the
+next case analysis.
+

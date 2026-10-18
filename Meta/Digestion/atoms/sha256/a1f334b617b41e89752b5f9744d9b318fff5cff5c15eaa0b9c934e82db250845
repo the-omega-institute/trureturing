@@ -1,0 +1,80 @@
+**Theorem 40.2 (Joint finite-event transport and the correlation allowance).** Under Definition 40.1, every $x\in B_\beta$ satisfies
+
+$$
+h_x+\delta z_x\le\delta+\eta,
+\qquad\text{equivalently}\qquad
+(1-\delta)h_x\le\delta d_x+\eta.
+\tag{40.4}
+$$
+
+More precisely, every such procedure and law family obey
+
+$$
+\big[(1-\delta)h_x-\delta d_x\big]_+\le\Delta,
+\qquad [a]_+=\max\{a,0\}.
+\tag{40.5}
+$$
+
+This includes arbitrary finite real proposals and all zero-probability cases. It imposes no common execution horizon.
+
+**Proof.** Fix $x\in B_\beta$. Enumerate the primes increasingly and put $P_m=\{p_1,\ldots,p_m\}$ for $m\ge1$. Define two disjoint measurable events on the common tape space:
+
+$$
+\begin{aligned}
+A_m&=\{\theta\in H_x:\tau_x(\theta)\le m,
+\ Q_x(\theta)\subseteq P_m,\ C_x(\theta)\le m\},\\
+T_m&=\{\theta\in R_x:\tau_x(\theta)\le m,
+\ Q_x(\theta)\subseteq P_m\}.
+\end{aligned}
+\tag{40.6}
+$$
+
+Both sequences increase, with $A_m\uparrow H_x$ and $T_m\uparrow R_x$. Every finite real output is eventually at most $m$, including a negative output; no lower cutoff or countability of the output range is required. Every finite execution has finite length and uses a finite prime menu, including the empty menu and repeated queries after deduplication. These facts justify both exhaustions without a uniform horizon.
+
+For each $m$, persistent unboundedness supplies one actual source
+
+$$
+y_m\in J_\beta(x,P_m),\qquad\Omega(y_m)>m.
+\tag{40.7}
+$$
+
+Choose this source before quantifying over tapes. On a tape in either $A_m$ or $T_m$, its advice and every prime answer along the finite run at $x$ agree with those of $y_m$. The finite-execution transport of Corollary 37.3, also used in Theorem 38.2, therefore preserves the entire run and terminal outcome. On $A_m$ the transported proposal is at most $m<\Omega(y_m)$; on $T_m$ the transported outcome is still a finite nonproposal. Consequently, for this same source and as inclusions in $\Theta$,
+
+$$
+A_m\subseteq F_{y_m},\qquad T_m\subseteq R_{y_m}.
+\tag{40.8}
+$$
+
+There is no exceptional set depending on a law in these inclusions: the deterministic rules apply to every tape, including tapes having probability zero at either source. The union of all relevant bounded menus is already contained in the single $P_m$.
+
+Apply the error hypothesis at $y_m$. Since $H_{y_m}$ and $R_{y_m}$ are disjoint, (40.8) gives
+
+$$
+\mu_{y_m}(A_m)+\delta\mu_{y_m}(T_m)
+\le e_{y_m}+\delta z_{y_m}
+\le\delta(h_{y_m}+z_{y_m})
+\le\delta.
+\tag{40.9}
+$$
+
+The required TV comparison is a bounded test with values $1,\delta,0$ on the measurable partition $A_m,T_m,\Theta\setminus(A_m\cup T_m)$. Its expectation difference costs at most $\operatorname{TV}(\mu_x,\mu_{y_m})$, rather than a separate full allowance for each class. Explicitly, disjointness gives, for either law $\lambda$,
+
+$$
+\lambda(A_m)+\delta\lambda(T_m)
+=(1-\delta)\lambda(A_m)+\delta\lambda(A_m\cup T_m).
+\tag{40.10}
+$$
+
+Each of the two event probabilities on the right increases by at most $\operatorname{TV}(\mu_x,\mu_{y_m})$ when replacing $\mu_{y_m}$ by $\mu_x$. Their nonnegative coefficients sum to one. Combining (40.9) and (40.10) yields
+
+$$
+\mu_x(A_m)+\delta\mu_x(T_m)\le\delta+\Delta\le\delta+\eta.
+\tag{40.11}
+$$
+
+This is the usual bounded-test property of TV, applied only to this finite measurable partition. Its finite-space dual formulation is standard; see Levin and Peres, with contributions by Wilmer, [Chapter 4, Proposition 4.5, p. 49](https://pages.uoregon.edu/dlevin/MARKOV/mcmt2e.pdf). That proposition uses tests in $[-1,1]$ and a factor $1/2$; replacing a test $f\in[0,1]$ by $2f-1$ gives the normalization used here. Equation (40.10) uses the event-supremum definition directly, so no assumption that the original tape space is finite is needed.
+
+Continuity from below under the fixed law $\mu_x$ now gives $h_x+\delta z_x\le\delta+\Delta$. Substituting $z_x=1-h_x-d_x$ proves (40.4), and $\Delta\ge0$ proves (40.5). Although $y_m$ can vary with $m$, the limit is taken only for the two increasing events under $\mu_x$; no convergence of the comparison sources or their laws is asserted. Every step holds at $\delta=0$ and $\delta=1$ without division. At the first endpoint the conclusion is $h_x\le\eta$; at the second it is $0\le d_x+\eta$.
+
+For $\eta=0$, (40.4) recovers the conclusion of Corollary 39.2 with its common-law hypothesis. That corollary's restart construction is not needed here. Independent restarts at source $y$ would use a product law built from $\mu_y$; (40.3) bounds the original law family and does not impose the same bound on those product laws. The deduction above retains the original single tape throughout. $\square$
+

@@ -1,0 +1,44 @@
+**Theorem 16.9 (geometry, redundancy and admissible height slack).** The
+Read value in (AAR.96) depends only on the rooted prefix-tree shape,
+including unary-chain lengths. It is unchanged by exchanging left and
+right child directions, by increasing an admissible $D$, or by adding
+a target that is an ancestor of an existing target. Left/right exchanges
+and added ancestor targets can change the retained-alphabet count
+$n(S)$; increasing an admissible $D$ leaves both counts unchanged by
+Theorem 12.6. In particular,
+
+$$
+ \mathcal C_D(\varnothing)=0,\qquad
+ \mathcal C_D(\{p\})=\lceil\log_2(|p|+1)\rceil,
+ \qquad
+ 1\le c(K)\le|K|\quad(K\ne\varnothing).
+\tag{AAR.97}
+$$
+
+The singleton formula is exactly the already published Theorem 13.8,
+not an additional single-address acquisition result.
+
+Proof. The three operations in (AAR.95) use rooted adjacency and
+ancestor order, with no left/right weight or target markings. Adding
+an already included prefix changes no vertex of $K$. The canonical
+realizations fit every $D\ge\max_{p\in P}|p|$; the attaining queries
+inspect no extra height slack. This proves the invariances. The empty
+menu has constant output. For a singleton the obligation shape is a
+path with $|p|$ vertices, and equality with Definition 13.1's optimum
+allows direct reuse of Theorem 13.8. The lower positive bound follows
+from the two root-leaf sources with different requested trajectories.
+Reading all vertices of $K$ proves the upper bound.
+
+A nonabsent descendant certifies each strict ancestor branch; requesting
+such an already certified ancestor again adds no boundary information.
+After reading a labelled leaf, its strict descendants are already known
+absent and need no further initial probe. After absence at $x$, all
+strict descendants of its parent are already absent, but the actual
+blocking leaf and its label still require acquisition. These are
+conditional redundancies on an actual acquired transcript. Removing
+nonmaximal targets does not remove their addresses as potential probes:
+a blocking leaf at one of those ancestors must itself be read by
+Theorem 16.2. Nor do the worst-budget invariances deny source-specific
+usefulness of off-menu probes, as Proposition 14.2 demonstrates.
+$\square$
+

@@ -1,0 +1,29 @@
+**Definition 145.1 (Reconstructible coordinate order).** In each cell
+order labels $r=0,\ldots,5$, and put coordinate index $z=6c+r$ where $c$
+is the cell's zero-based index. All six outputs in every one of the 41
+$O$ cells and 51 $N$ cells belong to their complete models.
+The following table supplies the first cell index of each schedule in
+both orders. Singleton cells follow in order $0,1$; $O$ pair cells follow
+in order $0,10,11$ and $N$ pair cells in order $00,01,10,11$.
+
+<!-- mathematical-data: cell-offsets -->
+
+| Schedule index | Schedule | First $O$ cell | First $N$ cell | $O$ / $N$ cell count |
+| --- | --- | --- | --- | --- |
+| 0 | () | 0 | 0 | 1 |
+| 1 | (1) | 1 | 1 | 2 |
+| 2 | (2) | 3 | 3 | 2 |
+| 3 | (3) | 5 | 5 | 2 |
+| 4 | (4) | 7 | 7 | 2 |
+| 5 | (5) | 9 | 9 | 2 |
+| 6 | (1,2) | 11 | 11 | 3 / 4 |
+| 7 | (1,3) | 14 | 15 | 3 / 4 |
+| 8 | (1,4) | 17 | 19 | 3 / 4 |
+| 9 | (1,5) | 20 | 23 | 3 / 4 |
+| 10 | (2,3) | 23 | 27 | 3 / 4 |
+| 11 | (2,4) | 26 | 31 | 3 / 4 |
+| 12 | (2,5) | 29 | 35 | 3 / 4 |
+| 13 | (3,4) | 32 | 39 | 3 / 4 |
+| 14 | (3,5) | 35 | 43 | 3 / 4 |
+| 15 | (4,5) | 38 | 47 | 3 / 4 |
+

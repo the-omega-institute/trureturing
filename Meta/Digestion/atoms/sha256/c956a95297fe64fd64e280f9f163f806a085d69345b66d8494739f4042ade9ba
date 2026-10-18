@@ -1,0 +1,33 @@
+## 457. 自匹配点的连续包络与 floor 损失分解
+
+§456 的 residual 还可以沿另一个切面拆开。这个拆分不引入新的价格源：它把
+同一 CA 指数剖面的整数约数和，与允许指数取实数的连续 Euler 包络逐素数比较。
+
+固定一个非事件稳定胞腔，记其支撑上界为 $P$，并置
+
+$$
+m_p(\varepsilon)=\lfloor Y_p(\varepsilon)\rfloor
+=a_p^-(\varepsilon)+1.
+$$
+
+定义连续包络和取整损失
+
+$$
+\mathcal C_P(\varepsilon)
+=\prod_{p\le P}\left(1-p^{-1-\varepsilon}\right)^{-1},
+$$
+
+$$
+\mathcal L_P(\varepsilon)
+=\sum_{p\le P}
+\log\frac{1-p^{-Y_p(\varepsilon)}}
+{1-p^{-m_p(\varepsilon)}}.
+$$
+
+由于 $m_p\le Y_p$，每一项损失非负：
+
+$$
+\boxed{\mathcal L_P(\varepsilon)\ge0.}
+\tag{457.1}
+$$
+

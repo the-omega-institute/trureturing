@@ -1,0 +1,26 @@
+**Theorem 16.1 (the original full-output minimax).** With the exact
+isolated point of Proposition 13.2 and the whole-complex common channel
+of Theorem 15.1,
+
+$$
+\boxed{
+\inf_{\Phi\ \mathrm{common\ CPTP}}
+\max_{(x,\beta,m)\in\mathcal H}
+ \frac12\|\Phi(\rho_{x,\beta,m})-\Omega_{x,\beta,m}\|_{1,\mathrm{cq}}
+ =E(\Phi_*)=F(x_*)=\delta_{27},
+\quad
+0.14817810291080132013<E_*<0.14817810291080132014.
+}
+\tag{CG.154}
+$$
+
+The symbol $x_*$ on the right is the six-coordinate algebraic variable
+of Definition 13.1; the history height $x$ on the left is still the
+original scalar $y/256$.
+
+Proof. Theorem 14.1 bounds every allowed channel below by $F(x_*)$.
+Theorem 15.2 proves the reverse inequality using one legitimate channel
+at the very same exact point. Proposition 13.2 supplies the strict
+decimal enclosure. This is a matching witness and attainer argument,
+not an inference from KKT stationarity to global optimality. $\square$
+

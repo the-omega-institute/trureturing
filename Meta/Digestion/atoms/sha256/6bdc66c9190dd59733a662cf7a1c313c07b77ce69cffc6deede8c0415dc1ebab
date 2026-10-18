@@ -1,0 +1,9 @@
+**Definition 185.1 (The original cyclic-window branch).** For $h\ge3$,
+take the cyclic list $1,2,\ldots,h,\ast$ and its $h+1$ consecutive
+length-three windows. In each window sort the numerical labels
+increasingly, with $\ast$ last. Query the first two labels, stopping
+at their first zero, and emit that zero label or the third selected
+label on positive exhaustion. The symbol $\ast$ means output zero;
+it is never queried. Give each indexed window mass $1/(h+1)$ and
+write $P_h^{\rm cyc}$ for the resulting complete-table mixture.
+

@@ -1,0 +1,19 @@
+**Open problem 10.2 (first missing higher-count certificate).** For an
+actual higher-count consequence, supply one eight-contact or nine-contact
+law at the same isolated original source together with its complete
+full-circle dual. Required data include exact source/root membership,
+all endpoint zeros and strict exclusion off that complete set, positive
+same-law weights solving every common moment and active contrast,
+nonzero height and report signs, positive angular curvatures and inward
+slopes, and independent $\Gamma$ columns for eight contacts or invertible
+$(\Gamma,k)$ columns for nine. To obtain a numerical actual TV deficit,
+one must additionally evaluate or rigorously bound $c_0,L,K,p_{\min}$
+and, in the nine-contact case, $\lambda$.
+
+Such an eight-contact seed would give the positive actual HALF-TV deficit
+(QS.38) for every competitor with at most seven supported low labels;
+such a nine-contact seed would give (QS.42) for every one with at most
+eight. No such actual seed or evaluated deficit constant is specified
+here. The conditional transfer from instruments to laws has been given
+before height optimization; another abstract compactness assertion is
+not the missing higher-count certificate. The original maximum minimum

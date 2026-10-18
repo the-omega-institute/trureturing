@@ -1,0 +1,105 @@
+**Theorem 20.1 (abstract states, immediately writable states and bits).**
+Under Assumptions 17.1 and 17.4, on the exact acquired entry
+(NARC.17.2), the optima of Definition 17.5 are
+
+$$
+\boxed{M_2=10,\qquad W_2=11,\qquad L_2=6.}
+\tag{NARC.20.1}
+$$
+
+The $L_2$ lower bound holds at every finite installed-state budget.
+Definition 19.1 simultaneously attains $W_2$ and $L_2$, so also
+$L_{11}=6$. These are complete recovery-control coordinates under
+the named conditional services, with separately charged acquisition,
+compilation, immutable storage, address submission and physical costs.
+
+**Proof, the abstract state minimum.** Theorem 18.1 requires three
+distinct reached running states. The seven distinct complete lags
+require at least seven distinct reached halts, disjoint from running
+states. Thus every table has at least ten installed states, whether
+or not it has extra unreachable states. Proposition 19.3 attains ten,
+giving $M_2=10$.
+
+**Proof, the writable state minimum.** At exactly ten installed states
+there are precisely the forced three running states and one halt
+for each required lag. Write $H_0,H_1$ for the unique halts with
+outputs $17,16$. Actual lower and upper second responses require
+both $A,B$ to be adjacent to both these halts. They are also both
+adjacent to $R$. These three common neighbors are distinct, so
+every ten-state controller's actual support contains
+
+$$
+K_{2,3}\quad\text{with parts }\{A,B\},\{R,H_0,H_1\}.
+\tag{NARC.20.2}
+$$
+
+The graph obstruction is classical: [Havel--Morávek, Propositions
+1--2 and Example 1][HM-RW], pp.340--342, supply adjacency-preserving
+injective cube coding and exclusion of $K_{2,3}$, as reused in
+[FIB, Proposition 46.2][FIB-RW]. Its local specialization is that
+two distinct cube words with a common neighbor differ in exactly
+two coordinates, and have just the two intermediate words as
+possible common neighbors. They cannot have three. Since
+$\Gamma_d$ is a subgraph of the binary cube, (NARC.20.2) precludes
+an injective edge-preserving implementation at every finite length.
+The task-specific premise is the universally forced actual native
+support, rather than the obstruction of just one chosen table.
+
+Every admissible word device is itself a Moore table on all its
+installed complete words and is subject to Theorem 18.1. Thus the
+argument excludes all ten-state writable competitors, including
+newly synthesized tables, and the abstract bound excludes fewer.
+Definition 19.1 supplies eleven immediately writable states, hence
+$W_2=11$.
+
+For the exact ten-state boundary, singleton first ages $27,28$
+cannot enter $A$: its $P_{16}$ branch successor is already required
+to output $17$ for lower age $18$, whereas their outputs are $12,13$.
+They cannot enter $B$: its $P_{30}$ absence successor already
+outputs $14$ for upper age $29$. Returning to $R$ cannot terminate
+on the stationary source. There is no other running state, so
+they halt directly at $H_5,H_4$. All lower-bound states are reached;
+an unused installed state does not repair this boundary.
+
+**Proof, word length independently of state budget.** Use the actual
+path $A-R-B$ and degree bounds of Theorem 18.1 for an arbitrary
+finite competitor, without assuming ten or eleven states.
+The needed ambient degree facts are literature-attested consequences
+of [Klavžar--Mollard--Petkovšek][KMP-RW]. In their notation
+$f_{n,k,w}$ counts degree-$k$, weight-$w$ vertices of $\Gamma_n$.
+Corollary 3.4 (author manuscript p.7), at $n=5,m=0$, satisfies
+its hypothesis $n\ge2m+2$ and gives one degree-five vertex.
+The word `00000` has all five unit words as neighbors, so it is
+that unique vertex. Theorem 4.6 (p.12) gives
+
+$$
+f_{n,k,w}=
+\binom{w+1}{n-w-k+1}\binom{n-2w}{k-w},\qquad
+f_{5,k,2}=\binom3{4-k}\binom1{k-2}=0\quad(k=4,5).
+\tag{NARC.20.3}
+$$
+
+The binomial coefficient is zero outside its allowed lower-index
+range. Since degree is at most five, every legal weight-two vertex
+of $\Gamma_5$ has degree at most three. These are intermediate
+classical graph facts, not new graph-theory claims.
+
+Suppose a correct writable controller embeds its actual support
+into $\Gamma_5$. Injectivity and edge preservation give each image
+at least as many distinct ambient neighbors as its supported degree.
+If $\deg(B)>5$ this is already impossible; otherwise $B$ must map
+to `00000`. Its distinct neighbor $R$ maps to a unit word $e_i$.
+A neighbor of $e_i$ other than zero has weight two. Because
+$A\ne B$ and the map is injective, $A$ must map to such a legal
+weight-two word. It then has at most three ambient neighbors,
+contradicting $\deg(A)\ge4$.
+
+For a shorter word length $d<5$, append $5-d$ trailing zeros.
+This preserves injectivity, absence of adjacent ones and every
+Hamming-one edge, and would give the already excluded embedding
+into $\Gamma_5$. Thus every finite-state immediate controller
+in this exact two-Read competition class needs at least six bits.
+The six-bit certificate gives $L_2\le6$, proving equality and the
+restricted $L_{11}=6$. No classification of eleven-state controllers
+or square-based lower-bound route enters the argument. $\square$
+

@@ -1,0 +1,58 @@
+### 84.5. Every special product and every phase pole
+
+Product \(\eta=1\), or \(j=0\), has \(s=0\) in the finite
+chart. The phase-pole alternatives in §84.2 do not have this product.
+Hence only the two constant canonical inputs remain, and they are
+exactly the orthogonal \(\Theta\) pair in (84.1).
+
+Product \(\eta=-1\), or \(j=\infty\), cannot have a phase
+pole either. Both phases are finite, \(T=1\), and \(v\ne0\).
+The leading homogeneous version of (84.11) is nonzero by (84.6)–(84.7).
+Take the coefficients of \(j^4\) in \(F_6\) and of \(j^6\)
+in \(N_8\), and divide them by \(1+v^2\) and \((1+v^2)^2\),
+respectively. These are exact divisions by positive factors, giving
+quartics \(F_\infty,N_\infty\) with resultant
+\[
+ \operatorname{Res}_v(F_\infty,N_\infty)
+             =26244b^8(b^2-1)^6(b^2-5)^4(b^2-3)^4\ne0. \tag{84.17}
+\]
+Thus no original input has product \(-1\).
+
+Define the four special polynomials by the exact formulas
+\[
+ F_+=b^4F_6|_{j=1/b},\quad N_+=b^6N_8|_{j=1/b},\qquad
+ F_-=\frac{b^4F_6|_{j=-1/b}}{v-b},\quad
+ N_-=\frac{b^6N_8|_{j=-1/b}}{(v-b)^2}.
+\]
+These are polynomials, and both displayed divisions are exact.
+The removed factors represent the already listed upper pole; every
+other finite original input must satisfy \(F_-=N_-=0\).
+The respective degrees are five and six in both signs. Put
+\[
+\begin{aligned}
+ W&=b^8+8b^6+6b^4+8b^2+25>0,\\
+ J_{10}(B)&=18B^{10}+107B^9-101B^8-552B^7-5452B^6+11014B^5\\
+ &\quad-16130B^4+43456B^3+25634B^2+11511B-3969.
+\end{aligned}
+\]
+Then
+\[
+\begin{aligned}
+ \operatorname{Res}_v(F_+,N_+)
+ &=21233664b^{12}(b^2-3)^4(b^2+1)^{23}W^2J_{10}(b^2),\\
+ \operatorname{Res}_v(F_-,N_-)
+ &=21233664b^{12}(b^2-3)^4(b^2+1)^{15}W^2J_{10}(b^2),\\
+ \gcd(J_{10},J_{10}')&=\gcd(J_{10},f)=1.
+\end{aligned}                                                    \tag{84.18}
+\]
+The last equalities are Euclidean gcd identities in \(\mathbb Q[B]\).
+Two distinct finite nonpole lifts at either special product would make
+the 11-by-11 Sylvester matrix have nullity at least two. Differentiate
+its determinant along \(b\), with \(j=\pm1/b\) already substituted.
+Since \(b\ne0\), (84.18) would force
+\(J_{10}(B)=J_{10}'(B)=0\), a contradiction. A pole and a finite
+nonpole lift would force \(f(B)=J_{10}(B)=0\), also impossible.
+Each pole itself is unique by (84.4). Thus either special product has
+at most one nonconstant input. The squared factors \(bj\pm1\) in
+(84.14) have been covered, not discarded.
+

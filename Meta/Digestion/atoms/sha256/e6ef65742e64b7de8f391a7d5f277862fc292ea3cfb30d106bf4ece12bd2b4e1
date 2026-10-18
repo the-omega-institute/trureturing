@@ -1,0 +1,15 @@
+**Definition 1.1 (Bernstein functions and the literal family).** A Bernstein function is a nonnegative smooth real function $f$ on $(0,\infty)$ such that $(-1)^n f^{(n+1)}(y)\ge0$ for every integer $n\ge0$ and every $y>0$. Write $\mathrm{BF}$ for this class. For $a>0$ and $0\le c<1$, define
+
+$$
+H_{a,c}(y)=\left(1+\frac1y\right)^{ay-c},\qquad y>0.
+$$
+
+With $b=-c$, the original parameterization is $F_{a,b}(x)=(1+a/x)^{x+b}$, and $F_{a,b}(ay)=H_{a,-b}(y)$. Define
+
+$$
+\alpha_* = \sup\{\alpha>0:H_{\alpha,0}\in\mathrm{BF}\},\qquad
+A(b)=\sup\{a>0:H_{a,-b}\in\mathrm{BF}\}\quad(-1<b\le0).
+$$
+
+These definitions refer to the exact Bernstein property, without substituting numerical approximations for $\alpha_*$ or $A$. The family and parameterization are those of Krasniqi, arXiv:2609.28707v1, equations (1.1), (3.1), and Theorem 17.
+

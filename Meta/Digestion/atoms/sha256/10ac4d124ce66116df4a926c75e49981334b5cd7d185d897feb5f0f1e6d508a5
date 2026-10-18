@@ -1,0 +1,20 @@
+#### 15.10　总结：反馈关系中的因果与位置
+
+反馈模型中，“哪个位置能影响哪个位置”必须经过四步：
+
+$$
+\boxed{
+\text{局部结构方程}
+\;\longrightarrow\;
+\text{闭环 resolvent}
+\;\longrightarrow\;
+\text{隐藏层 Schur 边界}
+\;\longrightarrow\;
+\text{可执行干预响应}.
+}
+$$
+
+邻接图给出候选路径，resolvent 给出所有反馈轮次的和，Schur 补给出消元后边界，干预响应才回答“改变这里是否会改变那里”。稳定性控制响应是否有限，观察分布则只在附加识别假设下才能确定这份响应。
+
+<a id="chapter-16"></a>
+

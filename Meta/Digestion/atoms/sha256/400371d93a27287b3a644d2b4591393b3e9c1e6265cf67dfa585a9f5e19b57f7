@@ -1,0 +1,74 @@
+**Theorem 12.4 (Exact full-face lift for every fixed nonzero cubic).**
+Under Definition 12.1 the entire exposed face, as a cone of full
+channel tuples, has the following finite descriptions.
+
+If $\mathcal P_{\mathfrak d}$ is empty, it is exactly (12.1).
+If $\mathcal P_{\mathfrak d}=\{p_*\}$, choose a unit generator
+$b_*$ of the rank-two radial block's kernel; it is exactly
+
+$$
+x=x_\partial+w_*k(a(p_*),b_*),\qquad w_*\ge0,
+\tag{12.11}
+$$
+
+with (12.1). If the interior zeros form a line, compute the polynomial
+$\widetilde V(t)=\sum_{k=0}^6V_kt^k$ from Lemma 12.2, padding
+unused coefficients with zero. Then it is exactly
+
+$$
+\boxed{x=x_\partial+\Psi(m),\qquad
+\Psi(m)=\sum_{k=0}^6V_km_k,\qquad
+v_j\in\mathcal P,\quad\ell_{\mathfrak d}(x_\partial)=0,
+\quad H_3(m)\succeq0,\quad K_2(m)\succeq0.}
+\tag{12.12}
+$$
+
+Every point has a finite reconstruction preserving its entire $x$.
+The respective seed bounds are eight, nine and twelve. On the TP
+slice, the corresponding direct quadrature bounds are $200$, $225$
+and $300$ scalar flags, with whole-block CPTP decoding.
+
+Proof. Theorem 7.3 already classifies this same entire face into
+its boundary part and all interior radial kernel rays. Theorem 7.2
+makes the nonzero-cubic cases precisely empty, singleton or line,
+and ensures the claimed rank-two kernels. Definition 12.1 and
+Theorem 11.3 give the exact boundary part, with at most eight seeds.
+This proves the empty and singleton descriptions, including a
+redundant singleton ray if its measurement itself misses a sector.
+
+In the line case Lemma 12.2 gives exactly every interior radial ray.
+Its two endpoint rays are actual boundary zero atoms, already in
+the boundary part. Hence adding endpoints changes no point of the
+sum of cones in (7.4). Lemma 12.3 gives
+
+$$
+\Psi(\{m:H_3(m)\succeq0,\ K_2(m)\succeq0\})
+=\operatorname{cone}\{\widetilde V(t):0\le t\le1\}
+\tag{12.13}
+$$
+
+as finite-sum cones, not just after closure. For one inclusion take
+the moments of any finite positive curve combination. For the other
+use the at-most-four-node reconstruction (12.8).
+
+At each positive node weight $w_a$, write
+$\widetilde V(t_a)=s_a k(a_a,b_a)$ with unit actual factors
+from Lemma 12.2, where
+$s_a=\operatorname{tr}Z(\widetilde V(t_a))>0$.
+Its true unit-atom coefficient is $w_as_a$. Together with the
+boundary reconstruction these are at most twelve nonzero canonical
+seeds, all with zero pairing with $\ell_{\mathfrak d}$. The
+$25$-point rule gives the asserted flags; TP of this same tuple
+normalizes their whole measurement sum exactly as in (2.9).
+
+Thus every $M$ entry, every plane coefficient, $M^T\tau$ and
+all $H_J(x)$ are retained. Equality of the channel on complex
+inputs retains every actual-history law as well. The credited QRC
+$225$-flag realization of a specified selected channel remains
+available even in the line case; $300$ is an explicit construction
+through these canonical kernel seeds, not a minimal flag claim.
+The lift has at most twenty binary variables and seven moments,
+eight PSD blocks of order two and one each of orders four and three.
+It does not reduce the faithful affine dimension of QRC or choose
+which face an optimizer uses. $\square$
+

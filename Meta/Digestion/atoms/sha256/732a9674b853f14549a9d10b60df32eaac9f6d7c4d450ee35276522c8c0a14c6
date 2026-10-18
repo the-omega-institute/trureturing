@@ -1,0 +1,25 @@
+**Proposition 6.2 (all-equal sufficiency).** For $t\ge2$, put
+
+$$
+A_t=\{0^t,1^t\},\quad C_t=\mathbf1_{A_t},\quad
+c_t=2^{1-t},\quad b_t=1-\epsilon+\epsilon c_t,\quad
+ a_t=\frac{b_t}{c_t}=\epsilon+(1-\epsilon)2^{t-1}.
+$$
+
+$C_t$ is sufficient for the binary experiment $E_t$. Its laws are
+Bernoulli$(c_t)$ under $P$ and Bernoulli$(b_t)$ under $Q$.
+The likelihood ratio $q_t/p_t$ is $a_t>1$ on $A_t$ and
+$\epsilon<1$ outside it.
+
+Proof. Every string has $p_t(y)=2^{-t}$. Its $q_t$ probability
+is $(1-\epsilon)/2+\epsilon2^{-t}$ on the two constant strings,
+and $\epsilon2^{-t}$ on the other $2^t-2$ strings. Division
+proves the ratios, and summation gives the Bernoulli probabilities.
+Both events have positive probability under both hypotheses since
+$t\ge2$ and $0<\epsilon<1$. Under either law, conditional on
+$C_t=1$, the vector is uniform on the two constant strings; conditional
+on $C_t=0$, it is uniform on the nonconstant strings. These common
+conditional laws define a hypothesis-independent reverse kernel from
+$C_t$ to $Y$. Since $C_t$ is already a function of $Y$, it
+loses no information for this binary pair. $\square$
+

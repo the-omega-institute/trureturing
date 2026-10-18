@@ -1,0 +1,18 @@
+**lemma 3.1 (Recurrence and tail suprema).** There are times $r_n\ge n$ with
+$\|O(r_n)-I\|_{\rm op}<1/n$. For every fixed CPTP $T$ and every $u\ge0$,
+
+$$
+\sup_{t\ge u}\max_J\|Q_J(t)-T^\dagger(Q_J(t))\|_{\rm op}=e(T).
+\tag{3.1}
+$$
+
+Proof. For each positive integer $n$, the infinite sequence
+$O(0),O(n),O(2n),\ldots$ lies in the compact orthogonal group. Two terms
+$O(kn),O(\ell n)$ with $k>\ell$ are within $1/n$. Unitary invariance of
+operator norm gives $r_n=(k-\ell)n\ge n$ and
+$\|O(r_n)-I\|<1/n$. For each fixed $t\ge0$, therefore,
+$Q_J(t+r_n)\to Q_J(t)$, with $t+r_n\ge u$ eventually. The finitely many
+event residuals are continuous in their effect. Every value before $u$ is
+thus a limit of tail values. The opposite inequality follows by inclusion
+of the tail. The QMB first-read identity proves (3.1). $\square$
+

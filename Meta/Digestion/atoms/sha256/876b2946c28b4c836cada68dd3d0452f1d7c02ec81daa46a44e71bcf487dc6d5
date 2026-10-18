@@ -1,0 +1,53 @@
+**Lemma 11.1 (Classwise square-zero legality and actual risk affinity).** For any $\theta\in\Theta_N$, its stationary mass is a finite mixture over positive-weight closed irreducible hidden classes $C$. Let $w_C=\lambda(C)>0$, let $\lambda^C$ be the normalized restriction, and let $M_x^C$ be the restrictions of the emission matrices. Then
+
+$$
+\lambda^C>0,\qquad (M_1^C)^2=0,
+\qquad P_\theta=\sum_Cw_CP_C,
+\qquad d(P_\theta)=\sum_Cw_Cd(P_C),
+\tag{11.1}
+$$
+
+where $P_C$ is the actual stationary visible law on that class. This is the component and affinity mechanism of [Universal][U], Theorem 5.1, with scalar legality made explicit.
+
+**Proof.** Let $V$ be the states outside all closed irreducible classes of the finite chain $A$. From every state of $V$ there is a positive path into a closed class. Finite maxima of lengths and minima of positive path probabilities give $k\ge1$ and $\eta>0$ such that the chance of leaving $V$ within $k$ steps is at least $\eta$ from every state in $V$. A closed class cannot return to $V$. Stationarity therefore gives $\lambda(V)\le(1-\eta)\lambda(V)$, whence $\lambda(V)=0$.
+
+A closed class has no outgoing entry of $A$. Nonnegativity implies that neither emission matrix has an outgoing entry there. Its normalized stationary row $\lambda^C$ is positive at every state: positive mass at one state propagates along positive paths by stationarity. Thus restriction gives a stationary actual joint law of the form (1.4). In the original joint law the hidden class is chosen with weight $w_C$ and stays fixed, giving the displayed actual mixture. Scalar legality decomposes as
+
+$$
+0=\lambda M_1^2\mathbf1
+=\sum_Cw_C\lambda^C(M_1^C)^2\mathbf1.
+\tag{11.2}
+$$
+
+Every summand is nonnegative, so each is zero. The entries of $\lambda^C$ are strictly positive, and the row sums of the nonnegative matrix $(M_1^C)^2$ must consequently all vanish. Therefore $(M_1^C)^2=0$ entrywise. No condition on the original zero-mass states has been inferred.
+
+For completeness, the visible law of each class is ergodic under the one-step shift, including periodic classes. One may realize its hidden and visible process as the finite chain of positive emission triples $(s,x,t)$, with transition
+
+$$
+K((s,x,t),(t,y,u))=M_y^C(t,u),\qquad
+\rho(s,x,t)=\lambda_s^CM_x^C(s,t).
+\tag{11.3}
+$$
+
+This chain is irreducible: connect the terminal state of one triple to the initial state of another by an $A$ path, choose a positive emission on each edge, and then take the specified last triple. A finite irreducible stationary Markov chain is shift ergodic even if periodic, and its visible factor is ergodic. A direct justification of the periodic point is as follows. A shift-invariant event has a future-measurable version by approximation with finite cylinders and translating those cylinders into the future. Its conditional probability given the current state is harmonic, hence constant by irreducibility and the maximum principle. Conditioning successively on pasts through time $n$ gives that same constant by the Markov property and invariance. These fields increase to the full path field, so conditional-expectation convergence makes the event's indicator constant and its probability zero or one.
+
+Merge classes with identical visible laws and write the remaining distinct ergodic laws as $R_1,\ldots,R_t$, with positive weights $w_1,\ldots,w_t$. For each finite word $u$, the past frequency
+
+$$
+\gamma_u(x)=\lim_{m\to\infty}\frac1m
+\sum_{k=|u|}^m\mathbf1_{[u]_0}(T^{-k}x)
+\tag{11.4}
+$$
+
+uses only negative coordinates. The pointwise ergodic theorem applied to $T^{-1}$ says that under $R_j$ it equals $R_j([u]_0)$ almost surely. There are countably many words, and distinct probability laws differ on some cylinder. Thus the joint frequency values determine pairwise disjoint events $E_j\in\mathcal E_0$ with $R_j(E_j)=1$; other components give them mass zero. This is an exterior-measurable actual visible label, without a mixing or aperiodicity assumption.
+
+Let $q_0$ be the full-exterior posterior of the mixture. For every $A\in\mathcal E_0$,
+
+$$
+0=\int_{A\cap E_j}(X_0-q_0)\,dP_\theta
+=w_j\int_A(X_0-q_0)\,dR_j.
+\tag{11.5}
+$$
+
+So this same $q_0$ is a posterior under each $R_j$. Integrating its squared residual and using (2.2) gives affinity of $d$. Unmerging identical visible laws proves (11.1). This is an assertion about infinite-exterior risk; finite-window risk need not be affine under mixtures. $\square$
+

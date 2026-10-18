@@ -1,0 +1,22 @@
+**Corollary 5.2 (name-constrained preparation intervals).** Minimize each
+worst preparation charge separately over correct pairs with exactly
+$M_1(D)$ attained names, and denote the resulting numbers by
+$T_M(D),L_M(D),H_M(D)$. For every $D\ge2$,
+
+$$
+\begin{aligned}
+2^{D-2}&\le T_M(D)\le2^{D-1},\\
+(D-1)2^{D-2}&\le L_M(D)\le D2^{D-1},\\
+D-1&\le H_M(D)\le D.
+\end{aligned}
+\tag{PPF.22}
+$$
+
+The same name-optimal construction attains all the stated upper bounds
+as guarantees. No exact value for these constrained minima is asserted.
+
+Proof. Apply Corollary 3.3 to this subclass for the lower bounds and
+Theorem 5.1 for the simultaneous upper bounds. The subclass is nonempty
+by that theorem, and each minimized charge is an integer, so its
+minimum exists. $\square$
+

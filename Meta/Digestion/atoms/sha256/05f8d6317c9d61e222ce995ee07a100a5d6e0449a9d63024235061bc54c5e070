@@ -1,0 +1,58 @@
+### 3.1 One function space for all heights
+
+Homogenize the encoder and update maps by setting
+
+$$
+F(x)=\begin{pmatrix}1\\E(x)\end{pmatrix}\in\mathbb R^N,
+\qquad N=n+1,
+$$
+
+$$
+T_s=\begin{pmatrix}1&0\\b_s&A_s\end{pmatrix},\qquad
+S_t=\begin{pmatrix}1&0\\d_t&C_t\end{pmatrix}.
+$$
+
+Then $F(P_sx)=T_sF(x)$ and $F(Q_tx)=S_tF(x)$ on their respective
+domains. Every fixed affine scalar functional of $E$ is a fixed linear
+functional of $F$. This includes all offsets without bounding them.
+
+At an interior height $k$, let
+
+$$
+V_k=\operatorname{span}_{\mathbb C}
+\{\theta\mapsto F_i(k,\theta):1\le i\le N\},
+\qquad \theta=(\alpha,\beta)\in\mathbb T^2,
+$$
+
+as a space of pointwise functions, not equivalence classes modulo null
+sets. For two interior heights $k,l$, the command $P_{l-k}$ is lawful
+at every phase point at height $k$, so
+
+$$
+F(l,\theta)=T_{l-k}F(k,\theta).
+$$
+
+Thus $V_l\subseteq V_k$. Reversing the displacement gives the reverse
+inclusion. All these spaces equal one space $V$ of dimension at most $N$.
+This uses inverse source commands, not invertibility of their ambient
+matrices.
+
+For $v\in\mathbb T^2$ write $(\tau_vf)(\theta)=f(\theta+v)$.
+The phase identity at height $k$ makes $V$ invariant under
+
+$$
+\tau_{v(k,t)},\qquad
+v(k,t)=\left(\frac t2,c(k)t\right),\qquad
+c(k)=\frac12-\frac kr.
+$$
+
+The inverse command gives inverse invariance as well. Choose two
+distinct heights. The two real vectors $(1/2,c(k))$ obtained this way
+are linearly independent: their determinant is half the nonzero
+difference of the two $c(k)$ values. Every real two-vector is a real
+linear combination of these directions. Translating by its circle class
+is therefore a composition of two of the above translation operators.
+It follows that $V$ is invariant under every torus translation.
+This is a conclusion about operators on the common function space;
+it adds no commands to the native control menu.
+

@@ -1,0 +1,36 @@
+**定义 C-107.1（同一人口纤维的实方向与固定读数）。** 沿用 C-106 的
+$B=(0,1,2,3,13)$、$f$、$e_s=|s,f(s)\rangle$、$\mathcal E$、$S$、
+$\mathfrak D$、$\mathfrak F$ 和 $Q$。令 $J:\mathbb C^5\to H^{(1)}\otimes H^{(2)}$
+为 $J|s\rangle=e_s$ 的等距嵌入，$J^\dagger J=I_5$。
+C-106.2 给每个 $\Gamma\in\mathfrak D$ 唯一的压缩
+$C=J^\dagger\Gamma J$，满足 $\Gamma=JCJ^\dagger$、$C\succeq0$、$C_{ss}=1/5$。
+定义实向量空间及实线性泛函
+
+$$
+\begin{aligned}
+V&=\{X\in M_5(\mathbb C):X=X^\dagger,\ X_{ss}=0\ (s\in B)\},\\
+\ell_Q(X)&=\operatorname{tr}(J^\dagger QJX),\qquad V_Q=\ker\ell_Q\subset V,\\
+\mathfrak D&=\{J(I_5/5+X)J^\dagger:X\in V,\ I_5/5+X\succeq0\},\\
+\mathfrak F&=\{J(I_5/5+X)J^\dagger:X\in V_Q,\ I_5/5+X\succeq0\}.
+\end{aligned}
+\tag{C107.1}
+$$
+
+Hermitian 算子的迹配对为实数。对任意有限固定 Hermitian 菜单
+$\mathcal A=(A_1,\ldots,A_m)$，每个 $A_j$ 作用在原来的 $25$ 维二体空间，设
+
+$$
+\begin{aligned}
+M_{\mathcal A}(\Gamma)&=(\operatorname{tr}(A_j\Gamma))_{j=1}^m,\\
+L_{\mathcal A}(X)&=(\operatorname{tr}(J^\dagger A_jJX))_{j=1}^m,\\
+M_{\mathcal A}(\Gamma)-M_{\mathcal A}(S)&=L_{\mathcal A}(X).
+\end{aligned}
+\tag{C107.2}
+$$
+
+这里的固定菜单独立于未知输入；所有读数是同一实际 $\Gamma$ 的精确总体期望。
+在 $\mathcal K=\mathfrak D$ 或 $\mathfrak F$ 上的“完整纠缠分类”指存在函数
+$d:M_{\mathcal A}(\mathcal K)\to\{0,1\}$，使对每个 $\Gamma\in\mathcal K$，
+$d(M_{\mathcal A}(\Gamma))=0$ 当且仅当 $\Gamma$ 对原分割
+$H^{(1)}\mid H^{(2)}$ 可分离。$d$ 可非线性；限制在于输入数据是固定单副本线性菜单。
+

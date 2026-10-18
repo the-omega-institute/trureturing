@@ -1,0 +1,44 @@
+**Theorem 4.3 (finite-coordinate preservation).** For a fixed surviving
+branch, compute the selected value of each original declared variable.
+Its set $F_*$ of finite coordinates is independent of the parameter values
+satisfying $A$. Every such coordinate is a finite mixed native template
+$f_i(p,q)$. At the same finite parameters every admissible solution of
+that branch has exactly this value on $F_*$. All other selected coordinates
+are infinite.
+
+Consequently every original completed native solution is covered by a
+selected solution, at the same original finite parameters, whose finite
+original coordinates are a subset of that original solution's finite
+coordinates and have the same values there.
+
+**Proof.** A selected slot is finite precisely when the graph reachable
+from its state has no directed cycle and reaches neither a marked state
+nor a free state. If these conditions hold, its reachable graph is a
+finite acyclic graph ending only in leaf descriptors. Unfolding it gives
+a finite code expression. Equations (NAC.14)--(NAC.15) force this expression
+in every branch solution, regardless of the values at free states.
+
+If a free or marked state is reachable, its selected $O$ supplies an
+infinite branch. If a directed cycle is reachable, following that cycle
+indefinitely supplies an infinite pair path. Thus every failure of the
+stated finite criterion produces an infinite selected code. Lemma 2.2
+makes its native expansion infinite as well. Finite labels cannot remove
+an existing raw infinite pair path.
+
+For a finite slot, unfold its acyclic graph starting with its actual
+$\delta_s$. Each resulting leaf has an affine integer rank, nonnegative
+under $A$ by Theorem 4.2. Native expansion gives $f_i(p,q)$. To express
+this in the nonnegative grammar (NAC.2), give each of its finitely many
+leaf occurrences a fresh natural scalar $b$ and the affine equality
+$b=\ell_t+\delta_s+\operatorname{wt}(\pi)$. Replace that leaf by $T_b$.
+These auxiliary scalars have unique values at each $(p,q)$ satisfying
+$A$; repetitions of the resulting whole template are unchanged.
+
+Finally, start with any original native completed solution. Lemma 2.4
+chooses a branch and finite collapse ranks from it. Its code valuation
+survives Theorems 3.2 and 4.2. Any coordinate finite in the selected
+solution is forced by the acyclic calculation, so is the same finite
+coordinate of the starting solution. Optional finite coordinates may
+become infinite when a free state is assigned $O$; no new finite coordinate
+is introduced and no retained finite value changes. $\square$
+

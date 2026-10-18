@@ -1,0 +1,26 @@
+**Lemma 2.3 (bijection of failure-line measures).** Put $M_2=\operatorname{diag}(m_1,m_2)$. From a nonzero ellipse point define $t=M_2^{-1/2}n$, $e=t/\|t\|$ and $dm=\|t\|^2d\nu$. Conversely, for a unit vector $e=(e_1,e_2)$ put
+
+$$
+\begin{gathered}
+a_e=\alpha Ve_2^2+\beta We_1^2=A(e_2^2)>0,\\
+z_e=-\sqrt V e_2/\sqrt{a_e},\quad
+w_e=\sqrt W e_1/\sqrt{a_e},\quad d\nu=a_e dm.
+\end{gathered}
+\tag{TC.3}
+$$
+
+After identifying antipodes and proportional splitting these are inverse transformations, including the axes. They give
+
+$$
+\int ee^Tdm=I_2,\quad\int dm=2,\quad
+\int e_2^2dm=1,\quad\int e_1e_2dm=0,
+$$
+
+$$
+\int F_c(z^2)d\nu=\int J(e_2^2)dm,\qquad
+\int k_+d\nu=\int(e^T\Xi e)_+dm.
+\tag{TC.4}
+$$
+
+Proof. Directly $t=(w/\sqrt W,-z/\sqrt V)$ and the ellipse equation gives $a_e=1/\|t\|^2$. Conversely (TC.3) lies on the ellipse and $n=M_2^{1/2}e/\sqrt{a_e}$. Congruence proves covariance and both integrals. Each line has precisely the two antipodal normalized ellipse points. Reallocating mass between them, or splitting a mass proportionally, preserves every displayed statistic. This is the whitening mechanism credited in SC. $\square$
+

@@ -1,0 +1,15 @@
+**Convention 9.2 (arbitrary competitors and exact cardinality).** An
+arbitrary original competitor first undergoes the credited RRN Theorem
+7.1 normalization. It may reduce $m$ attained names to $m_0\le m$;
+it preserves the optimum exactly, so $m_0=m=M_1(D)$ for an optimal
+competitor. Theorem 9.1 then preserves this canonical assignment and
+its complete alphabet exactly. It does not assert preservation of the
+original competitor's unnormalized fibers or preparation cost.
+
+If exactly $m$ names of a nonminimal competitor are required, RRN
+Corollary 7.2 refines assigned fibers and duplicates their valid public
+witnesses. Its fuller scan has at most $2^{D+1}-1$ Reads, maximum
+length $D+1$ and $D2^{D+1}+1$ letters. Contraction preserves those
+refined names as well. No uncharged source-dependent cut, phase,
+shape tag or topology selector is introduced by either correspondence.
+

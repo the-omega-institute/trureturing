@@ -1,0 +1,60 @@
+**Theorem 93.3 (positive-time heat and source correspondence).** Write
+$\bar p_H$ for the heat kernel of (93.7) relative to $db$, and set
+
+$$
+\bar P_s(t;0,b)=J_s\bar p_{s^2t}(\pi o,\Lambda_s b).
+\tag{93.8}
+$$
+
+Extend densities by zero outside their moving height intervals.
+For every fixed $t>0$,
+
+$$
+\bar P_s(t;0,\cdot)=\mathsf M_s P_s(t;0,\cdot)
+ \longrightarrow\bar p_H(t;0,\cdot)\quad\hbox{in }L^1(db),
+\tag{93.9}
+$$
+
+as $s\downarrow0$. The same convergence holds in
+$L^1([\delta,T]\times\mathbb R^3)$ for every $0<\delta<T<\infty$,
+and after inserting the factor $e^{\lambda s^2t}$.
+In particular the pushed rescaled source
+$j_0^{-1}e^{\lambda s^2}\bar P_s(1;0,b)$ tends in $L^1$ to
+$j_0^{-1}\bar p_H(1;0,b)$. Its total mass tends to $1/j_0$.
+The original source before this change of density has charge tending
+to one, exactly as in (81.7).
+
+Proof. Formula (92.6), $dx=|\ell_s|dw$ along each fibre, and
+$J_s|\ell_s|=j_0s^7$ prove the equality in (93.9). By (81.8),
+$P_s(t;0,\xi)\to p_E(t;0,\xi)$ locally uniformly at each $t>0$.
+Its total mass is $\mathbb P_{k_0}(\zeta>s^2t)\to1$, while the complete
+Engel diffusion has mass one. Nonnegativity and convergence of total
+masses therefore upgrade this local convergence to global $L^1$,
+by the minimum-of-densities argument used in (81.7).
+
+The shear $i_s$ tends to the identity and preserves four-dimensional
+Lebesgue measure. Its pullback converges strongly to the identity on
+$L^1$: prove this first for a continuous compactly supported function,
+whose sheared supports lie in one compact set, and then use density
+and its norm-one action. Consequently
+
+$$
+\|\mathsf M_sP_s(t)-\mathsf M_0p_E(t)\|_1
+ \le\|P_s(t)-p_E(t)\|_1
+       +\|p_E(t)\circ i_s-p_E(t)\|_1\longrightarrow0.
+\tag{93.10}
+$$
+
+Projecting the complete Engel SDE drops its last stochastic integral
+and gives $dr=\sqrt2dW^1$, $dY=\sqrt2dW^2$,
+$dZ=\sqrt2r\,dW^2$. Uniqueness and the symmetric core identify its
+kernel with $\bar p_H$, proving $\mathsf M_0p_E=\bar p_H$.
+The $L^1$ differences above are bounded by two; integration over
+$[\delta,T]$ and dominated convergence prove the spacetime assertion.
+The threshold factors tend uniformly to one on that interval. At
+time one their total mass is
+$j_0^{-1}e^{\lambda s^2}\mathbb P_{k_0}(\zeta>s^2)$, which proves
+the source statements. This argument controls the entire hidden
+fibre for positive finite times through total mass; it does not
+integrate a local limit over an uncontrolled fibre. $\square$
+

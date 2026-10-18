@@ -1,0 +1,21 @@
+**Corollary 7.3 (unbounded pointwise multiplicative loss).** For every
+$m\ge4$ there is some native depth $d$ and a uniform probability
+$\mu$ on an $m$-state actual support such that
+
+$$
+\beta_d(\mu)=\frac3m,\qquad
+V_{\mathrm{rec}}(d,\mu,C,\pi)\Longrightarrow C\ge\frac1{\sqrt m}.
+\tag{RCE.31}
+$$
+
+The ratio of the old minimum cap to the true pressure is at least
+$\sqrt m/3$, and is therefore unbounded over this family.
+
+Proof. Use one column for each four-element subset of $[m]$,
+assign its four rows distinct symbols and all other rows symbol
+zero, and pad to a power-of-two number of columns. This is a
+finite effective four-hash. Apply Theorem 6.4 and the feasible
+full-support floor $\sqrt m/m$. The strict loss occurs for
+$m>9$. No optimization over the entire $S_d$ is involved.
+$\square$
+

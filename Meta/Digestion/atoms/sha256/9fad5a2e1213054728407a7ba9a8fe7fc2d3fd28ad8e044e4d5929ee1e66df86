@@ -1,0 +1,60 @@
+**Proposition 11.1 (finite lawful selection and same-live-branch continuation).**
+Start with the calibrated pure programme and public candidate pair. At each
+reached live cut let a finite selector choose a public relative path using
+only actually retained requests, live/stopped flags, common metadata, public
+randomness and permitted common controller inputs. Every selected path must
+be monotone, legal at both current candidate heights and satisfy (CP.10) for
+the retained programme pair. Supply its calibrated Section 5 processor and
+its explicit boundary updates. Then every finite such protocol has exactly
+the sequential canonical CP law, including all time/mode failures and old
+joint spectator correlations. At each live return the programme is unchanged
+and the public candidate pair updates by the actual selected displacement.
+
+Proof. For a fixed reached record, (CP.21) is the actual live input to the next
+processor; the programme is product conditional on the same actual index.
+(CP.22)–(CP.23) give the full stopped successors. CP composition, propagator
+composition and (CP.20) show that first-failure branches and the all-live branch
+exhaust the original input. Integrate over the same acquired record and public
+randomness, then induct over the finite number of selected requests. Real
+phase integrals add at each literal chronological join. The actual initial
+$\beta,m$ are never controller variables. $\square$
+
+The live overlap invariant of Lemma 4.2 is necessary even for alternative
+implementations with arbitrary common memory updates. The attaining feedback
+protocol chooses the simple unchanged programme. A measurement or new update
+that changes its assistance must establish the next whole-input contract
+before another invocation; a numerical overlap alone supplies neither the
+actual quantum pair nor a calibrated processor.
+
+The proved service accepts only requests certified in its public menu: legal
+on both candidates, with the declared rate inequalities and supplied
+permissions. A known permission denial, known interface mismatch or request
+outside this service menu has an unexecuted rejection, its actual reason and
+the retained state/context. Verification of the waveform and inequality
+certificate is a separate supplied computation, not a sensor for the unknown
+past. This does not provide a guard that executes at one candidate and rejects
+at the other. An unflagged violation of the source or port promise is outside
+the service; no universal detector is constructed. Original executed failure
+instead keeps its actual first time/mode, programme successor and absorbing
+$f$, with no reset, reversal, fresh specimen or post-failure retry.
+
+The map from source to action to observation to resources is explicit:
+
+| Interface | Actual object, output and charged boundary |
+| --- | --- |
+| Source and preparation | (CP.1)–(CP.5), the same preparation and strict heights, every real $\beta$ and signed $m$, literal original chronological interfaces. Past waveform and lift remain unknown. |
+| Acquired extra dependence | Only the exact RA probe route (CP.30)–(CP.32), with same source/epoch, stable setting and old-joint identity law supplied. It yields an unmeasured programme, not a full probability law or height bit. |
+| Selected original operation | A public relative monotone path and the common joint generator (CP.16), lawful at both tracked candidates. No source index is read to select its eigenvalue. |
+| Complete observation and successor | Live specimen and returned programme (CP.21), or actual exact first time and one of five original mode names with (CP.22)–(CP.23) and absorbing $f$. No hidden Kraus index is exposed. |
+| Quantum carrier | Qutrit $V$ and two-dimensional programme span for $\mu<1$, live tensor dimension six before counting all other fields. This is an upper for this component, not a full-observer dimension minimum. |
+| Classical and reference retention | Old source/preparation/epoch, permission, calibration, actual clock, requests, selector/controller inputs, acquired archive and stopped status are retained separately and jointly. Exact real timestamps are not finite-state memory. |
+| Acquisition cost | Spectral-width action (CP.33) on all retained outcomes; (CP.34) is sharp only in the spectator class. The producer coupling, its authentication and certification are unconstructed services, not zero-cost consequences of the action formula. |
+| Execution and descriptions | Known calibrated programme rays, basis and joint CP operations; actual command generation, overlap/inequality certification, timing, arithmetic, precision, recording and hardware are separate resources. General exact real waveforms need not have finite effective descriptions. |
+
+For $\mu<1$ the known programme eigenvector matrix has condition number
+$\sqrt{(1+\mu)/(1-\mu)}$. It is invertible, and the ideal generators are
+integrable; this does not prove a noise-stable or physically bounded hardware
+implementation. All statements are exact and finite-horizon. No finite-noise
+clock guarantee, acquired derivative certificate, finite-shot marked-density
+estimate or uniform unbounded-horizon approximation is supplied.
+

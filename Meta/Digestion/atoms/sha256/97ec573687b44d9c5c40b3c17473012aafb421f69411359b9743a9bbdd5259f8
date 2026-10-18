@@ -1,0 +1,29 @@
+**Definition 2.2 (complete channel held fixed).** For EVERY complex
+$A\in M_5$ let $A_V=E^\dagger AE$ and $g(t)=2/(1+t)^2$, $0\leq t\leq1$.
+The specified channel is
+
+$$
+\begin{aligned}
+\Phi_*^L(A)&=E(DA_VD^\dagger+TA_VT^\dagger+SA_VS^\dagger)E^\dagger,\\
+\Phi_{*,j}^{f}(A)(dt)&=g(t)\left[w_j\operatorname{tr}(MA_V)
+                     +\mathbf1_{j=2}\operatorname{tr}(Q_5A)\right]dt\,P_f.
+\end{aligned}
+\tag{NP.11}
+$$
+
+All extra-sector maps and cross-support maps are zero; the complement
+has no live output. Since $\int_0^1g=1$ and (NP.9) holds, this is TP.
+All identities include arbitrary passive references and every separately
+labelled Borel time set. Fixed common metadata is carried identically.
+The inherited common-CPTP minimax is
+
+$$
+E_*=F^{\rm src}(\mathbf x_*)\in
+(0.14817810291080132013,0.14817810291080132014).
+\tag{NP.12}
+$$
+
+This credited ordinary computer-assisted result is retained because each
+constructed forgotten channel equals (NP.11) exactly. It is not reproved,
+and no uniqueness of the whole channel among error optimizers is assumed.
+

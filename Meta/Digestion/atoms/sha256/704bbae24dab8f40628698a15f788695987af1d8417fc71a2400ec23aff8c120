@@ -1,0 +1,84 @@
+### 定理 50.3（局部奇异因子与正算子迹）
+
+令
+
+\[
+\nu_H(\ell)
+=
+\left|\{-h\bmod\ell:h\in H\}\right|.
+\]
+
+在 \(\mathcal H_\ell=\mathbb C^\ell\) 上定义可容许投影
+
+\[
+P_{H,\ell}
+=
+\sum_{a\in A_H(\ell)}
+|a\rangle\langle a|.
+\]
+
+它是正交自伴投影，归一化迹为
+
+\[
+\tau_\ell(P_{H,\ell})
+=
+1-\frac{\nu_H(\ell)}{\ell}.
+\]
+
+相对于独立单点基准，定义
+
+\[
+u_H(\ell)
+=
+\frac{1-\nu_H(\ell)/\ell}{(1-1/\ell)^3},
+\qquad
+\kappa_H(\ell)=\log u_H(\ell).
+\tag{50.6}
+\]
+
+当 \(q\) 为平方自由数时，中国剩余定理给出局部投影的张量化，且
+
+\[
+\log \tau_q(P_{H,q})
+=
+\sum_{\ell\mid q}
+\log\!\left(1-\frac{\nu_H(\ell)}{\ell}\right).
+\tag{50.7}
+\]
+
+所以截断的奇异级数是局部正算子迹比的乘法势。有限截断保持严格自伴性和正性，但无限乘积、正则化行列式与全局谱参数仍未构造。
+
+以 \(H=\{0,2,6\}\) 为例，
+
+\[
+\nu_H(2)=1,\qquad
+\nu_H(3)=2,\qquad
+\nu_H(\ell)=3\quad(\ell\ge5),
+\]
+
+从而 Hardy–Littlewood 型基准为
+
+\[
+\mathfrak S(H)
+=
+\frac92
+\prod_{\ell\ge5}
+\frac{\ell^2(\ell-3)}{(\ell-1)^3}.
+\tag{50.8}
+\]
+
+其中 \(\mathfrak S(H)\) 以及由它得到的三胞胎渐近仍是猜想性基准。对应的局部算术曲率
+
+\[
+\kappa_H(2)=\log4,\qquad
+\kappa_H(3)=\log\frac98,\qquad
+\kappa_H(\ell)=
+\log\frac{\ell^2(\ell-3)}{(\ell-1)^3}
+\]
+
+描述 CRT 局部模障碍，不是时空曲率，也不是 RH 的谱曲率。
+
+若用 \(Y_n=(x(n+h))_{h\in H}\in\{0,1\}^3\) 的经验分布构造三阶指数族，则三体累积量是独立基线之外的不可约三点场强。它能作为三点相关的第三阶观测，但仍不足以决定全局一阶显式公式。
+
+---
+

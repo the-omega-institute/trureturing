@@ -1,0 +1,89 @@
+**Theorem 16.8 (the exact menu-prefix recurrence and native optimum).**
+Define $c(\varnothing)=0$, and for a nonempty rooted obligation shape
+$T$ define
+
+$$
+ \begin{aligned}
+ f_T(x)&=\sum_{U\in\mathscr F_T(x)}c(U),\\
+ a_T(x)&=\begin{cases}
+          0,&x=\operatorname{root}(T),\\
+          c(T_x^-),&x\ne\operatorname{root}(T),
+         \end{cases}\\
+ c(T)&=1+\min_{x\in T}\max\{f_T(x),a_T(x)\}.
+ \end{aligned}
+\tag{AAR.95}
+$$
+
+Every recursive tree has fewer vertices, so this is a finite recurrence
+on path deletion, parent truncation and rooted components of the public
+menu geometry. For every allowed $D,P$,
+
+$$
+ \boxed{\mathcal C_D(P)=c\bigl(\operatorname{Pref}(R^{-1}P)\bigr).}
+\tag{AAR.96}
+$$
+
+The number is unchanged by any assignment of open/capped terminal marks
+for a component of that same shape. An attaining source-blind encoder
+uses only original-root words $Rq$, $q\in K$, and may subsequently
+export the existing minimum $n(S)$-label prediction code. No enumeration
+of $\mathcal F_D$, whole decision trees or behavioral classes is part
+of (AAR.95).
+
+Proof. Induct simultaneously on the number of vertices for every
+assignment of terminal marks. A one-vertex component needs one Read:
+it is known present, but its two possible labels must be distinguished.
+An open terminal also allows branch; one Read resolves it as well.
+Thus both terminal types have the same value one.
+
+For a larger component, consider the first informative vertex query
+$x$. Its branch continuation has value $f_T(x)$ by Theorems 16.6–16.7
+and the inductive hypothesis. If $x$ is internal this reply is feasible.
+Its leaf continuations have just the strict-ancestor side components;
+the branch forest contains those components and, additionally, the
+child components of $x$. Their nonnegative costs show that a leaf
+continuation costs no more. If $x$ is terminal, there are no such child
+components, so every feasible positive reply has exactly $f_T(x)$.
+This includes a capped terminal, where branch is impossible but the
+two actual label replies give that same continuation cost.
+
+For nonroot $x$, absence is feasible, for example with a leaf at the
+component root. Its conditional task is exactly $T_x^-$ with the new
+cap. By the inductive hypothesis it has cost $a_T(x)$, independent of
+all inherited terminal marks. Root absence is impossible and contributes
+no extra alternative. Thus the true worst continuation for this first
+query is exactly $\max\{f_T(x),a_T(x)\}$, for every mark assignment.
+Every cell used for this lower bound has the bounded common-source
+realizations proved in Theorem 16.6. Any first query therefore requires
+at least the displayed leading one plus this maximum. A previously
+resolved query only spends a Read without changing the task. Taking
+the minimum over informative first queries proves the lower recurrence
+against every prefix strategy, including arbitrary interleaving later.
+It also proves that marks do not change its numerical value.
+
+To attain it, use fixed public tie-breaking to choose a minimizing
+$x$, and actually submit its embedded word $Rq$. On branch, solve
+$\mathscr F_T(x)$. On a label, save that actual label and solve only
+the side components left by its strict ancestors. On absent, retain
+the parent cap and solve $T_x^-$. Sequentially solving the resulting
+components attains their sum. Each step removes at least one unresolved
+vertex. A positive query is removed with its ancestor path; an absent
+query is removed with its parent's strict-descendant cone. Hence no
+actual query is repeated, all calls including absence are charged, and
+the procedure terminates on every original source with cost at most
+$c(K)$. Its actual witnesses reconstruct the entire boundary, including
+labels of caps that are reached and absence of caps blocked earlier.
+
+Theorem 16.4 identifies this prefix-boundary minimum with the original
+all-word prediction minimum, proving (AAR.96). Compute $\Sigma_P$
+or $e_S$ from that acquired boundary and use (AAR.59) at the authentic
+supplied $k$. For computing $e_S$, the constructor and relevant child
+codes needed by (AAR.67) are all in $K$; an empty child menu has its
+fixed zero code. The acquired table or complete finite transcript
+already suffices as an export. If only the minimum code is retained,
+use the complete handoff convention of Definition 12.1 to clear every
+other accessible source-dependent distinction. Such local encoding,
+storage and clearing add no Read, but have their separate costs.
+The code count and decoder are reused from §12, rather than obtained
+anew from this recurrence. $\square$
+

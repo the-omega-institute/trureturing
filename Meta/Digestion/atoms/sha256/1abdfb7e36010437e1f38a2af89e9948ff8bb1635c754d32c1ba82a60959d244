@@ -1,0 +1,126 @@
+#### 定理 7：Fibonacci 加权和在合法窗口上也是单射
+
+若 $I,J\in\Sigma_n$ 且
+
+```math
+W(I)=W(J),
+```
+
+则
+
+```math
+I=J.
+```
+
+##### 证明
+
+设
+
+```math
+w_i=\operatorname{Fib}_{i+2}.
+```
+
+令
+
+```math
+M_r
+=
+\max\left\{
+\sum_{i\in I}w_i:
+I\subseteq\{1,\ldots,r\},\ I\in\Sigma_r
+\right\}.
+```
+
+由于最后一个位置要么不取，要么取，所以
+
+```math
+M_r=\max(M_{r-1},M_{r-2}+w_r).
+```
+
+由 Fibonacci 递推可归纳证明
+
+```math
+M_r<w_{r+1}.
+```
+
+现在假设 $I\neq J$，取最大对称差位置 $m$，不妨设
+
+```math
+m\in I\setminus J.
+```
+
+所有大于 $m$ 的共同位置在两边相消。集合 $J\setminus I$ 只包含小于 $m$ 的位置，因此
+
+```math
+\sum_{i\in J\setminus I}w_i
+\leq M_{m-1}
+<w_m.
+```
+
+而 $I\setminus J$ 至少包含 $m$，所以
+
+```math
+\sum_{i\in I\setminus J}w_i
+\geq w_m.
+```
+
+于是
+
+```math
+W(I)>W(J),
+```
+
+与 $W(I)=W(J)$ 矛盾。因此
+
+```math
+I=J.
+```
+
+证毕。
+
+---
+
+这说明：
+
+> FIB 编码本身可以是无损的；信息损失不是发生在“状态编码”这一步，而是发生在只观察一阶均值、单一能量、单一局部时钟或有限历史之后。
+
+例如三态窗口中：
+
+```math
+W(\varnothing)=0,
+```
+
+```math
+W(1)=2,
+```
+
+```math
+W(2)=3,
+```
+
+```math
+W(3)=5,
+```
+
+```math
+W(1,3)=7.
+```
+
+完整的 $W$ 分布可以恢复五态概率。但它的均值只有
+
+```math
+\mathbb E[W]
+=
+2X+3Z+5Y,
+```
+
+其中不含 $\kappa$。因此所有 $p_\kappa$ 都有相同的加权平均值。
+
+这给出了一个精确的区分：
+
+- 完整 FIB 输出分布：可以识别状态律；
+- FIB 输出的单一均值：可能完全看不见联合 seam；
+- 局部时钟的单一平均速率：也可能只看到一阶投影。
+
+---
+

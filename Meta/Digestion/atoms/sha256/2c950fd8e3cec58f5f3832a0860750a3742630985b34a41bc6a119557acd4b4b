@@ -1,0 +1,20 @@
+**Definition 3.1 (The pointwise compliant class).** At known common $q$, the observer has one design and one source-independent initialization used under both labels. It may retune its finite state set, initialization and bit-transition probabilities arbitrarily with $(q,d,r,c,\alpha,M)$. At most $M$ complete persistent configurations count every initialization state, active state, control phase, register, retained random choice, stored seed and both emitted decision labels. Fresh update randomness is independent of the source and previous fresh randomness. The fixed table and known $q$ are immutable design data; their real precision is unpriced. All mutable information belongs to the counted configurations.
+
+Each action reads the next actual bit or stops with an internally emitted $D\in\{0,1\}$. The only source access is the uninterrupted consecutive history of Definition 2.1. There is no external time, age, read or action counter, program counter, archive, skipped bit, free gap, source reset, second source, hidden-state observation, true-label advice, probability response or parameter query. The cost tally is not an input, and there is no decision decoder from stopping time. Updates use the current configuration, the bit just read when applicable, and fresh randomness.
+
+If the read prefix is $X_0,\ldots,X_{T-1}$, its paid cost is $T$, including the initial wait, all read zeros and ticks, and any terminal partial gap. Initial stopping has $T=0$. Write $\mathfrak A_M(q,\alpha)$ for the observers satisfying all six obligations
+
+$$
+\begin{gathered}
+\mathsf P_{0,q}(D=1)\le\alpha,\qquad
+\mathsf P_{1,q}(D=0)\le\alpha,\\
+\mathsf P_{0,q}(T<\infty)=1,\qquad
+\mathsf P_{1,q}(T<\infty)=1,\\
+\mathbb E_{0,q}T<\infty,\qquad
+\mathbb E_{1,q}T<\infty.
+\end{gathered}
+\tag{3.1}
+$$
+
+These are selected-pair, pointwise conditions. They do not require one q-independent table or correctness over two separate unknown nuisance-parameter families.
+

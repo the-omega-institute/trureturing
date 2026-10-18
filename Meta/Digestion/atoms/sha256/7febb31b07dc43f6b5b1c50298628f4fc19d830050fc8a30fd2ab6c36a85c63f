@@ -1,0 +1,44 @@
+**Assumption 1.1 (original quantum problem and source suppliers).** Let
+FC denote the [complete finite-face criterion](FIB_NATIVE_COMPLETE_CONTINUATION_FINITE_FACE_ALPHABET_CRITERION.md),
+with its source through §41 fixed at revision
+0512cd17cf4807864a7097fb3169847fcf3eef68. Let GC denote
+[global actual acquisition counts](FIB_NATIVE_COMPLETE_CONTINUATION_GLOBAL_ACTUAL_COUNTS.md),
+using §§1–20 at revision 8f159f469445f6366dd2824d92f0c7e9e1532a70,
+whose source through §20 is also the source at
+321589a8be98de4fe179f99f6e593d8784952db1. Let RC denote the
+[residual-contact curve](FIB_NATIVE_COMPLETE_CONTINUATION_RESIDUAL_CONTACT_CURVE.md),
+using its signed-test interface RC.70 at the latter revision.
+
+Retain GC Assumption 1.2 and FC Assumptions 1.1, 17.1 and 28.1 at
+their original conditional scopes. There is one consistent isolated
+positive source, with membership in all nine dyadic rows of GC
+Definition 6.1. Existence, isolation, Jacobian, ranks and the root TP
+identity are stipulated source premises. The complete stopped-cq
+minimax, sharp worst-history JOINT cost, JR's separately supplied
+unaveraged supported equality, FA's full-complex multi-Kraus necessity,
+physical capacity and common constructor remain distinct premises.
+The abbreviations JR and FA have their owning sources in GC
+Assumption 1.2. The rectangular enclosures are bounds on expressions
+at this same root; off-root points do not become TP sources.
+
+The experiment remains GC Definitions 2.1–2.2: one unknown specimen,
+the original twelve signed complex histories, the full live coherences,
+arbitrary passive-reference conditional operators and five separately
+labelled Borel failures with weights $(0,1/4,1/2,1/4,0)$. Both
+zero-target components remain separate. The objective retains its
+original HALF normalization and all stopped-output sectors. The
+comparison class contains full complex CP acquisitions, hidden Kraus
+multiplicities, all admitted time laws and full-output TP conditional
+decoders. It is not replaced by a real-only, LOSR, PPT or diamond-norm
+class.
+
+Joint cost counts specimen, memory, controller, accessible environments
+and entangled shares together. Activity acts on each entire counted
+fibre; finite-budget survivors are strictly positive, survivor controls
+are TP, FIRST is the absolute time $6+a$, and failure has no later
+positive-carrier action. Necessity retains the finite, convergent
+countable and only the stipulated measurable class of GC Convention
+2.3. All comparison laws constructed below are finite. There is no
+additional specimen, copy, helper, oracle, reset, retry, postselection,
+acceptance or survival division, or uncounted accessible share.
+

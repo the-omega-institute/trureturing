@@ -1,0 +1,14 @@
+**Corollary 5.2 (nonbipartite demands require two excess incidences).**
+If $\Gamma_v$ is nonbipartite, then $a_v\ge3$ and $e_v=b_v-1\ge2$.
+Indeed $A=1$ permits at most one color and $A=2$ at most
+$\binom21=2$ colors in (CL.21), contradicting nonbipartiteness.
+An odd cycle is sufficient: a two-coloring would alternate around it
+and fail on the closing edge. This is a conditional consequence, not
+an assertion that any original pool must have an odd cycle.
+
+All witnesses at $v$ are combined in $\Gamma_v$ before applying these
+bounds. Duplicate demands get no extra charge. Overlapping odd cycles
+are not summed independently, and neither are the chromatic and cut
+bounds: they combine by the maximum in (CL.19). No positive lower
+degree or absence of isolated coordinates is required.
+

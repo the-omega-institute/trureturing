@@ -1,0 +1,45 @@
+### 引理 53.2（SLD Fisher 的变分表示）
+
+对上述 \((\rho,X)\)，有
+
+\[
+\boxed{
+F_\rho(X)
+=
+\sup_{Y=Y^\ast}
+\left\{
+2\operatorname{Re}\operatorname{tr}(XY)
+-\operatorname{tr}(\rho Y^2)
+\right\}.
+}
+\]
+
+#### 证明
+
+在 Hermitian 空间上，\(\mathcal J_\rho\) 是严格正的自伴算子。对任意 Hermitian \(Y\)，完成平方得到
+
+\[
+\begin{aligned}
+&2\langle X,Y\rangle_{\mathbb R}
+-\langle Y,\mathcal J_\rho(Y)\rangle_{\mathbb R}\\
+&=
+2\langle\mathcal J_\rho(L_\rho(X)),Y\rangle_{\mathbb R}
+-\langle Y,\mathcal J_\rho(Y)\rangle_{\mathbb R}\\
+&=
+F_\rho(X)
+-
+\langle Y-L_\rho(X),
+\mathcal J_\rho(Y-L_\rho(X))\rangle_{\mathbb R}.
+\end{aligned}
+\]
+
+而
+
+\[
+\langle Y,\mathcal J_\rho(Y)\rangle_{\mathbb R}
+=
+\operatorname{tr}(\rho Y^2),
+\]
+
+最后一项非负，并在 \(Y=L_\rho(X)\) 时取零。证毕。
+

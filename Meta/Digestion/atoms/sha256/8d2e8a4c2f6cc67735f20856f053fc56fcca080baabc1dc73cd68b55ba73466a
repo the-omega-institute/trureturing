@@ -1,0 +1,24 @@
+**Unbounded slopes with varying invariant.** Keep this $S_*$ and, for positive integers $n$, put
+
+$$
+\lambda_n=1+1/n,\quad S_0=S_*,\quad k_0=n,\quad
+S_1=\lambda_nS_*,\quad k_1=n/\lambda_n,\quad D_0=D_1=0.
+$$
+
+Use $c_0=(1,\theta)^{\mathsf T}$, $c_1=\lambda_n(1,\theta)^{\mathsf T}$ and $\ell_0=\ell_1=(1,\theta)$. The exact observations obey
+
+$$
+z_i^{(1)}-z_i^{(0)}
+=[\lambda_n(1+(n/\lambda_n)i)-(1+ni)]a_i=a_i/n.
+$$
+
+Their distance is $a_5/n\to0$, whereas
+
+$$
+|k_0-k_1|=n/(n+1)\longrightarrow1.
+$$
+
+The sources lie in the compact positive segment $\{\lambda S_*:1\le\lambda\le2\}$, preserve $p/u>\rho$, and have $u\in[u_*,2u_*]$. Both drifts are zero and all gains are positive. Thus allowing unbounded slopes while the invariant varies destroys uniform continuity of slope recovery even on this compact source domain. It does not contradict fixed-$u$ stability or compactness of the full target, since the slopes escape every bounded set.
+
+These failures change effective targets, rather than merely moving along the positive representation fibre. They do not assert that every particular smaller shape or slope family is unstable.
+

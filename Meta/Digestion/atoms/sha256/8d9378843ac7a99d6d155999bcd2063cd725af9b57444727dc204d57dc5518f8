@@ -1,0 +1,19 @@
+**Definition 1.1 (Complete open-word problem).** For every integer $n\ge1$, put
+
+$$
+B_n=\{w\in\{0,1\}^n:w_iw_{i+1}=0\ (1\le i<n)\}.
+$$
+
+Let $\Gamma_n$ contain all vertices of $B_n$ and all legal Hamming-one edges.
+There is no constraint joining the first and last coordinates. In testing an
+insertion, take $w_0=w_{n+1}=0$. On the entire probability simplex define
+
+$$
+h(s,t)=\begin{cases}st/(s+t),&s+t>0,\\0,&s=t=0,\end{cases}\qquad
+\Phi_n(\mu)=\sum_{\{w,z\}\in E(\Gamma_n)}h(\mu_w,\mu_z),\qquad
+\kappa_n=\max_{\mu\in\mathcal P(B_n)}\Phi_n(\mu).
+$$
+
+All-zero words, legal endpoint ones, every legal seam, and zero-mass vertices
+and edges remain in this domain. Write $c_\star=\lim_n\kappa_n/n$.
+

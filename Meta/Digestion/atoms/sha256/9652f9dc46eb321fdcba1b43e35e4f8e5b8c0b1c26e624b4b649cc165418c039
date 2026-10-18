@@ -1,0 +1,2 @@
+**定义 1.5（平方根末端测量）。** 对等先验纯态列矩阵 $\Phi$，若 Gram 矩阵 $G=\Phi^\dagger\Phi$ 正定，平方根测量（SRM）的向量是 $\Phi G^{-1/2}$ 的各列。这是成熟测量构造，来源为 [Eldar 与 Forney，*On Quantum Detection and the Square-Root Measurement*](https://arxiv.org/abs/quant-ph/0005132)，定理 3。它的几何均匀态族特殊最优性需要相应群轨道条件；来源酉彼此交换本身不提供这些条件。以下不假定 SRM 精确最优。
+

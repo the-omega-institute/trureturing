@@ -1,0 +1,37 @@
+**定理 37.1（协变滤波的精确回收）。** 在单份系统上定义
+
+$$
+F_0=E_{02}+E_{24},\qquad F_1=E_{00},\qquad
+F_2=E_{01},\qquad F_3=E_{03},\qquad
+\mathcal F(X)=\sum_{a=0}^3F_aXF_a^\dagger.
+\tag{37.1}
+$$
+
+则 $\mathcal F$ 为 CPTP、严格非相干且 $U(1)$ 协变，且
+
+$$
+\Phi\circ\mathcal F\circ\Phi=\Phi,\qquad
+\Phi\circ(\mathcal F\circ\Phi)^{r-1}=\Phi\quad(r\ge1).
+\tag{37.2}
+$$
+
+这些是全部复算子及有限参考上的恒等式。
+
+证明。$F_0^\dagger F_0=P_2+P_4$，其余三个完备项分别为 $P_0,P_1,P_3$，
+相加得 $I$。每个 $F_a$ 每行、每列至多一项，电荷升移依次为 $-1,0,-1,-1$，
+故严格非相干和协变性的 Kraus 计算与 (27.11)–(27.12) 相同。
+设 $\mathcal Q=\operatorname{span}\{e_2,e_4\}$。
+$\Phi$ 的整个输出代数支撑在 $\mathcal Q$，而 $\mathcal F$ 在此代数上给
+
+$$
+P_2\mapsto P_0,\quad P_4\mapsto P_2,\quad
+E_{24}\mapsto E_{02},\quad E_{42}\mapsto E_{20}.
+\tag{37.3}
+$$
+
+再施加 $\Phi$ 将四项全部送回原项，得到第一式，归纳得第二式。
+四个单位的参考系数任意，所以没有只检查约化态的缺口。证毕。
+
+$\mathcal F$ 的菜单是一般协变 CPTP 滤波，不是系统上守恒酉。
+它可降低系统电荷，不能把 (37.2) 当作原控制菜单中的无限存活。
+

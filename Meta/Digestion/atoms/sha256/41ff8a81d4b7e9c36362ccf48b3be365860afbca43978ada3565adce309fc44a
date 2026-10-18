@@ -1,0 +1,43 @@
+**Theorem 11.2 (finite joint-kernel loss).** For every actual encoder in Definition 1.1 and every $H\in\mathscr H(J)$,
+
+$$
+0\preceq H\preceq I_r,\qquad
+g_N^2\leq1-\lambda_{\min}(H),\qquad
+\delta_N\geq2\lambda_{\min}(H).
+\tag{R.43}
+$$
+
+More precisely, at each single environment density $\omega$, define
+
+$$
+m(\omega)=\min_{q\in\mathsf D(\mathbb C^3)}\Phi(q,\omega)^2.
+$$
+
+Then all the inequalities
+
+$$
+m(\omega)\leq1-\operatorname{Tr}(\omega H),\qquad
+m(\omega)\leq f(\tau,\omega)^2,\quad
+m(\omega)\leq f(\bar\tau,\omega)^2,\quad
+m(\omega)\leq f(\sigma,\omega)^2
+\tag{R.44}
+$$
+
+hold at that same $\omega$, and $g_N^2=\max_\omega m(\omega)$.
+
+**Proof.** The small-root identity of Theorem 6.1 gives $\Phi(q,\omega)=f(A_q,q\otimes\omega)$, without an inverse of $q$. Apply root-fidelity monotonicity under the binary CPTP measurement with effects $P_q,I-P_q$. Its first distribution is $(1,0)$, whence
+
+$$
+\Phi(q,\omega)^2
+\leq\operatorname{Tr}[P_q(q\otimes\omega)]
+\leq1-\operatorname{Tr}[Z_q(q\otimes\omega)]
+=1-\operatorname{Tr}(\omega H_{q,Z_q}).
+\tag{R.45}
+$$
+
+This is the finite-complex, arbitrary-PSD data-processing statement of Watrous, Theorem 3.27, (3.173), cited in Definition 10.1. Positive congruence and partial trace give $0\preceq H_{q,Z_q}\preceq\operatorname{Tr}_{\mathbb C^3}(q\otimes I_r)=I_r$. Since $m(\omega)$ is at most every selected input value, averaging (R.45) gives the first inequality in (R.44). The other three use the actual pure inputs $\chi_+,\chi_-,|2\rangle$. In the original input frame their reference vectors are the conjugate kets; their actual environment states remain $\tau,\bar\tau,\sigma$.
+
+Unrestricted Bény–Oreshkov duality in (R.27) fixes the order $\max_\omega\min_q$. Maximizing the first inequality of (R.44) only after aggregation gives $g_N^2\leq1-\min_\omega\operatorname{Tr}(\omega H)=1-\lambda_{\min}(H)$. For every complex CPTP recovery and every purification, measuring the pure identity target gives error at least $2(1-F_e)$. Taking the worst input and then the best recovery yields $\delta_N\geq2(1-g_N^2)$, as in (R.35), and proves (R.43).
+
+No interchange with $\min_q\max_\omega$ occurs here. For example, two orthogonal pure environment states separately have optimized squared fidelity one, whereas the maximum over one common $\omega$ of the minimum of their squared fidelities is $1/2$: the latter two values are $\omega_{00}$ and $\omega_{11}$, whose sum is at most one. Thus separate optimized centers cannot supply (R.44). $\square$
+

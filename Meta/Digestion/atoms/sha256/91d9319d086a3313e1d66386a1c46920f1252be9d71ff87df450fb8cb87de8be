@@ -1,0 +1,122 @@
+**引理 69.2（二值／三值全族充分证书）。** 在定义 68.1 的条件供应下，$h=9$ 有二值成功协议，$10\le h\le13$ 有三值成功协议。它们在每个实际来源上有限停止，输出初始 $q_H$；每条路径至多接受一次 $\rho$，来源调用至多
+
+$$
+\lceil\log_2H\rceil+5\le11.
+\tag{69.2}
+$$
+
+证明。对每个供应符号按下表从左到右使用计划。$F_c$ 表示选中截止 $c$ 后直接终端取得；$R_c$ 表示选中后只尝试一次 $\rho$，再终端取得。选择某个截止前，若 $c<h$，尝试一次右接已知非空、固定括号的实际全 $\alpha$ 宏 $\alpha^{D_c}$，其中
+
+$$
+D_c=4(h-c)>0.
+\tag{69.3}
+$$
+
+第一个接受的宏选中该块。$c=h$ 是隐式末端选择，没有空上下文动作。只有拒绝才继续下一个截止，所有被拒宏都保持当前来源不变；不把一个完整宏拆成部分接受的逐叶动作。
+
+| 计划 | $h$ | 供应符号 | 递增计划 |
+| --- | --- | --- | --- |
+| 69P90 | 9 | 0 | $F_{2},\ R_{4},\ R_{8},\ F_{9}$ |
+| 69P91 | 9 | 1 | $R_{5},\ R_{8}$ |
+| 69P100 | 10 | 0 | $F_{3},\ R_{5},\ R_{9},\ F_{10}$ |
+| 69P101 | 10 | 1 | $F_{4},\ R_{6},\ R_{8},\ F_{10}$ |
+| 69P102 | 10 | 2 | $F_{10}$ |
+| 69P110 | 11 | 0 | $F_{3},\ R_{5},\ R_{10},\ F_{11}$ |
+| 69P111 | 11 | 1 | $F_{4},\ R_{7},\ R_{9},\ F_{11}$ |
+| 69P112 | 11 | 2 | $R_{8},\ F_{11}$ |
+| 69P120 | 12 | 0 | $F_{3},\ R_{6},\ R_{11},\ F_{12}$ |
+| 69P121 | 12 | 1 | $F_{5},\ R_{7},\ R_{10},\ F_{12}$ |
+| 69P122 | 12 | 2 | $F_{5},\ R_{8},\ R_{10}$ |
+| 69P130 | 13 | 0 | $F_{3},\ R_{6},\ R_{12},\ F_{13}$ |
+| 69P131 | 13 | 1 | $F_{7},\ R_{9},\ R_{11}$ |
+| 69P132 | 13 | 2 | $F_{5},\ R_{8},\ R_{12}$ |
+
+假设前一个截止为 $l$（首块 $l=0$）。初始 $x$ 在前面各宏都拒绝、当前宏接受，恰在 $l<x\le c$：
+
+$$
+4x+D_c\le H
+\ \Longleftrightarrow\ 
+4(h+x-c)\le4h+\delta
+\ \Longleftrightarrow\ x\le c.
+\tag{69.4}
+$$
+
+在选择以前来源尚未修改。选中后，真实当前、下一尺寸分别是 $4x+D_c$、$4y+D_c$，因为全 $\alpha$ 上下文的替换仍有同样叶数。因此在 $R_c$ 块中，唯一一次 $\rho$ 的响应满足
+
+$$
+4y+D_c\le H\quad\Longleftrightarrow\quad y\le c.
+\tag{69.5}
+$$
+
+对 $Z_x$ 的每个实际实现，真实 $y>h\ge c$，故均拒绝；表中的无穷记号不用于实际计算尺寸。两式对四个 $\delta$ 都成立，$x=c$ 或 $y=c$ 包含在接受分支，特别在 $\delta=0$ 时候选恰等于 $H$。$c=h$ 时 $D_c=0$ 只供下面的解码公式使用，不执行空宏。
+
+终端取得直接调用既有 TM44.5／TM51.5：入口的未知实际整数尺寸 $M\in[1,H]$，用非空全 $\alpha$ 原子右拼接与真实守卫位取得 $M$，来源调用至多 $\lceil\log_2H\rceil+1$，包含饱和到 $H$ 后最后一次单叶拒绝。该算法的 $l<M\le u$、累计接受长度 $U=H-u$ 不变量同时包括 $M=H$ 与探测等号接受，无独立尺寸读口。它取得的是终端程序的入口尺寸，而非已经饱和后的当前目标。
+
+在 F 块及 R 拒绝分支，$M=4x+D_c$；在 R 接受分支，$M=4y+D_c$。仅对取得的整数作
+
+$$
+k=\frac{M-D_c}{4}
+=\begin{cases}
+x,&F\text{ 或 }R\text{ 拒绝},\\
+y,&R\text{ 接受}.
+\end{cases}
+\tag{69.6}
+$$
+
+下面是每个选中块的全部译码字典，包含所有 $C$ 目标和 $Z$ 目标。字典项 $k\mapsto r:s$ 表示输出 $C_{r,s}$，$k\mapsto Z_x$ 表示输出 $Z_x$；空字典记 $\varnothing$。F 列按 $x$，R 接受列按 $y$，R 拒绝列按 $x$ 编键。块内每一列键都无重复，所以取得 $k$ 后给出唯一的初始目标。
+
+| 字典 | $(h,\ell)$ | 块 | F | R 接受 | R 拒绝 |
+| --- | --- | --- | --- | --- | --- |
+| 69D901 | 9,0 | $F:(0,2]$ | $2\mapsto 1:1$ | $\varnothing$ | $\varnothing$ |
+| 69D902 | 9,0 | $R:(2,4]$ | $\varnothing$ | $4\mapsto 2:1$ | $3\mapsto 1:2,\ 4\mapsto 1:3$ |
+| 69D903 | 9,0 | $R:(4,8]$ | $\varnothing$ | $6\mapsto 4:1,\ 7\mapsto 3:2,\ 8\mapsto 4:2$ | $5\mapsto 1:4,\ 6\mapsto 3:3,\ 7\mapsto 5:2,\ 8\mapsto 7:1$ |
+| 69D904 | 9,0 | $F:(8,9]$ | $9\mapsto Z_{9}$ | $\varnothing$ | $\varnothing$ |
+| 69D911 | 9,1 | $R:(0,5]$ | $\varnothing$ | $5\mapsto 3:1$ | $4\mapsto 2:2,\ 5\mapsto 2:3$ |
+| 69D912 | 9,1 | $R:(5,8]$ | $\varnothing$ | $7\mapsto 5:1,\ 8\mapsto 6:1$ | $6\mapsto Z_{6},\ 7\mapsto Z_{7},\ 8\mapsto Z_{8}$ |
+| 69D1001 | 10,0 | $F:(0,3]$ | $2\mapsto 1:1,\ 3\mapsto 1:2$ | $\varnothing$ | $\varnothing$ |
+| 69D1002 | 10,0 | $R:(3,5]$ | $\varnothing$ | $5\mapsto 3:1$ | $4\mapsto 1:3,\ 5\mapsto 1:4$ |
+| 69D1003 | 10,0 | $R:(5,9]$ | $\varnothing$ | $7\mapsto 5:1,\ 8\mapsto 4:2,\ 9\mapsto 3:3$ | $6\mapsto 2:4,\ 7\mapsto 4:3,\ 8\mapsto 6:2,\ 9\mapsto 8:1$ |
+| 69D1004 | 10,0 | $F:(9,10]$ | $10\mapsto Z_{10}$ | $\varnothing$ | $\varnothing$ |
+| 69D1011 | 10,1 | $F:(0,4]$ | $3\mapsto 2:1,\ 4\mapsto 2:2$ | $\varnothing$ | $\varnothing$ |
+| 69D1012 | 10,1 | $R:(4,6]$ | $\varnothing$ | $6\mapsto 4:1$ | $5\mapsto 3:2,\ 6\mapsto Z_{6}$ |
+| 69D1013 | 10,1 | $R:(6,8]$ | $\varnothing$ | $8\mapsto 6:1$ | $7\mapsto 5:2,\ 8\mapsto 7:1$ |
+| 69D1014 | 10,1 | $F:(8,10]$ | $9\mapsto Z_{9}$ | $\varnothing$ | $\varnothing$ |
+| 69D1021 | 10,2 | $F:(0,10]$ | $5\mapsto 2:3,\ 7\mapsto Z_{7},\ 8\mapsto Z_{8}$ | $\varnothing$ | $\varnothing$ |
+| 69D1101 | 11,0 | $F:(0,3]$ | $2\mapsto 1:1,\ 3\mapsto 1:2$ | $\varnothing$ | $\varnothing$ |
+| 69D1102 | 11,0 | $R:(3,5]$ | $\varnothing$ | $5\mapsto 3:1$ | $4\mapsto 1:3,\ 5\mapsto 1:4$ |
+| 69D1103 | 11,0 | $R:(5,10]$ | $\varnothing$ | $7\mapsto 5:1,\ 8\mapsto 4:2,\ 9\mapsto 3:3,\ 10\mapsto 4:3$ | $6\mapsto 1:5,\ 7\mapsto 3:4,\ 8\mapsto 5:3,\ 9\mapsto 7:2,\ 10\mapsto 9:1$ |
+| 69D1104 | 11,0 | $F:(10,11]$ | $11\mapsto Z_{11}$ | $\varnothing$ | $\varnothing$ |
+| 69D1111 | 11,1 | $F:(0,4]$ | $3\mapsto 2:1,\ 4\mapsto 2:2$ | $\varnothing$ | $\varnothing$ |
+| 69D1112 | 11,1 | $R:(4,7]$ | $\varnothing$ | $6\mapsto 4:1,\ 7\mapsto 3:2$ | $5\mapsto 2:3,\ 6\mapsto 2:4,\ 7\mapsto 5:2$ |
+| 69D1113 | 11,1 | $R:(7,9]$ | $\varnothing$ | $9\mapsto 7:1$ | $8\mapsto 6:2,\ 9\mapsto 8:1$ |
+| 69D1114 | 11,1 | $F:(9,11]$ | $10\mapsto Z_{10}$ | $\varnothing$ | $\varnothing$ |
+| 69D1121 | 11,2 | $R:(0,8]$ | $\varnothing$ | $8\mapsto 6:1$ | $7\mapsto Z_{7},\ 8\mapsto Z_{8}$ |
+| 69D1122 | 11,2 | $F:(8,11]$ | $9\mapsto Z_{9}$ | $\varnothing$ | $\varnothing$ |
+| 69D1201 | 12,0 | $F:(0,3]$ | $2\mapsto 1:1,\ 3\mapsto 1:2$ | $\varnothing$ | $\varnothing$ |
+| 69D1202 | 12,0 | $R:(3,6]$ | $\varnothing$ | $5\mapsto 3:1,\ 6\mapsto 4:1$ | $4\mapsto 1:3,\ 5\mapsto 1:4,\ 6\mapsto 1:5$ |
+| 69D1203 | 12,0 | $R:(6,11]$ | $\varnothing$ | $8\mapsto 6:1,\ 9\mapsto 5:2,\ 10\mapsto 4:3,\ 11\mapsto 3:4$ | $7\mapsto 2:5,\ 8\mapsto 4:4,\ 9\mapsto 6:3,\ 10\mapsto 8:2,\ 11\mapsto 10:1$ |
+| 69D1204 | 12,0 | $F:(11,12]$ | $12\mapsto Z_{12}$ | $\varnothing$ | $\varnothing$ |
+| 69D1211 | 12,1 | $F:(0,5]$ | $3\mapsto 2:1,\ 4\mapsto 2:2,\ 5\mapsto 3:2$ | $\varnothing$ | $\varnothing$ |
+| 69D1212 | 12,1 | $R:(5,7]$ | $\varnothing$ | $7\mapsto 5:1$ | $6\mapsto 3:3,\ 7\mapsto Z_{7}$ |
+| 69D1213 | 12,1 | $R:(7,10]$ | $\varnothing$ | $9\mapsto 7:1,\ 10\mapsto 6:2$ | $8\mapsto 5:3,\ 9\mapsto 7:2,\ 10\mapsto 9:1$ |
+| 69D1214 | 12,1 | $F:(10,12]$ | $11\mapsto Z_{11}$ | $\varnothing$ | $\varnothing$ |
+| 69D1221 | 12,2 | $F:(0,5]$ | $5\mapsto 2:3$ | $\varnothing$ | $\varnothing$ |
+| 69D1222 | 12,2 | $R:(5,8]$ | $\varnothing$ | $8\mapsto 4:2$ | $6\mapsto 2:4,\ 8\mapsto Z_{8}$ |
+| 69D1223 | 12,2 | $R:(8,10]$ | $\varnothing$ | $10\mapsto 8:1$ | $9\mapsto Z_{9},\ 10\mapsto Z_{10}$ |
+| 69D1301 | 13,0 | $F:(0,3]$ | $2\mapsto 1:1,\ 3\mapsto 1:2$ | $\varnothing$ | $\varnothing$ |
+| 69D1302 | 13,0 | $R:(3,6]$ | $\varnothing$ | $5\mapsto 3:1,\ 6\mapsto 4:1$ | $4\mapsto 1:3,\ 5\mapsto 1:4,\ 6\mapsto 1:5$ |
+| 69D1303 | 13,0 | $R:(6,12]$ | $\varnothing$ | $8\mapsto 6:1,\ 9\mapsto 5:2,\ 10\mapsto 6:2,\ 11\mapsto 3:4,\ 12\mapsto 4:4$ | $7\mapsto 1:6,\ 8\mapsto 3:5,\ 9\mapsto 5:4,\ 10\mapsto 7:3,\ 11\mapsto 9:2,\ 12\mapsto 11:1$ |
+| 69D1304 | 13,0 | $F:(12,13]$ | $13\mapsto Z_{13}$ | $\varnothing$ | $\varnothing$ |
+| 69D1311 | 13,1 | $F:(0,7]$ | $5\mapsto 2:3,\ 6\mapsto 3:3,\ 7\mapsto 2:5$ | $\varnothing$ | $\varnothing$ |
+| 69D1312 | 13,1 | $R:(7,9]$ | $\varnothing$ | $9\mapsto 7:1$ | $8\mapsto 5:3,\ 9\mapsto 7:2$ |
+| 69D1313 | 13,1 | $R:(9,11]$ | $\varnothing$ | $11\mapsto 9:1$ | $10\mapsto 8:2,\ 11\mapsto 10:1$ |
+| 69D1321 | 13,2 | $F:(0,5]$ | $3\mapsto 2:1,\ 4\mapsto 2:2,\ 5\mapsto 3:2$ | $\varnothing$ | $\varnothing$ |
+| 69D1322 | 13,2 | $R:(5,8]$ | $\varnothing$ | $7\mapsto 5:1,\ 8\mapsto 4:2$ | $6\mapsto 2:4,\ 7\mapsto 4:3,\ 8\mapsto Z_{8}$ |
+| 69D1323 | 13,2 | $R:(8,12]$ | $\varnothing$ | $10\mapsto 8:1,\ 12\mapsto 6:3$ | $9\mapsto Z_{9},\ 10\mapsto Z_{10},\ 11\mapsto Z_{11},\ 12\mapsto Z_{12}$ |
+
+这些字典可逐项由标签字符串和 $x=r+s,y=r+2s$ 读出。对每个供应符号，各块的初始 $x$ 范围互不相交，其并覆盖该符号下所有目标；某些计划在 $c<h$ 结束，字典已覆盖其全部目标，故没有未处理尾部。每个 F 字典覆盖该块全部目标；每个 R 块恰由 $y\le c$ 与 $y>c$ 两个互补部分覆盖，$Z_x$ 全在后者。于是没有把成对可辨性当作全类充分性，也没有使用无环性作为充分判据。
+
+所有目标字典都记录初始目标。即使选中宏或接受替换使当前商合并了域外的目标，已知标签、已选块和真实响应仍使该字典内键唯一；终端取得以后不再需要保存来源内的组成。特别 $C_{r,s}$ 的原标签2输出仍由初始 $2r+3s\le h$ 判断，不从修改后的当前 $q_H$ 反推。每个与表代表有相等初始目标的实际来源具有相同供应符号；TM30.1–2 与 TM47.2 使其沿这个共同协议有相同真实记录、停止与输出。因此上述全部目标的字典证书同时覆盖完整 $U_H$ 的所有实际叶词和有序括号，而不是枚举代表的外推。
+
+每个计划至多三次实际宏调用：四项计划的末项总是隐式 $F_h$，其余计划至多三项。选中后 F 不作替换，R 恰一次尝试，接受次数至多一。终端入口始终在 $[1,H]$：宏接受时由整候选守卫保证；替换接受时同样由守卫保证；拒绝保持来源。计划有限，终端区间有限收缩，字典为有限整数运算，每个输入都有限停止。总调用至多 $3+1+(\lceil\log_2H\rceil+1)$，且本区间 $H\le55<64$，得到 (69.2)。无需 `Read`；允许保存全部已经取得的历史。证毕。
+

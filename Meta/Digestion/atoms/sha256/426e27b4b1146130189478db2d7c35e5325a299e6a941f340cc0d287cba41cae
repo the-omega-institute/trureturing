@@ -1,0 +1,41 @@
+**Theorem 3.3 (same preparation, same complete code, one late Read).**
+Fix $D\ge1$. Suppose a preparation satisfying Assumption 1.2 has a
+correct reduced reader for all requests $Rq$, $q\in J_D$. There is
+an effective full reader with that exact preparation and that exact
+function $E:\mathcal F_D\to E[\mathcal F_D]$. On an omitted request
+$Rq$ it makes precisely the reduced reader's zero-Read choice or its
+chosen one arbitrary original-root Read for $RqL$. Preparation charges
+and the complete attained alphabet are unchanged. Restriction supplies
+the converse, so the reduced and original optima are equal.
+
+Proof. A finite public table can turn the reduced reader's one reply
+into its full requested factor. To establish this effectively without
+supplying a fictitious authentic count, enumerate all finite explicit
+trees in $\mathcal F_D$. On each, simulate the given terminating
+preparation with locally computed replies. For each attained name and
+reduced request, the deterministic reader's query choice before the
+first Read depends only on that name, request and public data. Record
+its zero-Read choice or word. Compute its reply on every enumerated
+explicit tree and compute that tree's factor directly by (SCE.3).
+
+For a fixed name, request and selected reply, all these factors agree.
+Indeed equal inputs and reply give the same final predictor; correctness
+for every subsequently supplied authentic count gives equal entire
+trajectories, and Convention 1.3 gives equal factors. The zero-Read
+case is the same argument without a reply. Thus the table is
+well-defined; unattained replies receive arbitrary values. Enumeration
+and all required simulations terminate because the family is finite
+and the given procedures terminate on every actual source. Uniformly
+in public $D$ this is an effective table-generation procedure, with
+no efficiency claim and no unknown-source input.
+
+At run time an omitted request chooses $RqL$, makes that reader's
+identical query or zero-Read choice, uses the public table to obtain
+$\Gamma_{qL}(v)$, and applies $\Psi$. Equation (SCE.8) gives the
+desired $\Gamma_q(v)$. Equation (SCE.4) answers each authentic count
+when it is subsequently supplied, with no further Read. Retained
+requests use their original reader. Every query still acts on the
+same actual stationary $t$ and may remain off-target or arbitrarily
+long. No canonical replacement of $E$, additional acquired field,
+reselected color, or preparation transcript is used. $\square$
+

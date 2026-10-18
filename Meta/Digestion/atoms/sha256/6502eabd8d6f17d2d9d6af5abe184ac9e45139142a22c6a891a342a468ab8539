@@ -1,0 +1,22 @@
+### 57.2 Trace-norm lower bounds and explicit attainers
+
+For P<=r the population-interval theorem §51 applies. Suppose P>=r and q>0. Use x=c/D,y=q/D and u=(1+x)/2. Then c y=q x, so the support identity shows that H=2|psi_u><psi_u|-I has output support at most x. Its MC block is [[x,y],[y,-x]] and its other block is -I. Norm duality gives the all-output lower bound
+
+    ||tau-Lambda(rho)||_1 >= 2[qw-c(1-P)]/D.
+
+If qw<=c(1-P) and c>0, z=w/c gives the exact attainable target
+
+    tau=z rho+[P-zr]|00><00|+[(1-P)-zq]|11><11|.
+
+The weights are nonnegative because z<=(1-P)/q<=1 and P-zr>=(P-r)/q>=0. If c=0 the same zero-error condition forces w=0, and the target is a mixture of the two resets. Thus zero error is attained in every zero-bound case.
+
+If qw>c(1-P) and t<=1, t>0 and omega=t rho+(1-t)|00><00| is attainable. Its residual MC block is
+
+    b [[c/D,q/D],[q/D,-c/D]],  b=[qw-c(1-P)]/D>0.
+
+It has eigenvalues +/-b and hence trace norm2b. This also applies when c=0 and w>0. The other block vanishes.
+
+For t>=1 put A=P-r>=0 and B=w-c. The condition is equivalent to cB>=qA. If c>0 it gives B>=0; apart from A=B=0 one has B>0. Set L0=sqrt(A^2+B^2), x=A/L0,y=B/L0 and u=(1+x)/2. Then cy>=qx, so the support identity gives Tr H xi<=Tr H rho for every output xi. Norm duality gives ||tau-xi||_1>=2(xA+yB)=2L0. Identity attains this since tau-rho has MC eigenvalues +/-L0. If c=0, t>=1 and P>=r imply P=r; §51 gives2w, which agrees with the corner formula. The zero residual is immediate. Finally q=0 forces c=0; separability/negativity yields the lower bound2w and the population-matching mixture of product resets attains it.
+
+At t=1, the edge attainer equals rho and its norm is exactly the corner expression. At P=r, t<=1 means w<=c when c>0, and both formulas vanish; t>=1 gives2(w-c), matching §51. The c=0 overlaps were treated explicitly. Thus every physical source/target parameter and all degeneracies are covered, with at most three product-CPTP branches overall.
+

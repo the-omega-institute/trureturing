@@ -1,0 +1,52 @@
+**Proposition 24.2 (same-origin resource comparisons).** Let
+$V^{(6)}_{a,b}$ be the vector (NARC.22.2) for Definition 19.1 and
+$V^{(5)}_{a,b}$ the vector for Definition 22.1. On each same original
+they are exactly:
+
+| Original $(a,b)$ | $V^{(6)}_{a,b}$ | $V^{(5)}_{a,b}$ |
+| --- | --- | --- |
+| $(0,15)$ | $(6,2,2,15,24)$ | $(5,2,2,15,24)$ |
+| $(1,15)$ | $(6,2,2,15,24)$ | $(5,2,2,15,24)$ |
+| $(2,15)$ | $(6,2,2,15,24)$ | $(5,2,2,15,24)$ |
+| $(3,15)$ | $(6,2,2,15,24)$ | $(5,2,2,15,24)$ |
+| $(4,15)$ | $(6,2,2,15,24)$ | $(5,2,2,15,24)$ |
+| $(5,15)$ | $(6,2,2,15,24)$ | $(5,2,2,15,24)$ |
+| $(0,1)$ | $(6,2,2,15,24)$ | $(5,2,2,15,24)$ |
+| $(1,1)$ | $(6,2,2,15,24)$ | $(5,2,2,15,24)$ |
+| $(1,0)$ | $(6,2,2,15,24)$ | $(5,3,3,15,34)$ |
+| $(15,5)$ | $(6,1,1,15,15)$ | $(5,3,3,15,34)$ |
+| $(15,4)$ | $(6,1,1,15,15)$ | $(5,1,1,15,15)$ |
+| $(15,3)$ | $(6,2,2,16,31)$ | $(5,1,1,15,15)$ |
+| $(15,2)$ | $(6,2,2,16,31)$ | $(5,2,2,16,31)$ |
+| $(15,1)$ | $(6,2,2,16,31)$ | $(5,2,2,16,31)$ |
+| $(15,0)$ | $(6,2,2,16,31)$ | $(5,2,2,16,31)$ |
+
+The new table installs twelve words rather than eleven, and its four
+independently stored running literals contain fifty letters rather than
+forty. These are attained table coordinates. The new coordinatewise
+maxima are three Reads, three response writes, peak sixteen and sum
+thirty-four, but no actual run realizes all those maxima jointly.
+
+**Proof.** Proposition 19.2 and Theorem 22.2 provide the two actual
+paths on each original. Their individual Read and flip counts and
+literal lengths give the displayed vectors directly. In particular
+$(1,0)$ gains one Read, $(15,5)$ gains two, and $(15,3)$ loses one.
+Increasing the worst-case allowance from two to three therefore does
+not mean one extra Read on each history.
+
+The new three-Read runs have vector $(5,3,3,15,34)$; the runs whose
+peak is sixteen have vector $(5,2,2,16,31)$. Thus peak sixteen and
+sum thirty-four belong to different histories. The independent literal
+count is $15+9+10+16=50$, compared with Proposition 20.2's forty.
+It does not assert a minimum representation charge or address optimum.
+
+Apply the separate service account (NARC.20.5) to each new path with
+its own $m$, $p_t$, $w_t$, replies and complete output $17-b$.
+Initial and later acquisition, export and discard, continuation,
+compilation, installation, initialization, immutable literal/transition/
+output storage and Read/write/output services remain separately supplied
+and charged. The vector comparison therefore entails neither a total
+physical storage advantage nor a latency, energy or scalar cost ordering.
+No unmeasured service is made free by reducing the mutable word width.
+$\square$
+

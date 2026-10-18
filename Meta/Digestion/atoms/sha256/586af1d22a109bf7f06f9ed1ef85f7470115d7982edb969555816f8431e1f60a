@@ -1,0 +1,13 @@
+**数学引文 5.1（既有供应的精确边界）。** 下表仅标示相关步骤的已有来源，不将固定态族检测、通用优化工具或组合计数另列为新增定理。
+
+| 来源 | 使用范围与供应边界 |
+| --- | --- |
+| [Recovery][Recovery] 定义 1.2–1.4、定理 2.1(C)、§3.4、定义 4.2 和推论 4.3；[Minimax][Minimax] 定义 1.2–1.6、定理 2.1 和开放问题 5.3–5.4 | 不变源、一块式协议、均匀完整合法域、既有 Bayes 首项、minimax 首项结算、SRM 及服务合同。两卷的高阶准备缺口仍明确；其结论不供应本卷的四阶全准备优化。 |
+| [Yonina C. Eldar、G. David Forney, Jr.，*On Quantum Detection and the Square-Root Measurement*][EF]，定理 3 | `literature-attested`：成熟正交化 $\Phi G^{-1/2}$。几何均匀态族的特殊最小错误最优性不应用到完整合法词族。SRM、平方根演算和正交化不作为本卷新内容。 |
+| [Tanmay Singal、Sibasish Ghosh，*Minimum Error Discrimination for an Ensemble of Linearly Independent Pure States*][SG]，定理 3.2、4.1–4.2 及 §4.2 末尾 | `literature-attested`：线性无关纯态族的最小错误检测及解析机器；其加权 Gram 矩阵对应本卷 $G/M$。它供应固定态族工具，不供应张量符号输入优化；端点唯一性、全单纯形局部化、矩最小化和源特定系数由本卷证明承担。 |
+| [Jon Tyson，*Error rates of Belavkin weighted quantum measurements and a converse to Holevo’s asymptotic optimality theorem*][Tyson]，版本 v1、§§1.2–1.4、2.3 | `literature-attested`：带权测量及固定态族、固定先验的近正交渐近边界。它不替代全准备类的四阶最优值。 |
+| [Sandi Klavžar、Michel Mollard，*Daisy cubes and distance cube polynomial*][KM] | `literature-attested`：Fibonacci 合法词图的立方体计数背景。正方形数及组合账目属于支撑计算，该文不供应量子取得分数。 |
+| [EquiprobablePgmActiveSetRefutation][ActiveSet] | 不同的三个混态 active-set 反例及半正定对偶证书；不供应完整合法纯态族的准备优化。该源码引用不构成本卷的 Lean 编译或 kernel 核验。 |
+| mathlib 固定提交 [`db584cd6d46c92f209a44c0f1c829460d327499d`](https://github.com/leanprover-community/mathlib4/tree/db584cd6d46c92f209a44c0f1c829460d327499d) 的 [HermitianFunctionalCalculus][MathCFC]、[PosDef][MathPosDef]、[Calculus.Implicit][MathImplicit] | 通用谱演算、正定性和隐函数抽象；不是本卷定理的现有形式化。尤其不将该隐函数文件视为整个解析优化论证的已编译实现。 |
+| [StageScalarAddressCertificate][Stage]；[金字塔基础公式卷][Pyramid] §§二、六、十一、十四及其 [Wainwright–Jordan][WJ]、[Drton–Sullivant][Drton]、[Shannon][Shannon]、[Sullivant][Sullivant] 文献条目 | 前者处理原生有序树、地址观察及已知标量阶段的共同证书；后者处理五模式概率律、同源原生接续以及另需明确附件的量子表示。它们不提供本卷张量符号普通调用的来源对应、准备优化值或资源价格。原生树认证、经典概率拼接、受控源资源及本卷一块式量子实验保持各自合同。 |
+

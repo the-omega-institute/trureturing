@@ -1,0 +1,42 @@
+**Corollary 8.1 (all remote corrections to the height comparison).** Put
+
+$$
+B_h=3A-\gamma C_2-I_h,\qquad C_h=a\nu^2B_h-\lambda D_{\rm clock}.
+\tag{8.1}
+$$
+
+For real odd exterior corrections, and by complexification for all complex odd exterior corrections, the homogeneous comparison value is exactly
+
+$$
+\begin{aligned}
+\mathcal Q_h(u)
+ &:=3A-\gamma C_2+h_0[U_h+u]-2\operatorname{Re}\mathcal L(U_h+u)\\
+ &=B_h+h_0[u]-2\operatorname{Re}e(u)
+ \ge B_h-\frac{K_{\rm tail}+\eta(R)}{R^3}.
+\end{aligned}
+\tag{8.2}
+$$
+
+The same formula for even additions is understood through its continuous polarized forms; they only add nonnegative energy. The complete coefficient in original units therefore satisfies
+
+$$
+a\nu^2\mathcal Q_h(u)-\lambda D_{\rm clock}
+\ge C_h-a\nu^2\frac{K_{\rm tail}+\eta(R)}{R^3}.
+\tag{8.3}
+$$
+
+The infimum of $\mathcal Q_h(u)$ over the exterior class is $B_h-\mathfrak G(R)$, so its maximal improvement has precisely power $R^{-3}$. If $B_h>0$, every sufficiently remote canonical comparison stays positive. If $B_h-\mathscr R\overline D>0$ at a fixed admitted datum, every sufficiently remote complete comparison stays positive. Neither hypothesis is asserted to hold.
+
+Proof. H's projection identity gives $h_0[U_h]=\mathcal L(U_h)=I_h$. Exact polarization, including the cross term between $U_h$ and $u$, gives (8.2); Theorem 6.2 bounds its gain. Since $\lambda D_{\rm clock}=a\nu^2\mathscr R\overline D$, subtraction yields (8.3) with every original source, clock and threshold term intact. The supremum definition and Theorem 7.1 give the infimum identity and power. If either stated margin is positive, choose $R$ sufficiently large that the uniform error is smaller than half that margin. $\square$
+
+The full response remains
+
+$$
+G_{\rm resp}=B_h-\delta_h,\qquad \delta_h=h_0[\Psi-U_h]>0,
+\tag{8.4}
+$$
+
+where E supplies strict positivity. The exterior estimate is not an upper bound on the full $\delta_h$. Its interior and unrestricted components remain in (8.4). The bound rules out obtaining an unbounded or nonvanishing gain at arbitrarily remote heights by accumulating witnesses at arbitrarily many scales: every finite combined exterior correction, and every convergent exterior sum, satisfies the same bound with all cross terms. It does not exclude a sign proof from a finite core estimate, another same-source identity, or a sufficiently strong finite witness. A vanishing remote gain is neither a sign decision nor logical underdetermination of this fixed source.
+
+Under $W=j_0V$, $W_j=j_0V_j$, $W_{\rm t}=j_0V_{\rm t}$ and $\overline C=j_0C_*$, one has $\gamma=j_0/\overline C$. Consequently $p$, $\mathcal G$, $c_\infty$, $t_\infty$ and $K_{\rm tail}$ are canonical for this precise source. This normalization changes no original $\nu$, $\lambda$, signed parameter, raw source or native clock. The exterior parameter $R$ is independent of the native small-$s$ limit. A homogeneous comparison value is not substituted for an actual eigenstate or asserted to be a matching native infimum.
+

@@ -1,0 +1,89 @@
+## 350. Two-owner bounds without a receiver premise
+
+The following consequences depend only on tau, eta, (348.1), (349.1),
+and (349.2). In particular they do not assume an owner rho exists.
+
+The source-flat inequality and v<=m-2 give
+
+    (c+d)^2<=(m-1)*(m-3)=(m-2)^2-1,
+    c+d<m-2, d<m-c-2<m-3, m>4.                       (350.1)
+
+For eta, the exact axial M cosine is N_e/D_e, where
+
+    D_e=m^2+v^2+d^2+2*m*v*d-1>0,
+    N_e=2*v*d+m*(v^2+d^2)-(m^2-1)*z.
+
+Its v derivative has sign numerator
+
+    (N_e)_v*D_e-N_e*(D_e)_v
+      =2*(m^2-1)*[-d^3+d*m*z+d*v^2+d+m*v+v*z]>0.
+
+The d derivative is obtained by interchanging v,d; the z derivative
+is negative. The signs hold throughout 1<v,d<=m-2 and z>=m.
+Thus increasing v,d to m-2 and decreasing z to m strictly increases
+the algebraic cosine. At that comparison point
+
+    D_e-2*N_e=(m+1)*(7*m-9)>0.
+
+No genuine comparison endpoint is needed. The actual genuine angle
+therefore satisfies
+
+    theta_M(eta)>pi/3, beta_M(tau)<pi/3,              (350.2)
+
+the second statement following from (349.2).
+
+Put p=sqrt((m-1)*(z-1)) and q=sqrt((m+1)*(z+1)). The exact
+bad-eta half-angle product (349.1) is equivalent to
+
+    p*q<=v^2+d^2+2*v*d*(q-p)/(q+p).
+
+Since z>m>1, (q-p)/(q+p)<=1/m and
+p*q>(m-1)*(z-1). Hence
+
+    z<Zb(m,v,d):=1+[v^2+d^2+2*v*d/m]/(m-1).         (350.3)
+
+The right side increases in both positive variables v,d.
+
+For clarity, the published quarter-bound argument needs no rho
+premise. The source M cosine, as an algebraic function, is
+
+    C_t(z,d)=N_t(z,d)/sqrt(D_t(z)*D_t(d)),
+    N_t(z,d)=c*(z+d)+m*(z*d+c^2-m^2+1),
+    D_t(t)=t^2+m^2+c^2+2*t*m*c-1>0.
+
+It increases in z,d. For example its z derivative has sign numerator
+
+    (m^2-1)*[c*(d*z+m^2-c^2+1)+m*(d+z)]>0,
+
+and the d version is symmetric. Set d1=m-c-1 and
+z1=Zb(m,m-2,d1). Then d<d1,z<z1, and the actual source
+cosine is less than C_t(z1,d1).
+
+If c>=m/4, use m=4+b, b>0 and
+c=[m/4+(m-2)*a]/(1+a), a>=0, which covers m/4<=c<m-2.
+The exact polynomial from (325.3) is
+
+    A4(m,c)=m^2*(m-1)*[D_t(z1)*D_t(d1)-4*N_t(z1,d1)^2]
+           =sum_{j=0}^6 A4_j(m)*c^j,
+    P4(a,b)=4^6*sum_{j=0}^6 A4_j(m)
+              *[m/4+(m-2)*a]^j*(1+a)^(6-j), m=4+b.
+
+The complete published identity in Section 331 has 69 positive
+integer coefficients and positive constant 314572800. Thus P4>0,
+A4>0, and |C_t(z1,d1)|<1/2. The actual cosine is smaller,
+contradicting beta_M(tau)<pi/3 in (350.2). We have proved
+
+    1<c<m/4.                                          (350.4)
+
+Every hypothesis used in this reconstruction has been stated above;
+neither a rho L/J inequality nor a rho angle is used. The bound
+follows from the displayed two-owner calculation.
+
+Finally (350.1), (350.3), and monotonicity of Zb imply
+
+    z+m+1<Zb(m,m-2,m-3)+m+1
+           =3*m-(4*m^2-m-12)/(m*(m-1))<3*m.           (350.5)
+
+The final numerator is positive for m>4. Consequently each of
+v,z,u is strictly below 3*m, using the explicit gap for u.
+

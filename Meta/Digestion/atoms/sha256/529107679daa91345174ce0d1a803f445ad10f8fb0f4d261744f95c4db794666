@@ -1,0 +1,41 @@
+**Theorem 4.2 (terminating native arbitrary-word budget decision).** Given
+Assumption 1.1 and finite $K,A$ or a supplied finite downward-closed
+$\mathcal B$ within their rectangle, there is a terminating procedure
+returning exactly one of:
+
+1. a finite lawful whole-$D$ controller meeting the prescribed condition;
+2. a finite nonempty $S\subseteq D$ whose exact table test in Lemma 4.1
+   rejects every comparator on $S$ under that condition.
+
+There is no supplied bound on physical words and no finite-source,
+finite-image or determining-prefix premise.
+
+Proof. Run two effective enumerations in interleaved finite stages.
+For the positive enumeration, enumerate finite skeletons of read depth
+at most $K$, monotone epochs in $[N,N+A]$, and all tuples of finite words.
+For example at stage $j$ enumerate all such skeletons whose words have
+length at most $j$. Every stage is finite and every candidate is eventually
+included. Apply NSF Theorem 7.2 to every candidate on the entire $D$.
+Check full-row constancy and the prescribed path pair at each nonempty
+leaf. On success, use its actual original witnesses to install the full
+outputs and return that finite controller.
+
+For the negative enumeration, at stage $j$ list all finite native trees
+of size at most $j$, retain exactly those satisfying (NFO.2), and perform
+Lemma 4.1 on the resulting $S_j$. If it rejects, return $S_j$, its full
+rows and its finite physical reply tables. Each stage finishes even if
+$D$ is finite: it enumerates ambient size shells, not a search waiting
+for a nonexistent next admitted source.
+
+Every inner operation terminates. A positive return is correct on the
+entire $D$ by NSF; a negative return is correct against every comparator
+on $S_j$ by Lemma 4.1 and therefore against every whole-domain comparator.
+The two returns cannot both be valid. If a whole-domain service exists,
+Convention 2.3 gives a finite skeleton with finitely many finite words,
+so the positive enumeration eventually finds one. Otherwise Theorem 3.2
+gives a finite obstruction $S$. Some $S_j$ contains it. A service on
+$S_j$ would restrict to a service on $S$, so $S_j$ is also an obstruction
+and the negative enumeration eventually returns. These exhaustive cases
+prove termination without extracting the subsequence in Lemma 3.1.
+$\square$
+

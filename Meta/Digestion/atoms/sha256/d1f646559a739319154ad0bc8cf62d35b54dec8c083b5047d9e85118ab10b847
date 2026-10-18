@@ -1,0 +1,4 @@
+由 \(\sigma\) 忠实且 \(\mathcal L\) 保持迹，
+\[
+\frac{d}{dt}D(\rho_t\Vert\sigma)
+=

@@ -1,0 +1,50 @@
+**Theorem 4.6 (Explicit positive margin on the whole scalar interval).**
+Every constant in Definition 4.3 is well-defined and positive, and
+
+$$
+0<\varepsilon\le\frac12,\qquad
+0<\mu<\frac{T-\tau}{8},\qquad T-\mu>\tau>0.
+$$
+
+For this one prescribed perturbation,
+
+$$
+\boxed{F_\varepsilon(x)\le T-\mu\quad(0\le x\le1).}
+$$
+
+Proof. Lemma 4.4 gives $m,d>0$, and $T>0$ gives $C_0,M>0$.
+All entries of the minima defining $\varepsilon$ and $\mu$ are
+therefore positive. If $x\notin K$, then $W(x)<-m$ and
+$F_0(x)\le T$. Lemma 4.5 and $\varepsilon\le m/(2M)$ yield
+
+$$
+F_\varepsilon(x)
+\le T-m\varepsilon+M\varepsilon^2
+\le T-\frac{m\varepsilon}{2}.
+$$
+
+If $x\in K$, then $F_0(x)\le T-d$ and $|W(x)|\le C_0$.
+Using $\varepsilon\le1$ and
+$\varepsilon\le d/[2(C_0+M)]$ gives
+
+$$
+F_\varepsilon(x)
+\le T-d+C_0\varepsilon+M\varepsilon^2
+\le T-d+\varepsilon(C_0+M)
+\le T-\frac d2.
+$$
+
+These two sets cover $[0,1]$, and the definition of $\mu$ gives the
+uniform conclusion. Finally,
+
+$$
+\mu\le\frac{m\varepsilon}{2}
+\le\frac{\eta(T-\tau)}4
+<\frac{T-\tau}{8},
+$$
+
+using $m\le\eta(T-\tau)$, $\varepsilon\le1/2$ and $\eta<1/2$.
+This proves the claimed lower bound on $T-\mu$ as well. The bound is
+uniform in the scalar source variable for each fixed $Z$. It does not
+claim an optimal margin or an evaluated numerical value. $\square$
+

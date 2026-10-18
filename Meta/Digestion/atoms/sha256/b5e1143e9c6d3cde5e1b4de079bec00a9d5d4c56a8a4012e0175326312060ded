@@ -1,0 +1,21 @@
+**推论 220.5（Bounded eligibility saturation）。** Starting at $y_0=y$,
+set $y_{t+1}=\rho_{E(y_t)}y_t$. Eligibility is monotone along these
+resets. Stop when it no longer enlarges, in at most $L+1$ reset stages.
+Write $E_*$ for the terminal set and $V$ for the terminal score.
+Then $Q,W$ are unchanged, each fixed support is nonincreasing, pairs
+touching $E_*$ have $N=O$, and every pair outside $E_*$ retains its
+original $y$ readings. For $\Delta_O(y)\le d$, the saturated reset
+is affordable exactly when $E_*$ covers every original bad edge.
+
+**证明。** Each already eligible coordinate's zero face receives only
+old words on that face; its $C-A$ sums remain nonpositive.
+Each strict enlargement adds a coordinate. If no enlargement occurs,
+idempotence leaves the score fixed at the next reset. The maps commute,
+so the final score resets their union $E_*$ except at the first zero.
+Apply the touched-pair argument and outside reading equality from
+220.4 to that union. The graph is the original graph, not a sequence
+of separately chosen intermediate graphs. $\square$
+
+Single-pass failure does not rule out saturation. Saturation failure
+still does not rule out any unrestricted $(V,\theta)$.
+

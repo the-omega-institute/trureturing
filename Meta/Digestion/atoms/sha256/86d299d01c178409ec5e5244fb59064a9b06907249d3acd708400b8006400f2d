@@ -1,0 +1,115 @@
+**Theorem 8.1 (Simultaneous growing-budget lower bound).** Fix the exact $H_c$ and all source premises of Section 2. Choose $s_H>0$ from (2.8), using only the fixed source, such that
+
+$$
+Z_0(e^{-s})\ge\frac{9!}{2}s^{-10},\qquad
+\mu_0(e^{-s})\ge\frac5s
+\quad(0<s<s_H).
+\tag{8.1}
+$$
+
+For a fixed $0<\alpha<1/2$, put
+
+$$
+b=1-2\alpha,\qquad
+s_\alpha=\min\left\{s_H,1,\frac{5b}{8\delta}\right\}>0.
+\tag{8.2}
+$$
+
+For every finite integer $M\ge2$ define
+
+$$
+\begin{aligned}
+n_M&=M-2,\\
+L_M&=\max\left\{1,\left\lceil\frac{2\delta(M-2)}b\right\rceil\right\},\\
+X_M&=1+\frac{2\delta(M-2)}b.
+\end{aligned}
+\tag{8.3}
+$$
+
+Then simultaneously for every such $M$, every $0<s<s_\alpha$, every $\mathcal A\in\mathfrak A_M(e^{-s},\alpha)$ and each $i\in\{0,1\}$,
+
+$$
+\begin{aligned}
+\mathbb E_{i,e^{-s}}^{\mathcal A}T
+&\ge\frac{b\,9!}{4B\delta}\,
+       \frac{s^{-11}}{L_M^9\max\{1,sL_M\}}\\
+&\ge\frac{b\,9!}{4B\delta}\,
+       \frac{s^{-11}}{X_M^9\max\{1,sX_M\}}.
+\end{aligned}
+\tag{8.4}
+$$
+
+The neighborhood $s_\alpha$ depends only on the source and risk, and is chosen before every budget and machine. No upper bound on $sL_M$ or $sX_M$ is assumed.
+
+Proof. The moment premise selects (8.1) independently of all observers and budgets. After fixing $\alpha$, (8.2) selects a single neighborhood. Fix any finite $M$ and any $s$ in it. The integer $L=L_M$ is finite, positive and chosen independently of the actual machine at these parameters.
+
+For $u\ge0$ let $g(u)=(e^u-1)/(e^u+1)$. Then $g(0)=0$ and
+
+$$
+g'(u)=\frac{2e^u}{(e^u+1)^2}\le\frac12,
+\tag{8.5}
+$$
+
+because $(e^u-1)^2\ge0$. Integration gives $g(u)\le u/2$. Also $\log(1+v)\le v$ for $v\ge0$, by integrating $(1+v)^{-1}\le1$. Using $u=n_M\log\gamma_L$, we obtain
+
+$$
+\chi_{M,L}
+\le\frac{n_M}{2}\log\left(1+\frac\delta{L+1}\right)
+\le\frac{n_M\delta}{2(L+1)}\le\frac b4.
+\tag{8.6}
+$$
+
+For $n_M=0$ the left side is exactly zero. For $n_M>0$, the definition gives $L\ge2\delta n_M/b$, hence $L+1\ge2\delta n_M/b$, which proves the last inequality. The maximum with one therefore causes no exception at small budgets.
+
+The actual stationary initial comparison obeys, on this same neighborhood,
+
+$$
+r_H(e^{-s})\le\frac{2\delta}{\mu_0(e^{-s})}
+\le\frac{2\delta}{5}s\le\frac b4.
+\tag{8.7}
+$$
+
+To bound the signed coefficient, use (6.1), (8.1) and $1-e^{-s}\le s$:
+
+$$
+\begin{aligned}
+\kappa_L(e^{-s})
+&\le\frac\delta{Z_0(e^{-s})}L^9
+        \max\{1,(1-e^{-s})L\}\\
+&\le\frac{2\delta}{9!}s^{10}L^9\max\{1,sL\}.
+\end{aligned}
+\tag{8.8}
+$$
+
+This is an inequality for every finite $L$ on the same neighborhood, not an asymptotic for a fixed cutoff. Even when $L$ grows faster than $s^{-1}$, all its terms retain their stated directions.
+
+Theorem 7.1 with (8.6)–(8.8) leaves at least $b/2$ of decision separation to be paid under each target:
+
+$$
+\begin{aligned}
+\frac b2
+&\le\kappa_L B(1-e^{-s})\mathbb E_iT\\
+&\le\frac{2B\delta}{9!}s^{11}L^9
+         \max\{1,sL\}\mathbb E_iT.
+\end{aligned}
+\tag{8.9}
+$$
+
+The final coefficient is strictly positive: $B,\delta,s,L$ are positive. Divide by that coefficient to get the first line of (8.4). We have not divided by $\kappa_L$; a zero actual coefficient with the positive residual separation would instead make a compliant observer impossible, as Theorem 7.1 states.
+
+For $x\ge0$ one has $\lceil x\rceil\le x+1$, and $1\le x+1$. Consequently the full ceiling and maximum in (8.3) satisfy
+
+$$
+1\le L_M\le1+\frac{2\delta n_M}b=X_M,
+\tag{8.10}
+$$
+
+including $n_M=0$. For fixed $s>0$, $z^9\max\{1,sz\}$ is increasing on positive $z$: it is $z^9$ for $sz\le1$ and $sz^{10}$ for $sz\ge1$, and these formulas agree at the boundary. Thus
+
+$$
+L_M^9\max\{1,sL_M\}\le X_M^9\max\{1,sX_M\}.
+\tag{8.11}
+$$
+
+Taking reciprocals reverses this denominator comparison, which gives the second lower bound in (8.4). Every threshold used only the fixed source or risk. All estimates hold for the same actual machine through the supplied interfaces and for all finite cutoffs. This proves the simultaneous quantifiers without exchanging a fixed-$M$ limit with a growing-budget limit. $\square$
+

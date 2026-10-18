@@ -1,0 +1,48 @@
+**Definition 365.1 (Full scores and the equality hull).** For $L\ge3$ let
+$y=(A_w,C_w,P_w;T)\ge0$ assign a weight to every row in (363.5). Its word reward at label $z$ is
+
+$$
+f_w(z)=A_w\mathbf1_{z=0}+C_w\mathbf1_{z=n(w)}
+             +P_w\mathbf1_{z\in\{0,n(w)\}}
+\quad(w\ne1^L),\qquad
+f_{1^L}(z)=T\mathbf1_{z=0}.
+\tag{365.1}
+$$
+
+The anchor is $R=O(1,2;1,2,0)$ in stopped-cell order, with event vector $\mathbf r=z(R)$ and amplitude vector $\alpha=(1,1,0,\ldots,0)$. Define
+
+$$
+\begin{aligned}
+W_y&=y\cdot\mathbf r
+ =\sum_{n(w)\ge3}A_w+\sum_{n(w)\le2}C_w+\sum_{w\ne1^L}P_w+T,\\
+B_C(y)&=\max_{D\in\mathcal D_C}y\cdot z(D),\qquad
+\Delta_C(y)=B_C(y)-W_y\ge0\quad(C=N,O),\\
+Q(y)&=(\beta,K),\qquad
+\beta_n=\sum_{n(w)=n}(C_w-A_w),\\
+K&=\sum_{w\ne1^L}(A_w+C_w+P_w)+T.
+\end{aligned}
+\tag{365.2}
+$$
+
+Here $\mathcal D_C$ is the entire deterministic catalog of 363.3. A unit-$O$ score means $\Delta_O(y)=1$, with no restriction to a basis or normalized total weight. The closed hull is
+
+$$
+\begin{aligned}
+H_L=\{(b,e):\;&1\ge b_1\ge\cdots\ge b_L\ge e\ge0,\quad b_2=b_3,\\
+ &(L+1)e\le\sum_{j=3}^Lb_j,\quad
+ b_1+\sum_{j=3}^Lb_j-(L+1)e\le1\}.
+\end{aligned}
+\tag{365.3}
+$$
+
+For an arbitrary signed $q=(\beta,K)$ put
+
+$$
+F_q(b,e)=\sum_{n=1}^L\beta_n(b_n-\alpha_n)-Ke,
+\qquad \sigma_{H_L}(q)=\max_{(b,e)\in H_L}F_q(b,e).
+\tag{365.4}
+$$
+
+These are the full-score and signed-quotient conventions of [IX 207.1–207.3](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_IX.md) and [VI 199.1–199.3](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_VI.md). In particular, for the literal demand vector $d(b,e)$ in (363.6),
+$y\cdot(d(b,e)-\mathbf r)=F_{Q(y)}(b,e)$. A signed quotient difference is not required to have a nonnegative score representative.
+

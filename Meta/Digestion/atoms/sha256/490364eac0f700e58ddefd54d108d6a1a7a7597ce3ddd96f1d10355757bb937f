@@ -1,0 +1,36 @@
+**原生坐标与完整删边准则。** 对段首元组 $v$，令
+
+$$
+q_j=v(ab)^j,\qquad r_j=q_ja,\qquad j\pmod n.
+$$
+
+原生边为 $q_j\xrightarrow a r_j\xrightarrow b q_{j+1}$。$U_r$ 使用 $a$ 指标 $0,\ldots,r$ 与 $b$ 指标 $0,\ldots,r-1$；$H$ 是 $b_m$ 的完整补弧，$J$ 是 $a_0$ 的完整补弧。$b_j$ 的末标签为 $v[j]$。
+
+标准 $T=(\alpha,K,\omega)$ 的两个旧 $a$ 边以 $(\alpha,K,\omega)$ 与 $(\omega,K,\alpha)$ 为基。末 $\alpha$ 的 $b$ 族残余为 $(K[1:],\omega,K[0])$，末 $\omega$ 族交换 $\alpha,\omega$。旧 $b$ 族左旋指标为 $0,\ldots,m-3$；新增 $c$ 族为 $0,\ldots,m-2$。四个开关的残余表为
+
+| 开关 | 末标签 | 残余词 |
+|---|---|---|
+| $g_0$ | $t$ | $(z,\operatorname{rev}(C),u,y,x,p)$ |
+| $g_0$ | $x$ | $(z,\operatorname{rev}(C),u,y,t,p)$ |
+| $g_1$ | $y$ | $(B,z,t,x,u)$ |
+| $g_1$ | $x$ | $(B,z,t,y,u)$ |
+| $g_2$ | $y$ | $(z,\operatorname{rev}(C),u,t,p,x)$ |
+| $g_2$ | $p$ | $(z,\operatorname{rev}(C),u,t,y,x)$ |
+| $g_3$ | $u$ | $(\operatorname{rev}(B),x,t,z,y)$ |
+| $g_3$ | $z$ | $(\operatorname{rev}(B),x,t,u,y)$ |
+
+伴随残余为 $(t,y,z,\operatorname{rev}(B),u)$。保留零层的 $b$ 切口指标恰为 $t$ 的位置；在影子中改用 $g_0$ 的原生切口。
+
+第一条改变路径各段的起点依次为
+
+$$
+\begin{gathered}
+(B,z,y,t,u,x),\ (x,B,z,y,u,t),\ (u,t,x,B,y,z),\\
+(z,y,\operatorname{rev}(B),x,u,t),\ (z,y,\operatorname{rev}(B),x,t,u),\\
+(\operatorname{leftrotate}_r(B,y,z,u,x),t),\quad0\le r\le m-3,\\
+(u,x,B,y,z,t),\ (B,y,z,t,x,u),\ (t,x,u,B,z,y),\ (u,B,z,y,x,t).
+\end{gathered}
+$$
+
+各 $U_r$ 无旧 $a$ 切口，旧 $b$ 指标为 $\{r,m\}$，仅 $U_{m-4}$ 另有 $m-2$、紧随的 $U_0$ 另有 $1$，均在所用 $b$ 范围之外。$(ba)^{m-1}$ 的切口为 $a_0,b_1$，$ba$ 为 $a_0,b_{m-1}$，均避开其所用边。新增 $c$ 来源依次为零层、$g_3$、零层、$g_3$、零层；其 $H$ 群全部为零层；末部为 $g_3,g_1$、零层。末元组为 $(y,z,\operatorname{rev}(B),u,t,x)=p_{2m-2}$。
+

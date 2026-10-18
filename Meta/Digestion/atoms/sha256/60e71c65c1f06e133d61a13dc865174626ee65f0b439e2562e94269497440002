@@ -1,0 +1,53 @@
+**Definition 6.1 (dyadic data and interval rules).** Each endpoint
+integer in the following table is divided by $D_{\rm src}=2^{224}$.
+These are the required source rows of ST Definition 10.1. The
+parameters remain those of the same isolated root.
+
+| Quantity | Lower numerator | Upper numerator |
+| --- | --- | --- |
+| $h_0$ | $26537788820506109500788498850443291999899441414357450708533697655768$ | $26537788820506109500793183315073538792668688684001205079732940054331$ |
+| $h_1$ | $19041394653590742992836842417055357808127410672381937576282066738318$ | $19041394653590742992839410055472468226237891451663919566364482743060$ |
+| $h_2$ | $21824004785988993361054584934895991870094398276315525145506200547608$ | $21824004785988993361057348440025413753058042469208985303844669006803$ |
+| $a$ | $1770311394972945197641994965733434776804318798358636960993665423441$ | $1770311394972945197642330191383860313598676849494811590399527112584$ |
+| $b$ | $3935965654294995608601979521892857651473674590095072143984588712921$ | $3935965654294995608602313422828891500221393677289956783118602628225$ |
+| $c$ | $417790356983612701857377130657326048451791786364520663159403140999$ | $417790356983612701857967962172137068830255220590298423542851403047$ |
+| $d$ | $2663205433690388662341049091689729175826547547021472884789707223172$ | $2663205433690388662342459064972096088182130849082266016544667607076$ |
+| $m_1$ | $13395056598782546673904842458375183527737029361412185934273944851861$ | $13395056598782546673906662453967195540019733666091401589339664139139$ |
+| $m_2$ | $9286998735773460367948153511490550124076700197961256553923028397389$ | $9286998735773460367951141007906400979909044212876537994791222399466$ |
+
+All interval operations are outward exact rational operations. For
+$I=[l,u]$, $J=[r,v]$, addition has endpoints $l+r,u+v$,
+subtraction $l-v,u-r$, multiplication takes the minimum and maximum
+of the four endpoint products, and division multiplies by
+$[1/v,1/r]$ when $0<r\le v$.
+Squaring uses zero as the lower bound if the interval crosses zero;
+absolute value uses the same sign cases. For a nonnegative interval,
+the square-root enclosure uses denominator $Q=2^{192}$:
+$$
+\sqrt{[l,u]}\subseteq
+\left[\frac{k_l}{Q},\frac{k_u+1}{Q}\right],
+\qquad k_x=\max\{k\in\mathbb Z_{\ge0}:k^2\le Q^2x\}.
+\tag{GC.27}
+$$
+All comparisons defining $k_x$ are integer/rational comparisons.
+
+For direct evaluation from the original matrices, the exact height
+difference is
+$$
+\Delta=
+\begin{pmatrix}
+11/64&(\sqrt{999}-\sqrt{295})/128&(\sqrt{27}-\sqrt5)/16\\
+(\sqrt{999}-\sqrt{295})/128&-11/64&(\sqrt{37}-\sqrt{59})/16\\
+(\sqrt{27}-\sqrt5)/16&(\sqrt{37}-\sqrt{59})/16&0
+\end{pmatrix}.
+\tag{GC.28}
+$$
+Use (GC.6) to form $\theta,\omega,\delta,\alpha,\beta,s_0$,
+(GC.28) and the trace formula (GC.7) to form $N,G$, then
+(GC.12)–(GC.13) to form the boundary parameters. In the capacity
+expression use its squared coordinates directly, $z^2=u_F$, $w^2=v_F$,
+and compute $G_{ij}=L_{ii}N_{ij}L_{jj}$.
+At $t_b=t_0+\nu$ evaluate the eight absolute values and their Fourier
+coefficients in (GC.17)–(GC.18). All denominators are strictly positive.
+This specifies the scalar expression without any fitted height signs.
+

@@ -1,0 +1,14 @@
+**Definition 4.1 (the fixed actual scaffold).** For $h\ge0$ and
+$k=2^h$, let $T_h(x_1,\ldots,x_k)$ be the perfect ordered
+height-$h$ scaffold filled by the listed actual trees, with $T_0(x)=x$.
+For $w:S_d\to[0,\infty)$ define $w^{\uparrow}$ on $S_{d+h}$ by
+
+$$
+w^{\uparrow}(T_h(x_1,\ldots,x_k))=\prod_{i=1}^kw(x_i),
+\qquad w^{\uparrow}=0\text{ off this image}.
+\tag{RCE.17}
+$$
+
+The parsing map is injective. Every frontier occurrence is actually
+present, and this lift changes no source or operational interface.
+

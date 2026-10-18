@@ -1,0 +1,54 @@
+**定义 8.2（全部饱和整数多项式）。** 为把每个系数固定为有限整数乘积，完整列出
+
+$$
+\begin{aligned}
+S&=2+3\rho,&Z&=4\rho^2+25\rho+4,\\
+K&=4-15\rho-16\rho^2,&N&=512+3048\rho-218\rho^2-117\rho^3,\\
+H_n&=-20SZ,&B_n&=-5S(3\rho-4)(7\rho-4),\\
+A_n&=2(4-3\rho)(2\rho+1),\\
+U_n&=(H_n-3N-2B_n)K+ZN,\\
+V_n&=B_n^2+(3N-H_n)B_n+N^2,\\
+W_n&=400S^2K^2+40SU_n+4V_n.
+\end{aligned}
+\tag{8.8}
+$$
+
+$H_n,B_n,A_n$ 分别就是式 (8.1) 的 $H_{\rm num},B_{\rm num},A_{\rm num}$；$S$ 不是源的迹 $s$。由式 (5.5) 直接得到
+
+$$
+\begin{gathered}
+h=H_n/N,\quad\beta=B_n/N,\quad\lambda=A_n/Z,\quad z=Z/K,\\
+u=\frac{ZU_n}{NK^2},\qquad
+v=\frac{Z^2V_n}{N^2K^2},\qquad D=\frac{Z^2W_n}{N^2K^2}.
+\end{gathered}
+\tag{8.9}
+$$
+
+具体地，$u=z(h-3+z-2\beta)$ 和 $v=z^2[\beta^2+(3-h)\beta+1]$ 给前两个分式，再把它们代入 $D=h^2-2hu+4v$ 就给 $W_n$。因此
+
+$$
+U_{\rm num}=ZU_n,\qquad V_{\rm num}=Z^2V_n,\qquad W_{\rm num}=Z^2W_n.
+\tag{8.10}
+$$
+
+全部三行因子如下；$L_j=Zl_j$，$\gamma_j=c_j/12$。
+
+| $j$ | $a_j$ | $b_j$ | $l_j$ | $M_j$ | $\gamma_j$ | $c_j$ | $q_j$ |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| $0$ | $2A_n-Z$ | $2B_n$ | $-20S(3\rho-4)$ | $6+8\rho$ | $7/2$ | $42$ | $0$ |
+| $1$ | $A_n-4Z$ | $H_n+B_n+N$ | $-120S(\rho-1)$ | $10+15\rho$ | $1$ | $12$ | $24$ |
+| $2$ | $A_n$ | $B_n$ | $-20S(7\rho-4)$ | $8+16\rho$ | $5/12$ | $5$ | $48$ |
+
+定义
+
+$$
+\begin{aligned}
+\overline T_j&=K^2l_jb_j-M_j(a_jV_n+b_jU_n),\quad j=0,1,2,\\
+\overline P&=42\overline T_0-24\overline T_1+5\overline T_2,\\
+\overline A&=427\overline T_0+3150ZV_n-3272\rho ZW_n.
+\end{aligned}
+\tag{8.11}
+$$
+
+$\deg U_n\le5$，$\deg V_n,\deg W_n\le6$；表中 $a_j,b_j,l_j,M_j$ 次数分别至多 $2,3,2,1$。故 $\deg\overline T_j,\deg\overline P,\deg\overline A\le9$。下面给出的非零九次首项将证明后两者在特征零也恰为九次。
+

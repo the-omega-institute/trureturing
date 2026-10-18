@@ -1,0 +1,27 @@
+**Convention 12.3 (reused mathematics and scope of evidence).** Theorems
+9.2, 10.2 and 11.1 are `repo-derived` source-model synthesis with ordinary
+proofs, without Lean certification or worldwide novelty claims. Finite
+counting, continuation distinguishability and realized-image descent
+are mature mathematics. Their relevant interfaces are as follows.
+
+| Supplier | Hypotheses and exact role |
+| --- | --- |
+| `D5/S3/ObserverMemory/RefinementClosure/TypedFiniteViewKernel.lean`, `response`, `refinement`, `typed_finite_view_kernel`, and its owning Scribe | Partial typed steps, labels and readouts are independently supplied. Equality over all finite paths tracks legality and behavior; it does not create native rows or original admission. |
+| `PredictiveMemoryMinimalQuotient.lean`, `predictive_memory_minimal_quotient`, in the same directory, and its owning Scribe | Both readout factorization and a descended update are premises. Theorem 11.1 proves the latter on its realized partial chart rather than inferring it from a static fibre count or silently totalizing the boundary. |
+| `D5/S3/ObserverMemory/PredictionFactors/CanonicalReachableBehaviorFactor.lean`, `canonical_reachable_behavior_factor`, and `ReachableBehaviorMinimality.lean`, `finite_state_minimality`, with their owning Scribes | Reachability and equality of all anchor observations are premises over total monoid actions; the cardinal theorem also assumes finite state carriers. Our partial chart is not silently made such an action, and only its supplemental alphabet is bounded. |
+| `NativeSerialMachine.lean`, `operational_replay`/`reached_prefix_replay`; `NativeSerialEffective.lean`, `OriginalCodeRealization`/`original_code_service_simulation` and private `erased_reads`/`erased_external`; `NativeFullSourceProducer.lean`, `native_source_producer` and private `traverse`/`production_reads`/`stationary`, under `D5/S3/Arith/FibonacciAtomic/Observer/`, with owning Scribes | These results respectively use actual run witnesses, a supplied selector-code realization, or the explicit stationary source traversal. Their trace/read/whole-output conclusions do not identify this chart's rows with original complete successors. |
+| `NativeSourceSelectorCode.lean`, `selector_code_correct`/`realization`, in that directory, and its owning Scribe | Exact numerical code evaluation on genuine encoded states is supplied. It grants no current physical read authority or added-phase admission. |
+| [Pinned mathlib `Function.Basic`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Logic/Function/Basic.lean), `FactorsThrough`/`factorsThrough_iff` | `literature-attested`: fibre constancy is necessary; a total ambient factor equivalence assumes nonempty codomain. Theorem 11.1 needs only its specified realized edge domain. |
+| [Pinned mathlib `StateTransition`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Computability/StateTransition.lean), `Respects`/`tr_reaches`; [CompCert v3.16 `Smallstep.v`](https://github.com/AbsInt/CompCert/blob/v3.16/common/Smallstep.v), `fsim_properties` | `literature-attested`: the former requires a matching one-or-more-step relation and termination matching; the latter supplies indexed initial/final matching and trace-matching Plus or decreasing-index Star. Those simulation contracts do not imply exact one-row projected response sets. |
+| Rabin and Scott, [*Finite Automata and Their Decision Problems*](https://www.cse.chalmers.se/~coquand/AUTOMATA/rs.pdf), Theorem 2 and Corollary 2.1 | `literature-attested`: finite-index right continuation equivalence characterizes their tape-language automata and gives the least number of internal states, attributed there to Nerode. We use the same elementary distinguishable-continuations reasoning inside one full-$O^+$ fibre, not a new general minimization theorem or a bound on the whole state carrier. |
+| Devriese, Patrignani, Piessens and Keuchel, [*Modular, Fully-abstract Compilation by Approximate Back-translation*](https://lmcs.episciences.org/4011), DOI10.23638/LMCS-13(4:2)2017, abstract | `literature-attested`: preservation/reflection of contextual equivalence and bounded conservative approximate back-translation concern the specified languages and contexts. They supply no exact native-receipt, original-entry or current-authority correspondence for this apparatus. |
+
+The mathematical obstruction depends on full-coordinate equality, the
+literal six-row ingress and the complete authorized F-bounded read.
+Operand-valued receipts, a payload-dependent ingress branch, an earlier
+payload read, intervening required IN or missing current read permission
+would invalidate the corresponding source step; the cited recipes
+exclude them on this chart. Allowing spurious responses or discarding
+intermediate successors instead changes the exact realization contract.
+No search miss establishes library nonexistence or originality.
+

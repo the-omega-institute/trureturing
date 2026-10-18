@@ -1,0 +1,18 @@
+**Theorem 3.6 (comparison with completed-predecessor reconstruction).**
+On $\mathcal C$ the retained selection $M_J$ is sufficient without using
+the completed-cycle list as a replay witness. Adding the existing
+completed-cycle banks, every old scratch word and every serialized image
+changes no equality kernel on this domain. This does not license removal
+of their backing from ARC's actual consumer or price.
+
+Proof. Theorem 3.4 obtains $h$ from the two actual ingress frontiers,
+acquired initial lineage and meter. Replay of that $h$ gives the actual
+completed lists, old scratch, packages and rights. Forgetting the added
+selection returns $M_J$, while this reconstruction supplies its converse
+on actual images. Thus the two observations are mathematically equivalent
+there. ARC's installed Boundary/Issue/Call still consumes its copied
+manifest and frozen $M$, and CaptureCAP still constructs $M$. No row,
+bank, copy, loan, retained cell or access right is removed by the
+observational comparison. An executable replacement of that consumer
+would require its own authorized input route and paid finite program. ∎
+

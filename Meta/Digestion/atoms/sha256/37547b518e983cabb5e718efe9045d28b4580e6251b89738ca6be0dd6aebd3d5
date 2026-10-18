@@ -1,0 +1,26 @@
+**Definition 29.3 (the total hole-pair test).** For any two reached holes
+in a cylinder, use their ground values or tags from Definition 27.3.
+The following finite cases decide their equality-bit determination.
+
+1. Two ground values have constant status. For one ground $g$ and one
+   tag $(a,s)$, apply the supplied partial inverse $\delta^a$ to $g$.
+   Failure makes equality constantly false. Success gives a finite $c$
+   and exactly $y|_s=c$, determined by
+   $h=|s|+\operatorname{ht}(c)+1$.
+2. For two tags $(a,s),(b,r)$ with $s=r$, equality is constant: true
+   if $a=b$, false otherwise by the clock.
+3. For incomparable $s,r$, use Proposition 28.2.
+4. Otherwise orient the positions as $r=sp$ with
+   $p\ne\varepsilon$, interchanging the two tags if necessary. The
+   equation has precisely the form of Lemma 29.1. It is constantly
+   false unless $a=0,b=1,p=L$. In that one case use Proposition 29.2.
+
+Return the displayed bound in a positive case and bound zero for a
+constant status. In a negative case retain the effective finite-witness
+construction. Ground matching in item 1 requires no assumption that the
+ground value is feasible; if it is infeasible the same bound still
+suffices. In item 4 the original reach of $p$ follows from the two tags
+and is not dropped. Every pair of finite words is equal, incomparable,
+or properly nested in one orientation, so these cases exhaust every
+original hole pair. There is no unsupported result.
+

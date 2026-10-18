@@ -1,0 +1,11 @@
+**定义 11.3.1（有界偏差时钟）。** 令真实参考时间为 $t(e)\in\mathbb R$。进程 $i$ 的时钟读数为
+
+$$
+c(e)=t(e)+\theta_{p(e)},
+\qquad |\theta_i|\le\varepsilon.
+$$
+
+这里只考虑偏差上界；漂移和网络传输误差若存在，应并入更大的有效 $\varepsilon$。
+
+<a id="claim-11-3-2"></a>
+

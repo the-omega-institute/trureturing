@@ -1,0 +1,23 @@
+### 82.10. Every balanced four-axis Gram has the disphenoid form
+
+For vectors satisfying (28), put
+
+    u=(n_1+n_2)/2,  v=(n_1+n_3)/2,  w=(n_1+n_4)/2.
+
+Then
+
+    n_1=u+v+w,  n_2=u-v-w,
+    n_3=-u+v-w, n_4=-u-v+w.
+
+Equality of their four squared lengths implies u dot v=u dot w=v dot w=0. Therefore, in an orthonormal real coordinate frame, their Gram is represented by
+
+    n_1=(x,y,z), n_2=(x,-y,-z),
+    n_3=(-x,y,-z), n_4=(-x,-y,z),
+    x,y,z>=0,  x^2+y^2+z^2=1.                       (29)
+
+Only the Gram is being specified; the orientation of this coordinate frame is immaterial. Write R_fg=n_f dot n_g. The four real characters of the Klein four group diagonalize R. Its eigenvalues are
+
+    0, 4x^2, 4y^2, 4z^2,                            (30)
+
+with the zero eigenvalue on the normalized uniform vector. In particular balance and uniform null coefficients do not force a regular tetrahedron.
+

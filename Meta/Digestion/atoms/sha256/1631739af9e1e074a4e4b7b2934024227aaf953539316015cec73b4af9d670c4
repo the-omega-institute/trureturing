@@ -1,0 +1,20 @@
+**Definition 10.1 (the entire sixth-root class).** Write
+$y_4=\widehat Y$, $\zeta=\widehat z$ and
+
+$$
+\mathcal Z_6(d)=\{W\in\mathcal F(H):
+ (\delta-D_0)/\lambda=d,\ f(6)=0\}.
+\tag{10.1}
+$$
+
+This class also includes $f(7)=0$. Its terminal functions are the
+same chronological responses as in (2.6), extended by their original
+trace formulas without dividing by $f(7)$. In the trace-one source
+coordinates (1.5), put $j=u+v$, $\ell=1+u>1$, $k=j/\ell>0$.
+Then $u=\ell-1$, $v=(k-1)\ell+1$, and the six positive traces are
+
+$$
+(1,k\ell,\ell,(k+1)\ell,1+r+k\ell,(k+2)\ell-r).
+\tag{10.2}
+$$
+

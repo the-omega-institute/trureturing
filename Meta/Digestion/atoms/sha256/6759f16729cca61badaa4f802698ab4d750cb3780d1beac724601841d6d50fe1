@@ -1,0 +1,24 @@
+**定义 179.1（原树、空贡献与共同平面）。** 本章至第190章沿用定义168.2的非空自由有序二叉树
+
+$$
+T::=\alpha\mid\beta\mid\langle T,T\rangle,
+\qquad
+\rho(\alpha)=\beta,\quad
+\rho(\beta)=\langle\beta,\alpha\rangle,\quad
+\rho\langle S,T\rangle=\langle\rho S,\rho T\rangle.
+$$
+
+叶词映射把 $\alpha,\beta$ 分别记为 $a,b$，并把有序节点映成左右词连接。词域为 $\widehat W=\{a,b\}^*$，其中空贡献 $\epsilon$ 另行添加，既不是原树，也不是第三种原树叶。非空词可取左嵌套树代表；映射忘记括号。词替换为 $\rho(a)=b,\rho(b)=ba$，保持连接顺序，且 $\rho(\epsilon)=\epsilon$。
+
+具体取一个字母的代表为对应叶，将多字母词的代表递归写成“前缀代表与末叶的有序配对”，就实现每个非空词。对树作结构归纳：两种叶的替换与词规则相同；有序节点的两子树若各自相容，其左、右叶词连接也相容。因此 $\operatorname{wd}(\rho T)=\rho(\operatorname{wd}(T))$，后面的词运输同时适用于每棵原树的叶词，没有改变原节点的左右配对。
+
+几何采用同一原点、同一定向和同一正交等长单位，$e_a=(1,0),e_b=(0,1)$。从左到右累计词的单位步，得到正向折线 $P(h)$。组成 $(u,v)=(|h|_a,|h|_b)$ 就是终点，替换后的组成为
+
+$$
+\binom{u'}{v'}=M\binom uv,
+\qquad M=\begin{pmatrix}0&1\\1&1\end{pmatrix},
+\qquad (u',v')=(v,u+v).
+$$
+
+这里平面是已经指定的数学参照；叶序坐标及后面的方格地址不增加空间轴，也不定义物理容器或物理空间维数。实际事件类型、次序、取得、控制、精确记录、保留与访问仍须满足假设168.1、171.1及所使用的有限任务合同。此域和树替换复用[本卷固定版本，定义168.2及假设168.1](https://github.com/the-omega-institute/trureturing/blob/35c1ba7ae929c1434470e3726fa6d1f0b19641f3/docs/develop/theory/AURIC_FIB_HISTORY_RECORDS_TIME_ARROW.md)。
+

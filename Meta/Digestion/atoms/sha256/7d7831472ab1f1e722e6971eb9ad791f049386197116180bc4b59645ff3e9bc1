@@ -1,0 +1,37 @@
+**Corollary 4.2 (unrestricted Boolean count and native offset).** For
+the parameters of Definition 1.1,
+
+$$
+\begin{gathered}
+F(n,k)\le m_{\mathrm{exec}}(c,k)\le k(n-k+1),\\
+H_{\mathrm{exec}}(A,k;r)=m_{\mathrm{exec}}(c,k)+4+r.
+\end{gathered}
+\tag{CP.19}
+$$
+
+In particular every unrestricted Boolean competitor at both sharp
+caps has at least $F(n,k)$ installed running states.
+
+Proof. [WTF, Theorem 4.1][WTF] is the exact uniform-feasibility
+equivalence
+
+$$
+\mathsf N_{A,k,r}(H,p,L)
+\quad\Longleftrightarrow\quad
+\mathsf B_{c,k}(H-4-r,p-1,L-3).
+\tag{CP.20}
+$$
+
+To apply Theorem 3.3 to an arbitrary Boolean competitor, use its
+full-fiber native lift from that theorem. Every Boolean state becomes
+one selected occurrence-root state with the same coordinate label;
+all installed states, including unused ones, are retained. The lift
+adds two profile states, replaces the two Boolean terminals by the
+original entry latches, and installs $r$ further latches. It is
+correct on the entire original fiber, not just on the cube. Thus its
+selected count is precisely the Boolean running count. Theorem 3.3
+gives the lower bound. The supplied grid gives the upper bound.
+Taking minima in (CP.20) proves the equality in (CP.19).
+The offset $4+r$ is relative to the Boolean running count; relative
+to the Boolean total $m+2$, it is $2+r$. $\square$
+

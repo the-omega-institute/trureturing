@@ -1,0 +1,9 @@
+**Definition 9.2 (named-cut access problem).** At an arbitrary busy cut, a
+callable reconstruction package requires an authorized way to retain its
+live input latch, freeze an appropriate acquired prefix, bind its actual
+seed and receipt position, and perform paid scans, seals and copies to the
+intended owner. A set-theoretic tuple of those coordinates does not itself
+provide such a protocol. The present retention rule preserves the inputs;
+Theorems 6.2–6.5 delimit their publication and deferred access. A universal
+paid arbitrary-busy-cut materialization service is not established here.
+

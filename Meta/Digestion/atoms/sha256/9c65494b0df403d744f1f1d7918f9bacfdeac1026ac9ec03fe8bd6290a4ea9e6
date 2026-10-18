@@ -1,0 +1,60 @@
+**Theorem 18.4 (exact conditional-section deficit).** Under Lemma
+18.3's hypotheses, let
+
+$$
+\operatorname{TC}_i
+ =\sum_{(j,i)\in E}H_{p_i}(B_{ji})-H_{p_i}(I_i).
+$$
+
+Then, without any incidence, width, acyclicity, product-law or
+global-extension hypothesis,
+
+$$
+\begin{aligned}
+&\sum_i\log_2\ell_d(w_i)
+       -\mathcal B_{\mathcal N}(p;\boldsymbol w)\\
+&\quad=\sum_i\left\{
+ \mathbb E_{b\sim(p_i)_{I_i}}
+ \left[\log_2\frac{\ell_d(w_i)}{z_i(b)}
+       +D_2\bigl(p_i(O_i\mid b)\Vert g_{i,b}\bigr)\right]
+       +\operatorname{TC}_i\right\}\ge0.
+\end{aligned}
+\tag{COK.87}
+$$
+
+Equality holds exactly when, for every $i$ and every
+positive-probability $b$, one has $z_i(b)=\ell_d(w_i)$ and
+$p_i(O_i\mid b)=g_{i,b}$, and the whole incoming groups under
+that same $p_i$ are mutually independent. This last condition
+does not require independence of seeds within a group.
+
+Proof. Every edge entropy in $\mathcal B_{\mathcal N}$ is the
+entropy of one entire incoming group, by (COK.61). At block $i$,
+
+$$
+H(p_i)-\sum_{(j,i)\in E}H_{p_i}(B_{ji})
+ =H_{p_i}(O_i\mid I_i)-\operatorname{TC}_i.
+\tag{COK.88}
+$$
+
+The conditional finite Gibbs identity on $T_{i,b}$ gives
+
+$$
+H_{p_i}(O_i\mid I_i)+\mathbb E_{p_i}\log_2w_i(x_i)
+ =\mathbb E_b\log_2 z_i(b)
+  -\mathbb E_bD_2\bigl(p_i(O_i\mid b)\Vert g_{i,b}\bigr).
+\tag{COK.89}
+$$
+
+Its conditional probabilities may vanish; $g_{i,b}$ is positive
+on the finite $T_{i,b}$, so each relative entropy is finite.
+Insert (COK.89) in (COK.88), then in (COK.66), and subtract from
+$\sum_i\log_2\ell_d(w_i)$. This proves the identity. The section
+bound, relative-entropy nonnegativity and entropy subadditivity
+make each displayed term nonnegative. Total correlation is the
+relative entropy of the incoming joint law to the product of its
+whole-group marginals, so it vanishes exactly at their mutual
+independence. The other equality conditions follow term by term.
+Empty incoming tuples have $\operatorname{TC}_i=0$ and one
+context, so no exceptional case is omitted. $\square$
+

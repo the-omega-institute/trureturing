@@ -1,0 +1,10 @@
+### 1.1 Native correspondence
+
+The parent volume is *AURIC FIB-ATOM: Probability, Phase Transport and
+Holonomy*. Its Definition 2.1 fixes the mode order, probabilities and relation
+direction; Definitions 2.3 and 3.1 fix the negative phase convention and
+transport law. Its Definition 8.1 permits queries at arbitrary finite
+prefixes of those controls. Theorems 8.2, 8.4 and 8.6 already supply the
+current-ray domain, its observability and its static affine capacity. The
+specialization below retains precisely that task.
+

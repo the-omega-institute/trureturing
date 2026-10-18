@@ -1,0 +1,94 @@
+**Theorem 8.2 (normalization and all complex/reference/Borel identities).**
+Definition 8.1 is a normalized actual finite CP acquisition with full
+TP decoders and total encoder effect $I_5$. Forgetting all acquisition
+labels gives exactly $\widehat\Phi_*$ on every complex five-mode
+input, at every passive reference amplification and separately on every
+original labelled Borel-time set.
+
+Proof. The coefficient Gram gives, on all complex $A_V\in M_3$,
+
+$$
+\begin{aligned}
+\sum_jc_jc_j^T&=L_0,\\
+\sum_jK_jA_VK_j^\dagger
+ &=\delta DA_VD^\dagger+TA_VT^\dagger+SA_VS^\dagger,\\
+\sum_jK_j^\dagger K_j
+ &=\delta D^\dagger D+T^\dagger T+S^\dagger S.
+\end{aligned}
+\tag{EP.51}
+$$
+
+Range reconstruction gives precisely these products for the compressed
+encoders followed by their isometric decoders, including their effects.
+Adding the high pair makes the live coefficient Gram $I_3$ and live
+effect $I_3-M$. The four scalar spectral effects sum to $M$, since
+$\Pi_++\Pi_-=I_2$ and each report gets half. The two complement
+effects sum to $I_5-P_V$. Thus
+
+$$
+\sum_{\text{actual }a}\mathcal E_a^\dagger(I)
+=E(D^\dagger D+T^\dagger T+S^\dagger S+M)E^\dagger+(I_5-P_V)=I_5.
+\tag{EP.52}
+$$
+
+Every finite encoder is CP/TNI because its positive effect is bounded
+by this sum. The live decoders are isometries on the ENTIRE declared
+fibres. Scalar decoders are TP since
+$\sum_{\ell\in\mathcal L}w_\ell=1$ and
+$\int_0^1 2/(1+t)^2dt=[-2/(1+t)]_0^1=1$. No branch normalization or
+survival division is involved.
+
+For every complex $A\in M_5$, let $A_V=E^\dagger AE$. The forgotten
+maps, not just their effects or test-state values, are
+
+$$
+\begin{aligned}
+\Phi^L(A)&=E(DA_VD^\dagger+TA_VT^\dagger+SA_VS^\dagger)E^\dagger,\\
+\Phi^f_\ell(A)(B)&=G_B\left[
+ w_\ell\operatorname{tr}(EME^\dagger A)
+ +\mathbf1_{\ell=2}\operatorname{tr}((I_5-P_V)A)\right]P_f,\\
+G_B&=\int_B\frac{2\,dt}{(1+t)^2},\qquad
+B\subseteq[0,1]\text{ Borel},\quad\ell\in\mathcal L=(0,1,2,3,13).
+\end{aligned}
+\tag{EP.53}
+$$
+
+The live equation follows from the total coefficient Gram and image
+reconstruction; the failure equation from spectral effect $M$ and the
+complement effect. They hold on every complex matrix unit. Cross-support
+operators between $P_V$ and $I_5-P_V$ have zero output. Wrong support
+and additional output sectors vanish. Both zero-weight labels stay zero;
+labels $1,2,3$ remain separate. No singular or endpoint-atomic measure
+is added. All common metadata retain their fixed state.
+
+For a joint complex operator $X$ with an arbitrary passive reference,
+tensor every finite live Kraus map and decoder with $I_R$. The live
+output is
+
+$$
+\sum_{K\in\{D,T,S\}}(EKE^\dagger\otimes I_R)X
+                                  (EK^\dagger E^\dagger\otimes I_R).
+\tag{EP.54}
+$$
+
+The reference operators in the two failure terms are exactly
+
+$$
+\Theta_M(X)=\operatorname{Tr}_5[(EME^\dagger\otimes I_R)X],\qquad
+\Theta_\perp(X)=\operatorname{Tr}_5[((I_5-P_V)\otimes I_R)X].
+\tag{EP.55}
+$$
+
+Thus the amplified failure output is
+$G_BP_f\otimes[w_\ell\Theta_M(X)+\mathbf1_{\ell=2}\Theta_\perp(X)]$.
+Each spectral row first supplies its own conditional reference operator;
+their sum is $\Theta_M$. Each complement label supplies
+$\Theta_\perp/2$. These are not unconditional reference marginals.
+This proves the full complex/reference/separately labelled Borel identity,
+without time binning. The density $g$ is the actual approximate density;
+it does not replace any ideal $f_y$ in EP.2. Equality to the same
+complete approximate channel reuses the conditional original HALF
+full-cq error certificate for all twelve histories, including height
+$16$ and every live coherence. Necessity never prescribed this channel
+to competitors. $\square$
+

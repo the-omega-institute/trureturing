@@ -1,0 +1,38 @@
+**Definition 8.2 (primary mathematical precedents).** The new content here
+is the repository-derived unary/74-role/raw-control instance, joint
+retention join and exact current-owner source family. The intermediate
+port, simulation, replay and factorization ideas have the following
+precedents; no literature originality claim is made.
+
+Maignan and Spicher, *Causal Graph Dynamics and Kan Extensions*,
+[primary text, §1.2](https://arxiv.org/html/2403.13393v6), define an edge
+as a nonintersecting pair of vertex/port endpoints: a port occurs in at
+most one edge. This allows an empty child port and hence unary storage;
+it does not require full binary branching. Their synchronous-union and
+renaming results are not an initialization, authority or tariff theorem
+for this rooted sequential primitive. Endpoint consistency and the
+initialized row square are established here by the explicit templates.
+
+Lynch and Vaandrager, *Forward and Backward Simulations—Part I: Untimed
+Systems*, [author abstract](https://groups.csail.mit.edu/tds/papers/Lynch/IC95.html),
+distinguish refinements, simulations and history/prophecy relations.
+The row square here is proved directly, retaining each actual native
+cut; a trace-level simulation alone would not establish these cuts,
+current owner rights or their prices.
+
+Bennett, *Logical Reversibility of Computation*,
+[primary text](https://www.cs.princeton.edu/courses/archive/fall06/cos576/papers/bennett73.html),
+uses explicitly retained history and additional computation to manage
+information discarded by overwriting. Here the consumed inputs and
+finite stopping ordinal permit forward reconstruction on an actual
+image; neither reversible physical evolution, free uncomputation nor
+a thermodynamic inference is used.
+
+Pinned mathlib's `Function.factorsThrough_iff` in
+[`Mathlib/Logic/Function/Basic.lean`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Logic/Function/Basic.lean)
+states factorization from constancy on fibres, with a nonempty ambient
+codomain for extension. It is an abstract factorization statement,
+not an acquisition algorithm. The separate fibre proofs in §§3, 5
+and 6 supply the precise conditions used here; no worldwide absence
+or novelty conclusion is inferred from a search.
+

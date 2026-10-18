@@ -1,0 +1,64 @@
+**Theorem 7.1 (finite Lipschitz constant and measurable rounding).** For
+$F=\Gamma$ or $F=(\Gamma,k)$ there is a finite $L>0$ such that, for
+every $x=(\phi,\xi)$ and every contact $z_i$,
+
+$$
+\|F(x)-F(z_i)\|_2\le L
+        \sqrt{d_{\mathbb T}(\phi,\phi_i)^2+|\xi-\eta_i|}.
+\tag{QS.35}
+$$
+
+Assign each $x$ to one nearest contact in (QS.30), breaking ties by a
+fixed index, and let $q_i$ be the coefficient mass assigned to $i$.
+Then $q_i\ge0$, $\sum_iq_i=1$, and
+
+$$
+\left\|\sum_iq_iF(z_i)-\int_XF\,d\pi\right\|_2
+                 \le L\sqrt{\mathcal E/c_0}.
+\tag{QS.36}
+$$
+
+A finite law with $N$ supported original atoms has at most $N$ nonempty
+rounding cells, including when different contacts have the same angle
+and opposite endpoint heights. No original atom is split.
+
+Proof. The original capacity is smooth on the compact circle with positive
+denominator; its angular derivatives and all fractional coefficients are
+bounded. For $F=\Gamma$, let $M_\phi$ bound the angular derivative norm
+on $X$ and let $M_\xi$ bound its fractional derivative norm. For
+$F=(\Gamma,k)$ choose an angular Lipschitz bound instead: $|\cos\phi|$
+is globally $1$-Lipschitz along angular paths, and it is independent of
+$\xi$. Thus finite $M_\phi,M_\xi$ exist for both choices. Moving along
+a shortest angular path at fixed fraction and then along a fractional
+segment gives, with $d=d_{\mathbb T}(\phi,\phi_i)$ and
+$\zeta=|\xi-\eta_i|$,
+
+$$
+\|F(x)-F(z_i)\|_2\le M_\phi d+M_\xi\zeta
+ \le\sqrt{M_\phi^2+M_\xi^2}\sqrt{d^2+\zeta^2}
+ \le\sqrt{M_\phi^2+M_\xi^2}\sqrt{d^2+\zeta}.
+$$
+
+Take this constant, enlarged to a positive value if needed, as $L$.
+No differentiability of $|\cos|$ at its axes is required.
+
+The squared distances to contacts are continuous. Finite comparisons,
+with the fixed-index tie rule, define Borel cells $V_i$. Their masses
+$q_i=\pi(V_i)$ are nonnegative and sum to one. With $a(x)$ the assigned
+index, (QS.35), the triangle inequality for the vector integral and
+Cauchy–Schwarz for the probability law give
+
+$$
+\begin{aligned}
+\left\|\sum_iq_iF(z_i)-\int F\,d\pi\right\|_2
+&\le\int\|F(z_{a(x)})-F(x)\|_2\,d\pi\\
+&\le L\int\rho\,d\pi
+ \le L\sqrt{\int\rho^2\,d\pi}
+ \le L\sqrt{\mathcal E/c_0}.
+\end{aligned}
+$$
+
+For a finite law each original atom has a single assigned index, so it
+can occupy only one cell. The argument uses the original fractions;
+it never replaces them by two endpoint labels. $\square$
+

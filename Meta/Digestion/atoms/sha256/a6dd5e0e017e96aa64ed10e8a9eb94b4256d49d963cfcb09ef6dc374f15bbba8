@@ -1,0 +1,88 @@
+**定理 220.15（Commuting contractions and cumulative transfer cuts）。**
+For every full nonnegative $y$ and any masks $D,E\subseteq\{3,\ldots,L\}$,
+$\mathcal T_E$ is positive linear and idempotent, and
+
+$$
+ \mathcal T_D\mathcal T_E=\mathcal T_{D\cup E},\quad
+ W_z=W_y,\quad K_z=K_y-C_E,\quad B_C(z)\le B_C(y)
+ \quad(C=N,O),\tag{220.11}
+$$
+
+where $C_E=\sum_{n(w)\in E}C_w$. Hence both costs are nonincreasing.
+For $\gamma=\beta(y)-\beta(z)$, the first two entries vanish;
+at erased $j$, $\gamma_j=\beta_j(y)$, and at retained late $k$,
+
+$$
+ \gamma_k=\sum_{n(w)\in E,\ k_E(w)=k}(A_w+P_w).
+$$
+
+For every $3\le t\le L$ let $R_t=\sum_{j\le t}\gamma_j$.
+The exact transfer identity is
+
+$$
+ R_t=\sum_{n(w)\in E,\ n(w)\le t}C_w
+   +\sum_{n(w)\in E,\ k_E(w)\le t}P_w
+   -\sum_{n(w)\in E,\ n(w)\le t<k_E(w)}A_w.\tag{220.12}
+$$
+
+Infinity never satisfies $k_E(w)\le t$. The one final residual is
+
+$$
+\begin{aligned}
+ \Theta_E&=\sigma_H(Q(y)-Q(z))\\
+ &=\max\left(0,\max_{3\le t\le L}\frac{R_t}{t-1},
+       \max_{3\le t\le L}
+       \frac{3R_t+(t-2)(R_L-C_E)}{t+1}\right).
+\end{aligned}\tag{220.13}
+$$
+
+In particular $\Theta_E=0$ if and only if every $R_t\le0$.
+These are exact zero-charge cuts for this operation, not conditions
+necessary for an unrestricted certificate.
+
+**证明。** Retained first-zero classes keep their coefficient types.
+An erased late $A$ becomes late $A$ or terminal mass, contributing the
+same baseline and total cost. An erased $P$ does the same. Erased late
+$C$ had no baseline and is the only discarded cost. This proves the
+$W,K$ identities. Subtracting the class totals gives $\gamma$.
+In its cumulative sum, an erased $A$ cancels once it arrives, remains
+negative while crossing the cut, and an erased $P$ contributes only
+on finite arrival. Discarded $C$ contributes at its old address.
+This proves (220.12), including terminal arrivals.
+
+For support contraction, every erased bit is one on the image support,
+and an output label in $E$ earns zero. Replace such an output in a
+new table by zero; rewards cannot decrease. Fix replies to erased
+requests to one and delete those requests. The remaining empty,
+singleton or pair table is legal in the same catalog. In $O$ the
+remaining schedule is increasing and stops at its first queried zero.
+For an original retained first zero the rewards agree, since its
+label and all remaining queried bits agree. For an erased first zero
+the remaining outputs exclude its old label, so its old reward is
+exactly $(A+P)[\ell=0]$, equal to the transformed reward. The discarded
+$C$ earns nothing. The terminal word agrees as well. Thus each new
+table reward is at most the reward of an original legal table.
+Maximizing proves the two support contractions without restricting
+any earlier or unqueried retained output.
+
+For composition the final bit word is $f_{D\cup E}(w)$.
+Original $C$ survives precisely when its original first zero survives
+both masks. Original $P$ becomes base precisely when that zero is
+erased, and then follows subsequent retained first zeros to the final
+word or terminal. Original $A$ follows the same route. These
+coefficientwise observations prove composition, commutation and
+idempotence, also for overlapping masks.
+
+Reuse the full hull vertices of VI 198.5:
+$o=0$, $p=(1,0,\ldots;0)$,
+$u_t=(1/(t-1)\text{ on the first }t,0\text{ later};0)$, and
+$v_t=(1\text{ on the first }t,e_t\text{ later};e_t)$ with
+$e_t=(t-2)/(t+1)$, $3\le t\le L$.
+The early residuals vanish, so $o,p$ read zero.
+The other readings are $R_t/(t-1)$ and
+$[3R_t+(t-2)(R_L-C_E)]/(t+1)$, proving (220.13).
+Zero charge forces every $R_t\le0$ through $u_t$.
+Conversely these inequalities give $R_L-C_E\le0$ since $C_E\ge0$,
+so all displayed readings are nonpositive. This proves sufficiency
+and all closed equality cases. $\square$
+

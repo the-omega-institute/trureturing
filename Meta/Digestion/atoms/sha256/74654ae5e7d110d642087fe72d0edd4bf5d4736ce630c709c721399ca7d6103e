@@ -1,0 +1,38 @@
+**Proposition 11.3 (Compact attainment and finite separation on the whole domain).** For every finite $N$, $C_N$ is attained and
+
+$$
+C_N=\inf_{r\ge1}U_{N,r}\le c_\star.
+\tag{11.6}
+$$
+
+Moreover
+
+$$
+C_N<c_\star
+\quad\Longleftrightarrow\quad
+\exists r,m\ge1:\ U_{N,r}<\frac{\kappa_m}{m+1}.
+\tag{11.7}
+$$
+
+These are [Universal][U], Theorem 6.2's whole-domain statements.
+
+**Proof.** The domain $\Theta_N$ is nonempty: take $M_0=I$, $M_1=0$ and any probability row. All its coordinates lie in $[0,1]$, and its defining polynomial equalities and inequalities are closed. Hence it is compact. Each finite cylinder probability is a polynomial in the parameters by (1.4). The function $h$ is continuous even at $(0,0)$, where $0\le h(s,t)\le(s+t)/4$. Formula (2.2) therefore makes $D_r(P_\theta)$ continuous on the entire domain, including every zero-mass boundary point. Each $U_{N,r}$ is attained and the sequence decreases with $r$.
+
+Let $U=\lim_rU_{N,r}$, choose a maximizing $\theta_r$ for each $r$, and take a convergent subsequence $\theta_{r_j}\to\theta_*$ with $r_j\to\infty$. For fixed $k$ and all sufficiently large $j$,
+
+$$
+D_k(P_{\theta_{r_j}})\ge D_{r_j}(P_{\theta_{r_j}})=U_{N,r_j}.
+\tag{11.8}
+$$
+
+Continuity gives $D_k(P_{\theta_*})\ge U$ for every $k$, so (2.2) gives $d(P_{\theta_*})\ge U$. Conversely every $\theta$ satisfies $d(P_\theta)\le D_k(P_\theta)\le U_{N,k}$ for every $k$, hence $d(P_\theta)\le U$. This proves attainment and (11.6), without a continuity assumption on $d$.
+
+If $C_N<c_\star$, choose $r$ with $U_{N,r}<c_\star$ and then $m$ with $U_{N,r}<\kappa_m/(m+1)$ by (2.1). Conversely any such pair gives $C_N\le U_{N,r}<\kappa_m/(m+1)\le c_\star$. Thus (11.7) holds. In this case the entire domain obeys the positive bound
+
+$$
+c_\star-d(P_\theta)\ge\frac{\kappa_m}{m+1}-U_{N,r}>0.
+\tag{11.9}
+$$
+
+An attaining law would automatically have full visible support by (2.4). Zero stationary states allow padding a smaller presentation by adding isolated deterministic-zero self-loops with initial mass zero. Therefore the existence statements for at most $N$ states and for the complete $\Theta_N$ agree. $\square$
+

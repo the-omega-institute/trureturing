@@ -1,0 +1,44 @@
+**定理 82.2（任意参考下的有限完整历史误差）。** 对一列相容完整动作，设第 $j$ 步的误差上界为 $\delta_j$。初始原联合态为 $\varrho_0$，初始约化联合态为 $\sigma_0$，两者共用未触及参考 $R$，并满足
+
+$$
+D\bigl((\eta\otimes\mathrm{id}_R)(\varrho_0),\sigma_0\bigr)
+\le\epsilon_0,\qquad D(\xi,\zeta)=\tfrac12\|\xi-\zeta\|_1.
+$$
+
+则最多 $N$ 步后的完整记录—输出误差不超过
+
+$$
+\epsilon_0+\sum_{j=1}^{N}\delta_j.
+$$
+
+均匀 $\delta_j\le\delta$ 时上界为 $\epsilon_0+N\delta$；共同 CPTP 末端读出后的误差也不超过该值。
+
+证明（82.2）。为简洁略去各 map 上的 $\otimes\mathrm{id}_R$，它们实际一直存在。设原态与约化态分别为 $\varrho_j=\mathcal T_j(\varrho_{j-1})$、$\sigma_j=\overline{\mathcal T}_j(\sigma_{j-1})$，令 $e_j=D(\eta\varrho_j,\sigma_j)$。加减 $\overline{\mathcal T}_j\eta(\varrho_{j-1})$，得到
+
+$$
+\begin{aligned}
+e_j&\le\frac12\|\eta\mathcal T_j(\varrho_{j-1})
+-\overline{\mathcal T}_j\eta(\varrho_{j-1})\|_1\\
+&\quad+D\bigl(\overline{\mathcal T}_j\eta(\varrho_{j-1}),
+\overline{\mathcal T}_j(\sigma_{j-1})\bigr)\\
+&\le\delta_j+e_{j-1}.
+\end{aligned}
+$$
+
+第一项用参考稳定的一步 diamond 假设；第二项用 CPTP 的迹距离收缩。收缩可直接由 Hermitian 差 $\Delta=\Delta_+-\Delta_-$ 的 Jordan 分解证明：CP 把两正部分送到正算子，保迹保持其迹，三角不等式给 $\|\Lambda(\Delta)\|_1\le\operatorname{tr}\Delta_++\operatorname{tr}\Delta_- =\|\Delta\|_1$。对参考扩展仍为 CPTP，故同一证明适用。迭代递推即得结论，末端 CPTP 再收缩。
+
+等价的 map 望远镜恒等式是
+
+$$
+\begin{aligned}
+&\eta\mathcal T_N\cdots\mathcal T_1
+-\overline{\mathcal T}_N\cdots\overline{\mathcal T}_1\eta\\
+&=\sum_{j=1}^{N}
+\overline{\mathcal T}_N\cdots\overline{\mathcal T}_{j+1}
+(\eta\mathcal T_j-\overline{\mathcal T}_j\eta)
+\mathcal T_{j-1}\cdots\mathcal T_1.
+\end{aligned}
+$$
+
+各项在原前缀产生的合法关联态上应用一步误差，再由约化后缀收缩；初始边界误差另由全约化串收缩。这也说明为何不得遗漏 $\epsilon_0$。$\square$
+

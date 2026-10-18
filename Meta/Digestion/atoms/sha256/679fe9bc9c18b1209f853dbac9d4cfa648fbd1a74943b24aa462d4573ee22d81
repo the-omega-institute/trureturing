@@ -1,0 +1,23 @@
+## 4. Commuting update and four expressions
+
+Let $p(u)=(t,\beta)$ be the original parser projection and let $Q^+(u),Z(u)$ be the new retained fields. For every reachable completed-marker transition on the finite full marker tree, the source update has the bundled form
+
+$$
+\mathsf b^+(u)=\bigl(p(u),Q^+(u),Z(u)\bigr),
+\qquad
+\mathsf b^+(\delta_eu)=\overline F_e^+(\mathsf b^+(u)),
+$$
+
+where $\overline F_e^+$ advances the original parser fields, appends the event selected by $(p(u),e)$ to $S_1^+$ or $S_2^+$ only when $t<3$ and one of $a,b,c,d$ is identified, and writes $Z=e$ only at the first marker. Unmatched ordinal events use the same hold branch as non-marker events. After the third-marker latch it holds $(Q^+,Z)$ and the frozen bare snapshot while the original parser performs the fourth marker and produces Stop.
+
+The four expressions on this finite cell are therefore:
+
+| expression | source-derived object | role in the recovery |
+| --- | --- | --- |
+| space | $S_1^+,S_2^+$ and their event incidences | supplies the two ordered local records $Q^+$ |
+| time | the completed event word in the selected prefix | is recovered by the joint boundary address |
+| boundary | the latched $B$, frozen $Q^+$ and actual suffix/Stop interface | is the decoder input |
+| memory | the causally held first-marker bit $Z$ | separates the residual $ad,b$ fiber |
+
+The recovery is joint and task-relative. The bare scopes, $Q^+$ alone, $Z$ alone, or $B$ alone are not claimed to recover every selected past. The new incidence and the old memory bit are complementary expressions of the missing cross-scope information: the incidence stores the order involving $a$ and $d$, while $Z$ stores whether $b$ preceded $a$; they are not two copies of the same precedence edge.
+

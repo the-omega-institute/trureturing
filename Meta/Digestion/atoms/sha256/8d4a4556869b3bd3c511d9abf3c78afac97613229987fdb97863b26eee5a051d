@@ -1,0 +1,6 @@
+### 57.3 Scope and attribution
+
+The exact zero-error region agrees with the PIO reachable geometry and the independently proved full-support necessity in §54; that geometry and its construction are not claimed as new. The pure-source boundary uses §53's explicit Schmidt-support proof, following the standard method of George–Chitambar, Phys. Rev. A109,062418 (2024), https://link.aps.org/accepted/10.1103/PhysRevA.109.062418 . PIO predecessors are Shi et al., Scientific Reports7,14806 (2017), https://www.nature.com/articles/s41598-017-13687-4 , and Chitambar–Gour, Phys. Rev. A94,052336 (2016), https://link.aps.org/accepted/10.1103/PhysRevA.94.052336 . No literature priority claim is made for the auxiliary Cauchy–Schwarz, Choi-minor or convexity arguments. The conclusion is the complete all-output trace-norm optimum on the physical two-qubit MC source/target family, not the original coherent multisector RT optimum.
+
+For an explicit low-coherence example, take r=3/4, c=1/10 and the pure target P=9/10, w=3/10. Here q=1/4>c, D=√29/20 and t=22/29. The exact error is 13/(5√29), attained by (22/29)ρ+(7/29)|00⟩⟨00|. This lies outside the source region of §56 and exceeds the negativity lower bound 2(w−c)=2/5.
+

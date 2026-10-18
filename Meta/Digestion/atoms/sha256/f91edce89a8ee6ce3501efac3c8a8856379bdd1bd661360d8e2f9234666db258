@@ -1,0 +1,27 @@
+**Corollary 6.4 (a full-family small-depth consequence and coupling).**
+For the original full family,
+
+$$
+3\le M_1(3)\le4.
+\tag{LTR.22}
+$$
+
+Two restricted single-gadget minima do not multiply to the restricted
+two-gadget minimum.
+
+Proof. At $D=3$, the height-one scaffold with two gadget positions
+gives $\mathcal X_{2,3}\subseteq\mathcal F_3$. Restricting any
+full-family preparation and reader preserves its actual fibers,
+common rule and all-target correctness, so its alphabet is at least
+$C_2=3$. The upper bound is Theorem 3.4. Also $C_1^2=4>3=C_2$.
+The box encoder correlates the two coordinates; an independent
+subtree-code multiplication would lose this attainable option.
+$\square$
+
+The restricted theorem has an exact asymptotic exponent in (LTR.21).
+It is not the full-family exponent. In particular its gadgets have
+height at most one, whereas Definition 4.1 includes a height-two
+gadget and improves the exponential lower coefficient of the
+four-gadget volume bound. No extension of a
+restricted optimal coloring to all variable shapes is supplied here.
+

@@ -1,0 +1,38 @@
+**Theorem 7.1 (non-rational contact and bounded-rank method obstruction).**
+When both supports are unbounded, $K$ and $\Lambda$ are non-rational in
+the expanded native signature: they have infinitely many distinct whole
+subtrees. No method limited to rational native common closure points can
+witness this pair. Replacing either whole designated stratum by sources
+with a fixed rank bound loses all-depth contact even if every finite
+residual tree at those ranks remains available.
+
+**Proof.** Distribution through the two pairs in (CRE.19) gives for
+every $q\ge0$
+
+$$
+K|_{(RR)^q}=\rho^q K,\qquad
+K|_{(RR)^qL}=\rho^q\alpha=T_q.
+\tag{CRE.31}
+$$
+
+All these addresses are reached, as follows inductively from the
+preserved pairs. The finite atomic subtrees are pairwise distinct by
+the supplied clock $\kappa(T_q)=q$. Thus $K$ has infinitely many
+different subtrees, and so does any source containing it, including
+$\Lambda$. This is the subtree discrimination used in SPC Theorem
+4.2, here applied to the contact whose side coordinate is forced to
+$\Omega$. The finite guarded interpreted description (CRE.19) is
+compatible with this native non-rationality; it is not a rational-tree
+description in the expanded signature.
+
+By (CRE.28) a common closure point would have to be this non-rational
+$\Lambda$, proving the stated restriction on rational-contact methods.
+For any bounded-rank replacement, choose its bound $M\ge2$.
+Theorem 6.1 excludes contact at $M+4$ independently of every residual
+choice. This supplies the precise failed quantifier exchange: arbitrary
+residual freedom at finitely selected ranks cannot replace
+$\forall h\ \exists(j_0,j_1,y_0,y_1)$ over the whole feasible supports.
+The same $a$ occurs inside both feedback expressions, and their overlap
+forces $a=\rho a$. Rank escape is therefore coupled to the residual
+equation rather than appended beside an unrelated residual. $\square$
+

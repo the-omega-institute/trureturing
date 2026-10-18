@@ -1,0 +1,56 @@
+**Theorem 9.3 (uniform original risk–return-variation inequality).** For every finite COMPLETE observer satisfying Definitions 1.1–1.3, on every fixed finite or countable prior with $\mu(1),\mu(2)>0$ and a supported $k\ge3$,
+
+$$
+\frac{61}{11}e(M)+\frac{19}{11}\sqrt{\mathcal V(M)}>g
+=\frac{\eta}{400000}.
+\tag{9.18}
+$$
+
+This is a uniform lower bound on a joint risk-and-variation expression, with no carrier-size, mixing-rate, prior-mass-floor, defect or prescribed-resource hypothesis. It is not a lower bound on the unrestricted excess alone.
+
+Proof. Start from the literal original observer, including its source-independent initialization before the first paid seed Read. Extract the same common rows and actual kernels on (1.5) by [PAID97, Lemma 14.1], as in Citation 2.1. The extraction also retains the needed return statistic. To see this additional consequence, write
+
+$$
+f_x=\sum_{y,x'}B_{xy}A_{yx'}|u_x-u_{x'}|.
+$$
+
+The supplied paid histories approaching each supported pure depth have the same limiting row $\lambda$ from the original initialized rejection-chain and suffix updates. For every fixed $j$, appending $j$ actual returns gives rows tending to $\lambda(BA)^j$. Every approximant remains a positive original history in $\mathcal H_{p,S}$, so its row applied to $f$ is at most $\mathcal V(M)$. Finite-row continuity gives $\lambda(BA)^j f\le\mathcal V(M)$. The same Cesaro averages and the same convergent subsequence used for both phase-risk bounds then give
+
+$$
+\pi f\le\mathcal V(M).
+\tag{9.19}
+$$
+
+The two extracted pure-depth configuration-risk bounds still hold on these same rows, for every supported depth. In particular, no stationary row is optimized independently at either interface. The supplier's summable likelihood-ratio domination handles the countable prior, and all approximants include their actual paid rejections, original records and returns. Transient configurations remain in the original risk and variation domains, although the necessary stationary test can omit them from its positive support.
+
+Delete zero-row labels and clip the two emissions to $[a,b]$, retaining the actual kernels and both rows. The common-row form of [CLIP97, Theorem 3.1], used in Citation 2.1, gives simultaneous slacks at most $61e(M)/11$ in (2.4). Scalar clipping is 1-Lipschitz, hence the clipped stationary variation satisfies
+
+$$
+\widehat V_\pi
+=\sum_{x,y,x'}\pi_xB_{xy}A_{yx'}
+ |[u_x]_{[a,b]}-[u_{x'}]_{[a,b]}|
+\le\pi f\le\mathcal V(M).
+\tag{9.20}
+$$
+
+If $\mathcal V(M)>0$, apply Theorem 9.2 to this clipped table with $t=\sqrt{\mathcal V(M)}$. Its two complete-law error bounds satisfy
+
+$$
+D_p\le\frac{19}{11}\sqrt{\mathcal V(M)},
+\qquad
+D_\beta\le\frac{12}{11}\sqrt{\mathcal V(M)}.
+\tag{9.21}
+$$
+
+The one repaired table is exactly return-conserved and satisfies (2.4), simultaneously for the entire supported depth set, with both slacks bounded by
+
+$$
+\epsilon^c=\frac{61}{11}e(M)
+ +\frac{19}{11}\sqrt{\mathcal V(M)}.
+\tag{9.22}
+$$
+
+The supplied conserved-class Theorem 5.1 applies to that comparison and gives $\epsilon^c>g$. If $\mathcal V(M)=0$, (9.20) and nonnegativity show that every positive clipped $BA$ edge conserves its emission. Apply Theorem 5.1 directly with the common slack $61e(M)/11$, obtaining the same strict inequality without a width-zero construction. This proves (9.18).
+
+The original initialization, paid acquisition and complete history domain are used in (9.19); they have not been replaced by a stationary initial source. The repaired observer is a comparison used to contradict the supplied conserved-class bound. Its existence is not sufficient for an unrestricted optimizer, and no comparison changes the meaning of the original $e(M)$ or $\mathcal V(M)$. $\square$
+

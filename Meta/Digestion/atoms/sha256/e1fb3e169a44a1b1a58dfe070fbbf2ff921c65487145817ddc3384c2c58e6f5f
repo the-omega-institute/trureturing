@@ -1,0 +1,16 @@
+**Definition 1.2 (one positive selected cell).** Use the original fingerprint acceptance event
+
+$$
+E_1=\{R=1,\ Q_4=(0,2),\ \widetilde A=1\},
+\qquad H=\{w\text{ in }E_1:|w_1w_2w_3|=1\}.
+$$
+
+The zero in $Q_4$ requires zero payload return cycles. The retained bare snapshot, actual suffix and actual Stop on $H$ are respectively
+
+$$
+B_0=(\rho,\ell,t,\beta,h)=(1,2,3,1,1),
+\qquad Y=1,\qquad s_{\rm stop}=1.
+$$
+
+The selected-past consumer is $T(w)=w_1w_2w_3$. The original decoder $\mathscr D_\pi$ of §§105–106 and 114.1 takes the zero-based colex rank in the entire selected dictionary, not an ordinary lexicographic rank. In this cell its dictionary is $[100,010,001]$: reverse the three coordinates and compare with $0<1$.
+

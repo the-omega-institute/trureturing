@@ -1,0 +1,34 @@
+**定理 C-145.2（实际目标、剩余态与共同事件）。** 置 $m=2/3$，有
+
+$$
+\sigma=\tfrac12(P_{u_+^p}+P_{u_-^p})=mP_0+(1-m)P_2\in\mathcal F_p,
+\qquad\max_{\rho\in\mathcal F_p}\operatorname{Tr}(P_0\rho)=m.
+\tag{C145.2}
+$$
+
+$P_0,P_1,P_2,\sigma$ 在 $L$ 输运下不变。对每个同一通道 $N$ 定义
+$\tau_N=N(P_0)$、$\kappa_N=N(P_2)$、$\vartheta_N=N(\sigma)$，实际值为
+
+| 通道 $N$ | $\tau_N$ | $\kappa_N$ | $Q_N$ |
+| --- | --- | --- | --- |
+| $\mathcal A$ | $aR_0+\beta R_2$ | $R_4$ | $R_0+R_2$ |
+| $\mathcal B_c$ | $aR_0+\beta R_3$ | $aR_2+\beta R_1$ | $R_0+R_3$ |
+
+两目标在全部所定 $\beta$ 上都恰为秩二，且
+
+$$
+N^\dagger(Q_N)=P_0,\qquad
+\vartheta_N=m\tau_N+(1-m)\kappa_N,\qquad
+\operatorname{Tr}(Q_N\tau_N)=1,\quad
+\operatorname{Tr}(Q_N\kappa_N)=0.
+\tag{C145.3}
+$$
+
+证明。(C145.2) 是 (C131.4) 与 C-129.1 的完整源经过 $L^\dagger$ 输运后的
+同一见证；八射线的 $P_0$ 概率依次为 $0,0,2/3,2/3$ 及四个 $2/5$。
+表及伴随式逐项代入完整 (C144.1) 即得；线性性给 $\vartheta_N$。
+由于 $DQ_ND^\dagger=Q_N$，亦有 $(N^{\rm ph})^\dagger(Q_N)=P_0$。
+这些是实际通道的概率效果，未将混目标替换为 $R_0$，未把输出共同事件
+认作 C-130.1 的那个固定字。抽象测量菜单允许该投影；原末端 $n_1$ 菜单
+是否合成它是另外的实现义务。证毕。
+

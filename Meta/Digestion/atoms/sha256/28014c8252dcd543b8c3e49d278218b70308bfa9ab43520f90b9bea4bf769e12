@@ -1,0 +1,21 @@
+## 5. Relation to the existing obstructions and the unresolved target
+
+Theorem 2.1 of [Affine-gain erasure, positive secants, and drift-kernel collisions](FIB_AFFINE_GAIN_ERASURE_SPAN_AND_POSITIVE_GAIN_COLLISIONS.md) gives the exact positive-secant cone. Its Theorems 3.1 and 4.1 give the prescribed-slope and polynomial-erasure criteria, and its Theorem 5.1 gives the single noninitial erasure matrix-span obstruction. Those results remain separate credited tools. The family of Theorem 4.1 passes that matrix-span test for every permitted deletion, and at slope zero its full matrix/drift map is injective. The new collision compares different slopes at this injective slice; it is not an application of a nonzero prescribed-slope kernel there.
+
+The same companion's Theorems 7.1 and 8.1 treat its $U,F,G,H$ tail, while its Theorem 9.1 treats a different polynomial-erasure family. Theorem 4.1 here uses the $U,LU,U^2LU,L^mU^2LU$ tails, including a constant-drift subfamily with five distinct recorded matrices and positive gains. These additional excluded histories still constitute a proper family of all legal histories.
+
+The six-read companion already supplies both the unrestricted constant-drift upper bound and a separate affine-drift example in which every prescribed-slope kernel is safe but different positive slopes collide. Neither result is claimed anew here. Theorem 3.1 adds a determinant sign test quantified over arbitrary $d+5$ histories at their invertible slopes, and Theorem 4.1 gives its infinite actual-history application.
+
+For the broader common polynomial-gain model, Theorem 4.1 and Lemma 3.2 of [Common polynomial-gain shear calibration and erasure recovery](FIB_POLYNOMIAL_GAIN_SHEAR_CALIBRATION_AND_ERASURE_RECOVERY.md) already give $\max(k,d)+2k+4$ reads. Its Theorem 6.1 gives its scale fibre, and Theorem 8.1 and Corollary 8.2 give its specified-prefix continuation optimum. The affine target embeds at $k=1$ by
+
+$$
+R_0=\frac S{\operatorname{tr}S},\qquad
+H(t)=(\operatorname{tr}S)(1+\kappa t),
+$$
+
+and conversely $S=H(0)R_0$, $\kappa=H'(0)/H(0)$ when $H(0)>0$. This is a correspondence of complete common-source targets. The broader polynomial-gain domain also permits $H(0)=0$, outside the present positive-intercept affine model. Its prefix optimum, like Theorem 4.1 of the affine recovery companion, is restricted to its specified prefix and does not settle all predetermined histories.
+
+The original remaining target is unchanged: determine the sharp uniform number of exact scalar reads over every legal predetermined finite-word cumulative $M/J$ history, with a matching actual common-source inverse recovering the entire $(S,\kappa,D)$ for every real affine slope and every drift of degree at most $d$. The alternatives remain $5$ versus $6$ for $d=0$, and $d+5$ versus $d+6$ for every $d\ge1$. No history achieving the lower endpoint uniformly and no collision obstruction covering every history at that endpoint is established here.
+
+The necessary sign condition does not classify singular quotient slopes or prove sufficiency at one-sided slopes. The infinite family does not exhaust histories, establish an adaptive lower bound, or give an optimal atom count. All statements concern exact scalar observations and ordinary conditional mathematical proofs. Read count, literal atomic-operation count, bit precision, elapsed time, and physical acquisition cost are distinct resources; the results assert no noisy-stability, empirical-learning, physical-resource, or external-priority conclusion.
+

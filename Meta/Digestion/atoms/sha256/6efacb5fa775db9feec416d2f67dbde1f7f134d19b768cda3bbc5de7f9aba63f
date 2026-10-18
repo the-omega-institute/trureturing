@@ -1,0 +1,97 @@
+**Theorem 287.1 (One deletion bound from label-owned charges).**
+Let $m=L-2\ge4$, $a=(c_m-3)/2$, and define
+
+$$
+B_D=1+1/a,\qquad C_m=\frac{(m+1)!}{(m-k+1)!},\quad
+w_m=\frac{\ell}{\binom mk},\quad
+\gamma_m=\frac{w_m}{C_m},\quad
+\varepsilon_D=\frac{\gamma_m}{1+c_mB_D},
+\quad k=\lceil m/2\rceil,
+\tag{287.1}
+$$
+where $\ell=c_m$ for odd $m$ and $\ell=2$ for even $m$.
+For every full feasible $N$ allocation, at any real $b$, $e\ge0$
+and finite mass,
+
+$$
+\delta_b\ge\varepsilon_D e,
+\qquad \sum_{i\in J}(b_i-e)\le(c_m+1-\varepsilon_D)e.
+\tag{287.2}
+$$
+In the proof the total mass deleted from that same allocation is at
+most $B_D\delta_b$. Neither the deleted part nor the retained part
+is asserted feasible or normalized.
+
+**Proof.** Put $H_D=\sum_i g_i(D)+x_D+\eta_D$.
+The nonnegative grouped expressions in 286.2 and the moment
+coefficients in 285.10 give $H_D=0$ or $H_D\ge a$.
+Remove its positive columns, of mass
+
+$$
+\tau\le(G+X+\eta)/a.
+$$
+On the zero face, remove the late pairs whose $01$ output is their
+first address. These columns are disjointly owned by that first
+label, and their mass $\sigma$ is at most $\sum_i\Pi_i$ for the
+original full allocation. By (286.4),
+
+$$
+\sigma\le\sum_i s_i+G,\qquad
+ d:=\tau+\sigma\le\sum_i s_i+G+(G+X+\eta)/a
+                    \le(1+1/a)\delta_b.
+\tag{287.3}
+$$
+There is no coordinatewise repeated penalty for the first deletion.
+The zero-face list in the proof of 285.3 now gives the exact retained
+late-output functions on the two early fibres:
+
+$$
+\begin{aligned}
+f_1(Z)&=\sum_jB_j[j\in Z]+\sum_{i<j}D_{ij}[i\notin Z,j\in Z],\\
+f_2(Z)&=\sum_jA_j[j\in Z]+\sum_{i<j}D_{ij}[i\notin Z,j\in Z].
+\end{aligned}
+\tag{287.4}
+$$
+Here $A_j,B_j$ are the retained mixed-pair masses with heads one,
+two and $10$ output $j$, and $D_{ij}$ is the retained late-pair
+mass with $10$ output $j$. They are nonnegative parts of the same
+$\lambda$, with the same $D_{ij}$ in both functions.
+Every other retained column contributes no late label on these fibres.
+The original full independent union rows imply
+$0\le f_h(Z)\le\mu_{\text{early}_h,Z}(J)\le e$ on every subset.
+If $q_h(Z)$ is the deleted late mass, then $0\le q_h(Z)\le d$ and
+
+$$
+e-f_h(Z)=r_h(Z)+\chi_h(Z)+q_h(Z),
+\qquad
+\tfrac12\int(2e-f_1-f_2)\,d\nu
+ \le R_{\rm pair}+X+cd\le(1+cB_D)\delta_b.
+\tag{287.5}
+$$
+The opposite-head masses $\chi_h$ and the row slacks are those of
+the original full allocation. This equality does not transfer its
+feasibility to either part.
+
+Consume the sink estimate of Theorem 278.2 as follows. If an ordered
+cut $f$ on $r$ vertices is bounded by $e$ everywhere and every
+$s$-subset has deficit at most $\zeta$, $1\le s\le r-2$, adding
+the last vertex to an $s$-subset avoiding it increases $f$ by
+$a_r+\sum_{i\notin S}d_{ir}$, between zero and $\zeta$.
+Choose $S$ avoiding any specified $i$ to obtain
+$a_r,d_{ir}\le\zeta$. Adding the last vertex to an $(s-1)$-subset
+therefore changes $f$ by at most $r\zeta$, giving deficit at most
+$(r+1)\zeta$ on that lower layer. Restrict and repeat from $(m,k)$;
+the condition $s\le r-2$ persists until the empty layer. Since
+$f(\varnothing)=0$,
+
+$$
+e\le C_m\max_{|Z|=k}(e-f(Z)),\qquad
+\int(e-f)\,d\nu\ge w_m\max_{|Z|=k}(e-f(Z))\ge\gamma_m e.
+$$
+The second inequality uses nonnegative deficits and the actual
+$\nu$ mass $w_m$ on every $k$-set. Apply it to both functions
+(287.4) and compare with (287.5). This proves (287.2), including
+$e=0$ and vanishing charges. The balanced moments, common identity,
+zero face, cut representation and sink estimate are consumed existing
+results; (286.3) supplies the bound (287.3). $\square$
+

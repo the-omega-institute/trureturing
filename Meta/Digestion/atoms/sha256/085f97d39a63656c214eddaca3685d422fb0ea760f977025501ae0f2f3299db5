@@ -1,0 +1,135 @@
+**Proposition 3.2 (full-domain guarded representation).** There is an
+effective finite list of disjoint original prefix cells such that the
+entire $U$ is their union under $v\mapsto W_\eta[v]$. Each cell retains
+$\Delta_\eta$, its literal conditions, and a finite conjunction of signed
+relations between morphic residual terms or concrete trees. Empty cells
+may remain in the list. The construction does not require a general
+emptiness algorithm. It also computes the full target maps on each cell.
+
+Proof. A residual occurrence has depth $|p_i|+d$, strictly beyond every
+named endpoint, literal and new cut address. Thus navigation to an endpoint
+$s$ either reaches an original subterm $A$ of $W_\eta$, in which case the
+whole endpoint at epoch $a$ is $\rho^a(A[v])$, or meets a known original
+leaf $\lambda_b$ at a strict prefix $c$ of $s$. Here
+$\lambda_0=\alpha$, $\lambda_1=\beta$. In the latter case write $s=cz$.
+The supplied leaf-sector formula [SLH, Definition 29.1][SLH] gives the guard
+
+$$
+a+b\ge w(z^-)+2,
+\qquad w(z)=\#_L(z)+2\#_R(z),
+\tag{ARH.3.3}
+$$
+
+and, when it holds, the complete endpoint is
+$T_{a+b-w(z)}$, where $T_j=\rho^j\alpha$. If the guard fails, reject the cell
+for this relation record, for either sign. In the original-node case the
+endpoint is always reached. Concrete computations cover ground $A$ too.
+Apply this to both endpoints of every relation and retain the stated sign
+between the resulting **whole** expressions. Literal checks use the
+already supplied guarded reply formula, including repetitions and absent
+replies.
+
+Each concrete old class value has a unique pattern and a unique valuation
+by its original frontier subtrees. The inverse to filling is recovered at
+old representative holes and then at their pattern frontiers. [SLH,
+Theorems 59.4 and 60.2][SLH] supply exactly the old-row correspondence.
+The endpoint analysis proves each newly attached predicate equivalent to
+(ARH.1.3) under that same valuation. Therefore the disjoint union of all
+satisfying valuations is bijective with (ARH.1.4). No product relaxation,
+separate marginal feasibility or chosen representative is involved.
+
+The target construction of [SLH, (SLH.74.9)][SLH] still applies: navigation
+to $Q$ gives a fixed reached set $J_\eta$, a symbolic outside context
+$E_\eta$ and subterms $A_{\eta,q}$, satisfying
+
+$$
+\begin{aligned}
+I_Q(W_\eta[v])&=J_\eta,\qquad C_Q(W_\eta[v])=E_\eta[v],\\
+q\sim r&\Longleftrightarrow
+ A_{\eta,q}[v]=A_{\eta,r}[v]\quad(q,r\in J_\eta).
+\end{aligned}
+\tag{ARH.3.4}
+$$
+
+The outside can contain residual variables which must be output as complete
+concrete trees. Equation (ARH.3.4) keeps that obligation.
+
+For clarity about the algebraic boundary, when $a\le b$, injectivity from
+[TRANSPORT, (RA.2207)][TRANSPORT] gives
+
+$$
+\rho^a(A[v])=\rho^b(B[v])
+\Longleftrightarrow A[v]=\rho^{b-a}(B[v]),
+\tag{ARH.3.5}
+$$
+
+and the same equivalence for disequality. Only the common iterate cancels.
+If one endpoint is a known concrete $g$, its finite partial image inverse
+$\delta$ from the same supplier tests whether $g\in\rho^a[\mathcal T]$.
+When so, $\rho^a(A[v])=g$ is exactly $A[v]=\delta^a(g)$; otherwise it is
+always false. The corresponding reached disequality is its complement.
+Equal epochs therefore give ordinary signed term constraints; a known
+endpoint does too. Unequal live epochs generally leave a morphic relation.
+For instance $\rho(x)=\langle y,z\rangle$ has
+$(x,y,z)=(\beta,\beta,\alpha)$ as a solution. Treating $\rho$ as a free
+constructor would reject it. The original source
+$u=\langle\beta,\alpha\rangle$ satisfies $(0,L,1,R,=)$ although its
+original children differ. $\square$
+
+The following paid reductions identify existing supply used by this
+representation and by later consumers; they are not new solvers.
+
+If a record compares two reached old holes at the **same** epoch, [SLH,
+Theorem 60.2][SLH] determines its sign from the complete old partition.
+A consistent record is redundant; an inconsistent one violates the
+nonempty-input promise. All other old classes and their disequalities stay.
+Here [SLH, Theorem 74.4][SLH] applies directly when no other nonredundant
+relation remains. [SLH, Theorem 69.4][SLH] applies to its own finite VALUE
+tasks, with its static contract and exact minimax conclusion unchanged.
+
+For records whose cell expressions have a concrete endpoint, acquire the
+finite original prefix needed to select a cell using [SLH, Theorem 2.2][SLH].
+The actual current reply tuple entails that prefix on all old-row/literal
+sources. For each remaining nonconstant predicate $u|_a=g$, the selected
+cell guarantees that $a$ is originally reached; use the paid delayed
+whole-template certificate [SLH, Theorem 55.3][SLH] under the physical prefix
+$a$. Its complete actual reply tuple decides both equality and disequality
+against $g$, on every originally reached finite subtree, without a shape
+promise. Templates are computed from common data and the selected cell.
+They are not unknown-source descriptions.
+
+To verify the exact interface, let $H'$ contain $H_0$ and all those actual
+current replies. On a reached branch of this converter, every source in
+$\mathcal U_R(H')$ has the selected original prefix and the same template
+test outcomes, hence satisfies every incoming relation. Conversely any
+incoming source giving the tuple belongs to $\mathcal U_R(H')$. The new
+full branch fiber is therefore exactly that basic old-row/literal fiber.
+A rejected template is represented by its actual mismatching tuple, not
+an invented historical event. There are finitely many cells and finite
+template supports. Their union provides a uniform finite read bound;
+all branch feasibility and subsequent full-row decisions can now use
+[SLH, §§61 and 74][SLH]. Incoming bounded solvability restricts to every
+branch, and bounded branch services combine with the paid converter using
+a finite maximum. Thus this is also an exact existence reduction for this
+case. It adds no new mathematical criterion to the predecessor.
+
+A second direct interface is a fully acquired row at another known original
+frontier $A$: retained literals determine its entire outside context and
+reach guards, and same-epoch records determine its complete partition.
+It can be computed from already paid data. To replace the old input by
+this row and literal history, **both** full source-fiber inclusions must
+hold; the old row and every remaining record must be consequences of the
+new input, and conversely. Under that condition only a paid local encoding
+change is needed. Dropping old off-task disequalities would violate it.
+An ordinary same-epoch equation without such a correspondence does not
+by itself constitute an acquired row input.
+
+An unselected finite union of basic fibers is not this paid interface.
+For example, the union of the equal-child and unequal-child two-hole
+rows is the whole set of original pairs; knowing the separate row on
+each part would already decide the unbounded child-equality task. On the
+union, pairs $\langle z,z\rangle$ and $\langle z,z'\rangle$, with $z,z'$
+agreeing arbitrarily deeply but unequal, obstruct finite-prefix determination
+of the two-hole row. The caller has no free branch selector. The stronger
+nonreduction statements in §8 concern exact entire fibers.
+

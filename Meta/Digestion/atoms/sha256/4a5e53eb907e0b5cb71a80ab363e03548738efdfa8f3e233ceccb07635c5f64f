@@ -1,0 +1,18 @@
+## 12. Mathematical credits and scope of the contribution
+
+The result established here is the simultaneous same-law statement in Theorem 11.1. The renewal mechanism, gap-factor representation, two-anchor cancellation and six-bit certificate are used as explicit mathematical ingredients, with full proofs of their asserted properties. They are not assigned separate novelty claims. The conditional score, rank relaxation, reset detector and original optimization problem retain the following source ownership.
+
+| Canonical supplier | Interfaces used and retained boundaries |
+| --- | --- |
+| [Universal][U], *FIB 合法边调和负载：普适后验缺陷与有限隐藏维数分离* | Convention 1.3 and Lemma 2.1: the original $\pi_n$, insertion band, growth and exact finite discrepancy identity. Definition 4.1 and Proposition 4.2: the entire exact-real domain and its actual stationary joint law. Equation (1.5): density as full-exterior risk. Theorem 3.1: the necessary attained-law band. Theorem 6.2: the compact-domain alternative (11.6)–(11.7). Proposition 7.1: the two-state comparison mechanism and rational lower comparison for $c_\star$. |
+| [Guarded][Gd], *FIB harmonic-edge load: guarded replacement, attainment and conditional-rank obstruction* | Definitions 2.1 and 2.3 and Lemma 2.2: exact erasure fields, summability and original-loss cocycle. Lemmas 3.2–3.3 and Definition 6.3: the constrained conditional Brier score and compact rank families. Theorem 6.2: conditional rank from the actual matrices and full-complement limit. Theorem 7.1: slicing against one global candidate. Lemma 8.1 and Theorem 8.2: ratio coercivity and determinant bounds. Theorem 5.1 and Corollary 6.4: the sufficient strong-zero endpoint and optimizer budget, with their extra premises. |
+| [Global-local][Gl], *FIB harmonic-edge load: global and local rank compatibility and the reset-variance obstruction* | Definition 1.3 and Premise 1.4: the reference-law extension $\mathscr R_{N,n}(\nu)$ and its conditional-slicing use. Lemmas 2.1–2.2 and Theorem 2.3: rank-two resets and the variance detector $V_2$. Theorems 4.4 and 5.1: the separate persistent-mixture comparison between local fitting and a global candidate. No fact about that mixture is substituted for a probability under the renewal law here. |
+
+Conditional least squares and the conditional Brier score are classical; the score connection is described by Dawid, Lauritzen and Parry, *Proper Local Scoring Rules on Discrete Sample Spaces*, §4.2, Example 4.4, as credited in Guarded. Lemma 2.2 includes the equality proof needed on the constrained no11 graph. Finite-state matrix products, renewal factorization, conditional projection, convergence on increasing fields, finite-dimensional compactness, determinant expansion and geometric summation are also classical tools. The direct proofs above specify their hypotheses and uses; they import no general hidden-model regularity theorem.
+
+The mathematical increment is the completed conjunction: exact zero of this reset-variance test coexists with positive linear discrepancy, a persistent full-complement bridge defect, minimal hidden dimension three, paid erasure tails and strict nonattainment, all for one fixed stationary common-matrix law. The unchanged optimizer and all-dimension questions in §11 remain outside that conclusion.
+
+[U]: FIB_LEGAL_EDGE_LOAD_UNIVERSAL_POSTERIOR_DEFECT_AND_FINITE_HIDDEN_SEPARATION.md
+[Gd]: FIB_LEGAL_EDGE_LOAD_GUARDED_REPLACEMENT_ATTAINMENT_AND_CONDITIONAL_RANK_OBSTRUCTION.md
+[Gl]: FIB_LEGAL_EDGE_LOAD_GLOBAL_LOCAL_RANK_COMPATIBILITY_AND_RESET_VARIANCE_OBSTRUCTION.md
+

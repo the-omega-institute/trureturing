@@ -1,0 +1,26 @@
+**Theorem 36.1 (Stable raw data to a normalized reset law).** Let $\mathcal T(X)=\sum_{a=1}^sK_aXK_a^*$ act on $M_d(\mathbb C)$ with spectral radius $\rho(\mathcal T)<1$. Let $F=ff^*\ne0$ and $x\ne0$. Suppose the observability Gramian $Q$ below is positive definite. Set
+
+$$
+Q=\sum_{k\ge0}(\mathcal T^*)^k(F),\quad S=Q^{1/2},\quad z=x^*Qx,\quad b=\frac{Sx}{\sqrt z},\quad \tau=bb^*,\quad L_a=SK_aS^{-1},\quad L_{\rm tick}=bf^*S^{-1}. \tag{36.1}
+$$
+
+Here $\mathcal T^*$ is the trace-dual map, and operator stars are adjoints; $L_{\rm tick}$ denotes the tick and is separate from the zero family $\{L_a\}$. The maps $\Phi(X)=\sum_aL_aXL_a^*$ and $\Psi(X)=L_{\rm tick}XL_{\rm tick}^*$ form a trace-preserving two-outcome instrument, and every positive-probability tick resets to $\tau$. Their actual gap law from $\tau$ is
+
+$$
+\operatorname{Tr}\Psi(\Phi^k(\tau))=\frac{\operatorname{Tr}[F\mathcal T^k(xx^*)]}{z},\qquad k\ge0. \tag{36.2}
+$$
+
+In particular, if the numerator is $k^nq^k$ for every $k\ge0$, then $z=Z_n(q)$ and (36.2) is precisely (35.1), with no shift of $k$.
+
+Proof. For any $r$ strictly between $\rho(\mathcal T)$ and $1$, finite-dimensional Jordan theory bounds the powers of $\mathcal T$ and its dual by a constant times $r^k$. Hence the series in (36.1) converges in norm and consists of positive terms. Subtracting its shifted series gives $Q-\mathcal T^*(Q)=F$. It is the unique solution of this Stein equation, since a difference $H=\mathcal T^*(H)$ equals $(\mathcal T^*)^k(H)\to0$. Faithfulness gives invertible $S$ and $z>0$, and $\|b\|=1$. With $E=S^{-1}FS^{-1}$, direct multiplication yields
+
+$$
+\sum_aL_a^*L_a=S^{-1}\mathcal T^*(Q)S^{-1}=I-E,\qquad L_{\rm tick}^*L_{\rm tick}=E,\qquad \Psi(X)=\tau\operatorname{Tr}(EX). \tag{36.3}
+$$
+
+Thus $0\le E\le I$, completeness holds, and the normalized positive tick output is always $\tau$. The tick has exactly one nonzero rank-one Kraus operator. No trace contraction of the raw $K_a$ was assumed. It is the completed maps that are trace-nonincreasing branches.
+
+For $\Gamma(X)=SXS$, one has $\Phi=\Gamma\mathcal T\Gamma^{-1}$ and $\Phi^k(\tau)=S\mathcal T^k(xx^*)S/z$. Taking the trace against $E$ proves (36.2). Also $z=\sum_k\operatorname{Tr}[F\mathcal T^k(xx^*)]$, so the actual gaps sum to one; $\rho(\Phi)=\rho(\mathcal T)<1$ gives $\operatorname{Tr}\Phi^k(\tau)\to0$. Completeness consequently implies the actual survival identity $\operatorname{Tr}\Phi^k(\tau)=\sum_{j\ge k}\gamma_j$. This proves properness as well as normalization. $\square$
+
+The faithfulness condition has a concrete test used below: if $K_w$ denotes any finite ordered product of zero Kraus matrices, including the empty product, then $y^*Qy=\sum_{k\ge0}\sum_{|w|=k}|f^*K_wy|^2$. Thus $Q>0$ exactly when the only vector invisible to every such word is zero. This criterion retains the full proposed memory and supplies the hypotheses of the stable CP Stein similarity directly, rather than assuming a contraction or citing a similarity without its observability premise.
+

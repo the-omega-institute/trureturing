@@ -1,0 +1,24 @@
+**Proposition 59.1.** At this seed, every actual common-flat input ray
+orthogonal to any one of the six canonical rays is canonical. For a
+fixed canonical ray its actual common-flat orthogonal rays are exactly
+the other five members of the canonical orthonormal basis.
+
+The zero-mode cases are Proposition 58.1. First consider orthogonality
+to \(c_1^+\), which is exactly \(z_1=-iu_1\). If \(u_1=0\), both
+selected-mode coefficients vanish. A unit-phase triple with one zero
+Fourier coefficient is monochromatic, as proved in §58.2. Hence both
+input channels are monochromatic. Their modes must agree: otherwise an
+output channel has exactly two nonzero Fourier coefficients, since all
+entries of the blocks \(T_l\) are nonzero, contradicting that same
+unit-phase property. With a common mode, actual flatness gives one of
+the two canonical phases. This treats the missing selected mode.
+
+Otherwise use only a common phase to take \(u_1=t>0\). Suppose the
+ray is noncanonical. Then every \(u_l\) and \(z_l\) is nonzero.
+Indeed a zero coefficient in either channel would make that channel
+monochromatic. Its selected-mode coefficient is nonzero, so its sole
+mode would be 1 and its coefficient would have modulus one. The equal
+selected-mode modulus in the other channel and its norm equation
+\(\sum_l|z_l|^2=1\), or \(\sum_l|u_l|^2=1\), force that channel
+to be monochromatic at mode 1 as well. This would be canonical.
+

@@ -1,0 +1,15 @@
+**Definition 3.1 (exact type masses).** Fix $d,n$ and write $s=|S_d|$.
+A type $\nu=(\nu_x)_{x\in S_d}$ has nonnegative integer entries summing
+to $n$. Its class $T_\nu$ consists of tuples with those exact coordinate
+counts. Define
+
+$$
+a_n(\nu)=\max_\Theta|C_\Theta\cap T_\nu|,\qquad
+R_d(n)=\max_\nu\frac{|T_\nu|}{a_n(\nu)}.
+\tag{NDR.13}
+$$
+
+Singletons are admissible, so every denominator is positive. By Theorem
+2.2, $a_n(\nu)$ is also the maximum of $|B\cap T_\nu|$ over all
+admissible $B$.
+

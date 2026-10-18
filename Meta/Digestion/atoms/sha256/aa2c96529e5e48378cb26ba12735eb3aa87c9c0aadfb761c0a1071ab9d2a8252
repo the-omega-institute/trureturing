@@ -1,0 +1,35 @@
+**Proposition 12.5 (actual native-row correspondence).** Starting with the
+encoded actual pre-row state and its authentic reservoir (including the
+recorded activation selection of Definition 14.1 at that boundary), the compiled
+Step terminates with the encoded actual complete successor and native
+event, including its one receipt. It is source uniform. In particular,
+a represented IN-before-WR, partial private overwrite, row prefix or
+unsealed copy has its actual full type and raw bits. No live authority is
+recovered from historical permission bits.
+
+Proof. At the one activation occurrence the explicit recorded instrument
+case selects its actual bounded bootstrap-entry CTL. Otherwise row lookup
+terminates on the sealed description and selects the actual prescribed row. Each operand lookup is Nth or a finite marked-cell scan; each
+replacement preserves the other items. For RD the actual mark selects
+the same symbol, giving the same newly read latch and encoded branch.
+WR changes only the same symbol subfield. The adjacent-item ML/MR and
+EX cases give exactly their old-cell and new-cell effects. The finite BF
+truth table has the same operand index and output. IN changes only the
+specified latch and consumes exactly its next actual reservoir bit.
+OUT records the same emitted bit. TOK and CTL change their explicitly
+specified finite fields, with historical tokens confined to word data.
+The two boot cases are single-cell/single-bit constructors. Applying the
+common receipt rule after the core effect also handles meter-head overlap;
+it preserves the updated core read head, rather than its pre-row value.
+The tally and event append are encodings of those effects, not additional
+virtual native primitives.
+
+All the loops just used consume finite words, row lists or cell lists.
+Their intermediate new lists are not their scan sources. The compiler
+therefore gives finite actual paid work for each case. Induction on a
+finite native prefix gives the complete encoded endpoint and chronology.
+This is an implementation of AIF's literal replay map; AIF supplies its
+authentic actual-image identification, which is not claimed as a new
+information-sufficiency theorem. ∎
+
+

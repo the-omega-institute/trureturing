@@ -1,0 +1,55 @@
+**Lemma 2.2 (nonexpansive backward epoch transport).** There is an effective address map $S(n,m,p)$ for all $n\ge m\ge5$ satisfying
+
+$$
+ \forall u\in\mathcal T,\qquad
+ r_{\rho^n u}(p)=r_{\rho^m u}(S(n,m,p)),
+ \qquad |S(n,m,p)|\le |p|.
+\tag{JRF.2.2}
+$$
+
+The labels, including $\mathsf{absent}$, are unchanged. The address map is independent of the source and imposes no source-depth bound.
+
+Proof. The guarded leaf formula SCR (2.1), with $\lambda_0=\alpha$, $\lambda_1=\beta$, states that a nonempty suffix $s$ ending in $e$ exists in $\rho^j\lambda_b$ precisely when
+
+$$
+ j+b-w(s)\ge2-\omega(e).
+\tag{JRF.2.3}
+$$
+
+When it exists, residual values zero, one, and at least two give $\alpha,\beta,\mathsf{branch}$, respectively. The empty suffix always exists. Two nonempty suffixes with the same last edge, whose weight difference equals the epoch difference, therefore have exactly the same reply. Also SCR (2.7) gives
+
+$$
+ w(s)\le j-2\quad\Longrightarrow\quad
+ r_{\rho^j v}(s)=\mathsf{branch}\quad\text{for every }v\in\mathcal T.
+\tag{JRF.2.4}
+$$
+
+If $w(p)\le n-2$, set $S(n,m,p)=\varepsilon$. Both replies are branch by (JRF.2.4), and the length inequality holds. This includes $p=\varepsilon$.
+
+Otherwise factor $p=xy$, taking $x$ to be the shortest prefix for which $r=w(y)\le n-2$. Since each removed edge has weight one or two,
+
+$$
+ n-3\le r\le n-2,\qquad
+ t=m-n+r\in\{m-3,m-2\}.
+\tag{JRF.2.5}
+$$
+
+Here $x,y$ are nonempty: $x$ is needed by the strict inequality on $w(p)$, and $r\ge n-3\ge2$. Let $e$ be the last edge of $p$, also the last edge of $y$, and set
+
+$$
+ S(n,m,p)=xZ_e(t).
+\tag{JRF.2.6}
+$$
+
+The word is defined since $t\ge m-3\ge2$. If the original tree first reaches a leaf at a strict prefix $a$ of $x$, the old and new remaining suffixes are $(x\setminus a)y$ and $(x\setminus a)Z_e(t)$. They are nonempty, end in the same $e$, and their weights differ by $m-n$. Equation (JRF.2.3) preserves both existence and residual, hence the whole reply. If $x$ is reached in the original tree, apply (JRF.2.4) inside the arbitrary subtree there: $w(y)\le n-2$ and $t\le m-2$, so both replies are branch. These cases exhaust all finite original trees, including paths that were originally absent.
+
+Finally $t\le r$, and Definition 2.1 gives
+
+$$
+ |Z_e(t)|=h_e(t)\le h_e(r)\le |y|.
+$$
+
+Adding $|x|$ proves the literal length inequality. All operations are finite word and integer operations. $\square$
+
+The difference from SCR Theorem 2.2 is the one-sided condition $n\ge m\ge5$ and the nonexpansive literal-length conclusion. SCR's forward padding and bound $|T(n,M,p)|\le|p|+M-1$ do not supply this conclusion. No least universal threshold is asserted.
+

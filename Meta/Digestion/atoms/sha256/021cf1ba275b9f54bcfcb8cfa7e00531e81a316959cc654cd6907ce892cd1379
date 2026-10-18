@@ -1,0 +1,8 @@
+### 89.8. All physical ranks, exact quarter paths, and the global boundary
+
+For an arbitrary original channel use the canonical Choi square-root Kraus decomposition, in fixed environment dimension 32. It is continuous at rank changes. A fixed environment unitary aligns the base support of B with the old two coordinates and embeds A's rank-four base support in its 32 coordinates. Thus every sufficiently nearby physical channel pair has lifts in the above Stinespring neighborhood with d=32 and p=30. The old B square block remains invertible. The exact gauge slice in section 89.3 then applies. No spectral eigenvector selection, differentiable path, Choi-rank restriction, or calibration of the physical channels is needed. Combining (27) with (2) proves (1).
+
+There are genuine higher-rank quarter-attainers on the scalar cone. Start with a classified balanced qubit frame and original marker overlap η=3/4. Use the scalar B markers from (19)–(20) and change A's scalar overlap to (3/4)/τ. For small λ≥0 this is a permissible overlap of normalized marker vectors. The product Gram K is then exactly the original equality Gram, so the entire original reference-sensitive channel error remains 1/4. This explains the scalar zero modes without discarding them. It does not make all points in the larger witness-minimum manifold full diamond attainers.
+
+The proof is local at every section-82 equality member and includes its boundary disphenoids, because the spectral gap, balance regularity, old normal coercivity, and positive coefficient bound hold there. It establishes no lower bound of 1/4 for arbitrary distant product channels. The unrestricted global quarter-optimum problem remains open.
+

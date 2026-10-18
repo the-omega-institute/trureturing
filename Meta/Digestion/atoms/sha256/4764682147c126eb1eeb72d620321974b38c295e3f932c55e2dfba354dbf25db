@@ -1,0 +1,56 @@
+**Theorem 3.2 (Fixed scalar realization and full-block TP).** The maps
+
+$$
+\begin{gathered}
+B_f=\sqrt{c_f}\,b_f^TD^\dagger:\mathbb C^5\longrightarrow\mathbb C,
+\qquad R_f=Da_f:\mathbb C\longrightarrow\mathbb C^5,\\
+\operatorname{Enc}(X)=(B_fXB_f^\dagger)_f,\qquad
+\operatorname{Dec}_f(y)=R_fyR_f^\dagger
+\end{gathered}
+\tag{3.4}
+$$
+
+realize $T_\lambda\in\mathfrak C_1$ with fourteen fixed nonzero
+rank-one composite Kraus matrices. Every decoder is CPTP on all of
+$M_1$.
+
+Proof. Orthogonal sectors and
+
+$$
+9^2+119=200,\quad119+76=195,\quad
+1521^2+166^2\cdot119=5592605,\quad
+71^2\cdot119+94^2\cdot76=1271415
+\tag{3.5}
+$$
+
+make all four vector families unit. Quadratic circle averages give
+
+$$
+\begin{aligned}
+\sum_{k,l}c_{\mathrm A,k,l}b_{\mathrm A,k,l}b_{\mathrm A,k,l}^T
+&=\frac{400}{119}\left(\frac{81}{400}R_+
+                                  +\frac{119}{400}R_-\right)
+=\frac{81}{119}R_++R_-,\\
+\sum_kc_{\mathrm B,k}b_{\mathrm B,k}b_{\mathrm B,k}^T
+&=\frac{195}{119}\left(\frac{119}{195}R_0
+                                   +\frac{38}{195}R_+\right)
+=R_0+\frac{38}{119}R_+.
+\end{aligned}
+\tag{3.6}
+$$
+
+Their sum is $I_5$. Therefore
+$\sum_fB_f^\dagger B_f=I_5$ and $R_f^\dagger R_f=1$ for every
+flag. Each rectangular sandwich remains positive after tensoring
+with an identity of any reference dimension. Direct sums prove encoder
+CP; each decoder is CP, and the normalization identities prove trace
+preservation on every complex matrix of its whole domain. The composite
+has Kraus matrix
+$C_f=R_fB_f=\sqrt{c_f}Da_fb_f^TD^\dagger$, nonzero of rank one,
+and $\sum_fC_f^\dagger C_f=I_5$.
+
+The decoded branch trace equals its encoder trace, since
+$R_f^\dagger R_f=1$. All paths pass through the stated scalar block,
+and the decoder consumes the flag. The future policy receives only
+the summed decoded state. $\square$
+

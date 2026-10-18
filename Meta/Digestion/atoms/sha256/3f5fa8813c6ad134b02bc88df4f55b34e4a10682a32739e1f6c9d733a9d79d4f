@@ -1,0 +1,30 @@
+**Definition 2.2 (label transport and repair budget).** For Borel
+probabilities $\xi,\zeta$ on $\mathcal K_s$, write
+
+$$
+\mathsf W_s(\xi,\zeta)=
+ \min_{C\in\Pi(\xi,\zeta)}\int d_s(D,D')\,dC(D,D').
+\tag{2.4}
+$$
+
+This is $W_1$ with complete-law TV as its ground metric, not TV between
+the label distributions. Compactness and continuity of the cost give
+attainment. On each ordered product use the sum of the two ground
+metrics, and denote its $W_1$ by $\mathsf W_{p\beta}$ or
+$\mathsf W_{\beta p}$. Put
+
+$$
+\begin{gathered}
+m_\beta=\mathsf W_\beta(\tau_\beta,\sigma_\beta),\qquad
+m_p=\mathsf W_p(\tau_p,\sigma_p),\\
+x=e_B+m_\beta,\qquad y=e_A+m_p,\\
+D_p=\frac{10x+4y}{11},\qquad
+D_\beta=\frac{4x+6y}{11}.
+\end{gathered}
+\tag{2.5}
+$$
+
+All these quantities are finite. No access to an unknown device, unknown
+law, independent descriptor sample, source reset or stationary trajectory
+is an assumption of Definitions 2.1–2.2.
+

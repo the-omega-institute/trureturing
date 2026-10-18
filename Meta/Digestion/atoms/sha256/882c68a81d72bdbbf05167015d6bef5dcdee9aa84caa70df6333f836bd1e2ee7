@@ -1,0 +1,12 @@
+### 3.2 Bounded functions and possibly discontinuous characters
+
+Let
+
+$$
+W=\{f\in V:\|f\|_\infty:=\sup_{\theta\in\mathbb T^2}|f(\theta)|<\infty\}.
+$$
+
+This is a finite-dimensional complex vector space with a genuine norm.
+Translations on $W$ are commuting invertible isometries: torus translation
+is a bijection of all points, so it leaves the supremum unchanged.
+

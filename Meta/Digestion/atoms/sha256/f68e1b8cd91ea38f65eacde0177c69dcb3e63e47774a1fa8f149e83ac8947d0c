@@ -1,0 +1,40 @@
+**Definition 60.1 (rational comparison convention).** Every terminating
+decimal below is an exact rational. Directed arithmetic uses
+$\Lambda=2^{288}$. The interval $[l/\Lambda,h/\Lambda]$ has integer
+endpoints. Embed a rational $q$ with the floor and ceiling of
+$\Lambda q$. Add and negate endpoints exactly. Multiply using the
+minimum and maximum of the four endpoint products, divided by
+$\Lambda$ with floor and ceiling. For a nonzero interval reciprocal use
+$[\lfloor\Lambda^2/h\rfloor,\lceil\Lambda^2/l\rceil]/\Lambda$;
+the interval must exclude zero. For a positive interval square root use
+$[\lfloor\sqrt{l\Lambda}\rfloor,\lceil\sqrt{h\Lambda}\rceil]/\Lambda$,
+with the ceiling obtained by the integer-square comparison. Determinants
+and adjugates use their finite signed permutation expansions. This
+specifies (RC.4)–(RC.5)'s box inclusion without a root solver.
+
+For polynomial comparisons expand (RC.8) using coefficientwise rational
+interval addition and convolution, with the coefficients enclosed by the
+entire independent $\mathcal B_7$. Cancel identically zero constant
+powers of $a$ before the two divisions. For a polynomial
+$P(a,k)=\sum p_{ij}a^ik^j$ and a rectangle
+$[l,h]\times[v,w]$, define
+
+$$
+\begin{aligned}
+E_i^{N}(t;l,h)
+&=\sum_{r=0}^{\min(i,t)}\binom ir l^{i-r}(h-l)^r
+                       \frac{\binom tr}{\binom Nr},\\
+b_{tu}(P)&=\sum_{i,j}p_{ij}E_i^N(t;l,h)E_j^M(u;v,w),
+\quad 0\leq t\leq N,\quad0\leq u\leq M.
+\end{aligned}
+\tag{RC.14}
+$$
+
+Here $i\leq N,j\leq M$. This is equivalently the affine change to
+$[0,1]^2$ followed by monomial-to-Bernstein conversion. All sums in
+(RC.14) are finite rational comparisons with directed endpoints; terms
+are accumulated in increasing indices. The Bernstein basis is
+nonnegative and sums to one, so a common strict lower bound for all
+$b_{tu}$ is a strict bound on the whole rectangle, including its edges.
+This is a universal certificate, not an inference from sampled values.
+

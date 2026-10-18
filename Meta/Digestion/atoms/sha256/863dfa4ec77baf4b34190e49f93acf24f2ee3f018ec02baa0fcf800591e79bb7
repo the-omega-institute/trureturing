@@ -1,0 +1,84 @@
+**Theorem 9.4 (Estimability and finite-$N$ saturation).** A finite-variance
+estimator satisfying (9.8) exists if and only if $\ell$ is balanced on
+every component in (9.9). In that case every such estimator satisfies
+
+$$
+\operatorname{Var}_0\widehat\tau
+\ge\frac{R_\eta(\ell)}{4N}.
+\tag{9.10}
+$$
+
+Writing $Y_1,\ldots,Y_N$ for the complete independent records, equality
+is attained by the fixed-reference statistic
+
+$$
+\widehat\tau_\ell
+=\tau_\ell(0)+\frac1N\sum_{r=1}^N
+\ell^{\mathsf T}J_\eta^+s(Y_r).
+\tag{9.11}
+$$
+
+Proof. For real $x$,
+
+$$
+x^{\mathsf T}L_\eta x
+=\sum_{e=(u,v)\in E_\eta}g_e(x_u-x_v)^2.
+\tag{9.12}
+$$
+
+All retained conductances are positive. Thus $\ker L_\eta$ consists
+exactly of functions constant on each positive-edge component.
+Symmetry gives
+$\operatorname{im}L_\eta=(\ker L_\eta)^\perp$, which is precisely
+the component-balance condition. The same statements hold for
+$J_\eta=4L_\eta$.
+
+To see necessity directly in the experiment, shift $\theta$ by
+$t1_C$ on a component. Every observed edge difference and every
+blocked probability in (9.4) is unchanged. The derivative of any
+estimator's expectation in this direction is zero, whereas (9.8)
+requires $\sum_C\ell$. Hence an unbalanced target is not locally
+estimable. The obstruction is an actual likelihood invariance,
+not merely an inability to invert a matrix.
+
+For a balanced target let $v=J_\eta^+\ell$ and
+$S_N=\sum_rs(Y_r)$. Finite support and positivity at the reference
+justify differentiating expectations. The score identity gives
+
+$$
+\mathbb E_0S_N=0,\quad
+\mathbb E_0S_NS_N^{\mathsf T}=NJ_\eta,\quad
+\mathbb E_0[(\widehat\tau-\tau_\ell(0))S_N]=\ell.
+\tag{9.13}
+$$
+
+For nonzero $\ell$, set $A=\ell^{\mathsf T}J_\eta^+\ell>0$.
+Pairing the last identity with $v$ and applying Cauchy–Schwarz gives
+
+$$
+A^2\le\operatorname{Var}_0\widehat\tau\,
+      N v^{\mathsf T}J_\eta v
+=N A\,\operatorname{Var}_0\widehat\tau.
+$$
+
+Since $J_\eta^+=L_\eta^+/4$, this is (9.10).
+For (9.11), the mean is $\tau_\ell(0)$ and its expectation gradient is
+
+$$
+J_\eta J_\eta^+\ell=\ell.
+\tag{9.14}
+$$
+
+This computation differentiates the sampling law, not the fixed
+reference score. Independence gives variance $A/N$, proving equality.
+If $\ell=0$, the target is identically zero and the constant estimator
+has variance zero; the division by $A$ is unnecessary. $\square$
+
+For an unbalanced target the algebraic number
+$\ell^{\mathsf T}L_\eta^+\ell$ is still finite, but it is not the
+variance coefficient of an unbiased target estimator. Equation (9.9)
+assigns infinite extended resistance to this case. The estimator
+(9.11) uses the supplied $p$, measurement reference and reference
+score. It asserts exact local finite-sample saturation, not global
+unbiasedness or calibration-free estimation.
+

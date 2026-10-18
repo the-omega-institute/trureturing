@@ -1,0 +1,22 @@
+**Proposition 4.1 (Actual contexts, proportional matrices and guards).** Fix any $\theta\in\Theta_N$, distinct $a,b\in B_L$ with positive actual masses, and $\alpha,\beta>0$. Put $\Delta=\alpha M_a-\beta M_b$. Then the pair condition (2.1) is equivalent to
+
+$$
+\lambda M_u\Delta M_v\mathbf1=0\quad\text{for all finite binary words }u,v,
+\tag{4.1}
+$$
+
+including empty words and every seam. In particular $\Delta=0$ is sufficient. Equivalently, (4.1) says $r\Delta c=0$ on the actual spaces $\mathcal R=\operatorname{span}\{\lambda M_u\}$ and $\mathcal O=\operatorname{span}\{M_v\mathbf1\}$.
+
+**Proof.** Complete contiguous left and right exterior cylinders have expectation against $f_C$ equal to the left side of (4.1), under the single supplied joint law. Events with missing exterior coordinates are sums of such cylinders, with each unspecified letter replaced by $A$. Empty sides and illegal completions are included; the latter have zero actual probability. Cylinder extension proves (2.1), and testing (2.1) on the complete cylinders proves the converse. Bilinearity gives the span formulation. $\square$
+
+These two spaces are generated already by words of length at most $N-1$. Indeed, the cumulative row spans start at $\operatorname{span}\{\lambda\}$ and satisfy $\mathcal R_{k+1}=\mathcal R_k+\mathcal R_kM_0+\mathcal R_kM_1$. A plateau makes the span invariant and permanent; otherwise dimension increases from one to at most $N$. The column spans obey the analogous recursion. This gives a finite verification condition for a specified producer, without guaranteeing a pair or an efficient way to find it.
+
+One optional sufficient construction is a positive-mass legal guard $y$ with $M_y=vw\ne0$ of rank one, where $v,w\ge0$. For distinct equal-length interiors $u,u'$ whose guarded words are legal, set $s_u=wM_uv$ and $s_{u'}=wM_{u'}v$. If both scalars are positive, then
+
+$$
+M_{yuy}=s_u vw,\qquad M_{yu'y}=s_{u'}vw,
+\qquad f(yuy)=s_{u'},\quad f(yu'y)=-s_u.
+$$
+
+The guarded masses are $s_uP_\theta([y])$ and $s_{u'}P_\theta([y])$, so positivity and balance follow. All other legal words have coefficient zero. Rank one is not required by (4.1), and no rank-one guard is asserted to exist for every finite producer. A multiword matrix dependence supplies neither a two-word pair nor productivity. After producing a pair, a nonzero actual interior total or a strict (3.3) remains a separate obligation.
+

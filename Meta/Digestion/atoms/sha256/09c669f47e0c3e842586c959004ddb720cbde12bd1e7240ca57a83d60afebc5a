@@ -1,0 +1,70 @@
+### 97.4. Rank-one quotients and embedded quartet identities
+
+**Theorem 97.3.** Under the hypotheses of section 97.1, if one common witness has rank R=1, then S consists of three singleton coordinates in three distinct original fibres, and
+
+\[
+ t\ge\kappa:=\frac{\sqrt{21-9\sqrt[3]{9}}}{6}>\frac14.
+                                                                    \tag{19}
+\]
+
+**Proof.** Write R=vv*, |v_i|=1 and choose a diagonal unitary V on S with V²=diag(v). The reciprocal gauge G↦VGV*, H↦V*HV, extended diagonally outside S, preserves the full domain and product and makes
+
+\[
+ G_S=H_S=Q,\qquad \operatorname{rank}Q=n-1,\qquad
+ \ker Q=\operatorname{span}(a_S).                              \tag{20}
+\]
+
+Fix this gauge throughout. Its cross-fibre quotient entries are one, and all within-fibre entries of D vanish, so D_G=−D. Lemma 97.2 now applies to every Hermitian supported D with D_ff=0 and Da=0. Its fixed real quadratic form is
+
+\[
+ q(D)=-\sum_{\substack{i,j\in S\\i,j\text{ in different fibres}}}
+            \frac{\overline{a_i}a_j}{Q_{ij}}D_{ij}^2\ge0.
+                                                                    \tag{21}
+\]
+
+Introduce the weighted principal matrix
+
+\[
+ J=\operatorname{diag}(\overline{a_S})Q\operatorname{diag}(a_S),
+ \quad h_{ij}=J_{ij},\quad d_i=J_{ii}=|a_i|^2>0,
+ \quad J\mathbf1_n=0.                                         \tag{22}
+\]
+
+The distinct within-fibre entries vanish and every cross-fibre entry is nonzero.
+
+Choose four distinct supported coordinates 1,2,3,4 for which edges 13,14,23,24,34 cross original fibres. No assumption is made on edge 12. For x∈C and s∈R use the matrix
+
+\[
+ E=\begin{pmatrix}
+ 0&0&x&-x\\
+ 0&0&-x+is&x-is\\
+ \overline x&-\overline x-is&0&is\\
+ -\overline x&\overline x+is&-is&0
+ \end{pmatrix}                                                \tag{23}
+\]
+
+on this quartet and zero on the other coordinates. It is Hermitian, has zero row sums, and vanishes on every original fibre block. Thus
+
+\[
+ D=\operatorname{diag}(1/\overline{a_S})E
+                              \operatorname{diag}(1/a_S)
+                                                                    \tag{24}
+\]
+
+on S, extended by zero, is an original eight-coordinate admissible direction for (21). The nonlinear lift handles any extra full kernel of H.
+
+Put A=1/h₁₃+1/h₁₄, B=1/h₂₃+1/h₂₄ and C=1/h₃₄. Pairing each edge with its reverse gives
+
+\[
+ q(D)=-2\operatorname{Re}\Phi(x,s),\qquad
+ \Phi(x,s)=x^2(A+B)-2isxB-s^2(B+C).                            \tag{25}
+\]
+
+Hence Re Φ≤0 for all x,s. With s=0, complex square freedom forces A+B=0. If B≠0, the choice s=1 and x=i[1+Re(B+C)]/(2B) gives Re Φ=1, a contradiction. Thus A=B=0 and
+
+\[
+ h_{13}+h_{14}=0,\qquad h_{23}+h_{24}=0.                     \tag{26}
+\]
+
+These identities concern the same fixed J. Each violation would separately give a direction negative for every common witness. Combining several identities therefore combines no incompatible witnesses.
+

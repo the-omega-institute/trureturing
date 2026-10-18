@@ -1,0 +1,34 @@
+**定理 5.1（one closed autonomous realization）。** Install a semantically valid deficit word by parsing its complete finite frame, retaining its two seeds and directions, computing $P,S,T$ from $K,h$, and setting the internal update count $t=0$ and phase $r=0$. On each NEXT with $t<T$, output the finite amplitude construction in Proposition 4.3 from the first deficit and direction $\widehat\xi_r$, apply one pair update, increase $t$ by one and $r$ modulo three, and return to the ready state. Once $t=T$, enter the permanent zero mode. Every output approximates its entire-future target with error less than $\epsilon/16$ in the active part and less than $\epsilon/512$ in the permanent tail.
+
+Let
+
+$$
+B_*=1+K+\left\lceil\log_2(h+K+2)\right\rceil.
+$$
+
+The complete numerical peak, including installation, all control, addresses, scratch and full current outputs, is $O(B_*)$. A conservative installation and active-request bit-time bound is $O(B_*^4)$; the total finite active part costs
+$O((h+K+1)B_*^4)$ bit operations. Tail requests need constant numerical space and time if the other registers are erased. These are finite bounds, not claims of optimal running time.
+
+**证明。** At active count $t$ the true first component is $\delta_{3+t}$ and the phase is the direction of $x_{3+t}$. Lemma 4.2 and
+$|\sqrt a-\sqrt b|\le\sqrt{|a-b|}$ for $a,b\ge0$ give amplitude error from deficit propagation at most $\epsilon2^{-15}$. The integer-square output contributes at most $2\,2^{-S}$. The stored direction has norm at most $1+4\,2^{-S}<2$ and direction error at most $4\,2^{-S}$; the final coordinate rounding has vector error less than $2^{-S}$. Therefore active vector error is bounded by
+
+$$
+2\bigl(\epsilon2^{-15}+2\,2^{-S}\bigr)+5\,2^{-S}
+<\epsilon/16.
+$$
+
+The stopping argument uses the true source, not a rounded threshold. Since future norms decrease and $q_{j+2}\le q_j^2$ for $j\ge1$,
+
+$$
+q_{3+2R}\le q_3^{2^R}
+=(1-\delta_3)^{2^{R-1}}
+\le\exp(-\delta_3\,2^{R-1})
+\le\exp(-2^{K+10})<\epsilon/512 .
+$$
+
+Here $\delta_3\ge2^{-h-1}$ and $R=h+K+12$. Every later true norm is no larger, so zero outputs control the entire unbounded tail. The argument includes $\delta_3=1$, for which the norm is already zero. The separately selected tiny/zero mode has its own uniform bound and never divides by a norm.
+
+The finite program consists of parsing, length comparison, bounded shifts, integer addition, multiplication and division, bounded interval searches, finite conditional branches and output framing. Its description is fixed and charged once. $T$ is computed by binary additions; only its $O(\log(h+K+2))$-bit value is stored. The active count is saturated at $T$, the phase has three values, and the pair updates need a fixed number of $O(P)$-bit registers. All signed exponents have $O(\log(h+P+2))$ bits by Proposition 4.3. Direction and output registers have $O(S)$ bits. Thus they coexist in $O(B_*)$ bits, with a constant number of length-framed registers and $O(\log(B_*+2))$-bit physical positions and addresses. Source-dependent memory allocation, lengths and the program counter are included.
+
+Schoolbook products and divisions use linear scratch and quadratic bit time; the integer-square search uses $O(S)$ such comparisons. Parsing and binary length computations are finite scans of the actual compact word. These give the displayed conservative quartic bound without hidden real arithmetic, exponentiation or an installed table. The number of active requests is $T=O(h+K+1)$, which proves the total active-time bound. Each later NEXT still pays its actual fixed request and output transport; an infinite service has infinite total transmission.
+

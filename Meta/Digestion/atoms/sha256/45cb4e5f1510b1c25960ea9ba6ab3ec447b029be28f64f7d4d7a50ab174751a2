@@ -1,0 +1,26 @@
+**Proposition 16.2 (mathematical suppliers and the additional bridge).**
+The supplier roles in the preceding deductions are the following.
+
+| Supplier | Used statement and exact scope |
+| --- | --- |
+| [NBP, Definitions 1.1–1.2, 10.1 and (NBP.10.3)][NBP] | Original finite ordered trees, complete canonical row, all legal injective class valuations and the bijection to actual origins by the image inverse. These retain repetitions and entire class disequalities. |
+| [NBP, Proposition 10.2 and Theorem 10.4][NBP] | Branch subtrees of an image are images; exact exterior image parsing; class-root determination of the entire predecessor row. The target remains that row throughout. |
+| [LRD, Theorem 2.2][LRD] | One finite simultaneous assignment with prescribed intrinsic rank one, arbitrarily deep leaves and every syntactically nontrivial whole-term negative. Theorem 11.2 applies this supplier after the literal prefix decomposition; it does not claim a new general filling theorem. |
+| [Signed Local Prefix Lifting, Lemma 2.1][SLP] | The related general live-prefix and simultaneous-negative supplier, with fixed finite barriers and shared names. The present image-specific bridge uses LRD's rank-one specialization directly; it never applies unrestricted prefix lifting without checking image membership or a live frontier. |
+| [Native Ambient Contact Decision, Theorem 6.1 and Definition 1.2][NAC] | Total joint-prefix decision for its explicit exact-cover grammar and signed finite-source conditions. It does not decide arbitrary acquired-term programs or supply a determining certificate for them. |
+| [NBP, Proposition 12.5, Definitions 13.1 and 14.2][NBP] | Stationary no-revisit, shortest repeated occurrence, submitted literal sums, counted common start and terminal latch. The proofs retain paid visits instead of using silent forced-successor contraction. |
+| [NBP, Theorem 14.4 and Proposition 15.8][NBP] | The earlier jointly reselected-encoder bridge and the failure of universal arbitrary-code padding. A supplied finite determining certificate is the added hypothesis here; none of these arguments pads an arbitrary prescribed code without it. |
+| [NBP, Theorem 15.5 and PCA 4.3][NBP] | The very same eight-state reader serving every code in (PCA.12), including the entire program family (PCA.37), without changing its complete entries. |
+| [Prescribed binary codes: a nine-state escape, Theorems 4.1, 5.1 and 6.1][NRE] | The actual $E$-sensitive suffix distinction, nine-state two-call reader and exclusion of every same-code root-only two-call reader. A certificate-relative basis may include that suffix; no root-only claim for arbitrary code horizons is made here. |
+
+Proof. Theorem 11.2 substitutes typed image residuals into the original
+legal-row map and uses LRD on exactly its full negative list. Lemma
+12.2 then identifies every finite competitor word with one actual
+basis word and an installed reply map on the selected actual origins.
+Theorem 10.3 uses that identity without altering the reader;
+Theorems 13.1 and 13.3 respectively preserve reader observations or
+redesign its graph. These are the additional paid, original-entry
+correspondences. Theorem 15.2 adds the actual whole-fiber embedding
+needed for its halting reduction. The cited suppliers alone do not
+assert these fixed-code arbitrary-budget conclusions. $\square$
+

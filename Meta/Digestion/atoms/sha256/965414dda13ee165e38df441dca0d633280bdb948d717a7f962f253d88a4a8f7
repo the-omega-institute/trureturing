@@ -1,0 +1,43 @@
+**Proposition 6.2 (source-specific near-one-gauge obstruction).** The
+usual fixed near-one zero-free shortcut does not follow from strict
+positivity in this native carrier. At $d=2$, take a cyclic seed network
+with domains $\{\alpha,\beta,\mathsf{branch}\}$, actual root owners,
+and one edge that swaps $\alpha$ and $\beta$ while fixing
+$\mathsf{branch}$. Set $u(\alpha)=\alpha$, $u(\beta)=\beta$,
+$u(\mathsf{branch})=C_0$ and use the attained root, left, and right
+tables. Every seed has incidence two, and the only hard solution is
+$C_0^n$.
+
+Give the two leaf states mass $a=2/13$ each and all nine pair states
+mass $b=1/13$. With $D=\operatorname{diag}(a,a,b)$, $J$ the all-one
+matrix, and $P$ the transposition of the first two states, the exact
+soft interpolation is
+
+$$
+f_n(v)=\operatorname{tr}((D+vJ)^nP),\qquad f_n(0)=b^n.
+\tag{SCP.24}
+$$
+
+For $n\ge4$, put $t_n=4/(13\,2^n)$. The symmetric two-dimensional
+block of $D+vJ$ gives
+$f_n(-t_n)<0<f_n(0)$, so a real zero lies in $(-t_n,0)$. Hence the
+all-one interpolation $P_n(z)=z^nf_n(1/z-1)$ has a zero
+
+$$
+1<z_n<\frac1{1-t_n},
+$$
+
+and no radius $r>1$ works uniformly over this nonempty native family.
+For the strictly positive floor, the same calculation gives a zero of
+$z^nf_n(1/z-1+\varepsilon)$ between
+$1/(1-\varepsilon)$ and $1/(1-\varepsilon-t_n)$ whenever
+$\varepsilon+t_n<1$. This defeats an $\varepsilon$-independent
+near-one gauge, while saying nothing about a different certificate,
+an $\varepsilon$-dependent radius, or computability.
+
+The obstruction is only to this specified straight-line mechanism.
+Strict positivity is neither a mixing theorem nor an effective
+length-tail theorem. The checked Barvinok--Soberón condition that all
+edge entries lie within $0.34/\Delta$ of one is not implied as
+$\varepsilon\downarrow0$; the native table ratios diverge instead.
+

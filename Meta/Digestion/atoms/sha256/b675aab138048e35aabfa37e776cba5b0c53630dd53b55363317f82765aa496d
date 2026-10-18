@@ -1,0 +1,21 @@
+**约定 2.2（原风险及四目标）。** 在原返回切面，有限完整配置行为 $\rho_h$，每配置完整律为 $D_z$。保留两种不同损失
+
+$$
+e_{\rm law}(h)=\operatorname{TV}\!\left(\sum_z\rho_h(z)D_z,T_h^\mu\right),
+\qquad
+e_{\rm conf}(h)=\sum_z\rho_h(z)\operatorname{TV}(D_z,T_h^\mu).
+\tag{2.2}
+$$
+
+$\mathcal H_p,\mathcal H_\beta$ 是第三锁存后相应第四段相位的全部正有限实际历史，包括任意返回。置
+
+$$
+R_{s,H}^j=\sup_{h\in\mathcal H_s,\,\ell(h)\le H}e_j(h),\qquad
+\Phi_H^{j_p,j_\beta}=\max\{R_{p,H}^{j_p}-\rho_p,R_{\beta,H}^{j_\beta}-\rho_\beta\},
+\tag{2.3}
+$$
+
+空域误差上确界取零，$\rho_p=1116529/22781250$，$\rho_\beta=239/6750$。$H=\infty$ 表示去掉取得长度限制，而非改变未来目标。$(j_p,j_\beta)$ 逐一取 law/law、law/conf、conf/law、conf/conf。pending 与 delivered 的残余分别为唯一 Stop 和空残余，精确为零误差。
+
+若菜单中存在相同的有理 $r_k$，可仅在分析中按相同参数分组。组内真实后验比例始终等于原先验比例；把组质量按此比例提升，保持完整目标及后验 TV。来源仍抽取原 $K$，没有更换安装或物理状态。以下按不同 $r_k$ 排序为 $r_1'<\cdots<r_m'$，$m\ge2$；组质量仍至少为 $b$。实际 Fibonacci 菜单可用精确有理比较直接排序。
+

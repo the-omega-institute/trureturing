@@ -1,0 +1,17 @@
+**命题 475.2（整个远尾的临界极限）。** 对这同一选择，有
+
+$$
+\sqrt x\log x\,|T_x(D(x))|\longrightarrow0
+\qquad(x\to+\infty).
+$$
+
+证明保留真实自然数上取整；$e^x\le D(x)$ 及 $x\le e^x$ 支付截止前提。
+当 $x$ 足够大时，命题 475.1 给出
+
+$$
+0\le\sqrt x\log x\,|T_x(D(x))|
+\le A\frac{10(\log x)^2+96\log x}{\sqrt x}\longrightarrow0.
+$$
+
+这里同时趋向无穷的是参数 $x$ 和截止 $D(x)$；上述同一截止的显式上界给出对角极限。
+

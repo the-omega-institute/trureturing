@@ -1,0 +1,12 @@
+**定义 14.7.1（$r$ 阶响应商）。** 对一族允许的局部接口 $\mathcal M$，定义
+
+$$
+M\sim_rN
+\quad\Longleftrightarrow\quad
+J_rF_M(0)=J_rF_N(0)
+$$
+
+且基点读数相同。商类 $[M]_r$ 是当前喷流查询无法区分的机制集合。
+
+<a id="claim-14-7-2"></a>
+

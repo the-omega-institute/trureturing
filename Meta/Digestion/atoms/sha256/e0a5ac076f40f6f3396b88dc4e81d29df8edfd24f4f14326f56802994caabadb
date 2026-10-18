@@ -1,0 +1,19 @@
+**Definition 3.1 (one bit convention).** Fix $m\ge1$ and a public ordered full
+binary scaffold $S$ with exactly $m$ holes and no other leaves. Hole addresses
+$p_1,\ldots,p_m$ are pairwise prefix-incomparable; put $d_i=|p_i|$. Set
+
+$$
+G_0=\langle\alpha,\langle\alpha,\alpha\rangle\rangle,
+\qquad
+G_1=\langle\langle\alpha,\alpha\rangle,\alpha\rangle,
+\qquad
+U_x=S[G_{x_1},\ldots,G_{x_m}],\quad x\in\{0,1\}^m.
+\tag{DAF.2}
+$$
+
+Thus $\operatorname{Lit}(U_x,p_iL)$ is $\alpha$ for $x_i=0$ and `branch` for
+$x_i=1$. Interchanging the two displayed gadgets replaces every bit by its
+complement; it changes none of the bounds. Every $U_x$ has $3m$ alpha leaves,
+word $\alpha^{3m}$ and distinct ordered syntax. At $H\ge3m$ they are actual
+TM57 sources with a common initial $q_H$.
+

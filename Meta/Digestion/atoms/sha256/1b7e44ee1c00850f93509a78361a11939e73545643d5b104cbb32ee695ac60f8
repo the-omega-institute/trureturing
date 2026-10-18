@@ -1,0 +1,36 @@
+**Definition 1.1 (fixed original runtime).** Let
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle s,t\rangle,
+\qquad
+\rho\alpha=\beta,\quad
+\rho\beta=\langle\beta,\alpha\rangle,\quad
+\rho\langle s,t\rangle=\langle\rho s,\rho t\rangle.
+$$
+
+Pairing is ordered. Fix $H\ge1$, $N=2H-1$, the preparation occurrence
+$\xi$, and exactly the canonical continuing dispatcher of
+[Acquired Input Frontier and Replay](https://github.com/the-omega-institute/trureturing/blob/346647b9c5e41ec76f0ea19d5796323dc813f750/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ACQUIRED_INPUT_FRONTIER_AND_REPLAY.md)
+(AIF), Definitions 2.1–2.5. Its literal native rule table, port assignments,
+symbol encoding, reference conventions, and finite control are fixed public
+parameters. They do not depend on the unknown source. The source is installed
+by the paid private input of
+[Transport Memory Completion](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md)
+(PR57), §57, Definition D5, as its unique padded $N$-token packet:
+
+$$
+\mathsf{PAD}=00,\qquad\alpha=01,\qquad\beta=10,
+\qquad\mathsf{PAIR}=11.
+$$
+
+Validation scans the entire allocated packet. The valid installations are
+exactly $u\in\mathcal T_H=\{t:1\le\lambda(t)\le H\}$. Initial input,
+allocation, zeroing, control installation, validation, and descriptors are
+part of the original execution, not source-dependent initial advice.
+
+The supplied no-update producer is executed, its lossless output is
+materialized, and its paid delivery to the declared controller owner is
+completed. Let $a(u)$ be that acquisition fence. The producer's return is
+a subroutine return to the continuing dispatcher. In particular, its native
+Stop is not global halt. The ordinal of $a(u)$ can depend on $u$.
+

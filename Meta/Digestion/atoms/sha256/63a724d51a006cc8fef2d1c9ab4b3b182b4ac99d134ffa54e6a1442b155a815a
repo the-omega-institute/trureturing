@@ -1,0 +1,16 @@
+**定义 121.1（同一有限历史的记录坐标）。** 令 $H$ 为一个固定有限任务的非空实际合法 FIB 历史集。另供有限整数 $k\ge0$ 和每个历史的实坐标 $r_h\in\mathbb R^k$；坐标的取得是新增记录合同，不从原树自动导出。对 $1\le a\le k$ 定义实对角自伴算子
+
+$$
+R_a=\sum_{h\in H}r_h^a|h\rangle\langle h|.
+$$
+
+给方差参数 $t\ge0$，令 $Z_t$ 的单时刻分布为 $N(0,tI_k)$，并定义
+
+$$
+\Phi_t(\varrho)=\mathbb E\left[
+\exp\!\left(-i\sum_aZ_t^aR_a\right)\varrho
+\exp\!\left(+i\sum_aZ_t^aR_a\right)\right].
+$$
+
+$t=0$ 时分布为原点的点质量。$k=0$ 时坐标空间只含一个点，指数空和为零，所有 $\Phi_t$ 为恒等；以下空和均取零。
+

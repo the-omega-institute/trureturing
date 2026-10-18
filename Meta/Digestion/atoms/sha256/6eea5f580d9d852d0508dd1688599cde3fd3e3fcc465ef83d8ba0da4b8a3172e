@@ -1,0 +1,41 @@
+**定义 36.1（Wide source contract and joined phase cells）。** In Chapters 36–40 use the original reader (1.1)–(1.2), with $k\ge2$, $m\ge k$, $T=k+1$, $g=\gcd(m,T)$ and $P=g\mathbb Z/T\mathbb Z$. The two alphabets remain all literal $m$-bit words and the internally legal literal $m$-bit words. A block is observed only at its endpoint. INITIAL value or independent initial $\bot$ is free, and every subsequently emitted complete block costs one. The target $f$ is an arbitrary map on the full jointly attainable INITIAL record set, with arbitrary label coincidences. Put
+
+$$
+\Gamma(j,s)=\bigl(f(0,-j,s),f(1,-j,s)\bigr),\qquad
+\Lambda(j)=\Gamma(j,0),\qquad j\in P,\quad 0\le s<k.
+\tag{36.1}
+$$
+
+The pair is ordered: its components need not agree. By the credited Theorem 29.2, the preset cost of $f$ equals the preset cost of the target $\Gamma$, independent of the actual scalar value. This is a decoder symmetry on one actual stream, not permission to choose different streams for the two values.
+
+The full source prior is unchanged at wide widths. For every $(v,j,s)$, choose the single history (1.3), with $\ell\equiv0\pmod m$, $\ell\equiv-j\pmod T$, and $\ell\ge s+2$. Its separating zero and terminal run $s<k$ make the whole history legal, hence each constituent block internally legal. It realizes all three coordinates together. Under the internally legal alphabet, absorption is realized by following such an endpoint with tail $k-1$ by $10^{m-1}$; rejection occurs at the first bit across the seam. No source history length is observed. These are the supplied wide joint-source witnesses in Definition 24.1.
+
+Call $a\in\{0,\ldots,k-1\}$ a common eligible cut when
+
+$$
+\begin{aligned}
+\Gamma(j,s)&=\Lambda(j)&& (j\in P,\ 0\le s<k-a),\\
+\Gamma(j,s)&=\rho&& (j\in P,\ k-a\le s<k)
+\end{aligned}
+\tag{36.2}
+$$
+
+for one pair label $\rho$ when $a>0$. For $a=0$ the second line is empty. There is no freshness requirement on $\rho$, and $f(\bot)$ is independent of $\rho$. Since $a<k\le m$, the all-one block count before this cut is zero. Thus (36.2) is precisely the credited common-cut criterion of Theorem 24.2, specialized to this width and joined target. In particular, finite preset acquisition is equivalent to existence of one such common cut.
+
+For a literal block $B$ at chronological paid index $t$, write $u_t=tm\pmod T$ and define its folded actual bits and arithmetic successful response by
+
+$$
+d_B(r)=\bigoplus_{\substack{0\le i<m\\i\equiv r\ (T)}}B_i,\qquad
+q_t(j)=d_B(j-u_t)\oplus d_B(j-u_t-1).
+\tag{36.3}
+$$
+
+Indeed $c_{u_t-j+i}=1$ exactly at $i\equiv j-u_t$ or $j-u_t-1\pmod T$. Formula (36.3) describes an endpoint difference on a successful source, even when the word is unsafe on some other source. It confers no intermediate observation. If $g=1$, summing over all actual phases gives
+
+$$
+\bigoplus_{j\in P}q_t(j)=0.
+\tag{36.4}
+$$
+
+Every folded bit occurs twice. For $g\ge2$ this full-cycle identity imposes no parity condition on restriction to the actual subgroup $P$.
+

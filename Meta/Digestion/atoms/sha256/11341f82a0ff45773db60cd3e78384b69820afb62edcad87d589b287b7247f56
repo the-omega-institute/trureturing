@@ -1,0 +1,16 @@
+**定义 C-126.2（截断下置信比）。** 置
+
+$$
+\begin{aligned}
+\varepsilon&=\sqrt{\frac{\log(20/\delta)}{2n}},&
+\ell_j&=\max(0,\widehat p_j-\varepsilon),&
+u_j&=\min(1,\widehat p_j+\varepsilon),\\
+L_3&=\frac1{10}\sum_{j=0}^9\ell_j^3,&
+U_1&=\frac1{10}\sum_{j=0}^9u_j,&
+\widehat R_{\rm low}&=\frac{L_3}{U_1^2}.
+\end{aligned}
+\tag{C126.2}
+$$
+
+由于 $\varepsilon>0$，每个数据集均有 $u_j\ge\min(1,\varepsilon)>0$，故 $U_1>0$。
+

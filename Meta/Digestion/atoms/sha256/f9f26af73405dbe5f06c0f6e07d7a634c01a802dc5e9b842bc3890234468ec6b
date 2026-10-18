@@ -1,0 +1,68 @@
+**Theorem 6.1 (every tail after $L^nN_c(v)$).** For all integers
+$$
+n\ge1,\qquad c\ge n+2,\qquad v\ge3,
+\tag{6.1}
+$$
+every legal history with prefix
+$$
+I,\qquad L^n,\qquad P_c,\qquad L^nN_c(v)
+\tag{6.2}
+$$
+and every legal fifth multiplier, including the empty word, satisfies Theorem 5.1 and has its finite actual-target collision.
+
+**Proof.** Successive prefix multipliers can be
+$$
+L^n,\qquad UL^{c-1-n},\qquad L^nU^{v-1}J.
+$$
+The identities in (4.3) verify the first two endpoints and $U^{v-1}JP_c=N_c(v)$ verifies the last. These are finite literal words with no interior reads. The fourth endpoint is
+$$
+A_3=\begin{pmatrix}cv-1&v\\c+n(cv-1)&1+nv\end{pmatrix}.
+\tag{6.3}
+$$
+Thus its lower-right entry has already changed within the first four reads. Its earlier upper-left entry $c$ also differs from one.
+
+Set $d_*=v-2>0$ and $C=c-1$. In Theorem 5.1's notation,
+$$
+a=cv-1,\quad b=v,\quad x=c+n(cv-1),\quad E=nv,
+$$
+$$
+\lambda=d_* /(nv)>0,\qquad
+\gamma=-d_* /(n^2v)<0.
+\tag{6.4}
+$$
+Indeed $a-1-bC=d_*$ and $b/E=1/n$. Put $z=vC-x$. Direct substitution into (5.1) gives
+$$
+\xi=\frac{cv-3+z/n}{nv},\qquad
+\psi=\frac{2x-vC}{nv},
+$$
+$$
+\Lambda=
+\frac{c(v-1)-2n-2-d_*[cd_*+2(n-1)]/(vC)}{n^2v}.
+\tag{6.5}
+$$
+For a complete simplification, multiplying the defining expression for $\Lambda$ by $nv$ gives
+$$
+nv\Lambda=cv-3+\frac{z+d_*}{n}
++\frac{d_*[2x-vC-d_*-2cnv]}{nvC}.
+$$
+Here
+$$
+2x-vC-d_*-2cnv=-cd_*+2(1-n),\qquad
+z+d_*=cv(1-n)-c+n-2.
+$$
+Substituting these two identities gives (6.5).
+
+To prove its numerator positive, let
+$$
+E_*=c(v-1)-2n-2-\frac{d_*[cd_*+2(n-1)]}{vC}.
+$$
+The parameter constraints imply $C\ge2$, $2n+2\le2c-2$, and
+$cd_*+2(n-1)<cv$. Therefore
+$$
+E_*>c(v-3)+2-\frac{c(v-2)}C
+=c(v-3)(1-1/C)+1-1/C>0.
+$$
+This includes $v=3$ and $n=1$. Thus $\Lambda>0$ and $\gamma\Lambda<0$ for every stated parameter. Theorem 5.1 applies to every final word; its singular branch removes any exceptional final-word condition. ∎
+
+The prefix (6.2) satisfies neither Theorem 3.1's lower-right-one prefix hypothesis nor its upper-left-one mirror hypothesis. The parameter range (6.1) is the range proved here. No extension to $c=n+1$ is asserted by this uniform sign estimate.
+

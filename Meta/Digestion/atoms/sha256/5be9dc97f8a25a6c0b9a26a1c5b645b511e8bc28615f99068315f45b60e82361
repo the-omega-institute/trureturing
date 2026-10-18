@@ -1,0 +1,30 @@
+### 101.1. Original domain and the phase-aligned statement
+
+Retain the four original two-coordinate fibres, local channels
+\(\mathbb C^8\to\mathbb C^4\), fixed correlated encoding, arbitrary reference,
+and unhalved diamond error. For calibrated Grams
+\(G,H\succeq0\), \(G_{ff}=H_{ff}=I_2\), put
+\[
+L=T-G\odot H,\qquad T_{ff}=I_2,\qquad T_{fg}=\tfrac12J_2\ (f\ne g),
+\qquad \delta=F(G,H). \tag{1}
+\]
+The exact calibrated objective of §91 gives
+\(\delta\ge |L_{ij}|\) for coordinates in different original fibres.
+
+Label \(S=\{1,2,3,4\}\), with \(F=\{1,2\}\) a whole original fibre and
+3,4 singletons of two other original fibres. Suppose the supported \(H\) records,
+in the orthonormal basis supplied by \(F\), are
+\[
+e_1,\quad e_2,\quad \psi=(c,s),\quad\phi=(p,q),
+\qquad c,s,p,q\ge0,\qquad c^2+s^2=p^2+q^2=1. \tag{2}
+\]
+Suppose also that the full eight-coordinate \(G\) has the kernel vector
+\[
+a=(-A,-B,b,d)\ \text{on }S,\qquad a=0\ \text{off }S,
+\qquad A,B,b,d>0. \tag{3}
+\]
+No reality, exchange symmetry or rank assumption is made on \(G\).
+All outside records of both Grams may be arbitrary complex vectors and may
+leave the supported spans. Conditions (2)--(3) must hold in the same coordinates;
+they are not a general gauge reduction.
+

@@ -1,0 +1,23 @@
+**Open problem 10.2 (infinite-domain physical-word optimization).** On
+an arbitrary infinite admitted signed fiber, decide feasibility of a
+uniform $(q,a)$ budget when the physical read words have no supplied
+length bound, and give the applicable complete Pareto and rational
+same-source weighted interfaces. The all-source cap already bounds
+useful actual epochs, but there is no finite union $\mathcal P_n$ of
+known entire current sources to support Lemma 7.2. Theorem 8.1's finite
+candidate-cardinality descent is likewise unavailable.
+
+An INFINITE row-image result settles bounded raw recovery negatively;
+a finite source-fiber result settles all the interfaces in §8 positively
+and effectively. Between them, an infinite source fiber with finite row
+image can have bounded or unbounded full-row recovery. Existing CAR,
+SRF, CRF and GRS decisions continue to apply where their entire source
+and action hypotheses hold. The new theorem neither weakens those
+hypotheses nor repeats their recognized-family algorithms.
+
+The two open obligations retain all signed constraints, original whole
+outputs, actual same-register operations and separately charged resources.
+No source-size parameter, finite representative domain or free producer
+has been added. No undecidability or general native impossibility result
+is inferred from these unresolved obligations.
+

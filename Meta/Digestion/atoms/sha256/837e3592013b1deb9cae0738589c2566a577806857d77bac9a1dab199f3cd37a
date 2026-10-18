@@ -1,0 +1,28 @@
+**Definition 1.1 (native trees and literal addresses).** Let
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\qquad
+\rho\alpha=\beta,\quad
+\rho\beta=\langle\beta,\alpha\rangle,\quad
+\rho\langle x,y\rangle=\langle\rho x,\rho y\rangle.
+\tag{ABC.1.1}
+$$
+
+The domain consists of all nonempty finite ordered free trees. There is
+no common bound on size or depth and no supplied skeleton, orbit or template.
+Let $\mathcal P=\{L,R\}^{*}$, with root $\varepsilon$. The reached positions
+of $u$ form $\operatorname{Pos}(u)$; the whole subtree $u|_p$ exists only
+for $p\in\operatorname{Pos}(u)$. The literal reply $r_u(p)$ is one of
+$\alpha,\beta,\mathsf{branch},\mathsf{absent}$. Every finite physical word
+is a legal read request, whether or not it is reached.
+
+For a finite prefix-free set $A\subseteq\mathcal P$, use the complete
+original row $R_A(u)=(C_A(u),\pi_A(u))$ of [SLH, Definition 59.1][SLH].
+The holes occur precisely at $I_A(u)=A\cap\operatorname{Pos}(u)$, in
+lexicographic address order; $C_A(u)$ retains every outside constructor
+and concrete leaf. The complete partition $\pi_A(u)$ equates two holes
+exactly when their whole subtrees are equal. An absent original cut gives
+no hole. In particular $R_\varnothing(u)$ contains all of $u$, whereas
+$R_{\{\varepsilon\}}(u)$ is the constant one-hole row.
+

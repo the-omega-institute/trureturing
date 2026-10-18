@@ -1,0 +1,62 @@
+### 95.6. Symplectic overlap: a separate 19-dimensional diagonal kernel
+
+This step retains C and avoids any inverse of \(\Delta\).
+Write upper roots as \(Z_j=1+a\omega^j+b_1\omega^{-j}\) and
+\(Z'_j=1+c\omega^j+d\omega^{-j}\). Let \(E=\bar e,E'=\bar e'\),
+\(P=1-E,S=2-3E+E/q\), \(Q'=1-E',T=2-3E'+E'/q'\).
+Thus \(ab_1=P\), \(a^3+b_1^3=S\), and similarly for \(c,d\).
+The scaled lower values are
+\(\mathcal L(Z)=G+C(Z-1)+D(\overline Z-1)\), with
+\(\overline Z=(Z^2-3Z+3E)/E\).
+
+For the bilinear overlap \(\sum_j(Z_j\mathcal L'(Z'_j)-
+\mathcal L(Z_j)Z'_j)/3\), define
+\[
+ A_s=-D/E,\qquad B_s=C'-C-D'/E'+D/E,\qquad
+ C_s=0,\qquad D_s=D'/E',\qquad m_s=G'-G.
+\tag{95.9}
+\]
+Direct Fourier summation gives the three cyclic factors
+\(m_s+\omega^jL_0+\omega^{-j}L_1\), where
+\[
+ L_0=A_sa^2c+B_sb_1c+D_sb_1d^2,\quad
+ L_1=A_sb_1^2d+B_sad+D_sac^2.
+\]
+Exchanging \(c,d\) gives the other three factors. Consequently the same
+universal polynomial evaluated at
+\((A_s,B_s,0,D_s,m_s,P,S,Q',T)\) is an all-six-order symplectic norm
+\(N_S\). The original bilinear overlap differs by the nonzero factor
+\(3tt'/\kappa\), where \(t=\sqrt q,t'=\sqrt{q'}\).
+These six identities follow by expanding the displayed Fourier sums for the six permutations; no cyclic covariance of the candidate rays is imposed.
+
+Under the diagonal multiplication map
+\[
+ \mu:\mathcal A_{19}\otimes\mathcal A_{19}\to\mathcal A_{19},
+ \qquad \mu(a\otimes c)=ac,
+\]
+(95.9) becomes \((-D/E,0,0,D/E,0,P,S,P,S)\). The universal integer identity
+\[
+ \mathcal N(-d_0,0,0,d_0,0,P,S,P,S)=0
+\tag{95.10}
+\]
+proves \(\mu(N_S)=0\) over characteristic zero, without a Theta chart.
+The kernel has dimension \(19^2-19=342\). The leading principal 342-by-342 minor has residue 35 modulo 137.
+Thus
+\[
+ N_S(\mathcal A_{19}\otimes\mathcal A_{19})=\ker\mu.
+\tag{95.11}
+\]
+An original symplectically orthogonal pair therefore has the same point
+of (95.5), not merely a coincident projection. Unique lift reconstruction
+implies its selected representatives differ only by a synchronous
+permutation. After restoring the relative Theta parity, the actual
+orthogonal endpoints again belong to the same \(S_3\)-Theta union.
+
+Every generic ray is representable by this selected chart after a
+possible Theta, by the complete single-ray coverage. Ordinary and
+symplectic equations are selected by relative Theta parity; they are not
+simultaneously imposed. Therefore every generic orthogonal edge at these
+four parameters lies within the orbit union of either endpoint, including
+all channel-collision rays. The uniform within-union bipartite
+theorem now excludes all-generic noncanonical orthogonal triples.
+

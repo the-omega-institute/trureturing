@@ -1,0 +1,8 @@
+**定义 35.1（可复用字母表的辅助记录）。** 非空有限实际来源 $X$、固定 $q:X\to B,F:X\to Z$，在每个实际 $b$ 上令
+
+$$
+k_b=|F(q^{-1}\{b\})|,\qquad k_* =\max_{b\in q(X)}k_b.
+$$
+
+辅助标签为 $r:X\to\{1,\ldots,m\}$，解码器使用 $(q,r)$，固定长度最坏位数为 $\lceil\log_2m\rceil$。精确中间容量直接复用 [MinimalAppealLabelCount 的 `minimal_appeal_label_count`](../../../D5/S3/ConceptDynamics/Appeal/MinimalAppealLabelCount.lean) 和 [BinaryRepairCost 的 `binary_repair_cost_is_log_of_minimal_labels`](../../../D5/S3/ConceptDynamics/Coding/BinaryRepairCost.lean)，将观察陪域限制为有限实际像，有 $m_{\min}=k_*$、位数 $\lceil\log_2k_*\rceil$。其理由是纤维内不同目标值必须异标签，每条纤维可独立枚举目标并复用同一字母表，因为解码器已知 $b$。这不计标签取得、计算及译码成本，也不是可变长平均码长。
+

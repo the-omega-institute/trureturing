@@ -1,0 +1,9 @@
+**定义 11.1（共同实现上的原生可用图）。** 原生合法图 $G_F$、合法路径族 $\mathcal P_F(x,y)$、开放变量 $\omega_e$、非负边代价及首达下确界，直接采用 [Fibonacci 原子关系生成](FIBONACCI_ATOMIC_RELATION_GENERATION.md) 中题为“366. FIB 路径支撑上的渗流、首达输运与反应权重”的章节：
+
+$$
+\mathcal P_\omega(x,y)=\{\gamma\in\mathcal P_F(x,y):\omega_e=1\text{ 对全部 }e\in\gamma\},\qquad
+D_\omega(x,y)=\inf_{\gamma\in\mathcal P_\omega(x,y)}\sum_{e\in\gamma}w_e.
+$$
+
+无路取 $+\infty$。同一实现的环境变量、反应权重、时钟及资源按该章节分别保留。外部增边不自动成为原生操作。本章另指定一个无向连接的有根谱系树：$\alpha$ 节点有一个 $\beta$ 子节点，$\beta$ 节点有依次 $\beta,\alpha$ 两个子节点，各边独立同分布 Bernoulli$(p)$。这是 $\rho$ 的逐叶谱系展开，不把 $T_n$ 的括号树或运输位置等同于该谱系树。
+

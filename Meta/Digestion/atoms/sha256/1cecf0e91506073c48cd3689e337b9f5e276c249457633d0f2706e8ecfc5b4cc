@@ -1,0 +1,15 @@
+**Definition 3.2 (singular atoms).** Define
+
+$$
+\mathcal C_2=\left\{\sum_{j=1}^m z_jz_j^\dagger:
+ m<\infty,\quad (z_j)_0\bigl((z_j)_0^2-\alpha(z_j)_1^2-
+ \beta(z_j)_2^2\bigr)=0\right\}.
+\tag{CA.16}
+$$
+
+The empty sum is zero. Here an atom means a rank-one **coefficient
+projector** in this generating cone. It is not a claim of canonical
+factor irreducibility, a unique decomposition or universal ontology.
+Let $J:\mathbb C^2\to\mathbb C^3$ include the last two coefficient
+coordinates. The plane atoms sum to matrices $JWJ^\dagger$, $W\succeq0$.
+

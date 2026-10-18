@@ -1,0 +1,17 @@
+**Theorem 3.3 (initialized reachability is a separate restriction).** If
+only $R_{k,d}\subseteq U_k$ is supplied by an initialized execution family,
+the minimal count at that type is $|B_{k,d}(R_{k,d})|$. The full-carrier
+count (3.1) applies to this restriction exactly when its boundary image is
+all $Q_{k,d}$. It need not apply even when the initial state is admissible.
+
+Proof. The separating words in Theorem 2.2 remain valid for every pair in
+the restricted carrier, and equality of $B$ remains sufficient. Its exact
+quotient is therefore its own boundary image. For strict inequality, take
+$H=[1\ 0\ 1]$ over $\mathbb F_q$, initial prefix $00$, cut $k=2$ and
+remaining budget $d=1$. Every length-two prefix is extendable, and (3.1)
+gives $q^2$ full boundary points. A path returning to type $(2,1)$ cannot
+contain a delete, because the budget never rises; with no delete, any
+append strictly raises the cut. Hence this initialized family has only
+its initial point at that type. This restriction does not remove the
+possible continuation words from that point. $\square$
+

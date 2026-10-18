@@ -1,0 +1,70 @@
+**Theorem 5.1 (one observer, all four quantified failures).** Fix the observer $M$ and $B_0$ above. Set $a=1/4$, $\epsilon_0=1/1000$. For every integer $N\ge7$, install the rational prior
+
+$$
+\mu_{\delta_N}=(1/4,3/4-\delta_N,\delta_N)\text{ on }\{1,2,3\},
+\qquad \delta_N=(1/8)(8/9)^N.
+\tag{5.1}
+$$
+
+Both endpoint masses are at least $a$. For each of the four original objective pairs separately,
+
+$$
+\Phi_\infty^{j_p,j_\beta}(M,\mu_{\delta_N})-
+\Phi_N^{j_p,j_\beta}(M,\mu_{\delta_N})
+\ge\frac{39973}{13197840}>\epsilon_0.
+\tag{5.2}
+$$
+
+In fact, throughout $0<\delta\le1/4$,
+
+$$
+\Phi_\infty(M,\mu_\delta)=L:=1/4-\rho_p
+=9157567/45562500,
+\qquad R_p=1/4<1/3,\quad R_\beta\le4/35<1/3.
+\tag{5.3}
+$$
+
+**Proof.** Put $b_i=[r_i(1-r_i)]^3$ and $f_i=r_i^6(1-r_i)^{10}$. Actual likelihood at $h_n$ is $b_if_i^n$. No parser or record factor is added to (2.2). The endpoint-conditional depth-2/depth-1 odds are at least
+
+$$
+2(b_2/b_1)(f_2/f_1)^n,
+\quad b_2/b_1=19683/15625,
+\quad f_2/f_1=2541865828329/2441406250000>1.
+$$
+
+Hence the endpoint-conditional mean $m_E(n)$ obeys
+
+$$
+m_E(n)\ge m_{\min}:=\frac{r_1b_1+2r_2b_2}{b_1+2b_2}
+=314321/824865=3/8+g,
+\quad g=39973/6598920>0.
+\tag{5.4}
+$$
+
+The log derivative of $f(r)=r^6(1-r)^{10}$ is $(6-16r)/(r(1-r))$. Its unique maximum on this interval is at $r_3=3/8$, and $f_3>f_2>f_1$. For every fixed positive $\delta$,
+
+$$
+\frac{1-\nu_{h_n}(3)}{\nu_{h_n}(3)}
+=\sum_{i=1,2}\frac{\mu_\delta(i)b_i}{\delta b_3}(f_i/f_3)^n\longrightarrow0.
+\tag{5.5}
+$$
+
+This conditions the one installed common source on actual positive finite words. It does not assign posterior mixtures arbitrarily. Their source probabilities are $\sum_i\mu_\delta(i)b_if_i^n>0$. By (5.4), $m(h_n)=(1-\nu_{h_n}(3))m_E(n)+\nu_{h_n}(3)(3/8)\ge3/8$, and it tends to $3/8$. Lemma 4.1 therefore gives special-history errors bounded by $1/4$ and converging to $1/4$. All ordinary p errors are at most $1/7$, so $R_p=1/4$; all beta errors are at most $4/35$. The rational inequality $4/35-\rho_\beta<1/4-\rho_p$ proves (5.3). No finite $h_n$ attains the displayed p supremum: its endpoint masses remain positive, so its mean is strictly greater than $3/8$.
+
+For any actual word of $t$ Reads, use the depth-1 term alone in the Bayes denominator:
+
+$$
+\nu_h(3)\le4\delta(9/8)^{A(h)}(15/16)^{B(h)}
+\le4\delta(9/8)^t.
+\tag{5.6}
+$$
+
+With $\delta=\delta_N$ and $t\le N$, this is at most $1/2$. At any special history under that cap, (5.4) implies $m(h_n)\ge3/8+g/2$ and its full error is at most $1/4-g/2$. At every other capped history use Lemma 4.2, including all seeds and records. The exact comparisons
+
+$$
+1/7<1/4-g/2,\qquad
+4/35-\rho_\beta<1/4-g/2-\rho_p
+$$
+
+give $\Phi_N\le L-g/2$. This is an upper bound on every actual history below the cap, with full future loss. Subtract from (5.3) to obtain (5.2). Since $\rho_h$ is always a point mass, each use of law and conf agrees pointwise; the argument proves law/law, law/conf, conf/law and conf/conf for this same observer and prior, rather than importing one order's result into another random model. $\square$
+

@@ -1,0 +1,13 @@
+**Corollary 93.3.** A calibrated local minimum of the original four-fibre problem with both full local Gram ranks seven and error strictly below 1/4 cannot have common active-support occupancy (1,1,1,0). Consequently the possible doubly rank-seven patterns left by section 92 are reduced from five to four, up to permutation of the original fibres:
+
+\[
+ (2,1,1,0),\qquad (1,1,1,1),\qquad
+                (2,2,1,0),\qquad (2,1,1,1).                 \tag{29}
+\]
+
+**Proof.** The common-witness theorem and exact active-support reduction of section 92 give a reciprocal phase gauge preserving the full product coefficient and target. On a support of occupancy (1,1,1,0), the principal Grams then coincide and have rank two. The complete restricted norm equals the full value because the common norming witness is supported there; restriction monotonicity alone also suffices for the lower bound. Equation (27) contradicts a value below 1/4. Combining this exclusion with Theorems 92.3–92.4 leaves precisely (29).
+
+The corollary refines the unresolved list in sections 92.7 and 92.9. A zero occupancy still means an absent whole fibre, whereas an occupancy one retains only one coordinate of a two-coordinate fibre. No pattern in (29) is excluded here. Unequal full Gram ranks and the other lower-rank common-stress cases remain unresolved. For arbitrary leaking channels, calibration is invoked only to compare the unrestricted global optimum with an attained calibrated optimum, with no rank-preservation or local-minimum transfer. The unrestricted original-channel optimum remains in [√3−3/2,1/4]; neither its quarter lower bound nor a classification of all quarter-error attainters follows from this section.
+
+The proof uses ordinary real Lagrange multipliers, polynomial resultants, and Sturm's real-root theorem as established mathematical tools. For the last, see [Eisermann, The Fundamental Theorem of Algebra made effective: an elementary real-algebraic proof via Sturm chains](https://arxiv.org/abs/0808.0097). The specific sharp complex-Gram minimum is derived in Theorem 93.1, and the physical consumer uses the adaptive norm and common-support reduction of sections 91–92.
+

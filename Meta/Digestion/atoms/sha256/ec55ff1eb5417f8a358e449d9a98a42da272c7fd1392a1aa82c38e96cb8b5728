@@ -1,0 +1,16 @@
+**Convention 8.3 (failure and availability).** Under the specimen-only
+contract a complete table is available only if the specimen survives and
+the sampler actually finishes. The full-programme joint theorem cannot be
+asserted from those censored data alone. For a source-family input the
+canonical survival is $S(T)\geq e^{-LT/\eta}$. If the actual prefix sensor
+leaves this canonical specimen marginal unchanged and has a joint
+good-event probability at least $1-\alpha$, the intersection of
+survival and good sensing has probability at least
+$\max(0,e^{-LT/\eta}-\alpha)$, by the union bound. This lower bound is
+specific to the source-family survival calculation, not every arbitrary
+input in (SC.7). It is not guaranteed acquisition, a conditional-on-survival
+error theorem, or permission to repeat. On failure retain the actual prefix
+and $f$ with an incomplete whole-programme result. Under the extra
+programme-source recorder, full command records may instead continue after
+failure; their generation and storage are paid even on that branch.
+

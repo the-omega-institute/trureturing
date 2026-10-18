@@ -1,0 +1,64 @@
+**Lemma 210.1.** There is an actual genuine owner kappa_owner, distinct from
+tau, whose fixed reservoir pair is not {Z,U}, and whose P-angle expense
+exceeds pi. Tau also has P expense exceeding pi. Hence these two owners
+reserve more than 2*pi of the complete 5*pi capacity.
+
+Consider the maximal axial M run containing sigma. It keeps pair {C,D}
+by actual face transport. Section 209 shows that it has at most two genuine
+slots, each in a distinct owner, in addition to its one flat M slot.
+It cannot be the whole M circle, because degree(M)>=6.
+
+At either transverse boundary M slot, the owner has frame
+ (W,M,A,B,M,A), {A,B}={C,D}.
+Its two transverse M angles are positive and at most pi/2, since their
+sum is part of the total genuine M budget pi. At w0=1+m+a its M cosine
+numerator equals
+ [a+m*(1+m+a)]*(1+a+b-m)<0.
+Strict increase implies w>w0. W cannot be special by its fixed-pair
+barrier, and cannot be M,C,D. Thus W is Z or U. The positive response
+parameters for the axial W slot and transverse M angle have sum >1:
+a<m-2 and w>m+2 give the strict bound of §168. Consequently the original
+P expense theta_W+2*beta_M exceeds pi. Each boundary owner's pair
+{M,A} is not {Z,U}.
+
+One of the two boundary owners is the chosen tau. If the other is
+distinct, it is the required kappa_owner. Suppose both belong to tau.
+Then the two source-run boundary slots are tau's two transverse M slots.
+Since the source run plus tau has at most 1+2+2=5 M slots, degree(M)>=6
+forces a new owner on the other arc of the complete M circle. The first
+such owner is across a remaining tau face with labels {M,Z,C}; self
+pairing cannot supply a new original M slot. The target possibilities
+are exactly
+ (i) axial Z, pair {M,C};
+ (ii) axial M, pair {Z,C};
+ (iii) axial C, pair {M,Z}.
+Its pair differs from {C,D} and {Z,U}, and the owner is neither sigma
+nor a source-run axial M owner nor tau.
+
+For (i), theta_Z+2*beta_M>pi by §168; for (ii), theta_M+2*gamma_Z>pi
+by §169, using c<m-2 and z>m+2. Both are actual P expenses.
+For (iii), let the other axis value be q, and put k=z+m and h=z-m.
+The increasing Z numerator at q0=1+z+m is not needed. Instead, if q is
+special then q<q0; if q is M,C,D,Z then q<q0. If q=U>=q0, the owner
+has an axial U and reservoir pair {M,Z}, all three values greater than
+three; the final paragraph below directly proves P expense >pi.
+If q=U<q0 the following computation applies as well.
+
+With r=c, q<k+1, the exact L,J satisfy
+ L-2*J>k^2-(3*c+1)*k-4*(c+1)+2*h^2>0.
+For the last strict inequality, set z=m+c+1+t, with t>0. At t=0 the
+polynomial is 2*(2*m^2-m*c+m-c-1)>0, since c<m-2. Its derivative in t
+is 4*m+3*c+5+6*t>0. Also kappa^2>8/9 because z,m>3. Thus
+(beta_M+gamma_Z)=2*atan(kappa*sqrt(L/J))>pi/2, and its four transverse
+P slots already consume more than pi.
+
+For the deferred case, or any genuine owner with a P axis r and both
+reservoir labels in P, all r,a,b exceed three. Therefore kappa>sqrt(8/9)
+and lambda_r>2/3>1/2. For t=cot(theta_r/2),
+ 2*atan(lambda_r*t)>atan(t):
+if the left side is at least pi/2 this is immediate; otherwise its
+tangent is 2*lambda_r*t/(1-lambda_r^2*t^2)>t.
+Hence theta_r+2*(beta_a+beta_b)>pi. These are five original P slots,
+even when the axial label repeats a transverse label. This completes
+all target cases and proves the second-reserved-owner lemma.
+

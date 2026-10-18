@@ -1,0 +1,82 @@
+**定理 40.2（全部历史过滤后的精确末切片）。** 对任意实记录 $\mathcal H$ 和任意实数 $m$，以下保留参数与整个集合
+
+$$
+\mathcal K_{M,m}(\mathcal H)=\{W\in\mathcal K(\mathcal H):f_M(W)=m\}
+\tag{40.11}
+$$
+
+双射；不可达数据或不兼容响应允许给空集。它覆盖普通源、奇异源、全部低次、正负增益、零采样和零末增益，不预设有限性。
+
+先选 $b>0,0<r<1$，设
+
+$$
+c=\frac{r(1-r)}b,\quad j=b+c,\quad u=1+2b,\quad
+\eta=\eta_{\mathcal H}(b),\quad \ell=\ell_b(r)>0,\quad h=h_b(r).
+\tag{40.12}
+$$
+
+这里无下标 $\eta,\ell,h$ 仅在本切片构造内简记。随后强制
+
+$$
+\begin{gathered}
+G=\frac{m-\eta}{\ell},\qquad
+\lambda=\frac{4uG-\Theta}{b+4},\qquad d=a_0-\lambda,\\
+v_4=\frac{x_4+\lambda}{u},\qquad v_6=\frac{x_6+\lambda}{u},\\
+g(t)=\lambda\frac{(t-4)(t-6)}{24}
+-v_4\frac{t(t-6)}8+v_6\frac{t(t-4)}{12}.
+\end{gathered}
+\tag{40.13}
+$$
+
+这是一个完整多项式，系数为
+
+$$
+\begin{aligned}
+\mu&=-\frac{5\lambda}{12}+\frac{3v_4}{4}-\frac{v_6}{3}
+=\frac{-5(u-1)\lambda+9x_4-4x_6}{12u},\\
+\nu&=\frac{\lambda}{24}-\frac{v_4}{8}+\frac{v_6}{12}
+=\frac{(u-1)\lambda-3x_4+2x_6}{24u}.
+\end{aligned}
+\tag{40.14}
+$$
+
+拒绝整个零多项式，即拒绝 $\lambda,\mu,\nu$ 同时为零；然后必须保留全部四个未除样本的历史过滤：
+
+$$
+\begin{aligned}
+x_1+\lambda&=j g(1),\\
+x_2+\lambda&=(1+b)g(2),\\
+x_3+\lambda&=(j+r)g(3),\\
+x_5+\lambda&=(j+2r)g(5).
+\end{aligned}
+\tag{40.15}
+$$
+
+其中时钟二的偶数式不能省略。若某样本为零，该行恰要求左边为零；不额外要求 $G$、任一系数或任一样本非零。
+
+证明先给系数。式 (40.13) 的三个基项分别展开为
+
+$$
+\lambda\left(1-\frac{5t}{12}+\frac{t^2}{24}\right),\qquad
+\frac{3v_4}{4}t-\frac{v_4}{8}t^2,\qquad
+-\frac{v_6}{3}t+\frac{v_6}{12}t^2.
+$$
+
+由此得到式 (40.14) 的第一种形式。代入 $v_4,v_6$ 后，一次系数的 $\lambda$ 分子为 $-5u\lambda+9\lambda-4\lambda=-5(u-1)\lambda$，二次系数的对应分子为 $u\lambda-3\lambda+2\lambda=(u-1)\lambda$，其余项正是所列 $x_4,x_6$，所以第二种形式也成立，没有恰二次条件。
+
+必要性：任取切片中的实际世界，它唯一给出自身 $b,r$，秩一强制式 (40.12) 的 $c$。定理 40.1 和正 $\ell$ 强制实际 $G=(m-\eta)/\ell$，继而强制实际 $\lambda,d$。四、六读强制 $v_4=g(4),v_6=g(6)$；三节点插值强制整个式 (40.13)，所以系数也被固定。其整个增益非零且四个剩余实际行都成立，故必被保留。
+
+充分性：一个保留的 $b,r$ 给四元严格正、迹一、行列式零的源，故秩恰一；它也给一个非零次数至多二的整个增益和一个常漂移。在 $0,4,6$ 三节点，式 (40.13) 的值分别为 $\lambda,v_4,v_6$，因此这三个原方程自动成立。式 (40.15) 给另外四个原方程，全部七祖先均成立。还须确认构造中的 $G$ 是实际 $g(7)$，而不是另配标签。式 (40.7) 对构造的多项式给
+
+$$
+\begin{aligned}
+8u g(7)
+&=(u+7)\lambda+7(2x_6-x_4)\\
+&=2(b+4)\lambda+2\Theta=8uG,
+\end{aligned}
+$$
+
+最后一步用所选 $\lambda$。因为 $u>0$，得到 $g(7)=G$，实际末 $M$ 响应便为 $\eta+\ell G=m$。故这些条件足以产生切片世界。
+
+固定 $\mathcal H,m$ 后，保留参数 $b,r$ 固定 $c,j,u,G,\lambda,d$ 以及整个 $g$；每个世界又返回其自身 $b,r$。不同参数对改变源的 $b$ 或 $r$，故目标不同。这证明双射和整个切片等式，未通过全部过滤的形式参数从未被称为世界。∎
+

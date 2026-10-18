@@ -1,0 +1,20 @@
+**Proposition 4.3 (Hidden memory and the cut-budget boundary).** In this displayed realization at fairness, with natural-log information and $W_r=X_{-r:-1}$ (the empty observation at $r=0$),
+
+$$
+C_{1/2}(r):=I_{J_{1/2}}(H_{-r};H_0\mid W_r)
+=H_{J_{1/2}}(H_0\mid W_r)\ge\log2\qquad(r\ge0).
+\tag{4.5}
+$$
+
+Thus a nonsummable conditional hidden-endpoint information series can coexist with zero observable erasure defects. In particular, the entropy-budget inequality $\tau_{P_p}(0)\le H_{J_p}(H_j)$ fails on this family.
+
+Proof. Given a compatible hidden state and an observed symbol, the next hidden state is uniquely determined: an active XOR determines the new spin, and a separator copies it. Hence $H_0$ is a function of $(H_{-r},W_r)$. At fairness spin complementation preserves the law, the observation and the phase, but flips the endpoint spin. Conditional on $W_r$ and its starting phase, that spin is therefore uniform. Since the endpoint state records phase and spin, its conditional entropy is $\log2$ plus the remaining conditional phase entropy, including on all-zero phase-ambiguous words. This proves (4.5); Proposition 3.3 gives the simultaneous zero observable defects. The hidden-information statement concerns this realization and is not a minimality assertion.
+
+At any cut $j$ the actual past $X_{i<j}$ and future $X_{i\ge j}$ are conditionally independent given the four-valued $H_j$. Data processing bounds their mutual information by $H(H_j)\le\log4$; finite exterior blocks suffice to obtain the same whole-half-line bound. But at $K=16$, $p_K=137/272$, (4.3) gives
+
+$$
+\sum_{r=0}^{33}(e_{L,P_{137/272}}(r)+e_{R,P_{137/272}}(r))\ge68/9>\log4.
+$$
+
+Larger $K$ makes this sum arbitrarily large at fixed state count. Repeated defects with whole-opposite-side conditioning cannot be telescoped into one cut entropy. This refutes that budget, not arbitrary parameter-dependent estimates or universal per-law summability. $\square$
+

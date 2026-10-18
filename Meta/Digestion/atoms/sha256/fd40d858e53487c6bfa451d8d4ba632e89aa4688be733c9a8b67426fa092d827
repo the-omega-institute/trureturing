@@ -1,0 +1,23 @@
+**命题 4.3（局部五态纤维的适用域）。** 使用上述既有五态反解，固定 $(X,Z,Y)$ 的可行概率律为
+
+$$
+\begin{aligned}
+p_\kappa&=(1-X-Z-Y+\kappa,\ X-\kappa,\ Z,\ Y-\kappa,\ \kappa)^{\mathsf T},\\
+I(X,Z,Y)&=[\kappa_-,\kappa_+],\\
+\kappa_-&=\max(0,X+Z+Y-1),\qquad \kappa_+=\min(X,Y).
+\end{aligned}
+$$
+
+存在可行律恰要求 $X,Z,Y\ge0$ 且 $\kappa_-\le\kappa_+$。归一化三均值映射的带符号核为
+
+$$
+\ker\begin{pmatrix}\mathbf1^{\mathsf T}\\P\end{pmatrix}
+=\operatorname{span}\{d\},\qquad d=(1,-1,0,-1,1)^{\mathsf T}.
+$$
+
+但可行纤维的仿射维数为一恰要求 $\kappa_-<\kappa_+$；两端相等时为零。
+
+**证明。** 令 $p_{13}=\kappa$，三均值依次给出 $p_1=X-\kappa$、$p_2=Z$、$p_3=Y-\kappa$，总质量给出 $p_0$。五项非负恰给区间端点。对带符号质量使用总质量零的同一消元，得到任意核向量为 $td$。归一化加三个均值的秩为四；只有区间实际含两个点时，形式方向才产生概率纤维的一维变化。$\square$
+
+不带总质量行的 $\ker P$ 是二维，例如 $e_0$ 也在其中。限制支持集可能去掉 $d$ 所需的角点而使纤维为零维；去掉顶点 $s_2$ 则仍可保留底面方向。概率边界 $X=0$ 强制 $\kappa=0$，所以完整五态字典本身也不保证每条可行纤维非退化。
+

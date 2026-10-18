@@ -1,0 +1,38 @@
+**Lemma 2.3 (Finite-product sufficiency and adaptive execution).** Two
+integer address assignments on the same tree having the signature of
+Definition 2.2 have the same $Z$-law for every allowed $p$.
+
+Proof. Fix a phase $\phi$. The distinct indices in (2.3) form a finite
+set $V$. If $s:V\to\{0,1\}$ is a spin assignment, its probability under
+the actual source conditional on that phase is
+
+$$
+\prod_{z\in V}p^{s(z)}(1-p)^{1-s(z)}.
+\tag{2.4}
+$$
+
+Equal signatures identify these vertices bijectively by their slots,
+sending the target index to the target index. Transporting $s$ along
+this bijection gives the identical product mass. The target state is
+$h_{j,\phi,s(q_{j,\phi})}$. Each node of parity $\phi$ has potential
+reply equal to the XOR of its minus and plus spins, and each other node
+has potential reply zero. Consequently the complete node-indexed arrays
+and the target have the same conditional law:
+
+$$
+\left(H_j,(X_{t_v})_{v\text{ a read node}}\right).
+\tag{2.5}
+$$
+
+This compares finite-coordinate distributions of the same $J_p$; it
+grants the protocol no access to the spins or to potential replies at
+unvisited nodes. Average the two conditional laws using their original
+weights $1/2,1/2$. Execution is a deterministic function of this whole
+array: use the potential reply at each visited node to select its child.
+The reached leaf label and depth give $(O,D,N)$, with $D=0$ and $O=\bot$
+only at a $\bot$ leaf and with its actual depth still giving $N$.
+Applying that function to the equal array laws proves the assertion.
+The argument is a product identity for every $p$, not a fit to a chosen
+numerical bias. It restates the sufficiency interface in [Original,
+Theorem 12.2][Original]. $\square$
+

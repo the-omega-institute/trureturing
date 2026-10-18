@@ -1,0 +1,65 @@
+### 78.2. Rational channel normalization and original equations
+
+Put \(R=3-b^2\), \(B=3+b^2\), \(h=\sqrt{R/(1+b^2)}\), and
+\(\kappa=(b-i)h\). Write the original input as \((x_j,y_j/\kappa)\), so
+\(|x_j|^2=1\), \(|y_j|^2=R\), and set \(X=\sum x_j\), \(Y=\sum y_j\).
+The original six output equations are equivalent to \(S_j=D_j=0\), where
+\[
+\begin{aligned}
+S_j={}&|X|^2+|Y|^2/R+\Re[(-3+ib)\bar Xx_j-\bar Xy_j
+ +\bar Yx_j+(-3-ib)\bar Yy_j/R],\\
+D_j={}&\Re[2(b+i)\bar XY+R(b+i)\bar Xx_j+(-2b-iB)\bar Xy_j
+ +(-2b+iB)\bar Yx_j-(b-i)\bar Yy_j+2iB\bar x_jy_j].
+\end{aligned}                                                    \tag{78.1}
+\]
+Indeed, for the two unnormalized outputs \(A_j,C_j\) of \(\sqrt6H_0\),
+\(|A_j|^2+|C_j|^2-12=2S_j\) and
+\((1+b^2)h(|A_j|^2-|C_j|^2)=2D_j\) on the input circles. Off those
+circles the second formula has additional diagonal term
+\(-2bR|x_j|^2+2b|y_j|^2\). Expanding the actual two block rows gives these
+identities directly.
+
+In the selected chart fix the unique phase \(X=3t>0\), write
+\(x=t\mathbf1+u\), and interpolate
+\(y=Gt\mathbf1+Cu+D\bar u\). Define
+\[
+\begin{aligned}
+\alpha&=3-ib-\bar G,&\beta&=R+(3+ib)\bar G,\\
+Y_c&=\bar GC+G\bar D-|C|^2-|D|^2+C\bar D,\\
+L_q&=R(b+i)+(-2b+iB)\bar G,&N&=(-2b-iB)-(b-i)\bar G,\\
+T&=3(L_q+NC+\bar N\bar D)-2iB(\bar G+2\bar D-\bar C),\\
+E_c&=\bar CT-2iB Y_c,&A_c&=|C|^2+|D|^2,&B_c&=|CD|^2,\\
+J_c&=18(b+i)G+3L_q+3NG+2iB(G-C+2D).
+\end{aligned}                                                    \tag{78.2}
+\]
+The exact quotient of Theorem 75.3, in these nonsingular scaled coordinates,
+is
+\[
+\begin{gathered}
+\beta C+\bar\beta\bar D=-R\alpha,\qquad E_c=0,\\
+N_y=(A_c-R)|Y_c|^2+B_c[|G|^2-A_c+4\Re(C\bar D+Y_c)]=0,\\
+N_d=\Re(2iBC)|Y_c|^2+B_c\Re J_c+\Re(4iBC|D|^2Y_c)=0.
+\end{gathered}                                                    \tag{78.3}
+\]
+Retain \(\beta CDY_c\ne0\). Put
+\[
+q=B_c/|Y_c|^2,\quad e=-Y_c/(\bar CD),\quad
+\delta=q^2(3-8\Re e)+6q-1.
+\tag{78.4}
+\]
+The strict real domain is \(0<q<1\), \(\delta<0\). Reconstruct
+\(t=\sqrt q\), \(\xi=t\bar e\), all six orders of the three distinct unit
+roots of \(z^3-3tz^2+3t\xi z-\xi=0\), and the interpolated lower channel,
+then divide that channel by \(\kappa\). This is necessary and sufficient,
+not only a projected necessary system.
+
+On \(E_c=0\), replace the last two equations by
+\[
+\begin{aligned}
+N_{yD}&=(A_c-R)|T|^2+4B^2|D|^2[|G|^2-A_c+4\Re(C\bar D+Y_c)],\\
+N_{dD}&=\Re(2iBC)|T|^2+4B^2|D|^2\Re(J_c+2T).
+\end{aligned}                                                    \tag{78.5}
+\]
+Multiplication by \(|C|^2/(4B^2)\) recovers \(N_y,N_d\). The division is
+reversible on the retained chart; no zero-denominator stratum is discarded.
+

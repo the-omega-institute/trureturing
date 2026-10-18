@@ -1,0 +1,20 @@
+**Definition 7.1 (certificate data).** For any choices in Definition 6.1,
+put $\eta=w/\sqrt N$ and define
+
+$$
+\begin{aligned}
+A_\chi&=\frac{g}{2\pi\sqrt N}\int_I\chi(k)C_1(k)dk,
+&a_\chi&=\frac{g}{2\pi\sqrt N}\int_I\chi(k)R_+(k)dk,\\
+B_\chi&=\frac{q_g[w]}N-E,
+&C_\chi&=\frac KN+gB_\varepsilon,\\
+\Delta_\chi&=\frac{\sqrt{B_\chi^2+4A_\chi^2}-B_\chi}{2},
+&\delta_\chi&=\frac{\sqrt{C_\chi^2+4a_\chi^2}-C_\chi}{2}.
+\end{aligned}
+\tag{7.1}
+$$
+
+The subscripts distinguish $B_\chi$ from the inherited nonnegative
+constant $B_\varepsilon$. The values in (7.1) are real quantities
+defined by the actual restricted minimizer, the chosen bump and the
+one fixed native realization.
+

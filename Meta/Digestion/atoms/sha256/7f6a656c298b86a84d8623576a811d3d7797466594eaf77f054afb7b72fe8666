@@ -1,0 +1,40 @@
+**Theorem 84.1 (The finite row criterion for the original hard count).** Use
+(83.2)--(83.5). For every $k\in\mathbb N_0$, $\kappa_\varepsilon\le k$
+is equivalent to the following finite linear feasibility system:
+
+$$
+\begin{gathered}
+w_T\ge0\quad(T\in\mathcal T_{L,k}),\qquad \sum_Tw_T=1,\\
+p_b(0)\ge1-a_n-\varepsilon,\qquad
+p_b(n)\ge a_n-\varepsilon,\qquad
+p_b(0)+p_b(n)\ge1-\varepsilon
+\quad\bigl(b\ne1^L,\ n=n_L(b)\bigr),\\
+p_{1^L}(0)\ge1-\varepsilon.
+\end{gathered}
+\tag{84.1}
+$$
+
+All $2^L$ inputs occur in these rows. There are $3(2^L-1)+1$ TV rows;
+a negative right side is permitted and requires no change of convention.
+
+**Proof.** For a probability $p$ on $J$ and $n\le L$, the target's only
+possible negative discrepancies occur at $0$ and $n$. The TV mass
+calculation already used in (77.7) therefore gives
+
+$$
+\begin{aligned}
+\operatorname{TV}\left(\sum_jp(j)\delta_{\theta_j},\lambda_n\right)
+ &=(1-a_n-p(0))_++(a_n-p(n))_+\\
+ &=\max\{0,\ 1-a_n-p(0),\ a_n-p(n),\ 1-p(0)-p(n)\}.
+\end{aligned}
+\tag{84.2}
+$$
+
+The second equality follows by considering whether neither, one, or both
+of the two untruncated deficits are positive. Thus its cap is exactly the
+three corresponding rows of (84.1). The distance to $\delta_{\theta_0}$
+is $1-p(0)$, giving the last row. Definition 83.2 and Theorem 83.3 now
+prove both implications. The whole-carrier necessity is furnished by
+Theorem 83.3, not by assuming that the original competitor had finite
+support. $\square$
+

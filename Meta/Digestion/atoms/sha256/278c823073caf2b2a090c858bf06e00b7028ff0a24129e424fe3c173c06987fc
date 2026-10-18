@@ -1,0 +1,36 @@
+**定义 89.1（The full original target with one triple）。** Retain the original integer weights, matched $V_{16}\bmod2$ scalar and bit transitions of [IC, Definitions 1.1–1.3 and Interface 1.4; Definition 87.1], with exactly
+
+$$
+k=16,\qquad m=14,\qquad T=k+1=17,\qquad
+g=\gcd(14,17)=1,\qquad
+\gamma_i=\mathbf1_{\{0,16\}}(i\bmod17).
+\tag{89.1}
+$$
+
+The prior is all finite actual complete-fourteen-bit histories, including the empty history and rejected histories. Successful INITIAL records are $(v,-j,s)$, with $v\in\mathbb F_2$, $j\in\mathbb Z/17\mathbb Z$ and $0\le s<16$ jointly actual; $\bot$ is separately absorbing. The source length is unobserved. Take arbitrary tables $\lambda_0,\lambda_1:\mathbb Z/17\mathbb Z\to Y$, and write
+
+$$
+\Lambda(j)=(\lambda_0(j),\lambda_1(j)).
+\tag{89.2}
+$$
+
+Require the equality classes of this ordered join to be one three-element class $D$ and fourteen singleton classes. Thus $|\Lambda[\mathbb Z/17\mathbb Z]|=15$. The component tables need not have equal partitions, disjoint images or prescribed individual class counts. Choose $R$ fresh from both entire low images and any independent $L_\bot$, allowing $L_\bot$ to coincide with any other label. Define the complete immutable target and its history pullback by
+
+$$
+\begin{aligned}
+f(v,-j,s)&=
+\begin{cases}
+\lambda_v(j),&0\le s<14,\\
+R,&s\in\{14,15\},
+\end{cases}\\
+f(\bot)&=L_\bot,\qquad
+F(w)=f(q_{\rm INITIAL}(w)),\\
+P&=\{0,2\},\qquad N=\{1,15,16\}.
+\end{aligned}
+\tag{89.3}
+$$
+
+Here $P,N$ are root-charge sets, not restrictions on the actual phase prior. All seventeen phases and all sixteen successful INITIAL tails are present. The target is never reevaluated on an updated record.
+
+Keep both original alphabets, all fourteen-bit words and the fourteen-bit words internally avoiding $1^{16}$. They coincide as literal word sets because $14<16$, while rejection at a block boundary is still enforced. The free initial output is $v$ or $\bot$; later observations are only that source's own completed issued-block endpoints. ONE GLOBAL requires prefixes of one preset literal stream for this fixed full target on both values and every actual source, with its own endpoint decoder and stopping rule. Each issued complete word costs one block and fourteen emitted bits, including every wait, padding, repair and the whole suffix after absorption. No reset, copy, hidden INITIAL clock, intermediate reading or borrowed archive is allowed.
+

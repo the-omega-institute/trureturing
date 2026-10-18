@@ -1,0 +1,25 @@
+### 2.5 Proof of the resource count and angle tolerance
+
+Apply $H$ to each of the $n$ prepared zeros to obtain the product probe. After $q$ successive device calls, apply $S^\dagger$ and then $H$ at each site and measure computationally. The measured pre-rotation observable is
+
+$$
+(HS^\dagger)^\dagger Z(HS^\dagger)=SXS^\dagger=Y.
+$$
+
+For computational outcome $z_i\in\{0,1\}$, set $y_i=(-1)^{z_i}$ and $\widehat s_i=-y_i$. There are $n$ preparation gates and $2n$ readout gates, giving $3n$ known gates in total, together with $n$ measurements and $n$ retained answer bits. There is one uninterrupted source run on the prepared system, not $q$ independent preparations, and no auxiliary system is needed. The operation counts do not price calibration, gate implementations, storage lifetime or later service-query computation.
+
+For the perturbed product source of Assumption 1.6, the expectation after $L$ calls on factor $i$ is
+
+$$
+-\sin\big(2L(s_i\theta+\varepsilon_i)\big)
+=-s_i\cos(2L\varepsilon_i).
+$$
+
+The same decoder is correct on that factor with probability
+
+$$
+\frac{1+\cos(2L\varepsilon_i)}2=\cos^2(L\varepsilon_i).
+$$
+
+Product structure gives the exact success product in (2.5). For $x_i\in[0,1]$, $\prod_i(1-x_i)\ge1-\sum_i x_i$, by induction using $(1-x)(1-y)\ge1-x-y$. Apply this with $x_i=\sin^2(L\varepsilon_i)$ and use $|\sin u|\le|u|$ to prove the two inequalities and the stated sufficient tolerance. Constant angles and ideal preparation/readout are essential premises of this calculation; it introduces no claim about general noisy channels or calibration cost.
+

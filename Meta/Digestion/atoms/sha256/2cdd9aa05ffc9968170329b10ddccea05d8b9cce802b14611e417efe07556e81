@@ -1,0 +1,19 @@
+**Remark 1.5 (the separate complete reader).** The unchanged reader has
+$K_{\rm reader}=8$ installed states: three running states $e_0,Q_2,e_1$
+and five distinct complete-row halts. For the supplied fixed order $i_1,i_2$
+of $\{1,2\}$ its table is
+
+| state | literal | alpha | beta | branch | absent |
+| --- | --- | --- | --- | --- | --- |
+| $e_0$ | $q_{i_1}R$ | $H_{i_1}$ | $H_0$ | $Q_2$ | $H_0$ |
+| $Q_2$ | $q_{i_2}R$ | $H_{i_2}$ | $H_0$ | $H_0$ | $H_0$ |
+| $e_1$ | $RLR$ | $H_3$ | $H_0$ | $H_4$ | $H_0$ |
+
+The halts return the complete $R_0,\ldots,R_4$, including exterior,
+occurrences, partition, repetitions, disequalities and guards. Preparation
+first terminates at $\widehat e_\sigma$; code-only handoff then enters
+literally $e_\sigma$ on the same register. The reader's at most two fresh
+calls and six letters, and its eight states, are separate from preparation.
+No reader entry is reselected and no reader state is counted as a preparation
+latch. This retains [WTF, Convention 1.3][WTF].
+

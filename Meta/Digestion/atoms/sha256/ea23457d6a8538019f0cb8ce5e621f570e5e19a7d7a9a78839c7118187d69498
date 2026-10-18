@@ -1,0 +1,8 @@
+**既有结果 2.1（目标能否经表示恢复）。** 仓内 `QueryFamilyIdentification.identification_iff_kernel_inclusion` 给出任意依赖查询族的识别条件。单个表示的情形是
+
+$$
+q(x)=q(y)\Longrightarrow T(x)=T(y).
+$$
+
+目标必须在每条表示纤维上恒定。它判断指定目标的充分性；不以某个目标已经可恢复，推断表示保留了所有状态差异。
+

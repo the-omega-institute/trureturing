@@ -1,0 +1,26 @@
+## Proposition 8. A conditional entropy consequence
+
+Suppose \(q\ge2\) is even, the expanded shift is irreducible with
+positive entropy, and the transported beam state is precisely \(\Phi_q\),
+normalized on rays by \(p^m h_i\) at vertex \((i,s)\). Then
+\[
+\log(1+\beta)\le h_{\mathrm{top}}(H_q).
+\]
+
+Proof. Proposition 3 gives state multiplier \(\lambda_{H_q}=1+\beta\).
+Apply Schmieding's Theorem 3.3; Remark 3.5 gives the general form
+\(|\log\lambda_H|\le h_{\mathrm{top}}(H)\) by also applying the theorem
+to the inverse. The geometric state identification and irreducibility
+are hypotheses here. Irreducibility of the scalar degree-\(q\) polynomial
+does not establish irreducibility of the expanded \(2q\)-vertex graph's
+characteristic polynomial. No injection of the full history automorphism
+group into its state multipliers is asserted.
+
+Reference: Scott Schmieding, *Lyapunov exponents and entropy for
+automorphisms of the shift*,
+[arXiv:1803.04060v1](https://arxiv.org/pdf/1803.04060v1), Section 2,
+pp. 3–5 (Proposition 2.1), and Section 3, pp. 6–7 (Theorem 3.3,
+Remark 3.5). These published beam and entropy results are used with their
+stated hypotheses; the reset-specific parity calculation is the deduction
+above.
+

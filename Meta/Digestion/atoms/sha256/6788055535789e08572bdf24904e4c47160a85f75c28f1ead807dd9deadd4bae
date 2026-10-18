@@ -1,0 +1,21 @@
+**Corollary 10.3 (Necessary and sufficient bulk-rate state order).** Keep $a>2r$. Suppose for every sufficiently small $s>0$ a family chooses a finite integer $M(s)$ and $\mathcal A_s\in\mathfrak A_{M(s)}(e^{-s},\alpha)$. Suppose, in addition, that for one fixed target $i_\star$ and one fixed $0<C_T<\infty$,
+
+$$
+\mathbb E_{i_\star}^{\mathcal A_s}T\le C_Ts^{-(2r+1)}
+\quad\text{eventually for every sufficiently small }s.
+\tag{10.5}
+$$
+
+Then $M(s)\ge C_*s^{-r}$ eventually for a positive constant depending only on the fixed source, risk and $C_T$. Conversely one common family has at most $K s^{-r}$ listed configurations and both paid means $O(s^{-(2r+1)})$.
+
+Proof. Apply the all-budget lower bound to each selected actual observer in the intersection of its family neighborhood and (10.1). Its budget term and (10.5) give
+
+$$
+M(s)^\kappa\ge\frac{A_-}{C_T}s^{-(a-2r)}.
+\tag{10.6}
+$$
+
+Taking the increasing positive root gives $C_*=(A_-/C_T)^{1/\kappa}$ and $M(s)\ge C_*s^{-r}$. This includes every growing regime, without assuming a power law or small $sM$. All opposing risk, stop and finite-mean conditions remain part of $\mathcal A_s$; no opposing bulk upper was required. For sufficiency set $\lambda=1/s$ in Theorem 9.2. Its common table has count at most $K s^{-r}$ and paid mean at most $C_Us^{-(2r+1)}$ under both labels. $\square$
+
+For example, $(d,r)=(2,1)$ gives $\Phi(s,M)=\max\{s^{-3},s^{-4}/M\}$ and bulk budget order $s^{-1}$. The pair $(d,r)=(4,2)$ gives $\max\{s^{-5},s^{-6}/\sqrt M\}$ and budget order $s^{-2}$. These are source-dependent relations. Neither is a relabeling of the older rational-center polynomial theorem.
+

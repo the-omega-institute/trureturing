@@ -1,0 +1,11 @@
+**定义 32.2（四元素域与选择的角色识别）。** 在 $\mathbb F_2[t]$ 中取
+
+$$
+\mathbb F_4=\mathbb F_2[t]/(t^2+t+1),\qquad
+\eta=[t],\qquad
+\iota:\mathbb F_2^2\longrightarrow\mathbb F_4,
+\quad \iota(\bar a,\bar b)=\bar a+\bar b\eta.
+$$
+
+这一定义选择 $\bar\alpha\mapsto1$、$\bar\beta\mapsto\eta$；选择另一个根 $\eta^2$ 会给另一个识别。下文固定这一选择，不把域乘法认作原始树的有序配对。
+

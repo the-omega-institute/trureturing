@@ -1,0 +1,73 @@
+**Theorem 4.1 (exact threshold on the tagged product).** For every rational `C>0`, the full finite grammar accepts `(d,mu,C)` if and only if
+
+$$
+C\ge\frac1m.
+$$
+
+**Proof, acceptance.** Consider first the uniform probability on $\{z_s:s\in[m]\}$. Every subset $Q$ is range-feasible because each target is constant or enters one four-state core module. If $1\le|Q|\le3$, each target is determined by a prefixed core-identifying literal, so the hard vector is empty and its norm is $|Q|/m$.
+
+If $|Q|\ge4$, fix any two distinct rows of $Q$ and choose two further rows in $Q$. A column separating these four makes its $LL$ target four-valued on $Q$. Every experiment has at most three replies on $Q$, so this target is hard on $Q$, and it distinguishes the chosen pair. Repeating this argument for each pair shows that the joint vector of all hard targets is injective on $Q$. Its norm is consequently $\sqrt{|Q|}/m$. The full support attains $1/\sqrt m$, and
+
+$$
+\max\{3/m,1/\sqrt m\}=1/\sqrt m
+\qquad(m\ge10),
+$$
+
+since $9<m$. Adding a fixed right tag only introduces constants and public prefixes of the original interface: every variable target and experiment is realized by prefix $L$, and every new target or experiment is of this form or constant. Thus both uniform tagged marginal laws on the explicitly named sets $P_A=\{\langle z_s,A\rangle:s\in[m]\}$ and $P_B=\{\langle z_s,B\rangle:s\in[m]\}$ have the same joint value $1/\sqrt m$.
+
+The paired support $R$ is exactly the product interface of those two tagged sets. Root targets are constants; every other target or experiment is an individual constituent target or experiment, or a constant. Conversely prefixing by $L$ or $R$ realizes every constituent target and experiment within $W_d$. The chosen uniform law $\mu$ is the product of the two uniform tagged laws. After the zero-weight reduction, [RCE, Theorem 3.4][RCE] therefore applies to every feasible support, including correlated supports on which cross-factor donors can make a marginal hard target easy. It yields
+
+$$
+J_d(\mu)=\left(\frac1{\sqrt m}\right)^2=\frac1m.
+$$
+
+An actual finite threshold certificate is the following exhaustive ungrouped old leaf. Its label is $(d,\mu,1/m)$; its data contain the full native target and reply tables, and, for every nonempty $Q\subseteq R$, the list of hard targets and their cells, with mass $|\{x\in Q:U_Q(x)=y\}|/m^2$ in cell $y$. These are all positive supports and all are range-feasible. The established joint bound proves every squared cell sum at most $1/m^2$. All entries and squared comparisons are rational and finite. Zero-weight supports outside $R$ are covered by the zero-weight reduction. Hence these specified tables pass exactly the old leaf's tests. This uses tensorization to justify the tables, not as an additional grammar rule. The same leaf accepts every larger rational cap.
+
+**Proof, lower bound.** Every nonleaf rule has one parent, so follow any accepted finite derivation along its unique ancestry to its initial leaf. Height-zero scaffolds preserve the law and cannot lower the cap. Successive stability increments sum to at least the total variation between their endpoint laws. If a positive-height scaffold occurs, take the last one, of height $r\ge1$. Its output $\sigma$ has the final depth $d$, and its two root children are independent with the same law $\eta=\nu^{\uparrow(r-1)}$ on $S_{d-1}$, for its arbitrary parent law $\nu$. Since $P_A$ and $P_B$ are disjoint,
+
+$$
+\sigma(R)=\eta(P_A)\eta(P_B)\le\frac14,
+$$
+
+Indeed, writing the two factors as $x,y$, one has $4xy\le(x+y)^2\le1$. Since $\mu(R)=1$, $\operatorname{TV}(\mu,\sigma)\ge\mu(R)-\sigma(R)\ge3/4$. After the last positive scaffold only stability and identity nodes remain, so the final cap is at least $3/4$, whatever leaves, rational laws or scaffold heights preceded it.
+
+Assume now that no positive scaffold occurs and the initial leaf is old, with arbitrary law $\nu$ and cap $C_0$. An exhaustive joint leaf directly gives $C_0\ge J_d(\nu)$. For a grouping of any size $k$, [RCE, Theorem 3.4][RCE] gives maximum joint norm $J_d(\nu)^k$, so its squared tests against $C_0^{2k}$ give the same bound. For a bundle leaf, the full hard partition refines the selected bundle partition on every heavy support, and its nonnegative cell norm is no greater than the checked bundle norm. On each light support its norm is at most its mass, which is at most $C_0$. Thus every old leaf has $C_0\ge J_d(\nu)$, with all feasible supports retained. Stability and the triangle inequality give
+
+$$
+C\ge J_d(\nu)+\operatorname{TV}(\mu,\nu)\ge J_d(\mu)=1/m.
+$$
+
+This includes every rational ancestor law, all zero and off-support states, every grouping size, and every bounded bundle.
+
+It remains to consider a range leaf. Let `P` be its arbitrary declared support and `r\in\{1,2,3,4\}`. We only use necessary range conditions, so retaining its own-coordinate checks can only reduce the possible leaves. For `r=1`, two distinct points of `P\cap R` differ in a hash row and are separated by a prefixed `L` or `RL` literal, contradicting the one-reply condition. Hence `|P\cap R|\le1`.
+
+For $r=2$ or $r=3$, partition each copy of $[m]$ into pairs; here evenness is used. The resulting $m^2/4$ disjoint four-corner rectangles partition $R$. On any one rectangle every target is constant or depends on only one side, hence has at most two values. For $r=2$, three retained corners violate the requirement of more than two target values on that triple. For $r=3$, four retained corners violate the requirement of more than three target values on that four-set. Thus
+
+$$
+|P\cap R|\le m^2/2\quad(r=2),
+\qquad
+|P\cap R|\le3m^2/4\quad(r=3).
+$$
+
+For $r=4$, every target has at most four values on all of $R$, so five retained points violate the required separation and $|P\cap R|\le4$. These arguments also cover $|P|=r$ and arbitrary zero-weight or off-$R$ states in $P$: none repairs a violation on a subset lying inside $R$. Since $\nu$ vanishes outside $P$,
+
+$$
+\operatorname{TV}(\mu,\nu)\ge1-\frac{|P\cap R|}{m^2}.
+$$
+
+The four cases give respectively
+
+$$
+1-\frac1{m^2},\quad\frac12,\quad\frac14,\quad1-\frac4{m^2}.
+$$
+
+For $m\ge10$, the first and fourth bounds are at least $99/100$ and $24/25$, respectively, while the middle bounds are $1/2$ and $1/4$. Thus each is at least $1/4$. The range-leaf cap is nonnegative, and later stability costs add at least this distance. Every derivation beginning at a range leaf therefore has final cap at least $1/4\ge1/m$. The three ancestry cases exhaust the grammar. ∎
+
+The exact accepted cap is therefore `1/m`, while the true all-length pressure is `9/m^2`. The pointwise ratio is
+
+$$
+\frac{1/m}{9/m^2}=\frac m9,
+$$
+
+which is unbounded over the even integers $m\ge10$: for any prescribed bound choose an even $m$ greater than nine times that bound and at least ten, and use Section 2's finite construction. This is a pointwise limitation of this precise grammar. It does not refute optimized cofinality, because the optimizer may choose another probability on the same full alphabet.
+

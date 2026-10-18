@@ -1,0 +1,30 @@
+**Lemma 1.2 (one-source coordinates and legal states).** Every allowed $S$ has the unique coordinates
+
+$$
+x=\frac pr>0,\qquad y=\frac sr>0,\qquad
+S=r\begin{pmatrix}x&xy\\1&y\end{pmatrix},\qquad r>0.
+$$
+
+It has a positive factorization with one fixed row, and every intermediate state on every legal word remains positive. Every legal word matrix has nonnegative integer entries and determinant $1$ or $-1$.
+
+**Proof.** The rank-one equation gives $q=ps/r=rxy$, proving the coordinates. Take
+
+$$
+c=\begin{pmatrix}rx\\r\end{pmatrix},\qquad \ell=(1,y).
+$$
+
+Then $c\ell=S$. For an arbitrary matrix $C=(\begin{smallmatrix}a&b\\c_0&e\end{smallmatrix})$,
+
+$$
+\operatorname{tr}(CS)=ap+br+c_0q+es=\ell Cc.
+$$
+
+Both atoms preserve positive columns, because
+
+$$
+M\binom{c_1}{c_2}=\binom{c_2}{c_1+c_2},\qquad
+J\binom{c_1}{c_2}=\binom{c_2}{c_1}.
+$$
+
+Thus the same fixed row realizes all read and unread states. Taking $\alpha=1$, $\beta=\kappa$, and $R=S$ realizes every effective target in original parameters. Both atoms are nonnegative integer matrices of determinant $-1$; products preserve those entry properties and multiply determinants, and the empty product is $I$. ∎
+

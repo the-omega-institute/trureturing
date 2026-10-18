@@ -1,0 +1,36 @@
+**Lemma 4.2 (all-word locality with complete native shapes).** Every
+finite original-root word has either a public constant reply or a
+reply that is a deterministic function of one full actual gadget tuple
+$G_j$. The frontier position and hence that gadget label are determined
+by the literal word and public ordering, independently of hidden values.
+This holds for all word lengths, absent suffixes and repeated visits.
+
+Proof. The empty word reports branch. The word $L$ reports alpha,
+and every longer word beginning with $L$ reports absent. A word
+beginning with $R$ with fewer than $H$ subsequent letters ends at a
+fixed scaffold branch. Once $H$ letters after $R$ have been supplied,
+they select one fixed frontier position $b$. Any remaining suffix
+stays inside that one frontier block. Descending a tree cannot move
+from that block into a sibling or another gadget.
+
+For completeness, the entire possible local reply behavior is
+
+$$
+\begin{array}{c|ccc}
+\text{block}&\text{empty suffix}&\text{suffix }L\text{ or }R
+                                      &\text{suffix length }\ge2\\ \hline
+A&\alpha&\mathsf{absent}&\mathsf{absent}\\
+B&\beta&\mathsf{absent}&\mathsf{absent}\\
+C_0&\mathsf{branch}&\alpha&\mathsf{absent}
+\end{array}
+$$
+
+These cases cover every finite suffix. Lemma 2.3 says every original
+block has one of these shapes; padding is fixed $A$. Hence a query
+entering an original block is a deterministic function of its gadget's
+full tuple, even if that particular function is constant. Queries to
+the scaffold, left leaf and padding are public constants. This also
+proves consistency of revisits, since they evaluate the same function
+on the same stationary tuple. In particular a selector branch is not
+silently replaced by a Boolean leaf. $\square$
+

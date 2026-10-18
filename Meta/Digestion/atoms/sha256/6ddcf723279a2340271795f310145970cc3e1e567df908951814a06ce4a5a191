@@ -1,0 +1,54 @@
+**Definition 1.1 (fixed admitted native data).** Fix one arbitrary original admitted signed $\kappa\ne0$, $H$, $I=(l,u)$, interior $k_0\in I$, and $a,\varepsilon>0$. Retain every original probability, interval and denominator condition. In particular $k-\alpha_\kappa$ has a positive margin on $\overline I$. Put
+
+$$
+\begin{aligned}
+\alpha_\kappa&=\kappa+\kappa^2/H,&d_0&=k_0-\alpha_\kappa>0,&\nu&=\varepsilon/d_0,\\
+L_I&=u-l,&\lambda&=\varepsilon^2\pi^2/L_I^2,&
+\phi(k)&=\sqrt{2/L_I}\sin\bigl(\pi(k-l)/L_I\bigr),\\
+c_j&=c_\kappa^{(j)}(k_0)\quad(j=0,1,2),&
+j_0&=\varepsilon^4|\det(c_0,c_1,c_2)|>0.
+\end{aligned}
+\tag{1.1}
+$$
+
+The full original rational vector $c_\kappa=(A_\kappa,B_\kappa,b_\kappa)$ satisfies exactly
+
+$$
+\begin{aligned}
+c_\kappa(k_0+h)&=c_0+h c_1+\frac{h^2}{2(1+h/d_0)}c_2,\\
+(A_\kappa(k),B_\kappa(k))
+ &=\frac{k-2\kappa}{2H(k-\alpha_\kappa)}(H+\kappa-k,-k),\\
+\det(c_\kappa,c_\kappa',c_\kappa'')(k)
+ &=-\frac{H^2-\kappa^2}{2H^3(k-\alpha_\kappa)^3}\ne0.
+\end{aligned}
+\tag{1.2}
+$$
+
+The third component is exactly $b_0+h b_1+h^2b_2/[2(1+h/d_0)]$, where these are its original jets. None of the vector components, jets or source constants is independently selectable. Every datum is fixed before its native limit.
+
+On $\mathcal C=I\times\mathbb R^3$, $q=(\theta,v,x)$, use raw measure $dY=dk\,dq$ and the complex Hilbert space $L^2(dY)$. Both actual height faces are Dirichlet. Define
+
+$$
+B=-\varepsilon^2\partial_k^2-(c_\kappa(k)\cdot\partial_q)^2,
+\qquad S=B-\lambda\ge0.
+\tag{1.3}
+$$
+
+With unitary phase Fourier factor $(2\pi)^{-3/2}$ and $B_\eta=-\varepsilon^2\partial_k^2+|\eta\cdot c_\kappa|^2$, the entire domains, including underlying $L^2$ membership, are
+
+$$
+\begin{aligned}
+\mathcal Q
+ &=\left\{\psi:\widehat\psi(\cdot,\eta)\in H_0^1(I)\text{ a.e.},\quad
+ \int_{\mathbb R^3}\!\int_I
+ (\varepsilon^2|\partial_k\widehat\psi|^2+
+ |\eta\cdot c_\kappa|^2|\widehat\psi|^2)dk\,d\eta<\infty\right\},\\
+D(S)=D(B)
+ &=\left\{\psi:\widehat\psi(\cdot,\eta)\in H^2(I)\cap H_0^1(I)\text{ a.e.},\quad
+ \int_{\mathbb R^3}\|B_\eta\widehat\psi(\cdot,\eta)\|_{L^2(I)}^2d\eta<\infty\right\}.
+\end{aligned}
+\tag{1.4}
+$$
+
+Thus $\mathcal Q=D(S^{1/2})=D(B^{1/2})$. Every real phase frequency and every complex competitor in these domains remains allowed. No ordinary phase $H^1$, reality, parity or product restriction is imposed on native states.
+

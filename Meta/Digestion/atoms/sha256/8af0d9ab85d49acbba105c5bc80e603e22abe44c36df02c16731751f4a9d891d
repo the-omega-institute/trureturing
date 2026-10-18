@@ -1,0 +1,15 @@
+**命题 86.1（finite binomial alternative and its price）。** On the same log-scale contract, for a head argument $0\leq t<K+10$ choose an integer
+
+$$
+n\geq\max\{2t,\,2^{p+8}(K+10)^2\}.
+$$
+
+For $x=t/n\leq1/2$, integration of $1/(1-x)$ gives $-x-x^2\leq\log(1-x)\leq-x$. Hence
+
+$$
+e^{-t-t^2/n}\leq(1-t/n)^n\leq e^{-t},\qquad
+0\leq e^{-t}-(1-t/n)^n\leq t^2/n\leq2^{-p-8}.
+$$
+
+The already stated truncation handles $t\geq K+10$. Since $p=K+10$, a ceiling of this bound gives $n=O(p^2 2^p)$. Exact rational powering has numerator and denominator width $O(n(|k|+p+\log(n+1)))$, including constructing the signed-scale denominator and all finite exponent digits. At fixed accuracy this is polynomial in the numerical scale, but its accuracy dependence is exponential in $p$. It is a lawful finite alternative, not a global improvement over the Taylor or rounded-loss resource vectors.
+

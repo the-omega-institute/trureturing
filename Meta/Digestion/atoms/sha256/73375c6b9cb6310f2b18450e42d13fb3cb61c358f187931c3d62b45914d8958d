@@ -1,0 +1,70 @@
+**Definition 6.1 (seven-family memory body).** Serialize precisely UAS
+Definition 3.3's independently existing selection, not a complete trace or
+completed-cycle list. The body is an exact seven-field tuple. Family $f$
+is the five-field tuple
+
+$$
+[U(f),\mathcal L(\mathrm{cells}_f),\mathcal L(\mathrm{slots}_f),
+       \mathcal L(\mathrm{relations}_f),\mathcal L(\mathrm{frontier}_f)].
+$$
+
+Use the following fixed meanings and order:
+
+| $f$ | Actual selected material |
+| --- | --- |
+| 0 | Acquired seed 26/designated initial interval; actual seed/boot delivery 28/29 backing and $H_0,\xi$ binding. |
+| 1 | Constructed finite version/bootstrap slots, stage/cursor fields, captured field zero and constructed initial 69 prefix, with its actual 68 bindings. Later staging is excluded from this prefix. |
+| 2 | Chronological 13 header/length/payload backing and actual 17 descriptors/origins, including partial current records and unwritten allocated payload material. |
+| 3 | Actual 70 chain after its one sentinel and its constructed 68 ingress descriptors, including partial current material. |
+| 4 | Actual version/PC/call site/role permutation, relevant marked ingress/length heads, live base/length/counters 1–12 during 13 ingress or 66/67 during 70 ingress, and the uniquely occupied input latch only before its matching WR. |
+| 5 | Actual constructed cover/package/publication backing 71, acquired receiver backing/bindings 73 and actual invocation/read/mailbox relations, including partial unavailable records. |
+| 6 | Actual meter cells/marks and current token/stage slots determining the selected resources' rights. |
+
+A cell entry is `[U(port),U(creationPosition),eightTracks]`. A slot entry
+is `[U(slotCatalogIndex),value]`, with value 0 for absent, 10 for present 0,
+11 for present 1. A relation entry is `[U(kind),endpoints,rawFields]`.
+Here a cell reference is `[0,U(port),U(position)]`, a finite-slot reference
+`[1,U(slotIndex)]`, and a span `[U(port),U(base),U(constructedLength)]`.
+Optional is exactly 0 or `1 Frame(value)`. Reference identities are checked
+against the reconstructed actual history. An endpoint outside the selected
+spans, such as intermediate mailbox 72 or a remote origin, carries identity
+only; it does not import that endpoint's payload or grant a read. The six
+fixed schemas are:
+
+| kind | endpoints, exact arity | rawFields, exact arity |
+| --- | --- | --- |
+| 0 descriptor | `[descriptorSpan,backingSpan]` | `[grammarBit,rawSymbolTriples,optionalParsedFields,optionalStatusReference]`; grammar 0 is CAP's ten fields, grammar 1 RCA's six grouped fields. Parsed fields are absent on an incomplete descriptor. |
+| 1 origin-copy | `[sourceSpan,destinationSpan]` | `[completeOrigin,U(copiedExtent),optionalCompletionReference]`. |
+| 2 seal | `[sealedSpan]` | `[sealCellReference,eightSealTracks,availabilityValue]`. |
+| 3 availability | `[sourceSlotReference,destinationSlotReference]` | `[sourceValue,destinationValue]`, each in the slot-value code. |
+| 4 initial binding | `[seedSpan,bootSpan,optionalCaptureSpan]` | `[xi,U(H0),completeDeliveryReference,optionalCodeChain]`. |
+| 5 object span | `[constructedSpan]` | `[U(objectKind),U(callPathIndex),optionalDeclaredLength,availabilityValue,optionalCompleteOrigin]`. |
+
+DescriptorSpan and backingSpan contain their actually constructed prefix,
+not a predicted future extent. RawSymbolTriples includes delimiters already
+constructed; no complete parsed tuple is substituted for partial bytes.
+Object kinds are seed, initial field, input header, input length, input
+payload, cover, package, sender, mailbox, receiver, completion, in that order.
+All parsed/extent annotations are redundant values computed from the
+selected span/frontier or its actual construction relation; none is an
+extra historical input. No relation is emitted before its construction;
+partial object spans retain raw prefixes and unavailable status. Missing
+optional status/completion/capture is explicit, not a fictitious reference.
+
+A frontier entry is `[U(role),value]` in the static order version, PC,
+phase, role permutation, ingress head, length head, base, remaining length,
+counter, pending. Values are the actual finite words or marked creation
+positions; pending is 0 outside its interval, else `1 Frame([site,bit])`.
+These are descriptions of selected existing fields, not newly installed
+frontier registers. A not-applicable entry is the empty list. Preserve a
+selected raw scratch word as its cell records as well as its marked role;
+do not silently replace a partially constructed numeral by an integer.
+
+Order structures as the table, cells by port/creation position, slots by
+catalog index, relations by kind/endpoints/raw-fields lexicographic order,
+frontier by its listed role. Suppress duplicate physical entries within a
+family; references in different families still name the same physical
+identity. Alias equality is exact reference equality. Boundaries/markers
+needed to delimit each selected backing span are included with that span.
+An empty family component has the literal empty-list encoding.
+

@@ -1,0 +1,184 @@
+**Proposition 4.1 (a rational family strictly beyond residual graphs).**
+For every integer $N\ge3$ there is one rational regular stationary table,
+with $2N+3$ labels at each phase, whose own laws satisfy both full boxes
+(1.7) and $V=0$, but whose complete-law B successors genuinely branch.
+Its A successors are deterministic. Its two branch successors agree on
+both completed-word coordinates $w_{n,c}$ for every $n<N$ after removing
+their initial alpha, and differ at $\alpha w_{N,0}$.
+
+The table has a represented finite COMPLETE realization on every original
+record fibre, under the original exact fair-bit service convention. It is
+not a zero-excess witness. The count $2N+3$ is a label count, not a total
+COMPLETE minimum or a returned-cut minimum.
+
+**Proof.** Put
+
+$$
+u_*=\frac{73}{200},\quad v_* =\frac{46}{127},\quad
+\varepsilon=\frac1{100000},\quad v^*=v_*+\varepsilon.
+\tag{4.1}
+$$
+
+The labels are $o$ and $(\sigma,j)$ for $\sigma\in\{-1,1\}$,
+$0\le j\le N$. Take $A=I$. The B transition from $o$ chooses
+$(\sigma,0)$ with probability $1/2$; each arm advances deterministically
+from $j$ to $j+1$, and $(\sigma,N)$ returns to $o$. Set
+
+$$
+\begin{aligned}
+u_o&=u_*,& v_o&=v_*,\\
+u_{\sigma,j}&=u_*,&v_{\sigma,j}&=v_* &&(j<N),\\
+u_{\sigma,N}&=u_*+\sigma\varepsilon,&v_{\sigma,N}&=v^*.
+\end{aligned}
+\tag{4.2}
+$$
+
+The positive row
+
+$$
+\pi_o=\frac1{N+2},\qquad
+\pi_{\sigma,j}=\frac1{2(N+2)},\qquad \tau=\pi
+\tag{4.3}
+$$
+
+satisfies $\pi B=\pi$ by checking the centre, the first arm nodes and
+each remaining arm node. Also $\tau A=\pi$. All entries are rational.
+
+Let $L_{ij}=(1-u_i)B_{ij}v_j$ and
+$c_i=(1-u_i)\sum_jB_{ij}(1-v_j)$. The own complete laws are
+
+$$
+Q_i(w_{n,0})=(L^nu)_i,\quad Q_i(w_{n,1})=(L^nc)_i,
+\qquad W_i=(1-v_i)\delta_\beta+v_i\alpha Q_i.
+\tag{4.4}
+$$
+
+Here $u+c+L\mathbf1=\mathbf1$ and $L\mathbf1\le\lambda\mathbf1$.
+The telescoping identity
+$\sum_{n<M}L^n(u+c)=\mathbf1-L^M\mathbf1$ proves normalization,
+the tail bounds (1.2) and zero infinite masses. Thus these are full laws
+of one table, not independently assigned coordinates. Their same-update
+recursions and (4.3) give both original compatible flows.
+
+We verify every endpoint coordinate. Write $u_-=u_*-\varepsilon$,
+$u_+=u_*+\varepsilon$, $v_-=v_*$, $v_+=v^*$. Each positive edge weight
+$(1-u_i)v_j$ and each completion weight $c_i$ satisfy respectively
+
+$$
+z_-=(1-u_+)v_-\le(1-u_i)v_j\le(1-u_-)v_+=z_+,
+\qquad
+c_-=(1-u_+)(1-v_+)\le c_i\le(1-u_-)(1-v_-)=c_+.
+\tag{4.5}
+$$
+
+In particular $\ell<z_-\le z_+<L$ and $a<u_-\le u_+<b$.
+Iteration of the positive matrix gives
+
+$$
+u_-z_-^n\le Q_i(w_{n,0})\le u_+z_+^n,\qquad
+c_-z_-^n\le Q_i(w_{n,1})\le c_+z_+^n.
+\tag{4.6}
+$$
+
+The marker-zero bounds and their suspended multiples lie between
+$a\ell^n,bL^n$ and $a^2\ell^n,b^2L^n$, respectively, for every $n$.
+For an explicit small rational enclosure in the marker-one checks, put
+
+$$
+\underline z=\frac{22999}{100000},\quad
+\overline z=\frac{23001}{100000},\quad
+\underline c=\frac{40498}{100000},\quad
+\overline c=\frac{40501}{100000},\quad
+\underline v=\frac{3622}{10000},\quad
+\overline v=\frac{36222}{100000}.
+\tag{4.7}
+$$
+
+Substitution in (4.1) gives strict lower and upper enclosures for the
+corresponding quantities in (4.5). With
+$a_n=(4/9)\ell^n$, $b_n=(9/25)L^n$, rational multiplication gives
+
+$$
+\begin{array}{c|c|c}
+\text{indices}&\text{lower margin}&\text{upper margin}\\\hline
+n=0,1,2,3&
+\underline c\,\underline z^n-\min(a_n,b_n)>10^{-5}&
+\max(a_n,b_n)-\overline c\,\overline z^n>10^{-5}\\
+n=0,1&
+\underline v\,\underline c\,\underline z^n-\min(aa_n,bb_n)>10^{-5}&
+\max(aa_n,bb_n)-\overline v\,\overline c\,\overline z^n>10^{-5}.
+\end{array}
+\tag{4.8}
+$$
+
+All entries in this finite table are explicit rational inequalities; for
+example its tight p index 3 has lower margin greater than $49/10^6$ and
+upper margin greater than $48/10^6$. For p, the endpoint ordering is fixed
+from index 3 onward. The lower and upper enclosing sequences in (4.8)
+then multiply by $\underline z>\ell$ and $\overline z<L$, so induction
+proves all later p boxes. The suspended ordering is fixed from index 1
+onward, and the same induction proves all its later marker-one boxes.
+The suspended beta coordinate is boxed by $v_i\in[a,b]$; the infinite
+coordinates have already been handled. This proves the full boxes for
+every $N$, without checking a truncated replacement problem.
+
+There is only one nondeterministic B row. Its two successors are
+$W_{+,0}$ and $W_{-,0}$. Starting at the corresponding Q labels, all
+transitions are deterministic up to arm position $N$. The first $N$
+emissions $u$ coincide, and all v values encountered through that position
+also coincide between the two arms, including their common $v^*$.
+Consequently (4.4) gives
+
+$$
+Q_{+,0}(w_{n,c})=Q_{-,0}(w_{n,c})\quad(n<N,\ c=0,1),
+\tag{4.9}
+$$
+
+whereas
+
+$$
+Q_{+,0}(w_{N,0})-Q_{-,0}(w_{N,0})
+=2\varepsilon(1-u_*)^Nv_*^{N-1}v^*>0.
+\tag{4.10}
+$$
+
+Both successor W laws have completing-beta mass $1-v_*$ and have the
+same selected marker-one coordinates because $N\ge3$. Their full
+residual mean is their equal mixture. Thus the B features have zero
+conditional variance, while all other B rows and all A rows are
+deterministic. This proves $V=0$ after pushing the label flows to complete
+descriptors, even if any unneeded labels happen to share a descriptor.
+
+The full B dispersion of [REV, (16.5)] is nevertheless positive:
+
+$$
+d_B\ge\frac{\pi_o}{2}\operatorname{TV}(W_{+,0},W_{-,0})>0.
+\tag{4.11}
+$$
+
+Indeed the centre residual is their mean and each distance to that mean
+is half their mutual TV. Its mass is positive; merging coincident inputs
+does not change this integral, since equal input laws have equal complete
+residuals. Formula (4.10), multiplied by $v_*$, witnesses different W
+laws. Hence the pair is outside the full residual-graph class.
+
+To realize the table on the original source, retain the full $C_0$, use
+fair synthesis before the third latch, and sample (4.3) independently in
+the same update after the third write and latch. Apply B after acquired
+p-beta and A after acquired suspended-alpha, identically in synthesis.
+Complete and Stop using the original control. Both balances keep the
+rows $\pi,\tau$ at every positive fourth-segment history, on every record
+fibre. This is [PAID, Lemma 2.1.1] with all its source hypotheses retained.
+
+For each fixed N all primitives are rational. A finite common denominator
+permits exact categorical sampling by a bounded candidate drawn from fresh
+fair bits, rejection above that denominator, and deterministic workspace
+cleanup before return. All code, installed integers, selectors, candidates,
+cursors and service states are charged. The same update service is used
+after acquired and synthetic letters; independent emission bits are used
+when synthesis needs them. No source Read is used by a private service.
+Almost-sure service return is not a finite worst-case bit or work bound.
+This supplies a represented finite observer, without identifying its
+label count with total COMPLETE. Corollary 3.1 gives positive excess for
+every member, so none supplies the original zero face. $\square$
+

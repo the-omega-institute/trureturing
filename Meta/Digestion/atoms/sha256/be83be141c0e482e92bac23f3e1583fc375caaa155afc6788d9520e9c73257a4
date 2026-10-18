@@ -1,0 +1,10 @@
+**Theorem 3.3 (separation without generic-parameter exclusions).** Distinct pure laws have $d$-distance at least $\kappa$. Every $F_j$ with $j\in\{0,1,3\}$ has $d$-distance at least $\kappa$ from every $M_x$, $0\le x\le1$. The empty law has distance at least $1/25$ from every $M_x$, and at least $1/5$ from each pure law. These bounds hold also at $p=q$ and $r=s$.
+
+**Proof (3.3).** All pure pairs other than $2,4$ have a one-step singleton-coordinate difference at least $\min(c,p,q,a)$, as the rows in Theorem 2.1 show. The pair $2,4$ has $d$-distance one by Theorem 3.1. For $D=\operatorname{TV}(v_0,v_x)$, the events $\{1,3\}$ and $\{0\}$ imply
+
+$$
+D\ge s(1-x),\qquad D\ge|c-r(1-x)|.
+$$
+
+Therefore $c\le D+rD/s$ and $D\ge cs/(s+r)$. For comparison with $v_1$ the events $\{3\}$ and $\{1\}$ give $D\ge xp$ and $D\ge|a-xq|$, whence $a\le D+qD/p$ and $D\ge ap/s$. The comparison with $v_3$ similarly gives $aq/s$. The empty bounds were proved in Theorem 2.1. These estimates use only the declared positivity. The event bounds and triangle inequality use the finite half-$\ell^1$ convention of the repository's `TotalVariation.Metric` declarations at revision ad512afaf86ab2258ef58a78089f247e190866f4. $\square$
+

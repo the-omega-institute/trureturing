@@ -1,0 +1,20 @@
+## 387. Exhaustive fixed-pair alternatives at a VCD face
+
+Any owner with fixed transverse pair CD has two distinct axes selected
+from {M,V,Z,U}. Their shifted product is at least
+(m-1)*(v-1)>=(c+d)^2 by (386.1), so its L test is nonpositive.
+Every owner other than sigma is genuine. Hence sigma is the unique
+actual owner with pair CD, even among repeated copies of its role.
+
+Every original face of a fixed paired frame contains the two transverse
+labels and one axis. A face with label set VCD therefore has exactly
+one of these three alternatives:
+
+- pair CD, whose owner is sigma;
+- pair VC, with D axial and the other axis P in {M,Z,U};
+- pair VD, with C axial and the other axis P in {M,Z,U}.
+
+The latter two are exactly A(P) and B(P), and are genuine. These are
+alternatives for original face occurrences, not just numerical edge
+lengths. Equality of coshes at distinct labels changes none of them.
+

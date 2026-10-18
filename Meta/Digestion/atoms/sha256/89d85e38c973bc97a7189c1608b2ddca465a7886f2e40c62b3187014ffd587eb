@@ -1,0 +1,27 @@
+**Convention 13.3 (resource coordinates and recovery scope).** The
+complete retained alphabet in (LTR.36) or (LTR.37) includes its
+special-versus-other selector and every surviving acquired source
+distinction. Fixed-width naming uses $\lceil\log_2 N\rceil$ bits
+for its respective attained alphabet $N$; unused bit patterns do not
+add attained names. The scan computes shape and group indices, but
+only the counted name survives.
+
+Installed table generation and size, preparation computation/control
+and temporary storage, submitted-address construction, post-request
+workspace, final predictor size, count representation, entry,
+authentication, source continuity, handoff/isolation and physical time
+are separate resources. The original reader can keep the factor
+$(b,c)$ with $0\le b\le2D$, using at most
+$\lceil\log_2(2D+1)\rceil+1$ bits separately from the retained
+name. No small installation, preparation-work or total-efficiency
+bound is asserted. The preparation Reads and literal lengths are
+exactly those specified, not a preservation of an arbitrary rival's
+acquisition cost.
+
+What the boundary observer recovers is the complete selected temporal
+trajectory via one actually obtained native reply and the retained
+relation. The relaxed reader instead recovers just the supplied-count
+answer. Neither reader acquires a substituted source, an unknown age,
+a hidden history or physical space and time. Source continuity and
+authentic count input remain separately supplied services.
+

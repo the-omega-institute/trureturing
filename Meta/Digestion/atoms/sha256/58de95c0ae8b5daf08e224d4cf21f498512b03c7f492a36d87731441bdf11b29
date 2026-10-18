@@ -1,0 +1,107 @@
+**Theorem 38.2 (All terminal summands, with their degree shifts).**
+For this presentation,
+
+$$
+\begin{aligned}
+D_{k,b}&=F_{2k+2}^{\,b}+F_{2k}^{\,b},\\
+\dim R_{k,b}&=2kb+2,\\
+c_{k,b}=\operatorname{pd}_{\mathscr P_{k,b}}R_{k,b}
+ &=D_{k,b}-2kb-2.
+\end{aligned}
+\tag{38.2}
+$$
+
+The complete final module in a minimal ordinarily graded free
+resolution is
+
+$$
+\mathcal F_{c_{k,b}}=
+\bigoplus_{j=1}^{k-1}
+\mathscr P_{k,b}\bigl(-(D_{k,b}-2j-1)\bigr)^{\mu_{k,b,j}}.
+\tag{38.3}
+$$
+
+More precisely its full multigrading is
+
+$$
+\mathcal F_{c_{k,b}}=
+\bigoplus_{j=1}^{k-1}\ \bigoplus_{p\in\mathcal G_{k,b,j}}
+\mathscr P_{k,b}\bigl(-(\Sigma_{k,b}-p)\bigr).
+\tag{38.4}
+$$
+
+Thus (35.11) supplies every terminal multiplicity as well as every
+ordinary degree, and the compatible-tuple description supplies every
+full exponent shift. No intervening resolution matrices are specified.
+
+Proof. A path of length $r$ vertices has $F_{r+2}$ independent sets:
+separating the first vertex according to absence or presence leaves
+paths of lengths $r-1$ and $r-2$, with initial counts one for the
+empty path and two for a one-vertex path. If a global independent
+set omits the root, each of the $b$ cycles leaves a path of $2k$
+vertices and the choices are independent, giving $F_{2k+2}^b$.
+If it contains the root, its two neighbors on every cycle are absent,
+leaving a path of $2k-2$ vertices in each cycle, giving $F_{2k}^b$.
+These cases are disjoint and exhaustive. Their sum proves the first
+line of (38.2), and the dimension is the full lattice rank from
+Theorem 35.2.
+
+The polynomial ring has $D_{k,b}$ variables and depth $D_{k,b}$
+at its homogeneous maximal ideal $\mathfrak n=(z_I)_I$.
+Its nonzero finite quotient $R_{k,b}$ is Cohen–Macaulay of depth
+$2kb+2$. Hilbert syzygy gives finite projective dimension over the
+polynomial ring. Apply Auslander–Buchsbaum after localizing at
+$\mathfrak n$: [Stacks, §10.111, tag 090U, Proposition 10.111.1][AB38]
+states for a nonzero finite module of finite projective dimension
+over a Noetherian local ring that depth of the ring equals projective
+dimension plus depth of the module. It gives the last line of (38.2).
+A minimal graded resolution localizes to a minimal local resolution
+at $\mathfrak n$, so its length is this same $c_{k,b}$.
+
+Choose a minimal resolution in the full exponent grading. Such a
+choice is possible by homogeneous generator selection: the grading
+has a positive ordinary coarsening and finite-dimensional pieces,
+and all variables have positive ordinary degree. Its differentials
+have entries in $\mathfrak n$. The canonical module of the polynomial
+ring in this grading is
+$\omega_{\mathscr P_{k,b}}=\mathscr P_{k,b}(-\Sigma_{k,b})$,
+since the top exterior product of the variable differentials has
+degree equal to the sum of their degrees.
+
+Barile–Bruns [Theorem 4.5(a)][BB35] applies to the regular graded-local
+ring $\mathscr P_{k,b}$ and its Cohen–Macaulay residue ring $R_{k,b}$.
+Their codimension is $c_{k,b}$, and their graded canonical module is
+the one identified with the full-lattice interior ideal by Theorem 5.1.
+The theorem and the Ext vanishing in its proof give
+
+$$
+\operatorname{Ext}^{c_{k,b}}_{\mathscr P_{k,b}}
+ (R_{k,b},\mathscr P_{k,b}(-\Sigma_{k,b}))
+ \simeq\omega_{R_{k,b}},\qquad
+\operatorname{Ext}^{i}_{\mathscr P_{k,b}}
+ (R_{k,b},\mathscr P_{k,b}(-\Sigma_{k,b}))=0\ (i\ne c_{k,b}).
+\tag{38.5}
+$$
+
+This is the same duality supplier as (33.3), with the actual global
+mode set and its full lattice replacing the single-cycle data.
+
+Dualize the chosen resolution into $\mathscr P_{k,b}(-\Sigma_{k,b})$.
+By (38.5) the reversed dual complex resolves $\omega_{R_{k,b}}$.
+In particular the canonical module is the cokernel of the map into
+$\operatorname{Hom}(\mathcal F_{c_{k,b}},
+\mathscr P_{k,b}(-\Sigma_{k,b}))$. Tensoring this cokernel with
+$\mathscr P_{k,b}/\mathfrak n=\mathbb C$ makes the incoming map
+zero, because the original and the dual differentials both have
+entries in $\mathfrak n$. Consequently each summand of that final
+dual free module contributes exactly one minimal canonical generator,
+with no hidden cancellation. A summand $\mathscr P_{k,b}(-\Theta)$
+dualizes to a free module whose generator has degree
+$\Sigma_{k,b}-\Theta$. By Theorems 35.4–35.5 the full set of such
+generator degrees is precisely $\bigcup_j\mathcal G_{k,b,j}$,
+each once. Solving $\Sigma_{k,b}-\Theta=p$ proves (38.4).
+Coarsening to ordinary degree gives $D_{k,b}-(2j+1)$ with multiplicity
+$\mu_{k,b,j}$ and proves (38.3). This establishes the entire last
+module from the canonical generators, rather than inferring it from
+an alternating Hilbert numerator alone. $\square$
+

@@ -1,0 +1,109 @@
+**Theorem 5.2 (exact index compiler with all old constraints).** Suppose the
+input contains a record from Definition 4.1. There is an effective procedure
+which either detects its incompatible epoch/weight condition, or computes
+an integer $B\ge e$, a finite $S_0\subseteq\{e,\ldots,B-1\}$ and
+$\tau\in\{0,1\}$ such that
+
+$$
+U=\{T_k:k\in S\},\qquad
+S=S_0\ \cup\ \begin{cases}\{k:k\ge B\},&\tau=1,\\
+                              \varnothing,&\tau=0.
+             \end{cases}
+\tag{ARH.5.1}
+$$
+
+Here $P,R,H_0$ and **every** additional finite signed mixed-epoch relation
+are arbitrary. All predicates are checked jointly on the same $T_k$.
+The procedure detects emptiness too; under the nonempty promise it is
+excluded. An infinite tail in (ARH.5.1) denotes all its indices.
+
+Proof. An incompatible designated record gives emptiness by Theorem 4.2.
+Otherwise that theorem first restricts all and only possible sources to
+$T_k$, $k\ge e$. We give explicit eventual thresholds for every remaining
+condition and evaluate the finite part exactly.
+
+For a literal $(a,s,c)$, at
+
+$$
+k\ge B_{a,s}:=\max(0,w(s)+2-a)
+\tag{ARH.5.2}
+$$
+
+its reply on $T_k$ is branch. This inequality guarantees the reach guard
+as well as index at least two; for the root it still suffices.
+Consequently the eventual truth of that literal is exactly
+$c=\mathsf{branch}$. Small indices use the guarded formula of [SLH,
+Definition 29.1][SLH]. In particular, absent and repeated replies are
+not discarded.
+
+For an endpoint $(a,s)$ define
+
+$$
+G_{a,s}=\begin{cases}
+0,&s=\varepsilon,\\
+\max(0,w(s^-)+2-a),&s\ne\varepsilon.
+\end{cases}
+\tag{ARH.5.3}
+$$
+
+Above $\max(G_{a,s},G_{b,t})$ both endpoints of a relation are reached.
+Their whole values are $T_{k+a-w(s)}$ and $T_{k+b-w(t)}$. They are equal
+if and only if
+
+$$
+a-w(s)=b-w(t).
+\tag{ARH.5.4}
+$$
+
+For a disequality use the opposite comparison of these integers.
+This computes its eventual truth for arbitrary epochs and original or
+born endpoints. Below the threshold test both reach guards before either
+sign. A negative index is never substituted into $T$.
+
+The old row needs a whole-context check. If $P$ is complete, put
+
+$$
+B_P=\max\bigl(\{0\}\cup
+        \{w(p^-)+2:p\in P,\ p\ne\varepsilon\}\bigr).
+\tag{ARH.5.5}
+$$
+
+For every $k\ge B_P$ all cuts are reached. Completeness says their trie
+is the entire outside context, with branch nodes at proper prefixes and
+holes at $P$. The old hole values are $T_{k-w(p)}$; their complete
+partition identifies precisely equal weights $w(p)$. Thus the entire
+old row is one effectively constructed constant row on this tail.
+Compare it with all of $R$, including its context and complete partition,
+to decide the old row's eventual truth. This also covers the root cut.
+
+If $P$ is incomplete, compute an incomparable $r$ as in Definition 5.1.
+For
+
+$$
+k\ge B_P:=w(r)+\operatorname{ht}(C)+2,
+\tag{ARH.5.6}
+$$
+
+$r$ is reached in $T_k$ and its entire subtree $T_{k-w(r)}$ survives in
+the old outside. The recurrence (ARH.4.2) gives
+$\operatorname{ht}(T_j)=j-1$ for $j\ge1$ by induction, with
+$\operatorname{ht}(T_0)=0$. This surviving subtree has height greater
+than $\operatorname{ht}(C)$, so the old context cannot equal $C$.
+The eventual old-row truth is therefore false. For empty $P$, $r$ is
+root and this is simply the finite height obstruction for a fully
+concrete old row.
+
+Take $B$ at least $e$, $B_P$, all thresholds (ARH.5.2), and all endpoint
+thresholds (ARH.5.3). Let $\tau$ be the conjunction of the eventual old-row,
+literal and signed relation truth values. For each $e\le k<B$, directly
+compute the finite row $R_P(T_k)$ and all literal and guarded signed
+predicates; include $k$ in $S_0$ exactly when the entire conjunction holds.
+These are finite computations on known candidate trees, not source queries.
+
+Theorem 4.2 excludes every non-orbit source. The finite checks are exact
+below $B$, and the displayed thresholds prove constant truth at **every**
+$k\ge B$. This proves both inclusions in (ARH.5.1), including all old
+repetitions and off-task inequalities. It also proves emptiness exactly
+when $S_0=\varnothing$ and $\tau=0$. The finite initial list is not a
+finite proxy for the infinite tail. $\square$
+

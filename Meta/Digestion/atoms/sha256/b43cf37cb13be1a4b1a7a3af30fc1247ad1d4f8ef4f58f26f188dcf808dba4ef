@@ -1,0 +1,51 @@
+**Theorem 4.2 (Sharp affine capacity and the two symmetry walls).** Under
+the fixed-base, fixed-preparation and ideal-readout contract above,
+
+$$
+\operatorname{cap}_{\mathrm{aff}}(b)=
+\begin{cases}
+6,&X+Y\ne 1-Z\ \text{and }X\ne Y,\\
+4,&\text{exactly one of }X+Y=1-Z,\ X=Y\ \text{holds},\\
+3,&X+Y=1-Z\ \text{and }X=Y.
+\end{cases}
+\tag{4.12}
+$$
+
+In particular, the generic value is six, but it counts three character
+circles with two real quadratures each; it is not a spatial dimension.
+
+**Proof.** Theorem 3.3 and (4.3) identify the reachable character domains. In
+general position $\mathcal H_b\simeq\mathbb T^3$, and the six coordinates
+of $q_b$ have affine hull $\mathbb R^6$. Every edge block in (4.7) is
+nonzero and invertible on its character pair because $a_e>0$. Each of the
+three characters occurs on at least one edge, so $\operatorname{rank}D_b=6$.
+The repeated alpha and gamma edge blocks do give four output-coordinate
+relations: two for the pair $0\!-\!1,3\!-\!13$, and two for the pair
+$0\!-\!3,1\!-\!13$. Equivalently, $\dim\ker D_b^{\mathsf T}=10-6=4$.
+They are allowed in the rank argument; no independence of the ten output
+coordinates is asserted. Therefore the affine hull of the outputs has
+dimension six.
+
+If $X+Y=1-Z$, then $h_0=h_{13}$ and (4.3) gives $\gamma=-\alpha$; if
+$X=Y$, then $h_1=h_3$ and $\gamma=\alpha$. On either single wall,
+$q_b=(q_\xi,q_\beta)$ has affine hull $\mathbb R^4$, and every surviving
+character has a nonzero edge block, with a possible fixed reflection for the
+minus sign. Thus $\operatorname{rank}D_b=4$, including the expected
+six-dimensional coordinate kernel.
+
+At both walls, $2\alpha=2\pi m$, so the bottom character is the parity
+$\varepsilon=(-1)^m$, while $\beta$ remains a circle coordinate. The
+middle block is invertible and the bottom parity vector is nonzero, hence
+$\operatorname{rank}D_b=3$. The balanced domain
+$\mathbb T\times\mathbb Z_2$ has affine hull $\mathbb R^3$ in the
+coordinates $(q_\beta,\varepsilon)$. This proves the three lower bounds
+because an affine image of $\mathbb R^k$ has affine-hull dimension at most
+$k$, while (4.7) gives matching upper bounds. $\square$
+
+The identity components in Theorem 3.3 have real dimensions three, two and
+one in the generic, single-wall and double-wall regimes. Those group
+dimensions are not affine capacities. A phase coordinate can be a nonlinear
+angle, while the requested coherence expectations require its sine and cosine
+quadratures. The all-winding double-wall task therefore has two quadratures
+for the circle and one additional scalar for parity.
+

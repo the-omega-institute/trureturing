@@ -1,0 +1,57 @@
+**Lemma 17.1 (Radial domination with a height-dependent residual).**
+In the native case of Proposition 16.3 there are $C\ge0$ and
+finite $\gamma\in\mathbb R$ such that
+
+$$
+\operatorname{err}(E,q)^2\ge\mathcal R_Z(C,\gamma).
+\tag{17.1}
+$$
+
+The residual $c(k)$ need not be constant across heights.
+
+**Proof of Lemma 17.1.** At a fixed interior height the complex
+useful error is
+
+$$
+z(k,\alpha)-A(k)e^{i\alpha}
+=c(k)+(p_+f(k)-A(k))e^{i\alpha}
+             +p_-\overline{f(k)}e^{-i\alpha}.
+$$
+
+Call the nonconstant part $h_k(\alpha)$. It changes sign under
+$\alpha\mapsto\alpha+\pi$. The mean of the squared errors
+at these two actual phases is
+
+$$
+\frac{|c(k)+h_k(\alpha)|^2+|c(k)-h_k(\alpha)|^2}{2}
+=|c(k)|^2+|h_k(\alpha)|^2.
+$$
+
+Thus the worst useful error at this height is at least
+$\sup_\alpha|h_k(\alpha)|$. For complex numbers $u,v$,
+
+$$
+\sup_\alpha|ue^{i\alpha}+ve^{-i\alpha}|=|u|+|v|:
+$$
+
+the triangle inequality gives one direction, and choosing
+$2\alpha$ to align the two nonzero terms gives the other; if
+one term is zero the equality is immediate. Consequently
+
+$$
+\begin{aligned}
+\sup_\alpha|z(k,\alpha)-A(k)e^{i\alpha}|
+&\ge |p_+f(k)-A(k)|+|p_-|\,|f(k)|\\
+&\ge \bigl||p_+|\,|f(k)|-A(k)\bigr|\\
+&=|Ce^{\gamma k}-A(k)|,
+\end{aligned}
+$$
+
+where $C=|p_+|e^{-\gamma H/2}\ge0$ by (16.7). In particular
+$p_+=0$ yields the valid comparison $C=0$. Equation (12.1)
+restores the fourfold useful-plane weight and the exact residual
+$4Zk$, giving (17.1). The opposite-phase comparison is made at
+each height separately. It neither constructs a common affine
+center nor asserts that removing $c(k)$ is an admissible change
+of encoder. $\square$
+

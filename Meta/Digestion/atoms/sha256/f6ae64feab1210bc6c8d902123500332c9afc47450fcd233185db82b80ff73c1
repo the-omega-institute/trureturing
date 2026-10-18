@@ -1,0 +1,98 @@
+**Theorem 87.2.** Every original strict selected-channel ray satisfies
+\(F_{16}=C_Y=C_D=0\), including every leading-coefficient and affine-pivot
+stratum. In particular \(F_8=0\), \(q_{1g}=q_{0g}=0\), \(A=0\), and
+\(a_Y=a_D=0\) require no exceptions in this necessity statement.
+
+The cancellation uses the following exact coprimality certificate:
+\[
+ \gcd(F_8,q_{1g})=1\quad\hbox{in }\mathbb Q[b,x,y].    \tag{87.16}
+\]
+Indeed the \(x\)-degrees are 8 and 12, and direct reconstruction gives
+\[
+\begin{aligned}
+ [x^8]F_8&=-3b^2(b^2+9)^2,\\
+ [x^0y^0]F_8&=3b^2(b^2-3)^6,\\
+ [x^6y^0]F_8&=-6(b^2-3)(b^6+26b^4+99b^2-54).
+\end{aligned}                                                    \tag{87.17}
+\]
+Any \(x\)-content factor over \(\mathbb Q[b,y]\) divides the first
+polynomial, hence depends only on \(b\). The second restricts it to a
+factor of \(b^2\); the third has value \(-972\) at \(b=0\), so the
+content is one. At \(b=2,y=0\), the ascending \(x\)-coefficient arrays
+modulo 101 are
+
+```text
+F8:  12,34,9,45,53,62,17,27,93
+q1g: 71,69,15,49,3,6,12,89,70,75,72,7,81
+```
+
+Both degrees are preserved. Their conventional Sylvester determinant is
+\(53\pmod{101}\), certifying a nonzero characteristic-zero resultant.
+They are coprime over \(\mathbb Q(b,y)[x]\). The content calculation
+and Gauss's lemma prove (87.16). This modular calculation witnesses a
+nonzero integer polynomial, rather than counting real roots.
+
+Work in the UFD \(S=\mathbb Q[b,x,y,B^{-1}]\). Since
+\(q_2=-8BF_8\), (87.16) implies \(\gcd(Q_g,q_2)=1\) in \(S[\tau]\):
+a common divisor has \(\tau\)-degree zero and divides both \(F_8\)
+and \(q_{1g}\). Only UFD divisibility is used; a Bézout unit-ideal
+assertion in this multivariate ring is unnecessary.
+Put
+\[
+ k_Y=RBd^2\sigma^3/4608,\quad k_D=-Bd^2\sigma^2/96,
+ \quad c=-\sigma^2d^2/(8B),\quad c_0=-\sigma d/(8B).    \tag{87.18}
+\]
+These coefficients are nonzero at every original strict point.
+Fixed-power pseudo-division in (87.15) gives polynomial quotients
+\(\Pi_Y,\Pi_D\) such that
+\[
+ q_2^3Y_g=Q_g\Pi_Y+q_2^2k_YL_{gY},\qquad
+ q_2^2D_g=Q_g\Pi_D+q_2k_DL_{gD}.                     \tag{87.19}
+\]
+Coprimality forces \(q_2^2\mid\Pi_Y\) and \(q_2\mid\Pi_D\).
+Thus \(H_Y=\Pi_Y/q_2^2\), \(H_D=\Pi_D/q_2\) are genuine
+polynomials in \(S[\tau]\), and formal cancellation gives
+\[
+ q_2Y_g=Q_gH_Y+k_YL_{gY},\qquad
+ q_2D_g=Q_gH_D+k_DL_{gD}.                            \tag{87.20}
+\]
+These identities remain valid at \(q_2=0\). Defining polynomials by
+proved exact division is different from inverting their divisor at a ray.
+
+For \(j=Y,D\), write \(P_Y=Y_g,P_D=D_g\), and define
+\(Z_j=q_2a_j\tau+q_{1g}a_j-q_2\mu_j\). Direct quadratic expansion and
+(87.15) give
+\[
+ a_j^2Q_g-Z_jL_{gj}=q_2cC_j.
+\]
+After substituting (87.20),
+\[
+ Q_g(k_ja_j^2+Z_jH_j)-q_2Z_jP_j=q_2k_jcC_j.
+\]
+Coprimality again proves that
+\(A_j=(k_ja_j^2+Z_jH_j)/q_2\) is polynomial. Cancel the formal factor
+to obtain
+\[
+ k_jcC_j=Q_gA_j-Z_jP_j.                              \tag{87.21}
+\]
+Similarly the cross identity in (87.15) gives
+\[
+\begin{aligned}
+ q_2k_Yk_Dc_0F_{16}
+ &=q_2(k_Ya_YD_g-k_Da_DY_g)
+    +Q_g(k_Da_DH_Y-k_Ya_YH_D),\\
+ A_{16}&=(k_Da_DH_Y-k_Ya_YH_D)/q_2\ \in S[\tau],\\
+ k_Yk_Dc_0F_{16}&=k_Ya_YD_g-k_Da_DY_g+Q_gA_{16}.
+\end{aligned}                                                    \tag{87.22}
+\]
+The membership statement for \(A_{16}\) follows from the same
+coprimality before cancellation. Equations (87.19)–(87.22) specify all
+syzygy cofactors by exact polynomial operations; expanded cofactor lists
+are not required to reconstruct them.
+
+At an original ray \(Q_g=Y_g=D_g=0\). Since the multipliers in
+(87.18) are nonzero, (87.21)–(87.22) force \(C_Y=C_D=F_{16}=0\).
+Neither \(F_8\), \(q_{1g}\), \(q_{0g}\), \(A\), \(a_Y\) nor
+\(a_D\) was inverted at that point. This proves the theorem, including
+the entire constant-leading and double-pivot strata.
+

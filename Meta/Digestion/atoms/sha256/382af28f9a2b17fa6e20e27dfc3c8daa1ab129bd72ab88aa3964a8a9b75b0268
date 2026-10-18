@@ -1,0 +1,25 @@
+**推论 4.2（两个共同接收器的实际误差尺度）。** 在定理 4.1 的同一参数列上，令
+
+$$
+m_{\mathrm{rot}}=\max_b\eta_b^{\mathrm{rot}},\qquad
+m_{\mathrm{SRM}}=\max_b\eta_b^{\mathrm{SRM}},\qquad
+\bar\eta_{\mathrm{SRM}}=\frac1{M_n}\sum_b\eta_b^{\mathrm{SRM}}.
+$$
+
+则
+
+$$
+\begin{aligned}
+\frac{m_{\mathrm{rot}}}{nx^2}&\longrightarrow c_\star,
+&\frac{m_{\mathrm{rot}}}{\delta_n}&\longrightarrow1,\\
+\frac{m_{\mathrm{SRM}}}{nx^2}&\longrightarrow\frac14,
+&\frac{\bar\eta_{\mathrm{SRM}}}{\varepsilon_n^\star}&\longrightarrow1,\\
+\frac{\delta_n}{m_{\mathrm{SRM}}}&\longrightarrow4c_\star.
+\end{aligned}
+\tag{4.4}
+$$
+
+**证明。** 式（3.10）逐列成立且最大图负载等于 $\kappa_n$，故 $|m_{\mathrm{rot}}-\kappa_nx^2|\le(21/4)n^2x^3$。式（3.11）逐列成立，最大度数为全零词的 $n$，故 $|m_{\mathrm{SRM}}-(n/4)x^2|\le3n^2x^3$。对 SRM 平均错误，既有夹逼 $\ell_n\le\varepsilon_n^\star\le\bar\eta_{\mathrm{SRM}}\le u_n$ 与式（3.14）–（3.15）给出 $\bar\eta_{\mathrm{SRM}}/(nx^2)\to c_B$。再用定理 4.1 及 $c_\star,c_B>0$ 即得全部比值。证毕。
+
+此推论只比较两个明确构造的共同接收器。[Minimax][Minimax] 定理 2.1(D) 关于每个 Bayes 首项最优族的逐源刚性以固定 $n$ 为前提；上述优化值与指定接收器的联合界没有把它推广到任意增长词长的协议族。
+

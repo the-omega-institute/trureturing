@@ -1,0 +1,36 @@
+**Proposition 10.11 (The retained difference circle).**
+The continuous three-real-coordinate map
+
+$$
+E_\Delta(k,u,v)=\bigl(k,\cos(u-v),\sin(u-v)\bigr)
+$$
+
+is a finite affine factor. It also has exact affine updates for
+every prescribed simultaneous native path. It separates every
+pair of different $(k,u-v)\in I\times\mathbb T$.
+
+**Proof.** With $\alpha=u-v$, a probability command adds
+$(s,0,0)$. A phase command fixes the height and rotates the
+last two coordinates by $R_{t/2}$, because
+$\alpha'=\alpha+t/2$. These are fixed affine maps for each
+command and hold on the full lawful domains.
+For the simultaneous path of Proposition 10.9 the $J$ and
+$kt$ terms cancel upon subtracting the phase equations.
+Thus its update is
+
+$$
+(K,z)\longmapsto(K+s,R_{t/2}z),
+\qquad z\in\mathbb R^2,
+$$
+
+with the all-times guard $K+\rho(h)\in I$.
+The actual image is $I$ times the unit circle; these guards
+are saturated and the formulas preserve the image whenever
+lawful. Equal unit phase pairs mean equal circle classes,
+so exactly $k$ and $\alpha$ are retained. Finite continuation
+follows from the one-step identities. In particular
+$\alpha=0$ and $\alpha=\pi$ remain distinct.
+Storing only $2\alpha$ would impose an additional identification
+that this contract does not force. Three is an attained
+coordinate count here, not a claimed minimum. $\square$
+

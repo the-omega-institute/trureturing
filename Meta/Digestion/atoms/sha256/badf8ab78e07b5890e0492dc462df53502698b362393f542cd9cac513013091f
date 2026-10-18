@@ -1,0 +1,32 @@
+**Corollary 2.15 (Constant curvature with two half-angle ends).** If
+$X=Y=r/2$, then $p_0=p_{13}=\kappa$ and
+$p_1=p_3=r/2-\kappa$. Set
+
+$$
+\kappa=\frac r4(1-\cos\vartheta),\qquad 0<\vartheta<\pi.
+$$
+
+The reduced metric becomes
+
+$$
+g_{\rm red}=\frac r2\left(d\vartheta^2+
+                  \frac{\sin^2\vartheta}{4}d\chi^2\right),
+\qquad K=\frac2r,\qquad \mathrm{Area}=\pi r.
+$$
+
+Proof. Here
+
+$$
+I=\frac2\kappa+\frac2{r/2-\kappa}
+=\frac r{\kappa(r/2-\kappa)},\qquad
+b=\frac{2\kappa(r/2-\kappa)}r.
+$$
+
+Substitution and $d\kappa=(r/4)\sin\vartheta\,d\vartheta$ give the metric.
+Locally $\varphi=\chi/2$ gives the round metric of squared radius $r/2$;
+globally $\varphi$ has period $\pi$, so the completion is the quotient of that
+round sphere by its order-two axial rotation. Thus each pole has angle $\pi$.
+The curvature follows either from this local round metric or Theorem 2.12,
+and the area is $2\pi(r/2)$. This is dimensionless probability geometry.
+$\square$
+

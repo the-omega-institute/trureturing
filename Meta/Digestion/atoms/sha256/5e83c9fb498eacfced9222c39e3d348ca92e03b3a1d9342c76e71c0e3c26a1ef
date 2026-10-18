@@ -1,0 +1,24 @@
+**Definition 187.1 (The declared sharp core).** Use the seven-cell
+law (118.5) at
+
+$$
+\delta=\frac3{20},\qquad \alpha_{\rm core}=0,\qquad
+t=\frac{81}{100},\qquad u=\frac1{25},\qquad v=\frac1{50}.
+\tag{187.1}
+$$
+
+The ordinary supplier Theorem 118.1 gives
+
+$$
+A=\left(\frac{17}{20},\frac{17}{20},\frac{17}{20},
+                \frac{83}{100},\frac34\right),\qquad
+e_0=\frac{233}{600},\qquad q_{1^5}(0)=1-e_0.
+\tag{187.2}
+$$
+
+Its schedule weights in the notation of (118.4) are
+$w=79/200$, $x=1/15$, $y=193/600$, $z=1/20$, with
+$w+2x+y+3z=1$. This core differs from the core in Proposition 175.1.
+Refine it by the common-cell coupling (176.4), omitting zero
+schedule masses. No new proof of its five-active optimum is needed.
+

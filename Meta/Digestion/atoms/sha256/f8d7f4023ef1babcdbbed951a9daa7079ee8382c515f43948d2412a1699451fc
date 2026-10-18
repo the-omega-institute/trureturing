@@ -1,0 +1,4 @@
+**例 42.3（共享、强制及混合原形）。** $Q=(LL)$、$\mathbf c=(\mathsf D_2)$ 的骨架是根 $\beta$，$F_Q=\{\varepsilon\}$，全部来源恰为 $\beta$ 或 $\langle\alpha,z\rangle$，$z\in\mathcal T$ 任意。这包含根是叶的实际来源，绝不要求菜单的每个严格前缀都是分支。
+
+对 $Q=(LL,LR,LL)$ 和 $\mathbf c=(\mathsf D_2,\mathsf D_2,\mathsf D_2)$，仍只有同一个根位，三个局部二元候选必须一起选择，边界纤维有二而非八个元素。加上任务 $L$ 后，它的存在／缺席码区分这两个分支，原根位不再自由。对 $Q=(LLL,RLL)$、$\mathbf c=(\mathsf D_2,\mathsf D_2)$，骨架为 $\langle\beta,\beta\rangle$，左右两个展开位独立，四种混合形状都是真实来源。空菜单的骨架为一个孔，$F_Q=\varnothing$、边界只有空值，而来源仍是全部 $\mathcal T$。
+

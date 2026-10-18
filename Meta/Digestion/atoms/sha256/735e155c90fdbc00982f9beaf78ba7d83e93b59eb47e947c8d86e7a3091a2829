@@ -1,0 +1,151 @@
+**Convention 67.3 (the actual-instrument TV gain and its residual).**
+Retain every competitor and inherited premise of Convention 59.1.
+The following defines the comparison and expectation in the generic
+TV-gain bound. On the weak plateau it is precisely [JR, §55,
+JR.157–JR.160], with the actual-instrument direction of JR.139;
+the same refinement calculation also gives a comparison throughout
+$0\le s\le1$.
+
+For a fixed $s$, put $L_s=\operatorname{diag}(\sqrt u,\sqrt v,1)$,
+$G_s=L_sNL_s$, $\alpha_s=\theta v/u$, $\beta_s=\omega/u$,
+so $\alpha_s+\beta_s=1$. These symbols are unrelated to an actual
+acquisition label. The low coefficient Gram is $L_s^2$ by JR Theorem
+42.1 and the proof of Theorem 43.2. Remove a common phase from each
+nonzero low live product and write its coefficient vector as
+$L_s\sqrt{\pi_j}(1,p_j,q_j)^T$, $\pi_j>0$.
+This is possible because its first coordinate is nonzero by JRH.10.
+Summing its coefficient projectors and using the null equation gives
+
+$$
+\begin{gathered}
+\mu_s=\sum_j\pi_j\delta_{(p_j,q_j)},\qquad
+\mathbb E_{\mu_s}h=\sum_j\pi_jh(p_j,q_j),\\
+\alpha_sp^2+\beta_sq^2=1\quad\mu_s\text{-almost everywhere},\\
+\mathbb E_{\mu_s}1=1,\quad
+\mathbb E_{\mu_s}p=\mathbb E_{\mu_s}q=
+\mathbb E_{\mu_s}pq=0,\quad
+\mathbb E_{\mu_s}p^2=\mathbb E_{\mu_s}q^2=1.
+\end{gathered}
+\tag{JRH.66}
+$$
+
+In the stipulated integral class these are the pushforward of the
+weighted measurable low-product field and its integrals. They are
+coefficient expectations, neither a prior on the twelve histories nor
+the actual Born probabilities of the labels. Multiple encoder and
+decoder Kraus indices remain proof indices. Define
+
+$$
+\begin{gathered}
+f_s(p,q)=(1,p,q)G_s(1,p,q)^T,\qquad
+H_s=(1-u)\Delta A+(1-v)\Delta B,\\
+b_s^{\sigma\tau}=\min\{f_s(\sigma,\tau),0\},\qquad
+\bar b_s=\tfrac14\sum_{\sigma,\tau=\pm1}b_s^{\sigma\tau},\\
+P_s(p,q)=\tfrac14\sum_{\sigma,\tau=\pm1}
+ b_s^{\sigma\tau}(1+\sigma p)(1+\tau q)
+ +\tfrac{m_s}{8}(p^2-1),\\
+\mathfrak r_s(p,q)=\min\{f_s(p,q),0\}-P_s(p,q),\\
+\mathcal B_s=\tfrac12[H_s+L_f+\operatorname{tr}G_s]-\bar b_s.
+\end{gathered}
+\tag{JRH.67}
+$$
+
+Any real $m_s$ has the same expectation, because
+$\mathbb E_{\mu_s}P_s=\bar b_s$. Take $m_s=0$ for $s>s_0$.
+For $s\le s_0$, $G_s=\mathcal G$ of §64. Write its entries as
+$G_{00}=g_0,G_{11}=g_1,G_{22}=g_2,G_{01}=x_G,G_{02}=y_G,G_{12}=z_G$,
+and choose exactly the zero-mean term of JR.159:
+
+$$
+\begin{gathered}
+R_1=x_G-g_1-z_G+\alpha_s(x_G+y_G-g_0),\qquad
+R_2=y_G-z_G-g_2+\beta_s(x_G+y_G-g_0),\\
+m_s=2[(\alpha_s/\beta_s)R_2-R_1],\quad
+B=f_s(-1,-1)=-(R_1+R_2)=4\mathsf b(1)<0,\\
+P_s(p,q)=\tfrac B4(1-p)(1-q)+\tfrac{m_s}{8}(p^2-1),\qquad
+\mathcal B_s=T_0:=\mathcal T(s_0).
+\end{gathered}
+\tag{JRH.68}
+$$
+
+Indeed JR §43's signs at $v=1$ make the other three corner values
+positive. More generally the comparison $\mathcal B_s$ is the actual
+height TV of the H/L instrument with separate spectral failure rows:
+its high sum is $H_s$, and its four low differences are
+$f_s(\sigma,\tau)/4$. JR §§38, 43–44 supplies this finite instrument;
+for $s<s_0$ attenuate only its binary report by an independent generated
+coin, retaining the entire branch label. It still has contrast at least
+$s$, cost $\mathsf C(s)$ and error $E_*$. Thus
+$\mathcal B_s=T_0$ for $s\le s_0$, whereas
+$\mathcal B_s=\mathcal T(s)$ for $s\ge s_0$.
+No evaluation of the remaining weak residual curve is used.
+
+Let $T_{\rm instr}$ be the height TV of the actual retained acquisition
+record, possibly a common classical processing of the generated label.
+Its **actual TV gain** means $T_{\rm instr}-\mathcal B_s$.
+For each actual label $\alpha$, let $j\in\alpha$ run over all its
+live products, high and low, and put
+$n_\alpha=\operatorname{tr}(N_\alpha\Delta)$,
+$a_\alpha=\sum_{j\in\alpha}\ell(K_j)+n_\alpha$.
+Full TP and $G_o=0$ make $a_\alpha$ the difference of its two actual
+acquisition probabilities. The three nonnegative deficits are
+
+$$
+\begin{aligned}
+D_f&=L_f-\sum_\alpha|n_\alpha|,\\
+D_{\rm label}&=\sum_\alpha\left[
+ \sum_{j\in\alpha}|\ell(K_j)|+|n_\alpha|-|a_\alpha|\right],\\
+D_{\rm record}&=\sum_\alpha|a_\alpha|-2T_{\rm instr},\qquad
+D_{\rm tot}=D_f+D_{\rm label}+D_{\rm record}.
+\end{aligned}
+\tag{JRH.69}
+$$
+
+Their signs follow respectively from JRH.12–JRH.13, the real triangle
+inequality, and contraction under classical processing. Sums mean
+integrals of the corresponding signed densities in the stipulated
+measurable model; the last expression is contraction of signed-measure
+total variation. No individual failure-time law has been fixed.
+All high-product height differences are positive by JR §43's proof,
+so their absolute sum is $H_s$. The low sum is
+$\mathbb E_{\mu_s}|f_s|$. Hence JRH.69 gives the exact bookkeeping
+identity and its necessity bound
+
+$$
+\begin{aligned}
+2T_{\rm instr}
+ &=H_s+L_f+\mathbb E_{\mu_s}|f_s|-D_{\rm tot},\\
+T_{\rm instr}-\mathcal B_s
+ &=-\mathbb E_{\mu_s}\mathfrak r_s-\tfrac12D_{\rm tot}
+ \ \le\ -\mathbb E_{\mu_s}\mathfrak r_s.
+\end{aligned}
+\tag{JRH.70}
+$$
+
+For the second line use $|f|=f-2\min(f,0)$,
+$\mathbb E_{\mu_s}f_s=\operatorname{tr}G_s$ and
+$\mathbb E_{\mu_s}P_s=\bar b_s$. In particular, throughout the
+weak plateau this reads
+$T_{\rm instr}-T_0\le-\mathbb E_{\mu_s}\mathfrak r_s$ with
+exactly the residual and expectation of pinned JR.157–JR.160.
+The residual is a signed function, not a failure probability. On the
+strong face the four corner rays have weights $1/4$, so
+$\mathbb E_{\mu_s}\mathfrak r_s=0$ and the bound is JRH.14.
+
+Equality in JRH.70 requires all three deficits to vanish. Thus the
+ACTUALLY generated labels must implement optimal spectral failure
+readout: every nonzero $N_\alpha$ is a positive multiple of one
+$B_\pm$, as proved in JRH.13. At each label all nonzero refined live
+differences and its failure difference must have the same sign, and
+any subsequent record processing must preserve total variation.
+The actual record must therefore resolve the refined sign components
+without cancellation; grouping only components of the same sign is
+lossless. Analytic Kraus refinement alone supplies no such record.
+JR Definition 53.3 actually generates its finite atom labels and
+separate optimal spectral failure rows, so these deficits vanish and
+its weak-plateau equality is attained. Coordinate failure rows instead
+give $D_f=L_f-d_f>0$, even with the same supported forgotten channel;
+their TV gain is smaller by $\gamma_f$ when the other deficits vanish.
+These statements do not replace any original twelve-history error,
+complex-input, reference, joint-cost or five-Borel-measure condition.
+

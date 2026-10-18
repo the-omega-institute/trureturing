@@ -1,0 +1,21 @@
+**Theorem 3.3 (the guard-separated code self-lock).** Suppose
+$\mathsf{Load}_v(z)\land\mathsf{Blocked}_v(z)$. Suppose a splitting of
+that actual admitted DONE writes the new active version/entry before
+its final Finish, and at some following Busy cut the current raw main
+selector is disabled. If every remaining fine reaction first requires
+that current selector to be enabled, DONE has no completing positive
+finite fragment from that cut.
+
+Proof. DONE was admitted using the fixed bootstrap at its completed
+cursor, so the new main selector was not its entry condition. At the
+specified Busy cut that selector is false. It is now a necessary
+condition of every next fine reaction, in particular Finish. There
+is no next reaction, although the admitted row has not finished.
+Thus the required stable successor cannot be reached. The correct
+original result, when $\mathsf{Blocked}_v(z)$ holds, completes DONE
+and its receipt and then has no enabled main row. It is neither an
+unexecuted DONE nor global halt. A core continuation selected before
+raw decoding, or a final atomic publication of all gate-invalidating
+fields, escapes the stated hypothesis. Saving the old code value
+without a currently executable continuation does not. ∎
+

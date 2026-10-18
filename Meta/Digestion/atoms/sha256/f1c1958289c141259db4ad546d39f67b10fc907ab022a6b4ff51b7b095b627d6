@@ -1,0 +1,1 @@
+3. The mutual recovery is for the supplied selected-past consumer. It does not establish total-memory optimality, arbitrary-protocol recovery, metric distance, absolute duration or a global completion.

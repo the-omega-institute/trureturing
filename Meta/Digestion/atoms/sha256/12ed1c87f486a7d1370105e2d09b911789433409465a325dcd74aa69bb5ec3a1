@@ -1,0 +1,20 @@
+**Lemma 3.2 (Derived automorphisms on the hull).** For $|s|<H$,
+$\mathcal U_s|_{\mathscr L}$ is an affine automorphism with inverse
+$\mathcal U_{-s}|_{\mathscr L}$. Every $\mathcal V_t$ restricts to an
+affine automorphism, and on $\mathscr L$,
+
+$$
+\mathcal V_t\mathcal V_h=\mathcal V_{t+h},\qquad
+\mathcal V_0=\operatorname{id},\qquad
+\mathcal V_t^{-1}=\mathcal V_{-t}.
+$$
+
+**Proof of Lemma 3.2.** For $|s|<H$ choose a nonempty open strip
+whose translate by $s$ remains interior. Both hulls in the preceding
+proof are now $\mathscr L$, proving the inverse assertion. Every
+$Q_t$ is a global source bijection. Its source composition, inverse
+and identity laws hold on $E(\mathcal M)$ and extend by affine
+spanning. They are laws on the actual hull, not on unused ambient
+directions. A probability command remains a partial source map, even
+when its affine restriction to $\mathscr L$ is invertible. $\square$
+

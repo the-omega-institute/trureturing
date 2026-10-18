@@ -1,0 +1,32 @@
+**Theorem 9.2 (Each fixed positive cutoff exponent).** For each additionally fixed real $\theta\in(0,1]$ there exist $s_\theta>0$ and constants $C_{\theta,M},C_{\theta,T}>0$, depending only on $(r,c,\alpha,\theta)$, such that for every $0<s<s_\theta$ one common $q$-retuned table satisfies (2.3) and
+
+$$
+M\le C_{\theta,M}\frac{s^{-(r+\theta)}}{\sqrt{\log(1/s)}},\qquad
+\max_i\mathbb E_iT\le C_{\theta,T}\frac{s^{-(2r+1)}}{\log(1/s)}.
+\tag{9.4}
+$$
+
+Proof. After fixing $\theta$, choose one $s_\theta<s_*$ so that throughout $0<s<s_\theta$,
+
+$$
+\eta s^{-\theta}\ge2,\qquad \theta\log(1/s)\ge\max\{1,2|\log(\eta/2)|\}.
+\tag{9.5}
+$$
+
+Set $L=\lfloor\eta s^{-\theta}\rfloor$. Since $\lfloor x\rfloor\ge x/2$ for $x\ge2$, one has $L\ge\eta s^{-\theta}/2\ge1$. Also $sL\le\eta s^{1-\theta}\le\eta$ because $s<1$ and $\theta\le1$, including $\theta=1$. Every hypothesis of Theorem 9.1 holds on this single neighborhood.
+
+Integral comparison gives $\log(L+1)\le H_L\le1+\log L$. The cutoff and (9.5) imply
+
+$$
+\begin{aligned}
+H_L&\ge\log L\ge\theta\log(1/s)+\log(\eta/2)\ge\tfrac\theta2\log(1/s),\\
+H_L&\le1+\log L\le1+\theta\log(1/s)\le2\theta\log(1/s),\\
+L+2&\le(\eta+2)s^{-\theta}.
+\end{aligned}
+\tag{9.6}
+$$
+
+Substitution proves (9.4), for example with $C_{\theta,M}=C_M(\eta+2)\sqrt{2/\theta}$ and $C_{\theta,T}=2C_T/\theta$. The same table meets every condition, with all constants and the neighborhood fixed before $s$. $\square$
+
+The range of observed short lengths supplies the harmonic sum rather than a single-scale gain. A subtypical cutoff $s^{-\theta}$ for any fixed $\theta>0$ already retains a fixed positive fraction of $\log(1/s)$. This is one jointly implemented statistic of one history; no separately optimal scale controllers or incompatible optima are combined. Smaller fixed $\theta$ changes the constants and neighborhood. Theorem 9.2 supplies exponents arbitrarily close above $r$; it supplies neither an exponent-$r$ construction nor a limit with $\theta=\theta(s)$. It gives no optimality for the square-root logarithmic state factor.
+

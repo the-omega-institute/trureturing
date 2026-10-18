@@ -1,0 +1,12 @@
+**定义 30.2.3（局部效应界）。** 对每个 $z\in U$，若只知道
+
+$$
+\ell_z\le\delta_t(z)\le u_z,
+\qquad
+-1\le\ell_z\le u_z\le1,
+$$
+
+称 $(\ell_z,u_z)$ 为该分层的目标效应界。没有任何信息时取 $\ell_z=-1$、$u_z=1$。
+
+<a id="section-30-3"></a>
+

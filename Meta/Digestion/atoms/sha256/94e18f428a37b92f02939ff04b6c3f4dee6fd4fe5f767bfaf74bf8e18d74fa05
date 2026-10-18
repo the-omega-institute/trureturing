@@ -1,0 +1,62 @@
+**Theorem 4.2 (exact optimum in the full-scope class).** For Definition
+4.1, over every nonnegative whole-scope compensation (INB.9),
+
+$$
+\inf_{\Psi}B_F(\Psi)=(2a)^n,
+\qquad
+\inf_{\Psi}B_{\rm inc}(\Psi)=(2\sqrt2\,a)^n.
+\tag{INB.13}
+$$
+
+Thus the second estimate has exactly $n/2$ bits of optimized log-mass
+excess on these actual native instances, even though the full cyclic
+graph and both coordinates of every original factor remain.
+
+Proof. Every local pair extends to a common binary assignment. Since
+the product in (INB.9) is the positive constant $a^n$, every entry of
+every $\Psi_i$ is positive. Let $F_i=\log\Psi_i$. Apply the mixed
+two-coordinate finite difference in $s_i,s_{i+1}$ to
+$\sum_iF_i(s_i,s_{i+1})=n\log a$. For $n\ge3$ only $F_i$ contains
+both variables. Hence its mixed difference is zero and
+
+$$
+\Psi_i(0,0)\Psi_i(1,1)=\Psi_i(0,1)\Psi_i(1,0).
+$$
+
+This positive rank-one table has a factorization
+$\Psi_i(s,t)=A_i(s)B_i(t)$: for example take
+$A_i(s)=\Psi_i(s,0)$ and $B_i(t)=\Psi_i(0,t)/\Psi_i(0,0)$.
+Varying just $s_i$ in the global identity now shows
+$A_i(s_i)B_{i-1}(s_i)=\kappa_i$, independent of $s_i$. Thus
+
+$$
+\Psi_i(s,t)=c_i\frac{u_i(s)}{u_{i+1}(t)},\qquad
+u_i>0,\quad c_i>0,\quad\prod_i c_i=a^n.
+\tag{INB.14}
+$$
+
+For example $u_i=A_i,c_i=\kappa_{i+1}$ gives this formula.
+Each variable has degree two and each scope has size two. Substitute
+(INB.14) into (INB.10). The first marginal of table $i$ is
+$c_i u_i\sum u_{i+1}^{-1}$ and the second is
+$c_i u_{i+1}^{-1}\sum u_i$. Regrouping the cyclic product gives
+
+$$
+B_{\rm inc}(\Psi)=a^n\prod_i
+\left[\|u_i\|_2\|u_i^{-1}\|_2
+              \left(\sum u_i\right)\left(\sum u_i^{-1}\right)
+\right]^{1/2}.
+\tag{INB.15}
+$$
+
+Cauchy–Schwarz on a positive binary vector gives
+$\|u\|_2\|u^{-1}\|_2\ge2$ and
+$(\sum u)(\sum u^{-1})\ge4$. Therefore (INB.15) is at least
+$a^n(\sqrt8)^n$, attained by constant $u_i$ and in particular by
+the original constant factors. This proves the second infimum.
+
+Theorem 3.1 gives $B_F(\Psi)\ge Z$ for every compensation. Each
+original two-by-two constant table has counting $2$-norm $2a$, so
+the unmodified factors attain $B_F=Z$. This proves the first
+infimum and the stated excess. $\square$
+

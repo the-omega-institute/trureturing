@@ -1,0 +1,24 @@
+### 110.4. Larger kernels and the same matrix's enlarged symmetry
+
+Suppose $\dim K\geq3$. The coordinate functionals span $`K^*`$, so the number of distinct functionals cannot be one or two. All four are distinct. Any two distinct nonzero functionals over $\mathbb F_2$ are independent, and therefore for different fibres $f,g$ the map
+
+$$
+K\longrightarrow\mathbb F_2^2,\qquad
+k\longmapsto(k_f,k_g)
+\tag{110.11}
+$$
+
+is onto. Invariance of $M$ under $K$ forces the four entries in every cross-fibre block $M_{fg}$ to be equal: the row and column coordinate can be flipped independently. Each diagonal fibre block is invariant under its within-fibre flip because $\ell_f\ne0$. These diagonal blocks all coincide, by transitivity on the fibres; transporting a flip-invariant block is unaffected by the within-fibre swap in the chosen lift.
+
+It follows that every independent within-fibre flip preserves $M$. Moreover, every pure fibre permutation from $F$, with all flip bits zero, preserves $M$. Indeed choose a lift in $P$ and remove its within-fibre flips, which have just been shown to preserve the same matrix. Equivalently, constant cross-fibre blocks and equal flip-invariant diagonal blocks make this removal immediate. These statements apply to directed complex entries and do not insert any conjugation.
+
+Choose a regular $F_0\leq F$ of order four. Its pure fibre action, together with the global flip, gives
+
+$$
+R=F_0\times\langle c\rangle
+       \leq\operatorname{Aut}_{\rm fib}(M),\qquad |R|=8.
+\tag{110.12}
+$$
+
+This group is transitive on the fibres and on both coordinates in each fibre. Hence it acts freely and transitively on $\Omega$. This proves in every case that the full fibre-preserving symmetry of the original matrix contains a regular order-eight subgroup. The construction in (110.12) need not stay inside the originally given $P$ or $\mathcal A$; the invariant matrix itself has not changed.
+

@@ -1,0 +1,31 @@
+### 3.5 SRM 的有限误差界
+
+令 $H=G-I$、$r=(1+x)^n-1$。从固定 $b$ 出发，距离 $h$ 的合法词数不超过 $\binom nh$，故 $H$ 的绝对行和至多为 $r$。$H$ 实对称，所以 $\|H\|_{\mathrm{op}}\le r$。若 $r<1$，$G$ 的最小特征值至少为 $1-r>0$。
+
+记 $S=\sqrt G$。由 $S^2=G$、$G_{bb}=1$ 得
+
+$$
+1-P_{\mathrm{SRM}}
+=\frac1{M_n}\sum_{b\ne c}|S_{bc}|^2
+\le\frac1{M_n}\|S-I\|_{\mathrm{HS}}^2.
+$$
+
+在 $G$ 的本征基中，逐特征值 $\lambda$ 有
+
+$$
+(\sqrt\lambda-1)^2=\frac{(\lambda-1)^2}{(1+\sqrt\lambda)^2},
+\qquad
+\|S-I\|_{\mathrm{HS}}^2
+\le\frac{\|H\|_{\mathrm{HS}}^2}{(1+\sqrt{1-r})^2}.
+$$
+
+距离 $1$ 的有序合法对恰有 $2e_n$ 个；距离 $h\ge2$ 的有序对至多有 $M_n\binom nh$ 个，因而
+
+$$
+\frac{\|H\|_{\mathrm{HS}}^2}{M_n}
+\le\frac{2e_n}{M_n}x^2+\sum_{h=2}^n\binom nh x^{2h}
+=\frac{2e_n}{M_n}x^2+(1+x^2)^n-1-nx^2.
+$$
+
+代入并使用 $1-r=2-(1+x)^n$，得到式（2.3），证明 (B)。SRM 与平方根的谱估计是成熟步骤；此式额外保留合法邻边的准确数目，而不将全部有序对都按最坏距离估计。
+

@@ -1,0 +1,10 @@
+**Lemma 6.1 (a safe zero signal collapses the legal matrix span).** If $0\ne K\in\mathcal K_{\rm safe}$ and $\operatorname{tr}(A_iK)=0$ for every recorded $i$, then $\operatorname{rank}\mathcal L\le2$, and consequently $\operatorname{rank}T_a\le2$ for every real $a$.
+
+**Proof.** The initial matrix is $I$, so $\operatorname{tr}K=0$. The two nonnegative diagonal entries of $K$ must both be zero. Write its off-diagonal entries as $b,c\le0$, with at least one negative. Every legal cumulative matrix has nonnegative integer entries and determinant $\pm1$, since both atoms do and products preserve these properties. The zero trace equation is
+
+$$
+b(A_i)_{21}+c(A_i)_{12}=0.
+$$
+
+Both summands are nonpositive. If $b<0$, every $(A_i)_{21}=0$, so all $A_i$ are upper triangular. Their nonnegative integer diagonal entries have product $\pm1$; nonnegativity forces product one and both entries one. They therefore lie in the span of $I$ and the upper single-entry matrix. If $b=0$, then $c<0$ and the same argument gives the analogous lower triangular span. If both are negative, both off-diagonal entries of every $A_i$ vanish, so every $A_i=I$. In all cases their span has dimension at most two. The trace pairing is nondegenerate, so $\operatorname{rank}\mathcal L\le2$. Finally $T_a=\Lambda(\operatorname{Id}+a\mathcal I)\mathcal L$ has rank at most that of $\mathcal L$. ∎
+

@@ -1,0 +1,23 @@
+**Proposition 16.6 (finite installation and terminal family for $C_{4,M}$).**
+For fixed $M\ge4$, the $M-2$ runs indexed by $J=2,\ldots,M-1$ have distinct
+full histories and the same original terminal task response.
+
+**Proof.** Four saved-return states and their join controls are finite and are
+installed once. The old raw frame, invalid packet, directory, guard, row,
+channel, verifier, consumer and return phases are called with their original
+entries; no verifier lane or consumer lane is reassigned. The first and
+second reservations are strict, `Raise(M)` is valid after the second one, and
+$\rho$ is the original guarded source operation. All actual allocation,
+partial cells, descriptor/seal states and ACKs remain in the history.
+
+Different $J$ values leave different first unary request words and first
+immutable reservation records. The final state may have $h=K=M$ and the same
+accepted $\rho$ successor, but the retained histories still differ. The
+truthful acquired initial source again makes the verifier's initial-source
+fibre singleton. Each authentic snapshot therefore passes the same
+`INITIAL-q_H0` binding, and the consumer copies the same $q_1(\alpha)$ target
+before the final halt. The posthalt argument of Theorem 16.4 applies verbatim.
+Thus $T_J\not\sim_TT_{J'}$ for $J\ne J'$ while
+$T_J\sim_QT_{J'}$, giving $M-2$ histories in one terminal $Q$-fibre.
+$\square$
+

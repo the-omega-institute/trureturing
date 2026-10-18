@@ -1,0 +1,30 @@
+**Definition 301.2 (An exact 77-inequality comparison system).**
+All the following inequalities have their usual left-minus-right
+reading at most zero. The twelve hull inequalities mean
+$b_1\le1$, $b_{i+1}\le b_i$ for $1\le i\le6$, $e\le b_7$,
+$0\le e$, $b_2\le b_3$, $E=S-8e\ge0$ and $b_1+E\le1$;
+the chain and $b_2\le b_3$ together give $b_2=b_3$.
+
+| Family | Explicit inequalities | Count |
+| --- | --- | ---: |
+| Hull | the twelve inequalities just specified | 12 |
+| Scalar | $R\ge0$ | 1 |
+| Ratio generators | $\pm v_a\le B_aR$, $1\le a\le5$ | 10 |
+| Consumed prior consequence | $v_5\le33R$ | 1 |
+| Selected heads | $F_1\le0$, $F_2\le0$ | 2 |
+| Four-late | $\sum_{j\in I}b_j\le8e$, $I\subset J$, $|I|=4$ | 5 |
+| Weighted subsets | $\sum_{j\in I}b_j\le(|I|+21/5)e$, $\varnothing\ne I\subset J$ | 31 |
+| 113 prefixes | $b_1+\sum_{j=3}^mb_j\le1+(m+1)e$, $3\le m\le7$ | 5 |
+| 117 prefixes | $(m-3)b_2+(m-2)\sum_{j=3}^mb_j\le m-3+(m-2)(m+1)e$, $4\le m\le7$ | 4 |
+| 235 prefixes | $c_mb_2+(d_m-1)b_3+d_m\sum_{j=4}^mb_j\le c_m+((m+1)d_m-1)e$, $4\le m\le7$ | 4 |
+| 240 | $2b_2+4b_3+6b_4+5b_5+6b_6+6b_7\le2+45e$ | 1 |
+| 241 | $10b_3+14b_4+13b_5+14b_6+14b_7\le117e$ | 1 |
+
+Here $d_m=m(m-3)/2$ and $c_m=d_m-m+2$. The weighted subset family
+is the indicator-generator form of
+[282.1](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XVI.md);
+the other numbered families are
+[113.2 and 117.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION.md)
+and [235.3, 240.1 and 241.1](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XIV.md).
+These are exactly the listed constraints, not all historical consequences.
+

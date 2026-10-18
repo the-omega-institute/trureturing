@@ -1,0 +1,37 @@
+## 4. Native representatives and separating tests
+
+**Mathematical input 4.1 (supplied native admissibility of separating fibers).**
+For every interior $k$, every $\alpha$, and every pair $\beta_1,\beta_2$,
+the states $(k,\alpha,\beta_j)$ are exact current rays from the same
+fixed preparation, under the original two controls. They have identical
+bottom behavior with all complete guards. Distinct $\beta_j$ modulo
+$2\pi$ remain distinguishable by the original middle-reference output.
+
+Proof. Besides the supplied realization [N, Theorem 8.2], an explicit
+double-wall construction is available. Choose two distinct interior
+heights $k_1,k_2$. For real lifts of any target $\alpha,\beta$, prescribe
+two fixed-height control-phase legs $t_1,t_2$ satisfying
+
+$$
+t_1+t_2=2\alpha,\qquad c(k_1)t_1+c(k_2)t_2=\beta.
+\tag{4.1}
+$$
+
+The determinant is $c(k_2)-c(k_1)\ne0$, so finite real solutions exist.
+Move from the preparation height to $k_1$, then to $k_2$, and finally
+to $k$, keeping the phase control fixed on those height legs; execute
+the two phase legs at their indicated heights. Every height segment lies
+inside the convex interval $J$. This is a finite piecewise linear
+Definition 1.2 history, with no bound on its required resources asserted.
+If the preparation height is in $I$, both auxiliary heights can also be
+chosen in $I$. Otherwise the native preparation history precedes the
+analytic diffusion, whose killing clock starts at the chosen state.
+Formula (1.7) gives (4.1), so its endpoint has the required coordinates.
+Apply the construction separately to $\beta_1$ and $\beta_2$ without
+changing preparation phases or means.
+
+Equations (1.4)--(1.6) give identical bottom outputs and refusals for this
+pair, whereas $w=\sqrt{Zk}e^{i\beta}$ distinguishes the two rays. Fixed
+preparation rotations and the original output factor two preserve both
+statements. $\square$
+

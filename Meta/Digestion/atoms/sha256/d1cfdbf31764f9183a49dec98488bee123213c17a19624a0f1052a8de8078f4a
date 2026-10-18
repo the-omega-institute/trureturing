@@ -1,0 +1,103 @@
+**引理 45.2（首锚方向的临界两分支）。** 设首个锚之前的实际内部积为
+\(p\ne0\)，令 \(\lambda=|p|\le1\)，\(q=p/|p|\)，并在必要时把 \(q\) 换成
+\(-q\)，使
+
+$$
+q=\alpha+\nu u,\qquad \alpha=|\operatorname{Re}q|\in[0,1],
+\quad \nu=\sqrt{1-\alpha^2},
+\quad |u|=1,\ u\in E.
+\tag{45.2}
+$$
+
+换号只把实际首锚读数整体取负，不改变相等记录或欧氏距离。写
+\(bq=s+w\)，其中 \(s\in\mathbb R\)、\(w\in E\)。则实际锚读出的隐藏分量是
+\(\lambda w\)，而来源条件为
+
+$$
+\alpha s+\nu\langle w,u\rangle\ge\tau R,
+\qquad s^2+|w|^2=R^2,
+\tag{45.3}
+$$
+
+其中 \(R\in\{7,25\}\)。
+
+(i) 若 \(0\le\alpha<\kappa\)，置
+
+$$
+\rho=\kappa\nu-\tau\alpha>0,
+\qquad K=\kappa\alpha+\tau\nu=\sqrt{1-\rho^2}.
+\tag{45.4}
+$$
+
+对任意 \(R\) 定义
+
+$$
+t=R\rho,\qquad s_0=RK,\qquad
+b_\pm=(\pm t+s_0u)q^{-1}.
+\tag{45.5}
+$$
+
+则 \(b_+,b_-\) 都在半径 \(R\) 的球帽中，
+\(\operatorname{Im}(b_+q)=\operatorname{Im}(b_-q)=s_0u\)，且
+\(|b_+-b_-|=2R\rho\)。
+
+(ii) 若 \(\kappa\le\alpha<\tau\)，置
+
+$$
+h=\tau\nu-\kappa\alpha,\qquad H=\tau\nu+\kappa\alpha.
+\tag{45.6}
+$$
+
+则 \(0\le h\le H\le1\)，并且函数
+
+$$
+F(z)=\alpha\sqrt{1-z^2}+\nu z
+$$
+
+在 \([h,H]\) 上满足 \(F(z)\ge\tau\)。对本节的数值有
+
+$$
+25h\le7H\quad(\alpha\ge3/5).
+\tag{45.7}
+$$
+
+因此可取 \(r\in[25h,7H]\)，令
+
+$$
+s_R=\sqrt{R^2-r^2},\qquad b_R=(s_R+ru)q^{-1}\quad(R=7,25).
+\tag{45.8}
+$$
+
+两点均为来源点，且 \(\operatorname{Im}(b_7q)=\operatorname{Im}(b_{25}q)=ru\)，而
+\(|b_{25}-b_7|=s_{25}-s_7>0\)。若 \(\alpha\ge\tau\)，则更简单地取
+\(b_R=Rq^{-1}\)；两点的投影都是零，距离为 \(18\)。
+
+证明。式 (45.3) 直接由右乘单位四元数保持内积和范数得到。对 (i)，
+\(\rho^2+K^2=1\)，并有
+
+$$
+\nu K-\alpha\rho=\tau.
+\tag{45.9}
+$$
+
+故 \(\operatorname{Re}b_- =-\alpha t+\nu s_0=\tau R\)，而 \(b_+\) 的实部更大；
+二者的虚部投影相同，差只在实部方向，得到所述距离。对 (ii)，
+$\kappa\le\alpha<\tau$ 给出 $\tau\alpha-\kappa\nu\ge0$，直接展开得
+
+$$
+\sqrt{1-h^2}=\tau\alpha+\kappa\nu,\qquad
+\sqrt{1-H^2}=\tau\alpha-\kappa\nu.
+$$
+
+故 $F(h)=F(H)=\tau$，两值都满足未平方的原方程；凹性给出 $[h,H]$ 上的下界。
+式 (45.7) 等价于
+
+$$
+18\tau\nu\le32\kappa\alpha;
+$$
+
+两边非负，平方后即为 \(\alpha^2\ge(3/5)^2\)。由
+\(25h\le r\le7H\)，两点的归一化投影模分别落在 \([h,H]\) 内，故 (45.3)
+成立；\(r\le7\) 保证根号有意义，且 \(s_{25}>s_7\)。\(\alpha\ge\tau\) 的取法直接核对
+\(\operatorname{Re}(Rq^{-1})=R\alpha\ge R\tau\)。证毕。
+

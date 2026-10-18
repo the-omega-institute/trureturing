@@ -1,0 +1,32 @@
+**Definition 1.2 (stationary original interface).** Let
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\qquad h(\alpha)=h(\beta)=0,
+\qquad h(\langle u,v\rangle)=1+\max(h(u),h(v)).
+$$
+
+Pairing is free and ordered, and the two leaf labels are distinct. Set
+
+$$
+\rho\alpha=\beta,\qquad
+\rho\beta=\langle\beta,\alpha\rangle,\qquad
+\rho\langle u,v\rangle=\langle\rho u,\rho v\rangle.
+$$
+
+For public $D\ge2$, the complete original family and target menu are
+
+$$
+\mathcal F_D=\{\langle\alpha,v\rangle:h(v)\le D\},\qquad
+\mathcal P_D=\{Rq:|q|\le D-1\}.
+\tag{NPH.1}
+$$
+
+Every finite word $w$ over $L,R$, including the empty word
+$\varepsilon$, is a legal original-root Read. Its reply $r_t(w)$ is
+$\alpha$, $\beta$, $\mathsf{branch}$ or $\mathsf{absent}$, according
+as the address reaches that leaf label, a pair, or passes a leaf. An
+absent reply is a completed observation. One actual $t$ remains
+stationary throughout every phase in this volume. The tree
+$\rho^kt$ is a prediction target, not an executed register update.
+

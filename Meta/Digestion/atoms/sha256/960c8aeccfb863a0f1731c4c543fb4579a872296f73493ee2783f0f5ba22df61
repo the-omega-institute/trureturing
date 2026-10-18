@@ -1,0 +1,53 @@
+**命题 469.6（实际正向成本的商区间身份）。** 取 $N\ge1$ 和有限素数集合 $S$。定义
+
+$$
+c_{k,j}(S)=
+\sum_{\substack{1\le d\le k\\d\text{ squarefree}\\
+ \operatorname{supp}(d)\subseteq S\\\lfloor k/d\rfloor=j}}
+ \frac{\mu(d)}d,
+\qquad 1\le j\le k\le N.
+$$
+
+则实际正向算子范数准确为
+
+$$
+\left\|\prod_{p\in S}U_p\right\|_{\alpha,N}
+=\max_{1\le k\le N}(k+1)^\alpha
+ \sum_{j=1}^{k}\frac{|c_{k,j}(S)|}{(j+1)^\alpha}.
+\tag{WN.14}
+$$
+
+在 $S=P_N$ 时，全部完整系数来自同一原始前缀：
+
+$$
+\boxed{c_{k,j}(P_N)
+=H(\lfloor k/j\rfloor)-H(\lfloor k/(j+1)\rfloor).}
+\tag{WN.15}
+$$
+
+因此完整正向成本正是
+
+$$
+\boxed{
+\left\|\prod_{p\le N}U_p\right\|_{\alpha,N}
+=\max_{1\le k\le N}(k+1)^\alpha
+\sum_{j=1}^{k}
+\frac{|H(\lfloor k/j\rfloor)-H(\lfloor k/(j+1)\rfloor)|}
+ {(j+1)^\alpha}.}
+\tag{WN.16}
+$$
+
+**证明。** 展开有限 $U_p$ 积，每个素数子集产生平方自由 $d$，系数为标准 $\mu(d)/d$。若 $d>k$，输出为 $f(0)=0$；其余项按相同输出坐标 $j=\lfloor k/d\rfloor$ 合并，便得到系数 $c_{k,j}(S)$。因此每行输出是 $\sum_{j=1}^k c_{k,j}(S)f(j)$，加权绝对行和给 WN.14 的上界。取最大行，令输入坐标具有该行系数的符号与对应逆权 $(j+1)^{-\alpha}$，其范数为一并达到该行和，证明准确等号。每行对角系数 $c_{k,k}=1$，所以范数见证不是零向量。
+
+若 $S=P_N$，每个 $d\le k\le N$ 的素因子都属于 $S$，且非平方自由项的 Möbius 系数为零。准确整数商条件为
+
+$$
+\lfloor k/d\rfloor=j
+\quad\Longleftrightarrow\quad
+\lfloor k/(j+1)\rfloor<d\le\lfloor k/j\rfloor.
+$$
+
+把这段原始有限和写成两个完整前缀之差，就得到 WN.15，两个端点均保留。$j=k$ 时，它给 $H(1)-H(0)=1$；若两个整数商相同，区间为空，系数准确为零。将 WN.15 代入 WN.14 就是 WN.16。证毕。
+
+WN.14 的绝对值作用于同列的有符号系数合并以后；WN.11 的逆系数则全部为正。这将正向成本落实为同一实际 $H$ 的完整有限加权商区间变差，没有把 Möbius 系数改成无符号模型。$\alpha=0$ 时这些式子同样成立；$N=1$ 时唯一行系数为一；$N=0$ 时无正坐标，原零空间算子范数为零。
+

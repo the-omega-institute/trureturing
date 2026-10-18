@@ -1,0 +1,30 @@
+**Proposition 2.2 (differentiated event systems).** At the event,
+$$
+\begin{aligned}
+H z_6'+A^T Y_6'&=q,& A z_6'&=0,\\
+Ah&=-v\,p_4',& Hh+A^T\Delta Y&=0,\\
+v^T\Delta Y&=-d_6'.
+\end{aligned}
+$$
+Moreover,
+$$
+d_6'=\frac{P_4'}{d_4}>0,\qquad p_4'<0,
+$$
+where $P_4'$ is the cleared unused-stationarity derivative from [OE, Definition 4.1].
+
+**Proof.** The six unused normalized gap is $P_4/d_4$. At the event $P_4=0$ and $P_{4,x}=0$, so the quotient rule removes both the denominator derivative and the motion of the unused angle:
+$$
+d_6'=P_4'/d_4.
+$$
+The strict sign is inherited from the cleared derivative certificate and $d_4>0$. Along the seven section, differentiating $g_4=0$ gives
+$$
+v^TY_7'-k_4=0.
+$$
+Along the six section the stationary unused equation gives
+$$
+d_6'=v^TY_6'-k_4.
+$$
+Subtracting yields $v^T\Delta Y=-d_6'$.
+
+Differentiate the eight moments and the occupied stationarity equations. The disappearing atom contributes $v\,p_4'$ to the moment derivative; its angular motion is multiplied by $p_4=0$. Subtracting the six equations from the seven equations gives $Ah=-vp_4'$ and $Hh+A^T\Delta Y=0$. The first displayed six equations are the same differentiated stationarity and moment equations with $q=Dk$. This calculation keeps the moving unused angle in the cleared stationarity equation; it does not set an off-event normalized gap to zero. $\square$
+

@@ -1,0 +1,45 @@
+**Proposition 8.2 (an explicit two-copy matching law).** Set
+$m=2,\ell=2,\epsilon=1/4$. Label the four phase-zero solutions by
+their two edge choices, in the order $aa,ab,ba,bb$, and place the
+phase-one solution last. The single-gadget Gibbs probabilities are
+
+$$
+p=\frac1{1250}(81,144,144,256,625).
+$$
+
+Writing $f(s)$ for a row's phase, the two-copy laws on all $25$ actual
+rows are exactly
+
+$$
+P(s,t)=p(s)p(t),\qquad
+Q(s,t)=
+\begin{cases}
+\frac74p(s)p(t),&f(s)=f(t),\\
+\frac14p(s)p(t),&f(s)\ne f(t).
+\end{cases}
+$$
+
+Their phase law under $Q$, in order $00,01,10,11$, is
+
+$$
+q=(7/16,1/16,1/16,7/16).
+\tag{OCC.28}
+$$
+
+Both laws are normalized, have identical entire-gadget marginals and
+agree on every full conditional update of at most seven actual owners.
+Their entropy and free-energy difference is exactly $2-H(q)>0$.
+
+Proof. In phase zero the two independent choices have probabilities
+$9/25,16/25$ by Theorem 5.2. Multiplying their products by the phase
+mass $1/2$ gives the first four entries of $p$; the last entry is
+$1/2$. In (OCC.22), $2^\ell q$ equals $7/4$ on equal phases and
+$1/4$ on unequal phases, proving the stated $Q$. Each gadget has
+phase mass $1/2$, so summing either conditional multiplier over the
+other gadget gives $(7/4+1/4)/2=1$. This proves normalization and
+both entire-gadget marginals directly. An update of at most seven
+owners cannot change a phase because its crossing distance is eight.
+The multiplier $Q/P$ therefore cancels on each such conditional
+fiber. Finally apply (OCC.21); the displayed $q$ is not uniform.
+$\square$
+

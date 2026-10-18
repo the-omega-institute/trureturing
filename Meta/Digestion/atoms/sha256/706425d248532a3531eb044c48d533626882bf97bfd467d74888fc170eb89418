@@ -1,0 +1,2 @@
+**Definition 1.5 (Universal law radius).** A radius-$R$ rule uses only integer addresses $t$ with $|t-j|\le R$. Let $\rho_{\mathrm{law}}(k;p,j,\nu)$ be the least nonnegative integer radius sufficient to represent every lawful total-cap-$k$ input on this same given seed space, preserving the full law in Definition 1.4 and the total cap. The inherited exponential upper bound stated in Section 7 ensures finiteness. All parameter quantifiers in this definition and below retain the full range in Definitions 1.1–1.4.
+

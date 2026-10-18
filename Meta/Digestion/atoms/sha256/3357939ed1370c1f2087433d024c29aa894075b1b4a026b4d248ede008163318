@@ -1,0 +1,68 @@
+**Convention 2.1 (Supplier correspondence and versions).** Exterior records lie in the projection of
+$\mathsf X$ to $C^c$. Write $wy$ for completion of $y$ by $w$ on $C$, and $Z_Cx=0^Lx_{C^c}$. A word is
+compatible with $y$ exactly when it is in $B_L$ and both boundary seams are legal. [Cocycle, Theorem 3.1
+and equations (3.5)–(3.7)][E] supply, almost surely,
+
+$$
+\begin{gathered}
+p_C(0^L;y)\ge2^{-L},\qquad
+3^{-k(w)}p_C(0^L;y)\le p_C(w;y)\le p_C(0^L;y)
+\quad(w\text{ compatible}),\\
+p_C(w;y)\ge c_L:=2^{-L}3^{-\lceil L/2\rceil}\quad(w\text{ compatible}),
+\qquad (Z_C)_*P\le2^LP.
+\end{gathered}
+\tag{2.1}
+$$
+
+Incompatible words have mass zero. All finite legal replacement maps are nonsingular. There is a
+shift-invariant, finite-modification-saturated Borel conull set $\Omega$ on which the original absolutely
+convergent cocycle is
+
+$$
+\Delta_P(x,z)=\sum_{i\in\mathbb Z}(\ell_i(x)-\ell_i(z)),\qquad
+\Delta_P(x,z)=\Delta_P(x,u)+\Delta_P(u,z)
+\tag{2.2}
+$$
+
+whenever the configurations differ only finitely. It is measurable, antisymmetric and shift invariant.
+These are reused results, not new cocycle or support claims of this volume.
+
+For almost every $y$, finite disintegration and (2.1) place every compatible completion, including zero,
+in $\Omega$. Put, on this set,
+
+$$
+\begin{aligned}
+D_C(x)&=\Delta_P(x,Z_Cx),&d_C(w;y)&=\Delta_P(wy,0^Ly),\\
+m_C(y)&=\sum_w p_C(w;y)d_C(w;y),&a_C(w;y)&=d_C(w;y)-m_C(y),\\
+T_{C,f}(y)&=\sum_w p_C(w;y)f(w)d_C(w;y).
+\end{aligned}
+\tag{2.3}
+$$
+
+All word sums are over compatible words; zero values may be assigned to incompatible terms and to
+exceptional exterior records. The supplier gives $D_C\in L^1(P)$ and $T_{C,f}\in L^1(\mu_C)$. Under
+(1.5)–(1.6), $\mathsf Z(P)$ is equivalent to $T_{C,f}=0$ almost surely for every $C,f$. In particular
+$p_C(\cdot;y)\in\mathcal V_C$, and under these balances $p_C(\cdot;y)d_C(\cdot;y)\in\mathcal V_C$. These
+are linear annihilator statements; closure under multiplying by $d_C$ does not follow.
+
+For $C=[1,L]$ the supplier's reduced original predictor $b_i^C$ conditions only on the exterior half-line
+containing $i$, with $i$ omitted. It is unchanged by $Z_C$, and the exact offsets are
+
+$$
+\|q_{-j}-b_{-j}^C\|_2^2=e_R(j),\qquad
+\|q_{L+1+j}-b_{L+1+j}^C\|_2^2=e_L(j),\qquad j\ge0.
+\tag{2.4}
+$$
+
+Translations give the corresponding predictors for any $C$. They and every loss in (2.2) belong to
+(1.3)'s original law, not to a surgery pushforward.
+
+All subsequent almost-sure statements admit simultaneous choices for countably many intervals and sites.
+For statements linear in $f$, take a finite basis of each $\mathcal K_C(P)$ and then use linearity. To
+evaluate new identities after replacements, intersect their Borel conull sets with the inverse images
+under the countable monoid of shifts and fixed finite legal replacements. Nonsingularity makes this
+intersection conull and saturated. Finite disintegration and positive compatible masses then give
+identities at every compatible completion on almost every exterior. For any fixed two collections of
+original-law versions, the same construction makes them agree there; no universal null set for all
+conceivable versions is asserted.
+

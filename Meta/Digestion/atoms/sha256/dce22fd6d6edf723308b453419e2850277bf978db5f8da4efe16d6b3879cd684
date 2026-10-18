@@ -1,0 +1,27 @@
+**定义 156.1（自由操作词及乘序）。** 给定一个非空承载集合 $O$ 和两个已指定的自映射 $A_\alpha,A_\beta:O\to O$；若用于实际操作，还要求它们属于假设152.1的已取得菜单，并把需要的控制和来源纳入承载状态。符号 $\alpha,\beta$ 在本章先是操作词的字母，不把两个自映射假定为同一个或由恒等凭空生成。
+
+令 $W=\{\alpha,\beta\}^*$ 为自由词幺半群，单位为空词 $\epsilon$，乘法为有序拼接。定义替换
+
+$$
+\rho_{\rm op}(\alpha)=\beta,\qquad
+\rho_{\rm op}(\beta)=\beta\alpha,\qquad
+\rho_{\rm op}(uv)=\rho_{\rm op}(u)\rho_{\rm op}(v),\qquad
+\rho_{\rm op}(\epsilon)=\epsilon.
+$$
+
+它作用在语法词上，非空迭代开始为
+
+$$
+\alpha\longmapsto\beta\longmapsto\beta\alpha
+\longmapsto\beta\alpha\beta.
+$$
+
+为与定义117.1的叶序乘法一致，求值取
+
+$$
+E(w_1\cdots w_k)=A_{w_1}\circ\cdots\circ A_{w_k},\qquad
+E(\epsilon)=\operatorname{id}_O.
+$$
+
+因此右端字母先执行，$E(uv)=E(u)\circ E(v)$。若实际事件先执行 $A_\alpha$ 再执行 $A_\beta$，累计作用为 $A_\beta\circ A_\alpha=E(\beta\alpha)$，而事件档案按发生顺序记 $e_\alpha e_\beta$。词字母、矩阵乘积与完整事件采用不同类型，不能把字母名代替完整来源码。
+

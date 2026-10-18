@@ -1,0 +1,79 @@
+**Proposition 176.2 (Exact union counts and closed sharp-core membership).**
+In the primary schedule/table convention,
+
+$$
+\begin{aligned}
+|T_L|&=4+L+\binom L2+\binom L3,\\
+|Z_L|&=\binom{L+2}4,\\
+T_L\cap Z_L&=\{(1,2;0,2,0)\},\\
+|E_L|&=3+L+\binom L2+\binom L3+\binom{L+2}4.
+\end{aligned}
+\tag{176.2}
+$$
+
+There are $\binom{L+2}4-1$ new union entries beyond $T_L$.
+The kernel quotient removes exactly two further duplicates. At $L=6$
+the three primary counts are $45,70,114$, with $112$ distinct kernels.
+For every parameter choice in (118.1), the entire kernel (118.5)
+belongs to $\operatorname{conv}(E_5)$. More generally, a core in
+$\operatorname{conv}(E_m)$ has every residual extension of Theorem
+173.1 in $\operatorname{conv}(E_L)$; this includes the whole
+closed-parameter sharp-core family.
+
+**Proof.** The prefix table $(1,2;1,2,0)$ is already a canonical pair;
+the other three prefix entries add to the empty, singleton, pair and
+triple counts, giving $|T_L|$. For $Z_L$, a fixed $(i,j)$ has $j-i$
+middle labels and $L-j+1$ exhaustion labels. Thus
+
+$$
+|Z_L|=\sum_{j=2}^L\binom j2(L+1-j)
+      =\sum_{t=2}^L\sum_{j=2}^t\binom j2
+      =\sum_{t=2}^L\binom{t+1}3=\binom{L+2}4.
+\tag{176.3}
+$$
+
+Comparing first and middle labels shows that the only intersection
+entry is $(1,2;0,2,0)$. This proves the union count.
+The two kernel identifications are the prefix $(1,2;0,0,0)$ with
+immediate base emission, and $(1,2;1,0,0)$ with the canonical singleton
+at one. Every other pair table in this union has both queried bits
+essential to its output function. The set of its essential coordinates
+therefore determines its increasing schedule. Within that schedule,
+all three stopped cells are reachable, so the kernel determines each
+terminal label. A singleton's essential coordinate similarly determines
+it. There are consequently no further identifications. Substituting
+$L=6$ gives the numerical counts.
+
+For membership, apply the existing complete-cell realization of
+[Proposition 140.3](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_II.md#140-original-sources-and-complete-common-budget-allocations)
+to each of the seven schedules in the reused table (118.5).
+For a schedule $(i,j)$ of mass $\beta$, its first vector has support
+in $\{0,i\}$, its middle vector is $\beta e_j$, and its exhaustion
+vector has support in $\{0,j+1,\ldots,5\}$. Denote the first masses
+by $a_s$ and exhaustion masses by $w_\ell$. Both sum to $\beta$.
+If $\beta>0$, give the complete endpoint $(i,j;s,j,\ell)$ mass
+
+$$
+\frac{a_s w_\ell}{\beta}.
+\tag{176.4}
+$$
+
+Summing over $\ell$ recovers $a_s$, summing over $s$ recovers
+$w_\ell$, and their joint sum is $\beta$. The middle vector is
+unchanged. If $\beta=0$, all these nonnegative masses vanish and
+the schedule is omitted. An endpoint with $s=i$ is a canonical pair
+or numerical triple; one with $s=0$ is in $Z_5$, since its middle
+label is $j$. This reproduces every cell and hence every word law,
+not just the correct marginal or cap. Non-strict parameter endpoints
+are included without division on zero-mass schedules.
+
+The natural embedding $E_m\subseteq E_L$ uses the same schedules and
+labels. Each $P_h$ branch is a mixture of canonical numerical triples,
+or of canonical base-exhausting pairs when its last label is $\ast$.
+These belong to $T_L$. Therefore the one normalized residual mixture
+stays in $\operatorname{conv}(E_L)$ with exactly the same kernel.
+The same-seed actual realization and every actual tail are then those
+of Theorem 173.1, with the entire original carrier retained.
+Membership does not assert that all stopped kernels belong to this
+subcatalog. $\square$
+

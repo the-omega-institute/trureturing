@@ -1,0 +1,13 @@
+**Theorem 54.3 (Pointwise laws with the all-source gate retained).** Let $\mathcal L_\eta(q)$ be the set of probability laws at signature $q$ realized by lawful preparations satisfying the cap $\eta$ at every original source. Then
+
+$$
+\mathcal L_\eta(q)=
+\begin{cases}
+K_\infty^\eta(q),& K_\infty^\eta(q')\ne\varnothing\text{ for every }q'\in Q,\\
+\varnothing,& K_\infty^\eta(q')=\varnothing\text{ for some }q'\in Q.
+\end{cases}
+\tag{54.12}
+$$
+
+**Proof.** The necessity argument of Theorem 54.2 puts each lawful law in the stable value. If some other value is empty, no all-source cap preparation exists, so every $\mathcal L_\eta(q)$ is empty. If all values are nonempty, fix $v\in K_\infty^\eta(q_0)$ and replace just the value at $q_0$ by $\{v\}$. This modified correspondence is nonempty and closed-valued. It remains lower semicontinuous: at $q_0$ use lower semicontinuity for the point $v$; at $q\ne q_0$ restrict to an open neighborhood excluding $q_0$, which exists because $Q$ is Hausdorff. The clopen selection construction and (54.11) then give a lawful all-source cap preparation with law $v$ at $q_0$. This asserts arbitrary single-point prescription, not arbitrary simultaneous prescriptions at several signatures. $\square$
+

@@ -1,0 +1,89 @@
+**Theorem 56.2 (A positive-row countable failure).** For every (56.1) and every allowed profile, there is a fixed target family on a countable power-set carrier, on the entire actual $X$, with row (56.2), at most three tapes in each target support, and
+
+$$
+I(\mu)=R_\mu=r,
+\qquad
+\{\eta\in[0,1]:\eta\text{ is lawfully feasible}\}=(r,1].
+\tag{56.3}
+$$
+
+There is no TV-continuous family within cap $r$. Every cap above $r$ has a lawful preparation with a common finite prime menu and a finite positive-weight seed support.
+
+**Proof.** First strengthen the actual dense coloring used in Section 52. The arithmetic supplier is [Boundaries, Theorem 35.2](KBONACCI_SELF_CALIBRATING_BOUNDARIES.md#35-exact-finite-divisibility-fibres-in-canonical-fibonacci-windows), on the labeled source (36.1); its needed Fibonacci entry-rank identity is [equation (363.13)](FIBONACCI_ATOMIC_RELATION_GENERATION.md), namely $q\mid F_n\Longleftrightarrow z(q)\mid n$. It makes $\Omega$ unbounded in every occupied finite-prime cylinder. Complete observation classes have a fixed finite $\Omega$, so excluding finitely many classes preserves that unboundedness.
+
+On $Q$, or on any occupied clopen subset, and for any fixed number of colors, enumerate triples consisting of an occupied prefix subcylinder, a color and an integer $K$. For each triple choose a previously unassigned class in that cylinder with $\Omega\ge K$, and assign it that color. Only finitely many classes have been used at that stage, so the choice exists. Assign the remaining classes arbitrarily. Thus, for every actual $z$ in the domain and every color $i$, there are actual sources $y_\ell$ of that color with
+
+$$
+[y_\ell]\in U_\ell([z]),\qquad \Omega(y_\ell)\ge\ell.
+\tag{56.4}
+$$
+
+This construction uses only the actual domain and introduces no source probability, source selection during execution or additional observation. No exact realization of every integer $\Omega$ is required.
+
+We will use a moving-event consequence. If $\lambda$ is TV-continuous, $[y_\ell]\to[z]$ and $j_\ell=\Omega(y_\ell)\to\infty$, then
+
+$$
+\lambda_{y_\ell}(\{p_{j_\ell}\})
+ \le d(\lambda_{y_\ell},\lambda_z)
+                   +\lambda_z(\{p_{j_\ell}\})\longrightarrow0.
+\tag{56.5}
+$$
+
+The second term vanishes because the $p_j$ are disjoint atoms of a probability measure. Consequently, for fixed measurable $A$ disjoint from all proposal tapes, the inequalities $d(\lambda_{y_\ell},\mu_{y_\ell})\le\eta$ and $\mu_{y_\ell}(A\cup\{p_{j_\ell}\})\ge a$ for every $\ell$ imply $\lambda_z(A)\ge a-\eta$. The same source sequence controls the entire moving event; no coupling or unattainable joint experiment is assumed.
+
+Let $E$ be the complete anchor-signature fiber and $D_n$ the sources with first differing prime answer at index $n$. These sets partition every labeled source; each $D_n$ is occupied and clopen, and $D_n\subseteq C_{n-1}(x_*)$. The anchor support is $\{3\}$, so every source in $E$ has $\Omega=1$. Color the actual classes of each $D_n$ with $n$ colors using (56.4). Choose $0<c<\min\{r,1-r\}$ and put $w_n=r+c/n$. On the countable power-set carrier
+
+$$
+\Theta^- =\{o\}\sqcup\{a_{n,i}:n\ge1,\ 1\le i\le n\}
+                         \sqcup\{p_j:j\ge1\},
+\tag{56.6}
+$$
+
+use the consumer of Definition 56.1 and prescribe
+
+$$
+\begin{aligned}
+\mu_y^-&=(1-w_n)\delta_o+(w_n-h)\delta_{a_{n,i}}
+                          +h\delta_{p_{\Omega(y)}}
+       &&(y\in D_n\text{ of color }i),\\
+\mu_y^-&=(1-h)\delta_o+h\delta_{p_1}&&(y\in E).
+\end{aligned}
+\tag{56.7}
+$$
+
+All coefficients are nonnegative and sum to one; $h\le r<w_n<1$. The sole proposal is exactly the true target, establishing (56.2). All duplicate labels remain and receive their specified laws.
+
+For a continuous family of uniform error at most $\varepsilon$, fix $z\in D_n$ and approach it through each color as in (56.4). The target mass on $\{a_{n,i},p_{\Omega(y_\ell)}\}$ is $w_n$. Equations (56.5) and the event cap give
+
+$$
+\lambda_z(\{a_{n,i}\})\ge w_n-\varepsilon
+                      =r-\varepsilon+c/n.
+\tag{56.8}
+$$
+
+If $\varepsilon<r$, summing the $n$ disjoint singleton inequalities for sufficiently large $n$ exceeds total mass one. At $\varepsilon=r$, the block $A_n=\{a_{n,i}:i\le n\}$ has mass at least $c$ at every source in $D_n$. But $\lambda_{x_*}(A_n)\to0$ by pairwise disjointness. Continuity at the actual anchor supplies one cylinder where all laws are within $c/4$ of the anchor law. Choose $n$ beyond that prefix with anchor mass on $A_n$ less than $c/4$, and choose any actual source in the occupied $D_n$. Its mass on $A_n$ is less than $c/2$, a contradiction. Lemma 45.3 excludes every lawful cap-$r$ preparation, including those with arbitrary sourcewise finite stopping times.
+
+For the upper bound fix $M\ge1$ and preload independent coordinates $W_n$, $1\le n\le M$, of laws
+
+$$
+v_n=(1-w_n)\delta_o+\frac{w_n}{n}\sum_{i=1}^n\delta_{a_{n,i}}.
+\tag{56.9}
+$$
+
+Query the first $M$ primes. On first difference $n\le M$ emit $W_n$; otherwise emit $o$. The finite product of the finite categorical laws is one source-independent seed law on its finite positive-weight support. The selected coordinate depends only on actual acquired answers. All seeds and all sources terminate after this common finite menu, and record/output events are measurable. On a handled $D_n$, the only common target/output masses are at $o$ and the actual color atom. Thus event-TV equals
+
+$$
+1-\big(1-w_n+\min\{w_n/n,w_n-h\}\big)
+       =\max\{h,w_n(1-1/n)\}\le r,
+\tag{56.10}
+$$
+
+because $w_n(1-1/n)=r+(c-r)/n-c/n^2<r$. On unhandled $D_n$ the error is $w_n$, and on $E$ it is $h$. Since every $D_n$ is occupied, the exact uniform error is
+
+$$
+\varepsilon_M=w_{M+1}=r+\frac{c}{M+1}\downarrow r.
+\tag{56.11}
+$$
+
+The consumer then runs on the same static source and handed tape. The lower bound and these approximants prove $I(\mu^-)=r$, and Theorem 50.2 identifies this with the original sharp expression $R_{\mu^-}$. No mixture weight or terminal row was imposed on an arbitrary prepared family in the lower-bound proof; the moving union event retains the positive target-proposal mass even when preparation reallocates it. $\square$
+

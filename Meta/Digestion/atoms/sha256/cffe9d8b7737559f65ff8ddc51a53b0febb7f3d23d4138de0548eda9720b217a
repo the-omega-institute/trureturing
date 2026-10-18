@@ -1,0 +1,81 @@
+**Convention 3.1 (fixed spectral frame and scalar hypotheses).** The JR50
+spectral data are the fixed orthonormal real $Q$-null frame $(v,u,w)$,
+
+$$
+\begin{gathered}
+q(t)=\sqrt{\alpha+\beta t^2},\quad
+D_t=(1+\alpha)+(1+\beta)t^2,\quad
+v=\frac{(q(t_*),-1,-t_*)^T}{\sqrt{D_{t_*}}},
+\quad 17/20<t_*<9/10,\\
+B_*=\alpha t_*^2+\beta,\quad
+z_*=
+ \frac{\alpha q(t_*)t_*-\sqrt{B_*-\alpha\beta q(t_*)^2}}{B_*},
+\quad b_*=q(t_*)-t_*z_*,\\
+u=\frac{(1,b_*,z_*)^T}{\sqrt{1+b_*^2+z_*^2}},\qquad w=v\times u,\\
+\mu=v^TGv<0,\quad
+\lambda_{\rm sp}=\mu-g_0+(x+yt_*)/q(t_*),\quad
+H=G+\lambda_{\rm sp}Q,\quad Hv=\mu v,\\
+P_*=vv^T,\qquad H_+=H-\mu P_*.
+\end{gathered}
+\tag{RH.16}
+$$
+
+The conditional stationary point $t_*$, the eigenvector identity and
+positive spectrum of $H_+$ on $v^\perp$ are credited JR50 results.
+Their quantitative hypotheses include
+
+$$
+\begin{gathered}
+-1/10<z_*<0,\qquad49/50<b_*<27/25,\qquad
+v_0v_1<0,\quad u_0u_1>0,\quad w_0w_1<0,\\
+-129/10^5<\mu<-107/10^5,\qquad
+-9/10000<b_{\rm end}<-8/10000,\\
+b_{\rm end}=\frac{g_0+g_1+g_2-2x-2y+2z}{4},\\
+12227/100000<\beta<12230/100000,\\
+1269/10^6<g_0<1270/10^6,\quad
+29222/10^7<g_1<29224/10^7,\quad
+16771/10^7<g_2<16773/10^7,\\
+2370/10^6<x<2372/10^6,\quad
+2207/10^6<y<2209/10^6,\quad
+-1017/10^7<z<-1016/10^7.
+\end{gathered}
+\tag{RH.17}
+$$
+
+All terminating scalar bounds used below are exact rationals inherited
+from the specified source box, not newly executed numerical evidence.
+Here $b_{\rm end}$ is JR's $\mathsf b(1)$, distinct from $b_*$,
+$\beta$ and the original amplitude $b_K$. The displayed radicals are
+well-defined: $q(t_*)>0$, $B_*>0$, and
+
+$$
+B_*-\alpha\beta q(t_*)^2
+ =\alpha(1-\beta^2)t_*^2+\beta(1-\alpha^2)>0.
+$$
+
+All frame normalization denominators are positive. To check the fixed
+frame itself, $q(t_*)^2=\alpha+\beta t_*^2$ gives $v^TQv=0$
+and $\|v\|=1$. The displayed root $z_*$ solves
+$B_*z_*^2-2\alpha q(t_*)t_*z_*+\alpha q(t_*)^2-1=0$;
+with $b_*=q(t_*)-t_*z_*$ this gives $u^TQu=0$ and $u^Tv=0$.
+The unit cross product $w$ is orthogonal to both, and
+$w^TQw=\operatorname{tr}Q-v^TQv-u^TQu=0$.
+The initial product signs follow as well: $v_0>0$, $v_1<0$,
+$u_0,u_1>0$, and the signs of $w_0,w_1$ are those of
+$t_*b_*-z_*>0$ and $-t_*-q(t_*)z_*<0$.
+The latter uses $t_*>17/20$, $q(t_*)<1$ and $-z_*<1/10$.
+
+Put
+
+$$
+\bar\tau=\bar s/s_0=2u_0u_1<1,\quad
+J_{\rm bar}=\operatorname{tr}G-2\mu,\quad
+T_{\rm bar}=T_{\rm flat}-\mu,\quad
+T_{\rm end}=T_{\rm flat}-b_{\rm end}.
+\tag{RH.18}
+$$
+
+The strict upper inequality for $\bar\tau$ follows from
+$2b_*/(1+b_*^2+z_*^2)=1-((b_*-1)^2+z_*^2)/(1+b_*^2+z_*^2)$.
+In particular $T_{\rm bar}>T_{\rm end}$ by RH.17.
+

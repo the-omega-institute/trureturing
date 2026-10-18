@@ -1,0 +1,22 @@
+**Definition 3.3 (finite signed checker).** Choose $\mathcal V$ to
+include every required coordinate/epoch view. A repeated endpoint
+may have its own additional copy of its whole view. Let
+$\mathsf A_{I,B}$ be the following predicate on finite output trees.
+Reject unless the tree consists of a finite unary tick spine followed
+by the specified payload layout with finite native values in every
+slot. Read its source slots $\mathbf u$. Recompute all view and
+expression slots by Definition 3.1 and reject if any slot is unfaithful.
+For each $i$, evaluate every conjunct of $\Theta_I(u_i)$ and the
+complete target equality $R_Q(u_i)=r_i$ by Definitions 3.1–3.2.
+Accept exactly when all these tests hold.
+
+This definition is an explicit terminating finite-tree computation:
+structural equality, fixed finite substitutions and navigation, finite
+hole-context comparison, and the specified finite guard evaluation.
+It invokes neither an existential feasibility procedure nor $J_B$.
+In particular every positive equation is checked separately even
+when several define the same named value or form a cycle.
+All signed lists are kept, including off-task and repeated records.
+The checker need not check the common prefix, which is certified by
+the generator.
+

@@ -1,0 +1,40 @@
+**Theorem 216.4 (Forced intermediate pair stock on the least-stock face).**
+At B=$3g$ a zero-cost score in Theorem 216.3 exists exactly when
+$0\le h\le(r-1)g/r$. Every full zero-O score on this face satisfies
+
+$$
+\begin{gathered}
+A=0,\quad P(\Omega_3)=0,\quad P(\Omega_1)=P(\Omega_2)=g,\\
+\operatorname{supp}(P|_{\Omega_1})\subseteq\{w_2=1,w_3=0\},\quad
+\operatorname{supp}(P|_{\Omega_2})\subseteq\{w_3=0\},\\
+\sum_{j\ge4}P(\Omega_j)+T=g,\qquad
+\sum_{4\le j<m}P\{n(w)=j,w_m=0\}\ge h,\qquad T\le g-h.
+\end{gathered}
+\tag{216.11}
+$$
+
+One common zero-N/O score has total late P exactly h and T=$g-h$.
+Thus for $h>0$ neither early-P-only output nor $T\ge g$ is possible
+in this zero-cost face, even when all other full-score freedoms are allowed.
+
+**Proof.** In (216.8), the two label-3 guards $E_{13},E_{23}$ and
+the label-3 exhaustion guard $E_{12}$ give, respectively,
+
+$$
+g\le Z(\Omega_2\cap\{w_3=0\}),\quad
+g\le Z(\Omega_1\cap\{w_2=1,w_3=0\}),\quad
+g\le\sum_{j\ge4}Z(\Omega_j)+T.
+$$
+
+Their supporting stock sets are disjoint. Hence
+$3g\le|Z|\le B$, since B=$|Z|+A_{\rm tot}$ in this fiber.
+Equality B=$3g$ forces every equality, A=0 and no stock outside those
+sets. This gives the first five assertions. Exact Q then leaves C only
+in classes 3,m. The stopped 10 cell of $(3,m)$, assigned label m,
+cancels its own $P(\Omega_m)$, excludes early stock with $w_3=0$,
+and excludes T and post-m stock with $w_m=1$. Its guard yields the
+penultimate inequality, and therefore $T\le g-h$.
+Face II of (216.7) gives $h\le(r-1)g/r$.
+Conversely the final combination in (216.10) has stock $3g$, total
+late P=h and T=$g-h$. The all-zero case is included. $\square$
+

@@ -1,0 +1,84 @@
+**定理 202.13（五标签必要界的原始闭帽运输）。** 在 202.15 的完整原始来源和
+获取约定下，任取正、非增、趋零的整个幅序列 $a$、正闭帽 $\varepsilon>0$，
+若某原始 $\mathcal N_2$ 规则的全源统一 TV 误差不超过 $\varepsilon$，则对每个
+五元集 $J\subseteq\{3,4,\ldots\}$ 都有
+
+$$
+4\sum_{j\in J}a_j\le37\varepsilon.
+\tag{202.50}
+$$
+
+更一般地，对支撑在这五个实际标签上的任意非负 $\gamma$，有
+
+$$
+\sum_{j\in J}\gamma_ja_j
+\le(G+17\mu/4)\varepsilon.
+\tag{202.51}
+$$
+
+同样的必要式适用于原始 $\mathcal O_2$ 帽达到者。无需饱和、五活跃标签或截断
+原始尾部的假设；这些条件不声称充分。
+
+**证明。** 只使用已有
+[定理 110.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION.md#110-exact-closed-cap-transport-on-the-original-countable-source)
+的同类闭帽运输，以及
+[定理 137.1 的证明](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION.md#137-five-necessary-bounds-without-saturation-or-active-length-assumptions)
+中有限前缀的限制、标签投影与扩展。
+先设 $0<\varepsilon\le1$，令
+
+$$
+L_a=\max(\{i:a_i>\varepsilon\}\cup\{0\}),\qquad K=\max J.
+$$
+
+定理 110.2 将原始任意地址、完整纸带输出的达到者送到一个同类完整概率配置，
+在长度 $L_a$ 的全部字上满足闭帽。这里的一个概率配置同时承担全部事件行。
+将所选五个标签明确分为
+
+$$
+J_{\rm act}=\{j\in J:a_j>\varepsilon\},\qquad
+J_{\rm inact}=\{j\in J:a_j\le\varepsilon\}.
+\tag{202.52}
+$$
+
+不删除第二组，也不把稀疏的 $J$ 重标为连续的实际地址。
+
+若 $L_a\ge K$，将有限输入限制到 $(w,0,\ldots,0)$，$w\in\{0,1\}^K$，
+并将所有大于 $K$ 的输出标签投影到零。含零前缀的目标保持；若前缀全正且
+$L_a>K$，固定的下一个零使目标标签为 $K+1$，投影后恰为零标签；
+$L_a=K$ 时直接使用原全正行。TV 在投影下收缩。
+对每个已固定种子，高位回答在这个有限表示中都是常数，删除这些常数观察并
+代入输出表仍是至多两次低位预选查询的完整 $N$ 表。这是既有表示的代数限制，
+不是给原始获取免费观察高位，也不把它称为在实际尾部达到帽的低 $K$ 原始规则。
+
+若 $L_a<K$，把该有限核扩展为忽略新坐标、仍只输出 $0,\ldots,L_a$。
+首零 $n\le L_a$ 的所有字继续满足旧帽；首零 $L_a<n\le K$ 的字取同一
+全正旧字的律 $p_{1^{L_a}}$，它没有标签 $n$ 的质量，而
+$a_n\le\varepsilon$。定理 110.2 的精确尾式给出
+
+$$
+\operatorname{TV}\bigl(p_{1^{L_a}},(1-a_n)e_0+a_ne_n\bigr)
+=\max\{1-p_{1^{L_a}}(0),a_n\}\le\varepsilon.
+\tag{202.53}
+$$
+
+全正新字保留原基行。所以包括 $J_{\rm inact}$、$a_n=\varepsilon$、
+$L_a=0$ 和每种多零后缀在内，长度 $K$ 的全部行均受同一个闭帽控制。
+这里没有把实际序列的尾幅改成零。
+
+在所得长度 $K$ 的完整概率配置上，使用定理 202.11 的嵌入评分，取 $E=0$、
+pair 总量 $13\mu/4$、$T=\mu$。它的完整支持与锚均为 $17\mu/4$，
+全部行权重为 $G+17\mu/4$，而目标事件需求给出下界
+
+$$
+\frac{17\mu}{4}+\sum_{j\in J}\gamma_ja_j
+-\left(G+\frac{17\mu}{4}\right)\varepsilon.
+$$
+
+将这一下界与同一概率配置的支持上界 $17\mu/4$ 比较，即得 (202.51)；
+取五个单位权重得 (202.50)。这是一次全事件评分比较，pair 行只扣一次帽。
+若 $\varepsilon\ge1$，由 $a_j\le1$ 得加权左侧至多 $G$，等权乘四的左侧
+至多二十，两式直接成立。
+最后，原始停止规则到完整预选规则的同种子完成沿用命题 90.2：补取而忽略的
+请求仍计入硬上界二，输出律保持。它只给本必要界的 $O$ 推论，不提供相反方向
+的获取律转换。$\square$
+

@@ -1,0 +1,75 @@
+**Definition 1.2 (all twelve targets and full error).** Define
+
+$$
+\begin{aligned}
+p_y&=(y/128,(64-y)/128,1/2),& a_y&=(\sqrt{p_{yi}})_i,\\
+U_{e,n}&=\operatorname{diag}(e,n,1),&
+\rho_{y,e,n}&=U_{e,n}a_ya_y^TU_{e,n}^\dagger,\\
+d_y&=\left(\frac y{128},\frac{y(58-y)}{128(y+6)},
+                         \frac y{2(y+6)}\right),&
+B_y^{\rm tar}&=(\sqrt{d_{yi}d_{yj}})_{ij},\\
+s_y&=y/(y+6),& f_y(t)&=6y/(y+6t)^2,\\
+w&=(0,1/4,1/2,1/4,0),& P_f&=|f\rangle\langle f|.
+\end{aligned}
+\tag{NP.5}
+$$
+
+Here $e=(-1)^{\beta_{\rm hist}/\pi}$ and $n=e(-1)^m$ range
+independently over $\{\pm1\}$; $en$ is winding parity. The actual
+five-mode input is $E\rho_{y,e,n}E^\dagger$. Its target live block is
+$EU_{e,n}B_y^{\rm tar}U_{e,n}^\dagger E^\dagger$. In EACH original
+stopped label $j$ its target is the whole measure
+$w_j f_y(t)dt\,P_f$. Labels $1$ and $3$ stay separate, and labels $0$
+and mode $13$ stay named with zero ideal mass. Since $\int_0^1 f_y=1-s_y$
+and $\operatorname{tr}B_y^{\rm tar}=s_y$, the full target has trace one.
+
+For completeness the calibrated source-indexed target instrument has
+$d=6/256$, $c_0=1/4$ and
+
+$$
+\begin{aligned}
+K_x&=\operatorname{diag}\left(1,
+ \sqrt{\frac{x(c_0-x-d)}{(x+d)(c_0-x)}},\sqrt{\frac{x}{x+d}}\right),\\
+\mathcal I_{x,2}(dt)(A)&=\frac{dx}{(x+dt)^2}
+ |f\rangle\langle2|A|2\rangle\langle f|\,dt,\\
+\mathcal I_{x,j}(dt)(A)&=\frac{c_0}{2(c_0-x)}\frac{dx}{(x+dt)^2}
+ |f\rangle\langle1|A|1\rangle\langle f|\,dt\quad(j=1,3),\\
+\mathcal I_{x,0}&=\mathcal I_{x,4}=0.
+\end{aligned}
+\tag{NP.6}
+$$
+
+Their total effect on $V$ is identity. The unknown $x$ is not installed
+in a common processor by writing this target family.
+
+Available metadata and blanks are one fixed common state: no-failure
+flag, aligned clock, source/preparation/epoch identity, reference
+calibration, permissions and controller state. There is no readable old
+height, sign, waveform, generator word, source programme, callback,
+environment input port, helper specimen or history-dependent processor.
+Common independent ancillas, randomness, computation, finite adaptive
+instruments and retained records can be absorbed into one common CPTP map
+on the whole complex input algebra. All outcomes are counted.
+
+Let $\Omega_{y,e,n}$ denote this complete target. The original objective
+and benchmark are
+
+$$
+E(\Phi)=\max_{y,e,n}\frac12\|\Omega_{y,e,n}-
+ \Phi(E\rho_{y,e,n}E^\dagger)\|_{1,\mathrm{cq}},\qquad
+E_*=\inf_{\Phi\ \mathrm{common\ CPTP}}E(\Phi).
+$$
+
+The maximum retains ALL twelve and HALF the full cq trace norm.
+The norm includes coherent live matrices, the total-variation trace norm
+of EACH separately labelled exact-time measure, all atoms and singular
+continuous additions, wrong support, abort, rejection and every extra
+sector, including those with zero ideal weight. A common dominating
+scalar measure defines matrix-valued measure norms without time bins.
+First executed failure is absorbing; no later positive-carrier action,
+retry, reversal, reset or replacement is allowed on that branch. Earlier
+stopped archives and controller updates remain in their own branches.
+An output interpretation cannot delete an acquisition outcome or divide
+by survival or acceptance. Time $t$ means actual elapsed time, absolute
+$6+t$, and terminal live output is at time one.
+

@@ -1,0 +1,46 @@
+**Theorem 11.2 (a uniform action bound for each installed table).**
+For a table with $s=|E|$, put
+
+$$
+\begin{aligned}
+w(p)&=\#_L(p)+2\#_R(p),\\
+W_C&=\max(\{0\}\cup\{w(p_e):e\text{ is a read state}\}),\\
+b_C&=\max(0,W_C+2-N),\qquad T_C=s(b_C+1).
+\end{aligned}
+\tag{CAR.46}
+$$
+
+On any finite original source, every halting execution of this table
+uses at most $T_C$ nonhalt actions. Consequently, if it terminates on
+every source in $D$, this is a uniform bound on $q_C(u)+a_C(u)$ over
+the entire $D$. It does not require cycle coverage or a bound on source
+size. If $A_C$ is the largest installed word length, with maximum zero
+when there are no read states, then also $\ell_C(u)\le A_CT_C$.
+
+Proof. Reuse the all-finite-source identity [JRF, (2.4)][JRF]:
+
+$$
+j\ge w(p)+2\quad\Longrightarrow\quad
+r_{\rho^j u}(p)=\mathsf{branch}
+\quad\text{for every finite }u.
+\tag{CAR.47}
+$$
+
+Fix a halting execution and let $J=N+b_C$. Before epoch $J$, revisiting
+the same pair $(j,e)$ repeats the same physical register and complete
+controller state. Determinism would repeat the entire subsequent
+execution forever. Thus no such pair repeats before halt. There are
+at most $s b_C$ pairs with $N\le j<J$, so at most that many actions
+start before $J$, including any update that first reaches $J$.
+
+At and after $J$, every installed read returns branch, by (CAR.47),
+and it continues doing so after any number of further updates. The
+successor of a nonhalt state is now a fixed function of that state:
+its branch successor or its update successor. A repeated nonhalt state
+would follow a cycle of this function forever. A halting execution
+therefore takes at most $s$ further actions. This proves (CAR.46),
+including early halts and $b_C=0$. Each read has length at most $A_C$,
+which gives the length bound. The argument analyzes the actual table;
+it neither changes instructions nor equips the controller with a clock.
+$\square$
+

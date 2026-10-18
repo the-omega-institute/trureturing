@@ -1,0 +1,49 @@
+**Assumption 1.5 (reached-address transport and rank).** Fix a rank map
+$\operatorname{rk}:\mathcal C\to\{0,\ldots,q\}$ that strictly preserves the
+given order, where $q\in\mathbb N$ is a fixed maximum rank. The absent
+reply, if present, is the least rank, zero; in that case define
+$\operatorname{Reached}(z,p)$ by $r_z(p)\ne\mathsf{absent}$. If no absent
+symbol is supplied, every permitted address is reached. For each $p$
+supply a content set $\mathcal L_p$, a map $\chi_p$ from reached register
+objects into $\mathcal L_p$, and a reply map $g_p:\mathcal L_p\to\mathcal C$
+which gives $r_z(p)=g_p(\chi_p(z))$ on reached objects. For every admitted
+$u$, every $p\in\mathcal W$ and every $j,a\in\mathbb N$, reaching $p$ on
+$U^ju$ implies reaching it on $U^{j+a}u$. Thus absence can precede first
+reach, but cannot recur after it.
+
+Supply the reached-address transport law in the following explicit form.
+At a reached epoch set $w_{u,p,j}=\chi_p(U^ju)$. There are maps
+$L_{p,a}:\mathcal L_p\to\mathcal L_p$ with $L_{p,0}=\operatorname{id}$ and
+$L_{p,a+b}=L_{p,b}\circ L_{p,a}$ such that, for every $u\in D$, every
+$p\in\mathcal W$, every reached epoch $j$ and every $a\in\mathbb N$,
+
+$$
+\begin{gathered}
+w_{u,p,j+a}=L_{p,a}(w_{u,p,j}),\qquad
+r_{U^{j+a}u}(p)=g_p(L_{p,a}(w_{u,p,j})),\\
+\operatorname{rk}(g_p(w_{u,p,j}))
+ \le \operatorname{rk}(g_p(L_{p,a}(w_{u,p,j}))).
+\end{gathered}
+\tag{UDB.5}
+$$
+
+Before first reach the reply is the least element; first reach cannot
+decrease rank. If all reads are always reached, the absence clause is
+vacuous. Only reached content is transported: no nonexistent original
+subobject is assigned an image. These hypotheses imply, with all source
+and address quantifiers shared,
+
+$$
+\forall u\in D\;\forall p\in\mathcal W\;\forall j,k\in\mathbb N\quad
+j\le k\ \Longrightarrow\
+\operatorname{rk}(r_{U^ju}(p))\le\operatorname{rk}(r_{U^ku}(p)).
+\tag{UDB.6}
+$$
+
+The subsequent arithmetic proof uses (UDB.6); (UDB.5) specifies the
+original-address interpretation supplying it. Here rank $q$ means at
+most $q$ strict rank increases, allowing $q+1$ ordered replies. If instead
+an alphabet is described as having $q$ symbols, use maximum rank $q-1$;
+the sharper bound $(q-1)r+1$ then also implies the requested $qr+1$ bound.
+For the four replies in [NPS][NPS], maximum rank is three.
+

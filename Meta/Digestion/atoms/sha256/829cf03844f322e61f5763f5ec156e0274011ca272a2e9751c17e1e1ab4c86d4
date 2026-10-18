@@ -1,0 +1,10 @@
+**Application 7.3 (born endpoints and invalid old endpoints).** Let
+the epoch-zero cut be $\{LL\}$ with exterior $\alpha$ and no
+holes. It fixes $t=\alpha$ while retaining its blocker. Let the
+later row have cut $\{L,R\}$ and two distinct classes. With no
+links its support is exactly $\{(0,n):n\ge2\}$: $T_0,T_1$ are
+leaves, and $T_n=\langle T_{n-1},T_{n-2}\rangle$ for $n\ge2$.
+Both later holes are born positions. A proposed link using the old
+endpoint $(0,LL)$ is rejected for either sign, despite valid later
+endpoints. The absent old endpoint is not a hidden variable.
+

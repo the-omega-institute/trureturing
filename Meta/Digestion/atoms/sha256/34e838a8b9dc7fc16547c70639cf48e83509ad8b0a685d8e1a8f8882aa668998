@@ -1,0 +1,55 @@
+**Proposition 264.4 (Full probe cone and its single certificate).**
+For $L\ge4$, $t,s,u\ge0$ and
+$y=t\chi+sA^{\rm b}+u\zeta$, the complete catalogs have
+
+$$
+\Delta_O(y)=\max\{t+s-u,0\},\qquad
+\Delta_N(y)=\max\{3t/2+s-u/2,0\}.
+\tag{264.6}
+$$
+
+Every such unit-$O$ score has the one unrestricted certificate
+$V=0$, $\theta=\Delta_O(y)$.
+
+**Proof.** For $i\ge3$ the four full $N$ cell maxima are
+
+$$
+\max\{2t+s,(t+u)/2,t+u/4\},\quad
+(t+u)/2,\quad t+u,\quad t+u.
+$$
+
+Subtracting the anchor $3t+3u$ gives the stated $N$ maximum;
+the candidate $t+u/4$ is dominated either by $2t+s$ or by
+$(t+u)/2$. Pairs with $i=2$ have excess
+$\max\{t+s-u/2,0\}$ and those with $i=1$ have excess
+$\max\{s-u,0\}$, both dominated by (264.6).
+For $O$ and $i\ge2$, the merged cell maxima are
+$\max\{2t+s,t+u\},t+u,t+u$, giving the stated stopped excess.
+For $i=1$ the excess is $\max\{s-u,0\}$.
+An empty schedule has excess at most $\max\{s-2u,0\}$.
+A singleton at one has excess at most $\max\{s-u,0\}$;
+for a later singleton its zero-cell maximum is
+$\max\{2t+s,t+u\}$ and positive-cell maximum is $t+u$,
+so its excess is no larger. These cases cover every schedule
+and output label. A canonical table attains zero excess;
+the two columns in Proposition 264.3 attain the other alternatives.
+This proves both support formulas.
+
+On $H_L$, $D_b=2-b_1-b_2-E_b\ge1-b_2\ge0$ and
+$E_b,B_b\le\min\{1,D_b\}$. Hence
+
+$$
+F_y=tE_b+sB_b-uD_b
+ \le(t+s)\min\{1,D_b\}-uD_b
+ \le\max\{t+s-u,0\}.
+$$
+
+For $D_b\le1$ the last inequality follows from its linear
+expression $(t+s-u)D_b$; for $D_b\ge1$ it follows by
+monotonicity in $D_b$, with the nonpositive case included.
+Taking the hull supremum proves the certificate.
+This probe cone overlaps the early-pair support treatment of Section
+207. Its certificate is a reused scope boundary: positive canonical
+deficit is compatible with zero or fully paid hull charge.
+$\square$
+

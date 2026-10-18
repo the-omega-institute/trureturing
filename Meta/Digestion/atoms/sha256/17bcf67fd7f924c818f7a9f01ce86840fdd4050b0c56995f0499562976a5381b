@@ -1,0 +1,151 @@
+### 定理 21.2（Fibonacci 删除投影的观察交换与隐藏核满射）
+
+令
+
+\[
+T_n
+=
+\left\{
+v\in\mathbb R^{\Sigma_n}:
+\sum_{I\in\Sigma_n}v_I=0
+\right\},
+\]
+
+\[
+(A_nv)_i
+=
+\sum_{I\ni i}v_I,
+\qquad
+i\in[n].
+\]
+
+令 \(\operatorname{pr}_n:\mathbb R^{n+1}\to\mathbb R^n\) 删除最后一个坐标。则：
+
+1. \(\delta_n\) 和 \(D_n\) 都是满射；
+2. 对所有 \(v\in\mathbb R^{\Sigma_{n+1}}\)，
+   \[
+   A_nD_nv
+   =
+   \operatorname{pr}_n A_{n+1}v;
+   \]
+3. \(D_n(T_{n+1})\subseteq T_n\)，并且限制映射
+   \[
+   D_n:
+   \ker(A_{n+1}|_{T_{n+1}})
+   \longrightarrow
+   \ker(A_n|_{T_n})
+   \]
+   是满射；
+4. 其核维数为
+   \[
+   \dim\ker\left(
+   D_n:
+   \ker(A_{n+1}|_{T_{n+1}})
+   \to
+   \ker(A_n|_{T_n})
+   \right)
+   =
+   F_{n+1}-1.
+   \]
+
+#### 证明
+
+对任意 \(J\in\Sigma_n\)，集合 \(J\) 本身看作 \([n+1]\) 的子集，满足
+
+\[
+\delta_n(J)=J.
+\]
+
+所以 \(\delta_n\) 满射，\(D_n\) 将对应的 Dirac 质量推到 \(J\)，因而也是概率单纯形的满射。
+
+对 \(i\le n\)，有
+
+\[
+\begin{aligned}
+(A_nD_nv)_i
+&=
+\sum_{\substack{J\in\Sigma_n\\i\in J}}
+\sum_{\delta_n(I)=J}v_I\\
+&=
+\sum_{\substack{I\in\Sigma_{n+1}\\i\in I}}v_I\\
+&=
+(A_{n+1}v)_i.
+\end{aligned}
+\]
+
+这正是
+
+\[
+A_nD_n=\operatorname{pr}_nA_{n+1}.
+\]
+
+由于 \(D_n\) 的各列和为一，质量零空间被保持。若
+
+\[
+w\in\ker(A_n|_{T_n}),
+\]
+
+定义 \(\widetilde w\in\mathbb R^{\Sigma_{n+1}}\) 为
+
+\[
+\widetilde w_J=w_J
+\quad(J\in\Sigma_n),
+\qquad
+\widetilde w_I=0
+\quad(I\ni n+1).
+\]
+
+则
+
+\[
+D_n\widetilde w=w,
+\qquad
+\sum_I\widetilde w_I=0.
+\]
+
+由观察交换式，
+
+\[
+A_{n+1}\widetilde w
+=
+\bigl(A_nw,0\bigr)
+=
+0.
+\]
+
+故限制映射满射。使用已有公式
+
+\[
+h_n
+=
+\dim\ker(A_n|_{T_n})
+=
+F_{n+2}-n-1,
+\]
+
+有
+
+\[
+\begin{aligned}
+\dim\ker D_n
+&=
+h_{n+1}-h_n\\
+&=
+(F_{n+3}-(n+1)-1)-(F_{n+2}-n-1)\\
+&=
+F_{n+1}-1.
+\end{aligned}
+\]
+
+证毕。
+
+这个结果把“新一层的隐藏信息”精确化为：
+
+\[
+\boxed{
+\text{每增加一个 Fibonacci 支持位，删除投影不可见的新方向数为 }F_{n+1}-1.
+}
+\]
+
+它是状态空间线性代数结论，不涉及信息论或物理解释。
+

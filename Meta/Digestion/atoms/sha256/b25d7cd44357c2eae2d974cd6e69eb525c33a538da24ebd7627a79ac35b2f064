@@ -1,0 +1,29 @@
+**Convention 1.1 (the original experiment).** Fix one prior $\mu$ supported
+exactly on $\{1,2,3\}$, with each mass positive. The source parameters are
+$m=2,d=1,\ell=2,n=4$. One $K$ is sampled before the first paid Read.
+Conditional on this same $K=k$, all seed and payload letters are independent,
+with alpha probabilities $r_1=a=1/3$, $r_2=b=2/5$, $r_3=3/8$.
+Equal seed pairs remain two paid rejections, and both unequal accepted seeds
+remain. At phase p, alpha completes marker 0 and beta suspends. At suspension,
+alpha returns to p and beta completes marker 1. The third record is written
+before its latch; fourth completion enables its matching original Stop.
+Pending and delivered terminals permit no Read.
+
+The original finite control retains the parser, both seeds, selectors, all
+marker words and prefixes, bare and held $B,Q^+,Z$ fields, write and latch
+flags, permissions, completion and delivery. All positive finite paid
+rejection, partial-parse and return histories remain in the domain. The
+current-record renderer $I_c$ retains every future letter and inserts its
+original operation block; its inverse reads those letters. It preserves
+complete-law TV and deletion of an operation with its block, including the
+infinite noncompletion outcome. These are the interfaces of [PAIR, Section
+2 and Section 11.1] and [PAID, Definition 1.2 and Lemma 2.1.1].
+
+Initialization and acquired-letter kernels are source-independent. Synthetic
+generation uses those same kernels, from the actual complete configuration.
+COMPLETE charges original control, labels, programs, installed numerics,
+selectors, addresses, sampler states, workspace, output cursors and persistent
+randomness. The posterior and configuration probability row are analysis
+objects, not readable registers. No clock, source reset or new observation
+is introduced below.
+

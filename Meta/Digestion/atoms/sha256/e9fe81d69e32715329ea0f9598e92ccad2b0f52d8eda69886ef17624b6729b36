@@ -1,0 +1,56 @@
+**Definition 1.3 (unitary chart, shear and complete field).** For $\xi=(r,y,z,w)$ set
+
+$$
+\begin{aligned}
+\Xi_s\xi&=(k_0+\varepsilon sr,
+ s c_0y+\varepsilon s^2c_1z+\varepsilon^2s^3c_2w),\\
+I_s&=((l-k_0)/(\varepsilon s),(u-k_0)/(\varepsilon s)),&\Omega_s&=I_s\times\mathbb R^3,\\
+\mathcal U_s\psi&=(j_0s^7)^{1/2}\psi\circ\Xi_s,&\mathcal Q_s&=\mathcal U_s\mathcal Q,\\
+X&=\partial_r,&Y_s&=\partial_y+r\partial_z+\frac{r^2}{2(1+\beta_sr)}\partial_w,&\beta_s&=\nu s,\\
+b_s[F]&=\|XF\|_2^2+\|Y_sF\|_2^2,&U_s&=s^5W_{s^2}\circ\Xi_s.
+\end{aligned}
+\tag{1.7}
+$$
+
+The raw Jacobian is $j_0s^7$ and $\mathcal U_s$ is unitary. If $A_s$ is the Friedrichs operator of $b_s$, then $D(A_s)=\mathcal U_sD(S)$ and
+
+$$
+\begin{aligned}
+C_s&=A_s-\lambda s^2=s^2\mathcal U_sS\mathcal U_s^{-1}\ge0,\\
+q_s^c[F]&=a b_s[F]-\chi_c\int U_s|F|^2-a\lambda s^2\|F\|_2^2,\\
+q_s^c[\mathcal U_s\psi]&=s^2\mathfrak e_{g_s,s^2}[\psi],\qquad
+\inf_{\|F\|_2=1}q_s^c[F]=\epsilon_c(s).
+\end{aligned}
+\tag{1.8}
+$$
+
+Write $\mathbf z=(y,z,w)$ and
+
+$$
+L_s=\begin{pmatrix}1&\beta_s&0\\0&1&2\beta_s\\0&0&1\end{pmatrix},\quad
+\mathscr L_s(r,\mathbf z)=(r,L_s\mathbf z),\quad
+\mathcal T_sF=F\circ\mathscr L_s,\quad \widetilde U_s=U_s\circ\mathscr L_s.
+\tag{1.9}
+$$
+
+This determinant-one phase shear fixes the pole and both moving faces. With $Y=\partial_y+r\partial_z+(r^2/2)\partial_w$, P §97 gives the exact closed-form identity
+
+$$
+\widetilde b_s[f]:=b_s[\mathcal T_s^{-1}f]
+ =\int_{\Omega_s}(|Xf|^2+(1+\beta_sr)^{-2}|Yf|^2)d\xi.
+\tag{1.10}
+$$
+
+The denominator is positive on the whole actual interval. Zero extension is used for comparisons on $\mathbb R^4$, preserving both deaths. The complete heat/source correspondence is
+
+$$
+\begin{aligned}
+P_s(t;\eta,\xi)&=j_0s^7p_{s^2t}^B(\Xi_s\eta,\Xi_s\xi),\\
+U_s&=j_0^{-1}\int_1^\infty e^{\lambda s^2t}P_s(t;0,\cdot)dt,\\
+(A_s-\lambda s^2)U_s&=s^7\rho_{s^2}\circ\Xi_s.
+\end{aligned}
+\tag{1.11}
+$$
+
+All infinite-time native heat and field limits used here retain their supplied integrated time and spatial tail estimates. A compact positive-time heat limit alone is not an infinite-time interchange.
+

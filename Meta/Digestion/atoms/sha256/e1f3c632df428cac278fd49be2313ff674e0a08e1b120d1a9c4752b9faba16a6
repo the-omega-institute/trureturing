@@ -1,0 +1,24 @@
+**Lemma 2.2 (normality separates every witness pair).** For every
+$h\ge1$ and $k\ge0$,
+
+$$
+U^+_{h,k}\in\mathcal N,
+\qquad U^-_{h,k}\notin\mathcal N.
+\tag{TPO.6}
+$$
+
+Both heights and primitive ranks in this family are unbounded. In
+particular $U^+_{h,h}$ is a normal code for the actual native source
+$E(U^+_{h,h})$ for every $h\ge1$.
+
+Proof. The only nodes with two primitive children are the bottom
+cherries. Their left and right ranks in $U^+_{h,k}$ are $k,k+1$, so the
+forbidden equation would be $k=(k+1)+1$, which is false in $\mathbb N$.
+Every bottom cherry of $U^-_{h,k}$ is instead exactly the forbidden
+$F([k+1],[k])$. All higher children are nonprimitive and introduce no
+additional primitive-sibling condition. This proves (TPO.6).
+Choosing $k=h\to\infty$ proves the last claims, using ABC's source
+bijection. The negative witness is an ambient code, as required when
+testing a formula intended to select $\mathcal N$ inside $\mathcal K$;
+it is not claimed to be a second normal representative. $\square$
+

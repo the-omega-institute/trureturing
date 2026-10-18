@@ -1,0 +1,14 @@
+### 458.2 三点原子的误差形状及最大点偏移
+
+令 $a_h=F(h)$、$b_h=F(2h)$、$y_h=F(3h/2)$。三点准确公式为
+
+$$
+K_h=\frac{y_h^2-a_hb_h}{2y_h+a_h+b_h},\qquad
+\tau_h=\frac1h\log\frac{a_h+K_h}{b_h+K_h}.
+\tag{HO.3}
+$$
+
+其准确最优变换记为
+$L_h(v)=(a_h+K_h)e^{-\tau_h(v-h)}$，误差为 $D_h=F-L_h$。
+因此 $D_h(h)=D_h(2h)=-K_h$，$D_h(3h/2)=K_h$ 都是准确等式。
+

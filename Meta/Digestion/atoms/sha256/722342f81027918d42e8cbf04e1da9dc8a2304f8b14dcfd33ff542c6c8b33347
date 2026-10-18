@@ -1,0 +1,41 @@
+**定义 26.4（原恢复量词与尚缺的桥梁）。**
+沿用[《完整输入恢复证书》定义 1.1](AURIC_OMEGA_FULL_INPUT_RECOVERY_CERTIFICATES.md#1-the-complete-actual-real-frame-domain)
+的实际全实 Kraus 类 $N:M_3\to M_5$、原 $\beta$ 与全部复 CPTP 恢复，
+其中
+
+$$
+\delta_N=\inf_{\mathcal R}
+ \|\mathcal R N-\operatorname{id}_3\|_\diamond
+$$
+
+使用未折半 diamond 范数、全部输入和完整有限参考系统。
+这个通道记号 $N$ 与本卷的五态电荷算子按上下文区分。
+原全类目标
+
+$$
+\delta_N\ge1-\sqrt{1-\beta}
+\tag{26.2}
+$$
+
+以及原问题的 $G$ 仍为独立未决问题。
+本卷的供应假设没有包含：在原生约束下的共同实现与实际供应；
+从识别 (20.1) 的有限维参数族到同一个恢复实现的统一通道结论；
+在全部原输入、完整参考与原资源限制下的误差运输及锐界、可达性和逆向分支。
+$b_n$ 不被指定为 $\beta$，上述统计等式不赋值给 $G$。
+
+数学引文。[Buscemi，定义 4，PDF 第 5 页；定义 19、式 (50)，第 17 页；
+定义 20–21、命题 5、式 (55)–(57)，第 18 页][SP-BC]
+在其有限参数量子统计模型内，以加入辅助模型后的全部决策比较刻画
+CPTP 充分性。
+它不从几个分离统计量推出本连续纤维的锐近似 diamond 恢复界。
+定理 22.1 的有限副本可辨识性只在假设 20.3、定义 20.4 的输入及效果域内成立；
+物理或原生供应不由 PSD 可行性推出，也没有赋予这些普通数学证明以 kernel 认证。
+
+[SP-V]: https://arxiv.org/pdf/quant-ph/0311028v2
+[SP-MS]: https://arxiv.org/pdf/1312.0680v2
+[SP-B]: https://arxiv.org/pdf/quant-ph/0401067v2
+[SP-LLW]: https://arxiv.org/pdf/quant-ph/0308008v2
+[SP-BC]: https://arxiv.org/pdf/1004.3794v4
+[SP-H]: https://doi.org/10.1016/S0076-5392(08)60254-4
+[SP-A]: https://doi.org/10.1137/0117041
+

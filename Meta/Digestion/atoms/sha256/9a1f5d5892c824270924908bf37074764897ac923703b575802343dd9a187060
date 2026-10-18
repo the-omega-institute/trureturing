@@ -1,0 +1,4 @@
+## 10. Credited numerical bounds and their common-source interfaces
+
+Let $C_{\mathrm{fix}}(d)$ denote the smallest uniform exact-read bound over all legal predetermined finite-composite-word cumulative histories for the full target $(S,\kappa,D)$.
+

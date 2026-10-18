@@ -1,0 +1,50 @@
+**Theorem 258.3 (Universal common-map criterion).**
+Fix the positive schedule support, including its singleton set.
+There exists one map $f:B_L\to B_L$ such that
+
+$$
+\bar D(w)=D(f(w))\quad\text{for every supported schedule, every
+terminal-label assignment on it, and every }w
+\tag{258.5}
+$$
+
+if and only if $G$ has no directed two-edge path, every vertex
+has indegree at most one, and no positive singleton is placed
+at a vertex of positive indegree. Equivalently, its nontrivial
+components are disjoint outward stars and its positive singletons
+avoid their leaves. In that case $f_G$ supplies such a map.
+
+**Proof.** Arbitrary terminal labels distinguish any two distinct
+transcript cells. Hence for each edge $i\to j$, (258.5) forces
+
+$$
+f_i(w)=w_i,\qquad
+f_j(w)=\begin{cases}1,&w_i=0,\\ w_j,&w_i=1.\end{cases}
+\tag{258.6}
+$$
+
+Indeed, for $w_i=0$ the repaired output is the old $01$ cell
+for every label assignment, forcing input cell $01$ at $f(w)$;
+for $w_i=1$ the old cell is already $1w_j$ and must be preserved.
+A positive singleton at $j$ likewise forces $f_j(w)=w_j$.
+If $k\to i\to j$, choose $w_k=w_i=0$. The incoming edge
+requires $f_i=1$ and the outgoing edge requires $f_i=0$.
+If two distinct parents $i,k$ enter $j$, choose $w_i=1,w_k=0,
+w_j=0$. The two equations require $f_j=0$ and $f_j=1$.
+A singleton at a leaf contradicts its incoming edge when both
+parent and leaf are zero. These choices prove necessity.
+
+Under the stated graph conditions, every edge leaves an indegree-zero
+root and enters its unique leaf. Formula (258.1) fixes roots and
+all singleton coordinates; it changes a leaf only when its unique
+parent is zero. Thus it satisfies every equation (258.6) and every
+singleton condition simultaneously. All original and repaired cells
+then agree, for every choice of their labels. This proves sufficiency.
+
+The quantifier over terminal labels is essential. This criterion
+is not an iff for a particular kernel, where equal labels or
+signed cancellations may remove discrepancies. It is also not an
+iff for the existence of an arbitrary replacement $O$ kernel in
+the same cap slice. Those unrestricted replacements need not be
+given by a common input map at all. $\square$
+

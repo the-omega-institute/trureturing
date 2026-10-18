@@ -1,0 +1,54 @@
+**Theorem 6.1 (exact fixed-prefix decision).** For every input (NSF.3),
+every finite prefix-free $Q$ and every supplied $h\ge0$, one can decide
+
+$$
+\operatorname{PrefDet}(D,Q,h):
+\quad
+\forall u,v\in D,\quad
+\left(\forall |p|\le h,\ r_u(p)=r_v(p)\right)
+\Longrightarrow R_Q(u)=R_Q(v).
+\tag{NSF.11}
+$$
+
+A false answer supplies finite $u,v\in D$ with the stipulated common
+prefix and different full rows. A true answer on nonempty $D$ gives
+an effective actual static whole-row consumer at entry $N$.
+
+Proof. There are finitely many words with length at most $h$. The
+negation of (NSF.11) is an existential query on two whole sources:
+both retained predicates, equality of each of their four-valued
+literal replies at those words, and inequality of their complete rows.
+Lemma 5.1 and Theorem 5.2 decide it and provide exactly its witnesses.
+
+For a true answer use the paid historical decoder of [SLH, Theorem
+2.2][SLH] to recover those original literal replies from actual epoch
+$N$ reads. Each original request needs at most two current reads,
+each of length at most $h+\lceil N/2\rceil$. There are
+$2^{h+1}-1$ original requests. Conjoin their recovered original prefix
+with the full retained predicate and use Theorem 5.2 to obtain a
+source witness. The actual source proves this conditioned fiber
+nonempty. Equation (NSF.11) makes the witness's full row the correct
+output on that entire fiber. Halt genuinely after output. Only the
+actual current queries produce receipts.
+
+Alternatively precompute the finitely many prefix-conditioned
+nonempty fibers and their constant row outputs; install the resulting
+finite table. The decoder is source-total, uses no updates and has
+upper budgets
+
+$$
+q\le 2(2^{h+1}-1),\qquad
+a=0,\qquad
+\ell\le 2(2^{h+1}-1)(h+\lceil N/2\rceil).
+\tag{NSF.12}
+$$
+
+No optimum is asserted by these upper bounds. $\square$
+
+This replaces the conditional feasibility premise of ABC's fixed-prefix
+application by a native existential decision. It reuses ARH's
+static/serial existence bridge; it does not replace $\exists h$ by a
+finite search. If every supplied-depth test is false, successive finite
+counterexamples alone give no algorithmic signal that all future tests
+will also be false.
+

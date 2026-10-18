@@ -1,0 +1,24 @@
+**Convention 8.1 (the unchanged comparison class).** Sections 8–11 use
+exactly (CG.20): one normalized specimen at the already reached old live
+cut, the same fixed metadata and blanks, all twelve actual histories
+(CG.2), and the entire targets (CG.15). Write
+
+$$
+y=256x\in\{5,16,27\},\qquad
+W=\operatorname{span}\{|+\rangle,|-\rangle\},\qquad
+s_y=\frac{y}{y+6},\quad f_y(t)=\frac{6y}{(y+6t)^2},\qquad
+(w_0,w_1,w_2,w_3,w_4)=\left(0,\frac14,\frac12,\frac14,0\right).
+\tag{CG.50}
+$$
+
+Here $s_y,f_y$ are the dimensionless versions of (CG.13); index $4$
+still names original mode $13$. The class is the expressly enlarged class
+of all common CPTP maps, including countably additive simulated exact-time
+laws with atoms or singular continuous parts. It is not a subclass defined
+by finite physical implementations. All error norms count every outcome.
+The different old live masses (CG.8) are neither priors nor acceptance
+weights in this normalized problem. The original calibrated source,
+permissions, real lifts and literal continuation convention remain those
+of §§2–4; no new original actuator, helper, source parameter or port is
+supplied by this comparison.
+

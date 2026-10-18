@@ -1,0 +1,14 @@
+**Data 8.2 (separate unrestricted adaptive-tree check).** A second computation enumerated the actual complete-block transitions and all endpoint branches, retaining INITIAL labels paired with current records after destructive updates. It allowed every literal action, including constant-output displacement actions and actions causing rejection. It imposed no root-zero or proposed-protocol restriction. A node could stop exactly when its INITIAL labels were constant; candidates merged into one current record with different INITIAL labels were rejected as unsolvable. The two alphabets were compared as actual action sets, which coincide at every tested $m<k$. Both initial values and both alphabet choices were evaluated.
+
+| Tree-check family | Exhaustively compared targets | Value/alphabet cases | Budget feasibility checks |
+| --- | ---: | ---: | ---: |
+| Every unit-width partition in Data 8.1 | 1,152 | 4,608 | 29,308 |
+| Every width-two binary pattern in Data 8.1 | 336 | 1,344 | 5,916 |
+| Every first-window pattern in Data 8.1 | 140 | 560 | 1,476 |
+| Singletons at $(k,m)=(4,2),(4,3),(6,2),(6,3),(7,3)$, all $1\le j\le k$ | 27 | 108 | 336 |
+| Counterexample 7.1 | 1 | 4 | 12 |
+
+Each case tested every budget from zero through its claimed optimum. Every smaller budget was infeasible, and the claimed budget admitted a successful tree. In total, 6,624 value/alphabet cases and 37,048 budget checks agreed with the formulas. In particular this independently tests the three-block obstruction at $T=7,m=3,H=\{1,2,3\}$ and the two-block wrapped falsifier.
+
+The combined finite execution and tree-check program exited with code zero. Source retrieval and interface extraction also exited with code zero; all six pinned repository texts cited below and all four primary papers were retrieved with HTTP 200. The pinned repository texts matched their supplied SHA256 seals. The PDF's prose definitions 11–15 and 18 were readable; PDF mathematical-symbol extraction was not used to prove a cost law. No test program or execution log is part of this volume. The larger singleton pairs received protocol checks, not exhaustive optimal-tree claims. Finite results are regression evidence; the universal fees depend on the ordinary proofs in §§3–6, and no Lean/kernel result is claimed.
+

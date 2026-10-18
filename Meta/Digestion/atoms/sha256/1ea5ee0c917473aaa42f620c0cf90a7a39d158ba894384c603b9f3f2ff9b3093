@@ -1,0 +1,25 @@
+**定义 6.2.1（动作核）。** 令 $S$ 是有限状态集，动作族为有限集 $\mathcal A$。每个动作 $a$ 给出 Markov 核
+
+$$
+K_a(s,t)\ge0,
+\qquad
+\sum_{t\in S}K_a(s,t)=1.
+$$
+
+行向量分布 $\mu$ 经动作 $a$ 后变为
+
+$$
+(\mu K_a)(t)=\sum_{s\in S}\mu(s)K_a(s,t).
+$$
+
+动作词 $w=a_1\cdots a_m$ 的核为
+
+$$
+K_w=K_{a_1}K_{a_2}\cdots K_{a_m},
+\qquad K_\varepsilon=I,
+$$
+
+这里行向量从左向右更新。
+
+<a id="claim-6-2-2"></a>
+

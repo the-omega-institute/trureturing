@@ -1,0 +1,34 @@
+**Definition 44.1 (spectral failure readout with the existing live
+attainer).** For $s_0\leq s\leq1$, use exactly the high $H_\sigma$ and
+image-compressed low $L_{\sigma,\tau}$ branches of Definition 38.1.
+Their rank-three/rank-two statements and full TP isometric decoders
+are (JR.37)–(JR.38), also the range realization of IR Lemma 4.2.
+Let $v_\epsilon$ be a fixed real unit eigenvector of $\Xi$ for its
+positive or negative eigenvalue, $\epsilon=\pm1$. The projections are
+
+$$
+\Pi_\epsilon=\frac12\left[I_2+
+ \epsilon\frac{2\Xi+d_fI_2}{L_f}\right],\qquad
+C_{f,\epsilon,r}=\frac1{\sqrt2}\langle v_\epsilon|M^{1/2},
+ \qquad \epsilon,r=\pm1.
+\tag{JR.54}
+$$
+
+The row is zero on coordinate $0$ and its fibre is one-dimensional.
+Its full TP decoder sends a scalar $z$ to the whole measure
+$z w_jg(t)dt\,P_f$ in each of the five original labels, where
+$g(t)=2/(1+t)^2$. This is the spectral scalar realization of IR
+Theorem 5.2, applied to the height difference. Set the designated binary
+record to $r=\sigma$ on live branches, and to the row label $r$ on
+failure branches. Retain the entire generated branch label as $R$.
+
+On five modes precompose supported encoders with $E^\dagger$ and add
+the two scalar complement branches with effect $(I_5-P)/2$, one for
+each $r$. Each is decoded to $z g(t)dt\,P_f$ only at original
+label $2$. Its Kraus multiplicity is discarded, as in Definition 38.1.
+All matrices, spectral vectors and classical choices are fixed before
+the sole specimen arrives. The spectral outcome is actually generated
+by this new encoder; it is not an index read from an old discarded
+environment. Only its declared fibre and dephased classical label
+remain accessible after the cut.
+

@@ -1,0 +1,12 @@
+#### 32.5　去掉单调性后的 defier 边界
+
+若不假设 $A_1\ge A_0$，还会出现 defier 主层 $D=(1,0)$。记
+
+$$
+\pi_D=\Pr(D),
+\qquad
+\tau_D=\mathbb E[Y_1-Y_0\mid D].
+$$
+
+<a id="claim-32-5-1"></a>
+

@@ -1,0 +1,76 @@
+**Definition 2.1 (source coefficients and normalized moments).** Use
+positive source amplitudes, written with subscripts to distinguish
+various auxiliary coordinates:
+
+$$
+\begin{gathered}
+D=\operatorname{diag}(h_0,h_1,h_2),\quad
+T=a_K|0\rangle\langle1|+b_K|1\rangle\langle0|,\quad
+S=c_K|0\rangle\langle2|+d_K|2\rangle\langle0|,\\
+M=\operatorname{diag}(0,m_1,m_2),\qquad
+D^\dagger D+T^\dagger T+S^\dagger S+M=I_3,\\
+\kappa=h_0a_K+h_1b_K>0,\quad\kappa_{02}=h_0c_K+h_2d_K>0,\\
+\theta=\frac{a_Kb_K}{h_0h_1},\quad
+\omega=\frac{c_Kd_K}{h_0h_2},\quad
+\delta=\theta+\omega<1,\quad s_0=\sqrt\delta,\\
+A_y=\sum_i h_i^2p_{yi},\quad
+B_y=b_K^2p_{y0}+a_K^2p_{y1},\quad
+C_y=d_K^2p_{y0}+c_K^2p_{y2}.
+\end{gathered}
+\tag{EP.10}
+$$
+
+The scalar $B_y$ is not the ideal live matrix. These three resource
+functions are positive and strictly increasing through $5,16,27$.
+JR34–40 supplies $\mathsf C(s)=(1-\delta)A_{27}$ for
+$0\leq s\leq s_0$. Set $\Delta=\rho_{27,+,+}-\rho_{5,+,+}$,
+$(K_0,K_1,K_2)=(D,T,S)$ only in the following definition of $N$, and
+
+$$
+\begin{gathered}
+N_{ij}=\operatorname{tr}(K_i\Delta K_j^\dagger),\quad
+L=\operatorname{diag}(s_0,1,1),\quad L_0=L^2,\quad G=LNL
+ =\begin{pmatrix}g_0&x&y\\x&g_1&z\\y&z&g_2\end{pmatrix},\\
+\beta=\omega/\delta,\quad\alpha=1-\beta,\quad\gamma=\alpha/\beta,\quad
+Q=\operatorname{diag}(1,-\alpha,-\beta),\quad
+Q_0=\operatorname{diag}(1,-\theta,-\omega),\quad LQ_0L=\delta Q,\\
+C=(e_0e_1^T+e_1e_0^T)/2,\quad\tau=s/s_0,\quad j(\tau)=J_{s_0\tau}.
+\end{gathered}
+\tag{EP.11}
+$$
+
+In particular $\operatorname{tr}(CX)=X_{01}$. The $x,y,z$ entries of
+$G$ are not the original height, height index or CG coordinate. Write
+$\Delta A=A_{27}-A_5$, and similarly for $B,C$. With
+$\xi=\kappa(q_{27}-q_5)$,
+$\eta=\kappa_{02}(\sqrt{27}-\sqrt5)/16$ and
+$\zeta=a_Kc_K(\sqrt{37}-\sqrt{59})/16$,
+
+$$
+N=\begin{pmatrix}\Delta A&\xi&\eta\\\xi&\Delta B&\zeta\\
+\eta&\zeta&\Delta C\end{pmatrix},\qquad
+(g_0,g_1,g_2,x,y,z)=(\delta\Delta A,\Delta B,\Delta C,s_0\xi,s_0\eta,\zeta).
+\tag{EP.12}
+$$
+
+Define the unnormalized failure difference, extended by zero on
+coordinate $0$, by
+
+$$
+\begin{gathered}
+\Xi=M^{1/2}\Delta M^{1/2}\big|_{\{1,2\}}
+ =\begin{pmatrix}-d_f&z_f\\z_f&0\end{pmatrix},\quad
+d_f=11m_1/64,\quad
+z_f=\sqrt{m_1m_2}(\sqrt{37}-\sqrt{59})/16\ne0,\\
+L_f=\sqrt{d_f^2+4z_f^2},\quad
+T_{\rm flat}=\frac{(1-\delta)\Delta A+L_f+\operatorname{tr}G}{2}
+            =\frac{d_f+L_f}{2}.
+\end{gathered}
+\tag{EP.13}
+$$
+
+The trace identity in EP.10 gives
+$\Delta A+\Delta B+\Delta C=d_f$. All expressions are evaluated at
+the conditional source point. Box enclosures used for signs do not
+make off-root points normalized channels.
+

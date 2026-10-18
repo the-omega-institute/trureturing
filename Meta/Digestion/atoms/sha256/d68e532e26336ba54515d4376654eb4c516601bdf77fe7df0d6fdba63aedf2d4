@@ -1,0 +1,74 @@
+**Definition 2.1 (source dictionary).** Let
+
+$$
+\begin{gathered}
+D=\operatorname{diag}(h_0,h_1,h_2),\quad
+T=a|0\rangle\langle1|+b_{\rm src}|1\rangle\langle0|,\\
+S=c_{\rm src}|0\rangle\langle2|+d_{\rm src}|2\rangle\langle0|,
+\qquad M=\operatorname{diag}(0,m_1,m_2),\\
+\Lambda_*(X)=DXD^\dagger+TXT^\dagger+SXS^\dagger.
+\end{gathered}
+\tag{AC.6}
+$$
+
+All seven amplitudes and both $m_i$ are positive. Equivalently the
+amplitudes are the positive factors of $H,Q^{01},Q^{02}$ in CG.134:
+$h_i=\sqrt{H_{ii}}$, $a=\sqrt{Q^{01}_{00}}$,
+$b_{\rm src}=\sqrt{Q^{01}_{11}}$,
+$c_{\rm src}=\sqrt{Q^{02}_{00}}$,
+$d_{\rm src}=\sqrt{Q^{02}_{11}}$; the stipulated source ranks and
+positive off-diagonal factors identify these matrices at the root.
+There $D^\dagger D+T^\dagger T+S^\dagger S+M=I_3$.
+Set
+
+$$
+\begin{gathered}
+\theta=\frac{ab_{\rm src}}{h_0h_1},\quad
+\omega=\frac{c_{\rm src}d_{\rm src}}{h_0h_2},\quad
+\delta=\theta+\omega\in(0,1),\quad s_0=\sqrt\delta,\\
+\alpha=\theta/\delta,\quad \beta=\omega/\delta,\quad
+Q=\operatorname{diag}(1,-\alpha,-\beta),\quad
+\mathscr C=\{h=(1,z,w)^T:\alpha z^2+\beta w^2=1\},\\
+L=\operatorname{diag}(s_0,1,1),\quad
+\Delta=\rho_{27,+,+}-\rho_{5,+,+},\quad
+N_{ij}=\operatorname{tr}(K_i\Delta K_j^\dagger),\quad
+(K_0,K_1,K_2)=(D,T,S),\\
+G=LNL=\begin{pmatrix}g_0&x_G&y_G\\x_G&g_1&z_G\\y_G&z_G&g_2\end{pmatrix},
+\quad K_h=s_0D+zT+wS,\quad \ell(h)=h^TGh,\quad H_0=(1-\delta)N_{00}.
+\end{gathered}
+\tag{AC.7}
+$$
+
+Here $L$ normalizes coefficients; it is not a decoder survival effect.
+The failure support is coordinates $(1,2)$ of the supported qutrit.
+Its physical coordinates and height are
+
+$$
+\begin{gathered}
+\widehat n_h=(d_{\rm src}w/h_2,-b_{\rm src}z/h_1)^T,\quad
+n_h=(0,\widehat n_h)^T,\\
+\Delta_f=\begin{pmatrix}-11/64&(\sqrt{37}-\sqrt{59})/16\\
+(\sqrt{37}-\sqrt{59})/16&0\end{pmatrix},\quad
+f(h)=\widehat n_h^T\Delta_f\widehat n_h,\\
+M_2=\operatorname{diag}(m_1,m_2),\quad
+\Xi=M_2^{1/2}\Delta_fM_2^{1/2}
+=\begin{pmatrix}-d_f&z_f\\z_f&0\end{pmatrix},\\
+d_f=11m_1/64>0,\quad z_f<0,\quad
+L_f=\sqrt{d_f^2+4z_f^2},\quad
+\lambda_\pm=(-d_f\pm L_f)/2.
+\end{gathered}
+\tag{AC.8}
+$$
+
+Whitening a physical effect $B$ means
+$M_2^{-1/2}BM_2^{-1/2}$. A unit whitened vector $e$ corresponds to
+physical effect $M_2^{1/2}ee^TM_2^{1/2}$, not $ee^T$.
+The capacity is
+
+$$
+c(h)=\frac{h_1^2h_2^2\delta+a^2h_2^2z^2+
+ c_{\rm src}^2h_1^2w^2}
+ {h_0^2\delta+b_{\rm src}^2z^2+d_{\rm src}^2w^2}>0.
+\tag{AC.9}
+$$
+

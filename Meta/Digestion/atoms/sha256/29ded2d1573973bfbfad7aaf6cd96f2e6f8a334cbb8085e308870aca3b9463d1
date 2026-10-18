@@ -1,0 +1,36 @@
+## 254. Exact inherited setting and theorem
+
+Retain the mixed-flat five-reservoir hypotheses of the paired-reservoir
+ theory through Sections 245 and 246–253 of its return continuation.
+The original finite face-paired carrier has complete connected circular
+normal links and minimum original edge degree six. Every chosen paired
+frame (R,A,B,O,A,B) has two distinct transverse labels A,B in H.
+Lengths are positive and shared by actual global labels; every original
+edge angle sum is 2*pi. Repeated axial labels, repeated neighboring
+owners, parallel face pairings, and self-pairings of distinct faces are
+allowed. No extra closure is imposed on the external low-only region.
+
+Write H={M,C,D,Z,U}, P={M,Z,U}. The established reduction gives exactly
+four distinct interacting genuine owners K={tau,rho,eta,xi}, where an
+interacting owner contains two distinct P labels. The unique flat owner
+has one M pi slot; Z and U occur in no flat. Thus the total genuine P
+angle budget is pi+2*pi+2*pi=5*pi. Every interacting owner consumes
+strictly more than pi of this budget (Sections 213–216 and 231–234).
+Every face with two distinct P labels, called marked below, pairs to
+another face in K. At most one owner is entirely high, meaning all six
+slots lie in P (Sections 238–241). No special label has a fixed transverse
+pair contained in P. These statements concern actual original slots.
+
+The source is tau=(Z,M,C,D,M,C). Both its {M,Z,C} faces pair to one
+owner rho. Sections 242–245 leave two possible roles. We prove that
+ rho=(C,M,Z,U,M,Z)
+is impossible. Consequently only the other role
+ rho=(M,Z,C,Q,Z,C), with Q arbitrary,
+remains. This theorem does not exclude that axial-M family and does not
+prove five-reservoir realization.
+
+For lower-case cosh values, the inherited strict bounds (in particular
+Section 191 and its subsequent reductions) are
+ c,d>1, m>1+c+d, z>1+m+c, u>m.
+In particular c,d<m-2, m,u>3, and z>m+2>5.
+

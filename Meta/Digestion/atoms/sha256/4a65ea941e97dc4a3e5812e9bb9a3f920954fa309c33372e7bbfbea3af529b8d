@@ -1,0 +1,31 @@
+**Definition 3.1 (selected scalar algebraic branch).** For $s_*<s<1$ put
+
+$$
+\begin{gathered}
+j=1-s^2,\quad a_0=1+\alpha,\quad b_0=2\sqrt\alpha\,s,\quad
+\Delta=a_0^2-b_0^2=(1-\alpha)^2+4\alpha j,\\
+w_A=\frac{\alpha A+B}{2\alpha},\quad
+w_B=\frac{\alpha A-B}{2\alpha},\quad n=\frac\gamma{\sqrt\alpha},\\
+c_s(d)=(1-\alpha)d+2\alpha j,\quad
+d_{\min}=\frac{\beta\sqrt\Delta-2\alpha j}{1-\alpha},\quad
+I_s=(\max\{0,d_{\min}\},\beta),\\
+e_s(d)=\sqrt{c_s(d)^2-\Delta\beta^2},\quad
+r(d)=\sqrt{\beta^2-d^2},\quad
+u_s(d)=\frac{a_0c_s(d)+b_0e_s(d)}\Delta.
+\end{gathered}
+\tag{AS.17}
+$$
+
+Here $d$ is an optimization coordinate, distinct from $d_{\rm src}$.
+Let $d_s$ be the unique root in $I_s$ of
+
+$$
+\frac{w_A(1-\alpha)}\Delta
+ \left(a_0+\frac{b_0c_s(d)}{e_s(d)}\right)+w_B
+ =\frac{nd}{\sqrt{\beta^2-d^2}}.
+\tag{AS.18}
+$$
+
+Existence, uniqueness and positivity of every denominator are proved
+below. This specifies a scalar root, not a residual optimization.
+

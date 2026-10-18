@@ -1,0 +1,21 @@
+**例 7.3（An actual consumer of the different-label-set minimum）。** Keep $m=3,k=4,J,H,O$ as above, but use $\lambda_0(1)=1$, $\lambda_0(2)=\lambda_0(4)=0$, and $\lambda_1(4)=2$, $\lambda_1(1)=\lambda_1(2)=0$. The labels $0,1,2$ are distinct, $R,C$ are fresh and distinct, and $L_\bot$ is arbitrary. Here $r=3$ and the ordered classes are $(1,0),(0,0),(0,2)$. The exact adaptive and GLOBAL counts are respectively $N+4$ and $N+5$ by Theorems 5.2 and 6.2.
+
+The following five-word-row certificate attains the latter count on the full target, with $c(v)=a_v$, $c(\bot)=H_{L_\bot}$ and all $N$ actual Halt rows:
+
+| Row | Word | Endpoint $0$ | Endpoint $1$ | Bottom |
+| --- | --- | --- | --- | --- |
+| $a_0$ | $111$ | $b_0$ | $H_C$ | $H_R$ |
+| $a_1$ | $111$ | $H_C$ | $b_1$ | $H_R$ |
+| $b_0$ | $001$ | $H_0$ | $H_1$ | $H_R$ |
+| $b_1$ | $001$ | $H_0$ | $p$ | $H_R$ |
+| $p$ | $001$ | $H_2$ | $H_0$ | $H_R$ |
+
+Use the root and root-zero supports (5.5) and
+
+$$
+\Gamma_p=\{(\lambda_1(j),(1,-j+6,1)):j\in\{2,4\}\},
+\tag{7.5}
+$$
+
+with exact Halt images (5.6) and ranks $3,2,1,0$. The two $001$ words have full supports $\{0,1\}$ and $\{3,4\}$ at indices one and two. Both begin zero and end with tail one, so the actual seams are safe. The updates select precisely the displayed component labels on all $41$ INITIAL records. This is one application of the general certificates and lower theorem, not a new independent minimum proof. Its complete GLOBAL count is ten for an existing bottom label and eleven for a fresh bottom label; its adaptive count is nine or ten respectively. Equal installed words at the two positions do not by themselves identify their stationary response updates.
+

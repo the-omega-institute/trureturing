@@ -1,0 +1,42 @@
+### 85.2. A rank-two Ky Fan consumer of the original contraction witness
+
+For arbitrary original channels A,B define their correct-output record Grams G,H and K=G entrywise-multiplied by H, as in section 81. The target matrix T has diagonal two-by-two blocks I_2 and off-diagonal blocks J_2/2. For a Hermitian matrix Z, write Lambda_2(Z) for the sum of its two largest eigenvalues, and define
+
+    f(A,B)=Lambda_2(T-K)/4.                          (5)
+
+The original normalized reference input
+
+    |Omega>=(1/sqrt(8))sum_(f,i)|f,i>_R tensor |f,i>_logical
+
+has actual compression K^T/8 on the orthonormal support {|f,i>_R tensor |ff>_out}; the target compression is T/8. Retaining the complementary positive trace gives
+
+    delta(A,B) >= Tr(T-K)_+/4 >= f(A,B).             (6)
+
+This is an original-output pinching lower bound, not an assumption that good/bad cross coherences vanish. The forward-Gram transpose does not change eigenvalues. Both G and H depend real-linearly on their respective channels; in particular f is a function of the physical channels, independent of the chosen environments.
+
+Whenever B has Kraus rank two, the section-81 support argument yields a rank-two projection witness, even if its nullspace has dimension larger than one. Here are the details of this refinement. For the original correct-output contraction blocks A_f and B_f, form
+
+    C_f=A_f B_f^T/sqrt(2),
+    D_f=A_f Z B_f^T/sqrt(2), Z=diag(1,-1),
+    S=(1/4)sum_f C_f, a=4-4||S||_F^2.
+
+Let Q project in coefficient-matrix space onto {SX:Tr X=0}. This space has complex dimension at most three. Section 81's pointwise contraction inequality gives
+
+    sum_f ||(I-Q)D_f||_F^2 <=a.
+
+Let D_col be the matrix with vectorized D_f as its four columns. Since rank(Q D_col)<=3, choose any unit vector v in ker(Q D_col). Then
+
+    ||D_col v||^2=||(I-Q)D_col v||^2
+                 <=sum_f||(I-Q)D_f||_F^2<=a.
+
+In the full plus/minus coordinates, with s=ones/2, the plus Rayleigh value of K-T is -a and the minus Rayleigh value at v is at most a-1. Therefore the rank-two orthogonal projection diag(ss^*,vv^*) satisfies
+
+    Tr diag(ss^*,vv^*)(Khat-That) <= -1.
+
+The actual plus/minus cross block remains in Khat; its trace against this specified projection is zero, and no implication from separate scalar tests is used. Ky Fan's variational principle now gives
+
+    Lambda_2(T-K)>=1,
+    f(A,B)>=1/4 whenever B has Kraus rank two.        (7)
+
+This holds for all original A, including arbitrary leakage and rank. Selecting one kernel vector is essential here: (7) is a statement about the two-largest-eigenvalue sum, not merely the full positive part.
+

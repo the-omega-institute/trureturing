@@ -1,0 +1,17 @@
+**Definition 68.1 (A local order deficit of the fixed range).** Let $P$ be a nonempty subset of the nonnegative integral-one density classes in $L^1(\sigma|_{\mathcal G})$. For $g\in P$ and $\epsilon>0$ let $\mathscr H_P(g,\epsilon)$ consist of all nonempty finite or countably infinite subsets $H\subseteq P$ such that $g\in H$ and $\|k-g\|_1<\epsilon$ for every $k\in H$. Put
+
+$$
+D_P(g,\epsilon)=\sup_{H\in\mathscr H_P(g,\epsilon)}
+       \int\left(g-\inf_{k\in H}k\right)\,d\sigma.
+\tag{68.1}
+$$
+
+For each such $H$, simultaneous nonnegative measurable representatives can be used. The countable infimum is measurable, is at most $g$, and defines the greatest common submeasure of the laws in $H$. Thus its integral and (68.1) are independent of versions, and $0\le D_P(g,\epsilon)\le1$. Call the fixed range locally order controlled if
+
+$$
+\lim_{\epsilon\downarrow0}D_P(g,\epsilon)=0\qquad(g\in P).
+\tag{68.2}
+$$
+
+The supremum in (68.1) tests every countable family in a norm neighborhood of a fixed density. It takes no unknown prepared family or cap selection as input. It is a condition on the supplied range, distinct from the pointwise lower-semicontinuity test (62.3) for one particular selected family.
+

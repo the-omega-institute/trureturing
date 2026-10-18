@@ -1,0 +1,33 @@
+**Lemma 11.3 (Nonnegative donor stock and the full-vector identity).**
+The allocation $K$ is nonnegative, normalized, and legal in both
+complete finite catalogs. For every eight-bit word,
+
+$$
+K_w-L_w=36s\,w_6w_7(e_8-e_0).
+\tag{11.4}
+$$
+
+Proof. The starting branch weights are nonnegative and sum to one:
+$1-24\tau\ge0$, $W\ge0$, and
+$24\tau-W=24(\tau-128s)>0$, since $u\le\tau$ and $128<217$.
+The donor's precise remaining $P^0$ stock is
+
+$$
+\tau-128s-36s=\tau-164s\ge\frac{53\tau}{217}>0.
+\tag{11.5}
+$$
+
+All other weights are nonnegative. After coincident rows are added,
+the total $D_0$ weight is $\tau-147s$ and the total $D_8$
+weight is $93s$; their common $(6,7)$ schedule mass is
+$\tau-54s$. The transfer preserves the total probability and every
+cell's total mass. Thus one normalized complete-table allocation
+supplies all words and events.
+
+Only the exhaustion cell of $(6,7)$ changes. Its indicator on
+every word is $w_6w_7$, independently of every other zero, and
+its vector change is $36s(e_8-e_0)$. This proves (11.4) on
+the entire cube. No address depends on a reply. The counted
+$N$ table $N(i,j;f,f,m,z)$ and the corresponding stopped
+table are both legal. $\square$
+

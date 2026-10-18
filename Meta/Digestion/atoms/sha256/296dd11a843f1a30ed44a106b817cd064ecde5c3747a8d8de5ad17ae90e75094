@@ -1,0 +1,37 @@
+**定理 24.6.1（侧信息—隐藏动作—公开种子三角形）。** 对任意响应计划，
+
+$$
+\boxed{
+V_{\mathrm{hid}}=\delta\alpha,
+\qquad
+V_{\mathrm{pub}}=\delta\beta,
+\qquad
+0\le V_{\mathrm{hid}}\le V_{\mathrm{pub}}\le\delta.
+}
+$$
+
+固定 $\delta$ 后，所有满足 $0\le v_h\le v_p\le\delta$ 的点都可由有限二元状态、动作和至多三个种子实现。
+
+**证明。** 类型条件下的隐藏动作律是
+
+$$
+P_\theta^A=(1-r_\theta)p+r_\theta q,
+$$
+
+两行差为 $(r_1-r_0)(q-p)$，故总变差为 $\delta\alpha$；公开行同理给出 $\delta\beta$。给定 $0\le\alpha\le\beta\le1$，取三个种子 $u_+,u_-,u_0$：
+
+$$
+\begin{array}{c|c|c|c}
+\text{种子}&\mu&f(0,u)&f(1,u)\\ \hline
+u_+&(\beta+\alpha)/2&0&1\\
+u_-&(\beta-\alpha)/2&1&0\\
+u_0&1-\beta&0&0
+\end{array}
+$$
+
+则公开不一致质量为 $\beta$，而隐藏动作两行分别在动作 $1$ 上给出 $(\beta-\alpha)/2$ 与 $(\beta+\alpha)/2$，行距为 $\alpha$。最后取 $r_0=0,r_1=\delta$。证毕。
+
+严格内部点 $0<\alpha<\beta<1$ 至少需要两个方向相反的不一致分支和一个一致分支，故三个正质量种子是支持最小的。
+
+<a id="section-24-7"></a>
+

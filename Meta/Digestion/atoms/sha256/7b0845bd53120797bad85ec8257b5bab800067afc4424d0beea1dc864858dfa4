@@ -1,0 +1,19 @@
+**Definition 1.1 (residual support).** Fix a finite native interface $S_d$ with
+maps $g_q=\Gamma_q$ and replies $r_a$. Let $S\subseteq S_d$ be nonempty. Say
+that $q_*$ is a residual target on $S$ when every $q\ne q_*$ is determined on
+$S$ by one own-coordinate reply or is constant. The residual target itself may
+also be determined on a particular subset of $S$. For a nonnegative whole-block
+weight $w$ put
+
+```math
+R_S(w)=\max_{a}
+\sum_y\max_z
+\sum_{\substack{x\in S:r_a(x)=y\\g_{q_*}(x)=z}}w(x),
+\tag{SRP.1}
+```
+
+where the constant experiment is included among the choices of $a$. The set
+obtained by choosing, for each attained reply $y$, one maximizing residual
+value $z$ is locally admissible: the residual target is decoded from $r_a$ and
+all other targets retain their own witnesses.
+

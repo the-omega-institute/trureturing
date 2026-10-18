@@ -1,0 +1,95 @@
+**Theorem 6.1 (Normalization-aware phase bounds).** For the fixed source pair there are $C_D<\infty$ and $s_D\in(0,1)$, chosen before every cutoff, such that for every $0<s<s_D$, every finite integer $L\ge1$ and each direction $i,j=1-i$,
+
+$$
+D_i(s,L)\le
+\begin{cases}
+C_D\min\{s^{2r},s^aL^{a-2r}\},&a>2r,\\
+C_Ds^a[1+\log(\min\{L,1/s\})],&a=2r,\\
+C_Ds^a,&a<2r.
+\end{cases}
+\tag{6.1}
+$$
+
+The full-gap entropies are bounded respectively by $C_Ds^{2r}$, $C_Ds^a\log(e/s)$ and $C_Ds^a$, after enlarging $C_D$ if needed.
+
+Proof. The exact normalized difference, including its signed drift, is
+
+$$
+w_k=f_1(k)-f_0(k)
+=\frac{c[k^{d-r}-g(s)k^d]e^{-sk}}{Z_1(e^{-s})}.
+\tag{6.2}
+$$
+
+Indeed $Z_1=(1+cg(s))Z_0$. For either reference direction $j$, $F_j(k)\ge k^d$ and $Z_j\le Z_1$. Hence
+
+$$
+\frac{w_k^2}{f_j(k)}
+\le\frac{2c^2}{Z_0}e^{-sk}
+\left(k^{d-2r}+g(s)^2k^d\right).
+\tag{6.3}
+$$
+
+Lemma 2.3 provides a source-only neighborhood with $Z_0\ge C_0s^{-a}$ and $g(s)\le C_gs^r$. We use $C$ below for finite source-only constants, allowing a finite enlargement.
+
+The elementary inequality $\log x\le x-1$ gives, for positive reference probabilities,
+
+$$
+D(p\|q)\le\sum_x\frac{(p(x)-q(x))^2}{q(x)}.
+\tag{6.4}
+$$
+
+Summing (6.3) over all positive integers yields
+
+$$
+D(f_i\|f_j)\le C\left(\frac{R_{d-2r}(s)}{R_d(s)}+s^{2r}\right).
+\tag{6.5}
+$$
+
+If $a>2r$, the integer $d-2r\ge0$, and the power sums of Lemma 2.3 give $Cs^{2r}$. If $a=2r$, its value is $-1$. Integrating the geometric series on $(0,e^{-s})$ gives
+
+$$
+R_{-1}(s)=\sum_{k\ge1}\frac{e^{-sk}}{k}
+=-\log(1-e^{-s})\le C\log(e/s).
+\tag{6.6}
+$$
+
+The inequality follows from $1-e^{-s}$ being comparable to $s$ near zero. If $a<2r$, the integer $d-2r\le-2$, and $R_{d-2r}(s)\le\sum k^{-2}\le1+\int_1^\infty x^{-2}\,dx=2$. Also $s^{2r}\le s^a$ for $s\le1$. These prove the full-law bounds. Log-sum shows that collapsing a tail cannot increase them.
+
+To refine small cutoffs, first choose a fixed $\eta\in(0,1/2)$ such that
+
+$$
+\pi_j\le\frac{BL^a}{Z_0}\le C(sL)^a\le\frac12
+\quad\text{whenever }sL\le\eta.
+\tag{6.7}
+$$
+
+This uses $\sum_{k\le L}k^d\le L^{d+1}=L^a$ and the source-only lower bound for $Z_0$. The choice of $\eta$ precedes every $L$. Put
+
+$$
+S_j^L=\sum_{k\le L}\frac{w_k^2}{f_j(k)},\qquad
+m_L=\sum_{k\le L}w_k=\pi_1-\pi_0.
+\tag{6.8}
+$$
+
+The collapsed chi-square, with its full tail contribution, is $S_j^L+m_L^2/(1-\pi_j)$. Weighted Cauchy–Schwarz gives $m_L^2\le\pi_jS_j^L$. Consequently
+
+$$
+D_i(s,L)\le\frac{S_j^L}{1-\pi_j}\le2S_j^L
+\le Cs^a\left(\sum_{k\le L}k^{d-2r}+s^{2r}L^a\right)
+\quad(sL\le\eta).
+\tag{6.9}
+$$
+
+The first inequality applies in either direction; the difference changes sign but its squared short and tail masses do not. It is precisely the normalized tail mass in (6.8), rather than an omitted drift, that makes the first bound valid.
+
+For $a>2r$, the sum in (6.9) is at most $L^{a-2r}$ and $s^{2r}L^a=(sL)^{2r}L^{a-2r}\le L^{a-2r}$. For $a=2r$, the sum is at most $1+\log L$, and the second term is $(sL)^a\le1$. For $a<2r$, the sum is at most two and $s^{2r}L^a=(sL)^{2r}L^{a-2r}\le1$. These give (6.1) for $sL\le\eta$.
+
+Every remaining cutoff is handled on the same neighborhood. If $a>2r$ and $\eta<sL<1$, the global bound satisfies $s^{2r}\le\eta^{-(a-2r)}s^aL^{a-2r}$. If $sL\ge1$, the minimum in (6.1) is its global term. At criticality shrink $s_D$ so $s\le\eta^2$. In the intermediate case $\eta<sL<1$,
+
+$$
+\log L>\log(\eta/s)\ge\tfrac12\log(1/s),
+\tag{6.10}
+$$
+
+so the global logarithm is bounded by a constant times $1+\log L$. For $sL\ge1$, the minimum in (6.1) is $1/s$ and the global bound applies directly. In the rare-event case the global bound already handles every remaining cutoff. A finite enlargement of $C_D$ completes all cases simultaneously. There is no assumption that $L$ is fixed as $s\to0$, or that a growing budget has small $sL$. $\square$
+

@@ -1,0 +1,50 @@
+### 90.4. Exact arbitrary-reference diamond error
+
+The full norm can also be computed, without restricting the reference. Set
+
+\[
+ \mu=\frac1{2(2\sqrt2-1)},\qquad
+ v=c_1+\frac1{\sqrt2}c_2+c_3+c_4,\qquad
+ Z=2\mu vv^*-L.                                         \tag{11}
+\]
+
+We claim Z≥±L. The inequality Z+L≥0 is immediate. For the other one it is enough to check μvv*−L≥0. This matrix vanishes on ker L, equals 1/2 on t, and in the r,w coordinates of section 90.2 is
+
+\[
+ \begin{bmatrix}
+ 2\mu-1/2&\sqrt3\mu-\sqrt6/4\\
+ \sqrt3\mu-\sqrt6/4&3\mu/2
+ \end{bmatrix}.                                         \tag{12}
+\]
+
+Both diagonal entries are positive and its determinant is zero, using μ=1/[2(2√2−1)]. Hence (12) is positive semidefinite, proving the claim. Since every diagonal fibre block of L is zero,
+
+\[
+ Z_{ff}=2\mu v_fv_f^*\le2\mu I_2;
+ \qquad (\|v_1\|^2,\|v_2\|^2,\|v_3\|^2,\|v_4\|^2)
+          =(1,1/2,1,1).                                 \tag{13}
+\]
+
+For any positive-semidefinite coefficient matrix C, the map M_C is completely positive: its Choi matrix is an isometric embedding of C on {|f,i〉_reference⊗|f〉_output}. Thus Z±L≥0 imply M_Z±M_L are completely positive. Moreover (13) says M_Z*(I)≤2μI₈; explicitly this adjoint effect is the block-diagonal matrix with blocks Z_ffᵀ, which obey the same bound.
+
+For every normalized positive reference/input state ρ, set X=(id⊗M_L)(ρ), Y=(id⊗M_Z)(ρ). Then −Y≤X≤Y and Y≥0. If P₊ and P₋ are the positive and negative spectral projections of X, the order bounds give ‖X‖₁≤Tr((P₊+P₋)Y)≤Tr Y≤2μ. This is a bound on the actual 8→4 map, valid for every reference dimension. To pass from states to the defining diamond-norm optimization, first use the Jordan decomposition of any Hermitian input Q to obtain ‖(id⊗M_L)(Q)‖₁≤2μ‖Q‖₁. For a general input X, apply that bound after adjoining one reference qubit to the Hermitian dilation [[0,X],[X*,0]]/2; its trace norm is ‖X‖₁, and the output dilation has trace norm ‖(id⊗M_L)(X)‖₁. Thus δ(A,B)≤2μ for the full diamond norm.
+
+For a matching lower bound put
+
+\[
+ q=\frac{\sqrt2}{2\sqrt2-1},\qquad
+ p=(q/2,0,1-q,q/2),\qquad
+ |\psi\rangle=\sqrt{p_1}c_1+\sqrt{p_3}c_3+\sqrt{p_4}c_4.
+                                                               \tag{14}
+\]
+
+The numbers p_f are nonnegative and sum to one. Thus |ψ〉 is a normalized logical input with no reference. Its output difference is minus D_p M D_p, where D_p=diag(√p₁,…,√p₄) and M is (5). Direct substitution gives (Mp)_f=μ at every f for which p_f>0. Hence the unit vector (√p_f)_f is an eigenvector of D_p M D_p with eigenvalue μ. Congruence cannot increase the number of positive eigenvalues, so this matrix has exactly one positive eigenvalue, and its trace is zero. Its trace norm is therefore 2μ, attaining the upper bound. We have proved
+
+\[
+ \boxed{\displaystyle
+ \delta(A,B)=2\mu=\frac1{2\sqrt2-1}=\frac{1+2\sqrt2}{7}>\frac12.}
+                                                               \tag{15}
+\]
+
+This exact full-reference value makes the distinction from (8) quantitative.
+

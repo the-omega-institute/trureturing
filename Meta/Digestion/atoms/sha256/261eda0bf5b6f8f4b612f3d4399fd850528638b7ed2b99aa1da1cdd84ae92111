@@ -1,0 +1,11 @@
+# Atomic accumulation bases for complete relational observation
+
+> This volume is reference mathematics, with ordinary proofs conditional on
+> the stated suppliers; it asserts no Lean kernel verification. Its claim
+> format is compatible with `generic-v1`. Once integrated, existing text and
+> numbering remain fixed; corrections and additions follow the final append
+> anchor. The mathematical increment is the exhaustive synthesis in §§3–4,
+> its actual mixed-source application in §5, and the conditional recovery
+> interface in §6. These are `repo-derived` ordinary inferences, with the
+> literature and unrestricted-domain boundaries specified in §7.
+

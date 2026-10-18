@@ -1,0 +1,24 @@
+## 274. Both opposite axes are special and smaller than both low values
+
+For a genuine frame (r,a,b,o,a,b), let
+ L=(a+b)^2-(r-1)*(o-1)>0,
+ D_r=r^2+a^2+b^2+2*r*a*b-1,
+ D_o=o^2+a^2+b^2+2*o*a*b-1.
+The cosines of the two transverse angles have common positive
+denominator sqrt(D_r*D_o). Their numerators are
+ N_a=b*(r+o)+a*(r*o+b^2-a^2+1),
+ N_b=a*(r+o)+b*(r*o+a^2-b^2+1).
+Their exact difference is N_a-N_b=-(a-b)*L. Therefore a>=b implies
+beta_a>=beta_b, strictly if a>b.
+
+If the actual flat-opposite label O were the numerically larger of C,D,
+its transverse expense in A1,A2 would be at least E_A/2>pi. That exceeds
+its entire genuine budget pi. The same argument excludes equal low
+values. Thus O is the strictly smaller low label. Write its value b
+and the other low value a>b. The flat product and genuine A_i products
+now give
+ (m-1)*(b-1)>=(a+b)^2>(m-1)*(r_i-1).
+Hence r_i<b. Sections 265 and 268 already restrict R_i to C,D or special;
+neither low label has a value below b. Both R_i are therefore special.
+They may be the same actual label or distinct labels with equal values.
+

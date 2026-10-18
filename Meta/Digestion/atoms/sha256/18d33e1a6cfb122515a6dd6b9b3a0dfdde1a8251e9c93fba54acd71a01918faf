@@ -1,0 +1,49 @@
+**Proposition 8.3 (Containment of prefixes and retained lift information).**
+Every actual prefix in Definition 8.1 extends to a Definition 3.1
+base/phase loop of any specified integer winding. On a history already
+known to be admissible, its current ray tests the endpoint closing
+condition by
+
+$$
+\kappa=\kappa_0,\qquad e^{i d^{\mathsf T}h}=1.
+\tag{8.6}
+$$
+
+It does not determine the integer winding, the full lifted control record,
+or whether an arbitrary proposed intervening path obeyed the ODE.
+
+Proof. Given the actual terminal lift $L$ of a prefix, first return its
+height to $\kappa_0$ at fixed control phase. At $\kappa_0$ append a phase
+leg of increment $2\pi m-L$. Both legs are finite and legal, and the
+complete history has winding $m$. The existing prefix is preserved, not
+replaced by a history with the same endpoint. Thus querying all prefixes
+does not add a new kind of legal control.
+
+The quantity $e^{i d^{\mathsf T}h}$ is a well-defined function of the ray
+and fixed preparation: $d$ is integral and
+$d^{\mathsf T}\mathbf1=0$. For an admissible history it equals $e^{iL}$,
+so (8.6) is exactly the original periodic base closing condition. This
+conditional test does not certify the preceding evolution.
+
+To exhibit the loss of winding, let group $a$ have multiplicity $m_a$
+and sign $\varepsilon_a$, and put $c_a=m_a\varepsilon_a$ as in §3.3.
+A returned ray has real grouped increments $2\pi\ell_a$ and hence
+winding $m=\sum_a c_a\ell_a$. Conversely every such integer choice is
+realized at $\kappa_0$ by Theorem 8.2, and gives the initial ray. The
+possible windings of ray-returning loops are consequently
+$\gcd(c_1,\ldots,c_g)\mathbb Z$, namely $\mathbb Z$ off the double wall
+and $2\mathbb Z$ on it. Nonzero examples have exactly the same current
+ray as the constant loop. A path followed by its reverse supplies a
+separate ambiguity even with real terminal increments fixed.
+
+For path certification, compare the constant history with the proposed
+path $\kappa(t)=\kappa_0$, $\chi(t)=\chi(0)$,
+$h(t)=\sin^2(\pi t)(1,1,0,1,1)^{\mathsf T}$ on $[0,1]$. The latter
+has full support, the same endpoints, the middle-fixed gauge and
+$d^{\mathsf T}h=0$ throughout, including both wall equalities when
+applicable. But its nonzero phase derivative violates
+$\dot\theta=w\dot\chi=0$ in the interior. Its endpoint ray cannot
+distinguish it from the legal constant history. The ray therefore
+retains the closing predicate conditional on admissibility while
+forgetting integer and path data. $\square$
+

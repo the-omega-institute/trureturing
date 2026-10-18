@@ -1,0 +1,25 @@
+**Theorem 7.1 (native short-block slack).** Let a native preparer satisfy
+the original caps and let $M_i$ be the number of its installed states with
+word in $E_i$ of (1.2), including unused ones. Write $M=\sum_iM_i$.
+Its cube projection has
+$m\le M\le H-4-r$. If that projection has no three consecutive
+ambiguous depths, then
+
+$$
+H\ge G+4+r+\nu+E_{\rm reg}+b_{\rm short}.
+\tag{7.1}
+$$
+
+Any native $H<G+4+r$ forces (5.3)--(5.4) on this same projected graph.
+The qualified minimum is $G+4+r$, attained on the full original fiber.
+
+Proof. Apply (1.3)--(1.4) and Theorem 5.1 to this one projection. All
+projected count quantities in (7.1) concern that graph, without claiming
+them for an unrelated native history family. The fixed-order grid and the
+full-fiber lift of Theorem 1.4 attain $G+4+r$, with original code,
+$2+r$ latches, complete entries, literal four-reply tables and the
+separate unchanged reader. The same actual cube input attains the two
+native caps $n+1,W+3$. No shape promise is used in the upper. The
+qualified minimum itself is already [SI, Corollary 9.5][SI]; the explicit
+short-block slack is the added consequence here. $\square$
+

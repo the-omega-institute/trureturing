@@ -1,0 +1,26 @@
+**Proposition 7.4 (why the domain obligation cannot be silently erased).**
+The unrestricted ambient quantifiers in Definition 7.1, with equality
+as native equality, do not give the interpretation of §2. Normality at a
+fixed supplied constructor shape is, however, finitely expressible.
+Neither observation settles Assumption 7.3.
+
+Proof. The distinct ambient terms $[2]$ and $F([1],[0])$ have the same
+expansion by Proposition 3.3. Ambient disequality can therefore be true
+between two descriptions of the same native source. Quantifying over all
+ambient terms while treating equality as native equality is not sound
+for signed native constraints. Simply using the ambient constructor
+would also contradict (ABC.7.2).
+
+Now fix a finite shape $s$ and label its finitely many leaves by natural
+variables $n_1,\ldots,n_k$. For each internal node whose children are both
+leaves impose $n_i\ne n_j+1$ in their left-to-right order. Their finite
+conjunction, together with the supplied shape, is exactly (ABC.2.1),
+since these are precisely the possible forbidden occurrences. This is
+a Presburger condition and can also be expressed by finitely many guarded
+constructor selectors and lifted primitive comparisons. It concerns a
+supplied shape, not all shapes in one formula. There are normal shapes
+of arbitrarily great depth: take a complete binary shape with every
+primitive label zero. Its primitive siblings have equal ranks, so no
+forbidden occurrence exists. Consequently a finite enumeration of such
+fixed shapes does not cover the native domain. $\square$
+

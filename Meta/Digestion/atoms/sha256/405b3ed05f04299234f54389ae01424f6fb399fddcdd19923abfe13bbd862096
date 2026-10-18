@@ -1,0 +1,62 @@
+**Definition 4.1 (inclusive profiles of the entire installed menu).** Put
+
+$$
+b=\max\bigl(\{0\}\cup
+ \{|\operatorname{addr}(q)|-3:q\in Q,\ |\operatorname{addr}(q)|\ge3\}\bigr).
+\tag{FCS.13}
+$$
+
+This uses every installed Read, including unused states, repeated words
+and words visited only from an incorrect entry. It bounds observations
+of this finite table and imposes no bound on actual sources.
+
+At each class $d$, enumerate prefix patterns through inclusive relative
+depth $b$. At a reached node before the frontier choose alpha, beta,
+or an ordered pair of recursively smaller patterns. A leaf is retained
+literally and stops descent; every strict descendant is absent. At depth
+$b$ choose alpha, beta, or a live name $z_{d,w}$ recording a branch
+at that relative occurrence. A live name must be filled by a branch
+image. This is a bounded recursion with three possibilities at remaining
+depth zero and two leaves or a pair at positive remaining depth.
+
+Let $A_d$ be the resulting free ordered term. Different pairs $(d,w)$
+have independent names, without a requirement that their values differ.
+Every occurrence of class $d$ in $C_*$ uses the same whole $A_d$ and
+the same names. The negatives are exactly
+
+$$
+\Delta=\bigwedge_{d\ne e} A_d\ne A_e.
+\tag{FCS.14}
+$$
+
+They concern whole class terms, including all fixed ground pieces.
+Expand grounds literally in the ordered alpha/beta signature for syntax
+tests. Define
+
+$$
+\begin{aligned}
+J(\alpha)&=\mathsf{false},&J(\beta)&=\mathsf{true},&J(z)&=\mathsf{true},\\
+J(\langle A,B\rangle)
+&\Longleftrightarrow
+ (A\text{ is literally }\beta\ \land\ B\text{ is literally }\alpha)
+ \ \lor\ (J(A)\land J(B)).
+\end{aligned}
+\tag{FCS.15}
+$$
+
+Retain precisely the pattern tuples satisfying
+
+$$
+J(\mathscr S(A))\quad\land\quad
+\forall d\ne e,\ A_d\text{ and }A_e\text{ have unequal free syntax}.
+\tag{FCS.16}
+$$
+
+Denote this finite family by $\Omega_b$. It is PCA Definition 11.1's
+profile family at relative depth $b$ and on the row of Definition 1.3;
+it is also TCR Definition 5.1's family for this installed menu.
+PCA's $T_d,J,\Delta$ are respectively our $A_d,J,\Delta$. Neither
+the profile definition nor its attainment requires a code-determining
+assignment. Write $\eta_b(u)$ for the actual profile of $u$ and
+$\mathcal U_\eta=\{u\in\mathcal U_*:\eta_b(u)=\eta\}$.
+

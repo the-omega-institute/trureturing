@@ -1,0 +1,6 @@
+# Source-coherent continuation of overlapping records
+
+This continuation closes one finite interface obligation left explicit in [Overlapping spatial records and retained chronology](RECURSIVE_RELATIONAL_OBSERVATION_SPATIAL_RECORDS_CHRONOLOGY.md). The preceding construction shows that the two local records $q$ merge the accepted histories $abc$ and $bac$, and that a causally acquired register $z$ restores the selected-past decoder. Its remaining same-source event contract can be checked on the finite accepted cell below.
+
+The result is an ordinary finite classical calculation. It is source-specific and has no Lean verification. It does not claim a general parser theorem, a global spacetime completion, or a physical time law.
+

@@ -1,0 +1,33 @@
+**Theorem 9.3 (sharp endpoint minimum for actual low live labels).**
+For every parameter in Theorem 1.4, at least four actual low live-bearing
+labels are necessary for height optimality, and four suffice. Equivalently
+the minimum of this count among original height-optimal sharp-cost
+instruments is exactly four. This is not a claim that every four-label
+instrument is optimal, or that all optimizers have only four labels.
+
+Proof. If an original actual record attains the global value, its
+analytically refined product/failure upper bound from Proposition 2.2
+must attain that value too. Otherwise the actual record's TV would be
+strictly smaller. The unique grouped optimum and the complete contact
+zero sets in Theorems 4.3 and 5.1 force all four distinct contact rays,
+with the four strictly positive masses of Lemma 3.2. A single actual
+low live-bearing label supplies at most one such ray by Lemma 9.2.
+High labels supply only $D$ live products; supported failure-only
+labels supply neither these low live rays nor winding coordinates.
+Thus three or fewer actual low live-bearing labels cannot attain the
+optimum, even with arbitrary complex multiplicity and stochastic report
+processing. Analytic report or height-sign refinements do not create a
+second coefficient ray within a coarse actual label.
+
+Conversely Definitions 8.1 and EP.30 use exactly four distinct actual
+low labels, with full two-dimensional fibres and their respective fixed
+whole-fibre decoders. Theorems 8.2 and Proposition 8.3 prove ALL
+complex/reference/Borel, twelve-history, TP, $I_5$, contrast and acquired
+worst-history identities for this ONE construction. It attains the
+matching global value, so four suffice. Countably many positive label
+masses obey the same obstruction; a genuinely nonatomic accessible
+live record already has infinitely many labels. The finite-label integral
+case reduces to its actual CP masses as in Definition 9.1. This proves
+both directions without identifying real atoms or grouped rank with
+physical labels by assumption. $\square$
+

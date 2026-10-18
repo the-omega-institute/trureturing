@@ -1,0 +1,12 @@
+**Theorem 6.1 (Mean anchor-response identity).** For every reset index,
+
+$$
+M_i\bigl(\langle H_i\rangle_i-(1-2c_i)\bigr)
+=\sum_{e\in\mathcal E_i^{\mathrm{int}}}
+C_e\frac{\delta_e^2(1-2\theta_e)}{\theta_e^2(1-\theta_e)^2}
+\ge0.
+\tag{6.1}
+$$
+
+Proof. Sum (5.3) over $y$. Its left side is $M_i(1-2c_i-\langle H_i\rangle_i)$. Each internal edge contributes both partial derivatives; the last line of (4.7) identifies their sum. Change signs to get (6.1). Every term is nonnegative because $\theta_e\le1/2$. No exterior-context averaging is interchanged with a limit. $\square$
+

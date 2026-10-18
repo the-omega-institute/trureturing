@@ -1,0 +1,55 @@
+**Proposition 8.2 (the remaining constructive boundary is specific).**
+An implementation preserving immediate original-action disabledness
+must distinguish at admission the canonical RD/IN cuts of Proposition
+2.3. A completion-call interface allowing paid preliminary checks
+must instead expose its checking/refusal cuts and their different
+action interpretation. Either version of the complete-row bridge
+must, on the same initialized source, supply current executable
+continuation that completes the actual callback TOK of
+Proposition 3.4 and final halt of Proposition 3.5, and carries the
+accepted input of Proposition 2.1 through its unique original receipt
+and matching WR as in Proposition 4.4. If it permits a completed
+bad raw activation, it must additionally complete DONE at every
+$\mathsf{Load}_v\land\mathsf{Blocked}_v$ instance. A predecessor
+decoder or an output-fusion alone cannot satisfy these requirements.
+
+Proof. The admission alternatives follow from Proposition 2.3's
+strict disabledness contradiction and its stated escape conditions;
+the next two requirements are the direct self-invalidating
+guards; the input requirement follows from Propositions 2.1–2.2 and
+the exact balance theorem. The code clause is Theorem 3.3 with its
+actual loader and disabledness premises retained. Output fusion
+changes none of these admission/input/permission predicates.
+Predecessor reconstruction changes no actual executable guard,
+wire word or completed receipt. Thus neither operation supplies
+the missing cases. ∎
+
+The outstanding task is an executable, initialized realization of
+this interface, including its own matching, phase writes, authorized
+before-image acquisition and consumer return. Even an eventual all-row construction leaves separate the
+current-owner fine-cut acquisition/codec and the two implications
+between each independently defined natural view and unchanged original
+$Q$, on its actual raw, acquired and terminal domains. The original
+final output remains $q_{H_0}(u)$; on the fixed beta instance it is
+$(0,B,1)$. Arbitrary finite future Reserve/Raise fragments retain
+their actual-supply and reached-local-termination premises. This
+volume completes neither a native execution nor that full goal.
+
+[ARC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ACTOR_LOCAL_RESERVE_RECOVERY.md
+[CAP]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CAPACITY_COHERENCE_AND_GROWTH.md
+[UAS]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_GROWING_UNARY_STORAGE_ATLAS.md
+[SSA]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_STRUCTURAL_STORAGE_ATLAS.md
+[CSA]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CALLABLE_STORAGE_ATLAS.md
+[RCA]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_RETROSPECTIVE_CUT_ACQUISITION.md
+[AIF]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ACQUIRED_INPUT_FRONTIER_AND_REPLAY.md
+[TMC]: RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md
+[FIB]: FIBONACCI_ATOMIC_RELATION_GENERATION.md
+[NativeSerialMachine]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeSerialMachine.lean
+[NativeSerialEffective]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeSerialEffective.lean
+[NativeFullSourceProducer]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeFullSourceProducer.lean
+[TypedFiniteViewKernel]: ../../../D5/S3/ObserverMemory/RefinementClosure/TypedFiniteViewKernel.lean
+[PredictiveMemoryMinimalQuotient]: ../../../D5/S3/ObserverMemory/RefinementClosure/PredictiveMemoryMinimalQuotient.lean
+[Pinned StateTransition]: https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Computability/StateTransition.lean
+[CompCert]: https://raw.githubusercontent.com/AbsInt/CompCert/v3.16/common/Smallstep.v
+[Bennett]: https://www.cs.princeton.edu/courses/archive/fall06/cos576/papers/bennett73.html
+

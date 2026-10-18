@@ -1,0 +1,68 @@
+### 96.4. The two D=2b cofactor-resultant fibres Q14=0
+
+At Q14=0 the original quintic has the exact factor D−2b, since
+\[
+ Q_5(b,2b)=64b^5(b^2-1)(b^2+1)Q_{14}(b).
+\tag{96.8}
+\]
+Its leading coefficient has residue 27 and is nonzero. Define
+\(f_4=Q_5/(D-2b)\), normalized to be monic in \(K_{14}[D]\).
+The second exact identity
+\[
+ V(b,2b)=524288b^5(b^2-3)(b^2+1)(b^2+4)^2
+ (b^6+11b^4+4b^2+12)Q_{14}(b)                         \tag{96.8a}
+\]
+shows that V vanishes at D=2b. Its norm on this quartic quotient is
+nonzero, so D=2b cannot also be a root of the quotient. Thus D=2b is
+not a repeated root of Q5. At D=0 the cofactor resultant remains nonzero, with residue
+122. The Cayley-pole factor Q10 has residue 67, so there are no poles here.
+Every finite nonconstant ray with D≠2b maps to this quartic, with norms
+
+~~~text
+D:101; V:91; K:114; J:49; Fa:49; zden:83; rden:72.
+~~~
+
+The original polynomial identities give both directions of its finite
+reconstruction (96.5). The full 160-dimensional mixed determinant is 86
+modulo 149, excluding all mixed edges to these rays.
+
+It remains essential to retain D=2b rather than divide it out. Define
+\[
+\begin{split}
+ T_0={}&-\frac{3611b^{12}}{2460416}
+ -\frac{264835b^{10}}{11071872}
+ +\frac{90905b^8}{1581696}
+ +\frac{97589b^6}{345996}\\
+ &-\frac{28536763b^4}{22143744}
+ +\frac{4602029b^2}{3690624}
+ +\frac{24895}{43936}.
+\end{split}
+\tag{96.9}
+\]
+Exact division in \(K_{14}[T]\) gives
+\[
+ \gcd(F(b,2b,T),N(b,2b,T))=(T+b^2)(T-T_0).
+\tag{96.10}
+\]
+For a short complete certificate, both original polynomials are exactly
+divisible by the right side; the resultant of their remaining cofactors
+has residue 6 modulo 149. Thus no other T root is omitted. The factor
+T=−b² has K=4b²+4T=0 and is impossible in the nonconstant physical chart.
+The second factor is retained without assuming a physical existence count.
+
+At \(D=2b,T=T_0\), the good residues are
+\[
+ (D,T_0,a,c,K,J,F_a)=(20,40,118,8,113,14,144).
+\]
+All original Cramer denominators are units. Therefore the two signs
+\(s^2=K\), the reconstruction (96.5) and all three unique positions cover
+every remaining original aligned possibility. The original equations
+follow from (96.10) and the exact Cramer identities; no vanished V is used
+at this special point.
+
+The mixed norm in \(\mathcal A_{14}[s]/(s^2-K)\) has dimension 40 and
+full multiplication determinant 41 modulo 149. It retains both signs and
+all three relative positions. Thus these special rays have no mixed
+edge either. The full finite aligned set is Theta-stable by the explicit
+sign operation, so the ordinary mixed tests cover both relative parities.
+

@@ -1,0 +1,23 @@
+**Corollary 6.1 (the full-menu specialization).** For $P=A_D$ let
+$S_d=\{q:|q|\le d-1\}$ when $d\ge1$, and $S_0=\varnothing$.
+Then the exact minimum is $C_D$ states and
+$\lceil\log_2 C_D\rceil$ fixed bits, where
+
+$$
+C_0=1,\qquad C_d=2+C_{d-1}^{\,2}\quad(d\ge1).
+\tag{FM.24}
+$$
+
+This is the specialization of [DEV, (AAR.66)–(AAR.68)]: the root is
+selected, so $\eta(S_d)=1$, and both child menus are $S_{d-1}$.
+No additional counting proof is required. Theorem 5.2 further shows
+that the initial full-menu vector itself determines every future
+full-menu vector, since $S_D$ is prefix-closed.
+
+At $D=1$ the nonempty menu $\{R\}$ has the three right-subtree
+representatives alpha, beta and $\langle\alpha,\alpha\rangle$, all of
+height at most one; these have distinct root replies and require two
+fixed bits. An absent reply at $R$ is impossible. The empty menu has
+one state and zero bits. These representatives and counts are also
+listed in [DEV, Theorem 12.7].
+

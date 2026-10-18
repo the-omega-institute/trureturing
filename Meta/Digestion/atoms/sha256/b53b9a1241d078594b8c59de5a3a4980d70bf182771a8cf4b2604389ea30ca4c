@@ -1,0 +1,90 @@
+**Proposition 9.11 (A target that needs all three ports).** Let
+$p_s=1/5$ for all five modes, and consider
+
+$$
+\beta_{\rm target}=\theta_2-\theta_{13},\qquad
+\ell_\beta=e_2-e_{13}.
+$$
+
+This symbol is unrelated to the pulse phase in (9.3).
+If all $\eta_1,\eta_2,\eta_3$ are positive, then
+
+$$
+R_\eta(\ell_\beta)
+=\frac5{\eta_1}+\frac{10}{\eta_2}+\frac5{\eta_3}.
+\tag{9.34}
+$$
+
+Under $\eta_1+\eta_2+\eta_3=1$, its minimum and unique allocation are
+
+$$
+R_{\min}=30+20\sqrt2,\qquad
+\eta_1=\eta_3=\frac1{2+\sqrt2},\qquad
+\eta_2=\sqrt2-1.
+\tag{9.35}
+$$
+
+If any of the three budgets is zero, the target is unestimable.
+
+Proof. Each positive site-$i$ edge has conductance $\eta_i/10$.
+Any unit source at $2$ and sink at $13$ sends unit flow along
+the leaf $2\to0$, at energy $10/\eta_2$.
+Between $0$ and $13$, the two bottom paths are
+$0\to1\to13$ and $0\to3\to13$. Each has series resistance
+$10/\eta_1+10/\eta_3$. If the first carries $t$ and the second
+$1-t$, their energy is that common resistance times
+$t^2+(1-t)^2$, minimized at $t=1/2$.
+This gives the parallel contribution $5/\eta_1+5/\eta_3$
+and proves (9.34) without an additional circuit hypothesis.
+
+For positive $c=(5,10,5)$, Cauchy–Schwarz gives
+
+$$
+\left(\sum_i\frac{c_i}{\eta_i}\right)\left(\sum_i\eta_i\right)
+\ge(\sqrt5+\sqrt{10}+\sqrt5)^2=30+20\sqrt2.
+$$
+
+Equality requires $\eta_i$ proportional to $\sqrt{c_i}$;
+normalization gives (9.35). Strict positivity of all $c_i$
+makes that allocation unique.
+
+When $\eta_2=0$, vertex $2$ is isolated with target coefficient
+one. When $\eta_1=0$, positive remaining edges cannot connect
+$13$ to the component containing $2$; the former can connect
+only to $1$ and the latter only through $0$ and $3$.
+When $\eta_3=0$ the symmetric separation holds. Removing still
+more edges cannot repair these separations. Theorem 9.4 therefore
+excludes all zero-budget boundary cases. $\square$
+
+This example also exposes the danger of using an unrestricted
+pseudoinverse. At $(\eta_1,\eta_2,\eta_3)=(1/2,0,1/2)$,
+vertex $2$ is isolated and the bottom is a four-cycle of common
+conductance $1/20$. Its three nonzero Laplacian eigenvalues are
+$1/10,1/10,1/5$; vertex symmetry makes every bottom diagonal
+entry of $L^+$ equal to
+
+$$
+\frac14(10+10+5)=\frac{25}{4}.
+$$
+
+The isolated row of $L^+$ is zero, so
+$\ell_\beta^{\mathsf T}L^+\ell_\beta=25/4$.
+Nevertheless $R_\eta(\ell_\beta)=+\infty$, and no estimator
+satisfies the target's full local gradient. The finite algebraic
+number has projected away the very component offset being asked
+for.
+
+The quantum coefficient in (9.32) for this target is
+$A_{\ell_\beta}=1/p_2+1/p_{13}=10$. Define the efficiency of this
+restricted menu as the quantum variance lower bound divided by
+the minimum variance it attains. Its best value is
+
+$$
+\frac{10}{30+20\sqrt2}=3-2\sqrt2.
+\tag{9.36}
+$$
+
+The four-corner target has efficiency one on the same graph.
+Thus graph geometry alone does not select an optimal port:
+the target divergence determines which paths matter.
+

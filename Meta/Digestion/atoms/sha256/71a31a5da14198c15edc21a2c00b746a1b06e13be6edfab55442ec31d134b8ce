@@ -1,0 +1,46 @@
+## 462. The repeated-Z companion-C return closes four intervals
+
+In the first case of (461.2), genuineness gives
+
+    (m+1)*(q+1)>(z-c)^2>=(m+1)^2.
+
+Thus q>m, and (459.3) forces Q=Z. So
+
+    rho=(M,Z,C,Z,Z,C).
+
+For any genuine owner with pair {Z,C}, if at least one axis is not
+Z, its value b<=m and the other axis has value r<=z. The same increasing
+cosine-numerator comparison at r0=1+z+c is nonpositive because
+z>=1+m+c>=1+b+c; the actual r<r0 makes it strictly negative.
+Its two transverse Z angles are therefore obtuse. Since rho already
+has two such angles, no second owner of this kind is possible.
+
+The remaining possible pair-{Z,C} owner has both axes Z. Its four
+Z slots have the same cosine
+
+    z*(c+1)/(2*z^2+c-1)<1/2,
+
+because z>c+1. Their expense is greater than 4*pi/3 and cannot
+coexist with rho's Z expense greater than pi. Hence rho is the
+unique actual owner with pair {Z,C}.
+
+Its two faces at its sole M axis are paired to the two faces at
+tau's axial Z interval. The remaining rho faces have multiset
+{Z,Z,C}. Follow a transported Z slot across either. If it is axial,
+the complementary labels force pair {Z,C}. If it is transverse,
+its companion cannot be Z because transverse labels are distinct;
+it is C and the other Z on the face is axial. Again its pair is
+{Z,C}, hence its owner is rho. This includes either image of a Z
+slot under a label-preserving face permutation.
+
+Thus the one Z interval of tau and three Z intervals of rho form
+a nonempty closed union of original normal intervals. Connectedness
+makes it the whole Z circle, of degree at most four, contradicting
+degree(Z)>=6. Distinct-face self-gluings and edge-orientation reversals
+in individual maps only change the endpoint matching inside this
+closed set; no distinct-neighbor assumption was introduced. If such a
+matching splits the closed set into multiple circular components, it
+already contradicts connectedness. Otherwise the degree bound excludes
+the single component. Interval interiors are never identified by a
+face map, so repeated labels do not erase original intervals.
+

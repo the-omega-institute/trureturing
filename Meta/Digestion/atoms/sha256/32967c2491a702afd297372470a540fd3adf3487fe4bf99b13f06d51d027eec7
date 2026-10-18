@@ -1,0 +1,31 @@
+### 82.7. A normalized mixed coherent test removes the remaining overlap
+
+For complex alpha,gamma with |alpha|^2+|gamma|^2=1, use the normalized logical input
+
+    |psi_(alpha,gamma)>
+       =(1/2)sum_f [alpha|f,+>+gamma epsilon_f|f,->].  (22)
+
+The actual output is E^T/4, where E is the forward Gram of
+
+    e_f=alpha C_f+gamma epsilon_f D_f.
+
+The target output is (|alpha|^2 J_4+|gamma|^2 I_4)/4. Both have trace one. Since sum epsilon_fN_f=0, equations (15) and (18) imply
+
+    sum_f e_f=4alpha S+2gamma W.
+
+Test the actual-minus-target difference on the normalized uniform output vector s. Its expectation is
+
+    ||4alpha S+2gamma W||_F^2/16
+       -|alpha|^2-|gamma|^2/4
+      =-1/8+2 Re(conjugate(alpha) gamma lambda).      (23)
+
+If lambda!=0, choose |alpha|=|gamma|=1/sqrt(2) and their relative phase so that conjugate(alpha)gamma lambda=-|lambda|/2. Then (23) is -1/8-|lambda|. A trace-zero Hermitian output difference has trace norm at least minus twice any negative expectation. Thus
+
+    delta>=1/4+2|lambda|.
+
+As delta=1/4, it follows that
+
+    S^*W=0.                                        (24)
+
+All input and output test vectors used here are normalized; no reference is required for these three coherent tests. The full reference test remains essential in section 82.6.
+

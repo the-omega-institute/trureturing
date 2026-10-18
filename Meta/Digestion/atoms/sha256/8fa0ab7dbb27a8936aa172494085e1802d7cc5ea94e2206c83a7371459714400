@@ -1,0 +1,90 @@
+**Theorem 5.3 (exact local-to-joint defect).** Fix any law $p$ on a
+nonempty $R_\eta(w)$ and put $X=x(s)$, $P=\operatorname{supp}X$,
+$O=O(s)$ and $Y=Y_P(X)$. Partition the hard-target coordinates of
+$Y$ into $Y_1,\ldots,Y_k$ according to their prescribed incoming
+actual owner group, allowing empty vectors. Then $Y_A=(Y_g)_{g\in A}$
+is a function both of $X$ and of $B_A$. Define
+
+$$
+\begin{aligned}
+\mathcal L_\eta(p)
+={}&\sum_A\gamma_k(A)
+ \left[H_p(X\mid O,Y_A)+I_p(O;B_A\mid Y_A)\right]\\
+&+\frac12\sum_A\gamma_k(A)I_p(Y_A;Y_{A^c}).
+\end{aligned}
+\tag{COK.32}
+$$
+
+With $b_y=b_y(P)$ and $\kappa=\kappa_w(P)>0$, exactly
+
+$$
+\begin{aligned}
+\log_2J_d(w)-F_\eta(p)
+={}&\log_2\frac{J_d(w)}{\kappa}+\mathcal L_\eta(p)\\
+&+\sum_y p_Y(y)
+ D_2\!\left(p(X\mid y)\,\middle\|\,\frac{w(\,\cdot\,)}{b_y}
+                       \text{ on the cell }y\right)\\
+&+\frac12D_2\!\left(p_Y\,\middle\|\,(b_y^2/\kappa^2)_y\right).
+\end{aligned}
+\tag{COK.33}
+$$
+
+Every term on the right is nonnegative. In particular this gives the
+second comparison in (COK.30).
+
+Proof. A locally constant or owned-seed target is easy on $P$: the
+owned seed is its actual own-port reply by (COK.7). A hard target
+must therefore be assigned to an incoming seed, and hence to one
+specified actual owner group. This justifies the partition. Since
+$O$ is a function of $X$ and $Y_A$ is a function of both $X$ and
+$B_A$, the chain rule gives the exact identity
+
+$$
+H_p(O\mid B_A)
+=H_p(X)-H_p(Y_A)-H_p(X\mid O,Y_A)-I_p(O;B_A\mid Y_A).
+\tag{COK.34}
+$$
+
+Complement symmetry of $\gamma$ gives
+
+$$
+\sum_A\gamma_k(A)H_p(Y_A)
+=\frac12H_p(Y)+\frac12\sum_A\gamma_k(A)I_p(Y_A;Y_{A^c}).
+\tag{COK.35}
+$$
+
+Thus
+
+$$
+F_\eta(p)
+=H_p(X)-\tfrac12H_p(Y)+\mathbb E_p\log_2w(X)-\mathcal L_\eta(p).
+\tag{COK.36}
+$$
+
+On the finite positive-support set $P$, conditional Gibbs identities
+give
+
+$$
+\begin{aligned}
+H_p(X)-\tfrac12H_p(Y)+\mathbb E_p\log_2w(X)
+={}&\tfrac12H_p(Y)+\sum_yp_Y(y)\log_2b_y\\
+&-\sum_yp_Y(y)D_2(p(X\mid y)\Vert w/b_y)\\
+={}&\log_2\kappa-\tfrac12D_2(p_Y\Vert b_y^2/\kappa^2)\\
+&-\sum_yp_Y(y)D_2(p(X\mid y)\Vert w/b_y).
+\end{aligned}
+\tag{COK.37}
+$$
+
+All nonempty cells have $b_y>0$, including when the hard vector is
+empty. The support $P$ is range-feasible, since each local table has
+at most four values. Hence $\kappa\le J_d(w)$. Combine (COK.36)
+and (COK.37) to obtain (COK.33). $\square$
+
+The identity does not assume that a local law extends globally.
+When $p$ is an actual Gibbs marginal, it is compatible with the
+single common law in Theorem 3.2; when $p$ is an independent local
+maximizer it makes no such assertion. It isolates three distinct
+losses: the joint cap's finite support comparison, losses in the
+local ownership and incoming-group relations, and the weighted Gibbs
+loss on that same local state support.
+

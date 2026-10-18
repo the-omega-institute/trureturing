@@ -1,0 +1,36 @@
+**Definition 1.3 (actual resources and upper budgets).** For a table
+$C\in\mathcal C_K$ and the same original source $u$, put
+
+$$
+\begin{aligned}
+c_C(u)&=(q_C(u),a_C(u),\ell_C(u)),\\
+\ell_C(u)&=\sum_{\text{actual read calls at }p}|p|,\\
+b(C)&=(\sup_D q_C,\sup_D a_C,\sup_D\ell_C).
+\end{aligned}
+\tag{NRF.5}
+$$
+
+The first coordinate counts chronological raw read calls, including
+repetition and absence. The second counts actual post-entry unit
+forward updates. A root read contributes one to $q$ and zero to
+$\ell$; halt contributes zero to all three. Terminal updates, when
+present in the installed table, are actual charged updates.
+
+Write $\overline{\mathbb N}=\mathbb N\cup\{\infty\}$ and define
+
+$$
+\begin{aligned}
+\operatorname{Feas}_K(B)
+&\ \Longleftrightarrow\
+ \exists C\in\mathcal C_K\ \forall u\in D\quad c_C(u)\le B,
+ \qquad B\in\overline{\mathbb N}^{\,3},\\
+\mathcal F_K
+&=\{B\in\mathbb N^3:\operatorname{Feas}_K(B)\}.
+\end{aligned}
+\tag{NRF.6}
+$$
+
+A coordinate equal to infinity imposes no bound. These are simultaneous
+whole-fiber upper budgets, rather than a requirement to attain the
+three entries of $B$ on a single source.
+

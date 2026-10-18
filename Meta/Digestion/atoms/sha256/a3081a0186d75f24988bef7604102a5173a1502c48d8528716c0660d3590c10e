@@ -1,0 +1,65 @@
+**Definition 206.4 (Fair placement and its full cell rewards).**
+Given nonnegative $c_1,c_2,p_1,p_2,\eta_3,\ldots,\eta_L,\tau$, define
+$\mathcal V(c,p,\eta,\tau)$ as follows. For every suffix
+$v\in\{0,1\}^{L-2}$ place
+
+$$
+C_{01v}=c_1/2^{L-2},\quad P_{01v}=p_1/2^{L-2},\qquad
+C_{10v}=c_2/2^{L-2},\quad P_{10v}=p_2/2^{L-2}.
+\tag{206.13}
+$$
+
+For each $j\ge3$ and $v\in\{0,1\}^{L-j}$ place
+$C_{1^{j-1}0v}=\eta_j/2^{L-j}$. Set $T=\tau$; every other coefficient,
+including every $A$, is zero. Put $f_a=c_a+p_a$,
+$S'=p_1+p_2$ and $\mu_\eta=\max_j\eta_j$.
+The anchor is $c_1+c_2+S'+\tau$.
+
+The following full cell calculation will be used inside the proofs.
+For $(1,2)$ the $N$ maxima in order $00,01,10,11$ are
+
+$$
+(0,f_1,f_2,\max(\mu_\eta,\tau)),
+\tag{206.14}
+$$
+
+and the $O$ maxima are $f_1,f_2,\max(\mu_\eta,\tau)$.
+For an early/late pair $(a,j)$, let $b$ be the other early index and
+$H_j=\max_{3\le n<j}\eta_n$, $U_j=\max_{n>j}\eta_n$. Then the $N$
+maxima are $(f_a/2,f_a/2,X,Y)$ and the $O$ maxima are $(f_a,X,Y)$, where
+
+$$
+X=\max(f_b/2,H_j/2,\eta_j),\qquad
+Y=\max(p_b/2+\tau,f_b/2,H_j/2,U_j).
+\tag{206.15}
+$$
+
+For $3\le i<j$, let $H_i=\max_{3\le n<i}\eta_n$,
+$I_{ij}=\max_{i<n<j}\eta_n$ and $U_j=\max_{n>j}\eta_n$.
+The $N$ maxima are $(A_{ij},A_{ij},B_{ij},C_{ij})$ and the $O$ maxima
+are $(2A_{ij},B_{ij},C_{ij})$, with
+
+$$
+\begin{aligned}
+A_{ij}&=\max(S'/4,f_1/4,f_2/4,H_i/4,\eta_i/2),\\
+B_{ij}&=\max(S'/4,f_1/4,f_2/4,H_i/4,I_{ij}/2,\eta_j),\\
+C_{ij}&=\max(S'/4+\tau,f_1/4,f_2/4,H_i/4,I_{ij}/2,U_j).
+\end{aligned}
+\tag{206.16}
+$$
+
+To derive these expressions, an early suffix is fair at each late bit.
+A correct class before both late queries puts one quarter in each
+cell. Class $i$ puts half in $00$ and half in $01$; a class strictly
+between $i,j$ puts half in $10$ and half in $11$; class $j$ puts all
+its weight in $10$; later classes put all their weight in $11$.
+Label zero receives the sum of pair weights and receives $\tau$ only
+in $11$. Each early numerical label receives its own $C+P$, and each
+late numerical label its own $C$. This lists every label, not just the
+queried ones. In the first two $N$ cells the entire reward vectors
+have the same proportions, so their maxima add to the merged $O$
+maximum. For $(1,2)$ the empty $00$ cell gives the same conclusion.
+This is precisely the common-suffix specialization of 198.2, not an
+assumption about the source distribution. It also bounds every shorter
+schedule by Definition 206.2.
+

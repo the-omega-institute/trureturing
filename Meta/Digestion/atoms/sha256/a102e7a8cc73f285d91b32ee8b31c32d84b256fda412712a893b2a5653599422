@@ -1,0 +1,30 @@
+**Corollary 3.2 (simultaneous avoidance and deep replacement).** In a cell
+with finitely many retained negative records, fix a valuation satisfying all of
+them. For one coordinate $z$, the union of the forbidden sets from Lemma 3.1
+is finite. There are arbitrarily large finite trees outside that union. If $z$
+appears at original addresses $p_i$, choose a replacement that agrees with the
+old value through local depth
+$\max_i\max(0,h-|p_i|)$; then every resulting source agrees at every
+original address of length at most $h$. If the current $z$ has a branch at
+that local depth, the replacement can also be required to exceed any prescribed
+leaf-count threshold.
+
+Proof. Take the finite union. Replace within one child cone of a branch at
+the stated local depth. This leaves replies through that depth, and hence
+every global prefix of depth at most $h$, unchanged. The ordered full binary
+trees obtained by filling that cone with increasingly many leaves are
+pairwise distinct, so one avoids the finite union and any prescribed finite
+set. Shared occurrences of $z$ are changed simultaneously, preserving every
+repeated occurrence. $\square$
+
+The lemma is deliberately syntactic. It does not apply to a mixed internal
+power such as
+
+$$
+\rho^2(z)=\langle\rho(z),z\rangle,
+\tag{RNL.12}
+$$
+
+whose native equality has infinitely many finite solutions. That boundary is
+exactly the one exhibited in [URR, Proposition 7.1][URR].
+

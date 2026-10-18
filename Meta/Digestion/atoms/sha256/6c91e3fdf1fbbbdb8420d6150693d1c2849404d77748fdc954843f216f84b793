@@ -1,0 +1,29 @@
+#### 24.4　隐藏动作的精确损失
+
+对每个动作 $a$ 定义三类种子质量：
+
+$$
+c_a=\pi(a,a),
+\qquad
+x_a=\sum_{b\ne a}\pi(a,b),
+\qquad
+y_a=\sum_{b\ne a}\pi(b,a).
+$$
+
+于是
+
+$$
+K_0(a)=c_a+x_a,
+\qquad
+K_1(a)=c_a+y_a.
+$$
+
+令隐藏动作行距离为
+
+$$
+\alpha=\operatorname{TV}(K_0,K_1)
+=\frac12\sum_a|K_0(a)-K_1(a)|.
+$$
+
+<a id="claim-24-4-1"></a>
+

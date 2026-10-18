@@ -1,0 +1,22 @@
+**Definition 1.3 (actual complex and real encoder classes).** Fix $0\leq\beta\leq1/2$ and $a=1-\beta$. Let $\mathcal C_\beta$ be the set of all complex-linear CPTP maps $N^{\rm ph}:M_3\to M_5$ whose actual states $\rho^{\rm ph}=N^{\rm ph}(\theta_+)$ and $\sigma^{\rm ph}=N^{\rm ph}(\theta_-)$ satisfy
+
+$$
+\Delta=D^\dagger(\rho^{\rm ph}-\sigma^{\rm ph})D=iA_0,
+\quad A_0\in M_5(\mathbb R),\quad A_0^T=-A_0,
+\quad \operatorname{spec}\Delta=(a,\beta,0,-\beta,-a).
+\tag{P.4}
+$$
+
+Thus the actual passive pair has the same entrywise real part and the same diagonal $z$. Equal populations alone do not imply (P.4). No arbitrary population vector replaces this actual $z$.
+
+Let $\mathcal R_\beta\subseteq\mathcal C_\beta$ consist of those channels for which $N$ in (P.1) has real Kraus matrices $K_\alpha\in M_{5\times3}(\mathbb R)$:
+
+$$
+N(X)=\sum_\alpha K_\alpha X K_\alpha^T,
+\qquad \sum_\alpha K_\alpha^T K_\alpha=I_3,
+\qquad K_\alpha^{\rm ph}=DK_\alpha L^\dagger.
+\tag{P.5}
+$$
+
+For real passive Kraus matrices, $N(\chi_-)=\overline{N(\chi_+)}$; the spectrum condition still must hold. Real entries of physical Kraus matrices do not establish either this passive real structure or native oldblindness. The sign in (P.2) negates the phase difference, leaving its symmetric spectrum unchanged.
+

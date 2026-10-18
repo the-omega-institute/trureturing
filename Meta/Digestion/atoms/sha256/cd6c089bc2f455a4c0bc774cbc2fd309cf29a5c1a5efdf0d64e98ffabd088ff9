@@ -1,0 +1,37 @@
+**Definition 1.3 (joint configuration and legal histories).** A configuration
+contains one actual register $U\in\mathcal T$, observer control and retained
+finite records $c$, and the internal writer's active or halted control.
+At invocation $U=u$ is arbitrary; observer initialization depends only on
+$P$ and one fixed effective program. The writer acts on this same register
+and root, not an independently chosen marginal source. Its only
+source-changing event is the atomic assignment $U\leftarrow\rho U$.
+It may halt after any finite number of updates or remain active.
+
+Observer events are source-free local transitions, atomic literal Reads,
+and a separate Return event. A Read leaves $U$ unchanged; its literal and
+continuation are selected from actual retained records and control.
+Return follows finite local preparation of its output and leaves $U$
+unchanged. Writer events may occur before the first Read, between Reads,
+during local computation, and after the last Read before Return.
+They supply no observer event, count, timestamp or notification.
+A larger action class also permits an observer-issued atomic
+$U\leftarrow\rho U$ with the single source-free acknowledgement $\star$;
+only Theorem 6.3 uses that larger class.
+
+A legal history is a finite or natural-number-indexed interleaving
+respecting each process's order. Every finite prefix contains finitely
+many events and a finite source. A finite burst may be arbitrarily long,
+but no Read is preceded by infinitely many events at one event position.
+The semantic number $k$ of updates gives $U=\rho^k u$; it is a proof
+witness, not observer data. There is no reset, rerooting, local rewrite,
+source swap, saved source version, lock, snapshot, version field, size
+or epoch advice, source-walk port or scheduler observation. Finite trees
+reconstructed from paid replies are permitted records; they are not
+supplied historical copies of the register.
+
+This is a concurrent extension. [Sparse History, Convention 1.3][SLH]
+and [NativeSerialMachine][NSM] give a single controller its own recorded
+Read/Update sequence; they did not already permit an unrecorded independent
+writer. An acknowledgement $\star$ in the larger class does not transmit
+a hidden epoch.
+

@@ -1,0 +1,26 @@
+**Proposition 5.1 (one stronger forward control condition for survival).**
+Fix $0<\eta\leq c/2$ and suppose both heights stay in $[\eta,c-\eta]$. Put
+$\delta=\|k-\widetilde k\|_\infty$,
+$e=\|k'-\widetilde k'\|_{L^1}$, and
+$M=\operatorname{TV}(\widetilde k)$. Then
+
+$$
+\|\lambda-\widetilde\lambda\|_{L^1}
+\leq B:=e/\eta+M\delta/\eta^2,\qquad
+\|S-\widetilde S\|_\infty\leq B.
+\tag{IS.26}
+$$
+
+Proof. For fixed height, the hazard as a function of velocity is continuous
+piecewise linear with slopes bounded in modulus by $1/\eta$. Changing
+height with velocity fixed changes it by at most
+$|\widetilde k'|\delta/\eta^2$. Integrate the two differences.
+For nonnegative charges $x,y$, $|e^{-x}-e^{-y}|\leq|x-y|$;
+apply this to each prefix integral. $\square$
+
+Thus strong derivative control, or a separate certificate of accumulated
+loss variation in (IS.15), addresses the oscillation obstruction for
+survival. A bound on variation without an error bound on its accumulation
+does not. Survival convergence alone is still weaker than convergence of
+all retained quantum outputs and time/mode measures.
+

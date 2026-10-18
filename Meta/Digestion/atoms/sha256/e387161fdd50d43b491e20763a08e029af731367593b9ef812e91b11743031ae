@@ -1,0 +1,19 @@
+**Corollary 35.2 (two explicit classes of forbidden live mergers).**
+Two live histories with the same exposed set and different hit
+counts cannot share a running state. Two live histories with the
+same number of exposed coordinates and the same hit count, but
+different exposed sets, cannot share a running state either.
+
+Proof. The first statement is the second part of Theorem 35.1.
+For the second put $d=|S|=|T|$ and $h=g$. Then
+$a=b>0$ and $n-d=a+u$. Liveness gives
+
+$$
+1\le k-h\le n-d=a+u.
+$$
+
+The integer interval $[k-h-a,k-h-1]$ is nonempty, its upper
+endpoint is nonnegative and its lower endpoint is at most $u$.
+It therefore intersects $[0,u]$. This makes (PCA.86) nonempty,
+contrary to Theorem 35.1. $\square$
+

@@ -1,0 +1,11 @@
+**Definition 89.1 (domain and complete words).** Fix
+
+$$
+\varphi=\frac{1+\sqrt5}{2},\qquad L>1,\qquad
+1<d_0<L^{2/\varphi^2},\qquad H=1.
+$$
+
+Retain every actual source satisfying $\|a\|,\|b\|\leq L$, $\Delta=\|a\|^2\|b\|^2-(a\cdot b)^2\geq d_0$ and $q_i=\|x_i\|\leq1$ for $i=0,1,2$, including zero-label histories. Let $C_N(E)$ be [supplier §75](RECURSIVE_RELATIONAL_OBSERVATION_PARAMETERIZED_CROSS_PRODUCT_RECOVERY.md)'s minimum worst-case complete numerical binary-word length on the sources with at most $N$ original leaves. A word includes every source-dependent program, mode, precision, scale, coefficient, coordinate, constant and selection. One fixed finite interpreter receives only the complete word and a finite query; its actual description and installation costs are charged. Source-aware selection is permitted in this representation definition. It does not assert that the original observer can acquire the selected word.
+
+The end of the complete word is already a framing boundary in [supplier Definition 76.1](RECURSIVE_RELATIONAL_OBSERVATION_PARAMETERIZED_CROSS_PRODUCT_RECOVERY.md). Words need not be prefix-free. Constant transport start/end symbols, when used, have their actual constant cost. No independently supplied source-specific length, $N$, preparation, control hint or later name access is a decoder input. Here $N$ is only a proof stratum; the source domain remains unbounded. Mandatory evidence is treated in Definition 92.3, with no assumed bound on its length.
+

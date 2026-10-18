@@ -1,0 +1,12 @@
+**定理 51.1。** 若 $q_0,q_1,q_2\le\bar H$ 且同时 $|y_i-x_i|\le e$，则
+
+$$|Z-x_3|\le B_e+2\bar H\sqrt{P_e},\qquad B_e=(2\bar H+e)e,\quad P_e=\bar H^2e+(\bar H+e)B_e.$$
+
+证明。双线性给 $|y_2\times y_1-w|\le B_e$。真实尾零或报告符号正确时误差至多 $B_e$。符号错误或报告标量零时，两标量异号或后者为零，故
+
+$$q_2^2\le|x_0\cdot w|\le|x_0\cdot w-y_0\cdot(y_2\times y_1)|\le e|w|+(q_0+e)B_e\le P_e.$$
+
+于是 $|w|\le\bar Hq_2\le\bar H\sqrt{P_e}$，而反号误差至多 $B_e+2|w|$。这覆盖极小向量、零计算结果、错误符号、非正交及不在实际像中的报告。
+
+取 $\bar H\ge1,e\le1$，令 $P=3\bar H^2+3\bar H+1$、$C_s=2\bar H+1+2\bar HP$。有 $P_e\le Pe$、$B_e\le(2\bar H+1)e$，$\sqrt P\le P$，所以 $|Z-x_3|\le C_s\sqrt e$。当 $\bar H=1$，更紧的 $3e+2\sqrt{7e}\le9\sqrt e$ 可用。
+

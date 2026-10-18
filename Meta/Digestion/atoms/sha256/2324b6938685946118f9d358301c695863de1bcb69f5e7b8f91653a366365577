@@ -1,0 +1,50 @@
+**Theorem 37.2 (exact one-variable full-reference benchmark).** Put
+
+$$
+ A=\sqrt{at},\qquad B=\sqrt{\beta(1-t)}.
+$$
+For a diagonal center $\omega_t$ and $q=\operatorname{diag}(p_0,p_1,p_2)$, the full-reference quantity in (R.27) is
+
+$$
+ \Phi(q,\omega_t)=p_0(A+B)+p_1B+p_2A
+       +\sqrt{A^2p_1^2+B^2p_2^2}.
+\tag{R.177}
+$$
+
+Its inner minimum has $p_0=0$. If $AB>0$, writing $x=p_1$ and $p_2=1-x$ gives
+
+$$
+ x=\frac{B^2+(A-B)\sqrt{AB/2}}{A^2+B^2},
+\qquad
+ h_\beta(t)=\frac{A^3+B^3+\sqrt2\,(AB)^{3/2}}{A^2+B^2}.
+\tag{R.178}
+$$
+
+At $A=B=0$ set $h_\beta(t)=0$; if $AB=0$ and $A^2+B^2>0$, set $h_\beta(t)=\sqrt{A^2+B^2}$. Then
+
+$$
+ g_N=\max_{0\leq t\leq1}h_\beta(t).
+\tag{R.179}
+$$
+
+This is an exact one-variable reduction for the actual full-reference benchmark, not a claim of a closed-form outer optimization or of an exact diamond optimum.
+
+**Proof.** A convenient factor of the R38 complementary Choi matrix has columns
+
+$$
+\sqrt a\,|0,0_E\rangle,\quad \sqrt\beta\,|0,1_E\rangle,\quad
+\sqrt a\,|1,0_E\rangle+\sqrt\beta\,|2,1_E\rangle,\quad
+\sqrt\beta\,|1,1_E\rangle,\quad \sqrt a\,|2,0_E\rangle .
+$$
+
+For diagonal $q$ and $\omega_t$, the Gram matrix
+$B^\dagger(q^2\otimes\omega_t)B$ is diagonal up to zero rows, with nonzero eigenvalues
+$\{p_0^2A^2,p_0^2B^2,p_1^2B^2,p_2^2A^2,A^2p_1^2+B^2p_2^2\}$. Taking its square-root trace gives (R.177). This is a calculation on the full purification, so the $q^T$ input convention remains the one in Theorem 6.1.
+
+For $s=p_1+p_2>0$ and $x=p_1/s$, (R.177) is
+
+$$
+ (1-s)(A+B)+s\left[Bx+A(1-x)+\sqrt{A^2x^2+B^2(1-x)^2}\right].
+$$
+The bracket equals $A+B$ at $x=0$ and at $x=1$, so some minimizer has $s=1$, proving $p_0=0$. For $AB>0$, differentiating the remaining strictly convex one-variable expression gives the unique stationary point in (R.178). It is feasible: if $A\geq B$, its numerator is nonnegative and $A^2-(A-B)\sqrt{AB/2}\geq0$; if $A<B$, the corresponding two inequalities follow after interchanging $A,B$. Substitution gives the displayed $h_\beta$. When one of $A,B$ vanishes the objective is constant at $\sqrt{A^2+B^2}$, and when both vanish it is zero.$\quad\square$
+

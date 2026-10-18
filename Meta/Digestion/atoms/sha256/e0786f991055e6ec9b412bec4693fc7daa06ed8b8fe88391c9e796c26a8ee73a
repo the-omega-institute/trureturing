@@ -1,0 +1,101 @@
+**定理 15.2（整条弧的完整律与全先验风险）。** 对每个 $a\in[a_0,a_1]$，(14.1)给一个从第一笔实际 Read 前初始化的合法正单模式观察者 $G(a)$。同一个 $G(a)$ 对每个允许的固定有限或可数先验、两个风险次序满足
+
+$$
+R_j(\mathcal H_p;G(a))=\rho_p+e(a),\qquad
+R_j(\mathcal H_\beta;G(a))=\rho_\beta+f(a),
+\qquad j\in\{\mathrm{law},\mathrm{conf}\}.
+\tag{15.6}
+$$
+
+两项相容性精确成立，pending 与 delivered 切面的误差为零。这里的等号是全部有限实际历史的上确界，不声称一个有限历史必须取到上确界。
+
+**证明。** 保留原全部 $C_0$，从第一笔实际 Read 前确定性初始化，实际字母始终执行原更新 $\delta$。解码合成在提种与前三段使用公平字母，在第四段两个解析相位分别以 $u,v$ 的概率合成 $\alpha$，并执行同一 $\delta$；pending 只生成原唯一 Stop，delivered 为空残余。这是定理10.2的同一个从零构造，未增加状态模式或取得端口。实际来源仍为唯一共同 $K$ 的 $r_K$，合成不调用实际 Read。
+
+由 $(1-u)v=a,(1-u)(1-v)=b$ 及 $u+b=1-a$，第四段完整原始律为
+
+$$
+\begin{aligned}
+Q_p(u_{j,0})&=ua^j,&Q_p(u_{j,1})&=ba^j,\\
+Q_\beta(\beta)&=1-v,&Q_\beta(\alpha u_{j,0})&=vua^j,&
+Q_\beta(\alpha u_{j,1})&=vba^j,\qquad j\ge0.
+\end{aligned}
+\tag{15.7}
+$$
+
+两律的有限完成质量为1，无限不完成质量为 $\lim_j a^j=0$；样本空间仍保留该合法无限路径。前段公平提种接受概率为 $1/2$，前三段返回因子为 $1/4$，故整个合成几乎必然完成。原 $I_c$ 单射把字母律送到同历史完整转录，反向读字母，因而保持 TV。
+
+先证明两个端点上的全尾等号。所有0词的系数与返回因子严格夹在两个端点之间，故每个 $j\ge0$ 都夹持。1词在 $j=0,1,2,4$ 的夹持由引理15.1的表给出；在 $j=3$，预测质量 $ba^3$ 不小于两个端点质量。从第4圈起，除以端点1的 $(2/9)^j$ 后，预测比值增加；除以端点2的 $(6/25)^j$ 后，比值减少。所以第4圈的两个比较传播到所有 $j\ge4$。
+
+因此 $P_{p,r_1}-Q_p$ 的正词恰为 $E_p$，而 $Q_p-P_{p,r_2}$ 的正词为 $E_p$ 加上可能严格为正的第三圈1词。对全部可数词求正差得到
+
+$$
+\begin{aligned}
+\operatorname{TV}(Q_p,P_{p,r_1})&=\rho_p+c-bS(a),\\
+\operatorname{TV}(Q_p,P_{p,r_2})&=\rho_p+b(S(a)+a^3)-c-C.
+\end{aligned}
+\tag{15.8}
+$$
+
+$bH=N$ 恰给 $c-bS=(ba^3-C)/2=e(a)$，所以两者均为 $\rho_p+e(a)$。第三圈等号情形不改变正差和。
+
+悬置单字 $\beta$、全部0词、第0圈1词及第1圈1词的比较分别由(15.2)给出。第1圈起的1词和第0圈起的0词，同样用两个端点返回比例传播到全部尾。因此悬置律所有坐标夹持端点，其符号事件为 $E_\beta$，且 $Q_\beta(E_\beta)=(1-v)(1+a)=d_0+f(a)$。完整端点距离精确为
+
+$$
+\operatorname{TV}(Q_\beta,P_{\beta,r_1})=\rho_\beta-f(a),\qquad
+\operatorname{TV}(Q_\beta,P_{\beta,r_2})=\rho_\beta+f(a).
+\tag{15.9}
+$$
+
+$f(a)\ge0$ 使最大值为第二项。这些无限词符号证明没有把有限尾当作完整 TV。
+
+还须覆盖所有真实非端点。对每个 $r\in[3/8,5/13]$，(15.2)给 $u<r,a<r(1-r),b>(1-r)^2,v<r$。全部0词的预测质量小于真实质量；每个1词的正差至多 $[b-(1-r)^2]a^j$。完整几何和及悬置的两个互斥首分支分别给
+
+$$
+\begin{aligned}
+\operatorname{TV}(Q_p,P_{p,r})
+&\le\frac{b-(1-r)^2}{1-a}
+<\frac{2009/5000-64/169}{1-467/2000}
+=\frac{13014}{431795}<\frac4{125}<\rho_p,\\
+\operatorname{TV}(Q_\beta,P_{\beta,r})
+&\le r-v+v\operatorname{TV}(Q_p,P_{p,r})\\
+&<\frac5{13}-\frac{73}{200}+\frac{1841}{5000}\frac4{125}
+=\frac{255107}{8125000}<\frac7{200}<\rho_\beta.
+\end{aligned}
+\tag{15.10}
+$$
+
+第二界也可由 $Q_\beta=(1-v)\delta_{[\beta]}+v(\alpha Q_p)$ 与 $P_{\beta,r}=(1-r)\delta_{[\beta]}+r(\alpha P_{p,r})$ 的三角不等式直接得到。它控制整个非端点区间，并非有限深度列表。
+
+对每条实际有限历史 $h$，真实尾律是(1.4)的同源后验混合。归一化的可数非负权重和 TV 凸性给
+
+$$
+\operatorname{TV}\!\left(Q_s,\sum_k\nu_h(k)P_{s,r_k}\right)
+\le\sum_k\nu_h(k)\operatorname{TV}(Q_s,P_{s,r_k}).
+\tag{15.11}
+$$
+
+端点等号与(15.10)给全部实际历史上界。报告只读 $C_0(h)$，不读右侧后验、计数或分布向量。
+
+为反向等号，固定 $r\in\{1/3,2/5\}$、$\epsilon\in\{0,1\}$，置 $m_N=\lfloor Nr\rfloor,n_N=\lfloor N(1-r)\rfloor$，取实际历史
+
+$$
+h_{N,\epsilon}=(\alpha\alpha)^{m_N}(\beta\beta)^{n_N}
+\beta\alpha\mid\beta\beta\alpha\alpha\beta^\epsilon.
+\tag{15.12}
+$$
+
+相等对全是原付费拒绝，随后取得种子1及前三标记100，第三次记录先写入后锁存；$\epsilon=0,1$ 分别在两个活动相位查询。每条历史在每个支持深度下都有正概率，付费长度恰为 $2m_N+2n_N+6+\epsilon$。竖线只是书写分界，没有新操作。
+
+令 $F_r=\{k:r_k=r\}$、$c_k=\mu(k)r_k^3(1-r_k)^{3+\epsilon}$，则 $\sum_kc_k\le1$、$\sum_{k\in F_r}c_k>0$。从真实后验中除去参数 $r$ 的公共幂后，似然比为
+
+$$
+L_N(r_k)=\exp\{-2N\operatorname{KL}(\operatorname{Ber}(r)\Vert
+\operatorname{Ber}(r_k))+E_{N,k}\},\qquad
+|E_{N,k}|\le2\log(6/5)+2\log(10/9).
+\tag{15.13}
+$$
+
+统一误差界来自两个取整余量及 $r,r_k\in[1/3,2/5]$。在 $F_r$ 上比值为1，参数不同则 KL 严格正、比值逐点趋零；所有比值由同一有限常数控制。对可求和权重 $c_k$ 用支配收敛，得到 $\sum_{k\notin F_r}c_kL_N(r_k)\to0$，即整个后验在 $F_r$ 上趋于1。这个论证包括任意可数积聚支持，不丢掉非端点质量。真实完整尾律与 $P_{s,r}$ 的 TV 至多 $1-\nu_{h_{N,\epsilon}}(F_r)$，所以端点距离是有限实际历史误差的极限。取上确界给(15.6)的反向。
+
+最后，生成程序满足每个正预测下一操作的 $D_c(xw)=q_c(x)D_{\delta(c,x)}(w)$，包括该操作派生的原记录与控制块，因而每配置同更新生成精确成立。实际保持确定，边缘报告为 $D_{C_0(h)}$，下一实际字母仍转到 $\delta(C_0(h),x)$，同式另证明实际历史边缘化条件更新。两种种子、全标记树、写入先于锁存、记录保持、完成、pending、delivered 全沿原更新执行。law 与 conf 逐历史相等，终端误差为零。证毕。
+

@@ -1,0 +1,26 @@
+**Theorem 1.4 (the interface supplied).** Under Assumption 1.3, the single
+initial apparatus specified below has the following property. An authentic
+ARC acquired strict-Reserve Zero selector $(m,z,s)$ first obtains its
+CoverRef, PackageRef and HistoricalImage through their actual channel.
+After that Image is checked and ACKed, the apparatus performs five actual
+paid publications with single bodies of kinds
+
+$$
+S_0,\quad B,\quad M_J,\quad T,\quad S_1.
+$$
+
+Each later arrow consumes the immediately preceding receiver-acquired
+single body. Independent decoders use that body, its identity binding and
+public code only. The final current consumer checks $S_1=S_0$, recovers the
+bound old Image from $S_1$, applies the existing Image checker, and completes
+ACK, mailbox/invocation return, one completed-cycle append and Ready.
+Every body denotes the independently defined view of the same selected
+old prefix. All work is finite under the named premises.
+
+The same initialized code supports every finite increasing future Reserve
+list, optional lawful Raise/Rho, and the unchanged original INITIAL
+consumer/global halt. This is a finite native-program specification and
+conditional mathematical implementation theorem. No expansion, installation,
+native execution, numerical whole-run evaluation or Lean verification has
+been performed for $G_\circ$. Its proof is given in §§3–10.
+

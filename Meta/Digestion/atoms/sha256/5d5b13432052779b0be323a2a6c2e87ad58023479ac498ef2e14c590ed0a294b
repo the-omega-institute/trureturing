@@ -1,0 +1,10 @@
+**Definition 16.21 (case 1, event).** The signs are $(0,1,1)$, the double-factor index list is $(0,3)$, and the quotient degree is $0$.
+
+| Power coefficient index | Integer endpoint pair |
+| --- | --- |
+| $0$ | $(544006524806291958486364255332446079498514454051,544006524806291980512532020139045271958311742470)$ |
+
+| Leaf $(l,d)$ | Ordered Bernstein integer endpoint pairs |
+| --- | --- |
+| $(0,0)$ | $((544006524806291958486364255332446079498514454051,544006524806291980512532020139045271958311742470))$ |
+

@@ -1,0 +1,6 @@
+## 102. Earlier-support dihedral restrictions, with proven simultaneous independence
+
+The target is the original ternary sequence, not arbitrary rational points. This section extends the direct Hilbert proof of §101. The original recurrence and support inputs are the dossier's TBN3 and GPC5–GPC10: for every prime p dividing B_(3^h), h>=1, p>5, (5/p)=1 and p=1 modulo 3. We use the exact Pell identity, not an odd-valuation assertion about primitive divisors.
+
+Primary background: quadratic Hilbert reciprocity and its odd-local formula, as used in Stevenhagen, Redei reciprocity, governing fields, and negative Pell, arXiv:1806.06250v3, especially section 8, equations (48)–(50), the local arguments in Lemma 8.1, and the global product formula in the proof of Theorem 7.9; https://arxiv.org/pdf/1806.06250 . Chebotarev's natural-density theorem is Milne, Algebraic Number Theory, Theorem 8.31, https://www.jmilne.org/math/CourseNotes/ANT.pdf . The new field-degree calculations are proved below. We do not apply a Redei symbol to an unverified minimally ramified field.
+

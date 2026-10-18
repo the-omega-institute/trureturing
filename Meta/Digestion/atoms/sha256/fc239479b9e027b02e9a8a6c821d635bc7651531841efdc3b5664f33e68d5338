@@ -1,0 +1,12 @@
+**Theorem 7.2 (what exact prediction reconstructs).** After at least one read, the exact finite-start predictive class determines the current visible type. On the unresolved startup stratum with $a\ne b$, it also determines the recording length. On that stratum it does not determine the actual hidden component before an exit. At $a=b$ it does not determine startup length. After synchronization it determines the current hidden state but does not determine the old archive or elapsed recording length. A finite saturated approximation does not yield uniformly bounded absolute error in reconstruction of recording age.
+
+**Proof (7.2).** The separated normal forms of Theorem 2.1 identify whether the current class is a singleton or $B$, and which inferred pure state occurs. In a startup law, $x$ is recovered from its next-$0$ probability by $x=1-\Pr(0)/r$. For $a\ne b$,
+
+$$
+k=\frac{\log(x/(1-x))}{\log(a/b)},\qquad n=k+1.
+$$
+
+This inverts an exact law object or exact retained class, not a sampled future. Both hidden components have positive posterior mass for every finite startup run, so the past acquired word alone does not select its actual component. Their first eventual exit does select that component almost surely by the distinct exit alphabets. At equality $x=1/2$ for every startup length, excluding that age inverse.
+
+The histories $0$ and $00$ are positive, have different lengths, and share the pure current state $0$ and all continuation laws. The equal-length histories $00$ and $10$ have probabilities $c/5,q/5$ and different archives but the same future profile. Hence no archive or general recording-age inverse exists on the predictive quotient. Each saturated tail state in the constructed approximation is reached on startup words with unbounded lengths. Any one finite real-valued age estimate at that state has unbounded absolute error on those words. This does not contradict its uniform predictive error bound. $\square$
+

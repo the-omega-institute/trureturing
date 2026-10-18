@@ -1,0 +1,69 @@
+**Theorem 5.3 (The credited one-budget law and old attained wedge).**
+For $x,y\ge0$, $W=x+y\le24\tau$, set
+
+$$
+\mathcal B(x,y)=(1-24\tau)R+(24\tau-W)P^0+yP^\star+xQ.
+$$
+
+Its exact original error is
+
+$$
+\max\left\{
+5\tau+\frac{22W}{3072},\
+5\tau+u-\frac{159x+106y}{3072},\
+5\tau+v-\frac{53x+106y}{3072}\right\}.
+$$
+
+On $181v\ge75u$, the complete law with
+
+$$
+x=\frac{1536}{53}(u-v),\qquad
+y=\frac{12}{53}(181v-75u),\qquad W=12(u+v)
+$$
+
+attains the old common original minimum $5\tau+d_{\rm sum}$ in
+both classes. On $181v\le75u$, the old choice $x=3072u/181$,
+$y=0$ remains a lawful upper with exact error $5\tau+22u/181$.
+
+Proof. All branch weights are nonnegative and sum to one.
+Put $t=W/3072$ and $h=5\tau+22t$.
+On every core word, the independent outside mass is at most
+$5(\tau-128t)+662t=h$ by 5.2. Correct deficits in classes two
+through seven equal $h$; the class-one deficit is $2\tau+327t\le h$
+because $305t\le305\tau/128<3\tau$.
+These correct masses are at most actual targets, so base deficits
+are at most the separately bounded outside masses.
+
+On the entire class-eight and class-nine fibres,
+
+$$
+\begin{aligned}
+c_8&=(159x+106y)/3072,&D_8&=5\tau-(71x+18y)/3072,\\
+c_9&=(53x+106y)/3072,&D_9&=5\tau-(14x+67y)/3072.
+\end{aligned}
+$$
+
+Both outside masses are at most $5\tau$, and
+$c_n\le159W/3072\le159\tau/128<5\tau\le a_n$ in these classes.
+Their base deficits are bounded by their outside deficits, while
+their correct deficits give the last two error entries. Positive
+nonbase mass equals $h$. For actual $n>9$, the exact tail identity
+gives error $h$ since $a_n\le5\tau$. Actual class-two, class-eight
+and class-nine witnesses give equality with the maximum. Each row
+uses this same whole law.
+
+On the wedge the displayed $x,y$ are nonnegative and $W\le24\tau$.
+The identities $181x+128y=3072u$ and $75x+128y=3072v$ make
+all three error entries $5\tau+11(u+v)/128$. The credited $128$
+lower of 3.4 matches against every original competitor. This is
+exactly the DEV XVIII 324–327 wedge under
+$t'=(u+v)/2$, $\delta=(u-v)/2$: its donor condition
+$\delta\le53t'/128$ is $75u\le181v$, and
+$\delta\le\tau-t'$ is $u\le\tau$.
+
+For $x=3072u/181$, $y=0$, nonnegativity follows from $3072/181<24$.
+The three errors are $5\tau+22u/181$, the same value, and
+$5\tau+v-53u/181$. The last is at most the first exactly when
+$181v\le75u$. This evaluates the old construction without asserting
+a full-class complementary lower plane. $\square$
+

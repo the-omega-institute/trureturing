@@ -1,0 +1,9 @@
+# k-bonacci 自校准获取资源续卷 VIII：共同评分预算、早期正确信用与精确迁移
+
+This volume continues the numbering of
+[Continuation VII](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_VII.md).
+It uses ordinary mathematical definitions and proofs. Existing statements
+remain in their owning volumes. Throughout, $x_+=\max\{x,0\}$; empty sums
+and maxima of empty families of nonnegative weights are zero. Closed
+inequalities include equality and zero coefficients.
+

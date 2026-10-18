@@ -1,0 +1,3 @@
+**Definition 13.1 (interval units).** Unless a column is explicitly rational, a pair of integers $(l,h)$ in §§13–16 denotes the closed interval $[l/2^{300},h/2^{300}]$. Rows labelled $q_i$ and inclusion are exact rational upper bounds. For each root, inclusion means $q_i+\sup|(RF(c))_i|/10^{-12}$. All first-moment and contact equations use the order of Definition 3.2.
+
+

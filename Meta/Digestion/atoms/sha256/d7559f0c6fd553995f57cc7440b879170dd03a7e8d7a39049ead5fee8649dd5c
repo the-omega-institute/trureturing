@@ -1,0 +1,28 @@
+**Lemma 3.2 (consumed phase and orbit identities).** For every finite
+$u$ and $k\ge0$,
+
+$$
+m(\rho^k u)=m(u)+k,\qquad
+\mu(\rho^k u)=\left\lfloor\frac{m(u)+k}{2}\right\rfloor.
+\tag{AAR.9}
+$$
+
+For a leaf $(a,e)$ of $u$, the shortest leaf inside its future
+descendant cylinder has absolute length
+
+$$
+|a|+\left\lfloor\frac{k+e}{2}\right\rfloor
+=\left\lfloor\frac{2|a|+e+k}{2}\right\rfloor.
+\tag{AAR.10}
+$$
+
+Proof. Structural induction in the displayed recurrence gives a
+one-step increment: alpha changes from zero to one; beta from one
+to $2+\min(1,0)=2$; pairing commutes with the same increment of
+both children. Iteration gives the first formula. Taking the floor
+of each leaf score divided by two gives its depth, and finite minima
+commute with that monotone floor. Transport gives the subtree $T_{k+e}$
+at $a$; apply the supplied [NLC] formula
+$\mu(T_n)=\lfloor n/2\rfloor$. These elementary identities serve the
+selection and retention theorems below. $\square$
+

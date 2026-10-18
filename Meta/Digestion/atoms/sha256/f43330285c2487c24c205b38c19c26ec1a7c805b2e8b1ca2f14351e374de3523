@@ -1,0 +1,25 @@
+**Definition 1.2 (one unknown specimen and the complete error).** Order the five modes as $(0,1,2,3,13)$ and put
+
+$$
+E=\left((e_0+e_{13})/\sqrt2,(e_1+e_3)/\sqrt2,e_2\right),\quad P=EE^\dagger,\quad p_y=(y/128,(64-y)/128,1/2),
+$$
+
+$$
+a_y=(\sqrt{p_{y0}},\sqrt{p_{y1}},\sqrt{p_{y2}})^T,\quad U_{e,n}=\operatorname{diag}(e,n,1),\quad\rho_{y,e,n}=U_{e,n}a_ya_y^TU_{e,n}^\dagger,
+\quad y\in\{5,16,27\},\ e,n\in\{-1,1\}.
+$$
+
+The input is the sole normalized specimen $E\rho_{y,e,n}E^\dagger$; there is no history oracle, source prior, copy, helper, retry, reset or postselection. The ideal live block is $EU_{e,n}\xi_y\xi_y^TU_{e,n}^\dagger E^\dagger$, with positive entries determined by
+
+$$
+\xi_y^2=\left(y/128,\ y(58-y)/(128(y+6)),\ y/[2(y+6)]\right).
+$$
+
+The five ideal separately labelled Borel failure measures, in the same mode order, have weights $w=(0,1/4,1/2,1/4,0)$, fixed normalized stopped output $P_f$, and density
+
+$$
+f_y(a)=\frac{6y}{(y+6a)^2},\qquad 0\le a\le1.
+$$
+
+Their absolute FIRST coordinate is $6+a$. The error is HALF the norm of the **complete** stopped classical–quantum output difference: trace norm on the live block plus the trace-norm total variation of each separate operator-valued failure measure and every other output sector. Singular-time mass, wrong support, aborts, zero-target components and live off-diagonal entries participate. This is not a survival-normalized error or a diamond-norm claim. All passive-reference conditional maps are retained. The two zero failure components are separate zero measures.
+

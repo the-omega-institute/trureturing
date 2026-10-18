@@ -1,0 +1,95 @@
+**Theorem 40.1 (vanishing coefficient mass with persistent physical bounds).**
+For any sequence of feasible original laws at one fixed source, put
+
+$$
+c_n=\pi_n\{\Psi>0,\xi>0\},\qquad d\sigma_n=b_x\,d\pi_n.
+\tag{FC.181}
+$$
+
+If $c_n\to0$, then $t_n\to\infty$, while at each finite index
+
+$$
+\sigma_n(\mathcal R_+)\ge I_\Psi,\qquad
+\operatorname{tr}F_{{\rm rev},n}\ge C_{\rm tr},\qquad
+P^{\rm rev}_{y,\epsilon,+1,n}\ge C_y^+.
+\tag{FC.182}
+$$
+
+For every fixed $B>0$,
+
+$$
+\int_{\mathcal R_+\cap\{b_x\le B\}}b_x\,d\pi_n\le Bc_n\longrightarrow0.
+\tag{FC.183}
+$$
+
+For each height-optimal law at any finite feasible request,
+Corollary 27.2 makes its failure-bearing reverse set saturated; its
+reverse saturated coefficient mass $c$ satisfies the strict bounds
+
+$$
+\frac{4I_\Psi}{t}<c:=\pi\{\Psi>0,\xi=1\}<\frac{25\mu}{t},\qquad
+4I_\Psi=2.1072845153995428021\ldots.
+\tag{FC.184}
+$$
+
+These are regional necessity estimates, not existence or uniqueness of
+a particular optimizer or joint limit. The physical bounds in (FC.182)
+persist although the corresponding coefficient mass can vanish.
+
+Proof. Theorems 36.2 and 37.1 give (FC.182). Pointwise capacity yields
+$\sigma_n(\mathcal R_+)\le t_nc_n/4$, so
+$t_nc_n\ge4I_\Psi>0$; hence $c_n\to0$ forces $t_n\to\infty$.
+Equation (FC.183) bounds an integral directly, with no acceptance or
+survival division. For an optimum, use $\xi=1$ on the failure-bearing
+reverse set and $t/25<b_x<t/4$. Its coefficient mass is positive by
+(FC.182); therefore
+
+$$
+\frac{tc}{25}<\sigma(\mathcal R_+)<\frac{tc}{4},\qquad
+I_\Psi\le\sigma(\mathcal R_+)\le\mu.
+\tag{FC.185}
+$$
+
+Both inequalities in (FC.184) follow. For any Borel circle set $D$,
+the physical dictionary also gives
+
+$$
+\min(a_f^2,b_f^2)\sigma_n(D)
+\le\operatorname{tr}F_{D,n}
+\le\max(a_f^2,b_f^2)\sigma_n(D).
+\tag{FC.186}
+$$
+
+Thus coefficient convergence alone discards a forced physical intensity;
+(FC.183) locates it at unbounded $b_x$ when $c_n\to0$.
+
+The fixed-intensity laws of §38 illustrate this directly. Their
+saturated coefficient weights are exactly $s_i/(t\mathfrak c_i)\to0$,
+while their physical failure effects are exactly $s_in_in_i^T$ at
+every finite $t$. Their residual pure laws tend to the same four
+angular points $(\pm\sqrt\alpha,\pm\sqrt\beta)$, each with weight
+$1/4$, independently of the chosen admissible three-line intensity law.
+Different reverse effects therefore share this coefficient-law limit.
+The generic rare-weight recovery and exact finite repair are reused
+from [FA Theorem 81.2](FIB_NATIVE_COMPLETE_CONTINUATION_FINITE_ACTIVITY_FRONTIER.md)
+and [JS Theorem 5.1, (JS.23)–(JS.28)](https://github.com/the-omega-institute/trureturing/blob/ce3eb5de2f708f7b584dd86df8868682fc0fdbe6/docs/develop/theory/FIB_NATIVE_JOINT_ENDPOINT_SATURATION_BOUNDARY.md).
+Under that map, JS's ellipse coordinates are
+$(z,w)=(u/\sqrt\alpha,v/\sqrt\beta)$, its failure measure has atom
+mass $s_i$, its rare coefficient mass is $s_i/(t\mathfrak c_i)$,
+and its physical effect is $s_in_in_i^T$. The new requirement here
+is that a fixed open reverse region must carry (FC.182) and (FC.184).
+
+Since $\sigma_n$ has fixed mass $\mu$ on a compact circle, it has
+subsequential weak limits. Continuous second moments and $S_\Psi$
+are retained by every such limit, so the same integration witnesses
+apply to each limiting intensity measure. Identifying a limit of the
+restricted effects with the restriction of that weak limit to $\Psi>0$
+requires boundary mass control on $\Psi=0$. For example, zero boundary
+mass is sufficient for these bounded restricted continuous integrands;
+it is not supplied in general. Every finite effect, and every matrix
+cluster limit of those effects, still satisfies the trace bound and
+all six plus-history bounds, by continuity of matrix testing. No
+unique limiting intensity, unique optimizer or infinite-budget
+instrument is implied, and positive finite-budget survivors are never
+replaced by a zero-survivor construction. $\square$
+

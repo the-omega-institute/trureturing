@@ -1,0 +1,21 @@
+**推论 5.2（失败实际子纤维至少含三目标）。** For any known compatible
+$K$ at $H_J(Y)$,
+
+$$
+L_3(K,H_J(Y))\ \Longrightarrow\
+\exists z:\ L_2(K_z,H_{JM}(Y,z))\ \land\ |K_z|\ge3.          \tag{5.1}
+$$
+
+In particular, an $L_3$ set of exactly three targets at this $JMMJ$
+parent must have constant fifth-$M$ response. An $L_4$ family at
+$H_J^-$ must retain such an at-least-three-target $L_2$ child after
+some actual fourth-$J$ and fifth-$M$ readings.
+
+Proof. The recursion (1.2) supplies the actual losing child for fifth
+$M$. It has at least two targets, and Theorem 4.1 excludes exactly
+two. If the parent contains exactly three, that child is the whole
+parent. At the preceding history first unfold (1.2) at fourth $J$,
+retaining its actual $Y$, and apply the same assertion to that
+child's actual fifth-$M$ fiber. These are necessary conditions only;
+they do not supply a realization of a larger losing child. ∎
+

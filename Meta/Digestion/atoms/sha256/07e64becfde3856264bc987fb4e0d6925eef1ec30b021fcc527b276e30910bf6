@@ -1,0 +1,76 @@
+#### Five closed radial faces
+
+For any nonzero \((e,x,y)\) in (57.10), put
+\(r=\max(e,|x|,|y|)\) and \((E_0,X_0,Y_0)=(e,x,y)/r\).
+At least one of the five equalities
+\[
+E_0=1,\qquad X_0=1,\qquad X_0=-1,\qquad Y_0=1,\qquad Y_0=-1
+\tag{57.18}
+\]
+holds. On a face fix the indicated coordinate and let \((u,w)\) be the
+two remaining coordinates in their original order \((E_0,X_0,Y_0)\).
+A free \(E_0\) ranges over \([0,1]\), and either other free coordinate
+over \([-1,1]\). In coordinate order \((r,u,w,v)\), define
+\[
+T_{c,\mathrm{face}}=
+\sum_{d=2}^8r^{d-2}\mathcal P_c^{[d]}(E_0,X_0,Y_0,v)
+-\frac18(E_0^2+X_0^2+Y_0^2).                               \tag{57.19}
+\]
+This is a rational polynomial, including at \(r=0\). Its root box is
+\(r\in[0,1/16]\), the two indicated free intervals, and \(v\in[-1,1]\).
+For a polynomial on a box \(\prod_a[L_a,U_a]\), use the coordinatewise
+maximum exponent \(N_a\) as its Bernstein degree, with zero coefficients
+inserted as necessary. The power-to-Bernstein conversion on each axis is
+\[
+M^{(a)}_{ij}=\sum_{k=0}^{\min(i,j)}
+ \frac{\binom jk\binom ik}{\binom{N_a}k}
+ L_a^{j-k}(U_a-L_a)^k.                                    \tag{57.20}
+\]
+Apply these matrices in all four axes. To bisect axis \(a\), with
+coefficients \(c_0,\ldots,c_N\) in that axis and all other indices fixed,
+set \(c_i^{(0)}=c_i\) and
+\(c_i^{(k+1)}=(c_i^{(k)}+c_{i+1}^{(k)})/2\). The left coefficients are
+\(c_0^{(k)}\) and the right coefficients are \(c_k^{(N-k)}\), for
+\(k=0,\ldots,N\). These are rational operations.
+
+The complete trees below use the grammar
+\[
+\mathscr T ::= P\ \mid\ a\mathscr T\mathscr T,
+\qquad a\in\{0,1,2,3\}.                                  \tag{57.21}
+\]
+A digit bisects the corresponding axis \((r,u,w,v)\), followed by its
+left and right children. A terminal \(P\) asserts that every Bernstein
+coefficient on that closed leaf is strictly greater than \(1/4\).
+Parsing consumes the entire word. Thus every listed tree covers its
+entire root box, including all face overlaps and endpoints.
+
+| Chart | Face | Leaves | Complete tree |
+| --- | --- | ---: | --- |
+| F | \(E_0=1\) | 20 | `3121P2PPP212PPPP2132PP1P2PP32PP12PPP1PP` |
+| F | \(X_0=1\) | 3 | `23PPP` |
+| F | \(X_0=-1\) | 2 | `3PP` |
+| F | \(Y_0=1\) | 1 | `P` |
+| F | \(Y_0=-1\) | 1 | `P` |
+| Q | \(E_0=1\) | 9 | `312PP2PP21P1PP1PP` |
+| Q | \(X_0=1\) | 1 | `P` |
+| Q | \(X_0=-1\) | 1 | `P` |
+| Q | \(Y_0=1\) | 2 | `3PP` |
+| Q | \(Y_0=-1\) | 2 | `3PP` |
+
+All 42 terminal assertions follow by exact rational conversion
+(57.20) and subdivision (57.21) from (57.11), (57.19), and (56.4).
+The minimum coefficient over the finite-chart leaves exceeds
+\(29/100\); over the reciprocal-chart leaves it exceeds \(28/100\).
+In particular, both exceed \(1/4\).
+
+By nonnegativity and unit sum of the Bernstein basis, (57.19) is greater
+than \(1/4\) throughout every face box. For the positive radius chosen
+in (57.18), (57.16)–(57.17) now give
+\[
+\mathcal S_c/r^2\ge T_{c,\mathrm{face}}
+ +(1/8-E)(E_0^2+X_0^2+Y_0^2)>1/4.
+\]
+This contradicts (57.12), proving (57.10). No denominator or linear-row
+coefficient was cancelled, and the actual pole at the transverse
+origin remains explicitly separate.
+

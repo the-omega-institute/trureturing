@@ -1,0 +1,24 @@
+**Definition 2.2 (native and numerical menus).** The native menu of
+`NativeSerialMachine.Op` has source-free local steps, actual literal Read,
+unconditional actual `ApplyRho`, and Stop with the complete output. Its one
+register, epoch and chronological action trace have the `nativeStep` semantics.
+Its transition function receives control only. It has no graft operation.
+
+The numerical menu is the distinct TM30/TM57 contract at public finite $H$:
+$\mathcal T_H=\{t:1\le\lambda(t)\le H\}$. Numerical Read returns current
+Clifford $E(t)$ and preserves the source. A requested $\rho$, `Left(v)` or
+`Right(v)` forms the entire actual candidate $\rho t$, $\langle v,t\rangle$ or
+$\langle t,v\rangle$, respectively, with a complete named actual nonempty
+context $v$. It accepts and installs the candidate iff its leaf count is at
+most $H$; otherwise it executes reject and retains the old source. Reject
+reveals no candidate $E$. There is no reroot, reset, inverse, private-packet
+read, source-duplication or source-size port.
+
+TM57 additionally supplies actual paid installation, finite control and tapes,
+material/code generation, archive access/append/freeze, owned complete copies,
+record-only verification and consumer use. PR57.T3 makes every visible primitive
+cut a prefix-causal function of public initialization and already committed
+original responses. This includes instruction/address labels, ownership,
+availability, references, ticks, fees and partial delivery. It is not a theorem
+that numerical Read implements the native literal port.
+

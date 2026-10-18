@@ -1,0 +1,30 @@
+**定理 46.2（严格低于基线时必须保留不终止质量）。** 设规则满足（44.5），且存在非零序列 $\delta_n\to0$，$t+\delta_n\in(0,1)$，使同一个规则对每个 $n$ 满足
+
+$$
+P_{\delta_n}(\tau<\infty,D\ne X_0)\le\epsilon.
+$$
+
+则
+
+$$
+P_0(\tau=\infty,F)\ge f_t-\epsilon/m_t.
+\tag{46.3}
+$$
+
+特别地，$0<\epsilon<b_t$ 时右端为 $\beta_t>0$，且 $\mathbb E_0\tau=\infty$。这里不需要先假设非对角线终止。
+
+**证明。** 固定 $r$，事件 $\{\tau\le r,D\ne X_0\}$ 是有限字母表 $(X_0,Y_r)$ 上的同一个子集。其概率是有限个原柱概率的和；矩阵及平稳行在开方形中连续，故固定事件概率连续。先在这个确定时域令非对角线参数趋于 $(t,t)$，得到
+$P_0(\tau\le r,D\ne X_0)\le\epsilon$；然后令 $r\uparrow\infty$，事件递增给出有限终止错误仍至多为 $\epsilon$。
+
+令 $A_a=\{\tau<\infty,D=a\}$。这是停止标签事件的可数并，因而为完整外部可测，且 $A_0,A_1$ 不交。由（46.1），
+
+$$
+\begin{aligned}
+P_0(\tau<\infty,D\ne X_0,F)
+&=s_tP_0(A_0\cap F)+(1-s_t)P_0(A_1\cap F)\\
+&\ge m_tP_0(\tau<\infty,F).
+\end{aligned}
+$$
+
+从 $P_0(F)=f_t$ 减去至多 $\epsilon/m_t$ 的终止质量，得到（46.3）。正概率无穷半径使扩展期望无穷。参数极限只用于固定时域；证明未交换参数极限与无界停止操作。$\epsilon=b_t$ 时本式只给出零下界，不判定等号情形。$\square$
+

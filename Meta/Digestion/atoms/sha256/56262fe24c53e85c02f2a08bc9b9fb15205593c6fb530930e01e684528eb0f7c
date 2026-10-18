@@ -1,0 +1,29 @@
+### 18.4 TriangleInflationCertificate
+
+输入：
+\[
+p\in\Delta(\mathcal A\times\mathcal B\times\mathcal C),
+\]
+有限 inflation 图 \(N\) 和精确约束矩阵。首先证明 soundness：
+\[
+p\text{ triangle-local}
+\Longrightarrow
+\exists q\ge0,\ A_Nq=b_N(p).
+\]
+归一化、复制源对称性、可注入边缘和独立副本乘积边缘均编码在 \(A_N,b_N\) 中。
+
+非相容性证书的字段为：
+\[
+(p,N,A_N,b_N,y).
+\]
+必需证明：
+\[
+A_N^{\mathsf T}y\ge0,\qquad
+y^{\mathsf T}b_N(p)<0.
+\]
+矩阵、目标特征和证书向量使用精确有理数，或使用已经证明的区间误差界。然后 Farkas 矛盾直接给出：
+\[
+p\text{ is not triangle-local}.
+\]
+该证书不包含一个可行 \(q\)，因为其结论恰是可行 \(q\) 不存在。若另行找到可行 \(q\)，只能输出该级 inflation 必要条件；真正 compatibility 需要全层级完备性定理或显式独立源局部模型。
+

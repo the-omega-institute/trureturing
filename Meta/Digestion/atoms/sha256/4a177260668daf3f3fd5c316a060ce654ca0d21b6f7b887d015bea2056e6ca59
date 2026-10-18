@@ -1,0 +1,37 @@
+### 定理 63.4（条件性的场到 RH 固定子桥）
+
+设 \(\mathcal Z\) 是非平凡零点多重集，存在映射
+
+\[
+\Phi:\mathcal Z\to\Delta^\circ_5
+\]
+
+满足：
+
+\[
+\Phi(1-\overline\rho)=\tau\Phi(\rho),
+\tag{63.8}
+\]
+
+以及
+
+\[
+\eta(\Phi(\rho))
+=
+\log\left|1-\frac1\rho\right|.
+\tag{63.9}
+\]
+
+则
+
+\[
+\mathrm{RH}
+\quad\Longleftrightarrow\quad
+\Phi(\mathcal Z)\subseteq\operatorname{Fix}(\tau).
+\tag{63.10}
+\]
+
+证明：由 (63.7)，RH 等价于所有右端项为零；由 (63.2)，\(\eta=0\) 等价于 \(p_2=p_5\)，即属于 \(\operatorname{Fix}(\tau)\)。证毕。
+
+该条件定理仍缺少从已有的 FIB、prime local field 或 Weil 二次型自然构造 $\Phi$ 的桥接；任意指定映射并不提供这种来源关系。
+

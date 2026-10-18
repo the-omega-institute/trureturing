@@ -1,0 +1,22 @@
+## 361. Eta's two V slots each exceed π/4
+
+Put t=sqrt(L_eta/J_eta). Equation (357.2) implies t²≥p/q>(m−1)/(m+1). Since v>c, both individual transverse-response coefficients A_± are positive. The eta V angle is therefore greater than its reference value at t0=sqrt((m−1)/(m+1)). This reference angle lies in (0,π/2) and has tangent
+
+    T0=sqrt((v²−1)(m²−1))/(v+mc).
+
+Monotonicity, v>4m/5 and c<4m/9 give
+
+    T0>sqrt((16m²/25−1)(m²−1))/(4m/5+4m²/9)>1.
+
+For the last inequality, multiply the difference of squared numerator and denominator by 2025. The result is
+
+    896m⁴−1440m³−4617m²+2025.
+
+At m=4+b this equals
+
+    896b⁴+12896b³+64119b²+123320b+65369>0.
+
+Consequently
+
+    beta_V(eta)>π/4.                              (361.1)
+

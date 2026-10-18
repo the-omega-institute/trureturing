@@ -1,0 +1,98 @@
+**定理 3.1（Exact support one and two, with a finite converse）。** For every
+legal $(s,t)$, let $a=|s|$, $b=|t|$. Then
+
+$$
+k(C(s,t))=1\quad\Longleftrightarrow\quad a=b=0,
+\tag{3.1}
+$$
+
+and
+
+$$
+k(C(s,t))\le2
+\quad\Longleftrightarrow\quad
+6a^2\le(1-a)(1-2b).
+\tag{3.2}
+$$
+
+Every nonzero point satisfying (3.2) has exact value two; every point
+violating it has value at least three.
+
+Proof. A one-support Gram sum is diagonal, whereas (1.2) has a nonzero
+off-diagonal entry whenever $a$ or $b$ is nonzero. At the origin the five
+coordinate vectors realize $M=I_5$. This proves (3.1).
+
+Suppose $M(a,b)=\sum_\ell z_\ell z_\ell^\dagger$ with all supports at most
+two. For any nonnegative real weights $w_i$, triangle inequality gives
+
+$$
+2\sum_{i<j}w_iw_j|M_{ij}|
+\le \sum_\ell 2\sum_{i<j}w_iw_j|(z_\ell)_i||(z_\ell)_j|
+\le \sum_\ell\sum_i w_i^2|(z_\ell)_i|^2
+=\sum_iw_i^2.
+\tag{3.3}
+$$
+
+In the second step each term has at most one nonzero unordered pair and
+uses $2xy\le x^2+y^2$; a singleton term satisfies the same inequality. Thus
+this bound covers every complex phase and every finite length. Give both
+outers weight $x\ge0$ and all middles weight $y\ge0$. The one outer edge,
+six outer-middle edges and three middle edges yield
+
+$$
+2(1-a)x^2+3(1-2b)y^2-12axy\ge0\qquad(x,y\ge0).
+\tag{3.4}
+$$
+
+Taking $x=0$ excludes $b>1/2$. At $b=1/2$, any $a>0$ is excluded by a fixed
+positive $x$ and arbitrarily large $y$. If $b<1/2$ and $a>0$, use
+$x=1,y=2a/(1-2b)$; (3.4) becomes
+$2(1-a)-12a^2/(1-2b)\ge0$. At $a=0$, the necessary condition is just
+$b\le1/2$. Since $1-a>0$ on the entire rectangle, these cases give exactly
+(3.2), including the equality cases.
+
+For sufficiency with $a>0$, (3.2) forces $b<1/2$. Set
+
+$$
+\rho=\frac{2a}{1-2b}>0,\qquad
+w_1=w_5=1,\quad w_2=w_3=w_4=\rho,\qquad X=F(a,b).
+$$
+
+For each nonzero upper entry $X_{ij}$ take
+
+$$
+v_{ij}=\sqrt{|X_{ij}|\,w_j/w_i}\,e_i
+-i\operatorname{sgn}(X_{ij})\sqrt{|X_{ij}|\,w_i/w_j}\,e_j.
+\tag{3.5}
+$$
+
+The $(i,j)$ entry of its outer product is exactly $iX_{ij}$; no other pair
+is affected. At a middle coordinate its incident edges contribute
+$2a/\rho+2b=1$ to the diagonal. At either outer they contribute
+$a+3a\rho$. Add
+
+$$
+\sqrt{1-a-3a\rho}\,e_1,\qquad
+\sqrt{1-a-3a\rho}\,e_5.
+\tag{3.6}
+$$
+
+Their radicand equals $1-a-6a^2/(1-2b)\ge0$ by (3.2). Hence all diagonals
+and all off-diagonals of the finite sum equal those of $M(a,b)$.
+
+For $a=0$ and $0\le b\le1/2$, use $e_1,e_5$, the three vectors
+$\sqrt b(m_j-i m_{j+1})$, and the three vectors
+$\sqrt{1-2b}\,m_j$. Each middle diagonal is $2b+1-2b=1$, and each oriented
+cyclic edge is $ib$, exactly as in (2.2). This includes $b=0$ and $b=1/2$.
+All displayed supports are at most two. Divide by $\sqrt5$, remove zero
+slots, and use Lemma 2.2 to restore the actual signs. A useful consequence
+of (3.2) is
+
+$$
+6a^2\le1-a,\qquad (3a-1)(2a+1)\le0,\qquad a\le1/3.
+\tag{3.7}
+$$
+
+This will exclude support two everywhere on the vertical outer edge.
+$\square$
+

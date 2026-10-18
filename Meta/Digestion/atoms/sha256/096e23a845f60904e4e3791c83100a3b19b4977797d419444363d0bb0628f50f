@@ -1,0 +1,16 @@
+## Scope
+
+Consider a finite valid orientable ideal triangulation in which every
+abstract tetrahedron is a pure three-star packet: after naming its vertices
+`c,p1,p2,p3`, the three low local edges are `c-p1,c-p2,c-p3`, and the three
+high local edges are the peripheral triangle `p1-p2,p1-p3,p2-p3`. Assume
+all low quotient edges have degree exactly eight. Face pairings preserve the
+low/high quotient-edge classes, as they must in a role-homogeneous colored packet.
+This role-homogeneity is automatic when low means degree 8 and high means
+degree at least 10, but is an additional hypothesis if a high local edge is
+also allowed to have degree 8.
+
+The existing CFMP three-edge paper already records the independent parity
+fact that every high quotient edge has even degree. The theorem here is a
+different, vertex-link obstruction on the number of tetrahedra.
+

@@ -1,0 +1,133 @@
+**Theorem 226.1 (The specified pure-correct convex minimum).** For every
+$L\ge4$, pad by ones the four zero words
+
+$$
+y:\quad C_{0111}=C_{1000}=C_{1101}=C_{1110}=1,\qquad A=P=T=0.
+$$
+
+Then $W_y=2$, $Q(y)=(1,1,1,1,0,\ldots;4)$,
+$\Delta_N(y)=2$, $\Delta_O(y)=1$, and
+
+$$
+\min_{V\in\mathcal K_L(y)}J_{Q(y)}(V)=\frac{16}{15},\qquad
+\min_{V\ge0}J_{Q(y)}(V)=\frac25.
+$$
+
+**Proof of the convex minimum.** The full table
+$N(3,4;2,3,4,1)$ collects all four correct rewards.
+A stopped table has at most three output labels and each rewarded label
+has total one, so $B_O\le3$; $O(1,2;1,2,3)$ attains three.
+Thus the two original excesses are as stated.
+
+Masks above four act trivially. Aggregate the normalized weights on
+$\varnothing,\{3\},\{4\},\{3,4\}$ as $a,b,c,d\ge0$ with
+$a+b+c+d=1$. Their combined score is exactly
+
+$$
+\begin{gathered}
+C_{0111}=1,\quad C_{1000}=a,\quad C_{1010}=b,\quad
+C_{1001}=c,\quad C_{1011}=d,\\
+C_{1101}=a+c,\qquad C_{1110}=a+b.
+\end{gathered}
+$$
+
+It has $W=2$, $Q=(1,1,a+c,a+b,0,\ldots;2+2a+b+c)$.
+For $x=b+d$, $z=c+d$, the residual is
+$(0,0,x,z,0,\ldots;x+z)$. Its readings are zero at $o,p$,
+$x/2$ at $u_3$, $3x/4$ at $v_3$, and
+
+$$
+\frac{x+z}{k-1},\qquad\frac{3(x+z)}{k+1}\quad(k\ge4).
+$$
+
+Since $x,z\ge0$, the exact residual support is
+$\max\{3x/4,3(x+z)/5\}$.
+The following three full tables belong to this example:
+
+$$
+E_1=N(1,2;0,1,2,4),\quad E_2=N(1,2;0,1,2,3),\quad
+E_3=N(3,4;2,3,4,1).
+$$
+
+Their excesses on the same combined score are respectively
+$a+b,a+c,2a-d$. Use weights $7/15,7/15,1/15$ on these support
+bounds, and use just the $v_4$ residual reading. Then
+
+$$
+\begin{aligned}
+J_{Q(y)}(V)&\ge\frac7{15}(a+b)+\frac7{15}(a+c)
+ +\frac1{15}(2a-d)+\frac35(b+c+2d)\\
+ &=\frac{16}{15}+\frac d{15}\ge\frac{16}{15}.
+\end{aligned}
+$$
+
+At $a=b=c=1/3,d=0$, all-label full $N$ supports, in order
+$\varnothing;1,2,3,4;12,13,14,23,24,34$, are
+
+$$
+(1;2,2,5/3,5/3;8/3,7/3,7/3,8/3,8/3,8/3).
+$$
+
+They follow from the seven literal combined rows above, so the full
+excess is $2/3$. The residual support is $2/5$, giving equality.
+Constant-one padding folds extra queries to short low schedules, as in
+223.1, and the displayed decreasing residual formulas evaluate every
+added hull vertex. Hence this is the complete minimum for every $L$.
+
+**Proof of the unrestricted minimum.** The readings of $Q(y)$ at
+$o,p,u_3,v_3,u_4,v_4$ are
+
+$$
+-2,\quad-1,\quad-1/2,\quad1/4,\quad-2/3,\quad2/5.
+$$
+
+For $k\ge4$ they are $4/(k-1)-2$ and $12/(k+1)-2$.
+Therefore $V=0$, $\theta=2/5$ attains an unrestricted objective $2/5$.
+For a matching lower bound use the same point
+
+$$
+v_4=(1,1,1,1,2/5,\ldots,2/5;2/5)
+$$
+
+and the following actual mass-one allocation. Each row has weight $1/10$;
+the full $N$ column is its completion on the same two queries.
+
+| Triple | Stopped table | Full table outputs on $00,01,10,11$ |
+| --- | --- | --- |
+| $123$ | $O(1,2;1,2,3)$ | $(1,1,2,3)$ |
+| $124$ | $O(1,2;1,2,4)$ | $(1,1,2,4)$ |
+| $12\infty$ | $O(1,2;1,2,0)$ | $(1,1,2,0)$ |
+| $134$ | $O(1,3;1,3,4)$ | $(1,1,3,4)$ |
+| $13\infty$ | $O(1,3;1,3,0)$ | $(1,1,3,0)$ |
+| $14\infty$ | $O(1,4;1,4,0)$ | $(1,1,4,0)$ |
+| $234$ | $O(2,3;2,3,4)$ | $(2,2,3,4)$ |
+| $23\infty$ | $O(2,3;2,3,0)$ | $(2,2,3,0)$ |
+| $24\infty$ | $O(2,4;2,4,0)$ | $(2,2,4,0)$ |
+| $34\infty$ | $O(3,4;3,4,0)$ | $(3,3,4,0)$ |
+
+For every first-zero $n\le4$, correct probability is $3/5$, pair
+probability is at least $3/5$, and base probability is nonnegative,
+meeting demand $-2/5$. For every first zero $n>4$, all queried bits
+are positive: base and pair probabilities are $3/5$, correct probability
+is zero. The corresponding demands are $1/5,0,3/5$. The positive base
+probability is $3/5$. This checks all 46 rows at $L=4$ and all
+$3(2^L-1)+1$ rows at every padded length, independently of which
+additional zeros occur. Thus this very allocation $\lambda$ satisfies
+$G_N\lambda\ge h(v_4)$, with mass one and $v_4\in H_N$.
+
+For every unrestricted full $V\ge0$ it gives
+$F_{Q(V)}(v_4)\le\Delta_N(V)$. The one residual gives
+
+$$
+J_{Q(y)}(V)\ge\Delta_N(V)+F_{Q(y)-Q(V)}(v_4)
+ \ge F_{Q(y)}(v_4)=2/5.
+$$
+
+Together with the zero score, this proves the unrestricted minimum.
+The three detecting tables $E_1,E_2,E_3$ are not this full feasible
+allocation: their $7/15,7/15,1/15$ mixture has correct-label-one mass
+zero at $0000$ and base mass zero at $1111$, both below $3/5$.
+A detector and a full feasible $\lambda$ cannot be interchanged.
+The genuine feasible point has $F_{Q(y)}(v_4)=2/5\le1$, so it supplies
+no strict original separation. $\square$
+

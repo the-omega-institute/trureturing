@@ -1,0 +1,14 @@
+**来源保全与结构约定。** 原始来源的 SHA256 为 `0b69e0f9f7b76bfeda2c3befb5279b0953b12d2ce72604c08fbf463279567697`。原文部分仅采用下列转换；公式内容、主张、证明、例子、顺序与最终命题保持原样，限定不插入原文内部。
+
+1. 原文每个 Markdown 标题统一下移一级，以容纳卷名和独立限定；标题文字与局部编号不变。
+2. 原文行内公式的 `\(...\)` 外层改为 GitHub 支持的美元号加反引号形式；每个 `$$` 显示公式块的外层改为 `math` 围栏，块内 LaTeX 和换行不变。
+3. 删除三处不可访问的 ChatGPT 引用标记，将对应 sandbox 链接目标替换为同目录仓内文件，保留链接文字：
+
+| 原引用索引 | 对应的仓内参考正文 |
+| --- | --- |
+| 8 | [FIB-ATOM 基础公式与金字塔关系](AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md) |
+| 9 | [动态未来商与未来闭合记忆](AURIC_FIB_ATOM_DYNAMIC_FUTURE_QUOTIENT_AND_FUTURE_CLOSED_MEMORY.md) |
+| 10 | [配对校准与联合可观测性](RECURSIVE_RELATIONAL_OBSERVATION_PAIRED_CALIBRATION_OBSERVABILITY.md) |
+
+本卷只提供理论正文；不声明摄入、atom、覆盖或冻结状态。合入后的勘误与增补使用文末追加锚，不改写已有正文。
+

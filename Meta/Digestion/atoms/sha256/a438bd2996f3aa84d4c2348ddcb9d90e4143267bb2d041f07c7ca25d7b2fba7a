@@ -1,0 +1,65 @@
+## 8. Credited conditional capture and its origin
+
+**Mathematical citation 8.1 (paid guarded acquisition).** Under the
+availability of a stationary initial $\mathcal F_D$ source,
+[DEV, Theorem 12.9] supplies a native encoder realization. Read $L$
+as alpha, traverse the right subtree with complete literal operands,
+and reread $L$ as alpha. Reject an invalid guard, unexpected absence
+or a branch at absolute depth $D+1$ in the right subtree. Successful equal-alpha
+guards validate one actual initial version at the final guard Read.
+Compute (FM.17) from the acquired tree, export its fixed-width code in
+a fixed public region, and clear or retract all other accessible
+source dependence. The published successful bounds are
+
+$$
+T\le2^{D+1}+1,\qquad A\le D\,2^{D+1}+3,\qquad
+Q_{\mathrm{operand}}\le D+1.
+\tag{FM.30}
+$$
+
+The full-tree traversal variant of [PRIOR, Proposition 10.1] is the
+same guarded acquisition with an additional body visit to the root
+and to $L$. For one successful body visiting each present node of $t$
+once, its exact account is
+
+$$
+T=|\operatorname{Pos}(t)|+2,\qquad
+A=\sum_{p\in\operatorname{Pos}(t)}|p|+2,\qquad
+Q_{\mathrm{operand}}=\operatorname{height}(t)\le D+1.
+\tag{FM.31}
+$$
+
+The two extra submissions in (FM.31) are the length-one guards; the
+body includes all nodes, including the length-zero root. Since the
+source has height at least one, the guards do not raise its operand
+maximum. This bookkeeping preserves that variant without repeating
+the published capture proof.
+
+All unsuccessful attempts, operand construction, temporary trees,
+traversal data, code computation and cleanup are separately paid.
+The host must expose no surviving source-bearing transcript, reply
+latch, output, pointer, capacity or allocation distinction outside the
+code. Inaccessible remnants still cost physical storage. Empty $P$
+needs no acquisition for its constant output. A sufficient acquired
+ray table can alternatively be compressed by [DEV, Theorems 12.4
+and 12.6], paying Proposition 11.8's acquisition and codebook costs.
+
+The historical origin is the final successful guard Read, not Return
+or the end of cleanup. A supplied later count must include every update
+from that capture, including updates during encoding or cleanup.
+This procedure has no unprotected liveness guarantee once the writer
+has changed the initial alpha at $L$; alpha does not return there.
+It is a conditional capture construction, not a way to assume an
+initial snapshot for free.
+
+**Mathematical citation 8.2 (separate unknown-lag acquisition).**
+[DEV, Proposition 11.8] separately uses that genuinely acquired alpha
+at $L$ to search $L,LR,LR^2,\ldots$ until a leaf of label bit $f$
+is read at $LR^j$. At that actual final Read $w$ the acquired count
+is $k_w=2j+f$. The service is safe and terminates under finite
+interference and observer progress, with exactly $j+1$ queries,
+$(j+1)(j+2)/2$ literal letters and maximum operand $j+1$ on that run.
+On a quiescent call $j=\lfloor k/2\rfloor$. These costs and the
+capture-origin relation are additional to passive decoding. Computing
+the selected values of $U_w$ then creates no target Read events at $w$.
+

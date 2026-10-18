@@ -1,0 +1,21 @@
+**Definition 10.1 (the component of one actual continuation).** Keep
+the entire history (1.2), its normalization (1.3), every equation
+(1.6), and source legality (1.5). For arbitrary normalized responses
+$\sigma,\theta\in\mathbb R$ and $F\in\{J,M\}$, put
+
+$$
+\begin{aligned}
+\mathcal R^7_{MF}(H;\sigma,\theta)=\{W\in\mathcal F(H):\;&
+ f_W(7)=0,\quad v_M(W)=\sigma,\\
+ &d_W+f_W(7)\operatorname{tr}(FMQP_W)=\theta\}.
+\end{aligned}
+\tag{10.1}
+$$
+
+This is the root-seven component of the single actual history
+$(H,M,D_0+\lambda\sigma,F,D_0+\lambda\theta)$, with immediate
+readings at original clocks six and seven. The ambient fiber imposes
+no root-seven promise. Source, gain shape and drift are
+initially variable in (10.1); studying this component supplies no
+root-class label for that ambient fiber.
+

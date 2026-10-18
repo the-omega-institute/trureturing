@@ -1,0 +1,6 @@
+**Corollary 5.2 (no kernel-free exact inverse or zero-discrepancy modulus).** Even after supplying the full emissions, $A,\pi,\tau$, and both configuration-indexed paired arrays, there is no function that reconstructs all complete configured laws throughout this family without additional information distinguishing $B_\theta$. There is also no TV bound depending only on the discrepancy of those supplied data and vanishing at discrepancy zero. This failure holds on the fixed shape $N=8$.
+
+For every fixed finite Read horizon $H$, there is a finite rational positive family of this kind having identical entire configured transcript laws through $H$ and different complete laws. The necessary $N$ here grows with $H$; this is not a fixed-state impossibility of eventual finite identification.
+
+**Proof.** For $N=8$ choose $q=3$ and the rational signs $\theta=\pm\theta_0$. All proposed inverse inputs agree exactly. Their p laws at labels zero and one differ by (5.1), so an inverse output cannot equal both, and a purported vanishing modulus would bound a positive TV distance by zero. For any $H$, choose $q\ge3$ with $H\le2q+1$ and apply Theorem 5.1. $\square$
+

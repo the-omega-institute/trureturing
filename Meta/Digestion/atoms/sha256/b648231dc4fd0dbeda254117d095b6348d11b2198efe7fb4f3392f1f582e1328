@@ -1,0 +1,32 @@
+**Definition 6.1 (input-site partition).** The replay reservoir has the
+following disjoint site kinds, selected by represented version, PC and
+call site, not by equality of bit strings.
+
+| IN kind | Actual acquired or fixed canonical backing |
+| --- | --- |
+| Original public boot | Actual initialization/prior/controller material and bindings in the manifest. |
+| Original private preparation | Canonical padded packet reconstructed from the actual acquired initial syntax and $H_0$. |
+| First/second fresh bootstrap | Prescribed $E(L)$, and serialization $E(G)$ of the actual captured $\Delta(G)$. |
+| Capture-controller ingress | Actual captured $101U(\delta)\Delta(G)$ field. |
+| Outer gate | Its completed-cycle choice, with a second bit only after first bit 0. |
+| Auxiliary raw CAP | The actual three-block wire frame acquired and resolved for that 01 cycle. |
+| History request | Its actual complete 70 frame for that history cycle. |
+| Original computed command/callback | No IN; replay executes its literal Append/copy/RD rows. |
+
+Seed conversion scans the actual prefix syntax: branch 0 emits private
+token 11; leaf 11 emits 01; leaf 10 emits 10. An open-slot unary word
+starts at 1; branch replaces one slot by two and a leaf removes one.
+At slot zero require syntax exhaustion; pad by 00 to $2H_0-1$ tokens.
+The count $2H_0-1$ is constructed by two unary copies and one tail.
+This is RCA Definition 13.1's finite converter to CAP's original packet,
+not the noncomputable `NativeEffectiveSourceProducer.sourceDecoder` and
+not an identification of two different source codecs.
+
+For covers, all variable reservoirs are obtained from the fixed manifest
+and frozen completed-cycle list. For a general raw finite prefix, the
+model additionally contains its actually consumed current input and
+occupied IN-to-WR latch; this is not asserted to be already available to
+a cover that precedes that input. Source-raw, gate, selector, bootstrap and
+capture inputs all retain their types. No invocation or schedule choice
+other than those installed sites is inferred from primitive time.
+

@@ -1,0 +1,26 @@
+**Corollary 6.2 (Strict improvements on both unrestricted endpoints).**
+Under the unchanged contract,
+
+$$
+\boxed{\frac{129931}{250000}\le\varepsilon_1\le\lambda},\qquad
+\frac{445256}{10^8}<\lambda-\frac{129931}{250000}
+<\frac{445258}{10^8}.
+\tag{6.2}
+$$
+
+Proof. Theorem 2.3 is necessary for all competitors; Theorems 3.2 and
+6.1 provide a sufficient legal port. Direct rational comparisons give
+
+$$
+\frac{129931}{250000}-\frac{12993}{25000}=\frac1{250000}>0,
+\qquad
+\lambda<\frac{52417658}{10^8}<\frac{26209}{50000}
+<\frac{52427}{100000}<\theta,
+\tag{6.3}
+$$
+
+where the last inequality is QWS Theorem 5.4. Subtracting the new
+necessary endpoint from (5.8) gives the gap in (6.2). The older bounds
+retain their domains; the new sufficient example rules out a necessary
+lower bound at the former sufficient value $\theta$. $\square$
+

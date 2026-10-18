@@ -1,0 +1,18 @@
+## 406. Individual residual counts and the remaining boundary
+
+This strengthens the former assertion that at least two owners lie
+outside the expensive P classes: at least two must now be in the
+specific axial residual families A(P0) or B(P0), rather than only in
+the broader residual union that also includes transverse P/V owners.
+
+The two forced owners are distinct original tetrahedra, but can have
+the same role vector or high label. They need not both receive a
+source VCD face, and the two source VCD faces may still have the same
+receiver. The count asserts no new face-incidence pairing.
+
+In subsequent budget arguments the six counts A(M),A(Z),A(U),B(M),
+B(Z),B(U) must remain available separately. Their V,C,D costs and
+their individual M,Z,U degree contributions need not be interchangeable.
+The present integer count is not a complete joint budget or a
+six-edge flat-exclusion theorem.
+

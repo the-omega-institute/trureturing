@@ -1,0 +1,59 @@
+**Theorem 75.2 (Power thresholds and the square-root separation).** In the
+marked family let $a_i=i^{-s}$ with $s>0$, and let $c(i)=i^t$ for $i\ge1$,
+$c(0)=0$, with $t>0$. The exact uniform optima are finite under precisely
+the following conditions:
+
+$$
+\begin{aligned}
+\min_A\sup_x\mathsf E_A K_{A,x}<\infty
+   &\quad\Longleftrightarrow\quad s>1,\\
+\min_A\sup_x\mathsf E_A S_{c,A,x}<\infty
+   &\quad\Longleftrightarrow\quad s>t+1,\\
+\min_A\sup_x\mathsf E_A M_{A,x}^{t}<\infty
+   &\quad\Longleftrightarrow\quad s>t.
+\end{aligned}
+\tag{75.3}
+$$
+
+In particular, for $s=1/2$ the modulus is $(m+1)^{-1/2}$, and every exact
+acquisition satisfies $\mathsf E_A K_{A,x}\ge\sqrt n$ at every $x\in D_n$.
+Every such acquisition has infinite supremal mean count and cumulative
+charge for every charge in Theorem 74.1. Nevertheless the optimal uniform
+mean $M^{1/4}$ is finite. The prefix acquisition has finite mean count at
+every individual source and uniformly tight counts.
+
+**Proof.** Substitute into (74.1). The three exact optima are respectively
+
+$$
+\sum_{i\ge1}i^{-s},\qquad
+\sum_{i\ge1}i^{t-s},\qquad
+\sum_{i\ge1}\bigl(i^t-(i-1)^t\bigr)i^{-s}.
+\tag{75.4}
+$$
+
+For $i\ge2$, the mean-value theorem writes the increment as
+$t\xi_i^{t-1}$ with $i-1<\xi_i<i$. Since $1/2\le\xi_i/i\le1$, this increment
+is bounded above and below by positive constants depending only on $t$
+times $i^{t-1}$. The last series thus has the convergence behavior of
+$\sum_i i^{t-1-s}$. Integral comparison, using the elementary evaluation of
+$\int_1^R u^{-v}\,du$, gives convergence of $\sum_i i^{-v}$ exactly when
+$v>1$; at $v=1$ the integral is $\log R$. Applying this criterion to the
+three series proves (75.3), including divergence at each equality boundary.
+
+For $s=1/2$, the sourcewise certificate (73.7) gives $n a_n=\sqrt n$.
+Since every $D_n$ is occupied, its supremum is infinite for every acquisition.
+For any charge with $c(1)>0$, $S_c\ge c(1)K$, so its supremal cumulative
+mean is infinite as well. Taking $t=1/4<s$ in the last line of (75.3) gives
+the finite uniform maximum-charge optimum
+
+$$
+\sum_{i\ge1}\bigl(i^{1/4}-(i-1)^{1/4}\bigr)i^{-1/2}<\infty.
+\tag{75.5}
+$$
+
+Finally, (73.6) gives the prefix mean
+$\sum_{i=1}^n i^{-1/2}\le1+\int_1^n u^{-1/2}\,du=2\sqrt n-1$ and its
+uniform count tail $(m+1)^{-1/2}$. This proves the stated sourcewise finite
+and uniform tightness properties alongside the unavoidable infinite
+supremal mean. $\square$
+

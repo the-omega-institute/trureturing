@@ -1,0 +1,19 @@
+##### 定义 1.8.1： 区域泄漏查询
+
+在有限维酉动力学 $U_t=e^{-itH/\hbar}$ 下，区域 $R$ 的投影为 $P_R$，定义时间 $t$ 的泄漏效果
+
+$$
+L_{R,t}=I-U_t^\dagger P_RU_t.
+$$
+
+对状态 $\rho$，泄漏响应为
+
+$$
+\ell_{R,t}(\rho)=\operatorname{Tr}(\rho L_{R,t})
+=1-\operatorname{Tr}(U_t\rho U_t^\dagger P_R).
+$$
+
+它是一个特殊的查询：动作固定为“自由演化到 $t$”，读出只问“是否已经离开 $R$”。
+
+<a id="claim-1-8-2"></a>
+

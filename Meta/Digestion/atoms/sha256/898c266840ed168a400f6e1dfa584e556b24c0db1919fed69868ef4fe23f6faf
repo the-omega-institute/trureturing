@@ -1,0 +1,9 @@
+**Definition 2.3 (binary projection join).** For a nonempty
+$B\subseteq S^n$ define
+
+$$
+J_2(B)=\{x\in S^n:x_i\in\pi_iB\ (1\le i\le n),\quad
+ (x_i,x_j)\in\pi_{ij}B\ (i<j)\}.
+\tag{NDR.11}
+$$
+

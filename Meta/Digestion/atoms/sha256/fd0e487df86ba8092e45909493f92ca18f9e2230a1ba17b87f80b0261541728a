@@ -1,0 +1,10 @@
+**Counterexample 7.1 (wrap makes an excluded filler accessible earlier).** Take $k=4,T=5,m=3$ and $H=\{1,2,3\}$, with label $B$ on $H$ and $A$ elsewhere. This violates $T\ge2m+1$. Emit $010$, with root mask $\{1,2\}$. Difference one returns $B$. On zero the surviving INITIAL indices are $\{0,3,4\}$; emit $111$. Its actual mask is
+
+$$
+\{3,6\}\pmod5=\{3,1\}.
+$$
+
+Index one has already been excluded on this branch, so the restricted query selects only index three. Return $B$ on one and $A$ on zero. The first block ends zero; the second run has length three below $k=4$. Thus the protocol costs two and is safe for every INITIAL tail. A one-block solution is impossible because the root mask is even, excludes zero, and would have to equal the odd set $H$; hence two is exact.
+
+This refutes dropping the nonwrapping width hypothesis from Theorem 5.1. It does not reverse that theorem or a supplied theorem: its own pair $T=5,m=3$ is outside the stated hypothesis, whereas $T=7,m=3,H=\{1,2,3\}$ in §5 has exact fee three.
+

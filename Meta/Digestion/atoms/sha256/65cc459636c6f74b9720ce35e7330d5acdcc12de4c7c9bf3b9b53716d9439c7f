@@ -1,0 +1,46 @@
+**定理 6.5（每条原始有限律的加权熵矩与实际尾预算）。** 对每个 $N\geq1$ 和每个固定 $\theta\in\Theta_N$，若其原始标记产生器存在不相容支撑对，则上述 $L=2N$、$\kappa$、$K_\lambda$ 给出
+
+$$
+\begin{gathered}
+R_n,\ s_n\leq\ell_n
+\leq K_\lambda\kappa^{\lfloor n/L\rfloor},\\
+T_{P_\theta}\leq\sum_{n\geq0}\ell_n
+\leq\frac{K_\lambda L}{1-\kappa}<\infty,\\
+\tau_{P_\theta}(R)\leq\eta_\theta(R)
+:=\frac{K_\lambda L}{1-\kappa}\kappa^{\lfloor R/L\rfloor}
+<\infty,\qquad
+\eta_\theta(R)\longrightarrow0.
+\end{gathered}
+$$
+
+若没有不相容支撑对，则 $\ell_n=R_n=s_n=0$，$T_{P_\theta}=0$、$\tau_{P_\theta}(R)=0$，可取 $\eta_\theta(R)=0$。
+
+证明。**同律熵余量分解。** 上述实际平稳有限标记律满足
+
+$$
+\ell_n=R_n+s_n,\qquad 0\leq R_n,s_n\leq\ell_n.
+$$
+
+平稳性及条件熵链式法则给出，对每个有限 $m\geq1$，
+
+$$
+I_{P_\theta}(\mathcal P^-;X_{n:n+m-1}\mid X_{0:n-1})
+=\sum_{k=n}^{n+m-1}a_k.
+$$
+
+给定实际切口状态 $H_0$，标记边过去与整个输出未来条件独立。对有限尾块应用互信息链式法则，得到
+
+$$
+\begin{aligned}
+I_{J_\theta}(H_0;X_{n:n+m-1}\mid X_{0:n-1})
+&=I_{P_\theta}(\mathcal P^-;X_{n:n+m-1}\mid X_{0:n-1})\\
+&\quad+I_{J_\theta}(H_0;X_{n:n+m-1}\mid X_{-\infty:n-1}).
+\end{aligned}
+$$
+
+令 $m\to\infty$，条件互信息对递增尾场的连续性给出所述恒等式。左侧不超过有限的 $H_J(H_0)$，故不会出现无限量相减。此分解是可见熵矩与终端隐状态信息之间的同律支撑关系；$s_n$ 是非负隐信息，不能混同于平方损失的有符号差。
+
+**原始比特尾预算。** 将原始矩阵和先验直接代入定理 5.1，用上述同律熵余量分解控制 $R_n,s_n$，再用 [EWM] 的两侧比较及非负求和。$R$ 起始的尾求和由定理 5.1 支付。这些都是同一实际 $J_\theta/P_\theta$ 上的期望量；$\eta_\theta$ 是确定性原始比特半径函数，其构造没有使用负荷最优性或有限取得假设。
+
+可见量 $T_{P_\theta}$ 只依赖输出律；$\ell_n,K_\lambda,\kappa$ 可以依赖所选有限呈现。本结论没有把呈现相关常数解释成可见律的最小常数。若熵以比特计量，[EWM] 的自然对数熵项需乘 $\ln2$；平方损失与发射比特尺度不重标。
+

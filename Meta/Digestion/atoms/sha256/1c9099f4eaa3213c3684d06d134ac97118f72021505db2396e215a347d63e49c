@@ -1,0 +1,54 @@
+**Theorem 2.2 (sourcewise eventual truth of a fixed row).** For every
+valid $(P,R)$, every $t\in\mathcal T$ and every $n\ge b=b(P,R)$,
+
+$$
+R_P(\rho^n t)=R
+\quad\Longleftrightarrow\quad
+R_P(\rho^b t)=R.
+\tag{NUE.6}
+$$
+
+Consequently the same equivalence holds between an arbitrary $n$ and
+$\min(n,b)$. The original source on the two sides is identical.
+
+Proof. Suppose first that $C$ contains a concrete leaf at depth $d$.
+If $R_P(\rho^n t)=R$, that leaf is a literal leaf of $\rho^n t$ at
+the same address. But NSF Lemma 9.2 says every address at depth at
+most $d$ is a branch for $n\ge2(d+1)$. Thus the equality is false
+for every such $n$ and every $t$, including $n=b$. This does not
+require the proposed row to occur anywhere along the orbit of $t$.
+
+Suppose next that $C$ has no concrete leaves. All its leaves are
+holes. Validation forces $H=P$: an omitted member of $P$ would
+require a concrete blocker. Hence $P$ is the entire leaf frontier of
+the finite full context $C$. In particular it covers every infinite
+binary ray, and its proper prefixes are exactly the internal nodes
+of $C$. This is a consequence of the row syntax, not a promise that
+the original arbitrary cut was complete.
+
+If $D=0$, $P=\{\varepsilon\}$ and $C$ is the single root hole.
+Its partition is necessarily the singleton partition. Its row is
+constant on all nonempty sources, and $b=0$ works. If $D>0$, apply
+NSF Lemma 9.2 with $h=D-1$. At epoch $2D$ all proper prefixes of
+members of $P$ are branches. Every $p\in P$ is therefore reached.
+Cutting at these positions yields exactly the frontier context $C$,
+with no concrete exterior leaves. The same is true at every later
+epoch.
+
+Let $v=\rho^{2D}t$. Each cut position now exists. For $k\ge0$,
+reached-subtree transport and injectivity give, for all $p,q\in P$,
+
+$$
+ (\rho^k v)|_p=\rho^k(v|_p),\qquad
+ (\rho^k v)|_p=(\rho^k v)|_q
+ \ \Longleftrightarrow\ v|_p=v|_q.
+\tag{NUE.7}
+$$
+
+Thus every equality bit, and also every disequality bit, is unchanged.
+The entire addressed exterior and the complete partition agree at
+epochs $2D$ and $2D+k$. They either both equal the proposed row or
+both fail to equal it. Transport has only been used after the cut
+positions are known to exist. This proves (NUE.6). For $n<b$ the
+minimum leaves $n$ unchanged. $\square$
+

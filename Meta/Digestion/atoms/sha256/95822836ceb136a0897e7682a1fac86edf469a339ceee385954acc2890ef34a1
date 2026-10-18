@@ -1,0 +1,48 @@
+**Resource statement 16.1 (separate upper and lower accounts).** The
+attaining calibration uses one live active qutrit and one independent probe
+qubit, active tensor dimension six before readout, excluding all old
+archives and references. Keeping the full five-mode realization instead
+uses a ten-dimensional live specimen/probe tensor product. Readout appends
+one classical bit; it can consume the probe, or the known conditional probe
+state can also be retained and counted. The post-read active live component
+with just that bit is $M_3\oplus M_3$, not a dimension-three complete
+observer. Stopped status, the request/status fields and every old or newly
+appended event are additional retained resources.
+
+The producer-side carrier retains a two-valued classical setting, coupled
+through the extra port. It is a source-bearing resource even though it is
+not directly delivered as an accessible label. If a larger physical or
+mathematical carrier implements it, its size is not bounded by this
+two-valued description. Port ownership and access permission belong to the
+producer/service contract. The observer owns the prepared probe and its
+actual acquired bit; neither owns an extra original specimen.
+
+The public catalogue, $Z$, preparation basis, coupling scale, known probe
+amplitudes, orthogonal readout basis, action programme, calibration and
+authentication, clock/reference stability, controller, request description,
+permissions and all selection/update inputs require their actual supplied
+representations. General exact real parameters need not have finite
+effective descriptions. In Example 15.1 the catalogue is rational, the
+basis read is the algebraic $\pm i$ basis, and $4\pi$ has a finite
+symbolic description; exact execution still consumes ideal action and
+timing/reference calibration, not a finite-noise guarantee.
+
+Paid port action is $4\pi$ in that example, with interrogation time
+$4\pi/v$ at the stated rate and any additional control/readout overhead
+charged separately. The six-unit witness preparation, its $2/9$ live
+probability, old waveform/lift information retained elsewhere, original
+hold and tail permissions, and supplied canonical processor are separate
+resources. Neither action nor live dimension prices their construction or
+certification. Exact canonical failure time is an ideal continuous record;
+no finite-bit archive bound is claimed. All source-bearing assistance must
+be counted jointly when accessible, including a returned environment,
+receiver share, source-sensitive clock or installed programme.
+
+The sharp lower bound denies such extra readable assistance; it permits
+the actual height-dependent old specimen and arbitrary common controls on
+it. The upper joint identity permits arbitrary old correlations and simply
+does not read them. A pre-existing readable height bit can reduce the
+required port action to zero, so those two assistance contracts cannot be
+conflated. No minimum physical hardware, classical archive size or total
+observer resource follows from (RA.19).
+

@@ -1,0 +1,42 @@
+**Theorem 5.3 (exhaustive basis and mixed finite joint witnesses).**
+For $B=\{r_=,r_{\ne}\}$, the equal row is an eligible anchor whose
+complete accumulation basis is $\{\Omega\}$. For every requested $h$
+put $m=2h+2$. The two actual finite sources
+
+$$
+u_=W(T_m),\qquad
+u_{\ne}=W(\langle T_m,T_m\rangle)
+\tag{AAB.18}
+$$
+
+belong to their indicated complete fibers and both agree with
+$\Omega$ through inclusive depth $h$. Hence $J_B(h)$ holds for every
+$h$. For unshared tree syntax their node counts are respectively
+$4F_{m+3}-1$ and $8F_{m+3}-1$, with $F_0=0,F_1=1$.
+
+Proof. The anchor chart is $U(n)=\langle T_{n+2},T_{n+2}\rangle$,
+$S(n)=(n\ge2)$. Its only nonempty cofinal set is the singleton empty
+tuple for $A=\{1\}$. The computed completion is
+$\langle\Omega,\Omega\rangle=\Omega$, so Theorem 3.1 proves exhaustion.
+In (AAB.18) both arguments of $W$ are branch-rooted and the second
+is non-atomic by the distinct-child observation in Theorem 5.2.
+Thus the entire acquired predicates and opposite complete rows hold.
+
+Since $\mu(T_m)=h+1$, both these arguments have no leaf at depth
+at most $h$. Native $\rho$ preserves original branches and only
+expands leaves, so neither fixed iterate creates a shallower leaf.
+The explicit pairs in $W$ consequently leave every source address
+of depth at most $h$ a branch. Both sources share the one stated
+prefix, proving the joint claim. The acquired negative holds on each
+finite source although its two compared values coincide in the limit
+$\Omega$; finite signed feasibility has not been replaced by a sign
+test at that limit.
+
+Atomic leaf counts are $|\operatorname{Leaves}(T_j)|=F_{j+1}$ by
+(AAB.1)'s recurrence. For $W(T_m)$ their sum is
+$F_{m+3}+F_{m+2}+F_{m+1}=2F_{m+3}$. Pairing two copies of the argument
+doubles that sum in the second source. A finite full binary tree with
+$l$ leaves has $2l-1$ nodes, giving the stated counts. These are
+exact construction sizes of these literal finite witnesses, not read
+charges, measured performance or minimum sizes. $\square$
+

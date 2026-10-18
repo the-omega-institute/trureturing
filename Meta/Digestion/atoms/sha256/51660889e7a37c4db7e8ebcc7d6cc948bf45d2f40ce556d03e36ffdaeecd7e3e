@@ -1,0 +1,75 @@
+**Proposition 18.1 (scalar live return with every failure retained).**
+For every path in Definition 17.1, let $p(x)=(x,c-x,Z,c-x,x)$ and set
+
+$$
+\begin{aligned}
+S(t)&=\exp\left(-\int_0^t\lambda(s)\,ds\right),\\
+K(t)&=\operatorname{diag}_i
+       \sqrt{S(t)p_i(k(t))/p_i(a)},\\
+\gamma_i(t)&=\lambda(t)-(\log p_i(k(t)))',\\
+J_i(t)&=\sqrt{\gamma_i(t)}\,|f\rangle\langle i|K(t).
+\end{aligned}
+\tag{PR.64}
+$$
+
+Path indices are suppressed in this formula. These are precisely
+(OC.19)–(OC.19b) with zero phase increment. In particular
+
+$$
+K(T)=\sqrt q\,I_5,\qquad
+K(T)^\dagger K(T)+\sum_{i=0}^4\int_0^T J_i(t)^\dagger J_i(t)\,dt=I_5.
+\tag{PR.65}
+$$
+
+For every actual joint specimen/reference input $\rho_{AR}$, conditional
+on its actual history and the seed, the unnormalized live successor is
+$q\rho_{AR}$. Failure in a Borel event $E$ and mode $i$ has successor
+
+$$
+\int_E(J_i(t)\otimes I_R)\rho_{AR}
+                 (J_i(t)^\dagger\otimes I_R)\,dt,
+\tag{PR.66}
+$$
+
+with the same $U$, exact first time, original mode name, old archive and
+absorbing $f$ retained. Append $\nu(u)$ for the joint seed/outcome law.
+No failure is merged, retried or replaced by a live successor.
+
+Proof. Strict interiority and continuity on a compact interval bound
+$k,c-k$ away from zero. Either original regularity alternative makes
+$k$ absolutely continuous and $k'$ integrable, so $\Lambda<\infty$ and
+$q>0$. The logarithmic derivatives of the two repeated height probabilities
+and the middle probability are $k'/k,-k'/(c-k),0$. Their maximum is
+$\lambda$, so all $\gamma_i$ are nonnegative and integrable. The squared
+$i$th diagonal entry of $K(t)$ has derivative
+$-\gamma_i(t)|K_{ii}(t)|^2$ almost everywhere. Integrating this identity
+gives (PR.65) entry by entry. A height return cancels the probability
+ratios, and the constant phase removes all relative phase factors,
+giving its first equality.
+
+The displayed Kraus operations are CP; the same normalization proves
+their completeness on every joint input after tensoring with identity.
+An already stopped input retains its old event and has the identity
+stopped successor. Equations (PR.65)–(PR.66), not separate specimen and
+archive marginals, give the full joint operation. $\square$
+
+For clarity about the source correlation, if $h$ is an actual classical
+past label with parity $\pi(h)$ and conditional joint state $\rho^h_{AR}$,
+its live output, including the seed, is
+
+$$
+\Pr(dh)\,\nu(u)\,q_{\pi(h)}(u)\,
+ |u,\mathsf L\rangle\langle u,\mathsf L|\otimes\rho^h_{AR}.
+\tag{PR.67}
+$$
+
+Use the same actual $\Pr(dh)$ in every failure block of (PR.66).
+Normalizing the live output reweights this history mixture by its actual
+$q_{\pi(h)}(u)$; its unconditional archive marginal need not stay fixed.
+The source executor controls (PR.64) by its classical $(\pi(h),u)$.
+These are controlled CP operations on that promised joint source,
+not a single specimen-only operation that secretly reads $h$. No
+coherent superposition of these classical programme labels is assumed.
+The formula also covers arbitrary entanglement with $R$ within each
+history-conditioned input, before restricting to (PR.61).
+

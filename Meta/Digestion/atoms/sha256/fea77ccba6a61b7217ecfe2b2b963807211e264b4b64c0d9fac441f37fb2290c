@@ -1,0 +1,65 @@
+**Lemma 351.1 (repo-derived).** Let a genuine paired response
+have axes r,c and transverse coshes m,d. If
+
+    m>4, 1<c<m/4, 1<d<m-c-2, 1<r<3*m,              (351.1)
+
+then its transverse M angle beta_M is greater than pi/3.
+
+Its exact cosine C=N/sqrt(D(r)*D(c)) uses
+
+    D(t)=t^2+m^2+d^2+2*t*m*d-1>0,
+    N=d*(r+c)+m*(r*c+d^2-m^2+1).                    (351.2)
+
+The r derivative has sign numerator
+
+    N_r*D(r)-N*(r+m*d)
+      =(m^2-1)*[d*(c*r+m^2-d^2+1)+m*(c+r)]>0.      (351.3)
+
+Here m>d, and all other variables exceed one. Thus increasing r
+to 3*m strictly increases C. Work now with r=3*m. In particular
+c*r<m^2, by c<m/4. The d derivative has sign numerator
+
+    E_d=N_d*D(r)*D(c)
+        -N*[D_d(r)*D(c)+D(r)*D_d(c)]/2
+       =(m^2-1)*P,                                (351.4)
+
+where the exact polynomial identity is
+
+    P=(c+r)*d^4+4*m*(c*r+1)*d^3+6*m^2*(c+r)*d^2
+      +4*m*[c*r*(m^2-c*r)+m^2+c^2+r^2-1]*d
+      +(c+r)*[m^4-c^2*r^2+c^2+r^2-1].              (351.5)
+
+Every displayed summand is positive for c,r>1 and c*r<m^2.
+In particular m^4-c^2*r^2>0. Hence increasing d to
+d0=m-c-2 strictly increases C again. These comparisons concern
+an algebraic function with positive denominators; no intermediate
+or endpoint response is asserted to be genuine.
+
+At r=3*m,d=d0 define the polynomial
+
+    Q(m,c)=[D(r)*D(c)-4*N^2] at r=3*m,d=m-c-2.
+
+It is positive on m>4,1<c<m/4. Here is a full finite identity
+proving that assertion. Set m=4+b and
+c=[1+(m/4)*a]/(1+a), so a,b>0 cover that domain. Then
+
+    256*(1+a)^4*Q(4+b,[1+((4+b)/4)*a]/(1+a))
+      =T0(b)+a*T1(b)+a^2*T2(b)+a^3*T3(b)+a^4*T4(b),
+
+where the five coefficient polynomials are
+
+    T0=6144*b^5+97280*b^4+602624*b^3+1831168*b^2
+        +2736640*b+1612800;
+    T1=768*b^6+33664*b^5+421504*b^4+2416512*b^3
+        +7158144*b^2+10718080*b+6451200;
+    T2=1856*b^6+57760*b^5+646432*b^4+3550400*b^3
+        +10411152*b^2+15734400*b+9676800;
+    T3=1424*b^6+39176*b^5+417432*b^4+2261424*b^3
+        +6672544*b^2+10261120*b+6451200;
+    T4=332*b^6+8910*b^5+95182*b^4+524912*b^3
+        +1588368*b^2+2508160*b+1612800.              (351.6)
+
+All 34 coefficients are positive integers. Thus Q>0 and the final
+comparison cosine has absolute value less than 1/2. The actual
+cosine is strictly smaller, so beta_M>pi/3, proving the lemma.
+

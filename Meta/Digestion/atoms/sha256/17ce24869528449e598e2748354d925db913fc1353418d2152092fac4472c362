@@ -1,0 +1,21 @@
+## 14. 十四、条件性未来商定理
+
+设每个历史 $h$ 的未来律为 $L_h$，并假设：
+
+1. 存在一个摘要映射
+   $$
+   \sigma(h)=(\mathrm{phase},A,B,\mathrm{boundary});
+   $$
+2. 在共同深度先验下，$L_h$ 只依赖于 $\sigma(h)$；
+3. 不同摘要对应的条件未来核线性可辨识。
+
+则有
+
+$$
+\boxed{
+L_h=L_{h'}
+\quad\Longleftrightarrow\quad
+\sigma(h)=\sigma(h').
+}
+$$
+

@@ -1,0 +1,4 @@
+**Lemma 4.2 (compactness).** The feasible part of $\mathcal Q_6$ is compact, and $J$ attains its maximum.
+
+**Proof.** The space of padded six-atom laws is the continuous image of the compact product $\Delta_5\times X^6$. The capacity denominator is strictly positive on the circle, so the columns $\Gamma_\xi$, the height $H_\xi$ and $|u|$ are continuous. The eight moment equalities and the closed inequality $K\ge\kappa$ define a closed subset. The objective is continuous and hence attains its maximum. $\square$
+

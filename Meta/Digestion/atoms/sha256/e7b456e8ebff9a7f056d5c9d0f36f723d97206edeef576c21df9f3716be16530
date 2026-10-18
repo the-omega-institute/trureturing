@@ -1,0 +1,19 @@
+**Open Problem 9.3 (Unchanged finite-attainment alternative).** On the entire original domain (1.3), set
+
+$$
+C_N=\sup_{\theta\in\Theta_N}d(P_\theta),\qquad
+U_{N,r}=\max_{\theta\in\Theta_N}D_r(P_\theta).
+$$
+
+Still decide whether some finite exact-real producer attains $c_\star$, or whether $C_N<c_\star$ for every finite $N$. [Universal, Theorem 6.2][U] gives attainment of $C_N$, $C_N=\inf_rU_{N,r}$ and the equivalence of the negative alternative with
+
+$$
+\forall N\ge1\ \exists r,m\ge1:\qquad
+U_{N,r}<\kappa_m/(m+1).
+\tag{9.4}
+$$
+
+Theorem 5.1 would turn an actual finite strong-zero producer into a positive answer. No such producer is constructed. Conversely, excluding strong zero would resolve (9.4) only after an upstream implication from hypothetical attainment or its first-order balances to strong zero, together with the needed summability, or another complete exclusion argument. Those bridges remain unproved. There is no claim that attainment implies a stronger rigidity property merely because that property would be useful.
+
+The band and $A_P$ are explicit hypotheses of the present route, not changes to $\Theta_N$. For $N=1$, scalar legality gives $M_1=0$ and the all-zero visible law, which fails the free posterior band; this boundary observation does not replace the arbitrary-$N$ question. The arguments permit original stationary mixtures and never optimize separate components and combine them as one realization. No fixed-$N$ uniform margin, efficient radius, effective optimization algorithm, common family of minimizing matrices, or empirical learning benefit follows from these bounds.
+

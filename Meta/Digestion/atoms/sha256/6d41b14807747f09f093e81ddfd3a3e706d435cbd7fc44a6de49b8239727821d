@@ -1,0 +1,186 @@
+**Theorem 70.2 (Lawful adaptive uniform tightness and intrinsic order calibration).**
+Use the measurable finite-record and output-event semantics of Definition
+45.1, including a deterministic common rule after fixing the shared seed.
+For the constructive direction retain the fixed shared tables and countable
+product seed spaces permitted by Theorem 46.4.
+For a lawful exact acquisition $A$ of $(\lambda_x)$, let
+$I_{A,x,j}(s)$ be the prime index of its $j$th request, with value zero if
+that request is never made. The value is defined by actual finite execution,
+also on nonhandoff branches. For $k,m\in\mathbb N_0$ put
+
+$$
+J_{A,k,m}=\bigcup_{x\in X}\ \bigcup_{1\le j\le k}
+                  \{s:I_{A,x,j}(s)>m\}.
+\tag{70.3}
+$$
+
+This is one common measurable seed event, and for every fixed finite $k$
+
+$$
+J_{A,k,m}\downarrow\varnothing,\qquad
+\mathsf P(J_{A,k,m})\longrightarrow0\quad(m\to\infty).
+\tag{70.4}
+$$
+
+For every actual $x$ the finite measure obtained from its output on
+$\{K_{A,x}\le k\}\setminus J_{A,k,m}$ is dominated by all
+$\lambda_y$, $y\in C_m(x)$. Consequently
+
+$$
+\boxed{\Omega_\lambda(m)\le T_A(k)+\mathsf P(J_{A,k,m})}
+\qquad(k,m\in\mathbb N_0).
+\tag{70.5}
+$$
+
+For an arbitrary selected probability family on the original carrier, the
+following two properties are equivalent: it has a lawful exact acquisition
+with uniformly tight actual request counts; it is uniformly order-calibrated.
+The constructive direction uses the positive-increment acquisition of
+Theorem 46.4 and the tail calculation of Theorem 69.2, applied to the
+selected family's own mixture (70.2). In that particular
+acquisition the actual request count $L_x$ is a sequential prefix depth and
+
+$$
+\mathsf P\{L_x>m\}=1-a_{C_m(x)}^\lambda,\qquad
+\sup_x\mathsf P\{L_x>m\}=\Omega_\lambda(m).
+\tag{70.6}
+$$
+
+Uniform order calibration implies TV total boundedness of the selected range.
+Total boundedness alone does not imply it, even for a lawfully acquired
+finite range on the exact sources and tapes of Theorem 67.5. Summability of
+$\Omega_\lambda$ supplies the uniform mean bound (69.5) for (70.6), but
+is not necessary for a finite uniform mean of a different adaptive
+acquisition. Actual request count and prefix depth therefore remain distinct.
+
+**Proof.** For each $x,j,i\ge1$, the event that the $j$th request has index
+$i$ is a countable union over its finite transition times and finite
+prime-answer words of measurable finite-record events. This proves the
+measurability of $I_{A,x,j}$, and countability of the actual $X$ proves that
+of (70.3). Likewise $\{K_{A,x}\le k\}$ is the countable union of the
+measurable finite-handoff events with at most $k$ requests.
+
+Fix a seed $s$. Before the first request all actual sources have identical
+processing, since the seed and zero advice are the only inputs. After a
+request there are at most two answer branches. Between requests the common
+rule has one determined continuation for each preceding answer word;
+termination or infinite processing without another request adds no query
+node. The possible $j$th requests across actual sources thus occupy at most
+$2^{j-1}$ nodes, and their first $k$ requests use at most $2^k-1$ addresses.
+Repetitions can only decrease the number of distinct addresses. This finite
+set has a finite largest prime index, or is empty. Hence this seed belongs
+to no $J_{A,k,m}$ once $m$ exceeds that index. This proves the setwise
+decrease in (70.4), and continuity from above of the seed probability proves
+its probability limit. Only branches followed by actual sources were used;
+no infinite signature was made into an additional source.
+
+The elementary fixed-seed binary-tree description is the decision-tree
+background in Buhrman and de Wolf, [*Complexity Measures and Decision Tree
+Complexity: A Survey*, Sections 3.1--3.2, Theoretical Computer Science
+288(1), 21--43](https://homepages.cwi.nl/~rdewolf/publ/qc/dectree.pdf).
+The argument above uses finite branching through a fixed number of requests,
+not their finite-Boolean-input complexity theorems. Random addresses and
+unbounded processing between requests are retained.
+
+On $E=\{K_{A,x}\le k\}\setminus J_{A,k,m}$ the actual finite execution at
+$x$ uses only $P_m$. Every $y\in C_m(x)$ therefore follows exactly that
+execution, with the same seed, and hands over exactly the same tape. This
+is the whole-event induction of Lemma 45.3, with a request-count cutoff in
+place of its joint transition/menu cutoff. For each $B\in\mathcal F$,
+
+$$
+\rho_{x,k,m}(B)=\mathsf P(E\cap\phi_x^{-1}(B))\le\lambda_y(B)
+\quad(y\in C_m(x)),
+\qquad
+\rho_{x,k,m}(\Theta)\ge1-T_A(k)-\mathsf P(J_{A,k,m}).
+\tag{70.7}
+$$
+
+The measurable output-event argument needs no measurable equality diagonal
+on an arbitrary tape carrier. Greatestness of $\ell_{C_m(x)}^\lambda$ gives
+(70.5). If $T_A(k)\to0$, choose $k$ first and then use (70.4) to obtain
+$\Omega_\lambda(m)\to0$.
+
+Conversely the last limit gives $a_{C_m(x)}^\lambda\uparrow1$ at every
+actual $x$. Apply Theorem 46.4 to the family itself. Its positive node
+increments $\ell_C^\lambda-\ell_{C^-}^\lambda$, a zero parent at the
+depth-zero root, their normalized original-tape coordinates and an
+independent uniform coordinate form one shared countable product seed.
+The handoff thresholds and measurability are precisely those proved there
+and in Theorem 69.2; their telescoping identity gives (70.6). Equal complete
+signatures consequently have equal selected laws, whether or not that
+equality was assumed initially. Every actual source has finite handoff
+almost surely, with its original consumer on the same static source.
+
+As an intermediate consequence, there are at most $2^m$ occupied
+depth-$m$ cylinders. Select one actual representative $x_C$ in each.
+For $y\in C$, both $\lambda_y$ and $\lambda_{x_C}$ dominate $\ell_C^\lambda$.
+Subtracting this measure leaves two positive measures of the same mass
+$1-a_C^\lambda$, so the event definition of TV gives
+
+$$
+\operatorname{TV}(\lambda_y,\lambda_{x_C})\le1-a_C^\lambda
+\le\Omega_\lambda(m).
+\tag{70.8}
+$$
+
+Thus these at most $2^m$ centers give a finite-prefix TV cover. This is the
+common-submeasure/TV step of Lemma 45.3 and Theorem 46.4, not an optimal
+coupling assertion on an arbitrary measurable carrier. A vanishing modulus
+makes (70.8) a cover at every positive tolerance, proving total boundedness.
+
+For the converse boundary take the unchanged tapes of Theorem 67.5 and
+two distinct points $\theta_0,\theta_1\in B_1$. Set
+$\lambda_x=\delta_{\theta_{n(x)\bmod2}}$, using its $n(x)$ from (67.15).
+The deterministic preparation queries primes increasingly until the first
+negative answer and then emits the indicated tape. Every actual integer
+has finite prime support, so the handoff uses exactly $n(x)<\infty$
+requests. The range consists of two probabilities and is totally bounded.
+For each $m$, the cylinder whose first $m$ answers are positive contains
+actual sources in both $D_{m+1}$ and $D_{m+2}$ by
+[Boundaries, Theorem 35.2](KBONACCI_SELF_CALIBRATING_BOUNDARIES.md#35-exact-finite-divisibility-fibres-in-canonical-fibonacci-windows). Its two
+distinct point laws have zero common submeasure. Therefore
+$\Omega_\lambda(m)=1$ for every $m$, and (70.5) excludes a uniformly
+tight exact acquisition of this same finite family. This example preserves
+the original tapes and consumer, and prescribes no new target problem.
+
+For the mean boundary, retain these same two original tapes and put
+$w_i=1/(i(i+1))$, $i\ge1$. One shared integer seed $I$ with probabilities
+$w_i$ selects an actual prime $p_I$. Query it once and hand over
+$\theta_{q_I(x)}$, where $q_i(x)=\mathbf1_{p_i\mid N(x)}$. This is the
+single random-prime mechanism already used in (48.8)--(48.10), here with
+the declared weights and two outputs. Its laws are
+
+$$
+\lambda_x=(1-u_x)\delta_{\theta_0}+u_x\delta_{\theta_1},
+\qquad u_x=\sum_{i\ge1}w_iq_i(x),
+\qquad K_{A,x}=1.
+\tag{70.9}
+$$
+
+In a depth-$m$ cylinder set $c=\sum_{i\le m}w_iq_i(x)$ and
+$r_m=\sum_{i>m}w_i=1/(m+1)$. The infimum of $u_y$ in that cylinder is
+$c$, and its supremum is $c+r_m$. Indeed Theorem 35.2 realizes the fixed
+prefix together with every finite subsequent all-negative or all-positive
+answer word, and the remaining weight tends to zero. These are limits of
+actual finite-pattern realizations, not assumed actual infinite words.
+The greatest common submeasure therefore has masses $c$ on $\theta_1$
+and $1-c-r_m$ on $\theta_0$, giving
+
+$$
+\Omega_\lambda(m)=r_m=\frac1{m+1}\longrightarrow0,
+\qquad \sum_{m\ge0}\Omega_\lambda(m)=\infty.
+\tag{70.10}
+$$
+
+Every source nevertheless has expected actual request count one in (70.9).
+For the specified prefix acquisition (70.6), every source instead has
+infinite expected depth by Tonelli's tail-sum identity. Thus summability is
+an additional sufficient mean condition for that prefix acquisition,
+not a necessary condition for uniform finite mean under adaptive queries.
+No source law, advice, reset or selection of a source enters either example.
+The intrinsic/adaptive correspondence combines the cited finite-record and
+lower-envelope ingredients in the prescribed source model; it asserts no
+effective evaluation of cylinder tables or sampling of arbitrary tape laws
+from a single real random variable. $\square$
+

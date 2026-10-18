@@ -1,0 +1,32 @@
+## Theorem (M81 strengthening)
+
+The same split Lucas tower carries one further unconditional 3-adic
+constraint. Keep
+\[
+ m_j=2r_j=2\cdot 3^{j+1},\qquad
+ u_j=\frac{B_j-1}{m_j},\qquad
+ b_{p,j}=\frac{p-1}{m_j},
+\]
+and, for a fixed block, write
+\[
+ S_j=\sum_{p\mid B_j}h_p\,b_{p,j}.
+\]
+The integrality of \(u_j\) and \(b_{p,j}\), and the interpretation of \(h_p\)
+as the original (not index-multiplied) Fibonacci depth, are exactly the
+TBN.2--TBN.3 inputs used in M27.
+
+Then
+\[
+ \boxed{u_j\equiv 26(-1)^j\pmod {81}\qquad(j\ge2).}
+ \tag{M81.1}
+\]
+Moreover,
+\[
+ \boxed{S_j\equiv 26(-1)^j\pmod {81}\qquad(j\ge3),}
+ \tag{M81.2}
+\]
+with the direct initial values \(S_1=1\) and \(S_2=26\). Since
+\(26\equiv-1\pmod {27}\), reduction of (M81.2) recovers the M27 residue for
+all \(j\ge3\); the new information is the lift from modulus \(27\) to
+modulus \(81\).
+

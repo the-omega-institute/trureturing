@@ -1,0 +1,54 @@
+**Lemma 3.3 (all normal assignments on a supplied residual shape).**
+For any successful branch, any supplied $\mathbf K$ and any guarded
+numerical $\mathbf n$, the decoded normal assignments satisfying all
+branch definitions and signed comparisons are exactly the assignments
+obtained from (SFP.12). This correspondence retains every rank at every
+leaf of every name.
+
+Proof. All positive shape equations hold after substituting $\mathbf K$
+into the unifier. On equal ground shapes, equality of codes is exactly
+equality of the corresponding ranks. A uniform translation adds its
+affine value at each such leaf. For ordinary pairing, the output's
+left and right leaf addresses are respectively $Lp$ and $Rq$; the
+pair instruction therefore expresses exactly its defining code equation.
+Anchors and collapse alignments have their literal meanings. Reassembling
+these comparisons proves that the graph equations are equivalent to all
+positive branch definitions and equalities.
+
+A finite code on $H_v$ is normal exactly when its labels are natural and
+none of its primitive cherries has left rank one greater than right.
+These are precisely all the nonnegativity conditions and (SFP.9).
+This check includes every node after substitution. In particular a
+residual shape $c$ can create a new cherry at an insertion boundary,
+and that cherry is checked. No assertion about the nonprimitive root
+of a residual was assumed.
+For example, dropping these checks would let the different ambient
+shapes of $F([1],[0])$ and $[2]$ certify a false native disequality:
+both expand to $T_2$. Their use in the negative argument below therefore
+depends on all-name normality.
+
+For two normal codes on different ground shapes, code equality is
+impossible; injectivity of $E$ on $\mathcal N$ makes their native
+expansions different as well. For two codes on the same ground shape,
+inequality holds exactly when some corresponding leaf labels differ.
+The shape is finite and nonempty, so an unequal pair admits one of the
+witnesses (SFP.8). Conversely such a witness establishes inequality.
+Choose these leaves independently as certificates but evaluate all of
+them on the same shared rank assignment. A negative comparison of a
+name with itself necessarily gives $r-r\ne0$ and has no solution.
+
+It remains to solve the graph without changing any solutions. Following
+forest edges in an actual rank assignment gives (SFP.11), with $b_C$
+its actual root rank. These bases are natural, and the anchored base is
+zero. Every remaining equality is exactly the second line of (SFP.10),
+and every required disequality becomes its last line. Hence actual
+ranks yield admitted bases without alteration.
+
+Conversely, (SFP.10) and (SFP.11) reconstruct every graph edge: the two
+bases cancel and its potential equation supplies the required difference.
+They reconstruct natural labels and all selected forbidden differences.
+The previous paragraphs then reconstruct every normal named code and
+all signed branch constraints. Taking the rank of a forest root is an
+inverse to (SFP.11) for each fixed shape and witness selection. There is
+no replacement by a constant field or a different shape. $\square$
+

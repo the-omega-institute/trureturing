@@ -1,0 +1,28 @@
+**Proposition 3.1 (Every lawful probability displacement).** The original
+straight probability leg of displacement $s$ is
+
+$$
+k(t)=k+ts,\qquad \chi(t)=\chi(0),\qquad 0\le t\le1.
+$$
+
+On $\mathcal M$ it is the partial action
+$T_s(k,\alpha,\beta)=(k+s,\alpha,\beta)$, with exact guard
+$0<k+s<H$. On $\mathscr Z$, recover $k=\|z_\beta\|^2/(4Z)$.
+Its exact four-coordinate update is
+
+$$
+F_s(z_\alpha,z_\beta)=\left(
+ \sqrt{\frac{(k+s)(H-k-s)}{k(H-k)}}\,z_\alpha,
+ \sqrt{\frac{k+s}{k}}\,z_\beta\right).
+$$
+
+**Proof.** The ODE leaves both phases fixed on this leg. Its entire
+probability segment is interior if and only if its endpoint is interior,
+because the current height is already interior and the interval is convex.
+Every denominator and square-root argument above is positive on the guard.
+The two factors are exactly $A(k+s)/A(k)$ and $B(k+s)/B(k)$, so the
+formula gives the actual encoded endpoint. It preserves $\mathscr Z$ and
+$D(F_s(z))$ is the original endpoint output. The factors depend on the
+recovered current height, giving a finite realization with generally
+nonlinear updates. $\square$
+

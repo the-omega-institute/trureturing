@@ -1,0 +1,4 @@
+## 91. Adaptive original-channel witnesses and an obstruction to all two-fibre tests
+
+The separation in section 90 leaves open whether the uniform-reference witness becomes sufficient after adding every two-fibre coherent test. This section gives an exact physical counterexample to that stronger assertion. It also derives an input-adaptive correct-output witness that includes both tests, retains original leakage, and equals the full diamond norm when the original channels are calibrated. The unrestricted global quarter optimum remains open.
+

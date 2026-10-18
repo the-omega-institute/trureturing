@@ -1,0 +1,7 @@
+**Definition 4.1 (execution-minimum state counts).** Let
+$m_{\mathrm{exec}}(c,k)$ be the minimum installed Boolean running
+count among Definition 1.2's graphs at the simultaneous caps $(n,W)$.
+Let $H_{\mathrm{exec}}(A,k;r)$ be the minimum total native count at
+the simultaneous caps $(n+1,W+3)$. Both minima exist by the grid
+construction of [PCA, Theorem 26.1][PCA].
+

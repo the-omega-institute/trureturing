@@ -1,0 +1,67 @@
+**Theorem 10.1 (The defined filtered-witness route cannot match).**
+Take one normalized all-fifteen-event/three-TP tuple of QJM
+Convention 6.3, with real PSD $A_J^\pm$ satisfying
+$\sum_J\operatorname{tr}(A_J^++A_J^-)=1$, all three
+$y\in\mathbb R^3$, and its actual atom form $b^TB_y(a)b$.
+Suppose that for all real $a,b$ it has the form
+
+$$
+b^TB_y(a)b=\kappa\Psi_H(a,b)+Q(a,b),\qquad
+\kappa>0,\quad Q(a,b)\ge0\quad\text{for all }a,b,
+\tag{10.1}
+$$
+
+where $H$ is as in (8.1) and $Q$ is a real biquadratic product
+form. Then this tuple has no complementary legal port of error
+less than $43/68$. In particular it cannot match the original
+$\varepsilon_1$. For $H=I$, replace $43/68$ by $103/136$ in
+the complementary-port assertion. The conclusion allows arbitrary
+globally product-nonnegative augmentations, not only PSD matrix
+augmentations.
+
+Proof. Equation (10.1) is globally nonnegative. QJM's exact slack
+identity (6.5), with the same full TP marginal and signed event
+constraints, makes $c=\beta-\tau^Ty$ a lower bound on every
+selected feasible channel and, by the no-worse QRC replacement,
+on every original complex scalar port.
+
+Suppose an original legal $T$ matched it with $e(T)=c$.
+Its no-worse selected representative has error at most $c$ and
+the same universal lower forces equality. Decompose that selected
+channel into positive-weight unit atoms
+$x=\sum_fw_fk(a_f,b_f)$, with $M^T\tau=\tau$.
+Apply the supplied slack identity at $z=e(T_x)=c$. Each of the
+thirty signed event pairings is nonnegative, and so is each
+positive-weight atom slack. Their sum is zero. In particular,
+
+$$
+0=b_f^TB_y(a_f)b_f
+ =\kappa\Psi_H(a_f,b_f)+Q(a_f,b_f)
+\quad\Longrightarrow\quad\Psi_H(a_f,b_f)=0
+\qquad(w_f>0).
+\tag{10.2}
+$$
+
+Thus the same selected channel belongs to $\mathcal E_H$ and
+has the full TP weights (8.4). Theorem 9.1 implies
+$c=e(T_x)\ge43/68$, or $c\ge103/136$ for $H=I$.
+This proves the complementary-port assertion. Equivalently,
+nonnegative augmentation can only shrink the witness zero face;
+it cannot supply a missing competitive TP/event solution on it.
+
+The legal QSD Theorem 5.2 port already gives
+
+$$
+\varepsilon_1\le e_{\rm mix}
+ <\frac{52417600}{10^8}<\frac{43}{68}.
+\tag{10.3}
+$$
+
+Consequently no tuple satisfying (10.1) can be tight at the
+original value. This does not say such a normalized tuple is
+infeasible or cannot give a weaker necessary bound. All fifteen
+event constraints and all three marginal multipliers remain in
+the slack identity. One actual event suffices to obstruct their
+joint competitive attainment; adding the other fourteen cannot
+repair that obstruction. $\square$
+

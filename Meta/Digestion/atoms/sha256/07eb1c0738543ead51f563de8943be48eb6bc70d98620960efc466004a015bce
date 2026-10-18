@@ -1,0 +1,51 @@
+**Theorem 35.5 (All canonical generator counts).**
+For $1\le j\le k-1$ define
+
+$$
+\begin{aligned}
+T_q(a,c)&=\mathbf1_{a+c\le q},\quad 0\le a,c\le q,\\
+M_{k,j}&=(T_{2j-2}^{\,2k+1})_{j-1,j-1},\\
+\mu_{k,b,j}&=M_{k,j}^{\,b}-(M_{k,j}-1)^b.
+\end{aligned}
+\tag{35.11}
+$$
+
+There are exactly $\mu_{k,b,j}$ minimal canonical generators in
+degree $2j+1$ and no minimal generators in any other degree. Thus
+
+$$
+\operatorname{type}R_{k,b}
+=\sum_{j=1}^{k-1}\bigl(M_{k,j}^{\,b}-(M_{k,j}-1)^b\bigr).
+\tag{35.12}
+$$
+
+Proof. A local interior exponent of degree $2j+1$ has edge sums at
+most $2j$. Summing the $2k+1$ edge bounds yields
+$\sum_i c_i\le(2k+1)j$. For $j\le k-1$,
+
+$$
+(2k+1)j\le k(2j+1)-1.
+\tag{35.13}
+$$
+
+Hence the strict cycle inequality is automatic in these degrees.
+Set $d_i=c_i-1$. Its conditions are $d_i\ge0$,
+$d_i+d_{i+1}\le2j-2$ and root $d_0=j-1$. Each coordinate lies
+between zero and $2j-2$ because it has a nonnegative neighbor.
+The closed transfer walk starting and ending at $j-1$ counts exactly
+these labelled vectors, with each factor imposing one cyclic edge.
+This proves that $M_{k,j}$ is their number. For $j=1$ the matrix
+$T_0=[1]$ has one state, so $M_{k,1}=1$; no empty-matrix convention
+is involved.
+
+At this fixed boundary the $b$ cycle vectors can be chosen independently
+and then glued by (35.2); there are $M_{k,j}^b$ tuples. Exactly one
+of the $M_{k,j}$ possibilities in each cycle is $\nu_j$. The tuples
+with no such entry number $(M_{k,j}-1)^b$, and Theorem 35.4 excludes
+precisely those tuples from the basic set. Different $j$ give different
+degrees and hence disjoint sets. Their number is the minimal number
+of generators of the canonical module, which for this Cohen–Macaulay
+ring is its type. This proves (35.11)–(35.12). It counts all compatible
+local interiors with a basic entry, rather than multiplying the local
+types. $\square$
+

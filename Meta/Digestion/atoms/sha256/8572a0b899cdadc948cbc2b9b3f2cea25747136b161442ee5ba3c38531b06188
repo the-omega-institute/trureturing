@@ -1,0 +1,22 @@
+**Definition 80.1 (the retained actual premises).** Let $N:M_3(\mathbb C)\to M_5(\mathbb C)$ be an actual original-real CPTP encoder of Definition 52.1, with actual phase-difference spectrum $(a,\beta,0,-\beta,-a)$ and $0<\beta\leq1/2$. Fix one actual real Kraus compression of minimal rank $r\leq9$, its isometry $V$ and its complement $\Gamma$ as in (S.2). Center support rank $k\leq r$ is a separate variable. The complete actual complementary-domain premises are those of (S.64)–(S.65), or equivalently (R.3)–(R.5) of [the first volume at the fixed published snapshot](https://github.com/the-omega-institute/trureturing/blob/40f9e7b52526d6fab4e139bb95e7bdbdda64f78c/docs/develop/theory/AURIC_OMEGA_FULL_INPUT_RECOVERY_CERTIFICATES.md#1-the-complete-actual-real-frame-domain):
+
+$$
+\begin{gathered}
+J_p=\begin{pmatrix}
+\tau&0&C\\0&\bar\tau&\bar C\\C^\dagger&C^T&\sigma
+\end{pmatrix}\succeq0,\qquad
+\tau\succeq0,\quad\operatorname{spec}_{>0}\tau=(a,\beta),\\
+\sigma=\bar\sigma=\sigma^T,\qquad
+\operatorname{Tr}\tau=\operatorname{Tr}\sigma=1,\qquad\operatorname{Tr}C=0,\\
+\operatorname{ran}C\subseteq\operatorname{ran}\tau,\qquad
+S_{\rm res}=\sigma-C^\dagger\tau^+C-
+\overline{C^\dagger\tau^+C}\succeq0,\qquad
+\operatorname{rank}S_{\rm res}\leq1,\qquad\operatorname{rank}J_p\leq5.
+\tag{S.185}
+\end{gathered}
+$$
+
+Here $\tau^+$ acts on its actual support; singular $\tau$ requires the range condition. The bars refer to the fixed original real environment frame. A center-diagonalizing unitary transports every block and the original antiunitary together, as in Definition 52.2. It does not make these blocks jointly entrywise real, commuting, or supported on the same two-dimensional subspace. In particular (S.11) is a mixture of the two transported phase marginals for every complex phase-plane direction; that mixture need not have rank two. Every admissible third column remains present, including its active-output components and the full $C,\bar C,\sigma$ data.
+
+The conditional application assumes, with exactly their stated domains and conventions: the actual phase and supported common-projection interfaces (S.8)–(S.12), (S.55)–(S.60); the rectangular-contraction identity (S.6); the fixed-center compact-affine minimax identity (S.26); the unrestricted CPTP recovery/complement identity (S.7); and the pure-target unhalved-diamond lower interface (S.27). These premises include the actual domination of singular contracted marginals, the full paired-basis transpose, and one common range completion. The standard literature formulas cited below do not by themselves verify these repository-specific actual reductions.
+

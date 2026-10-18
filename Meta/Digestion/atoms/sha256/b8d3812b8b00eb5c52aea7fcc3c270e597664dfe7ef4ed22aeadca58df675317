@@ -1,0 +1,40 @@
+**Definition 1.4 (conditional numerical and contact inputs).** Use the
+following consequences of FC §§11, 18, 24 and Proposition 34.2, all
+at the source of Assumption 1.1:
+
+$$
+\begin{gathered}
+0.876<\alpha<0.879,\quad 0.121<\beta<0.124,\quad
+\mu<12,\quad c(x)>1/25\ (x\in S^1),\\
+0<u_F=V/\mu<1,\quad \chi>18/25,\quad
+0<A_\ell<0.00465,\quad A_\ell<B_\ell<0.02,\\
+0<a_\ell<0.00032,\quad 0<l_u<0.0052,\quad
+0<l_v<0.013,\quad 0.0075<e<0.008,\quad 0<d_*<0.022.
+\end{gathered}
+\tag{RB.5}
+$$
+
+All decimals here and below are exact terminating rationals. In
+particular FC Theorem 11.1 gives $\ell>0$ for $u\ge0$, and
+FC Proposition 20.1 excludes pure contacts of height zero.
+
+FC Theorem 34.3 applies in the range of Assumption 1.3. In its
+nonzero rank-one negative-semidefinite branch write
+
+$$
+R_-=-\rho ww^T,\qquad \rho>0,\quad \|w\|=1,\qquad
+Q=-t\mathsf F-\rho ww^T,\quad
+R_+=-2t\mathsf F-\rho ww^T.
+\tag{RB.6}
+$$
+
+The theorem supplies a unique directed negative-height pure contact
+$x_*\in\ker R_-$, its saturated contact with
+$\eta_1(x_*)=\ell(x_*)+tc(x_*)f(x_*)\le0$, and their compatible
+group $G_*$. Every optimal endpoint representation has positive pure
+coordinate in this group, with the stronger inequality FC.149.
+FC Proposition 28.2 supplies mandatory reverse saturated singleton
+mass in the same law. These contact results are inherited inputs.
+There is no additional bound on positive pure contacts or saturated
+singletons.
+

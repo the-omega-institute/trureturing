@@ -1,0 +1,56 @@
+**Proposition 8.2 (every original competitor restricts to an admissible
+joint fiber).** Let $D\ge3$, $h=D-3$ and $n=2^h$. In the right
+subtree of the actual wrapper, place a perfect ordered scaffold of
+height $h$, with frontier words $a_1,\ldots,a_n$ of length $h$,
+and substitute $x_i\in P$ at each frontier. Let $t_x$ denote the
+resulting source. For any preparation and reader correct under
+Assumption 8.1 and any attained code $e$, the nonempty restricted
+fiber
+
+$$
+B_e=\{x\in P^n:E(t_x)=e\}
+\tag{CIT.40}
+$$
+
+is jointly admissible for all seven targets and every finite native
+experiment. Hence $\Omega_\theta(B_e)\le(3+\theta)^n$ for
+every $\theta\in[0,1]$.
+
+Proof. All frontier occurrences are present in the same original
+tree, the construction is injective in $x$, and the right subtree
+has height at most $h+3=D$. Thus every $t_x$ lies in the original
+$\mathcal F_D$. For every $i$ and $q\in W_3$, the actual request
+$p=Ra_iq$ has length at most $1+h+2=D$, so is in
+$\mathcal P_D$. Transport at the present block root identifies its
+factor with $\Gamma_q(x_i)$. The suffix endpoint need not itself
+be present initially: the factor interface already describes its
+entire future trajectory, including stages after an initial absence.
+
+Fix $e,i,q$. Completeness of the retained name and determinism of
+the reader fix its zero-Read decision or its one literal before any
+reply or count. Account for every possible finite original-root
+experimental word as follows. The empty word reads the wrapper branch.
+A word beginning with $L$ reads the fixed wrapper leaf or passes
+beyond it. A word beginning with $R$ and stopping strictly before
+the frontier reads a scaffold branch. All these replies are constant
+on the slice. Every other word in the right cone has a unique frontier
+prefix $Ra_j$ and a finite suffix $a$ in that actual block. There
+is no restriction that $j=i$ and no restriction on $|a|$.
+
+For $|a|\le2$ it is a boundary experiment of Lemma 4.3. For
+$|a|=3$ it is the stated public function of its length-two parent
+reply. For $|a|\ge4$ it is absent. This classification includes
+words going beyond earlier leaves. If the reader uses no Read or
+a constant experiment, (CIT.39) gives the same trajectory for every
+tuple of $B_e$, and the exact temporal interface makes the target
+factor constant there. Otherwise two tuples with the same selected
+boundary reply have the same actual reply, even when the latter is
+a coarsening. The common reader therefore produces the same $Z$
+and the same trajectory for every later authentic $k$. Equality of
+trajectories gives equality of $\Gamma_q(x_i)$.
+
+This is exactly (CIT.2) on the original $B_e$, separately for each
+$i,q$. The boundary reply is used to establish the implication;
+no operational conditioning, source replacement or new information
+is supplied to the reader. Theorem 5.2 now applies. $\square$
+

@@ -1,0 +1,38 @@
+**Proposition 56.6 (closed contact pair and all-continuation obstruction).** At $\rho=\rho_*$, the same original three-update word has two legal fixed INITIAL sources with the common four reports $(0,0,0,(7+\delta)i)$ and INITIAL half-distance $\sqrt{144-7\delta}$. Every authorized future continuation of that common prefix can still be given identical actual reports and actions for these two sources. In particular arbitrary report postprocessing or continuation cannot turn the contact direction into a policy with risk $B(\rho_*,\delta)$.
+
+Proof. Use (56.11) with $\rho=\rho_*$, and let
+$l=(4/5)\alpha+(3/5)\nu$.
+The actual full source pair is the original cross-layer pair (54.7), written in original coordinates:
+
+$$
+x_7=(0,7\nu+7\alpha i)=(0,(7i)q^{-1}),\qquad
+x_{25}=(0,20-15i)
+       =(0,(25l+(7+2\delta)i)q^{-1}).
+\tag{56.18}
+$$
+
+Indeed $25h=7+2\delta$ at contact,
+$l^2+h^2=1$ and $\alpha l+\nu h=4/5$.
+The inner source has norm7 and real part $7\nu\ge28/5$; the outer source has norm25 and real part exactly20, on its original closed cap boundary. Both initial visible coordinates are exactly zero.
+Under the literal original events (56.12), the first three true visible values are zero. The fourth values are respectively $7i$ and $(7+2\delta)i$.
+Choose errors $(0,0,0,\delta i)$ and $(0,0,0,-\delta i)$.
+They are legal on the closed error-ball boundary, and give the common report $(7+\delta)i$ exactly. The full ordered action records and Stop, if taken there, are identical.
+
+The two fixed INITIAL values satisfy
+
+$$
+\frac{|x_{25}-x_7|^2}{4}
+=\frac{(25l)^2+(2\delta)^2}{4}
+=\frac{625-(7+2\delta)^2+4\delta^2}{4}
+=144-7\delta.
+\tag{56.19}
+$$
+
+This is the full INITIAL distance. It does not pair independently chosen maxima from different realizations.
+After the fourth Read the actual residual states are $(7i,0)$ and $((7+2\delta)i,0)$: their histories agree, while their visible state difference is exactly $2\delta i$ and their hidden difference is zero.
+The original two-slot contraction and midpoint continuation used in Theorem56.3 preserves differences of norm at most $2\delta$ in each slot under every future original action. Every subsequent actual Read can therefore be common with errors of norm at most $\delta$.
+Causality keeps the future actions and stopping decisions common, for finite or countable continuations, with no post-infinite event. The erased real-coordinate distinction cannot be recovered by any of these continuations.
+
+The two closed report balls touch at the actual fourth report, and the outer cap point attaining the smaller outer projection is allowed. Strict $g(\rho)>2\delta$ is consequently essential for uniform separation in this word; equality cannot be repaired by a choice of threshold or a decoder tie rule. The common-record half-distance gives risk at least
+$\sqrt{144-7\delta}>1>B(\rho_*,\delta)$ for every such continuation. This is a source-realizable contact obstruction, not only an overlap of numerical ranges. □
+

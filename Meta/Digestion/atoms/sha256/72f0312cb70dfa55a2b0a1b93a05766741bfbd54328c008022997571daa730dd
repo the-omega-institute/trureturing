@@ -1,0 +1,43 @@
+**Corollary 4.2 (explicit nonzero final projective range).** Define solely by source radicals
+
+$$
+\begin{gathered}
+p_L=(p_z+p_s)/2,\quad M_g=\zeta/[2v(p_s)^3],\\
+\delta_p=\min\{(p_s-p_z)/2,\ g(p_L)/(2M_g)\}>0,\quad
+p_F=p_s-\delta_p,\quad C_F=C(p_F)<C_{\rm sat}.
+\end{gathered}
+\tag{TC.10}
+$$
+
+For every $C_F\le\lambda\le C_{\rm sat}$ let $P_F(\lambda)$ be the unique solution in $[p_F,p_s]$ of $C(p)=\lambda$. Then
+
+$$
+\Phi(\lambda)=g(P_F(\lambda)).
+\tag{TC.11}
+$$
+
+This is an exact selected cost inverse on a specified nonzero final neighborhood. Its interior inverse is analytic. $C_F$ is a conservative certified endpoint, without any claim that it is a support transition.
+
+Proof. On $[p_L,p_s]$, $0\le g'(p)\le M_g(p_s-p)$, because $-g''(p)\le M_g$. For $q=1-p$ strict convexity gives $B_J/\Delta_J<p-q<1$. On $[p_F,p_s)$ therefore
+
+$$
+\eta_p B_J<g'(p)\le g(p_L)/2<g(p).
+$$
+
+Thus $c_p<0$ throughout this interval. At $p_s$, the expressions extend continuously with $\eta=0$ and $c=-v(p_s)\gamma<0$; alternatively use JS's spectral equality there. Strict increase of $C$ proves unique coverage and the exact inverse in (TC.11). Since $C'>0$ on this closed interval, its local inverses are analytic, including one-sided endpoint extensions. This establishes the final range without assuming any intervening global pattern or evaluating all zeros of $c_p$. $\square$
+
+The quadratic law on this range has the already credited SC coefficient. Indeed, simultaneously rotating the spectral pair gives cost derivative $-D_{\rm sat}$, where
+
+$$
+D_{\rm sat}=\frac{2u_f}{1+u_f^2}C'(p_s)>0,\qquad
+K_{\rm sat}=L_f/D_{\rm sat}^2.
+$$
+
+The objective is exactly $\gamma-L_f\sin^2\vartheta$ and $\vartheta=h/D_{\rm sat}+O(h^2)$ at cost $C_{\rm sat}-h$. Analytic inversion with bounded third derivative yields
+
+$$
+\Phi(C_{\rm sat}-h)=\gamma-K_{\rm sat}h^2+O(h^3).
+$$
+
+This identifies SC's coefficient within the exact projective branch; it does not count that coefficient as new content.
+

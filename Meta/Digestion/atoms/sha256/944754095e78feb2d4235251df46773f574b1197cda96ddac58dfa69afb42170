@@ -1,0 +1,10 @@
+**Definition 7.1 (Actual response shortfall).** A probe is a function $f:S_i\to[0,1]$. It depends on at most $s$ specified exterior coordinates if there is a set $K\subseteq[1,n]\setminus\{i\}$ with $|K|\le s$ such that $f_y$ is a function only of $(y_k)_{k\in K}$. Dependence on coordinates fixed by the reset is allowed. Define
+
+$$
+d_i(f)=\bigl[\langle f(1-2c_i-H_i)\rangle_i\bigr]_+,
+\qquad [t]_+=\max\{t,0\}.
+\tag{7.1}
+$$
+
+The notation measures a signed conditional shortfall under the actual reset-complement distribution. The probe is not a newly chosen conditional law.
+

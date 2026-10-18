@@ -1,0 +1,18 @@
+**Assumption 1.2 (primitive foundation and finite supply).** Use the sequential
+atomic model of [TMC, PR57.D1–D2 and D7–D9](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#57-a-complete-paid-ideal-realization-of-the-original-ordered-tree-interface),
+with CAP's finite row/effect encoding and actual initialized channels.
+One occurrence is RD, WR, ML, MR, EX, BF, IN, OUT, TOK or CTL, including
+its specified finite boot variant. Each has one receipt, one tick and two
+fee units. Boundary construction and finite control-bit installation are
+paid boot variants. An ordinary symbol is one of
+$L,R,0,1,\square,\mathsf{sep},\mathsf{seal},\mathsf F$.
+A cell has the supplier's eight literal tracks. There is one actual meter;
+its read and append heads remain distinct. Exclusive writers, provenance,
+seals and current tokens have their original meanings.
+
+Required finite input is actually supplied at its prescribed IN sites.
+Every reached computation of an original controller or prior used in a
+claimed completed flight terminates. These are pointwise premises, with
+no deadline and no premise supplying a future capacity maximum. No
+physical conformance or physical energy law is included in this model.
+

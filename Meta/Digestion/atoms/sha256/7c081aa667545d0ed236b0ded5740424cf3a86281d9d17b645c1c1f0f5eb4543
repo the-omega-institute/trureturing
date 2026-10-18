@@ -1,0 +1,58 @@
+**Lemma 2.2 (localization and counting; SI Theorem 9.3).** The blocks
+$X_B$ partition $[n]$. The interior pools $Q_B$ and all cut pools
+$\bigcup_{p\in V_a}F_p$ are pairwise disjoint. A cut state hosts exactly
+one count cell. Consequently
+
+$$
+\begin{gathered}
+|Q_B|=|V_B|+E_B-D_B,\\
+D=\sum_BD_B,\qquad
+E=E_{\rm cut}+\sum_BE_B,\\
+m-G=E-D+u=E_{\rm cut}+u+\sum_B(E_B-D_B).
+\end{gathered}
+\tag{CL.10}
+$$
+
+Proof. At a common depth supports coincide; unequal-hit cells cannot
+share a state. Every earlier live support is a proper subset of that
+common support by extension, and every later one properly contains it
+by ancestry. Nested-support exclusion separates a cut state from all
+other depths. The chain from $\varnothing$ to $[n]$ has disjoint
+successive differences $X_B$. By (CL.9) a live state's one fixed label
+belongs to its range's block, so it cannot lie in two different ranges.
+This proves localization and the assertions about cuts.
+
+Double-counting the finite cell-state incidences inside a pool gives
+$\sum_{p\in V_B}b_p=|Q_B|+D_B$, proving the first identity. Globally
+$\sum_pb_p=G+E=|Q_{\rm live}|+D$ and
+$m=|Q_{\rm live}|+u$. Localized sharing gives $D=\sum_BD_B$ and the
+partition of cells gives $E=E_{\rm cut}+\sum_BE_B$. These prove (CL.10).
+Every state and incidence has its original meaning; no certified visit
+is suppressed. $\square$
+
+For completeness the same decomposition respects the original installed
+coordinate vector. Put $m_i=|\{q:i(q)=i\}|$, $m(X)=\sum_{i\in X}m_i$,
+$u_B=|\{q\in Q\setminus Q_{\rm live}:i(q)\in X_B\}|$, and
+$g_B=|V_a|+|V_B|$. Localization partitions the states with label in
+$X_B$ into its lower cut pool, its interior pool, and those counted by
+$u_B$. Hence
+
+$$
+m(X_B)-g_B=E_a+E_B-D_B+u_B,\qquad
+\sum_Bu_B=u,\quad \sum_Bg_B=G.
+\tag{CL.11}
+$$
+
+These are finite incidence identities, not independently allocated
+residual graphs. Certified traffic can cross the live envelopes and
+remains paid on its original full run.
+
+Every internal depth of a consecutive gap is noncommon. The diagonal
+argument above and (CL.5) therefore give the credited baseline
+
+$$
+e_d:=\sum_{p\in V_d}(b_p-1)\ge1
+\qquad(a<d<b).
+\tag{CL.12}
+$$
+

@@ -1,0 +1,31 @@
+**Proposition 12.2 (the selected root closes a selection gap, not a
+zero inventory).** At an interior root of Theorem 11.3 the exact
+parameters $m,p,q$ satisfy TC.7 and TC.12–13, namely
+
+$$
+m=\frac{1-2q}{p-q},\qquad
+g_+'(p)D_J(p,q)-g_+(p)[J'(p)-J'(q)]=0,
+\quad \lambda_*(\varpi)=mJ(p)+(2-m)J(q),\quad
+\varpi=mg_+(p).
+\tag{JS.60}
+$$
+
+Proof. The diagonal identity is $mp+(2-m)q=1$. In coordinates
+$(m,p)$ the derivatives of the cost are $D_J(p,q)$ and
+$m[J'(p)-J'(q)]$; those of the contribution are $g_+(p)$ and
+$mg_+'(p)$. Their parallel gradients give (JS.60). Cross cancellation
+gives exactly TC.7's two negative masses. Conversely TC's feasible
+three-line stationary family has these moments and contribution,
+so its cost-minimizing representative is the unique root already
+selected here. At $m=1$, (JS.59) gives TC's projective test.
+
+TC Definition 10.2 separately leaves arbitrary-budget branch selection
+and the full inventory/sign intervals of the $c_p$ zeros unresolved.
+Equations (JS.49)–(JS.52) supply the first by a globally justified
+monotone scalar inversion. They do not supply the second: the finite
+zero set (JS.58) has not been isolated or sorted in the conditional
+source field. TC's algebraically selected initial branch, its global
+three-line equations and its selected final inverse are reused exactly;
+none is counted again as new. This distinguishes a unique optimizer
+at each budget from uniqueness of a support transition. $\square$
+

@@ -1,0 +1,6 @@
+# Fixed-block conditional information and nuisance efficiency
+
+This volume extends the completed-pair conditional acquisition result of Section 22 of *Real renewal instruments and detector rank* to every fixed block size. The source polynomials, stationary initialization and consecutive paid binary history are exactly those of that supplier. For a fixed integer $m\ge2$, conditioning the $m$ complete gaps on their observed total removes the geometric nuisance and yields an explicit information coefficient. The limit $s\downarrow0$ is taken with $m$ fixed; only afterwards is $m\to\infty$ considered.
+
+The arguments are ordinary handwritten mathematics, conditional on the expressly credited actual-source interfaces. They are not kernel verification or a claim of physical realization. The pair result and its controllers are inherited results, not new pair theorems. The new content is the fixed-$m$ convolution and moment bridge, both conditional divergences, their paid normalization, and the resulting sequential efficiency comparison.
+

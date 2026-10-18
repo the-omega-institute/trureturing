@@ -1,0 +1,48 @@
+**Theorem 29.2 (an explicit actual nonzero certificate with both PSD decompositions).** On the already-owned $t=0$ member of (R.75), the actual normalized Kraus list is, also including $\beta=0$,
+
+$$
+K_0=(\sqrt a e_0,\sqrt a e_1,h),\qquad
+K_1=(\sqrt\beta e_2,\sqrt\beta e_3,0),\qquad
+0\leq\beta\leq1/2.
+\tag{R.140}
+$$
+
+Let $V=(e_0,e_1,h)$, $D_a=\operatorname{diag}(\sqrt a,\sqrt a,1)$, $L=VD_a^{-1}$. For every $0\leq s\leq a$ the map
+
+$$
+W(Z)=sL(2Z-\operatorname{Tr}(Z)I_3)L^\dagger
+\tag{R.141}
+$$
+
+satisfies (R.137)–(R.139), and hence $m_0(N)\geq s$. Explicitly put $R_s=I_5-sLL^\dagger\succeq0$, $\omega_L=\sum_i|i\rangle\otimes L|i\rangle$, and let $\mathsf F$ be the swap on $\mathbb C^3\otimes\mathbb C^3$. Valid PSD choices are
+
+$$
+\begin{aligned}
+C_W&=s(2|\omega_L\rangle\langle\omega_L|-I_3\otimes LL^\dagger),\\
+S_+&=I_3\otimes R_s+2s|\omega_L\rangle\langle\omega_L|,&T_+&=0,\\
+S_-&=I_3\otimes R_s,&
+T_-&=2s(I_3\otimes L)(I_9-\mathsf F)(I_3\otimes L^\dagger).
+\end{aligned}
+\tag{R.142}
+$$
+
+For positive beta the endpoint certificate $s=a$ is nonzero and satisfies $a<\sqrt a$. It is a lower bound on contraction, not an improving recovery or a counterexample to G. At $\beta=0$ this channel is isometric and $m_0(N)=1$.
+
+**Proof.** The TP sum for (R.140) is $\operatorname{diag}(a+\beta,a+\beta,1)=I_3$, and the phase outputs follow as before. For positive beta, its two first columns are independent, so $q=1$; the disappearance of the second Kraus term at zero is allowed. The ranges of $V$ and $K_1$ are orthogonal, and $K_0=VD_a$, so $K_0^\dagger L=L^\dagger K_0=I_3$ and $K_1^\dagger L=0$. Hence on every complex $Z$,
+
+$$
+N^\dagger(W(Z))=s(2Z-\operatorname{Tr}(Z)I_3),\qquad
+\mathcal A(W(Z))=2s\Pi(Z),
+$$
+
+using $\Pi(I_3)=0$. For a complex unit $\psi$, $2\rho_\psi-I_3$ has eigenvalues $1,-1,-1$, so $\|W(\rho_\psi)\|_{\rm op}\leq s\|L\|_{\rm op}^2=s/a\leq1$. Thus $I_5\pm W(\rho_\psi)\succeq0$; spectral decomposition of any PSD $Z$ proves positivity of $\Phi_\pm$. This also verifies the nonzero certificate directly, independently of its decomposition.
+
+The nonzero eigenvalues of $LL^\dagger$ are $1/a,1/a,1$, so $R_s\succeq0$ for the stated interval. The swap is a self-adjoint involution, so $I_9-\mathsf F\succeq0$. Every term in (R.142) is therefore PSD. Expansion of $W$ on matrix units gives its displayed Choi matrix. Under input partial transpose,
+
+$$
+\bigl[(I_3\otimes L)\mathsf F(I_3\otimes L^\dagger)\bigr]^\Gamma
+=|\omega_L\rangle\langle\omega_L|,
+$$
+
+because $\mathsf F=\sum_{ij}E_{ij}\otimes E_{ji}$, and interchanging $i,j$ after transposing the first factor gives $\sum_{ij}E_{ij}\otimes LE_{ij}L^\dagger$. Thus $T_-^\Gamma=2s(I_3\otimes LL^\dagger-|\omega_L\rangle\langle\omega_L|)$. Adding $S_-$ gives $I_{15}-C_W$, while $S_++T_+^\Gamma=I_{15}+C_W$ is immediate. This checks both signs, the coefficient two and the input-transpose convention. Finally $\beta=0$ gives $K_1=0$, $K_0=V$ an isometry, so every trace norm is preserved. For $0<\beta\leq1/2$, $0<a<1$ gives $a<\sqrt a$ exactly. $\square$
+

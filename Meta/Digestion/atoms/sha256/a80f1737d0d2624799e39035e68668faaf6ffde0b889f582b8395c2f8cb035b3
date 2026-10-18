@@ -1,0 +1,21 @@
+**Definition 3.1 (Finite loss vector).** Fix $P=P_\theta$, $L\ge1$ and
+integers $R,r\ge0$. Put $I_R=[1-R,L+R]\cap\mathbb Z$ and
+
+$$
+\begin{aligned}
+v_{L,R,r}(w)&=\sum_{i\in I_R}
+\mathbb E_P[\mathbf1_{\{X_C=w\}}(X_i-q_{r,i})^2],\\
+U_{R,r}(P,f)&=f\mathbin{\cdot}v_{L,R,r},\\
+a_{L,R,r}(P)&=\max_{f\in\mathcal K_L(P),\ \|f\|_\infty\le1}
+|f\mathbin{\cdot}v_{L,R,r}|.
+\end{aligned}
+$$
+
+These are finite quantities from the actual marginal on
+$[1-R-r,L+R+r]$. On a positive radius-$r$ exterior atom $u,v$, the finite
+posterior is
+$\lambda M_uM_1M_v\mathbf1/(\lambda M_uAM_v\mathbf1)$.
+Zero denominators contribute zero; empty words handle $r=0$.
+Every block/window overlap is retained. This defines no infinite response
+of a word indicator.
+

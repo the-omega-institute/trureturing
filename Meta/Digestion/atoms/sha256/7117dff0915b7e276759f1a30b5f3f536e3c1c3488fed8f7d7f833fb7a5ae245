@@ -1,0 +1,21 @@
+**Definition 1.3 (Exact one-sided erasure defects).** For $r,R\in\mathbb N_0$, use precisely [Conditional Response, §2][C]'s fields
+
+$$
+\mathcal G^L_r=\sigma(X_{-r},\ldots,X_{-1},X_j:j\ge1),\qquad
+\mathcal G^R_r=\sigma(X_j:j\le-1,X_1,\ldots,X_r),
+$$
+
+$$
+p^L_{r,P}=\mathbb E_P[X_0\mid\mathcal G^L_r],\quad
+p^R_{r,P}=\mathbb E_P[X_0\mid\mathcal G^R_r],\quad
+e_{L,P}(r)=\|q_P-p^L_{r,P}\|_{L^2(P)}^2,\quad
+e_{R,P}(r)=\|q_P-p^R_{r,P}\|_{L^2(P)}^2,
+$$
+
+$$
+\tau_P(R)=\sum_{r=R}^\infty(e_{L,P}(r)+e_{R,P}(r))\in[0,+\infty].
+\tag{1.4}
+$$
+
+The entire opposite half-line remains in each field, including at $r=0$. All posteriors are $[0,1]$ versions interpreted under their own law. No general summability hypothesis is included in this definition.
+

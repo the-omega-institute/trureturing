@@ -1,0 +1,57 @@
+**Theorem 31.2 (local change of the global minimum).** There is
+$\varepsilon>0$ such that at fixed $A=\log1001$ the original value
+on $(s_D-\varepsilon,s_D]$ has minimum five supported low and six total
+actual labels, and on $(s_D,s_D+\varepsilon)$ it has minimum six low
+and seven total actual labels. This local seam has $C^1$ value and
+fails to be $C^2$.
+
+Proof. The analytic implicit function theorem applied to $J_5$ continues
+the five occupied contacts at fixed $t$ using $\lambda$ as parameter.
+At the unused endpoint, positive curvature continues a unique local
+minimum of its signed gap. Its value is zero at $D$ and has the
+strictly negative derivative AC.144. Thus it is positive immediately
+below $\lambda_D$ and negative immediately above. Around every old
+occupied contact its exact value/derivative equations and strict
+curvature preserve nonnegativity. On the compact complement of all six
+contact neighborhoods Lemma 28.1 has a strictly positive margin;
+uniform continuity preserves it. Height and report signs persist.
+This includes both axes, opposite sign sectors and chart endpoints,
+so below the seam the five-atom branch is an original global optimum.
+
+The six-atom Jacobian $J_6$ is also nonsingular even at $p_5=0$.
+Its analytic continuation has $p_5'>0$ by AC.144, so its new weight
+is positive immediately above the seam while the old weights stay
+positive. Both pure-positive double factors and all other signed
+contacts persist with strict curvature. The same compact-complement
+argument preserves complete-circle nonnegativity. Hence above the seam
+this branch also matches a universal bound and is globally optimal.
+Column independence, endpoint disjointness and uniqueness of merged
+weights persist. Theorem 30.1's equality argument gives the two local
+minimum counts, not merely feasibility of an extra outcome. Both
+$\tau_n'$ are strictly positive, orienting these branches as lower and
+upper physical-strength sides. Their strength images contain an open
+one-sided neighborhood of $s_D$.
+
+Let $v_n=\boldsymbol d B-\lambda k_u$ along either branch. Differentiate
+the moment equations and contact equations. Weight derivatives multiply
+zero contact gaps; angle derivatives multiply zero stationarity gaps;
+multiplier derivatives give $B$. Their cancellation yields
+
+$$
+v_n'=-\lambda k_u',\qquad
+\frac{d\mathcal T_A}{ds}=-\frac{\lambda\sqrt\alpha}{2s_0},\qquad
+\frac{d^2\mathcal T_A}{ds^2}
+ =-\frac{\sqrt\alpha}{2\delta\tau_n'}.
+\tag{AC.149}
+$$
+
+At the seam the two exact laws agree after deletion of the zero-weight
+endpoint, and their common multiplier is $\lambda_D$. Values and
+first derivatives therefore join. The two disjoint positive intervals
+for $\tau_n'$ in AC.144 force different one-sided second derivatives.
+Thus the value is $C^1$ and not $C^2$ at this seam. This argument
+uses IFT only for local unfolding after root selection, full-domain
+positivity and transverse signs have been certified. It asserts no
+quantitative or maximal neighborhood and no ordering of other seams.
+$\square$
+

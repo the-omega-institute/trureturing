@@ -1,0 +1,62 @@
+**Theorem 26.2 (finite causal full-held attainment).** For every fixed
+$\eta>0$ there is a policy in this class whose actual zero-start
+controls $(a_\eta,b_\eta)$ are almost surely finite piecewise linear
+histories. Put $J_\eta=\int a_\eta\,db_\eta$. Its complete held native
+path has
+
+$$
+D_{\max}(\bar q_\eta,\bar q^\lambda)\le6\rho\le\eta
+\quad\hbox{almost surely},
+\tag{26.2}
+$$
+
+including every interrupted leg, terminal leg and hold. Its own
+censored death and cutoff are exactly
+
+$$
+\zeta_\eta=
+\begin{cases}\tau+\delta,&\tau+\delta\le T,\\
+\infty,&\tau+\delta>T,
+\end{cases}
+\qquad S_\eta=\min(T,\tau+\delta),\qquad
+0\le S_\eta-S\le\delta.
+\tag{26.3}
+$$
+
+Every retained native death is at the target's exit face. The entire
+held triples obey
+
+$$
+\begin{aligned}
+\|a_\eta-W^1_{\cdot\wedge S}\|_\infty&\le4\rho,\\
+\|b_\eta-W^2_{\cdot\wedge S}\|_\infty&\le10\rho,\\
+\|J_\eta-J^\lambda_{\cdot\wedge S}\|_\infty
+ &\le10K_*\rho+7\rho^2.
+\end{aligned}
+\tag{26.4}
+$$
+
+With precisely the actual executed-prefix costs (11.4), its original-law
+expectations satisfy
+
+$$
+\begin{aligned}
+\mathbb E V^a_\eta&\le\frac3{\mu_\lambda}
+                  (\mathbb ES/\rho+\rho)+5\rho,\\
+\mathbb E V^b_\eta&\le\frac3{\mu_\lambda}
+                  (\mathbb ES/\rho+\rho)+17\rho,\\
+\mathbb E L_\eta&\le\frac6{\mu_\lambda}
+                  (\mathbb ES/\rho+\rho)+22\rho,\\
+\mathbb E E_\eta&\le\frac{48}{c_\lambda\mu_\lambda}
+                  (\mathbb ES/\rho^2+1)+708.
+\end{aligned}
+\tag{26.5}
+$$
+
+Here $\mu_\lambda$ is exactly (18.2). Energy has no factor $1/2$.
+In particular the expected variation and length powers are
+$O(\eta^{-1})$ and the expected energy power is $O(\eta^{-2})$,
+on the same target, clock, error variable and probability law. The
+construction and proof occupy §§27–30; §31 gives its coupled lifetime
+and path-space consequences.
+

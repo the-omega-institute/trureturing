@@ -1,0 +1,47 @@
+**推论 84.2（两侧一致拼接与联合极限）。** 在约定 78.1 的连续对偶分支前提下，存在 $d,C,B>0$，使得
+
+$$
+\left|
+\mathcal T(s)-\mathcal T_A(s)-\frac{K(s)}{b_A}
+\right|
+\le \frac{C}{b_A^2}
+\qquad
+(|s-s_{\rm c}|\le d,\ b_A\ge B),
+\tag{RC.155}
+$$
+
+其中接触后的 $K$ 使用本节所列、由既有静态对偶与一般谱承载机制供应的表达式。由 RC63 的对偶与乘子拼接，
+
+$$
+\boxed{
+\lim_{s\uparrow s_{\rm c}}K(s)
+=
+K(s_{\rm c})
+=
+\lim_{s\downarrow s_{\rm c}}K(s).
+}
+\tag{RC.156}
+$$
+
+对任意 $s_A\to s_{\rm c}$，都有
+
+$$
+\boxed{
+b_A\bigl[\mathcal T(s_A)-\mathcal T_A(s_A)\bigr]
+\longrightarrow K(s_{\rm c}).
+}
+\tag{RC.157}
+$$
+
+平台端点也有
+
+$$
+\lim_{s\downarrow s_{\rm p}}K(s)=K_{\rm flat}.
+$$
+
+证明。把接触后第四条方向及其非负静态权重完全固定，减去它的 Gram 和 contrast 后，另外三条正权重射线的六维导数连续趋向引理 81.1 的接触导数。取足够小的闭接触邻域，导数逆范数、二阶导数和三个主权重的正下界统一受控。新增两个谱承载标签后只改变这六个参数，精确补回剩余 Gram 和 contrast；不需要改变第四条方向或除以它趋零的权重。固定第四条在原静态对偶下 slack 为零，另三条的总 slack 仍是 $O(\eta_A^2)$。这给出接触两侧共同的上界。
+
+下界重复 §82.3 的四谱点二次 coercivity，所用物理谱、容量和零集都不随静态分支改变；RC 对偶与乘子在接触连续，故所有 Lipschitz 界在该闭邻域统一有限。有限个取向选择给出同一个预算阈值和二阶常数。于是 (RC.155) 在两侧同时成立。RC63 的两个接触对偶只差 $Q$ 倍数，$\operatorname{tr}Q=0$ 且所有 $h$ 都 $Q$-null，故系数值在接触完全相等。有限个连续取向分支的最小值连续，得到 (RC.156)。
+
+若 $s_A\to s_{\rm c}$、$A\to\infty$，最终 $s_A$ 在上述邻域，(RC.155) 乘 $b_A$ 后误差至多 $C/b_A\to0$；再用 $K(s_A)\to K(s_{\rm c})$ 得 (RC.157)。平台处则由 $\lambda(r_\star)=0$ 和 (RC.135) 连续性得到平台常数的右极限。整个证明不要求 $\tau'(a_{\rm c})\ne0$，也不把固定强度极限与 $s\uparrow s_0$ 的端点极限互换。所需非退化性是实际三射线联合矩映射的非退化性。$\square$
+

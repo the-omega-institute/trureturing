@@ -1,0 +1,52 @@
+**定理 24.13（孤立关系矩的唯一方向与有序实现）。** 固定合法 $T\in\Gamma_n$，$k=|T|\ge2$。若整数直方图差 $c\ne0$ 保持所有其他合法矩，包括质量，并且只允许 $\mu_T$ 改变，则存在唯一非零整数 $a$ 使
+
+$$
+c=aD_T,\qquad m(c)=|a|2^{k-1}.
+$$
+
+最小体积 $2^{k-1}$ 可由 $m=2^{k-1}$ 个可区分系统上的一个显式 Hermitian 矩阵实现，并严格保持所有 $S\ne T$ 的总关系荷。
+
+证明。设 $m_S(c)=0$ 对每个合法 $S\ne T$ 成立，令 $a=m_T(c)$。矩是整数系数的和，故 $a\in\mathbb Z$。消费定义 24.11 的 Möbius 反演得到
+
+$$
+c_I=\sum_{S\supseteq I}(-1)^{|S|-|I|}m_S(c)
+=a(-1)^{|T|-|I|}\mathbf1_{I\subseteq T}=aD_T(I).
+$$
+
+若 $a=0$ 则所有 $c_I=0$，矛盾；反演也给唯一性。定理 24.12 证明中的矩计算表明 $m_S(D_T)=\mathbf1_{S=T}$，因而 $D_T$ 确实保持所有其他矩，不仅仅保持比 $k$ 小的那些矩。切换一个 $T$ 内坐标给正负各 $2^{k-1}$ 项，故体积公式成立。
+
+为具体达到，按任意固定顺序列出 $D_T=+1$ 的全部子集 $I_1^+,\ldots,I_m^+$，以及 $D_T=-1$ 的全部子集 $I_1^-,\ldots,I_m^-$，定义两个有序正交标签态
+
+$$
+|\mathbf I_+\rangle=|I_1^+,\ldots,I_m^+\rangle,\qquad
+|\mathbf I_-\rangle=|I_1^-,\ldots,I_m^-\rangle,
+$$
+
+$$
+A_T=|\mathbf I_+\rangle\langle\mathbf I_-|,\qquad
+H_T=A_T+A_T^\dagger.
+$$
+
+两个列表没有共同标签；其直方图差恰为 $D_T$。对任意合法 $S$，对应总荷本征值之差为
+
+$$
+q_S(\mathbf I_+)-q_S(\mathbf I_-)
+=\sum_{I\supseteq S}D_T(I)=\mathbf1_{S=T}.
+$$
+
+故
+
+$$
+[Q_S^{(m)},A_T]=\mathbf1_{S=T}A_T,\qquad
+[Q_S^{(m)},H_T]=0\quad(S\ne T).
+$$
+
+$S=T$ 时交换子为 $A_T-A_T^\dagger\ne0$，所以算子确有改变该目标的能力。在这两个列表张成的二维空间，$H_T=\sigma_x$；在正交补上为零，因而
+
+$$
+e^{-iuH_T}|\mathbf I_-\rangle
+=\cos u\,|\mathbf I_-\rangle-i\sin u\,|\mathbf I_+\rangle.
+$$
+
+初态为确定的负侧列表时，目标总矩期望增加 $\sin^2u$，其他总矩严格不变；在 $u=\pi/2$ 完全交换到正侧列表。这直接实现了体积下界，不需要储库，也不要求每个系统采用相同的输入态。整数 $a>0$ 可把每个侧标签重复 $a$ 次作同一构造；$a<0$ 则互换两侧，给一般体积的实现。证毕。
+

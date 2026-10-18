@@ -1,0 +1,19 @@
+**Theorem.** Every reservoir has a genuine occurrence. Every flat owner
+therefore selects its axial pair. This is a structural theorem; it
+neither excludes all axial flats nor gives six-reservoir realization.
+
+Choose the maximal pi-selected reservoir M and genuine escape
+
+    tau=(Z,M,C,D,M,C), H={M,C,D,Z,U,V},
+    m>=1+c+d, z>=1+m+c, p_M=1, p_Z=0.
+
+The upper-gap theorem182 supplies U outside M,C,D,Z with u>T(m,z)>m-2.
+The arbitrary-reservoir upper-witness theorem296–298 witnesses U and
+excludes every flat transverse occurrence of M,Z,U. C,D are witnessed
+in tau. Consequently only V can be unwitnessed. If it is, v<=m-2.
+
+We first prove a complete-star lemma that allows additional low labels,
+then show that an unwitnessed V would violate it. Only the weak escape
+inequalities above are used; the five-label strict-source theorem191
+is not imported.
+

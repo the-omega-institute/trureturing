@@ -1,0 +1,69 @@
+### 62.6 Coercivity, the factored remainder, and the proof
+
+Put \(r=\sqrt{x^2+y^2}\) and
+
+\[
+ q(b,x,y)=(x^2-y^2,xy-\tfrac{\sqrt3}{2}y^2,bx,by).
+\]
+
+For \(m=(x^2,xy,y^2)^T\), define
+
+\[
+ T=\begin{pmatrix}
+ 1&0&-15/16\\
+ 0&7/8&-\sqrt3/2\\
+ -15/16&-\sqrt3/2&7/4
+ \end{pmatrix},\qquad
+ B=T-\operatorname{diag}(1/1024,1/512,1/1024).
+\]
+
+The leading principal minors of \(B\) are
+
+\[
+ \frac{1023}{1024},\qquad
+ \frac{457281}{524288},\qquad
+ \frac{4775103}{536870912},
+\]
+
+all positive. Hence \(B\) is positive definite, and direct expansion yields
+
+\[
+ (x^2-y^2)^2+(xy-\tfrac{\sqrt3}{2}y^2)^2
+       -\frac{(x^2+y^2)^2}{1024}=m^TBm\ge0.
+\]
+
+It follows that \(\|q\|\ge r^2/32\). Its last two coordinates also give
+\(\|q\|\ge|b|r\). Taking half the sum of these lower bounds gives
+
+\[
+ \|q(b,x,y)\|\ge\frac{r(|b|+r)}{64}.
+\tag{62.13}
+\]
+
+Let \(R=G-q\). It is analytic, all its Taylor terms through degree two
+vanish, and \(R(b,0,0)=0\). On a sufficiently small convex chart
+neighborhood, Taylor's theorem applied to the derivative in \((x,y)\)
+gives a finite constant \(L\) such that
+
+\[
+ \|D_{(x,y)}R(b,x,y)\|\le L(|b|+r)^2.
+\]
+
+Integrating this derivative along \(t\mapsto(b,tx,ty)\) gives
+
+\[
+ \|R(b,x,y)\|\le Lr(|b|+r)^2.
+\tag{62.14}
+\]
+
+The factor \(r\) is essential and follows from the exact axis identity,
+not just from the vanishing quadratic jet. This estimate is uniform even
+when \(r\) is arbitrarily smaller than \(b^2\).
+
+If \(G=0\) and \(r>0\), (62.13)–(62.14) imply
+\(1/64\le L(|b|+r)\). Shrink the neighborhood so that
+\(L(|b|+r)<1/64\). The contradiction forces \(r=0\) for every nearby
+full solution. Equation (62.12) then identifies it with the actual
+canonical family. This proves Theorem 62.1. No explicit radius for this
+neighborhood is asserted.
+

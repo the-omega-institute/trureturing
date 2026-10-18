@@ -1,0 +1,39 @@
+**Proposition 9.3 (minimal additional relation and the remaining bridge).**
+For the fixed source/action contract, the prescribed-budget gap is closed
+by the following chain of supplied and new implications:
+
+$$
+\begin{aligned}
+&\text{native fixed-word feasibility and finite-source physical tables}\\
+&\quad+\ \text{finite-source obstruction completeness at fixed }(K,A)\\
+&\quad\Longrightarrow\ \text{terminating arbitrary-word budget decision}\\
+&\quad\Longrightarrow\ \text{same-source threshold decisions}\\
+&\quad\Longrightarrow\ \text{complete resource minima given finite success}.
+\end{aligned}
+\tag{NFO.26}
+$$
+
+It does not imply a terminating decision of (NFO.25).
+
+Proof. NSF already provides the first logical supplier, and finite
+source tables follow from actual finite iterates as in NPL. Reusing
+only those suppliers leaves an unbounded positive word search without
+a negative stopping rule. Theorem 3.2 adds exactly the finite original
+obstruction needed for the negative search, yielding Theorem 4.2.
+Theorems 5.1 and 5.2 combine it with sourcewise nonexpansive cap and
+cleanup; Theorems 6.3 and 7.1 supply the resulting exact optimization
+consumers after a known successful static upper witness. These establish
+the chain with actual same-register operations and the original full row.
+
+No change to the source representation, no finite representative promise
+and no extra equality observation is required. The relations that encode
+memory remain the acquired guarded constraints; the original boundary
+and its concrete spatial exterior remain the target; the authenticated
+epoch remains the forward physical action coordinate. Their resource
+comparison is made on the same source throughout. The chain addresses
+how much paid access suffices at a prescribed budget; it does not turn
+finite semantic alternatives into a free observable selector. Equation
+(NFO.24) explains why its finite obstructions cannot terminate the outer
+existential search in (NFO.25). That additional uniform inference remains
+open. $\square$
+

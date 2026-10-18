@@ -1,0 +1,36 @@
+**定理 22.13.1（无平均运行时预算）。** 对任意 $\delta>0$、$m>1$ 和 $K>0$，存在 $0<q_0<q_1<1$ 及有限 $N$，使每个活动轮的局部项目扩张恰为 $\delta$，同时
+
+$$
+\max_{\theta\in\{0,1\}}\mathbb E_\theta T_N<m,
+\qquad
+\Delta_{\mathrm{flag}}>K.
+$$
+
+**证明。** 取
+
+$$
+q_1=\frac{m-1}{2m},
+\qquad
+q_0=\frac{q_1}{e^\delta(1-q_1)+q_1}.
+$$
+
+则 $\operatorname{logit}(q_1)-\operatorname{logit}(q_0)=\delta$，并且
+
+$$
+\mathbb E_1T_N=S_N(q_1)<\frac1{1-q_1}=\frac{2m}{m+1}<m.
+$$
+
+取 $N>mK/\delta$。定理 22.12.1 给出
+
+$$
+\Delta_{\mathrm{flag}}>
+\frac{N\delta}{\mathbb E_1T_N}>
+\frac{N\delta}{m}>K.
+$$
+
+证毕。
+
+所以不存在只依赖局部扩张 $\delta$ 和无条件平均停止时间上界 $m$ 的有限统一函数 $B(\delta,m)$，能够约束所有公共旗标的项目扩张。这里的失效来自稀有长生存路径；路径级预算仍然可以收费 $N\delta$。
+
+<a id="section-22-14"></a>
+

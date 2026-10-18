@@ -1,0 +1,40 @@
+**Lemma 1.3 (uniform native variance margins).** Define
+
+$$
+a_\kappa(k)=2B_\kappa(k)^2.
+\tag{1.10}
+$$
+
+On the full closed rectangle $\mathcal K\times[l,u]$ there are
+$a_->0$, $a_+<\infty$ and $c_a>0$ with
+
+$$
+a_-\le a_\kappa\le a_+,\qquad a_\kappa'\ge c_a.
+\tag{1.11}
+$$
+
+All derivatives needed below have common finite bounds.
+
+Proof. Polynomial division and differentiation of (1.2) give
+
+$$
+\begin{aligned}
+B_\kappa(k)&=-\frac1{2H}\left(k+\alpha_\kappa-2\kappa+
+\frac{\alpha_\kappa(\alpha_\kappa-2\kappa)}{k-\alpha_\kappa}\right),\\
+B_\kappa'(k)&=-\frac1{2H}\left(1-
+\frac{\alpha_\kappa(\alpha_\kappa-2\kappa)}{(k-\alpha_\kappa)^2}\right),\\
+\alpha_\kappa(\alpha_\kappa-2\kappa)
+&=\kappa^2(\kappa^2/H^2-1)\le0.
+\end{aligned}
+\tag{1.12}
+$$
+
+The retained margins give $k-2\kappa>0$ and $k-\alpha_\kappa>0$.
+For example, at positive $\kappa<l/2<H/2$ one has
+$\alpha_\kappa<3l/4$, while at negative $\kappa$ it is negative.
+Thus $B_\kappa<0$ and $B_\kappa'\le-1/(2H)$.
+Compactness gives (1.11), since $a_\kappa'=4B_\kappa B_\kappa'$.
+The rational denominator stays uniformly away from zero, which gives
+the derivative bounds. This uses the entire already fixed family.
+$\square$
+

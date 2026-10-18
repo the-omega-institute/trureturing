@@ -1,0 +1,60 @@
+**定义 48.1（原来源上的小预算风险）。** 固定定义45.1、46.1的同一来源及
+定义44.1的误差合同，取
+
+$$
+\begin{aligned}
+W&=E\oplus\mathbb H,\qquad E=\operatorname{Im}\mathbb H,\qquad C=P_E,\qquad d=e_4,\\
+\mathcal B&=\{b\in\mathbb H:|b|\in\{7,25\},\ \operatorname{Re}b\ge(4/5)|b|\},\\
+\mathcal D_2&=E\times\mathcal B,\qquad (n,L,U,\tau)=(1,7,25,4/5).
+\end{aligned}
+\tag{48.1}
+$$
+
+初始 $a\in E$ 任意、无界并与 $b$ 独立；两个半径未标记，帽条件使用各来源自己的
+初始半径。制备来源、公开参数、标架、单位锚与控制身份均精确供应，致动精确。
+唯一当前寄存器从 $z_0=x=(a,b)$ 开始，原菜单恰为
+
+$$
+A_c(a,b)=(c\times a,bc),\quad c\in E,\ |c|\le1,
+\qquad A_d(a,b)=(\operatorname{Im}b,-a).
+\tag{48.2}
+$$
+
+更新覆盖旧状态；来源限制只施于初态，后继状态不必仍在 $\mathcal D_2$ 中。
+每次实际Read报告 $Cz+e\in E$，$|e|\le\delta$、$\delta\ge0$，且不改状态。
+全部误差可以联合对抗、相关并依赖历史，读次数不产生独立样本或平均精度。
+控制器源无关、共同初始化、确定且因果，下一实际事件仅由已见有限前缀决定。
+完整记录保留全部实际Read、动作身份及停止信息；每条合法有限或可数记录都须给出
+一个 $W$ 值估计，估计不必属于来源。可数事件按自然数排序，没有无穷事件以后的
+额外事件，也没有极限Read。没有半径标签、复位、初态副本、混合控制或反事实端口。
+
+目标在整条运行中始终为同一个 INITIAL $x$，损失为 $W$ 中的欧氏距离。沿用
+（46.3），$\mathcal P_N$ 限制每条合法历史至多 $N$ 次破坏性更新，不另设Read上限，
+并记
+
+$$
+\mathcal E_\pi(\delta)
+ =\sup_{x\in\mathcal D_2}\sup_{\text{合法联合因果读误差}}
+     |\widehat x_\pi(M)-x|,
+\qquad
+R_N(\delta)=\inf_{\pi\in\mathcal P_N}\mathcal E_\pi(\delta)
+ =\mathcal R_N^2(\delta;1,7,25,4/5).
+\tag{48.3}
+$$
+
+右端上标 $2$ 表示两层来源，不是平方损失。
+
+本节的执行／可访问记录合同与第47章在 $\eta=0$ 时一致：每次内部执行参数
+恰为已记命令 $c$，该章的单点证书不增加来源信息。这里的 $R_N(\delta)$ 上确界
+只允许精确致动和有界Read误差，不包含 $\eta>0$ 时的潜在执行增益；
+$R_N^{\rm cmd}(\delta,\eta)$ 属于第47章另行供应的合同。
+
+在 $0\le\delta\le21/10$ 时另记
+
+$$
+q=\frac{21}{5},\qquad
+h(\delta)=\frac{\sqrt{625-(q-2\delta)^2}-28/5}{2},\qquad
+B(\delta)=\sqrt{2\delta^2+h(\delta)^2}.
+\tag{48.4}
+$$
+

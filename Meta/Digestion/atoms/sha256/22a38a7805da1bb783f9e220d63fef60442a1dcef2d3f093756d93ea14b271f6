@@ -1,0 +1,60 @@
+### 71.4 Phase normalization and a second flat unitary
+
+For flat three-by-three \(V,W\), write
+\(v_{jk}\bar w_{jk}=e^{i\theta_{jk}}/3\). Substituting into Eq. (41)
+of the same source yields
+
+\[
+\cos(2\alpha)\cos(2\beta)
++\cos\theta_{jk}\sin(2\alpha)\sin(2\beta)=0.
+\tag{71.8}
+\]
+
+Thus, when the sine factors are nonzero,
+\(\cos\theta_{jk}=-\cot(2\alpha)\cot(2\beta)\). The additional
+factor \(1/3\) in the arccos expression following (D12) does not arise
+from that substitution.
+
+This difference matters for genuine Hadamards. With
+\(\omega=(-1+i\sqrt3)/2\), set
+
+\[
+V=\frac{J+(\omega-1)I}{\sqrt3},\qquad
+W=\frac{\omega[J+(\bar\omega-1)I]}{\sqrt3},\qquad
+c^2=\frac{1+1/\sqrt3}{2},\quad s^2=\frac{1-1/\sqrt3}{2},
+\quad cs=1/\sqrt6.
+\tag{71.9}
+\]
+
+Both \(V,W\) are flat unitaries. Their relative phases
+\(3v_{jk}\bar w_{jk}\) equal \(\omega\) on the diagonal and
+\(\bar\omega\) off it, so every real part of \(v_{jk}\bar w_{jk}\)
+is \(-1/6\). Dephasing gives opposite Fourier orientations for \(V,W\),
+as required in the corresponding case of the source argument.
+
+Choose \(\alpha=\beta\in(0,\pi/4)\) with
+\(\cos(2\alpha)=1/\sqrt3\), so \(c=\cos\alpha,s=\sin\alpha\).
+Then
+
+\[
+G=\begin{pmatrix}
+c^2V+s^2W&cs(V-W)\\cs(V-W)&s^2V+c^2W
+\end{pmatrix}
+\tag{71.10}
+\]
+
+is the source normal form with \(\gamma=0\), hence unitary. Directly,
+
+\[
+|c^2v+s^2w|^2=\frac{1-2/6}{3}-\frac1{18}=\frac16,
+\qquad
+|cs(v-w)|^2=\frac16\left(\frac23+\frac13\right)=\frac16.
+\tag{71.11}
+\]
+
+The other two blocks have the same modulus. Thus \(G\) is a rank-two
+CHM with \(\cot(2\alpha)\cot(2\beta)=1/2\) and all relative phase
+cosines \(-1/2\), rather than \(-1/6\). Also \(2\alpha>\pi/4\).
+The corrected relation therefore permits the \(2\pi/3\) phase spacing
+discarded by the printed final angle argument. Again, no quartet follows.
+

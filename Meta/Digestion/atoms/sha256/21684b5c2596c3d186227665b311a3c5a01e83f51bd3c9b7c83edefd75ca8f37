@@ -1,0 +1,41 @@
+**Lemma 24.2 (height weights on the full phase space).** Let $\mathfrak d(\xi)=d_E(0,\xi)$ and $\omega(r)=1+|r|$. There are fixed-data constants such that
+
+$$
+|p|\le C(1+\mathfrak d)^{-5},\qquad
+|g_0|\le C(1+\mathfrak d)^{-10},\qquad
+0\le F_s\le C\omega^{-5}.
+\tag{24.4}
+$$
+
+Consequently
+
+$$
+\begin{gathered}
+p\in L^{3/2}\cap L^2,\qquad
+r^ng_0\in L^p\quad\text{if }(10-n)p>7,\qquad
+r^ng_0\in L^\infty\quad(0\le n\le6),\\
+w_s:=F_sp,\qquad
+\|w_s\|_1+\|w_s\|_2+
+\sum_{n=0}^3\bigl(\|r^nw_s\|_{3/2}+\|r^nw_s\|_2\bigr)\le C.
+\end{gathered}
+\tag{24.5}
+$$
+
+The following early-field bounds also hold:
+
+$$
+\begin{gathered}
+\|F_s-V\|_2+\|F_s-V\|_\infty\le Cs,\qquad
+\left\|F_s-\sum_{k=0}^3s^kV_k\right\|_\infty\le Cs^4,\\
+\left\|F_s-\sum_{k=0}^ns^kV_k\right\|_4\le Cs^{n+1}
+\quad(n=0,1,2).
+\end{gathered}
+\tag{24.6}
+$$
+
+Proof. E Theorem 3.1 and J (31.2) give the two full-distance bounds. Since $|r|\le C\mathfrak d$ and homogeneous volume has dimension seven, polar integration gives all stated canonical memberships, including the sixth bounded seed moment.
+
+For the native field use $0\le F_s\le U_s$ and the height estimate J (2.9). Fix $0<\delta<c_0$. For $1\le|r|\le\delta/s$, take its radius to be $|r|$; the result is $C|r|^{-5}+Cs^5\le C_\delta\omega^{-5}$. For $|r|>\delta/s$ take the radius to be $\delta/s$, obtaining $C_\delta s^5$. On the original interval $|r|\le D/s$ for one fixed $D$, so this too is bounded by $C_{\delta,D}\omega^{-5}$. For $|r|<1$ use the uniform multiplier bound, and outside $I_s$ use zero extension. This proves the height bound in (24.4) uniformly over all three unrestricted phase coordinates.
+
+For $n\le3$, $|r|^nF_s\le C$; hence $|r|^nw_s$ is bounded in $L^{3/2}$ and $L^2$ by the corresponding norm of $p$. Also $\|w_s\|_1\le\|F_s\|_2\|p\|_2$. J Lemma 32.1 bounds $\|F_s\|_2$ and gives (24.6): at exponent two use degree zero, and at exponent four use $5-7/4=13/4>n+1$ for $n\le2$. The supremum bounds follow from J Lemma 23.2, bounded complete coefficients, and $\|U_s^{>}\|_\infty=O(s^5)$. These arguments establish exactly (24.5) on $I_s\times\mathbb R^3$. No homogeneous-distance envelope for $F_s$, or cap on a phase coordinate, is inferred from the height interval. $\square$
+

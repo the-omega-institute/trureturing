@@ -1,0 +1,34 @@
+**定义 37.1（十八端点输入）。** 取标签 $1,\ldots,10$，令 $a,b,c$ 分别反转前 $10,9,8$ 位。置
+
+$$
+g=(4,7,8,9,5,6,1,3,10,2),\qquad O_g=(cb)^9_g.
+$$
+
+沿该十八边圈依次记顶点为 $p_0,\ldots,p_{17},p_{18}=p_0$。这也给出不依赖其它状态的具体顶点定义：令 $W=(4,7,8,9,5,6,1,3,10)$，$R_j$ 为 $W$ 向右循环移动 $j$ 位，则
+
+$$
+p_{2j}=(R_j,2),\qquad
+p_{2j+1}=(\operatorname{rev}(R_j[0{:}8]),R_j[8],2),\qquad 0\le j<9.
+$$
+
+设 $F$ 为这些标签的 Big-3 图上的一个二因子，恰含两个圈 $C,Q$，长度分别为 $3627382,1418$。要求 $O_g$ 在 $F$ 中恰有九条 $b$ 边
+
+$$
+p_1p_2,p_3p_4,\ldots,p_{15}p_{16},p_{17}p_0.
+$$
+
+其中前四条属于 $C$，后五条属于 $Q$。删除这九条边后，要求实际补路径的端点与长度为
+
+$$
+\begin{array}{c|r@{\qquad}c|r}
+\multicolumn{2}{c}{C\text{ 的补路径}}&\multicolumn{2}{c}{Q\text{ 的补路径}}\\
+p_6\longleftrightarrow p_8&36&p_0\longleftrightarrow p_{15}&179\\
+p_3\longleftrightarrow p_5&140&p_{13}\longleftrightarrow p_{16}&179\\
+p_1\longleftrightarrow p_4&8785&p_{11}\longleftrightarrow p_{14}&179\\
+p_2\longleftrightarrow p_7&3618417&p_9\longleftrightarrow p_{12}&179\\
+&&p_{10}\longleftrightarrow p_{17}&697
+\end{array}
+$$
+
+长度均为生成元边数。这些条件指定实际有序边界，而非稀疏关联图、环秩或未经读取的外部配对。
+

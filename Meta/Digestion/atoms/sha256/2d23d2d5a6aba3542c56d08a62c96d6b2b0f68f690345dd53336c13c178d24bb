@@ -1,0 +1,44 @@
+**Corollary 16.2 (Original bounds and the unchanged attained wedge).**
+All valid lower bounds and attained results in 5–8 remain valid.
+On the whole original family,
+
+$$
+\begin{aligned}
+\max\{E_{\rm sum},L_8\}
+ &\le m_N\le m_O\\
+ &\le5\tau+
+ \min\left\{
+ \max\left\{\frac{22u}{181},\frac{11(u+v)}{128}\right\},
+ \max\left\{\frac{22u}{217},v\right\}
+ \right\}.
+\end{aligned}
+\tag{16.5}
+$$
+
+On $181v\ge75u$ the exact attained value in both classes
+is still $E_{\rm sum}$. The full-class complement remains
+unevaluated in general.
+
+Proof. Choose the better of the two complete common laws in 5.2
+and 10.2 for the fixed parameters. This selects one whole law;
+it does not combine separately optimized event margins.
+The lower bounds are (5.4) and 7.2.
+
+The old wedge's parameter condition is exactly the conserved-transfer
+parameter domain of XVIII 324–327 under
+$t=(u+v)/2$, $\delta=(u-v)/2$:
+$\delta\le53t/128$ is exactly $75u\le181v$,
+and $\delta\le\tau-t$ is $u\le\tau$.
+This domain is broader than the narrower overlapping slice
+$v\ge u/2$ identified in XVIII 330.
+The wedge law (5.2) is that same credited law, since
+$x+y=24t$ and $53x/3072=\delta$.
+At $u>0$ on the wedge, $v\ge75u/181>22u/217$,
+so $K$ has error $5\tau+v\ge E_{\rm sum}$.
+There is no conflict with the old matching lower bound or new
+optimality credit for that wedge.
+Compact original attainment in 8.1 still holds separately;
+it does not supply a value or equality in the complement.
+The full-score face question in 9.1 retains its stated unresolved
+intersection range. $\square$
+

@@ -1,0 +1,4 @@
+**定理 28.1（准确零制度）。** 若 $G=0,H\le1$，或 $G>0,H<H_*$，则所有实际未来 $x_j,j\ge3$ 均零，$\Omega\equiv0$。
+
+证明。定理18.3–18.4排除全部非零标签尾；定理4.3给剩余来源的全零尾。这不宣称原初值零或来源域为空。例19.4在每组站立参数都给实际零标签、非零初值见证：取 $a=Le_1,b=\xi e_1+(s_0/L)e_2$，$\xi>0$ 足够小，使 $|b|\le L$ 且 $L\xi s_0\le H$。字面树 $\langle\alpha,\langle\beta,\langle\alpha,\beta\rangle\rangle\rangle$ 的初值为 $CK\ne0$、范数 $L\xi s_0$，$\Delta=d_0$，三个取得值及全零尾同时合法。
+

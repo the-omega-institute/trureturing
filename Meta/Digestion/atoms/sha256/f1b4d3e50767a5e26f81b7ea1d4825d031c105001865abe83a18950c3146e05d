@@ -1,0 +1,59 @@
+**Definition 1.1 (original source and prescribed entry).** Use the finite
+ordered trees and homomorphism of [WTF, Definitions 1.1–1.4][WTF]:
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\qquad \rho\alpha=\beta,\quad
+\rho\beta=\langle\beta,\alpha\rangle,
+\quad \rho\langle v,w\rangle=\langle\rho v,\rho w\rangle.
+$$
+
+The complete current row at the cut $\{L,R\}^3$ has equality classes
+
+$$
+\{LLL,LRL\}=a,\quad \{LLR\}=b_1,\quad \{LRR\}=b_2,
+\quad \{RLL,RRL\}=c,\quad \{RLR\}=b_3,\quad \{RRR\}=b_4.
+$$
+
+Different classes are disequal. Write this row as $R_*$ and retain the
+entire unbounded original fiber
+
+$$
+\mathcal U_* = \{u\in\mathcal T:R_{\{L,R\}^3}(\rho u)=R_*\}.
+$$
+
+A complete predecessor row includes its ordered exterior, occurrences,
+canonical equality partition, disequalities and strict-prefix guards.
+There is no bound on the size, depth or interior shape of a source.
+
+Fix $n\ge6$, $3\le k\le n-2$, distinct positive original positions
+$A=\{s_1<\cdots<s_n\}$ and $r\ge0$. Put
+
+$$
+w_i=L^{s_i}R,\qquad a_i=LLLw_i,\qquad c_i=s_i+4,
+\qquad C_B=\sum_{i\in B}c_i,\qquad W=C_{[n]}.
+\tag{SI.1}
+$$
+
+For a branch image $B$, let
+$\theta_i(B)=\mathbf1_{\{r_B(w_i)=\mathsf{branch}\}}$; alpha, beta
+and absent each contribute zero. Keep the original eleven profiles and
+the literal pointwise code
+
+$$
+\sigma_{A,k}(u)=
+\begin{cases}
+0,&u\in\Pi_1\cup\Pi_2,\\
+1,&u\in\Pi_3\cup\Pi_4,\\
+\mathbf1_{\{\sum_i\theta_i(x_a)\ge k\}},&u\in Z_{b_3},\\
+0,&u\text{ is in another zero profile}.
+\end{cases}
+\tag{SI.2}
+$$
+
+The required result of preparation is the original latch
+$\widehat e_{\sigma_{A,k}(u)}$, followed by the original complete entry
+$e_{\sigma_{A,k}(u)}$. The separate reader of [WTF, Convention 1.3][WTF]
+has eight installed states and uses at most two fresh queries and six
+fresh letters. Returning another usable entry does not meet (SI.2).
+

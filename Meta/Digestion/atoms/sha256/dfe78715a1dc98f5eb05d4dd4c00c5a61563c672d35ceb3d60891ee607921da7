@@ -1,0 +1,53 @@
+### 定义 24.4（场导出的能量分布）
+
+若 \(\mathcal E_v(\Phi)\ge0\) 是节点 \(v\) 的局部能量贡献，并且
+
+\[
+\mathcal E_{\mathrm{tot}}(\Phi)
+=
+\sum_{v\in V}\mathcal E_v(\Phi)>0,
+\]
+
+则定义能量分布
+
+\[
+\pi_\Phi(v)
+=
+\frac{\mathcal E_v(\Phi)}
+{\mathcal E_{\mathrm{tot}}(\Phi)}.
+\]
+
+因此能量分布不是与场并列的原始变量，而是场配置和势函数的推前。若势函数为五态函数 \(\varepsilon:\Sigma\to\mathbb R\)，则单节点平均能量为
+
+\[
+\overline{\varepsilon}(p)
+=
+\sum_{s\in\Sigma}p_s\varepsilon(s).
+\]
+
+对原生数值读出
+
+\[
+\varepsilon(0)=0,\quad
+\varepsilon(2)=2,\quad
+\varepsilon(3)=3,\quad
+\varepsilon(5)=5,\quad
+\varepsilon(25)=7,
+\]
+
+有
+
+\[
+\overline{\varepsilon}(p)=2X+3Z+5Y,
+\]
+
+而二阶能量为
+
+\[
+\sum_s p_s\varepsilon(s)^2
+=
+4X+9Z+25Y+20\kappa.
+\]
+
+因此一次能量均值只看到三维可见投影，二阶能量已经看到隐藏 seam \(\kappa\)。这给出“场产生能量分布”的严格版本：隐藏联合关系在低阶观测中可以退化，在更高阶能量矩中恢复。
+

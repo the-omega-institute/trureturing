@@ -1,0 +1,47 @@
+**Lemma 4.3 (credited all-cyclic entropy supplier, specialized to $P$).**
+For every $r\ge0$ and every jointly admissible $T\subseteq P^r$, allowing
+arbitrary cyclic donors and all finite words,
+
+$$
+|T|\le4^r.
+\tag{NDR.24}
+$$
+
+**Proof.** For $r=0$ there is at most one tuple; empty $T$ is immediate.
+Apply [NCE, Theorem 2.2][NCE] to the seven native target functions and
+boundary experiments restricted to $P$, with unit weights, reply bound
+$m=4$ and mass cap $C=4$. Its hypothesis is: every range-feasible subset
+with mass greater than $C$ has a target not determined by an own experiment,
+whose squared target-cell masses sum to at most $C^2$. The only subset
+heavier than four is $P$ itself. It is range-feasible by (NDR.21); its
+$LL$ target has cell sizes $2,1,1,1$, squared sum $7\le16$, and no own
+witness by Lemma 4.2. Thus all hypotheses hold. Normalization of longer
+words stays within the same coordinate, so they do not change the class.
+
+Here is the relevant entropy mechanism, to make its all-joint scope
+explicit. Let $X$ be uniform on $T$, let $I$ be the coordinates whose
+marginal support is all of $P$, and put $Y_i=\Gamma_{LL}(X_i)$ for
+$i\in I$. The chosen donor $j_i$ for that target is distinct from $i$,
+and $Y_i$ is a function of both $X_i$ and $X_{j_i}$ under this same law.
+Write $\mathcal C=\sum_iH(X_i)-H(X)$. For any ordering, the contribution
+$H(X_i)-H(X_i\mid\text{earlier coordinates})$ is at least $H(Y_i)$
+when $j_i$ is earlier. Average over all orders: each distinct donor is
+earlier with probability $1/2$. Hence
+$\mathcal C\ge\tfrac12\sum_{i\in I}H(Y_i)$, including cycles.
+
+A coordinate outside $I$ has entropy at most $\log_2 4$. For one in $I$,
+condition on the four target cells, with sizes $a_z=2,1,1,1$ and
+probabilities $p_z$. The log-sum entropy bound gives
+
+$$
+H(X_i)-\tfrac12H(Y_i)
+\le\tfrac12H(p)+\sum_zp_z\log_2a_z
+\le\tfrac12\log_2\sum_za_z^2
+=\tfrac12\log_2 7\le\log_2 4.
+$$
+
+Subtract the total-correlation charge from the sum of marginal entropies
+to obtain $H(X)\le r\log_2 4$. Uniformity gives (NDR.24). This is the
+NCE random-order argument, not an independence assumption or a new entropy
+theorem. $\square$
+

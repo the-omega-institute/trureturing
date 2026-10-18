@@ -1,0 +1,27 @@
+**Theorem 55.2 (the exact strict gap).** At (S.31), $G_1>4v$. Thus no positive commuting $X$ and $c\geq0$ satisfy (S.14) there.
+
+Proof. Put
+
+$$
+L=\sqrt{\frac75}+\sqrt{\frac45-\frac h2},\qquad
+A_0=\frac{28}{25}-\frac{7h}{10},\qquad B_0=\frac{5h}{2}-\frac15.
+\tag{S.44}
+$$
+
+All square roots and both $A_0,B_0$ are positive: $0<h<1$ proves positivity of $A_0$, and $h>2/5$ proves positivity of $B_0$. Direct expansion with $v^2=(1+h)/2$ gives
+
+$$
+L^2-(2v)^2=2\sqrt{A_0}-B_0,
+\qquad 4A_0-B_0^2=\frac{263-360h}{200}.
+\tag{S.45}
+$$
+
+Both $263$ and $360h$ are positive and
+
+$$
+263^2-(360h)^2=263^2-\frac{360^2}{2}=4369>0.
+\tag{S.46}
+$$
+
+Therefore $263>360h$, then $2\sqrt{A_0}>B_0$, then $L>2v$ and $G_1=2L>4v$. Every squaring used positive sides. The sign follows from the positive integer (S.46), without a numerical minimum or approximate sign test. $\square$
+

@@ -1,0 +1,13 @@
+**Definition 1.1 (ordinary-theory scope).** This volume concerns finite
+relational objects, their prescribed read and transport operations, and
+recovery of one complete target row of the original object. A source is
+finite; the family of sources, coordinate values, literal lengths and
+execution lengths need not be bounded. The new bridge separates arithmetic
+controller synthesis from dynamic sufficiency of a boundary representation.
+Its deductions are `repo-derived` ordinary mathematics. The arithmetic
+decision fact used inside the deductions is `literature-attested`
+[Ginsburg–Spanier, Theorems 1.2–1.3][GS]. These statements are not assertions
+of Lean or kernel verification, physical realization or literature novelty.
+The append-only convention is that subsequent additions follow the final
+append anchor and use new numbers.
+

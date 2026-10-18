@@ -1,0 +1,100 @@
+**Definition 50.2 (the real-null curve).** Set
+
+$$
+q(t)=\sqrt{1-\chi+\chi t^2},\qquad d=2-\chi,\qquad e=1+\chi,\qquad
+D_t=d+et^2,
+$$
+
+and
+
+$$
+v(t)=\frac{(q(t),-1,-t)^T}{\sqrt{D_t}}.
+\tag{JR.87}
+$$
+
+Then $\|v(t)\|=1$ and $v(t)^TQv(t)=0$. Let
+
+$$
+\begin{gathered}
+p=(1-\chi)g_0+g_1,\qquad h=\chi g_0+g_2,\\
+F_t=p+ht^2-2q(t)(x+yt)+2zt,\qquad
+\psi(t)=\frac{F_t}{D_t}.
+\end{gathered}
+\tag{JR.88}
+$$
+
+The tuple
+
+$$
+X_{-,-}=v(t)v(t)^T,\qquad X_{+,+}=I-v(t)v(t)^T,\qquad
+X_{+,-}=X_{-,+}=0
+\tag{JR.89}
+$$
+
+is feasible for (JR.84) at $s=s(t)$, with trial objective
+
+$$
+\sum_{r,\epsilon}r(X_{r,\epsilon})_{01}=\frac{2q(t)}{D_t},\qquad
+J_{\rm trial}(t):=\operatorname{tr}G-2\psi(t)\leq J_{s(t)},\qquad
+s(t)=\frac{2s_0q(t)}{D_t}.
+\tag{JR.90}
+$$
+
+Here $J_{\rm trial}(t)$ is the linear objective of (JR.89), whereas
+$J_s$ retains its optimized meaning in (JR.84). Feasibility gives the
+displayed inequality; it does not assert equality.
+
+At $t=1$, the restriction of $G$ to $v(1)^\perp$ is represented in
+coordinates $u_0=u_1+u_2$ by
+
+$$
+\begin{pmatrix}
+g_0+g_1+2x&g_0+x+y+z\\
+g_0+x+y+z&g_0+g_2+2y
+\end{pmatrix}\succ0.
+\tag{JR.91}
+$$
+
+Evaluation on $\mathcal B_{\rm CG}$ places the determinant of (JR.91)
+in the rational interval
+
+$$
+\frac{32748113870346}{10^{18}}<\det\!\begin{pmatrix}
+ g_0+g_1+2x&g_0+x+y+z\\
+ g_0+x+y+z&g_0+g_2+2y
+\end{pmatrix}<\frac{32748113870347}{10^{18}}.
+\tag{JR.92}
+$$
+
+Consequently the former three-low-ray construction has actual value
+$T_{\rm flat}-\psi(1)$, with $\psi(1)=4\mathsf b(1)/3$. At $t=9/10$,
+exact rational radical bounds on $\mathcal B_{\rm CG}$ give
+
+$$
+3q(9/10)-D_{9/10}>
+\frac{178177939744504162}{10^{18}}>0,
+\tag{JR.93}
+$$
+
+and
+
+$$
+-\frac{97686672107194}{10^{18}}<
+3F_{9/10}-D_{9/10}F_1<-
+\frac{97686672107193}{10^{18}}.
+\tag{JR.94}
+$$
+
+Indeed, the second expression is the exact combination
+
+$$
+3F_t-D_tF_1=-(1-t^2)(dh-ep)+2x(D_t-3q(t))
+ +2y(D_t-3tq(t))+2z(3t-D_t).
+\tag{JR.95}
+$$
+
+Equations (JR.93)--(JR.95) prove $s(9/10)>2s_0/3$ and
+$\psi(9/10)<\psi(1)-10^{-5}$. Thus the original three-low point is
+strictly suboptimal at $s=2s_0/3$, while the comparison is with its
+actual TV and not with a lower bound.
+

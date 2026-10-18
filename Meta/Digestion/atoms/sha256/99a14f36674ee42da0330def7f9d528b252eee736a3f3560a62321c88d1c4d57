@@ -1,0 +1,138 @@
+**Theorem 209.2 (Complete support on one equal-pair carrier).** Let
+$L\ge4$, and stipulate one actual measure $\nu$ whose cells at every
+late pair $i<j$ have masses $(a,d,d,h)$ in order $00,01,10,11$.
+All four parameters are nonnegative; put $S=a+2d+h$ and $m=a+d$.
+Choose arbitrary $g_j,c_1,c_2,\tau\ge0$, and set
+
+$$
+\begin{aligned}
+c&=c_1+c_2,&c_*&=\min(c_1,c_2),&\mu&=\max_{j\in I}g_j,\\
+f_j&=\max(\{g_k:k>j\}\cup\{0\}),&
+u_j&=\min(g_j,d),&r_j&=(g_j-d)_+.
+\end{aligned}
+\tag{209.1}
+$$
+
+Construct $V$ by $P_{01x}=P_{10x}=\nu(x)/2$, by early correct
+masses $c_a$ at $w(\{a\}\cup I)$, by late correct masses
+$u_j\delta_{e_j}+r_j\delta_{v_j}$, and by $T=\tau$.
+Coincident words are added. Its anchor is $W_V=S+c+\tau$.
+Define
+
+$$
+\begin{aligned}
+I_j&=(g_j-m/2-c_*)_++(f_j-(d+h)/2-\tau)_+,\\
+J_{ij}&=(g_i-m)_++(g_j-d)_++(f_j-h-\tau)_+-c,\\
+D_F&=\max\{0,\mu-\tau,\max_j I_j,\max_{i<j}J_{ij}\}.
+\end{aligned}
+\tag{209.2}
+$$
+
+Then $\Delta_N(V)=\Delta_O(V)=D_F$. This is equality of complete
+catalog maxima. It does not assert $B_N^s(V)=B_O^s(V)$ for every
+schedule. There is no upper bound on $g_j$, $c$ or $\tau$ in this
+statement. Existence of the single full $\nu$ is a hypothesis;
+compatible pair tables alone do not supply it.
+
+**Proof.** The late placement is exactly the threshold placement of
+[203.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_VII.md)
+when every directed cutoff $a_{nj}=d$. Here its complete support is
+computed without the protected-terminal or bounded-profile restrictions.
+
+The head pair supplies $(\mu-\tau)_+$ and the anchor supplies zero.
+On early/late $(a,j)$, with other early label $b$, the stopped-zero
+cell supplies $S/2+c_a$; the other two cells offer respectively
+$m/2+c_b$ or $g_j$, and $(d+h)/2+\tau$ or $f_j$.
+Choose $a$ so that $c_b=c_*$. This gives $I_j$.
+A late stopped $(i,j)$ can independently choose zero or $i$ in its
+first cell, zero or $j$ in $10$, and zero or a future maximizing
+label in $11$. Its baselines are $m,d,h+\tau$, giving $J_{ij}$.
+Thus $\Delta_O(V)\ge D_F$. Ordering distinct late labels also gives
+
+$$
+D_F\ge g_n+g_q-S/2-\tau-c_*\quad(n\ne q),\qquad
+D_F\ge g_n+g_q+g_k-W_V\quad(n,q,k\text{ distinct}).
+\tag{209.3}
+$$
+
+For the first inequality use $I$ at the earlier label; for the second
+use $J$ at the first two ordered labels. Positive parts dominate their
+arguments. These are bounds from one stopped table at a time.
+
+For an early/late $N$ pair the two early-zero maxima sum to
+$S/2+c_a$. The remaining maxima are
+
+$$
+\max(m/2+c_b,g_j,\max_{n<j}r_n),\qquad
+\max((d+h)/2+\tau,f_j,\max_{n<j}u_n).
+\tag{209.4}
+$$
+
+If the second uses its baseline or a future label, choose a late
+winner $n\le j$ of the first, taking $n=j$ when its gain is zero.
+The first gain is at most $(g_n-m/2-c_*)_+$ and $f_n\ge f_j$,
+so $I_n$ bounds the combined excess. If an earlier label $k$ wins
+the second, its reward is $u_k\le d$. With positive first gain the
+excess is at most
+$g_n-m/2-c_b+d-(d+h)/2-\tau\le\mu-\tau$;
+with no first gain use $u_k\le\mu$ instead. Thus (209.4) is bounded.
+
+For late $i<j$, all-label maxima in $N$ are exactly
+
+$$
+\begin{aligned}
+M_{00}&=\max(a,a/2+c_1,a/2+c_2,\max_{n\le i}r_n),\\
+M_{01}&=d,\\
+M_{10}&=\max(d,g_j,\max_{i<n<j}r_n),\\
+M_{11}&=\max(h+\tau,f_j,\max_{n<j,\ n\ne i}u_n).
+\end{aligned}
+\tag{209.5}
+$$
+
+In $01$ only class $i$ can add correct reward, at most $u_i\le d$.
+Earlier unqueried labels occur explicitly in $00$ and $11$.
+Let $g_{00},g_{10},g_{11}$ be the gains over $a,d,h+\tau$;
+the excess is $g_{00}+g_{10}+g_{11}-c$.
+
+Suppose first that $00$ uses a late label or its baseline, and $11$
+uses a future label or its baseline. Select winners $n\le i$ and
+$i<q\le j$ for the first and third cells, using $n=i,q=j$ for
+zero gains. Then
+
+$$
+g_{00}\le(g_n-m)_+,\qquad g_{10}\le(g_q-d)_+,\qquad
+g_{11}\le(f_q-h-\tau)_+.
+$$
+
+One $J_{nq}$ bounds their sum minus $c$. If instead an earlier label
+$k$ positively wins $11$, use $u_k\le d$. When at most one of
+$g_{00},g_{10}$ is positive, the excess is at most $\mu-\tau$.
+When both are positive, the distinct winners satisfy $n\le i<q\le j$,
+and the excess is
+
+$$
+g_n+g_q+u_k-W_V-\epsilon,\qquad
+\epsilon=\begin{cases}0&q=j,\\d&q<j.\end{cases}
+$$
+
+For $k\notin\{n,q\}$ use the three-label inequality (209.3).
+For $k=n$ or $q$ use its two-label inequality and
+$u_k\le d\le S/2+c-c_*$. No separate allowance is paid for $11$.
+
+Finally suppose an early label positively wins $00$. Its gain is
+$c^{\max}-a/2$, so the excess becomes
+$g_{10}+g_{11}-c_*-a/2$.
+If $11$ has a future winner and both gains are positive, choose $q$
+for $10$ and bound this by
+$g_q+f_q-d-h-\tau-c_*-a/2\le I_q$, since
+$d+h+a/2\ge S/2$. With only the $10$ gain use
+$d+a/2\ge m/2$ and the first part of $I_q$; with only the $11$
+gain use $\mu-\tau$. If $11$ has an earlier winner, $u_k\le d$
+gives the same $\mu-\tau$ bound, with or without a $10$ gain.
+This includes arbitrarily large early credit.
+
+Every $N$ pair is bounded by $W_V+D_F$. The catalog completion in
+207.2 handles every shorter rule. Together with the stopped lower
+bounds and $B_O\le B_N$ this proves both equalities, including
+$a,d,h,\tau$ or any class mass zero. $\square$
+

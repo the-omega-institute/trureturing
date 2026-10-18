@@ -1,0 +1,91 @@
+**Theorem 206.17 (Dense stock exchange at fixed totals).**
+Fix arbitrary nonnegative $\gamma_1,\ldots,\gamma_L,S,t$ and $d\ge0$.
+Suppose
+
+$$
+\mu\ge2d,\qquad t\ge\mu-d,\qquad
+S\ge\max\{2\mu,4(\mu-d)-2E\}.
+\tag{206.43}
+$$
+
+There exists a full score $V$ in the $A=0$, early-pair family preserving
+every $\gamma_j$, $S$ and $t$, hence $Q,W$, with $\Delta_N(V)\le d$.
+If $t=\mu-d$, its exact $N$ and $O$ excesses are $d$, and $d$ is the
+attained minimum of each excess over all scores in that family with
+precisely these fixed totals. For $d\le1$, $(V,0)$ is a certificate.
+When $t>\mu-d$, only the asserted upper bound is claimed.
+
+**Proof.** Define
+
+$$
+\begin{aligned}
+\tau&=\mu-d,&E_0&=\min(E,\mu-2d),\\
+c_1&=\min(\gamma_1,E_0),&c_2&=E_0-c_1,\\
+p_a&=2(\tau-c_a),&S_0&=p_1+p_2,
+\qquad f_a=c_a+p_a=2\tau-c_a.
+\end{aligned}
+\tag{206.44}
+$$
+
+Because $0\le E_0\le E$, each $c_a$ is nonnegative and at most
+$\gamma_a$. Also $c_a\le\mu-2d\le\tau$, so $p_a\ge0$.
+In particular
+
+$$
+\begin{gathered}
+S_0=4\tau-2E_0=\max\{2\mu,4(\mu-d)-2E\}\le S,\\
+2\mu\le S_0\le4\mu,\qquad
+\mu\le f_a\le2\mu,\quad f_a\le S_0,\quad
+\tau\ge\mu/2,\quad p_a/2+\tau=f_a.
+\end{gathered}
+\tag{206.45}
+$$
+
+Construct the fair core $V_0=\mathcal V(c,p,\gamma_{\ge3},\tau)$,
+with anchor $W_0=f_1+f_2+\tau=E_0+S_0+\tau$.
+For $(1,2)$ its exact $N$ maxima are $(0,f_1,f_2,\mu)$ because
+$\tau\le\mu$. The stopped table $(1,2;1,2,j_*)$ attains
+$W_0+d$. For an early/late pair, the first two $N$ cells sum to
+$f_a$; the $10$ cell has maximum at most $\mu$, since
+$f_b/2\le\mu$ and all late totals are at most $\mu$.
+In $11$, zero earns $p_b/2+\tau=f_b$, dominating all numerical
+labels since $f_b\ge\mu$. Thus the support is at most
+$f_a+\mu+f_b=W_0+d$.
+
+For late $i<j$, each of $00,01$ has maximum exactly $S_0/4$.
+This zero-label reward covers $f_a/4$, earlier late rewards at most
+$\mu/4$, and class $i$'s half-total at most $\mu/2$, using
+$S_0\ge2\mu$. The $10$ maximum is at most $\mu$, including
+$S_0/4\le\mu$. The $11$ maximum is exactly $S_0/4+\tau\ge\mu$,
+which covers every numerical label. Consequently the total is at most
+$3S_0/4+\mu+\tau$, whose excess over $W_0$ is
+
+$$
+\mu-S_0/4-E_0=d-E_0/2\le d.
+$$
+
+These full-label bounds cover every pair and hence every shorter
+schedule. The stopped attainer at $(1,2)$ proves
+$\Delta_N(V_0)=\Delta_O(V_0)=d$, also when $\mu=d=0$.
+
+Now add correct mass $\gamma_a-c_a$ fairly in early class $a$, pair
+mass $S-S_0$ fairly in early class one, and $t-\tau$ to $T$.
+More explicitly, divide each added early total equally over all
+$01v$ or $10v$ as appropriate. All added coefficients are
+nonnegative. The anchor collects each added row with coefficient one;
+any fixed deterministic table collects it with coefficient at most
+one. Hence adding them cannot increase that table's relative excess.
+Taking the maximum only after this comparison gives
+$\Delta_N(V)\le d$. Every prescribed total, the quotient and the
+anchor are exactly restored. This does not assign separate positive
+budgets to the additions.
+
+If $t=\tau$, any competitor with these data permits the stopped
+table $(1,2;1,2,j_*)$, which collects all early correct and pair rows
+and the maximum late class. Its reward is
+$E+S+\mu=W+d$, independent of suffix placement or early imbalance.
+Thus $\Delta_O\ge d$ and $\Delta_N\ge\Delta_O$ for every such
+competitor. The constructed upper bound matches, proving both minima.
+No minimum-stock claim or optimization over unrestricted event types
+is asserted. $\square$
+

@@ -1,0 +1,22 @@
+**Definition 6.1 (structural entrance).** Replace the original irreducible
+primitive port by its fixed structural version: $F_{65}$, the finite
+register component in the same fixed initial state, the two meter boundary
+cells and their original head marks, and the meter's two head links.
+The other tapes are empty components. This is a declared finite primitive
+foundation, with construction/endowment charged in Definition 8.2.
+Its native event ordinal is zero. It contains no unknown source material.
+
+Run the original finite bootstrap, installing every ordinary boundary,
+native control-description bit, and finite control/token bit via its
+compiled single-row patch. Supply the same canonical private source bits
+by their IN/WR/MR rows. Allocate and zero source/workspace cells and
+construct Base offsets/descriptors by the original literal routines.
+Execute the original fixed validation and no-update acquisition, every
+row, seal, mailbox copy, receiver copy, and token operation included.
+Thereafter use the unchanged dispatcher and source programs, with each
+native row interpreted by its compiled patch. Denote the resulting
+structural history over an original prefix $h$ by $\widehat h$.
+The structural machine holds the switch components and their incidences,
+not an additional original byte machine or a stored $K$. The original
+record $W(h)$ is the comparison object in the correspondence proof.
+

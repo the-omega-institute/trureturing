@@ -1,0 +1,167 @@
+**Theorem 366.2 (All stochastic fiber maps of one complete law).** For every
+$0<s<1/23$, define
+
+$$
+\begin{aligned}
+T_w&=\frac12\bigl(e_{2w_1+w_3}+e_{4+2w_2+w_3}\bigr),\\
+P_s(w)&=(1-8s)T_w+se_0
+                +s\sum_{i=1}^7\bigl((1-w_i)e_i+w_ie_0\bigr).
+\end{aligned}
+\tag{366.4}
+$$
+
+This is a complete normalized $\mathscr N_7$ kernel, and
+
+$$
+d_\infty(k,q)\ge\frac{1-23s}{6}>0
+\quad\text{for every }k\in\mathcal K(P_s)
+\text{ and every }q\in\mathscr O_7.
+\tag{366.5}
+$$
+
+Consequently $\mathcal K(P_s)\cap\mathscr O_7=\varnothing$. At $s=1/100$ the lower bound is $77/600$.
+
+The assertion concerns the finite full catalog $\mathscr O_7$ and six general law events, not a canonical unit-$O$ score or an arbitrary-address original law-distance extension. Its associated profile
+
+$$
+a_1=\cdots=a_7=1-s,\qquad e_s=1-2s,
+\qquad a_8\le e_s
+\tag{366.6}
+$$
+
+with any entire positive ordered vanishing tail is outside $H_7$. Both $P_s$ and the zero-request original stopped law
+
+$$
+q^*=(1-7s)e_0+s\sum_{i=1}^7e_i
+\tag{366.7}
+$$
+
+attain error $e_s$ at that same entire profile. Thus (366.5) is a failure of every fiber-averaging repair of this supplied kernel, with a same-cap stopped survivor.
+
+*Proof.* The complete $N$ allocation has ten schedule types. In a pair, the four output labels are listed in $00,01,10,11$ order; each cell is the owning mass times its listed unit vector.
+
+| Schedule | Owning mass | Complete cell labels |
+| --- | --- | --- |
+| $(1,3)$ | $(1-8s)/2$ | $(0,1,2,3)$ |
+| $(2,3)$ | $(1-8s)/2$ | $(4,5,6,7)$ |
+| empty | $s$ | $(0)$ |
+| $(i)$, each $1\le i\le7$ | $s$ each | $(i,0)$ |
+
+All masses are positive in the stated range, and their sum is
+$(1-8s)+s+7s=1$. This is exactly (366.4), on every word. The single interval-seed construction of 363.3 fixes every complete terminal table in advance; pairs acquire both replies and singletons acquire one. Emitting the actual marks gives an original $\mathcal N_2$ realization without changing advice, requests or handoff. The constant law (366.7) is realized by the empty schedule with one seed and no requests.
+
+We first verify the entire-profile assertion, independently of the separation. At a low first zero $n$, the empty branch of $P_s$ gives $p_w(0)\ge s$, and singleton $n$ gives $p_w(n)\ge s$. The three literal demands are
+
+$$
+1-a_n-e_s=3s-1,\qquad a_n-e_s=s,\qquad 1-e_s=2s.
+\tag{366.8}
+$$
+
+Thus all three rows hold: the negative base demand is retained, the correct coordinate is at least $s$, and their union is at least $2s$. At the positive word,
+
+$$
+P_s(1^7)=8se_0+\frac{1-8s}{2}(e_3+e_7),
+\tag{366.9}
+$$
+
+whose base coordinate exceeds $2s$. At word $1100000$ the two tagged labels in (366.4) are $2,6$, so its label-$3$ mass is exactly $s$; its correct deficit is $a_3-s=e_s$. There is an actual source with that word. This proves attained error $e_s$ on the low fibers.
+
+For $q^*$ the correct coordinate is $s$, its union coordinate is $1-6s\ge2s$, and its base coordinate $1-7s\ge2s$ also meets the positive row. Its correct deficit on each low zero fiber is exactly $e_s$. For every actual $n>7$, the exact tail errors from (363.8) are respectively
+
+$$
+\max\{1-8s,a_n\}\le e_s,\qquad
+\max\{7s,a_n\}\le e_s.
+\tag{366.10}
+$$
+
+All the inequalities used here hold for $s<1/23$. They include the closed tie $a_8=e_s$, and include every allowed suffix and every later first absence. The active length is seven, but
+
+$$
+8e_s-\sum_{j=3}^7a_j=8(1-2s)-5(1-s)=3-11s>0,
+\tag{366.11}
+$$
+
+so this prefix/cap fails the defining inequality of $H_7$. At $s=1/100$ one may, for example, take $a_n=(49/50)/(n-7)$ for $n\ge8$; then the prefix is $99/100$ and the cap is $49/50$. No optimum over all preparations is asserted.
+
+For the separation use the six-event functional
+
+$$
+S(k)=\sum_{j=1}^6 k_{w^{(j)}}(E_j),
+\tag{366.12}
+$$
+
+with the following complete fiber minima. The last two columns specify the tagged event probability $T_v(E_j)$ on the entire fiber, and a suffix attaining the minimum stock from the empty and singleton branches.
+
+| $j$ | $w^{(j)}$ | $E_j$ | $\min_{\tau(v)=\tau(w^{(j)})}P_s(v)(E_j)$ | $T_v(E_j)$ | A minimizing $v$ |
+| ---: | --- | --- | --- | ---: | --- |
+| 1 | 0101111 | $\{0,5,7\}$ | $1/2-s$ | $1/2$ | 0000000 |
+| 2 | 0111111 | $\{1,2,4,6\}$ | $1/2-3s$ | $1/2$ | 0111111 |
+| 3 | 1001111 | $\{3,4\}$ | $1/2-4s$ | $1/2$ | 1011111 |
+| 4 | 1011111 | $\{0,1,2,5,6\}$ | $1/2+s$ | $1/2$ | 1000000 |
+| 5 | 1101111 | $\{1,2,6\}$ | $1-8s$ | $1$ | 1101111 |
+| 6 | 1111111 | $\{3,7\}$ | $1-8s$ | $1$ | 1111111 |
+
+Here is the full-fiber calculation. For any event $E\subseteq J_7$, the coefficient of $s$ from the empty and seven singleton branches is
+
+$$
+C_E(v)=\begin{cases}
+\displaystyle\sum_{i\in E}(1-v_i),&0\notin E,\\[2mm]
+\displaystyle1+|E\setminus\{0\}|+
+        \sum_{i\notin E\setminus\{0\}}v_i,&0\in E,
+\end{cases}
+\tag{366.13}
+$$
+
+where the input sums range over $i\in[7]$. For the six rows, after fixing only the first-zero prefix, these are
+
+$$
+\begin{array}{c|c|l|c}
+j&\tau(v)&C_{E_j}(v)&\min C_{E_j}\\ \hline
+1&1&3+v_2+v_3+v_4+v_6&3\\
+2&1&1+(1-v_2)+(1-v_4)+(1-v_6)&1\\
+3&2&(1-v_3)+(1-v_4)&0\\
+4&2&5+v_3+v_4+v_7&5\\
+5&3&1-v_6&0\\
+6&8&0&0
+\end{array}
+\tag{366.14}
+$$
+
+Every term bounded below is nonnegative, and the minimizing words in the table attain the bounds. On the first fiber, the two tagged labels are $v_3$ and $4+2v_2+v_3$; each of $E_1,E_2$ contains exactly one of them for either value of $v_3$. On the second fiber the labels are $2+v_3$ and $4+v_3$; each of $E_3,E_4$ again contains exactly one. On the third fiber they are $2,6$, and on the positive fiber they are $3,7$, both in the indicated event. This proves the tagged column for every free suffix, and (366.13)–(366.14) then prove the six displayed minima exactly. For any row-stochastic map in (366.2), convexity within each fiber gives
+
+$$
+S(k)\ge4-23s\qquad(k\in\mathcal K(P_s)).
+\tag{366.15}
+$$
+
+It remains to bound the whole stopped catalog on these general events. For a cell, sum $\mathbf1_{z\in E_j}$ over its selected words and maximize over every $z\in J_7$, exactly as in (365.7). All six selected words have coordinates $4,5,6,7$ equal to one. The full list of schedule types therefore has the following cell maxima:
+
+| Schedule type | Number of schedules | Cell maxima |
+| --- | ---: | --- |
+| empty | 1 | $(3)$ |
+| singleton $i\in\{1,2,3\}$ | 3 | $(1,2)$ |
+| singleton $h\in\{4,5,6,7\}$ | 4 | $(0,3)$ |
+| pair $(1,2),(1,3),(2,3)$ | 3 | $(1,1,1)$ |
+| pair $(i,h)$, $i\le3<h$ | 12 | $(1,0,2)$ |
+| pair $(h,k)$, $4\le h<k\le7$ | 6 | $(0,0,3)$ |
+
+This covers all $29$ schedules and every output label. For example, at each low pair its three cells each contain two selected words whose events are disjoint, so their cell maxima are all one. On a low singleton its zero cell has maximum one and its positive cell maximum two. An empty schedule has maximal label reward three. Fixed high replies give exactly the other rows of the table. By the common owning-mass argument (365.8),
+
+$$
+S(q)\le3\qquad(q\in\mathscr O_7).
+\tag{366.16}
+$$
+
+For $d=d_\infty(k,q)$, each of the six event differences is at most $d$, giving
+
+$$
+4-23s\le S(k)\le S(q)+6d\le3+6d.
+\tag{366.17}
+$$
+
+This proves (366.5), including the exact value $77/600$ at $s=1/100$. At $s=1/23$ the bound is zero; no positive separation is asserted there.
+
+The events $E_j$ are general observation-law events and are not the canonical base/correct/union/positive rows. The quantifier in (366.2) excludes every stochastic input averaging within the entire first-zero fiber of this one $N$ kernel. It does not exclude selection confined to $H_L$, selection after changing the initial representative, or an arbitrary same-profile stopped preparation; (366.7) explicitly supplies the last one. It also does not assert an original arbitrary-address extension of (366.5).
+
+The fixed endpoint and common-map repair obstructions of [XV 258](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XV.md) range over terminal assignments of a different repair problem. [XV 266.4](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XV.md) excludes one uniform averaging of an already stopped kernel, for which the identity map survives. Here the complete initial kernel is fixed and every row-stochastic fiber map is excluded from $\mathscr O_7$. The convexity and support arguments themselves are ordinary finite-dimensional methods, with the concrete complete law and the full-fiber invariant carrying this conclusion. $\square$
+

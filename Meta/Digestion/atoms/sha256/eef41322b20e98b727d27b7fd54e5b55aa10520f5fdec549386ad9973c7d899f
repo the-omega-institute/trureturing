@@ -1,0 +1,22 @@
+**Definition 6.2 (intrinsic depth and subtree boundaries as consumers).** From the recovered source, the complete addressed-subtree intervals are supplied by [AncestorAreaInterval](../../../D5/S3/Arith/FibonacciAtomic/Geometry/AncestorAreaInterval.lean), `ancestor_area_interval`. In its notation, for $1\le a\le b\le m(T)$,
+
+$$
+\operatorname{area}_T(a,b)=\binom{b-a+1}{2}
+\quad\Longleftrightarrow\quad
+[a,b]\text{ is the complete leaf interval of an actual subtree occurrence}.
+$$
+
+Here the area is evaluated from the acquired coordinate list, and the occurrence includes its ambient address. This gives the existing relational boundary consumer of the paid acquisition; it is not a total-area identity or an extra oracle.
+
+For the substitution $\rho$ with $\rho(\alpha)=\beta$, $\rho(\beta)=\langle\beta,\alpha\rangle$ and preservation of ordered pairing, the existing inverse-image parsing and primitive-ray decomposition define
+
+$$
+\nu(T)=\max\{n\ge0:T\in\rho^n[\mathcal T]\}.
+$$
+
+Their finite computation from the complete tree is supplied by [Joint Moment Fibers](RECURSIVE_RELATIONAL_OBSERVATION_JOINT_MOMENT_FIBERS.md), §§36.2–36.3 and the evidence consumers of Theorem 57.2. Thus exact retained tree memory supplies this intrinsic inverse-generation depth without new raw reads. This is not the depth of a queried address, elapsed source-query duration, physical age or the unknown true entry history.
+
+The same current tree $\beta$ can have actual entry $\beta$ with zero substitutions or entry $\alpha$ with one substitution. Both histories produce the identical current four-reply function and the identical $\tau(\beta)$ and $\nu(\beta)=1$. Deterministic queries to that unchanged current source therefore cannot tell which entry occurred. This is the existing entry ambiguity of JM §37.3, and it survives complete acquisition. An authenticated entry record or actual event archive is another supplied input.
+
+Likewise, the tree $\langle\alpha,\beta\rangle$ admits the read orders $(\varepsilon,L,R)$ and $(L,R,\varepsilon)$, and arbitrary repeated requests, all with the same semantic source and final full description. That description alone cannot recover which past order occurred. If a particular deterministic acquisition program and its entire initial inputs are supplied, its abstract trace can be replayed from the tree, but replay does not recover actual timestamps, durations or unrecorded executions. The cut of Assumption 5.1 specifically prevents old chronology from becoming an unlisted input.
+

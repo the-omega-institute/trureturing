@@ -1,0 +1,45 @@
+**Theorem 7.1 (full-domain unitary scaling and all equality cases).** For every auxiliary $\alpha>0$ keep the same canonical heat, source and density and set
+
+$$
+V^{[\alpha]}=j_0^{-1}\int_\alpha^\infty k_tdt,\qquad
+C_*^{[\alpha]}=\sup_{0\ne f\in\mathcal Q_E}
+       \frac{\int V^{[\alpha]}|f|^2}{b[f]},\qquad
+\chi^{[\alpha]}=a/C_*^{[\alpha]}.
+\tag{7.1}
+$$
+
+For $R>0$ let $\mathcal D_Rf(\xi)=R^{-7/2}f(\delta_{1/R}\xi)$. This unitary maps $\mathcal Q_E$ bijectively to itself, and with $R=\sqrt\alpha$,
+
+$$
+\begin{aligned}
+b[\mathcal D_R f]&=R^{-2}b[f],&
+k_t(\delta_R\xi)&=R^{-7}k_{t/R^2}(\xi),\\
+V^{[\alpha]}(\xi)&=\alpha^{-5/2}V(\delta_{1/\sqrt\alpha}\xi),&
+\mathcal EV^{[\alpha]}&=j_0^{-1}k_\alpha,\\
+\int V^{[\alpha]}|\mathcal D_{\sqrt\alpha}f|^2
+ &=\alpha^{-5/2}\int V|f|^2,&
+C_*^{[\alpha]}&=\alpha^{-3/2}C_*,\\
+\chi^{[\alpha]}&=\alpha^{3/2}\chi,&
+h^{[\alpha]}[\mathcal D_{\sqrt\alpha}f]&=\alpha^{-1}h[f],
+\end{aligned}
+\tag{7.2}
+$$
+
+where $h^{[\alpha]}=ab-\chi^{[\alpha]}\int V^{[\alpha]}|\cdot|^2$. The identity holds for every complex $f\in\mathcal Q_E$ and every norm. Its closed operator $H^{[\alpha]}=a\mathcal E-\chi^{[\alpha]}V^{[\alpha]}$ has domain $D(\mathcal E)$ and
+
+$$
+\mathcal D_{\sqrt\alpha}^{-1}H^{[\alpha]}\mathcal D_{\sqrt\alpha}
+ =\alpha^{-1}H_c,\qquad
+\ker H^{[\alpha]}=\mathbb C p^{[\alpha]},\quad
+p^{[\alpha]}=\mathcal D_{\sqrt\alpha}p.
+\tag{7.3}
+$$
+
+Equality in $\int V^{[\alpha]}|f|^2\le C_*^{[\alpha]}b[f]$ holds precisely for $f\in\mathbb C p^{[\alpha]}$, including zero.
+
+Proof. The homogeneous degree one of $X,Y$ and Haar Jacobian $R^7$ give the unitarity and form scaling on the compact smooth core. That core is mapped bijectively to itself. Passing to its form closure, and then applying the inverse dilation, proves the full-domain bijection and the first identity for every complex form vector. Form representation gives $\mathcal D_R^{-1}\mathcal E\mathcal D_R=R^{-2}\mathcal E$, including its operator domain, and spectral calculus gives the heat conjugacy. Comparing its kernels under the same change of Haar density and retaining the source at the identity proves $k_t(\delta_R\xi)=R^{-7}k_{t/R^2}(\xi)$.
+
+Change time $t=\alpha u$ in (7.1). The factor $\alpha$ from time and $\alpha^{-7/2}$ from the kernel give exactly $\alpha^{-5/2}V(\delta_{1/\sqrt\alpha}\xi)$. Applying the heat equation against compact smooth tests and using $t^{-7/2}$ at infinity proves its source identity. Since the heat is conservative, this source has Lebesgue mass $1/j_0$ for every $\alpha$. It has not been divided by any additional charge.
+
+Change variables $\xi=\delta_{\sqrt\alpha}\eta$ in the potential pairing; the Jacobian cancels the squared amplitude factor and gives the displayed pairing identity. Divide by the kinetic scaling and take the supremum over the entire domain, using its bijection, to obtain the exact best constant and threshold. Substitution proves the form identity. The field $V^{[\alpha]}$ is bounded for each fixed positive $\alpha$, so bounded perturbation gives operator domain $D(\mathcal E)$. Form representation proves (7.3). Since $h\ge0$ and its form-null space is $\mathbb Cp$, the bijection gives both the stated kernel and every equality case. This uses the full complex domain, without a height-product restriction. $\square$
+

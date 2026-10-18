@@ -1,0 +1,48 @@
+**Definition 222.1 (Complete words, rewards and tables).** Fix an integer $L\ge3$.
+Let $J_L=\{0,\ldots,L\}$, $\Omega=\{0,1\}^L\setminus\{1^L\}$,
+$n(w)=\min\{j:w_j=0\}$ and $\Omega_j=\{w:n(w)=j\}$.
+A full score $V$ consists of independent nonnegative numbers
+$A_w,C_w,P_w$ for every $w\in\Omega$, and $T\ge0$. Its reward is
+
+$$
+g_V(w,\ell)=A_w\mathbf1_{\ell=0}+C_w\mathbf1_{\ell=n(w)}
+ +P_w\mathbf1_{\ell\in\{0,n(w)\}},\qquad
+g_V(1^L,\ell)=T\mathbf1_{\ell=0}.
+$$
+
+An empty table has one output, a singleton table has outputs on cells
+$0,1$, and a full pair table $N(i,j;a,b,c,d)$, $i<j$, has outputs
+$a,b,c,d$ on cells $00,01,10,11$. A stopped pair table
+$O(i,j;a,c,d)$ has outputs on cells $0,10,11$; its first cell merges
+$00,01$ before any maximization. Every cell allows every label in $J_L$,
+including labels earlier than both queries and labels never queried.
+The complete catalogs $\mathcal D_N,\mathcal D_O$ include all such
+empty, singleton and pair tables. At a schedule $S$ set
+
+$$
+B_{\mathcal C}^{S}(V)=\sum_{E\text{ a cell of }S}
+ \max_{\ell\in J_L}\sum_{w\in E}g_V(w,\ell),\qquad
+B_{\mathcal C}(V)=\max_S B_{\mathcal C}^{S}(V).
+$$
+
+Put $R=O(1,2;1,2,0)$, with full completion $N(1,2;1,1,2,0)$, and
+
+$$
+\begin{aligned}
+W_V&=\sum_{n(w)\ge3}A_w+\sum_{n(w)\le2}C_w+\sum_wP_w+T,\\
+\Delta_{\mathcal C}(V)&=B_{\mathcal C}(V)-W_V,\\
+Q(V)&=(\beta_1,\ldots,\beta_L;K),\quad
+\beta_j=\sum_{\Omega_j}(C_w-A_w),\quad
+K=\sum_w(A_w+C_w+P_w)+T.
+\end{aligned}
+$$
+
+Thus $W_V$ is the reward of $R$ and $0\le\Delta_O\le\Delta_N$.
+Both $Q$ and $W$ are linear; $B_{\mathcal C}$ and $\Delta_{\mathcal C}$
+are homogeneous and subadditive on nonnegative scores. A reversed pair
+permutes the full cells, and a repetition gives singleton information.
+These are identities for evaluating supports: actual repeated and ignored
+requests still count. Unspecified coefficients in every example below
+are zero, and coincident contributions add. Zero score coefficients
+never remove event constraints.
+

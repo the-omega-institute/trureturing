@@ -1,0 +1,32 @@
+**Lemma 4.1 (entries and the calibrated reality test).** For every positive supported $\rho$,
+
+$$
+\begin{aligned}
+C_{DD}&=h_0^2\rho_{00}+h_1^2\rho_{11}+h_2^2\rho_{22},&
+C_{TT}&=b^2\rho_{00}+a^2\rho_{11},&
+C_{SS}&=d^2\rho_{00}+c^2\rho_{22},\\
+C_{DT}&=h_0a\rho_{10}+h_1b\rho_{01},&
+C_{DS}&=h_0c\rho_{20}+h_2d\rho_{02},&
+C_{TS}&=ac\rho_{21}.
+\end{aligned}
+\tag{PG.19}
+$$
+
+The remaining entries are their conjugates. In the fixed calibrated basis, $C(\rho)$ is real if and only if $\rho$ is real.
+
+Proof. Multiply the sparse Kraus matrices in (PG.12). Section 10 proves the inherited source consequences
+$r_T=ah_1/(bh_0)\in(1/4,2/5)$,
+$r_S=ch_2/(dh_0)\in(1/10,1/6)$,
+$h_1/h_0>7/10$ and $h_2/h_0>4/5$. Hence
+
+$$
+\frac{h_0a}{h_1b}=\frac{r_T}{(h_1/h_0)^2}<40/49<1,\qquad
+\frac{h_0c}{h_2d}=\frac{r_S}{(h_2/h_0)^2}<25/96<1 .
+$$
+
+Thus $\chi_T=h_1b-h_0a>0$ and $\chi_S=h_2d-h_0c>0$.
+The imaginary parts of the three off-diagonal entries are
+$\chi_T\operatorname{Im}\rho_{01}$,
+$\chi_S\operatorname{Im}\rho_{02}$ and
+$-ac\operatorname{Im}\rho_{12}$. All multipliers are nonzero, proving both implications. Reality here is not reality after an arbitrary coefficient rephasing. $\square$
+

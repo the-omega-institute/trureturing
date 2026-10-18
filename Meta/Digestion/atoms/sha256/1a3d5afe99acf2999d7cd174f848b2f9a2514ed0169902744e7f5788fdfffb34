@@ -1,0 +1,31 @@
+**Definition 2.1 (fixed installed source).** Fix a finite depth menu $S$ containing 1 and 2 and a feasible rational every-mass floor $b_{\rm src}>0$, so $|S|b_{\rm src}\le1$. Write
+
+$$
+\mathcal P_{S,b_{\rm src}}=\{\mu:\operatorname{supp}\mu=S,\ \mu(k)\ge b_{\rm src},\ \sum_{k\in S}\mu(k)=1\}.
+$$
+
+A source is installed once. Before the first actual Read it draws one common $K\sim\mu$; every actual paid Read, including rejected seed pairs and payload returns, uses this same $K$. Conditional on $K=k$, fresh Read letters have probabilities $r_k=F_{k+1}/F_{k+3}$ for $\alpha$ and $1-r_k$ for $\beta$. Here $r_1=1/3$, $r_2=2/5$ and $3/8\le r_k\le5/13$ for $k\ge3$. Nothing below chooses, copies or resamples this source.
+
+Retain the entire PH1.2 original transition table $\delta_0$ and original configuration $C_0$: both seeds, bare fields, selector, all tree records $B,Q^+,Z$, ordered writes and latch, parser, permissions, completion and delivery. The seed parser rejects equal pairs, accepts $\alpha\beta$ as seed 0 and $\beta\alpha$ as seed 1. In each payload phase $p_i$, $\alpha$ completes marker 0 and $\beta$ enters the suspended phase; there $\alpha$ returns to $p_i$ and $\beta$ completes marker 1. The third write finishes before latch. The same history's latched record is held through segment four, its completion, the sole original Stop and delivery. Pending permits only that Stop; delivered has empty residual; neither permits Read. The monitor added below never changes a record, original event, permission or source probability.
+
+For a history $h$, let $A(h),B(h)$ count all acquired letters and let $\ell(h)=A(h)+B(h)$ count paid Reads. The complete actual target, at an active fourth-segment cut with original configuration $c$, is
+
+$$
+T_h^\mu=(I_c)_*\sum_{k\in S}\nu_h(k)P_{s,r_k},\qquad
+\nu_h(k)=\frac{\mu(k)r_k^{A(h)}(1-r_k)^{B(h)}}{\sum_i\mu(i)r_i^{A(h)}(1-r_i)^{B(h)}}.
+\tag{2.1}
+$$
+
+This is the common-source posterior, with strictly positive denominator. The posterior, acquired counts and probability rows below are analysis objects, never runtime inputs. The full legal raw carrier at $p_4$ consists of $u_{j,0}=(\beta\alpha)^j\alpha$, $u_{j,1}=(\beta\alpha)^j\beta\beta$ for $j\ge0$, and the legal infinite noncompletion outcome. At the suspended cut it consists of $\beta$ or $\alpha u_{j,z}$ and its infinite outcome. The already acquired suspended $\beta$ is absent from future letters. With $a_r=r(1-r)$,
+
+$$
+\begin{aligned}
+P_{p,r}(u_{j,0})&=r a_r^j,&P_{p,r}(u_{j,1})&=(1-r)^2a_r^j,\\
+P_{\beta,r}(\beta)&=1-r,&P_{\beta,r}(\alpha u_{j,0})&=r^2a_r^j,&
+P_{\beta,r}(\alpha u_{j,1})&=r(1-r)^2a_r^j.
+\end{aligned}
+\tag{2.2}
+$$
+
+PH/ST supplies the same-history transcript map $I_c$: each raw word executes the original ordered event blocks, held-record actions, completion, Stop and delivery from this $c$. Reading back letters gives its inverse on the image. It preserves TV, including the noncompletion outcome, rather than discarding records or comparing records from different histories. The pinned formal source `FourthSegmentStoppedLaw.lean` supplies `legalRead`, `legalStop`, `first_completion_normal_form`, `noncompletion_fiber`, `actual_noncompletion_mass_zero` and `actual_fourth_segment_stopped_word_law`, with $\alpha=0,\beta=1$. The common-$K$, Bayes and full-record bridges are the separate PH/ST contracts. Mathematical `totalRead` grants no terminal Read.
+

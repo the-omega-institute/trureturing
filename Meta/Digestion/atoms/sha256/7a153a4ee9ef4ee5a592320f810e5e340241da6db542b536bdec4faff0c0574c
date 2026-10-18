@@ -1,0 +1,21 @@
+**Definition 4.2 (common processing after the last source-bearing input).**
+Acquisition and the algebra are fixed before the next public request is
+supplied. For each public request $q$, subsequent outcome-retaining
+processing is one common CPTP map $\Phi_q$ on $\widehat{\mathcal B}$,
+with absorbing input $\bot$ remaining stopped. Independent ancillary
+states, computation, fresh randomness and internal feedback on actual
+records can be absorbed into it. Arbitrary source-independent exact-time
+output capability is granted; the output algebra need not be finite.
+Every acquisition stop, erroneous rejection and executed failure remains
+an output sector, with its declared successor. There is no renormalization
+by acceptance. Discarding fields only defines a necessary reduced test.
+
+No later source-dependent channel, actuator configuration, original-height
+query, waveform callback, source-sensitive timer, programme setting,
+producer port or readable share arrives outside $\mathcal B$. This is
+essential. The ideal source-indexed family $\mathcal I_x$ does not itself
+constitute one common channel on an isolated finite handoff. Supplying its
+source-bound execution as an additional future service changes this access
+contract. In particular the extra producer phase port of [RA][RA] §§13–17
+is outside it.
+

@@ -1,0 +1,54 @@
+**定理 86.4（Exact new whole-target prices under both alphabets）。** For every $d\ge3$ in Definition 86.1, under each original literal alphabet,
+
+$$
+\boxed{
+C_{\rm ad}(\widetilde f)=C_{\rm ad}(\widetilde F)=d+1,\qquad
+C_{\rm pre}(\widetilde f)=C_{\rm pre}(\widetilde F)=2d+1.
+}
+\tag{86.21}
+$$
+
+The exact minimum worst emitted-bit fees are respectively $m(d+1)$ and $m(2d+1)$. The additional price result is the GLOBAL equality and its sharp compulsory-root obstruction. The adaptive positive-child construction below is credited reuse of Chapter 85.
+
+证明（the precise reused adaptive archive）。 Issue the same actual root $P$ of (86.11), retaining the INITIAL value $v$. The high and initial-bottom rules are those already proved. A successful root difference one has exactly support $S$, current scalar $v\oplus1$, current tail one, and current phase $-j+m$. On $S$ neither modified entry occurs, so $\widetilde\lambda_v|_S=\lambda_v|_S$. This is exactly the positive archive in (85.6), with the same parameter, same joint INITIAL candidates, same component labels, same multiplicities and same chronological suffix indices. The proof of Chapter 85's positive continuation applies to this actual archive, rather than to the changed full target without checking its restriction.
+
+Specifically (85.11)–(85.15) supplies a bijection $c^{(v)}$ of its $r$ component labels onto the $d$-cube, zero in coordinate $t$ on both phases of $M_t$ for $1\le t\le d$. The proper-requirement verification (85.12)–(85.13) uses the unchanged prescribed omission-pair labels. Use precisely the full rows and inverses
+
+$$
+\begin{aligned}
+q_t^{(v)}(j)&=c_t^{(v)}(\widetilde\lambda_v(j))&&j\in S,\\
+q_t^{(v)}(1)&=\bigoplus_{j\in S}c_t^{(v)}(\widetilde\lambda_v(j)),\\
+q_t^{(v)}(N-1)&=q_t^{(v)}(N)=0,\\
+B^{(v)}_{t,i}&=\bigoplus_{b=0}^{i}q_t^{(v)}(tm+b\bmod T)
+&&1\le t\le d,\quad0\le i<m.
+\end{aligned}
+\tag{86.22}
+$$
+
+These are (85.16)–(85.17) on the identical positive support. Their available phase-one parity compensation is an offline bit prescription; that phase is absent from this archive even though it now has a different INITIAL label elsewhere. All full rows are even and zero on their actual omissions. The credited minimum component multiplicity on $S$ is $r-2$. Consequently their root/first-suffix and consecutive suffix charged intersections are at least $r(r-2)/2$ and $r(r-2)/4$, respectively, both strictly above three. The original Lemma 84.2 therefore gives every strict seam exactly as in (85.18)–(85.20). These same dense rows exclude all-one suffixes; no inherited tail is replaced incorrectly.
+
+A positive source issues $P\mid B_1^{(v)}\mid\cdots\mid B_d^{(v)}$, reads its own $d$ suffix endpoint differences, inverts $c^{(v)}$, and returns its immutable component label. Its total fee is $d+1$. The suffix selection may use the free INITIAL value, so this supplies adaptive attainment and is not the GLOBAL witness.
+
+证明（the changed zero archive is actually completed）。 Root difference zero now has three phases $\{1,N-1,N\}$ with joined labels $X,(C,C),Y$. At absolute issued indices one and two, give this archive the complete words
+
+$$
+U=0^3\,1\,0^{m-4},\qquad
+V=0^5\,1\,0^{m-6}.
+\tag{86.23}
+$$
+
+Their isolated ones are at local positions three and five. At index one the path starts at $m=N-2$, so $U$ has arithmetic support $\{0,1\}$ modulo $T$. At index two the start is $2m\equiv N-5\pmod T$, so $V$ has support $\{N,0\}$. Phase zero is absent from this archive; its prescribed charges belong to these same literal words and supply no observed sibling output.
+
+Both words start and end zero. The incoming tail of $U$ is the root's actual one, so its seam sum is $1+0<k$; $U$ leaves tail zero and the next seam sum is $0+0<k$. Their only internal one-runs have length one. All these sources succeed. Their own two successive endpoint differences distinguish
+
+$$
+1\longmapsto(1,0),\qquad
+N-1\longmapsto(0,0),\qquad
+N\longmapsto(0,1).
+\tag{86.24}
+$$
+
+Return $\lambda_v(0)$, $C$, or $\lambda_v(2)$, respectively. On value one the first and third labels are both $D_0$, which is permitted; the rule still decodes correctly. Stop at the second pulse's completed endpoint. This zero branch pays exactly three blocks including $P$, with no final cleanup. Since $d\ge3$, it does not exceed $d+1$.
+
+Thus the adaptive worst fee is at most $d+1$ on the entire new target. Lemma 86.2 proves the matching all-action lower bound; Lemmas 86.2–86.3 similarly prove the GLOBAL equality. Deterministic record evolution, actual surjectivity (86.5) and the explicit pullback (86.4) give both record/history equalities [S1, Proposition 2.2]. Controllers receive only the specified record output archive, not the raw source history. Finally every issued word has exactly $m$ emitted bits, including the absorbed part of the high root. Multiplying both optimal worst-block fees by $m$ gives the stated bit fees. ∎
+

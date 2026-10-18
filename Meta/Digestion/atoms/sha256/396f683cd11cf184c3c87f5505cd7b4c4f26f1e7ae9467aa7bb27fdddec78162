@@ -1,0 +1,65 @@
+**Theorem 66.3 (Simultaneous integrable lower envelopes and original-tape realization).** Under Definition 66.1, let $Q$ be exactly the actual signature space (50.2), and let $q\mapsto g_q\in\mathcal M$ be continuous in $d_{\mathcal M}$. For its canonical increasing representatives define
+
+$$
+ h_m^q(u)=\inf_{q'\in U_m(q)}g_{q'}(u),
+ \qquad
+ \ell_{C_m(q)}(A)=\int_A h_m^q(t(\theta))\,d\tau(\theta)
+ \quad(A\in\mathcal F).
+\tag{66.9}
+$$
+
+These are the greatest common submeasures of the selected original-tape laws in the indicated actual cylinders. Their masses increase to one at every actual $q$. More precisely, for every $q$, $0<\delta<1$ and $\epsilon>0$, any depth $m$ with
+
+$$
+ \|g_{q'}-g_q\|_1<\epsilon\quad(q'\in U_m(q))
+\tag{66.10}
+$$
+
+gives the simultaneous lower bound
+
+$$
+ h_m^q(u)\ge e_{q,\delta,\epsilon}(u)
+ :=\begin{cases}
+       \left(g_q(u-\delta)-\frac\epsilon\delta\right)_+,&\delta<u<1,\\
+       0,&0<u\le\delta.
+    \end{cases}
+\tag{66.11}
+$$
+
+The envelopes are measurable and integrable, with $0\le e_{q,\delta,\epsilon}\le g_q$. Along $\delta_n=2^{-n}$ and $\epsilon_n=\delta_n^2$, their masses increase to one. The depths that certify them are source-dependent. Thus the laws $\iota(g_{[y]})$ have an exact lawful preparation on the entire original carrier, using one source-independent common seed and actual finite-prime execution almost surely at every original source. No common integrable upper envelope of the whole selection is assumed.
+
+**Proof.** For increasing densities $g,k$ and $u>\delta$, monotonicity gives, for almost every $v\in(u-\delta,u)$,
+
+$$
+ g(v)\ge g(u-\delta),\qquad k(v)\le k(u),\qquad
+ \|g-k\|_1\ge\delta\bigl(g(u-\delta)-k(u)\bigr)_+.
+\tag{66.12}
+$$
+
+Apply this to every $k=g_{q'}$ in (66.10). The same shifted density and the same error bound work for all these neighbors, proving (66.11). This is a simultaneous pointwise bound, rather than separate exceptional sets or separate optimizers for each neighbor.
+
+With the displayed $\delta_n,\epsilon_n$, the lower envelopes are increasing in $n$: the shifted argument increases, the subtracted $\delta_n$ decreases and the indicator expands. They are bounded by $g_q$. At every continuity point of $g_q$ they converge to $g_q$, and an increasing finite function on $I$ has only countably many discontinuities. Dominated convergence under the single integrable density $g_q$ gives $\int_I e_{q,\delta_n,\epsilon_n}\,d\lambda\to1$. Continuity of the selection supplies a finite depth for each such tolerance; choose these depths increasing. Since $h_m^q$ increases with $m$ and is bounded above by $g_q$ because $q\in U_m(q)$, (66.11) proves
+
+$$
+ \int_I h_m^q\,d\lambda\uparrow1,
+ \qquad
+ h_m^q\uparrow g_q\quad\lambda\text{-almost everywhere}.
+\tag{66.13}
+$$
+
+The infima in (66.9) are measurable because $Q$ is countable. Any positive measure dominated by all the selected laws in a cylinder is absolutely continuous with respect to $\tau$; its density is bounded by all their densities after one countable union of null sets, hence by their infimum. This proves greatestness on the entire $\mathcal F$, including for competing submeasure densities that do not factor through $t$. Countability of $Q$ also allows (66.13) to hold for every actual $q$ outside one common tape null set. The domination used for convergence is local to $q$ and does not introduce a uniform neighborhood size or a global upper bound.
+
+Equations (66.9)--(66.13) discharge exactly the order-exhaustion hypothesis of Theorem 46.4, whose positive-increment realization is reused. To specify its correspondence, include the depth-zero occupied node $X$ and give it fictitious parent mass zero. At a node $C$ with parent $C^-$, set $\Delta_C=\ell_C-\ell_{C^-}$ and $a_C=\ell_C(\Theta)$; at the root use $\Delta_X=\ell_X$. These are positive measures on the original tapes. Preload, for each of the countably many nodes with positive increment mass, a coordinate $W_C$ with law $\Delta_C/(a_C-a_{C^-})$, and use a fixed original tape at zero-mass nodes. Take all these coordinates and an independent uniform $U\in(0,1)$ under one product probability measure, the same at every source.
+
+At a reached node $C$, the common deterministic rule emits $W_C$ if $U<a_C$ and otherwise queries the next actual prime and follows its answer. Reaching a non-root node implies $U\ge a_{C^-}$, so its unconditional output submeasure is
+
+$$
+ \mathsf P\{a_{C^-}\le U<a_C,\ W_C\in A\}=\Delta_C(A)
+ \quad(A\in\mathcal F).
+\tag{66.14}
+$$
+
+Along each actual source, the output submeasures telescope to $\ell_{C_m(x)}$. By (66.13), the probability of no handoff through that finite depth is $1-a_{C_m(x)}\to0$, and the full output law is $\iota(g_{[x]})$. Finite record events and output preimages are measurable interval and coordinate events or countable unions of them. The original consumer receives only this original tape and then runs on the same static source. There is no source sampling, source label, target input, additional probe, reset or failure conditioning.
+
+The product theorem used by Theorem 46.4 has arbitrary measurable probability spaces as coordinates; only countably many are needed here. Its cylinder formula is also the `Measure.infinitePi` result in [pinned Mathlib, Probability/ProductMeasure](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Probability/ProductMeasure.lean). It provides the seed measure directly, and does not assert that these coordinate laws can be sampled effectively from a real uniform variable. No standard-Borel assumption, measurable-singleton assumption, disintegration or finite-description rule is needed. This construction supplies sourcewise almost-sure finite execution, not a common finite horizon or a bound on seed support. $\square$
+

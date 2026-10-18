@@ -1,0 +1,33 @@
+**Definition 2.2 (finite leaf-arithmetic scheme).** A scheme consists of
+finitely many names $v$, including designated output names, one finite
+shape template $S_v$ for every name, a finite affine parameter guard,
+and finite lists of the following edge instructions:
+
+1. $\operatorname{Align}(v,w,a)$, with identical shape templates, creates
+   $r_{v,p}-r_{w,p}=a(\mathbf n)$ at every corresponding leaf;
+2. $\operatorname{Pair}(v,l,r)$, with $S_v=f(S_l,S_r)$, creates
+   $r_{v,Lp}-r_{l,p}=0$ and $r_{v,Rq}-r_{r,q}=0$ at every child leaf;
+3. $\operatorname{Anchor}(v,k)$, with $S_v=c$, creates
+   $r_{v,\varepsilon}-r_o=k$, where $r_o=0$ and $k$ is a fixed integer.
+
+The scheme also has a finite list of pairs of names required different.
+That list is an instruction for generating mismatch coordinates, not a
+native disequality predicate in the final domain. Normality is enforced
+by the universal local instruction in Definition 2.3, not by an oracle
+for normal native trees.
+
+Given $\mathbf K$, set $H_v=S_v[\mathbf K]$. The temporary rank-vertex
+set is the disjoint union
+
+$$
+V(\mathbf K)=\{o\}\ \sqcup\
+\coprod_v\{(v,p):p\in\operatorname{Leaves}(H_v)\}.
+\tag{SFP.7}
+$$
+
+Reuse of a name reuses these very vertices. Different names and different
+positions initially have different vertices, even when their shapes are
+identical. Only listed positive edge instructions relate their ranks.
+These instructions generate a finite affine-labelled equality graph.
+They generate neither native trees nor a search through possible sources.
+

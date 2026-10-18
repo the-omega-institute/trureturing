@@ -1,0 +1,18 @@
+**Corollary 9.2 (necessary structure of a nineteen-state competitor).** If such a graph has $m=19$, its complete common-support cut list, including the formal endpoint, is exactly one of
+
+$$
+(0,1,7,8),\qquad(0,1,2,7,8).
+\tag{35}
+$$
+
+Its sole long gap is respectively $(1,7)$ or $(2,7)$, and that gap has
+
+$$
+D_B-E_B=1,\qquad E_{\rm cut}=0,\qquad u=0.
+\tag{36}
+$$
+
+In particular $b_{(3,4)}=1$; in the second case also $b_{(1,1)}=1$.
+
+**Proof.** Equality $m-20=-1$ requires a negative pool contribution. Theorem 9.1's complete case analysis permits only $(1,7)$ or $(2,7)$, each with deficit at most one. All other pool contributions and $E_{\rm cut},u$ are nonnegative, so equality forces exactly (36) and zero contribution from every other gap. Consecutivity excludes every intervening cut. Together with depth one being common, the remaining integer depths outside the gap give precisely (35). Depth seven has only the cell $(3,4)$, whose zero cut excess makes its host unique. At depth two the only non-axis cell is $(1,1)$; in the second case it is a cut and has zero excess as well. The condition $u=0$ permits certified/live reuse, while requiring every installed state to be live somewhere. These are necessary conditions, with no nineteen-state table or attainment asserted. $\square$
+

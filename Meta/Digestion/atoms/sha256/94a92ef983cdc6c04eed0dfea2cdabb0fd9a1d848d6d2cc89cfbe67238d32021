@@ -1,0 +1,10 @@
+### 命题 12.6（期望分解）
+
+对每个满足 $\operatorname{Prob}(p)$ 的 $p\in\mathcal L$ 和每个 $f:\Sigma\to\mathbb R$，
+
+$$
+\sum_s p_sf_s=f_0+(f_2-f_0)X(p)+(f_5-f_0)Y(p)+(f_3-f_0)Z(p)+J_f\kappa(p).
+$$
+
+证明：定理 2.2 的唯一函数展开乘以 $p_s$ 后求和，常数项使用 $\sum_s p_s=1$。证毕。
+

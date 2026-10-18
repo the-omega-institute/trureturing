@@ -1,0 +1,44 @@
+**Lemma 1.3 (exact routing across every original chart).** Fix a chart
+$\eta$ of [ARH, Proposition 10.3][ARH] and an epoch numeral $e\ge0$.
+For $p\in I$, the reply at $p$ in $\rho^e W_\eta[v]$ is a computable
+constant independent of $v$. For every $c\in B$, precisely one of the
+following descriptions applies, uniformly over feasible $v$:
+
+1. If $c=a_i s$ and the class pattern reaches its depth-$h_0$ frontier at
+   $s$, let $x$ be that frontier variable. Then
+   $r_{\rho^e W_\eta[v]}(cz)=r_{\rho^e v(x)}(z)$ for every finite $z$.
+2. Otherwise a known original leaf $\lambda\in\{\alpha,\beta\}$ occurs
+   at an address $a$ with $c=a t$, where $t$ is fixed. Put
+   $g=(\rho^e\lambda)|_t$ if that subtree exists, and $g=\varnothing$
+   otherwise. Then $r_{\rho^e W_\eta[v]}(cz)=r_g(z)$ for every $z$, where
+   the empty tree has reply absent everywhere.
+
+The finite choice of routing form and the suffix $z$ specify one common
+physical action before the chart or source is quantified; its charged
+length is exactly (SRF.2), even in case 2.
+
+Proof. ARH uses the same original depth $h_0$ in every chart. Every
+frontier variable has an original occurrence $a_b s_x$ with
+$|s_x|=h_0$, and all occurrences of a class contain the same original
+subtree. Thus a routing leaf in an old hole either reaches that very
+frontier variable, or its length-$h_0$ path has already met a concrete
+leaf of the pattern. An outside routing leaf is itself concrete and has
+$t=\varepsilon$. These are exhaustive, including patterns that terminate
+earlier and ground charts. The iterate $\rho$ preserves each original
+pairing node and replaces each original leaf by its known finite image.
+Induction along the fixed original path proves both displayed reply
+identities, including descendants born inside that image and paths that
+remain absent. If $p\in I$, it meets no residual variable: every residual
+occurrence is a leaf of $K$. Navigation therefore either ends at an
+explicit original pairing node or enters a known finite leaf image, so
+its reply is constant on the chart.
+
+The routing data $K,I,B$ depend only on the common old row and $h_0$,
+not on $\eta$. A suffix is neither deleted from an unknown tree nor
+chosen after seeing a chart. At execution the word $cz$, including its
+whole prefix, is submitted at the original root. Repeated occurrences
+select the same residual coordinate in each chart, by the old-class
+source identity just cited. The argument is valid simultaneously for
+all charts and all satisfying valuations, without weakening any of
+$D_\eta$'s joint constraints. $\square$
+

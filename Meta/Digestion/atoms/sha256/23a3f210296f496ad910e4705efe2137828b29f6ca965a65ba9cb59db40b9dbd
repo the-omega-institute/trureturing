@@ -1,0 +1,66 @@
+**Proposition 4.3 (physical positivity and an explicit admitted interval).**
+Every admitted state (NP.29) is normalized and positive definite; its
+Gram is positive definite and genuinely nonreal. For every chosen
+positive $\tau$, a whole explicit interval of $\xi$ is admitted. Namely set
+
+$$
+\begin{aligned}
+T_0&=2\beta+\frac{\beta^2(1+\alpha)}{\alpha k},\\
+G_0&=4A\sqrt\alpha+
+            \frac{\beta(B_T+2\alpha A)}{\sqrt\alpha k},\\
+\xi_0&=\min\left\{\frac14,
+ \sqrt{\frac\ell{2T_0}},
+ \sqrt{\frac{k}{4(1-\alpha)}},
+ \sqrt{\frac{A\alpha k^2}{2B_T\beta^2}},
+ \frac{\chi\sqrt{\tau_0\tau_1}}{2G_0}\right\}>0.
+\end{aligned}
+\tag{NP.31}
+$$
+
+Every $0<\xi\leq\xi_0$ satisfies the strict admission conditions, including
+the closed upper edge. For all admitted positive $\xi$,
+$0<s_*<\sqrt\ell$.
+
+Proof. First $c_\xi,\sigma_\xi>0$, $c_\xi^2+\sigma_\xi^2=1$ and
+
+$$
+p-\alpha q=\delta_\xi=k+\beta(1-c_\xi)\geq k,
+\qquad pq=r_0^2>0.
+\tag{NP.32}
+$$
+
+Thus $p,q>0$, every denominator in (NP.27) is positive, and admission
+makes $\lambda,\gamma>0$. The $DT$-state determinant is
+$\tau_0\tau_1-(\gamma/\chi)^2>0$, so $\rho>0$ and its trace is one.
+Multiplying $D^\dagger T$ against $\rho$ gives
+$h_0a\rho_{10}+h_1b\rho_{01}=i\gamma$; the other off-diagonal Gram
+entries vanish, proving (NP.29). Independence of $D,T,S$ and $\rho>0$
+give $z^\dagger Cz=\operatorname{tr}(K(z)^\dagger K(z)\rho)>0$ for
+$z\ne0$. Hence $C>0$, and $\gamma>0$ proves genuine nonreality.
+
+All quantities inside the minimum (NP.31) are finite and positive.
+For $0<\xi\leq\xi_0$ one has $c_\xi>1/2$, $\sigma_\xi\leq2\xi$,
+$1-c_\xi\leq2\xi^2$, $p\geq k$, and
+$q=r_0^2/p\leq\beta^2\xi^2/(\alpha k)$. Therefore
+
+$$
+\begin{aligned}
+p+q&=\delta_\xi+(1+\alpha)q
+ \leq k+T_0\xi^2\leq1-\ell/2<1,\\
+k_\xi&\geq k-2(1-\alpha)\xi^2\geq k/2>0,\\
+Ap-B_Tq&\geq Ak-\frac{B_T\beta^2\xi^2}{\alpha k}\geq Ak/2>0.
+\end{aligned}
+\tag{NP.33}
+$$
+
+Moreover $0<\lambda\leq A/c_\xi\leq2A$ and
+$\sqrt{q/p}=r_0/p\leq\beta\xi/(\sqrt\alpha k)$. Substitution in
+$\gamma$ yields
+$0<\gamma\leq G_0\xi\leq\chi\sqrt{\tau_0\tau_1}/2$, giving the
+last strict inequality in (NP.28). Finally
+$t=\delta_\xi+(1+\alpha)q>k$, while admission gives $t<1$;
+this proves the asserted endpoint bounds. The exact choice
+$\tau=(1/3,1/3,1/3)$, $\xi=\xi_0/2$ is a concrete member without any
+search. Algebraic public parameters give algebraic constants and matrices.
+$\square$
+

@@ -1,0 +1,48 @@
+**定理 486.2（全部实尺度 $x\ge8$ 的正储备预算）。** 对每个实数 $x\ge8$，
+
+$$
+\boxed{R(x)>\frac1{50\sqrt x\log x}.}
+$$
+
+**证明。** 先设 $x\ge10$，令 $y=\sqrt{2x}>4$。由于 $x-1>0$ 且
+
+$$
+(x-1)^2-(2y)^2=x^2-10x+1=x(x-10)+1>0,
+$$
+
+有 $2y<x-1$。因此 $(y,2y]$ 的全部素数都在 §87.4 的实际子储备区间 $[\sqrt{2x},x-1]$ 内。复用逐项界并对同一区间求和，得到
+
+$$
+R(x)>\frac{y}{5\log y}\frac1{4y(2y+1)}
+=\frac1{10(2\sqrt{2x}+1)\log(2x)}.
+$$
+
+$\sqrt x\ge3$、$\sqrt2<10/7$ 给
+
+$$
+2\sqrt{2x}+1
+\le\left(2\sqrt2+\frac13\right)\sqrt x
+<\frac{67}{21}\sqrt x<\frac{16}{5}\sqrt x.
+$$
+
+又 $x>8=2^3$ 给 $\log(2x)<(4/3)\log x$。所有因子均正，所以
+
+$$
+R(x)>\frac3{128\sqrt x\log x}
+>\frac1{50\sqrt x\log x}.
+$$
+
+再设 $8\le x\le10$。素数 $7$ 满足 $7\le x-1$ 和 $\sqrt{2x}\le\sqrt{20}<7$，故
+
+$$
+R(x)\ge\frac17-\log(1+1/7)\ge\frac1{112}.
+$$
+
+$\sqrt x>2$、$\log x\ge\log8>2$ 给
+
+$$
+\frac1{50\sqrt x\log x}<\frac1{200}<\frac1{112}\le R(x).
+$$
+
+两段包含 $x=8$ 和 $x=10$，证明全部范围。$\square$
+

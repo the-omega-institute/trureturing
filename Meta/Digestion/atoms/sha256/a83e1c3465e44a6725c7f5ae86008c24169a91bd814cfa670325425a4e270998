@@ -1,0 +1,80 @@
+**引理 45.1（平稳初始项、中央发射与可见投影）。** 对每个确定整数 $r\ge1$ 及每个 $q=t+\delta\in(0,1)$，令 $\mu_\delta^r$ 为 $(X_0,Y_r)$ 在 $P_\delta$ 下的联合律。则
+
+$$
+D(\mu_\delta^r\Vert\mu_0^r)\le C_t r\delta^2,
+\qquad
+\operatorname{TV}(\mu_\delta^r,\mu_0^r)
+\le |\delta|\sqrt{C_t r/2}.
+\tag{45.1}
+$$
+
+总变差为半 $\ell^1$ 距离。仅投影到 $Y_r$ 时两个界仍成立。
+
+**证明。** 为写全与原律的对应，置
+
+$$
+S=t+(1+2t)q,\qquad S_0=2t(1+t),\qquad
+\lambda^\delta=\frac{(q,t,tq,tq)}S,\qquad
+\lambda^0=\frac{(t,t,t^2,t^2)}{S_0}.
+$$
+
+这是（44.2）同乘 $tq$ 后的行。通分给出
+
+$$
+\lambda^\delta-\lambda^0
+=\frac{\delta}{SS_0}(t,-t(1+2t),t^2,t^2).
+$$
+
+因此 Pearson 和式为
+
+$$
+\chi^2(\lambda^\delta\Vert\lambda^0)
+=\frac{\delta^2}{S^2S_0}
+ [t+t(1+2t)^2+2t^2]
+=\frac{(1+2t)\delta^2}{S^2},
+\tag{45.2}
+$$
+
+其中方括号等于 $2t(1+t)(1+2t)=S_0(1+2t)$。由 $\log z\le z-1$，任意共同有限正支撑上的概率行 $\alpha,\beta$ 满足
+
+$$
+D(\alpha\Vert\beta)\le\sum_i\alpha_i(\alpha_i/\beta_i-1)
+=\sum_i\frac{(\alpha_i-\beta_i)^2}{\beta_i}.
+$$
+
+同一不等式用于 $\log(\beta_i/\alpha_i)$，给出
+$D(\alpha\Vert\beta)\ge\sum_i(\alpha_i-\beta_i)=0$。因此初始相对熵由（45.2）控制，后面使用的条件散度亦非负。
+
+保留 $H_{-r},\ldots,H_{r+1}$ 以及 $X_{-r},\ldots,X_r$，记其两个路径律为 $J_\delta^r,J_0^r$。它们的正支撑相同。原柱式（44.3）的对数密度比为初始行的对数比加上全部 $2r+1$ 条发射边的对数比。只有状态二的出边分布改变；在扰动律下，该行的实际平稳占用为 $t/S$。以
+
+$$
+\operatorname{kl}(u,v)=u\log(u/v)+(1-u)\log((1-u)/(1-v))
+$$
+
+表示 Bernoulli 相对熵，对路径对数比取期望，逐项得到
+
+$$
+D(J_\delta^r\Vert J_0^r)
+=D(\lambda^\delta\Vert\lambda^0)
+ +(2r+1)\frac tS\operatorname{kl}(q,t).
+\tag{45.3}
+$$
+
+这里包含中央发射，既未丢弃初始项，也未给观察者开放隐藏状态。Bernoulli 卡方和为 $\delta^2/[t(1-t)]$，故
+
+$$
+\begin{aligned}
+D(J_\delta^r\Vert J_0^r)
+&\le\delta^2\left[\frac{1+2t}{S^2}
+ +\frac{2r+1}{S(1-t)}\right]\\
+&\le r\delta^2\left[\frac{1+2t}{t^2}+\frac3{t(1-t)}\right],
+\end{aligned}
+\tag{45.4}
+$$
+
+最后使用 $S>t$、$1\le r$ 和 $2r+1\le3r$。这在全部 $q\in(0,1)$ 上有效。
+
+按确定投影的纤维拆分相对熵，原散度等于像散度加上以像概率加权的非负条件散度。因此丢弃隐藏状态并把可见位重排成 $(X_0,Y_r)$，得到（45.1）的熵界。这个像正是原可见联合律，不是替代实验。
+
+为核对总变差常数，取有限字母表上第一律质量大于第二律的集合。投影到该集合的指标后，两概率之差为总变差。固定 $0<v<1$，$u\mapsto\operatorname{kl}(u,v)$ 在 $u=v$ 处的值和导数均为零，二阶导数为 $1/[u(1-u)]\ge4$；两次积分得 $\operatorname{kl}(u,v)\ge2(u-v)^2$。端点按极限处理；若参考概率为零或一，共同支撑给出相同退化概率。数据处理于是给出 Pinsker 界及（45.1）。对任意 $[0,1]$ 值损失，两律期望之差至多为总变差，因为有符号质量的正负部分各有该总质量。再丢弃中心是另一个确定投影。以上全部半径均为确定整数。$\square$
+

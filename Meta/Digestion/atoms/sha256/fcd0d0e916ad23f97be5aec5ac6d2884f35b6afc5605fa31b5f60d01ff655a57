@@ -1,0 +1,174 @@
+**Theorem 16.11 (acquired boundary versus retained joint prediction).**
+For $D\ge3$ and $P=\{RLL,RLR\}$, the actual sources
+
+$$
+ t_0=\langle\alpha,\beta\rangle,
+ \qquad
+ t_1=\langle\alpha,\langle\alpha,\alpha\rangle\rangle
+\tag{AAR.100}
+$$
+
+have different menu-prefix boundaries and identical joint future
+trajectories. A correct full-family acquisition must read $R$ on
+$t_0$ and $RL$ on $t_1$, even though a minimum retained prediction
+code merges them. Adding the ancestor target $R$ to
+$P_0=\{RLL\}$ changes its minimum retained alphabet from six to
+seven without changing its two-Read acquisition price. Moreover
+$\{RLL\}$ and $\{RRR\}$ have the same acquisition shape and price,
+but retained alphabets of six and seven, respectively.
+
+Proof. The two sources in (AAR.100) have the joint statistic
+
+$$
+ \Sigma_{\{RLL,RLR\}}(t_0)
+   =\Sigma_{\{RLL,RLR\}}(t_1)=((3,0),(4,1)).
+\tag{AAR.101}
+$$
+
+This is the two-target instance of the already published collisions
+in Propositions 13.3 and 13.10, using (AAR.57). The $RLL$ trajectory
+has no alpha stage; its replies are absent, absent, beta, then branch.
+The $RLR$ trajectory is absent, absent, alpha, beta, then branch.
+The common left-ending absence guard is essential to the first equality.
+The boundaries differ at $R$ and $RL$. Flipping the beta at $R$ in
+$t_0$, or the alpha at $RL$ in $t_1$, changes a requested trajectory
+while preserving every other initial literal reply. Both flips remain
+in the same height-bounded family. Theorem 16.2 forces the stated
+actual Reads. Their shared collision is one joint boundary choice,
+rather than independent choices made per target.
+
+For $P_0$, the suffix menu is $\{LL\}$. Formula (AAR.66) gives six;
+for $\{R,RLL\}$ its suffix menu is $\{\varepsilon,LL\}$ and gives
+seven, since the selected root removes the beta/branch collision.
+The relative prefix tree is the same three-vertex path, so Theorem
+16.9 leaves its acquisition price at two. For $\{RRR\}$ the suffix
+menu $\{RR\}$ gives seven by the same existing count recurrence;
+its path shape is unchanged. These are applications of §12's retained
+code result, not new alphabet formulas.
+
+Thus, on attained data, the recoveries are
+
+$$
+ \text{actual terminal transcript}\ \longrightarrow\ B_K(t)
+ \ \longrightarrow\ \Sigma_P(t)
+ \ \longleftrightarrow\ e_S(v)
+ \ \longleftrightarrow\ \mathcal H_P(t).
+\tag{AAR.102}
+$$
+
+The reverse of the first boundary-to-statistic arrow fails in
+(AAR.100). The last two arrows are the attained-image bijections
+already proved in Theorems 12.3 and 12.6. Correct acquisition can
+therefore require a finer spatial boundary than the memory eventually
+needed to serve the exact declared menu. $\square$
+
+**Mathematical citation 16.12 (existing suppliers and their exact ports).**
+The structural addition (AAR.95)–(AAR.96) uses the following prior
+results with their source, operation and target conditions retained.
+
+| Supplier | Reused content and remaining interface |
+| --- | --- |
+| This volume, §§11–12 | Finite initial family, sufficient acquired boundary coordinates, guarded supplied-count decoder, joint spatial statistic and minimum retained alphabet. The full-source capture in Theorem 12.9 is sufficient but is not a minimum initial Read theorem. The present addition prices actual acquisition of its sufficient input. |
+| This volume, §§13–15 | Exact singleton Read price, height-safe leaf/branch evidence and projected-source normalization with its pointwise obstruction. They are direct suppliers for (AAR.97), the bounded evidence transfer and the singleton checks; their exact single-address results are not proved again. Multiple hanging components and parent caps require Theorems 16.6–16.8. |
+| [SLH §§35–43](RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT.md#35-达到切点上的任意地址未来任务), especially Definition 40.3 and Lemma 43.2 | Future-code semantics, joint-query objective, shared boundary collisions and indispensable actual leaf evidence. Theorem 16.2 checks the latter's competitors inside $\mathcal F_D$. Theorem 43.5 minimizes terminal-record range, rather than maximum record length. No record-count argument substitutes for (AAR.96). |
+| [CNA §§14–21](RECURSIVE_RELATIONAL_OBSERVATION_CONCURRENT_NATIVE_CUT_ACQUISITION.md#14-protected-entry-and-the-public-cut-geometry) | Ancestor-path coverage, successful ordered search and independently realized native completions. Its Release permits later paid full-tree acquisition and origin calibration. That continuation port differs from (AAR.86)'s passive decoder. Its deep-padding lower witnesses must not be assumed height-bounded. |
+| [LQF §§2–5](RECURSIVE_RELATIONAL_OBSERVATION_LITERAL_QUERY_FRONTIER.md#2-all-legal-words-their-reply-cells-and-their-literal-lengths) and [AOF §§8–9](RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_ORBIT_RESOURCE_FRONTIER.md#8-stationary-interval-reading-with-a-zero-origin) | All-word reply classification and actual response-map simulation are existing methods. Their acquired atomic-slot histories or age intervals are different source families. LQF's identical-history pointwise domination is stronger than (AAR.91) and is not transferred. Theorem 16.3 supplies the bounded arbitrary-tree classification needed here. |
+| [ActualTreeReadoutAcquisition](../../../D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean), `readout`, `flip`, `source_foundation`; [NativeDepthPatterns](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeDepthPatterns.lean), `original_present_transport`, `original_prefix_locality` | Native four replies, leaf relabelling and transport of originally present subtrees. The source module's `paid` counts distinct addresses for its separate task; (AAR.87) instead charges every actual call. Present-subtree transport does not transport from an absent address or supply an unacquired boundary. |
+| [NativeSerialMachine](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeSerialMachine.lean), `operational_replay`, `reached_prefix_replay`; [NativeIndependentExecution](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeIndependentExecution.lean), `native_history_correspondence` | Source-free control and same-source literal histories are native interfaces. The ordinary replay used here allows growing finite workspace. [ActualObserverPrefixRigidity](../../../D5/S3/Arith/FibonacciAtomic/Observer/ActualObserverPrefixRigidity.lean), `actualPrefix_replay`, has its stated finite-carrier observer premise and is not silently enlarged to prove the new minimax theorem. |
+| [TargetFamilyMinimalQuotient](../../../D5/S3/ConceptDynamics/SufficiencyQuotient/TargetFamilyMinimalQuotient.lean), `target_family_minimal_quotient` | General minimal sufficient target factor, already applied in Theorem 12.6. It supplies no query-partition geometry or acquisition cost. |
+
+A concrete failed transfer of CNA's cover functional is visible in
+Theorem 16.10's split trie
+$T=\{\varepsilon,L,LL,R,RR\}$. This is the internal skeleton of a
+complete cut. Its ordered cover $LL,RR$ has new-ancestor counts
+$(3,2)$, hence cover budget
+
+$$
+ \max\{1+\lceil\log_2 3\rceil,
+          2+\lceil\log_2 2\rceil\}=3.
+\tag{AAR.103}
+$$
+
+Its native joint passive-prediction acquisition needs four Reads by
+(AAR.99). Finding one authentic leaf permits CNA's later calibration,
+but does not resolve the other independent prediction component
+without further Reads. This exposes the target/continuation mismatch,
+rather than contradicting the cover theorem. The geometric joint
+recurrence and its bounded interfaces are `repo-derived` ordinary
+results; successful-search capacity, generic target factors and finite
+decision-game reasoning are reused methods.
+
+**Mathematical citation 16.13 (primary search models and failure boundaries).**
+[Cicalese, Laber and Saettler, *Decision Trees for Function Evaluation:
+Simultaneous Optimization of Worst and Expected Cost*, §1's DFEP
+model and decision-tree costs](https://arxiv.org/pdf/1309.2796v2)
+define finite objects, target classes, complete multiway tests, a prior
+and positive test costs. Here objects are actual bounded sources,
+classes are joint futures, and tests are literal four-reply words with
+unit Read costs. Words through right-subtree depth $D$ already
+separate initial sources; deeper words are constant absent. After
+projection, the prefix boundary is the finite object tested. The
+paper's class-determination model explains why output need not identify
+the source. Its approximation and distributional conclusions do not
+supply the exact native recurrence or the stronger compulsory evidence
+that distinguishes acquisition from retained classification. No prior
+or expected-cost conclusion is imposed here.
+
+[Bose, Cardinal, Iacono, Koumoutsos and Langerman, *Competitive Online
+Search Trees on Trees*, §1.1 and §1.3.2](https://arxiv.org/html/1908.00848v1)
+use a vertex query that finds one hidden vertex or identifies the
+connected component containing it. On an unresolved chain this gives
+the familiar shallower/hit/deeper geometry. In the joint task a branch
+reply instead leaves several components, all of which must be solved,
+and absence prunes at the queried vertex's parent. Their one-target
+component oracle, online rotations and pointer-move costs do not give
+(AAR.95), whose positive continuation is a sum rather than the cost
+of one chosen component. A constant-factor oracle simulation would
+also be insufficient for an exact unit-Read correspondence.
+
+[Zhu et al., *Budget Constrained Interactive Search for Multiple
+Targets*, §3.2's target independence and question definition](https://arxiv.org/html/2012.01945v3)
+provide a rooted-tree boundary-search comparison: their hidden target
+set is an antichain, and a Boolean question asks whether a supplied
+vertex reaches any target. Their budgeted objective chooses vertices
+close to those targets. Our relevant labelled leaves form an antichain,
+but a native Read distinguishes a local branch, two leaf labels and
+absence; it is not a descendant-existence oracle. Further, (AAR.86)
+requires exact predictions for every authentic count, rather than
+budgeted closeness. Those operation and objective differences prevent
+transferring its search optimizer.
+
+[Eisel, McMullen and Muth, *An efficient search strategy for hidden
+ideals in pointed partially ordered sets*, §1.1 and Definition 2.2](https://arxiv.org/pdf/2505.07604v1)
+permit membership queries with a cap on positive answers, and define
+an ideal to be empty or a principal downward set. Their directed-lower-set
+convention is different from (AAR.90)'s arbitrary downward-closed
+branch set. For the actual right subtree
+$\langle\langle\alpha,\alpha\rangle,\langle\alpha,\alpha\rangle\rangle$
+and the full relative depth-two menu, that branch set is
+$\{\varepsilon,L,R\}$, with two incomparable maximal vertices, so it
+is not principal. The source lies in $\mathcal F_3$. Their hidden-ideal
+recurrence therefore does not characterize this branching labelled
+boundary, even before comparing its binary membership test with the
+four-reply native port. No cap on positive replies is assumed here.
+
+[van der Linden, de Weerdt and Demirović, *Necessary and Sufficient
+Conditions for Optimal Decision Trees using Dynamic Programming*,
+§§4.2–4.3, Definition 4.2, Proposition 4.3 and Theorem 4.6](https://arxiv.org/pdf/2305.19706v4)
+identify sufficient current states and a principle of optimality as
+the ingredients of a dynamic-programming decomposition. Their
+feature-learning formulation presumes a chosen binarization and its
+own objectives and constraints. Here Theorem 16.6 proves the concrete
+native sufficient-state property, including absent guards, caps and
+bounded completions; Theorem 16.7 proves addition for simultaneously
+realizable components. These bridges cannot be supplied merely by
+writing a generic minimax decision-tree formula. Neither their
+scalability results nor a polynomial evaluation bound are claimed for
+(AAR.95).
+
+These primary correspondences concern class determination, ordered
+and tree search, discovering a rooted boundary, poset search and
+constrained decision trees. They establish the stated reuse and its
+limits, rather than worldwide originality or an exhaustive absence
+claim for other literature.
+

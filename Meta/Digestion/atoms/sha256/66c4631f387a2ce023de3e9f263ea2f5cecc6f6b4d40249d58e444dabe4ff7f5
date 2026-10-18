@@ -1,0 +1,41 @@
+**Definition 2.1 (represented anchor).** An anchor representation is a
+finite exact whole-source cover
+
+$$
+D_{r_*}=\bigcup_b
+\{U_b(\mathbf n,\mathbf z):C_b(\mathbf n,\mathbf z)\},
+\qquad \mathbf n\in\mathbb N^{k_b},\quad
+\mathbf z\in\mathcal T^{m_b}.
+\tag{AAB.5}
+$$
+
+Its visible whole-source output $U_b$ uses only fixed finite native
+grounds, actual pairing and occurrences $T_{n_i+c}$ with fixed
+$c\in\mathbb N$. Thus it is independent of every $z_j$. Coordinates
+may repeat, occur with different offsets, and obey joint constraints.
+No normality or uniqueness of chart choice is assumed.
+
+The predicate $C_b$ is in the exact finite mixed-query language of
+Assumption 1.4: a NIC signed pullback has a rank predicate and whole
+native disequalities after expansion; Boolean mixed native equalities
+and fixed observations can also use the scalar-preserving NSF extension.
+Rank predicates are effectively given Presburger formulas. Native powers,
+observations, cuts and epochs are fixed finite data. Auxiliary ranks and
+residual trees can be jointly constrained; no arbitrary non-Presburger
+policy is admitted.
+
+Exactness in (AAB.5) includes two directions: every satisfying tuple
+reconstructs an original finite source satisfying all of (AAB.3) and its
+full row label; every original member of $D_{r_*}$ is reconstructed as
+that same source by some satisfying tuple. This equality is supplied by
+NIC's construction, or by a provided exact chart certificate with both
+proved directions. A list of sampled atomic sources is insufficient.
+An arbitrary proposed chart's unproved surjectivity is not an assumption
+silently granted by the class test.
+
+The supplied representation, including its exactness certificate, is
+part of the mathematical input. The recognition below decides the
+finite-basis condition on this representation. It does not decide whether
+an arbitrary fiber has some alternative exact atomic representation,
+or whether an arbitrary prose certificate is a correct proof.
+

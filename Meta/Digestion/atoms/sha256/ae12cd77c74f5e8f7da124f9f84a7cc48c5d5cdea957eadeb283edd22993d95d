@@ -1,0 +1,51 @@
+**Proposition 340.1 (The 117 bound is the folded old certificate).**
+For every original competitor the following necessary inequality is
+already the eight-coordinate consequence of 318.2:
+
+$$
+2a_2+11a_3+13a_4+13a_5+12a_6+11a_7+11a_8
+                                      \le2+117e_a(A).
+\tag{340.1}
+$$
+
+On (339.1), with $\delta=23\kappa$ and $r_0=5\tau+\delta$,
+it reads
+
+$$
+e_a(A)\ge5\tau+\frac{121}{117}\delta
+            =r_0+\frac4{117}\delta.
+\tag{340.2}
+$$
+
+The matched 253 bound improves this named bound by
+
+$$
+E-\left(5\tau+\frac{121}{117}\delta\right)
+       =\frac{25\delta}{2691}=\frac{25\kappa}{117}>0.
+\tag{340.3}
+$$
+
+**Proof.** At any positive cap, take the one normalized eight-bit
+representative supplied by 331.2. Extend it by ignoring a ninth bit
+and retaining its output law. On the new first-zero-nine word let
+$q=p_+(0)\ge1-e$. For the auxiliary amplitude $b_9=e$, its
+$A,C,P$ probabilities are $(q,0,q)$ against demands
+$(1-2e,0,1-e)$, respectively. All three rows and the positive row
+hold. Applying 318.2 to this same normalized law and subtracting
+$11b_9=11e$ gives (340.1). This auxiliary finite amplitude does
+not replace the actual $a_9$; actual tails can exceed the cap in
+this necessary argument. The original correspondence and decreasing
+positive caps give (340.1) at the actual error.
+
+This is the same folding proved in
+[Eight-coordinate Obstruction, 3.1–4.2](FIB_NATIVE_TWO_QUERY_EIGHT_COORDINATE_OBSTRUCTION.md)
+and reused in
+[Unequal Two-tail Frontier, 7.1–7.2](FIB_NATIVE_UNEQUAL_TWO_TAIL_ATTAINED_FRONTIER.md).
+Its family substitution is $117e\ge585\tau+121\delta$.
+Subtracting this from the 253 consequence proves (340.3).
+In particular (340.2) already excludes the coarser demand
+$e_N<r_0+4\delta/9513533$ for $\delta>0$.
+That exclusion is already a consequence of the folded 318 result,
+independently of the 253 score. The 117 bound
+alone provides no matching positive-width upper law. $\square$
+

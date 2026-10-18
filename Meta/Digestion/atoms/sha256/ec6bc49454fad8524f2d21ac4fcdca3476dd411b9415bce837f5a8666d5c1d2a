@@ -1,0 +1,16 @@
+**Definition 8.1 (ordinary coordinate-preserving cell).** An ordinary cell
+in tree coordinates $(x,y)$ is a relation defined by
+
+$$
+\exists z_1,\ldots,z_s\in\mathcal T\quad
+ \bigwedge_i A_i(x,y,\mathbf z)=B_i(x,y,\mathbf z)
+ \ \land\ \bigwedge_j C_j(x,y,\mathbf z)\ne D_j(x,y,\mathbf z),
+\tag{ARH.8.1}
+$$
+
+where every expression is a finite free term over the original two
+leaves and ordered pair. Finite ground tree parameters are allowed.
+There is no interpreted $\rho$ or encoded replacement of the source
+coordinates. Arbitrary existential auxiliary finite-tree variables are
+allowed. Finite unions of these cells are the compilation class below.
+

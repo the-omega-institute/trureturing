@@ -1,0 +1,47 @@
+**Proposition 8.1 (Credited band-to-known-parameter bridge).** C, Sections 28–30, implies a family in the exact class of Definition 2.4 with both cubic paid means and complete mutable bits $O_{H_c,\alpha}(1+\log(1/s))$. Its displayed full configuration bound alone permits every polynomial exponent strictly greater than $368640$. Neither the optimal threshold nor attainment of that loose bookkeeping exponent follows from this bound alone.
+
+Proof. Choose once a rational $\rho\in[\alpha/2,\alpha]$. Given known $q=e^{-s}$, let $\xi=1-q$ and select a dyadic rational $\varepsilon$ with $\xi/2\le\varepsilon\le\xi$. Then
+
+$$
+q\in[1-2\varepsilon,1-\varepsilon],\qquad
+s/4\le\varepsilon\le s\quad(0<s\le1),
+\tag{8.1}
+$$
+
+because $s/2\le1-e^{-s}\le s$. All sufficiently small $s$ therefore select sufficiently small supplied rational bands. This is an existence selection using the known common parameter; it does not assert an effective calibration algorithm for an arbitrary real encoding of $q$.
+
+Compile the one C controller for this $\varepsilon,\rho$. Its two separate band risks imply both selected-pair risks at this same $q$. C, Theorem 28.4 and Corollary 30.1, give a paid cap $W=O_{H_c,\alpha}(\varepsilon^{-3})$, both almost-sure stops, both finite means and both per-parameter means of order $\varepsilon^{-3}$. Under (8.1) these are of order $s^{-3}$ with constants independent of $s$. The controller pays the stationary first interval and every read in a partial last gap or pair. A deciding pair update at read $W$ receives its ordinary decision before the timeout default.
+
+The passage from C's internal bit computations to the normal form is a finite-state correspondence, not an assumption of free computational storage. Its Lemma 29.5 proves that initialization and each internal segment terminate without reading a new source bit on every legitimate capped history. The complete bank includes 256 words, 32 heads/pointers, operand copies, scratch, Boolean flags, input/output latches, return sites, phases, 30 control bits and initialization. All online source-dependent information lies in those counted coordinates.
+
+At each read boundary, compose the finite deterministic internal segment following that read until the next read-ready configuration or emitted label. Compose initialization into the common initial row. The read-ready configurations form a subset of the full counted microconfiguration set; identifying terminal configurations with the same label cannot enlarge it. Totalize rows never used on a legal source history arbitrarily, using existing labels. The construction preserves the ordered paid bits and emitted label pathwise on every legal history, including all-zero histories and timeout during a stationary initial wait or partial pair. In particular it preserves the joint law of $(T,D)$ under both actual laws.
+
+There is no source observation during an internal segment. Composition changes neither the logical next unread bit nor the paid tally; this discrete observation contract makes no assertion about a physical source evolving during computation. All transient internal storage was counted before composition. Source-dependent intermediates are not transferred to immutable description or to an external archive. Compiler work, deployed immutable descriptor, internal work and paid reads retain their separate meanings.
+
+For a justified conversion of the supplied bit count, rename C's fixed risk-width integer and coefficient-width integer as $b_{\rm ctrl}$ and $B_{\rm coef}$, and its pointer width as $a_{\rm ptr}$. These are distinct from this volume's $b,B,a$. C's (29.1) simplifies exactly to
+
+$$
+\begin{aligned}
+m_{\rm ctrl}&=\lceil\log_2(2W+2)\rceil,\\
+w&=480m_{\rm ctrl}+16b_{\rm ctrl}+32B_{\rm coef}+536,\\
+a_{\rm ptr}&=8+\lceil\log_2(w+1)\rceil.
+\end{aligned}
+\tag{8.2}
+$$
+
+For fixed model and the once-chosen controlled risk surrogate, C, Theorem 29.6, therefore gives
+
+$$
+\begin{aligned}
+M_{\rm band}
+&\le2^{256w+32a_{\rm ptr}+97}\\
+&\le C(W+1)^{122880}(1+\log(W+2))^{32}\\
+&\le C's^{-368640}(1+\log(1/s))^{32}
+\end{aligned}
+\tag{8.3}
+$$
+
+near the endpoint, with constants independent of $s$. Indeed $2^{m_{\rm ctrl}}<4W+4$, the term $256\cdot480m_{\rm ctrl}$ contributes exponent $122880$ in $W+1$, and the pointer term contributes the indicated logarithmic factor. For any fixed positive exponent slack, that logarithmic factor is absorbed by its extra power of $1/s$. This proves the assertion about every exponent greater than $368640$, and only bounds the corresponding infimum by $368640$ using this count. It does not prove attainment at $368640$. $\square$
+
+This bridge reconciles the deterministic rational-band implementation with the retuned known-$q$ class. The original G necessity and C sufficiency already imply order $\log(1/s)$ necessary and sufficient mutable bits after that correspondence. This useful map is credited reuse. Theorem 7.3 resolves the sharper configuration exponent by the new all-competitor converse and U's already counted upper, rather than by optimizing (8.3).
+

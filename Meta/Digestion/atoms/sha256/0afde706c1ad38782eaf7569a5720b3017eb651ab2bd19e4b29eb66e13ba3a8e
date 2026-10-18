@@ -1,0 +1,88 @@
+**定理 C-138.2（全部联合块与相同功效下的全域约化）。** 对 (C138.1)，
+(C136.2) 的全部允许效果恰为下表总电荷块上的 Hermitian 正收缩算符：
+
+| 总电荷 | 有序基 | 维数 | 效果块 |
+| --- | --- | ---: | --- |
+| $0$ | $e_0f_0$ | 1 | $x_0$ |
+| $1$ | $e_1f_0,e_2f_0,e_3f_0$ | 3 | $A_1$ |
+| $2$ | $e_0f_2,e_4f_0$ | 2 | $M$ |
+| $3$ | $e_1f_2,e_2f_2,e_3f_2$ | 3 | $A_3$ |
+| $4$ | $e_4f_2$ | 1 | $x_4$ |
+
+即 $\mathsf E=x_0\oplus A_1\oplus M\oplus A_3\oplus x_4$，
+$0\le x_0,x_4\le1$、$0\preceq A_1,A_3\preceq I_3$、$0\preceq M\preceq I_2$，
+初始块允许任意复非对角元。其有效系统效果为
+
+$$
+\begin{aligned}
+T&=(I\otimes\langle r|)\mathsf E(I\otimes|r\rangle)=T_S\oplus H,\\
+T_S&=\frac12\begin{pmatrix}x_0+M_{11}&M_{12}\\M_{21}&M_{22}+x_4\end{pmatrix}_{(e_0,e_4)},
+\qquad H=\frac{A_1+A_3}{2}\quad\text{于 }\operatorname{span}(e_1,e_2,e_3).
+\end{aligned}
+\tag{C138.2}
+$$
+
+对全零假设 $\mathcal F_{\rm all}$，每个允许复效果在相同目标功效下，
+均可换成风险不增加的允许效果，其有效形式为
+
+$$
+T(a,c)=\begin{pmatrix}a&c\\c&a\end{pmatrix}_{(e_0,e_4)}\oplus0,
+\qquad 0\le c\le\tfrac14,\quad c\le a\le1-c.
+\tag{C138.3}
+$$
+
+此实参数域中的每一点反过来均由允许联合效果实现。
+
+证明。总电荷块维数为 $1+3+2+3+1=10$，对易恰排除异块矩阵元。
+直接与 $r$ 收缩得 (C138.2)。参考没有电荷差一模式，故系统粒子数一子空间
+与 $S$ 之间没有有效矩阵元，未对 $A_1,A_3,M$ 作实数假设。
+
+先将 $A_1,A_3$ 置零。这删除正块 $H$，保持目标功效，且每个零假设上的接受概率不增加。
+定义基置换 $V,J$ 为
+
+$$
+\begin{gathered}
+Ve_0=e_4,\quad Ve_4=e_0,\quad Ve_1=e_2,\quad Ve_2=e_1,\quad Ve_3=e_3,\\
+Jf_0=f_2,\quad Jf_2=f_0,\quad W=V\otimes J.
+\end{gathered}
+\tag{C138.4}
+$$
+
+有 $V\widehat NV^\dagger=2I-\widehat N$、
+$J\widehat N_RJ^\dagger=2I-\widehat N_R$、$Jr=r$，从而
+$WLW^\dagger=4I-L$。
+所以 $\mathsf E\mapsto W\mathsf EW^\dagger$ 将允许效果映回允许效果；
+与原效果取平均仍合法。它保持目标，因为 $V\psi=\psi$。
+同时 $V$ 在能量基上置换为
+
+$$
+(b_1,b_2,b_3,b_4,b_5)\longmapsto(b_3,b_4,b_1,b_2,b_5).
+\tag{C138.5}
+$$
+
+因此它双向保持每个复三支持纯态集合，进而保持全部有限凸混合
+$V\mathcal F_{\rm all}V^\dagger=\mathcal F_{\rm all}$。
+平均后风险不超过两个相同风险的平均，目标功效不变。
+有效二阶块于是有相等对角元 $a$ 和实非对角元 $c$。
+这是允许效果集合中的数学对称化，不安装 $V$ 或 $J$ 为可执行门；
+不要求、也不使用 $V$ 保持 $Q$。
+
+若 $c<0$，功效 $p=a+c\in[0,1]$，而零假设 $P_{e_0}$ 给风险至少 $a\ge p$。
+改取允许效果 $p\Pi_S\otimes I_R$，功效和全域风险均为 $p$。
+因此相同功效的全域最优化可限制到 $c\ge0$。
+
+对称化后的联合非零块写成
+
+$$
+x_0=x_4=x,\qquad M=\begin{pmatrix}b&2c\\2c&b\end{pmatrix}.
+\tag{C138.6}
+$$
+
+块约束精确为 $0\le x\le1$、$2c\le b\le1-2c$，且 $a=(x+b)/2$。
+这给出 (C138.3) 的必要性。反向给定该域中的 $(a,c)$，取
+$b=\max\{2c,2a-1\}$、$x=2a-b$。
+由 $c\le1/4$、$a\le1-c$ 得 $b\le1-2c$；由 $a\ge c$ 得 $b\le2a$，
+故 $x\ge0$，而 $b\ge2a-1$ 得 $x\le1$。
+所有块约束均成立，(C138.2) 恰实现指定 $T(a,c)$。
+这证明精确域与全部复效果的约化，而非对某个实效果子类的猜测。证毕。
+

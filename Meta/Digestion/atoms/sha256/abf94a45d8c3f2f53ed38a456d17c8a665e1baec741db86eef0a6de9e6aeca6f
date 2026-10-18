@@ -1,0 +1,53 @@
+**Lemma 16.1 (Projector intertwining on an individual actual orbit).**
+Set
+
+$$
+u_\xi(k)=\Pi_\xi F(k,0).
+$$
+
+For each lawful pair $0<k,k+s<H$,
+
+$$
+T_s\Pi_\xi F(k,0)=\Pi_\xi T_sF(k,0),\qquad
+u_\xi(k+s)=T_su_\xi(k).
+\tag{16.1}
+$$
+
+Also
+
+$$
+\Pi_\xi F(k,\alpha)=\xi(\alpha)u_\xi(k).
+\tag{16.2}
+$$
+
+The vector $u_\xi(k)$ is a finite complex linear combination of
+actual homogeneous states at that single height. No spanning
+assumption about a probability-command domain is needed.
+
+**Proof of Lemma 16.1.** For each circle element $\delta$ and
+this particular lawful starting height,
+
+$$
+T_sV_\delta F(k,0)=T_sF(k,\delta)=F(k+s,\delta)
+=V_\delta F(k+s,0)=V_\delta T_sF(k,0).
+\tag{16.3}
+$$
+
+Here the native commands can change $\beta$ differently in the
+two orders. Their encoded values agree because this encoder is
+$\beta$-independent. Equation (16.3) is asserted on the selected
+actual state, not as an operator commutation law on all of $X$.
+
+Insert the finite expression (15.1) for $\Pi_\xi$ into (16.3)
+and use linearity. This proves (16.1). The same expression gives
+
+$$
+u_\xi(k)=\sum_j c_{\xi,j}F(k,\delta_{\xi,j}),
+$$
+
+so the projected vector lies in the span of that actual phase
+orbit. Projectors commute with all phase operators, and the
+native block is a line on which $V_\alpha$ acts by
+$\xi(\alpha)$. Applying this to $F(k,\alpha)=V_\alpha F(k,0)$
+proves (16.2). $\square$
+

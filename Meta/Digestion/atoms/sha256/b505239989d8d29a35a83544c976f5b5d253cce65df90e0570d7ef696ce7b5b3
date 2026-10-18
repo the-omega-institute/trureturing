@@ -1,0 +1,27 @@
+**Convention 19.2 (primary sources and contribution boundary).**
+
+| Source | Exact supplied machinery and limit |
+| --- | --- |
+| Pedro Paredes, Spectrum preserving short cycle removal on regular graphs, arXiv:2002.07211v1, Definition 1.1 and Theorems 1.10/1.12 [primary text][ParedesParity] | High-girth near-Ramanujan regular graph existence. Proposition 15.4 derives simple, connected graphs and the required cut inequality from its actual girth and spectral conditions. No native mass, entropy or optimizer theorem is attributed to that paper. |
+| G. David Forney Jr., Codes on Graphs: Fundamentals, arXiv:1306.6264v2, §§2.2, 3.3–3.4 and 4 [primary text][ForneyParity] | Equality-aware normal realizations and finite-group projection/cross-section and sum/intersection duality. The actual native lift, owner sections and resource correspondence are proved separately above. A graphical representation grants no observation or acquisition service. |
+
+Binary incidence rank, affine-fiber counting, parity Fourier
+summation, finite entropy chain rules and the spectral Rayleigh
+inequality are mature machinery. The repo-derived statements here
+are their explicit two-sector native mass identity, evaluated
+all-size cap for the exact graph grammar, quantified residual COK
+loss after every bounded adaptive owner section, and the original
+paid full-family consumer. No claim of worldwide originality,
+kernel verification, unrestricted optimized pressure or
+programme completion accompanies them.
+
+[ParityCOK]: https://github.com/the-omega-institute/trureturing/blob/91170b89dfe9dd7eadc64d14d86d2157ed14abdf/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CONDITIONAL_OWNER_KERNELS.md
+[ParityGCB]: https://github.com/the-omega-institute/trureturing/blob/91170b89dfe9dd7eadc64d14d86d2157ed14abdf/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_GRAPH_COVER_BETHE_BOUNDARIES.md
+[ParityRRN]: https://github.com/the-omega-institute/trureturing/blob/91170b89dfe9dd7eadc64d14d86d2157ed14abdf/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_REPRESENTATIVE_REPLY_NORMAL_FORM.md
+[ParitySIR]: https://github.com/the-omega-institute/trureturing/blob/91170b89dfe9dd7eadc64d14d86d2157ed14abdf/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SEED_INCIDENCE_REDUCTION.md
+[ParityOCB]: https://github.com/the-omega-institute/trureturing/blob/91170b89dfe9dd7eadc64d14d86d2157ed14abdf/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_OVERLAP_CLOSURE_BOUNDARIES.md
+[ParityCycle]: https://github.com/the-omega-institute/trureturing/blob/91170b89dfe9dd7eadc64d14d86d2157ed14abdf/D5/S3/Fourier/CharacterSelection/SimpleGraphCycleSpace.lean
+[ParityFCS]: https://github.com/the-omega-institute/trureturing/blob/91170b89dfe9dd7eadc64d14d86d2157ed14abdf/docs/develop/theory/FIB_NATIVE_FINITE_READER_CODE_SYNTHESIS.md
+[ParedesParity]: https://arxiv.org/html/2002.07211v1
+[ForneyParity]: https://arxiv.org/html/1306.6264v2
+

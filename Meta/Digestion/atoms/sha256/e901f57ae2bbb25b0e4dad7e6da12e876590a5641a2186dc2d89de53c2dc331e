@@ -1,0 +1,9 @@
+**Corollary 5.4 (full rows and the remaining contact problem).** Neither
+cofinal arithmetic feasibility alone nor the simple switching equations
+$Y_i=E_i$ alone decide (FNS.27). They do not impose a positive old-row
+pullback omitted from the raw map. Lemma 4.2 keeps every old identification
+by positive normalization; the resulting maps, not an assumed unchanged
+raw parameterization, are the inputs to (FNS.24). Locating an unknown common
+map with its arbitrary finite profile remains open. A finite exclusion for
+one supplied $B$ does not settle other attained full rows in the same fiber.
+

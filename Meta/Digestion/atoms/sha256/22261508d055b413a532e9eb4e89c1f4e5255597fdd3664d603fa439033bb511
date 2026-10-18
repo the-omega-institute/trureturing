@@ -1,0 +1,12 @@
+**定义 19.2.1（有限通道）。** 取非空有限集 $\mathcal X,\mathcal Y$，且 $|\mathcal Y|\ge2$。一个有限随机通道是
+
+$$
+K:\mathcal X\longrightarrow\Delta(\mathcal Y),
+\qquad
+K_x(y):=K(y\mid x),
+$$
+
+其中 $K_x(y)\ge0$ 且 $\sum_yK_x(y)=1$。
+
+<a id="claim-19-2-2"></a>
+

@@ -1,0 +1,56 @@
+**Theorem 46.1 (Acquisition envelope and the unrestricted lower bound).** Let
+
+$$
+M=\sup_{y\in X}\widehat\mu_y(H_y).
+\tag{46.1}
+$$
+Every lawful preparation and every full target family satisfying (45.2) obey
+
+$$
+(1-B)M\le\varepsilon,
+\qquad
+(1-B)h\le(2-B)\varepsilon,
+\qquad
+h=h_{x_*}.
+\tag{46.2}
+$$
+Thus, when $h>0$ and $B<1$, exact acquisition is impossible and every design has
+
+$$
+\varepsilon\ge R:=\frac{(1-B)h}{2-B}.
+\tag{46.3}
+$$
+
+**Proof.** Fix a source $x$. Let $G_m(x)$ be the seed event on which the preparation and the subsequent consumer proposal both have finite composite length at most $m$, all queried primes lie among the first $m$ primes, and the final proposal is at most $m$. These events increase to the prepared proposal event at $x$ up to a null set. For the whole event $G_m(x)$, before quantifying over seeds, choose by the persistent-source theorem of Section 37 one actual source $y_m$ agreeing with $x$ on those finitely many prime answers and satisfying $k_m=\Omega(y_m)>m$.
+
+Every seed in $G_m(x)$ replays identically at $y_m$ through both the preparation and consumer stages, and its proposal is false there. Hence
+
+$$
+G_m(x)\subseteq\phi_{y_m}^{-1}(F_{y_m}).
+\tag{46.4}
+$$
+
+For $0\le c<1$, the function
+
+$$
+q_{y,c}=\mathbf 1_{F_y}-c\mathbf 1_{H_y}
+$$
+has values among $1-c,-c,0$ and oscillation at most one. The event definition of total variation therefore gives
+
+$$
+\widehat\mu_y(F_y)-c\widehat\mu_y(H_y)
+\le \mu_y(F_y)-c\mu_y(H_y)+\varepsilon.
+\tag{46.5}
+$$
+
+Indeed, $q_{y,c}+c=(1-c)\mathbf1_{F_y}+c\mathbf1_{F_y\cup H_y^c}$, and the two nonnegative event coefficients sum to one. This proves (46.5) directly on every measurable carrier. The finite-space TV dual and coupling conventions are those of Levin and Peres, with Wilmer, *Markov Chains and Mixing Times*, second edition, [Propositions 4.5 and 4.7](https://pages.uoregon.edu/dlevin/MARKOV/mcmt2e.pdf); no finite-space converse is being imported here.
+
+Putting $c=b(k_m)$ and using (45.2), (46.4) and $b(k_m)\le B$ gives
+
+$$
+\mathsf P(G_m(x))\le B M+\varepsilon.
+\tag{46.6}
+$$
+
+Continuity from below under the one fixed seed law at $x$ yields $\widehat\mu_x(H_x)\le BM+\varepsilon$. Taking the supremum over $x$ proves the first inequality in (46.2). At the anchor, event-TV gives $h\le\widehat\mu_{x_*}(H_{x_*})+\varepsilon\le M+\varepsilon$. Multiplying by $1-B$ and using the first inequality proves the second. No sequence of comparison sources is passed through a limit; only the increasing events under the fixed source $x$ are exhausted. $\square$
+

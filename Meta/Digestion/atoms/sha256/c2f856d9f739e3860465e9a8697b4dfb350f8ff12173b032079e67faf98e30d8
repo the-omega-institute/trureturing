@@ -1,0 +1,11 @@
+**The actual integral multiple.** For any repetition under the hypotheses, the proof of Theorem 90.1 supplies the integral points
+
+$$R=(5D^2,25D^2L_NF_N),\qquad
+K=(5DB_{Nk},25D^2L_{Nk}cF_{Nk})$$
+
+and an odd integer $m$ such that
+
+$$K=mR,\qquad |m|\ge3,\qquad |m|>\sqrt D.\tag{91.1}$$
+
+The full Kummer class removes the rational two-torsion term. The multiplier used below is this elliptic multiplier $m$, not the Lucas relative index $k$.
+

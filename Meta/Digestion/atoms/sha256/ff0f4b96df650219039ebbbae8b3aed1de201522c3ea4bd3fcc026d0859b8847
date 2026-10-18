@@ -1,0 +1,31 @@
+**Definition 2.3 (All-cut families and global minima).** Extend a probability on $K_m^{\xi,\zeta}$ by zero to the full binary cube. Its cut matrix is
+
+$$
+\mathsf F_j(r)(u,v)=r(uv),\qquad
+u\in\{0,1\}^j,\quad v\in\{0,1\}^{m-j},\quad1\le j<m.
+\tag{2.5}
+$$
+
+Every forbidden internal or boundary seam stays a zero entry. Nonnegative rank is the least number of nonnegative rank-one summands. Let $\mathscr F_{N,m}^{\xi,\zeta}$ consist of the band-compatible probabilities with nonnegative rank at most $N$ at every internal cut. For a band-compatible reference probability $\nu$ on the indicated completion set, use [Guarded, Definition 6.3] and [Global-local, Definition 1.3]'s quantities
+
+$$
+\delta_{N,m}^{\xi,\zeta}(\nu)
+=\min_{r\in\mathscr F_{N,m}^{\xi,\zeta}}\mathcal D_{K_m^{\xi,\zeta}}(\nu\Vert r),\qquad
+\mathscr R_{N,n}(\nu)=\delta_{N,n}^{0,0}(\nu),\qquad
+\mathcal R_{N,n}=\mathscr R_{N,n}(\pi_n).
+\tag{2.6}
+$$
+
+The empty minimum is $+\infty$. At length one there are no cut conditions. A singleton completion set has discrepancy zero. The families are relaxations; membership does not assert a stationary extension or a common hidden producer.
+
+For later use, a nonempty family is compact and its minimum is attained. Indeed, the band is closed and (2.3) gives a common positive floor. For each fixed cut, probability matrices of nonnegative rank at most $N$ are the image of the compact set
+
+$$
+R=\sum_{h=1}^Nt_h a_hb_h^{\mathsf T},\qquad
+t_h\ge0,\quad\sum_ht_h=1,
+\quad a_h,b_h\text{ probability vectors}.
+\tag{2.7}
+$$
+
+To obtain this representation, normalize each nonzero nonnegative factor by its coordinate sum and put the product of the two sums into $t_h$; zero terms can use arbitrary probability factors. The entries of $R$ sum to one. The continuous image is compact, hence closed. Intersect the finitely many cut conditions and the band. All compatible-edge denominators in (2.2) are bounded away from zero there, so the discrepancy is continuous. This is the compactness argument of [Guarded, Theorem 6.2 and Definition 6.3].
+

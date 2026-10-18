@@ -1,0 +1,80 @@
+**Proposition 93.1 (No smaller active cube or smaller request budget).**
+For every sequence (73.3) and every $0<\varepsilon\le1$, the three
+classes have identical feasibility at hard budgets zero and one.
+If the active length $L$ of (83.2) is at most three, they have identical
+feasibility at every hard budget. Hence active dimension four and hard
+budget two are minimal for the strict feasibility gaps in Theorem 92.1.
+This does not assert minimality of the number of comparison sources or
+of their numerical labels.
+
+**Proof.** At budget zero there is no source observation, and every
+lawful rule is already preselected and ordered with an empty sequence.
+At budget one, Theorem 83.3 supplies a common mixture of leaves and
+one-query trees for any feasible original rule. Every such tree is an
+$\mathcal O_1$ rule, so its original exact-cap feasibility is attained
+in both restricted classes. Containment gives the converse. This uses
+the theorem's feasibility transport, not preservation of an arbitrary
+adaptive competitor's laws.
+
+The near-full-depth case provides the remaining bridge. For any
+$L\ge1$, original feasibility with $k=L-1$ is equivalent to
+
+$$
+a_L\le(L+1)\varepsilon,
+\tag{93.1}
+$$
+
+and when feasible it is attained in $\mathcal O_{L-1}$. Necessity is
+Theorem 85.1 at $n=L$, $k=L-1$: since $a_L>\varepsilon$ by the
+definition of $L$, it gives $a_L-\varepsilon\le L\varepsilon$.
+For sufficiency use the nonnegative probabilities
+
+$$
+w_0=1-a_1,\quad w_j=a_j-a_{j+1}\ (1\le j<L),\quad w_L=a_L.
+\tag{93.2}
+$$
+
+They sum to one. Branch zero emits $\theta_0$. Branch $j<L$ queries
+$1,\ldots,j$ increasingly until its first zero and emits that zero's
+mark, or emits $\theta_0$ on exhaustion. Branch $L$ uses the existing
+$P_{L,L-1}$ kernel from Theorem 87.1, with its inclusion probability
+$L/(L+1)$. This is only an auxiliary finite mixture within the
+minimality proof.
+
+At any actual first absence $n\le L$, the exact branches $n\le j<L$
+contribute correct-mark mass $a_n-a_L$, while the last branch contributes
+$a_LL/(L+1)$. Hence
+
+$$
+p_n=a_n-\frac{a_L}{L+1},\qquad p_0\ge1-a_n.
+\tag{93.3}
+$$
+
+The base lower bound comes from branches $j<n$, including branch zero.
+All other target coordinates are zero, so (92.9) gives error exactly
+$a_L/(L+1)$ regardless of all multiple-zero suffixes. At any actual
+first absence $n>L$, every selected numerical query is positive; the
+shorter branches emit base, and the last branch emits base with
+probability $L/(L+1)$. There is no emitted tail mark, so
+
+$$
+\operatorname{TV}(\widehat\lambda_x,\lambda_x^a)
+ =\max\{a_L/(L+1),a_n\}\le\varepsilon
+\tag{93.4}
+$$
+
+under (93.1). Each branch is an increasing first-zero-stop rule with
+at most $L-1$ requests. These finite categorical branches give one
+common seed rule on all actual sources, without altering the original
+positive tail.
+
+If $L=0$, immediate base is feasible. At any $k\ge L$, the ordered
+full-active-prefix sampler in the proof of Theorem 83.3 is feasible:
+sample the exact low target at its first zero and emit base on an
+all-positive active prefix. For $L\le3$, budgets zero, one and $k\ge L$
+leave only $L=3$, $k=2$ to check. Equation (93.1) and its ordered
+attainer settle that case. The interval in (92.3) has $L=4$ because
+all four leading amplitudes exceed its cap and $a_5$ does not.
+Its strict gap therefore attains both claimed minima. No analogous
+normal form for $L\ge4$ follows. $\square$
+

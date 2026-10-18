@@ -1,0 +1,204 @@
+## 63. 条件路径的相关运输与信息界
+
+**定义 C-63.1（条件路径与未来总权）。** 在事件 $B_i=0$ 下，按外部顺序记
+
+$$
+(V_0,V_1,\ldots,V_\ell)
+=(B_L,B_{r_1},\ldots,B_{r_{n-3}},B_R),\qquad \ell=n-2,
+$$
+
+并记对应活动为 $\alpha_0,\ldots,\alpha_\ell$。整个路径的条件律记作 $\nu_i$；其端点边缘才是 $Q_i$。因与中心相接的两条边因子均等于一，$\nu_i$ 精确正比于
+
+$$
+\prod_{k=0}^{\ell}\alpha_k^{v_k}
+\prod_{k=0}^{\ell-1}J_{v_k,v_{k+1}}.
+\tag{C63.1}
+$$
+
+对固定 $V_k=s$，令 $R_k(s)$ 为右侧 $k+1,\ldots,\ell$ 的填充总权，不含第 $k$ 位的活动。于是
+
+$$
+R_\ell(s)=1,\qquad
+R_k(s)=\sum_{t=0}^1J_{s,t}\alpha_{k+1}^tR_{k+1}(t)>0.
+\tag{C63.2}
+$$
+
+所有协方差、相关系数及条件概率在本章均取自 $\nu_i$，除非明确写回完整环律。
+
+**命题 C-63.2（外部路径的精确相关乘积）。** 条件路径为非齐次一阶 Markov 链，且每个单点边缘非退化。其端点相关系数满足
+
+$$
+\operatorname{Corr}_{\nu_i}(V_0,V_\ell)
+=\prod_{k=0}^{\ell-1}\operatorname{Corr}_{\nu_i}(V_k,V_{k+1}).
+\tag{C63.3}
+$$
+
+每条边的相关系数严格负，因此端点相关的符号为 $(-1)^\ell=(-1)^n$。式 (C63.3) 是对当前外部来源的精确恒等式。
+
+证明。对任意有正概率的合法前缀，式 (C63.1) 的前缀权在条件分子、分母中消去，余下
+
+$$
+\mathbb P_{\nu_i}(V_{k+1}=t\mid V_0=v_0,\ldots,V_k=s)
+=\frac{J_{s,t}\alpha_{k+1}^tR_{k+1}(t)}{R_k(s)}.
+\tag{C63.4}
+$$
+
+它只依赖最后状态 $s$ 及位置 $k$，其两项和为一；这直接证明 Markov 性。非法前缀概率为零，不给它虚构条件概率。全零路径及仅第 $k$ 位占用的路径都有正权，所以 $\mu_k=\mathbb E_{\nu_i}V_k$ 满足 $0<\mu_k<1$，方差 $s_k^2=\mu_k(1-\mu_k)>0$。
+
+二值条件均值必有唯一仿射形式
+
+$$
+\mathbb E_{\nu_i}(V_{k+1}\mid V_k)=a_k+b_kV_k,
+\qquad
+b_k=\frac{\operatorname{Cov}_{\nu_i}(V_k,V_{k+1})}{s_k^2}.
+\tag{C63.5}
+$$
+
+第二式来自与 $V_k-\mu_k$ 相乘后取均值。由 Markov 性与条件期望塔式，在每步均有
+
+$$
+\operatorname{Cov}_{\nu_i}(V_0,V_{k+1})
+=b_k\operatorname{Cov}_{\nu_i}(V_0,V_k).
+$$
+
+从 $\operatorname{Cov}(V_0,V_0)=s_0^2$ 起归纳，端点协方差等于 $s_0^2\prod_kb_k$。而
+
+$$
+\operatorname{Corr}(V_k,V_{k+1})=b_k\frac{s_k}{s_{k+1}},
+$$
+
+连乘时中间标准差消去，得到 $\prod_k\operatorname{Corr}(V_k,V_{k+1})=(s_0/s_\ell)\prod_kb_k$，正是端点协方差除以 $s_0s_\ell$。
+
+最后 $V_kV_{k+1}=0$ 恒成立，所以每条边的协方差为 $-\mu_k\mu_{k+1}<0$。全部标准差为正，边相关也严格负，遂得符号结论。这个推导与 C-8.2 的行列式符号在同一路径上相符；没有对不同来源的最优边界作拼合。证毕。
+
+**命题 C-63.3（只有统一上界的非齐次衰减）。** 若对完整环有
+
+$$
+0<\lambda_j\le\Lambda<\infty\quad(j\in V),\qquad
+q_\Lambda=\frac{\Lambda}{1+\Lambda}<1,
+$$
+
+则
+
+$$
+\begin{aligned}
+\bigl|\operatorname{Corr}_{Q_i}(B_L,B_R)\bigr|
+&\le q_\Lambda^{n-2},\\
+|\Delta_i|&\le\frac{(1-Z)^2}{4}q_\Lambda^{n-2}.
+\end{aligned}
+\tag{C63.6}
+$$
+
+该界不要求活动有统一正下界，并覆盖外部路径的两条边界边。
+
+证明。固定一个边 $k,k+1$。由式 (C63.4)，
+
+$$
+\mathbb P(V_{k+1}=1\mid V_k=0)
+=\frac{\alpha_{k+1}R_{k+1}(1)}
+{R_{k+1}(0)+\alpha_{k+1}R_{k+1}(1)}.
+\tag{C63.7}
+$$
+
+若 $k+1<\ell$，固定 $V_{k+1}=1$ 强制下一位为零，允许的后缀集合是固定 $V_{k+1}=0$ 所允许集合的子集，且各后缀权相同。因此 $0<R_{k+1}(1)\le R_{k+1}(0)$。若 $k+1=\ell$，两者均为一，仍成立。于是式 (C63.7) 不超过 $\alpha_{k+1}/(1+\alpha_{k+1})\le q_\Lambda$。
+
+从左侧定义同样的过去总权，完全相同的子集论证给反向条件概率
+
+$$
+\mathbb P(V_k=1\mid V_{k+1}=0)\le\frac{\alpha_k}{1+\alpha_k}\le q_\Lambda.
+$$
+
+没有依赖某一边必须远离端点；终端空后缀总权一已包含端点情形。
+
+对这条排斥边，$\mathbb P(11)=0$，所以
+
+$$
+\begin{aligned}
+\bigl|\operatorname{Corr}(V_k,V_{k+1})\bigr|^2
+&=\frac{\mu_k\mu_{k+1}}{(1-\mu_k)(1-\mu_{k+1})}\\
+&=\mathbb P(V_{k+1}=1\mid V_k=0)
+\mathbb P(V_k=1\mid V_{k+1}=0)
+\le q_\Lambda^2.
+\end{aligned}
+\tag{C63.8}
+$$
+
+式 (C63.3) 给相关系数界。再由二值方差不超过 $1/4$，有 $s_0s_\ell\le1/4$，并由式 (C59.3) 得
+
+$$
+|\Delta_i|=r^2\bigl|\operatorname{Cov}_{Q_i}(B_L,B_R)\bigr|
+=r^2s_0s_\ell\bigl|\operatorname{Corr}_{Q_i}(B_L,B_R)\bigr|,
+$$
+
+从而得到第二界。所有步骤只用活动的上界和逐点严格正性；当某些活动趋零时，界保持一致，但极限上的相关系数仍须另查方差是否为零。证毕。
+
+这个 $q_\Lambda$ 是上述有限路径的直接估计。Sinclair–Srivastava–Yin v2 的强空间混合定理需要统一活动及连接常数阈值，不供应式 (C63.6)。本界也不宣称是齐次模型的最优谱速率。
+
+**定义 C-63.4（事件条件下的信息量）。** 以 $Q=Q_i$，$Q_L,Q_R$ 为其两个边缘，定义
+
+$$
+I_Q=\sum_{x,y=0}^1Q(x,y)
+\log\frac{Q(x,y)}{Q_L(x)Q_R(y)}
+=\operatorname{KL}(Q\Vert Q_L\otimes Q_R).
+\tag{C63.9}
+$$
+
+这是先条件化于事件 $B_i=0$ 后的互信息，单位由自然对数规定。它不同于按随机变量 $B_i$ 的全部取值平均的条件互信息。
+
+**命题 C-63.5（外部依赖的事件信息界及完整条件互信息）。** 在命题 C-63.3 的假设下，
+
+$$
+0<I_Q\le\bigl|\operatorname{Corr}_{Q}(B_L,B_R)\bigr|^2
+\le q_\Lambda^{2(n-2)}.
+\tag{C63.10}
+$$
+
+而在完整环律中，
+
+$$
+I(B_L;B_R\mid B_i)=(1-Z)I_Q
+\le(1-Z)q_\Lambda^{2(n-2)}.
+\tag{C63.11}
+$$
+
+证明。置 $P=Q_L\otimes Q_R$。$Q$ 四格全正，所以 $P$ 也全正。对每格使用 $\log t\le t-1$，得
+
+$$
+\operatorname{KL}(Q\Vert P)
+\le\sum_{x,y}\frac{Q(x,y)^2}{P(x,y)}-1
+=\sum_{x,y}\frac{(Q(x,y)-P(x,y))^2}{P(x,y)}
+=\chi^2(Q\Vert P).
+\tag{C63.12}
+$$
+
+最后等式只用 $\sum Q=\sum P=1$。这个有限 KL 估计与 C-3.6 所用对数不等式同属经典中间方法；其在本二元表上的值可以完整算出。记 $a=Q_L(1)$、$b=Q_R(1)$、$\delta=\operatorname{Cov}_Q(B_L,B_R)$。C-8.7 的同边缘差表给
+
+$$
+Q-P=\delta\begin{pmatrix}1&-1\\-1&1\end{pmatrix},
+$$
+
+故
+
+$$
+\begin{aligned}
+\chi^2(Q\Vert P)
+&=\delta^2\left(\frac1a+\frac1{1-a}\right)
+\left(\frac1b+\frac1{1-b}\right)\\
+&=\frac{\delta^2}{a(1-a)b(1-b)}
+=\bigl|\operatorname{Corr}_Q(B_L,B_R)\bigr|^2.
+\end{aligned}
+$$
+
+命题 C-63.3 给最后的衰减界。KL 非负及其等号条件可由同一个对数不等式作用于 $P/Q$ 得出；等号要求 $Q=P$。当前 $\det Q\ne0$，所以 $Q\ne P$ 且 $I_Q>0$。
+
+当 $B_i=1$，两个相邻端点均确定为零，其互信息为零。条件互信息按两个中心事件的实际概率平均，$\mathbb P(B_i=0)=r=1-Z$，立即得到式 (C63.11)。证毕。
+
+同一应用还保留 C-8.7 的精确端点近似意义：
+
+$$
+\operatorname{TV}(Q,Q_L\otimes Q_R)
+=\frac{2|\Delta_i|}{r^2}\le\frac12q_\Lambda^{n-2}.
+$$
+
+这些界控制当前指定的端点表及其有界函数。每个有限正活动长度仍有 $\Delta_i\ne0$、$I_Q>0$；小误差不等于精确独立，也不自动控制额外稀有事件条件化后的误差或整个外部配置的重建。
+

@@ -1,0 +1,41 @@
+**Theorem 6.2 (Covariance identity and variance upper bound).** With covariance and variance under (4.3),
+
+$$
+-M_i\operatorname{Cov}_i(q,H_i)
+=2v_i+
+\sum_{e=\{y,z\}\in\mathcal E_i^{\mathrm{int}}}
+\nabla J_e(q_y,q_z)\mathbin{\cdot}(q_y-c_i,q_z-c_i).
+\tag{6.2}
+$$
+
+Every summand after $2v_i$ is nonnegative, and
+
+$$
+v_i\le\frac{M_i}{4}\operatorname{Var}_i(H_i).
+\tag{6.3}
+$$
+
+Proof. Multiply (5.3) by $q_y-c_i$ and sum. Since $\sum_y m_y(q_y-c_i)=0$, the resulting left side is
+
+$$
+-2\sum_y m_y(q_y-c_i)^2-\sum_y m_y(q_y-c_i)H_i(y)
+=-2v_i-M_i\operatorname{Cov}_i(q,H_i).
+$$
+
+Combining the two endpoints of each edge gives (6.2). Convexity of $J_e$ and $J_e(c_i,c_i)=0$ imply the tangent-plane inequality
+
+$$
+\nabla J_e(q_y,q_z)\mathbin{\cdot}(q_y-c_i,q_z-c_i)
+\ge J_e(q_y,q_z)\ge0.
+\tag{6.4}
+$$
+
+Consequently Cauchy--Schwarz gives
+
+$$
+2v_i\le-M_i\operatorname{Cov}_i(q,H_i)
+\le\sqrt{v_iM_i\operatorname{Var}_i(H_i)}.
+$$
+
+For $v_i>0$ divide and square; if $v_i=0$, (6.3) is immediate. $\square$
+

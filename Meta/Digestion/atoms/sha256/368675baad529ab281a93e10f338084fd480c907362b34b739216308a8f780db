@@ -1,0 +1,2 @@
+**定义 3.1（几何读出合同）。** 设 $K\subset\mathbb R^d$ 是具有非空内部的紧凸多胞体，$d\in\{2,3\}$，取 $O\in\operatorname{int}K$ 并以 $O$ 为原点。边界的外单位法向 $\nu$ 在每个面内部定义，棱角的零面积集合不参与积分。设 $f$ 是次数 $r\in\mathbb N_0$ 的齐次实多项式，即 $f(tx)=t^rf(x)$。目标是 $I_f(K)=\int_Kf(x)\,dx$；边界读出为有向、加权的 $f(x)x\cdot\nu(x)dS$。
+

@@ -1,0 +1,60 @@
+**Lemma 7.1 (Locally bounded two-complex-dimensional representations).**
+For the representation $B_t$ of §6, a fixed complex basis puts it
+in one of these forms:
+
+$$
+B_t=\operatorname{diag}(\sigma_1(t),\sigma_2(t)),\qquad
+\sigma_j(t)=e^{\gamma_jt}\chi_j(t),
+\tag{7.1}
+$$
+
+or
+
+$$
+B_t=e^{\gamma t}\chi(t)(I+tN),\qquad
+N\ne0,\quad N^2=0.
+\tag{7.2}
+$$
+
+Here the $\gamma_j,\gamma$ are real, and the $\chi_j,\chi$ are
+abstract unitary characters of $(\mathbb R,+)$. In (7.1) the two
+multiplicative characters $\sigma_j$ are distinct. No continuity
+of the unitary characters is asserted in this lemma.
+
+Proof. If some $B_t$ has distinct eigenvalues, its two eigenlines
+are invariant under every commuting $B_u$. In that fixed basis all
+matrices are diagonal. Invertibility and the group law make each
+diagonal entry a character $\sigma_j:\mathbb R\to\mathbb C^\times$.
+Local bounds for the matrices and their inverses bound
+$\log|\sigma_j(t)|$ near zero. This logarithm is additive.
+
+An additive real or complex function $b$ bounded by $K$ on
+$(-h,h)$ is continuous at zero: for every positive integer $n$,
+$|t|<h/n$ gives $|b(t)|=|b(nt)|/n\le K/n$. Additivity then
+gives continuity everywhere, and rational approximation to any real
+argument proves $b(t)=tb(1)$. Applying this to the logarithm gives
+$|\sigma_j(t)|=e^{\gamma_jt}$. Dividing by this modulus leaves
+the abstract unitary character $\chi_j$.
+
+Suppose instead that every $B_t$ has a repeated eigenvalue. Not
+all $B_t$ can be scalar, since then the orbit of one state vector
+would span only one complex line, contrary to Proposition 6.2.
+Choose a nonscalar member. Its nonzero nilpotent Jordan part $N_0$
+has $N_0^2=0$. In a Jordan basis the equation of commutation with
+$N_0$ says that every commuting matrix has the form $aI+bN_0$.
+Thus
+
+$$
+B_t=\sigma(t)(I+b(t)N_0),
+$$
+
+where $\sigma(t)\ne0$. Uniqueness of these two coefficients and
+the group law imply that $\sigma$ is multiplicative and $b$ is
+additive. Local matrix and inverse bounds bound $|\sigma|$ above
+and away from zero. They also bound the nilpotent entry divided
+by $\sigma$, hence $b$. The preceding bounded-additivity argument
+gives $\log|\sigma(t)|=\gamma t$ and $b(t)=ct$, with $c\ne0$
+because a nonscalar member exists. Set $N=cN_0$ and
+$\chi(t)=e^{-\gamma t}\sigma(t)$. This proves (7.2), without
+replacing an abstract unit phase by a continuous one. $\square$
+

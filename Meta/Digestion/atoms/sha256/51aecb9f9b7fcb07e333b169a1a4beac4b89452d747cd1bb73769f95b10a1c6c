@@ -1,0 +1,28 @@
+**Lemma 3.2 (One edge).** Conditional on a specified phase, the two
+target-spin joint masses on a single active edge are
+
+| Target position | Zero label | One label |
+| --- | --- | --- |
+| In the edge | $a^2,b^2$ | $\eta,\eta$ |
+| Outside the edge | $ac,bc$ | $2a\eta,2b\eta$ |
+
+Consequently a zero-edge prefix has maximal full-law state mass at most
+$a^2/2$. A one-edge prefix with at most one further query has summed
+full-law correct mass at most $a\eta$.
+
+Proof. A zero edge has two constant assignments of weights $a^2,b^2$;
+a one edge has two opposite assignments of weights $\eta,\eta$. An
+external target contributes its independent factor $a$ or $b$, proving
+the table. Since $ac<a^2$, the zero bound follows.
+
+For an internal target after a one edge, an extension by a fresh vertex
+gives phase-conditional best sum $2a\eta$ by (3.2). No other operation
+can do better: a disjoint query leaves the tie unchanged, and repeats or
+separators are uninformative. For an external target the singleton has
+odds $R$. Joining the tie component gives
+$\max(2a\eta,\eta)=2a\eta$. Joining a fresh vertex also leaves its
+average majority probability $a$ unchanged; a nontarget query only
+partitions the probability $2\eta$ of the first one edge. Thus in every
+case the phase-conditional sum is at most $2a\eta$. Multiply by $1/2$.
+$\square$
+

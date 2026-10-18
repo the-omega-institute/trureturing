@@ -1,0 +1,54 @@
+**Lemma 4.1.** The complete gain is
+
+$$
+f(T)=\frac d{126}(T-3)(T-6)(T-7)
+ +\frac{C_*}{36t}T(T-6)(T-7)
+ -\frac c{18(1+2t)}T(T-3)(T-7).
+\tag{4.2}
+$$
+
+Its full increasing-power coefficient vector is
+
+$$
+\left(
+-d,\quad
+\frac{9d}{14}+\frac{7C_*}{6t}-\frac{7c}{6(1+2t)},\quad
+-\frac{8d}{63}-\frac{13C_*}{36t}+\frac{5c}{9(1+2t)},\quad
+\frac d{126}+\frac{C_*}{36t}-\frac c{18(1+2t)}
+\right).
+\tag{4.3}
+$$
+
+All its samples needed here are
+
+$$
+\begin{array}{c|l}
+i&f(i)\\ \hline
+0&-d\\
+1&-10d/21+5C_*/(6t)-2c/(3(1+2t))\\
+2&-10d/63+10C_*/(9t)-5c/(9(1+2t))\\
+3&C_*/t\\
+4&d/21+2C_*/(3t)+2c/(3(1+2t))\\
+5&2d/63+5C_*/(18t)+10c/(9(1+2t))\\
+6&c/(1+2t)\\
+7&0
+\end{array}
+\tag{4.4}
+$$
+
+**Proof.** The three numerator products in (4.2) are respectively
+
+$$
+T^3-16T^2+81T-126,\quad T^3-13T^2+42T,\quad
+T^3-10T^2+21T.
+\tag{4.5}
+$$
+
+They give (4.3) by distribution and (4.4) by substitution. The values
+at $0,3,6,7$ are the required $-d,C_*/t,c/(1+2t),0$.
+The difference from any other degree-at-most-three interpolant has
+four distinct zeros, and therefore vanishes. The root bound follows
+by successive division by the distinct linear factors. All variable
+denominators are positive since $t>1$. This includes degree drops,
+zero sixth gains and multiple roots. ∎
+

@@ -1,0 +1,41 @@
+**Theorem 10.2 (Scope at the original numerical frontier).** Let
+$e_{\rm mix}=\lambda_{\rm mix}$ be the exact error in
+[QSD, Definition 5.1 and Theorem 5.2](RECURSIVE_RELATIONAL_OBSERVATION_QUANTUM_SPLITTING_EVENTS_AND_DECODER_DESCENT.md).
+The credited endpoints remain
+
+$$
+\frac{129931}{250000}\le\varepsilon_1\le e_{\rm mix},\qquad
+\frac{52417598}{10^8}<e_{\rm mix}<\frac{52417600}{10^8}.
+\tag{10.4}
+$$
+
+No original optimizer admits a constant-preparation-population
+realization as in Definition 9.1. Every normalized globally positive
+event/TP certificate that matches $\varepsilon_1$ has boundary
+preparation contact and finite-test saturation as in Theorem 10.1.
+These restrictions do not determine an optimizer, its positive-weight
+boundary support or the value of $\varepsilon_1$.
+
+Proof. The lower in (10.4) is QJM Theorem 2.3; the upper is the
+legal twenty-seven-flag all-fifteen-event channel of QSD Theorem 5.2.
+Its exact error is less than $52417600/10^8<11/20$.
+Theorem 9.2 therefore excludes the stated realization for any port
+attaining $\varepsilon_1$, and Theorem 10.1 applies to every
+matching tuple. These uses do not reprove or improve either endpoint.
+The earlier upper $\lambda_Q$ in (6.1), and the QEC and QWS
+bounds, retain their stated validity.
+
+Boundary dual contact is a zero of a nonnegative product form.
+Complementarity requires each positive-weight primal atom to be a
+zero; it does not require every zero to be used. In particular
+(10.2) alone supplies neither a positive weight nor a TP marginal.
+Theorem 8.2 tests TP feasibility of the whole zero face, and its
+three-seed representative may change all event values. A matching
+port still has to satisfy the same fifteen residual inequalities,
+all three TP equations and the active signed eigenspace conditions
+in (5.3). QSD's necessary splitting-event activity remains an
+additional common-channel condition. No optimizer is restricted
+to the displayed examples, a specified number of orbits, real
+factors of its unchanged complex representation, unitality,
+self-adjointness or preparation equal to measurement. $\square$
+

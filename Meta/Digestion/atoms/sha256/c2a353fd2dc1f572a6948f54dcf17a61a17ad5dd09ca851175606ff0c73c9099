@@ -1,0 +1,76 @@
+**Definition 6.2 (service class and costs).** A permitted service
+remains a common deterministic effective controller, correct and
+terminating on every actual $u\in U$. For a prescribed finite prefix-free
+original target cut $Q$, correctness still means returning the entire
+$R_Q(u)$: reached original holes in their specified order, the complete
+concrete exterior, and the full whole-subtree equality partition. The
+empty cut retains the complete source; the root cut gives the one-hole
+row. No service for this target is furnished by the section theorem.
+Its source operations are
+original-root $\mathsf{Read}(p)$ for any finite word
+$p\in\{L,R\}^*$, including absent addresses; forward same-register
+$\mathsf{ApplyRho}$; and absorbing $\mathsf{Halt}$. Replies may control
+later actions, and the halt time may vary with the source. There is no
+reset, clone, reroot, identity, rank, chart, unknown-subtree equality or
+free inverse port. Updates convey no extra source-dependent information.
+
+For a service $A$ on one source write
+
+$$
+\begin{aligned}
+c_A(u)&=(q_A(u),a_A(u),\ell_A(u)),&
+\ell_A(u)&=\sum_{\text{actual reads at }p}|p|,\\
+b(A)&=(\sup_Uq_A,\sup_Ua_A,\sup_U\ell_A),&
+W_\lambda(A)&=\sup_{u\in U}\lambda\cdot c_A(u),
+\qquad\lambda\in\mathbb Q_{\ge0}^3.
+\end{aligned}
+\tag{URR.26}
+$$
+
+Every actual read counts, including repeats and absence; $a_A$ counts
+actual post-entry updates. Root reads have length zero but cost one call.
+The weighted sum is taken on the same run before the supremum.
+Coordinate maxima can come from different sources; the two objectives
+cannot be identified. Zero weights remain allowed, and do not remove
+source-total correctness or the obligation to halt. Installation, local
+work, address generation, storage, acquisition, authentication, retention,
+output, physical time and energy are separately supplied costs.
+
+The section selects a possible source at each rank; it does not
+identify the unknown original source, supply a source port or produce
+an observer reply or causal message. Restricting an optimization or recovery question from
+$U$ to $s_C(S_C)$ would change its domain and is not justified here.
+The construction bounds the mass of its chosen witnesses only. It does
+not bound the sizes of all sources, even at one fixed feasible rank, as
+Proposition 5.2 shows. Nor does fixed residual mass bound the size of
+$s_C(\mathbf n)$ as the atomic ranks increase.
+
+For this same full $U$, fixed finite histories and a fixed finite target
+cut, [NPL, Theorems 4.1 and 5.3][NPL] already decide finite versus
+infinite native output images and the complete row image. Their finite
+answers enumerate every output with an original realizing source;
+their infinite answers give original sources with pairwise distinct
+outputs. Under Assumption 6.1 and the actual-action contract above,
+[NPL, Theorem 6.2][NPL] also decides bounded recovery of the reached
+set and concrete exterior and supplies its paid static consumer.
+The partition remains part of the full row target. Finite row image
+alone does not supply its bounded observation.
+
+When the entire original source fiber is finite and nonempty,
+[NPL, Theorems 7.1 and 8.1–8.2][NPL] enumerate that entire fiber and
+give a finite family dominating every legal adaptive comparator on each
+same source. Their exact Pareto basis and attained rational nonnegative
+same-run weighted minima include zero weights. Finiteness is decided
+from the original retained input; it is not an added source-size promise.
+Neither a finite list of rows nor the common section $s_C(S_C)$ satisfies
+the entire-finite-fiber hypothesis merely by being a list of witnesses.
+
+For infinite fibers with finite row image, uniform observation of the
+remaining partition and optimization over arbitrary physical words are
+the separate obligations of [NPL, Open problems 10.1–10.2][NPL]. The
+common section supplies no determining original-prefix depth or actual
+service for those obligations. The source bijection (URR.21) applies to
+the finite descriptions of §4; it is not a positive normalizer for
+arbitrary native histories. Empty instances remain empty mathematical
+fibers; all service assertions retain the nonempty-fiber premise.
+

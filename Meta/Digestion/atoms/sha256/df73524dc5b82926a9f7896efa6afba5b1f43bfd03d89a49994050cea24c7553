@@ -1,0 +1,13 @@
+**定理 135.1（五模式相干接缝的有限共同实现）。** 在完整五态参数 $p,q,r>0,p+q+r<1$、矩阵 (129.1)、边酉 (127.1)、正交边记录及定义130.1的初始化与实际读取合同下，下列结论成立；其中第2项为具有独立参数的四态对照：
+
+1. 跨输入共同等距的充要条件是 (126.1)；唯一共同正后继强制正交记录，故第五模式的两条合流分别给出 (129.2)。
+2. 只含方形且无自环的四态对照取 $p_4\in[0,1],q_4=1-p_4$，允许 (128.2) 的反对易相干混合 $W_{p_4}$。这个 $p_4+q_4=1$ 的参数域与完整五态的 $p+q+r<1$ 分开，不能把它当作完整五态的无记录实现。
+3. 完整边仪器 $V_{\rm edge}$ 按来源行的路径权重 (130.1) 同时产生 $p_h$、条件酉 $U_h$ 和记录 $\Gamma_{hk}=\delta_{hk}$；空边历史也遵守固定根或正交初始化记录的条件。该指定的一轮通道的 Choi 秩恰为 $15$，不推广到所有同 $P$ 的量子实现。
+4. 因子化 (131.3) 给出中心闭路；反向边明确为逆时，定理132.1给出全部内部密度态端点充分的充要条件。同一框架下 (132.2) 固定完整逻辑 $M_2$ 代数，乘积通道保持任意逻辑密度及其未触动参考关联；三个 Pauli 方向是其非恒定实坐标。
+5. 在 $N\ge1,p\ne q$ 时，均匀平稳块的可见熵保持与 (133.1) 的严格正路径箭头共存；$N=0$ 或 $p=q$ 时该箭头为零。中心相位和概率偏置分别属于酉与统计两类读出。
+6. 固定根小任务摘要 $B=(i_N,W)$ 确定未来配置律、内部酉和 $\ell_{\mathrm{stat}}=W\log(p/q)$，其标签比特数为 $O(\log(N+1))$；它不存储未知量子态，也不替代自身 $\delta_0$ 初始律的倒序比较。任意相干全历史输入域仍受 (134.3)–(134.4) 的残余记录下界约束。
+
+**证明。** 第1项由定理126.2及引理126.3，代入五模式的共同支撑即得；第2项由 (128.1)–(128.3)，四态对照只检验反对易闭路的相干抵消；第3项由 Kraus 算子正交、行、列随机性及 (130.1)；第4项由逐边端点因子望远镜、反向逆边的闭路标量判据及乘积通道的参考保持式；第5项由 unital 固定态、平稳路径倒序似然比和 $(p-q)\log(p/q)>0$ 的条件；第6项由初始化后的 (134.1)、具名平稳比较量及任意相干全域内积条件和抽屉原理。各项所需的概率、控制、辅助记录和新环境均是本定理明列的合同，不从原生树语法或实际三维空间自动取得。 $\square$
+
+原生来源、五模式接缝和配置语义承接钉版 [《FIB_RELATIONAL_CONTINUATION_GEOMETRY》](https://github.com/the-omega-institute/trureturing/blob/6247af628aac8e4688aedb6a4cb1cd42642b578a/docs/develop/theory/FIB_RELATIONAL_CONTINUATION_GEOMETRY.md)。实际 Read、事件取得、控制与时钟权限必须按原接口供应；本篇的 Read 指定义130.1实际取得边仪器标签的事件，可分辨或全路径公式不等于已取得某条历史。同版 [《联合来源、量子关系与有限时钟》命题1.1](https://github.com/the-omega-institute/trureturing/blob/6247af628aac8e4688aedb6a4cb1cd42642b578a/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_JOINT_RELATIONS_CLOCKS.md) 给出数值编码不等于可取得操作及有向时钟的边界，不供应额外读数权限。Felix A. Pollock、César Rodríguez-Rosario、Thomas Frauenheim、Mauro Paternostro、Kavan Modi, [“Operational Markov condition for quantum processes”](https://arxiv.org/abs/1801.09811) 讨论操作意义的多时刻 Markov 条件和记忆，不从一时刻通道推出多时刻相干。Paolo Facchi、Saverio Pascazio, [“Quantum Zeno dynamics: mathematical and physical aspects”](https://arxiv.org/abs/0903.3297) 是前卷投影保护的背景综述，允许投影子空间内继续演化；本篇边通道的保护由第132章直接证明，并非 Zeno 冻结。共同原生交互能否同时产生所选 $P,U,\Gamma$，相位控制、长程资源、无限递归成本、实际距离和物理三维空间桥，仍是未证条件。
+

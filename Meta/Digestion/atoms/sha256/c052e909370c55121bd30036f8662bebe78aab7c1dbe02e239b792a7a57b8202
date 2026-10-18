@@ -1,0 +1,56 @@
+**Theorem 2.1 (Component attainment with the inherited constants).** There
+is a standard Borel space $\Lambda$ of actual normalized stationary ergodic
+probability laws $R_\lambda$ on $X$, a measurable component map
+$\psi:X\to\Lambda$, and its probability distribution
+$W=(\psi)_*Q_\star$, such that $Q_\star$ disintegrates over these laws.
+There is one measurable $\Lambda_\star\subseteq\Lambda$ with
+$W(\Lambda_\star)=1$ on which all of the following assertions hold
+simultaneously.
+
+For every $\lambda\in\Lambda_\star$, every $i\in\mathbb Z$, and every
+$A\in\mathcal E_i$,
+
+$$
+q_i=\mathbb E_{R_\lambda}[X_i\mid\mathcal E_i]
+\quad R_\lambda\text{-almost surely},
+\qquad
+R_\lambda(A,X_i=0)\ge\frac12R_\lambda(A),
+\tag{2.1}
+$$
+
+and, whenever $A\subseteq F_i$,
+
+$$
+\frac13R_\lambda(A,X_i=0)
+\le R_\lambda(A,X_i=1)
+\le R_\lambda(A,X_i=0).
+\tag{2.2}
+$$
+
+For every such $\lambda$, every $m,n\ge1$, every $a\in\mathbb Z$, and
+every $w\in B_n$,
+
+$$
+R_\lambda([0^m]_a)\ge2^{-m},\qquad
+R_\lambda([w]_a)\ge2^{-(n+2)}3^{-k(w)}>0,
+\tag{2.3}
+$$
+
+and
+
+$$
+d(R_\lambda)=c_\star,\qquad
+n c_\star\le\Phi_n((R_\lambda)_n)
+\le\kappa_n\le(n+1)c_\star\quad(n\ge1).
+\tag{2.4}
+$$
+
+Every legal finite next-extension $wv$ of a legal nonempty word $w$ has
+$R_\lambda([wv]) / R_\lambda([w])>0$. If the final bit of $w$ is $1$,
+the next bit is $0$ with conditional probability one. Each $R_\lambda$
+in this common set has no finite visible Markov order. In particular at
+least one single stationary ergodic law has all these properties.
+
+**Proof.** We first specify the actual joint law, then transfer the
+infinite-exterior posterior, and only then deduce optimality and support.
+

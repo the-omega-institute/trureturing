@@ -1,0 +1,36 @@
+**Proposition 17.2 (The R3 restriction and R4 failed move retain their scopes).**
+The fixed-base tail-relabeling obstruction called R3 does not
+apply to $K$. The failed unaccompanied rescheduling called R4
+is not a full-class obstruction to (10.3).
+
+Proof. R3 fixes schedule masses and every originally zero- or
+core-labeled cell, redistributing only originally eight- or
+nine-labeled stock. Within that restricted family, the reused
+class-two correct mass is
+$1-16\tau-22W/3072$, and correct-eight mass is at most
+$159W/3072$. At cap $5\tau+d$ its two correct rows require
+
+$$
+22W\le3072d,\qquad 3072(u-d)\le159W,
+\tag{17.4}
+$$
+
+which imply $181d\ge22u$, also when the second demand is
+negative. This remains a restricted-family statement.
+For $u>0$, $K$ moves the positive amount $36s$ from an
+originally base-labeled $P^0$ cell to label eight and obtains
+$195s$ correct-eight mass. That operation violates R3's
+fixed-base premise. Its legality is proved by 11.3 and 12.1–13.1,
+rather than by broadening R3's scope.
+
+R4 replaces the old 17-count $O(8,9;0,9,0)$ branch by
+$O(7,8;0,8,0)$ without compensation.
+On the actual finite word $101000100$, with first zero two,
+this raises the old $Q$ outside count from 662 to 679:
+the old branch emits zero and its replacement emits eight.
+Here $w_6=0$. In $Q_8$ the old branch instead becomes
+constant zero, and the additional $(6,7)$ transfer of $K$
+is inactive. No such 17-count addition to $(7,8)$ is made.
+Thus that failed move remains excluded, while the all-word
+proof above supplies a different legal law. $\square$
+

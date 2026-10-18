@@ -1,0 +1,124 @@
+**Proposition 11.1 (All attaining starts, with optional last reads).**
+Fix a table of Definition 9.1 and a deterministic initial row with
+$q_3=1$. It attains correctness $S_3$ if and only if its actual
+positive-section execution has the following form, with the terminal
+labels specified below. On null or inconsistent sections this
+proposition imposes no instruction or output condition.
+
+The first instruction reads an edge $E$ of parity $\alpha$.
+After first reply zero it reads an edge $F$ of that same parity;
+$E,F$ are vertex-disjoint. After replies $00$ it reads an edge $G$
+of that parity, disjoint from both $E,F$. The actual target index
+satisfies $T\in E\cup F$. Its third-reply successors on this prefix
+halt, with labels
+
+$$
+000:\ h_\beta(\sigma),\qquad
+001:\ h_\alpha(\sigma).
+\tag{11.1}
+$$
+
+After first reply one it reads an edge $H$ of parity $\alpha$,
+vertex-disjoint from $E$. Write $xy$ for the first two replies,
+including when the actual second edge is $F$ on the zero subtree
+and $H$ on the one subtree. There are exactly these cases:
+
+| Target incidence | Prefix $01$ | Prefix $10$ | Prefix $11$ |
+| --- | --- | --- | --- |
+| $T\in E$ | Optional last read or halt; always target spin $\sigma$. | Required join of $E,H$; use Lemma 10.1's one-pair target labels. | Required fresh extension of $E$ outside $E\cup H$; use Lemma 10.2's internal-target labels. |
+| $T\in F\cap H$ | Required join of $E,F$; use Lemma 10.1's one-pair target labels. | Optional last read or halt; always target spin $\sigma$. | Required fresh extension of $H$ outside $E\cup H$; use Lemma 10.2's internal-target labels. |
+| $T\in F\setminus H$ | Required join of $E,F$; use Lemma 10.1's one-pair target labels. | Required join of $T$ to the zero pair $H$; its zero/one target spins are $\sigma,1-\sigma$. | Optional last read or halt; exactly the exterior-target labels and ties of Lemma 10.2. |
+
+Every target-spin label in the table means its actual state
+$h_\alpha(s)$. Every required joining edge must exist in the original
+integer line. The optional last read can have any actual integer
+address, including the other parity or a repeat; it is still paid.
+After any last read every positive reply successor must immediately
+halt with the specified maximizing label. All mandatory prefixes and
+both replies of every mandatory third read have positive source mass.
+No early halt is allowed at the root, after the first reply, or on
+$00$; the optional cells displayed are the only possible positive
+sections of early return.
+
+Proof. An initial halt gives correctness at most $a/2<S_3$.
+For any first read both replies have positive mass, respectively
+$1-\eta$ and $\eta$. Let $D_0,D_1$ be the actual correct masses
+on these two sections. Lemma 9.2 and Lemmas 5.1--5.2 give
+
+$$
+D_0\le Z,\qquad D_1\le D,\qquad Z+D=S_3.
+\tag{11.2}
+$$
+
+Equality in the total forces equality in both bounds and in every
+intervening bound that sums to them. Halting on first zero gives at
+most $a/2<Z$; halting on first one gives at most $a\eta<D$, by
+(5.3). Thus both actual successors read.
+
+Consider their zero subtree first. The proof of Lemma 5.2 gives
+$Q<Z$ if $F$ has the other parity. For the same parity its repeated
+and adjacent cases are strictly below $Z$, by (5.6)--(5.8).
+These are bounds for at most the remaining reads, hence include
+halting at either second-reply section by Lemma 9.2. Consequently
+$F$ has the same parity and is disjoint from $E$.
+If the actual $00$ instruction halts, its mass is at most $a/2$,
+and its $01$ continuation has mass at most $a^2\eta$ by Lemma 3.4.
+Their sum falls short of $Z$ by $a^2c\eta>0$. Thus $00$ really
+reads an address $G$. If its parity is $\beta$, the bound is again
+$Q<Z$, by the corresponding case in Lemma 5.2.
+
+For parity $\alpha$, the $000$ leaf has maximum exactly $a/2$:
+it contains all of phase $\beta$, and no state has prior above
+$a/2$. The other two terms have upper bounds
+
+$$
+D_{01}\le a^2\eta,\qquad m(001)\le a^2c\eta.
+\tag{11.3}
+$$
+
+Their sum with $a/2$ is $Z$, so all three bounds must be attained.
+Lemma 10.3 forces $G$ disjoint from $E,F$ and $T\in E\cup F$.
+On $001$ its unique label is the second label in (11.1).
+On $000$ the phase-$\alpha$ largest mass is $a^2c^2/2<a/2$,
+and the phase-$\beta$ majority has mass $a/2>b/2$; hence its
+unique label is the first label in (11.1). At $01$, apply Lemma 10.1
+with $E$ the zero pair and $F$ the one pair. If $T\in E$, this
+is its optional case; otherwise $T\in F$ and its required join
+and unique, opposite labels give the last two rows of the table.
+
+For the first-one subtree, the second instruction cannot be a
+separator, a repeat, or an adjacent edge: each has bound $a\eta<D$
+in Lemma 5.1. Thus its actual edge $H$ has parity $\alpha$ and is
+disjoint from $E$. Its two continuation bounds are
+
+$$
+D_{10}\le a^2\eta,\qquad D_{11}\le2a\eta^2,
+\tag{11.4}
+$$
+
+and they sum to $D$. They too must both be equalities. Apply
+Lemma 10.1 to $E=1,H=0$, and Lemma 10.2 to $E=1,H=1$.
+Together with $T\in E\cup F$ these give exactly the three rows
+of the displayed table. In its first row the required join also forces
+$E,H$ to have precisely one intervening line edge. This restriction
+is a conclusion about actual addresses, not an address normalization.
+
+Each required prefix has distinct active edges on a finite line
+forest, with consistent prescribed labels; every corresponding spin
+assignment has positive product weight since $a,b>0$. Phase
+$\alpha$ therefore gives positive mass to all the required branches
+and to both replies of each required new edge. The all-zero section
+also has the entire positive phase-$\beta$ contribution. Lemma 9.2
+forces all their third-reply successors to halt.
+
+Conversely take an actual execution with the displayed conditions.
+On its zero subtree (11.1) attains $a/2$ and $a^2c\eta$;
+Lemma 10.1 makes the $01$ continuation attain $a^2\eta$.
+Thus it attains the inherited value $Z$ on that same source.
+On its one subtree Lemmas 10.1--10.2 attain the two values in
+(11.4), hence $D$. They are continuations of the same first read,
+so their sum is $S_3$. Optional last reads and their tied choices
+attain these same bounds by the precise label rules above.
+This proves necessity and sufficiency, including all positive early
+halts and all maximizing-label ties. $\square$
+

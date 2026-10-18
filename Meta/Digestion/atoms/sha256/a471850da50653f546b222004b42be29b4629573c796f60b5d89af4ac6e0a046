@@ -1,0 +1,52 @@
+**Mathematical citation 2.3 (endpoint events and boxes).** Use the supplied positive-difference events
+
+$$
+E_p=\{w_{0,1},w_{1,1},w_{2,1}\},\qquad
+E_\beta=\{\beta,\alpha w_{0,1}\}.
+$$
+
+Their endpoint masses and midpoints are
+
+$$
+P_{p,a}(E_p)=\frac{412}{729},\quad
+P_{p,b}(E_p)=\frac{7299}{15625},\quad
+C_p=\frac{11758471}{22781250},
+$$
+
+$$
+P_{\beta,a}(E_\beta)=\frac{22}{27},\quad
+P_{\beta,b}(E_\beta)=\frac{93}{125},\quad
+C_\beta=\frac{5261}{6750},\quad
+c=1-C_\beta=\frac{1489}{6750}.
+\tag{2.5}
+$$
+
+The event-mass differences are exactly $2\rho_p,2\rho_\beta$ [ST; CLIP; INTERIOR]. Projection of (2.4) to these complete events yields
+
+$$
+|\overline Q(E_p)-C_p|\le\epsilon_p,\qquad
+|\overline W(E_\beta)-C_\beta|\le\epsilon_\beta.
+\tag{2.6}
+$$
+
+Indeed a law within $d/2+\epsilon$ of both endpoint laws has event mass between their midpoint minus $\epsilon$ and midpoint plus $\epsilon$ whenever that event realizes their TV distance $d$.
+
+The full countable coordinate identity also gives
+
+$$
+\sum_w\operatorname{dist}\bigl(\overline Q(w),
+ [\min(P_{p,a}(w),P_{p,b}(w)),\max(P_{p,a}(w),P_{p,b}(w))]\bigr)
+\le2\epsilon_p.
+\tag{2.7}
+$$
+
+To see this, sum $|q-A|+|q-B|=|A-B|+2\operatorname{dist}(q,[\min(A,B),\max(A,B)])$ over all coordinates and divide by two. The left endpoint-loss sum is at most $2\rho_p+2\epsilon_p$, whereas endpoint TV is $2\rho_p$. Include the infinite outcome in that sum. In particular
+
+$$
+\overline Q(w_{3,1})\le q_*+2\epsilon_p,\qquad
+q_* =P_{p,b}(w_{3,1})=\frac{1944}{390625}.
+\tag{2.8}
+$$
+
+The other endpoint is smaller: their difference is $254584/2562890625>0$. These are consequences of complete-law losses, rather than replacements of those losses by a scalar target.
+

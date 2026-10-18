@@ -1,0 +1,6 @@
+**Proposition 4.2 (No positive two-word null direction at any length).** Under this exact actual $P_t$, distinct equal-length positive block words cannot support a conditional-null $\alpha\mathbf1_{[v]}-\beta\mathbf1_{[w]}$ with $\alpha,\beta>0$.
+
+Proof. For any nonzero nonnegative row $x$, the second coordinate of normalized $xB$ is $s(px_1+bx_2)/(ax_1+bx_2)\le s$, whereas the first coordinate of normalized $xR$ is $s(px_1+2qx_2)/(px_1+qx_2)\le2s$. The two image sets are disjoint since $3t<1$. If two atom products are positively proportional, applying a positive row forces their final atoms to coincide. Invertibility cancels this final atom. Repetition leaves identical sequences, or a nonempty positive product proportional to $I$. The latter is impossible because its off-diagonal entries are positive.
+
+Conditional nullity of the proposed pair, tested against exterior zero guards of lengths one and two on both sides, gives $E(\alpha T_v-\beta T_w)O=0$. Equation (4.2) implies $\alpha T_v=\beta T_w$. Parsing $0v0$ and $0w0$ after their first zero into completed $0,10$ atoms is unique. The preceding cancellation argument forces identical sequences, hence $v=w$, a contradiction. This uses actual exterior tests and full support, rather than inferring pair absence from word ranks. $\square$
+

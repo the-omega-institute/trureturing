@@ -1,0 +1,52 @@
+**Proposition 4.2 (exact profiles of an extracted or supplied table).**
+Every $C\in\mathcal C_K$ has finite $b(C)\in\mathbb N^3$.
+For a supplied literal table, membership in $\mathcal C_K$ is
+decidable under Assumption 1.1. When membership holds, its exact
+coordinate maxima and its exact worst same-run rational weighted
+sum are computable, with original-source witnesses for each
+maximum.
+
+Proof. For the supplied table put
+
+$$
+W_C=\max\bigl(\{0\}\cup\{w(p_e):e\in E_R\}\bigr),\qquad
+T_C=|E|\bigl(\max(0,W_C+2-N)+1\bigr).
+\tag{NRF.18}
+$$
+
+[CAR, Theorem 11.2][CAR] bounds every halting execution by $T_C$.
+Unlike (NRF.11), this table-specific bound may inspect all
+installed words; here those words are already finite input.
+Enumerate its formal first-halt paths through at most $T_C$
+actions and use their fixed-word instances of (NRF.14).
+Totality of this finite union is decidable. For each terminal
+path, equality of $R_Q(\Theta_\eta(\mathbf n))$ to the actual
+installed row is decidable by [CAR, Lemma 4.1(4)][CAR].
+These tests, together with $|E|\le K$, are exactly membership:
+any actual halt is inside the bound, and compatible paths are
+actual executions. A failure to halt cannot be hidden beyond
+this bound.
+
+For a member, decide the nonemptiness of every terminal path
+support and extract one admitted tuple for each nonempty support.
+There are finitely many such paths and at least one, since
+$D\ne\varnothing$. They cover every source, and their costs
+$v_\pi$ are fixed finite triples for this literal table. Thus
+
+$$
+\begin{aligned}
+b_i(C)&=\max_{\pi:\,\exists\eta,\mathbf n\ A_{\eta,\pi}}
+                              v_{\pi,i},\\
+W_\lambda(C)&=
+\max_{\pi:\,\exists\eta,\mathbf n\ A_{\eta,\pi}}
+                              \lambda\cdot v_\pi.
+\end{aligned}
+\tag{NRF.19}
+$$
+
+In each maximum, the extracted tuple of a maximizing path expands
+to an original source realizing it. Different coordinates may
+select different sources. For the weighted maximum, one path and
+one source realize the entire sum. All predicates retain the full
+fiber; the finite witnesses do not replace it. $\square$
+

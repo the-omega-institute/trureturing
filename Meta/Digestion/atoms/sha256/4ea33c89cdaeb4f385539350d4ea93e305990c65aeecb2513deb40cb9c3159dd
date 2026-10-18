@@ -1,0 +1,39 @@
+**Definition 5.3 (supplied native partitions and literal realization).**
+Reuse [AOF, Definition 8.2, (AOF.24)][AOF]. Denote absence by $\bot$
+and branch by $\mathsf b$. For nonnegative ages the supplied relative
+response functions are
+
+$$
+\begin{array}{c|cccc}
+ &\bot&\alpha&\beta&\mathsf b\\ \hline
+E&\text{never}&n=0&n=1&n\ge2\\
+P_t\ (t\ge2)&n<t&n=t&n=t+1&n>t+1\\
+S_t\ (t\ge2)&n<t&\text{never}&n=t&n>t.
+\end{array}
+\tag{NARC.5.7}
+$$
+
+Every finite relative word has one of these response functions, by the
+supplier's proper-prefix guard. $S_t$ is a coarsening of $P_t$: send
+$\bot$ to $\bot$, $\alpha$ to $\beta$, and both $\beta$ and
+$\mathsf b$ to $\mathsf b$. Hence a target recovered
+by $S_t$ can also be recovered by the legal $P_t$. The relative root
+experiment $E$ may be denoted $P_0$ as a response function. The native
+menu has no $P_1$.
+
+The following supplied literal representatives will be used:
+
+$$
+w_0=\varepsilon,\qquad
+w_{2m}=R^m\ (m\ge1),\qquad
+w_{2m+1}=LR^m\ (m\ge1).
+\tag{NARC.5.8}
+$$
+
+For $t=0$ they realize $E$; for $t\ge2$ they realize $P_t$.
+At a right-visible entry submit $Lw_t$; at a left-visible entry submit
+$Rw_t$. In particular $w_0$ is an empty suffix, but $Lw_0=L$ and
+$Rw_0=R$ each cost one original-root call. They are distinct from the
+uninformative original-root empty word. Powers in (NARC.5.8) mean actual
+finite sequences of letters.
+

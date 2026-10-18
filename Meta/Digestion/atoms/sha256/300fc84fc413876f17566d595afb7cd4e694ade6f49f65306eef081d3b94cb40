@@ -1,0 +1,39 @@
+**Theorem 17.1 (all certificates and all orthogonal pairs constrain an improver).** Fix positive beta and an actual original-class encoder. If $\delta_N<U(\beta)$, then there is one maximizing environment density $\omega_\star$ for which, simultaneously,
+
+$$
+\begin{gathered}
+m(\omega_\star)=g_N^2>t_\beta,\\
+f(\tau,\omega_\star)^2>t_\beta,\quad
+f(\bar\tau,\omega_\star)^2>t_\beta,\quad
+f(\sigma,\omega_\star)^2>t_\beta,\\
+\operatorname{Tr}(\omega_\star H_{q,Z_q})<\frac{U(\beta)}2
+\quad\text{for every complex density }q\text{ and every allowed }Z_q.
+\end{gathered}
+\tag{R.72}
+$$
+
+For every finite aggregate $H\in\mathscr H(J)$ the same $\omega_\star$ has $\operatorname{Tr}(\omega_\star H)<U(\beta)/2$, and necessarily
+
+$$
+\lambda_{\min}(H)<\frac{U(\beta)}2,\qquad
+\operatorname{Tr}[D(sI_r+H)^{-1}]>1
+\quad(D=\tau,\bar\tau,\sigma).
+\tag{R.73}
+$$
+
+Every simultaneous matrix $M$ allowed in Theorem 12.2 must likewise have $\lambda_{\max}(M)>t_\beta$. In addition, for every complex unit $u\in\operatorname{span}(|0\rangle,|1\rangle)$ and every real $\varphi$,
+
+$$
+\mu_{u,\varphi}(N):=
+\frac12\left\|N\left(e^{-i\varphi}|u\rangle\langle2|
++e^{i\varphi}|2\rangle\langle u|\right)\right\|_1
+\geq1-\delta_N>\sqrt a.
+\tag{R.74}
+$$
+
+**Proof.** The pure-target bound gives $2(1-g_N^2)\leq\delta_N<1-s$, hence $g_N^2>t_\beta$. In a fixed finite environment the density domains are compact, and $\Phi(q,\omega)^2$ is continuous even at singular matrices. Its minimum over $q$ is continuous in $\omega$, so a maximizing $\omega_\star$ exists. Apply every inequality (R.44) at this one maximizer. They give the three strict fidelity conditions and all of the strict kernel charges in (R.72), with the quantifier order $\exists\omega_\star\ \forall(q,Z_q)$.
+
+A finite convex average of these strict charge inequalities is still strict; thus $\lambda_{\min}(H)\leq\operatorname{Tr}(\omega_\star H)<U/2$. Contraposition of (R.47) gives all three inverse inequalities. The pointwise proof of Theorem 12.2 gives $\operatorname{Tr}(\omega_\star M)\geq m(\omega_\star)>t_\beta$, proving its eigenvalue condition.
+
+Finally the states $(e^{-i\varphi}u\pm|2\rangle)/\sqrt2$ are orthogonal and have projector difference equal to the input in (R.74). The same-recovery contraction argument of Theorem 14.2 gives $\delta_N\geq1-\mu_{u,\varphi}(N)$ for each pair. Rearrangement proves (R.74). At beta zero the antecedent would be $\delta_N<0$ and is impossible; no positive-beta support formula is needed for that observation. $\square$
+

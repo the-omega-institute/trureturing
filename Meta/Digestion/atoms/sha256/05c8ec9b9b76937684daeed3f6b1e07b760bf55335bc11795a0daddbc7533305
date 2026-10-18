@@ -1,0 +1,38 @@
+**Resource account 9.3.** The live specimen has the credited active qutrit
+support inside the five original modes, plus an absorbing classical sector
+when stopped. The pure helper pair occupies at most two joint dimensions
+and is an additional resource. A one-step C success residue needs at most
+two dimensions; an R construction can use the returned two-dimensional
+helper and an extra residue of at most two dimensions. On the promised
+frame span failure needs at most four dimensions. On the full
+qutrit-times-helper input of dimension at most six, the complementary
+square-root completion can keep a failure residue of dimension at most
+six. These are sufficient mathematical register counts, not minima for
+hardware, implementation environments or total observer memory.
+
+In the coherent checkpoint construction, the two actual success vectors
+span at most two dimensions at each cut. This does not remove independently
+retained spectator archives or imply they have dimension two. The binary
+flag and first-failure-or-all-success field are retained. For $L$ cuts the
+latter has $L+1$ possibilities; all success flags before that first failure
+are then determined by the fixed programme. Other event payloads, programme
+descriptions and actual archives are separately charged. A protocol with
+additional outcome labels must retain and count those labels as well.
+
+Exact coefficients require calibrated descriptions of $Z,k,l$, preparation
+phases, the helper rays, reference basis and the instruments. Rational base,
+heights, durations and a rational/algebraic calibrated helper pair give
+finite algebraic descriptions for the finite Gram constructions, including
+matrix square roots. The example in (PR.18) has such a description. This
+does not give exact physical execution at finite accuracy. Arbitrary real
+calibration parameters need not have finite effective descriptions.
+Storage widths, arithmetic, programme length, acquisition work, specimen
+and helper preparation, gate precision, clocks, timing and physical energy
+are distinct resources. None is priced solely by $p_C$, $p_R$ or $P_n^*$.
+
+All new theorems are exact. There is no approximate observation metric,
+finite-noise certification or accumulation bound claimed for these new
+operations. The stability supplier's TV and strong-derivative conditions
+remain conditions for its canonical output, not supplied error data for
+these assisted gates.
+

@@ -1,0 +1,13 @@
+**Definition 11.6 (the qualified class).** Let $\mathfrak C$ consist
+of the complete graphs of Convention 11.1 for which
+
+$$
+B\in\mathcal L_*,\quad q\in Q_B
+\quad\Longrightarrow\quad q\text{ satisfies (SI.63)}.
+\tag{SI.68}
+$$
+
+There is no both-conflict requirement on cut states or on pools in
+$\mathcal A_*$. In particular the entire class of Corollary 10.6,
+whose late gaps have span at most four, is contained in $\mathfrak C$.
+

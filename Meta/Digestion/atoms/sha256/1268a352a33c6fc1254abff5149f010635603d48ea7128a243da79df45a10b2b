@@ -1,0 +1,26 @@
+**Proposition 9.2 (boundary witnesses).** The following exact witnesses
+distinguish the relevant claims.
+
+1. The five-row reader with $d=0$ performs its one zero test and no payload
+   IN. For $d\ge1$, local cuts 1 and 2 are respectively before and after
+   its first IN. They differ even when its later completed frame is the
+   same. The next cut additionally executes WR.
+2. In a capacity-one accepted $\rho\alpha=\beta$ write, packets 01 and 10
+   differ in both bits. After the first changed bit the intermediate
+   packet is 11 or 00, depending on write order. Neither is a valid
+   complete one-token source packet.
+3. Fix a cover with bound $b$ and request $k>b$. Later request processing
+   may advance actual receipts beyond $k$. Correct comparison to the
+   frozen $b$ still rejects $k$.
+4. If a package instead stores a pointer to mutable latest-cover, replacing
+   that cover can change its target binding. Storing its immutable cover
+   and $U(k)$ prevents this failure by Proposition 6.2.
+5. Lemma 7.2's equal-length service frames give different latch states at
+   equal physical ordinals with identical old source-only replay input.
+
+Proof. Items 1 and 2 follow by the displayed local transition counts and
+two-bit writes. Item 3 compares the original frozen bound, which is not
+the later meter. Item 4 follows by substituting two different cover values
+in the mutable-reference scheme, whereas the frozen fields are unchanged.
+Item 5 is the two actual IN successors in Lemma 7.2. ∎
+

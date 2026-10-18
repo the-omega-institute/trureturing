@@ -1,0 +1,25 @@
+**Proposition 5.2 (edge cases and source-fiber distinction).** The
+theorem retains the entire input domain, but its witness templates
+are in general a strict subset of the source fiber.
+
+Proof. An empty cut supplies a ground $W_i$; a root cut supplies one
+class variable; a valid blocked row with no holes supplies a ground
+context and an empty class tuple. Empty $\Lambda$ adds true. A
+same-endpoint disequality becomes $x\ne x$ and rejects every branch;
+an equality is harmless. Equal epochs are included by non-strict
+chronology and are checked against the same iterate equations. A
+later-born hole is constrained in $\rho^{n_i}t$ itself. None of the
+construction stages assumes initial reachedness or a positive number
+of class variables. All negative partitions and links are processed
+in the same finite system.
+
+For the distinction, one root-cut row at epoch zero with no links
+admits every finite native tree. Any one finite list of fixed normal
+shapes has a maximum number of normal leaves, while normal codes
+with constant rank zero have arbitrarily many leaves and are all
+normal. Thus those templates need not cover the entire source fiber.
+Their sufficiency concerns existence at each epoch tuple, not a
+bijection on original sources. Proposition 2.2 remains the exact
+all-source presentation. NUE's row-only source-preserving result
+retains its stronger fiber property in its own language. $\square$
+

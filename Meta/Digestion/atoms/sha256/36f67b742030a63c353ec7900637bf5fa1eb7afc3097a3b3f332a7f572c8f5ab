@@ -1,0 +1,38 @@
+**命题 C-90.3（条件最大联合与完整纯态趋于中模式可以并存）。** 采用迹距离约定
+
+$$
+D(\rho,\sigma)=\frac12\|\rho-\sigma\|_1,
+$$
+
+则式 (C90.1) 满足
+
+$$
+D(|\psi_r\rangle\langle\psi_r|,|2\rangle\langle2|)=\sqrt r.
+\tag{C90.4}
+$$
+
+存在固定全正条件态使所有 $r>0$ 都有 $\mathcal C=1$，
+同时 $\mathcal K=2/r\to+\infty$，而完整态的迹距离趋零。
+
+证明。$\phi$ 与 $|2\rangle$ 正交，在正交基 $(|2\rangle,|\phi\rangle)$ 上，
+两个密度矩阵之差为
+
+$$
+\begin{pmatrix}
+-r&\sqrt{r(1-r)}\\
+\sqrt{r(1-r)}&r
+\end{pmatrix}.
+$$
+
+其迹为零、行列式为 $-r$，故特征值为 $\pm\sqrt r$；
+正交补上为零，迹范数为 $2\sqrt r$。
+例如取
+$|\phi\rangle=(|0\rangle+|1\rangle+|3\rangle-|13\rangle)/2$，
+则条件四格全正，$\widehat X=\widehat Y=1/2$、$\widehat\kappa=1/4$，
+$B=\frac12\left(\begin{smallmatrix}1&1\\1&-1\end{smallmatrix}\right)$ 给 $\mathcal C=1$。
+C-82.1 给所选尺度的 $\mathcal K=2/r$。证毕。
+
+这里 $r=0$ 不在条件化定义域，不能在质量已消失的分支上继续声称有一个实际条件态。
+上述极限同时保留了 $r>0$ 时的条件关系和完整态的分支稀有性。
+曲率发散来自指定度量的整体缩小，不推出信息量单调增加或引力增强。
+

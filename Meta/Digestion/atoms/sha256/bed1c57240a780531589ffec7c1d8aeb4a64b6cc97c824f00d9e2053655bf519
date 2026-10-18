@@ -1,0 +1,34 @@
+### 93.2. Full source algebra without dividing by a direction derivative
+
+Use the three primitive source curves \(h_0,h_1,h_2\) of §87.5, of degrees
+8,10,10 in \(k,t\). Use exactly the degree-19 monomial order, 30-element
+basis \(\mathcal B\), 188 source multiples and selected 180 rows in §88.2.
+The basis has total degree at most six, together with
+\((e_t,e_k)=(1,6),(0,7)\), in inherited monomial order.
+Let \(M\) be the selected matrix on the 180 nonbasis columns, and \(C\)
+its 30 basis columns. The exact residues are
+\[
+ \det M=8,\qquad \det V_*=57\pmod{61}.
+\]
+The second is the original vertical 18-by-18 minor. It excludes physical
+means with \(x=0\). Every other degree-at-most-19 monomial has its basis
+expression from \(-M^{-1}C\); basis monomials have their standard vectors.
+Define \(K,T\) by the expressions of the one-step \(k,t\) multiples
+of every basis monomial. These borders all lie in the represented range.
+
+Here is the characteristic-zero specialization justification. Over
+\(\mathbb Q(i)(b)\), the source/CRT theorem makes \(K,T\)
+the actual multiplication matrices. Therefore they commute,
+\(h_j(K,T)=0\), and evaluation of each basis monomial on the constant
+vector gives its standard basis vector. These are rational-function
+identities whose construction denominators divide powers of \(\det M\)
+and fixed scalar contents. They specialize to \(K_Q\) because \(\det M\)
+is a unit. They provide a 30-dimensional algebra representation generated
+by its constant vector. Conversely the same Macaulay border relations
+bound the full quotient by 30. Hence
+\[
+ K_Q[k,t]/(h_0,h_1,h_2)
+\]
+is exactly this free 30-dimensional algebra. No old component derivative
+is assumed invertible in this argument.
+

@@ -1,0 +1,20 @@
+**Lemma 1.4 (Unchanged metric).** On the actual source,
+
+$$
+y=D(A(k)e^{i\alpha},B(k)e^{i\beta}),\qquad
+D^{\mathsf T}D=4I_2\oplus I_2,\qquad
+\|D(a,b)\|_2^2=4|a|^2+|b|^2.
+$$
+
+Proof. The negative phase convention gives
+$\overline\psi_i\psi_j=\sqrt{p_ip_j}e^{i(\theta_i-\theta_j)}$.
+The expectation pair is twice its real and imaginary parts. The five
+increment differences are $\alpha,\beta,\alpha,-\alpha,-\alpha$,
+and $U(-\alpha)=JU(\alpha)$. This proves the displayed factorization.
+Four distinct output blocks contain the first vector and one contains
+the second. Orthogonality of $J$ and the fixed preparation rotations
+gives the Gram matrix. In particular $y$ is bounded, since $A\le H$
+and $B<2\sqrt{ZH}$. These are the original ten-output Euclidean
+weights, as in [M, Lemma 1.5], [Q, Lemma 1.4] and [O, Lemma 1.3].
+$\square$
+

@@ -1,0 +1,15 @@
+## 1. Independent scope and existing owners
+
+This is an independent algorithmic continuation of the existing gate and observation theories. It does not depend on the HS4 maximum, singlet cells, spatial interpretation or many-body Hamiltonians. It distinguishes an ordinary mathematical construction, a compiled reversible circuit, a hardware experiment and a complexity advantage. The mathematical constructions below use explicit ideal control and observation hypotheses.
+
+The following sources supply distinct mathematical interfaces:
+
+| Existing owner | Object consumed here | Retained boundary |
+| --- | --- | --- |
+| [Legal interference](FIB_LEGAL_EDGE_LOAD_INTRINSIC_NULL_KERNEL_DUAL_RESIDUAL_AND_PRESENTATION_OBSTRUCTION.md), Chapter 8, especially Definitions 8.3 and 8.16 | The no11 Hilbert space, explicit conditional pulses, ordered gate words and full output records | A legal pulse and its phase are supplied controls; the occupancy grammar alone supplies neither |
+| [Output-resolved instrument closure](AURIC_FIB_ATOM_OUTPUT_RESOLVED_INSTRUMENT_CLOSURE.md), Section 15 with its editorial conditions | Actual branch maps and dependence of future observations on retained records | Classical recorded histories and unmeasured coherent work registers are different carriers |
+| [Fusion-chain QCA](FUSION_SPIN_CHAIN_QCA_CUT_OBSTRUCTIONS.md), Sections 1.1-1.3 and 8.1-8.2 | Actual window algebras, their embeddings and the restricted finite-depth gate menu | A finite register permutation is not automatically a local implementation on an infinite fusion chain |
+| `D5/S1/Recurrence/LucasCompanion.lean` | `matrixPeriod`, `companion_zpow_eq_one_iff`, `matrixPeriod_pos`, `companion_power_shape` | These are algebraic period declarations; these algebraic declarations do not themselves specify a quantum circuit |
+
+Shor [S97] and Kitaev [K95] supply the established order-finding and eigenphase-estimation framework. The integration below specifies the phase information, reversible work space and power-access hypotheses needed to apply that framework to these project objects. It does not claim a new factoring algorithm or a solution of arbitrary state-machine prediction.
+

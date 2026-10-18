@@ -1,0 +1,83 @@
+**Theorem 4.3 (sharp bin-label capacity for this acquired event).** For
+every $M\geq1$ and every code satisfying Definition 4.1,
+
+$$
+\begin{aligned}
+\Pr(\widehat X_M=X_M\mid\mathsf F)&\leq\min(1,D/M),\\
+\Delta_M&\geq\max(0,1-D/M).
+\end{aligned}
+\tag{EM.11}
+$$
+
+Both bounds are attained for the abstract task of retaining and decoding
+the bin label alone, with already acquired exact input data and calibrated
+encoding/decoding. Therefore conditional error at most $\delta<1$
+requires $D\geq(1-\delta)M$. If $n\leq2^B$ and every block is at
+most $d$ dimensional, a necessary condition is
+
+$$
+B+\log_2 d\ \geq\ \log_2 M+\log_2(1-\delta).
+\tag{EM.12}
+$$
+
+This is a retained-information bound, not an acquisition, hardware, energy
+or programme-description bound. Sharp attainment for this one label does
+not assert simultaneous optimal retention of mode, controller and all
+other archive fields at the same $D$.
+
+For a concrete distinction, $M=1,D=1$ permits perfect bin-label retention.
+It does not permit perfect retention of the actual mode in (EM.7): a
+one-dimensional normalized memory state is constant, so any decoded mode
+is independent of that input mode and has correct-guess probability at
+most $\max(c,Z,c)=2/5$. Thus extending the sharp-attainment assertion
+to the full event archive at the same dimension would be false already
+in this displayed source.
+
+**Proof.** By Theorem 3.1, $X_M$ is uniform on $M$ labels. Average the
+encoded density operator over the actual conditional times, modes and any
+other joint inputs given $X_M=x$ and $\mathsf F$; denote the resulting
+normalized state by $\sigma_x$ on the $D$ dimensional embedding of
+(EM.9). The common decoder induces a POVM $\{E_x\}$; additional abort
+effects can be included or assigned to one label for an upper bound.
+Because $0\leq\sigma_x\leq I$, positivity gives
+
+$$
+\Pr(\widehat X_M=X_M\mid\mathsf F)
+ =\frac1M\sum_x\operatorname{tr}(E_x\sigma_x)
+ \leq\frac1M\sum_x\operatorname{tr}E_x\leq\frac DM.
+\tag{EM.13}
+$$
+
+Probability is also at most one. This is the mature finite-dimensional
+quantum guessing inequality, here proved directly for arbitrary block
+dimensions. In particular the set of possible code states need not be
+finite: a continuum of exact density matrices still satisfies (EM.13).
+
+Write $q(x,y)$ for the actual coupled output law. Its first marginal is
+$1/M$, hence $q(x,x)\leq1/M$. The half-$L^1$ distance from the ideal
+diagonal law equals
+
+$$
+\frac12\left(\sum_x(1/M-q(x,x))
+                   +\sum_{x\ne y}q(x,y)\right)
+ =1-\Pr(\widehat X_M=X_M\mid\mathsf F).
+\tag{EM.14}
+$$
+
+Abort mass is included in the off-diagonal term. This proves the second
+bound. For attainment, enumerate an orthonormal basis across the direct
+summands and use $\min(D,M)$ basis states for that many distinct labels.
+If $D<M$, send every remaining label to the first basis state; decoding
+the selected basis labels gives exactly $D/M$ correct probability. If
+$D\geq M$, use distinct basis states for all labels. This construction
+lies in the block-diagonal algebra and needs no coherence between blocks.
+It proves sharpness only for the stated abstract label task.
+Finally $D\leq nd\leq2^Bd$ gives (EM.12). $\square$
+
+Nayak, Theorem 2.4(2), gives the general most-probable-input mass bound for
+an $m$-qubit encoding. Its uniform-input specialization is the inequality
+used here. Neither that inequality nor its elementary proof is claimed as
+new. The source contribution is that the uniform label is the bin of an
+actual stopped event of the smooth original programme (EM.6), with its
+complete law and absorbing branch verified.
+

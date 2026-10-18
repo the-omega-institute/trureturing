@@ -1,0 +1,6 @@
+**Remark 6.1 (What is not proved).** The volume proves the converse fails at length nine; failure at length eight was previously known (Remark 4.8). It proves nothing about any other length: neither the existence nor the non-existence of symmetry-free bad $\{\pm1\}$-potentials on $C_L$ for $L\notin\{8,9\}$, nor any minimality statement in $L$.
+
+**Open question 6.2 (Composite lengths).** Determine the set of $L\ge3$ for which $C_L$ carries a bad potential with values in $\{-1,1\}$ and trivial shared commutant. For prime $L$, Lindblad and Guerrero, Proposition 4.1, show that bad potentials are exactly those with a reflection symmetry about a vertex, so prime lengths admit no such potential; the composite lengths other than $8$ and $9$ are open here.
+
+**Open question 6.3 (Structure of nodal factors).** For a bad potential with trivial shared commutant, the nodal factor of Theorem 3.2 has degree two at length eight and degree three at length nine. Is there a description of the nodal factors, for example through transfer matrices of the two letters $a$ and $b$ as in the proof of Theorem 4.4, that predicts which words in $\{1,-1\}^L$ carry a persistent nodal branch?
+

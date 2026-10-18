@@ -1,0 +1,48 @@
+**推论 201.4（饱和基行扩张，保留同一预算）。** 设一般非负评分满足
+
+$$
+A_w\le C_w\quad(w\in\Omega),\qquad
+\operatorname{supp}(A+P)\subseteq\Omega_1\cup\Omega_2.
+\tag{201.21}
+$$
+
+按定理 198.1 先作饱和
+
+$$
+y'=(A'=0,\ C'=C-A,\ P'=P+A,\ T'=T).
+$$
+
+令 $a_* =\sum_wA_w$，并严格以饱和后的权重定义
+
+$$
+\begin{aligned}
+S'&=S+a_*,&\gamma'_j&=\sum_{w\in\Omega_j}(C_w-A_w),&
+E'&=\gamma'_1+\gamma'_2,\\
+G'&=\sum_{j=3}^L\gamma'_j,&\mu'&=\max_{j\ge3}\gamma'_j,&
+B'&=S'+T,\qquad\Lambda'=\Lambda(\gamma').
+\end{aligned}
+\tag{201.22}
+$$
+
+若 $\delta=\Delta_O(y)\le1$ 且
+$B'\ge\Lambda'+(\mu'-\delta)_+$，则定理 201.3 对 $y'$ 给出的同一 $V$ 满足
+
+$$
+\Delta_N(V)\le\delta\le1,\qquad
+F_{Q(y)-Q(V)}(b)=-ea_*\le0\quad(b\in H).
+\tag{201.23}
+$$
+
+故 $(V,0)$ 仍为 $Q(y)$ 的完整证书；更一般地，在不要求 $\delta\le1$ 时，
+相同阈值给出 $Q(y)\in D_N(\delta)+P_H$。零预算时取
+$B'\ge\Lambda'+\mu'$ 即可。
+
+**证明。** 定理 198.1 保持逐字逐标签奖励、锚和两个支持，故
+$\Delta_O(y')=\delta$，且 $F_{y'}=F_y+ea_*$。
+假设 (201.21) 使 $C'\ge0$ 且 $P'$ 仍仅在早期类。定理 201.3 保持
+$Q(V)=Q(y')$ 与锚 $E'+B'$，因此残差恰为 (201.23)。特别地
+$K_{y'}=K_y-a_*$，构造中的早期正确量、pair 总量和余量须使用饱和后的值。
+由于晚期 $A$ 在 (201.21) 下为零，晚期 $\gamma'_j=\gamma_j$；早期正确量和
+可用 pair 总量仍须按 (201.22) 改写。整个证明只使用原预算一，没有为基行或层集
+增加另一份预算。$\square$
+

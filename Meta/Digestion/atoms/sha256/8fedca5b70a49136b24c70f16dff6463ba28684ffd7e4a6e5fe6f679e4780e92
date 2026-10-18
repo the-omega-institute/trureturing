@@ -1,0 +1,39 @@
+**定义 9.3（圆形读出与内部谐波）。** 令
+
+$$
+C_N(x)=\sum_{\substack{1\le n\le2N-1\\n\ {\rm odd}}}\frac{\cos nx}{n},
+\qquad
+S_N(x)=\sum_{\substack{1\le n\le2N-1\\n\ {\rm odd}}}\frac{\sin nx}{n}.
+$$
+
+采用标准奇数对数级数
+
+$$
+\sum_{n\ {\rm odd}\ge1}\frac{z^n}{n}
+=\operatorname{arctanh}z
+=\frac12\log\frac{1+z}{1-z},\qquad |z|<1,
+$$
+
+参见 [DLMF §4.38](https://dlmf.nist.gov/4.38)。在 $x\notin\pi\mathbb Z$，其边界值为
+
+$$
+C(x)=\frac12\log\left|\cot\frac x2\right|,
+\qquad S(x)=\frac{\pi}{4}\operatorname{sgn}(\sin x).
+$$
+
+定义 $\chi_4(m)=(-1)^{(m-1)/2}$，仅用于奇数 $m$。平移三角波的 Fourier 级数给
+
+$$
+k(\theta)=\frac8{\pi^2}
+\sum_{m\ {\rm odd}}\frac{\chi_4(m)\sin(m\theta)}{m^2},
+$$
+
+$$
+U_N(\theta)=\frac8{\pi^2}\sum_{m\ {\rm odd}}\frac{C_N(m\theta)}{m^2},
+\qquad
+V_N(\theta)=\frac8{\pi^2}\sum_{m\ {\rm odd}}
+\frac{\chi_4(m)S_N(m\theta)}{m^2}.
+$$
+
+有限外层求和与绝对收敛内层交换合法。正方形改变内部谐波，圆形本身已经具有对数读出。
+

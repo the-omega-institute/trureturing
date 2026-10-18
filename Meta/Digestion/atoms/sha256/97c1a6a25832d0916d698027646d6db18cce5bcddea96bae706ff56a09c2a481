@@ -1,0 +1,37 @@
+**Theorem 10.7 (rare-history obstruction with future horizon capped at one).** There is a compact countable subset of $\mathfrak A$ for which finite calibration quantization cannot satisfy (10.1), even with only $H=1$ queried, at $\epsilon\le11/200$. Histories remain all positive finite acquired words, and the observer may retain arbitrarily much history.
+
+**Proof (10.7).** Put $\vartheta_0=(1/8,1/8,1/4)$ and, for $n\ge1$,
+
+$$
+\lambda_n=100^{-n},\qquad
+r_n=\frac14+\frac34(1-e^{-\lambda_n}),\qquad
+\vartheta_n=(1/8,1/8,r_n),\qquad
+\Theta_{\rm rare}=\{\vartheta_0,\vartheta_1,\ldots\}.
+\tag{10.14}
+$$
+
+Here $a=3/4$ and $b_n=(3/4)e^{-\lambda_n}$. Since $1-e^{-\lambda_n}<\lambda_n\le1/100$, all parameters are strictly admissible and bounded away from its boundary. They converge to $\vartheta_0$, so the family is compact.
+
+For $k_n=3\cdot100^n$, use the actual history $h_n=B^{k_n+1}$. Under any member its mass is $(a^{k_n}+b^{k_n})/5>0$, by Theorem 2.1. The state-$2$ posterior under $\vartheta_m$, $m\ge1$, is
+
+$$
+x_m(k_n)=\frac1{1+e^{-3\cdot100^{n-m}}}
+=\sigma(3\cdot100^{n-m}),\qquad
+\sigma(u)=\frac1{1+e^{-u}}.
+\tag{10.15}
+$$
+
+The next-symbol event $\{1,3\}$ has probability $(p+q)x_m(k_n)=x_m(k_n)/4$. At $m=n$, $\sigma(3)>19/20$: the exponential series gives $e^3>\sum_{j=0}^6 3^j/j!>19$. For $m>n$, its argument is at most $3/100$, and $\sigma(3/100)<51/100$. Indeed $e^{3/100}<1/(1-3/100)=100/97<51/49$. Hence
+
+$$
+\operatorname{TV}
+ (F_{\vartheta_n,h_n}^1,F_{\vartheta_m,h_n}^1)
+\ge\frac{\sigma(3)-\sigma(3\cdot100^{n-m})}{4}
+>\frac{11}{100}\qquad(m>n).
+\tag{10.16}
+$$
+
+A finite label alphabet repeats a label on two of the infinitely many $\vartheta_n$, say $n<m$. Their state after the same $h_n$ is identical. The triangle inequality for its one-step decoder would bound (10.16) by $2\epsilon\le11/100$, a contradiction. Every witness is finite and positive, however rare; no acquired age is supplied to the machine. This proves a second obstruction arising from unbounded acquisition length rather than unbounded future horizon. $\square$
+
+For comparison, if both acquisition length and future horizon are capped on a compact strict parameter set, there are only finitely many relevant words. The common-support positive history masses are continuous positive functions with positive minima on that compact set. Conditional finite-word probabilities are then uniformly continuous quotients, and an authentic finite parameter quantization can satisfy any positive tolerance for that different capped contract. Neither this finite-dimensional continuity nor the law-output slack of Theorem 8.5 justifies calibration rounding in (10.1): Theorem 8.5 keeps the exact source kernel, (10.2) separates every nonzero parameter difference over all horizons, and (10.16) retains a separate rare-history failure at horizon one.
+

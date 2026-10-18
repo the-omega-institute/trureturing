@@ -1,0 +1,113 @@
+**Theorem 14.2 (binary producer-port acquisition frontier).** For every
+$0<Z<1$ and public $0<x<y<c$, under Definitions 13.2 and 14.1 the minimum
+paid action for exact total binary calibration on the whole original
+family (RA.14) is
+
+$$
+\mathcal A_{\min}=\frac{\pi r}{y-x}.
+\tag{RA.19}
+$$
+
+One independent probe attains it, leaves the old specimen and all supplied
+joint archives/reference unchanged, and appends one actually acquired
+classical height bit. The attaining preservation statement holds for every
+conditional joint input $\rho^h_{SAR}$ of Definition 13.2. The minimum
+claim uses the lower-bound assistance restriction; arbitrary readable
+height-bearing archives are not subject to that lower bound.
+
+Proof. First remove a possible shortcut through the old specimen using
+actual source states. For each fixed $k$, the four states with
+$\beta\in\{0,\pi\}$ and $m\in\{0,1\}$ span $V$: their sums give
+$2\sqrt Z e_2$, and their differences give the two vectors
+$2(\sqrt{2k}U_+\pm\sqrt{2(c-k)}U_-)$. All three coefficients are
+nonzero by strict positivity. Section 13's common-preparation construction
+realizes every one of these witnesses.
+
+Fix the proposed protocol and a candidate $k$. With its common ancillary
+input absorbed, let $E^{(k)}_{\rm bad}\geq0$ be the induced effect on the
+old specimen for an incorrect or inconclusive output. Correctness says
+$\langle\psi,E^{(k)}_{\rm bad}\psi\rangle=0$ on the four actual
+witnesses. Since this equals $\|\sqrt{E^{(k)}_{\rm bad}}\psi\|^2$,
+the positive effect annihilates their entire span. Completeness therefore
+forces output $k$ with probability one for every unit vector of $V$.
+This is a consequence of one fixed protocol's correctness, not permission
+to prepare further original specimens. In particular the same protocol
+must distinguish the two ports starting from a single identical unit vector
+$v\in V$ and the same source-independent ancillary state.
+
+Purify that common ancillary state. Let $W_x(t),W_y(t)$ be the dilated
+unitaries, including every outcome and known feedback operation. Write
+$V_{\rm rel}(t)=W_x(t)^\dagger W_y(t)$. Between the common operations,
+
+$$
+i\dot V_{\rm rel}(t)=L(t)V_{\rm rel}(t),\qquad
+L(t)=-\frac{y-x}{r}\,W_x(t)^\dagger G(t)W_x(t).
+\tag{RA.20}
+$$
+
+Common instantaneous unitaries cancel in $V_{\rm rel}$. Its generator
+therefore has diameter $(y-x)\operatorname{diam}(\operatorname{spec}G)/r$.
+Apply the projective-angle accumulation argument of the cited FIB §2.4
+to the ray $V_{\rm rel}(t)|v,\mathrm{anc}\rangle$. Its continuous
+version has speed $\sqrt{\langle L^2\rangle-\langle L\rangle^2}$:
+subtract the component of $-iLz$ parallel to a unit vector $z$ and take
+its norm. If the spectrum lies in $[a,b]$, positivity of
+$(L-aI)(bI-L)$ gives variance at most
+$(b-\langle L\rangle)(\langle L\rangle-a)\leq(b-a)^2/4$.
+The projective angle obeys the triangle inequality used in FIB §2.4.
+For completeness its path-length bound also follows without a smoothness
+assumption on the controls: multiply the absolutely continuous vector
+path by the phase $\exp(i\int\langle L\rangle)$, giving a unit path
+$w$ with $w'=-i(L-\langle L\rangle)w$ and speed equal to that variance
+square root. Regard it as a path on the real Hilbert unit sphere. If
+$b(t)=\operatorname{Re}\langle w(0),w(t)\rangle$, tangency and
+Cauchy–Schwarz give $|b'|\leq\sqrt{1-b^2}\,\|w'\|$.
+Integrating the derivative of $\arccos b$, with limiting truncations at
+$b=\pm1$, bounds spherical endpoint distance by $\int\|w'\|$.
+Projective endpoint angle is no larger, since the absolute inner product
+is at least its real part. Consequently
+
+$$
+\arccos\left|\langle v,\mathrm{anc}|
+ W_x(T_c)^\dagger W_y(T_c)|v,\mathrm{anc}\rangle\right|
+ \leq\frac{(y-x)\mathcal A}{2r}.
+\tag{RA.21}
+$$
+
+The final records have different deterministic labels, hence the two
+purifications lie in orthogonal output sectors. The left side is $\pi/2$,
+proving the lower bound. Dilation retained all outcomes, so feedback and
+postselection have not supplied a free exception. Source-independent
+randomized choices also obey it: each of the finitely many spanning
+witnesses is correct almost surely, giving one common conull set of seeds
+on which this same argument applies under the common action bound.
+
+For attainment prepare $|+\rangle=(|0\rangle+|1\rangle)/\sqrt2$ once
+and drive the port with positive action $a_*:=\pi r/(y-x)$. Its two possible
+states are
+
+$$
+q_k=\frac{|0\rangle+e^{ika_*/r}|1\rangle}{\sqrt2},\qquad
+\langle q_x,q_y\rangle
+ =\frac{1+e^{i(y-x)a_*/r}}2=0.
+\tag{RA.22}
+$$
+
+One calibrated measurement in this known orthonormal basis returns $Y=k$
+with certainty. The scalar drive has action $a_*$. Most importantly, the
+joint port premise gives, conditional on each actual history $h$,
+
+$$
+\rho^h_{SAR}\longmapsto
+ \rho^h_{SAR}\otimes|k(h)\rangle\langle k(h)|_Y.
+\tag{RA.23}
+$$
+
+The measured probe may also be retained in its known state $q_{k(h)}$;
+discarding that probe does not change (RA.23). Integrating this equation
+against the actual history distribution preserves its old quantum and
+classical correlations, and appends the correct correlated bit. This
+joint identity follows from the supplied coupling, not from equal sensor
+marginals. The native hold has zero survival charge and phase increment.
+There is one probe preparation, no specimen copy, reset or retry. $\square$
+

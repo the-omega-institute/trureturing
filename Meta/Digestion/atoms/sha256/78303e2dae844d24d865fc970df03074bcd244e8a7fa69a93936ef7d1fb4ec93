@@ -1,0 +1,24 @@
+**Corollary 7.3 (precise remaining common-drift alternatives).**
+An $L_2$ triple in the terminal-nonzero stratum with common drift
+must lie in one of the following two unresolved systems:
+
+1. Every sixth gain is zero. Then $U_i=V_i=d$, so the remaining
+   template is TT, with all terminal gains still nonzero.
+2. Every sixth gain is nonzero, with a common sign. Then the
+   template is PP with different proper pairs, the terminal gains
+   have a common sign, and at least two of the ratios
+   $g_i(6)/g_i(7)$ differ.
+
+Proof. The sixth-sign claim, including its zero case, is Theorem
+5.1. Its nonzero case excludes PT, TP and TT and gives PP;
+Theorem 3.1 gives the terminal sign, and Theorem 6.1 excludes
+one common nonzero ratio. In the zero case (2.5) gives the TT
+sixth conditions directly. No feasibility assertion follows in
+either direction. ∎
+
+For arbitrary drifts, Theorem 3.1 excludes mixed-terminal-sign
+PP systems. Such mixed-sign triples, if they exist, must use PT,
+TP or TT. All variable-drift residual systems still require
+simultaneous solution of (7.1)–(7.7) and their terminal
+conditions; marginal pair constructions would not suffice.
+

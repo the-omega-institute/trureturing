@@ -1,0 +1,17 @@
+**定义 232.1（The earlier weighted family）。** For nonnegative weights
+$\gamma_j$ on any finite late label set, let
+$G=\sum_j\gamma_j$, $\mu=\max_j\gamma_j$, with both zero for
+empty support. Order their values $g_1\ge\cdots\ge g_s\ge g_{s+1}=0$,
+write $\delta_k=g_k-g_{k+1}$, and put
+
+$$
+c_1=2,\quad c_2=3,\quad
+c_k=4-2/\lceil k/2\rceil\ (k\ge3),\qquad
+\Lambda(\gamma)=\sum_{k=1}^s c_k\delta_k.
+$$
+
+The family of
+[VI, Corollary 201.5](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_VI.md#201-共享终端的加权割覆盖补偿与单一完整预算)
+is $\sum_{j\ge3}\gamma_j b_j\le(G+\Lambda+\mu)e$. Sorting
+weights in this definition does not relabel their addresses.
+

@@ -1,0 +1,17 @@
+**Theorem 11.2 (a strict true-cone gap with exact scope).** At $s=0$, $F_{\rm rel}$ is exactly the value of the same-strength coefficient problem obtained by replacing each true low cone constraint with $L_r\succeq0$, $\operatorname{tr}(BL_r)\le0$. In the true original class,
+
+$$
+\mathsf E_s(\psi\psi^\dagger)>F_{\rm rel}\qquad\text{for every }s\in[0,1].
+\tag{PG.63}
+$$
+
+In particular $s=0$ is a genuine physical strict relaxation gap.
+
+Proof. At zero strength use
+$H_r=H_{\rm rel}/2$, $L_r=(I-H_{\rm rel})/2$, $N_r=M/2$.
+They are positive, have the required totals and exact binary effect, and each low trace is zero because $\operatorname{tr}(BH_{\rm rel})=k$. Thus the relaxed coefficient problem has value at most $F_{\rm rel}$, while (PG.62) gives the reverse bound.
+
+If the true problem had equality at any strength, scalar uniqueness would force $H=H_{\rm rel}$. Its total low matrix would be $I-H_{\rm rel}$ with $B$ trace zero. Each actual low trace is nonpositive, so both report matrices lie on the exposed real face (PG.15). Their sum would be real, contradicting the nonzero imaginary $DT$ entry of $H_{\rm rel}$. Compactness, nonemptiness and exact finite realization from Section 3 make the minimum strictly greater; this is an infimum gap rather than just absence of an equality attainer.
+
+At strengths $s>0$, (PG.63) is separation from the same fixed constant $F_{\rm rel}$. It is not an evaluation of the same-strength scalar relaxation there. No exact true complex resource curve, input-uniform quantitative gap, or general real-minimizer normal form follows. $\square$
+

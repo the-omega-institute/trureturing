@@ -1,0 +1,82 @@
+**Proposition 6.1 (Applicable reuse).** Conditions $\mathsf A$ and $\mathsf B$ use exactly [OWN, (9.8)–(9.13)], already complete by deadline three. The universal five-row fallback is exactly [OWN, (6.2)–(6.5)], also complete by deadline three. Their domains include every source of (1.2), not merely the continuing lower archive. The following declarations specify their application and the extension of $\mathsf R$.
+
+In all certificates, put
+
+$$
+\mathcal R_v=\{(f(v,-j,s),(v,-j,s)):j\in P,\ 0\le s<k\},
+$$
+$$
+\mathcal S_v=\{(\lambda_v(j),(v,-j+m,m+s)):j\in J,\ 0\le s<h\}.
+\tag{6.1}
+$$
+
+Install one $H_y$ for each actual $y\in f(Q)$, with $u(H_y)=\operatorname{Halt}(y)$ and $V(H_y,o)=H_y$ for all raw responses. Initialize $c(\bot)=H_{L_\bot}$. Each word row's bottom update is $H_R$. Exact Halt supports are the initial-bottom pair when applicable and the union of all actual incoming images routed to that Halt. This is [OWN, (5.6)], applied to the actual word-row unions below.
+
+For $\mathsf A$, take two roots $a_v$ and two query rows $d_v$. Initialize $c(v)=a_v$, install $L$ at the roots and $B=\mathcal B_1(E)$ at both queries, and set
+
+$$
+V(a_v,v)=d_v,\quad V(a_v,1-v)=H_C,
+\qquad V(d_i,x)=H_{G_i(x)},
+$$
+$$
+G_i(x)=\kappa^{-1}(x\oplus i\oplus\eta),\quad
+\beta=(1-i)\oplus q(M_i),\quad
+V(d_{1-i},\beta)=d_i,\quad V(d_{1-i},1-\beta)=H_z,
+\tag{6.2}
+$$
+
+where $z$ is the other component's constant literal label outside $M_i$. Root supports are $\mathcal R_v$, the other query has $\mathcal S_{1-i}$, and
+
+$$
+\Gamma_{d_i}=\mathcal S_i\cup
+\{(\lambda_{1-i}(j),(\beta,-j+2m,\tau(B))):j\in M_i\}.
+$$
+
+The same word and decoder act on both parts. Ranks $3,2,1,0$ on roots, continuing query, final query and Halts, and stream $L\mid B\mid B$, are the existing certificate.
+
+For $\mathsf B$, use two roots, one shared query $d$ and one last row $x$. Both root-zero updates enter $d$; positive updates halt $C$. Install $B=\mathcal B_1(E)$ at $d$ and $D=\mathcal B_2(F)$ at $x$, with
+
+$$
+V(d,e)=H_L,\quad V(d,1-e)=x,
+\qquad V(x,z)=H_{L_{z\oplus(1-e)\oplus\delta}},\quad L_0=L,\ L_1=L'.
+\tag{6.3}
+$$
+
+Its query support is $\mathcal S_0\cup\mathcal S_1$, and its last support is
+
+$$
+\Gamma_x=\{(L_{\mu(j)},(1-e,-j+2m,\tau(B))):j\in J\}.
+$$
+
+The actual strict seam in (2.5), ranks $3,2,1,0$, and stream $L\mid B\mid D$ give the unchanged complete certificate. Both A/B certificates have exactly $N+4$ states.
+
+For $\mathsf R$, use four rows $a_v,a_w,b_v,b_w$, with $c(x)=a_x$, both root words $L$, both query words the same $B$ in (2.6), and
+
+$$
+V(a_x,x)=b_x,\quad V(a_x,1-x)=H_C,\qquad
+V(b_v,v)=H_z,\quad V(b_v,w)=a_w,\qquad
+V(b_w,e)=H_{G(e)}.
+\tag{6.4}
+$$
+
+These are precisely [OWN, (11.4)]. The exact unions are
+
+$$
+\Gamma_{a_v}=\mathcal R_v,\quad \Gamma_{b_v}=\mathcal S_v,
+$$
+$$
+\Gamma_{a_w}=\mathcal R_w\cup
+\{(\lambda_v(j),(w,-j+2m,0)):j\in I\},
+$$
+$$
+\Gamma_{b_w}=\mathcal S_w\cup
+\{(\lambda_v(j),(w,-j+3m,m)):j\in I\}.
+\tag{6.5}
+$$
+
+Since $a\in J$, condition (2.6) excludes $a$ from $I$: its translated phase would be zero. The very same $B$ therefore ends zero. Every added root pair is already an original support pair at $j'=j-2m$, original tail zero and the same literal target; the added query pair is its actual root image. The first $B$ clears every surviving original root tail, including $k-1$; the middle $L$ is safe from tail zero; the last $B$ clears tail $m$. Ranks $4,3,2,1,0$ on $a_v,b_v,a_w,b_w$, Halts certify the single stream $L\mid B\mid L\mid B$. These support inclusions, seams and outputs use no hypothesis about three classes on $O$. Thus the original sufficient controller applies to the present slack domain with $N+4$ states.
+
+For the $N+5$ branch, reuse the entire five-row certificate [OWN, Theorem 6.1]: roots $a_v$, first queries $b_v$ and last row $p_2$, with (6.2)–(6.4) of that owner. Its first query isolates a leaf of the three-corner rectangle; its reverse orientation is retained when that leaf is the homogeneous $H$ class. The displayed second word includes the original first-interior charge adjustment, so its actual seam is safe even in that reverse orientation. Supports are $\mathcal R_v,\mathcal S_v$, the owner's (6.5), and its exact Halt images (5.6); ranks are $3,2,1,0$. All executions are prefixes of its installed three-block stream. No extra fourth block is needed. This is a direct application of the complete existing attainment, not a new five-row mechanism.
+
+These certificates meet [FC, Theorem 27.2] on their actual immutable-target/current-record unions. They do not read those supports or ranks at runtime. The horizon-independent lower bound matches all four-row attainments; the exhaustion matches the five-row fallback on its complement. This proves Theorem 2.2. ∎
+

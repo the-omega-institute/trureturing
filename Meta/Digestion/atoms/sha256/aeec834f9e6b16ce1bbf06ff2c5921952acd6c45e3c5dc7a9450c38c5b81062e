@@ -1,0 +1,13 @@
+**Theorem 11.2 (Critical sandwich with budget dependence).** If $a=2r$, on one source/risk neighborhood every finite-budget compliant observer satisfies
+
+$$
+\mathbb E_iT\ge
+\frac{A_-s^{-(a+1)}}{1+\log(\min\{L_M,1/s\})}
+\ge\frac{A_-s^{-(a+1)}}{\log(e/s)},
+\tag{11.1}
+$$
+
+where $L_M$ is (7.1). There is a common q-retuned family with one fixed sufficient capacity and both means $O(s^{-(a+1)})$. For every fixed sufficient $M$, the separate and joint infima have order $s^{-(a+1)}$, with lower constants allowed to depend on that fixed $M$.
+
+Proof. The first bound is the critical line of Theorem 7.1. Since $1\le\min\{L_M,1/s\}\le1/s$, the second follows. With $\lambda=\ell_0$, Theorem 9.2 has fixed sufficient count and upper $C_Us^{-(a+1)}$, since $2r-a=0$. For fixed $M$, the first denominator is at most $1+\log L_M$, a constant, and the one upper table gives the corresponding infimum orders. These are fixed-capacity q-retuned families. $\square$
+

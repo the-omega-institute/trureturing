@@ -1,0 +1,37 @@
+**定理 24.3（Hankel 见证与相关模式的塌缩）。**
+
+$$
+C_0C_2-C_1^2=t\Delta.
+\tag{24.7}
+$$
+
+在规范链中，$\Delta=0$ 当且仅当整个相关序列是一个几何序列，
+此时其精确形式是
+
+$$
+C_\ell=t(1-t)\left(-\frac{t}{1-t}\right)^\ell
+\qquad(\ell\ge0).
+\tag{24.8}
+$$
+
+若 $\Delta\ne0$，则不能用单个几何序列表示全部 $C_\ell$。
+
+证明。将 (24.2) 代入即得
+
+$$
+t(1-t)(\kappa-t^2)-t^4
+=t\big((1-t)\kappa-t^2\big)=t\Delta.
+$$
+
+若 $C_\ell=A\rho^\ell$，由 $C_0=t(1-t)>0$ 知
+$A=C_0$，并由 $C_1$ 得 $\rho=-t/(1-t)$；
+任何几何序列都有 $C_0C_2-C_1^2=0$，所以 $\Delta=0$ 必要。
+反向在 $\Delta=0$ 时 $\alpha=\beta=t/(1-t)$，
+(24.3) 成为 $C_{\ell+2}=-\alpha C_{\ell+1}$，
+且 $C_1=-\alpha C_0$，归纳得 (24.8)。
+这与 [LocalClock 命题 15.8][SM-LC] 的
+$\eta=t/(1-t)$、$\mu=t$、$d=\ell$ 的一阶相关式完全一致。
+矩阵 $\bigl(\begin{smallmatrix}C_0&C_1\\C_1&C_2\end{smallmatrix}\bigr)$
+是此序列的 Hankel 矩阵，右下角并非另一个位的方差；
+其行列式可以为负，不能误用协方差矩阵半正定性要求它非负。证毕。
+

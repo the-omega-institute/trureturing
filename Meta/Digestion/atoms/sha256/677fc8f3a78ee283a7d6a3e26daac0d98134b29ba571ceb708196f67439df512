@@ -1,0 +1,31 @@
+### 89.4. Simultaneous minimization of all genuinely normal variables
+
+Set y=(n,Q), viewed as a real vector. At D=0,y=0 the Hessian in y is positive definite: its n-block is the full old normal Hessian; its Q-block is the positive quadratic form ‖Q‖²/8; there is no mixed n,Q block because f is invariant under simultaneous sign reversal of all new records. The kernel identities in (6) also give no mixed y,D Hessian block.
+
+The analytic implicit-function theorem, followed by uniform normal convexity, supplies a unique analytic critical point y_*(m,D), with
+
+\[
+ f(m,y,D)\ge \psi(m,D)+a\|y-y_*(m,D)\|^2,
+ \qquad \psi(m,D)=f(m,y_*(m,D),D),\quad a>0.              \tag{12}
+\]
+
+All estimates hold on a fixed sufficiently small product neighborhood. In particular they are uniform neighborhood estimates, not limits along chosen paths.
+
+Uniqueness and (11) imply
+
+\[
+ n_*(m,VD)=n_*(m,D),\quad Q_*(m,VD)=VQ_*(m,D),\quad
+ \psi(m,VD)=\psi(m,D).                                  \tag{13}
+\]
+
+Differentiation at D=0 and the absent mixed Hessian give dy_*/dD=0. The sign symmetry then gives n_*=O(‖D‖²) and Q_*=O(‖D‖³). Consequently minimizing Q has no effect on the degree-four coefficient. At the base the degree-four coefficient of ψ is exactly the section-87 minimized form, with D equal to the difference in (7):
+
+\[
+ \psi(m_0,D)=\frac14+\sum_{a=1}^3c(u_a)r_a^2+O(\|D\|^6),
+ \quad \overline{D^*D}=r_0I_2+\sum_ar_a\sigma_a,
+ \quad c(u)=\frac{(1-u)(7u-1)^2}{256u^2}.
+                                                               \tag{14}
+\]
+
+Here u_a≥2/7 and Σu_a=1, so c(u_a)≥35/1024. The use of the symmetric records (10), instead of the section-87 records 0,D b_f1, is justified by the exact order-four gauge identity of section 88. Its proof works verbatim with a p×2 common coefficient in (8); it translates the full old tangent space bijectively, and terms of order three in the new amplitude do not affect the quartic coefficient on the quadratic kernel. No normal, leakage, or extra A direction is left outside the minimization in (12).
+

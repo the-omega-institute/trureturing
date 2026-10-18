@@ -1,0 +1,28 @@
+**Definition 3.1 (row and callable prefix).** A sealed row is length framed and
+contains $\xi$, original-root and port tags, a row ordinal, the preceding row's
+actual reference, the full request, full finite response, actual before/after
+epoch, and its start, commitment and seal provenance. Original and current
+source identities are distinct fields. Numerals and wire references are
+constructed with paid scans and copies. The port tags are `NativeRead`,
+`NativeRho` and `ArchiveFetch`; none is `ReadE`.
+The row body uses only already closed start/commit fence numerals. Its own
+seal provenance is the actual seal flag and creation/copy relation, not a
+printed future numeral that already counts the row's own serialization.
+
+A descriptor $d$ names one already sealed finite producer prefix with $a$ rows.
+The actual service $\operatorname{Fetch}(d,j)$, for any constructed finite
+index $j$, scans that fixed prefix. If $0\le j<a$, it makes a complete owned
+copy of row $j$ through a separate mailbox, preserves the identity/framing and
+returns that row and its copy reference. Otherwise it executes a finite checked
+return $\mathsf{ArchiveIndexReject}(d,j,a)$ with its actual successor. The
+service has an admission phase, copying/checking phases and one response
+commitment. Its response is subsequently recorded in a fresh row after $d$.
+It never scans its own growing output as input.
+
+Only the prescribed microtransition is enabled during a busy service. Missing
+ownership or a request submitted at a busy phase is illegal-unexecuted. That
+case has no event or successor. An admitted out-of-range index executes the
+rejection; it is not illegal, source absence, a source-update reject, or a
+failed evaluator attempt. Complete row copying and a real caller make this
+memory an acquired callable interface, not merely a history-valued definition.
+

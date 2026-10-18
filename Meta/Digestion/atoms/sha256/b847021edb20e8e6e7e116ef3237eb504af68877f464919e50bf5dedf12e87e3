@@ -1,0 +1,20 @@
+**Definition 182.2 (Classical ingredients inside the acquisition proof).**
+The intermediate LP strong-duality ingredient is
+[Boyd and Vandenberghe, *Convex Optimization*, Section 5.2.3 and
+Exercise 5.23](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf).
+The binary pair-regularity ingredient is
+[Kolmogorov and Zabih, *What Energy Functions Can Be Minimized via
+Graph Cuts?*, IEEE TPAMI 26(2), Theorem 4.1 and equation (7), p. 150](https://www.cs.cornell.edu/~rdz/Papers/KZ-PAMI04.pdf).
+Its inequality is $E_{00}+E_{11}\le E_{01}+E_{10}$.
+A positive pair coefficient violates this inequality in the original
+bits; complementing one color of a bipartite graph restores it.
+[Kolmogorov, *Generalized roof duality and bisubmodular functions*,
+arXiv:1005.2305v2, Sections 1--2](https://arxiv.org/pdf/1005.2305v2)
+supplies the relaxation context, including the distinction between
+half-integrality and Boolean exactness. These are attributed classical
+ingredients, used within the joint acquisition criterion below.
+Neither graph regularity nor LP duality is a new standalone theorem
+here. The threshold calculation below establishes the exact property
+needed in this application; no universal acquisition comparison is
+attributed to these sources.
+

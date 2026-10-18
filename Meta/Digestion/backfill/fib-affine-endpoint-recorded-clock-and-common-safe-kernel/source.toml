@@ -1,0 +1,5 @@
+source_id = "fib-affine-endpoint-recorded-clock-and-common-safe-kernel"
+path = "docs/develop/theory/FIB_AFFINE_ENDPOINT_RECORDED_CLOCK_AND_COMMON_SAFE_KERNEL.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

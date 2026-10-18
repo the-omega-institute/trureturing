@@ -1,0 +1,20 @@
+**引理 17.4.1（二元通道的精确系数）。**
+
+$$
+\alpha(K_{\lambda_i})=\lambda_i.
+$$
+
+**证明。**
+
+两行输出分布分别为
+
+$$
+\left(\frac{1+\lambda_i}2,\frac{1-\lambda_i}2\right),
+\qquad
+\left(\frac{1-\lambda_i}2,\frac{1+\lambda_i}2\right),
+$$
+
+其总变差为 $\lambda_i$；二元输入只有这两个纯状态，故最大值即为 $\lambda_i$。证毕。
+
+<a id="claim-17-4-2"></a>
+

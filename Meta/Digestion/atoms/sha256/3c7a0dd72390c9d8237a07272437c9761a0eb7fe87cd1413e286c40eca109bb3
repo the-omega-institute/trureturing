@@ -1,0 +1,16 @@
+### Definition 48.3 (Finite predictive observability of the seam)
+
+Let \(X=\mathbb R^n\), let \(O:X\to\mathbb R^m\) be linear, and let each action have linear difference map \(A_a\). For a word \(w\), write \(A_w=A_{a_m}\cdots A_{a_1}\). The seam direction \(d\) is predictively observable if
+
+\[
+O A_wd\ne0
+\]
+
+for at least one word \(w\). It is predictively invisible if
+
+\[
+O A_wd=0
+\qquad
+\forall w\in\mathcal A^\ast.
+\]
+

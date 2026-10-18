@@ -1,0 +1,27 @@
+**Lemma 9.2 (received single-body use and authority).** On an authentic
+successful flight, every new callback receives exactly its handler's
+published body under current read authority; each next arrow obtains its
+operand from that import, and the next Publish has current availability.
+The final consumer uses the returned single S body and returns all flight
+resources prescribed in Definition 8.3.
+
+Proof. Inherited CoverRef/PackageRef/Call first establish actual acquired
+$c,p$ and source/target lineage. ARC's positioned two-copy induction gives
+bitwise sender/mailbox/receiver equality at each new publication as well.
+Its seal/TOK grants the current read; the protected placements position
+the actual receiver before bank work can disturb their recency. The
+F-bounded import preserves the receiver head while rebuilding banks.
+The callback clears candidate before import and assigns sourceBody only
+from the parsed received word. Its independent decoder has no excluded
+logical argument. By Theorem 7.4 it succeeds on this authentic word.
+ACK/mailbox return occur before the actual client→handler TOK, so induction
+over the five stages proves availability and the operand dependence.
+
+The final S is the same mask body as the first, by that theorem, although
+its actual publication origins/current native state differ. Its independent
+$D_S$ supplies the Image checker with the same old historical arguments
+and immutable target binding. FirstS supplies only the separate equality
+comparison. No historical token description is used by a native TOK or
+source entry. The explicit final rows append exactly one outer cycle and
+restore the actual $R_r$ relation with all extra receipts retained. ∎
+

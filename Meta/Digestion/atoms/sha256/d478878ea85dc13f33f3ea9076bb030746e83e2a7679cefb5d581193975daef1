@@ -1,0 +1,17 @@
+### 定义 8.1（算术编码桥）
+
+令 \(\mathcal C\) 是算术配置集合，例如素数窗口、模类、素数间距类别、Fibonacci 支持或具有指定禁字条件的整数词。
+
+一个算术到 FIB 的桥必须显式给出
+
+\[
+\Phi:\mathcal C\to\Delta(\Sigma_n).
+\]
+
+如果算术类别还控制转移，则需要给出
+
+\[
+T_\chi:\Delta(\Sigma_n)\to\Delta(\Sigma_n),
+\qquad \chi\in\mathcal C.
+\]
+

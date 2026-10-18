@@ -1,0 +1,108 @@
+**Theorem 3.1 (Uniform short-gap contrast; T1).** Define
+
+$$
+L_0=\left\lceil\exp(16r^2\mathrm e^3)\right\rceil,\qquad
+W=2r\mathrm e(1+c),\qquad
+D=\frac{c}{4\mathrm e(1+c)}.
+\tag{3.1}
+$$
+
+For every integer $L\ge L_0$ and every $s>0$ with $sL\le1$, put
+$J=1+\log L$, $I=J/L^{2r}$ and $h(k)=k^{-r}$. Define the actual
+truncated normalizers and conditional laws by
+
+$$
+Z_i^L=\sum_{k=1}^LF_i(k)e^{-sk},\qquad
+g_i(k)=\frac{F_i(k)e^{-sk}}{Z_i^L}\quad(1\le k\le L).
+\tag{3.2}
+$$
+
+Thus $g_i$ is $f_i$ conditioned on $K\le L$, using that source's own
+normalizer. Write
+
+$$
+m_i=\mathbb E_{g_i}h,\qquad
+\theta=(m_0+m_1)/2,\qquad \Delta=m_1-m_0.
+\tag{3.3}
+$$
+
+Then, throughout this entire cap range,
+
+$$
+0<I\le1,\qquad 0\le\theta\le1,\qquad
+\mathbb E_{g_i}h^2\le WI,\qquad
+\theta^2\le WI,\qquad \Delta\ge DI>0.
+\tag{3.4}
+$$
+
+Proof. Let $\mathcal H_L=\sum_{k=1}^L1/k$, and set
+
+$$
+\begin{aligned}
+B_L&=\sum_{k=1}^Lk^{2r-1}e^{-sk},\\
+A_L&=\sum_{k=1}^Lk^{r-1}e^{-sk},\\
+C_L^{\rm harm}&=\sum_{k=1}^Lk^{-1}e^{-sk}.
+\end{aligned}
+\tag{3.5}
+$$
+
+The condition $sL\le1$ puts all truncated exponential weights in
+$[\mathrm e^{-1},1]$. Integral comparison for the nondecreasing
+function $x^{2r-1}$ and termwise upper bounds give
+
+$$
+\frac{L^{2r}}{2r\mathrm e}\le B_L\le L^{2r},\qquad
+A_L\le L^r,\qquad
+\mathcal H_L/\mathrm e\le C_L^{\rm harm}\le\mathcal H_L.
+\tag{3.6}
+$$
+
+In particular
+
+$$
+m_0=\frac{A_L}{B_L}\le2r\mathrm e L^{-r},\qquad
+\frac{\mathcal H_L}{\mathrm e L^{2r}}
+\le\mathbb E_{g_0}h^2=\frac{C_L^{\rm harm}}{B_L}
+\le\frac{2r\mathrm e\mathcal H_L}{L^{2r}}.
+\tag{3.7}
+$$
+
+The harmonic estimates $\mathcal H_L\ge1$,
+$\mathcal H_L\ge\log L$ and $\mathcal H_L\le1+\log L$ imply
+$J/2\le\mathcal H_L\le J$. Since $L\ge L_0$ makes
+$J\ge16r^2\mathrm e^3$, (3.7) yields
+
+$$
+\mathbb E_{g_0}h^2\ge I/(2\mathrm e),\qquad
+m_0^2\le4r^2\mathrm e^2L^{-2r}\le I/(4\mathrm e),\qquad
+\operatorname{Var}_{g_0}(h)\ge I/(4\mathrm e).
+\tag{3.8}
+$$
+
+For the exact positive pair, $Z_0^L=B_L$ and
+$Z_1^L=B_L+cA_L=B_L(1+cm_0)$. Therefore the conditional likelihood
+ratio and conditional mean contrast are exactly
+
+$$
+\frac{g_1(k)}{g_0(k)}=\frac{1+ch(k)}{1+cm_0},\qquad
+m_1=\frac{m_0+c\mathbb E_{g_0}h^2}{1+cm_0},\qquad
+\Delta=\frac{c\operatorname{Var}_{g_0}(h)}{1+cm_0}.
+\tag{3.9}
+$$
+
+This is the classical linear-tilt variance identity applied to the
+specified conditional laws. Since $0<h\le1$, $0\le m_0\le1$, and
+(3.8) proves $\Delta\ge DI$. The likelihood ratio in (3.9) is at
+most $1+c$. Hence (3.7) and $\mathcal H_L\le J$ give
+$\mathbb E_{g_i}h^2\le WI$ for both labels. Jensen's inequality gives
+
+$$
+\theta^2\le(m_0^2+m_1^2)/2\le WI.
+\tag{3.10}
+$$
+
+Both conditional means are in $[0,1]$, so the same is true of
+$\theta$. Finally $J=1+\log L\le L\le L^{2r}$ gives $0<I\le1$.
+Every estimate includes the endpoints of the integer truncation.
+$\square$
+

@@ -1,0 +1,97 @@
+### 66.1 整个分支纤维的几何
+
+沿用（JM.151）–（JM.152）的 $P_n$、$B=T_3$ 和 $W_n$，固定 $n\ge4$，置
+
+$$
+\begin{gathered}
+J_n^{\mathrm{raw}}=\{pL:p\in P_n\},\qquad h_n^{\mathrm{raw}}=((pL,\mathsf{br}):p\in P_n),\\
+F_n^{\mathrm{raw}}=\{U\in W_n:\forall q\in J_n^{\mathrm{raw}},\ r(q,U)=\mathsf{br}\}.
+\end{gathered}
+\tag{JM.214}
+$$
+
+其中 $h_n^{\mathrm{raw}}$ 按 shortlex 从共同空初始 decoder 实际发出；$\operatorname{Pref}$ 包括地址自身。
+取 $F(0)=0,F(1)=1$，并令 $N=F(n+1)$、$a=F(n-1)$、$b=F(n)$、
+$j=F(n-2)$、$d=F(n-3)$。实际三叶位置的反链及递推精确复用（JM.153）、（JM.156）：
+
+$$
+P_3=\{\varepsilon\},\quad P_2=\varnothing,\quad
+P_n=LP_{n-1}\mathbin{\dot\cup}RP_{n-2},\quad |P_n|=F(n-2)\quad(n\ge4).
+\tag{JM.215}
+$$
+
+取定义56.1在 $S=T_{n-3}$ 上的带标签叶反链 $E_a,E_b$。以下块是已供应块的精确别名：
+
+$$
+B=X=T_3,\qquad C_0=Y=T_4,\qquad C_1=Y_2,
+\tag{JM.216}
+$$
+
+右端 $X,Y,Y_2$ 精确取（JM.166）–（JM.167），不另供应其支持或禁形证明。
+置 $K_n^{\mathrm{raw}}=P_{n-1}$、$D_n^{\mathrm{raw}}=\{qR:q\in K_n^{\mathrm{raw}}\}$、$A_n^{\mathrm{raw}}=\operatorname{Pref}(J_n^{\mathrm{raw}})$。
+$D_n^{\mathrm{raw}}$ 是本节终端分支集合，不是（JM.179）的支持并集 $\mathsf D_n$。
+准确有 $K_n^{\mathrm{raw}}=E_b$：在 $n=4$ 两边都是 $\{\varepsilon\}$，在 $n=5$ 两边都是 $\{L\}$，
+以后两边都按 $T_n=(T_{n-1},T_{n-2})$ 的左右分解递推。这逐规模给相等，故每个
+$q\in K_n^{\mathrm{raw}}$ 都是第三像分块的 $Y=C_0$ 根，且锥的不交来自原叶反链。
+$K_4^{\mathrm{raw}}=\{\varepsilon\}$，$K_n^{\mathrm{raw}}=LK_{n-1}^{\mathrm{raw}}\mathbin{\dot\cup}RK_{n-2}^{\mathrm{raw}}$（$n\ge5$）。
+由（JM.178），在一个 $C_0$ 锥内 $J_n^{\mathrm{raw}}$ 的唯一实际请求是 $qLL$；$qL$ 只是共同的分支祖先。
+
+引理56.2已给 $C_0,C_1$ 的同词 $babba$、$C_1\notin I_1$ 和完整原始／粗支持：
+
+$$
+\{u:r(u,C_0)\ne r(u,C_1)\}
+=\{u:\kappa r(u,C_0)\ne\kappa r(u,C_1)\}=H_2.
+\tag{JM.217}
+$$
+
+这里 $H_2$ 精确取（JM.168）的六地址集合，包含 $LRL,LRR$，未缩成四叶支持。
+
+每个 $T_m$ 的内部子树是某个 $T_k$（$k\ge2$）。终端 $T_2$ 的全部根恰为
+$J_n^{\mathrm{raw}}\mathbin{\dot\cup}D_n^{\mathrm{raw}}$：若它是左孩子，其父为 $T_3$，若为右孩子，其父为 $T_4$；
+递推没有其他父形。每个非终端 $T_k$（$k\ge3$）都含有 $B$，其锥因而含 $J_n^{\mathrm{raw}}$ 地址。
+终端 $J_n^{\mathrm{raw}}$ 本身也在该前缀闭包中，终端 $D_n^{\mathrm{raw}}$ 则无 $J_n^{\mathrm{raw}}$ 后代。因此
+
+$$
+A_n^{\mathrm{raw}}=\operatorname{Int}(T_n)\setminus D_n^{\mathrm{raw}},\qquad
+|A_n^{\mathrm{raw}}|=N-1-d=b+j-1,\qquad
+A_n^{\mathrm{raw}}\setminus J_n^{\mathrm{raw}}=\operatorname{Int}(T_{n-1}).
+\tag{JM.218}
+$$
+
+最后一式也可直接由 $T_n=\rho(T_{n-1})$ 得到：替换保持原内部地址，只在 $\beta$ 叶处
+新增终端 $T_2$ 根 $J_n^{\mathrm{raw}}\sqcup D_n^{\mathrm{raw}}$。这些是整个递归类的地址等式。
+
+对任意 $H\subseteq K_n^{\mathrm{raw}}$，在每个 $q\in H$ 处把完整 $C_0$ 换成 $C_1$，所得不可变比较来源
+记为 $U_H$。引理56.2给同词、原始性及完整支持的前缀运输，故替换保持词及每个 $J_n^{\mathrm{raw}}$ 的
+`branch` 回复。锥不交使各选择同时实现，$qR$ 检出每个不同选择。
+一阶像对内部／非叶子树封闭；特殊终端 $(\beta,\alpha)$ 的叶孩子不承担此闭合性。
+非空替换留下内部 $C_1\notin I_1$，因而排除整树属于 $I_1$。于是
+
+$$
+U_H\in F_n^{\mathrm{raw}},\quad |\{U_H:H\subseteq K_n^{\mathrm{raw}}\}|=2^d,\quad
+H\ne\varnothing\Longrightarrow U_H\notin I_1.
+\tag{JM.219}
+$$
+
+原始射线分解给 $Q(U_\varnothing)=(n,1)$，非空 $H$ 给 $Q(U_H)=(0,0)$，因为原始端点
+有 $N\ge5$ 个叶，不可能是单叶 $\alpha$。这给 $|F_n^{\mathrm{raw}}|\ge2^{F(n-3)}$ 及两个 $Q$ 值的实现。
+
+还须对整个 $F_n^{\mathrm{raw}}$ 做一阶像刚性。设 $U=\rho(V)\in F_n^{\mathrm{raw}}$。固定组成使 $V$ 有 $b$ 个叶、
+$b-1$ 个原内部节点，并有 $a=j+d$ 个由 $\beta\mapsto(\beta,\alpha)$ 产生的特异终端块。
+每个 $J_n^{\mathrm{raw}}$ 都是分支，故其祖先 $A_n^{\mathrm{raw}}$ 全部是分支。$A_n^{\mathrm{raw}}$ 中的特异终端只能在 $J_n^{\mathrm{raw}}$：
+若它严格高于某个 $J_n^{\mathrm{raw}}$，两叶终端不可能再有分支后代。因此 $A_n^{\mathrm{raw}}$ 中至多 $j$ 个地址
+是特异终端，至多 $b-1$ 个地址是 $V$ 的原内部节点；两类互斥且穷尽 $U$ 的分支地址。
+（JM.218）的容量恰为 $b+j-1$，所以两种容量同时饱和：$J_n^{\mathrm{raw}}$ 全为特异终端，且
+$\operatorname{Int}(V)=A_n^{\mathrm{raw}}\setminus J_n^{\mathrm{raw}}=\operatorname{Int}(T_{n-1})$。
+替换码 $\alpha\mapsto\beta,\beta\mapsto\beta\alpha$ 的逆贪心唯一：每个 `alpha` 和紧前的
+`beta` 配对，其余 `beta` 单独解码。因此 $w(V)=w(T_{n-1})$；同一内部地址集和同一叶标记
+强制 $V=T_{n-1}$，从而 $U=T_n$。于是
+
+$$
+F_n^{\mathrm{raw}}\cap I_1=\{T_n\},\qquad Q(F_n^{\mathrm{raw}})=\{(0,0),(n,1)\}\qquad(n\ge4).
+\tag{JM.220}
+$$
+
+$I_1$ 外的来源准确深度为零且多于一叶，故 $Q=(0,0)$；这排除了整个 $F_n^{\mathrm{raw}}$ 的第三个 $Q$ 值。
+（JM.219）的实现子族只供应下界，不是整个纤维的分类。
+

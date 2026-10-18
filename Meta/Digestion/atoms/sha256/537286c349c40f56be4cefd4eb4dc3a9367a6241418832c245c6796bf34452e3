@@ -1,0 +1,86 @@
+**定理 5.4（The exact all-controller minimum is eleven）。** Under Definition 5.1, for every $m\ge6$,
+
+$$
+\boxed{K_{\min}(4;m)=11.}
+\tag{5.7}
+$$
+
+In particular the complete five-emitting-state competitor class has no correct depth-four controller. An attaining stationary controller has six emitting states and five stopping states. Its literal description and offline compilation resources are separate from this cardinality and from its four paid blocks.
+
+Proof, constructive upper bound. Use the already priced four words
+
+$$
+L=1^m,\qquad D=1^r0^3,\qquad Z=0^m,\qquad P=0^r1\,0^2.
+\tag{5.8}
+$$
+
+Take states $a_0,a_1,d,w,p_0,p_1$ and $H_A,H_B,H_M,H_R,H_C$. Initialize $c(0)=a_0$, $c(1)=a_1$, $c(\bot)=H_R$. The entire emitting table is
+
+| State | Installed word | Endpoint $0$ | Endpoint $1$ | Endpoint $\bot$ |
+| --- | --- | --- | --- | --- |
+| $a_0$ | $L$ | $d$ | $H_C$ | $H_R$ |
+| $a_1$ | $L$ | $H_C$ | $d$ | $H_R$ |
+| $d$ | $D$ | $w$ | $w$ | $H_M$ |
+| $w$ | $Z$ | $p_0$ | $p_1$ | $H_R$ |
+| $p_0$ | $P$ | $H_A$ | $H_B$ | $H_R$ |
+| $p_1$ | $P$ | $H_B$ | $H_A$ | $H_R$ |
+
+For each label $X$, set $u(H_X)=\operatorname{Halt}(X)$ and $V(H_X,y)=H_X$ for every $y$. The bottom entries at $w,p_0,p_1$ complete the table and are unreachable from the allowed sources. There is no free clock: each row has one word and one endpoint update at every possible occurrence.
+
+Here is a full support–rank certificate. Put $\lambda(j)=B$ when $j=j_B$ and $A$ otherwise, and put $\epsilon(j)=\mathbf1_{\{j=2m-3\}}$ for $j\in J$. Let $F(j,s)$ be the restriction of (5.1) to $j\in J,\ 0\le s<h$. Supports contain immutable target/current-record pairs; $v,j,s$ below are proof coordinates, not runtime inputs:
+
+$$
+\begin{aligned}
+\Gamma_{a_b}
+ &=\{(f(b,-j,s),(b,-j,s)):j\in\mathbb Z/T\mathbb Z,\ 0\le s<k\},\\
+\Gamma_d
+ &=\{(F(j,s),(v,-j+m,m+s)):v\in\mathbb F_2,\ j\in J,\ 0\le s<h\},\\
+\Gamma_w
+ &=\{(\lambda(j),(v\oplus\epsilon(j),-j+2m,0)):v\in\mathbb F_2,\ j\in J\},\\
+\Gamma_{p_b}
+ &=\{(\lambda(j),(b,-j+3m,0)):j\in J\},\\
+\Gamma_{H_X}&=\{X\}\times Q.
+\end{aligned}
+\tag{5.9}
+$$
+
+Assign ranks $4,3,2,1,0$ to $a_b,d,w,p_b,H_X$, respectively. Initial coverage follows directly from $c$. The root rejects exactly $s\ge h$ with label $R$. On success its charge is $\mathbf1_{\{0,m\}}(j)$, so the positive branch has label $C$, and the zero branch is exactly $\Gamma_d$. On that support, $D$ rejects exactly $s\ge1$ into label $M$. At $s=0$, its first zero is safe because $m+r=k-1$, its endpoint tail is zero, and its charge restricted to $J$ is $\epsilon(j)$. This gives $\Gamma_w$. The paid $Z$ preserves the value, clears the tail, advances phase and enters exactly $\Gamma_{p_b}$ according to its actual scalar endpoint. Finally $P$ is safe from tail zero and at issued index three has charge support $\{j_B,0\}$. Phase zero was excluded from these supports, so its difference is exactly $\mathbf1_{\{j=j_B\}}$. The final comparison in the table therefore returns $\lambda(j)$.
+
+These statements give legal literal actions, successor closure and strict rank descent on every emitting support. Each stopping support contains only its installed target. The terminal supports are permitted overapproximations; no action is executed after stopping. By the reused support–rank criterion [CM, Theorem 27.2], every allowed source stops correctly within four paid blocks. The proof of the certificate is ordinary and makes no current kernel claim. Actual $A,B$ sources use four blocks, $M$ sources two, successful $C$ and rejected $R$ sources one, and initial bottom zero.
+
+Proof, exclusion of every ten-state competitor. Suppose a correct controller has at most ten states. Lemma 5.3 already excludes fewer than ten. All five stopping labels and the forced emitting roles must therefore fit into precisely five emitting states. Every fourth-block state $p_v$ has both scalar successors stopping with labels in $\{A,B\}$. In particular neither $e_v$ can be any fourth-block state: the actual third endpoint is scalar $\beta_v$, whereas $p_v=V(e_v,\beta_v)$ must still emit. No early stopping convention removes this requirement, because the paired unequal labels have not been separated.
+
+Case one: $d_0=d_1=d$. The cut has a single word and $\beta_0\ne\beta_1$. By Lemma 5.3, the five emitting states are exactly
+
+$$
+\{a_0,a_1,d,p_0,p_1\}.
+\tag{5.10}
+$$
+
+The third-block state $e_v$ is neither fourth-block state. It is not $d$ either: if $e_v=d$, then (5.5) gives $p_v=V(d,\beta_v)=e_v=d$, a contradiction. Thus $e_v=a_i$ for some $i$. If $i=\beta_v$, its mandatory zero-response entry is $V(a_i,i)=d$, again contradicting $p_v$ being a fourth-block state. Necessarily
+
+$$
+e_v=a_{1-\beta_v},\qquad V(a_{1-\beta_v},\beta_v)=p_v.
+\tag{5.11}
+$$
+
+Case two: $d_0\ne d_1$. The five emitting states can contain only one fourth-block state, so $p_0=p_1=p$. Lemma 5.3 requires $\beta_0=\beta_1=\beta$. The emitting set is exactly $\{a_0,a_1,d_0,d_1,p\}$. Again neither $e_v$ is $p$. If $e_v=d_i$, stationarity and (5.5) imply
+
+$$
+p=V(e_v,\beta)=V(d_i,\beta)=e_i.
+\tag{5.12}
+$$
+
+But $e_i$ cannot be a fourth-block state, a contradiction. Hence $e_v$ is a root. The zero-response root entry excludes $a_\beta$, leaving
+
+$$
+e_0=e_1=a_{1-\beta},\qquad V(a_{1-\beta},\beta)=p.
+\tag{5.13}
+$$
+
+The same all-word contradiction closes both cases. Fix a value $v$ and write $p=p_v$, $\beta=\beta_v$, and $a=a_{1-\beta}$. Equations (5.11) or (5.13) say that a positive-difference root source with initial value $1-\beta$ enters $p$ after its first block. In particular take an actual $C$ source at $j=0$, initial tail zero. Its current value is $\beta$ and its current tail is $m$. If $u(p)$ succeeded on this source, its scalar endpoint would immediately enter one of the installed $A,B$ stops, mislabelling $C$. Therefore this literal word must reject the $C$ source.
+
+For any length-$m$ literal word, rejection from tail $m$ requires at least $h=k-m=m-2$ leading ones. Indeed, if its first zero is after $\ell<h$ ones, it reaches that zero safely, and every later internal run has length at most $m<k$, so no later rejection is possible. The all-one word also has at least $h$ leading ones. This covers every possible $u(p)$, without a selected action summary.
+
+On the actual $B$ execution, however, the third-block state is $a$, whose word is $1^m$. It is safe from the cut tail $\tau_v\le2$ and leaves current tail $m+\tau_v\ge m$. The same $h$ leading ones of $u(p)$ therefore reject this $B$ source as well. They also reject its paired $A$ source, whose tail is identical. Their shared bottom endpoint cannot yield both labels, contrary to Lemma 5.3. Both five-emitting-state cases are impossible. Thus every correct controller has at least eleven states, matching (5.8)–(5.9). ∎
+

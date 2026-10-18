@@ -1,0 +1,24 @@
+**推论 33.5（V67 交空间的整个守卫）。** 保留全部来源、全部原矩阵和全部整个守卫，在每个整个系数块同时属于 V67 的交空间上，至少一个整个守卫恒零。
+
+**all slots and rows.**
+
+Fix ANY strict source assignment to all 256 slots q=(w,epsilon), w a seven-action time word and epsilon in {0,1}. Keep all 254 nonempty prefixes and their actual left products A_v. At i=|v| put t_v(P)=tr(A_v\*P) and ell_v(P)=(t_v-1,i\*t_v,i^2\*t_v,i^3\*t_v). The SAME original B(P) compares each descendant slot's ell_v(P_q)\*x_q to its prefix representative's value. Each of 2^i prefixes has 2^(8-i) slots, hence 2^i\*(2^(8-i)-1)=256-2^i rows at depth i. The layers are 254,252,248,240,224,192,128, summing to 1538; 256 entire four-coefficient blocks give 1024 columns. These are unexecuted symbolic counts. No policy-only submatrix, ancestor deletion or separate block kernel is substituted.
+
+**restriction and guards.**
+
+U67 is ker B(P) intersect the simultaneous restriction that EVERY whole four-coefficient block belongs to V67. The block formula already checked is (42\*alpha_q,42\*beta_q-13\*alpha_q,alpha_q-13\*beta_q,beta_q), with its own coefficients per slot. Keep every entire four-component gain map G_q(x)=x_q and every applicable same-source leaf entire difference map D_w(x)=x_(w,0)-x_(w,1). There are 256 gain guards and at most 128 applicable differences. Each must be nonzero on ONE common vector to constitute a witness. Different-source leaf targets are distinct without a difference guard.
+
+**all guard vector impossible.**
+
+Suppose x in this same U67 satisfies all whole guards. For each slot fix its strict P_q, whole g_q(t)=sum_{h=0}^3 x_qh\*t^h and d_q=-x_q0=-42\*alpha_q. Each is a legal promised world with initial zero. Its actual response at prefix v is -x_q0+t_v(P_q)\*g_q(i)=ell_v(P_q)\*x_q. All current and ancestor rows hold on this single x, so every prefix's fixed descendant support shares that entire actual history. Each terminal leaf has two distinct complete worlds by source inequality or the full difference guard and therefore L0. For an internal node and each action, its child's fixed descendant support lies within the parent's full actual response slice; inclusion preserves the child's inductive failure there. A descendant distinct leaf pair preserves the parent's non-singleton stop guard. Bottom-up induction gives L7 for the fixed union of complete promised worlds, contrary to the decoder consumer. Only entire equal triples are merged. Thus no single all-guard vector exists on U67.
+
+**finite avoidance to entire identity.**
+
+If U67={0}, every G_q is already identically zero. Otherwise suppose none of these finitely many whole vector maps vanishes identically on U67. For each map choose one coordinate whose restriction to this SAME U67 is a nonzero linear functional. In basis coordinates of U67 their finite product is a nonzero real polynomial, because a polynomial ring over R is an integral domain. A nonzero real polynomial has a point where it does not vanish: induct on its number of variables, select earlier coordinates making a nonzero coefficient in the last variable nonzero, then choose the last coordinate outside the finitely many roots of that nonzero univariate polynomial. The zero-variable case is a nonzero constant. One common vector therefore makes every selected coordinate, and hence every original whole map, nonzero, contradiction. At least one ENTIRE G_q or applicable ENTIRE D_w is identically zero on U67. If no same-source leaf exists, the conclusion must be a G_q. Coordinate choices serve this existence proof only; they do not replace the contract's whole guards.
+
+**limits and translation.**
+
+The identity is on U67 only, may depend on the full source assignment, and gives no fixed guard identity on unrestricted ker B. No feasible unrestricted vector is supplied. For arbitrary a0 the complete-world bijection (P,g,d)->(P,g,d-a0) subtracts a0 from every actual response and preserves gain membership, distinct triples, chronological products, full nested slices, both actions and stops. Its inverse adds a0 to drift. Psi is translation invariant since its coefficients sum to zero. Normalized initial zero means d=-42\*alpha in this class, not zero drift or an initial gain root.
+
+母卷第 29 节要求 H(0)=0 且 H(1)—H(6) 非零，本节不满足该假设；姊妹卷第 31 节的物理仿射定理也不能在未知漂移时通过除 H 安装。因为 (y_i-a0)/H(i)=F(i)tr(Q_iP)-42alpha/H(i)，最后一项未知。本节等待实际 y6 才归一化，却在此前用原物理 Psi 决定第五动作。双末根也使第五与第七评价不能提供定理 32.1 的非零 Delta57，本节完整坏类分类正承担这项缺口。
+

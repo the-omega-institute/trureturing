@@ -1,0 +1,48 @@
+**Theorem 60.2 (literal private compilation and the complete installed generator).** From the authentic current packet of any $s\in\mathcal T_H$, a finite fixed-schedule private Boolean computation constructs, for every public $p\in\mathcal A_H$,
+
+$$
+x_p=[p\in\operatorname{Pos}(s)],\qquad
+b_p=[s|_p=\beta].
+\tag{60.3}
+$$
+
+It constructs these bits from the current source, without a source-size reply, address oracle, acquired archive, private-data-dependent seek or counterfactual source. The resulting supplied gate decomposition has, on $\mathcal U_H$, generator
+
+$$
+\widehat H_s=
+\sum_{p\in\mathcal A_H}x_p\bigl(a d_p-g2^{-|p|}\bigr)|p\rangle\langle p|
+-a\sum_{\substack{q\in\mathcal A_H\\q\ne\varepsilon}}
+ x_q\bigl(|q^-\rangle\langle q|+|q\rangle\langle q^-|\bigr),
+\qquad d_p=\begin{cases}2,&p=\varepsilon,\\3,&p\ne\varepsilon.\end{cases}
+\tag{60.4}
+$$
+
+Here $q^-$ is the actual parent address. It fixes the reference and inactive coordinates. If $V_s:\ell^2(D)\to\mathcal U_H$, $D=\operatorname{Pos}(s)$, sends $e_p$ to $|p\rangle$, then
+
+$$
+\widehat H_s=0_{\mathbb C r}\oplus V_s\mathsf H_DV_s^*
+ \oplus0_{\operatorname{span}\{|p\rangle:x_p=0\}}.
+\tag{60.5}
+$$
+
+In particular every actual leaf keeps both missing-child killing terms, the potential is the common $2^{-|p|}$ restriction, and every internal, exceptional and root-invisible direction is retained. No free-standing subtree potential or newly solved killed field occurs.
+
+Proof. The all-source address cover and its size are the existing [Fiber Calculus II Lemma38.40](FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_II.md#384-叶预算的原几何与精确迹编译), with its leaf-budget parameter set to this $H$. This is only a finite cover for allocating the bank; it does not restrict the original menu or make a source reply available.
+
+Here are explicit compiler instructions. Use $H+1$ private pending-address rows, each containing an $H$-bit zero-padded path and a length, and a private stack height $h$. Put the root in row zero and set $h=1$. Use width $w=\lceil\log_2(4H+8)\rceil$ for lengths and signed temporary counters. For each of the $N$ token slots, in its public order, select the top row by OR-ing the row bits under the masks $[j=h-1]$ over every $0\le j\le H$. The case $h=0$ selects a zero dummy row. Record its path and length with the token's non-PAD bit. Every row and bit is scanned even on PAD.
+
+For PAIR, replace row $h-1$ by that path followed by $R$, replace row $h$ by that path followed by $L$, and set $h$ to $h+1$. For a leaf set $h$ to $h-1$; for PAD leave it unchanged. These are bitwise MUX writes to every row, selected by equality masks, not writes at a private address. Stale rows above the new height are immaterial and remain private. Form both possible children even when the token is a leaf or PAD. A child path is formed by scanning every path-bit position and testing equality with the old length; incrementing its length is a fixed-width addition. Actual branch depths are at most $H-2$, while unused leaf-child expressions have length at most $H$, so the reserved path and counter widths suffice. The unselected arithmetic arms are inside the signed range; no underflow is interpreted as a valid address.
+
+The pending rows, from top downward, are exactly the remaining preorder node addresses. This invariant follows by replacing the first pending address by left then right on a branch and by deleting it on a leaf. It holds initially and at each active token. Valid padding begins only after closure by PR57.T1, when $h=0$. The stack never has more than $H$ pending nodes: every pending subtree is nonempty and their disjoint leaves belong to the same source of at most $H$ leaves. Thus each recorded active address is exactly that token's actual address. Fold all $N$ recorded rows against each public $p$, using full path-and-length equality, and OR the active matches to get $x_p$; add the beta-token test to get $b_p$. Distinct active tokens have distinct addresses, although the OR recipe does not assume a unique match as a machine primitive.
+
+All operations just described expand into PR57.5's fixed-width additions, comparisons, Boolean truth tables and MUXs; PR57.3 supplies allocation, unary descriptors and every seek. For example a sufficient upper bound on the number of Boolean gates, including initial constant writes, is
+
+$$
+G_{\rm flag}(H)=100N(H+1)(H+w+1)^2+20NK(H+w+1).
+\tag{60.6}
+$$
+
+To check this bound, in each token iteration the two counter updates, top equality selection, child construction and two MUX writes per row take at most $100(H+1)(H+w+1)^2$ gates using the five-gate adder, three-gate-per-bit equality and one-gate MUX of PR57.5. Each recorded-row/public-address match and the two folds take at most $20(H+w+1)$ gates. The generous constants also cover initialization and the terminal height check. This is a Boolean-gate bound, not a native tick count. Generation writes every instruction and all unary references, and their native costs are counted separately in Definition60.7.
+
+The only edges installed in (60.4) are parent–child seams with an actual child. Downward closure gives an actual parent. A leaf diagonal is never obtained by counting its installed neighbours: it is the inherited $a d_p-g2^{-|p|}$ even when its children are absent. Consequently (55.4) is exactly the active principal block, proving (60.5). The common field values are generated from public depth by a binary shift, not read from a hidden field oracle. $\square$
+

@@ -1,0 +1,5 @@
+source_id = "kbonacci-endpoint-return-cost"
+path = "docs/develop/theory/KBONACCI_ENDPOINT_RETURN_COST.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

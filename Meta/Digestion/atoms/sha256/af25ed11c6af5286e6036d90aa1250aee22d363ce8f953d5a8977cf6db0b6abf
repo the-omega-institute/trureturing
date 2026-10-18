@@ -1,0 +1,29 @@
+### 86.4 计数与辅助字典
+
+接触前和接触处，上述选择给出 五个 supported low live-bearing labels 加一个 high label 的构造上界。它不是有限 $A$  精确优化者的最小字母表定理。接触后邻域还保留 RC 的第四条 pure-live 标签，简单构造为六 low 加一 high。取向并列可以选一个取向保持上述上界；若采用任意比例拆分，则实际生成的 low 标签数可增加。为完整对应 FA74.3，若引用其辅助量，令
+
+$$
+r_\epsilon^{\rm aux}=-z_\epsilon/w_\epsilon,\qquad
+\bar{\mathbf c}_\epsilon=
+(\sqrt{\theta(r_\epsilon^{\rm aux})^2+\omega},
+-r_\epsilon^{\rm aux},1)^T,
+$$
+
+$$
+a_0=
+\left(4\sum_\epsilon
+\bar{\mathbf c}_\epsilon^TL_0^{-1}\bar{\mathbf c}_\epsilon\right)^{-1}.
+$$
+
+FA 的辅助族由两条 $\sqrt{a_0}\bar{\mathbf c}_\epsilon$ 和剩余 Gram 的至多三个 support-restricted null atoms 构成，且
+
+$$
+\nu_\star^{\rm FA}
+=
+\max_\epsilon
+\frac{m_1h_2^2(e_\epsilon)_1^2}
+{a_0d^2\operatorname{cap}(\bar{\mathbf c}_\epsilon)}.
+\tag{RC.166}
+$$
+
+这里 $\operatorname{cap}(\bar{\mathbf c})$ 按原非归一化 coefficient 向量的 FA69 齐次容量解释。两条辅助向量满足 $L_0-a_0\sum_\epsilon\bar{\mathbf c}_\epsilon\bar{\mathbf c}_\epsilon^T\succeq3L_0/4$，再用支撑限制的 null 分解，故只需至多三个剩余 atoms。$\nu_\star^{\rm FA}$ 是该固定辅助族的预算常量，区别于 $\nu_\epsilon$，也区别于 FA 的最小预算端点质量和容量常量。这是供应字典；§82 的达到族具体使用 (RC.142) 的谱载荷及同一个三射线修复。

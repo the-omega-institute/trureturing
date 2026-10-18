@@ -1,0 +1,114 @@
+**Theorem 11.3 (whole-table feasibility, exact count and native lift).**
+The table $B_M$ is total, terminates correctly on every Boolean input,
+and has exact installed running count
+
+$$
+m_B=2^{3M+5}-16(2^M-1)+5M+1>G=k(n-k+1).
+\tag{WTF.38}
+$$
+
+Every input uses at most $n$ queries and weighted charge at most $W$;
+one untouched input attains both bounds. The full-fiber lift of
+Theorem 4.1 therefore has exact installed preparation count and
+simultaneously attained uniform maxima
+
+$$
+H=m_B+4+r,\qquad p=n+1,\qquad \ell=3+W.
+\tag{WTF.39}
+$$
+
+It preserves the entire original domain, code, literal complete reader
+entries and separate reader of §1.
+
+Proof. The unit routing cylinders are disjoint. Within a cylinder the
+two selected prefixes differ at $t$, so their deleted subtrees are
+disjoint too. Every deletion is below routing depth $M$ and is disjoint
+from $R=0^M$. In particular it does not remove $J$.
+
+The low prefix has $1+(M-j)+1=M-j+2=k-j-2$ hits. Its unread
+set is $Y\cup U_j$, of size $j+2$, and its residual is AND on that
+set. The high prefix has $1+1+M+1=M+3=k-1$ hits, unread set
+$X\cup U_j$, and residual OR on that set. All these prefixes are live.
+The scan sends an all-zero $U_j$ to $B_X$, an all-one $U_j$ to $B_Y$,
+and a mixed $U_j$ to $J$ at its first change of value.
+
+For a mixed scan the low AND is zero and the high OR is one, exactly
+the respective old $t$ replies at $J$. On an all-zero scan the low
+history has old $x=1$, so $B_X$ goes through $J$ to zero. The high
+history obtains $x\lor x'$: if $x=1$ it goes through $J$ to one,
+and if $x=0$ it reads $x'$. On an all-one scan the low history
+obtains $y\land y'$: if $y=0$ it goes through $J$ to zero, and if
+$y=1$ it reads $y'$. The high history has old $y=0$, so it goes
+through $J$ to one. These six cases cover every assignment extending
+either replaced prefix. Every other input follows the original
+complete threshold tree. The scan index strictly advances, its exits
+have at most two further calls, and $J$ terminates. The retained tree
+also terminates. Thus every input has a correct finite run.
+
+A replaced run has $n-j-2$ prefix calls, at most $j$ scan calls and
+at most two tail calls, hence at most $n$ calls. The two prefixes
+cost $C_{I_j}+C_X$ and $C_{I_j}+C_Y$, and the scan costs at most
+$C_{U_j}$. The exhaustive tail charges are
+
+| Scan exit | Low-prefix tail charge | High-prefix tail charge |
+| --- | --- | --- |
+| all zero | $c_x+c_t\le C_Y$ | $\max(C_X,c_x+c_t)=C_X$ |
+| all one | $\max(C_Y,c_y+c_t)=C_Y$ | $c_y+c_t\le C_X$ |
+| mixed | $c_t\le C_Y$ | $c_t\le C_X$ |
+
+Here the two maximum equalities use $c_t\le c_{x'}$ and
+$c_t\le c_{y'}$, respectively; the mixed inequalities follow from
+these as well. Thus each complete replaced run costs at most
+$C_{I_j}+C_X+C_Y+C_{U_j}=W$. Repeated $x,y,t$ calls and every
+postcertificate call are included in these sums. Every untouched
+$R=0^M$ input still queries all $n$ coordinates once, paying exactly
+$n,W$ on that same run.
+
+The complete tree contributes $2^n-1$ running vertices. Delete exactly
+$2\sum_{j=1}^M(2^{j+2}-1)$ distinct vertices. Add $M$ states $V_j$,
+$2(M-1)$ states $Z_i,O_i$, and four private states, or $3M+2$
+in all. The existing $J$ is counted once in the retained tree and
+is not added. Consequently
+
+$$
+\begin{aligned}
+m_B&=(2^n-1)-2\sum_{j=1}^M(2^{j+2}-1)+(3M+2)\\
+   &=2^n-16(2^M-1)+5M+1.
+\end{aligned}
+$$
+
+This counts every installed vertex, including unnecessary complete-tree
+vertices after certification. The retained zero-routing subtree alone
+has $2^{n-M}-1=2^{2M+5}-1$ vertices. Since $2^M\ge M+1$,
+its count is at least $32(M+1)^2-1$, strictly exceeding
+$G=2(M+4)(M+1)$. This proves the strict inequality in (WTF.38).
+
+Apply exactly Theorem 4.1, rather than placing a shape promise on the
+upper domain. Each coordinate state installs the original absolute
+literal $a_i=LLL L^{s_i}R$, with the one successor for branch and
+three separately installed zero successors for alpha, beta and absent.
+Retain every Boolean running state. Add its two profile states $D,T$
+at $RLR,RRR$, its two literal original-entry latches and all $r$
+mandated distinct latches, including unused ones. The all-vector proof
+above applies to the static selected replies of every finite branch
+image, not only the comb witnesses. The eleven profiles in §1 supply
+all remaining sources. Supplier 2.1 supplies actual cube origins for
+the untouched cap-attaining inputs, so the lift attains both (WTF.39)
+maxima on one actual source.
+
+The domain is exactly $\mathcal U_*$ of (WTF.3), with the original
+$\rho$ and no size or depth bound. Every finite absolute address and
+all four replies retain their original meaning. Both occurrences of
+each repeated class, all different-class disequalities, the canonical
+restricted partitions and every blocking guard remain in the complete
+predecessor outputs. Handoff enters literally the unchanged COMPLETE
+$e_0$ or $e_1$ on that same register. Convention 1.3's separate
+$K=8$ reader, including every whole-row halt, is unchanged.
+All actual native invocations, including root, constant, absent, repeated
+and postcertificate calls, are paid as in Definitions 1.4 and 3.1.
+The construction grants no source copy, archive, equality, inverse,
+source-dependent selector, counter, computed address or additional
+control port. Assumption 1.5's acquisition, authentication, export,
+isolation, handoff, lawful entry, binding and continuity services
+remain separately supplied and priced. $\square$
+

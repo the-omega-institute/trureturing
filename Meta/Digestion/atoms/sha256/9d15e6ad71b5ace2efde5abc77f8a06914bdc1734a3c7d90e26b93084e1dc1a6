@@ -1,0 +1,77 @@
+**Theorem 3.3 (Symbolic allowance with all stationary boundaries).** If $K=1$, then $\epsilon_Q(r)=e_L(r)=e_R(r)=0$ for all $r$; take $\eta_\theta(R)=0$. If $K\ge2$, choose a finite $\ell\ge1$ distinguishing every pair of quotient states by its length-$\ell$ word distribution $P_a(w)=\mathbf e_aT_w\mathbf1$. Put
+
+$$
+\rho=\max_{a\ne b}\sum_{|w|=\ell}\sqrt{P_a(w)P_b(w)}<1,\qquad
+D=\sum_{a<b}\sqrt{\pi_a\pi_b}\le\frac{K-1}{2}.
+\tag{3.2}
+$$
+
+Any common upper bound below one may replace this $\rho$. Then
+
+$$
+\epsilon_Q(r),\ e_L(r),\ e_R(r)\le D\rho^{\lfloor r/\ell\rfloor},\qquad
+\tau_P(R)\le\eta_\theta(R):=
+\frac{2D\ell}{1-\rho}\rho^{\lfloor R/\ell\rfloor}\longrightarrow0.
+\tag{3.3}
+$$
+
+These constants depend on the fixed actual law and its selected presentation. The conclusion covers reducible and periodic stationary presentations, structural zeros and original zero-mass states through Lemma 1.3. It gives no fixed-$N$ uniform rate or efficient distinguishing length.
+
+Proof. There are finitely many distinct pairs, each distinguished by some finite cylinder. Longer word distributions retain every shorter marginal, so one common $\ell$ exists. Cauchy–Schwarz gives affinity at most one, with equality precisely for equal normalized distributions. Thus (3.2) has $\rho<1$.
+
+On ordered distinct quotient pairs define the nonnegative matrix
+
+$$
+\mathsf B_{(a,b),(c,d)}
+=\sum_{x\in\{0,1\}}\sqrt{p_a(x)p_b(x)}
+\,\mathbf1_{\{\delta(a,x)=c,\ \delta(b,x)=d,\ c\ne d\}},
+\tag{3.4}
+$$
+
+ignoring zero-weight symbols. Its row sums are at most one. Each word determines one trajectory from each initial class, and trajectories cannot split after meeting. Consequently
+
+$$
+(\mathsf B^r\mathbf1)_{(a,b)}
+=\sum_{\substack{|w|=r\\\delta(a,w)\ne\delta(b,w)}}
+\sqrt{P_a(w)P_b(w)}.
+\tag{3.5}
+$$
+
+Undefined paths have zero contribution. This identity follows by expanding the path products; final distinctness is equivalent to never having met. In particular $\mathsf B^\ell\mathbf1\le\rho\mathbf1$. Nonnegativity and $\mathsf B\mathbf1\le\mathbf1$ imply
+
+$$
+\mathsf B^r\mathbf1\le\rho^{\lfloor r/\ell\rfloor}\mathbf1.
+\tag{3.6}
+$$
+
+Indeed write $r=m\ell+t$, $0\le t<\ell$, bound the remainder by $\mathbf1$, and iterate the length-$\ell$ inequality.
+
+For an observed word $w$, let $a_i=\pi_iP_i(w)$ and group initial masses by final class:
+
+$$
+b_s=\sum_{\delta(i,w)=s}a_i.
+$$
+
+Its unnormalized contribution to final-class MAP error is $\sum_s b_s-\max_s b_s$. If $m$ maximizes $b_s$, then $b_s\le\sqrt{b_mb_s}$ for $s\ne m$, and
+
+$$
+\sum_s b_s-\max_s b_s
+\le\sum_{s<t}\sqrt{b_sb_t}
+\le\sum_{\substack{i<j\\\delta(i,w)\ne\delta(j,w)}}\sqrt{a_ia_j}.
+\tag{3.7}
+$$
+
+The second inequality uses $\sqrt{\sum_i a_i}\le\sum_i\sqrt{a_i}$ separately in the two disjoint groups. Summing over words, (3.5)–(3.6) and stationarity give
+
+$$
+\epsilon_Q(r)\le
+\sum_{i<j}\sqrt{\pi_i\pi_j}(\mathsf B^r\mathbf1)_{(i,j)}
+\le D\rho^{\lfloor r/\ell\rfloor}.
+$$
+
+Finally $D=((\sum_i\sqrt{\pi_i})^2-1)/2\le(K-1)/2$. Apply Theorem 2.3 and sum by $\ell$-sized blocks, overcounting the first partial block harmlessly, to obtain (3.3). The proof uses every quotient pair directly and needs neither communication nor convergence of hidden transition powers.
+
+For $\rho=0$, use $0^0=1$ and $0^m=0$ for $m\ge1$: $\mathsf B^\ell\mathbf1=0$ makes all classification errors and defects vanish for $r\ge\ell$, while (3.3) still bounds the initial finite tail. The $K=1$ case follows immediately from (2.2)–(2.3). $\square$
+
+The pair matrix and word sums are symbolic proof objects. They do not assert a numerical computation, word/pair search, exact synchronization word or hidden minimality. The allowance is proved before any attainment assumption.
+

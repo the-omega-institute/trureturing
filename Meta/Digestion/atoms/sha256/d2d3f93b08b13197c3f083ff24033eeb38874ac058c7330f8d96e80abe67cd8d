@@ -1,0 +1,24 @@
+**Definition 2.3 (crossing by a real final update).** Write
+$\operatorname{succ}_U(q)$ for an update successor and put
+
+$$
+X_v(x,y,d)\ \Longleftrightarrow\
+\bigvee_{\substack{q\in E_U\\\operatorname{succ}_U(q)=y}}
+ \exists c\in\mathbb N\,
+       \bigl(d=c+1\ \land\ P_v(x,q,c)\bigr).
+\tag{NPS.7}
+$$
+
+Thus $X_v$ describes a path with positive update count whose **last
+action is an actual update**. Suppose its starting epoch is $a$ and
+$a+d=b>a$. Before its final edge the accumulated update count is at
+most $d-1$, because every edge weight is nonnegative and the final edge
+still contributes one. All preceding actions, including that last
+update at epoch $b-1$, therefore start in $[a,b)$. The endpoint is at
+epoch $b$. This is exactly the endpoint convention needed when a reply
+vector changes at $b$; no read at $b$ may still use the old vector.
+
+The relation counts updates, not elapsed instructions. Its path can
+contain arbitrarily many actual reads. Those actions remain in the
+finite path witness and in the native execution it describes.
+

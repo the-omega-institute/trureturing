@@ -1,0 +1,41 @@
+### 459.2 非负谱率上的精确负质量问题
+
+对 $[0,\infty)$ 上任意有限实有符号 Borel 测度 $\sigma$，取其真实
+Jordan 分解 $\sigma=\sigma^+-\sigma^-$，定义
+$$
+L_\sigma(s)=\int e^{-st}\,d\sigma(t),\qquad
+N_-(\sigma)=\sigma^-([0,\infty)),
+$$
+$$
+E_h(\sigma)=\max_{s\in\{h,3h/2,2h\}}|cB(s)-L_\sigma(s)|.
+\tag{SNC.3}
+$$
+这里每个核在非负轴有界，故三核对总变差都真正可积。
+成本始终是 Jordan 负部的质量；不能用某个含重叠的作者分解代替它。
+
+给定 $0\le\varepsilon\le K$，置
+$$
+U=u+\varepsilon,\qquad V=v-\varepsilon,\qquad Z=z+\varepsilon,
+\qquad \Delta_\varepsilon=V^2-UZ=\Delta-S\varepsilon
+ =S(K-\varepsilon)\ge0,
+\tag{SNC.4}
+$$
+$$
+D_\varepsilon=\sqrt{9V^2-8UZ}
+ =\sqrt{V^2+8\Delta_\varepsilon},\qquad
+r_\varepsilon=\frac{3V-D_\varepsilon}{2U},
+$$
+$$
+n_\varepsilon=\frac{8(V-Ur_\varepsilon)}{r_\varepsilon^3},
+\qquad W_\varepsilon=\frac U{r_\varepsilon^2}+\frac{n_\varepsilon}4.
+\tag{SNC.5}
+$$
+由 $K<v$，有 $V>0$；由 $UZ>0$，有 $D_\varepsilon<3V$。
+又有 $D_\varepsilon\ge V$，因此
+$$
+0<r_\varepsilon\le V/U<1,
+\quad n_\varepsilon\ge0,\quad W_\varepsilon>0.
+\tag{SNC.6}
+$$
+$n_\varepsilon=0$ 恰当且仅当 $\varepsilon=K$。
+

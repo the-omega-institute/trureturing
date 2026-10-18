@@ -1,0 +1,32 @@
+**Lemma 7.2 (bounded concave roofs at relative interior targets).**
+Fix a continuous payoff on $\mathcal X$. On the mass-one moment
+projection, with a contrast coordinate allowed to decrease below its
+achieved value, the maximum payoff is continuous at every relative
+interior target where it is finite.
+
+Proof. The common-law feasible set is convex. Mixtures preserve the
+moment and contrast-slack targets, so its upper payoff roof $F$ is
+concave. Since the payoff is bounded on $\mathcal X$, there is a
+constant $C$ such that $|F|\le C$ on the projection. At a relative
+interior point $y$ choose $R>0$ with the affine-hull ball
+$B(y,R)$ contained in the projection. For a unit direction $e$
+and $0<h<R$, concavity on the segment from $y$ to $y+Re$ gives
+the lower bound below. Concavity with $y$ between $y-Re$ and
+$y+he$ gives the upper bound:
+$$
+-\frac{2C}{R}h\le F(y+he)-F(y)
+                      \le\frac{2C}{R}h.
+\tag{GC.32}
+$$
+Indeed, $y=\frac{h}{R+h}(y-Re)+\frac{R}{R+h}(y+he)$ for the
+upper bound; each payoff difference at the endpoints is bounded by
+$2C$. These inequalities prove continuity in the affine hull.
+
+Ordinary probability measures on $\mathcal X$ can be used for this
+convex argument. Their finite vectors consisting of moment,
+contrast and payoff coordinates belong to the convex hull of a
+compact image in a finite-dimensional space. Finite convex
+combinations represent the same vectors. Thus this argument computes
+the same finite-law value and introduces no new measurable physical
+disintegration assumption. $\square$
+

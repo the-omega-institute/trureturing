@@ -1,0 +1,62 @@
+**Proposition 77.3 (the full complex sphere yields a strict matrix bound).** Under (S.158), define
+
+$$
+\begin{aligned}
+C_0&=T-\beta-(a-\beta)s
+=\beta u+(a-\beta)\varepsilon>0,\\
+\Delta&=4a\beta s(1-s)-C_0^2
+=(T-s)\bigl(s-T(2u-1)^2\bigr)
+=\varepsilon(2\beta u-\varepsilon).
+\end{aligned}
+\tag{S.164}
+$$
+
+Then $\Delta>0$ and
+
+$$
+q_2>f_\beta(s,t):=
+ t-\frac{\Delta}{2\beta}
+\left[\frac1{2as+C_0}+\frac{t}{s(2at+C_0)}\right].
+\tag{S.165}
+$$
+
+Proof. By monotonicity, (S.158) and (S.163),
+
+$$
+2\sqrt{a\beta}\sqrt{s(1-s)-st\kappa}>C_0+\beta q>0.
+$$
+
+Both sides are positive, so squaring and collecting terms is valid and gives
+
+$$
+4a\beta st\kappa+2\beta C_0q+\beta^2q^2<\Delta.
+\tag{S.166}
+$$
+
+In particular $\Delta>0$. Drop the nonnegative last term. Since the inequality holds for every complex unit $\psi$ for this one $L$, it is the Hermitian inequality
+
+$$
+\begin{gathered}
+L^\dagger\mathcal D L\prec\Delta I_2,\qquad
+\mathcal D=4a\beta st I_2+2\beta C_0\Omega\succ0,\\
+G\prec\Delta\mathcal D^{-1},\qquad
+\mathcal D=\operatorname{diag}
+\bigl(2\beta s(2at+C_0),\ 2\beta t(2as+C_0)\bigr).
+\tag{S.167}
+\end{gathered}
+$$
+
+Indeed, for $K=\mathcal D^{1/2}L$, the first inequality says $\|K\|_{\rm op}^2<\Delta$. Equality of the operator norms of $K$ and its adjoint gives $KK^\dagger\prec\Delta I_2$; congruence by $\mathcal D^{-1/2}$ proves the second. This argument needs no inverse of $L$. Every entry of $\mathcal D$ is strictly positive since $\beta,s,t,C_0>0$.
+
+Taking traces and using the same third budget in (S.162) gives
+
+$$
+\begin{aligned}
+q_2&\geq t(1-\operatorname{Tr}G)\\
+&>t-\frac{\Delta}{2\beta}
+\left[\frac{t}{s(2at+C_0)}+\frac1{2as+C_0}\right].
+\end{aligned}
+$$
+
+This proves (S.165), with its strict direction, also when $G$ is singular. $\square$
+

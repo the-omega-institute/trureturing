@@ -1,0 +1,56 @@
+**Corollary 20.4 (No entropy divergence for this exact-rank example).**
+Use natural logarithms, and let $S_{n,k}$ be the cut
+entanglement entropy of $\Psi_n$ after site k. For all
+sufficiently large n, uniformly in $1\le k<n$,
+
+$$
+S_{n,k}\le\log4+n(\log2)t_n+h(t_n),\qquad
+h(t)=-t\log t-(1-t)\log(1-t).
+\tag{20.10}
+$$
+
+In particular
+
+$$
+\limsup_{n\to\infty}\max_{1\le k<n}S_{n,k}\le\log4,
+\qquad
+\sup_{n\ge2}\max_{1\le k<n}S_{n,k}<\infty.
+\tag{20.11}
+$$
+
+Proof. Partial trace contracts trace distance. For example,
+its variational characterization tests an operator Q with
+$0\le Q\le I$ on the subsystem by the allowed operator
+$Q\otimes I$ on the full system. Thus every cut reduction
+of $\Psi_n$ is within trace distance $t_n$ of that of
+$\Phi_n$. The latter has rank at most four and entropy at
+most $\log4$.
+
+Use the existing sharp entropy-continuity inequality of
+[Audenaert, *A Sharp Fannes-type Inequality for the von
+Neumann Entropy*, arXiv:quant-ph/0610146v1, Theorem 1,
+p. 2, equation (6)](https://arxiv.org/abs/quant-ph/0610146v1).
+After multiplying its base-two form by $\log2$, its bound
+is $T\log(d-1)+h(T)$. The subsystem dimension is at most
+$2^n$. For all sufficiently large n, $t_n\le1/2$;
+h is then increasing on $[0,t_n]$, so replacing the actual
+reduced-state distance T by $t_n$ gives (20.10).
+Exponential decay in (20.8) implies $nt_n\to0$ and
+$h(t_n)\to0$. The remaining finitely many n have finite
+dimension, proving both assertions. $\square$
+
+The unbounded exact ranks of Theorem 19.2 and the fixed-bond
+approximation of Theorem 20.3 concern the same fixed law
+and the same prescribed positive coherent vectors. The
+rank lower bound detects nonzero Schmidt coefficients,
+including arbitrarily small ones. It supplies neither
+approximate bond-dimension growth nor entropy divergence.
+The low-bond approximation need not reproduce the diagonal
+law exactly and is not the mixed carrier of Proposition
+19.3. No physical preparation, efficient parameter-learning
+procedure, common infinite pure state or minimal quantum
+statistical memory is inferred. Hellinger transfer, rank
+subadditivity, sequential Schmidt decomposition and entropy
+continuity are reused methods; this stationary no11
+application makes no priority claim.
+

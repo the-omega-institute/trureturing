@@ -1,0 +1,35 @@
+### 4.1. One actual law and the two square-sector eigenvalues
+
+Allow the joint occupation weight to vary independently. Fix $a,b,c>0$
+and put
+
+$$
+T=1+2a+c,\qquad Z=T+b,\qquad
+p=\frac{(1,a,b,a,c)}Z,\qquad
+\psi=\frac{(1,\sqrt a,\sqrt b,\sqrt a,\sqrt c)}{\sqrt Z}.
+\tag{4.1}
+$$
+
+The state order and the recorded-site reference-phase experiment remain
+those of Parent/Readout §8. This enlarges the activity family of §3, recovered when
+$c=a^2$. It does not change the definition of its site budget. The
+information projectors of the same actual law are
+
+$$
+\begin{aligned}
+K_1&=\frac{(\sqrt a\,e_0-e_1)(\sqrt a\,e_0-e_1)^{\mathsf T}}{1+a}
++\frac{(\sqrt c\,e_3-\sqrt a\,e_{13})
+(\sqrt c\,e_3-\sqrt a\,e_{13})^{\mathsf T}}{a+c},\\
+K_2&=\frac{(\sqrt b\,e_0-e_2)(\sqrt b\,e_0-e_2)^{\mathsf T}}{1+b},\\
+K_3&=\frac{(\sqrt a\,e_0-e_3)(\sqrt a\,e_0-e_3)^{\mathsf T}}{1+a}
++\frac{(\sqrt c\,e_1-\sqrt a\,e_{13})
+(\sqrt c\,e_1-\sqrt a\,e_{13})^{\mathsf T}}{a+c}.
+\end{aligned}
+\tag{4.2}
+$$
+
+They are orthogonal projections annihilating $\psi$. Define
+$H_\omega=\sum_i\omega_iK_i$ and
+$\gamma(\omega)=\lambda_{\min}(H_\omega|_{\psi^\perp})$.
+All phase coordinates in this optimization are real.
+

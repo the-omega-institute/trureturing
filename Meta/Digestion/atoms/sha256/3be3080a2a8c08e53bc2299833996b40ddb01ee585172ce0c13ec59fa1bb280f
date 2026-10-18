@@ -1,0 +1,8 @@
+**Theorem 37.2 (Low-degree parameter interfaces).** At $n=3$, one may take $p(t)=\sqrt3(t+1/2+i/\sqrt{12})$, giving $|p(t)|^2=3t^2+3t+1$ and $\sum_{t<k}|p(t)|^2=k^3$. At $n=1$, in target-source order, the completion has
+
+$$
+Q=\operatorname{diag}\big((1-q)^{-1},q(1-q)^{-2}\big),\quad L_A=\sqrt q\,I_2,\quad L_B=\sqrt{1-q}\,E_{ts},\quad L_{\rm tick}=\sqrt{1-q}\,E_{st},\quad \tau=E_{ss}. \tag{37.5}
+$$
+
+Proof. The first identity follows by multiplying the displayed conjugate linear factors. For the second, $U=(1)$ and $v=1$, so the word-Gramian diagonal entries are $\sum_kq^k$ and $\sum_kkq^k$, with zero off-diagonal entries. Substitution in (36.1) gives (37.5). Its invariant density is $I_2/2$, and the actual gaps are $k(1-q)^2q^{k-1}$ for $k\ge1$, with zero at $k=0$. At $q=1/2$, label $s=0,t=1$: this is exactly (29.7), and $\gamma_k=k/2^{k+1}$ is (22.2). More generally the $n=1$ law is the equal-parameter SNS law with the two source parameters both equal to $q$ in Marzen–Crutchfield, [arXiv:1408.6876v2, §V, Fig. 7, equation (15)](https://arxiv.org/abs/1408.6876v2). At $n=2$, $Z_2(q)=q(1+q)/(1-q)^3$, so (35.1) equals (27.3) with the exact identification $q=r^2$ of Chapter 33. This identifies the visible law, without asserting that the two chosen matrix coordinates are identical. $\square$
+

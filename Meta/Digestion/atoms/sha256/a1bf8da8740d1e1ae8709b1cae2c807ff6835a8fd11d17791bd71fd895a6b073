@@ -1,0 +1,85 @@
+**Theorem 10.1 (unit-profile lower implication).** Let $s_n\downarrow0$ be any prescribed sequence, and for each $n$ choose an actual normalized complex ground state $\psi_{s_n}\in D(S)$ on (3.5). If
+
+$$
+\operatorname{dist}(F_{s_n},\mathcal O_c)\to0,
+\qquad F_s=\mathcal U_s\psi_s,
+\tag{10.1}
+$$
+
+then
+
+$$
+\liminf_n E_{s_n}\ge C_{\rm resp}.
+\tag{10.2}
+$$
+
+Proof. Remove a constant phase from each actual state so that $F_s\to p$ globally in $L^2$ along the sequence. The determinant-one shears are unitary and converge strongly to the identity: this follows on compact continuous functions from $L_s\to I$, and on $L^2$ by density. Therefore $f_s=\mathcal T_sF_s\to p$ globally, since
+$\|\mathcal T_s(F_s-p)\|_2=\|F_s-p\|_2$ and $\mathcal T_sp\to p$. No spatially varying phase or phase derivative is used.
+
+Fix any $\delta\in(0,\delta_*]$ before taking a limit. Put $R=\delta/s$, $u_s=\eta_Rf_s$ and decompose it by (8.3) as $u_s=c_sp+v_s$. Then $u_s\to p$ globally, $\|u_s\|_2\to1$, and $c_s\to1$, because $Vp\in L^2$. The IMS error is now
+
+$$
+C_\delta s^2\int_{\delta/s\le|r|\le2\delta/s}|f_s|^2=o_\delta(s^2).
+\tag{10.3}
+$$
+
+Indeed its mass tends to zero by global strong convergence to the fixed $L^2$ vector $p$. The outer error is $O_\delta(s^5)$. Hence (9.3)–(9.4) imply
+
+$$
+\epsilon_c(s)\ge\widehat q_{s,\delta}[u_s]-o_\delta(s^2),
+\qquad
+\widehat q_{s,\delta}[u_s]\le\epsilon_c(s)+o_\delta(s^2)\le o_\delta(s^2),
+\tag{10.4}
+$$
+
+where actual native negativity gives the final inequality. The enhanced local estimate (8.4) now gives $b[v_s]=O(s^2)$ at fixed $\delta$. More precisely there is a constant $B_0$ independent of small fixed $\delta$ such that
+
+$$
+\limsup_{s\to0}\frac{b[v_s]}{s^2}\le B_0.
+\tag{10.5}
+$$
+
+This follows by dividing (8.4) and (10.4) by $s^2$: $c_1,C$ are uniform in $\delta$, $\|u_s\|_2\to1$, and the IMS contribution tends to zero at each fixed $\delta$. Uniform IMS little-oh as $\delta\downarrow0$ is not required.
+
+Write $d=d_{s,\delta}$. Its exact expansion on its defined support and parity give
+
+$$
+\int d|Yp|^2=3\beta_s^2A+o_\delta(s^2),
+\qquad
+\|(d/\beta_s+2r)Yp\|_2\to0.
+\tag{10.6}
+$$
+
+For the first assertion subtract the exactly odd term $-2\beta_sr\rho(sr/\delta)$. The quotient of the remaining coefficient by $\beta_s^2$ converges pointwise to $3r^2$ and is dominated by $Cr^2$. For the second, the coefficient tends pointwise to zero after addition of $2r$, and is bounded by $C|r|$ on the whole space, including outside the auxiliary support. Both assertions follow by $rYp\in L^2$ and dominated convergence. Thus the kinetic cross term is
+
+$$
+-4a\beta_s\operatorname{Re}\left(\overline{c_s}\int r(Yp)(Yv_s)\right)
+                 +o_\delta(s^2).
+\tag{10.7}
+$$
+
+Its $v_s$ diagonal is bounded below by $-C\delta b[v_s]$. By (10.5), its limiting error divided by $s^2$ is at worst $-C'\delta$ with $C'$ independent of small fixed $\delta$.
+
+Expand the entire potential in (8.2), keeping the remainder on $u_s$. Its base $V_1$ term vanishes, its leading cross term is
+$-2\chi\beta_s\operatorname{Re}(\overline{c_s}\int V_1pv_s)$, and its base $V_2,V_{\rm t}$ integrals are $|c_s|^2C_2$ and $|c_s|^2T$. The diagonal $V_1$ term is $O(s b[v_s])=O(s^3)$ by Theorem 4.1. The $V_2,V_{\rm t}$ cross terms are $O(s^2\sqrt{b[v_s]})=O(s^3)$ by (4.5), and their diagonals are $O(s^2b[v_s])=O(s^4)$. The residual costs $O(s^{5/2})\|u_s\|_2^2=o(s^2)$. Keep the original threshold term exactly. Using $h[u_s]=h[v_s]$ yields the limiting lower estimate
+
+$$
+\begin{aligned}
+\widehat q_{s,\delta}[u_s]\ge{}&h[v_s]
+ -2\beta_s\operatorname{Re}(\overline{c_s}\ell(v_s))
+ +|c_s|^2\beta_s^2K_{\rm base}\\
+ &-\chi\lambda s^2|c_s|^2T-a\lambda s^2\|u_s\|_2^2
+ -C'\delta s^2+o_\delta(s^2).
+\end{aligned}
+\tag{10.8}
+$$
+
+Here the $-C'\delta$ assertion is interpreted in liminf, as supplied by (10.5); an arbitrarily small additional error can be absorbed in $o_\delta(s^2)$. Apply (5.6) to the whole complex $v_s$. Divide (10.8) and (10.4) by $s^2$, use $c_s\to1$, $\|u_s\|_2\to1$ and $\beta_s/s=\nu$, to obtain
+
+$$
+\liminf_{s\to0}E_s\ge C_{\rm resp}-C'\delta.
+\tag{10.9}
+$$
+
+Take $s\to0$ first at each fixed $\delta$, then $\delta\downarrow0$. This proves (10.2). Global unit norm was an explicit hypothesis at the start; it was never inferred from the native weak-profile disk, local convergence or a successful trial. $\square$
+

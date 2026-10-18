@@ -1,0 +1,22 @@
+**Theorem 188.2 (Sharp triangle and the insufficient weakened test).**
+The allowance $1/2$ is attained by a unit triangle, and the test
+$m_{\rm rel}\ge d-\Delta$ alone can hold when the Boolean row
+fails.
+
+**Proof.** For
+$E(v)=-v_1-v_2-v_3+v_1v_2+v_1v_3+v_2v_3$, its Boolean values
+at cardinalities $0,1,2,3$ are $0,-1,-1,0$, so $m_B=-1$.
+Writing $s=x_1+x_2+x_3$, the relaxed value is at least
+$-s+\max(0,2s-3)\ge-3/2$, with equality at all $x_i=1/2$.
+A two-versus-one coloring has one monochromatic unit edge, so
+$\Delta=1/2=m_B-m_{\rm rel}$. In particular the unconditioned
+compensation test is not exact on this triangle. Conditioning one
+vertex makes each remaining graph bipartite, as used in Section 184.
+
+For the same unit triangle with $K=0,c=0$, instead
+$m_B=m_{\rm rel}=0$ and $\Delta=1/2$. At demand $d=1/4$,
+the weakened test $m_{\rm rel}\ge d-\Delta$ holds, but the actual
+Boolean row fails. These are exact algebraic boundaries of a row
+test, not original $N/O$ counterexamples or universal certificates.
+$\square$
+

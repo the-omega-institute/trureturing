@@ -1,0 +1,11 @@
+**命题 4.2（精确分量公式）。** 在命题 4.1 中，令 $u(M)$ 为没有删边的 bracelets 数。删除 $M$ 后，每个受影响 bracelet 分解为路径；令 $\beta_M$ 把每个 $U$ 端点送到它所在剩余路径的另一端点，$\alpha(v)=vc$。则
+
+$$
+\#\operatorname{components}(F_M)
+=u(M)+\frac12\#\operatorname{cycles}(\alpha\circ\beta_M).
+$$
+
+因此在本卷范围 Hamilton 条件恰为 $u(M)=0$ 且 $\alpha\circ\beta_M$ 恰有两个置换轨道。
+
+证明：$M$ 是匹配，故删除它不产生孤立顶点，受影响部分的每条路径有两个不同端点；$\alpha,\beta_M$ 均为 $U$ 上无固定点对合。收缩各剩余路径，所得接线图是这两个匹配的并，保留平行边；一个交替分量恰在两步置换 $\alpha\circ\beta_M$ 下分成两个轨道。未动 bracelets 独立贡献 $u(M)$。因 $B\ge12$，一个覆盖所有顶点的圈不能保留某个独立未动 bracelet；若 $u(M)=0$，公式给出所述充要条件。
+

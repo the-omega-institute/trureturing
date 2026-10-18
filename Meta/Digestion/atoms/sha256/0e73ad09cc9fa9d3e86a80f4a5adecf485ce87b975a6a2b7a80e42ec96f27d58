@@ -1,0 +1,79 @@
+**Lemma 5.1.** With $c=15493/50625$,
+
+$$
+\widetilde a\le\mathbb E_\pi\varphi_p(u)-c\mathcal E_C,
+\qquad
+\widetilde b\ge\mathbb E_\pi\varphi_\beta(u)+\mathcal E_C/5.
+\tag{5.5}
+$$
+
+Proof. Here $U\in[3/5,2/3]$ and $0<a=U-U^2\le a_*=6/25$. The first term in (5.4) is $\langle U,U\rangle-\mathcal E_C$.
+
+For its second term, the weighted square inequality gives
+
+$$
+\langle C^*U,\operatorname{diag}(a)CU\rangle
+\le\tfrac12\sum_{P\in\{C,C^*\}}
+\langle PU,\operatorname{diag}(a)PU\rangle.
+$$
+
+Each summand equals
+
+$$
+\langle U,\operatorname{diag}(a)U\rangle
+-2\langle aU,(I-P)U\rangle
++\langle(I-P)U,\operatorname{diag}(a)(I-P)U\rangle.
+$$
+
+The function $aU=U^2-U^3$ has derivative $U(2-3U)\ge0$. Equations (5.2)–(5.3) therefore bound the second term in (5.4) by its diagonal value plus $2a_*\mathcal E_C$.
+
+For the third term, let $t_-=\operatorname{diag}(a)C^*U$ and $t_+=\operatorname{diag}(a)CU$. Norm contraction and Cauchy give $\langle t_-,Ct_+\rangle\le(\|t_-\|^2+\|t_+\|^2)/2$. Each norm square expands as
+
+$$
+\|aU\|^2-2\langle a^2U,(I-P)U\rangle
++\|\operatorname{diag}(a)(I-P)U\|^2.
+$$
+
+For $f(U)=a^2U=U^3(1-U)^2$,
+
+$$
+f'(U)=U^2(1-U)(3-5U)\ge-4/81.
+$$
+
+Indeed $U^2(1-U)\le4/27$ and $0\le5U-3\le1/3$ on this interval. Thus $f(U)+(4/81)U$ is nondecreasing. Equations (5.2)–(5.3) bound each square by $\|aU\|^2+(8/81+2a_*^2)\mathcal E_C$. Combining the three terms gives the first inequality in (5.5), since
+
+$$
+1-2a_*-8/81-2a_*^2=15493/50625>0.
+$$
+
+Finally $\widetilde b=\mathbb E U+\langle a,CU\rangle$. The function $a(U)+U/5$ is nonincreasing, because its derivative $6/5-2U\le0$. Apply (5.3) to its negative. It gives $\langle a,(I-C)U\rangle\le-\mathcal E_C/5$, proving the second inequality. ∎
+
+The supplied stopped-source polynomial sign [MIXSEP, §3] is, for $z=15u-5\in[0,1]$,
+
+$$
+\frac{412/729-\varphi_p(u)}{d_p}
+-\frac{22/27-\varphi_\beta(u)}{d_\beta}
+\ge z(1-z)/16.
+\tag{5.6}
+$$
+
+It is the pointwise part of its Lemma 3.1. To verify the needed sign directly, the left side of (5.6) factors as
+
+$$
+\frac{z(1-z)(17655975+459915z-6931z^2-6931z^3+239z^4)}{239\cdot1116529}.
+$$
+
+The parenthesis is at least $17642113$ on $[0,1]$, and $16\cdot17642113=282273808>266850431=239\cdot1116529$. This exact source-specific sign is reused, not claimed as new.
+
+Apply (5.5)–(5.6) to the normalized comparison score
+
+$$
+\widetilde D=
+\frac{412/729-\widetilde a}{d_p}
+-\frac{22/27-\widetilde b}{d_\beta}.
+$$
+
+It is at least $\mathbb E[Z(1-Z)]/16+h\mathcal E_C$, with $h=c/d_p+1/(5d_\beta)$. At the two event midpoints the score is zero. Equations (3.3) and (4.2) give its upper bound $G$ in (1.5), with $K=10/(11d_p)+15/(11d_\beta)$. The fractions in (1.6) follow by rational arithmetic. This proves the new joint calibration relation (1.4).
+
+If $J=\varepsilon_p=\varepsilon_\beta=0$, then $u$ is supported on the two endpoints and $C$ preserves $u$ on every positive edge. Equation (4.1) makes the original p laws equal the paired ones. Their return dynamics then retain their endpoint parameter, so each is a pure endpoint source law. Moreover $J=0$ gives $v_y=u_x$ on each positive alpha edge. Since $BA$ preserves $u$, every positive beta edge also preserves that endpoint value. Thus the suspended laws are pure matching endpoint laws. Event calibration forces fair endpoint weights. This is a dynamic rigidity conclusion, without a native-mixture premise.
+

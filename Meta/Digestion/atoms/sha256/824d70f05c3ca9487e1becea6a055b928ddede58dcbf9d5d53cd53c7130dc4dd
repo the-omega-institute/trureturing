@@ -1,0 +1,46 @@
+**Lemma 8.1 (Half-likelihood supermartingales).** The same actual table satisfies $\mathsf P_0(D=1)\le\alpha$ and $\mathsf P_1(D=0)\le\alpha$.
+
+Proof. For $|x|\le1/2$, Taylor's integral remainder bounds $e^x-1-x$ by $e^{1/2}x^2/2\le x^2$. The inequality $e^{1/2}<2$ follows by comparing its power series to $\sum_{n\ge0}(1/2)^n$, strictly from $n=2$ onward. Thus $e^x\le1+x+x^2$ on that interval. Conditional on each actual category $z$, (6.2)–(6.4) and $\delta<1$ imply for either sign
+
+$$
+\mathbb E_i[e^{\pm\varepsilon_n/2}\mid Y_n=z]
+\le1+\frac14\mathbb E_i[\varepsilon_n^2\mid Y_n=z]
+\le1+\frac{\delta^2}{4}=1+\frac u4.
+\tag{8.1}
+$$
+
+The coarser variance bound $\delta^2$ suffices. The exact unrounded identities are
+
+$$
+\mathbb E_0e^{\ell_{Y_n}/2}=\sum_z a_0(z)\sqrt{a_1(z)/a_0(z)}=A,\qquad
+\mathbb E_1e^{-\ell_{Y_n}/2}=A.
+\tag{8.2}
+$$
+
+Multiply the conditional bound by the category factor and then average, without assuming independence between category and rounding error. Since $V_n=\ell_{Y_n}+\varepsilon_n$,
+
+$$
+\mathbb E_0e^{V_n/2}\le A(1+u/4)=(1-u)(1+u/4)<1,\qquad
+\mathbb E_1e^{-V_n/2}\le(1-u)(1+u/4)<1.
+\tag{8.3}
+$$
+
+Independence of the next increment from $\mathcal F_n$ makes $e^{S_{n\wedge N}/2}$ a nonnegative supermartingale under source zero and $e^{-S_{n\wedge N}/2}$ one under source one. At a live step use (8.3); after exit the multiplier is one. Finite conditional iteration gives expectation at most one at every deterministic horizon $m$.
+
+Lemmas 7.1–7.2 already prove finite gap stopping and actual finite paid means. By (7.3) the stopped exponentials are uniformly bounded by $e^{B/2}$. Bounded convergence as $m\to\infty$ gives
+
+$$
+\mathbb E_0e^{S_N/2}\le1,\qquad \mathbb E_1e^{-S_N/2}\le1.
+\tag{8.4}
+$$
+
+A wrong label under source zero requires $S_N\ge H\delta$; under source one it requires $S_N\le-H\delta$. Restricting the nonnegative expectations to these events yields
+
+$$
+\mathsf P_0(D=1)\le e^{-H\delta/2},\qquad
+\mathsf P_1(D=0)\le e^{-H\delta/2}\le e^{-R/2}=\alpha.
+\tag{8.5}
+$$
+
+The argument uses finite-horizon conditional expectations and bounded convergence after finite stopping. It introduces no unproved auxiliary stop, infinite stopped-likelihood identity, external decision decoder or runtime exponential calculation. $\square$
+

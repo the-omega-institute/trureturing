@@ -1,0 +1,89 @@
+## 10. An infinite full-survivor-span family with positive-gain collisions
+
+**Theorem 10.1.** For every integer $w\ge3$, the legal five-read history
+
+$$
+A_0=I,\qquad A_1=L,\qquad
+A_2=Q_w=\begin{pmatrix}w&1\\w-1&1\end{pmatrix},
+$$
+
+$$
+A_3=T_{3,w}=\begin{pmatrix}3w-1&3\\w&1\end{pmatrix},\qquad
+A_4=T_{4,w}=\begin{pmatrix}4w-1&4\\w&1\end{pmatrix}
+\tag{10.1}
+$$
+
+has distinct endpoints and four independent survivors after every noninitial deletion, yet has different-slope actual constant-drift collisions with both slopes arbitrarily close to zero and all sampled gains positive.
+
+**Proof.** The successive left multipliers are
+
+$$
+L,\qquad UL^{w-2}=JML^{w-2},\qquad U^2J,\qquad U.
+$$
+
+Indeed $UL^{w-1}=Q_w$, $JQ_w=(\begin{smallmatrix}w-1&1\\w&1\end{smallmatrix})$, $U^2JQ_w=T_{3,w}$, and $UT_{3,w}=T_{4,w}$. The chronological blocks are $(J,M)$; then $w-2$ repetitions of $(J,M)$ followed by $(M,J)$; then $(J,M,J,M,J)$; then $(M,J)$. Their lengths are $2,2w-2,5,2$, totaling $2w+7$, with no interior reads. They occur at precisely the consecutive indices $0,\ldots,4$. Section 1 realizes all unread states positively with one fixed row.
+
+The matrices $I,L,Q_w,T_{3,w}$ are independent. After subtracting $I$, their three nonconstant trace coefficient vectors on $(p,q,r)$ are
+
+$$
+(0,1,0),\qquad(w-1,w-1,1),\qquad(3w-2,w,3).
+$$
+
+Their determinant is nonzero, since its reduced two-by-two determinant is $3(w-1)-(3w-2)=-1$. The five matrices have the unique dependence up to scalar
+
+$$
+(w-3)I+(2-w)L+2Q_w-2T_{3,w}+T_{4,w}=0.
+\tag{10.2}
+$$
+
+For the upper-right, lower-left, lower-right, and upper-left entries the corresponding sums are, respectively,
+
+$$
+2-6+4=0,\quad (2-w)+2(w-1)-2w+w=0,
+$$
+
+$$
+(w-3)+(2-w)+2-2+1=0,
+$$
+
+$$
+(w-3)+(2-w)+2w-2(3w-1)+(4w-1)=0.
+$$
+
+Every noninitial coefficient $2-w,2,-2,1$ is nonzero for $w\ge3$. A dependence on any four noninitial-deletion survivors would extend to a five-matrix dependence with that missing coefficient zero, contradicting uniqueness. At $w=3$ only the initial coefficient vanishes, which does not affect the claim. The upper-right entries are $0,0,1,3,4$ and $I\ne L$, so all endpoints are distinct.
+
+Their off-diagonal vectors are
+
+$$
+\mathbf x=(0,1,w-1,w,w)^{\mathsf T},\qquad
+\mathbf y=(0,0,1,3,4)^{\mathsf T}.
+$$
+
+The four vectors $\mathbf1,\mathbf t,\mathbf y,\mathbf t\mathbf y$ are independent. A zero combination with coefficients $\alpha,\beta,\gamma,\eta$ first gives $\alpha=\beta=0$ from indices zero and one. Indices two and three then give $\gamma+2\eta=0$ and $3\gamma+9\eta=0$, forcing both remaining coefficients zero. Their one-dimensional left nullspace contains
+
+$$
+\nu=(5,-12,12,-8,3)^{\mathsf T}.
+$$
+
+Explicitly its pairings with $\mathbf1,\mathbf t,\mathbf y,\mathbf t\mathbf y$ are
+
+$$
+5-12+12-8+3=0,\qquad -12+24-24+12=0,
+$$
+
+$$
+12-24+12=0,\qquad24-72+48=0.
+$$
+
+In contrast,
+
+$$
+\nu\cdot\mathbf x=-12+12(w-1)-8w+3w=7w-24\ne0
+$$
+
+for integer $w$. Therefore $\mathbf1,\mathbf t,\mathbf x,\mathbf y,\mathbf t\mathbf y$ are independent and the second determinant in (9.1) is nonzero. Theorem 9.1 and Lemma 8.1 now supply a finite actual collision, not just a critical point.
+
+In that construction the sources obey $S_0=S_1+\epsilon\mathsf T_a^{-1}\mathsf C S_1$, the slopes are $a,a+\epsilon$, and the whole drifts are $0,\operatorname{tr}(S_0-S_1)$. Equation (8.4) makes the difference of their undrifted signals exactly this same constant at all five original readings; (8.5) makes the observations identical. Choose $|a|<1/16$ and $0<\epsilon<1/16$ for strictly positive sampled gains. Both sources have (1.2)'s strictly positive factors, fixed in their respective runs, and (1.4) proves positivity throughout these precise words. Their slopes differ, beyond the representation fibre. ∎
+
+At $w=4$ the endpoints are the credited six-read affine-drift construction with its repeated $Q$ read removed. The later indices become $3,4$, so its gain and drift equations must be evaluated at these indices. The constant-drift proof above checks this new recorded clock directly; deleting a read from an affine-drift inverse is not used as a recovery argument.
+

@@ -1,0 +1,61 @@
+**命题 C-107.4（四模式菜单遗漏中模式的八个实方向）。** 令
+$\mathcal E_4=\operatorname{span}\{e_0,e_1,e_3,e_{13}\}$、$P_4$ 为其正交投影。
+即使给定全部满足 $A=P_4AP_4$ 的 Hermitian 观测，其在 $V$ 上的共同不可见方向仍恰为
+
+$$
+\mathcal N_2=\left\{
+\sum_{a\in\{0,1,3,13\}}
+\bigl(z_a|e_2\rangle\langle e_a|+
+\overline{z_a}|e_a\rangle\langle e_2|\bigr):z_a\in\mathbb C
+\right\},\qquad \dim_{\mathbb R}\mathcal N_2=8.
+\tag{C107.8}
+$$
+
+式中把方向经 $J$ 嵌回原空间。$\mathcal N_2\subset V_Q$，故加上原 $Q$ 仍不能消掉这八维。
+全体四模式观测在 $V$ 上秩为十二，在 $V_Q$ 上秩为十一。
+
+证明。与所有四模式 Hermitian 算子的迹配对为零，等价于
+$P_4XP_4=0$。零对角条件留下的仅是四条连接 $e_2$ 的复相干，给 (C107.8)；
+反向每一这样的方向显然不可见。$\Omega\in\mathcal E_4$ 给 $\ell_Q=0$。
+四模式内部六个复相干给十二实维，(C107.5) 是它们中一个非零约束；
+所以在 $V_Q$ 上只剩十一维可见，八维不可见。证毕。
+
+更具体地，任取 $z=(z_a)_{a\in\{0,1,3,13\}}\in\mathbb C^4$，令
+$Z_z$ 为 (C107.8) 中的矩阵，定义
+
+$$
+\Gamma_z=S+Z_z,\qquad
+\|z\|_2\le1/5.
+\tag{C107.9}
+$$
+
+$Z_z$ 在 $\mathcal E$ 上的特征值为 $+\|z\|_2,-\|z\|_2,0,0,0$：
+当 $z\ne0$ 时只须在 $e_2$ 与 $\sum_a\overline{z_a}e_a/\|z\|_2$ 张成的二维空间上取谱。
+因而 $\Gamma_z$ 在该支撑上谱为
+$1/5\pm\|z\|_2,1/5,1/5,1/5$，在其余二十维为零。
+它保持原全部二十五个人口、$q=1/5$ 和所有四模式期望；
+只要 $z\ne0$，C-106.2 就给纠缠。这是实在的合法反例族，包含边界 $\|z\|_2=1/5$；
+不只是忽略正性的线性核计数。其纯度为 $1/5+2\|z\|_2^2$。
+
+(C107.6) 的五模式达到性包含这四条连接，不能只检查原四角相位。
+如另外实际允许对每一对 $s<a$ 使用局部算子
+$D=|s\rangle\langle a|$、$F=|f(s)\rangle\langle f(a)|$，
+设 $X_D=D+D^\dagger$、$Y_D=-i(D-D^\dagger)$，$X_F,Y_F$ 同理，则
+
+$$
+\begin{aligned}
+\langle X_D\otimes X_F-Y_D\otimes Y_F\rangle_\Gamma
+ &=4\operatorname{Re}c_{sa},\\
+\langle X_D\otimes Y_F+Y_D\otimes X_F\rangle_\Gamma
+ &=-4\operatorname{Im}c_{sa}.
+\end{aligned}
+\tag{C107.10}
+$$
+
+这是 C-106.6 的同一个局部乘积展开，第二式的负号来自
+$\operatorname{tr}((D\otimes F)\Gamma)=\overline{c_{sa}}$。
+将这些期望解释为实验读数，须实际拥有各局部算子全部 $-1,0,+1$ 谱效果、
+按上述有序模式对齐的复相位参照，并使不同设置采样同一稳定来源 $\Gamma$。
+这些乘积观测不要求原 $H^{(1)}$ 与 $H^{(2)}$ 独立；目标正是它们可能纠缠的联合态。
+期望重建不等于投影仪器及其选择后状态等价，也不提供任何原生 FIB 控制。
+

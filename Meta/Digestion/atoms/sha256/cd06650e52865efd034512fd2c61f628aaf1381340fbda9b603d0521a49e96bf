@@ -1,0 +1,69 @@
+**Theorem 109.1.** If either correct-output Gram is invariant under all eight left translations, then
+
+$$
+\delta\geq\sqrt2-1>\frac14. \tag{109.1}
+$$
+
+The other channel may be nonsymmetric, and either channel may leak. The conclusion also holds after an original fibre-preserving coordinate relabeling and reciprocal diagonal unitary phases. No rank or real-phase hypothesis is imposed. Sharpness for this particular action is not asserted.
+
+First suppose both Grams are calibrated and invariant. Use the real representation and sign characters
+
+$$
+U(r)=\begin{pmatrix}0&-1\\1&0\end{pmatrix},\qquad
+U(s)=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\qquad
+\chi_{\epsilon,\eta}(r^as^b)=\epsilon^a\eta^b.
+\tag{109.2}
+$$
+
+The orthogonality calculation in §108 gives the unique expansions
+
+$$
+\begin{aligned}
+g(x)&=\sum_\chi a_\chi\chi(x)+\operatorname{Tr}(MU(x)),
+& M&=\begin{pmatrix}p/2&z\\\overline z&q/2\end{pmatrix},\\
+b(x)&=\sum_\chi b_\chi\chi(x)+\operatorname{Tr}(NU(x)),
+& N&=\begin{pmatrix}p'/2&w\\\overline w&q'/2\end{pmatrix}.
+\end{aligned}\tag{109.3}
+$$
+
+Here $G_{xy}=g(x^{-1}y)$ and $H_{xy}=b(x^{-1}y)$. Their regular blocks are $8a_\chi,4M^{\mathsf T},4M^{\mathsf T}$ and their second-party counterparts. Thus the scalar coefficients are nonnegative and $M,N\succeq0$. Calibration at $e,s$ gives
+
+$$
+\begin{aligned}
+\sum_\epsilon a_{\epsilon,+}&=\frac{1-p}{2},&
+\sum_\epsilon a_{\epsilon,-}&=\frac{1-q}{2},&
+|z|^2&\leq\frac{pq}{4},\\
+\sum_\epsilon b_{\epsilon,+}&=\frac{1-p'}{2},&
+\sum_\epsilon b_{\epsilon,-}&=\frac{1-q'}{2},&
+|w|^2&\leq\frac{p'q'}{4}.
+\end{aligned}\tag{109.4}
+$$
+
+In particular $p,q,p',q'\in[0,1]$; the complex phases of $z,w$ remain arbitrary.
+
+Write the product coefficient $k(x)=g(x)b(x)$ as $\sum_\chi c_\chi\chi(x)+\operatorname{Tr}(SU(x))$, where $c_\chi\geq0$ and $S\succeq0$. Put $c_0=c_{+,+}$ and $c_-=c_{+,-}+c_{-,-}$. The invariant vector of $U\otimes U$ is $(|00\rangle+|11\rangle)/\sqrt2$, so
+
+$$
+c_0=\sum_\chi a_\chi b_\chi+\frac{pp'+qq'}8+\operatorname{Re}(zw).
+\tag{109.5}
+$$
+
+The tensor contribution is $\tfrac12\operatorname{Tr}(MN^{\mathsf T})$, so no conjugate is inserted into $zw$. Matching nonnegative products within each $\eta$ sector are bounded by the product of the sector masses. Moreover,
+
+$$
+\operatorname{Re}(zw)\leq|zw|\leq\frac{\sqrt{pq p'q'}}4
+\leq\frac{pp'+qq'}8.
+\tag{109.6}
+$$
+
+For $c_-$ the scalar characters contribute opposite-$\eta$ products. The sum of the two $\eta=-1$ projectors in $U\otimes U$ is the projector onto $\operatorname{span}\{|01\rangle,|10\rangle\}$, contributing $(pq'+qp')/4$. Consequently, with $P=1-2p$, $Q=1-2q$, $P'=1-2p'$ and $Q'=1-2q'$, all in $[-1,1]$,
+
+$$
+\begin{aligned}
+c_0&\leq\frac{(1-p)(1-p')+(1-q)(1-q')+pp'+qq'}4
+      =\frac14+\frac{PP'+QQ'}8,\\
+c_-&=\frac{(1-p)(1-q')+(1-q)(1-p')+pq'+qp'}4
+      =\frac14+\frac{PQ'+QP'}8.
+\end{aligned}\tag{109.7}
+$$
+

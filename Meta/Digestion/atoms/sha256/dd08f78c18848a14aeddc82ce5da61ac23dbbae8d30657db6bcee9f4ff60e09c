@@ -1,0 +1,71 @@
+**Definition 140.2 (Complete finite classes).** For each integer $L\ge1$,
+write $B_L=\{0,1\}^L$, $J_L=\{0,\ldots,L\}$ and
+
+$$
+D_L=\{(a_1,\ldots,a_L,e):1\ge a_1\ge\cdots\ge a_L\ge e\ge0\}.
+\tag{140.4}
+$$
+
+For a word $b$ with a zero put $n_L(b)=\min\{i:b_i=0\}$ and
+$\eta_b=(1-a_{n_L(b)})e_0+a_{n_L(b)}e_{n_L(b)}$; put $\eta_{1^L}=e_0$.
+These finite targets are algebraically defined on all of $D_L$, including
+auxiliary $e=0$, $a_L=e$, zero amplitudes and ties. Original active
+profiles instead have $0<e<a_L$ and retain a full tail with $a_{L+1}\le e$.
+The finite word $1^L$ never denotes an infinite all-positive actual source.
+
+Order the schedules as
+$\mathcal S_L=(\varnothing,(1),\ldots,(L),(1,2),(1,3),\ldots,(L-1,L))$,
+with pairs in lexicographic order. Empty and singleton cells are respectively
+$\varnothing$ and $(0,1)$. For $N$ an increasing pair has cells
+$(00,01,10,11)$; for $O$ it has $(0,10,11)$, and stopped cell $0$
+is shared by acquired patterns $00,01$. Denote the selected cell by
+$c_C(b,S)$ for $C=N,O$.
+All labels in $J_L$ are allowed in every cell, including unqueried labels.
+
+A complete allocation consists of nonnegative $w_S,T_{S,c,r}$ satisfying
+
+$$
+\sum_{r=0}^L T_{S,c,r}=w_S\quad\text{for every cell }c\text{ of }S,
+\qquad \sum_{S\in\mathcal S_L}w_S=1.
+\tag{140.5}
+$$
+
+Its probability-vector kernel is
+$p_b(r)=\sum_S T_{S,c_C(b,S),r}$.
+Let $K_{C,L}$ be all these allocations without cap constraints; their
+kernel classes are $\mathscr N_L$ and $\mathscr O_L$, respectively.
+There is one schedule mass shared by all counterfactual cells of that
+schedule and one global schedule budget. No label, word or cell has an
+independent probability normalization.
+Writing each terminal cell as a vector, the two full pair contributions are
+
+$$
+\begin{aligned}
+p^N_b&=T_{\varnothing}+\sum_i\bigl((1-b_i)T_i^0+b_iT_i^1\bigr)\\
+ &\quad+\sum_{i<j}\bigl((1-b_i)(1-b_j)T_{ij}^{00}
+ +(1-b_i)b_jT_{ij}^{01}+b_i(1-b_j)T_{ij}^{10}+b_ib_jT_{ij}^{11}\bigr),\\
+p^O_b&=T_{\varnothing}+\sum_i\bigl((1-b_i)T_i^0+b_iT_i^1\bigr)\\
+ &\quad+\sum_{i<j}\bigl((1-b_i)T_{ij}^{0}
+                 +b_i(1-b_j)T_{ij}^{10}+b_ib_jT_{ij}^{11}\bigr).
+\end{aligned}
+\tag{140.8}
+$$
+
+In particular every additional zero in a low word is part of its actual
+cell selection; it is not discarded in favor of a single-zero surrogate.
+The terminal-coordinate counts, excluding explicit $w$ variables, are
+
+$$
+\begin{aligned}
+d_N(L)&=(L+1)\left(1+2L+4\binom L2\right),\\
+d_O(L)&=(L+1)\left(1+2L+3\binom L2\right).
+\end{aligned}
+\tag{140.6}
+$$
+
+At $L=5$ there are 16 schedules, 51 $N$ cells and 41 $O$ cells,
+with 306 and 246 terminal coordinates respectively.
+Eliminating $w$ gives 36 independent $N$ equalities and 26 independent
+$O$ equalities: compare every other cell mass to a chosen first cell in
+its schedule, then normalize the sum of those first-cell masses.
+

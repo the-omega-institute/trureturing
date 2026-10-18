@@ -1,0 +1,75 @@
+**Theorem 4.3 (terminating native existential decision and witnesses).**
+There is a terminating YES/NO algorithm for every (NSF.2).
+A YES answer produces concrete finite native values for all its free
+variables. More explicitly, one can compute a finite list of finite
+code templates, with only scalar natural ranks left unspecified, and
+a finite arithmetic condition for each, such that a native solution
+exists exactly when at least one arithmetic condition is satisfiable.
+These templates are witness templates, not a representation of every
+source in the solution fiber.
+
+Proof. Perform §§2–3, rejecting failed shape unifications. For each
+remaining negative branch choose the markers of Lemma 4.1 for all
+shape terms of its code names. Replace every block occurrence of sort
+$w_j$ by $G_j$ with a single scalar $b_U$ assigned to all its leaves.
+The same block name uses the same scalar everywhere.
+
+Keep all scalar constraints from §§2–3. Translate $U=V+d$ and
+$U\ne V+d$ into $b_U=b_V+d$ and $b_U\ne b_V+d$. Require every scalar
+rank nonnegative and impose normality at each explicit template
+cherry. The result is a finite conjunction of integer offset equalities,
+disequalities and lower bounds, hence an effectively decidable
+Presburger formula. Offset equations can alternatively be eliminated
+by the finite potential calculation in Lemma 4.2; no tree oracle is
+required by this arithmetic step. A satisfying arithmetic assignment
+is effectively obtainable.
+
+For an explicit arithmetic stopping procedure, add one distinguished
+scalar of value zero and express each fixed-rank equation by an edge
+to it. Compute integer potentials in every equation component.
+Reject an inconsistent cycle, a negative forced rank in the anchored
+component, or a disequation whose two sides are forced equal in one
+component. Every unanchored component has only a lower bound on its
+base. Assign its base above that bound and outside the finitely many
+values forbidden by disequations with already assigned components.
+Treat the anchored component first. This finite procedure either
+rejects for one of the stated necessary reasons or constructs all
+ranks; remaining cross-component disequations are met when their
+later component is assigned.
+
+For soundness, every inserted marker has constant rank at all leaves.
+Its cherries therefore have equal ranks and are normal. Its root is a
+constructor, so insertion creates no primitive cherry across the
+template/marker boundary. Every other possible primitive cherry is an
+explicit one, whose inequality was imposed. All resulting code names
+are thus normal. Lemma 3.2 reassembles every positive definition.
+A shape-separated disequality follows from Lemma 4.1. Each remaining
+disequality has its selected scalar or block mismatch. Lemma 2.3 now
+expands these normal codes to an actual native solution.
+
+For completeness, start with any native solution, with no size promise.
+Its evaluation chooses a flattened branch and its finite code shapes
+factor through the unifier in Definition 3.1. Read the actual scalar
+ranks at the explicit leaves. They satisfy every explicit normality
+constraint, since the actual codes are normal. For an identical-shape
+disequality, at least one of its finitely many compared scalar leaves
+or block occurrences differs; choose such a disjunct. The actual
+decorations of each residual shape give a functional solution of all
+its whole-block offset constraints, even if that residual shape happens
+to be a single leaf. Lemma 4.2 replaces those functions by constants on
+the chosen nonleaf marker. Scalar ranks at explicit leaves can be
+retained. No scalar/block constraints were lost, by Lemma 3.2.
+Replacing an originally primitive residual shape by a nonleaf can
+remove a boundary cherry but cannot create one. The explicit normality
+conditions still hold. Syntactically different shape terms are now
+separated by Lemma 4.1. Hence this branch's arithmetic problem has a
+solution.
+
+There are finitely many propositional branches, finitely many collapse
+choices, finite unification problems and finitely many negative
+disjunct choices. Each arithmetic decision terminates, including its
+NO case. Rejecting all branches therefore terminates and is correct
+by completeness; it is not failed source enumeration. In a YES case
+expand one returned normal assignment by $E$. This terminates and
+provides the finite native witness. $\square$
+

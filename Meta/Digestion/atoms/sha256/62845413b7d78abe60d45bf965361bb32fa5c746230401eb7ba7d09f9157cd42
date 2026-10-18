@@ -1,0 +1,31 @@
+**Definition 1.2 (future laws at the recording boundary).** Let $\mathcal A=\{0,1,3,B\}$, and let $\mathcal H_n$ be the visible words of length $n$ having strictly positive probability under Assumption 1.1. Set
+
+$$
+\mathcal H=\{\varnothing\}\cup\bigcup_{n\ge1}\mathcal H_n.
+$$
+
+The empty word is a queryable initialized boundary. For $h\in\mathcal H_n$, $n\ge1$, let $F_h^H$ be the joint conditional law of $(Y_n,\ldots,Y_{n+H-1})$ given $h$, for every integer $H\ge1$. At $\varnothing$ the predicted word begins with $Y_0$. A law profile is a family of normalized finite-word laws consistent under deletion of final symbols. On profiles define
+
+$$
+d(F,G)=\sup_{H\ge1}\operatorname{TV}(F^H,G^H),\qquad
+\operatorname{TV}(\nu,\nu')=\frac12\sum_{w\in\mathcal A^H}|\nu(w)-\nu'(w)|.
+$$
+
+For a current hidden distribution $\mu$, write $D_y=\operatorname{diag}(\mathbf1_{\chi(i)=y})$ and
+
+$$
+F_\mu^H(y_1\cdots y_H)
+=\mu P D_{y_1}P D_{y_2}\cdots P D_{y_H}\mathbf1.
+$$
+
+Write $F_i=F_{e_i}$ and $M_x=xF_2+(1-x)F_4$, $0\le x\le1$. At initialization use
+
+$$
+F_*^H(y_1\cdots y_H)
+=\pi D_{y_1}P D_{y_2}\cdots P D_{y_H}\mathbf1.
+$$
+
+The already established double stochasticity in Auric Theorem 122.3 gives $\pi P=\pi$, so $F_*=F_\pi$. This identity changes no acquisition convention: its first requested read is still $Y_0$.
+
+These finite products use the standard HMM path-summation and posterior-mixture construction. The normalization operation is also represented by Mathlib's `PMF.bind` and `bind_apply`, in `Probability.ProbabilityMassFunction.Monad` at revision db584cd6d46c92f209a44c0f1c829460d327499d. For the changing hidden state here, Bayes conditioning uses the joint weight $(\mu P)_j\mathbf1_{\chi(j)=y}$; a likelihood update on $\mu$ without the transition would describe a different source.
+

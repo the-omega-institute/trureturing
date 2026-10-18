@@ -1,0 +1,123 @@
+**Theorem 5.2 (paid full-family construction from the fractional seed).**
+Define positive rational numbers by
+
+$$
+x_2=25/17,\qquad x_{D+1}=x_D^2+1\quad(D\ge2).
+\tag{FMR.26}
+$$
+
+For every $D\ge2$ there is an effective whole-family preparation
+and common reader satisfying the original contract, with
+
+$$
+m_D\le H_{N_D}x_D.
+\tag{FMR.27}
+$$
+
+These codes obey (FMR.11), and their late submitted word has length
+at most $D$. Consequently
+
+$$
+\frac{\log_2(7/5)}4\le\lambda
+\le L_{\mathrm{seed}}
+:=\lim_{D\to\infty}2^{-D}\log_2x_D
+<0.216605159<\frac14.
+\tag{FMR.28}
+$$
+
+The left inequality and the former upper $1/4$ are reused from LTR;
+the strict smaller upper comes from the present construction.
+
+Proof. Start with the eleven rationally weighted native sets of
+Theorem 5.1. Iteratively use Lemma 4.3, keeping their explicit
+product sets, the two-leaf set and their rational weights. This
+gives a finite admissible fractional cover of weight $x_D$ at every
+depth. Lemma 4.4 rounds it deterministically and Theorem 2.5 acquires
+the resulting complete code on every actual source. Boundary probes
+have original-root length at most $D$ and need at most one Read.
+Neither the fractional weights nor codebook installation provide
+source dependence for free.
+
+For the scalar recurrence,
+
+$$
+2^{-D-1}\log_2x_{D+1}-2^{-D}\log_2x_D
+=2^{-D-1}\log_2(1+x_D^{-2}).
+\tag{FMR.29}
+$$
+
+The increments are nonnegative and have a convergent geometric
+majorant, so $L_{\mathrm{seed}}$ exists. Alternatively the shifted
+sequence $2^{-D}\log_2(x_D+1)$ decreases to that same limit.
+The harmonic term in (FMR.27) has vanishing normalized logarithm
+by (FMR.22), giving $\lambda\le L_{\mathrm{seed}}$.
+LTR Theorem 4.4 gives, on one simultaneously realized actual family
+and against every complete code and arbitrary one-Read reader,
+
+$$
+m_D\ge\left\lceil(7/5)^{2^{D-2}}\right\rceil\quad(D\ge2).
+\tag{FMR.30}
+$$
+
+Taking the limit supplies the lower bound in (FMR.28); no weaker
+gadget bound is substituted.
+
+For an explicit strict upper certificate, the rational recurrence gives
+
+$$
+x_7=\frac{525485427082016387838879317076050951153210066522}
+{2367911594760467245844106297320951247361},
+\qquad
+L_{\mathrm{seed}}\le\frac{\log_2(x_7+1)}{128}.
+\tag{FMR.31}
+$$
+
+Here is a rational way to certify the decimal inequality, avoiding
+a floating-point premise. For $0\le z<1$ put
+
+$$
+S_m(z)=2\sum_{j=0}^{m-1}\frac{z^{2j+1}}{2j+1},
+\qquad
+R_m(z)=\frac{2z^{2m+1}}{(2m+1)(1-z^2)}.
+\tag{FMR.32}
+$$
+
+The power series obtained by integrating
+$2/(1-z^2)=2\sum_{j\ge0}z^{2j}$ gives
+
+$$
+S_m(z)\le\ln\frac{1+z}{1-z}\le S_m(z)+R_m(z).
+\tag{FMR.33}
+$$
+
+The remainder bound follows by replacing every later denominator
+by $2m+1$ and summing the geometric series. Set
+$u=(x_7+1)/2^{27}$, so $1<u<2$, and $z=(u-1)/(u+1)$.
+Substitution into the following entirely rational inequality gives
+
+$$
+\frac1{128}\left(27+
+\frac{S_{16}(z)+R_{16}(z)}{S_{16}(1/3)}\right)
+<\frac{216605159}{10^9}.
+\tag{FMR.34}
+$$
+
+All numbers in (FMR.34) are given rationally in (FMR.31)–(FMR.32),
+so it can also be verified by cross-multiplication of positive
+integers. Since the numerator bounds $\ln u$ above and the
+denominator bounds $\ln2$ below, (FMR.33) proves the strict bound
+claimed in (FMR.28). This finite rational certificate only evaluates
+the upper construction; it is not an optimality certificate for
+$\lambda$. $\square$
+
+**Source correspondence 5.3 (exact initial cases and different scales).**
+LTR Theorem 5.1 gives $m_1=1,m_2=2$, and Corollary 6.4 gives
+$3\le m_3\le4$. In particular $z_2=25/17<m_2$: fractional
+covering is not an exact finite integral optimum. For $D=1$ the
+attaining constant export uses zero preparation Reads, and the sole
+late target $R$ is answered by one Read at $R$. Branch roots have
+the constant branch trajectory, and the two leaf roots have their
+distinct supplied root trajectories. Formula (FMR.28) improves an
+alphabet-rate coefficient, rather than merely restating
+$\log_2m_D=\Theta(2^D)$ or declaring the exact rate evaluated.
+

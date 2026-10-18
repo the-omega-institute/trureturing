@@ -1,0 +1,50 @@
+**Theorem 345.1 (The complete normalized $H_7$ slice).** Let
+$\Pi_{N,7},\Pi_{O,7}$ denote feasibility of the complete mass-one
+seven-coordinate models with every row (344.2). Then
+
+$$
+\boxed{\qquad \Pi_{N,7}\cap H_7=P=\Pi_{O,7}\cap H_7.\qquad}
+\tag{345.1}
+$$
+
+The equality holds for all real points, including the closed auxiliary
+boundary $e=0$. It is a classification on $b_2=b_3$, without an
+unequal-head or arbitrary-mass assertion.
+
+Proof. Consider one nonnegative full score $y$ of the dataset.
+For a fixed $N$ pair of schedule mass $m$, its score reward is at
+most $m\sum_{ab}M_{ij}^{ab}$: the four terminal vectors each
+have that same mass, and each is evaluated against its own full
+cell's label rewards. Taking the maximum over pairs gives the
+bound $mB_N$. An empty or singleton schedule satisfies this bound
+as well. Extend its observed set to a distinct pair; the pair cells
+refine its information, and summing the independent cell maxima
+can only increase a maximum with a shared label. Reversal permutes
+cells and a repeated static address gives a singleton. Thus the
+bound covers every complete $N$ schedule and every legal label.
+Summing under the one global mass-one budget bounds total reward
+by $B_N$. Feasibility bounds it below by
+$\beta\cdot b-Ke+C_y$. This proves (344.4) for every $N$
+allocation, with all $A,C,P,T$ rows retained independently.
+Lemma 344.2 identifies the exact $471$ inequalities, so
+$\Pi_{N,7}\cap H_7\subseteq P$.
+
+The domain is bounded; thus $P$ is the convex hull of its complete
+vertex list. Write any real point $x\in P$ as
+$x=\sum_v\lambda_vv$ with $\lambda_v\ge0$, $\sum_v\lambda_v=1$.
+Choose the whole stopped allocation of vertex $v$ with probability
+$\lambda_v$. Each counterfactual cell is mixed with exactly the
+same weights. Nonnegativity, equal cell masses and global mass one
+are preserved. Since every demand in (344.2) is affine in the
+profile and cap, the same mixed allocation satisfies all rows at
+$x$, proving $P\subseteq\Pi_{O,7}\cap H_7$.
+To realize it, one seed first fixes the vertex branch, then its
+schedule interval, then all cell quantiles within that schedule.
+Everything is fixed before replies, and the selected increasing
+schedule makes at most two actual requests. Its $N$ completion
+uses the same seed, acquires both replies, reconstructs the stopped
+cell, and ignores the extra reply when appropriate. That ignored
+request counts. Hence $\Pi_{O,7}\subseteq\Pi_{N,7}$, completing
+the equality. No separate best allocation has been chosen for
+individual rows or words. $\square$
+

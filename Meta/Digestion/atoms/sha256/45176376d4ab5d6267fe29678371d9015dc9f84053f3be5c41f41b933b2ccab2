@@ -1,0 +1,135 @@
+### 一个明确的例子：平均危险率看不见，完整等待律看得见
+
+假设状态 $s$ 的局部等待时间是指数分布：
+
+~~~math
+T\mid s\sim\operatorname{Exp}(r_s).
+~~~
+
+令：
+
+~~~math
+r_s=a+b\,x(s)+c\,y(s)+d\,z(s),
+~~~
+
+其中 $a,b,c,d>0$。
+
+于是：
+
+~~~math
+r_{s_0}=a,
+~~~
+
+~~~math
+r_{s_1}=a+b,
+~~~
+
+~~~math
+r_{s_2}=a+d,
+~~~
+
+~~~math
+r_{s_3}=a+c,
+~~~
+
+~~~math
+r_{s_{13}}=a+b+c.
+~~~
+
+瞬时危险率的四角差为：
+
+~~~math
+r_{s_0}-r_{s_1}-r_{s_3}+r_{s_{13}}
+=
+a-(a+b)-(a+c)+(a+b+c)
+=0.
+~~~
+
+因此，只观察初始危险率：
+
+~~~math
+\bar r
+=
+\sum_s p_sr_s,
+~~~
+
+无法识别 $\kappa$。
+
+但是完整等待时间的生存函数是：
+
+~~~math
+S_\kappa(t)
+=
+\sum_s p_s e^{-r_st}.
+~~~
+
+其中 $\kappa$ 的系数为：
+
+~~~math
+\begin{aligned}
+\Delta S(t)
+&=
+e^{-r_{s_0}t}
+-e^{-r_{s_1}t}
+-e^{-r_{s_3}t}
++e^{-r_{s_{13}}t}
+\\
+&=
+e^{-at}
+\left(
+1-e^{-bt}
+\right)
+\left(
+1-e^{-ct}
+\right).
+\end{aligned}
+~~~
+
+只要 $b,c,t>0$，就有：
+
+~~~math
+\Delta S(t)>0.
+~~~
+
+因此：
+
+~~~math
+S_\kappa(t)
+=
+S_0(t)+\kappa\Delta S(t)
+~~~
+
+能够识别 $\kappa$，虽然初始危险率完全不能识别。
+
+这给出一个很重要的层级：
+
+~~~math
+\boxed{
+\text{瞬时变化率}
+\;\subsetneq\;
+\text{等待时间分布}
+\;\subseteq\;
+\text{完整局部历史}
+}
+~~~
+
+因此，“时间只是局部变化率”如果只理解成一个瞬时标量，会丢掉大量联合信息。更完整的数学对象应当是：
+
+~~~math
+\boxed{
+\text{局部时间场}
+=
+\text{状态条件等待核的族}
+}
+~~~
+
+而不仅仅是：
+
+~~~math
+\text{局部时间场}
+=
+\text{一个数值速率}.
+~~~
+
+---
+

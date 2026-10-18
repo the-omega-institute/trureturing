@@ -1,0 +1,18 @@
+## 470. The four-slot owner closes the entire Z circle
+
+Suppose rho has both axes Z. Every original face of rho has multiset
+{Z,Z,A}. Follow either tracked Z edge across any such face. If its
+image is axial, the other two edge labels force fixed pair {Z,A}.
+If its image is transverse, its companion must be A: companion Z
+would violate distinctness of the transverse labels. It again belongs
+to a pair-{Z,A} owner. Every such owner is a transverse Z owner,
+hence is rho itself.
+
+Consequently every endpoint of rho's four original Z normal intervals
+is paired inside those four intervals. They form a nonempty closed
+subcollection. If it splits into more than one circular component,
+connectedness is already violated. If it has one component, that is
+the entire connected actual Z circle and has degree four. Both
+possibilities contradict the required connected degree at least six.
+This includes self-gluings and every orientation of the original maps.
+

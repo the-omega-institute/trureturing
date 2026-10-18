@@ -1,0 +1,56 @@
+**Proposition 8.1 (credited comparison family and its exact effect).**
+The earlier RE construction has supported high effect
+
+$$
+G_{\rm old}^{V}(s)=c_s(D^\dagger D+s^2T^\dagger T),\qquad
+c_s=1-\frac{\beta}{1-\alpha s^2},\qquad
+R_s=\frac{1-\alpha s^2}{\beta}>1.
+\tag{IR.48}
+$$
+
+It and Definition 7.1 preserve the same binary-conditioned complete maps
+of JR §§30–31, rather than only their effects. The comparison is with
+RE's earlier all-strength family, not with the coincident common effect
+of current JR §38.
+
+Proof. To fix the comparison without assuming universal optimality of
+that family, let $K_{r,s}=D+rsT$. Equation (IR.20) gives
+
+$$
+\det(uK_{r,s}+vS)=uh_1cd(R_su^2-v^2).
+\tag{IR.49}
+$$
+
+Here $1-\alpha s^2\geq1-\alpha>\beta$, so $R_s>1$.
+The matrix $K_{r,s}$ is invertible, whereas
+$K_{r,s}+\epsilon\sqrt{R_s}S$ has rank exactly two. The two matrices
+$B_{r,\epsilon}=(K_{r,s}+\epsilon\sqrt{R_s}S)/(2\sqrt{R_s})$
+satisfy, on all complex $A$,
+
+$$
+\sum_\epsilon B_{r,\epsilon}AB_{r,\epsilon}^\dagger
+ =\frac{K_{r,s}AK_{r,s}^\dagger}{2R_s}+\frac{SAS^\dagger}{2}.
+\tag{IR.50}
+$$
+
+The opposite $K,S$ cross terms cancel. Add high matrix
+$\sqrt{(R_s-1)/(2R_s)}K_{r,s}$, and low residual matrix
+$\sqrt{(1-s^2)/2}T$. Compress each rank-two range with (IR.22)
+or the range isometry $(|1\rangle,|0\rangle)$ for $T$. Their full
+TP live decoders recover those matrices. Add the same scalar failure
+and complement branches as in §7. Then (IR.50) gives
+
+$$
+\frac12\left[K_{r,s}AK_{r,s}^\dagger
+ +(1-s^2)TAT^\dagger+SAS^\dagger\right]=\Lambda_r^0(A).
+\tag{IR.51}
+$$
+
+The effect sum, full TP scalar decoding and joint reference/time
+identities follow directly as in (IR.46) and Theorem 7.2, since the
+composite matrices and failure maps are precisely the same. This
+recovers the actual RE design, including the omitted zero residual
+$T$ at $s=1$. Its only high matrices are the stated $K_{r,s}$ multiples;
+their effect sum is (IR.48). This verifies the consumed comparison
+identity without importing an endpoint pointwise formula. $\square$
+

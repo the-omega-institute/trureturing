@@ -1,0 +1,18 @@
+## 13. Exact residual and limits
+
+These three certificates give sufficient collision conditions. A failure of their signs or prefix hypotheses establishes neither recovery nor impossibility by another mechanism. The first theorem leaves its concrete upper-shear final branch outside its final-diagonal-exit hypothesis. The second covers every tail after its certified early-exit prefixes, but does not establish its kernel form or opposite-sign condition for arbitrary first-four endpoints. Its uniform family is proved for $c\ge n+2$, and does not decide $c=n+1$ merely by that family estimate. The general certificate can still be checked with its own literal hypotheses.
+
+The third theorem covers every legal fourth endpoint after $I,J,L$ satisfying $E>0,\lambda>1,\Delta>0$, and every legal final word. Its cone $x\ge3,a\ge2x$ is sufficient, not necessary for the general criterion. Its arbitrary interior word $V$ and final word $W$ in (10.2) are independently unrestricted predetermined words on the same actual history. It does not show that every fourth endpoint after $I,J,L$ satisfies that criterion or lies in the cone. Its mirror has the same limitations. Failed criteria and failed cone inequalities are not recovery certificates.
+
+After the one-erasure obstruction and these sufficient classes are accounted for, the remaining universal obligation still includes arbitrary first-four recorded endpoint patterns, other ways of leaving both diagonal-one strata, other prefix-kernel geometries, and failed coefficient or tangent-section signs, except where a separate theorem applies with its own literal hypotheses. The cone result enlarges the excluded set; it does not exhaust that set's complement or classify all five-read histories.
+
+A complete resolution of the constant-drift question still requires either a legal predetermined five-read history with a global inverse and a complete actual common-source image criterion for the entire $(S,k,D)$ at every real slope, including erased and negative gains, or finite actual-target collisions at all original readings for every remaining legal five-read history. Neither is established here. Thus
+$$
+5\le C_{\mathrm{fix}}(0)\le6
+$$
+remains the available interval. The original all-degree sharp recovery programme retains the whole target and its representation fibres. The credited equality $C_{\mathrm{fix}}(d)=d+5$ for $d\ge1$ does not settle the constant-degree case or classify all optimal histories.
+
+Every collision here uses finite exact-real algebra and continuity, actual strictly positive rank-one sources, one entire constant drift in each run, original consecutive reading indices $0,1,2,3,4$, positive unread columns, and one unchanged positive row per run. Every matrix operation belongs to the same prescribed cumulative finite-word history. Positive-gain collisions obstruct uniform recovery on the larger arbitrary-real-slope domain. Finite algebraic root choices specify exact existence without asserting bit complexity, running time, numerical stability, or physical acquisition cost.
+
+The conclusions do not establish adaptive-path lower bounds, unrestricted atom optima, off-image noise decoding, general neural-network performance, empirical or Lean/kernel certification, worldwide originality, or absence of other literature.
+

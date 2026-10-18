@@ -1,0 +1,22 @@
+**Proposition 10.2 (paid inserted phases require their own boundary values).**
+Suppose a serial realization inserts $m\ge1$ paid non-IN maintenance
+steps before the next original primitive at a continuing cut. Its $m+1$
+successive running cuts all project to the same original cut. With its
+own complete-physical-successor task and one receipt per step, these
+$m+1$ cuts are pairwise task-distinct. A view factoring only through that
+common original cut cannot be exact for this extended task.
+
+Proof. Two maintenance cuts with different elapsed ordinals have different
+successful next-Advance successors because their successor receipt counts
+differ. At the final phase the next original non-IN, if present, has yet
+another successor receipt count; if it is IN, Advance is disabled there
+and separates it from the earlier phases. Thus all listed cuts differ
+in their one-step maps. A pullback of the common original view is constant
+on them, proving the claim. Under PR57 pricing the added steps cost $m$
+ticks, $2m$ fee units and $m$ original eight-bit receipt cells, besides
+their core work/storage. These are conditional phase distinctions, not a
+lower bound charged again if a realization already stores its meter/phase.
+They do not arise in Theorem 6.2, which declares a one-patch-per-original-
+primitive alternative basis. Nor do they preclude a separately proved
+retimed simulation of the original semantic task. ∎
+

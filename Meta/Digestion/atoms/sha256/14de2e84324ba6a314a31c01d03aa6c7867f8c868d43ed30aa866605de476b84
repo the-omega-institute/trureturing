@@ -1,0 +1,70 @@
+**定理 29.3（全部参考上的最早普遍精确替换）。** 若 $2^r>2k$，
+则对每个允许的控制列、每个有限平凡电荷参考及每个联合输入，
+
+$$
+(\mathcal C_{k,r;\mathbf U}\otimes\operatorname{id}_R)(\rho_{SR})
+=P_4^{\otimes k}\otimes\operatorname{Tr}_S\rho_{SR}.
+\tag{29.6}
+$$
+
+使此普遍结论成立的最小正整数恰为
+
+$$
+r_{\mathrm{reset}}(k)=2+\lfloor\log_2k\rfloor.
+\tag{29.7}
+$$
+
+其时间锐性已可由不变、基对角的输入及一个固定守恒非相干置换见证。
+
+证明。$2^r>2k$ 使 (29.3) 的上界为零。
+$D=0$ 的系统空间仅含 $|4^k\rangle$，
+所以输出必为 $P_4^{\otimes k}\otimes B_R$。
+整个演化在 $S$ 上迹保持且不作用于 $R$；
+对任意 $X_{SR}$，局部迹保持性由 Kraus 完备式给
+$\operatorname{Tr}_S[(\mathcal C\otimes\operatorname{id}_R)(X_{SR})]
+=\operatorname{Tr}_SX_{SR}$，故 $B_R=\operatorname{Tr}_S\rho_{SR}$。
+这一步确定了联合态而非只确定系统约化态。
+$4^k$ 在每次噪声下固定，且每个守恒控制在此一维空间只乘相位；
+因此较长的所有复合仍是同一替换通道。
+最小满足 $2^r>2k$ 的整数就是 (29.7)。
+
+为证更早不能普遍替换，令
+$A_d=2^d4^{k-d}$，$1\le d\le k$。
+初始取不变对角态 $|0^k\rangle\langle0^k|$；
+第一次噪声精确给 $|A_k\rangle\langle A_k|$。
+沿严格递减的缺额序列
+$k,\lfloor k/2\rfloor,\lfloor k/4\rfloor,\ldots$，
+对每个遇到的 $d\ge2$，定义
+
+$$
+t_d=
+0^{\lfloor d/2\rfloor}
+2^{\,d\bmod2}
+4^{\,k-\lfloor d/2\rfloor-(d\bmod2)},
+\qquad
+U_{\mathrm{reset}}:\ A_d\longleftrightarrow t_d.
+\tag{29.8}
+$$
+
+每个 $t_d$ 的长度是 $k$；
+其填充指数非负，因为
+$\lfloor d/2\rfloor+(d\bmod2)=\lceil d/2\rceil\le d\le k$。
+它的缺额是 $2\lfloor d/2\rfloor+(d\bmod2)=d$。
+源字 $A_d$ 没有真空字母，目标 $t_d$ 至少有一个，
+故确为两个不同基字；不同 $d$ 属于不同扇区，
+所以所有对换互不相交，补以其余基字恒等便是一个全空间守恒酉置换。
+这是同一个 $U_{\mathrm{reset}}$，不是随时间另选控制。
+
+对换后的噪声把 $t_d$ 精确送到 $A_{\lfloor d/2\rfloor}$：
+每个 $0$ 变 $2$，每个 $2$ 和 $4$ 变 $4$。
+于是第 $r$ 次后的缺额精确是
+$\lfloor2k/2^r\rfloor$，只要这一数仍正。
+记 $h=1+\lfloor\log_2k\rfloor$；
+$2^h\le2k<2^{h+1}$，第 $h$ 次后的字恰为 $A_1$，不是 $4^k$。
+另一不变对角输入 $|4^k\rangle\langle4^k|$ 在相同控制下始终为自身，
+故该复合不可能是任何固定输出的替换通道。
+此前各次缺额也正，已同时排除所有更早普遍重置。
+$k=1$ 时没有对换，第一次输出 $e_2$、第二次重置，
+与 (29.7) 相符。证毕。
+
+

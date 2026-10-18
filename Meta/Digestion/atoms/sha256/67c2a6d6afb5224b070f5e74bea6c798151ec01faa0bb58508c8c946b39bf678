@@ -1,0 +1,15 @@
+**Proposition 35.3 (fixed-input calibration using the existing attained recovery).** Let $N_\beta$ and $R_\beta$ be exactly the encoder and whole-output decoder (P.11), (P.14), and put $p=(1+\sqrt a)/2$. Their squared entanglement fidelity at the maximally mixed input is
+
+$$
+F_e(I_3/3,R_\beta N_\beta)
+=p+\frac{1-p}{9}
+=\frac{5+4\sqrt a}{9},\qquad
+F_e(I_3/3,R_\beta N_\beta)-p
+=\frac{1-\sqrt a}{18}>0.
+\tag{R.169}
+$$
+
+Their worst-input squared fidelity is $p$, while their unhalved full-reference diamond error is still exactly $1-\sqrt a$ as in (P.15)–(P.16).
+
+**Proof.** Reuse (P.15), $R_\beta N_\beta=p\,\mathrm{id}+(1-p)\operatorname{Ad}_{Z_0}$ with $Z_0=\operatorname{diag}(1,1,-1)$. On a purification of any density $\rho$, its overlap with the pure identity target is $F_e(\rho)=p+(1-p)|\operatorname{Tr}(\rho Z_0)|^2$. At $I_3/3$, $\operatorname{Tr}(\rho Z_0)=1/3$, proving (R.169). The overlap is at least $p$ for every input and equals $p$ for $\rho=(E_{00}+E_{22})/2$. This also agrees with the matched optimal fidelity certificate of Theorem 8.1. The diamond equality and its full-reference upper bound are already (P.15), attained on $(|0\rangle+|2\rangle)/\sqrt2$. Thus (R.169) distinguishes fixed-input and worst-input fidelities without constructing a different recovery. $\square$
+

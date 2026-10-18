@@ -1,0 +1,177 @@
+**Theorem 6.2 (original-class sharp diagonal lower bound).** For every
+design of Definition 3.1 satisfying (IR.13), every positive diagonal
+$\tau\in M_3$ satisfies
+
+$$
+p_H^{\rm acq}(\tau;\mathfrak F)\geq
+p_H^L(\tau;\mathfrak F)\geq
+\operatorname{tr}\bigl((p_sD^\dagger D+q_sT^\dagger T)\tau\bigr).
+\tag{IR.33}
+$$
+
+For a positive $\sigma\in M_5$ with diagonal compression
+$\tau=E^\dagger\sigma E$, the same inequality holds with that
+unnormalized compression. One common finite design, supplied in §7,
+attains both inequalities for all such inputs simultaneously. Thus the
+right side is the exact pointwise minimum on this domain over the
+entire original finite class.
+
+Proof. Choose finite Kraus matrices for each actual encoder and each
+decoder's supported live compression. After restricting the input to
+$V$, their products are $L=BC$ through the same counted fibre, so
+$\operatorname{rank}L\leq d_\xi$. Their rank-one Choi matrices are
+positive summands of the fixed $J_*$. The positive-kernel argument of
+Theorem 5.2 therefore puts each product uniquely in
+$\operatorname{span}_{\mathbb C}\{D,T,S\}$. Separate these actual
+products according to binary record $r$ and actual low fibres
+$d_\xi\leq2$ or high fibres $d_\xi\geq3$. Their coefficient matrices
+are $L_r\succeq0,H_r\succeq0$, with
+
+$$
+\sum_r(H_r+L_r)=I_3.
+\tag{IR.34}
+$$
+
+The low vectors obey (IR.21). This uses arbitrary complex products and
+arbitrary mixed encoders/decoders. It creates no new physically observed
+Kraus tag. The supported plus failure event yields (IR.24) for
+$Z_+=H_++L_+$.
+
+For a diagonal test input we can analytically average these coefficient
+matrices. Conjugation by $U_{e,n}$ acts on $(D,T,S)$ through characters
+
+$$
+C_{e,n}=\operatorname{diag}(1,en,e).
+\tag{IR.35}
+$$
+
+Replace a pair of matrices indexed by $r$ by the average of
+$C_{e,n}H_{enr}C_{e,n}$, and similarly for $L$, over all four signs.
+Also average the result with its complex conjugate. Positivity and the
+complex singular locus are invariant: the signs preserve the squares
+in (IR.20), and the polynomial has real coefficients. The total identity
+(IR.34) is fixed. For the binary constraints,
+$\Theta(C_{e,n}ZC_{e,n})=U_{e,n}\Theta(Z)U_{e,n}^\dagger$,
+$M$ is invariant, and conjugating the effect with record $enr$ gives
+the required effect with record $r$. Complex conjugation also preserves
+these real effects. Thus all necessary feasibility conditions survive.
+
+For diagonal $\tau$, the matrix of pairings
+$\operatorname{tr}(K_j^\dagger K_i\tau)$ is diagonal and real:
+all cross products between $D,T,S$ are off-diagonal. Therefore this
+average leaves the total high live cost on $\tau$ unchanged. If one
+also averages the actual acquired effects by the same input
+conjugations, their diagonal-input cost is unchanged and their domination
+of the high live effect survives. Only analytic matrices and inequalities
+are being averaged. No physical sign gate, conjugation channel or native
+symmetry service is assumed or required.
+
+In the averaged total binary matrices, the $DS,TS$ entries vanish by
+the free sign remaining at fixed $en$. Opposite records have identical
+diagonal entries, and their sum is $I_3$, so these entries equal $1/2$.
+The $DT$ entries are real, opposite for the two records, and (IR.30)
+fixes them to $rs/2$. Thus the total matrices are exactly $Z_r^0(s)$,
+although the unaveraged original live maps need not be those matrices.
+The averaged high and low matrices consequently have the form
+
+$$
+\begin{aligned}
+H_r^{\rm av}&=\frac12
+\begin{pmatrix}p&rt&0\\rt&q&0\\0&0&z\end{pmatrix},\\
+L_r^{\rm av}&=\frac12
+\begin{pmatrix}1-p&r(s-t)&0\\r(s-t)&1-q&0\\0&0&1-z\end{pmatrix},
+\qquad 0\leq p,q,z\leq1,\quad t\in\mathbb R.
+\end{aligned}
+\tag{IR.36}
+$$
+
+Positivity implies
+$t^2\leq pq$, $(s-t)^2\leq(1-p)(1-q)$, hence
+
+$$
+s\leq F(p,q):=\sqrt{pq}+\sqrt{(1-p)(1-q)}.
+\tag{IR.37}
+$$
+
+Summing (IR.21) over all low vectors, before or after averaging, gives
+$1-p\leq\alpha(1-q)+\beta(1-z)$, or
+
+$$
+p\geq k+\alpha q+\beta z.
+\tag{IR.38}
+$$
+
+Let $A=\operatorname{tr}(D^\dagger D\tau)$,
+$B=\operatorname{tr}(T^\dagger T\tau)$,
+$C=\operatorname{tr}(S^\dagger S\tau)$. These are nonnegative and
+the unchanged high live cost is $pA+qB+zC$. In the weak regime
+(IR.38) already gives $pA+qB+zC\geq kA$.
+
+For the strong regime consider $p_0(q)=k+\alpha q$ on
+$0\leq q\leq q_{\max}$. It is at least $q$, with equality just at
+$q_{\max}$. For fixed $q$, $F(p,q)$ is nonincreasing as $p$ increases
+from $q$ to one. To check strict monotonicity along $p_0$, write
+$F(p_0(q),q)=\cos(\arcsin\sqrt{p_0(q)}-\arcsin\sqrt q)$.
+For $0<q<q_{\max}$ the angular gap is positive. Its derivative is
+negative precisely when
+$p_0(q)(1-p_0(q))>\alpha^2q(1-q)$. The difference is the affine function
+
+$$
+k\ell+\alpha(\beta-k)q.
+\tag{IR.39}
+$$
+
+It is positive at zero, and at $q_{\max}$ it equals
+$\beta k(1+\alpha)/(1-\alpha)>0$. Thus it is positive throughout
+the interval. The continuous function $F(p_0(q),q)$ strictly increases
+from $\sqrt\ell$ at zero to one at $q_{\max}$. Consequently, for
+$\sqrt\ell<s\leq1$ there is a unique $q_s\in(0,q_{\max}]$ with
+
+$$
+\sqrt{(k+\alpha q_s)q_s}
+ +\sqrt{(1-k-\alpha q_s)(1-q_s)}=s,
+\qquad p_s=k+\alpha q_s.
+\tag{IR.40}
+$$
+
+If a feasible $q<q_s$, then $q<q_{\max}$ and (IR.38) gives
+$p\geq p_0(q)>q$. Monotonicity in $p$ and then in $q$ yields
+$s\leq F(p,q)\leq F(p_0(q),q)<s$, a contradiction.
+Hence $q\geq q_s$ and $p\geq k+\alpha q\geq p_s$.
+This proves the claimed scalar lower bound for every allowed design.
+It never assumes simultaneous attainment of independent scalar pieces.
+
+For completeness, (IR.31) evaluates the unique root just used. Let
+$\nu=\sqrt{q/(1-q)}$. On this angular branch (IR.40) is equivalent to
+$\sqrt{p_0}=s\sqrt q+\sqrt{1-s^2}\sqrt{1-q}$. Squaring gives
+
+$$
+(1-\beta-s^2)\nu^2
+ -2s\sqrt{1-s^2}\nu+(s^2-\ell)=0.
+\tag{IR.41}
+$$
+
+The discriminant divided by four is $\mathscr H_s$ in (IR.31).
+At the threshold the relevant root is zero. Rationalizing its smaller
+branch gives exactly $\nu_s$ in (IR.31). When the leading coefficient
+vanishes the same expression solves the remaining linear equation;
+when it is negative the other quadratic root is negative and this is
+the positive root. When it is positive the two roots are distinguished
+by continuity from zero and the unique angular root on
+$[0,q_{\max}]$. Indeed the branch has no collision because
+$\mathscr H_s>0$, so it cannot exchange roots. Thus (IR.31) is valid
+without division by that leading coefficient. At $s=1$ it gives
+$\nu_1=\sqrt{k/\beta}$ and $p_1=q_1=k/(1-\alpha)$.
+This also proves every range and endpoint assertion in (IR.32).
+
+Finally the full five-mode live Choi matrix has input support $V$ and
+output support $V$. Every positive live summand inherits both supports,
+so each product kills $V^\perp$ and has no complement live range.
+The actual high live effect is therefore supported on $V$ and its cost
+on $\sigma$ depends only on $E^\dagger\sigma E$. Its acquired effect
+can have further terms, but (IR.16) remains an operator inequality on
+all five modes, including cross-support coherent inputs. This proves
+the stated extension. At zero input all masses vanish; singular or
+subnormalized diagonal inputs require no division and use the same
+proof. $\square$
+

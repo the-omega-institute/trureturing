@@ -1,0 +1,19 @@
+**Definition 5.4 (CaptureCAP and $M$).** After a completed 01 call and its
+InnerReturn normalization, import closed 28/29. Resolve its newly delivered
+unified row and all dependencies by §3. Append a complete cycle item to
+$M$ containing the acquired choice 01, actual header/length/payload input
+bits in IN-site order, row occurrence and origins, and their actual
+acquired dependencies. Restore 28/29 heads. A CTL selects the same outer
+$R_r$. No old word pool is borrowed by CaptureCAP.
+
+$M$ is an encoded list of completed cycles, not an independent semantic
+execution log. A history cycle item retains choice 1, its actual supplied
+frame, typed outcome and received-reference bindings. Append it only after
+its full final ACK. Internal callbacks and computed output are not external
+IN. The initial pre-activation prefix has its fixed manifest field. Choice
+00 and its unfinished/terminal suffix remain actual retained 70/old-port
+material, even though no completed-cycle item is appended if there is no
+new Ready. A cover freezes the predecessor $M$ and $R_r$, before the
+current choice's Base/IN work; its current physical request stays retained
+on 70 but outside that frozen predecessor.
+

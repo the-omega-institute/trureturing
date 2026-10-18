@@ -1,0 +1,14 @@
+**Definition 12.2 (records along one target).** Fix $q\in W_d$, put
+$\ell=|q|$, and write $q_{\le t}$ for its prefix of length $t$.
+The record of $x\in S_d$ along $q$ is $(t,\lambda)$ if the first
+leaf on that path occurs at $q_{\le t}$, with
+$0\le t\le\ell$ and $\lambda\in\{\alpha,\beta\}$. Otherwise
+the record is $\mathsf B_q$, meaning that $q$ itself is an original
+branch endpoint. Assign $\mathsf B_q$ formal depth $\ell+1$ solely
+for ordering records. For a leaf record the prefix replies are branch
+before depth $t$, $\lambda$ at depth $t$, and absent afterwards.
+For $\mathsf B_q$ every prefix through depth $\ell$ replies branch.
+These are records of the stationary original tree. Formula (RCE.4)
+makes $\Gamma_q$ a function of the record; that function need not
+be injective.
+

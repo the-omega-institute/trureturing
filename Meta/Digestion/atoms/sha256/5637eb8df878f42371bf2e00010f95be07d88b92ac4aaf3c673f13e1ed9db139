@@ -1,0 +1,10 @@
+**Theorem 3.4 (Forest expansion of the replica determinant).** For every replica datum and every real $\varepsilon$,
+
+$$
+\Delta(\varepsilon)=\det\big(\varepsilon I+c(\varepsilon)L_\Gamma\big)=\sum_{(F,\rho)}\varepsilon^{|\rho|}\,c(\varepsilon)^{m-|\rho|}\,w(F),
+$$
+
+the sum running over the rooted spanning forests of $\Gamma$. Stance: suspected-novel for the first equality and its application; the second equality applies the literature-attested all-minors matrix-tree theorem (§9).
+
+**Proof.** Since $\tfrac{(1+\varepsilon)^2}{4}-\tfrac{(1-\varepsilon)^2}{4}=\varepsilon$, Theorem 3.3 gives $\tfrac{(1+\varepsilon)^2}{4}I-c(\varepsilon)G=\varepsilon I+c(\varepsilon)(I-G)=\varepsilon I+c(\varepsilon)L_\Gamma$. For any square matrix $B$ indexed by $V$ and scalar $s$, multilinearity of the determinant in the columns gives $\det(sI+B)=\sum_{U\subseteq V}s^{|U|}\det B[V\setminus U]$, where $B[W]$ is the principal submatrix on $W$ and $\det B[\varnothing]=1$. Apply this with $B=cL_\Gamma$: $\det(cL_\Gamma)[V\setminus U]=c^{|V\setminus U|}\det L_\Gamma[V\setminus U]$. By the all-minors matrix-tree theorem (cited step, §9), $\det L_\Gamma[V\setminus U]$ is the sum of $w(F)$ over the spanning forests $F$ of $\Gamma$ each of whose trees contains exactly one vertex of $U$; for $U=\varnothing$ and $V\ne\varnothing$ the sum is empty and $\det L_\Gamma=0$, consistent with $L_\Gamma\mathbf 1=0$. Pairs $(F,U)$ of this kind are exactly the rooted spanning forests with $\rho=U$, and then $|V\setminus U|=m-|\rho|$. ∎
+

@@ -1,0 +1,54 @@
+**Theorem 6.1 (faithful bounded-incidence cap transfer).** Let
+$d,L\ge1$, let $\mu$ be a probability on $S_d$, and let $C_0>0$.
+Suppose
+
+$$
+\forall n\ge1\ \forall\mathcal N\in\mathfrak N_{d,L}(n),\qquad
+Z(\mathcal N;\mu,\ldots,\mu)\le C_0^n.
+\tag{SIR.30}
+$$
+
+Then every original complete template, at every length, has mass
+at most $C^n$ for
+
+$$
+C=4^{m_d/(L+1)}C_0.
+\tag{SIR.31}
+$$
+
+Any positive rational $\widehat C$ satisfying
+
+$$
+\widehat C^{L+1}\ge4^{m_d}C_0^{L+1}
+\tag{SIR.32}
+$$
+
+is also a valid original cap. In particular, for all $D\ge d$,
+
+$$
+M_1(D)\ge\left\lceil\widehat C^{-2^{D-d}}\right\rceil,
+\qquad \lambda\ge-2^{-d}\log_2\widehat C.
+\tag{SIR.33}
+$$
+
+Proof. The premise is exactly $\beta_{d,L}(\mu)\le C_0$.
+Apply (SIR.20). Raising positive quantities to $L+1$ makes
+(SIR.32) equivalent to $\widehat C\ge C$. For rational $C_0$
+this is an exact rational comparison without a floating-point premise.
+Apply NPC Theorem 7.1, or (SIR.9).
+
+Its original-competitor restriction uses the actual perfect scaffold
+with $2^{D-d}$ present $S_d$ blocks in the right subtree. Each
+permitted block target is an original-root request. Every arbitrary
+original-root late literal is constant outside the blocks or is a
+function of one boundary reply in one actual donor block, even if
+that donor differs from the target. On a fixed original code fiber,
+the query is fixed before its reply and every count. Equal replies
+must produce the same whole target trajectory, hence the same
+factor. The restricted fiber is therefore admissible with all its
+correlations intact, and its mass is bounded by the transferred
+cap. These fibers partition total analytical product mass one.
+Counting them proves the ceiling against the unchanged complete
+alphabet. No seed vector is made accessible to that competitor.
+$\square$
+

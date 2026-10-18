@@ -1,0 +1,24 @@
+**Lemma 10.4 (Inverses on the image hull).**
+If $|s|<\ell$, the restriction of $\mathcal A_s$ to
+$\mathscr H$ is an affine automorphism with inverse
+$\mathcal A_{-s}$. Every $\mathcal B_t$ restricts to an affine
+automorphism, and on $\mathscr H$,
+
+$$
+\mathcal B_t\mathcal B_h=\mathcal B_{t+h},\qquad
+\mathcal B_0=\operatorname{id},\qquad
+\mathcal B_t^{-1}=\mathcal B_{-t}.
+$$
+
+**Proof.** For $|s|<\ell$ choose an open $J$ with
+$J,J+s\subset(a,b)$. Lemma 10.3 makes both strip hulls equal
+to $\mathscr H$, so the restricted inverse identities in its
+proof apply on all of $\mathscr H$.
+The source maps $Q_t$ are global bijections with
+$Q_tQ_h=Q_{t+h}$ and $Q_{-t}=Q_t^{-1}$. Their encoder
+identities and affine spanning give the asserted restrictions
+and group law. These statements concern $\mathscr H$, not
+unused directions of $\mathbb R^n$. At $|s|=\ell$ the lawful
+slice need not span, and no restricted automorphism assertion
+about the supplied $\mathcal A_s$ is required. $\square$
+

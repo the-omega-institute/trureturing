@@ -1,0 +1,49 @@
+**Lemma 1.2 (Native circle coordinates).** The phase increments
+$h=\theta-\theta^{\rm in}$ have the form $(u,v,0,v,u)$, and
+
+$$
+I(k)=\frac r{k(H-k)},\qquad
+du=\left(\frac12-\frac kr\right)d\chi,\qquad
+dv=-\frac kr\,d\chi.
+$$
+
+Set $\alpha=u-v$ and $\beta=u$. They are independent circle
+coordinates, with inverse $u=\beta$, $v=\beta-\alpha$, and
+
+$$
+d\alpha=\frac12d\chi,\qquad
+d\beta=\left(\frac12-\frac kr\right)d\chi.
+$$
+
+With $\eta_j=\theta_j^{\rm in}-\theta_2^{\rm in}$, a representative is
+
+$$
+\psi(k,u,v)=\left(
+\sqrt{k}e^{-i(\eta_0+u)},
+\sqrt{H-k}e^{-i(\eta_1+v)},
+\sqrt Z,
+\sqrt{H-k}e^{-i(\eta_3+v)},
+\sqrt{k}e^{-i(\eta_{13}+u)}
+\right).
+$$
+
+Two such representatives define the same ray exactly when their heights
+and both circle coordinates agree.
+
+**Proof of Lemma 1.2.** The probabilities sum to $2H+Z=1$ and are
+strictly positive. The reciprocal sum is $2/k+2/(H-k)=r/[k(H-k)]$.
+The positive-group rate is $(H-k)/r=1/2-k/r$, the negative-group rate
+is $-k/r$, and the middle rate is zero. Integration from zero increments
+gives the two groups. This equates increments only; it imposes no
+equality on preparation phases. Subtraction proves the difference
+equation. The coordinate changes and their inverses have integer
+coefficients, so they descend to inverse maps on $\mathbb T^2$.
+Along actual real lifts, $d^{\mathsf T}h=2(u-v)=\chi-\chi(0)$.
+
+The displayed gauge fixes the middle amplitude at the positive number
+$\sqrt Z$. Equality of rays therefore forces their common scalar phase
+to be one. Moduli determine $k$, and the nonzero amplitudes in the two
+groups determine $u,v$ separately modulo $2\pi$. These conditions also
+suffice. In particular a common bottom turn is observable relative to
+the middle mode and is not a removable ray gauge. $\square$
+

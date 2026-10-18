@@ -1,0 +1,33 @@
+**Theorem 1.1 (original-source paired-event noncollapse).** Every original finite COMPLETE observer and every installed finite or countable prior with $\mu(1),\mu(2)>0$ satisfy
+
+$$
+367e(M)+20\mathcal O_p(M)+52\mathcal O_\beta(M)
+>\frac1{25000}.
+\tag{1.5}
+$$
+
+In particular, the class in which both designated event readouts are constant on their reachable phase fibres has
+
+$$
+e(M)>\frac1{9175000},\qquad
+\inf_M e(M)\ge\frac1{9175000}.
+\tag{1.6}
+$$
+
+Exact common conf/conf attainment requires
+
+$$
+20\mathcal O_p(M)+52\mathcal O_\beta(M)>\frac1{25000}.
+\tag{1.7}
+$$
+
+For any sequence with $e(M_n)\to0$,
+
+$$
+\liminf_n\bigl(20\mathcal O_p(M_n)+52\mathcal O_\beta(M_n)\bigr)
+\ge\frac1{25000}.
+\tag{1.8}
+$$
+
+No supported nonendpoint is needed for these statements. The event ranges are free in the unrestricted original class, so this is not an unrestricted positive gap. No exact common attainer, vanishing-excess construction or fixed-resource optimum is supplied. The main mathematical result is the nonlinear finite-readout inverse in Section 4; (1.5) is its risk consequence, rather than a renamed full-law-diameter estimate.
+

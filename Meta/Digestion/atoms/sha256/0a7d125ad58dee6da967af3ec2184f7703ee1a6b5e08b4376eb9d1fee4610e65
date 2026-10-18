@@ -1,0 +1,14 @@
+## 235. Precise surviving-pattern target
+
+Retain the exact mixed-flat five-reservoir hypotheses and the proved
+three-core exclusion. Thus the interacting high core K has exactly
+four actual owners. Put P={M,Z,U}, and retain the escape
+ tau=(Z,M,C,D,M,C),
+with distinct M,Z,C,D, m>1+c+d, c,d<m-2, z>1+m+c, and u>m.
+Every K owner is genuine; its faces carrying two distinct P labels
+pair only to other K faces. All original normal edge links are complete
+circles of degree at least six. The total genuine M/Z budget is 3*pi.
+Every owner has a fixed paired frame with distinct transverse labels.
+Repeated axes, self-gluings, and repeated normal-circle visits remain
+allowed. No connectedness of the marked-face graph is assumed.
+

@@ -1,0 +1,12 @@
+##### 定义 1.4.1： 分辨率证书集
+
+给定资源偏序 $(\mathsf R,\le)$ 和目标 $C$，定义其证书集
+
+$$
+\mathsf{Cert}(C)=\{r\in\mathsf R:\equiv_{\mathcal Q_r}\subseteq\ker C\}.
+$$
+
+其中一个 $r$ 表示一整套资源上限，而不是一次实验结果。
+
+<a id="claim-1-4-2"></a>
+

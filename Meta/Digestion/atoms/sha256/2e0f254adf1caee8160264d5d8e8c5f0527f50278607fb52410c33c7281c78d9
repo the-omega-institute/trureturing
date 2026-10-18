@@ -1,0 +1,17 @@
+**Definition 4.1 (The twelve-state law).** Use $F_s,T_s$, $s\in\mathbb Z/6\mathbb Z$, and set
+
+$$
+p_0=p_3=\tfrac14,\qquad p_1=p_4=\tfrac12,\qquad
+p_2=p_5=\tfrac34,\qquad c=\tfrac3{62}.
+$$
+
+The only nonzero entries are
+
+$$
+M_0(F_s,F_s)=1-p_s,\qquad M_0(T_s,F_s)=1,\qquad
+M_1(F_s,T_{s+1})=p_s,
+\tag{4.1}
+$$
+
+with $\lambda(F_s)=c/p_s$ and $\lambda(T_s)=c$. Indices in (4.1) are modulo six.
+

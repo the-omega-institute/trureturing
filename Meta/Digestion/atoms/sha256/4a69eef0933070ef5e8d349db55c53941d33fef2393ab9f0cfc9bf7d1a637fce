@@ -1,0 +1,9 @@
+## 161. Scope of the new restriction
+
+The proof uses both complete M/Z budgets and actual continuation across
+the two unused return faces. It rules out all M/Z-only owners globally,
+and eliminates the companion-M return when d<=z-m-1. It preserves repeated
+labels, special edges of other reservoir pairs, and distinct-face
+self-gluings. It does not exclude (156.5), or the companion-M H-return cases
+when d>z-m-1.
+

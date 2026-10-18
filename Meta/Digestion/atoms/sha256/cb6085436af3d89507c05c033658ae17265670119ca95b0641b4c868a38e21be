@@ -1,0 +1,18 @@
+**Convention 10.4 (Resource and recovery limits).** The
+independent all-state preparation of Assumption 1.1 has no native
+$\alpha/\beta$ implementation bridge here. Exact algebraic coefficients
+give finite mathematical descriptions; finite-precision CPTP realization,
+physical synthesis, preparation acquisition, clock precision, storage
+duration and physical transport require additional contracts and bounds.
+Theoretical termination is distinct from a practical implementation or
+runtime measurement. The rational-wait witnesses in §7 are mathematical
+tests under the assumed menu, not a physical clock specification.
+
+Recurrence makes time-translation of the future menu preserve the worst
+error. Under Assumption 1.1 and Definitions 1.2–1.3, stationarity expresses
+the fixed-memory minimax boundary through actual wait-zero tests by (3.3).
+This is an equivalence of error optimizations for the specified preparation,
+menu and port class. A mutual-recovery theorem for space, time, boundary and
+memory, or a rate theorem for the native tree, requires additional
+definitions and bridges.
+

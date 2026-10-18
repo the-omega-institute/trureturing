@@ -1,0 +1,67 @@
+**Theorem 9.2 (exact all-length mass and pressure).** For every
+$n\ge1$ and every jointly admissible $B_0\subseteq S_3^n$,
+
+$$
+\sum_{x\in B_0}\prod_{i=1}^n w_{\rm j}(x_i)\le9996^n.
+\tag{NCE.66}
+$$
+
+The maximum equals $9996^n$ at every length, including when the
+maximum is taken over full solution sets of complete native decoder
+templates. In the pressure notation of [NPC, Definition 5.1][NPCj],
+
+$$
+A_n(\mu_{\rm j})=\left(\frac{2499}{6407}\right)^n,
+\qquad \beta_3(\mu_{\rm j})=\frac{2499}{6407}.
+\tag{NCE.67}
+$$
+
+Proof of the upper. Apply Theorem 2.2 to the seven targets $W_3$,
+all native boundary replies and a constant experiment, with capacity
+$m=4$, weight $w_{\rm j}$ and cap $C_{\rm j}$. Theorem 9.1 proves
+its entire hypothesis, even for all finite own experiments.
+
+In particular the theorem uses the one Gibbs law proportional to
+$\prod_iw_{\rm j}(x_i)$ on this actual $B_0$. A heavy projection has
+an own-unrecoverable target determined by a distinct actual donor
+under that same law. The permutation average charges half its target
+entropy even around arbitrary cycles. Conditional Gibbs domination
+then uses exactly (NCE.65). Light projections use their total mass
+at most $C_{\rm j}$. No product law on a competing fiber, independent
+child code, separately chosen owner law or acyclic donor ordering is
+assumed. Every full block weight in (NCE.66) appears once.
+
+Proof of equality. Put
+
+$$
+H_B=\{B\}\cup\mathcal G,\qquad
+P_B=\{\langle x,y\rangle:x,y\in H_B\}\subset S_3.
+\tag{NCE.68}
+$$
+
+On $H_B$ the root reply determines its root factor. At side $s$,
+an absent reply identifies the known leaf $B$ and its fixed factor
+$\Gamma_s(B)$; a present reply on $\mathcal G$ identifies the
+constructor of that child and hence its factor among
+$(2,1),(1,0),(0,0)$. Thus every $W_2$ target on $H_B$ is determined
+by the literal at that same target. On $P_B$ the root factor is
+constant branch; at $sq$, $s\in\{L,R\}$, $q\in W_2$, use the
+single same-coordinate literal $sq$. These witnesses serve all
+seven targets. There are $|P_B|=10^2=100$ states and
+
+$$
+w_{\rm j}(P_B)=(0,1,9)M(0,1,9)^{\mathsf T}
+=1437+2\cdot9\cdot237+81\cdot53=9996.
+\tag{NCE.69}
+$$
+
+The products $P_B^n$ retain these own-coordinate witnesses and have
+mass $9996^n$. Extending their attained reply decoders arbitrarily
+to total tables gives a complete native template whose solution set
+contains $P_B^n$. The already proved upper bounds its mass by
+$9996^n$, so its mass is exactly that value. Since $w_{\rm j}$ is
+positive on every state, it has no additional solutions. This proves
+attainment in both families without a separate saturation assumption.
+Normalize by $W_{\rm j}^n$ and use
+$9996/25628=2499/6407$ to obtain (NCE.67). $\square$
+

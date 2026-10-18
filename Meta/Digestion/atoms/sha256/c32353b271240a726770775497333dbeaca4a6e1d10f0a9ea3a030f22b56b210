@@ -1,0 +1,27 @@
+**Lemma 4.2 (Recalled finite coercivity, with its ratio proof).** The band floor and inverse estimate of [Guarded, Lemmas 3.3 and 8.1][G] give, for band-compatible $p,r$ on the same $K=K_L^{\alpha,\beta}$,
+
+$$
+p_w,r_w\ge6^{-L}\quad(w\in K),\qquad
+\|p-r\|_1^2\le H_L\mathcal D_K(p\Vert r),\qquad H_L=2L6^{4L}.
+\tag{4.2}
+$$
+
+**Proof of the recalled estimate.** Deleting ones reaches $0^L$ and shows every mass is at most the zero-word mass, which is therefore at least $|K|^{-1}$. Reinserting ones gives $p_w\ge3^{-k(w)}|K|^{-1}\ge6^{-L}$, and likewise for $r$.
+
+Set $t_w=r_w/p_w$ and $\alpha_L=6^{-L}$. Each edge term in (4.1) equals
+
+$$
+\frac{(p_up_v)^2(t_u-t_v)^2}{(p_u+p_v)(r_u+r_v)^2}
+\ge\alpha_L^4(t_u-t_v)^2,
+\tag{4.3}
+$$
+
+since the pair sums are at most one. Any two vertices are connected by deleting and inserting ones through zero in at most $2L$ steps; removing repetitions gives a simple path. Cauchy–Schwarz on a path between the largest and smallest ratios gives
+
+$$
+(\max_wt_w-\min_wt_w)^2\le2L\alpha_L^{-4}\mathcal D_K(p\Vert r).
+$$
+
+Because $\sum_wp_wt_w=1$, the number one lies between these extreme ratios, so
+$\|p-r\|_1=\sum_wp_w|1-t_w|\le\max t-\min t$. This proves (4.2). If $K$ is a singleton, its two probabilities coincide and the estimate is immediate. $\square$
+

@@ -1,0 +1,34 @@
+**Definition 384.1 (Finite and original objects).** Use the original source $X$, replies $q_i$, first absence $n(x)$, distinct carrier marks $\theta_j$, and classes $\mathcal N_2,\mathcal O_2$ of [XXIII 368.1](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XXIII.md#368-original-resources-complete-cells-and-signed-scores). Thus $X$ is the countable Fibonacci-window divisibility source, every finite Boolean pattern has an actual witness, and the selected target for an entire profile $1\ge a_1\ge a_2\ge\cdots>0$, $a_i\to0$, is
+
+$$
+\lambda_x^a=(1-a_{n(x)})\delta_{\theta_0}+a_{n(x)}\delta_{\theta_{n(x)}},
+\qquad e_a(A)=\sup_{x\in X}\operatorname{TV}(\nu_{A,x},\lambda_x^a).
+$$
+
+Both original classes have zero advice, one source-independent seed fixing the whole schedule and every counterfactual terminal output before replies, and measurable sourcewise almost-sure finite handoff. The hard bound is two actual requests, counting repetitions and acquired replies later ignored. In $\mathcal N_2$ the entire preselected schedule is acquired; in $\mathcal O_2$ the preselected increasing schedule stops at its first queried zero or exhaustion. Addresses and full-carrier outputs of original competitors are unrestricted. Source-dependent information consists only of the acquired replies; terminal choice uses those replies and the seed. The unchanged consumer receives the original handed tape on the same source. These are the interfaces of [108–110](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION.md#108-common-probability-vector-kernels-and-stopped-schedules) and [Source-Correlated Laws 45](KBONACCI_SELF_CALIBRATING_SOURCE_CORRELATED_LAWS.md#45-lawful-acquisition-through-one-inherited-seed).
+
+For an integer $L\ge3$, let $B_L=\{0,1\}^L$ and $J_L=\{0,\ldots,L\}$. The complete catalog in either class contains the empty schedule, every singleton, and every pair $i<j$. An $N$ pair has cells $00,01,10,11$; an $O$ pair has cells $0,10,11$, where $0$ means $w_i=0$ regardless of $w_j$. Write $c_s(w)$ for the cell visited by $w$ in schedule $s$. A complete allocation consists of vectors $X_{s,c}\ge0$ on $J_L$ and owning masses $m_s\ge0$ satisfying
+
+$$
+\sum_{z=0}^L X_{s,c}(z)=m_s\quad\text{for every cell }c\text{ of }s,
+\qquad \sum_s m_s=M,\qquad
+p_w=\sum_sX_{s,c_s(w)}.
+\tag{384.1}
+$$
+
+Every word, cell and label is retained, including multiple-zero words, unqueried output labels and zero-mass schedules. At $M=1$ the common-interval-seed realization of XXIII 368.2 turns these vectors into an original procedure. At other finite masses $M\ge0$ they are literal affine allocations.
+
+For real $b_j\ge0$ and $e\ge0$, feasibility means the separate inequalities $p_w(0)\ge d_A(w)$, $p_w(n(w))\ge d_C(w)$, $p_w(0)+p_w(n(w))\ge d_P(w)$ at every zero word, and $p_{1^L}(0)\ge d_T$, with
+
+$$
+\begin{array}{c|cc}
+ &d_A(w)&d_C(w)\\ \hline
+n(w)\le2&1-b_{n(w)}-e&M-1+b_{n(w)}-e\\
+3\le n(w)\le L&M-b_{n(w)}-e&b_{n(w)}-e
+\end{array}
+\qquad d_P(w)=d_T=M-e.
+\tag{384.2}
+$$
+
+These are exactly $d(b,e)+(M-1)r$ for the anchor $R=O(1,2;1,2,0)$, $r=z(R)$ of XXIII 368.3. Singleton floors remain signed and the union floor is independent. Division by $M$ is not part of this definition.
+

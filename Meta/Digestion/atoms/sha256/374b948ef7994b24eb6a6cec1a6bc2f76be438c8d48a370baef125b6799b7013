@@ -1,0 +1,13 @@
+## 7. 剩余义务、文献和核验范围
+
+定理 5.2 把一类全局问题缩成“覆盖全部 bracelets 的唯一四环关联设计”，而命题 4.2 保留了超出树方案的所有实际端点。尚缺对所有 $n$ 的兼容构造。局部补路径、最小删边分类和合法修复不能替代这一步；只删两条 $a$ 边也是比原猜想更强的路线，其失败不反驳原题。
+
+| 来源 | 支持范围与边界 |
+| --- | --- |
+| Sawada–Williams, [Successor rules for flipping pancakes and burnt pancakes](https://www.socs.uoguelph.ca/~sawada/papers/pancake_successor.pdf), §2.3、§3.2 | `literature-attested`：bracelet 机制及精确 Big-3 猜想；不提供本卷所需的全阶关联设计。 |
+| Blanco 等, [Generating the symmetric group by three prefix reversals](https://arxiv.org/html/2511.16959v3), §4.2 及 Big-3 短圈表 | `literature-attested`：原猜想、小阶计算及八边圈字；本卷不把已列圈字认作新关系。 |
+| Konstantinova–Son, [The girths of the cubic Pancake graphs](https://arxiv.org/abs/2201.05733), §2 | `literature-attested`：原始前缀反转短圈机制；不等于全阶 Hamilton 构造。 |
+| 本卷第 2–6 节 | `repo-derived`：在既有陪集和切换框架中自证长补路径、规范分类、实际端点条件、条件性全局拼接及删标签层障碍；不作全球新颖性声明。 |
+
+已先查仓库 `Library/`、既有 PrefixReversalTriple 模块和上述原文；未找到可直接替代剩余全阶拼接义务的证明。检索范围不完整，不能报告穷尽新颖性或官方仍无人解决的实时认证。独立原始排列核验覆盖 $n=5,\ldots,16$ 的局部切换与合并字，以及 60 个选定匹配场景的端点公式；这些有限核验不承担无限全称证明，也未用作新增正向 Lean 实例。全称内容由正文的普通证明承担，不宣称 Lean、冻结、unique 或官方验收。
+

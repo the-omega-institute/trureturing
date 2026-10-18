@@ -1,0 +1,60 @@
+**Theorem 8.4 (unique labelled common limit and incompleteness for this
+row pair).** The two exact strata in (NLC.24) have exactly one common
+prefix-closure point:
+
+$$
+\overline{D_0^*}\cap\overline{D_1^*}=\{L^*\}.
+\tag{NLC.27}
+$$
+
+They have finite original same-prefix/different-row witnesses at every
+depth. Nevertheless no finite original constructor context $C$ with
+all its holes filled by $\Omega$ satisfies
+$\operatorname{Contact}(C;r_0,r_1)$ for this row pair.
+
+Proof. Any prefix limit of either stratum retains the finite outer
+constructor skeleton. In the first stratum its left subtree equals
+the right-left subtree. Equality of two whole trees is closed under
+prefix agreement: if the limiting subtrees differed, some finite
+address would witness different replies, contradicting their equal
+finite approximants. In the second stratum the left subtree equals
+$F$ applied to the right-left subtree. This relation is also closed:
+its root pair, left $\alpha$ and equality of the right subtree to the
+argument are each forced by finite addresses. The relation between
+the right-right and right-left subtrees, already imposed in every
+$U(x,y)$, has the same property.
+
+Consequently a common limit must have the form $U(x,y)$ as a
+finite-or-infinite constructor expression, with $x=y$ from the first
+label and $x=F(y)$ from the second. Hence $y=F(y)$, so $y=K$ by
+Definition 8.3 and the common limit is (NLC.26). This proves that the
+intersection is contained in the displayed singleton; no assertion
+about continuity of a finite equality partition was used.
+
+Conversely take the finite sources
+
+$$
+u_n^0=U(y_n,y_n),\qquad
+u_n^1=U(y_{n+1},y_n).
+\tag{NLC.28}
+$$
+
+They lie in their exact strata by Lemma 8.2, so they satisfy every
+acquired constraint with both guards. At every depth less than $n$,
+$y_n$ and $y_{n+1}$ agree with $K$: their terminal $\beta$ leaves are
+still beyond that depth. The constructors of $U$ preserve this
+agreement. For any $h$, taking $n>h$ therefore makes both displayed
+sources agree with $L^*$ through $h$ and with each other. Their finite
+full rows remain $r_0$ and $r_1$. This proves membership of $L^*$ in
+both closures and the finite witness assertion.
+
+The tree $L^*$ is infinite and has no subtree equal to $\Omega$.
+Indeed every subtree of $K$ is either $K$ or an $\alpha$ leaf, and
+both contain a reached leaf. The remaining subtrees of $L^*$ are
+$L^*$ itself and $\langle K,K\rangle$, which also contain a reached
+leaf. By contrast any infinite $C[\Omega,\ldots,\Omega]$ has at
+least one hole and therefore has a subtree exactly $\Omega$ at its
+hole address. A context with no holes is finite. Thus no such context
+represents $L^*$, and (NLC.27) excludes every supplied-context contact
+for the prescribed pair. $\square$
+

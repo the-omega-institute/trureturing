@@ -1,0 +1,44 @@
+**Definition 1.1 (Original law and endpoint).** Fix $0<p<1$,
+$p\ne1/2$, and a single $j\in\{0,1\}$. The four symbols in
+$\mathcal A=\{a_0,a_1,b_0,b_1\}$ are distinct. Let $\varphi$ be
+uniform on $\{0,1\}$, independently of iid Bernoulli$(p)$ spins
+$(S_\ell)_{\ell\in\mathbb Z}$. On the original integer clock put
+
+$$
+\begin{aligned}
+H_{2\ell+\varphi}&=a_{S_\ell},&
+H_{2\ell+\varphi+1}&=b_{S_{\ell+1}},\\
+X_{2\ell+\varphi}&=Y_\ell:=S_\ell\mathbin\oplus S_{\ell+1},&
+X_{2\ell+\varphi+1}&=0.
+\end{aligned}
+\tag{1.1}
+$$
+
+Write $J_p$ for this one joint law. Its active transition takes $a_s$
+to $b_t$ with probability $\pi_t$, where $\pi_0=1-p$, $\pi_1=p$,
+and emits $s\oplus t$. The next transition takes $b_t$ to $a_t$ and
+emits zero. The stationary masses are
+$(1-p,p,1-p,p)/2$: incoming mass at $b_t$ is
+$\sum_s(\pi_s/2)\pi_t=\pi_t/2$, and copying supplies the same mass
+at $a_t$. Thus this is the stationary emitted-bit clock of Original,
+Proposition 2.1 and (2.2), including the separator positions. In
+particular $X_tX_{t+1}=0$ at every integer $t$.
+
+The target is the actual $H_j$ in (1.1). Define
+
+$$
+\begin{array}{c|cc}
+ &j=0&j=1\\ \hline
+h_0(s)&a_s&b_s\\
+h_1(s)&b_s&a_s
+\end{array}
+\qquad v_0=j,\quad v_1=0.
+\qquad H_j=h_\varphi(S_{v_\varphi}).
+\tag{1.2}
+$$
+
+This is Original, (9.4). The two state pairs indexed by the phases are
+disjoint. On a phase-ambiguous observation, one correct state cannot
+collect correct masses from both pairs. The representation provides no
+operation that observes an unacquired spin or the phase.
+

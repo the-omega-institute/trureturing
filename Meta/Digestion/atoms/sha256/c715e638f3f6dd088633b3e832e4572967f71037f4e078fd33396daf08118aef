@@ -1,0 +1,19 @@
+**Definition 1.3 (handoff and recovery).** For $m\ge1$, chronological successful captures
+have designated validation events $v_0\le\cdots\le v_{m-1}$ on the same
+authentic pure history. Put $t=U_{v_0}$ and write
+$U_{v_i}=\rho^{n_i}t$, where $0=n_0\le\cdots\le n_{m-1}$ count genuine
+updates between these events. The history promise supplies no $n_i$.
+A later decoder receives exactly the ordered public cuts, complete rows,
+and supplementary records specified by its theorem, together with this
+promise. It has no new hidden-source access or historical archive.
+
+All accessible source-dependent state at a handoff counts: guard and
+operand words, replies, control, counters, attempts, transcripts, earlier
+outputs, pointers, region identities, lengths and allocation distinctions.
+Our positive constructions clear and retract nonoutput regions, reset
+control, and use fixed output-region identities with extents determined
+by canonical output bytes. Cleanup is finite paid computation. A host
+retaining extra fields has a richer interface and must charge them.
+The output is acquired data, not a freely replayable authenticity
+certificate. The common-root promise is not certified by matching clocks.
+

@@ -1,0 +1,9 @@
+**Remark 4.6 (no post-death information requirement).** The comparison
+extension and (4.3) are convenient sufficient conditions for proving
+lifetime convergence. The killed law itself uses only the joint history
+before death and the death time. Equivalently one can assume convergence
+of the continuously held joint histories together with their censored
+lifetimes, with no atom at $T$, and apply the time-change part of
+Theorem 4.2 directly. Extensions which agree before death and have the
+same lifetime yield the same killed law, whatever they do afterwards.
+

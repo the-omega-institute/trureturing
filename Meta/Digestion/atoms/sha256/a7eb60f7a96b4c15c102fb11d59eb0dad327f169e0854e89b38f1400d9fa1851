@@ -1,0 +1,23 @@
+## 9. Projection supplier correspondence and remaining cover obligations
+
+**Mathematical attribution 9.1 (local parameters and the new coupling).**
+The supplier correspondence for Sections 7--8 is as follows.
+
+| Existing result | Parameters used here | Supplied statement and its use |
+| --- | --- | --- |
+| [NARC, Theorem 14.2][NARC] and Definition 1.2 | $q=19$, the same $\lambda$, original pair $(a,b)$, attained label $t$ and entire class $C_t$ | Exact correspondence between native encoder service and one simultaneous disjoint whole-square cover. |
+| [NARC, Theorem 13.3][NARC] | The increasing-$d$ path of each chosen $C_t$; its actual first and second coordinates | Six pure triples, nine changes of each coordinate, ten distinct values on each axis and no coordinate returns. All macro orders and legal positive outer lengths remain in scope. |
+| [NARC, Theorem 14.3, part 3][NARC] | Its fixed-first-coordinate count at $i$ is $N_i$; its fixed-second-coordinate count is $M_i$ | Nonempty line intersections have size $1+3j$; the loads satisfy (NAGC.7.3). These supply the hypotheses for Lemma 7.2 and the central-anchor count. |
+| Definition 4.1, equation (NAGC.4.1) | The same class $C_t$, its actual coordinate extrema and gap $g_t$ | The existing span decomposition becomes $g_t=\gamma_t^a+\gamma_t^b$ after the two baseline spans of nine are separated. |
+| Theorem 2.2 | $q=19$, the actual $D_t,L_t,U_t$ and $G(\mathcal C)$ of Definition 2.1 | The existing total-span identity is $\sum_t(U_t-L_t)=342+G(\mathcal C)$. |
+| Theorem 3.2 | The actual positive and negative difference lists of the same classes, with $\delta_t=0$ for every $t$ | The existing identities and inequalities give $H^+=H^-$ and $H^++H^-\ge G(\mathcal C)$. |
+
+The repo-derived increment is the classwise residue-duplication charge
+(NAGC.7.7), its combination with the inherited incidence congruences,
+and the central anchor's coupling of the two actual projection deficits.
+These yield the thirteen-gap necessity and its conditional equality
+structure. The span decomposition, projection cardinalities, incidence
+congruences and signed-moment identities are reused results, not new
+identities. The proofs require no external numerical theorem or
+literature-based sufficiency criterion, and make no global novelty claim.
+

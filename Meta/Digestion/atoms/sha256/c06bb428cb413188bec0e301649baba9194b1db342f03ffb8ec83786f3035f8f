@@ -1,0 +1,23 @@
+**Theorem 25.1 (interior-threshold installed-state bound).** For every
+$2\le k\le n-1$, every accurate finite preparer in Convention 23.2
+has
+
+$$
+|V|\ge2n,\qquad H\ge2n+2+r.
+\tag{PCA.58}
+$$
+
+The bound is independent of any larger finite call or literal budget.
+
+Proof. Lemma 24.2 counts at least $2n-2$ installed running states
+at words in the disjoint $E_i$. Lemma 7.1 applies to every code of
+the unchanged template (PCA.12): there must also be an installed
+running word in the $b_3$ occurrence cone and another in the $b_4$
+occurrence cone. Those cones are disjoint from all $E_i$ and from
+each other. These are two further states, regardless of how much
+sharing occurs on executions. Both prescribed values occur on the
+positive profiles, so the two distinct literal-entry latches are
+necessary. Adding every mandated further latch proves (PCA.58).
+The argument neither unrolls the graph nor imposes a read-once or
+ordered competitor. $\square$
+

@@ -1,0 +1,34 @@
+**Theorem 6.2 (exact fixed-shape completeness and quantified finite soundness).** For a fixed shape, a regular periodic common model with
+
+$$
+R_{\rm conf}(\mathcal H_p)=\rho_p,
+\qquad R_{\rm conf}(\mathcal H_\beta)=\rho_\beta,
+\qquad \Delta_{\rm all}=\Delta_4\le D
+\tag{6.5}
+$$
+
+exists if and only if $\mathcal F_L(D)$ is nonempty for every $L$. The statement remains true with the additions (6.3)–(6.4).
+
+Every point of a finite level itself defines one lawful abstract finite common observer with
+
+$$
+R_{\rm conf}(\mathcal H_p)\le\rho_p+b^L+\zeta_{p,L},
+$$
+
+$$
+R_{\rm conf}(\mathcal H_\beta)\le\rho_\beta+\frac25b^L+\zeta_{\beta,L},
+\qquad
+\Delta_{\rm all}=\Delta_4\le D+\lambda^L.
+\tag{6.6}
+$$
+
+These are bounds on every original positive finite history; no finite observation grid is promoted to an exact endpoint certificate.
+
+**Proof.** Finite-word entries in (2.3)–(2.4) and residual entries are finite products of the same table variables. Clearing the positive denominators in (5.4), and expressing an absolute value by a bounded nonnegative auxiliary variable dominating both signs, yields the stated finite polynomial description. The variables for absolute values are existential and may be chosen equal to the absolute values; they introduce no additional runtime data. The auxiliary variables can be bounded in $[0,1]$: finite probability differences have absolute value at most one, and after clearing a conditional denominator the corresponding difference is at most that denominator, also at most one. The base table parameter space is compact. Each level, viewed as a set of tables admitting such auxiliary variables, is a compact projection of a closed bounded polynomial set and hence is closed.
+
+The partitions refine with $L$, so finite TV values increase. The target sets $S_L$ increase. Thus these closed feasible sets are nested. If every level is nonempty, compactness gives one common table in their intersection. For each supported parameter and mode, Theorem 5.2 and Proposition 5.3 send (6.1) to the full configuration-risk bounds. They send (6.2) to the full defects. Proposition 2.3 then supplies all actual histories, and the separate lower bounds (1.3) force equality. Definition 2.1 installs this table before the first actual Read, with its charged mode and original controls.
+
+Conversely any table satisfying (6.5) satisfies every finite-partition inequality. If the support is infinite, (5.6) includes the limiting target $r_*$. To justify the optional constraints, endpoint equality and (3.6) put every positive-row law in its complete endpoint coordinate box. At p, the endpoint-positive difference event is $E_p=\{w_{0,1},w_{1,1},w_{2,1}\}$; at suspension it is $E_\beta=\{\beta,\alpha w_{0,1}\}$, with endpoint 1 minus endpoint 2 in both cases. Endpoint risk equality centers their average masses at the endpoint midpoint. Direct substitution of (1.1) gives $P_{p,r_1}(E_p)=412/729$, $P_{p,r_2}(E_p)=7299/15625$, $P_{\beta,r_1}(E_\beta)=22/27$ and $P_{\beta,r_2}(E_\beta)=93/125$. Their respective arithmetic midpoints are the two constants in (6.3). All partial boxes (6.4) follow. These are moment constraints on the same complete generator, not separate optimum witnesses.
+
+Finally (5.2), (5.3), (5.8) and Proposition 2.3 prove (6.6) for each finite feasible table. ∎
+

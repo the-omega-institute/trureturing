@@ -1,0 +1,140 @@
+**lemma 6.3 (Fourth moment and affine majorant).** For any complex unit
+vector $z$ define the unnormalized fourth moment
+
+$$
+F(z)=\lim_{W\to\infty}\frac1W\int_0^W
+\sum_s a_s|v_s(t)^Tz|^4\,dt,\qquad v_s(t)=O(t)^Te_s.
+\tag{6.5}
+$$
+
+It obeys the two simultaneous bounds
+
+$$
+F(z)\le m:=\frac{5556+423\sqrt{17}}{13414},\qquad
+F(z)\le z^\dagger\Lambda z,
+\quad
+\Lambda=\frac35R_0+\frac{23}{50}R_++\frac12R_-.
+\tag{6.6}
+$$
+
+The real-unit-vector maximum of $F$ is exactly $m$. This auxiliary maximum
+is not asserted to be the minimax port error or a simultaneously achievable
+channel survival optimum.
+
+Proof. First let $x$ be real unit and put
+$p_j=\|R_jx\|^2$, so $p_0+p_++p_-=1$ and $p_j\ge0$.
+For a fixed mode the inner product in (6.5) is a constant dark component
+plus two independent planar cosines in the mathematical angle average.
+Their cosine second and fourth moments are $1/2$ and $3/8$, respectively;
+odd terms vanish. Thus Lemma 6.2 and (6.3) give
+
+$$
+\begin{aligned}
+F(x)={}&S_{00}p_0^2+\frac38S_{++}p_+^2+\frac38S_{--}p_-^2\\
+&+3S_{0+}p_0p_++3S_{0-}p_0p_-+\frac32S_{+-}p_+p_-\\
+={}&p^T\mathsf H p,
+\end{aligned}
+\tag{6.7}
+$$
+
+where
+
+$$
+\mathsf H=\frac1{544}
+\begin{pmatrix}
+272&204+36\rho_{17}&204-36\rho_{17}\\
+204+36\rho_{17}&201-9\rho_{17}&312\\
+204-36\rho_{17}&312&201+9\rho_{17}
+\end{pmatrix}.
+\tag{6.8}
+$$
+
+For example the mixed fourth-power term of the two planar cosines is
+$6\cdot(1/2)^2r_{s+}r_{s-}p_+p_-$, giving the last coefficient in
+(6.7). This also fixes the weight normalization: the measure defining $F$
+has total mass five, not one.
+
+Fix $p_+$ and vary $p_0$ with $p_-=1-p_+-p_0$. The coefficient of
+$p_0^2$ is $(65+81\rho_{17})/544>0$. Hence the maximum of $F$, or of
+$F$ minus any affine function of $p$, lies on one of the edges $p_0=0$
+or $p_-=0$. On the first edge,
+
+$$
+\frac12-F(x)=\frac1{544}
+\begin{pmatrix}p_+&p_-\end{pmatrix}
+\begin{pmatrix}71+9\rho_{17}&-40\\-40&71-9\rho_{17}\end{pmatrix}
+\begin{pmatrix}p_+\\p_-\end{pmatrix}\ge0.
+\tag{6.9}
+$$
+
+The diagonal entries are positive and the determinant is $2064$.
+On $p_-=0$ the coefficient of $p_0^2$ is
+$(65-81\rho_{17})/544<0$. Completing the square, or differentiating
+this single concave quadratic, gives its maximum at
+
+$$
+p_0=\frac{3+45\rho_{17}}{81\rho_{17}-65},\qquad
+p_+=\frac{36\rho_{17}-68}{81\rho_{17}-65},\qquad p_-=0,
+\tag{6.10}
+$$
+
+with value $m$. Both populations are positive and sum to one. Since
+$m>1/2$, these two edge calculations give the global maximum. Every such
+population vector is realized by a real unit vector with components in the
+three orthogonal subspaces, so this is an attained moment maximum.
+
+For the second bound let
+$\lambda=(3/5,23/50,1/2)$. Since $\sum_jp_j=1$,
+
+$$
+\lambda\cdot p-p^T\mathsf Hp=p^T\mathsf Bp,\qquad
+\mathsf B_{ij}=\frac{\lambda_i+\lambda_j}2-\mathsf H_{ij}.
+\tag{6.11}
+$$
+
+It suffices by the same convexity argument to check the two edges just
+used. In their coordinate order the two blocks are
+
+$$
+\begin{gathered}
+\mathsf B_{0,+}=
+\begin{pmatrix}
+1/10&31/200-9\rho_{17}/136\\
+31/200-9\rho_{17}/136&1231/13600+9\rho_{17}/544
+\end{pmatrix},\\
+\mathsf B_{+,-}=
+\begin{pmatrix}
+1231/13600+9\rho_{17}/544&-159/1700\\
+-159/1700&71/544-9\rho_{17}/544
+\end{pmatrix}.
+\end{gathered}
+\tag{6.12}
+$$
+
+Their determinants, respectively, are
+
+$$
+\frac{-60807+15075\rho_{17}}{680000},\qquad
+\frac{-18349+7650\rho_{17}}{11560000}.
+\tag{6.13}
+$$
+
+Both are positive: $41/10<\rho_{17}<5$ makes the numerators positive,
+and also proves positivity of both diagonal entries of each block.
+They are positive definite. Thus $F(x)\le\lambda\cdot p=x^T\Lambda x$
+on both edges and hence on the entire simplex.
+
+Finally write a complex unit vector as $z=u+iv$ with real $u,v$.
+Let $t=\|u\|^2$, so $\|v\|^2=1-t$. Since the $v_s$ are real,
+
+$$
+|v_s^Tz|^2=t|v_s^T\widehat u|^2+(1-t)|v_s^T\widehat v|^2.
+\tag{6.14}
+$$
+
+Convexity of the square, followed by integration, gives
+$F(z)\le tF(\widehat u)+(1-t)F(\widehat v)$. Terms with zero weight
+are omitted. The first real bound gives $F(z)\le m$; the second gives
+$F(z)\le u^T\Lambda u+v^T\Lambda v=z^\dagger\Lambda z$.
+No Kraus reality assumption is used. $\square$
+

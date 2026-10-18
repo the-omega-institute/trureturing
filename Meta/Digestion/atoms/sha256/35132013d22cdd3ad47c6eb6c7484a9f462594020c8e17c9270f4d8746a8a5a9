@@ -1,0 +1,17 @@
+**约定 1.1（来源和四值口）。** 沿用[运输与记忆卷 §22–23](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md)的全部非空有限自由有序满二叉树、实际出现地址及替换：
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\qquad
+\rho\alpha=\beta,\quad \rho\beta=\langle\beta,\alpha\rangle,
+\quad \rho\langle x,y\rangle=\langle\rho x,\rho y\rangle.
+$$
+
+左右次序、全部括号和同标签的不同出现均保留。令 $\mathcal P=\{L,R\}^{*}$，根为 $\varepsilon$，拼接按从根到节点的方向书写。记 $r_t(p)$ 为字面地址的回复，值域
+
+$$
+\mathcal A=\{\alpha,\beta,\mathsf{branch},\mathsf{absent}\}.
+$$
+
+根分别报告叶标签或分支；非空地址在叶上报告不存在，在分支上按首字母选择孩子并继续。所有有限地址，包括不存在地址，都是合法查询。非根 $p=qd$ 的父地址为 $q=p^-$，其中 $d\in\{L,R\}$。以下 $k$ 是同一实际来源已执行的非负替换次数，不是最大可逆解析深度、物理时长或从树形猜出的年龄。
+

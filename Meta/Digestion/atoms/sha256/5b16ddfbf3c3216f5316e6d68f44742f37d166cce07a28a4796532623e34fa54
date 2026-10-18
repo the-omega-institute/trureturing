@@ -1,0 +1,92 @@
+**Proposition 10.9 (late long-gap obstruction and the exact surviving
+global sum).** For every complete graph in Convention 10.1,
+the original comparison $m\ge G$ is equivalent to each of
+
+$$
+\begin{aligned}
+\sum_{\substack{B\in\mathcal B\\\beta_B\ge5}}(D_B-E_B)
+&\le E_{\mathrm{cut}}+u+
+ \sum_{\substack{B\in\mathcal B\\\beta_B\le4}}(E_B-D_B),\\
+\sum_{B\in\mathcal L_*}(D_B-E_B)
+&\le E_{\mathrm{cut}}+u+
+ \sum_{B\in\mathcal A_*}(E_B-D_B),
+\end{aligned}
+\tag{SI.59}
+$$
+
+where
+
+$$
+\mathcal L_*=\{(a,b)\in\mathcal B:b-a\ge5,\ b>e_*\},
+\qquad \mathcal A_*=\mathcal B\setminus\mathcal L_*.
+$$
+
+Every summand on the right of either inequality is nonnegative.
+A correct strict-subgrid graph at both caps must therefore have a
+consecutive gap $B=(a,b)$ with
+
+$$
+b-a\ge5,\qquad b>e_*,\qquad
+D_B>E_B,\qquad |Q_B|<|V_B|.
+\tag{SI.60}
+$$
+
+Each internal depth of that gap contains a support-ambiguous cell,
+so there are at least four consecutive such depths.
+The right endpoint lies in $\{e_*+1,\ldots,n\}$, a set of
+$d_*-1$ possible depths. The same necessity applies to the supplied
+projection of every complete original native preparer with
+$H_P<G+4+r$ at both native caps.
+
+Proof. Split the exact identity (SI.32) first at span four and
+then at the partition $\mathcal L_*,\mathcal A_*$. This proves
+both equivalences (SI.59), without discarding any term. Theorems
+9.4 and 10.4 make every span-at-most-four contribution
+$E_B-D_B$ nonnegative. Any remaining interval in $\mathcal A_*$
+ends at $b\le e_*$, and Lemma 10.2 gives $D_B=0$ there.
+Thus all right-hand terms have the stated signs.
+
+If $m<G$, the second inequality is strictly reversed. Some
+$B\in\mathcal L_*$ has $D_B-E_B>0$; otherwise its left side
+would be nonpositive. Equation (SI.33) gives the host deficit.
+There are no common-support depths internal to this consecutive gap,
+and Definition 9.1 supplies an ambiguous cell on each internal
+diagonal. Its span supplies at least four of them. Finally
+$n-e_*=\min(K,L)-1=d_*-1$. For a native strict saving,
+$m\le H_P-4-r<G$ in its supplied projection, so this entire
+argument applies to that same complete projected graph. $\square$
+
+The unrestricted inequality (SI.59), in particular the late gaps of
+span at least five, remains unresolved here. No complete correct
+strict-subgrid graph is constructed. Proving $D_B\le E_B$ for
+each remaining gap would suffice but is stronger than the stated
+global sum, which permits cut excess, other interval excess and
+genuinely nonlive states to compensate a deficit. With five or more
+block coordinates there are more internal support layers; a common
+live reply can lead to another shareable internal layer. The proof
+of Lemma 10.3 therefore supplies no corresponding six-cell
+classification or compensation at those spans. The simultaneous
+CP inequalities and (SI.56) constrain one vector; subtracting lower
+bounds on overlapping coordinate sets cannot assign their differences
+as available states. The unrestricted-budget $H_{\min}$ also
+retains its separate unresolved meaning.
+
+These new deductions are repo-derived. Their mathematical suppliers
+are Theorem 2.2, the local diagonal argument in Theorem 4.1, the
+support exclusions cited in Section 2, and the exact localization
+of Theorem 9.3; the span-at-most-three theorem is reused.
+CP Theorem 5.1 supplies actual-prefix restriction, and WTF Theorem
+4.1 with PCA Theorem 26.1 supplies the original full-fiber resource
+map and grid. The fixed-representative obstructions of WTF Section
+11 do not supply a separator-capacity premise here.
+
+The literature boundaries are those of Section 8: Wegener,
+Chapter 14.4, printed pages 423–425, treats BP1 and explicitly
+uses realizability of every graph path in the normalization proof
+on page 424; Bryant, Section 2, Definition 1, requires increasing
+variable indices; CEMP, Section 2.1, assumes an acyclic graph and
+read-once consistent accepting paths. None of these extra hypotheses
+is imposed on the original paid graph by the arguments above.
+The proofs use paired actual live extensions and charged installed
+incidence, and make no worldwide priority assertion.
+

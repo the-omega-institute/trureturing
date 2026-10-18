@@ -1,0 +1,25 @@
+**Definition 4.1 (saturated path data and corner classes).** In this
+section $q=19$. For $C_t$ write its increasing-$d$ vertices as
+$z_0,\ldots,z_{18}$ and its positive pure edge lengths as
+$\ell_1,\ldots,\ell_{18}$. Reuse [NARC, Theorem 13.3][NARC]:
+the unit middle positions are $2,5,8,11,14,17$, with nine $A$
+and nine $B$ edges in arbitrary permitted macro order. Telescoping
+along that supplied path gives
+
+$$
+g_t=\sum_{i=1}^{18}(\ell_i-1)
+=\bigl(\max_{C_t}a-\min_{C_t}a\bigr)
+ +\bigl(\max_{C_t}b-\min_{C_t}b\bigr)-18.
+\tag{NAGC.4.1}
+$$
+
+Let $N$ be the unique class containing $(0,18)$ and $P$ the unique
+class containing $(18,0)$. Use the same class statistics for these
+names, for example $D_N,L_N,U_N,g_N$ and $D_P,L_P,U_P,g_P$.
+These names may denote the same class. The two distinct gates
+$m_+,m_-\in\{2,\ldots,16\}$ and their adjacent-band ownership
+are exactly [NARC, Theorem 14.3, (NARC.14.2)][NARC]. In particular
+$C_{m_+}$ is the unique class missing difference $1$, and
+$C_{m_-}$ the unique class missing difference $-1$; a missing
+difference need not lie inside that class's span.
+

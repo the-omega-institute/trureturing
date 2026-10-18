@@ -1,0 +1,78 @@
+**Proposition 291.2 (Exact support and the two ray comparisons).**
+This full input has
+
+$$
+\beta=(-1,0,1,-1,1,10,1),\quad K=179/6,\quad W=95/6,
+\quad\Delta_O=1,\quad\Delta_N=16/9,\quad\sigma_H(Q(y))=3.
+$$
+
+The four-address payer $V=(11/4)Y^4_{(3,4,5,6)}$ has $K_V=22$,
+$\Delta_N(V)=0$ and exact residual support $1$. On the named uniform
+five-address ray of 281, residual support at most $1$ requires scale
+at least $5/2$; that scale attains it and has coefficient total $23$.
+These are comparisons of the two specified rays only.
+
+**Proof.** Class and row sums give the displayed $Q,W$. For any queried
+pair, sum rewards within each cell and maximize over every label
+$0,\ldots,7$. The exact support sums are below. $N$ uses four cells;
+$O$ first adds the $00$ and $01$ reward vectors before maximizing.
+
+| Pair | $N$ cell maxima | $O$ cell maxima |
+| --- | --- | --- |
+| $1,2$ | $(0,41/12,41/12,10)$ | $(41/12,41/12,10)$ |
+| $1,3$ | $(1,29/12,29/12,11)$ | $(41/12,29/12,11)$ |
+| $1,4$ | $(0,41/12,41/12,10)$ | $(41/12,41/12,10)$ |
+| $1,5$ | $(4/9,107/36,41/12,10)$ | $(41/12,41/12,10)$ |
+| $1,6$ | $(37/12,1/3,10,41/12)$ | $(41/12,10,41/12)$ |
+| $1,7$ | $(4/9,107/36,113/18,257/36)$ | $(41/12,113/18,257/36)$ |
+| $2,3$ | $(1,29/12,29/12,11)$ | $(41/12,29/12,11)$ |
+| $2,4$ | $(0,41/12,41/12,10)$ | $(41/12,41/12,10)$ |
+| $2,5$ | $(4/9,107/36,41/12,10)$ | $(41/12,41/12,10)$ |
+| $2,6$ | $(37/12,1/3,10,41/12)$ | $(41/12,10,41/12)$ |
+| $2,7$ | $(41/12,0,119/36,91/9)$ | $(41/12,119/36,91/9)$ |
+| $3,4$ | $(0,41/12,41/12,10)$ | $(41/12,41/12,10)$ |
+| $3,5$ | $(4/9,107/36,41/12,10)$ | $(41/12,41/12,10)$ |
+| $3,6$ | $(103/36,5/9,92/9,115/36)$ | $(41/12,92/9,115/36)$ |
+| $3,7$ | $(4/3,29/12,97/18,289/36)$ | $(41/12,97/18,289/36)$ |
+| $4,5$ | $(4/9,107/36,41/12,10)$ | $(41/12,41/12,10)$ |
+| $4,6$ | $(37/12,1/3,10,41/12)$ | $(41/12,10,41/12)$ |
+| $4,7$ | $(4/9,107/36,113/18,257/36)$ | $(41/12,113/18,257/36)$ |
+| $5,6$ | $(37/12,1,10,107/36)$ | $(139/36,10,107/36)$ |
+| $5,7$ | $(131/36,1,37/12,89/9)$ | $(139/36,37/12,89/9)$ |
+| $6,7$ | $(103/18,265/36,1,11/4)$ | $(157/12,1,11/4)$ |
+
+The empty and every singleton support equal $101/6$ in both catalogs.
+Every $O$ row above sums to $101/6$. The $N$ sums differ from $101/6$
+only at $(3,7),(5,6),(5,7)$, where they are respectively
+$103/6,307/18,317/18$. In particular $N(5,7;0,5,0,0)$ earns
+$131/36,1,37/12,89/9$, whose sum is $317/18$. Constant zero earns
+$101/6$. These exact sums prove both support values.
+
+For the hull support, 198.5 gives its vertices $o$, $p$, $u_j$, $v_j$,
+where $p=(1,0,\ldots,0;0)$, $u_j$ has its first $j$ entries
+$1/(j-1)$ and $e=0$, and $v_j$ has its first $j$ entries one and all
+remaining entries and $e$ equal to $(j-2)/(j+1)$. On these vertices the
+values of $F_{Q(y)}$ are $1,0$ and
+
+$$
+\begin{aligned}
+(F(u_3),\ldots,F(u_7))&=(1,2/3,1,3,17/6),\\
+(F(v_3),\ldots,F(v_7))&=(-89/24,-107/15,-101/12,-115/21,-319/48).
+\end{aligned}
+$$
+
+Thus the raw support is $3$, attained at $u_6$. For the four-address
+payer, $t=11/4$, $K_V=22<K$, and 290.1 gives exact residual support
+$1$, attained at $o$ (also at $u_7$). For the five-address ray with
+$\beta=\mathbf1_{\{3,\ldots,7\}}$, $K=46/5$, its scale $a$ has
+residual reading $3-4a/5$ at $u_6$. Thus $a\ge5/2$ is necessary.
+At $a=5/2$ its late residual prefixes are
+$-3/2,-5,-13/2,1, -1/2$, all at most $1$, and $K-23>0$;
+the Abel argument gives support at most $1$, with equality at $o$.
+
+Keeping $V=y$ costs $16/9$ in $N$, while $V=0$ has residual support $3$.
+The particular sufficient extension of the old $79s/21$ interval using
+a one-pivot coefficient total $4$ requires $K\ge4h-44s/7$.
+Here that threshold is $236/7>179/6$. This comparison concerns that
+specified sufficient extension, not all earlier syntheses. $\square$
+

@@ -1,0 +1,94 @@
+**theorem 3.3 (No-worse stationary design).** For every legal complex
+$T\in\mathfrak C_q$ there exists a walk-stationary
+$S\in\mathfrak C_q$ with $e(S)\le e(T)$. It still has a fixed realization
+with at most $625$ flags and whole-block CPTP decoders. Consequently, with
+$\mathcal J_{15}=\{J\subseteq\mathsf S:1\le|J|\le2\}$,
+
+$$
+\boxed{
+\varepsilon_q=
+\min_{\substack{S\in\mathfrak C_q\\S\mathcal L_A=\mathcal L_AS}}
+\max_{J\in\mathcal J_{15}}\|\Pi_J-S^\dagger(\Pi_J)\|_{\rm op}.}
+\tag{3.3}
+$$
+
+For every stationary $S$, the displayed event maximum is exactly $e(S)$,
+and some full mode read at wait zero attains its worst-case TV.
+
+Proof. The supplied class $\mathfrak C_q$ is compact. It is convex because
+concatenating scaled rank-at-most-$q$ Kraus families implements any finite
+mixture. The error is convex, being a supremum of norms of affine functions
+of the channel. It is continuous by QMB Theorem 5.1; alternatively the
+difference of two such errors is bounded by the uniform output trace-distance
+difference on density inputs.
+
+For $u\ge0$ let
+$T_u=\operatorname{Ad}_{O(u)}T\operatorname{Ad}_{O(-u)}$.
+Its Kraus family $O(u)C_iO(-u)$ has the same ranks and is TP. Direct duality
+and conjugation by $O(-u)$ give
+
+$$
+\|Q_J(t)-T_u^\dagger(Q_J(t))\|_{\rm op}
+=\|Q_J(t+u)-T^\dagger(Q_J(t+u))\|_{\rm op}.
+\tag{3.4}
+$$
+
+Lemma 3.1 proves $e(T_u)=e(T)$ for the actual nonnegative-wait menu.
+No negative wait has been added to a future protocol: the inverses here
+appear only in allowed mathematical CPTP design transformations.
+
+Let $\mathcal G$ be the closure of $\{O(t):t\ge0\}$ in $O(5)$.
+Products remain in this closure. Recurrence gives
+$O(r_n-t)\to O(-t)$ for each fixed $t\ge0$, so it contains the inverses
+of the actual orbit and, by continuity, of its closure. It is a compact
+group. Equation (3.4), recurrence, and continuity in the conjugating matrix
+give $e(\operatorname{Ad}_gT\operatorname{Ad}_{g^{-1}})=e(T)$ for every
+$g\in\mathcal G$.
+
+Take the normalized Haar average
+
+$$
+S=\int_{\mathcal G}\operatorname{Ad}_gT\operatorname{Ad}_{g^{-1}}\,dg.
+\tag{3.5}
+$$
+
+Finite convex mixtures approximate this integral in the finite-dimensional
+channel space. Compactness and convexity put $S$ in $\mathfrak C_q$, and
+convexity and continuity give $e(S)\le e(T)$. Haar invariance implies that
+$S$ commutes with $\operatorname{Ad}_g$, hence with the walk and its
+generator. The supplied finite-support theorem replaces the averaged
+channel by at most $625$ rank-restricted Kraus terms. There is no continuous
+flag in its realization and no requirement to implement averaging physically.
+
+For stationary $S$, its dual commutes with the same conjugations and
+
+$$
+Q_J(t)-S^\dagger(Q_J(t))
+=O(t)^T\bigl(\Pi_J-S^\dagger(\Pi_J)\bigr)O(t).
+\tag{3.6}
+$$
+
+The norm is independent of $t$. Since $S^\dagger(I)=I$, complementary
+events have opposite residuals; empty and full events have zero residual.
+The five singletons and ten pairs therefore represent every event test.
+This gives exactly the fifteen tests in (3.3), without claiming that fifteen
+is a minimal necessary number of independent constraints.
+
+The stationary class is a closed subset of the compact legal class. It is
+nonempty, for the completely depolarizing channel is stationary and has
+rank-one Kraus operators. Its minimum exists. The no-worse construction and
+the inclusion of stationary channels in the original class prove equality
+of the two minima.
+
+Finally choose a maximizing event $J$ and a unit eigenvector $v$ of
+$\Pi_J-S^\dagger(\Pi_J)$ with eigenvalue of largest absolute magnitude.
+The physical input $Dvv^\dagger D^\dagger$, followed by the full read at
+$t=0$ and Stop, has event-$J$ probability difference equal to that eigenvalue.
+Its TV is at least its absolute value and at most $e(S)$; hence equality
+holds. The event groups outcomes only after the full rank-one read.
+$\square$
+
+The quantifier is existence of a stationary design no worse than each
+competitor. Neither stationarity of every competitor nor equality of every
+individual error under averaging follows from this theorem.
+

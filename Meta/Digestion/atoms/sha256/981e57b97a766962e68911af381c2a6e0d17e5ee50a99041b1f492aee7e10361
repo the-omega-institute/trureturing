@@ -1,0 +1,50 @@
+### 71.2 Exact Schmidt rank of the actual family
+
+Use the ordered tensor basis
+\((e_0\otimes f_0,e_0\otimes f_1,e_0\otimes f_2,
+e_1\otimes f_0,e_1\otimes f_1,e_1\otimes f_2)\).
+For \(-1<b<1\), put
+
+\[
+h=\sqrt{\frac{3-b^2}{1+b^2}},\qquad
+P=\frac{bh-3+i(h+b)}2,\qquad
+Q=\frac{-bh-3+i(h-b)}2.
+\tag{71.1}
+\]
+
+Writing \(J=J_3\) and \(I=I_3\), the actual unit-entry matrix is
+
+\[
+M=\sqrt6H_0(b)=
+\begin{pmatrix}J+PI&J+QI\\J+\bar QI&-J-\bar PI\end{pmatrix}
+=F_2\otimes J+L\otimes I,
+\quad
+F_2=\begin{pmatrix}1&1\\1&-1\end{pmatrix},\quad
+L=\begin{pmatrix}P&Q\\\bar Q&-\bar P\end{pmatrix}.
+\tag{71.2}
+\]
+
+Indeed,
+
+\[
+\frac12F_2^*L=-\frac32I_2+\frac i2K,\qquad
+K=\begin{pmatrix}b&h(1+ib)\\h(1-ib)&-b\end{pmatrix},
+\qquad K^2=3I_2.
+\tag{71.3}
+\]
+
+Since \(h>0\), \(K\) is not scalar; hence \(F_2,L\) are linearly
+independent. So are \(J,I\). Therefore \(H_0(b)\) has operator Schmidt
+rank exactly two. No change of tensor factorization is used.
+
+Retaining independent real \(b,h\), direct multiplication also gives
+
+\[
+D=(1+b^2)h^2+b^2-3,\qquad
+M^*M=(6+D/2)I_6,\qquad
+|1+P|^2=|1+Q|^2=1+D/4.
+\tag{71.4}
+\]
+
+These verify the original Hadamard equations at \(D=0\).
+

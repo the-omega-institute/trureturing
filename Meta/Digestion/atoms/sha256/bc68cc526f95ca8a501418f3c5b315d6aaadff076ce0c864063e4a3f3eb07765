@@ -1,0 +1,78 @@
+**Theorem 68.1 (prescribed-path minimum).** On a finite-dimensional
+whole decoder fibre prescribe terminal live CP map $\mathcal L$ and
+five measurable finite-dimensional CP densities $\mathcal F_\ell(t)$.
+Assume their effects are integrable, put
+$B(t)=\sum_\ell\mathcal F_\ell(t)^\dagger(I)$ and
+$S(t)=I-\int_0^tB(u)du$, and assume
+$L=\mathcal L^\dagger(I)=S(1)\succ0$. In Definition 67.2's class with
+known general TP terminal processing, the minimum activity, attained
+with every prescribed labelled Borel map, is
+
+$$
+\mathfrak a_{\min}=\int_0^1
+\|S(t)^{-1/2}B(t)S(t)^{-1/2}\|\,dt.
+\tag{FA.2}
+$$
+
+It obeys
+
+$$
+-\log\lambda_{\min}(L)\le\mathfrak a_{\min}\le-\log\det L.
+\tag{FA.3}
+$$
+
+The effects need not commute, and $\mathcal L$ may have arbitrary Kraus
+multiplicity. A nonzero singular-time failure component cannot be
+realized in this finite-rate class. If terminal processing is restricted
+to an isometry, the general sufficiency statement requires the normalized
+terminal CP map below to be isometric; it is not inferred for an
+arbitrary multi-Kraus $\mathcal L$.
+
+**Proof.** In any realization, TP survivor controls and trace balance
+give $\mathcal S_t^\dagger(I)=S(t)$ and
+$B(t)=\mathcal S_t^\dagger(R(t))$ almost everywhere. Since
+$0\preceq R(t)\preceq\|R(t)\|I$, positivity implies
+$B(t)\preceq\|R(t)\|S(t)$. Congruence by $S(t)^{-1/2}$ proves the
+pointwise lower bound in FA.2. This uses neither a single-Kraus survivor
+nor a commutative effect path.
+
+For attainment let $K_t=S(t)^{1/2}$ and
+$R(t)=S(t)^{-1/2}B(t)S(t)^{-1/2}$. Since $S(t)\succeq L\succ0$,
+the square-root path is absolutely continuous, its derivative and inverse
+are integrable/bounded as needed. With $A_t=\dot K_tK_t^{-1}$,
+differentiating $K_t^2=S(t)$ gives
+$A_t+A_t^\dagger=-R(t)$. The self-adjoint
+$H_t=i(A_t-A_t^\dagger)/2$ therefore satisfies
+$\dot K_t=(-iH_t-R(t)/2)K_t$. The current-survivor jump density is
+$\mathcal J_\ell(t)=\mathcal F_\ell(t)\circ\operatorname{Ad}_{K_t^{-1}}$.
+Its total effect is $R(t)$, and
+$\mathcal J_\ell(t)\operatorname{Ad}_{K_t}=\mathcal F_\ell(t)$
+on every complex matrix. At the end apply only to survivors
+$\Theta=\mathcal L\circ\operatorname{Ad}_{L^{-1/2}}$.
+It is CP and $\Theta^\dagger(I)=I$, hence TP; this is a fixed map,
+not input-dependent normalization. The no-event map followed by
+$\Theta$ is exactly $\mathcal L$.
+
+The same construction from any intermediate $s$ uses $K_tK_s^{-1}$.
+Differentiating its squared norm gives negative derivative, so it is
+contractive. Integrating the jumps plus its terminal effect gives
+identity on the whole fibre. Splitting the jump integral at a cut
+proves chronological consistency and keeps the first event absorbing.
+Thus it supplies an actual CP first-event instrument, not a retrospective
+time draw. The finite-dimensional Choi square root supplies measurable
+Kraus densities if one is desired; no Kraus index is made readable.
+
+Jacobi's formula and cyclicity give
+$\int_0^1\operatorname{tr}R(t)dt=-\log\det L$; positivity gives the
+upper bound in FA.3. For any positive input, trace balance gives
+$\dot p(t)\ge-\|R(t)\|p(t)$ even with TP survivor controls.
+Integration gives $L\succeq e^{-\mathfrak a}I$ and proves the lower
+bound. It also proves positive survival for every nonzero input at any
+finite activity. All finite-rate jump measures have Lebesgue densities,
+so none can equal a nonzero singular component. The terminal-isometry
+qualification follows from the displayed $\Theta$ itself. This uses the
+mature no-jump/first-jump framework [CKL, §II, II.3–II.11 and
+II.17–II.21][CKL] and TP postprocessing [LS, §6.1, Definition 7][LS]
+as intermediate tools; the pullback lower bound establishes the claimed
+minimum. $\square$
+

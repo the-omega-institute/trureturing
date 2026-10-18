@@ -1,0 +1,25 @@
+**Definition 1.2 (Nuisance families and asymptotic notation).** For $i\in\{0,1\}$ and $q\in(0,1)$ let
+
+$$
+\begin{aligned}
+Z_i(q)&=\sum_{k\ge1}F_i(k)q^k,
+&f_{i,q}(k)&=\frac{F_i(k)q^k}{Z_i(q)}\quad(k\ge1),
+&f_{i,q}(0)&=0,\\
+S_{i,q}(t)&=\sum_{k\ge t}f_{i,q}(k)\quad(t\ge0),
+&\mu_i(q)&=\mathbb E_{i,q}(K+1),
+&\beta_i(q)&=\frac{\mathbb E_{i,q}[K(K+1)]}{2\mu_i(q)}.
+\end{aligned}
+$$
+
+Every $Z_i(q)$ is positive and finite, and every polynomial moment is finite, by polynomial-geometric summability. Write $\mathsf P_{i,q}$ for the actual stationary binary law of this source and $\mathbb E_{i,q}$ for expectation under it or its stated gap marginal. The promise consists of the two entire families $\{\mathsf P_{0,q}:0<q<1\}$ and $\{\mathsf P_{1,q'}:0<q'<1\}$, with independent, unconstrained opposing nuisance values $q,q'$. No assertion equates them.
+
+All logarithms in information formulas are natural. For probability laws $P,Q$ on the same finite or countable support, with positive masses there, write
+
+$$
+D(P\Vert Q)=\sum_xP(x)\log\frac{P(x)}{Q(x)}.
+$$
+
+All countable uses below have absolutely integrable log ratios by the credited unequal-parameter interface; shared zero masses are omitted. The notation $\mathsf P_{i,q}^W$ denotes the restriction to the first $W$ actual bits.
+
+The notation $O_{H,m}(n^{-r})$ bounds the absolute remainder by a constant depending on the one fixed polynomial $H$ and the fixed integer $m$, for all sufficiently large $n$. Analogous notation in $s$ means $s\downarrow0$ with these data fixed. Constants can also depend on the fixed rational risk $\alpha$ when shown. Such notation carries no uniformity in $m$, in varying polynomials, or over the whole nuisance interval. Set $s=-\log q>0$ when discussing the near-one limit.
+

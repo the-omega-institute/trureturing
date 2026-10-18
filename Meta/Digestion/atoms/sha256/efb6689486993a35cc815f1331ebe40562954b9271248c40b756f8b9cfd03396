@@ -1,0 +1,17 @@
+## 443. 接触链对变化秩的相邻模约束
+
+现在再加入 Musin Corollary 3.10 在其凹性假设下给出的首接触整除链。设
+
+$$
+m_k=N_k=1+F_{r_k}g_k,\qquad
+m_k\mid m_{k+1},
+$$
+
+并置
+
+$$
+R_k=\frac{m_{k+1}}{m_k},
+\qquad
+h_k=\gcd(r_k,r_{k+1}).
+$$
+

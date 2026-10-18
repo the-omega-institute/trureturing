@@ -1,0 +1,24 @@
+**Lemma 2.4 (separation and available guard values).** For every $d\ge1$:
+
+1. The vector $(\Gamma_q(u))_{q\in W_d}$ determines $u\in S_d$
+   uniquely.
+2. For every $q\in W_d$,
+   $\{\alpha,\beta,\mathsf{branch}\}\subseteq h[G_q]$.
+   Consequently, for each $a\in\mathcal A$, a value
+   $\zeta\in G_q$ exists with $h(\zeta)\ne a$.
+
+Proof. Applying $h$ to the factor vector gives the complete constructor
+array $(r_u(q))_{q\in W_d}$. At $d=1$ its three possible roots
+determine $\alpha,\beta,C_0$. Inductively a root leaf is determined;
+a root branch gives two constructor arrays of depth $d-1$ and hence
+two unique children. This is also [CBN, Theorem 2.2][CBN].
+
+For the second assertion, follow the path to $q$, placing alpha at
+each unused sibling, and place respectively $\alpha,\beta,C_0$ at
+its endpoint. The heights are at most $|q|+1\le d$. If an endpoint
+branch occurs at depth $d-1$, it is exactly the permitted $C_0$;
+all other terminal constructors are leaves. The three trees therefore
+belong to $S_d$, including $q=\varepsilon$ and $d=1$, and give
+the three stated replies. At least one differs from any prescribed
+$a$, including $a=\mathsf{absent}$. $\square$
+

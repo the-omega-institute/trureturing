@@ -1,0 +1,39 @@
+**Definition 2.1 (Literal affine model).** For an integer $n\ge0$, a
+model of dimension at most $n$ consists of some $m\in\{0,\ldots,n\}$,
+an arbitrary function $E:\mathcal M\to\mathbb R^m$, one fixed affine
+decoder $q(x)=q_0+LE(x)$ into $\mathbb R^{10}$, and, for every
+real $s,t$, fixed affine maps
+
+$$
+\mathcal U_s(z)=L_sz+b_s,\qquad
+\mathcal V_t(z)=C_tz+d_t
+$$
+
+such that
+
+$$
+E(P_sx)=\mathcal U_sE(x)\quad(x\in\operatorname{dom}P_s),\qquad
+E(Q_tx)=\mathcal V_tE(x)\quad(x\in\mathcal M).
+$$
+
+All coefficients may depend on the fixed source, preparation, model and
+command, and are independent of the current state and producing history.
+Both update offsets and the decoder offset are allowed. No regularity,
+measurability, computability, boundedness or injectivity of $E$, no
+parameter regularity, and no ambient inverse or group law are assumed.
+The source supplies neither a retained lift nor an external height input.
+An empty lawful domain imposes no identity, although an ambient map is
+assigned for every command. Decoded vectors need not be physical outputs.
+
+Define
+
+$$
+\operatorname{err}(E,q)=\sup_{x\in\mathcal M}\|q(x)-y(x)\|_2,\qquad
+e_n^{\rm aff}(Z)=\inf_{\text{models of dimension at most }n}
+\operatorname{err}(E,q).
+$$
+
+The error may be infinite. The zero-dimensional constant model makes
+this literal class nonempty with finite infimum. A finite tolerance
+$\epsilon$ is achievable when a model has error at most $\epsilon$.
+

@@ -1,0 +1,34 @@
+### 18.3 FIBEntropyFlow
+
+输入是一个内部概率单纯形、可见约束、负熵 \(\mathcal V\) 和显式向量场 \(F\)。桥接结构必须给出余切到切空间的 Onsager 算子
+\[
+\mathsf M_p:T_p^*\Delta\to T_p\Delta
+\]
+并验证：
+
+1. \(\mathsf M_p\) 对称半正定；
+2. \(F(p)=-\mathsf M_pD\mathcal V(p)\)；
+3. \(F\) 保持归一化和所声明的可见约束；
+4. 向量场正向保持概率单纯形；存在唯一性和边界延拓按所使用的 ODE 定理单独证明；
+5. 若引用 Maas 的线性 Markov 链定理，则另给 generator \(Q\)、正平稳分布 \(\pi\)、不可约性、detailed balance \(\pi_sQ_{st}=\pi_tQ_{ts}\) 及相应 transport metric。
+
+输出是耗散恒等式
+\[
+\frac{d}{dt}\mathcal V(p(t))
+=-D\mathcal V(p(t))[\mathsf M_{p(t)}D\mathcal V(p(t))]\le0.
+\]
+这里 \(D\mathcal V\) 是余切向量；没有在 Onsager 算子外再偷偷使用一套 Fisher gradient。
+
+对 FIB 四角反应，17.2.2 中的显式算子满足这些有限代数条件，给出
+\[
+\dot p=\gamma(p_2p_5-p_0p_{25})d,\qquad
+\dot\kappa=-\gamma\Delta.
+\]
+固定可见量时，\(r=1-Z>0\)，于是
+\[
+\kappa(t)=\kappa_*+e^{-\gamma rt}(\kappa(0)-\kappa_*).
+\]
+因为 \(\kappa_*\) 和初值都在合法闭纤维区间内，解是二者的凸组合，故对 \(t\ge0\) 保持合法性。这一证明不需要给五态完整空间伪造不可约线性 Markov generator。
+
+不能由此决定 \(\gamma\) 的数值、物理质量、Hamiltonian 频率、量子能级或真实时空。
+

@@ -1,0 +1,35 @@
+**Convention 8.11 (exact limits).** The lower bound at three calls is
+at least ten installed states. No ten-state sufficiency assertion or
+exact minimum state count at three calls is made. The exact optima
+established here are the root call minima four for $\sigma^\dagger$
+and three for $\sigma$ at budget nine, and the arbitrary-literal
+at-most-two-call state minimum nine for the new bit. There is no
+classification of all lawful codes, no general prescribed-code
+frontier or effective universal compatibility test for an arbitrary
+supplied code computation, and no universal root-four normalization.
+
+The unbounded-call question for general nine-state prescribed codes
+remains open: whether some lawful binary code admitting a nine-state
+arbitrary-literal two-call reader excludes every nine-state root reader
+when no call bound is prescribed. Neither the three-call obstruction
+nor these two examples answers that question. In particular, no
+impossibility at arbitrarily many calls is asserted for the new bit;
+its four-call root reader is explicit. Convention 7.2's two-call
+conclusions retain their original scope; the additional root call
+statements here are precisely Theorem 8.7 and Proposition 8.8.
+
+Every applicability claim remains conditional on Assumption 3.1's genuine
+acquisition, authentication, version binding, actual export, complete
+access isolation, installation, faithful lawful entry and stationary
+service. A finite inverse used to construct an actual mathematical
+witness is not a physical inverse action. Acquisition and finite
+acquired-term computation, code transfer and isolation, entry after
+absorbing stop, installed address and transition tables, whole-output
+representation, control work, address construction, storage and each
+literal submission have separate costs. The state and call counts
+supply no total physical storage, elapsed-time, energy or acquisition
+bound, and no empirical machine-learning interpretation. Computed
+addresses, extra workspace, another source port, extra updates or
+source-bearing entry fields require a different contract. These
+results do not assert completion of any broader research programme.
+

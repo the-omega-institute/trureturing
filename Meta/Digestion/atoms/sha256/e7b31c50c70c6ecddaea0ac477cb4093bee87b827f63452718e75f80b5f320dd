@@ -1,0 +1,20 @@
+**Definition 4.1 (Common support and boundary).** Let $P,Q$ be row-stochastic matrices on the same finite set $\mathcal S$, with $|\mathcal S|\le M$ and common distinct absorbing labels $d_0,d_1$. Suppose $\gamma\ge1$ and
+
+$$
+\gamma^{-1}P(u,v)\le Q(u,v)\le\gamma P(u,v)
+\quad(u,v\in\mathcal S).
+\tag{4.1}
+$$
+
+Let $t=d_1$ and let $h_P,h_Q$ denote the actual probabilities of ever reaching $t$, allowing time zero. Comparison makes the directed positive-edge supports identical. In that common support set
+
+$$
+\mathcal Z=\{u:\text{there is no positive directed path from }u\text{ to }t\},
+\qquad \partial=\mathcal Z\cup\{t\},
+\qquad V=\mathcal S\setminus\partial,
+\qquad n=|V|.
+\tag{4.2}
+$$
+
+Here $d_0\in\mathcal Z$, so $n\le|\mathcal S|-2\le M-2$. Both hitting functions vanish on $\mathcal Z$ and equal one at $t$. The zero assertion follows because hitting is a countable union of finite-time hitting events, each requiring a positive finite path. Conversely a positive path gives a positive hitting probability. Replacing each row in $\mathcal Z$ by its identity row preserves every hitting probability: once that set is reached, $t$ is inaccessible. Perform this same replacement in $P$ and $Q$. It preserves (4.1), uses no new vertex, and makes every vertex of $\partial$ absorbing. Rows on $V$ are untouched.
+

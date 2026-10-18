@@ -1,0 +1,13 @@
+**Theorem 7.3 (full acquired records and a single future trajectory).** A visible record containing a singleton determines its entire compatible hidden trajectory. An all-$B$ record of length $n\ge1$ has exactly two compatible trajectories. Consequently, using natural logarithms and $h(x)=-x\log x-(1-x)\log(1-x)$,
+
+$$
+H(X_0,\ldots,X_{n-1}\mid Y_0,\ldots,Y_{n-1})
+=\frac{a^{n-1}+b^{n-1}}5\,h(x_{n-1})\le\log2.
+$$
+
+This bounded hidden-trajectory uncertainty does not bound the number of exact finite-start predictive configurations. Distinct finite unresolved startup ages cannot both be recovered almost surely by one decoder of a single complete future trajectory.
+
+**Proof (7.3).** If the first singleton is $0$, its preceding initial $B$ run, if present, must have stayed at $4$; if it is $1$ or $3$, that run must have stayed at $2$. The singleton identifies its own state and every later symbol has the unique successor described in Theorem 2.1. Thus the whole compatible path is determined. On an all-$B$ word the only two paths and their conditional weights are the ones already computed. Taking conditional entropy over the actual visible histories gives the formula; all other histories contribute zero. Binary entropy is at most $\log2$. In particular the conditional entropy per observation tends to zero, although the unequal exact class count is infinite.
+
+For the final statement, extend the coherent branch profiles to their usual measures on infinite visible streams. Any two finite startup laws are mixtures of the same $F_2,F_4$ with both coefficients strictly positive. A measurable set has zero mass under either mixture exactly when it has zero mass under both branch measures. The two mixtures are therefore mutually absolutely continuous. If a common future-trajectory decoder returned two different old ages almost surely under the two laws, its probability-one event for one output would also have probability one under the other law, contradicting the required distinct output there. The future can reveal a branch without revealing the old posterior weight or old recording boundary. $\square$
+

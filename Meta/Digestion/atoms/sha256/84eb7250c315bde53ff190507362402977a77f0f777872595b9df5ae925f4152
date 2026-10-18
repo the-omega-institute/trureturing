@@ -1,0 +1,29 @@
+**Proposition 306.4 (An attained normal-domain interval).**
+If $a_2=a_3=13\tau$ and (306.2) holds, the same finite profile
+belongs to $H_N$ at $L=7$ with this same mass-one allocation. In
+particular, for every
+
+$$
+\frac1{24}<\tau\le\frac1{23},\quad
+\delta=\frac{24\tau-1}{40},\quad
+13\tau\le a_1\le1-7\tau+17\delta,
+\tag{306.15}
+$$
+
+and every permitted tail $a_8\le5\tau+\delta$, the optima are
+attained at $5\tau+\delta$.
+
+**Proof.** The hull excess is
+$\sum_{n=3}^7a_n-8e=6\tau-8\delta>0$ and
+$a_1+6\tau-8\delta\le1-\tau+9\delta<1$.
+Order, $a_7>e$ and $a_2=a_3$ supply the other hull conditions;
+306.2 supplies one full feasible mass-one allocation. In (306.15),
+$\delta>0$ and $\delta\le\tau/40$ are equivalent to the stated
+interval, and the second expression in (306.13) involving $a_2$
+equals $\delta$. The first head bound makes its other expression
+at most $\delta$. Thus $d_*=\delta$, including $\tau=1/23$
+where $\rho=0$. The upper head interval is nonempty, since
+$1-20\tau+17\delta=(23-392\tau)/40>0$ there.
+This proves the asserted continuum. The endpoint $1/23$ is not a
+global upper bound on scales at other caps. $\square$
+

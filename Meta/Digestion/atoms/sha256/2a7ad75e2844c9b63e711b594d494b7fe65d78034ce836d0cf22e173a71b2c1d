@@ -1,0 +1,52 @@
+**Lemma 18.3 (guard-preserving conditional sections).** Fix any
+actual network on $n$ blocks, any nonzero nonnegative weights
+$w_i:S_d\to[0,\infty)$, and any positive matching population
+$p=(p_i)$. Use the entire owned tuple $O_i$ and incoming tuple
+$I_i=(B_{ji})_{(j,i)\in E}$ of Definition 11.2. For an attained
+incoming value $b$, define
+
+$$
+\begin{aligned}
+T_{i,b}&=\{o:(o,b)\in R_i^+\},\qquad
+z_i(b)=\sum_{o\in T_{i,b}}w_i(x_i(o,b)),\\
+g_{i,b}(o)&=\frac{w_i(x_i(o,b))}{z_i(b)}
+                  \quad(o\in T_{i,b}).
+\end{aligned}
+\tag{COK.85}
+$$
+
+Then $g_{i,b}$ is a probability and
+
+$$
+0<z_i(b)\le\ell_d(w_i).
+\tag{COK.86}
+$$
+
+Proof. Positive probability of $I_i=b$ supplies at least one
+$(o,b)\in R_i^+$, proving strict positivity. In the local analytical
+description of block $i$, replace every occurrence of an incoming
+seed by the full factor prescribed at its fixed coordinate in $b$.
+Each replacement belongs to that port's original attained range.
+Remove just these incoming seed symbols. Retain all owned seeds,
+their domains, their distinct actual owner ports, their owner tables
+and the identities $h(B_{o_c}(a))=a$. Retain every repeated owned
+occurrence as that same seed, along with every actual compatibility
+test and the one whole weight $w_i$.
+
+These are precisely lawful one-block owned-seed data in
+[RRN, Definition 5.1 and Theorem 5.2][COKRrnJoint]. Their guarded
+inverse is a complete one-block native template, including its
+off-domain owner guards. Its positive solutions are exactly
+$x_i(o,b)$ for $o\in T_{i,b}$. Indeed its local full factor vector
+is the old vector with this same $b$ substituted, in both directions.
+If $o\ne o'$, some owned reply differs; that reply is recovered at
+its retained actual owner port. Thus the reconstructed trees differ.
+The weighted solution sum is exactly $z_i(b)$, with no multiplicity,
+so (COK.83) bounds it. When $O_i$ is empty there is just one empty
+owned tuple, and the same argument gives a constant template.
+
+Fixing $b$ here is a comparison of finite mathematical sections.
+It supplies no observation, cut descriptor or source-dependent
+constant to the original reader, and asserts no operation on the
+outside stationary source. $\square$
+

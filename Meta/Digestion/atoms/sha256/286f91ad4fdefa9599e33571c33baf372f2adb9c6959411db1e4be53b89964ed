@@ -1,0 +1,114 @@
+**Proposition 30.3 (The Hilbert numerator of this cyclic occupancy
+quotient).**
+For the seven-position relation map (28.14),
+
+$$
+H_R(t)=\sum_{m\ge0}L(m)t^m
+=\frac{1+21t+84t^2+85t^3+21t^4+t^5}{(1-t)^8}.
+\tag{30.10}
+$$
+
+In particular its numerator is not palindromic. The count polynomial,
+with the convention that $\binom{x}{7}=x(x-1)\cdots(x-6)/7!$ as a
+polynomial in $x$, is
+
+$$
+\begin{aligned}
+L(x)={}&\binom{x+7}{7}+21\binom{x+6}{7}
++84\binom{x+5}{7}+85\binom{x+4}{7}\\
+&\quad+21\binom{x+3}{7}+\binom{x+2}{7}.
+\end{aligned}
+\tag{30.11}
+$$
+
+Its reciprocity defect relative to the path translation is the
+polynomial identity
+
+$$
+-L(-x)=L(x-3)+\binom{x+1}{6}.
+\tag{30.12}
+$$
+
+For integers $m\ge3$ its last term is the index correction (30.5).
+Values at negative arguments are polynomial evaluations, not counts
+of negative copies.
+
+Proof. A degree bound is needed before finitely many counts determine
+a Hilbert numerator. Here it follows from the canonical calculation.
+Because $R$ is standard graded, Cohen–Macaulay, and eight-dimensional
+over the infinite field $\mathbb C$, choose a linear homogeneous
+system of parameters that is a regular sequence. Quotienting by its
+eight linear forms gives a finite-dimensional graded algebra with
+polynomial Hilbert series $h(t)$; the successive multiplication exact
+sequences give $H_R(t)=h(t)/(1-t)^8$ and $h(0)=1$.
+
+The canonical Hilbert-series relation is
+
+$$
+H_{\omega_R}(t)=\frac{t^8h(t^{-1})}{(1-t)^8}.
+\tag{30.13}
+$$
+
+This is the canonical duality used in [Miyazaki, §5, proof of
+Theorem 5.2][MI28]. It follows here directly by alternating the
+Hilbert series of the reversed dual resolution (30.9): a shift $j$
+becomes $29-j$, reversal contributes $(-1)^{21}$, and
+$(1-t^{-1})^{29}=-t^{-29}(1-t)^{29}$. Therefore the result is
+$H_R(t^{-1})$, which is (30.13) because the ring dimension is even.
+These manipulations are identities of rational functions before the
+expansion at zero.
+
+The least degree of $\omega_R$ is three with a one-dimensional degree
+piece, by §29.2. The least exponent of $t^8h(t^{-1})/(1-t)^8$ is
+$8-\deg h$, since the denominator has constant term one.
+Thus $\deg h=5$ and the leading coefficient is one.
+Substituting (30.13) into (29.5) gives
+
+$$
+t^5h(t^{-1})-h(t)=t^2-t^3.
+\tag{30.14}
+$$
+
+Write $h(t)=\sum_{j=0}^5h_jt^j$. The count $L(0)=1$ gives $h_0=1$;
+the $29$ actual modes give
+$h_1=L(1)-8L(0)=21$. Proposition 28.3 gives $L(2)=288$, and hence
+
+$$
+h_2=L(2)-8L(1)+28L(0)=288-232+28=84.
+$$
+
+Equation (30.14) now forces $h_5=h_0=1$, $h_4=h_1=21$ and
+$h_3=h_2+1=85$. This proves every coefficient of (30.10) with a
+justified degree bound, and explains the nonsymmetry $84\ne85$ by
+the face quotient rather than by an unexplained finite table.
+It is the $\ell=3$ specialization of the asymmetry relation in
+Miyazaki's Theorem 5.2, used here for this mode-map application.
+
+Expanding $(1-t)^{-8}$ gives (30.11) for nonnegative integers.
+For $0\le m<j\le5$, the nominal upper argument $m+7-j$ is a
+nonnegative integer less than seven, so the displayed polynomial
+binomial is zero, just as the absent degree term requires.
+Thus (30.11) is valid in all nonnegative degrees, not only eventually.
+Theorem 28.2 identifies this same function with the lattice-point count
+of the seven-dimensional lattice polytope $Q_7$.
+
+To see reciprocity explicitly, use the polynomial identity
+$\binom{-a}{7}=-\binom{a+6}{7}$. It gives
+
+$$
+-L(-m)=\sum_{j=0}^5h_j\binom{m+j-1}{7}.
+\tag{30.15}
+$$
+
+For $m\ge1$ the right side is exactly the degree-$m$ coefficient of
+(30.13): terms below their starting degree have upper argument between
+zero and six and vanish. By the interior description of $\omega_R$
+this is $L^\circ(m)$. This is the classical Ehrhart reciprocity sign
+$(-1)^7$ in the precise lattice of (28.2), here derived from the
+canonical-series supplier. For $m\ge3$, (29.5) identifies it with the
+right side of (30.12). Both sides of (30.12) are polynomials agreeing
+at all those integers, so they agree identically. The positive-degree
+index interpretation uses the range in Theorem 30.2; polynomial
+continuation does not introduce any negative-copy realization.
+$\square$
+

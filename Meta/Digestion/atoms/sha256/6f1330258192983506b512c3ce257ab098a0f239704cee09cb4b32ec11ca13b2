@@ -1,0 +1,18 @@
+## 4. The dyadic completed-gap category
+
+Fix an integer $J\ge2$. Set $p_j=2^{-j}$ for $0\le j<J$, so $p_0=1$.
+The observer category starts at level $0$. On a zero, level $j<J$ goes to $j+1$ with
+probability $p_j$ and stays at $j$ with probability $1-p_j$; level $J$ stays at $J$.
+On a closing one the current level is the completed-gap output, and the next gap
+restarts the observer level at $0$. This stochastic rule is source blind.
+
+For a proof of the exact kernel, let $G_\ell$ be independent geometric variables on
+$\{1,2,\ldots\}$ with success probability $p_\ell$, and put
+
+$$
+T_0=0,\qquad T_j=\sum_{\ell=0}^{j-1}G_\ell.
+$$
+
+The variables $G_\ell,T_j$ are proof variables only; no count, coin tape, or residence
+time is retained by the observer.
+

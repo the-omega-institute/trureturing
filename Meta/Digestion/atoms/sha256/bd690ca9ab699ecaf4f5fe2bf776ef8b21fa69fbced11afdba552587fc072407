@@ -1,0 +1,21 @@
+**Boundary 13.2 (Classical tools and the mathematical increment).** The finite nonnegative phase-type representation, Frobenius block form, cyclic Perron–Frobenius peripheral-spectrum theorem and finite-dimensional Jordan expansion are classical. Lemma 7.2 states their useful-block, periodic and reducible application explicitly; boundedness, not an assumed asymptotic cancellation, removes leading polynomial terms. Conditional expectation as projection, tower identities, uniqueness from finite cylinders, Tonelli and stationary mass transport are classical; their particular uses are proved above. Finite irreducible shift ergodicity and the pointwise ergodic theorem support the actual visible component label in Lemma 11.1, as in Universal's use of Gray's *Probability, Random Processes, and Ergodic Properties*. The real-analytic inverse and identity theorems are used with the nonzero first derivative and accumulating exact identities proved in Lemma 10.1. Strict convexity, differentiation and polynomial coefficient comparison complete the contradiction.
+
+Conditional Brier scoring is classical, as credited in Direct and Renewal to Dawid, Lauritzen and Parry, *Proper Local Scoring Rules on Discrete Sample Spaces*, §4.2. No additional proper-scoring theorem is required here. These classical attributions do not certify external document bodies or claim a literature search or priority.
+
+The repo-derived mathematical increment is the combination of the universal renewal contradiction in Theorem 10.3 and its exact whole-domain consequence in Theorem 11.4. It depends on the declared supplier premises, with the full support, actual erasure tails, score identities, periodic-tail collapse, derivative nondegeneracy and low-dimensional reduction proved at their stated quantifiers. It is a handwritten result, not a claim of formal verification. The general nonrenewal and all-dimension questions remain exactly those in Open Problem 12.3.
+
+[U]: FIB_LEGAL_EDGE_LOAD_UNIVERSAL_POSTERIOR_DEFECT_AND_FINITE_HIDDEN_SEPARATION.md
+[D]: FIB_LEGAL_EDGE_LOAD_ATTAINMENT_STRONG_ZERO_EQUIVALENCE_AND_FINITE_OPTIMIZER_COMPARISON.md
+[R]: FIB_LEGAL_EDGE_LOAD_RENEWAL_RESET_VARIANCE_BLINDNESS_AND_MINIMAL_HIDDEN_DIMENSION.md
+[Ug]: FIB_LEGAL_EDGE_LOAD_GROWTH_CONSTANT.md
+[Uo]: FIB_LEGAL_EDGE_LOAD_POSITIVE_UNIQUE_OPTIMIZER.md
+[Us]: FIB_LEGAL_EDGE_LOAD_FULL_SUPPORT_STATIONARY_ATTAINMENT.md
+[Ue]: FIB_LEGAL_EDGE_LOAD_ERGODIC_FULL_SUPPORT_STATIONARY_ATTAINMENT.md
+[Un]: FIB_LEGAL_EDGE_LOAD_FINITE_VISIBLE_MEMORY_NONATTAINMENT.md
+[Uc]: FIB_LEGAL_EDGE_LOAD_FINITE_VISIBLE_MEMORY_COMPLETENESS.md
+[De]: FIB_LEGAL_EDGE_LOAD_EXTERIOR_LOCALIZATION_AND_ACTUAL_LOSS_COCYCLE_BALANCE.md
+[Dg]: FIB_LEGAL_EDGE_LOAD_GUARDED_REPLACEMENT_ATTAINMENT_AND_CONDITIONAL_RANK_OBSTRUCTION.md
+[Ds]: FIB_LEGAL_EDGE_LOAD_SECOND_ORDER_LOSS_LOCALIZATION_AND_LOCAL_TILT_AVERAGING_OBSTRUCTION.md
+[Dt]: FIB_LEGAL_EDGE_LOAD_ONE_SIDED_ERASURE_SUMMABILITY_AND_OUTPUT_FILTER_BOUNDARIES.md
+[Rg]: FIB_LEGAL_EDGE_LOAD_GLOBAL_LOCAL_RANK_COMPATIBILITY_AND_RESET_VARIANCE_OBSTRUCTION.md
+

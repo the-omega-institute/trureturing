@@ -1,0 +1,103 @@
+**Theorem 326.1 (All-real full-row feasibility).** The one law
+325.1 satisfies every row of 315.2 at (324.2) and cap $E$.
+Its positive-word base mass is $p^\delta_+(0)=1-E$.
+
+**Proof.** First use the unchanged endpoint proofs 319.2 and 320.2.
+They prove all three independent rows on every word for their
+respective profiles and caps, with the actual $P^0$ specified above.
+For $R$ the auxiliary profile is $(1,1,0,\ldots,0)$ and its cap
+is zero. The weights in (325.1) are nonnegative and sum to one.
+Their affine combination has amplitudes
+
+$$
+(1-11\tau,1-11\tau,13\tau,10\tau,9\tau,8\tau,6\tau,
+ 5\tau+t,5\tau+t)
+\tag{326.1}
+$$
+
+and cap
+$5(\tau-t)+24t(331/1536)=5\tau+11t/64=E$.
+Every event probability and every event demand is affine in these
+same weights. Thus every independent row holds for $p^B$ for
+every real parameter, and $p^B_+(0)=1-E$. This is a proof from
+the complete endpoint inequalities, not an inference from a parameter
+scan or a check of extreme suffixes only.
+
+At a word with first zero $n\le7$, both transferred labels lie
+outside $\{0,n\}$. Equation (325.5) leaves its base probability,
+correct probability and their union probability separately unchanged.
+The target amplitude is unchanged too. This proves all three rows
+in those classes even when $w_6w_7=1$ and several other bits vanish.
+
+It remains to check the two classes where a transferred label is
+correct. Write $c_n=p_w(n)$ and
+$d_n=1-p_w(0)-p_w(n)$ for the outside-pair probability in the
+indicated class. All earlier bits are one in classes 8 and 9, so
+$w_6w_7=1$. The following exact counts refer to this same endpoint
+law $P^\star$, not separately attainable marginals:
+
+| First zero | Correct count /3072 | Outside-pair count /3072 |
+| --- | ---: | ---: |
+| 8, either value of $w_9$ | 106 | 622 |
+| 9 | 106 | 573 |
+
+Indeed (320.5) gives $Z=728$ in the entire class 8, independent
+of $w_9$, and $Z=679$ in class 9. Subtract its correct count
+106. Alternatively the full vector at $111111110$ has counts
+
+$$
+(2393,0,0,220,162,187,0,0,4,106)/3072
+\tag{326.2}
+$$
+
+in label order $0,\ldots,9$. On both classes $P^0$ sees a
+positive seven-bit prefix, has correct mass zero and outside mass
+$5/24$; $R$ emits zero. Consequently the baseline counts are
+
+$$
+c^B_8=c^B_9=\frac{53t}{64},\qquad
+d^B_8=5\tau-\frac{18t}{128},\qquad
+d^B_9=5\tau-\frac{67t}{128}.
+\tag{326.3}
+$$
+
+For example $d^B_8=5(\tau-t)+622t/128$; the other identity
+uses 573 in place of 622. After the single transfer,
+
+$$
+\begin{aligned}
+c_8&=\frac{53t}{64}+\delta=a_8-E,&
+d_8&=5\tau-\frac{18t}{128}-\delta,\\
+c_9&=\frac{53t}{64}-\delta=a_9-E,&
+d_9&=5\tau-\frac{67t}{128}+\delta.
+\end{aligned}
+\tag{326.4}
+$$
+
+Thus the correct deficit equals $E$ in each class. Independently,
+the union deficits satisfy
+
+$$
+E-d_8=\frac{40t}{128}+\delta\ge0,\qquad
+E-d_9=\frac{89t}{128}-\delta
+ \ge\frac{36t}{128}\ge0.
+\tag{326.5}
+$$
+
+The base deficit is $c_n+d_n-a_n=d_n-E\le0$. This proves
+the base, correct and independent union rows separately. In
+particular the worsening union row in class 9 has not been inferred
+by adding singleton inequalities. Its pre-transfer slack is
+$89t/128$, whereas the **available donor mass in the changed
+cell** is only $53t/128$. The smaller latter quantity is the
+nonnegativity restriction in (324.1). These two stocks have different
+meanings and are not interchanged.
+
+At the positive word (325.5) changes only two nonzero labels, so its
+base mass remains $1-E$. Negative singleton demands remain literal
+throughout, and no zero-score event or multiple-zero word was removed.
+Nonnegativity of $d_8,d_9$ also follows from the actual normalized
+cell construction, rather than from a signed deficit calculation.
+This proves the full-row assertion, including $t=0$, zero branch
+weights, exhausted donor and every equality endpoint. $\square$
+

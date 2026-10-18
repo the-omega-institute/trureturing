@@ -1,0 +1,31 @@
+**Definition 2.2 (the entire channel held fixed).** For any complex
+$A\in M_5$ write $A_V=E^\dagger AE$ and $g(t)=2/(1+t)^2$.
+The particular channel is
+
+$$
+\begin{aligned}
+\Phi_*^L(A)&=E(DA_VD^\dagger+TA_VT^\dagger+SA_VS^\dagger)E^\dagger,\\
+\Phi_{*,j}^f(A)(dt)&=
+ g(t)\left[w_j\operatorname{tr}(MA_V)
+       +\mathbf1_{j=2}\operatorname{tr}(Q_5A)\right]dt\,P_f .
+\end{aligned}
+\tag{QO.11}
+$$
+
+Cross-support maps, complement live output and every additional sector
+are zero. Its identities are identities of complex maps, amplified by
+identity on any passive reference and evaluated on each labelled Borel
+time set. Common fixed metadata are carried identically. Equation
+(QO.9) and $\int_0^1g=1$ give TP. The inherited minimax identification
+is
+
+$$
+E_* =F^{\rm src}(\mathbf x_*)\in
+(0.14817810291080132013,0.14817810291080132014).
+\tag{QO.12}
+$$
+
+Every upper instrument below forgets to (QO.11), so this credited error
+is retained. Neither a fresh certificate nor whole-channel uniqueness
+among original error optimizers is asserted.
+

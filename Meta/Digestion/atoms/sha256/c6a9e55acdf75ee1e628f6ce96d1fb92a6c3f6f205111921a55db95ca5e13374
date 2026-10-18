@@ -1,0 +1,9 @@
+## The six-sector quotient has N=24
+
+Let K=<c,d> ≅ S3, |K|=6. Since [W+:Gamma]=72, [W:Gamma]=144. The coarsened tetrahedra are indexed by Gamma\W/K. Torsion-freeness makes every right K-orbit free, so
+N=|Gamma\W/K|=[W:Gamma]/|K|=144/6=24.
+
+The six-sector development and face/link checks in merged PR #12065 apply to every finite-index torsion-free subgroup. Therefore this quotient is connected, orientable, compact with totally geodesic boundary; coarsening gives complete tetrahedral face pairings, low degree 8, high degree 9, and boundary components of genus at least two. The result is a valid N=24 packet in the six-sector family.
+
+The argument does not claim that every arbitrary 24-tetrahedron pseudo-simplicial pairing is Coxeter-sector-derived, and does not alter the scoped normal index-72 obstruction of PR #12096.
+

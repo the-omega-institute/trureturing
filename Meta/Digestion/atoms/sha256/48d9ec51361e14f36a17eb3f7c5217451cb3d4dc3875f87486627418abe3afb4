@@ -1,0 +1,39 @@
+**Definition 72.4 (truncated conical chambers with exact volume).**
+Choose once a sufficiently small $0<\alpha<\pi/4$, using the angle and
+clearance margins of72.3. Angular caps of radius $2\alpha$ about different
+incident rays at a vertex are disjoint. At a ground vertex use both its
+upper ray and its reflection; their caps avoid the equator. Set
+$q=\rho\tan\alpha$.
+
+For degree $k$ and reference volume $m_v$, start with a radial body about
+zero. Outside these caps its radial function is $R_v$. In polar angle
+$\theta$ about each incident axis, set it equal to
+$R_v\sec(\alpha-\theta)$ near $\theta=0$, and join smoothly to $R_v$
+within the cap, with identical fixed transition profiles at every port.
+This is a conical tip with apex $c_v d$, where $d$ is its unit axis and
+$c_v=R_v\sec\alpha$. Choose $R_v>0$ so that the untruncated body's
+volume is $m_v$. The volume coefficient depends only on $s,k,\alpha$
+and the transition profile, since the caps are disjoint; in particular
+$R_v$ and $c_v$ do not depend on their actual directions.
+
+Truncate each tip by the plane with axial coordinate $c_v-qt$. For all
+small $t$ this cuts within the exact cone. Its plate is an
+$(s-1)$-disk of radius $\rho t$ and measure $t^{s-1}$. Each removed cone
+has volume $qt^s/s$. Denote the truncated radial function by
+$F^{\rm tr}_{v,t}$. Choose a nonnegative smooth spherical function
+$\psi_v$ supported away from all the port caps, with
+$\int_{\mathbb S^{s-1}}\psi_v\,d\omega=1$, and set
+
+$$
+ F_{v,t}(\omega)^s
+   =F^{\rm tr}_{v,t}(\omega)^s+kqt^s\psi_v(\omega),\qquad
+ K_v(t)=\{\lambda\omega:0\le\lambda<F_{v,t}(\omega)\}.
+ \tag{72.4}
+$$
+
+For a ground chamber choose the profiles reflection-even and choose
+$\psi_v$ even and supported away from the equator. The supports can be
+fixed away from slightly enlarged caps of the initial directions, so
+small subsequent changes of directions preserve all these conditions.
+In particular the chamber remains spherical near the equator.
+

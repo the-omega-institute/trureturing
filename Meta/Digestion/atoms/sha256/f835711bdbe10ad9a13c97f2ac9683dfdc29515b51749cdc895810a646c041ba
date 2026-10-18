@@ -1,0 +1,37 @@
+### 十、静态 seam 与动态非交换性的区别
+
+FIB 单项式满足
+
+```math
+x_Ax_B
+=
+\begin{cases}
+x_{A\cup B},&A\cup B\in\Sigma_n,\\
+0,&A\cup B\notin\Sigma_n.
+\end{cases}
+```
+
+因此静态 FIB 代数是交换的：
+
+```math
+x_Ax_B=x_Bx_A.
+```
+
+但是动态转换算子不必交换。对两个局部变化 $U_a,U_b$，定义
+
+```math
+H_{a,b}
+=
+\frac12(U_aU_b-U_bU_a).
+```
+
+若
+
+```math
+H_{a,b}\neq0,
+```
+
+则操作顺序会影响最终状态，这是一种动态路径记忆或 holonomy。
+
+因此必须区分两种隐藏关系：
+

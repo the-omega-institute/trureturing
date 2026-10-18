@@ -1,0 +1,90 @@
+**Proposition 14.1 (all four integer projection tables).** For a
+range-feasible $P\subseteq S_3$, let
+$T=\{(x,y):\langle x,y\rangle\in P\}$ and let $X,Y$ be its
+two projections. For $U\subseteq S_2$ write
+$n(U)=(\mathbf1_{A\in U},\mathbf1_{B\in U},|U\cap\mathcal G|)$.
+Use precisely the ordered families of Lemma 8.2:
+
+$$
+\begin{aligned}
+\mathcal F_4&=((1,0,9),(0,1,9),(1,1,4)),\\
+\mathcal F_3&=((0,0,9),(1,0,4),(0,1,4),(1,1,1)),\\
+\mathcal F_{4A}&=((1,0,9),(1,1,4)),\\
+\mathcal F_X&=((1,1,0),(1,0,4),(0,1,1)),\\
+\mathcal F_Y&=((1,1,0),(1,0,1),(0,1,1),(0,0,4)).
+\end{aligned}
+\tag{NCE.84}
+$$
+
+In their displayed orders the complete tables are
+
+$$
+\left(u^{\mathsf T}M_{\rm a}v\right)_{
+ u,v\in\mathcal F_4}
+=\begin{pmatrix}
+8667021&9114093&8206668\\
+9114093&9114093&9156228\\
+8212604&9162164&8150280
+\end{pmatrix},
+\tag{NCE.85}
+$$
+
+$$
+\left(4481982+u^{\mathsf T}M_{\rm a}v\right)_{
+ u,v\in\mathcal F_3}
+=\begin{pmatrix}
+8375733&8469972&8146944&9106461\\
+8473788&7514008&8140540&8067828\\
+8150760&8140540&8320000&9125064\\
+9114093&8070796&9128032&9114093
+\end{pmatrix},
+\tag{NCE.86}
+$$
+
+$$
+\left(2959092+u^{\mathsf T}M_{\rm a}v\right)_{
+ u\in\mathcal F_{4A},\ v\in\mathcal F_3}
+=\begin{pmatrix}
+9114093&8206668&8653740&9114093\\
+8889120&7877236&8826796&9132696
+\end{pmatrix},
+\tag{NCE.87}
+$$
+
+$$
+\left(u^{\mathsf T}M_{\rm a}v\right)_{
+ u\in\mathcal F_X,\ v\in\mathcal F_Y}
+=\begin{pmatrix}
+3651672&1745880&2839008&1866432\\
+3142312&1701424&2327956&1774136\\
+2838160&1538941&1826077&1053716
+\end{pmatrix}.
+\tag{NCE.88}
+$$
+
+The first three tables bound $w_{\rm a}(P)$ when its parent-leaf
+set is respectively empty, $\{A\}$ or $\{B\}$. The fourth
+bounds the branch mass when both parent leaves occur. Exactly five
+entries in the first three tables exceed $C_{\rm a}$, and their
+excesses are respectively $42135,48071,10971,13939,18603$ in
+the order of the support classes in Lemma 14.2 below.
+
+Proof. Lemma 8.3 assigns the families, including the asymmetric
+parent-$B$ collision. If $u,v$ dominate $n(X),n(Y)$, positivity
+gives
+
+$$
+\sum_{(x,y)\in T}(M_{\rm a})_{c(x),c(y)}
+\le n(X)^{\mathsf T}M_{\rm a}n(Y)
+\le u^{\mathsf T}M_{\rm a}v.
+\tag{NCE.89}
+$$
+
+Adding the actual parent-leaf contribution gives the indicated
+table entry. These inequalities enlarge a nonnegative sum; they
+do not assert that $T$ is a product or that its full rectangle is
+admissible. Each displayed integer is the corresponding three-by-three
+bilinear expression. Inspection of all $33$ entries in
+(NCE.85)–(NCE.87) gives the five excesses, all at most
+$m_{\rm a}$; the maximum of (NCE.88) is $3651672$. $\square$
+

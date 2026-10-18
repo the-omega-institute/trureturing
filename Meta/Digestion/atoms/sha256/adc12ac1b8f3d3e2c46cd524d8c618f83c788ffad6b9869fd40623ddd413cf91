@@ -1,0 +1,64 @@
+**Lemma 3.2 (Packing with the actual target fixed).** Let $E\subset\mathbb Z$
+be a finite set of $m$ distinct edge left endpoints, and
+adjoin a distinguished vertex $q\in\mathbb Z$ to the graph with edges
+$\{e,e+1\}$, $e\in E$. There is an injective map $f$ from its occupied
+vertices into $\mathbb Z$ which fixes $q$, translates each component
+without reversing it, and sends every queried edge to an edge whose left
+endpoint belongs to $[q-m,q+m]\cap\mathbb Z$. Thus it preserves exactly
+all equalities of target and oriented edge slots, including repeated
+occurrences of an edge.
+
+Proof. Each component is a finite integer interval with all consecutive
+edges inside it present: a missing edge separates its two sides on the
+integer line. The component of $q$ is
+$[q-l,q+r]\cap\mathbb Z$, with $a=l+r$ edges; $l=r=0$ is allowed.
+Keep this entire component fixed. Every other component has positive
+edge length $\ell_i$ and vertex size $s_i=\ell_i+1$. Put
+
+$$
+d=\sum_{i=1}^C\ell_i=m-a.
+\tag{3.4}
+$$
+
+Order these detached components by their least original vertex. Lemma
+3.1 gives a first group of total size $x\le d$ and a second group of
+total size $y\le d+1$. Place the first group, in that order, in the
+consecutive vertex blocks occupying
+$[q-l-x,q-l-1]\cap\mathbb Z$, and the second group in the blocks
+occupying $[q+r+1,q+r+y]\cap\mathbb Z$. Empty groups occupy nothing.
+For a component with least original vertex $a_i$ and chosen new least
+vertex $b_i$, define $f(z)=z-a_i+b_i$ on that component. The new least
+vertices are determined by the indicated starting index plus the sum of
+preceding sizes in the same group. This completely specifies $f$.
+
+Each component is translated in its original orientation. Its internal
+vertex equalities and every edge's ordered pair of endpoints are
+preserved. Different blocks, including the fixed target component, are
+disjoint, so $f$ is injective and introduces no equality between
+originally different indices. Two blocks may have nearest vertices
+one unit apart. The edge between those blocks is not a mapped queried
+edge; adjacency alone imposes no constraint on distinct iid spins.
+Thus this placement preserves exactly the slot equivalence relation,
+without needing to preserve unqueried gaps. Every occurrence of a
+repeated edge uses the same translated pair of vertices, while remaining
+a separate paid node.
+
+The smallest occupied index satisfies
+
+$$
+q-l-x\ge q-l-d\ge q-m,
+\tag{3.5}
+$$
+
+because $l+d=m-r\le m$. The largest satisfies
+
+$$
+q+r+y\le q+r+d+1\le q+m+1,
+\tag{3.6}
+$$
+
+because $r+d=m-l\le m$. A mapped queried edge has consecutive endpoints
+in this occupied set; its left endpoint is consequently at least $q-m$
+and at most $q+m$. If $m=0$, only the distinguished vertex is present,
+and there is no queried edge to bound. $\square$
+

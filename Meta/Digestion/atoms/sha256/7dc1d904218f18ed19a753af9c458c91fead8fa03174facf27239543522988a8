@@ -1,0 +1,18 @@
+**Proposition 17.5 (the earlier covered domain remains constructive).** The
+zero-fill checkpoints and their selector lower bound are already supplied by
+CAP Theorems 13.2–13.6. Those results apply when a later acquired frontier,
+actual target binding, owner token and reached-local completion are present.
+They do not add an entry to the no-extra-entry final suffix of Definition 17.1.
+Consequently the present horizon result removes only the unsupported claim of
+cofinal Ready-only recovery; it leaves the earlier acquired recovery route
+available on its stated domain.
+
+**Proof.** CAP Theorem 13.2 gives the $d+1$ lawful cuts and their distinct
+complete successors, while Proposition 13.5 requires an acquired distinction
+for the intended target and Proposition 12.2 supplies the retained-prefix
+reconstruction conditions. Each of those statements is conditional on an
+actual later frontier and paid selector/call. Definition 17.1 explicitly
+withholds such an entry in the final stopping flight. Therefore the two
+claims concern disjoint admission domains and can be combined without
+requiring an immediate busy-cut `Freeze` or a terminal self-call. $\square$
+

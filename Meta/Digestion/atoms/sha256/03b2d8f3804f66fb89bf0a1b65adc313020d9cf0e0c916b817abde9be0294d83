@@ -1,0 +1,25 @@
+**定义 17.1（Width-five boundary INITIAL family）。** For any $Q\ge2$, put
+
+$$
+m=5,\qquad r=2,\qquad T=5Q+2,\qquad k=5Q+1.
+\tag{17.1}
+$$
+
+Here $g=1$ and every phase is actual. Choose pairwise distinct labels $A,B,C$, and arbitrary $D,E,R,L_\bot$; these latter labels may coincide with each other or with $A,B,C$. On both free-value fibres define
+
+$$
+f_5(v,-j,s)=
+\begin{cases}
+R,&s\ge k-5,\\
+B,&s<k-5,\ j=1,\\
+C,&s<k-5,\ j=3,\\
+D,&s<k-5,\ j=0,\\
+E,&s<k-5,\ j=5,\\
+A,&\text{otherwise},
+\end{cases}
+\qquad f_5(\bot)=L_\bot.
+\tag{17.2}
+$$
+
+All low-tail cases range over every $0\le s<k-5$. Their sources and the high-tail comparisons below have the joint witnesses (1.3).
+

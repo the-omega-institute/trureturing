@@ -1,0 +1,59 @@
+**Definition 2.2 (standing heat and threshold antecedents).** Retain the following results at exactly their supplied scopes from §§82–88, 97 and 102–107 of the companion source.
+
+The canonical heat is conservative and positive, $\mathcal E$ has no $L^2$ kernel, and
+
+$$
+p_E(t;\eta,\xi)\le Ct^{-7/2}e^{-c d_E(\eta,\xi)^2/t},
+\quad
+0<V\le C(1+N)^{-5},
+\quad
+\sup_{|r|\ge R}\widetilde U_s\le CR^{-5}+Cs^5
+\quad(R\ge1,\ sR\le c_0).
+\tag{2.7}
+$$
+
+The last bound includes all heights of the original killed domain. It will be used on its native side only; canonical fields have the analogous height bound. Canonical local form compactness, the native height-strip core approximation, and both-face native heat bounds are retained. The threshold data satisfy
+
+$$
+\begin{aligned}
+C_*&=\sup_{0\ne f\in\mathcal Q_E}\frac{\int V|f|^2}{b[f]}\in(0,\infty),&
+\chi&=\chi_c=a/C_*,\\
+h[f]&=a b[f]-\chi\int V|f|^2\ge0,&
+H_c&=a\mathcal E-\chi V,\\
+\ker H_c&=\mathbb C p,& p&=\Phi_c>0,\quad \|p\|_2=1,\quad p\in D(\mathcal E),\\
+\mathcal Ep&=C_*^{-1}Vp,& \mu&=\int Vp^2>0,\quad a b[p]=\chi\mu.
+\end{aligned}
+\tag{2.8}
+$$
+
+Multiplication by $V^{1/2}$ is denoted $M_V$. The bounded compact positive operator
+
+$$
+K_0=\lim_{b\downarrow0}M_V(\mathcal E+b)^{-1}M_V
+\tag{2.9}
+$$
+
+has norm $C_*$ and a simple top eigenvalue. Its zero-energy reconstruction $\int_0^\infty P_tM_Vdt$ is compact into $L^2$ and has range in $D(\mathcal E)$ on these right sides. These statements do not assert a bounded inverse of $\mathcal E$ on all of $L^2$.
+
+The weighted mode and parity antecedents of §106 are
+
+$$
+\begin{gathered}
+rp\in\mathcal Q_E,\qquad h[rp]=a,\qquad
+\int r^2(p^2+|Xp|^2+|Yp|^2)d\xi<\infty,\\
+\sigma(r,y,z,w)=(-r,y,-z,w),\qquad p\circ\sigma=p,\quad V\circ\sigma=V.
+\end{gathered}
+\tag{2.10}
+$$
+
+If $\eta$ is smooth and even, one on $[-1,1]$ and zero outside $[-2,2]$, with a smooth quadratic complement $\zeta$ satisfying $\eta^2+\zeta^2=1$, then
+
+$$
+\int |\eta_R'|^2p^2=o(R^{-4}),\qquad \eta_R(r)=\eta(r/R).
+\tag{2.11}
+$$
+
+Indeed the integral is bounded by $CR^{-4}\int_{|r|>R}r^2p^2$. The cutoff is native form admissible whenever its height support lies between both faces. This follows by multiplying canonical core approximants by the height cutoff and using the equivalence of (2.3) and $b$ on that strip. The same argument applies to every supported canonical form vector used below.
+
+All these are conditional antecedents of this volume. In particular their cited external heat and localization suppliers are not independently authenticated here.
+

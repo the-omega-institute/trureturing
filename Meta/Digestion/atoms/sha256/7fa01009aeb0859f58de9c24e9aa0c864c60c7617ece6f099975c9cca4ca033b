@@ -1,0 +1,21 @@
+### 99.3. Complete-norm complementarity and strict ranks
+
+The exact restricted norm on the original intersections \((2,1,1)\) has dual
+\[
+t=\min_{\tau,Z}
+\{\tau: Z\succeq0,\ Z\succeq2L_S,\ Z_{ff}\preceq\tau I_f\}.\tag{5}
+\]
+Indeed a multiplier \(Z\succeq0\) for \(W\preceq\rho\) requires \(Z\succeq2L_S\) when maximizing over \(W\succeq0\). Maximizing over trace-one block-diagonal \(\rho\) then gives \(\max_f\lambda_{\max}(Z_{ff})\). Both sides are strictly feasible: take \(\rho=I_4/4,W=\rho/2\), and take \(Z=\mu I_4,\tau>\mu>2\|L_S\|_{\mathrm{op}}\). The primal is compact, and dual sublevel sets are bounded because PSD matrices with bounded diagonal blocks have bounded entries. Finite-dimensional semidefinite strong duality and attainment apply.
+
+For every optimal primal pair and optimal dual \(Z\), the complementary products are
+\[
+(Z-2L_S)W_S=0,\qquad Z(\rho_S-W_S)=0,\qquad
+(tI_f-Z_{ff})(\rho_S)_{ff}=0.\tag{6}
+\]
+Their trace gaps are nonnegative and sum to zero; zero trace product of two PSD matrices gives zero matrix product. Thus
+\[
+Z\rho_S=2L_SW_S,\qquad
+t(\rho_S)_{ff}=2(L_SW_S)_{ff},\qquad
+EC^*=\tfrac t2\rho_F.\tag{7}
+\]
+

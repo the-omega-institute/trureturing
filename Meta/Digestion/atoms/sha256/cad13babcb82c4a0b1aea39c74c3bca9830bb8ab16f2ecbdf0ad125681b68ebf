@@ -1,0 +1,87 @@
+**Lemma 10.1 (even-comb pointwise query).** For every $m\ge1$,
+$d=6m-2$, word $q$ with $|q|\le d-1$, and integer $k\ge0$,
+there is a zero-Read constant or a literal $L^a$, $0\le a\le d-1$,
+whose reply on $T_j$, $j\in\{0,2,\ldots,d\}$, determines
+$r_{\rho^k T_j}(q)$. The choice and decoder are effective functions
+of $m,q,k$, independent of $j$.
+
+**Proof.** First let $q=L^\ell$, including $\ell=0$. The credited
+factor formula gives
+
+$$
+\Gamma_{L^\ell}(T_j)=
+\begin{cases}
+(0,0),&j>\ell,\\
+(2,1),&j=\ell,\\
+(\ell-j+2,0),&j<\ell.
+\end{cases}
+\tag{LTR.29}
+$$
+
+At $k=0$, query $L^\ell$ and return its actual reply. At $k\ge1$
+put $a=\ell+1-k$. If $a<0$, (LTR.29) and (LTR.4) make every
+answer branch. If $a\ge0$, query $L^a$ and decode
+
+$$
+\mathsf{absent}\mapsto\mathsf{absent},\qquad
+\alpha\mapsto\beta,\qquad
+\mathsf{branch}\mapsto\mathsf{branch}.
+\tag{LTR.30}
+$$
+
+Indeed these replies mean respectively $j<a,j=a,j>a$. In the
+first case $k<\ell-j+1$ and the predicted reply is absent. In the
+second $k=\ell-j+1$, giving beta, including $j=\ell,k=1$.
+In the third it is branch; if $j=\ell$ then $k\ge2$, and if
+$j>\ell$ it was a branch already. Also $a\le\ell\le d-1$.
+
+Otherwise write uniquely $q=L^rRu$. Define
+
+$$
+B=\#L(u)+2\#R(u)+2,\qquad
+c=\mathbf1_{q\text{ ends in }R}.
+$$
+
+The first alpha reached is at $L^j$ when $j\le r$, and at
+$L^rR$ when $j>r$. Hence, including $u=\varepsilon$,
+
+$$
+\Gamma_q(T_j)=
+\begin{cases}
+(B+r+2-j,c),&j\le r,\\
+(B,c),&j>r.
+\end{cases}
+\tag{LTR.31}
+$$
+
+As the allowed even $j$ increase, the distinct first coordinates
+$b$ strictly decrease in gaps of at least two, followed by the
+possible final plateau $b=B$. The gap immediately before that
+plateau is two or three. For fixed $k$, (LTR.4) gives branch at
+$b\le k$, beta at $b=k+1$, alpha at $b=k+2$ if $c=1$, and
+absent at the remaining larger $b$. Two distinct exceptional levels
+would differ by one, which the gap excludes. Thus the outputs, in
+increasing $j$ order, consist of an initial absent interval, at most
+one exceptional alpha-or-beta level, and a final branch interval.
+An interval may be empty; an exceptional plateau can have several
+$j$ but only one $b$ and one output.
+
+If the exceptional level is a nonplateau even $j_*$, query
+$L^{j_*}$. Its absent, alpha and branch replies correspond exactly
+to $j<j_*,j=j_*,j>j_*$. Decode them as absent, the exceptional
+output, and branch. Here $j_*\le r\le d-2$. If the exception is
+the final plateau $j>r$, query $L^r$: absent or alpha means
+$j\le r$ and has output absent, whereas branch means the plateau
+and has its exceptional output. This query also has $r\le d-2$.
+
+If there is no exceptional level and both output intervals are
+nonempty, take an odd $a$ strictly between the last absent even
+length and the first branch even length. Its possible replies are
+absent and branch, with exactly those outputs. One can take one
+more than the last absent length, so $a\le d-1$. A constant
+output uses zero Reads. These alternatives exhaust all cases and
+are effective finite comparisons. Every $b\le2d$, so $k\ge2d$
+is constant branch; a finite installed table for $k<2d$ suffices.
+The proof covers every word $q$, including initially absent targets,
+rather than just the pure-left test targets. $\square$
+

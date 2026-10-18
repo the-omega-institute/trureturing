@@ -1,0 +1,41 @@
+**Proposition 4.3 (Averaged tilt control and the endpoint counterexample).** For every fixed $m\ge2$ and $p\in\{1,2,3,4\}$,
+
+$$
+\mathbb E_{0,n}\left|\frac{w_n}{c_n}-1\right|^p
+=O_{H,m}(n^{-p}).
+$$
+
+The assertion $w_n/c_n=1+O_{H,m}(n^{-1})$ is false if its remainder is required uniformly over all compositions. Nevertheless
+
+$$
+\operatorname{Var}_{1,n}(w_n)=\frac{a^2v_m}{n^2}+O_{H,m}(n^{-3}).
+$$
+
+Proof. Set $U_n=w_n-1$ and $\eta_n=\mathbb E_{0,n}U_n=c_n-1\ge0$. Then $w_n/c_n-1=(U_n-\eta_n)/(1+\eta_n)$. The inequality $|x-y|^p\le2^{p-1}(|x|^p+|y|^p)$, Jensen's inequality $\eta_n^p\le\mathbb EU_n^p$, and Lemma 4.2 prove the averaged bounds.
+
+For a counterexample to uniformity use the legal composition $(1,\ldots,1,n-m+1)$. Since $r_k\to1$, $r_1=1+\delta$ and $c_n\to1$,
+
+$$
+\frac{w_n(1,\ldots,1,n-m+1)}{c_n}
+\longrightarrow(1+\delta)^{m-1}>1.
+$$
+
+The fourth-order moment bounds do not assert this exceptional composition has a typical size of tilt.
+
+For the other variance set $z=w_n-c_n$ and $\sigma_n^2=\mathbb E_{0,n}z^2$. The exact change of measure $G_1/G_0=w_n/c_n=(c_n+z)/c_n$ and $\mathbb E_0z=0$ give
+
+$$
+\mathbb E_1z=\frac{\sigma_n^2}{c_n},\qquad
+\mathbb E_1z^2=\sigma_n^2+\frac{\mathbb E_0z^3}{c_n}.
+$$
+
+Consequently
+
+$$
+\operatorname{Var}_{1,n}(w_n)
+=\sigma_n^2+\frac{\mathbb E_0z^3}{c_n}
+-\frac{(\sigma_n^2)^2}{c_n^2}.
+$$
+
+Here $c_n\ge1$, $\mathbb E_0|z|^3=O(n^{-3})$, and $(\sigma_n^2)^2=O(n^{-4})$ by Lemma 4.2 and the centered-moment bound just used. Its variance coefficient is therefore the same. This weighted identity supplies the required conclusion without a pointwise tilt shortcut. $\square$
+

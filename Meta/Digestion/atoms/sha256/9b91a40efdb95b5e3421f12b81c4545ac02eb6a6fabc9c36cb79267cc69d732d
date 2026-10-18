@@ -1,0 +1,54 @@
+**命题 469.5（实际有限素数逆成本及全素数增长）。** 对 $N\ge1$ 和有限素数集合 $S$，
+
+$$
+\boxed{
+\left\|\prod_{p\in S}U_p^{-1}\right\|_{\alpha,N}
+=\max_{1\le k\le N}
+ \sum_{\substack{1\le d\le k\\\operatorname{supp}(d)\subseteq S}}
+ \frac1d
+ \left(\frac{k+1}{\lfloor k/d\rfloor+1}\right)^\alpha.}
+\tag{WN.11}
+$$
+
+此准确范数不超过
+
+$$
+\sum_{\substack{1\le d\le N\\\operatorname{supp}(d)\subseteq S}}
+ d^{\alpha-1}
+\le B_\alpha(S).
+\tag{WN.12}
+$$
+
+若 $S=P_N$ 且 $0<\alpha<1$，则
+
+$$
+\boxed{
+\frac{(N+1)^\alpha}{2^{\alpha+1}}
+\le\left\|\prod_{p\le N}U_p^{-1}\right\|_{\alpha,N}
+\le\sum_{d=1}^{N}d^{\alpha-1}
+\le1+\frac{N^\alpha-1}{\alpha}.}
+\tag{WN.13}
+$$
+
+所以对每个固定 $0<\alpha<1$，全素数逆范数为 $\Theta(N^\alpha)$，在 $\alpha=1/2$ 时为 $\Theta(\sqrt N)$。$\alpha=0$ 时，它准确等于普通调和和 $\sum_{d=1}^N1/d$。
+
+**证明。** FG.9 给完整正系数逆展开。每个范数不超过一的向量给 WN.11 的行和上界；同一 $f_\alpha(k)=(k+1)^{-\alpha}$ 同时达到各行，因而最大行和就是准确算子范数。WN.1 把每个权比控制为 $d^\alpha$，给 WN.12 的第一个上界。对各素数的非负几何和求有限积，完整 $S$-smooth 和不超过 $B_\alpha(S)$，得到第二个上界。
+
+当 $\alpha=0$ 时，各非零权比等于一，行和随 $k$ 增加，最大值在 $N$，准确恢复 FG.10。当 $S=P_N$ 时，所有 $d\le k$ 的素因子条件自动成立，因此此范数为普通调和和。其增长也由初等积分比较给出。
+
+对 $\alpha>0$ 的全素数下界，取 WN.11 的行 $k=N$，仅保留 $d>\lfloor N/2\rfloor$。每个这样的 $d$ 都有 $\lfloor N/d\rfloor=1$，共有 $\lceil N/2\rceil$ 项，每项倒数至少为 $1/N$，所以其倒数和至少为 $1/2$。该行贡献因而至少为 $(N+1)^\alpha/2^{\alpha+1}$。
+
+上界由 WN.12 保留全部整数 $d\le N$ 给出。因为 $x^{\alpha-1}$ 递减，
+
+$$
+\sum_{d=1}^N d^{\alpha-1}
+\le1+\int_1^N x^{\alpha-1}\,dx
+=1+\frac{N^\alpha-1}{\alpha}.
+$$
+
+这证明 WN.13 及所述阶数，包括 $N=1$ 的上界等号；不需要任何素数分布渐近。证毕。
+
+正 $\alpha$ 时，准确逆范数是完整行最大值。floor 权比会跳变，不能把 WN.11 的最大值未经证明地替换为 $k=N$。零空间 $N=0$ 的算子范数仍为零；$N=1$ 的实际逆为恒等，范数为一。
+
+固定 $S$ 的 WN.10 因而不能直接作为增长集合 $S_N$ 的统一预算。全素数情形给出明确的逆成本增长；同时增长的素数集合、实际衰减率与原截止需要联合估计，有限可逆身份本身保持成立。
+

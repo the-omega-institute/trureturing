@@ -1,0 +1,11 @@
+### 定义 14.1（有限分布与局部概率核）
+
+对任意有限集合 $E$，令 $\mathcal D(E)=\mathbb R^E$，并定义
+
+$$
+\operatorname{Dist}_E(\mu)\ \Longleftrightarrow\
+(\forall a\in E,\ \mu(a)\ge0)\ \land\ \sum_{a\in E}\mu(a)=1.
+$$
+
+对任意集合 $\Omega$ 和任意有限输出集合 $O$，局部概率核是函数 $K:\Omega\times O\to\mathbb R$，满足 $\forall\omega\in\Omega\ \forall o\in O,\ K(\omega,o)\ge0$ 及 $\forall\omega\in\Omega,\ \sum_{o\in O}K(\omega,o)=1$。这里不要求 $\Omega$ 有限。
+

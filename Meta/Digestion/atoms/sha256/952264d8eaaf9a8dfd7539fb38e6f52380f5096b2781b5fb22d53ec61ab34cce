@@ -1,0 +1,30 @@
+**Definition 205.7 (Fixed projection and actual positive-cell capacity).**
+Let $J=\{j\ge3:\gamma_j>0\}$ be nonempty, in original address order.
+Fix one finite nonnegative measure $\nu$ on $\{0,1\}^J$, of mass $S$;
+for an input this is its actual pair projection
+$\nu(x)=\sum_{w:w|_J=x}P_w$. Define, with all indices in $J$,
+
+$$
+\begin{aligned}
+m_j&=\nu(x_j=0),&d_{ij}&=\nu(x_i=1,x_j=0)\quad(i<j),\\
+a_{nk}&=\nu(x_n=0,x_k=1)\quad(n<k),&a_{nn}&=0,\\
+\kappa&=\max\left\{0,\max_j(\gamma_j-m_j/2)_+,
+ \max_{i<j}\big[(\gamma_i-m_i)_++(\gamma_j-d_{ij})_+\big]\right\},\\
+\zeta&=\min\left(\{(S-m_j)/2:j\in J\}
+ \cup\{\nu(x_i=x_j=1):i<j\text{ in }J\}\right).
+\end{aligned}
+\tag{205.20}
+$$
+
+An empty pair-index family is omitted. $\zeta$ concerns the actual
+positive cells of this same projection; it is neither $\nu(1^J)$ nor
+an assumed removable common reserve. The fixed-data competitors below
+have $A=0$, $E=0$, early pair support, this projection $\nu$, these late
+totals, and specified $T=\tau$; their early splitting, correct suffixes
+and unprojected bits are arbitrary. Fixing the full late projection is
+a different family. One may instead declare a larger ordered projection
+containing zero-total coordinates, including all late coordinates, but
+must then retain those coordinates in every capacity and protection
+condition and in the construction; one cannot change projections within
+a minimum.
+

@@ -1,0 +1,20 @@
+**A4 all coefficient equations and ratio roots.**
+
+**even coefficient ledger.**
+
+e3=b\*a2/2
+
+e2=a2+b\*a1/2
+
+e1=a1+b\*a0g/2
+
+e0=d+a0g
+
+**K derivation.**
+
+Subtract q times E=d+e\*g from O=d+o\*g. This gives Kq=R+q\*e3\*S-q\*E=(1-q)\*d+b\*eta(q)\*g. The cubic coefficient cancels exactly. Every remaining coefficient is k2=o2-q\*(e2+9e3), k1=o1-q\*(e1-23e3), k0=o0-q\*(e0+15e3). The whole identity requires k2=b\*eta\*a2, k1=b\*eta\*a1, and k0=(1-q)\*d+b\*eta\*a0g. The constant equation is retained and is not inferred merely from a formal ratio root.
+
+**F derivation.**
+
+Substitute b\*a2=2e3 in k2=b\*eta\*a2. Moving all terms to one side gives o2-q\*e2-9q\*e3-2e3+2e3\*q^2+e3\*q=0, namely F(q)=2e3\*q^2-(e2+8e3)\*q+o2-2e3. Its quadratic coefficient is nonzero. Consequently there are at most two distinct real roots, and every legal ratio is one of its positive real roots. Nonreal or nonpositive roots contribute nothing. A zero discriminant yields one distinct candidate, not two worlds by multiplicity. No discriminant is divided out.
+

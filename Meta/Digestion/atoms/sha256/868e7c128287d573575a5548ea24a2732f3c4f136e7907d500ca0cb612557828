@@ -1,0 +1,43 @@
+## Proof
+
+The recurrence gives
+\[
+ B_{j+1}-1=(B_j-1)\bigl((B_j-1)^2-3\bigr).
+\]
+Writing \(B_j-1=2r_j u_j\) and \(r_{j+1}=3r_j\), we obtain the exact
+recurrence
+\[
+ u_{j+1}
+ =u_j\left(-1+\frac{4r_j^2}{3}u_j^2\right)
+ =u_j\left(-1+4\cdot3^{\,2j+1}u_j^2\right).
+ \tag{M27.3}
+\]
+Here \(u_1=(19-1)/(18)=1\). The correction term in parentheses is
+divisible by \(27\) for every \(j\ge1\). Induction in (M27.3) therefore
+proves (M27.1).
+
+Now fix \(j\ge2\). Every prime factor has the form
+\(p=1+2r_j b_{p,j}\). Since
+\[
+ (2r_j)^2=4r_j^2
+ \quad\text{is divisible by}\quad 54r_j
+ \qquad (j\ge2),
+\]
+the binomial theorem gives
+\[
+ p^{h_p}\equiv1+2r_jh_pb_{p,j}\pmod{54r_j}.
+\]
+All cross terms in the product also contain \((2r_j)^2\), so multiplying
+over the distinct prime factors yields
+\[
+ B_j=\prod_{p\mid B_j}p^{h_p}
+ \equiv1+2r_j\sum_{p\mid B_j}h_pb_{p,j}\pmod{54r_j}.
+\]
+On the other hand, \(B_j=1+2r_ju_j\). Cancelling the common factor
+\(2r_j\) in the congruence modulo \(54r_j\) gives
+\[
+ \sum_{p\mid B_j}h_pb_{p,j}\equiv u_j\pmod{27},
+\]
+which is (M27.2) by (M27.1). For \(j=1\), \(B_1=19\), \(b_{19,1}=1\),
+and \(h_{19}=1\), so both sides are \(1\) modulo \(27\).
+

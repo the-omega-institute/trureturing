@@ -1,0 +1,29 @@
+## 248. The low axis of xi closes a degree-one edge
+
+Both incoming faces of xi have only P labels, since eta is entirely
+high-labelled. One such face already forces xi's transverse pair to
+consist of two distinct P labels and its incident axis to have a P
+label. Xi cannot itself be entirely high-labelled by Sections 238–240.
+Its other axis therefore has a label B outside P. No transverse or
+first axial slot can have that label. A special B is impossible because
+its fixed pair would be contained in P. Thus B is C or D and occurs
+exactly once in xi, as an axis.
+
+Every face incident to this B axis contains B and the two distinct P
+transverse labels, hence is marked. Neither incoming face from eta can
+be incident to B, as those faces have only P labels. Thus the two B
+faces are precisely xi's two remaining face occurrences. Their partners
+must belong to K. Tau has only its unmarked {D,M,C} faces unused; rho
+and eta have no unused faces. Consequently the two B faces must pair
+to each other. Their unique B edge slots are the two ends of xi's one
+original B normal interval, so this interval is a closed component of
+the actual B normal circle. Connectedness forces degree(B)=1, contrary
+to minimum degree six.
+
+This contradiction proves the claim. It covers repeated high axes,
+self-pairings of distinct faces, and arbitrary global multiplicities.
+No assertion that an arbitrary low-partner U face stays marked is used:
+marking at the last step follows from xi's two distinct high transverse
+labels. The external low-only region remains unrestricted.
+
+

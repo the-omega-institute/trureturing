@@ -1,0 +1,22 @@
+**Lemma 3.2 (the exact finite Gibbs identity).** For $P$ with positive
+weights and any finite function $U$ on $P$, let
+$b_y=\sum_{x\in P:U(x)=y}w(x)$. Then
+
+$$
+\log_2\sqrt{\sum_yb_y^2}
+=\max_{\mathcal L(X)\text{ on }P}
+\left\{H(X)+\mathbb E\log_2w(X)-\frac12H(U(X))\right\}.
+\tag{RCE.15}
+$$
+
+A maximizing law has full support $P$.
+
+Proof. Conditional Gibbs in the $y$ cell bounds
+$H(X\mid U=y)+\mathbb E[\log_2w(X)\mid U=y]$ by
+$\log_2b_y$, with equality at conditional probabilities $w(x)/b_y$.
+For the cell law $p$, the remaining maximum is
+$\frac12H(p)+\sum_yp_y\log_2b_y$. Relative entropy against
+$p_y=b_y^2/\sum_zb_z^2$ proves that its value is
+$\frac12\log_2\sum_yb_y^2$. These choices are positive on every
+state of $P$. $\square$
+

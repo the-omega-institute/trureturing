@@ -1,0 +1,51 @@
+## 11. 十一、对当前项目的直接解释
+
+按照 trureturing 当前的 information-escape 语言，AURIC 五态结构可以直接写成：
+
+| 项目问题 | AURIC 对应物 |
+|---|---|
+| 信息在哪里逃逸？ | $\kappa=p_{13}$，或者长窗口的 $\kappa_q$ |
+| 为什么逃逸？ | 当前读出只保留 $(X,Y,Z)$，没有保留合法独立集的二阶联合 |
+| 加什么读出可以找回？ | $\chi=z+xy$、$S^2$、完整 Fibonacci 光谱或未来响应 $\mathscr L$ |
+| 新信息是什么？ | $\kappa$、$\Delta$、局部 square-cycle flow |
+| 还有什么继续逃逸？ | 长窗口的高阶独立集矩、环路 holonomy、无界历史计数 |
+| 什么时候可形成有限记忆？ | 只有当 separator、cycle 和 history 三层都被有限可辨识地商掉 |
+
+所以 AURIC FIB ATOM 金字塔的更深定义可以写成：
+
+$$
+\boxed{
+\text{金字塔不是完整状态空间，而是完整关系几何的一个观察切面。}
+}
+$$
+
+它保留了：
+
+$$
+\text{单点占用}
+$$
+
+却可能丢失：
+
+$$
+\text{端点联合、局部环流、未来响应差异和全局 holonomy}.
+$$
+
+因此 $\kappa$ 不是一个附加参数，而是“边界读出无法唯一代表内部”的最小数学证据。
+
+下一步最值得形式化的对象是：
+
+$$
+\mathrm{EscapeKernel}(R)=
+\ker R\cap\{\text{总质量为零的 signed laws}\},
+$$
+
+以及：
+
+$$
+\mathrm{CycleBasis}(B_n)=
+\{h_q:q\text{ 产生 }2\times2\text{ square cycle}\}.
+$$
+
+一旦这两个对象在 Lean 中建立起来，AURIC、信息逃逸、common-law flow 和 future quotient 就不再是四套叙事，而会成为同一个边界—内部—读出理论的不同投影。
+

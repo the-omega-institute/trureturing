@@ -1,0 +1,53 @@
+**Proposition 10.3 (total rows, exact composite menu and receipt).**
+There is a total instruction rule on the installed set (10.1) with
+the described lawful execution. Its complete Read menu is exactly
+$\mathcal D_{H,J}$, not all words of length at most $P$. Every installed
+source-response receipt changes at most one encoded bit. With one
+Read PC, one Update PC and two fixed-output Halt PCs, its counts are
+
+$$
+n_R^{\rm comp}=n_U^{\rm comp}=2^{b-r-5},\qquad
+n_H^{\rm comp}=2^{b-r+1},\qquad
+n_{\rm typed}^{\rm comp}=5\,2^{b-r-5}.
+\tag{10.3}
+$$
+
+Proof. Use ERROR holds for unused PC/opcode patterns; use fixed-width
+arithmetic, zero for an out-of-range read, and a holding protected write
+for out-of-range or readonly destinations. Out-of-range motion has a
+local error successor. These rules are total and create no memory or
+source information. Ordinary bit-loop branches inspect their named
+bits. Lawful paths perform the bounds/permission scans before using
+their results. Malformed paths need not terminate or simulate a promised
+entry; they remain installed and counted.
+
+At Read PC with all five response flags zero, select (8.4) when its
+three range conditions hold, and the empty materialized interval
+otherwise. This is the same total operand-framing convention as
+Proposition 4.5, now for one mixed readonly/writable flat lane. It
+does not decode $X$ or a repeat count during the source operation.
+Even at an unreachable unsealed issue configuration, every selected
+letter already exists in that lane. Validity of receiver provenance
+at such an arbitrary configuration is not asserted. On lawful runs
+the paid scans and material seal precede this PC.
+
+Every selected word lies in $\mathcal D_{H,J}$. Conversely choose
+any $p$ of length $m\le H$ by putting its bits in the last $m$ cells
+of $Y$ and setting $n=0$; choose any $xR^n$ with $|x|=H$ by filling
+all of $Y$ and selecting that $n\le J$. Set Read PC and zero flags.
+These configurations are all installed, regardless of reachability.
+They realize every member of (8.1), proving the exact composite menu
+and its exact prefix union and longest installed literal.
+
+At actual Read receipt set exactly its typed flag; at actual Update
+receipt set only $f_\star$. The PC and every other bit hold. The issue
+PC with nonzero flags performs local continuation or ERROR, never
+a repeated source call. Wrong-typed, multiset or malformed flags enter
+ERROR by local work. Thus all source rows, reachable or not, have
+legal one-bit receipt; the zero-interleaving map preserves that one
+coordinate change. Each of the two source PCs fixes $r$ bits and
+requires five zero flags, giving (10.3). The two Halt PCs each fix
+$r$ bits and their output. The remaining configurations are local.
+The original native Update and Halt row counts remain the different
+counts of Definition 4.1 and SLHC.12.5. ∎
+

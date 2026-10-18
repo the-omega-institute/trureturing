@@ -1,0 +1,34 @@
+**Theorem 42.1 (Universal invariant at constant advice).** Every such family, on every measurable common carrier, satisfies
+
+$$
+(1-\delta)\sup_{y\in X}h_y\le\Delta.
+\tag{42.5}
+$$
+
+In particular, at the anchor,
+
+$$
+\Delta\ge(1-\delta)h.
+\tag{42.6}
+$$
+
+**Proof.** Write $H=\sup_y h_y$. For a fixed source $x$ use the increasing finite-record events $A_m$ of (40.6): a tape belongs to $A_m$ when its run at $x$ is a finite proposal, has length at most $m$, queries only the first $m$ primes, and outputs at most $m$. Their union is $H_x$. Since $\beta_0$ is constant, Theorem 37.2 supplies, for each $m$, one source $y_m\in B_{\beta_0}$ whose answers on those first $m$ primes agree with $x$ and whose target is greater than $m$. Finite-execution transport gives
+
+$$
+A_m\subseteq F_{y_m}.
+\tag{42.7}
+$$
+
+Consequently, using the event-TV inequality and then the conditional error bound at $y_m$,
+
+$$
+\mu_x(A_m)
+\le \mu_{y_m}(A_m)+\Delta
+\le e_{y_m}+\Delta
+\le \delta h_{y_m}+\Delta
+\le \delta H+\Delta.
+\tag{42.8}
+$$
+
+Continuity from below under $\mu_x$ gives $h_x\le\delta H+\Delta$. Taking the supremum over $x$ yields $H\le\delta H+\Delta$, which is (42.5). This is a universal necessity for the changed law contract; it does not use the anchor construction and does not assert that a law can be acquired from the observed integer. At $\delta=1$ the invariant is the tautology $0\le\Delta$. $\square$
+

@@ -1,0 +1,27 @@
+**Lemma 4.2 (equal trace parameter reconstructs the whole world).**
+For fixed $d,c,y,\zeta$ with $AB\ne0$, two legal members of this
+root-seven response fiber with the same $t$ are the same complete world.
+
+**Proof.** Formula (4.2) first gives the same polynomial. Since
+$f(1)j=A$ and $f(2)\ell=B$ and both traces are positive,
+$f(1),f(2)\ne0$. Recover
+
+$$
+j=A/f(1),\qquad \ell=B/f(2),\qquad
+u=\ell-1,\quad v=j-\ell+1.
+\tag{4.6}
+$$
+
+Both $f(4),f(5)$ cannot vanish: their roots with seven would be the
+forbidden pair $(a,b)=(4,5)$. If $f(4)\ne0$ use
+
+$$
+r=Y_*/f(4)-1-j;
+\quad\text{if }f(4)=0\text{ use }r=j+2\ell-Z_*/f(5).
+\tag{4.7}
+$$
+
+These determine $P$, and then the raw gain and drift follow from
+(1.3). The unused late equation, positivity and rank one remain
+membership conditions; reconstruction does not replace them. ∎
+

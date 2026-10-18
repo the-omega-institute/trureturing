@@ -1,0 +1,15 @@
+**定理 142.3（忘记细节的并集扩张）。** 在同一 $\mathcal U_O$、同一任务与权限合同内，设可达细记录集合为 $\mathscr R$，忘记映射为 $Q:\mathscr R\to\overline{\mathscr R}$。粗记录 $\bar r=Q(r)$ 的相容集定义为
+
+$$
+\overline C_O(\bar r)=
+\bigcup_{r'\in\mathscr R:\ Q(r')=\bar r}C_O(r').
+$$
+
+则 $C_O(r)\subseteq\overline C_O(Q(r))$，后者仍有限非空，且
+
+$$
+\log_2|\overline C_O(Q(r))|\ge H_{\rm count}(r).
+$$
+
+证明（142.3）。并集的索引包含实际细记录 $r$，所以包含其全部候选；它仍是固定有限 $\mathcal U_O$ 的子集，并包含非空的 $C_O(r)$。基数不减及对数单调性给结论。$\square$
+

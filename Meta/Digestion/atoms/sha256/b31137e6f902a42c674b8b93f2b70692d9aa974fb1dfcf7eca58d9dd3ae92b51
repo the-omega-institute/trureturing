@@ -1,0 +1,39 @@
+**Definition 8.1 (Recorded real pair readout).** Fix $n\ge2$,
+a positive normalized reference law $p$ on $B_n$ and
+$\psi=\sqrt p$. Orient each legal site pair $\{s,t\}$ so
+that $t$ has the occupied bit at that site. Choose one
+fixed parameter
+
+$$
+0<\tau<\min_{\{s,t\}\text{ oriented legal pair}}
+\frac{\psi_t}{\psi_s},\qquad
+c=\frac1{\sqrt{1+\tau^2}},\quad
+d=\frac\tau{\sqrt{1+\tau^2}}.
+\tag{8.1}
+$$
+
+The minimum is positive because the carrier and pair
+set are finite and $p$ is positive. At each real site
+setting use the orthonormal pair vectors
+
+$$
+R_{st,+}=ce_s+de_t,\qquad
+R_{st,-}=-de_s+ce_t,
+\tag{8.2}
+$$
+
+and keep every blocked word as a resolved singleton.
+Choose quadrature site $i$ with probability $r\omega_i$
+and real site $i$ with probability $(1-r)\eta_i$, where
+$\omega,\eta$ are distributions. The common $\tau$,
+setting probabilities and effects stay fixed as the
+unknown state varies. Every setting and outcome remains
+recorded, and each preparation uses one setting.
+
+The real rotation axis and its calibration are supplied
+additional controls. This menu replaces the mode-basis
+choice of Definition 5.1; it is not identified with that
+original control menu or with the same hardware cost.
+The common budget being compared is the number of
+preparations.
+

@@ -1,0 +1,21 @@
+### 定理 56.3（内部坐标的共同因子分组）
+
+对 \(n\ge2m+1\)，
+\[
+\Phi_n(Q_n)=(n-2m)D_m(Q)+E_n,\qquad0\le E_n\le m/2.
+\]
+对所有 \(n\ge1\)，
+\[
+|\Phi_n(Q_n)-nD_m(Q)|\le m/2.
+\]
+因此 \(d(Q)=\lim_n\Phi_n(Q_n)/n\) 存在且 \(d(Q)=D_m(Q)\)。
+
+#### 证明
+
+对内部坐标 \(i=m+1,\ldots,n-m\)，成对完整词只在长度 \(m+1\) 的中心窗口改变，其余转移因子给共同非负因子 \(C_\omega\)。由 \(h\) 的正齐次性，
+\[
+\sum_\omega h(C_\omega A_0,C_\omega A_1)
+=h\!\left(\sum_\omega C_\omega A_0,\sum_\omega C_\omega A_1\right),
+\]
+而两个和正是 \(Q_{2m+1}(a0v)\) 和 \(Q_{2m+1}(a1v)\)。内部坐标共有 \(n-2m\) 个，端点边贡献由 \(0\le h\le1/4\) 控制，得到余项界。零 cylinder 质量也可直接在非负质量上分组。证毕。
+

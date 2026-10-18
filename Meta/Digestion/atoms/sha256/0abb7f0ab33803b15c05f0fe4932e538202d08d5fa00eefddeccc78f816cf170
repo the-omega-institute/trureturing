@@ -1,0 +1,57 @@
+**Theorem 29.1 (a paid common tuple upper).** For every $D\ge1$ and
+nonempty public $Q\subseteq\mathcal P_D$,
+
+$$
+M_D(Q)\le\prod_{p\in Q}m(|p|).
+\tag{GDB.113}
+$$
+
+One preparation uses exactly $2^D-1$ original-root Reads, maximum
+address length $D$ and exactly $(D-1)2^D+1$ submitted letters on
+every source. Every later request uses one actual prefix Read of
+length at most $D$, with the original all-authentic-count guarantee.
+
+Proof. Install a fixed public order of $Q$ and all its grouping tables.
+On the one stationary $t$, before any request, submit every $Rw$,
+$|w|\le D-1$, in a fixed public order. All the prefixes of every
+$p\in Q$ occur in this same acquired array. Compute from it
+
+$$
+E_p(t)=g_{|p|}(\partial_p(t)),\qquad
+J_Q(t)=(E_p(t))_{p\in Q}.
+\tag{GDB.114}
+$$
+
+Export only this fixed-slot complete tuple and isolate the acquired
+array, descriptors and other preparation dependence as in Theorem
+27.2. Its actual attained cardinality obeys
+
+$$
+|J_Q[\mathcal F_D]|\le\prod_{p\in Q}|E_p[\mathcal F_D]|
+                         =\prod_{p\in Q}m(|p|).
+\tag{GDB.115}
+$$
+
+The left side is one joint image on the same source. Equality with the
+product is neither needed nor asserted; component names may be
+arbitrarily correlated. No separately chosen sources are joined to
+make the tuple. On receiving $p$, choose its public slot, and apply
+Theorem 27.2's single center-prefix Read to that same stationary $t$.
+The slot value and its reply give $\Gamma_p(t)$ before any supplied
+count, so (GDB.4) completes the required prediction.
+
+The scan words have lengths $j$ with multiplicity $2^{j-1}$, for
+$j=1,\ldots,D$. Hence the exact charges are
+
+$$
+\sum_{j=1}^D2^{j-1}=2^D-1,\qquad
+\sum_{j=1}^Dj2^{j-1}=(D-1)2^D+1.
+\tag{GDB.116}
+$$
+
+This is the credited [FMR, Theorem 2.3][FMR]/[CBN, Theorem 7.1][CBN]
+canonical acquisition scan, used here simply to obtain the actual
+prefix replies. It does not require acquiring deeper source structure.
+Every request and every original shape is covered; no actual cut or
+shape descriptor is installed for free. $\square$
+

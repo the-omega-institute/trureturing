@@ -1,0 +1,35 @@
+**Theorem 3.3 (Bounded affine observables lose the beta phase).** In any
+finite model satisfying the exact updates of Definition 2.1, let a fixed
+affine scalar functional of $E$ be bounded on every phase torus at fixed
+height. That observable is independent of $\beta$. In particular, every
+component of any decoded output with finite uniform error is independent
+of $\beta$.
+
+**Proof.** Set $t=1$ in the spectral inclusion. Since $0<k<H=r/2$,
+the values $c(k)$ range over exactly $(0,1/2)$. Dividing the finite
+set $\operatorname{spec}(S_1)$ by the nonzero number $\lambda_1(1/2)$
+shows that
+
+$$
+h(x)=\lambda_2(x\bmod 2\pi)
+$$
+
+has finite image on $(0,1/2)$. Lemma 3.2 makes $h$ trivial. Every
+circle class has a real representative, so $\lambda_2$ itself is
+trivial. Every eigenfunction in the basis of $W$ is therefore independent
+of $\beta$, and so is every function of $W$.
+
+At each height the given affine observable belongs to $V$, by
+homogenization, and its stated boundedness puts it in $W$. This proves
+the first assertion. For the decoder, finite uniform error and the
+uniform boundedness of $y$ give
+$\|q(x)\|_2\le\epsilon+\sup_{x\in\mathcal M}\|y(x)\|_2$.
+Each component is thus bounded and qualifies. The homogeneous constant
+ensures that offsets have been included even when $n=0$.
+
+Unbounded encoder coordinates need not belong to $W$. The proof says
+nothing that places them there. It consequently does not classify every
+encoder coordinate, every affine factor, or all encoder fibers. It is a
+bounded-observable theorem, exactly sufficient for finite-error affine
+readout. $\square$
+

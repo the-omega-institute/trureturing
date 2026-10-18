@@ -1,0 +1,2 @@
+**Convention 4.5 (Bits).** If $a_k^{\mathrm{bits}}$ is defined using base-two entropy, then $a_k=(\log2)a_k^{\mathrm{bits}}$. Accordingly (3.1) has coefficient $(\log2)/2$ against the bit-entropy tail, and (4.2) has coefficient $\log2$ against its weighted bit-entropy sum. A bit-unit exponential constant $C_{\mathrm{bits}}$ becomes $C=(\log2)C_{\mathrm{bits}}$ in (4.4). The squared-loss units and the emitted-bit clock do not change.
+

@@ -1,0 +1,25 @@
+### 定义 15.3（静态场到 FIB 的推前）
+
+设 \((\Omega,\mu)\) 为有限或概率测度空间，场 \(\Phi\) 诱导密度 \(\rho_\Phi\)，并给出五个可测分区 \(e_s:\Omega\to[0,1]\)，满足 \(\sum_s e_s=1\)。定义
+
+\[
+\Pi(\Phi)_s=\int_\Omega e_s\,\rho_\Phi\,d\mu.
+\]
+
+当 \(\rho_\Phi\ge0\) 且归一化时，\(\Pi(\Phi)\in\Delta(\Sigma)\)。再定义
+
+\[
+P_{\mathrm{vis}}(\Phi)
+=\bigl(\mathbb E_{\Pi(\Phi)}x,\mathbb E_{\Pi(\Phi)}y,
+\mathbb E_{\Pi(\Phi)}z\bigr).
+\]
+
+若存在 \(v_\kappa\in T_*\) 使
+
+\[
+D\Pi_{\Phi_*}(v_\kappa)=d,\qquad
+D(P_{\mathrm{vis}})_{\Phi_*}(v_\kappa)=0,
+\]
+
+则称 \(v_\kappa\) 为 FIB 隐藏法向。它是场的隐藏读出方向；只有当 \(K_*v_\kappa=0\) 时才同时是静态零模。若 \(K_*v_\kappa=\eta_\kappa v_\kappa\) 且 \(\eta_\kappa>0\)，则 \(\eta_\kappa\) 是该方向的静态曲率，而不是自动的动力学能级。
+

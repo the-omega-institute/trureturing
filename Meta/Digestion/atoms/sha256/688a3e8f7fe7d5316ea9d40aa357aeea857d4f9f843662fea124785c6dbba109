@@ -1,0 +1,12 @@
+**Definition 6.1 (the two-row linked family).** Let both cuts be
+$P_0=P_1=\{L,R\}$. Each proposed row is an ordered root pair of holes
+with two distinct classes. Use epochs $(0,d)$ and retain the links
+
+$$
+(0,R)=(1,L),\qquad (0,L)\ne(1,R).
+\tag{SFP.18}
+$$
+
+The second link is included to specify a full signed example, even
+though the positive link and within-row negatives will force it.
+

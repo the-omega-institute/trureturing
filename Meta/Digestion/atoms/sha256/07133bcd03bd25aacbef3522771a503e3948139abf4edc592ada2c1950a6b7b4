@@ -1,0 +1,86 @@
+**Lemma 68.5 (exact cable Grams and normalized reserves).** In the one-particle
+space of any actual $D$ write $D_{\rm deg}=\operatorname{diag}(d_p)$, $A_{\rm adj}$
+for seam adjacency, $L_D=D_{\rm deg}-A_{\rm adj}$, $E$ for the affine harmonic lift,
+$`\Gamma=E^*E`$ and $S=\Gamma^{-1/2}$. Set $\eta(x)=4x(1-x)$ on every open cable,
+zero at atoms, and $Z(v)=M_\eta Ev$. Then
+
+$$
+\begin{aligned}
+\Gamma&=I+\delta(2D_{\rm deg}+A_{\rm adj})/6,&
+G_\eta=E^*M_\eta E&=\delta(3D_{\rm deg}+2A_{\rm adj})/15,\\
+\|Z(v)\|^2&=\langle v,N_\eta v\rangle,&
+N_\eta&=\delta(16D_{\rm deg}+12A_{\rm adj})/105,\\
+k[Z(v)]&=\langle v,K_\eta v\rangle,&
+K_\eta&=(8/15)(4D_{\rm deg}+A_{\rm adj}).
+\end{aligned}
+\tag{68.9}
+$$
+
+Let $\gamma=1+3\delta/2$. Then $I\le\Gamma\le\gamma I$,
+$(2\delta/15)I\le G_\eta\le\delta I$,
+$(8\delta/105)I\le N_\eta\le(4\delta/5)I$ and $0\le K_\eta\le8I$.
+If $0<g<a\lambda$, put $\mu=a\lambda-g$, $H^{(1)}=aL_D-g\Phi_D$ and, for any
+unit discrete $f$, define
+
+$$
+\theta=H^{(1)}Sf,\qquad v=G_\eta^{-1}\Gamma\theta,\qquad
+z=QZ(v),\qquad w=z/\|z\|.
+\tag{68.10}
+$$
+
+This is a nonzero admissible normalized reserve, with the vacuum-restricted full
+form, equivalently its particle form, satisfying
+
+$$
+q_D(Wf,w)=-\|\theta\|^2/\|z\|\le-k_*,\qquad q_D[w]\le C_{\rm res},\qquad
+k_*=\frac{\mu\sqrt{5\delta}}{15\gamma^{3/2}}>0,\qquad
+C_{\rm res}=6a+\frac{105\gamma a}{\delta}.
+\tag{68.11}
+$$
+
+Proof. For the endpoint basis $(1-x,x)$ the four local matrices, respectively
+unweighted mass, $\eta$-weighted mass, $\eta^2$-weighted mass and bump derivative,
+are
+
+$$
+\begin{pmatrix}1/3&1/6\\1/6&1/3\end{pmatrix},\quad
+\begin{pmatrix}1/5&2/15\\2/15&1/5\end{pmatrix},\quad
+\begin{pmatrix}16/105&4/35\\4/35&16/105\end{pmatrix},\quad
+\begin{pmatrix}32/15&8/15\\8/15&32/15\end{pmatrix}.
+\tag{68.12}
+$$
+
+Integrate the displayed polynomials on $[0,1]$ and sum over actual seams and
+both distinct grounded stubs, with ground endpoint value zero. This gives (68.9).
+The edge inequality $2|u_pu_q|\le|u_p|^2+|u_q|^2$ gives $-D_{\rm deg}\le A_{\rm adj}\le D_{\rm deg}$; also $2I\le D_{\rm deg}\le3I$.
+The asserted bounds follow directly. In particular the weighted Gram is invertible;
+$\Gamma-I$ is the actual continuum Gram. Also $\mu I\le H^{(1)}\le6aI$, hence
+$\|\theta\|\ge\mu/\sqrt\gamma$ and
+$\|v\|\le15\gamma\|\theta\|/(2\delta)$.
+
+The bump has zero atoms and zero endpoint/ground traces, so it is a form vector.
+$`E^*Z=G_\eta v=\Gamma\theta`$ gives $PZ=E\theta$ and
+$z=Z-E\theta$, with atomic coordinates $-\theta$. Therefore $\|z\|\ge\|\theta\|>0$.
+The actual operator identity $T_DWf=J_D\theta$ gives $q_D(Wf,Z)=0$ and
+$q_D(Wf,z)=-\|\theta\|^2$. Harmonic orthogonality to zero-atomic form vectors gives
+$q_D[z]=a k[Z]+\langle\theta,H^{(1)}\theta\rangle$ exactly; no potential or kinetic
+cross term was discarded. The upper norm bound
+$\|z\|\le\|Z\|\le\sqrt{4\delta/5}\|v\|
+\le15\gamma\|\theta\|/\sqrt{5\delta}$ proves the coupling inequality.
+
+For normalized energy a lower norm bound is required. Write $C=(E-J)S$, so
+$`C^*C=I-\Gamma^{-1}\le(1-\gamma^{-1})I`$. Because $Z$ has zero atoms,
+$`\|PZ\|^2=\|C^*Z\|^2\le(1-\gamma^{-1})\|Z\|^2`$. Thus
+$\|z\|^2\ge\gamma^{-1}\|Z\|^2\ge8\delta\|v\|^2/(105\gamma)$.
+Combining this with $k[Z]\le8\|v\|^2$, and separately using
+$\|z\|^2\ge\|\theta\|^2$ for the $H^{(1)}$ term, proves $C_{\rm res}$.
+These two estimates concern the same vector, not separately optimized states.
+An upper bound on $\|z\|$ alone would not prove its Rayleigh-quotient bound.
+For example on the actual two-stub singleton, writing $\gamma_0=1+2\delta/3$,
+this construction has
+$q_D[z]/\|\theta\|^2=(80a/3)\gamma_0^2/\delta^2+2a-g$.
+The proposed unnormalized coefficient $6a+388800a/(\delta\lambda^2)$ is false:
+at $a=1,g=1/10,\delta=10^{-8}$ the exact ratio is $72000000960000003713/270$,
+exceeding $1399680000000006$, an upper bound for that coefficient since
+$\lambda>1/6$. The normalized estimates (68.11) do not use that claim. $\square$
+

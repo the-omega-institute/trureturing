@@ -1,0 +1,13 @@
+**命题 39.3（一个混合原形达到行的非乘积未来）。** 共同旧程序在纪元零读 $LL$，按其实际四值回复停止。其缺席行的证据是 $H=((0,LL,\mathsf{absent}))$。这个实际达到族包含 $\alpha,\beta,\langle\alpha,\alpha\rangle$，也包含任意右子树的 $\langle\alpha,z\rangle$，没有共同原形。取 $N=0,Q=(\varepsilon,L)$，其联合未来码像恰为
+
+$$
+\mathcal K_{H,0,Q}
+ =\{(\mathsf A,\mathsf D_2),\ (\mathsf B,\mathsf D_1),\
+       (\mathsf C,\mathsf A),\ (\mathsf C,\mathsf B)\}.
+\tag{SLH.39.3}
+$$
+
+两个边缘分别有3和4个值，故乘积有12个值；例如 $(\mathsf A,\mathsf A)$ 没有共同原来源。即使已经取得 $LL=\mathsf{absent}$，整个 $LL$ 未来也不由该行单独决定。
+
+证明。若根为叶，它是 $\alpha$ 或 $\beta$，左孩子分别在偏移2或1出生，给前两项。若根为分支，$LL$ 缺席恰要求左孩子是叶，右孩子完全自由，给后两项。四项分别由 $\alpha,\beta,\langle\alpha,\alpha\rangle,\langle\beta,\alpha\rangle$ 实现。根 $\alpha$ 强制左孩子目前缺席，排除所列交叉元组。原程序在这些来源上真实读到相同缺席回复并到达同一完整停止行；新任务若要实际执行，按假设35.1另供入口。最后 $\alpha$ 的 $LL$ 在偏移3出生，$\beta$ 的 $LL$ 在偏移2出生，因而相同旧行上的零读计算不能给全部 $LL$ 未来。这里的较小未来任务仍不能靠“已有精确语言”代替实际取得。$\square$
+

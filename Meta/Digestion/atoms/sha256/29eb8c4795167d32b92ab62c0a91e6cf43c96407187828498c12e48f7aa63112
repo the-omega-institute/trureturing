@@ -1,0 +1,28 @@
+**Corollary 10.2 (erased-slot attainment and endpoints).** The same
+finite realization satisfies
+
+$$
+\delta(\mathcal S_r(\operatorname{Dep}_d))=2(1-r/d).
+\tag{JG.70}
+$$
+
+This is the minimum erased-slot distance for identity-fixing realizations
+with bypass cap $r$. At $r=1$, $\mathcal S_1$ is the finite diagonal-phase
+twirl of the slot, and $\epsilon_1=2$. At $r=d$, $\mathcal S_d=\Theta$
+and $\epsilon_d=0$. In particular $d=2$ gives uniform values $2,0$
+and erased-slot values $1,0$; $d=3$ gives uniform values $2,1,0$ and
+erased-slot values $4/3,2/3,0$.
+
+Proof. For $\operatorname{Dep}_d$, all $t_{ii}=1/d$, so (JG.60) gives
+(JG.70). Conversely (JG.55) and the measurement argument of (JG.59),
+now directly at the erased slot, give at least $2(1-r/d)$ even without
+fixing $\Delta$. At $r=1$ the sole group contains all indices, $V_f$
+simply appends a fixed scalar memory and the decoder is the inverse
+on the entire slot space. Thus the only surviving average is the
+finite phase twirl. At $r=d$ every group is a singleton, all wrong
+populations are corrected, and (JG.67) gives $\Theta$.
+The old unaveraged $r=1$ code construction would instead leave every
+slot unchanged. The phase-averaged $\mathcal S_1$ is not that identity
+supermap: for example, it removes a swap slot's reverse coherence.
+$\square$
+

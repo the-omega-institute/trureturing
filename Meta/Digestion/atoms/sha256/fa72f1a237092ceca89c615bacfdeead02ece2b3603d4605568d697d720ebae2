@@ -1,0 +1,20 @@
+**Definition 13.6 (a bounded native witness family).** For a finite word
+$a$ and a tree $u$, let $C_a[u]$ be the tree obtained by placing $u$ at
+$a$, making every strict ancestor of $a$ a branch, and placing alpha at
+each sibling not on this path. In particular $C_\varepsilon[u]=u$.
+Define the actual trees
+
+$$
+ t_{j,e}=C_{p_j}[\lambda_e]\quad(1\le j\le n,\ e\in\{0,1\}),
+ \qquad t_* = C_p[\langle\alpha,\alpha\rangle],\qquad
+ \mathcal K_p=\{t_{j,e}\}\cup\{t_*\}.
+\tag{AAR.79}
+$$
+
+Because $p$ starts with $R$, every one has initial left child alpha.
+The right-subtree heights are $j-1$ and $n$, respectively. Thus
+$\mathcal K_p\subseteq\mathcal F_D$ for every $D\ge n$, without
+padding above a submitted query. Their descriptors are exactly all
+$2n+1$ possibilities of Definition 13.2, all simultaneously realized
+in this same public family.
+

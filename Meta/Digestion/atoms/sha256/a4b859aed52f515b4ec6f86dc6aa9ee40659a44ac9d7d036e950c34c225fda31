@@ -1,0 +1,87 @@
+**定理 5.1（Injective full-band cost）。** Suppose $\lambda(j)=B_j$ for $1\le j<m$, and $A,R,B_1,\ldots,B_{m-1}$ are mutually distinct. Let $h$ be the least positive integer satisfying
+
+$$
+m\le2^h+h+1,
+\tag{5.1}
+$$
+
+and put
+
+$$
+\epsilon=\mathbf1_{\{m=2^h+h+1\ \text{or}\ (Q,m)=(2,3)\}}.
+\tag{5.2}
+$$
+
+Then, for every $Q\ge2,m\ge3$,
+
+$$
+C_{\rm ad}=C_{\rm pre}=hQ+1+\epsilon.
+\tag{5.3}
+$$
+
+The scope excludes $m=2$.
+
+Proof of the all-adaptive lower bounds. First note $1\le h\le m-2$, since $r=m-2$ satisfies (5.1) for $m\ge3$. At any total budget at most $hQ$, restrict to band phases $1\le j\le m-h$ with INITIAL tail zero. Their only informative indices after the forced root are $Q,2Q,\ldots,(h-1)Q$. Indeed every window of residue one starts at least $m-(h-1)>m-h$, and residues at least two miss the band. They can have at most $2^{h-1}$ different output paths and hence at most that many different label leaves. There are only $h-1$ other band phases, each contributing at most its own one label. Thus a correct controller at this budget would require
+
+$$
+m-1\le2^{h-1}+h-1.
+\tag{5.4}
+$$
+
+For $h=1$ this is false because $m\ge3$. For $h>1$, minimality of $h$ says $m>2^{h-1}+h$, which also contradicts (5.4).
+
+This count applies to every adaptive controller: all restricted sources first share the forced root's zero archive; the compulsory second block clears their tails; a subsequent rejection at a nonconstant node cannot create a useful extra leaf. After pruning constant nodes, the only branching opportunities for the restricted phases are the stated main indices. The $h-1$ other phases are counted as individual sources, without combining their responses with those of a different branch. All counted sources have actual witnesses (1.5).
+
+At total budget $hQ+1$, the same core $1..m-h$ has only $h$ informative main indices, and the remaining $h-1$ band phases still contribute at most one label each. Therefore at this budget
+
+$$
+m-1\le2^h+h-1
+\tag{5.5}
+$$
+
+is necessary. If $m=2^h+h+1$, it fails, proving the additional block. If $(Q,m)=(2,3)$, the fresh-$A$ exception of Theorem 3.1 supplies the additional block. These prove the lower side of (5.3).
+
+For attainment outside $(Q,m)=(2,3)$, use the ordinary scan of Theorem 2.1 when it removes all outsiders, and the alternative scan (2.4) when $Q=2$ and $m$ is odd. In the latter case $m\ge5$ and $h\ge2$. Thus the scan leaves exactly $I$, or exactly $I\cup\{z\}$ with $z=m+1$.
+
+Write $e=\mathbf1_{\{m=2^h+h+1\}}$ and
+
+$$
+p=h-1+e,\qquad n=m-1-p=m-h-e.
+\tag{5.6}
+$$
+
+The core is $K=1..n$ and the peeled phases are $H_r=m-r$, $1\le r\le p$. If $e=0$, $n\le2^h$; if $e=1$, $n=2^h$. Assign core phase $j$ the $h$-bit expansion of $j-1$, in increasing bit order:
+
+$$
+c_r(j)=\left\lfloor\frac{j-1}{2^{r-1}}\right\rfloor\bmod2,\qquad1\le r\le h.
+\tag{5.7}
+$$
+
+At each main index $rQ$, prescribe these bits on $K$ and zero on all other phases, except for the special modification below. Their total charge is compensated at the absent phase 0. The whole core lies in $W_{rQ}=[-r,m-r]$: even its largest phase satisfies $n\le m-h\le m-r$. The donor 0 is in that window and was excluded by the root. Emit the unique word (1.7).
+
+At each peeling index $rQ+1$, $1\le r\le p$, use
+
+$$
+E_r=\{m-r,m\},\qquad \mathcal B_{rQ+1}(E_r)=1^r0^{m-r}.
+\tag{5.8}
+$$
+
+Phase $m$ is absent from the continuing root-zero archive. Thus this row selects exactly the actual band phase $H_r$, not a linear surrogate. Each core phase lies strictly below every peeling window's left endpoint, including the equality boundary $e=1$ where the last selected frontier is $m-h=n+1$. Every other peeled phase has response zero in this row. The main-query codes on the core are different; the peeling rows give separate unit coordinates to the other $p$ band phases. Consequently all $m-1$ band labels are identified.
+
+For the exceptional scan $Q=2$, odd $m\ge5$, make two modifications: at the first main index $Q$ also prescribe one at $H_1=m-1$; at the first peeling index $Q+1$ replace (5.8) by
+
+$$
+E_1=\{H_1,z\},\qquad \mathcal B_{Q+1}(E_1)=110^{m-2}.
+\tag{5.9}
+$$
+
+Compensate the modified main row at phase 0 as before. There is such a first peel because $h\ge2$. The outside phase $z$ is invisible at every main index and has only its first-peel coordinate one. Phase $H_1$ has that same peel coordinate but also its first-main coordinate one, so their codes differ. Every core phase has all peeling coordinates zero. Every other peeled phase has a different peeling unit coordinate. Thus $A$ and every $B_j$ have distinct actual codes. No outside-label clearance is added beyond a peeling slot already counted in the stream. In this scan phases $0,m,k$ have been excluded on the same archive; in particular the main row's left endpoint $-1=k$ is not an unaccounted source.
+
+Place a literal $0^m$ at every remaining absolute index after the scan and before the last query. The final index is $hQ$ when $e=0$, and $hQ+1$ when $e=1$. These are genuine paid intervening blocks: a peel occupies the index immediately after its main query, and the other gap indices are zero waits. Hence the stream has exactly $hQ+1+e$ blocks. The case $(Q,m)=(2,3)$ is supplied by the actual binary stream (3.4), giving four blocks as required by (5.2).
+
+To check literal safety, the index-1 scan word starts zero and clears even the maximal surviving current tail. Later scan words contain zero. Every main word starts zero, since its left endpoint $-r$ is unselected and $r\ge1$; it may end in one when a core or peeled phase is its right endpoint. Every peel word contains zero because $r\le p\le h\le m-2$, and (5.9) contains zero for $m\ge3$. Its leading run is at most $m-2$, or two in (5.9), and its terminal tail is zero. All post-scan words therefore have leading and terminal runs at most $m-1$, giving the strict general seam bound $2m-2<k$. The actual terminal tail of the final main word is retained. No cleanup is charged or silently omitted.
+
+The decoder first returns $R$ on root rejection and $A$ on scan-positive archives. On the remaining archive it uses the main and peel difference coordinates just proved distinct. In the modified scan the additional code belongs to $A$ at $z$. Every returned label is an INITIAL label; no source is copied, and no two archives are combined. This is one fixed stream for both free values. The preset upper bound equals the all-adaptive lower bound, proving (5.3). ∎
+
+The first saturated widths $m=2^h+h+1$ are $4,7,12,21$. At these widths the main-row core capacity is short by exactly one band source, and the final frontier query costs one extra block. At the unsurcharged boundary $m=2^h+h$, all $2^h$ core codes can be used; for $Q=2$ and odd $m$ the first peel simultaneously handles the fresh outside source by (5.9). Thus its presence does not require a new tour. These are consequences of the proved construction and count, not an assumption that adaptive and preset query models always agree.
+

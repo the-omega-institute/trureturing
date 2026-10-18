@@ -1,0 +1,48 @@
+**Proposition 4.2 (Exact residual on a rational orbit with prediction
+fixed).** Suppose a model has error at most a finite $\epsilon$.
+For each $x=(k,\alpha,\beta)$ decompose its single prediction uniquely as
+
+$$
+q(x)=D(a_x,b_x)+w_x,\qquad w_x\perp\operatorname{im}D.
+$$
+
+Then
+
+$$
+\|w_x\|_2^2+4\|a_x-A(k)U(\alpha)\|_2^2
++(\|b_x\|_2+B(k))^2\le\epsilon^2.
+$$
+
+At $\epsilon=e_*$ this is equivalently
+
+$$
+\|w_x\|_2^2+4\|a_x-A(k)U(\alpha)\|_2^2
++\|b_x\|_2^2+2B(k)\|b_x\|_2\le4Z(H-k).
+$$
+
+**Proof of Proposition 4.2.** Since $D^{\mathsf T}D$ is invertible,
+put $(a_x,b_x)=(D^{\mathsf T}D)^{-1}D^{\mathsf T}q(x)$ and
+$w_x=q(x)-D(a_x,b_x)$. This gives the unique orthogonal
+decomposition, including predictions outside $\operatorname{im}D$.
+Every rational-turn state $x_q=(k,\alpha,\beta+2\pi q)$ has exactly
+the same prediction by Theorem 3.4. Its squared error is
+
+$$
+\|w_x\|_2^2+4\|a_x-A(k)U(\alpha)\|_2^2
++\|b_x-B(k)U(\beta+2\pi q)\|_2^2.
+$$
+
+The rational turns are dense in the circle. With $q(x)$ fixed, this
+explicit target expression is continuous in the angle. Its supremum
+over rational turns is its maximum over the circle. The last term has
+maximum $(\|b_x\|_2+B(k))^2$, by choosing the opposite unit direction
+to $b_x$ when $b_x\ne0$; when $b_x=0$ it is constant. This proves
+the first inequality. Subtracting $B(k)^2=4Zk$ from the floor value
+$e_*^2=4ZH$ gives the second.
+
+The continuity used here belongs only to the displayed target response
+with its prediction frozen. The assertion does not make $q(x)$
+independent of $\beta$ on different irrational common-turn cosets.
+It does not turn an arbitrary readout into an affine observable.
+$\square$
+

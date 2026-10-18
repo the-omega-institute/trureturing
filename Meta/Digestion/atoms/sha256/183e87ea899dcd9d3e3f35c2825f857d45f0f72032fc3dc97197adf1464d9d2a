@@ -1,0 +1,26 @@
+## Independent co-volume closure (no product adapter)
+
+There is a second paper-level route that avoids the finite-product Brouwer
+port.  Put `I_e=[arccosh(a_e), arccosh(b_e)]` and
+`\overline Ω_ℓ=∏_e I_e`.  Luo--Yang's extended tetrahedral co-volume is
+`C¹` on all of `ℝ⁶`; summing it over tetrahedra and subtracting
+`2π∑_e ℓ_e` gives a `C¹` global functional `H` on `ℝ^E`, with
+
+```
+                    ∂H/∂ℓ_e = −K_e(cosh ℓ).
+```
+
+The rectangle `\overline Ω_ℓ` is compact, so `H` has a minimizer.  If a
+minimizer lies on a lower face, the box theorem gives `K_e ≥ η`, hence the
+one-sided derivative in the inward `+ℓ_e` direction is at most `−η`; a small
+positive step strictly decreases `H`.  On an upper face, `K_e ≤ −η`, and the
+inward `−ℓ_e` step strictly decreases `H`.  Therefore a minimizer is interior,
+where every derivative vanishes and `K_e=0` for all global edges.  The strict
+cosine inequalities already proved on the box identify the generalized angles
+in this gradient formula with the ordinary angles used in `K`.
+
+This route requires only the standard extended-co-volume regularity and
+gradient identity (Luo--Yang/Zhao); it does not assume a zero-curvature metric
+or use a Ricci-flow convergence theorem.  A formal Lean development would
+need those co-volume declarations instead of the product-PM adapter.
+

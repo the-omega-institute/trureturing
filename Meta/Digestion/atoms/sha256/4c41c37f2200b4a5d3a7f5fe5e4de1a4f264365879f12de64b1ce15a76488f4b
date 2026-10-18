@@ -1,0 +1,57 @@
+### 2.2. A simultaneous posterior transfer
+
+Fix $i$ and an exterior cylinder $A$ specifying finitely many coordinates
+other than $i$. For every $H\in\mathcal L$, the exterior measurability of
+the component label and the defining identity for $q_i$ give
+
+$$
+\int \mathbf1_A\mathbf1_{\{\psi\in H\}}(X_i-q_i)\,dQ_\star=0.
+$$
+
+Applying (2.6) yields
+
+$$
+\int_H g_{i,A}(\lambda)\,dW(\lambda)=0,
+\qquad
+g_{i,A}(\lambda)=\int\mathbf1_A(X_i-q_i)\,dR_\lambda.
+\tag{2.7}
+$$
+
+The function $g_{i,A}$ is measurable and bounded. Since (2.7) holds for
+every $H$, taking its positive and negative level sets gives
+$g_{i,A}=0$ $W$-almost surely. There are countably many $i$ and countably
+many exterior cylinders at each $i$, including $X$ and the empty event.
+Intersect their measurable conull sets with $\Lambda_0$ to obtain
+$\Lambda_1$.
+
+For a fixed $\lambda\in\Lambda_1$ and $i$, the finite signed measure
+$A\mapsto\int_A(X_i-q_i)\,dR_\lambda$ vanishes on this cylinder
+pi-system. It vanishes on all of $\mathcal E_i$: the class of zero sets
+contains $X$, is closed under complements and disjoint countable unions,
+and hence contains the generated sigma-field by the pi-lambda argument.
+The function $q_i$ is $\mathcal E_i$-measurable and bounded, so the
+defining conditional-expectation identities prove
+
+$$
+q_i=\mathbb E_{R_\lambda}[X_i\mid\mathcal E_i]
+\quad R_\lambda\text{-almost surely}
+\quad(\lambda\in\Lambda_1,\ i\in\mathbb Z).
+\tag{2.8}
+$$
+
+This reduction to a countable generating class precedes the extension to
+all exterior events. No intersection over an uncountable family of
+event-dependent exceptional sets is taken.
+
+Let $E$ be the Borel event on which, simultaneously for all $i$,
+$q_i=0$ on $F_i^c$ and $1/4\le q_i\le1/2$ on $F_i$. By (1.2) and
+stationarity, $Q_\star(E)=1$. Equation (2.6) gives
+$\int R_\lambda(E)\,dW=1$, so
+
+$$
+\Lambda_2=\Lambda_1\cap\{\lambda:R_\lambda(E)=1\}
+$$
+
+is measurable and conull. Both the common posterior and all of its
+coordinate bounds now hold under each component in $\Lambda_2$.
+

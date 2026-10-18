@@ -1,0 +1,50 @@
+**Theorem 18.5 (sharp maximum over all matching populations).** For
+every $d,n\ge1$ and all nonzero nonnegative $w_1,\ldots,w_n$,
+
+$$
+\max_{\substack{\mathcal N\text{ actual on }n\text{ blocks}\\
+                  p\in\mathcal P^+(\mathcal N;\boldsymbol w)}}
+ \mathcal B_{\mathcal N}(p;\boldsymbol w)
+   =\sum_{i=1}^n\log_2 A_1(w_i).
+\tag{COK.90}
+$$
+
+In particular, for homogeneous $w$,
+
+$$
+\sup_{n,\mathcal N,p}\frac{\mathcal B_{\mathcal N}(p;w)}n
+       =\log_2\ell_d(w).
+\tag{COK.91}
+$$
+
+If all weights are rational, the maximum in (COK.90) is attained
+with rational matching populations. For real weights rational
+populations approach the same value on fixed positive supports.
+
+Proof. Theorem 18.4 supplies the upper bound, even without using
+matching beyond the stated population domain. For each $i$ choose
+a complete one-block template attaining $\ell_d(w_i)$. RRN's exact
+correspondence makes all of its seeds owned in that block, with
+no incoming groups and one lift per actual tree. On its positive
+solution set use the law $w_i(x)/\ell_d(w_i)$, transported by that
+bijection to its owned tuples. The Gibbs identity is
+
+$$
+H(O_i)+\mathbb E\log_2w_i(x_i)=\log_2\ell_d(w_i).
+$$
+
+Take the disjoint union of these $n$ actual templates. Matching
+has no edges to test, so these laws are a positive matching
+population attaining (COK.90). This union is a lawful competitor
+in the unrestricted class used by that maximum; it is not a
+reduction of another competitor to independent child codes.
+Rational weights give rational normalized laws. At real weights,
+approximate each finite Gibbs law by rational laws on its same
+positive solution support. Entropy and the finite energy expectation
+are continuous there; the edge-free matching constraints remain
+vacuous. This proves the last assertion and (COK.91). $\square$
+
+The maximum is for the cover-population functional. It is neither
+$\log_2\Omega_d(w)$ nor $\log_2\beta_d(w)$ in general, and it
+is not an optimization of $\Delta(P)$.
+

@@ -1,0 +1,15 @@
+**Proposition 264.3 (Sharp individual column constants).** For $L\ge4$,
+$N(3,4;0,3,4,0)$ has
+$\chi z_D-3=3/2$, $A^{\rm b}z_D=1$, $d_\zeta(D)=1/2$.
+The stopped column $O(3,4;0,4,0)$ has the respective values
+$1,1,1$. Thus the individual constants in (264.2) cannot be
+improved at column level.
+
+**Proof.** Insert their four or three terminal labels into (264.4)
+and the fair cell table. This gives respectively
+$\chi z_D=9/2,4$ and $\zeta z_D=5/2,2$.
+At $v$ both output zero. These verify every value.
+This sharpness is columnwise; no optimal cap, unrestricted distance,
+class nonmembership or residual-charge lower bound is asserted.
+$\square$
+

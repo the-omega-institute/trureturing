@@ -1,0 +1,21 @@
+**Theorem 46.2 (Finite consumer carriers).** If $\Theta$ is finite, every lawful design satisfies
+
+$$
+\varepsilon\ge\frac h2.
+\tag{46.7}
+$$
+This bound is attained for every profile, every $(h,d,z)\in\mathscr S$, and every $B$, including $B=1$.
+
+**Proof.** Enumerate the finite carrier. The measurable anchor event $E=H_{x_*}$ has a common finite prime menu and a common finite output bound because the carrier is finite. Include in that menu a finite preparation truncation from Lemma 45.3, chosen so that the prepared laws at the anchor and at every source matching the menu differ by at most $\gamma$.
+
+For this argument only, color an actual source by the least carrier index which gives a correct finite proposal there, and color it $0$ when no carrier tape does so. This is a finite-valued auxiliary observation, not advice supplied to the original procedure. A persistent source for this coloring cannot have color $j>0$: the auxiliary procedure that, on color $j$, runs tape $j$ gives only correct finite proposals on that color cell, contradicting Corollary 37.3 at a persistent source. Thus Theorem 37.2 supplies one actual source $y$ matching the combined menu, with color $0$ and with target larger than every anchor output. Thus every tape in $E$ is a false proposal at $y$, and color $0$ says that every finite proposal at $y$ is false. Therefore $F_y=H_y$. Since $b(\Omega(y))<1$, (45.2) forces $h_y=e_y=0$, and hence $\mu_y(E)=0$.
+
+The two preparation laws differ on $E$ by at most $\gamma$, while $\mu_{x_*}(E)=h$. Thus
+
+$$
+ h\le |h-\widehat\mu_{x_*}(E)|+|\widehat\mu_{x_*}(E)-\widehat\mu_y(E)|
+      +|\widehat\mu_y(E)-0|\le 2\varepsilon+\gamma.
+$$
+
+Letting $\gamma\downarrow0$ proves (46.7). For attainment use three tapes $a,v,u$: $a$ immediately proposes $1$, $v$ literally diverges, and $u$ returns unknown. Give the target law $(h,d,z)$ at every source with numerical value $27$, the law $(0,d+h,z)$ at every other source, and prepare the midpoint law $(h/2,d+h/2,z)$ in one finite transition without queries. The target error is zero at every source and the two endpoint distances from the midpoint are $h/2$. The anchor row is exact. This also covers $h=0$ and all simplex faces. $\square$
+

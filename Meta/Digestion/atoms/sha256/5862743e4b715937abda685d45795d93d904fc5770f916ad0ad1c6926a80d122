@@ -1,0 +1,20 @@
+**Theorem 3.2 (all-strength selected-input law).** For exactly every
+admitted state (AS.15), in the entire class (AS.11), the infimum is
+attained and
+
+$$
+\boxed{
+E_s(\rho)=\begin{cases}
+F,&0\leq s\leq s_*,\\
+A+B-w_Au_s(d_s)-w_Bd_s-n\sqrt{\beta^2-d_s^2},&s_*<s<1,\\
+\displaystyle\frac{k}{1-\alpha}(A+B),&s=1.
+\end{cases}}
+\tag{AS.19}
+$$
+
+It is continuous and convex on $[0,1]$, constant exactly on $[0,s_*]$,
+strictly increasing on $[s_*,1]$, and real analytic on $(s_*,1)$.
+There is one later branch with no additional interior rank degeneration.
+The plateau and sharp quadratic onset are credited NP/QO results; the
+whole later evaluation and endpoint follow from Sections 4–8.
+

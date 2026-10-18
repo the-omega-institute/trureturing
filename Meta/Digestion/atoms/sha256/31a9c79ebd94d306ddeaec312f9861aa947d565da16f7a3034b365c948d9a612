@@ -1,0 +1,33 @@
+**Theorem 7.2 (interface-to-memory equivalence with reconstruction limits).**
+For the full carrier of Definition 1.1, at each fixed known type the
+interface, minimal boundary and an optimal memory presentation are
+mutually recoverable. The required memory supplement has exactly
+$q^{\lambda_d}$ labels above the forward syndrome, and changing the declared
+budget refines that presentation by exactly $q^{\delta_{d,e}}$ points per
+fiber. This correspondence recovers every legal continuation response;
+it recovers the current prefix only under (5.4), a full source snapshot
+only under (5.5), and does not in general recover a realized ordered past.
+
+Proof. The boundary gives the entire interface recursively through the
+root readout, guards and typed updates in Theorem 2.2. Conversely, two
+boundary points with equal interface would have the same legal words;
+(2.6)–(2.7) force the points to agree. Thus the correspondence from $Q$ to
+the actual interface image is bijective. Choose the fiberwise label map of
+Theorem 3.1, defined on $Q$, rather than an arbitrary prefix label carrying
+extra distinctions. Then $(s,L)$ determines $(s,t)$, and $(s,t)$ determines
+that chosen label, giving both directions for the optimal memory
+presentation. Theorem 4.2 gives exactly the refinement count and its
+zero-increment recovery criterion; different physical costs or
+operation menus are not identified by that count.
+
+The prefix and snapshot qualifications are necessary and sufficient by
+Theorem 5.2. Theorem 6.4 excludes recovery of ordered history even when
+full snapshot recovery holds. Theorem 6.1 excludes a general transfer from
+supplied inputs to actual hidden-source reads, and Theorem 6.2 excludes a
+transfer from suffix operations to value-guarded old-coordinate actions.
+This interface-to-memory bridge is the repo-derived bounded-operation
+specialization of the cited strict residual, forward trellis and
+finite-fiber principles. Those intermediate principles retain their
+original attribution; no assertion of literature originality is required
+for the specialization. $\square$
+

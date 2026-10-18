@@ -1,0 +1,24 @@
+**Corollary 2.5 (joint support and selected marginal witnesses).** Replacing
+(FNS.11) by separate unboundedness assertions for each rank coordinate can
+change its truth value: the support $w_1=0\lor w_2=0$ is unbounded in each
+coordinate but never meets both positive lower bounds. A valid spectrum
+retains one tuple satisfying every coordinate lower bound at once.
+
+At fixed $(\mathbf c,\mathbf w,\mathbf f)$, URR gives a more specific fact
+for this unrestricted Cartesian negative-only grammar:
+
+$$
+\exists\mathbf z\;\bigwedge_\ell A_\ell\ne B_\ell
+\quad\Longleftrightarrow\quad
+\bigwedge_\ell\exists\mathbf z_\ell\;(A_\ell\ne B_\ell).
+\tag{FNS.15a}
+$$
+
+**Proof.** The forward implication is projection. For the reverse implication
+no listed equality is a residual identity, so URR's one section breaks all
+of them together, including shared names. Separately selected per-clause
+fillings need not themselves assemble into that single tuple; this is a
+witness-assembly warning, not a failure of (FNS.15a). Positive residual
+restrictions would require a different argument and are excluded from this
+carrier. $\square$
+

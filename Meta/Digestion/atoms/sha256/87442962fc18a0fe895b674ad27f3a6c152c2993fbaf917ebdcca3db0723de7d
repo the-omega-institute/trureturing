@@ -1,0 +1,58 @@
+**命题 63.2（原生未来与独立端口协议的同一置信纤维）。** 给定 $0<\delta<1$，置
+
+$$
+\begin{aligned}
+t&=\sqrt{\frac{\log(2m/\delta)}{2N}},\\
+\mathcal C_{\widehat p}
+ &=\{\tau\in\mathsf D(\mathcal K_n):
+          \max_j|\operatorname{tr}(\tau P_j)-\widehat p_j|\leq t\},\\
+X_{h,\widehat p}
+ &=\{y\in X_h:\rho_y\in\mathcal C_{\widehat p}\},
+\qquad r=\min\{1,2t/\chi\}.
+\end{aligned}
+\tag{VIII.18}
+$$
+
+则对每个固定 $x\in X_h$ 有 $\Pr_x\{x\in X_{h,\widehat p}\mid h\}\geq1-\delta$。任何非空 $\mathcal C_{\widehat p}$ 的迹距离直径至多 $r$。对该集合内任意 $\sigma,\tau$，同时有
+
+$$
+\sup_{w\in\mathcal W_n}|p_\sigma(w)-p_\tau(w)|\leq r.
+\tag{VIII.19}
+$$
+
+进一步，固定任意已声明的有限端口协议 $\Pi$：仅接收端口输入 $A$，有限辅助系统以同一已知态 $\eta$ 独立初始化，采用固定有限分支的量子仪器和经典反馈，终止时保留完整记录，不含被省略的输入相关返回环境。其完整无条件记录律满足
+
+$$
+\operatorname{TV}(\mathsf P_\sigma^\Pi,
+                   \mathsf P_\tau^\Pi)\leq D(\sigma,\tau)\leq r.
+\tag{VIII.20}
+$$
+
+**证明。** 假设 63.1 下，第 $j$ 组为 $N$ 个独立 Bernoulli 试验，均值为 $\operatorname{tr}(\rho_xP_j)$。Hoeffding 双侧界及 $m$ 项并合给
+
+$$
+\Pr_x\left\{\max_j|\widehat p_j-
+               \operatorname{tr}(\rho_xP_j)|>t\mid h\right\}
+ \leq2m e^{-2Nt^2}=\delta.
+\tag{VIII.21}
+$$
+
+这复用 [《递归关系观察：波粒事件》定理 22.3](RECURSIVE_RELATIONAL_OBSERVATION_WAVE_PARTICLE_EVENTS.md#22-从精确恢复到有误差的关系重建) 的独立重复取样与共同置信事件方法；这里的消费者是 (VIII.11) 的指定原生菜单。(VIII.21) 中失败事件的补事件 $\{\max_j|\widehat p_j-\operatorname{tr}(\rho_xP_j)|\leq t\}$ 在 $\Pr_x(\cdot\mid h)$ 下的概率至少为 $1-\delta$；在该联合成功事件上，$\rho_x\in\mathcal C_{\widehat p}$，从而 $x\in X_{h,\widehat p}$。若 $\sigma,\tau$ 同属该集合，逐坐标三角不等式给 $B_{\mathcal F}(\sigma,\tau)\leq2t$；(VIII.11) 给 $D(\sigma,\tau)\leq2t/\chi$，再用 $D\leq1$。定理 60.2 的上界于是给 (VIII.19)，无需对无限字族另取并合界。
+
+为核对 (VIII.20) 的协议量词，把每条完整记录 $z$ 的复合分支记为辅助扩张上的 CP 映射 $\mathcal I_z$，把预先的独立初始化记为 $J_\eta(\tau)=\tau\otimes\eta$。其输入效果为 $E_z=(\mathcal I_z\circ J_\eta)^*(I)\geq0$。完整性给 $\sum_zE_z=I$；反馈只决定各分支内已声明的复合映射。因此 $\mathsf P_\tau^\Pi(z)=\operatorname{tr}(\tau E_z)$。对任何记录事件 $S$，$E_S=\sum_{z\in S}E_z$ 是效果，故 $|\operatorname{tr}((\sigma-\tau)E_S)|\leq D(\sigma,\tau)$。对 $S$ 取最大便得完整记录总变差界。只要每个协议满足同一初始化合同，这一确定性结论在同一个置信事件上对全部这样的协议成立；它不授予其中未声明的操作。$\square$
+
+在非空纤维中选一个估计态，只能得到上述置信保证，不是有限比特给出无误精确态名。若集合为空，应报告该置信集合为空，不用任意态替换它。对 $0<\epsilon<1$，充分的预设每组样本数为
+
+$$
+N\geq\frac{2\log(2m/\delta)}{\chi^2\epsilon^2},
+\tag{VIII.22}
+$$
+
+此时 $r\leq\epsilon$，总消耗为 $mN$ 份所供应样本。该充分预算与 (VIII.12) 的设置数障碍是不同方向的结论，不把两者合称最优层析复杂度。可靠置信区域参见 Christandl–Renner，[*Reliable Quantum State Tomography*](https://arxiv.org/abs/1108.5329v2)。
+
+若按训练记录选择未来字或协议，(VIII.19)–(VIII.20) 的确定性统一界仍可用，但物理预测必须作用于一份另行供应的、条件于固定 $x,h$ 与训练记录独立的留出输入，及该协议独立初始化的辅助系统。它不是已消耗样本的测后条件态预测。对于输入相关的隐环境，局部边缘 $\rho_x$ 不决定回流记录；这里直接保留 [《观察者内生三轴几何与预测接口》定义 9.3 的共同环境例](AURIC_FIB_OBSERVER_INTERNAL_THREE_AXIS_GEOMETRY_AND_PREDICTIVE_INTERFACE.md) 的边界。对稀有后选择事件的条件律也须另给事件概率下界，不能从完整无条件记录界直接保留同一常数。
+
+相同单份边缘不供应假设 63.1。复用 [《四角相干与单份认证》命题 C-121.5](AURIC_FIB_ATOM_FOUR_CORNER_COHERENCE_AND_SINGLE_COPY_CERTIFICATION.md) 的共同标签机制：取单位向量 $u\in\operatorname{ran}P_j$、$v\in\ker P_j$，仅抽一次公平比特 $L$，随后全部样本按 $L$ 同时取 $u$ 或同时取 $v$。每份边缘均为 $(|u\rangle\langle u|+|v\rangle\langle v|)/2$，但 $\widehat p_j=L$，对其边缘均值的误差恒为 $1/2$，不随 $N$ 缩小。共同标签造成的联合关联不能被边缘相等消去。
+
+若还要求保留一个实际参考 $R$，可另假定供应 $\tau_{AR}\otimes\rho_x^{\otimes mN}$ 且 $\operatorname{tr}_R\tau_{AR}=\rho_x$；测量后面的独立份不会物理作用于 $AR$。然而本置信纤维只约束 $A$ 的边缘，不识别未知 $AR$ 相关，也不提供带参考的联合迹距离证书。这样的联合供应不是从一个未知 $AR$ 输入免费复制出来的资源。
+

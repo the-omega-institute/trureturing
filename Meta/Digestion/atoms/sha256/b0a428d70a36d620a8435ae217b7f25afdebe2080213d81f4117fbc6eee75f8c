@@ -1,0 +1,35 @@
+**构造 74.3（An explicit unbounded symbolic stream family）。** The full-target theorem already supplies every power-of-two label table of Definition 74.1. The following subfamily needs no matching selection to specify its emitted words. For every $d\ge4$, put
+
+$$
+N=2^d,\qquad m=N-1,\qquad k=N,\qquad T=N+1,
+\qquad \lambda(j)=j\quad(0\le j<N).
+\tag{74.6}
+$$
+
+For $0\le j<N$ let $b_t(j)$ be bit $t$ of its $d$-digit binary expansion, with bit zero least significant. Use the coordinate order
+
+$$
+t_r=r\ (1\le r\le d-2),\qquad
+t_{d-1}=d-1,\qquad t_d=0,
+\qquad e_r=N-2r,
+\tag{74.7}
+$$
+
+and the completely specified code
+
+$$
+c_r(j)=b_{t_r}(j)\oplus b_{t_r}(e_r).
+\tag{74.8}
+$$
+
+For $s_r=N+1-2r$ define $q_r$ and every literal bit $x_{r,i}$ by (73.10)–(73.11), with $z=N$. The actual full stream is
+
+$$
+(10)^{(N-2)/2}1\ \bigm|\
+(x_{1,0}\cdots x_{1,N-2})\ \bigm|\ \cdots\ \bigm|\
+(x_{d,0}\cdots x_{d,N-2}).
+\tag{74.9}
+$$
+
+Every factor has exactly $m=N-1$ bits, specified by finite parity expressions in $d,r,i$. It is a literal stream on the original reader, not an abstract list of questions. Extend its target by (74.1), for example with $R=N$, $C=N+1$ and arbitrary independent $L_\bot$.
+

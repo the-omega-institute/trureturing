@@ -1,0 +1,12 @@
+### 82.1. Two graph types and their scope
+
+Continue with \(0<|b|<1\), and define
+\[
+ \Theta(x,y)=(-\bar y,\bar x),\qquad
+ S(x_0,x_1,x_2)=(x_1,x_2,x_0).
+\]
+The synchronous \(S_3\) action and \(\Theta\) preserve common-flat
+rays. For a noncanonical ray \(w\), let \(\Gamma(w)\) be the
+orthogonality graph induced on
+\(S_3w\cup S_3\Theta w\), with projective duplicates identified.
+

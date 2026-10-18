@@ -1,0 +1,41 @@
+**Definition 8.1 (joint child-category weights).** Retain exactly the
+source, substitution, observations, request menu and paid-export contract
+of §1. Write $A=\alpha$, $B=\beta$ and
+
+$$
+\mathcal G=\{\langle u,v\rangle:u,v\in S_1\},\qquad
+S_2=\{A,B\}\sqcup\mathcal G,\qquad |\mathcal G|=9.
+\tag{NCE.50}
+$$
+
+Let $c:S_2\to\{A,B,G\}$ send the two leaves to their respective
+symbols and every member of $\mathcal G$ to $G$. In this category order
+put
+
+$$
+M=\begin{pmatrix}
+281&1131&271\\
+1131&1437&237\\
+271&237&53
+\end{pmatrix},\qquad
+w_{\rm j}(A)=4947,\quad w_{\rm j}(B)=3264,\quad
+w_{\rm j}(\langle x,y\rangle)=M_{c(x),c(y)}.
+\tag{NCE.51}
+$$
+
+This notation is separate from the weights $w$ in (NCE.31). Every state
+of $S_3$ has positive $w_{\rm j}$ weight. For $e=(1,1,9)^{\mathsf T}$,
+
+$$
+W_{\rm j}:=w_{\rm j}(S_3)=4947+3264+e^{\mathsf T}Me
+=8211+17417=25628,\qquad
+C_{\rm j}:=9996,\qquad \mu_{\rm j}:=w_{\rm j}/25628.
+\tag{NCE.52}
+$$
+
+The branch table is a genuine joint child weight: its $A,B$ principal
+minor is $281\cdot1437-1131^2=-875364\ne0$. Thus it cannot have the
+form $u(c(x))v(c(y))$. Categories and weights are mathematical counting
+data. They are not retained descriptors, source observations or inputs to
+a reader. An entire original block receives its weight once.
+

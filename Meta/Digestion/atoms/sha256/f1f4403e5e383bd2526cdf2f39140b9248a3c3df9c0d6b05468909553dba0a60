@@ -1,0 +1,73 @@
+**Definition 8.1 (three distinct effective obligations).** The unrestricted
+bounded-recovery question remains [ARH, Definition 9.1][ARH] on precisely
+(ABC.1.3): decide whether any determining original prefix exists and supply
+an actual source-total full-row consumer when one does. ARH Theorems 6.1,
+14.1 and 22.1 already decide their recognized root-certificate, synchronous
+and constructor-elimination cases. Their restricted conclusions require
+no Assumption 7.3. For arbitrary acquired inputs, the following are distinct
+obligations of the present logical route.
+
+1. **Native source interpretation.** Supply Assumption 7.3, or another
+   exact uniform interpretation with its declared language and both
+   original-source inclusions. Theorem 7.2 supplies finite operation
+   formulas only on normal arguments; it does not fill this obligation.
+2. **Existence of a determining prefix.** Decide $\exists h\,
+   \operatorname{PrefDet}(D,Q,h)$ with a negative stopping argument as
+   well as a positive witness. Even granting item 1 and Proposition 7.5's
+   fixed-$h$ decision, this remains an additional problem.
+3. **Unbounded-address service decisions and exact optimization.** Supply
+   a logical or other effective decision of existential finite service
+   addresses preceding universal quantification over *all* admitted
+   sources, with full-row constancy as the terminal condition. Relate
+   it in both directions to every permitted adaptive serial competitor,
+   and supply the finite search horizons and witness extraction needed
+   for the raw price, joint Pareto basis and separate rational weighted
+   minimax. A finite-menu decision alone does not meet this obligation.
+
+For item 3 the target condition has the form
+
+$$
+\exists(p_v)_v\ \forall X,Y\quad
+ [\mathsf{Adm}(X)\land\mathsf{Adm}(Y)]\Longrightarrow
+ \bigwedge_t
+ [\mathsf{Path}_t(X;(p_v))\land\mathsf{Path}_t(Y;(p_v))
+       \Longrightarrow\operatorname{Same}_Q(X,Y)],
+\tag{ABC.8.1}
+$$
+
+with $p_v$ ranging over arbitrary finite physical words and with legal
+monotone epochs. The finite conjunction in each path is determined by
+the supplied skeleton. Unlike Theorem 7.2, (ABC.8.1) requires navigation
+at variable words. It is a mathematical specification, not a formula
+asserted to belong to Definition 7.1. Reachability, literal address costs
+and extraction of actual terminal outputs must use the same source
+interpretation as its universal quantifiers.
+
+JRF Theorem 4.3 discharges its corresponding address quantifiers through
+matched WS2S source, target and reply formulas for literal-history fibers;
+Theorem 5.3 additionally uses the literal-only GB decision and a static
+supplier to justify its finite Pareto search. Theorem 7.1 separately
+proves weighted minimax, including zero weights and same-source sums.
+Their universal operational ingredients transfer by Proposition 6.4.
+The recognized ARH decisions also discharge bounded-recovery existence
+and supply static consumers on their positive instances. In particular,
+ARH (14.2) or (CE.22.2)–(CE.22.3) supplies a finite raw bound $K_0$ and
+finite maximum physical address length $D_0$, hence a static upper budget
+$(K_0,0,K_0D_0)$. These are the static-supplier hypotheses of JRF
+Definition 5.1 and Lemma 5.2. Together with the epoch-five cap and cleanup,
+they give the same finite cofinal rectangle of worst read and update
+budgets on such a positive instance: $q\le\max(K_0,K_0D_0+\max(0,2-N))$
+and $a\le\max(N,5)-N$. Cofinality compares coordinatewise worst budgets;
+it does not make the static supplier cheaper on each same source.
+This does not decide whether a pair in that rectangle is feasible with
+arbitrarily long addresses. That independent
+decision is required before JRF Theorem 5.3 searches for a minimum length;
+its literal-only source-language proof is not supplied by the ARH
+bounded-recovery criterion. The weighted proof retains its separate
+same-source and zero-weight obligations.
+
+The full effective conclusions therefore still require exact suppliers
+for the signed morphic domain, including (ABC.8.1), with every relation
+retained. Neither the finite basis conclusion of Dickson's lemma nor a
+finite image of $R_Q$ supplies those missing stopping arguments.
+

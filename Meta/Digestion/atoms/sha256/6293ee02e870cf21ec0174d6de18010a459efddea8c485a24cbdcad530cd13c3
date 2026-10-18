@@ -1,0 +1,124 @@
+**Lemma 10.1 (complete rational source implications).** The inherited source box implies
+
+$$
+1/4<r_T<2/5,\qquad 1/10<r_S<1/6,\qquad
+7/10<h_1/h_0<3/4,\qquad4/5<h_2/h_0<5/6.
+\tag{PG.48}
+$$
+
+All twelve original Grams are real positive definite.
+
+Proof. The following is the RG rational implication chain, retained as inherited credit rather than a new root certificate. Put
+$r_5^{\rm src}=1+\alpha_1^2+\alpha_2^2$ and
+$r_{27}^{\rm src}=1+\beta_1^2+\beta_2^2$.
+The box and positive square comparisons give
+
+$$
+\begin{gathered}
+.479<\lambda_{\rm src}<.480,\quad
+1.412<\alpha_1<1.413,\quad1.185<\alpha_2<1.186,\quad
+.413<\beta_1<.414,\quad .809<\beta_2<.810,\quad\eta_1>.19,\\
+4.39<r_5^{\rm src}<4.41,\quad1.82<r_{27}^{\rm src}<1.83,\quad
+2.23<\sqrt5<2.24,\quad5.19<\sqrt{27}<5.20,\quad
+17<\sqrt{295}<18,\quad31<\sqrt{999}<32.
+\end{gathered}
+\tag{PG.49}
+$$
+
+For example the first two denominator bounds follow by squaring the chart endpoints and adding one; radical bounds follow by squaring positive rational endpoints. Positive numerator/denominator bounds in (PG.4) give
+
+$$
+\begin{aligned}
+(A_5^{\rm src})_{00}&>\frac{(.479)(1.412)^2}{4.41}>.21,&
+(A_{27}^{\rm src})_{00}&>\frac{(.520)(.413)^2}{1.83}>.04,\\
+.180&<\frac{(.479)(1.412)(1.185)}{4.41}
+ <(A_5^{\rm src})_{01}
+ <\frac{(.480)(1.413)(1.186)}{4.39}<.185,\\
+.094&<\frac{(.520)(.413)(.809)}{1.83}
+ <(A_{27}^{\rm src})_{01}
+ <\frac{(.521)(.414)(.810)}{1.82}<.097.
+\end{aligned}
+\tag{PG.50}
+$$
+
+Hence
+
+$$
+.045<\frac{180\cdot17+94\cdot31}{128000}
+ <N^{\rm src}_{01}
+ =\frac{(A_5^{\rm src})_{01}\sqrt{295}+
+         (A_{27}^{\rm src})_{01}\sqrt{999}}{128}
+ <\frac{185\cdot18+97\cdot32}{128000}<.051.
+\tag{PG.51}
+$$
+
+Retain the sign in the other off-diagonal source entry:
+$N^{\rm src}_{02}=P_{\rm pos}-P_{\rm neg}$, with
+
+$$
+\begin{aligned}
+.021&<\frac{(.479)(1.412)(2.23)}{16(4.41)}
+ <P_{\rm neg}=\frac{\lambda_{\rm src}\alpha_1\sqrt5}{16r_5^{\rm src}}
+ <\frac{(.480)(1.413)(2.24)}{16(4.39)}<.022,\\
+.038&<\frac{(.520)(.413)(5.19)}{16(1.83)}
+ <P_{\rm pos}=\frac{(1-\lambda_{\rm src})\beta_1\sqrt{27}}{16r_{27}^{\rm src}}
+ <\frac{(.521)(.414)(5.20)}{16(1.82)}<.039 .
+\end{aligned}
+\tag{PG.52}
+$$
+
+Thus $.016<N^{\rm src}_{02}<.018$, in particular $d>0$ from the positive-pivot adjugate. Each displayed comparison is a rational inequality after multiplication by positive denominators.
+
+The inherited lower pivots are $.1$. Their upper bounds follow from (PG.4) and (PG.50):
+
+$$
+\begin{aligned}
+(S_{02}^{\rm src})_{00}
+ &=\lambda_{\rm src}/2-
+ [(A_5^{\rm src})_{00}+(A_{27}^{\rm src})_{00}]/2
+ <.24-(.21+.04)/2<.12,\\
+(S_{01}^{\rm src})_{00}
+ &<\frac{(.48-.21)59-(.04)37}{128}<.12.
+\end{aligned}
+$$
+
+Rank-one adjugate identities give
+
+$$
+a/b=N^{\rm src}_{01}/(S_{01}^{\rm src})_{00},\quad
+c/d=N^{\rm src}_{02}/(S_{02}^{\rm src})_{00},\quad
+b^2=\eta_1(S_{01}^{\rm src})_{00}>.019.
+\tag{PG.53}
+$$
+
+The diagonal source bounds give
+
+$$
+(7/10)^2<498/970<(h_1/h_0)^2<500/968<(3/4)^2,\quad
+(4/5)^2<655/970<(h_2/h_0)^2<656/968<(5/6)^2.
+$$
+
+Combining them proves
+
+$$
+\begin{aligned}
+r_T&>\frac{(.7)(.045)}{.12}=21/80>1/4,&
+r_T&<\frac{(.75)(.051)}{.1}<2/5,\\
+r_S&>\frac{(.8)(.016)}{.12}>1/10,&
+r_S&<\frac{(5/6)(.018)}{.1}<1/6 .
+\end{aligned}
+$$
+
+In particular $a/b<.51,c/d<.18$, which also prove the failure margins used in Section 2 as explained there.
+
+For $a_y$ all coordinates are positive. Its only potential positive singular height, by (PG.23), is
+
+$$
+y_{\rm crit}=\frac{64(r_T+r_S)}{1+r_T}.
+$$
+
+The inequalities
+$48r_T+64r_S>48/4+64/10>16$ and
+$37r_T+64r_S<37(2/5)+64/6<27$
+give $16<y_{\rm crit}<27$. None of $5,16,27$ equals it. The three output columns are therefore independent, and the Gram is positive definite. Sign congruence below proves all four signs at each height. $\square$
+

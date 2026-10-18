@@ -1,0 +1,105 @@
+**Theorem 216.8 (Signed stock conversion attaining early debt).**
+Let $L\ge m\ge5$, $r=m-3$, $0\le g\le h\le2rg$.
+Prescribe $\beta_3=g,\beta_m=h$ and
+$\beta_j=-a_j\le0$ otherwise, with
+
+$$
+\begin{gathered}
+t=h/r,\quad s=g+t/2,\quad D=a_1+a_2,\quad
+B_0=2g+h+t,\\
+J=\min(a_1,s)+\min(a_2,s)+\sum_{4\le j<m}\min(a_j,t),\quad
+B_{\rm req}=B_0-J,\quad
+K=g+h+\sum_{j\notin\{3,m\}}a_j+B.
+\end{gathered}
+$$
+
+For every $B\ge B_{\rm req}$ the unrestricted full exact-Q minima
+in both catalogs equal D, with a common attainer. The stock condition
+is sufficient; necessity for arbitrary signed profiles is not asserted.
+
+**Proof.** A convenient zero-cost core has an explicitly available P
+mass s in each early class and t in each gap class. Set
+
+$$
+\gamma=\frac{2rg-h}{2r-1},\quad
+\lambda_0=\frac{h-g}{2r-1},\qquad
+\gamma+\lambda_0=g,\quad \gamma+2r\lambda_0=h.
+$$
+
+For each $e=1,2$ put P masses
+
+$$
+\begin{array}{c|c}
+\{e,3,m\}\cup I&\gamma(1-1/r)\\
+\{e,3,m\}&\gamma/(2r)+\lambda_0\\
+\{e,3\}&\gamma/(2r)\\
+\{e,m\}&\gamma/(2r)+\lambda_0
+\end{array}
+$$
+
+at their actual zero-set words, and P=t at each $\{j,m\}$, $j\in I$.
+Put C=$\gamma$ at $\{3,m\}\cup I$, C=$\lambda_0$ at $\{3,m\}$,
+C=h at $\{m\}$, and T=t. This is one alternate core on the same
+zero face (216.7), retained for its classwise convertible stock.
+It is $\gamma E+\lambda_0 H$, where E has $(g,h)=(1,1)$ and
+H has $(g,h)=(1,2r)$; H is $U_1$.
+
+The following complete cylinder table verifies cellwise zero dominance
+on E; the H column also records its matching masses. Put $u=1/r$,
+$e\in\{1,2\}$ and distinct $i,j\in I$. Each pair lists the Z mass
+in the C3 cylinder then in the Cm cylinder.
+
+| Pair | E | H |
+| --- | --- | --- |
+| $12$ | $(1,1)$ | $(2r,2r)$ |
+| $e,3$ | $(1,1+u/2)$ | $(1,2r+1)$ |
+| $e,i$ | $(1,1+u/2)$ | $(2r,2r)$ |
+| $e,m$ | $(2-u,2-u)$ | $(2r,2r)$ |
+| $3,i$ | $(2-2u,1)$ | $(2,2r)$ |
+| $3,m$ | $(2-u,1)$ | $(2,2r)$ |
+| $i,j$ | $(2-2u,1+u)$ | $(2r,2r)$ |
+| $i,m$ | $(2-u,1)$ | $(2r,2r)$ |
+
+Since $r\ge2$, these dominate $(1,1)$ and $(1,2r)$, respectively.
+All other numerical rewards are P subsets of zero's reward. Coarsening
+and constant-one padding cover all other schedules. Zero therefore
+maximizes every cell of the combined core. Its total P is $2g+h$,
+its terminal is t, and W=$B_0$.
+
+In each nonpivot class convert exactly
+$\min(a_j,\text{available class P})$ from P to A on the same words,
+for example proportionally within that class. Convert zero if its P
+mass is zero. The total converted mass is J. Zero reward stays unchanged
+and the nonzero reward only decreases. Add the remaining $a_j$ as A
+at $w(\{j\})$, then add $B-B_{\rm req}$ to T.
+The final charge is
+
+$$
+g+h+B_0+\left(\sum a_j-J\right)+(B-B_0+J)
+ =g+h+\sum a_j+B.
+$$
+
+Hence Q is exactly the required quotient; each negative coefficient and
+each stock coefficient was funded once. Zero still dominates every cell.
+For any full score with this Q, constant zero has excess
+$-\beta_1-\beta_2=D$, providing an unrestricted lower bound.
+The constructed score attains it in N and O. The proof includes
+$g=h=0$, zero negative masses, both ratio endpoints and $B=B_{\rm req}$;
+there is no division by g. $\square$
+
+At $L=m=5$ the signed example
+$\beta=(-1/2,0,1,-3/4,3/2)$, K=$27/4$, B=3 has
+$t=3/4,B_0=17/4,J=5/4,D=1/2$. Its common score has W=$15/4$,
+both costs $1/2$, and terminal below h. Every actual full unit-O
+input in this signed domain has D at most one, so this one exact-Q
+score supplies (216.1) with zero residual.
+
+Deleting a zero-net coordinate is a different operation. At
+$L=m=5,g=h=1,B=7/2$, the zero core has
+$q=(0,0,1,0,1;11/2)$ and both costs zero. Deleting coordinate 4
+while keeping the totals gives $q'=(0,0,1,1;11/2)$.
+The valid $m=4,r=1$ instance of (216.14) forces
+$4\Delta_O\ge1/2$, hence $\Delta_N\ge\Delta_O\ge1/8$ for every
+full four-coordinate representative. This falsifies cost-preserving
+zero-net-coordinate compression; it is not an original N/O separator.
+

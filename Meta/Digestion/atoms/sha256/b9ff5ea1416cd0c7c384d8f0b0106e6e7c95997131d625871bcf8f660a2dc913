@@ -1,0 +1,20 @@
+**Definition 75.1 (channels and allowed symmetries).** Retain the actual
+matrix (74.1), and write
+\[
+ M=\sqrt6H_0,\qquad A=3+P,\quad B=3+Q,\qquad
+ w=(x,y),\quad X=\sum_{j=0}^2x_j,\quad Y=\sum_{j=0}^2y_j.
+\]
+A common-flat input has \(|x_j|=|y_j|=1\) and every entry of \(Mw\)
+of squared modulus six. Its normalized ray is \([w/\sqrt6]\).
+The original output channels are
+\[
+ a_j=X+Y+Px_j+Qy_j,\qquad
+ \ell_j=X-Y+\bar Qx_j-\bar Py_j.                    \tag{75.1}
+\]
+The synchronous \(S_3\) action permutes both channels in the same order.
+The antiunitary \(\Theta(x,y)=(-\bar y,\bar x)\) preserves common-flatness,
+commutes with this action, and satisfies \(\Theta^2=-I\).
+Common scalar phases do not change rays. An aligned repeated pair means
+that two equal entries occupy the same two positions in both channels;
+a constant channel permits any repeated pair.
+

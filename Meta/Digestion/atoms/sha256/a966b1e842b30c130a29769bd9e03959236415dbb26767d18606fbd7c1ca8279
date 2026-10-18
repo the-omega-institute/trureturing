@@ -1,0 +1,20 @@
+## 322. The inventory-one combined-angle obstruction
+
+Retain the six-edge, four-distinct-label paired setting of Sections
+314–321: original shared positive lengths, complete connected normal
+circles, degree at least six, and original angle sums 2*pi. The unique
+flat owner is sigma=(M,C,D,V,C,D), with selected axes M,V. Its transverse
+C,D angles are zero, so the genuine M,V capacities are pi each and the
+genuine C,D,Z,U capacities are 2*pi each. Lower-case letters denote
+coshes of the corresponding shared lengths.
+
+The following conditional obstruction concerns three distinct genuine
+owners with the precise roles
+
+    tau=(Z,M,C,D,M,C),
+    rho=(U,V,D,C,V,D),
+    eta=(M,V,D,Z,V,D).                              (322.1)
+
+Here eta has axes M,Z. Call (322.1) inventory one. No assertion that
+every remaining configuration has this inventory is made.
+

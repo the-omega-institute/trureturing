@@ -1,0 +1,103 @@
+**Theorem 2.2 (Factorization on the actual saturated face).** Every
+$x\in\mathcal K$ satisfying the two planar saturation equations
+has $\eta_\Delta=\eta_\Sigma$ and is of the form (2.1).
+For the tuple (2.1), membership in $\mathcal K$ is equivalent to
+the existence of finitely many real vectors
+$\alpha_f,\beta_f\in\mathbb R^3$ such that
+
+$$
+\Lambda_{ij}=\sum_f\alpha_{fi}^2\beta_{fj}^2,\qquad
+\Gamma_{ij}=\sum_f(\alpha_{fi}\beta_{fi})
+                         (\alpha_{fj}\beta_{fj}).
+\tag{2.2}
+$$
+
+For this same $Z(x)$, complex separability is also equivalent to
+(2.2). A channel additionally requires all three equations
+$\sum_i\Lambda_{ij}=n_j$.
+
+Proof. For an unnormalized real product atom put
+$p_i=\|R_ia\|^2$, $q_i=\|R_ib\|^2$ and
+$s_i=(R_ia)^T(R_ib)$. In a plane, direct substitution in (1.5)
+gives
+
+$$
+\Lambda_{jj}=p_jq_j,\quad
+4\eta_{2j}=2s_j^2-p_jq_j,\quad
+\Lambda_{jj}-4\eta_{2j}
+ =2(p_jq_j-s_j^2)=2\det(a_j,b_j)^2\ge0.
+\tag{2.3}
+$$
+
+Here $a_j,b_j$ are the two real plane coordinates, and
+$j\in\{+,-\}$. Equality in a nonnegative sum forces equality
+for every positive-weight term of every generator decomposition.
+Thus its preparation and measurement components are collinear in
+each plane, including the possibility that one or both are zero.
+Choose a common unit direction in each plane and signed amplitudes
+$\alpha_j,\beta_j$ along it. Rotate both factors together so those
+directions are $u_+,u_-$; the atom coordinates are unchanged.
+The dark coordinates are the signed amplitudes $\alpha_0,\beta_0$.
+No division by a zero component is involved.
+
+For these radial vectors the complete coefficient identities are
+
+$$
+\begin{aligned}
+\Lambda_{ij}&=\alpha_i^2\beta_j^2,&
+\eta_{0j}&=(\alpha_0\beta_0)(\alpha_j\beta_j),\\
+\eta_{2j}&=\alpha_j^2\beta_j^2/4,&
+\eta_\Delta=\eta_\Sigma
+ &= (\alpha_+\beta_+)(\alpha_-\beta_-)/2.
+\end{aligned}
+\tag{2.4}
+$$
+
+Here $\eta_{0+}=\eta_+$ and $\eta_{0-}=\eta_-$.
+Absorb a generator's nonnegative weight into the squared norm of
+its preparation factor. Summing (2.4) proves (2.2), including
+the diagonal identity and both mixed planes.
+
+Conversely, embed each pair of factors in the original real space by
+
+$$
+\widetilde a_f=\alpha_{f0}d+\alpha_{f+}u_+
+                                  +\alpha_{f-}u_-,\qquad
+\widetilde b_f=\beta_{f0}d+\beta_{f+}u_+
+                                  +\beta_{f-}u_-.
+\tag{2.5}
+$$
+
+Formula (2.4) shows that their finite sum of homogeneous atoms is
+exactly (2.1). Normalize nonzero factors and absorb their squared
+norms into nonnegative weights; omit a zero product. This proves
+membership in $\mathcal K$ with every coefficient retained.
+
+For the complex assertion, suppose $Z(x)$ is a finite sum of complex
+positive product matrices. Apply $\mathcal R(Y)=(Y+Y^T)/2$ to
+each factor of this decomposition. On a Hermitian positive matrix,
+$\mathcal R(Y)$ is real symmetric positive: test real vectors,
+then split a complex test vector into its real and imaginary parts.
+Separate-transpose invariance of the whole $Z(x)$ makes
+$(\mathcal R\otimes\mathcal R)Z(x)=Z(x)$.
+Real spectral decompositions of the resulting factors therefore give
+a real product decomposition of the unchanged matrix. Averaging
+these finitely many products by the QRC torus/reflection formula
+returns exactly its coordinates in $\mathcal K$. The forward
+implication is immediate from that formula. This argument uses a
+positive operation on each product factor, not a claim that
+transposition or $\mathcal R$ is CP on arbitrary bipartite matrices.
+Finally (1.7) proves the full-marginal assertion. $\square$
+
+The factors in (2.2) are the real instance of the established PCP/TCP
+factorizations. In the original convention of
+[Johnston–MacLean, 1807.06897v1, Definition 1](https://arxiv.org/pdf/1807.06897v1),
+the pair is $(X,Y)=(\Gamma,\Lambda)$. In
+[Singh–Nechita, 2010.07898v2, Definitions 2.6–2.7](https://arxiv.org/pdf/2010.07898v2),
+the order is $(A,B)=(\Lambda,\Gamma)$ and the real factors give
+the TCP triple $(\Lambda,\Gamma,\Gamma)$. Their Theorem 2.9
+concerns diagonal-sign invariant bipartite matrices. The correspondence
+here is the explicit map (2.1), (2.4) and (2.5), with multiplicities
+$(1,2,2)$; it is not an identification of that sign group with the
+walk torus or a substitution of a $\mathbb C^3$ preparation source.
+

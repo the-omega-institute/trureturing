@@ -1,0 +1,45 @@
+**Construction 8.3 (receiver storage and actual operand).** Reserve two
+disjoint writable arrays $X,Y$, each of $H$ letter bits. $X$ retains
+the first $\min(d,H)$ arrivals in order. Place $Y$ at positions
+$-H,\ldots,-1$ of an operand lane, and place the immutable string
+$R^J$ at its positions $0,\ldots,J-1$. These are actual consecutive
+letter positions of a single lane. Other registers and the $X$ lane
+are elsewhere. Fixed wiring between letter positions does not select a
+current position: its moving head and interval endpoints are counted.
+
+When the arrived word has length $d$, set
+
+$$
+m=\min(d,H),\qquad n=\max(d-H,0).
+\tag{8.3}
+$$
+
+After the end delimiter, compute these two integers by paid bit loops.
+Copy $X_i$ into $Y_{-m+i}$ for $0\le i<m$, using two counted heads
+and a one-bit buffer. Walk the operand head over all $n$ tail cells,
+reading and checking each $R$; no tail cell is written. Walk back to
+$-m$ and verify the assembled interval against the retained receiver
+representation, one cell at a time, before setting its material seal.
+The latter scan has length $m+n=d$. Its comparisons use $X_i$ in
+the prefix and the constant letter $R$ in the tail. Neither scan
+consults the sender's row, graph literal or source.
+
+The source-facing value is now the whole flat word
+
+$$
+\operatorname{mat}(Y;m,n)
+   =Y_{-m}\cdots Y_{-1}\,R_0\cdots R_{n-1},
+\quad 0\le m\le H,\quad 0\le n\le J,\quad (n=0\ \lor\ m=H).
+\tag{8.4}
+$$
+
+The subscripts on $R$ denote different installed cells, not a runtime
+expansion operation. Empty intervals are permitted. The physical
+source service consumes the same root-relative letters as before;
+it is given no extra source operation, prefix feedback, decoder or
+history. The receiver's interval descriptor is ordinary operand
+framing, counted just like the length in (4.4). It is resolved on the
+observer side into an already present interval before the call.
+Relocating an operand within observer memory does not reroot the
+source: its first letter still means an edge from the original root.
+

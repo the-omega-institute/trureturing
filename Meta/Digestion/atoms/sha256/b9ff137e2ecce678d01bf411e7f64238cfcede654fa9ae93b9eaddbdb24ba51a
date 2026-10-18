@@ -1,0 +1,10 @@
+### Proposition 5.1 (the twenty-state ordered grid)
+
+There is a complete correct graph for $n=8,k=4$ with $m=20$ satisfying both caps and attaining $t=8$ and $J=W$ on one input.
+
+**Proof.** Install a running state $q_{h,z}$ for each $0\le h\le3$ and $0\le z\le4$, and distinct terminals $\mathsf0,\mathsf1$. Start at $q_{0,0}$. State $q_{h,z}$ queries coordinate $h+z+1$. Its zero successor is $\mathsf0$ when $z=4$ and is $q_{h,z+1}$ otherwise. Its one successor is $\mathsf1$ when $h=3$ and is $q_{h+1,z}$ otherwise. These formulas specify every installed state and both successors.
+
+Inductively, before visiting $q_{h,z}$ the run has queried the first $h+z$ coordinates, with exactly $h$ ones and $z$ zeros. A one edge at $h=3$ returns the correct positive answer. A zero edge at $z=4$ returns the correct negative answer, because five zeros leave at most three ones. If neither terminal condition has occurred, the next coordinate is fresh. At depth seven the only live cell is $(3,4)$, so the next reply reaches a terminal. Thus every input terminates correctly after at most eight queries, and every query is a distinct coordinate, so the letter charge is at most $W$ on the same run.
+
+Choose an input whose first seven replies contain three ones and four zeros. Its run reaches $q_{3,4}$ and queries the eighth coordinate, attaining eight queries and the full charge $W$. There are $4\cdot5=20$ installed running states. \(\square\)
+

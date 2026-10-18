@@ -1,0 +1,29 @@
+**Definition 42.1 (targets and distances).** Let
+$\mathcal W_{\kappa,b}$ be the Brownian probability law on
+$C_0([0,b],\mathbb R^3)$ of covariance
+$2\min(s,t)M_\kappa$. Its endpoint density is
+
+$$
+\Gamma_{\kappa,b}(z)=
+\frac{\exp[-z^{\mathsf T}M_\kappa^{-1}z/(4b)]}
+{(4\pi b)^{3/2}\sqrt{\det M_\kappa}}.
+\tag{42.1}
+$$
+
+The joint path distance is
+$d((x,y),(x',y'))=\|x-x'\|_\infty+|y-y'|$; its endpoint counterpart
+is $|z-z'|+|y-y'|$. In both cases $W_1$ is the infimum of expected
+distance over probability couplings. The bounded-Lipschitz distance
+is the supremum of expectation differences for functions bounded in
+absolute value by one with Lipschitz constant at most one. For a
+signed measure $\rho$ on $\mathbb R^3\times I$, put
+
+$$
+\|\rho\|_{{\rm var},1}
+=\int_{\mathbb R^3\times I}(1+|z|)\,d|\rho|(z,y).
+\tag{42.2}
+$$
+
+Unweighted variation is denoted by $\|\cdot\|_{\rm var}$; ordinary
+total variation distance of probabilities is half this norm.
+

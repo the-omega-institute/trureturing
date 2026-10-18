@@ -1,0 +1,77 @@
+**定义 199.9（原始比较的未决精确命题）。** 任取满足
+$1\ge a_1\ge a_2\ge\cdots>0$、$a_i\to0$ 的整个原始幅序列以及
+$0<\varepsilon\le1$，实际活跃长度为
+$$
+L=\max\bigl(\{i:a_i>\varepsilon\}\cup\{0\}\bigr).
+$$
+令 $B_L=\{0,1\}^L$、$J_L=\{0,\ldots,L\}$，共同核载体为
+$$
+\mathscr P_L=\prod_{w\in B_L}\Delta(J_L),\qquad
+\Delta(J_L)=\left\{v\in\mathbb R_{\ge0}^{J_L}:\sum_{r\in J_L}v(r)=1\right\}.
+$$
+沿用定义 108.1 的 $\mathscr N_L\subseteq\mathscr P_L$，$e_r$ 为标签 $r$ 的单位
+概率向量。对含零字置
+$n_L(w)=\min\{i\le L:w_i=0\}$，并置
+$$
+\eta_w=(1-a_{n_L(w)})e_0+a_{n_L(w)}e_{n_L(w)}\quad(w\ne1^L),
+\qquad \eta_{1^L}=e_0.
+$$
+定义 110.1 的式 (110.5) 所给的帽可行核切片是
+$$
+\mathcal F_N(a,\varepsilon)
+=\{p\in\mathscr N_L:\operatorname{TV}(p_w,\eta_w)\le\varepsilon
+                       \text{ 对每个 }w\in B_L\}.
+$$
+这些是式 (110.6) 的全部闭帽行，包括独立 pair 行和全正行。由于实际 $L$ 的
+定义，所有 $n>L$ 都满足 $a_n\le\varepsilon$，故尾部使用式 (199.18)。
+
+在同一归一核载体上，沿用定义 108.2 的唯一多线性系数，正部与向量不等式均逐坐标
+解释。对次数至多二的核写
+$$
+p_w=c+\sum_i\ell_iw_i+\sum_{i<j}Q_{ij}w_iw_j,
+\qquad
+V_i=\sum_{j>i}(-Q_{ij})_+,\quad h_i=(V_i-\ell_i)_+,
+$$
+并记系数向量 $H(p)=\sum_i h_i$ 和无下标标量
+$$
+\beta(p)=\sum_i\max\{\mathfrak m(V_i),\mathfrak m(h_i)\},
+\qquad \mathfrak m(v)=\sum_{r\in J_L}v(r)\quad(v\ge0).
+$$
+此处 $H(p)$ 不同于辅助剖面域 $H_L$。系数定义的停止核类为
+$$
+\mathscr C_L
+=\{p\in\mathscr P_L:\deg p\le2,\ c\ge H(p),\ \beta(p)\le1\}
+=\mathscr O_L\subseteq\mathscr N_L,
+$$
+最后的等式由定理 109.1 给出。核归一使
+$\mathfrak m(h_i)\ge\mathfrak m(V_i)$，所以式 (108.4) 给出
+$\beta(p)=\mathfrak m(H(p))\le\mathfrak m(c)=1$，其中最后一步使用
+$c\ge H(p)$。$\mathscr C_L$ 的条件独立于所选帽，不能用帽行替代。
+
+原始比较要求对上述每个整个序列及每个正闭帽成立
+$$
+\mathcal F_N(a,\varepsilon)\ne\varnothing
+\quad\Longrightarrow\quad
+\mathcal F_N(a,\varepsilon)\cap\mathscr C_L\ne\varnothing.
+\tag{199.19}
+$$
+由定理 110.2，后件恰为原始 $\mathcal O_2$ 帽可行性；其中的核可以不同于前件
+所给的任何核，不要求保留其律。定理 112.2 的 $p^N$ 仍在帽切片内而不在
+$\mathscr C_L$ 内，$p^P$ 则见证其交非空。
+
+这些核定义包含 $L=0,1,2$，空和按零计；$\varepsilon=1$ 时 $L=0$，即刻基点
+输出可行，更大的帽也由同一规则处理。小活跃长度及既有残差充分范围沿用
+定义 110.3 与定理 168.1 所列供应者。对其余范围，定理 110.2、167.2 和 168.1
+把普遍的式 (199.19) 等价地化为完整有限方向命题
+$$
+\forall L\ge3\ \forall b\in H_L,\qquad
+\rho_N(b)<\infty\ \Longrightarrow
+\rho_O(b)\le\max\{1,\rho_N(b)\}.
+\tag{199.20}
+$$
+其中 $H_L$ 的零帽或非活跃坐标边界属于辅助闭域；定理 168.1 将该闭域中的失败
+运输到正帽、实际活跃长度及所有允许的正单调趋零尾部，不把边界本身当作原始实现。
+由推论 199.4，式 (199.20) 又等价于每个 $L\ge3$ 的完整包含
+$D_O(1)\subseteq E_N$。式 (199.19)—(199.20) 仍为未决命题；零成本有序包含的
+等价刻画和条件性的证书失败推论均不判定这一正预算包含。
+

@@ -1,0 +1,15 @@
+**定理 4.2（纳入、排除与无新增排除的精确条件）。** 若 $C\subseteq D$，则
+
+$$
+\Omega_D\subseteq\Omega_C,\qquad
+\operatorname{Excl}(C)\subseteq\operatorname{Excl}(D).
+$$
+
+对合法扩展 $C'=C\cup\{e\}$，有
+
+$$
+\Omega_{C'}=\Omega_C\iff e\in\operatorname{Cl}(C).
+$$
+
+**证明。** 包含 $D$ 的实现包含 $C$；对实现并集取补得排除包含。最后的等式恰好表示全部原相容实现本已包含 $e$。因此发生并耗时的事件不必严格减少候选，候选排除也不表示备选结构从整体中被消灭。$\square$
+

@@ -1,0 +1,4 @@
+**Definition 2.3 (Strong zero).** Write $\mathsf Z_\Delta(P)$ when a saturated conull set as in Lemma 2.2 satisfies $\Delta_P(x,z)=0$ for every legal finitely differing pair in that set. This is an additional pathwise hypothesis.
+
+The supplied first-order property is different: for $\mathcal H_C=\sigma(X_j:j\notin C)$ and $\mathbb E_P[f(X_C)\mid\mathcal H_C]=0$, the response $\sum_i\mathbb E_P[f(X_C)\ell_i]$ is absolutely convergent and zero under attainment; see [Localization, Convention 1.3 and Theorem 4.2][L]. Its conditional balances and [Two-word, Theorem 2.1][W]'s positive-pair exterior cancellation do not assert $\mathsf Z_\Delta(P)$. No implication from them, or from a rank bound, to strong zero is used.
+

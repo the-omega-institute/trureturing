@@ -1,0 +1,24 @@
+**定义 116.1（续卷载体与叶序）。** 本卷续接[《Auric：二元来源的三维二阶关系完成》](AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md)，沿用其第102、106–110、115章的类型与条件。密度态记为 $\varrho$；$\rho$ 专指原生树替换。原生来源是保留叶标签、左右顺序和括号的自由有序二叉树，采用[《FIB关系延拓几何》，版本cd077854c1e3df8b987f1ab9d6abee7554434e85，定义1.1、1.3及定理1.2](https://github.com/the-omega-institute/trureturing/blob/cd077854c1e3df8b987f1ab9d6abee7554434e85/docs/develop/theory/FIB_RELATIONAL_CONTINUATION_GEOMETRY.md)的替换、组成和数量读出。令
+
+$$
+T_0=\alpha,\quad T_1=\beta,\quad
+T_{n+2}=\langle T_{n+1},T_n\rangle=\rho^{n+2}\alpha,
+\qquad n\ge0,
+$$
+
+$$
+t_n^+=\rho^n\langle\beta,\alpha\rangle
+=\langle T_{n+1},T_n\rangle,\qquad
+t_n^-=\rho^n\langle\alpha,\beta\rangle
+=\langle T_n,T_{n+1}\rangle.
+$$
+
+叶序映射 $\operatorname{wd}$ 将二叉节点映成有序串接：$\operatorname{wd}(\alpha)=\alpha$、$\operatorname{wd}(\beta)=\beta$、$\operatorname{wd}(\langle s,t\rangle)=\operatorname{wd}(s)\operatorname{wd}(t)$。写
+
+$$
+W_0=\alpha,\quad W_1=\beta,\quad W_{n+2}=W_{n+1}W_n,
+\qquad u_n=W_{n+1}W_n,\quad v_n=W_nW_{n+1}.
+$$
+
+于是 $\operatorname{wd}(t_n^+)=u_n$、$\operatorname{wd}(t_n^-)=v_n$。空词记为 $\epsilon$。$F_0=0,F_1=1,F_{j+2}=F_{j+1}+F_j$；本卷的 $\log$ 均为自然对数。
+

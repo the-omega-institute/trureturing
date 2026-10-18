@@ -1,0 +1,95 @@
+**Theorem 6.1 (classification and a realizing edge).** Under the same
+assumptions, $1\le n_t(r)\le9$ throughout $[r_-,r_+]$, and
+
+$$
+\begin{aligned}
+n_t(r)=8&\quad\Longleftrightarrow\quad r\in U_8\setminus U_7,\\
+n_t(r)=9&\quad\Longleftrightarrow\quad
+                              r\in[r_-,r_+]\setminus U_8.
+\end{aligned}
+\tag{FC.17}
+$$
+
+In particular $U_8=[r_-,r_+]$ is equivalent to eight-low compression
+on this supplied face; $U_7=[r_-,r_+]$ is the corresponding
+seven-low statement. Both $r_-$ and $r_+$ belong to $U_8$.
+For a nonconstant edge with endpoint contrasts $K_-<K_+$, every
+$r\in[K_-,K_+]$ has the exact endpoint representation
+
+$$
+w(r)=\frac{K_+-r}{K_+-K_-}w^-+
+                       \frac{r-K_-}{K_+-K_-}w^+.
+\tag{FC.18}
+$$
+
+Merging occupied groups gives original optimal fractional laws with
+at most $\gamma(e)$ labels. If $r\notin U_8$, there is such an
+edge strictly bracketing $r$ with exactly nine positive endpoint
+coordinates in its relative interior, all in different groups.
+Writing their index set as $I$, it satisfies
+
+$$
+\operatorname{rank}A_I=8,\qquad
+\operatorname{rank}\begin{pmatrix}A_I\\\kappa_I^T\end{pmatrix}=9.
+\tag{FC.19}
+$$
+
+Proof. The slice $\mathcal P\cap\{\kappa^Tw=r\}$ is a
+nonempty compact polytope. At a vertex of this slice, its positive
+columns of $\widehat A=[A;\kappa^T]$ are independent. Otherwise
+a nonzero kernel vector on that positive support gives two small
+opposite feasible perturbations, contradicting extremality. There
+are thus at most $\operatorname{rank}\widehat A\le9$ positive
+endpoints, and at most nine groups. Merging proves the nine-low
+upper bound, consistent with the credited FA bound. Mass one
+excludes zero labels. Theorem 5.2 and integer counts now prove
+(FC.17). Minimizing or maximizing $K$ on $\mathcal P$ gives a
+vertex; the same perturbation argument using $A$ alone bounds its
+positive endpoints by eight. This also recovers the credited GC
+face-extrema bound and gives $r_\pm\in U_8$.
+
+For precision about edges, a face with positive-coordinate support
+$I$ has affine dimension
+
+$$
+\dim F=|I|-\operatorname{rank}A_I.
+\tag{FC.20}
+$$
+
+Indeed a relative-interior point is positive on $I$. Small
+perturbations in every direction of $\ker A_I$ remain
+nonnegative; the face is exactly the zero-coordinate face on that
+support. To see the latter assertion, if a point of $\mathcal P$
+has no coordinates outside $I$, extend the segment from it through
+the positive relative-interior point a little beyond that point.
+The extension is still feasible; the defining face property then
+puts the first point in $F$. Thus its affine hull has exactly
+the kernel dimension in (FC.20). Vertices have at most eight
+positive coordinates, and edges have at most nine.
+
+The whole edge graph projects onto $[r_-,r_+]$: join vertices
+achieving the global extrema, with the singleton case handled by
+its one vertex. If $r\notin U_8$, it is not a vertex contrast
+since every vertex has at most eight groups. A path between the
+global extreme vertices therefore has an edge whose endpoint
+contrasts strictly bracket $r$. It is nonconstant. If that edge
+had at most eight groups, its image would put $r$ in $U_8$.
+It has at least nine groups and at most nine positive coordinates,
+hence exactly nine of each. Equation (FC.20) gives
+$\operatorname{rank}A_I=8$. Nonconstant $K$ on its
+one-dimensional kernel means $\kappa_I^T$ does not annihilate
+that kernel; adjoining the row raises rank to nine, proving
+(FC.19).
+
+Formula (FC.18) is a nonnegative convex combination with moments
+$B$ and contrast exactly $r$. Its height is
+$C_t(\lambda)-\lambda r$ by Theorem 4.2. Group masses are
+affine functions of $r$; for a paired group its legal fraction is
+the ratio of its saturated mass to its total mass. At zero total
+mass omit the group rather than divide. At a vertex or a
+constant-$K$ edge, use any point with its sole contrast value;
+there is no contrast interpolation denominator. This proves the
+construction including all endpoints and vanishing weights.
+The ranks (FC.19) alone do not exclude a different shorter optimal
+table: that exclusion is supplied by $r\notin U_8$. $\square$
+

@@ -1,0 +1,49 @@
+**Proposition 2.1 (an actual producer for the full signed input).** Fix a
+finite public list of literal coordinates, a finite public list of endpoint
+pairs, $P$, and a final epoch $N$ at least their epochs. There is a
+deterministic source-total pre-cut acquisition procedure whose successful
+retained outputs have exactly the fibers (ARH.1.4), conditional on the
+complete cut in Assumption 1.3. An unreachable endpoint produces a distinct
+invalid-record outcome, not a successful signed record.
+
+Proof. Use the paid full traversal of [SLH, §§53 and 59][SLH] at epoch zero
+to compute $R_P(u)$, including all old comparisons. Process the public
+epochs in increasing order, executing each intervening update on the same
+register. Perform every requested literal read. For each endpoint $(a,s)$,
+read $s$ at epoch $a$. If reached, acquire its complete finite subtree by
+the same traversal, prefixing every relative request by $s$ and requesting
+children only after their parent reports branch. Keep these paid finite
+descriptions until both endpoints of each comparison have been obtained.
+Finite syntactic tree comparison then determines its sign. A comparison
+can be computed after the earlier endpoint's epoch without accessing that
+old physical version: its paid description was still available before
+the cut. These descriptions are not physical register clones.
+
+Continue to $N$ and retain the canonical old row, stipulated literal
+replies, endpoint coordinates and signs, $N$, and common code, permissions
+and ready control. Apply the stipulated complete cut to the descriptions
+and all other source-dependent acquisition fields. On any source the
+successful retained output reports exactly the predicates in Definition
+1.2. Conversely, any finite source satisfying a fixed successful output
+executes the same public coordinate schedule, gives its stated replies and
+signs, and reaches that same retained state. Its forgotten traversal length
+can differ. These two directions prove the fiber equality, not merely
+soundness of each record separately.
+
+For a non-sharing traversal, successful pre-cut raw cost is
+
+$$
+|\operatorname{Pos}(u)|+|H_0|
+ +\sum_{(a,s)\in E}|\operatorname{Pos}((\rho^a u)|_s)|,
+\tag{ARH.2.1}
+$$
+
+where $E$ lists endpoint occurrences with repetitions; their root reads
+are already counted in their traversals. Every physical request includes
+its actual prefix. Comparisons, descriptions, updates, certification and
+the access cut have their separate costs. All are finite on each source;
+none is refunded by the short retained sign. The procedure computes both
+sign outcomes, so fixing either actual outcome is legitimate. An adaptive
+producer requires its own full control/state correspondence; legality
+alone does not make its selection rule disappear. $\square$
+

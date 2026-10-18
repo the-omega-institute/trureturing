@@ -1,0 +1,18 @@
+**Definition 59.1 (supported normal form and parameters).** Work in the paired center coordinates of (S.55)–(S.59), with one supported positive center and one common triple of matrices. Write
+
+$$
+\begin{gathered}
+3\leq k\leq9,\qquad n=3k-5,\qquad
+\omega=\operatorname{diag}(s,t,\lambda_3,\ldots,\lambda_k)>0,\\
+s\geq t\geq\lambda_3\geq\cdots\geq\lambda_k>0,\qquad
+\operatorname{Tr}\omega=1,\qquad \epsilon=1-s-t>0,\\
+\Omega_2=\operatorname{diag}(s,t),\qquad
+\omega_{\rm tail}=\operatorname{diag}(\lambda_3,\ldots,\lambda_k),\\
+T_a=\frac{1+\sqrt a}{2},\qquad d_a=\frac{1-\sqrt a}{2},\qquad
+v_a=\sqrt{T_a},\qquad a=1-\beta,\quad0<\beta\leq\frac12.
+\end{gathered}
+\tag{S.67}
+$$
+
+The symbols $T_a,d_a,v_a$ are the $T,d,v$ of (S.3). Relaxed feasibility means precisely (S.59), with $H_a$ given by (S.57)–(S.58). The support is fixed before forming the normalized matrices; no arbitrary compression of a larger projection is asserted to preserve its rank. Center eigenvalue degeneracies are allowed.
+

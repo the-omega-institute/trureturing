@@ -1,0 +1,11 @@
+**定义 5.1（乘法秩而非位置总数）。** 令 $\Omega(d)=a+b+c+k$。采用 [既有时间切面系数](https://github.com/the-omega-institute/trureturing/blob/05149fa5456f6eb47259bab8138572902863368e/docs/develop/theory/ZECKENDORF_EULER_5040.md#L29728) 所描述的同一指数盒，定义
+
+$$
+\begin{aligned}
+R_H(t)&=P_H(t,t,t,t)=[5]_t[3]_t(1+t)^2\\
+&=1+4t+8t^2+11t^3+12t^4+11t^5+8t^6+4t^7+t^8.
+\end{aligned}
+$$
+
+这是 $\Omega$ 分层的生成式，$R_H(1)=60$。系数与指数盒为引用的既有输入；新增对应是把这个分层读出接到圆周相消和关联坐标的分级上。
+

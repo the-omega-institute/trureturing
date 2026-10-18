@@ -1,0 +1,89 @@
+**Theorem 5.2 (attaining joint first-failure instrument).** Suppose (CP.10)
+holds and $0\le\mu<1$. On $V\otimes H$ define public operators by
+
+$$
+\begin{aligned}
+C_+(t)r_j&=-i\omega(t)r_j/2,\\
+C_-(t)r_j&=-\gamma_j(t)r_j/2,\\
+C_2(t)r_j&=(-\lambda_j(t)/2-ik_j(t)\omega(t)/r)r_j,\\
+Q_\alpha&=-C_\alpha-C_\alpha^\dagger,\qquad
+C=\sum_{\alpha\in\{+,-,2\}}|\alpha\rangle\langle\alpha|\otimes C_\alpha.
+\end{aligned}
+\tag{CP.16}
+$$
+
+These are common operators, not an instruction conditional on reading $j$.
+Equivalently, for the known invertible matrix $R_0$ whose columns are $r_1,r_2$,
+$C_\alpha=R_0\operatorname{diag}(z_{\alpha1},z_{\alpha2})R_0^{-1}$.
+By Lemma 5.1, $Q_+=0$ and $Q_-,Q_2\ge0$. Let $M(t,s)$ be the absolutely
+continuous propagator with $\partial_tM=C(t)M$ and $M(s,s)=I$. Set
+
+$$
+\begin{aligned}
+J_1(t)=J_3(t)&=\frac1{\sqrt2}|f\rangle\langle-|\otimes\sqrt{Q_-(t)},\\
+J_2(t)&=|f\rangle\langle2|\otimes\sqrt{Q_2(t)},\\
+J_0(t)=J_{13}(t)&=0.
+\end{aligned}
+\tag{CP.17}
+$$
+
+The live map $\rho\mapsto M(t,s)\rho M(t,s)^\dagger$ and the marked
+first-failure measures with Kraus fields $J_i(u)M(u,s)$ define one complete
+causal instrument. Its successful action is
+
+$$
+M(t,s)(q\otimes r_j)=\widetilde K_j(t,s)q\otimes r_j.
+\tag{CP.18}
+$$
+
+Tracing the programme from its failure outputs gives exactly (CP.9), on every
+$M_3$ input and every unchanged reference. Retaining the programme gives the
+specific additional successors described in Section 6.
+
+Proof. Strict support bounds $k_j^{-1}$ and $(c-k_j)^{-1}$ on the compact
+interval. Thus $C$ is measurable and norm-integrable. The finite-dimensional
+integral equation for $M$ has its unique absolutely continuous solution
+(successive integral iteration converges with the exponential norm bound).
+Alternatively the common eigenvectors in (CP.16) give (CP.18) directly on a
+basis. In particular $M(t,u)M(u,s)=M(t,s)$.
+
+The matrix square roots in (CP.17) are measurable; their squared norms are
+integrable since the $Q_\alpha$ have integrable norms. At null exceptional
+times the rates and jumps may be set to zero. We have
+
+$$
+\sum_iJ_i(u)^\dagger J_i(u)=-C(u)-C(u)^\dagger.
+\tag{CP.19}
+$$
+
+Differentiate $M(u,s)^\dagger M(u,s)$ almost everywhere and integrate to obtain
+
+$$
+M(t,s)^\dagger M(t,s)+
+\sum_i\int_s^t M(u,s)^\dagger J_i(u)^\dagger J_i(u)M(u,s)\,du=I.
+\tag{CP.20}
+$$
+
+Each branch is CP and the sum is trace preserving. Integrable finite-dimensional
+CP densities give countably additive measures on all Borel time events.
+Tensoring the branch formulas with identity proves complete positivity and
+normalization for every unchanged reference, including trace-class quantum
+archives.
+
+Splitting (CP.20) at a checkpoint gives the early failure measure plus the
+late first-failure measure applied to the actual live successor. Propagator
+composition gives the same live operation. These identities hold for every
+finite partition and every Borel event, establishing consistent restrictions
+of this one process. They also deliver the first event at its actual time in
+the declared ideal recording service. The branch $f$ is absorbing, with no
+new original execution.
+
+Finally $\langle r_j,Q_2r_j\rangle=\lambda_j$ and
+$\langle r_j,Q_-r_j\rangle=\gamma_j$. Inserting (CP.18) into each jump
+field gives the middle density $\lambda_jA_j^2$ and the two separately
+labelled minus densities $\gamma_jB_j^2/2$. Phases cancel within each
+rank-one failure CP map. The live CP map is the canonical one because the
+gauge changes only a scalar phase. This proves equality on every matrix unit
+of $M_3$, hence every joint input, and completes sufficiency for $\mu<1$.
+$\square$
+

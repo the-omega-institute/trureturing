@@ -1,0 +1,28 @@
+## 149. Coupling to both ends of the source M run
+
+The proper axial M run containing the selected source flat block has
+pair {C,D}. Both of its distinct transverse M endpoints are genuine.
+Every genuine transverse M angle is strictly below pi/2: its owner has
+two equal M angles and, since M has one flat occurrence and degree at
+least six, at least three further positive genuine occurrences share
+M's remaining pi with those two slots.
+
+At either source endpoint actual face transport gives the paired frame
+
+    (Q,M,A,B,M,A),       {A,B}={C,D}.
+
+The increasing transverse-M cosine numerator, evaluated at
+x_Q=1+m+x_A, equals
+
+    [x_A+m(1+m+x_A)]*(1+x_A+x_B-m)<0.
+
+The actual angle is less than pi/2, so the numerator is positive and
+x_Q>1+m+x_A. The special-edge bound excludes Q in S; among H only Z
+has value above m. Thus Q=Z and each endpoint owner has a dominant
+axial Z occurrence.
+
+Uniqueness of the dominant Z run and (146.6) force both endpoint owners to
+be the SAME actual tetrahedron tau, rather than two copies with equal
+length data. Its two transverse M slots are the two source-run endpoints.
+The companion is C on both sides because tau has fixed pair {M,C}.
+

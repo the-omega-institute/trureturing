@@ -1,0 +1,6 @@
+**平方根率的已发表实际见证。** 下述成对构造复用本卷定理 21.3；这里验证它在 $q_0$ 仅有界、$q_1,q_2$ 一致收缩的较宽域内仍成立。 当 $0<\rho<1$ 时，固定 $0<h_0<\bar H,0<h_1<\rho$，取小 $s>0$，$r=\sqrt{h_1/s}$、$C=\sqrt{h_0^2h_1/s^3-s^2}$，$b=re_1,a=(C/r)e_1+(s/r)e_2$。直接算得 $K=se_3,V=rse_2$；实际树 $t=\langle\alpha,\langle\alpha,\beta\rangle\rangle$ 的三式为 $U,-BK,-\Delta V$，给
+
+$$x_0=(s/r)(-se_1+Ce_2),\quad x_1=-h_1e_3,\quad x_2=-qe_2,\quad q=\sqrt{h_1}s^{5/2}.$$
+
+取 $\theta=2\arctan(s/C)$、$b'=r(\cos\theta e_1+\sin\theta e_2)$、$K'=-se_3$、$V'=rs(\sin\theta e_1-\cos\theta e_2)$、$a'=(C/B)b'+V'/B$，并用根反序树 $t'=\langle\langle\alpha,\beta\rangle,\alpha\rangle$。直接用半角公式验证两个 Gram 相同、$U'=-U$，故 $x'_0=x_0,x'_1=x_1,x'_2=q(\sin\theta e_1-\cos\theta e_2)$。三读距离为 $\epsilon_s=2s^5/h_0$，第三未来距离为 $\sqrt2h_1^{3/2}\sqrt{h_0}\sqrt{\epsilon_s}\cos(\theta/2)$。两源均满足 $q_0=h_0,q_1=h_1,q_2=q<\rho$，而 $\epsilon_s$ 覆盖全部充分小的正数。共同中点报告给平方根风险下界。两叶范数发散、$\Delta\to0$，故不能反驳有条件域的线性界。
+

@@ -1,0 +1,78 @@
+**Theorem 3.3 (P2: support obstruction and optimizing representation).**
+One has $C_{\rm end}<C_{\rm two}<C_{\rm sat}$. For
+$C_{\rm end}<\lambda\le C_{\rm two}$, no optimizing failure measure
+can have at most two distinct failure lines. For every
+$C_{\rm end}<\lambda<C_{\rm sat}$ every optimizer uses cost exactly
+$\lambda$, and some optimizer has at most four failure lines. Thus the
+minimum optimizing line count in the initial specified interval is
+three or four. These counts concern failure directions, not minimum
+physical labels or all their proportional splittings.
+
+Proof. Two distinct whitened lines with weights $t_1,t_2>0$ must obey
+$t_1e_1e_1^T+t_2e_2e_2^T=I_2$. The square matrix with columns
+$\sqrt{t_i}e_i$ is orthogonal, so the lines are orthogonal and both
+weights are one. One line cannot have rank-two covariance. If the
+larger squared second coordinate is $p\ge1/2$, their cost is
+$\mathcal C(p)$.
+
+For $0<p<1$, direct differentiation and Theorem 2.1 give
+
+$$
+x'(p)=VB_*/A(p)^2,\qquad
+\mathcal J''(p)=\frac{V^2B_*^2}{A(p)^3}\mathcal F''(x(p))>0.
+\tag{SC.17}
+$$
+
+Thus $\mathcal C$ is symmetric about $1/2$ and strictly increasing on
+$[1/2,1]$. At $1/2$, both radial coordinates are $r$ and
+$A(1/2)=\mu/2$, giving $\mathcal C(1/2)=C_{\rm end}$. The spectral
+pair gives $\mathcal C(p_s)=C_{\rm sat}$.
+
+The supplied $m_1>496/1000$, $m_2<345/1000$ imply
+
+$$
+\frac{d_f}{2|z_f|}
+=\frac{\sqrt{59}+\sqrt{37}}{16}\sqrt{m_1/m_2}
+>\frac{27}{32}\sqrt{496/345}>1,
+\tag{SC.18}
+$$
+
+since $729\cdot496=361584>353280=1024\cdot345$.
+For the favorable off-diagonal sign the possible positive expectation
+of an orthogonal pair is
+
+$$
+g(p)=2|z_f|\sqrt{p(1-p)}-d_f(1-p),
+\tag{SC.19}
+$$
+
+and its companion is negative. With the other sign the only possible
+candidate is $2|z_f|\sqrt{p(1-p)}-d_fp<0$ for $p\ge1/2$.
+For $p<1$, (SC.19) is positive exactly when $p>p_z$; at $p=1$
+both expectations are nonpositive. Also $1/2<p_z<p_s<1$, because
+$g(p_s)=\gamma>0$. Strict increase of $\mathcal C$ proves the
+claimed constant inequalities. A two-line measure with positive
+objective must have cost strictly above $C_{\rm two}$. JS Theorem
+9.2 gives $\Phi(\lambda)>0$ above $C_{\rm end}$, proving the
+obstruction, including at $\lambda=C_{\rm two}$. Two-line feasibility
+itself is not excluded.
+
+If an optimizer had cost $C'<\lambda<C_{\rm sat}$, its same value
+would be feasible at $C'$, contradicting JS's strict increase (and its
+zero value at $C_{\rm end}$). Thus cost is active. Begin with JS
+Lemma 4.2's at-most-five-atom optimizer, merging antipodal duplicates.
+If five distinct lines remain, the constraint columns
+
+$$
+(1,z_i^2,z_iw_i,\mathcal F(z_i^2))^T\in\mathbb R^4
+\tag{SC.20}
+$$
+
+have a nonzero linear dependence $c_i$. Its first coordinate gives
+$\sum c_i=0$, so both signs occur. Small weight changes in both
+directions preserve covariance and active cost. Optimality forces
+$\sum c_i k(z_i,w_i)_+=0$, since otherwise one direction improves the
+objective. Move until a weight vanishes. The same covariance, cost and
+value then have at most four lines. This is an existence statement;
+it does not restrict arbitrarily split optimizing measures. $\square$
+

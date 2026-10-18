@@ -1,0 +1,35 @@
+**Definition 2.1 (rank-free negative charts).** A rank-free expression
+has finite syntax
+
+$$
+A::=g\mid\rho^a z_i\mid\langle A,A\rangle,
+\qquad g\in\mathcal T,quad a\in\mathbb N.
+\tag{FJC.6}
+$$
+
+All constants and exponents are supplied finite data. A repeated name
+uses the same value. For each supplied $r\in B$, give finitely many
+charts $(\Theta_{r,c},\Delta_{r,c})$, with
+$\mathbf z\in\mathcal T^{m_{r,c}}$, such that
+
+$$
+D_r=\bigcup_c
+ \{\Theta_{r,c}(\mathbf z):\Delta_{r,c}(\mathbf z)\},
+\qquad
+\Delta_{r,c}=\bigwedge_\ell A_{r,c,\ell}\ne A'_{r,c,\ell}.
+\tag{FJC.7}
+$$
+
+Each comparison is a whole-tree negative. The carrier before imposing
+$\Delta$ is the full Cartesian product; zero coordinates and empty
+conjunctions are allowed. There are no variable-rank coordinates,
+residual positive equations, navigation filters, image restrictions or
+normality predicates left in a chart.
+
+Equation (FJC.7) requires both source directions. Every chart point
+satisfies the original exterior, reached sets, both complete partitions,
+every literal, every sign and both endpoint guards, and exactly row $r$.
+Every $u\in D_r$ is reconstructed as that same source by at least one
+chart. It is insufficient to cover merely selected partition bits or to
+supply arbitrary finite feasibility witnesses.
+

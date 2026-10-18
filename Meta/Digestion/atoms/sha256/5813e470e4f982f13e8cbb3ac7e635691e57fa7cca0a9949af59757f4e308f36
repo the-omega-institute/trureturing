@@ -1,0 +1,20 @@
+**Theorem 184.2 (Literal $C=\{2\}$ count for the supplied geometry).**
+Suppose the positive $Q$ graph on $\{2,\ldots,L\}$ is a subgraph
+of the triangle on $2,3,4$ together with the path
+$4-5-\cdots-L$. Then $C=\{2\}$ makes Theorem 183.2 exact with
+exactly $2L+2$ energy systems. The alternative $C=\{3\}$ gives
+$2L+4$ systems for the same specified enumeration.
+
+**Proof.** Deleting vertex two leaves a subgraph of the path
+$3-4-5-\cdots-L$, which is bipartite. For first zero one,
+$A_1=\{2\}$ has two assignments and therefore four base/pair
+systems. For every $n=2,\ldots,L$, $A_n$ is empty and gives two
+systems. The total is $4+2(L-1)=2L+2$. Empty suffix systems are
+included. Deleting vertex three instead leaves a subgraph of
+$2-4-5-\cdots-L$; both $n=1,2$ have two assignments, so its total
+is $8+2(L-2)=2L+4$. The graph can omit edges through zero
+weights or plateaus. This is a literal count for these choices;
+it is not a minimum over all certificates, graphs or protocols.
+The additional rows and the single budget of Theorem 183.2 remain.
+$\square$
+

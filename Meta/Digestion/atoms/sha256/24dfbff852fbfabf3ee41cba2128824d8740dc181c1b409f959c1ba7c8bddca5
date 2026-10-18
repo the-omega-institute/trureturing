@@ -1,0 +1,16 @@
+**定义 1.1（来源、组成与局部关系的分型）。** 来源载体 $\mathcal T$、替换 $\rho$、组成 $c$ 和矩阵 $M$ 直接采用 [FIB 关系延拓几何](FIB_RELATIONAL_CONTINUATION_GEOMETRY.md) 定义 1.1、1.3：
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle s,t\rangle,\qquad
+\rho\alpha=\beta,\quad \rho\beta=\langle\beta,\alpha\rangle,\quad
+\rho\langle s,t\rangle=\langle\rho s,\rho t\rangle,
+$$
+
+$$
+c\alpha=(1,0)^{\mathsf T},\quad c\beta=(0,1)^{\mathsf T},\quad
+c\langle s,t\rangle=cs+ct,\qquad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\quad c\rho=Mc.
+$$
+
+这里不对左右顺序、叶标签或括号取商。沿用该卷定理 1.2 的 $T_n=\rho^n\alpha$ 与 $T_{n+2}=\langle T_{n+1},T_n\rangle$。关系表示由载体 $V$、二元运算 $B$、叶值及树的递归评估 $q$ 组成，满足 $q\langle s,t\rangle=B(qs,qt)$；替换相容性指另有 $D:V\to V$ 使 $q\rho=Dq$。来源类型、表示载体、输出类型、位置载体是分别指定的对象。五模式窗口沿用基础卷定义 2.1、2.2，首先是含接缝的编码语法。
+

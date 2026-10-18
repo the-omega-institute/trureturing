@@ -1,0 +1,100 @@
+**Theorem 14.3 (one original response recovers the actual reference
+counterpart).** For every $h\in\Gamma$ and every lawful original
+primitive $a$ that executes at $h$, its existing response $R_h(a)$,
+together with the fixed full reference entry $e_0$, determines exactly
+$\nu(h)$. More explicitly, let $D_{e_0}$ be SOURCECALL Theorem 3.3's
+inverse returning the actual suffix after $e_0$, and let $\star$ attach
+that suffix to the fixed history $e_0$. Then
+
+$$
+e_0\star\operatorname{dropLast}
+ \bigl(D_{e_0}(\operatorname{sel}(R_h(a)))\bigr)=\nu(h).
+$$
+
+Thus the response determines the consumed source-frame word with its IN
+sites, the ordered source-body occurrences, and their exact stopping
+row offset $m(h)$ across the two entries. The returned object is an
+actual history on the reference-entry tree. It does not identify the
+unknown actual entrance sheet, its retained first word, or the literal
+full physical history $h$ when $h\in\Gamma_1$. Whether additional
+coordinates of the full original response determine those objects is
+not asserted. Execution of a primitive is meant here, including a
+primitive on a service-refusal path; semantic acceptance is not required.
+
+Proof. First apply Theorem 13.3 to the actual gate01 dispatches from
+Proposition 11.2's paired Readies. They reach their respective
+$e_\sigma$ with equal absolute receipt counts. Apply the same supplied
+theorem to each finite source-body prefix. Corresponding active control,
+ordinary operands, current heads/latches/owners/tokens and receipts
+agree, and the consumed source bits agree. Consequently they have the
+same $\mathsf P_7$ prefix and immediate lawful supply set, the same
+unchanged next-row status, and the same final-idle boundary. This gives
+$\tau(\mathcal I_\sigma)=\mathcal I_{1-\sigma}$ and
+$\tau(\Gamma_\sigma)=\Gamma_{1-\sigma}$.
+
+The fixed graph, already consumed bits and prescribed number of actual
+rows uniquely determine these finite paths. No future completion word
+is used. Applying the construction twice returns the original path.
+The retained opposite values at $c_p$ make the two actual trees
+disjoint, so $\tau$ is a fixed-point-free involution. In particular
+$\nu(h)$ is well-defined and is the actual reference-entry counterpart,
+not an arbitrarily chosen compatible prefix. Theorem 13.3 also gives
+
+$$
+K(z)=K(\nu(z)),\qquad z\in\mathcal I.
+$$
+
+The ordinary original13 record, latch5 and real receipts are among its
+preserved coordinates. This uses no assertion about membership or
+nonmembership of $C_L$ in the entire original response.
+
+Only now apply SOURCECALL Theorem 3.3, at the one fixed actual entry
+$e_0$. Since $\nu(z)\in\mathcal I_0$, the supplied $K(z)$ is an actual
+image of that inverse, and hence
+
+$$
+e_0\star D_{e_0}(K(z))=\nu(z),\qquad z\in\mathcal I.
+$$
+
+Here SOURCECALL Lemma 3.2 supplies its matching-write rule: for an IN
+with pre-ordinal $j$, the matching WR is after ordinal $j+3$ for
+header/length and $j+2$ for payload. Before that write, the occupied
+latch5 supplies the bit; after it, the retained wire bit supplies it.
+The published inverse already handles partial descriptors, invalid
+intermediate source packets and downstream work. Its proof is not
+replaced by an assumption that the current source tree or frame is
+complete. In particular it is not applied with $e_1$ silently substituted
+for its fixed parameter.
+
+Let $h^+$ be the successor of the stated original action. Corollary
+11.6's original-row correspondence makes this exactly one actual native
+row, with its actual label, outputs, control effects and receipt.
+Canonical Supply extends the same frame prefix; Advance adds no input.
+Thus $h^+\in\mathcal I_\sigma$. At the upper boundary, the allowed
+source-token return can land immediately before the changed final idle
+CTL. This landing cut is in $\mathcal I_\sigma$ even though it is not
+in $\Gamma_\sigma$. Neither that CTL nor its successor is used as an
+original test. No InnerReturn row is crossed by this argument.
+
+The counterpart successor has exactly one final occurrence beyond the
+counterpart of $h$. The displayed inverse therefore returns
+$\nu(h^+)$; removing its last actual occurrence returns $\nu(h)$, as
+claimed. Its suffix retains the actual source bits, their sites and all
+native row progress. When the actual history is on sheet1, the attached
+reference prefix instead has $w_0$ and $c_p=0$; it is not the actual
+sheet1 prefix with $w_1$ and $c_p=1$.
+
+This is a repo-derived original-response consequence of the cited
+source suppliers. The finite-execution transport uses the standard
+forward-simulation method of Lynch and Vaandrager,
+[Forward and Backward Simulations, Part I: Untimed Systems, §3.2,
+Lemma 3.8 and Theorem 3.10](https://groups.csail.mit.edu/tds/papers/Lynch/IC95.pdf).
+That method requires related starts and matching-step witnesses and
+provides matching execution fragments and trace inclusion. Here the
+actual starts and exact one-row witnesses come from Theorem 13.3;
+original-response recovery additionally uses the expressly original
+selection and SOURCECALL's inverse. Trace inclusion alone supplies no
+equality of complete original successors. All selections and inverses
+in this theorem are mathematical; no current acquisition or runtime
+extraction procedure follows. ∎
+

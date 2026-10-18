@@ -1,0 +1,126 @@
+**Theorem 2.2 (Real replacement and real finite support).** Let $T$ be
+any CPTP channel on $M_n$ with a finite complex rank-one Kraus
+representation. Then
+$\mathfrak r(T)$ is a real measure-and-prepare CPTP channel. For every
+real symmetric Hermitian effect $E$ simultaneously,
+
+$$
+\mathfrak r(T)^\dagger(E)=\mathcal R(T^\dagger(E)),\qquad
+\|E-\mathfrak r(T)^\dagger(E)\|_{\rm op}
+\le\|E-T^\dagger(E)\|_{\rm op}.
+\tag{2.2}
+$$
+
+If $T$ commutes with conjugation by a real orthogonal matrix, then so
+does $\mathfrak r(T)$. It has a real rank-one Kraus representation with
+at most $[n(n+1)/2]^2$ terms. Consequently every original complex
+$T\in\mathfrak C_1$ has a fixed legal scalar-port replacement with at
+most $225$ flags and error no greater than $e(T)$.
+
+Proof. Use (1.6) with $5$ replaced by $n$. Write
+$a_i=u_i+iv_i$, $b_i=x_i+iy_i$ with real vectors, and set
+$a_{i0}=u_i$, $a_{i1}=v_i$, $b_{i0}=x_i$, $b_{i1}=y_i$.
+The explicit real matrices
+
+$$
+K_{i\alpha\beta}=s_i a_{i\alpha}b_{i\beta}^T,
+\qquad \alpha,\beta\in\{0,1\},
+\tag{2.3}
+$$
+
+have rank at most one and satisfy
+
+$$
+\begin{aligned}
+\sum_{i,\alpha,\beta}K_{i\alpha\beta}^T K_{i\alpha\beta}
+&=\sum_i s_i^2(\|u_i\|^2+\|v_i\|^2)
+(x_ix_i^T+y_iy_i^T)\\
+&=\mathcal R\left(\sum_i s_i^2b_ib_i^\dagger\right)=I_n.
+\end{aligned}
+\tag{2.4}
+$$
+
+Indeed $\|u_i\|^2+\|v_i\|^2=1$. Every sandwich by a real matrix is
+completely positive on complex matrices, because on each reference
+extension it is still a matrix sandwich. Thus the finite family (2.3)
+is CPTP, with action
+
+$$
+\sum_i s_i^2\mathcal R(a_ia_i^\dagger)
+\operatorname{tr}(\mathcal R(b_ib_i^\dagger)X)
+=\mathcal R(T(\mathcal R(X))).
+\tag{2.5}
+$$
+
+This also proves complete positivity of this particular composite
+without requiring complete positivity of $\mathcal R$ itself.
+
+For real symmetric $E$,
+$a_i^\dagger Ea_i=u_i^TEu_i+v_i^TEv_i$ is real. Computing the dual
+of (2.5) gives the first identity in (2.2). The residual
+$H=E-T^\dagger(E)$ is Hermitian, so $H^T=\overline H$ and
+
+$$
+\|\mathcal R(H)\|_{\rm op}
+\le\tfrac12(\|H\|_{\rm op}+\|\overline H\|_{\rm op})
+=\|H\|_{\rm op}.
+\tag{2.6}
+$$
+
+Complex conjugation preserves the operator norm: substitute $\bar z$
+for $z$ in its unit-vector supremum. This proves the simultaneous
+inequalities, which quantify over all complex input expectations of
+these Hermitian residuals. Every $Q_J(t)$ is real symmetric. Equation
+(1.5) therefore proves the asserted original-history error inequality.
+
+For real orthogonal $g$, direct transposition gives
+$\mathcal R\operatorname{Ad}_g=\operatorname{Ad}_g\mathcal R$.
+This proves the commutation statement.
+
+Normalize each nonzero real factor of (2.3), absorbing its squared
+norms into a weight $w_f$. The normalized output-first Choi matrix is
+
+$$
+\chi_{\mathfrak r(T)}=\frac1n\sum_f w_f
+(a_fa_f^T)\otimes(b_fb_f^T),\qquad
+\sum_fw_f=n.
+\tag{2.7}
+$$
+
+Each product projector has trace one and lies in
+$\operatorname{Sym}_n(\mathbb R)\otimes\operatorname{Sym}_n(\mathbb R)$,
+whose real dimension is $[n(n+1)/2]^2$. Its trace-one affine hyperplane
+has dimension one less. The normalized real product projectors form a
+compact set. The finite-dimensional Carathéodory theorem supplies at
+most $[n(n+1)/2]^2$ terms for (2.7). Their convex hull is compact:
+the indicated bounded-length convex combinations are a continuous
+image of a compact product and a compact simplex. Thus the same support
+bound applies to limits and averages of real product states as well.
+Preserving the Choi matrix preserves the entire channel and its TP
+marginal.
+
+For $n=5$, any such representation has the exact original-coordinate
+scalar realization
+
+$$
+B_f=\sqrt{w_f}\,b_f^TD^\dagger,\qquad R_f=Da_f,\qquad
+\operatorname{Enc}(X)=(B_fXB_f^\dagger)_f,\qquad
+\operatorname{Dec}_f(y)=R_fyR_f^\dagger.
+\tag{2.8}
+$$
+
+Here $\sum_fB_f^\dagger B_f=I_5$, $R_f^\dagger R_f=1$, and the
+composite Kraus matrices are $\sqrt{w_f}Da_fb_f^TD^\dagger$.
+Every decoder is TP on all of $M_1$, and the sandwich argument proves
+CP at every reference dimension. This realizes one finite fixed port
+with flags consumed in decoding.
+
+The positive-map compositions in Horodecki–Shor–Ruskai Theorem 4(E–F)
+give a general antecedent for the CP aspect of (2.5); (2.2) supplies
+the menu-specific contraction. The replacement changes the channel.
+It does not identify complex separability with real product
+decomposability of an unchanged real Choi matrix, the distinction in
+[Caves–Fuchs–Rungta](https://arxiv.org/html/quant-ph/0009063) and
+[QPC, Proposition 9.2](https://github.com/the-omega-institute/trureturing/blob/de4128dc7165bb668a0080dee9b94bf41f968814/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_QUANTUM_PORT_COVARIANCE_AND_CERTIFIED_FRONTIER.md).
+No physical application of transposition is used in (2.8). $\square$
+

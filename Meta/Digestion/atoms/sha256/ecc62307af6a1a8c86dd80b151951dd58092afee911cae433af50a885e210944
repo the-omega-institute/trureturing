@@ -1,0 +1,40 @@
+**Definition 7.1 (linear prefix contract).** Let $\mathbb F_q$ be a finite
+field, let $H:\mathbb F_q^n\to\mathbb F_q^m$ be linear, and let
+$C=\ker H$. At cut $k$, partition its columns as
+
+$$
+H=[H_P\ H_F],\qquad
+r_P=\operatorname{rank}H_P,\quad
+r_F=\operatorname{rank}H_F,\quad r=\operatorname{rank}H.
+\tag{7.1}
+$$
+
+The actual states at every cut $j$ are the extendable prefixes of codewords
+in this one family. Thus at the chosen cut,
+
+$$
+U_k=\{p\in\mathbb F_q^k:\ \exists f\in\mathbb F_q^{n-k},
+                       \ H_Pp+H_Ff=0\}.
+\tag{7.2}
+$$
+
+The forward contract has a name $\operatorname{append}_a$ for each field
+symbol $a$, legal exactly when the longer prefix $pa$ is extendable. Its
+successor is $pa$, and its complete label is the requested symbol and its
+status; all other task fields are constant or functions of these and the
+known cuts. The root observation is just the cut. No task-visible query
+returns the entire existing prefix. There is no pre-existing full prefix
+archive in this contract. The declaration supplies all finite append
+continuations, including rejected requests, and stops appending at cut $n$.
+
+The enlarged contract also permits every name $\operatorname{delete}_a$,
+legal precisely when the current nonempty prefix ends in $a$. Its successor
+removes that symbol. The label records its name and legality. A deleted
+prefix is still extendable. Both kinds of operation act only on the actual
+prefix family. They are partial deterministic construction/comparison
+permissions of this model, not an assertion of physically free access to
+an unknown prepared source or to the unseen tail of a fixed codeword.
+If an archive, source identifier, varying resource meter or independently
+accessible prefix is included, its response kernel must instead be included
+and the forward count below need not be the task's minimal count.
+

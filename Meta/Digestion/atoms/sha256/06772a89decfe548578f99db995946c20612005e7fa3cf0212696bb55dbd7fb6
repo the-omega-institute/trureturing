@@ -1,0 +1,38 @@
+**Convention 5.3 (storage, code and actual source image).** The acquisition
+and completion programs operate on tuples arising from one actual
+$t$, its actual deterministic Read history and the associated computed
+control. Their hidden environment field is the same $t$; their visible
+working field is the acquired partial table, local operands and control;
+their reference binds the phase to that source and epoch; their permission
+is the declared literal menu. The port reference, epoch and type tags are
+fixed across alternative source inputs; any additional accessible
+source-dependent identity belongs in the complete name. Extending a run
+by any selected literal appends its truthful successful event and
+recomputes these fields from
+that same run. This construction defines the joint image and its
+successors, rather than independently assigning archive, reference or
+permission values. Assumption 1.3 supplies actual lawful handoff and
+continuity; syntax of a tuple does not establish a physical service.
+
+Complete export retains only the stated name and its public functions.
+Temporary raw observations, branch-dependent selectors and stopping
+times must be isolated or included in that name. Lexicographic frontier
+generation, the local six-entry tables and a direct address-list
+implementation use at most $O(D2^D)$ bits of acquisition/completion
+working storage, apart from public input representation and output. This
+is a sufficient algorithmic bound, not a storage optimum or a bound on
+later prediction evaluation. Installed public code, its construction,
+local computation, output materialization,
+source-bound access, isolation and count representation remain separate
+resources. The original preparer's acquisition in (CCF.6), refinement
+preparation, completion, final answer storage and services are distinct
+charges, even when a single implementation performs them consecutively.
+
+With only $e$, the unchanged individually selected original task still
+needs at most one fresh Read, by PPF. With no refinement, target-free
+prediction completion requires exactly $f$ fresh Reads, whereas literal
+completion requires exactly $2f$, by (CCF.12) and (CCF.14). The extra
+rightmost-label relation in (CCF.13) is exactly priced for the specified
+literal completion interface at budget $f$; it is not necessary for the
+original selected-target service or a unique syntactic form of memory.
+

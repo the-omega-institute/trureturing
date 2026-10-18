@@ -1,0 +1,30 @@
+**Corollary 6.3 (exact comparison and retained upper).** The new rate
+lower is strictly larger than the credited NCM depth-two lower:
+
+$$
+\frac18\log_2\frac{33}{13}
+>\frac14\log_2\frac{25}{17},
+\qquad
+33\cdot17^2=9537>8125=13\cdot25^2.
+\tag{NCE.46}
+$$
+
+With the unchanged FMR upper construction,
+
+$$
+\frac18\log_2\frac{33}{13}
+\le\lambda\le L_{\rm seed}<0.216605159,
+\qquad
+L_{\rm seed}=\lim_{D\to\infty}2^{-D}\log_2x_D,
+\quad x_2=\frac{25}{17},\quad x_{D+1}=x_D^2+1.
+\tag{NCE.47}
+$$
+
+Proof. Strict monotonicity of the logarithm turns the integer
+inequality in (NCE.46) into the displayed comparison. FMR
+Theorem 5.2 supplies the recurrence construction and its strict
+upper. Its native fractional covers, harmonic rounding and paid
+boundary acquisition retain their original resources (NCE.10).
+The new lower does not introduce an attaining encoder, unpriced
+coloring, or a bound on those other resources. $\square$
+

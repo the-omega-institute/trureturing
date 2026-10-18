@@ -1,0 +1,290 @@
+## 3. Rigidity of the entire late-double-root class
+
+Define the known-candidate root class
+
+$$
+\mathcal Z_{45}=\{W\in\mathcal F(H): f(4)=f(5)=0\}.            \tag{3.1}
+$$
+
+**Theorem 3.1.** If $\widehat Y\ne\widehat z$, this class is empty.
+If it is nonempty, it has one common normalized drift
+$d=\widehat Y=\widehat z>0$ and one common gain
+
+$$
+f(T)=-\frac d{20}(T-4)(T-5)(1+\mu T).                         \tag{3.2}
+$$
+
+The parameter $\mu$ is unique among legal candidates and satisfies
+$\mu<-1/3$ or $\mu>0$. Thus the gain is exactly cubic, with distinct
+simple roots $4,5,\rho$, where $\rho=-1/\mu<3$ and
+$\rho\notin\{0,1,2\}$. The off-diagonal source entries are fixed;
+there are at most two complete worlds. The sixth $J$ response is
+injective on the whole class and every known subset, and recovers the
+complete target with one further immediate read. In particular
+$\neg L_1(\mathcal Z_{45},H)$ and $\neg L_2(\mathcal Z_{45},H)$.
+
+**Proof, forced form and nonzero denominators.** The roots at four
+and five make their actual readings equal to $d$. Lemma 2.1 excludes
+any root at zero, one, two or three. Positivity of all six traces
+therefore gives
+
+$$
+d\notin\{0,24,48,312/5\},\qquad f(0)f(1)f(2)f(3)\ne0.        \tag{3.3}
+$$
+
+Factor $f(T)=(T-4)(T-5)(a+bT)$. This includes a possible quadratic.
+The initial equation is $20a=-d$, so $a\ne0$. Set $\mu=b/a$ to
+obtain (3.2). In particular $1+\mu$, $1+2\mu$ and $1+3\mu$
+are nonzero. The next three ancestor equations give
+
+$$
+\begin{aligned}
+j&=\frac{5(d-24)}{3d(1+\mu)},\\
+\ell&=\frac{10(d-48)}{3d(1+2\mu)},\\
+j+\ell&=\frac{10(d-312/5)}{d(1+3\mu)}.
+\end{aligned}                                                       \tag{3.4}
+$$
+
+All divisions so far are by the nonzero quantities just established.
+
+**Proof, the gain quadratic.** Equating the sum of the first two
+expressions in (3.4) to the third gives
+
+$$
+\begin{aligned}
+0={}&(d-24)(1+2\mu)(1+3\mu)
+ +2(d-48)(1+\mu)(1+3\mu)\\
+ &-6(d-312/5)(1+\mu)(1+2\mu).
+\end{aligned}                                                       \tag{3.5}
+$$
+
+Its coefficients at powers zero, one and two are respectively
+$(1272-15d)/5$, $(3096-25d)/5$ and $1584/5$. Thus
+
+$$
+Q_d(\mu)=1584\mu^2+(3096-25d)\mu+1272-15d=0.                 \tag{3.6}
+$$
+
+Put
+
+$$
+K=66\mu^2+129\mu+53,\qquad h=25\mu+15.
+$$
+
+Then $Q_d=24K-dh$ and
+
+$$
+Q_d(-3/5)=-384/25.                                           \tag{3.7}
+$$
+
+Consequently $h\ne0$ at a root of $Q_d$. Since $d\ne0$,
+also $K\ne0$, and $d=24K/h$. The identities
+
+$$
+K-h=2(\mu+1)(33\mu+19),\qquad
+K-2h=(2\mu+1)(33\mu+23)
+$$
+
+now turn (3.4) into
+
+$$
+\begin{aligned}
+j&=\frac{10(33\mu+19)}{3K},&
+\ell&=\frac{10(33\mu+23)}{3K},\\
+u&=\ell-1=\frac{-198\mu^2-57\mu+71}{3K},&
+v&=j-\ell+1=\frac{198\mu^2+387\mu+119}{3K}
+             =1-\frac{40}{3K}.
+\end{aligned}                                                       \tag{3.8}
+$$
+
+The canceled factors are only $1+\mu$ and $1+2\mu$, already
+nonzero. Here $h$ is an auxiliary linear polynomial, not a fixed
+shape promise.
+
+**Proof, only one quadratic branch can be legal.** Since $Q_d$ has
+positive leading coefficient and is negative at $-3/5$, it has two
+distinct real roots
+
+$$
+\mu_-<-3/5<\mu_+ .                                           \tag{3.9}
+$$
+
+At $\mu_-$, the numerator $33\mu+19$ in $j$ is negative.
+Thus $j>0$ forces $K<0$. Also $h<0$, so $d=24K/h>0$.
+The further condition $\ell>0$ forces $\mu_-<-23/33$.
+The point $-23/33$ lies strictly between the two roots, so
+
+$$
+Q_d(-23/33)=\frac{80}{33}(d-48)<0.
+$$
+
+A legal lower root therefore requires $d<48$.
+
+At $\mu_+$ the numerator $33\mu+23$ is positive, so $\ell>0$
+forces $K>0$. Now $h>0$, and again $d>0$. Positivity of $j$ gives
+$\mu_+>-19/33$, while positivity of $v$ in (3.8) gives $K>40/3$.
+For $\mu>-19/33$,
+
+$$
+K'(\mu)=132\mu+129>53>0,\qquad K(-1/2)=5<40/3.
+$$
+
+Hence $\mu_+>-1/2$. This point is strictly above $\mu_-$, so
+$-1/2$ lies strictly between the roots. Thus
+
+$$
+Q_d(-1/2)=\frac52(48-d)<0,
+$$
+
+and a legal upper root requires $d>48$. For the one fixed drift
+$d$, both branches cannot be legal; each branch contains only its
+one quadratic root. This proves uniqueness of the legal $\mu$ and
+also $d>0$. No source or gain shape has been fixed in this argument.
+
+**Proof, the small quartic obstruction and all five coefficients.**
+Define
+
+$$
+U=-198\mu^2-57\mu+71,\qquad V=198\mu^2+387\mu+119.
+$$
+
+By (3.8) and (1.8), $uv=UV/(9K^2)\le1/4$, hence
+$9K^2-4UV\ge0$. Complete coefficient multiplication is
+
+$$
+\begin{array}{c|rrrrr}
+ &\mu^0&\mu^1&\mu^2&\mu^3&\mu^4\\ \hline
+9K^2&25281&123066&212733&153252&39204\\
+4UV&33796&82776&-126252&-351648&-156816\\
+9K^2-4UV&-8515&40290&338985&504900&196020
+\end{array}
+$$
+
+It follows that
+
+$$
+\begin{aligned}
+9K^2-4UV&=5R(\mu),\\
+R(\mu)&=39204\mu^4+100980\mu^3+67797\mu^2+8058\mu-1703.
+\end{aligned}                                                       \tag{3.10}
+$$
+
+For $-1/3\le\mu\le0$, put $X=-3\mu\in[0,1]$. Exactly
+
+$$
+R(-X/3)=484X^4-3740X^3+7533X^2-2686X-1703.                   \tag{3.11}
+$$
+
+Let $B_{i,4}(X)=\binom4iX^i(1-X)^{4-i}$. The complete Bernstein
+identity is
+
+$$
+\begin{aligned}
+R(-X/3)={}&-1703B_{0,4}(X)-\frac{4749}{2}B_{1,4}(X)
+ -\frac{3581}{2}B_{2,4}(X)\\
+ &-886B_{3,4}(X)-112B_{4,4}(X).
+\end{aligned}                                                       \tag{3.12}
+$$
+
+For an explicit verification, if $(p_0,p_1,p_2,p_3,p_4)
+=(-1703,-2686,7533,-3740,484)$, the Bernstein coefficient at index
+$i$ is $\sum_{a=0}^ip_a\binom ia/\binom4a$. All five evaluations are
+
+$$
+\begin{array}{c|l|r}
+i&\text{coefficient sum}&\text{value}\\ \hline
+0&-1703&-1703\\
+1&-1703-2686/4&-4749/2\\
+2&-1703-2686/2+7533/6&-3581/2\\
+3&-1703-3(2686)/4+7533/2-3740/4&-886\\
+4&-1703-2686+7533-3740+484&-112
+\end{array}                                                       \tag{3.13}
+$$
+
+The conversion follows directly from
+
+$$
+X^a=\sum_{i=a}^4\frac{\binom ia}{\binom4a}B_{i,4}(X):
+$$
+
+indeed $\binom4i\binom ia/\binom4a=\binom{4-a}{i-a}$,
+and the sum is $X^a(X+1-X)^{4-a}$. Thus (3.13) proves every
+coefficient in (3.12) from (3.11), without an omitted array.
+The Bernstein terms are nonnegative on $[0,1]$ and sum to one.
+Every displayed coefficient is strictly negative. The endpoints
+are included: the value is $-1703$ at zero and $-112$ at one.
+Therefore $R(\mu)<0$ throughout the closed interval $[-1/3,0]$,
+contradicting (3.10) and $9K^2-4UV\ge0$.
+
+Consequently $\mu<-1/3$ or $\mu>0$. In particular $b=a\mu\ne0$,
+so the gain is exactly cubic. Its third root is negative when
+$\mu>0$, and is in $(0,3)$ when $\mu<-1/3$. It cannot be zero;
+Lemma 2.1 excludes one and two. This root is distinct from four
+and five, so all three roots are simple. The initially permitted
+quadratic, repeated-root and later-third-root cases in this class
+have been excluded by deductions, rather than additional promises.
+In particular
+
+$$
+f(6)=-\frac d{10}(1+6\mu)\ne0,\qquad
+f(7)=-\frac{3d}{10}(1+7\mu)\ne0.                             \tag{3.14}
+$$
+
+They have the same sign. Also $f(3)=-d(1+3\mu)/10$ has this sign.
+The clock-three equation therefore gives $d<312/5$ when $\mu<0$
+and $d>312/5$ when $\mu>0$. These are necessary conditions on
+$\mathcal Z_{45}$ alone.
+
+**Proof, all sources and the full-target inverse.** The unique $d$
+and $\mu$ fix $u,v$ by (3.8). The only possible diagonal parameters are
+
+$$
+r_\pm=\frac{1\pm\sqrt{1-4uv}}2.                              \tag{3.15}
+$$
+
+There are no candidates if the legality conditions fail. When a
+candidate exists, $0<uv\le1/4$, so both displayed values are in
+$(0,1)$; they coincide if $uv=1/4$. Every remaining ancestor
+equation still applies. At clocks four and five it is exactly the
+zero-gain equation with reading $d$, so it imposes no further
+restriction on $r$. There are at most two sources and hence at
+most two complete worlds.
+
+Direct multiplication gives
+
+$$
+JQ=\begin{pmatrix}3&2\\1&1\end{pmatrix},\qquad
+\operatorname{tr}(JQP)=1+2r+u+2v.                            \tag{3.16}
+$$
+
+The actual sixth $J$ response is
+$d+f(6)(1+2r+u+2v)$, with nonzero slope $2f(6)$ in $r$.
+Given its raw reading $w$, put $s_6=(w-D_0)/\lambda$ and recover
+
+$$
+r=\frac12\left(\frac{s_6-d}{f(6)}-1-u-2v\right),\qquad
+P=\begin{pmatrix}r&u\\v&1-r\end{pmatrix}.                     \tag{3.17}
+$$
+
+Equations (3.2) and (1.5) return the full $g,\delta$.
+The divisions are by $\lambda\ne0$ and the proved nonzero $f(6)$.
+The known ancestor and root class determine the unique legal
+quadratic root; its existence at an actual candidate follows from
+that candidate. Empty classes are unreachable; a known singleton
+may stop already. The same $J$ read and inverse work on every known
+subset, without imposing a cardinality premise. At most seven total
+readings are used, at the original clocks zero through six.
+
+For explicit recursion quantifiers, for this fixed first action $J$
+and every real raw response $w$, the actual child
+
+$$
+K_w=K\cap\mathcal F(H,J,w),\qquad H_w=(H,J,w)
+$$
+
+has at most one world for every known $K\subseteq\mathcal Z_{45}$.
+Thus $L_0(K_w,H_w)$ and $L_1(K_w,H_w)$ both fail for every $w$.
+The $J$ action conjunct in (1.6) consequently fails for both
+$L_1(K,H)$ and $L_2(K,H)$. This includes empty and singleton sets,
+whose cardinality clauses already fail. ∎
+

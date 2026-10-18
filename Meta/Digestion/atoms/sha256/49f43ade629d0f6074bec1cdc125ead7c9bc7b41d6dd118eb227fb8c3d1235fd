@@ -1,0 +1,55 @@
+**Theorem 2.3 (Matching domination).** For any matching
+$\mathcal M$ of $G$, define
+
+$$
+b_{ij}=\frac{w_i+w_j-\sqrt{(w_i-w_j)^2+
+4w_iw_jq_iq_j}}2.
+\tag{2.6}
+$$
+
+Then
+
+$$
+0\le\sum_{ij\in\mathcal M}b_{ij}
+\le B_{\rm prod}\le W-\Lambda.
+\tag{2.7}
+$$
+
+Proof. Retain only the edges of $\mathcal M$, with all unmatched
+sites isolated. For one matching edge the legal configuration
+space consists of its vacuum and two singletons. Its parent has
+eigenvalues zero and
+
+$$
+\frac{w_i+w_j\pm\sqrt{(w_i-w_j)^2+
+4w_iw_jq_iq_j}}2.
+\tag{2.8}
+$$
+
+For example, its trace is $w_i+w_j$, and the sum of its principal
+two-by-two minors is $w_iw_j(1-q_iq_j)$, which yields (2.8).
+The smaller positive eigenvalue is $b_{ij}>0$. Every positive
+Perron vector on its three configurations has product form after
+normalizing the vacuum coordinate to one. An isolated site's
+Perron vector also has this form, and its top eigenvalue is $w_i$.
+
+Take the tensor product of these actual component Perron vectors.
+It is one product profile $g_x$ for the entire relaxed graph, with
+constant row ratio
+
+$$
+W-\sum_{ij\in\mathcal M}b_{ij}.
+\tag{2.9}
+$$
+
+Every configuration legal for $G$ is legal for this relaxed graph.
+Restoring the omitted exclusion edges leaves every occupied-site
+term in (2.1) unchanged and only removes positive insertion terms.
+Thus the same vector, restricted to $\Omega_G$, has maximum row
+ratio at most (2.9). Infimizing and using (2.3) proves (2.7).
+The empty matching gives the first inequality as well. $\square$
+
+The construction uses a common vector on a common configuration
+space. It does not combine separately attained extrema without
+a simultaneous realization.
+

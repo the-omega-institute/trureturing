@@ -1,0 +1,5 @@
+source_id = "fib-atom-whitebox-correlated-word-recovery"
+path = "docs/develop/theory/FIB_ATOM_WHITEBOX_CORRELATED_WORD_RECOVERY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

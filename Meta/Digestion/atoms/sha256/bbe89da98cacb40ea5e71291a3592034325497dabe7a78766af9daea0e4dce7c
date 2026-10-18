@@ -1,0 +1,18 @@
+## 3. The exact closure criterion
+
+Compactify each scalar coordinate by
+$\overline{\mathbb N}=\mathbb N\cup\{\infty\}$. Finite points are isolated,
+and a neighborhood of $\infty$ contains all integers above a prescribed
+bound. Give completion trees the finite-prefix topology. For
+$\lambda\in\overline{\mathbb N}^{\,k}$ and a completion tuple
+$\eta\in\widehat{\mathcal T}^{\,m}$, let
+
+$$
+F=\{i:\eta_i\text{ is finite}\},\qquad f=\eta_F.
+$$
+
+Write $\overline C$ for the set of pairs $(\lambda,\eta)$ each of whose
+finite scalar/prefix neighborhoods contains a finite member
+$(\mathbf n,\mathbf z)$ satisfying (SLP.1). This is a closure definition;
+it does not extend the signed predicates to a limit.
+

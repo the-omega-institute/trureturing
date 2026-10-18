@@ -1,0 +1,53 @@
+**定义 C-115.1（原来源、同源通道与独立使用服务）。** 只取 C-114.1 的 $\eta=0$，
+保持 $B=(0,1,2,3,13)$、$f=(0\ 13)(1\ 3)$、$f(2)=2$ 和原切口 $A\mid B$。
+系数位置 $j=0,\ldots,4$ 对应 $B_j$；$V e_j=|B_j\rangle_A$、
+$W e_j=|f(B_j)\rangle_B$、$Je_j=|B_j,f(B_j)\rangle$ 仍只是原标签识别。
+对 $X\in\mathcal K$、$0\le t\le1$，令
+
+$$
+\begin{aligned}
+A_{t,X}&=I_5+tX,\qquad C_{t,X}=A_{t,X}/5,\\
+\Gamma_{t,X}&=JC_{t,X}J^\dagger=\rho_{t,0}(X),\\
+\Phi_{t,X}(Y)&=A_{t,X}\circ Y=\Phi_{t,0,X}(Y),\qquad Y\in M_5(\mathbb C),\\
+|\beta_f\rangle&=5^{-1/2}\sum_{j=0}^4|B_j,f(B_j)\rangle,\\
+\widehat\chi(\Phi_{t,X})
+&=(\Phi_{t,X;A}\otimes\mathrm{id}_B)(|\beta_f\rangle\langle\beta_f|)
+=\frac15\sum_{j,k}(A_{t,X})_{jk}
+ |B_j,f(B_j)\rangle\langle B_k,f(B_k)|=\Gamma_{t,X}.
+\end{aligned}
+\tag{C115.1}
+$$
+
+这里 $\Phi_{t,X;A}(VYV^\dagger)=V\Phi_{t,X}(Y)V^\dagger$；Choi 输出因子在前，
+规范化因子始终为 $1/5$。$A_{t,X}\succeq0$、对角为一，故通道 CPTP。
+式 (C115.1) 是全复矩阵上的通道与来源对应，不是用一个未知来源态编程通道。
+所有这些来源仍属于 C-108.3 的同一完整原生历史纤维。
+
+本章另外声明固定已知 $t,X$ 的无记忆通道服务：每次可使用同一 $\Phi_{t,X}$，
+各次环境新鲜、独立并与输入初始无关，故 $n$ 次的联合映射是 $\Phi_{t,X}^{\otimes n}$。
+发送者和接收者允许任意复 CPTP 块编码、解码
+
+$$
+\mathcal E_n:M_{k_n}(\mathbb C)\longrightarrow M_{5^n}(\mathbb C),\qquad
+\mathcal D_n:M_{5^n}(\mathbb C)\longrightarrow M_{k_n}(\mathbb C).
+\tag{C115.2}
+$$
+
+允许任意本地空白辅助系及本地丢弃；辅助系不预先跨双方相关，也不携带未知消息或来源标签。
+没有预共享纠缠、辅助量子通道、免费前向或反馈经典通信、隐藏环境读数、后选择成功豁免
+或带外资源。$R_n\cong\mathbb C^{k_n}$ 是始终不动的参考，初始与逻辑输入处于
+$|\beta_{k_n}\rangle=k_n^{-1/2}\sum_a|a,a\rangle$。令 $\beta_{k_n}$ 表示其密度矩阵，
+要求未除以二的迹范数误差
+
+$$
+\epsilon_n=\left\|
+(\mathrm{id}_{R_n}\otimes\mathcal D_n\Phi_{t,X}^{\otimes n}\mathcal E_n)
+(\beta_{k_n})-\beta_{k_n}\right\|_1\longrightarrow0.
+\tag{C115.3}
+$$
+
+$Q_t(X)$ 为所有这样的代码序列之 $\liminf_{n\to\infty}n^{-1}\log_2 k_n$ 的上确界，
+单位是 qubit／次。编码可以跨全部 $n$ 次相关并与参考纠缠，不限为乘积、实矩阵或均匀输入。
+本章熵 $H_2,S_2$ 均用底二对数，$0\log_2 0=0$；不改 C-114 的自然对数约定。
+独立通道使用、校准已知参数和任意块编码是此处明确附加的数学服务，不由原生历史菜单取得。
+

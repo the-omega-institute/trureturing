@@ -1,0 +1,66 @@
+### 60.2 Canonical-complement coordinates and all flatness equations
+
+First select \(c_1^+\). Let \(C\) have the following five columns in
+unit-entry normalization, in the displayed order:
+
+\[
+ (0,+),(0,-),(1,-),(2,+),(2,-),\qquad
+ m=(0,0,1,2,2),\qquad \boldsymbol g=(g_0,-g_0,-g_1,g_1,-g_1).
+\tag{60.3}
+\]
+
+Thus column \(j\) is \((f_{m_j},\boldsymbol g_jf_{m_j})\). Directly from (60.1)–(60.2),
+
+\[
+ C^*C=6I_5,\qquad M^*M=6I_6,\qquad |(MC)_{rj}|^2=6.
+\]
+
+Every vector orthogonal to \(c_1^+\) is uniquely \(Cz\).
+For \(z\ne0\), the unit vector \(Cz/(\sqrt6\|z\|)\) is actual
+common-flat if and only if
+
+\[
+ |(Cz)_r|^2=\|z\|^2,\qquad |(MCz)_r|^2=6\|z\|^2
+ \quad(0\le r\le5).
+\tag{60.4}
+\]
+
+Define
+
+\[
+ \alpha_j=P+3\,\mathbf1_{m_j=0},\qquad
+ \beta_j=Q+3\,\mathbf1_{m_j=0},\qquad
+ o_j=\alpha_j+\beta_j\boldsymbol g_j,\qquad
+ p_j=\bar\beta_j-\bar\alpha_j\boldsymbol g_j.
+\]
+
+For \(v\in\mathbb C^5\) and \(r\in\mathbb Z_3\), put
+
+\[
+ q(v,r)=\sum_{\substack{i\ne j\\m_j-m_i=r\pmod3}}
+                 \bar v_i v_j\bar z_i z_j.
+\]
+
+Use the ordered generators
+
+\[
+ \begin{array}{c|cccccccccc}
+ s&0&1&2&3&4&5&6&7&8&9\\\hline
+ q_s&q(\mathbf1,0)&q(o,0)&q(\mathbf1,1)&\overline{q_2}&
+ q(\boldsymbol g,1)&\overline{q_4}&q(o,1)&\overline{q_6}&q(p,1)&\overline{q_8}\\
+ \gamma_s&0&0&1&2&1&2&1&2&1&2
+ \end{array}
+\tag{60.5}
+\]
+
+Conjugation exchanges \(z\) and \(\bar z\), as well as conjugating
+coefficients. Thus \(q_0,q_1\) are real and the other eight generators
+are four conjugate pairs. Equations (60.4) are equivalent to
+\(q_s=0\) for all ten generators. Indeed, in each three-coordinate
+channel the squared moduli have only Fourier grades \(0,1,2\).
+The grade-zero diagonals cancel by \(|\boldsymbol g_j|^2=1\) and
+\(|o_j|^2=|p_j|^2=6\); the omitted bottom-channel means follow from
+\(C^*C=6I_5\) and \(M^*M=6I_6\). The remaining coefficients are
+exactly the four grade-one autocorrelations and their conjugates.
+This keeps every original input and output flatness condition.
+

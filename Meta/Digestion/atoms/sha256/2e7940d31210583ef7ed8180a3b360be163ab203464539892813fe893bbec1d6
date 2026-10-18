@@ -1,0 +1,25 @@
+**定义 5.1（五模式的同源尺度响应）。** 使用 [对称 seam 与 Fibonacci 层级卷中合法窗口的定义及五模式](https://github.com/the-omega-institute/trureturing/blob/c1b1f24da3ffc4aff376259b96685604d55525ea/docs/develop/theory/AURIC_FIB_ATOM_SYMMETRIC_SEAM_PATH_DEFECT_AND_FIBONACCI_HIERARCHY.md)：
+
+$$
+\Sigma_3=\{\varnothing,\{1\},\{2\},\{3\},\{1,3\}\},
+\qquad Z_3(z)=\sum_{I\in\Sigma_3}z^{|I|}=1+3z+z^2.
+$$
+
+对 $\tau\ge0$，每个选中位置贡献系数 $-\tau$ 并增加同一个尺度 $\ell$，定义
+
+$$
+\begin{aligned}
+\mathcal F_\tau(r)
+&=\sum_{I\in\Sigma_3}(-\tau)^{|I|}h(r+|I|\ell)\\
+&=h(r)-3\tau h(r+\ell)+\tau^2h(r+2\ell).
+\end{aligned}
+\tag{5.1}
+$$
+
+这是指定的解析响应；系数不是概率，相同单选响应也不将三个模式标签识别成一个模式。置
+
+$$
+\varphi=\frac{1+\sqrt5}{2},
+\qquad \tau_* =\varphi^{-2}=\frac{3-\sqrt5}{2}.
+$$
+

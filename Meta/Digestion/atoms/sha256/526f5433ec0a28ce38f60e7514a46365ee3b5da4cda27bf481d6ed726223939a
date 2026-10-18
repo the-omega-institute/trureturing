@@ -1,0 +1,13 @@
+### 64.1 Exact fixed-ray classification
+
+At the actual central seed, put
+
+\[
+ \omega=\frac{-1+i\sqrt3}{2},\qquad A=J_3+(\omega-1)I_3,
+ \qquad M=\begin{pmatrix}A&A\\\bar A&-\bar A\end{pmatrix}.
+\]
+
+Let \(R=\operatorname{diag}(R_3,R_3)\), where \(R_3\) exchanges
+coordinates zero and one. Common-flat rays have unit-entry
+representatives \(z\) satisfying \(|(Mz)_j|^2=6\).
+

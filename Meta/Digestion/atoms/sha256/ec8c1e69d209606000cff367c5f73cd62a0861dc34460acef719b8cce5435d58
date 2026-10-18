@@ -1,0 +1,32 @@
+**Definition 54.2 (three discriminants).** In this moving frame put
+
+$$
+B=F^TGF,\quad c=F^TCF,\quad q_{ij}=(F^TQF)_{ij},\quad
+\lambda(t)=2\psi'(t)/h'(t),\qquad \psi=B_{00}.
+$$
+
+The contrast multiplier $\lambda$ is distinct from $\lambda_{\rm sp}$.
+It extends to $\lambda(t_*)=0$ and is defined by this ratio only for
+$t<t_3$. Define
+
+$$
+\begin{aligned}
+k_-&=c_{01}-q_{01}c_{12}/q_{12},&
+k_+&=q_{02}c_{12}/q_{12}-c_{02},&
+m&=B_{12}-q_{12}B_{02}/q_{02},\\
+d_-&=-B_{00}c_{11}-\lambda k_-^2,\\
+d_+&=B_{00}c_{22}+\lambda(c_{00}c_{22}-k_+^2),\\
+d_N&=(B_{11}+\lambda c_{11})B_{22}-m^2.
+\end{aligned}
+\tag{JR.142}
+$$
+
+Since $q_{ii}=0$ and $2q_{01}q_{02}q_{12}=\det Q=\alpha\beta>0$,
+every displayed $q_{ij}$ denominator is nonzero. Set
+
+$$
+t_\dagger=\min\{t\in(t_*,t_3):d_-(t)d_+(t)d_N(t)=0\},\qquad
+\tau_\dagger=h(t_\dagger).
+\tag{JR.143}
+$$
+

@@ -1,0 +1,39 @@
+**Theorem 4.1 (actual family with nonreal environment state).** In a real output frame $(b_1,g_1,b_2,g_2,h)$ let $0<\beta\leq1/2$, $0<\vartheta<\pi/4$, $0\leq w\leq1$, and $t=\sqrt{1-w}\,b_2+\sqrt w\,h$. The three real Kraus matrices
+
+$$
+\begin{aligned}
+K_0&=\sqrt a\cos\vartheta(b_1\langle0|+g_1\langle1|)+t\langle2|,\\
+K_1&=\sqrt\beta(b_2\langle0|+g_2\langle1|),\\
+K_2&=\sqrt a\sin\vartheta(-g_1\langle0|+b_1\langle1|)
+\end{aligned}
+\tag{R.17}
+$$
+
+define an actual member of the original real class with (R.7), actual outside weight $w$, nonreal $\tau$, and $C\ne0$ whenever $w<1$.
+
+**Proof.** The three individual TP products are respectively $\operatorname{diag}(a\cos^2\vartheta,a\cos^2\vartheta,1)$, $\operatorname{diag}(\beta,\beta,0)$ and $\operatorname{diag}(a\sin^2\vartheta,a\sin^2\vartheta,0)$; they sum to $I_3$. The third column is orthogonal to the first plane, so no cross terms were discarded. Directly $K_0\chi_\pm=\sqrt a\cos\vartheta f_1^\pm$, $K_1\chi_\pm=\sqrt\beta f_2^\pm$, and $K_2\chi_\pm=\pm i\sqrt a\sin\vartheta f_1^\pm$. Thus (R.7) holds. The actual third output is $|t\rangle\langle t|$, including its $b_2$–$h$ coherences $\sqrt{w(1-w)}$.
+
+In the unchanged real environment $(\epsilon_0,\epsilon_1,\epsilon_2)$ put $z_\vartheta=\cos\vartheta\epsilon_0+i\sin\vartheta\epsilon_2$. Then
+
+$$
+V\chi_+=\sqrt a f_1^+\otimes z_\vartheta+\sqrt\beta f_2^+\otimes\epsilon_1,
+\quad V|2\rangle=t\otimes\epsilon_0,
+$$
+
+$$
+\tau=a|z_\vartheta\rangle\langle z_\vartheta|+\beta|\epsilon_1\rangle\langle\epsilon_1|,
+\quad \sigma=|\epsilon_0\rangle\langle\epsilon_0|,
+\quad C=\sqrt{\beta(1-w)/2}|\epsilon_1\rangle\langle\epsilon_0|.
+\tag{R.18}
+$$
+
+In particular $\tau_{02}=-ia\cos\vartheta\sin\vartheta\ne0$. The support inverse is $\tau^+=a^{-1}|z_\vartheta\rangle\langle z_\vartheta|+\beta^{-1}|\epsilon_1\rangle\langle\epsilon_1|$, so $C^\dagger\tau^+C=(1-w)|\epsilon_0\rangle\langle\epsilon_0|/2$ and $S=w|\epsilon_0\rangle\langle\epsilon_0|$. Fidelity adds over the orthogonal environment blocks, giving
+
+$$
+f(\tau,\bar\tau)=a|\langle z_\vartheta,\bar z_\vartheta\rangle|+\beta
+=a\cos(2\vartheta)+\beta.
+\tag{R.19}
+$$
+
+No complex environment gauge has been used to erase this imaginary part. $\square$
+

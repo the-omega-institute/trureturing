@@ -1,0 +1,19 @@
+**Theorem 2.5 (when an owned weight argument can be removed).** Fix
+a feasible seed relation $R$ and a block $i$, with seed scope $I_i$.
+For $c\in I_i$, the value $w_i(x_i(s))$ can be written on all of $R$
+as a function of $s|_{I_i\setminus\{c\}}$ exactly when it is constant
+on each fiber of that restricted projection. Such a rewriting works
+for every nonnegative $w_i:S_d\to[0,\infty)$ exactly when $x_i(s)$
+itself is constant on each such fiber. In particular a realized
+change of an actual owner reply in block $i$, with the other scoped
+seeds fixed, prevents universal removal of that argument.
+
+Proof. A factored function is constant on projection fibers. Conversely
+assign the common value to every attained projected tuple, extending
+arbitrarily off its image. For the universal claim, two different actual
+blocks are separated by the indicator weight of either one. An owner
+reply is an actual reply of its block, so changing it changes the block.
+Empty relations satisfy the statements vacuously. This is a finite
+pointwise criterion; equality of one total sum is insufficient.
+$\square$
+

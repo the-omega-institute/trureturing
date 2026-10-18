@@ -1,0 +1,21 @@
+## 229. At most two single-high transverse owners in total
+
+Let T be the set of genuine owners containing exactly one distinct P
+label and having that label transverse in its chosen paired frame.
+Write j=|T|. For M, the single-high-return theorem makes any such owner
+the symmetric exceptional owner, whose two transverse M angles each
+exceed pi/3. For Z or U, Section 224 gives
+the same strict lower bound for the two transverse high angles.
+Thus every owner in T consumes more than 2*pi/3 of genuine P budget.
+Owners in K and T are disjoint by definition. Summing original slots
+of distinct actual owners does not duplicate an angle, even when labels
+or neighbors repeat. Since the entire genuine P capacity is 5*pi,
+ k*pi+(2*j/3)*pi<5*pi.
+For k=3 this forces j<=2; for k=4 it forces j<=1. In particular j<=2
+across all three high labels together. Any extra axial high slots in a
+T owner only increase its expense and do not weaken the argument.
+
+This is a joint necessary incidence and angle-budget restriction.
+It does not assert a realizable contracted graph, exclude all remaining
+three- or four-owner configurations, or prove five-reservoir realization.
+

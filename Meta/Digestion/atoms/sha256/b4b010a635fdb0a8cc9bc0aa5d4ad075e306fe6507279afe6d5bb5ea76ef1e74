@@ -1,0 +1,82 @@
+**Theorem 7.2 (complex feasibility, real optimization and complete update).**
+In Definition 7.1, prescribed numbers $q_j\in\mathbb R$, $h_j\in\mathbb C$
+are realizable by complete instruments if and only if, for $1\leq j\leq L$,
+
+$$
+\begin{aligned}
+0&\leq q_j\leq q_{j-1},& |h_j|&\leq q_j,\\
+|h_{j-1}-h_j|&\leq q_{j-1}-q_j,&
+|D_{k_{j-1}}h_{j-1}-D_{k_j}h_j|
+ &\leq r(q_{j-1}-q_j).
+\end{aligned}
+\tag{PR.25}
+$$
+
+Replacing all $h_j$ by their real parts preserves feasibility and the same
+survival schedule $(q_j)$. Consequently real overlaps suffice for maximizing
+$q_L$; expanding the absolute values makes that finite optimization a linear
+programme. Replacement need not preserve prescribed complex overlaps or
+the corresponding joint record states.
+
+Proof. Lemma 4.1 applies to the cumulative successful contraction at every
+cut, giving (PR.24). At step $j$ use generators
+$e_2\otimes a_{j-1,\epsilon}$ and
+$n_\epsilon(k_{j-1})\otimes a_{j-1,\epsilon}$. The two input Gram blocks
+have diagonal $q_{j-1}$ and off-diagonal $h_{j-1}$ and
+$t_{k_{j-1}}h_{j-1}$. Their successful output blocks have diagonal $q_j$
+and off-diagonal $h_j$ and $t_{k_j}h_j$. Their positive differences give
+exactly the last two constraints in (PR.25); positivity of the output
+token Gram gives $|h_j|\leq q_j$. Trace decrease gives monotonicity.
+
+Conversely, realize each pair $a_{j,\pm}$ by its positive two-by-two Gram
+matrix. The same frame argument as Theorem 4.2 gives a well-defined
+contraction between the actual consecutive frame spans, even for a singular
+Gram matrix. Complete it with the complementary square root and keep the
+failure output as in (PR.13). If $q_{j-1}>0$, the conditional step success
+probability on either normalized actual survivor is $q_j/q_{j-1}$.
+If $q_{j-1}=0$, all later $q,h$ vanish and there is no live branch to
+continue; $h_0=\mu$ causes no division problem at a zero later cut.
+
+Compose the complete instruments, stopping at first failure. Let $B_j,F_j$
+be the success and failure contractions on the appropriate full cut spaces,
+with $B_j^\dagger B_j+F_j^\dagger F_j=I$. The all-success product is
+$B_L\cdots B_1$, and the first-failure products are
+$F_jB_{j-1}\cdots B_1$. Their effects telescope to identity on the initial
+space. Keep the cut label and all quantum output registers in each product.
+This proves completeness, actual record succession and absorbing failure,
+not only a product of scalar probabilities.
+
+For real initial $h_0$, replacing every $h_j$ by $\operatorname{Re}h_j$
+reduces each modulus in (PR.25), because $D_{k_j},r$ are real.
+The new feasible sequence is realized by the construction just given.
+The $q_j$ are in $[0,1]$ and $|h_j|\leq q_j$, so the finite real feasible
+set is compact and nonempty (it contains immediate failure). A maximum
+exists. $\square$
+
+For example, take $\mu=0$, $k_0=k_1=c/2$, $q_1=1/2$ and $h_1=i/4$.
+These prescribed complex data satisfy (PR.25): the top overlap difference
+has modulus $1/4\leq1/2$, and both $D$ values are zero. Replacing $h_1$
+by zero preserves the survival schedule but changes nonorthogonal survivor
+records into orthogonal ones. No common record isometry can identify those
+two Gram matrices. Thus “real overlaps suffice” is an optimization reduction,
+not an assertion that a specified complex joint output is preserved.
+
+The theorem is an exact iff for the complete coherent token contract stated.
+For an arbitrary instrument that retains mixed records or classical coins,
+its dilation can be used for an upper bound: keep every generated
+purification in a larger proof system. Every later actual operation extends
+by identity on unavailable purifying registers, so the same Gram necessity
+still holds. Granting access to these registers only enlarges the class for
+an upper bound. It does not grant such access to the actual observer.
+The attaining construction above explicitly supplies its own pure residue
+and therefore needs no unsupplied purification port. Mixed spectator
+archives are never replaced by an accessible purification.
+
+If later choice uses extra classical suboutcomes, their labels and
+purifications belong to that enlarged survivor record in the upper-bound
+argument. The positive construction generates no such internal suboutcomes:
+its live branch has the single recorded success at each public cut and its
+actual coherently retained token. Thus a two-vector Gram realization does
+not erase an old classical archive or silently turn classical-only access
+into coherent access.
+

@@ -1,0 +1,38 @@
+## 221. Finite size of the complete selected-M circle
+
+Under the exact five-reservoir hypotheses of the whole-high-core and
+single-high-return theorems, at most eight actual tetrahedron owners
+contain M, and 6<=degree(M)<=19.
+
+Proof. The unique flat owner sigma contributes one M slot. A genuine
+owner containing M and also Z or U belongs to the interacting high core,
+which has at most four owners. Otherwise, if M is transverse, the
+single-high theorem gives the one possible symmetric exceptional owner,
+with two M slots. If M is not transverse, it is axial and the distinct
+transverse pair must be {C,D}. There are at most two such genuine owners;
+each has exactly one M slot, because two M axes would make it flat.
+These alternatives exhaust all actual owners containing M. Their union
+has at most 1+4+1+2=8 members, without needing a disjointness assumption
+for this upper bound.
+
+Every paired owner has at most four M slots: at most two axes and at
+most two transverse slots, because the transverse labels are distinct.
+The interacting core contains tau=(Z,M,C,D,M,C), which has exactly two
+M slots. Thus its other at most three owners contribute at most twelve
+M slots. Adding sigma, the two genuine axial-CD owners, and the possible
+exception gives
+ degree(M)<=1+2+2+2+3*4=19.
+The lower bound six is the standing degree hypothesis.
+
+For any chosen nonempty subset of marked original M slots, the actual
+oriented normal circle has a first-return permutation on those slots.
+Each first-return segment retains its original number of slots and the
+sum of its original angles. The segments partition the actual circle;
+their lengths sum to degree(M)<=19 and their angle weights sum to 2*pi.
+This is ordinary segmentation of the actual successor cycle, including
+any repeated visits to one tetrahedron owner. It does not identify
+owners, assume homogeneous angles on a segment, discard slots, or
+replace the original angle equations by a formal graph equation.
+The finite bounds permit a bounded role analysis but do not prove
+five-reservoir exclusion or realization.
+

@@ -1,0 +1,22 @@
+**Definition 6.1 (the credited four-state core).** Put
+
+$$
+A=\alpha,\quad B=\beta,\quad C=\langle A,A\rangle,
+\quad J=\langle B,A\rangle,
+\qquad (u_0,u_1,u_2,u_3)=(C,J,\langle C,C\rangle,\langle J,J\rangle).
+\tag{RCE.23}
+$$
+
+These are the four core states of the existing NCM/SRP motif, all
+in $S_3$. They are reused, not a new motif. Their relevant tables are
+
+$$
+\begin{array}{c|cccc}
+ &u_0&u_1&u_2&u_3\\\hline
+r_L&\alpha&\beta&\mathsf{branch}&\mathsf{branch}\\
+r_{RL}&\mathsf{absent}&\mathsf{absent}&\alpha&\beta\\
+\Gamma_{LL}&(3,0)&(2,0)&(2,1)&(1,0)
+\end{array}
+\tag{RCE.24}
+$$
+

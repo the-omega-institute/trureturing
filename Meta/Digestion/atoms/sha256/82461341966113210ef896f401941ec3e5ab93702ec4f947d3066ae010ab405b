@@ -1,0 +1,23 @@
+**Convention 6.1 (counted acquisition and isolated dependence).** Both
+constructions begin from public $D$ and common tables and actually
+acquire every source-dependent table entry they use by the charged
+Reads of Lemma 4.1. Its recursive branch choices, inferred constructors,
+temporary arrays, stack, buffers and partial addresses are preparation
+materials. Export is only the fixed-width name declared in the theorem.
+Public allocation and a padded finite local-computation schedule can be
+used at each fixed $D$; finite reply histories and bounded acquisition
+make the necessary local bound finite and effectively obtainable.
+The supplied paid handoff/isolation service removes all other accessible
+source dependence, including preparation histories and timing. If any
+additional acquired distinction survives, it belongs in the complete
+attained alphabet and the stated name count no longer describes that
+implementation.
+
+The scan adapts its actual queries to paid replies. Its queries are
+whole original-root strings, never movement to a cursor or a copied
+subtree. Repeated and absent submissions would still be charged. The
+proof's alternate inputs, canonical representatives and cover members
+are mathematical comparison objects; they create no readable source
+register or free acquired shape. The same stationary actual $t$
+underlies preparation and its one possible late Read.
+

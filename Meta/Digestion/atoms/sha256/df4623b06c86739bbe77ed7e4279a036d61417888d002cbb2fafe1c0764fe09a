@@ -1,0 +1,41 @@
+**定理 19.2（端点制度的准确有限公式）。** 若 $s_0\le1$，站立条件强迫 $\gamma<0$，任意 $H>0$ 可行。若 $s_0>1$，令
+
+$$
+\eta=\ell/z-1>-1/2.
+$$
+
+非零预测的充要条件还可写为
+
+| 19端点参数 | 准确条件 |
+| --- | --- |
+| 19叶阈值 $\eta\le1$，即 $L\le s_0^2$ | $H\ge s_0$ |
+| 19有限中间区 $1<\eta<\varphi$ | $H\ge s_0^{\psi(\eta)}$ |
+| 19临界端点 $\eta=\varphi$，即 $L=s_0^{\varphi^2}$ | $H>1$ |
+| 19收缩端点 $\eta>\varphi$ | 每个 $H>0$ |
+
+中间区置
+
+$$
+\begin{gathered}
+G_\eta(m,n)=\max\{(1+\eta)m-\eta n,\ n-\eta m,\ m+(1-\eta)n\},\\
+B_\eta=\frac{\eta+1}{\eta+1-\eta^2},\\
+\mathcal E_\eta=\{(m,n):1\le m\le\lfloor B_\eta\rfloor,
+\ m<n\le\lfloor\eta m+1\rfloor,\ (m,n)\notin(2\mathbb N)^2\},\\
+\psi(\eta)=\min\bigl(\{1\}\cup
+\{G_\eta(m,n):(m,n)\in\mathcal E_\eta\}\bigr)>0.
+\end{gathered}
+$$
+
+证明。$s_0\le1$ 时，若 $\ell>0$ 直接有 $\gamma<0$；若 $\ell\le0$，则 $z<2\ell\le\ell/\varphi^2$，仍收缩。以下取 $z>0$。纯组成中 $\alpha$ 的 $f_2=z$、$\beta$ 的 $f_1=z$，不能低于叶阈值；$\alpha$ 在等叶长处达到它。对混合 $n\le m$，若 $v<0$，则 $f_0\ge mz\ge z$；若 $v\ge0$，则 $f_2\ge(m+n)z\ge2z$。故任何改善必须有 $n>m\ge1$。此时三线关于 $v$ 的斜率均正，其最优点为 $v=z-\ell=-\eta z$，由实际端点制备 $a=Le_1,b=(s_0/L)e_2$ 实现；该点最大对数除以 $z$ 恰为 $G_\eta$。
+
+当 $\eta\le1$，第三项 $m+(1-\eta)n\ge m\ge1$，不能改善叶阈值，得第一行。当 $1<\eta<\varphi$，任何可与叶持平或改善的组成须有 $G_\eta\le1$，由前两项得到
+
+$$
+\frac{(1+\eta)m-1}{\eta}\le n\le\eta m+1,\qquad
+(\eta+1-\eta^2)m\le\eta+1.
+$$
+
+这证明有限集 $\mathcal E_\eta$ 覆盖全部可能优化者；略去的组成的指数严格大于1。前两项不能同时非正，否则会有 $1+1/\eta\le n/m\le\eta$，与 $\eta^2<\eta+1$ 矛盾。因此有限最小值正，且每个所留组成有实际树及端点制备，阈值达到。
+
+当 $\eta=\varphi$，令 $e=n-\varphi m$，端点三项为 $-\varphi e,e,-e/\varphi$；整数组成及无理性给 $e\ne0$，最大值严格正。连续 Fibonacci 组成 $(F_j,F_{j+1})$ 的 $e=(-1)^j\varphi^{-j}\to0$，相邻数互素、不会双偶，故均在支撑内。其最大指数趋于零但不达到，正是定理18.3的临界制度。若 $\eta>\varphi$，选择有理比值 $1+1/\eta<n/m<\eta$，约成互素正整数后取任意大奇数倍。支撑仍非双偶，前两项负；第三项是前两项的和，也负。其倍数趋向负无穷，证明任意 $H>0$ 可行。
+

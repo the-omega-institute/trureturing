@@ -1,0 +1,21 @@
+## 19. Constructor definitions with observable original coordinates
+
+The source and service contract is Definition 1.1, Definition 1.2 and
+Assumption 1.3: finite nonempty ordered trees, the interpreted substitution
+$\rho$, the entire acquired fiber $U=\mathcal U_R(H_0,H_{\rm rel})$, and
+the entire original row $R_Q$. The old row retains every repeated class and
+every different-class disequality. Both endpoints of each relation record
+must exist, including for a disequality. Literal repetitions and absent
+replies retain their force. The certified initial epoch is at least every
+recorded epoch. Arbitrary finite prefix-free original $P,Q$, including
+empty, root and absent cuts, remain allowed.
+
+The extension here eliminates constructor definitions while preserving
+coordinates that are actual original subtrees. It gives a decidable family
+of acquired inputs, an exact decision of finite original-prefix
+determination on that family, and a paid whole-row consumer. Constructor
+definitions may copy parameters and contain unequal fixed powers of
+$\rho$. Residual constraints may couple all remaining coordinates. This
+is a restricted extension of the synchronous residual method; it does not
+decide arbitrary cyclic interpreted equations.
+

@@ -1,0 +1,49 @@
+**Assumption 4.1 (the entire preparation and later-use contract).** Fix
+one common effective producer and one common effective consumer. Their
+installed programs and source-independent constants are the same for
+every source. The following interfaces and services are separately
+supplied and priced.
+
+1. Preparation presents an unknown $u\in\mathcal T$ through the original
+   raw address interface, stationary during this traversal. Starting at
+   the actual root, the producer reads each present node once, expanding
+   the two children only after a branch reply. It restores $u$ from
+   these actual replies, then computes the finite inverse parsing and
+   any proposed calibration $\lambda(u)$ on that description.
+2. A complete retention cut leaves an authentic label $\lambda(u)$.
+   Every other accessible source-dependent preparation field factors
+   through this label. These fields include old outputs, retained
+   archives, references, installation variants, caches, control location,
+   addresses, counters, workspace contents and lengths, timestamps and
+   any accessible termination-time information. Equal labels therefore
+   give identical accessible preparation information under the same
+   public task input. Random initialization, if present, is independent
+   of the source conditional on that input and label. A readable source
+   identity or archive carrying a further distinction is additional
+   retained information and belongs in the label.
+3. A supplied authentic same-source, same-root, forward-only presentation
+   later gives $y=\rho^k u$ for an arbitrary unknown $k\in\mathbb N_0$.
+   Every $u$ and every such $k$ is in the task domain. The invocation
+   supplies no $k$, event count, initial intrinsic depth, source size,
+   clock value or extra source-correlated input. The authenticity service
+   gives this contract, not an identity token that distinguishes source
+   pairs with equal labels. The current version remains quiescent during
+   the entire consumer call.
+4. The consumer gets the retained label at a separately supplied new
+   task entry. Its only new source observations are actual original
+   four-reply reads. The calibration comparison class chooses only
+   $R^j$ requests; local computation and output are paid. It has no
+   $\mathsf{ApplyRho}$, pairing, reset, equality, stream, event or clock
+   oracle. A completed earlier call does not create a free future
+   invocation or free archive access. Physical reply durations are not an
+   observation of this four-reply model; a source-dependent timing port
+   would enlarge the comparison interface.
+
+The full-tree acquisition is the existing service of [ACQ] and [SLH,
+Proposition 53.2][SLH]. Authentication, forward presentation, isolation, retention
+lifetime, invocation and payment are hypotheses about supplied capabilities.
+Neither the syntax of a construction context nor a mathematical invariant
+manufactures any of these capabilities or proves their physical realization.
+The complete cut is essential to the comparison: a forgotten tree whose
+old source-dependent runtime or archive can still be read has not passed it.
+

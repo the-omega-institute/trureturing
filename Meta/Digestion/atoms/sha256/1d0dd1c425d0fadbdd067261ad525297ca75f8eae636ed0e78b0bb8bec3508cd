@@ -1,0 +1,8 @@
+### Lemma 8.1. A distinguished Bell eigenvector
+
+Suppose a two-qubit density matrix has spectrum lambda_* and both one-qubit marginals I_2/2. Let v be a unit eigenvector for its simple eigenvalue 1/2. Then
+
+$$\rho=\frac16I_4+\frac13|v\rangle\langle v|,\qquad \operatorname{Tr}_B|v\rangle\langle v|=I_2/2.$$
+
+Thus v is maximally entangled. This follows simply by taking a one-qubit partial trace of the displayed spectral decomposition. If B_v is its two by two amplitude matrix, B_v B_v^dagger=B_v^dagger B_v=I_2/2. Given any fixed Bell vector with matrix B_0, the one-qubit unitary V=2B_0 B_v^dagger satisfies V B_v=B_0. Hence the distinguished vector can be fixed using a genuine one-qubit operation, not an arbitrary two-qubit change of basis.
+

@@ -1,0 +1,36 @@
+**Definition 2.4 (The exact inherited strict-improvement certificate).**
+For $0<\tau<1$, keep $T,x_*,\lambda=\lambda_T,f=f_T,v=v_T$ from
+Theorem 2.3. To specify the certificate of [Q, Definitions 4.1 and 4.3],
+use distinct names for its perturbation constants:
+
+$$
+b_Q=e^{-1}-1,\quad
+\psi_Q(x)=1+b_Qx-e^{-x},\quad
+\eta_Q=\psi_Q(x_*)/2,\quad a_Q=1-\eta_Q,
+$$
+
+$$
+R_u^Q(x)=f(x)\bigl[(1+ua_Q)e^{ub_Qx}-u e^{-x}\bigr],\qquad
+F_0^Q(x)=(f(x)-s(x))^2+\tau x,
+$$
+
+$$
+h_Q=f(\psi_Q-\eta_Q),\quad W_Q=2(f-s)h_Q,\quad
+m_Q=\eta_Q\min\{T,T-\tau,f(x_*)v(x_*)\},
+$$
+
+$$
+K_Q=\{x\in[0,1]:W_Q(x)\ge-m_Q\},\qquad
+d_Q=T-\max_{K_Q}F_0^Q,
+$$
+
+$$
+C_Q=2T+\sqrt T,\qquad M_Q=28T+2\sqrt T,\qquad
+\varepsilon_Q=\min\left\{\frac12,\frac{m_Q}{2M_Q},
+\frac{d_Q}{2(C_Q+M_Q)}\right\},
+$$
+
+$$
+\mu(\tau)=\min\{m_Q\varepsilon_Q/2,d_Q/2\}.
+$$
+

@@ -1,0 +1,10 @@
+## 4. Small signed change forces a mixture near a pure endpoint
+
+Let
+
+$$
+G_p=\left\{\int_I P_{p,r}\,\omega (dr):\omega \text{ is a Borel probability on }I\right\}.
+$$
+
+This contains all actual posterior p-tail laws. It also permits a larger comparison parameter interval than [NATIVE], which uses the two endpoints and [3/8,5/13]. Membership in G_p is a semantic comparison property; no arbitrary Borel mixture is being offered as a finite executable decoder.
+

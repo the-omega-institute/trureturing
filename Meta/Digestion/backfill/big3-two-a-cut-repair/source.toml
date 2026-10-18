@@ -1,0 +1,5 @@
+source_id = "big3-two-a-cut-repair"
+path = "docs/develop/theory/BIG3_TWO_A_CUT_REPAIR.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

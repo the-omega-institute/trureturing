@@ -1,0 +1,27 @@
+**Theorem 6.3 (totality and all-size soundness).** $V_{\rm swap}$ is
+total computable. Acceptance implies, simultaneously for every $n$ and
+every original owned-seed network of prescribed incidence at most $L$,
+
+$$
+Z(\mathcal N;\mu,\ldots,\mu)\le C^n,
+\qquad \beta_{d,L}(\mu)\le C.
+\tag{OOA.24}
+$$
+
+Proof. Each enumeration and every rational power or comparison in the
+definition is finite. If a network has positive mass, all its vertex
+types have nonempty support-aware relations, by COK coverage. Its actual
+radius-two patterns therefore require swap witnesses at every high
+vertex. The rational majorants imply (OOA.16) uniformly over all full
+contexts. The kernel arrays are assigned using each vertex's complete
+actual decoration, and (OOA.21) gives its local domination. Corollary
+5.2 bounds its mass by
+
+$$
+c_0^{n-t}\left[c_1(1-\delta/\Delta)^{1/(2B)}\right]^t\le C^n
+$$
+
+using (OOA.23). Zero mass is immediate; in particular an empty local
+relation permits no positive global assignment. Taking the supremum
+over all lengths gives (OOA.24). $\square$
+

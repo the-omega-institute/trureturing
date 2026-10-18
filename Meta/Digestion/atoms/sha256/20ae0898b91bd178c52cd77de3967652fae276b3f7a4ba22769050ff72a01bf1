@@ -1,0 +1,37 @@
+**定理 28.5.1（Shapley 唯一性）。** 满足上述四条公理的责任规则唯一，并且等于定义 28.3.1 的 Shapley 规则。
+
+**证明。**
+
+对每个非空 $T\subseteq N$ 和 $v\in V$，定义 unanimity 游戏
+
+$$
+u_T^v(A)
+=
+\begin{cases}
+v,&T\subseteq A,\\
+0,&T\nsubseteq A.
+\end{cases}
+$$
+
+Möbius 反演把任意 $g$ 唯一写成
+
+$$
+g=\sum_{\varnothing\ne T\subseteq N}u_T^{m(T)},
+$$
+
+其中 $m(T)$ 是其交互谱。
+
+在 $u_T^v$ 中，$T$ 外端是虚无端，$T$ 内端由对称性必须获得相同值。效率要求 $T$ 内各端之和为 $v$，所以每个端必须获得 $v/|T|$。由加性，
+
+$$
+\Psi_i(g)
+=
+\sum_{T\ni i}\frac{m(T)}{|T|},
+$$
+
+这正是定理 28.4.1。证毕。
+
+唯一性依赖于四条公理和全体联盟响应；改变合法排列权重或删除联盟后，公理系统与结论都会改变。
+
+<a id="section-28-6"></a>
+

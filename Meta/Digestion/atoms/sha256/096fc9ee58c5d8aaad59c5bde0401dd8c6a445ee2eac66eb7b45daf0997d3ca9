@@ -1,0 +1,19 @@
+**Proposition 4.7 (orbit gauge criterion).** Let each $Q_i$ have a declared
+task gauge equivalence $\approx_i$, such as the orbits of a specified group
+of automorphisms preserving the complete task contract. Suppose each edge
+domain and image is orbit saturated, and each partial transport and inverse
+preserves orbit equivalence; all response dictionaries and task operations
+also descend to these orbit quotients. The orbit charts embed into their
+transport quotient if and only if every actual closed path sends each input
+to its own orbit. Full orbit frames require the coverage of Corollary 4.2
+on the orbit charts. Membership of some selected loop maps in a gauge group,
+without these domain, descent and comparison conditions, is insufficient.
+
+**Proof.** Saturation and orbit preservation give true partial bijections
+$Q_i/\!\approx_i\dashrightarrow Q_j/\!\approx_j$. Saturation permits an
+actual representative to lift every successive quotient-domain step, so a
+closed quotient word has an actual closed lift. Identity of that word on
+the orbit chart is exactly $H_pq\approx_i q$. Apply Theorem 4.1 and
+Corollary 4.2 to these quotient charts. Descended response and operation
+data retain precisely the stated gauge-invariant task. $\square$
+

@@ -1,0 +1,19 @@
+**Proposition 9.2 (Native consequence in the certified window).** For every
+allowed preparation and every $Z$ in (6.2), an actual four-real-coordinate
+model attains
+
+$$
+4H\sqrt{T_4(\tau)}
+$$
+
+in both guarded contracts, with the original ten-output norm, all signed real
+commands, all finite lawful histories, and every prescribed path on its full
+all-times domain.
+
+**Proof.** Theorem 6.2 gives a good global minimizer, and Theorem 1.5 gives
+its native realization, affine updates, height-fiber guard saturation,
+prescribed-path maps, truncations, and concatenations. Its scalar error
+identity gives the displayed original value. The guard is always the source
+condition $0<k+\eta(u)<H$ at every prescribed time; no endpoint-only guard is
+used. $\square$
+

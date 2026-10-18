@@ -1,0 +1,38 @@
+**Proposition 3.2 (Exact cut identity and conditional Shannon allowance).** For either side $A=L,R$,
+
+$$
+\begin{aligned}
+b_A(r)&=\sigma_r-\chi_A(r)=a_r+k_A(r),&0\le e_A(r)&\le b_A(r)/2,\\
+k_L(r)&=\Gamma-I_P(X_0;\mathcal F\mid W_L(r)),&
+k_R(r)&=\Gamma-I_P(X_0;\mathcal P\mid W_R(r)).
+\end{aligned}
+\tag{3.2}
+$$
+
+In particular $b_A(r)\le a_r$ is equivalent to $\chi_A(r)\ge\sigma_{r+1}$, a condition not implied by contiguous-present monotonicity. Moreover
+
+$$
+K_H(R)\le\sum_{r\ge R}(b_L(r)+b_R(r))\le K_H(R)+2\sigma_R,
+\qquad \tau_P(R)\le\sigma_R+\tfrac12K_H(R).
+\tag{3.3}
+$$
+
+A separately proved $K_H(R)\le B_H(R)<\infty$ with $B_H(R)\to0$ therefore supplies $\eta_P(R)=\sigma_R+B_H(R)/2$, without an attainment premise. This is an additional budget; the finite-hidden cut argument above does not establish it.
+
+Proof. The stationary cut at $-r$ has the same information $\sigma_0$ as the cut at zero. Its chain rule and (2.8) give
+
+$$
+\begin{aligned}
+I_P(\mathcal L_r;\sigma(X_j:j\ge0)\mid W_L(r))
+&=\sigma_0-I_P(\mathcal L_r;W_L(r))\\
+&=\sigma_0-\sum_{k<r}a_k=\sigma_r.
+\end{aligned}
+\tag{3.4}
+$$
+
+Split the target on the left into $\mathcal F$ and $X_0$. The resulting identity is $\sigma_r=\chi_L(r)+I_P(\mathcal L_r;X_0\mid G_L(r))=\chi_L(r)+b_L(r)$. Since $\sigma_r=a_r+\sigma_{r+1}$, this proves the first left identity. Also $H(X_0\mid G_L(r))=h_r-I(X_0;\mathcal F\mid W_L(r))$, proving the formula for $k_L$. Reversing the visible coordinates and using their equal block-entropy gaps proves the right identities; no reversed hidden kernel is required.
+
+Apply (2.7) and its Bernoulli divergence bound to $q$ and $p_A(r)$ to obtain $e_A(r)\le b_A(r)/2$. From $b_A=a_r+k_A\ge0$, one has $k_A(r)_-\le a_r$ and $k_A(r)_+\le b_A(r)\le k_A(r)_++a_r$. Nonnegative summation proves (3.3).
+
+Conditional co-information and the distinction between contiguous-present and erased-center conditioning are mature tools [Ara–James–Crutchfield, §§II.1–II.4][AJC]. Their signed information decomposition does not supply a sign for $k_A(r)$. In (3.4) the target includes $X_0$; in $\chi_A(r)$ it is deleted. Thus a contiguous-present monotonicity statement does not establish the stronger cut comparison in (3.2). Proposition 4.1 gives its same-law failure with both neighbors retained. $\square$
+

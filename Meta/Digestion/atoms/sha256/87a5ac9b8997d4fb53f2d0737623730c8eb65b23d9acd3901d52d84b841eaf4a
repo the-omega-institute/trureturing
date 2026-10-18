@@ -1,0 +1,26 @@
+**Lemma 5.2 (An early final query implies $\mathsf A$ or $\mathsf R$).** Suppose $b_i$ has two scalar Halts. Then $r=2$, and one of (2.3), (2.6) holds.
+
+Proof. Its installed decoder is a bijection $G$ and
+
+$$
+\lambda_i(j)=G(i\oplus q(j)).
+$$
+
+For $w=1-i$, the other table is mixed exactly on $M_i$, a whole $q=d$ class; it is constant on the complement. Its mixed raw response is $\beta=w\oplus d$.
+
+If its successor is $b_i$, the same $B$ is issued again. The same raw decoder on the early and late supports gives (2.3); its late mixed pair also forces the two lower-label sets to coincide.
+
+If its successor is $b_w$, the other edge cannot halt, since then only that sole label could ever return on the mixed support. GLOBAL forces that other edge into $b_i$. Termination requires $q_2^B=1$ on $M_i$. Correct decoding of the homogeneous complementary class requires $q_2^B$ constant there. That constant cannot be one, by $q_2^B(a)=0$. Thus $q_2^B=\mathbf1_{M_i}$ on $J$. Index actual phases as $j=tm$, $2\le t\le n-1$, with $n=|P|$ and $Q_t=q(tm)$, $Q_1=0$. If $d=1$, the identity becomes $Q_{t-1}=Q_t$, forcing constant $q$ on $J$. If $d=0$, it becomes $Q_{t-1}=1-Q_t$; on $M_i$ the two-step predecessor $q_3^B$ is then zero. The last decoder is constant on the mixed class. Both alternatives contradict its two labels.
+
+The remaining successor is a root. Lemma 5.1 makes its positive edge a direct $C$ Halt, so all mixed sources must use its zero edge. A last $b_w$ cannot separate them, leaving only root $a_i$ and last query $b_i$. The root charge $\rho$ is constant $1\oplus d$ on $M_i$. Both literal labels on that mixed class are decoded by $G$, so the two lower-label sets coincide and $r=2$.
+
+For $d=1$, the whole one-charge class $I=M_i$ arrives with scalar $i$. Safety gives $\tau(B)<h$. At the reused root its current record is an actual original record at $j'=j-2m$, with tail $\tau(B)$. Equality of immutable labels there forces $j'\in J$ and $\lambda_w(j)=\lambda_i(j')$; fresh $C$ excludes the endpoint phases. Together with the constant complement these are exactly $\mathsf R$. The mixed pair decoded at $b_i$ gives $r=2$.
+
+For $d=0$, $M_i\subseteq\{a,c\}$ and its nonconstancy gives $M_i=\{a,c\}$. Both vertices miss $H$. The late decoder gives
+
+$$
+\lambda_w(a)=G(i\oplus p),\qquad \lambda_w(c)=G(i),
+$$
+
+whereas $\lambda_i$ equals $G(i)$ on both. Nonconstancy forces $p=1$: the literal labels are unequal at $a$ and equal at $c$. Choose the alternative whole first-charge class $A=M_i$. Its shifted charge is zero at $a-m=m$ and one at $c-m=a$. Its excluded-zero even completion satisfies (2.4), hence $\mathsf A$. This is an existence extraction of an existing predicate, not a claim that the competing word had that alternative support. ∎
+

@@ -1,0 +1,21 @@
+**定理 3.2（Exact whole-source adaptive/GLOBAL separation）。** For (3.2), on the full original joint prior and under either original alphabet,
+
+$$
+\boxed{C_{\rm ad}(f)=2,\qquad
+C_{\rm pre}(f)=\begin{cases}
+3,&|\Lambda[O]|\le2,\\
+4,&|\Lambda[O]|=3.
+\end{cases}}
+\tag{3.3}
+$$
+
+**证明（supplied forced root and individual binary price）。** At either free value and any $j\in J$, the actual INITIAL tails zero and $h$ have different labels $\lambda_v(j)$ and fresh $R$. A zero-containing root has at most $m-1$ leading ones. Both records survive to that first zero because $h+(m-1)=k-1$; they have the same scalar and phase there, and that zero merges their whole records. No later endpoint archive, rejection, wait or stopping rule can recover their different INITIAL labels. This is the supplied first-zero loss [S1, Lemma 4.3; IC, Proposition 4.2; MC, Corollary 3.1]. It excludes every such root at arbitrary later depth and also free stopping. Every correct root is therefore $1^m$, separately on both free values and for one GLOBAL stream.
+
+The root rejects the high tails into the homogeneous label $R$ and its positive-success archive returns the homogeneous label $C$, both at fee one. Its two zero-success archives are (1.2), labelled respectively by $\lambda_0,\lambda_1$. Each table is nonconstant and constant on $H$. The already supplied binary law [MC, Theorem 2.1, cut zero and $\mathsf A_1$; IC, Chapter 5] gives additional adaptive fee one. Explicitly, orient the common $H$ label as zero, or choose either label when $H$ is empty, and apply (2.2) to its other binary label. That complete word begins zero and returns its binary label in one endpoint. These two words may differ because the free value selects the adaptive control. The forced root and each live binary child give the matching total lower bound two.
+
+**证明（credited value join, one literal suffix and its lower bound）。** Use exactly [IC, Definitions 29.1 and Theorem 29.2]. Under any fixed literal stream, changing the INITIAL scalar complements every successful scalar endpoint and leaves the phase, tail and rejection time unchanged. With its remembered free value, one actual archive therefore determines the two value-translated archives by deterministic output complementation. Their issued words and bottom entries are the same. A decoder may retain the first component once determined and continue the same actual stream until both are determined; no source copy or second experiment is executed. The supremum of these two stopping times remains within the same stream's uniform fee bound. Conversely, an acquired ordered pair returns its remembered value component. Thus the supplied value-join equality applies, including different stopping rules on the two free-value fibres.
+
+For (3.2), that full joined target has high label $(R,R)$, endpoint label $(C,C)$ and low zero-archive table $\Lambda$, with the same forced root. Its positive and rejection archives have already stopped; initial bottom returns its independent pair freely. Theorem 2.1 prices its only live root-zero archive, and supplies the actual common suffix from (2.2)–(2.5). The GLOBAL stream for $f$ is the same $1^m$ followed by that suffix, with each source decoding its own consecutive differences and returning its value component. Every root/suffix seam has been checked on the same current records. Some actual sources emit all three or four blocks by the local lower bound.
+
+Conversely, any purported cheaper GLOBAL controller for $f$ gives, by the supplied value-join decoder, an equally bounded GLOBAL controller for the joined target. Its forced root leaves the exact archive of Theorem 2.1, contradicting that theorem's adaptive lower bound if the total is below the respective value in (3.3). The price is therefore a common-stream result on full INITIAL sources, not a maximum of independently selected child optima. ∎
+

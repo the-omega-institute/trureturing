@@ -1,0 +1,10 @@
+## 6. The full scalar partition of an actual execution
+
+Fix a deterministic initialized row with $q(r)=1$. If it initially
+reads, call its first parity $\alpha$, put $\beta=1-\alpha$,
+write $E$ for its active edge in phase $\alpha$, and write
+$T=v_\alpha$ for that phase's actual target. Let $C_0,C_1$ be
+its actual correct masses on first reply zero and one. Continuation
+masses always include every subsequent finite leaf within three
+calls. Null histories contribute zero.
+

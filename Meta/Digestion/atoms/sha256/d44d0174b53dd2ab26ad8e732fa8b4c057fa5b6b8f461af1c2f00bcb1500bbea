@@ -1,0 +1,42 @@
+**Definition 29.2 (Local transitions and primitive contracts).** Use 256 word cells, 32 pointers, 64 Boolean flags, one input bit and a three-valued output latch. A local internal transition inspects or writes at most four addressed tape bits, changes finite control and flags, and moves at most four heads by one neighboring position, or changes a head's selector to a specified cell. Selector changes preserve its position. A finite sequence of such moves implements a reset or seek. At a boundary a head reverses or exits as specified; it never moves outside $\{0,\ldots,w\}$. Reading or writing a word is a sweep, not one transition. All heads, selectors, flags and intermediate modes are configuration coordinates. For binary encodings of these coordinates charge at most $128w$ internal bit inspections or changes per local transition: $32a+64+30+16\le128w$. This deliberately charges the whole pointer and finite-control encoding, rather than treating a growing address as one bit operation.
+
+The following relations define bounded primitive graphs. Inputs remain protected for a primitive unless an in-place output is explicitly specified. Distinct scratch words receive all other outputs. Copies between operands and scratch are themselves sweeps. Each displayed digit recurrence is one local full-adder or full-subtractor relation on Boolean inputs; it invokes no integer arithmetic on a word.
+
+A zero or copy sweep writes respectively zero or the corresponding input digit for positions $0,\ldots,w-1$. A comparison scans from position $w-1$ down to zero, retaining a flag in $\{<,=,>\}$; the first unequal high digit fixes the flag, which subsequent lower digits preserve. Its invariant is comparison of the already scanned high prefixes. Addition scans upward with carry $c_0=0$ and relations
+
+$$
+x_r+y_r+c_r=z_r+2c_{r+1},\qquad z_r,c_{r+1}\in\{0,1\}.
+\tag{29.3}
+$$
+
+At position $s$ its invariant is $x\bmod2^s+y\bmod2^s=z\bmod2^s+2^sc_s$. The final carry is zero whenever the promised sum is below $2^w$. Subtraction, called only after comparison has certified $x\ge y$, uses borrow $e_0=0$ and
+
+$$
+x_r-y_r-e_r=z_r-2e_{r+1},\qquad z_r,e_{r+1}\in\{0,1\}.
+\tag{29.4}
+$$
+
+The analogous low-prefix identity proves its result and zero final borrow. During either sweep every partially written output is a $w$-bit word; carries and borrows are single flags. Increment, decrement and adding a fixed small integer use these same relations with copied constant operands. A signed addition first compares magnitudes: equal signs select addition; unequal signs select larger minus smaller with the larger operand's sign; equality yields positive zero. This proves its exact signed contract, including cancellation, without two's-complement overflow assumptions.
+
+A one-place left shift sweeps downward, copying each old digit to its upper neighbor and writing zero in bit zero; a one-place right shift sweeps upward and clears the top bit. A bit latch protects the digit when needed. A shift by a supplied $s\in\{0,\ldots,w\}$ repeats this sweep, with a separate loop word initially $s$ decreased by (29.4) after each sweep. Its invariant is the requested partial shift after the completed repetitions. Left shift is called only when the exact final value is below $2^w$, so every discarded high bit is zero. A power word $2^s$, $0\le s<w$, is obtained by shifting the word one. Thus even data-dependent shift lengths are bounded loops with charged counters.
+
+For multiplication of nonnegative words $x,y$ with $xy<2^w$, initialize output $z=0$ and scan the multiplier at positions $r=0,\ldots,w-1$. If $y_r=0$ the row is skipped. If $y_r=1$, form a zeroed row with $x$ shifted by $r$, then add it in place to $z$ by (29.3). Here row formation needs no loop of $r$ shifts: temporarily change the multiplier head's selector to a marker word, mark position $r$, and return its selector. Seek a row head to that marker by a sweep; copy the digits of $x$ upward starting there, then erase the marker. Each copy advances its two heads by one square. Digits of $x$ beyond the row boundary are zero because the selected row $2^rx$ is at most $xy<2^w$. The row invariant is its copied low prefix; the outer invariant is
+
+$$
+z=x\sum_{s<r}y_s2^s.
+\tag{29.5}
+$$
+
+The pending row and every completed accumulation are at most $xy$. Low-digit carry propagation is justified by (29.3), also for the in-place accumulator since its old digit is latched before replacement. No two-word or unbounded product is silently used.
+
+For division of a dividend $A<2^w$ by a positive divisor $V$ with $2V<2^w$, initialize quotient and remainder to zero and scan the dividend downward. For each digit $\xi$, form $r'=2r+\xi$, compare it with $V$, and retain $r'$ or subtract $V$ accordingly; append quotient digit zero or one. If $A_s$ is the dividend prefix already scanned, the invariant is
+
+$$
+A_s=Vq_s+r_s,\qquad 0\le r_s<V.
+\tag{29.6}
+$$
+
+Indeed $0\le2r_s+\xi<2V$, so at most one subtraction restores the invariant. The applications below have $2V<2^w$; the shifted transient therefore fits. Quotient append is an exact one-place shift and bit insertion, and the quotient prefix never exceeds the final quotient. Comparison and subtraction are the preceding sweeps, with their carry/borrow flags reset at entry. These relations prove the division contract, not merely its terminal numerical identity.
+
+All scans use separate heads for the outer digit, inner digit and marker seek. Marker words start and finish zero. Remaining-iteration words use the preceding ripple relations; no loop counter is an uncounted integer. Sentinel entry ends a scan before any dereference. Descending scans enter at sentinel $w$ and first move to $w-1$; ascending scans enter at zero and exit on reaching $w$. Fixed boundary checks and neighboring head moves are finite tape relations, not calls to an arithmetic oracle.
+

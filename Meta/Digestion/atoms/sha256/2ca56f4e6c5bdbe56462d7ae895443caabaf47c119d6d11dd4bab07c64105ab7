@@ -1,0 +1,39 @@
+### 75.2 Exact local isometries
+
+For a Hermitian matrix H define its Cayley unitary
+
+    U(H)=(I+iH)(I−iH)^(-1).
+
+The inverse exists because H has real spectrum. Commutation of the two polynomial factors gives U(H)*U(H)=I.
+
+Let A_1=0_(2×2), B_1=0_(3×3), and set
+
+    A_2=[[-15,17+9i],[17−9i,−6]],
+    A_3=[[-1,19+22i],[19−22i,−37]],
+    A_4=[[2,−2−14i],[−2+14i,8]],
+
+    B_2=[[14,−13+6i,−10+4i],
+         [−13−6i,7,−4+8i],
+         [−10−4i,−4−8i,4]],
+    B_3=[[-2,−12+19i,1+10i],
+         [−12−19i,37,−7+2i],
+         [1−10i,−7−2i,−2]],
+    B_4=[[-4,3−18i,6−8i],
+         [3+18i,−11,10i],
+         [6+8i,−10i,7]].
+
+Define a_(f,i)=U(A_f/32)e_i in C² and b_(f,i)=U(B_f/32)e_i in C³, using the first two columns in the latter case. Each fibre therefore gives an orthonormal pair of local records. In fixed computational bases define local isometries from C⁸ by
+
+    V_A|f,i>=|f>⊗overline(a_(f,i)),
+    V_B|f,i>=|f>⊗overline(b_(f,i)).
+
+Orthogonality of the output labels and of each record pair proves V_A*V_A=V_B*V_B=I_8. Tracing the respective record spaces defines CPTP maps A:C⁸→C⁴ and B:C⁸→C⁴, with Kraus ranks at most two and three. No shared randomness is used.
+
+Let G_A and G_B be the 8×8 Gram matrices of the un-conjugated columns a_(f,i) and b_(f,i), in the order (1,0),(1,1),...,(4,0),(4,1). The explicit complex conjugates in V_A,V_B fix the coefficient convention: tracing the records on |f,i><g,j| gives (G_A)_(fi,gj)(G_B)_(fi,gj), with no additional transpose.
+
+After the physical MC input encoding, both output labels agree. The resulting logical channel has coefficient matrix G_A⊙G_B. Let K have diagonal 2×2 blocks I₂ and off-diagonal blocks J₂/2, and put
+
+    D=G_A⊙G_B−K.
+
+Thus D is Hermitian, its diagonal fibre blocks vanish, and the physical channel difference is the MC output embedding of the collapsed-fibre coefficient map D. These identities specify its action on all 64 input matrix units, including coherent cross-fibre inputs.
+

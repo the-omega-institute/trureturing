@@ -1,0 +1,19 @@
+### 107.2. The descent normalization and its kernel
+
+**Proof.**
+
+The standard descent map on y^2=x^3+A(a x+b)^2 is [y-(a x+b)sqrt A], with kernel the dual-isogeny image, under the normalization of [Cohen–Pazuki, Definition 1.3 and Proposition 1.4](https://arxiv.org/pdf/0903.4963). We use precisely A=M, a=3, b=3M. Since M is squarefree and prime to 3, b is cubefree; the normalization hypotheses are satisfied. Section 106.5 identifies its geometric kernel, whose nonzero points are not rational.
+
+At the displayed point,
+
+ alpha(P)=y-3(X+M)sqrt M
+         =3M^2 t/B^2+3M(2B-3)sqrt M/B
+         =(sqrt M)^3 beta.
+
+Thus alpha(P) and beta define the same cubeclass. Direct algebra gives
+
+ q^2-r^2=B^2(2B-3)^2-BG(B)=3B(B-1)^3,
+ Norm_(K/Q)(beta)=(3(B-1)/B)^3.
+
+In particular beta is nonzero and has cube norm. Since B>=19 and q>0, the positive norm identity also gives q>|r| at the real embeddings, so beta is totally positive. There is no hidden real sign obstruction; every nonzero real number has a real cube root.
+

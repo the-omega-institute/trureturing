@@ -1,0 +1,129 @@
+**Theorem 5.1 (second-band ownership and the forced anchor triples).**
+Let a nineteen-label cover have adjacent unequal gates. Put
+$r=\min(m_+,m_-)$, so initially $2\le r\le15$. Then necessarily
+$3\le r\le14$, and the whole second bands obey
+
+$$
+e(i+2,i)=e(i,i+2)=
+\begin{cases}
+i,&0\le i<r,\\
+i+2,&r\le i\le16.
+\end{cases}
+\tag{NAGC.5.1}
+$$
+
+If $(m_+,m_-)=(r,r+1)$, the class $C_r$ contains four
+successive vertices in one $B$ triple of the form
+
+$$
+(r,r+1+x),\quad(r,r+1),\quad(r,r),\quad(r,r-y),
+\qquad x\ge2,\quad y\ge3,
+\tag{NAGC.5.2}
+$$
+
+and $C_{r+1}$, writing $v=r+1$, contains
+
+$$
+(v,v+x'),\quad(v,v),\quad(v,v-1),\quad(v,v-1-y'),
+\qquad x'\ge3,\quad y'\ge2.
+\tag{NAGC.5.3}
+$$
+
+Both classes have $b$ span at least twelve and gap count at least
+three. If $(m_+,m_-)=(r+1,r)$, the corresponding successive
+vertices are instead the $A$ triples
+
+$$
+\begin{aligned}
+C_r:\quad &(r-y,r),\ (r,r),\ (r+1,r),\ (r+1+x,r),\\
+C_v:\quad &(v-1-y',v),\ (v-1,v),\ (v,v),\ (v+x',v),
+\end{aligned}
+\tag{NAGC.5.4}
+$$
+
+with the same lower bounds on $x,y,x',y'$. Their $a$ spans
+are at least twelve, and their gap counts are again at least three.
+These statements hold under either lag convention.
+
+**Proof, exhaustion of the bands.** First take
+$(m_+,m_-)=(r,r+1)$ and write $v=r+1$. For $t<r$ the
+inherited first-band formulas put
+$(t,t+1),(t,t),(t+1,t)$ in $C_t$. Differences $-1,0,1$
+are consecutive integers, so these are consecutive vertices of
+that class. They give a unit $B$ edge followed by a unit $A$
+edge. A change of direction in the six-triple normal form is a
+junction of complete triples. The preceding edge is therefore
+the unit middle $B$ edge of the incoming triple, and the
+following edge is the unit middle $A$ edge of the outgoing
+triple. Hence $(t,t+2)$ and $(t+2,t)$ also lie in $C_t$.
+The neighboring edges exist because the incoming edge is third
+in its triple and the outgoing edge is first in its triple.
+
+For $t>v$, the first-band formulas instead put
+$(t-1,t),(t,t),(t,t-1)$ in $C_t$. This is the analogous
+unit $A$-to-$B$ junction, forcing $(t-2,t)$ and $(t,t-2)$.
+The two ranges are $t=0,\ldots,r-1$ and $t=r+2,\ldots,18$.
+In the band $d=2$ they give, respectively,
+
+$$
+\{(i+2,i):0\le i<r\},\qquad
+\{(i+2,i):r\le i\le16\}.
+\tag{NAGC.5.5}
+$$
+
+These are disjoint positions and together exhaust the entire
+seventeen-cell band. The same calculation with coordinates
+exchanged exhausts $d=-2$. All forced cells are in the square
+even at the initial extremes $r=2,15$. Disjointness proves
+(NAGC.5.1), and in particular neither $C_r$ nor $C_v$ can
+meet either second band. This deduction uses a single actual
+cover, not two separately chosen band assignments.
+
+**Proof, the first gate triple.** The class $C_r$ misses
+difference $1$, and contains the consecutive points
+$(r,r+1),(r,r)$ with differences $-1,0$. Their unit $B$
+edge cannot be first in its designated triple: the next middle
+edge would reach difference $1$. It cannot be third: the
+preceding middle edge would force difference $-2$. Therefore
+it is the middle edge. If the preceding outer length were one,
+its predecessor would have difference $-2$; hence that length
+is $x\ge2$. If the following outer length were one or two,
+its successor would have difference $1$ or $2$; hence its
+length is $y\ge3$. This proves (NAGC.5.2). Its coordinates
+give $r-y\ge0$ and $r+1+x\le18$, so $3\le r\le15$.
+
+**Proof, the second gate triple.** The class $C_v$ misses
+difference $-1$, and contains the consecutive points
+$(v,v),(v,v-1)$ with differences $0,1$. Their unit $B$
+edge cannot be first in its triple, because the following
+middle edge would reach difference $2$. It cannot be third,
+because the preceding middle edge would force difference
+$-1$. It is the middle edge. The preceding outer length
+cannot be one or two, since its predecessor would have
+difference $-1$ or $-2$; thus $x'\ge3$. The following
+outer length cannot be one, since that would reach difference
+$2$; thus $y'\ge2$. This proves (NAGC.5.3). Its coordinates
+give $v+x'\le18$ and $v-1-y'\ge0$, so $v\le15$ and
+$v\ge3$, or $2\le r\le14$. Combining the two classes'
+necessary bounds yields $3\le r\le14$.
+
+Each displayed triple has length at least six. The other six
+$B$ edges have total length at least six, so the whole $b$
+span is at least twelve. Its nine $A$ edges contribute at least
+nine. Formula (NAGC.4.1) therefore gives $g_r,g_v\ge3$.
+No condition was imposed on the positions or lengths of the
+remaining triples.
+
+**Proof, reversed gates.** Transpose all cells by
+$(a,b)\mapsto(b,a)$ and reverse every ordered vertex list.
+This preserves disjoint saturated geometric coverage, keeps
+anchor $t$ at $(t,t)$, interchanges the gates and exchanges
+$A$ and $B$ lengths. It also preserves each unit middle edge.
+The established positive-geometric statement applied to this
+cover gives the same symmetric second-band equation, while
+transposing and reversing (NAGC.5.2)--(NAGC.5.3) gives
+exactly (NAGC.5.4). It supplies the asserted $a$ spans and
+gap counts. A nonnegative cover is a member of this positive
+geometric domain; this argument does not assert that its
+transpose passes the native zero-origin filter. $\square$
+

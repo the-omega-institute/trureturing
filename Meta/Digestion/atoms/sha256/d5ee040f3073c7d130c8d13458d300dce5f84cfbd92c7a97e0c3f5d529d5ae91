@@ -1,0 +1,82 @@
+## 4. 合法 5040 整数比较给出的排除
+
+**Proposition (source-relative activation exclusion).** Retain an
+original good edge with endpoint sources \(pU,rU\), clocks \(A<C\),
+strict inventory \(U\) on \([A,C]\), and labels
+\(p,r>2\mathcal R\). For \(t\in[A,C]\), \(t\ge64\), an actual
+prime \(q\le2t\), \(h=\log q\), and \(e=v_q(U)\), one has
+\[
+ \tau_{q,e+1}>t+h/3.
+\]
+If \(e>v_q(5040)\), then also
+\[
+ \tau_{q,e}<t-h/2.
+\tag{EL.7}
+\]
+The label and source premises are indispensable; no new integer
+maximality at an interpolated real center is asserted.
+
+*Proof.* The labels exceed \(q\), so \(q\ne p,r\). The insertion
+\(rU\to rUq\) stays in the original \(5040r\) class. Maximality gives
+\[
+ \beta_{q,e+1}\le f(C+h)-f(C)\le f(t+h)-f(t).
+\]
+If \(e>v_q(5040)\), deletion \(pU\to pU/q\) stays in the original
+\(5040p\) class and gives a smaller integer. Least attainment makes
+its objective comparison strict:
+\[
+ \beta_{q,e}>f(A)-f(A-h)\ge f(t)-f(t-h).
+\]
+All logarithms are legal, since \(p>q\) and \(U\ge5040\).
+Both transfers use decrease of the corresponding increments of the
+concave \(f\). Strict convexity of \(\lambda=f'\) gives
+\[
+ r_{q,e}>\frac1h\int_{t-h}^t\lambda(s)ds
+ >\lambda(t-h/2),
+\]
+which proves the deletion assertion.
+For insertion, \(h\le\log(2t)\le t/10\). The exact formula for
+\(w\) implies
+\[
+ \frac{w(t+h)}{w(t)}\ge(10/11)^4>2/3.
+\]
+Indeed \(t/(t+h)\ge10/11\),
+\(\log(t+h)-\log t\le h/t\le1/10\le(\log t)/10\), and the
+remaining numerator ratio is at least one. Therefore
+\[
+\begin{aligned}
+ \lambda(t)-r_{q,e+1}
+ &\ge\frac1h\int_0^h(h-u)w(t+u)du\\
+ &\ge\frac h2w(t+h)>\frac h3w(t)
+ \ge\int_0^{h/3}w(t+u)du.
+\end{aligned}
+\]
+It follows that \(r_{q,e+1}<\lambda(t+h/3)\), proving the insertion
+assertion. \(\square\)
+
+In particular, a sufficiently late original selected center has no
+prime in \((t,t+L(t)]\), where \(L(t)=(\log t)/3-1>0\). If such
+a prime existed, (EL.1) would make it absent from \(U\), so (EL.7) and
+(EL.1) would imply both
+\(\tau_{q,1}>t+(\log q)/3\) and
+\(\tau_{q,1}<q+1\le t+(\log t)/3<t+(\log q)/3\).
+But the baseline of this excluded segment is at most
+\[
+ \int_t^{t+L(t)}k_t(x)dx\le b(t)L(t)
+ \le t^{-3/10}\log t/3.
+\]
+Its integral over the complete \(S_X\) is at most
+\(M_X\ell^{-3/10}\log\ell/3=o(M_X)\). This genuine exclusion
+therefore supplies no fixed favorable coefficient.
+
+**Proposition (the conservation test has no global monotone representative).** The conservation test \(g=\mathcal W'/w\) has no globally
+nondecreasing or globally nonincreasing representative on
+\((1,\infty)\). It vanishes almost everywhere before and after the
+compact support \([\ell,2\mathcal R]\). A monotone representative
+with those two properties must vanish everywhere. Then absolute
+continuity forces \(\mathcal W\) to be constant, and compact support
+forces it to be zero, contrary to \(\int\mathcal W=\mathcal D>0\).
+This rules out the global monotone-test shortcut for the actual weight.
+
+
+

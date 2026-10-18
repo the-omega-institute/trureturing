@@ -1,0 +1,15 @@
+**Corollary 7.1 (Strict inequality beyond the pair witness).** Let $Q^{\mathrm{pair}}$ be the stationary law in [TwoStep], Definition 2.1 and Proposition 2.2. With its supplied density
+
+$$
+d_{\mathrm{pair}}=\frac1{38}
+\left(\frac{1372}{543}+\frac{588}{247}+\frac{63}{113}\right),
+$$
+
+there is a permitted stationary visible-order-at-most-four law $P$ with
+
+$$
+d_{\mathrm{pair}}<d(P)\le c_\star.
+$$
+
+**Proof.** The supplied law is normalized, stationary, positive on every legal pair state and every legal extension, and hence on every legal finite cylinder. Its next-bit kernel has visible order at most two. Its cylinder density is $d_{\mathrm{pair}}$ by the owned [TwoStep], Theorem 3.1. Apply Theorem 1.5 with $m=2$. $\square$
+

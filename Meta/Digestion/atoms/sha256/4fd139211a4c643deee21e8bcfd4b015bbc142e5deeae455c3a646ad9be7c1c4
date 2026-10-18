@@ -1,0 +1,31 @@
+**引理 81.2（纤维条件与局部 Heisenberg 代数等价）。** 定义 81.1 等价于
+
+$$
+i[H,A\otimes I_E]\in M_2(\mathbb C)\otimes I_E
+\quad\text{对每个局部 }A\in M_2(\mathbb C).
+$$
+
+证明（81.2）。先取 Hermitian $A$，令 $L_A=i[H,A\otimes I_E]$，它也 Hermitian。局部期望的导数为
+
+$$
+\operatorname{tr}\bigl((A\otimes I_E)(-i[H,\varrho])\bigr)
+=\operatorname{tr}(L_A\varrho).
+$$
+
+若 $L_A=M_A\otimes I_E$，导数就是 $\operatorname{tr}(M_A\operatorname{Tr}_E\varrho)$，所以对同一局部态的纤维不变；全体 Hermitian $A$ 的迹配对非退化，便推出局部导数算子相同。
+
+反向，设纤维条件成立。任取 Hermitian $D$ 且 $\operatorname{Tr}_E D=0$，其总迹也为零。令环境维数为 $m$；对充分小 $u>0$，$I_{2m}/(2m)\pm uD$ 均为密度算子，而且局部约化态相同。纤维条件及上述导数配对遂给 $\operatorname{tr}(L_AD)=0$。定义
+
+$$
+M_A=\frac1m\operatorname{Tr}_E L_A,
+\qquad R_A=L_A-M_A\otimes I_E.
+$$
+
+$R_A$ Hermitian 且 $\operatorname{Tr}_E R_A=0$，所以可以取 $D=R_A$。另一方面 $\operatorname{tr}((M_A\otimes I_E)R_A)=\operatorname{tr}(M_A\operatorname{Tr}_E R_A)=0$，因而
+
+$$
+0=\operatorname{tr}(L_AR_A)=\operatorname{tr}(R_A^2).
+$$
+
+Hermitian 平方的迹是非负特征值平方之和，故 $R_A=0$，$L_A=M_A\otimes I_E$。任意复矩阵是两个 Hermitian 矩阵的复线性组合，交换子的线性性将结论延伸到全部 $A$。$\square$
+

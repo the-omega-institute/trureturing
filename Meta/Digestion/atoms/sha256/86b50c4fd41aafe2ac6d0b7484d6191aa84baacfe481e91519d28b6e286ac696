@@ -1,0 +1,11 @@
+**Proposition 4.6 (flatness does not equalize route domains).** In one chart
+$Q=\{0,1\}$ take a coordinate self-edge that is identity only on $\{0\}$,
+with the same partial inverse. All actual loops are identity on their
+domains and $Q\hookrightarrow Y$ is injective. This edge is not strictly
+equal to the empty route, whose domain is all of $Q$.
+
+**Proof.** Every nonempty composable word in the partial edge is identity
+on $\{0\}$, whereas the empty word is identity on both points. There are
+no identifications between distinct points, but the displayed domains are
+unequal. $\square$
+

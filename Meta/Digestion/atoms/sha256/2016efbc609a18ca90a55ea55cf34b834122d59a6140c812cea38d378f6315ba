@@ -1,0 +1,42 @@
+**Definition 1.5 (The supplied no-worse and event correspondences).**
+For an original channel write
+$\widehat T(X)=D^\dagger T(DXD^\dagger)D$ and
+$Q_J(t)=O(t)^T\Pi_JO(t)$. The following are credited suppliers:
+QMB Theorem 2.1, QPC Theorem 3.3, and QRC Theorems 2.2, 3.2 and 6.2.
+For every original complex $T\in\mathfrak C_1$ there is $x\in\mathcal F$
+such that the physical channel
+$T_x(X)=DS_x(D^\dagger XD)D^\dagger$ has $e(T_x)\le e(T)$.
+It has a fixed scalar realization with at most $225$ flags. For every
+$x\in\mathcal F$, put
+
+$$
+\begin{gathered}
+\mathcal J_{15}=\{J\subseteq\mathsf S:1\le|J|\le2\},\qquad
+t_J=(\operatorname{tr}(H_i\Pi_J))_i,\\
+H_J(x)=\Pi_J-S_x^\dagger(\Pi_J)
+=\sum_i[t_J-M^Tt_J]_iH_i
+ +\sum_\nu(1-\eta_\nu)P_\nu(\Pi_J),\\
+e(T_x)=\max_{J\in\mathcal J_{15}}\|H_J(x)\|_{\rm op}.
+\end{gathered}
+\tag{1.11}
+$$
+
+The adjoint, and hence $M^T$, is essential in this formula. It is
+not replaced by the state map. All five singleton and ten pair
+events belong to this same channel and this same marginal.
+
+The real replacement in QRC can change a channel. If a rank-one
+complex factor is $s\,ab^\dagger$, write $a=u+iv$, $b=w+iz$.
+QRC uses the four real rank-at-most-one factors
+$s\,u w^T,s\,u z^T,s\,v w^T,s\,v z^T$ in a new channel.
+The summed squared-adjoint factors are the real part of the original
+TP normalization, hence still $I$. Direct matrix sandwiches prove
+complete positivity of this new composite; transposition itself is
+not assumed CP. Realification contracts every real symmetric event
+residual simultaneously. Walk stationarity and the specified reflection
+are then obtained by the credited no-worse averaging. Thus (1.11)
+does not assume real Kraus factors for an unchanged complex channel,
+full $O(5)$ menu invariance, or a definite-character rank-one Kraus
+decomposition. The counterexamples in QPC Propositions 9.1–9.3
+remain applicable to those stronger claims.
+

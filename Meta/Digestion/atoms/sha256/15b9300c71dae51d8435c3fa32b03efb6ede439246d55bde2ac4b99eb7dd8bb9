@@ -1,0 +1,19 @@
+**Definition 3.1 (compatibility of acquired records).**
+For a finite numerical query record $h$, set
+
+$$
+\mathcal C(h)=\{x\in X_{N,t}:f_x(a)=y
+                   \text{ for every occurrence }(a,y)\text{ in }h\}.
+\tag{3.1}
+$$
+
+This is a response fibre, without a probability prior. If $h$ is an
+actual record of a policy on a fixed tape, every $x\in\mathcal C(h)$
+reproduces that record, its intervening control transitions and its
+stop/output decision whenever the original execution has stopped.
+This follows from the finite-path transfer in Theorem 2.1, not from
+supplying the fibre itself as an observation.
+Let $Z(h)$ and $P(h)$ be the distinct addresses with zero and positive
+replies, respectively. An actual record has consistent replies at
+repeated addresses.
+

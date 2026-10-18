@@ -1,0 +1,54 @@
+**Theorem 21.3 (uniform extensive forest excess).** At the fixed law
+of Definition 12.4, every feasible forest reweighting of Definition
+20.3, on every graph satisfying Definition 20.2, obeys
+
+$$
+\begin{aligned}
+U-\log_2 Z_G
+&\ge n\kappa-\log_2[1+(31/32)^n]>n\kappa-1,\\
+\kappa&=\frac13+\frac23\log_2(63^{3/2}+1)-\log_2 64
+>\delta:=\frac13+\log_2\frac{63}{64}>\frac14.
+\end{aligned}
+\tag{GDB.92}
+$$
+
+In particular this class has no uniformly vanishing normalized
+per-template error on the unbounded actual-native family $G_n$.
+
+Proof. For a nonempty induced forest $F$, let $c\ge1$ be its component
+count. Counting incident edges and bounding those leaving $F$ gives
+
+$$
+4|F|=2(|F|-c)+|\partial F|\le2(|F|-c)+4(n-|F|),
+\qquad |F|\le\frac{2n-c}{3}\le\frac{2n-1}{3}.
+\tag{GDB.93}
+$$
+
+The empty subset also has size at most $(2n-1)/3$. In particular
+$\sum_v\rho_v=\sum_j\theta_j|F_j|\le2n/3$.
+The function $f$ is convex as the perspective of log-sum-exp, with
+fixed inputs $\log_2 A,\log_2 B$. Direct differentiation gives
+
+$$
+f'(t)=h_2\left(\frac{A^{1/t}}{A^{1/t}+B^{1/t}}\right)-1\le0.
+\tag{GDB.94}
+$$
+
+Jensen and monotonicity therefore give
+$\sum_v f(\rho_v)\ge n f(n^{-1}\sum_v\rho_v)\ge n f(2/3)$.
+Insert Theorem 21.2 and subtract (GDB.84). Normalization by $619$
+cancels and gives (GDB.92). Dropping the positive $1$ inside
+$63^{3/2}+1$ gives $\kappa>\delta$. Finally $\delta>1/4$ is
+exactly the comparison
+
+$$
+64^{12}=4722366482869645213696
+<7818376656957655759362=2\,63^{12}.
+\tag{GDB.95}
+$$
+
+Also $0<(31/32)^n<1$, so its displayed logarithm is less than one.
+The class is nonempty: equally mix the singleton sets $\{v\}$ and
+use $\Phi_v^n$ at their only scopes. No size extrapolation or numerical
+logarithm estimate is used. $\square$
+

@@ -1,0 +1,33 @@
+**Definition 5.1 (the residual translations in an actual old fiber).**
+Suppose an old retained input $B$ already meets Theorem 2.2 for $G$.
+Fix a nonempty fiber $A_b$ and its known profile $v=V_G(a)$. For
+each component put
+
+$$
+w_C=\max_{i\in C}v_i,\qquad L_C=H-w_C,\qquad
+u_C=\min_{i\in C}a_i.
+\tag{SCC.20}
+$$
+
+Then $a_i=v_i+u_C$ and $0\le u_C\le L_C$. Define the actual residual
+set
+
+$$
+\Lambda_b=\{(u_C)_C:\ a_i=v_i+u_C\text{ defines }a\in A_b\}.
+\tag{SCC.21}
+$$
+
+This set includes every constraint imposed by the old code, public
+source restrictions and any retained $z$. It need not be a product.
+For the full box with exactly $V_G$ retained, it is
+$\prod_C\{0,\ldots,L_C\}$. On $A_c$ with exactly $V_G$ retained,
+it is that product with the coordinate
+
+$$
+u_{C_0}=c-v_0
+\tag{SCC.22}
+$$
+
+fixed. A profile is present on $A_c$ precisely when this integer lies
+in $[0,L_{C_0}]$.
+

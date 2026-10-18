@@ -1,0 +1,48 @@
+## 5. The source-specific calibration energy inequality
+
+The comparison uses any finite stationary row-stochastic $C$; it need not be reversible or irreducible. Put $U_x=1-u_x$, $a_x=u_xU_x$, and use the real inner product $\langle f,g\rangle=\sum_x\pi_xf_xg_x$. Let $C^*$ be its adjoint. It is a stochastic kernel because $\pi C=\pi$. Both $C,C^*$ contract this norm by Jensen. They are analysis tools, not extra runtime updates.
+
+Define
+
+$$
+\mathcal E_C=\langle U,(I-C)U\rangle
+=\frac12\sum_{x,z}\pi_xC_{xz}(u_x-u_z)^2.
+\tag{5.1}
+$$
+
+For $P=C$ or $C^*$,
+
+$$
+\|(I-P)U\|^2\le2\mathcal E_C.
+\tag{5.2}
+$$
+
+This follows by expanding the square, using norm contraction and $\langle U,PU\rangle=\langle U,CU\rangle$.
+
+A useful elementary stationary-coupling inequality is
+
+$$
+\langle f(U),(I-P)U\rangle\ge0
+\quad\text{when }f\text{ is nondecreasing}.
+\tag{5.3}
+$$
+
+Take a convex primitive $F$ of $f$. Its tangent inequality gives $F(U_z)-F(U_x)\ge f(U_x)(U_z-U_x)$. The stationary expectation of the left side is zero. This proves (5.3), for both $P$, without detailed balance. This convexity fact is a mature tool.
+
+For the paired table, set $H=\operatorname{diag}(U)C\operatorname{diag}(u)$ and $g=\operatorname{diag}(U)CU$. Its p event mean expands as
+
+$$
+\widetilde a
+=\langle U,CU\rangle+
+\langle U,C\operatorname{diag}(a)CU\rangle+
+\langle U,C\operatorname{diag}(a)C\operatorname{diag}(a)CU\rangle.
+\tag{5.4}
+$$
+
+Let
+
+$$
+\varphi_p(u)=(1-u)^2(1+u(1-u)+u^2(1-u)^2),
+\quad \varphi_\beta(u)=1-u+u(1-u)^2.
+$$
+

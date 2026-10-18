@@ -1,0 +1,29 @@
+**Proposition 68.3 (the residual belongs to the same dilation).** The actual support-aware Schur residual of (S.65) for (S.113) is
+
+$$
+S_{\rm res}=v_{\epsilon,Q}v_{\epsilon,Q}^T,\qquad
+v_{\epsilon,Q}=(d_\epsilon/\sqrt2,0,\sqrt\epsilon\langle h,q_1\rangle,\ldots,
+\sqrt\epsilon\langle h,q_s\rangle)^T,
+\qquad
+w=\frac{1-\epsilon}{2}+\epsilon\langle h,Qh\rangle.
+\tag{S.116}
+$$
+
+Proof. Apply the same-dilation identity of Theorem 2.1 in the first volume: the residual is the Gram outer product of the actual third-input components along the one outside-phase output direction $h$. Their list is precisely $v_{\epsilon,Q}$, which is nonzero since $d_\epsilon>0$. Thus the residual has rank one and trace $w$. Its phase-Choi rank is $2\operatorname{rank}\tau+1=5$ by (R.5); this is distinct from the encoder Kraus rank $2+s$.
+
+For example, $Q=hh^T$ gives the actual third-input environment state and residual
+
+$$
+\sigma=\begin{pmatrix}
+3d_\epsilon^2/4&0&d_\epsilon\sqrt{\epsilon/2}\\
+0&d_\epsilon^2/4&0\\
+d_\epsilon\sqrt{\epsilon/2}&0&\epsilon
+\end{pmatrix},\qquad
+S_{\rm res}=\begin{pmatrix}d_\epsilon/\sqrt2\\0\\\sqrt\epsilon\end{pmatrix}
+\begin{pmatrix}d_\epsilon/\sqrt2&0&\sqrt\epsilon\end{pmatrix},\qquad
+w=\frac{1+\epsilon}{2}.
+\tag{S.117}
+$$
+
+The inverse of $\tau$ in the Schur calculation is its support inverse, zero on the remaining environment coordinates. No independently chosen residual or discarded active-space third column enters these identities. $\square$
+

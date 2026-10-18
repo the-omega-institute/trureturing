@@ -1,0 +1,13 @@
+## 494. Explicit self-gluing map and orientation
+
+For completeness choose phi's vertex-induced frame as
+
+    (V,C,D,B,C,D), B in {C,D},
+
+in edge order (12,13,14,34,24,23). The V faces are 123 and 124. Because V,C,D are distinct actual labels, the unique label-preserving map from 123 to 124 is
+
+    (1,2,3) -> (2,1,4).
+
+It sends edge 12 to edge 21, edge 13 to edge 24, and edge 23 to edge 14. The inverse is retained as part of the face involution. In particular, the map reverses the V-edge direction; no argument discards that possibility or assumes an orientation-preserving edge map. The normal interval still has its two original endpoints identified, so it is an isolated one-interval component. If a chosen manifold formalism additionally forbids the resulting edge inversion, that is an extra obstruction, not a premise used here.
+
+Exchanging transverse labels or the two axes merely changes this vertex description. The unique V slot and its two actual faces remain the same slot-level configuration. Self-gluing is admitted and then contradicted by connected original degree, rather than excluded from the input class.

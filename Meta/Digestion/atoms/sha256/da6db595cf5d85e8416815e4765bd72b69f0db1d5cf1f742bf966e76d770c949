@@ -1,0 +1,41 @@
+**Theorem 46.4 (Exact acquisition on an arbitrary measurable carrier).** Fix a nonempty measurable carrier $(\Theta,\mathcal F)$ and a family of probability laws $(\mu_y)_{y\in X}$. Since the actual labeled source set $X$ is countable, enumerate it as $x_1,x_2,\ldots$ and define the auxiliary probability measure on tapes
+
+$$
+\sigma=\sum_{i\ge1}2^{-i}\mu_{x_i},\qquad
+f_y=\frac{d\mu_y}{d\sigma}.
+\tag{46.11}
+$$
+
+Choose measurable nonnegative versions of these densities. For each occupied prime-prefix cylinder $C$, put
+
+$$
+\ell_C(A)=\int_A\inf_{y\in C}f_y\,d\sigma,
+\qquad a_C=\ell_C(\Theta).
+\tag{46.12}
+$$
+
+Under the measurable common-rule semantics of Definition 40.1, exact lawful acquisition is possible if and only if
+
+$$
+\lim_{m\to\infty}a_{C_m(x)}=1\qquad\text{for every actual }x\in X.
+\tag{46.13}
+$$
+
+No topology, measurable-singleton, standard-Borel or countable-generation assumption on the consumer or seed carrier is required. The sufficiency uses the stipulated measurable common-rule semantics, with fixed shared tables; it asserts no effective finite-description or real-sampling algorithm. The measure $\sigma$ is a dominating measure on $\Theta$, not a sampled source or a law supplied on $X$.
+
+**Proof.** Every $\mu_y$ is absolutely continuous with respect to the finite measure $\sigma$. The Radon--Nikodym theorem therefore supplies the densities in (46.11). Countability of $X$ makes their pointwise infimum measurable and makes all simultaneous almost-everywhere comparisons legitimate after a single countable union of null sets. The measure $\ell_C$ is the greatest measure dominated by every $\mu_y$, $y\in C$: any such measure $\rho$ is dominated by $\sigma$ up to a finite scalar, has a density, and that density is at most every $f_y$ almost everywhere, hence at most their infimum. In particular (46.12) is independent, as a measure, of the chosen versions and enumeration. If $C'\subseteq C$, then $\ell_{C'}\ge\ell_C$.
+
+If preparation acquires the family exactly, the common submeasure $\rho_{x,m}$ of Lemma 45.3 is dominated by $\ell_{C_m(x)}$. Its mass tends to one, proving necessity of (46.13).
+
+For sufficiency include the depth-zero cylinder $X$, whose fictitious parent has submeasure zero. For each occupied cylinder $C$ with parent $C^-$, put $\Delta_C=\ell_C-\ell_{C^-}$, using $\Delta_X=\ell_X$. These are positive finite measures of masses $a_C-a_{C^-}$. When that mass is positive, give a tape coordinate $W_C$ the law $\Delta_C/(a_C-a_{C^-})$; for zero mass choose a fixed tape. There are countably many nodes. Take one common seed consisting of a uniform variable $U\in(0,1)$ and these tape coordinates, with their product probability measure, independent of $U$.
+
+The deterministic preparation begins at $X$. At a reached node $C$, it emits $W_C$ if $U<a_C$; otherwise it queries the next prime and moves to the child indicated by the answer. At every non-root reached node it already has $U\ge a_{C^-}$. Therefore the unconditional output submeasure at that node, for any measurable tape event $A$, is
+
+$$
+\mathsf P\{a_{C^-}\le U<a_C,\ W_C\in A\}=\Delta_C(A).
+$$
+
+The accumulated output submeasure along source $x$ through depth $m$ telescopes to $\ell_{C_m(x)}$. Condition (46.13) makes the preparation terminate after a finite actual prefix with probability one, and its complete output law is $\mu_x$: the increasing submeasures are dominated by $\mu_x$ and their masses tend to one. All finite record events are intervals in $U$ intersected with measurable coordinate events; output events are countable unions of these. Nodes with empty source cylinders are unreachable and receive arbitrary fixed rules. Every query precedes the handoff, and the original consumer subsequently runs on the same source. No failure is conditioned away and no restart is used.
+
+The countable product of probability measures on arbitrary measurable spaces is the standard product-measure construction; it is represented, without standard-Borel assumptions, by `Measure.infinitePi` and its cylinder identity in [pinned Mathlib, Probability/ProductMeasure](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Probability/ProductMeasure.lean). This supplies a common seed measure directly rather than realizing arbitrary tape laws from a real uniform variable. Radon--Nikodym domination, as in [pinned Mathlib, Measure/Decomposition/RadonNikodym](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/MeasureTheory/Measure/Decomposition/RadonNikodym.lean), and product measures are reused ingredients. Local lower-envelope and range-partition methods occur for countable-alphabet chains in Gallo, Lerasle and Takahashi, [*Markov approximation of chains of infinite order in the $\bar d$-metric*, Section 3, Lemma 3.1](https://arxiv.org/html/1107.4353v2). Their stationary-chain and coalescence assumptions are not imported: the correspondence here uses the actual countable source set and its prime-prefix tree. $\square$
+

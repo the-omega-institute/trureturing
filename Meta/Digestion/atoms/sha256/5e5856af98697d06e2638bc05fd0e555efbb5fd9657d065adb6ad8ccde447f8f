@@ -1,0 +1,19 @@
+**Definition 1.2 (complete row).** For a finite prefix-free cut $P$, let
+$O=P\cap\operatorname{Pos}(u)$. The exterior $C_P(u)$ replaces exactly
+the reached subtrees by holes marked with their entire addresses and
+retains every other constructor and concrete leaf. Define
+
+$$
+R_P(u)=(C_P(u),\pi_P(u)),\qquad
+p\sim_{\pi_P(u)}q\ \Longleftrightarrow\ u|_p=u|_q\quad(p,q\in O).
+\tag{CAB.2}
+$$
+
+Different classes assert disequality. Every blocked cut word has its
+concrete blocking strict-prefix leaf in the exterior. This is the
+`literalRecord` of [ACPD], including its faithful correspondence
+`canonicalRow_record_iff`; it is not a vector of constructor replies.
+Empty, root, deep, mixed and blocked cuts are allowed. An empty cut
+retains the whole tree; a root cut has one constant hole and singleton
+partition.
+

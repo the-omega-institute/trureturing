@@ -1,0 +1,56 @@
+**Lemma 3.1 (Complete extension without a new request).**
+Let one normalized complete eight-bit $N$ allocation satisfy (2.2),
+with $0\le b_i\le1$ and $0\le e\le1$. There is a complete
+nine-bit allocation with identical table weights, schedules and old
+outputs at profile $(b_1,\ldots,b_8,e;e)$.
+
+**Proof.** For every complete table set
+
+$$
+D'(w,v)=D(w),\qquad w\in\{0,1\}^8,\quad v\in\{0,1\}.
+\tag{3.1}
+$$
+
+Retain its weight $\lambda_D$ and its whole schedule. The law still
+has mass one, all outputs lie in $\{0,\ldots,8\}\subseteq\{0,\ldots,9\}$,
+and
+$p'_{(w,v)}(\ell)=p_w(\ell)$ for $\ell\le8$, while
+$p'_{(w,v)}(9)=0$. Put $b'_9=e$ and $b'_i=b_i$ for $i\le8$.
+If $w$ already has first zero $n\le8$, either value of $v$
+leaves its first zero and target amplitude unchanged. Each old
+$A,C,P$ probability and demand is copied exactly, including every
+multiple-zero suffix.
+
+For the new first-zero word $1^8 0$, write $q=p_+(0)\ge1-e$.
+Its complete row verification is
+
+$$
+\begin{array}{c|ccc}
+\text{event}&A& C& P\\\hline
+\text{probability}&q&0&q\\
+\text{demand}&1-2e&0&1-e
+\end{array}
+\tag{3.2}
+$$
+
+Since $e\ge0$, $q\ge1-e\ge1-2e$, so all three rows hold
+separately. The positive word $1^9$ retains $q\ge1-e$.
+Equivalently the new first-zero TV is $\max\{1-q,e\}\le e$.
+The existing positive row supplies the new independent union row;
+correct singleton probabilities alone would not supply it.
+
+The auxiliary amplitude $b'_9=e$ is boxed and inactive under the
+strict convention $b_i>e$. At $e=0$ the positive row forces $q=1$;
+at $e=1$ the new demands are $(-1,0,0)$. Old inactive ties and
+negative singleton demands remain unchanged. No condition $b_8\ge e$
+or ordering of the extended profile is used.
+
+Input nine is never requested. Constants, singletons and repeated
+schedules retain their original requests, and a full pair retains its
+same two requests. There is no need to pad a schedule. Selection of
+the complete table by the same seed preserves source independence,
+zero advice and finite handoff; ignored and repeated requests remain
+counted. This is an extension of the same complete law, with no
+recoupling of counterfactual cells. It asserts no unchanged-profile
+extension for arbitrary conic mass. $\square$
+

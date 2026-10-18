@@ -1,0 +1,93 @@
+**Proposition 329.1 (Obstruction only to the direct method of 173–174).**
+For $t>0$ in (324.1), extracting a seven-coordinate core by exactly
+the residual-extension equations of
+[173–174](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_V.md),
+with $m=7$, $L=9$, cannot produce (324.2) at cap $E$.
+This excludes that specified extraction, although the actual profile
+is feasible in both original classes by 324.1.
+
+**Proof.** Those fixed equations require
+
+$$
+g_8=a_8-E=\frac{53t}{64}+\delta,\qquad
+g_9=a_9-E=\frac{53t}{64}-\delta,\qquad g_{10}=0.
+\tag{329.1}
+$$
+
+They are ordered and nonnegative; $g_9>0$ for $t>0$.
+The two prescribed residual weights and their sums are
+
+$$
+\begin{aligned}
+w_8&=3(g_8-g_9)=6\delta,&
+w_9&=\frac{10}{3}g_9=\frac{265t}{96}-\frac{10\delta}{3},\\
+W&=w_8+w_9=\frac{9g_8+g_9}{3}
+ =\frac{265t}{96}+\frac{8\delta}{3},\\
+E_{\rm res}&=\frac{6g_8+g_9}{3}
+ =\frac{371t}{192}+\frac{5\delta}{3},&
+W-E_{\rm res}&=g_8.
+\end{aligned}
+\tag{329.2}
+$$
+
+Both weights are nonnegative. The parameter bounds give
+
+$$
+\begin{aligned}
+W&\le\frac{265t}{96}+\frac{8(\tau-t)}3
+ \le\frac{265\tau}{96}\le\frac{265}{2304}<1,\\
+E-E_{\rm res}
+ &=5\tau-\frac{169t}{96}-\frac{5\delta}{3}
+ \ge\frac{10\tau}{3}-\frac{3t}{32}
+ \ge\frac{311\tau}{96}>0.
+\end{aligned}
+\tag{329.3}
+$$
+
+Thus $r=1-W>0$ and the unique candidate core lies in the ordered
+positive domain:
+
+$$
+A_i=\frac{a_i-W}{r}\ (1\le i\le7),\qquad
+e_0=\frac{E-E_{\rm res}}r,\qquad
+1\ge A_1\ge\cdots\ge A_7\ge e_0>0.
+\tag{329.4}
+$$
+
+Indeed $A_1\le1$ follows from $a_1\le1$, order follows from
+the common positive denominator, and
+$A_7-e_0=(a_7-E-g_8)/r=(\tau-t-\delta)/r\ge0$.
+The complete inverse correspondence is
+
+$$
+a_i=rA_i+W\ (i\le7),\qquad
+E=re_0+E_{\rm res},\qquad a_8=E+g_8,\quad a_9=E+g_9.
+\tag{329.5}
+$$
+
+Reuse the complete-$N$ necessary $Y_2$ relation of 299.1 on this
+candidate core. Its reading is
+
+$$
+A_2+4A_3+5A_4+5A_5+5A_6+4A_7-1-40e_0
+=\frac{665t/96+16\delta/3}{1-W}>0.
+\tag{329.6}
+$$
+
+For direct verification, the numerator before division is
+
+$$
+[a_2+4a_3+5a_4+5a_5+5a_6+4a_7-1-40E]
+-23W+40E_{\rm res}.
+\tag{329.7}
+$$
+
+The bracket equals $-55t/8$. Substituting (329.2) gives
+$665t/96+16\delta/3$, strictly positive at $t>0$.
+Therefore this candidate core has no complete feasible $N$ allocation
+of any finite mass, and in particular no stopped core suitable for
+that direct method. At $t=0$, $\delta=0$ and this reading is zero;
+there is no exclusion on that reused branch. The argument neither
+excludes every earlier supplier nor asserts original $O$ infeasibility
+or a separator. $\square$
+

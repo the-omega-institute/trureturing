@@ -1,0 +1,17 @@
+**定理 4.2（树来源二阶统计具有三维内部）。** 允许概率混合非空有序树时，二阶矩向量的可行集合在 $\mathbb R^3$ 中有非空内部，但只构成实半正定锥的受限子集。
+
+证明。取四棵树 $\alpha,\beta,\langle\alpha,\beta\rangle,\langle\alpha,\alpha\rangle$。其二阶向量依次为
+
+$$
+v_0=(1,0,0),\quad v_1=(0,0,1),\quad
+v_2=(1,1,1),\quad v_3=(4,0,0).
+$$
+
+以列顺序 $v_1-v_0,v_2-v_0,v_3-v_0$ 排列，得到
+
+$$
+\begin{pmatrix}-1&0&3\\0&1&0\\1&1&0\end{pmatrix},\qquad \det=-3.
+$$
+
+因此四点仿射无关，概率混合的四面体有非空三维内部。另一方面，对任意实 $r$，$r^TSr=\mathbb E(r^Tc)^2\ge0$；又因树组成 $a,b\ge0$，有 $V\ge0$。例如 $\left(\begin{smallmatrix}1&-1/2\\-1/2&1\end{smallmatrix}\right)$ 正定而不满足这一必要条件，所以树矩集合不能等同于全部半正定锥。非负未归一权重生成的树矩锥也有这些额外限制。$\square$
+

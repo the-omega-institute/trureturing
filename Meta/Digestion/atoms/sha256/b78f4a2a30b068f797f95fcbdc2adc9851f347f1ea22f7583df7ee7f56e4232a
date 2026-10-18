@@ -1,0 +1,16 @@
+**Theorem 3.2 (equality of entire source fibers).** For every
+$\mathbf n\in\mathcal C_m$,
+
+$$
+F_{\mathbf n}=F_{\kappa_B(\mathbf n)}.
+\tag{NUE.9}
+$$
+
+Proof. Fix an arbitrary $t\in\mathcal T$. If $n_i<B$, its coordinate
+is unchanged. Otherwise both $n_i$ and $B$ lie at or above
+$b(P_i,R_i)$. Apply Theorem 2.2 twice to this same $t$, obtaining
+equivalence of the $i$th row predicate at $n_i$ and $B$. Conjoin over
+all $i$. The nondecreasing map $n\mapsto\min(n,B)$ preserves order
+and fixes zero, so the capped tuple lies in $A_B$. No existential
+source has been selected or replaced in this argument. $\square$
+

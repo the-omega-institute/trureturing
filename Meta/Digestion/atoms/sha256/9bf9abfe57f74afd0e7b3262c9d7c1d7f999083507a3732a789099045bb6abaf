@@ -1,0 +1,69 @@
+**Theorem 6.1 (Triplet multiplicity locus).** For every positive source in
+the stated fiber, all positive eigenvalue multiplicities of the active Gram
+are divisible by three if and only if
+
+$$
+p=(a,b,8b,b,a),\qquad a,b>0,\qquad 2a+10b=1.
+\tag{6.3}
+$$
+
+On this locus the source is on both symmetry walls and
+
+$$
+G_{\mathrm{lat}}=16ab\,I_3=[16ab]\otimes I_3.
+\tag{6.4}
+$$
+
+Thus the active Gram is orthogonally equivalent to $A\otimes I_3$ with the
+one-dimensional positive multiplicity matrix $A=[16ab]$. If one embeds this
+active three-dimensional support into six coordinates, the padded expression
+$\operatorname{diag}(16ab,0)\otimes I_3$ is only a statement about
+multiplicities; it is not a six-dimensional source claim.
+
+**Proof.** In generic position all three coefficients in (6.1) are positive,
+and each has multiplicity two. If two coefficients coincide, the positive
+multiplicities are $4$ and $2$; if all three coincide, the only positive
+multiplicity is $6$. The latter alternative cannot occur in generic position,
+because
+
+$$
+\lambda_\alpha-\lambda_\gamma
+ =2(p_0-p_{13})(p_1-p_3).
+\tag{6.5}
+$$
+
+Equality would impose $p_0=p_{13}$ or $p_1=p_3$, which are respectively the
+walls $X+Y=1-Z$ and $X=Y$. Hence no generic source has the required positive
+multiplicities.
+
+On exactly one wall the active support has dimension four and consists of two
+positive blocks, each of multiplicity two. The only possible multiplicity
+patterns are therefore $(2,2)$ or $(4)$, neither of which is divisible by
+three. This conclusion uses the wall formula of Theorem 5.1 and does not
+continue a generic Haar formula through the wall.
+
+At both walls, $p_0=p_{13}$ and $p_1=p_3$. Put these common values equal to
+$a$ and $b$. The positive multiplicities are $2$ for the circle coefficient
+and $1$ for the parity coefficient, so divisibility by three is equivalent to
+their equality. Equations (6.2) give
+
+$$
+2a p_2=16ab.
+\tag{6.6}
+$$
+
+Since $a>0$, this is $p_2=8b$. Total mass one then gives
+$2a+10b=1$. Conversely, every positive pair satisfying (6.3) has both wall
+equalities, and (6.2) becomes $\lambda_{\mathrm{circ}}=
+\lambda_{\mathrm{par}}=16ab$, proving (6.4). The existing output covariance
+has the same positive spectrum by (5.4); its null directions do not alter any
+positive multiplicity. $\square$
+
+Adding the four, six or seven output null directions in the generic, single-
+wall or double-wall regimes changes only the multiplicity of the zero
+eigenvalue. It cannot repair a positive pattern $(2,2,2)$, $(4,2)$ or $(2,1)$.
+The classification is consequently a positive-spectrum statement and makes
+no claim about a physical spatial dimension. The compact-group identity
+dimensions $(3,2,1)$ and affine capacities $(6,4,3)$ proved in §§3–4 are
+different invariants from these eigenvalue multiplicities.
+

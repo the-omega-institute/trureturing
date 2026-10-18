@@ -1,0 +1,95 @@
+**定理 45.4（临界下确界：三更新有限逼近而永不达到）。** 对每个
+\(\varepsilon>0\)，存在一个只依公开 \(\varepsilon\) 和来源参数的源无关确定控制器，
+至多三次原菜单更新、四次实际 Read，在同一 \(\mathcal D_2\) 上满足
+
+$$
+\sup_{x\in\mathcal D_2}|\widehat x-x|<\varepsilon.
+\tag{45.10}
+$$
+
+所以对每个 \(N\ge3\)，
+
+$$
+\inf_{\pi\in\mathcal P_N}\sup_{x\in\mathcal D_2}|\widehat x_\pi-x|=0,
+\tag{45.11}
+$$
+
+但没有任何一个单一控制器达到零风险。
+
+证明。给定 \(\varepsilon\)，选 \(\alpha<\kappa\) 足够接近 \(\kappa\)，使
+\(50\rho<\varepsilon\)，其中 \(\rho\) 为 (45.4)，并置
+\(\nu=\sqrt{1-\alpha^2}\)、\(q=\alpha+\nu i\)。取
+
+$$
+c_1=j,\qquad c_2=-\alpha j+\nu k,\qquad c_1c_2=q.
+\tag{45.12}
+$$
+
+这是原内部菜单中的两个单位纯虚控制。实际词固定为
+
+$$
+\text{初 Read},\quad A_{c_1},\quad\text{Read},\quad A_{c_2},\quad
+\text{Read},\quad A_d,\quad\text{Read},\quad\text{停止}.
+\tag{45.13}
+$$
+
+记首锚前隐藏值为 \(bq=s+w\)。对半径 \(R\) 的来源，若 \(z=|w|/R\)，则
+来源条件和 \(\langle w,i\rangle\le|w|\) 给出
+
+$$
+\tau\le\alpha\sqrt{1-z^2}+\nu z.
+\tag{45.14}
+$$
+
+在本证明的 $0\le\alpha<\kappa$ 范围内，$\nu>\tau$，
+$h=\tau\nu-\kappa\alpha$ 满足 $0<h<\nu$，且
+
+$$
+\sqrt{1-h^2}=\tau\alpha+\kappa\nu,\qquad F(h)=\tau.
+$$
+
+当 $\alpha>0$ 时，$F'(z)=\nu-\alpha z/\sqrt{1-z^2}>0$ 在 $0<z<\nu$ 成立；
+$\alpha=0$ 时 $F(z)=z$。因此 $0\le z<h$ 时 $F(z)<\tau$。又由凹性及
+$F(1)=\nu>\tau$，在 $h\le z\le1$ 上有 $F(z)\ge\tau$。所以 (45.14) 在
+$[0,1]$ 内的解集恰为 $[h,1]$，所有合法点满足 $|w|\ge Rh$。另一方面 $|w|\le R$。
+并且 $h'(\alpha)=-\tau\alpha/\nu-\kappa<0$ 在 $[0,\kappa]$ 上给出严格递减，
+$h(\kappa)=\tau^2-\kappa^2=7/25$，故在 $\alpha<\kappa$ 时
+
+$$
+25h-7=25(\tau\nu-\kappa\alpha)-7>0
+\quad(\alpha<\kappa),
+\tag{45.15}
+$$
+
+两层投影由阈值
+
+$$
+T=\frac{7+25h}{2}
+\tag{45.16}
+$$
+
+严格分开：\(|w|<T\) 判为半径7，\(|w|>T\) 判为半径25。等号不会来自合法
+来源，因为内层至多7、外层至少25h，且两者间隙正。协议用初读给出
+\(\widehat a=a\)，用首锚读的模判出 \(R\)，再置
+
+$$
+\widehat s=\sqrt{R^2-|w|^2},\qquad
+\widehat b=(\widehat s+w)q^{-1}.
+\tag{45.17}
+$$
+
+若真实 \(s\ge0\)，估计完全正确。若 $s=-t<0$，则来源条件给
+$\nu\sqrt{R^2-t^2}-\alpha t\ge\tau R$。令
+$G(y)=\nu\sqrt{1-y^2}-\alpha y$，$0\le y\le1$；由 (45.4)、(45.9) 得
+$G(\rho)=\tau$，而 $G$ 在 $[0,1]$ 上严格递减，故 $t\le R\rho$。因此
+
+$$
+|\widehat b-b|=2t\le2R\rho\le50\rho<\varepsilon,
+\tag{45.18}
+$$
+
+且可见分量误差为零，得到 (45.10)。该控制器的动作、停止和四次 Read 都预先固定，
+没有把两条历史拼接为一个实验，也没有使用半径标签或新端口。\(\rho(\alpha)\to0\)
+当 \(\alpha\uparrow\kappa\)，故 (45.11) 成立。零风险若由某一个控制器达到，便与
+定理45.3矛盾；所以下确界不达。证毕。
+

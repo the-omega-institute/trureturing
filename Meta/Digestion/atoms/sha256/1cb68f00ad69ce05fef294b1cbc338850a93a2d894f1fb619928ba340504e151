@@ -1,0 +1,88 @@
+**Lemma 5.2 (Simultaneous minor bounds).** Let $\Delta_k$ denote a
+leading $k\times k$ principal minor in the fixed block order. Every
+entry in the following table is a strict lower bound, uniform over
+all indicated events and signs.
+
+| Events | Matrix | $\Delta_1(L)$ | $\Delta_2(L)$ | $\Delta_1(V)$ | $\Delta_2(V)$ | $\Delta_3(V)$ |
+| --- | --- | --- | --- | --- | --- | --- |
+| All ten pairs and $\{2\},\{3\},\{5\},\{25\}$ | $(52417/100000)I\pm H_J$ | $1/10$ | $1/100$ | $1/250$ | $1/2000$ | $1/1000000$ |
+| $\{N\}$ | $I/2+H_N$ | $1$ | $2/5$ | $1/3$ | $1/10$ | $3/100$ |
+
+Consequently every event other than $N$ has norm below
+$52417/100000$, and $H_N\succ-I/2$.
+
+Proof. Integer squaring gives the exact enclosure
+
+$$
+r_-:=\frac{4123105625617}{10^{12}}<r<
+r_+:=\frac{4123105625618}{10^{12}}.
+\tag{5.2}
+$$
+
+After reducing by $r^2=17$, define rational lower and upper evaluations
+
+$$
+\mathcal L(u+vr)=
+\begin{cases}u+vr_-,&v\ge0,\\u+vr_+,&v<0,\end{cases}
+\qquad
+\mathcal U(u+vr)=
+\begin{cases}u+vr_+,&v\ge0,\\u+vr_-,&v<0.\end{cases}
+\tag{5.3}
+$$
+
+Always $\mathcal L(x)\le x\le\mathcal U(x)$. Coefficient pairs
+multiply by
+$(u,v)(u',v')=(uu'+17vv',uv'+vu')$. Use determinants $x$,
+$xy-u^2$ and
+
+$$
+\det\begin{pmatrix}x&u&v\\u&y&w\\v&w&z\end{pmatrix}
+=xyz+2uvw-xw^2-yv^2-zu^2.
+\tag{5.4}
+$$
+
+The exact componentwise minima of $\mathcal L(\Delta_k)$ over the
+first row's fourteen events and two signs, in the five-column order,
+are
+
+$$
+\begin{aligned}
+\mathbf m_1=\bigg(&
+\frac{3314112062228496699144983}{32234365883540000000000000},\\
+&\frac{11117047152782718364064289}{1060435740071266010000000000},\\
+&\frac{74001553834953578188307}{15169113356960000000000000},\\
+&\frac{8661755674367053479938143696483915327021}
+{15585815158708912272643974000000000000000000},\\
+&\frac{12374008581540525615548222555049850329394499}
+{6234326063483564909057589600000000000000000000000}\bigg).
+\end{aligned}
+\tag{5.5}
+$$
+
+For the second row the five rational lower evaluations are
+
+$$
+\begin{aligned}
+\mathbf m_2=\bigg(&
+\frac{65742763772159683721784551}{64468731767080000000000000},\\
+&\frac{146013008268942174562624110493217}
+{360548151624230443400000000000000},\\
+&\frac{16564743247676126577930379}{48351548825310000000000000},\\
+&\frac{1028320525716796652475761983317691651249}
+{9351489095225347363586384400000000000000},\\
+&\frac{35189018771331516520403183322728471911}
+{935148909522534736358638440000000000000}\bigg).
+\end{aligned}
+\tag{5.6}
+$$
+
+Equations (5.1)–(5.4), the displayed event list, and the two choices
+of sign specify every identity behind (5.5)–(5.6). All denominators
+are positive. Cross multiplication shows that each coordinate strictly
+exceeds the corresponding simple table bound. Thus all $140+5=145$
+leading principal minors are positive. Sylvester's criterion on
+the two real symmetric blocks proves the asserted strict Loewner
+and norm bounds. Real symmetric positivity also gives complex
+positivity by splitting a vector into real and imaginary parts.
+No trace-zero singleton assumption is used. $\square$
+

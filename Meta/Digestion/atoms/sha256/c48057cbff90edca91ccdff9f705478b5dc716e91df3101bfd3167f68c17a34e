@@ -1,0 +1,92 @@
+**Theorem 3.1 (Exact boundary-contact consequence).** For every real $b$ with $-1<b<0$, there exists exactly one real $t_b>0$ satisfying
+
+$$
+D_{A(b),-b}(t_b)=0.
+$$
+
+At this point,
+
+$$
+D_t(A(b),-b,t_b)=0,\qquad D_{tt}(A(b),-b,t_b)>0.
+$$
+
+Thus the contact has exactly order two, as in Krasniqi's Conjecture 23.
+
+**Proof.** Put $a=A(b)$ and $c=-b$, so $0<c<1$. We first identify the published facts supplying the exact boundary parameters. Krasniqi's Theorem 17 states that the Bernstein region is precisely $0<a\le A(b)$ and that the supremum defining $A(b)$ is attained. It also gives
+
+$$
+0<a<\alpha_*,\qquad D_{a,c}(t)\ge0\quad(t\ge0),
+$$
+
+and a nonempty finite set of positive zeros of $D_{a,c}$. Proposition 6 supplies $\alpha_*<7/3$. Proposition 2 gives, at every Bernstein pair,
+
+$$
+a+c<K_0<3,\qquad M_\delta(a,c)>0,\qquad
+ a<2(1-c)+2\sqrt{1-c},
+\quad K_0=\frac{10\delta-8}{\delta^2}.
+\tag{3.1}
+$$
+
+The strict bounds come from its equations (2.11)--(2.14); Proposition 3 supplies the regularized density and its Bernstein criterion. These are facts about the original family, not extra boundary-membership assumptions. No uniqueness or nondegeneracy statement is supplied by them.
+
+Since $D$ is smooth and nonnegative, Fermat's theorem gives $D'(u)=0$ at every positive zero $u$. We distinguish the number of sign switches of $h(x)=e^{-a}x^2w_{a,c}(1-x)$.
+
+If $k=a+c\le1$, then $0<k-ax<1$ for $0<x<1$, so $h(x)>0$ and
+
+$$
+D''(t)=\int_0^1h(x)e^{xt}\,dx>0.
+$$
+
+Thus $D'$ is strictly increasing. Two positive contacts would give two zeros of $D'$, which is impossible. Existence supplies exactly one contact, and its curvature is positive.
+
+If $1<k\le2$, put $r_1=(k-1)/a$. Since $c<1$, $0<r_1<1$. The signs of $h$ are negative on $(0,r_1)$ and positive on $(r_1,1)$, including the case $k=2$. Define
+
+$$
+G(t)=e^{-r_1t}D''(t).
+$$
+
+The endpoint estimates and dominated differentiation used in Theorem 2.2 also apply here. They yield
+
+$$
+G'(t)=e^{-r_1t}\int_0^1(x-r_1)h(x)e^{xt}\,dx>0.
+$$
+
+Hence $G$ is strictly increasing, and $D''$ has at most one zero. If $u<v$ were positive zeros of $D$, Rolle's theorem would give $z\in(u,v)$ with $D'(z)=0$. Fermat gives $D'(u)=D'(v)=0$. Applying Rolle to $D'$ on $[u,z]$ and $[z,v]$ gives two distinct zeros of $D''$, a contradiction.
+
+At the unique contact $u$, suppose $D''(u)\le0$. For every $0<t<u$, strict increase of $G$ gives $G(t)<G(u)\le0$, hence $D''(t)<0$. On an interval ending at $u$, $D'$ is strictly decreasing toward $D'(u)=0$, so $D'(t)>0$ before $u$. The mean value theorem then gives $D(t)<D(u)=0$ for $t$ sufficiently close to $u$ from the left. This contradicts nonnegativity. Thus $D''(u)>0$. Only the sign-switch integral, Fermat, Rolle, and the mean value theorem are needed in this case.
+
+It remains to consider $2<k<3$. Since $c<1$, this implies $a>1$. Also
+
+$$
+a-2+2c=(k-2)+c>0.
+$$
+
+The square-root bound in (3.1) therefore gives, with the correct squaring direction,
+
+$$
+a-2+2c<2\sqrt{1-c},\qquad U(a,c)>0.
+$$
+
+Together with $a<\alpha_*<7/3$ and $M_\delta>0$, these conditions place the actual attained boundary pair in $\mathcal R$. Theorem 2.2 applies for every $t\ge0$.
+
+At any contact $u$, $D(u)=D'(u)=0$, so
+
+$$
+D''(u)=K(u)\ge\frac\rho{a^2}>0.
+$$
+
+Moreover, with $r=(k-2)/a$ and $R=(k-1)/a$, define
+
+$$
+J(t)=e^{-Rt}\bigl(D'(t)-rD(t)\bigr).
+$$
+
+The product rule gives
+
+$$
+J'(t)=e^{-Rt}\bigl(D''(t)-(r+R)D'(t)+rRD(t)\bigr)
+ =e^{-Rt}K(t)>0.
+$$
+
+Every contact is a zero of $J$. Strict monotonicity permits at most one, and the published existence result supplies one. The positive second derivative and $D(u)=D'(u)=0$ show by Taylor's formula that this zero has exactly order two. The three cases exhaust every $-1<b<0$. $\square$
+

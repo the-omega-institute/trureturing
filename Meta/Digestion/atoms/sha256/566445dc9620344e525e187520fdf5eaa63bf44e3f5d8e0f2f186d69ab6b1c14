@@ -1,0 +1,37 @@
+**Definition 2.2 (exact initial family and relative menu).** Fix public
+$D\ge1$ and
+
+$$
+\begin{aligned}
+\mathcal F_D
+ &=\{\langle\alpha,v\rangle:v\in\mathcal T,
+                              \operatorname{height}(v)\le D\},\\
+A_D&=\{p:1\le |p|\le D,\ p\text{ begins with }R\},\\
+P&\subseteq A_D,\qquad S=R^{-1}P=\{q:Rq\in P\},\\
+S_L&=\{r:Lr\in S\},\qquad S_R=\{r:Rr\in S\},\\
+d(S)&=\begin{cases}-1,&S=\varnothing,\\
+\max_{q\in S}|q|,&S\ne\varnothing.
+\end{cases}
+\end{aligned}
+\tag{FM.2}
+$$
+
+Menus may be empty or nested; they need not be prefix-free. The relative
+menu can contain $\varepsilon$, and its words have length at most
+$D-1$. A public ordering fixes every vector's order. Since
+$\operatorname{height}(\langle\alpha,v\rangle)=1+\operatorname{height}(v)$,
+this is exactly [DEV, Definition 11.1]'s family, not a smaller family.
+Deleting the initial $R$ is a relabeling of queries, not a source
+operation. Homomorphism gives the relative-menu identity used in
+[DEV, (AAR.61) and Theorem 12.6]:
+
+$$
+\operatorname{val}(Rq,\rho^k\langle\alpha,v\rangle)
+ =\operatorname{val}(q,\rho^k v)
+ \quad(q\text{ any literal},\ k\ge0).
+\tag{FM.3}
+$$
+
+The outer root remains a branch, so this identity includes an empty
+suffix and every blocked suffix.
+

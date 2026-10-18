@@ -1,0 +1,76 @@
+**Lemma 3.6 (Paid joint representatives and integration).** All retained
+subtree choices can be made jointly, and they prove Theorem 3.2.
+
+Proof. For a type-$I$ root the two reply branches have total support
+at most $U_I+V_I$ by Lemmas 3.3–3.5. For type $D$ the bound is
+$U_D+V_D$. The second address on first zero and the second address
+on first one are separate choices in an adaptive policy. They need
+not coincide. The zero-read return and initial rejection give the
+other two entries of $B$.
+
+Here are explicit representatives, all with even root address. The
+target in phase zero is $S_j$; the target in phase one is $S_0$,
+for both endpoint choices.
+
+| Root type | Root address | First-one second-address choices | First-zero second-address choices |
+| --- | --- | --- | --- |
+| $I$ | $2j$ | $2(j+1)$ for $T$ | $2j$, $2(j+1)$, $2(j+2)$, $2(j+8)+1$ for $Z_R,Z_A,Z_I,O_I$ |
+| $D$ | $2(j+4)$ | root repeat for $T$, or $2j$ for $H$ | root repeat, $2(j+5)$, $2(j+8)$, $2(j+8)+1$, $1$ for $Z_R,Z_A,Z_D,O_{DD},O_{DI}$ |
+
+The adjacent choices share one spin vertex; the stated distant
+even choices have disjoint spin supports. Odd address $1$ touches
+the phase-one target $S_0$, whereas $2(j+8)+1$ avoids it.
+Thus every retained table entry is realized at the same root as
+all the other entries of its type.
+
+For completeness, maximizing outputs for these concrete choices
+can be fixed entirely in advance as follows. At an $I$ root the
+adjacent first-one leaves $10,11$ output $h_0(1-\sigma)$ and
+$h_0(\sigma)$ respectively. On a same-parity first-zero branch,
+output $h_1(\sigma)$ on $00$ and $h_0(\sigma)$ on any possible
+$01$. On its opposite-parity first-zero branch, output
+$h_0(\sigma)$ on $00$ and $h_1(\sigma)$ on $01$.
+
+At a $D$ root, use $h_0(\sigma)$ on every possible first-one
+leaf for either retained second-address choice; a fair leaf has
+a tie and this fixes one maximizer. On a same-parity first-zero
+branch use $h_1(\sigma)$ on $00$ and $h_0(\sigma)$ on $01$.
+For $O_{DD}$ use $h_0(\sigma)$ on $00$ and $h_1(\sigma)$ on
+$01$; the $00$ phase maxima tie. For $O_{DI}$ use
+$h_1(\sigma)$ on both leaves. Impossible leaves can have any
+fixed output. Lemma 2.2 and tables (3.5)–(3.6) verify every such
+maximizer.
+
+For the chosen $\lambda$, choose a maximizing entry on each
+branch, make both actual calls on every path, and accept a leaf
+exactly when $M-\lambda W>0$, allowing either decision at a
+zero. On rejection continue internally forever with no more calls.
+This is a measurable finite rule; even a repeated or rejected call
+is paid. Choose the best whole tree, immediate majority-state
+return, or initial internal nonreturn according to (3.2). The
+result ignores the seed and attains $B(\lambda)$ under every
+unchanged $\nu$. No phase or spin was observed beyond the actual
+replies.
+
+Conversely apply the fixed-seed bound to an arbitrary original
+protocol. There are countably many finite integer-address/reply
+records. Consistency and finite return on each record are
+measurable seed conditions, and its output takes only four values.
+Its source-section mass and correct mass therefore give measurable
+functions $q(u),C(u)$. Finite section sums, or their countable
+nonnegative sums before the two-call reduction, give
+
+$$
+q=\int q(u)\,d\nu(u),\qquad
+C=\int C(u)\,d\nu(u).
+\tag{3.8}
+$$
+
+Integrating $C(u)-\lambda q(u)\le B(\lambda)$ proves (3.3).
+For completed product versions use measurable representatives;
+their differences lie in a product-null set, whose sections are
+source-null for almost every seed. They change no integral.
+No conditioning on a singleton seed, regular conditional law on
+an arbitrary auxiliary space, or added randomness is required.
+$\square$
+

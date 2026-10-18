@@ -1,0 +1,51 @@
+**Theorem 8.2 (Failure of fixed-$B$ nearest rounding for this table).**
+Fix $J=1$ and any integer $B\ge1$. Keep the exact ideal midpoint
+$\theta$ and the threshold $H$ of (2.7), and replace each ideal tick
+probability by its nearest $B$-bit dyadic probability. For every
+sufficiently small $s>0$ this rounded table stops almost surely with
+finite paid mean under both sources but emits label one under both.
+In particular $\mathsf P_0(D=1)=1$. This is a failure of this specific
+rounding prescription, not a necessary precision lower for all dyadic
+controllers.
+
+Proof. At $J=1$ there is a live phase of reward $\delta=2^{-r}$ and a
+dead phase of reward zero. Conditional on $K=k$, the live probability
+is $2^{-k}$. Hence
+
+$$
+a_i:=\mathsf P_i(z=1)=\mathbb E_i2^{-K}>0,\qquad
+m_i=\delta a_i>0.
+\tag{8.2}
+$$
+
+The fixed-cap upper in (2.5) implies $m_i\to0$ and thus
+$\theta/\delta\to0$ as $s\downarrow0$. For sufficiently small $s$,
+
+$$
+0<\theta/\delta<2^{-(B+1)}.
+\tag{8.3}
+$$
+
+Write $a=\theta/\delta$. In the live phase the normalized ideal input
+is $1-a$, of floor zero; in the dead phase it is $-a$, of floor minus
+one. In both cases the upper-endpoint probability is $1-a$. By (8.3)
+its unique nearest $B$-bit dyadic is one, with no tie at a rounding
+boundary. Consequently the live increment becomes $+\delta$ and the
+dead increment becomes zero. The $J=1$ zero probabilities are already
+exact for $B\ge1$.
+
+All increments are nonnegative. Each completed gap supplies an iid
+live indicator with success probability $a_i>0$, since the phase
+restarts at one and fresh randomness is independent across gaps.
+The table reaches evidence $+H$ after $H$ live successes. To see
+finite mean directly, each waiting number of gaps for the next success
+has tail $(1-a_i)^n$, so its mean is
+$\sum_{n\ge0}(1-a_i)^n=1/a_i$. Independence of the successive blocks
+gives $\mathbb E_iG=H/a_i<\infty$, and $G<\infty$ almost surely.
+The predictable payment proof (4.15)–(4.16) applies to these same blocks,
+giving $\mathbb E_iT=1+\beta_i+\mu_iH/a_i<\infty$.
+There is no negative exit, so the emitted label is one with probability
+one under either source. This proves the risk failure despite finite
+stopping and despite the row error $a\to0$. It imposes no restriction
+on other table designs or alternative rounding rules. $\square$
+

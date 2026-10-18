@@ -1,0 +1,4 @@
+## 6. A full original-observer consequence with explicit clipping
+
+An original observer may have emissions outside $[a,b]$, zero or unit emissions, transient configurations and noncompletion mass. Its direct return-weight statistic need not obey the regular bounds used in Theorem 3.1. The following statement specifies the analysis statistic that the supplied clipping comparison actually controls.
+

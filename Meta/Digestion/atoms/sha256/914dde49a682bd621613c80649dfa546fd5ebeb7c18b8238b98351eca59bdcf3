@@ -1,0 +1,44 @@
+### 10.13 任意准备的一粒子矩阵与无相位菜单
+
+取任意 $\rho\succeq0,\operatorname{Tr}\rho=1$ 于完整 $\mathcal I_m$，定义
+
+$$
+C_{ab}=\operatorname{Tr}(\rho\,c_b^\dagger c_a).
+$$
+
+这里 $C_{ab}=\overline{C_{ba}}$，故 $C$ Hermitian。Pereira–Mueller 的 $\rho_{lm}^{\rm paper}=\langle a_l^\dagger a_m\rangle$ 对应 $C_{ml}$，即矩阵指标转置。对于本章的 $Q$，直接展开给
+
+$$
+\langle Q(M)\rangle_\rho
+=\sum_{a,b}M_{ab}C_{ba}=\operatorname{Tr}(MC).
+$$
+
+该指标顺序保证下面的共轭方向。无论准备是否 Gaussian，所有这些式子都只是二次算子的期望恒等式。更具体地，对任意向量 $v$，取 $d_v=\sum_a\overline v_a c_a$，则 $v^\dagger Cv=\langle d_v^\dagger d_v\rangle\ge0$，由 CAR 还得 $\|v\|^2-v^\dagger Cv=\langle d_vd_v^\dagger\rangle\ge0$，所以 $0\preceq C\preceq I_m$。这不宣称 $C$ 决定整个多体态。
+
+令 $E_{ab}$ 为一粒子矩阵单位，$H_j=E_{j,j+1}+E_{j+1,j}$。因 $h_j=Q(H_j)$，CAR 也给
+
+$$
+[Q(H_j),c_a]=-\sum_b(H_j)_{ab}c_b.
+$$
+
+于是 Heisenberg 方程的唯一解是
+
+$$
+e^{iuh_j}c_ae^{-iuh_j}=\sum_b(V_j(u))_{ab}c_b,
+\qquad V_j(u)=e^{-iuH_j}.
+$$
+
+对 $\rho'=e^{-iuh_j}\rho e^{iuh_j}$，逐指标代入得到
+
+$$
+\begin{aligned}
+C'_{ab}
+&=\sum_{r,s}\overline{(V_j)_{br}}(V_j)_{as}
+\operatorname{Tr}(\rho c_r^\dagger c_s)\\
+&=\sum_{r,s}(V_j)_{as}C_{sr}\overline{(V_j)_{br}}
+=(V_jCV_j^\dagger)_{ab}.
+\end{aligned}
+$$
+
+因此按时间顺序的有限词在一粒子矩阵上给 $C\mapsto VCV^\dagger$，其中 $V$ 是对应顺序的有限乘积。
+

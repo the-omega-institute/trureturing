@@ -1,0 +1,45 @@
+### 92.3. Algebraic identities and the hypothetical subquarter minimum
+
+The common stress equations determine all block multipliers:
+
+\[
+ \begin{aligned}
+ \Lambda_{A,f}&=(C_AG)_{ff},&
+ \Lambda_{B,f}&=(C_BH)_{ff},\\
+ (P_A)_{ff}&=2\sum_{g\ne f}(\overline{H_{fg}}\odot W_{fg})G_{gf},&
+ (P_B)_{ff}&=2\sum_{g\ne f}(\overline{G_{fg}}\odot W_{fg})H_{gf}.
+ \end{aligned}                                                   \tag{12}
+\]
+
+They also give the trace identities
+
+\[
+ \begin{split}
+ \sum_f\operatorname{Tr}\Lambda_{A,f}
+   &=\sum_f\operatorname{Tr}\Lambda_{B,f}
+     =2\operatorname{Tr}[(G\odot H)W],\\
+ p:=\operatorname{Tr}P_A=\operatorname{Tr}P_B
+   &=2\operatorname{Tr}[(T-I_8)W]-t.
+ \end{split}                                                   \tag{13}
+\]
+
+For 0<t<1/2, p>0. The identities follow by multiplying (4) by G or H, taking diagonal blocks, and using G_ff=H_ff=I₂. In particular the computed blocks in (12) must be Hermitian; this is not an additional automatic property of an arbitrary triple G,H,W.
+
+If the unrestricted original-channel minimum were below 1/4, its attained calibrated minimizer would have both ranks in {3,4,5,6,7}. The upper bound follows from Theorem 92.1; the lower bound follows from the [rank-two-party lower bound](ARITHMETIC_HOLOGRAPHIC_RT_II.md#81-a-subnormalized-centroid-support-witness-for-original-local-environment-bounds). This is a statement about an attained hypothetical minimum, not every subquarter competitor.
+
+Such a minimizer would satisfy (1)–(4), (10)–(13), and the full adaptive dual conditions from section 91:
+
+\[
+ Y\ge0,\quad Y\ge2L,\quad Y_{ff}\le tI_2,\quad
+                 t=2\operatorname{Tr}(LW),\quad0<t<1/4.       \tag{14}
+\]
+
+Equivalently, feasible primal and dual variables have the complementary relations
+
+\[
+ Y(\rho-W)=0,\qquad (Y-2L)W=0,\qquad
+                       (tI_2-Y_{ff})\rho_f=0.                 \tag{15}
+\]
+
+These follow term by term from the nonnegative gap identity in section 91. They are finite real algebraic and positive-semidefinite conditions after separating real and imaginary parts. Stress stationarity alone is not a sufficient condition for a minimum, and no extreme-point rank reduction is inferred from convexity of a one-party objective.
+

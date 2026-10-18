@@ -1,0 +1,44 @@
+**Theorem 16.7 (component addition against arbitrary adaptive interleaving).**
+For a forest of the independently realizable components in Theorem
+16.6, its minimum worst prefix-Read count is the sum of the individual
+component minima. This holds for every deterministic strategy that
+interleaves components based on the whole acquired transcript.
+
+Proof. Sequentially solve the components to attain the sum. For the
+lower bound, a remaining query concerns at most one component; a query
+outside them has a known reply. Their compatible boundaries form a
+Cartesian product by Theorem 16.6, with already acquired labels fixed.
+For each component keep its nonempty set $Z_i$ of still compatible
+boundaries. As a proof device, let $d_i(Z_i)$ be its minimum worst
+remaining number of local vertex queries to determine that boundary.
+It is finite, since reading every vertex suffices, and is zero exactly
+when the boundary is already determined. This conditional complexity
+is used only for the adversary argument, rather than as the structural
+characterization to be computed below.
+
+At any query to component $i$, at least one nonempty truthful reply
+cell $Z_i'$ has
+
+$$
+ d_i(Z_i')\ge d_i(Z_i)-1.
+\tag{AAR.94}
+$$
+
+Otherwise this query followed by optimal local continuations would
+improve $d_i(Z_i)$. Choose such a reply and keep that cell. Other
+components' sets do not change. Thus $\sum_i d_i(Z_i)$ decreases
+by at most one per actual Read, regardless of adaptive interleaving,
+and a correct halt requires every component boundary to be determined.
+At least its initial sum of queries is necessary.
+
+Throughout this argument the product of retained completion sets is
+nonempty. If the strategy halted too early, its terminal record would
+leave an unresolved component. If it continued past the asserted
+budget, choose one surviving boundary in each component and glue them
+as in Theorem 16.6: that single initial source realizes the entire
+preceding adaptive transcript. There is no change of source during
+this execution and no combination of separately attainable marginal
+optima. Finite termination on every completion excludes an infinite
+source-consistent run. The inequality and attainment prove the claim.
+$\square$
+

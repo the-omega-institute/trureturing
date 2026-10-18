@@ -1,0 +1,30 @@
+### 推论 29.4（FIB seam 的量子表示）
+
+令
+
+\[
+D=\operatorname{diag}(d_s)_{s\in\Sigma},
+\qquad
+d=(1,-1,0,-1,1).
+\]
+
+则
+
+\[
+D=D^\ast,
+\qquad
+\operatorname{tr}D=0.
+\]
+
+若 \(p_\kappa-p_{\kappa'}=(\kappa-\kappa')d\)，则
+
+\[
+\iota_\Sigma(p_\kappa)
+-
+\iota_\Sigma(p_{\kappa'})
+=
+(\kappa-\kappa')D.
+\]
+
+所以 \(\kappa\) 隐藏方向在量子载体中成为一个对角、迹为零的 Hermitian 扰动。它仍然是有限线性代数对象，并不需要把 \(\kappa\) 解释为物理叠加振幅。
+

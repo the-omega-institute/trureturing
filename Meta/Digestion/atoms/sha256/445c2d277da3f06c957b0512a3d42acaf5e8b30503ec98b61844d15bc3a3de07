@@ -1,0 +1,30 @@
+**Lemma 3.2 (Symbolic nonemptiness).** For every fixed $1/3<a<b<3/8$, all $p<1$ sufficiently close to one belong to $\mathcal S$.
+
+Proof. The finite rational functions in (3.2) have positive denominators at $p=1$ and extend continuously there. At that point
+
+$$
+L(1)=U(1)=\frac{a}{(1-a)^2},\qquad
+\frac34<\frac{a}{(1-a)^2}<\frac{24}{25}<1.
+\tag{3.4}
+$$
+
+The middle inequalities follow directly from $1/3<a<3/8$ and $5/8<1-a<2/3$. In particular both required inequalities involving $L,U$ are strict at one. Also
+
+$$
+\mathsf D_1(1)=
+\frac{a(1-a)^2}{(1+a)((1-a)^2+a)}.
+\tag{3.5}
+$$
+
+The denominator of (3.5) minus seven times its numerator is
+
+$$
+(1+a)((1-a)^2+a)-7a(1-a)^2
+=(3a-1)(-2a^2+4a-1)>0.
+\tag{3.6}
+$$
+
+Indeed $3a-1>0$, and the second factor is $1-2(1-a)^2>1/9$. Thus $\mathsf D_1(1)<1/7<c_0$, the latter strict inequality being exactly $12559<12600$. Continuity of these three finite rational functions gives an $\varepsilon(a,b)>0$, decreased to at most one, for which (3.3) holds whenever $1-\varepsilon<p<1$. The interval for $a,b$ is nonempty, so $\mathcal S$ is nonempty. No continuity assertion about an infinite-exterior posterior or about $d(P)$ is involved. $\square$
+
+From now on fix one member $(a,b,p)\in\mathcal S$, once and independently of every word length, block location, exterior observation and comparison candidate. The auxiliary endpoint $p=1$ used in the existence proof is not a member of this chosen family.
+

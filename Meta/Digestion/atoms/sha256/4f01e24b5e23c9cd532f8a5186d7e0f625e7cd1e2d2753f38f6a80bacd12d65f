@@ -1,0 +1,10 @@
+**Definition 4.1 (Jordan convention and root multiplicities).** For an integer $m\ge1$, the block $J_m(\lambda)$ has $\lambda$ on its diagonal, ones immediately above the diagonal and zeros elsewhere. A linearly independent list $a_0,\ldots,a_{m-1}$ satisfying $(A-\lambda I)a_j=a_{j+1}$ for $j<m-1$ and $(A-\lambda I)a_{m-1}=0$ gives this block when ordered as $a_{m-1},\ldots,a_0$. For the polynomial $f$ in (2.3), factor over $\mathbb C$ as
+
+$$
+f(z)=\prod_{\lambda\in\Lambda}(z-\lambda)^{m_\lambda},
+\qquad m_\lambda\ge1,
+\qquad \sum_{\lambda\in\Lambda}m_\lambda=d,
+$$
+
+where $\Lambda$ consists of distinct roots. Complex polynomial factorization and polynomial division are used in their ordinary algebraic senses.
+

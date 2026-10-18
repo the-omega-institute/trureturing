@@ -1,0 +1,15 @@
+**Corollary 312.3 (The same cut in directional coordinates).**
+Put $R_J=(46/5)e-\sum_{k=1}^5b_{j_k}$ and
+$v_k=b_{j_k}-(13,10,9,8,6)_k e/5$. Then (312.2) is exactly
+
+$$
+v_3+v_5\ge-5R_J.
+\tag{312.4}
+$$
+
+**Proof.** Expanding $5R_J+v_3+v_5$ gives
+$43e-5b_{j_1}-5b_{j_2}-4b_{j_3}-5b_{j_4}-4b_{j_5}$.
+This is one inequality in two coordinate systems, not a second
+mathematical result. On the cone below, $R_J=2\sigma/5$ and
+$v_3+v_5=-2\sigma$, so it is tight. $\square$
+

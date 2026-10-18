@@ -1,0 +1,15 @@
+**Definition 8.1 (conditional independence and per-source budgets).**
+For an integer $n\ge1$, draw $n$ whole sources independently
+conditional on the same $\Theta$. Each obeys Definitions 2.2–4.1,
+remains stationary, has the constant complete name and isolation of
+Assumption 1.4, and has its own budget of at most $k$ online Reads.
+The joint laws conditional on $\Theta=P$ and $\Theta=Q$ are
+$P^{\otimes n}$ and $Q^{\otimes n}$. A global policy may choose
+both its next source and its word from all observed histories and
+independent private randomness, but must respect every per-source
+budget. Under $Q$, different sources have independent mixture
+markers and, in common mode, independent within-source common bits.
+Sharing one marker or one bit across sources is a different joint law.
+Conditional independence given $\Theta$ does not assert independence
+after forgetting $\Theta$.
+

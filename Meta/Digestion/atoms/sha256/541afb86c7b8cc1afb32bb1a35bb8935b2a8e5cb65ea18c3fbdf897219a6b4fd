@@ -1,0 +1,256 @@
+**Theorem 9.1 (the actual-J pair map).** On
+$\mathcal F^{\ne0}_7(H)$ at each fixed arbitrary normalized drift $d$,
+the map $W\mapsto(U,A,B)$ is injective. Thus two distinct worlds with
+this common drift cannot form a losing two-world actual sixth-$J$
+child. Their future ratios and entire gain shapes may differ.
+
+Proof. Suppose two worlds agree in $U,A,B$. In (2.7) their matrices
+$X_i$ have the same nonzero upper-right entry $b=B-A$. All entries
+of each $X_i$ have the sign of $b$. Therefore $Z_i=X_i/b$ is strictly
+positive, even for $b<0$. Put $m_i=(Z_i)_{22}$. The common $A$ gives
+a common $S=\operatorname{tr}Z_i=(A-d)/b$, and rank one gives
+
+$$
+Z_i=\begin{pmatrix}S-m_i&1\\c_i&m_i\end{pmatrix},\qquad
+c_i=m_i(S-m_i),\quad 2<m_i<3,\quad S>m_i.
+\tag{9.1}
+$$
+
+Indeed $b/e\in(1/3,1/2)$ gives $2<m_i<3$, and explicitly
+
+$$
+Q^{-1}Z_i=
+\begin{pmatrix}
+(m_i-2)(S-m_i)&m_i-2\\
+(3-m_i)(S-m_i)&3-m_i
+\end{pmatrix}>0.
+\tag{9.2}
+$$
+
+Let $L_{i,k}=\operatorname{tr}(A_kQ^{-1}Z_i)>0$,
+$a_i=L_{i,0}$ and $\kappa_i=f_i/a_i$. Then
+$P_i=Q^{-1}Z_i/a_i$, $\kappa_i(7)=b$, and the entire ancestor is
+$d+\kappa_i(k)L_{i,k}=(0,24,48,312/5,\widehat Y,\widehat z)_k$.
+The six trace forms, obtained from (9.2), are
+
+$$
+(L_{i,0},\ldots,L_{i,5})=
+(c_i-2S+m_i+3,\ 3S-2m_i-c_i-2,\ c_i-2S+2m_i+1,
+ S-1,\ c_i-S+m_i+1,\ S).
+\tag{9.3}
+$$
+
+In particular $L_{i,3}=L_{i,1}+L_{i,2}=S-1$ and $L_{i,5}=S$.
+The common actual readings at three and five force agreement of
+$\kappa_1,\kappa_2$ at those clocks; they also agree at seven.
+Writing $\epsilon=\kappa_1(6)-\kappa_2(6)$, factorization gives
+
+$$
+\kappa_1(T)-\kappa_2(T)
+ =-\frac\epsilon3(T-3)(T-5)(T-7).
+\tag{9.4}
+$$
+
+Its values at $0,1,2,4$ are $35\epsilon,16\epsilon,5\epsilon,
+-\epsilon$. Put $\Delta m=m_1-m_2$, $\Delta c=c_1-c_2$,
+$v=\Delta c+2\Delta m$ and $w=\Delta c+\Delta m$. Then
+$\Delta L_0=\Delta L_4=w$, $\Delta L_1=-v$, $\Delta L_2=v$.
+
+First let $\epsilon=0$, so both polynomials equal $\kappa$.
+At least one of $\kappa(1),\kappa(2)$ is nonzero, since the
+corresponding actual readings 24 and 48 differ. Subtracting the
+ancestor equations gives $v=0$. If $\kappa(6)\ne0$, shared $U$
+gives $\Delta c=0$, hence $\Delta m=0$. If $\kappa(6)=0$ but
+one of $\kappa(0),\kappa(4)$ is nonzero, the corresponding
+ancestor equation gives $w=0$, again forcing $\Delta m=\Delta c=0$.
+The remaining case has roots zero, four and six, and
+
+$$
+\kappa(T)=C T(T-4)(T-6),\quad C\ne0,\qquad d=\widehat Y=0.
+\tag{9.5}
+$$
+
+Its values at one, two and three are $15C,16C,9C$. The identity
+$L_3=L_1+L_2$, multiplied by $9C$, now forces
+
+$$
+312/5=9\left(24/15+48/16\right)=207/5,
+\tag{9.6}
+$$
+
+a contradiction. Thus the zero-difference branch either makes the
+matrices equal or is impossible, including when both sixth gains vanish.
+
+Suppose now $\epsilon\ne0$. Subtracting the samples expressed
+through their positive trace factors gives
+
+$$
+16\epsilon=\frac{(24-d)v}{L_{1,1}L_{2,1}},\qquad
+5\epsilon=-\frac{(48-d)v}{L_{1,2}L_{2,2}},\qquad
+35\epsilon=\frac{dw}{L_{1,0}L_{2,0}}.
+\tag{9.7}
+$$
+
+Hence $v\ne0$, $24<d<48$ and $wv<0$. The rank-one relation is
+$\Delta c=\Delta m(S-m_1-m_2)$, so $\Delta m\ne0$ and
+$-2<S-m_1-m_2<-1$. Exchanging the same two worlds if necessary, set
+
+$$
+m_1=x+2,\quad m_2=y+2,\quad \rho=S-m_1-m_2+2,
+\qquad 0<x<y<1,\quad 0<\rho<1.
+\tag{9.8}
+$$
+
+Consequently their matrices are exactly
+
+$$
+Z_1=\begin{pmatrix}y+\rho&1\\(x+2)(y+\rho)&x+2\end{pmatrix},
+\qquad
+Z_2=\begin{pmatrix}x+\rho&1\\(y+2)(x+\rho)&y+2\end{pmatrix}.
+\tag{9.9}
+$$
+
+Define the following strictly positive quantities:
+
+$$
+\begin{aligned}
+a&=1-x+x(y+\rho),&j&=x+(1-x)(y+\rho),\\
+j'&=y+(1-y)(x+\rho),&l&=1+x(y+\rho),\\
+l'&=1+y(x+\rho),&k&=1+x+y+\rho,\\
+D'&=1+(y+2)(x+\rho).
+\end{aligned}
+\tag{9.10}
+$$
+
+Here $a,j,l,k$ are the first world's traces at zero, one, two,
+three, and $j',l'$ are the second world's corresponding traces.
+Put $\beta=48-d>0$ and $r_*=d/\beta$. The first two equations
+of (9.7) give
+
+$$
+r_*=1+\frac{32jj'}{5ll'},\qquad
+\epsilon=-\frac{\beta\rho(x-y)}{5ll'},\qquad
+\Delta c=-(2-\rho)(x-y).
+\tag{9.11}
+$$
+
+The shared actual sixth-$J$ reading says
+$\kappa_1(6)(1+c_1)=\kappa_2(6)(1+c_2)$. Thus
+$\kappa_1(6)\Delta c=-\epsilon(1+c_2)$ and
+
+$$
+\frac{\kappa_1(6)}\beta
+ =-\frac{\rho D'}{5(2-\rho)ll'}.
+\tag{9.12}
+$$
+
+On the other hand the clock-six interpolation row (7.5) applied
+to $\kappa_1$ gives
+
+$$
+\frac{\kappa_1(6)}\beta
+ =\frac{10r_*}a+\frac{18(1-r_*)}j-\frac{45}l
+                  +\frac{26+6r_*}k.
+\tag{9.13}
+$$
+
+For its last term, $20(312/5-d)/\beta=26+6r_*$;
+for its second, $(24-d)/\beta=(1-r_*)/2$.
+In particular the actual clock-three value has not been replaced.
+Equations (9.12)–(9.13) require $E=0$, where
+
+$$
+E=\frac{10r_*}a+\frac{18(1-r_*)}j-\frac{45}l
+ +\frac{26+6r_*}k+\frac{\rho D'}{5(2-\rho)ll'}.
+\tag{9.14}
+$$
+
+Substituting (9.11) and clearing positive factors gives the entire
+polynomial identity
+
+$$
+\begin{aligned}
+N&=5ak(2-\rho)ll'E\\
+ &=50k(2-\rho)ll'+320k(2-\rho)jj'
+   -576ak(2-\rho)j'-225ak(2-\rho)l'\\
+ &\hspace{1em}+160a(2-\rho)ll'+192a(2-\rho)jj'+ak\rho D'.
+\end{aligned}
+\tag{9.15}
+$$
+
+Here is a complete integer certificate for the required strict sign.
+Set $y=x+(1-x)s$, so $0<s<1$. With the definitions (9.10),
+
+$$
+-N(x,x+(1-x)s,\rho)=
+ \sum_{i=0}^{6}\sum_{j_0=0}^{3}\sum_{h=0}^{4}
+ C_{i,j_0,h}\,x^i(1-x)^{6-i}s^{j_0}(1-s)^{3-j_0}
+                         \rho^h(1-\rho)^{4-h}.
+\tag{9.16}
+$$
+
+The basis in this identity has no binomial prefactors. All 140
+integers are given below; each row lists $h=0,1,2,3,4$.
+
+| $i$ | $j_0$ | $C_{i,j_0,0}$ | $C_{i,j_0,1}$ | $C_{i,j_0,2}$ | $C_{i,j_0,3}$ | $C_{i,j_0,4}$ |
+| --- | --- | --- | --- | --- | --- | --- |
+| 0 | 0 | 30 | 1606 | 4012 | 2620 | 504 |
+| 0 | 1 | 1592 | 9208 | 14926 | 7966 | 1296 |
+| 0 | 2 | 3222 | 12348 | 15426 | 6914 | 934 |
+| 0 | 3 | 1020 | 3146 | 3232 | 1248 | 142 |
+| 1 | 0 | 3054 | 17190 | 28876 | 17138 | 3292 |
+| 1 | 1 | 14170 | 62506 | 90726 | 49934 | 9154 |
+| 1 | 2 | 17830 | 68486 | 91160 | 49098 | 9132 |
+| 1 | 3 | 6842 | 24480 | 32040 | 18344 | 3764 |
+| 2 | 0 | 10716 | 46328 | 70196 | 44186 | 9608 |
+| 2 | 1 | 35994 | 150248 | 227082 | 146194 | 32648 |
+| 2 | 2 | 42416 | 175508 | 267520 | 176066 | 40184 |
+| 2 | 3 | 18640 | 75944 | 115138 | 76006 | 17442 |
+| 3 | 0 | 11570 | 51406 | 90702 | 71890 | 18860 |
+| 3 | 1 | 41834 | 198042 | 356628 | 276946 | 71058 |
+| 3 | 2 | 56674 | 269230 | 472694 | 352098 | 87516 |
+| 3 | 3 | 26440 | 121576 | 204094 | 144868 | 34770 |
+| 4 | 0 | 5778 | 40554 | 96212 | 88708 | 24884 |
+| 4 | 1 | 30604 | 185512 | 388976 | 326542 | 86878 |
+| 4 | 2 | 45426 | 251632 | 486138 | 381122 | 97162 |
+| 4 | 3 | 20600 | 106674 | 193374 | 143288 | 35168 |
+| 5 | 0 | 3976 | 31520 | 72610 | 62680 | 16804 |
+| 5 | 1 | 16302 | 111912 | 239430 | 197124 | 51434 |
+| 5 | 2 | 20676 | 129264 | 261030 | 206208 | 52456 |
+| 5 | 3 | 8350 | 48872 | 94210 | 71764 | 17826 |
+| 6 | 0 | 1372 | 9164 | 18600 | 14434 | 3608 |
+| 6 | 1 | 4116 | 27492 | 55800 | 43302 | 10824 |
+| 6 | 2 | 4116 | 27492 | 55800 | 43302 | 10824 |
+| 6 | 3 | 1372 | 9164 | 18600 | 14434 | 3608 |
+
+For an explicit algebraic interpretation of the certificate, expand
+$-N(x,x+(1-x)s,\rho)=\sum p_{abc}x^as^b\rho^c$ using (9.10)
+and (9.15). Its coordinate degrees are at most $(6,3,4)$.
+The coefficients in (9.16) are exactly
+
+$$
+C_{i,j_0,h}=
+\sum_{a\le i,\ b\le j_0,\ c\le h}
+p_{abc}\binom{6-a}{i-a}\binom{3-b}{j_0-b}\binom{4-c}{h-c}.
+\tag{9.17}
+$$
+
+This is a direct finite coefficient identity: in one variable
+$X^a=\sum_{i=a}^n\binom{n-a}{i-a}X^i(1-X)^{n-i}$ by the
+binomial theorem, and applying it in the three variables gives
+(9.16)–(9.17) with precisely the displayed integers. Every integer
+is strictly positive, and every basis factor is strictly positive
+for $0<x,s,\rho<1$. Hence $-N>0$. Since the multiplier in
+(9.15) is positive, this contradicts $E=0$.
+
+The remaining possibility in the zero-difference branch was
+$Z_1=Z_2$. It gives $a_1=a_2$ and $P_1=P_2$ by (9.2).
+At the common drift the first four positive trace factors determine
+the same four gain samples, hence the same entire polynomial and,
+by (1.4), the same $(P,g,\delta)$. This proves the theorem.
+No sixth gain, ancestor gain, leading coefficient or root separation
+was divided out. The nonzero terminal gain is the explicit premise
+that makes $b\ne0$; every later cancellation uses positive factors
+or the established $x-y\ne0$. Lower degrees, repeated roots,
+zero sixth gains and either sign of $\lambda$ are included. ∎
+

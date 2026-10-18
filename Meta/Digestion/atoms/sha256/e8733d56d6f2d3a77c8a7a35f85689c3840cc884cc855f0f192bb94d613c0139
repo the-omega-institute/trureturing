@@ -1,0 +1,126 @@
+**Theorem 12.2 (one global injection of actual live hosts).** Every
+graph satisfying Definition 12.1 admits an injection
+
+$$
+\Phi:V\longrightarrow Q_{\mathrm{live}},\qquad
+\Phi(h,z)\in F_{(h,z)}.
+\tag{SI.86}
+$$
+
+Consequently, on that same installed graph,
+
+$$
+|Q_{\mathrm{live}}|\ge G=k(n-k+1),\qquad
+D\le E,\qquad m\ge G+u.
+\tag{SI.87}
+$$
+
+There is no bound on common-support gap spans or on the lengths of
+$\mathsf U,\mathsf V$. No attainment assertion for a fixed proper
+switch $B$ is part of this theorem.
+
+Proof. The live freshness and support exclusions are the supplied
+facts in Section 2: Theorem 2.2, [PE, Lemma 4.1][PE] and
+[PCA, Theorem 35.1][PCA]. We also use [PE, Theorem 3.1(2)][PE]
+with its stated $n,k$ range. Its Boolean consequence is obtained by
+lifting this entire graph through (SI.5): if lower-hit and higher-hit
+actual live histories with incomparable supports $S,T$ share a host,
+and all old bits in $T\setminus S$ on the higher-hit history are one,
+then
+
+$$
+C_{T\setminus S}\le C_{S\setminus T}.
+\tag{SI.88}
+$$
+
+The lift is correct on the full original fiber and obeys both native
+caps, so every hypothesis of that supplier applies to the two actual
+lifted cube histories. This use of the supplier adds no residual
+predicate attached to a state and no restriction on certified traffic.
+
+For a depth $d$, let $S_0(d),S_1(d)$ be the sets of the first $d$
+coordinates in (SI.85). Suppose first that these sets differ, and put
+
+$$
+P_d=S_0(d)\setminus S_1(d),\qquad
+Q_d=S_1(d)\setminus S_0(d),\qquad q_d=|P_d|=|Q_d|>0.
+\tag{SI.89}
+$$
+
+The entire $\mathsf I$ block has then been read. During the first
+swapped block, $P_d,Q_d$ are matched nonempty prefixes of
+$\mathsf X,\mathsf Y$; during $\mathsf U$ they are the full
+blocks; during the second swapped block they are matched nonempty
+suffixes. Thus (SI.84) gives
+
+$$
+C_{P_d}<C_{Q_d},\qquad q_d\le d-p.
+\tag{SI.90}
+$$
+
+A mode-zero exposed assignment on $S_0(d)$ can have any total number
+of ones in the integer interval $[0,B-1+d-p]$: its $\mathsf I$
+count ranges over $[0,B-1]$ and its other exposed bits are free.
+A mode-one assignment on $S_1(d)$ with every $Q_d$ bit one can have
+any total in $[B+q_d,d]$: its $\mathsf I$ count ranges over $[B,p]$
+and the other $d-p-q_d$ bits are free. For every live cell
+$(h,d-h)$ choose a mode-zero assignment if $h\le B+q_d-1$;
+otherwise choose a mode-one assignment with $Q_d$ all one. The first
+choice is possible by $q_d\le d-p$, and the second is possible by
+the displayed mode-one interval. These choices cover every live cell,
+including when one of the two ranges contains no live count.
+
+Each chosen assignment realizes an actual history. Its final counts
+satisfy $h<k$ and $d-h\le n-k$, so every earlier prefix of its
+chosen permutation has live counts as well. Induct from the fixed
+start on any completion of the assigned bits. Correctness forbids a
+terminal while both outputs remain possible, and Definition 12.1
+forces exactly the next permutation coordinate. Before the switch the
+order is common; after it the completed $\mathsf I$ assignment
+forces the chosen mode. Fixed successors then realize the entire
+prefix and its ending live host. No arbitrary syntactic path has been
+assumed actual. At a depth with $S_0(d)=S_1(d)$, all actual live
+histories have that common support; Theorem 2.2 supplies a history for
+every live count cell there. Select any one of its hosts.
+
+At one depth, selected histories in the same mode have equal supports
+and different hit counts, so cannot share a host. This also separates
+all selected cells at a common-support depth. At a differing-support
+depth, a selected cross-mode pair has strictly fewer hits on its
+mode-zero member, and all private $Q_d$ bits are one on its
+mode-one member. Their equal-sized distinct supports are incomparable.
+A shared host would therefore give $C_{Q_d}\le C_{P_d}$ by
+(SI.88), contradicting (SI.90). The selected hosts at each depth are
+distinct.
+
+To separate different depths, use each installed state's single fixed
+coordinate label. Every coordinate of $\mathsf I,\mathsf U,
+\mathsf V$ occupies the same unique position in both permutations,
+so such a state cannot be live at two different depths. For $x_j$,
+the only possible predecessor supports at its early and late live
+positions are respectively
+
+$$
+\mathsf I\cup\{x_1,\ldots,x_{j-1}\},\qquad
+\mathsf I\cup\mathsf Y\cup\mathsf U
+                  \cup\{x_1,\ldots,x_{j-1}\}.
+\tag{SI.91}
+$$
+
+They are properly nested, since $b\ge1$. For $y_j$ the corresponding
+supports are $\mathsf I\cup\{y_1,\ldots,y_{j-1}\}$ and
+$\mathsf I\cup\mathsf X\cup\mathsf U
+\cup\{y_1,\ldots,y_{j-1}\}$, again properly nested. PE Lemma 4.1
+excludes a common live host in each case. This derives cross-depth
+separation from actual live positions; it does not level the installed
+graph.
+
+There is now one distinct selected actual host for every
+$(h,z)\in V$, proving (SI.86). There are $G$ such cells. Since
+$|Q_{\mathrm{live}}|=G+E-D$ by Theorem 5.2, the remaining
+assertions follow. A selected state may also be visited after
+certification on another input; it is counted once. No paid
+discriminator is assigned automatically to $u$ or outside the selected
+image, and unused installed states retain their original count.
+$\square$
+

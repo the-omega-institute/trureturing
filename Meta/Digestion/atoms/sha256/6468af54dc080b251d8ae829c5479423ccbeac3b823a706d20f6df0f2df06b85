@@ -1,0 +1,49 @@
+**Assumption 1.1 (the entire CAR task).** Fix a finite acquired input of
+[CAR, Assumption 1.1 and Definition 3.1][CAR], with nonempty cycle-covered
+fiber $D$, authenticated common entry epoch $N$, and original target cut
+$Q$. The native sources are nonempty finite ordered free binary trees
+over $\alpha,\beta$. Their one forward operation is
+
+$$
+\rho\alpha=\beta,\qquad
+\rho\beta=\langle\beta,\alpha\rangle,\qquad
+\rho\langle x,y\rangle=\langle\rho x,\rho y\rangle.
+\tag{NPS.1}
+$$
+
+The fiber consists of **all** original sources with the specified complete
+old row, literal history and signed relation history. A signed relation
+between subtrees at two recorded epoch/address pairs requires both
+addresses to be reached, for either equality or disequality. Repeated
+old classes, distinct-class inequalities, and records outside the target
+remain constraints on the same source. No further rank, size, parity or
+finite-support promise is part of this assumption.
+
+The required output is $R_Q(u)$ at the original epoch: its whole concrete
+marked exterior, its reached original holes with their canonical
+numbering, and the complete equality partition of their whole subtrees.
+An absent original target address is not turned into a hole by subsequent
+growth. The retained input was acquired with its original payment,
+permissions, authentication, retention and complete-access-cut hypotheses.
+In particular, the accessible common input contains no further
+source-dependent cache, pointer, timing information or selector.
+
+The controller is exactly [CAR, Definition 11.1][CAR], the native instance
+of [Continuation II, Definitions 26.1–26.2][CII]. It has a nonempty finite
+state set $E$, common initial state $e_*$, and one fixed instruction at
+each state. A read state contains one finite literal word over $\{L,R\}$
+and four fixed response successors; an update state has one successor
+and applies $\rho$ once to the same physical register; a halt contains
+one concrete complete row. Reads leave the register unchanged. Absent
+reads are legal and counted. Halts are absorbing. All online program
+positions, retained replies, mutable selectors and output distinctions
+belong to $E$. The plant register is not an additional readable control
+state, and the epoch is not a clock available to the controller.
+
+The operations have the stipulated synchronous whole-word and whole-row
+semantics. The size of fixed words, fixed output rows and retained common
+input is charged as installation separately from $|E|$. There is no
+bound on reads, updates, address lengths or installation in this volume's
+prescribed-$K$ question. Each installed word and row is nevertheless
+finite, and every admitted source must actually halt.
+

@@ -1,0 +1,88 @@
+**定理 C-110.2（任意复端口的存活率—泄漏界）。** 对每个 $T\in\mathfrak C_q^{(d)}$
+和每个复单位向量 $v$，有 $1/d\le c(v)\le1$、$0\le\ell(T)\le1$，以及
+
+$$
+\boxed{\quad
+\sqrt{F_v(T)}\le\sqrt{q\,c(v)}+
+\sqrt{d(1-c(v))\,\ell(T)}.\quad}
+\tag{C110.3}
+$$
+
+$\ell(T)$ 由通道决定，与选用的 Kraus 族无关。该界不要求 BP、保单位性、协变性、
+实 Kraus 数据或后选择。
+
+证明。沿用 QMB 定理 5.1 的整个块端口到低秩 Kraus 族的方向，直接在给定编码和解码
+上取 $K_{fab}=R_{fb}B_{fa}$。由 (C110.1)，
+
+$$
+T(X)=\sum_\alpha K_\alpha X K_\alpha^\dagger,\qquad
+\operatorname{rank}K_\alpha\le q,\qquad
+\sum_\alpha K_\alpha^\dagger K_\alpha=I_d.
+\tag{C110.4}
+$$
+
+这是同一个通道的一组实际有限分解；不在任意 Kraus 混合后假设各项仍低秩。
+这个成熟对应见 Chruściński–Kossakowski，
+[*On partially entanglement breaking channels*, Theorem 1 的证明](https://arxiv.org/html/quant-ph/0511244v1)，
+以及 Bluhm–Rauber–Wolf，
+[*Quantum compression relative to a set of measurements*, Definition 4.1、Lemma 5.2 的证明](https://arxiv.org/html/1708.04898v4)。
+后者的精确观测保持目标和这里的实际历史 TV 仍是不同合同。
+
+正性、保迹给 $m_{rs}\ge0$、$\sum_rm_{rs}=1$，而
+
+$$
+m_{rs}=\sum_\alpha|K_\alpha(r,s)|^2,\qquad
+\sum_{\alpha,r\ne s}|K_\alpha(r,s)|^2=d\ell(T).
+\tag{C110.5}
+$$
+
+第一式的左端不含 Kraus 选择，因而第二式在任意其他表示下仍是同一数值。
+特别是 $0\le\ell\le1$；$p_s\ge0$、$\sum_sp_s=1$ 和 Cauchy–Schwarz 给
+$1/d\le c\le1$。
+
+令 $P=\operatorname{diag}(p_s)$，按有限 Kraus 指标定义复向量
+
+$$
+a_\alpha=\operatorname{tr}(K_\alpha P)=\sum_sp_sK_\alpha(s,s),\qquad
+b_\alpha=\sum_{r\ne s}\overline{v_r}K_\alpha(r,s)v_s.
+\tag{C110.6}
+$$
+
+于是 $F_v(T)=\sum_\alpha|a_\alpha+b_\alpha|^2$。
+消费 QPC 引理 8.1 使用的成熟复矩阵秩—迹估计
+$|\operatorname{tr}X|^2\le\operatorname{rank}(X)\|X\|_{\rm HS}^2$，
+取 $X=K_\alpha P$，其秩至多 $q$，得到
+
+$$
+\begin{aligned}
+\|a\|_2^2
+&\le q\sum_\alpha\|K_\alpha P\|_{\rm HS}^2\\
+&=q\sum_sp_s^2\sum_{\alpha,r}|K_\alpha(r,s)|^2
+=q\sum_sp_s^2=qc.
+\end{aligned}
+\tag{C110.7}
+$$
+
+这里用的是右乘 $P$ 后的列范数与保迹等式；未使用行范数归一化或 $T(I)=I$。
+上述秩—迹估计对任意复矩阵成立：奇异值分解先界
+$|\operatorname{tr}X|\le\sum_{j=1}^{\operatorname{rank}X}\sigma_j$，再用
+Cauchy–Schwarz；它不要求 $X$ 为正或 Hermitian。
+
+对 (C110.6) 的非对角和用复 Cauchy–Schwarz，得
+
+$$
+\begin{aligned}
+|b_\alpha|^2
+&\le\left(\sum_{r\ne s}|v_r|^2|v_s|^2\right)
+      \sum_{r\ne s}|K_\alpha(r,s)|^2\\
+&=(1-c)\sum_{r\ne s}|K_\alpha(r,s)|^2,\\
+\|b\|_2^2&\le d(1-c)\ell(T).
+\end{aligned}
+\tag{C110.8}
+$$
+
+在同一有限指标空间用三角不等式
+$\sqrt{F_v(T)}=\|a+b\|_2\le\|a\|_2+\|b\|_2$，即得 (C110.3)。
+这里的新关系是把这些成熟矩阵工具用于固定模式基下的通道泄漏；没有把一般 CP、
+Kraus 秩或矩阵范数工具当作新结论。证毕。
+

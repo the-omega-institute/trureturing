@@ -1,0 +1,125 @@
+**定理 9.1（包括闭源极限的精确 u=1 切片）。** Let $\theta$ be
+the unique root in $[0,1]$ of
+
+$$
+C_*(b)=45b^3+141b^2+2464b-56.
+\tag{9.1}
+$$
+
+It satisfies
+
+$$
+\frac{22697}{10^6}<\theta<\frac{22698}{10^6}.                 \tag{9.2}
+$$
+
+The entire set $\mathcal F_*\cap\{\operatorname{tr}(JP)=1\}$
+consists of exactly the following two complete targets:
+
+$$
+\begin{aligned}
+W_0&=(P_0,g_0,0),&
+P_0&=\frac12\begin{pmatrix}1&1\\1&1\end{pmatrix},&
+g_0(T)&=\frac4{25}T(T^2-53T+202),\\
+W_\theta&=(P_\theta,g_\theta,d_\theta),&
+P_\theta&=\begin{pmatrix}1-\theta&\theta\\1-\theta&\theta\end{pmatrix},&
+d_\theta&=\frac{48}{5}
+ \frac{10\theta^3-3\theta^2-89\theta+44}
+      {3\theta^3-\theta^2-20\theta+8}.
+\end{aligned}                                                \tag{9.3}
+$$
+
+Here $g_\theta$ is specified completely by its four values
+
+$$
+\left(-d_\theta,\ 24-d_\theta,
+ \frac{48-d_\theta}{1+\theta},
+ \frac{312/5-d_\theta}{2+\theta}\right)
+\quad\text{at }0,1,2,3,                                    \tag{9.4}
+$$
+
+using (8.4). The same two targets exhaust the solutions if source
+positivity is relaxed to entrywise nonnegativity while retaining
+trace one, determinant zero, $u=1$, and all six ancestor equations.
+Thus there is no compatible source-boundary limit on this slice.
+
+Proof. In (8.2), $u=1$ gives $c=1-b$. The determinant equation is
+
+$$
+a(1-a)=b(1-b),\qquad (a-b)(1-a-b)=0.
+\tag{9.5}
+$$
+
+Consequently both and all source branches are $a=b$ and $a=1-b$,
+with $0<b<1$. For the nonnegative version use $0\le b\le1$;
+(9.5) still exhausts the sources. The six trace factors are
+$1,1,1+b,2+b,2+a,3+2b-a$, all strictly positive even at those
+closed-interval endpoints.
+
+Put
+
+$$
+\begin{aligned}
+D&=(b+1)(b+2),\\
+A_4&=\frac{96}{5}(5b^2+13b-7),&B_4&=2-7b-3b^2,\\
+A_5&=24(15b^2+31b-24),&B_5&=8-23b-11b^2,\\
+t_4&=2+a,&t_5&=3+2b-a,\\
+Q_i&=D+t_iB_i,&N_i&=y_iD-t_iA_i\quad(i=4,5),
+\end{aligned}
+\qquad y_4=48/5,\quad y_5=-532/5.                            \tag{9.6}
+$$
+
+The first four readings force precisely the interpolant (9.4) with
+$b,d$ in place of $\theta,d_\theta$. By (8.5),
+$DG_i=A_i+dB_i$ for $i=4,5$. Hence the two remaining actual
+ancestor equations are exactly
+
+$$
+dQ_4=N_4,\qquad dQ_5=N_5.                                   \tag{9.7}
+$$
+
+Multiplication of the displayed polynomials gives the identities
+
+$$
+N_4Q_5-N_5Q_4=
+\begin{cases}
+\dfrac{12}{5}(2b-1)D(334+157b-4b^2-5b^3),&a=b,\\[2mm]
+\dfrac45(2b-1)D C_*(b),&a=1-b.
+\end{cases}                                                 \tag{9.8}
+$$
+
+On $[0,1]$, $D>0$ and the first residual cubic is at least $325$.
+The second has derivative $135b^2+282b+2464>0$, with endpoint values
+$-56,2594$. Moreover its values at the left and right endpoints
+of (9.2) are respectively
+
+$$
+-\frac{285830572174143}{200000000000000000},\qquad
+ \frac{26032934573941}{25000000000000000}.                    \tag{9.9}
+$$
+
+Thus the only possible parameters are $b=1/2$ on either branch,
+and $b=\theta$ on the branch $a=1-b$. This conclusion includes
+the closed endpoints and precedes any division by $Q_i$.
+
+At $b=a=1/2$, $Q_4=-15/8$ and $N_4=0$, so $d=0$ and interpolation
+gives $g_0$. On the second branch,
+
+$$
+Q_4=3b^3-b^2-20b+8,\qquad
+N_4=\frac{48}{5}(10b^3-3b^2-89b+44).
+\tag{9.10}
+$$
+
+For $b$ in (9.2), $Q_4>7$. Therefore $d=N_4/Q_4$ is lawful and
+gives exactly $d_\theta$. Conversely, at either candidate, (9.8)
+vanishes and $Q_4\ne0$. Substituting $d=N_4/Q_4$ into (9.8)
+gives $dQ_5=N_5$, without division by $Q_5$. Both remaining
+ancestors are satisfied. The four earlier ones hold by the single
+fixed interpolant, not by changing the world at a later clock.
+
+Both displayed matrices are strictly positive, trace one and rank
+one. The interpolants are nonzero, as already noted after (8.4).
+This proves existence and exhaustion, including every potential
+zero divisor, sampled root and degree drop, and proves the
+closed-source assertion. ∎
+

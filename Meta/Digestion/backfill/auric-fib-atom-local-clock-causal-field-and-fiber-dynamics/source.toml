@@ -1,0 +1,5 @@
+source_id = "auric-fib-atom-local-clock-causal-field-and-fiber-dynamics"
+path = "docs/develop/theory/AURIC_FIB_ATOM_LOCAL_CLOCK_CAUSAL_FIELD_AND_FIBER_DYNAMICS.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

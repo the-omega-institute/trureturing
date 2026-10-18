@@ -1,0 +1,73 @@
+## 46. Light and sound as normal-mode branches
+
+Let \(\Phi_*\) be a stationary field state:
+
+\[
+\mathsf G(\Phi_*)=0.
+\]
+
+A fixed point is a state, not a wave. Linearize with
+
+\[
+\Phi=\Phi_*+\varepsilon v,
+\qquad
+\dot v=A_*v+O(\varepsilon),
+\qquad
+A_*=D\mathsf G_{\Phi_*}.
+\tag{46.1}
+\]
+
+The spectral branches of \(A_*\) classify the local processes:
+
+\[
+\lambda=i\omega
+\]
+
+gives a nondissipative oscillatory mode,
+
+\[
+\operatorname{Re}\lambda<0
+\]
+
+gives a decaying mode, and
+
+\[
+\lambda=0
+\]
+
+gives a conserved, neutral, or critical direction subject to the nonlinear stability conditions.
+
+Light and sound are candidate normal-mode families of the same field architecture, with different observable ports and constitutive blocks:
+
+- an electromagnetic port uses a gauge connection, field curvature, and Maxwell constitutive map;
+- an acoustic port uses density, momentum, pressure, and a medium constitutive map.
+
+A coupled finite linearization can be written
+
+\[
+A_*=
+\begin{pmatrix}
+A_{\mathrm{EM}} & C\\
+C^* & A_{\mathrm{mat}}
+\end{pmatrix}.
+\tag{46.2}
+\]
+
+The eigenvectors of this block operator are the actual modes. In a decoupled limit they separate into electromagnetic and acoustic branches. With coupling, hybrid modes can occur. The propagation laws, such as \(\omega\approx c|k|\) or \(\omega\approx c_s|k|\), come from the respective spatial operators and constitutive assumptions. They do not follow from the abstract unified architecture alone.
+
+Thus:
+
+\[
+\text{static field}
+\longrightarrow
+\text{stationary point}
+\longrightarrow
+\text{linearized generator}
+\longrightarrow
+\text{normal modes}.
+\]
+
+“Light” and “sound” are therefore field excitations or readout branches. They are not generally fixed points themselves. A fixed point is the background around which the modes are defined.
+
+The project's gravitational candidate belongs one level higher. A graph Dirichlet form, Fisher Hessian, effective resistance, or holonomy defect can produce a metric-like structure. To identify it with physical gravity, one still needs a continuum limit, a diffeomorphism-covariant field equation, a stress-energy coupling, and observable predictions. The present finite results define a geometry interface and a closure residual. They do not yet prove an Einstein or Ricci realization.
+

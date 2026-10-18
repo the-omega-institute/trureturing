@@ -1,0 +1,31 @@
+**Proposition 5.1 (The bridge witness and its complete full law).** Keep $\psi,q,d,c$ from (4.1), and put $B=2q+\psi=j+1$. Define a seed-ignoring rule $V_j$ as follows: first read $j+7$; on one return $a_0$ at count one; on zero read $j+3$; on its one return $a_0$ at count two; on two zeros read $j+5$, returning $a_1$ on one and $a_0$ on zero. Fixed finite waits make this a lawful rule, always returning with cap three on every formal branch. For each $s\in\{0,1\}$ its complete nonzero source masses are
+
+$$
+\begin{aligned}
+J_p(H_j=b_s,O=a_0,D=1,N=1)&=\tfrac{\pi_s}{2}\,2d,\\
+J_p(H_j=b_s,O=a_0,D=1,N=2)&=\tfrac{\pi_s}{2}\,2dc,\\
+J_p(H_j=b_s,O=a_1,D=1,N=3)&=\tfrac{\pi_s}{2}\,2d^2,\\
+J_p(H_j=b_s,O=a_0,D=1,N=3)&=\tfrac{\pi_s}{2}\,(c^2-2d^2),\\
+J_p(H_j=a_s,O=a_0,D=1,N=3)&=\tfrac{\pi_s}{2}.
+\end{aligned}
+\tag{5.1}
+$$
+
+Every other tuple has mass zero. For every $G\in\mathcal U$, the corresponding joint mass with $u\in G$ is the displayed mass times $\nu(G)$.
+
+Proof. In phase $\psi$, the three queried edges, in execution order along zeros, are
+
+$$
+\{q+3,q+4\},\qquad \{q+1,q+2\},\qquad \{q+2,q+3\}.
+\tag{5.2}
+$$
+
+The first two are disjoint pairs and are detached from the target $S_q$. Each pair has XOR-one probability $2d$ and zero probability $c$. Thus stopping at count one has probability $2d$ and stopping at count two has probability $2dc$. On the two-zero event, each pair is constant. The third, bridging edge is one precisely when the pairs have opposite constant spins. Each of the two such assignments has mass $\pi_0^2\pi_1^2=d^2$, giving the count-three $a_1$ mass $2d^2$. All three zeros force all four spins equal, with mass
+
+$$
+\pi_0^4+\pi_1^4=(\pi_0^2+\pi_1^2)^2-2\pi_0^2\pi_1^2=c^2-2d^2>0.
+\tag{5.3}
+$$
+
+All events use spins disjoint from $S_q$, giving independence from the target. Their probabilities sum to $2d+2dc+c^2=1$, because $c+2d=1$. In the opposite phase every queried address is a separator; the rule returns $a_0$ at count three surely. Multiplication by the original phase weights and target probabilities proves (5.1), including its zero coordinates. Seed independence gives all rectangle masses. The rule's own radius is seven, attained at its first call. This last fact is a property of the displayed rule, without a lower-bound claim about its law. $\square$
+

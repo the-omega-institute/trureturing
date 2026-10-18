@@ -1,0 +1,14 @@
+**命题 C-9.6（三份共同记录的循环判据）。** 对同一单位记录 $`e_1,e_2,e_3`$，按第二槽线性的约定置 $`a=\langle e_1,e_2\rangle,b=\langle e_2,e_3\rangle,c=\langle e_3,e_1\rangle`$。共同实现当且仅当
+
+
+```math
+G=\begin{pmatrix}1&a&\bar c\\\bar a&1&b\\c&\bar b&1\end{pmatrix}
+\text{ Hermitian},\quad |a|,|b|,|c|\le1,\quad
+\det G=1-|a|^2-|b|^2-|c|^2+2\mathrm{Re}(abc)\ge0.
+```
+
+
+预定载体维数 𝑑 时还须 $`\mathrm{rank}G\le d`$；最小抽象载体维数等于此秩。
+
+**证明。** 将共同参考取为 $`e_1`$，命题C-9.2中的三个条目依次为 $`a,\bar c,b`$，其精确圆盘不等式展开就是行列式非负；连同模界给必要性和充分构造。任意共同实现的 $`v^\dagger Gv=\|\sum_i v_i e_i\|^2`$ 非负；反向谱平方根 $`G=E^\dagger E`$ 的列归一化并实现全部重叠，实际张成维数等于 Gram 秩。因此分别合法的对子不能替代共同来源。所用单位、二阶主子式与秩条件都须保留。[C-R4] §§68、109；经典 Gram 工具同时供算术记录与几何记录分类消费。□
+

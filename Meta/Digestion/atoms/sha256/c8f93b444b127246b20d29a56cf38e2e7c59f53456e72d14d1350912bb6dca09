@@ -1,0 +1,26 @@
+**Definition 2.1 (finite interface and hard targets).** Let $S$ be finite. Let
+$g_q:S\to G_q$ be target maps and $r_a:S\to A_a$ be experiments, including a
+constant experiment. For $P\subseteq S$, say that $r_a$ determines $g_q$ on
+$P$ when equal $r_a$ values imply equal $g_q$ values on $P$. Put
+
+$$
+H(P)=\{q:\text{no own-coordinate experiment }r_a\text{ determines }g_q
+\text{ on }P\}.
+$$
+
+For a nonnegative weight $w:S\to[0,\infty)$ define the joint hard-target map
+$Y_P(x)=(g_q(x))_{q\in H(P)}$ and its cell masses
+
+$$
+ b_y(P)=\sum_{x\in P:Y_P(x)=y}w(x),
+ \qquad
+ \kappa_w(P)^2=\sum_y b_y(P)^2 .
+\tag{JTC.3}
+$$
+
+The empty hard-target vector is constant. In the native interface take
+$S=S_d$, $g_q=\Gamma_q$ and $r_a(x)=r_x(a)$ for $q,a\in W_d$. A subset is
+range-feasible when every $g_q(P)$ has at most four values. Every coordinate
+projection of a native complete template is range-feasible because each target
+is either constant or factors through one four-valued reply.
+

@@ -1,0 +1,31 @@
+## 6. Paid native realization and remaining obligation
+
+For the explicit lower-witness construction at $D=h+3$, let
+$A_h=T_h(P_H^k)$ where $P_H$ is the credited depth-three attaining set of
+mass $169$ and cardinality $100$. Scan every $Rq$ with $q\in W_D$ before the
+request and export one name for all canonical right subtrees in $A_h$ and a
+distinct canonical-state name for every other state. The complete attained
+alphabet is exactly
+
+$$
+1+|S_D|-100^k.
+$$
+
+The scan uses at most $2^D-1$ charged preparation Reads, maximum submitted
+length $D$, and $(D-1)2^D+1$ submitted letters. The exported name is isolated
+under the paid handoff. On the merged name, scaffold targets above the
+frontier are constants and each remaining target uses its own actual-root
+literal at the fixed module occurrence; singleton names need no Read. The
+reader chooses this optional one original-root Read before any authentic $k$
+and then applies the credited $\Gamma$ decoder for all counts. At $D=5$ this
+has $31$ preparation Reads, $129$ submitted letters, and
+$128947164$ attained names. These are explicit paid resources for a deliberately
+nonoptimal code, not an optimum for $M_1(D)$.
+
+The unresolved original requirement is unchanged: no accepted finite family
+in this volume is proved cofinal in $\sigma_d$, and no uniform effective
+length error is supplied. Consequently no terminating two-sided approximation
+of the original $\lambda$, no sharp general $M_1(D)$, and no physical
+space-time recovery theorem follows here. The credited bounds
+$\log_2(33/13)/8\le\lambda<3/16$ remain the relevant numerical interval.
+

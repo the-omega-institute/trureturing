@@ -1,0 +1,47 @@
+#### 定义 2：因果场
+
+定义因果场：
+
+$$
+\mathcal C=(\mathcal E,\to,\mathcal U),
+$$
+
+其中：
+
+- $\mathcal E$ 是事件集合；
+- $e\to e'$ 表示 $e'$ 是 $e$ 的一个合法后继；
+- $\mathcal U_{e\to e'}$ 是沿这条因果边进行的状态更新。
+
+一条合法历史是：
+
+$$
+\pi:
+e_0\to e_1\to\cdots\to e_n.
+$$
+
+对应的整体更新是路径有序复合：
+
+$$
+\mathcal U_\pi
+=
+\mathcal U_{e_{n-1}\to e_n}
+\circ\cdots\circ
+\mathcal U_{e_0\to e_1}.
+$$
+
+因此基础问题不再是：
+
+$$
+\text{“某个物体在全局时间 }t\text{ 的状态是什么？”}
+$$
+
+而是：
+
+$$
+\boxed{
+\text{“从当前事件出发，哪些后继是合法的，状态如何沿路径继续？”}
+}
+$$
+
+---
+

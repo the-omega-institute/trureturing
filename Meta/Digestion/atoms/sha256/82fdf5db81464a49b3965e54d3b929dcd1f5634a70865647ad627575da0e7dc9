@@ -1,0 +1,36 @@
+**Definition 1.1 (actual native sources and replies).** Let
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\qquad \operatorname{ht}(\alpha)=\operatorname{ht}(\beta)=0,
+\qquad
+\operatorname{ht}(\langle x,y\rangle)
+=1+\max\{\operatorname{ht}(x),\operatorname{ht}(y)\}.
+$$
+
+Pairing is free and ordered. Every finite word in $L,R$, including
+$\varepsilon$, is an original-root literal. Its reply $r_t(a)$ is alpha
+or beta at a leaf, branch at a pair, and absent if traversal has passed a
+leaf. Put
+
+$$
+\mathcal A=\{\alpha,\beta,\mathsf{branch},\mathsf{absent}\},
+\qquad
+\rho\alpha=\beta,\quad
+\rho\beta=\langle\beta,\alpha\rangle,\quad
+\rho\langle x,y\rangle=\langle\rho x,\rho y\rangle.
+$$
+
+For every public integer $D\ge1$ retain exactly
+
+$$
+\mathcal F_D=\{\langle\alpha,v\rangle:
+                         \operatorname{ht}(v)\le D\},\qquad
+W_D=\{q:|q|\le D-1\},\qquad
+\mathcal P_D=\{Rq:q\in W_D\}.
+\tag{JPL.1}
+$$
+
+One actual initial source remains stationary throughout preparation and
+later acquisition. The iterates $\rho^kt$ are prediction targets.
+

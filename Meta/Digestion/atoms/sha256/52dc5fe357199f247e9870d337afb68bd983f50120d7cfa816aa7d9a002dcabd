@@ -1,0 +1,102 @@
+**Proposition 15.2 (total handler and its complete quantum output).**
+Assume this port, its calibration and the following original canonical
+processor are supplied and permitted. After acquiring $Y$, consider the
+public unit relative request
+
+$$
+\Delta k(t)=t/8,\qquad \Delta\chi(t)=0,\qquad 0\leq t\leq1.
+\tag{RA.25}
+$$
+
+Its actual domain is $(0,c-1/8)=(0,1/8)$. The handler uses only the
+actually acquired $Y$ and retained permission fields. At $Y=x$ it
+reports executed and applies the matching canonical processor. At $Y=y$
+it reports unexecuted domain rejection, keeps the specimen and old joint
+state unchanged, and records no fictitious execution time or failure.
+Known permission denials likewise return unexecuted rejection.
+
+For the legal branch, let $\rho_{VR}$ denote the actual joint input,
+including quantum archives in $R$, and let
+$\rho^R_{aa}=\langle a|\rho_{VR}|a\rangle$ for
+$a\in\{+,-,2\}$ in (RA.13). Its success operator at time $t$ is
+
+$$
+K_t=\operatorname{diag}_{(+,-,2)}
+ \left(1,\sqrt{\frac{3-2t}{3(1+2t)}},\frac1{\sqrt{1+2t}}\right).
+\tag{RA.26}
+$$
+
+The terminal output consists of success with
+$(K_1\otimes I_R)\rho_{VR}(K_1^\dagger\otimes I_R)$, or the following
+exact first-failure CP densities, each with absorbing specimen $f$:
+
+$$
+\begin{aligned}
+\omega_2(t)&=\frac{2}{(1+2t)^2}|f\rangle\langle f|\otimes\rho^R_{22},\\
+\omega_1(t)&=\omega_3(t)
+ =\frac{4}{3(1+2t)^2}|f\rangle\langle f|\otimes\rho^R_{--},\\
+\omega_0(t)&=\omega_{13}(t)=0,\qquad 0<t\leq1.
+\end{aligned}
+\tag{RA.27}
+$$
+
+The labels $1$ and $3$ remain distinct actual outcomes despite equal
+densities. Exact event times are translated to the actual clock after
+calibration. On every source-family input at $x$, the complete outcome
+masses are success $1/3$, mode $2$ failure $1/3$, mode $1$ failure $1/6$,
+mode $3$ failure $1/6$, and zero in the other two modes. Failure is absorbing,
+with no original retry. With request permission present, each live branch
+has working height $y$: by execution on legal survival, and by identity on
+domain rejection at $y$. A permission denial instead retains its actual
+current height.
+The old calibration bit remains an archived event, not an overwritten
+working-height register.
+
+Proof. The partial-action domain follows by requiring
+$0<k+t/8<c$ for every $t$. Thus $x$ is legal and $y$ is illegal
+(its proposed endpoint would be $5/16>c$). The acquired bit is exactly
+the actual $K$, so the handler implements this total distinction without
+guessing a guard from a law. On the legal path
+$k(t)=(1+2t)/16$ the canonical law gives
+$\lambda=k'/k$ and $S(t)=x/k(t)=1/(1+2t)$.
+Insert this into (OC.19), or the credited horizontal maps (OC.57), to
+obtain (RA.26). The middle attenuation squared has negative derivative
+$2/(1+2t)^2$, while the minus attenuation squared has negative derivative
+$8/(3(1+2t)^2)$. The two original minus-mode jumps each have half that
+strength. This proves the full-reference CP densities (RA.27), rather
+than inferring them from a specimen marginal or an unrelated waveform.
+
+For completeness, $K_1=\operatorname{diag}(1,1/3,1/\sqrt3)$, the
+integrated middle failure effect is $2/3$, and the two integrated minus
+effects are $4/9$ each. Their sum with $K_1^\dagger K_1$ is $I_V$.
+For an actual source input the diagonal in this basis is
+$(1/8,3/8,1/2)$; substituting it gives the stated outcome masses and,
+more fully, failure densities $1/(1+2t)^2$ in mode $2$ and
+$1/(2(1+2t)^2)$ in each of modes $1,3$. No phase or signed winding has
+been supplied to the handler. Applying $K_1$ to (RA.14) gives
+$\sqrt{1/3}\,\psi_{y,\beta,m}$, with the old real lift preserved.
+
+Equation (RA.23) followed by these branch CP maps, tensored with identity
+on all old registers, proves the asserted joint implementation. The
+relative phase joins to the old actual lift through
+`concatenate_original`; zero-relative-phase requests do not require its
+numerical value. Old executed failures are never passed to a live
+processor. On a new failure the complete old archive, acquired bit,
+request, exact time/mode and stopped status remain. On rejection execution
+does not occur and its current time is retained. The two live branches can
+therefore have different current clocks; any later selector uses their
+actual clocks, permissions and records. $\square$
+
+After legal survival or domain rejection at $y$, every separately supplied
+and permitted original tail based at $y$ can be joined with its actual
+relative real phase. This includes
+either original regularity alternative, arbitrary finite durations including
+the zero-duration identity, and all signed sectors allowed by that tail's
+explicit promises. For finite feedback, choose only from actual retained
+records and the declared controller/external inputs and retain each full
+update. The credited joint-continuation theorem of Instrument Boundaries
+§14 then applies branchwise. This is not an assertion that missing future
+processors, source-sensitive permissions or controller inputs have been
+acquired. Calibration preserves the old specimen; the subsequent legal
+original operation has its genuine nonzero failure probability.
+

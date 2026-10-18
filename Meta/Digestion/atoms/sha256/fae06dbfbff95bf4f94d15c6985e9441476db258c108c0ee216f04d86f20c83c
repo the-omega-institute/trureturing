@@ -1,0 +1,117 @@
+**Theorem 211.3 (An all-length attained interval with fixed unary data).**
+For every $L\ge6$, choose actual addresses
+$3\le a<b<c<z\le L$, parameters $d>0$, $s\ge2d$, and
+$h_j\in[0,d/2]$ for each late $j\notin\{a,b,c,z\}$.
+Set $A=0$, $T=s$, no early correct mass, and, for $e=1,2$, put
+pair mass $s/2$ at each of
+
+$$
+w(\{e,a,b,z\}),\qquad w(\{e,a,c,z\}),\qquad w(\{e,b,z\}).
+\tag{211.7}
+$$
+
+For $0\le u\le d$, define the remaining score $Y_u$ by
+
+$$
+\begin{array}{c|rrrrrrr}
+Z&\{a,b,c,z\}&\{a,b,z\}&\{a,c,z\}&\{a,z\}&\{b,z\}&\{c,z\}&\{z\}\\\hline
+C_{w(Z)}&d-u&u&u&s-u&d&d&s+d
+\end{array}
+\tag{211.8}
+$$
+
+and $C_{w(\{j\})}=h_j$ at every other late class. Then
+
+$$
+\Delta_O(Y_u)=d,\qquad\Delta_N(Y_u)=2d-u,\qquad W=4s,\qquad
+K=6s+4d+\sum_jh_j.
+\tag{211.9}
+$$
+
+The entire pair measure, $Q,W$, all correct unary data and every
+individual stopped schedule support are fixed throughout this interval.
+The totals are $\gamma_a=\gamma_z=s+d$, $\gamma_b=\gamma_c=d$
+and $\gamma_j=h_j$ otherwise. Among input-family scores with these
+fixed pair rows, terminal mass, correct totals and unary data, the
+minimum in each catalog is $d$, attained by $Y_d$.
+The family attains every $N$ cost in $[d,2d]$; this does not assert
+that $2d$ is the maximum over that entire fixed-data class.
+
+**Proof.** First consider $Y_d$ without the extra $h_j$ rows.
+Its exact full-label $N$ cell maxima are as follows, with $e=1,2$.
+
+| Schedule | Maxima in $00,01,10,11$ order |
+| --- | --- |
+| $(1,2)$ | $(0,3s/2,3s/2,s+d)$ |
+| $(e,a)$ | $(s,s/2,s+d,3s/2)$ |
+| $(e,b)$ | $(s,s/2,s,3s/2)$ |
+| $(e,c)$ | $(s/2,s,s/2,2s)$ |
+| $(e,z)$ | $(3s/2,0,3s/2,s)$ |
+| $(a,b)$ | $(s,s,s,s+d)$ |
+| $(a,c)$ | $(s,s,d,2s)$ |
+| $(a,z)$ or $(b,z)$ | $(2s,0,s+d,s)$ |
+| $(b,c)$ | $(0,2s,s,s+d)$ |
+| $(c,z)$ | $(s,0,2s,s)$ |
+
+Indeed zero collects all pair mass in each cell and $T$ in $11$;
+an early label collects a subset of that pair mass; each late label
+collects exactly its own displayed correct atoms. Substitution of
+(211.7)–(211.8), using $s\ge2d$, gives the entries and shows that
+no unqueried label is larger. Every row sums to at most $4s+d$.
+The empty and each single core-coordinate support are $4s$.
+Coordinates outside the six core addresses are constant one on these
+atoms and reduce to shorter information types.
+
+Extra sole-zero class $j$ has reward $h_j\le d/2\le s$ in the
+$11$ cell of any core pair, already dominated there. At a core/extra
+pair the old support is the corresponding singleton support $4s$,
+and the new zero cell adds at most $h_j$. At two distinct extra
+coordinates $j,k$ the support is $4s+h_j+h_k\le4s+d$.
+Other extra labels are dominated in the positive cell. These arguments
+also handle short schedules by full $N$ refinement. The stopped head
+table $(1,2;1,2,a)$ earns $4s+d$, so $O\subseteq N$ proves both
+costs $d$ at $u=d$, for all address gaps and all extra classes.
+
+At $Y_0$, on $(b,c)$ the label-$a$ rewards are $(d,0,0,s)$,
+and their competing maxima are $(0,2s,s,s+d)$.
+The donor rows have weights $d,s$, and (211.5) gives $\tau=d$.
+Theorem 211.2 changes $Y_0$ precisely into (211.8).
+All other supports stay at their values for $Y_d$, while the
+exceptional support is $4s+2d-u$. This proves (211.9) and every
+claimed invariant, including both $u$ endpoints and $s=2d$.
+For any competitor with the fixed data, the stopped head table still
+earns $S+\gamma_a=4s+d$, proving the minimum $d$.
+Taking every $h_j>0$ gives positive totals at every late address at
+arbitrarily large lengths. If the displayed formulas are specialized
+to $d=0$, they have $u=h_j=0$ and both costs zero by the same
+cell bounds; at $s=0$ the score is zero. The nontrivial interval and
+strict decrease require $d>0$. $\square$
+
+The generic unary-preserving relocation is already
+[209.12–209.15](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_IX.md).
+The additional assertions here are the explicit donor/slack decrement,
+invariance of every stopped schedule maximum and the attained interval.
+For a precise boundary of that supplier, in class $a$ of (211.8) the
+signed cut $1-X_b-X_c$ of (209.31), where $X_k$ is the zero indicator,
+has desired value $(s+d)-d-d=s-d>0$.
+The pair carrier conditioned on $x_a=0$ has only the two atoms with
+exactly one of $b,c$ zero, so its positive-part support for that cut
+is zero. With $E=0$ the other early carriers are dominated by it.
+Thus that matching hypothesis does not already certify this fixed-unary
+family. This is a condition failure, not exclusion from $E_N$.
+
+The unchanged threshold placement is still the supplier 203.2, not a
+new construction. For this example its cutoffs in class $a$ are
+$a_{ab}=a_{ac}=s$, $a_{az}=0$: the length parameter in (203.10)
+puts mass $s$ in $(b,c)=11$ and $d$ in $00$.
+The full $N$ table $(b,c;a,0,0,z)$ then earns $4s+2d$.
+For the full projection the core marginals are $(2s,2s,s,3s)$ and
+its ordered directed masses are $(s,0,s,s,s,2s)$ in order
+$ab,ac,az,bc,bz,cz$. Extra coordinates are always one under $\nu$;
+their correct totals are at most $d/2$. Hence (203.6) has
+$\kappa=d$, $\pi=d$, proving the matching upper bound $2d$.
+At $d\le1$, $Y_d$ itself is a certificate, whereas this unchanged
+threshold score with $\theta=0$ exceeds unit cost if $d>1/2$.
+The factor-two failure is already owned by 204.9. The moment interfaces
+remain those of 206.5–206.6; no new quotient-region coverage follows.
+

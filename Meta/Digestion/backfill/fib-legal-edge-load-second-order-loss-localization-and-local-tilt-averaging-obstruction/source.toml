@@ -1,0 +1,5 @@
+source_id = "fib-legal-edge-load-second-order-loss-localization-and-local-tilt-averaging-obstruction"
+path = "docs/develop/theory/FIB_LEGAL_EDGE_LOAD_SECOND_ORDER_LOSS_LOCALIZATION_AND_LOCAL_TILT_AVERAGING_OBSTRUCTION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

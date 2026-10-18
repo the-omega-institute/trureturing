@@ -1,0 +1,52 @@
+**Lemma 3.2 (control origin and failure exclusion).** On the fixed
+canonical graph, an actual occurrence of $E_0$ is the Image-success arm
+of an authentic accepted-target flight. Starting there and stopping at
+its subsequent $E_1$ without leaving this stage follows RenderS,
+Publish0 and CheckS0 of that same flight. No Rejection, callback-fault,
+other View stage, final Image-value check or bank-encoded simulated PC
+can supply either success handoff as that stage occurrence.
+
+Proof. GENERAL Definition 2.1 expands fixed calls with fresh temporaries
+and physical labels before numbering. Finite parity alternatives retain
+that call-site distinction. Its complete successful table, Definition
+7.2, and CYCLE Definition 8.3 give the following incoming and outgoing
+joins for the interval.
+
+| Physical region | Incoming success join and next successful region |
+| --- | --- |
+| RenderS | ClientImage's actual Image-success handoff $E_0$; then this call site's Publish0. |
+| Publish0 | This RenderS after constructing S and clearing Image work; then the actual handler→client TOK/CTL to CheckS0. |
+| CheckS0 | This Publish0 after complete receiver print; then its full check/ACK/return and $E_1$ to FromS. |
+
+Within a region, the only extra edges are its expanded helper sequence,
+finite tests and local while back edges. Hygienic inlining does not create
+a return from a distinct call site into this one. All static stage joins
+are the displayed ones. The later CheckS1 uses a separate inlined
+CheckImageValue subgraph and exits to FinalReturn, not RenderS. Its
+represented argument, and all represented nested PCs, are bank data;
+GCA Definition 4.1 and GENERAL's physical numbering keep them separate
+from the actual outer PC.
+
+There are three relevant failure exits. ARC Definition 7.3/GCA Definition
+6.3's handler failure publishes kind0011 Rejection and enters the
+ClientImage rejection arm, which checks reason/request and returns a
+failed cycle to Ready. Its Image codec/binding refusal appends a fault,
+ACKs and returns a failed cycle. CYCLE Definition 8.5/GENERAL Definition
+7.4's new handler failure likewise takes Rejection; a new callback failure
+already holding a receiver publishes nothing, records its fault and
+returns a failed cycle. None of these arms has the success CTL into
+RenderS or the success CTL into FromS. Their occurrence of shared cleanup
+operations does not identify their distinct final successors. A disabled
+operation supplies no executed edge.
+
+Every canonical acquired flight starts from its actual preceding Ready;
+no busy second entry exists. Before Image success, the preserved
+Recover/ClientCover/Bind/ClientIssue/Call route resolves the actual
+immutable cover/package and checks the selected target. GENERAL Lemma
+5.3 applies to that accepted target. Thus an actual $E_0$ on this domain
+is reached through that route. The listed stage edges, absence of external
+input or scheduling between them, and the enumerated failure exits prove
+the asserted interval and exclusions. This is a check of this specified
+finite construction, not an assumption that arbitrary successful-looking
+output authenticates its producer. ∎
+

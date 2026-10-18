@@ -1,0 +1,28 @@
+**定义 12.3（完成掩码与紧边图）。** 令
+
+$$
+P=\{p:p\text{ 为素数},\ p\mid D_s\},\quad
+k=|P|=\omega(D_s),\quad r=\min(k,N),
+\quad K_{v,p}=\nu_p(D_v),\quad \delta_{v,p}=\nu_p(d_v).
+\tag{12.4}
+$$
+
+约定 $\nu_p(0)=+\infty$，有限数与 $+\infty$ 不满足下文的等式。每个顶点的完成剖面及其有限并族为
+
+$$
+F_v=\{p\in P:K_{v,p}\ge K_{s,p},\ \delta_{v,p}=K_{v,p}\},
+\qquad
+\mathcal U=\left\{\bigcup_{v\in W}F_v:W\subseteq V\right\}.
+\tag{12.5}
+$$
+
+状态为 $(v,M)\in V\times\mathcal U$，$M$ 只标记已经由实际 Read 取得的完整目标素数幂 $p^{K_{s,p}}$。在状态 $(v,M)$，具名原边 $e:v\to w$ 的紧边条件为
+
+$$
+K_{w,p}=K_{v,p}+\nu_p(a_e)
+\qquad\text{对每个 }p\in P\setminus M.
+\tag{12.6}
+$$
+
+这是一项成功续接判据，不改变不满足它的原边在来源上的合法性。$\mathsf S$ 图从 $(s,\varnothing)$ 开始，有每次计一的实际 Read 边 $(v,M)\to(v,M\cup F_v)$，以及每次计一的紧原边 $(v,M)\to(w,M)$。$\mathsf M$ 图先付实际根 Read 的一个事件单位，从 $(s,F_s)$ 开始；每个紧原边连到 $(w,M\cup F_w)$，代表原边与其强制到达 Read 两个事件。两图以 $M=P$ 为取得终点，终点以后可以停止。
+

@@ -1,0 +1,119 @@
+**Proposition 2.2 (credited reduction with its equality mechanism).**
+The exact original value is
+
+$$
+\begin{aligned}
+j(\tau)=\max\quad&\sum_{r,\epsilon=\pm1}
+                    \epsilon\operatorname{tr}(GX_{r,\epsilon})\\
+\text{subject to}\quad&X_{r,\epsilon}\in\operatorname{Sym}_3(\mathbb R),
+\quad X_{r,\epsilon}\succeq0,\quad\operatorname{tr}(QX_{r,\epsilon})=0,\\
+&\sum_{r,\epsilon}X_{r,\epsilon}=I_3,\qquad
+ t(X)=\sum_{r,\epsilon}r\operatorname{tr}(CX_{r,\epsilon})\geq\tau,\\
+\mathcal T(s_0\tau)&=\frac{(1-\delta)\Delta A+L_f+j(\tau)}2.
+\end{aligned}
+\tag{EP.14}
+$$
+
+This is the JR42/JR45/JR50 reduction, also RH2.2, with necessity over
+Definition 1.2. Every sharp weak-cost optimizer has supported live map
+$\Lambda_*=D(\cdot)D^\dagger+T(\cdot)T^\dagger+S(\cdot)S^\dagger$,
+total supported failure effect $M$, no other supported output mass,
+and high acquired effect $(1-\delta)D^\dagger D$.
+
+Proof. Conditional CG support and individual endpoint saturation put
+every encoder/live-decoder product in the span of $D,T,S$ and fix
+the total diagonal coefficient masses to $(1,1,1)$. Positivity passes
+support to every summand, or almost every integrand. The independent
+Choi vectors permit transfer to their coefficient Grams by a Gram
+left inverse. Initially the total failure effect kills coordinate
+$0$, and other supported output mass is zero.
+
+For arbitrary complex $c=(c_0,c_1,c_2)$, expansion gives
+
+$$
+\det K(c)=h_0h_1h_2c_0(c_0^2-\theta c_1^2-\omega c_2^2),
+\qquad K(c)=c_0D+c_1T+c_2S.
+\tag{EP.15}
+$$
+
+A low product has rank at most two, hence
+$|c_0|^2\leq\theta|c_1|^2+\omega|c_2|^2$, including the singular
+plane $c_0=0$. If $(u_L,v_L,w_L)$ are the sums of these three squared
+low masses, four-sign averaging only as a necessary cost test gives
+
+$$
+u_L\leq\theta v_L+\omega w_L\leq\delta,\quad v_L,w_L\leq1,
+\qquad\mathsf W\geq A_{27}(1-u_L)+B_{27}(1-v_L)+C_{27}(1-w_L).
+\tag{EP.16}
+$$
+
+The acquired-minus-high-live effect is PSD because the whole decoder
+is TP and its live restriction TNI. This is why later failing high
+acquisitions remain charged. Positivity of the three coefficients and
+$\mathsf W=(1-\delta)A_{27}$ force
+$(u_L,v_L,w_L)=(\delta,1,1)$. The PSD acquired-minus-high-live effect
+has zero trace against $\operatorname{diag}(p_{27})\succ0$, so it is
+zero, separately on each branch or almost everywhere. High products
+are multiples of $D$ and have no supported later failure.
+
+All low triangle slacks likewise vanish. Each nonzero low product has
+$c_0\ne0$ and satisfies both the complex null equation in EP.15 and
+$|c_0|^2=\theta|c_1|^2+\omega|c_2|^2$. Divide by $c_0^2$:
+equality in the complex triangle inequality makes both nonzero squared
+ratios nonnegative real. Thus $c_1/c_0,c_2/c_0$ are real. This derives
+the real equality face for the original complex class.
+
+The total Gram is real. TP and the failure effect killing coordinate
+$0$ eliminate its $DT,DS$ entries using $\kappa,\kappa_{02}>0$.
+A residual real $TS$ entry $a$ changes each conditional height-$27$
+endpoint live witness by $naC_{TS}$, where the positive conditional
+CG witness vector $\zeta_{27}$ gives
+$C_{TS}=2(\zeta_{27}^TTa_{27})(\zeta_{27}^TSa_{27})>0$.
+Each sign separately saturates the witness, whose nonlive payoff is
+zero. Both signs of $n$ force $a=0$. The live Gram is $I$, the
+failure effect is $M$, and the low Gram is $L_0$.
+
+A real PSD $X$ with $\operatorname{tr}(QX)=0$ admits a real null
+outer-product decomposition with exactly $\operatorname{rank}X$
+nonzero vectors. To prove it, restrict $X^{1/2}QX^{1/2}$ to
+$\operatorname{ran}X$. It is symmetric and traceless. If nonzero,
+its opposite-sign eigenvalues give a unit zero-Rayleigh vector by
+continuity. Remove that vector; the orthogonal compression stays
+traceless. Induction gives an orthonormal zero-Rayleigh basis, also
+when a compression is zero. Multiplication by $X^{1/2}$ gives the
+required vectors. Every nonzero null vector has nonzero coordinate
+$0$. After an irrelevant global sign it is $\sqrt\pi(1,u,v)^T$,
+$\pi>0$, with exact moments
+
+$$
+\alpha u^2+\beta v^2=1,\qquad
+\mathbb E1=1,\quad\mathbb Eu=\mathbb Ev=\mathbb Euv=0,\quad
+\mathbb Eu^2=\mathbb Ev^2=1.
+\tag{EP.17}
+$$
+
+Here expectations are coefficient sums or stipulated integrals, not
+priors over histories. Set $f(u,v)=(1,u,v)G(1,u,v)^T$. Analytically
+grouping the actual low products by their report and height sign gives
+the slots of EP.14. A failure plus subeffect is dominated by $M$, so
+it kills coordinate $0$ and adds no winding coordinate. After a global
+binary reversal, the normalized report coordinate is $\mathbb E(ru)$,
+whose maximum is $\mathbb E|u|\leq1$.
+
+Splitting actual labels, live/failure parts and Kraus products can only
+increase the absolute height difference; no hidden index is made
+observable. The high absolute sum is $(1-\delta)\Delta A$. If
+$B_a\succeq0$ are failure subeffects summing to $M$, write
+$B_a=M^{1/2}E_aM^{1/2}$ on its support. Then
+$\sum_a|\operatorname{tr}(E_a\Xi)|\leq\operatorname{tr}|\Xi|=L_f$,
+with the identical integral inequality. This proves the universal
+upper direction. The slots form a nonempty compact set, since
+$0\preceq X_{r,\epsilon}\preceq I$. Their null decompositions and
+the actual finite construction in Section 8 give the reverse direction.
+A maximizing tuple's realized absolute objective is at least its signed
+objective; the proved upper direction forbids strict excess. All
+nonnegative support/equality steps extend under precisely the specified
+convergence and integrability assumptions. This recalls the existing
+reduction rather than claiming a new minimax or whole-channel uniqueness
+theorem. $\square$
+

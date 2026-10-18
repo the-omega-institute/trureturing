@@ -1,0 +1,96 @@
+**Theorem 52.1 (Countable-carrier failure at every interior boundary).** For every $r\in(0,1)$ there is one fixed target family on a countable power-set consumer carrier, on the entire original $X$, with
+
+$$
+I(\mu)=r
+\quad\text{and no lawful preparation with error at most }r.
+\tag{52.1}
+$$
+
+Every target law has at most two support points; the anchor target law has one. Each cap $\eta>r$ has an all-source lawful preparation with a finite positive-weight seed carrier and a common finite prime menu. All targets have row $(h_y,e_y,d_y,z_y)=(0,0,0,1)$ and satisfy every allowed profile. Thus sourcewise finite target support does not imply the finite-common-carrier attainment conclusion.
+
+**Proof.** Encode the actual prime answers relative to the anchor as in Proposition 46.5. Let $E$ be the sources with the anchor's entire observation signature, and let $D_n$ be the sources whose first differing answer is at prime index $n$. These sets partition the whole labeled $X$, with each $D_n$ an occupied clopen set. Every occupied prefix subcylinder of $D_n$ contains infinitely many distinct complete observation classes: Theorem 35.2 gives unbounded $\Omega$ there, whereas a fixed finite list of complete prime supports has bounded $\Omega$.
+
+For each $n$, partition the actual observation classes in $D_n$ into $n$ dense colors. To do so, enumerate its occupied prefix subcylinders and, for each subcylinder and each of the $n$ colors, choose a previously unassigned class and assign that color. At every finite stage only finitely many classes have been used, so the preceding infinitude suffices. Give every remaining class any fixed color. Each color meets every occupied subcylinder. This is one fixed specification of target laws on complete observation classes, not a new observation available to a preparation. The same argument with any fixed finite number of colors applies to $Q$ itself.
+
+Choose $0<c<\min\{r,1-r\}$ and put
+
+$$
+\begin{aligned}
+\Theta&=\{0\}\sqcup\{(n,i):n\ge1,\ 1\le i\le n\},\\
+B_n&=\{(n,i):1\le i\le n\},\\
+w_n&=r+\frac cn.
+\end{aligned}
+\tag{52.2}
+$$
+
+Use the power-set sigma algebra and let every tape immediately return unknown. For a source of color $i$ in $D_n$ prescribe, once and for all,
+
+$$
+\mu_y=(1-w_n)\delta_0+w_n\delta_{(n,i)};
+\qquad
+\mu_y=\delta_0\quad(y\in E).
+\tag{52.3}
+$$
+
+Here $0<w_n<1$, so all laws are normalized with the stated support and terminal row. Labels with identical complete observations have identical laws. Neither the color nor the source label is supplied to the preparation.
+
+For lawful approximations define
+
+$$
+v_n=(1-w_n)\delta_0+\frac{w_n}{n}\sum_{i=1}^n\delta_{(n,i)}.
+\tag{52.4}
+$$
+
+Preload independent coordinates $W_n$ of laws $v_n$ under one common countable product seed law. For a fixed $M\ge1$, inspect the first $M$ prime answers. If the first difference is $n\le M$, emit $W_n$; otherwise emit $0$. The selected coordinate depends only on the observed prefix. All sources and all seeds terminate after this finite menu, and their finite-record and output events are measurable. Only coordinates $1,\ldots,M$ are used, so their finite product, on its finite positive-weight point support, is also a sufficient seed space for this same preparation.
+
+At a source in $D_n$ with $n\le M$, event-TV between (52.4) and (52.3) is
+
+$$
+w_n\left(1-\frac1n\right)
+ =r+\frac{c-r}{n}-\frac{c}{n^2}<r.
+\tag{52.5}
+$$
+
+At a source in $D_n$ with $n>M$, the emitted law is $\delta_0$ and the error is $w_n$. On $E$ it is zero. Every $D_n$ is occupied and $w_n$ decreases, so the exact uniform error is
+
+$$
+\varepsilon_M=w_{M+1}=r+\frac{c}{M+1}\downarrow r.
+\tag{52.6}
+$$
+
+The whole target family is unchanged as $M$ varies.
+
+For the lower bound and endpoint obstruction, let $\lambda$ be any TV-continuous probability-valued family with uniform error at most $\varepsilon$. Fix $z\in D_n$. For each color $i$, its density gives actual sources of that color matching successively longer prefixes of $z$. Their target law is the fixed $i$-th law in (52.3), while their $\lambda$ laws converge to $\lambda_z$ in TV. Consequently, for every $i$,
+
+$$
+\lambda_z(\{(n,i)\})\ge w_n-\varepsilon.
+\tag{52.7}
+$$
+
+If $\varepsilon<r$, choose $n$ so large that $n(r-\varepsilon)+c>1$. Summing (52.7) over its $n$ disjoint singletons gives a mass larger than $1$, a contradiction. Thus every continuous approximant, and in particular every lawful prepared family, has error at least $r$.
+
+If $\varepsilon=r$, the same inequalities instead force
+
+$$
+\lambda_z(B_n)\ge c
+\qquad(z\in D_n).
+\tag{52.8}
+$$
+
+The blocks $B_n$ are pairwise disjoint, so the probability law $\lambda_{x_*}$ has $\lambda_{x_*}(B_n)\to0$. By TV continuity at the actual anchor, choose $m$ such that
+
+$$
+\operatorname{TV}(\lambda_y,\lambda_{x_*})<c/4
+\qquad(y\in C_m(x_*)).
+$$
+
+Choose $n>m$ with $\lambda_{x_*}(B_n)<c/4$ and choose an actual $z\in D_n$. It belongs to that same anchor cylinder. The one measurable event $B_n$ gives
+
+$$
+\lambda_z(B_n)<c/2,
+$$
+
+contradicting (52.8). This excludes even a continuous optimum at the boundary. Lemma 45.3 therefore excludes every lawful attainer, regardless of its seed carrier or its sourcewise stopping times.
+
+Together with (52.6), the lower bound proves (52.1). The feasible caps in $[0,1]$ are exactly $(r,1]$. The obstruction is compatibility of probability masses across actual blocks approaching the anchor, rather than an inability to realize a finite target law at one isolated source. No source sampling, source choice during execution, reset, conditioning away failure or color probe is used. $\square$
+

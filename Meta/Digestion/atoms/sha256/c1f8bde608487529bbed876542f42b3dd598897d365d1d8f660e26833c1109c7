@@ -1,0 +1,12 @@
+**Definition 371.1 (Arbitrary literal demands).** Fix any finite $L\ge0$, either complete class $N$ or $O$, and finite mass $M\ge0$. At every zero word prescribe arbitrary real numbers $d_A(w),d_C(w),d_P(w)$, and prescribe $d_T\in\mathbb R$ at $1^L$. Feasibility means
+
+$$
+p_w(0)\ge d_A(w),\qquad
+p_w(n(w))\ge d_C(w),\qquad
+p_w(0)+p_w(n(w))\ge d_P(w),\qquad
+p_{1^L}(0)\ge d_T.
+\tag{371.1}
+$$
+
+In particular these demands include (368.6) and the literal mass-$M$ affine vector (368.8), with no restriction on the signs of singleton demands. The demands remain fixed throughout the following construction.
+

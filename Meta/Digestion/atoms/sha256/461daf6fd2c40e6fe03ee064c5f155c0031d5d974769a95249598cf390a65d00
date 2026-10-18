@@ -1,0 +1,52 @@
+**Convention 10.1 (mathematical reuse and literature scope).** The following
+parameter correspondences are part of the statements above.
+
+| Supplier | Exact use and retained boundary |
+| --- | --- |
+| PR57.D1–D3, D7–D9; AIF Definitions 2.1–2.3 and Theorems 4.2–4.4 | Original finite primitive entrance, same actual source/preparation, retention/frontier, local rows and one receipt per row. No finite-source bound on total runtime memory is inferred |
+| LJA Definitions 4.1–5.2 and Theorems 4.5/5.3 | Genuine source calls, immutable authentic acquisition/rows, pending-event and copy availability types. The converter never reads a current invalid packet as a valid tree |
+| RCA Definitions 11.1–11.5, 12.1–12.4, 13.1–13.4, 14.1–14.2 | Eight actual O lanes, F origins, actual descriptor0/base1 capture, native word compiler/Step, source clone, corrected staging/length reload, Publish and actual one-client rights. $D_2$ is substituted consistently at a new allowed installation; no live upgrade is supplied |
+| RCA Lemmas 13.2a/15.1, Theorems 15.2–15.3 and Proposition 16.2 | Exact full manifest import and finite completed-frame/replay/cost arguments. Their changed $D_2$ hypotheses are checked in §§2,4,7,8, not presumed by citing their fixed-$D_1$ conclusions |
+| SSA Definitions 3.2, 4.1–4.3, 5.1–5.2 and Theorem 7.3 | Literal switch/tape storage, independent support and terminals, bounded local templates and known mathematical inverse maps. The actual additional serializers and return interface are §§5–6 here |
+| CSA Definitions 2.3, 3.2–4.3, 5.1–5.2 and §§6–8 | Optional sockets, initialized atomic-patch storage, selected backing/frontier, comparison-task inverse method and structural tariff. Use actual $q_2,\Pi_2$ and $D_2$ frame/return labels |
+| CAP §§13–19 | Preserve acquired-selector restrictions, literal lane33 incompatibility, scoped terminal fibres, final-service horizon and output/copy bounds. None is broadened to refute every possible common runtime |
+
+The repository declarations
+`D5/S3/ObserverMemory/RefinementClosure/TypedFiniteViewKernel.typed_finite_view_kernel`
+and
+`D5/S3/ObserverMemory/RefinementClosure/PredictiveMemoryMinimalQuotient.predictive_memory_minimal_quotient`,
+with their owning Blueprint Scribes, specify typed path legality/readout
+kernels and predictive quotient hypotheses. They supply no native ownership,
+new service entry or paid serialization. In particular the latter's
+readout-factor and descended-update premises do not identify full chronology
+with an arbitrary terminal task.
+
+`NativeFullSourceProducer.native_source_producer`, its private traversal,
+stationarity and read-order helpers, and its owning Scribe give the
+no-update acquisition correspondence. `NativeSerialEffective`'s
+`OriginalCodeRealization`, code soundness/completeness, private prefix and
+`erased_external` helpers and `original_code_service_simulation` with its
+owning Scribe retain their supplied-code and erased-trace hypotheses.
+Its trace-valued `terminalObservation` is not the original CAP terminal
+response map. None is used as an unpriced native interpreter.
+
+At the pinned mathlib revision
+`db584cd6d46c92f209a44c0f1c829460d327499d`,
+`Computability.Encoding.decode_encode/encode_injective` and
+`StateTransition.Respects/tr_reaches/tr_eval` are the standard coding and
+forward-simulation interfaces. They do not provide canonical rejection,
+live authority or the installed native converter. No new third-party
+dependency or exact Lean application is part of this ordinary construction.
+
+Counted framing and deterministic ordering are `literature-attested`
+methods: [RFC 4506 §4.10](https://www.rfc-editor.org/rfc/rfc4506#section-4.10)
+specifies counted opaque data, and
+[RFC 8949 §4.2.1](https://www.rfc-editor.org/rfc/rfc8949#section-4.2.1)
+specifies deterministic ordering/definite lengths. Their formats and
+bounded integer machinery are not the wire language or a native cost
+theorem here. The elementary finite-tree inverses are explicitly reused
+from SSA/CSA. The new `repo-derived` content is this concrete completed-object
+entry/registry/import/publication interface, its $D_2$ extraction and
+row/compiler extension, and its paid closed cycle on that instance.
+No literature originality or physical realization is asserted.
+

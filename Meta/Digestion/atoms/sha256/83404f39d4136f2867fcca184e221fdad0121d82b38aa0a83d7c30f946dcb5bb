@@ -1,0 +1,48 @@
+**Theorem 4.2 (lifetime and killed-path continuity).** Suppose the triples
+in Theorem 3.1 are continuous comparison extensions, and their heights
+start at the same $k\in I$. Exclude $\tau_T(h)=T$. If
+$\tau=\tau_T(h)<T$, require the following strict-crossing condition:
+
+$$
+\text{for every }\epsilon>0\text{ with }\tau+\epsilon\le T,
+\text{ some }s\in(\tau,\tau+\epsilon)
+\text{ satisfies }h_s\notin[l,u].
+\tag{4.3}
+$$
+
+If $\tau=\infty$, no crossing condition is needed. Then the censored
+lifetimes converge, taking $\infty$ as an isolated no-death mark on
+this horizon; the continuously held joint triples and source paths
+converge uniformly; and
+
+$$
+q_n^\dagger\longrightarrow q^\dagger
+\quad\hbox{in the Skorokhod }J_1\hbox{ topology on }D([0,T],E).
+\tag{4.4}
+$$
+
+For weakly convergent joint triples these conclusions hold in distribution
+if the limiting law gives probability one to the conditions above.
+
+Proof. On every $[0,t]$ with $t<\tau$, continuity puts $h$ a positive
+distance inside $I$. Uniform approximation yields $\liminf\tau_n\ge\tau$.
+When $\tau<T$, a strictly exterior value supplied by (4.3) persists for
+$h_n$ and gives $\limsup\tau_n\le\tau+\epsilon$; hence
+$\tau_n\to\tau$. If $\tau=\infty$, the entire compact image on
+$[0,T]$ lies a positive distance inside $I$, so $\tau_n=\infty$
+eventually. Uniform continuity of $z$ and uniform convergence of $z_n$
+give $z_n(\cdot\wedge s_n)\to z(\cdot\wedge s)$ uniformly.
+The same then holds for (2.5).
+
+When $0<\tau<T$, choose increasing piecewise linear time homeomorphisms
+$\lambda_n:[0,T]\to[0,T]$ sending $0,\tau,T$ to
+$0,\tau_n,T$. Their distance from the identity tends to zero. Before
+$\tau$, both $q_n^\dagger(\lambda_n(t))$ and $q_t^\dagger$ are alive
+and their distance tends uniformly to zero by continuity of the held
+paths. At and after $\tau$ both are $\dagger$. This is (4.4).
+For no death the identity time change suffices. The exit/holding maps
+are measurable; for example hitting a closed exterior is measurable
+using minima of continuous distance functions on compact time intervals.
+The deterministic continuity just proved gives the probabilistic assertion
+by the continuous mapping theorem. $\square$
+

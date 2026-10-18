@@ -1,0 +1,39 @@
+**Theorem 14.5 (separately optimized motion budgets).** Let $V_u,V_Q$ be the actual $\Xi$-integrals of $|u(Q)-u(Q')|$ and $\operatorname{TV}(Q,Q')$. Reuse exactly Theorem 13.6, specifically (13.18):
+
+$$
+
+V_u=V_Q=v=\frac1{45}+\frac{s_1^-+s_1^+}{90}.
+\tag{14.11}
+
+$$
+
+For an abstract budget $b$ of returned suspended configurations summed over the two blocks in a fixed fiber, the attainable scalar motion images are
+
+$$
+
+\begin{array}{c|c}
+b&\{v:N(\Xi;c)\le b\}\\\hline
+2&\{4/135\}\\
+3&[7/270,17/540]\\
+4&[1/45,1/30].
+\end{array}
+\tag{14.12}
+
+$$
+
+The separately optimized minimum $M(v)=\min_{\Xi:\,V_u=V_Q=v}N(\Xi;c)$ is 2 at $4/135$, 3 on the three-label interval elsewhere, and 4 on the rest of $[1/45,1/30]$. No triple exists outside that interval. The joint images are the corresponding diagonal sets $(v,v)$. Rational $v$ in every stated budget image has rational exact attainment.
+
+**Proof.** Two configurations force both vectors to be $C$, hence $s_1^-+s_1^+=2/3$. At most three force at least one vector to be $C$, so the sum ranges over $[1/3,5/6]$. Each value occurs by taking the other vector
+
+$$
+
+s(t)=((1-t)/2,t,(1-t)/2),\qquad 0\le t\le1/2.
+
+$$
+
+Four permit both middle coordinates throughout $[0,1/2]$, independently within the already lawful WHOLE-triple family (14.4); taking $s^-=s^+=s(t)$ gives the full sum interval $[0,1]$. Substitution in the covered (14.11) proves (14.12), including endpoints; (14.5) then proves $M$. This is joint realization by the explicit kernels, not multiplication of separately attainable quantities.
+
+For the rational global endpoints use $s^-=s^+=L=(1/2,0,1/2)$, giving $v=1/45,N=4$, and $s^-=s^+=H=(1/4,1/2,1/4)$, giving $v=1/30,N=4$. The three-label endpoints are $(C,L)$ and $(C,H)$. Their primitive denominators divide 60, so the service above can accept 60 of 64 six-bit candidates. For rational motion the displayed $t$'s are rational, giving the same finite representation with a suitable denominator.
+
+Let $D=(1/2,1/3,1/6)$. The three distinct whole triples with block pairs $(C,C),(C,D),(D,D)$ all have motion $4/135$, but their prescribed-triple minima are respectively 2, 3 and 4. Distinctness follows from (14.4), for example its incoming-0/outgoing-0 mass in each changed block. Therefore $M(v)$ cannot substitute for the minimum of a prescribed $\Xi$. ∎
+

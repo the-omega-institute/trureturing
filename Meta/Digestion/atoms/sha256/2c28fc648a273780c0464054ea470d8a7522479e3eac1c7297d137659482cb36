@@ -1,0 +1,40 @@
+## Proposition 6. Unit shift and the even whole-ray action
+
+For every \(q>0\), \(\rho_q(S)=\Theta_q\). For every positive even
+\(q\), the numbered reset square-lift gives
+\(H_q\in\operatorname{Aut}(X_q,S)\) with
+\(\rho_q(H_q)=\mathrm{id}+\Theta_q\).
+
+Proof. The unit shift sends \(\mathcal R(x,m)\) onto
+\(\mathcal R(Sx,m-1)\) with the same endpoint. Refinement from cut
+\(m-1\) to cut \(m\) multiplies the row by \(B_q\); under \(E_q\)
+this is exactly \(T_q\). This includes the cut-zero to cut-minus-one
+calculation.
+
+For the even construction, use the reset numbered commuting squares and
+their finite-forgetting lifts. Their mutually inverse finite-window
+tables define the square-lift homeomorphism \(H_q\) and commute with the
+unit shift. Put \(C_q=I+A_q\). The whole-ray calculation of the lift is
+\[
+H_q\bigl(\mathcal R(x,m)\bigr)
+ =\bigsqcup_{\substack{r\text{ numbered expanded }C_q\text{-edge}\\
+                       s(r)=t(x_m)}}\mathcal R(\beta_r,m).
+\]
+Each component has endpoint \(t(r)\). Every legal future in that
+component lifts back to the original whole past of \(x\), with its
+prescribed numbered boundary \(r\). This supplies actual equality of
+sets and disjointness, rather than just finite-window agreement or
+equality of endpoint counts.
+
+The image endpoint row at the same cut is consequently
+\(e_{t(x_m)}(I+B_q)\). Counted edge fibers, including the separate
+identity edges, give this multiplicity exactly. Under the two-coefficient
+integral transport,
+\[
+T_{I+A_q}v=v+T_qv.
+\]
+Hence \(\rho_q(H_q)\) agrees with \(\mathrm{id}+\Theta_q\) on every
+vertex basis generator at every natural stage. Every element of \(G_q\)
+has a stage representative, so the equality holds on the whole original
+integer group.
+

@@ -1,0 +1,14 @@
+**定义 1.3（任意基数的实际失败）。** 在剩余原时钟内，对 $K\subseteq\mathcal F(H)$ 定义
+
+$$
+\begin{aligned}
+L_0(K,H)&\iff |K|\ge2,\\
+L_{s+1}(K,H)&\iff |K|\ge2\ \land\
+\bigwedge_{E\in\{J,M\}}\exists a\in\mathbb R:\
+L_s\bigl(K\cap\mathcal F(H,E,a),(H,E,a)\bigr).
+\end{aligned}
+\tag{1.5}
+$$
+
+每层基数条件都排除停止；空子集不可达，单元素可立即返回。对同历史的包含，$L_s$ 向上保持：基数条件向上保持，对 $s$ 归纳并保留各动作同一个实际响应即可。只有终端 $L_0$ 才直接选择不同目标对，不把非终端较大失败族当作含同深度失败对的族。所有下述有限支持均由实际末叶选择，适用于有限或无限原族。
+

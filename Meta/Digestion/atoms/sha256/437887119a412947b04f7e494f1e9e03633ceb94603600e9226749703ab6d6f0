@@ -1,0 +1,66 @@
+**Theorem 3.2 (scalable separated bounds).** Let $\nu_0^{(r)}$ be uniform
+on the $2n$ canonical witnesses $t_{j,e}$ and let $\nu_1^{(r)}$ be uniform
+on the $2n$ guided witnesses $g_{j,e}$. With $U_r$ uniform on the same full
+$\mathcal F_D$ and $\varepsilon=n^{-2}$, set
+
+$$
+\mu_i^{(r)}=(1-\varepsilon)\nu_i^{(r)}+\varepsilon U_r.
+\tag{3.3}
+$$
+
+Then both laws are rational, full-support, and have identical
+$\partial_p$ pushforwards. If $L_r$ is the canonical lower bound
+
+$$
+L_r=2r-1+\frac{2r+2}{4^r},
+\tag{3.4}
+$$
+
+then
+
+$$
+V_{\rm all}(\mu_0^{(r)})
+ \ge(1-\varepsilon)L_r+\varepsilon,
+\qquad
+V_{\rm all}(\mu_1^{(r)})
+ \le(1-\varepsilon)(r+1)+\varepsilon(3r+2).
+\tag{3.5}
+$$
+
+The difference between the displayed lower and upper bounds is
+
+$$
+\Delta_r
+ =(1-\varepsilon)\left(r-2+\frac{2r+2}{4^r}\right)
+   -\varepsilon(3r+1)>0,
+\tag{3.6}
+$$
+
+for every $r\ge2$, and grows asymptotically like $r-2$.
+
+**Proof.** Read the $r$ words $RRs_iL$ and interpret their four replies as
+the base-four digits. On a guided witness this recovers $j=1+c$; read $p_j$
+and return only on the actual leaf label or branch at $p$. On any source for
+which the guide is misleading, use the AAR13.4 prefix fallback. The core
+cost is $r+1$, and the worst cost is at most
+
+$$
+r+1+\lceil\log_2(n+1)\rceil\le3r+2.
+$$
+
+The canonical lower argument is the same mandatory-label and all-word
+projection argument as Lemma 2.5. A binary search tree with $n=4^r$ keys
+has minimum mean key depth (3.4): fill levels successively, leaving one
+key at depth $2r+1$. Mixing with the common uniform law gives (3.5), using
+one Read as the universal lower bound on the uniform component. Direct
+substitution of $\varepsilon=4^{-2r}$ gives (3.6); its value at $r=2$ is
+$709/2048$. For $r\ge3$, use $\varepsilon\le1/4096$ to bound its numerator
+by $4095(r-2)-(3r+1)=4092r-8191>0$. All guide coordinates
+are installed in one fixed off-path forest, so this is a same-source native
+construction, not a sequence of independently redrawn nuisance replies.
+$\square$
+
+The family in Theorem 3.2 proves an increasing mean-cost gap in the stated
+bounds. It does not assert exact Bayes optima, a sharp ratio, or a universal
+asymptotic law for all native priors.
+

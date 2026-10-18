@@ -1,0 +1,24 @@
+**定义 92.1（Actual proper-positive child and its local prices）。** Retain [IC, Definitions 1.1–1.4], the original joint complete-history prior, immutable INITIAL records, free remembered value or independent absorbing bottom, endpoint-only observations, and the complete-block fee. Assume
+
+$$
+m\ge3\text{ odd},\qquad k=m+1,\qquad T=m+2,\qquad \gcd(m,T)=1.
+\tag{92.1}
+$$
+
+Fix a free initial value, an archive of length $a$, a prior endpoint $v$, and a parent word $P$ whose recorded positive endpoint is the actual archive
+
+$$
+C=\operatorname{archive}\mathbin{+\!\!+}[(P,\operatorname{some}(v+1))].
+\tag{92.2}
+$$
+
+Let
+
+$$
+A=\operatorname{initialSupport}_{\mathrm{alphabet},\,\mathrm{free}}(k,m,C)\subsetneq W_a,\qquad
+W_a=[am,(a+1)m]\pmod T,
+\tag{92.3}
+$$
+
+be nonempty, where the subscript records the chosen original alphabet and remembered free value. Require the exact INITIAL phase-label law on the whole actual acquired-pair set: there is a function $\lambda:A\to Y$ such that every actual pair in the fixed free-value fibre of $C$ has $-\theta_{\rm INITIAL}\in A$ and immutable target value $\lambda(-\theta_{\rm INITIAL})$. Put $n=|\lambda[A]|\ge3$. Let $D_{\rm ad}(C)$ be the least additional worst-branch adaptive fee after the paid prefix of $C$, and let $D_{\rm child\text{-}pre}(C)$ be the corresponding fee when this child alone must use one fixed literal suffix, with its own endpoint stopping and decoding.
+

@@ -1,0 +1,37 @@
+**Lemma 7.1 (positive constants and the entire segment).** All expressions in
+§6 are finite, $\gamma,m_\lambda,\kappa,\eta_{1,\star},\tau_{\rm q},
+\epsilon_{\rm q}>0$, and for $0\leq r\leq\tau_{\rm q}$,
+
+$$
+0<\lambda(r)<1,\qquad
+\kappa(r):=z(r)-p_{50}\lambda(r)>\kappa/2,\qquad
+rk<\gamma/2.
+\tag{ZG.30}
+$$
+
+Proof. Write the two positive eigenvalues of $S$ as $\sigma_1,\sigma_2$.
+The formula (ZG.28) gives
+$\gamma=\sigma_1\sigma_2/(\sigma_1+\sigma_2)>0$, with
+$\gamma\leq\min(\sigma_1,\sigma_2)$. The eigenvalues justify this bound;
+they are not unknown spectral extrema in the definition of $\gamma$.
+Premise 5.2 and Lemma 5.3 supply the other positive denominators and the
+inverse. The real symmetric $K$ has finite Frobenius norm $k$, and
+$M,b_{\rm q}\geq0$. Thus the reciprocal in (ZG.29) is finite and positive.
+It is smaller than $1$ and separately smaller than each of
+
+$$
+\frac{m_\lambda}{2(1+|\ell|)},\quad
+\frac{\kappa}{2(1+|c_\kappa|)},\quad
+\frac{\gamma}{2(1+k)},\quad
+\frac{\eta_{1,\star}}{2(1+M+3b_{\rm q})}.
+\tag{ZG.31}
+$$
+
+Since $m_\lambda\leq\min(\lambda_\star,1-\lambda_\star)$ and
+$\lambda(r)=\lambda_\star+r\ell$, the first bound leaves $\lambda(r)$
+strictly between zero and one on the entire interval. The affine identity
+$\kappa(r)=\kappa+rc_\kappa$ and the second bound give its assertion.
+The third gives $rk<\gamma/2$, also if $k=0$. None of this requires the
+segment to stay in the isolation box or to consist of roots of $\Psi$.
+$\square$
+

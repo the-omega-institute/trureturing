@@ -1,0 +1,40 @@
+**Corollary 8.4 (credited counts and a native subsequence of the
+obstruction).** In Theorem 8.3 the selected set has cardinality
+$s=5^{n/2}$. The total source count and attained alphabet size are
+
+$$
+f_0=2,\qquad f_{j+1}=2+f_j^2,\qquad
+L=f_D-5^{n/2}+1.
+\tag{CIT.42}
+$$
+
+At $D=4$, these are exactly the NCM Proposition 6.2 construction
+and its supplied counts: $31$ preparation Reads, maximum length
+$5$, $129$ submitted letters, $f_4=2{,}090{,}918$ sources and
+$2{,}090{,}914$ attained names, with late Read length at most $4$.
+The cell-only obstruction of §7 is therefore realized by exact
+attained fibers at every $n=2^h$, $h\ge1$, under the stated
+services.
+
+Proof. The five pairs of (CIT.33) can be chosen independently in
+the selected relation, and the scaffold map is injective, giving
+$5^{n/2}$. A height-at-most-zero right subtree is one of two
+leaves; a height-at-most-$(j+1)$ right subtree is a leaf or an
+ordered pair of height-at-most-$j$ subtrees. These disjoint cases
+give the recurrence for $f_j$, and merging $s$ names into one
+gives the formula for $L$. The predecessor's values are
+$f_1=6,f_2=38,f_3=1446,f_4=2{,}090{,}918$; at $D=4$ one
+merges the same five sources as NCM. In particular its $LL$
+requests $RLLL$ and $RRLL$ read respectively $RRRL$ and $RLRL$.
+These exact numerical counts retain their NCM credit.
+
+For the realized fibers, $N=n/2=2^{h-1}$ in Theorem 7.1. Their
+weight is $(3+2\theta)^{n/2}$ and their ratio to the same cell
+charge $c^n$ is $((3+2\theta)/(1+\theta)^2)^{n/2}$.
+The normalized logarithmic gap in (CIT.37) persists along this
+unbounded native subsequence. A subexponential correction on all
+block sizes would have a vanishing normalized logarithm on this
+subsequence too, which is impossible. This does not optimize the
+large supporting code or contradict a full-family memory lower bound.
+$\square$
+

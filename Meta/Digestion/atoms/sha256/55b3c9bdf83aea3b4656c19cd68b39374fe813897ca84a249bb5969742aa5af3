@@ -1,0 +1,27 @@
+**定理 34.2.3（被动联合分布等价）。** 在无干预时，$M_+$ 与 $M_-$ 都给出中心 Gaussian
+向量 $(X,H,Y)$，协方差矩阵为
+
+$$
+\Sigma=
+\begin{pmatrix}
+1&\rho&\rho^2\\
+\rho&1&\rho\\
+\rho^2&\rho&1
+\end{pmatrix}.
+$$
+
+因此任何只读取一次被动联合向量的统计查询，都不能在这两个模型之间识别 $\theta$。
+
+**证明。**
+
+在 $M_+$ 中，$\operatorname{Var}(X)=1$，
+$\operatorname{Cov}(X,H)=\rho$，
+$\operatorname{Cov}(H,Y)=\rho$，
+$\operatorname{Cov}(X,Y)=\rho^2$，且三个方差都为一。交换 $X$ 与 $Y$ 后，
+$M_-$ 的同样计算给出同一矩阵。两者都是线性 Gaussian 组合，均值为零；Gaussian 律
+由均值和协方差决定。证毕。
+
+被动等价只限制一类查询。它没有说明端点方程被替换后焦点如何响应。
+
+<a id="section-34-3"></a>
+

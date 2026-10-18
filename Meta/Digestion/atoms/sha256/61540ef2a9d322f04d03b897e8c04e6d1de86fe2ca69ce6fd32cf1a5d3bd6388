@@ -1,0 +1,44 @@
+## 七、推广到局部因果历史：时间的形状是历史核的形状
+
+单次等待时间还不够描述局部因果结构。定义 $n$ 步局部历史核：
+
+~~~math
+\Gamma_s^{(n)}
+\in
+\operatorname{Prob}
+\left(
+(\mathbb R_{\ge0}\times\mathcal O)^n
+\right),
+~~~
+
+其中每一项可以包含：
+
+~~~math
+(T_1,o_1,T_2,o_2,\ldots,T_n,o_n).
+~~~
+
+这里：
+
+- $T_i$：第 $i$ 个局部等待量；
+- $o_i$：第 $i$ 个局部输出、吸收、返回或分支标签；
+- $\mathcal O$：局部输出集合。
+
+混合历史读出为：
+
+~~~math
+C_\Gamma^{(n)}(p)
+=
+\sum_s p_s\Gamma_s^{(n)}.
+~~~
+
+定义：
+
+~~~math
+\operatorname{Curv}_{\Gamma}^{(n)}
+=
+\Gamma_{s_0}^{(n)}
+-\Gamma_{s_1}^{(n)}
+-\Gamma_{s_3}^{(n)}
++\Gamma_{s_{13}}^{(n)}.
+~~~
+

@@ -1,0 +1,18 @@
+**Definition 4.1 (Three-state producer).** In the state order $(R,U,V)$ set
+
+$$
+M_0=\begin{pmatrix}0&p&c\\0&s&0\\0&0&t\end{pmatrix},\qquad
+M_1=\begin{pmatrix}0&0&0\\a&0&0\\b&0&0\end{pmatrix},\qquad
+\lambda=\frac1Z\left(1,\frac pa,\frac cb\right).
+\tag{4.1}
+$$
+
+Let $e=(1,0,0)$ be a row and $v=(0,a,b)^{\mathsf T}$ a column; thus $M_1=ve$. Let $J$ be (1.6) for these matrices, $P$ its visible marginal, and
+
+$$
+\mu_n=P_{[1,n]}.
+\tag{4.2}
+$$
+
+All probabilities and conditional expectations for the reference law below use this $J/P$, or an actual marginal (4.2).
+

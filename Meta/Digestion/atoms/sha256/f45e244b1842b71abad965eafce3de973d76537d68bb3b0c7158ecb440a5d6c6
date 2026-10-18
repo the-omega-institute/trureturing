@@ -1,0 +1,9 @@
+**Definition 8.1 (separate resource quantities).** Let the input size
+count all literal exterior nodes, all delivered address symbols,
+partition data, link endpoints and signs, and binary integer
+coefficients. For one constructed branch let $C$ count smart-pair
+sites, $L$ bound the fully expanded shape-template leaf counts,
+$s$ count residual sorts, and $D$ count its scalar disequalities.
+These are finite syntax quantities, distinct from the sizes of
+unknown sources and the numerical values of epochs.
+

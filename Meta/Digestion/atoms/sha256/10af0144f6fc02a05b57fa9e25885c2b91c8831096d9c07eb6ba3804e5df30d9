@@ -1,0 +1,23 @@
+### 72.1 Channel class and resource-preserving conclusion
+
+Partition an input basis into k≥2 nonempty fibres X_f of sizes d_f, with N=Σ_f d_f. Let K be an N×N positive semidefinite matrix whose diagonal fibre blocks are K_ff=I_(d_f). Define the channel F_K:C^N→C^k by
+
+    F_K(|f,i><g,j|)=K_(fi,gj)|f><g|.
+
+Its Choi matrix is K on the span of |f,i>_in|f>_out and zero on the orthogonal complement; K≥0 and K_ff=I give complete positivity and trace preservation. Fix the MC encodings J_in(|x><y|)=|xx><yy| and J_out(|f><g|)=|ff><gg|.
+
+For any finite physical LOSR channel L=Σ_t w_t(A_t⊗B_t), with fixed positive weights summing to one and arbitrary local CPTP maps C^N→C^k, there are local CPTP maps A'_t,B'_t with the same weights such that
+
+    A'_t(|f,i><f,j|)=B'_t(|f,i><f,j|)=δ_ij|f><f|,          (1)
+    ||Σ_t w_t(A'_t⊗B'_t)J_in−J_out F_K||diamond
+       ≤ ||LJ_in−J_out F_K||diamond.                      (2)
+
+The diamond norm is unhalved and includes arbitrary references. Each replacement local map has a Stinespring environment of dimension at most N. Thus exact fibre calibration can be imposed when minimizing error, without restricting the original physical outputs or increasing the number, weights or entropy of shared branches. This is a target-specific error comparison; it does not assert that deleting the diagonal of an arbitrary operator is trace-norm contractive.
+
+Let G denote the compact set of positive semidefinite N×N matrices with diagonal fibre blocks I_(d_f). For any fixed branch weights, the unrestricted physical minimum is exactly
+
+    min_(G_t,H_t∈G)  ν(Σ_t w_t G_t⊙H_t−K),               (3)
+    ν(D)=max_(ρ=⊕_f ρ_f≥0, Trρ=1) ||√ρ D √ρ||₁.          (4)
+
+Here ⊙ denotes entrywise product. The finite minimum is attained. The same equality of infima holds for a fixed finite branch budget or weights subject to any prescribed constraint, because the construction preserves the original weights. Attainment holds for fixed weights and for a compact allowed set of weights; no attainment is asserted for arbitrary nonclosed weight constraints. Formula (3) is generally a nonconvex Gram-factor optimization, not a claim of an overall semidefinite program or a solved four-fibre optimum.
+

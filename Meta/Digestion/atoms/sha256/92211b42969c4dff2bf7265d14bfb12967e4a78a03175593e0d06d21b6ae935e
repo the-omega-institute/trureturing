@@ -1,0 +1,32 @@
+**Definition 8.2 (primary mathematical reference frame).** The guarded
+prefix construction uses mature fixed-point reasoning. [Milius–Moss,
+*The Category Theoretic Solution of Recursive Program Schemes*,
+arXiv:0904.2385v2, Theorem 7.5 and §7.3 Theorem 7.15][MM] is
+`literature-attested` background: a guarded recursive program scheme
+has an interpreted solution in an Elgot algebra, unique in a completely
+iterative algebra; its contracting-functor/nonempty complete-metric
+setting identifies that solution with the unique fixed point of its
+specified operator. Here (CRE.22) proves the required prefix gain
+directly. Those theorems do not convert arbitrary overlapping native
+equations into lawful guarded presentations, preserve finite signs at
+a completion, or make finite native trees a complete metric space.
+
+[Comon–Lescanne, *Equational Problems and Disunification*, Journal of
+Symbolic Computation 7 (1989), 371–425, §3.2 Lemma 1, Appendix B.3
+and §6.2][CL] is `literature-attested` free-term background. Its
+nontrivial syntactic disequation argument uses infinite sort carriers
+and the finite/at-most-one one-variable exclusion property in its free
+or rational-tree setting. Section 6.2 explicitly excludes general
+nontrivial equational theories from those completeness results.
+Interpreted $\rho$ with its native leaf laws is not a free unary
+constructor. Neither that result nor a rational-native-contact-only
+method supplies the required native synthesis here; Theorem 7.1
+gives the latter method's exact obstruction. No faithful transfer of
+rigid E-unification, tree-transducer or regular-substitution decision
+results to this full acquired relation is assumed. Unchecked or
+inaccessible unused leads yield no novelty or undecidability conclusion.
+
+The statements of this volume are `repo-derived` ordinary consequences
+of the specified native contracts. No external priority or literature-wide
+originality is asserted.
+

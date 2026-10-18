@@ -1,0 +1,41 @@
+# Native FIB: an actual four-coordinate strict affine improvement
+
+**Status.** This volume contains ordinary handwritten mathematics. Its
+proofs have not been verified by Lean.
+
+For every fixed $0<Z<2/3$, four stored real coordinates suffice to improve
+strictly on the exact two-coordinate affine minimax error, uniformly over
+all actual native current rays. The same four-coordinate model has exact
+initialization, every signed real straight command, recoverable original
+guards, and every prescribed simultaneous native path on its full
+all-times domain. The decoder is one fixed affine map into the original
+ten outputs, measured in their original Euclidean norm.
+
+The quantitative conclusion, with the exact constants defined below, is
+
+$$
+e_{4,\mathsf C}^{\rm aff}(Z)
+\le 4H\sqrt{T-\mu}
+<4H\sqrt T=e_{2,\mathsf C}^{\rm aff}(Z),\qquad \mu>0,
+$$
+
+for each of the literal, guard-recoverable, prescribed-path, and combined
+contracts $\mathsf C$. This is an upper witness and a strict comparison;
+it is not a solution of the four-dimensional minimax problem.
+
+The mathematical suppliers used here are:
+
+- **[M]** *Native FIB: exact two-dimensional affine minimax and an
+  attaining annulus*.
+- **[A]** *Native FIB on the full open domain: affine approximation and
+  finite attainment*, including its fixed-dimension continuation.
+
+In particular, [M, Theorem 6.4] supplies the lower bound over arbitrary
+two-coordinate affine models. That theorem is reused, not presented as a
+new classification of competitors. The native interfaces and path
+integration are supplied by [A, §§1–4 and 9] and [M, §§1–3 and 9]. The
+scalar root and unique lower contact already occur in [M, §7]. The proofs
+below develop the complete active set needed for a strict perturbation,
+give its explicit uniform margin, and realize that very perturbation with
+four actual affine coordinates. Section 9 separates these roles.
+

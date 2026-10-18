@@ -1,0 +1,13 @@
+**定义 18.1（原始直读完整表）。** 当 $d>0$，取 $E=\{S\}\cup\{H_y:y\in\mathcal A\}$，$e_0=S$，逐行定义
+
+$$
+\begin{aligned}
+a(S)&=\operatorname{Query}(p),&c(S)&=[],&\delta(S,y)&=H_y,\\
+a(H_y)&=\operatorname{Halt}(y),&c(H_y)&=[(p,y)],&
+\delta(H_y,z)&=H_y\quad(z\in\mathcal A).
+\end{aligned}
+\tag{SLH.18.1}
+$$
+
+若 $d=0$，只保留 $S,H_\alpha,H_\beta,H_{\mathsf{branch}}$，同样定义真实三种后继；反事实 $\delta(S,\mathsf{absent})=H_{\mathsf{branch}}$。根缺席不实际发生，故这个总表补项不承担实际更新义务。所有行地址无重复，停止行自吸收。非根直读在分支／缺席回复后的完整动作不同，故属于 $\mathcal R_p$ 而不属于 $\mathcal C_p$；根表属于两类。
+

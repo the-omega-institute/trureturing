@@ -1,0 +1,64 @@
+**Lemma 8.2 (five finite child count bounds).** For $U\subseteq S_2$
+write
+
+$$
+n(U)=(\mathbf1_{A\in U},\mathbf1_{B\in U},|U\cap\mathcal G|),\quad
+d_s(U)=|\Gamma_s(U)|\ (s=L,R),\quad
+k(U)=|\{r_u(\varepsilon):u\in U\}|.
+\tag{NCE.53}
+$$
+
+Here $k(U)$ counts attained root constructors, and is zero for empty
+$U$. A vector is dominated by a family if it is componentwise at most
+one member of that family. The following implications hold, with the
+families ordered exactly as displayed:
+
+$$
+\begin{aligned}
+\mathcal F_4&=((1,0,9),(0,1,9),(1,1,4)),\\
+\mathcal F_3&=((0,0,9),(1,0,4),(0,1,4),(1,1,1)),\\
+\mathcal F_{4A}&=((1,0,9),(1,1,4)),\\
+\mathcal F_X&=((1,1,0),(1,0,4),(0,1,1)),\\
+\mathcal F_Y&=((1,1,0),(1,0,1),(0,1,1),(0,0,4)).
+\end{aligned}
+\tag{NCE.54}
+$$
+
+| Hypothesis on the actual set $U$ | A family dominating $n(U)$ |
+| --- | --- |
+| $d_L(U),d_R(U)\le4$ | $\mathcal F_4$ |
+| $d_L(U),d_R(U)\le3$ | $\mathcal F_3$ |
+| $d_L(U\cup\{A\}),d_R(U\cup\{A\})\le4$ | $\mathcal F_{4A}$ |
+| $k(U)\le2$ and $d_L(U\cup\{A\}),d_R(U\cup\{A\})\le3$ | $\mathcal F_X$ |
+| $k(U)\le2$ and $d_L(U),d_R(U)\le2$ | $\mathcal F_Y$ |
+
+Proof. Let $\ell=|U\cap\{A,B\}|$, and let $p_L,p_R$ be the numbers
+of distinct symbols from $S_1$ appearing as the two children of members
+of $U\cap\mathcal G$. The exact table (NCE.26) gives
+
+$$
+d_s(U)=\ell+p_s,\qquad
+|U\cap\mathcal G|\le p_Lp_R,\qquad 0\le p_s\le3.
+\tag{NCE.55}
+$$
+
+For side ranges at most four, zero or one leaf permits at most nine
+branches; two leaves permit at most four. The zero-leaf vector is
+dominated by $(1,0,9)$. This gives $\mathcal F_4$. At range three,
+the branch bounds for zero, one and two leaves are respectively
+nine, four and one, giving $\mathcal F_3$.
+
+For the third row, if $B\notin U$, adjoining $A$ leaves at most nine
+branches, giving $(1,0,9)$. If $B\in U$, adjoining $A$ gives two
+leaves and at most four branches, giving $(1,1,4)$.
+
+For $\mathcal F_X$, if both leaves occur, the root-constructor bound
+excludes every branch. With only $A$ present, adjoining $A$ changes
+nothing and range three permits four branches. With only $B$ present,
+adjoining $A$ leaves only one branch symbol per side, hence one branch.
+With no leaves, adjoining $A$ permits four branches, whose count vector
+is dominated by $(1,0,4)$. These are all cases. For $\mathcal F_Y$,
+two leaves again exclude branches, a single leaf permits one branch,
+and no leaves permit four. The empty set satisfies each applicable
+bound. No locally admissible projection is assumed. $\square$
+

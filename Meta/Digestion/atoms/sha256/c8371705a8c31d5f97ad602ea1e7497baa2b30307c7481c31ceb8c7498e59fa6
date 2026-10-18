@@ -1,0 +1,63 @@
+**Theorem 4.3 (all-cut wire and receipt balance for this interface).**
+For every finite initialized fine prefix satisfying Definitions
+4.1–4.2, let $\operatorname{Wire}(w)$ be the chronological actual
+typed IN/OUT word. Then
+
+$$
+\operatorname{Wire}(w)
+ =\operatorname{Wire}(h_c(w))\,p(w),\qquad |p(w)|\le1.
+\tag{OR.1}
+$$
+
+The completed original receipts correspond bijectively, in their actual
+append-chain order and ordinary/F kinds, to the rows of $h_c(w)$.
+Thus their number is $|h_c(w)|$. Any outstanding row contributes one
+identified staged append or its partial construction, and contributes
+zero completed receipts. No event-word equation uses a postponed actual
+input or a duplicated output.
+
+Proof. Induct on the actual fine reactions. Initially both original
+word and wire word are empty and there is no outstanding receipt.
+A non-IN admission creates no wire letter; an IN admission appends
+exactly its site-bound letter and records it as $p$. No second
+admission is allowed, so it cannot be overwritten by another input.
+An original row has at most one wire action; hence it cannot also
+release an OUT while retaining an accepted IN.
+
+An internal write, scan, birth or handoff changes neither wire word
+nor completed original word. Its actual receipt-prefix growth stays
+attached to the uniquely admitted append, not a new completed row.
+If an unfused OUT occurs, it appends exactly the row's one letter
+and makes that letter $p$. All subsequent internal reactions retain
+it. At a nonfused Finish, the actual admitted row moves to $h_c$:
+its wire projection is exactly that previously accepted/released
+letter, or empty. Removing $p$ therefore leaves (OR.1) unchanged.
+At a fused OUT/Finish, the actual output and $h_c$ gain that same
+letter together. These are all wire cases.
+
+For receipts, admission binds the actual old append position and
+its unique successor template. Internal stages never repeat a
+constructor or publish the next row. Finish occurs only after the
+specified append and lane handoff are complete, so it extends the
+completed receipt correspondence by exactly this one row/receipt
+pair. Its successor phase disables a second Finish for that same
+row. The induction preserves append-chain order and the computed
+ordinary/F kind, including a core meter move on an aliased cell.
+It also proves that the receipt-shaped but Busy suffix cannot be
+counted a second time. ∎
+
+Taking input/output subwords, or restricting input letters to any
+actual site kind $\tau$, gives the corresponding exact word identities.
+For early IN and fused OUT, these specialize to
+
+$$
+I(w)=I(h_c(w))\,A(w),\quad |A(w)|\le1,
+\qquad O(w)=O(h_c(w)),
+\tag{OR.2}
+$$
+
+where $A$ is nonempty exactly when the outstanding row has already
+accepted its original IN. These equations concern the open-row wire
+and completion interface at every fine cut. They do not identify
+that interface with original $Q$.
+

@@ -1,0 +1,17 @@
+**Definition 1.3 (Unrestricted contracts).** An at-most-$n$ literal model has
+an arbitrary encoder into at most $n$ real coordinates, one fixed affine
+decoder, and fixed affine ambient updates for every signed $P_h,Q_t$ on
+their source domains. Both affine offsets and arbitrary encoder irregularity
+are allowed. $\mathsf G$ additionally requires straight domains to be
+saturated under encoder fibers; $\mathsf P$ requires one affine update for
+every prescribed path on its full all-times domain; $\mathsf{GP}$ requires
+both. Thus
+
+$$
+\mathsf{GP}\subseteq\mathsf G\subseteq\mathsf L,\qquad
+\mathsf{GP}\subseteq\mathsf P\subseteq\mathsf L.
+$$
+
+Errors use the original ten-output Euclidean norm and the supremum over the
+open source.
+

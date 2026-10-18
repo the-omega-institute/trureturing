@@ -1,0 +1,26 @@
+**Proposition 2.4 (Scalar minimizer and its residual).** At a fixed positive
+$p=p_\kappa$, prescribe a real relation velocity $u$. Among phase velocities
+$v$ satisfying $d^{\mathsf T}v=u$ and $p^{\mathsf T}v=0$, the unique minimizer
+of $\sum_s p_sv_s^2$ is
+
+$$
+w_s(\kappa)=\frac{d_s}{p_sI},\qquad v=wu,
+\qquad \min\sum_s p_sv_s^2=\frac{u^2}{I}.
+$$
+
+Proof. This is the scalar application of HRM and the velocity in SP §35.7.
+For the explicit residual correspondence, the formula gives
+$d^{\mathsf T}w=1$, $p^{\mathsf T}w=0$, and
+$\sum p_sw_s^2=1/I$. Every other feasible vector is $wu+z$ with
+$d^{\mathsf T}z=p^{\mathsf T}z=0$. Its cross term is
+
+$$
+\sum_s p_sw_sz_s=\frac{d^{\mathsf T}z}{I}=0,
+$$
+
+so its cost is $u^2/I+\sum p_sz_s^2$. Full positivity makes the last term
+zero only for $z=0$. Without the mean-zero gauge, variance has the same minimum
+and the minimizers additionally admit arbitrary common phase velocity. This
+is a use of the existing weighted minimizer, not a new generic optimization
+result. $\square$
+

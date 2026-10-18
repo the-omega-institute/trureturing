@@ -1,0 +1,12 @@
+**Definition 10.3 (global rounding inputs).** Choose $M_\phi,M_\xi\ge1$
+bounding $\|\partial_\phi\Gamma_\xi\|_2$ and
+$\|\partial_\xi\Gamma_\xi\|_2$ on all $X$, and choose rational
+$L\ge\max(1,\sqrt{M_\phi^2+M_\xi^2})$. Then
+$\|\Gamma(x)-\Gamma(z_i^e)\|_2\le L\mathfrak d(x)$ when $i$ is a nearest contact; this is the derivative bound used in QS Theorem 7.1. Use the row-selector $S_7$ for moment rows $(0,1,2,3,4,5,7)$ and define the exact left inverse
+$$
+J_{\rm left}=(S_7A_7)^{-1}S_7,\qquad J_{\rm left}A_7=I_7.
+$$
+The inverse exists by OE Proposition 7.1. Choose rational
+$K_G\ge\max(1,\max_i\|\operatorname{row}_iJ_{\rm left}\|_2)$.
+Bounds for these derivatives and this left inverse are finite original-source inputs, not numerical values supplied here.
+

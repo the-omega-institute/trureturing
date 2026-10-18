@@ -1,0 +1,42 @@
+**Theorem 8.3 (resource and public-schedule transport).** SSA.12–14 give an
+evaluable finite bill on every original run. Under the atomic convention,
+the primitive ordinal and original source/input/copy occurrences correspond
+one for one, while the additional structural prices and storage remain
+as stated. For equal original public boot, acquired public history and
+submitted request, the added publicly charged schedule before response
+commitment is source uniform. This includes private assignments that are
+no-ops.
+
+Proof. The inspection count $3v-1$ follows by two child probes per vertex
+and one return per tree edge. All switch patterns have the same number
+of vertices, so this count is independent of the bits. Every probe in
+the compiler is one of the listed component or route probes. SSA.13
+counts exactly the original-field assignment lists, 48 new vertices per cell
+append, and one commitment. Construction from the primitive foundation
+and summation prove SSA.14. Every original primitive contributes its actual
+receipt append, so no source input, internal gate, source WR, row operation,
+copy, seal, or readout has disappeared from this sum.
+
+PR57's source programs and LJA's literal circuit have value-independent
+precommit instructions, addresses, allocations, and cursor occurrences
+for equal public request data. The new role routes have fixed outer and
+head lengths; moved-to routes have the fixed displayed length. Endpoint
+aliases, terminal tests, and head movement are determined by those public
+cursor occurrences, not private 0/1 values. The finite-register and cell
+components have constant size. Thus every summand of SSA.12 and every
+integer in SSA.13 is the same for the two compared precommit schedules.
+Assignments are not omitted according to their private value. Internal
+port probes/assignments are private suboperations of the atomic patch;
+their private switch topology is not an extra emitted label. The public
+patch label retains the original row/phase, logical cursor occurrence,
+release, tick, and its publicly determined charge. At a permitted response
+release, subsequent public branches can depend on that now acquired
+response, just as in the original machine. Induction through releases
+therefore gives a prefix-causal source-uniform public correspondence.
+
+The graph event's ordinal equality is a consequence of its declared atomic
+granularity, not a physical speed comparison. A physical device exposing
+internal topology probes as public data, or charging differently for
+private no-op writes, would violate the stated observation/price
+hypotheses. No such device is covered by the theorem. ∎
+

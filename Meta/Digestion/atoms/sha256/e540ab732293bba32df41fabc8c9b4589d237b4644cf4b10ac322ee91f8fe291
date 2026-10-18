@@ -1,0 +1,41 @@
+**定义 229.1（Words, labels and complete tables）。** Fix $L\ge3$.
+Write $\Omega_n=\{w\in\{0,1\}^L:w_1=\cdots=w_{n-1}=1,w_n=0\}$,
+and $n(w)=n$ on $\Omega_n$. The label set is $J_L=\{0,1,\ldots,L\}$.
+The complete catalogs contain every constant table $E_\ell$, every
+singleton table with arbitrary labels on answers $0,1$, and, for every
+$i<j$, every table
+
+$$
+N(i,j;a,b,c,d),\qquad O(i,j;a,c,d).
+$$
+
+The $N$ labels are in $00,01,10,11$ order. The $O$ labels are in
+stopped-cell $0,10,11$ order: the second address is not requested after
+the first answer zero. Every terminal label can be any member of $J_L$.
+In particular, an earlier unqueried label is legal. The $N$ completion
+of $O(i,j;a,c,d)$ is $N(i,j;a,a,c,d)$, which acquires both replies.
+Reversing an $N$ pair permutes its information cells; a repeated address
+has singleton information. These information identities do not exempt
+any actual request from the hard request count.
+
+For each $w\in\Omega_n$ the three independent event demands at $(b,e)$
+are
+
+$$
+d_{w,0}=1-b_n-e,\qquad d_{w,n}=b_n-e,\qquad
+d_{w,\{0,n\}}=1-e.
+$$
+
+At $1^L$ the demand on label zero is $1-e$. All
+$3(2^L-1)+1$ rows remain, including multiple-zero words, zero-scored
+rows and negative singleton demands. A probability vector $p_w$ has
+distance from $(1-b_n)\delta_0+b_n\delta_n$ equal to
+
+$$
+\operatorname{TV}(p_w,(1-b_n)\delta_0+b_n\delta_n)
+=\max\{1-b_n-p_w(0),\ b_n-p_w(n),\ 1-p_w(0)-p_w(n)\}.
+$$
+
+Consequently the independent union row cannot be discarded after
+checking the two singleton rows.
+

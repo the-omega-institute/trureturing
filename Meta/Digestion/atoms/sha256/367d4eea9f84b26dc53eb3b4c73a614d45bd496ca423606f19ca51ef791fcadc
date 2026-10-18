@@ -1,0 +1,12 @@
+## 2. The cost mechanism inherited from the literal reader
+
+We use the first-zero, actual path-mask and finite adaptive-tree interfaces of [S1, §§2, 4–5] and [S4, §§1–3], not a new mask or Bellman framework. A one at absolute continuation position $t$ has INITIAL phase mask $\{t,t+1\}\pmod T$. The successful endpoint difference of a whole block is the XOR of its literal one-position masks. Rejection is an independent observation, not an additional parity value. Differences mean $y_{t+1}\oplus y_t$ between consecutive visible successful endpoints; knowing the free initial value makes these equivalent to the endpoint archive.
+
+For a nonconstant phase-only target, any successful root word starts with zero [S4, Lemma 3.1]. Indeed, if it starts with one, choose two differently labelled phases, each with actual INITIAL tail $k-1$ using $W$. Both immediately enter the same absorbing rejection record and have identical archives forever. This argument applies to the full joint prior and both alphabets. It does not impose root zero on a target that depends on INITIAL tails.
+
+Root zero sacrifices the earliest edge while clearing every old tail. Thereafter candidates sharing an archive have a common current value and the same literal current tail. On such a set, any next block either rejects all these candidates or succeeds on all of them. Uniform rejection cannot distinguish different INITIAL labels. A nonzero phase $j$ first has active positions $j-1,j$; after those pass, its interior distinction is silent until cyclic reactivation. Phase zero has its position zero suppressed by the root zero and next becomes active at $T-1=k$.
+
+The lower-bound pair $j=0,J$, both initially of tail zero, therefore remains on one common archive before block $\lceil J/m\rceil$: every earlier block ends before position $J-1$, and also before phase zero reactivates. Adaptation cannot create a difference while both sources are silent; their common tail also makes any rejection uniform. When their labels differ, this proves the paid-arrival lower bound. It is an application of actual transition semantics, not a free displacement to a favorable phase.
+
+An excluded phase can supply parity on the same actual branch. A literal mask of even total charge may restrict to an odd mask on the surviving candidates because its other endpoint has already been excluded. Whether that endpoint is accessible, and whether the same word's leading run is legal with the actual terminal tail, determines the fee. The four laws below make this dependence explicit.
+

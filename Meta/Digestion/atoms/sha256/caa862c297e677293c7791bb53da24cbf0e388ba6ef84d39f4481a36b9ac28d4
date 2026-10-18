@@ -1,0 +1,24 @@
+**数学引文 25.2（经典供应与具体应用的边界）。**
+有限块条件熵与 KL 等号原理按 [Kiriukhin v1 的 Theorem 4.3、
+Corollary 4.4][SM-K] 的有限块域使用；所有平稳来源的唯一性由
+定理 18.3 对每个有限过去的等号另行给出。
+Perron 正归一化按 [Sinatra 等人 v2 的 Eq. (10)][SM-S] 与
+[Burda 等人 v2 的 Eqs. (6)–(13)][SM-B] 的实际作者和条件引用；
+本例的二状态自环矩阵、黄金参数与全柱闭合极限由 (21.5)、(23.2)–(23.4) 明确连接。
+[DLMF §24.15(iv)][SM-F] 供应 Fibonacci 与 Lucas 初值约定，
+[DLMF §5.11][SM-ST] 供应正实阶乘的 Stirling 展开及余项控制。
+标记间隙公式、四角 KL/Fisher 与一阶黄金协方差沿具名卷的既有证明复用。
+这里保留的是这些供应对同一个 no11 来源比较问题的具体数学推导，
+不把经典公式、记号替换或该综合的出现称为全局优先成果。
+
+[SM-BT]: AURIC_FIB_ATOM_BOUNDARY_TRANSPORT_FIBERS_AND_LOOP_CLOSURE.md
+[SM-HR]: AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS.md
+[SM-LC]: AURIC_FIB_ATOM_LOCAL_CLOCK_KERNEL_AND_OUTPUT_RESOLVED_SEAM_VISIBILITY.md
+[SM-SC]: AURIC_FIB_SEAMS_CYCLES_ARITHMETIC_BOUNDARY_RECONSTRUCTION.md
+[SM-BC]: AURIC_FIB_ATOM_PYRAMID_BOUNDARY_CALCULUS.md
+[SM-K]: https://arxiv.org/html/2604.10752v1
+[SM-S]: https://arxiv.org/pdf/1007.4936v2
+[SM-B]: https://arxiv.org/html/0810.4113v2
+[SM-F]: https://dlmf.nist.gov/24.15#iv
+[SM-ST]: https://dlmf.nist.gov/5.11
+

@@ -1,0 +1,32 @@
+**Theorem 1.3 (all third columns and real Kraus compression).** For $\beta>0$ there is a real output orthonormal frame $(b_1,g_1,b_2,g_2,h)$ with
+
+$$
+\sigma_\pm=a|f_1^\pm\rangle\langle f_1^\pm|
++\beta|f_2^\pm\rangle\langle f_2^\pm|,
+\quad f_j^\pm=(b_j\pm ig_j)/\sqrt2.
+\tag{R.7}
+$$
+
+Let $Jb_j=g_j$, $Jg_j=-b_j$ on the real active space $U$. Every real Kraus list has exactly the form
+
+$$
+K_\alpha=(x_\alpha,Jx_\alpha,t_\alpha),\quad
+x_\alpha=\sum_{j=1}^2(\operatorname{Re}z_{j\alpha}b_j-\operatorname{Im}z_{j\alpha}g_j),
+\quad ZZ^\dagger=\operatorname{diag}(a,\beta),
+\tag{R.8}
+$$
+
+$$
+t_\alpha\in\mathbb R^5,\quad
+\sum_\alpha\|t_\alpha\|^2=1,\quad
+\sum_\alpha x_\alpha^Tt_\alpha=0,\quad
+\sum_\alpha(Jx_\alpha)^Tt_\alpha=0.
+\tag{R.9}
+$$
+
+These conditions are also sufficient. At zero complete the active plane by any three real orthonormal directions; (R.8)–(R.9) still hold with the second row of $Z$ zero. Every such actual channel admits a real Kraus list of length $r\leq9$.
+
+**Proof.** Orthogonality and conjugation give $\sigma_\pm=(|\Delta|\pm\Delta)/2$ for $\Delta=\sigma_+-\sigma_-$; the common real part is $|\Delta|/2$. The real skew-normal form gives (R.7), correcting orientation by the unused axis if needed. Positivity of the sum $\sigma_+=\sum_\alpha|K_\alpha\chi_+\rangle\langle K_\alpha\chi_+|$ places every $K_\alpha\chi_+$ in its actual support. Equating real and imaginary parts of $K_\alpha|0\rangle+iK_\alpha|1\rangle=\sum_jz_{j\alpha}(b_j+ig_j)$ gives exactly the first two columns in (R.8), and their weighted output sum gives $ZZ^\dagger=\operatorname{diag}(a,\beta)$. This already supplies both column norms and their inner product: $x_\alpha^TJx_\alpha=0$ separately. The remaining TP equations are exactly (R.9); there is no condition deleting components of $t_\alpha$ along $U$.
+
+The real space of matrices $(x,Jx,t)$ has dimension $4+5=9$. The real encoder Choi matrix is a sum of vectorized real Kraus outer products supported there, so its real spectral decomposition supplies at most nine real Kraus matrices for the same channel. At zero the active $x$ space has dimension two and the same upper bound remains valid. Compression changes the complementary environment representation; all block data must be transformed with it. This is not a two-Kraus assumption. $\square$
+

@@ -1,0 +1,22 @@
+**Definition 9.1 (The exact restricted representation class).** For a
+complex density matrix $\sigma$ in the passive frame let
+$p_i(\sigma)=\operatorname{tr}(R_i\sigma)$. Say that an original
+scalar port admits a constant-preparation-population realization if
+it has a finite representation
+
+$$
+\widehat T(X)=\sum_f\sigma_f\operatorname{tr}(M_fX),\qquad
+\sigma_f\succeq0,\quad\operatorname{tr}\sigma_f=1,\quad
+M_f\succeq0,\quad\sum_fM_f=I_5,\quad
+p(\sigma_f)=p\in\Delta_2\ \text{for every nonzero }M_f.
+\tag{9.1}
+$$
+
+Preparations and effects may be arbitrary complex matrices; the
+preparations may be mixed and the effects need not have rank one.
+This is a property of an admitted realization, not an assumption on
+all competitors and not merely a condition on $T(I_5/5)$.
+Pure preparations with one common population are included. Mixed
+preparations are not assumed to possess a pure-state refinement
+with that common population.
+

@@ -1,0 +1,28 @@
+### 85.3. Smoothness at every equality member, including boundary disphenoids
+
+At the equality pair, section 82 gives balanced disphenoid parameters x^2,y^2,z^2>=2/7 with sum one. The eigenvalues of K_0-T in plus/minus coordinates are
+
+    plus:  -1/2, x^2/2, y^2/2, z^2/2;
+    minus: -1/2, (7/2)x^2-1, (7/2)y^2-1, (7/2)z^2-1.
+
+Consequently the two largest eigenvalues of T-K_0 are both 1/2, and every other eigenvalue is at most zero. The two-dimensional cluster has a spectral gap of at least 1/2, even when one of the remaining eigenvalues is zero at a disphenoid boundary. The sum of the isolated top cluster is real-analytic in the Hermitian entries in a neighborhood of T-K_0; the degeneracy within the two-dimensional cluster causes no problem.
+
+In the original bit coordinates after the allowed marker alignment, its spectral projection is
+
+    P_0=(J_4/4) tensor I_2.                          (8)
+
+Thus f is smooth near (A_0,B_0), f(A_0,B_0)=1/4, and its derivative is
+
+    df=-(1/4)Tr(P_0 dK).                            (9)
+
+There is also a useful global witness minimum with A_0 fixed. For an arbitrary original B, let H_i be the Gram of its four correct-output records in bit sector i. One has H_i>=0 and Tr H_i<=4. The aligned A_0 Gram obeys (G_i^0)^T=H_i^0=2P_i<=2I_4. Since Tr(P_0 T)=5,
+
+    Tr(P_0 K)=(1/4)sum_i Tr(H_i^0 H_i)
+                  <=(1/2)sum_i Tr H_i<=4,
+
+and hence the rank-two variational principle gives
+
+    f(A_0,B)>=Tr(P_0(T-K))/4>=1/4                  (10)
+
+for every original B. This proof uses the fixed-bit tight frames in (1), which hold for every allowed disphenoid, not just the regular tetrahedron.
+

@@ -1,0 +1,25 @@
+**Proposition 8.8 (stopped-law coupling comparison).** Under the same suppliers, a second, weaker quantitative consequence is
+
+$$
+e(M)+\frac{15}{122}\operatorname{osc}(M)>\frac1{195200}.
+\tag{8.37}
+$$
+
+Proof. In the clipped table set $s_0=(\max v+\min v)/2$ and replace only $v$ by $s_0$, retaining $u,B,A,\pi,\tau$. This is one regular constant-emission comparison with its own charged realization. Its suspended Bernoulli perturbation is at most $t/2$. Couple emissions from identical labels maximally, and after matched letters use the same acquired-update randomness. At p emissions already agree. From suspension the probability of reaching the $j$th further suspended visit without completion or an earlier discrepancy is at most $(4/15)^j$. The coupling inequality and the geometric sum therefore give, for complete stopped laws,
+
+$$
+\sup_y\operatorname{TV}(W_y,W_y^{s_0})\le\frac{t/2}{1-4/15}=\frac{15t}{22},
+\qquad
+\sup_x\operatorname{TV}(Q_x,Q_x^{s_0})\le\frac23\frac{15t}{22}=\frac{5t}{11}.
+\tag{8.38}
+$$
+
+Both regular generators terminate almost surely; their legal infinite outcomes have zero mass. Matching letters and labels match every rendered deterministic event and Stop. These bounds thus concern full laws rather than terminal projections. The triangle inequality before configuration averaging, followed by convexity, gives the endpoint mean-law bounds of Theorem 3.1 for this one constant table, with excess bounds $\epsilon_p+5t/11$ and $\epsilon_\beta+15t/22$. Hence
+
+$$
+\frac1{35200}<\max\{\epsilon_p+5t/11,\epsilon_\beta+15t/22\}
+\le\frac{61}{11}e+\frac{15}{22}t.
+$$
+
+Multiply by $11/61$, use $t\le\omega$ and $11/(61\cdot35200)=1/195200$ to prove (8.37). Only synthetic geometric survival is used, not actual-chain convergence or mixing. ∎
+

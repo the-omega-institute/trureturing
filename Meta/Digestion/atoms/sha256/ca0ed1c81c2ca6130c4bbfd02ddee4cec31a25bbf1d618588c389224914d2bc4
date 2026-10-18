@@ -1,0 +1,86 @@
+### 定理 40.3（节点乘积场的 Fisher 可加性）
+
+令 \(V\) 为有限图顶点集。每个顶点有严格正定 FIB 对角态
+
+\[
+\rho_{v,\kappa_v}
+=
+\iota_\Sigma(p_{\kappa_v}),
+\]
+
+并定义乘积状态
+
+\[
+\rho_{\boldsymbol\kappa}
+=
+\bigotimes_{v\in V}\rho_{v,\kappa_v}.
+\]
+
+令 \(u_v=\partial_{\kappa_v}p_{\kappa_v}=d\)。则对任意向量 \(\dot{\boldsymbol\kappa}=(\dot\kappa_v)_v\)，有
+
+\[
+\boxed{
+F_Q(\rho_{\boldsymbol\kappa};\dot{\boldsymbol\kappa})
+=
+\sum_{v\in V}
+\dot\kappa_v^{\,2}\mathcal I_v(\kappa_v).
+}
+\]
+
+#### 证明
+
+乘积状态的导数为
+
+\[
+\dot\rho
+=
+\sum_{v\in V}
+\dot\kappa_v
+\left(
+\bigotimes_{w<v}\rho_w
+\right)
+\otimes
+\dot\rho_v
+\otimes
+\left(
+\bigotimes_{w>v}\rho_w
+\right).
+\]
+
+每个局部 SLD 为
+
+\[
+L_v=\operatorname{diag}(d_s/p_{v,s}),
+\qquad
+\operatorname{tr}(\rho_vL_v)=\operatorname{tr}(\dot\rho_v)=0.
+\]
+
+因此全局 SLD 为
+
+\[
+L
+=
+\sum_{v\in V}
+\dot\kappa_v
+\,
+I\otimes\cdots\otimes L_v\otimes\cdots\otimes I.
+\]
+
+计算 \(\operatorname{tr}(\rho L^2)\) 时，交叉项 \(v\ne w\) 含有因子
+
+\[
+\operatorname{tr}(\rho_vL_v)
+\operatorname{tr}(\rho_wL_w)=0.
+\]
+
+剩余对角项为
+
+\[
+\sum_v\dot\kappa_v^{\,2}
+\operatorname{tr}(\rho_vL_v^2)
+=
+\sum_v\dot\kappa_v^{\,2}\mathcal I_v(\kappa_v).
+\]
+
+证毕。
+

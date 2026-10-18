@@ -1,0 +1,30 @@
+### 55.5 实际 channel 交换与紧重心区域
+
+令 \(T_{\rm sw}\) 交换两个三坐标输入 channel，\(D_{\rm sg}=\operatorname{diag}(I_3,-I_3)\)。由于在式 (55.2) 中 \(b\mapsto-b\) 正好交换 \(P,Q\)，有实际矩阵恒等式
+\[
+D_{\rm sg}H_{hb}T_{\rm sw}=H_{-hb}.
+\tag{55.21}
+\]
+两操作均保持平坦性并与 \(\mathcal S\) 交换，故保持实际循环正交及输出方程。若 \(r>1\)，交换后只乘一个公共相位 \(\bar\zeta/\sqrt r\)，得到
+\[
+X'=X\sqrt r>0,\quad \zeta'=1/\zeta,\quad
+h'=h,\quad b'=-b,\quad r'=1/r.
+\]
+相应系数的精确关系是
+\[
+\begin{gathered}
+l'=m/\bar\zeta,\quad m'=l/\bar\zeta,\quad
+\lambda'=\mu/r,\quad\mu'=\lambda/r,\quad\Sigma'=\Sigma/r,\quad
+\tau'=\tau/r,\\
+B'=-\bar B,\quad C'=(\bar\zeta/\zeta)C,\quad
+A_0'=(\bar BA_0-C\bar A_0)/\zeta.
+\end{gathered}
+\tag{55.22}
+\]
+它们由式 (55.10)、(55.15) 直接验证；特别是有限 \(\tau\) 仍有限，所有原来的非零分母仍非零。因 \(|b|\le\varepsilon\) 对符号对称，任何假想解都可选代表满足
+\[
+0<r<1,\qquad |s|\le1,\quad |t|\le1.
+\tag{55.23}
+\]
+这里不是任意交换 Fourier modes，也没有使用独立 channel 相位的自由度。
+

@@ -1,0 +1,28 @@
+**定理 6.5.2（词级因果因子化）。** 若 $q$ 对动作族共同强 lumpable，则对任意动作词 $w$ 和微观分布 $\mu$：
+
+$$
+\boxed{
+q_*(\mu K_w)=(q_*\mu)\overline K_w,
+}
+$$
+
+其中 $\overline K_w=\overline K_{a_1}\cdots\overline K_{a_m}$。因此所有由动作词和最终宏观事件组成的记录，都可以只从初始粗分布和商核计算。
+
+**证明。**
+
+对词长归纳。空词显然成立。若对 $w$ 成立，追加 $a$：
+
+$$
+\begin{aligned}
+q_*(\mu K_wK_a)
+&=q_*((\mu K_w)K_a)\\
+&=(q_*(\mu K_w))\overline K_a\\
+&=((q_*\mu)\overline K_w)\overline K_a\\
+&=(q_*\mu)\overline K_{wa}.
+\end{aligned}
+$$
+
+第二行使用定理 6.3.1。证毕。
+
+<a id="claim-6-5-3"></a>
+

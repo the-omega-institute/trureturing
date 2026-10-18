@@ -1,0 +1,33 @@
+**Definition 1.2 (complete native tables).** Use [CAR, Definition
+11.1][CAR]. A table has a nonempty finite set $E$, common initial state
+$e_*$, and exactly one fixed instruction at each state:
+
+$$
+\mathsf{Read}(p_e),\qquad \mathsf{ApplyRho},\qquad
+\mathsf{Halt}(Y_e).
+\tag{NRF.4}
+$$
+
+Here $p_e$ is one finite literal word over $\{L,R\}$. Its four
+successors, for replies absent, $\alpha$, $\beta$ and branch, are
+fixed. An update has one fixed successor and applies $\rho$ once to
+the actual register. A halt carries one literal complete row and is
+absorbing. Reads do not alter the register. Root, repeated and absent
+reads are legal. Each instruction and its successors are shared by
+all sources and every visit.
+
+The number $|E|$ includes unreachable states and all accessible
+program positions, mutable selectors, retained replies and output
+distinctions. There is no additional online epoch, history, chart,
+source witness, descriptor interpreter, address generator or cache.
+The operation convention is one whole-word read and one whole-row
+halt. Fixed words, output rows, the table and retained common data
+have arbitrary finite installation, paid separately. State cardinality
+does not bound their literal sizes.
+
+For a prescribed $K\in\mathbb N$, let $\mathcal C_K$ be the tables
+with $|E|\le K$ which, for every $u\in D$, halt from
+$(\rho^N u,e_*)$ with $R_Q(u)$. This is a pointwise termination
+requirement on the entire domain. In particular $\mathcal C_0$ is
+empty.
+

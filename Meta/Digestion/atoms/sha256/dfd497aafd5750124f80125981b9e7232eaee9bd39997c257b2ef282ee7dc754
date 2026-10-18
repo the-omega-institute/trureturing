@@ -1,0 +1,57 @@
+**Proposition 3.2 (All finite exact quarter phases and the obstruction).**
+A positive return has joint phase $i$ or $-i$ if and only if
+$d=p/q$ is rational in lowest terms with positive even denominator $q$.
+More explicitly, for a specified positive $m$,
+
+$$
+\lambda_m=i
+\quad\Longleftrightarrow\quad
+d=1-\frac{4k+1}{2m},\qquad k=0,\ldots,m-1.
+$$
+
+The corresponding energy ratio is
+$J/r=4d/\sqrt{1-d^2}$. A finite positive corrected exact $S$ matrix or
+complete $S$ channel exists under Assumption 1.3 exactly when
+
+$$
+\operatorname{Re}(g)=0
+\quad\hbox{and}\quad
+ d\in\mathbb Q\text{ has even reduced denominator}.
+$$
+
+For every allowed $g,J$, the fixed $H$ pulse alone never gives an exact
+$S$ matrix or its complete channel at positive time.
+
+Proof. The phase equation is
+$m(1-d)=1/2+2k$; $-1<d<1$ gives the indicated range of $k$.
+If $\alpha$ is irrational, no nonzero integer multiple can be an integer
+plus a quarter. If $\alpha=a/b$ in lowest terms, its powers form exactly
+the $b$th roots of unity, containing $i$ and $-i$ precisely when $4\mid b$.
+For $d=p/q$ reduced, $\alpha=(q-p)/(2q)$. If $q$ is even, $p$ and
+$q-p$ are odd and $\gcd(q-p,2q)=1$, so $b=2q$ is divisible by four.
+If $q$ is odd, $b$ is $q$ or $2q$ and is not divisible by four.
+This treats positive, negative and zero $p$.
+
+Suppose $\lambda_m=\pm i$ and $\sin(\pi mx)=0$ simultaneously.
+The phase makes $L=2md$ an odd integer; the sine condition makes $k=mx$
+an integer. Multiplying $d^2+4x^2=1$ by $4m^2$ gives
+
+$$
+4m^2=L^2+16k^2.
+$$
+
+The two sides are respectively zero and one modulo four, a contradiction.
+For $\operatorname{Re}(g)\ne0$ this rules out Theorem 3.1's exact realness
+condition at every quarter phase. For $\operatorname{Re}(g)=0$ that
+condition is automatic, and the denominator criterion is sufficient.
+A $-i$ finite phase can also be replaced by an $i$ phase using the cyclic
+phase subgroup, so the existence criteria for matrix and channel coincide.
+
+For a pulse without corrections, equality of a complete channel forces
+uniform return and $U_m=\zeta S$. The fixed vacuum makes $\zeta=1$,
+and the single-particle block must equal $I$. In particular its sine
+vanishes, contradicting the same modulo-four equation. Repetition of only
+this fixed Hamiltonian with nonnegative durations adds the durations;
+it does not change the conclusion. No assertion about interleaved other
+controls is made by this single-Hamiltonian statement. $\square$
+

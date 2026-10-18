@@ -1,0 +1,19 @@
+**Theorem 6.2 (failure at every positive law).** For every choice of
+$r,d,L$ in Definition 6.1 and every strictly positive block law $\mu$,
+its mandatory premise is false. Thus a sound route with that premise
+accepts no nontrivial full-support labels. Already at $d=2$ it cannot
+by itself be optimizer-cofinal for the original $\sigma_2$.
+
+Proof. Choose $m\ge2$ with $4m>r$. The native witness
+$\mathcal T_{m,d}$ is connected, has incidence at most four and
+positive mass under every strictly positive whole-block law. Its
+positive support is its full actual relation. Theorem 4.4 makes it
+terminal under the specified individual contraction, and Theorem 4.3
+makes $G_r$ disconnected. This refutes the mandatory premise at
+every such law, without selecting a special balance of weights.
+
+At depth two the credited [NCM, Theorem 4.1][NCM] gives
+$\sigma_2=\log_2(25/17)>0$. Labels with $C\ge1$ have
+$-\log_2C\le0$ and cannot approach that positive value. No other
+branch is present in the defined route. $\square$
+

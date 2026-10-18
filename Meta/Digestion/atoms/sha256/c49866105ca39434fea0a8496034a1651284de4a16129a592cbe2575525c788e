@@ -1,0 +1,8 @@
+### Corollary 5.2. Energy-to-fidelity certificate
+
+For any density matrix sigma, pure or mixed,
+
+$$\boxed{\langle H_+|\sigma|H_+\rangle\ge1-\frac12\operatorname{Tr}(\sigma H^{(+)}).} \tag{5.3}$$
+
+This follows by tracing (5.2) against sigma. It is a fidelity bound from specified two- and three-body observable expectations. It supplies no claim about hardware implementation, thermalization rates, sampling cost or uncalibrated-device certification.
+

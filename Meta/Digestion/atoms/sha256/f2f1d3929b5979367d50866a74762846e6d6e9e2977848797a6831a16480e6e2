@@ -1,0 +1,29 @@
+**推论 200.6（实际的零评分证书切片）。** 有如下完整商像的包含：
+
+$$
+\{Q(y):y\ge0,\ \Delta_O(y)+\Gamma(y)\le1\}\subseteq E_N.
+\tag{200.16}
+$$
+
+其明确证书为 $V=0$、$\theta=\Delta_O(y)+\Gamma(y)$。特别地，
+
+$$
+\{Q(y):y\ge0,\ \Delta_O(y)=0,\ \Gamma(y)=0\}
+ \subseteq P_H\subseteq D_N(0)+P_H.
+\tag{200.17}
+$$
+
+若 $\Gamma(y)=0$ 且 $\Delta_O(y)\le1$，可取 $V=0$、$\theta=\Delta_O(y)$。
+
+**证明。** $\delta,\Gamma\ge0$，故 (200.16) 的假设给 $0\le\theta\le1$。
+$V=0$ 满足 $V\ge0$、$\Delta_N(V)=0\le1-\theta$，而定理 200.4 给
+
+$$
+F_{Q(y)-Q(V)}(b)=F_y(b)\le\theta\qquad(b\in H).
+$$
+
+这正是定义 199.2 的完整证书。若 $\delta=\Gamma=0$，则 $Q(y)\in P_H$；
+又 $Q(0)\in D_N(0)$，故得到 (200.17)。所有选择都达到，论证包含零权重和
+$\theta=0,1$ 的闭端点。这里给出的 $V=0$ 只是一类证书，未缩减 $E_N$：在
+$\theta=1$，完整定义依然允许所有非零零成本 $N$ 评分。$\square$
+

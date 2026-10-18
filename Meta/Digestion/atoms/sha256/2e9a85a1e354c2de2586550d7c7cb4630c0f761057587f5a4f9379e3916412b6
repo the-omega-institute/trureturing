@@ -1,0 +1,24 @@
+**定义 74.1（固定来源的首次分离）。** 仍取命题 41.7 的 Fibonacci 数 $f_k$、自然来源域、动作 $F$、量 $Q$ 与数值响应 $Z_{p,m}$。对素数 $p$、$m\ge1$ 及 $x=(x_1,x_2)\in\mathbb Z^2$，置
+
+$$
+L_k(x)=f_{k-1}x_1+f_kx_2,\qquad
+G_m(k,x)=\gcd(|L_k(x)|,p^m)\quad(k>0),
+\qquad r_j=\min\{d\ge1:p^j\mid f_d\}\quad(j\ge1).
+$$
+
+称 $x$ 为 $p$-本原，指两个坐标不同时被 $p$ 整除。称正整数 $T$ 为本节的精确分离端点，指存在两个固定 $p$-本原来源 $x,y\in\mathbb Z^2$，满足
+
+$$
+\begin{aligned}
+&G_m(k,x)=G_m(k,y)&& (0<k<T),\\
+&G_m(T,x)\ne G_m(T,y),\\
+&\exists v,w\in\mathbb N^2,\quad
+v_1,v_2,w_1,w_2<p^m,\\
+&\hspace{16mm}Z_{p,m}(v)(k)=G_m(k,x),\quad
+Z_{p,m}(w)(k)=G_m(k,y)&& (k>0).
+\end{aligned}
+\tag{74.1}
+$$
+
+量词中的四个来源在所有正索引上固定；自然来源实现的是整个数值剖面，并非只实现截至 $T$ 的命中位。
+

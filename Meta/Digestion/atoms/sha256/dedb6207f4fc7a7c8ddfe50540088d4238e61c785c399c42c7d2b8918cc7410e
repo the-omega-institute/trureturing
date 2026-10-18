@@ -1,0 +1,18 @@
+**Proposition 29.2 (what this particular common tuple preserves).**
+For any $t,u\in\mathcal F_D$,
+
+$$
+J_Q(t)=J_Q(u)\quad\Longleftrightarrow\quad
+      E_p(t)=E_p(u)\text{ for every }p\in Q.
+\tag{GDB.117}
+$$
+
+Proof. Equality of fixed-slot tuples is equivalent to equality in each
+slot. $\square$
+
+Thus the kernel of this explicit tuple is the intersection of its
+component kernels. This elementary common-source property imposes no
+condition on an arbitrary optimal original code. Such a code need not
+refine these chosen singleton maps or passively determine every factor;
+its permitted late reply remains essential.
+

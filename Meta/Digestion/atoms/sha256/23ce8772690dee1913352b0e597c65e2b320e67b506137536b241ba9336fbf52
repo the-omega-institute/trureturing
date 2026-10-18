@@ -1,0 +1,19 @@
+**定义 1.2（祖先坐标与首樱桃边界）。** 使用 [AncestorAreaInterval](../../../D5/S3/Arith/FibonacciAtomic/Geometry/AncestorAreaInterval.lean) 的已有坐标定义：
+
+$$
+\begin{aligned}
+a(\alpha)&=a(\beta)=[],\\
+a(\langle S,U\rangle)&=
+ a(S)\mathbin{+\!+}[n(S)n(U)]\mathbin{+\!+}a(U).
+\end{aligned}
+$$
+
+这个左右叶数乘积坐标对应 Loday，*Realization of the Stasheff polytope*，[arXiv:math/0212126v1](https://arxiv.org/abs/math/0212126v1)，§1、印刷页2的 $a_i b_i$；其多面体实现不是这里的新结论。向量按中序叶间隙编号，长度为 $n(T)-1$。一个分支在其左右子树交界处的坐标等于一，恰在两个孩子都是叶时成立，因为两个正整数叶数之积等于一恰在二者都为一时成立。称这样的分支为樱桃。任一至少两叶的有限满二叉树都有樱桃：取最深分支，其孩子不能再是分支。因此定义
+
+$$
+\tau(T)=\min\{j\in\{1,\ldots,n(T)-1\}:a(T)_j=1\}
+\qquad(n(T)\ge2).
+$$
+
+$\tau$ 是第一对同父相邻叶的边界编号，不是坐标读口返回值。单叶时约定 $\tau(T)=0$。
+

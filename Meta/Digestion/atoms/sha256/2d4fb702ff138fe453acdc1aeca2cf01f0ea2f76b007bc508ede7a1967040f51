@@ -1,0 +1,10 @@
+**定理 3.1（原替换的全树运输）。** 对所有 $t\in\mathcal T,p\in\mathcal P,j\ge0$，
+
+$$
+E_p(\rho^jt)=E_{F^j(p)}(t).
+$$
+
+$F$ 的 Gram 更新为 $(A,B,C)\mapsto(B,\Delta,0)$。
+
+证明。一阶两侧在 $\alpha$ 处同为 $b$、在 $\beta$ 处同为 $b\times a$，并保持同一个有序叉积节点；结构归纳使两侧对所有树相等。重复应用此等式给所有 $j$。$K\perp b$ 且 $|K|^2=\Delta$ 给 Gram 更新。实际执行仍是 $(\rho^jt,p)$，这个等式没有执行 $F$ 制备。
+

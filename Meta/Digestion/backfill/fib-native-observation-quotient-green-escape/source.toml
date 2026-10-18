@@ -1,0 +1,5 @@
+source_id = "fib-native-observation-quotient-green-escape"
+path = "docs/develop/theory/FIB_NATIVE_OBSERVATION_QUOTIENT_GREEN_ESCAPE.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

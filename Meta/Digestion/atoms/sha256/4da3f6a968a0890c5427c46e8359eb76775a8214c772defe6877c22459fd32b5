@@ -1,0 +1,12 @@
+**Remark 228.5 (Numerical corrections without an additional theorem).** For
+$q=(0,0,-3,3,1/2;0)$, the readings at
+$o,p,u_3,v_3,u_4,v_4,u_5,v_5$ are
+$0,0,-3/2,-17/8,0,1/5,1/8,1/2$; in particular the $u_3$ value is
+$-3/2$. The selected-mask $19/20$ comparison concerns $Y/10$, where
+$A_{10000}=5,P_{10000}=7,A_{11000}=6,C_{01100}=6,P_{11100}=1,
+C_{11110}=5,A_{01101}=4,P_{01111}=3$. This existing example has
+$W_Y=23$, $Q(Y)=(2,-5,-6,0,5;37)$ and $B_N=B_O=33$.
+Its sharp unrestricted and single-$T_{\{3,4,5\}}$ objectives are both
+$1/2$ after scaling by ten. These are corrections to that comparison;
+they assert no further erasure-family theorem.
+

@@ -1,0 +1,44 @@
+## 445. Published reductions to the whole source range
+
+Suppose a flat exists in the class of Section 444. In the framework
+of Section 130, take the reservoir part to be all of E and the special
+part to be empty. This is allowed even if a label
+happens to occur only axially; no transverse witness is presumed.
+Sections 132-134 choose M maximal among all pi-selected reservoir
+labels and provide four distinct actual labels M,Z,C,D and a genuine
+source tau with
+
+    tau=(Z,M,C,D,M,C), p_M=1, p_Z=0,
+    m>=1+c+d, z>=1+m+c>m.
+
+Here p_e counts original flat pi slots. In particular c,d<m-2.
+Section 182 provides an additional upper-threshold reservoir.
+Sections 296-298 and 304-307 then prove that every one of the six
+reservoirs has a genuine occurrence and every flat is axial-selected.
+The degree-eight strengthening mentioned earlier is unnecessary.
+
+Sections 314-316, under the four-distinct-frame hypothesis, provide
+a second actual label U with u>m. Section 317 shows that the source
+flat's other axis is the sixth label V, and proves globally that
+sigma is the unique flat owner and the only owner with fixed pair
+C,D. Thus
+
+    sigma=(M,C,D,V,C,D), 1<v<=m,
+    (m-1)*(v-1)>=(c+d)^2,
+    u>m, z>=1+m+c,
+
+and every other original owner is genuine. In particular Z,U have
+wholly genuine stars. This published reduction covers both ranges
+v<=m-2 and m-2<v<=m; it does not itself exclude the latter.
+
+Sections 318-321 apply the complete-star maximum-gap theorem to the
+larger of Z,U. Every cosh outside those two labels is at most m, and
+the two largest other values are min(z,u) and m. With all the actual
+degree, circle and complete-angle hypotheses retained, this gives
+
+    |z-u|<m+1,
+    u<z+m+1 and z<u+m+1.                          (445.1)
+
+This is the source of both strict one-sided gaps used by the
+low-sixth proof. They are not inferred from a local scalar relaxation.
+

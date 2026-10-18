@@ -1,0 +1,9 @@
+**定义 7.1（叉积 FIB 表示与同源联合响应）。** 在定向 $\mathbb R^3$ 取 $a=e_1,b=e_2,k=b\times a=-e_3$，递归定义 $q\alpha=a,q\beta=b,q\langle s,t\rangle=qs\times qt$。取
+
+$$
+Ra=b,\quad Rb=k,\quad Rk=a,\qquad
+R=\begin{pmatrix}0&0&-1\\1&0&0\\0&-1&0\end{pmatrix}.
+$$
+
+对只有替换动作 $\rho$ 的共同来源 $T_n$，定义联合输出 $f(n)=(cT_n,qT_n)\in\mathbb R^2\oplus\mathbb R^3$。线性实现允许实线性状态更新与实线性输出，没有额外正性要求。
+

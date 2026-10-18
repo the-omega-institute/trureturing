@@ -1,0 +1,30 @@
+**定理 53.3（Value dependence inside the maximal-cut family）。** For (53.1),
+
+$$
+0\le C_{\rm pre}(f)-C_{\rm ad}(f)\le1.
+\tag{53.12}
+$$
+
+If at least one fibre is nonconstant, write $\alpha=\max\{\psi(b_0),\psi(b_1)\}$. Then the two exact fees are $p+\alpha$ and $p+\psi(b)$. Their difference is one precisely when both scalar residual tables have one-block fee, while their ordered-pair residual table has three distinct labels. This can occur at every $p\ge3$. It is a value-dependent comparison for this family, not a universal bound on preset excess.
+
+**证明。** A constant full fibre has constant $b_v$ and $\psi(b_v)=0$. Thus (53.5) gives the displayed forms whenever some fibre is nonconstant. If $\alpha=0$, both residual components are constant and so is $b$. If $\alpha=1$, each scalar outside set $i\ge2$ is constant and each scalar residual has at most two labels. The pair outside is consequently constant. The pair residual has at most three labels, one at each of indices zero and one and a single outside label. For $p=2$ the outside is empty and there are at most two. It has fee one unless it has three distinct labels, when its last possible differing boundary is at most one and its fee is two. Three pair labels require both scalar tables to be nonconstant, since one constant component would leave at most two pair labels.
+
+If $\alpha\ge2$, let $B_v$ be each nonconstant component's last differing boundary. A component with fee at most one has no differing boundary beyond index one. The pair's differing boundaries are exactly the union of those of its components. Therefore the pair also fails the one-block condition and
+
+$$
+\psi(b)=\max\{2,\max_{v:\,b_v\text{ nonconstant}}B(b_v)\}=\alpha.
+\tag{53.13}
+$$
+
+This covers all cases and proves the characterization.
+
+For actual attaining examples, choose $A\ne B$, put $R_0=R_1=A$, and put all non-residual tail-zero labels equal to $A$. On the residual order (53.8) let
+
+$$
+b_0=(A,B,A,A,\ldots,A),\qquad
+b_1=(A,A,B,B,\ldots,B).
+\tag{53.14}
+$$
+
+For every $p\ge3$ each component has additional fee one, but the pair has three labels and additional fee two. Both complete-source fibres have positive-tail label $A$. Their exact fees are $C_{\rm ad}=p+1$ and $C_{\rm pre}=p+2$. The common paid parent is (53.6). Value zero uses suffix $01$, marking only its $B$ endpoint; value one uses suffix $11$, marking its two $A$ endpoints relative to its outside label $B$. The preset pair uses $11\mid11$: residual indices zero, one and two have columns $(1,0),(1,1),(0,1)$ respectively, and every later index has column $(0,0)$ and the same pair label as index two. These words start at actual tail zero and contain at most four consecutive ones, strictly below $k=2p$ for $p\ge3$. Every reached block is paid. This proves attainability of the claimed one-block excess. ∎
+

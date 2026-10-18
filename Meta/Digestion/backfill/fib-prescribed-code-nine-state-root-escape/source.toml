@@ -1,0 +1,5 @@
+source_id = "fib-prescribed-code-nine-state-root-escape"
+path = "docs/develop/theory/FIB_PRESCRIBED_CODE_NINE_STATE_ROOT_ESCAPE.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

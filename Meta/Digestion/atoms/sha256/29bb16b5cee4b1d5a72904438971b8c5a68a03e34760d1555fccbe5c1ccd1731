@@ -1,0 +1,54 @@
+### 104.8. Opposite-polar and quotient-rank margins
+
+**Lemma 104.7.** The actual chart satisfies
+\[
+A<3/4-1/50000,\qquad1-r^2>10^{-10}.
+\tag{104.51}
+\]
+
+**Proof.** For the first claim suppose \(3/4-1/50000\le A<3/4\) and put \(\epsilon=(B-1/4)/B\le1/12500\). The actual 23 and 24 errors imply
+\[
+\Re(\overline u^2\mathsf R_{23})>1-\epsilon,
+\qquad\Re(u^2\mathsf R_{24})>1-\epsilon.
+\]
+Thus \(\|b_3-u^2b_2\|,\|b_4-\overline u^2b_2\|<\sqrt{2\epsilon}\).
+By the first identity in (104.20), \(b_1\) differs from a real multiple of \(b_2\) by norm less than \(25\sqrt{2\epsilon}\). Projecting orthogonally onto \(b_2\) gives
+\(1-r^2<1250\epsilon\le1/10\). Hence \(r\ne0\). For \(\sigma=\operatorname{sign}r\),
+\(|r-\sigma|\le1-r^2<1250\epsilon\).
+Set \(x=\mathsf R_{23}\), \(y=\mathsf R_{13}\). Gram Cauchy–Schwarz gives
+\[
+|y-rx|\le\sqrt{1-r^2}\sqrt{1-|x|^2}<50\epsilon,
+\qquad |x-u^2|<\sqrt{2\epsilon}.
+\]
+Therefore \(|y-\sigma u^2|<\sqrt{2\epsilon}+1300\epsilon<44/375\), so
+\(|K_{13}-\sigma A\overline u^2|<11/125\). Its original error then forces
+\[
+|1/2-\sigma A\overline u^2|<169/500.
+\]
+But (104.41) gives \(|\Re u^2|<7/8\), and \(A>7/10\) implies that the square of this modulus is greater than
+\(1/4+A^2-7A/8\ge51/400>49/400\). It therefore exceeds \(7/20=175/500\), a contradiction.
+
+For the second claim put \(\delta=\sqrt{1-r^2}\), and suppose \(\delta\le10^{-5}\). Write \(b_2=rb_1+\delta e\) with \(e\perp b_1\) unit. Formula (104.20) and (104.41)–(104.42) bound the perpendicular components of \(b_3,b_4\) by \(21\delta<1\). Choose the unit phases \(\beta_3,\beta_4\) of their nonzero \(b_1\)-components, and \(\beta_1=1\). The elementary identity
+\[
+\|b_i-\beta_i b_1\|^2=2(1-|\langle b_1,b_i\rangle|)
+\le2(1-|\langle b_1,b_i\rangle|^2)
+\]
+gives distances less than \(30\delta\).
+On the distinct original fibres \(\{1,3,4\}\), compare \(\mathsf R\) with the rank-one correlation
+\((\mathsf R_0)_{ij}=\overline{\beta_i}\beta_j\). Its oriented edge differences are bounded by \(30\delta,60\delta,30\delta\). Choose phases \(\kappa_i^2=\overline{\beta_i}\). The rank-at-most-two correlation
+\(H'=\operatorname{diag}(\kappa)^*H_{134}\operatorname{diag}(\kappa)\)
+satisfies \(H'\odot H'=H_{134}^{\odot2}\odot\overline{\mathsf R_0}\).
+This is a comparison matrix, not a replacement physical channel.
+
+If \(E\) and \(E_0\) denote the sums of the three squared edge errors for the actual product and this comparison, respectively, then
+\(\sqrt E\ge\sqrt{E_0}-\sqrt{5400}\delta>\sqrt{E_0}-74\delta\).
+The uniform original density on \(\{1,3,4\}\), the traceless three-dimensional trace-norm bound, and RT III Theorem 93.1 give
+\[
+t\ge\frac23\sqrt E>
+\frac{\sqrt{21-9\sqrt[3]9}}6-\frac{148}3\delta.
+\tag{104.52}
+\]
+The first constant exceeds \(251/1000\): use \(\sqrt[3]9<2081/1000\) and
+\((21-9\cdot2081/1000)/36>(251/1000)^2\).
+For \(\delta\le10^{-5}\), the right side of (104.52) exceeds \(1/4\), contradicting (104.2). \(\square\)
+

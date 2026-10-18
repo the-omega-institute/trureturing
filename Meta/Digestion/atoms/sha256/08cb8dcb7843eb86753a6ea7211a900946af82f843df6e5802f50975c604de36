@@ -1,0 +1,62 @@
+**Lemma 18.1 (each first-absent branch has a limited candidate capacity).**
+Let a universally correct procedure have protected budget $k$, and let
+$a_1,\ldots,a_t$ be its actual literals on the all-branch entry path,
+where $t\leq k$. For complete $P$, put
+
+$$
+B_i=\{x\in I:x\preceq a_j\text{ for some }j\leq i\},\qquad
+ d_i=|B_i\setminus B_{i-1}|.
+\tag{CNA.28}
+$$
+
+These $a_i$ are arbitrary literals, not necessarily in $I$.
+Whenever $d_i>0$,
+
+$$
+d_i\leq 2^{k-i}.
+\tag{CNA.29}
+$$
+
+**Proof.** There are at least $d_i-1$ newly certified vertices of $I$
+that are strict ancestors of $a_i$. If $a_i\in I$, only $a_i$ itself
+must be excluded. If it lies beyond $I$, all $d_i$ vertices are strict
+ancestors; discard one to retain the stated weaker count. Choose a set
+$S$ of $d_i-1$ such vertices. For every $t_0\in S$, no earlier branch
+query is at or below $t_0$. It is therefore consistent to put the
+invocation leaf at $t_0$: all earlier queries are branch, and query $i$
+is absent. The candidate leaf is exposed, because $t_0\in I$.
+
+Suppose $d_i>2^{k-i}$, so initially $|S|\geq2^{k-i}$. Set $r=k-i$.
+Before each remaining query maintain at least $2^r$ possible blockers,
+all consistent with the finite transcript and with no leaf yet read.
+For an arbitrary next literal $b$, discard the at most one candidate
+$t_0=b$. Every remaining candidate belongs to exactly one of two groups:
+
+- $t_0\prec b$, giving absent;
+- $t_0\npreceq b$, giving branch under finite padding.
+
+Choose a group of largest cardinality and give its reply. If $r\geq1$,
+it has at least $\lceil(2^r-1)/2\rceil=2^{r-1}$ members. Decrement $r$.
+This argument includes off-chain, below-hole, repeated and root queries.
+An arbitrarily long literal still has only these two nonleaf outcomes
+and can hit at most one candidate exactly.
+
+Every chosen finite transcript has the simultaneous finite realization
+of Lemma 16.4 for each surviving blocker. Hence the procedure cannot
+avoid this argument by infinite local work or a $(k+1)$st Read. If it
+Releases or Returns early with any candidate remaining, choose one of
+them. Otherwise after all $k-i$ further Reads at least one remains.
+Choose a final depth $H$ beyond every literal used, and realize the
+whole transcript by the finite all-alpha padded source with that leaf.
+Its $\rho$ successor has the same branch/absent transcript and a different
+exposed leaf label in the invocation row. Lemma 16.1 contradicts
+correctness even with arbitrary later computation and storage. This
+proves (CNA.29). $\square$
+
+Equivalently, $s$ remaining Reads can guarantee an actual hit among at
+most $2^s-1$ such candidates: a query hits at most one, and its two
+nonleaf continuations each have $s-1$ Reads. The finite-padding argument
+is essential. It makes this a lower bound for the native four-reply
+port on actual finite trees, rather than a presumed comparison-oracle
+restriction on the observer.
+

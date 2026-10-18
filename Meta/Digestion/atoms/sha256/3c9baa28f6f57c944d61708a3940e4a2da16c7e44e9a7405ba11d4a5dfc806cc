@@ -1,0 +1,39 @@
+**Source correspondence 8.2 (primary intermediate methods).** The
+literature status of the native bounds and counterexamples is
+`repo-derived`: their ordinary proofs are §§3--7. The following
+primary interfaces are `literature-attested` intermediate methods,
+with the stated operation correspondence. No worldwide originality
+or exhaustive absence claim is made.
+
+Miltersen, Nisan, Safra and Wigderson,
+[*On Data Structures and Asymmetric Communication Complexity*,
+BRICS RS-94-41, §1.1, printed pp. 1--2](https://www.brics.dk/RS/94/41/BRICS-RS-94-41.pdf),
+defines static data $d$, a later query $q$, preprocessing $\phi(d)$
+into $s$ cells of $b$ bits and a $t$-probe reader. Its forward
+communication simulation sends cell addresses and cell contents.
+Here a source holder first exports $E(t)$ before $p$ exists, and
+the later requester sends $w(E,D,p)$ and receives a native reply.
+Our fresh reply is constrained to $r_t(w)$, and cannot be an arbitrary
+computed cell or target value. All of $E$ is available as local
+input after handoff. Address length and installed state are separate
+resources. Thus the classical framework motivates the partition
+analysis, but its unrestricted communication converses or general
+data-structure bounds do not implement a native reader here.
+
+Gál and Miltersen,
+[*The Cell Probe Complexity of Succinct Data Structures*, BRICS
+RS-03-44, §1 and §3, printed pp. 1--5 and 11](https://www.brics.dk/RS/03/44/BRICS-RS-03-44.pdf),
+defines systematic representations $\phi(x)=x\cdot\phi^{\ast}(x)$
+with an index accompanying the input, and discusses source-dependent
+help bits in its prefix-sum argument. Our retained code has the
+role of an index while the original source remains readable, but
+it is prepared by paid native Reads and probed through constructors,
+not through arbitrary representation bits. The source-dependent
+index may correlate coordinates; this is the reason to preserve
+joint fibers. Neither its parity lower bound nor the separately
+cited help-bit theorem is a premise of Lemma 4.3. That lemma proves
+the needed weighted dependence bound for the actual five native
+gadgets. The box-cover upper in Theorem 6.3 uses the elementary
+probabilistic method and union bound, with its complete argument
+given there, not a claimed new general covering method.
+

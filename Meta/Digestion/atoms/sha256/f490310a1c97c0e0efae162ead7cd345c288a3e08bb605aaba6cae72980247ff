@@ -1,0 +1,30 @@
+**Theorem 2.6 (Exact rectangular residual).** Let $\kappa_0,\kappa_1$ be
+interior points of the same fiber and let $\alpha\in\mathbb R$. Traverse the
+four legs
+
+$$
+(\kappa_0,0)\to(\kappa_1,0)\to(\kappa_1,\alpha)
+\to(\kappa_0,\alpha)\to(\kappa_0,0).
+$$
+
+The real phase residual is exactly
+
+$$
+h=\alpha\bigl(w(\kappa_1)-w(\kappa_0)\bigr),
+\qquad d^{\mathsf T}h=0,
+\qquad p_{\kappa_0}^{\mathsf T}h=-\alpha(\kappa_1-\kappa_0).
+$$
+
+Proof. The first and third legs have $d\chi=0$. The other two legs integrate
+to $\alpha w(\kappa_1)$ and $-\alpha w(\kappa_0)$. The relation identity
+follows from $d^{\mathsf T}w=1$. Since
+$p_{\kappa_0}=p_{\kappa_1}-(\kappa_1-\kappa_0)d$,
+
+$$
+p_{\kappa_0}^{\mathsf T}w(\kappa_1)=-(\kappa_1-\kappa_0),
+\qquad p_{\kappa_0}^{\mathsf T}w(\kappa_0)=0.
+$$
+
+This proves the weighted identity for finite rectangles without replacing the
+integral by an infinitesimal approximation. $\square$
+

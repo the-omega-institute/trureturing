@@ -1,0 +1,73 @@
+## 4. Support of the same law
+
+Let $C$ be a finite exterior event, not involving coordinate $0$, and assume
+$C\subseteq\{X_{-1}=X_1=0\}$. Every component $(T^i)_*P_N$ in (3.1) has
+$1\leq i\leq N$, so its center is the original bit $b_i$.
+Pair each center-zero word satisfying $C$ with its center-one insertion.
+This is a legal bijection onto the center-one words satisfying $C$: both
+neighbors are zero, and changing the center preserves every exterior
+coordinate, including padding. Summing (1.2) over these pairs gives
+
+$$
+\frac13(T^i)_*P_N(C,X_0=0)
+\leq(T^i)_*P_N(C,X_0=1)
+\leq(T^i)_*P_N(C,X_0=0).
+\tag{4.1}
+$$
+
+The inequalities survive averaging and cylinder limits. A monotone-class
+argument extends them to every $C$ in the exterior sigma-field contained in
+$\{X_{-1}=X_1=0\}$. Let
+$p_\star=\mathbb E_{Q_\star}[X_0\mid\mathcal F_\infty]$. The Radon--Nikodym
+form of (4.1) gives
+
+$$
+p_\star=0\quad\text{if }X_{-1}=1\text{ or }X_1=1,
+\qquad
+\frac14\leq p_\star\leq\frac12\quad\text{if }X_{-1}=X_1=0,
+\tag{4.2}
+$$
+
+almost surely.
+
+For any exterior event $A$ (with no condition on the neighbors), split it
+according to whether both neighbors are zero. On the free part, (4.1) says
+$Q_\star(A\cap\{X_{-1}=X_1=0\},X_0=0)\geq
+Q_\star(A\cap\{X_{-1}=X_1=0\})/2$; on the complementary part legality
+forces $X_0=0$. Hence, for every event $A$ not involving coordinate $i$,
+
+$$
+Q_\star(A,X_i=0)\geq\frac12Q_\star(A).
+\tag{4.3}
+$$
+
+Applying (4.3) successively to the coordinates of an all-zero word gives
+
+$$
+Q_\star([0^m])\geq2^{-m}\qquad(m\geq1).
+\tag{4.4}
+$$
+
+Let $w\in B_n$. Start with the cylinder $[0^{n+2}]$ and insert the $k(w)$
+ones of $w$ one at a time in its middle $n$ coordinates. Every intermediate
+word is legal and the inserted coordinate has two zero neighbors, even when
+$w$ begins or ends with $1$. Applying (4.1) at each insertion gives
+
+$$
+Q_\star([w])\geq Q_\star([0w0])
+\geq3^{-k(w)}Q_\star([0^{n+2}])
+\geq2^{-(n+2)}3^{-k(w)}>0.
+\tag{4.5}
+$$
+
+Thus every legal finite cylinder is positive. Every legal finite next-extension
+$wz$ is another legal cylinder, so
+
+$$
+Q_\star([wz])/Q_\star([w])>0.
+\tag{4.6}
+$$
+
+When the last bit of $w$ is $1$, legality makes the sole extension $z=0$ have
+conditional probability one.
+

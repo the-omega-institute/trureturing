@@ -1,0 +1,37 @@
+**Theorem 3.1 (Necessary bound, strict certificate and finite detectability).** Under these pair hypotheses, attainment by this same law implies, for every integer $r\ge0$,
+
+$$
+|T_{L,r}(P,f)|\le2LF\sqrt{\frac{c_\star}{r+1}}.
+\tag{3.2}
+$$
+
+Consequently any verified strict inequality
+
+$$
+|T_{L,r}(P,f)|>2LF\sqrt{\frac{\bar c}{r+1}}
+\tag{3.3}
+$$
+
+implies $d(P)<c_\star$. Moreover, if the pair is productive, meaning $S_P(f)\ne0$, every sufficiently large finite $r$ satisfies (3.3), without an attainment assumption in this detectability statement.
+
+**Proof.** Under attainment, the supplied zero-total-response theorem and (2.2) make the interior sum zero. Conditional projection and stationarity give
+
+$$
+\mathbb E_P(q_i-q_{r,i})^2=D_r(P)-c_\star.
+$$
+
+Using $|(x-u)^2-(x-v)^2|\le2|u-v|$ for $x\in\{0,1\}$ and $u,v\in[0,1]$, then Cauchy–Schwarz and (1.3), yields
+
+$$
+\left|T_{L,r}-S_P(f)\right|
+\le2F\sum_{i=1}^L\mathbb E_P|q_i-q_{r,i}|
+\le2LF\sqrt{D_r(P)-c_\star}
+\le2LF\sqrt{\frac{c_\star}{r+1}}.
+$$
+
+This proves (3.2). Equation (3.3) contradicts it since $c_\star\le\bar c$, and (1.1) then gives strict nonattainment. For an arbitrary stationary pair law, increasing-field $L^2$ conditional projection gives $q_{r,i}\to q_i$. The same loss bound and the finite interior sum give $T_{L,r}\to S_P(f)$. If $|S_P(f)|>0$, eventually $|T_{L,r}|>|S_P(f)|/2$ while the threshold in (3.3) is smaller than $|S_P(f)|/2$. Thus a finite violation exists. $\square$
+
+For $P=P_\theta$, all of (3.1) is determined by actual cylinder probabilities in $[1-r,L+r]$. On a positive-mass radius-$r$ exterior atom with words $u,v$, its posterior is $\lambda M_uM_1M_v\mathbf1/(\lambda M_uAM_v\mathbf1)$. At zero denominator it may be set to zero; forced atoms have zero numerator. Empty words handle $r=0$. Overlap of the block and windows is retained when integrating $f_C$.
+
+[Conditional Response, equations (4.2)–(4.3)][R] allow $Fc+2LF\sqrt{c/(r+1)}$ for general null directions. Theorem 2.1 removes exactly the exterior $Fc$ allowance for this subclass. Finite $T_{L,r}$ is not identified with total $S_P(f)$: their equality is only a limit unless separately proved. Detectability gives neither a rate nor a uniform or efficient radius, and nullity alone gives no productive sign.
+

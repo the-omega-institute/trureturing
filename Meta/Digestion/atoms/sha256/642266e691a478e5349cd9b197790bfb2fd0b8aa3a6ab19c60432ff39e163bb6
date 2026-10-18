@@ -1,0 +1,52 @@
+**Theorem 80.1 (positive finite coefficient for every fixed real strength).**
+For each fixed real $0\le s<s_0$, the limit
+
+$$
+K(s)=\lim_{A\to\infty}e^A[\mathcal T(s)-\mathcal T_A(s)]
+\tag{FA.48}
+$$
+
+exists and lies in $(0,\infty)$. This is existence, not an evaluated
+coefficient or a claim of continuity in $s$.
+
+**Proof.** Theorem 72.1 expresses the attained value by eight Hermitian
+$5\times5$ Toeplitz blocks, with entries represented by real and imaginary
+coordinates. Positive semidefiniteness is equivalent to nonnegative
+principal minors. All constraints and the objective are polynomial in
+these coordinates and $t=e^A-1$, with fixed real source data and fixed
+real $s$. The graph of the maximum can be written by the first-order
+formula: there exists a feasible tuple with this objective and every
+feasible tuple has objective at most this one. Real quantifier elimination
+therefore makes the graph semialgebraic. This argument allows arbitrary
+fixed real parameters; it does not require $s$ to be algebraic.
+
+Theorems 74.2–74.3 give positive finite constants $c_s,C_s$ and $t_s$
+with
+$c_s\le t[\mathcal T(s)-\mathcal T_{\log(1+t)}(s)]\le C_s$
+for all $t\ge t_s$. The upper construction uses exactly the finite
+auxiliary family FA.31: its two specified null vectors
+$\mathbf c_\pm$, the weight
+$a_0=(4\sum_\pm\mathbf c_\pm^TL_0^{-1}\mathbf c_\pm)^{-1}$,
+the at-most-three-atom IR decomposition of
+$L_0-a_0\sum_\pm\mathbf c_\pm\mathbf c_\pm^T$, and
+
+$$
+\nu_*=\max_\pm
+ \frac{m_1h_2^2(e_\pm)_1^2}{a_0d^2\mathfrak c(\mathbf c_\pm)}.
+$$
+
+Thus no undefined auxiliary constant is being assumed. The source's
+negative spectral positivity FA.27 and FA.29 provide the strict lower
+bound. FA.32 supplies the upper bound also at $s=0$, where its contrast
+adjustment term is zero.
+
+For completeness, the limit consequence of semialgebraicity needs only
+its one-dimensional finiteness property. For any real threshold $a$, the
+set where the bounded quotient above exceeds $a$ is semialgebraic, hence
+a finite union of points and intervals; it is eventually either empty
+or an entire tail. If liminf and limsup differed, a threshold strictly
+between them would have infinitely many visits and omissions on every
+tail, a contradiction. Hence a limit exists; the two-sided bounds make
+it positive and finite. Finally $e^A/t\to1$. No fixed-strength limit
+has been interchanged with an endpoint limit. $\square$
+

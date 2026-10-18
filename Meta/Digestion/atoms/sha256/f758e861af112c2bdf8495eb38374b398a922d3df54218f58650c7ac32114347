@@ -1,0 +1,11 @@
+**定义 21.3（不剪枝的整个粗动作公式）。** 在全部 $m^2$ 个行对上，从 $(0,0)$ 闭包生成 $P$：若 $(e,f)\in P$ 且 $\kappa(z)=\kappa(z')$，加入 $(\bar\delta(e,z),\bar\delta(f,z'))$。不以来源实现、缓存真值或请求地址一致过滤这六种回复对。置
+
+$$
+\operatorname{CoarseAll}(\mathcal O)=
+\bigwedge_{(e,f)\in P}[a(e)=a(f)],\qquad
+\Phi^{\rm coarse}_{M,F}=\Phi^{\rm raw}_{M,F}\land\operatorname{CoarseAll}.
+\tag{SLH.21.4}
+$$
+
+两个请求动作相等要求其字面地址相等；两个停止要求整个向量相等；请求与停止不等。$P$ 仅依总转移、初态和查询／停止行类别，有效吸收也在该生成中。由 `ActualObserverPairReach.pairReach_iff_equal_coarse_response_words` 与 `pairActionInvariant_iff_allHistoryFactorization` 的原论证，$P$ 恰表示从共同初态沿两个粗相等回复词到达的全部对。取报告地址全为根给必要方向，投影回复词给充分方向，余域换为向量不改变证明。因此 $\Phi^{\rm coarse}$ 当且仅当属于 $\mathcal C_{M,F}$。它还约束没有真实来源能产生的回复词及停止后报告，不从 $\Phi^{\rm raw}$ 推出。
+

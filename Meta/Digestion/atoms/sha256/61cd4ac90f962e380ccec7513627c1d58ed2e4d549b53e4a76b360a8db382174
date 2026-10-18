@@ -1,0 +1,108 @@
+**Theorem 10.14 (Single-target support criterion).** In the full-phase
+task of Definition 10.12, fix a nonempty legal $T$ and write
+
+$$
+f_T=P^{-1}d_T,\qquad I_T=d_T^{\mathsf T}P^{-1}d_T
+=\sum_{I\subseteq T}p_I^{-1}.
+\tag{10.47}
+$$
+
+For the recorded site menu (10.42), its quantum target value
+$I_T/(4N)$ is attainable with the full phase gradient $d_T$ if and
+only if $\operatorname{supp}\eta\subseteq T$.
+In that case $L_\eta f_T=d_T$ and $R_\eta(d_T)=I_T$.
+If any positive budget lies outside $T$, every finite-variance
+full-gradient estimator, when one exists, has variance strictly
+larger than $I_T/(4N)$. Failure of component balance means no such
+estimator exists.
+
+Proof. The vector $f=f_T$ has $p$-mean zero and
+$p$-variance $I_T$. For $i\in T$, every $J\subseteq T\setminus\{i\}$
+is paired legally with $J\cup\{i\}$, since $T$ is independent.
+Their coefficients in $d_T$ are opposite. If $d_T(u)=a$ and
+$d_T(v)=-a$ on such a pair, its Laplacian contribution at $u$ is
+
+$$
+\frac{p_up_v}{p_u+p_v}
+\left(\frac a{p_u}+\frac a{p_v}\right)=a.
+\tag{10.48}
+$$
+
+The contribution at $v$ is $-a$. Every other site-$i$ pair has both
+coefficients zero, and no supported word is blocked at $i$.
+Therefore $L_if=d_T$ on all vertices, including all zero-coefficient
+and blocked vertices. When $\operatorname{supp}\eta\subseteq T$,
+summing gives $L_\eta f=d_T$.
+Thus $d_T$ is in the image of $L_\eta$, equivalently it is balanced
+on every positive-edge component. Moreover
+$L_\eta^+d_T$ differs from $f$ by a vector in $\ker L_\eta$.
+Pairing that difference with $d_T$ gives zero, so
+
+$$
+d_T^{\mathsf T}L_\eta^+d_T=d_T^{\mathsf T}f=I_T.
+\tag{10.49}
+$$
+
+Theorem 9.4, with its $\ell=d_T$ and the same $p,\eta,N$, gives
+the full-gradient reference-score estimator and variance $I_T/(4N)$.
+This extends the one-site sufficient construction of Theorem 9.13
+to all budgets supported in $T$.
+
+For necessity, let $\mathcal E_i$ be the partition that retains all
+bits except bit $i$ in this finite experiment. Its fibers are exactly
+the legal site-$i$ pairs and blocked singletons. The conditional
+variance identity underlying Proposition 8.13 becomes
+
+$$
+f^{\mathsf T}L_if
+=\mathbb E_p\operatorname{Var}(f\mid\mathcal E_i)
+=I_T-\mathbb E_p\bigl(\mathbb E_p[f\mid\mathcal E_i]\bigr)^2.
+\tag{10.50}
+$$
+
+Indeed, on a pair of masses $a,b$, its contribution is
+$ab(f_u-f_v)^2/(a+b)$, and on a singleton it is zero; summing
+gives the first equality. The second follows from $\mathbb E_pf=0$.
+For $i\in T$, the conditional mean on every fiber is zero by opposite
+coefficients, in agreement with (10.48). For $i\notin T$, each
+fiber contains at most one subset of $T$. In particular the fiber
+with all other bits zero is the legal pair
+$\{\varnothing,\{i\}\}$, and its conditional mean is
+
+$$
+\frac{p_\varnothing f(\varnothing)+p_{\{i\}}f(\{i\})}
+{p_\varnothing+p_{\{i\}}}
+=\frac{(-1)^{|T|}}{p_\varnothing+p_{\{i\}}}\ne0.
+\tag{10.51}
+$$
+
+Its probability is strictly positive. Thus the conditional-mean
+square in (10.50) is strictly positive. More generally any blocked
+singleton carrying a nonzero coefficient would also contribute to
+that square; blocked modes cannot be dropped. Consequently
+$f^{\mathsf T}L_if<I_T$ for every $i\notin T$, whereas
+$f^{\mathsf T}L_if\le I_T$ for all sites. Any positive outside
+budget therefore gives $Q_\eta:=f^{\mathsf T}L_\eta f<I_T$.
+
+On the admissible subpath $\theta=tf$, the target derivative is $I_T$
+and the menu Fisher information on $N$ copies is $4NQ_\eta$.
+If $Q_\eta>0$, the scalar score inequality forces
+
+$$
+\operatorname{Var}_0\widehat\Phi_T
+\ge\frac{I_T^2}{4NQ_\eta}>\frac{I_T}{4N}.
+\tag{10.52}
+$$
+
+If $Q_\eta=0$, its zero score contradicts the required derivative
+$I_T>0$. Separately, if the target is unbalanced on a positive-edge
+component, the likelihood invariance in Theorem 9.4 excludes a
+full-gradient estimator, even if $Q_\eta>0$.
+These alternatives exhaust the cases and prove necessity. $\square$
+
+Both strict positivity on every legal word and $T\ne\varnothing$
+are used: the former makes (10.51) a positive-probability obstruction,
+and the latter makes $d_T$ a nonzero contrast of total mass zero.
+The zero-budget sites supply no events. A pseudoinverse number for
+an unbalanced target is not a finite attainable resistance.
+

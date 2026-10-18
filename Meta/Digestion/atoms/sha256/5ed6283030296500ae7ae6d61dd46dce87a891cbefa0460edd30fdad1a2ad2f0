@@ -1,0 +1,24 @@
+#### 17.3　串联因果路径的乘法预算
+
+取有限状态链：
+
+$$
+X_0
+\xrightarrow{K_1}
+X_1
+\xrightarrow{K_2}
+\cdots
+\xrightarrow{K_n}
+X_n.
+$$
+
+复合核按
+
+$$
+K_{1:n}=K_1K_2\cdots K_n
+$$
+
+记号表示先经过 $K_1$，再经过 $K_2$，直至 $K_n$。
+
+<a id="claim-17-3-1"></a>
+

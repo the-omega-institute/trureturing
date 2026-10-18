@@ -1,0 +1,26 @@
+**推论 11.1（零、一次、二次配对的完整区别）。** 对全部实际来源 $s,t$ 与 $m\ge2$，定义8.3满足
+
+$$
+\begin{aligned}
+s\sim_{m,0}t
+&\Longleftrightarrow \nu(s)\equiv\nu(t)\pmod m,\\
+s\sim_{2,1}t
+&\Longleftrightarrow \nu(s)=\nu(t),\\
+s\sim_{m,1}t\quad(m\ge3)
+&\Longleftrightarrow Q(s)=Q(t),\\
+s\sim_{m,k}t\quad(k\ge2)
+&\Longleftrightarrow Q(s)=Q(t),\\
+s\sim_{m,\infty}t
+&\Longleftrightarrow Q(s)=Q(t).
+\end{aligned}
+\tag{NIC.36}
+$$
+
+证明。零配对语境恰为 $\rho^v\square$，深度加共同整数，第一式成立。相同 $Q$ 在全部语境中保持相同，是 [JM 定理50.2][JM] 的已有稳定性，不需新的同余证明。
+
+若 $\nu(s)=a<d=\nu(t)$，取已有分离常数所给语境 $H_a[z]=(T_{a+1},z)$。深度较大的输入不满足例外条件，输出深度 $a+1$。深度较小的输入标志一时输出深度 $a+2$，标志零时输出深度 $a$。两种情况与 $a+1$ 均相差一，所以一次配对对所有 $m\ge2$ 区分不同深度，无须对输入标志作许诺。
+
+相同深度而相反标志时，定理9.1证明全部至多一次配对的奇偶测试都相同；定理9.2的 $E_n$ 对所有 $m\ge3$ 用一次配对分离，$C_n$ 对所有 $m\ge2$ 用二次配对分离，包括 $n=0$。这给其余各式。$\square$
+
+本推论只识别这个来源与余数读数下的测试关系。单孔测试给最大相容同余的通用机制，沿用 [StrictOneHoleContexts.contextual_equivalence_is_greatest][SOHC] 及 [上下文几何 §§1–3][CG]；准确深度观察的 $Q$ 商沿用 [JM §50][JM]。这里的承重增量是 (NIC.27)、(NIC.33) 的全语境下界和实际共同达到，而非另立通用商定理。
+

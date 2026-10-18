@@ -1,0 +1,9 @@
+**定义 29.1（Value join）。** For any original $k\ge2,m\ge1$ and record target $f$, set
+
+$$
+\Gamma(\theta,s)=\bigl(f(0,\theta,s),f(1,\theta,s)\bigr).
+\tag{29.1}
+$$
+
+View $\Gamma$ as a target independent of the actual initial and current scalar value, on both free-value fibres. Give initial $\bot$ any separately prescribed pair label. Initial rejection is already freely distinguished and imposes no condition on the positive-fee stream.
+

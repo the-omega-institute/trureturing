@@ -1,0 +1,16 @@
+**Corollary 4.2 (fixed observations and existential auxiliaries).** The
+same exhaustive decision holds after exactly compiling any finite list
+of fixed native observations, full-row conditions or guarded reached
+output expressions. All original variables and all auxiliary witnesses
+can be reconstructed.
+
+Proof. NSF Lemma 5.1 supplies finitely many formula cases with both
+source directions. Apply Theorem 4.1 to each case and its designated
+native output terms. If a case is DEEP, its reconstruction supplies
+original witnesses at every $h$. If all nonempty cases are BARRIER,
+the maximum of their finitely many bounds bounds every original
+solution in its own case. If all cases are EMPTY, the exact original
+predicate is empty. Auxiliary variables are retained throughout;
+existentially forgetting them changes neither a designated output nor
+its reconstructed original source. $\square$
+

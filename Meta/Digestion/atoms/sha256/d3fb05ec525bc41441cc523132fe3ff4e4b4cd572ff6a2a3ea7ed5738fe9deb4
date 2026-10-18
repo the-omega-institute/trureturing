@@ -1,0 +1,14 @@
+**Corollary 19.2 (cardinality and weight as distinct preparation data).**
+For this family finite preparability is equivalent to finite support of
+$a$. Among finite supports of the same cardinality the state and call
+minima coincide, whereas the literal minimum depends on the sum of
+the selected indices. The parameters are not the number of leaves
+of a full context: unselected side leaves of the comb are not tested
+by the code. For any $s$ selected alone the exact vector is
+$(5,2,s+7)$, and for the empty support it is $(4,2,6)$.
+
+Proof. These are substitutions into (PCA.43); the infinite case is the
+last part of Theorem 19.1. The proof of that theorem supplies the
+full-domain upper and the all-address actual-source lower that make
+these substitutions legitimate. $\square$
+

@@ -1,0 +1,39 @@
+**Theorem 2.3 (coarsest right congruence on the declared image).** Assume
+that $\varepsilon\in\mathcal U$, every one-step word allowed by the declared
+menu is in $\mathcal U$, and $\mathcal U$ is prefix-closed and closed
+under appending every action that the contract allows after a tested prefix
+(including the continuations after a legal failure).  If a selector or
+namespace allocator is part of the task, its decision (or distribution) must
+also be included in each trace or assumed to factor through the profile.
+Then $\equiv_{\mathcal U}^{\rm res}$ is a typed right congruence and is
+the largest relation whose classes have a
+well-defined complete response profile.  Equivalently, if $R$ is any
+response-preserving forward-invariant equivalence relation on $X$, then
+
+$$
+R\subseteq\equiv_{\mathcal U}^{\rm res}.
+\tag{2.2}
+$$
+
+Thus $X/\equiv_{\mathcal U}^{\rm res}$ is the coarsest resource-aware
+right quotient for this task.  In the order of inclusion on relations it is
+also the **maximum response-preserving forward-invariant relation** on the
+declared image: every other admissible forward relation is contained in it.
+
+**Proof sketch.**  Equality of profiles gives equality for the empty word and
+for every one-step word, hence equal types, legality, labels and meter
+responses.  For a legal first action $a$, equality of the profiles on all
+words $av$ gives equality of the successor profiles on every continuation
+$v$; this is forward invariance.  If $R$ preserves every declared
+response, two $R$-related states have equal value on each $u\in\mathcal U$,
+so they are related by (2.1), proving (2.2).  The argument is a factorization
+argument on the actual image; it does not construct a quotient for sources
+outside $X$. $\square$
+
+The word **minimal** in this theorem is relative to the declared task,
+resource coordinates and reachable image.  It does not mean minimal for all
+possible future experiments, all hidden physical variables or every source
+fiber.  It also does not imply that the quotient is finite: an ordered archive,
+an unbounded clock or a fresh namespace can make infinitely many residual
+classes even when each individual step has a finite table.
+

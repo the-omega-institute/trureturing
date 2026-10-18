@@ -1,0 +1,96 @@
+**定理 9.2（Exact complete-state classification at deadline three, $r=2$）。** Under Convention 9.1,
+
+$$
+\boxed{K_{\min}^{\rm GLOBAL}(3;f)=
+\begin{cases}
+N+4,&\text{A or B holds},\\
+N+5,&\text{neither holds}.
+\end{cases}}
+\tag{9.6}
+$$
+
+Proof of all-controller necessity. Lemma 5.3 excludes fewer than four word rows. Suppose a correct deadline-three GLOBAL controller has four. Every initial root installs $1^m$ by Theorem 3.2, and every mandatory root-zero successor emits a word beginning zero: differently labelled phases at the actual maximal surviving tail $h-1$ would otherwise merge in bottom. GLOBAL makes this first suffix one literal $B$ for both values. All its successful images have the literal terminal tail $\tau(B)$.
+
+A two-label scalar child after $B$, with one whole block left, requires a final separating row: its word succeeds and its two scalar updates directly halt with the two different labels. Uniform rejection cannot separate this common-scalar, common-tail child. A root is not a final separating row, since its mandatory root-zero scalar update emits. A first-query row with an emitting scalar update is not one either. These are constraints on fixed raw-response updates at actual occurrences; rows have not been separated by depth.
+
+First allow a shared initial root $a$. Its scalar successor $d_y$ contains $C$ and both lower labels of $\lambda_y$: the lower sources have initial value $y$, and the $C$ sources have initial value $1-y$. Original phase $m$ supplies an actual $C$ source whose charge under the zero-leading $B$ is zero.
+
+If $d_0=d_1=d$, each raw child after $B$ contains this phase-$m$ $C$ source and, for every $j\in J$, one of the complementary-value lower sources. There can be **two** other word rows; allow both as distinct final rows. Even so, a common-tail child can finish in its one remaining block only if it has at most two labels, hence at most one lower label besides $C$. Write these lower labels as $L_0,L_1$ for the raw children. Correctness would give $\lambda_0(j)=L_{q_1^B(j)}$ and $\lambda_1(j)=L_{1\oplus q_1^B(j)}$, so the join has at most two classes. This contradicts (3.1), independently of which last row each child uses.
+
+If $d_0\ne d_1$, each has an emitting scalar update because its actual first support contains three labels. The fourth word row $p$ is the only possible final separator. Each three-label support must therefore split into one homogeneous child and a two-label child whose label pair is exactly the two scalar Halt labels of $p$. Two mixed children could not cover three labels with that same pair. Thus the excluded homogeneous label is the same in both supports; it need not stop immediately for this argument. If it is a lower label $L$, the final pair is $\{C,L'\}$. Phase $m$ puts $C$ in the charge-zero child, forcing $q_1^B(j)=1$ exactly when $\lambda_y(j)=L$ for both $y$. The two literal tables would coincide. If the excluded label is $C$, every $J$ source must have charge one and enter $p$. Their current scalars are complementary, and its fixed successful last word and raw decoder allow at most two joined pairs. Both cases contradict (3.1). Shared roots are therefore impossible at this particular four-row deadline; no root-separation rule for larger controllers is inferred.
+
+Now take distinct roots $a_0,a_1$. Their mandatory first-query rows are not roots, since they begin zero. If these rows are distinct, all four word rows have been used. At least one value $w$ has a mixed child after $B$; otherwise the root and the common $B$ would acquire the full join within two blocks, contrary to Theorem 3.2. Its final separator must be the other value's first-query row $d_i$, $i=1-w$. At the mandatory early occurrence of $d_i$, both scalar updates already halt and return its two lower labels. There is therefore an $\eta$ with $q_1^B=b_i\oplus\eta$ on all $J$, and the installed decoder is
+
+$$
+G_i(x)=\kappa^{-1}(x\oplus i\oplus\eta).
+\tag{9.7}
+$$
+
+The later mixed child is exactly $M_i$. GLOBAL requires the last word of this row to be the same $B$ as at its early occurrence. Its late raw scalar is $w\oplus q_1^B(j)\oplus q_2^B(j)$. Equation (9.7) returns $\lambda_w(j)$ on this whole actual support precisely when the second equation of (9.2) holds. The first equation and even zero-leading full support have already been extracted from the arbitrary actual $B$. This is condition A.
+
+If the two roots share their first-query row $d$, only one other word row $p$ remains. Two mixed scalar children after $B$ would both require $p$. Applying its same word and raw decoder to both complementary-value sources would again allow at most two joined pairs. Hence one raw child, say $e$, is homogeneous, with a common lower label $L$, and the other is mixed. The homogeneous child must halt immediately. If it too entered $p$, the same two-pair contradiction would hold. A root cannot return this lower label in the last block: its mandatory scalar exit emits, any direct other scalar Halt must return fresh $C$, and its bottom continuation has the mandatory eventual label $R$. Sending this child back to $d$ would leave both scalar updates emitting ($d$ and $p$), with no final scalar Halt; bottom cannot return a lower label either. This exhausts possible delays within the four-row budget.
+
+At every $j$, the actual value $e\oplus q_1^B(j)$ enters that homogeneous child with label $L$. Thus $(L',L')$ is absent; since three corners are occupied, (9.3) follows. The other child has current scalar $1-e$, every actual phase in $J$, and immutable label $L$ on the central class and $L'$ on the two leaves. Its final $p$ word must succeed on the common actual tail. Its full even support $F$ and the orientation of its two scalar Halt labels give exactly (9.4), including the strict seam and the no-zero case. This is condition B.
+
+These four sharing cases exhaust four word rows. The argument extracted mandatory unequal-label sources from each possible controller; it neither transforms controllers to a chosen menu nor assumes early $C,R$ stopping. Delayed homogeneous paths, waits, homogeneous rejection and cross-depth identifications were retained whenever they could affect these sources. Lemma 5.3 covers smaller budgets. Necessity is therefore over the full competitor domain.
+
+Proof of complete attainments. Put
+
+$$
+\begin{aligned}
+\mathcal R_v&=\{(f(v,-j,s),(v,-j,s)):j\in P,\ 0\le s<k\},\\
+\mathcal S_v&=\{(\lambda_v(j),(v,-j+m,m+s)):j\in J,\ 0\le s<h\}.
+\end{aligned}
+\tag{9.8}
+$$
+
+For both attainments use two root rows $a_v$, $c(v)=a_v$, $c(\bot)=H_{L_\bot}$, $u(a_v)=1^m$, and
+
+$$
+V(a_v,v)=d_v,\qquad V(a_v,1-v)=H_C,\qquad V(a_v,\bot)=H_R.
+\tag{9.9}
+$$
+
+In A take $w=1-i$, $B=\mathcal B_1(E)$, $\beta=w\oplus e_E(M_i)$, and let $L_S$ be the constant label of $\lambda_w$ on $J\setminus M_i$. There are just two further word rows $d_i,d_w$, both installing $B$, with
+
+$$
+V(d_i,x)=H_{G_i(x)}\quad(x\in\mathbb F_2),\qquad
+V(d_w,\beta)=d_i,\qquad V(d_w,1-\beta)=H_{L_S}.
+\tag{9.10}
+$$
+
+Here $e_E(M_i)$ denotes its constant value, supplied by (9.2). The actual word-row union supports are
+
+$$
+\begin{aligned}
+\Gamma_{a_v}&=\mathcal R_v,&\Gamma_{d_w}&=\mathcal S_w,\\
+\Gamma_{d_i}&=\mathcal S_i\ \cup\
+\{(\lambda_w(j),(\beta,-j+2m,\tau(B))):j\in M_i\}.
+\end{aligned}
+\tag{9.11}
+$$
+
+The same decoder (9.7) works on both parts of $\Gamma_{d_i}$ by (9.2). Both occurrences of $B$ begin zero, clearing every incoming tail, including root tail $k-1$; internal runs are shorter than $k$. Ranks $3,2,1,0$ on $a_v,d_w,d_i,H_y$ strictly decrease. The stream is $1^m\mid B\mid B$; both labels on $M_i$ actually continue, so its worst fee is three.
+
+In B take $B=\mathcal B_1(E)$, $D=\mathcal B_2(F)$ and identify $d_0=d_1=d$ in (9.9). Install $B$ at $d$ and $D$ at $p$. Define $\ell(0)=L$, $\ell(1)=L'$, $\beta=1-e$, and
+
+$$
+V(d,e)=H_L,\qquad V(d,\beta)=p,\qquad
+V(p,x)=H_{\ell(x\oplus\beta\oplus\delta)}
+\quad(x\in\mathbb F_2).
+\tag{9.12}
+$$
+
+The exact actual supports are
+
+$$
+\Gamma_{a_v}=\mathcal R_v,\qquad
+\Gamma_d=\mathcal S_0\cup\mathcal S_1,\qquad
+\Gamma_p=\{(\ell(\mu(j)),(\beta,-j+2m,\tau(B))):j\in J\}.
+\tag{9.13}
+$$
+
+There is one genuine continuing initial value at every $j$ in $\Gamma_p$. Equation (9.4) gives the same raw decoder on this entire support. The zero-leading $B$ clears all original surviving tails. The actual inequality $\tau(B)+\alpha(D)<k$ makes this very $D$ safe, including $D=1^m$; later internal runs are shorter than $k$. Ranks $3,2,1,0$ on roots, $d,p,H_y$ descend. The stream is $1^m\mid B\mid D$, and the nonconstant $\mu$ support actually emits its third block.
+
+For both tables set the unused bottom update of every nonroot word row to $H_R$, install exactly one $H_y$ for every actual $y\in f(Q)$, and make all its updates self-updates. Its actual support is exactly (5.6): the initial-bottom pair if applicable and all routed incoming word images from the displayed unions. Thus all $c,u,V$ entries, every actual source and all stopping outputs are accounted for. Each construction has $N+4$ states and satisfies the existing [FC, Theorem 27.2] conditions. No support or rank is an input. If neither condition holds, the necessity proof excludes four rows and the unchanged full five-row certificate (6.2)–(6.5), including its reverse orientation and safe seam, attains $N+5$. Together with Lemma 5.3 this proves (9.6). ∎
+

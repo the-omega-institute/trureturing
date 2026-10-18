@@ -1,0 +1,36 @@
+**Lemma 9.1 (Rounded risk).** The same table satisfies
+$\mathsf P_0(D=1)\le\alpha$ and $\mathsf P_1(D=0)\le\alpha$.
+
+**Proof.** For $|x|\le1/2$, Taylor's integral remainder gives
+$e^x\le1+x+x^2$. Since $|\varepsilon_n|\le\delta<1$ and its conditional mean is zero,
+
+$$
+\mathbb E(e^{\pm\varepsilon_n/2}\mid Y_n=j)
+ \le1+\frac14\mathbb E(\varepsilon_n^2\mid Y_n=j)
+ \le1+\frac u4.
+$$
+
+The exact unrounded half-likelihood identities are
+
+$$
+\mathbb E_0e^{\ell_{Y_n}/2}=\sum_j\sqrt{a_0(j)a_1(j)}=1-u,
+\qquad
+\mathbb E_1e^{-\ell_{Y_n}/2}=1-u.
+$$
+
+Conditioning first on the category gives
+$\mathbb E_0e^{V_n/2}\le(1-u)(1+u/4)<1$, and likewise under source one with the
+negative sign. Therefore the stopped exponentials
+$e^{S_{n\wedge N}/2}$ under source zero and
+$e^{-S_{n\wedge N}/2}$ under source one are nonnegative supermartingales at every finite
+horizon. Lemma 8.1 has already proved finite $N$ and the bound by $B$ gives uniform
+boundedness. Bounded convergence yields
+
+$$
+\mathbb E_0e^{S_N/2}\le1,\qquad \mathbb E_1e^{-S_N/2}\le1.
+$$
+
+A wrong label requires respectively $S_N\ge H\delta$ or $S_N\le-H\delta$. Since
+$H\delta\ge R=2\log(1/\alpha)$, both error probabilities are at most
+$e^{-R/2}=\alpha$. The proof exponentials and overshoot are not runtime state. $\square$
+

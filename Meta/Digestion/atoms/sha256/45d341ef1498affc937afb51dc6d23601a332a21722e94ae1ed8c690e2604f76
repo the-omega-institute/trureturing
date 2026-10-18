@@ -1,0 +1,27 @@
+**Boundary 267.4 (The unrestricted original obligation).**
+For every full nonnegative input $y$ with $\Delta_O(y)\le1$,
+the universal obligation remains the existence of one unrestricted
+$V\ge0$ and $\theta\in[0,1]$ such that
+
+$$
+\Delta_N(V)+\theta\le1,\qquad
+\sigma_H(Q(y)-Q(V))\le\theta.
+\tag{267.1}
+$$
+
+At $\theta=1$, nonzero zero-cost $V$ remains allowed.
+The alternative is one actual same $(b,e)\in H_N$, one complete
+feasible $N$ allocation of mass $M\ge1$, and a unit-$O$ full
+score with strict $F_y(b,e)>M$, together with original realization
+and a uniform arbitrary-address full-carrier lower certificate.
+The three-daughter positive correction in (263.5) is not universally
+paid. The family in Section 262 has an explicit same-cap stopped
+law and lies outside $H_3$. The relations of Sections 264 and 266
+are necessary relations for every full witness, not nonmembership
+or sufficient deficit-to-$\theta$ estimates. Conic normalization
+changes the auxiliary profile. Failure of a selected repair,
+canonical class, invariant class or sensitivity test does not settle
+(267.1). The conditional hypothesis of Theorem 263.6 is the named
+remaining payment bridge; none of the finite constructions above
+establishes it for all inputs and all required hull points.
+

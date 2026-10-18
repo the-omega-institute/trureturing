@@ -1,0 +1,15 @@
+**Corollary 13.4 (exact-target support discontinuity).** A supplied binary
+classical record with laws $(1-e,e)$ and $(e,1-e)$ has exactly the
+unassisted checkpoint optimum for every $0<e<1/2$, while at $e=0$ it
+allows deterministic parity-selected endpoint action. The two noisy laws
+approach their perfect-label laws in total variation by $e$.
+
+Proof. For every positive $e$ both labels are shared and $a_+=a_-=0$ in
+(PR.43). At zero the labels are exclusive and $a_+=a_-=1$.
+Apply (PR.44); the total-variation calculation is immediate. $\square$
+
+This is a discontinuity of an **exact conversion** task. It gives no
+nonzero-noise lower bound for approximate conversion and no error estimate
+for a canonical instrument. Scalar helper diagnostics in Proposition 13.2
+are not claimed to be sufficient statistics for the full joint experiment.
+

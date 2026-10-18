@@ -1,0 +1,56 @@
+**Theorem 290.1 (Interleaved full inputs with arbitrary stock).**
+Let $L\ge7$, $3<r<k<\ell<m\le L$, $s\ge0$, and $h\in\mathbb R$.
+Suppose a full nonnegative input has
+
+$$
+\beta_1=-s,\quad\beta_3=s,\quad\beta_r=-s,\quad
+\beta_k=s,\quad\beta_\ell=h,\quad\beta_m=s,
+$$
+
+and all other coefficients zero. Its actual total satisfies
+$K\ge5s+|h|$. Put $t=(s+h)_+/4$ and $V=tY^4_{(3,r,k,\ell)}$.
+For $\theta=\sigma_H(Q(y)-Q(V))$,
+
+$$
+\Delta_N(V)=0,\qquad
+s\le\theta\le s+\frac{L-2}{L+1}(8t-K)_+\le\Delta_O(y).
+\tag{290.1}
+$$
+
+Thus every actual unit-$O$ input of this pattern has one jointly paid
+signed certificate, for every real $h$, with no restriction on its event
+placements, cancellations, $P,T$ or anchor.
+
+**Proof.** Nonnegativity gives $K\ge\sum|\beta_j|=5s+|h|$.
+The late residual prefixes at the five displayed late addresses are
+
+$$
+s-t,\quad-2t,\quad s-3t,\quad s+h-4t,\quad2s+h-4t.
+$$
+
+For $h\ge-s$ the last two are $0,s$ and all are at most $s$.
+For $h<-s$, $t=0$ and the same conclusion follows directly. Prefixes in
+the gaps repeat these values. The Abel proof of 289.3 therefore applies
+to this embedded core. For the same actual input,
+
+$$
+U+T_3=
+\begin{cases}
+5s+2h,&h\ge s,\\
+6s+h,&0\le h\le s,\\
+6s,&h<0.
+\end{cases}
+$$
+
+Each is at least $2(s+h)_+=8t$. The two same-input support bounds in
+289.3 prove (290.1), including $s=0$, $h=-s$, all zero masses and every
+closed endpoint. For one full feasible allocation at the same $(b,e)$,
+
+$$
+F_{Q(y)}\le F_{Q(V)}+\theta\le\theta\le\Delta_O(y).
+$$
+
+In particular a unit input cannot have $F_{Q(y)}>M$ there when $M\ge1$.
+No normalized law at unchanged $(b,e)$ is inferred by dividing a conic
+allocation by its mass. $\square$
+

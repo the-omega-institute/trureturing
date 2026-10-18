@@ -1,0 +1,26 @@
+**Theorem 5.1 (N2: restriction on every surviving singular pencil).** Fix any history in Definition 1.1. If its pencil is identically singular and it has no prescribed-slope positive-source collision at any real slope, then
+
+$$
+\operatorname{rank}T_a=3,\qquad
+\ker T_a=\mathbb RK\quad\hbox{for every }a\in\mathbb R,
+\qquad 0\ne K\in\mathcal K_{\rm safe},
+\tag{5.1}
+$$
+
+for one constant matrix $K$. Moreover there is one $Q\in\mathcal P_{d-1}$ such that
+
+$$
+\operatorname{tr}(A_iK)=Q(i)\quad(0\le i<n),\qquad BK=CK=0.
+\tag{5.2}
+$$
+
+In particular every uniformly recovering identically singular history must have this form. This conclusion does not assume that the transverse tests are sufficient.
+
+**Proof.** If $\operatorname{rank}T_a\le2$ at some real $a$, choose two independent vectors $U,V$ in its kernel. If either is unsafe, retain it. Otherwise orient both safe and set $X=\Phi(V)U-\Phi(U)V$. This is a nonzero kernel vector with $\Phi(X)=0$, hence unsafe by the credited safe-subspace criterion. In each case (2.5)–(2.7) give a collision. Rank three with an unsafe line gives the same collision directly. Thus the no-collision hypothesis forces rank three and a safe line at every real slope.
+
+Lemma 4.1 constructs the primitive adjugate kernel. Theorem 4.2 excludes degree three, leaving a constant nonzero vector $K$ which can be oriented safe. It spans every real-slope kernel, establishing (5.1). Applying Theorem 3.1 at $m=0$ proves (5.2).
+
+The degree drop also has a separate direct check once the kernel is common. Since $BK=CK=0$, (2.2) gives $\mathcal L(K)=\operatorname{ev}(P)$ and $\mathcal I\mathcal L(K)=\operatorname{ev}(H)$ for $P,H\in\mathcal P_d$. The polynomial $H-tP$ has degree at most $d+1$ and vanishes at $n=d+5$ distinct nodes. It is zero. Thus either $P=0$ or $\deg P\le d-1$, and $Q=P$. At $d=0$ this forces $P=H=0$. Every excluded branch has an unsafe kernel at a real slope, so every exclusion has the actual realization and entire drift already specified in Section 2. ∎
+
+A constant kernel vector outside $\mathcal U$ is also excluded by that bridge. The theorem does not assert that every common safe kernel survives different-slope collisions. It restricts the residual after the exact prescribed-slope tests.
+

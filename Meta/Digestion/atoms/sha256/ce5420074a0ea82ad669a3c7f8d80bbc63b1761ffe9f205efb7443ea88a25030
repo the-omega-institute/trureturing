@@ -1,0 +1,17 @@
+**定理 2.2（方向锥与法向锥的互补角宽）。** $`N(C_\theta)`$ 以负横轴为轴，其角宽为 $`\pi-\theta`$。
+
+证明。对非零法向写 $`y=R(\cos\eta,\sin\eta)`$，$`R\gt0`$。内积条件等价于
+
+```math
+\cos(\eta-t)\le0\qquad\text{对所有 }-\theta/2\le t\le\theta/2.
+```
+
+在一圈中取包含负横轴的代表区间。每个 $`t`$ 允许 $`\eta`$ 落在 $`[t+\pi/2,t+3\pi/2]`$；全部区间的交恰为
+
+```math
+\frac\pi2+\frac\theta2\le\eta\le
+\frac{3\pi}2-\frac\theta2.
+```
+
+其长度为 $`\pi-\theta`$。锥还包含零向量，但零向量没有方向角。∎
+

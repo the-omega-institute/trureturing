@@ -1,0 +1,131 @@
+### 84.6. Complete rational enclosures at the two retained fibers
+
+A degree-one subresultant of \(\Pi,\Pi_L\) is
+\(a_1(B)L+a_0(B)\). It can be reconstructed by the ordinary
+subresultant polynomial remainder sequence in \(L\), taking its
+last degree-one member. Reducing its coefficients modulo \(H\)
+gives \(\gcd(a_1,H)=1\). Therefore every common root in (84.15)
+has
+\[
+ L=\lambda(B),\qquad
+ \lambda=\operatorname{rem}_H(-a_0a_1^{-1}),            \tag{84.19}
+\]
+where inverse and remainder are in \(\mathbb Q[B]/(H)\).
+For a direct rational reconstruction the complete representative is:
+
+```text
+lambda = 3575487365945788537139*B^14/63185374465228800000 - 115911984524574002407307*B^13/284334185093529600000 + 4716365731075265877343373*B^12/5118015331683532800000 - 458198675842667704242163*B^11/1279503832920883200000 - 150991604719907859004852451*B^10/27637282791091077120000 + 60107067013252372417369063*B^9/4606213798515179520000 + 2329465284340172320388342951*B^8/138186413955455385600000 - 521589993424150723141546543*B^7/17273301744431923200000 - 385310928633431758038277067*B^6/9212427597030359040000 - 14705257028378933433258731*B^5/1535404599505059840000 + 13387870183745756250887903*B^4/5118015331683532800000 + 29452593358685271498097*B^3/28433418509352960000 + 74579728603187404458257*B^2/568668370187059200000 - 40048282689457075039*B/6318537446522880000 - 15301279245840750541/12637074893045760000
+```
+
+There is no loss of a parameter fiber in this inversion. The following
+two rational intervals \(I_1,I_2\) each contain exactly one root of
+\(H\), by exact Sturm counts, and exhaust its roots in \((0,1)\).
+Their endpoints are printed separately to keep the rational numbers
+unambiguous.
+
+```text
+I1_lo = 46491110417433194301119411015223509038913078103636387620527/500000000000000000000000000000000000000000000000000000000000
+I1_hi = 18596444166973277720447764406089403615565231241454555048211/200000000000000000000000000000000000000000000000000000000000
+I2_lo = 63905364834466114959542710532943485165929995851372012464551/250000000000000000000000000000000000000000000000000000000000
+I2_hi = 51124291867572891967634168426354788132743996681097609971641/200000000000000000000000000000000000000000000000000000000000
+```
+
+It is enough to take \(b>0\) and \(j>0\), with
+\(b=\sqrt B\), \(j=\sqrt{\lambda(B)}\); the intervals below
+certify \(\lambda(B)>0\) in both fibers. For negative \(b\),
+conjugate \(z,r\) and replace \(g\) by \(-\bar g\).
+The original quartics transform under
+\[
+ (b,j,v,p,t)\longmapsto(-b,-j,-v,p,-t)
+\]
+by the signs \((1,-1,-1)\), and inner products conjugate. At fixed
+\(b\), applying \(\Theta\) to both inputs conjugates their
+product and changes \(j\) to \(-j\), preserving orthogonality.
+These two operations retain the singleton position and cover both signs.
+
+The complete lists of rational \(v\)-boxes are as follows. In each
+fiber every listed box has exactly one real root of \(F_6\), and
+their total equals the count on the whole real line.
+
+| Fiber | Box | Lower endpoint | Upper endpoint | Necessary \(N_8\) test |
+| --- | --- | --- | --- | --- |
+| 1 | 1 | \(-310405079061/500000000000\) | \(-620810158121/1000000000000\) | retained |
+| 1 | 2 | \(-41966905549/500000000000\) | \(-83933811097/1000000000000\) | retained |
+| 2 | 1 | \(-223673694227/12500000000\) | \(-17893895538159/1000000000000\) | retained |
+| 2 | 2 | \(-2160931417437/1000000000000\) | \(-540232854359/250000000000\) | \(N_8>8509962\) |
+| 2 | 3 | \(180224865923/1000000000000\) | \(45056216481/250000000000\) | retained |
+| 2 | 4 | \(197439810293/1000000000000\) | \(98719905147/500000000000\) | \(N_8>231\) |
+
+Here “retained” means only that the box has not been excluded; it does
+not assert an original common-flat lift. All interval bounds in this
+section are obtainable by the following fully specified rational rules.
+
+1. Use outward dyadic intervals with denominator \(D_*=2^{256}\).
+   A rational endpoint \(x\) is enclosed by
+   \(\lfloor D_*x\rfloor/D_*\) and
+   \(\lceil D_*x\rceil/D_*\). Addition and negation are exact on
+   this grid. For multiplication take the least and greatest of the four
+   endpoint products and round outward to the grid. Invert an interval
+   only when its endpoints have the same strict sign; invert its endpoints,
+   reorder, and round outward. For a positive interval \([a,b]\), use
+   \(\lfloor\sqrt{aD_*^2}\rfloor/D_*\) and
+   \((\lfloor\sqrt{bD_*^2}\rfloor+1)/D_*\) as square-root bounds.
+2. Expand the exact polynomials from (84.9)–(84.13) and the printed
+   \(\lambda\). Evaluate multivariate polynomials by sums of monomials,
+   forming successive powers by multiplication. Use reduced rational
+   numerator and denominator polynomials for \(p_*,t_*\).
+3. On each \(B\)-box enclose \(b=\sqrt B\),
+   \(\lambda(B)\), and \(j=\sqrt{\lambda(B)}\). Substitute
+   these intervals in the seven coefficients of \(F_6\) in ascending
+   powers of \(v\). Form the derivative and the Sturm sequence
+   \(F_6,F_6',-\operatorname{rem}(F_6,F_6'),\ldots\) by interval
+   polynomial long division. At each division cancel the highest term
+   algebraically, discard that coefficient, and retain outward intervals
+   for the lower coefficients. Every divisor leading coefficient excludes
+   zero; the sequence has degrees \(6,5,4,3,2,1,0\).
+4. Evaluate a polynomial at a finite rational endpoint by Horner's rule.
+   At \(+\infty\) use its leading-coefficient sign and at
+   \(-\infty\) multiply that sign by \((-1)^{\deg}\).
+   Every endpoint evaluation excludes zero. Thus the computed Sturm
+   variation differences are the exact root counts for the actual
+   algebraic \(B,b,j\), not just for an interval midpoint.
+5. Evaluate \(N_8,p_*,t_*\) on every root box by rule 2. Every Cramer
+   denominator excludes zero. The two discarded boxes have the strict
+   lower bounds printed in the table. The remaining boxes can each contain
+   at most one original input, by the one-root count and Cramer uniqueness.
+
+For completeness, the Sturm variation data produced by these rules are:
+
+| Fiber | At \(-\infty,+\infty\) | At the two endpoints of each box, in table order |
+| --- | --- | --- |
+| 1 | \(4,2\) | \((4,3),(3,2)\) |
+| 2 | \(5,1\) | \((5,4),(4,3),(3,2),(2,1)\) |
+
+For the two retained boxes in a fiber, use their corresponding interval
+values \(v,v',p_*,t_*,p_*',t_*'\), and define
+\[
+\begin{gathered}
+ r=\frac{1+iv}{1-iv},\quad r'=\frac{1+iv'}{1-iv'},\quad
+ \eta=\frac{1+ij}{1-ij},\quad z=\eta\bar r,\quad z'=\eta\bar r',\\
+ \bar gg'=\frac{(p_*-it_*)(p_*'+it_*')}{3-B}.
+\end{gathered}                                                    \tag{84.20}
+\]
+Complex interval operations here mean their two real-component formulas;
+for Cayley phases use \((1-v^2,2v)/(1+v^2)\).
+Direct substitution in (84.1) gives the rigorous rational bounds
+\[
+\begin{array}{c|c}
+ \text{fiber}&\operatorname{Re}\langle w,w'\rangle\\ \hline
+ 1&(21433/10000,\ 21434/10000)\\
+ 2&(16871/10000,\ 16872/10000).
+\end{array}                                                       \tag{84.21}
+\]
+In particular every possible distinct pair in these retained fibers has
+real overlap greater than \(3/2\), or greater than \(1/4\) after
+unit normalization. Existence of lifts is not inferred from interval
+containment of zero in \(N_8\); only an exclusion of zero overlap is
+needed. Equations (84.14)–(84.21) and all special charts therefore exclude
+every nonconstant equal-product orthogonal pair. Together with Theorem
+83.1 and (84.1)–(84.3), this proves Theorem 84.1 for the entire punctured
+branch and at any fixed singleton position.
+

@@ -1,0 +1,15 @@
+**定义 10.1（分开的线性与正性载体）。** 令 $\sigma_x,\sigma_y,\sigma_z$ 为标准 Pauli 矩阵，三维方向 $r=(x,y,z)$ 的 Hermitian 扩充为
+
+$$
+H=\tau I+x\sigma_x+y\sigma_y+z\sigma_z
+=\begin{pmatrix}\tau+z&x-iy\\x+iy&\tau-z\end{pmatrix}.
+$$
+
+计数载体仍是第一章的 $\mathbb R^2$ 与单边更新 $M$。量子状态合同要求 $\rho=H/2$、$\tau=1$、正半定和迹一；纯态以复二维单位向量的射线表示。颜色合同另取实线性光谱空间 $S$、非负来源锥 $S_+$，及三个独立匹配泛函
+
+$$
+T(s)=\left(\int s f_1,\int s f_2,\int s f_3\right),
+$$
+
+积分和函数空间须使这三项有定义。颜色来源见 [CIE 文献注](../../../Library/Observer/cie2020grassmann.md)，其观察条件是该合同的假设，不是全部物理光谱的无条件规律。
+

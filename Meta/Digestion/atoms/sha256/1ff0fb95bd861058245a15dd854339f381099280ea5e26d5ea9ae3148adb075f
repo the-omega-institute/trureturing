@@ -1,0 +1,27 @@
+**Definition 6.1 (remote compact perturbation).** Fix a nonnegative
+normalized actual restricted minimizer $v$ as in Lemma 2.2, with its
+representative from Theorems 4.1--4.2. Choose either component of
+$I\setminus\{k_o\}$, an open interval $I_0$ compactly contained in
+that component, and a real function
+
+$$
+0\ne\chi\in C_c^\infty(I_0),\qquad \chi\ge0.
+\tag{6.1}
+$$
+
+Such a choice exists on either side of the interior source height.
+On $I_0\times\mathbb T$ set $b=\chi/v$, and extend $b$ by zero to
+the rest of $D$. Define
+
+$$
+f_0=Jv,\qquad
+w(k,\alpha,\beta)=\frac{b(k,\alpha)}{\sqrt{2\pi}}
+                      \cos(\beta-\beta_o),\qquad
+N=\|w\|_2^2,\qquad K=T[w].
+\tag{6.2}
+$$
+
+The reciprocal in this definition is taken only on the remote interior
+strip. It is not an expression involving division at a height face or
+at the base pole.
+

@@ -1,0 +1,66 @@
+**Theorem 4.2 (exact three worst-case projections without a name cap).**
+Let $\mathfrak A_D$ be all correct original pairs under Assumption 1.3,
+with arbitrary finite complete attained alphabets. For every $D\ge2$,
+
+$$
+\begin{aligned}
+\min_{A\in\mathfrak A_D}\max_{t\in\mathcal F_D}T_A(t)&=2^{D-2},\\
+\min_{A\in\mathfrak A_D}\max_{t\in\mathcal F_D}L_A(t)&=(D-1)2^{D-2},\\
+\min_{A\in\mathfrak A_D}\max_{t\in\mathcal F_D}H_A(t)&=D-1.
+\end{aligned}
+\tag{PPF.19}
+$$
+
+One correct pair attains all three minima simultaneously and has exactly
+$N_{D-1}$ complete attained names. At $D=1$ the three minima are zero
+and one name suffices.
+
+Proof of acquisition and names. For $D\ge2$, before any request run
+$\operatorname{Acquire}(R,D-2)$ on the actual
+$t=\langle\alpha,v\rangle$. Its table gives exactly the canonical
+representative $e=\pi_{D-1}(v)\in S_{D-1}$, by Convention 2.2.
+Export only its fixed-width public dictionary index. No actual subtree
+is supplied to the algorithm: every observation used the full
+original-root word produced in Lemma 4.1. Every element of $S_{D-1}$
+occurs as an actual $v$ and is fixed by $\pi_{D-1}$, so all and only
+$N_{D-1}$ names are attained. The other acquired distinctions are
+isolated under Assumption 1.3.
+
+Proof of the late reader. After any $p=Rq$ arrives, $|q|\le D-1$.
+If $|q|\le D-2$, its full factor is determined by the acquired
+boundary, so compute $\Gamma_q(e)=\Gamma_q(v)$ and use zero Reads.
+For $|q|=D-1$, inspect its strict prefixes, all in that boundary.
+If one is a leaf, its first such label and remaining suffix determine
+$\Gamma_q(v)$ by (PPF.7), again with zero Reads. If no strict prefix
+is a leaf, all those prefixes are present branches: starting from the
+present root $v$, induct along the path, since a child of a branch
+is present. Thus $q$ is actually present. Submit the one original
+word $p=Rq$. Its reply is alpha, beta or branch and gives respectively
+
+$$
+(2,1),\qquad(1,0),\qquad(0,0).
+\tag{PPF.20}
+$$
+
+These are exactly the factors at a present endpoint. This construction
+serves every permitted request on every variable shape, including
+requests initially absent because of an earlier leaf. Its query choice
+depends only on the exported name, $D,p$ and public data, before the
+reply and every count. Equation (PPF.8) supplies every subsequently
+authenticated $k$ without another Read.
+
+Proof of the extrema. Lemma 4.1 with $|R|=1,h=D-2$ gives the three
+simultaneous upper bounds in (PPF.19). Corollary 3.3 gives their lower
+bounds for every pair. Consequently these upper bounds are attained
+worst-case values, as well as bounds on every actual execution.
+
+At $D=1$ the only request is $R$. Preparation exports a constant,
+uses zero Reads, and the late reader Reads $R$ once. The three
+nonabsent replies give (PPF.20) and then every count. All preparation
+charges are nonnegative, proving the zero minima. $\square$
+
+The larger retained code in this theorem is paid for by its actual
+boundary acquisition. The result concerns the late-target interface,
+where one further Read remains. AAR's already supplied full-menu
+zero-later-Read endpoint has a different acquisition obligation.
+

@@ -1,0 +1,45 @@
+**Definition 25.2 (Finite carrier and its quotient map).**
+For an integer $m\ge0$, let $\mathcal P_m$ be the homogeneous degree $m$
+polynomials in these five variables, and put $\mathcal P_d=0$ for $d<0$.
+The supplied Bargmann inner product is
+
+$$
+\langle z^\alpha,z^\beta\rangle=\delta_{\alpha\beta}\alpha!,
+\qquad \alpha!=\prod_s\alpha_s!.
+$$
+
+The original normalized occupation vector maps to
+$z^\alpha/\sqrt{\alpha!}$. Multiplication and its finite adjoint are
+
+$$
+M_f:\mathcal P_{m-2}\longrightarrow\mathcal P_m,\qquad
+A_m=M_f^\dagger=\partial_1\partial_3-\partial_0\partial_{13},
+\qquad H_m=A_m^\dagger A_m.
+$$
+
+The exact supplier is Toric Theorem 23.6: the nonzero polynomial $f$
+in a domain makes $M_f$ injective, so $A_m$ is surjective and
+
+$$
+\ker H_m=\ker A_m=(f\mathcal P_{m-2})^\perp
+\xrightarrow{\ q\mapsto[q]\ }(R_3)_m
+$$
+
+is an isomorphism. Its inverse chooses the orthogonal representative;
+this choice depends on the stated inner product. The resulting dimension is
+
+$$
+N_m=\binom{m+4}{4}-\binom{m+2}{4}
+=\frac{(m+1)(m+2)(2m+3)}6.
+\tag{25.1}
+$$
+
+Here and below a binomial representing a negative-degree polynomial space
+is zero. In particular the second term is zero for $m=0,1$.
+A finite self-adjoint map $H_m:\mathcal P_m\to\mathcal P_m$ has index zero;
+$A_m:\mathcal P_m\to\mathcal P_{m-2}$ has index $N_m$.
+Neither assertion by itself is an Atiyah–Singer realization.
+The application below adds an elliptic complex whose cohomology is this
+same quotient, so its relation to the finite zero space is stronger than
+an equality of two dimension formulas.
+

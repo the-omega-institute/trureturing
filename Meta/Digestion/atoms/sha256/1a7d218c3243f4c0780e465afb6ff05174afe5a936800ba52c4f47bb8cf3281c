@@ -1,0 +1,26 @@
+**Mathematical citation 8.2 (one-sided exact realization and its preservation boundary).** [PAIR, Theorem 13.2] supplies a stronger conditional realization interface than requiring both input marginals to be finite. If a supplied compatible pair has $N$ distinct positive p-law atoms, it keeps that entire p marginal and gives a finite regular same-update table with at most $N^2+2N+q-1$ suspended labels. It may preserve any specified $q$ bounded Borel integrals on the suspended marginal and any Borel full-measure suspended constraint. The symmetric result exchanges phases. The construction matches unweighted moments to retain actual circulation and weighted residual moments to close both complete-law equations. The complete descriptors are the regenerated table's own laws, not finite-horizon fits.
+
+For an actually supplied zero pair at the fixed support $\{1,2,3\}$ with finite p marginal, choose
+
+$$
+G=\{W:\text{every complete suspended coordinate lies in its endpoint box}\},
+\qquad f_1(W)=W(E_\beta),\qquad
+f_2(W)=\operatorname{TV}(W,P_{\beta,3/8}).
+$$
+
+Here $q=2$. The retained p marginal keeps its whole box, midpoint and all three configuration losses. The selected suspended laws remain in the whole box; matching $f_1$ keeps its midpoint and hence both endpoint losses, while matching $f_2$ keeps its depth-3 loss. Thus [PAIR, Corollary 13.4] gives a possibly different abstract finite zero table with
+
+$$
+|X|=N,\qquad |Y|\le N^2+2N+1.
+$$
+
+The exchanged map uses the p box, $Q(E_p)$ and $\operatorname{TV}(Q,P_{p,3/8})$. Consequently the existence of an abstract finite original common attainer is equivalent to the existence of some zero pair with either one finite law marginal. Both input marginals need not be finite. This is a conditional realization statement; this volume supplies no such zero pair.
+
+For a chosen one-sided support cap $N$, [PAIR, Theorem 13.5] matches all three opposite target losses and equates the attained minimum on that branch to the attained table minimum with opposite label cap $N^2+2N+2$. It evaluates neither minimum and gives no $N$ known to contain an unrestricted optimizer. If $j_c=0$ and no abstract finite attainer exists, both law marginals of every zero pair are infinite, and both distinct-law counts tend to infinity along any regular vanishing-excess sequence. Absence only of a permitted effective sampler does not imply that abstract nonattainment condition.
+
+Theorem 13.2 may replace the opposite marginal and both joint flows. Preservation of the retained marginal and selected opposite moments does not establish preservation of the old $\Gamma_B,\Gamma_A$, dispersion $D$, the collection of signed path charges in (3.10), or hidden actual return coupling. The diagnostics in this volume must be evaluated on the resulting pair's own flows and chain. Theorem 4.1 and Corollary 5.3 then apply to that resulting pair by their stated hypotheses. [PAIR, Theorem 11.8] realizes a pair with both finite marginals while preserving its two descriptor flows; [RETURN, Proposition 11.9] still prevents interpreting that two-flow preservation as hidden-return preservation.
+
+[PAIR, Proposition 13.3] restores the full original histories, same-update kernels and source-independent latch sampler. It preserves the retained side's losses against every posterior target and the specified opposite pure-target losses. Opposite losses at each posterior mixture need not equal their old values; the full-history phase suprema are the supported pure-target suprema, which is the relevant risk correspondence. For arbitrary real nodes, weights and entries, permitted finitely represented exact samplers for the latch, both acquired kernels and emissions remain separate obligations. All numerical descriptions, active and service states, program, workspace, fresh bits, computation, acquired Reads, synthesis and output are charged. The label bounds preserve no fixed COMPLETE, hard-defect or worst-case work budget. Proposition 7.2 discharges representation only for its explicit rational nonattaining example.
+
+[PAIR, Theorem 13.6] concerns a different countably infinite installed-support branch: a one-sided finite zero pair and strictly positive opposite accumulation-target slack imply abstract finite all-supported attainment. Saturated accumulation loss remains outside that theorem. Neither its support nor its strict-slack premise is substituted for the fixed three-depth question here.
+

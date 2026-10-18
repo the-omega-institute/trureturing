@@ -1,0 +1,80 @@
+**Definition 2.1 (Terminal masses and the reused count-only estimate).**
+For a fixed seed $u$, a finite ordered record $r$ of length $n$ either
+agrees with the protocol's successive choices and finite return, or it
+does not. In the former case its terminal source section is exactly
+
+$$
+C(r)=\{X_{t_i}=x_i:1\le i\le n\};
+\tag{2.1}
+$$
+
+in the latter case the terminal section is empty. The output on a
+consistent section is fixed by $u$ and $r$. This is the finite-section
+reduction in [Original, Theorems 9.2--10.1][Original]. Internal waits add
+no source condition: the same seed and acquired replies give the same
+finite events and delays, or the same internal nonreturn. The assertion
+therefore includes adaptive addresses.
+
+For a consistent section and its chosen output $h$, use the notation
+
+$$
+w_h=J_p(C(r),H_j=h),\qquad W=J_p(C(r)),\qquad L=W-w_h.
+\tag{2.2}
+$$
+
+These are source-section masses, with no regular conditional probability
+on $\mathsf U$ assumed. In a specified phase, distinct active addresses
+give edges $\{\ell,\ell+1\}$ of the integer spin line. Repetitions repeat
+an edge; separators impose their required zero reply. A component with
+specified XOR labels has two complementary spin assignments if it is
+consistent. For the component containing the endpoint spin, with $v$
+vertices, the two same-phase endpoint masses have a common factor from
+the phase and every other component, times complementary products of
+$v$ Bernoulli factors. Their ratio in either direction is at most $R^v$.
+This is the product comparison of [Original, Lemma 3.1, (9.5), and the
+proof of Theorem 10.1][Original]. Components outside the endpoint
+component remain in the common factor; they are not discarded from the
+source law.
+
+We use, without introducing a new count-only theorem, the sharper
+conclusion of [Original, Theorem 10.1][Original]: for every output on a
+terminal section of length $n$,
+
+$$
+L\ge e_nW.
+\tag{2.3}
+$$
+
+This includes $n=0$, where the largest state prior is $a/2$. The sequence
+$(e_n)_{n\ge0}$ is nonincreasing and $e_1=b$. Summing the supplied
+recordwise bound gives $L_0\ge e_0q_0$ and $L_k\ge e_kq_k$ for $k\ge1$,
+as well as its random-count version. There are only countably many
+finite integer-address/reply records. Their source sections can be
+summed at a fixed seed and then integrated against the unchanged $\nu$.
+Measurable representatives outside completed-product null sets suffice;
+completion does not change any integrated mass below.
+
+For each integer $n\ge1$, the existing sharpness witness in [Original,
+Theorem 10.1, (10.4)][Original] makes $n-1$ local even-address reads
+$2(j+i)$, $0\le i\le n-2$, and the
+distant even-address read $2(j+n)$, paying for all $n$ calls. It returns
+the majority-spin phase-zero state only when every local reply is zero
+and the distant reply is one, and otherwise continues internally forever
+without more reads. Its already established masses are
+
+$$
+\mathbb P_p(T)=ab(a^n+b^n),\qquad
+\mathbb P_p(A\ne H_j,T)=ab\,b^n,\qquad
+\mathbb P_p(A\ne H_j\mid T)=e_n.
+\tag{2.4}
+$$
+
+For $n=1$ the local list is empty, and the distant spin pair is disjoint
+from the unobserved target spin. For $n=0$, immediate return of a largest
+prior state has error $e_0$. Neither these coefficients nor this selective
+witness are new claims of this volume. [Original, Theorem 9.2][Original]
+also retains its weaker coefficient $1/(1+R^{k+1})$ and its consequence
+that positive-probability finite return always has positive joint error.
+Selective sharpness does not itself determine risk at prescribed return
+mass or at almost-sure return.
+

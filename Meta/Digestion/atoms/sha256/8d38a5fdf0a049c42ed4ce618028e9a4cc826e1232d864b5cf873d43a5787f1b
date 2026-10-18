@@ -1,0 +1,17 @@
+**Definition 8.2 (bounded literature correspondence).** The following
+are `literature-attested` methods used inside the native deductions,
+not additional native recovery theorems.
+
+| Primary source | Correspondence and limit |
+| --- | --- |
+| R. D. Nowak, *The Geometry of Generalized Binary Search*, [arXiv:0910.4397v5, §V.A][Nowak] | The disjoint-interval example distinguishes permitted point tests from stronger dyadic-subinterval queries. Here the permitted geometry is proved by (LQF.5)--(LQF.6); binary GBS bounds grant neither a new native test nor a missing $P_1$. |
+| F. Cicalese, E. Laber and A. M. Saettler, *Diagnosis determination: decision trees optimizing simultaneously worst and expected testing cost*, [PMLR 32(1):414--422, §1, pp.414--415][CLS] | Finite objects, target classes, multiway priced tests and homogeneous-class leaves are the established discrete-function-evaluation framework. Objects here are actual histories, classes are lags, and tests must first pass the native correspondence. Their distributional and approximation objectives do not prove this exact call/sum/peak frontier. |
+| J. G. M. van der Linden, M. M. de Weerdt and E. Demirović, *Necessary and Sufficient Conditions for Optimal Decision Trees using Dynamic Programming*, [arXiv:2305.19706v4, §4][LWD] | Established state transitions, combination operators and Pareto subtree sets explain the recursion method. The multiway native cells, whole-word lengths and max-type peak coordinate are instantiated and proved here; no complexity guarantee is transferred from its decision-tree learning algorithms. |
+
+This comparison assigns no worldwide originality or priority claim.
+The added interface is the complete multi-slot, arbitrary-encoder
+history domain with its all-word literal prices, joint frontier,
+shortest separators and conditional global extension. The generic
+finite decision-tree and Pareto methods, atomic reply formulas and
+the two-slot interval boundary are credited above.
+

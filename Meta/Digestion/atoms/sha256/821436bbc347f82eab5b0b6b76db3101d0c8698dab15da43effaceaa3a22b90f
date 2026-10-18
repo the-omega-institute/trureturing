@@ -1,0 +1,27 @@
+**Definition 2.1 (ideal finite point interface).** On an unknown actual past
+of known duration $T>0$, a deterministic strategy makes at most $N$ interior
+point queries. A query at $t$ returns the exact real pair $(k(t),\chi(t))$
+with its timestamp. Endpoints, preparation, public parameters and explicitly
+stated side information are also available. Later queries and stopping may
+depend on the whole previous transcript. Retrospective queries are allowed,
+so this is stronger than a causal logger. Repeated queries count toward the
+budget and supply no new time.
+
+All retained source-dependent observer state is a deterministic function of
+this complete transcript and side information. A hidden clock, cache,
+history pointer, waveform description, control generator state, coherence
+measurement or archive entry is not an uncounted input. Unlimited
+computation and exact-real storage are allowed in the lower bounds. The
+interface is itself a conditional sensor promise, not supplied hardware.
+
+Numerical lower bounds concern estimators returning values in the stated
+real or complex target space on every allowed history. An abstention is
+retained as a failed acquisition, not assigned an invented numerical value
+or removed by conditioning on success. Such an interface may abstain, but
+then it has not delivered uniform successful acquisition on this class.
+
+An unknown actual waveform is different from a public prescribed waveform.
+A valid description of the latter may permit exact integration or an
+independent numerical certificate. The lower bounds quantify over unknown
+histories whose only acquired dependence is Definition 2.1.
+

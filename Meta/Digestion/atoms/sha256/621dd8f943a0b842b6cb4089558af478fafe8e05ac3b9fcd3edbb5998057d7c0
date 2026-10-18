@@ -1,0 +1,93 @@
+## 7. The remaining original group-removal and full-programme problem
+
+**Open problem 7.1 (same-law nine-row removal or evaluated complete coverage).**
+For every original supplied face let
+
+$$
+\begin{gathered}
+A=[\Gamma(x_1)\ \cdots\ \Gamma(x_N)],\quad
+\kappa=(|u_1|,\ldots,|u_N|)^T,\quad
+\mathcal P=\{w\ge0:Aw=B(t)\},\quad
+\mathcal P(r)=\{w\in\mathcal P:\kappa^Tw=r\},\\
+\gamma(w)=\#\left\{G\in\mathscr G:\sum_{i\in G}w_i>0\right\}.
+\end{gathered}
+\tag{IC.31}
+$$
+
+The columns enumerate the complete endpoint inventory, including all
+unused roots and both coordinates of every compatible paired group.
+For a family $\mathcal Q\subseteq\mathscr G$, retain their entire
+coordinate set and let $\mathcal P_{\mathcal Q}$ be the corresponding
+coordinate face. Define
+
+$$
+U_7=\bigcup_{|\mathcal Q|\le7}\kappa^T\mathcal P_{\mathcal Q}.
+\tag{IC.32}
+$$
+
+FC Theorem 5.2 supplies its equivalent complete vertex/edge coverage
+criterion. The original universal seven-low question on this face is
+$U_7=[r_-,r_+]$, equivalently every $\mathcal P(r)$ contains a
+point with $\gamma(w)\le7$. What remains missing is an original-source
+relation preserving all nine joint rows
+
+$$
+\begin{pmatrix}A\\\kappa^T\end{pmatrix}w
+=\begin{pmatrix}B(t)\\r\end{pmatrix},
+\tag{IC.33}
+$$
+
+with nonnegative weights, which removes an occupied whole group when
+needed, or an evaluated complete-group coverage theorem with the same
+consequence. A direction in the kernel of these nine rows is useful
+only with sufficient sign and support information to reach a boundary
+where the entire group is removed. Driving just one column of a paired
+group to zero does not remove the group. A path may require several
+steps or a different original law; existence of one kernel vector is
+not the required universal relation. On the common contact face the
+height row is $g_i=y\cdot\Gamma_i-\lambda\kappa_i$, so preserving
+(IC.33) preserves the same $J_t$. This does not permit an independent
+choice of the law on any one row.
+
+The alternative higher-count task requires an actual attained
+same-root tuple with global entire-cylinder feasibility, a complete
+evaluated inventory and nonnegative primal weights at its request,
+and exclusion of every at-most-seven-group alternative in
+$\mathcal P(r)$. A claim of nine-low necessity additionally requires
+exclusion of every at-most-eight-group alternative. Neither ranks of
+one table, local stationary roots, node counts, endpoint mass nor
+(IC.12) supplies either exclusion. All compatible fractional labels,
+negative pure singletons, mandatory reverse groups, weak-zero contacts,
+opposite-height singleton groups and unused contacts must remain in
+the alternatives. The minimum-total-count relation remains GC.10's
+$1+$ minimum supported-low count, an equality of minima rather than
+of counts for every instrument.
+
+Theorems 3.1–5.1 do not supply global dual feasibility from locally
+compatible roots, a complete evaluated root inventory, positive primal
+weights, group removal, universal $U_7$ or $U_8$ coverage, or an
+all-alternative higher-count obstruction. The all-budget/all-contrast
+finite $(s,A)$ frontier remains the original one, for every common
+oriented failure allocation and every live-height decomposition,
+including those below maximum contrast at a fixed allocation.
+Global branch ordering and connected coverage; selected and unused
+roots with signs and multiplicities; collisions; capacity, rank and
+count transitions; endpoint, threshold, budget and degenerate-orientation
+gluing; evaluated coefficient parameters and physical orientations;
+coefficient gluing, limiting root isolation, next terms and uniform
+joint limits remain required. Sharp strong optimal counts remain
+separate from weak counts and from strong feasibility counts.
+
+Source existence/isolation/Jacobian/ranks/root TP, the full stopped-cq
+minimax, sharp worst-history JOINT cost, separate unaveraged equality,
+full-complex multi-Kraus necessity, capacity and constructor remain
+their original conditional suppliers. Finite positive-multiplier dual
+existence outside the supplied scope, $\lambda=0$, nonfinite or
+unattained duals and boundary attainment remain unresolved. Native
+source access and calibration, jointly counted coherent storage and
+accessible shares, entire-fibre actuation, acquisition duration,
+absolute FIRST clock alignment, archive/source/epoch/controller
+permissions and the general quantum/native-instrument and count
+bridges remain unsupplied. The complete original quantum/count/source/
+native problem is retained with these obligations.
+

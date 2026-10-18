@@ -1,0 +1,25 @@
+**Lemma 5.2 (Comparison to the actual opponent).** Every matrix in (5.1) is stochastic and fixes both labels. The same holds for $W_i$, and
+
+$$
+\gamma_L^{-1}U_j(x,y)\le W_i(x,y)\le\gamma_L U_j(x,y)
+\quad(x,y\in\mathcal S).
+\tag{5.3}
+$$
+
+Proof. Since every $f_i(k)>0$, finite $L$ gives $0<\pi_i<1$: there is positive mass both in $\{1,\ldots,L\}$ and beyond $L$. Hence $J_i^L,V_i^L$ are probability-weighted averages of stochastic matrices fixing the labels, and so is $W_i$.
+
+For $k>L$, put $t(k)=H(k)/k^9$. By (2.3), $t(k)\in[1,\gamma_L]$. The exact ratio of the two conditional tail masses is
+
+$$
+\frac{f_1(k)/(1-\pi_1)}{f_0(k)/(1-\pi_0)}
+=\frac{t(k)}{\displaystyle\sum_{\ell>L}
+             \frac{f_0(\ell)}{1-\pi_0}t(\ell)}.
+\tag{5.4}
+$$
+
+The denominator is an average of values in $[1,\gamma_L]$, hence lies in that interval. The ratio lies in $[\gamma_L^{-1},\gamma_L]$, as does its reciprocal. This comparison has cancelled the full $Z_i$ normalizers, rather than treated their ratio as one. Averaging the common nonnegative entries of $\mathcal K_k$ proves the same comparison between $V_0^L$ and $V_1^L$ in either direction.
+
+Now $U_j=\pi_jJ_j^L+(1-\pi_j)V_j^L$, whereas $W_i$ has exactly the same short term $\pi_jJ_j^L$. For nonnegative numbers $c,a,b$ with $\gamma^{-1}a\le b\le\gamma a$, one has $\gamma^{-1}(c+a)\le c+b\le\gamma(c+a)$ because $\gamma^{-1}c\le c\le\gamma c$. Apply this entrywise with the common short term as $c$. This proves (5.3), including zero entries. In particular $W_i$ and the actual opponent $U_j$ have identical positive supports. $\square$
+
+No operational source is replaced in this construction. Both the opponent's whole short term and its mixing weight remain present. There is no tail-only access, skipped paid interval or claim that $W_i$ absorbs from all states.
+

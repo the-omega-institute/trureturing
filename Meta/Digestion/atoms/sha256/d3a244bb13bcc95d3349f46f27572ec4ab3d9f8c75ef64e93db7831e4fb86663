@@ -1,0 +1,50 @@
+**Corollary 207.18 (A dense family at every growing length).** For
+every $m=L-2\ge4$, set $c=4-2/\lceil(m+1)/2\rceil$, use
+$\nu=\mathcal L_m(s)$, and choose
+
+$$
+\frac2{c-2}\le s<\frac1{c-3},\qquad
+r_3=r_4=1,\qquad 0\le r_j\le z=(c-3)s\quad(j\ge5).
+\tag{207.43}
+$$
+
+Then $D=1$. The threshold representative has both costs one, also
+after arbitrary early correct additions. With $E=0$, the input that
+has the same pair rows and $T$ but places all $C_j=s+r_j$ at the
+singleton $w(\{j\})$ has costs $(\Delta_N,\Delta_O)=(2,1)$.
+
+**Proof.** $3<c<4$, so the interval is nonempty. It gives $s\ge1$,
+$b_*\ge1$ and $z<1$. Now $R_3=1\le b_*$ and every $R_j$ for
+$j\ge4$ is at most $z$. Thus all terms of (207.40) are at most one
+and $r_{\max}=1$ attains it. The head-table equality also preserves
+the representative's cost after early additions.
+
+For the singleton input, empty and all single supports equal
+$W=(c+1)s$: zero marginals $2s$ dominate every $\gamma_j\le2s$,
+and the positive baseline $(c-1)s$ dominates each late total. Head
+excess is one. An early/late excess is
+$r_j+(\max_{n\ne j}r_n-b_*)_+\le1$. A late pair has $N$ maxima
+
+$$
+\bigl(s,s+r_i,s+r_j,s+\max(z,\max_{n\notin\{i,j\}}r_n)\bigr),
+\tag{207.44}
+$$
+
+so its $N$ excess is $r_i+r_j+(\max_{n\notin\{i,j\}}r_n-z)_+$.
+Its stopped first cell has maximum $2s$ because $r_i\le s$, giving
+$O$ excess $r_j+(\max_{n\notin\{i,j\}}r_n-z)_+$. If both heavy
+classes $3,4$ are queried these are two and one. If exactly one is
+queried and another heavy class remains, $j$ is nonheavy, so
+$r_j\le z$ bounds the $O$ excess by one and the $N$ excess by two.
+If neither is queried, $N\le1+z<2$ and $O\le1$. This proves the
+complete costs, including shorter schedules. The exact input $N$ cost
+two is an $E=0$ claim; early additions may reduce it.
+
+At the upper endpoint $s=1/(c-3)$, allow all other $r_j\in[0,1]$.
+Then $z=1$, $b_*\ge1$, all extra positive parts vanish, and the same
+representative still has costs $(1,1)$ while the $E=0$ singleton input
+has costs $(2,1)$. This endpoint is already within 205.8's positive-cell
+protection, with $\zeta=\pi=1$, and within the aggregate supply of
+205.10. The strict upper inequality in (207.43) excludes it only from
+that strict comparison, not from the exact theorem. $\square$
+

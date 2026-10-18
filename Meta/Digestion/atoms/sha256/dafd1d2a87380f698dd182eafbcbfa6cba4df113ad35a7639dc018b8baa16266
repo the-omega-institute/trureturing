@@ -1,0 +1,25 @@
+**Definition 1.2 (two transport contracts).** An executable probe
+$e\in E_{\mathrm{probe}}$ has the same partial response contract as an
+action, with successor $H_e:U_e\to X_k$. A pure relabeling
+$e\in E_{\mathrm{rel}}$ is a partial bijection
+$H_e:U_e\to V_e$ between actual subsets of two charts, with a declared inverse.
+Its dictionaries identify the task fields in the two representations.
+Relabelings impose representation compatibility; they supply no additional
+experiment, readout, free recut or execution permission.
+
+For a typed equivalence $R$, a relabeling descends precisely when $U_e$ and
+$V_e$ are saturated for the respective restrictions of $R$, and both $H_e$
+and its inverse preserve related pairs. In formulas,
+
+$$
+xRy\Longrightarrow (x\in U_e\Longleftrightarrow y\in U_e),\qquad
+xRy, x,y\in U_e\Longrightarrow H_ex\,R\,H_ey,
+\tag{1.2}
+$$
+
+with the corresponding conditions for $H_e^{-1}$ on $V_e$. Task-field
+dictionaries must also be independent of the representative. These conditions
+give a partial bijection between quotient charts: a class is in its domain
+exactly when every representative is. Forward preservation alone gives neither
+this domain property nor a descended inverse.
+

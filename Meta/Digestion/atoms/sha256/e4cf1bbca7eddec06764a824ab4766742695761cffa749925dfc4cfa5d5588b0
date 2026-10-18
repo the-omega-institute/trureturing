@@ -1,0 +1,57 @@
+**Theorem 5.1 (weighted thresholds with prescribed read and update caps).**
+For finite $K,A$, rational $T$, and $\lambda\in\mathbb Q_{\ge0}^3$, it
+is decidable whether a whole-domain service satisfies simultaneously
+
+$$
+\forall u\in D,\quad
+q_B(u)\le K,\quad a_B(u)\le A,\quad
+\lambda\cdot c_B(u)\le T.
+\tag{NFO.11}
+$$
+
+A true decision gives a finite lawful whole-domain controller. A false
+decision gives a finite original $S\subseteq D$ rejecting every service
+under the same caps and threshold, even when correctness is required
+only on $S$. All zero-weight cases are included.
+
+Proof. If $T<0$, nonnegative costs exclude success on any nonempty domain;
+one native witness from NSF is already a rejecting sample. Let $T\ge0$.
+If $\lambda_\ell=0$, use Theorem 4.2 with
+
+$$
+\mathcal B=\{(k,d):0\le k\le K,\ 0\le d\le A,\
+                           \lambda_qk+\lambda_ad\le T\}.
+\tag{NFO.12}
+$$
+
+It is finite and downward closed. Its per-leaf inequality is precisely
+the same-source inequality (NFO.11), including when one or both remaining
+weights vanish. It is not an inequality on separately maximized costs.
+
+If $\lambda_\ell>0$, every successful sourcewise run has
+
+$$
+\ell_B(u)\le L=\lfloor T/\lambda_\ell\rfloor .
+\tag{NFO.13}
+$$
+
+Use NSF's finite-box skeleton enumeration with $(K,A,L)$ and test
+(NFO.11) on every nonempty leaf by NSF Theorem 7.2. Its all-comparator
+unrolling only decreases actual costs, so every comparator satisfying
+(NFO.11) has a passing candidate. Every passing candidate is itself a
+lawful service with exactly its tested same-source path costs. This is
+the positive decision and the existing finite-box supplier is sufficient.
+
+For the asserted finite negative certificate, a failing candidate has
+either a nonempty leaf violating the threshold, with an original-source
+witness, or a leaf containing two original sources with different full
+rows, with a two-source witness. There are finitely many candidate
+skeletons in this box; gather these witnesses, choosing one failure for
+each candidate. Their finite union lies in $D$. Every candidate still
+fails on this union. Any service satisfying (NFO.11) on the union would
+unroll into one candidate with words of length at most $L$, producing a
+contradiction. The argument ignores output labels during enumeration;
+a leaf with two different rows defeats every possible installed label.
+Thus it covers all outputs, not a finite preselected output list.
+$\square$
+

@@ -1,0 +1,10 @@
+### 99.2. Full basis and primary pairing
+
+**Proof.**
+
+Use the exact parametrization in Theorem 95.1. The Legendre matrix A is zero, and delta=t=(0,0,1) in the prime order (p,q,r). Hence the full Selmer dimension is 7 and the pure dimension is 5. The parameter triples (y0,x,y) for S and the two rational torsion generators are (1,0,0),(0,1,0),(1,0,1), where 1 is the all-one vector. The four remaining classes have parameter triples (0,e_p,0),(0,e_q,0),(0,0,e_p),(0,0,e_q). All sign and five exponents in these four classes vanish because delta and t vanish on e_p,e_q. These seven vectors are independent: 1,e_p,e_q form a basis of each three-dimensional kernel. Thus the claimed pure basis is exact, not just a list of Selmer classes.
+
+Theorem 85.1 gives exact rational torsion E_D[2] and the actual non-torsion original point. The rational Kummer image is in the radical, so S has zero pairing with every class.
+
+The primary tangent formula is Shukla–Stoll, arXiv:2302.01640v1, section 3.2 equations (3.9)–(3.10), Theorem 5.6, with rational-image radical inclusion on printed page 2: https://arxiv.org/pdf/2302.01640 . Use the multiplicative convention (-1)^(2 times the additive pairing). The short-model translation x=X-10D/3 has roots -10D/3,-25D/3,35D/3 and preserves all root differences and Kummer coordinates. No Sha finiteness or rank parity is used.
+

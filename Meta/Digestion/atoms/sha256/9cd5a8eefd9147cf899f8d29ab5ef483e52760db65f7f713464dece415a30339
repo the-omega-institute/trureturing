@@ -1,0 +1,56 @@
+## 8. Permanent correspondence and unresolved scope
+
+The source-relative deductions here are the repeated-sixth-root
+rigidity with its explicit root/drift ranges and normalized sign,
+the four three-coordinate terminal injections on the whole promised
+class, and their root-multiplicity and collision-incidence consequences
+for a simultaneous TT triple. Polynomial factorization, interpolation,
+root counting, the intermediate value theorem, quadratic root products,
+two-by-two matrix algebra, sign checks and Bernstein conversion are
+standard tools within these deductions. No external priority or
+literature-completeness claim is made.
+
+| Permanent source | Reused interface and boundary |
+| --- | --- |
+| [FIB JMMJM Nonzero-Terminal Collision Sparsity and Ratio Diversity](FIB_JMMJM_NONZERO_TERMINAL_COLLISION_SPARSITY_AND_RATIO_DIVERSITY.md), Sections 1–2 and Proposition 7.2 | Complete worlds, all six ancestor equations, normalization for both signs, positive chart, four-terminal inverse and actual-child PP/PT/TP/TT interface. Sections 3 and 5–7 give the established terminal-sign and common-drift residual distinctions. The needed zero-sixth specialization, inverse and raw-response quantifiers are proved in full above; they are baseline reuse. |
+| Nonzero-Terminal, Theorem 4.1 and Corollary 4.2 | The five strict ratios and the fixed-sum exchanged-source argument require a nonzero sixth chart gain to infer common $s$. At zero sixth gain this inference fails. Their stronger one-coordinate conclusion is not imported here. |
+| Nonzero-Terminal, Theorem 6.1 | The diagonal-swap proof requires a common nonzero $q=f(6)/f(7)$. Here $q=0$; its cancellation is unavailable. The present terminal-triple determinant proof uses only the explicitly displayed positivity and rank-one conditions. |
+| [FIB Self-Calibrating Relation Mathematics VII](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_VII.md), Definitions 1.1–1.3 and equation (4.2) | Original-clock model, actual-fiber recursion, fixed matrices and positive chart. VII credits its terminal reconstruction to V, Theorem 7.1. All algebra needed here is supplied in Sections 1, 3 and 5. |
+| VII, Lemma 2.1 and Sections 3–4 | Its roots at six and seven are a distinct class. Neither that lemma, its pair exclusion, its nine coefficient matrices nor their tensor Bernstein identities are premises here. The complete small certificate (2.12)–(2.18) is specific to $(T-6)^2(a+bT)$. |
+| VII, Sections 6 and 8–11 | Its separate $MMJM$ known-common-response consumer and its exact-history gain-ray, source-slice, interval, local-inverse and whole-band results retain their own histories and promises. None places the present whole fiber in such a restricted class. |
+| [FIB JMMJM Late-Root Rigidity and Terminal Collision Reductions](FIB_JMMJM_LATE_ROOT_RIGIDITY_AND_TERMINAL_COLLISION_REDUCTIONS.md), Sections 1, 5–7 | Full source legality, chronological terminal table, proper-pair versus whole-three quantifiers and common-drift terminal-sign reduction. The terminal-sign deduction above is reuse of this interface with the terminal inverse. No conditional appeal to VII's pair exclusion is needed. |
+| Late-Root Rigidity, Theorem 3.1 and its coefficient certificate | Its simultaneous roots at four and five define a different class, with factor $(T-4)(T-5)(a+bT)$ and different polynomials. Its two-world sharpness example is not a zero-sixth TT witness. No coefficient or feasibility conclusion from that class is transferred to the present repeated-sixth class. |
+
+The remaining all-sixth-zero question is whether three distinct legal
+worlds satisfy the simultaneous system in Section 7 for some common
+$d$ and late readings, with all four terminal columns noninjective.
+The surviving configurations include three simple sixth roots, or
+two simple sixth roots with the one possible double-sixth world,
+subject to the proved sign and pair-incidence restrictions. The
+necessary ranges and incidence patterns assert no actual realization.
+Neither an exact legal TT witness nor a uniform TT exclusion is given.
+
+The common-drift nonzero-sixth varying-ratio PP system remains outside
+this result. Variable drifts, terminal-root strata, other literal
+histories, arbitrary-cardinality losing families and their entire
+actual fibers retain their own obligations. An injective vector of
+three terminal functions supplies no joint physical acquisition of
+those functions and no unrestricted single-trajectory decoder.
+The finite-set scalar policy in Proposition 5.2 assumes an injective
+scalar on the entire supplied known set.
+
+At the earlier $JMMJ$ parent, losing children of its different actions
+would still need one simultaneous fixed-ancestor realization. No
+parent-arm gluing is provided. The distinct $MMJM$ and $MJMMJ$
+histories are not identified with this $JMMJM$ history.
+Pairwise restrictions alone neither give a policy on every larger
+family nor extract a losing triple from every larger losing family.
+
+The original-root alternative remains
+$n_{\mathrm{det}}(3,0)\ge9$ versus a lawful complete-target decoder
+on all of $\mathcal W_3$ using at most eight total readings. It still
+quantifies over every initial action, actual history and early stop,
+all constant drifts, every positive nonsymmetric rank-one trace-one
+source, and every nonzero cubic-or-lower gain with both signs and
+all sampled roots and multiplicities. The present deductions decide
+neither alternative.

@@ -1,0 +1,27 @@
+**Definition 9.1 (received original phase commands).** Fix the same
+actual source as in Proposition 4.3:
+$Z=r=1/2$, $c=1/4$, current height $k=1/8$, calibrated phases
+$\theta_i=0$. Its unknown live family is all of (QC.37) at this height.
+For $N\geq1$ define $C_j=j/(N+1)$, $1\leq j\leq N$.
+A finite command $j$ is actually received before retention. Every command
+may accompany every unknown $\beta,m$; it is not a label inferred from
+the unknown past. After retention a bit $b\in\{0,1\}$ is supplied,
+requesting the one-unit original tail
+
+$$
+k(t)=1/8,\qquad \chi(t)=\chi_{\rm old}+bC_jt,
+\qquad
+U_j=\operatorname{diag}(e^{-iC_j/4},e^{iC_j/4},1)
+\quad\text{on }(U_+,U_-,e_2).
+\tag{QC.49}
+$$
+
+All requests in this task are domain-legal and permitted. The wait tail
+has $b=0$ and the execute tail $b=1$. Their height margin is $1/8$,
+height speed zero, phase speed and variation at most one, and both
+original regularities hold. Since $k'=0$, all canonical failure densities
+vanish on these tails; their complete live operation is respectively
+identity or $\operatorname{Ad}_{U_j}$. They are open relative phase
+controls and need not be integer loops. No value of $\chi_{\rm old}$
+is supplied to the controller.
+

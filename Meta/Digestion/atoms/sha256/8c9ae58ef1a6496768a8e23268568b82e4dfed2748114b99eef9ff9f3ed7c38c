@@ -1,0 +1,13 @@
+**Proposition 6.2 (strength one without singular divisions).** Let
+$z_0=\beta/(1-\alpha)$ and $q_{\rm end}=1-z_0=k/(1-\alpha)$.
+Every original competitor at $s=1$ has cost at least
+$q_{\rm end}(A+B)$.
+
+Proof. $Z_1$ has rank one. Positive support domination gives
+$X=qZ_1$, $0\leq q\leq1$, so $P=Q=t=q$, $R=0$ and
+$U=V=1-q$. The $\theta=0$ full-cone tilt gives
+$(1-\alpha)(1-q)\leq\beta$, hence $q\geq q_{\rm end}$.
+Its cost is $q(A+B)$. The endpoint construction below supplies
+equality in the original class. No inverse of $Z_1$, division by $j$
+or continuation through a zero discriminant is used. $\square$
+

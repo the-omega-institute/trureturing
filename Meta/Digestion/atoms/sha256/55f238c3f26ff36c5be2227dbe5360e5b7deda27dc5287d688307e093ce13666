@@ -1,0 +1,33 @@
+**Theorem 12.2 (support-aware simultaneous certificate).** Set $D_+=\tau$, $D_-=\bar\tau$, $D_2=\sigma$. Choose three PSD matrices $A_j$ satisfying
+
+$$
+\operatorname{ran}D_j\subseteq\operatorname{ran}A_j,\qquad
+\operatorname{Tr}(D_jA_j^+)\leq1,\qquad j\in\{+,-,2\}.
+\tag{R.48}
+$$
+
+For nonnegative weights $\lambda_0+\lambda_++\lambda_-+\lambda_2=1$ and $H\in\mathscr H(J)$, define
+
+$$
+M=\lambda_0(I_r-H)+\lambda_+A_++\lambda_-A_-+\lambda_2A_2.
+$$
+
+Then $g_N^2\leq\lambda_{\max}(M)$. In particular,
+
+$$
+M\preceq t_\beta I_r\quad\Longrightarrow\quad\delta_N\geq U(\beta).
+\tag{R.49}
+$$
+
+All kernels, states and matrices in this test belong to the same actual complementary representation.
+
+**Proof.** The range condition implies $\sqrt{D_j}P_{A_j}=\sqrt{D_j}$. Inserting $(A_j^+)^{1/2}A_j^{1/2}=P_{A_j}$ into the fidelity product and using the same Schatten inequality gives
+
+$$
+f(D_j,\omega)^2
+\leq\operatorname{Tr}(D_jA_j^+)\operatorname{Tr}(\omega A_j)
+\leq\operatorname{Tr}(\omega A_j).
+$$
+
+This remains valid for singular $A_j,D_j,\omega$. A pseudoinverse trace condition alone is insufficient: $A_j=0$ would have zero such trace without bounding fidelity to a nonzero $D_j$. Weighting these three bounds and the kernel bound in (R.44) gives $m(\omega)\leq\operatorname{Tr}(\omega M)$ for every same $\omega$. Maximization gives the claim. The complete $J$, and hence its actual $C$ and $S$, enters through $H$; none of the three pure-state tests is detached from that $J$. $\square$
+

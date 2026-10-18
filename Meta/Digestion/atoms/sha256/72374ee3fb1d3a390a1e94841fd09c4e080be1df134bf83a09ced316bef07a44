@@ -1,0 +1,83 @@
+**Theorem 32.1 (the full joint sphere, its converse and its actual transformation).** For every $(\beta,\theta)$ in (R.144), put $A=A_{\beta,\theta}$. The entire third-column domain is
+
+$$
+\mathcal T_{\beta,\theta}
+=\{T\in\mathbb R^{5\times2}:\langle A,T\rangle_F
+=\langle JA,T\rangle_F=0,\ \|T\|_F=1\}\cong S^7.
+\tag{R.148}
+$$
+
+For each such $T$, use both actual Kraus matrices
+
+$$
+K_\alpha=(A_\alpha,JA_\alpha,T_\alpha),\quad \alpha=0,1,
+\qquad N_{\beta,\theta,T}(Z)=\sum_{\alpha=0}^1K_\alpha ZK_\alpha^T.
+\tag{R.149}
+$$
+
+They realize the normalized pair $(B_{\beta,\theta},C_{\rm out})$ with $C_{\rm out}=AT^T$, $q=1$ and $\operatorname{rank}C_{\rm out}=\operatorname{rank}T$. Conversely every rank-two pair of (R.108) is represented in this way after a transformation (R.143). The sphere is a complete parametrization, with possible repetitions under remaining stabilizers; it imposes neither condition of (R.120).
+
+To display every active and outside component, let
+
+$$
+Y=\begin{pmatrix}
+T_{b_1,0}+iT_{g_1,0}&T_{b_1,1}+iT_{g_1,1}\\
+T_{b_2,0}+iT_{g_2,0}&T_{b_2,1}+iT_{g_2,1}
+\end{pmatrix},\qquad \nu=(T_{h,0},T_{h,1})\in\mathbb R^2.
+$$
+
+The sphere conditions are exactly
+
+$$
+\sqrt a cY_{11}-i\sqrt a sY_{12}
+-i\sqrt\beta sY_{21}+\sqrt\beta cY_{22}=0,
+\qquad \|Y\|_F^2+\|\nu\|_2^2=1.
+\tag{R.150}
+$$
+
+The four $Y$ entries remain arbitrary complex coordinates subject to this one complex equation.
+
+For the same common transformation of $A,T$ in (R.143), the resulting channel $N'$ obeys, for every $d\geq1$ and $Z\in M_3\otimes M_d$,
+
+$$
+\begin{gathered}
+N'=\operatorname{Ad}_{O_{\rm out}}\circ N,\\
+(N'\otimes\mathrm{id}_d)(Z)
+=(O_{\rm out}\otimes I_d)(N\otimes\mathrm{id}_d)(Z)
+ (O_{\rm out}^T\otimes I_d),\\
+R'=R\circ\operatorname{Ad}_{O_{\rm out}^T},\qquad R'N'=RN.
+\end{gathered}
+\tag{R.151}
+$$
+
+The last line bijects all complex CPTP recoveries on the entire output, with inverse $R=R'\circ\operatorname{Ad}_{O_{\rm out}}$. Trace norms on all complex inputs and references, all recovery diamond errors, and the input space $\mathcal H_0$ are preserved.
+
+**Proof.** The matrices $A,JA$ have Frobenius norm one and Frobenius inner product zero. The last fact follows termwise from $x^TJx=0$. Thus the two real linear conditions in (R.148) are independent in $\mathbb R^{10}$; their common kernel has dimension eight and its unit sphere is $S^7$. Expanding (R.150), its real and imaginary parts are respectively $\langle A,T\rangle_F$ and $\langle JA,T\rangle_F$. This proves the claimed coordinate equivalence without deleting any active-$U$ or $h$ component.
+
+The first two columns in (R.149) already have summed squared norms one and zero cross inner product. The two remaining TP cross entries and third squared norm are precisely (R.148). Hence (R.149) is TP, and its actual Kraus representation is CP on the whole complex matrix algebra. Its phase outputs are $(Q\pm iJQ)/2$ by (R.103). This is the realization (R.109), specialized to the complete coordinates rather than a new general realization theorem.
+
+Explicitly, $A$ has full column rank, so $A^TB^+A=I_2$. Consequently
+
+$$
+\begin{gathered}
+C_{\rm out}=AT^T,\qquad
+C_{\rm out}^TB^+C_{\rm out}=TT^T,\qquad
+q=\|T\|_F^2=1,\qquad
+\operatorname{rank}C_{\rm out}=\operatorname{rank}T.
+\end{gathered}
+\tag{R.152}
+$$
+
+For the converse, first use (R.109) and Theorem 31.2 to put a rank-two feasible pair in the frame (R.144). In that frame the unique third-column factor is
+
+$$
+T=C_{\rm out}^TB^+A,\qquad
+AT^T=BB^+C_{\rm out}=C_{\rm out},\qquad
+TT^T=C_{\rm out}^TB^+C_{\rm out}.
+\tag{R.153}
+$$
+
+The range, trace and normalization conditions of (R.108) give both orthogonality equations and the unit norm in (R.148). The identity $A^TB^+A=I_2$ also recovers $T$ from $AT^T$, proving uniqueness for fixed $A$. All pseudoinverses act on the actual support of the singular $5\times5$ matrix $B$. This is the exact pseudoinverse converse already owned by (R.109), with no invertibility assumption on $B$.
+
+Right multiplication by $O_K$ mixes the entire two-Kraus list with the same real orthogonal coefficients, so its sum is unchanged on every complex matrix. Since $O_{\rm out}J=JO_{\rm out}$, left multiplication acts on all three columns of each Kraus matrix, giving (R.151). Real orthogonal output matrices are also complex unitaries; tensoring with $I_d$ proves the full-reference norm assertions. The displayed recovery correspondence and its inverse are compositions with unitary channels and hence remain complex CPTP on the entire output. There is no input transformation, so every individual $X\in\mathcal H_0$ is retained. Moreover $O_{\rm out}$ preserves $Q,J$, and hence preserves the actual phase-output matrices $(Q\pm iJQ)/2$. These facts, rather than whitening, transport the norms and recoveries. $\square$
+

@@ -1,0 +1,29 @@
+**Definition 364.1 (Whole gauges and their two budgets).** For a degree-at-most-two entire kernel write its unique multilinear expansion as
+
+$$
+p(w)=c+\sum_i\ell_iw_i+\sum_{i<j}Q_{ij}w_iw_j.
+\tag{364.1}
+$$
+
+For a vector $v$, let $m(v)=\sum_{z\in J_L}v(z)$; positive parts and maxima of vectors are coordinatewise. A whole gauge has $m(g_{ij})=0$ for every pair, including every pair with $Q_{ij}=0$. Use the data of [XIX 341.1–341.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XIX.md#341-the-complete-preselected-coefficient-cone):
+
+$$
+\begin{aligned}
+r_{ij}&=(-g_{ij})_+,&s_{ij}&=(-g_{ij}-Q_{ij})_+,\\
+t_{ij}&=\max\{m(r_{ij}),m(s_{ij})\},&
+D_i&=\ell_i-\sum_{h<i}g_{hi},\\
+R_i&=\sum_{j>i}r_{ij},&S_i&=\sum_{j>i}s_{ij},\\
+T_i&=\sum_{j>i}t_{ij},&U_i&=\max\{R_i,S_i-D_i\},\qquad u_i=m(U_i).
+\end{aligned}
+\tag{364.2}
+$$
+
+A funded gauge means that this same whole family satisfies both
+
+$$
+c\ge\sum_iU_i,\qquad \sum_i\max\{u_i,T_i\}\le1.
+\tag{364.3}
+$$
+
+XIX 341.2 characterizes complete $\mathscr N_L$ realizability by the existence of such a gauge; the $g=0$ slice is the stopped criterion of 109.1. Here the criterion is used for the concrete family below.
+

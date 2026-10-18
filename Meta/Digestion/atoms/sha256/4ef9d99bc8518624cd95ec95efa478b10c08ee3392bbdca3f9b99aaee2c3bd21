@@ -1,0 +1,100 @@
+**Theorem 19.1 (sparse prescribed-code preparation spectrum).** If $A$
+is finite, set $n=|A|$ and $W=\sum_{s\in A}(s+4)$, with $n=W=0$
+for the empty set. Under Convention 17.2 the complete preparation
+upper-budget region on the entire original $\mathcal U_*$ is exactly
+
+$$
+\boxed{\quad H\ge n+4,\qquad
+ p\ge\max(2,n+1),\qquad
+ \ell\ge\max(6,3+W).\quad}
+\tag{PCA.43}
+$$
+
+One table attains all three coordinate minima simultaneously, with
+the original code, literal entries and unchanged eight-state reader.
+On an alphabet fixed in advance with exactly two latches, this table
+can be installed whenever $|V|\ge n+2$ and the prescribed start is
+running; surplus running states remain installed and counted. If $r$
+additional distinct latches are mandated, the exact state threshold is
+$n+4+r$, with at least $n+2$ running states and a running start still
+necessary and sufficient. The other two minima are unchanged.
+
+If $A$ is infinite, no finite installed preparer generates this code
+on the entire original fiber, even under sourcewise termination alone.
+
+Proof, upper bound. List finite $A$ as $s_1<\cdots<s_n$. Install the
+two original-entry latches and running states $D,T,A_1,\ldots,A_n$.
+The common start is $D$. In the table below $A_{n+1}$ means
+$\widehat e_0$; when $n=0$, the beta successor of $D$ is also
+$\widehat e_0$.
+
+| Running state | Absolute literal | alpha successor | beta successor | branch successor | absent successor |
+| --- | --- | --- | --- | --- | --- |
+| $D$ | $RLR$ | $\widehat e_1$ | $A_1$ if $n>0$, else $\widehat e_0$ | $T$ | $\widehat e_0$ |
+| $T$ | $RRR$ | $\widehat e_1$ | $\widehat e_0$ | $\widehat e_0$ | $\widehat e_0$ |
+| $A_i$ | $LLL L^{s_i}R$ | $A_{i+1}$ | $A_{i+1}$ | $\widehat e_1$ | $A_{i+1}$ |
+
+The last row is used for $1\le i\le n$. Each $A_i$ is a distinct
+installed state with one literal address, not a loop index or runtime
+counter. An alpha at $b_3$ is exactly $\Pi_3$ and requires one.
+A beta at $b_3$ is exactly $Z_{b_3}$; the chain computes the exact
+disjunction (PCA.41), using actual absence and both leaf replies as
+false. If $b_3$ is branch, the only remaining code-one profile is
+$\Pi_4$, detected by alpha at $b_4$. This verifies all four positive
+and all seven zero profiles. In particular it imposes no comb shape
+or other restriction on the branch fillings. All four successors are
+installed even where a reply at a class root is unattained.
+
+There are $n+2$ running states and two latches. The two possible longest
+paths have costs $(2,6)$ and $(n+1,3+W)$; for $n=0$ the beta path
+has only $(1,3)$. When $n>0$, the negative comb source of Lemma 18.1
+with $S=A$ follows $D,A_1,\ldots,A_n$, attaining the second path's
+costs. A $Z_c$ source follows $D,T$, attaining $(2,6)$.
+For $n>0$ one has $n+1\ge2$ and $3+W\ge8>6$, so both execution
+maxima occur on the comb source; for $n=0$ both occur on the $Z_c$
+source. Extra running states or mandated latches can be made
+unreachable with arbitrary total successor assignments and remain
+counted. Relabel $D$ as the prescribed running start. No source-dependent
+choice of tables or start occurs at execution.
+
+Proof, lower bounds for finite $A$. First let $n>0$ and take $S=A$
+in Lemma 18.1. Different required latches force the terminating $u_0$
+path to query a word in every $E_s$. Otherwise equal replies along
+that path force the same latch on $u_s$. Disjointness forces $n$
+different visits of total literal charge at least $W$. Lemma 18.2
+forces one more visit of length at least three on this same path.
+Thus $p\ge n+1$ and $\ell\ge3+W$, regardless of how many states
+or other resources are allowed.
+
+For the baseline two-call and six-letter bounds use the same actual
+$Z_c$ source and its two replacements from Lemma 7.1. Replacing only
+$b_3$ or only $b_4$ by alpha gives respectively $\Pi_3$ and $\Pi_4$,
+both requiring code one instead of zero. On the zero-source path there
+must be a distinguishing query in each of these disjoint occurrence
+cones. Each has absolute length at least three. Hence $p\ge2$ and
+$\ell\ge6$ for every $A$, including the empty set.
+
+Every $E_s$ also requires an installed running word there, by the
+same path argument. Lemma 7.1 already supplies mandatory installed
+words in the $b_3$ and $b_4$ cones for every code of (PCA.12).
+Those cones and all $E_s$ are disjoint, so $|V|\ge n+2$.
+Both original entries are attained on positive profiles, requiring
+both distinct original-entry latches. All extra mandated latches
+also count. This proves the state bound, including $n=0$.
+It applies to arbitrary shared four-successor graphs, with cycles,
+unused states and repeated literal words allowed. A forced or root
+call cannot eliminate a required distinction: every word outside
+the stated difference support has equal replies on its comparison
+pair and is still a paid visit.
+
+Proof, infinite $A$. A finite installed menu has a finite maximum
+absolute word length $d$. Choose $s\in A$ with $s+4>d$ and use
+Lemma 18.1 with $S=\{s\}$ and $m=s$. Its negative comb has no
+branch at any $w_t$, including every other selected position, and
+its replacement has a branch at exactly $w_s$. Thus their prescribed
+codes differ even for infinite $A$. Every word of their exact difference
+support is longer than $d$. The two actual sources agree on the entire
+installed menu, forcing identical paths and latches by Lemma 2.3.
+If that path fails to terminate, correctness already fails. This
+contradiction needs no advance uniform call bound. $\square$
+

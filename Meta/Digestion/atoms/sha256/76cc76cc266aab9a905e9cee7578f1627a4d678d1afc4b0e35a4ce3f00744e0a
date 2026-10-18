@@ -1,0 +1,18 @@
+## 1. The unchanged original problem and the endpoint conclusion
+
+This companion to [JR, §§41–57][JR], [RC, §§58–66][RC] and *Residual
+height records: global quadratic certificates and actual acquisition-label
+rigidity* (denoted RH) evaluates the exact NEXT endpoint value coefficient
+$K_1$ and the constant correction $2K_1$ to every normalized optimal
+contrast multiplier. These are finite explicit algebraic expressions.
+RC already supplies the full conditional residual curve, the genuine
+three-to-four-contact transition, unique grouped optima, and exact common
+attainments. Those results are credited here. Sections 3–5 retain an
+independent local derivation to justify the coefficient computation;
+they are not a new full-curve or transition claim. Section 7 identifies
+its parameter and multiplier exactly with RC's branch. Exactly four
+actual low live-bearing labels are necessary and sufficient on the
+proved endpoint neighborhood. This local actual-label assertion is
+distinct from RC's real-atom and construction counts, and is not extended
+here to a new global actual-label theorem.
+

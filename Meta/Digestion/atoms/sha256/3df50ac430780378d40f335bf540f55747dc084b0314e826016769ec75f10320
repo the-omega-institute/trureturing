@@ -1,0 +1,47 @@
+**Proposition 2.1 (the supplied graph and its exact action interface).** Put
+
+$$
+F(y)=\langle\rho(y),y\rangle,\qquad
+V=\{y\in\mathcal T:
+ r_{\rho^aF(y)}(p)=c\text{ for all }(a,p,c)\in H_0\}.
+\tag{GRS.6}
+$$
+
+The supplier [ARH, Theorem 8.2 and (27.2)][ARH] gives the bijection
+$F:V\to U$. For every $y\in V$, every integer $j\ge0$ and every suffix
+$z\in\Sigma^*$, the following are identities of the actual replies:
+
+$$
+\begin{aligned}
+r_{\rho^j F(y)}(\varepsilon)&=\mathsf b,\\
+r_{\rho^j F(y)}(Lz)&=r_{\rho^{j+1}y}(z),\\
+r_{\rho^j F(y)}(Rz)&=r_{\rho^j y}(z).
+\end{aligned}
+\tag{GRS.7}
+$$
+
+Every physical read address is uniquely one of these three forms. Its physical
+length is respectively zero or $1+|z|$. The suffix and the choice $L/R$
+are common action data chosen before the unknown source is quantified.
+
+Proof. To make explicit what is retained in the supplied bijection, the
+old row says $u=\langle a,b\rangle$ with $a\ne b$. Both relation endpoints
+are reached, and its equation says $a=\rho(b)$. Conversely every
+$\langle\rho(y),y\rangle$ has this old row and both endpoints. The supplied
+clock $\kappa(\alpha)=0$, $\kappa(\beta)=1$,
+$\kappa(\langle a,b\rangle)=2+\kappa(b)$ satisfies
+$\kappa(\rho y)=\kappa(y)+1$, so the old disequality holds for every finite
+$y$. The literal conjunction gives exactly $V$ in both directions.
+The inverse parameter is mathematically $u|_R$; this is not an acquired
+operation. This spells out the supplier's whole-source correspondence,
+including its old inequality and guards.
+
+Distribution of $\rho$ over the original root gives
+$\rho^jF(y)=\langle\rho^{j+1}y,\rho^j y\rangle$. Navigating the first
+letter proves (GRS.7), also when the remaining word is empty, is absent,
+or reaches a descendant born inside a leaf image. Every nonempty word has
+one first letter and one suffix. The physical request remains $Lz$ or
+$Rz$ at the original root; no source root is moved. Actual application
+of $\rho$ raises both displayed exponents by one. Thus the same $y$
+controls every reply through an entire run, on both sides. $\square$
+

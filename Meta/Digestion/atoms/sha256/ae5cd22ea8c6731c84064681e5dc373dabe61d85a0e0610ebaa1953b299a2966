@@ -1,0 +1,25 @@
+**Proposition 6.1 (conserved immediate emission with moving complete forecasts).** There is one original-domain rational finite observer satisfying (1.6), with strictly interior nonconstant suspended emissions, positive actual-return complete-law motion, positive suspended-alpha emission change and decrease, noncollapsed successor laws, and neither interface a complete redraw. One p decoder is outside the entire Borel constant-parameter native mixture family on $[a,b]$.
+
+Proof. On every original record fibre use two labels, fair rows and
+
+$$
+u_0=u_1=\frac{11}{30},\qquad
+v_0=\frac7{20},\quad v_1=\frac{23}{60},\qquad
+B=I,\qquad A=\begin{pmatrix}0&1\\1&0\end{pmatrix}.
+\tag{6.1}
+$$
+
+Use the original product realization of Definition 2.2. Fair latch sampling is source-independent and takes place after the third write and latch in that same original update. Both acquired flows are fair. All original controls, records, paid histories and Stop permissions remain, and synthetic generation uses these exact acquired updates.
+
+Each actual return swaps labels while preserving $u=11/30$. The p laws differ on $w_{0,1}=\beta\beta$ by $(19/30)(v_1-v_0)=19/900$, so complete-return motion is positive. Suspended laws differ on immediate beta by $1/30$. The actual alpha edge has expected absolute emission change $1/60$ and expected decrease $1/120$. The supplied suspended-interiority tent has expectation $1/60$. The kernels are distinct-row bijections and do not redraw a common row. The conditional successor laws differ at both interfaces.
+
+For the p law at label 1, write $q_j=Q_1(w_{j,0})$, $c=11/30$, $U=19/30$. Then $q_0=c$, $q_1=cUv_1$, $q_2=cU^2v_1v_0$, and
+
+$$
+q_1^2-q_0q_2=c^2U^2v_1(v_1-v_0)>0.
+$$
+
+A native mixture would have $q_j=\int r[r(1-r)]^j\,d\kappa(r)$ and hence $q_1^2\le q_0q_2$ by Cauchy. This decoder is therefore not such a mixture. All entries are rational. A common denominator is $60$: draw a fresh six-bit candidate, reject values at least $60$, and use thresholds $22,21,23,30$ for $u,v_0,v_1$ and the fair latch, respectively. Acceptance probability is $15/16$, so reuse of the same finite candidate and cursor storage gives exact probabilities and almost-sure service return. The updates $B,A$ are deterministic. The bit candidate, cursor, current phase and label, installed thresholds, program counter, addresses, event/output cursors and every service microstate belong to COMPLETE. Retries store no unbounded counter. Internal service states carry the conditional continuation of that same program and add no original Read cut or permission. At each original returned cut, acquired and synthetic updates use the same represented sampler. This instantiates the supplied rational-table convention [PAID, Lemma 2.1.1 and Proposition 11.3]. The two labels are not the total COMPLETE count. Installed tables, program, numerical representation, randomness, workspace, output and synthesis are separately charged; no physical exact-real oracle or finite worst-case time bound is inferred. $\square$
+
+This example is not near-optimal, and it does not establish independence from every supplied quantitative conjunction. It separates the new conserved-p-return predicate from zero complete-return motion, zero alpha change/decrease, endpoint suspended emissions, constant suspended emission and complete redraw. Theorem 1.5 concerns a different class from SEH: it permits the varying $v$ in (6.1) and arbitrary within-class suspended dynamics.
+

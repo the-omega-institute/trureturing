@@ -1,0 +1,24 @@
+**Definition 7.1 (retained-token checkpoint contract).** Fix a finite public
+height programme $k_0,\ldots,k_L\in(0,c)$, with actual horizontal original
+legs between consecutive cuts. Start with (PR.8) at $k_0$. Each successful
+cut must have exact specimen $\psi_{k_j,\beta,m}$; every auxiliary success
+output is retained as the next token and is available coherently under the
+additional service permission. This is C continued in time. It need not
+return the initial helper unchanged and is not a multi-step R theorem.
+
+The complete coherent survivor vector at cut $j$ has the form
+
+$$
+\psi_{k_j,\beta,m}\otimes a_{j,\epsilon},\qquad
+\|a_{j,+}\|^2=\|a_{j,-}\|^2=q_j,\qquad
+h_j=\langle a_{j,+},a_{j,-}\rangle.
+\tag{PR.24}
+$$
+
+Here $q_j$ is the unconditional probability of reaching that cut with all
+previous successes, not its conditional step probability. Initially
+$q_0=1$, $a_{0,\epsilon}=\eta_\epsilon$ and $h_0=\mu$.
+The token is the actual vector, not the number $h_j$. Every executed failure
+retains its first failed cut, actual quantum residue and absorbing $f$.
+Other actual spectator fields remain jointly present and untouched.
+

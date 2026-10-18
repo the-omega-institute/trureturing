@@ -1,0 +1,153 @@
+**Theorem 29.2 (explicit repeated-query resource point).** Under the
+unchanged permissions and prices of Definition 29.1 and Convention
+23.2, every supplied $A$ and $k$ have a finite common-start preparer
+on all of $\mathcal U_*$ with
+
+$$
+\boxed{\ H=n(2\lceil\sqrt n\rceil+1)+4+r,\qquad
+p=2n+1,\qquad \ell=3+2W_A.\ }
+\tag{PCA.67}
+$$
+
+The displayed call and literal costs are the attained uniform maxima
+of this one construction, and $H$ is its exact installed cardinality,
+including every unreachable state and all $r$ mandated further
+latches. The only mutable preparation configuration is its current
+counted state.
+
+Proof. The two modular scans below are a native use of the classical
+modular-router and two-box exact-division method: see Sinha's
+[dissertation, Proposition 3.10, Definitions 3.14 and 3.17, and the
+exact-division attribution on printed p. 42][SINHA95]. The modular
+method is a credited supplier; the present assertion specifies and
+prices its original-entry native consumer.
+
+Let
+
+$$
+d=\lceil\sqrt n\rceil,\qquad e=d+1,\qquad
+c=(-k)\bmod d\in\{0,\ldots,d-1\},\qquad J=(k+c)/d.
+\tag{PCA.68}
+$$
+
+Here $J$ is an integer with $1\le J\le d$, since
+$1\le k\le n\le d^2$. Every $0\le h\le n$ satisfies
+
+$$
+0\le h+c\le d^2+d-1<de.
+\tag{PCA.69}
+$$
+
+Install distinct running states $D,T$ and, independently, all states
+
+$$
+U_{i,j}\quad(1\le i\le n, 0\le j<d),\qquad
+V_{i,z}\quad(1\le i\le n, 0\le z<e).
+\tag{PCA.70}
+$$
+
+Install the two original-entry latches and the $r$ mandated further
+latches. All states in (PCA.70) count even when they are unreachable
+from the common start. A modular remainder in the following formulas
+always names a fixed member of its displayed finite range.
+
+For $\varepsilon\in\{0,1\}$ define the following *table entries*,
+with $j'=(j+\varepsilon)\bmod d$ and
+$z'=(z+\varepsilon)\bmod e$:
+
+$$
+\begin{aligned}
+F_U(i,j,\varepsilon)&=
+\begin{cases}
+U_{i+1,j'},&i<n,\\
+V_{1,(c-j')\bmod e},&i=n,
+\end{cases}\\
+F_V(i,z,\varepsilon)&=
+\begin{cases}
+V_{i+1,z'},&i<n,\\
+\widehat e_1,&i=n\text{ and }(-z')\bmod e\ge J,\\
+\widehat e_0,&i=n\text{ and }(-z')\bmod e<J.
+\end{cases}
+\end{aligned}
+\tag{PCA.71}
+$$
+
+Start at $D$. Install precisely the following literals and all four
+successors at every running state.
+
+| Running state | Absolute literal | alpha successor | beta successor | branch successor | absent successor |
+| --- | --- | --- | --- | --- | --- |
+| $D$ | $RLR$ | $\widehat e_1$ | $U_{1,c}$ | $T$ | $\widehat e_0$ |
+| $T$ | $RRR$ | $\widehat e_1$ | $\widehat e_0$ | $\widehat e_0$ | $\widehat e_0$ |
+| $U_{i,j}$ | $a_i$ | $F_U(i,j,0)$ | $F_U(i,j,0)$ | $F_U(i,j,1)$ | $F_U(i,j,0)$ |
+| $V_{i,z}$ | $a_i$ | $F_V(i,z,0)$ | $F_V(i,z,0)$ | $F_V(i,z,1)$ | $F_V(i,z,0)$ |
+
+Formulas (PCA.68)–(PCA.71) describe source-independent choices of
+literal successor names at installation. In particular the final
+comparison, modular remainders and first-to-second-scan connection
+are already reflected in those names. Execution has no modular
+arithmetic instruction, decoder, phase register, bit register,
+cursor, source copy, computed address, reset or silent connection
+step. The symbols $i,j,z$ distinguish separately installed states;
+there is no mutable tuple alongside the one current state. The
+$r$ further latches are installed but unreachable.
+
+First examine an arbitrary $u\in Z_{b_3}$, with arbitrary finite
+branch image $x_a=B$. The paid $D$ query returns beta. Put
+$\theta_i=\chi(r_B(w_i))$ and $h=\sum_i\theta_i$ only for this
+proof. Induction on the first scan shows that its state before
+reading $a_i$ is $U_{i,(c+\sum_{v<i}\theta_v)\bmod d}$. Thus its
+last paid edge selects the second scan's first state with residue
+$(c-j_*)\bmod e$, where $j_*=(h+c)\bmod d$.
+
+Each repeated query is on the same stationary current tree. It
+therefore has the same $\theta_i$ in the second scan, whatever the
+shape of $B$. Induction on that scan shows that its residue after
+its last reply is
+
+$$
+z_*=(c-j_*+h)\bmod e
+    =d\left\lfloor\frac{h+c}{d}\right\rfloor\bmod e.
+\tag{PCA.72}
+$$
+
+By (PCA.69), $v=\lfloor(h+c)/d\rfloor$ lies in
+$\{0,\ldots,e-1\}$. Since $d\equiv-1\pmod e$, (PCA.72)
+implies $(-z_*)\bmod e=v$. Consequently the installed final edge
+latches one exactly when
+
+$$
+v\ge J
+\quad\Longleftrightarrow\quad h+c\ge dJ=k+c
+\quad\Longleftrightarrow\quad h\ge k.
+\tag{PCA.73}
+$$
+
+This is exactly the prescribed code on $Z_{b_3}$. The proof used no
+comb shape, bound on tree size or distributional assumption. Both
+leaf labels and absent replies have been handled by the installed
+zero successors, not removed from the native alphabet.
+
+For completeness check all other members of the eleven-profile
+partition of Definition 4.1. Alpha at $b_3$ occurs exactly on
+$\Pi_3$ and selects $\widehat e_1$. Beta occurs exactly on
+$Z_{b_3}$, already proved. On the remaining branch-at-$b_3$
+profiles, alpha at $b_4$ occurs exactly on $\Pi_4$ and selects
+$\widehat e_1$ from $T$. Every other such profile, including
+$\Pi_1,\Pi_2$, every other $Z_d$ and $Z_*$, selects
+$\widehat e_0$. Class-root absence cannot occur on this complete
+cut but its successors are installed. Thus every actual finite
+origin in $\mathcal U_*$ reaches its literal prescribed entry.
+The fixed reader then returns the original whole $R_P(u)$, with
+its unchanged partition, repeated occurrences and blocking guards.
+
+Each execution on $Z_{b_3}$ visits $D$, all $n$ first-scan
+positions and all $n$ second-scan positions. Each such visit makes
+one paid invocation. Its costs are exactly $2n+1$ and $3+2W_A$.
+This fiber is nonempty by Definition 4.1, so these costs are
+attained by actual finite origins. Every other execution makes
+one or two root queries and costs at most two calls and six
+letters. Since $W_A\ge5n$ and $n\ge3$, these are smaller than
+the displayed scan costs. There are exactly $n(d+e)+2$ running
+states and $2+r$ latches. This proves all of (PCA.67). $\square$
+

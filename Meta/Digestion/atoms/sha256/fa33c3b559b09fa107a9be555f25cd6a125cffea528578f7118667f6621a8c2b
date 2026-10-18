@@ -1,0 +1,25 @@
+**Proposition 7.2 (callability and selector closure).** At a named cut $h$,
+$M(h)$ computes any finite indexed row of every sealed prefix then available,
+or its exact out-of-range refusal. The observer itself actually services these
+requests through Definition 3.1. Every $P_{H,J}$ choice and its complete
+successor can be obtained from each other view without a new source Read.
+
+Proof. Replay to $n_h$ reconstructs the exact prefix descriptor, actual rows,
+tokens and bytes. A finite scan or direct selection of the regenerated finite
+row list computes the requested row/refusal. If an actual owned copy is
+required, use the corresponding reconstructed reference with the same paid
+scan/mailbox/copy routine; no incomplete destination is read. The program's
+scheduled calls demonstrate actual success, actual rejection and complete
+copies, with NCR.2 preserving their records. Replay-based recall is a second
+paid implementation of the same finite lookup function, not a promise that
+the extant archive can be accessed for free. Reading the replayed selector
+input and evaluating its finite routine produces its exact chosen next
+action. Theorem 7.1 gives the original joint successor. ∎
+
+The full atlas is asserted through every tape read/write/move/allocation,
+counter increment, row append, copy and rejection cut of the declared hybrid
+primitives. It is not extended to substeps of its atomic Native source calls,
+arbitrary-entry histories, or freely interleaved consumers. A replay-only
+logical payload does not remove the actual producer, mailbox, receiver,
+retired versions, meter or interpreter from physical storage.
+

@@ -1,0 +1,64 @@
+**Theorem 7.4 (Unique scalar root strictly between floor and baseline).**
+There is exactly one $T_\tau>\tau$ satisfying
+$\Phi_\tau(T_\tau)=0$, and
+
+$$
+\tau<T_\tau<T_0.
+$$
+
+Every radial model has normalized squared error at least $T_\tau$,
+and $\mathcal J(\sqrt{T_\tau},\lambda_{T_\tau})=T_\tau$.
+
+**Proof of Theorem 7.4.** The defining functions are jointly continuous
+on a compact $x$ interval and any compact $T$ interval inside
+$(\tau,\infty)$. Uniform continuity there proves continuity of
+$\Phi_\tau$: the difference of two maxima is bounded in absolute
+value by the supremum of the difference of their functions.
+
+For every $x\in[0,1]$,
+
+$$
+\partial_T\log f_T(x)=
+\frac{1-x}{2T}+\frac{x}{2(T-\tau)}>0.
+$$
+
+If $T_2>T_1>\tau$, also
+
+$$
+v_{T_2}(x)-v_{T_1}(x)
+=\frac{T_2-T_1}{v_{T_2}(x)+v_{T_1}(x)}
+\ge\frac{T_2-T_1}{\sqrt{T_2}+\sqrt{T_1}}>0.
+$$
+
+Thus $g_{T_2}$ lies below $g_{T_1}$ by a uniform positive amount;
+$\Phi_\tau$ is strictly decreasing.
+
+The square-completion identity in Lemma 7.2 gives
+$s(x)\le v_{T_0}(x)$ everywhere. Since
+$T_0-\tau=(1-\tau)^2/4>0$ and $f_{T_0}$ has a positive minimum,
+$\Phi_\tau(T_0)<0$.
+
+For the other sign, fix $x_0=(1+\tau)/2$, so $\tau<x_0<1$.
+As $T\downarrow\tau$,
+
+$$
+f_T(x_0)\longrightarrow0,\qquad
+s(x_0)-v_T(x_0)\longrightarrow
+\sqrt{1-x_0}\,(\sqrt{x_0}-\sqrt\tau)>0.
+$$
+
+Thus $\Phi_\tau(T)>0$ for $T$ sufficiently close to $\tau$ from
+above. This uses a fixed interior point and does not assert uniform
+convergence of $f_T$ at $x=0$ as $T\downarrow\tau$.
+The intermediate value theorem and strict decrease give exactly one
+root, in the asserted interval.
+
+For a positive exponential, Lemma 7.2 puts its error level above
+$\tau$. If it were below $T_\tau$, Lemma 7.3 would contradict
+strict decrease of $\Phi_\tau$. Conversely Lemma 7.3 makes
+$f_{T_\tau}$ feasible. It cannot have error below $T_\tau$ by the
+same argument. The zero amplitude has larger value $T_0$.
+This proves the minimum over all radial parameters, without any
+compactness or existence assumption about a minimizing sequence.
+$\square$
+

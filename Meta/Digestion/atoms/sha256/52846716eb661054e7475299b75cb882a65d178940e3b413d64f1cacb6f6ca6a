@@ -1,0 +1,70 @@
+**Theorem 2.5 (all finite joint tuples with certified depth).** For
+every finite $m\ge1$, every finite slot list $\mathcal V$ as above,
+every $n\in\mathbb N$ and every $\mathbf u\in\mathcal T^m$,
+
+$$
+\mathsf{tick}^n\operatorname{Payload}_{\mathcal V}(\mathbf u)
+\in\mathcal L(\mathcal G_{m,\mathcal V})
+\quad\Longleftrightarrow\quad
+\forall i,j\quad u_i\simeq_nu_j.
+$$
+
+Every finite output has this form. All its epoch and expression slots
+are faithful views of the same whole original values. Agreement includes
+original-address absence. The certificate $n$ need not be the first
+mismatch depth.
+
+Proof. First consider a finite selection by $\mathsf{Gen}$ before its
+continuation is called. Its outer choice either selects $\mathsf A$,
+selects $\mathsf B$, or selects a pair. In the pair case both recursive
+selections must finish before $\mathsf{Right}$ calls the continuation.
+Induction on this finite selection gives exactly the builder $[u]$ of
+a finite $u$. Conversely induction on $u$ makes these same choices
+and yields $[u]$. No choice remains inside the returned builder.
+An infinite sequence of recursive selections cannot give a finite
+choice-free output: infinitely many surviving choice nodes would have
+to be removed. Therefore $\mathsf Q_m$ selects exactly all finite
+tuples, each coordinate once before using its continuation.
+
+Write $\mathcal A_n$ for the tuple family selected by
+$\mathsf F_m^n\mathsf Q_m$. At $n=0$ it is $\mathcal T^m$.
+The equations for $\mathsf F_m$ give exactly three alternatives:
+the all-$\alpha$ tuple, the all-$\beta$ tuple, and
+
+$$
+(\langle x_1,y_1\rangle,\ldots,\langle x_m,y_m\rangle)
+\quad\text{with }\mathbf x,\mathbf y\in\mathcal A_n.
+$$
+
+The two selections in the third alternative are separate selections
+of child tuples; their deterministic values are paired coordinatewise.
+If all original roots agree through strict depth $n+1$, their roots
+are either the same leaf or all branches. In the leaf cases every
+strict descendant is absent in every coordinate. In the branch case
+the actual left-child tuple and right-child tuple agree through strict
+depth $n$. Conversely those two agreements imply agreement through
+strict depth $n+1$ of the paired tuple. Induction on $n$ proves
+
+$$
+\mathcal A_n
+=\{\mathbf u\in\mathcal T^m:
+                         \forall i,j\ u_i\simeq_nu_j\}.
+$$
+
+This proves both source directions: every derivation produces actual
+finite originals, and every requested original tuple is reproduced
+with its actual children, not replaced by representative witnesses.
+Choosing the continuation branch of $\mathsf C$ exactly $n$ times
+leaves $n$ ordinary tick nodes and then
+$(\mathsf F_m^n\mathsf Q_m)\mathsf{Emit}$. A finite output must
+eventually take its stop branch; an infinite tick spine remains
+infinite under finite choice pruning. The builder identities in
+Definition 2.2 prove every emitted slot, with the same selected
+parameter at every occurrence.
+
+The only tick occurrences are on this one spine, so their number
+is exactly $n$. Early common leaves can certify arbitrarily many
+layers when the sources are equal. When a tuple first differs at
+depth $d$, every $0\le n\le d$ is a valid certificate, whereas
+$n=d+1$ is not. No maximality test is imposed. $\square$
+

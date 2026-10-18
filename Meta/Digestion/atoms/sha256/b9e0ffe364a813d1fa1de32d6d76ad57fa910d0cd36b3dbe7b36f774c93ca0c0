@@ -1,0 +1,11 @@
+**定义 126.1（配置、内部载体与记录）。** 令 $X$ 为有限配置集，内部空间为
+$K=\mathbb C^d$，其中 $1\le d<\infty$。给定随机矩阵 $P=(P_{ij})$，满足
+$P_{ij}\ge0$ 且 $\sum_jP_{ij}=1$，并在每条允许边 $i\to j$ 上给定酉
+$U_{ji}\in\mathsf U(K)$。记录向量 $e_{ji}$ 属于有限维空间 $E$，且
+$\langle e_{ji},e_{ji}\rangle=1$。候选共同实现定义在
+$\mathbb C^X\otimes K$ 上：
+$$
+ V(|i\rangle\otimes\psi)=\sum_j\sqrt{P_{ij}}\,|j\rangle\otimes U_{ji}\psi\otimes e_{ji}.
+$$
+这里的 $V$ 同时承载概率、内部酉和记录；三者不能先分别选出再假定具有共同实现。
+

@@ -1,0 +1,16 @@
+#### 25.3　二元动作的 cut-polytope 定理
+
+先令 $\mathcal A=\{0,1\}$。每个种子值 $u$ 给出一个子集
+
+$$
+S_u=\{h:f(h,u)=1\}\subseteq H.
+$$
+
+它诱导 cut 半度量
+
+$$
+\delta^{S_u}_{ij}=\mathbf1\{\mathbf1_{i\in S_u}\ne\mathbf1_{j\in S_u}\}.
+$$
+
+<a id="claim-25-3-1"></a>
+

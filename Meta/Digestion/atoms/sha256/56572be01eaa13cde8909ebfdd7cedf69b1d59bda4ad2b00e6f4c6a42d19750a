@@ -1,0 +1,40 @@
+## 61. 最小原始证书的两种块形
+
+本节固定 $n\ge3$，沿用（JM.166）的分块。记 $E_a,E_b$ 为 $T_{n-3}$ 的 $\alpha$、$\beta$ 叶地址，$a=|E_a|$、$b=|E_b|$。于是 $T_n$ 在 $p\in E_a$ 处是 $X$ 块，在 $p\in E_b$ 处是 $Y$ 块，并且
+
+$$
+a+2b=F_{n-1},\qquad 3a+5b=F_{n+1}.
+\tag{JM.186}
+$$
+
+对每个 $X$ 块取一个原始地址回复
+
+$$
+C^X_p=\{(pLR,\alpha)\}.
+\tag{JM.187}
+$$
+
+对每个 $Y$ 块取两种同样大小的原始地址回复：
+
+$$
+\begin{aligned}
+C^{H}_p&=\{(pLL,\mathsf{br}),(pRR,\alpha)\},\\
+C^{V}_p&=\{(pLLR,\alpha),(pRR,\alpha)\}.
+\end{aligned}
+\tag{JM.188}
+$$
+
+上标 $H$ 表示 hidden branch：第一项在粗投影下是 `none`；上标 $V$ 表示 visible leaf。对 $S\subseteq E_b$，定义实际的原始历史 $h_{n,S}$：在固定的无重复次序中，逐项请求
+
+$$
+C_{n,S}=\bigcup_{p\in E_a}C^X_p\ \cup\ \bigcup_{p\in S}C^V_p\ \cup\ \bigcup_{p\in E_b\setminus S}C^H_p
+\tag{JM.189}
+$$
+
+并保留每个首次回复及其原始四值。由于各块锥互不相交，
+
+$$
+|C_{n,S}|=a+2b=F_{n-1}.
+\tag{JM.190}
+$$
+

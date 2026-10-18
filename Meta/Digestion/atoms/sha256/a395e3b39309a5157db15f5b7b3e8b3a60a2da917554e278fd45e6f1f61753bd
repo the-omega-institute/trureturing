@@ -1,0 +1,33 @@
+**命题 22.3（One colour per strict slot is insufficient without the clearing-boundary condition）。** At the same parameters let $A,B,C,F$ be pairwise distinct, and set
+
+$$
+\lambda(4)=\lambda(5)=B,\qquad \lambda(1)=C,\qquad
+\lambda(6)=F,\qquad \lambda(2)=\lambda(7)=A,
+\qquad \lambda(0)=D\ne E=\lambda(3).
+\tag{22.5}
+$$
+
+The endpoint labels and $R,L_\bot$ need satisfy no additional freshness conditions. Then
+
+$$
+C_{\rm ad}(f)=C_{\rm pre}(f)=4.
+\tag{22.6}
+$$
+
+Proof. Each strict slot has only one nonbaseline label: $K_1$ carries $B$ and $K_2$ carries $C$ outside its baseline positions. But the adjacent boundary six carries a third nonbaseline label $F$.
+
+To exclude adaptive fee three, use frozen phase two's label $A$. Both phases four and five have label $B\ne A$ and no opportunity after index one. They must both leave the zero archive at that index. Its word starts zero by the full-tail obstruction; in bits $0ab$ the charges at four, five, six are $a,a\oplus b,b$. Selecting both four and five therefore forces $a=1,b=0$, and charge zero at six. The positive child $\{4,5\}$ can stop with $B$, but the zero child contains the actual phases one, two, and six with respective labels $C,A,F$. There is only one complete endpoint left. It cannot distinguish these three labels: phase two has zero charge, while selecting both one and six puts the different labels $C,F$ in the same final positive child; failing to select either leaves that label with $A$. Later rejection cannot help, since after the compulsory clearing bit all choices up to fee three are safe by (20.4). Thus the adaptive deadline fails, excluding every adaptive or preset fee at most three.
+
+The necessity of the clearing bit is visible in a false relaxed construction. The formal charges one at all four vertices $3,4,5,6$ would be the literal word $101$. They would select the right boundary six along with four and five, allowing a later phase-six repair on that child. But its first bit one rejects every root-zero source at INITIAL tail three, merging the different original labels. Thus it is not an available full-target action. The retirement criterion (19.8) together with (19.6) detects exactly this obstruction.
+
+For attainment use the common stream
+
+$$
+111\mid001\mid101\mid100.
+\tag{22.7}
+$$
+
+Its post-root supports are $\{5,6\}$, $\{6,7,0,1\}$, $\{1,2\}$. At the second block the root-zero positive archive is $\{5,6\}$; at the third it separates phase five's $B$ from phase six's $F$ and stops. The root-zero zero archive is $\{1,2,4,7\}$. At the third block its positive child is $\{1,7\}$ with labels $C,A$, and its zero child is $\{2,4\}$ with labels $A,B$. The fourth block selects phase one in the former child and phase two in the latter, giving the correct two decoders. On the endpoint sibling, the third block selects zero and not three, so $D,E$ are identified by fee three. Root rejection and initial rejection have their independent prescribed labels.
+
+The second word begins zero, clearing even current tail six. It ends with one; the third word's leading one makes a run of length two before its zero. The third word again ends with one, and the fourth's leading one likewise makes a run of length two before clearing. These runs are strictly shorter than $k=7$, on every INITIAL low tail and both values. Thus the fourth block is a paid literal repair on the same sources, not an abstract extra binary query. The upper bound four and the adaptive lower bound four prove (22.6). ∎
+

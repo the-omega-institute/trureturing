@@ -1,0 +1,35 @@
+**Mathematical citation 2.1 (Common acquired row).** [PAID, Lemma 14.1] applies literally to the experiment of Definition 1.1 and the suffix
+
+$$
+S=\beta\alpha\mid\beta\beta\alpha\alpha.
+\tag{2.1}
+$$
+
+It supplies finite carriers, the actual $B,A$, and probability rows $\pi,\tau$ with
+
+$$
+\pi B=\tau,\qquad \tau A=\pi,
+\tag{2.2}
+$$
+
+such that, for every supported depth, the same rows satisfy
+
+$$
+\sum_x\pi_x\operatorname{TV}(Q_x,P_{p,r_k})\le R_{{\rm conf},p},\qquad
+\sum_y\tau_y\operatorname{TV}(W_y,P_{\beta,r_k})\le R_{{\rm conf},\beta}.
+\tag{2.3}
+$$
+
+The law-order counterparts also hold. Positive-row labels are reachable original configurations; their laws are their exact original decoders pulled back through their own $I_c$. Deleting zero-row labels preserves both kernels and every retained law, since (2.2) prohibits transitions from positive-row labels to zero-row labels. Transient original configurations are not deleted from the original history domain.
+
+The correspondence does not change source, operation, loss or resource semantics. For completeness, its ordinary justification is as follows. At the paid seed-pair boundary, let $R_\alpha,R_\beta$ be the finite updates for rejected equal pairs. Choose periods $d_\alpha,d_\beta$ for which $R_\alpha^{d_\alpha n}$ and $R_\beta^{d_\beta n}$ converge. For each supported $r=r_k$, use histories $(\alpha\alpha)^{m_n}(\beta\beta)^{t_n}S$, with
+
+$$
+m_n=d_\alpha\left\lfloor nr/d_\alpha\right\rfloor,\qquad
+t_n=d_\beta\left\lfloor n(1-r)/d_\beta\right\rfloor.
+$$
+
+Writing $E_\alpha,E_\beta$ for those two matrix limits, $\eta_0$ for the initial row and $P_S$ for the fixed acquired suffix update, their observer rows converge to the one source-independent row $\zeta=\eta_0E_\alpha E_\beta P_S$. Their likelihood ratio at any competing depth is the fixed positive suffix ratio times $\exp[-2n\operatorname{KL}(\operatorname{Ber}(r)\Vert\operatorname{Ber}(r_i))+O(1)]$. The rounding term is uniformly bounded on $I$; so is the suffix ratio, since its likelihood is $r^3(1-r)^3$. The source parameters are distinct: $r_{k+1}=(1-r_k)/(2-r_k)$ is a strict contraction on $I$ with only the irrational fixed point $(3-\sqrt5)/2$, so its rational orbit cannot repeat. Multiplication by $\mu(i)/\mu(k)$ therefore gives a summable dominating sequence and pointwise convergence to zero for every $i\ne k$. This proves posterior concentration for countable as well as finite priors.
+
+Appending a fixed number $j$ of acquired returns, with or without a further beta, preserves that domination. The limiting rows are $\zeta(BA)^j$ and $\zeta(BA)^jB$, with the pure supported targets. Configuration loss is linear in the finite row and 1-Lipschitz in the target; law loss is continuous in both. Cesaro averaging gives (2.2)–(2.3) on one row for every supported depth. If a stationary coordinate is positive, some finite-return limiting coordinate is positive, and a sufficiently late finite positive-history approximant is positive there too. This proves reachability. No limiting row or posterior is installed in the observer, and no cost or hard defect budget is preserved by this analysis extraction.
+

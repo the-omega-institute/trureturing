@@ -1,0 +1,14 @@
+**Definition 23.2 (published finite-separated-scale supplier and unresolved boundaries).** [Actual critical solvability and microscopic disappearance](FIB_NATIVE_ACTUAL_CRITICAL_SOLVABILITY_AND_MICROSCOPIC_DISAPPEARANCE.md), §§17–20, already supplies a unique positive $L^2$ Coulomb column $\zeta_{R_0}$ for each fixed separated parameter $R_0>r_C$, with the original source charge and Friedrichs Coulomb operator. If an actual ground-state sequence of one fixed admitted datum has $r_s\to R_0\in(r_C,\infty)$, its Theorem 20.1 supplies the moving $L^2$ comparison orbit
+
+$$
+\inf_\theta\|F_s-e^{i\theta}\alpha_{R_0}(p+\mathcal M_s\zeta_{R_0})\|_2\to0,\qquad
+\alpha_{R_0}=(1+\|\zeta_{R_0}\|_2^2)^{-1/2}.
+\tag{23.1}
+$$
+
+The map $\mathcal M_s$ is exactly its isometric comparison map (17.4), not an asserted native form map. Its Corollary 20.2 gives microscopic and macroscopic masses $\alpha_{R_0}^2$ and $\alpha_{R_0}^2\|\zeta_{R_0}\|_2^2$, a common complex phase, sum one and no third $L^2$ mass scale. These are credited shape and mass suppliers at an actually occurring finite separated $R_0$; they force $C_{\rm resp}=0$ but prove neither occurrence of that branch nor selection of $R_0$. Their constants need not be uniform through $R_0=r_C$ and they give no kinetic-energy transfer or native point interaction.
+
+The absolute signs of $G_{\rm resp},G_{108}$, positive/zero response occurrence and the every-actual-choice response-zero selection remain unresolved. The symbolic error and interval formulas do not enclose numerical values until all their same-source inputs and constants are enclosed. The original entire complex native domains, both Dirichlet deaths, raw source charges, signed nonzero parameter, determinant-one shear and heat clock remain those of §§1–3. There is no general $L^2$ inverse or spectral gap, arbitrary response membership, assertion $\Psi\in D(\mathcal E)$, or passage from a canonical form representative to native admissibility without the original cutoff and transport argument.
+
+The complete finite-$(s,A)$ quantum frontier, evaluated fixed-source coefficients through precontact/contact and degenerate gluing, all finite-budget contacts and optimizer/rank/actual-alphabet changes, endpoint uniform rates and joint critical limits retain their original universal-necessity and common-attainer obligations. The analytic differential-operator coefficients above supply no bridge to acquired mass, completely positive instrument resources, controller permissions, amplitude preparation or a joint native implementation. No physical-space or physical-$SO(3)$ selection, zero-leaf, torus, cutoff-free or parameter-uniform theorem is obtained. Finite analytic or numerical checks do not imply Lean, root or native certification, and this conditional finite theory does not complete the continuous quantum-first programme.
+

@@ -1,0 +1,12 @@
+**定义 76.2（loss fields and syntax）。** A sum-loss word consists of its mode followed by the gamma words of $K,h,a,b$, then the gamma words of the signed fields of the nine anchor integers in phase order $3,4,5$, each in coordinate order $1,2,3$. Thus it has thirteen fields. Require $K\geq1$, $h,a,b\geq0$, and put $p=K+10$. The bit length of each of $a,b$ is at most $p+4$; $2^{p-1}\leq a+b\leq2^{p+3}$; $a,b\leq2^{p+h}$; and each signed coordinate integer has absolute value at most $2^p+1$. The reconstructed losses are $a2^{-p-h},b2^{-p-h}$ and the reconstructed anchor coordinates are the signed integers times $2^{-p}$. These tests reject out-of-range or insufficient-loss fields, a wrong mode, truncation and any trailing field or symbol. They establish syntax and finite coefficient ranges, not correspondence to an actual source.
+
+The loss-above-one comparison can be performed using integer bit lengths before expanding $2^h$: a significand is valid if its bit length is less than $p+h+1$, or is equal to that length and it equals the single-bit integer $2^{p+h}$. The equality case constructs only the integer actually being compared. Installation separately pays for the full $h$-dependent scale. A successful word never obtains zero-cost workspace from the short gamma field for $h$.
+
+On a semantically valid encoded source the significands satisfy $a,b\leq4\cdot2^p+2$ and the coordinates satisfy the ranges above. Applying the gamma length formula to the four natural and nine signed fields gives the complete numerical bound
+
+$$
+|w|\leq22p+100+2\log_2(K+1)+2\log_2(h+1).
+$$
+
+No source-size field $N$ occurs. Source-dependent accuracy, branch and scale are represented by the mode and the actual $K,h$ fields. If a different source-dependent interpreter, identity, selection certificate or evidence is required, its complete finite description is additional word content, not common infrastructure.
+

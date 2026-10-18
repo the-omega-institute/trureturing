@@ -1,0 +1,51 @@
+**Theorem 262.3 (Triangle certificate on the full original domain).**
+On the three words $x=000$, $y=010$, $z=110$, every complete
+finite stopped law satisfies
+
+$$
+H(q):=q_x(0)+q_y(1)+q_z(\{0,3\})\le2.
+\tag{262.4}
+$$
+
+Consequently (262.2) holds also against every original arbitrary-address,
+full-carrier stopped competitor.
+
+**Proof.** The target events for $x,y$ are disjoint, as are those for $y,z$. An increasing
+stopped schedule which queries both varying coordinates merges $x,y$
+at its first zero. Seeing only coordinate one also merges $x,y$;
+seeing only coordinate two merges $y,z$. Seeing neither merges all
+three. Coordinates at least three are identical on these words.
+Thus a deterministic stopped rule cannot score three; it scores at
+most two for every output label. Random mixtures prove (262.4).
+Here $H(p_t)=2+t$. Uniform distance $r$ therefore implies
+$2+t-3r\le2$. If $q$ is same-cap feasible, its third event is
+at least $1-e=k$, exactly its value in $p_t$; only the first
+two terms can decrease, giving $2+t-2r\le2$.
+These prove the finite lower bounds. On $O_3$, $H\le2$;
+on $N_3$, trivially $H\le3$. Hence any representation
+$p_t=(1-s)o+sn$ has $2+t\le2+s$, so $s\ge t$.
+The displayed decomposition attains $t$, proving $\omega(p_t)=t$.
+
+Now fix any original stopped competitor and $\varepsilon>0$.
+Its preselected schedule has finite maximum address almost surely.
+Choose $m\ge3$ with probability of maximum address exceeding $m$
+at most $\varepsilon$. The original source supplier gives three
+actual sources with prefixes
+$0001^{m-3}$, $0101^{m-3}$ and $1101^{m-3}$.
+Their identities are fixed before the seed. On good seeds every
+queried address is at most $m$, so the preceding stopped-partition
+argument applies. On exceptional seeds the total score is at most
+three. For Borel mark events $\{\theta_0\}$, $\{\theta_1\}$ and
+$\{\theta_0,\theta_3\}$ it follows that $H(q)\le2+\varepsilon$.
+All other original tapes score zero. Countability gives the common
+conull termination event; no competitor is restricted to marked tapes.
+Uniform all-source radius gives $3r\ge t-\varepsilon$, or
+$2r\ge t-\varepsilon$ for a same-cap competitor, since the third
+source has actual first absence three. Let $\varepsilon\downarrow0$.
+The witnesses may depend on $m$: this is legitimate for a uniform
+supremum, and introduces no source prior or algorithmic advice.
+
+For the original class radius, take $D$ alone: its triangle score
+is three, so the same proof gives $r\ge1/3$. Together with
+Theorem 261.7 this proves the original sharp radius. $\square$
+

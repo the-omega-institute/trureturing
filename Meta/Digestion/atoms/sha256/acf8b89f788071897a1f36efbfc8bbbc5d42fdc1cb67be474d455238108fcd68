@@ -1,0 +1,9 @@
+### 461.2 固定单位约束的精确解与唯一性
+
+沿用原误差
+$$
+E_h(\sigma)=\max_{s\in\{h,3h/2,2h\}}
+ |cB(s)-L_\sigma(s)|,
+\qquad L_\sigma(s)=\int e^{-st}\,d\sigma(t).
+$$
+

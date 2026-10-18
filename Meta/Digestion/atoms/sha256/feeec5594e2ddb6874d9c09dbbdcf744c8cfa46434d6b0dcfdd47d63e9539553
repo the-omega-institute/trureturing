@@ -1,0 +1,41 @@
+## 209. At most two genuine axial M owners have pair {C,D}
+
+**Lemma 209.1.** There are at most two genuine owners with an axial M slot and
+fixed pair {C,D}, in the entire quotient, not merely one axial run.
+
+Such an owner cannot have two M axes: since m>1+c+d, it would be flat.
+Thus its axial M occurrence uniquely identifies it. Suppose there are
+g>=3 such owners, with axial angles theta_i. Their sum is at most pi.
+The proof of §116.1 uses only the existence of one angle <=pi/3,
+not equality of the entire sum to pi. It therefore gives
+
+ lambda_M^2>1/3, lambda_O^2>1/7,
+
+where lambda_M and lambda_O use the source pair {C,D}. The second bound
+uses the actual source product (m-1)*(o-1)>=(c+d)^2. Explicitly, putting
+K=(sqrt(c^2-1)+sqrt(d^2-1))^2/(c+d)^2 and T=(m-1)/(m+1), the positive
+remainder identity of §96 gives K*T>1/3 and
+F(m)=2*(m-1)/(c+d)^2-T*(c-d)^2/(c+d)^2<1/3.
+Then K>1/3 and
+ lambda_O^2>=K/[1+2*(m-1)/(c+d)^2]>1/7.
+
+The function b_lambda(theta)=atan(lambda*cot(theta/2)) is positive,
+strictly decreasing and strictly convex for 0<lambda<1. Jensen gives
+ sum_i b_lambda_M(theta_i)>=g*b_lambda_M(pi/g)
+                              >=g*b_lambda_M(pi/3)>g*pi/4.
+Each of these distinct owners contributes 4*b_lambda_M(theta_i) in
+its four original C/D transverse slots. Their total exceeds 3*pi.
+
+If O=C or D, the entire genuine C/D budget is exactly 3*pi, contradiction.
+If O=S is special, its complete star has h=degree(S)-1>=5 genuine slots
+of total angle pi, all with fixed pair {C,D}. The bound lambda_S^2>1/7
+and Jensen imply
+ sum_j b_lambda_S(phi_j)>=h*b_lambda_S(pi/h)
+                           >=h*b_lambda_S(pi/3)>h*pi/6.
+An actual owner has at most two S slots, so the C/D transverse expense
+of these owners is at least 2*sum_j b_lambda_S(phi_j)>pi.
+No such genuine owner belongs to the axial M set: one containing both
+M and S has exactly the six source lengths and is flat. The disjoint
+C/D expenses would exceed 3*pi+pi=4*pi, contradiction. This proves the
+lemma with repeated S axes fully counted.
+

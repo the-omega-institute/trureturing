@@ -1,0 +1,19 @@
+**Proposition 8.3 (what spatial structure plus one Read recovers).**
+Under the paid interface, Theorem 3.4 turns a target-blind retained
+relation and one same-source observation into the exact selected
+temporal trajectory for every late spatial address. That trajectory
+and its factor determine each other on attained inputs. The code
+alone need not predict the trajectory, identify the first leaf,
+or recover the whole tree or spatial boundary.
+
+Proof. The construction's selector and decoder give the factor
+by Theorem 3.3; Convention 2.1 gives the attained bijection with
+the trajectory. At $D=2$ its code $0$ contains both right-root
+leaves alpha and beta, with different trajectories at $R$. Thus
+the code alone is not sufficient even for that target. AAR's
+descriptor collision shows why the factor need not identify its
+blocking position, and branch factors ignore arbitrary descendants.
+An exact prediction at supplied $k$ produces no authentic Read
+event on $\rho^k t$; source continuity and the authentic count remain
+assumptions. $\square$
+

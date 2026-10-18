@@ -1,0 +1,30 @@
+**Definition 1.2 (Resource and objective).** Before the input and future policy
+are chosen, fix CPTP maps
+
+$$
+\operatorname{Enc}:M_5\longrightarrow\bigoplus_{f\in F}M_1,\qquad
+\operatorname{Dec}_f:M_1\longrightarrow M_5,
+\tag{1.2}
+$$
+
+with finite fixed $F$ and each decoder CPTP on its whole block. Write
+$T(X)=\sum_f\operatorname{Dec}_f(\operatorname{Enc}(X)_f)$. The input is
+replaced once, before the common future protocol. Flags are free for this
+dimension criterion, consumed by decoding, and not additionally exposed to
+future policy. No input retention, bypass or entangled assistance is allowed.
+Let $\mathfrak C_1$ be the full complex class of such composites, and define
+
+$$
+e(T)=\sup_{\rho\in\mathcal D(\mathbb C^5)}
+\sup_{\pi\ {\rm actual,\ finite}}
+\operatorname{TV}(P_\rho^\pi,P_{T(\rho)}^\pi),\qquad
+\varepsilon_1=\inf_{T\in\mathfrak C_1}e(T).
+\tag{1.3}
+$$
+
+TV is half the $\ell^1$ difference, with the corresponding measure convention
+for randomized controls. This is a system-history criterion. It does not
+include a joint-reference measurement and is not replaced by trace or diamond
+distance. No reality, unitality, covariance, projector or orbit-support
+condition is imposed on competitors.
+

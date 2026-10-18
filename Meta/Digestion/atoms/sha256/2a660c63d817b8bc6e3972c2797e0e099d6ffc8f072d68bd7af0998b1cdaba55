@@ -1,0 +1,9 @@
+**Reused bounds 1.4.** [OWN, Lemma 5.3] is horizon-independent and gives at least four word rows. [OWN, Theorem 6.1, (6.2)–(6.5)] supplies five word rows within three blocks on precisely (1.1). Consequently
+
+$$
+N+4\le K_{\min}^{\rm GLOBAL}(4;f)\le N+5.
+\tag{1.6}
+$$
+
+[OWN, Theorem 3.2] supplies $C_{\rm ad}(f)=2$ and $C_{\rm pre}(f)=3$. Block-fee value joining is not a memory-preserving transformation and is not used to infer a complete state minimum.
+

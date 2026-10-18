@@ -1,0 +1,28 @@
+**Mathematical citation 1.5 (supplied mechanisms).** [CNA, Theorem 2.2][CNA]
+supplies persistence of present positions and branches, and the certificate
+that two equal leaf replies at one address enclose no update. [CWS,
+Definition 2.4 and Theorems 3.3–4.4][CWS] supplies RA: descend left to a guard
+leaf, construct the complete exterior by stackless preorder, compare
+every pair of hidden subtrees by rereading their constructors in common
+left-first preorder, then reread the guard. A mismatch ends a comparison;
+equal branches descend and equal leaves move to the next pending right
+sibling. It stores paths and the candidate row, not hidden-tree values.
+Its every attempt is finite under finite interference, its failed
+validation intervals are disjoint, and
+
+$$
+J\le b+1,\qquad T_j\le H+2+m_*N,\qquad A_j\le HT_j,
+\qquad Q\le H,\qquad |B_j|\le F.
+\tag{CAB.4}
+$$
+
+The monotone finite final tree bounds moving traversals, including failed
+ones. RA's complete pair comparisons retain both equalities and
+disequalities. All uses below retain this body, including its treatment
+of blocking leaves. [DOR] supplies the right clock
+$c(\alpha)=0,c(\beta)=1,c(\langle x,y\rangle)=2+c(y)$,
+its exact advancement, and its right-ray reply intervals. [IDC, §6][IDC]
+supplies exponential/binary acquisition on a stationary source. The
+constructions below connect these suppliers to new retained consumers
+and account for their moving attempts.
+

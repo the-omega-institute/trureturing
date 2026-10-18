@@ -1,0 +1,5 @@
+source_id = "fib-gain-zero-planes-and-causal-observation-policies"
+path = "docs/develop/theory/FIB_GAIN_ZERO_PLANES_AND_CAUSAL_OBSERVATION_POLICIES.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

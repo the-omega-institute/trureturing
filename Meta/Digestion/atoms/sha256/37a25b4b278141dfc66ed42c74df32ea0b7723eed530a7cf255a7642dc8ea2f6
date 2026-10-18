@@ -1,0 +1,125 @@
+**定理 80.3（Exact whole INITIAL fees for the entire placement/multiplicity class）。** For every target (80.3) satisfying Definition 80.1, under each original alphabet,
+
+$$
+\boxed{
+C_{\rm ad}(f)=C_{\rm pre}(f)
+=d+\mathbf1_{\{D\in\{\lambda(0),\lambda(1)\}\}}.
+}
+\tag{80.8}
+$$
+
+The same equality holds for its explicit history pullback $F$. These are total fees from the free INITIAL reading. The exact worst emitted-bit fee is $m$ times (80.8), counting all bits of each issued block, including a rejecting block. Each preset attainment is one actual GLOBAL stream for the fixed full target, on both free-value fibres.
+
+**证明（all joint histories and the compulsory root）。** Every INITIAL record used here has the supplied single-history realization [IC, (1.3); S1, Convention 1.3; S15, Section 1]. To make its application explicit, let $\gamma_i=\mathbf1_{\{0,m+1\}}(i\bmod T)$, the original matched coefficient cycle [S2, Sections 13–14, Theorem 14.1]. For any $v,j,s$ in (80.3) choose
+
+$$
+\ell\equiv0\pmod m,\qquad \ell\equiv-j\pmod T,\qquad
+\ell\ge s+2,\qquad
+\eta=\bigoplus_{i=\ell-s}^{\ell-1}\gamma_i,\qquad
+w(v,j,s)=(v\oplus\eta)0^{\ell-s-1}1^s.
+\tag{80.9}
+$$
+
+The actual gcd one in (80.1) makes these congruences compatible and supplies arbitrarily large lengths. The separating zero and $s<k$ make this one history legal. Its first bit and terminal run give value $v$, while its complete-block length, phase and tail are simultaneously $\ell,-j,s$. Every constituent block belongs to both alphabets. The history $1^{2m}$ separately realizes initial bottom under either alphabet: each block is internally legal, and rejection occurs across the seam. Neither the choice of witness nor its unobserved length is an input to the controller. The original deterministic record interface and the specified factorization in (80.3) identify acquisition of $F$ with that of $f$ [S1, Proposition 2.2].
+
+Fix either free INITIAL value. At every phase the two actual tails $m-1$ and $m$ have different labels, the latter fresh $R$ and the former in $L\cup\{C\}$. Free stopping is impossible. A root beginning zero merges this pair at that zero, with identical scalar and phase, so its completed endpoint and every future archive agree on their unequal INITIAL labels. A root with at least two leading ones, including an all-one root, rejects both before the first observed endpoint. Their unobserved rejection positions cannot distinguish them, and every later output is absorbing bottom. These supplied irreversible losses [S1, Lemmas 4.2–4.3; S15, Proposition 4.2] exclude both kinds of root at any horizon. Every correct controller must use a root $B_0$ beginning $10$.
+
+Such a root rejects precisely the high tail $s=m$. Every low tail $s<m$ survives its first one because $s+1\le m<k$, reaches its second-bit zero, and finishes safely: later runs lie inside a word of length $m<k$. At each phase this first zero merges low tails with their common INITIAL label preserved. The high band is homogeneous $R$ and is absorbed through the rest of the issued root; its one complete block is paid. All successful low sources have the same terminal tail of $B_0$. If $r(j)$ is the successful root difference, the supplied path equations [IC, Interface 1.4] force
+
+$$
+r(z)=0,\qquad r(0)=r(1)=1,\qquad
+\bigoplus_{j\in A}r(j)=0.
+\tag{80.10}
+$$
+
+**证明（every literal adaptive action and the placement obstruction）。** Within a successful root archive, value and tail are common. The supplied common-tail argument [S10, Lemma 3.2] applies to every later literal word: it either succeeds on all candidates or rejects all, independently of phase. Uniform rejection cannot resolve a nonconstant INITIAL label at its completed endpoint or after further absorbed actions. A successful word gives at most two scalar endpoints, and each child again has common current value and tail. Thus an archive with worst additional fee $h$ can return at most $2^h$ different low labels, including homogeneous early endpoint stops. This induction includes all-one words, waits, padding, repairs and attempted rejection. Every issued action consumes one chronological paid slot.
+
+There are exactly $N$ low labels $L\cup\{C\}$ on the chosen value fibre, all actual by (80.9). For a controller of whole worst fee $h\ge1$, let $L_b$ be the low label image of root-difference child $b$. Each satisfies $|L_b|\le2^{h-1}$, and their union contains all $N$ low labels. Consequently $N\le2^h$, proving $C_{\rm ad}\ge d$.
+
+If a controller finishes within $d$ blocks, saturation forces
+
+$$
+|L_0|=|L_1|=N/2,\qquad L_0\cap L_1=\varnothing.
+\tag{80.11}
+$$
+
+Every occurrence of any one low label therefore has the same root difference, denoted $r(E)$. Otherwise that label would occur in both images. The outside label $C$ is in child zero because $r(z)=0$. The positive child has exactly $N/2$ classes, all in $L$. Using their actual phase multiplicities and (80.2), root parity becomes
+
+$$
+0=\bigoplus_{j\in A}r(j)
+=\left(\frac N2\bmod2\right)\oplus r(D)
+=r(D).
+\tag{80.12}
+$$
+
+Indeed every selected positive class would contribute one if it were odd, whereas the unique even class contributes zero instead; $N/2$ is even. No count of INITIAL tails is substituted for this phase count. If $D=\lambda(0)$ or $D=\lambda(1)$, (80.12) contradicts (80.10). Hence every adaptive controller in that case has fee at least $d+1$. This argument used an arbitrary fixed free-value fibre, so a different adaptive root on the other fibre cannot reduce either lower bound. GLOBAL controllers inherit these bounds.
+
+**证明（one actual $d$-block GLOBAL stream when the even class avoids phases zero and one）。** Choose the bijection of Lemma 80.2. Each coordinate of the full $d$-cube has $N/2$ ones, an even number. On the actual phase cycle, (80.2) and the singleton outside class give
+
+$$
+\bigoplus_{j=0}^{m+1}c(\Lambda(j))
+=\bigoplus_{E\in(L\cup\{C\})\setminus\{D\}}c(E)
+=\left(\bigoplus_{y\in\{0,1\}^d}y\right)\oplus c(D)=0.
+\tag{80.13}
+$$
+
+This elementary cube identity is credited coding algebra. Its physical realization uses the additional restrictions proved in Lemma 80.2.
+
+At actual issued index $t=0,\ldots,d-1$, put $u_t=tm\pmod T$ and $W_t=[u_t,u_t+m]\pmod T$, in its actual order. Since $m\equiv-2\pmod T$, this window misses exactly $e_0=z$ for $t=0$, and $e_t$ in (80.4) for $t\ge1$. For $t\ge1$ its first vertex is $s_t$, and its last is $e_t-1$. The last vertex of $W_{t-1}$ is $s_t$. Inequality (80.6) ensures all the displayed positive representatives are within the stated cycle; no extra rotation, wait or phase reading is performed.
+
+Set the full phase row $\chi_t(j)=c_t(\Lambda(j))$. Equations (80.5) give $\chi_t(e_t)=0$ at the unavailable vertex, including $\chi_0(z)=0$. Equation (80.13) then gives even parity on $W_t$. The unique supplied literal inverse [IC, (1.5); S15, Section 1] is the complete word
+
+$$
+B_{t,i}=\bigoplus_{a=0}^{i}\chi_t(u_t+a\bmod T),
+\qquad 0\le i<m.
+\tag{80.14}
+$$
+
+Issue the single fixed stream $B_0\mid\cdots\mid B_{d-1}$. Its successful physical charge is exactly $\chi_t$ at every phase, including zero outside $W_t$. These rows refer to the one specified stream, simultaneously on both live root children and both free values.
+
+The first two root bits are $c_0(\lambda(0))=1$ and $c_0(\lambda(0))\oplus c_0(\lambda(1))=0$. Thus the root has exactly the high rejection and low preservation proved above. For every subsequent boundary, even-path inversion and the common boundary vertex give
+
+$$
+B_{t-1,m-1}=c_{t-1}(\Lambda(s_t)),\qquad
+B_{t,0}=c_t(\Lambda(s_t)),\qquad
+B_{t-1,m-1}B_{t,0}=0
+\quad(1\le t\le d-1).
+\tag{80.15}
+$$
+
+There is a zero among the two literal bits adjacent to each boundary, including the first one. No run of ones crosses a boundary, and no single word of length $m<k$ contains $1^k$ internally. Hence all continuing low sources survive these very words, regardless of their INITIAL tail. This proves strict seam safety for the entire emitted trace, even if some subsequent word is all ones. No clearing or repair block is implicit.
+
+Initial bottom stops freely with $L_\bot$. Root-bottom sources return $R$ at the completed first endpoint, after every bit of that issued block. Every low source can continue through all $d$ blocks. From its own free initial value and completed scalar endpoints $v_0,\ldots,v_d$, it obtains
+
+$$
+(v_1\oplus v_0,\ldots,v_d\oplus v_{d-1})=c(\Lambda(j)).
+\tag{80.16}
+$$
+
+The inverse of the bijection returns its immutable INITIAL label. Identical words and the same difference decoder work on both free-value fibres; no branch supplies another branch's observation. All low records are actual and execute $d$ words under this stopping rule, so the worst fee is exactly $d$. An endpoint stop needs no final cleanup even when the final tail is nonzero. This gives $C_{\rm pre}\le d$ in the first case of (80.8).
+
+**证明（the actual $(d+1)$-block stream in the obstructed case）。** The upper bound is credited to the full-positive-window supplier, with its arrival checked on this entire target. Issue the actual root
+
+$$
+P_m=(10)^{(m-1)/2}1.
+\tag{80.17}
+$$
+
+It begins $10$, has terminal tail one and rejects exactly INITIAL $s=m$. Its charge is one on all $A=W_0$ and zero at $z$. The successful zero-difference archive is precisely the low phase $z$, has label $C$ and stops at fee one. The positive archive has the actual full support $A$, common scalar $v\oplus1$, common tail one and one retained label $\lambda(j)$ at each phase. All these sources share their own root archive and are actual by (80.9). Every original low-tail merger preserves (80.3); the rejected band is homogeneous $R$. Thus Definition 73.1 holds with $a=u=0$ and $n=N-1\ge7$.
+
+Since $\lceil\log_2(N-1)\rceil=d$, Lemma 73.3 and Construction 73.4 supply an injective code $b:L\to\{0,1\}^d$ obeying (73.5), with coordinates now $1,\ldots,d$. For clarity, the selected suffix is the following one actual sequence. At absolute issued index $r=1,\ldots,d$ put $\widetilde e_r=m+1-2r$, $\widetilde s_r=m+2-2r$, and prescribe
+
+$$
+\begin{aligned}
+\psi_r(j)&=b_r(\lambda(j))&&j\in A\setminus\{\widetilde e_r\},\\
+\psi_r(\widetilde e_r)&=0,&&
+\psi_r(z)=\bigoplus_{j\in A\setminus\{\widetilde e_r\}}b_r(\lambda(j)),\\
+S_{r,i}&=\bigoplus_{a=0}^{i}\psi_r(\widetilde s_r+a\bmod T)&&0\le i<m.
+\end{aligned}
+\tag{80.18}
+$$
+
+The supplied code restrictions include $b_r(\lambda(\widetilde e_r))=0$, $b_1(\lambda(m))=0$, and $b_{r-1}(\lambda(\widetilde s_r))b_r(\lambda(\widetilde s_r))=0$ for $r\ge2$. The missed coordinate therefore has its desired charge, compensation at $z$ makes the full path even, and (80.18) is the literal inverse of that same row. Compensation is a prescription for bits, never a donor source or an additional observation. The first suffix word starts zero and clears the actual inherited tail one. Every internal suffix boundary has a zero among its adjacent bits by the pair restrictions. Lemma 73.5 proves safety of this very suffix; here $d\ge3$, so its four-label alternative is not needed. All words are internally shorter than $k$.
+
+The single GLOBAL stream is $P_m\mid S_1\mid\cdots\mid S_d$. Its high-root rejection returns $R$ at its completed paid endpoint, its root-zero sources return $C$ there, and initial bottom stops freely. Only root-positive sources continue. Each such source decodes $b(\lambda(j))$ from its own $d$ suffix endpoint differences and returns its unique INITIAL label. Both values use this same stream. Every phase in $A$ has actual continuing low sources that pay exactly $d+1$ complete blocks. No wait, padding, repair, rejection fragment or terminal action is omitted from the fee. There is no other live sibling requiring a different suffix. Therefore $C_{\rm pre}\le d+1$ for the obstructed case. Together with the all-action lower bounds and $C_{\rm ad}\le C_{\rm pre}$, this proves (80.8) and its emitted-bit version. ∎
+

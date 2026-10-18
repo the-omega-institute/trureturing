@@ -1,0 +1,66 @@
+**Theorem 3.3 (quantified common-prefix installed-state bound).** For
+every $n\ge6$, $3\le k\le n-2$, every original position set $A$
+and every $r\ge0$, any preparer correct on all of $\mathcal U_*$
+under both caps (CP.6) satisfies
+
+$$
+\boxed{\quad M\ge F(n,k):=2n+\max(k,n-k+1)-4.\quad}
+\tag{CP.13}
+$$
+
+Consequently its total native installed count satisfies
+
+$$
+H_P\ge 2n+\max(k,n-k+1)+r.
+\tag{CP.14}
+$$
+
+Proof. Put $a=k$ and $b=n-k+1$, so $a,b\ge3$ and $a+b=n+1$.
+Theorem 3.1 supplies $3b$ distinct states. Add the witnesses
+
+$$
+v_Z(h,z),\qquad 3\le h\le a-1,\quad z\in\{b-2,b-1\}.
+\tag{CP.15}
+$$
+
+There are $2(a-3)$ added witnesses. Any two of them have zero
+counts differing by at most one, so cannot collide by (CP.9). In a
+collision with an original witness, the lower-hit member would be
+the original one. Its zero count is at most $b-1$ and the added
+member's zero count is at least $b-2$. This also contradicts (CP.9).
+Thus one pairwise separated family in this one table has size
+
+$$
+M\ge 3b+2a-6=2n+b-4.
+\tag{CP.16}
+$$
+
+Theorem 3.2 supplies $3a$ distinct states. Add
+
+$$
+v_O(h,z),\qquad 3\le z\le b-1,\quad h\in\{a-2,a-1\}.
+\tag{CP.17}
+$$
+
+Two added witnesses have hit gap at most one. For a collision
+between an added witness and an original witness, (CP.9) requires
+the added witness, having the larger zero count, to have the lower
+hit count. Its hit count is at least $a-2$, whereas the original
+one's hit count is at most $a-1$. The required hit gap of two is
+impossible. This gives the second independent bound
+
+$$
+M\ge 3a+2b-6=2n+a-4.
+\tag{CP.18}
+$$
+
+Taking the maximum of (CP.16) and (CP.18), without adding the two
+families' sizes, proves (CP.13). Each count is an injection of
+explicit actual witnesses into distinct states of one installed table.
+There is no summation of repair states or costs from different sources.
+
+[WTF, Lemma 2.2][WTF] supplies two mandatory nonselected running
+states outside all $E_i$, in disjoint profile cones, in addition to
+the two original entry latches and $r$ further latches. Therefore
+$H_P\ge M+4+r$, proving (CP.14). $\square$
+

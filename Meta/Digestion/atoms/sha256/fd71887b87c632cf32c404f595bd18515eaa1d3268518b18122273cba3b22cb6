@@ -1,0 +1,67 @@
+**Convention 1.1 (mathematical antecedents).** This companion uses the
+ordinary conditional results of [JR], [RC] and [FA]. The isolated CG
+source root, its isolation/Jacobian certificate, exact ranks,
+normalization and original minimax identification remain named
+`ASSUMED-UNVERIFIED` antecedents here. Equalities of source operators and
+trace preservation apply at that root. Supplied enclosures establish
+inequalities of derived expressions; they do not establish off-root
+normalization. No fresh numerical, external, Lean/kernel or frozen
+certification is asserted.
+
+There is one unknown normalized reached-cut specimen, in the original
+five modes indexed by $(0,1,2,3,13)$. Put
+
+$$
+\begin{gathered}
+E=((e_0+e_{13})/\sqrt2,(e_1+e_3)/\sqrt2,e_2),\qquad P=EE^\dagger,\\
+p_y=(y/128,(64-y)/128,1/2),\quad a_y=(\sqrt{p_{yi}})_i,\\
+\rho_{y,e,n}=U_{e,n}a_ya_y^TU_{e,n}^\dagger,\quad
+U_{e,n}=\operatorname{diag}(e,n,1),\quad
+y\in\{5,16,27\},\quad e,n\in\{\pm1\}.
+\end{gathered}
+\tag{WE.1}
+$$
+
+The received state is $E\rho_{y,e,n}E^\dagger$. Original height is
+$y/256$ and winding parity is $en=(-1)^m$; neither is given to the
+instrument. The ideal live matrices remain the entire coherent matrices
+$EU_{e,n}B_y^{\rm ideal}U_{e,n}^\dagger E^\dagger$ prescribed by CG.111.
+The five ideal failure measures, separately in their original labels,
+are $w_\ell f_y(u)du\,P_f$, where
+
+$$
+w=(0,1/4,1/2,1/4,0),\qquad f_y(u)=\frac{6y}{(y+6u)^2},\qquad 0\le u\le1.
+\tag{WE.2}
+$$
+
+Here $P_f$ is the fixed normalized stopped failure output. Original
+absolute time is $6+u$. Error is HALF the entire stopped-cq trace norm,
+maximized over all twelve histories. It includes every live coherence,
+singular-time component, abort, wrong-support and zero-target sector.
+The ideal matrices and original minimax certificate are inherited data;
+no replacement ideal target is introduced.
+
+An actual acquisition consists of CP encoders of total effect $I_5$,
+actually generated dephased classical labels, and full-output TP
+conditional decoders. Its quantum fibre counts jointly every
+future-accessible input-bearing specimen, memory, quantum controller,
+environment, return system and entanglement share. Any other dilation
+system is permanently inaccessible before this same acquisition cut.
+An inaccessible Kraus multiplicity is not a record. There is no prior,
+postselection, acceptance division, helper specimen, copy, reset, retry,
+readable old history, bypass or free clock interval.
+
+For a designated binary record with supported plus effect $F$, retain
+exactly the original inequality and sharp cost:
+
+$$
+\mathsf V(F)=\frac{2|\operatorname{Re}F_{01}|}{\kappa}\ge s,
+\qquad \mathsf W=\mathsf C(s),
+\tag{WE.3}
+$$
+
+where $\mathsf W$ is the maximum over the twelve histories of the
+ACQUIRED probability of a joint fibre of dimension at least three.
+It includes any acquired branch that later fails. Other entries of $F$
+and the forgotten complete channel are free.
+

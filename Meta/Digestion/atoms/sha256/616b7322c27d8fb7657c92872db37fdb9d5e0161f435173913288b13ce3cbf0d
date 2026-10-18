@@ -1,0 +1,11 @@
+**Theorem 341.2 (repo-derived).** Under these hypotheses, every genuine
+owner eta whose two axes are Z,U and whose
+transverse pair is either {V,C} or {V,D} satisfies
+
+    theta_Z(eta)+theta_U(eta)>pi.                  (341.3)
+
+No degree lower bound is needed for this implication beyond the stated
+connected circular links. The usual degree-at-least-six source setting
+therefore satisfies the topological hypothesis, but no degree estimate
+is being substituted for connectedness.
+

@@ -1,0 +1,15 @@
+## 148. The run contains exactly one owner
+
+Sum (146.5) over all g axial occurrences of I. These have distinct owners,
+as recorded above, so their two M slots each are correctly counted in (146.1):
+
+    g*pi < Theta+2*sum_i beta_i < 2*pi.
+
+Thus g<2. Since I is nonempty,
+
+    g=1.                                          (146.6)
+
+Its single owner is the original escape tau. This improves the previous
+one-or-two bound using M's remaining pi and Z's full 2*pi equations.
+It does not assign M's half-budget to Z.
+

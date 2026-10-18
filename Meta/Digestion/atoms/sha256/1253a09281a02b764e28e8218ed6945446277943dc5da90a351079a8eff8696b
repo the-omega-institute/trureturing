@@ -1,0 +1,97 @@
+**Theorem 27.1 (whole-law loss at every feasible request).** Under
+Assumption 23.1, fix any $r\in[0,r_{\max}(t)]$ and any feasible
+common law $\pi$ with $K(\pi)\ge r$. Define its unrestricted
+height deficit by
+
+$$
+\Delta_\pi=R_t(r)-J_t(\pi)\ge0.
+\tag{FC.106}
+$$
+
+Then
+
+$$
+\Delta_\pi\ge\frac1{10000}
+                 \int_T\min(\xi,1-\xi)\,d\pi.
+\tag{FC.107}
+$$
+
+For its corresponding original actual-record height, the deficit is
+exactly $\Delta_\pi/2$, and hence is at least
+$(1/20000)\int_T\min(\xi,1-\xi)\,d\pi$.
+The maximum in $R_t(r)$ is over the full original law class with
+no prescribed label cap.
+
+Proof. First take a finite law. Replace an atom of coefficient mass
+$p$ at $(u,v,\xi)$ in a comparison law by masses $p(1-\xi)$ and
+$p\xi$ at $(u,v,0)$ and $(u,v,1)$, omitting zero pieces.
+All eight $\Gamma$ coordinates are affine in $\xi$ and $k=|u|$
+is independent of $\xi$. The full moment vector and achieved $K$
+are therefore preserved. Both endpoint intensities $0,t\mathfrak c$
+are legal. With $\eta_\xi=(1-\xi)\eta_0+\xi\eta_1$, the height
+increase is $p$ times the already supplied triangle defect (FC.8):
+
+$$
+\mathcal D_t(u,v,\xi)
+=(1-\xi)|\eta_0|+\xi|\eta_1|-|\eta_\xi|\ge0.
+\tag{FC.108}
+$$
+
+On $T$, Theorem 25.1 makes the two endpoint heights strictly
+opposite, so the exact scalar identity and its quantitative bound are
+
+$$
+\begin{aligned}
+\mathcal D_t
+&=2\min\big((1-\xi)\ell,\ \xi|\eta_1|\big)\\
+&\ge\frac1{10000}\min(\xi,1-\xi).
+\end{aligned}
+\tag{FC.109}
+$$
+
+The smaller uniform endpoint magnitude is $1/20000$; the factor
+$2$ in the exact triangle defect gives $1/10000$. Outside $T$
+the defect remains nonnegative. Splitting every atom gives a feasible
+comparison law with the same $K$, whose height gain is at least the
+right side of (FC.107). Its height cannot exceed $R_t(r)$.
+
+For a convergent countable law the same nonnegative sums give the
+same inequality. To justify comparison also for the stipulated
+integral necessity class, let $E_j(u,v,\xi)=(u,v,j)$ and form the
+endpoint pushforward probability measure
+
+$$
+\pi^{\rm end}=(E_0)_*((1-\xi)\pi)+(E_1)_*(\xi\pi).
+\tag{FC.110}
+$$
+
+It is supported on the compact two-sheet circle
+$S^1\times\{0,1\}$, preserves $\int\Gamma$ and $K$ exactly,
+and satisfies
+$J_t(\pi^{\rm end})=J_t(\pi)+\int\mathcal D_t\,d\pi$.
+The continuous vector $(\Gamma,k,g_t)$ on that compact space has
+compact convex hull in a finite-dimensional real space. Its integral
+belongs to that hull, by approximation with finite convex combinations
+and closedness. The ordinary finite-dimensional convex-hull theorem
+then gives an exact finite combination of endpoint vectors preserving
+all eight moments, $K$, and this improved $J_t$. This is exactly the
+finite-representation interface already used in GC Proposition 12.2;
+no new Tchakaloff theorem is needed. GC Proposition 10.1 realizes
+that finite common law as a legal original comparison instrument.
+Thus even an original countable or stipulated measurable competitor
+is compared with an admitted finite instrument at the same request,
+not with an unlicensed continuous implementation.
+
+The standard zero-integral and finite-representation interfaces may
+also be read in di Dio–Schmüdgen,
+[arXiv:1703.01497v2, Lemma 3 and Proposition 4](https://arxiv.org/html/1703.01497v2).
+Here all functions are bounded continuous on a compact space and the
+constant mass coordinate is retained; those interfaces do not give
+a count-preserving splitting rule.
+
+Finally (GC.58) and (GC.9) give
+$\mathcal T(s,t)=(H_0+R_t(r))/2$ and
+$T_{\rm actual}=(H_0+J_t(\pi))/2$, with
+$s=s_0r/\sqrt\alpha$. Subtracting proves the exact HALF statement.
+$\square$
+

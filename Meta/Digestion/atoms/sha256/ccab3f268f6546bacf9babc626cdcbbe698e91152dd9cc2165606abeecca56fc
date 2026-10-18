@@ -1,0 +1,28 @@
+**定义 C-110.1（整个块端口的泄漏与纯态存活率）。** 设 $d\ge1$、$1\le q\le d$，
+固定 $\mathbb C^d$ 的模式基。$\mathfrak C_q^{(d)}$ 是经过有限经典旗与整个 $M_q$ 块的
+CPTP 编码、解码所实现的通道类；当 $d=5$ 时就是 C-109.1 的原 $\mathfrak C_q$。
+编码分支的 Kraus 算子记为 $B_{fa}:\mathbb C^d\to\mathbb C^q$，解码分支的算子记为
+$R_{fb}:\mathbb C^q\to\mathbb C^d$，满足
+
+$$
+\sum_{f,a}B_{fa}^\dagger B_{fa}=I_d,\qquad
+\sum_bR_{fb}^\dagger R_{fb}=I_q\quad\text{对每个 }f.
+\tag{C110.1}
+$$
+
+所有数据允许为复数，经典旗有限且事先固定，解码在整个块上保迹。
+输入到输出的全部量子路径通过这个 $q$ 维块。对任意 CPTP $T:M_d\to M_d$ 定义
+
+$$
+\begin{aligned}
+m_{rs}(T)&=\langle r|T(\Pi_s)|r\rangle,\qquad \Pi_s=|s\rangle\langle s|,\\
+\ell(T)&=\frac1d\sum_s\sum_{r\ne s}m_{rs}(T),\\
+F_v(T)&=\langle v|T(|v\rangle\langle v|)|v\rangle,\qquad
+p_s=|v_s|^2,\qquad c(v)=\sum_sp_s^2\quad(\|v\|_2=1).
+\end{aligned}
+\tag{C110.2}
+$$
+
+$\ell$ 使用固定原模式基，不要求该基在任意酉变换下保持。$F_v$ 是数学上的同态
+纯态存活率；只有把它对应到一个允许的输入和未来读数之后，才成为实际菜单的误差见证。
+

@@ -1,0 +1,14 @@
+**Theorem 90.1.** For every \(0<|b|<1\) with \(H_*(b)\ne0\), every
+original noncanonical aligned ray is covered by (90.11), with all repeated
+positions and signs, and no such ray is orthogonal to any original
+noncanonical generic ray.
+
+The aligned coverage follows from the original Cramer argument, complete
+resultant strata and the rational shape identity. Generic coverage,
+including the original \(F_8=0\) obligation, is already complete under
+\(G_*\ne0\) by §89.4. Every mixed edge would annihilate \(N_m\),
+contradicting its invertible multiplication matrix. This proves the theorem
+without a numerical census or a presumption that candidate rays share an
+orbit union. The finite guard fibres, including all actual aligned poles,
+remain unresolved by this statement.
+

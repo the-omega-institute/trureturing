@@ -1,0 +1,57 @@
+**定义 15.1（Higher-tour protected INITIAL target）。** Use exactly the original reader, joint actual prior, two free-value fibres, independent initial rejection reading, and paid complete-block fee of Chapter 1. Fix
+
+$$
+Q\ge2,\qquad m\ge3,\qquad 2\le r<m,\qquad
+T=Qm+r,\qquad k=T-1,\qquad g=\gcd(m,r),\qquad P=g\mathbb Z/T\mathbb Z.
+\tag{15.1}
+$$
+
+Choose integers $d,a,J$ with
+
+$$
+1\le d\le Q,\qquad 0\le a<m,\qquad a>0\Longrightarrow d<Q,
+\qquad H=k-dm-a>0,\qquad J\ge0.
+\tag{15.2}
+$$
+
+Choose a set and a label table
+
+$$
+S\subseteq P\cap\bigl(\{1,\ldots,J\}\cup\{Qm+1,\ldots,T-1\}\bigr),
+\qquad \eta:S\longrightarrow Y,
+$$
+$$
+M=|\eta[S]|\ge2,\qquad L=\lceil\log_2 M\rceil,
+\qquad A\in\eta[S],\qquad J+Lr\le m.
+\tag{15.3}
+$$
+
+An interval with upper endpoint smaller than its lower endpoint is empty. Let $D,E,R_1,\ldots,R_d,L_\bot$, and, when $a>0$, $R_\star$, be arbitrary labels in $Y$. All coincidences among these labels and $\eta[S]$ are allowed. Put
+
+$$
+\lambda(j)=
+\begin{cases}
+D,&j=0,\\
+E,&j=m,\\
+\eta(j),&j\in S,\\
+A,&\text{otherwise},
+\end{cases}
+\qquad j\in P.
+\tag{15.4}
+$$
+
+The cases are disjoint: (15.3) implies $J\le m-r<m$, and the other protected interval lies above $Qm$. On both free-value fibres define the entire immutable INITIAL target by
+
+$$
+f(v,-j,s)=
+\begin{cases}
+R_t,&k-tm\le s<k-(t-1)m,\quad 1\le t\le d,\\
+R_\star,&H\le s<k-dm,\quad a>0,\\
+\lambda(j),&0\le s<H,
+\end{cases}
+\qquad f(\bot)=L_\bot.
+\tag{15.5}
+$$
+
+Every triple in this definition has the single actual-history witness (1.3). In particular, all comparisons of different tails below concern jointly realized records, and not a product of separately attainable coordinates. The target is independent of the free value, but that value and its subsequent changes remain part of each source's own archive.
+

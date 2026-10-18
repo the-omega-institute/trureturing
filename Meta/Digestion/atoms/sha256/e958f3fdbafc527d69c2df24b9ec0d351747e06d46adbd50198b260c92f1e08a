@@ -1,0 +1,48 @@
+### 61.1 The central representative and the new local statement
+
+Retain the actual input-ray convention and the one-parameter matrix
+\(M(b)=\sqrt6H_0(b)\) of (60.1). At \(b=0\), put
+
+\[
+ \omega=\frac{-1+i\sqrt3}{2},\qquad
+ A=J_3+(\omega-1)I_3,\qquad
+ M(0)=\begin{pmatrix}A&A\\\bar A&-\bar A\end{pmatrix}.
+\tag{61.1}
+\]
+
+Define the unit phases
+
+\[
+ \begin{aligned}
+ \gamma&=-\frac{\sqrt3+5i}{2\sqrt7},\\
+ t&=-\frac12-\frac{3\sqrt{21}}{28}
+       +i\left(-\frac{\sqrt3}{4}+\frac{3\sqrt7}{14}\right),\\
+ \delta&=-\frac{3+i\sqrt7}{4},\qquad
+ \tau=\omega^2t,\qquad \sigma=\omega^2\delta.
+ \end{aligned}
+\tag{61.2}
+\]
+
+For \(m=0,1,2\), let \(f_m=(1,\omega^m,\omega^{2m})\), and set
+
+\[
+ \begin{gathered}
+ u_m=((1,1,\tau)\odot f_m,(\gamma,\gamma,\sigma)\odot f_m),\\
+ \Theta(x,y)=(-\bar y,\bar x),\qquad
+ U=(u_0,u_1,u_2,\Theta u_0,\Theta u_1,\Theta u_2),\\
+ V=U\operatorname{diag}(1,1,1,-\gamma,-\gamma,-\gamma).
+ \end{gathered}
+\tag{61.3}
+\]
+
+Here \(\odot\) is coordinatewise multiplication. The first row of \(V\)
+is \((1,1,1,1,1,1)\). The columns of \(U/\sqrt6\) and \(V/\sqrt6\)
+represent the same six rays.
+
+Alternative completions at this central Fourier-equivalent point are
+already part of the Fourier-family literature; see the explicit bridge
+and attribution in §61.5. Their existence is used here as an intermediate
+fact, with an explicit representative and original-equation proof.
+The new statement is isolation relative to the prescribed real branch,
+with no restriction on nearby basis coordinates.
+

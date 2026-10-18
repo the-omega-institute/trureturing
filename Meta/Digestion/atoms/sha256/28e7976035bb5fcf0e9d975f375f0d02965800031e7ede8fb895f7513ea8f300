@@ -1,0 +1,70 @@
+**Theorem 3.2 (exact actual-tuple phase contraction).** For every
+$d,n\ge1$, every lawful finite owned-seed network and every choice
+in Definition 3.1, this replacement is a lawful owned-seed network
+on the same original $n$ blocks. The realizable seed assignments before
+and after replacement are in bijection, with
+
+$$
+s_c=p_c(a_K)\quad(c\in K),
+\qquad x_{\rm old}(s)=x_{\rm new}(a).
+\tag{GDB.14}
+$$
+
+In particular it preserves the identical actual original tuples and
+
+$$
+Z(\mathcal N;w_1,\ldots,w_n)
+ =Z(\mathcal N^{\rm ph};w_1,\ldots,w_n)
+\tag{GDB.15}
+$$
+
+for arbitrary nonnegative whole-block weights, including zero weights.
+The corresponding finite-sum identity also holds for an arbitrary
+correlated tuple weight $W(x)$, and for complex weights. A phase is
+the actual reply at its retained owner, not an additional observation.
+
+The finite construction can be repeated whenever a transformed test
+between distinct current phases becomes a total bijection on its current
+domains. Unless an empty domain is found, after at most $\max(J-1,0)$
+nontrivial merging passes, where $J$ is the original seed count, it
+terminates with no such individual test. This terminal property does not
+assert discovery of all functional dependence in the joint solution set.
+
+Proof. In an original realizable assignment, (GDB.10) implies every
+selected edge. Propagation on a component's tree gives uniquely
+$s_c=p_c(s_r)$. The other selected edges are precisely the remaining
+conditions in (GDB.13), so $a_K=s_r$ belongs to $D_K$.
+
+Conversely, lift a phase assignment by (GDB.14). Its tree edges hold by
+construction and its other selected edges hold by (GDB.13). At every
+original port its prescribed factor is exactly the old prescribed factor
+on this lifted assignment. Consequently every unselected test, unary
+condition and constant condition holds on one side exactly when it holds
+on the other. The actual reconstruction criterion (GDB.10) gives the
+same $x_i$ in both directions. This preserves compatibility zeros;
+there is no projection that might combine different lifts.
+
+At the retained owner, $p_r=\mathrm{id}$ and (GDB.7) give
+$h(B_{o_r}(p_r(a)))=a$. Owners stay distinct and every substituted
+factor remains in its original $G_q$. Thus RRN's exact converse supplies
+a complete original native template with exactly this solution set.
+The phase is recovered uniquely as that owner's actual reply, proving
+the bijection without multiplicity. Summation on identical tuples proves
+all the weight assertions, using one $w_i$ per original block.
+
+If $D_K$ is empty, the selected edges themselves are inconsistent.
+The original solution set is empty, and the replacement empty owner
+domain represents that same empty set by RRN's guard construction.
+An initially empty domain is treated in this way directly. With no
+seeds, or with no selected edges, the unchanged network already suffices;
+incompatible constants need not be detected by contraction. Singleton
+domains and singleton phases obey the same proof.
+
+Every relation test examines at most sixteen input pairs, and every
+transport and cycle test has at most four representative values.
+Each nontrivial pass merges at least two existing variables. Domains and
+tables remain finite, so the stated bound on merging passes proves
+termination. This is a finite structural transformation, not a uniform
+network-size cutoff or a procedure evaluating all-size pressure.
+$\square$
+

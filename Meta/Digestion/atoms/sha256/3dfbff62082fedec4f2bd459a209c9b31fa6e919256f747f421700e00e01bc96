@@ -1,0 +1,19 @@
+**Theorem 6.2 (support-aware weighted kernel witness).** For any unit $\xi\in\ker J_\Gamma$, put $D_\xi=\operatorname{Tr}_E|\xi\rangle\langle\xi|$ and $\ell=\operatorname{Tr}\sqrt{D_\xi}>0$. Then for every same environment center,
+
+$$
+F(\Gamma,\mathcal C_\omega)^2
+\leq1-\frac{\langle\xi|I\otimes\omega|\xi\rangle}{\ell^2}.
+\tag{R.28}
+$$
+
+For Schmidt rank $k$, $\ell^2\leq k$; it equals one for a product vector and two for a maximally entangled rank-two vector. In particular the complete kernel (R.26), including its $u$ terms, is available for certificates.
+
+**Proof.** Set $q=\sqrt{D_\xi}/\ell$ on its actual support, and let $q^+$ denote its Moore–Penrose inverse. The vector $\zeta=(q^{-1/2}\otimes I)\xi/\ell$, using the inverse only on this support, has norm one because
+
+$$
+\|\zeta\|^2=\operatorname{Tr}(D_\xi q^+)/\ell^2
+=\ell\operatorname{Tr}\sqrt{D_\xi}/\ell^2=1.
+$$
+
+For $A_q=(\sqrt q\otimes I)J_\Gamma(\sqrt q\otimes I)$, $(\sqrt q\otimes I)\zeta=\xi/\ell$ gives $A_q\zeta=0$. The binary measurement onto $\zeta$ charges the other state $q\otimes\omega$ by exactly $\langle\xi|I\otimes\omega|\xi\rangle/\ell^2$: the support projector fixes $\xi$ and commutes with $I\otimes\omega$. Root-fidelity monotonicity yields (R.28). The charge lies in $[0,1]$ since it is a probability. Cauchy–Schwarz on the $k$ Schmidt eigenvalues gives $\ell^2\leq k$. These are ordinary input purifications, not physical filtering or postselection. Combining several such bounds still requires one common $\omega$ before its maximization. $\square$
+

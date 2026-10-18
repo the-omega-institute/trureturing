@@ -1,0 +1,42 @@
+**Definition 2.3 (classical record and joint assistance contract).** Fix
+distinct candidate current heights $x_1,\ldots,x_M\in(0,c)$, with
+$1\leq M<\infty$. The same statements on any finite subset apply to a
+larger height family. An actually delivered finite or countable classical
+record $Y$ has law $Q_j(y)$ on height $x_j$, independent of $z,m$.
+Write
+
+$$
+S_y=\{j:Q_j(y)>0\}.
+\tag{RB.6}
+$$
+
+Conditional on the actual $j,z,m,y$, the entire input accessible to the
+processor is exactly
+
+$$
+|\psi(x_j,z,m)\rangle\langle\psi(x_j,z,m)|\otimes\tau_{m,y}.
+\tag{RB.7}
+$$
+
+Here $\tau_{m,y}$ is a normal density operator on the joint assistance
+register, independent of $j,z$. It can include any calibrated parity
+helper, arbitrarily large fixed blanks, controller systems and even a
+perfectly readable parity label. Allowing dependence on the whole signed
+$m$, rather than only its parity, also leaves the upper bounds valid.
+There is no dimension bound on this assistance in the upper bound.
+
+Every accessible source-bearing classical field is included in $y$ or
+explicitly in this assistance contract. All accessible quantum assistance
+is included jointly in $\tau_{m,y}$. This includes readable archives,
+source and epoch labels, generator/programme descriptions, clock latches,
+calibration, references, permissions, controller state, selection inputs,
+returned environments, shared-resource registers and bypasses. Independence
+of their separate marginals is insufficient: (RB.7) is the joint premise.
+A height- or phase-correlated accessible extra token changes the problem.
+
+An inaccessible spectator reference can remain correlated with the actual
+history and assistance. The gate acts by identity on it. Since the specimen
+is pure conditional on history, it factors from every other register there;
+this does not assert that assistance and spectator factor from one another.
+No accessible purification of a mixed archive is granted.
+

@@ -1,0 +1,13 @@
+### 58.6 Conclusion and exact scope
+
+All mean-zero, constant-channel, distinct-channel, repeated-coordinate,
+central, and finite/infinite phase-chart cases have been retained.
+The theorem follows for both zero-mode canonical rays throughout
+\(-1<a<1\). The endpoint \(h=1\), or \(b=\pm1\), is not included;
+the certificate deliberately has vanishing factors there.
+
+This constrains mixed orthogonality without assuming a basis or a triple
+is covariant under a cyclic permutation. It does not by itself establish
+single-canonical rigidity for the two nonzero modes, classify all mixed
+orthogonal triples, or resolve the general fourth-basis problem.
+

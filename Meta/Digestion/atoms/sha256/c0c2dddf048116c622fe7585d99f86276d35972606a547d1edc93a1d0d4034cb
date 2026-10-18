@@ -1,0 +1,20 @@
+## 4. Suppliers and the source-specific addition
+
+| Supplier | Exact use and limit |
+| --- | --- |
+| [PC][PC], pin `1b27ec30e865e4fba864033fffed5ab2ba02fa6f`, Definitions 1.2–1.5, Theorem 2.1, §§2.1,2.4,4 | Original all-prior contract, complete transcript bridge, global compatibility pair, finite-law descriptions and positive attained worst-history minima. Its §4 leaves actual-history averages distinct. Those minima and their proofs are reused. |
+| [FR][FR], same pin, §§9,13,15,20–26 | Acquired-count likelihood rows, legal overflow memory and existing actual-weighted terminal averages for finite rational support. §13 excludes overflow raw-tail accuracy; §§21–26 give countable-prior exact law/window recovery with separate precision and representation obligations, not the finite coherent average theorem here. |
+| [ST][ST], pin `c5408c868deab35a192a8ed9105f2838a80a155d`, §§2.1,3.1,3.3,4 | Full stopped laws, all-countable finite positive-history lower witnesses, distinct randomized risk orders and the terminal/full-law distinction. No reproof of its lower witness construction is needed. |
+| [BD][BD], pin `c633bce93ac6ffd5fa44ae3d9489c87c7557a531`, §§94.3,96.1,97.1,100.1,105.1,114.1 | Restored same-source Reads, stopped freshness, paid seed retries, original parser, total Read expectation and original Stop/receiver restrictions. No independent resampling or extra receiver information is transferred. |
+| [E1][E1], pin `c5408c868deab35a192a8ed9105f2838a80a155d`, §2 | Causal record update on the full marker tree, third-write-before-latch and holding. Its accepted-cell past-recovery restriction does not restrict $\mathcal H_3$. |
+| Levin–Peres, with Wilmer, [*Markov Chains and Mixing Times*, second edition][LPW], §4.2, Proposition 4.7, pp.50–52 | Mature TV coupling principle, applied to the two-letter rows in the live proof. Its finite-chain mixing objectives are not a supplier of this stopped-source average theorem. |
+
+The addition is `repo-derived`: finite approximate likelihood rows and their same-update full continuation, the complete-tail bound (2.5) averaged under the actual whole $H_3$ law, and the resulting all-prior zero/unattained values. Existing terminal average constructions, exact conditional-law recovery and worst-history results are credited above. Rational approximation, Bayes conditioning, TV convexity, coupling, the tower identity and Markov's inequality are mature tools, not new general results. No generic memory framework or publication-priority claim is made. The theorem is ordinary mathematics; finite arithmetic corroboration cannot replace its countable-prior and unbounded-tail proof, and it has no Lean kernel verification.
+
+[PC]: https://github.com/the-omega-institute/trureturing/blob/1b27ec30e865e4fba864033fffed5ab2ba02fa6f/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_PHASE_COHERENT_FULL_TAIL_MINIMAX.md
+[FR]: https://github.com/the-omega-institute/trureturing/blob/1b27ec30e865e4fba864033fffed5ab2ba02fa6f/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_FUTURE_RESPONSE_SUFFICIENCY.md
+[ST]: https://github.com/the-omega-institute/trureturing/blob/c5408c868deab35a192a8ed9105f2838a80a155d/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_RANDOMIZED_STOPPED_TAIL_MINIMAX.md
+[BD]: https://github.com/the-omega-institute/trureturing/blob/c633bce93ac6ffd5fa44ae3d9489c87c7557a531/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_BOUNDARY_DYNAMICS.md
+[E1]: https://github.com/the-omega-institute/trureturing/blob/c5408c868deab35a192a8ed9105f2838a80a155d/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_FULL_E1_SCOPE_EXTENSION.md
+[LPW]: https://pages.uoregon.edu/dlevin/MARKOV/markovmixing.pdf
+

@@ -1,0 +1,48 @@
+**Proposition 8.2 (Height recovery, all real commands and initialization).**
+On the actual annulus define
+
+$$
+\kappa(z)=\frac1\gamma
+\log\frac{\|z\|}{2H\sqrt T}.
+$$
+
+The exact probability guard is $0<\kappa(z)+s<H$, and the phase
+guard is all of $\mathscr A_*$. The fixed ambient linear maps
+
+$$
+\mathcal U_s^*(z)=e^{\gamma s}z,\qquad
+\mathcal V_t^*(z)=R_{t/2}z
+$$
+
+intertwine every real signed command on its entire native domain.
+At the original preparation the exact initial value is
+$z_0=\rho(k_0)U(0)$. More generally every actual current ray can be
+initialized at its displayed $E_*$.
+
+**Proof of Proposition 8.2.** Direct substitution gives
+$\kappa(E_*(k,\alpha,\beta))=k$. Thus the displayed guard is
+exactly the source guard and is constant on every encoder fiber.
+Also
+
+$$
+E_*(P_sx)=e^{\gamma s}E_*(x),\qquad
+E_*(Q_tx)=R_{t/2}E_*(x)
+$$
+
+on the respective domains. The actual source change of $\beta$ is
+still present in $Q_t$, and disappears only after applying $E_*$.
+All signed real commands, including zero and those with empty
+probability domains, have the displayed ambient maps. The image is
+preserved whenever the command is lawful; no off-image vector is
+declared a native state.
+
+The preparation increments are zero, even for arbitrary preparation
+phases, so its $\alpha$ is zero. The decoder still contains the
+original fixed rotations $O$. Starting from any exact encoding,
+induction with the two identities gives exact encoding after every
+finite lawful word. Fractional commands give the same statement at
+every intermediate point of a straight leg. The uniform readout
+bound is evaluated at each current encoded ray and does not
+accumulate; no approximate output is fed back as latent state.
+$\square$
+

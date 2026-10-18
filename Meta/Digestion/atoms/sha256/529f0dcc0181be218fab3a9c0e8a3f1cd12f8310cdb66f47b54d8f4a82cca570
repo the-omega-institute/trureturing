@@ -1,0 +1,46 @@
+**推论 46.4（固定来源的平方根律与二次精度条件）。** 对每个 $N\ge3$、
+$0<\delta\le1$，有
+
+$$
+5\sqrt\delta\le R_\infty(\delta)\le R_N(\delta)
+ \le\sqrt{2\delta^2+(5\delta+\sqrt{50\delta})^2}
+ <14\sqrt\delta.
+\tag{46.22}
+$$
+
+给定 $\varepsilon>0$，任何允许的控制器若对全部 INITIAL 及合法读误差保证
+$\mathcal E_\pi(\delta)\le\varepsilon$，则必要有
+
+$$
+\delta\le\varepsilon^2/25.
+\tag{46.23}
+$$
+
+反过来，若 $N\ge3$ 且
+
+$$
+0<\delta\le\min\{1,\varepsilon^2/196\},
+\tag{46.24}
+$$
+
+则定理46.3的实际三更新四Read控制器保证
+$\mathcal E_\pi(\delta)<\varepsilon$。两条数值条件分别是必要条件与充分条件，
+不把它们之间的常数间隔写成精确误差阈值。
+
+更精确地，对任意 $\delta(\varepsilon)\in(0,1]$ 和任意整数预算
+$N(\varepsilon)\ge3$，当 $\varepsilon\downarrow0$ 时，二次阶的充要关系为
+
+$$
+R_{N(\varepsilon)}(\delta(\varepsilon))=O(\varepsilon)
+\quad\Longleftrightarrow\quad
+\delta(\varepsilon)=O(\varepsilon^2).
+\tag{46.25}
+$$
+
+证明。$\mathcal P_N\subseteq\mathcal P_\infty$，所以相应下确界按（46.22）排序；
+两端由定理46.2、46.3给出。（46.23）平方正量下界即得，（46.24）代入严格上界
+即给明确控制器，而不是由下确界假设达到。对（46.25），若左侧以常数 $A$
+上界，则 $\delta(\varepsilon)\le(A/5)^2\varepsilon^2$；若右侧以常数 $B$
+上界，则 $R_{N(\varepsilon)}\le14\sqrt B\,\varepsilon$，且已有实际有限
+控制器实现这个阶。证毕。
+

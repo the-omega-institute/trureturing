@@ -1,0 +1,18 @@
+**Corollary 106.3.** Suppose \((G,H)\) is a full-domain calibrated local minimum with \(\operatorname{rank}G=7\), \(0<F(G,H)<1/4\), and kernel support occupancy \((2,1,1,0)\). Impose no assumption on the full rank of \(H\). Then
+\[
+\operatorname{rank}H_S=\operatorname{rank}\mathsf R=2,
+\tag{106.14}
+\]
+and arbitrarily close full-domain local minima have ranks exactly \((7,6)\), with the same principal Grams, kernel vector, complete error coefficient and canonical common-witness subset. In particular this class has no member for which either principal Gram admits the real diagonal gauge of RT III §101, both supported singleton \(H\) records are unbiased as in RT III §102, the equal-polar hypothesis (104.3) holds, or the complementary-polar hypothesis (105.2) holds.
+
+**Proof.** Put \(h=\operatorname{rank}H_S\) and \(r=\operatorname{rank}\mathsf R\). The whole original fibre in \(S\) gives \(h\ge2\). RT III Lemma 95.2 gives
+\[
+\operatorname{rank}G_S=3,
+\qquad h+r\le4,
+\qquad 3\le hr.
+\tag{106.15}
+\]
+The only positive integer possibilities are \((h,r)=(2,2)\) and \((3,1)\). RT III Theorem 97.3 excludes the rank-one quotient for this support, so (106.14) follows. Here \(o=4\); Theorem 106.1 gives opposite rank \(h+o=6\) while retaining first rank seven. Corollary 106.2 retains exactly the same common pairs and quotient.
+
+Each additional condition in the statement depends only on the unchanged supported data. Apply the corresponding rank-\((7,6)\) obstruction, respectively RT III §§101–102 or Theorems 104.1 and 105.1, to any sufficiently close constructed pair. This contradicts its full-domain local minimality. The argument constructs a point satisfying the original rank assumptions of those theorems; it does not read their statements with weakened assumptions. \(\square\)
+

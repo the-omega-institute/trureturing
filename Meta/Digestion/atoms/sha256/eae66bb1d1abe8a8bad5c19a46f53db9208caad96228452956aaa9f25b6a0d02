@@ -1,0 +1,4 @@
+**命题 A-1.4（有序来源的遗漏）。** $`C`$ 忘记叶序及括号，$`qC`$ 进一步忘记组成。$`\langle\beta,\alpha\rangle`$ 与 $`\langle\alpha,\beta\rangle`$ 同组成却不同序；$`\langle\langle\beta,\alpha\rangle,\alpha\rangle`$ 与 $`\langle\beta,\langle\alpha,\alpha\rangle\rangle`$ 同叶序却不同括号。若已在同一初始化读者上读取 $`I`$，随后实际输入 $`j`$ 个零窗口，则最后组成恰为 $`S^jd_I`$，最后回复为 $`V_j(I)`$。
+
+证明。前两项由定义逐叶求和；数量层中 $`(3,0)`$ 与 $`(0,2)`$ 都读成六。最后一项每次实际零窗口执行 $`C\mapsto SC`$，归纳给公式，同时层数和档案增长。它不提供任意未知来源的免费初始化、重置、逆树替换或多个独立样本。证毕。
+

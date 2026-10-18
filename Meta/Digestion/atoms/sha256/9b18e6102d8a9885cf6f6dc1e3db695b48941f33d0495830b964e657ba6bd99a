@@ -1,0 +1,47 @@
+**Theorem 1.2 (support-aware complementary block domain and reverse realization).** The complete complementary domain, allowing any finite real environment, is
+
+$$
+J_p=\begin{pmatrix}
+\tau&0&C\\0&\bar\tau&\bar C\\C^\dagger&C^T&\sigma
+\end{pmatrix},\quad
+\tau\succeq0,\quad\operatorname{Tr}\tau=1,\quad
+\sigma=\bar\sigma=\sigma^T,\quad\operatorname{Tr}\sigma=1,\quad
+\operatorname{Tr}C=0,
+\tag{R.3}
+$$
+
+where $\tau=\Gamma(\chi_+)$ has nonzero spectrum $(a,\beta)$ for $\beta>0$, or $(1)$ at zero, and $C=\Gamma(|\chi_+\rangle\langle2|)$. With the Moore–Penrose inverse on the actual support, the remaining conditions are exactly
+
+$$
+\operatorname{ran}C\subseteq\operatorname{ran}\tau,\qquad
+S:=\sigma-C^\dagger\tau^+C-\overline{C^\dagger\tau^+C}\succeq0,
+\qquad
+\begin{cases}\operatorname{rank}S\leq1,&\beta>0,\\
+\operatorname{rank}S\leq3,&\beta=0.
+\end{cases}
+\tag{R.4}
+$$
+
+Every such block datum is the complement of an actual real-Kraus CPTP encoder into $\mathbb C^5$ with the stated actual phase-output spectrum. In particular this is not only a PSD relaxation.
+
+**Proof.** The spectrum gives $\|\sigma_+-\sigma_-\|_1=2$. The positive spectral projection distinguishes these two density matrices perfectly; positivity then forces orthogonal supports, as in the proof of the phase-gain lower bound. Hence each is the corresponding positive or negative part of the difference. Reality gives $\sigma_-=\bar\sigma_+$. Their Schmidt environment states are $\tau$ and $\bar\tau$. Every output vector in $V\chi_+$ is orthogonal to every output vector in $V\chi_-$, so $\Gamma(|\chi_+\rangle\langle\chi_-|)=0$. The same real conjugation gives the barred $C$ block and real $\sigma$. Trace preservation gives precisely the three diagonal traces and $\operatorname{Tr}C=0$. Contracting $V$ with the five output basis vectors gives five real Kraus matrices for $\Gamma$, so $\operatorname{rank}J_p\leq5$.
+
+For $A=\operatorname{diag}(\tau,\bar\tau)$ and $D_C=(C;\bar C)$, positivity of $\left(\begin{smallmatrix}A&D_C\\D_C^\dagger&\sigma\end{smallmatrix}\right)$ forces $\operatorname{ran}D_C\subseteq\operatorname{ran}A$. A vector in $\ker A$ cannot have a nonzero coupling to the lower block, as its two-dimensional quadratic-form compression would otherwise take a negative value. Under this range condition the invertible triangular congruence subtracting $A^+D_C$ from the upper variable gives $\operatorname{diag}(A,S)$. Thus, including singular $\tau$,
+
+$$
+J_p\succeq0\ \Longleftrightarrow\ (\text{range condition and }S\succeq0),
+\qquad \operatorname{rank}J_p=2\operatorname{rank}\tau+\operatorname{rank}S.
+\tag{R.5}
+$$
+
+Since $S$ is real, positive beta permits $S=vv^T$ with $v\in\mathbb R^r$, including $v=0$. At zero the phase rank is one, and the correct residual bound is three.
+
+Conversely (R.3)–(R.4) give a PSD $J_p$ of rank at most five with $\operatorname{Tr}_EJ_p=I_3$. It obeys $J_p=(P\otimes I)\bar J_p(P\otimes I)$. Since $HP=\bar H$ and $PH^\dagger=H^T$, (R.2) makes $J_0$ real. Take a real spectral Gram decomposition of $J_0$, reshape its at most five vectors into real $r\times3$ Kraus matrices $L_n$ of $\Gamma$, and pad to five with zeros. Define
+
+$$
+(K_\alpha)_{n i}=(L_n)_{\alpha i}.
+\tag{R.6}
+$$
+
+Then $\sum_\alpha K_\alpha^TK_\alpha=\sum_nL_n^TL_n=I_3$. Contracting indices shows that its actual complement on every matrix unit is the prescribed $\Gamma$. The zero $(+,-)$ block says $\langle K_\gamma\chi_-,K_\alpha\chi_+\rangle=0$ for every $\alpha,\gamma$, so the encoder's actual phase supports are orthogonal. Their Schmidt spectra are the spectra of $\tau$ and $\bar\tau$. Their actual difference has exactly $(a,\beta,0,-\beta,-a)$, including the rank-one zero-beta branch. Equation (P.1) therefore supplies an actual physical member of $\mathcal R_\beta$. $\square$
+

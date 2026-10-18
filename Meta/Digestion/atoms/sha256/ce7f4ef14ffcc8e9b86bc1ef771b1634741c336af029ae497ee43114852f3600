@@ -1,0 +1,8 @@
+**Theorem.** If B has Kraus rank two and delta=1/4, then both original channels are exactly fibre-calibrated: every input |f,i> has output support in |f>. Moreover A has Kraus rank exactly four. The statement is symmetric in A and B.
+
+Consequently the minimum product of local Kraus ranks among all original physical products having error exactly 1/4 is eight. In particular no rank pair (2,2), (2,3), or (3,2) attains quarter error. The known eta=3/4 tetrahedral-marker product has ranks (4,2) and attains the minimum. This does not settle whether products with both ranks at least three can have error below 1/4.
+
+The equality family is also complete within this rank-two-party class. After exchanging the parties if needed, environment isometries and independent simultaneous input-bit swaps in the two local channels put every equality product into a fixed-marker form with overlap 3/4. Its four balanced Bloch axes have a disphenoid Gram, parametrized by x^2+y^2+z^2=1, and exact quarter error is equivalent to x^2,y^2,z^2>=2/7. Sections 82.9--82.12 prove necessity and sufficiency, including the full-reference upper bound. These equivalences use only the stated target-preserving swaps, not arbitrary changes of the input bit bases.
+
+A pure Stinespring environment dimension is meant throughout, and a mixed environment must be purified. Each local Kraus rank is at least two, since a Stinespring isometry C^8->C^4 tensor C^d requires 8<=4d.
+

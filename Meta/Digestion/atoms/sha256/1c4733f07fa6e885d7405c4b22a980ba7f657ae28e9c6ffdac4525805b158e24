@@ -1,0 +1,129 @@
+**定理 10.16（无局部相位时的精确链闭包）。** 对上述独立相邻交换菜单、全部归一化正半定准备和末端 $n_j$ 期望，令
+
+$$
+D=\operatorname{diag}(1,i,i^2,\ldots,i^{m-1}).
+$$
+
+则未来观察空间是
+
+$$
+\mathcal O_m=
+\mathbb RI\ \oplus\
+\{Q(DSD^\dagger):S\in\operatorname{Sym}_m(\mathbb R)\},
+$$
+
+$$
+\dim\mathcal O_m=1+\frac{m(m+1)}2.
+$$
+
+因而最小非归一化实线性期望坐标数为 $m(m+1)/2$。
+
+证明。先确定实际有限动作群。逐矩阵元求值得
+
+$$
+D^\dagger H_jD=i(E_{j,j+1}-E_{j+1,j}),
+$$
+
+$$
+D^\dagger V_j(u)D
+=O_j(u)=\exp\bigl(u(E_{j,j+1}-E_{j+1,j})\bigr).
+$$
+
+$O_j(u)$ 在相邻二维平面上的块为
+
+$$
+\begin{pmatrix}\cos u&\sin u\\-\sin u&\cos u\end{pmatrix},
+$$
+
+在其余坐标上为单位，故在 $SO(m)$ 中。$D$ 只是一次固定的数学换基；此菜单没有因写下 $D$ 就增加可执行的局部相位动作。
+
+为证明每个 $O\in SO(m)$ 都恰为这些相邻旋转的有限词，使用逐列自下而上的消元。处理列 $k=1,\ldots,m-1$，依次处理相邻行对 $(m-1,m),(m-2,m-1),\ldots,(k,k+1)$。若该列在当前两行的分量为实数 $x,y$，置 $r=\sqrt{x^2+y^2}$。$r>0$ 时，左乘可用旋转
+
+$$
+G(x,y)=\begin{pmatrix}x/r&y/r\\-y/r&x/r\end{pmatrix}
+$$
+
+将 $(x,y)^{\mathsf T}$ 送到 $(r,0)^{\mathsf T}$；$r=0$ 时取单位。它确是某个 $O_{i-1}(u)$，因为两系数平方和一且允许所有实角。
+
+前 $k-1$ 列若已成为 $e_1,\ldots,e_{k-1}$，行号至少为 $k$ 的这些旋转不会破坏它们。第 $k$ 列与它们正交，故前 $k-1$ 个分量为零，剩余范数为一。自下而上消元后，第 $k$ 个分量是正枢轴 $1$，而非不确定的 $\pm1$。即使该列开始已经只有一个负的第 $k$ 分量，最后一次 $(k,k+1)$ 旋转也以 $x/r=-1,y/r=0$ 把它变成正一。
+
+所有前 $m-1$ 列完成后，正交性使最后一列为 $\pm e_m$。各消元旋转及原矩阵的行列式都是一，因此最后符号必须为正。于是有限个相邻旋转的左积把 $O$ 精确化为 $I$；逆序取逆便给出 $O$ 的有限动作词。这里用的是有限消元，不是仅由 Lie 代数维数推断稠密性。$m=1$ 时 $SO(1)=\{1\}$，无边菜单单独符合此结论。
+
+现在写
+
+$$
+\widetilde C=D^\dagger CD=S_\rho+iA_\rho,
+\quad S_\rho=\operatorname{Re}\widetilde C\in\operatorname{Sym}_m(\mathbb R),
+\quad A_\rho\in\mathfrak{so}(m,\mathbb R).
+$$
+
+每个实际词 $V=DOD^\dagger$ 给
+
+$$
+S_\rho\longmapsto OS_\rho O^{\mathsf T},
+\qquad
+\langle n_j\rangle_{W\rho W^\dagger}
+=(OS_\rho O^{\mathsf T})_{jj}.
+$$
+
+实反对称矩阵 $OA_\rho O^{\mathsf T}$ 的对角元为零，所以它在此菜单与此终端读口下不可见。由迹对偶，终端拉回是
+
+$$
+W^\dagger n_jW
+=Q(V^\dagger E_{jj}V)
+=Q(DO^{\mathsf T}E_{jj}OD^\dagger).
+$$
+
+算子等式可直接由 $c_a$ 的共轭式代入验证；因此所有拉回都在所列空间中，给充分包含。
+
+对于 $m\ge2$，$SO(m)$ 在实单位球面上传递。具体地，把任意实单位向量 $v$ 补成正交基；若所得矩阵行列式为负，就翻转一个不承载 $v$ 的基向量。这样得到正定向正交矩阵，且指定行或列为 $v$。已证有限生成性保证这个矩阵来自实际动作词。因此 $O^{\mathsf T}E_{jj}O$ 的轨道包含全部 $vv^{\mathsf T}$。这些投影张成全部实对称矩阵：$v=e_a$ 给 $E_{aa}$，$v=(e_a+e_b)/\sqrt2$ 给
+
+$$
+\frac12(E_{aa}+E_{bb}+E_{ab}+E_{ba}),
+$$
+
+减去已得对角项即得每个对称非对角矩阵单位。故反向包含也成立。$m=1$ 时唯一测试本身给全部一维实对称空间，不需要球面传递性。
+
+还须排除二次表示的核和归一化冗余。定义逻辑真空与单激发向量
+
+$$
+|\Omega\rangle=|0\cdots0\rangle,\qquad
+|a\rangle=c_a^\dagger|\Omega\rangle.
+$$
+
+它们全都属于固定高、中标签的 $\mathcal I_m$；这里的逻辑真空仍在每个 $y_j=1$ 点有物理高占据。由 CAR，
+
+$$
+Q(M)|\Omega\rangle=0,\qquad
+Q(M)|b\rangle=\sum_aM_{ab}|a\rangle.
+$$
+
+所以 $Q$ 在矩阵空间上单射。若 $\alpha I+Q(M)=0$，先作用于真空得 $\alpha=0$，再作用于全部单激发向量得 $M=0$。故所列直和确为直和，维数为 $1+m(m+1)/2$，没有把可变的总激发数误当归一化。
+
+最后，在 $d=2^m$ 维的全部密度域上重复定理 10.11 的有限维 Hilbert–Schmidt 分离：若候选空间 $V$ 含 $I$ 却不含 $\mathcal O_m$，取真实轨道测试 $F\notin V$ 和 $D_0=F-P_VF$，则 $\operatorname{Tr}D_0=0$，$\operatorname{Tr}(D_0F)>0$。选
+
+$$
+0<\varepsilon<\frac1{2^m\|D_0\|_{\rm op}},\qquad
+\rho_\pm^{(0)}=\frac{I_{2^m}}{2^m}\pm\varepsilon D_0.
+$$
+
+两者正定、迹一、记录相同而未来不同。故任何充分线性记录连同常数必须包含全部 $\mathcal O_m$，至少需要 $m(m+1)/2$ 个非归一化坐标；$S_\rho$ 的这些独立实元素达到下界。证毕。
+
+$m=1$ 时显式地 $\mathcal O_1=\operatorname{span}_{\mathbb R}\{I,n_1\}$，最少一个实数。$n_1$ 的期望可在零与一之间变化，所以它不能由归一化推出。
+
+$m=3$ 时 $D=\operatorname{diag}(1,i,-1)$，$S_\rho=\operatorname{Re}(D^\dagger CD)$ 与前面的六坐标精确对应为
+
+$$
+\langle n_A\rangle=S_{11},\quad
+\langle n_B\rangle=S_{22},\quad
+\langle n_C\rangle=S_{33},
+$$
+
+$$
+\langle J_{AB}\rangle=2S_{12},\qquad
+\langle J_{BC}\rangle=2S_{23},\qquad
+\langle T\rangle=-2S_{13}.
+$$
+
+例如 $c_1^\dagger c_3=R_AZ_B^{\rm sf}L_C$，故 $\langle T\rangle=C_{31}+C_{13}=2\operatorname{Re}C_{13}$，而 $S_{13}=-\operatorname{Re}C_{13}$。相邻项由 $\langle J_{AB}\rangle=-i(C_{21}-C_{12})$ 与 $S_{12}=\operatorname{Re}(iC_{12})$ 给出。这样三点七维表与一般链公式具有相同的符号及归一化。
+

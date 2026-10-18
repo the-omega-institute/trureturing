@@ -1,0 +1,31 @@
+**Assumption 1.1 (parameters and complete Boolean graph).** Fix
+$n\ge7$, $4\le k\le n-3$, positive integers
+$s_1<\cdots<s_n$, and a nonnegative integer $r$. Set
+
+$$
+c_i=s_i+4,\qquad C_X=\sum_{i\in X}c_i,\qquad W=C_{[n]},
+\qquad K=k,\quad L=n-k+1,\quad n=K+L-1,\quad G=KL.
+$$
+
+Thus $K,L\ge4$. A graph has a finite installed running set $Q$, a fixed
+running start, two distinct terminals $\mathsf0,\mathsf1$ outside
+$m=|Q|$, a fixed coordinate $i(q)\in[n]$ at each running state, and two
+fixed successors $\delta(q,0),\delta(q,1)$. The current state is the
+entire changing configuration. Every actual input $x\in\{0,1\}^n$
+terminates with $\mathbf1_{\{|x|\ge k\}}$ and satisfies, on that same
+input,
+
+$$
+t(x)\le n,\qquad J(x)=\sum_{\text{all running visits }q}c_{i(q)}\le W.
+\tag{TS.1}
+$$
+
+All installed states count, including unused ones. Repeated-coordinate
+queries and every query after certification are paid. Coordinate orders,
+sharing, union cycles and inconsistent syntactic paths are allowed; only
+actual runs must terminate. There is no additional history, counter, clock,
+phase, selector or computed-address register. No order, global read-once
+condition, level structure, unique host, unique support, unique residual,
+nonresonance or disjointness of residual cones is assumed. Distinct
+individual costs do not preclude equal sums of larger disjoint subsets.
+

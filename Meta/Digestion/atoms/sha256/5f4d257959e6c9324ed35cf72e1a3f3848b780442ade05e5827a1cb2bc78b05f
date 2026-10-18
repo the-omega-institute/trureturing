@@ -1,0 +1,55 @@
+**Lemma 75.7 (a compatible form core avoiding the entire collision set).** In $E\mathcal Q^{\rm hc}$ the bounded members which vanish whenever $d_X(x,y)<h$ for some $h>0$ depending on the member are dense in the full form norm $\bigl(q^{\rm fr}[F]+\|F\|^2\bigr)^{1/2}$.
+
+**Proof.** First apply the same scalar clipping to the real and imaginary parts on every stratum, including the atomic coordinates. The map fixes zero, commutes with exchange and with Sobolev traces, and therefore preserves every endpoint and boundary equality, the grounded zeros and the zero diagonal traces. As the clipping bound tends to infinity, the functions and weak derivatives converge in the finite weighted direct-sum form norm. This follows from the Sobolev chain rule: the derivative of a clipped real function is its original derivative on the unclipped set and zero on the clipped set, so the derivative difference tends to zero by dominated convergence. The imaginary part is identical. It suffices to treat a bounded $F\in E\mathcal Q^{\rm hc}$.
+
+For $0<\eta<1/4$, define the single real multiplier on $X_D^2$
+
+$$
+\chi_\eta(t)=
+\begin{cases}
+0,&0\le t\le\eta^2,\\
+\log(t/\eta^2)/\log(1/\eta),&\eta^2<t<\eta,\\
+1,&t\ge\eta,
+\end{cases}
+\qquad F_\eta(x,y)=\chi_\eta(d_X(x,y))F(x,y).
+\tag{75.25}
+$$
+
+On every interval and cell this is a Lipschitz multiplier for each fixed $\eta$. The metric $d_X$ is continuous under all the incidence identifications. Thus the cell multiplier at a port is precisely the corresponding slice multiplier, and its slice endpoint is the atomic multiplier. All matching equalities persist. Zero ground and collision traces persist, and the multiplier is exchange symmetric. Its value is one on distinct atomic pairs, whose graph distances are at least one; the diagonal atomic values remain zero.
+
+The norm difference tends to zero by dominated convergence on all continuous strata. The derivative difference is the sum of $(\chi_\eta-1)\nabla F$, which also tends to zero by dominated convergence, and $F\nabla\chi_\eta$. Only three types of strata can meet the graph collision neighborhood of radius less than $1/4$.
+
+On a mixed slice incident at its equal atomic port, the graph distance is the endpoint coordinate $t$, and that slice has zero endpoint there. For any $v\in H^1(0,L)$ with $v(0)=0$,
+
+$$
+\int_0^L\frac{|v(t)|^2}{t^2}\,dt
+\le4\int_0^L|v'(t)|^2\,dt.
+\tag{75.26}
+$$
+
+For smooth functions vanishing at zero, integration by parts gives an upper bound $2\operatorname{Re}\int v'\overline v/t$, the boundary term at $L$ being nonpositive. Cauchy–Schwarz gives(75.26), and $H^1$ approximation with the zero endpoint proves the general assertion. Since $|\chi_\eta'(t)|\le1/(t\log(1/\eta))$, the additional derivative energy on such a slice is bounded by its fixed Hardy integral times $\log(1/\eta)^{-2}$, and tends to zero.
+
+On each same-cable triangle, $d_X(x,y)=|x-y|$. Apply(75.26) on almost every section $x>y$ starting at $x=y$ and ending at $x=1$, and on the sections $x<y$ with reversed coordinate. The section endpoint is the zero diagonal trace. More explicitly the affine coordinates $(t,y)=(x-y,y)$ flatten the diagonal; on each closed subinterval of $0<y<1$ they give a rectangular collar of that side. Fubini's $H^1$ section identity and continuity of the flat boundary trace identify the section endpoint with the triangle trace there. Exhausting $0<y<1$ proves the identity almost everywhere; no value at either diagonal corner is needed. It yields
+
+$$
+\int_{(0,1)^2}\frac{|F_{ee}(x,y)|^2}{|x-y|^2}\,dx\,dy
+\le4\int_{(0,1)^2}|\partial_xF_{ee}(x,y)|^2\,dx\,dy.
+\tag{75.27}
+$$
+
+The two components of the cutoff gradient give at most twice this Hardy bound times $\log(1/\eta)^{-2}$. Both diagonal sides are included.
+
+Finally, on two distinct cables meeting at a port, use their distances $u,v$ from that port. Near the shared corner $d_X=u+v$. Boundedness of $F$, without a corner point value, gives
+
+$$
+\begin{aligned}
+\int |F|^2|\nabla\chi_\eta(u+v)|^2\,du\,dv
+&\le\frac{2\|F\|_\infty^2}{\log(1/\eta)^2}
+       \int_{\eta^2<u+v<\eta}\frac{du\,dv}{(u+v)^2}\\
+&=\frac{2\|F\|_\infty^2}{\log(1/\eta)}\longrightarrow0.
+\end{aligned}
+\tag{75.28}
+$$
+
+The equality uses $u,v\ge0$ and $\eta<1$: the cross-section at $u+v=t$ contributes $t\,dt$. Distinct atoms, a nonincident atom/cable slice and nonincident cable cells have graph separation at least one and are unaffected. These cases exhaust the finite unit-cable tree. Multiplying the estimates by the exact positive weights in(75.3) and summing proves $F_\eta\to F$ in the complete form norm. Clipping followed by a diagonal choice of $\eta$ proves the assertion for every form vector, with every mixed slice and rectangle retained. $\square$
+

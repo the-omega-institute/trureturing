@@ -1,0 +1,20 @@
+### 104.5. Every ramified prime in the composite cut
+
+Fix p|d and write d=p d' with d' a p-unit. In a^2-d b^2=5de the two left valuations have opposite parity and the right valuation is one. Thus v_p(b)=0 and v_p(a)>=1, even for rational a,b. Dividing by d gives b^2+5e=a^2/d and hence b^2=-5e modulo p.
+
+Choose t=1,z1=-b,z2=a and the Hensel root z3 of z3^2=b^2-15e satisfying z3=-2b modulo p. It exists because p>3 and b is a unit, and all three covering equations hold. Then
+
+ L3=2d b^2, L2=b(3b+1)^2/2 modulo p.
+
+If 3b+1=0 modulo p, the other root z3=2b gives L2=-3b(b-1)^2/2 modulo p, a unit in this exceptional case. Since p=1 modulo 24, the characters of -1,2,-3 are all +1. The chosen L2 has residue character (b/p).
+
+There is no omitted factor from the composite unit d':
+
+ (L3,d)_p=(2d b^2,d)_p=(2,d)_p(d,d)_p=(-2,d)_p=1.
+
+The last equality is (-2/p)=1, using v_p(d)=1. For the unit L2, the local symbol is (L2/p)=(b/p)=(-5e/p)_4. Multiplication over all p|d and the already checked remaining places proves
+
+ <lambda_(d),mu_(d)>=product_(p|d)(-5e/p)_4.            (104.7)
+
+No dimension or nullity premise entered this local identity. If a common primitive denominator c is introduced for the rational a,b, the proof does not assert that (c/p)=1 separately for every p|d; the composite tangent calculation already retains all denominator contributions.
+

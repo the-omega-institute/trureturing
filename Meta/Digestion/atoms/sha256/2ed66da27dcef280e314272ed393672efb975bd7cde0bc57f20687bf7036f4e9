@@ -1,0 +1,32 @@
+**Theorem 6.1 (Target-touching root upper bound).** Fix any allowed $p$, either $j$, and any unchanged independent seed space. Suppose a lawful hard-total-cap-three input has, at each seed, a normalized tree that is an immediate terminal or whose root edge contains $q_{j,\alpha}$, where $\alpha$ is that root address's parity. Then it has one lawful full-law representative with every address in $[j-6,j+7]\cap\mathbb Z$, hence radius at most seven. The representative keeps the original ordered tree, all terminal labels and all paid terminal depths, including $\bot$ at any depth. One relabelling of any fixed supplied tree works for every allowed $p$.
+
+The root hypothesis is the public integer condition
+
+$$
+t_{\mathrm{root}}\in\{B_{j,\alpha}-2,B_{j,\alpha}\}.
+\tag{6.1}
+$$
+
+It requires no observation of the realized phase.
+
+Proof. Fix a normalized deterministic tree $T$. Keep an immediate terminal, including immediate nonreturn. Otherwise let $\alpha$ be the root parity and set $q=q_{j,\alpha}$. In its matching phase, $P_\alpha(T)$ retains the target-touching root $E$ and has active height at most three. Place that root at $\{q,q+1\}$. For each reading second node $F$ use its row of Theorem 5.1; for each reading third node $G$ below it use the appropriate third-edge entry. All second nodes share the one placed root, and both third alternatives below each second node share its one placed $F$. Thus this defines actual addresses of one tree before execution.
+
+For a terminal after one active read, its joint mass with $S_q=s$ is a coordinate of $(S_q,X_E)$. After two active reads on replies $x,y$, it is a coordinate of $(S_q,X_E,X_{F_x})$. After three, its mass is
+
+$$
+J_p(S_q=s,X_E=x,X_{F_x}=y,X_{G_{x,y}}=z\mid\varphi=\alpha).
+\tag{6.2}
+$$
+
+Each corresponding one-, two- or three-edge identity is supplied by Theorem 5.1. The terminal events partition execution, so these individual identities preserve the conditional target/tag law with tags (4.1). This uses neither relations between incompatible sibling replies nor a separate early placement for each final branch.
+
+Put $\beta=1-\alpha$. In phase $\beta$ the original root is a separator and its zero branch has at most two original calls left. Hence $P_\beta(T)$ has active height at most two. Apply Lemma 3.1 at its own target $q_{j,\beta}$ with the same kind of original terminal tags. Its conditional target/tag law is preserved too.
+
+Apply Theorem 4.2 to combine the two constructions. Every original node receives a single actual integer address from its own parity, or the fixed same-parity base if absent from its matching prune. Execution uses the original whole tree. In each actual phase the relevant conditional law holds, and averaging the original phase mixture gives the $Z$-law. Every separator and repeated occurrence still costs one at its visited original node; every original terminal depth still gives $N$. The height bound holds on all formal branches, including exceptional source and seed paths.
+
+Matching-root-phase left endpoints are in $[q_{j,\alpha}-3,q_{j,\alpha}+3]$, so their actual addresses are in $[B_{j,\alpha}-6,B_{j,\alpha}+6]$. The other phase's constructed addresses are in $[B_{j,\beta}-4,B_{j,\beta}+4]$; absent nodes use their bases. By (1.2), their union is contained in $[j-6,j+7]$.
+
+The finite incidence tests and listed placements are specified maps on the countable discrete tree space. Their composition with $T(u)$ is measurable. Lemma 2.2 proves the full $(u,H_j,O,D,N)$ identity for every seed event, including on atomic or nonstandard spaces with permitted completions. The choices use only integer geometry and $j$, and the product identities hold at every allowed $p$. If the input uses public $p$, apply them to its tree at that fixed parameter; no joint measurability in varying $p$ is needed. No phase oracle, additional randomizer or free observation enters the construction. $\square$
+
+This is a subclass upper, without a claim that seven is its exact universal minimum. Together with Corollary 4.3 it covers inputs with both pruned heights at most two and cap-three inputs with a target-touching root. A detached-root active-phase tree of height three remains outside this construction.
+

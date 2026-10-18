@@ -1,0 +1,51 @@
+**Corollary 15.3 (certificate equality at the inherited optimum).**
+Let $c_+(d)$ be the infimum of rational caps of accepted rational
+laws for the grammar of Convention 12.1, and let
+$b_d=\min_{\mu\in\Delta(S_d)}\beta_d(\mu)$ as in Convention
+1.4. Then
+
+$$
+c_+(2)=b_2=\frac{17}{25}.
+\tag{RCE.57}
+$$
+
+The pressure-minimizing real law is unique and is the inherited law
+
+$$
+\nu_*(\alpha)=\nu_*(\beta)=\frac8{25},\qquad
+\nu_*(g)=\frac1{25}\quad(g\in\mathcal G).
+\tag{RCE.58}
+$$
+
+Here $b_2$, its numerical value and the attaining law are the NCM/NPC
+results credited in Convention 12.1. Equality for $c_+(2)$ is a
+certificate consequence of (RCE.51), and uniqueness is the routine
+equality analysis below.
+
+Proof. For completeness the local inequalities identify all equality
+cases over the full real simplex. Write $z=M(\mu)$,
+$p=a+b$, and let the nine branch weights have total $1-p$ and
+largest value $t$. Then
+
+$$
+a,b\ge1-z,\qquad p\ge2(1-z),\qquad
+t\ge\frac{1-p}{9},\qquad
+z\ge p+t\ge\frac{8p+1}{9}\ge\frac{17-16z}{9}.
+\tag{RCE.59}
+$$
+
+Thus $z\ge17/25$, agreeing with the inherited optimum. The law
+(RCE.58) has all three expressions in (RCE.48) equal to $17/25$.
+It is a rational law on the whole $S_2$, and Corollary 15.2 gives
+its old joint leaf at the rational cap $17/25$. Hence
+$c_+(2)\le17/25$. Full-grammar soundness gives
+$c_+(2)\ge b_2=17/25$, proving (RCE.57).
+
+At equality $z=17/25$, (RCE.59) gives $a,b\ge8/25$, whereas
+$z\ge(8p+1)/9$ gives $p\le16/25$. Thus
+$a=b=8/25$. The branch total is $9/25$ and
+$t\le z-p=1/25$. Nine nonnegative numbers at most $1/25$ with
+sum $9/25$ are all $1/25$. This proves uniqueness among all real
+laws, with zero coordinates allowed at the start of the argument.
+$\square$
+

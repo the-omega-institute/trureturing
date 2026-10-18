@@ -1,0 +1,50 @@
+### 82.2. Cross-three-cycle overlaps and complete channel coverage
+
+For \(w=(x,y)\), put
+\[
+ \Delta_w=\det\begin{pmatrix}
+ 1&1&1\\x_0&x_1&x_2\\y_0&y_1&y_2
+ \end{pmatrix}.
+\]
+Expansion of the two overlaps gives
+\[
+ w^*S\Theta w=-\overline{\Delta_w},\qquad
+ w^*S^2\Theta w=\overline{\Delta_w}.                     \tag{82.1}
+\]
+A common phase multiplies \(\Delta_w\) by its square, a synchronous
+permutation multiplies it by its sign, and \(\Theta\) sends it to its
+complex conjugate. Its vanishing is therefore a projective invariant of
+the whole symmetry union.
+
+If a channel has three distinct entries, optionally apply \(\Theta\)
+to make it \(x\). The complete punctured-branch chart theorem in §75
+makes its mean nonzero for a noncanonical ray and gives
+\[
+ y=A\mathbf1+c x+d\bar x,\qquad d\ne0.                  \tag{82.2}
+\]
+Here the coefficient \(d\) is the channel-reconstruction coefficient,
+not the scalar \(\boldsymbol K\cdot v\) of §81. Unit moduli give
+\[
+\begin{aligned}
+ (x_0x_1x_2)\det\begin{pmatrix}1&1&1\\x_0&x_1&x_2\\
+                    \bar x_0&\bar x_1&\bar x_2\end{pmatrix}
+ &=\det\begin{pmatrix}1&1&1\\x_0&x_1&x_2\\x_0^2&x_1^2&x_2^2\end{pmatrix}\\
+ &=(x_1-x_0)(x_2-x_0)(x_2-x_1)\ne0.
+\end{aligned}                                                    \tag{82.3}
+\]
+Multiplying columns by \(x_j\) and cyclically permuting rows proves
+the first equality. Thus \(\Delta_w=d\det[\mathbf1,x,\bar x]\ne0\).
+This proof allows the other channel to have collisions. It uses the
+selected-channel coefficient \(d\ne0\), and no invertibility
+assumption for the map between the two channels.
+
+If neither channel has three distinct entries, the unaligned exclusion
+and complete finite/pole coverage of §75 give, after phase and permutation,
+\[
+ w=(1,1,z;g,g,gr).
+\]
+A constant channel is allowed here; both channels constant would be
+canonical. The first two columns defining \(\Delta_w\) coincide,
+so \(\Delta_w=0\). These alternatives exhaust the noncanonical rays
+on the stated punctured branch, including every aligned pole stratum.
+

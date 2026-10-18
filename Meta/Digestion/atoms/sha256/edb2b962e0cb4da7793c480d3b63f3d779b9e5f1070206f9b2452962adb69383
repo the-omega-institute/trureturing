@@ -1,0 +1,14 @@
+**定理 87.6（Exact small-capacity whole-target fees）。** For the one full target (87.4), under each original literal alphabet,
+
+$$
+\boxed{
+C_{\rm ad}(f_{87})=C_{\rm ad}(F_{87})=3,\qquad
+C_{\rm pre}(f_{87})=C_{\rm pre}(F_{87})=5.
+}
+\tag{87.32}
+$$
+
+The exact minimum worst actual emitted-bit fees are respectively $42$ and $70$. These are separate optima for adaptive control and ONE GLOBAL preset control on this same fixed target, on both genuinely different free-value fibres and all actual INITIAL records and histories.
+
+证明。 Lemma 87.3 gives the all-action lower bounds. Lemmas 87.4 and 87.5 give the full-source, strictly safe, fully paid attainments with own-endpoint decoding and stopping. Interface 87.2 and the explicit pullback (87.4) give equality of record and history fees. Every issued block emits fourteen bits, so multiplying the optimal block fees by fourteen proves the exact bit prices, including absorbed suffixes. ∎
+

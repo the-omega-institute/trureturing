@@ -1,0 +1,30 @@
+**Convention 2.1 (canonical supplier).** Reuse [AAR, Theorems 12.3 and
+16.3][AAR], [CBN, Theorem 2.2][CBN] and [PPF, §2][PPF]. Put
+
+$$
+C_0=\langle\alpha,\alpha\rangle,\qquad
+S_1=\{\alpha,\beta,C_0\},\qquad
+S_{j+1}=\{\alpha,\beta\}\sqcup
+\{\langle x,y\rangle:x,y\in S_j\}.
+\tag{CCF.3}
+$$
+
+For $j\ge1$, $\pi_j(v)$ preserves each reached constructor and labelled
+leaf through relative depth $j-1$, replacing a branch at that cutoff by
+$C_0$. Its attained image on $h(v)\le D$, $1\le j\le D$, is exactly
+$S_j$. Write $N_j=|S_j|$, so $N_1=3$ and $N_{j+1}=2+N_j^2$.
+The actual reply table on $W_j$ reconstructs $\pi_j(v)$, and
+
+$$
+r_{\rho^k\langle\alpha,v\rangle}(Ra)
+=r_{\rho^k\langle\alpha,\pi_D(v)\rangle}(Ra)
+\quad(a\in W_D,\ k\ge0).
+\tag{CCF.4}
+$$
+
+The all-count trajectory factor and this canonical sufficiency are
+credited. In particular (CCF.4) is not a new reconstruction of actual
+execution time. A cutoff branch is recorded by its constructor; the alpha
+children used in its canonical representative are placeholders, not
+acquired original labels.
+

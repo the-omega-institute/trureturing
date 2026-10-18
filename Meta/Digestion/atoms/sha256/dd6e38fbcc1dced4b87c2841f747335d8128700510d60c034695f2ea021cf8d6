@@ -1,0 +1,57 @@
+**Lemma 24.3 (six finite derivatives on a fixed estimating strip).** Fix sufficiently small $\ell>0$, put $L=\ell/s$ and keep $L,T$ fixed during parameter differentiation. Require $(-L,L)\Subset I_s$ and $|\nu|\ell<1/4$. For $|\theta|\le s$ let $Q_\theta^L(t)$ be the Friedrichs heat on this symmetric strip, zero extended, with generator
+
+$$
+C_\theta^L=-X^2-(1+\nu\theta r)^{-2}Y^2-\lambda\theta^2.
+\tag{24.7}
+$$
+
+For $0\le k\le6$, $0<t\le T$, and $1\le p_n\le q\le\infty$, one has
+
+$$
+\|\partial_\theta^kQ_\theta^L(t)f\|_q
+\le C_k\sum_{n=0}^k
+ t^{(k-n)/2-(7/2)(1/p_n-1/q)}\|r^nf\|_{p_n},
+\qquad
+\|\partial_\theta^kq_\theta^L(t;0,\cdot)\|_\infty
+\le C_kt^{(k-7)/2}.
+\tag{24.8}
+$$
+
+These are bounds on the indicated weighted inputs, not bounded parameter derivatives on arbitrary $L^2$.
+
+Proof. Use the single height bridge from $A$ to $B$ and retain its killing indicator in $(-L,L)$; it is independent of $\theta$. Its covariance is
+
+$$
+M_\theta[H]=\int_0^t(1+\nu\theta H_v)^{-2}u(H_v)u(H_v)^{\mathsf T}dv,
+\qquad u(h)=(1,h,h^2/2).
+\tag{24.9}
+$$
+
+On this event $M_\theta$ is uniformly comparable to $M_0$, and its $j$th relative matrix derivative has norm at most $C_j\sup|H|^j$ for $j\le6$. Repeated differentiation of the phase Gaussian gives a finite sum of Gaussian polynomials in the whitened phase variable, of degree at most $2k$ at order $k$. A fixed inflated-covariance Gaussian absorbs each such polynomial with its order-dependent constant. This follows directly by differentiating the determinant and the quadratic exponential; it extends the finite matrix calculation in J (23.3) to order six.
+
+Write $H=A+W$ and use the triangular matrix
+
+$$
+D_A=\begin{pmatrix}1&0&0\\A&1&0\\A^2/2&A&1\end{pmatrix},\qquad
+u(A+W)=D_Au(W),\qquad\det D_A=1.
+\tag{24.10}
+$$
+
+Here the left side of the middle identity is the vector $u$ evaluated at $A+W$. Conjugation by $D_A^{-1}$ puts the phase displacement in the input-first group coordinate $\eta^{-1}\xi$. Extracting $|A|^n$ leaves relative bridge degree $k-n$. The clock obeys
+
+$$
+|\partial_\theta^be^{\lambda\theta^2t}|\le C_bt^{b/2}
+\quad\text{because }|\theta|\sqrt t\le1.
+\tag{24.11}
+$$
+
+A clock derivative therefore contributes its own relative degree and is included in the same count. The full fixed-order bridge moments J (3.3)/P (107.5), followed by phase integration, give relative majorant kernels with norms
+
+$$
+\|K_{kn}(t)\|_b
+\le C_kt^{(k-n)/2-(7/2)(1-1/b)},\qquad1\le b\le\infty.
+\tag{24.12}
+$$
+
+Indeed the $L^1$ estimate is Brownian scaling of the relative supremum moment; the supremum estimate uses the inverse-determinant moment and has degree $k-n-7$; interpolation gives the remaining exponents. The safe indicator can be dropped in these positive majorants. Ordered Young, with $1+1/q=1/p_n+1/b$, proves the first bound in (24.8). Setting the input height to zero gives the column bound. The moments permit every fixed degree used here; no infinite-time differentiation is involved. Weighted approximation and dominated convergence on each finite time interval justify the derivatives and pairings, also for complex inputs. Only the strip family has been defined at nonzero $\theta$; no rational coefficient is continued through a pole. $\square$
+

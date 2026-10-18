@@ -1,0 +1,83 @@
+## 6. Exactly two terminal roots reduce to their proper pair
+
+**Theorem 6.1.** Let $K=\{W_1,W_2,W_3\}$ be three pairwise distinct
+fixed legal worlds, all on the one entire history (1.1). Suppose
+
+$$
+f_1(7)=f_2(7)=0,\qquad f_3(7)\ne0.
+$$
+
+Then
+
+$$
+\begin{aligned}
+L_2(K,H)\quad\Longleftrightarrow\quad
+&d_1=d_2,\quad v_J(W_1)=v_J(W_2),\quad v_M(W_1)=v_M(W_2)\\
+\quad\Longleftrightarrow\quad &L_2(\{W_1,W_2\},H).
+\end{aligned}                                                       \tag{6.1}
+$$
+
+Thus an $L_2$ triple in this pattern is not inclusion-minimal.
+The statement is an unconditional reduction and does not assume
+VII's pair-exclusion theorem.
+
+**Proof.** Each terminal response of $W_i$ for $i=1,2$ is $d_i$.
+For $W_3$, let $b,e$ be the entries of $X=f_3(7)QP_3$ in (5.1).
+They satisfy (5.2). On either sixth branch its two terminal
+responses differ. Therefore a mixed pair consisting of $W_3$ and
+one zero-terminal-gain world cannot have $L_1$ at that branch:
+equality with the latter's constant drift response under both last
+atoms would require those two different responses to be equal.
+
+First suppose $d_1\ne d_2$. The pair of zero worlds cannot have
+$L_1$ either, because their terminal responses are different.
+No response child of size at most two can consequently have $L_1$.
+If $K$ had $L_2$, then for each sixth action $E\in\{J,M\}$ its
+existential response child in (1.6) would have to contain all three
+worlds. On that whole child, each terminal action must have a
+collision. Since $d_1\ne d_2$, each such collision involves $W_3$.
+Since $W_3$'s two responses on that branch differ, they must be
+$d_1,d_2$ in some order. The sixth $J$ branch would imply
+
+$$
+|d_1-d_2|=|b|,
+$$
+
+while the sixth $M$ branch would imply
+
+$$
+|d_1-d_2|=|b+e|.
+$$
+
+This contradicts (5.2). In particular the argument has allowed the
+two terminal collision pairs to differ after a shared-three sixth
+response. It proves $\neg L_2(K,H)$ whenever $d_1\ne d_2$.
+
+Now suppose $d_1=d_2=d$. Fix either sixth action $E$, and for every
+real normalized response $s$ write
+
+$$
+K_{E,s}=\{W\in K:v_E(W)=s\}.
+$$
+
+Any child omitting one of $W_1,W_2$ is empty, singleton or a mixed
+pair, so it cannot have $L_1$. An $L_1$ child must therefore contain
+both zero worlds. Such a child can exist only if
+$v_E(W_1)=v_E(W_2)$. Conversely, if these two sixth responses are
+equal, use their common response $s$. For each terminal action $F$
+the raw response $D_0+\lambda d$ retains both worlds in that child. Thus
+$L_0$ holds for that terminal response under each $F$, and
+$L_1(K_{E,s},(H,E,D_0+\lambda s))$ holds. This is true whether or
+not the same sixth response also retains $W_3$.
+
+For each $E$ separately, existence of an $L_1$ response child is
+therefore equivalent to equality of the zero pair's sixth responses.
+Conjoining for both $E$ proves the first equivalence in (6.1).
+For the pair alone the same sixth equalities and the common drift
+make all four terminal values equal; conversely (5.4) requires just
+these equalities. This proves the second equivalence, including the
+unequal-drift case. Affine normalization transfers all existential
+and universal response quantifiers to the raw readings bijectively.
+No condition on the sixth gain samples, sources, other roots or
+gain multiplicities has been imposed. ∎
+

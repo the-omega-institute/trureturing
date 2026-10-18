@@ -1,0 +1,57 @@
+**Definition 3.2 (table fixed before any pair is chosen).** Fix one
+finite installed table $T$ on $\mathcal K=Q\sqcup H$, with
+$|\mathcal K|\le9$, and fixed functions
+
+$$
+\begin{aligned}
+\operatorname{addr}&:Q\to\{L,R\}^{*},\\
+\operatorname{next}&:Q\times\mathcal A\to\mathcal K,
+ &\mathcal A&=\{\alpha,\beta,\mathsf{branch},\mathsf{absent}\},\\
+\operatorname{out}&:H\to\{\text{complete rows at }P\}.
+\end{aligned}
+\tag{TCR.9}
+$$
+
+Also fix its labeled distinct entries $e_0,e_1\in\mathcal K$.
+Entry for a bit $z$ is $e_z$, with the fixed inverse labeling recovering
+that bit. A Read makes exactly one paid invocation at its fixed literal
+and replaces the state by its fixed successor for the reply. A Halt
+returns its fixed entire row without a call. All four successors are
+installed at every Read. Every installed state counts, including
+unused Reads, unused Halts and distinct Halts with identical outputs.
+
+After entry the current member of $\mathcal K$ is the whole mutable
+accessible source-dependent memory. There is no retained bit copy,
+reply or address register, computed address, independent program counter,
+phase, clock, counter, history, archive, table selector or output decoder.
+There is no free control transition. Sharing, repeated words, early
+Halts and cycles in unions of different-source paths are allowed; a
+required run must actually terminate within its call budget. These are
+the exact state conventions of NBP Definition 11.1, NRE Definition 3.2
+and NRN Definition 3.2.
+
+For this fixed table and these fixed labels define $\mathcal C(T)$ to
+be the full class of lawful acquired-term codes $\sigma$ of Assumption
+3.1 such that, for every $u\in\mathcal U_*$, execution from
+$e_{\sigma(u)}$ returns the entire $F(u)$ within two actual calls.
+The computation of $\sigma$ and its pointwise values are held fixed
+when asking whether it belongs to this class. No recoding of it into
+an initial-state code is permitted. Assume throughout the main results
+that $\mathcal C(T)\ne\varnothing$; this is a promise, not a decision
+task here. All of $T,e_0,e_1,\mathcal C(T)$ are fixed before choosing
+any positive index or bit.
+
+Define the allowed correct-entry set on every actual origin by
+
+$$
+G_T(u):=\{z\in\{0,1\}:T\text{ from }e_z\text{ on stationary }t_u
+       \text{ Halts with the whole }F(u)\text{ within two calls}\}.
+\tag{TCR.10}
+$$
+
+This definition imposes no promise on the other entry's run. It can
+Halt incorrectly, cycle, or still be running after two calls. Every
+$\sigma\in\mathcal C(T)$ selects $\sigma(u)\in G_T(u)$ at every
+actual origin, so nonemptiness of the class implies nonemptiness of
+every $G_T(u)$.
+

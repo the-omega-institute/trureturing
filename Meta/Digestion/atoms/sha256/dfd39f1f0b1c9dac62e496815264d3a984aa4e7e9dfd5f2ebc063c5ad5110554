@@ -1,0 +1,54 @@
+**Definition 14.3 (finite common return dictionaries and domains).**
+After the actual old history and its joint state have been fixed, draw
+$U$ in a finite set $\mathcal U$ with $\nu(u)>0$ and
+$\sum_u\nu(u)=1$, independently of the entire old source and joint
+state. For each seed supply one common relative coordinate
+$z_u:[0,T_u]\to\mathbb R$, with $0\leq T_u<\infty$, satisfying
+
+$$
+z_u(0)=z_u(T_u)=0,\qquad -a<z_u(t)<a,\qquad
+k_{X,u}(t)=X+z_u(t),\qquad
+\chi(t)-\chi(0)=0.
+\tag{AC.42}
+$$
+
+Here AC means that the real coordinates are absolutely continuous on
+their finite interval. PC1 means that they are continuous and have a
+finite nondecreasing partition, possibly with repeated times, on whose
+open pieces their derivatives agree with rates continuous on the closed
+pieces. This is precisely the alternative in
+OriginalControlComposition.FiniteC1Control. Piecewise integration and
+telescoping make a PC1 coordinate AC on the whole interval. Constant
+relative phase has finite variation automatically. No common speed,
+partition-size or variation budget is assumed for the lower bound.
+For $T_u=0$ only the matching identity is allowed.
+
+For an arbitrary such relative command its full mathematical
+starting-height domain is
+
+$$
+J(z_u)=(-\min z_u,\ c-\max z_u).
+\tag{AC.43}
+$$
+
+Condition (AC.42) is exactly the strict-support condition at both
+catalogue heights. Each individual finite dictionary has a positive
+common margin by compactness and finiteness. There is no uniform margin
+over all dictionaries in the optimization.
+
+There is no intermediate specimen read, live height/waveform sensor,
+source callback, readable source programme, hidden Kraus-index or
+environment access in this class. At a completed live return all
+accessible history-sensitive calibration data are $U$ and the
+no-failure flags. Clock times, controller stages and command names are
+determined by $U$ on that branch. Actual old archives and references
+remain joint spectators and are inaccessible for this calibration task.
+Making any of them readable changes the comparison class.
+
+A finite controller using only public randomness and no-failure flags
+is included: pre-draw its finite random tape as $U$. Along its completely
+live branch every status flag is prescribed, so its concatenated relative
+path and stopping checkpoint are functions of that tape alone. Assume
+the resulting path is a return in (AC.42). This reduction grants no
+height-dependent choice or intervention.
+

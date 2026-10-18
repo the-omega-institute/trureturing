@@ -1,0 +1,66 @@
+**Proposition 265.2 (Exact all-row criterion within the canonical class).**
+The law $x$ is cap-$e$ feasible exactly when
+
+$$
+m_n\ge a_n-e,\qquad z_n\ge1-a_n-e,\qquad
+z_n+m_n\ge1-e\quad(1\le n\le L),\qquad m_\infty\ge1-e.
+\tag{265.2}
+$$
+
+For an original positive vanishing profile of active length $L\ge3$,
+a cap-feasible canonical law exists exactly when
+
+$$
+a_2+e\ge1,\qquad D_3(a,e):=\sum_{n\ge3}(a_n-e)_+\le3e.
+\tag{265.3}
+$$
+
+This characterizes the canonical witness class, not all stopped laws.
+
+**Proof.** At first zero $n$, a triple outputs $n$ if and only if
+it contains $n$. Earlier selected coordinates are positive, and
+later suffix bits cannot change this conclusion. Thus correct
+probability is always $m_n$. Base probability is
+$\sum_{i<j}x_{\{i,j,\infty\}}w_iw_j$, a polynomial with
+nonnegative coefficients. Its exact minimum on $\Omega_n$ is
+$z_n$, attained at $1^{n-1}0^{L-n+1}$. At the positive word it
+is $m_\infty$. Taking these minima proves both directions of
+(265.2), including the independent pair event.
+
+At $10^{L-1}$ canonical base mass is zero, so $a_2+e\ge1$.
+At $0^L$, $10^{L-1}$ and the positive word, the pair and positive
+rows require $m_1,m_2,m_\infty\ge1-e$.
+Triple marginals sum to three; hence the total later correct mass
+is at most $3e$, proving the other necessity in (265.3).
+
+For sufficiency use the subset construction of Theorem 113.3.
+Write $d_n=a_n-e>0$ for $3\le n\le L$, $d_{L+1}=0$,
+$s=D_3/3$, and
+
+$$
+w_m=\frac{m+1}{3}(d_m-d_{m+1})\quad(3\le m\le L),
+\qquad R=1-s-d_3.
+\tag{265.4}
+$$
+
+With mass $w_m$ choose a uniform three-subset of
+$\{1,\ldots,m,\infty\}$. With mass $R$ choose
+$\{1,2,\infty\}$ and always emit its first queried zero.
+Telescoping gives $\sum_mw_m=s+d_3$, so the masses sum to one.
+The existing supplier proves $R\ge0$ and its late pair bounds;
+explicitly $R\ge a_n-a_3$ for $n\le2$ because
+$R-(a_n-a_3)=1-s+e-a_n\ge1-a_n$.
+The subset correct marginal is $d_n$ at every later label and
+$d_3$ at labels one and two. Thus new early correct mass
+$R+d_3=1-s\ge1-e\ge a_n-e$.
+Early base demands are nonpositive by $a_2+e\ge1$.
+Replacing the residual branch of 113.3 by this canonical triple
+keeps early pair membership, leaves late base/correct/pair rows and
+the positive row unchanged, and can only improve early correctness.
+The subset outside-pair mass is at most $s\le e$, and positive
+base probability is $1-s$. All rows therefore hold.
+Actual tail error is $\max\{s,a_n\}\le e$.
+Zero weights, $R=0$ and $a_{L+1}=e$ are included.
+This is an application of the existing supplier, with no new
+unrestricted amplitude coverage. $\square$
+

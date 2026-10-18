@@ -1,0 +1,25 @@
+**Definition 3.2 (complete designated labels).** With the full exterior and
+reached set in Theorem 3.1, let $r_0,r_1$ have complete partitions
+
+$$
+\pi_0=\{\{1\},\{2,3,4\},\{5\},\{6\}\},\qquad
+\pi_1=\{\{1\},\{2,5\},\{3,6\},\{4\}\}.
+\tag{CRE.15}
+$$
+
+Define
+
+$$
+\begin{aligned}
+\Theta_0(j,y)&=U(T_j,y,y,y),\\
+\Theta_1(j,y)&=U(T_j,F_{T_j}(y),G_{T_j}(y),y),\\
+\Delta_0(j,y)&=\Delta(j,y,y,y),\\
+\Delta_1(j,y)&=\Delta(j,F_{T_j}(y),G_{T_j}(y),y),\\
+C_i(j,y)&\Longleftrightarrow y\ne T_j\ \land\ \Delta_i(j,y).
+\end{aligned}
+\tag{CRE.16}
+$$
+
+Every substitution in (CRE.16) is simultaneous throughout the entire list.
+In particular its copies of $y$ and of $j$ are shared.
+

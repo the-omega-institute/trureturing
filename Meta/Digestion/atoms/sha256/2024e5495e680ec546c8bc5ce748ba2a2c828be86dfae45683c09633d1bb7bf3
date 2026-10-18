@@ -1,0 +1,28 @@
+**Proposition 6.3 (zero parameters, visibility and inconsistent rows).**
+If $H=0$, every attained entry has zero frontier vector for every
+encoder. If $S=I$, including the forced case $D=0$, an attained entry
+either already has constant lag and zero frontier vector, or is locally
+impossible. Full visibility alone does not remedy a bad encoder.
+For $D=2,H=1,S=\{3\}$, a putative row with the native skeleton and
+displayed $T_7$, but with two hidden slots declared equal, is
+inconsistent even though its displayed normalized clock is legal.
+
+Proof. At $H=0$ the only profile is zero, and any displayed normalized
+clock equals the lag. If every slot is displayed, the current tree is
+already fixed by the entry. Every new query is constant on its fiber,
+so (LQF.8) is equivalent to constant lag. Nonempty selection at $D=0$
+forces this case. For the proposed depth-two row, the clock at slot
+three is $7-3\cdot2=1$, attainable at lag one with displayed age
+zero. But at any history the distinct offset bands make all three
+hidden subtrees pairwise unequal. The proposed equality partition
+therefore has no actual witness. This demonstrates why the entire row
+test in Lemma 1.3 cannot be dropped. $\square$
+
+The root word always costs one call when actually submitted, even at
+length zero. At a fully determined lag the optimum is instead a true
+zero-call halt. The missing $P_1$ is also material: the already proved
+zero-origin interval $[0,3]$ requires two calls, while $[1,4]$ permits
+one, by [AOF §8][AOF] and [NARC §3.1][NARC]. Those results keep their
+original contracts; a certified epoch from another service cannot fill this
+missing threshold in the unknown-lag problem.
+

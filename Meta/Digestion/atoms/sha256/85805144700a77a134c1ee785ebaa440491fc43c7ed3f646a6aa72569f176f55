@@ -1,0 +1,49 @@
+**Theorem 11.1 (cycle/face quotient and actual-owner connectivity).**
+For every $m\ge3$, $R_m$ has dimension $n+1$ over $\mathbb F_2$,
+and every $R_h$, $h\in\mathbb F_2^2$, has $2^{n-1}$ points.
+For every integer $r\ge3$ with $2r<m$, the graph $G_r(R_m)$ of
+Definition 3.1 has exactly four connected components, namely $R_h$.
+In particular this holds at the fixed update budget $r=3$ for every
+$m\ge7$.
+
+Proof. Let $H$ be the binary vertex-edge incidence matrix. Its
+transpose kernel consists of constant vertex vectors: an edge forces
+its two endpoint coefficients equal, and the torus graph is connected.
+Thus $\operatorname{rank}H=n-1$, and
+$R_m=\ker H$ has dimension $2n-(n-1)=n+1$.
+
+Let $f_{x,y}$ be the boundary of the elementary square with corners
+$(x,y),(x+1,y),(x+1,y+1),(x,y+1)$. Let $B$ be the span of all
+$n$ such edge vectors. They belong to $R_m$. In a dependence
+$\sum_{x,y}c_{x,y}f_{x,y}=0$, each edge occurs in its two adjacent
+faces, so their coefficients must agree. The dual square torus is
+connected. All coefficients are therefore equal, and the only
+nonzero dependence is the sum of all faces. Consequently
+$\dim B=n-1$.
+
+Every face boundary has $\chi=(0,0)$, including faces crossing a
+chosen seam: their crossings occur in pairs. A full horizontal row
+cycle has $\chi=(1,0)$; a full vertical column cycle has
+$\chi=(0,1)$. Hence $\chi:R_m\to\mathbb F_2^2$ is onto, and its
+kernel has dimension $n-1$. It contains $B$, so it equals $B$.
+Every $R_h$ is one affine coset of $B$ and has the stated size.
+
+A face flip changes four edges but exactly three owner tuples.
+Its southwest vertex owns the bottom and left edges; the southeast
+vertex owns the right edge, and the northwest vertex owns the top
+edge. These three vertices are distinct for $m\ge3$. A sequence of
+face flips therefore connects every coset $R_h$ by three-owner moves.
+
+It remains to exclude every permitted move between different cosets,
+including nongeometric moves. For $z\in R_m$, let
+$a_x=\sum_y z^x_{x,y}$. Summing its vertex parity equations over
+column $x$ cancels all vertical edges and gives $a_x=a_{x-1}$.
+Thus $\chi_x(z)=1$ forces at least one changed horizontal edge in
+each of the $m$ disjoint horizontal seams, and hence at least $m$
+changed edges. Summing over a row gives the corresponding assertion
+for $\chi_y(z)=1$ and vertical edges. If $s,t$ differ at at most
+$r$ owners, $z=s+t$ has at most $2r$ changed edges, since each owner
+owns two. Under $2r<m$, neither crossing parity can be one.
+Every edge of $G_r$ stays in one $R_h$. Together with face-flip
+connectivity, this proves the component classification. $\square$
+

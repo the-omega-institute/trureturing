@@ -1,0 +1,26 @@
+**定理 17.2（受控完成中的对称性与容量）。** 定义 17.1 有
+
+$$
+O_h=\operatorname{span}\{A_w^{\mathsf T}C^{\mathsf T}y:|w|\leq h,\ y\in Y\},\qquad
+N:=O_\infty^\perp=\bigcap_w\ker(CA_w).
+$$
+
+$N$ 对每个 $A_a$ 不变，是当前盲核中最大的共同不变子空间。最小精确线性预测边界是 $H/N$，其维数为 $\dim O_\infty$；任一充分线性摘要 $L$ 都满足 $\ker L\subseteq N$。塔在有限维中稳定，一次精确连续阶段相等即永久稳定。
+
+进一步，若 $H=\mathbb R^m\otimes\mathbb R^3$，每个 $A_a$ 都与同一全部旋转 $I_m\otimes R$、$R\in SO(3)$ 交换，且 $C=c^{\mathsf T}\otimes I_3$，则
+
+$$
+A_a=K_a\otimes I_3,\qquad
+O_h=M_h\otimes\mathbb R^3,\qquad
+M_h=\operatorname{span}\{K_w^{\mathsf T}c:|w|\leq h\},
+\qquad \dim O_h=3\dim M_h.
+$$
+
+因此额外预测容量按完整向量份额出现，而不改变每份接口的三维代数。这个倍数结论仅适用于上述纯向量、共同旋转等变的线性载体和读出。
+
+证明。单映射的塔定义、正交对偶、最大不变核与永久稳定直接复用仓内 [ObservableKrylovGrowthBound](../../../D5/S3/ObserverMemory/Dynamics/ObservableKrylovGrowthBound.lean) 的 `observableKrylov`、[FiniteObservabilityOrthogonalDuality](../../../D5/S3/ObserverMemory/Dynamics/FiniteObservabilityOrthogonalDuality.lean) 的 `finite_unobservable_eq_observable_orthogonal`、[InfiniteObservabilityOrthogonalDuality](../../../D5/S3/ObserverMemory/Dynamics/InfiniteObservabilityOrthogonalDuality.lean) 的 `infinite_unobservable_eq_observable_orthogonal`、[MaximalUnobservableSubspace](../../../D5/S3/ObserverMemory/Dynamics/MaximalUnobservableSubspace.lean) 的 `future_kernel_is_maximal_invariant` 和 [ObservableKrylovPermanentStability](../../../D5/S3/ObserverMemory/Dynamics/ObservableKrylovPermanentStability.lean) 的 `observable_krylov_once_stable_permanently`。这里的多控制共同不变性须另外检查：把词写为首字母 $a$ 后接 $w$，有 $A_{aw}=A_wA_a$，故其伴随生成元为 $A_a^{\mathsf T}A_w^{\mathsf T}C^{\mathsf T}y$，归纳给张成式。正交于全部生成元等价于全部响应为零。
+
+若 $n\in N$，则 $CA_wA_an=CA_{aw}n=0$，故 $A_an\in N$。任何共同不变且包含于 $\ker C$ 的子空间都由词归纳包含于 $N$。若 $O_h=O_{h+1}$，每个伴随都保留 $O_h$，于是后续阶段不再增加；有限维的严格增加只能发生有限次。摘要纤维的差属于 $\ker L$，未来充分性给所述包含，再由秩—零度得 $\operatorname{rank}L\geq\dim H-\dim N$。商 $H/N$ 达到下界且可逐操作更新。这是 [观察者相对时空与恢复](OBSERVER_RELATIVE_SPACETIME_CAUSAL_COMPATIBILITY_RECOVERY.md) §§20、24 的受控接口连接，不把 Hermitian 完全正单映射塔等同于此实多映射模型。精确相等用子空间判断，数值小奇异值不构成相等证明。
+
+将 $A_a$ 写成 $3\times3$ 块。每块与绕三个坐标轴的半圈旋转交换，故非对角元为零；再与交换两根轴并保持定向的四分之一圈旋转交换，三个对角元相等。于是每块为标量 $I_3$，给 $K_a\otimes I_3$。同一词的乘积也有此形，伴随生成元为 $(K_w^{\mathsf T}c)\otimes y$，得到张成与维数式。若加入标量、其他张量表示、非线性来源限制或只读一个坐标，则块计算的前提不再完整，不能沿用三的倍数。证毕。
+

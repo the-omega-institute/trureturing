@@ -1,0 +1,41 @@
+**Proposition 257.4 (Concrete distinctions from named suppliers).**
+The cut (256.3) excludes some profiles passing the two named
+head-bound families, and the two-parameter law is outside the
+following direct previously specified constructions.
+
+**Proof.** For the cut diagnostic, take $a_1=\cdots=a_8=1/2$,
+$e=3/10$, and $a_{8+j}=(3/10)2^{1-j}$. This point is in
+$H_8$, with $E=3/10$. The residual necessary bound of
+Theorem 113.2 gives $D_3=6/5\le7/5$.
+The divided slack of Theorem 117.2 at $4\le m\le8$ is
+$3(m+1)/10-((m-2)/2-(m-3)/(2(m-2)))$; its minimum is
+$7/60$. For $m>8$, tail amplitudes at most $3/10$ bound that
+slack below by $-3/10+(m-3)/(2(m-2))\ge7/60$.
+Thus every named first- and second-head cut holds, whereas the
+new cut requires $43(3/10)\ge13$, which is false.
+The actual optimum here is $13/43$ by Theorem 257.1, exceeding
+$3/10$ by $1/430$. This point is outside $H_N$ by (256.4),
+so it is not a same-feasible-profile separator.
+
+The score has union weight nine in each of classes three and four.
+It is outside the early-union restriction of Section 207 and the
+pure-correct restriction of Proposition 198.4. Its class-three
+correct and union supports differ, so it is not the common-product
+form of Proposition 198.2. These are literal score-class distinctions.
+
+For the family, the high-flat eight-coordinate capacity corollary
+of Section 245 starts at $t=139/157$, above the entire range
+$t\le3/5$ here. For a direct proper-core residual construction
+of Sections 173–174 with core length $2\le m\le7$, the flat
+late residuals give $E_{\mathrm{res}}=2(t-e_*)>e_*$, because
+$3e_*<2t$. This fails its positive residual-subtraction test
+$e_*>E_{\mathrm{res}}$. The separate $W=1$ endpoint requires
+unit head amplitudes and also does not apply. For the fixed-core
+family of Section 187, $E/(1-a_2)=2/3$, whereas here this ratio
+lies in $[24/43,27/43]$, strictly below $2/3$.
+These computations distinguish named direct sufficient domains;
+they assert neither impossibility of other representations nor
+exclusion of every historical composition or future constructor.
+The general terminal coupling and suffix-polynomial methods of
+Sections 176 and 178 remain reused methods. $\square$
+

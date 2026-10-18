@@ -1,0 +1,6 @@
+### 103.6. Applicability boundary
+
+The equal-polar record form is a substantive restriction. Theorem 103.1 excludes both balanced scaled-kernel signs, and Theorem 103.2 excludes an explicit parameter-dependent region of unequal ratios. Neither result derives balance or a parameter-independent gap for arbitrary equal-polar points. The general necessary equation (17), by itself, is not a sufficient normer condition or a whole-class exclusion.
+
+Both proofs retain the original common witness, the full eight-coordinate fibre constraints and arbitrary complex outside records. They concern local minima on the full calibrated domain, not a fixed-rank feasible set or a principal joint minimization. Calibration of leaking channels is not asserted to preserve this local-minimum class. The remaining unequal-weight equal-polar cases, the full \((2,1,1,0)\) pattern and the global quarter optimum remain open; the original global interval is still \([\sqrt3-3/2,1/4]\).
+

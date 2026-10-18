@@ -1,0 +1,33 @@
+**Proposition 7.2 (What the sufficient target would imply).**
+If (7.1) holds for a given positive path, then
+$\gamma+\Lambda\le1$ for that same path.
+
+Proof. The pencil variational principle gives
+$\gamma\le\min r_-$, while Theorem 2.2 gives
+$B_{\rm prod}\le1-\Lambda$. Compose these inequalities
+under (7.1). $\square$
+
+No all-parameter proof of (7.1) is supplied. The strictness
+in (2.12), the coercivity in (3.8), and the quantum phase
+classification concern different inequalities and cannot
+replace this missing upper bound on a realizable gap probe.
+Failure of (7.1) for this menu would not refute the original
+spectral comparison: the product certificate can be nonsharp
+and higher-degree phase probes remain available.
+
+The graph-dependent product sharpness criterion, explicit
+path posterior profile, and full-support phase/rank/entropy
+relations are deductions for the defined models. Their
+literature priority is not asserted. Positive-vector bounds,
+Perron comparison, Markov propagation, Schmidt decomposition,
+Schur concavity and correlator-product representations are
+established intermediate methods. The cited monomial energy
+and unit-deletion coercivity remain attributed to their
+published owner.
+
+[PJ]: https://github.com/the-omega-institute/trureturing/blob/c8daa37c66e7b2bf32c475bd2967ccbeac34f0e5/docs/develop/theory/FIB_LEGAL_EDGE_LOAD_PHASE_PARENT_AND_JOINT_OCCUPATION_DESIGN.md
+[BC]: AURIC_FIB_ATOM_PYRAMID_BOUNDARY_CALCULUS.md
+[Ji]: https://arxiv.org/abs/1304.5182v1
+[CPS]: https://arxiv.org/abs/0907.4646v2
+[MY]: https://arxiv.org/abs/2609.21936v1
+

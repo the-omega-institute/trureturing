@@ -1,0 +1,77 @@
+### 66.2 原始续行的精确费用与原生接口
+
+令 $\mathsf{RawOpt}_n$ 是来源无关、对整个 $W_n$ Legal、有限终止且 Boolean `Pos` 正确，
+并有独立总 bit/raw-cache $Q$ 消费者的原始读者，在 $T_n$ 的实际 $h_n^{\mathrm{raw}}$ 之后支付的
+新增 distinct 字面地址数下确界。每个读者必须从共同空缓存实际产生同一个 shortlex $h_n^{\mathrm{raw}}$。
+
+下界直接消费定理58.2。由（JM.178）及 $K_n^{\mathrm{raw}}=E_b$，
+$J_n^{\mathrm{raw}}=\{pL:p\in E_a\}\sqcup\{pLL:p\in E_b\}$。
+在 $X$ 块旧地址 $pL$ 命中 $pH_X$；在 $Y$ 块旧地址 $pLL$ 命中且只命中三个支持中的 $pH_1$。
+其他块的旧地址不能进入该块锥，故定义58.1准确给
+
+$$
+ d_X(p,J_n^{\mathrm{raw}})=0\ (p\in E_a),\qquad
+ \mathcal U_q(J_n^{\mathrm{raw}})=\{2,3\},\quad d_Y(q,J_n^{\mathrm{raw}})=1\ (q\in E_b),\qquad
+ L_n(J_n^{\mathrm{raw}})=|E_b|=d.
+\tag{JM.221}
+$$
+
+定理58.2的参数在这里是 $h_0=h_n^{\mathrm{raw}},J_0=J_n^{\mathrm{raw}}$，任务为原 Boolean $\operatorname{Pos}$ 或
+另配独立消费者的 $Q$。其全 $W_n$ 正确性、共同空态、完整缓存、缺席、重复及动作权限
+逐项就是本节合同；没有缩成缺陷族。由（JM.177）直接得
+
+$$
+\mathsf{RawOpt}_n\ge L_n(J_n^{\mathrm{raw}})=F(n-3).
+\tag{JM.222}
+$$
+
+这是定理58.2在上述参数下的应用，支持命中和缓存重放证明均由该定理给出。
+$J_n^{\mathrm{raw}}$ 在 $Y$ 块包含非叶 $qLL\in\mathsf D_n\setminus\mathsf A_n$，所以不满足58.3的
+$\alpha$-hit 前提；这里没有从该尖锐类搬运原始最优值，下面另证达到者。
+
+若 $U\in F_n^{\mathrm{raw}}$ 在所有 $D_n^{\mathrm{raw}}$ 地址也给 `branch`，（JM.218）迫使它在
+$\operatorname{Int}(T_n)$ 的每个地址均为分支。$U,T_n$ 都有 $N$ 个叶及 $N-1$ 个内部地址，
+故地址包含关系饱和；内部形状和固定叶词共同强制 $U=T_n$。这给全域分支证书。
+
+达到者属于原 `ActualFiniteObserverAbsentElimination.Observer`。
+$E$ 是有限完整名义配置集，$e_0$ 解码空缓存，`action` 先按 $h_n^{\mathrm{raw}}$ 的 shortlex 顺序请求 $J_n^{\mathrm{raw}}$。
+$J_n^{\mathrm{raw}}$ 阶段第一次非 `branch` 进入有限回退扫描；若 $J_n^{\mathrm{raw}}$ 全为 `branch`，按固定顺序请求 $D_n^{\mathrm{raw}}$。
+$D_n^{\mathrm{raw}}$ 全为 `branch` 时停在 `Pos=true`；$D_n^{\mathrm{raw}}$ 阶段第一次非 `branch` 时停在 `Pos=false`。
+后一分支的相容来源属于 $F_n^{\mathrm{raw}}\setminus\{T_n\}$，由（JM.220）都不在一阶像，故确实非正。
+
+回退取 $N=F(n+1)$，按固定 shortlex 请求（JM.173）的全部 $\mathsf B_N$，保留与旧查询重复的
+请求、缺席和原始命中。57.2的同一个 $N$ 叶高度界保证全部叶都在窗内，其完整前沿重建
+给唯一来源；然后调用原 `ActualTreeReadoutAcquisition.finiteDecision`。
+完整名义载体取上述有界四分支决策树的全部节点，每个查询行及四回复子行都保留，包括
+不一致、在重复请求上冲突及不可实现的回复词。节点标签保留沿该路径控制器所选的地址和
+完整四值回复；decoder 从空表逐条作原 `cacheUpdate`，不把有重复的响应词直接当缓存。
+扫描终端若响应词匹配唯一 $U\in W_n$，停在 `finiteDecision U`，否则停在 `false`。
+停止行 transition 自环，查询行 transition 到对应四值子行。每个名义 decoder 都地址 `Nodup`，
+只在首次出现追加，命中不覆盖、不删除、不推断。实际输入上 `queryReply_eq_readout` 与
+该 fold 逐步给缓存 truth 及原 `Legal` 的精确更新律。每条路径长至多
+$|J_n^{\mathrm{raw}}|+|D_n^{\mathrm{raw}}|+|\mathsf B_N|$，故对每个 $W_n$ 有限终止。
+完整扫描终端的实际相容集是单点，`acquisition_foundation` 给
+`finiteDecision U = true ↔ Positive U`；两条快速停止分支已由（JM.220）及分支证书判定。
+在 $T_n$ 上回退不触发，新增地址恰为 $D_n^{\mathrm{raw}}$，与 $J_n^{\mathrm{raw}}$ 不交。
+
+独立总 $Q$ 消费者定义在整个 bit/raw-cache 域上。对任意 `Bool` $b$ 和任意有限原始缓存 $c$，
+包括不一致、冲突及重复输入，置
+
+$$
+H_n^{\mathrm{raw}}(c)=\{U\in W_n:\forall(q,y)\in c,\ y=r(q,U)\}.
+$$
+
+令 $\Delta_n^{\mathrm{raw},Q}(b,c)$ 在 $H_n^{\mathrm{raw}}(c)\ne\varnothing$ 且 $Q$ 在其上为常值时返回该常值，否则返回 $(0,0)$。
+$W_n$ 有限，所以这是整个输入域上的有限、来源无关总函数。成功的 $J_n^{\mathrm{raw}}+D_n^{\mathrm{raw}}$ 终端有
+$H_n^{\mathrm{raw}}(c)=\{T_n\}$；第一次 $D_n^{\mathrm{raw}}$ 偏离的终端有 $H_n^{\mathrm{raw}}(c)\subseteq F_n^{\mathrm{raw}}\setminus\{T_n\}$，
+由（JM.220）其 $Q$ 恒为 $(0,0)$；回退扫描终端有单点相容集。
+故 $\Delta_n^{\mathrm{raw},Q}$ 在每个 $W_n$ 实际终端准确输出 $Q$，与 Boolean halt 分离。于是
+
+$$
+\mathsf{RawOpt}_n=|D_n^{\mathrm{raw}}|=|K_n^{\mathrm{raw}}|=F(n-3)\qquad(n\ge4).
+\tag{JM.223}
+$$
+
+该数只计 $h_n^{\mathrm{raw}}$ 之后的新增 distinct 地址；命中、重复、名义行、缓存、地址长度、计算、
+通信、安装和保持费用仍按原合同分别计费。
+

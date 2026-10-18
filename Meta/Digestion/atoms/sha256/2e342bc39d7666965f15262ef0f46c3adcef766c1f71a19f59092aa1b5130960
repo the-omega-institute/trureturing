@@ -1,0 +1,163 @@
+**定理 5.2（理想连续全前缀生存界）。**
+Among ideal CP-divisible instruments that preserve the exact target
+$U(t)\Psi_{k(t),\beta,m}$ at every successful prefix for every initial
+$\beta\in\mathbb R,m\in\mathbb Z$, allow only history-independent additional
+inputs, and retain every failure event, the
+optimal probability of surviving all prefixes through time $T$ is
+
+$$
+S^*(T)=e^{-\Lambda(T)}.
+\tag{OC.16}
+$$
+
+For every $t$ the same instrument has survival $e^{-\Lambda(t)}$.  Equivalently,
+
+$$
+\Lambda(T)=
+\frac12\operatorname{TV}_{[0,T]}
+ \left(\log\frac{k}{c-k}\right)
+ +\frac12\log\frac{k(T)(c-k(T))}{k(0)(c-k(0))}.
+\tag{OC.17}
+$$
+
+For a closed probability path the endpoint term in (OC.17) is zero.  Any
+nonconstant closed excursion therefore has strictly positive charge even
+when its endpoint holonomy, signed area, and winding are all zero.
+
+**证明上界。** For a finite partition $\Pi$ of $[0,T]$, Theorem 5.1 gives
+
+$$
+S(T)\le\prod_{[s,t]\in\Pi}s_*(k(s),k(t)).
+\tag{OC.18}
+$$
+
+Put $u=\log k$ and $v=\log(c-k)$.  The negative logarithm of one factor is
+
+$$
+-\log s_*(k(a),k(b))=\max\{0,u(b)-u(a),v(b)-v(a)\}
+ =(u(b)-u(a))_+ +(v(b)-v(a))_+.
+$$
+
+For either function, positive-increment sums increase under refinement.
+Thus one common refinement can approximate both suprema.  The supremum over
+finite partitions of the sums of positive increments is
+the integral of $u'_++v'_+$ for absolutely continuous $u,v$.  Since
+$u'=k'/k$ and $v'=-k'/(c-k)$, refining (OC.18) yields
+$S(T)\le e^{-\Lambda(T)}$.
+
+**证明达到。** For $0\le s\le t\le T$, let
+
+$$
+K_{t,s}=e^{-\Lambda[s,t]/2}
+\operatorname{diag}_{i=0}^4
+ \left(\sqrt{\frac{p_b(k(t))_i}{p_b(k(s))_i}}
+ e^{-i(H_i(t)-H_i(s))}\right).
+\tag{OC.19}
+$$
+
+Write $\lambda(t)=\Lambda'(t)$ almost everywhere and
+
+$$
+\gamma_i(t)=\lambda(t)-\frac{d}{dt}\log p_b(k(t))_i .
+$$
+
+The logarithmic derivatives of the plus, minus and middle probabilities are
+$k'/k,-k'/(c-k),0$ respectively.  Hence every $\gamma_i$ is nonnegative
+and integrable.  In particular the middle probability is constant and its
+attenuation rate is $\gamma_2=\lambda$.
+Each diagonal squared modulus in (OC.19) has logarithmic derivative
+$-\gamma_i$, so $K_{t,s}^*K_{t,s}\le I$.
+On a success input, (OC.19) sends the state at $s$ to
+$e^{-\Lambda[s,t]/2}$ times the exact state at $t$.  The diagonal ratios,
+the phase integrals, and the exponential factors multiply, so
+
+$$
+K_{u,t}K_{t,s}=K_{u,s}.
+$$
+
+To give a consistent complete failure law, add one orthogonal stopped state
+$f$ to the five-mode live space.  For a finite interval use six Kraus
+operators
+
+$$
+A_{t,s}=K_{t,s}\oplus1,\qquad
+B_{t,s,i}=\sqrt{1-|K_{t,s,ii}|^2}\,|f\rangle\langle i|,
+\quad i=0,\ldots,4.
+\tag{OC.19a}
+$$
+
+Their adjoint products sum to $I_6$.  Keep the success flag or the failure
+interval and mode label $i$; the state $f$ has an absorbing successor.
+On a live block $\rho$ the forgotten-record channel has live block
+$K_{t,s}\rho K_{t,s}^*$ and gains stopped mass
+$\operatorname{tr}[(I-K_{t,s}^*K_{t,s})\rho]$.
+The loss identity
+
+$$
+I-K_{u,s}^*K_{u,s}
+=(I-K_{t,s}^*K_{t,s})
+  +K_{t,s}^*(I-K_{u,t}^*K_{u,t})K_{t,s}
+$$
+
+proves exact composition of these forgotten-record stopped channels.
+The refined records retain the first interval of failure and its mode.
+
+For an ideal exact failure time $\tau$ use the CP density on live inputs
+
+$$
+J_i(\tau;s)=\sqrt{\gamma_i(\tau)}\,|f\rangle\langle i|K_{\tau,s},
+\quad
+\mathcal I_{\mathrm{fail},i}(E)(\rho)
+  =\int_E J_i(\tau;s)\rho J_i(\tau;s)^*\,d\tau
+\tag{OC.19b}
+$$
+
+for Borel $E\subset(s,t]$, together with success $K_{t,s}$ and the already
+stopped identity.  The fundamental theorem for the absolutely continuous
+function $|K_{\tau,s,ii}|^2$ gives
+
+$$
+\int_s^t J_i(\tau;s)^*J_i(\tau;s)\,d\tau
+ =(1-|K_{t,s,ii}|^2)|i\rangle\langle i|.
+$$
+
+Thus (OC.19b) is a complete countably additive instrument with retained
+failure time and mode.  Splitting the integral at a cut and using the
+cocycle for $K$ proves consistency under chronological refinement.
+The no-failure mass from an initial family state is exactly
+$\|K_{t,0}\Psi_{k(0),\beta,m}\|^2=e^{-\Lambda(t)}$.
+This proves attainment in the stated ideal class.  It does not implement
+continuous monitoring or an exact real time register with finite resources.
+$\square$
+
+The variation identity (OC.17) follows from
+
+$$
+u'_++v'_+=\tfrac12(|u'|+|v'|+u'+v'),
+$$
+
+the identities $|u'|+|v'|=|(u-v)'|$ and
+$u+v=\log(k(c-k))$.  Phase-only legs contribute no survival charge but keep
+their exact phase integrals and elapsed control time.  A prescribed endpoint
+identity therefore does not justify deleting an intermediate probability
+trajectory.
+
+For two prescribed original controls at the same double-wall base with
+matching probability endpoints, their literal source concatenation also has
+
+$$
+\Lambda_{\gamma*\delta}
+ =\Lambda_\gamma+\Lambda_\delta,\qquad
+S^*_{\gamma*\delta}=S^*_\gamma S^*_\delta .
+\tag{OC.19c}
+$$
+
+Indeed, the pasted $k$ has the first derivative on the prefix and the
+translated second derivative on the tail almost everywhere.  Splitting
+(OC.15) and changing variables proves the charge identity.  The composition
+supplier independently identifies the unchanged prefix, the shifted real
+lift and the added phase integrals, so (OC.19) composes with these exact
+phase factors on the same chronology.  No reparameterization or deletion of
+an odd or negative winding sector is involved.  Zero duration gives the
+identity instrument, zero charge, and empty-product survival one.
+

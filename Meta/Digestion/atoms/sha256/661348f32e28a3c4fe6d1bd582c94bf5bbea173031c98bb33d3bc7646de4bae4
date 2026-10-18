@@ -1,0 +1,21 @@
+**Convention 13.1 (actual apparatus and fixed numeral).** Use exactly
+[ABT, Definition 18.1 and Convention 18.2][NCE-ABT]: the one GENERAL/ARC
+installation $G_{\mathrm{gc}}$, its preparation occurrence $\xi$, actual
+source16 and growing $\phi_K$, first Ready $P$ with source $\beta$ and
+$H_0=h=K=1$, parked original client, occupied verifier and INITIAL consumer.
+A completed call below is an actual outer01 call with canonical frame,
+ReadState, generation, source/maintenance work, response, counters, rows,
+actual delivery/check/ACK, source-token return, InnerReturn, CaptureCAP
+and genuine Ready. Each next call begins after that return. The finite
+supply and local-termination hypotheses are GENERAL Assumption 1.2's.
+No outer00, history1 flight, reset, clone or new installation is used.
+
+Fix a supplied numeral $h\ge1$. Let $\mathsf{HasBeta}$ be the language
+of trees containing a beta leaf, and put
+$L_h=\{u\in\mathcal T:\lambda(u)\le h\}$. Both are regular.
+For $\mathsf{HasBeta}$ use an occurrence bit, with pair transition OR.
+For $L_h$ use states $1,\ldots,h,\mathsf{overflow}$, leaf state $1$,
+and truncated addition at a pair, accepting the numeral states. This
+is an automaton for each supplied $h$, not one automaton with an unknown
+numerical cutoff.
+

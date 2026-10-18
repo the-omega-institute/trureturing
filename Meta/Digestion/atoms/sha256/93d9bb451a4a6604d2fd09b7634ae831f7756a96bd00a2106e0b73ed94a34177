@@ -1,0 +1,15 @@
+### 106.2. Exact recurrence and complete kernels
+
+**Proof.** For odd N, Binet's identities give
+
+ L_(3N)=L_N(L_N^2+3)=L_N B,
+ F_(3N)=F_N(L_N^2+1)=F_N(B-2).
+
+Consequently, with G(z)=z^3-3z^2+3,
+
+ B'=G(B).
+
+Starting from B_3=19, this recurrence preserves B=19 modulo 120. Hence every block is prime to 30. Also 5F_N^2=B+1; each prime q|B therefore has (5/q)=1 and q=+/-1 modulo 5. It follows that C^2=1 modulo 5. Since C is odd and prime to 3, C^2=1 modulo 24, and hence C^2=1 modulo 120. Thus D=19 modulo 120, and likewise D'=19 modulo 120.
+
+Moreover gcd(B,B')=gcd(B,3)=1. Hence D,D'>1 are coprime, M>1 is squarefree, M=1 modulo 120, and C,C',M are all prime to 30. Reduction of G modulo 7 gives the cycle 5 -> 4 -> 5, starting at B_3=5 modulo 7. Therefore B B'=6 modulo 7, none of B,B',C,C',M is divisible by 7, and (M/7)=-1.
+

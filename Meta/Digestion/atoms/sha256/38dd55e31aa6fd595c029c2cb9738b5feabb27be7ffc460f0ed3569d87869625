@@ -1,0 +1,94 @@
+**Proposition 10.9 (All prescribed simultaneous paths, with offsets).**
+The same four-coordinate factor has one exact affine update for
+every prescribed native relative path, on its full all-times
+band guard, and those updates compose for every finite valid
+concatenation.
+
+**Proof.** Prescribe a piecewise $C^1$ or absolutely continuous
+relative path on $[0,T]$, in the native regularity class, with
+
+$$
+k(h)=k+\rho(h),\quad \rho(0)=0,\qquad
+\chi(h)=\chi(0)+\gamma(h),\quad \gamma(0)=0.
+$$
+
+Set
+
+$$
+s=\rho(T),\qquad t=\gamma(T),\qquad
+J=\int_0^T\rho(h)\dot\gamma(h)\,dh.
+$$
+
+Continuity makes $\rho$ bounded on this finite compact interval;
+finite phase variation makes $\dot\gamma$ integrable.
+Thus the integral exists. The source guard is exactly
+
+$$
+k+\rho(h)\in I\quad\hbox{for every }h\in[0,T].
+$$
+
+Its endpoints alone do not replace this condition. Direct
+integration of the native equations yields
+
+$$
+k'=k+s,\qquad
+u'=u+\frac t2-\frac{kt}{r}-\frac Jr,\qquad
+v'=v-\frac{kt}{r}-\frac Jr.
+$$
+
+These are circle equalities induced by the integrated real
+increments. Put
+
+$$
+\delta=s/r,\qquad \tau=t/(2\pi),\qquad
+\eta=J/(2\pi r).
+$$
+
+Then $\nu'=\nu-x\tau-\eta$ modulo integers, so the required
+ambient affine map is
+
+$$
+(X,W,F)\longmapsto
+ \left(X+\delta,\ W+\sigma(\delta),\
+ F+\tau X-\operatorname{Re}(\sigma(\tau)W)-f(\eta)\right).
+$$
+
+Its offset is
+$(\delta,\operatorname{Re}\sigma(\delta),
+\operatorname{Im}\sigma(\delta),-f(\eta))$.
+Its linear last row is the same as in Proposition 10.8.
+Thus both probability and phase offsets are present where
+needed. The guard on $\mathscr S_\sigma$ is
+$rX+\rho(h)\in I$ for every $h$; empty and singleton guards
+are allowed. Applying $\sigma$ to the resulting scalar
+$\eta$ makes no interchange between a discontinuous field map
+and integration.
+
+For two concatenated relative paths, the displacement on the
+second part is $s_1+\rho_2$, hence
+
+$$
+s=s_1+s_2,\qquad t=t_1+t_2,\qquad
+J=J_1+J_2+s_1t_2.
+$$
+
+In normalized variables,
+$\eta=\eta_1+\eta_2+\delta_1\tau_2$.
+Composing the two displayed affine maps produces in the last
+coordinate the extra term
+
+$$
+\tau_2\delta_1-
+ \operatorname{Re}\bigl(\sigma(\tau_2)\sigma(\delta_1)\bigr)
+ =-f(\delta_1\tau_2).
+$$
+
+Additivity of $f$ gives exactly the combined offset
+$-f(\eta_1+\eta_2+\delta_1\tau_2)$.
+The guard is the first path's guard followed by the second
+path's guard at the actual new height. Induction gives all
+finite concatenations. Replacing $T$ by an intermediate time
+gives the same identity at every point of a prescribed path.
+No approximation by increasingly fine words, or limiting
+evaluation of the irregular encoder, is used. $\square$
+

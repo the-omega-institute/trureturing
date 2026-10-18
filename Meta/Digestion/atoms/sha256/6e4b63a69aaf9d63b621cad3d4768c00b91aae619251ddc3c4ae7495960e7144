@@ -1,0 +1,41 @@
+**Proposition 32.3 (retained lower bounds and distinct remaining gaps).**
+For every $2\le k\le n-1$,
+
+$$
+\begin{aligned}
+2n+2+r
+&\le H_{\min}(A,k;r)\\
+&\le\min\{k(n-k+1),\ n(2\lceil\sqrt n\rceil+1)\}+4+r,\\
+H_{\min}(A,k;r)
+&\le H_{\mathrm{exec}}(A,k;r)
+ \le k(n-k+1)+4+r.
+\end{aligned}
+\tag{PCA.81}
+$$
+
+When a separating chain of size $S$ is supplied, the first upper
+can additionally include $nS$ in that minimum. For sufficiently
+large $n$, Corollary 32.1 gives the corresponding uniform
+near-linear-polylog upper on $H_{\min}$. The independent minimum
+call and literal upper budgets remain exactly $n+1$ and $3+W_A$.
+For $k=2$ and $k=n-1$ both installed minima remain exactly
+$2n+2+r$, as in Theorem 27.1. For the remaining general interior
+thresholds $3\le k\le n-2$, neither an exact unrestricted
+$H_{\min}$ nor an exact $H_{\mathrm{exec}}$ is determined here.
+
+Proof. Reuse Theorem 25.1 for the unrestricted linear state lower
+and Theorem 25.2 and Corollary 27.3 for the exact independent
+execution minima. Theorems 26.1, 29.2 and, when applicable, 31.2
+give separate full attainable resource points; dropping execution
+constraints gives their respective uppers on $H_{\min}$. Only
+Theorem 26.1 is used for the upper at the simultaneous execution
+minima. Restricting competitors cannot lower the infimum of
+installed cardinalities, giving
+$H_{\min}\le H_{\mathrm{exec}}$. The exact two endpoint values
+are direct reuse of Theorem 27.1, including coincident endpoints
+when $n=3$. None of the new repeated-scan bounds is paired with
+another table's smaller execution costs. No ordered/read-once
+lower bound of Wegener or Bryant is imposed on the unrestricted
+competitors. Thus the stated inequalities leave precisely the two
+general state questions unresolved. $\square$
+

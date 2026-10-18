@@ -1,0 +1,29 @@
+**Proposition 34.2 (exact capacity minimum and a sufficient finite range).**
+Under the source premises, the exact circle minimum is
+
+$$
+c_{\min}=\min\{N_u/D_u,N_v/D_v\}.
+\tag{FC.146}
+$$
+
+For every common law, $S\le\mu/(tc_{\min})$. Consequently
+$t\ge t_0$ and $t\ge100\mu/c_{\min}$ suffice to apply Theorem 34.1
+at its stated optimal-law and complete-face scopes. The uniform coarse sufficient
+range $t\ge30000$ also suffices.
+
+Proof. The ratio $(N_u u^2+N_v v^2)/(D_u u^2+D_v v^2)$ is the
+positive-denominator weighted mean of the two axial ratios, and both
+axes are present. Integrate $\xi\mathfrak c$ to get
+$\mu/t\ge c_{\min}S$. The coarse source rectangle of §18 gives
+
+$$
+V<\frac{0.35(0.707)^2}{(0.1459)^2}<8.22,\qquad
+W<\frac{0.50(0.810)^2}{(0.0987)^2}<33.68,
+\qquad \mu<0.879(8.22)+0.124(33.68)=11.4017<12.
+\tag{FC.147}
+$$
+
+Use the inherited uniform $\mathfrak c>1/25$ to get $S<300/t$.
+The dyadic $t_0$ interval in §24 is below $30000$; the coarse
+$t_0$ rectangle alone is not used to assert $t_0>250$. $\square$
+

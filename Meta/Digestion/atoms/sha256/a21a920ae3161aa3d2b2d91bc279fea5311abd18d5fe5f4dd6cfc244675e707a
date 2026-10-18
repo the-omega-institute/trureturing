@@ -1,0 +1,7 @@
+**Corollary 94.2 (rank-one nonrepetition for all original indices at least 81).** Let $j,C$ be positive integers, $N=3^j\ge81$, and $B_N=DC^2$ with $D$ its full positive squarefree kernel. If $E_D$ has rational rank one, then there are no positive integers $k,c$ with $k>1$ odd, $3\nmid k$, and $B_{Nk}=Dc^2$.
+
+**Proof.** Theorem 93.1 excludes $j\ge5$. The only remaining value is $j=4$, whose original block is the squarefree $B$ of Theorem 94.1. That theorem excludes its repetitions as well. $\square$
+
+The result uses exact rational integral bounds and a fixed rational approximation; no floating-point approximation or finite scan over multipliers is a premise. Its rank-one hypothesis remains essential in the passage to $K=mR$. It leaves higher-rank blocks and original indices below $81$ outside its conclusion and does not settle the full WSS problem.
+
+

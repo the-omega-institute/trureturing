@@ -1,0 +1,60 @@
+## 11.4 Canonical constants and the uniform number
+
+Assume $0<Z<4H$ and retain $N=n+1$. Then $\rho_0\in(0,1)$; define
+$$
+\eta=\frac{1-\rho_0}{4},
+\qquad
+\rho=\rho_0+2\eta=\frac{1+\rho_0}{2}.
+\tag{11.17}
+$$
+Thus $0<\eta<1/4$ and $\rho_0<\rho<1$. By Lemma 11.2 there is a finite
+index
+$$
+M=\min\{m\ge0:d_{N,m}\ge\rho\}.
+\tag{11.18}
+$$
+Set
+$$
+L=2M+1,\qquad
+h=\frac{H(2\eta-\eta^2)}{L}.
+\tag{11.19}
+$$
+Because $0<2\eta-\eta^2<1$, one has $0<h<H/L$, and
+$$
+\eta_h
+ =1-\sqrt{1-\frac{Lh}{H}}
+ =1-\sqrt{(1-\eta)^2}
+ =\eta.
+$$
+The canonical squared excess is
+$$
+\Gamma(n,Z)
+ =\frac{16H^2}{2M+1}(2\eta-\eta^2)
+   \left((\rho_0+\eta)^2-\rho_0^2\right).
+\tag{11.20}
+$$
+It is strictly positive because $H>0$, $2M+1>0$,
+$\eta(2-\eta)>0$, and
+$$
+(\rho_0+\eta)^2-\rho_0^2=\eta(2\rho_0+\eta)>0.
+$$
+Since $d_{N,M}-\eta\ge\rho-\eta=\rho_0+\eta>\rho_0$, (11.16) yields
+$$
+\operatorname{err}(A)^2-4ZH\ge\Gamma(n,Z)
+$$
+for every finite-error model in $\mathfrak F_{\le n}(Z)$. Infinite-error
+models satisfy the same inequality trivially. This proves (11.1).
+
+The corresponding additive gap in error, if desired, is
+$$
+\gamma(n,Z)
+ =\sqrt{4ZH+\Gamma(n,Z)}-\sqrt{4ZH}
+ =\frac{\Gamma(n,Z)}
+ {\sqrt{4ZH+\Gamma(n,Z)}+\sqrt{4ZH}}>0.
+\tag{11.21}
+$$
+The certificate is exact but implicit. Existence of $M$ is proved, while no
+effective upper bound on $M$, evaluated value of $d_{N,M}$, practical
+algorithm, native-realizability converse, matching capacity rate, or
+optimal-dimension theorem is asserted.
+

@@ -1,0 +1,58 @@
+## 233. Three core owners are impossible
+
+Suppose K={tau,rho,eta}. Since tau has no U slot, Section 232 forces both
+rho and eta to contain U. The two faces incident to tau's unique axial
+Z have labels {M,Z,C}. They cannot pair to one another: this would close
+its single Z interval and force degree(Z)=1. Their partners lie in K.
+
+If they meet different owners, both rho and eta have a face {M,Z,C}.
+In each, U must be the other axis: the transverse pair lies in that face,
+one axis is its remaining label, and U is distinct from all three.
+Thus each has exactly one U slot. All faces incident to either U slot
+are marked, since the transverse pair contains M or Z. Tau has no U,
+so these two slots close within rho and eta. This forces degree(U)<=2,
+a contradiction. Consequently both tau faces meet the same owner rho.
+
+Rho contains the four distinct labels M,Z,C,U. Up to swapping the
+transverse pair and the two axes, there are exactly three possibilities:
+
+ (i)  (Z,M,C,U,M,C),
+ (ii) (M,Z,C,U,Z,C),
+ (iii)(C,M,Z,U,M,Z).
+
+In (i), rho's Z axis is unique and its two incident {M,Z,C} faces are
+paired to tau's two Z faces. Their two Z intervals close, forcing
+degree(Z)=2.
+
+In (ii), rho's other two faces are {U,Z,C}. They cannot pair to each
+other, which would close rho's unique U interval. They cannot pair to
+tau, which has no U. They therefore both meet eta. Eta has one of
+three roles at such a face, with its other axis Q arbitrary:
+
+ (a) (U,Z,C,Q,Z,C),
+ (b) (Z,U,C,Q,U,C),
+ (c) (C,U,Z,Q,U,Z).
+
+For (a), every U slot in rho and eta is axial; eta has at most two,
+including Q=U. All their U-incident faces are marked, hence paired
+inside K, and tau has no U. At most three U slots close, contradiction.
+For (b), every Z-incident face in tau, rho, and eta is marked: tau's
+one Z is axial; rho's two transverse Z slots meet axes M and U;
+eta has one Z axis, or two when Q=Z, with pair {U,C}. No other Z slot
+occurs in these owners. Thus their complete Z link closes with at most
+1+2+2=5 slots, contradiction.
+For (c), every U-incident face in rho and eta is marked, since eta's
+transverse pair is {U,Z}; eta has at most three U slots, including
+Q=U. With rho's one U axis and no U in tau, at most four U slots close.
+Again this contradicts degree at least six.
+
+In (iii), rho's other two faces are {U,M,Z}. They cannot pair to each
+other, which closes its unique U interval, or to tau, which has no U.
+Both meet eta. A face {U,M,Z} forces eta's transverse pair to contain
+two of these high labels and one axis to carry the third. Hence every
+U-incident face in eta is marked, including any repeated U in its other
+axis. Eta has at most three U slots. All U slots in K, at most rho's
+one plus eta's three, close internally, contradiction.
+
+Every case is excluded. Therefore |K|=4.
+

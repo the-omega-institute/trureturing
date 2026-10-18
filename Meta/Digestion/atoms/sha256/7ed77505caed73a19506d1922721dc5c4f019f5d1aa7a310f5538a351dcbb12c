@@ -1,0 +1,139 @@
+**Lemma 5.1 (Sublinear square-root growth is bounded at finite rank).**
+Let $(b_j)_{j\ge0}$ be a complex sequence. Suppose there is a finite
+integer $N\ge0$ such that every finite submatrix of its Hankel array
+
+$$
+\mathcal H=(b_{p+q})_{p,q\ge0}
+$$
+
+has rank at most $N$. If $|b_j|\le C\sqrt{j+1}$ for some finite
+$C$, then the sequence is bounded.
+
+**Proof.** For $q\ge0$ let
+
+$$
+v_q=(b_{p+q})_{p\ge0}
+$$
+
+be an actual infinite sequence, and let $X$ be the complex span of all
+$v_q$. We first prove $\dim X\le N$, without presuming that infinite
+matrices have an independently defined rank.
+
+If $N+1$ columns $v_{q_1},\ldots,v_{q_{N+1}}$ were independent,
+consider their coefficient space $\mathbb C^{N+1}$. The map from
+coefficients to the corresponding sequence would be injective. The
+coordinate evaluations on this coefficient space therefore have common
+kernel zero. Finitely many already have common kernel zero: starting
+with the whole coefficient space, if the current common kernel is
+nonzero, choose a nonzero coefficient vector in it. Its corresponding
+sequence is nonzero, so some coordinate evaluation does not vanish on
+that vector. Intersecting with this evaluation's kernel strictly reduces
+the dimension. After at most $N+1$ steps the common kernel is zero.
+The resulting finite set of row coordinates makes the selected columns
+independent in a finite Hankel submatrix, a contradiction. If
+$\dim X>N$, independent columns could be chosen successively from its
+generating family, so this argument proves the dimension bound.
+
+Coordinate shift on sequences restricts to a linear map $S:X\to X$,
+since it sends $v_q$ to $v_{q+1}$. Let $e:X\to\mathbb C$ be
+evaluation at coordinate zero. Then
+
+$$
+b_j=e(S^jv_0).
+\tag{5.1}
+$$
+
+If $X=0$, all $b_j$ vanish and the conclusion follows. Otherwise
+$S$ is a finite complex matrix. The standard generalized-eigenspace
+decomposition can be obtained algebraically as follows. Factor its
+characteristic polynomial over $\mathbb C$ into the relatively prime
+powers $(z-\lambda)^{d_\lambda}$. The Cayley–Hamilton identity
+annihilates $S$. Bezout identities for these relatively prime factors
+express the identity map as a sum of polynomial maps in $S$ with images
+in the kernels of the corresponding $(S-\lambda I)^{d_\lambda}$.
+Their pairwise intersections are zero by the same Bezout identity.
+Thus $X$ is the direct sum of invariant generalized eigenspaces.
+On each of them $S=\lambda I+R$ with $R$ nilpotent. This also
+explains the only finite-dimensional spectral decomposition needed here.
+
+For $\lambda\ne0$, the finite binomial identity gives on that space
+
+$$
+S^j=\sum_{h=0}^{d_\lambda-1}
+\binom jh\lambda^{j-h}R^h
+$$
+
+for all sufficiently large $j$. Applying $e$ and the component of
+$v_0$ gives a polynomial in $j$ times $\lambda^j$, because each
+$\binom jh$ is a polynomial of degree $h$. The zero-eigenvalue
+space contributes zero once $j$ exceeds its nilpotency index.
+Consequently, after a finite initial segment,
+
+$$
+b_j=\sum_{\lambda\in\Lambda}p_\lambda(j)\lambda^j,
+\tag{5.2}
+$$
+
+where $\Lambda$ is a finite set of distinct nonzero eigenvalues and
+zero polynomials have been omitted. If no terms survive, boundedness is
+immediate. It remains to control the possible cancellations in (5.2).
+
+For distinct unit complex numbers $z_1,\ldots,z_a$ and constants
+$c_1,\ldots,c_a$, the finite geometric-sum formula proves
+
+$$
+\lim_{L\to\infty}\frac1L\sum_{j=0}^{L-1}
+\left|\sum_{i=1}^a c_i z_i^j\right|^2
+=\sum_{i=1}^a|c_i|^2.
+\tag{5.3}
+$$
+
+Indeed the diagonal terms are constant, while a cross term has the
+factor
+
+$$
+\frac1L\sum_{j=0}^{L-1}(z_i\overline{z_h})^j
+=\frac{1-(z_i\overline{z_h})^L}
+       {L(1-z_i\overline{z_h})}\longrightarrow0
+\quad(i\ne h).
+$$
+
+Thus a nonzero finite sum of distinct unit exponentials cannot tend to
+zero. If it did, its squared moduli would tend to zero, and so would
+their Cesaro means: split each mean into a fixed finite initial segment
+and a tail bounded by any prescribed positive tolerance. That would
+contradict (5.3).
+
+Suppose a surviving eigenvalue in (5.2) has modulus greater than one.
+Let $R_0$ be the greatest modulus and let $d$ be the largest polynomial
+degree among terms with that modulus. Divide (5.2) by $R_0^j j^d$.
+The left side tends to zero by the given square-root bound. Terms of
+smaller modulus tend to zero, regardless of their polynomial degree;
+terms of modulus $R_0$ and smaller degree do also. For the former
+assertion, a polynomial times $\rho^j$ with $0<\rho<1$ tends to zero:
+the ratio of successive absolute monomial bounds tends to $\rho<1$,
+so a geometric majorant applies beyond a finite index. The remaining
+leading terms form a nonzero sum
+
+$$
+\sum_{\substack{|\lambda|=R_0\\\deg p_\lambda=d}}
+ c_\lambda(\lambda/R_0)^j
+$$
+
+of distinct unit exponentials, which would tend to zero. This contradicts
+(5.3). No surviving eigenvalue has modulus greater than one.
+
+If any surviving unit-modulus term has polynomial degree at least one,
+let $d\ge1$ be the largest such degree and divide (5.2) by $j^d$.
+The hypothesis gives $|b_j|/j^d\le C\sqrt{j+1}/j^d\to0$.
+Smaller-degree unit terms vanish after division, and all strictly
+smaller-modulus terms vanish as well. The leading unit terms again
+contradict (5.3). Therefore all surviving unit-modulus terms have
+constant polynomials. They are bounded, and every smaller-modulus term
+is bounded and decays. Adding the finite initial segment proves that
+$(b_j)$ is bounded. $\square$
+
+Finite rank here is uniform over all finite row and column choices.
+The lemma does not require convergence of any family of matrices,
+continuity of an encoder, or a bound on a latent vector norm.
+

@@ -1,0 +1,34 @@
+#### 17.1　核心关系：一条箭可以存在，但它传不出任何差异
+
+令 $X,Y$ 为有限状态集。一个有限 Markov 核 $K:X\rightsquigarrow Y$ 为每个 $x\in X$ 指定概率分布 $K(x,\cdot)$。对两个分布 $\mu,\nu$，总变差距离为
+
+$$
+\operatorname{TV}(\mu,\nu)
+=
+\frac12\sum_{y\in Y}|\mu(y)-\nu(y)|.
+$$
+
+定义核的 Dobrushin 收缩系数：
+
+$$
+\alpha(K)
+=
+\max_{x,x'\in X}
+\operatorname{TV}\bigl(K(x,\cdot),K(x',\cdot)\bigr)
+\in[0,1].
+$$
+
+$\alpha(K)$ 只问一件事：输入端任意两个纯状态的区别，经过这个接口后最多还能保留多少总变差。
+
+若一个因果网络的图论祖先关系中有 $A\to B$，但路径上某个接口满足 $\alpha(K)=0$，那么 $A$ 的全部输入差异都会在该接口处被擦除。反过来，所有 $\alpha(K_i)$ 都正，只能给出可能的增益上界，不能单独保证实际输入会产生非零输出差。
+
+$$
+\boxed{
+\text{图论可达性}
+\;\supsetneq\;
+\text{正的操作性影响}.
+}
+$$
+
+<a id="section-17-2"></a>
+

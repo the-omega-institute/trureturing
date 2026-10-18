@@ -1,0 +1,12 @@
+**Definition 1.3 (the local decision).** For $K\in\mathbb N$, let
+$\mathsf{Native}_K(D,N,Q)$ assert existence of a table under Assumption
+1.1 with $|E|\le K$ that, from $(\rho^N u,e_*)$, halts with the
+complete row $R_Q(u)$ for every $u\in D$. All quantification over tables
+allows arbitrary finite installation. The native-control supplier
+[CAR §§11–14][CAR] is cited at immutable revision
+`ac159239a7c999bf163bd244eb18ba0a49c0de81`, the separately published
+[PR15494][CAR-PR] source. Its per-installed-table bound and its bounded
+synthesis theorems are used only at their own scopes. The question here
+is the unrestricted prescribed-state regime identified in its
+Definition 14.2.
+

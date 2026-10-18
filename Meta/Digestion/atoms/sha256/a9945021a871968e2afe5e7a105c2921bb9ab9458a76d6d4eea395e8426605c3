@@ -1,0 +1,37 @@
+**定理 47.5（完整闭域重接与实际闭合边）。** 选择 $A$ 不增加任何域顶点，所得实际因子仍为覆盖恰 $\mathcal D^-$ 的一个圈，含实际闭合边 $R_{\ell+5}^Ac=L_0^A$。
+
+**证明。** 删除 $C^-$ 的全部 $m$ 条旧 $A$ 边，令 $X_j$ 为紧随旧切口 $A_j$ 的完整定向路径，至下一个 $A$ 切口之前为止，$\overline X_j$ 为反向路径。它们互不相交且穷尽旧圈，由实际切圈得到，不是假定的端点模型。偶数 $\ell$ 时，新的完整遍历路径列表为
+
+$$
+\begin{aligned}
+X_0,\;&X_\ell,X_{\ell-2},\ldots,X_4,\\
+&\overline X_1,\overline X_2,\overline X_{\ell+5},\overline X_{\ell+3},\\
+&\overline X_3,\overline X_5,\ldots,\overline X_{\ell+1},\\
+&X_{\ell+2},X_{\ell+4}.
+\end{aligned}
+$$
+
+奇数 $\ell$ 时，列表为
+
+$$
+\begin{aligned}
+X_0,\;&X_\ell,X_{\ell-2},\ldots,X_3,\\
+&X_{\ell+3},X_{\ell+5},X_2,X_1,\\
+&\overline X_4,\overline X_6,\ldots,\overline X_{\ell+1},\\
+&X_{\ell+2},X_{\ell+4}.
+\end{aligned}
+$$
+
+在每两个相邻路径及最后到起点之间加入真实 $A$ 的 $c$ 边。为逐项核对，设 $f(j)$ 为引理 47.4 中 $j$ 后的原生指标。若切口 $j$ 为负，则 $X_j$ 始于 $L_j$，否则始于 $R_j$；若 $f(j)$ 为负，则它终于 $R_{f(j)}$，否则终于 $L_{f(j)}$。这完全确定所有上述路径端点。
+
+首条 $X_0$ 终于 $L_{\ell+1}$，经 $c$ 到 $R_\ell$，即 $X_\ell$ 的起点。下降正指标段的连接为 $L_{j-1}c=R_{j-2}$。偶数情形的中段依次到 $\overline X_1$ 的 $R_2$、$\overline X_2$ 的 $R_0$、$\overline X_{\ell+5}$ 的 $R_1$、$\overline X_{\ell+3}$ 的 $R_{\ell+4}$、$\overline X_3$ 的 $R_{\ell+2}$。奇数情形则由 $X_3$ 依次到 $X_{\ell+3},X_{\ell+5},X_2,X_1,\overline X_4$。两种情形的上升反向段均按 $R_jc=L_{j+1}$ 连接，最后到 $X_{\ell+2},X_{\ell+4}$，再经 $R_{\ell+5}c=L_0$ 闭合。列表中每个 $X_j$ 恰一次，故恢复所有实际路径后覆盖全部旧顶点和所有新增 $A$ 边，没有隐藏圈；这也复用命题 4.2 的实际路径收缩论证。
+
+两种遍历都从 $L_0^A$ 开始，以 $R_{\ell+5}^A$ 结束。实际元组为
+
+$$
+L_0^A=(p,q,V,u_4,u_3,u_2,u_1,x),\qquad
+R_{\ell+5}^A=(u_2,u_3,u_4,v_\ell,\ldots,v_1,q,p,u_1,x).
+$$
+
+反转后一元组的前 $n-2$ 项即得前者，故末边确为生成元 $c$ 的边。
+

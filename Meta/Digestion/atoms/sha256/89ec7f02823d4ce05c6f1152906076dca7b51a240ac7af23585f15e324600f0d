@@ -1,0 +1,77 @@
+**Theorem 207.13 (Sharp protected stock and its complete cost).** Write
+$m_i=\nu(i\in Z)$, $d_{ij}=\nu(i\notin Z,j\in Z)$ for ordered
+distinct $i,j\in I$. Protection is equivalent to
+
+$$
+m_i\ge2s\quad(i\in I),\qquad d_{ij}\ge s\quad(i\ne j).
+\tag{207.33}
+$$
+
+The least possible stock is
+
+$$
+S_* =s\left(4-\frac2{\lceil(h+1)/2\rceil}\right).
+\tag{207.34}
+$$
+
+Every protected score has $\Delta_N=\Delta_O=(s-\tau)_+$, regardless
+of its early correct placements. At fixed exact $B=S+\tau$, the class
+is empty for $B<S_*$; otherwise its attained minimum cost is
+$(s-B+S_*)_+$. It has a score of cost at most $d\ge0$ exactly when
+
+$$
+B\ge S_*+(s-d)_+.
+\tag{207.35}
+$$
+
+**Proof.** On an early/internal pair, cell $10$ has class $i$ reward
+$s$ and pair capacity $m_i/2$, forcing the unary inequality. An
+internal pair has class $i$ in $01$ and class $j$ in $10$, each of
+weight $s$, forcing both directed inequalities. Conversely those
+directed inequalities cover the only nonzero non-$11$ late rewards
+of internal pairs. On $(i,z)$, cell $00$ has capacity $m_i\ge2s$,
+and cell $10$ has capacity $S-m_i\ge d_{ij}\ge s$ for any other
+internal $j$; every correct label has weight at most $s$. On early/$i$
+use $m_i/2\ge s$, and on early/$z$ use $S/2\ge s$. The head pair
+has late rewards only in $11$. Inactive coordinates yield singleton
+or constant information: an internal zero cell has capacity $m_i$,
+an early zero cell contains no late correct mass, and a terminal zero
+cell has capacity $S$. Thus they too satisfy protection. Early labels
+collect only subsets of pair mass. This proves the equivalence for all
+cells and labels.
+
+Set $K=|Z|$. Summing the unary and ordered directed inequalities gives
+
+$$
+\int K\ge2hs,\qquad\int K(h-K)\ge h(h-1)s.
+\tag{207.36}
+$$
+
+For $h=2q-1$, $K(h-K)\le q(q-1)$, giving $S\ge2hs/q$. For
+$h=2q$, integer $K$ satisfies $(K-q)(K-q-1)\ge0$, or
+$K(h-K)\le q(q+1)-K$. Integration yields
+
+$$
+q(q+1)S\ge h(h-1)s+2hs,
+\qquad S\ge\frac{2(2q+1)s}{q+1}.
+\tag{207.37}
+$$
+
+These are exactly (207.34) in the two parities. The already supplied
+measure $\mathcal L_h(s)$ attains all unary $2s$ and directed $s$
+capacities and total $S_*$. Extra stock at the empty subset preserves
+protection. This attainment reuses 201.2; the necessary stock bound
+does not assert optimality outside the declared protected class.
+
+In a complete core table every non-$11$ maximum equals its pair
+baseline; in $11$ a late label earns at most $s$, whereas zero earns
+its pair mass plus $\tau$. The core excess is at most $(s-\tau)_+$.
+Restoring early correct rows increases any fixed table by at most $E$
+and the anchor by exactly $E$. The stopped head table with exhaustion
+label zero or $z$ attains $E+S+\max(\tau,s)$, so both costs equal
+$(s-\tau)_+$. At fixed $B$, $\tau=B-S$ and $S\ge S_*$; minimizing
+$(s-B+S)_+$ gives the attained value at $S=S_*$. Combining this with
+$B\ge S_*$ gives (207.35). All equalities, $d=0$ and $\tau=0$ are
+included. Early $E$ is retained and cannot replace any of this $B$.
+$\square$
+

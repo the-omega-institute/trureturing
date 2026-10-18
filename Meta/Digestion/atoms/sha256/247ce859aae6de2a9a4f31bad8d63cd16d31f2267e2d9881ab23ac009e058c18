@@ -1,0 +1,82 @@
+**Definition 1.1 (actual full fiber).** Use the free algebra of all finite
+nonempty ordered trees, with the original homomorphic update
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\qquad
+\rho\alpha=\beta,\quad
+\rho\beta=E:=\langle\beta,\alpha\rangle,\quad
+\rho\langle u,v\rangle=\langle\rho u,\rho v\rangle.
+\tag{WTF.1}
+$$
+
+Every finite original-root word in $\mathcal W=\{L,R\}^*$ is legal,
+including $\varepsilon$. Its reply is alpha, beta, branch or absent;
+descent beyond a leaf is absent. Equal subtrees at different addresses
+retain their distinct occurrences.
+
+Fix $P=\{L,R\}^3$ and the complete current row $R_*$ with the perfect
+depth-three exterior and equality classes
+
+$$
+\{LLL,LRL\}=a,\quad \{LLR\}=b_1,\quad \{LRR\}=b_2,\quad
+\{RLL,RRL\}=c,\quad \{RLR\}=b_3,\quad \{RRR\}=b_4.
+\tag{WTF.2}
+$$
+
+Every two different classes assert whole-subtree disequality. A complete
+row retains the ordered exterior, all reached occurrence holes, their
+whole equality partition and all concrete strict-prefix blocking guards.
+Canonical class names are recomputed from first occurrences after any
+restriction. The domain and whole predecessor target are exactly
+
+$$
+\mathcal U_*=\{u\in\mathcal T:R_P(\rho u)=R_*\},\qquad F(u)=R_P(u).
+\tag{WTF.3}
+$$
+
+There is no bound on size, height or hidden interior shape. For an
+injective six-class valuation $x$, write its actual current filling as
+
+$$
+\mathscr S(x)=
+\left\langle
+ \left\langle\langle x_a,x_{b_1}\rangle,
+                  \langle x_a,x_{b_2}\rangle\right\rangle,
+ \left\langle\langle x_c,x_{b_3}\rangle,
+                  \langle x_c,x_{b_4}\rangle\right\rangle
+\right\rangle.
+\tag{WTF.4}
+$$
+
+The inherited image grammar is
+$\mathcal I=\rho[\mathcal T]=\{\beta,E\}\cup
+\{\langle y,z\rangle:y,z\in\mathcal I\}$.
+Its three parsing cases are disjoint because alpha is not an image.
+The actual inverse is
+$\delta(\beta)=\alpha$, $\delta(E)=\beta$, and
+$\delta\langle y,z\rangle=\langle\delta y,\delta z\rangle$
+for image children. It obeys $\rho\delta=\mathrm{id}$ on $\mathcal I$
+and $\delta\rho=\mathrm{id}$ on $\mathcal T$.
+
+By [TMC, (RA.2207)][TMC] and [NBP, Proposition 9.3][NBP],
+$\mathscr S(x)$ is an image exactly when all six values are images,
+or exactly one right-class value $x_{b_j}$ is alpha, its repeated
+left partner is beta, and every other value is an image. All
+different-class disequalities remain imposed. The actual origin is
+$\delta(\mathscr S(x))$; the inverse is a proof supplier, not a controller
+operation.
+
+The exhaustive eleven profiles of [NBP, Proposition 15.2][NBP] are
+$\Pi_j$, where $b_j$ is alpha, its partner is beta and all other roots
+are branches; $Z_d$, where only class $d$ is beta and the other roots
+are branches; and $Z_*$, where all six roots are branches. Unspecified
+branch values range over all allowed finite branch images. The five
+literal complete predecessor outputs are $R_0=R_*$ on all zero profiles
+and $R_j$ on $\Pi_j$. For
+$(q_1,q_2,q_3,q_4)=(LL,LR,RL,RR)$, $R_j$ replaces only the two sibling
+holes at $q_jL,q_jR$ by concrete beta at $q_j$, retaining the remaining
+exterior and restricting the entire old partition canonically. The other
+occurrence of the repeated partner remains an old hole. Every surviving
+disequality and every blocking guard is part of the output.
+

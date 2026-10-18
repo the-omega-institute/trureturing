@@ -1,0 +1,53 @@
+**Definition 2.1 (all allowed data and global compensation).** A
+certificate on Definition 1.4 consists of a strictly positive binary
+probability law $\nu_a$ for each edge, exponents $\theta_v\ge0$,
+strictly positive full four-bit tables
+$f_v:\mathbb F_2^{\operatorname{st}(v)}\to(0,\infty)$, and
+a scalar $c>0$. All these data may be real. Require
+
+$$
+\theta_u+\theta_v\le1\quad(uv\in E),
+\qquad
+W(s)\le c\left(\prod_{a\in E}\nu_a(s_a)\right)
+             \left(\prod_{v\in V}f_v(s_{\operatorname{st}(v)})\right)
+\quad(s\in\mathbb F_2^E).
+\tag{WBF.7}
+$$
+
+The second condition is one global pointwise inequality on the same
+actual assignment. It permits unrestricted compensation between
+different whole-star tables and the scalar. No separate per-vertex
+factor identity is required. Allowing zero entries in finite
+nonnegative tables or in reference probabilities would add no feasible
+certificate: every edge value and every star pattern extends to an
+assignment with $W(s)>0$, whereas a zero entry would make its majorant
+zero. Thus strict positivity loses no finite feasible datum of that
+kind. Let
+$\nu_{\operatorname{st}(v)}(z)=\prod_{a\ni v}\nu_a(z_a)$ and
+define the reported upper bound
+
+$$
+\begin{aligned}
+N_v&=\begin{cases}
+\displaystyle\left(\sum_z\nu_{\operatorname{st}(v)}(z)
+                    f_v(z)^{1/\theta_v}\right)^{\theta_v},
+ &\theta_v>0,\\
+\displaystyle\max_z f_v(z),&\theta_v=0,
+\end{cases}\\
+F&=c\prod_{v\in V}N_v.
+\end{aligned}
+\tag{WBF.8}
+$$
+
+The product reference $\nu=\bigotimes_a\nu_a$ is an analytical
+probability space. It is not a claim that the actual conditioned
+source or the native Gibbs law has independent edge replies.
+
+This class retains every original whole-star scope and permits cyclic
+overlap. It has no scope splitting or enlargement, auxiliary variables,
+recut, syndrome correction, multiple-rule combination or additional
+scaffold/stability bypass. An extension with any of those operations
+is a different class. The optimum below quantifies over every datum
+allowed in (WBF.7)–(WBF.8), including all product laws, zero exponents,
+scalars and global positive majorants.
+

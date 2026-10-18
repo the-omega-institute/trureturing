@@ -1,0 +1,41 @@
+**Theorem 3.2 (The eight-coordinate consequence of $Y_{128}$).**
+For every normalized complete eight-bit $N$ allocation satisfying
+all rows (2.2), with $b_i,e\in[0,1]$,
+
+$$
+2b_2+11b_3+13b_4+13b_5+12b_6+11b_7+11b_8\le2+117e.
+\tag{3.3}
+$$
+
+**Proof.** Apply (2.5) with $L=9$ and consecutive late addresses
+to the actual complete extension of Lemma 3.1. Its last amplitude
+is $b'_9=e$. Subtracting $11e$ from the right and left sides of
+the resulting nine-coordinate inequality gives (3.3).
+The extension supplies all rows with one law before the theorem is
+applied. $\square$
+
+**Residual form 3.3 (One inequality in two coordinates).**
+For the same eight-bit profile define
+
+$$
+\begin{aligned}
+S&=b_3+b_4+b_5+b_6+b_7+b_8,\\
+s&=1+44e-b_2-4b_3-5b_4-5b_5-5b_6-4b_7-4b_8,\\
+g&=3S-b_6-29e.
+\end{aligned}
+\tag{3.4}
+$$
+
+Here $g$ is an affine residual, unrelated to the source integer
+in (1.1). The existing six-late score $Z_6$ and its support 68 in
+[XVII305.1–305.2](https://github.com/the-omega-institute/trureturing/blob/07dfbdacb577f1cb1ebd6b6048ee3efa4c75285d/docs/develop/theory/KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XVII.md#305-a-six-late-integer-score-and-the-saturated-head-tail-boundary)
+give $s\ge0$. Direct expansion gives
+
+$$
+g-2s=2b_2+11b_3+13b_4+13b_5+12b_6+11b_7+11b_8-2-117e.
+$$
+
+Consequently (3.3) is exactly $g\le2s$, including its face
+$s=0\Rightarrow g\le0$. These are formulations of the same
+application of $Y_{128}$, rather than separate supporting results.
+

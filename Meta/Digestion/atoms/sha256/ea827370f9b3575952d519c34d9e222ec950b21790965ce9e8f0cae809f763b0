@@ -1,0 +1,84 @@
+**Theorem 3.3 (exact reader costs and cuts).** For every $d\ge0$ and actual
+request ordinal $q\ge0$ in Definition 3.2, the complete setup after $n_-$
+uses exactly $30d+40q+408$ primitives. Put
+$n_0=n_-+30d+40q+408$, just before the payload loop's first test. After
+$r$ complete payload iterations, $0\le r\le d$, the ordinal is
+
+$$
+n_{\mathrm{body}}(d,r)=n_0+5r.
+\tag{AIF.1}
+$$
+
+For $1\le r\le d$, the cut immediately after the $r$th payload IN, before
+its WR, has ordinal
+
+$$
+n_{\mathrm{latch}}(d,r)=n_0+5(r-1)+2=n_0+5r-3.
+\tag{AIF.2}
+$$
+
+The complete loop, including its final zero test, uses $5d+1$ primitives.
+Setup plus loop therefore costs $35d+40q+409$ primitives and ticks, and
+$70d+80q+818$ fee units after $n_-$. The Base preamble adds its separately
+counted 45 primitives before $n_-$. Later payload sealing, parsing and
+source/journal/delivery service are additional. All displayed schedules
+are independent of the payload bit values.
+
+Proof. Reservation plus tag supply, seal and recognition cost
+$1+12+1+9+1+6=30$: tag ends at R, position 4 relative to L. Length supply,
+seal and first positioning cost $5(d+1)+1+(2d+6)=7d+12$.
+
+Template W has $3q+25$ bit cells and five sep cells. Outside its three
+Base fields and three request-ordinal fields there are 19 literal bit
+cells and five separators, costing 72 occurrences. Copying the three
+actual $U(0)$ Base fields costs 15. Copying $U(q)$ three times costs
+$15(q+1)$; the two counter Home/MR pairs cost $4q+12$. Template seal
+costs 1. Its head is then at R, position $3q+31$, so Home/MR costs
+$6q+64$. Template construction and positioning therefore cost
+$25q+179$, including all its metadata-source reads and moves. Each Base
+source ends at R; the request counter ends at R, position $q+2$.
+
+The zero-reservation body and its one sep cost $5d+4$, leaving length
+on its terminal zero, position $d+1$, and payload at R, position $d+2$.
+The five template segment copies cost $5(3q+25)+5=15q+130$; their four
+joining MR occurrences cost 4. The extra leading 1 costs 3. The two
+length-copy positionings cost $(2d+4)+(2d+6)$; the two unary copies cost
+$10(d+1)$. Three descriptor separators and seals cost 12. Thus descriptor
+construction costs $14d+15q+169$. It produces exactly the three displayed
+descriptors, containing $2d+3q+28$ bit cells and three separators. Both
+length copies end at R. The last template head is on its final sep,
+position $3q+30$, and the descriptor head is at R, position
+$2d+3q+32$.
+
+The final length and payload Home/MR pairs each cost $2d+6$. There are
+two accounting-tag CTLs. Summing these disjoint executed graphs gives
+
+$$
+30+(7d+12)+1+(25q+179)+(5d+4)
+ +(14d+15q+169)+(4d+12)+1=30d+40q+408.
+$$
+
+Every descriptor is correctly initialized when sealed. No constructed
+interval overlaps another port; immutable source fields are only read.
+At entry to the payload loop the length and payload heads are both at
+position 1. For $d=0$ these are respectively the real terminal zero and
+the sole payload sep: the first test exits without touching the sep.
+For positive $d$, iteration $r+1$ tests length position $r+1$, consumes
+one bit, writes payload position $r+1$ and moves each head once. Induction
+gives AIF.1 and AIF.2, and after $d$ iterations both heads are on their
+respective zero/sep positions $d+1$. One final RD(0) gives $5d+1$.
+The complete setup constructs exactly $4d+6q+66$ new ordinary cells:
+three tag cells, $d+1$ length cells, $d+1$ payload cells, $3q+30$ template
+cells and $2d+3q+31$ descriptor-stream cells. Meter receipts are additional.
+Each primitive has one receipt, one tick and two fee units. ∎
+
+For the zero and small lengths, the exact setup and setup-plus-loop
+counts at the same actual ordinal parameter are:
+
+| $d$ | Setup after $n_-$ | Setup plus complete payload loop |
+| --- | --- | --- |
+| 0 | $408+40q$ | $409+40q$ |
+| 1 | $438+40q$ | $444+40q$ |
+| 2 | $468+40q$ | $479+40q$ |
+| 3 | $498+40q$ | $514+40q$ |
+

@@ -1,0 +1,66 @@
+**Lemma 332.2 (All first-zero fibres of the endpoint laws).**
+Let $p_w^\pm$ be these two output laws. On each entire first-zero
+fibre $n$, their correct-label counts $c_n^\pm=D_\pm p_w^\pm(n)$
+are constant. The exact base and independent-union minima are:
+
+| $n$ | $c^-_n$ | $\min D_-p_w(0)$ | $\min D_-p_w(\{0,n\})$ | $c^+_n$ | $\min D_+p_w(0)$ | $\min D_+p_w(\{0,n\})$ |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| $1$ | 858 | 1161 | 2019 | 41871 | 58032 | 99903 |
+| $2$ | 531 | 1488 | 2019 | 26991 | 72912 | 99903 |
+| $3$ | 531 | 1488 | 2019 | 26991 | 72912 | 99903 |
+| $4$ | 531 | 1488 | 2019 | 26991 | 72912 | 99903 |
+| $5$ | 531 | 1500 | 2031 | 26991 | 73068 | 100059 |
+| $6$ | 531 | 1625 | 2156 | 26991 | 78413 | 105404 |
+| $7$ | 531 | 1827 | 2358 | 26991 | 88479 | 115470 |
+| $8$ | 531 | 2019 | 2550 | 26991 | 99903 | 126894 |
+| $9$ | 531 | 2019 | 2550 | 26991 | 99903 | 126894 |
+
+Their positive-word base counts are $2019$ and $99903$, respectively.
+
+**Proof.** Every nonzero first-cell output equals $i$, every middle
+output equals $j$, and every nonzero exhaustion output is strictly
+greater than $j$. Zero is legal in every cell where displayed.
+Thus a first-cell contribution to the correct label $n$ has $i=n$;
+a middle contribution has $j=n$ and $i<n$; an exhaustion contribution
+has $i<j<n$. In the last case both queried replies are positive on
+the whole first-zero fibre. No other contribution emits $n$.
+Adding the displayed vectors therefore gives the stated constant
+correct counts on every suffix, including multiple-zero suffixes.
+
+For a complete base calculation put $k=w_1+\cdots+w_5$,
+$u=w_6$, $v=w_7$. Summing first-cell base counts times $1-w_i$
+and exhaustion base counts times $w_iw_j$ gives
+
+$$
+\begin{aligned}
+D_-p_w^-(0)={}&1803-327k+327w_1+113\binom{k}{2}
+             +101(k-3)u+64(k-3)v+64uv,\\
+D_+p_w^+(0)={}&88698-15411k+14880w_1+5189\binom{k}{2}
+             +5033(k-3)u+3808(k-3)v+3808uv.
+\end{aligned}
+\tag{332.3}
+$$
+
+Bits eight and nine do not enter these polynomials. For coefficient
+vector $(C,A,\eta,B,U,V)$ equal to
+$(1803,327,327,113,101,64)$ or
+$(88698,15411,14880,5189,5033,3808)$, minimization over $u,v$ at
+fixed $k,w_1$ gives
+
+$$
+C-Ak+\eta w_1+B\binom{k}{2}
++\min\{0,U(k-3),V(k-3),U(k-3)+V(k-2)\}.
+\tag{332.4}
+$$
+
+For first-zero classes one through five, the respective allowed
+$(w_1,k)$ are $(0,0\ldots4)$, $(1,1\ldots4)$,
+$(1,2\ldots4)$, $(1,3\ldots4)$ and $(1,4)$.
+For class six use $k=5,w_1=1,u=0$ and minimize over $v$.
+For class seven use $k=5,w_1=u=1,v=0$.
+For classes eight and nine use $k=5,w_1=u=v=1$.
+Substitution gives precisely the base-minimum columns; adding the
+constant correct counts gives the independent-union columns.
+The positive word in (332.3) gives $2019$ and $99903$.
+This calculation covers all words. $\square$
+

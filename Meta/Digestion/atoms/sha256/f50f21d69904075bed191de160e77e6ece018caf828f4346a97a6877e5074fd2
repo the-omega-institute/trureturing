@@ -1,0 +1,60 @@
+**Definition 13.1 (source-blind stationary acquisition).** Fix public
+$D\ge1$ and $p\in A_D$, and write $n=|p|$. The initial source ranges over
+exactly Definition 11.1's family
+
+$$
+ \mathcal F_D=\{\langle\alpha,v\rangle:\operatorname{height}(v)\le D\},
+ \qquad p\text{ starts with }R,\qquad 1\le n\le D.
+\tag{AAR.73}
+$$
+
+Its shape and all nonpublic labels are unknown. During acquisition the
+one initial register is promised stationary. An encoder $\mathsf A$ is
+a deterministic effective procedure, with the same source-blind initial
+state on every member of this family. Public $D,p$ and the family promise
+are allowed. Its only source operation is an actual
+$\operatorname{Read}_t(w)$ for an arbitrary finite original-root word
+$w\in\{L,R\}^*$. All four replies have their meanings in Definition 1.1.
+There is no restriction to prefixes of $p$, no query-depth restriction,
+and no subtree, age, navigation, reset, source-identity or pre-acquired
+boundary input. No $\rho$ operation occurs during acquisition.
+
+The encoder must terminate for every $t\in\mathcal F_D$. Its complete
+accessible source dependence at handoff is $E_{\mathsf A}(t)$, including
+any surviving selector, operand, latch, buffer, transcript, control,
+length or allocation distinction. A single effective passive decoder
+must satisfy
+
+$$
+ \mathsf D(E_{\mathsf A}(t),D,p,k)
+       =\operatorname{readout}(p,\rho^k t)
+ \quad(t\in\mathcal F_D,\ k\in\mathbb N).
+\tag{AAR.74}
+$$
+
+Here $k$ is supplied authentically for the same root, register and initial
+version. It is supplied after acquisition and is not inferred by the
+code. The decoder makes no fresh source Read. The code need not identify
+the source, retain a lossless ray table, or use the minimum alphabet of
+§12. It must serve every supplied count, not just the current reply.
+
+Let $T_{\mathsf A}(t)$ count actual initial Reads, including constant,
+repeated and absent calls. Let $A_{\mathsf A}(t)$ and $Q_{\mathsf A}(t)$
+be their total submitted letters and peak word length, as in
+Definition 1.4. Put
+
+$$
+ C_D(p)=\min_{\mathsf A}\max_{t\in\mathcal F_D}T_{\mathsf A}(t),
+ \qquad
+ Q_D(p)=\min_{\mathsf A}\max_{t\in\mathcal F_D}Q_{\mathsf A}(t),
+\tag{AAR.75}
+$$
+
+where both minima range over all encoders satisfying this contract.
+These are separate objectives. Installation, local computation, working
+and retained memory, clearing, authentication and the representation of
+$k$ are separate resource coordinates. In particular, a public promise
+of stationarity is not a paid validation protocol. This contract concerns
+one address declared before acquisition. It supplies neither a later
+unknown menu nor an unknown lag.
+

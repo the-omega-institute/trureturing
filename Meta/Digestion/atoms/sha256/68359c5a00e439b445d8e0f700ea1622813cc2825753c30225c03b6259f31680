@@ -1,0 +1,10 @@
+**Specialization principle used throughout.** A finite computation in
+\(K_L\), performed by polynomial multiplication and inverses expressed as
+adjugates divided by determinants, is legitimate whenever each inverted
+determinant has a nonzero residue at one of these good maps. Such a residue
+proves nonvanishing in the characteristic-zero field. Consequently it
+proves nonvanishing at every complex root of \(L\), with a fixed choice of
+\(i\). This is an irreducible-number-field argument, not an inference that
+a modular solution set equals a real solution set. Different polynomial
+scalars may use different good maps.
+

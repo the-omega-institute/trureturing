@@ -1,0 +1,67 @@
+**Theorem 18.2 (finite-p-support eventual-tail rigidity).** Under Standing assumptions 18.1, there is $\theta\in[0,1]$ such that
+
+$$
+ \nu_p=(1-\theta)\delta_{P_{p,a}}+\theta\delta_{P_{p,b}},
+ \qquad
+ \nu_\beta=(1-\theta)\delta_{P_{\beta,a}}+\theta\delta_{P_{\beta,b}},
+ \tag{18.10}
+$$
+
+and
+
+$$
+ \Gamma_B=(1-\theta)\delta_{(P_{p,a},P_{\beta,a})}
+ +\theta\delta_{(P_{p,b},P_{\beta,b})},
+$$
+
+$$
+ \Gamma_A=(1-\theta)\delta_{(P_{\beta,a},P_{p,a})}
+ +\theta\delta_{(P_{\beta,b},P_{p,b})}.
+ \tag{18.11}
+$$
+
+The eventual recurrence is an additional hypothesis. It is not inferred from the unrestricted endpoint face, and it constrains only the averaged marker-one word sequence sufficiently far into the tail.
+
+**Proof.** Let $G\subset\mathcal K_\beta$ be the full suspended endpoint box. It is closed, hence Borel: it is a countable intersection of closed coordinate intervals, and atom evaluation is TV-continuous. It has full original $\nu_\beta$ measure by hypothesis. Apply Theorem 13.2 with the given finite p marginal, this $G$, and $q=0$. The resulting finite regular table has exactly the original p own-law marginal $\nu_p$, all its suspended own laws lie in $G$, and both its full recursions and unweighted balances hold. Each of its p laws lies in the p endpoint box because its positive-mass marginal is unchanged. Its averaged marker-one sequence is therefore the original $d_n$ and obeys (18.1).
+
+Lemma 18.1 classifies this finite table. Since Theorem 13.2 preserves the entire p marginal, it follows that the original marginal is
+
+$$
+ \nu_p=(1-\theta)\delta_{P_{p,a}}+\theta\delta_{P_{p,b}}
+$$
+
+for some $\theta\in[0,1]$. No preservation of the original suspended marginal or either original flow is inferred from that realization; those objects are now recovered from the original equations (11.8).
+
+Write $m_a=1-\theta$ and $m_b=\theta$. For each $r\in\{a,b\}$ with $m_r>0$, disintegrate the original $\Gamma_B$ over $Q=P_{p,r}$. Its first residual equation gives the equality of complete measures
+
+$$
+ \int W\,\Gamma_B(dW\mid P_{p,r})
+ =\mathcal R_B(P_{p,r})=P_{\beta,r}.
+$$
+
+Every coordinate $W(\eta)$ lies almost surely between $P_{\beta,a}(\eta)$ and $P_{\beta,b}(\eta)$: this follows from the original second marginal and its full-measure box. At each $\eta$, the barycentre value $P_{\beta,r}(\eta)$ is an endpoint of this interval. Subtracting the lower endpoint, or subtracting from the upper endpoint, gives a nonnegative random variable of mean zero. Thus $W(\eta)=P_{\beta,r}(\eta)$ conditionally almost surely. The carrier is countable, including infinity, so these equalities hold simultaneously and force
+
+$$
+ \Gamma_B(dW\mid P_{p,r})=\delta_{P_{\beta,r}}.
+$$
+
+This proves the first flow identity in (18.11) for the original pair. Its second marginal, equal to the first marginal of the original $\Gamma_A$ by (11.6), is precisely the suspended marginal in (18.10).
+
+For each such present $r$, the second original residual equation gives
+
+$$
+ \int Q\,\Gamma_A(dQ\mid P_{\beta,r})
+ =\mathcal R_A(P_{\beta,r})=P_{p,r}.
+$$
+
+Its conditional p support is contained in $\{P_{p,a},P_{p,b}\}$. Testing the alpha coordinate, whose values at these two laws are the distinct numbers $a,b$, forces the conditional mass to be entirely at $P_{p,r}$. This proves the second flow identity in (18.11). Null endpoint fibres are omitted throughout, so the argument includes $\theta=0$ and $\theta=1$. No atomicity assumption was made on the original suspended marginal.
+
+The resulting full classification gives
+
+$$
+ d_n=(1-\theta)c_a z_a^n+\theta c_b z_b^n
+ \qquad(n\ge0).
+$$
+
+The coefficients are already uniquely determined by any two consecutive late values: the determinant of the columns $c_az_a^n,c_bz_b^n$ at $n,n+1$ is $c_ac_bz_a^nz_b^n(z_b-z_a)\ne0$. Early and non-marker-one coordinates follow from the full-law classification, without running the assumed recurrence backward. $\square$
+

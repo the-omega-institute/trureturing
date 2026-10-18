@@ -1,0 +1,83 @@
+**定理 449.2（完整原尾的显式补偿与单侧方向）。** 定义
+
+\[
+\kappa=\sum_{n\ge1}c_n=\frac{\mathcal B'(0)}{\mathcal B(0)},\qquad
+\kappa_0=\frac{187}{1323}\frac{q^2\log2}{b}>0.
+\tag{HT.10}
+\]
+
+则 \(\kappa\ge\kappa_0\)，且对每个原实数 \(x>1\) 精确有
+
+\[
+I_{\mathsf F}(x)-I_\psi(x)=
+\int_x^\infty C_\beta(t)w(t)\,dt,
+\qquad
+|I_{\mathsf F}(x)-I_\psi(x)|\le\frac{M_0}{x\log x},
+\tag{HT.11}
+\]
+
+\[
+\boxed{
+\left|I_{\mathsf F}(x)-I_\psi(x)
+-\frac{\kappa}{x\log x}\right|
+\le\frac{M_\alpha x^{-\alpha}}{x\log x}.
+}
+\tag{HT.12}
+\]
+
+特别地，令
+
+\[
+X_\beta=\max\!\left\{
+e,\left(\frac{2M_\alpha}{\kappa_0}\right)^{1/\alpha}
+\right\}<\infty.
+\]
+
+则对全部 \(x\ge X_\beta\)，有可量化单侧预算
+
+\[
+\boxed{
+I_\psi(x)\le I_{\mathsf F}(x)-\frac{\kappa_0}{2x\log x},
+\qquad
+I_{\mathsf F}(x)-I_\psi(x)
+=\frac{\kappa}{x\log x}
++O\!\left(\frac{x^{-1-\alpha}}{\log x}\right)>0.
+}
+\tag{HT.13}
+\]
+
+**证明：完整实际尾的运输。** （HT.7）在 \(s=0\) 的绝对收敛给
+\(\sum c_n=\mathcal B'(0)/\mathcal B(0)\)。§448 的非负实轴结论给
+
+\[
+0<\mathcal B(0)<b,\qquad
+\mathcal B'(0)\ge\frac{187}{1323}q^2\log2,
+\]
+
+所以 \(\kappa\ge\kappa_0>0\)。对每个 \(t\ge1\)，整个未保留补集满足
+
+\[
+|C_\beta(t)|\le M_0,\qquad
+|\kappa-C_\beta(t)|
+\le\sum_{n>t}|c_n|
+\le M_\alpha t^{-\alpha}.
+\tag{HT.14}
+\]
+
+这里最后一步直接消费完整加权无穷尾，没有把有限源估计当成全尾界。
+
+原 \(I_\psi\) 已绝对存在，而 \(C_\beta\) 有界，故 \(I_{\mathsf F}\)
+也绝对存在。原权重精确满足
+
+\[
+w(t)=-\left(\frac1{t\log t}\right)',\qquad
+\int_x^\infty w(t)\,dt=\frac1{x\log x}.
+\tag{HT.15}
+\]
+
+对（HT.3）中的两个完整积分作差，得到（HT.11）的身份和绝对界；
+对（HT.14）的尾差在整个 \(t\ge x\) 上积分，并用
+\(t^{-\alpha}\le x^{-\alpha}\)，得到（HT.12）。
+当 \(x\ge X_\beta\) 时，
+\(M_\alpha x^{-\alpha}\le\kappa_0/2\)，于是（HT.13）成立。证毕。
+

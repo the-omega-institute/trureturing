@@ -1,0 +1,70 @@
+**Assumption 14.1 (Paid geometric-mark upper supplier).** The mathematical supplier `upper-proposal.json`, its `complete_new_controller` and `handwritten_results_and_proofs`, supplies the following construction and performance under exactly Definitions 2.3 and 3.1. `upper-check.json` supplies a distinct fallible handwritten assessment of that proposal. Both are separate from the entropy lower argument, and neither is a supplied final upper manuscript.
+
+For its exact correspondence, rename the upper proposal's mark probabilities $p_i$ to $z_i$ to distinguish them from the actual decision probabilities in (6.1), and rename its boundary $L$ to $R$ to distinguish it from the lower cutoff. Put
+
+$$
+\begin{aligned}
+z_i(q)&=\frac{Z_i(q^2)}{Z_i(q)},
+&\Delta(q)&=z_1(q)-z_0(q),\\
+t(q)&=\frac{z_0(q)+z_1(q)}2,
+&d(q)&=\frac{\Delta(q)}2,\\
+\ell&=\log\frac{1-\alpha}{\alpha}>0,
+&R(q)&=\left\lceil\frac{\ell}{d(q)}\right\rceil
+=\left\lceil\frac{2\ell}{\Delta(q)}\right\rceil.
+\end{aligned}
+\tag{14.1}
+$$
+
+The new branch applies at parameters with $\Delta(q)>0$. Its listed complete configurations are one waiting state $w$, both labels, and $(j,h)$ with integers $-R<j<R$ and $h\in\{0,1\}$. Their total number is $4R+1$. The source-blind initialization is deterministically $w$. Every nonlabel state reads the next actual bit. In $w$, zero loops and one enters $(0,1)$. In $(j,1)$, zero preserves the flag with probability $q$ and changes it to zero with probability $1-q$; in $(j,0)$, zero loops. The coordinate $j$ is unchanged on zeros. On a one, flag one moves up with probability $1-t$ and holds with probability $t$; flag zero moves down with probability $t$ and holds with probability $1-t$. Every nonterminal one successor resets the internal flag to one. A move reaching $R$ emits $d_1$; a move reaching $-R$ emits $d_0$. Labels absorb, and emission requires no additional read. All successor choices are compiled into one finite table at this known $q$.
+
+This is an internal flag reset, not a source reset. A survival failure still pays every remaining zero and the closing one. Conditional on a real gap $K=k$, its potential mark is one with probability $q^k$, giving $z_i=\mathbb E_iq^K$. Potential mark and evidence-coin blocks are iid across gaps and independent of $\tau$, but a mark is not independent of its own duration. The upper supplier proves the resulting lazy walk, its risks and stopping by finite-horizon drift and bounded gambler's-ruin arguments. With
+
+$$
+u_i^{\rm up}=z_i(1-t),\qquad v_i^{\rm up}=(1-z_i)t,
+\qquad \rho_i=\frac{v_i^{\rm up}}{u_i^{\rm up}},
+\tag{14.2}
+$$
+
+its supplied errors and completed-gap count $G$ satisfy
+
+$$
+\begin{aligned}
+e_0&=\frac1{1+\rho_0^R}\le\alpha,
+&e_1&=\frac1{1+\rho_1^{-R}}\le\alpha,\\
+\mathbb E_iG&=\frac{2R}{\Delta}(1-2e_i),
+&\mathbb E_iT&=1+\beta_i+\frac{2\mu_iR}{\Delta}(1-2e_i).
+\end{aligned}
+\tag{14.3}
+$$
+
+Here $G$ is the upper construction's number of completed post-first-tick gaps through its terminal tick. It is not substituted for the generic live-epoch count $N$ of an observer that may stop in zeros. For this particular table, all begun gaps are completed and
+
+$$
+T=1+\tau+\sum_{r=1}^G(K_r+1).
+\tag{14.4}
+$$
+
+The event $\{G\ge r\}$ is determined by preceding gaps and coins, hence independent of the next $K_r$. This is the supplied predictable-inclusion justification of its mean identity. It does not assume independence of the terminal decision and terminal gap duration. Both source laws have almost-sure stopping and finite paid means at every interior parameter where this branch applies.
+
+The fixed-observer continuation's Proposition 27.2 supplies the geometric separation
+
+$$
+\Delta(e^{-s})=c_{\rm sep}s+O_H(s^2),
+\qquad c_{\rm sep}=\frac{a}{9\cdot2^{10}}>0.
+\tag{14.5}
+$$
+
+It originally concerns a changing-machine kernel coordinate; by itself it is not a compliant classifier. The upper proposal supplies the flag-and-walk realization needed to use that coordinate for testing. Combining the credited separation with the source moment premises, its upper theorem provides one source-only $s_U>0$, chosen at most one, such that for every $0<s<s_U$ this one common table has both errors at most $\alpha$, both almost-sure stops, both finite means, and
+
+$$
+\begin{aligned}
+M_U(s)&=4R(e^{-s})+1\le K_U s^{-1},
+&K_U&=\frac{16\ell}{c_{\rm sep}}+5,\\
+\mathbb E_{i,e^{-s}}T&\le C_U s^{-3}\quad(i=0,1),
+&C_U&=\frac{176\ell}{c_{\rm sep}^2}+\frac{44}{c_{\rm sep}}+7.
+\end{aligned}
+\tag{14.6}
+$$
+
+The precision of $q,t$ and the transition description is immutable and unpriced, exactly as in Definition 3.1. There is no separate mark register, unbounded gap counter, coin-tape index, clock or elapsed-read decoder. A supplied optional all-interior-$q$ extension selects the continuation's credited fixed sum-four classifier when $\Delta\le0$, using that classifier's additional sum-four certificate and confidence premise. No such fallback is needed for (14.6) or the comparison below. No cubic claim away from the endpoint follows from (14.6).
+

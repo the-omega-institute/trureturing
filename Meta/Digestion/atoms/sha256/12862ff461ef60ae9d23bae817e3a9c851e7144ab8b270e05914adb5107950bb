@@ -1,0 +1,41 @@
+### 2. 二阶矩看见 $\kappa$
+
+因为
+
+$$
+xz=0,\qquad zy=0,
+$$
+
+有
+
+$$
+S^2=4x+9z+25y+20xy.
+$$
+
+于是
+
+$$
+\boxed{
+\mathbb E[S^2]=
+4X+9Z+25Y+20\kappa.
+}
+$$
+
+所以二阶矩直接恢复
+
+$$
+\boxed{
+\kappa=
+\frac{\mathbb E[S^2]-4X-9Z-25Y}{20}.
+}
+$$
+
+这也说明 $\Delta$ 与 $J_{\mathscr L}$ 的角色不同：
+
+- $\Delta$ 是源分布自身的条件相关；
+- $J_{\mathscr L}$ 是观测器对隐藏相关的灵敏度。
+
+源可以满足 $\Delta=0$，而某个非加法型未来读出仍然有 $J_{\mathscr L}\neq0$。
+
+---
+

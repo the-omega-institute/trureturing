@@ -1,0 +1,33 @@
+**Proposition 146.2 (Same laws and the exact stopped region).** Completion
+preserves every word law, common schedule masses and global normalization.
+It gives all 36 independent $N$ equalities from the stopped lifts.
+Their kernels lie in $\mathscr C_5$ of Theorem 109.1.
+
+**Proof.** If $b_i=0$, either pair word $00$ or $01$ uses the same stopped
+cell $0$; on $10,11$ the completed cells are unchanged. Thus each schedule
+contributes the identical vector on every word. Every duplicated cell has
+mass $w_S$, so normalization persists.
+At the original-source execution level select the same schedule and table
+using the identical $U$, acquire the whole schedule for $N$, reconstruct
+where $O$ would stop, and emit the same original tape. If $O$ stopped at
+its first requested zero, the acquired later reply in the $N$ completion
+is ignored but counted. At most two actual requests are made.
+This is exactly the law-preserving containment of Proposition 90.2.
+
+For completeness, the already proved coefficient interface uses the
+componentwise degree-at-most-two expansion
+
+$$
+p_b=c+\sum_i\ell_i b_i+\sum_{i<j}Q_{ij}b_i b_j,
+\quad V_i=\sum_{j>i}(-Q_{ij})_+,\quad
+h_i=(V_i-\ell_i)_+,\quad H=\sum_i h_i.
+\tag{146.3}
+$$
+
+Theorem 109.1 states precisely $p\in\mathscr C_5$ if and only if
+$c\ge H$ for such a probability-vector kernel. Normalization implies
+$\sum_rH(r)\le1$. These are vector inequalities with one probability budget,
+not independent scalar costs. Our displayed stopped tables directly place
+the kernels in $\mathscr O_5=\mathscr C_5$; (146.3) is a reused interface,
+not a new coefficient or transport result. $\square$
+

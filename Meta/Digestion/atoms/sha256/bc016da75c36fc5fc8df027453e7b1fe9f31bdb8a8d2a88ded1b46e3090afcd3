@@ -1,0 +1,111 @@
+**Theorem 264.2 (Every-decomposition tradeoffs).** Every complete
+feasible allocation, including every choice of representation and
+every nonnegative mass, satisfies
+
+$$
+\begin{array}{c|cc}
+ &E_b+S_\chi&B_b+S_{A^{\rm b}}\\\hline
+N&\displaystyle\le\min\{3\tau_\lambda/2,3J_\lambda\}
+ &\displaystyle\le\min\{\tau_\lambda,2J_\lambda\}\\
+O&\displaystyle\le\min\{\tau_\lambda,J_\lambda\}
+ &\displaystyle\le\min\{\tau_\lambda,J_\lambda\}.
+\end{array}
+\tag{264.2}
+$$
+
+In particular the same actual slacks obey
+
+$$
+\begin{array}{ll}
+N:&3S_\zeta+S_\chi\le3D_b-E_b,\quad
+       2S_\zeta+S_{A^{\rm b}}\le2D_b-B_b,\\
+O:&S_\zeta+S_\chi\le D_b-E_b,\quad
+       S_\zeta+S_{A^{\rm b}}\le D_b-B_b.
+\end{array}
+\tag{264.3}
+$$
+
+These statements use all independent rows and need no membership
+in $H_L$. If $E_b>0$, they force $J_N\ge E_b/3$ and
+$\tau_N\ge2E_b/3$, or $J_O,\tau_O\ge E_b$.
+If $B_b>0$, they additionally force $J_N\ge B_b/2$,
+$\tau_N\ge B_b$, or $J_O,\tau_O\ge B_b$.
+
+**Proof.** Put $d_\zeta(D)=3-\zeta z_D$ and let $I_D$ be the
+noncanonical indicator. The all-label fair cell table in the proof
+of Theorem 252.2 supplies $\zeta^{ab}_{ij}(r)$.
+For precision, the corresponding $\chi$ cell reward is exactly
+
+$$
+\chi^{ab}_{ij}(r)=[ab=00][r\in\{0,1\}]
+ +[ab=(v_i,v_j)][r\in\{0,2\}]
+ +\zeta^{ab}_{ij}(r)[r=0\text{ or }r\ge3].
+\tag{264.4}
+$$
+
+Here $v_1=1$ and $v_i=0$ for $i\ge2$.
+This formula separates the two specific pair events from the late
+fair-correct and positive events, so every label is included.
+Using the six relative-label cases of that fair table gives the
+following cell maxima in $00,01,10,11$ order:
+
+| pair range | $\chi$ maxima | $\chi+3\zeta$ maxima |
+|---|---|---|
+| $i=1$ | $(1,0,1,1)$ | $(5/2,3/2,4,4)$ |
+| $i=2$ | $(2,0,1,1)$ | $(5/2,3/2,4,4)$ |
+| $i\ge3$ | $(2,1/2,1,1)$ | $(2,2,4,4)$ |
+
+For example, at $i\ge3$ the zero label in cell $00$ earns both
+pair events, giving two. A label earlier than $i$ contributes a
+quarter in each fair cell, while label $i$ contributes a half in
+$00,01$; multiplying by three gives the stated combined maxima.
+At $i=1,2$ the omitted early correct labels leave the first two
+combined maxima $5/2,3/2$. Formula (264.4) also verifies the
+remaining cells directly. Thus every $N$ pair satisfies
+$\chi z_D\le9/2$ and $(\chi+3\zeta)z_D\le12$.
+Every canonical pair has $\chi z_D=3$, since its two queried
+correct labels and its late exhaustion or zero output contribute
+exactly three after the two early-event substitutions. Consequently
+
+$$
+\chi z_D-3\le\tfrac32 I_D,\qquad
+\chi z_D-3\le3d_\zeta(D).
+\tag{264.5}
+$$
+
+For stopped pairs merge $00,01$ before maximizing their common
+label. The $\chi$ maxima on cells $0,10,11$ are $(1,1,1)$
+for $i=1$ and $(2,1,1)$ for $i\ge2$.
+The $\chi+\zeta$ maxima are $(2,2,2)$ in every case.
+Hence in $O$, (264.5) improves to
+$\chi z_D-3\le I_D$ and $\chi z_D-3\le d_\zeta(D)$.
+Constants have $\zeta z_D\le1,\chi z_D\le3$;
+singletons have $\zeta z_D\le2,\chi z_D\le3$.
+These bounds follow by the same zero/positive cell split and prove
+all these inequalities on those schedules too, including a singleton
+at the last address without an artificial increasing pair extension.
+
+The base probe has value zero on every canonical table, and at
+most one on every table, so $A^{\rm b}z_D\le I_D$.
+If it is one on a nonstopped pair with $i=1$, cell $10$ emits zero
+and loses one unit of fair reward. If $i\ge2$, cell $00$ emits
+zero and loses at least one half. Thus
+$A^{\rm b}z_D\le2d_\zeta(D)$ in $N$.
+For stopped pairs the relevant cell is $10$ or the merged $0$
+cell, and the loss is at least one, giving
+$A^{\rm b}z_D\le d_\zeta(D)$ in $O$.
+Empty and singleton deficits are at least one and obey these bounds.
+
+Finally $\chi\mathbf r=3$, $A^{\rm b}\mathbf r=0$,
+$F_\chi=E_b$, $F_{A^{\rm b}}=B_b$, and $F_\zeta=-D_b$.
+Sum the column inequalities with the same unnormalized $\lambda$:
+
+$$
+\sum_D\lambda_D(\chi z_D-3)=E_b+S_\chi,\qquad
+\sum_D\lambda_DA^{\rm b}z_D=B_b+S_{A^{\rm b}},\qquad
+\sum_D\lambda_Dd_\zeta(D)=D_b-S_\zeta.
+$$
+
+This proves (264.2) and (264.3) without dividing by $M$.
+Nonnegative slacks give the stated profile consequences. $\square$
+

@@ -1,0 +1,21 @@
+**Definition 1.1 (finite native trees).** Let
+
+$$
+\begin{aligned}
+\mathcal T&::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,\\
+\rho\alpha&=\beta,
+&\rho\beta&=\langle\beta,\alpha\rangle,
+&\rho\langle s,t\rangle=\langle\rho s,\rho t\rangle,\\
+T_j&=\rho^j\alpha\qquad(j\in\mathbb N).
+\end{aligned}
+\tag{FNS.1}
+$$
+
+Every source is a nonempty finite free ordered tree. The displayed laws
+interpret \rho; it is not a free unary constructor. An address is a word in
+$\{L,R\}$, with the root $\varepsilon$. The four-valued reply at an address is
+the corresponding leaf, branch, or absence. Write $u\equiv_h v$ when all
+replies at addresses of length at most $h$ agree. Repeated occurrences of one
+name always denote one source subtree; sharing a value does not delete an
+occurrence from the ordered source.
+

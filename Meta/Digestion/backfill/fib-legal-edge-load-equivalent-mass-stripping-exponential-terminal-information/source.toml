@@ -1,0 +1,5 @@
+source_id = "fib-legal-edge-load-equivalent-mass-stripping-exponential-terminal-information"
+path = "docs/develop/theory/FIB_LEGAL_EDGE_LOAD_EQUIVALENT_MASS_STRIPPING_EXPONENTIAL_TERMINAL_INFORMATION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

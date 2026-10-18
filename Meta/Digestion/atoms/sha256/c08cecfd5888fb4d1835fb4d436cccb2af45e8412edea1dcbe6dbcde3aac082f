@@ -1,0 +1,30 @@
+**Theorem 6.1 (a phase value cannot generally be deleted from a source-free
+boundary).** There is a two-source finite relational task satisfying all
+the interface hypotheses and (UDB.23), with a successful three-state
+table, for which deleting the phase vector from $b$ merges two histories
+with different immediate responses and outputs.
+
+Proof 6.1. Let $D=\{u_0,u_1\}$ be finite one-port records. Their target
+rows are distinct $Y_0,Y_1$. Use one chart with $\operatorname{Adm}(n)$
+equal to $n=0\lor n=1$, and $\operatorname{Same}(n,m)$ equal to $n=m$.
+Let $U$ be identity. There is one permitted literal $p$, one parameterless
+valid descriptor realizing it, and ordered replies $c_0<c_1$ with ranks
+zero and one. Here $c_0=\mathsf{absent}$ and $c_1$ reports the single
+reached content. Source $u_n$ replies $c_n$ at every epoch. Take $N=0$.
+The port is absent forever for $u_0$ and reached forever for $u_1$;
+reached transport is identity. Reply is the exact formula $n=i$ for $c_i$.
+
+The initial state $e$ reads $p$ and sends $c_i$ to halt $h_i$ with row
+$Y_i$. The two initial histories have the same $e,j=0,A=\mathsf{Pending}$,
+but phase vectors $(c_0)$ and $(c_1)$. Their next replies and halts differ.
+There are no update states, so (UDB.23) holds vacuously; the full bare
+boundary is sufficient, but its phase-deleted projection is not. All
+sources, ports and table states in the example are finite. $\square$
+
+If the exact source coordinate and epoch are retained, deleting the phase
+vector is harmless: (UDB.4) reconstructs it. For a source-free projection,
+the exact additional hypothesis is that its fibers have identical declared
+current responses, enabled actions and projected successors. One cannot
+prove that a redundant vector is indispensable merely by counting its
+coordinates.
+

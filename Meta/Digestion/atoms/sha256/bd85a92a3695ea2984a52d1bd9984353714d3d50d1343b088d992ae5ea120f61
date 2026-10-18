@@ -1,0 +1,52 @@
+**Theorem 29.1 (the two evaluated original optima).** Under Convention
+26.1, define $k_u,s$ from the occupied weights of $S$ or $D$. Then
+
+$$
+\mathcal T_{\log1001}(s)
+ =\frac12[H_0+\boldsymbol d\cdot B-\lambda k_u].
+\tag{AC.136}
+$$
+
+At $S$, where $\lambda=1/4$,
+
+$$
+0.12444515769477<s_S<0.12444515769480,\qquad
+0.10273812575328<\mathcal T_{\log1001}(s_S)<0.10273812575331.
+\tag{AC.137}
+$$
+
+At $D$,
+
+$$
+\begin{gathered}
+0.15672072828365<\lambda_D<0.15672072828368,\\
+0.12435694642837<s_D<0.12435694642840,\\
+0.10280323941363<\mathcal T_{\log1001}(s_D)<0.10280323941368.
+\end{gathered}
+\tag{AC.138}
+$$
+
+Both are strict original weak interior points. The theorem maximizes
+over every original allocation and live-height decomposition, including
+those below fixed-allocation maximum contrast.
+
+Proof. The first five exact moment equations give
+$\sum p=1$, $\sum pu=\sum pv=\sum puv=0$, $\sum pu^2=\alpha$.
+Since $u^2+v^2=1$, the omitted square gives $\sum pv^2=\beta$.
+After the diagonal rescaling to $(1,z,w)$ this is the full live Gram
+$I_3$, not just its diagonal. The last three exact equations give
+
+$$
+1000\sum p\eta c=\mu,\quad
+1000\sum p\eta c z^2=V,\quad
+1000\sum p\eta c zw=0.
+\tag{AC.139}
+$$
+
+Using $\mu=\alpha V+\beta W$ restores the $w^2$ moment $W$.
+Congruence by $(z,w)\mapsto(d_{\rm src}w/h_2,-b_{\rm src}z/h_1)$
+therefore gives $\sum p\eta1000c\,n n^T=M$. This is the physical
+failure covariance. In particular neither bare whitened projectors nor
+separately optimized failure marginals have replaced it.
+
+For an arbitrary original competitor, FA69's reduction applies to its

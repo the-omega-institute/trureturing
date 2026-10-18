@@ -1,0 +1,36 @@
+**Definition 10.2 (only the scalar trace relaxation).** In the exact
+coefficient constraints of Proposition 3.3 retain $H_r\succeq0$,
+$\sum_r(H_r+L_r)=I$, the full effect relation defining $N$, and
+$0\preceq N\preceq M$. Replace ONLY
+
+$$
+L_r\in\mathcal C_2\quad\hbox{by}\quad
+L_r\succeq0,\quad\operatorname{tr}(B_0L_r)\leq0.
+\tag{NP.64}
+$$
+
+Let $R_{\rm tr}(s,C)$ be the minimum of $\operatorname{tr}(C(H_++H_-))$
+on this relaxed set. It exists: every positive variable is bounded by
+$I$, and the set is closed and nonempty as the constructions below show.
+This is an algebraic relaxation and not a physical competitor class.
+
+The unrelaxed coefficient formulation has the same pointwise acquired
+minimum as (NP.15), as established in the complex-cone reduction.
+For clarity its converse does not require a hidden failure restriction:
+spectrally decompose each $H_r$ into coefficient vectors assigned new
+actual dimension-three branches, decompose $L_r$ into its finite singular
+atoms with dimension-two range encoders, and use scalar Kraus rows for
+$N$ or $M-N$ at the two reports. For general singular atoms, including
+the plane, fix independent specimen columns $1,2$ when $u\ne0$,
+columns $0,1$ when $u=0,v\ne0$, and columns $0,2$ otherwise.
+The rank proof in Lemma 3.2 makes these pairs independent; apply
+(NP.47) to that chosen pair to obtain the full TP range decoder.
+The failure effects $N$ and $M-N$ have rank at most two because
+their first row is zero. Decode each scalar with $w_\ell g(t)dt$,
+and add a scalar complement effect $Q_5/2$ at each report, decoded at
+label two. The total effect and forgotten channel are exactly (NP.14)
+by the same proof as §7, including references and all time measures.
+Each declared high branch is wholly live, so its acquired cost is the
+coefficient objective. This establishes the converse for that NEW
+instrument; it does not impose a half split on a general competitor.
+

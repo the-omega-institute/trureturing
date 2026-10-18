@@ -1,0 +1,90 @@
+**Corollary 61.2 (repo-derived graph distinction).** At \(b=0\), the six
+rays in (61.3) form an all-noncanonical orthogonality clique. No automorphism
+of the full common-flat orthogonality graph sends the canonical \(K_6\)
+onto this clique. In particular, no fixed-pair unitary or antiunitary
+symmetry preserving the common-flat locus does so.
+
+**Proof.** Let \(R_3\) interchange zero-based positions 1 and 2 in three
+coordinates, and put \(R=\operatorname{diag}(R_3,R_3)\). For any
+\(w=(x,y)\), symmetry of \(R_3\) gives
+
+\[
+ \langle w,R\Theta w\rangle
+ =-\bar x^TR_3\bar y+\bar y^TR_3\bar x=0.
+\]
+
+Since \(R\) commutes with \(M(0)\), the ray of
+\(v=R\Theta u_2\) is common-flat and orthogonal to \(u_2\).
+All six displayed basis rays have second/first upper-coordinate ratio
+in \(\{1,\omega,\omega^2\}\). For \(v\), that ratio is
+\(\overline{\delta/\gamma}\), whose real part is
+
+\[
+ \frac{35+3\sqrt{21}}{56}\in(0,1).
+\]
+
+Thus \(v\) is outside the displayed basis. The vertex \([u_2]\) has
+its five basis neighbors and this sixth distinct neighbor. Proposition 60.1
+gives degree exactly 5 for each canonical vertex. Graph automorphisms
+preserve degree, proving the claim. This does not preclude ordinary
+Hadamard equivalence that changes the fixed pair.
+
+For the literature identification, let \(\zeta=e^{\pi i/3}\) and define
+
+\[
+ F_{jk}=\frac{\zeta^{jk+(j\bmod2)\mathbf1_{k\in\{1,4\}}}}{\sqrt6},
+ \qquad 0\le j,k\le5.
+\tag{61.13}
+\]
+
+This is \(F(1/6,0)\) in Brierley–Weigert's Fourier-family convention,
+Appendix A.2, equation (35) of
+[*Constructing Mutually Unbiased Bases in Dimension Six*](https://arxiv.org/abs/0901.4051v2).
+Let \(\Pi\) reorder rows as \((3,0,4,2,5,1)\), and put
+
+\[
+ \begin{aligned}
+ D_L&=\operatorname{diag}(1,\zeta^4,\zeta^2,\zeta^2,\zeta^2,\zeta^2),\\
+ D_R&=\operatorname{diag}(\zeta^4,1,1,\zeta,\zeta^3,\zeta^3).
+ \end{aligned}
+\]
+
+The entrywise identity is
+
+\[
+ \Pi H_0(0)=D_LFD_R.
+\tag{61.14}
+\]
+
+Thus, if a unit column vector \(v\) is unbiased to \((I,F)\), then
+\(v\) and \(F^*v\) are flat, and
+
+\[
+ w=D_R^*F^*v,\qquad H_0(0)w=\Pi^*D_Lv
+\tag{61.15}
+\]
+
+are the corresponding actual input and output. The inverse is
+\(v=D_L^*\Pi H_0(0)w\); this is a unitary bijection preserving
+orthogonality. The usual common-unbiased column basis associated with
+(61.3) for the actual pair \((I,H_0(0))\) is \(H_0(0)U/\sqrt6\).
+
+Brierley–Weigert §4.2 discusses multiple completions at this Fourier
+point. Szöllősi's
+[*A two-parameter family of complex Hadamard matrices of order 6 induced by hypocycloids*](https://arxiv.org/abs/0811.3930v2),
+Lemma 3.1, supplies the central Fourier-intersection context.
+Theorem 1.4 of Jaming–Matolcsi–Móra–Szöllősi–Weiner,
+[*A generalized Pauli problem and an infinite family of MUB-triplets in dimension 6*](https://arxiv.org/abs/0902.0882v2),
+excludes a quartet containing a Fourier-family pair. These are established
+context and intermediate identifications, not premises of the determinant
+in (61.12). No exact census, exhaustive classification, or priority for
+the existence of alternative completions is inferred. Identifying the
+particular radical representative with a catalogued source basis is
+unnecessary for the original-equation proof or the local-isolation result.
+
+The example rules out universal intersection with the canonical component.
+It does not establish persistence away from the center or a general
+fourth-MUB result; the explicit cross-overlaps (61.8) already distinguish
+two alternative completions from four mutually unbiased bases.
+
+后续结果见[理论续卷 II](MUB_SIX_FOURTH_BASIS_THEORY_CONTINUATION_II.md)：第 62 节给出移动 canonical 基穿过中心参数的局部唯一性，第 63 节确定本节六条非 canonical 射线的局部正交图。

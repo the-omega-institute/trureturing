@@ -1,0 +1,4 @@
+**Corollary 3.2 (initial cardinality relative to SC).** Set $C_{\rm two}=C(p_z)$. Then $C_{\rm end}<C_{\rm two}<C_{\rm sat}$, and every optimizer has exactly three failure lines on $(C_{\rm end},C_{\rm two}]$.
+
+Proof. A two-line covariance measure is an orthogonal pair with unit masses. If its larger squared second coordinate is $p\ge1/2$, its cost is $C(p)$. The favorable positive expectation is $g(p)$; the other possible candidate is $2\zeta v(p)-d_0p<0$. Hence positive objective requires $p>p_z$, and therefore cost $>C(p_z)$. Strict increase of $C$ gives the stated endpoint inequalities. JS supplies positive optimum above $C_{\rm end}$, so two lines cannot optimize in the stated interval; Theorem 3.1 gives three. This reuses SC's evaluated two-line obstruction and improves its four-line existence bound. $\square$
+

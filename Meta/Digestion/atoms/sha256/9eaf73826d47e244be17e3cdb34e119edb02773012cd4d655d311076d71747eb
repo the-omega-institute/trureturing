@@ -1,0 +1,30 @@
+**Proposition 27.2 (Why the machine cannot vary with the endpoint).** Let $r\in(0,1)$ index a three-state observer with an active state $u$ and absorbing labels $d_0,d_1$. From $u$, a zero preserves $u$ with probability $r$ and otherwise leads to $d_0$; a one leads to $d_1$. This specifies one fixed stochastic machine for each fixed $r$. The analytical completed-gap kernel has the row entry
+
+$$
+U_i(q)(u,d_1)=\sum_{k\ge1}f_{i,q}(k)r^k
+=\frac{Z_i(qr)}{Z_i(q)}.
+\tag{27.2}
+$$
+
+For any fixed $r<1$, Lemma 24.2 applies. It does not give an $O(s^{10})$ difference uniform in $r$ as $r\uparrow1$. In fact along the changing-machine diagonal $r=q=e^{-s}$,
+
+$$
+\frac{Z_1(e^{-2s})}{Z_1(e^{-s})}
+-\frac{Z_0(e^{-2s})}{Z_0(e^{-s})}
+=\frac{a}{9\cdot2^{10}}s+O_H(s^2).
+\tag{27.3}
+$$
+
+Proof. The coefficient $a$ in (23.2) and the polynomial power sums imply
+
+$$
+\frac{Z_1(e^{-s})}{Z_0(e^{-s})}
+=1+\frac a9s+O_H(s^2),\qquad
+\frac{Z_0(e^{-2s})}{Z_0(e^{-s})}=2^{-10}+O(s).
+\tag{27.4}
+$$
+
+Divide the first ratio at $2s$ by the first ratio at $s$, subtract one, and multiply by the second ratio to obtain (27.3). Thus a row-coordinate difference alone prevents a bound $C s^{10}$ with one $C$ for all these matrices. The transient zero eigenvalue $r$ approaches one, so the analytic bounds used in (24.8) need not remain uniform. $\square$
+
+This construction is a counterexample to a uniform kernel estimate over changing machines. It is not asserted to satisfy the two uniform error bounds in (23.8), and therefore supplies neither an efficient tuned classifier nor a counterexample to Theorem 25.4.
+

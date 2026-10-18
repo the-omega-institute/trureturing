@@ -1,0 +1,55 @@
+**Proposition 7.5 (Activity characterization and a support obstruction).**
+For a positive law on $B_n$, activity form is
+equivalent to the square identities
+$p_Rp_{R\cup\{i,j\}}=p_{R\cup\{i\}}p_{R\cup\{j\}}$
+on every doubly free fixed-exterior square at
+nonadjacent sites. It is also equivalent to
+$[K_i,K_j]=0$ for every $|i-j|\ge2$.
+These separated-site relations alone, if the
+exclusion carrier is discarded, do not imply the
+spectral inequality of Theorem 7.2.
+
+Proof. Activity form immediately gives each square
+identity. Conversely, the insertion odds
+$p_{R\cup\{i\}}/p_R$ do not change when one
+occupied exterior site is deleted, by the relevant
+square identity. Such a site is nonadjacent to
+the legally inserted $i$. Deleting all exterior
+occupations gives the constant odds
+$\lambda_i=p_{\{i\}}/p_0$. Successive legal
+insertions then give $p_R=p_0\prod_{i\in R}\lambda_i$.
+This is the conditional-factorization argument
+specialized to the exclusion support, not a claim
+of unconditional occupation independence.
+
+For commutation fix the complete exterior of
+nonadjacent sites. Its legal sector is a product
+of two sets, each either $\{0\}$ or $\{0,1\}$.
+One- and two-state sectors commute automatically.
+On a four-state sector write its positive masses
+as $A=p_{00},B=p_{10},C=p_{01},D=p_{11}$ and
+$\Delta=AD-BC$. The two conditional-expectation
+projections, transported to Euclidean coordinates,
+have a common constant direction and one remaining
+principal angle. Directly computing that angle gives
+
+$$
+z=\frac{\Delta^2}{(A+B)(A+C)(B+D)(C+D)},
+\qquad\|[K_i,K_j]\|_F^2=2z(1-z).
+\tag{7.14}
+$$
+
+The denominator minus $\Delta^2$ is
+$(A+B+C+D)(ABC+ABD+ACD+BCD)>0$.
+Thus $0\le z<1$, and commutation is equivalent
+to $\Delta=0$, exactly the square identity.
+
+For the support obstruction take the full two-bit
+cube with uniform product law and weights $1/2,1/2$.
+Its independent toggle projections commute and
+have a common zero ground vector, but their sum
+has spectrum $0,1/2,1/2,1$. Hence
+$\gamma+\Lambda=3/2$. This restores the word $11$
+forbidden in $B_2$ and is not a counterexample
+on the legal carrier. $\square$
+

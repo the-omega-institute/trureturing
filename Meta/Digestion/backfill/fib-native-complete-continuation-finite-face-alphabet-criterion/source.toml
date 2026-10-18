@@ -1,0 +1,5 @@
+source_id = "fib-native-complete-continuation-finite-face-alphabet-criterion"
+path = "docs/develop/theory/FIB_NATIVE_COMPLETE_CONTINUATION_FINITE_FACE_ALPHABET_CRITERION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

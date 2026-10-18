@@ -1,0 +1,4 @@
+**Corollary 5.3 (Complete finite-complement convention).** Condition any $\mu_n$ on the entire complement of an interval. Every extendible complement has positive mass. Its conditional is positive and band-compatible on the completion set with the actual neighboring complement bits, using zero only for the original open-endpoint convention when the interval touches an endpoint.
+
+Proof. A complement with a legal completion has positive probability by Lemma 4.3. Dividing the two masses on an internal insertion edge by that same complement probability preserves (5.4). Incompatible completions remain zero. A forced fiber has its sole zero-center completion; a singleton completion graph has its unique probability. A nonextendible complement is null and contributes zero without any conditional denominator. $\square$
+

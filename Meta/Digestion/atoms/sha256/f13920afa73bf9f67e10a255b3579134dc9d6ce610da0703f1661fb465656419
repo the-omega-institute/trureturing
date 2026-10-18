@@ -1,0 +1,16 @@
+### 94.1. Original problem and precise scope
+
+Retain the original local CPTP maps A,B:C⁸→C⁴, four fibres of two coordinates, correlated input encoding |f,i〉↦|f,i〉|f,i〉, output encoding |f〉↦|ff〉, and arbitrary-reference unhalved diamond error. On the calibrated domain, the local Grams satisfy G,H≥0 and G_ff=H_ff=I₂. With T_ff=I₂ and T_fg=J₂/2 for f≠g, section 91 gives the exact objective
+
+\[
+ F(G,H)=\max_{(\rho,W)\in\mathcal C}
+       2\operatorname{Tr}[(T-G\odot H)W],\qquad
+ \mathcal C=\left\{(\rho,W):\rho=\bigoplus_f\rho_f\ge0,
+                 \ \operatorname{Tr}\rho=1,\ 0\le W\le\rho\right\}.
+                                                                    \tag{1}
+\]
+
+**Theorem 94.1.** No calibrated local minimum of (1) with rank G=rank H=7 has error below 1/4.
+
+This is a statement about calibrated local minima, not about every doubly rank-seven competitor. The physical calibration comparison of section 72 is global and may enlarge ranks; it does not transfer local minimality from an arbitrary leaking pair. The unrestricted quarter lower bound and unequal-rank cases, including pairs with one rank seven, are not asserted here.
+

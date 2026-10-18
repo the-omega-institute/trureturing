@@ -1,0 +1,35 @@
+**Theorem 53.2 (the sufficient full-reference implication).** For an actual channel of Definition 52.1, suppose every center of rank $k\geq2$ admits (S.14). Then
+
+$$
+g_N^2\leq T,\qquad \delta_N\geq2(1-T)=1-\sqrt{1-\beta}.
+\tag{S.25}
+$$
+
+Proof. For a fixed center let $f_\omega(\rho)=F_\rho(\Gamma,\mathcal C_\omega)$. The input densities and rectangular-contraction ball are nonempty compact convex sets over their finite-dimensional real coordinates, and the pairing in (S.6) is continuous and real affine in each variable. The continuous convex-concave minimax theorem in [Watrous, Theorem 1.12](https://cs.uwaterloo.ca/~watrous/TQI/TQI.1.pdf) therefore gives
+
+$$
+\min_\rho f_\omega(\rho)
+=\max_{U^\dagger U\preceq I_5}\min_\rho\operatorname{Re}\operatorname{Tr}(\rho A_{\omega,U})
+=\max_{U^\dagger U\preceq I_5}\lambda_{\min}(\operatorname{Herm}A_{\omega,U}).
+\tag{S.26}
+$$
+
+The least eigenvalue is at most the restricted test minimum in (S.15). Theorem 53.1 bounds that minimum by $v$ for each $U$; rank-one centers are covered by Theorem 52.3. Thus every center has $\min_\rho f_\omega(\rho)\leq v$, and (S.7) yields $g_N\leq v$.
+
+For any allowed recovery $R$ and actual density $\rho$, let $|\Psi_\rho\rangle$ purify $\rho$ and put
+
+$$
+F_e(\rho,RN)=\langle\Psi_\rho|(RN\otimes\mathrm{id})(|\Psi_\rho\rangle\langle\Psi_\rho|)|\Psi_\rho\rangle.
+$$
+
+The binary measurement onto this pure target gives unhalved trace distance at least $2(1-F_e(\rho,RN))$. Consequently
+
+$$
+\|RN-\mathrm{id}_3\|_\diamond
+\geq2\left(1-\min_\rho F_e(\rho,RN)\right)
+=2\left(1-F(RN,\mathrm{id}_3)^2\right).
+\tag{S.27}
+$$
+
+Taking the infimum over all complex whole-output recoveries gives $\delta_N\geq2(1-g_N^2)$, the direct lower interface of Theorem 7.4 in the first volume, proving (S.25). No equality involving the optimized diamond norm is required. The all-center assumption is only sufficient; Section 55 shows that this scalar assumption does not hold for all centers. $\square$
+

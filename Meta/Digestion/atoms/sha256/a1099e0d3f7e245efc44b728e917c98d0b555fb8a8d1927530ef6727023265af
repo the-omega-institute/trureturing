@@ -1,0 +1,19 @@
+**Definition 6.1 (the original failure remainder).** In FC's notation
+let
+
+$$
+\begin{gathered}
+Q=\begin{pmatrix}y_5+y_6&y_7/2\\y_7/2&y_5\end{pmatrix},\qquad
+\mathsf F=\begin{pmatrix}0&e\\e&-d_*\end{pmatrix},\\
+e=-\frac{b_sd_s\Delta_{12}}{h_1h_2\sqrt{\alpha\beta}}>0,
+\qquad d_*=\frac{11d_s^2}{64\beta h_2^2}>0,
+\qquad R_-=Q+t\mathsf F.
+\end{gathered}
+\tag{PC.28}
+$$
+
+The saturated endpoint coefficient mass is
+$S_{\rm sat}=\int\xi\,d\pi$. FC Proposition 34.2 gives
+$S_{\rm sat}<300/t$, using the same $\mu<12$ and
+$\mathfrak c>1/25$. This is coefficient mass, not failure probability.
+

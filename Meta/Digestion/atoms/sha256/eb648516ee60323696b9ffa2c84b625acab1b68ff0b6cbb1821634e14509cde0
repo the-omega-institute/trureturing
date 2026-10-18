@@ -1,0 +1,28 @@
+**Theorem 38.1 (Classical realization and pole lower bound).** The same actual gap law has a complete nonnegative classical realization on $n+1$ states, and no homogeneous finite classical model reproducing its full stationary output can use fewer states.
+
+Proof. Use row orientation and states $0,\ldots,n$. Let $J_{\rm f}$ have entries $(J_{\rm f})_{i,i+1}=1$ for $i<n$ and zero otherwise; thus a row advances one state by multiplication. Set
+
+$$
+T_0=qI+(1-q)J_{\rm f},\qquad \alpha_j=C_n(q){n\brace j}\,j!\frac{q^j}{(1-q)^{j+1}}\quad(1\le j\le n),\qquad \beta_{n-j}=\alpha_j,\quad\beta_n=0,\qquad T_1=(1-q)e_n\beta. \tag{38.1}
+$$
+
+Here $e_n$ is a column, and $\beta$ a row. Stirling coefficients are nonnegative (indeed positive for $1\le j\le n$). The classical identities $k^n=\sum_{j=1}^n{n\brace j}j!\binom{k}{j}$ and $\sum_{k\ge j}\binom{k}{j}q^k=q^j/(1-q)^{j+1}$ give $\sum_j\alpha_j=C_n(q)Z_n(q)=1$. The second identity follows by differentiating the geometric series $j$ times inside $|q|<1$. Every nonfinal row of $T_0$ sums to one, its final row sums to $q$, and $T_1$ fills precisely that final deficit. Thus $T_0+T_1$ is stochastic and nonnegative. For any probability row $r$, $rT_1=(1-q)r_n\beta$, so every positive-probability tick really resets to $\beta$.
+
+The binomial expansion of $T_0^k$ gives, including $k=0$,
+
+$$
+\beta T_0^kT_1\mathbf1=\sum_{j=1}^{\min(n,k)}\alpha_j\binom{k}{j}(1-q)^{j+1}q^{k-j}=C_n(q)k^nq^k. \tag{38.2}
+$$
+
+All eigenvalues of $T_0$ are $q$, so it is stable and eventually ticks almost surely. The invariant initialization and all cylinders follow in Theorem 39.1. This is an actual positive realization; no signed representation supplies its state upper bound.
+
+For the lower bound, the rational generating function is
+
+$$
+G(z)=\sum_{k\ge0}\gamma_kz^k=C_n(q)\sum_{j=1}^n{n\brace j}j!\frac{(qz)^j}{(1-qz)^{j+1}}. \tag{38.3}
+$$
+
+At $z=1/q$ it has a pole of exactly order $n+1$: multiply by $(1-qz)^{n+1}$ and evaluate there to obtain $C_n(q)n!>0$, since every term with $j<n$ vanishes. For an arbitrary competing $h$-state presentation with matrices $M_0,M_1$ and specified initial row $\lambda$, full cylinder equality and $P(1)=\nu>0$ give the actual posterior $a=\lambda M_1/\nu$, the column $c=M_1\mathbf1$, and $\gamma_k=aM_0^kc$. Hence $G(z)=a(I-zM_0)^{-1}c$ near zero. Its reduced denominator divides $\det(I-zM_0)$, of degree at most $h$. Equality as power series implies equality of these rational functions, whose pole of order $n+1$ forces $h\ge n+1$. No reset or invariant hidden row was imposed on the competitor. $\square$
+
+The Newton and Stirling identities used here and in Theorem 37.1 are classical finite-difference ingredients; see [DLMF §26.8, Stirling numbers](https://dlmf.nist.gov/26.8). They organize the positive ladder weights and the amplitude coordinates. The exact comparison concerns their use in the common actual renewal law, not an invention of these identities or of conjugate-root factorization.
+

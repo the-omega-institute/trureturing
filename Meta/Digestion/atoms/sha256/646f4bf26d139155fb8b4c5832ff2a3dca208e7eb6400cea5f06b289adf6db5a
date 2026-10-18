@@ -1,0 +1,68 @@
+### 88.6. A uniform Choi/polar chart and the tail comparison
+
+At B₀ the two nonzero Choi eigenvalues are 4,4. In a neighborhood there is a fixed spectral contour separating the largest two eigenvalues from the rest. Its rank-two spectral projection P(B) is smooth, regardless of degeneracy inside that two-dimensional cluster. Choose a smooth orthonormal frame E_B:C²→C³² for its range, aligned with the base Kraus vectors. Define the two old Choi vector columns by
+
+\[
+ C_W=E_B(E_B^*J_BE_B)^{1/2}.
+                                                               \tag{22}
+\]
+
+The 2×2 matrix under the square root remains positive definite, so C_W is smooth in the channel coordinates. Its outer product is J_BP(B). When rank J_B≤3, the remaining matrix J_B(I−P(B)) is positive semidefinite of rank at most one. Choose any vector c_R with outer product equal to this remainder, or c_R=0 if it vanishes. No continuous choice of its phase or eigenvector is required. Reshape C_W and c_R as the old and new Kraus operators. Their Stinespring blocks W,R obey exactly
+
+\[
+ W^*W+R^*R=I_8,\qquad
+ \langle K_{W,a},K_R\rangle_F=0\ (a=1,2),\qquad
+ \|R\|_F^2=\epsilon_2(B).                               \tag{23}
+\]
+
+The middle identity follows from the orthogonality of the Choi spectral subspaces. At the base W is the square unitary Stinespring isometry; hence it stays invertible and its polar U is smooth. We have obtained (4) with an exact tail norm, uniformly even as ε₂ tends to zero and the rank drops.
+
+For clarity define the row vector
+Γ_V(R)_a=〈K_{V,a},K_R〉_F for any old-two-coordinate operator V. At the minimum point m associated to the actual comparison x=(V_A,U), the flat projection and tightness give
+
+\[
+ \Gamma_{U_m}(R)=2S_R.
+                                                               \tag{24}
+\]
+
+Indeed the wrong outputs give zero, and on each correct bit the tight frame sends L_i to 2L_i. The perpendicular component has zero inner product with the common-gauge subspace, which is contained in K_m. Equivalently (24) follows directly by substituting L_i=R_i(B_i^m)*/2.
+
+Use the exact Choi orthogonality Γ_W(R)=0. Cauchy–Schwarz and the smooth normal chart give
+
+\[
+ \begin{split}
+ 2\|S_R\|_F
+  &=\|\Gamma_{U_m-W}(R)\|_F
+       \le r\|U_m-W\|_F\\
+  &\le r\{C_3\|n\|+r^2\}.
+ \end{split}                                             \tag{25}
+\]
+
+For the last step, ‖U_m−U‖_F≤C₃‖n‖, and
+‖U−W‖_F=‖I−√(I−R*R)‖_F≤‖R*R‖_F≤r². These bounds hold whenever ‖R‖op<1. They do not require the polar old Kraus vectors themselves to be Choi-orthogonal to R.
+
+Choose η>0 so small that c₁(1−η)²>κ. By reducing the channel neighborhood, (25) gives ‖S_R‖²≤ηr². Therefore the exact decomposition (11) yields
+
+\[
+ q:=e^2+\|D_R\|_F^2=r^2-\|S_R\|_F^2\ge(1-\eta)r^2.
+                                                               \tag{26}
+\]
+
+For r small enough that 2c₁r²≤1/16, put b=e². Since 0≤b≤q≤r²,
+
+\[
+ {e^2\over16}+c_1\|D_R\|_F^4
+    ={b\over16}+c_1(q-b)^2
+    \ge c_1q^2
+    \ge c_1(1-\eta)^2r^4.                              \tag{27}
+\]
+
+Shrink the neighborhood once more so that C₂r²≤c₁(1−η)²−κ. Equations (21), (23), and (27) then prove
+
+\[
+ f(x,R)\ge\tfrac14+\kappa r^4
+          =\tfrac14+\kappa\epsilon_2(B)^2.              \tag{28}
+\]
+
+All neighborhood choices are uniform inequalities on a local chart. There is no passage from pointwise path limits to a neighborhood assertion.
+

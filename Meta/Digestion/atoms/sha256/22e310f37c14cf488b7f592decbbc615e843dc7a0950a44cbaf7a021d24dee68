@@ -1,0 +1,52 @@
+**Theorem 9.1 (a critical point forces noninjectivity in this model).** For any legal $n=d+5$ history, if the full observation map on the actual target chart has a singular derivative at any allowed target, that history admits two distinct actual effective targets with identical observations. Consequently a uniformly recovering endpoint history must have an everywhere nonsingular derivative and be a local smooth diffeomorphism at every target. The collision need not pass through the particular critical target.
+
+**Proof.** Use the actual chart
+
+$$
+(r,x,y,\kappa,\delta_0,\ldots,\delta_d),\quad
+r,x,y>0,\qquad
+S=rE(x,y),\quad D(t)=\sum_{j=0}^d\delta_jt^j .
+$$
+
+It parametrizes the target injectively; Section 6 realizes every chart point with positive factors. Apply to the output vector the fixed linear map
+
+$$
+v\longmapsto(v_0,\ldots,v_d,\Lambda v).
+\tag{9.1}
+$$
+
+This is an isomorphism. Its kernel is zero: Lemma 2.1 gives $v=\operatorname{ev}(P)$, and its first $d+1$ zero entries force $P=0$ by interpolation. Its domain and codomain both have dimension $d+5$.
+
+In these output coordinates, drift appears only in the first $d+1$ components. Its derivative block there is the invertible evaluation map for degree-at-most-$d$ polynomials at $0,\ldots,d$. The last four components equal $f(S,\kappa)=\mathcal T_\kappa S$. Ordering the drift coordinates first makes the derivative block triangular. Hence the full derivative is singular exactly when the four-dimensional derivative of $f$ is singular.
+
+Fix the slope $a$ of such a point. If $\mathcal T_a$ is invertible, the kernel equation for the quotient derivative is
+
+$$
+\mathcal T_a V+t\mathcal C S=0,\quad V\in\mathsf V_S,
+\qquad\hbox{equivalently}\qquad V=-tH(S).
+$$
+
+A nonzero kernel vector must have $t\ne0$. Equation (6.1) then says exactly $Q_H(S)=0$, and Theorem 7.1 supplies a collision in every branch of that condition.
+
+If $\mathcal T_a$ has rank at most two or an unsafe kernel line, the prescribed-slope criterion used in Theorem 8.1 already gives a collision. The only remaining case has rank three and a safe kernel line. Proposition 8.2 says that a singular quotient derivative there means $h(S)=0$, and Theorem 8.1 supplies a different-slope collision. These cases exhaust all quotient ranks and kernels. Every collision uses the complete Section 6 bridge. The inverse function theorem gives the asserted local diffeomorphism when the derivative is nonsingular. This argument uses the determinant and pencil structure of this model; it is not a theorem about arbitrary smooth injective maps. ∎
+
+For $E=E(x,y)$ define
+
+$$
+E_x=\begin{pmatrix}1&y\\0&0\end{pmatrix},
+\qquad
+E_y=\begin{pmatrix}0&x\\0&1\end{pmatrix}.
+$$
+
+The symbol $\det_4$ below is the determinant of four quotient vectors as columns; it is distinct from the two-by-two source determinant. Put
+
+$$
+\begin{aligned}
+c(x,y)&=\det_4[\mathcal B E,\mathcal B E_x,\mathcal B E_y,\mathcal C E],\\
+b_1(x,y)&=\det_4[\mathcal B E,\mathcal C E_x,\mathcal B E_y,\mathcal C E]\\
+&\quad+\det_4[\mathcal B E,\mathcal B E_x,\mathcal C E_y,\mathcal C E],\\
+a_2(x,y)&=\det_4[\mathcal B E,\mathcal C E_x,\mathcal C E_y,\mathcal C E].
+\end{aligned}
+\tag{9.2}
+$$
+

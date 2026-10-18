@@ -1,0 +1,70 @@
+**Theorem 13.1 (positive-spectrum Gram and full kernel at every beta).** Let the actual blocks satisfy Theorem 1.2. Write
+
+$$
+\tau=W\Lambda W^\dagger,\quad W^\dagger W=I_k,\quad
+\Lambda\succ0,\quad
+T=\Lambda^{-1/2}W^\dagger C,\quad S=V_SV_S^T,
+\tag{R.50}
+$$
+
+where $V_S$ is real with $d=\operatorname{rank}S$ independent columns, with no columns when $S=0$. The eigenvalue and residual branches are
+
+$$
+\begin{cases}
+k=2,\quad\Lambda=\operatorname{diag}(a,\beta),\quad d\leq1,&\beta>0,\\
+k=1,\quad\Lambda=(1),\quad d\leq3,&\beta=0.
+\end{cases}
+$$
+
+In phase-input coordinates the same actual $J_p$ has the Gram factor
+
+$$
+B=\begin{pmatrix}
+W\Lambda^{1/2}&0&0\\
+0&\bar W\Lambda^{1/2}&0\\
+T^\dagger&T^T&V_S
+\end{pmatrix},\quad
+C=W\Lambda^{1/2}T,\quad
+\sigma=T^\dagger T+T^T\bar T+V_SV_S^T.
+\tag{R.51}
+$$
+
+The remaining scalar constraints are
+
+$$
+\operatorname{Tr}(W\Lambda^{1/2}T)=0,\qquad
+2\|T\|_F^2+\|V_S\|_F^2=1.
+$$
+
+Together with the displayed isometry, positive spectrum and real residual branches, these constraints also suffice for actual-channel realization by Theorem 1.2. Its complete kernel is
+
+$$
+\begin{pmatrix}
+-W\Lambda^{-1/2}Tz+u_+\\
+-\bar W\Lambda^{-1/2}\bar Tz+u_-\\
+z
+\end{pmatrix},\qquad
+V_S^Tz=0,\quad W^\dagger u_+=0,\quad W^Tu_-=0,
+\tag{R.52}
+$$
+
+with complex $z,u_+,u_-$. Consequently
+
+$$
+\operatorname{rank}J_p=2k+d\leq5,\quad
+\dim\ker J_p=3r-2k-d,\quad
+\ker A_q=\ker[B^\dagger(\sqrt q\otimes I_r)].
+\tag{R.53}
+$$
+
+**Proof.** The range condition in (R.4) gives $C=W\Lambda^{1/2}T$. Its actual support inverse gives $C^\dagger\tau^+C=T^\dagger T$, so the residual identity gives the last block of (R.51). Multiplication of the displayed Gram factor recovers all nine blocks of (R.3), including both $C$ blocks. The block equations $B^\dagger(x_+,x_-,z)=0$ are
+
+$$
+\Lambda^{1/2}W^\dagger x_++Tz=0,\quad
+\Lambda^{1/2}W^Tx_-+\bar Tz=0,\quad V_S^Tz=0.
+$$
+
+Solving only on the positive spectrum gives exactly (R.52), with the full two orthogonal-complement freedoms retained. The first $2k$ columns of $B$ are independent by their upper blocks; the $d$ remaining columns are independent of them and each other by the full column rank of $V_S$. This proves the rank and dimension formulas. Finally $A_q=MM^\dagger$ with $M=(\sqrt q\otimes I_r)B$, so its kernel is exactly $\ker M^\dagger$, even when $q$ is singular. In particular weighted kernels need not be obtained by an ordinary inverse of $\sqrt q$.
+
+At half weight $\Lambda=I_2/2$, (R.51)–(R.52) reduce exactly to (R.25)–(R.26), including $S=0$, $v=0$, zero or repeated Takagi values and every $u_\pm$. At zero only the positive eigenvalue one is inverted; $d=3$ is allowed and is attained by Theorem 2.2. There is no limiting inversion of beta and no replacement of that rank-three residual by a single vector. Theorem 1.2 supplies reverse actual-channel realization with the original trace conditions; an arbitrary PSD block relaxation is not substituted for it. $\square$
+

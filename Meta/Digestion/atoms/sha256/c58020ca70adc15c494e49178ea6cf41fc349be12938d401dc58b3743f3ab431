@@ -1,0 +1,97 @@
+**Proposition 55.6 (an exact original whole-rho history with a hidden negative sector).** Take the actual INITIAL source $t=E=\langle\beta,\alpha\rangle$ and the original fixed cap $H=3$. In the TM30/57 Clifford port, $E(\alpha)=A$, $E(\beta)=B$, $A^2=1$, $B^2=-1$, $AB+BA=1$. The complete actual history
+
+$$
+\operatorname{Read}[BA];\quad\rho[\mathrm{accept}];\quad
+\operatorname{Read}[A+B];\quad\rho[\mathrm{reject}];\quad
+\operatorname{Read}[A+B];\quad\operatorname{Stop}
+\tag{55.21}
+$$
+
+has leaf counts $2,3,5$ for the initial, accepted and refused candidates. The current accepted tree is $\langle\langle\beta,\alpha\rangle,\beta\rangle$; the refused candidate is
+$\langle\langle\langle\beta,\alpha\rangle,\beta\rangle,\langle\beta,\alpha\rangle\rangle$ and is not installed. INITIAL and its original target remain $t$ and the literal tag-1 target $(1,(1,1),BA,A+B)$. The geometric quantities below belong to this original source and this actually accepted version; none is an additional numerical Read or a later-state replacement target.
+
+In the order $(o,L,R,LL,LR)$ its actual matrix and common restricted field are
+
+$$
+L_D=\begin{pmatrix}
+2&-1&-1&0&0\\
+-1&3&0&-1&-1\\
+-1&0&3&0&0\\
+0&-1&0&3&0\\
+0&-1&0&0&3
+\end{pmatrix},
+\qquad \phi|D=(1,1/2,1/2,1/4,1/4)^T.
+\tag{55.22}
+$$
+
+There are six exterior killing seams, two each at $R,LL,LR$. The newly killed field, and the exterior input for the common restriction, are respectively
+
+$$
+\phi_D^0=(21,9,7,3,3)^T/26,
+\qquad b_D=(0,0,1/2,1/4,1/4)^T.
+\tag{55.23}
+$$
+
+For the explicitly sufficient-coupling choice $a=1,g=16$, the common-restriction amplitude matrix has diagonal $(-14,-5,-5,-1,-1)$ and the same $-1$ seam entries. Its *full* characteristic polynomial is
+
+$$
+D_o(z)=-(z+1)(z^4+25z^3+185z^2+465z+202).
+\tag{55.24}
+$$
+
+It has the normalized root-invisible eigenstate
+$\psi_{\rm hid}=(0,0,0,1,-1)^T/\sqrt2$ at $z=-1$, with multiplicity one. All five eigenvalues are negative. The remaining four are exactly the roots of the displayed quartic, retaining their full algebraic multiplicities and their reconstruction below.
+
+Proof. The source substitution is literal (55.1). Associativity of the original Clifford leaf product gives $(BA)B=B(AB)=B-B^2A=A+B$, confirming every original Read in (55.21), including the unchanged Read after refusal. The guard accepts at three leaves and refuses the five-leaf whole candidate. The geometric nodes, labels and seams of the installed version are therefore exactly those in (55.22); $LL$ is a $\beta$ leaf, $LR$ an $\alpha$ leaf and $R$ a $\beta$ leaf. The potential weights ignore these labels but the joint source record retains them.
+
+Multiplication verifies $L_D(\phi|D)=\mathbf1_o+b_D$ and $L_D\phi_D^0=\mathbf1_o$. The complete boundary and norm quantities are
+
+$$
+Q_D(\phi|D)=11/8,
+\quad \|\phi|D\|^2=13/8,
+\quad \sum_{p\in D}\phi(p)^3=41/32,
+\quad Q_D(\phi_D^0)=21/26.
+\tag{55.25}
+$$
+
+They differ even though both field choices concern the same actual source domain. The internal common-field gradient energy is $5/8$ and its remaining continued exterior energy is $3/8$, whereas its zero-extended amplitude energy is $11/8$. These values consume, rather than delete, the six boundary seams.
+
+Put $x=-5-z$, $y=-1-z$, $r=-14-z$, $B_z=xy-2$. The internal left block has determinant $yB_z$, the right block determinant $x$, and the root-deleted determinant is $P_o=yB_zx$. Direct elimination gives
+
+$$
+D_o=y\bigl((rx-1)B_z-xy\bigr),\qquad
+S_o(z)=r-\frac y{B_z}-\frac1x,
+\qquad G_o(z)=P_o(z)/D_o(z).
+\tag{55.26}
+$$
+
+Expanding gives (55.24). The internal exceptional energies are $-1,-5,-3-\sqrt6,-3+\sqrt6$. At $-1$ the two left leaves support their opposite-sign kernel vector and cancel at their parent; $D_o$ has a simple zero because the quartic equals $-102$ there, while $G_o$ cancels the $z+1$ factor. At $-5$, compatibility forces the retained root amplitude zero and the sole right internal kernel coefficient then zero, so no full eigenvector remains; indeed $D_o(-5)=8$. At the two left-block eigenvalues $B_z=0$, their left-root coefficient is nonzero and cannot cancel through the invertible right block when the retained root is zero; again there is no full eigenstate at that exceptional energy. Algebraically $D_o=-xy^2\ne0$ there. The exceptions have thus been checked with full block equations, not assigned spurious inverse values.
+
+At each quartic root $z$, all inverses in (55.26) exist and the full root-amplitude-one eigenvector and its norm are
+
+$$
+\psi_z=(1,y/B_z,1/x,1/B_z,1/B_z)^T,
+\qquad N(z)=1+\frac{y^2+2}{B_z^2}+\frac1{x^2}=-S_o'(z).
+\tag{55.27}
+$$
+
+The full normalized state is $\psi_z/\sqrt{N(z)}$; the boundary amplitude alone is not unit full norm. The endpoint recurrence or these equations show that each such root eigenspace has dimension one. The leading principal minors of $-\mathsf H_D$ are $14,69,340,271,202$, so Sylvester's criterion gives all five negative eigenvalues. The hidden vector contributes its own norm and multiplicity to that count. Its zero extension is not silently identified with an infinite eigenstate: the four child seams beyond $LL,LR$ give $\|(\mathsf H+I)I_D\psi_{\rm hid}\|^2=2$. In the common depth-one contrast channel, the first two normalized levels have matrix $\left(\begin{smallmatrix}-1&-\sqrt2\\-\sqrt2&1\end{smallmatrix}\right)$, with minimum $-\sqrt3<-1$. Those levels occur in sufficiently advanced actual whole-rho domains, and the compactness proof (55.14) applies to this invariant channel: its kinetic lower bound is $\lambda_*$ and its diagonal potential tends to zero. It yields a negative normalized channel ground state below $-1$. Both depth-one vertices supply identical channel copies, giving two channel-ground eigendirections; any coincidence with another channel adds its multiplicity as in (55.18). The finite value $-1$ therefore need not stay fixed under continuation; the window theorem preserves limiting full states and multiplicities, not each finite energy verbatim.
+
+One rational off-spectrum check retains normalization as well as response:
+
+$$
+\begin{aligned}
+S_o(-16)&=3258/1793,&G_o(-16)&=1793/3258,\
+\psi_{-16}&=(1,15/163,1/11,1/163,1/163)^T,
+&\|\psi_{-16}\|^2&=3268885/3214849,\
+(\mathsf H_D+16I)\psi_{-16}&=S_o(-16)\mathbf1_o,
+&\frac{\langle\psi_{-16},\mathsf H_D\psi_{-16}\rangle}{\|\psi_{-16}\|^2}
+&=-46460566/3268885.
+\end{aligned}
+\tag{55.28}
+$$
+
+This check is a resolvent reconstruction and a normalized trial, not an eigenstate at $-16$. The root-visible eigenstates instead have the quartic energies and (55.27). The determinant was also calculated independently of the subtree recursion by the permutation formula for the matrix (55.22) with its potential diagonal: its coefficients in ascending powers are $(-202,-667,-650,-210,-26,-1)$, and the root-deleted coefficients are $(15,48,44,12,1)$. They reproduce (55.24)–(55.26). Exact rational elimination of (55.22) gives (55.23), and direct multiplication gives the hidden vector, norms, residual and principal minors. These finite identities are reproducible ordinary exact calculations; the general source and infinite conclusions rest on the preceding proofs.
+
+As a boundary discriminator at $g=0$, the normalized constant on these five actual sites has $Q_D=6/5$. The graft's single outgoing killing would instead give $1/5$, while a closed finite matrix would give zero. Neither is compression of the present common operator. A three-node identity or a root response with the hidden factor cancelled would miss this actual irregular-domain distinction. □
+

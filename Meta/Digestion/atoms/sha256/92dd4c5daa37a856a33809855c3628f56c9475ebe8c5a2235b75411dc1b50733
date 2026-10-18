@@ -1,0 +1,16 @@
+**Definition 3.4 (body codecs).** The S-body and B-body are the strictly
+lexicographically ordered lists of their paths, empty root path included
+in S. The T-body is a list of patch records. A record has, in order, native
+row/version/phase and defined input/read/output labels, reached old
+operand identities, the ordered probes/results, target assignments,
+new-template roles and commitment/receipt label. Undefined labels use an
+explicit absent tag. Each sublist uses PVC.2 and fixed arity records.
+Identities are the port/creation position and the fixed constructor role,
+with root/scaffold roles separately tagged. Repeated operations remain
+repeated list items. There is no endpoint snapshot in this body.
+
+The M-body is the eight-tagged-list serialization of Definition 4.2. Raw
+eight-bit cell records use original track order. All list orders and
+record arities are fixed there. Serializing a right is serializing its
+represented value; it issues no live TOK.
+

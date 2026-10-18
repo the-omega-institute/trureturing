@@ -1,0 +1,39 @@
+## 1. 供应接口和同律表示
+
+[Stationary] §2 给出每个归一化两侧平稳合法律 $P$ 的实际外部后验 $q_i=\mathbb E_P[X_i\mid\mathcal E_i]$、风险恒等式
+
+$$
+d(P)=\lim_n\Phi_n(P_n)/n
+=\mathbb E_P[(X_0-q_0)^2]=\inf_{r\ge0}D_r(P)\le c_\star.
+$$
+
+$D_r$ 使用半径 $r$ 的真实可见外部，$r=0$ 的字段为平凡字段。有限纤维恒等式把每条原始 Hamming 边的调和项识别为二点条件 Brier 风险，并允许零质量和强制零纤维。[Growth] 定理 5.2、7.3 和推论 5.3 给出
+
+$$
+nc_\star\le\kappa_n\le(n+1)c_\star,\qquad
+\frac{1800}{12559}\le c_\star\le\bar c:=3-2\sqrt2.
+$$
+
+[Universal Posterior Defect] 定理 3.1 给出：若 $d(P)=c_\star$，则每个自由外部后验在 $[1/4,1/2]$ 内，全部合法柱正，且 $n c_\star\le\Phi_n(P_n)\le\kappa_n$。以下“达到律”恒指这样的归一化两侧平稳合法律。
+
+对任意整数 $N\ge1$，完整边发射域是 [Universal Posterior Defect] 定义 4.1 的
+
+$$
+\Theta_N=\{(\lambda,M_0,M_1):\lambda\ge0,\ \lambda\mathbf1=1,
+M_0,M_1\in\mathbb R_{\ge0}^{N\times N},
+A=M_0+M_1,\ A\mathbf1=\mathbf1,\ \lambda A=\lambda,
+\lambda M_1^2\mathbf1=0\}.
+$$
+
+$\lambda$ 为行向量，$M_w=M_{w_1}\cdots M_{w_n}$，空词矩阵为单位阵。该供应卷命题 4.2 给出的一个实际归一化两侧平稳联合律具有 $H_i\in\{1,\ldots,N\}$，其区间概率为
+
+$$
+J_\theta(H_a=h_a,\ldots,H_{b+1}=h_{b+1},X_a=x_a,\ldots,X_b=x_b)
+=\lambda_{h_a}\prod_{i=a}^bM_{x_i}(h_i,h_{i+1}),\qquad
+P_\theta([w]_a)=\lambda M_w\mathbf1.
+$$
+
+所有模型专用的变量、后验和期望都取在这个 $J_\theta$ 的可见边缘 $P_\theta$ 下，不另行拼接条件表。联合律的左右相容分别由 $A\mathbf1=\mathbf1$ 和 $\lambda A=\lambda$ 保证；每位置 $11$ 的零概率及可数并保证合法性。
+
+给定任意 $\theta\in\Theta_N$，由 [P7 separation] 引理 8.2 可裁掉 $\lambda_i=0$ 的状态：非负平稳流使保留集合对 $M_0,M_1$ 闭，裁剪保留全部柱概率；其 $\lambda$ 全正且 $M_1^2=0$。这只是同律约化。通常“先按状态发射再转移”的约定由 $M_x=\operatorname{diag}(e_s(x))A$ 接入；可见律平稳而隐藏初始未平稳时，供应命题 4.2 的 Cesàro 约化保持同维数与全部可见柱。反向三元组状态 $(s,x,t)$ 给至多 $2N^2$ 个确定性状态发射状态。两种约定的最小维数不由这些对应判等。
+

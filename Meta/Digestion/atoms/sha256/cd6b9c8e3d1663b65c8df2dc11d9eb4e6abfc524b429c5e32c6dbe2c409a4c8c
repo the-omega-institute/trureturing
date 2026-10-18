@@ -1,0 +1,102 @@
+**定义 24.1（占位、振幅及关系坐标）。** 使用 §23.1 的同一五标签
+
+$$
+\Sigma=(0,1,2,3,13),\qquad
+(v_0,v_1,v_2,v_3,v_{13})
+=((0,0,0),(1,0,0),(0,0,1),(0,1,0),(1,1,0)).
+$$
+
+三坐标 $(x,y,z)$ 的次序是低、高、中；标签 $2$ 是中位，标签 $13$ 是低高同时占据。取概率律 $p$，令
+
+$$
+X=p_1+p_{13},\qquad Y=p_3+p_{13},\qquad Z=p_2,\qquad \kappa=p_{13}.
+$$
+
+本卷 §23.1–23.2 供应的反演在这里逐项为
+
+$$
+p_\kappa=(1-X-Y-Z+\kappa,\ X-\kappa,\ Z,\ Y-\kappa,\ \kappa),
+$$
+
+$$
+0\le Z\le1,\quad 0\le X,Y\le1-Z,\qquad
+\max(0,X+Y+Z-1)\le\kappa\le\min(X,Y).
+$$
+
+五个非负条件分别给这个闭区间的下界、上界和 $Z\ge0$，总和恒为一。均值域中的 $X,Y\le1-Z$ 又保证下界不超过上界；故它给全部可行律，包括零宽度和零概率边界。
+
+为避免与后面的交换算子 $A$ 混淆，将 §23.1 的质量—占位矩阵改记为 $W$：
+
+$$
+W=\begin{pmatrix}
+1&1&1&1&1\\
+0&1&0&0&1\\
+0&0&0&1&1\\
+0&0&1&0&0
+\end{pmatrix},\qquad d=(1,-1,0,-1,1)^{\mathsf T}.
+$$
+
+精确的所有者对应是 $W=A_{\S23.1}$，而基础公式卷原标签 $(0,2,3,5,25)$ 对应 $(0,1,2,3,13)$；隐藏关系卷的 $(O,L,T,R,J)$ 也依次对应这些标签。原有核公式给
+
+$$
+\ker_{\mathbb R}W=\mathbb R d,\qquad
+\ker_{\mathbb Z}W=\mathbb Z d.
+$$
+
+其参数对应可直接看出：若 $Wc=0$，中位行给 $c_2=0$，低、高行给 $c_1=c_3=-c_{13}$，质量行给 $c_0=c_{13}$。因此 $c=c_{13}d$，实系数和整数系数分别给两个核。$d$ 的非零分量互素，故为原始整数方向；概率纤维的切向量正是 $\partial_\kappa p=d$。列关系是 $v_0+v_{13}=v_1+v_3$，质量行也参与其中。
+
+另供正交标签空间 $\mathcal H=\mathbb C^5$，按负相位约定嵌入
+
+$$
+|\psi\rangle=\sum_{s\in\Sigma}\sqrt{p_s}e^{-i\theta_s}|s\rangle,
+\qquad \langle\psi|\psi\rangle=1,\qquad
+[\psi]\in\mathbb{CP}^4.
+$$
+
+$|0\rangle$ 是范数一的空标签基向量，既不是零向量，也不是 §23.4 的零粒子 Fock 真空。共同相位只改变归一化代表，不改变射线。概率律没有独自规定这些相位或这一个复载体。
+
+在全正图上取
+
+$$
+\chi=\theta_0-\theta_1-\theta_3+\theta_{13}\pmod{2\pi},\qquad
+R=\sqrt{p_0p_1p_3p_{13}},\qquad
+M=\psi_0\psi_{13}\overline{\psi_1}\,\overline{\psi_3}
+=Re^{-i\chi}.
+$$
+
+四个底面模式都参加 $M$；空模式的振幅不能省略。若乘积为零，仍使用多项式 $M$，不赋予 $\arg0$ 一个角。
+
+数学引文与完整商对应。[《辛预测完成》§35.3–35.5](SYMPLECTIC_PREDICTIVE_COMPLETION.md#353-五模式振幅局部原始形式与最小维数)使用完全相同的负相位、标签及概率坐标，射影直线面积取 $2\pi$，Hamilton 约定为 $\iota_{X_H}\Omega=dH$。其共同相位及占位相位作用在此合写为
+
+$$
+\theta_s\longmapsto\theta_s+\alpha+x_s\beta+y_s\gamma+z_s\eta,
+\qquad (\alpha,\beta,\gamma,\eta)\in(\mathbb R/2\pi\mathbb Z)^4.
+$$
+
+由 $Wd=0$，$\chi$ 在整个作用下不变。更强的整周期说明如下：取
+
+$$
+\alpha=-\theta_0,\quad
+\beta=\theta_0-\theta_1,\quad
+\gamma=\theta_0-\theta_3,\quad
+\eta=\theta_0-\theta_2
+\pmod{2\pi}.
+$$
+
+变换后的 $\theta_0,\theta_1,\theta_2,\theta_3$ 全为零，$\theta_{13}=\chi$。保持这四个零角的变换依次强制四个参数全为零模 $2\pi$，所以没有遗漏的有限剩余规范类；这不是仅由微分得到的商。与隐藏关系卷正相位记号的对应是 $\theta_s^{\rm old}=-\theta_s$、$\Phi^{\rm old}=-\chi$。
+
+令 $\vartheta_X=\theta_1-\theta_0$、$\vartheta_Y=\theta_3-\theta_0$、$\vartheta_Z=\theta_2-\theta_0$。消费上述辛形式的精确坐标式，
+
+$$
+\Omega=d\vartheta_X\wedge dX+d\vartheta_Y\wedge dY
++d\vartheta_Z\wedge dZ+d\chi\wedge d\kappa.
+$$
+
+也可由局部势 $\lambda=\sum_sp_s\,d\theta_s=d\theta_0+X\,d\vartheta_X+Y\,d\vartheta_Y+Z\,d\vartheta_Z+\kappa\,d\chi$ 取 $-d\lambda$ 读出该式。在含全正律的固定均值层，先限制 $X,Y,Z$，再商掉三个占位相位轨道，得到
+
+$$
+\Omega_{\rm red}=d\chi\wedge d\kappa.
+$$
+
+只固定均值而不取商时限制形式退化，不能称为这个二维辛空间。这里使用的是正部分圆柱；端点零支撑、稳定子和闭曲面的正则性仍按 §35.5 的条件处理。射影 Kähler 与 Schrödinger 的几何背景见 [Ashtekar–Schilling，Geometrical Formulation of Quantum Mechanics](https://arxiv.org/abs/gr-qc/9706069)及[既有文献条目](../../../Library/Geometry/ashtekar1997geometrical.md)；该背景不赋予 FIB 标签一个物理时钟。
+

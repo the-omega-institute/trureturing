@@ -1,0 +1,69 @@
+**Theorem 27.5 (Finite legal laws, positivity and sufficient logical resources).** The two separating batches admit the setting counts in Theorems 27.3–27.4, with every retained-setting label strictly positive. Actual masses, rather than normalized conditional success laws, determine these readouts. Sufficient serial logical resource bounds are as follows; the single-window rows are the source comparisons.
+
+| Family and protocol | $L$ | $C$ | Heralds | Stored flags / joint dimension | Monitored applications, at most | Total device applications, at most | Settings / retained labels |
+| --- | ---: | ---: | ---: | --- | ---: | ---: | --- |
+| Full, $(2,3)$ | 3 | 5 | 2 | 5 / 32 | 10 | 15 | 4 / 12 |
+| Full, single four | 4 | 4 | 1 | 4 / 16 | 5 | 9 | 4 / 12 |
+| Sparse, $(2,4)$ | 4 | 6 | 2 | 6 / 64 | 10 | 16 | 2 / 6 |
+| Sparse, single six | 6 | 6 | 1 | 6 / 64 | 5 | 11 | 2 / 6 |
+
+Proof. For distinct equal-total-count words $u,v$, with entry $q=\mathsf Q[u,v]$, define the two orthonormal pairs and spectral projectors
+
+$$
+|R_\pm\rangle=(|u\rangle\pm|v\rangle)/\sqrt2,\qquad
+|I_\pm\rangle=(|u\rangle\mp i|v\rangle)/\sqrt2,\qquad
+P^B_\pm=|B_\pm\rangle\langle B_\pm|,\quad
+P^B_0=I-P^B_+-P^B_-\quad(B=R,I).
+\tag{27.22}
+$$
+
+Each three-outcome projective setting commutes with $Q_{\rm tot}$. If $D_u=\mathsf Q[u,u]$, $D_v=\mathsf Q[v,v]$ and $M=D_u+D_v$, direct expectations give, in order $(+,-,0)$,
+
+$$
+\Pr(\cdot\mid R)=(M/2+\operatorname{Re}q,M/2-\operatorname{Re}q,1-M),\qquad
+\Pr(\cdot\mid I)=(M/2+\operatorname{Im}q,M/2-\operatorname{Im}q,1-M).
+\tag{27.23}
+$$
+
+The sign of the imaginary part follows from the minus $i$ in $I_+$. Both signed differences recover twice the corresponding component of $q$. The construction is the source quadrature readout (25.24)–(25.26), applied to these actual joint pairs.
+
+For full support use the two settings for $u=00|001,v=01|000,q=Z$, and two settings for $u=010,v=001,q=C_3$ on the second window, lifted by the identity on every first-window flag. The lifted projectors remain count preserving and are measured only at the joint terminal time. Choose uniformly among the four settings, independently of the device, and retain the setting. The twelve effects are $P^s_o/4$ and sum to the identity. Their probabilities are (27.23) times $1/4$, with actual masses
+
+$$
+D_u^Z=(1-p_1)p_2,\quad D_v^Z=p_1(p_3+p_4),\quad M_Z=D_u^Z+D_v^Z,\qquad
+M_C=p_1+p_2.
+\tag{27.24}
+$$
+
+For sparse support use the two settings for $u_s,v_s$ of (27.20), uniformly and independently chosen. The six effects are $P^B_o/2$, with (27.23) times $1/2$ and
+
+$$
+D_u^s=(1-p_1)p_1^2,\qquad D_v^s=p_1p_2,\qquad M_s=D_u^s+D_v^s.
+\tag{27.25}
+$$
+
+All four diagonal masses in (27.24)–(27.25) are positive. Since $c_4\ne0$, the first nonzero coordinate of $x$ is $e_0$, whereas that of $S^2x$ is $e_2$; both are nonzero and cannot be proportional. For either product pair in (27.11) or (27.19), the first factors are these vectors times nonzero scalars. Proportional nonzero product vectors would force their first factors to be proportional, so strict Cauchy–Schwarz gives
+
+$$
+|Z|<\sqrt{D_u^ZD_v^Z}\le M_Z/2,\qquad
+|Z_s|<\sqrt{D_u^sD_v^s}\le M_s/2.
+\tag{27.26}
+$$
+
+For the lifted $C_3$ pair, $x,Sx$ are likewise nonproportional, giving $|C_3|<\sqrt{p_1p_2}\le M_C/2$. The omitted word $01|010$ has diagonal $p_1^2>0$ in the full batch, so $1-M_Z>0$; $1-M_C=p_3+p_4>0$. The omitted word $01|0101$ has diagonal $p_1^3>0$ in the sparse batch, so $1-M_s>0$. Thus every signed outcome and every zero outcome has strictly positive probability, for all phases, including cancellations in (27.13). There is no conditioning on being in the two-word span.
+
+For each setting its three projectors admit the source pointer realization (25.28), now on the entire batch:
+
+$$
+W_s=\sum_{o\in\{+,-,0\}}P^s_o\otimes R_o,\qquad
+R_o|\mathrm{ready}\rangle=|o\rangle,\qquad
+[W_s,Q_{\rm tot}\otimes I]=0.
+\tag{27.27}
+$$
+
+The $R_o$ are unitaries on a three-level pointer. Orthogonality and completeness make $W_s$ unitary. This requires no within-window operation; the complex quadrature control occurs within a total-count sector at terminal time.
+
+For the serial pairs one five-level memory, a reusable two-level herald detector, a three-level pointer, and a four-valued or two-valued setting register suffice. One explicit controller has two states $\mathrm{wait}_j$, states $\mathrm{capture}_{j,k}$ for $0\le k\le n_j$, and $\mathrm{done}$: $C+5$ states, respectively ten and eleven. The flag dimensions and use bounds follow from (27.4)–(27.5). Each retained herald time needs a five-valued classical record; two have 25 joint labels. A terminal record needs twelve or six labels per trial, or processing of the corresponding frequencies. Storage, record processing or disposal, detector/controller control, the joint measurement, and maintenance of stable phases through waiting and storage are separate resources. Ignoring a record in the effect does not eliminate its production or disposal cost.
+
+A parallel realization instead uses two five-level memories: joint Hilbert dimension 25 and sum of local level counts ten. It supplies no single ten-dimensional-memory realization. It still requires the same internal $\theta$ and phase relation, independent preparation and all flag/readout resources. These are sufficient logical realizations, without optimized hardware, elapsed time or energy costs. Neither pair route dominates its single-window comparison across all coordinates: the pairs reduce largest window, while the single windows need fewer heralds and fewer sufficient total applications; full single four also uses fewer coherent applications and flags. $\square$
+

@@ -1,0 +1,6 @@
+**Lemma 5.2 (a finite rectangle cofinal for worst budgets).** Every correct comparator whose worst budget vector is finite is weakly dominated in worst budgets by a correct finite service with read budget at most $K$ and update budget at most $U$.
+
+Proof. Apply Theorem 3.1, then Lemma 3.2, to obtain $A'$ with $b(A')\le b(A)$ and $\sup_D d_{A'}\le U$. Write its finite worst read and length costs as $q'$ and $L'$. Equation (JRF.3.3) gives $q'\le L'+s_N$.
+
+If $q'\le K$, unroll its finite reachable reply tree as in Theorem 4.3. Its addresses and epoch segments are finite, and the resulting finite service has no larger costs. If $q'>K$, then $q'>K_0$ and $L'\ge q'-s_N>L_0$. The static supplier (JRF.5.1) therefore has no larger worst cost in any coordinate. It has read budget at most $K$ and zero updates. This branch compares maxima; it does not assert that the supplier is cheaper on each individual source. $\square$
+

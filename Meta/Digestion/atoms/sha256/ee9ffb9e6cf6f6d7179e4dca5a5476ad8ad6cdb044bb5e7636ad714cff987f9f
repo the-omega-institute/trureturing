@@ -1,0 +1,80 @@
+**Definition 45.1 (waiting, service, terminal execution and abort).**
+Use the local computation (44.1) and Lemma 34.2's geometric connector,
+with the new scale $\rho$. An abort means an immediate continuous
+replacement by a hold, with no further Reads or movement. A terminal
+connector, once issued, is followed by its hold and uses no further
+Reads. At the horizon retain the actual prefix at its issued velocity;
+never compress a connector into the remaining time. At own actual
+height exit hold both controls, as required by Definition 20.3.
+
+Initially hold at $q_0$ and store its time $p=0$ and point as an anchor.
+A completed normal service will again leave the own wrapped point equal
+to its stored target anchor. In waiting mode, schedule the next Read at
+the minimum of current time plus $d_0$, the known time $p+\rho^2$,
+and $T$. Only strictly positive future delays are used. At $T$ make no
+new movement. At any earlier returned point with height $l$ or $u$,
+use the terminal rule below. Otherwise compute (44.1) from the stored
+anchor to this returned point. Continue waiting if all three absolute
+coordinates are below $\rho$ and the clock is below $p+\rho^2$.
+At the first failure of that test, at time $s$, abort if any of
+$|X|,|Y|,|D|$ exceeds $2\rho$. Otherwise store the point at $s$ as
+the next anchor and serve the known connector from the previous anchor
+to this point. Its geometry $g=(x,y)$ is fixed at $s$.
+
+The normal service is the following paid-poll suffix procedure. Set
+$r_0=s$, $v_0=0$. On attempt $j\ge0$ put
+
+$$
+\epsilon_j=(\rho/64)2^{-j},\qquad
+h_j=c\rho^2 4^{-j},\qquad m_j=\Lambda+j,
+\tag{45.1}
+$$
+
+and issue the entire numerical profile
+
+$$
+\gamma_j(u)=g\left(v_j+(1-v_j)\min(u/h_j,1)\right)-g(v_j),
+\tag{45.2}
+$$
+
+including its hold after $h_j$. Store the target point just acquired at
+$r_j$. Read at the planned times $r_j+\ell h_j/m_j$,
+$\ell=1,\ldots,m_j$, or at $T$ if that comes first. At each Read
+use the following priority: horizon, target boundary, overshoot abort,
+completion, retry, continuation. The target-boundary priority invokes
+the terminal rule. For the other priorities compute (44.1) between the
+stored target point at $r_j$ and the new target point. Abort if any
+absolute coordinate exceeds $2\epsilon_j$. At the planned completion
+$r_j+h_j$ finish the service, even if a threshold is just reached.
+Strictly before completion, if any absolute coordinate is at least
+$\epsilon_j$, interrupt at this paid Read time $r_{j+1}$ and set
+
+$$
+v_{j+1}=v_j+(1-v_j)(r_{j+1}-r_j)/h_j.
+\tag{45.3}
+$$
+
+Start the next suffix attempt there. Otherwise keep executing the
+already issued profile and its next planned poll. Unused polls of an
+interrupted attempt are canceled and are not charged as calls.
+
+At normal completion, the current own point equals the target anchor
+stored at $s$. Compute (44.1) from this anchor to the just-read target
+point. Abort if any absolute coordinate is at least $\rho$.
+Otherwise enter waiting mode with anchor time $p=s$. Completion occurs
+before $s+\rho^2$, so its next waiting delay is positive.
+
+The terminal rule uses the boundary point actually returned by the
+Read, and the known current own point. Compute (44.1) between these
+two points. Abort unless $|X|,|Y|\le5\rho$ and $|D|\le15\rho$.
+If accepted, issue Lemma 34.2's complete connector from the actual own
+height to that acquired boundary point in duration $\rho^2$ of the
+original clock, then hold. The boundary Read does not interrupt an
+unseen past execution or declare native death. Only the final height
+leg of this positive-duration connector can produce own death.
+
+Every choice above is a function of already acquired wrapped points,
+known numerical progress, and the clock. In particular the tests are
+made only at paid Reads. No continuous threshold detector, bridge or
+free notification is part of the policy.
+

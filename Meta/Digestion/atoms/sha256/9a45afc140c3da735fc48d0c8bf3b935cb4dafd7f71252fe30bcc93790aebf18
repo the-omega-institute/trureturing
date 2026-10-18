@@ -1,0 +1,31 @@
+**命题 21.10（单位端点矩的首次缺项与指数响应）。**
+
+端点矩直接采用 `RealL2FirstReturnMoments.endpoint_moments` 的单位端点和路径算子；其指数响应推论如下。
+
+实际载体是实 Hilbert 空间 ℓ²(ℕ,ℝ)（坐标 j 对应源坐标 j+1）和 ℝ^n 的 EuclideanSpace；端点分别是单位向量 e₀（源坐标 e₁）及 b_n。令 S 为单边移位，A_∞=S+S*，A_n 为 n 点路径的单位邻接矩阵，K_X=3I_X−A_X，n≥1。已有声明的矩为
+$$
+m_X(k)=\langle e_X,K_X^k e_X\rangle,\quad
+m_\infty(k)=m_n(k)\ (0\le k<2n),\qquad
+m_\infty(2n)-m_n(2n)=1.
+$$
+这里不是将邻接矩或指数核重新归一化为概率。
+
+普通解释：k<n 时 K_∞^k e_∞ 等于有限迭代的零延拓；第 n 次迭代增加 (-1)^n e_n（源位置 n+1）。自伴性把第 2n 阶端点矩写成第 n 次迭代的范数平方，新增正交单位坐标贡献恰为 1。较低阶可拆成至少一项尚未到边界的两迭代内积，因此相同。
+
+置 c_X(k)=⟨e_X,A_X^k e_X⟩。由 A_X=3I_X−K_X 的二项式展开，c_∞(k)=c_n(k) 对 k<2n 成立，第 2n 阶的差也为 1，因为最高次项的系数为 (-1)^{2n}=1。对任意实 t，
+$$
+M_X(t)=\langle e_X,e^{-tK_X}e_X\rangle
+=e^{-3t}\sum_{k=0}^\infty {t^k\over k!}c_X(k).
+$$
+A_∞ 有界（范数≤2），故级数在有界 t 集上一致绝对收敛。特别
+$$
+M_\infty(t)-M_n(t)=e^{-3t}\bigl(t^{2n}/(2n)!+O(t^{2n+1})\bigr).
+$$
+n=1、k=0 均包括在内。有限阶或有限前缀相同不能推出全部未来响应相同；本式是指定算子的端点响应，没有新增物理或 CTMC 解释。
+
+相干历史的来源对应。经典链与《AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION》定义110.1、定理110.2–110.3和命题110.4的相干合同不同：该合同保留同一实际持续环境及正迹一块态 $\Omega_n=\sum_{h,k}|h\rangle\langle k|\otimes\Xi^{(n)}_{hk}$，同一相位相容等距实现给 $\Xi^{(n+1)}_{ha,kb}=K_{a|h}\Xi^{(n)}_{hk}K_{b|k}^{\dagger}$。这里历史 $h$ 对应完整分支序列，不能只以当前模式替代。命题110.4的同环境两次CNOT满足 $W^2=I$；新独立环境两次退相干则不同。块态、相位和环境由该所有者完整定义，本章不重复另立相干理论。
+
+完整未来的来源对应。被动链的条件互信息为零，只给上述链的Markov充分性。全部允许操作的充分摘要采用 Hidden C-28.11.1–C-28.11.4 及《AURIC_FIB_ATOM_OUTPUT_RESOLVED_INSTRUMENT_CLOSURE》的输出分支合同：在同一实际可达域内，每个摘要纤维须有相同目标、合法菜单、守卫、后继摘要和全部允许记录律；未归一化分支线性、正质量后的后选择才归一化。相同局部边缘或相同KL不提供这些量词。Robin的 $n>5040$ 目标还须原整数、素数指数、预算与停止合同；本章不提供从五模式到完整算术状态的识别映射。
+
+数学引文。Canonne，*A short note on an inequality between KL and TV*，[arXiv:2202.07198v2](https://arxiv.org/abs/2202.07198v2)，§1 Lemma2、式(2)，提供自然对数Pinsker先例；有限支撑证明已附于原生链应用。Richard Bellman，*Dynamic Programming*，Princeton University Press，有限时域最优性原理，提供逐边势函数先例；上文仅使用明示的有限望远镜恒等式。G. Robin，*Grandes valeurs de la fonction somme des diviseurs et hypothèse de Riemann*，J. Math. Pures Appl.63，187–213，定理1的量词是全部整数 $n>5040$；有限链预算没有改变该量词。
+

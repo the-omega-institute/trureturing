@@ -1,0 +1,105 @@
+### 2.3 全部随机有限机器的有限正历史下界
+
+以下只用概率单纯形的有限网格、共同随机更新的 TV 收缩和上述源特定证据倍率。它们是成熟有限概率方法，不另列为新的通用定理。对任何行随机矩阵 $Q$ 和两行分布 $u,v$，
+
+$$
+\sum_j\left|\sum_i(u_i-v_i)Q_{ij}\right|
+\le\sum_i|u_i-v_i|\sum_jQ_{ij}
+=\sum_i|u_i-v_i|.
+\tag{2.10}
+$$
+
+同样，对任何可数目标上的解码律 $D_i$，把 $Q_{ij}$ 换成 $D_i(w)$ 再对 $w$ 求和，得到解码也收缩 TV。且
+
+$$
+\operatorname{TV}\left(\sum_i u_iD_i,L\right)
+\le\sum_i u_i\operatorname{TV}(D_i,L).
+\tag{2.11}
+$$
+
+所以 $e_{\rm law}(h)\le e_{\rm conf}(h)$；这不是把两种风险定义为同一个对象。
+
+现在固定任意 $S$ 状态竞争机器。令 $A=P_\alpha P_\alpha$，并置
+
+$$
+a=\frac{36}{25}>1,\qquad b=\frac{81}{100}<1,
+\qquad c_p=\frac{\mu_2}{\mu_1}\frac{19683}{15625},
+\qquad c_\beta=\frac9{10}c_p.
+\tag{2.12}
+$$
+
+为证明所选阶段 $s$，在下式使用 $c=c_s$。对 $\epsilon,\zeta$ 如定理，置
+
+$$
+\begin{aligned}
+q&=\left\lceil\frac{S}{2\epsilon}\right\rceil,
+&N&=(q+1)^S,\\
+D&=\left\lceil
+ \frac{2\log((1-\zeta)/\zeta)+|\log b|}{\log a}
+ \right\rceil,
+&i_0&=\max\{0,\lceil-\log c/\log a\rceil\}.
+\end{aligned}
+\tag{2.13}
+$$
+
+$D\ge1$，$c a^{i_0}\ge1$。取 $N+1$ 个实际拒绝前奏后的分布
+
+$$
+\eta A^{i_0},\eta A^{i_0+D},\ldots,\eta A^{i_0+ND}.
+$$
+
+把分布 $u$ 编成有限格标签 $(\lfloor q u_1\rfloor,\ldots,\lfloor q u_S\rfloor)$；至多 $N$ 个标签。因此存在指数 $i<j$，$j-i\ge D$，使两行同标签。每个坐标差小于 $1/q$，从而
+
+$$
+\operatorname{TV}(\eta A^i,\eta A^j)
+<\frac{S}{2q}\le\epsilon.
+\tag{2.14}
+$$
+
+取非负整数 $t$ 为 $(\log c+(i+j)\log a/2)/|\log b|$ 的最近整数。分子非负，故可以如此选择 $t\ge0$。取两条实际历史
+
+$$
+\begin{aligned}
+h^-&=(\alpha\alpha)^i(\beta\beta)^t
+       \beta\alpha\mid\beta\beta\alpha\alpha,\\
+h^+&=(\alpha\alpha)^j(\beta\beta)^t
+       \beta\alpha\mid\beta\beta\alpha\alpha.
+\end{aligned}
+\tag{2.15}
+$$
+
+证明阶段 $\beta$ 时，再给两条历史各接一笔实际 $\beta$。竖线只标出确定解析的提种边界。每条相等对都是原付费拒绝，$\beta\alpha$ 接受种子1，载荷 $\beta\beta\alpha\alpha$ 完成前三标记100而无返回圈。所有字母在两个实际深度上都有正概率，故两条都是原全域中的有限正历史。两条当前原 $c$ 相同；附加 $\beta$ 时都正处于 $q_{\beta,4}$。没有第四标记、未来接受位或新来源进入条件。
+
+从 (2.14) 接共同后缀并使用 (2.10)，书签或悬置切面的完整配置分布 TV 仍至多 $\epsilon$。真实赔率却是
+
+$$
+O^-=ca^i b^t,\qquad O^+=ca^j b^t.
+$$
+
+记 $m=\log c+(i+j)\log a/2+t\log b$，最近整数选择给 $|m|\le|\log b|/2$。因此
+
+$$
+\log O^-\le-\frac{D\log a}{2}+\frac{|\log b|}{2}
+\le-\log\frac{1-\zeta}{\zeta},
+$$
+
+而 $\log O^+\ge\log((1-\zeta)/\zeta)$。所以 $x^-\le\zeta$、$x^+\ge1-\zeta$。由 (2.8)，两个真实目标律之间的距离至少 $(1-2\zeta)d$。共同解码的边缘化预测之间距离至多 $\epsilon$，三角不等式给
+
+$$
+(1-2\zeta)d
+\le e_{\rm law}(h^-)+\epsilon+e_{\rm law}(h^+)
+\le2R_{\rm law}+\epsilon.
+$$
+
+再用 (2.11)，得到两个风险的 (2.1)。对每台固定有限机器分别令 $\epsilon,\zeta\downarrow0$，得到 $R_{\rm law},R_{\rm conf}\ge d/2$。这个极限只取有限历史上的上确界，不把端点后验或无限运行当作实际查询，也不要求机器的状态分布最终周期。
+
+该证明还有显式有限长度证书。令
+
+$$
+J=i_0+ND,
+\qquad T=\left\lceil\frac{\log c+J\log a}{|\log b|}\right\rceil.
+\tag{2.16}
+$$
+
+$T\ge0$、$i,j\le J$、$t\le T$，故 (2.15) 两条历史的实际 Read 长度均至多 $2J+2T+6$；悬置阶段至多再加1。这个界对固定 $S,\epsilon,\zeta,\mu$ 是有限的，允许很长的极罕见历史；它不是源执行截止，也不是最短反例或最小程序价格。
+

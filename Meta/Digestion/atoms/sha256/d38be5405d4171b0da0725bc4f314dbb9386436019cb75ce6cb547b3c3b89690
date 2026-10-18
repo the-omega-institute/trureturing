@@ -1,0 +1,8 @@
+**数学引文 13.2（经典合同与归属）。** 以下已知方法仅作为局部接口应用的中间工具。
+
+| 文献 | 精确使用范围 |
+| --- | --- |
+| John G. Kemeny、J. Laurie Snell，*Finite Markov Chains*，Springer 重印本，§6.3，Theorem 6.3.2，[出版社书目](https://link.springer.com/book/9780387901923) | `literature-attested`：分块转移质量对块内状态相同的 Markov lumpability 合同；本卷使用的 intertwining 式还需另保留输出和合法性 |
+| Wen-Guey Tzeng，*A Polynomial-Time Algorithm for the Equivalence of Probabilistic Automata*，SIAM Journal on Computing 21(2)，216–227，[DOI:10.1137/0221017](https://doi.org/10.1137/0221017) | `literature-attested`：有限线性表示上的概率自动机等价方法；不向任意路径依赖传感器或未知实数模型移植多项式复杂度 |
+| The Stacks Project，Section 6.7，Definition 6.7.1，[Tag 006S](https://stacks.math.columbia.edu/tag/006S) | `literature-attested`：实际层合同下相容截面的唯一粘合；任意观察者图式不自动满足该合同 |
+

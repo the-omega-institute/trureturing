@@ -1,0 +1,47 @@
+**Convention 4.2 (the supplied temporal factor).** Use the substitution
+and the temporal factor of NCM §1, attributed there to AAR:
+
+$$
+\rho\alpha=\beta,\qquad
+\rho\beta=\langle\beta,\alpha\rangle,\qquad
+\rho\langle x,y\rangle=\langle\rho x,\rho y\rangle.
+\tag{CIT.18}
+$$
+
+Write $s(r)=\#L(r)+2\#R(r)$ and $e(\alpha)=0,e(\beta)=1$.
+If $q$ ends at an original branch, $\Gamma_q(u)=(0,0)$. Otherwise
+let $\ell$ be the first original leaf on the path, at prefix $a$,
+and write $q=ar$. The supplied static formula is
+
+$$
+\Gamma_q(u)=
+\begin{cases}
+(2-e(\ell),1-e(\ell)),&r=\varepsilon,\\
+(s(r)+2-e(\ell),\mathbf1_{r\text{ ends in }R}),&r\ne\varepsilon.
+\end{cases}
+\tag{CIT.19}
+$$
+
+For attained pairs $(b,c)$ the supplied trajectory decoder is
+
+$$
+\operatorname{Pred}((b,c),k)=
+\begin{cases}
+\mathsf{branch},&k\ge b,\\
+\beta,&b\ge1\text{ and }k=b-1,\\
+\alpha,&c=1\text{ and }k=b-2,\\
+\mathsf{absent},&\text{otherwise},
+\end{cases}\qquad k\in\mathbb N_0.
+\tag{CIT.20}
+$$
+
+Here $c\in\{0,1\}$ and $c=1$ implies $b\ge2$. The conditional
+interface used in §8 is
+$r_{\rho^ku}(q)=\operatorname{Pred}(\Gamma_q(u),k)$ for all
+$k\ge0$, with equality of factors equivalent to equality of the
+entire trajectories. Its inverse identifies $b$ from the first branch
+count and $c$ from the alpha stage. This is temporal-factor recovery,
+not full-source or first-leaf-descriptor recovery. The formula and this
+exact temporal correspondence retain their predecessor attribution;
+the static tables and deductions below use them at that scope.
+

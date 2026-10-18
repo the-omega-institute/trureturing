@@ -1,0 +1,90 @@
+**引理 7.1（首根实际第五、第六 M 已唯一确定完整世界）。** 在式 (1.3) 的整个首根类中，共同实际 $p,v$ 至多给一个完整 $(P,g,d)$。
+
+证明。若两个合法参数 $t\ne s$ 有共同 $p,v$，令
+
+$$
+\sigma=ts>1,\quad\Omega=(2t-1)(2s-1)>0,\quad
+G=h(t)h(s)>0,\quad A_0=C/G>0,\quad B_0=A_0m/\Omega>0.
+\tag{7.1}
+$$
+
+记 $\operatorname{DD}(F)=(F(t)-F(s))/(t-s)$。基本恒等式为
+
+$$
+\operatorname{DD}(1/t)=-1/\sigma,\quad
+\operatorname{DD}(1/(2t-1))=-2/\Omega,\quad
+\frac{1/[t(2s-1)]-1/[s(2t-1)]}{t-s}=\frac1{\sigma\Omega}.
+\tag{7.2}
+$$
+
+为写全分式差商，置
+
+$$
+\begin{aligned}
+H_t&=4tu\,h(t)=-48t^2+(312+m)t-144,\\
+Q_t&=2tu\,f(t)=144t^2+(-552+5m)t+240,\\
+N_t&=tu\,k(t)=240t^2+(-840+5m)t+360.
+\end{aligned}
+\tag{7.3}
+$$
+
+下标 $s$ 表示同式换元；逐项展开有
+
+$$
+\begin{aligned}
+sQ_t-tQ_s&=48(t-s)(3\sigma-5),\\
+sN_t-tN_s&=120(t-s)(2\sigma-3),\\
+Q_tH_s-Q_sH_t&=192(t-s)[24\Omega+m(2\sigma-5)],\\
+N_tH_s-N_sH_t&=120(t-s)[72\Omega+m(4\sigma-9)].
+\end{aligned}
+\tag{7.4}
+$$
+
+同样，$uf=72t-276+120/t+5m/2$，$2uk=480t-1680+720/t+10m$。结合正 $H_t,H_s$ 与式 (7.4)，四个完整差商为
+
+$$
+\begin{aligned}
+\operatorname{DD}(uf)&=24(3\sigma-5)/\sigma,\\
+\operatorname{DD}(f/h)&=\frac{24}{\sigma G}\left(24+\frac{m(2\sigma-5)}\Omega\right),\\
+\operatorname{DD}(2uk)&=120(4\sigma-6)/\sigma,\\
+\operatorname{DD}(k/h)&=\frac{120}{\sigma G}\left(18+\frac{m(\sigma-9/4)}\Omega\right).
+\end{aligned}
+\tag{7.5}
+$$
+
+每个乘积中的 $u$ 使用自身参数。实际 $p-24=uf+Cf/h,v-24=2uk+Ck/h$，故共同响应要求
+
+$$
+3\sigma-5+24A_0+(2\sigma-5)B_0=0,\qquad
+4\sigma-6+18A_0+(\sigma-9/4)B_0=0.
+\tag{7.6}
+$$
+
+第一式三倍减第二式四倍，得 $9-7\sigma+2(\sigma-3)B_0=0$。$\sigma=3$ 时是 $-12=0$，先排除；否则
+
+$$
+B_0=\frac{7\sigma-9}{2(\sigma-3)},\qquad
+A_0=-\frac{q(\sigma)}{48(\sigma-3)},\quad
+q(\sigma)=20\sigma^2-81\sigma+75.
+\tag{7.7}
+$$
+
+$B_0>0$ 排除 $\sigma=9/7$，只留 $1<\sigma<9/7$ 或 $\sigma>3$。高支上 $q(3+x)=12+39x+20x^2>0$，使 $A_0<0$，矛盾。低支上 $A_0>0$ 给 $q(\sigma)>0$，且
+
+$$
+q(\sigma)-7(9-7\sigma)=4(5\sigma-3)(\sigma-1)>0,\qquad
+0<\frac{B_0}{A_0}=\frac{24(9-7\sigma)}{q(\sigma)}<24/7.
+\tag{7.8}
+$$
+
+又 $t+s\ge2\sqrt\sigma$，所以
+
+$$
+0<\Omega=4\sigma-2(t+s)+1\le(2\sqrt\sigma-1)^2
+ <(6/\sqrt7-1)^2<2.
+$$
+
+最后比较由正数 $29<12\sqrt7$ 得到，其平方为 $841<1008$。于是 $m=\Omega B_0/A_0<48/7<9$，违反 $m>9$。全部 $\sigma$ 情形穷尽，故参数只能相同。
+
+同一个 $t$ 固定 $h,T=C/h$ 和整个式 (3.2)；引理 3.4 的秩一二次式固定唯一合法 $r,c$，$d=24$ 已定，所以识别的是完整目标。差商仅在 $t\ne s$ 时除参数差，其余 $\sigma,\Omega,G$ 正；$\sigma=3$ 先单独处理，未除任何晚期样本、增益首项或判别式。这是并类定理的类内支撑，不另计新增内容。∎
+

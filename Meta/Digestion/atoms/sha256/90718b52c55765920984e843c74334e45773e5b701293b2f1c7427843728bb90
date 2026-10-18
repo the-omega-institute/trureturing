@@ -1,0 +1,17 @@
+**定义 168.2（树、正词与共同几何参照）。** 原始来源仍为非空自由有序二叉树
+
+$$
+T::=\alpha\mid\beta\mid\langle T,T\rangle.
+$$
+
+定义左到右叶词映射 $\operatorname{wd}$：两个叶分别送为字母 $a,b$，节点送为左右叶词的连接。令 $W=\{a,b\}^+$ 为非空正词，另添空贡献 $\epsilon$，写 $\widehat W=W\cup\{\epsilon\}$。每个非空词有左嵌套树代表；$\epsilon$ 不是原树或第三种叶。替换保持节点的左右顺序和括号，词上的规则为
+
+$$
+\rho(a)=b,\qquad \rho(b)=ba,\qquad
+\rho(hk)=\rho(h)\rho(k),\qquad \rho(\epsilon)=\epsilon.
+$$
+
+树和组成接口直接采用[基础卷定义1.1、1.3及定理1.4，钉版2e9bab02bb1e6d58f0659418318632e1c12d6938](https://github.com/the-omega-institute/trureturing/blob/2e9bab02bb1e6d58f0659418318632e1c12d6938/docs/develop/theory/FIB_RELATIONAL_CONTINUATION_GEOMETRY.md)。叶词映射忘括号，不替代原树身份。
+
+另供一个定向欧氏平面、共同原点 $0$ 和正交等长单位步 $e_a=(1,0),e_b=(0,1)$。原点是相对几何的参照，不是物理容器。沿词从左到右累计这两个单位步，得到 $P(h)$。一般有限实折线、有符号三角形链及分段 $C^1$ 曲线属于另声明的数学扩展域；其负方向和逆路不从正词菜单免费取得。面积沿用定义160.2。
+

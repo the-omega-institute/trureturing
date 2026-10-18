@@ -1,0 +1,43 @@
+### 460.1. 实际支撑覆盖与零价格亏损
+
+因为 $0\le h_j\le L_j/2000$，先有
+$Y_j\le A_j^{1/2+1/4000}$。对充分大的 $j$ 和全部 $p\le Y_j$，首层价格满足
+
+$$
+r_{p,1}=\frac{\log(1+1/p)}{\log p}
+>\frac1{(p+1)\log p}
+>\frac1{A_j\log A_j}=\lambda(A_j),
+$$
+
+因为 $(A_j^{1/2+1/4000}+1)\log(A_j^{1/2+1/4000})<A_j\log A_j$ 最终成立。
+§111.4 的唯一价格最优者取尽全部严格有益层，所以这些素数确实都出现在 $N_j$ 中。
+特别地，每个 $d\le D_j$ 的平方自由核都被支撑覆盖。
+
+此处只需要有限的调和和比较。按 $d=\operatorname{rad}(n)$ 分组，使用
+$\sum_{\operatorname{rad}(n)=d}1/n=1/\varphi(d)$（$d$ 平方自由），便有
+
+$$
+H_{D_j}=\sum_{n\le D_j}\frac1n
+\le\sum_{d\le D_j}\frac{\mu^2(d)}{\varphi(d)}
+=G_j,\qquad H_{D_j}\ge\log(D_j+1)>L_j/8.
+$$
+
+因此最终 $h_j=L_j/2000$，$B_j=A_j^{1+1/2000}$。
+区间 $(A_j,B_j]$ 中的每个合数都有一个不超过 $Y_j$ 的素因子，
+而第二个和中的每个素数底数也不超过 $Y_j$；它们全被实际支撑覆盖。
+又有 $Y_j<A_j$，故
+
+$$
+S_j^\circ=\sum_{A_j<p\le B_j}\frac1p.
+$$
+
+同一整数的价格亏损为
+
+$$
+d_{A_j}(N_j)
+=S(\lambda(A_j))-
+ \left(\log Z(N_j)-\lambda(A_j)\log N_j\right)=0,
+$$
+
+其中 $S$、$Z$ 和 $\lambda$ 沿用主卷 §98.1；没有换成另一个极值整数。
+

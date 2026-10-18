@@ -1,0 +1,49 @@
+**定理 57.4（完整 $V_7$、全域穷尽及最后真实 $c$）。** 对 $v$ 在 $[A]$ 的每个插入间隙构造一个完整 $V_6$ 子圈，保持 $A$ 的所选方向，再取整供应
+
+$$
+E_7=(v,[p,q,x,y,z,w,A]).
+$$
+
+独立定义的完整 $V_7$ 域是这些子域的不交并：删 $p,q,x,y,z,w$ 后记录 $v$ 在 $A$ 的间隙，唯一恢复所属子域。每个内部所选支持末标签属于 $p,q,x,y,z,w$，外层支持末 $v$，故全部旧末 $v$ 的 $b$ 保留，所有新增外层 $c$ 尚不存在，整开关合法。
+
+把外层端点延伸为 $R_i=(\rho^iU,v)$、$L_i=R_ib$，$0\le i<h$。删除 $p,q,x,y,z,w$ 后，$i=0,\ldots,6$ 全在特殊子域 $(v,A)$；它们正是 $v$ 在连续六所选标签所在原始 $A$ 间隙中的七个位置。其余 $i=7,\ldots,h-1$ 分别在其它各子域中一次。这是对实际圆字间隙的读取，不只按接触数猜归属。
+
+特殊子域提供 (B7pq) 的七条完整路径。每个非特殊完整 $V_6$ 子圈只删一条保留末 $v$ 的 $b$，故提供包含其全部顶点的实际同端点补路径。外层真实 $c$ 及这些完整补路径组成穷尽链
+
+$$
+L_6\xrightarrow cR_7\xrightarrow{\text{完整子路径}}L_7
+\xrightarrow cR_8\longrightarrow\cdots\longrightarrow
+L_{h-1}\xrightarrow cR_0.
+$$
+
+与 (B7pq) 合并，得到唯一完整端点圈：
+
+$$
+\begin{aligned}
+R_0&\xrightarrow{\beta}R_1\xrightarrow cL_0
+\xrightarrow{\beta}R_2\xrightarrow cL_1
+\xrightarrow{\beta}L_5\xrightarrow cR_6
+\xrightarrow{\beta}R_5\xrightarrow cL_4\\
+&\xrightarrow{\beta}R_3\xrightarrow cL_2
+\xrightarrow{\beta}L_3\xrightarrow cR_4
+\xrightarrow{\beta}L_6
+\xrightarrow{\text{外部完整链}}R_0.
+\end{aligned}
+$$
+
+这里 $\beta=\beta_{7,pq}$。十四特殊端点各出现一次，七条特殊完整路径各出现一次，每条非特殊子域完整补路径也各出现一次。独立子域分割及每个删边图的完整路径穷尽，保证展开后没有额外分量或隐藏圈。因此得到完整 $V_7$ 原生域上的一个简单圈，顶点数为
+
+$$
+2n(n-1)(n-2)(n-3)(n-4)(n-5)(n-6)(n-7).
+$$
+
+每条特殊路径取其实际完整 $V_6$ 圈词的指定子字；每条非特殊路径取对应子圈删唯一 $b$ 后的实际补字。按上式连接，得到原来 $a,b,c$ 的字面圈词。外部链最后一步恰是
+
+$$
+\boxed{L_{h-1}\xrightarrow cR_0=(p,q,x,y,z,w,A,v),}
+$$
+
+所以最终闭合边是所声明的真实生成元 $c$，不是只在抽象端点圈闭合。
+
+$n=10$ 时余基 $A$ 有三个标签，是这些标签上的唯一圆，故完整 $V_7$ 域为全部 $S_{10}$；较大 $n$ 时为指定适当插入层。这一完整单元没有提供下一 $V_8$ 所需标记配对，也没有由此宣告全 $k$ 单圈状态或原来所有 $n\ge4$ 的目标。
+

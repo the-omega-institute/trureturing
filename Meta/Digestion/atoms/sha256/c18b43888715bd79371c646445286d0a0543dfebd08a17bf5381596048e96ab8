@@ -1,0 +1,18 @@
+**Definition 11.3 (joint matching polytope).** A collection of local
+probability laws $p=(p_i)$, with $p_i\in\Delta(R_i)$, is matching if
+for every $e=(j,i)\in E$ the following equality holds as a law of the
+whole tuple $B_{ji}$:
+
+$$
+\pi_e:=(B_{ji})_*p_i
+       =(\operatorname{pr}_{ji}O_j)_*p_j.
+\tag{COK.61}
+$$
+
+Let $\mathcal P(\mathcal N)$ be this polytope and let
+$\mathcal P^+(\mathcal N;\boldsymbol w)$ restrict $p_i$ to $R_i^+$.
+Both are finite rational polytopes, possibly empty. Their defining
+equations have integer coefficients even when the positive weights
+are real: the weights select only the finite support in (COK.60).
+Equality of separate seed marginals is not the matching condition.
+

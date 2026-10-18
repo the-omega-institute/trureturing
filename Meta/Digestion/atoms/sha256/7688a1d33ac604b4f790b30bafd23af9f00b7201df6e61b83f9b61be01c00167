@@ -1,0 +1,62 @@
+**Theorem 3.2 (both directions of the entire acquired-entry fiber).**
+In the full global contract with encoder (NTL.7), the histories giving
+entry $E_*$ are exactly
+
+$$
+\{(a(b),S_*,\ell_b):b\in\{0,1\}^m\}.
+\tag{NTL.11}
+$$
+
+This is a bijection of $2^m$ inputs with $2^m$ genuine compatible
+histories; their originals and current trees are each pairwise distinct.
+Their required lag is exactly $\lambda_0+f(b)$.
+
+**Proof, realization.** By Theorem 2.2, every $a(b)$ is in the
+original cube and its early code is zero. Its legal lag is $\ell_b$.
+Homomorphic continuation of this one fixed original gives, at every
+slot,
+
+$$
+jq+a(b)_j+\ell_b=jq+K+\lambda_0+v(b)_j.
+\tag{NTL.12}
+$$
+
+Thus its actual current tree is $Y_b$. Every skeleton slot is reached,
+including a slot whose filling is a leaf. The displayed reference has
+$v(b)_s=0$ and is exactly $T_{sq+z_*}$.
+
+For completeness of the hidden partition, at any profile and lag in
+the full cube the exponent in slot $j$ lies in
+$[jq+\ell,jq+H+\ell]$. For $j<k$,
+
+$$
+kq+a_k+\ell-(jq+a_j+\ell)\ge q-H=1.
+\tag{NTL.13}
+$$
+
+The right clock separates different $T_n$, so hidden fillings at
+different original slots are actually unequal. Consequently their
+within-row partition is discrete; every self-equality and every
+cross-disequality is the stated one. The skeleton fixes the brackets,
+and the visible literal fixes all labels and descendant absence guards
+outside the holes. These are the complete row components of
+[NAR, (NAR.16.6)][NAR] and `canonicalRow_record_iff`, not just a
+scalar clock collision. Hence $V_{S_*}(a(b),\ell_b)=V_*$.
+
+**Proof, exclusion of every other history.** Suppose a legal full-cube
+history has this entry. Its code zero forces $a=a(b)$ for a unique
+$b$ by (NTL.8): normalization of $a$ recovers $v(b)$ and then $b$.
+Equality of the complete rows implies equality of their displayed
+literal reference trees. Taking the right clock and subtracting $sq$
+gives $a_s+\ell=z_*$. Since $a_s=t_b=K-f(b)$, this forces
+$\ell=\lambda_0+f(b)$. No additional histories satisfy the entry.
+The forward argument already checks all the hidden comparisons, so
+none of these histories is removed by a forgotten row constraint.
+
+Different $b$ have different normalized profiles, hence different
+$a(b)$ and different originals by the acquired clocks. Their current
+trees differ at any bit slot where the bits differ, again by the right
+clock. Each alternative uses its own original and that original's
+continuation throughout; alternatives are never spliced into one run.
+$\square$
+

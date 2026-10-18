@@ -1,0 +1,49 @@
+**Definition 73.1 (fixed product data).** Fix exactly Definition72.1's source,
+parameters, geometry and grounding. Write $\mathcal H=\mathcal H_\delta$,
+$\mathcal Q=\mathcal Q_\delta$, and $L=A_{\delta,D,1}$ as in (72.2)–(72.3).
+The free comparison space is
+$\mathcal H_2^{\rm fr}=L^2_{\rm sym}(X_D^2,\mu_\delta^{\otimes2})$.
+Ordered coordinates before exchange restriction give $n^2$ atomic pairs,
+$4n^2$ atom/cable slices and $4n^2$ cable/cable cells. In particular each
+$(p,p)$ has mass one; ground endpoints have no atomic coordinate.
+Every same-cable square is retained. Its diagonal has
+zero two-dimensional measure; this does not impose a zero collision trace.
+For $F=(F_{pq},F_{pe},F_{ep},F_{ef})$, the norm is
+
+$$
+\|F\|^2=\sum_{p,q}|F_{pq}|^2
+ +\delta\sum_{p,e}(\|F_{pe}\|_2^2+\|F_{ep}\|_2^2)
+ +\delta^2\sum_{e,f}\|F_{ef}\|_2^2.                 \tag{73.1}
+$$
+
+There is no additional normalization on the symmetric subspace. Symmetry means
+$F_{pq}=F_{qp}$, $F_{pe}(y)=F_{ep}(y)$ and
+$F_{ef}(x,y)=F_{fe}(y,x)$.
+Define $\mathcal Q_2^{\rm fr}$ by $H^1$ slices and $H^1$ full rectangles,
+with these trace conditions: a cell boundary at a source port equals the
+corresponding atom/cable slice in $L^2$; a slice endpoint at a source port
+equals its atomic pair value; grounded ends give zero in either coordinate.
+Explicitly, if $e$ meets $p$ and $f$ meets $q$,
+
+$$
+\operatorname{Tr}_xF_{ef}(p,y)=F_{pf}(y),\qquad
+\operatorname{Tr}_yF_{ef}(x,q)=F_{eq}(x),\qquad
+F_{eq}(p)=F_{pq}=F_{pf}(q).
+$$
+
+All incident boundaries use the same slice, including at shared ports.
+Thus incident slices approaching $(p,p)$ end at $F_{pp}$, which is allowed
+to be nonzero. On a dissected same-cable square the two diagonal traces
+agree, with no requirement that they vanish. This is equivalent to $H^1$
+on its full square. No point trace of an arbitrary rectangle at a corner
+is used. Put
+
+$$
+q_2^{\rm fr}[F]=a\left[
+ \sum_{e,q}\|\partial_xF_{eq}\|_2^2
+ +\sum_{p,f}\|\partial_yF_{pf}\|_2^2
+ +\delta\sum_{e,f}\int_{(0,1)^2}
+       (|\partial_xF_{ef}|^2+|\partial_yF_{ef}|^2)\right].
+                                                               \tag{73.2}
+$$
+

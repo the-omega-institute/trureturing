@@ -1,0 +1,111 @@
+### 20.3 The original zero face and exact full-residual controls
+
+For the same complete native laws, put $z_r=r(1-r)$. Their coordinates are
+
+$$
+P_{p,r}(w_{n,0})=r z_r^n,\qquad
+P_{p,r}(w_{n,1})=(1-r)^2z_r^n,\qquad
+P_{\beta,r}=(1-r)\delta_\beta+r\alpha P_{p,r},
+\tag{20.12}
+$$
+
+with zero infinite masses. Define $E_p=\{w_{0,1},w_{1,1},w_{2,1}\}$ and $E_\beta=\{\beta,\alpha w_{0,1}\}$, and retain
+
+$$
+\rho_p=\frac{1116529}{22781250},\quad
+\rho_\beta=\frac{239}{6750},\quad
+C=\frac{11758471}{22781250},\quad H=\frac{5261}{6750}.
+$$
+
+For $D_p=Q$ and $D_\beta=W$, the zero face of Section 11.8 requires the simultaneous complete coordinate boxes
+
+$$
+P_{s,a}(\omega)\wedge P_{s,b}(\omega)
+\le D_s(\omega)\le
+P_{s,a}(\omega)\vee P_{s,b}(\omega)
+\quad(\omega\in\Omega_s),\quad \nu_s\text{-almost surely},
+\tag{20.13}
+$$
+
+the midpoint means
+
+$$
+\int Q(E_p)\,d\nu_p=C,\qquad
+\int W(E_\beta)\,d\nu_\beta=H,
+\tag{20.14}
+$$
+
+and every actually supported configuration-TV budget
+
+$$
+\int\operatorname{TV}(Q,P_{p,r_k})\,d\nu_p\le\rho_p,\qquad
+\int\operatorname{TV}(W,P_{\beta,r_k})\,d\nu_\beta\le\rho_\beta
+\quad(k:\mu(k)>0).
+\tag{20.15}
+$$
+
+TV remains inside the configuration integral. Explicitly, on the compatible-pair domain $\mathfrak C$ of Definition 11.2 the original objective is
+
+$$
+\mathcal J=\max\left\{
+\sup_{k:\mu(k)>0}\int\operatorname{TV}(Q,P_{p,r_k})\,d\nu_p-\rho_p,
+\ \sup_{k:\mu(k)>0}\int\operatorname{TV}(W,P_{\beta,r_k})\,d\nu_\beta-\rho_\beta
+\right\},\qquad j_c=\min_{\mathfrak C}\mathcal J.
+$$
+
+Under compatibility, (20.13)--(20.15) are the original zero-level conditions $\mathcal J=0$: the endpoint triangle identity gives the boxes and midpoint means, while (20.15) retains all targets. For marginals satisfying (20.13)--(20.15), the exact remaining flow-existence condition is (20.5) in both directions at every level. It produces new full flows with those marginals. It does not preserve a previously chosen joint flow, a prescribed three-stage coupling, an acquired-return statistic, a coherence-defect budget or a COMPLETE/resource budget.
+
+The original-history meaning of the target suprema is unchanged. PAID Lemma 14.1 obtains common acquired rows by limits along finite paid histories on one held-record fibre. For countable priors its likelihood ratios are dominated by a constant multiple of $\mu(i)/\mu(k)$ for each fixed supported $k$; this is summable. Thus all supported pure-target bounds concern the same rows of the same installed source. They are not separate pure-source experiments. PAID Lemma 2.1.1 and Section 11.4 supply original product realization when an appropriate finite table is available, retaining both seeds, records, permissions, the same update program, noncompletion and matching Stop. Theorem 20.2 alone supplies neither that finite table nor an exact sampler.
+
+The following two controls apply the full criterion on its stated domain.
+
+For the Chapter 15 pair, let $\nu_p=\delta_Q$, $\nu_\beta=\delta_W$. Explicitly, with $s_a=1349641/2857232$, $s_b=1507591/2857232$,
+
+$$
+\begin{aligned}
+Q(w_{0,0})&=\frac{1829}{5000},&
+Q(w_{0,1})&=\frac{995}{2484},\\
+Q(w_{1,1})&=\frac{72763013}{776250000},&
+Q(w_{2,1})&=\frac{19907803}{911250000}.
+\end{aligned}
+$$
+
+Every other finite coordinate of $Q$ equals $s_aP_{p,a}+s_bP_{p,b}$, $Q(\infty_p)=0$, and
+
+$$
+W=\frac{79}{125}\delta_\beta+\frac{46}{125}\alpha Q,\qquad
+U_0=1-Q(\alpha)=\frac{3171}{5000}.
+$$
+
+Sections 15.2--15.5 establish its complete boxes, tails, means, supported losses and selected event-output tests. The full A residual is exactly $\mathcal R_A(W)=Q$, including infinity. In the B direction the full coordinate formulas are
+
+$$
+\mathcal R_B(Q)(\beta)=\frac{Q(w_{0,1})}{U_0},\qquad
+\mathcal R_B(Q)(\alpha w_{n,i})=\frac{Q(w_{n+1,i})}{U_0},\qquad
+\mathcal R_B(Q)(\infty_\beta)=0.
+$$
+
+The immediate beta coordinate already yields
+
+$$
+Q(w_{0,1})-U_0W(\beta)=-\frac{97339}{388125000},\qquad
+\mathcal R_B(Q)(\beta)-W(\beta)=-\frac{97339}{246148875}\ne0.
+\tag{20.16}
+$$
+
+Our partition $\Pi^\beta_2$ contains $\{\beta\}$, so the first line of (20.5) fails its affine-mean test at $\ell=2$. The constant input test $\phi=1$ in (20.7) fails as well. Dirac marginals have only the point-mass coupling, so no alternative flow with these marginals can repair this defect. The selected scalar event orders pass, but they do not replace this complete-vector test. The failure is a falsifier for these given marginals, not for every full-vector certificate or every compatible pair.
+
+For a matching native endpoint control, take $r\in\{a,b\}$ and marginals $\delta_{P_{p,r}},\delta_{P_{\beta,r}}$. Equation (20.12) gives, for every $n,i$,
+
+$$
+\begin{aligned}
+\mathcal R_B(P_{p,r})(\beta)&=1-r,\\
+\mathcal R_B(P_{p,r})(\alpha w_{n,i})
+ &=\frac{P_{p,r}(w_{n+1,i})}{1-r}=rP_{p,r}(w_{n,i}),\\
+\mathcal R_A(P_{\beta,r})(w_{n,i})&=P_{p,r}(w_{n,i}).
+\end{aligned}
+\tag{20.17}
+$$
+
+Both residuals have zero mass at infinity. Hence $\mathcal R_B(P_{p,r})=P_{\beta,r}$ and $\mathcal R_A(P_{\beta,r})=P_{p,r}$ as complete measures; both lines of (20.5) are equalities at every level. This proves compatibility of the matching endpoint controls. A single endpoint control does not satisfy the midpoint conditions. Even the fair mixture of the two matched endpoint components, which does satisfy both means, violates a supported nonendpoint p budget by the strict chord inequality below. Endpoint compatibility therefore supplies no zero-excess assertion for a prior with a supported nonendpoint.
+

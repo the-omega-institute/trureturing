@@ -1,0 +1,27 @@
+**Definition 8.2 (explicit consumer and unresolved interface problem).**
+The consumer is a prescribed finite-state observer or read/update/halt
+controller recovering a complete original relation row over an entire
+source family. It consumes finite chart and descriptor data, exact joint
+predicates and a reached-address monotonicity law. It can be a native
+controller, a finite relational register controller or another effectively
+presented task with these same interfaces. Its synthesis decision and
+positive literal extraction are independent of which qualifying chart
+presentation supplied them.
+
+The remaining project gap is to prove these interface hypotheses for
+**general signed fibers outside cycle-covered recognition**, including
+unforced non-atomic skeletons and jointly constrained residual coordinates.
+In particular, one needs a complete finite arithmetic representation of
+the same original sources, exact whole-row Same, descriptor coverage by
+common literals and all-source/all-epoch exact Reply. A finite image cover,
+a feasible fixed-rank witness or a bounded-prefix lifting result by itself
+does not supply those relations. This volume proves what follows if they
+are supplied; it does not solve that missing interface problem.
+
+No result here establishes minimality of the native $\alpha/\beta$ alphabet,
+native undecidability, a complete solver for arbitrary signed residual
+fibers, physical spacetime, cost-optimal installation, or Lean/kernel
+verification. In particular, failure to verify an interface is not a
+negative instance of (UDB.17), and failure of a source-free boundary is
+not failure of the original finite-controller task.
+

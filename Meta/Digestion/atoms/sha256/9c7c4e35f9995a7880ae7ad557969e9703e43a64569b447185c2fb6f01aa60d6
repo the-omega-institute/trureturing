@@ -1,0 +1,36 @@
+### 102.6. The same positive block has negative determinant
+
+The exact determinant of (13)--(14), after (16), is
+\[
+\det(EC^*)=\frac{\alpha^2b^2d^2s^2}{4}\,\Xi,
+\tag{19}
+\]
+where
+\[
+\Xi=4cr(1-k)q+(4c^2-1)r^2-2k(r+1)+1.
+\tag{20}
+\]
+For an explicit direct expansion, the bracket before division by \(bd\) is
+\[
+2cr(1-k)(b^2+d^2)
+ +bd\bigl((4c^2-1)r^2-2k(r+1)+1\bigr).
+\]
+Thus (19) can also be checked by multiplying \(\det E\) and \(\overline{\det C}\); it requires only \(u\overline u=1\), before the norm relation is substituted.
+
+From (17), \(q=c(k^2-r)/(1-k^2)\), with a strictly positive denominator. Therefore
+\[
+\Xi=\frac{4c^2kr(k+r)}{1+k}-r^2-2kr-2k+1.
+\tag{21}
+\]
+Since \(c<1\) and \(k,r>0\),
+\[
+\begin{aligned}
+\Xi
+&<\frac{4kr(k+r)}{1+k}-r^2-2kr-2k+1\\
+&=\frac{(r-1)\bigl((2k-1)(k+1)+(3k-1)r\bigr)}{k+1}
+<0.
+\end{aligned}
+\tag{22}
+\]
+The last inequality follows from (18). Every prefactor in (19) is strictly positive. Hence \(\det(EC^*)<0\), contradicting the positive definiteness of the very same block in (4). This proves the theorem.
+

@@ -1,0 +1,34 @@
+**Definition 1.2 (services and three different prices).** A comparator is
+a common deterministic effective service, correct and terminating on
+every source in its stated comparison domain, with actual operations
+$\mathsf{Read}(p)$, forward same-register $\mathsf{ApplyRho}$, and
+absorbing $\mathsf{Halt}$. Its common control may depend on actual replies.
+There is no reset, reroot, clone, hidden selector, source-membership port
+or uncharged source-related input. Updates expose no additional timing
+channel. Define the sourcewise costs and worst-coordinate vector by
+
+$$
+\begin{aligned}
+c_B(u)&=(q_B(u),a_B(u),\ell_B(u)),
+&\ell_B(u)&=\sum_{\text{actual post-entry reads }p}|p|,\\
+b(B)&=(\sup_Dq_B,\sup_Da_B,\sup_D\ell_B).
+\end{aligned}
+\tag{NFO.3}
+$$
+
+Here $q$ counts every actual raw read, including repeated calls and
+absent replies; $a$ counts actual post-entry updates. A root read costs
+one call and zero literal length. The length includes the whole physical
+address, not just a class suffix. For rational $\lambda\ge0$, put
+
+$$
+W_\lambda(B)=\sup_{u\in D}
+ [\lambda_q q_B(u)+\lambda_a a_B(u)+\lambda_\ell\ell_B(u)].
+\tag{NFO.4}
+$$
+
+The sum precedes the supremum. Coordinate maxima can have different
+realizing sources. Local computation, installation, address construction,
+memory, output, authentication, retention and physical time are separate
+resources; finite action counts do not assign prices to them.
+

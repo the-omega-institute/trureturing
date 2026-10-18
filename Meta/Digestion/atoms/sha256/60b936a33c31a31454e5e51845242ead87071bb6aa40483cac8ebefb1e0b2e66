@@ -1,0 +1,28 @@
+## 200. The exact threshold forced by eta
+
+The fixed pair {Z,U} makes eta distinct from tau and rho. It is genuine
+because every Z occurrence is genuine. Its axial M angle theta and
+two transverse Z angles gamma are actual M/Z slots. Since tau and rho
+consume more than 2*pi together, their remaining complete capacity
+implies theta+2*gamma<pi, even if eta contains additional M or Z axes.
+
+Its exact response is
+ gamma=atan(A2*t)+atan(B2*t), t=cot(theta/2)>0,
+ A2/B2=[sqrt(z^2-1) +/- sqrt(u^2-1)]/(z+u)
+       *sqrt((m-1)/(m+1)).
+Both parameters are positive since z>m>=u. If A2+B2>=1, then
+atan(A2*t)+atan(B2*t)>atan(t): if the left sum is at least pi/2,
+the claim is immediate; otherwise its tangent is
+(A2+B2)*t/(1-A2*B2*t^2)>t. This would give theta+2*gamma>pi,
+contradiction. Thus A2+B2<1, which is exactly u>T2.
+
+Finally put alpha=sqrt((m-1)/(m+1)), beta=s. Then
+ T=2*(m+1)*alpha*beta-m,
+ T2=2*(z+1)*alpha*beta-z,
+so T2-T=(z-m)*(2*alpha*beta-1)>0. Also m>T.
+If u<=m the established u>T2 implies u>min(m,T2); if u>m the
+same conclusion is immediate. Both possible minima strictly exceed T.
+The actual third owner and this improved gap are the conclusions;
+no claim is made that its remaining face continuations are impossible.
+
+

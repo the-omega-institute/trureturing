@@ -1,0 +1,67 @@
+**Definition 2.1 (positive source and the double-wall restriction).** For an
+original valid base $b=(X,Y,Z)$ put $r=1-Z$. Thus
+$0<Z<1$, $0<X,Y<r$, and
+
+$$
+\begin{aligned}
+J(b)&=(\max(0,X+Y-r),\min(X,Y)),\\
+p_b(x)&=(r-X-Y+x,X-x,Z,Y-x,x),\\
+d&=(1,-1,0,-1,1),\\
+I_b(x)&=p_0(x)^{-1}+p_1(x)^{-1}+p_3(x)^{-1}+p_4(x)^{-1},\\
+w_b(x)_i&=d_i/(p_b(x)_i I_b(x)).
+\end{aligned}
+\tag{RB.1}
+$$
+
+The mode order is $(0,1,2,3,13)$, with index $4$ denoting mode $13$.
+An original control has finite duration $T\geq0$, continuous real
+$k,\chi$ on $[0,T]$, strict $k(t)\in J(b)$, finite variation of $\chi$,
+and either absolute continuity of both coordinates or the supplied finite
+piecewise $C^1$ regularity with continuous rates on each closed piece.
+The latter implies absolute continuity by finite integration and
+telescoping. Its real residual is
+$H_i(t)=\int_0^t w_b(k(u))_i\chi'(u)\,du$.
+These are the definitions in `FiniteRectangleTransport` and
+`OriginalControlComposition`; they grant no waveform read port.
+
+The new results restrict to
+
+$$
+X=Y=c=r/2,\qquad 0<x<c,\qquad
+p(x)=(x,c-x,Z,c-x,x),
+\qquad
+w(x)=\left(\frac12-\frac{x}{r},-\frac{x}{r},0,
+                    -\frac{x}{r},\frac12-\frac{x}{r}\right).
+\tag{RB.2}
+$$
+
+No off-wall generalization is asserted. Fix a common positive preparation
+and calibrated preparation phases $\theta_i$ where actually supplied, with
+$\theta_2=0$. Let
+
+$$
+\begin{aligned}
+e&=e_2,\\
+U_+&=(e^{-i\theta_0}e_0+e^{-i\theta_4}e_4)/\sqrt2,\\
+U_-&=(e^{-i\theta_1}e_1+e^{-i\theta_3}e_3)/\sqrt2,\\
+\mathcal B&=\operatorname{span}_{\mathbb C}\{U_+,U_-\},\qquad
+\mathcal V=\mathbb Ce\oplus\mathcal B,\\
+n_s(x)&=\sqrt{x/c}\,U_++s\sqrt{1-x/c}\,U_-,\\
+\psi(x,z,m)&=\sqrt Z\,e+z\sqrt r\,n_{(-1)^m}(x),
+\qquad |z|=1,\quad m\in\mathbb Z.
+\end{aligned}
+\tag{RB.3}
+$$
+
+The displayed directions are orthonormal and all these specimen vectors
+have norm one. Inner products are conjugate linear in the first argument.
+Writing $z=e^{-i\beta}$, the real residual is
+
+$$
+(\beta,\beta-\pi m,0,\beta-\pi m,\beta).
+\tag{RB.4}
+$$
+
+The specimen sees parity, but the actual source keeps every signed integer
+$m$ and its real lift.
+

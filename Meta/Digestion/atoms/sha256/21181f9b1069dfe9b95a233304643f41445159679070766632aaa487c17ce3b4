@@ -1,0 +1,27 @@
+**引理3.1（实际与合成的两种返回矩阵）。** 置 $b_j=1-u_j-a$，实际第四段返回矩阵是 $\mathsf A\mathsf B$，而合成完整返回圈的联合概率矩阵是
+
+$$
+\mathsf R=\operatorname{diag}(1-u_0,1-u_1)\mathsf A
+\operatorname{diag}(0,1/2)\mathsf B
+=a\begin{pmatrix}x&1-x\\x&1-x\end{pmatrix}.
+\tag{3.6}
+$$
+
+同时
+
+$$
+\lambda\mathsf A=(1-k,k)=:\kappa,\qquad
+\kappa\mathsf B=\lambda,\qquad
+xu_0+(1-x)u_1=U.
+\tag{3.7}
+$$
+
+**证明。** (3.3)给 $(1-u_j)c_j/2=a$，所以(3.6)逐项成立。$l$ 的定义给 $lu_0+(1-l)u_1=\bar u$。两点加权倒数的恒等式为
+
+$$
+\frac l{1-u_0}+\frac{1-l}{1-u_1}
+=\frac{1-u_0-u_1+\bar u}{(1-u_0)(1-u_1)}.
+$$
+
+$u_1$ 的定义使右边恰为 $G$。故 $\lambda\mathsf A$ 的第二分量为 $2aG=2V=k$；其第一分量为 $1-k$。$y$ 的定义给 $(1-k)y+kx=l$，证明第二个等式。$x$ 的定义给最后一式。所有运算分母由参数表及 $(1-u_0)G>1$ 保证正。实际在条件于同一个输入字母后不乘合成概率；这正是两种返回矩阵不同的原因。证毕。
+

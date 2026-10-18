@@ -1,0 +1,21 @@
+**分支 $Z=0$。** 式 (4.8) 前两个在 $(\lambda,\beta/h)$ 上的矩阵和右端是
+
+$$
+\begin{pmatrix}2(3\rho-4)&16\rho+12\\7\rho-4&16\rho+8\end{pmatrix},
+\qquad \binom{3\rho-4}{0}.
+$$
+
+行列式为 $-4Z$。若 $Z=0$，消去 $\beta/h$ 会强迫 $(3\rho-4)(16\rho+8)=0$，但
+
+$$
+Z(4/3)=400/9,\qquad Z(-1/2)=-15/2
+$$
+
+均非零，矛盾。故 $Z\ne0$，Cramer 公式给
+
+$$
+\lambda=\frac{2(4-3\rho)(2\rho+1)}Z,\qquad
+\frac\beta h=\frac{(3\rho-4)(7\rho-4)}{4Z}.
+\tag{5.2}
+$$
+

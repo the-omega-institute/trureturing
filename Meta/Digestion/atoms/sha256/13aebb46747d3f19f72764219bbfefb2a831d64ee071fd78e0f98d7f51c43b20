@@ -1,0 +1,26 @@
+**Lemma 97.3 (All lower terms, independently of the tail cap).** For every
+sequence (73.3), $A\in\mathcal A_2$ has $e_a(A)\ge F_A$, and
+$A\in\mathcal N_2$ or $\mathcal O_2$ has $e_a(A)\ge F_R$.
+
+**Proof.** A zero-error finite-hard-count acquisition is excluded by
+Proposition 89.1. For positive uniform error $r=e_a(A)\le1$, the supplied
+late-mark bound (85.1) at $n=3,k=2$ gives $(w-r)_+\le3r$ and
+therefore $w\le4r$. Lemma 97.1 gives $w+z\le6r$. For the adaptive
+last term, Theorem 79.2 applies at cap $r$ and the hard bound gives
+
+$$
+2\ge\sup_x\mathsf E_AK_{A,x}
+ \ge\left(\sum_{i\ge1}(a_i-r)_+-r\right)_+
+ \ge u+v+w+z-5r.
+\tag{97.8}
+$$
+
+The last step uses $(a_i-r)_+\ge a_i-r$ only for the first four terms;
+it does not assume that other active coordinates are absent. For the
+restricted classes, Theorem 91.1 gives $u+w+z-1\le5r$ and Lemma 97.2
+gives the remaining term. These statements also give necessary
+inequalities at any asserted cap $\varepsilon\ge r$. The late-mark
+condition $z\le3r$ at $n=4$ follows from $w\ge z$ and $w+z\le6r$,
+so it adds no term here. All comparisons retain arbitrary-address
+competitors and full-carrier laws. $\square$
+

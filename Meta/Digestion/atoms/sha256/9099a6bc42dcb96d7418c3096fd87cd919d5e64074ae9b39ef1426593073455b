@@ -1,0 +1,16 @@
+**Definition 397.1 (The full comparison assertion).** With the inherited objects of Definitions 394.1–394.3, the comparison assertion remains exactly [XXVI 393.1](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XXVI.md#393-the-simultaneous-replacement-still-required):
+
+$$
+\begin{gathered}
+\forall L\ge8\ \forall y\ge0\text{ full with }\Delta_O(y)=1,
+\quad\exists V\ge0\text{ full}\ \exists\theta\in[0,1]:\\
+\Delta_N(V)+\theta\le1,\qquad
+\sigma_{H_L}(Q(y)-Q(V))\le\theta.
+\end{gathered}
+\tag{397.1}
+$$
+
+No fixed class totals, shared product or Markov law, fixed complementary allocation, named score basis, first-zero-invariant output law or zero residual is required here. All zero-$Q$ gauge directions, signed residuals, both endpoints of $\theta$ and nonzero zero-$N$-excess scores are permitted, with the same entire $V$ and the same $\theta$ in both inequalities. Theorem 396.1 concerns a restricted completion map; its correlated certificate neither proves (397.1) for other full scores nor refutes it.
+
+The original strict-separation alternative has the quantifiers of XXVI 393.1: one entire positive nonincreasing vanishing sequence in (394.1), one complete original common-seed $A_N\in\mathcal N_2$ attaining $c_0=e_a(A_N)$, and some $\varepsilon>0$ such that every original $A_O\in\mathcal O_2$ satisfies $e_a(A_O)\ge c_0+\varepsilon$, where $e_a$ is the supremum of total variation error over all actual sources and measurable events. Every source, arbitrary query address, full-carrier output and closed tail tie remains in that assertion. The auxiliary scores in Theorem 396.1 are not cap-feasible probability kernels or original error attainers, and supply no such separation. The original nonatomic-target and complete paid-$M1$ assertions retain their own target and resource conditions; neither is identified with the fixed-total score completion problem.
+

@@ -1,0 +1,6 @@
+**Corollary 6.2 (N3 at $d=0$).** A uniformly recovering five-read constant-drift history must have a regular pencil.
+
+**Proof.** If it were identically singular, Theorem 5.1 would give a nonzero safe $K$ with signal in $\mathcal P_{-1}=\{0\}$ and rank three everywhere. Lemma 6.1 contradicts that rank. ∎
+
+This is consistent with, and also follows from, the credited one-erasure span restrictions. It is not a new read lower bound and does not exclude regular five-read pencils.
+

@@ -1,0 +1,24 @@
+**Convention 2.3 (Inherited numerical inputs).** We use the following
+ordinary results with their stated ownership:
+
+$$
+\begin{aligned}
+S_1&=\frac a2+a\eta,\qquad
+T=\frac a2+a\eta(1+c),\\
+Z&=\frac a2+a^2\eta(1+c),\qquad
+D=a^2\eta+2a\eta^2,\\
+S_3&=Z+D=\frac a2+3a^2\eta+2\eta^3.
+\end{aligned}
+\tag{2.3}
+$$
+
+[Original, Theorem 11.4][O] and [Paid Risk, Theorem 4.1][P] own the
+unrestricted almost-sure one-read correct optimum $S_1$. [Two Installed,
+Theorem 6.1][I2] bounds every $q_2=1$ table with at most two read rows
+by $T$, irrespective of its halt-row count. Here $q_2$ means return
+within two calls almost surely. [Three Read, Theorem 7.1][E3] owns the
+unrestricted $q_3=1$ optimum $S_3$; its Theorem 12.4 owns the exact
+all-attainers minimum $M_3=9$, with at least six read and three halt
+rows. Their constructive realizations are inherited as well. None of
+these values or minima is counted as a new result of this volume.
+

@@ -1,0 +1,10 @@
+**Example 10.3 (why a sealed-row counter does not index all cuts).** Consider
+the cut after Native Read commitment and the next cut after writing one row
+bit. The source, update epoch, sealed semantic row prefix and pending semantic
+event can agree, but the writable tape cell, head/phase and remaining work
+differ. A clock counting only sealed rows does not distinguish them. The
+receipt count $n$ changes at every primitive, including that write. If a
+primitive implementation removes the atomic receipt convention, it must add
+its meter-update phase to the reconstruction index; a stale stored numeral
+alone does not justify the all-cut theorem.
+

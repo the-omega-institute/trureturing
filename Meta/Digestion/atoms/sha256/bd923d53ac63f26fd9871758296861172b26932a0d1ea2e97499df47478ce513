@@ -1,0 +1,19 @@
+**Lemma 38.3 (nested live supports cannot merge).** Two live cube histories
+of the same preparer ending at one running state cannot have S ⊂ T.
+
+**Proof.** Write h and g for the hit counts in S and T, put b = |T ∖ S| > 0,
+and let U = [5] ∖ T. Complete the T history to weight two by assigning
+exactly 2 − g ones on U. Its saturated suffix queries only U and the already
+common profile call, and then enters the zero entry. Give the S history the
+same values on U and assign one to every coordinate in T ∖ S. It follows
+that identical suffix from the common state, because none of those private
+coordinates is queried in the suffix. Correctness of the zero entry gives
+h + b + (2 − g) < 3, hence h + b ≤ g.
+
+Conversely complete the T history to weight three by assigning 3 − g ones on
+U, and give every coordinate in T ∖ S value zero for the S source. The same
+suffix now enters the one entry. Correctness gives h + (3 − g) ≥ 3, hence
+h ≥ g. These inequalities contradict b > 0. The two completions are actual
+finite origins, and their old assignments on S ∩ T need not be compared:
+the common suffix reads only U and the profile word. ∎
+

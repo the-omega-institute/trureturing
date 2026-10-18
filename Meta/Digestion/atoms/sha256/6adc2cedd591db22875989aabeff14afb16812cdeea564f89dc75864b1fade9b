@@ -1,0 +1,10 @@
+**定义 1.3（任意偏置及两种尺度符号）。** 固定任意 $D_0\in\mathbb R$ 和 $\lambda\in\mathbb R\setminus\{0\}$，置
+
+$$
+f=g/\lambda,\qquad d=(\delta-D_0)/\lambda,\qquad
+\widehat z_i=(z_i-D_0)/\lambda.
+                                                               \tag{1.3}
+$$
+
+于是 $\widehat z_i=f(i)\operatorname{tr}(A_iP)+d$，逆映射为 $(P,f,d)\mapsto(P,\lambda f,D_0+\lambda d)$。这对两种非零尺度符号都为双射，保留所有响应相等关系、完整目标差异、实际子纤维与 $L_s$。$D_0$ 是历史偏置，不是对整个纤维的真实漂移承诺。
+

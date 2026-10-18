@@ -1,0 +1,117 @@
+## 9. 共同记录的圆盘与参考递归
+
+**假设 C-9.1（共同纯记录）。** 另供同一个复 Hilbert 载体、归一化记录 $`o,u_0,v_0`$ 及可取得的关系条目。内积共轭线性于第一槽、线性于第二槽。置 $`a=\langle o,u_0\rangle,b=\langle o,v_0\rangle,c=\langle u_0,v_0\rangle`$。已知 𝑎,𝑏、待补 𝑐 的 Gram 为
+
+
+```math
+G_{\rm rec}=\begin{pmatrix}1&a&b\\\bar a&1&c\\\bar b&\bar c&1\end{pmatrix}.
+```
+
+
+[C-R4] §109 的退相干记录矩阵 $`\Gamma_{ij}=\langle e_j,e_i\rangle`$ 是通常 Gram 的转置；正性和秩相同，密度非对角因子的索引约定仍须保持。
+
+**命题 C-9.2（给定共同参考后的精确可实现性）。** 此三记录可在某个复 Hilbert 空间共同实现，当且仅当 |𝑎|,|𝑏|≤1 且
+
+
+<table><tbody><tr><td>
+
+```math
+|c-\bar a b|^2\le(1-|a|^2)(1-|b|^2).
+```
+
+</td></tr></tbody></table>
+
+
+其行列式为右侧容量减左侧平方。两模长均小于一时，盘内秩三、圆周秩二；两模长均一时秩一；恰一个模长一时秩二。这里秩是该纯记录实现的最小载体维数。
+
+**证明。** $`u_\perp=u_0-ao,v_\perp=v_0-bo`$ 的范数平方分别 $`A=1-|a|^2,B=1-|b|^2`$，内积 $`c-\bar a b`$，故必要性由 Cauchy–Schwarz。$`A\gt 0`$ 时构造
+
+
+```math
+o=(1,0,0),\quad u_0=(a,\sqrt A,0),\quad
+v_0=\left(b,\frac{c-\bar a b}{\sqrt A},
+\sqrt{B-\frac{|c-\bar a b|^2}{A}}\right).
+```
+
+
+条件保证归一化和所有重叠；𝐴=0 时强制 $`c=\bar a b`$，取 $`u_0=ao,v_0=bo+\sqrt B f`$，$`f\perp o`$。消去参考列后 $`G_{\rm rec}`$ 合同于 1 加二阶残差 Gram，给行列式和全部秩分支。任意记录的 Gram 秩等于其张成维数，谱平方根实现达到该维数，故最小性成立；固定 $`ℂ^2`$ 载体只允许秩至多二，不能实现任意盘内点。□
+
+**命题 C-9.3（成对合法但整体不合法）。** 𝑎=𝑏=9/10,𝑐=-9/10 每对单位记录都可实现，但三者共同不可实现。
+
+**证明。** 圆心 81/100、半径 19/100，实轴可行区间 [31/50,1] 排除 -9/10。等价地 [C-R4] 命题 109.3 的矩阵在 (-1,1,1) 上有特征值 -4/5，其余二值 19/10，行列式 -361/125。三个独立的成对实现不构成共同实现。□
+
+**定义 C-9.4（已经保留的参考列）。** 在同一载体中，𝐸 是满列秩参考列，𝐹 是待比较列，置 $`A=E^\dagger E\gt 0,B=E^\dagger F,C=F^\dagger F`$。为避免与原生 𝑆 混淆，剩余关系记 $`𝒮=C-B^\dagger A^{-1}B`$。
+
+**命题 C-9.5（残差递归服务共同实现任务；Schur 中间步骤见 [C-L1] 附录 A.5.5）。**
+
+
+<table><tbody><tr><td>
+
+```math
+P_E=E(E^\dagger E)^{-1}E^\dagger,\qquad
+𝒮=F^\dagger(I-P_E)F\succeq0,
+```
+
+</td></tr></tbody></table>
+
+
+```math
+\det\begin{pmatrix}A&B\\B^\dagger&C\end{pmatrix}
+=\det A\det𝒮,\qquad
+\mathrm{rank}G=\mathrm{rank}A+\mathrm{rank}𝒮.
+```
+
+
+正主元 $`𝒮_{aa}\gt 0`$ 新增参考后剩余条目为
+
+
+<table><tbody><tr><td>
+
+```math
+𝒮'_{ij}=𝒮_{ij}-
+\frac{𝒮_{ia}𝒮_{aj}}{𝒮_{aa}}.
+```
+
+</td></tr></tbody></table>
+
+
+零主元强制整行整列零，不能除零。相关参考先取实际张成空间独立基；若用 $`A^+`$，须保留 $`\mathrm{range}B\subseteq\mathrm{range}A`$。
+
+**证明。** $`P_E`$ 是正交投影，代入得残差 Gram。令
+
+
+```math
+W=\begin{pmatrix}I&-A^{-1}B\\0&I\end{pmatrix},\quad
+W^\dagger G W=\begin{pmatrix}A&0\\0&𝒮\end{pmatrix},\quad\det W=1,
+```
+
+
+证明行列式和秩；将一个剩余列分量投影到新参考给主元更新。PSD 的二阶主子式强制 $`|𝒮_{ia}|^2\le𝒮_{ii}𝒮_{aa}`$，零主元遂行列全零。奇异参考的 PSD 候选若 $`v\in\ker A`$，对 (𝑡𝑣,𝑤) 的二次式任意变 𝑡 强制 $`v^\dagger Bw=0`$，即 $`(I-AA^+)B=0`$；在实际非零参考空间消元给 $`C-B^\dagger A^+B\succeq0`$ 及秩相加。全部大矩阵含冗余列时行列式零，不滥用非零行列式积。概率残差代入 𝐸=𝑏,𝐹=(𝑥,𝑦),𝐴=𝑟；记录圆盘代入 $`E=o,F=(u_0,v_0),A=1`$。两者同为扣除共享投影，但布尔 Fréchet 区间与复记录圆盘的可行集不同；残差正性不替代事件非负性，代数条目可计算也不等于实际已取得。□
+
+**命题 C-9.6（三份共同记录的循环判据）。** 对同一单位记录 $`e_1,e_2,e_3`$，按第二槽线性的约定置 $`a=\langle e_1,e_2\rangle,b=\langle e_2,e_3\rangle,c=\langle e_3,e_1\rangle`$。共同实现当且仅当
+
+
+```math
+G=\begin{pmatrix}1&a&\bar c\\\bar a&1&b\\c&\bar b&1\end{pmatrix}
+\text{ Hermitian},\quad |a|,|b|,|c|\le1,\quad
+\det G=1-|a|^2-|b|^2-|c|^2+2\mathrm{Re}(abc)\ge0.
+```
+
+
+预定载体维数 𝑑 时还须 $`\mathrm{rank}G\le d`$；最小抽象载体维数等于此秩。
+
+**证明。** 将共同参考取为 $`e_1`$，命题C-9.2中的三个条目依次为 $`a,\bar c,b`$，其精确圆盘不等式展开就是行列式非负；连同模界给必要性和充分构造。任意共同实现的 $`v^\dagger Gv=\|\sum_i v_i e_i\|^2`$ 非负；反向谱平方根 $`G=E^\dagger E`$ 的列归一化并实现全部重叠，实际张成维数等于 Gram 秩。因此分别合法的对子不能替代共同来源。所用单位、二阶主子式与秩条件都须保留。[C-R4] §§68、109；经典 Gram 工具同时供算术记录与几何记录分类消费。□
+
+**命题 C-9.7（成对模长遗漏闭环相位）。** 若三个重叠模长都为 $`1/\sqrt2`$，则 𝑎𝑏𝑐≠0 且共同实现要求 $`\cos\arg(abc)\ge1/\sqrt2`$。另供二维共同记录
+
+
+```math
+e_1=|0\rangle,\quad e_2=(|0\rangle+|1\rangle)/\sqrt2,\quad
+ e_3^\pm=(|0\rangle\pm i|1\rangle)/\sqrt2
+```
+
+
+时三个成对模平方都为 1/2，但 𝑎𝑏𝑐=(1± 𝑖)/4，行列式为零。
+
+**证明。** 代入命题C-9.6给 $`-1/2+(1/\sqrt2)\cos\arg(abc)\ge0`$。例中 $`a=c=1/\sqrt2,b=(1\pm i)/2`$；直接取内积和相乘给全部结论。独立重相位在环积中抵消，故成对模长遗忘的闭环关系并非标架更名可补。取得这些条目、比较相位及共同相干实现仍须另供；经典 𝜅 与复环积也不是同一读口。□
+

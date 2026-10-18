@@ -1,0 +1,94 @@
+**Theorem 87.4 (subcritical domain, proper critical completion and absence of a critical zero mode).** For $0<g<g_c$, $q_{2,\eta}$ is a closed nonnegative form on exactly $\mathcal E_2$. At $g=g_c$ its restriction to $\mathcal D_0$ has a nonnegative Friedrichs closure $\overline q_c$ with domain $\mathcal Q_c$, and
+
+$$
+\mathcal E_2\subsetneq\mathcal Q_c,\qquad
+\{\psi\in\mathcal Q_c:\overline q_c[\psi]=0\}=\ker H_F=\{0\}.
+\tag{87.19}
+$$
+
+Here $H_F$ is the associated nonnegative self-adjoint operator. On $\mathcal E_2$ the closure agrees with the finite integral expression. On all of $\mathcal Q_c$ the closed form, rather than subtraction of its separate kinetic and potential integrals, defines the energy. For $0<g\le g_c$ the normalized infimum is zero and is not attained in the respective closed domain. There is no positive uniform spectral gap. No complete intrinsic characterization of $\mathcal Q_c$ or original-field threshold resonance classification is asserted.
+
+Proof. Set $S=aT+\eta D_2$ and $\theta=g/g_c$. Equation (87.3) gives $(1-\theta)S\le q_{2,\eta}\le S$ for $\theta<1$. The free intersection form is closed, and this norm equivalence proves the subcritical assertion, equivalently KLMN with relative bound $\theta<1$. At the endpoint the densely defined symmetric differential operator $aL+\eta D_w^2-g_c\Gamma$ on $\mathcal D_0$ is nonnegative by Proposition 87.3. The Friedrichs theorem gives a closable core form and its injective $L^2$ completion. Punctured-core density in $\mathcal E_2$ and $0\le q_c\le S$ imply inclusion and agreement there. They do not imply closedness on $\mathcal E_2$.
+
+To verify that the inclusion is proper for the actual field, put $\kappa=\sqrt{\eta/a}$ and take a smooth radial outer cutoff $\chi(\rho)$ equal to one near zero. Let $f_*=\chi\Phi$ and
+
+$$
+\Psi_*(\xi,s)=\kappa^{-1/2}f_*(\xi,s/\kappa).
+\tag{87.20}
+$$
+
+This is in $L^2$, but its ordinary gradient has a logarithmically divergent squared integral at zero. On compact boxes the $\mathcal E_2$ norm controls the ordinary $H^1$ norm, because $\partial_s$ is controlled and the shear coefficients are bounded. Thus the actual state in (87.20) is not in $\mathcal E_2$.
+
+Choose inner radial cutoffs $\zeta_\varepsilon$ that vanish for $\rho\le\varepsilon^2$, equal one for $\rho\ge\varepsilon$, and satisfy $|\nabla\zeta_\varepsilon|\le C/(\rho|\log\varepsilon|)$. Set $f_\varepsilon=f_*\zeta_\varepsilon$ and use (87.20) to define $\psi_\varepsilon$. Each is in $\mathcal E_2$ and has punctured-core approximants. For a difference $F=f_\varepsilon-f_{\varepsilon'}$ write $d=\max(\varepsilon,\varepsilon')$, small enough that $\chi=1$ on its support. Equation (87.7) gives
+
+$$
+\mathfrak t[F]\le C\bigl(|\log\varepsilon|^{-1}+|\log\varepsilon'|^{-1}\bigr),
+\quad |F|\le C/\rho,\quad |\nabla F|\le C/\rho^2,
+\quad \operatorname{supp}F\subset\{\rho\le d\}.
+\tag{87.21}
+$$
+
+These differences are real and radial in $\xi$, so the two magnetic cross terms cancel. The actual form identity for their scaled states is
+
+$$
+q_c[\psi_F]=a\mathfrak t[F]
+ +\frac a{4\kappa^2}\int r_\perp^2|\partial_tF|^2d\xi dt
+ +g_c\left(\frac{J[F]}{4\pi\kappa}-V[\psi_F]\right).
+\tag{87.22}
+$$
+
+All terms here are finite for each cutoff difference. The magnetic integral is $O(d^2)$. To bound the signed last difference, use the actual homogeneous bound $\mathcal G(\xi,s)\le C(r^4+s^2)^{-3/4}$. For any fixed $0<\alpha<1/2$ it implies
+
+$$
+\int|s|^\alpha\mathcal G(\xi,s)ds\le C_\alpha r^{2\alpha-1}.
+\tag{87.23}
+$$
+
+The power follows by $s=r^2v$; the tail integral converges precisely for $\alpha<1/2$. The bounds in (87.21) give, uniformly in the cutoffs,
+
+$$
+\bigl||F(\xi,0)|^2-|F(\xi,s/\kappa)|^2\bigr|
+ \le C_\kappa r^{-2}\min\{|s|/r,1\}.
+\tag{87.24}
+$$
+
+For $|s|\le\kappa r$ this is the central derivative bound for $|F|^2$; beyond that range its two values are each bounded by $C/r^2$. The expression vanishes for $r>d$. Use the actual marginal for the trace term and $\min(u,1)\le u^\alpha$ in (87.23)--(87.24). Integration in $\xi$ then gives
+
+$$
+\left|\frac{J[F]}{4\pi\kappa}-V[\psi_F]\right|
+ \le C_{\kappa,\alpha}\int_0^d r^{\alpha-1}dr
+ \le C'_{\kappa,\alpha}d^\alpha.
+\tag{87.25}
+$$
+
+Thus $q_c[\psi_\varepsilon-\psi_{\varepsilon'}]\to0$, and the states converge in $L^2$ to (87.20). Approximating each cutoff in $\mathcal E_2$ also in the $q_c+\|\cdot\|_2^2$ norm produces a genuine Friedrichs core sequence. Its limit proves $\psi_*\in\mathcal Q_c\setminus\mathcal E_2$. This uses a controlled same-field error, not identification of $\Gamma$ with a delta interface.
+
+The zero-kernel assertion requires a separate whole-closure argument. Define on all of $L^2(G)$ the nonlinear map
+
+$$
+\mathcal M_{a,\eta}\psi(\xi,t)=\kappa^{1/2}U(\xi,\kappa t),\qquad
+U=\mathcal F_s^{-1}|b_\psi|.
+\tag{87.26}
+$$
+
+Shear, Fourier transformation and this scaling are unitary, while $||b|-|c||\le|b-c|$. Hence $\|\mathcal M\psi\|_2=\|\psi\|_2$ and $\|\mathcal M\psi-\mathcal M\phi\|_2\le\|\psi-\phi\|_2$. The actual comparison (87.11), before its strict scalar optimization, gives on $\mathcal D_0$
+
+$$
+q_c[\psi]\ge a\mathfrak t[\mathcal M\psi],\qquad
+\mathcal M\psi\in H^1\subset\mathcal Q_\delta.
+\tag{87.27}
+$$
+
+Indeed $A[\mathcal M\psi]=A[U]$, $C[\mathcal M\psi]=\kappa^2D_2$, $J[\mathcal M\psi]=\kappa J[U]$, and $g_c/(4\pi)=4a\kappa/\pi$. Take a core form approximating sequence $\psi_n\to\psi\in\mathcal Q_c$. Its $q_c$ values tend to $\overline q_c[\psi]$, and $\mathcal M\psi_n\to\mathcal M\psi$ in $L^2$. A nonnegative closed form, extended by $+\infty$ outside its domain, is lower semicontinuous in $L^2$; this follows also by weak compactness in its graph Hilbert space for a bounded-energy subsequence. Therefore
+
+$$
+\mathcal M\psi\in\mathcal Q_\delta,\qquad
+\overline q_c[\psi]\ge a\mathfrak t[\mathcal M\psi]
+ =a\int\Phi^2|\nabla(\mathcal M\psi/\Phi)|^2.
+\tag{87.28}
+$$
+
+No estimate for $\mathfrak t[\mathcal M\psi_n-\mathcal M\psi_m]$ is used or inferred. If the left side is zero, (87.9) gives $\mathcal M\psi=0$, and norm preservation gives $\psi=0$. The form representation $\overline q_c[\psi]=\|H_F^{1/2}\psi\|_2^2$ identifies its zero set with $\ker H_F$. The remainder in (87.28) is strictly positive for every nonzero $\psi\in\mathcal Q_c$; it is generally a nonlinear functional, not a quadratic form or a uniform multiple of $\|\psi\|_2^2$.
+
+Finally normalized outward Carnot dilates of any core state have energy $aR^{-2}T+\eta R^{-4}D_2-gR^{-3}V\to0$. Subcritical strict positivity and (87.19) show nonattainment. At critical coupling $0\in\sigma(H_F)\setminus\sigma_p(H_F)$. The auxiliary $\Phi$ is not thereby an original-field resonance: (87.26) is nonlinear and (87.28) is only a comparison, with no inverse operator equivalence. $\square$
+

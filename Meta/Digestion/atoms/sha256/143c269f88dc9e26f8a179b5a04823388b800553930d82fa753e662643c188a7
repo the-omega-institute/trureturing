@@ -1,0 +1,28 @@
+## 301. Count every V occurrence
+
+A transverse-selected flat must select an unwitnessed reservoir, because
+its two pi slots exhaust that label's original equation. Consequently
+it must select V, and there is at most one such actual owner F_V.
+A flat axial zero occurrence of V must belong to F_V. This owner cannot
+have V on both axes: the transverse-flat inequality would require
+v-l>=sqrt((v+1)^2)=v+1 with l>1. Thus F_V has at most one axial V slot.
+
+If F_V exists, its two transverse V pi slots exhaust p_V=2; all axial
+V slots are zero and belong to F_V. If F_V does not exist, all axial V
+slots have angle pi, and there are exactly two of them.
+Every other V occurrence is transverse zero in an axial-flat owner.
+Let k be the number of these actual owners. Each contributes exactly
+two transverse V slots, irrespective of any additional V axis.
+Therefore the exact degrees are
+
+    degree(V)=2+2*k+t,  t in {0,1}, if F_V exists;
+    degree(V)=2+2*k,                 otherwise.
+
+The second formula counts any axial V slots in these same owners
+separately, as original slots. Minimum degree six implies k>=2 in
+both cases.
+
+All transverse labels of any flat belong to {C,D,V}: M,Z,U have no
+flat transverse occurrences. Each of the k owners thus has pair {V,C}
+or {V,D}. It differs from sigma, whose pair is {C,D}.
+

@@ -1,0 +1,19 @@
+**Lemma 6.2 (three replies and triple identification).** Every finite
+literal has at most three replies on this core. Every subset of at
+most three core states is identified by one literal, hence every
+target factor on that subset is determined by that same literal.
+
+Proof. The root reply is constant branch. The $L$ and $RL$ rows
+are in (RCE.24). The $R$ replies are
+$(\alpha,\alpha,\mathsf{branch},\mathsf{branch})$; the $LL$
+replies equal the $RL$ row; the $LR$ and $RR$ replies are
+$(\mathsf{absent},\mathsf{absent},\alpha,\alpha)$.
+All length-three or longer words are absent, since the core has
+height at most two. This exhausts every finite word.
+
+For a triple omitting $u_2$ or $u_3$, $L$ is injective; for one
+omitting $u_0$ or $u_1$, $RL$ is injective. A smaller subset is
+contained in a triple and inherits that experiment. Identification
+determines every $\Gamma_q$, including an initially absent target.
+$\square$
+

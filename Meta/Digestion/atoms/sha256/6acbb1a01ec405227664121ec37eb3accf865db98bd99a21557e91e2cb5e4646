@@ -1,0 +1,58 @@
+**Theorem 11.3 (native prefix bridge and the shifted fixed tree).**
+On the finite-or-infinite trees of Definition 5.1, interpreted $\rho$
+has a unique extension by its actual leaf replacements and pair law.
+For inclusive depths $h\ge0$ it satisfies
+
+$$
+s\equiv_h t\ \Longrightarrow\
+ \rho(s)\equiv_h\rho(t)
+ \quad\hbox{and}\quad
+ G(s)\equiv_{h+1}G(t).
+\tag{NLC.38}
+$$
+
+There is exactly one tree $K$ with $K=G(K)$. Writing
+$T_j=\rho^j\alpha$, its right spine and complete left subtrees satisfy
+
+$$
+K|_{R^j}=\rho^j(K),\qquad K|_{R^jL}=T_j
+ \quad(j\ge0).
+\tag{NLC.39}
+$$
+
+This $K$ is infinite and is not ordinary regular.
+
+Proof. At a finite address in the image, follow the address through
+original pairs until the first original leaf, if any. Thereafter the
+reply is determined inside that leaf's specified finite image. If no
+leaf occurs along the address, the image node is a pair. This defines
+every reply consistently with the constructor arities and gives the
+unique extension. It also proves that the image reply uses only
+original replies at prefixes of the requested address. Matched leaves
+produce the same born positions and the same absent replies; absence
+at one epoch is not assumed to persist at the next. Equivalently,
+induction on $h$ treats equal root leaves by their identical entire
+images and equal pairs by their two children. This proves the first
+part of (NLC.38), and the added pair in $G$ proves the second.
+On finite sources this is the locality argument of
+[ARH, Lemma 19.2][ARH]; the address argument here also covers infinite
+branches.
+
+Use the atomic identities and index injectivity of [ABC, Definition
+1.3][ABC]. Define $K$ by a branch at every $R^j$ and the entire finite
+subtree $T_j$ at $R^jL$. The tooth addresses are prefix-free.
+Every finite word is either $R^j$ or $R^jLw$, so this definition fixes
+all four replies, including absent suffixes inside a tooth.
+Applying $\rho$ shifts each tooth to $T_{j+1}$; hence the right tail
+is $\rho(K)$ and $K=\langle\alpha,\rho(K)\rangle$.
+
+For any fixed tree $J=G(J)$, the native pair law gives
+$\rho^j(J)=\langle T_j,\rho^{j+1}(J)\rangle$. Induction down its
+right spine forces (NLC.39) with $J$ in place of $K$. The same
+finite-word decomposition then forces $J=K$. Formula (NLC.37)
+excludes a finite fixed tree. Finally the actual subtrees $T_j$ at
+$R^jL$ are pairwise distinct by atomic index injectivity. Thus $K$
+has infinitely many distinct constructor subtrees. Its right-spine
+subtrees are also pairwise distinct, since their left children differ.
+This uses the original constructor signature throughout. $\square$
+

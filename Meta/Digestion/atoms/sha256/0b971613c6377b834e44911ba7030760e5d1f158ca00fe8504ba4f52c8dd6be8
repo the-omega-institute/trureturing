@@ -1,0 +1,137 @@
+**Theorem 4.2 (complete canonical test for one chart tuple).** Fix
+charts $c_r$, one for every $r\in B$. They have actual finite
+representatives with a common original prefix at arbitrarily large
+depths if and only if their canonical chart tuple passes. In the passing
+case, effective finite representatives are produced for every requested
+$h$, satisfying all chart negatives together within each source and
+exactly the original full row labels. They need not satisfy the
+completed cross-source equations as finite equalities.
+
+**Proof.** We give the prefix-preserving negative argument explicitly.
+Its prefix-substitution part overlaps [NCC, Theorems 3.2–3.3][NCC];
+here it is derived from the accepted finite mass and clock suppliers
+rather than assumed through that manuscript.
+
+The normal atomic code in [ABC, Theorems 2.2–2.3][ABC] assigns a mass
+$\gamma(t)$ counting its nonprimitive constructor nodes. As recorded
+in [URR, Definition 2.1][URR], on finite native values
+
+$$
+\begin{aligned}
+\gamma(\rho^a t)&=\gamma(t),\\
+\gamma(\langle s,t\rangle)&\ge\max(\gamma(s),\gamma(t)),\\
+\gamma(\langle s,t\rangle)&=1+\gamma(s)+\gamma(t)
+       &&\text{if either child has positive mass}.
+\end{aligned}
+\tag{FJC.13}
+$$
+
+The exceptional atomic pairing can have mass zero; we do not treat its
+normal code as an unconditionally free constructor. The native clock
+from [ARH, Lemma 19.2][ARH] is
+
+$$
+\kappa(\alpha)=0,\quad\kappa(\beta)=1,\quad
+\kappa(\langle s,t\rangle)=2+\kappa(t),\quad
+\kappa(\rho^a t)=\kappa(t)+a.
+\tag{FJC.14}
+$$
+
+For each remaining coordinate $z_i$, take any finite constructor context
+$C_i$ with a nonempty frontier. Use distinct private names at its hole
+occurrences, disjoint from other coordinates; repeated occurrences of
+$z_i$ reuse the whole same context and its names. Its finite fillings
+have arbitrarily large mass: the comb $c_0=\alpha$,
+$c_{n+1}=\langle c_n,\alpha\rangle$ has mass $n$, by (FJC.13).
+Filling one private hole by $c_n$ makes the context mass at least $n$
+and leaves other contexts fixed.
+
+We claim that universal equality of two expressions on these context
+fillings implies universal equality on the unrestricted remaining
+coordinate product. Normalize fixed powers, evaluate grounds and
+expand their finite leaf/pair syntax. Induct on the sum of expression
+sizes. Two pair roots cancel to their corresponding smaller children.
+Two decorated occurrences of the same variable can be universally
+equal only with equal exponents, by (FJC.14); then they agree on every
+assignment. For different variables, vary a private hole of one while
+fixing the other: one mass is unbounded and the other fixed.
+A decorated variable likewise cannot universally equal a residual-free
+expression. Against a pair containing no occurrence of that variable,
+the same independent mass variation excludes equality. Against a pair
+containing that variable, choose its context filling with positive mass.
+Along the explicit pair path above that occurrence, (FJC.13) increases
+mass strictly, whereas a fixed power at the variable root preserves
+mass. The pair value therefore has greater mass than the decorated
+variable. Finally two ground sides compare directly, and a ground
+leaf differs from a pair root. Reversing the sides changes none of these
+arguments. These cases exhaust the normalized syntax and prove the
+claim. The reverse implication is specialization to finite fillings.
+The argument also covers zero remaining variables.
+
+If a finite conjunction of whole negatives is feasible on the full
+remaining product, each forbidden equality is nonuniversal there.
+The claim makes each substituted equality nonuniversal on the private
+frontier variables. Substitution still has grammar (FJC.6).
+[URR, Theorem 3.1 and Corollary 3.2][URR] gives one computable finite
+frontier tuple avoiding all those equalities simultaneously. This is
+one joint filling, not one witness per negative. Thus any prescribed
+nonground contexts preserve feasibility of the whole conjunction.
+
+For precision, the URR construction takes the largest side weight $M$
+(ground mass, with one added at each explicit pair), the largest
+variable decoration $d$, a common mass $G=M+1$, and assigns successive
+variables $\rho^{(i-1)(d+1)}c_G$. Residual-free values have mass at most
+$M$; residual-containing pair values have mass at least $G+1$; a variable
+value has mass $G$. The clock separates its finite decorations and the
+separated exponent intervals distinguish different variables. Pair
+cancellation then reflects every listed equality to universal equality.
+This gives an explicit terminating filling algorithm after substitution.
+For an empty negative list any finite fillings suffice. For no remaining
+variables the exact finite ground tests suffice.
+
+Now suppose the canonical tuple passes. Fix $h$. Keep its finite chart
+coordinates exactly $f_i$. For every other coordinate compute the
+prefix of its canonical infinite tree through $h$, preserving every
+early leaf and its absent descendants. At every reached position of
+depth $h+1$ replace the remaining subtree by a distinct hole.
+An infinite full tree has an infinite branch, so this frontier is
+nonempty. Every finite filling agrees through $h$ with that coordinate.
+Coordinates in different charts have private fillings even if their
+canonical state values coincide. Sharing inside a chart remains exact.
+
+Apply the preceding negative construction to each chart with its entire
+substituted $\Delta$. The resulting finite tuples satisfy every negative
+of their own chart simultaneously. Since all their coordinates agree
+through $h$ with the canonical ones, nonexpansion of native expressions
+makes each finite source $\Theta_{r,c_r}(\mathbf z_{r,h})$ agree through
+$h$ with its canonical completed output. Equation (FJC.11) makes these
+completed outputs a single common tree. Thus all the finite sources
+share a common inclusive original prefix. Equation (FJC.7) proves every
+original literal, sign, guard and exact full row on each source. No sign
+or finite partition has been passed to the limit, and no cross-source
+finite equality was required.
+
+Conversely suppose actual finite chart representatives exist at
+unbounded depths $h_n\to\infty$. Choose their chart coordinates.
+Compactness of the finite product of $\widehat{\mathcal T}$ supplies
+a convergent subsequence with coordinate limit $\boldsymbol\xi$.
+Continuity of all source expressions, and the common prefixes at
+$h_n$, make the limiting source outputs equal: at any fixed depth the
+coordinates and outputs eventually have their limit replies, and the
+finite sources agree at that depth. By (FJC.11), the coordinate limit
+extends to a solution of $\mathscr G$. A clash certificate would rule
+this out.
+
+Every coordinate finite in the canonical solution has the same exact
+finite value in this extension, by Theorem 3.1. Such a finite tree is
+isolated by its maximum-leaf-depth prefix. Convergence therefore makes
+that coordinate in the finite witness sequence eventually equal to its
+canonical value. There are only finitely many such coordinates; at a
+late common index they all have those values simultaneously. That
+finite witness satisfies every chart negative, so supplies feasibility
+of each entire substituted conjunction in Definition 4.1. The canonical
+tuple passes. This argument does not assert that the remaining
+coordinates of $\boldsymbol\xi$ equal their canonical values. The
+negative completion argument permits replacing them by the canonical
+infinite choices. $\square$
+

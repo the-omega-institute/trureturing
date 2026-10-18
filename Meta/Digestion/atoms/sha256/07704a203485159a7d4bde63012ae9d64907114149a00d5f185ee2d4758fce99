@@ -1,0 +1,46 @@
+**Lemma 11.1 (Exact height collisions of the minimal spectral image).**
+For a minimal order-two realization, height is constant on each
+encoder fiber precisely in the three cases listed in Theorem 3.4.
+In the remaining case of a purely imaginary distinct pair,
+$\lambda_j=i\omega_j$, different interior heights collide if
+and only if
+
+$$
+|\omega_1-\omega_2|>2\pi.
+$$
+
+Proof. The confluent ratio and the nonzero-real-part radius of
+Lemma 10.1 prove height constancy in those cases. It remains to
+consider a distinct pair with both real parts zero. At normalized
+heights $x,y$, the two pairs in (8.1) agree for suitable phases
+$\alpha,\alpha'$ exactly when
+
+$$
+e^{i\omega_1(y-x)}=e^{i\omega_2(y-x)}.
+\tag{11.1}
+$$
+
+Necessity follows by dividing their two coordinate equalities.
+For sufficiency, choose
+$\alpha'-\alpha=-\omega_1(y-x)$ modulo $2\pi$; (11.1) makes
+both coordinates agree. Hence the height difference must satisfy
+
+$$
+(\omega_1-\omega_2)(y-x)\in2\pi\mathbb Z.
+$$
+
+The smallest positive difference is
+$p=2\pi/|\omega_1-\omega_2|$. Two different heights in $(0,1)$
+can differ by $p$ exactly when $p<1$. If $p<1$, choose any
+$x\in(0,1-p)$ and $y=x+p$. If $p\ge1$, no nonzero integer
+multiple of $p$ lies in $(-1,1)$. In particular equality
+$|\omega_1-\omega_2|=2\pi$ is allowed: its first possible
+collision is across the two absent endpoints, not between
+source heights. This proves the exact threshold. At the same
+height any equality of encoded points forces equality of
+$e^{i\alpha}$, since both stored exponentials are nonzero.
+Thus in the good cases the fibers are exactly the full beta
+circles at fixed $(k,\alpha)$; in the excluded case the
+additional height collisions are exactly those just described.
+$\square$
+

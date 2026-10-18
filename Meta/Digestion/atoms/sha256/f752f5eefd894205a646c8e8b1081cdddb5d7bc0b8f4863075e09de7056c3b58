@@ -1,0 +1,4 @@
+## 2. Separate original interfaces and the consistent source
+
+The owning definitions are [CG §§13–17 and positive-pivot dictionary](FIB_NATIVE_COMPLETE_CONTINUATION_DISTINGUISHABILITY_GAP.md), [JR §§34–42](FIB_NATIVE_COMPLETE_CONTINUATION_JOINT_RECORD_PAYLOAD.md), [FA §§67–72 and 78](FIB_NATIVE_COMPLETE_CONTINUATION_FINITE_ACTIVITY_FRONTIER.md), and [corrected RC §§67 and 75](FIB_NATIVE_COMPLETE_CONTINUATION_RESIDUAL_CONTACT_CURVE.md). The following are explicit conditional inputs. They have distinct scopes; none is recertified by the strip arithmetic.
+

@@ -1,0 +1,41 @@
+**Definition 297.1 (Source, carrier and the two target families).**
+Let $F_0=0$, $F_1=1$, $F_{r+2}=F_{r+1}+F_r$, and let $p_i$ be the
+increasing primes. The actual countable source is
+
+$$
+X=\{(r,g):r\text{ prime},\ g\in\mathbb Z,
+\ \lceil F_r/10\rceil\le g\le\lfloor F_r/5\rfloor\},\qquad
+N(r,g)=1+F_rg,\quad q_i(x)=[p_i\mid N(x)].
+$$
+
+Its replies are static, and $n(x)=\min\{i:q_i(x)=0\}$ is finite.
+The full output carrier is the Borel disjoint union
+$\Theta=\bigsqcup_{j\ge1}B_j\sqcup\bigsqcup_{j\ge1}P_j$ of copies
+of $(0,1)$. The unchanged consumer returns unknown on $B_j$ and
+proposes $j$ on $P_j$, without making prime requests.
+
+The original nonatomic targets of
+[273.3](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XVI.md)
+are retained: fix $h_0\in(0,1)$, put
+$t_x=\sum_i3^{-i}q_i(x)$ and $Z_t=\int_0^1e^{tu}\,du$, let $\nu_x$
+have density $e^{t_xu}/Z_{t_x}$ on $B_{n(x)}$, and let $\pi_j$ be
+uniform on $P_j$. With $\Omega(x)$ the number of distinct prime
+divisors of $N(x)$, their law is
+$\mu_x^{\rm orig}=(1-h_0)\nu_x+h_0\pi_{\Omega(x)}$.
+
+The targets compared below are instead the separately selected marked laws
+
+$$
+\lambda_x^a=(1-a_{n(x)})\delta_{\theta_0}
+                  +a_{n(x)}\delta_{\theta_{n(x)}},\qquad
+\theta_j=(B_1,1/(j+2)),\quad j\ge0,
+\quad1\ge a_1\ge a_2\ge\cdots>0,\quad a_n\longrightarrow0.
+\tag{297.1}
+$$
+
+For an acquisition $A$, write
+$e_a(A)=\sup_{x\in X}\operatorname{TV}(\mathcal L(A(x)),\lambda_x^a)$.
+A law supported on finitely many marks has TV distance one from every
+$\mu_x^{\rm orig}$, since those targets give its finite support mass zero.
+Thus marked-target estimates do not estimate the unchanged nonatomic targets.
+

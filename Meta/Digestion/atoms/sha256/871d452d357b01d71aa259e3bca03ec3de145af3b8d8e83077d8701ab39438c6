@@ -1,0 +1,29 @@
+**命题 37.14（给定素数层到组成周期的准确连接）。** 令 $P=F_q\ge5$ 为素数，$a=F_{q-1}$ 取整数值。则
+
+$$
+M^q=aI+PM,\qquad
+\operatorname{ord}_P(M)=4q,\qquad
+T^q=-I\pmod P,\qquad \operatorname{ord}_P(T)=2q.
+$$
+
+在单位组成的轨道上，四个 $q$ 步区块的起点依次为 $C,aC,-C,-aC$，其后返回 $C$。这里单位足以保证满点周期，非单位不被普遍排除，但其周期不能只凭矩阵阶断言。
+
+证明。该矩阵阶的已有供应是 [GoldenFibonacciModulusPeriod](../../../D5/S3/Arith/GoldenFibonacciModulusPeriod.lean) 及其 [Blueprint](../../../Blueprint/D5/S3/Arith/GoldenFibonacciModulusPeriod.md)：对每个奇 $n\ge5$，模 $F_n$ 的 $\widehat M=\left(\begin{smallmatrix}1&1\\1&0\end{smallmatrix}\right)$ 阶为 $4n$，不以 $F_n$ 素为前提。用 $M=J\widehat M J$、$J=\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$ 交换坐标，取 $n=q$ 即得当前结果。
+
+为明确原生应用所用的最小性，展开这个既有供应的参数对应。矩阵公式
+
+$$
+M^k=\begin{pmatrix}F_{k-1}&F_k\\F_k&F_{k+1}\end{pmatrix}
+\quad(k\ge1)
+$$
+
+在 $k=q$ 给 $aI+PM$。任何正返回指数 $k$ 必有 $P\mid F_k$；强整除性给
+
+$$
+F_{\gcd(q,k)}=\gcd(F_q,F_k)=F_q.
+$$
+
+严格增长迫使 $\gcd(q,k)=q$，故 $q\mid k$。在这些指数中，$M^{qj}=a^jI\pmod P$，而 $a$ 的阶是四，所以最小 $k=4q$。平方矩阵的阶为 $4q/\gcd(4q,2)=2q$，且 $T^q=a^2I=-I$。
+
+若 $\alpha(C)$ 是 $R_P$ 的单位，乘法可约去它，点周期等于矩阵阶；于是四块及其内部的全部 $4q$ 个点没有更短整体返回。零点的周期一；非单位的行为须按其消去性质分别分析，单位条件不是必要性断言。上述 $q$ 步用的是 $M$ 的指标步，不自动等于 $q$ 个原生窗口。证毕。
+

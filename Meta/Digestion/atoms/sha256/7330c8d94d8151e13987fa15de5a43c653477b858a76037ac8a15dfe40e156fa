@@ -1,0 +1,57 @@
+**Proposition 27.3 (The duality degrees of the concrete path modes).**
+The degree in (27.4) is
+
+$$
+\Theta_n=\bigl(F_{n+2}-3;
+F_iF_{n-i+1}-1\ (1\le i\le n)\bigr).
+\tag{27.6}
+$$
+
+The following tuples list $(D_n,c_n,\Theta_{n,0};\Theta_{n,\rm occ})$:
+
+$$
+\begin{array}{c|c}
+n&\text{tuple}\\\hline
+3&(5,1,2;1,0,1)\\
+4&(8,3,5;2,1,1,2)\\
+6&(21,14,18;7,4,5,5,4,7).
+\end{array}
+$$
+
+For $n=4$, the matrix (26.1) respects exactly this multigrading.
+The duality is a statement about algebraic modules; it is not Hermitian
+self-duality of quantum states or a claim about time evolution.
+
+Proof. The usual independent-set recursion gives
+$D_n=D_{n-1}+D_{n-2}$, with $D_0=1,D_1=2$.
+A mode containing position $i$ cannot contain its neighbors.
+Its independent remaining left and right segments have lengths
+$i-2$ and $n-i-1$. Their counts are $F_i$ and $F_{n-i+1}$.
+At an endpoint the absent segment has count one, agreeing with $F_1=1$;
+this also handles the apparent length minus one in that notation.
+Multiplying gives the number of mode variables whose $i$th occupancy
+degree is one. Subtracting $(3,\mathbf1)$ proves (27.6).
+
+For the four-position complex the five quadratic multidegrees are
+
+$$
+\begin{aligned}
+b_1&=(2;1,0,1,0),&b_2&=(2;1,0,0,1),\\
+b_3&=(2;0,1,0,1),&b_4&=(2;1,1,0,1),\\
+b_5&=(2;1,0,1,1),&\Theta_4&=(5;2,1,1,2).
+\end{aligned}
+$$
+
+Thus $F_1=\bigoplus_iS_4(-b_i)$ and
+$F_2=\bigoplus_jS_4(-(\Theta_4-b_j))$.
+For every nonzero matrix entry, its degree must be
+$\Theta_4-b_i-b_j$. The eight upper-triangular nonzero entries have
+indices $12,13,14,23,24,25,35,45$ with respectively
+$z_{24},z_{14},z_4,z_{13},z_3,z_2,z_1,z_0$ and their displayed signs. Substitution of the five $b_i$ verifies
+each equality. The initial $f$ column maps degree $\Theta_4$ to degree
+$\Theta_4-b_i$ by an entry of degree $b_i$, and the last row maps degree
+$b_i$ to zero by the same entry. Ordinary degrees recover $5,3,2,0$.
+For $n=6$, fourteen is the projective dimension of a resolution with
+ranks determined by this algebra, not fourteen temporal operations.
+$\square$
+

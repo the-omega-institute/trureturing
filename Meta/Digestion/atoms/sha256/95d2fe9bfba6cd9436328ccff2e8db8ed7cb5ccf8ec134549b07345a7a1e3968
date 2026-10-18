@@ -1,0 +1,42 @@
+**Proposition 10.2 (exact body, wrapper and channel subaccounts).** Write
+$\ell(w)=|w|$. The exact length functional is
+
+$$
+\ell(U(n))=n+1,\quad \ell(F(w))=2\ell(w)+1,\quad
+\ell(\mathcal L(w_1,\ldots,w_t))=1+\sum_i(2\ell(w_i)+2).
+$$
+
+Together with Definitions 5.3/6.1 this specifies exact M/T body lengths,
+including every repeated record and unary reference. For example a memory
+cell entry has length $27+2(\mathrm{port}+\mathrm{position})$. A new full
+View wrapper at stage $j$ has length
+
+$$
+L_j=29+2\bigl(j+\ell(\mathrm{serviceBinding})+\ell(\xi)
+                     +\ell(b)+\ell(v_j)\bigr).
+$$
+
+On one successful flight let $L_C,L_P,L_I,L_0,\ldots,L_4$ be the actual
+eight full publication lengths. Their disjoint two-copy-plus-print body
+subtotal, ending after the second handoff and mandatory print, is
+
+$$
+\sum_X(17L_X+7)=17\sum_X L_X+56.
+$$
+
+The full flight count is this subtotal plus exactly the sum of all other
+actual expanded rows of Definition 10.1. That remainder includes setup,
+exports, allocation, positioning, parsing, decoding, checks, ACKs and return;
+it is not a constant overhead. Distinct sender/mailbox/receiver payloads
+alone retain at least $3\sum_X L_X$ ordinary cells.
+
+Proof. Each Frame adds its unary length/zero and payload; each list item
+adds its tag/Frame, giving the functional. Apply it to the displayed cell
+tuple and seven-field wrapper, with $\ell(U(j))=j+1$, four-bit kind and
+two-bit view tag, to obtain the counts. Each publication retains ARC's
+$12L+6$ two-copy/second-handoff body and $5L+1$ print body. The eight
+protected segments are disjoint actual intervals. Definition 10.1 counts
+all remaining leaves at their actual shared successors. The three payload
+copies occupy distinct immutable intervals, so their storage lower bound
+is additive. Delimiters/descriptors/banks/meter are additional. ∎
+

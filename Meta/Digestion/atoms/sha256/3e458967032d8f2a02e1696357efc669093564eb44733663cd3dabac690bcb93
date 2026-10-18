@@ -1,0 +1,35 @@
+**Theorem 5.3 (sharp read-only preparation/code-only handoff).** Fix integers
+$p,q\ge0$, $M\ge1$. A common source-blind read-only preparer uses at most $p$
+literal calls, leaves $U_x$ unchanged and passes only a complete code of at most
+$M$ names. The receiver has no preparation transcript or other source-dependent
+channel and uses at most $q$ fresh literal calls. Such exact reconstruction is
+possible, conditional on this actual isolated handoff, iff
+
+$$
+p+q\ge m,
+\qquad M2^q\ge2^m.
+\tag{DAF.7}
+$$
+
+Proof. Preparation has at most $2^p$ terminal acquired paths by Theorems 3.3
+and 4.2. Since its code is computed from those paths and common public data,
+the attained code image has size at most $\min\{M,2^p\}$. The receiver proof
+of Theorem 5.1 gives
+
+$$
+2^m\le\min\{M,2^p\}\,2^q.
+$$
+
+This implies both inequalities in (DAF.7). Conversely let
+$k=\max\{m-q,0\}$. Those inequalities give $k\le p$ and $2^k\le M$.
+Preparation reads $p_iL$ for $k$ positions and passes exactly those bits.
+After the isolated handoff the receiver reads the remaining $m-k\le q$
+positions. The source is unchanged and every bit comes from a truthful call.
+
+The isolation is substantive. If preparation may modify the source, a
+reply-dependent graft or update count can store information in the physical
+register outside the code. If earlier archives, source-dependent timings,
+controller states or names remain accessible, they belong in the complete code
+alphabet. Neither native effective history accessibility nor TM57's copy
+authenticity is itself this code-only isolation service.
+

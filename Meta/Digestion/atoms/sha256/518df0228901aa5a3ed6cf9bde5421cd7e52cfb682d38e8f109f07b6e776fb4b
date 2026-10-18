@@ -1,0 +1,18 @@
+**Definition 1.3 (original task).** $Q$ is AIF Definition 2.6 as instantiated
+by ARC Definition 11.1 and UAS Definition 1.4, using the actual installed
+original entry relation. Experiments use original prescribed Supply or
+Advance and the original finite semantic/audit protocols at their real
+admission points. Finite adaptive branching uses only acquired public
+information. Responses retain legality, actual labels, released finite
+outputs and the complete original joint successor after each executed
+action. The empty response contains only running/terminal type and the
+actual terminal output.
+
+An enabled noncanonical Supply can be task-undefined while its raw IN
+executes. A disabled or unauthorized trial instead has defined unexecuted
+`none` and no receipt. An executed refusal retains its actual work and
+successor. Write $x\sim_Q y$ for equality of the entire partial response
+maps, including their domains. No new entry, diagnostic, successor field
+or posthalt experiment is added here. In particular $Q_G$ is not used as
+a replacement for $Q$.
+

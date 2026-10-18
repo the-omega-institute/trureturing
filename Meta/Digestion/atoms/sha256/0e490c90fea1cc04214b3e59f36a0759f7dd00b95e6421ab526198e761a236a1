@@ -1,0 +1,19 @@
+**Definition 34.3 (A split comparison with the identical graded layers).**
+On the graded $A_k$-module
+$\bigoplus_{j=2}^{k-1}A_ke_j$ define a second $R_k$-module
+$\mathcal C_k^{\mathrm{split}}$ by restriction of the action along
+$\pi:R_k\to A_k$. Explicitly,
+
+$$
+\rho_{\mathrm{split}}(X^s)e_j=
+\begin{cases}
+y^{a(s)}e_j,&\delta(s)=0,\\
+0,&\delta(s)>0.
+\end{cases}
+\tag{34.9}
+$$
+
+The ordinary grading and the basis degrees are unchanged. Since
+$\pi$ is a graded algebra homomorphism, this is a well-defined
+graded action, rather than an arbitrary collection of zero maps.
+

@@ -1,0 +1,89 @@
+**Theorem 5.3 (Conditional strict progress on the original interval).**
+Let $\lambda_Q$ be the exact error of the QJM fourteen-flag port,
+so the credited original interval is
+
+$$
+L_0\le\varepsilon_1\le\lambda_Q,\qquad
+\frac{52417656}{10^8}<\lambda_Q<\frac{52417658}{10^8}.
+\tag{5.9}
+$$
+
+Suppose there is an exact primal feasible extension for the
+level-52 problem (1.9), (2.1)–(2.3) with objective $b$, and a dual
+certificate (5.8) of value $a$ for that same problem, such that
+
+$$
+a\le L\le b,\qquad b-a\le\frac1{100000}.
+\tag{5.10}
+$$
+
+The first inequality on $a$ follows from (5.8). Put
+
+$$
+\ell=\max(L_0,a),\qquad
+u=\min\left(\lambda_Q,\frac{63}{64}b+\frac1{80}\right).
+\tag{5.11}
+$$
+
+Then
+
+$$
+\ell\le\varepsilon_1\le u,\qquad
+u-\ell\le\frac{140453}{32000000}
+<\frac{55657}{12500000}<\lambda_Q-L_0.
+\tag{5.12}
+$$
+
+Hence $\ell>L_0$ or $u<\lambda_Q$, possibly both. The upper branch
+is supplied by the repaired legal fixed scalar port of Theorem 4.1;
+exact algebraic primal data give its exact algebraic description.
+
+Proof. A primal feasible point gives a relaxed upper $b$; Theorem 5.1
+repairs that same point to an original legal port of error at most
+$63b/64+1/80$. To give the lower direction explicitly, for any feasible
+$(x,z,W)$ the dual equations imply
+
+$$
+\begin{aligned}
+z-a={}&\sum_J\operatorname{tr}\left[
+A_J^+(zI-\mathcal H_J(x))+A_J^-(zI+\mathcal H_J(x))\right]\\
+&+\operatorname{tr}(PW)+\operatorname{tr}(R\mathcal G(W))\ge0.
+\end{aligned}
+\tag{5.13}
+$$
+
+Indeed the event sum is $z-\beta+\mathcal L(x)$, while the last
+two terms sum to $\operatorname{tr}(Q\mathcal B(W))
+=\operatorname{tr}(Q\chi(x))$. The coefficient identity in (5.8)
+and $M^T\tau=\tau$ make their total
+$z-\beta+\tau^Ty=z-a$. Every term is a positive-semidefinite
+trace pairing. Taking the relaxed minimum gives $a\le L$; (2.4)
+then makes $a$ necessary for every original complex scalar port.
+Combining these facts with
+(5.9) proves the first part of (5.12). Since $\ell\ge a$ and
+$\ell\ge L_0$,
+
+$$
+\begin{aligned}
+u-\ell
+&\le\frac{63}{64}(b-\ell)+\frac1{64}\left(\frac45-\ell\right)\\
+&\le\frac{63}{6400000}+\frac{70069}{16000000}
+=\frac{140453}{32000000}.
+\end{aligned}
+\tag{5.14}
+$$
+
+On the other hand,
+
+$$
+\frac{52417656}{10^8}-L_0=\frac{55657}{12500000},\qquad
+\frac{55657}{12500000}-\frac{140453}{32000000}
+=\frac{50723}{800000000}>0.
+\tag{5.15}
+$$
+
+If neither endpoint improved, then $\ell=L_0$ and $u=\lambda_Q$,
+contradicting (5.12). The proof requires exact certificates in (5.10);
+it does not supply such $a,b,\Omega$, an evaluated $L$, or a new
+unconditional numerical endpoint. $\square$
+

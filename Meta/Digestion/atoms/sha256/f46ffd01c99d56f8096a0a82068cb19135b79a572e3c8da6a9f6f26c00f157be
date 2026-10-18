@@ -1,0 +1,22 @@
+### 91.5. Uniform-reference and complete two-fibre tests
+
+Taking ρ=I₈/8 in (4) gives Tr(L₊)/4. For any pair f≠g, choose unit vectors u,v such that u*L_fg v=‖L_fg‖op and take ρ_f=uu*/2, ρ_g=vv*/2, with other blocks zero. The nonzero compression of √ρL√ρ has off-diagonal entries ‖L_fg‖op/2 and nonnegative diagonal entries by (9). Adding the latter cannot decrease positive-part trace. Hence
+
+\[
+ \mathcal B(L)\ge
+ \max\left\{\tfrac14\operatorname{Tr}L_+,
+                     \max_{f<g}\|L_{fg}\|_{\rm op}\right\}.
+                                                               \tag{20}
+\]
+
+At calibration the two selected diagonal entries vanish. More strongly, for calibrated channels the entire restriction of the original difference map to the sum of two input fibres has diamond norm exactly ‖L_fg‖op, allowing arbitrary references and arbitrary within-fibre bit amplitudes.
+
+For completeness, write D=L_fg and q=‖D‖op. For q>0 the coefficient matrix
+
+\[
+ \begin{bmatrix}I_2&D/q\\D^*/q&I_2\end{bmatrix}\ge0
+                                                               \tag{21}
+\]
+
+defines a CPTP two-fibre coefficient-collapse channel. Composing it with the output off-diagonal map O(X)=(X−σ_zXσ_z)/2 gives the two-fibre difference divided by q, up to the forward-Gram transpose. The diamond norm of O is one: the two-unitary-channel triangle inequality gives the upper bound, and |+〉 attains it. Singular vectors of D give a normalized equal-weight two-fibre input with output coherences q/2 and hence trace norm q. This proves the exact norm identity; q=0 is immediate. The fixed correlated output isometry preserves the norm. This is the two-fibre identity of [section 65](ARITHMETIC_HOLOGRAPHIC_RT_II.md#65-exact-unrestricted-common-channel-projection-for-two-collapsed-fibres), here used for the actual restricted channels.
+

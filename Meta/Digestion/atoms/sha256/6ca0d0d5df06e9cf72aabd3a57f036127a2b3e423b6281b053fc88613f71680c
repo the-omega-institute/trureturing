@@ -1,0 +1,10 @@
+**Remark 226.2 (Representative and constructor scope).** The four correct
+atoms $0101,1011,1100,1110$ define a different score with its own
+detectors and support vector. The constant $16/15$ does not identify
+its data with those of Theorem 226.1. The theorem here concerns only
+$0111,1000,1101,1110$ and the literal tables in its proof. Its pure-correct
+membership is already covered by 198.4 and 200.4. The conic obstruction
+of 223, the convex robustness of 225, this quantitative convex example
+and the supplement below concern one constructor-boundary subject;
+they are not additional original membership regions.
+

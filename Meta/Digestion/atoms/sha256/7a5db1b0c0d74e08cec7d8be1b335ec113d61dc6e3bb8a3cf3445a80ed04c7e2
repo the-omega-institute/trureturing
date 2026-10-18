@@ -1,0 +1,28 @@
+**Theorem 6.1 (Strict original endpoint progress).** For the unchanged
+problem (1.3),
+
+$$
+c\leq\varepsilon_1\leq\lambda_{\rm J},\qquad
+0<\lambda_{\rm J}-c<\frac7{10^7},\qquad
+e_{\rm mix}-\lambda_{\rm J}>
+\frac{679667}{10^{11}}.
+\tag{6.1}
+$$
+
+**Proof.** Theorems 3.5 and 5.3 concern precisely the same source, menu,
+input quantifier and resource class, so they combine. Direct rational
+comparison gives $c<l$ and
+
+$$
+u_*-c=
+\frac{5974973522349992451074993109708889744120314409547}
+{8888888789585797417322725866009842156661312300000000000}
+<\frac7{10^7}.
+\tag{6.2}
+$$
+
+The credited QSD Theorem 5.2 gives $e_{\rm mix}>52417598/10^8$.
+Subtracting $u_*$ from this rational lower enclosure gives exactly
+$679667/10^{11}$. Equations (5.10) and (3.16) prove the remaining
+strict comparisons. $\square$
+

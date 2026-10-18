@@ -1,0 +1,19 @@
+**Definition 1.4 (separate resource coordinates).** On one run ending
+at its first Halt let $Q,U$ count original Reads and genuine post-entry
+Updates, $A=\sum_{i=1}^Q|p_i|$, and
+$P_{\rm run}=\max_i|p_i|$, with maximum zero for an empty list. Let $E$
+count letters arriving at the final receiver, and $I$ count all local
+and transport occurrences, including delimiters and head movements but
+excluding the $Q+U$ source calls and Halt itself. Distinguish these from
+the worst-run suprema, the installed menu
+$\mathcal M=\{p:\text{some installed Read row selects }p\}$, its
+cardinality $M$, and $P_{\rm inst}=\max_{p\in\mathcal M}|p|$.
+
+Complete mutable width $L$, installed configuration count, immutable
+code/table/provider bits, compilation and installation peaks, native
+calls, literal traffic, local work, and physical source-service costs
+are distinct coordinates. There is no rule replacing an installed
+union by one run's $A$, or a bit count by its logarithm without changing
+the meaning of the coordinate. Initialization is a paid source-independent
+service; its state is included in the peak allocation.
+

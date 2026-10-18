@@ -1,0 +1,23 @@
+### 定义 15.8（三角网络的静态源场）
+
+令三条源场的 Hilbert 空间为
+\(\mathcal H_\alpha,\mathcal H_\beta,\mathcal H_\gamma\)，各自静态 Hamiltonian 为 \(H_\alpha,H_\beta,H_\gamma\)。无源间相互作用时
+
+\[
+H_{\mathrm{src}}
+=H_\alpha\otimes I\otimes I+
+I\otimes H_\beta\otimes I+
+I\otimes I\otimes H_\gamma.
+\]
+
+若温度参数相同，则 Gibbs 态严格分解为
+
+\[
+\rho_{\mathrm{src}}
+=\rho_\alpha\otimes\rho_\beta\otimes\rho_\gamma,
+\qquad
+\rho_i=\frac{e^{-\beta H_i}}{\operatorname{Tr}(e^{-\beta H_i})}.
+\]
+
+局部响应核分别只读取相邻两源，并经有限事件分区推前到 \(\Sigma\)。所得 FIB 律是三角静态场的局部边缘。若出现 \(V_{\alpha\beta\gamma}\) 的非局部交叉项，则必须把它列为 triangle-locality defect；不能再自动使用独立源乘积。
+

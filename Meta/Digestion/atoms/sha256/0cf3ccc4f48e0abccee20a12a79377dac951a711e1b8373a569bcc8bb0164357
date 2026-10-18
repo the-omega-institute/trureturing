@@ -1,0 +1,28 @@
+**Definition 5.1 (exposed coordinates and calibration).** Reuse the
+absence-safe coordinates of [NAR, Definition 11.2][NAR]. For $w$, let
+$a(u,w)$ be its longest reached prefix, and put
+
+$$
+J_w(u)=w\!t(a(u,w))+c(u|_{a(u,w)}),\qquad
+w\!t(a)=\#L(a)+2\#R(a).
+\tag{CAB.12}
+$$
+
+They obey $J_w(\rho^n u)=J_w(u)+n$, including blocked words.
+Write $j_L=J_L,j_R=J_R$ and $\delta=j_R-j_L$. Explicitly,
+
+$$
+\begin{array}{c|ccc}
+u&j_L(u)&j_R(u)&\delta(u)\\\hline
+\alpha&0&0&0\\
+\beta&1&1&0\\
+\langle x,y\rangle&1+c(x)&2+c(y)&1+c(y)-c(x).
+\end{array}
+\tag{CAB.13}
+$$
+
+These $j_L$ coordinates are not the leftmost stamp $\ell$ of §2.
+The row of $P=\{R\}$ determines $j_L$ from its entire concrete left
+tree or its blocking root leaf. The row of $Q=\{L\}$ analogously
+determines $j_R$. The integer $\delta$ is invariant under $\rho$.
+

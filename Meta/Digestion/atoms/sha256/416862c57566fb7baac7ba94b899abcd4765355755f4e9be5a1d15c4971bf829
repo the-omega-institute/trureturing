@@ -1,0 +1,27 @@
+**Corollary 4.3 (the precise projection and its limits).** The theorem
+constructs a quantifier-free affine formula for parameter support.
+Splitting $a\ne b$ into $a\le b-1$ or $b\le a-1$ shows that this
+support is a finite union of integer points in rational polyhedra,
+also intersected with the supplied guard. Its nonemptiness is decidable,
+and a semilinear representation is effectively obtainable.
+
+Proof. Every output condition is explicitly affine. Distribute the
+finite Boolean guard and the displayed disequality alternatives.
+Presburger sentence decision and effective semilinear conversion are
+the established results of Ginsburg--Spanier, Theorems 1.2--1.3 [GS].
+They are applied only after the native variables have been removed
+by Theorem 4.2. Arithmetic model extraction can, for example, follow
+a positive decision by enumeration of natural tuples; termination
+then follows from that decision's positive certificate of existence.
+The negative decision never relies on such enumeration. $\square$
+
+The quantifiers are
+$\forall\mathbf z\,[\exists\mathbf x\ \Phi
+\leftrightarrow\exists b,\mathbf r\ A_b]$ under the guard.
+Neither the source nor the scalar ranks must remain the same as
+$\mathbf z$ varies. Even at one $\mathbf z$, marker replacement can
+change source shape and identity. The formula does not define all
+normal codes in the ambient language excluded by [TPO][TPO], does
+not give a source-preserving truncation, and does not represent all
+solutions of arbitrary tree-quantifier alternations.
+

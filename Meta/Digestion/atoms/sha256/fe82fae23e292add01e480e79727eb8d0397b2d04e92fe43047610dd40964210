@@ -1,0 +1,44 @@
+**Proposition 59.2 (identities and root selection).** Both divisions in
+(RC.8) are exact. For every $0\leq a\leq37/125$ there is precisely one
+$k(a)\in(7/20,2/5)$ with $\mathcal P(a,k(a))=0$. This selected root
+is real analytic, including one-sided analytic extensions at the two
+endpoints. Throughout $\mathcal R$,
+
+$$
+D,H,R,\mathcal E>0,\quad \sigma<0,\quad g<0,\quad
+\ell_1<0,
+\tag{RC.9}
+$$
+
+and
+
+$$
+n^TQn=Z^TQZ=0,\quad n^TQZ=-2H^2,\quad
+n^TW=D\sigma,\quad Z^TW=\mathcal E.
+\tag{RC.10}
+$$
+
+Proof. Expansion of $D^2-\alpha U^2-\beta V^2$ gives zero.
+Consequently
+$Z^TQZ=4H^2R+4HRn^TQW=0$ and
+$n^TQZ=2Hn^TQW=-2H^2$.
+The last two identities follow from $n^TQn=0$ and $n^TCn=DU$.
+At $a=0$ the exact values are
+
+$$
+n=\alpha(1,-1,1)^T,\quad
+W=\alpha^2(-1,1,0)^T/2,\quad
+Z=\alpha^5\beta(-1,1,1)^T/4.
+\tag{RC.11}
+$$
+
+They make $\ell=0$ and the first determinant column in (RC.8) zero.
+Thus every coefficient of $a^0$ vanishes identically, proving exact
+divisibility. The full-domain bounds in Proposition 60.1 give
+$\mathcal P(a,7/20)>0$, $\mathcal P(a,2/5)<0$ and
+$\mathcal P_k<0$. The intermediate value theorem and strict monotonicity
+give existence and uniqueness for each $a$. Since the root is strictly
+inside the $k$ interval and $\mathcal P_k\ne0$, the analytic implicit
+function theorem applies at every point, including the endpoint roots.
+The same bounds give (RC.9). $\square$
+

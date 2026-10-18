@@ -1,0 +1,78 @@
+**Theorem 62.1 (four contacts and unique optimizing aggregates).** For
+$0\leq a<a_\dagger$ the aggregate ranks are $(2,1,1)$. At
+$a=a_\dagger$ they are $(1,1,1)$. The two $A$ contacts, normalized to
+coordinate $0$ equal to one, are
+
+$$
+\begin{aligned}
+v_\pm&=\frac{-\alpha W_0W_2\pm W_1\sqrt{N_Q}}
+                    {\alpha W_2^2+\beta W_1^2},\\
+u_\pm&=-\frac{W_0+W_2v_\pm}{W_1},\qquad
+q_\pm=(1,u_\pm,v_\pm)^T,\\
+w_+&=\frac{A_{02}-v_-A_{00}}{v_+-v_-},\qquad
+w_- =\frac{v_+A_{00}-A_{02}}{v_+-v_-}.
+\end{aligned}
+\tag{RC.31}
+$$
+
+There are four distinct real null lines
+$\mathbb Rq_+,\mathbb Rq_-,\mathbb Rn,\mathbb RZ$, and
+
+$$
+A=w_+q_+q_+^T+w_-q_-q_-^T,
+\qquad w_\pm>0\quad(0\leq a<a_\dagger).
+\tag{RC.32}
+$$
+
+For $0<a\leq a_\dagger$ the tuple in (RC.12) is the unique original
+optimizing aggregate tuple at its contrast. Uniqueness here does not
+mean uniqueness of the complete output instrument.
+
+Proof. The restriction of $Q$ to $W^\perp$ is indefinite because
+
+$$
+N_Q=-\alpha\beta W^TQ^{-1}W>0.
+$$
+
+It has exactly two distinct real null lines. Eliminating $u$ from
+$W_0+W_1u+W_2v=0$ and $\alpha u^2+\beta v^2=1$ gives (RC.31).
+Its denominators are positive by Proposition 60.2.
+Furthermore $W_1>0$, $W_2\geq0$, and $W_0<0$ follows from
+$W_0=D(U/2-2\beta ak)$. The bound
+$\beta W_0^2-W_2^2>0$ implies
+$W_0+W_2v<0$ for every null $v$, since $|v|\leq1/\sqrt\beta$.
+Consequently $u_\pm>0$. The other two lines are distinct from each
+other by $n^TQZ\ne0$, and from $W^\perp$ by
+$n^TW=D\sigma\ne0$, $Z^TW=\mathcal E\ne0$.
+
+By (RC.22), $A$ is supported on $W^\perp$. Write a symmetric matrix
+on this plane in the basis $q_+,q_-$. Both diagonal $Q$ pairings vanish
+and the mixed one is nonzero, since the restricted form is indefinite
+and nondegenerate. Thus $\operatorname{tr}(QA)=0$ eliminates the
+mixed coefficient. Positivity forces the two remaining coefficients
+nonnegative; rank two forces both strictly positive. Entries $00,02$
+then give exactly the weights in (RC.31). At $a_\dagger$ precisely one
+of them vanishes. The ranks follow from (RC.22).
+
+Fix the dual of Theorem 61.1 at $a>0$. Any original optimizer must
+annihilate all its slacks; its fourth block is zero by (RC.29), its
+$B,C_0$ are supported on $n,Z$, and its $A$ on $W^\perp$.
+The null-trace constraint therefore confines it to these same four
+rank-one projectors. Four distinct projectors on this real null conic
+are linearly independent. To prove this directly, normalize a ray as
+
+$$
+(1,\cos\vartheta/\sqrt\alpha,\sin\vartheta/\sqrt\beta).
+$$
+
+The independent projector coordinates are equivalent to
+$1,\cos\vartheta,\sin\vartheta,\cos2\vartheta,\sin2\vartheta$.
+A nonzero polynomial in this trigonometric system has at most four
+distinct circle zeros: multiply by $e^{2i\vartheta}$ to obtain a
+nonzero polynomial of degree at most four. Hence evaluation at any
+five distinct points is invertible. Add any fifth point to the four
+in question; independence of the five evaluation columns implies
+independence of the original four. Their sum being $I$ therefore
+uniquely determines their coefficients, including when one is zero.
+This proves aggregate uniqueness also at $a_\dagger$. $\square$
+

@@ -1,0 +1,130 @@
+## 118. 复读数与精确的占位相位群
+
+**定义 C-118.1（理想复期望）。** 对 $r>0$ 令
+
+$$
+a=\frac2r(C_{01}-C_{3,13}),\qquad
+b=\frac2r(C_{03}-C_{1,13}).
+\tag{C118.1}
+$$
+
+于是 $u=\operatorname{Re}a$、$v=\operatorname{Re}b$。
+这里 $a,b$ 为状态的精确复期望，不是有限样本模长估计。
+
+**定理 C-118.2（双复圆盘、复菱形与固定对角达到性）。**
+全部底面态的 $(a,b)$ 像恰为
+$\{(a,b)\in\mathbb C^2:|a|\le1,|b|\le1\}$；
+全部可分离底面态的像恰为
+$\{(a,b):|a|+|b|\le1\}$。
+两者仍能在每个 (C117.3) 的固定完整对角上达到。
+因此
+
+$$
+2\bigl(|C_{01}-C_{3,13}|+|C_{03}-C_{1,13}|\bigr)>r
+\tag{C118.2}
+$$
+
+足以排除底面可分离性。
+
+证明。对任意实 $\phi$，算子
+$(\cos\phi X_A+\sin\phi Y_A)\otimes Z_B$ 的算子范数为一，
+其在 $\sigma$ 中的期望为 $\operatorname{Re}(e^{-i\phi}a)$。
+取相位使该实部为 $|a|$，得到 $|a|\le1$；交换两因子得到 $|b|\le1$。
+对乘积态直接由矩阵元得到
+
+$$
+a=(x_A+iy_A)z_B,\qquad b=z_A(x_B+iy_B).
+\tag{C118.3}
+$$
+
+故
+
+$$
+|a|+|b|\le
+\sqrt{x_A^2+y_A^2+z_A^2}\,
+\sqrt{z_B^2+x_B^2+y_B^2}\le1,
+\tag{C118.4}
+$$
+
+其中应用二维 Cauchy–Schwarz 于
+$(\sqrt{x_A^2+y_A^2},|z_A|)$ 和
+$(|z_B|,\sqrt{x_B^2+y_B^2})$。
+三角不等式及凸性给可分离混态的同一界。
+
+为了达到任意目标，先用 C-117.2 达到实非负读数 $(|a|,|b|)$，
+再主动施加底面局部对角酉
+
+$$
+U_{\varphi,\psi}
+=\operatorname{diag}(1,e^{i\varphi})_A\otimes
+\operatorname{diag}(1,e^{i\psi})_B.
+\tag{C118.5}
+$$
+
+在固定的原占位读数下，该态变换使
+$a\mapsto e^{i\varphi}a$、$b\mapsto e^{i\psi}b$，
+并保持每个占位对角以及可分离性。
+选 $\varphi=\arg a$、$\psi=\arg b$；目标为零时相应相位任取。
+这同时证明全态与可分离态的反向包含和固定对角达到性。
+(C118.2) 就是可分离界的逆否命题。证毕。
+
+**命题 C-118.3（固定读数下模长和不变的最大对角相位群）。**
+设 $D=\sum_{j\in\Sigma}e^{i\theta_j}|j\rangle\langle j|$，
+主动变换 $\rho\mapsto D\rho D^\dagger$，保持 (C117.1)、(C118.1) 的读数定义不变。
+对于所有 $r>0$ 的五模式态均保持 $|a|+|b|$ 的对角酉恰满足
+
+$$
+\theta_0+\theta_{13}=\theta_1+\theta_3\pmod{2\pi},
+\qquad\theta_2\text{ 任意}.
+\tag{C118.6}
+$$
+
+该条件下，底面限制恰为共同相位乘一个局部对角酉，且
+
+$$
+a\longmapsto e^{i(\theta_1-\theta_0)}a,\qquad
+b\longmapsto e^{i(\theta_3-\theta_0)}b.
+\tag{C118.7}
+$$
+
+证明。主动对角共轭使
+$C_{ij}\mapsto e^{i(\theta_j-\theta_i)}C_{ij}$。
+(C118.6) 恰使 $C_{01},C_{3,13}$ 具有相同相因子，
+也使 $C_{03},C_{1,13}$ 具有相同相因子，给 (C118.7)。
+底面酉此时为
+$e^{i\theta_0}\operatorname{diag}(1,e^{i(\theta_1-\theta_0)})_A
+\otimes\operatorname{diag}(1,e^{i(\theta_3-\theta_0)})_B$。
+
+为证必要性，取底面乘积向量
+$|+\rangle_A|+\rangle_B=(|0\rangle+|1\rangle+|3\rangle+|13\rangle)/2$，
+其 $a=b=0$。令
+$\delta=\theta_0+\theta_{13}-\theta_1-\theta_3$，
+共轭后由四个振幅直接得
+
+$$
+a'=\tfrac12e^{i(\theta_1-\theta_0)}(1-e^{i\delta}),\qquad
+b'=\tfrac12e^{i(\theta_3-\theta_0)}(1-e^{i\delta}).
+\tag{C118.8}
+$$
+
+所以 $|a'|+|b'|=2|\sin(\delta/2)|$，
+要保持原来的零值必须 $\delta=0\bmod2\pi$。
+可在 $|2\rangle$ 加质量 $1-r$ 得任意 $0<r<1$ 的同一反例。
+$\theta_2$ 不进入底面矩阵元，故完全自由。证毕。
+
+**命题 C-118.4（主动作用与被动换基的边界）。**
+命题 C-118.3 比较固定 $\iota,K_1,K_2$ 下的不同状态。
+若改为被动换基，则状态、读数和底面张量识别均须按同一坐标规则运输，
+迹配对保持不变；任意被动基变换的这一事实不扩大 (C118.6) 的主动相位群。
+
+证明。若 $W$ 将新坐标送入旧坐标，则被动表示为
+$\rho'=W^\dagger\rho W$、$K_j'=W^\dagger K_jW$、
+$\iota'=W^\dagger\iota$，于是
+$\operatorname{Tr}(\rho'K_j')=\operatorname{Tr}(\rho K_j)$，且
+$\iota'^\dagger\rho'\iota'=\iota^\dagger\rho\iota$。
+主动作用固定读数时，必要条件已经由 (C118.8) 给出。
+例如固定读数下 $\theta_{13}=\pi$、其余底角相位为零，
+把上面的乘积向量送到 $G_{++}$；其 $a=b=1$。
+该态的系数矩阵有行列式 $-1/2$，故 concurrence 为一。
+这一非局部主动相位作用改变了底面纠缠及读数，不能当作保持原张量任务的相位重标记。证毕。
+

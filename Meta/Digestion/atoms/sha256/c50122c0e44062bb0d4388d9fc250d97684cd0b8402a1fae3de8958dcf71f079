@@ -1,0 +1,23 @@
+**Definition 4.1 (the admitted parameter language).** Let $\mathbf z$
+be a finite tuple of free natural parameters. The finite expression
+grammar is
+
+$$
+A::=\alpha\mid\beta\mid x_j\mid\langle A,A\rangle
+                  \mid\rho^{a(\mathbf z)}(A),
+\tag{NCE.9}
+$$
+
+where each $a$ is a specified integer-affine form. A specified finite
+Boolean combination $G(\mathbf z)$ of affine equalities, disequalities
+and weak inequalities includes, as conjuncts, $a(\mathbf z)\ge0$ for
+every exponent occurrence.
+Only assignments satisfying $G$ interpret the expressions. Fixed
+natural powers and the powers $\rho^{z_i}$ are special cases; nesting
+and repeated parameters are allowed. Fixed finite ground trees are
+abbreviations in this grammar. Let $\Phi(\mathbf z,\mathbf x)$ be a
+finite Boolean combination of equalities between these expressions.
+Every tree variable is existential over $\mathcal T$. There are no
+free unknown tree parameters, tree quantifier alternations, variable
+addresses, arbitrary morphisms or products of epoch variables.
+

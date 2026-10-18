@@ -1,0 +1,25 @@
+**Proposition 10.4 (the finite table does not supply all-finite RA).**
+A single fixed Table with the opcodes in Definition 10.1, and no
+additional operand or storage service, cannot realize the designated
+Reads of RA on every finite source. Theorems 10.2–10.3 discharge the
+finite-table routing obligation; they do not construct an encoding of
+RA's extensible records or its row output.
+
+Proof. There are only $2^k$ table controls, hence finitely many literal
+Read operands. Let $D$ be their maximum length, including zero if the
+menu is empty. The installed construction adds only the root operand.
+Run RA quiescently on a complete tree of height $D+1$, with any fixed
+valid cut. Its unshortened guard search in Definition 2.4 Reads
+$\varepsilon,L,\ldots,L^{D+1}$. The last operand belongs to neither
+the original finite menu nor the added root Reads. Exact designated
+action matching is therefore impossible for this table.
+
+RA additionally has candidate growth, paths, local cell work and a
+readable row, whereas the supplied table has fixed literal operations
+and Boolean halts. A finite subroutine table can be used inside a
+larger RA realization only with a separately supplied faithful
+storage, operand, continuation and output interface satisfying
+Assumption 8.2 and its full resource account. Neither a hypothetical
+height bound nor a different bounded-source task is substituted into
+Theorem 9.1. $\square$
+

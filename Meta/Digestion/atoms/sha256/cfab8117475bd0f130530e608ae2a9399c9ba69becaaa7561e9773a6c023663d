@@ -1,0 +1,34 @@
+**Lemma 1.3 (Original output factorization).** For arbitrary fixed
+preparation,
+
+$$
+y(k,\alpha,\beta)=D(A(k)U(\alpha),B(k)U(\beta)),
+\qquad D^{\mathsf T}D=4I_2\oplus I_2.
+$$
+
+In particular,
+
+$$
+\|D(a,b)\|_2^2=4\|a\|_2^2+\|b\|_2^2.
+$$
+
+**Proof.** The negative exponential convention gives
+$\overline\psi_i\psi_j=\sqrt{p_ip_j}e^{i(\theta_i-\theta_j)}$.
+The two expectations are twice its real and imaginary parts. The five
+increment differences are, in their declared order,
+$\alpha,\beta,\alpha,-\alpha,-\alpha$. Since $U(-a)=JU(a)$,
+this gives $D_0$ followed by the fixed preparation rotations $O$.
+The four copies of the first pair each contribute $I_2$ to its Gram
+matrix; the second pair contributes one $I_2$. There are no cross terms
+between these pairs, and $O,J$ are orthogonal. This proves the identities.
+In particular $D$ is injective. Also $k(H-k)\le H^2/4$, so
+$A(k)\le H$ and $B(k)<e_0$. Thus $y$ is uniformly bounded on
+$\mathcal M$. $\square$
+
+These formulas express the original metric, not a change of that metric.
+They also show that the outputs distinguish current rays: the rotated
+$02$ pair has squared norm $4Zk$, determining $k$, and normalization
+of the rotated $01$ and $02$ pairs then determines the two circle
+coordinates. This uses mathematical ideal outputs and chooses no real
+angle branch or measurement procedure.
+

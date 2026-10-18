@@ -1,0 +1,18 @@
+**Definition 1.4 (return-conserved p emission).** Use the original seed-1, marker-100 held-record fibre reached by
+
+$$
+S=\beta\alpha\mid\beta\beta\alpha\alpha.
+\tag{1.5}
+$$
+
+Let $u_x$ be the next synthetic alpha probability at a reachable p configuration $x$ on that fibre. Require
+
+$$
+u_{x'}=u_x
+\quad\text{whenever the actual noncompleting return }\beta\alpha
+\text{ can take }x\text{ to }x'\text{ with positive probability}.
+\tag{1.6}
+$$
+
+Reachability ranges over every positive finite history on the fibre. This is conservation of one immediate p emission on the actual return, not conservation of complete forecasts. Suspended emissions may be nonconstant and strictly interior; both interfaces and all other fibres remain arbitrary. Zero predicted probabilities do not remove any actual edge from (1.6). Original transient configurations remain in the history domain.
+

@@ -1,0 +1,17 @@
+**Theorem 1.3 (Original exact-optimum consequence).** Suppose additionally $\mu(\{k\ge3\})>0$. If an original finite COMPLETE observer attains both complete-tail configuration minima,
+
+$$
+R_{{\rm conf},p}=\rho_p,\qquad
+R_{{\rm conf},\beta}=\rho_\beta,
+\tag{1.7}
+$$
+
+then every common stationary support extracted on the original seed-1, marker-100 fibre contains a positive suspended label $y$ with
+
+$$
+J_y\notin\mathcal N_p(I).
+\tag{1.8}
+$$
+
+That label is reachable after a finite positive original history. No uniform bound on that history's paid length or probability is asserted. Equivalently, requiring every reachable suspended configuration's actual alpha-successor average on that fibre to be native precludes (1.7). Arbitrary transient behavior, zero/unit emissions and noncompletion mass are allowed before the endpoint equalities are applied. The proof is completed in Section 5.
+

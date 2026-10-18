@@ -1,0 +1,19 @@
+### 2.6 Excluding a zero numerator before factoring it
+
+In the coordinate $x=-\log_2t$, a nonzero root $\alpha$ of $Q(1-t)$
+has bad band
+
+$$
+|\alpha|/2<t<2|\alpha|,
+$$
+
+which becomes an open interval of length two before intersection with
+$[2,J+2]$. There are at most $N$ such bands, counting multiplicity;
+zero roots exclude nothing. Their union has length at most $2N<J$,
+so a good $t$ exists.
+
+If $P$ were the zero polynomial, the left side of (2.17) at that
+good $t$ would equal one, contradicting its strict bound below $1/2$.
+Thus $P\ne0$. Its degree is at most $N-1$. Numerator roots are used
+only after this conclusion.
+

@@ -1,0 +1,26 @@
+**定理 78.9（Exact deterministic frontier and upward closure）。** In the selector of 78.6, let $\mathcal D$ be the set of actual deterministic exact cost vectors and
+
+$$
+F_\sigma=\{(c_\pi,r_\pi):\pi\text{ a permutation of }A\},
+$$
+
+discarding duplicate vectors. Then $F_\sigma$ is exactly the Pareto-minimal subset of $\mathcal D$, and $|F_\sigma|=n!/2$.
+
+Proof. Attainment and 78.8 give
+
+$$
+F_\sigma\subseteq\mathcal D\subseteq\uparrow F_\sigma,\qquad
+\uparrow\mathcal D=\uparrow F_\sigma.
+$$
+
+Here $\uparrow S=\{z\in\mathbb R_{\ge0}^{2n}:\exists s\in S,\ s\le z\}$ is the upper closure in the nonnegative real coordinate space. The raw set $\mathcal D$ consists of actual integer count vectors; upper closure grants no policy realizing each larger vector. Prepending arbitrarily many restorations already gives infinitely many feasible padded vectors, whereas $F_\sigma$ is finite.
+
+Every permutation has the same sums
+
+$$
+\sum_a c_\pi(a)=\frac{L(n-1)(n+2)}2,\qquad
+\sum_a r_\pi(a)=\frac{(n-2)(n+1)}2.
+$$
+
+If one permutation vector is below another, equality of these sums forces equality of every coordinate. Thus distinct members are incomparable. A feasible vector strictly below an $F_\sigma$ member would, by 78.8, place another $F_\sigma$ member strictly below it, a contradiction. A feasible vector outside $F_\sigma$ has a distinct member below it and is not minimal. Costs distinguish positions $1,\ldots,n-2$, while the final two positions have the same pair. Exactly the exchange of those last two leaves a permutation vector unchanged; hence there are $n!/2$ distinct vectors, including one for $n=2$. This finite frontier does not make the set of all padded policies finite. $\square$
+

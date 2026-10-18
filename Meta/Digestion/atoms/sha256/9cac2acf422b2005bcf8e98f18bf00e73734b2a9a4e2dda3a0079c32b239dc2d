@@ -1,0 +1,31 @@
+**Definition 7.1 (fixed compact two-sheet projection).** Put
+$u=\sqrt\alpha\,z$, $v=\sqrt\beta\,w$ and let
+$$
+\begin{gathered}
+\mathcal X=\{(u,v,\eta):u^2+v^2=1,\ \eta\in\{0,1\}\},\\
+\Gamma_\eta=
+ (1,u,v,u^2,uv,\eta\mathfrak c,\eta\mathfrak c u^2,
+                         \eta\mathfrak c uv),\\
+B(t)=(1,0,0,\alpha,0,\mu/t,\alpha V/t,0),\\
+g_t(u,v,\eta)=|\ell(h)+\eta t\mathfrak c(h)f(h)|,\qquad
+r(s)=\sqrt\alpha\,s/s_0.
+\end{gathered}
+\tag{GC.30}
+$$
+Every occurrence of $h$ here means
+$(1,u/\sqrt\alpha,v/\sqrt\beta)$. Endpoint families satisfy
+$$
+\sum_jp_j\Gamma_{\eta_j}=B(t),\qquad
+\sum_jp_j|u_j|\ge r(s).
+\tag{GC.31}
+$$
+The first five coordinates recover all live Gram entries. The last
+three give
+$\sum p\eta t\mathfrak c=\mu$,
+$\sum p\eta t\mathfrak c z^2=V$ and
+$\sum p\eta t\mathfrak c zw=0$.
+The ellipse identity recovers the $w^2$ moment $W$.
+Congruence by
+$(z,w)\mapsto(dw/h_2,-bz/h_1)$ recovers exactly $M$.
+Thus these are constraints on one common joint law.
+

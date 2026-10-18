@@ -1,0 +1,44 @@
+**定理 6.2（五模式响应与四记录相容性的同一边界）。** 对全部 $\tau\ge0$，
+
+$$
+\det G_\tau=1-3\tau+\tau^2,
+\qquad
+G_\tau\succeq0\iff0\le\tau\le\tau_*.
+\tag{6.2}
+$$
+
+在可实现范围内，最小载体维数为
+
+$$
+\operatorname{rank}G_\tau=
+\begin{cases}
+4,&0\le\tau<\tau_*,\\
+3,&\tau=\tau_*.
+\end{cases}
+\tag{6.3}
+$$
+
+因此，在 $0\le\tau\le1$ 内，式 (5.2) 还等价于四份记录的共同实现；只有临界点可在三维载体实现。
+
+证明。行列式的非零置换由路径上的不相邻换位组成。空选择贡献 $1$，三个单换位各贡献 $-a^2$，第一与第三条边的共同换位贡献 $a^4$。故行列式恰为同一个五模式多项式 $P(a^2)$。
+
+谱计算使用三对角 Toeplitz 矩阵的经典特征值公式（[Nicholas J. Higham, *What Is a Tridiagonal Matrix?*, 式 (6)](https://nhigham.com/2022/01/10/what-is-a-tridiagonal-matrix/)）。对式 (6.1)，其四个特征值为
+
+$$
+1+a\varphi,\quad1+a\varphi^{-1},\quad
+1-a\varphi^{-1},\quad1-a\varphi.
+$$
+
+最小值为 $1-a\varphi$，故给正半定阈值。阈值以下全部特征值严格为正；在阈值处只有最后一个为零，给式 (6.3)。经典 Gram 分解在此提供存在性及最小维数，定理 5.2 给同源解析等价。
+
+临界时令 $a=\varphi^{-1}$，满足 $a+a^2=1$。显式向量
+
+$$
+\begin{aligned}
+e_1&=(1,0,0),& e_2&=(a,\sqrt a,0),\\
+e_3&=(0,\sqrt a,a),& e_4&=(0,0,1)
+\end{aligned}
+$$
+
+均为单位向量，相邻内积为 $a$，非相邻内积为零，且张成三维，因而达到最小值。这里的维数始终是所定义共同记录的载体维数。$\square$
+

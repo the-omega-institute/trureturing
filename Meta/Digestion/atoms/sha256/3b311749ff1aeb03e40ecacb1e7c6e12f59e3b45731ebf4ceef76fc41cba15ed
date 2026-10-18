@@ -1,0 +1,84 @@
+**Convention 11.1 (conditional scope and exact dictionary).** Sections
+11–18 retain every assumption and comparison-class clause of §§1–2.
+In particular the CG root, its isolation/Jacobian certificate, exact
+ranks, root TP identity and original minimax/support identification
+remain `ASSUMED-UNVERIFIED`. The results are ordinary conditional
+mathematics. The amplitude enclosures used by the suppliers remain
+conditional inequalities; no rational centre certifies these premises.
+
+Let [TC] denote *Joint failure records: three-line structure and the
+exact initial law*, and [SC] denote *Joint interior records: support
+obstruction and saturation curvature*. Their global cost convexity,
+unique optimizing line measure, at-most-three-line structure, strict
+concavity, projective certificate, scalar three-line family, selected
+initial/final branches and initial/saturation coefficients are suppliers,
+not additional results here. WE retains ownership of the universal
+critical full-record limit. Sections 7–9 retain ownership of limiting
+correspondence, prescribed-sequence recovery, evaluated saturation and
+spectral equality. The additional assertions below are scalar selection
+across the intervening limiting budgets, quantitative uniform estimates
+and a simultaneous finite-activity spectral layer.
+
+To distinguish the off-diagonal magnitude from both the source amplitude
+$b$ and §8's negative spectral eigenvalue magnitude, put
+
+$$
+b_{\rm off}=-z_f>0,\qquad
+p_z=d_f^2/L_f^2,\qquad p_s=(1+d_f/L_f)/2=1/(1+u_f^2).
+\tag{JS.46}
+$$
+
+Here $u_f$ has exactly Definition 8.1's spectral meaning. The endpoint
+radial constant is $r=V/\mu$, not this $u_f$. In notation in which the
+live quadratic is $\ell$, the failure quadratic is $f$, the radial
+constant is $u_f$ and the off-diagonal magnitude is $b_f$, the exact
+translation to this volume is respectively $f(z,w)$, $k(z,w)$,
+$r$ and $b_{\rm off}$. The constant denoted $\nu$ in that notation
+is $\mu/c_*(r)$; it is distinct from this volume's failure measure
+$d\nu=v\,dP$. Its $(\mu_f,V_f,W_f)$ are $(\mu,V,W)$.
+The normalization matrix remains $L=\operatorname{diag}(s_0,1,1)$;
+a terminal decoder effect is a different operator $B^\dagger B$.
+
+For $0\le p\le1$ define the same scalars as TC.2 by
+
+$$
+\begin{aligned}
+a(p)&=\beta W+(\alpha V-\beta W)p,& x(p)&=Vp/a(p),\\
+J(p)&=a(p)F_c(x(p)),&
+g_+(p)&=2b_{\rm off}\sqrt{p(1-p)}-d_f(1-p),\\
+C(p)&=J(p)+J(1-p),&
+D_J(p,q)&=J(p)-J(q)-(p-q)J'(q).
+\end{aligned}
+\tag{JS.47}
+$$
+
+All denominators are positive through the axes. SC Theorem 2.1 and
+TC Lemma 2.1 give strict convexity of $F_c$ on $[0,U]$, with positive
+second derivative in the interior. Consequently
+$J''(p)=V^2(\beta W)^2F_c''(x(p))/a(p)^3>0$ for $0<p<1$.
+The source inequality $d_f>2b_{\rm off}$ is (JS.19); hence
+$1/2<p_z<p_s<1$, $g_+>0$ on $(p_z,1)$, and its unique maximum
+is $g_+(p_s)=\gamma_f$. Also
+$2J(1/2)=C_{\rm end}$ and $C(p_s)=C_{\rm sat}$.
+
+The physical change of coordinates is essential. For a real unit
+vector $e=(e_1,e_2)^T$ and whitened mass $\omega$, its actual failure
+effect, ellipse point and failure-measure mass are
+
+$$
+\begin{gathered}
+B_e=\omega M_2^{1/2}ee^TM_2^{1/2},\quad M_2=\operatorname{diag}(m_1,m_2),\\
+z_e=-\sqrt V e_2/\sqrt{a(e_2^2)},\quad
+w_e=\sqrt W e_1/\sqrt{a(e_2^2)},\quad
+\nu_e=\omega a(e_2^2),\quad
+n(z_e,w_e)=M_2^{1/2}e/\sqrt{a(e_2^2)}.
+\end{gathered}
+\tag{JS.48}
+$$
+
+Thus covariance is $\sum\omega ee^T=I_2$, the cost is
+$\sum\omega J(e_2^2)$, and the objective is
+$\sum\omega(e^T\Xi e)_+$. The unwhitened effects are never
+replaced by $\omega ee^T$. Antipodes or proportional splittings do
+not change these quantities. This is precisely TC.3–4/SC.15–16.
+

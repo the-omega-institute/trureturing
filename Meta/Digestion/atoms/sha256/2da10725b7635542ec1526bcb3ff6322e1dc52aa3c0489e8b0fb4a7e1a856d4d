@@ -1,0 +1,53 @@
+**Theorem 9.1 (paired high-resource inequality).** Put
+$W=\operatorname{diag}(-1,-1,1)$ on the supported qutrit. For every
+positive supported $\rho$, and every one allowed ceiling factorization,
+
+$$
+\frac{p_H^{\rm acq}(\rho;\mathfrak F)
++p_H^{\rm acq}(W\rho W^\dagger;\mathfrak F)}{2}
+\geq\left(1-\frac1R\right)
+\operatorname{tr}((D^\dagger D+T^\dagger T)\rho).
+\tag{RE.59}
+$$
+
+The $s=1$ construction of Definition 5.1 attains this inequality
+simultaneously for every such $\rho$, with one common design.
+
+Proof. $W$ commutes with $K_r$ and anticommutes with $S$.
+Consequently $A_r,C$ are unchanged by $\rho\mapsto W\rho W^\dagger$
+and $U_r$ changes sign. For the actual fixed high coefficient matrices
+(RE.39), averaging the two high live evaluations cancels the cross
+terms. Equations (RE.19) and (RE.40) therefore give
+
+$$
+\begin{aligned}
+\frac{p_H^{\rm acq}(\rho)+p_H^{\rm acq}(W\rho W^\dagger)}2
+&\geq\sum_r(u_rA_r+v_rC)\\
+&\geq u_0\sum_rA_r
+=\left(1-\frac1R\right)
+\operatorname{tr}((D^\dagger D+T^\dagger T)\rho).
+\end{aligned}
+\tag{RE.60}
+$$
+
+This uses the same actual factorization on both inputs, not independently
+attained values. It is an algebraic inequality between two conditional
+masses and supplies no source prior or new mixture preparation.
+
+In Theorem 8.1 set $x_+=x_-=0$. Then $\eta_r=u_0$,
+$\ell_{r,\epsilon}=1/(4R)$, and the instrument is exactly Definition
+5.1 at $s=1$. Its effect is
+
+$$
+G_1=\left(1-\frac1R\right)(D^\dagger D+T^\dagger T).
+\tag{RE.61}
+$$
+
+This diagonal effect commutes with $W$, so its two evaluations are
+identical and equal the right side of (RE.59). This proves simultaneous
+attainment without discarding any failure branch or exact-time record.
+The proof is homogeneous, so no normalization of $\rho$ was needed.
+For arbitrary five-mode inputs a corresponding inequality follows by
+using the unitary $EWE^\dagger+Q$ and unnormalized compression; there
+is no positive bound asserted on the complement alone. $\square$
+

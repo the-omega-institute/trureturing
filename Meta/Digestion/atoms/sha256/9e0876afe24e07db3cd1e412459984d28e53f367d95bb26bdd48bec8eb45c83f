@@ -1,0 +1,66 @@
+## 8. Remaining four-view bridge
+
+**Open problem 8.1 (original-task native four-view realization).** On one
+actual same-source history domain, construct four concrete natural
+expressions for spatial support, ordered executed events, complete lawful
+continuation responses and callable memory. They must be jointly acquired,
+have lawful selectors and successors, and satisfy the Full/NextCompat
+conditions of [PG, §34][PG], or their full run versions if failures are
+included. Every view must individually have the intended complete task
+kernel, with nonredundancy as required by [PG, Proposition 43.1][PG].
+Pairwise recoverability and task sufficiency alone give only the forward
+kernel inclusion.
+
+Theorems 3.1 and 5.2 give acquired recovery states for two specified
+successful update domains. They do not present four natural views, and
+neither endpoint alone is a substitute for its required reference or
+archive. The added relation differs between the menus: an acquired
+initial-entry separator suffices for (ER.4), while the transported-graft
+menu needs information about actual order even with the entire source
+given. Enlarging a source-only reference cannot repair (ER.20). Any order
+archive must be acquired from actual commits, as in (ER.19), or the menu
+must be restricted.
+
+For the original task (ER.3), actual update words on one fixed $t$ are
+not requested distinctions. Full literal syntax can also be redundant:
+for $D\ge1$, two perfect right subtrees of height $D$ differing only at
+one depth-$D$ leaf label have branch replies at every relative target
+of length at most $D-1$, for every $k\ge0$, because substitution preserves
+each original pair. Yet their complete initial work trees differ.
+Consequently neither full syntax nor exact update chronology has here
+been shown nonredundant for original prediction. Adding trace recall or
+deeper-label access changes the declared task; it cannot silently change
+that kernel.
+
+Callable archive reads themselves create actual events. A full-run
+extension must define their selectors, legal domains, outputs, failures,
+successors, source/session binding and retention on the same joint image.
+The height supplement and bounded shuffle rank do not discharge these
+obligations or recover arbitrary preparation/read/failure histories.
+
+The original general $M_1(D)$, sharp $\lambda$, effective all-size
+certificates and coherent all-resolution reconstruction remain separate
+open objectives. Finite successful-update constructions supply no global
+coverage, ThreadComplete or whole-edge legality. No physical clock,
+universal spacetime or ontological theorem is asserted.
+
+[PG]: RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md
+[JM]: RECURSIVE_RELATIONAL_OBSERVATION_JOINT_MOMENT_FIBERS.md
+[PPF]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PAID_PREPARATION_FRONTIERS.md
+[AAR]: RECURSIVE_RELATIONAL_OBSERVATION_ADAPTIVE_ACQUIRED_REFERENCE_FRONTIER.md
+[CBN]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CONSTRUCTOR_BOUNDARY_NETWORKS.md
+[SCE]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SELECTOR_COMMON_EXTENSION.md
+[SC]: RECURSIVE_RELATIONAL_OBSERVATION_SPATIAL_RECORDS_CHRONOLOGY.md
+[ATA]: ../../../D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean
+[ATAB]: ../../../Blueprint/D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.scribe.cs
+[FCE]: ../../../D5/S3/Observer/Separation/FixedTreeCommonExtension.lean
+[FCEB]: ../../../Blueprint/D5/S3/Observer/Separation/FixedTreeCommonExtension.scribe.cs
+[NLM]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeLiteralMoore.lean
+[NLMB]: ../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeLiteralMoore.scribe.cs
+[Bennett]: https://www.cs.princeton.edu/courses/archive/fall06/cos576/papers/bennett73.html
+[Foster]: https://www.cis.upenn.edu/~bcpierce/papers/lenses-toplas-final.pdf
+[Lanese]: https://arxiv.org/html/2307.13360v2
+[Shalizi]: https://arxiv.org/pdf/cond-mat/9907176v2
+[Bos]: https://arxiv.org/html/1907.11034v2
+[Kowshik]: https://arxiv.org/html/1105.0240v2
+

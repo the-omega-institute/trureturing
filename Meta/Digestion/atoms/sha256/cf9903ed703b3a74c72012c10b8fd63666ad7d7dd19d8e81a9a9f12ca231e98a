@@ -1,0 +1,62 @@
+**命题 11.1（The same source realizes every coordinate and every fixed readout）。**
+Every state $\Gamma(X)$ in (2.1), including every endpoint and every state
+on the interval paths, satisfies
+
+$$
+\begin{aligned}
+\langle s,u|\Gamma(X)|s,u\rangle
+ &=\tfrac15\mathbf1_{\{u=f(s)\}},\\
+\operatorname{Tr}_2\Gamma(X)&=\operatorname{Tr}_1\Gamma(X)=I_5/5.
+\end{aligned}
+\tag{11.1}
+$$
+
+For the original normalized vector and effect
+
+$$
+|\Omega\rangle=\tfrac12(e_0+e_{13}-e_1-e_3),\qquad
+Q=|\Omega\rangle\langle\Omega|,
+$$
+
+one has
+
+$$
+\operatorname{tr}(Q\Gamma(X))=\frac15,
+\qquad \operatorname{tr}\bigl(Q(\Gamma(X)-I_{25}/25)\bigr)=\frac4{25}.
+\tag{11.2}
+$$
+
+Proof. The zero skew diagonal gives $C_{ss}=1/5$, proving every one of the
+$25$ populations. The partial traces of a matching matrix unit are
+
+$$
+\begin{aligned}
+\operatorname{Tr}_2(|e_s\rangle\langle e_a|)
+ &=\langle f(a)|f(s)\rangle\,|s\rangle\langle a|,\\
+\operatorname{Tr}_1(|e_s\rangle\langle e_a|)
+ &=\langle a|s\rangle\,|f(s)\rangle\langle f(a)|.
+\end{aligned}
+$$
+
+The permutation $f$ kills every off-diagonal term in either partial trace;
+the diagonal terms give $I_5/5$ on each side. The compressed real vector is
+
+$$
+q=J^\dagger\Omega=(1,-1,0,-1,1)^T/2,\qquad q^Tq=1.
+$$
+
+Since $q^TXq=(q^TXq)^T=q^TX^Tq=-q^TXq$, its value is zero. Therefore
+$q^TCq=1/5$, proving the first equality of (11.2). The rank-one normalized
+$Q$ has expectation $1/25$ on $I_{25}/25$, proving the second. The same
+calculation holds for every legal $X$, so none of the constructions changes
+these fixed readouts. $\square$
+
+In particular each marginal has purity $1/5$ throughout. If
+$P_{\mathrm b}=I_5-|2\rangle\langle2|$ is the inherited bottom-face
+projection, each marginal has bottom mass $4/5$ and normalized bottom state
+$I_4/4$. The joint bottom mass is also $4/5$: exactly the four matched
+vectors with $s\ne2$ lie in the joint bottom space. This is a correlated
+source; the independent product of the two marginals would instead give
+joint bottom mass $16/25$. These statements follow directly from (11.1)
+and do not alter the original split used for negativity.
+

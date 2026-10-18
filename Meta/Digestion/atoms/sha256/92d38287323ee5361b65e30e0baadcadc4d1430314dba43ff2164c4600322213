@@ -1,0 +1,144 @@
+## 1. Complete worlds, normalization and actual children
+
+A complete world is $W=(P,g,\delta)$, where $P$ is a strictly
+entrywise positive real $2\times2$ matrix of rank one and trace one,
+$0\ne g\in\mathbb R[T]$ has degree at most three, and
+$\delta\in\mathbb R$. The source need not be symmetric. Both gain
+signs, all permitted degree drops, sampled roots and repeated roots
+are allowed unless a conclusion below excludes them. Set
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+A_0=I,\quad A_i=E_iA_{i-1},\quad E_i\in\{J,M\}.
+\tag{1.1}
+$$
+
+At original clock $i$ the reading is
+$g(i)\operatorname{tr}(A_iP)+\delta$. The initial reading counts.
+Every atom is immediately read on one unresettable, uncopyable
+trajectory. A chronological word $EF$ means first $E$ and its
+reading, then $F$ and its reading; its cumulative matrix is $FEA$.
+There are no skipped or extra readings and no clock renumberings.
+Policies may be arbitrary deterministic functions of the entire
+actual history, without a regularity or computational bound.
+
+For arbitrary $D_0,Y,z\in\mathbb R$ and $\lambda\ne0$, fix exactly
+the literal history
+
+$$
+H=(D_0,J,D_0+24\lambda,M,D_0+48\lambda,
+                 M,D_0+312\lambda/5,J,Y,M,z).
+\tag{1.2}
+$$
+
+Its five chronological atoms are $JMMJM$. All six readings at clocks
+zero through five remain imposed on every world considered together.
+The history parameter $D_0$ is not a drift promise. Put
+
+$$
+f=g/\lambda,\qquad d=(\delta-D_0)/\lambda,\qquad
+y=(Y-D_0)/\lambda,\qquad \zeta=(z-D_0)/\lambda.
+\tag{1.3}
+$$
+
+The matrices and normalized readings are
+
+$$
+\begin{gathered}
+(A_0,\ldots,A_5)=(I,J,L,J+L,C,Q),\\
+L=MJ=\begin{pmatrix}1&0\\1&1\end{pmatrix},\quad
+C=\begin{pmatrix}2&1\\1&1\end{pmatrix},\quad
+Q=\begin{pmatrix}1&1\\3&2\end{pmatrix}=I+2J+2L-C,\\
+(c_0,\ldots,c_5)=(0,24,48,312/5,y,\zeta).
+\end{gathered}
+\tag{1.4}
+$$
+
+Write
+
+$$
+P=\begin{pmatrix}r&u\\v&1-r\end{pmatrix},\qquad
+0<r<1,\quad u,v>0,\quad uv=r(1-r)\le\tfrac14,
+\qquad j=u+v,\quad \ell=1+u.
+\tag{1.5}
+$$
+
+These inequalities and the determinant equation are equivalent to
+source legality: determinant zero and trace one give rank one.
+Direct trace multiplication gives the entire ancestor system
+
+$$
+\begin{aligned}
+f(0)+d&=0,\\
+f(1)j+d&=24,\\
+f(2)\ell+d&=48,\\
+f(3)(j+\ell)+d&=312/5,\\
+f(4)(1+r+j)+d&=y,\\
+f(5)(j+2\ell-r)+d&=\zeta.
+\end{aligned}
+\tag{1.6}
+$$
+
+All six trace factors are strictly positive. More generally this
+holds for the trace of any nonzero entrywise nonnegative cumulative
+matrix against a strictly positive source. Membership in
+$\mathcal F(H)$ means legality and all six equations, not merely an
+eliminated necessary relation.
+
+The individual sixth-matrix identities are
+
+$$
+JQ=\begin{pmatrix}3&2\\1&1\end{pmatrix}=2C-L,\qquad
+MQ=\begin{pmatrix}3&2\\4&3\end{pmatrix}=I+2J+2L.
+\tag{1.7}
+$$
+
+Thus define the normalized sixth and terminal responses by
+
+$$
+\begin{aligned}
+t_J&=2(1+r+j)-\ell,&t_M&=1+2j+2\ell,\\
+v_E(W)&=d+f(6)\operatorname{tr}(EQP),&
+r_{EF}(W)&=d+f(7)\operatorname{tr}(FEQP).
+\end{aligned}
+\tag{1.8}
+$$
+
+Here $E,F\in\{J,M\}$ and $EF$ is chronological. Raw responses are
+$D_0+\lambda v_E$ and $D_0+\lambda r_{EF}$. Counterfactual response
+functions in a proof are not additional acquisitions.
+
+For a known candidate set $K$ at any literal history $H'$, use
+
+$$
+\begin{aligned}
+L_0(K,H')&\Longleftrightarrow |K|\ge2,\\
+L_{q+1}(K,H')&\Longleftrightarrow |K|\ge2\ \land\
+ \bigwedge_{E\in\{J,M\}}\exists w\in\mathbb R:
+ L_q(K\cap\mathcal F(H',E,w),(H',E,w)).
+\end{aligned}
+\tag{1.9}
+$$
+
+Each actual child retains the same fixed worlds and their whole
+common ancestor. The affine response map
+$w\mapsto(w-D_0)/\lambda$ is a bijection for either sign of
+$\lambda$. It preserves response equalities and child cardinalities.
+Induction in (1.9), using the bijection for each existential real
+response, proves preservation of every $L_q$. Complete-world
+distinction is preserved, and inverse normalization is
+
+$$
+g=\lambda f,\qquad \delta=D_0+\lambda d,
+\tag{1.10}
+$$
+
+with the same $P$.
+
+The model, ancestor and positive chart used below are credited to
+*FIB self-calibrating relation mathematics VII*, Definitions 1.1–1.3.
+Every identity needed for those deductions
+is proved below; no unseen source or large coefficient certificate is
+a premise.
+

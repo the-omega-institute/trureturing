@@ -1,0 +1,19 @@
+**Example 8.4 (a nine-dimensional live component).** Take
+$c=1/4$, $Z=r=1/2$, $a_0=1/8$, $q=1/16$ and $M=3$. The heights
+are $(1/16,1/8,3/16)$. For the three phase witnesses of Theorem 7.5,
+the rectangle heights $B/\pi$ are $(0,8,0)$, their signed windings are
+$(0,0,1)$, and their Gram determinants at the three current heights are
+$(3/8,1/2,3/8)$. Their respective canonical preparation live
+probabilities are $(2/9,1/3,2/9)$, independent of the witness selected
+at a fixed height. The six-unit source paths have probability support at
+least $1/16$, height speed at most $1/16$ and witness phase variation
+at most $16\pi$.
+
+The positive requests of displacements $1/8$ and $1/16$ have executed
+masks $(1,0,0)$ and $(1,1,0)$. The full five-request menu has legal
+successors precisely $j+s\in\{1,2,3\}$, and all legal ramps retain
+support at least $1/16$. These values follow by substitution in
+(QC.38), (QC.44), the two monotone survival factors and the integer guard.
+They give $D_{\rm live}=9$. Universal claims use the proofs above;
+this finite instance has no separate acquisition or hardware claim.
+

@@ -1,0 +1,36 @@
+## 215. Every owner containing two distinct high labels costs more than pi
+
+Let an actual owner contain at least two distinct labels from P.
+It is genuine, because sigma contains only M from P. We exhaust its
+fixed-pair possibilities.
+
+If both pair labels belong to P, Section 214 excludes special axes.
+If an axis lies in P, apply the five-slot inequality of Section 213.
+If both axes lie in {C,D}, order the pair values a>=b>=m>3 and denote
+axis values by r,o. We have r<=b and o<=a, so
+ L-2*J>=3*a^2-5*a*b+3*b^2-a-b-3
+       =(b-3)*(b+1)+(a-b)*(b-1)+3*(a-b)^2>0.
+Since K>8/9, K*L/J>16/9>1. Thus the four transverse P slots have
+expense 2*(beta_a+beta_b)>pi.
+
+If exactly one pair label A lies in P, the other B lies in {C,D}.
+A second distinct P label must be an axis R. Write its values a,b,r.
+Then a,r>=m and b<m-2<a. For t=cot(theta_r/2)>0 the individual angle
+beta_a equals atan(Aplus*t)+atan(Aminus*t), with Aplus,Aminus>0 and
+ Aplus+Aminus=2*sqrt(a^2-1)/(a+b)*sqrt((r-1)/(r+1))>1.
+Indeed sqrt(a^2-1)/(a+b) is strictly increasing in a>1, its derivative
+is (a*b+1)/[sqrt(a^2-1)*(a+b)^2]>0, and the square root in r is
+increasing. Substituting a=r=m gives the lower bound
+ 2*(m-1)/(m+b)>1,
+since b<m-2. For positive X,Y,t with X+Y>1,
+atan(X*t)+atan(Y*t)>atan(t): if their sum is at least pi/2 this is
+immediate, and otherwise its tangent is (X+Y)*t/(1-X*Y*t^2)>t.
+Therefore theta_r+2*beta_a>pi. These are three actual P slots.
+
+Finally, if neither pair label belongs to P, the pair is {C,D}.
+Having two distinct P labels forces both axes into P. Both values
+are at least m>1+c+d, so their flat product is strictly larger than
+(c+d)^2. Such an owner is flat, contradicting unique flatness and
+the fact that sigma has only one P axis. This case is impossible.
+The cases exhaust every paired frame and prove the assertion.
+

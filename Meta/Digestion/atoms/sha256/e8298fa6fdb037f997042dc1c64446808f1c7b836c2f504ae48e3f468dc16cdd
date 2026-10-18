@@ -1,0 +1,38 @@
+**Theorem 3.2 (Universal two-read upper bound).** Every lawful total-cap-two input has a lawful representative on its unchanged given seed space with every address in $[j-4,j+5]\cap\mathbb Z$ and the same full law of $(u,H_j,O,D,N)$. More specifically, a supplied normalized tree of height at most two has one relabelling independent of $p$ which retains its ordered shape, all terminal labels, and every terminal paid depth. The same relabelling of that fixed tree works for every allowed $p$ simultaneously.
+
+Proof. Work first with one supplied finite tree. Keep any immediate terminal. Otherwise let its root address $t$ have parity $\alpha$ and active edge $E=\{e,e+1\}$, where $e=(t-\alpha)/2$. Put $q=q_{j,\alpha}$ and $B=2q+\alpha$. Give the root the single new edge left endpoint
+
+$$
+e'=\begin{cases}q&q\in E,\\q+1&q\notin E,\end{cases}
+\qquad t'_{\mathrm{root}}=2e'+\alpha.
+\tag{3.1}
+$$
+
+This choice is made once, before either root-reply branch. In phase $\alpha$, a target-touching edge, in either direction, has conditional reply $S_q\oplus V$ with $V$ an independent Bernoulli$(p)$ spin. A detached edge has the XOR of two fresh Bernoulli$(p)$ spins independently of $S_q$. Formula (3.1) has the respective same laws. In the other phase both old and new root bits are separator zeros. Thus the complete target/root-reply marginal is preserved.
+
+Keep each terminal child at depth one, including $\bot$. Consider each reading child separately, retaining its two terminal labels at depth two. If its parity $\beta$ differs from $\alpha$, put $q_\beta=q_{j,\beta}$ and replace its active edge left endpoint by $q_\beta$ when its old edge contains $q_\beta$, and by $q_\beta+1$ otherwise. Its actual new address is twice that endpoint plus $\beta$. In phase $\alpha$ this child is a separator and the root/target marginal has already been preserved. In phase $\beta$ the root is a separator and the touching/detached argument preserves the child/target marginal. Consequently the target/root/that-child potential-reply triple has the same law, after averaging the original phase weights $1/2,1/2$.
+
+If the child has parity $\alpha$, use Lemma 3.1 for its old edge $F$, giving actual new address $2f'+\alpha$. In phase $\alpha$ take the lemma's vertex bijection. Each spin assignment on the finite occupied vertex set has mass
+
+$$
+\prod_v\pi_{s(v)}.
+\tag{3.2}
+$$
+
+Transporting the assignment along the bijection preserves all its factors, the target spin, and both edge XORs. The XOR is symmetric, so unordered edges suffice. Summing over assignments proves equality of the joint target/root/that-child potential-reply triple. In the opposite phase both addresses are separators. Averaging gives the unconditional triple identity too.
+
+This constructs actual addresses for one tree, for both parities and both mutually exclusive child branches. The root is always the same (3.1) in the two child arguments. The abstract spin bijections used to prove their respective marginal identities may differ. Each identity is nevertheless a marginal of the genuine law of this one constructed tree; no joint identity of the two siblings' potential replies is needed.
+
+To see execution explicitly, let $x$ denote the root reply. For a terminal child with label $\ell_x$, the event of reaching it jointly with $H_j=h$ has the preserved mass $J_p(H_j=h,X_{\mathrm{root}}=x)$. For a reading child, let $y$ be its reply and $\ell_{x,y}$ its terminal label. The corresponding mass is exactly
+
+$$
+J_p(H_j=h,X_{\mathrm{root}}=x,X_{\mathrm{child}\ x}=y),
+\tag{3.3}
+$$
+
+which is the triple coordinate just proved equal. These terminal events partition actual execution, including any zero-mass events. Their kept labels and depths give $O,D,N$. Summing their masses proves the entire $Z$-law identity. A $\bot$ label at depth zero, one, or two retains internal nonreturn with exactly that many paid calls. No samplewise coupling or record preservation has been imposed.
+
+Every same-parity table endpoint $f'$ is between $q-2$ and $q+2$, so its address is between $B-4$ and $B+4$. Root and opposite-parity child addresses are their own $B_{j,\gamma}$ or $B_{j,\gamma}+2$. By (1.2) every base is $j$ or $j+1$. All actual addresses therefore lie in $[j-4,j+5]$, within radius five. Keeping the shape retains the cap on every formal branch, including impossible replies and every nonreturn depth.
+
+The specified construction defines a map $C_j$ on the countable discrete tree space. Lemmas 2.1–2.2 now yield the measurable same-seed rule and equality (2.2) for every seed event and every $z$. No new randomness or source observation is involved. Geometry and $j$ alone determine $C_j$, and the product identity (3.2) holds at every allowed $p$. If an input itself uses public $p$, apply the construction to its tree at that fixed $p$; joint measurability in a varying parameter is not required. $\square$
+

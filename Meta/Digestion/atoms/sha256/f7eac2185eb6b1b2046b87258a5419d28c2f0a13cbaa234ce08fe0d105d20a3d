@@ -1,0 +1,67 @@
+**定理 33.1（双末零平面的因果逆）。** 设外部预先知道
+
+$$
+H(t)=(t-6)(t-7),\qquad
+V_{67}=H\operatorname{span}\{1,t\},\qquad
+g=H(\alpha+\beta t)\ne0,\qquad d=a_0-42\alpha.
+\tag{33.1}
+$$
+
+先实际取得 J,M,J,M 的四个立即响应，之后仅由已经取得的物理读数计算
+
+$$
+\Psi=35y_4+43y_1-63y_2-15y_0,\qquad
+E_5=\begin{cases}J,&\Psi=0,\\M,&\Psi\ne0.\end{cases}
+\tag{33.2}
+$$
+
+实际续行 E5,J,J，在整个声明类上恢复唯一完整世界。到实际时钟六已单射，故可选在七次总读后停止；展示的完整协议保留时钟七的第八读。不主张最少读数。
+
+**worlds.**
+
+For every a0 in R, retain every P=[[r,b],[c,1-r]] with 0<r<1, b,c>0 and bc=r(1-r), every nonzero F(t)=alpha+beta\*t, and d=a0-42\*alpha. Set H(t)=(t-6)(t-7) and g=H\*F. There is one fixed source, one whole gain and one constant drift per world. No known gain direction, source ratio, diagonal side, symmetry, source box, gain sign or finite-prefix hypothesis is assumed.
+
+**coefficient check.**
+
+H=t^2-13\*t+42. The complete four-coefficient block of g is (42\*alpha,42\*beta-13\*alpha,alpha-13\*beta,beta). Since R[t] is an integral domain and H is nonzero, H\*F is nonzero exactly when F is nonzero, and H,tH are linearly independent. Thus the plane really has dimension two. Its physical degree is two when beta=0 and alpha!=0, and three when beta!=0. Constant and linear physical gains cannot have the two required distinct roots and are therefore absent by the promise, not removed from the original unrestricted domain.
+
+**samples and nonemptiness.**
+
+The samples H(0),...,H(7) are 42,30,20,12,6,2,0,0. Each is obtained from the displayed two factors; in particular the five normalizing samples at 1,...,5 and H(0) are nonzero. For any strict source, a0 and nonzero F, choosing d=a0-42\*alpha gives a promised world. Both signs and arbitrary real coefficients are allowed. F may have an unsampled root or a root at any sampled clock, including a repetition of a required root at 6 or 7. The initial read determines neither drift nor a promise label.
+
+**trace law.**
+
+For A=[[a,h],[v,e]], multiplication gives tr(AP)=e+(a-e)\*r+v\*b+h\*c. Both J=[[0,1],[1,0]] and M=[[0,1],[1,1]] are nonnegative and invertible. Their products are nonnegative, invertible and have no zero row; pairing each row with a strictly positive column of P makes each diagonal entry of QP positive. All actual traces are positive without any sign restriction on g.
+
+**ledger.**
+
+clock: 0 ; action: initial ; Q: [[1,0],[0,1]] ; trace: 1 ; equation: y0=d+42\*alpha=a0
+
+clock: 1 ; action: J ; Q: [[0,1],[1,0]] ; trace: j=b+c ; equation: y1=d+30\*(alpha+beta)\*j
+
+clock: 2 ; action: M ; Q: [[1,0],[1,1]] ; trace: 1+b ; equation: y2=d+20\*(alpha+2\*beta)\*(1+b)
+
+clock: 3 ; action: J ; Q: [[1,1],[1,0]] ; trace: n=j+r ; equation: y3=d+12\*(alpha+3\*beta)\*n
+
+clock: 4 ; action: M ; Q: [[1,0],[2,1]] ; trace: u=1+2\*b ; equation: y4=d+6\*(alpha+4\*beta)\*u
+
+clock: 5 ; action: J branch ; Q: [[2,1],[1,0]] ; trace: j+2\*r ; equation: y5=d+2\*(alpha+5\*beta)\*(j+2\*r)
+
+clock: 5 ; action: M branch ; Q: [[2,1],[3,1]] ; trace: n+u ; equation: y5=d+2\*(alpha+5\*beta)\*(n+u)
+
+clock: 6 ; action: J after fifth J ; Q: [[1,0],[2,1]] ; trace: u ; equation: y6=d+H(6)\*F(6)\*u=d
+
+clock: 6 ; action: J after fifth M ; Q: [[3,1],[2,1]] ; trace: 1+2\*r+2\*b+c ; equation: y6=d+H(6)\*F(6)\*(1+2\*r+2\*b+c)=d
+
+clock: 7 ; action: J after fifth J ; Q: [[2,1],[1,0]] ; trace: j+2\*r ; equation: y7=d+H(7)\*F(7)\*(j+2\*r)=d
+
+clock: 7 ; action: J after fifth M ; Q: [[2,1],[3,1]] ; trace: n+u ; equation: y7=d+H(7)\*F(7)\*(n+u)=d
+
+**product proof.**
+
+Left multiplication by J interchanges rows; left multiplication by M replaces the first row by the former second and the second by the sum. Applying these rules successively gives every matrix in the ledger from I. Applying the trace law gives its listed trace: for example [[2,1],[3,1]] gives 1+r+3\*b+c=n+u and [[3,1],[2,1]] gives 1+2\*r+2\*b+c. The last J restores the chosen fifth matrix at clock 7, retaining gain g(7). The branch table describes alternative trajectories, not additional readings.
+
+**chronology.**
+
+Acquire y0 and then four immediate readings for J,M,J,M. At clock 4 the statistic uses only y0,y1,y2,y4, all actually acquired; y3 is saved and remains a required equation. Select only one fifth action. Its immediate reading is followed by an immediate J reading at clock 6 and an immediate J reading at clock 7. Drift becomes available as y6, never as an input to the fifth action. There are seven actions and eight TOTAL reads at original clocks 0,...,7, on one trajectory with no reset, copy, skip, empty action, clock change or additional port. Even if sources differ, both last responses equal d because both H samples vanish.
+

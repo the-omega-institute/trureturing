@@ -1,0 +1,31 @@
+**Corollary 43.2 (matrix occupation estimates).** For a macroscopic
+interval $I_0\subset[0,b]$ of length $h$ let
+
+$$
+S_{I_0}=\frac2T\int_{TI_0}c_\kappa(K_r)c_\kappa(K_r)^{\mathsf T}dr,
+\qquad B_{I_0}=2hM_\kappa.
+\tag{43.5}
+$$
+
+If $Th\ge1$, then under both exact laws
+
+$$
+\mathbb P_{g,\tau}\left(\|S_{I_0}-B_{I_0}\|_F
+>C_*\sqrt{hx/T}\right)\le C_*e^{-x}\quad(x\ge1).
+\tag{43.6}
+$$
+
+In particular, for $A=S_{[0,b]}$, $B=2bM_\kappa$,
+
+$$
+\mathbb E_{g,\tau}\|A-B\|_F^2\le C_b/T,
+\qquad 0\le A\le2bC_c^2\,\mathrm{Id}.
+\tag{43.7}
+$$
+
+Proof. Apply Lemma 43.1 to the nine entries, multiply by $2/T$,
+and take a finite union bound. Sum their second moments for (43.7).
+Its deterministic bound follows from
+$v^{\mathsf T}cc^{\mathsf T}v\le C_c^2|v|^2$.
+$\|\cdot\|_F$ is the Frobenius norm. $\square$
+

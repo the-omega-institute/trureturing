@@ -1,0 +1,30 @@
+**Theorem 6.3 (four views on one actual stable image).** Let
+$q_{\mathrm{sp}},q_{\mathrm{tm}},q_{\mathrm{bd}},q_{\mathrm{mem}}$ be maps on
+this same $X$. Suppose each individually has kernel $R_\infty$ and supports
+all descended executable responses, selectors and updates. Suppose its
+coordinate transports satisfy (1.2), its complete squares and route
+presentation satisfy §3, and its atlas satisfies the appropriate partial
+or full criterion of §4. Then each actual view image is uniquely bijective
+with $Q=X/R_\infty$; these bijections intertwine the specified operations
+and transports. Chartwise recovery gives the corresponding bijections with
+$\iota_i(Q_i)$, and covers all of $Y$ only under the appropriate actual
+coverage condition. If only the joint map of the four views has kernel
+$R_\infty$, no individual sufficiency follows.
+
+These chartwise assertions retain the task-local crossing domains of §3.
+For dynamics and complete responses on the entire glued carrier $Y$,
+additionally require the whole-edge hypotheses of Corollary 4.8 for every
+action being glued.
+
+**Proof.** For each view, send $q_v(x)$ to $[x]$. Kernel equality is exactly
+well-definedness and injectivity, and restriction to the actual image gives
+surjectivity and uniqueness. The descended responses and successors
+intertwine because their values agree on every representative. Apply the
+same factorization chartwise and then Theorem 4.1 or Corollary 4.2. A joint
+kernel is the intersection of the component kernels, which does not force
+any one of them to equal that intersection. For example on $\{0,1\}^2$,
+the two coordinate projections, repeated as four views, jointly separate
+points, while each projection merges a pair. With the additional whole-edge
+hypotheses, Corollary 4.8 supplies the operations and complete responses
+throughout $Y$. $\square$
+

@@ -1,0 +1,58 @@
+**Corollary 74.8 (necessary strength, range and finite-error conditions).**
+Within the soft scattering model, convergence of (74.6) to zero for
+even one of the unchanged comparators requires
+$\Gamma_\varepsilon\to\infty$. The same is true for convergence of
+either hard-ball discrepancy at radius $h_\varepsilon=o(\varepsilon)$.
+Indeed
+$h_\varepsilon^s/\varepsilon^{s-1}
+=\varepsilon(h_\varepsilon/\varepsilon)^s\to0$;
+if $\Gamma_\varepsilon$ does not tend to infinity, a bounded
+subsequence in (74.22) gives a strictly positive lower limit.
+Within the broader range model, or its hard-ball version, convergence
+requires $\tau_\varepsilon\to\infty$, by (74.28).
+
+For a finite error tolerance $\eta>0$, each applicable scattering
+comparison satisfying $\Delta\le\eta$ must satisfy
+
+$$
+ \Gamma_\varepsilon\ge\frac1{4\delta N}
+ \left[\frac{b_\varepsilon(h_\varepsilon)^2}
+                         {\sqrt{M^2+1}\,\eta}-A_p\right]_+.
+\tag{74.31}
+$$
+
+Each applicable range comparison satisfying $\Delta\le\eta$ must
+likewise satisfy
+
+$$
+ \tau_\varepsilon\ge\frac1{B_p}
+ \left[\frac{b_\varepsilon(R_\varepsilon)^2}
+                         {\sqrt{M^2+1}\,\eta}-A_p\right]_+.
+\tag{74.32}
+$$
+
+These follow by rearranging the respective positive denominators;
+when the overlap factor is zero they give only the trivial condition.
+They hold separately for every port, without any change of comparator.
+
+In $s=3$, $\alpha$ in (74.11) is the scattering length $\ell$ with
+the relative kinetic normalization $2\beta$. Thus
+
+$$
+ S=8\pi\beta\ell,\qquad
+ \Gamma_\varepsilon=8\pi\beta
+                 \frac{\ell_\varepsilon}{\varepsilon^2},\qquad
+ \frac{\ell_\varepsilon}{\varepsilon^2}\longrightarrow\infty
+                       \quad\hbox{is necessary}.
+\tag{74.33}
+$$
+
+For an ideal hard ball $\ell=h$, and in every fixed $s\ge3$ its
+strength is precisely (74.13). Since $S(v)\le S_{\rm hard}(h)$,
+strength divergence also entails divergence of the corresponding
+normalized support range in the radial model. The converse is not
+implied. These are necessary obstructions; they establish neither a
+sufficient convergence criterion nor a sharp threshold. All assertions
+have fixed $D,\delta,a,s,M$ and fixed geometry. There is no
+source-growth, $\delta\to0$, growing-$M$, or dimension-uniform assertion.
+

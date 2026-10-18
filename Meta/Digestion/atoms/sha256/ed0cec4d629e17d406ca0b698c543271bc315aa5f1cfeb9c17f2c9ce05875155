@@ -1,0 +1,12 @@
+##### 定义 1.4.3： 最小分辨率证书
+
+证书集中的极小元素组成
+
+$$
+\mathsf{MinCert}(C)=\operatorname{Min}_{\le}\mathsf{Cert}(C).
+$$
+
+若 $\mathsf R$ 不是全序，$\mathsf{MinCert}(C)$ 可以含有多个互不可比资源。它们表达不同的可行路线，例如“更长时间但较粗读出”和“较短时间但更细读出”。
+
+<a id="claim-1-4-4"></a>
+

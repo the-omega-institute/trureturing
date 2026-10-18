@@ -1,0 +1,56 @@
+**Lemma 25.3 (A predictable tick bound prices actual reads).** Under either source and at every $q\in(0,1)$, the conditional probability that the next bit is one, given any positive-probability observed finite bit history, is at most $B(1-q)$. The same bound holds when independent observer randomness is included. Consequently every legal stopping rule, including one with an unbounded state space, satisfies the extended nonnegative expectation inequality
+
+$$
+\mathbb E_{i,q}Q_T\le B(1-q)\mathbb E_{i,q}T.
+\tag{25.7}
+$$
+
+Proof. First suppose an actual tick has been observed and exactly $b$ zeros have followed it. At $b=0$ the next bit is forced to be zero, since $K\ge1$. For $b\ge1$, the next-tick probability is
+
+$$
+\frac{f_{i,q}(b)}{S_{i,q}(b)}
+=\frac{F_i(b)q^b}{\sum_{k\ge b}F_i(k)q^k}
+\le\frac{Bb^9q^b}{\sum_{k\ge b}b^9q^k}
+=B(1-q).
+\tag{25.8}
+$$
+
+All earlier complete intervals are independent of the current gap, so this conditional probability applies to the whole preceding observed history.
+
+Before any tick has been observed, a history of $b$ zeros says exactly $\tau\ge b$. Its next-tick probability is
+
+$$
+\frac{S_{i,q}(b)}{\sum_{v\ge b}S_{i,q}(v)}.
+\tag{25.9}
+$$
+
+For integers $k\ge1$ and $j\ge0$, (23.3) implies
+
+$$
+F_i(k+j)\ge(k+j)^9\ge k^9\ge B^{-1}F_i(k).
+$$
+
+Shifting each term of the tail sum by $j$ proves, also when $b=0$,
+
+$$
+S_{i,q}(b+j)\ge B^{-1}q^j S_{i,q}(b).
+\tag{25.10}
+$$
+
+For $b=0$ the shifted terms start at $j+1$ and form a subset of the tail defining $S_{i,q}(j)$, which is sufficient for the inequality. Summing (25.10) over $j\ge0$ bounds (25.9) by $B(1-q)$. Thus the first stationary interval has the same hazard bound without being replaced by a complete gap.
+
+For the payment identity, expose an independent supply of all the observer's fresh coins on the analytical probability space. Independence leaves the source's conditional next-bit probabilities unchanged. Let $\mathcal F_t$ contain these coins and $X_0,\ldots,X_{t-1}$. The event $\{T>t\}$, meaning that read $t+1$ is undertaken, belongs to $\mathcal F_t$. Tonelli and the conditional bound give
+
+$$
+\begin{aligned}
+\mathbb E_{i,q}Q_T
+&=\sum_{t\ge0}\mathbb E_{i,q}
+  \left[\mathbf1_{\{T>t\}}\mathbb E_{i,q}(X_t\mid\mathcal F_t)\right]\\
+&\le B(1-q)\sum_{t\ge0}\mathsf P_{i,q}(T>t)
+=B(1-q)\mathbb E_{i,q}T.
+\end{aligned}
+\tag{25.11}
+$$
+
+The extra exposure of coins is for the proof of predictability and provides no memory to the controller. The summands refer to precisely those reads that occur, including the terminal actual read. They omit every unread suffix. $\square$
+

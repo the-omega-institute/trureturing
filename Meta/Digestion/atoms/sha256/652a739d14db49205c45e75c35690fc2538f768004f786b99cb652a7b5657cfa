@@ -1,0 +1,48 @@
+**Lemma 3.1 (support necessity, transpose and acquisition domination).** Order $K_0,K_1,K_2=(D,T,S)$ and put
+
+$$
+K(z)=uD+vT+wS,\quad
+\Lambda_Z(A)=\sum_{i,j}Z_{ij}K_iAK_j^\dagger,\quad
+\Theta(Z)=\sum_{i,j}Z_{ij}K_j^\dagger K_i,\quad
+C(\rho)_{ij}=\operatorname{tr}(K_i^\dagger K_j\rho).
+\tag{PG.12}
+$$
+
+Then $z^\dagger C(\rho)z=\|K(z)\rho^{1/2}\|_F^2$ and
+$\operatorname{tr}(CZ)=\operatorname{tr}(\Theta(Z)\rho)$.
+With unnormalized output-then-input vectorization,
+$J_Z=\sum Z_{ij}|K_i\rangle\!\rangle\langle\!\langle K_j|$ has input partial trace $\Theta(Z)^T$. Its effect is $\Theta(Z)$, not its transpose.
+
+Every design has coefficient matrices $H_r\succeq0$, $L_r\in\mathcal C_2$ satisfying
+
+$$
+\begin{gathered}
+\sum_r(H_r+L_r)=I_3,\qquad
+N_r:=\frac{I_3+rs\kappa X_{01}}2-\Theta(H_r+L_r)\succeq0,\qquad
+N_++N_-=M,\\
+H=H_++H_-,\qquad 0\preceq H\preceq I_3,\qquad
+\operatorname{tr}(BH)\ge k,\qquad
+G_{\rm acq}\succeq E\Theta(H)E^\dagger .
+\end{gathered}
+\tag{PG.13}
+$$
+
+Here $\mathcal C_2$ is the cone of finite sums $zz^\dagger$ with
+$u=0$ or $u^2=\alpha v^2+\beta w^2$, over the full complex numbers.
+
+Proof. Choose encoder and live-decoder Kraus matrices for the actual branches. Their products form positive rank-one summands of the fixed live Choi matrix. For a vector orthogonal to its range, the total nonnegative quadratic form is zero, so every summand kills that vector. Each product is therefore in the span of $|ED E^\dagger\rangle\!\rangle$, $|ET E^\dagger\rangle\!\rangle$, $|ES E^\dagger\rangle\!\rangle$. These columns are linearly independent, with disjoint matrix supports. If their column matrix is $\mathcal V$, its Gram left inverse $(\mathcal V^\dagger\mathcal V)^{-1}\mathcal V^\dagger$ applied to the Choi sum gives $\sum zz^\dagger=I_3$. No orthonormal-column assumption is made.
+
+A product through a fibre of dimension at most two has rank at most two. Direct expansion gives
+
+$$
+\det K(z)=h_0h_1h_2\,u(u^2-\alpha v^2-\beta w^2).
+\tag{PG.14}
+$$
+
+Every nonzero singular $K(z)$ has rank exactly two: if $u\ne0$, its lower diagonal minor is $u^2h_1h_2\ne0$; if $u=0$, its first column $(0,bv,dw)^T$ and at least one of its other columns $(av,0,0)^T,(cw,0,0)^T$ are independent. Group products by actual report and high/low fibre to obtain $H_r,L_r$.
+
+Integrated canonical-failure effects are $N_r$ on the supported input, hence positive with total $M$. They can be arbitrary subeffects of $M$ in a competitor; the argument uses no stipulated density for an individual report. Zero full-output sectors have zero positive branch contributions. Full TP of each decoder implies its live TNI effect is at most its encoder effect, on the whole five-mode space. Summing high branches gives the last operator inequality, including complement and cross-support possibilities in the acquisition. This is stronger than just a supported scalar inequality.
+
+For every singular atom the complex triangle inequality gives
+$z^\dagger Bz\le0$. Thus $\operatorname{tr}(BL_r)\le0$, and tracing $B$ against the total coefficient identity gives $\operatorname{tr}(BH)\ge\operatorname{tr}B=k$. The two Gram identities follow by expanding traces. Finally, tracing the output index of $|K_i\rangle\!\rangle\langle\!\langle K_j|$ gives $(K_j^\dagger K_i)^T$, proving the transpose convention. $\square$
+

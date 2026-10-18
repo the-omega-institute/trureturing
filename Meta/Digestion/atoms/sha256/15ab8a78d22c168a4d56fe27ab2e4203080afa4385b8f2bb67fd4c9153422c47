@@ -1,0 +1,53 @@
+## 9. Result map, source credit and mathematical contribution
+
+The numbering separates inherited analytic data from the additional
+ground-state argument. The full map is:
+
+| Item | Result or role | Dependencies and scope |
+| --- | --- | --- |
+| Definition 1.1 | Native parameters, torus coordinates, measures, fields and clock | [Q, Definitions 1.1--1.3]; unchanged point-source realization |
+| Definition 1.2 | Original full horizontal domain, base domain, isometry and form-operator convention | [Q, Definition 1.3 and Theorem 2.1] |
+| Contract 1.3 | Explicit inherited kernel, free-domain, heat-marginal and full form-bound premises | The only source-specific analytic premises imported from [Q] |
+| Definition 1.4 | Strict coupling, same-field restriction and the two actual infima | Contract 1.3 and the unnormalized hidden-circle factor |
+| Theorem 2.1 | Closedness, strict shifted coercivity and finite actual attainment on both domains | Full bound and compact free embedding; no binding condition |
+| Lemma 2.2 | Actual nonnegative base minimizer and weak eigen-equation | Modulus inequality and variational minimality |
+| Lemma 3.1 | Logarithmic base Green upper bound, every finite $L^p$, smoothness off the base pole | Original heat product and off-pole full smoothness |
+| Lemma 3.2 | Base $H^1$ to $L^4$ estimate | Odd extension and Fourier inequalities in two dimensions |
+| Theorem 4.1 | $Wv\in L^2$, actual free base operator-domain membership, $H^2$, continuity and local smoothness | Lemmas 2.2, 3.1--3.2 and the exact base operator domain |
+| Theorem 4.2 | Strict positivity at every interior base point, including the pole | Theorem 4.1 and a shifted positive free resolvent; arbitrary sign of $E$ |
+| Lemma 5.1 | Native harmonic $C_1=R_1>0$ and explicit $R_+$ lower comparison | Inherited [Q, Theorem 4.1], with its normalization and comparison displayed |
+| Definition 6.1 | Remote compact reciprocal perturbation of an actual minimizer | Theorems 4.1--4.2 and an interior bump |
+| Lemma 6.2 | Actual smooth-core membership, finite positive norm, exact original kinetic energy and orthogonality | Remote support and the closed free form splitting |
+| Proposition 6.3 | Strictly negative mixed form with exact factor $g/(2\pi)$ | Reciprocal cancellation and the native harmonic |
+| Definition 7.1 | Finite certificate data $A_\chi,a_\chi,B_\chi,C_\chi,\Delta_\chi,\delta_\chi$ | The actual base minimizer, original field and explicit lower kernel |
+| Theorem 7.2 | $E_{\rm base}-E_{\rm full}\ge\Delta_\chi\ge\delta_\chi>0$ and an explicit unit form trial | Actual attainment, admissible mixed form and two-dimensional Rayleigh algebra |
+| Proposition 8.1 | Equal free minima at $g=0$ | Height Poincare and the angularly constant first sine mode |
+| Boundary 8.2 | Endpoint, domain, parameter-dependence and interpretation limits | No extension of Theorem 7.2 beyond its displayed contract |
+
+The necessary mathematical source credit is as follows. Content hashes
+identify the supplied texts; they do not certify their mathematical truth.
+
+| Source | Precise mathematical use |
+| --- | --- |
+| [Q] *Native observation quotient, hidden Green harmonics and attractive response*, SHA-256 `97d5082350d496499ec28ee44770212d2075570d78d0026610b65f71040179fa` | Native realization, explicit inherited analytic contract and the positive first harmonic. Definitions 1.3 and 3.2 there attribute the full heat and form-bound inputs to their analytic suppliers. Those statements, as reproduced in Contract 1.3, are the premises here. |
+| [C] Supplied mathematical note, *Strict native fixed-pole ground-energy descent throughout the original strict stable regime*, SHA-256 `899c6d4f3f6a71d605f3de9deea84bbe0f949ad7e3aab9fc965833c33097b61f` | Credit for the compact reciprocal-ground-state construction and the two positive certificates. Their complete derivation is in Sections 2--7 of this volume. |
+| [R] Supplied mathematical note, *The actual full minimum is strictly below the actual restricted minimum throughout the sealed strict stable regime*, SHA-256 `d3acfdc6a69b0553ebaadeea41d0f0c2fe0067fa185149735645d790587e001d` | Credit for the detailed coercivity, Fourier-domain, positivity and certificate-sign clarifications embodied in the proofs above. No assessment or endorsement in that note is a mathematical premise. |
+
+The full singular heat-kernel and form-bound facts of Contract 1.3 remain
+inherited handwritten premises; their nested suppliers are not independently
+established here. The base logarithmic estimate, actual-minimizer
+regularity and positivity, remote reciprocal admissibility and mixed-form
+calculation are proved in this volume from those premises. Source-specific
+contributions are the connection of those bridges to the native positive
+harmonic and the resulting strict comparison of the two actual minima
+throughout the original strict stable range.
+
+The two-vector Rayleigh calculation, Fourier Sobolev estimates,
+positive-resolvent argument and one-dimensional Green comparison are
+standard mathematical methods. They are not claimed as new general
+theorems. The source-specific synthesis is `repo-derived`; no worldwide
+originality claim or independent external-literature verification is made.
+The trial-energy separation and projected-response defect in [Q,
+Theorems 5.2 and 6.1] remain distinct results. They supply neither the
+actual minimizer nor a substitute for the admissible descent proved here.
+

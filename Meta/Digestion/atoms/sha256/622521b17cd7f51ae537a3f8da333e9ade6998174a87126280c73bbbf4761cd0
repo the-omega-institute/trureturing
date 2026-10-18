@@ -1,0 +1,26 @@
+# Native projection finiteness and concrete-exterior limitedness
+
+Finite existential feasibility and finiteness of the entire output image
+are different questions. This volume decides the latter for the actual
+finite Fibonacci tree algebra. A finite answer supplies every output
+and an original realizing assignment; an infinite answer supplies an
+effective sequence of original solutions with pairwise distinct outputs.
+The argument extends the witness construction of NSF by proving which
+output coordinates are fixed on **all** solutions and which can be pumped.
+It does not identify NSF's replacement witnesses with the solution set.
+
+For arbitrary acquired signed fibers this gives exact whole-row image
+classification and a complete bounded-recovery criterion for the reached
+set and concrete exterior. For an empty target cut it decides bounded
+whole-source recovery. When the entire source fiber is finite, it gives
+the complete paid adaptive Pareto frontier and rational same-source
+weighted optimum, including zero weights. On infinite source fibers,
+finite row image does not settle partition observability or arbitrary
+physical-word optimization.
+
+The proofs are ordinary mathematics. They are not new Lean kernel
+verification, a solver implementation, a complexity claim or evidence
+that a particular physical acquisition has occurred. This companion is
+reference input; published text is immutable and additions use the final
+append anchor.
+

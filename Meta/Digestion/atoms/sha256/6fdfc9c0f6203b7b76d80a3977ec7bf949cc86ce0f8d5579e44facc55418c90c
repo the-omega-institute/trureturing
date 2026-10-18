@@ -1,0 +1,15 @@
+**Proposition 3.4 (sharpness of the floor constant).** The coefficient
+$R_d$ in (SCP.12) is the smallest universal coefficient for the
+unnormalized floor. Take $w=0$, give every port its own seed with the
+full attained reply range at that port, and let every seed occur only in
+its owner block. Then the hard partition is zero while every block has
+exactly $R_d$ owner assignments, so
+
+$$
+Z^{\mathrm{fl},\varepsilon}_{\mathcal N}=(R_d\varepsilon)^n.
+$$
+
+No smaller coefficient can bound its $n$th root for all $n$. At depth
+$d=1$, the same three independent root owners show the coefficient is
+attained even for nonzero weights.
+

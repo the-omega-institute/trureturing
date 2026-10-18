@@ -1,0 +1,20 @@
+**Proposition 15.4 (why the saturated diagonal belt is not a local
+eighteen-point lemma).** A positive-lag two-readable eighteen-point
+class in $[0,17]^2$ can contain $(11,11)$ and $(0,9)$. Thus the
+anchor-belt conclusion of Theorem 14.3 cannot be transferred to
+arbitrary readable defect-one classes as a candidate restriction in
+Theorem 15.2.
+
+**Proof.** Use the word (NARC.15.6), start at $(0,9)$, and replace
+only its shared increment by $D=(9,2)$. Its first vertices are
+$(0,9),(1,9),(2,9),(11,11),(11,10),(11,9)$; its remaining vertices
+are $(12,9),(13,9),(14,9),(14,8),(14,7),(14,6),(15,6),(16,6),
+$(17,6),(17,5),(17,4),(17,3)$. All lie in the square. Pure edges
+have unit lengths and the shared edge has $d$ increment seven.
+Theorem 15.1 proves positive-lag readability. The diagonal point
+is $(11,11)$, yet at $(0,9)$ the proposed belt would require
+$11\le\max(0,9)$, which is false. This is a counterexample to
+the local transfer, not to a global eighteen-label theorem with
+additional packing hypotheses. It supplies neither a complete encoder
+nor a nonnegative-lag certificate for this auxiliary class. $\square$
+

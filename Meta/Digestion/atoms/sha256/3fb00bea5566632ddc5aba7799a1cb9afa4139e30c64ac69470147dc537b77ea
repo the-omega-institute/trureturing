@@ -1,0 +1,14 @@
+## Variational conclusion
+
+The Luo--Yang shared-edge co-volume minus `2*pi*sum_e l_e` is continuous on
+the compact global box and has derivative `-K_e` in each global length
+coordinate. The strict face signs exclude a minimizer on any boundary face.
+The interior minimizer has `K_e=0` for all quotient edges. The common global
+lengths make paired right-angled hexagons isometric, yielding the required
+nondegenerate hyper-ideal realization of the prescribed triangulation.
+
+This uses the same cited ordinary geometric inputs as the current CFMP notes;
+only the packet-specific endpoint arithmetic is new. It does not claim Lean
+formalization, an explicit 24-tetrahedron pairing, or the unrestricted
+minimum-eight CFMP conjecture.
+

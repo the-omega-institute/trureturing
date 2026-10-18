@@ -1,0 +1,11 @@
+**Corollary 6.2 (finite supplied families).** For any finite supplied
+family of contexts and finite supplied family of attained row pairs,
+one can decide which of their contacts hold and return the same
+witnesses or exclusion depths for each. If the full row image is finite,
+NPL Theorem 5.3 can supply the exact finite row list for this purpose.
+
+Proof. There are finitely many instances of Theorem 6.1. Exact row
+image enumeration is reused only when its finite-image decision has
+that outcome. A finite list of negative contact answers does not range
+over other contexts or other kinds of limit. $\square$
+

@@ -1,0 +1,47 @@
+**定理 C-109.3（同一匹配矩阵的精确端口资源）。** 对 $\Gamma_C=JCJ^\dagger\in\mathfrak D$
+设 $T_C(X)=(5C)\circ X$。则对每个 $q$，
+
+$$
+T_C\in\mathfrak C_q\quad\Longleftrightarrow\quad
+C=\sum_a z_az_a^\dagger,\quad |\operatorname{supp}z_a|\le q
+\quad\Longleftrightarrow\quad
+\operatorname{SN}_{A\mid B}(\Gamma_C)\le q.
+\tag{C109.6}
+$$
+
+其中分解均有限，Schmidt number 在原 $A\mid B$ 切口上取值。因此
+$q_{\rm exact}(T_C)=k(C)=\operatorname{SN}_{A\mid B}(\Gamma_C)$。
+
+证明。QMB 定理 5.1 的有限块端口等价于存在同一通道的有限秩至多 $q$ Kraus 族。
+具体地，编码分支 Kraus $B_{fa}:\mathbb C^5\to\mathbb C^q$ 和整个块的解码 Kraus
+$R_{fb}:\mathbb C^q\to\mathbb C^5$ 给 $K_{fab}=R_{fb}B_{fa}$，其秩至多 $q$，
+解码保迹给总族完备。C-109.2 的零平方和论证作用于这个族本身，故这些 $K_{fab}$
+全部对角；没有混合 Kraus 后再假定秩不变。
+对角矩阵的秩就是非零对角数，得 $M=5C$ 的 $q$ 稀疏 Gram 分解。
+
+反向若 $M=\sum_a z_az_a^\dagger$ 且每个支撑大小至多 $q$，取
+$K_a=\operatorname{diag}z_a$。为每个 $a$ 选择固定坐标等距嵌入
+$V_a:\mathbb C^q\to\mathbb C^5$，其像包含 $\operatorname{ran}K_a$；
+不足 $q$ 个坐标时补齐，零向量分支可省略。定义
+
+$$
+B_a=V_a^\dagger K_a,\quad
+\operatorname{Enc}(X)=(B_aXB_a^\dagger)_a,\quad
+\operatorname{Dec}_a(Y)=V_aYV_a^\dagger.
+\tag{C109.7}
+$$
+
+$V_a^\dagger V_a=I_q$ 使解码在整个 $M_q$ 上保迹；而
+$V_aV_a^\dagger K_a=K_a$ 给
+$\sum_aB_a^\dagger B_a=\sum_aK_a^\dagger K_a=I_5$。
+每个矩形夹乘在任意参考放大下为正，故编码和解码 CPTP。
+复合在所有复矩阵上等于 $T_C$，全部量子路径通过其 $q$ 块，没有旁路。
+
+对任一 $\Gamma_C=\sum_a|\psi_a\rangle\langle\psi_a|$ 的正纯态分解，
+向 $\operatorname{ran}J$ 的正交补投影给
+$\sum_a\|(I-JJ^\dagger)\psi_a\|^2=0$，故每个 $\psi_a=Jz_a$。
+矩阵系数是 $\operatorname{diag}z_a$ 乘一个置换；$Jz_a$ 的 Schmidt 秩恰等于
+$|\operatorname{supp}z_a|$。逆向也逐项成立，证明 (C109.6)。
+这对应于标准 coherence-number/Schmidt-number 关系以及 QMB 的 Kraus 秩合同，
+不是独立来源副本之间的切口。证毕。
+

@@ -1,0 +1,13 @@
+**命题 138.3（经典极化与实际组合条件）。** 实内积载体中的平行四边形式及极化式为
+
+$$
+\|u+v\|^2+\|u-v\|^2=2\|u\|^2+2\|v\|^2,\qquad
+ g(u,v)=\frac{\|u+v\|^2-\|u-v\|^2}{4}.
+$$
+
+在实范数向量空间中，若第一式对全部向量成立，则第二式定义产生原范数的内积。
+
+证明（138.3）。前向和反向均复用前卷定理51.2；反向的经典中间工具是钉版 Mathlib [Analysis/InnerProductSpace/OfNorm.lean，`InnerProductSpace.ofNorm`](https://raw.githubusercontent.com/leanprover-community/mathlib4/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/InnerProductSpace/OfNorm.lean)。其条件是范数加法交换群、实范数空间及对全部 $u,v$ 成立的平行四边形律；实齐次性以范数连续性和有理数稠密为依据。不是只检验几个长度就取得全部内积。$\square$
+
+在实际任务中，组成 $u+v,u-v$、保持比较参照、读取并保存相应长度，都须由定义136.1的接口取得；组合可能改变来源。极化公式不供应四个同时存在而不受扰动的长度读数，也不将来源的树节点加法读出自动变成可执行向量减法。
+

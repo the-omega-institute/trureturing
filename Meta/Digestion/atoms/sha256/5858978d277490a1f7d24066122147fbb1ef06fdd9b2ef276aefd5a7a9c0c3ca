@@ -1,0 +1,18 @@
+### Q8 更正命题：有理价格的定义域、唯一根与重建的区别
+
+供文第八节所引 [AR：RationalPrice 的固定源码修订](https://github.com/the-omega-institute/trureturing/blob/28ad453e41abaed367803049823da3f69c1fd328/D5/S3/Arith/FibonacciAtomic/OptimalLaw/RationalPrice.lean)中，`embedding_result` 的域是 $m\ge2$、严格正且归一化的实数律 $p:\mathrm{Fin}\,m\to\mathbb R$、取到最小坐标的指标 $k$，以及已达到的比值 $\operatorname{cost}(p)/p(k)=\alpha(m)$。它给出一个在各深度固定的排列和一条合法三角根路径，保留全部概率、锚质量 $p(k)$ 和代价；排列及路径可以依赖所选概率律。“固定排列”不表示全部律共享一个排列，也不表示最优路径唯一。
+
+这里 $\alpha(m)$ 是完整严格正归一化实数律域上、dyadic floor-tail 代价除以最小正质量的下确界。$W$ 是从“残余质量 $1$、保留标签数 $m$”出发的无限合法三角路径上，“路径代价减价格乘锚质量”的下确界。AR 的 `result` 对每个自然数 $m\ge2$ 给出
+
+```math
+\exists A\in\mathbb Q,\quad
+A>0,\quad (A:\mathbb R)=\alpha(m),\quad
+\forall x\in\mathbb R,\quad W(x,m,1)=0\ \Longleftrightarrow\ x=(A:\mathbb R).
+```
+
+这是固定 $m$ 的标量零点唯一性，不是输入律或最优路径的重建、唯一性与最小坐标定理。定义域与目标也见 [AS：OptimalLawStrictSlope](https://github.com/the-omega-institute/trureturing/blob/28ad453e41abaed367803049823da3f69c1fd328/D5/S3/Arith/FibonacciAtomic/OptimalLawStrictSlope.lean)、[AV：TriangularFirstSplitRecurrence](https://github.com/the-omega-institute/trureturing/blob/28ad453e41abaed367803049823da3f69c1fd328/D5/S3/Arith/FibonacciAtomic/TriangularFirstSplitRecurrence.lean)及 [AC：DyadicSupportLines](https://github.com/the-omega-institute/trureturing/blob/28ad453e41abaed367803049823da3f69c1fd328/D5/S3/Arith/FibonacciAtomic/DyadicSupportLines.lean)。
+
+因此，供文“这两个量……都是……最小分辨坐标”保留为启发性类比。固定 $m$ 的 $\alpha(m)$ 是这个优化任务共享的任务值；若要称它切开某个不可见纤维，须另外定义观察映射与纤维、充分性／逆映射及允许比较类，并证明相应最小性。这里不声称 $A$ 与 $\kappa$ 有经证出的等价，也不从统一表述取得新颖性。
+
+[AB：历史 Blueprint](https://github.com/the-omega-institute/trureturing/blob/28ad453e41abaed367803049823da3f69c1fd328/Blueprint/D5/S3/Arith/FibonacciAtomic/OptimalLaw/RationalPrice.md)中的 `✓ std3` 及 [AF：历史 Frozen 成员记录](https://github.com/the-omega-institute/trureturing/blob/28ad453e41abaed367803049823da3f69c1fd328/Golden/Frozen/state/D5/S3/Arith/FibonacciAtomic/OptimalLaw/RationalPrice.lean.json)是该修订自身的记录。它们不认证本供文的统一定理、取得核与 $d$ 的识别、时钟、探测器或物理解释。本卷没有新编译或公理闭包核验，不由这些历史文本建立现时 CI 或 dev 状态。
+

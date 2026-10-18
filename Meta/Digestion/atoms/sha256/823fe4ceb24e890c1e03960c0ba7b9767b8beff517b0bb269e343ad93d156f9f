@@ -1,0 +1,24 @@
+### 104.16. Complete scalar normer tests
+
+Define, in order,
+\[
+\begin{aligned}
+ K&=T-2pg,\\
+ P_+&=-p^{[2]}QT^{[2]}+2Q(D+p^{[2]})T\lambda
+                            +p^{[2]}(D+p^{[2]})\lambda^{[2]},\\
+ P_-&=Q^{[2]}T^{[2]}+2p^{[2]}QT\lambda
+                  +(DQ+p^{[2]}p^{[2]}+p^{[2]})\lambda^{[2]},\\
+ B_0&=-(MP_++DaP_-)/4,\\
+ F_1&=2R\Delta B_0-j\lambda H^{[2]}B,\\
+ F_2&=4Q\Delta H j^{[2]}-B\bigl(jKH+2R\Delta\bigr).
+\end{aligned}                                                     \tag{104.90}
+\]
+Reject if zero is absent from $F_1$, then reject if zero is absent from $F_2$. No division by $\lambda$ occurs. Finally apply $\operatorname{pos}$ to
+\[
+ RK\Delta H j+\lambda^{[2]}H^{[2]}Hj^{[2]}/4
+               +R^{[2]}\Delta^{[2]}-16\Delta^{[2]}Hj^{[2]}.       \tag{104.91}
+\]
+If it declares no contradiction, let $\mathcal R(B)=0$.
+
+Equations (104.88), (104.89) and (104.91) are respectively the strict complete-norm trace bound, actual singleton-34 bound and the positive multiple of $t^{-2}-16$. The positivity of $K$ is not separately tested; omitting that necessary condition only weakens this predicate. Every explicit test has been listed; there is no numerical tolerance, iteration stopping heuristic or unprinted oracle.
+

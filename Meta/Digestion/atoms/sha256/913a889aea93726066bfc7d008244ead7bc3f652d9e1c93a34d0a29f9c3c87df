@@ -1,0 +1,38 @@
+### 106.5. Residual ranks for a hypothetical subquarter global optimum
+
+**Theorem 106.5.** Suppose the minimum of \(F\) on \(\mathcal E^2\) has value \(0<t_*<1/4\). It has a minimizer in at least one of the following classes:
+
+1. Both full Gram ranks are at most six.
+2. One full Gram has rank seven and an everywhere-nonzero spanning kernel vector, while the opposite full rank is at most five.
+
+More precisely, every rank-seven global minimizer whose kernel has a proper coordinate support has an equal-value competitor with both ranks at most six and exactly the same complete product.
+
+**Proof.** The domain is compact: its matrices are positive semidefinite with trace eight and fixed fibre blocks. The objective (106.1) is continuous. Thus the minimum is attained. Every global minimum is a full-domain local minimum. At a positive-subhalf local minimum, RT III Theorem 92.1 gives nonzero positive complementary stresses on both sides. A positive definite Gram would force its complementary stress to vanish, so both Gram ranks are at most seven.
+
+Suppose one rank is seven and interchange the parties if necessary so that it is \(G\). Let \(S\) be the exact support of its kernel vector, and put \(n=|S|\), \(h=\operatorname{rank}H_S\). For any canonical common witness, RT III §§95,97 give a supported quotient of rank \(r\) with
+\[
+h+r\le n,\qquad
+r\le8-\operatorname{rank}H,\qquad r\ge2.
+\tag{106.19}
+\]
+The last assertion uses the complete rank-one-quotient exclusion: RT III Theorem 97.3 allows only a three-singleton support in that case and forces its error strictly above \(1/4\).
+
+If \(S\) is proper, (106.18) makes \(D\ne0\). The endpoint of Theorem 106.4 has the same full coefficient and global value, while
+\[
+\operatorname{rank}G_{\tau_*}\le6,
+\qquad
+\operatorname{rank}H_{\tau_*}=h+8-n\le6.
+\tag{106.20}
+\]
+This proves the precise assertion and gives the first alternative.
+
+If \(S\) is all eight coordinates, (106.19) gives \(\operatorname{rank}H\le6\). RT III Theorem 95.1 excludes opposite rank six for such a positive-subhalf full-domain local minimum. Hence \(\operatorname{rank}H\le5\), giving the second alternative. If neither Gram initially had rank seven, the first alternative already held. \(\square\)
+
+This is an existence alternative for a minimizer of the hypothetical value. Another minimizer with proper-support rank seven can coexist with its reduced-rank endpoint. The proof uses an explicit constant-product feasible path, not an assertion that a convex-norm minimizer must be an extreme Gram point.
+
+**Corollary 106.6.** For the original unrestricted one-product channel problem with the fixed correlated encoding and unhalved diamond error, a hypothetical optimum below \(1/4\) has a calibrated representative in one of the two classes of Theorem 106.5.
+
+**Proof.** The exact physical calibration theorem in [RT II §72](ARITHMETIC_HOLOGRAPHIC_RT_II.md#72-exact-physical-calibration-reduction-for-collapsed-fibre-channels) applies to the present target \(T\) with four fibres of size two and one shared branch of weight one. It replaces arbitrary local CPTP maps, including population leakage, by calibrated maps without increasing the full arbitrary-reference error or adding a shared branch. Conversely every \(G,H\in\mathcal E\) realizes calibrated local channels. Hence the unrestricted physical infimum equals the attained minimum (106.1). The established lower bound \(\sqrt3-3/2>0\) makes a hypothetical subquarter value positive, and Theorem 106.5 supplies the stated representative. \(\square\)
+
+The representative conclusion does not preserve the ranks or local minimality of a given leaking pair. The local transfer in Corollary 106.3 takes place wholly inside the calibrated domain. Neither residual class in Theorem 106.5 is excluded here, and the unrestricted global interval remains \([\sqrt3-3/2,1/4]\). General unequal noncomplementary polar angles and the remaining rank/support cases are unresolved.
+

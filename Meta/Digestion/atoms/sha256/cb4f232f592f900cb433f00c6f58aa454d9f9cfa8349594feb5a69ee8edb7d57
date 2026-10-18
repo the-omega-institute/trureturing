@@ -1,0 +1,28 @@
+**Corollary 96.3 (Binding form of the missing constraints).** Under the
+cap hypotheses of Theorem 96.2, put $h=(w+z-5\varepsilon)_+$. Adaptive
+hard-two feasibility is equivalent to
+
+$$
+w\le4\varepsilon,\qquad w+z\le6\varepsilon,\qquad u+v\le2-h.
+\tag{96.4}
+$$
+
+Restricted hard-two feasibility in either class is equivalent to
+
+$$
+w\le4\varepsilon,\qquad w+z\le6\varepsilon,\qquad
+u\le1-h,\qquad v\le1-2h.
+\tag{96.5}
+$$
+
+Here $h$ is a residual parameter and has no identification with the
+proportional-containment coefficient of Section 67.
+
+**Proof.** If $w+z\le5\varepsilon$, the remaining terms in (96.1) are
+nonpositive or bounded by $\varepsilon$ using $u,v\le1$, and the
+additional inequalities are automatic with $h=0$. Otherwise
+$h=w+z-5\varepsilon$. The adaptive last inequality in (96.1) becomes
+$u+v\le2-h$. The restricted last two become $u\le1-h$ and
+$v\le1-2h$. Thus a separate second-coordinate restriction is necessary
+in the restricted class. $\square$
+

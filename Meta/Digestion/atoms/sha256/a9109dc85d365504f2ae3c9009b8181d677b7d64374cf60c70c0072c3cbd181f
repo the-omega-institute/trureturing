@@ -1,0 +1,97 @@
+**Proposition 8.5 (simultaneous finite witnesses).** In class order
+$(a,c,b_1,b_2,b_3,b_4)$ use the following six current-value tuples:
+
+| Name $z$ | $x_a$ | $x_c$ | $x_{b_1}$ | $x_{b_2}$ | $x_{b_3}$ | $x_{b_4}$ | $h$ | $\sigma^\dagger$ | Complete target |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| $z_a$ | $\beta$ | $T_3$ | $T_4$ | $T_2$ | $T_5$ | $T_6$ | $0$ | $0$ | $R_0$ |
+| $z_c$ | $T_3$ | $\beta$ | $T_4$ | $T_2$ | $T_5$ | $T_6$ | $0$ | $0$ | $R_0$ |
+| $z_1$ | $\beta$ | $T_3$ | $\alpha$ | $T_2$ | $T_4$ | $T_5$ | $1$ | $0$ | $R_1$ |
+| $z_2$ | $\beta$ | $T_2$ | $T_3$ | $\alpha$ | $T_4$ | $T_5$ | $2$ | $0$ | $R_2$ |
+| $z_3$ | $T_2$ | $\beta$ | $T_4$ | $T_3$ | $\alpha$ | $T_5$ | $3$ | $0$ | $R_3$ |
+| $z_4$ | $T_2$ | $\beta$ | $T_4$ | $T_3$ | $T_5$ | $\alpha$ | $4$ | $0$ | $R_4$ |
+
+For each row set $t_z=\mathscr S(x^{(z)})$ and
+$u_z=\delta(t_z)$. These are six distinct actual finite origins in
+$\mathcal U_*$. Their full representative-root reply matrix is
+
+| Origin | $p_a=LLL$ | $p_c=RLL$ | $p_{b_1}=LLR$ | $p_{b_2}=LRR$ | $p_{b_3}=RLR$ | $p_{b_4}=RRR$ |
+| --- | --- | --- | --- | --- | --- | --- |
+| $u_{z_a}$ | $\beta$ | $\mathsf{br}$ | $\mathsf{br}$ | $\mathsf{br}$ | $\mathsf{br}$ | $\mathsf{br}$ |
+| $u_{z_c}$ | $\mathsf{br}$ | $\beta$ | $\mathsf{br}$ | $\mathsf{br}$ | $\mathsf{br}$ | $\mathsf{br}$ |
+| $u_{z_1}$ | $\beta$ | $\mathsf{br}$ | $\alpha$ | $\mathsf{br}$ | $\mathsf{br}$ | $\mathsf{br}$ |
+| $u_{z_2}$ | $\beta$ | $\mathsf{br}$ | $\mathsf{br}$ | $\alpha$ | $\mathsf{br}$ | $\mathsf{br}$ |
+| $u_{z_3}$ | $\mathsf{br}$ | $\beta$ | $\mathsf{br}$ | $\mathsf{br}$ | $\alpha$ | $\mathsf{br}$ |
+| $u_{z_4}$ | $\mathsf{br}$ | $\beta$ | $\mathsf{br}$ | $\mathsf{br}$ | $\mathsf{br}$ | $\alpha$ |
+
+Here $\mathsf{br}$ is the native branch reply. The other $a$ occurrence
+$LRL$ duplicates the $LLL$ column, and the other $c$ occurrence $RRL$
+duplicates the $RLL$ column. Thus the table also specifies every reached
+cut-root reply while retaining all eight separate occurrences.
+
+**Proof.** Orbit distinctness makes the six class values in every tuple
+pairwise distinct. In $z_a,z_c$ all values are images. In each positive
+row the only nonimage is alpha at $b_j$, its left partner is beta,
+and every other value is a branch image. The necessary and sufficient
+image criterion reused in Convention 8.1 therefore puts each $t_z$ in
+$\mathcal I$. The disjoint finite inverse (NRE.3) supplies its actual
+origin. To expose these witnesses completely, the inverse expressions
+are
+
+$$
+\begin{aligned}
+u_{z_a}={}&\left\langle
+ \left\langle\langle\alpha,T_3\rangle,\langle\alpha,\beta\rangle\right\rangle,
+ \left\langle\langle T_2,T_4\rangle,\langle T_2,T_5\rangle\right\rangle
+\right\rangle,\\
+u_{z_c}={}&\left\langle
+ \left\langle\langle T_2,T_3\rangle,\langle T_2,\beta\rangle\right\rangle,
+ \left\langle\langle\alpha,T_4\rangle,\langle\alpha,T_5\rangle\right\rangle
+\right\rangle,\\
+u_{z_1}={}&\left\langle
+ \left\langle\beta,\langle\alpha,\beta\rangle\right\rangle,
+ \left\langle\langle T_2,T_3\rangle,\langle T_2,T_4\rangle\right\rangle
+\right\rangle,\\
+u_{z_2}={}&\left\langle
+ \left\langle\langle\alpha,T_2\rangle,\beta\right\rangle,
+ \left\langle\langle\beta,T_3\rangle,\langle\beta,T_4\rangle\right\rangle
+\right\rangle,\\
+u_{z_3}={}&\left\langle
+ \left\langle\langle\beta,T_3\rangle,\langle\beta,T_2\rangle\right\rangle,
+ \left\langle\beta,\langle\alpha,T_4\rangle\right\rangle
+\right\rangle,\\
+u_{z_4}={}&\left\langle
+ \left\langle\langle\beta,T_3\rangle,\langle\beta,T_2\rangle\right\rangle,
+ \left\langle\langle\alpha,T_4\rangle,\beta\right\rangle
+\right\rangle.
+\end{aligned}
+\tag{NRE.18}
+$$
+
+Indeed, $\delta(T_n)=T_{n-1}$ for $n\ge1$, and a selected depth-two
+$E$ block inverts to beta. Applying the homomorphic $\rho$ to these
+expressions gives exactly the six displayed fillings. All terms are
+finite. In each filling both partner occurrences receive their specified
+shared value, and the six different classes remain disequal. Every cut
+occurrence exists and the full current row is exactly $R_*$, so each
+origin lies in the original $\mathcal U_*$. The six fillings are
+different: positive rows have alpha at different right classes, neither
+zero row has alpha there, and the two zero rows have different partner
+roots. Their origins are therefore different as well.
+
+The inherited whole-target identity (NRE.13) gives exactly the listed
+complete outputs, including the surviving partner hole, recomputed
+class names, retained disequalities and beta guards. For $z_a,z_c,z_1$
+one has $h\in\{0,1\}$ and $x_{b_2}=T_2=E$, so (NRE.16) is zero.
+For $z_2$ the $h=2$ clause applies. For $z_3,z_4$ one has
+$h\in\{3,4\}$ and $x_{b_2}=T_3\ne E$, again giving zero.
+These are evaluations of the prescribed code on actual acquired terms.
+
+At every representative the actual reply is the root constructor of
+its displayed class value by (NRE.1). The orbit values of index at least
+two are branches, so this gives the entire matrix. Equal values at the
+second partner occurrences give the duplicated columns without merging
+the occurrences. No all-address binary assertion is needed for these
+new witnesses: the competing readers in the next theorem are root-only,
+and the arbitrary-literal reader has genuinely different suffix replies.
+$\square$
+

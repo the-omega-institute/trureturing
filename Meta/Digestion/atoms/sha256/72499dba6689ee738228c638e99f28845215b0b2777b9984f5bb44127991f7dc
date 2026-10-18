@@ -1,0 +1,2 @@
+**Definition 83.6 (scope and remaining gap).** Proposition 83.2 and Corollary 83.3 are a conditional reuse composition, not a new generic minimax, SDP, or real-symmetry theorem. They do not construct an explicit closed formula for $(\rho_N,Y_N)$, prove S.154, justify code/third pinching, provide a relaxed-data-to-actual converse, or establish a fidelity–diamond equality. The original all-class target remains conditional on Definition 80.1, and the fixed-$\rho_\star$ and $\sqrt a<\lambda<1$ witness programmes remain open.
+

@@ -1,0 +1,75 @@
+**Proposition 6.2 (symbolic binary-width bounds).** For every $D\ge1$,
+
+$$
+3^{\,2^{D-1}}\le C_D,\qquad
+C_D+1\le4^{\,2^{D-1}},
+\tag{FM.25}
+$$
+
+and hence
+
+$$
+\left\lceil2^{D-1}\log_2 3\right\rceil
+\le\left\lceil\log_2 C_D\right\rceil\le2^D.
+\tag{FM.26}
+$$
+
+Proof, as in [PRIOR, Proposition 8.2]. The lower inequality follows
+by induction from $C_1=3$ and $C_d\ge C_{d-1}^2$. For $x\ge1$,
+$x^2+3\le(x+1)^2$, so (FM.24) implies
+$C_d+1\le(C_{d-1}+1)^2$. Induction from $C_1+1=4$ gives the upper
+inequality. Taking logarithms gives the lower width bound. The upper
+inequality gives $\log_2 C_D<2^D$, whose ceiling is at most the integer
+$2^D$. $\square$
+
+**Mathematical citation 6.3 (fixed public ray coordinates).** In
+[DEV, Theorem 11.4 and Corollary 11.6], $Q$ is a fixed finite public
+set of distinct eventually-right rays and the retained data are the
+lossless table
+
+$$
+Z_Q(t)=(h_t(\omega))_{\omega\in Q},\qquad
+h_t(\omega)=s(a)+e(t|_a),
+\tag{FM.27}
+$$
+
+where $a$ is the actual leaf on that ray. Its entries advance by $k$
+on the genuine continuation. Such a table solves the supplied-count
+task exactly when
+
+$$
+Q\cap[pR]\ne\varnothing\quad(p\in P),\qquad
+Q\cap[aR]\ne\varnothing\quad(aL\in P),
+\tag{FM.28}
+$$
+
+where $[b]$ denotes the rays with prefix $b$. If
+
+$$
+B_P=\{pR:p\in P\}\cup\{aR:aL\in P\},\qquad
+B_{P,\max}=\{b\in B_P:\text{no strict extension of }b\text{ lies in }B_P\},
+$$
+
+the exact minimum is $|B_{P,\max}|$ coordinates, attained by one
+eventually-right ray through each maximal cylinder. It is $2^{D-1}$
+for $A_D$ and zero for the empty menu. This is the published ray
+count, with its own proof and input restrictions.
+
+| Complete retained interface and minimized resource | Full-menu optimum |
+| --- | --- |
+| Arbitrary reachable information states | $C_D$ |
+| Arbitrary fixed-width binary payload | $\lceil\log_2 C_D\rceil$ |
+| Fixed public ray table, number of distinct coordinates | $2^{D-1}$ |
+
+One coordinate may carry several bits; coordinates need not vary
+independently, and a lossless table may retain task-irrelevant
+information. [DEV, Theorem 12.8] already proves strict alphabet
+compression for $P=\{R\}$: the ray $R^\infty$ has exactly the scores
+$2,3,\ldots,2D+3$, while its prediction classes are
+$\{2\}$, $\{3\}$ and $\{4,\ldots,2D+3\}$. At $D=1$, right subtrees
+$\langle\alpha,\alpha\rangle$ and $\langle\alpha,\beta\rangle$ have
+scores four and five and the same permanent-branch task state.
+Four raw names and three task names both happen to require two fixed
+bits there. None of these coordinate counts is an arbitrary-memory
+bit lower bound or a free acquisition procedure.
+

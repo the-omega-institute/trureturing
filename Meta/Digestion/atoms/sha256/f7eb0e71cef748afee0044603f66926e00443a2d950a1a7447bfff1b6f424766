@@ -1,0 +1,42 @@
+**Definition 22.1 (a separate variational certificate class).** Let
+$\mathfrak F(G)=\{F\subseteq V:G[F]\text{ is a forest}\}$. For any
+one actual probability law $P$ on $\mathbb F_2^E$, set
+
+$$
+\Psi_F(P)=\sum_{a\in E}H_P(S_a)
+ +\sum_{v\in F}\left[H_P(S_{\operatorname{st}(v)})
+                  -\sum_{a\ni v}H_P(S_a)\right].
+\tag{GDB.96}
+$$
+
+For a probability vector $\theta$ on the finite family $\mathfrak F(G)$,
+define
+
+$$
+\begin{aligned}
+U_\theta^{\rm ent}
+ &=\max_{P\in\Delta(\mathbb F_2^E)}
+       \left[\sum_F\theta_F\Psi_F(P)+\mathbb E_P\log_2 W\right],\\
+U_{\rm exact}^{\rm ent}
+ &=\max_{P\in\Delta(\mathbb F_2^E)}
+       \left[\min_{F\in\mathfrak F(G)}\Psi_F(P)
+                        +\mathbb E_P\log_2 W\right].
+\end{aligned}
+\tag{GDB.97}
+$$
+
+All full original star weights remain in the energy, including those
+not selected by $F$. These are finite continuous objectives and their
+maxima exist. The second expression allows the best forest separately
+at each actual law and gives the method exact global realizability.
+
+The entropy certificate class reports an upper at least its displayed
+variational value, optionally after replacing the actual marginal set
+by any outer set containing the singleton and all whole-star marginals
+of every actual law. Entropies in that outer set must be defined from
+normalized distributions on the indicated full scopes. Mixtures may
+be optimized. No Gibbs-only constraint, cyclic entropy correction,
+change of variables or additional proof rule is included. This class
+is defined independently of Definition 20.3; no equivalence of their
+optimized bounds is assumed.
+

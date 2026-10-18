@@ -1,0 +1,131 @@
+**Theorem 6.1 (class bound and complete large-row equality geometry).**
+For any encoder and successful at-most-one-call decoder in Assumption
+5.1, $d=a-b$ is injective in every class $C$, and
+
+$$
+|C|\le7.
+\tag{NARC.6.1}
+$$
+
+If one coordinate is constant on $C$, then $|C|\le4$. At $|C|=7$,
+the class is exactly a union of four-point row and column arms sharing
+one corner:
+
+$$
+C=(\{A\}\times B_*)\ \cup\ (A_*\times\{B\}).
+\tag{NARC.6.2}
+$$
+
+Here $A_*,B_*$ each have four distinct integer values and contain $A,B$.
+Either $A=\min A_*$ and $B=\min B_*$, or $A=\max A_*$ and
+$B=\max B_*$. In the increasing ordering $x_0<x_1<x_2<x_3$ of
+each arm's coordinate set, its two interior values satisfy
+
+$$
+x_2=x_1+1.
+\tag{NARC.6.3}
+$$
+
+There is no requirement that either outer gap be one. Conversely every
+such seven-point class contained in the source square has both its full
+large-$z$ coordinate targets separated by one legal native call under
+each singleton cut. This converse concerns all sufficiently large full
+fibers, rather than every small-$z$ truncated fiber.
+
+**Proof.** First reuse the common-translation obstruction of [NAR,
+Theorem 16.3][NAR]. Its specialization can be seen directly: if distinct
+$(a,b),(a',b')\in C$ have the same $d$, then $b\ne b'$. Choose
+$z\ge q+2$. Both belong to the right-visible fiber of Theorem 5.2 for
+either lag convention. At lags $z-b$ and $z-b'$ their entire current
+trees are the same $\langle T_{z+d},T_{q+z}\rangle$. Their code and
+entire later row also agree, but the required outputs differ. Every
+native reply is identical. Deterministic transcript induction therefore
+precludes recovery even with arbitrarily many current reads. Thus $d$
+is injective. This does not assume any particular code shape.
+
+Fix this same $z\ge q+2$ for each of the two visible regions. Both
+fibers contain all of $C$, and all hidden ages are at least two.
+List its $m$ points as $p_1,\ldots,p_m$ in strictly increasing $d$,
+writing their coordinates $a_i,b_i$ and $d_i=a_i-b_i$. Let
+
+$$
+D_a=\{i<m:a_i\ne a_{i+1}\},\qquad
+D_b=\{i<m:b_i\ne b_{i+1}\}.
+\tag{NARC.6.4}
+$$
+
+Every successive pair of distinct points changes at least one
+coordinate, so $D_a\cup D_b=\{1,\ldots,m-1\}$.
+For the right-visible entry the target is $b$. If it is constant,
+$D_b=\varnothing$. Otherwise Theorem 5.2 forces an informative hidden
+query. Its $E$ reply is constant on these ages, so Definition 5.3 lets
+us take a successful $P_t$ with $t\ge2$, refining $S_t$ if necessary.
+Since $n_R=z+d$ increases with $d$, this partitions the ordered points
+into a lower tail, at most one point at $n=t$, at most one at $n=t+1$,
+and an upper tail. Each nonempty cell is an interval of this order,
+and $b$ is constant in it. Consequently $|D_b|\le3$. For the
+left-visible entry $n_L=q+z-d$ reverses the order, but its successful
+partition has the same two tails and at most two singleton cells.
+The identical reasoning gives $|D_a|\le3$. Thus
+
+$$
+m-1=|D_a\cup D_b|\le |D_a|+|D_b|\le6,
+\tag{NARC.6.5}
+$$
+
+proving the bound. When $a$ is constant, injectivity of $d$ makes all
+$b$ values distinct, so recovering them with one four-reply call
+requires $m\le4$. The argument with $a,b$ exchanged proves the other
+constant-coordinate case. All these deductions use the actual tests
+chosen at the fixed complete entries, not an assumed uniform threshold
+across different entries.
+
+Suppose now $m=7$. Equality in (NARC.6.5) forces $D_a,D_b$ to be
+disjoint sets of size three covering the six gaps. For either successful
+refined $P_t$, all four cells must be nonempty: fewer cells permit fewer
+than three changes. Every cell boundary must change its target, and
+there are no changes inside a cell. If its lower tail ends at position
+$j$, its middle cells are exactly positions $j+1,j+2$. Its three
+change gaps are therefore $j,j+1,j+2$. This remains true on reversing
+the order for the left-visible query. Two disjoint consecutive
+three-gap blocks covering $1,\ldots,6$ must be $\{1,2,3\}$ and
+$\{4,5,6\}$.
+
+If $D_b=\{1,2,3\}$, then $a$ is constant on points $1,\ldots,4$,
+while $b$ is constant on points $4,\ldots,7$. Along the first arm,
+strictly increasing $d$ and constant $a$ force strictly decreasing $b$;
+along the second, constant $b$ forces strictly increasing $a$. Their
+common point $p_4=(A,B)$ is the minimum of both arm coordinate sets.
+The $b$ query has its singleton middle cells at $p_2,p_3$, so
+$d_3-d_2=1$, and hence $b_2-b_3=1$. These are the interior values of
+the four-element $B_*$ in increasing order. The $a$ query has its
+singleton middle cells at $p_5,p_6$, so $d_6-d_5=1$ and
+$a_6-a_5=1$. These are the interior values of $A_*$. This proves
+(NARC.6.2)--(NARC.6.3) in the minimum-corner case.
+
+If $D_a=\{1,2,3\}$, points $1,\ldots,4$ have constant $b$ and
+strictly increasing $a$, and points $4,\ldots,7$ have constant $a$
+and strictly decreasing $b$. The shared point $p_4$ is now the maximum
+of both sets. The singleton middle cells are again $p_2,p_3$ for
+the first varying coordinate and $p_5,p_6$ for the second. Their
+consecutive ages prove the two interior adjacencies in (NARC.6.3).
+These two cases exhaust the equality possibilities. They impose no
+condition on the distances from the interior values to the endpoints.
+
+For the converse, consider first a minimum-corner class. Its $d$ order
+has four constant-$a$ row points followed by four constant-$b$ column
+points, sharing $p_4$. The two interior $b$ values give consecutive
+$d_2,d_3$; the two interior $a$ values give consecutive $d_5,d_6$.
+For a sufficiently large $z$, query $P_{z+d_2}$ on the hidden left
+slot. Its lower tail is $p_1$, its middle cells are $p_2,p_3$, and its
+upper tail is $p_4,\ldots,p_7$, where $b$ is constant. Query
+$P_{q+z-d_6}$ on the hidden right slot. In increasing hidden-age
+order its cells are $p_7$, $p_6$, $p_5$, and $p_4,\ldots,p_1$,
+the last having constant $a$. Both targets are thus recovered. In the
+maximum-corner case the $a$ variation is first and $b$ variation last:
+use $P_{z+d_5}$ for $b$ and $P_{q+z-d_3}$ for $a$.
+All selected thresholds are at least two once $z$ is large; both
+fibers are then full. Definition 5.3 supplies literal representatives
+and Theorem 5.2 supplies every corresponding actual history. This
+proves precisely the claimed large-row converse. $\square$
+

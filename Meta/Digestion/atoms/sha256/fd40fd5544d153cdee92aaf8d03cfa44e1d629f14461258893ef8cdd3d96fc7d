@@ -1,0 +1,21 @@
+**Definition 2.2 (flattened branches).** Convert (NSF.2) into a finite
+disjunction of conjunctions of equations and disequations. Give every input
+variable and every subexpression a code name, consistently retaining
+repeated variables.
+Its defining constraints have the forms
+
+$$
+Z=[0],\quad Z=[1],\quad Z=\tau_kX,\quad Z=J(X,Y).
+\tag{NSF.8}
+$$
+
+An original signed atom becomes equality or disequality between its
+names. Definitions remain positive even when the original atom is
+negative. Every name must denote a normal code.
+
+For each of the finitely many $J$ definitions choose one of two branches.
+The collapse branch imposes $X=[r+1],Y=[r],Z=[r+2]$ for a natural scalar
+$r$. The other branch imposes $Z=F(X,Y)$ and requires normality.
+No ordinary-constructor branch is admitted with a forbidden primitive
+cherry. Choices for different occurrences are made jointly.
+

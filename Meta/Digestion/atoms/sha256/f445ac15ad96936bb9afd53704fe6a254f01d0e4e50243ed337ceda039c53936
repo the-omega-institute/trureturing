@@ -1,0 +1,20 @@
+**Proposition 7.7 (the restricted acquisition check).** A deterministic
+encoder acting on one unknown original specimen and input-independent
+ancillas cannot construct the guard of Definition 7.3, even for two
+distinct heights, without additional source-bound input.
+
+Proof. At $\beta=m=0$, two actual inputs at $k_j\ne k_l$ have overlap
+
+$$
+Z+2\sqrt{k_jk_l}+2\sqrt{(c-k_j)(c-k_l)}>0.
+\tag{QC.45}
+$$
+
+Their trace distance is strictly less than one. The separating guard
+would make their encoded supports orthogonal by (QC.43), giving distance
+one, contrary to CPTP contraction. This is the mature impossibility of
+perfectly discriminating nonorthogonal states applied to these source
+inputs. It excludes only the stated specimen-only acquisition route;
+it does not exclude a paid same-source sensor or the generator in §8.
+$\square$
+

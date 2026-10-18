@@ -1,0 +1,29 @@
+**Definition 43.1 (one original-basis witness and the full-transpose dual).** For exactly the Kraus list (R.195), put
+
+$$
+ \rho=\operatorname{diag}(1/2,0,1/2),\qquad
+ d_\alpha=\operatorname{vec}_{\mathrm{out\ first}}(K_\alpha\rho),
+ \qquad D_\rho=[d_0\ d_1],
+$$
+
+$$
+ \begin{aligned}
+ d_0&=\tfrac12\bigl(\sqrt a\,|e_0,0\rangle
+ +\sqrt{1-u}\,|e_4,2\rangle\bigr),\\
+ d_1&=\tfrac12\bigl(\sqrt\beta\,|e_2,0\rangle
+ +\sqrt u\,|e_0,2\rangle\bigr).
+ \end{aligned}
+\tag{R.213}
+$$
+
+The order is output $\mathbb C^5$ first and logical $\mathbb C^3$ second. For any complex CPTP whole-output recovery, its Choi variable is $X=J_R^T$, the full transpose in this product basis, with $X\succeq0$, $\operatorname{Tr}_3X=I_5$. Reusing (R.29)–(R.31),
+
+$$
+ F_e(\rho,RN)=\operatorname{Tr}(XD_\rho D_\rho^\dagger),\qquad
+ Y\otimes I_3\succeq D_\rho D_\rho^\dagger
+ \quad\Longrightarrow\quad F_e(\rho,RN)\leq\operatorname{Tr}Y.
+\tag{R.214}
+$$
+
+This is squared entanglement fidelity at the specified actual input $\rho$, distinct from the reference variable $q$ in (R.186). The full transpose is essential: if $\ell_j=\sum_{b,i}(L_j)_{ib}|b,i\rangle$ for recovery Kraus matrices $L_j$, the overlap is $\ell_j^Td_\alpha=\operatorname{Tr}(\rho L_jK_\alpha)$ and $X=\sum_j\bar\ell_j\ell_j^T$. This is the existing recovery dual, without a partial transpose or any restriction to real recoveries.
+

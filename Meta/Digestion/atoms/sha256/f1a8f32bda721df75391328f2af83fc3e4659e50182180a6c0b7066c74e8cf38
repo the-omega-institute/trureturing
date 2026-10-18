@@ -1,0 +1,48 @@
+**Proposition 7.1 (a current joint certificate, with every support checked).**
+For every $h\ge1$, [JTC, Corollary 2.3][JTC] accepts
+$(d,\mu_0,4/5)$. Its current probability-stability rule therefore
+accepts $(4,\mu_+,81/100)$. The diagonal example does not refute
+the existing calculus $V_{\mathrm{rec}}$.
+
+Proof. For a support $H\subseteq S_d$, a target is hard when no
+own-coordinate reply, including a constant, determines it on $H$.
+Let $Y_H$ be the vector of all hard targets. The JTC joint leaf checks
+every nonempty range-feasible $H\subseteq\operatorname{supp}(\mu_0)$
+and requires
+
+$$
+\sum_y\left(\sum_{x\in H:Y_H(x)=y}\mu_0(x)\right)^2
+\le(4/5)^2.
+\tag{JPL.31}
+$$
+
+On $\mathcal Q_h$ every target and literal pulls back to its motif
+counterpart or a constant, exactly as in Theorem 5.2. All subsets are
+range-feasible, since all motif targets have at most four values.
+If a nonempty subset omits a core index, it is locally admissible by
+the credited motif classification and this same translation. Its hard
+vector is empty, so the left side of (JPL.31) is its total mass
+squared, at most $(4/5)^2$.
+
+There are only two other supports. On all five diagonal states, the
+hard targets are the $k$ repeated copies of motif $LL$. Their joint
+partition has index cells $\{0,4\},\{1\},\{2\},\{3\}$. Its
+squared mass is $(2^2+1+1+1)/25=7/25$. On the four core diagonal
+states the same repeated hard targets give four singleton cells and
+squared mass $4/25$. They remain hard because no literal has the
+missing four-way distinguishing power on these sets. Every other
+target retains its own witness. Both squared masses are at most
+$16/25$, verifying all thirty-one nonempty supports without omitting
+smaller supports. Thus the joint leaf accepts.
+
+Finally $\operatorname{TV}(\mu_+,\mu_0)\le1/100$; one existing
+stability step from cap $4/5$ accepts cap $81/100$. These are rules
+already present in JTC, with no extension or deletion. $\square$
+
+Theorem 4.3 is an optimizer ceiling for $V_{\mathrm{core}}$ only.
+Theorem 6.4 is a pointwise gap for $V_{\mathrm{sep},h}$ only; it
+does not even assert an optimizer ceiling for that language after
+varying its weights and depths. Neither is a counterexample to
+unrestricted $V_{\mathrm{rec}}$ optimizer-cofinality. Proposition 7.1
+exhibits its concrete bypass of the second obstruction.
+

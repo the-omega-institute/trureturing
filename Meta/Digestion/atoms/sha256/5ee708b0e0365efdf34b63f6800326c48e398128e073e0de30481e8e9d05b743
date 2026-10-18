@@ -1,0 +1,23 @@
+**Corollary 7.3 (boundary, record, source and transport).** For a fixed
+complete input and attained finite $B$, the retained memory predicates and
+native transport determine which of the two alternatives in Theorem 6.1
+holds for original boundary replies. In its positive case, no finite
+original-prefix depth distinguishes all rows of $B$ on their entire
+strata. In its negative case, the returned depth excludes that one
+simultaneous family; for $|B|>2$ it need not distinguish every pair in $B$.
+
+For a supplied finite entire row image, apply Theorem 6.1 to every distinct
+row pair. If all pair alternatives are negative, the maximum of their
+finitely many returned depths determines the complete row throughout the
+entire source fiber. If one pair alternative is positive, no such finite
+determining depth exists. Under the paid complete-state assumptions of
+[ARH][ARH], this is the source-level boundary used by the existing
+original-prefix/service correspondence.
+
+**Proof.** The first assertion is (NAC.3) and Theorem 6.1. Pairwise
+prefix determination on a finite row image is equivalent to exclusion of
+every distinct row pair. Agreement through a larger depth implies agreement
+through every smaller one, so the finite maximum suffices in the all-negative
+case. A positive pair supplies counterexamples at every depth. This uses
+the whole row strata, with no selected finite source catalogue. $\square$
+

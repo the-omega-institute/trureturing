@@ -1,0 +1,24 @@
+**Credited R3 (critical points and quadratic requirement).** The supplier's Theorems 9.1–9.2 show, specifically for this model, that any actual-target critical point forces some actual collision. In the chart $(r,x,y,k)$ after quotienting drift, the derivative determinant is $r^3j(k;x,y)$, where
+
+$$
+\begin{aligned}
+c(x,y)&=\det_4[BE,BE_x,BE_y,CE],\\
+b_1(x,y)&=\det_4[BE,CE_x,BE_y,CE]
+             +\det_4[BE,BE_x,CE_y,CE],\\
+a_2(x,y)&=\det_4[BE,CE_x,CE_y,CE],\\
+j(k;x,y)&=c+b_1k+a_2k^2.
+\end{aligned}
+\tag{7.1}
+$$
+
+Here $\det_4$ is the determinant of four quotient columns. Recovery requires at each positive shape exactly one alternative
+
+$$
+a_2=b_1=0,\ c\ne0,
+\qquad\hbox{or}\qquad
+a_2\ne0,\ b_1^2-4a_2c<0.
+\tag{7.2}
+$$
+
+The value $c$ has one common strict sign over all shapes, and every nonzero $a_2$ has that same sign. These are necessary tests, equivalent to everywhere derivative nonsingularity when imposed at all shapes, and are not a global injectivity theorem.
+

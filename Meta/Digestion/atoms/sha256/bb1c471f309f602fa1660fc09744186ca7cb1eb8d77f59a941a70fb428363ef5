@@ -1,0 +1,46 @@
+### 2.2 Proof of the Hamming-distance formula, including saturation
+
+The trace-distance/numerical-range reduction for unitary channels is the mature result in [Watrous][WAT], Theorems 3.52 and 3.55. Here it takes the following concrete form. For a pure joint input $|\psi\rangle$ with reduced system state $\rho_{\mathcal K}$, the two output unit vectors have overlap
+
+$$
+\langle\psi|(V\otimes I_R)|\psi\rangle
+=\operatorname{Tr}(\rho_{\mathcal K}V),
+\qquad V=(U_s^q)^\dagger U_r^q.
+$$
+
+Their half trace distance is
+
+$$
+\sqrt{1-|\operatorname{Tr}(\rho_{\mathcal K}V)|^2}.
+\tag{2.8}
+$$
+
+Indeed, when the two vectors span a two-dimensional space, the difference of their rank-one projectors has trace zero and eigenvalues $\pm\sqrt{1-|\langle\psi_s,\psi_r\rangle|^2}$ on that span, with zeros elsewhere; when their span is one-dimensional the difference is zero. Decomposing an arbitrary mixed input into pure states and using convexity of the trace norm bounds its distance by the largest pure-input distance.
+
+Since $V$ is diagonal unitary, its expectations are precisely convex combinations of its eigenvalues. Conversely every such combination is the expectation on an unreferenced pure state whose amplitudes in the corresponding orthonormal eigenvectors are the square roots of the combination weights. Hence references do not enlarge the possible expectations or the optimum of (2.8).
+
+Put $v=2q\theta=q\pi/(2L)$. The factors on the $n-h$ agreeing positions cancel. On the remaining positions the relative rotation has angles $\pm v$, and its spectrum, disregarding multiplicity, is
+
+$$
+\{\exp(i v(h-2j)):0\le j\le h\}.
+\tag{2.9}
+$$
+
+If $q=0$ or $h=0$, $V=I$ and the distance is zero. Suppose $q>0$ and $h>0$. If $hv\le\pi/2$, all phases in (2.9) lie between $-hv$ and $hv$. Every convex combination has real part at least $\cos(hv)\ge0$, and therefore modulus at least $\cos(hv)$. The equal mixture of the two endpoint eigenvalues attains $\cos(hv)$. Formula (2.8) gives $D_q(s,r)=\sin(hv)$, attained without a reference.
+
+For $hv\ge\pi/2$, a wider endpoint arc alone would not justify saturation, because the spectrum is discrete. The following combination does. Let $b_*=0$ for even $h$ and $b_*=1$ for odd $h$. The spectrum contains the symmetric pair with phases $\pm b_*v$, whose mean is $\cos(b_*v)\ge0$. If this mean is zero, the eigenvalue hull already contains zero. Otherwise choose the smallest integer $a_*\le h$ of the same parity as $h$ such that $a_*v\ge\pi/2$. It exists by $hv\ge\pi/2$, and $a_*>b_*$. Minimality gives
+
+$$
+\frac\pi2\le a_*v<\frac\pi2+2v\le\frac{3\pi}2,
+$$
+
+so the symmetric eigenvalue pair at phases $\pm a_*v$ has mean $\cos(a_*v)\le0$. With
+
+$$
+\lambda=\frac{\cos(b_*v)}{\cos(b_*v)-\cos(a_*v)}\in[0,1],
+$$
+
+take weight $\lambda$ on the equal $\pm a_*$ pair and weight $1-\lambda$ on the equal $\pm b_*$ pair. Its expectation is zero. These pairs are actual eigenvalues from (2.9), including the single eigenvalue when $b_*=0$, so the square-root-amplitude construction realizes the combination without a reference. Equation (2.8) now attains distance one. This proves (2.2) in both regimes and at $hq=L$.
+
+For $q=1$ and $h>0$, (2.2) is strictly positive. Thus $s\ne r$ implies $\Lambda_s\ne\Lambda_r$ as channels, completing (i). Maximizing (2.2) over $h\in\{0,\ldots,n\}$ gives the stated diameter, with $h=n$ attained by $r=-s$.
+

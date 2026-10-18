@@ -1,0 +1,5 @@
+source_id = "fib-legal-edge-load-conditional-null-response-and-finite-certificate"
+path = "docs/develop/theory/FIB_LEGAL_EDGE_LOAD_CONDITIONAL_NULL_RESPONSE_AND_FINITE_CERTIFICATE.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

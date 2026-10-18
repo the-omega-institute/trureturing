@@ -1,0 +1,112 @@
+**Proposition 219.10 (Exact linear and capacitated feasibility).**
+Fix the parameters of Theorem 219.9 and row totals $s_i\ge0$ with
+$\sum_i s_i=S$, $\xi_i\le s_i$. For a prescribed $\delta\ge0$,
+a constructor of cost at most $E+\delta$ exists if and only if one
+matrix and reserve vector with the margins (219.21) satisfy
+
+$$
+s_i+s_h+\mu-S\le\delta,\qquad
+a_{ij}-c\le\delta,\qquad
+a_{ij}-\delta\le x_{ij}+t_i\le c+\delta.
+\tag{219.25}
+$$
+
+Equivalently, choose $0\le t_i\le s_i$, $\sum_i t_i=c$, set
+
+$$
+r_i=s_i-t_i,\qquad
+\ell_{ij}=\max(0,a_{ij}-\delta-t_i),\qquad
+u_{ij}=c+\delta-t_i,
+\tag{219.26}
+$$
+
+and retain the first two scalar bounds in (219.25).
+Require $\ell_{ij}\le u_{ij}$ and every cut
+
+$$
+r(A)-\gamma(B)\le
+ \sum_{i\in A,j\notin B}u_{ij}
+ -\sum_{i\notin A,j\in B}\ell_{ij},
+\qquad A\subseteq I,quad B\subseteq J.
+\tag{219.27}
+$$
+
+Empty subsets are included. For any such $t$, define residual margins
+and capacities
+
+$$
+R_i=r_i-\sum_j\ell_{ij},\qquad
+C_j=\gamma_j-\sum_i\ell_{ij},\qquad
+U_{ij}=u_{ij}-\ell_{ij}.
+\tag{219.28}
+$$
+
+Another equivalent test is $R_i,C_j,U_{ij}\ge0$ and
+
+$$
+\sum_{i\in A}R_i\le
+ \sum_{j\in J}\min\left(C_j,\sum_{i\in A}U_{ij}\right)
+ \qquad(A\subseteq I).
+\tag{219.29}
+$$
+
+The minimum constructor excess over all $x,t$ with the fixed margins
+is attained. These equivalences concern the constructor only.
+
+**Proof.** The exact scalar identity
+
+$$
+(v-c)_++(a-v)_+=\max(0,v-c,a-v,a-c)
+\tag{219.30}
+$$
+
+proves (219.25). Subtracting the lower bounds in (219.26) converts
+the matrix problem to a matrix $z=x-\ell$ with row totals $R_i$,
+column totals $C_j$ and bounds $0\le z_{ij}\le U_{ij}$.
+The residual totals agree because $\sum_i r_i=G=\sum_j\gamma_j$.
+Summing any subset of rows and bounding each column by both its total
+and incoming capacities proves necessity of (219.29).
+
+For sufficiency take the finite network from source to row $i$ with
+capacity $R_i$, from row $i$ to column $j$ with capacity $U_{ij}$,
+and from column $j$ to sink with capacity $C_j$.
+Its bounded feasible flow polytope is nonempty and compact, so a
+maximum real flow exists. At a maximum a residual source-sink path
+would permit an increase by the minimum positive residual along a
+simple finite path. Consequently no such path exists. Vertices
+reachable from the source determine a cut with outgoing arcs saturated
+and incoming arcs carrying zero flow; conservation equates its capacity
+to the maximum value. This proves the needed finite max-flow fact
+without assuming termination of a real-valued augmentation algorithm.
+
+A cut with row set $A$ and column set $B$ has capacity
+$R(I\setminus A)+U(A,J\setminus B)+C(B)$.
+Minimizing over $B$ gives
+$R(I\setminus A)+\sum_j\min(C_j,U(A,\{j\}))$.
+Thus (219.29) forces value $\sum_iR_i$. Every source and sink arc
+then saturates, producing the required matrix and $x=\ell+z$.
+At zero total residual mass use the zero flow.
+
+Expanding the same cut inequalities before lower-bound subtraction
+gives (219.27). Its choices $A=\varnothing$, $B=\{j\}$ force
+$C_j\ge0$; choices $A=I\setminus\{i\}$, $B=J$ force $R_i\ge0$.
+Thus these requirements are not missing from that formulation.
+The assumption $\ell\le u$ supplies $U\ge0$.
+
+The original margin set is nonempty: use
+$t_i=cs_i/S$ and $x_{ij}=(s_i-t_i)\gamma_j/G$.
+Here $G,S>0$. It is closed and bounded, and (219.22) is continuous,
+so its minimum is attained. This is exact finite real existence,
+with no claim about bit complexity, exact-real sampling or acquisition
+runtime. The finite flow theorem is classical machinery; the
+full-cell identification with this one allocation is the relation here. ∎
+
+At $\delta=0$, the same test can be written with
+$\ell_{ij}=\max(0,s_i-t_i-(G-\gamma_j-\mu_{-j}))$ and
+$u_{ij}=c-t_i$. This recovers (219.24) and the row-subset criterion
+without imposing proportional columns.
+If $E+\delta\le1$ is separately established, the constructed score
+gives an exact-$Q$ unit certificate. Unit-O feasibility alone does not
+establish this affordability for an arbitrary positive constructor
+minimum.
+

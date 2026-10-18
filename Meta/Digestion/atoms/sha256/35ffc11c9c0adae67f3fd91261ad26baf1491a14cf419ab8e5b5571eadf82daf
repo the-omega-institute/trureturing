@@ -1,0 +1,18 @@
+### 101.2. Original recurrence and the norm element
+
+**Proof.**
+
+For odd n, the Fibonacci identity is F_(3n)=5F_n³-3F_n. Since F_9=34=-4 modulo 19 and 5(-4)³-3(-4)=-4 modulo 19, induction gives
+
+ F_N=-4 modulo 19 for every j>=2.
+
+The same recurrence, starting at F_3=2, gives F_N=2 modulo 4 for every j>=1. The standard odd-index identity L_N²-5F_N²=-4 yields
+
+ B_N=5F_N²-1,
+ beta=-1-F_N sqrt5,
+ Norm_(Q(sqrt5)/Q)(beta)=-D C².
+
+Thus B_N=3 modulo 19, so neither D nor C is divisible by19. At the two roots sqrt5=9,-9 modulo 19, beta has residues16 and 1. Both are nonzero squares modulo 19. This is the exact original-index input; it can equivalently be viewed as the combination of the original Pell identity with the known cross-level congruence B_N=3 modulo 19. We do not present that congruence itself as new.
+
+In the full integer ring O_5=Z[phi], phi=(1+sqrt5)/2, the congruence F_N=2 modulo 4 gives beta=1 modulo 4O_5. This full-ring congruence, not an integer-coefficient shorthand, will control the dyadic place.
+

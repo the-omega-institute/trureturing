@@ -1,0 +1,21 @@
+**Proposition 20.4 (the two original-prefix directions).** In each accepted
+chart,
+
+$$
+\begin{aligned}
+v\equiv_h w&\Longrightarrow F_\eta[v]\equiv_h F_\eta[w],\\
+F_\eta[v]\equiv_{A_\eta+h}F_\eta[w]
+ &\Longrightarrow v\equiv_h w,
+\qquad A_\eta=\max(\{0\}\cup\{|a_{\eta,y}|:y\in Y_\eta\}).
+\end{aligned}
+\tag{CE.20.5}
+$$
+
+Proof. The first line is Lemma 19.2 applied to the reconstructed source
+template, including all introduced offsets and copied occurrences.
+For the second, inspect each original representative followed by every
+suffix of length less than $h$, using Proposition 20.3. Empty parameter
+tuples satisfy both statements. The finite selector of Proposition 19.4
+additionally separates distinct charts. Thus later tests within charts
+omit no arbitrarily close cross-chart pair. $\square$
+

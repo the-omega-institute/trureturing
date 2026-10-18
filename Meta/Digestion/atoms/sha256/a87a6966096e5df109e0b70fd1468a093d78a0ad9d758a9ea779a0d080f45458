@@ -1,0 +1,34 @@
+**Definition 1.2 (unchanged native task).** Let
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\qquad \operatorname{ht}(\alpha)=\operatorname{ht}(\beta)=0,
+\qquad
+\operatorname{ht}(\langle u,v\rangle)=1+\max(\operatorname{ht}(u),\operatorname{ht}(v)).
+$$
+
+Pairing is free and ordered. Every finite original-root word over $L,R$,
+including the empty word, is legal. Its reply $r_t(a)$ is the addressed
+constructor, or absent after traversal passes a leaf, in
+
+$$
+\mathcal A=\{\alpha,\beta,\mathsf{branch},\mathsf{absent}\}.
+$$
+
+Use the homomorphic substitution and original families
+
+$$
+\begin{aligned}
+\rho\alpha&=\beta,&\rho\beta&=\langle\beta,\alpha\rangle,&
+\rho\langle u,v\rangle&=\langle\rho u,\rho v\rangle,\\
+\mathcal F_D&=\{\langle\alpha,v\rangle:\operatorname{ht}(v)\le D\},&
+W_D&=\{q:|q|\le D-1\},&\mathcal P_D&=\{Rq:q\in W_D\},
+\end{aligned}
+\tag{GDB.1}
+$$
+
+for public $D\ge1$. One actual initial source stays stationary during
+preparation and late acquisition; $\rho^kt$ specifies prediction targets.
+There is no subtree, equality, source-identity, age, reset, copying,
+free-navigation or advice port.
+

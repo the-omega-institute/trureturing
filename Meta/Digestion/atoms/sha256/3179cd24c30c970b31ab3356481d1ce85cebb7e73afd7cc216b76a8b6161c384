@@ -1,0 +1,31 @@
+**Proposition 12.1 (an ordinary context contact on the same entire fiber).**
+The pair $(r_0,r_2)$ of Definition 11.1 has the regular common limit
+
+$$
+M=\langle\Omega,\langle\Omega,\langle\alpha,\Omega\rangle\rangle\rangle
+  =C^\dagger[\Omega,\Omega,\Omega],
+\tag{NLC.42}
+$$
+
+where $C^\dagger$ is the finite context (NLC.29).
+
+Proof. For $m\ge4$ take $a_m=U(T_m,T_m)$ and
+$b_m=U(T_{m+1},T_m)$. The first has row $r_0$.
+For the second, $T_{m+1}\ne T_m$ by index injectivity, and
+$T_{m+1}=\langle T_m,T_{m-1}\rangle$ has a branch as left child,
+whereas $G(T_m)=\langle\alpha,T_{m+1}\rangle$ has an $\alpha$ leaf.
+Thus the second has exactly $r_2$. Both belong to the same entire
+$D$, retaining the original guarded link.
+
+Their fillings of $C^\dagger$ are respectively
+$(T_m,T_m,T_{m+1})$ and $(T_{m+1},T_m,T_{m+1})$.
+By Lemma 3.1, $\mu(T_j)=\lfloor j/2\rfloor$; for any $h$, choosing
+$m\ge2h+4$ makes every displayed filling agree with $\Omega$ through
+$h$. Lemma 5.3 then gives $a_m\equiv_h M\equiv_h b_m$.
+The tree $\Omega$ has one subtree type and a finite constructor
+context adds only finitely many more, so $M$ is ordinary regular.
+The third row has not been discarded. Theorem 11.4 therefore refutes
+completeness required for every prescribed pair; it does not refute
+a method permitted to choose another opposite pair in this fiber.
+$\square$
+

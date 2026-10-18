@@ -1,0 +1,164 @@
+**Proposition 67.1 (derived comparisons over the conditional source box).**
+The inequalities used in §§59–66 follow from the entire rational
+nine-coordinate box of CG Proposition 13.2 with radius $10^{-24}$
+and exact source formulas, without fitting parameters or using an
+off-root TP identity. In particular
+
+$$
+\begin{gathered}
+.12534<s_0<.12535,\quad
+.24163<v^\dagger<.24165,\quad
+.90417<s^\dagger<.90419,\\
+v_0<18/677<6/25<v^\dagger<1/4<1,\qquad
+d_f>2|z_f|,\quad\gamma_f>0.
+\end{gathered}
+\tag{JRH.60}
+$$
+
+Proof. Use CG.112–CG.116's matrices $A_y^{\rm src}$,
+$S_0^{\rm src},S_{01}^{\rm src},S_{02}^{\rm src}$, their
+adjugates $H^{\rm src}=1000\eta_0\operatorname{adj}S_0^{\rm src}$,
+$Q^{01}=\eta_1\operatorname{adj}S_{01}^{\rm src}$ and
+$Q^{02}=\eta_2\operatorname{adj}S_{02}^{\rm src}$. Define the
+amplitudes by the positive-pivot first-column formulas CA.8/CG.134.
+Their pivot denominators are separated from zero throughout the box.
+The mass definitions on this box are
+$m_1=1-H^{\rm src}_{11}-Q^{01}_{00}$ and
+$m_2=1-H^{\rm src}_{22}-Q^{02}_{00}$. At the conditional root,
+rank-one identities additionally identify $H^{\rm src}=hh^T$ and
+$Q^{01}=(a,b)^T(a,b)$, $Q^{02}=(c,d)^T(c,d)$.
+Useful root identities, consistent with these box definitions, are
+
+$$
+\begin{aligned}
+b^2&=\eta_1\left[59\lambda/128-
+ \{59(A_5^{\rm src})_{00}+37(A_{27}^{\rm src})_{00}\}/128\right],\\
+d^2&=\frac{\eta_2}{2}
+ [\lambda-(A_5^{\rm src})_{00}-(A_{27}^{\rm src})_{00}].
+\end{aligned}
+\tag{JRH.61}
+$$
+
+They express adjugate diagonal entries at the root. Interval evaluation
+of the positive-pivot formulas themselves suffices off root; no exact
+rank factorization is asserted on the whole box.
+
+All terminating decimals below mean exact rationals. Direct outward
+substitution gives sufficient, deliberately coarse enclosures:
+
+| Quantity | Strict lower bound | Strict upper bound |
+| --- | --- | --- |
+| $m_1$ | $.496850$ | $.496851$ |
+| $m_2$ | $.344473$ | $.344475$ |
+| $dh_1/(bh_2)$ | $.590360$ | $.590362$ |
+| $\theta$ | $.013789$ | $.013790$ |
+| $\omega$ | $.001921$ | $.001922$ |
+| $\Delta A$ | $.0807$ | $.0809$ |
+| $\Delta B$ | $.00291$ | $.00294$ |
+| $\Delta C$ | $.00167$ | $.00169$ |
+| $\xi$ | $.0188$ | $.0191$ |
+| $\eta$ | $.0175$ | $.0178$ |
+| $-\zeta$ | $.000100$ | $.000104$ |
+| $t_f$ | $.404699$ | $.404701$ |
+| $q_f$ | $.198937$ | $.198938$ |
+| $(dh_1/(bh_2))\sqrt{m_2/m_1}/t_f$ | $1.21464$ | $1.21466$ |
+| $d_f-2|z_f|$ | $.002738$ | $.002740$ |
+| $\gamma_f$ | $.0167257$ | $.0167258$ |
+
+These comparisons can be specified using only rational operations and
+integer square roots. At mesh $2^{-256}$, embed each of the nine
+rational coordinate intervals outwards. After each sum, product and
+quotient round the lower and upper endpoints down and up to this mesh.
+For a nonnegative interval with integer scaled endpoints $a,b$, use
+$[\lfloor\sqrt{a2^{256}}\rfloor,
+\lceil\sqrt{b2^{256}}\rceil]/2^{256}$. Form determinants by
+first-row expansion and adjugates by cofactors, then the positive-pivot
+amplitudes and the displayed expressions in JRH.3, JRH.5 and JRH.7.
+For height differences one can use directly
+
+$$
+\begin{gathered}
+\Delta A=\frac{22}{128}(h_0^2-h_1^2),\quad
+\Delta B=\frac{22}{128}(b^2-a^2),\quad
+\Delta C=\frac{22}{128}d^2,\\
+\xi=(h_0a+h_1b)\frac{\sqrt{999}-\sqrt{295}}{128},\quad
+\eta=(h_0c+h_2d)\frac{\sqrt{27}-\sqrt5}{16},\quad
+\zeta=ac\frac{\sqrt{37}-\sqrt{59}}{16}.
+\end{gathered}
+\tag{JRH.62}
+$$
+
+This is a finite rational enclosure specification for the entire box,
+not a finite set of sign samples. For the compatible-row formula
+JRH.17 the two values enclose respectively in
+$(.000656,.000657)$ and $(.003408,.003410)$; the much weaker
+analytic bound JRH.19 already suffices. Alternatively the coarse
+$t_f$ bound in JRH.18 follows from
+
+$$
+\frac{t_f}{1-t_f^2}=\frac4{11}\sqrt{m_2/m_1}
+ (\sqrt{59}-\sqrt{37}),
+\tag{JRH.63}
+$$
+
+since $t/(1-t^2)$ is strictly increasing on $(0,1)$ and direct
+rational-square comparisons bracket its right side between its values
+at $.39$ and $.42$. The source coarse bounds give
+$.82<\sqrt{m_2/m_1}<.85$, and then the $q_f$ and positive-row
+ratio estimates used in §60. The strict sign $d_f>2|z_f|$ also
+follows already from $d_f>.49(11/64)$ and
+$2|z_f|<\sqrt{.50(.35)}(1.6)/8$, using
+$\sqrt{59}-\sqrt{37}<1.6$; squaring positive rationals verifies
+the gap. Thus no near equality in the table is needed for that sign.
+
+For the strong live-ray signs in §65, reuse the precise finite
+comparisons of JR.52, obtained by the same source-box substitution.
+Writing $\mathfrak a=\theta\Delta A+\Delta B$ and
+$\mathfrak b=\omega\Delta A+\Delta C$, these include
+
+$$
+\begin{gathered}
+\mathfrak a,\mathfrak b>0,\quad \Delta A/2>\xi,\quad
+\mathfrak a<2\sqrt\theta\,\xi,\quad
+\mathfrak a+\mathfrak b>2\sqrt\delta\,\xi,\\
+\mathfrak a+2\sqrt\theta\,\xi>\theta\eta/\sqrt\omega,\quad
+\xi\sqrt\omega>|\zeta|,\quad
+\ell_{\sigma\tau}(v_0)>1/25000.
+\end{gathered}
+\tag{JRH.64}
+$$
+
+These finite comparisons imply the required whole-interval signs,
+rather than just the signs of finitely many rays at sampled $v$.
+Indeed $q(v)=(\mathfrak av+\mathfrak b)^2-
+4\xi^2v(\theta v+\omega)$ is strictly concave, with positive
+values at $0,1$. Hence
+$\mathfrak av+\mathfrak b>2\xi\sqrt{v(\theta v+\omega)}$
+throughout $[0,1]$. In the JR.50 formula for $4\ell_{-,+}$,
+the remaining terms $2\eta\sqrt{\theta v+\omega}-
+2\zeta\sqrt v$ are positive, so $\ell_{-,+}>0$.
+For $\ell_{+,-}$ its derivative times four is
+
+$$
+\mathfrak a+
+\xi\frac{2\theta v+\omega}{\sqrt{v(\theta v+\omega)}}
+-\frac{\theta\eta}{\sqrt{\theta v+\omega}}
+-\frac{\zeta}{\sqrt v}
+>\mathfrak a+2\sqrt\theta\,\xi-
+ \theta\eta/\sqrt\omega>0.
+\tag{JRH.65}
+$$
+
+Its positive value at $v_0$ therefore persists through $1$.
+This proves both $\sigma\tau=-1$ signs needed for strict TV loss.
+High differences are positive as in JR §43 from $u\le v$,
+$1-u\ge1-v$ and $\Delta A/2>\xi$.
+
+Finally the same direct substitution in the exact ratios gives
+$6/25<v^\dagger<1/4$ and the tighter enclosures JRH.60;
+the inherited coarse bound $v_0<18/677$ places it strictly in the
+strong interval. Monotonicity of $\mathfrak f$ locates
+$s^\dagger$ without a fitted inverse root. No root-existence,
+Jacobian, rank or minimax recertification is part of these derived
+comparisons. $\square$
+

@@ -1,0 +1,28 @@
+**Corollary 5.4 (infinite upper coordinates and genuine halt).** Allow
+upper budgets in $\overline{\mathbb N}^3$, where
+$\overline{\mathbb N}=\mathbb N\cup\{\infty\}$.
+On a positive instance the feasible extended upper vectors are
+exactly those dominating some $v\in\mathcal B$.
+On a negative instance they are exactly
+$(\infty,b,\infty)$, $b\in\overline{\mathbb N}$, and their
+minimal extended vector $(\infty,0,\infty)$ is attained by
+a pointwise terminating static service.
+
+Proof. This is JRF Corollary 5.5 with the same matched suppliers.
+A finite raw bound gives a finite reachable reply tree and hence
+finite maxima of all its installed costs after deleting trailing
+updates. A finite length bound first gives a finite raw bound by
+cleanup, without increasing any other constrained coordinate.
+If both read and length upper bounds are infinite, the static
+supplier works on a positive instance.
+
+For every finite source on either branch, a static service can
+traverse the entire original tree using the current-epoch historical
+literal decoder of SLH Theorem 2.2. Recurse only at a decoded
+original branch and stop at each original leaf. Each node costs
+finitely many actual current reads; finiteness of the particular
+original tree gives termination. Compute its whole row and halt.
+This has zero actual updates. On the negative branch Theorem 5.3
+forces its two infinite suprema, while every individual run is
+finite. No continuation is performed after halt. $\square$
+

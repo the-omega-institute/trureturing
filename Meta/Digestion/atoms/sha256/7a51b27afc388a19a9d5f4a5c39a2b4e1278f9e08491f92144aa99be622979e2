@@ -1,0 +1,52 @@
+**Proposition 3.3 (necessity before any normalization of arrays).**
+Every original finite competitor has $H_r\succeq0$, $L_r\in\mathcal C_2$
+such that, with $Z_r=H_r+L_r$ and $H=H_++H_-$,
+
+$$
+\begin{gathered}
+Z_++Z_-=I_3,\qquad0\preceq H\preceq I_3,\\
+N=(I_3+s\kappa X_{01})/2-\Theta(Z_+),\qquad0\preceq N\preceq M,\\
+\operatorname{Re}(Z_+)_{DT}=s/2,\qquad
+G_{\rm acq}\succeq E\Theta(H)E^\dagger .
+\end{gathered}
+\tag{QO.18}
+$$
+
+Its supported-live high cost is $\operatorname{tr}(CH)$.
+
+Proof. Multiply each encoder Kraus matrix by each supported-live decoder
+Kraus matrix. Their positive Choi projectors sum to the live Choi of
+(QO.11). A vector in the kernel of that sum has zero squared pairing
+with every product, so each product lies in its three-column support
+and equals $EK(z)E^\dagger$. In particular it kills complement and
+cross-support inputs. The embedded columns are independent. Apply
+their Gram left inverse
+$(\mathcal W^\dagger\mathcal W)^{-1}\mathcal W^\dagger$ on both sides
+of the Choi identity to obtain $\sum zz^\dagger=I_3$. Their norms
+have not been set to one.
+
+Group these same products by actual report and actual fibre dimension.
+Products through dimension at most two have rank at most two and hence
+belong to $\mathcal Z$; they yield $L_r$. The rest yield $H_r$.
+This Kraus refinement is analytic and does not create an accessible
+record of an old discarded environment. The plus supported failure
+effect is $N$, the minus effect is $M-N$. Both are positive. Since
+$M$ kills coordinate zero, positive two-by-two minor bounds force both
+of their first rows and columns to vanish. For Hermitian $Z$,
+
+$$
+\Theta(Z)_{01}=h_1bZ_{DT}+h_0a\overline{Z_{DT}}.
+\tag{QO.19}
+$$
+
+Its real part is $\kappa\operatorname{Re}Z_{DT}$, proving the record
+condition. No conditioned live or failure measure has been fixed here.
+
+For each high branch, the full TP decoder has live adjoint identity
+at most its whole identity. Pull this inequality back through its
+encoder and sum. This proves the full five-mode operator inequality
+in (QO.18), including acquired-to-failure loss and all complement or
+cross-support contributions. Evaluation on any positive input gives
+the required acquired lower bound without acceptance normalization.
+$\square$
+

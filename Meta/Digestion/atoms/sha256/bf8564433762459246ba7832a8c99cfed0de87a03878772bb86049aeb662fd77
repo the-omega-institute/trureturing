@@ -1,0 +1,44 @@
+**Assumption 1.1 (Original stationary XOR law and fixed endpoint).** Fix
+$0<p<1$, $p\ne1/2$, and a single endpoint index $j\in\{0,1\}$. The hidden
+state alphabet is $\mathcal A=\{a_0,a_1,b_0,b_1\}$. Let $\varphi$ be uniform
+on $\{0,1\}$, independently of iid Bernoulli$(p)$ spins
+$(S_\ell)_{\ell\in\mathbb Z}$. On the original integer clock set
+
+$$
+\begin{aligned}
+H_{2\ell+\varphi}&=a_{S_\ell},&
+H_{2\ell+\varphi+1}&=b_{S_{\ell+1}},\\
+X_{2\ell+\varphi}&=Y_\ell:=S_\ell\mathbin\oplus S_{\ell+1},&
+X_{2\ell+\varphi+1}&=0.
+\end{aligned}
+\tag{1.1}
+$$
+
+Write $J_p$ for this one joint hidden-visible law. This is exactly the
+realization in [Original, Proposition 2.1 and (2.2)][Original], with the
+four stationary state masses $(1-p,p,1-p,p)/2$. An active transition goes
+from $a_s$ to $b_t$ with probability $\pi_t$, where $\pi_0=1-p$ and
+$\pi_1=p$, and emits $s\oplus t$; the following transition goes from
+$b_t$ to $a_t$ and emits zero. Thus the phase mixture uses the original
+stationary emitted-bit clock, including its separator positions. In
+particular $X_tX_{t+1}=0$ at every integer $t$. No rescaled or replacement
+source is used.
+
+The target is the actual $H_j$ in this same realization. The endpoint
+identification is exactly [Original, (9.4)][Original]:
+
+$$
+\begin{array}{c|cc}
+ &j=0&j=1\\ \hline
+\varphi=0&a_{S_0}&b_{S_1}\\
+\varphi=1&b_{S_0}&a_{S_0}
+\end{array}
+\tag{1.2}
+$$
+
+For a fixed endpoint, each phase corresponds to two states distinguished
+by the displayed spin. Knowing a representation of $J_p$ does not grant
+access to that spin or to $\varphi$. In particular the complete-half-line
+measurability in [Original, Lemma 8.1][Original] grants no free acquisition
+operation in the following definition.
+

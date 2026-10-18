@@ -1,0 +1,87 @@
+**Theorem 37.3 (Radical support and sharp simultaneous nilpotence).**
+Each $\mathfrak p_a$ is the prime ideal of the face $\delta_a=0$.
+Moreover
+
+$$
+\begin{aligned}
+J&=\operatorname{span}_{\mathbb C}
+      \{X^s:\delta_a(s)\ge1\text{ for every }a\},\\
+\sqrt{\operatorname{Ann}_{R_{k,b}}C_{k,b}}&=J,\\
+J^{k-2}C_{k,b}&=0,\qquad J^{k-3}C_{k,b}\ne0.
+\end{aligned}
+\tag{37.7}
+$$
+
+When $k=3$, $\operatorname{Ann}C_{3,b}=J$ and the nonvanishing
+statement is $J^0C_{3,b}=C_{3,b}\ne0$. When $k\ge4$,
+
+$$
+J^{k-2}\subsetneq\operatorname{Ann}C_{k,b}\subsetneq J.
+\tag{37.8}
+$$
+
+Proof. Since $\delta_a$ is nonnegative and additive on the semigroup,
+its zero locus is a face submonoid: if $\delta_a(s+s')=0$, both
+summands have deficit zero. The linear map fixing its monomials and
+killing the positive-deficit monomials is therefore a surjective
+algebra homomorphism onto its semigroup algebra. Its kernel is
+$\mathfrak p_a$. That algebra is a domain, as a monomial subalgebra
+of the same ambient polynomial ring; thus $\mathfrak p_a$ is prime.
+The face is proper: the empty degree-one mode has deficit $k>0$,
+whereas simultaneous root-zero maximum sets on all cycles give
+nonzero points on it. The forms $\delta_a$ are supporting forms of
+$K_{k,b}$, so this is exactly the asserted face prime.
+
+The ideals have a common monomial basis. A polynomial is in all of
+them if and only if each of its terms has positive deficit on every
+cycle; this proves the first line of (37.7). It also proves directly
+that no cancellation changes membership in their intersection.
+For distinct cycles the primes are distinct: take a degree-one global
+set with root zero, size $k-1$ on cycle $a$, and size $k$ on every
+other cycle. It has deficit one on $a$ and zero on the others.
+Such sets exist on the $2k$-vertex paths, for example the odd positions
+through $2k-3$ and through $2k-1$, respectively.
+
+Every product of $r$ monomials from $J$ has deficit at least $r$
+on each cycle. Extending by linearity and taking $r=k-2$ gives
+$J^{k-2}\subseteq\operatorname{Ann}C_{k,b}$ by Theorem 37.1.
+That theorem also gives $\operatorname{Ann}C_{k,b}\subseteq J$.
+A finite intersection of primes is radical, so taking radicals in
+
+$$
+J^{k-2}\subseteq\operatorname{Ann}C_{k,b}\subseteq J
+\tag{37.9}
+$$
+
+proves the radical assertion. It describes a union of the cycle-face
+supports; it does not replace the full annihilator by a reduced ideal.
+
+For sharpness choose the single global independent set $U$ whose
+root is zero and whose occupied positions on every cycle are
+$\{1,3,\ldots,2k-3\}$. Its local size is $k-1$, so its mode
+$s_U=(1,\mathbf1_U)$ has $\delta_a(s_U)=1$ for all $a$ and
+$X^{s_U}\in J$. Acting on the common witness (37.5) gives
+
+$$
+(X^{s_U})^{k-3}[X^{p_*}]
+=[X^{p_*+(k-3)s_U}]\ne0,
+\qquad\delta_a(p_*+(k-3)s_U)=k-2.
+\tag{37.10}
+$$
+
+The strict inequalities persist under addition. For $k=3$ this is
+exponent zero: the monomial power is $1$, $J^0=R_{3,b}$ and
+$[X^{p_*}]$ is nonzero. Thus the endpoint is included rather than
+silently requiring a positive power.
+
+If $k\ge4$, the same $X^{s_U}$ lies in $J$ but fails the threshold
+$k-2\ge2$, proving the right strict inclusion in (37.8). The empty
+degree-one mode has every deficit $k$, so belongs to the annihilator.
+It is not in $J^{k-2}$: every monomial in $J$ has degree at least one,
+and hence that power has no nonzero element of degree less than
+$k-2\ge2$. This proves the other strict inclusion. In particular
+ordinary ideal powers are not identified with the monomial threshold
+ideal. For $k=3$ the threshold is one, giving the stated equality.
+The $k=2$ zero module has annihilator and radical equal to the whole
+ring by Theorem 37.1 and is outside (37.6)–(37.10). $\square$
+

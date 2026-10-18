@@ -1,0 +1,31 @@
+**定义 37.1（固定载体、读出与控制权限）。** 沿用第八章的 $W=\operatorname{Im}\mathbb O$，固定一个结合的四元数切面
+
+$$
+E=\operatorname{span}(e_1,e_2,e_3),\qquad
+F=E^\perp=\operatorname{span}(e_4,e_5,e_6,e_7),\qquad W=E\oplus F,
+$$
+
+并令当前读出为 $C=P_E:W\to E$。取本卷已引用的 Fano 定向
+$(123),(145),(176),(246),(257),(347),(365)$，于是
+
+$$
+ e_1\times e_4=e_5,\quad e_2\times e_4=e_6,\quad e_3\times e_4=e_7,\quad
+ e_4\times e_5=e_1,\quad e_4\times e_6=e_2,\quad e_4\times e_7=e_3.
+$$
+
+对 $u\in W$ 写 $A_u(x)=u\times x$。
+内部控制权限为 $\Gamma_\parallel=\{A_c:c\in E\}$。固定一个非零外部环境锚 $d=e_4\in F$ 后，扩展权限为
+$\Gamma_d=\Gamma_\parallel\cup\{A_d\}$，而仅有锚的权限为
+$\Gamma_{\{d\}}=\{A_d\}$。锚 $d$ 是所有词共享的外部侧信息；它不是来源状态的一部分，也不能在未声明时被重置为另一个向量。
+
+这里的 $W$ 是权限依赖响应的数学载体；原生 FIB 的可达像仍由第七章的有限树定义，不能把整个 $W$ 或任意 $\mathcal D\subseteq W^m$ 直接称为原生可达来源。
+
+给任一控制族 $\Gamma$，定义受控未来的线性观察塔
+
+$$
+O_0(\Gamma)=\operatorname{im}C^{\mathsf T}=E,\qquad
+O_{h+1}(\Gamma)=O_h(\Gamma)+\sum_{A_u\in\Gamma}A_u^{\mathsf T}O_h(\Gamma).
+$$
+
+这里的 $h$ 是允许的控制词长度，线性容量是 $\dim O_h(\Gamma)$；它不是有限记录的位数、取得成本或非线性行为商的大小。
+

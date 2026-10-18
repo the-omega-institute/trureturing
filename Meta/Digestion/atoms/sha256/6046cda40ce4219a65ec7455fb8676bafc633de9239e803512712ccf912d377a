@@ -1,0 +1,38 @@
+# A counting obstruction to an all-flat minimum-valence angle structure
+
+Consider a finite generalized angle structure on `N` tetrahedra.  Assume
+every global edge has target angle sum `2π` and degree at least `d ≥ 6`.
+Call a tetrahedron flat when its six local angles are
+`(0,0,0,0,π,π)` up to the opposite-pair permutation, and let `F` be the
+number of flat tetrahedra and `E` the number of global edges.
+
+Each flat tetrahedron contributes exactly two local `π` occurrences.  A fixed
+global edge can contain at most two such occurrences, because its total angle
+is `2π` and all angles are nonnegative.  Counting flat `π` occurrences by
+global edge gives
+
+```
+                 2 F ≤ 2 E,  hence  F ≤ E.
+```
+
+On the other hand, counting all local edge occurrences gives
+
+```
+                 6 N = Σ_e deg(e) ≥ d E,
+```
+
+so `E ≤ 6N/d`.  Therefore
+
+```
+                 F/N ≤ 6/d.
+```
+
+In particular, minimum valence eight forces at least one quarter of the
+tetrahedra to be non-flat (`F ≤ 3N/4`), and minimum valence nine forces at
+least one third to be non-flat.  This is a genuine exclusion of an all-flat
+maximum-volume candidate, but it does not exclude isolated flat blocks; a
+local perturbation or stronger incidence argument is still required for the
+unrestricted minimum-eight problem.  It uses only nonnegativity, the global
+`2π` equations, and degree counting, so it applies independently of a chosen
+co-volume or fixed-point proof.
+

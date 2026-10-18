@@ -1,0 +1,34 @@
+**Theorem 22.3 (extensive entropy excess even with exact marginals).**
+For every $n\ge8$ and every graph satisfying Definition 20.2, at the
+same fixed full-support law,
+
+$$
+U_\theta^{\rm ent}\ge U_{\rm exact}^{\rm ent}
+\ge\log_2Z_G+n\delta+\frac13-\log_2[1+(31/32)^n]
+>\log_2Z_G+\frac n6.
+\tag{GDB.98}
+$$
+
+The same lower bound applies to all specified outer marginal
+relaxations. Thus enforcing exact joint marginal realizability does
+not give this mechanism a uniformly sublinear log-mass excess.
+
+Proof. Take the one common actual law $P_0$, uniform on $K=\ker H$.
+It is supported on actual tuples by Theorem 12.3. The rank of $H$
+is $n-1$, so $H(P_0)=2n-(n-1)=n+1$. Lemma 21.1 makes each
+whole star uniform on its eight even patterns: a surjective linear
+projection has equal-sized fibers. Each star entropy is therefore
+three, and each singleton edge is fair with entropy one. Hence
+$\Psi_F(P_0)=2n-|F|$ and
+$\mathbb E_{P_0}\log_2 W=n\log_2 A$.
+
+Equation (GDB.93) gives
+$\min_F\Psi_F(P_0)\ge(4n+1)/3$. Insert this actual law into
+(GDB.97) and subtract (GDB.84). The result is exactly the middle
+lower bound of (GDB.98), with $\delta$ from (GDB.92). By (GDB.95)
+and $\log_2[1+(31/32)^n]<1$, the excess is strictly greater than
+$n/4-2/3\ge n/6$ for $n\ge8$. A mixture is pointwise at least
+the minimum. Every allowed outer set contains $P_0$'s actual marginal
+tuple. These facts prove all the remaining assertions, including after
+optimization over mixtures. $\square$
+

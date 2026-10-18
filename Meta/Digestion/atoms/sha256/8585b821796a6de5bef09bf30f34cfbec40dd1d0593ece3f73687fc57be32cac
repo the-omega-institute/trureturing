@@ -1,0 +1,23 @@
+**Theorem 2.2 (exact all-competitor containment).** Every nonempty
+$C_\Theta$ is jointly admissible. Conversely every nonempty jointly
+admissible $B\subseteq S^n$ is contained in some $C_\Theta$ on the same
+$n$ coordinates. Integral and fractional cover optima, and the maximum
+of any nonnegative mass over admissible sets, are unchanged when cover
+members or maximizers are restricted to nonempty $C_\Theta$.
+
+**Proof.** For each $i,q$, choose its actual witness on $B$. A constant
+target supplies a unary relation. Otherwise (NDR.6) makes $g_q(x_i)$ a
+well-defined function of the attained replies $r_a(x_j)$. Extend that
+function arbitrarily to unattained replies in the nonempty set $G_q$.
+The selected constraints all hold on $B$, so $B\subseteq C_\Theta$.
+Conversely every selected constraint is itself an allowed decoder on its
+entire solution set, proving that $C_\Theta$ is admissible.
+
+Enlarge every member of a cover to its containing solution set. Coverage
+cannot decrease, integral cardinality cannot increase, and fractional
+coefficients retain their total weight, combining duplicates if needed.
+All solution sets are themselves competitors, so the opposite optimum
+inequality also holds. Nonnegative mass is monotone under enlargement,
+which proves the maximum assertion. No projection, independent code or
+restricted donor class is used. $\square$
+

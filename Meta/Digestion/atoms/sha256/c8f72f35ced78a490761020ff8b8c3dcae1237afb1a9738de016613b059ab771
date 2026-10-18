@@ -1,0 +1,10 @@
+**Convention 4.1 (Owned positive reference law).** Let $R$ be exactly the stationary pair law of [TwoStep], Definition 2.1 and Proposition 2.2, with pair-state order $(00,01,10)$ and
+
+$$
+P=\begin{pmatrix}7/10&3/10&0\\0&0&1\\2/3&1/3&0\end{pmatrix},
+\qquad \pi^R=(10/19,9/38,9/38).
+\tag{4.1}
+$$
+
+The supplier proves row normalization, $\pi^RP=\pi^R$, positive mass on every legal cylinder and stationary consistency at every window. Those are precisely the reference hypotheses used here. Its strict density comparison is not used to prove the completeness bridge.
+

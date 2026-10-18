@@ -1,0 +1,20 @@
+**Definition 3.1 (Boundary-conditioned finite score).** For $m\ge1$ and $a,b\in\{0,1\}$ put
+
+$$
+K_m^{a,b}=\{w\in B_m:aw_1=w_mb=0\}.
+$$
+
+Its graph contains every legal Hamming-one edge between these words. Deleting ones connects every vertex to $0^m$, including when the graph is a singleton. For a probability $p$ on $K=K_m^{a,b}$, let $p_i(w_{-i})$ be its single-site posterior. Forced singleton fibers have posterior zero; zero-total fibers have any version. For a strictly positive probability $r$ on $K$ define
+
+$$
+\begin{aligned}
+\mathcal D_K(p\Vert r)
+&=\sum_{i=1}^m\mathbb E_p\bigl(p_i(W_{-i})-r_i(W_{-i})\bigr)^2\\
+&=\sum_{u\to v\text{ in }K}(p_u+p_v)
+\left(\frac{p_v}{p_u+p_v}-\frac{r_v}{r_u+r_v}\right)^2.
+\end{aligned}
+\tag{3.1}
+$$
+
+A zero-total $p$ edge contributes zero without division. Let $\Phi_K(p)$ be the sum of $h(p_u,p_v)$ over this graph, so $\Phi_{B_m}=\Phi_m$.
+

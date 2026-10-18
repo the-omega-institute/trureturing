@@ -1,0 +1,50 @@
+**Theorem 274.3 (Necessary unrestricted-score bound with signed early loss).**
+For every full $y\ge0$ define
+
+$$
+\begin{gathered}
+H_{ij}^y(r)=\sum_{w:w_i=w_j=0}g_y(w,r),\\
+\omega_{\rm late}(y)=\max_{3\le i<j\le L}
+                  \bigl(\max_rH_{ij}^y(r)-\min_rH_{ij}^y(r)\bigr),\\
+\mathcal E_y(\lambda)=
+ \sum_{D=N(i,j;u,v,s,t),\ i\le2}
+             \lambda_D\bigl(H_{ij}^y(u)-H_{ij}^y(v)\bigr).
+\end{gathered}
+\tag{274.7}
+$$
+
+The early term is signed. For the same full feasible allocation,
+
+$$
+F_y+S_y\le M\Delta_O(y)+\mathcal E_y(\lambda)
+       +2\omega_{\rm late}(y)(\delta_b-S_Y-\eta).
+\tag{274.8}
+$$
+
+Thus, if $\Delta_O(y)\le1$, $M\ge1$ and $g=F_y-M>0$,
+
+$$
+g+S_y+M(1-\Delta_O(y))
+\le\mathcal E_y(\lambda)
+       +2\omega_{\rm late}(y)(\delta_b-S_Y-\eta).
+\tag{274.9}
+$$
+
+**Proof.** Replace each pair by its endpoint table $O(i,j;v,s,t)$,
+keeping shorter tables and all coefficients. The exact reward loss
+of that column is $H_{ij}^y(u)-H_{ij}^y(v)$.
+The late loss is zero for $u=v$, and otherwise at most
+$\omega_{\rm late}(y)$. The early loss is the single signed
+aggregate in (274.7), without positive-part substitution.
+The repaired conic allocation has mass $M$ and reward excess at
+most $M\Delta_O(y)$, whereas the old excess is exactly $F_y+S_y$.
+Use $\Gamma_{\rm late}\le2(\delta_b-S_Y-\eta)$ from (274.3),
+then subtract $M$ for (274.9).
+
+The early term has not been paid or given a favorable sign.
+For example $N(1,j;1,0,j,0)$ has zero potentials in Section 275
+but unequal first-zero cells. These are column facts, not a full
+feasible separator or an obstruction to a wholly different stopped
+law. Zero reserve does not imply full $O$ membership, and no
+positive-cap zero-reserve attainer is asserted. $\square$
+

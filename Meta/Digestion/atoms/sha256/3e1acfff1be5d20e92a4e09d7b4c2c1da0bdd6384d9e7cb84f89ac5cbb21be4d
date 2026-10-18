@@ -1,0 +1,39 @@
+**Definition 1.1 (one finite linear relation).** Let $\mathbb F_q$ be a finite
+field, let $m,n\ge0$, and fix a matrix $H:\mathbb F_q^n\to\mathbb F_q^m$ with
+columns $h_1,\ldots,h_n$. Put $C=\ker H$. For $0\le k\le n$, write
+
+$$
+H_P^{(k)}=[h_1\ \cdots\ h_k],\qquad
+H_F^{(k)}=[h_{k+1}\ \cdots\ h_n],\qquad
+r_P(k)=\operatorname{rank}H_P^{(k)},\quad
+r_F(k)=\operatorname{rank}H_F^{(k)},\quad r=\operatorname{rank}H.
+\tag{1.1}
+$$
+
+Empty blocks have rank zero. The full admissible prefix carrier at cut $k$ is
+
+$$
+U_k=\{u\in\mathbb F_q^k:\ \exists f\in\mathbb F_q^{n-k},\quad
+                         H_P^{(k)}u+H_F^{(k)}f=0\}.
+\tag{1.2}
+$$
+
+All source and completion equations use this same $H$. A type is $(k,d)$
+with $0\le d\le k\le n$; its states are $(k,d,u)$ for all $u\in U_k$.
+Here $k$ is the known current cut and $d$ is the remaining total deletion
+budget. For any word $z$ of length at least $j$, $\operatorname{tail}_j(z)$
+is its ordered last $j$ entries, and $\operatorname{tail}_0(z)=()$.
+Juxtaposition of words denotes ordered concatenation. At this type split
+
+$$
+u=(v,t),\qquad v\in\mathbb F_q^{k-d},\quad t\in\mathbb F_q^d,\qquad
+H=[H_A^{(k,d)}\ H_D^{(k,d)}\ H_F^{(k)}],
+\tag{1.3}
+$$
+
+where $H_A^{(k,d)}$ has columns $1,\ldots,k-d$ and $H_D^{(k,d)}$ has columns
+$k-d+1,\ldots,k$. Set $r_A(k,d)=\operatorname{rank}H_A^{(k,d)}$.
+The tuple $t$ is the ordered last $d$ coordinates of the CURRENT prefix;
+it is not the last $d$ coordinates of a fixed initial prefix after later
+appends.
+

@@ -1,0 +1,92 @@
+## 8. Suppliers, primary literature and remaining acquisition bridges
+
+**Source map 8.1 (credited repository boundaries).** All following paths
+refer to the public pin stated in §1. They identify reused mathematics and
+interfaces, not a new build or certification of these ordinary proofs.
+
+| Supplier | Exact use and boundary |
+| --- | --- |
+| [FiniteRectangleTransport](https://github.com/the-omega-institute/trureturing/blob/773d4d43b91abd515be1059283d79dd6572fc174/D5/S3/Quantum/Fibers/FiniteRectangleTransport.lean) and [owning Scribe](https://github.com/the-omega-institute/trureturing/blob/773d4d43b91abd515be1059283d79dd6572fc174/Blueprint/D5/S3/Quantum/Fibers/FiniteRectangleTransport.scribe.cs) | `ValidBase`, signed `phaseWeight`, strict `probability`, `weight_compatible` and `finite_rectangles_realize`. The Scribe's all-sector application supplies the fixed-height winding leg and (RB.5); the rectangle declaration alone is not attributed the whole all-sector classification. No sensor, helper or physical actuator follows. |
+| [OriginalControlComposition](https://github.com/the-omega-institute/trureturing/blob/773d4d43b91abd515be1059283d79dd6572fc174/D5/S3/Quantum/Fibers/OriginalControlComposition.lean) and [owning Scribe](https://github.com/the-omega-institute/trureturing/blob/773d4d43b91abd515be1059283d79dd6572fc174/Blueprint/D5/S3/Quantum/Fibers/OriginalControlComposition.scribe.cs) | The exact `OriginalControl` alternatives and `concatenate_original`: arbitrary finite/zero durations, literal unchanged prefix, matching height, translated real-phase tail and additive continuous weighted integrals. |
+| [Instrument Boundaries](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_INSTRUMENT_BOUNDARIES.md), §§4–5, 9–15 | The actual full unknown phase/parity family, known-height Kraus rigidity, fixed-parity rotations, canonical stopped completion, survival factors, complete terminal classification and matched finite continuation. Corollary 4.3 and Proposition 6.2 reuse these; no marked-law inverse or endpoint classification is redelivered. |
+| [Instrument Stability](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_INSTRUMENT_STABILITY.md), §§1–5; [Quantum Carrier Minimum](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_QUANTUM_CARRIER_MINIMUM.md), §§3–6 | Complete output metrics and their regularity boundaries; exact labelled live-qutrit correspondence with supplied correlated archives. That upper and the separate unassisted live-dimension lower have different assistance contracts. Neither obtains matching-height data. |
+| [Record Acquisition](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_RECORD_ACQUISITION.md), §§2–9, 11 | Credited adaptive/randomized query obstructions, bounded-speed rates and conditional calibrated area/winding certificates. No duplicate quadrature or general sampling impossibility is proposed. |
+| [Sampled Instrument Certificates](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_SAMPLED_INSTRUMENT_CERTIFICATES.md), §§2–3, 7–8 | Finite timed-record complete-instrument prediction under common margin/speed/variation/BV-velocity promises and an explicit extra joint recorder kernel. Exact return height is its generator guarantee. Its law prediction is not an open-cut reanchoring actuator. |
+| [Event Memory and Coarse Aliasing](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_EVENT_MEMORY_AND_COARSE_ALIASING.md), §§3–6 | Actual-event total-memory capacity, exact-time versus binning and marginal resampling. Those tasks and dimensions are not identified with our classical uncertain-height support bound. |
+| [Parity Record Transport](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_PARITY_RECORD_TRANSPORT.md), Lemma 4.1, §§5–9 | Retained-auxiliary phase rigidity, supplied-helper optima, return-on-success distinction and finite checkpoint updates at known current heights. The present extra uncertainty is current height; no helper construction is inferred. |
+| [Transport–Memory Completion](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md), §§2.9–2.12, 2.18 | Same coherent source, actual common port, aligned acquired records, known nonzero amplitudes and known nonzero record overlap. A parity helper and a constant noisy height report do not acquire these. Unknown overlap cannot be divided out. |
+| [Process Geometry](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md), §34; [Atlas Stable Core](RECURSIVE_RELATIONAL_OBSERVATION_ATLAS_STABLE_CORE_HOLONOMY.md), Theorem 6.3 | One actual joint image, full acquisition and successor compatibility, actual routes/domains and individually sufficient views. A CP obstruction on a particular consumer does not instantiate the four-view recovery hypotheses. |
+| `TypedFiniteViewKernel.typed_finite_view_kernel`, `DynamicsDescent.dynamics_descends_iff`, `EnvironmentRecords.recordOverlap`, `PhaseRecordRecoveryCriterion.phase_record_recovery_criterion` | Respectively: typed finite-path behavior with illegality distinct from a successor; preservation of fibers for dynamics descent; actual record overlap; and recovery for the specified matching reversal channels. They are interface suppliers, not a hidden height sensor, generic quantum-program obstruction or authorization of an environment port. |
+
+**Literature statement 8.2 (primary metadata and applicability).** The
+following primary texts support mature ingredients or a precise comparison.
+The source-specific three-height obstruction, pair filter, record-support
+capacity and actual-history application are `repo-derived` consequences
+proved here. No worldwide priority or complete literature-search claim is
+made.
+
+| Primary source | Verified hypotheses, use and non-transfer |
+| --- | --- |
+| Anthony Chefles, Richard Jozsa and Andreas Winter, [*On the existence of physical transformations between sets of quantum states*, quant-ph/0307227v1](https://arxiv.org/html/quant-ph/0307227v1), Theorems 2–3, Eqs. (7)–(9) | `literature-attested`: finite specified pure families admit deterministic or outcome-dependent probabilistic CP transformations subject to positive environment Gram factors/contributions; omitting failure gives a positive Gram remainder. The environment may depend on the source. This applies to the finite nine-state witness and the complete two-height constructions. It supplies neither an acquired helper/calibration nor a continuous-family phase-rigidity theorem; those source calculations are explicit above. |
+| Anthony Chefles and Stephen M. Barnett, [*Quantum State Separation, Unambiguous Discrimination and Exact Cloning*, quant-ph/9808018v1](https://arxiv.org/html/quant-ph/9808018v1), Eq. (18) and its surrounding discrimination conditions | `literature-attested`: the equiprobable known pure pair has maximum unambiguous conclusive probability $1-|\langle\eta_+,\eta_-\rangle|$, with an inconclusive branch. Proposition 4.2 uses its equal-probability construction and keeps the actual inconclusive successor. No helper acquisition or endpoint optimality for a nonorthogonal helper is attributed to it. |
+| Kai Liu and Deguang Han, [*Intermediate memory costs of quantum channel synthesis with a protected subsystem*, 2610.20536v1](https://arxiv.org/html/2610.20536v1), §V.1, Theorem 2, Eq. (40) | The stated finite controlled-channel task has a protected subsystem and a prescribed first-stage noncommutative graph. Feasibility requires the identity in every cross-Kraus span and supplies a simultaneous processor with finite nonorthogonal programmes. Its classical control source and programme relation are premises. No map from an unknown original waveform to that control/programme register is supplied here; its dimension or approximation conclusions are not transferred. |
+
+The literature comparison distinguishes a specified finite controlled
+channel from an actually acquired source-dependent programme. Source-family
+Gram criteria, Kraus/Stinespring representation, positivity of a pure
+marginal, circle geometry, matrix square roots and counting are mature
+mathematics. The proof does not import deterministic arbitrary-data unitary
+programming or sharp-observable programming hypotheses, nor an unconditional
+no-information interpretation of Koashi–Imoto. Searches of the pinned
+original-control/fiber surfaces for uncertain-height reanchoring and the
+public arXiv search for probabilistic pure-state transformations locate
+these relevant comparison frameworks; their bounded scope establishes no
+absence theorem or novelty claim.
+
+**Arithmetic example 8.3 (bounded exact instances).** Rational arithmetic on
+the nine choices (RB.22) verifies (RB.5), the support and velocity bounds,
+the prefix/arrival survivals (RB.26) and individual return factors (RB.25).
+As a separate exact unit-circle instance, the three bottom-coordinate pairs
+
+$$
+(3/5,4/5),\quad(4/5,3/5),\quad(5/13,12/13)
+\tag{RB.29}
+$$
+
+have affine difference determinant $-6/325$. The first pair has $g=24/25$,
+so (RB.15) gives $p=49/50$; its vector $w$ obeys both unit-functional
+constraints and $p\|w\|^2=1$. These are original heights
+$x=c(3/5)^2,c(4/5)^2,c(5/13)^2$ at any fixed allowed $c$.
+The finite checks support the displayed arithmetic. The universal
+conclusions rest on the ordinary polynomial, linear-algebra and counting
+proofs, without retained experiments.
+
+**Open boundary 8.4 (the missing acquisition and actuation relation).**
+The obstruction isolates a joint requirement for this exact consumer:
+actual acquisition must yield inputs compatible with a phase-preserving
+matching-height action. A generator's exact return invariant can supply
+the match; an actually acquired height- or phase-dependent record/token
+could instead change (RB.7), but needs its own same-source preparation,
+calibration, permission, precision, action and complete successor proof.
+A phase-bearing prehistory archive can also change the premise. This
+volume does not privilege height measurement as the only possible escape.
+
+Reducing a noisy height error without eliminating the three-height support,
+retaining a sampled table, or adding the same supplied parity helper does
+not implement this exact reanchoring macro. Conversely the result does not
+exclude approximate reanchoring, every alternative live action, an observer
+with richer actual correlated data, or a boundary protected by a generator
+invariant. Positive endpoint constructions do not close the canonical full
+instrument task.
+
+The source-bound helper and its overlap/calibration are not acquired here.
+Neither are the common-port observations, unknown joint-overlap estimates,
+all legal controller/selector/update inputs, complete archive, spatial or
+temporal reconstruction, or a closed observer for the whole original menu.
+Full space/time/boundary/memory mutual recovery, native stationary
+$\alpha/\beta$ memory-rate/cofinality, and the distinct fixed-Hamiltonian
+quantum minimax task retain their original unresolved bridges. The static
+arithmetic, C114 mixed-state, twisted-ground and two-clock span models
+supply no source/action/observation/resource correspondence for this
+reanchoring task merely by sharing terminology or dimensions.
+

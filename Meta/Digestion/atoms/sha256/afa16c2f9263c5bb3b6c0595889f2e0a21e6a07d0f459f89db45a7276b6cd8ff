@@ -1,0 +1,14 @@
+**定理 2.2（规范两条 a 边切换）。** 对每个 $n\ge5$ 和 $g\in S_n$，字
+
+$$
+W=(ac(bc)^{n-3})^2
+$$
+
+给出简单 $F_0$ 交替圈 $\mathcal T_g$，长度 $4n-8$，含两条 $a$ 边、$2n-6$ 条 $b$ 边与 $2n-4$ 条 $c$ 边。其顶点集恰为
+
+$$
+(gE\cup gaE)\setminus\{gb,gbc,gab,gabc\}.
+$$
+
+证明：路径依次为 $g\xrightarrow a ga\xrightarrow P ga\delta\xrightarrow a g\delta\xrightarrow P g$，由引理 2.1 闭合。$a\notin E$，所以两个 $P$ 路径处于互不相交的陪集 $gaE,gE$；每条都是一个 $E$ 圈中与三边短路互补的简单长路，删去短路内部两个顶点即得到所述支持。$P$ 起止均为 $c$，内部交替为 $c,b,c,\ldots,b,c$，故整个圈交替于 $F_0$ 边和新增 $c$ 边。两条长路各含 $n-3$ 条 $b$ 边和 $n-2$ 条 $c$ 边。最后一条边明确为 $gc\xrightarrow c g$。
+

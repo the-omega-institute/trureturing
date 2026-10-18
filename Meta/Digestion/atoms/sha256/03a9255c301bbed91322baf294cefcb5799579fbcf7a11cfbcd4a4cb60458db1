@@ -1,0 +1,15 @@
+## 158. No owner can use only M and Z
+
+The total genuine-angle capacity of the two actual edges M,Z is 3*pi.
+The owner tau consumes more than pi of this capacity by (156.1). The distinct
+owner rho consumes more than pi through its two transverse Z slots alone.
+
+An owner whose labels were all M,Z would be genuine because it contains
+Z. It would differ from tau and rho, since each of those has a C slot.
+Its contribution to M,Z would exceed pi by Section 157. These three distinct
+owners would therefore consume more than 3*pi, a contradiction.
+
+Thus no tetrahedron in this same original quotient has all six labels
+in {M,Z}. This is a whole-owner angle-capacity exclusion, not an assumption
+about the number of times a tetrahedron occurs around an edge.
+

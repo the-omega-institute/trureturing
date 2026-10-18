@@ -1,0 +1,23 @@
+**Definition 78.1 (capacity as a scalar function).** For $0\le u\le u_m=1/\alpha$
+put
+
+$$
+\begin{gathered}
+c_*(u)=\mathfrak c\left(s_0,\sqrt u,
+ \sqrt{(1-\alpha u)/\beta}\right)
+       =\frac{A_c+B_cu}{C_c+D_cu},\\
+A_c=h_1^2h_2^2\delta+c^2h_1^2/\beta,\quad
+B_c=a^2h_2^2-c^2h_1^2\alpha/\beta,\\
+C_c=h_0^2\delta+d^2/\beta,\quad
+D_c=b^2-d^2\alpha/\beta,\quad E_c=B_cC_c-A_cD_c,\\
+u_f=V_f/\mu_f,\quad c_f=c_*(u_f),\quad
+\nu=\mu_f/c_f,\quad q_m=\mu_f/W_f,\quad t_0=W_f/c_f=\nu/q_m,\\
+\tau_* =q_m\sqrt{u_f}+\sqrt{(1-q_m)(1-q_mu_f)}.
+\tag{FA.38}
+\end{gathered}
+$$
+
+The variable $u$ here is $z^2$, not a strong-regime coefficient $u_s$.
+All denominators are positive. At the conditional source
+$0<u_f<1<u_m$, $0<q_m<1$, $B_c>0$, $D_c<0$ and $E_c>0$.
+

@@ -1,0 +1,82 @@
+**Theorem 3.1 (finite controller compilation with simultaneous costs).**
+For every controller (NVC.4) and paid entry (Assumption 1.4), there
+is an explicit public controller using only stationary Reads of $t$
+whose attained complete-entry alphabet has exactly $r$ values and
+whose installed carrier has
+
+$$
+|Q_0|+2|Q_+|+|H|\le2|Q|+|H|\le2K
+\tag{NVC.8}
+$$
+
+states, where $Q_0=\{q:\operatorname{addr}(q)=\varepsilon\}$
+and $Q_+=Q\setminus Q_0$.
+For every $t\in X$, a finite virtual run from $e(t)$ reaches halt
+$h$ if and only if its compiled run reaches that same halt. Its
+whole output is the identical $\operatorname{out}(h)$.
+
+On any such run let $n_0,n_+$ count the empty and nonempty virtual
+requests, and let
+$\ell=\sum |\operatorname{addr}(q)|$ count all virtual submitted
+letters with multiplicity. Let $B$ be the multiset of nonempty
+request visits for which the actual parent reply is branch. The
+compiled actual call and letter counts satisfy the exact formulas
+
+$$
+\begin{aligned}
+n'&=n_0+n_++|B|\le n_0+2n_+,\\
+\ell'&=\ell-n_++\sum_{q\in B}|\operatorname{addr}(q)|
+\le2\ell-n_+.
+\end{aligned}
+\tag{NVC.9}
+$$
+
+Its peak submitted length is no larger than the virtual peak.
+All statements hold on the same source and run; bounds from
+separately optimized histories are not combined.
+
+Proof. Give each $q\in Q_0$ one running state, which Reads the
+empty word and feeds $F$ of its reply to the original
+$\operatorname{next}(q,-)$. Give each $q\in Q_+$ a first phase
+and a child phase. The first phase Reads the parent of
+$w=\operatorname{addr}(q)$. A branch reply enters its child phase.
+Every other reply feeds the corresponding value in (NVC.7) directly
+to $\operatorname{next}(q,-)$. The child phase Reads $w$ and
+feeds $F$ of its reply to $\operatorname{next}(q,-)$. In each
+case a resulting running state is replaced by its first phase, or
+its unique empty-word phase; a halt is left unchanged. This defines
+total tables even on the unreachable child-absent edge, using the
+total map $F$. The same halts and their complete outputs are kept.
+These phases give exactly the carrier count in (NVC.8).
+
+Inject $Q\sqcup H$ into the compiled carrier by taking these first
+phases and fixing the halts. The new entry is that injection of
+$e(t)$, so its attained alphabet has exactly $r$ values. The map
+is public and introduces no additional source selection. It is
+computed from the paid entry; any redundant acquired preparation
+material remains inaccessible under the same isolation contract.
+
+By Theorem 2.2, each virtual request is implemented by one or two
+actual Reads and reaches precisely the image of the virtual next
+state. Induction on requests proves preservation of the full
+controller path at these completion points and the identical final
+halt and output. Conversely the compiled machine can leave a child
+phase only by completing its current request. It cannot halt in an
+intermediate phase. Thus any compiled termination projects to a
+virtual termination. In particular virtual divergence cannot be
+replaced by a compiled halt.
+
+An empty visit uses one zero-length call. Each nonempty visit uses
+its parent word, and exactly the visits in $B$ also use their
+original word. Summing these actual costs proves both exact
+formulas; the sum over $B$ is at most $\ell$. Every submitted
+word is a virtual word or its parent, proving the peak claim.
+$\square$
+
+The finite state bound includes every installed phase and halt,
+including unreachable ones. It counts the controller's accessible
+mutable carrier, not a callable external log. The temporary reply
+handling is the declared transition table, not an uncounted persistent
+buffer. Installation, address-table storage, output payload, internal
+transition computation and the paid preparation retain separate costs.
+

@@ -1,0 +1,14 @@
+### Proposition 6.1. A unique two-candidate crossing below order two
+
+There is a unique alpha_0 in (3/2,5/3) at which r(alpha_0)=5/3. For every alpha>alpha_0 the cluster candidate strictly beats H_+ and H_-, including a nonempty interval inside (1,2).
+
+Proof. A nonuniform probability vector has strictly decreasing Renyi entropy. Explicitly, with ell(alpha)=ln sum_j p_j^alpha, ell'' is the positive variance of ln p under the tilted distribution. Since ell(1)=0, strict convexity gives ell(alpha)<(alpha-1)ell'(alpha) for alpha>1; differentiating ell(alpha)/(1-alpha) proves strict decrease.
+
+At alpha=3/2, the power sum is (sqrt(3)+1)/(2sqrt(6)). Its sixth power is (208+120sqrt(3))/13824<1/32, since sqrt(3)<28/15. Therefore r(3/2)>5/3. At alpha=5/3, the desired reverse comparison is
+
+$$(1+3^{-2/3})^9>32.$$
+
+It follows from the exact integer comparisons 9*12^3<25^3 and 37^9>32*25^9: they imply 3^{-2/3}>12/25 and then (1+3^{-2/3})^9>(37/25)^9>32. Hence r(5/3)<5/3. Continuity and strict decrease give a unique crossing. QED.
+
+Its numerical value is approximately 1.58798688975; this decimal is a numerical locator, not an exact expression. This comparison does not identify the globally optimal state at intermediate orders. Another family may dominate one or both candidates. No complete Renyi phase diagram is claimed.
+

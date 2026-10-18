@@ -1,0 +1,23 @@
+**Convention 2.2 (specific conditional premises used below).** CG
+Proposition 13.2, Corollary 13.3, Theorem 15.1 and JR Proposition 29.2
+supply the following facts:
+
+$$
+\begin{gathered}
+H=hh^T,\quad Q^{01}=(a,b)^T(a,b),\quad Q^{02}=(c,d)^T(c,d),\\
+h_0,h_1,h_2,a,b,c>0,\quad d\ne0,\quad m_1,m_2,\eta_2>0,\\
+D^\dagger D+T^\dagger T+S^\dagger S+M=I_3,\qquad
+0<\kappa<1/4,\\
+H_{01}>695/1000,\quad H_{11}<500/1000,\quad H_{22}>655/1000,\quad
+\operatorname{tr}Q^{01}+\operatorname{tr}Q^{02}<36/1000,\\
+h_0h_1-s^2ab>677/1000\qquad(0\leq s\leq1).
+\end{gathered}
+\tag{RE.9}
+$$
+
+The box also gives
+$\lambda<49/100$, $\alpha_1>0$, $\alpha_2>1$,
+$2/5<\beta_1<1/2$ and $0<\beta_2<5/6$. These are credited enclosure
+consequences, not arithmetic newly executed here. In particular the
+normalization in (RE.9) is an exact source identity, not a tolerance.
+

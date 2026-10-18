@@ -1,0 +1,50 @@
+**定理 202.4（一般核心的全部前缀残差证书）。** 对任意定理 202.2 的核心，令
+
+$$
+R_k=\sum_{j=3}^k(\gamma_j-\eta_j),\qquad3\le k\le L.
+$$
+
+给定 $\theta\in[0,1]$，$(W,\theta)$ 是 $Q(y)$ 的完整证书，当且仅当
+
+$$
+\begin{gathered}
+D(\eta,p,h,\tau)\le1-\theta,\\
+R_k\le(k-2)E+(k-1)\theta,\\
+3R_k\le(k-2)(E+B-B')+(k+1)\theta
+\qquad(3\le k\le L).
+\end{gathered}
+\tag{202.15}
+$$
+
+同一个 $W$ 给出 $Q(y)\in D_N(d)+P_H$ 的证书，恰当且仅当把上述
+$\theta$ 取零并将第一式换成 $D\le d$。此参数判据没有固定的 $G$ 或
+$\Lambda$ 总量下限。
+
+**证明。** 定理 198.5 的所有顶点为
+
+$$
+\begin{aligned}
+o&=0,&p&=(1,0,\ldots,0;0),\\
+u_k&=(\underbrace{1/(k-1),\ldots,1/(k-1)}_k,0,\ldots,0;0),\\
+v_k&=(\underbrace{1,\ldots,1}_k,e_k,\ldots,e_k;e_k),&e_k&=(k-2)/(k+1).
+\end{aligned}
+$$
+
+将带符号残差 $q=Q(y)-Q(W)$ 代入其支持公式，得到完整的顶点读数
+
+$$
+\begin{aligned}
+F_q(o)&=-E,&F_q(p)&=-\gamma_2,\\
+F_q(u_k)&=\frac{R_k-(k-2)E}{k-1},&
+F_q(v_k)&=\frac{3R_k-(k-2)(E+B-B')}{k+1}.
+\end{aligned}
+\tag{202.16}
+$$
+
+例如 $K_q=E+R_L+B-B'$，而 $K_q-\sum_j\beta_j(q)=B-B'$，所以最后一式
+仍适用于任意符号的 $R_k$ 和 $B-B'$。前两值非正，其余全部值不超过 $\theta$
+恰为 (202.15) 的两列前缀不等式。再用 (202.10) 即得充要性。
+对完整配置，(202.9) 给 $F_y(b)\le DM+\theta\le\max\{1,M\}$。
+负单点需求不会改变非负评分的这一推论。$\theta=1$ 时没有删去非零零成本
+$W$。没有声称每个 $E_N$ 证书都能写成这种核心。$\square$
+

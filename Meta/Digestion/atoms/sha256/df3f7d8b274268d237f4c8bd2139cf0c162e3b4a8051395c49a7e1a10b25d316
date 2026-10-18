@@ -1,0 +1,21 @@
+**约定 B-28.1（只调用一次完整反解）。** 直接使用命题A-2.2的逆式及宽度证明，不另建立第二套基础。令 &#x1D45F;&#x3D;&#x31;&#x2212;&#x1D44D;、&#x3BA;&#x3D;&#x1D45D;<sub>&#x31;&#x33;</sub>，其接口是
+
+```math
+(p_0,p_1,p_2,p_3,p_{13})
+=(r-X-Y+\kappa, X-\kappa, Z, Y-\kappa, \kappa),
+```
+
+```math
+\kappa_-=\max(0,X+Y+Z-1),\qquad
+\kappa_+=\min(X,Y),\qquad
+w=\kappa_+-\kappa_-=
+\min\{X,Y,1-X-Z,1-Y-Z\}.
+```
+
+命题A-2.5的目标接口为
+
+```math
+\ell_f(m)=f_0+(f_1-f_0)X+(f_3-f_0)Y+(f_2-f_0)Z,
+\qquad \mathbb E_pf=\ell_f(m)+J_f\kappa.
+```
+

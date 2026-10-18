@@ -1,0 +1,119 @@
+**Proposition 6.1 (Pairs, Theorem 5.1).** A distinct $AC$ collision
+in $\mathcal K_{\mathbf c,d}$ must satisfy exactly one of the
+following necessary alternatives:
+
+$$
+\begin{array}{ll}
+\mathrm{I}:&0<d<24,\quad y<d,\quad\zeta<d,\\
+\mathrm{II}:&24<d<48,\quad y>d.
+\end{array}
+\tag{6.1}
+$$
+
+In I, every world on the entire same-ancestor common-$d$ zero-sixth
+slice is exactly cubic with three simple roots
+$\rho_0\in(0,1)$, $\tau_0\in(3,4)$ and six, and with positive
+normalized leading coefficient and positive $f(7)$.
+In II every sixth root on that entire slice is simple.
+Neither alternative asserts existence. No additional terminal-sign
+claim belongs to II.
+
+Here is the exhaustive difference certificate used from Pairs.
+In the $AC$ row of (5.6), $\epsilon=0$ would leave common $a,c,e$;
+the nonzero common $c$ and $ae=bc$ would give common $b$.
+Distinctness thus proves $\epsilon\ne0$. Equal $A$ gives equal
+nonzero $\sigma_5$, and the actual fifth equation yields
+$h_1(5)=h_2(5)$, even at a fifth gain root. Therefore
+
+$$
+h_2-h_1=kR_5,\qquad
+R_5=(T-5)(T-6)(T-7)=T^3-18T^2+107T-210.
+\tag{6.2}
+$$
+
+Its full coefficient row is $(-210,107,-18,1)$ and its sample row
+at $0,\ldots,7$ is $(-210,-120,-60,-24,-6,0,0,0)$.
+If $k=0$, the common $h$ and clocks one and two force
+$\epsilon+\beta=2\epsilon+\beta=0$ when $d\notin\{24,48\}$.
+At $d=24$, use clocks zero and two to obtain
+$\epsilon+3\beta=2\epsilon+\beta=0$.
+At $d=48$, use clocks zero and one to obtain
+$\epsilon+3\beta=\epsilon+\beta=0$.
+Each case gives equal matrices, a contradiction. Thus $k\ne0$.
+For $0\le j\le4$, neither $c_j-d$ nor $\Delta\sigma_j$ can vanish:
+either would make the two $h(j)$ equal, contrary to (6.2).
+In particular
+
+$$
+d\notin\{0,24,48,312/5,y\}.
+\tag{6.3}
+$$
+
+Only now put $\theta=\beta/\epsilon$. Then
+
+$$
+\Delta\sigma=\epsilon F,\qquad
+F=(1+3\theta,-2(1+\theta),2+\theta,-\theta,1+\theta,0),
+\quad \theta\notin\{-2,-1,-1/3,0\}.
+\tag{6.4}
+$$
+
+The common $A-d$ forces equal terminal-gain signs. Subtracting the
+two actual equations in their divided-by-trace form gives
+
+$$
+kR_5(j)=-\frac{(c_j-d)\epsilon F_j}
+                      {\sigma_{1,j}\sigma_{2,j}},\qquad
+\operatorname{sgn}(k/\epsilon)
+ =\operatorname{sgn}((c_j-d)F_j)\quad(0\le j\le4).
+\tag{6.5}
+$$
+
+The denominator is positive and $R_5(j)<0$ at all these nodes.
+All signs of the five nonzero entries of $F$ are
+
+| $\theta$ interval | $(F_0,F_1,F_2,F_3,F_4)$ | Negative of the first four |
+| --- | --- | --- |
+| $\theta<-2$ | $(-,+,-,+,-)$ | $(+,-,+,-)$ |
+| $-2<\theta<-1$ | $(-,+,+,+,-)$ | $(+,-,-,-)$ |
+| $-1<\theta<-1/3$ | $(-,-,+,+,+)$ | $(+,+,-,-)$ |
+| $-1/3<\theta<0$ | $(+,-,+,+,+)$ | $(-,+,-,-)$ |
+| $\theta>0$ | $(+,-,+,-,+)$ | $(-,+,-,+)$ |
+
+Every entry follows from the displayed linear factors. The complete
+possible first-four residual sign rows, after (6.3), are
+
+$$
+\begin{array}{c|c}
+d&\operatorname{sgn}(c_0-d,c_1-d,c_2-d,c_3-d)\\ \hline
+d<0&(+,+,+,+)\\
+0<d<24&(-,+,+,+)\\
+24<d<48&(-,-,+,+)\\
+48<d<312/5&(-,-,-,+)\\
+d>312/5&(-,-,-,-).
+\end{array}
+\tag{6.6}
+$$
+
+Only the second and third $F$ rows match, and none of the negative
+rows matches. Thus $k/\epsilon>0$ and either
+$-2<\theta<-1$, $0<d<24$, or
+$-1<\theta<-1/3$, $24<d<48$.
+The clock-four identity gives $(y-d)(1+\theta)>0$, yielding the
+stated strict $y$ inequalities. No condition $d\ne\zeta$ is imposed.
+
+For the entire-slice assertion in I, every such world has
+$f(0)<0$, $f(1),f(2),f(3)>0$ and $f(4)<0$.
+The intermediate value theorem gives roots in $(0,1)$ and $(3,4)$,
+besides six. The degree bound forces
+$f(T)=\kappa(T-\rho_0)(T-\tau_0)(T-6)$ with exactly three simple
+roots. At three the factor product is positive, so $\kappa>0$;
+at five it is negative, and at seven positive. The actual fifth
+equation therefore gives $\zeta<d$ and $f(7)>0$.
+For II, the reused repeated-sixth theorem
+[G, Theorem 2.1](FIB_JMMJM_ZERO_SIXTH_ROOT_RIGIDITY_AND_TERMINAL_COLLISION_GEOMETRY.md)
+permits a repeated sixth root on this exact ancestor only when
+$d<0$, $0<d<24$ or $48<d<312/5$. Hence all sixth roots in II
+are simple. The large repeated-root certificate is not needed
+for either new exclusion below.
+

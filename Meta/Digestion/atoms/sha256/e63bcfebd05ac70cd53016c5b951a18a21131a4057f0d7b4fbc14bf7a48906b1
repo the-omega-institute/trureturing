@@ -1,0 +1,29 @@
+**Lemma 5.4 (what old-role transport supplies).** In a stage schedule
+which never removes old cell/spine occurrences and only uses the
+original adjacent head moves, every old cell role at a fixed bounded
+offset from a moved head remains reachable after that handoff by a
+bounded actual walk. Separate read and append lanes are necessary
+when applying this fact to the meter.
+
+Proof. [UAS] Definition 2.2 gives next-cell walk $\mathsf{PRL}$ and
+previous-cell walk $\mathsf{PPL}$. Before a lane moves, its actual
+origin/head link reaches its old anchor. After displacement
+$\Delta\in\{-1,0,1\}$, the old role at offset $a$ is reached from
+the new anchor by $a-\Delta$ adjacent walks. An append handoff has
+$\Delta=1$ and the same inverse route. A fixed finite original
+stencil has a finite maximum offset, independent of growing tape
+length. Unary bit rewrites and parent-first births below the old tail
+preserve those old spine paths. Initial activation instead uses its
+actual fixed origin/template; it has no fictitious old head.
+
+For example let meter read be at $a$ and append at its adjacent $b$.
+A core MR of read can move it to $b$ while the receipt makes $b$ a
+receipt and appends $c$. Lane 0 is then $a\to b$, lane 1 is
+$b\to c$; the old $b$ is reached backwards from lane 1. The receipt
+must preserve the core-updated read mark at $b$. Distinct
+$O_0/H_0$ and $O_1/H_1$ slots retain these facts even if old
+roles coincide. Written-order evaluation on each alias class is
+therefore required before final assignments. The walks prove
+reachability under the stated schedule; they grant no new authority
+and certify no unchecked raw CTL schedule. ∎
+

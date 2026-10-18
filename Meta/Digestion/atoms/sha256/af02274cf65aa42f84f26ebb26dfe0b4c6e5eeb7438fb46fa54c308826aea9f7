@@ -1,0 +1,95 @@
+**Theorem 3.1 (Harmonic density of the pair prior).** Define the rational number
+
+$$
+d=\frac1{38}\left(\frac{1372}{543}+\frac{588}{247}+\frac{63}{113}\right).
+\tag{3.1}
+$$
+
+For every $n\ge5$ there is $E_n\in[0,1]$ such that
+
+$$
+\Phi_n(\mu_n)=(n-4)d+E_n.
+\tag{3.2}
+$$
+
+For every $n\ge1$,
+
+$$
+|\Phi_n(\mu_n)-nd|\le1.
+\tag{3.3}
+$$
+
+In particular,
+
+$$
+\lim_{n\to\infty}\frac{\Phi_n(\mu_n)}n=d,
+\qquad
+\lim_{N\to\infty}\frac{\Phi_{3N}(\mu_{3N})}{3N}=d.
+\tag{3.4}
+$$
+
+**Proof.** Fix $n\ge5$ and $3\le i\le n-2$. By (2.5), the probabilities of its lower and upper windows are respectively
+
+$$
+L_{xy}=\pi_{x0}P_{x0,00}P_{00,00}P_{00,0y},\qquad
+U_{xy}=\pi_{x0}P_{x0,01}P_{01,10}P_{10,0y}.
+\tag{3.5}
+$$
+
+Their exact values are as follows; the entries in the two middle columns have the common denominator $1900$.
+
+| Context $xy$ | $1900L_{xy}$ | $1900U_{xy}$ | $R_{xy}$ |
+| --- | ---: | ---: | ---: |
+| $00$ | $343$ | $200$ | $200/343$ |
+| $01$ | $147$ | $100$ | $100/147$ |
+| $10$ | $147$ | $100$ | $100/147$ |
+| $11$ | $63$ | $50$ | $50/63$ |
+
+For example, $L_{00}=(10/19)(7/10)^3=343/1900$ and $U_{00}=(10/19)(3/10)(2/3)=200/1900$. The other entries follow from the same three-factor products.
+
+For each context, retaining an outside completion and flipping only coordinate $i$ is a bijection between its lower and upper full words. Both windows have zero bits next to the changed coordinate, so the same outside completions are legal on both sides. Enumerate their actual endpoint masses as $(s_\omega,t_\omega)$. Proposition 2.4 gives $t_\omega=R_{xy}s_\omega$ for every completion, and therefore
+
+$$
+\begin{aligned}
+\sum_\omega h(s_\omega,t_\omega)
+&=\frac{R_{xy}}{1+R_{xy}}\sum_\omega s_\omega\\
+&=h\left(\sum_\omega s_\omega,\sum_\omega t_\omega\right)
+=h(L_{xy},U_{xy}).
+\end{aligned}
+\tag{3.6}
+$$
+
+Thus the grouping is an equality justified by common ratios of paired full-word masses. Both marginals in (3.6) belong to the same normalized law $\mu_n$.
+
+Summing the four contexts yields
+
+$$
+\begin{aligned}
+\Phi_{n,i}(\mu_n)
+&=\frac1{1900}\left(
+\frac{343\cdot200}{543}
++2\frac{147\cdot100}{247}
++\frac{63\cdot50}{113}\right)\\
+&=\frac1{38}\left(\frac{1372}{543}+\frac{588}{247}+\frac{63}{113}\right)=d.
+\end{aligned}
+\tag{3.7}
+$$
+
+This exact value occurs at all $n-4$ interior coordinates, without a limiting approximation.
+
+The edges at any one coordinate form a matching. The elementary inequality $h(s,t)\le(s+t)/4$ follows from $(s-t)^2\ge0$. Since the masses of the endpoints of a matching sum to at most one, for every probability vector on $B_n$,
+
+$$
+0\le\Phi_{n,i}(\mu)\le\frac14.
+\tag{3.8}
+$$
+
+All edges at coordinates $1,2,n-1,n$ remain in the objective. Their sum is exactly
+
+$$
+E_n=\Phi_{n,1}(\mu_n)+\Phi_{n,2}(\mu_n)
++\Phi_{n,n-1}(\mu_n)+\Phi_{n,n}(\mu_n)\in[0,1],
+$$
+
+proving (3.2). Taking an interior coordinate at length five in (3.8) also gives $0\le d\le1/4$. For $n\ge5$, $\Phi_n(\mu_n)-nd=E_n-4d$ lies in $[-1,1]$. For $1\le n\le4$, both $\Phi_n(\mu_n)$ and $nd$ lie in $[0,n/4]$, again proving (3.3). Division by $n$ proves both limits. $\square$
+

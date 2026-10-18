@@ -1,0 +1,64 @@
+**Definition 14.1 (the cyclic class).** Retain Definitions 1.1–1.2
+and Convention 1.3: the original $n\ge6$, $3\le k\le n-2$,
+positive integer positions $s_1<\cdots<s_n$, costs $c_i=s_i+4$,
+and one complete correct stationary graph terminating on every Boolean
+input with both caps $t\le n$, $J\le W$. Partition $[n]$ into
+fixed disjoint ordered lists
+$\mathsf I,\mathsf X_0,\ldots,\mathsf X_{v-1},\mathsf U,\mathsf V$,
+where $p=|\mathsf I|\ge1$, $v\ge3$, and each
+$\mathsf X_j=(x_{j,1},\ldots,x_{j,b})$ has the same length $b\ge1$.
+The lists $\mathsf U,\mathsf V$ may be empty. Subscripts on the
+$\mathsf X$ blocks are interpreted modulo $v$. Define
+
+$$
+\pi_j=(\mathsf I,\mathsf X_j,\mathsf U,
+       \mathsf X_{j+1},\mathsf X_{j+2},\ldots,
+       \mathsf X_{j+v-1},\mathsf V)
+\qquad(0\le j<v).
+\tag{SI.115}
+$$
+
+Lists in set expressions denote their underlying sets. The sans-serif
+$\mathsf V$ is distinct from the count rectangle $V$ in (SI.4).
+For a binary word $w$, write $\operatorname{len}(w)$ for its length
+and $\operatorname{wt}(w)$ for its Hamming weight, the number of ones.
+For an assignment on a coordinate set, $\operatorname{wt}$ likewise
+counts its ones.
+
+There is a fixed descriptive function
+$f:\{0,1\}^{\mathsf I}\to\{0,\ldots,v-1\}$ with the following
+property on every actual live history. Before depth $p$ its next
+coordinate is the next member of $\mathsf I$. After completing
+$\mathsf I$, with exposed assignment $\eta$, its next coordinate at
+depth $d$ is $\pi_{f(\eta)}(d+1)$. This condition concerns the given
+installed graph and all its actual live histories.
+
+When $\mathsf U$ is nonempty, require assignments $\eta_a$ and modes
+$\gamma(a)$ for every $0\le a\le p$ such that
+
+$$
+\begin{gathered}
+\operatorname{wt}(\eta_a)=a,\qquad f(\eta_a)=\gamma(a),\\
+a<a',\quad \gamma(a)\ne\gamma(a')
+\quad\Longrightarrow\quad
+C_{\mathsf X_{\gamma(a)}}<C_{\mathsf X_{\gamma(a')}}.
+\end{gathered}
+\tag{SI.116}
+$$
+
+The cost condition is only on the selected whole blocks. It requires
+neither a numerical ordering of the cyclic mode indices nor componentwise
+cost comparisons, and places no monotonicity condition on other
+assignments. When $\mathsf U$ is empty, no transversal or block-cost
+condition is required.
+
+These are class hypotheses, not a transformation of arbitrary graphs.
+The lists, $f$, $\gamma$ and representatives below are descriptive
+data and proof indices, supplying no runtime selector, counter, phase,
+clock, computed address, archive or additional changing register.
+After certification the order condition imposes no restriction: paid
+repeats, sharing, certified/live reuse and syntactic union cycles remain
+permitted, subject to actual termination and both original caps on
+every complete input. There is no uniform bound on the number of
+modes, block lengths or common-support gap spans.
+

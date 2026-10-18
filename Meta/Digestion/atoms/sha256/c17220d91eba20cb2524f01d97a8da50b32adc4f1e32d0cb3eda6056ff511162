@@ -1,0 +1,14 @@
+**Definition 8.2 (the complete acquired bit).** For every
+$u\in\mathcal U_*$ prescribe
+
+$$
+\sigma^\dagger(u)=0\quad\Longleftrightarrow\quad
+ h(u)=2\ \lor\
+ \bigl(h(u)\in\{0,1\}\ \land\ x_{b_2}=E\bigr)\ \lor\
+ \bigl(h(u)\in\{3,4\}\ \land\ x_{b_2}\ne E\bigr).
+\tag{NRE.16}
+$$
+
+Set $\sigma^\dagger(u)=1$ in every other case. Its definition covers the
+entire actual fiber, including every zero-target beta placement.
+

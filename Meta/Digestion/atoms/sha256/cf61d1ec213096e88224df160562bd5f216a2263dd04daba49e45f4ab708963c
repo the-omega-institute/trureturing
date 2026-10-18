@@ -1,0 +1,10 @@
+**定义 5.1（完整族的固定下系数）。** 对同一原族，考虑条件
+\[
+ \exists\kappa<c_Q\quad\forall T<\infty\quad
+ \exists\text{合格原见证 }X\text{ 且 }\ell_X\ge T:
+ \quad\mathcal I_X\ge-\kappa M_X.
+\tag{EL.8}
+\]
+其中每个 \(T\) 都可以包含任意有限共同起点；
+所选集合始终是该见证完整而未改动的 \(S_X\)。
+

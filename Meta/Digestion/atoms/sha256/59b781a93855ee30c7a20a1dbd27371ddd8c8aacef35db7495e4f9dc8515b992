@@ -1,0 +1,59 @@
+**Definition 1.1 (the fixed native source).** Let [N] denote
+[Auric FIB atom probability, phase transport and holonomy](AURIC_FIB_ATOM_PROBABILITY_PHASE_TRANSPORT_AND_HOLONOMY.md).
+Use exactly [N, Definitions 2.1, 2.3, 3.1 and 8.1]. In mode order
+$(0,1,2,3,13)$, put
+
+$$
+r=1-Z,
+\qquad p_k=(r-X-Y+k,X-k,Z,Y-k,k),
+\qquad d=(1,-1,0,-1,1)^{\mathsf T},
+$$
+
+$$
+0<Z<1,\quad 0<X,Y<r,\qquad
+J_b=(\max(0,X+Y-r),\min(X,Y)).
+$$
+
+The means are fixed. The preparation height and all preparation phases are
+fixed but arbitrary. Representatives have the negative convention
+$\psi_s=\sqrt{p_s}\,e^{-i\theta_s}$. The original controls satisfy
+$\dot p=d\dot k$, $\dot\theta=w(k)\dot\chi$, with
+
+$$
+\mathcal I(k)=\sum_{s\in\{0,1,3,13\}}p_s(k)^{-1},
+\qquad w_s(k)=\frac{d_s}{p_s(k)\mathcal I(k)}.
+$$
+
+They are the finite-variation, absolutely continuous or piecewise $C^1$
+histories of [N, Definition 3.1]. No mean selector is added.
+
+Write $E_-=\{X+Y=r\}$ and $E_+=\{X=Y\}$. With
+$m=4-\mathbf1_{E_-}-\mathbf1_{E_+}$, group equal increments as in [N, §8]:
+$h_2=0$, $h_0=h_{13}$ on $E_-$, and $h_1=h_3$ on $E_+$.
+These are equalities of increments, not restrictions on preparation phases.
+The current-ray source is
+
+$$
+\mathcal M_b=J_b\times\mathbb T^m,
+\qquad \mathbb T=\mathbb R/(2\pi\mathbb Z).
+$$
+
+[N, Theorem 8.2] supplies exact finite native realizations of every point.
+The direct fields, with one coordinate for each pole group, are
+
+$$
+P=\partial_k,
+\qquad Q=\sum_{a=1}^m w_a(k)\partial_{h_a},
+\qquad w_a(k)=\frac1{\mathcal I(k)(k-\lambda_a)}.
+\tag{1.1}
+$$
+
+The distinct $\lambda_a$ are obtained by grouping the four poles
+$X+Y-r,X,Y,0$; their multiplicities remain in $\mathcal I$.
+A common relative command $(a(t),b(t))$ has the original guard
+$k+a(t)\in J_b$ for every $t$ and phase increment
+$\int w(k+a(t))\,db(t)$, exactly as in [N, Definition 9.1].
+Restricting a path to an interior cylinder imposes an additional restriction
+on that guard. Neither an arbitrary height displacement nor a phase rotation
+is promoted to an everywhere-defined native operation.
+

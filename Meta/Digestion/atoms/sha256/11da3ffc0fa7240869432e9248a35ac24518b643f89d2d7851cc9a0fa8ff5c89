@@ -1,0 +1,44 @@
+## 325. A strict quarter bound for the source companion
+
+The source flat inequality and v<=m-2 give
+
+    (c+d)^2<=(m-1)*(m-3)=(m-2)^2-1,
+    c+d<m-2, d<m-c-2<m-3, m>4.                   (325.1)
+
+For the last assertion use c+d>2 and m>3. Define the source M
+cosine, as an algebraic function of z,d, by
+
+    C(z,d)=N(z,d)/sqrt(D(z)*D(d)),
+    N(z,d)=c*(z+d)+m*(z*d+c^2-m^2+1),
+    D(t)=t^2+m^2+c^2+2*t*m*c-1.                  (325.2)
+
+It increases strictly in both z,d. For example, its z-derivative
+has the sign of
+
+    N_z*D(z)-N*(z+m*c)
+      =(m^2-1)*[c*(d*z+m^2-c^2+1)+m*(d+z)]>0.
+
+The d derivative is symmetric. Positivity holds for z,d>1 and m>c,
+including outside the genuine angle domain.
+
+For this first bound set d0=m-c-1 and z0=Zb(m,m-2,d0). Then
+d<d0 and z<z0, so the actual source cosine is less than C(z0,d0).
+Suppose c>=m/4. Since c<m-2, write
+
+    m=4+b, b>0, c=[m/4+(m-2)*a]/(1+a), a>=0.
+
+Define the degree-six polynomial in c
+
+    A4(m,c)=m^2*(m-1)*[D(z0)*D(d0)-4*N(z0,d0)^2]
+           =sum_{j=0}^6 A4_j(m)*c^j,
+    P4(a,b)=4^6*sum_{j=0}^6 A4_j(m)
+              *[m/4+(m-2)*a]^j*(1+a)^(6-j), m=4+b. (325.3)
+
+The factor in A4 cancels its denominators exactly. Section 331 gives
+the complete expansion of P4: 69 positive integer coefficients and
+positive constant 314572800. Hence P4>0, so A4>0. Since D(z0),D(d0)
+are positive, |C(z0,d0)|<1/2. The actual source cosine is smaller,
+contradicting (324.5). Therefore
+
+    c<m/4.                                       (325.4)
+

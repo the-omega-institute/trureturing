@@ -1,0 +1,75 @@
+**Theorem 6.4 (joint-block rate and geometric depth error).** The limits
+
+$$
+\sigma_d=\lim_{n\to\infty}\frac{\log_2K_d(n)}n
+=\inf_{n\ge1}\frac{\log_2K_d(n)}n,
+\qquad
+\phi=\lim_{h\to\infty}2^{-h}\log_2U_h
+\tag{FMR.40}
+$$
+
+exist, with $0\le\phi\le1$. For the unchanged original rate,
+
+$$
+\boxed{\displaystyle
+\lambda=\sup_{d\ge1}\frac{\sigma_d}{2^d},\qquad
+0\le\lambda-\frac{\sigma_d}{2^d}\le\frac\phi{2^d}.}
+\tag{FMR.41}
+$$
+
+The lower structural endpoints $2^{-d}\sigma_d$ are nondecreasing.
+
+Proof. The first native inequality in (FMR.38) makes
+$a_n=\log_2K_d(n)$ subadditive. For a fixed positive $m$ write
+$n=jm+r$, $0\le r<m$, and use $a_n\le ja_m+a_r$.
+Dividing by $n$ gives $\limsup a_n/n\le a_m/m$.
+Taking the infimum over $m$, while every $a_n/n$ is at least
+that infimum, proves the first limit and its equality to the
+infimum. This proves the relevant subadditive limit directly
+after deriving its native hypothesis.
+
+For $U_h$, normalized logarithms increase, because
+$U_{h+1}\ge U_h^2$. They are bounded above by one, since induction
+using $U_{h+1}\le2U_h^2$ gives
+$U_h\le2^{2^h-1}$. Thus $\phi$ exists. The exact increment is
+$2^{-h-1}\log_2(1+U_h^{-2})$, so the tail after $h=H$ is at most
+$2^{-H}\log_2(1+U_H^{-2})$.
+
+Take logarithms of (FMR.39), divide by $2^{d+h}$ and let
+$h\to\infty$. The middle term tends to $\lambda$ by Theorem
+3.3; the other terms converge by (FMR.40), even along block
+lengths $2^h$. Therefore
+
+$$
+\frac{\sigma_d}{2^d}\le\lambda
+\le\frac{\sigma_d+\phi}{2^d}.
+\tag{FMR.42}
+$$
+
+The restriction $K_d(2n)\le K_{d+1}(n)$, divided logarithmically
+by $n$ and sent to the limit, gives $2\sigma_d\le\sigma_{d+1}$.
+The endpoints increase, and (FMR.42) makes their gap from
+$\lambda$ tend to zero. This proves (FMR.41). $\square$
+
+The characterization preserves arbitrary joint retained-code fibers.
+It does not identify $\sigma_d$ with $\log_2z_d$: product fractional
+covers give $\sigma_d\le\log_2z_d$, but correlated joint fibers
+are additional legal competitors. Indeed, a product of admissible
+single-block sets is jointly admissible by querying the target's
+own coordinate. Products of their fractional weights cover $S_d^n$
+with weight $z_d^n$. The greedy argument on $N_d^n$ vertices gives
+$K_d(n)\le H_{N_d^n}z_d^n$; since
+$n^{-1}\log_2H_{N_d^n}\to0$, the asserted inequality follows.
+In particular
+
+$$
+\lambda\le2^{-d}\left(\phi+
+\frac{\log_2K_d(n)}n\right)
+\tag{FMR.43}
+$$
+
+is a valid finite-block upper bound. A finite $K_d(n)$ is an upper
+bound for the infimum $\sigma_d$, not its lower certificate.
+The geometric error in (FMR.41) concerns a regularized endpoint;
+it does not by itself give a computable shrinking numerical interval.
+

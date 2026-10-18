@@ -1,0 +1,44 @@
+**Theorem 14.2 (actual effects of completed service composition).** For
+every comparison branch $B$ of Definition 13.3, ending at its specified
+completed counter boundary,
+
+$$
+\mu(B_{\rm end})-\mu(P)=E(B),\qquad
+A_{55}(B_{\rm end})-A_{55}(P)\ge E(B)+9J(B).
+$$
+
+The allocation inequality also holds without interpreting the event
+counter at the final cut, provided the counted services themselves have
+completed. Additional lawful work cannot remove these allocations.
+
+Proof. TMC PR57.D1's EX on a port0–55 adds exactly one cell. RD, WR,
+ML, MR, BF, IN, OUT, TOK and CTL remove no cell. A write of a blank,
+retirement, loss of a handle and return of a token do not shorten a
+creation chain. The same fact holds under GENERAL Lemma 2.6's actual
+incidence realization: its patches preserve that very native effect.
+Consequently $\Delta A_{55}$ is the number of actual EX occurrences on
+these ports, and is additive over disjoint consecutive row intervals.
+
+For each completed event, CAP Definition 4.6 requires the unified
+row/index/delivery route before return or halt. Definition 6.2 constructs
+its new row on14 by Base, payload Appends, sep/status and descriptor
+construction; it does not overwrite a previous row. In particular at
+least one new14 cell exists for each counted event. These row writes
+are distinct from the1–12 parser allocations counted by Lemma 14.1.
+Apply that lemma to every completed journal invocation, and add the
+nonnegative allocations of all remaining work. This proves the inequality,
+including nested journal helpers without counting any EX twice.
+
+For the event equation use CAP Definition 4.6's commitment rule and ARC
+Proposition 10.4's actual row indicators. Each source, NativeLocal, Halt
+or maintenance commitment increments $m$ exactly once. A later row seal
+materializes that event without another increment. Source rejection and
+`absent` remain source events; unchanged and refused maintenance remain
+maintenance events. Journals create no event by Lemma 14.1. At the
+completed boundaries the selected counters agree with those commitments;
+CAP Definition 6.1 provides no independently updated shadow bank.
+Summing the actual indicators gives the equation. Disabled trials have
+no row, receipt or commitment. Every executed row, including all the
+extra parsing, copying and return work, still adds its own actual native
+receipt; event neutrality is not zero cost. ∎
+

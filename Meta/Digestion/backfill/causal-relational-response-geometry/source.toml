@@ -1,0 +1,5 @@
+source_id = "causal-relational-response-geometry"
+path = "docs/develop/theory/CAUSAL_RELATIONAL_RESPONSE_GEOMETRY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

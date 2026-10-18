@@ -1,0 +1,86 @@
+**Interpretation 14.2 (which task is approximated, and which escapes).**
+For a fixed source and preparation, the section $D=0$ assigns a current
+ray to each $q$: take $[h_0]=[h_{13}]$ and retain the other phases.
+It is an actual ray of the nearby leaf by [N, Theorem 8.2]; on the double
+wall it is the entire leaf. Compare a guarded history's ray with this
+section at its same $q$. In the common middle-fixed gauge their only
+different component is mode $0$, and their representative distance is
+
+$$
+2\sqrt{p_{\kappa,0}(k)}\left|\sin\frac{\delta}{2}\right|
+ \le\sqrt{p_{\kappa,0}(k)}\,d_{\mathbb T}(D,0).
+\tag{14.2}
+$$
+
+The uniform bound (14.1) therefore gives a precise finite-resolution
+meaning to this three-coordinate approximation. It does not assign a
+preparation cost to the section or identify it with a separately prepared
+$\kappa=0$ source. For two nearby-source rays with the same $q$, the
+corresponding bound uses their hidden circle separation. An ideal native
+coherence pair involving mode $0$ varies continuously with that same
+phase; the other coherence pairs are unchanged.
+
+Theorem 13.1 also specifies the escaped distinction. Compare its endpoint
+with the constant history in the same source and preparation. Their
+retained observations agree exactly, while only the mode-$0$ phase
+circle differs, by $\chi$. Since the positive middle component fixes the
+projective gauge, these are different original current rays.
+The unchanged doubled-coherence menu of [N, Theorem 8.4], specifically
+its $02$ block (8.8), distinguishes them by the Euclidean output distance
+
+$$
+\|y_{02}^{\rm fam}-y_{02}^{\rm const}\|
+ =4\sqrt{(k_0-2\kappa)Z}\sin(\chi/2)
+ \longrightarrow4\sqrt{k_0Z}\sin(\chi/2)>0.
+\tag{14.3}
+$$
+
+This holds for arbitrary fixed preparation phases with the original
+negative convention. It introduces no measurement or phase actuator.
+It concerns ideal expectations and supplies no exact finite-shot
+acquisition or discrimination guarantee. Exposing this fixed principal
+phase requires the inverse-gap variation/length and inverse-squared-gap
+fixed-time energy scales of Theorem 13.1; one common actual family
+suffices at those scales.
+
+For $q$-only future tasks, however, $q$ is an exact predictive factor at
+every fixed $\kappa$. Starting from height $k$ and applying any common
+lawful future command $(a_f,b_f)$, its update is precisely
+
+$$
+\begin{aligned}
+k_f(t)&=k+a_f(t),\\
+[h_{13,f}(t)]&=[h_{13}]+\left[\int_0^t
+ A_\kappa(k+a_f(s))\,db_f(s)\right],\\
+[v_f(t)]&=[v]+\left[\int_0^t
+ B_\kappa(k+a_f(s))\,db_f(s)\right].
+\end{aligned}
+\tag{14.4}
+$$
+
+Legality depends only on the height path. Thus equal $q$ gives equal
+$q$-responses and equal legal command domains, even when $D$ differs.
+The escape (14.3) refutes completeness for the full native readout,
+not closure for the declared $q$-only task. Likewise retaining the
+controller's circle $[b]$ changes the information comparison: (12.10)
+recovers
+
+$$
+D=[b]-2[h_{13}]+2[v].
+\tag{14.5}
+$$
+
+Discarding that record is part of the stated observation task. Neither
+its omission nor this reconstruction is a finite-memory-bit theorem or
+recovery of the producing control path.
+
+The finite-resource result gives an operational bridge between the
+exactly symmetric leaf and nearby-source descriptions at a specified
+resolution. It does not reduce the exact nearby current-ray dimension,
+or prove that exactly three coordinates are necessary at finite
+resolution. Its constants and limits fix $\chi,I,k_0,Z,T$; no uniform
+claim as $\chi\downarrow0$, as the guard meets a probability endpoint,
+or as the other fixed data vary is included. These are command budgets
+in an ideal mathematical source, not physical spatial axes, physical
+energy or a rule selecting the means.
+

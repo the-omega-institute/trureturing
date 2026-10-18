@@ -1,0 +1,30 @@
+**定义 25.2（整数消元多项式）。** 在式 (25.1) 的基础上，全部下式都是变量 $x$ 的整数系数多项式，$A,G$ 还关于源坐标 $r$ 仿射：
+
+$$
+\begin{aligned}
+E&=5x^2+16x+20,\\
+K&=-2D(D+N)+(D-14N)E,\\
+Z_r&=xD-rN,\\
+A(x,r)&=2Z_rK+9DN(D+N),\\
+G(x,r)&=6912DNV+432D^2V+216DN(D+N)\\
+&\hspace{1.5em}-5760DVZ_r-1440ENZ_r.
+\end{aligned}
+\tag{25.5}
+$$
+
+另置
+
+$$
+\begin{aligned}
+A_0&=A(x,0),\qquad A_1=A(x,1)-A(x,0)=-2NK,\\
+\Pi&=(5-8x)D^2+(8x-6)ND+5N^2,\\
+U&=4NA_0+(D+N)A_1,\\
+W&=4N^2A_0^2+2N(D+N)A_0A_1\\
+&\hspace{1.5em}+(D-N)(2xD-D+N)A_1^2,\\
+P_i&=54A(x,i)-G(x,i)\quad(i=0,1).
+\end{aligned}
+\tag{25.6}
+$$
+
+$P_0,P_1$ 在此是多项式，不表示源矩阵；$K$ 与下文的参数二次式 $K_6$ 也分别解释。
+

@@ -1,0 +1,131 @@
+## 2. Exact source graph and baseline interfaces
+
+For $P$ in (1.4), or in the larger nonnegative domain
+
+$$
+\mathcal N=\left\{\begin{pmatrix}r&u\\v&1-r\end{pmatrix}:
+              0\le r\le1,\ u,v\ge0,\ u+v>0\right\},
+\tag{2.1}
+$$
+
+all six traces in (1.6) remain positive. In IX's trace coordinates
+$\mathsf u=u+v$, $\mathsf v=1+u$, their row is
+
+$$
+(t_0,\ldots,t_5)
+ =(1,\mathsf u,\mathsf v,\mathsf u+\mathsf v,
+                    1+r+\mathsf u,\mathsf u+2\mathsf v-r).
+\tag{2.2}
+$$
+
+Define
+
+$$
+\begin{aligned}
+\ell_j(T)&=\prod_{\substack{0\le k\le3\\k\ne j}}
+                          \frac{T-k}{j-k},\\
+V_P(T)&=\sum_{j=0}^3\frac{\ell_j(T)}{t_j},&
+U_{P;\mathbf c}(T)&=\sum_{j=0}^3\frac{c_j\ell_j(T)}{t_j},\\
+\alpha_i&=1-t_iV_P(i),&\beta_i&=c_i-t_iU_{P;\mathbf c}(i)
+                                      \quad(i=4,5),\\
+\Delta(P)&=\alpha_4^2+\alpha_5^2,&
+\mathcal C(P;\mathbf c)&=\alpha_4\beta_5-\alpha_5\beta_4.
+\end{aligned}
+\tag{2.3}
+$$
+
+The only interpolation divisors are positive traces and nonzero fixed
+integers. [IX, Theorem 2.1](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_IX.md)
+proves on all of $\mathcal N$ that
+
+$$
+\alpha_4=0\ \Longrightarrow\
+V_P(5)>V_P(3)=1/t_3\ge1/t_5,\quad \alpha_5<0;
+\qquad \Delta(P)>0.
+\tag{2.4}
+$$
+
+Thus the following formulas have no omitted denominator-zero stratum:
+
+$$
+d_P=\frac{\alpha_4\beta_4+\alpha_5\beta_5}{\Delta(P)},\qquad
+f_P=U_{P;\mathbf c}-d_PV_P.
+\tag{2.5}
+$$
+
+[IX, Theorem 3.1](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_IX.md)
+gives compatibility exactly when $\mathcal C(P;\mathbf c)=0$ and
+then uniquely recovers $(f,d)=(f_P,d_P)$ for that supplied source.
+Its residual identity is
+
+$$
+\begin{pmatrix}\beta_4\\\beta_5\end{pmatrix}
+ -d_P\begin{pmatrix}\alpha_4\\\alpha_5\end{pmatrix}
+ =\frac{\mathcal C(P;\mathbf c)}{\Delta(P)}
+                  \begin{pmatrix}-\alpha_5\\\alpha_4\end{pmatrix}.
+\tag{2.6}
+$$
+
+Consequently the exact legal source slice is
+
+$$
+\mathcal Z_{\mathbf c,d}=\{P\text{ satisfying (1.4)}:
+ \mathcal C(P;\mathbf c)=0,\ d_P=d,\ f_P(6)=0,\ f_P(7)\ne0\}.
+\tag{2.7}
+$$
+
+The map
+
+$$
+P\longmapsto(P,\lambda f_P,D_0+\lambda d)
+\tag{2.8}
+$$
+
+is a bijection from (2.7) to the entire class (1.7). The first two
+different readings exclude a zero reconstructed polynomial. Distinct
+complete worlds therefore have distinct sources. These statements
+are conditional recovery given $P$; the ancestor has not identified
+an unknown $P$. The new terminal maps below are rational maps on this
+whole source slice.
+
+Two baseline results from
+[G](FIB_JMMJM_ZERO_SIXTH_ROOT_RIGIDITY_AND_TERMINAL_COLLISION_GEOMETRY.md)
+will be used with their full hypotheses:
+
+* G, Theorem 2.1: on this entire fixed ancestor and at fixed $d$, at
+  most one legal world has $f(6)=f'(6)=0$. Every such gain is exactly
+  cubic with exactly a double sixth root and one simple root $\rho$;
+  its normalized leading coefficient and $f(7)$ are positive. Its
+  necessary ranges are $d<0$, $-3<\rho<0$; or $0<d<24$,
+  $0<\rho<1$; or $48<d<312/5$, $2<\rho<3$. These are not
+  existence assertions. In particular neither a quadratic double
+  sixth root nor a triple sixth root is legal on this ancestor.
+* G, Theorem 4.1: each of the four maps given by any three of the
+  chronological terminal coordinates $A,B,C,D$ is injective on
+  (1.7). Hence a distinct pair agrees in at most two coordinates.
+  G, Theorem 6.1 gives the resulting incidence count and common
+  terminal sign for a losing triple. These results do not assume
+  a common source, gain shape, source sum or terminal amplitude.
+
+The terminal notation is fixed in Section 3. The large repeated-root
+certificate and the triple-coordinate proofs are reused at these exact
+scopes rather than reproved as new results.
+
+The geometry in fresh IX, Sections 7–11 has its stated history
+restrictions. In normalized coordinates IX, Theorem 7.2 places source
+escape exactly on
+
+$$
+\zeta=12y-288/5,\qquad -1788/25<y\le-5268/155.
+\tag{2.9}
+$$
+
+IX, Theorems 8.1, 9.2 and 10.1 give a full trace corridor and the
+compact complete-world closure obtained by adjoining six source-boundary
+targets for $H_*=(0,J,24,M,48,M,312/5,J,48/5,M,-532/5)$ and its fixed
+affine copies. IX, Definition 11.1 retains both possible boundary limits
+and coalescing triples in its incidence set. Neither this history-specific
+compactification nor the conditional corridor in IX, Theorem 4.1 is a
+compactness, smoothness or joint-feasibility assertion for arbitrary
+$(d,y,\zeta)$. None is a premise of the new proofs below.
+

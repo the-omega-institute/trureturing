@@ -1,0 +1,27 @@
+**The twist height uses the squarefree kernel.** The integral short transformation $x=9X-30D$, $y=27Y$ sends $R,K$ to integral points $P,mP$ on
+
+$$E'_D:y^2=x^3-8775D^2x-236250D^3.$$
+
+It is $D$, rather than $B$, that is squarefree. This is exactly the premise needed for the quasi-minimality check of §91: $8775=3^3\cdot5^2\cdot13$, $D$ is coprime to $15$, and every prime valuation of $8775D^2$ is less than $4$. No integral short equation in its isomorphism class has smaller discriminant.
+
+All twists have $j=35152/9$. At the only potentially multiplicative prime $3$, the minimal multiplicative type, if present, is $I_2$. Additive component-group orders are at most $4$, and good reduction has trivial component group. Thus $M(P)\mid12$, independently of $C$.
+
+The original-support congruence gives $D\equiv19\pmod{120}$, so $D\ge19$. In Ingram's height convention,
+
+$$h(E'_D)=3\log D+\log945000\le3\log B+\log945000.\tag{92.2}$$
+
+The equality holds already for $D\ge19$: the cubic coefficient dominates the linear one and $h(j)=\log35152$. This height also exceeds $2\pi\sqrt3$, so the large-height proof of Proposition 11 applies without its finite small-height adjustment.
+
+The effective constants $c_3,c_4$ from Ingram's Proposition 11 can be chosen uniformly for $M(P)\mid12$, as in §91. If $|m|\le c_3$, use that bound; otherwise the integrality of $|m|P$ gives $|m|<c_4h(E'_D)^{5/2}$. Therefore (92.1)–(92.2) imply
+
+$$\sqrt B<|m|\le\max\left\{c_3,c_4(3\log B+\log945000)^{5/2}\right\}.\tag{92.3}$$
+
+The effective cutoff argument of §91 now applies with $s=\log B$. The function $\exp(s/2)/(3s+\log945000)^{5/2}$ increases for $s\ge\log144$ and tends to infinity. Choose an effective $s_0\ge\log144$ such that
+
+$$\exp(s_0/2)>c_3,\qquad
+\exp(s_0/2)>c_4(3s_0+\log945000)^{5/2},$$
+
+and set $B_0=\lceil\exp(s_0)\rceil$. Then $B>B_0$ contradicts (92.3). Since $B_{3^j}$ is strictly increasing and computable, only effectively bounded finitely many original indices remain possible. ∎
+
+The real lower bound depends on the full block $B_N=DC^2$, whereas the twist-height upper bound depends on $D\le B_N$. This extends effective eventual uniqueness to every actual rank-one original block, including blocks with nontrivial square cofactor. The analytic input remains Ingram's [Proposition 11](https://arxiv.org/pdf/0802.2651), with the model and uniformity checks of §91. Rank one remains essential. No numerical cutoff, exhaustive finite search, extra $N=81$ exclusion, higher-rank conclusion, or universal WSS solution is asserted.
+

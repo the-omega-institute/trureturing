@@ -1,0 +1,76 @@
+**Theorem 24.2 (complete phase-circle output and attained minimum).** The matrices (R.115) are an actual TP common realization with
+
+$$
+B=\operatorname{diag}(a,0,\beta,0,0),\quad
+B+JBJ^T=Q,\quad q=1,\quad
+\operatorname{rank}B=2,\quad c_{\rm pl}=1.
+\tag{R.116}
+$$
+
+For $d=\sqrt{\beta+v^2}>0$, set
+
+$$
+\eta=\frac{\sqrt\beta\,|2\rangle-v|1\rangle}{d},\quad
+X_\theta=e^{i\theta}|0\rangle\langle\eta|
+          +e^{-i\theta}|\eta\rangle\langle0|,
+\quad X_+=X_0,\quad X_-=X_{\pi/2}.
+\tag{R.117}
+$$
+
+Every $X_\theta$ belongs to the full complex Hermitian $\mathcal H_0$ of (R.102), has eigenvalues $1,-1,0$, and has trace norm two. Its exact ratio is
+
+$$
+\begin{aligned}
+r(\theta)^2
+&:=\frac{\|N(X_\theta)\|_1^2}{4}\\
+&=\frac{v^2+a\beta(s_0^2+s_1^2+k^2)+\beta^2u^2
+       +2\beta\sqrt{a\beta}\,s_0u\cos(2\theta)}{\beta+v^2},\\
+r_*^2:=\min_{\theta\in\mathbb R}r(\theta)^2
+&=\min\{r(0)^2,r(\pi/2)^2\}\\
+&=a-\frac{\beta(a-\beta)u^2+2\beta\sqrt{a\beta}|s_0u|}{\beta+v^2}
+\leq a.
+\end{aligned}
+\tag{R.118}
+$$
+
+For $s_0u>0$ choose $X_-$; for $s_0u<0$ choose $X_+$; for $s_0u=0$ either phase attains the minimum. If $s_0u\ne0$, the minimizing phases are exactly those with $\cos(2\theta)=-\operatorname{sign}(s_0u)$. The family therefore has
+
+$$
+m_0(N)\leq r_*,\qquad
+\delta_N\geq1-r_*\geq1-\sqrt a.
+\tag{R.119}
+$$
+
+The first inequality is a witness bound, not an assertion that this circle contains a minimizer over all of $\mathcal H_0$.
+
+**Proof.** In the TP sum the first two diagonal entries are $a+\beta=1$, and the $01$ entry vanishes termwise. The $02$ entry is zero. The two contributions to the $12$ entry are $-\sqrt\beta v$ and $+\sqrt\beta v$. The third diagonal entry is $u^2+v^2/a+s_0^2+s_1^2+k^2=1$. Thus the full two-term map is CPTP. Its $A$ in (R.99) has independent columns $\sqrt a e_0,\sqrt\beta e_2$, so $P_A=I_2$, $q=\operatorname{Tr}TT^T=1$, and the displayed $B$ follows. Equation (R.103) gives $N(\chi_\pm)=(Q\pm iJQ)/2$, with orthogonal phase supports and eigenvalues $a,\beta$. This verifies actual class membership rather than just a putative block constraint. The diagonal difference in (R.105) has trace norm two, giving $c_{\rm pl}=1$.
+
+The vectors $|0\rangle,\eta$ are real orthonormal, so the input assertions follow on their two-dimensional span, including when $v=0$. Direct column multiplication, keeping both Kraus terms, gives
+
+$$
+K_1\eta=\frac{\sqrt\beta u}{d}e_0,\qquad
+g:=\sqrt a K_0\eta=
+\frac{-v e_1+\sqrt{a\beta}(s_0e_2+s_1e_3+kh)}d,
+\qquad j:=\frac{\beta u}{d}e_2.
+$$
+
+Both $g,j$ are orthogonal to $e_0$. Consequently
+
+$$
+N(X_\theta)=e^{i\theta}(e_0g^T+je_0^T)
+            +e^{-i\theta}(ge_0^T+e_0j^T).
+$$
+
+This Hermitian matrix has only an $e_0$-to-$e_0^\perp$ block and its adjoint. Its nonzero eigenvalues are $\pm\|e^{i\theta}g+e^{-i\theta}j\|_2$; the formula remains valid if the vector is zero. Squaring the vector norm uses $g^Tj=\beta\sqrt{a\beta}s_0u/d^2$ and proves the first line of (R.118). In particular
+
+$$
+\begin{gathered}
+w_\pm=\frac{-v e_1+(\sqrt{a\beta}s_0\pm\beta u)e_2
+                         +\sqrt{a\beta}s_1e_3+\sqrt{a\beta}kh}{d},\\
+N(X_+)=e_0w_+^T+w_+e_0^T,\qquad
+N(X_-)=i(e_0w_-^T-w_-e_0^T).
+\end{gathered}
+$$
+
+Minimizing the cosine chooses the sign stated. Subtracting the phase-independent numerator from $a(\beta+v^2)$ and using (R.115) gives $\beta(a-\beta)u^2$. This proves the minimum formula without restrictions on any parameter sign. Its nonnegativity also follows from its attained squared-norm expression. The inequality is strict precisely when $\beta(a-\beta)u^2+2\beta\sqrt{a\beta}|s_0u|>0$. This includes $0<\beta<1/2$, $u\ne0$; at half beta it requires $s_0u\ne0$ for this formula. For any phase, $X_\theta$ is the difference of the orthogonal pure states $(e^{i\theta}|0\rangle\pm\eta)/\sqrt2$. Apply the existing same-recovery estimate (R.95) to the minimizing phase. It already permits every complex CPTP recovery and the full finite-reference unhalved diamond norm, proving (R.119). $\square$
+

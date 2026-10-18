@@ -1,0 +1,39 @@
+**Definition 2.2 (common-start preparation).** Use the terminal-latch
+convention of [NBP, Definition 14.2][NBP]. Its installed alphabet is
+
+$$
+\mathcal B=V\sqcup\widehat S,
+\qquad \widehat S=\{\widehat s:s\in S\},
+\qquad b_0\in\mathcal B.
+\tag{PCA.4}
+$$
+
+The start $b_0$ is common to the entire fiber. A running state $v\in V$
+has one fixed word $a(v)\in\mathcal W$ and four fixed successors
+$N(v,z)\in\mathcal B$, $z\in\mathcal A$. Visiting $v$ makes one
+actual invocation at $a(v)$ and takes the successor for its actual
+reply. There are no silent control transitions. Latch $\widehat s$
+holds the literal complete reader-state code $s$, replaces the running
+configuration, and makes no native call. The supplied paid handoff
+enters exactly $s$ and makes preparation material inaccessible.
+
+Every installed state counts, including unused states. Extra installed
+latches, if required, count too; constructions here need just $\widehat
+S$. For a terminating run with running visits $v_1,\ldots,v_m$, put
+
+$$
+q_P(u)=m,\qquad
+\ell_P(u)=\sum_{j=1}^{m}|a(v_j)|,\qquad
+H=|\mathcal B|.
+\tag{PCA.5}
+$$
+
+The uniform call and literal upper budgets are denoted $p$ and $\ell_P$.
+Each visit costs a call, including repeats, absence, and the empty
+word; an empty word contributes zero letters. These cardinality and
+literal coordinates do not price physical table bytes, local work,
+elapsed time, energy, or handoff storage. Installed literals and all
+four successors are common data, with their separate representation
+and installation prices. The only mutable preparation configuration is
+the one counted member of $\mathcal B$.
+

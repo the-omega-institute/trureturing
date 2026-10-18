@@ -1,0 +1,20 @@
+**推论 4.6.2（路径缺失度的可加界）。** 若 $E\to F$ 的候选后处理为 $G$，$F\to H$ 的候选后处理为 $H'$，则
+
+$$
+\boxed{
+\max_\theta\operatorname{TV}(K_EGH',K_H)
+\le
+\max_\theta\operatorname{TV}(K_EG,K_F)
++
+\max_\theta\operatorname{TV}(K_FH',K_H).
+}
+$$
+
+**证明。**
+
+这正是定理 4.3.4 证明中的逐状态不等式。证毕。
+
+因此，沿多段记录协议累计的模拟误差可以逐段记账；任何一段的零缺失度都允许把其接口折叠为一次精确后处理。
+
+<a id="section-4-7"></a>
+

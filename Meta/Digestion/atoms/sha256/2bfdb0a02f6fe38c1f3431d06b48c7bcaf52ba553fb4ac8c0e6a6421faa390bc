@@ -1,0 +1,8 @@
+### 54.3 Attribution and scope
+
+The qubit region has the familiar PIO reachable-hexagon geometry after phase alignment, as in Shi et al., Scientific Reports 7,14806 (2017), Eqs.31-32 and Fig.3: https://www.nature.com/articles/s41598-017-13687-4 . The connection from PIO to zero-communication MC transformations is discussed after Proposition 3 of Chitambar and Gour, Physical Review A 94,052336 (2016): https://link.aps.org/accepted/10.1103/PhysRevA.94.052336 . Neither the hexagon shape nor its constructive sufficiency is claimed as new. The argument above supplies a direct full-support, all-product-CPTP necessity and a dimension-independent channel restriction normal form. Literature priority for that normal form is not asserted.
+
+The linear-map conclusion is a concrete coherent-input interface: once one full-support MC test state has exactly zero leakage, all coherent matrix units and arbitrary references obey the same normal form. It does not imply that independently chosen optimizers for separate RT sectors can be combined into one local physical channel. It does not prove the general mixed-source positive-error optimum, approximate support rigidity, or full RT recovery.
+
+The original volume's §38.2 already gives a coherent-channel interface. The present result supplies a different sufficient certificate, namely strict positivity on the MC support together with exact zero output leakage; it is not claimed as the first coherent-input interface.
+

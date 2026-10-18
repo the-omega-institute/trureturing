@@ -1,0 +1,30 @@
+**引理 5.3（A required fourth-block state and the universal ten-state lower evidence）。** Define $\beta_v=v\oplus b_v$. On the $B$ source with free value $v$, let $e_v$ and $p_v$ be its control states after two and three emitted blocks. Then
+
+$$
+e_v=V(d_v,\beta_v),\qquad p_v=V(e_v,\beta_v).
+\tag{5.5}
+$$
+
+Both are emitting states. The state $p_v$ is distinct from every root and every cut entry. Its two scalar successors are stopping states with labels $A$ and $B$, in some order. If $\beta_0\ne\beta_1$, then $p_0\ne p_1$. Every correct depth-four controller therefore has at least ten complete control states.
+
+Proof. For each $v$, pair its $B$ source at $j_B$ and tail zero with the tail-zero $A$ source at
+
+$$
+j_A(v)=
+\begin{cases}
+2m-4,&b_v=0,\\
+2m-3,&b_v=1.
+\end{cases}
+\tag{5.6}
+$$
+
+They are actual sources, including at $m=6$. Both have zero root difference. The cut charges at $j_B,j_A(v)$ are both $b_v$, by [IF, (1.4)]. Thus after the cut their observed values are both $\beta_v$, their current tails are the same trailing run $\tau_v\le2$, and they occupy the same state $e_v$.
+
+For the third block the full physical charge window is $W_2=[1,m+1]$. All of $j_B,2m-4,2m-3$ lie outside it: $2m-4>m+1$ for $m\ge6$. Every legal third word therefore has charge zero on the pair. Every such word is also safe from their common tail, since $\tau_v+m\le m+2<2m-2=k$. Its actual endpoint is again $\beta_v$ on both sources, and its final tail is again common. The pair cannot have stopped after the root, cut or third word. This proves (5.5) and that $e_v,p_v$ emit.
+
+At the fourth block, rejection is common to the pair: rejection depends on their equal incoming tails and the literal word, not on phase. Common rejection cannot recover their unequal labels. Thus the final word must succeed on both and give different scalar endpoints. With the four-block deadline, those two scalar successors must already be $\operatorname{Halt}(A)$ and $\operatorname{Halt}(B)$. Lemma 5.2 excludes $p_v$ from all root and cut states.
+
+If the two $p_v$ were one state and $\beta_0\ne\beta_1$, its one fourth-block literal word would give the same charge $q_3(j_B)$ to both $B$ sources. Their endpoints $\beta_v\oplus q_3(j_B)$ would be opposite, forcing both scalar successors to output $B$. This contradicts the paired $A$ source. Hence unequal $\beta_v$ require distinct fourth-block states.
+
+All five labels occur, so at least five distinct stopping states are required. If the cut entries differ, two roots, two cuts and at least one fourth-block state require five additional emitting states. If the cuts coincide, their $b_v$ coincide, so $\beta_0\ne\beta_1$; two roots, one cut and two fourth-block states again require five emitting states. This proves $K_{\min}(4;m)\ge10$ for all controllers. It uses no normal form for delayed homogeneous stops or third/fourth words. ∎
+

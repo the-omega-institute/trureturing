@@ -1,0 +1,73 @@
+**Definition 206.1 (Original source and the unchanged comparison).**
+Use the source of [Definition 110.1 and Theorem
+110.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION.md#110-exact-closed-cap-transport-on-the-original-countable-source):
+
+$$
+\begin{aligned}
+X&=\{(r,g):r\text{ prime},\ g\in\mathbb Z,
+       \ \lceil F_r/10\rceil\le g\le\lfloor F_r/5\rfloor\},\\
+N(r,g)&=1+F_rg,\qquad F_0=0,\quad F_1=1,\quad
+F_{r+2}=F_{r+1}+F_r,\\
+q_i(x)&=\mathbf1_{p_i\mid N(x)},\qquad
+n(x)=\min\{i:q_i(x)=0\},
+\end{aligned}
+\tag{206.1}
+$$
+
+where $p_1<p_2<\cdots$ are the primes. Replies are static. Every finite
+Boolean pattern, including every multiple-zero pattern, has an actual
+source witness, as supplied by Boundaries, Theorem 35.2. The original
+carrier is the full disjoint union of Borel blocks
+$\bigsqcup_{j\ge1}B_j\sqcup\bigsqcup_{j\ge1}P_j$, each a copy of
+$(0,1)$. Its measurable distinct marks are
+$\theta_j=(B_1,1/(j+2))$, $j\ge0$. The consumer and its original
+nonatomic targets remain those of Acquisition Resources, Definition
+73.1. For every sequence
+
+$$
+1\ge a_1\ge a_2\ge\cdots>0,\qquad a_j\longrightarrow0,
+\qquad
+\lambda_x^a=(1-a_{n(x)})\delta_{\theta_0}
+                +a_{n(x)}\delta_{\theta_{n(x)}},
+\tag{206.2}
+$$
+
+these are separately selected marked laws, not replacements for the
+consumer's original targets.
+
+The classes $\mathcal N_2,\mathcal O_2$ have exactly the meaning of
+Acquisition Resources, Definition 90.1: zero advice, one
+source-independent common seed, actual sourcewise almost-sure finite
+handoff, arbitrary query addresses and outputs anywhere in the full
+carrier. The hard budget is at most two actual requests, including
+repeated requests and requests whose replies are ignored. $N$ preselects
+its whole schedule before replies and obtains its scheduled replies.
+$O$ preselects an increasing schedule and stops at its first queried
+zero or at exhaustion. There is no adaptive choice of the second
+address. Error is the supremum of TV over every actual source and every
+Borel event; no distribution on sources, address bound, runtime bound,
+mean-request budget, extra observation or second seed is introduced.
+
+For $0<\varepsilon\le1$, let
+$L_a=\max(\{j:a_j>\varepsilon\}\cup\{0\})$. The finite cap constraints
+for a probability-vector kernel are, for every low word with first zero
+$n\le L_a$,
+
+$$
+p_w(0)\ge1-a_n-\varepsilon,\qquad
+p_w(n)\ge a_n-\varepsilon,\qquad
+p_w(0)+p_w(n)\ge1-\varepsilon,
+\qquad p_{1^{L_a}}(0)\ge1-\varepsilon.
+\tag{206.3}
+$$
+
+The pair row is independent of both singleton rows. Negative singleton
+right sides are retained. Write $\mathscr N_{L_a}$ for the convex hull
+of complete finite $N$ tables, and $\mathscr C_{L_a}$ for the finite
+stopped kernels characterized by 109.1. Then $\mathcal F_N(a,\varepsilon)$
+is the subset of $\mathscr N_{L_a}$ satisfying (206.3). The universal
+question remains whether its nonemptiness always implies
+$\mathcal F_N(a,\varepsilon)\cap\mathscr C_{L_a}\ne\varnothing$.
+Theorem 110.2 owns the equivalence with original closed-cap feasibility;
+its use for actual probability configurations is specified in 206.24.
+

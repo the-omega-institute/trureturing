@@ -1,0 +1,20 @@
+**Theorem 184.3 (Two boundaries of the conditioned test).** Sharing
+$Q$ does not in general permit sharing the base and pair compensation
+variables. The correct-minimum shortcut of (183.7) does not extend
+to the full stopped catalog without its nonnegative-$\kappa$ proof.
+An affine row vector at $\tau>1$ need not be a probability law.
+
+**Proof.** On one edge with $Q=1$, the energy with $K=0$, $c=(0,0)$
+has dual expression $-t$, uniquely maximized at $t=0$.
+The energy with $K=2$, $c=(-1,-1)$ has dual expression $t$ on
+$0\le t\le1$, uniquely maximized at $t=1$. The two algebraic
+energies thus have a shared edge and different exact witnesses.
+The full stopped table $(2,3;0,0,1)$, outside $E_3$, has correct
+probability $u_2u_3$ in first-zero class one. Its all-one-suffix
+value is one and its minimum is zero. Finally, immediate-base mass
+two in (183.1) gives $f_u=2\mathbf e_0-R_u$, with correct-label-one
+coordinate $-1$ in first-zero class one. Normalization and padding
+in Theorem 184.1 are essential before a probability or execution
+claim. These are boundaries of the method, not whole-class cap
+separators. $\square$
+

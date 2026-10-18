@@ -1,0 +1,62 @@
+**Theorem 85.2 (every complex negative-sector near-minimizer).**
+Assume (85.1) and $\chi_0>\chi_c$. For every complex normalized
+sequence $\psi_n\in\mathcal Q$ satisfying precisely
+
+$$
+\tau_n\bigl(\mathfrak e_{g_n,\tau_n}[\psi_n]
+                         -E_{\tau_n}(g_n)\bigr)\longrightarrow0,
+\tag{85.5}
+$$
+
+there are constant phases $\theta_n\in\mathbb R$ such that, with
+zero extension outside $\Omega_{s_n}$,
+
+$$
+\left\|(j_0s_n^7)^{1/2}\psi_n(\Xi_{s_n}(\cdot))
+                  -e^{i\theta_n}\Phi_{\chi_0}\right\|_{L^2(d\xi)}
+ \longrightarrow0.
+\tag{85.6}
+$$
+
+Consequently the entire mass concentrates at the fixed source in
+the privileged microscopic scales:
+
+$$
+\lim_{R\to\infty}\limsup_n
+ \int_{\mathcal C\setminus\Xi_{s_n}(\{N\le R\})}
+                            |\psi_n(Y)|^2dY=0.
+\tag{85.7}
+$$
+
+The intersections with $\mathcal C$ are understood in (85.7).
+There are no translations, frequency restrictions or spatially
+varying phase adjustments in (85.6). Every choice of normalized
+native ground states is included.
+
+Proof. Theorem 85.1 and (85.5) give
+$q_n[f_n]\to e(\chi_0)<0$. The kinetic bound of Proposition 83.2
+and Lemma 83.1 apply to every subsequence. Along a further
+subsequence, (85.4) now gives the chain
+
+$$
+e(\chi_0)\ge h_{\chi_0}[f]
+       \ge e(\chi_0)\|f\|_2^2\ge e(\chi_0).
+\tag{85.8}
+$$
+
+All terms are equal. Since $e(\chi_0)<0$, equality forces
+$\|f\|_2=1$. Weak convergence of unit vectors is therefore strong
+in global $L^2$, and $f$ is a normalized minimizer of $h_{\chi_0}$.
+Theorem 84.1 makes it exactly $e^{i\theta}\Phi_{\chi_0}$.
+Thus every subsequence has a further subsequence converging to
+this one phase orbit. If its distance from the orbit did not tend
+to zero, a subsequence bounded away from it would contradict this
+conclusion. Choose the phases minimizing that distance; equivalently
+use the argument of $\langle f_n,\Phi_{\chi_0}\rangle$ with the
+appropriate inner-product convention. This proves (85.6).
+Global $L^2$ convergence to a fixed normalized profile gives (85.7).
+The source was fixed in the potential and in $\Xi_s$, so there is
+no free centre parameter. The phase-orbit result in Theorem 84.1
+was proved using positive kernels, and imposes no additional phase
+regularity on the native vectors. $\square$
+

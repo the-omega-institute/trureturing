@@ -1,0 +1,69 @@
+### 453.4 精确有限配对及条件极限
+
+定义真实二倍配对核
+
+\[
+\mathscr D_x(m)=P_x^\eta(m)-P_x^\eta(2m)
+=\sum_{n=m}^{2m-1}J_x^\eta(n)\qquad(m\ge1).
+\tag{DP.12}
+\]
+
+对每个整数 \(N\ge1\)，令 \(S_N(x)=\sum_{n=1}^NM(n)J_x^\eta(n)\)。在有限集合中使用（DP.6）及望远镜，精确得到
+
+\[
+\boxed{\displaystyle
+S_N(x)=\sum_{m\le N,\ m\text{ 奇}}\mu(m)
+\left[P_x^\eta(m)-P_x^\eta(\min\{2m,N+1\})\right].}
+\tag{DP.13}
+\]
+
+触发条件是 \(m\le n<2m\)；一个完整奇源纤维恰为 \(m\le n\le2m-1\)。这包括原单位源 \(m=1\)，其核 \(\mathscr D_x(1)=J_x^\eta(1)\) 保留 §424.7 的原首块补偿。
+
+令 \(T_N(x)=\sum_{m\le N,\ m\text{ 奇}}\mu(m)\mathscr D_x(m)\)，则
+
+\[
+E_N(x):=S_N(x)-T_N(x)
+=\sum_{N/2<m\le N,\ m\text{ 奇}}\mu(m)
+\left[P_x^\eta(2m)-P_x^\eta(N+1)\right].
+\tag{DP.14}
+\]
+
+若 \(2m=N+1\)，括号精确为零，所以该写法对奇偶 \(N\) 都成立。取固定 \(x\)，随后令 \(N\to\infty\)。对 \(N>2x\)，在 \([N/2,N]\) 上置
+
+\[
+B_N(t)=O(t)-O(N/2),\qquad
+F_N(t)=P_x^\eta(2t)-P_x^\eta(N+1).
+\]
+
+（DP.8）给 \(\sup|B_N(t)|=O(N/\log^4N)\)；（DP.11）给
+
+\[
+|F_N(N)|+\int_{N/2}^N|F_N'(t)|dt
+=O_x(\log^2N/N).
+\]
+
+有限 Abel 求和保留全部端点：
+
+\[
+E_N(x)=B_N(N)F_N(N)-\int_{N/2}^NB_N(t)F_N'(t)dt
+=O_x(\log^{-2}N)\longrightarrow0.
+\tag{DP.15}
+\]
+
+§424 的绝对 Mertens 配对使 \(S_N(x)\to I_\psi(x)\)，故得到付清截止末项后的原子身份
+
+\[
+\boxed{\displaystyle
+I_\psi(x)=\lim_{N\to\infty}
+\sum_{m\le N,\ m\text{ 奇}}\mu(m)\mathscr D_x(m).}
+\tag{DP.16}
+\]
+
+这个极限按所写奇源自然截止定义。它没有从 §424 的绝对累计配对推出原子绝对交换。事实上（DP.9）–（DP.10）还给固定 \(x\) 下
+
+\[
+\mathscr D_x(m)\sim\frac{\log m\log\log m}{2m}\qquad(m\to\infty).
+\]
+
+在真实奇素数 \(p\) 上 \( |\mu(p)|=1\)，因此该原子绝对和发散：充分大的素数项至少为 \(\log p/(4p)\)，而既有第一 Mertens 供应 \(\sum_{p\le Y}\log p/p=\log Y+O(1)\) 发散。这里的条件截止付款不可删除，也不能将全部素数与合数另作未经支付的无限分拆。
+

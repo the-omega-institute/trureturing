@@ -1,0 +1,3 @@
+**Definition 1.2 (actual alphabet and unchanged optimization).** An actual
+acquisition has CP maps $\mathcal E_\gamma$, total encoder effect $I_5$,
+and one common full-output TP decoder $\mathcal R_\gamma$ on the

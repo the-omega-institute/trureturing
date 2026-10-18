@@ -1,0 +1,52 @@
+**定理 C-105.5（同一纤维中的可分离端点与连续纠缠族）。** $\Gamma_0=S$
+相对于 $H^{(1)}\mid H^{(2)}$ 可分离；每个 $0<t\le1$ 的 $\Gamma_t$
+相对于同一分割均纠缠。$t\mapsto\Gamma_t$ 连续且单射。
+
+证明。$S=(1/5)\sum_s P_s\otimes P_{f(s)}$ 是明确的产品密度算子凸组合，
+所以可分离。对第二份取计算基部分转置，约定
+
+$$
+(|a,b\rangle\langle c,d|)^{\mathsf T_2}
+=|a,d\rangle\langle c,b|.
+\tag{C105.11}
+$$
+
+由 (C105.3)，$\langle0,13|\Gamma_t|13,0\rangle=t/5$。
+$|0,0\rangle$ 与 $|13,13\rangle$ 在原计算基对角上均不匹配置换，
+故其对角元为零。部分转置的相应二阶压缩为
+
+$$
+\left.\Gamma_t^{\mathsf T_2}\right|_{\operatorname{span}\{|0,0\rangle,|13,13\rangle\}}
+=\begin{pmatrix}0&t/5\\t/5&0\end{pmatrix}.
+\tag{C105.12}
+$$
+
+令 $|z_-\rangle=(|0,0\rangle-|13,13\rangle)/\sqrt2$，则 $\|z_-\|=1$，
+
+$$
+\langle z_-|\Gamma_t^{\mathsf T_2}|z_-\rangle=-t/5<0\qquad(t>0).
+\tag{C105.13}
+$$
+
+可分离态的部分转置必正半定：对任意产品密度算子
+$A\otimes B$，其第二份部分转置是 $A\otimes B^{\mathsf T}\succeq0$，
+凸组合仍正半定。这是 Peres 的 PPT 必要条件，见
+Asher Peres，*Separability Criterion for Density Matrices*，
+[Phys. Rev. Lett. 77, 1413–1415 (1996)](https://doi.org/10.1103/PhysRevLett.77.1413)，
+[arXiv:quant-ph/9604005v2](https://arxiv.org/abs/quant-ph/9604005v2)，式 (3)–(6)
+（交换两份即可采用这里的第二份转置约定）。负期望直接排除可分离性；
+这里没有使用 PPT 在 $5\times5$ 上的充分性。
+$\Gamma_t=S+tK$ 是有限维仿射映射，因而连续；所列非对角元为 $t/5$，
+所以不同 $t$ 给不同状态。证毕。
+
+本构造的矩阵结构属于成熟的 maximally correlated 类型。
+具体地，局部置换酉 $U_f|s\rangle=|f(s)\rangle$ 满足
+$(I_5\otimes U_f)e_s=|s,s\rangle$，因此将 (C105.3) 变成
+$\sum_{s,a}c_{sa}(t)|s,s\rangle\langle a,a|$。
+这一类型的标准定义见 Tohya Hiroshima、Masahito Hayashi，
+*Finding a maximally correlated state: Simultaneous Schmidt decomposition of bipartite pure states*，
+[Phys. Rev. A 70, 030302(R) (2004)](https://doi.org/10.1103/PhysRevA.70.030302)，
+[arXiv:quant-ph/0405107v2](https://arxiv.org/abs/quant-ph/0405107v2)，式 (1)、(4)。
+这里复用该结构与 PPT 判据；本章的仓内综合是 (C105.3) 的特定符号选择同时保持
+C-104 的全部基概率和 $Q$ 读数，并给同一纤维的参数读口，不作原创性主张。
+

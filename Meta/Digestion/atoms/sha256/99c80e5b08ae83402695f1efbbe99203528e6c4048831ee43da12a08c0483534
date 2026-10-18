@@ -1,0 +1,14 @@
+### 71.5 A positive-error branch obstruction and scope
+
+Fix an integer r with 1≤r<k/3, and define
+
+    a=(k/(3r)−1)/(k−1)>0,    B=18√20.
+
+Every implementation with at most r positive product branches obeys the explicit necessary condition
+
+    δ ≥ [2a/(B+√(B²+40a))]².                            (16)
+
+Indeed, (2) implies M_k(δ)≥k/(3r), hence 10δ+B√δ≥a. Solving this quadratic in √δ, with a rationalized positive root, gives (16). It applies to unrestricted physical channels, all coherent logical inputs and arbitrary reference systems. It does not presume that approximate branches retain exact fibre outputs or a common physical environment plane.
+
+The exact δ=0 cap and its MUB/Bloch resource interpretation are supplied by §66; its classical mutually unbiased basis and traceless-projector ingredients are credited there, including [Boykin, Sitharam, Tiep and Wocjan](https://arxiv.org/abs/quant-ph/0506089) and [Pittenger and Rubin](https://arxiv.org/abs/quant-ph/0308142). The diamond-norm convention is [Watrous, The Theory of Quantum Information, §3.3](https://cs.uwaterloo.ca/~watrous/TQI/). Section 70 treats one product and four fibres with a stronger numerical lower bound and an explicit upper construction. The present theorem supplies a different resource conclusion: simultaneous quantitative control of every shared weight, the branch count and the entropy for arbitrary k and finite mixtures. It asserts no matching positive-error construction or general RT recovery theorem.
+

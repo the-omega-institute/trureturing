@@ -1,0 +1,29 @@
+**Theorem 4.1 (a sharp two-call scalar instance).** Fix $D\ge2$.
+For a common source-independent initial state, exact computation of
+$V_t(RR)$ on every $t\in\mathcal F_D$ requires at least two
+original-root Reads in the worst case, even with arbitrary off-target
+words. Theorem 2.2 attains two.
+
+Proof. Consider $t=\langle\alpha,v\rangle$ for
+
+$$
+v=\alpha,\quad\beta,\quad
+\langle\alpha,\alpha\rangle,\quad
+\langle\alpha,\beta\rangle.
+$$
+
+Their required virtual replies at $RR$ are respectively
+$\mathsf{absent},\alpha,\beta,\mathsf{branch}$.
+The first two actual sources have identical replies at every word
+except $R$. A correct procedure with at most one call must therefore
+make that call at $R$: with constant entry its choice cannot depend
+on the unknown source. But the last two sources both reply branch
+at $R$ and require different outputs. This is a contradiction.
+All four actual sources are in the promised family, and $RR$ is
+an original allowed target at $D\ge2$. The upper bound follows
+from (NVC.7). $\square$
+
+This is a scalar fixed-count response lower bound with constant
+advice. It is not a lower bound against the original paid
+preparation/one-late-Read service with a nonconstant acquired export.
+

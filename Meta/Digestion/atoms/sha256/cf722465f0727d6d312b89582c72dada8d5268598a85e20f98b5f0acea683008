@@ -1,0 +1,77 @@
+**Proposition 10.1 (complete acquired names for the cyclic fibers).**
+Fix $d\ge2$ and an even $N\ge4$, put $H=\lceil\log_2N\rceil$,
+$K=2^H$ and $D=d+H$. The cycle of
+Definition 7.2 has the full-family paid realization of [COK, Proposition
+23.2 and Convention 23.4][GCBCOK], with exactly
+
+$$
+R_D=|S_D|-2^N+1
+\tag{GCB.32}
+$$
+
+complete attained names on every variable-shape source in $\mathcal F_D$.
+One sufficient source-blind preparation uses, on every source,
+
+$$
+T_{\rm prep}=2^D-1,\qquad Q_{\rm prep}=D,\qquad
+A_{\rm prep}=(D-1)2^D+1.
+\tag{GCB.33}
+$$
+
+Every permitted late target is answered using zero Reads or one actual
+original-root Read of length at most $H+2\le D$, chosen before its
+reply and every authentic count. These are credited sufficient
+construction costs and an attained nonoptimal code, not acquisition
+minima or a value of $M_1(D)$.
+
+Proof of the resource correspondence. Put the $N$ actual blocks at the
+first $N$ public frontier addresses $a_i$, $|a_i|=H$, of a perfect
+scaffold with $K$ slots in the right subtree of
+$t=\langle\alpha,v\rangle$; pad the other $K-N$ slots by alpha.
+A single cycle of
+the relative matching in COK Proposition 21.2 gives this even cycle,
+up to the relabelling in Definition 7.2. At dyadic $N$ there is no
+padding. The $2^N$ displayed canonical scaffold states are distinct members
+of $S_D$.
+
+Before receiving a target, the deterministic preparer actually submits
+every original-root word $Rq$, $q\in W_D$, including absent replies,
+in a fixed public order. These replies compute the credited canonical
+completion $\pi_D(v)$. Merge exactly the displayed $2^N$ canonical
+states into one fixed-width name and assign each other canonical state
+its own name. Every name is attained because $\pi_D$ fixes $S_D$
+and each of those canonical trees is an actual allowed right subtree.
+This proves (GCB.32); the full-family fibers are the corresponding
+inverse images under $\pi_D$. The name uses
+$\lceil\log_2 R_D\rceil$ bits. Counting actual scan words gives
+$\sum_{l=0}^{D-1}2^l=2^D-1$ Reads and
+$\sum_{l=0}^{D-1}(l+1)2^l=(D-1)2^D+1$ submitted letters.
+
+After a singleton name, all requested canonical factors are installed
+and no Read is needed. After the merged name, a target above the
+frontier or at a true block root has constant branch factor. A request
+in a padded slot uses its fixed full alpha-leaf factor at the requested
+suffix, with no Read. Every remaining request is $Ra_iLr$ or $Ra_iRr$.
+The former queries $Ra_iL$ and
+the latter queries $Ra_{i-1}L$. These are literal words on the same
+stationary original source, of length $H+2$, not queries to a new
+subtree root. Its one reply and the public suffix $r$ determine the
+factor (GCB.12). These cases exhaust all requests of length at most
+$D$, including initially absent suffixes. Canonicalization preserves
+the queried replies and every requested full factor. Its scaffold and
+owner occurrences are actually present, so homomorphic transport at
+those occurrences, with COK's stated presence premise, applies at every
+authentic subsequent count. The credited factor decoder then supplies
+the entire required trajectory without another Read.
+
+The scaffold, cyclic ordering, pairing and all tables are fixed public
+installation. They are never source-varying free descriptors. Export
+only the fixed-width name. The public allocation, fixed scan and padded
+finite membership schedule accompany the declared paid handoff and
+isolation of every other acquired distinction: constructor arrays,
+selectors, buffers, lengths, control, transcripts and accessible timing.
+Any extra surviving distinction would have to enlarge the complete
+counted alphabet. This is precisely the credited COK construction;
+neither the norm calculation nor its analytical replicas add an
+operational port. $\square$
+

@@ -1,0 +1,21 @@
+**Definition 3.1 (first-leaf acquisition).** Start an attempt with an empty
+record and a stack containing only $\varepsilon$. Pop $p$, issue
+$\operatorname{Read}(p)$, and retain $(p,r_U(p))$ in order.
+On branch, push $pR$ then $pL$, giving left-first depth-first traversal.
+On a leaf, add no children. Save the first leaf pair $(q,\ell)$.
+An absent reply rejects a purported transcript and is never reconstructed
+as a leaf.
+
+When the stack is empty the recorded constructor grammar determines a
+finite tree $T$. Issue one additional $\operatorname{Read}(q)$,
+designated $v$. Accept $T$ and this attempt's transcript if the reply
+is $\ell$. Otherwise discard the attempt's guard, stack and description
+and restart. After acceptance compute the complete $R_P(T)$ by literal
+exterior extraction and structural comparison of acquired subtrees,
+then Return. No failed-attempt archive or failure count is needed to retry.
+
+This is one uniform effective read-only procedure. Pending literals,
+guard, labels, partial tree and control are actual executable records.
+It neither selects a leaf by consulting the unknown source nor predicts
+a traversal length from an unprovided size bound.
+

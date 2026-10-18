@@ -1,0 +1,53 @@
+**Definition 1.2 (source and late-target task).** Let
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\qquad
+\operatorname{ht}(\alpha)=\operatorname{ht}(\beta)=0,
+\qquad
+\operatorname{ht}(\langle u,v\rangle)
+=1+\max\{\operatorname{ht}(u),\operatorname{ht}(v)\}.
+$$
+
+Pairing is free and ordered. A literal Read at any finite original-root
+word in $\{L,R\}^*$ returns its constructor, or absent after a leaf,
+in $\mathcal A=\{\alpha,\beta,\mathsf{branch},\mathsf{absent}\}$.
+The empty word is legal. Set
+
+$$
+\begin{aligned}
+\rho(\alpha)&=\beta,&
+\rho(\beta)&=\langle\beta,\alpha\rangle,&
+\rho(\langle u,v\rangle)&=\langle\rho(u),\rho(v)\rangle,\\
+\mathcal F_D&=\{\langle\alpha,v\rangle:\operatorname{ht}(v)\le D\},&
+W_D&=\{q\in\{L,R\}^*:|q|\le D-1\},&
+\mathcal P_D&=\{Rq:q\in W_D\},
+\qquad D\ge1.
+\end{aligned}
+\tag{WBF.1}
+$$
+
+One actual initial $t\in\mathcal F_D$ stays stationary throughout
+preparation and late acquisition. Preparation is one deterministic
+effective procedure, initially source-blind, depending on public $D$
+but not on the later target. It terminates on every source and obtains
+source dependence only through charged literal Reads. It exports a
+finite complete name $E(t)$. All accessible surviving source distinctions,
+including control, selectors, buffers, lengths, allocation and accessible
+timing, belong to that name. Separately paid handoff and isolation
+services make every other preparation distinction and transcript
+inaccessible. These services are assumptions about the interface.
+
+Only after export, a public source-independent $p\in\mathcal P_D$
+arrives. The deterministic reader uses $E(t),D,p$ and installed public
+tables, and makes zero Reads or one Read of the same stationary source
+at any finite original-root word chosen before its reply and before
+every supplied count. Its final predictor must return
+$r_{\rho^kt}(p)$ for every subsequently supplied authentic $k\ge0$,
+without further Reads, simultaneously for every $t$ and $p$.
+There is no subtree, equality, source-identity, hidden-age, navigation,
+reset, copying or free-advice port. The minimum complete attained alphabet
+is $M_1(D)=\min |E[\mathcal F_D]|$. The minimization does not discard
+variable shapes or restrict competitors to independent child codes or
+on-target queries. Other resources are specified in Section 8.
+

@@ -1,0 +1,9 @@
+**Definition 44.1 (class, constants and fixed-input convention).** Retain the original real input and output bases of Definition 1.1. In Sections 44–46, $N:M_3\to M_5$ is an actual real-Kraus CPTP channel with phase-difference spectrum $(1/2,1/2,0,-1/2,-1/2)$ and actual Kraus rank exactly two. Set
+
+$$
+c=\frac1{\sqrt2},\qquad T=\frac{1+c}{2},\qquad d=1-T=\frac{1-c}{2},\qquad
+\mathcal C=\operatorname{span}\{|0\rangle,|1\rangle\}.
+$$
+
+The recovery variable always ranges over all complex CPTP maps $R:M_5\to M_3$ on the whole output. For an actual input density $\rho$, $p(\rho)=\max_R F_e(\rho,RN)$ is squared fixed-input entanglement fidelity as in (R.30)–(R.31). The quantity $g_N$ is root channel fidelity minimized over input purifications, and $\delta_N$ is the unhalved diamond error with every finite complex reference allowed. Restricting the encoder class here imposes no corresponding restriction on recoveries or references.
+

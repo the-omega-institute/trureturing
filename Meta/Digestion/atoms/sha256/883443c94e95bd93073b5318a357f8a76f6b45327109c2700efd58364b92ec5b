@@ -1,0 +1,11 @@
+**Definition 7.1 (retained group graph).** For each integer $m\ge0$, let $\mathcal H_m$ have
+the vertices of $\mathcal P$ with $\gamma(v)\le m$ and just
+the edges with $\gamma(e)\le m$. The endpoints of every such
+edge are in this vertex set. An isolated retained vertex is a
+component. For each component $C$ put
+
+$$
+J(C)=[\min_{v\in C}\kappa^Tv,\max_{v\in C}\kappa^Tv].
+\tag{FC.21}
+$$
+

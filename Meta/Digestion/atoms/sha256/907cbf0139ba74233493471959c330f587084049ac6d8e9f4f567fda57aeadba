@@ -1,0 +1,12 @@
+**Convention 1.1 (the question and the result).** An external choice becomes
+part of a machine's acquired information when its input operation executes.
+That occurrence can precede its tape write, a complete request, a source
+response, a producer row seal, and acquisition by a different owner. The
+results below concern those distinct cuts of one actual source execution.
+They give a sufficient reconstruction code through every primitive cut of the
+lawful canonical-frame histories of a specified serial runtime, and a sharp
+conditional information requirement on actual equal-clock unfinished-request
+families. They do not give four global
+exact kernels for spatial support, time, continuation boundary, and callable
+memory.
+

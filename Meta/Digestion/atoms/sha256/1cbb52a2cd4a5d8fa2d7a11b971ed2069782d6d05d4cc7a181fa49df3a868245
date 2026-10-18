@@ -1,0 +1,53 @@
+**Definition 5.2 (Exact finite dual-certificate equations).** At level
+$n=52$, use the natural isometric occupation-basis embeddings
+
+$$
+\begin{aligned}
+V_n &: I\otimes\operatorname{Sym}^n(O)\longrightarrow
+I\otimes O^{\otimes n},\\
+V_h &: I\otimes\operatorname{Sym}^{26}(O)
+\otimes\operatorname{Sym}^{26}(O)\longrightarrow
+I\otimes O^{\otimes52}.
+\end{aligned}
+\tag{5.6}
+$$
+
+For a Hermitian supported extension variable $W$, let
+$\mathcal B(W)$ be the output-first marginal of $V_nWV_n^\dagger$
+on $O_1\otimes I$, and let
+
+$$
+\mathcal G(W)=V_h^\dagger
+(V_nWV_n^\dagger)^{\Gamma_{O_{27}\cdots O_{52}}}V_h.
+\tag{5.7}
+$$
+
+The support in Proposition 6.2 makes $\mathcal G(W)\succeq0$
+equivalent to the embedded half-transpose condition. Adjoint maps
+$\mathcal B^\dagger,\mathcal G^\dagger$ refer to the real
+Hermitian trace pairing; they are fixed finite linear maps. An exact
+dual certificate consists of matrices $A_J^\pm\succeq0$ of order
+five, a Hermitian matrix $Q$ of order $25$, a positive matrix $R$
+on the half-symmetric support, and $y\in\mathbb R^3$, satisfying
+
+$$
+\begin{gathered}
+\sum_J\operatorname{tr}(A_J^++A_J^-)=1,\qquad R\succeq0,\\
+P:=\mathcal B^\dagger(Q)-\mathcal G^\dagger(R)\succeq0,\\
+Z_J=A_J^+-A_J^-,\qquad
+\beta=\sum_J\operatorname{tr}(Z_J\Pi_J),\qquad
+\mathcal L(x)=\sum_J\operatorname{tr}(Z_JS_x^\dagger(\Pi_J)),\\
+\mathcal L(x)+\operatorname{tr}(Q\chi(x))
+=y^TM^T\tau\quad\text{for every }x=(M,\eta)\in\mathbb R^{15},\\
+a=\beta-\tau^Ty.
+\end{gathered}
+\tag{5.8}
+$$
+
+The linear identity in (5.8) is a finite coefficient condition:
+it is checked on the fifteen coordinate basis vectors of (1.7).
+The positive matrices $P$ and $R$ concern the full supported extension
+and its half-transpose, respectively. This is the usual conic weak-dual
+certificate specialized to (1.9), (2.1)–(2.3); no dual attainment
+or numerical status is part of its definition.
+

@@ -1,0 +1,32 @@
+**Theorem 11.6 (exactly-$q$-label two-read service for every legal lag).**
+For every $1\le q\le17$, Definition 11.1 supplies a genuinely
+acquired deterministic encoder with exactly $q$ attained labels and
+a decoder using at most two actual chronological original-root Reads,
+for every original, both singleton visible regions, and separately
+$\ell\ge0$ and $\ell\ge1$.
+
+**Proof.** Proposition 11.2 proves the attained alphabet. Theorem 11.5
+supplies both full positive certificates and every required complete
+zero certificate. Invoke Theorem 10.2 with $k=2$, rather than
+extrapolating a bounded selection of lag values. At runtime the
+controller enumerates the public class, restricts it to the complete
+acquired fiber of Theorem 5.2, and chooses either its certified zero
+tree or the lawful translated reference tree using only the label,
+visible region, normalized acquired clock and public lag convention.
+Every actual reply is evaluated on the same stationary original's
+current tree and is mapped, if required, exactly as in Theorem 10.2.
+The original's index survives every restriction. The terminal common
+target $v$ therefore equals that original's visible-origin coordinate,
+and $z-v$ is its actual lag.
+
+All requested words are the hidden-slot prefix followed by the
+materialized representative (NARC.5.8), or the hidden-slot word
+itself for $E$. No source-bearing part of the discarded initial row
+is consulted, no $P_1$ is issued, and no age, equality or subtree
+oracle is used. The right original offset changes to the actual $q$
+in every prefix: its left-hidden full reference is $h=2q+1$, and
+its later translated age is $q+z+b-a$. These are the states proved
+in Theorem 11.5 and the correspondence used in Theorem 10.2;
+smaller-$q$ source correctness is not asserted merely from a subset
+of seventeen-offset sources. $\square$
+

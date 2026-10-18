@@ -1,0 +1,10 @@
+**定义 33.1.2（被动签名）。** 对模型 $M$，令
+
+$$
+\mathsf O(M)=\operatorname{Law}_M(X_1,\ldots,X_n)
+$$
+
+为完整被动联合律。两个模型若 $\mathsf O(M)=\mathsf O(N)$，称它们被动观测等价。
+
+<a id="claim-33-1-3"></a>
+

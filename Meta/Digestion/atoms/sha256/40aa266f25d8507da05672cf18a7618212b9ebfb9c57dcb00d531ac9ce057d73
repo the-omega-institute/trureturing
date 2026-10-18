@@ -1,0 +1,30 @@
+**Corollary 12.1 (remaining common-drift terminal-nonzero triples).**
+If three distinct worlds $K\subseteq\mathcal F^{\ne0}_7(H)$
+have common drift and $L_2(K,H)$, then necessarily
+
+$$
+\begin{gathered}
+f_i(6)=0,\quad f_i'(6)\ne0\quad(i=1,2,3),\\
+d\in(24,48)\cup(72,96),\qquad d\ne y_4,\zeta,\\
+\Delta(A)=\Delta(B)=\Delta(C)=\Delta(D)=0.
+\end{gathered}
+\tag{12.1}
+$$
+
+Their normalized terminal gains have one common sign. The whole
+system (7.1)–(7.7) and both late readings still hold on these same
+fixed worlds. Its only remaining sixth template is TT.
+
+Proof. Corollary 9.2 forces all sixth gains zero. The scalar
+injection and actual decoder of Theorem 11.2 and Corollary 11.3
+exclude $d\in\mathcal S$. Lemma 11.1 excludes $d=y_4$ or
+$d=\zeta$, since either gives at most two worlds. Proposition 7.2
+then supplies exactly the TT collision products. The repeated-sixth
+root ranges in
+[Zero-Sixth Geometry, Theorem 2.1](FIB_JMMJM_ZERO_SIXTH_ROOT_RIGIDITY_AND_TERMINAL_COLLISION_GEOMETRY.md)
+are $d<0$, $0<d<24$, or $48<d<312/5$. Both surviving windows
+are disjoint from them, so every sixth root is simple. Its
+Theorem 6.1, or Zero-Sixth Pairs, Section 6, gives the common
+terminal sign on this same triple. No condition here proves
+existence. ∎
+

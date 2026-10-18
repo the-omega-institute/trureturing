@@ -1,0 +1,6 @@
+## 85. Second-order stability against original bilateral rank-raising paths
+
+This result does not assume a qubit-core factorization of either perturbed correct-output Gram. It concerns paths through any section-82 quarter-error equality pair having a rank-two party. Original output leakage and arbitrary finite environment dimensions are permitted.
+
+The small parameter measures a smooth Stinespring amplitude. A channel mixture with new Kraus weight proportional to t generally has new-environment amplitude sqrt(t) and is not covered by the C^2-in-t hypothesis below. Nonnegative second-order curvature does not exclude higher-order improvement or imply full local minimality.
+

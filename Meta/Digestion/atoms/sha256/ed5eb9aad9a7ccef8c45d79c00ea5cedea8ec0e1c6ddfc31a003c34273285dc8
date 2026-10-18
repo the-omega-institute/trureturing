@@ -1,0 +1,23 @@
+### 103.5. The normalized norm-conic Artin comparison
+
+**Theorem 103.2.** Impose the full hypotheses of §100: N=3^j>=81, B_N=D C^2 with arbitrary C>0 and complete squarefree kernel D=p_0...p_s, s>=1, p_0=19 modulo 24, p_i=1 modulo 24 for i>=1, and every mutual Legendre symbol +1. Actual support also gives p_i>5, (5/p_i)=1 and the original orders in section 103.3.
+
+For each i>=1 take any permitted primitive certificate
+
+ a_i^2-p_i b_i^2=5D c_i^2, c_i>0,
+ p_j not dividing b_i c_i for j>=1 different from i.
+
+Put p=p_i, e=D/p, m=-5e, write a_i=p k, and set
+
+ gamma=b_i+k sqrt(p), E_i=Q(sqrt(p),sqrt(m)).
+
+There is a uniquely specified epsilon_i in {1,-1,2,-2} at the dyadic squareclass level such that
+
+ F_i=E_i(sqrt(epsilon_i gamma))
+
+is an everywhere-unramified quadratic extension of E_i. It is Galois over Q with group D4 of order eight, and E_i is its maximal abelian subfield. At every prime P of E_i above p_j, j>=1, its relative Frobenius sign is
+
+ Frob_P(F_i/E_i)=(-1)^(H_ij),
+
+where H is exactly the mixed matrix of §100. These are relative Frobenius elements; the underlying rational p_j can ramify in F_i/Q.
+

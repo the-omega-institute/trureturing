@@ -1,0 +1,28 @@
+**Definition 2.1 (constructor mass and occurrence edges).** Let
+$\gamma(u)$ be the number of $F$ occurrences in $B(u)$. Thus
+$\gamma(u)=0$ exactly when $u=T_j$ for some $j$, and
+$\gamma(\rho^a u)=\gamma(u)$.
+
+A normalized template is a finite expression built from concrete leaves,
+ordered pairs and decorations $\rho^a(x)$, with powers distributed through
+pairs as in [ARH, Definition 19.1][ARH]. Consider any conjunction of
+mandatory positive equations between these templates. Cancel equal pair
+heads to expose their two conjuncts. For each exposed equation that can
+be oriented as
+
+$$
+\rho^a(x)=A,
+\tag{CAR.8}
+$$
+
+put an edge $x\longrightarrow y$ for every occurrence $\rho^b(y)$ in
+$A$. Mark the edge strict when that occurrence lies below at least one
+pair constructor. When both orientations have a decorated-variable head,
+include both. Duplicate edges cause no difficulty. Do not extract edges
+from a disequality, an atom under a disjunction or negation, or a target
+comparison whose truth has not been acquired.
+
+A positive constructor cycle is a directed cycle containing a strict
+edge. Its forward closure is the set of vertices reachable from any such
+cycle, including its vertices.
+

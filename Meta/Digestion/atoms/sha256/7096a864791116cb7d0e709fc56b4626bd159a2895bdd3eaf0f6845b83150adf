@@ -1,0 +1,27 @@
+### 110.5. The original complete norm and sharpness
+
+Apply the finite matrix argument to the transitive correct-output Gram in Theorem 110.1. It supplies a regular order-eight symmetry of that same Gram and of the same original four-fibre partition. Corollary 109.3 now gives (110.4).
+
+In particular, the argument does not replace the original channels by an averaged pair. The calibrated one-party consumer fixes the invariant Gram, and only its opposite is averaged when estimating the convex arbitrary-reference objective. For leaking original channels the completion from §§107–109 is
+
+$$
+\mathcal C(G)=G+\bigoplus_f(I_2-G_{ff}),\qquad
+\mathcal C(H)=H+\bigoplus_f(I_2-H_{ff}).
+\tag{110.13}
+$$
+
+This completion preserves every fibre-preserving permutation symmetry of its argument. The tagged-reference lower bound and positive Schur order give the original inequality
+
+$$
+\delta(A,B)\geq \mathcal B(T-G\odot H)
+                \geq F(\mathcal C(G),\mathcal C(H))
+                \geq\sqrt2-1,
+\tag{110.14}
+$$
+
+with the definitions and original normalization of RT III §91. No rank-preservation assertion about this completion is used. Reciprocal diagonal unitary phases leave the physical product coefficients unchanged, and fibre-preserving relabelings simultaneously reindex the target and product. Thus the stated sufficient gauge condition inherits the same conclusion; it does not assert that arbitrary monomial symmetry actions admit such a gauge.
+
+The calibrated cyclic attainer in Theorem 107.1 has ranks $(3,3)$, belongs to this transitive-symmetry class and attains $\sqrt2-1$. The exact-rank cyclic approximation families in that theorem have ranks $(7,4)$ and $(7,5)$, a unique full-support first kernel, and errors tending to $\sqrt2-1$. They give the upper infima in these subclasses, while (110.4) gives the matching lower bound. These are infima in the union of transitive symmetry classes; they do not assert sharpness of the noncentral dihedral subclass alone.
+
+The assumption that one original Gram has a transitive fibre-preserving symmetry is substantive. No averaging of a generic pair into this class, no common-stress or local-minimum property of the approximation families, and no unrestricted global-quarter conclusion follows. This completes the proof.
+

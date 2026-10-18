@@ -1,0 +1,17 @@
+**Lemma 6.1 (bounded raw reads give finitely many outputs).** On any
+nonempty domain with the common-state and action contract of
+Assumption 1.2, a source-total service with a uniform bound $K$ on raw
+reads has at most $4^K$ different outputs. This applies to the full row,
+the exterior output or the whole original source.
+
+Proof. At a reachable reply history the computation until the next read
+or halt, including its update schedule and submitted word, is fixed by
+that history and the common input. It is finite because at least one
+source reaches it and the service terminates on that source. Updates
+have no source-dependent reply. Unroll the reachable histories into a
+four-child tree of read depth at most $K$, making unreachable children
+halts. A halt has a fixed output. A four-ary tree of depth at most $K$
+has at most $4^K$ leaves, also when some branches halt early. This is
+the operational part of ARH (2.3); it uses no literal-only feasibility
+or uniform computation-time assumption. $\square$
+

@@ -1,0 +1,55 @@
+**Lemma 11.1 (center points, forced row segments and anchor ranks).**
+Under Assumption 10.1, the actual classes satisfy
+
+$$
+\begin{aligned}
+&(9,t)\in C_t &&(0\le t\le18),\\
+&(a,t)\in C_t
+ &&\bigl(\min(t,9)\le a\le\max(t,9),\ a\in\mathbb Z\bigr),\\
+&S_0^a=[0,9]_{\mathbb Z},\qquad
+ S_{18}^a=[9,18]_{\mathbb Z}.&
+\end{aligned}
+\tag{NAGC.11.1}
+$$
+
+For every $(a,b)\in C_t$, one has $b\ge t$ if $a<9$ and
+$b\le t$ if $a>9$. The zero-based rank of $t$ in the increasing
+list of $S_t^b$ belongs to $\{0,3,6,9\}$.
+
+**Proof.** Proposition 8.3 supplies one point $(9,b_t)$ from each
+class on $a=9$, with all $b_t$ distinct. The belt inequality in
+[NARC, Theorem 14.3, part 1][NARC] gives $b_t\le t$ for
+$t<9$, and $b_t\ge t$ for $t>9$. Also $b_9=9$ by the anchor.
+For $t=0$, the former inequality forces $b_0=0$. Inductively,
+if the values $0,\ldots,t-1$ already belong to their respective
+classes, distinctness and $0\le b_t\le t$ force $b_t=t$.
+This proves the assertion for $t<9$. Descending induction from
+$t=18$, using $t\le b_t\le18$, gives the assertion for $t>9$.
+Thus $(9,t)$ is the actual center-line point of $C_t$.
+
+The first coordinate never decreases along a chosen path and the
+second never increases. Every point of $C_t$ with $a<9$ is
+therefore before $(9,t)$ and has $b\ge t$; every point with
+$a>9$ is after it and has $b\le t$.
+
+Now fix an integer $t\le a<9$ and let $C_j$ own $(a,t)$ in
+the complete cover. The belt gives $t\le j\le a$, while the
+preceding inequality applied to $C_j$ gives $t\ge j$.
+Hence $j=t$. For $9<a\le t$ the belt instead gives
+$a\le j\le t$ and the center-line inequality gives $t\le j$,
+again forcing $j=t$. The cases $a=9$ are already known.
+This proves the entire row segment in (NAGC.11.1): every indicated
+cell has its owner fixed within this same cover.
+
+For $t=0$ and $18$ these segments contain ten distinct first
+coordinates. Each projection has exactly ten elements by Definition
+7.1, so they exhaust $S_0^a$ and $S_{18}^a$ respectively.
+
+No $B$ edge can be incident to $(9,t)$, because it would give
+a second point of $C_t$ on $a=9$. Every $B$ triple is consequently
+entirely before or entirely after that point. The number of $B$
+changes after it is one of $0,3,6,9$. Each such change reaches a
+new and strictly smaller second coordinate; these are precisely
+the elements of $S_t^b$ smaller than $t$. Their number is its
+zero-based rank, proving the last assertion. $\square$
+

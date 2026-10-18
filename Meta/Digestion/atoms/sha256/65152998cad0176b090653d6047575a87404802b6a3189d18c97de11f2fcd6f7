@@ -1,0 +1,104 @@
+**Proposition 36.1 (one actual read consumes two locally certified classes).**
+Take the full original input
+
+$$
+\begin{gathered}
+P=\{L,R\},\quad C=\langle\square_1,\square_2\rangle,
+\quad\pi=\{\{1\},\{2\}\},\\
+H_0=((0,L,\mathsf{branch}),(0,R,\mathsf{branch})),\\
+e_L=(0,L,1,LL,=),\quad e_R=(0,R,1,RL,=),\\
+d_1=(0,L,1,R,\ne),\quad d_2=(0,L,2,R,\ne),\\
+H_{\rm rel}=(e_L,e_R,d_1,d_2),\quad N=2,\\
+Q=\{LLL,LLR,LR,RL,RR\}.
+\end{gathered}
+\tag{LAC.36.1}
+$$
+
+Its entire original fiber is
+
+$$
+U=\{\langle T_i,T_j\rangle:i,j\ge2,\ i-j\notin\{0,1,2\}\}.
+\tag{LAC.36.2}
+$$
+
+It has exactly the following two complete target rows. Number holes by
+the displayed reached addresses in order.
+
+$$
+\begin{array}{c|c|c|c}
+\text{case}&\text{reached cuts}&\text{concrete exterior}&\text{partition}\\\hline
+i=2&LR,RL,RR&
+ \langle\langle\beta,\square_1\rangle,
+              \langle\square_2,\square_3\rangle\rangle&
+ \{\{1\},\{2\},\{3\}\}\\
+i\ge3&LLL,LLR,LR,RL,RR&
+ \langle\langle\langle\square_1,\square_2\rangle,\square_3\rangle,
+              \langle\square_4,\square_5\rangle\rangle&
+ \{\{1,3\},\{2\},\{4\},\{5\}\}.
+\end{array}
+\tag{LAC.36.3}
+$$
+
+At actual entry epoch two, $\mathsf{Read}(LRR)$ selects the first row
+on reply $\alpha$ and the second on $\beta$ or branch. The service then
+outputs that whole row and halts, using one new read, zero new updates
+and one submitted address of length three.
+
+Proof. Both local certificates have suffix $L$, $n=0$ and $m=1$.
+Proposition 33.2 forces each original child to be atomic of index at
+least one. The two retained literals strengthen both bounds to two.
+The old partition imposes $i\ne j$. At the same source the two additional
+records compare $T_i$ with $T_{j+1}$ and $T_{j+2}$ respectively, giving
+exactly the remaining excluded differences.
+
+Conversely every displayed pair has the old branch exterior and distinct
+children. Its epoch-zero literals are branch. At epoch one the reached
+subtrees at $LL$ and $RL$ are $T_i$ and $T_j$, since $i+1,j+1\ge3$;
+the two local positive predicates therefore hold with both endpoints
+present. The $R$ endpoint of each negative record is an originally
+reached child and persists at epochs one and two. The stipulated
+inequalities make both negative signs true. Thus every tree in
+(LAC.36.2), and no other finite source, satisfies the entire input.
+No tree in this fiber is globally atomic: an atomic native pair with
+children $T_i,T_j$ would require $i=j+1$, which $d_1$ excludes.
+
+When $i=2$, the original $LL$ subtree is $\beta$, so $LLL$ and $LLR$
+are absent; that concrete $\beta$ remains outside. The three reached
+hole values are $T_0,T_{j-1},T_{j-2}$. Here $j\ge3$ by the old
+disequality, making all three different. This gives the first whole row.
+When $i\ge3$ all five cuts are reached, with ordered values
+
+$$
+T_{i-2},\quad T_{i-3},\quad T_{i-2},\quad T_{j-1},\quad T_{j-2}.
+\tag{LAC.36.4}
+$$
+
+The first and third always agree. They differ from the second; the
+fourth differs from the fifth. A cross-equality between the left and
+right groups requires, respectively, $i-j=1$, $0$, $2$ or $1$.
+All are excluded in (LAC.36.2), so the second complete partition in
+(LAC.36.3) exhausts every pair comparison. The exterior is the fixed
+displayed trie. Both rows occur, for example at $(i,j)=(2,4)$ and
+$(3,4)$.
+
+At epoch two the actual source is $\langle T_{i+2},T_{j+2}\rangle$.
+The physical address $LRR$ enters the original left child and follows
+two right edges. Its guard is $i+2\ge4$, and its whole subtree is
+$T_{i-2}$. Its actual root reply is therefore $\alpha$ for $i=2$,
+$\beta$ for $i=3$, and branch for $i\ge4$. This proves the service on
+every source in the fiber. In the arithmetic decision one may also use
+$K=3$: equal clipped pairs agree on whether $i=2$, which by the derived
+whole rows is the only remaining target distinction. This explicitly
+consumes the joint domain and complete-target interpretation.
+
+For acquisition, use Proposition 2.1 with precisely the public coordinate
+schedule in (LAC.36.1). At epoch zero acquire the old row, the stipulated
+literals and the required original endpoint descriptions. After one
+actual update acquire the whole subtrees at $LL$, $RL$ and $R$ needed
+there; after the next update acquire the $R$ endpoint for $d_2$.
+Compute the signs from these paid descriptions and impose the complete
+cut at $N=2$. The proposition gives both source directions for that
+retained outcome. No description, rank or forgotten traversal field is
+available to the post-cut one-read service. Its acquisition and cut
+hypotheses are precisely Assumption 1.3. $\square$
+

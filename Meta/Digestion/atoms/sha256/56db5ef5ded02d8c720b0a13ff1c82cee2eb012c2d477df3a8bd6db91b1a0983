@@ -1,0 +1,73 @@
+**Lemma 5.2 (sequential likelihood and fixed-record scores).** Conditional
+on $P_s,b,z$, use the future real increments $y_1,\ldots,y_N$ as
+coordinates. Put $t_0=s$. Recursively each $t_i$ is a Borel function
+of $P_s$ and $y_1,\ldots,y_{i-1}$, and $t_N=\tau$. The likelihood is
+
+$$
+\mathcal L_z(y)=\prod_{i=1}^N p_{V_i(z)}(y_i),\qquad
+V_i(z)=\int_{t_{i-1}}^{t_i}a_\kappa(K^z_{u-s})du.
+\tag{5.4}
+$$
+
+It is relative to $N$-dimensional Lebesgue measure on each past fiber
+and integrates to one. Holding $P_s,b,y$ fixed holds every timestamp,
+branch and the count $N$ fixed as $z$ varies. In an interior region
+where $K^z$ stays in $I$, its score is $\sum_i U_i$, where
+
+$$
+\begin{aligned}
+V_i'(z)&=\int_{t_{i-1}}^{t_i}a_\kappa'(K^z_{u-s})\frac{u-s}{h}du,\\
+U_i&=\frac{V_i'}{2V_i}\left(\frac{y_i^2}{V_i}-1\right),\\
+\mathbf E(U_i\mid P_s,b,z,y_{<i})&=0,\qquad
+\mathbf E(U_i^2\mid P_s,b,z,y_{<i})=\frac{V_i'^2}{2V_i^2}\le C.
+\end{aligned}
+\tag{5.5}
+$$
+
+All endpoint derivatives hold the known $\kappa$ fixed. These assertions
+require no continuity or differentiability of a timing
+function in its history variables, and are uniform in all positive
+spacings.
+
+Proof. Conditional on the full height path, $W^2$ remains Brownian.
+Enlarge its filtration initially by this independent path and the seed.
+Each query time is a stopping time in that filtration: its next endpoint
+is already measurable at the preceding query and is later than it.
+After conditioning on $P_s,b,z$, the future height coefficient is
+deterministic and the future driver after $s$ is still Brownian,
+independent of its past. At each subsequent query, Brownian strong
+Markov independence and the endpoint already chosen at that query
+give the centered normal kernel with variance in (5.4). Conditioning
+further down to the preceding queried record leaves that same kernel,
+because its variance is a function of just that record and the fixed
+height. Induction proves the product formula. Repeated integration
+from the last coordinate backward gives mass one, even though the
+variances and endpoints depend on preceding coordinates. One is not
+conditioning on a whole endogenous vector of timestamps and asserting
+independent increments afterward.
+
+The policy uses the reconstructed wrapped values from the fixed past
+and preceding $y$ values. It does not use $z$. Thus fixed $P_s,b,y$
+fixes all integration endpoints in (5.4). Differentiation in $z$
+gives (5.5) and (3.2) gives its conditional moments. The completed
+policy is valid at every such history, so no $z$-dependent record-space
+boundary appears. Finally
+$V_i\ge a_-(t_i-t_{i-1})$ and
+$|V_i'|\le C(t_i-t_{i-1})$, giving the uniform bound in (5.5) even
+for arbitrarily small spacings. The $U_i$ are martingale differences
+in the sequential record. Hence their cross moments vanish and
+
+$$
+\int\left(\sum_i U_i\right)^2\mathcal L_z(y)dy\le Cn,
+\qquad
+\int|\partial_z\mathcal L_z(y)|dy\le C\sqrt n.
+\tag{5.6}
+$$
+
+The second bound follows by Cauchy--Schwarz. In particular the
+likelihood derivatives are integrable. For fixed record the density
+is smooth in $z$ on interior compact supports, irrespective of its
+mere Borel dependence on $y$. Integrating (5.6) over a compact $z$
+support justifies Fubini and differentiation in the integrated
+one-dimensional identities below. $\square$
+

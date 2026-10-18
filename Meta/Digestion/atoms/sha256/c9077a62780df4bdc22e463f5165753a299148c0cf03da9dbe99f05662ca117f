@@ -1,0 +1,43 @@
+**Lemma 4.3 (D2 extraction without a registry or image sidecar).** For every
+$h\in\Omega_2$, finite word operations on its M-body and the fixed public
+code extract
+
+$$
+\bigl(\operatorname{code}(u),J_0(h),J_1(h),A(h),n(h)\bigr).
+\tag{PVC.6}
+$$
+
+$J_0$ is old variable ingress before Install, $J_1$ installed external
+ingress, $A=\bot$ before Install and otherwise the actual number of completed
+old frames at activation, and $n$ the absolute receipt count. The occupied
+variable bit occurs exactly once in its appropriate reservoir.
+
+Proof. Recover $u$ from the authentic no-update rows/backing by the original
+preorder acquisition, using its original preparation/fence rather than a
+later private packet. This is SSA Proposition 2.1 and CSA Lemma 5.3's
+acquisition case. Count existing meter receipts to obtain $n$; the finite
+serialized meter end is part of this old body.
+Only the basic selected structures are used here; the later cover/package
+fold of Definition 4.2 is not a premise of extraction or replay.
+
+Before activation AIF Theorem 4.2 gives old written ingress plus its unique
+occupied bit, $A=\bot$ and empty $J_1$. After the Install CTL, including
+before the first manifest bit, the installing frontier distinguishes that
+choice; all earlier old frames are complete. Count those complete frames
+to obtain $A$, retaining their full ordered bits as $J_0$. Fixed code and
+capture inputs do not enter either variable reservoir. During head saves,
+asset copying and manifest construction these old complete bits remain
+unchanged. Once frozen, their manifest-prefix copy identifies exactly
+the same $J_0,A$, excluding later source-clone extensions on old ports.
+
+For installed ingress use its immutable 38 blocks and current reader
+frontier. Header IN/EX/WR and length/payload IN/EX/WR preserve latch 6 until
+the corresponding WR; tests use latch 5. Between IN and WR append that
+one bit to the written prefix. At and after WR it is in the prefix and
+the optional field is empty. Source-clone RD(38), imports and serializers
+consume no external input. This includes every Convert identifier,
+destination choice and all partial unary fields. Registry appends after
+ACK, graph/word operations and final return have no IN at all. Thus none
+creates a missing external-choice coordinate. Lists, counters and tests
+are the finite scans of Definitions 2.1 and 4.2. ∎
+

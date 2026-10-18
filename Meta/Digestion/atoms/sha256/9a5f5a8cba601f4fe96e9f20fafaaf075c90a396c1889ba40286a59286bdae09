@@ -1,0 +1,55 @@
+## 1. The unchanged common-source programme
+
+Let
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+U=JM=\begin{pmatrix}1&1\\0&1\end{pmatrix},\qquad
+L=MJ=\begin{pmatrix}1&0\\1&1\end{pmatrix}.
+$$
+
+A legal fixed history has $A_0=I$ and $A_{i+1}=W_iA_i$, with each $W_i$ a predetermined finite word in $M,J$, possibly empty. Products act on the left and execute from right to left. Thus chronological $(M,J)$ implements $U$, while $(J,M)$ implements $L$. Every scalar read advances the consecutive recorded index $i$, including a repeat after an empty word; an unread atom does not advance it.
+
+The effective source and complete observations are
+
+$$
+S=\begin{pmatrix}p&q\\r&s\end{pmatrix},\qquad
+p,q,r,s>0,\quad ps=qr,
+$$
+
+$$
+z_i=(1+ki)\operatorname{tr}(A_iS)+D(i),\qquad
+k\in\mathbb R,\qquad D\in\mathbb R[\tau],\quad\deg D\le d.
+\tag{1.1}
+$$
+
+The integer upper degree $d\ge0$ is known; smaller actual degrees and the zero polynomial are included. The target is the entire triple $(S,k,D)$. In original parameters, $S=\alpha R$, $k=\beta/\alpha$, $\alpha>0$, $\beta\in\mathbb R$, and $R$ is a single strictly positive rank-one relation. There is one fixed positive row during each run. All real slopes, sampled gain zeros, and negative gains belong to the domain. There are no resets, source copies, inverse acquisitions, alternative unexecuted histories, independently lifted sources, or extra acquisition clocks.
+
+Every allowed effective source has the actual realization
+
+$$
+\alpha=1,\quad\beta=k,\quad R=S,\qquad
+c_{\mathrm{col}}=\binom p r,\qquad\ell=(1,q/p).
+\tag{1.2}
+$$
+
+Indeed $c_{\mathrm{col}}\ell=S$, since $s=qr/p$. For $A=(\begin{smallmatrix}a&b\\c&e\end{smallmatrix})$,
+
+$$
+\ell A c_{\mathrm{col}}=\operatorname{tr}(AS)=ap+br+cq+es.
+\tag{1.3}
+$$
+
+Both factors are strictly positive. Each atom preserves positive columns:
+
+$$
+M\binom{x}{y}=\binom{y}{x+y},\qquad
+J\binom{x}{y}=\binom{y}{x}\qquad(x,y>0).
+\tag{1.4}
+$$
+
+Consequently every recorded and unread state along any of the words below is positive, with the same row $\ell$. Different candidate runs may have different fixed rows. Every cumulative word matrix is nonnegative integral with determinant $\pm1$.
+
+Write $C_{\mathrm{fix}}(d)$ for the least uniform exact-read bound over all such predetermined histories recovering (1.1). The original programme asks for this sharp count for every $d\ge0$, with the whole target and its exact representation fibres. The credited positive-degree equality $C_{\mathrm{fix}}(d)=d+5$ is preserved here. The new positive-degree construction concerns its atom cost; the constant-drift obstruction narrows a proper class of five-read candidates.
+

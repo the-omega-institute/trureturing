@@ -1,0 +1,33 @@
+## 133. The maximal selected edge has a dominant axial pi occurrence
+
+The pi occurrence of M must be axial. A transverse pi would contribute
+two pi occurrences to M, contradicting Lemma 132.2. Choose its flat block
+sigma, with reservoir labels A,B and values a,b, and opposite axis value o.
+Then
+
+       m >= 1+a+b.                                (L)
+
+If the opposite label is in H, it is also pi-selected, hence o<=m;
+(A) implies (m-1)^2>=(a+b)^2. If the opposite label is in S, (S) gives
+o-1<a+b, so (A) implies the stronger m>1+a+b. In particular M,A,B are
+three distinct actual labels and m>a,b.
+
+The entire M star cannot be axial. Otherwise its reservoir pair is the
+same {A,B} everywhere. The genuine witness from Lemma 132.2 supplies genuine
+witnesses for A and B too. Neither reservoir label can then be selected
+twice by a transverse-flat block. Thus every flat M occurrence is axial-pi,
+and there is exactly one of them. There are g=degree(M)-1>=5 genuine M
+occurrences, with total angle pi.
+
+No genuine block can contain two of these axial M occurrences: its axes
+would both be m, and (L) and (A) would make it flat. They therefore belong
+to distinct genuine blocks. Applying (D) and summing their four distinct
+transverse slots gives
+
+       2*sum(beta_i+delta_i) > 2*g*pi-4*pi >= 6*pi.
+
+All these slots belong to the same two actual edges A,B, whose full
+combined budget is only 4*pi. This contradiction excludes the all-axial
+case. It is precisely the existing Section 112 budget argument, with its
+required witnesses and occurrence distinctness proved here.
+

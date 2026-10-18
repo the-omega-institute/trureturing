@@ -1,0 +1,36 @@
+### Lemma 132.2
+
+p_M=1, and M has a genuine occurrence.
+
+Proof. Suppose p_M=2. Then every M occurrence is flat.
+
+First suppose all its occurrences are axial. Their reservoir pair is
+constant around the circle. Every zero occurrence must belong to a block
+selecting the strictly larger member P of that pair transversely, by (T).
+Each such block contributes two pi occurrences to the same actual edge P,
+so its global angle equation permits at most one such block. This one
+block can contain at most two axial M occurrences. Together with the two
+pi occurrences of M, this gives degree(M)<=4, a contradiction.
+
+Otherwise there is a transverse M occurrence. By Lemma 132.1 its block
+selects M,M and already supplies all two pi occurrences of M. Therefore
+the entire circle has exactly two transverse occurrences, both in this
+one block; every other occurrence is axial and zero. Removing the two
+transverse occurrences leaves at most two axial runs. In each nonempty
+run the reservoir pair is constant, and all its zero blocks must select
+the same strictly larger reservoir label P. Its 2*pi budget allows at
+most one such block. If this one block supplied two axial M occurrences,
+its axes would both have value m. Formula (T) would then give
+
+       x_P-x_Q >= m+1,
+
+so x_P>m. But P is a pi-selected H label, contradicting maximality of m.
+Consequently each run has at most one occurrence. Again degree(M)<=4.
+
+Both alternatives contradict degree(M)>=6. Thus p_M cannot be two;
+it is one because M was selected. The remaining pi of its total angle
+must come from genuine occurrences, so M has a genuine witness. QED.
+
+Note carefully: this does not say every flat M occurrence is pi. Axial
+zero occurrences in other reservoir runs have not yet been excluded.
+

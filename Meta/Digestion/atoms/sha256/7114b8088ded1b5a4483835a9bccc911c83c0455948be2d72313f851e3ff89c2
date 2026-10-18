@@ -1,0 +1,25 @@
+**Proposition 10.2 (Reusing one exact record need not give independent uses).** Measuring one batch once and reusing its outcome $z$ on $n$ data factors gives
+
+$$
+\Psi_X^{(n)}=\sum_z p_X^{\otimes m}(z)S_z^{\otimes n},
+\tag{10.2}
+$$
+
+which need not equal $N_X^{\otimes n}$. This can fail even when every one-use channel is exact.
+
+Proof. Retain the original fixed label $X=X_a$ and take $\eta=0$, $t=1/2$, $m=5$. Equations (8.4) and (4.2) give
+
+$$
+D=13043/25000>1/2,\qquad r=12500/13043>0,\qquad Q=q_{\emptyset}=s=1.
+$$
+
+Theorem 4.1 gives exact one-use programming. Nevertheless, the inactive statistic $h_b$ has mean zero and positive second moment; the all-$b_+$ event alone has probability $(1/5)^5>0$. On $E_{13}\otimes E_{31}$, a conditional two-use response has multiplier $(irh_b)(-irh_b)=r^2h_b^2$. Averaging gives $r^2\mathbb E_{a,+}h_b^2>0$, while the desired tensor target annihilates this operator.
+
+To witness the failure with a normalized physical input, use the two-data-factor state of the vector
+
+$$
+|\zeta\rangle=(e_1\otimes e_3+e_3\otimes e_1)/\sqrt2.
+$$
+
+At $q_a=q_b=q_o=1$ all sector populations are preserved. The difference between the reused-record output and the target output has only the two conjugate off-diagonal entries $r^2\mathbb E h_b^2/2$ in this two-dimensional support. Its eigenvalues are $\pm r^2\mathbb E h_b^2/2$, so its trace norm is $r^2\mathbb E h_b^2>0$. This is a shared-record correlation with the same fixed source label, not a varying-label model. QED.
+

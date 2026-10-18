@@ -1,0 +1,27 @@
+**Theorem 10.5 (singleton joint Pareto minimum).** In the contract of
+Definitions 10.1–10.2, the attainable joint supremum triples have the
+coordinatewise least element
+
+$$
+\left(
+2^{\max(\lfloor z/2\rfloor-b,0)},\quad
+\left\lceil\frac z2\right\rceil
+ 2^{\max(\lfloor z/2\rfloor-b,0)},\quad
+\left\lceil\frac z2\right\rceil
+\right)=(M,rM,r).
+\tag{AAR.39}
+$$
+
+Their Pareto-minimal set is the singleton consisting of this triple.
+For each admissible pair of encoder and service, all three lower
+coordinates are witnessed together by one finite source and one
+performance-slice history.
+
+Proof. Theorem 10.3 gives $(q,a,\ell)\ge(M,rM,r)$ coordinatewise,
+with the stronger common-history witness. Construction 10.4 attains
+all three equalities with the same encoder and service. Thus the
+attained triple weakly dominates every other attainable triple, and
+any different triple is strictly worse in at least one coordinate.
+This determines the Pareto minimum without classifying which other
+exact supremum triples are attainable. $\square$
+

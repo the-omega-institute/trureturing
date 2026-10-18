@@ -1,0 +1,28 @@
+**Definition 266.1 (Equal-mass word measures and fibre diameters).**
+Let $\lambda$ be any complete feasible $N$ or $O$ allocation of
+arbitrary finite mass $M$, and put
+$\mu_w=\sum_D\lambda_D\delta_{D(w)}$.
+All these measures have mass $M$. For equal-mass finite measures
+use $\operatorname{TV}(\mu,\nu)=\tfrac12\sum_r|\mu(r)-\nu(r)|$.
+Set
+
+$$
+\rho_n=\max_{w,v\in\Omega_n}\operatorname{TV}(\mu_w,\mu_v)
+\quad(n=1,2),\qquad
+\Delta_{xy}(z)=\mu_{(x,y,z)}-\mu_{(x,y,1^{L-2})}.
+\tag{266.1}
+$$
+
+For $n\ge3$ let $z^n$ be the suffix whose sole zero is at $n$,
+so $(11,z^n)$ is the full sole-zero word $v^n$.
+The actual slacks used here are
+
+$$
+s_+=\mu_+(0)-(M-e),\qquad
+s_n=\mu_{v^n}(n)-(b_n-e)\quad(n\ge3).
+\tag{266.2}
+$$
+
+They are nonnegative: the corresponding anchor entries are one
+at the positive base row and zero at every late correct row.
+

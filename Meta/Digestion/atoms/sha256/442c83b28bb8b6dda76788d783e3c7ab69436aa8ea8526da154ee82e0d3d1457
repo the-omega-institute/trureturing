@@ -1,0 +1,8 @@
+## 291. All oriented normal first-return circles
+
+A state `T:a>b/Ff` is an ordered local edge with endpoints `a,b` and exiting
+face `Ff`. Cross that face with its stated map, carry both endpoints in their
+order, then exit through the other face containing the image edge. Each list
+below is cyclic: its last state transitions to its first state exactly,
+including the ordered endpoints. Every underlying local edge occurs once.
+

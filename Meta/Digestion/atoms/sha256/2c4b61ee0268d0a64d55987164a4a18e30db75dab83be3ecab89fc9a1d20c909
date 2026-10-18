@@ -1,0 +1,57 @@
+**Theorem 5.1 (P4: chord and aggregate contact asymptotics).** For every
+$C_{\rm end}<\lambda<C_{\rm sat}$,
+
+$$
+\Phi(\lambda)>\gamma\frac{\lambda-C_{\rm end}}{C_{\rm sat}-C_{\rm end}}.
+\tag{SC.34}
+$$
+
+For every optimizing failure measure at $\lambda=C_{\rm sat}-h$,
+the aggregates (SC.28) satisfy, uniformly over all such measures,
+
+$$
+\mathsf m=h/D_{\rm sat}+O(h^2),\qquad
+\mathsf u=h^2/D_{\rm sat}^2+O(h^3),\quad
+\mathsf v=h^2/D_{\rm sat}^2+O(h^3).
+\tag{SC.35}
+$$
+
+Writing $t_h=h/D_{\rm sat}$, their directional remainders obey
+
+$$
+\int_{\Omega_+}(\eta-t_h\xi)^2dm=O(h^3),\qquad
+\int_{\Omega_-}(\xi+t_h\eta)^2dm=O(h^3).
+\tag{SC.36}
+$$
+
+These are weighted aggregate and mean-square assertions, not exact
+contacts, projective optimality, uniqueness or a support classification.
+
+Proof. Subtract the endpoint chord from the concave continuous
+$\Phi$. The difference is nonnegative and zero at both endpoints.
+If it vanished at an interior point, express that point as a strict
+convex combination of any earlier point and the right endpoint.
+Concavity forces the difference at that earlier point to be zero.
+Using the left endpoint proves the same for every later point. Thus
+$\Phi$ would be affine, with positive slope
+$\gamma/(C_{\rm sat}-C_{\rm end})$. Theorem 4.2's zero left derivative
+excludes this, proving (SC.34).
+
+Every optimizer has active cost by Theorem 3.3. Equations (SC.22) and
+(SC.31) therefore give $h=D_{\rm sat}\mathsf m+O(h^2)$.
+Also (SC.30) gives the nonnegative identity
+
+$$
+0\le\gamma(\mathsf u-\mathsf m^2)+b_f(\mathsf v-\mathsf m^2)
+=\mathfrak d(h)-L_f\mathsf m^2=O(h^3).
+\tag{SC.37}
+$$
+
+Each nonnegative summand is $O(h^3)$, proving (SC.35). All constants
+come from the fixed trial and global remainder bounds, so are independent
+of the chosen optimizer. Expanding the two squares in (SC.36) gives,
+respectively,
+$\mathsf v-2t_h\mathsf m+t_h^2(1-\mathsf u)$ and
+$\mathsf u-2t_h\mathsf m+t_h^2(1-\mathsf v)$, both $O(h^3)$.
+This also proves optimizer-uniformity of (SC.36). $\square$
+

@@ -1,0 +1,26 @@
+**约定 12.3（数学引用与适用范围）。** (NIC.27)、(NIC.33) 及其匹配构造为 repo-derived 普通数学推导。坐标与全部叶的例外配对供应由 [IntrinsicSubstitutionCoordinates][ISC] 及其[对应 Blueprint][ISCB]给出；唯一原始射线、Fibonacci 叶数、准确深度语境商分别归 [JM §§36、37.4、49–50][JM]。字面无替换语境的孔外材料归 [ActualLeafHistoryRigidity][ALHR]；本节只按 (NIC.24) 扩展这一资源，区别插入时材料与最终展开材料。
+
+单孔项代入与树同余的成熟背景属 literature-attested，引用 Dexter Kozen, *On the Myhill–Nerode Theorem for Trees*，作者[原文][Kozen]第2–3页的 ranked ground terms 与第3–5页的单变量一次出现代入和同余论证。第1–2页将此背景追溯至 Brainerd、Eilenberg–Wright、Arbib–Give'on；不把通用树同余归为本节的新结果。其有限 ranked 项语法可用两个零元符号、一个二元配对符号和一个一元符号表述 (NIC.23)，但本节的一元符号解释为既有 $\rho$，不是原树上的新自由构造。余数值观察可逐余数取原像语言后使用同一代入框架。该背景不提供 (NIC.26) 的来源特定例外、插入叶数最优值或原地址取得费用。本节不作外部优先权或穷尽文献缺失的断言。
+
+[已取得行的深度恢复 §§3–7][RDR]、[已保留字面根深度 §§3–5][LRD]及[已取得内在深度校准 §§5–8][IDC]处理完整取得行、后继原地址或未知前向滞后合同；本节 (NIC.23) 不替换这些任务和资源。[Native Ambient Contact Decision 定义1.2与定理6.1][NAC]在其整个有限覆盖来源类上供应联合接触分类，[NativeCompletionSupportClosure.support_closure_iff][NSC]供应完整同时 signed support；本节不重开其已解决范围。[KBONACCI Acquisition Resources §§96–101][KAR]的指定四振幅律区域与[FIB Fiber Calculus Continuation V 定理59.3][FCV]的指定热曲线精度转移也属于不同观察合同。它们不供应本节的余数语境材料价格，本节也不取得它们的 native 实现桥。
+
+[Nonlinear Recut Memory 定义1.1–1.2及7.3][NRM]的来源是固定长度关系与已声明的 echo、deletion、recut 动作，其 native 来源对应另列为桥接条件。保持这种来源与操作区别，不能将其中的前驱上下文或保留宽度换成本节的原树配对权限。以上归属划分保留共同来源、真实历史、观察和费用的各自变量。
+
+[NativeRotationDepthGap.native_rotation_depth_gap][NRG]供应实际单次局部旋转的深度差、整个 Fibonacci 叶词与几何纤维的深度极值以及共同前向迭代；(NIC.23) 的孔外构造保留括号，不包含旋转动作。[NativeRankedEqualityCompiler.ranked_equality_compilation 与 support_compilation][NREC]供应固定有限残余下的精确 scalar 等式及整份负条件的可行秩支持。它们的来源范围和供应结论继续使用，但不将其原生等式判定或旋转距离换成 (NIC.27)、(NIC.33) 的语境材料最优值。
+
+[ISC]: ../../../D5/S3/Arith/FibonacciAtomic/SourceCoordinates/IntrinsicSubstitutionCoordinates.lean
+[ISCB]: ../../../Blueprint/D5/S3/Arith/FibonacciAtomic/SourceCoordinates/IntrinsicSubstitutionCoordinates.scribe.cs
+[ALHR]: ../../../D5/S3/Arith/FibonacciAtomic/ActualLeafHistoryRigidity.lean
+[SOHC]: ../../../D5/S3/ConceptDynamics/Observation/StrictOneHoleContexts.lean
+[CG]: RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md
+[RDR]: RECURSIVE_RELATIONAL_OBSERVATION_RETAINED_ROW_DEPTH_RECOVERY.md
+[LRD]: RECURSIVE_RELATIONAL_OBSERVATION_RETAINED_LITERAL_ROOT_DEPTH.md
+[IDC]: RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_INTRINSIC_DEPTH_CALIBRATION.md
+[NAC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_AMBIENT_CONTACT_DECISION.md
+[NSC]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeCompletionSupportClosure.lean
+[KAR]: KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES.md
+[FCV]: FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_V.md
+[NRM]: https://github.com/the-omega-institute/trureturing/blob/176edc1f6ea512f5ba55a86ba2e40ae50e7c0364/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NONLINEAR_RECUT_MEMORY.md
+[NRG]: https://github.com/the-omega-institute/trureturing/blob/fbd824520b6ad2885dc25fe88387899f88078e8f/D5/S3/Arith/FibonacciAtomic/SourceCoordinates/NativeRotationDepthGap.lean
+[NREC]: https://github.com/the-omega-institute/trureturing/blob/fbd824520b6ad2885dc25fe88387899f88078e8f/D5/S3/Arith/FibonacciAtomic/Observer/NativeRankedEqualityCompiler.lean
+

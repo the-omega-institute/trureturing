@@ -1,0 +1,23 @@
+**Lemma 1.2 (inherited image grammar and finite inverse).** Put $\mathcal I=\rho[\mathcal T]$ and $\mathcal B_I=\mathcal I\setminus\{\beta\}$. The disjoint image grammar and inverse are
+
+$$
+\begin{aligned}
+\mathcal I&::=\beta\mid E\mid\langle\mathcal I,\mathcal I\rangle,\\
+\delta(\beta)&=\alpha,\qquad\delta(E)=\beta,\\
+\delta\langle y,z\rangle&=\langle\delta y,\delta z\rangle
+\quad(y,z\in\mathcal I).
+\end{aligned}
+\tag{BPS.3}
+$$
+
+Alpha is not an image; beta is its only leaf; $\mathcal B_I$ consists precisely of branch images. Every subtree of an image is alpha or an image. Both $\mathcal B_I$ and its complement among branch trees are infinite.
+
+Proof. This is the image supplier used in NBP Proposition 9.3 and FCS Proposition 1.4. Each source constructor gives the displayed image case. The cases cannot overlap: alpha is never produced at a root, so $E$, whose right child is alpha, is not a pair of images. Recursion on finite terms proves $\delta\rho=\mathrm{id}$ and $\rho\delta=\mathrm{id}$ on their domains. Thus $\rho$ is injective. The subtree assertion follows inductively from the children $\beta,\alpha$ of $E$ and the two image children of a general image pair. Define
+
+$$
+B_0=\beta,\qquad B_{h+1}=\langle B_h,B_h\rangle.
+\tag{BPS.4}
+$$
+
+For positive $h$ these are distinct branch images, with all leaves at depth $h$. The trees $\langle\alpha,B_h\rangle$ are distinct nonimage branches, since their left child is not an image and they are not $E$. These supply both infinitudes. The inverse constructs mathematical witnesses and is no physical inverse port. $\square$
+

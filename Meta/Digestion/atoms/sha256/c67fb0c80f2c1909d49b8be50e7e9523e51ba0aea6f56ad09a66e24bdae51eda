@@ -1,0 +1,31 @@
+**Lemma 98.4.** For every real diagonal matrix \(A\), the reciprocal phase direction
+\[
+D^A=i(HA-AH),\qquad
+\mathcal R(D^A)=-i(GA-AG) \tag{22}
+\]
+is in the radical of the fixed form:
+\[
+q(D+D^A)=q(D) \tag{23}
+\]
+for every direction in Corollary 98.3. This is an algebraic identity from the common-stress data and does not assume that \(q\) is nonnegative.
+
+**Proof.** Both commutators are original-fibre tangents and satisfy full product cancellation. Put \(z=\operatorname{Tr}(B_0AD)\). The mixed-term polarization in (21) is
+\[
+-2i\sum_{i,j}(B_0)_{ji}(A_j-A_i)D_{ij}
+=-2i\{\operatorname{Tr}(B_0DA)-\operatorname{Tr}(B_0AD)\}
+=-4\operatorname{Im}z. \tag{24}
+\]
+The first cost polarization is
+\[
+2\operatorname{Re}\bigl[(\mathcal R(D^A)a)^*G^+\mathcal R(D)a\bigr]
+=2\operatorname{Re}\bigl[i\,a^*A\mathcal R(D)a\bigr]
+=2\operatorname{Im}z. \tag{25}
+\]
+Here \(\mathcal R(D^A)a=-iGAa\), \(\mathcal R(D)a\perp a\), and (17), together with the zero fibre blocks, gives \(a^*A\mathcal R(D)a=-z\). The second cost polarization is
+\[
+2\operatorname{Re}\operatorname{Tr}(B_0D^AH^+D)
+=2\operatorname{Re}(-iz)=2\operatorname{Im}z. \tag{26}
+\]
+Indeed \(B_0H=0\) removes the first commutator term, and
+\(N_HDB_0=N_HDN_HB_0=0\) permits replacing \(P_HD\) by \(D\) in the remaining trace. The three polarizations cancel. Taking \(D=D^A\) first proves \(q(D^A)=0\), and then proves (23). \(\square\)
+

@@ -1,0 +1,46 @@
+**Definition 9.7 (Fixed fiber and its existing score).** For $n=3$ use
+the order $(0,1,2,3,13)$ of (8.1) and put
+
+$$
+d=(1,-1,0,-1,1)^{\mathsf T},\qquad
+\chi=d^{\mathsf T}\theta
+=\theta_0-\theta_1-\theta_3+\theta_{13}.
+\tag{9.22}
+$$
+
+The corresponding probability fiber at fixed $(X,Y,Z)$ is
+
+$$
+p(\kappa)
+=(1-X-Y-Z+\kappa,\ X-\kappa,\ Z,\ Y-\kappa,\ \kappa).
+\tag{9.23}
+$$
+
+On its strictly positive interval the Fisher coefficient is
+
+$$
+I_\kappa=\sum_s\frac{d_s^2}{p_s}
+=\frac1{p_0}+\frac1{p_1}+\frac1{p_3}+\frac1{p_{13}}.
+\tag{9.24}
+$$
+
+This is the existing HiddenRelations C-4.1–C-4.6 construction [Hidden9].
+Its mode score is $S_s=d_s/p_s$, with
+$\mathbb E_pS=0$ and $\mathbb E_pS^2=I_\kappa$.
+For the retained function space
+$\operatorname{span}(1,x,y,z)$ and target $w=xy$, its orthogonal
+residual is
+
+$$
+h_s=\frac{d_s}{p_sI_\kappa}=\frac{S_s}{I_\kappa},
+\qquad \|h\|_p^2=I_\kappa^{-1}.
+\tag{9.25}
+$$
+
+The label map from Boundary Calculus §4 is exactly (8.2):
+$p_{25}$ there is $\kappa=p_{13}$ here. Neither the residual
+function $h_s$ nor the probability parameter $\kappa$ changes
+Definition 1.1's two-mass function $h(s,t)$ or its maximum $\kappa_n$.
+The phase target (9.22) uses the same vector $d$, but is a different
+statistical task from estimating the probability parameter.
+

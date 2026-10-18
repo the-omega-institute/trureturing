@@ -1,0 +1,28 @@
+**Proposition 48.2 (actual realization and complementary data).** Equation (R.244) defines an original-real CPTP encoder of actual Kraus rank exactly two, retained-output support dimension five, and phase-difference spectrum $(1/2,1/2,0,-1/2,-1/2)$.
+
+**Proof.** Write $K_\alpha=cH_\alpha$, where
+
+$$
+H_0=\begin{pmatrix}1&0&1/2\\0&1&0\\0&0&0\\0&0&1/2\\0&0&1\end{pmatrix},
+\qquad
+H_1=\begin{pmatrix}0&0&0\\0&0&1/2\\1&0&-1/2\\0&1&0\\0&0&0\end{pmatrix}.
+\tag{R.246}
+$$
+
+Exact multiplication gives $(H_0^TH_0+H_1^TH_1)/2=I_3$. In particular the third-column squared norms are $3/4$ and $1/4$; the first-to-third inner products $1/4$ and $-1/4$ cancel, and the other TP cross terms vanish. The first columns make the two Kraus matrices linearly independent, hence their Choi rank is two. Their column span contains $e_0,e_1,e_2,e_3$ and a vector with a nonzero $e_4$ component, so the retained-output support is all of $\mathbb C^5$.
+
+For $\chi_\pm=(|0\rangle\pm i|1\rangle)/\sqrt2$, the four normalized vectors $\sqrt2K_\alpha\chi_\pm$ are mutually orthogonal. Each phase output is therefore a half-weight sum of its two orthogonal projectors, and the two phase supports are orthogonal. Their difference has the asserted spectrum. This verifies the actual encoder, rather than only a relaxed complementary datum.
+
+For later use define the Pauli matrices $Z=\operatorname{diag}(1,-1)$ and $X=\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$. With $E_{ij}=|i\rangle\langle j|$ and the actual complement convention $\Gamma(E_{ij})_{\alpha\beta}=(K_\beta|j\rangle)^\dagger K_\alpha|i\rangle$, direct contraction gives
+
+$$
+\begin{aligned}
+\Gamma(E_{00})&=\Gamma(E_{11})=I_2/2,&\Gamma(E_{01})&=0,\\
+\Gamma(E_{02})&=Z/4,&\Gamma(E_{12})&=X/4,&
+\Gamma(E_{22})&=\operatorname{diag}(3/4,1/4).
+\end{aligned}
+\tag{R.247}
+$$
+
+The remaining matrix units follow by adjoints. $\square$
+

@@ -1,0 +1,32 @@
+### 定义 53.1（SLD Fisher 的有限维二次型）
+
+令 \(\rho\succ0\) 是有限维严格正定密度矩阵，令 \(X=X^\ast\) 且 \(\operatorname{tr}X=0\) 是一个合法切向量。定义 Lyapunov 超算子
+
+\[
+\mathcal J_\rho(Y)=\frac12(\rho Y+Y\rho).
+\]
+
+由于 \(\rho\succ0\)，\(\mathcal J_\rho\) 在 Hermitian 矩阵空间上可逆。令
+
+\[
+L_\rho(X)=\mathcal J_\rho^{-1}(X)
+\]
+
+为 SLD，并定义
+
+\[
+F_\rho(X)
+=
+\operatorname{tr}\bigl(XL_\rho(X)\bigr)
+=
+\operatorname{tr}\bigl(\rho L_\rho(X)^2\bigr).
+\]
+
+在 Hermitian 矩阵空间上使用实 Hilbert--Schmidt 配对
+
+\[
+\langle A,B\rangle_{\mathbb R}
+=
+\operatorname{Re}\operatorname{tr}(AB).
+\]
+

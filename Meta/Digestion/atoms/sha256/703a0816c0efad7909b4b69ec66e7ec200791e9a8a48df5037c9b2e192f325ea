@@ -1,0 +1,50 @@
+**Theorem 68.6 (joint legal witness and sharp exponent).** Fix the parameters of
+Lemma68.5. For every $n\ge1$ take one run with immutable INITIAL $t_0=\alpha$,
+one fixed cap $H_n=n+1$, and $n$ original Left$(\alpha)$ calls,
+$t_{j+1}=\langle\alpha,t_j\rangle$. Each complete candidate has $j+2$ leaves,
+so the original guard accepts, including final equality. Every context occurrence
+is distinct, $|D_j|=2j+1$, $\iota_j(p)=Rp$, and $f_j=e_{R^j}$ obeys
+$f_{j+1}=\iota_jf_j$. Right$(\alpha)$ uses $Lp,e_{L^j}$; any prescribed direction
+word works with its actual successive prefixes. The policy uses public inputs
+only. Original Reads at checkpoints return $E(t_j)=A^{j+1}$ in the pinned Clifford
+algebra. An extra alpha graft at full cap is refused and retains the old source,
+without candidate Read; a subsequent Read and Stop keep their original meanings.
+No event follows Stop. These services change no $D_j$ in the compared prefix.
+
+For each $j<n$ construct $w_j$ by (68.10) at the actual $D_j,f_j$, using particle maps before tensoring. In the single
+complete bank use its common canonical vacuum $|0_{H_n}\rangle$, and any fixed
+unit auxiliary $\xi$. The joint trial
+
+$$
+\Psi_n=\frac1{\sqrt2}\left(W_nf_n,n^{-1/2}w_{n-1},\ldots,n^{-1/2}w_0\right)
+ \otimes|0_{H_n}\rangle\otimes\xi
+\tag{68.13}
+$$
+
+is normalized and form-admissible, and
+
+$$
+\boldsymbol q_n[\Psi_n]\le C_0-k_*\sqrt n,\qquad C_0=3a+C_{\rm res}/2.
+\tag{68.14}
+$$
+
+Proof. There are finitely many admissible components; the same full-bank vacuum
+belongs to the number domain and is annihilated by every actual common or killed
+$h_{D_j}$. Orthogonality of direct-sum branches makes the squared norm before
+$1/\sqrt2$ exactly two. Equation(68.5) gives $p_j=W_jf_j$ simultaneously for
+this one active input. Its active energy is
+$\langle S_nf_n,H_n^{(1)}S_nf_n\rangle\le6a$. Lemma68.5 bounds the reserve average
+by $C_{\rm res}$ and the complete cross sum by $-2k_*\sqrt n$ before normalization.
+The exact expansion proves (68.14). All reference, two-particle, mixed/cell and
+oscillator sectors remain in the carrier; only this chosen variational vector has
+zero amplitude in unused sectors. No native preparation or reachability follows.
+For fixed parameters in this regime, the infimum over normalized full form inputs
+and separately legal length-$n$ histories is between $-2g-r\sqrt n$ and
+$C_0-k_*\sqrt n$. Thus the worst negative energy grows as $\Theta(\sqrt n)$, with
+no optimal-coefficient claim. In one fixed-$H$ run every nonempty accepted graft
+adds a leaf, so $n\le H-\operatorname{leaves}(\mathrm{INITIAL})$; (68.6) gives a
+finite cap-dependent floor. The unbounded sequence instead varies $H$ between
+separately legal finite runs and refutes a cap/history-uniform constant floor for
+this recurrence in the stated regime. It is not an infinite fixed-cap execution,
+a physical instability certificate or a joint depth/density limit. $\square$
+

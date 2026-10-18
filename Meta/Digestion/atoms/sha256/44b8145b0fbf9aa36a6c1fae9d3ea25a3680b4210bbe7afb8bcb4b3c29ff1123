@@ -1,0 +1,54 @@
+**定义 23.3（有限次数正算子）。** 使用代数直和
+
+$$
+\mathcal F_{\rm alg}=\bigoplus_{m\ge0}^{\rm alg}\mathcal H_m,
+\qquad \mathcal H_m=\operatorname{Sym}^m(\mathbb C^5),
+\qquad \mathcal H_q=0\quad(q<0).
+$$
+
+每个向量只含有限多个次数。归一化占位基为
+
+$$
+|n\rangle=\prod_{s\in\Sigma}\frac{(a_s^\dagger)^{n_s}}{\sqrt{n_s!}}
+|\mathrm{vac}\rangle,\qquad n_s\ge0,\quad \sum_s n_s=m.
+$$
+
+产生、湮灭算子在这个代数域上逐项定义为
+
+$$
+a_s|n\rangle=\sqrt{n_s}|n-e_s\rangle,\qquad
+ a_s^\dagger|n\rangle=\sqrt{n_s+1}|n+e_s\rangle.
+$$
+
+零占位的湮灭项为零。此处 $[a_s,a_t^\dagger]=\delta_{st}I$，同类算子相互交换；这些关系连接不同次数。固定的有限维 $\mathcal H_m$ 本身不承载这些 CCR：例如有限矩阵交换子的迹为零，不能等于迹非零的恒等矩阵。模式 $0$ 是可占据的空窗模式，$|1,0,0,0,0\rangle$ 不是 Fock 真空 $|0,0,0,0,0\rangle$。
+
+记 $n_s=a_s^\dagger a_s$ 及
+
+$$
+N=\sum_s n_s,\qquad U=n_1+n_{13},\qquad
+V=n_3+n_{13},\qquad W=n_2,
+$$
+
+并定义
+
+$$
+\widehat A=a_1a_3-a_0a_{13},\qquad
+\widehat H=\widehat A^\dagger\widehat A,
+\qquad B=a_0^\dagger a_{13}^\dagger a_1a_3.
+$$
+
+$\widehat A$ 从 $\mathcal H_m$ 到 $\mathcal H_{m-2}$，更精确地将固定荷
+
+$$
+(m,U,V,W)\longmapsto(m-2,U-1,V-1,W).
+$$
+
+两个湮灭项具有同一降荷；目标含负荷时相应空间为空。$\widehat H_m=\widehat H|_{\mathcal H_m}$ 则是同次数上的有限线性 Hermitian 算子，并有
+
+$$
+\widehat H=n_1n_3+n_0n_{13}-B-B^\dagger,\qquad
+\langle\Psi,\widehat H_m\Psi\rangle=\|\widehat A\Psi\|^2\ge0.
+$$
+
+$B$ 将占位移为 $n+d$，$B^\dagger$ 为逆移，故 $\widehat H$ 保持 $N,U,V,W$。在 $m=0,1$ 上 $\widehat A=0$，所以 $\widehat H_m=0$。所需伴随性和正性完全在有限次数空间中成立，不涉及完成 Fock 空间上的无界自伴扩张。算子对向量线性；后文振幅函数 $h$ 的四次性是其期望符号的性质。
+

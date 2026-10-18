@@ -1,0 +1,9 @@
+**Theorem 382.1 (restricted low-V exclusion, repo-derived).**
+No quotient satisfying these hypotheses can also satisfy
+
+    v<=c and v<=d.                                    (382.2)
+
+Thus a surviving low-sixth, unique-flat normal form must have
+v>min(c,d). This closes only the region (382.2), not the full six-edge
+flat-exclusion problem.
+

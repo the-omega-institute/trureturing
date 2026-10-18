@@ -1,0 +1,31 @@
+## 3. 已占用减项的强制尺度
+
+Put
+\[
+ A_S(x)=\int_{\substack{t\in S\\t<x<B_t}}\frac{dt}{w(t)t^{11/10}}.
+\]
+The strict/weak conventions and (EL.1) give the exact pulse identity
+\[
+ Q(x)=\sum_{q,k\ge2}h_q\mathbf1_{\tau_{q,k}<x<q^k}
+ -\sum_qh_q\mathbf1_{q\le x\le\tau_{q,1}}.
+\]
+Finite Stieltjes integration against the absolutely continuous
+\(\mathcal W\), using the derivative identity (EL.0.3), yields
+\[
+\begin{aligned}
+ \sum_{q,k}h_q[\mathcal W(\tau_{q,k})-\mathcal W(q^k)]
+ ={}&\sum_qh_q\int_q^{\tau_{q,1}}\mathcal W'(x)\,dx\\
+ &+\sum_{q,k\ge2}h_q\int_{\tau_{q,k}}^{q^k}w(x)A_S(x)\,dx
+ -L_{\rm occ}(X),
+\end{aligned}
+\]
+where
+\[
+ L_{\rm occ}(X)=\sum_{q,k\ge2}h_q
+       \int_{S_X\cap(\tau_{q,k},q^k)}b(t)\,dt.
+\tag{EL.5}
+\]
+This is the original source-local subtraction in the pulse split. It
+has no restriction \(q^k\le B_t\); it is not \(H_{\rm ref}\).
+The finite support just established justifies each interchange.
+

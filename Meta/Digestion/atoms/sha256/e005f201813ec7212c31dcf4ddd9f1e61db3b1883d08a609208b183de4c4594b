@@ -1,0 +1,34 @@
+**Lemma 2.2 (ODE, decay and parameter control).** The integrals above are positive and finite at their stated parameters, smooth on compact subsets of those parameters, and
+
+$$
+xU_{xx}+(2-x)U_x-AU=0,\qquad
+W_\eta''+\left(-\frac14+\frac\eta x\right)W_\eta=0.
+$$
+
+Uniformly for $\eta$ in any compact $K\subset(0,1)$,
+
+$$
+W_\eta(x)=e^{-x/2}x^\eta(1+O_K(x^{-1}))\qquad(x\to\infty).
+$$
+
+The differentiated functions through the orders needed for one parameter derivative and one radial derivative have exponential decay times powers of $x$ and $1+\log x$.
+
+Proof. The integrand at $q=0$ has size $q^{-\eta}$; parameter derivatives add powers of $|\log q|$. These are integrable uniformly on $K$. At infinity the exponential dominates all the polynomial factors introduced by $x$ derivatives and the logarithms introduced by parameter derivatives. The same observations prove finiteness and smoothness of $\Gamma$ on compact $A$ intervals. Differentiation under each integral is therefore justified.
+
+Put $f_A(q)=q^{A-1}(1+q)^{1-A}$. The derivative of $q(1+q)f_A(q)$ is $(A+2q)f_A(q)$. Integration of the derivative of $e^{-xq}q(1+q)f_A(q)$ has zero boundary terms: at zero its size is $O(q^A)$, and at infinity it decays exponentially. Consequently
+
+$$
+\int_0^\infty e^{-xq}\{xq(1+q)-2q-A\}f_A(q)dq=0.
+$$
+
+This is the stated equation for $U$. Direct differentiation of $W=e^{-x/2}xU$ gives the stated equation for $W$.
+
+In the defining integral substitute $q=y/x$:
+
+$$
+U(1-\eta,2,x)=\frac{x^{\eta-1}}{\Gamma(1-\eta)}
+ \int_0^\infty e^{-y}y^{-\eta}(1+y/x)^\eta dy.
+$$
+
+For $x\ge1$, the difference between $(1+y/x)^\eta$ and $1$ is bounded by $C_Ky/x$. The integral is therefore $\Gamma(1-\eta)+O_K(x^{-1})$. Parameter differentiation adds integrable powers of $|\log y|$ and factors bounded by powers of $1+y$; differentiating in $x$ has the same exponential majorant in $y$. These estimates give the asserted differentiated exponential bounds, also after $x=2kr$ with $k$ in a compact subset of $(\varrho,\infty)$. $\square$
+

@@ -1,0 +1,26 @@
+**Definition 2.2 (the actual double-wall orbit).** Fix $0<Z<1$, put
+$r=1-Z=2c$, and use $b=(c,c,Z)$. Fix the common preparation phases where
+actually supplied, with $\theta_2=0$. Define the orthonormal directions
+
+$$
+\begin{aligned}
+|+\rangle&=(e^{-i\theta_0}e_0+e^{-i\theta_4}e_4)/\sqrt2,\\
+|-\rangle&=(e^{-i\theta_1}e_1+e^{-i\theta_3}e_3)/\sqrt2,
+\qquad |2\rangle=e_2,\\
+V&=\operatorname{span}\{|+\rangle,|-\rangle,|2\rangle\},
+\qquad P_j=|j\rangle\langle j|,\\
+\psi_{x,\beta,m}&=\sqrt Z|2\rangle+e^{-i\beta}
+ \bigl(\sqrt{2x}|+\rangle+(-1)^m\sqrt{2(c-x)}|-\rangle\bigr),\\
+\rho_{x,\beta,m}&=|\psi_{x,\beta,m}\rangle\langle\psi_{x,\beta,m}|,
+\qquad 0<x<c,\quad\beta\in\mathbb R,\quad m\in\mathbb Z.
+\end{aligned}
+\tag{FH.3}
+$$
+
+Here $p(k)=(k,c-k,Z,c-k,k)$ and
+$w(k)=(1/2-k/r,-k/r,0,-k/r,1/2-k/r)$. Every vector in (FH.3) has
+norm one. Its real residual is
+$(\beta,\beta-\pi m,0,\beta-\pi m,\beta)$. The ray sees parity;
+the actual history retains the full signed $m$. Using these calibrated
+directions in a proof supplies no additional permission to measure them.
+

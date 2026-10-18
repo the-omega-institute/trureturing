@@ -1,0 +1,34 @@
+**Proposition 2.2 (credited reachability, with the explicit source map).**
+For each $k\in(0,c)$ choose one auxiliary $a\in(0,c)$, $a\ne k$,
+independently of $\beta,m$. Prepend a unit-time fixed-height phase leg of
+increment $2\pi m$ at $k$, then use the supplied four-leg rectangle at $a$
+with real phase height
+
+$$
+B_{\beta,m}
+ =\frac{r(\pi m-\beta)-2\pi m k}{a-k}.
+\tag{PR.6}
+$$
+
+This is an actual original history from the fixed preparation, of duration
+five, ending in (PR.5) and hence (PR.4). Every history has the same height
+waveform and support margin
+$\min\{k,a,c-k,c-a,Z\}>0$. Its phase variation is
+$2\pi|m|+2|B_{\beta,m}|$, finite for every pair. No uniform phase-variation
+bound over all $\beta,m$ is asserted.
+
+Proof. The exact `finite_rectangles_realize` supplier gives residual
+$B(w(a)-w(k))$, zero rectangle phase increment, strict probabilities and
+four unit affine legs. Since
+
+$$
+w(a)-w(k)=-\frac{a-k}{r}(1,1,0,1,1),
+$$
+
+the total residual $2\pi m w(k)+B(w(a)-w(k))$ is (PR.5), coordinate by
+coordinate. The fixed-height leg contributes $2\pi|m|$ to variation and
+the rectangle contributes $2|B|$. All pieces are affine and join
+continuously, so both original regularity alternatives hold. This is the
+all-sector application in the owning Blueprint, reused with its original
+signs and negative state-phase convention. $\square$
+

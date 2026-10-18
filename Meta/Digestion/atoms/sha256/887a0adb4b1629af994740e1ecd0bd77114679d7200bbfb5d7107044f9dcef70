@@ -1,0 +1,46 @@
+**Lemma 10.1 (Exact gap composition forces local associativity).** Suppose $v_n$ is not eventually $L$, and set $x_n=v_n-L$. Define near zero
+
+$$
+\phi(x)=\log R(s+x)-\log R(s),\qquad
+H(x,y)=\phi^{-1}\bigl(\phi(x)+\phi(y)-\phi(x+y)\bigr),
+\tag{10.1}
+$$
+
+where $s=2L$ and the inverse is the branch through zero. Then $H$ is well defined and real analytic on a neighborhood of $(0,0)$, $H(x,0)=H(0,x)=0$, and on a neighborhood of $(0,0,0)$ it must satisfy
+
+$$
+H(H(x,y),z)=H(x,H(y,z)).
+\tag{10.2}
+$$
+
+**Proof.** The limits in Lemma 8.1 give $x_n\to0$. Since the sequence is not eventually zero, each tail contains infinitely many distinct values: otherwise finitely many nonzero values would be bounded away from zero, contradicting convergence. Thus every tail-value set has an accumulation point at zero.
+
+For $0<t<1$, $R(t)>0$ is real analytic and
+
+$$
+\phi(0)=0,\qquad
+A_1:=\phi'(0)=-\frac1{2s(1-\sqrt s)}\ne0.
+\tag{10.3}
+$$
+
+The real-analytic inverse theorem therefore supplies the inverse branch used in (10.1). Shrink the neighborhood so that $s+x,s+y,s+x+y$ lie in $(0,1)$, the argument of the inverse lies in its domain, and both compositions in (10.2) are defined. Continuity and $H(0,0)=0$ allow such a common neighborhood. Also (10.1) directly gives $H(x,0)=0$ and its symmetric counterpart.
+
+Equations (8.2)–(8.3) are exact identities, so for all $a,b\ge2$,
+
+$$
+R(s+x_{a+b})
+=\frac{R(s+x_a)R(s+x_b)}{R(s+x_a+x_b)}.
+\tag{10.4}
+$$
+
+For all sufficiently large $a,b$, every term is in the chosen inverse branch. Taking logarithms and inverting gives
+
+$$
+x_{a+b}=H(x_a,x_b).
+\tag{10.5}
+$$
+
+Choose an index cutoff large enough that all tail values lie in the common neighborhood and (10.5) applies also to pairs involving $a+b$ or $b+c$. For any three indices beyond that cutoff, both sides of (10.2), evaluated at $(x_a,x_b,x_c)$, equal $x_{a+b+c}$.
+
+The difference between the two sides of (10.2) is real analytic on a small product neighborhood. Fix $y=x_b,z=x_c$ in the tail-value set and apply the one-variable identity theorem in $x$ to its infinitely many distinct zeros $x_a$ accumulating at zero. It vanishes for every small $x$. Now fix such an $x$ and $z=x_c$ and apply the theorem in $y$, using all $x_b$. Finally apply it in $z$ for arbitrary fixed small $x,y$. This proves (10.2) throughout that product neighborhood. Exact equality on a product of three infinite sets, rather than an asymptotic fit, is what licenses this conclusion. $\square$
+

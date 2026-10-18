@@ -1,0 +1,8 @@
+## All edge links
+
+At a generic point of a low edge A∩B, the dihedral group <a,b> has order 8. Its eight Q-sectors have angle π/4, with one per T-block. Hence the low edge has eight tetrahedral occurrences and total angle 2π.
+
+At a high edge B∩C, the dihedral group <b,c> has order 18. Its eighteen Q-sectors are grouped in adjacent pairs by c∈K. Each T-block contributes exactly two sectors, and hence there are nine blocks around the edge, each of angle 2π/9. The sum is 2π.
+
+No further sectors are identified in the Γ quotient: an edge stabilizer in the discrete development is finite, while Γ is torsionfree. Thus the edge links are circles, with the indicated degrees. The low-edge midpoint and base-face center have the full spherical chamber links cited above; coarsening introduces no extra triangulation vertices.
+

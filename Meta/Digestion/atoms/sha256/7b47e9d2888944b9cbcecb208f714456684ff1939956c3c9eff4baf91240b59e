@@ -1,0 +1,33 @@
+**Convention 14.3 (credited native frontier).** With the existing
+normalization $\lambda=\lim_{D\to\infty}2^{-D}\log_2M_1(D)$,
+[FMR][CombFMR] supplies existence of this limit. [NCE, §§13–19,
+in particular Theorems 17.1–17.2][CombNCE] supplies the credited
+positive asymmetric depth-three law with exact pressure
+$3038031/7792603$, and hence
+
+$$
+M_1(D)\ge
+\left\lceil(7792603/3038031)^{2^{D-3}}\right\rceil
+\quad(D\ge3),\qquad
+\frac{\log_2(7792603/3038031)}8\le\lambda<\frac3{16}.
+\tag{LTR.41}
+$$
+
+The upper endpoint and $M_1(3)=4$ are credited to [D3, Theorems
+2.3 and 4.1][CombD3]; the same NCE result gives $M_1(6)\ge1874$.
+These credited results answer the existence and depth-three subquestions
+in Open problem 8.4. Its displayed alternative normalization is $4\lambda$.
+The sharp rate and general exact memory question remain open. No new
+endpoint, fixed-law pressure result or optimized recoloring bound is
+provided by (LTR.37).
+
+The conditional-owner, component and forest results of [COK,
+§§18–25][CombCOK], [OCC, §§10–17][CombOCC] and [GDB,
+§§20–25][CombGDB] retain their declared matching-population,
+augmented-descriptor and specified-certificate scopes. None is an
+unrestricted optimizer-cofinality obstruction. [NPC][CombNPC],
+[CBN][CombCBN] and [RRN][CombRRN] retain actual common sources,
+shared coordinates, guards and each full joint block potential once;
+their semantic completeness and exact representations give no
+uniform finite-length cutoff.
+

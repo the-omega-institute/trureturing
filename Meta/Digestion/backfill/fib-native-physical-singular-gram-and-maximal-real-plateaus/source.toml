@@ -1,0 +1,5 @@
+source_id = "fib-native-physical-singular-gram-and-maximal-real-plateaus"
+path = "docs/develop/theory/FIB_NATIVE_PHYSICAL_SINGULAR_GRAM_AND_MAXIMAL_REAL_PLATEAUS.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

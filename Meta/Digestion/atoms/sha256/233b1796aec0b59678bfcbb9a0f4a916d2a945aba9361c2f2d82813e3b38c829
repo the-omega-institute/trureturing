@@ -1,0 +1,16 @@
+**Definition 4.1 (bounds from every named expression).** For each free
+sink $C$, collect the integer offsets $d$ at all occurrences of $S_C$
+in the expansions of every name in Lemma 3.4. This includes its own
+representative occurrence, of offset zero. Define
+
+$$
+L_C=\max\bigl(\{0\}\cup\{-d:d\text{ occurs for }C\}\bigr).
+\tag{PDC.11}
+$$
+
+Check every occurrence of every fixed primitive after its translations;
+reject a negative fixed rank. For a free primitive sink write
+$S_C=[L_C+n_C]$. For a free unrestricted sink write
+$S_C=\tau_{L_C}V_C$. These are changes of mathematical coordinates on
+an image, not inverse native actions.
+

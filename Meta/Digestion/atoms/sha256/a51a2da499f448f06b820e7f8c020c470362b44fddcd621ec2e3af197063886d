@@ -1,0 +1,56 @@
+**Theorem 17.2 (Unrestricted three-dimensional plateau).** For
+every $0<Z<1$ and every fixed preparation, every affine competitor
+of stored dimension at most three is dominated in uniform
+original-output error by some radial competitor of dimension at
+most two. In particular,
+
+$$
+\boxed{
+(e_3^{\rm aff}(Z))^2=(e_2^{\rm aff}(Z))^2
+=\inf_{C\ge0,\ \gamma\in\mathbb R}
+\sup_{0<k<H}\{4(Ce^{\gamma k}-A(k))^2+4Zk\}.}
+\tag{17.2}
+$$
+
+Hence $e_3^{\rm aff}(Z)=e_2^{\rm aff}(Z)$.
+
+**Proof of Theorem 17.2.** A competitor of infinite error is
+dominated by the finite zero witness. For finite error, the
+actual-hull reduction and rank split of §13 are exhaustive.
+Deficient useful rank gives the zero radial comparison. A
+full-rank hull of dimension two, or the lawful quotient of a
+nonzero beta fiber at dimension three, is dominated by a radial
+choice using the already-proved Theorem 6.4. Every other
+competitor has a $\beta$-independent encoder on a hull of
+dimension three.
+
+For this last case, §14 bounds only the useful observable module.
+A phase-independent readout or any unmatched abstract character
+gives the zero radial comparison by Proposition 14.3. If the
+native pair is used, the full primary-block argument of §15,
+the lawful projector identities and nonzero multipliers of §16,
+and Lemma 17.1 give a radial comparison. These cases include
+rank loss, a missing pair, both possible zero useful coefficients,
+unbounded hidden coordinates, and both affine offsets. No
+partial-domain spanning or regularity assumption enters them.
+
+Every radial comparison is an actual budget-two model, as stated
+in Definition 12.1 and proved in Theorem 6.4. Thus the radial
+infimum is a lower bound for every budget-three squared error. Conversely
+all those radial models lie in the budget-three class, and the
+budget-two class is a subclass of the budget-three class.
+Equation (12.2) now gives both inequalities in (17.2).
+Nonnegativity permits taking square roots. This argument compares
+each individual competitor before taking any infimum; no compact
+latent image, convergent sequence of encoders, or bound on model
+parameters is needed. $\square$
+
+The source's $\beta$ motion and its noncommuting rectangles are
+unchanged. The only commuting action used globally is the phase
+action on the actual homogeneous hull after the relevant encoder
+has been shown to be $\beta$-independent. The probability/phase
+identity used for the projector is only (16.3) on lawful states.
+Thus (17.2) is an error plateau, not a claim that every hidden
+coordinate is phase-trivial or that every affine realization is
+radial.
+

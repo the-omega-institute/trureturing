@@ -1,0 +1,10 @@
+### 90.5. Scope of the certificate obstruction
+
+**Corollary 90.2.** Neither Λ₂(T−G⊙H)≥1 nor ‖G⊙H−T‖₁≥2 holds for all original product channels, even when both local record matrices consist of four exact orthonormal two-frames. The two assertions remain false when restricted to pairs of Kraus ranks exactly (3,3).
+
+**Proof.** The product Gram in (3) comes from the original isometries (2), and (8) violates both assertions. In particular no relaxation to independently chosen contraction blocks is needed.
+
+The [rank-two-party lower bounds](ARITHMETIC_HOLOGRAPHIC_RT_II.md#81-a-subnormalized-centroid-support-witness-for-original-local-environment-bounds), [rank-two-party equality classification](ARITHMETIC_HOLOGRAPHIC_RT_II.md#82-quarter-error-rigidity-minimal-kraus-product-and-the-complete-rank-two-party-family), and subsequent one-sided, qubit-core, curvature and local results retain their stated hypotheses. Both parties in (2) have rank three, so the example lies outside the rank-two-party hypothesis. Section 89 supplies a lower bound in a neighborhood of the classified rank-two-side equality pairs, whereas (8) disproves an unrestricted global extension of the witness. Moreover the full diamond error (15) exceeds 1/4, so this example does not violate that local diamond lower bound even if tested without reference to its neighborhood hypothesis.
+
+For this pair, the normalized maximally entangled logical/reference input gives (1+√7)/16, while the coherent inputs (10) and (14) give respectively 1/2 and (1+2√2)/7. Thus a global quarter proof must retain sufficient input optimization, or a different full-reference dual bound, to distinguish these values. No conclusion about the existence of a subquarter original product follows from the failure of the two Gram certificates.
+

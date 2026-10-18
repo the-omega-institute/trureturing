@@ -1,0 +1,46 @@
+**Theorem 5.4 (effective test for autonomous boundary sufficiency).** For
+each fixed graph/type choice and valid descriptor tuple, condition
+(UDB.23) is an effective Presburger property of that tuple. More
+precisely, it is equivalent to absence of witnesses in the following
+finite disjunction, where the outer choices are
+$\eta,\theta\in\mathcal A$, $e\in E_U$ and $v,w,z\in\mathcal C^{E_R}$ with
+$w\ne z$:
+
+$$
+\begin{aligned}
+\exists\mathbf n\;\exists\mathbf m\;\exists j\in\mathbb N\quad
+&\operatorname{Adm}_\eta(\mathbf n)\land
+\operatorname{Adm}_\theta(\mathbf m)\land\\
+&\mathcal B_{\eta,e}(\mathbf n,j;\boldsymbol\delta)\land
+\mathcal B_{\theta,e}(\mathbf m,j;\boldsymbol\delta)\land\\
+&\mathcal V_{\eta,v}(\mathbf n,j;\boldsymbol\delta)\land
+\mathcal V_{\theta,v}(\mathbf m,j;\boldsymbol\delta)\land\\
+&\mathcal V_{\eta,w}(\mathbf n,j+1;\boldsymbol\delta)\land
+\mathcal V_{\theta,z}(\mathbf m,j+1;\boldsymbol\delta).
+\end{aligned}
+\tag{UDB.25}
+$$
+
+Writing $\operatorname{PC}_G$ for its negation, existence of a successful
+at-most-$K$ table whose bare observable form is autonomously sufficient
+is also decidable: add $\operatorname{PC}_G(\boldsymbol\delta)$ within
+the existential scope of (UDB.16), and use the same finite enumeration.
+This additional demand is not imposed on $\mathsf{Solve}_K$ itself.
+
+Proof 5.4. Equal bare boundaries at an update have the same $e,j,v$.
+Their accumulators agree automatically under (UDB.19). Exact finite-prefix
+arrival supplies the two $\mathcal B$ predicates. Failure of successor
+consistency supplies distinct $w,z$; exact Reply supplies all four vector
+predicates. Conversely each witness reconstructs two admitted histories
+with those shared boundary fields and distinct next vectors. This proves
+the equivalence. Every part of (UDB.25) is Presburger, and all vector,
+state and chart choices are finite. Negation and the outer descriptor
+existential preserve that property. Theorem 4.2 supplies the rest of the
+successful-table equivalence and extraction. $\square$
+
+Thus a successful finite controller and an autonomous predictive boundary
+are different requirements. The source-context interface always provides
+the exact factorization; its source-free version does so precisely when
+the additional arithmetic test passes. Neither adds a clock, source
+coordinate port or response-vector port to the actual controller.
+

@@ -1,0 +1,133 @@
+**Theorem 19.1 (a same-effects pair at the credited point).** Reuse $h$,
+$b^{01},b^{02}$ and $K_0,K_{01},K_{02}$ from (CG.134). Define
+
+$$
+D_0=K_0,\qquad
+D_{0j}=b^{0j}_1P_0+b^{0j}_0P_j,\qquad
+U_{0j}=|0\rangle\langle j|+|j\rangle\langle0|
+                        +\sum_{k\notin\{0,j\}}P_k
+\quad(j=1,2).
+\tag{CG.171}
+$$
+
+Replace the three live Kraus operators in (CG.135) by $D_0,D_{01},D_{02}$
+and leave its five failure CP densities unchanged. Call this full
+instrument $\Phi_D$; call the credited instrument $\Phi_K=\Phi_*$.
+Both are CPTP on the full complex algebra. They have identical
+classical live-branch probabilities, identical failure labels/times and
+identical unnormalized reference marginals in every corresponding branch,
+for arbitrary joint specimen/reference inputs. Nevertheless their live
+successors differ, and their original complete-output performances satisfy
+
+$$
+E(\Phi_K)=E_*,\qquad E(\Phi_D)\geq E_*+\epsilon_0>E_*.
+\tag{CG.172}
+$$
+
+Proof. The fixed swaps are unitary and
+
+$$
+\begin{aligned}
+K_{0j}&=U_{0j}D_{0j},\\
+D_{0j}^\dagger D_{0j}
+ &=|b^{0j}_1|^2P_0+|b^{0j}_0|^2P_j
+ =K_{0j}^\dagger K_{0j},\\
+\sum_{a\in\{0,01,02\}}D_a^\dagger D_a
+       +\operatorname{diag}(m_*)&=I_3.
+\end{aligned}
+\tag{CG.173}
+$$
+
+The last equation reuses (CG.141). The diagonal entries of $D_{0j}$
+need not be positive; their signed amplitudes are retained. These are
+diagonal Kraus operators, not replacements by square-root effects that
+silently remove phase data. Kraus conjugations and the unchanged positive
+failure densities prove complete positivity at every reference
+amplification. Equation (CG.173) proves joint trace preservation.
+
+For any complex joint operator $X$ on $V\otimes R$ and any branch $a$,
+cyclicity of the partial trace on the specimen gives
+
+$$
+\begin{aligned}
+\operatorname{Tr}_V[(K_a\otimes I_R)X(K_a^\dagger\otimes I_R)]
+ &=\operatorname{Tr}_V[(K_a^\dagger K_a\otimes I_R)X]\\
+ &=\operatorname{Tr}_V[(D_a^\dagger D_a\otimes I_R)X]\\
+ &=\operatorname{Tr}_V[(D_a\otimes I_R)X(D_a^\dagger\otimes I_R)].
+\end{aligned}
+\tag{CG.174}
+$$
+
+This includes entangled, mixed and history-correlated references; no
+factorization of $X$ has been used. Tracing the reference proves equality
+of the corresponding classical branch probabilities. Failure CP maps
+are identical, so their joint stopped-state/reference measures agree
+on every Borel set, with the same five labels, exact-time laws and
+absorbing successor. In particular, complete failure records are equal,
+not only their integrated probabilities.
+
+The live difference is already explicit on the operator test $P_0$:
+
+$$
+\begin{aligned}
+\Lambda_D(P_0)&=P_0,\\
+\Lambda_K(P_0)&=|h_0|^2P_0
+        +|b^{01}_1|^2P_1+|b^{02}_1|^2P_2,\\
+|b^{01}_1|^2+|b^{02}_1|^2&>0.
+\end{aligned}
+\tag{CG.175}
+$$
+
+Here $h_0$ is coordinate $0$ of $h$, not the time density $h_0(t)$.
+The equality $\Lambda_D(P_0)=P_0$ uses $r_{0,*}=1$; strict positivity
+uses (CG.166). This test is not an extra supplied preparation.
+The difference also occurs on actual catalogue inputs. For every sign
+at height $y$,
+
+$$
+\bigl(\Lambda_D(U\rho_yU^\dagger)
+             -\Lambda_K(U\rho_yU^\dagger)\bigr)_{22}
+ =\frac{(Q_*^{02})_{00}}2-\frac y{128}(Q_*^{02})_{11}.
+\tag{CG.176}
+$$
+
+The right side is a strictly decreasing affine function of $y$, so it
+vanishes at at most one of the three distinct heights. Thus the live
+successors differ for at least eight of the twelve actual histories.
+All four signs and all complex coherence entries remain part of the
+maps; diagonal statistics have only been used to witness inequality.
+Since every $D_a$ is diagonal, $\Phi_D$ is zero-transfer and (CG.167)
+gives its strict performance separation. The value for $\Phi_K$ is
+credited Theorem 16.1, not a new minimax calculation.
+
+For the original five-mode algebra use the same fixed isometry $E$ and
+$P_V$ as (CG.142). Set $\widehat K_a=EK_aE^\dagger$ and
+$\widehat D_a=ED_aE^\dagger$, and use for BOTH instruments the full
+failure measures
+
+$$
+ h_0(t)\left[w_\ell\operatorname{tr}
+       (E\operatorname{diag}(m_*)E^\dagger A)
+  +\mathbf1_{\ell=2}\operatorname{tr}((I_5-P_V)A)\right]dt\,P_f.
+\tag{CG.177}
+$$
+
+Their common total effect is $I_5$. The complementary live support is
+sent to original failure label $2$ with its entire mass; cross operators
+between $V$ and its complement have the same zero image in both
+instruments. Thus the equality of effects and reference marginals
+extends to arbitrary complex five-mode/reference inputs. On the actual
+inputs the complete outputs and errors are those already stated.
+
+The local Kraus label $a$ can be kept as an internal generated record
+when defining the branch comparison in (CG.174). The canonical live
+output in (CG.20) sums over it. No claim of the same error for a different
+joint task that exposes this extra label is being made. This is the
+instance-specific strengthening of the mature distinction between an
+effect and an instrument; the repository's
+`StaticEffectSequentialSeparation.same_effects_different_two_step_joint_law`
+and `FiniteKrausInstrumentBornMarginal.finite_kraus_instrument_born_marginal`
+already supply the corresponding general lesson and finite Born identity.
+Here the same-effects pair straddles the exact benchmark and the strict
+zero-transfer gap. $\square$
+

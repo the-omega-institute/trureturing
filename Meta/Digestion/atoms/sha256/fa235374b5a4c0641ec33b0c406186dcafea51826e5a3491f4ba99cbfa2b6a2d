@@ -1,0 +1,49 @@
+**Convention 1.4 (credited temporal factor and canonical completion).**
+Use [AAR, §§12–13][AAR]. Put $e(\alpha)=0,e(\beta)=1$ and
+$s(r)=\#L(r)+2\#R(r)$. At an original branch endpoint set
+$\Gamma_q(u)=(0,0)$. Otherwise let the first original leaf along
+$q$ have label $\ell$ at $a$, with $q=ar$. Then
+
+$$
+\Gamma_q(u)=
+\begin{cases}
+(2-e(\ell),1-e(\ell)),&r=\varepsilon,\\
+(s(r)+2-e(\ell),\mathbf1_{r\text{ ends in }R}),&r\ne\varepsilon.
+\end{cases}
+\tag{GDB.3}
+$$
+
+On attained factors the credited decoder is
+
+$$
+\operatorname{Pred}((b,c),k)=
+\begin{cases}
+\mathsf{branch},&k\ge b,\\
+\beta,&b\ge1,\ k=b-1,\\
+\alpha,&c=1,\ k=b-2,\\
+\mathsf{absent},&\text{otherwise}.
+\end{cases}
+\tag{GDB.4}
+$$
+
+Here $c=1$ implies $b\ge2$. This gives $r_{\rho^ku}(q)$ for
+every $k\ge0$, including initially absent targets. The complete
+trajectory recovers $b$ as its first branch count and $c$ by its alpha
+stage. Write $h(z)=\operatorname{Pred}(z,0)$.
+
+Put $C_0=\langle\alpha,\alpha\rangle$ and
+
+$$
+S_1=\{\alpha,\beta,C_0\},\qquad
+S_{d+1}=\{\alpha,\beta\}\sqcup\{\langle x,y\rangle:x,y\in S_d\}.
+\tag{GDB.5}
+$$
+
+The completion $\pi_d(v)\in S_d$ for $\operatorname{ht}(v)\le d$
+fixes $S_d$ and preserves all replies and factors on $W_d$. It keeps
+constructors through depth $d-1$ and completes a branch there by $C_0$.
+On $S_d$, a length-$d$ reply is alpha if its parent is branch and
+absent otherwise; longer words are absent. Thus an arbitrary finite
+canonical probe is a function of one boundary reply in the same donor
+block or a constant. These are [FMR, Lemma 2.2 and Theorems 2.3–2.5][FMR].
+

@@ -1,0 +1,12 @@
+**Convention 7.4 (separate resource accounting).** These constructions
+do not preserve an old preparation transcript, its Read count or its
+work bound. Fixed public scans replace that preparation, and only
+their complete exported names remain accessible. Table generation,
+installation and lookup work are finite but have no useful uniform
+efficiency bound here. The factor predictor $(b,c)$ has $0\le b\le2D$
+and $c\in\{0,1\}$, so
+$\lceil\log_2(2D+1)\rceil+1$ bits suffice for it separately from
+the complete retained name and the authentic count representation.
+Isolation, entry and authentication are paid service premises;
+padding does not establish a physical erasure or timing theorem.
+

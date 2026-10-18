@@ -1,0 +1,8 @@
+**定义 4.1（单位标签）。** 固定正交单位叶 $e_1,e_2$，令 $f_1=e_1,f_2=e_2,f_3=e_2\times e_1$。这是左手叉积标架；索引按模三循环。记
+
+$$
+\chi(t)=E_{(e_1,e_2)}(t)\in\{0,\pm f_1,\pm f_2,\pm f_3\}.
+$$
+
+复用 [Boundary Geometry 定理7.2](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY.md) 的全树单位标签与循环运输：$R_0f_i=f_{i+1}$ 保持叉积，$\chi(\rho t)=R_0\chi(t)$。七值都由实际叶或有序节点实现。这个复用只针对该固定单位解释。
+

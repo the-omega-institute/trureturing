@@ -1,0 +1,88 @@
+**Proposition 9.3 (two sample-only lower bounds).** Put $M_N=N+1$ and
+suppose
+
+$$
+M_N\geq\max\{1,W/(4L),WT/(4a)\}.
+\tag{SC.27}
+$$
+
+For every $\delta\geq0$,
+
+$$
+R_N(\delta)\geq\frac{WT}{16aM_N}.
+\tag{SC.28}
+$$
+
+If $0<\delta\leq\delta_0$, where
+
+$$
+\delta_0=\min\left\{\frac14,\frac a2,\frac{WT}{32},
+ \frac{2L^2T}{W},\frac{2a^2}{WT}\right\},
+\tag{SC.29}
+$$
+
+then also
+
+$$
+R_N(\delta)\geq\frac{\sqrt{WT\delta}}{8\sqrt2\,a}.
+\tag{SC.30}
+$$
+
+The second lower remains valid with any number of point queries.
+
+Proof of (SC.28). Run a deterministic strategy on the exact constant replies
+$a$, with the common upper promises. This is a realizable waiting source.
+Its distinct query times and endpoints partition $[0,T]$ into $J\leq M_N$
+positive gaps of lengths $\ell_j$ summing to $T$. Set
+$v=W/(4M_N)$. In each gap insert a triangular excursion with slope $+v$
+on its first half and $-v$ on its second half. Its excess is
+$\alpha_j=v\ell_j/2$. The resulting single fixed actual path agrees with
+waiting at every queried time. Induction over adaptive queries gives the
+same times, replies and stopping decision: each next decision sees the
+same prefix. Constructing this path after specifying the deterministic
+strategy defines a worst-case fixed source, not a source changed mid-query.
+
+Its speed is $v\leq L$ by (SC.27). Its BV derivative has one $2v$ jump at
+each peak and one $2v$ jump at each join between consecutive gaps, so its
+variation is $2v(2J-1)\leq W$. Endpoints do not add artificial exterior
+jumps. Its largest excess is at most $vT/2\leq a/2$, which keeps it in
+$[\eta,c-\eta]$. It is an actual original control with finitely many
+affine legs and fixed preparation. By Lemma 9.2 its distance from waiting
+is $1-S$, and
+
+$$
+-\log S\geq\sum_j2\alpha_j/a=vT/a=:x,\qquad 0<x\leq1.
+$$
+
+Here $-\log((1-z)/(1+z))\geq2z$ follows by integrating
+$2/(1-z^2)\geq2$ from zero. Also $1-e^{-x}\geq x/2$ on $[0,1]$,
+for instance by $e^{-x}\leq1-x+x^2/2$. Therefore
+$1-S\geq WT/(8aM_N)$. The common-transcript estimate is at distance
+at least half this from one of the two instruments, by the triangle
+inequality. This proves (SC.28) for exact replies, which are permitted at
+every noise budget. No exact variation total is supplied to the estimator.
+
+Proof of (SC.30). Let
+$n=\lfloor\sqrt{WT/(8\delta)}\rfloor\geq2$. Use $n$ equal triangular
+excursions of excess $\delta$ over $[0,T]$. Their speed is
+$u=2n\delta/T$, and
+
+$$
+\operatorname{TV}(k')=2u(2n-1)\leq8n^2\delta/T\leq W,\qquad
+u\leq\sqrt{W\delta/(2T)}\leq L.
+$$
+
+The band holds because $\delta\leq a/2$. This path and waiting can return
+the same value $a$ at every time, even under unlimited point access: choose
+the fixed error function $a-k(t)$ on the triangular path and zero on
+waiting. Both have sup error at most $\delta$ and exact endpoints. Thus
+all deterministic adaptive transcripts match, irrespective of the query
+count. They have common calibration promises and constant phase.
+
+Now $S=q(\delta)^n$ and $x=2n\delta/a\leq1$ by (SC.29). As above,
+$1-S\geq1-e^{-x}\geq n\delta/a$. Since
+$n\geq\tfrac12\sqrt{WT/(8\delta)}$, the instrument separation is at
+least $\sqrt{WT\delta}/(4\sqrt2 a)$. Halving for the common estimate
+proves (SC.30). These are deterministic bounded-error functions, not
+stochastic or independently sampled noise. $\square$
+

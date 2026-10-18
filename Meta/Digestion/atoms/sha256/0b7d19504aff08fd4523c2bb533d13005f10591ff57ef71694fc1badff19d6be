@@ -1,0 +1,14 @@
+**Lemma 325.2 (Identity on the entire Boolean cube).** For every
+$w\in\{0,1\}^9$, including all multiple-zero words,
+
+$$
+p^\delta_w=p^B_w+\delta w_6w_7(e_8-e_9).
+\tag{325.5}
+$$
+
+**Proof.** The changed vector is used exactly in the exhaustion
+cell of $(6,7)$, whose indicator is $w_6w_7$. Its difference is
+$\delta(e_8-e_9)$, and every other cell and row is unchanged.
+This argument concerns the full vector, independently of which other
+bits vanish. $\square$
+

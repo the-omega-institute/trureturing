@@ -1,0 +1,19 @@
+**Definition 1.5 (Legal five-window code and complete service).** For $n=3N$ with $N\ge1$, define
+
+$$
+B_n=\{b\in\{0,1\}^n:b_i b_{i+1}=0\text{ for }1\le i<n\},
+\qquad s_i(b)=(-1)^{b_i},
+$$
+
+and write $W_j(b)=(b_{3j-2},b_{3j-1},b_{3j})$ for $1\le j\le N$. The five-window alphabet, in increasing position order, is the one in [the FIB whitebox volume][FIB], Definition 2.1:
+
+$$
+\Sigma=\{000,100,010,101,001\},
+$$
+
+with respective labels $\mathrm{null},2,3,2\ 5,5$. A word in $B_n$ has each $W_j(b)\in\Sigma$ and every seam satisfies $b_{3j}b_{3j+1}=0$. This is fixed-length finite-word syntax. It includes the all-zero word and words whose final window is $000$. It does not require acceptance of the canonical terminal $\mathrm{End}$ query of [FIB], Definition 6.1; in that interface a final $000$ does not accept $\mathrm{End}$. A null window still occupies three positions.
+
+The acquisition task is to install a closed deterministic service whose reply to every requested index $j\in\{1,\ldots,N\}$ is $W_j(b)$. Installation and each legal reply take finite computation. After installation the service retains its acquired data and no longer accesses the source or source-dependent advice. Success requires correct replies on every finite index-query history, including repetitions and indices selected adaptively from previous replies. Installation may be randomized; the installed service is deterministic. Thus success concerns the whole response service rather than the average correctness of individual queries.
+
+A pointer variant has public initial pointer $p=1$ and state $(b,p)$ with $p\in\{1,\ldots,N+1\}$. An indexed read leaves $p$ unchanged. A $\mathrm{Next}$ request is legal exactly when $p\le N$, returns $W_p(b)$ and updates $p$ to $p+1$. This variant has no $\mathrm{End}$ action. The Fibonacci numbers used below satisfy $F_0=0$, $F_1=1$ and $F_{k+2}=F_{k+1}+F_k$.
+

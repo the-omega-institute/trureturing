@@ -1,0 +1,76 @@
+**Lemma 17.1 (quantitative inward rectangle and final height leg).**
+Let a partition interval $[s,t]$ have duration $D>0$, starting height
+$h\in I$, and desired relative endpoint $(X,Y,C)$ with
+
+$$
+|X|,|Y|\le2\rho,\qquad |C|\le3\rho^2,\qquad h+X\in[l,u].
+\tag{17.1}
+$$
+
+Assume $\rho\le(u-l)/4$. Choose
+
+$$
+d=\begin{cases}\rho,&h\le(l+u)/2,\\-\rho,&h>(l+u)/2,
+\end{cases}
+\qquad q=C/d.
+\tag{17.2}
+$$
+
+Use the following relative control vertices, giving each of the six
+legs exactly $D/6$ units of the original time:
+
+$$
+(0,0),\ (d,0),\ (d,q),\ (0,q),\ (0,0),\ (0,Y),\ (X,Y).
+\tag{17.3}
+$$
+
+A zero increment is a hold of its assigned duration. Write $(x(v),y(v))$
+for this connector and $j(v)=\int_s^v x\,dy$. Its endpoint is
+$(X,Y,C)$ and every partial prefix obeys
+
+$$
+|x(v)|\le2\rho,\qquad |y(v)|\le3\rho,\qquad |j(v)|\le3\rho^2.
+\tag{17.4}
+$$
+
+The height $h+x(v)$ is in $I$ for $s\le v<t$. At $t$ it is on
+the killing boundary if and only if $h+X$ is there. The interval's
+actual variation, length and unhalved identity energy are
+
+$$
+\begin{aligned}
+V^a_{s,t}&=2\rho+|X|\le4\rho,\\
+V^b_{s,t}&=2|q|+|Y|\le8\rho,\\
+L_{s,t}&=2\rho+2|q|+|X|+|Y|\le12\rho,\\
+E_{s,t}&=\frac6D(2\rho^2+2q^2+X^2+Y^2)
+                              \le\frac{168\rho^2}{D}.
+\end{aligned}
+\tag{17.5}
+$$
+
+Proof. The rectangle in (17.3) is the original two-control rectangle
+used in Proposition 15.1 and N, Theorem 9.3. Its inward orientation
+makes the full excursion lawful: when $d=\rho$, its maximum height
+is at most $(l+u)/2+(u-l)/4<u$ and its minimum is $h>l$.
+For $d=-\rho$ the symmetric inequalities apply. The next phase leg
+has height $h$. The last height leg is the linear segment from the
+interior point $h$ to $h+X\in[l,u]$; every point before its terminal
+one is interior. Thus no earlier leg reaches the killing boundary.
+
+Only the second leg contributes to the relative integral $\int x\,dy$.
+It varies linearly from zero to $dq=C$ there and remains $C$ on all
+later legs. This proves the endpoint area and every partial bound in
+(17.4), since $|q|\le3\rho$. Translation to an actual control start
+$(a_s,b_s)$ gives exactly
+
+$$
+\int_s^v a\,db=a_s y(v)+j(v).
+\tag{17.6}
+$$
+
+Thus the chronological cross term is retained. Every leg is along
+one of the two original control axes. Its velocity is its displayed
+increment divided by $D/6$. Direct integration gives (17.5), including
+$6(2+18+4+4)=168$. These are bounds for the explicit native control,
+not an appeal to a steering theorem. $\square$
+

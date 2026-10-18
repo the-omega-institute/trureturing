@@ -1,0 +1,17 @@
+**Corollary 10.2 (arbitrary interior legal word).** For any legal multiplier matrix $V$, including the empty word's matrix, any integers $c\ge3$, $m\ge2$, and any legal final multiplier $W$, the history with endpoints
+$$
+I,\qquad J,\qquad L,\qquad A_3=U^mVU L^c,\qquad A_4=WA_3
+\tag{10.2}
+$$
+has the collision of Theorem 9.1.
+
+**Proof.** Successive transitions can be $J$, $M$, $U^mVU L^{c-1}$, and $W$. All are predetermined finite words, since $U=JM$ and $L=MJ$, and none requires an interior read. Write $V=(\begin{smallmatrix}H&B\\G&F_*\end{smallmatrix})$. Each row is nonzero and nonnegative integral. Since
+$$
+UL^c=\begin{pmatrix}c+1&1\\c&1\end{pmatrix}
+$$
+is entrywise positive, so is $VUL^c=(\begin{smallmatrix}a_0&b_0\\x&e\end{smallmatrix})$. Its bottom entries satisfy
+$$
+x=c(G+F_*)+G\ge c\ge3,\qquad e=G+F_*\ge1.
+$$
+Left multiplication by $U^m$ preserves these bottom entries and makes $a=a_0+mx>2x$. Theorem 10.1 applies. Proposition 1.2 verifies the fixed row and positive unread columns on these exact words. Both word parameters $V,W$ are unrestricted and predetermined. Theorem 10.1 also covers legal cone endpoints without a selected factorization (10.2). ∎
+

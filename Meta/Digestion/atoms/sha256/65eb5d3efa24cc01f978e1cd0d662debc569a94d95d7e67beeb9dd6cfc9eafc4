@@ -1,0 +1,17 @@
+## 451. 同一原始完整肩项的半 Gamma 负储备
+
+This section strictly strengthens §447 for the same literal objects. Set
+\[
+ C=e^\gamma,\qquad k=C-1,\qquad
+ \delta=\frac{2\log2-1}{6}>0,
+\]
+and retain the original complete two-piece constant \(A<1/2\),
+\[
+ Q(u)=u\Re\zeta(1+u),\qquad
+ K(t)=A-k(\log t+\gamma)
+ +C\int_{u>0}e^{-tu}\frac{1/Q(u)-1}{u}\,du\quad(t>0).
+\]
+No new shoulder, finite truncation, or assumed infinite bound is introduced.
+The suppliers for complete integrability and the literal comparison are
+exactly those in §447.
+

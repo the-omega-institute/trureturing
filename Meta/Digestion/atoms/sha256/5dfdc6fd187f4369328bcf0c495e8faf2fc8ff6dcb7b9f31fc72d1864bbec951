@@ -1,0 +1,34 @@
+**供应推导 8.2（全树等变、选定模式代表与通道碰撞）。** 同一乘法表有
+
+$$
+A^2=B^2=C^2=-I,\quad CB=A,\quad AC=B,\quad CA=-B.
+$$
+
+例如 $AC=\sigma_x\sigma_z=-i\sigma_y=B$，$CB=\sigma_z\sigma_y=-i\sigma_x=A$。循环 $A\mapsto B\mapsto C\mapsto A$、固定标量槽，给四元数代数的三阶自同构 $R$。在标准虚基上它循环 $e_x,e_y,-e_z$，是保定向正交变换，因而保持内积和叉积，保持完整四元数乘法；不能只循环三个名字而不检查乘法表。
+
+两叶的替换求值满足 $Q\rho\alpha=B=RQ\alpha$、$Q\rho\beta=BA=C=RQ\beta$。对子树成立时，
+
+$$
+Q(\rho\langle s,t\rangle)
+=RQ(s)RQ(t)=R(Q(s)Q(t)),
+$$
+
+所以对全部有序树 $Q(\rho t)=RQ(t)$。这是已有全树接口的消费，不仅核对一条递推轨道。仅用叉积的另一求值来自[《递归全息边界几何》第7.2条](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY.md)，它会把 $q\langle\alpha,\alpha\rangle$ 送到零；本结合表示则给 $A^2=-I$。二者不能互换。加法组成又把 $\langle\beta,\alpha\rangle$ 送到 $(1,1)$，仍在原二维组成平面；第三方向取决于明确的组合关系，不能由 $\rho^2\alpha$ 的缩写强迫。
+
+选择代表 $[2]\mapsto\alpha$、$[3]\mapsto\beta$、$[5]\mapsto\langle\beta,\alpha\rangle$、$[25]\mapsto\langle\langle\beta,\alpha\rangle,\alpha\rangle$，则
+
+$$
+[2]\mapsto A,\quad[3]\mapsto B,\quad[5]\mapsto C,
+\quad[25]\mapsto CA=-B.
+$$
+
+$\mathrm{null}$ 在这个乘法接口中另取空积 $I$，空积不是自由非空树，也不是原生窗口仪器的恒等操作。代表的选择保留高位置在来源左侧的约定；它不恢复全部来源。
+
+对任意密度算子 $\varrho$，
+
+$$
+B\varrho B^\dagger=(-B)\varrho(-B)^\dagger.
+$$
+
+所以 $[3]$ 与选定 $[25]$ 代表的单独共轭通道相同，模式和历史却不同。相干控制的 $\operatorname{diag}(I,B)$ 与 $\operatorname{diag}(I,-B)$ 可有不同相对符号，但供应这两个比较门是额外前提，不能从一个未知通道免费构造。原生接缝也区分它们：$[3]$ 的新接缝为零、$[25]$ 为一；再接高到低的 $[5]$，前者合法、后者非法。这是既有第90节的守卫碰撞，第9节将它置于共同来源律和实际回复合同中。
+

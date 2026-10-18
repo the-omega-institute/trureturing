@@ -1,0 +1,53 @@
+**Lemma 4.1 (the sign of the second transfer).** The premises imply
+$d>0$. For $0\leq s\leq1$ define
+
+$$
+\Delta_s=h_0h_1-s^2ab,\qquad
+R_s=\frac{h_2\Delta_s}{h_1cd}.
+\tag{RE.20}
+$$
+
+Then $\Delta_s>677/1000$ and $R_s>677/18>1$.
+
+Proof. From (RE.7),
+
+$$
+N_{02}=-\frac{\lambda\alpha_1}{1+\alpha_1^2+\alpha_2^2}
+\frac{\sqrt5}{16}
++\frac{(1-\lambda)\beta_1}{1+\beta_1^2+\beta_2^2}
+\frac{\sqrt{27}}{16}.
+\tag{RE.21}
+$$
+
+Since $\alpha_2>1$ and $\alpha_1>0$, the elementary inequality
+$\alpha_1^2+2\geq2\sqrt2\alpha_1$ gives
+
+$$
+\frac{\alpha_1}{1+\alpha_1^2+\alpha_2^2}
+<\frac1{2\sqrt2}<\frac38.
+\tag{RE.22}
+$$
+
+The positive box bounds give
+
+$$
+\frac{\beta_1}{1+\beta_1^2+\beta_2^2}
+>\frac{2/5}{1+1/4+25/36}=\frac{36}{175}>\frac15.
+\tag{RE.23}
+$$
+
+Positive squaring shows $\sqrt5/16<3/20$ and
+$\sqrt{27}/16>3/10$. The negative term in (RE.21) has magnitude
+less than $441/16000$; its positive term exceeds $153/5000$.
+Consequently $N_{02}>243/80000>0$. The two-dimensional adjugate in
+(RE.8) has off-diagonal entry $\eta_2N_{02}$, so
+$cd=Q^{02}_{01}=\eta_2N_{02}>0$. Since $c>0$, this proves $d>0$.
+This is a symbolic consequence of the credited box, not a new numerical
+calculation of that box.
+
+The strict bounds on $H_{22}=h_2^2$ and $H_{11}=h_1^2$ imply
+$h_2>h_1>0$. Also
+$0<2cd\leq c^2+d^2=\operatorname{tr}Q^{02}<36/1000$.
+Combine these inequalities with (RE.9) in (RE.20) to obtain the stated
+strict lower bound on $R_s$. $\square$
+

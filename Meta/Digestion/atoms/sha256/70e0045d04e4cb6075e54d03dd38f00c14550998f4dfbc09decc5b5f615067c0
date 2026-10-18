@@ -1,0 +1,61 @@
+**Definition 11.2 (compatible complete-law flows).** A compatible pair is a Borel probability measure $\Gamma_B$ on $\mathcal K_p\times\mathcal K_\beta$ and a Borel probability measure $\Gamma_A$ on $\mathcal K_\beta\times\mathcal K_p$ with the same respective phase marginals:
+
+$$
+(\Gamma_B)_1=(\Gamma_A)_2=\nu_p,\qquad
+(\Gamma_B)_2=(\Gamma_A)_1=\nu_\beta.
+\tag{11.6}
+$$
+
+For every continuous real $\phi$ on $\mathcal K_p$, every continuous real $\psi$ on $\mathcal K_\beta$, and every atom $\eta\in\Omega_\beta$, $\omega\in\Omega_p$, require
+
+$$
+\int\phi(Q)\bigl(\mathcal R_B(Q)(\eta)-W(\eta)\bigr)
+ \,d\Gamma_B(Q,W)=0,
+$$
+
+$$
+\int\psi(W)\bigl(\mathcal R_A(W)(\omega)-Q(\omega)\bigr)
+ \,d\Gamma_A(W,Q)=0.
+\tag{11.7}
+$$
+
+The atom tests include the infinite outcomes. Denote this domain by $\mathfrak C$. Its flows are unweighted acquired flows: no factors $U(Q)$ or $v(W)$ are inserted into their marginals. Such factors enter only the synthetic recursions (11.4).
+
+For a fixed $\eta$, the residual difference in the first equation of (11.7) defines a finite signed measure on $\mathcal K_p$ by projection. Annihilation of all continuous functions forces that signed measure to vanish. For example, continuous approximations to the indicator of a closed set, followed by bounded convergence and regularity, prove uniqueness of the signed measure. Consequently (11.7) also holds for every bounded Borel $\phi$, and likewise for $\psi$. Atomwise equalities give equalities of full measures on the countable carrier.
+
+Equivalently, disintegrating these measures on their compact metric spaces gives
+
+$$
+\mathcal R_B(Q)=\int W\,\Gamma_B(dW\mid Q)
+ \quad(\nu_p\text{-almost every }Q),
+$$
+
+$$
+\mathcal R_A(W)=\int Q\,\Gamma_A(dQ\mid W)
+ \quad(\nu_\beta\text{-almost every }W).
+\tag{11.8}
+$$
+
+This interpretation conditions on the entire input descriptor. Conditioning only on its residual value would be weaker. A finite realization below does not require constructing these disintegrations. The descriptor spaces are mathematical carriers, not available continuous configuration registers.
+
+Define the configuration losses against any complete raw target by
+
+$$
+\mathcal L_p(T)=\int\operatorname{TV}(Q,T)\,d\nu_p(Q),\qquad
+\mathcal L_\beta(T)=\int\operatorname{TV}(W,T)\,d\nu_\beta(W),
+$$
+
+and define the joint excess
+
+$$
+\mathcal J(\Gamma_B,\Gamma_A)=
+\max\left\{
+ \sup_{k:\mu(k)>0}\mathcal L_p(P_{p,r_k})-\rho_p,
+ \sup_{k:\mu(k)>0}\mathcal L_\beta(P_{\beta,r_k})-\rho_\beta
+\right\},\qquad
+j_c=\min_{\mathfrak C}\mathcal J.
+\tag{11.9}
+$$
+
+TV remains inside each configuration integral. Formula (11.9) fixes the original targets; it neither optimizes them nor substitutes a new prior.
+

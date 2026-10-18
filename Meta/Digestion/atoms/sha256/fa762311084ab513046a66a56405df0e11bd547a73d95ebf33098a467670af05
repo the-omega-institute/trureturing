@@ -1,0 +1,42 @@
+**Proposition 247.2 (A larger specified convex comparison at seven).**
+The center in Proposition 246.3 also lies outside the convex hull of
+the following seven-prefix data: the families of §§238, 240–242;
+the old unit plateaus and saturated-head profiles; and feasible cores
+with at most six active coordinates or the fixed §187 core, with any
+finite §173 residual extensions. All actual inactive amplitudes and
+caps are retained in this comparison.
+
+Proof. Put $E_7=\sum_{n=3}^7a_n-8c$. Each compared feasible datum
+satisfies the two old head inequalities
+
+$$
+E_7\le1-a_1,\qquad E_7\le\tfrac45(1-a_2).
+\tag{247.3}
+$$
+
+The center is tight in both and has $a_2=a_3$. All these slacks and
+$a_2-a_3$ are nonnegative. Hence each positive-weight component of a
+convex representation would be tight in all three.
+The families with excess ratio at most $3/4$ (or $2/3$) can be tight
+in the second inequality only at $a_2=1,E_7=0$; simultaneous tightness
+in the first then gives $a_1=1$. They lie in the plateau face
+$\operatorname{conv}\{v_3,\ldots,v_7\}$ of the full hull (237.7).
+For an actual inactive seventh coordinate, $a_7\le c$ further removes
+$v_7$ when applicable. The families §§238, 240–241 have strict
+second-head slack: their respective excess ratios are at most
+$5/9,7/12,5/9$, below $4/5$. Saturated-head and unit families have
+zero excess and reduce to the same plateau face under tightness.
+
+For §242, tightness in both inequalities forces
+$a_1=H(t)=(4t+1)/5$ and $c=e_2(t)$. Its resulting tight data are
+the segment from
+$p_0=(29/33,28/33,\ldots,28/33;17/33)$ to $v_7$.
+Thus every possible representation of the center reduces to $p_0$
+and the plateau vertices $v_3,\ldots,v_7$.
+The coordinate $a_2=9/10$ forces $p_0$ weight $33/50$, leaving total
+plateau weight $17/50$. The four successive late gaps $1/20$ force
+$v_3,v_4,v_5,v_6$ weights
+$1/15,1/12,1/10,7/60$, because the respective vertex jumps are
+$3/4,3/5,1/2,3/7$. Their sum is $11/30>17/50$, by $2/75$.
+No nonnegative weight remains for $v_7$, a contradiction. ∎
+

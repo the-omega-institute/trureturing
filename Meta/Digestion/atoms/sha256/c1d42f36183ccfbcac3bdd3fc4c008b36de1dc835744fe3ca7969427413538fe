@@ -1,0 +1,43 @@
+**Theorem 216.5 (A signed whole-score cut).**
+For every $L\ge m\ge5$, put $r=m-3$ and $R_r=3+1/r$.
+Every unrestricted full score satisfies
+
+$$
+-\beta_1-2\beta_2+3\beta_3+(2+1/r)\beta_m-K
+ \le R_r\Delta_O\le R_r\Delta_N.
+\tag{216.12}
+$$
+
+There are no sign assumptions on beta or restrictions on A, late P,
+class cancellations, suffixes or terminal mass.
+
+**Proof.** Use this one conic mixture of legal stopped tables:
+
+| Table | Weight |
+| --- | --- |
+| $(1,2;1,2,m)$ | $1/r$ |
+| $(1,3;1,3,0)$ | $1$ |
+| $(2,3;0,3,0)$ | $1$ |
+| $(3,j;0,0,m)$, each $4\le j<m$ | $1/r$ |
+| $(3,m;0,m,0)$ | $1/r$ |
+
+Its total weight is $R_r$. Let $l_0,l_n$ be base and correct counts.
+For n=1, $l_1\ge1+1/r$. Either $(2,3)$ outputs zero, or $w_3=0$
+and the weight-one bundle beginning at 3 does so; hence $l_0\ge1$.
+For n=2, $l_2\ge1/r$ and $l_0\ge2$: table $(2,3)$ gives one,
+and either the 3-bundle or $(1,3)$ gives the other.
+For n=3 the counts are $(l_0,l_3)=(1,2)$.
+For $4\le n<m$, base count is at least $2+1/r$, including table
+$(3,n)$, while the correct count is nonnegative.
+For n=m the counts are $(2,1+1/r)$; after m the counts are
+$(R_r-1,0)$, with positive-word base count $R_r-1$.
+Thus the pair count is at least $R_r-1$ on every zero word.
+
+Set $v_1=-1,v_2=-2,v_3=3,v_m=2+1/r$ and other $v_j=0$.
+After subtracting $R_r$ copies of the anchor the independent row
+coefficients dominate $-v_n-1,v_n-1,-1$ on A,C,P, and $-1$ on T.
+Multiplication by the one nonnegative full score and summation proves
+(216.12). The tests cover every suffix and every multiple-zero word.
+The conic weights are proof weights; no auxiliary affine direction is
+asserted to lie in $H_L$ or $H_N$. $\square$
+

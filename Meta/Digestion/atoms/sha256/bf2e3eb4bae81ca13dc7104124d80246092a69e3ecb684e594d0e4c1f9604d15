@@ -1,0 +1,52 @@
+**Proposition 15.4 (attainability of the explicit graph conditions).**
+For every fixed $r$ and every lower size threshold, there is a graph
+of larger size satisfying (GDB.67). Such graphs can be selected by
+a terminating enumeration with exact finite girth and cut tests;
+no useful search-time or size bound is asserted.
+
+Proof. [Paredes, Theorem 1.12, version 1][ParedesParity] supplies
+4-regular graphs of unbounded order and girth tending to infinity,
+with
+
+$$
+\lambda(G)=\max\{\lambda_2(G),|\lambda_n(G)|\}
+\le2\sqrt3+\frac1{100}<\frac72.
+\tag{GDB.70}
+$$
+
+To obtain this specialization, take degree four, spectral tolerance
+$1/100$ and the fixed girth parameter $c=1$; its displayed condition
+$c\le\sqrt{\log m}\log_3(2)/15$ holds for all sufficiently large
+input sizes $m$. Its output order is $m(1+o(1))$ and its girth
+is at least $\sqrt{\log m}$.
+
+The paper's spectral definition permits multigraphs. The extra
+properties needed here follow from its conditions, rather than
+from attributing extra wording to its theorem. Once girth exceeds
+two, there are no loops or parallel edges, whose cycle lengths
+are one and two, respectively. Thus the output is simple.
+If a 4-regular graph were disconnected, eigenvalue four would
+have multiplicity at least two, contradicting $\lambda_2<7/2$.
+Thus it is connected. The bound on $|\lambda_n|$ also excludes
+bipartiteness, although nonbipartiteness is not used below.
+
+For a set $U$ of size $u\le n/2$, apply the Rayleigh inequality
+for $4I-A_G$ to
+$f=\mathbf1_U-(u/n)\mathbf1$. Its squared norm is
+$u(1-u/n)$ and its Laplacian quadratic form is $|\delta U|$.
+Consequently
+
+$$
+|\delta U|\ge(4-\lambda_2)u(1-u/n)\ge u/4.
+\tag{GDB.71}
+$$
+
+Choosing the input size sufficiently large also makes girth exceed
+the fixed $K$ and order exceed the requested threshold. This proves
+existence. Enumerate finite simple 4-regular graphs and test every
+cut and girth until the stated integer/rational inequalities and
+the size threshold hold. These tests are finite and existence makes
+the enumeration terminate. The spectral theorem is used for
+existence; the enumeration need not decide spectral inequalities.
+$\square$
+

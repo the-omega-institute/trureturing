@@ -1,0 +1,5 @@
+source_id = "auric-fib-seams-cycles-arithmetic-boundary-reconstruction"
+path = "docs/develop/theory/AURIC_FIB_SEAMS_CYCLES_ARITHMETIC_BOUNDARY_RECONSTRUCTION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

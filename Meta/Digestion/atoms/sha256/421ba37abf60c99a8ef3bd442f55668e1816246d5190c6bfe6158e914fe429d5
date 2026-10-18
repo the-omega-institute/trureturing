@@ -1,0 +1,6 @@
+### 82.12. Classification and resource interpretation
+
+By the original-channel rigidity proof above, every exact-quarter product having a rank-two party is, after an environment isometry and independent simultaneous bit swaps, one of the fixed-marker products (27) whose balanced-axis Gram satisfies (35). Conversely all these products attain exact quarter error. Their three axis directions are nonzero by (35), and the local ranks are exactly (4,2), consistently with the rigidity theorem.
+
+No regular-tetrahedron uniqueness claim is made. The unrestricted optimum with both local ranks at least three remains open.
+

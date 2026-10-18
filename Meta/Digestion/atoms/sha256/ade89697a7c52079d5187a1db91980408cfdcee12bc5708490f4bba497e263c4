@@ -1,0 +1,26 @@
+**定义 4.3（行列式余式、真实响应余式及混合式）。** 定义
+
+$$
+\begin{gathered}
+\mathsf D=\mathrm{Den}(\mathsf T),\qquad \delta=\det\mathsf D,\\
+\mathbf U=\operatorname{adj}(\mathsf D)N_M(\mathsf T)\mathbf e_0,
+\qquad \mathbf W=\operatorname{adj}(\mathsf D)N_J(\mathsf T)\mathbf e_0,\\
+U(t)=U_0+U_1t+U_2t^2,\qquad W(t)=W_0+W_1t+W_2t^2,\\
+u_2=U_2,\quad v_2=W_2,\quad p_u=U_1,\quad p_v=W_1.
+\end{gathered}
+\tag{4.5}
+$$
+
+$\mathbf U,\mathbf W$ 为升幂系数列。它们的每个分量和下式都是四变量的有限多项式表达式：
+
+$$
+\begin{aligned}
+\mathcal J_2={}&(s_2+s_1^2)u_2^2v_2^2
++2s_1(p_uu_2v_2^2+p_vv_2u_2^2)\\
+&+p_u^2v_2^2+p_up_vu_2v_2+p_v^2u_2^2,\\
+\mathcal J_3={}&s_3u_2^2v_2^2
++(s_1u_2+p_u)(s_1v_2+p_v)(s_1u_2v_2+p_uv_2+p_vu_2).
+\end{aligned}
+\tag{4.6}
+$$
+

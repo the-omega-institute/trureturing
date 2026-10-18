@@ -1,0 +1,19 @@
+**定义 57.1（One chronological spine and its actual maximum）。** Start at a recorded-zero archive $(b,S,\sigma,\lambda)$ of Definition 55.1. A priced spine is a finite sequence of literal words $B_b,\ldots,B_{L-1}$ with $L\ge b$. Set $S_b=S$, $\sigma_b=\sigma$ and, at each issued index $t$, require $S_t$ to be nonempty and $\lambda|_{S_t}$ nonconstant. Require the safety inequality in (55.2), and put
+
+$$
+A_t=S_t\cap E_t(B_t),\qquad
+S_{t+1}=S_t\setminus E_t(B_t),\qquad
+\sigma_{t+1}=\text{the literal new tail in (55.2)}.
+\tag{57.1}
+$$
+
+Require $\lambda|_{S_L}$ to be constant; the empty set is constant. Each $A_t$ is the *first positive* child off this zero-difference spine, with its own acquired archive at paid depth $t+1$. Give it the explicit price (55.3). The certificate's absolute paid depth is
+
+$$
+\Pi=\max\left(\{L\}\cup
+\{t+1+\delta(A_t,B_t):b\le t<L,\ A_t\ne\varnothing\}\right).
+\tag{57.2}
+$$
+
+For an empty sequence $L=b$, a constant or empty support has $\Pi=b$ and additional price zero. An empty support is only a vacuous composition case, not an executed source. No positive child has an optimization variable or another decision tree: its continuation is the specified constant stop, paid return (55.4), or next-block $10$.
+

@@ -1,0 +1,19 @@
+**Proposition 9.3 (dynamic sufficiency and its failure fibers).** For
+lawful prefixes in $\mathcal D_{H,J}$, (9.1), with the pending discipline,
+supports the next arrival, termination, and paid production of (8.4).
+It is dynamically sufficient for those operations, rather than merely
+an injective code at completed cuts. It is not a receiver for arbitrary
+words of length $P$.
+
+Proof. Constructions 9.1 and 8.3 give the required operations and their
+intermediate storage. Omitting $e$ from a pending cut identifies the
+two possible next letters before position $H$. Omitting the phase
+identifies the zero-write example. Omitting the count identifies
+$xR^n$ and $xR^{n+1}$ and loses the materialized endpoint. A late $L$
+cannot be incorporated as an $R$ without identifying distinct words;
+the stated error behavior preserves it pending and makes no source
+call. Retaining a count without the material lane would recover a word
+mathematically but would not supply its whole physical operand. These
+are distinct insufficiencies, not alternative encodings of one missing
+bit. ∎
+

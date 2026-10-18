@@ -1,0 +1,68 @@
+**Theorem 2.1 (all-address reduction and jointly attained prices).**
+Under Assumption 1.1, fix $(a_0,Q=\{L\},Y_z)$ and the interval $I_0$
+of Theorem 1.2. Write $K(l,u)$ and $M(l,u)$ for the stationary native
+interval prices of [AOF, Definition 8.1 and Theorems 8.3, 9.2][AOF].
+The exact conditional minima over all deterministic whole-tree decoders
+are
+
+$$
+\begin{aligned}
+\mathsf{Calls}(a_0,Y_z)&=K(a_0+b,a_0+z),\\
+\mathsf{Peak}(a_0,Y_z)&=
+\begin{cases}
+0,&N=1,\\
+1+\left\lfloor\dfrac{a_0+z-1}{2}\right\rfloor,&N\ge2.
+\end{cases}
+\end{aligned}
+\tag{NARC.2.1}
+$$
+
+One finite literal decoder attains both minima. Its call price is
+$K_0(N)$ when $a_0+b=0$ and $K_+(N)$ otherwise, with both zero at
+$N=1$. If $Q=\varnothing$ or $Q=\{R\}$, both new prices are zero.
+The conditional worst cases are over all histories with this same code
+and entire later input, rather than over an already known actual lag.
+
+**Proof.** On the exact fiber, every whole-tree query is one of
+$\varepsilon,Lp,Rp$. The root reply is constantly branch. At $Rp$ the
+reply is exactly the constructor read of $p$ in the supplied literal
+$T_{q+z}$, including failure at a leaf, and is fixed across the fiber.
+At $Lp$ it is
+
+$$
+r_{\langle T_{a_0+\ell},T_{q+z}\rangle}(Lp)
+=r_{T_{a_0+\ell}}(p).
+\tag{NARC.2.2}
+$$
+
+Hence every potentially informative query is left-prefixed, although
+some left-prefixed queries are themselves constant. Simulate any proposed
+whole-tree decoder's root and right-cone queries locally from the common
+input, and replace each $Lp$ query by the one paid relative query $p$.
+For each $n_0\in I_0$, Theorem 1.2 supplies an actual history, so this
+simulation preserves the proposed decoder's replies, choices and lag
+output. Adding $a_0$ to that output gives an interval reader for $n_0$,
+with no more calls. Pointwise finite termination transfers. This proves
+the call lower bound against all whole-tree addresses.
+
+If $N\ge2$, a decoder with no nonempty informative address cannot
+distinguish its compatible lags. In particular a whole-word cap of zero
+is impossible. For a cap $B\ge1$, the same simulation submits only
+suffixes of length at most $B-1$. The interval peak lower bound therefore
+forces $B-1\ge M(I_0)$. This also covers $M(I_0)=0$, where at least
+the one-letter slot address must be submitted. Root and right queries
+cannot relax the bound because their replies are fixed.
+
+For the upper bounds, use the single AOF reader attaining both interval
+minima and submit each of its actual literal words $p$ as $Lp$. Its
+replies are (NARC.2.2), the current source remains stationary, and the
+answer $n_0$ gives $\ell=n_0-a_0$. A relative root query costs one paid
+whole-tree call at $L$; it has whole-word length one. The prefix adds
+exactly one letter to the peak of a nontrivial reader. For $N=1$ the
+unique lag is already determined, and no word is submitted.
+
+For the other permitted cuts, the entire acquired left subtree is
+visible. Its clock is $a_0+\ell$, whose difference from the retained
+$a_0$ is the lag. This calculation uses acquired literal data and no
+new source call. The initial full row remains discarded. $\square$
+

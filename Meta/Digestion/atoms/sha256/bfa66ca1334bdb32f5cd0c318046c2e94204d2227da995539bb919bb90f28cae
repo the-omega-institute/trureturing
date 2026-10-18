@@ -1,0 +1,17 @@
+**Theorem 3.3 (the joint constraints reconstruct both covariances).** Every nonnegative law of Definition 3.1 has
+
+$$
+\sum_i p_i h_ih_i^T=I_3,\qquad
+\sum_i p_i\eta_i1000\operatorname{cap}(h_i)n_{h_i}n_{h_i}^T=M.
+$$
+
+Proof. The first five equations give $\sum p=1$, $\sum pu=\sum pv=\sum puv=0$, $\sum pu^2=\alpha$, and $\sum pv^2=\beta$. Rescaling $z,w$ yields the first identity, including its cross terms. The last three equations give
+
+$$
+\sum p\eta1000\operatorname{cap}\,z^2=V_0,\quad
+\sum p\eta1000\operatorname{cap}\,zw=0,\quad
+\sum p\eta1000\operatorname{cap}\,w^2=W_0.
+$$
+
+For the last equality use $\alpha z^2+\beta w^2=1$ and $\mu=\alpha V_0+\beta W_0$. Congruence by $(z,w)\mapsto(dw/h_2,-bz/h_1)$ gives lower diagonal entries $m_1,m_2$ and zero cross term. These are covariances of one common law, including the physical off-diagonal constraint. $\square$
+

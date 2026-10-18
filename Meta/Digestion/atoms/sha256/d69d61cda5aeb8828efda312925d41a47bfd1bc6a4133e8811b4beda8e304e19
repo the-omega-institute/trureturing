@@ -1,0 +1,45 @@
+## 六、第五定理：输出分支必须逐支闭合，平均转移不够
+
+设动作是 $a$，输出是 $o$，相应的子核为：
+
+```math
+M_{a,o}.
+```
+
+平均转移核为：
+
+```math
+K_a=\sum_oM_{a,o}.
+```
+
+定义递归观察空间：
+
+```math
+V_0=\operatorname{span}(G),
+```
+
+```math
+V_{n+1}
+=
+V_n+
+\operatorname{span}
+\left\{
+M_{a,o}f:
+a,o,\ f\in V_n
+\right\}.
+```
+
+令：
+
+```math
+V_\infty=\bigcup_{n\ge0}V_n.
+```
+
+对一个输出词：
+
+```math
+\omega=(a_1,o_1,\ldots,a_n,o_n),
+```
+
+记其复合子核为 $M_\omega$。
+

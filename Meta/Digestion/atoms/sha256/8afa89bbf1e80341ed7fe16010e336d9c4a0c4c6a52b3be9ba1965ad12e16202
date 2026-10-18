@@ -1,0 +1,23 @@
+**Definition 55.1 (the endpoint coefficient).** Put
+$\varepsilon=1-s/s_0$, $\gamma=\alpha/\beta$, and
+
+$$
+\begin{aligned}
+R_1&=x-g_1-z+\alpha(x+y-g_0),&
+R_2&=y-z-g_2+\beta(x+y-g_0),\\
+b_{++}&=R_1-\gamma R_2,&b_{+-}&=-(1+\gamma)R_2,\\
+b_{-+}&=(1+\gamma)R_1,&
+b_{--}&=-(\gamma+2)R_1+(2\gamma+1)R_2,\\
+\Gamma&=\sqrt{\tfrac18\sum_{\sigma,\eta=\pm1}b_{\sigma\eta}^2},&
+T_0&=\mathcal T(s_0)=T_{\rm flat}-b(1).
+\end{aligned}
+\tag{JR.155}
+$$
+
+The scalar $b(1)$ in $T_0$ is the inherited endpoint residual, not an
+entry of the four-number list $b_{\sigma\eta}$. We have $\sum b_{\sigma\eta}=0$,
+$.008<\Gamma<.009$, and $|b_{\sigma\eta}/\Gamma|<3$.
+These follow directly from the source formulas and directed enclosures
+specified in §56; for example
+$.00824076104752150020<\Gamma<.00824076104752150022$.
+

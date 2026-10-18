@@ -1,0 +1,24 @@
+**Definition 4.1 (left and right cancellation).** In a possibly
+noncommutative meter operation $\odot$, left cancellation means
+
+$$
+a\odot b=a\odot c\Longrightarrow b=c,
+\tag{4.1}
+$$
+
+and right cancellation means
+
+$$
+b\odot a=c\odot a\Longrightarrow b=c.
+\tag{4.2}
+$$
+
+If a known prefix meter is on the left of a total inherited meter, left
+cancellation recovers a unique unknown suffix charge.  If a known suffix
+meter is on the right, right cancellation recovers the unknown prefix charge.
+In a commutative
+cancellative monoid the distinction disappears algebraically, but the
+prefix/suffix position still matters for the trace and selector.  Cancellation
+recovers a meter value; it does not by itself recover the order of action
+names.
+

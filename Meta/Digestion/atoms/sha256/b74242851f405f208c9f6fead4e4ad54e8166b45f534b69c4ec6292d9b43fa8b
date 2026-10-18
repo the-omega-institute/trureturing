@@ -1,0 +1,37 @@
+**Resource statement 10.1 (what is and is not minimized).** Theorem 7.5
+minimizes total retained Hilbert dimension for a live state-and-total-guard
+component, allowing arbitrary counted assistance. Theorem 9.3 gives the
+exact block profile capacity of an unassisted endpoint-factorized delayed
+command task. Their superficially similar factors of three have different
+premises; they cannot be multiplied or combined without a new common-task
+proof. Neither is the complete observer minimum of Definition 1.3.
+
+For the lattice, rational $c$ gives a finite description of $h$ and all
+integer request arithmetic. The working label uses
+$\lceil\log_2M\rceil$ bits in a binary implementation; (QC.42)'s
+bit inequality is attained by qutrit blocks when $M$ is a power of two.
+Request indices, counters, policy state, clocks and all variable archives
+are separately included when retained. For each finite delayed catalogue,
+$C_j=j/(N+1)$ has a finite rational description; its source-dependent
+command setting must cross retention through $\mathcal B$. It cannot
+survive for free as an installed phase dial or a timing channel.
+
+The rational examples have finite algebraic descriptions of the support
+basis and compression isometries, and finite symbolic descriptions of
+their phase gates. Exact real calibration, exact clocks, exact gate
+implementation and the canonical exact-time recorder remain declared
+ideal services. An arbitrary real calibration parameter or waveform need
+not have a finite effective description. Programme length, arithmetic
+precision, sensing, preparation, acquisition, waveform generation, gate
+synthesis and physical hardware are distinct resources; none is priced by
+$D$ or the capacity formula. The four-state delayed-source witness has
+duration five, height speed at most $1/16$, phase speed at most $8\pi$,
+phase variation at most $18\pi$ and preparation live probability $1/3$.
+This probability is not a repeat-until-success resource.
+
+All new bounds are exact. No approximate guard, finite-noise programming
+rate, finite effective implementation of an arbitrary real waveform or
+unbounded-horizon error guarantee is derived from exact orthogonality.
+Every finite execution keeps its actual growing archive. A finite live
+component does not imply a forever finite-state predictor.
+

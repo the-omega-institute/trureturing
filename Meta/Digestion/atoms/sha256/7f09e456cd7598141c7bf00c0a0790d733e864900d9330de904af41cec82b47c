@@ -1,0 +1,10 @@
+**定义 53.3（取得后的相等位）。** 定义
+
+$$
+E(u)=1\ \Longleftrightarrow\ \exists v\in\mathcal T, u=\langle v,v\rangle,
+\qquad E(u)=0\text{ 在其余情形}.
+\tag{SLH.53.2}
+$$
+
+生产者按命题53.2实际取得原树，再比较两个有序子树的有限构造符描述并保留 $E$。$\alpha$ 与 $\langle\alpha,\alpha\rangle$ 分别达到零、一，因此该位的像恰有两个元素；其保留载荷是一位，完整切口仍须满足假设53.1的全部条件。
+

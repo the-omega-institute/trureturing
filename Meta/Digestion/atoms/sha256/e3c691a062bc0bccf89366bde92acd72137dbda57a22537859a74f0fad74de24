@@ -1,0 +1,57 @@
+## 326. Coarse exact length bounds
+
+Solving w^2>3 from (324.4) for z gives
+
+    z>Z3(m,c,d)
+      :=[(2*d+1)*(m^2+c^2)+(2*d+4)*m*c+d^2-1]
+           /[2*(d^2-1)].                         (326.1)
+
+In fact (d-1)*Jt-3*(d+1)*Lt=4*(d^2-1)*(z-Z3). This Z3 increases
+with c and decreases with d. Its d derivative is
+
+    -[(m^2+c^2)*(d^2+d+1)+m*c*(d^2+4*d+1)]/(d^2-1)^2<0.
+
+Combine z<Zb, z>Z3, c>1, v<=m-2 and d<m-3. They require
+
+    Zb(m,m-2,m-3)-Z3(m,1,m-3)>0.
+
+This difference equals Nm/[2*m*(m-4)*(m-2)*(m-1)], where
+
+    Nm=2*m^5-34*m^4+124*m^3-121*m^2-109*m+192.
+
+If 4<m<=11, substitute m=(11+4*a)/(1+a), a>=0. Direct expansion is
+
+    -(1+a)^5*Nm((11+4*a)/(1+a))
+      =900*a^5+13383*a^4+74765*a^3+187297*a^2
+         +184925*a+26296>0,
+
+contradicting the positive difference. Thus m>11.
+
+If v<=6, the same monotonicity requires
+Zb(m,6,m-3)-Z3(m,1,m-3)>0. This difference is
+
+    -Nv/[2*m*(m-4)*(m-2)*(m-1)],
+    Nv=18*m^4-192*m^3+833*m^2-1331*m+576,
+    Nv(11+b)=18*b^4+600*b^3+7565*b^2+43131*b+94714>0.
+
+If d<=6, it instead requires Zb(m,m-2,6)-Z3(m,1,6)>0, equal to
+
+    -Nd/[70*m*(m-1)],
+    Nd=13*m^4-67*m^3+242*m^2-3618*m+1680,
+    Nd(11+b)=13*b^4+505*b^3+7469*b^2+46597*b+92320>0.
+
+Both are contradictions since b=m-11>0 and all denominators are
+positive. We have obtained the strict necessary bounds
+
+    m>11, v>6, d>6.                              (326.2)
+
+The positive weighted mean K therefore exceeds sqrt(35)/6. By
+bad-eta and z>m,
+
+    Le/Je>=sqrt((m-1)*(z-1)/[(m+1)*(z+1)])
+         >(m-1)/(m+1)>5/6,
+    y^2>(35/36)*(5/6)=175/216>81/100.
+
+The last difference is 1/5400, so y>9/10. This is not the stronger
+inequality y>1 or S(eta)>pi/2.
+

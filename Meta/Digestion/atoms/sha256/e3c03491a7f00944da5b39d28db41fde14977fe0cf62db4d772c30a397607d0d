@@ -1,0 +1,39 @@
+**Definition 9.3 (Full phase-gradient local unbiasedness).** Fix
+$\ell\in\mathbb R^{B_n}$ with $\sum_u\ell_u=0$ and define the
+local phase contrast $\tau_\ell(\theta)=\ell^{\mathsf T}\theta$.
+An estimator is locally unbiased at the supplied reference if
+
+$$
+\mathbb E_0\widehat\tau=\tau_\ell(0),\qquad
+\left.\frac{\partial}{\partial\theta_u}
+\mathbb E_\theta\widehat\tau\right|_0=\ell_u
+\quad\text{for every }u\in B_n.
+\tag{9.8}
+$$
+
+The statistic and its reference coefficients are held fixed in taking
+these derivatives. This is the full gradient condition, including every
+phase nuisance direction, rather than unbiasedness along one chosen
+curve. The common phase is harmless precisely because $\sum\ell=0$.
+Here $p$ is fixed and calibrated; unknown probability parameters would
+require a separately specified statistical model.
+
+Let $\mathcal C_\eta$ be the connected components of the graph with
+all vertices $B_n$ and only edges $E_\eta$, including isolated vertices.
+Define the extended target resistance by
+
+$$
+R_\eta(\ell)=
+\begin{cases}
+\ell^{\mathsf T}L_\eta^+\ell,
+ &\displaystyle\sum_{u\in C}\ell_u=0
+       \text{ for every }C\in\mathcal C_\eta,\\
++\infty,&\text{otherwise}.
+\end{cases}
+\tag{9.9}
+$$
+
+The superscript $+$ denotes the Moore–Penrose pseudoinverse. Its
+quadratic form is used as a resistance only on the stated feasible
+domain.
+

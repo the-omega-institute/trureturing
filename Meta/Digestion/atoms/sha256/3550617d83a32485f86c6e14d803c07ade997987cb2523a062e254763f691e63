@@ -1,0 +1,53 @@
+**Convention 1.4 (Intrinsic kernel and first-order balance).** For a nonempty finite interval $C=[a,b]$
+of length $L$, write
+
+$$
+\mathcal H_C=\sigma(X_j:j\notin C),\quad Y=X_{C^c},\quad
+\mu_C=P\circ Y^{-1},\quad p_C(w;y)=P(X_C=w\mid Y=y),\quad
+\mathcal K_C(P)=\{f\in\mathbb R^{B_L}:\mathbb E_P[f(X_C)\mid\mathcal H_C]=0\}.
+\tag{1.7}
+$$
+
+For $C=[1,L]$, [Intrinsic, Theorem 2.2 and Corollary 2.3][I] identify this law-invariant kernel with
+$\ker E_{\theta,L}$, where $E_{\theta,L}((u,v),w)=\lambda M_uM_wM_v\mathbf1$ and both collar words have
+length $N-1$. All actual zero rows remain; $N=1$ has an empty collar. The matrix-null condition
+$\sum_w f(w)M_w=0$ is only sufficient. Set $\mathcal V_C=\mathcal K_C(P)^\perp$; the supplied finite
+realization bounds its dimension by $N^2$. Neither that bound nor positive kernel dimension supplies a
+productive direction.
+
+The separate first-order premise is the supplied property
+
+$$
+\mathsf Z(P):\quad
+\sum_{i\in\mathbb Z}\bigl|\mathbb E_P[f(X_C)\ell_i]\bigr|<\infty,
+\qquad S_P(f_C):=\sum_i\mathbb E_P[f(X_C)\ell_i]=0
+\quad(C\text{ finite},\ f\in\mathcal K_C(P)).
+\tag{1.8}
+$$
+
+[Cocycle, Convention 1.3 and Theorem 4.2][E] supply attainment $\Rightarrow
+\mathsf Z(P)$ and, under (1.5)–(1.6), its equivalence with the all-length
+conditional balances in (2.3) below. The $L^2$ estimates, general $C^2$
+integrals and local-law averaging do not assume $\mathsf Z(P)$.
+
+Under hypothetical $d(P)=c_\star$, retain all the original necessary conditions, as supplied in
+[Universal, Theorems 3.1 and 5.1][U] and [Two-word, §1][W]: for all locations, legal $w\in B_n$, and
+$m,n\ge1$,
+
+$$
+\begin{gathered}
+P([0^m]_a)\ge2^{-m},\qquad P([w]_a)\ge2^{-(n+2)}3^{-k(w)},\\
+nc_\star\le\Phi_n(P_n)\le\kappa_n\le(n+1)c_\star,\qquad
+0\le D_r(P)-c_\star\le\frac{c_\star}{r+1},\quad r\ge0,\\
+c_\star\le\bar c:=3-2\sqrt2<\tfrac14.
+\end{gathered}
+\tag{1.9}
+$$
+
+Here $k(w)$ counts ones. Positive-weight actual hidden closed classes also attain, including periodic
+classes. These conclusions do not establish an attainer. The band alone gives neither attainment nor
+(1.9)'s risk budget. In particular, the all-$n$ bulk lower bound already implies attainment on taking its
+limit; a low-risk band-only law cannot falsify a claim retaining that lower bound. The original $N=1$
+all-zero law remains in (1.2), although it fails (1.5), so the band-qualified construction does not apply
+to it.
+

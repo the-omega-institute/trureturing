@@ -1,0 +1,157 @@
+**Theorem 11.5 (complete finite certificates for the master and every prefix).**
+For every $1\le q\le17$, the encoder of Definition 11.1 satisfies
+$D_2$ on both full reference states for every class, and on every
+complete boundary state (NARC.10.4).
+
+**Proof, coordinate reply certificates.** In the full master classes
+use the following offset schedules. The middle first replies halt;
+the lower or upper second experiment is needed only if its surviving
+target is nonconstant.
+
+| Class $c$ | First offset | Second after $\bot$ | Second after $\mathsf b$ |
+| --- | --- | --- | --- |
+| $0$ | $11$ | $0$ | $14$ |
+| $1$ | $10$ | $-1$ | $13$ |
+| $2$ | $1$ | $-11$ | $12$ |
+| $3$ | $1$ | $-11$ | $10$ |
+| $4,5,6$ | $1$ | $-11$ | $4$ |
+| $7\le c\le16$ | $4$ | $1$ | $7$ |
+
+Each pair of four-entry tuples below gives the targets of the second
+reply cells after first absence and first branch, respectively.
+$\varnothing$ denotes an empty cell, not an output target.
+
+| $c$ | First $\alpha$ target | First $\beta$ target | Lower second $(\bot,\alpha,\beta,\mathsf b)$ | Upper second $(\bot,\alpha,\beta,\mathsf b)$ |
+| --- | --- | --- | --- | --- |
+| $0$ | $5$ | $4$ | $(16,0,\varnothing,6)$ | $(3,2,1,0)$ |
+| $1$ | $5$ | $4$ | $(15,1,1,0)$ | $(3,2,1,0)$ |
+| $2$ | $1$ | $0$ | $(14,\varnothing,13,2)$ | $(3,\varnothing,1,0)$ |
+| $3$ | $2$ | $1$ | $(12,14,14,3)$ | $(0,4,3,0)$ |
+| $4$ | $3$ | $2$ | $(14,13,12,4)$ | $(1,0,\varnothing,2)$ |
+| $5$ | $4$ | $3$ | $(13,12,11,5)$ | $(2,1,0,1)$ |
+| $6$ | $5$ | $4$ | $(13,11,10,6)$ | $(3,2,1,0)$ |
+
+Here is a direct derivation of every exceptional row. Class zero has
+negative extras $u=-16,\ldots,-10$ all with $v=16$, its base point
+$(0,0)$, and positive extras $u=10,\ldots,16$ with $v=16-u$.
+First offset eleven singles out targets five and four. Its lower
+cell contains the negative group, the base, and $(u,v)=(10,6)$;
+offset zero gives the displayed three nonempty target groups. Its
+upper cell has $u=13,14,15,16$, which offset fourteen separates
+as displayed. Class one similarly has negative extras
+$u=-15,\ldots,-10$, all with target fifteen, base targets one at
+$u=-1,0$ and zero at $u=1$, and positive extras
+$u=10,\ldots,15$ with target $15-u$. Offsets ten, minus one
+and thirteen give exactly its row.
+
+Class two's negative extras are $(-14,14),(-13,14),(-10,13)$;
+its positive extras are $(10,3),(13,1),(14,0)$. Its base lower
+arm has target two, and its positive base points at $u=1,2$ have
+targets one and zero. Offsets one and minus eleven partition the
+lower group into targets fourteen, an empty singleton, thirteen and
+two. Offset twelve on its upper extras gives three, an empty
+singleton, one and zero. Class three's negative extras are
+$(-12,12),(-11,14),(-10,14)$, and its positive extras are
+$(10,4),(11,3),(12,0)$. Its lower base target is three, and its
+upper cell also contains the base point $(3,0)$. The offsets in
+its schedule now give its complete displayed row. Classes four
+through six are exactly the instances of Lemma 11.4, which proves
+their lower tuples and upper target mergers.
+
+For a normal class (NARC.11.2), first offset four has middle targets
+$c-4,c-5$. Its lower second offset one gives
+$(c,c-1,c-2,c-3)$, and its upper second offset seven gives
+$(c-6,c-7,c-8,c-9)$ wherever the indicated support points exist.
+If $r<9$, the corresponding terminal positions are simply empty.
+This proves target constancy in every occupied terminal cell for
+every master class. Prefix restriction, and later entry feasibility,
+only delete origins from these algebraic partitions.
+
+**Proof, positive full reference realization.** At the right reference
+$h=q+1$ and the left reference $h=2q+1$, every needed first
+threshold is legal. Prune any target-constant state and any
+constant-reply node. If a threshold exceeds $3q+1$, all tested
+ages are below it, so its constant absence node is deleted as in
+Theorem 10.2. The remaining first and second queries lie in the
+finite menu whenever their thresholds are at least two.
+
+For class zero, nontrivial extras first appear at $q=17$, so its
+needed lower threshold $h$ is legal. For class one, $q\ge2$ gives
+right lower threshold $h-1=q\ge2$, and the left threshold is
+larger. For classes two through six, a nonconstant lower cell
+requires a negative extra. Its smallest possible maximum coordinate
+$A$ is, respectively, $13,12,12,11,10$. Since a prefix containing
+it has $q\ge A+1$, the right lower threshold $h-11=q-10$
+is at least two except at $q=11,c=6$. There its surviving lower
+cell consists of the extra point of age two and target ten, and
+base ages $6,\ldots,12$ of target six. Use actual $P_2$:
+its alpha and branch cells separate these targets. The formal
+threshold-one partition is not requested. For smaller prefixes
+the corresponding lower cell is already target-constant. Every
+needed left-reference lower threshold is legal, since an extra
+requires $q\ge11$ and $h=2q+1$. All upper offsets are positive.
+Normal-class offsets are positive as well. Thus the displayed
+coordinate certificates give actual $D_2$ reference witnesses for
+every prefix, including this sole positive-reference replacement.
+
+**Proof, the complete zero-containing fibers.** The master boundary
+labels are
+
+$$
+\bigl(e_{17}(0,z)\bigr)_{z=0}^{16}
+=(0,1,2,3,4,5,6,7,8,9,6,6,3,6,2,1,0).
+\tag{NARC.11.7}
+$$
+
+For any prefix take only $z<q$ and delete origins outside its square.
+These are exactly the labels indexing (NARC.10.4), whose whole
+fiber retains every class member with $b\le z$. Right visibility
+has $h=z$, independently of the changed right offset $q$.
+At $z=0$ all candidates have $v=b=0$, so halt. At every other
+listed boundary clock the first threshold is legal; prune it if
+constant. Upper second thresholds are positive and legal when
+needed. The only nonconstant lower cells requiring $E$ in place
+of the schedule's nonempty threshold are the following:
+
+| $(c,z)$ | Complete remaining lower age-to-target groups | Actual second experiment |
+| --- | --- | --- |
+| $(1,1)$ | $\{0,1\}\mapsto1$, $2\mapsto0$ | $E$ |
+| $(6,10)$ | $0\mapsto10$, $[4,10]\mapsto6$ | $E$ |
+| $(6,11)$ | $0\mapsto11$, $1\mapsto10$, $[5,11]\mapsto6$ | $E$ |
+| $(3,12)$ | $0\mapsto12$, $[9,12]\mapsto3$ | $E$ |
+
+These groups follow from the base lower arms and the feasible negative
+extras: at clock ten only $A=10$ survives in class six; at eleven
+only $A=10,11$ survive there; at twelve only $(0,12)$ survives
+among class three's negative extras. At $(1,1)$ no negative extra
+with target fifteen is feasible, so the lower cell is exactly its
+three-point base. Actual $E$ has separate alpha, beta and branch
+cells and separates the stated targets in every row. Prefix
+restriction can only remove some of these groups.
+
+For exhaustion, at clocks $z=2,\ldots,6$ the label is $c=z$.
+All negative extras have target greater than $z$, so the lower cell
+has only its constant base target $c$ and halts. At clocks seven
+through nine the normal-class positive offsets are legal. The
+remaining four clocks have the following legal lower experiments
+and target tuples:
+
+| $(c,z)$ | Lower experiment | Lower $(\bot,\alpha,\beta,\mathsf b)$ targets |
+| --- | --- | --- |
+| $(6,13)$ | $P_2$ | $(13,11,10,6)$ |
+| $(2,14)$ | $P_3$ | $(14,\varnothing,13,2)$ |
+| $(1,15)$ | $P_{14}$ | $(15,1,1,0)$ |
+| $(0,16)$ | $P_{16}$ | $(16,0,\varnothing,6)$ |
+
+In the first row the feasible negative extra ages are zero, two and
+three, with targets thirteen, eleven and ten; the base lower ages
+are $[7,13]$. There is no age-one extra. In the second row the
+negative extras have ages zero and one at target fourteen, and age
+four at target thirteen, with lower base target two. The last two
+rows are the star certificates already derived, translated to their
+displayed clocks. Each occupied actual reply cell is target-constant.
+Together with the four $E$ rows and the initial constant halt, this
+exhausts (NARC.11.7), including every member of every complete
+zero-containing fiber. Oversized constant-absence nodes are again
+pruned, so these are witnesses using (NARC.10.1). $\square$
+

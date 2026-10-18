@@ -1,0 +1,40 @@
+**Theorem 4.4 (All rows and exact original error of $A$).**
+Every $A,C,P$ and positive row through eight holds at $E$, and
+for every continuation in 1.2 the law's exact original error is
+
+$$
+e_a(A)=5\tau+\max\{24u/253,v\}.
+$$
+
+Proof. Its core correct masses, constantly on entire first-zero fibres,
+are
+
+$$
+(8\tau-24\kappa,8\tau-24\kappa,8\tau-24\kappa,
+5\tau-24\kappa,4\tau-24\kappa,3\tau-24\kappa,
+\tau-24\kappa,229\kappa).
+$$
+
+Nonzero first and middle outputs are their queried addresses, while
+nonzero exhaustion outputs are later than both queries. Thus no
+suffix bit changes a correct contribution. The anchor adds
+$1-24\tau$ in classes one and two. With actual $u=253\kappa$,
+this gives $c_n=a_n-E$ for every $n\le8$.
+Each $C$ deficit equals $E$; separately, each $P$ deficit is
+$D_n\le E$ by 4.3; each $A$ deficit is $D_n-E\le0$.
+Negative singleton demands remain literal.
+
+At the positive eight-word the same allocation is
+
+$$
+A_+=(1-E)e_0+(2\tau-20\kappa)e_3+(\tau-35\kappa)e_4
+                  +(2\tau-50\kappa)e_5+129\kappa e_8.
+$$
+
+Its nonbase mass is exactly $E$ and no label above eight is emitted.
+For actual $n>8$, Proposition 1.4 gives error $\max\{E,a_n\}$.
+Actual $a_9=5\tau+v$ and all later amplitudes are at most $5\tau$.
+This proves the uniform upper; actual first-zero-two and first-zero-nine
+witnesses give equality with its larger term. Original execution of
+these complete tables is specified in 6.2. $\square$
+

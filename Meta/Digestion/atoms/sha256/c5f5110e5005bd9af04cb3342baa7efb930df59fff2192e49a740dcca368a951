@@ -1,0 +1,6 @@
+# Self-calibrating acquisition resources: complete five-active projection and rational separation
+
+> 本卷为普通理论参考输入，消化方言为 `generic-v1`；locator 由本文件字节决定。
+> 卷首、既有正文与终端追加锚保持只增不减。新增章写在追加锚之后，并以同一追加锚结束。
+> 证明采用普通数学与有限精确算术；本卷未经 Lean kernel 验证，不承担冻结、覆盖或机器状态。
+

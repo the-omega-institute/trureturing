@@ -1,0 +1,78 @@
+## 292. Every vertex-link corner fan
+
+There is one link triangle `(T,v)` for each of the 32 local tetrahedron vertices.
+Its corner `(T;v,w)` is the endpoint at `v` of edge `vw`. Its two incident sides
+come from the two faces containing that edge. The following ten cyclic lists
+are all the actual link-vertex fans. Here `T:v>w` means the corner `(T;v,w)`;
+it does not mean a directed edge in a new triangulation.
+
+- Label 0, endpoint fan 0: `M0:1>3`, `M1:1>3`, `M2:1>3`, `M3:1>3`, `M0:2>4`, `P0:1>3`, `P3:1>3`, `P2:2>4`, `M2:2>4`, `P2:1>3`, `P1:2>4`, `M1:2>4`, `P1:1>3`, `P0:2>4`, `P3:2>4`, `M3:2>4`.
+- Label 0, endpoint fan 1: `M0:3>1`, `M1:3>1`, `M2:3>1`, `M3:3>1`, `M0:4>2`, `P0:3>1`, `P3:3>1`, `P2:4>2`, `M2:4>2`, `P2:3>1`, `P1:4>2`, `M1:4>2`, `P1:3>1`, `P0:4>2`, `P3:4>2`, `M3:4>2`.
+- Label 1, endpoint fan 0: `M0:1>4`, `M1:1>2`, `P1:1>2`, `P0:2>3`, `P3:4>3`, `P0:4>1`, `M0:3>2`, `M3:4>3`.
+- Label 1, endpoint fan 1: `M0:4>1`, `M1:2>1`, `P1:2>1`, `P0:3>2`, `P3:3>4`, `P0:1>4`, `M0:2>3`, `M3:3>4`.
+- Label 2, endpoint fan 0: `M0:3>4`, `P0:4>3`, `P1:3>2`, `P2:2>1`, `M2:2>1`, `M1:4>1`, `P1:4>1`, `M1:3>2`.
+- Label 2, endpoint fan 1: `M0:4>3`, `P0:3>4`, `P1:2>3`, `P2:1>2`, `M2:1>2`, `M1:1>4`, `P1:1>4`, `M1:2>3`.
+- Label 3, endpoint fan 0: `M1:3>4`, `P1:4>3`, `P2:3>2`, `P3:2>1`, `M3:2>1`, `M2:4>1`, `P2:4>1`, `M2:3>2`.
+- Label 3, endpoint fan 1: `M1:4>3`, `P1:3>4`, `P2:2>3`, `P3:1>2`, `M3:1>2`, `M2:1>4`, `P2:1>4`, `M2:2>3`.
+- Label 4, endpoint fan 0: `M0:1>2`, `M3:4>1`, `P3:4>1`, `P0:2>1`, `P3:2>3`, `P2:3>4`, `M2:4>3`, `M3:2>3`.
+- Label 4, endpoint fan 1: `M0:2>1`, `M3:1>4`, `P3:1>4`, `P0:1>2`, `P3:3>2`, `P2:4>3`, `M2:3>4`, `M3:3>2`.
+
+Every consecutive pair, including last-to-first, is joined by the relevant
+face map from Section 289. All ten fans are disjoint. The two fans at edge 0 have
+length 16; the other eight have length 8. They exhaust all 96 local corners,
+and each corner has exactly two incident side identifications. Therefore every
+link vertex has a circular fan and a disc neighborhood. All 96 triangle sides
+are paired by a fixed-point-free involution, so every link-edge interior also
+has a disc neighborhood, and the resulting surfaces have no boundary. These
+are local manifold checks; Euler characteristic is not being used to assume
+surface manifoldness.
+
+For complete explicit connectivity evidence, the following 31 face-induced
+identifications form a spanning tree on all 32 link triangles:
+
+- `M0:1 ~ M3:2`
+- `M0:1 ~ M3:4`
+- `M0:1 ~ M1:1`
+- `M3:2 ~ P3:2`
+- `M3:2 ~ M2:4`
+- `M3:4 ~ M0:3`
+- `M3:4 ~ P3:4`
+- `M1:1 ~ P1:1`
+- `M1:1 ~ M2:1`
+- `P3:2 ~ P0:2`
+- `P3:2 ~ P2:3`
+- `M2:4 ~ P2:4`
+- `M0:3 ~ P0:4`
+- `M0:3 ~ M1:3`
+- `P1:1 ~ M1:2`
+- `M2:1 ~ P2:1`
+- `M2:1 ~ M3:1`
+- `P2:3 ~ P1:4`
+- `P2:4 ~ P3:3`
+- `P2:4 ~ M2:3`
+- `P0:4 ~ P1:3`
+- `M1:2 ~ P1:2`
+- `M1:2 ~ M0:4`
+- `P2:1 ~ M2:2`
+- `M3:1 ~ M0:2`
+- `M3:1 ~ P3:1`
+- `P1:4 ~ M1:4`
+- `P3:3 ~ P0:1`
+- `P3:3 ~ P0:3`
+- `M2:3 ~ M3:3`
+- `P1:3 ~ P2:2`
+
+There is therefore exactly one actual ideal vertex and one connected link.
+The link is orientable directly: order the three corner labels of triangle
+`(T,v)` by increasing `w != v`, then give it sign `s(T)*(-1)^(v-1)`.
+Every side identification reverses the induced side orientations. This is
+checked directly on the 96 directed side occurrences by restricting the
+signed vertex permutations in Section 289.
+
+After the local and global surface checks, its cell counts are
+`V=10`, `E=48`, `F=32`, hence `chi=10-48+32=-6=2-2*4`.
+The sole link is a closed orientable genus-4 surface. Truncation produces the
+required compact connected orientable 3-manifold: face interiors have ordinary
+paired neighborhoods, every original edge has a circular normal link without
+reversal, and the actual ideal vertex link is the verified surface above.
+

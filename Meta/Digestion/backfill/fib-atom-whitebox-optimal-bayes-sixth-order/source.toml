@@ -1,0 +1,5 @@
+source_id = "fib-atom-whitebox-optimal-bayes-sixth-order"
+path = "docs/develop/theory/FIB_ATOM_WHITEBOX_OPTIMAL_BAYES_SIXTH_ORDER.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

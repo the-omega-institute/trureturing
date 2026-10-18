@@ -1,0 +1,174 @@
+- [SWS25] I. D. Smith, E. Wolfe, R. W. Spekkens, *Fully quantum inflation: quantum marginal problem constraints in the service of causal inference*, [arXiv:2501.12320](https://arxiv.org/abs/2501.12320). State-network compatibility is distinct from the compatibility of one measured probability distribution.
+
+## 9. A concrete spatial cell: the smallest quantum tetrahedron
+
+The spatial interface used here is the finite-state, CPTP inverse-limit construction of [Typed Bridges, first continuation, Section 32](AURIC_FIB_ATOM_TYPED_BRIDGES_AND_ARITHMETIC_TRIANGLE_RH_PIPELINE_CONTINUATION.md). That construction requires actual completely positive bonding maps and does not assert a smooth spacetime. The following finite cell makes the hidden observable and the permitted coarse-graining explicit. All new claims in Sections 9-13 are ordinary mathematical derivations, not Lean-verified declarations.
+
+Set J_X=sigma_X/2 in dimensionless units and let C=Inv((C^2)^{tensor 4})=ker J_total^2. The isometry E already defined above identifies C with C^2. The quantum-tetrahedron interpretation assigns the four spins to four faces, fixes each area Casimir J_X^2=3I/4, and imposes closure sum_X J_X=0 on C. These are the established intertwiner construction [B98, S13]; they are additional geometric semantics for this carrier, not a derivation of gravity from FIB occupancies. AURIC occupation labels and face-spin labels remain different objects.
+
+Amelung-Sahlmann [AS26] investigate entanglement of precisely this class of invariant tensors, including spin 1/2, but their principal objective is entropic fill. Their entropic tetrahedron, the coherent-state label geometry and the quantum volume operator are distinct constructions. Their results do not supply the unrestricted HS average-von-Neumann-entropy theorem. We use their work to locate the geometric question, not as an unproved identification of entropy and physical volume.
+
+### Proposition 9.1. Oriented volume and volume magnitude separate already at spin 1/2
+
+Define the signed triple-product operator
+
+$$Q_{\rm geom}=\mathbf J_A\cdot(\mathbf J_B\times\mathbf J_C)=K_{ABC}/8.$$
+
+Its restriction and square are
+
+$$\widehat Q_{\rm geom}=-\frac{\sqrt3}{4}Y_L,\qquad \widehat{Q_{\rm geom}^2}=\frac3{16}I_2. \tag{9.1}$$
+
+In the dimensionless volume convention of [S13], Section 2, Eqs. (3)-(5),
+
+$$V_{\rm red}=\frac{\sqrt2}{3}\sqrt{|\widehat Q_{\rm geom}|}=\frac{\sqrt2\,3^{1/4}}6 I_2. \tag{9.2}$$
+
+Thus every state on C has the same positive volume magnitude and volume distribution in this convention. H_+ and H_- are the two signed-volume eigenvectors, with eigenvalues -sqrt(3)/4 and +sqrt(3)/4. Their significance is sharp orientation, not a larger magnitude of (9.2) than other singlet states.
+
+Proof. The already displayed compression of K gives (9.1). Functional calculus of its two eigenvalues gives (9.2). As a concrete distinction, e_1 is the product of the AB and CD singlets up to a phase; its average two-versus-two entropy is (0+2+2)/3=4/3, strictly below F_*, while (9.2) is unchanged. Physical area and volume units, if adopted from loop quantum gravity, require their separately supplied scale factors. QED.
+
+### Proposition 9.2. The complete boundary-shape disk and orientation fiber
+
+Every density matrix supported on C has a unique logical representation
+
+$$\rho(u,v,w)=E\frac{I_2+uX_L+vY_L+wZ_L}{2}E^\dagger,\qquad u^2+v^2+w^2\le1.$$
+
+Let s_1,s_2,s_3 be the expectations of S_AB,S_AC,S_AD, respectively. Then
+
+$$s_1=w,\qquad s_2=-\frac w2-\frac{\sqrt3u}{2},\qquad s_3=-\frac w2+\frac{\sqrt3u}{2},$$
+
+$$s_1+s_2+s_3=0,\qquad \sum_c s_c^2=\frac32(u^2+w^2),\qquad \langle Q_{\rm geom}\rangle=-\frac{\sqrt3}{4}v. \tag{9.3}$$
+
+The set of attainable boundary expectations is exactly the disk
+
+$$\sum_c s_c=0,\qquad \frac23\sum_c s_c^2\le1.$$
+
+Above each disk point the full mixed-state fiber is
+
+$$-\sqrt{1-\frac23\sum_c s_c^2}\le v\le\sqrt{1-\frac23\sum_c s_c^2}. \tag{9.4}$$
+
+Only the two endpoints are pure in the disk interior; on its boundary they coincide. At its center they are H_+ and H_-. The pure-state Bloch sphere therefore projects to the boundary-data disk as two orientation sheets meeting on the circle. This is a map between state and observation spaces, not a spatial-dimension theorem.
+
+Proof. The swap compressions of Section 2 give (9.3); their inverse is w=s_1 and u=(s_3-s_2)/sqrt(3). Positivity of the logical density matrix is equivalent to the ball inequality, yielding the entire fiber (9.4). Rank one is equality in that ball inequality. At the disk center the normalized pair angle means are <J_X dot J_Y>/(3/4)=-1/3, the regular tetrahedral Gram data, for every v in the fiber. They cannot select its orientation or purity. QED.
+
+## 10. An exact entropy-shape identity and sharper singlet stability
+
+For mixed states in this section, F_s denotes the average entropy of the internal two-qubit marginals. It is an entanglement entropy across those cuts only when the four-qubit state itself is pure. It is not a mixed-state entanglement measure.
+
+### Theorem 10.1. Entropy deficit is a binary relative-entropy cost of shape
+
+For every rho(u,v,w), the pair marginal with swap expectation s has spectrum
+
+$$\left(\frac{1-s}{2},\frac{1+s}{6},\frac{1+s}{6},\frac{1+s}{6}\right).$$
+
+Writing h_2 for binary entropy in bits and Delta_s=F_*-F_s, one has
+
+$$F_s=\frac13\sum_c h_2\left(\frac{1+s_c}{2}\right)+\frac12\log_2 3,$$
+
+$$\boxed{\Delta_s=\frac1{3\ln2}\sum_c D_{\rm KL}\left(\left(\frac{1+s_c}{2},\frac{1-s_c}{2}\right)\middle\|\left(\frac12,\frac12\right)\right).} \tag{10.1}$$
+
+Consequently, with r_perp^2=u^2+w^2,
+
+$$\boxed{\frac{r_\perp^2}{4\ln2}\le\Delta_s\le\frac{r_\perp^2}{2}.} \tag{10.2}$$
+
+Proof. Collective SU(2) invariance makes each marginal a mixture of the singlet projector P_s and its triplet complement: rho_pair=(1-s)P_s/2+(1+s)(I-P_s)/6. The singlet has swap eigenvalue -1, the triplet +1, so the weights and multiplicities are exact. Opposite pairs have equal marginals by the compressed swap identities. Evaluating the entropy and using sum_c s_c=0 proves (10.1). For |s|<=1, put
+
+$$f(s)=\frac{(1+s)\ln(1+s)+(1-s)\ln(1-s)}2.$$
+
+It obeys f(0)=f'(0)=0 and f''(s)=1/(1-s^2)>=1, so f(s)>=s^2/2. Its power series is sum_{n>=1} s^{2n}/[2n(2n-1)]. The positive coefficients sum to f(1)=ln2, whence f(s)<=ln2 s^2, including the endpoints by continuity. Sum these estimates and use (9.3). The lower constant in (10.2) is attained in the limit r_perp to zero. This is an independent proof within C; it does not replace the inherited all-state HS4 certificate. QED.
+
+### Corollary 10.2. Pure-state orientation rigidity with square-root scaling
+
+For a pure state in C, v^2=1-r_perp^2 and its best squared overlap with the two fixed endpoints is (1+|v|)/2. Therefore
+
+$$\max_{s\in\{+,-\}}|\langle H_s|\psi\rangle|^2\ge1-2\ln2\,\Delta_s,$$
+
+$$\min_{s,\theta}\|\psi-e^{i\theta}H_s\|_2\le2\sqrt{\ln2\,\Delta_s}. \tag{10.3}$$
+
+The exponent 1/2 cannot be increased uniformly near these endpoints: take the pure Bloch vector (t,sqrt(1-t^2),0). Then Delta_s=t^2/(4ln2)+O(t^4), while the ray distance is |t|/2+O(|t|^3). The coefficient in (10.3) is conservative. The improvement over the preceding general Delta^(1/4) estimate assumes exact support in this calibrated singlet subspace; it is not an improved all-state exponent.
+
+Proof. The infidelity equals (1-|v|)/2<=r_perp^2/2. Apply (10.2), then use ray distance squared <= twice the infidelity. The expansions follow from the positive series in the theorem and the displayed overlap. QED.
+
+There is also a direct geometric uncertainty statement for these pure states:
+
+$$\frac4{3\ln2}\operatorname{Var}(Q_{\rm geom})\le\Delta_s\le\frac83\operatorname{Var}(Q_{\rm geom}), \tag{10.4}$$
+
+because Var(Q_geom)=3(1-v^2)/16. Within this sector, maximal average entropy is equivalent to zero signed-volume uncertainty. Volume magnitude alone, as (9.2) shows, gives no such criterion.
+
+## 11. A boundary quotient is not automatically a quantum bonding map
+
+The inverse-limit model in the cited dev Section 32 requires its bonding maps to be CPTP restrictions. The shape projection of Section 9 is a valid affine observation quotient, but converting its output back into a logical qubit introduces a further requirement.
+
+### Theorem 11.1. Exact obstruction and optimal symmetric quantum approximation
+
+The complex-linear map that keeps both visible logical components and removes only orientation is
+
+$$\mathcal D(M)=\frac{M+M^T}{2},\qquad (u,v,w)\longmapsto(u,0,w).$$
+
+It is positive, trace preserving and idempotent, but is not completely positive. With the normalized Bell-state convention, its Choi eigenvalues are
+
+$$\frac34,\quad\frac14,\quad\frac14,\quad-\frac14. \tag{11.1}$$
+
+More generally consider the explicitly declared unital family
+
+$$\Phi_{\eta,\kappa}: (u,v,w)\longmapsto(\eta u,\kappa v,\eta w),\qquad \eta\ge0.$$
+
+It is CPTP exactly when
+
+$$-1\le\kappa\le1,\qquad 2\eta\le1+\kappa. \tag{11.2}$$
+
+In particular exact orientation erasure, kappa=0, permits at most eta=1/2. This bound is attained by
+
+$$\Phi_{1/2,0}(M)=\frac12 M+\frac14X_LMX_L+\frac14Z_LMZ_L. \tag{11.3}$$
+
+Proof. D preserves the Bloch ball, giving positivity. Its Choi matrix is (id tensor D)(|Phi_+><Phi_+|), which has the spectrum (11.1); the singlet Bell vector has expectation -1/4. This already disproves complete positivity. For the general family the four Bell eigenvalues are
+
+$$\frac{1+2\eta+\kappa}{4},\quad\frac{1-\kappa}{4},\quad\frac{1-2\eta+\kappa}{4},\quad\frac{1-\kappa}{4}.$$
+
+Nonnegativity is (11.2), by the finite Choi criterion [C75]. Conversely these four nonnegative numbers are the probabilities for conjugation by I,X,Y,Z, proving sufficiency directly. Substitution gives (11.3). QED.
+
+The 1/2 optimum is stated for this same-input/same-output logical-qubit family, without postselection or an extra output system. It is not a limit on extracting classical shape statistics. In fact the four POVM effects
+
+$$E_{X\pm}=(I\pm X_L)/4,\qquad E_{Z\pm}=(I\pm Z_L)/4$$
+
+define a CPTP classical record map, with probabilities (1+u,1-u,1+w,1-w)/4. The labelled probabilities recover u and w exactly as statistical parameters. A claimed CPTP decoder that turns these records into D(rho) for every input would compose to D and is therefore impossible. Finite samples introduce ordinary statistical uncertainty.
+
+This provides two lawful options for the spatial hierarchy: retain a quantum cell with the noise tradeoff (11.2), or retain a classical labelled observation register. Keeping a disk of expectation values is a third, purely mathematical description; it must not silently be declared a same-qubit physical channel. The obstruction concerns all states on C, including their entangled extensions. On a single fixed fiber or a singleton domain a constant channel can agree with D, so the all-state scope is essential.
+
+## 12. Assembling cells: local purity is a separate entanglement budget
+
+Choose a finite graph with N vertices and explicitly use C^{tensor N} as its node-intertwiner Hilbert space. Edges specify possible couplings or constraints; no independent-source preparation is assumed. Let Omega be any density matrix on this space and rho_a its logical one-node marginal. Define zeta_a=1-Tr(rho_a^2), Delta_a as in Section 10, and choose H_{s_a} to have the sign of that node's Y_L expectation (either sign at zero).
+
+### Theorem 12.1. A quantitative node-product bound
+
+One has
+
+$$\boxed{\langle\bigotimes_a H_{s_a}|\Omega|\bigotimes_a H_{s_a}\rangle\ge\max\left\{0,1-\sum_a\left(\zeta_a+2\ln2\,\Delta_a\right)\right\}.} \tag{12.1}$$
+
+Thus requiring every node to be an exact pure HS endpoint forces the whole node-intertwiner state to be their product. Such a state has no entanglement between these node factors, although it has the already established internal four-spin entanglement.
+
+Proof. At node a, 2zeta_a=1-u_a^2-v_a^2-w_a^2. Its infidelity to the selected endpoint is
+
+$$(1-|v_a|)/2\le(1-v_a^2)/2=\zeta_a+(u_a^2+w_a^2)/2\le\zeta_a+2\ln2\,\Delta_a.$$
+
+The N endpoint projectors commute since they act on different factors. Simultaneous diagonalization gives I-product_a P_a <= sum_a(I-P_a). Trace this inequality against Omega and substitute the local bounds. A rank-one projector with expectation one contains the full support of a positive trace-one matrix, proving exact product rigidity. QED.
+
+The purity term cannot be deleted. For N>=2,
+
+$$|\mathrm{cat}_N\rangle=\frac{|H_+\rangle^{\otimes N}+|H_-\rangle^{\otimes N}}{\sqrt2} \tag{12.2}$$
+
+is entangled across every nontrivial node bipartition. Each node marginal is Pi/2, with Delta_a=0 and zeta_a=1/2. All six internal two-body marginals at every node are still R. The product |H_+>^{tensor N} has exactly the same individual-node pair observations. Consequently a hierarchy keeping only these local boundary statistics cannot distinguish absence of node entanglement from the correlations in (12.2). Correlations between records from distinct nodes are additional observations and are not covered by this blindness statement.
+
+This is the specific tensor-factor version of the distinction emphasized by [L18, BBY18]: internal spin entanglement, link entanglement and intertwiner entanglement are different resources. It does not rule out boundary entanglement created by a subsequently specified spin-network contraction, nor identify (12.2) with a state generated by independent triangle sources.
+
+For an increasing sequence of finite vertex sets V_j, a concrete lawful hierarchy is H_j=tensor_{a in V_j} C, K_j=D(H_j), with partial trace as q_{j+1,j}. These maps are surjective: append any fixed density matrix on the added nodes. Compactness then gives the consistent-state inverse limit of dev Section 32. Inter-node correlations reside in K_j and are lost by replacing it with merely a tuple of one-node means. This construction supplies compatible quantum states; a metric, manifold limit, geometric gluing constraints, physical time and gravitational equations still require their own definitions and proofs.
+
+## 13. Source attribution and verification boundary for spatial completion
+
+The quantum-tetrahedron carrier and volume convention are inherited from [B98, S13]. [AS26] is recent context for the entanglement/geometry question and uses a different principal entanglement measure. [L18, BBY18] motivate the distinction between node and boundary correlations. Complete positivity and the Choi criterion are established tools [C75]. The calculations here provide the exact HS4 disk/fiber map, entropy identity and scoped stability, the specified erasure-channel feasibility boundary, and the node-product budget. Their historical novelty has not been exhaustively investigated.
+
+The three-copy roles remain separate: a face spin is a tensor factor of a quantum cell; an AURIC mode is a legal occupancy; an independent triangle source is a specified causal resource. No Fibonacci-to-intertwiner state-preparation functor, continuum spacetime, gravitational field equation, Bell/nonlocality certificate, or complete Renyi optimizer theorem is supplied.
+
+Supporting code and actual finite-check output are in the companion experiments PR #11 under `docs/reports/hs4-rigidity/verify_space_completion.py` and `space_completion_result.json`. The universal parts of Sections 9-12 rest on the proofs above, not on random tests. No new Lean compilation, kernel certificate, Scribe emission, independent mathematical review or canonical admission result is asserted.
+
+### Additional references
+

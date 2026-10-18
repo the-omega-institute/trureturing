@@ -1,0 +1,29 @@
+**Lemma 3.1 (literal interpretation at an actual occurrence).** Suppose
+a subtree $u$ is actually present at the known original-root address
+$a$. A constituent preparation or reader designed for the artificial
+wrapper $\langle\alpha,u\rangle$ can be simulated as follows:
+
+$$
+\begin{array}{c|c}
+\text{constituent literal}&\text{simulation}\\ \hline
+\varepsilon&\mathsf{branch}\text{ by public computation}\\
+L&\alpha\text{ by public computation}\\
+Lw, w\ne\varepsilon&\mathsf{absent}\text{ by public computation}\\
+Rw&\text{one actual literal Read at }aw.
+\end{array}
+\tag{FMR.13}
+$$
+
+The same interpretation applies to preparation calls and to a later
+one-Read call. It does not change the actual source or give a subtree
+as an operational input.
+
+Proof. These are precisely the wrapper's four exhaustive literal cases.
+All replies that depend on $u$ are obtained from the actual source at
+the full word $aw$. Presence of the occurrence follows from previously
+acquired branch ancestors or from a fixed scaffold promise, never from
+a free navigation action. For temporal targets inside this occurrence,
+pairing homomorphism, iterated along its present ancestors, transports
+$\rho^ku$ there for every $k$. No transport from an absent address is
+used. $\square$
+

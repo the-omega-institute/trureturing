@@ -1,0 +1,70 @@
+**Theorem 75.13 (a finite-height alternative on the full carrier).** Keep exactly75.1–75.3's source, geometry and step multipliers, but replace the hard domain by the entire mixed-ground domain. Fix any $\kappa>0$, use $R_\varepsilon=\kappa r_\varepsilon$, and choose finite heights $\Lambda_\varepsilon\ge0$ with
+
+$$
+\Lambda_\varepsilon R_\varepsilon\longrightarrow\infty.
+\tag{75.51}
+$$
+
+Let $H_{\varepsilon,C}^{\Lambda}$ be the densely defined full-product operator of the closed form
+
+$$
+q_{\varepsilon,C}^{\Lambda}[u]
+ =q_{0,\varepsilon}[u]
+ +\Lambda_\varepsilon\int_{|x-y|\le R_\varepsilon}|u|^2
+ +\langle u,W_{\varepsilon,C}u\rangle,
+\qquad u\in\mathcal Q_{{\rm mix},\varepsilon}.
+\tag{75.52}
+$$
+
+For every fixed compact $K\subset\mathbb C\setminus\mathbb R$,
+
+$$
+\max_{C\in\{C_0,C_{\rm c},C_{\rm k}\}}\ \sup_{z\in K}
+\big\|(H_{\varepsilon,C}^{\Lambda}-z)^{-1}-K_{\varepsilon,C}(z)\big\|
+                         _{\mathcal B(\mathcal P_\varepsilon)}\longrightarrow0.
+\tag{75.53}
+$$
+
+This is a sufficient height schedule on the full unchanged target, not a sharp height threshold or a physical price assertion.
+
+**Proof.** Each finite height is a bounded nonnegative perturbation for its individual $\varepsilon$, so the form is closed and dense on the full carrier, with lower bound $-M$. A bounded shifted-energy sequence satisfies both the free bound(75.17) and
+
+$$
+\Lambda_\varepsilon\int_{|x-y|\le R_\varepsilon}|u_\varepsilon|^2\le A
+\tag{75.54}
+$$
+
+for a fixed $A$. Obtain $u_\varepsilon-JF\to0$ and $F\in\mathcal Q^{\rm fr}$ from75.5. Since $R_\varepsilon\to0$, (75.51) implies $\Lambda_\varepsilon\to\infty$. On the positive-fraction ball products of(75.23),
+
+$$
+\theta_p|F_{pp}|^2
+\le2\|u_\varepsilon-JF\|^2
+       +2\int_{|x-y|\le R_\varepsilon}|u_\varepsilon|^2\longrightarrow0.
+\tag{75.55}
+$$
+
+Thus the atomic collisions vanish for every fixed positive $\kappa$.
+
+For a same-cable average $f_\varepsilon=(J^*u_\varepsilon)_{ee}$, (75.24) still holds. The complete transverse strip is inside the physical penalty region, so Jensen gives
+
+$$
+\delta^2\int_{|x-y|<R_\varepsilon/2}|f_\varepsilon(x,y)|^2\,dx\,dy
+                                  \le A/\Lambda_\varepsilon.
+\tag{75.56}
+$$
+
+For every $f\in H^1((0,1)^2)$ and $0<h<1/2$ the diagonal trace satisfies
+
+$$
+\|\operatorname{Tr}_{x=y}f\|_{L^2(0,1)}^2
+\le \frac{2}{h}\int_{|x-y|<h}|f(x,y)|^2\,dx\,dy
+       +2h\int_{(0,1)^2}|\partial_xf|^2\,dx\,dy.
+\tag{75.57}
+$$
+
+Indeed for $y\le1/2$ use the section $v(t)=f(y+t,y)$, $0<t<h$, and for $y>1/2$ use $v(t)=f(y-t,y)$. The fundamental theorem and Cauchy–Schwarz give $|v(0)|^2\le2|v(t)|^2+2t\int_0^t|v'|^2$. Average in $t$, then integrate in $y$; both section regions are in the indicated strip and their union has no multiplicity. Smooth approximation and continuity of the diagonal trace prove the general $H^1$ assertion.
+
+Apply(75.57) with $h=R_\varepsilon/2$. Equations(75.24), (75.56) and(75.51) show that these diagonal traces tend to zero. The strong $L^2$ and weak $H^1$ limit is $F_{ee}$, so it has zero diagonal trace. Now(75.2) gives exactly the full hard-core target domain, including all shared-port and ground conditions. The free lower bound, the nonnegative penalty and(75.36) give the complete target lower bound.
+
+For every target form vector use precisely75.8's collision-avoiding recovery. Its lift vanishes in the physical penalty region for sufficiently small $\varepsilon$ at each fixed core stage, so its penalty is exactly zero, regardless of the height. The same slow diagonal choice supplies complete form recovery. These two form directions and the free compactness allow the arbitrary-forcing minimization proof of75.10 with(75.52) in place of the hard form and with identity inclusion on the full carrier. The shifted energy still bounds the entire free energy; its recovery still attains the target functional for every competitor. Compactness and(75.44) therefore prove(75.53), including the same complement and both cross blocks relative to $P_\varepsilon$. The finite-height route adds the diverging height coordinate(75.51), whereas the hard route declares an ideal Dirichlet installation. No price model equating or ordering those controls is assumed. $\square$
+

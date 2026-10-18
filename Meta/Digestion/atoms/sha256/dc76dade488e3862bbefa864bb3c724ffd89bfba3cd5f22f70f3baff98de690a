@@ -1,0 +1,12 @@
+**Proposition 13.8 (diagonal proxy failure and the independent interior point).** The measure
+
+$$
+\Xi_{\rm diag}=\frac16\sum_{\sigma,i}
+             \delta_{(Q_{\sigma,i},W_\sigma,Q_{\sigma,i})}
+\tag{13.23}
+$$
+
+has the two exact joint marginals (11.34) and zero motion, but no original same-update realization with those full laws. Its successor barycenter conditioned only on $W_\sigma$ nevertheless equals the required $G_\sigma$. The conditional independent join is the supplied lawful $\Xi_1$ in (11.37), with motion $4/135$, and conditional independence is not necessary for realization.
+
+**Proof.** The displayed marginals follow by summation. At incoming $i=0$, testing alpha in (13.7) would require $(1/6)(1/3)=(1/6)(11/30)$, which is false. The analogous defect occurs at $i=2$. If identity return rows were imposed, that incoming suspended state's alpha-alpha mass would be $\sigma/3$ instead of the prescribed $\sigma m$. Yet averaging the three successors conditional only on $W_\sigma$ gives $\tfrac13\sum_iQ_{\sigma,i}=G_\sigma$ by (13.14), so that weaker test misses the failure. Conversely (11.37) is $T^\sigma_{ik}=1/3$, which satisfies (13.13), and Theorem 13.6 evaluates its motion. The lower lawful witness has $T_{10}=0$ and differs from that independent join. It proves that imposing conditional independence would discard realizable triples. More generally the independent tensor $x_{ijk}=b_{ij}a_{jk}/\tau_j$ satisfies (13.6)–(13.7) by (13.3)–(13.4); the criterion restricts prescribed triples over a compatible pair and creates no new obstruction to existence of some triple over a finite compatible pair. $\square$
+

@@ -1,0 +1,14 @@
+**Definition 14.2 (the optimization and its scope).** Let $q(P)$ be the
+minimum such worst-case protected Read bound among universally correct
+programs under Assumption 14.1, and put $q(P)=\infty$ when no finite bound
+exists. This minimizes one resource only. The achieved cost on a particular
+source, an expected cost under a supplied probability law, the size of
+installed control, address traffic and peak retained bits are different
+quantities. No probability law or total-workspace optimality is assumed.
+
+The case $k=1$ recovers the protected first-observation classification of
+Theorem 10.4; that classification and the executable positive endpoint in §11 are
+suppliers. The new question is the optimum over arbitrary protected
+multi-Read entry programs, including programs that first query far below
+an unreached cut.
+

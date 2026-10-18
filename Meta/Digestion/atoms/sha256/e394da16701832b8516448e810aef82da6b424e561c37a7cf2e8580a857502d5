@@ -1,0 +1,45 @@
+**Theorem 3.3 (exact inhomogeneous whole-joint-weight pressure).** Let
+$h\ge0$, $d=h+3$, $n\ge1$, and let $w_i:S_d\to[0,\infty)$ be
+arbitrary nonnegative weights supported in $U_h$. Then
+
+$$
+\max_{B\text{ admissible in }S_d^n}
+          \sum_{x\in B}\prod_{i=1}^n w_i(x_i)
+=\prod_{i=1}^n\mathcal R_h(w_i).
+\tag{JPL.17}
+$$
+
+The same maximum over complete templates has this value. In particular,
+for every such $w$ and every $n\ge1$,
+
+$$
+A_n^{(d)}(w)=\mathcal R_h(w)^n,
+\qquad \beta_d(w)=\mathcal R_h(w).
+\tag{JPL.18}
+$$
+
+Proof. For any competitor, discard its zero-product-weight rows.
+This does not change its mass, and a nonempty remainder is admissible
+with its original witnesses. It lies in $U_h^n$, so Theorem 3.1 puts
+it in a product of boxes $\prod_i L_{c_i}$. By nonnegativity its mass
+is at most
+
+$$
+\sum_{x\in\prod_iL_{c_i}}\prod_iw_i(x_i)
+=\prod_i\sum_{u\in L_{c_i}}w_i(u)
+\le\prod_i\mathcal R_h(w_i).
+$$
+
+Only weights on distinct coarse coordinates have been multiplied;
+each $w_i$ remains a single function of all its modules and is counted
+once. If there are no positive rows, the upper inequality holds with
+zero left side.
+
+Choose a maximizing box for each $w_i$. Their product is admissible
+by Theorem 3.1 and has exactly the displayed product mass. This also
+works when a weight is identically zero. Thus both inequalities hold.
+Saturation from Definition 1.4 gives the complete-template equality;
+its larger solution set cannot exceed the proved universal upper.
+Taking identical weights and then the all-length supremum proves
+(JPL.18). $\square$
+

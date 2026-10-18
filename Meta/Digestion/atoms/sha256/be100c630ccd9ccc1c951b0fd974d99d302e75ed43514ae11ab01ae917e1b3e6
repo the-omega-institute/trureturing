@@ -1,0 +1,4 @@
+**Corollary 3.3 (finite address budgets cannot conceal infinitely many necessary reads).** A uniform finite literal-address budget for a correct service exists if and only if GB holds. If GB fails, every correct service has both $\sup_D q_A=\infty$ and $\sup_D\ell_A=\infty$.
+
+Proof. GB failure excludes finite raw budgets by SLH Theorem 74.4. If a correct $A$ had $\sup_D\ell_A=L<\infty$, Lemma 3.2 would give a correct service with at most $L+s_N$ reads, a contradiction. Conversely, the static finite service supplied by GB has a finite reply tree, hence finitely many installed addresses and a finite total address budget. No source bound follows from this finite program. $\square$
+

@@ -1,0 +1,34 @@
+**Assumption 1.3 (complete paid export and late timing).** Preparation
+is one deterministic effective procedure, source-blind initially, depending
+on $D$ and public installed tables but receiving no later target. It
+terminates on every $t\in\mathcal F_D$ and acquires every source
+distinction by charged literal Reads. Its finite export $E(t)$ contains
+every accessible surviving source distinction: selectors, control,
+operands, buffers, lengths, allocation, handles, counters and accessible
+timing. Every other accessible field is a function of this complete name
+and public data. Separately paid handoff and access-isolation services
+remove access to all other preparation dependence, including transcripts,
+and provide lawful common entry.
+
+Only after export, a public source-independent $p\in\mathcal P_D$
+arrives. A deterministic reader uses $E(t),D,p$ and public tables to
+choose zero Reads or one fresh Read of that same stationary source, at
+any finite original-root word. The choice precedes its reply and every
+supplied count. Its final predictor $Z$ must obey
+
+$$
+\operatorname{Dec}(Z,D,p,k)=r_{\rho^kt}(p)
+\quad(t\in\mathcal F_D,\ p\in\mathcal P_D)
+\tag{GDB.2}
+$$
+
+for every subsequently supplied authentic $k\ge0$, with no further
+Reads. Define $M_1(D)$ as the minimum complete attained cardinality
+$|E[\mathcal F_D]|$. Preparation Read cost must be bounded for an
+attaining construction. Preparation work/control and temporary storage,
+installed tables, post-request workspace, final predictor size, submitted
+address lengths and letters, count representation, handoff, isolation,
+entry, authentication and physical time are separate resources. The
+services are premises, not deductions about physical operations. These
+are the original [FMR, §1][FMR] and [NPC, §1][NPC] conditions.
+

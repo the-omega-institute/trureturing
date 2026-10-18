@@ -1,0 +1,14 @@
+**Definition 4.3 (local operations and complete fields).** The fixed
+interpreter has sequential ROM and work access: read or write the
+currently addressed bit, move a head by one cell, branch on one bit,
+or make a fixed finite-control transition. There is no whole-word
+random access. Seeking a row means moving through the intervening
+cells. Registers containing a successor index are bit strings copied
+one bit at a time; equality, increment, comparison, offset calculation
+and bounded addition are bit loops with carry and loop state. ROM
+fetching, routine entry/return and instruction selection have counted
+PCs and heads. Each local instruction includes its finite-control
+continuation in the same paid occurrence. A local move can change the
+binary head encoding and PC in several coordinates; a local array write
+can change its one data cell and the counted stage bits together.
+These are charged local instructions;

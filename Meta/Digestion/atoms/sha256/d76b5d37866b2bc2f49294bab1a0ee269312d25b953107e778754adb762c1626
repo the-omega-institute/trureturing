@@ -1,0 +1,130 @@
+**Theorem 45.1 (four real PSD matrices and actual attainment).** Put
+$K_0=D,K_1=T,K_2=S$ and
+
+$$
+L_0=\operatorname{diag}(\delta,1,1),\qquad
+Q_0=\operatorname{diag}(1,-\theta,-\omega),\qquad
+N_{ij}=\operatorname{tr}(K_i\Delta K_j^\dagger)\in\mathbb R.
+$$
+
+For $0\leq s\leq s_0$, define
+
+$$
+\begin{aligned}
+J_s=\max\quad &\sum_{r,\epsilon=\pm1}\epsilon\operatorname{tr}(NZ_{r,\epsilon})\\
+\text{subject to}\quad
+&Z_{r,\epsilon}\in\operatorname{Sym}_3(\mathbb R),\quad
+ Z_{r,\epsilon}\succeq0,\quad
+ \operatorname{tr}(Q_0Z_{r,\epsilon})=0,\\
+&\sum_{r,\epsilon}Z_{r,\epsilon}=L_0,\qquad
+ \sum_{r,\epsilon}r(Z_{r,\epsilon})_{01}\geq s.
+\end{aligned}
+\tag{JR.58}
+$$
+
+Then the exact original height-record optimum is
+
+$$
+\boxed{\displaystyle
+\mathcal T(s)=\frac12[(1-\delta)\Delta A+L_f+J_s],
+ \qquad 0\leq s\leq s_0.}
+\tag{JR.59}
+$$
+
+The feasible set is nonempty compact, the maximum exists, and an optimal
+tuple gives one finite actual five-mode instrument with at most twenty
+branches. It has full TP decoders, original error $E_*$, cost
+$\mathsf C(s)$, contrast at least $s$, and the full complex/reference/
+labelled-Borel-time identity (JR.56). Formula (JR.58) is an exact
+optimization with attainment; its value for $s<s_0$ is not evaluated
+here. It does not replace the unrestricted complex cone (IR.68), the
+set $\mathcal K_s$ of (IR.69), or CA's prescribed-effect problem.
+
+Proof. For necessity use Theorem 42.1. The high products are proportional
+to $D$ and have positive total height difference $(1-\delta)\Delta A$.
+Every low product is a real null vector after removal of a phase;
+write it $c=(x,z,w)^T$. Group its coefficient projector by its actual
+binary label $r$ and by $\epsilon=\operatorname{sign}(c^TNc)$,
+assigning zero values either sign. The four sums or integrals are real
+PSD, have zero $Q_0$ trace and total $L_0$. The high products give zero
+$DT$ moment; all failure subeffects kill coordinate $0$.
+After a global binary reversal, the winding identity is exactly
+$\mathsf V(F)=\sum_{r,\epsilon}r(Z_{r,\epsilon})_{01}$.
+This proves the final constraint, with no factor-of-two change and no
+condition on any other entry of $F$. The grouped signed objective is
+the sum of absolute low-product height differences. Refinement and
+live/failure separation only upper-bound the TV of the original actual
+label; the failure contribution is at most $L_f$ as in §43.
+This proves the upper direction of (JR.59).
+
+For sufficiency reuse IR Lemma 10.1 and CA Theorem 5.1 on each
+$Z=Z_{r,\epsilon}$. The useful rank count is
+
+$$
+Z=\sum_{j=1}^{\operatorname{rank}Z}c_jc_j^T,\qquad
+c_j^TQ_0c_j=0,
+\tag{JR.60}
+$$
+
+with no vectors for $Z=0$. To see the support count, restrict
+$Z^{1/2}Q_0Z^{1/2}$ to $\operatorname{ran}Z$. It is real symmetric
+with trace zero. The zero-Rayleigh-basis induction in (IR.58), equivalently
+(CA.22), operates on this support: choose a zero Rayleigh vector between
+a positive and a negative eigenvector, remove it, and repeat on its
+orthogonal complement. A zero compression permits any basis.
+Multiplying that basis by $Z^{1/2}$ gives (JR.60). The induction on
+all of $\mathbb R^3$ alone gives at most three, whereas the support
+restriction gives the asserted rank count, including singular $Z$.
+Every nonzero $c_j$ has $x_j\ne0$, and IR Lemma 4.2 makes $K(c_j)$
+rank exactly two.
+
+For each actual low label $(r,\epsilon,j)$, supply encoder
+$V_{c_j}^\dagger K(c_j)$ into its fixed two-dimensional image and
+full TP decoder $X\mapsto EV_{c_j}XV_{c_j}^\dagger E^\dagger$,
+using the fixed isometries (IR.22). Add the two high branches with
+live products $\sqrt{(1-\delta)/2}\,D$, tagged by fair $r$,
+and full TP decoder $X\mapsto EXE^\dagger$ on each high fibre.
+Add all four spectral scalar failure rows (JR.54), and the two scalar
+complement branches of Definition 44.1. Precompose supported encoders
+with $E^\dagger$ on five modes. These are at most $12+2+4+2=20$
+actual branches. The true acquired record retains $(r,\epsilon,j)$
+and the full high/failure/complement labels, with probabilities
+
+$$
+p(r,\epsilon,j\mid y,e,n)
+ =\|K(c_{r,\epsilon,j})U_{e,n}a_y\|^2
+\tag{JR.61}
+$$
+
+on low branches, fair high probabilities $(1-\delta)A_y/2$, and the
+failure law of (JR.55). All nondeclared dilation systems are permanently
+inaccessible before the cut.
+
+The total live coefficient Gram is
+$L_0+\operatorname{diag}(1-\delta,0,0)=I_3$. Thus the live encoder
+effect is $D^\dagger D+T^\dagger T+S^\dagger S=I_3-M$. Adding
+the spectral failure effect gives $I_3$; the complement gives $I_5$.
+Individual effects are positive and bounded by this total. The live
+decoders are TP isometries and scalar decoders have exactly the TP
+integrals in §44. Hence the construction gives (JR.56) on every complex
+input and, with its conditional partial traces, at every reference and
+Borel time set. Cross-support and extra-sector maps vanish. Thus every
+original error constraint, including height $16$, is retained. Its only
+high-fibre effect is $(1-\delta)D^\dagger D$, so its worst-history
+cost is $(1-\delta)A_{27}=\mathsf C(s)$. Its contrast is the last
+sum in (JR.58), at least $s$; its other binary-effect entries are free.
+
+The actual refined low-label TV is at least the grouped signed
+objective. The high and failure terms attain their respective bounds.
+The feasible set of (JR.58) is closed and bounded since
+$0\preceq Z_{r,\epsilon}\preceq L_0$; it is nonempty using the
+H/L instrument at $s_0$ with the classical kernel (JR.35), retaining
+all labels. Thus a maximizing tuple exists. Realizing it as above gives
+actual TV at least the right side of (JR.59). The already proved
+universal upper bound forbids strict excess. This is actual common
+finite attainment, using the same compact-moment realization mechanism
+as IR §11 and CA §6, without compactness of the full time-output space.
+At $s=s_0$, signed Cauchy–Schwarz equality gives the four H/L low rays,
+so (JR.59) agrees with (JR.51). At $s=0$ the cost is still the strictly
+positive original plateau cost. $\square$
+

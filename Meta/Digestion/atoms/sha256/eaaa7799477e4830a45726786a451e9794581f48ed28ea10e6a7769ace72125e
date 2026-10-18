@@ -1,0 +1,18 @@
+### 1. 五态纤维定理
+
+定义
+
+```text
+FIBMode := {null, one, two, three, thirteen}
+```
+
+并证明：
+
+$$
+\pi^{-1}(X,Y,Z)=
+\left\{
+p(\kappa):
+\kappa_-\le\kappa\le\kappa_+
+\right\}.
+$$
+

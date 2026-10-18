@@ -1,0 +1,10 @@
+## 9. Complete tables and simultaneous actual-source masses
+
+Each construction below is an alternative complete controller.
+Only its displayed rows are installed; every read transition is
+specified. A dash denotes the absence of a transition at a halt.
+Initialization is constant at the named initial row, and every
+instruction may have duration one. The seed law is left unchanged
+and is never accessed subsequently. Phase notation in the proofs
+describes source events and gives no runtime memory port.
+

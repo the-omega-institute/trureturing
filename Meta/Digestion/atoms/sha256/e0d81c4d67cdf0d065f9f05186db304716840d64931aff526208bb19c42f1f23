@@ -1,0 +1,15 @@
+**Proposition 20.4 (soundness and finite identity checking).** Every
+reweighting in Definition 20.3 satisfies $\log_2 Z_G\le U$. If $A,B$
+and all table entries are positive real algebraic numbers, the rational
+mixture and global identity have finite exact algebraic checks.
+
+Proof. Put $a_j(s)=\prod_{v\in F_j}\psi_{jv}(s_{\operatorname{st}(v)})$.
+Finite weighted Hölder gives
+$\sum_s\prod_j a_j(s)^{\theta_j}\le\prod_j(\sum_s a_j(s))^{\theta_j}$.
+Use (GDB.85) and take logarithms. For the checking assertion, clear
+the rational denominators of the $\theta_j$. At every one of the
+finitely many common assignments, (GDB.85) becomes an equality of
+products with nonnegative integer exponents. Positivity makes this
+clearing reversible; exact algebraic equality is decidable. This is
+per-input verification, not an all-size native cap verifier. $\square$
+

@@ -1,0 +1,27 @@
+# Native paid-point observation tracking
+
+This volume continues
+[Native guarded lift limits and diffusion selection](FIB_NATIVE_GUARDED_LIFT_LIMITS_AND_DIFFUSION_SELECTION.md).
+Its sections 42–49 retain the continuous section, theorem and equation
+numbering of that argument. Unless another source is named, references
+numbered 1–41 refer to the preceding volume; references numbered 42–49
+refer to this volume.
+
+The fixed native data, executed costs and complete wrapped metric are in
+[§2](FIB_NATIVE_GUARDED_LIFT_LIMITS_AND_DIFFUSION_SELECTION.md#2-the-original-source-its-guard-and-its-entire-chronological-path),
+[§11](FIB_NATIVE_GUARDED_LIFT_LIMITS_AND_DIFFUSION_SELECTION.md#11-executed-approximation-classes-on-the-original-clock)
+and [§13](FIB_NATIVE_GUARDED_LIFT_LIMITS_AND_DIFFUSION_SELECTION.md#13-accuracy-of-complete-wrapped-native-paths).
+The causal and held-death conventions are in
+[§20](FIB_NATIVE_GUARDED_LIFT_LIMITS_AND_DIFFUSION_SELECTION.md#20-causal-knowledge-and-finite-numerical-issuance),
+the persistent central-noise target and residual identities in
+[§33](FIB_NATIVE_GUARDED_LIFT_LIMITS_AND_DIFFUSION_SELECTION.md#33-independent-central-noise-and-necessary-executed-resources),
+and the connector supplier in
+[§34](FIB_NATIVE_GUARDED_LIFT_LIMITS_AND_DIFFUSION_SELECTION.md#34-small-inward-loops-with-a-larger-chronological-increment).
+The added paid sensor, acquired filtration, chance class and almost-sure
+hard-tube statement are in
+[§41](FIB_NATIVE_GUARDED_LIFT_LIMITS_AND_DIFFUSION_SELECTION.md#41-paid-wrapped-current-points-and-the-original-hard-tube).
+
+The named comparison volumes in Scope 49.2 are
+[Native finite-menu minimal memory](FIB_NATIVE_FINITE_MENU_MINIMAL_MEMORY.md)
+and [Growing-state budget renewal tradeoff](FIB_GROWING_STATE_BUDGET_RENEWAL_TRADEOFF.md).
+

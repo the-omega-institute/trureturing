@@ -1,0 +1,55 @@
+**Definition 2.4 (complete contacts and compatible groups).** Set
+$\eta_j=\ell+jt\mathfrak c f$, $j\in\{0,1\}$, and let
+$Z=\{(u,v,j):d(u,v,j)=0\}$ include every endpoint contact, occupied
+or unused. Coincident signed descriptions of one sheet point are
+deduplicated. A pure endpoint and saturated endpoint at the same
+directed angle form one paired group exactly when both contact and
+$\eta_0\eta_1\ge0$. Every other endpoint is a singleton.
+Let $\mathscr G$ be this complete partition. For a selected family
+$Q\subseteq\mathscr G$, let $I_Q$ contain every endpoint column of
+every selected group, including both columns of a pair.
+
+The eight signed tests are the original (FC.7). Explicitly, let $D_c$
+and $N_c$ be the positive denominator and numerator in (PC.5), and put
+
+$$
+\begin{gathered}
+P_y=y_0+y_1u+y_2v+y_3u^2+y_4uv,\qquad
+Q_y=y_5+y_6u^2+y_7uv,\\
+F_{0,\epsilon,\sigma}=P_y-\epsilon\lambda u-\sigma\ell,\\
+F_{1,\epsilon,\sigma}
+=D_cF_{0,\epsilon,\sigma}+N_c(Q_y-\sigma t f),
+\qquad \epsilon,\sigma\in\{\pm1\}.
+\end{gathered}
+$$
+
+All eight are nonnegative on the whole circle by (PC.8); their zeros,
+on their respective sheets and with coincident descriptions
+deduplicated, give $Z$. The omitted affine half-angle point $(-1,0)$,
+report axes, weak height signs and repeated zeros retain their
+full-circle meanings.
+
+FC Theorems 3.3 and 4.2 give the following exact interfaces. A strict
+fractional contact has both endpoints in its group, with weakly
+same-sign heights. For endpoint masses $a_0,a_1\ge0$ in a pair,
+merging gives $p=a_0+a_1$ and $\xi=a_1/p$ when $p>0$, preserving
+all eight moments, $K$ and $J_t$. Zero total mass is omitted.
+The triangle identity behind this fact is
+
+$$
+\begin{aligned}
+d(u,v,\xi)&=(1-\xi)d(u,v,0)+\xi d(u,v,1)\\
+&\quad +(1-\xi)|\eta_0|+\xi|\eta_1|
+                   -|(1-\xi)\eta_0+\xi\eta_1|.
+\end{aligned}
+\tag{PC.9}
+$$
+
+Every term is nonnegative. Strictly opposite heights therefore
+remain separate singletons when both endpoints occur.
+For every request $r$ in the complete attained interval $[r_-,r_+]$,
+every original optimum has $K=r$ and zero integrated gap. Its endpoint
+representation uses the complete inventory above. This activity
+conclusion follows from $\lambda>0$ and the original inequality
+$K\ge r$; it does not impose equality on arbitrary feasible laws.
+

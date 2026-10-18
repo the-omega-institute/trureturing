@@ -1,0 +1,16 @@
+**命题 3.5（Zero, repeated and boundary spectral cases）。** The construction
+(3.6)–(3.9) covers every degenerate spectrum allowed in (2.2), including
+$X=0$ and all singular states.
+
+Proof. The only numerical denominator in the vector weights is the fixed
+positive integer ten; there is no division by $a$, $b$, an eigenvalue gap
+or a coordinate of an eigenvector. If $a=0$ or $b=0$, Lemma 3.2 supplies
+orthonormal vectors in the zero eigenspace and the same weights apply.
+If $a=b$, the orthonormal choices in the repeated eigenspaces still give
+the same projection identity (3.5). If $a=1$ or $b=1$, some weights vanish;
+their entire groups may be removed. At $a=b=1$ only $p_{++}=1$ remains,
+and (3.7) still decomposes its $Q$ with eigenvalues $2,2,1,0,0$. At
+$a=b=0$, all four weights are $1/4$ and any orthonormal basis may fill the
+five slots. Lemma 3.1 also includes cancellations that yield zero vectors.
+These cases exhaust the degeneracies of the paired spectrum. $\square$
+

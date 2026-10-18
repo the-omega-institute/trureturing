@@ -1,0 +1,22 @@
+**定义 43.1（Closed suffix expression）。** For $1\le L\le p$ use the fixed low labels $\Lambda_L,\ldots,\Lambda_{p-1}$; $L=p$ means the empty suffix. Define
+
+$$
+\Psi(L)=
+\begin{cases}
+0,&\operatorname{Const}\{\Lambda_i:L\le i<p\},\\
+1,&\text{the suffix is nonconstant, }\operatorname{Const}\{\Lambda_i:L+2\le i<p\},
+       \quad |\{\Lambda_i:L\le i<p\}|\le2,\\
+\max\{2,B-L\},&\text{otherwise},
+\end{cases}
+\tag{43.1}
+$$
+
+In the last case
+
+$$
+ B=\max\{j:L\le j<p-1,\ \Lambda_j\ne\Lambda_{j+1}\}.
+\tag{43.2}
+$$
+
+The nonconstant suffix has a differing adjacent pair, so this maximum exists. The one-block condition can equivalently be written as follows: if $\{L+2,\ldots,p-1\}$ is nonempty, its labels have one value $A$ and $|\{\Lambda_L,\Lambda_{L+1}\}\setminus\{A\}|\le1$; if it is empty, the two possible endpoint entries impose no extra condition. Thus empty, singleton and constant suffixes cost zero, and a nonconstant two-element suffix costs one. Both versions of the one-block condition include these cases.
+

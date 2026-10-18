@@ -1,0 +1,26 @@
+**Theorem 62.1 (repo-derived central canonical-basis germ).**
+There is a neighborhood of \((0,[C(0)/\sqrt6])\) in which every pair
+\((b,[B])\), with \(B\) an actual common-flat orthonormal input basis
+for \(H_0(b)\), belongs to the moving canonical family
+\((b,[C(b)/\sqrt6])\). Brackets identify independent column phases and
+column permutations only.
+
+Equivalently, after matching the columns and normalizing their first
+entries, the only sufficiently nearby unit-entry matrices \(Z\) satisfying
+
+\[
+ Z^*Z=6I_6,\qquad |(M(b)Z)_{ak}|^2=6
+ \quad(0\le a,k\le5)
+\tag{62.2}
+\]
+
+are \(Z=C(b)\). No covariance, row-phase quotient, Fourier-support
+restriction, or relation between different candidate columns is imposed.
+The assertion concerns all nearby solutions, including singular or
+nondifferentiable approaches to the canonical family.
+
+The central first derivative has rank 28 in 31 variables, so an ordinary
+full-rank argument cannot prove this statement. The proof below resolves
+the two extra tangent directions by a coercive quadratic residual whose
+remainder vanishes on the exact moving canonical axis.
+

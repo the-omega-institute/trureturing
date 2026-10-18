@@ -1,0 +1,33 @@
+**Definition 93.1 (retained chart, shear and density).** Let
+$d_j=(A_\kappa^{(j)}(k_0),B_\kappa^{(j)}(k_0))$, $j=0,1,2$.
+By (92.9) there are unique real numbers $\beta,\gamma$ such that
+$d_2=\beta d_0+\gamma d_1$. Put
+
+$$
+D_0=|\det(d_0,d_1)|,\qquad
+h_*=b_\kappa''(k_0)-\beta b_\kappa(k_0)-\gamma b_\kappa'(k_0),
+\qquad \ell_s=\varepsilon^2s^3h_*.
+\tag{93.1}
+$$
+
+The determinant (76.4) gives $h_*\ne0$ and
+$j_0=\varepsilon^4D_0|h_*|$. For $b=(r,Y,Z)\in I_s\times\mathbb R^2$
+define the invertible retained chart and the actual retained map by
+
+$$
+\begin{aligned}
+\Lambda_s(b)&=(k_0+\varepsilon sr,\ s d_0Y+\varepsilon s^2d_1Z),\\
+F_s(r,y,z,w)&=(r,\ y+\varepsilon^2s^2\beta w,
+                         \ z+\varepsilon s\gamma w),\\
+i_s(b,w)&=(r,Y-\varepsilon^2s^2\beta w,Z-\varepsilon s\gamma w,w),\\
+n_s&=(0,-\varepsilon^2s^2\beta,-\varepsilon s\gamma,1),
+\qquad J_s=\varepsilon^2D_0s^4.
+\end{aligned}
+\tag{93.2}
+$$
+
+Here $n_s$ includes the zero height component. The limiting map is
+$F_0(r,y,z,w)=(r,y,z)$, with $i_0(b,w)=(r,Y,Z,w)$.
+The labels $Y,Z$ inside $b$ are scalar chart coordinates, distinct from
+native points and from the fixed probability parameter $Z$ in G.
+

@@ -1,0 +1,59 @@
+**Theorem 7.2 (forced complex equality splits and exact maximal endpoint).** Let a selected physical $C$ have the unique saturated scalar minimizer $P=vv^T$ and certificate (PG.30), as in Theorem 6.1 or Convention 6.3. Define
+
+$$
+s_{\max}(v)=\min\left\{
+1,\ \frac1{|\tau|},\ \frac1{\|V_c\|},\
+\frac1{\|M_2^{-1/2}W_2M_2^{-1/2}\|}
+\right\}.
+\tag{PG.36}
+$$
+
+A zero denominator means $+\infty$. Then $0<s_{\max}(v)<1$, and
+
+$$
+\mathsf E_s(\rho)=F(C)\quad\Longleftrightarrow\quad
+0\le s\le s_{\max}(v).
+\tag{PG.37}
+$$
+
+Every equality coefficient tuple is forced to have
+
+$$
+H_r=\frac{1+rs\tau}{2}P,\qquad
+L_r=\frac{Q+rsV_c}{2},\qquad
+N_r=\frac{M-rsW}{2}.
+\tag{PG.38}
+$$
+
+Uniqueness here is supported aggregate, coefficient report splits and integrated supported failure effects. It does not assert uniqueness of an entire instrument, its full acquired operator or finer report-dependent time measures.
+
+Proof of necessity. Acquired equality entails equality in acquired $\ge$ supported high-live $\ge F(C)$. The scalar certificate forces $H=P$. Since $H_r\succeq0$ and $\sum H_r=P$, write $H_+=aP$, $H_-=(1-a)P$. The low sum is $Q$, and
+$\operatorname{tr}(BQ)=k-k=0$. Each low trace is nonpositive, so each is zero. The exposed-face Lemma 3.2 makes $L_+,L_-$ real despite arbitrary complex competitors and arbitrary failure subeffects.
+
+Put $t=2a-1$, $Y=2L_+-Q$ and
+$R=2(H_++L_+)-I=tP+Y$. Then $Yv=0$, $\operatorname{tr}(BY)=0$. Each $N_r\preceq M$ kills the entire first row. Subtracting twice the plus binary effect from the total effect gives
+$\Theta(R)+(2N_+-M)=s\kappa X_{01}$. Thus
+
+$$
+\Theta(R)_{00}=0,\qquad R_{DT}=s,\qquad R_{DS}=0.
+\tag{PG.39}
+$$
+
+For completeness, even before realness, $\Theta(Z)_{01}=\kappa\operatorname{Re}Z_{DT}+i\chi_T\operatorname{Im}Z_{DT}$ and the analogous $DS$ identity has $\chi_S>0$. Hence the real prescribed first row carries no hidden complex cancellation.
+
+The matrix $J'=R-tI$ satisfies $J'v=0$, $\operatorname{tr}(BJ')=0$, $J'_{DT}=s$, $J'_{DS}=0$. These conditions uniquely determine $J'=sJ$. To prove the homogeneous uniqueness, their difference has first row zero because $v_D>0$. Its lower symmetric block kills $(v_T,v_S)$ and is therefore a scalar multiple of
+$\begin{pmatrix}v_S^2&-v_Tv_S\\-v_Tv_S&v_T^2\end{pmatrix}$.
+This statement also holds when either coordinate vanishes. Its $B$ trace is the negative of that scalar times $R_v>0$, so the scalar vanishes.
+
+By $\Theta(R)_{00}=0$ and $\Theta(I)_{00}=1$, $R=sJ+tI$ forces $t=s\tau$. Substitution gives $Y=s(J+\tau Q)=sV_c$, and then the full binary equation fixes $N_r$ as in (PG.38). This necessity has not assumed any decoder wholly live or any individual failure density.
+
+Proof of sufficiency and exact caps. The high matrices in (PG.38) are positive exactly when $s|\tau|\le1$. The operators $J,Q,V_c$ kill $v$, so $L_\pm$ are positive exactly when $s\|V_c\|\le1$ on $v^\perp$. Their $B$ traces vanish since
+$\operatorname{tr}(BJ)=\operatorname{tr}(BQ)=0$; Lemma 3.2 puts them in the true complex cone. Since $W$ has zero first row, $N_\pm\succeq0$ is exactly
+$s\|M_2^{-1/2}W_2M_2^{-1/2}\|\le1$.
+Their totals are $P,Q,M$. Finally
+$H_r+L_r=(I+rs(J+\tau I))/2$ and (PG.34) give the full binary equation. Theorem 3.4 enacts these tuples with exact acquired effect $E\Theta(P)E^\dagger$, hence equality. Every bound is necessary and sufficient, including closed endpoints and zero norms. Positivity of $s_{\max}$ follows because all fixed matrices are finite and $M_2\succ0$.
+
+To prove $s_{\max}<1$, suppose equality at $s=1$. The Hermitian contraction $R=2(H_++L_+)-I$ has $R_{DT}=1$. Its $D$ and $T$ column norm bounds force their other entries to vanish: $R_{DD}=R_{TT}=R_{DS}=R_{TS}=0$. The equation $\Theta(R)_{00}=0$ then gives $d^2R_{SS}=0$, hence $R=X_c$. But $Rv=tv$ would make $v$ an eigenvector of $X_c$. A unit eigenvector with $v_D>0$ has $B$ value $(1-\alpha)/2$, or the zero-eigenspace has $D$ coordinate zero and $B$ value $-\beta$. Neither equals $k>35/36$. This contradiction proves strictness.
+
+Lastly, outside these caps no feasible tuple can have objective $F(C)$, by the already proved necessity and scalar uniqueness. The compact nonempty coefficient set has a minimum, so its value is strictly larger, not merely unattained. Equation (PG.17) makes this a strict infimum gap in the original acquired class, with actual finite attainment. This proves (PG.37) on the entire strength interval, without evaluating its later curve. $\square$
+

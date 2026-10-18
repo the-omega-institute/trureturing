@@ -1,0 +1,18 @@
+## 220. At most one actual exceptional owner
+
+In this frame the two opposite M edges have angle alpha and the four
+other edges have value b. The exact cosine formula simplifies to
+ cos(alpha)=[2*b^2-m*(m-1)]/[2*b^2+m-1].
+Its denominator is positive. Since b<m-2 and m>3,
+ (m-1)*(2*m+1)-2*b^2
+ > (m-1)*(2*m+1)-2*(m-2)^2=7*m-9>0.
+Thus cos(alpha)<1/2 and alpha>pi/3. Each such actual owner consumes
+2*alpha>2*pi/3 of the genuine M budget pi. Two distinct owners would
+already exceed that budget, so there is at most one in the whole
+quotient, even if the candidate low label differs between them.
+
+The theorem classifies the possible single-high transverse-M returns;
+it does not exclude the one permitted exceptional owner. Together
+with the interacting-high-core bound, it gives a finite M-star
+classification, but no five-reservoir exclusion or realization claim.
+

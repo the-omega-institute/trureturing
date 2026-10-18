@@ -1,0 +1,23 @@
+**Convention 2.4 (Scalar bounds versus state counting).** For a source
+event $B$ put
+
+$$
+M(B)=\max_{h\in\mathcal A}J_p(B,H_j=h).
+\tag{2.4}
+$$
+
+This bounds every actual terminal label. Splitting $B$ at a
+hypothetical further call gives
+
+$$
+M(B)\le M(B\cap\{X_t=0\})+M(B\cap\{X_t=1\}).
+\tag{2.5}
+$$
+
+Indeed keep a label maximizing the old section on both subevents,
+then maximize separately. Thus scalar caps for at most the remaining
+calls include early halts. This comparison only bounds masses. It
+does not add calls or states to the original table, preserve state
+cost under padding, or identify tree occurrences with installed rows.
+All row counting below uses its actual instructions and fixed updates.
+

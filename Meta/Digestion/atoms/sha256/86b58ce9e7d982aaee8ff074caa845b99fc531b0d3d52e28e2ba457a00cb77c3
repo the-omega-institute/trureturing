@@ -1,0 +1,21 @@
+**Lemma 13.1 (injectivity of the whole boundary table).** For every
+$d\ge1$, the map
+
+$$
+x\longmapsto(r_x(a))_{a\in W_d}
+\tag{RCE.43}
+$$
+
+is injective on the actual $S_d$.
+
+Proof. At $d=1$, the root replies distinguish $\alpha,\beta,C_0$.
+Assume the claim at $d$. On $S_{d+1}$ the root reply distinguishes
+the two leaves from each other and from the branch case. In the branch
+case $x=\langle u,v\rangle$, the replies at $La$ and $Ra$ for
+all $a\in W_d$ give the two whole child boundary tables. These words
+belong to $W_{d+1}$. Induction identifies $u,v\in S_d$, and
+ordered parsing identifies $x$. This also proves the claimed
+injectivity without changing the canonical endpoint state $C_0$.
+It is consistent with the boundary reconstruction in Convention 1.2.
+$\square$
+

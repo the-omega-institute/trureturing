@@ -1,0 +1,99 @@
+**Lemma 15.2 (uniform upper bound and admissible Gram repair).**
+For (JS.61)'s remaining law, uniformly with bounded $\zeta$,
+
+$$
+\int|f|dP\le S_{\rm corner}+\Gamma\sqrt{E_{\rm rem}}
+ +O(E_{\rm rem}+t^{-1}).
+\tag{JS.74}
+$$
+
+If $\Gamma>0$, this coefficient can be attained by finitely many
+pure-live atoms near the four corners while repairing exactly the
+same residual Gram $I_3-\int hh^TdP_{\rm cap}$. With a small amplitude
+$\varepsilon$ and $\delta_t=t^{-1}$ their energy and total live value
+obey uniformly
+
+$$
+\begin{aligned}
+E_{\rm rem}&=\varepsilon^2+
+O(\varepsilon^3+\varepsilon\delta_t+\delta_t^2),\\
+\int|f|dP&=S_{\rm corner}+\Gamma\varepsilon+
+O(\varepsilon^2+\delta_t).
+\end{aligned}
+\tag{JS.75}
+$$
+
+Every target Gram here lies in
+$\{S:\operatorname{tr}(QS)=0\}$, $Q=\operatorname{diag}(1,-\alpha,-\beta)$.
+No six-dimensional unrestricted symmetric-matrix repair is asserted.
+For $\Gamma=0$ one may take no tangent motion and obtain residual
+energy $O(t^{-2})$ and live value $S_{\rm corner}+O(t^{-1})$.
+
+Proof. Put $u=|z|-1$ in each sign sector. Near its corner,
+
+$$
+|f(z,w)|-B(z,w)=\max\{a_a^-u,a_a^+u\}+O(u^2).
+\tag{JS.76}
+$$
+
+The ellipse parametrization is
+$z=\sigma(1+u)$,
+$w=\eta\sqrt{1-2(\alpha/\beta)u-(\alpha/\beta)u^2}$.
+Taylor expansion proves (JS.76) locally, also when $f$ vanishes,
+since $|e_au|$ has exactly the two slopes specified above. Away from
+the corners $u^2$ is bounded below and every numerator is continuous
+and bounded. Thus a single $K u^2$ remainder works on the entire
+ellipse, including both axes and every sign assignment there.
+
+The exact total Gram gives $\int B\,dP=S_{\rm corner}$.
+Capacity mass is $O(\delta_t)$, and
+$\int u\,dP_{\rm rem}=-E_{\rm rem}+O(\delta_t)$.
+Subtract $c_*u$ from (JS.76) and use Cauchy–Schwarz. Lemma 13.1's
+sector masses are $1/4+O(\sqrt{E_{\rm rem}}+\delta_t)$, so the
+weighted squared farthest slope is
+$M(c_*)+O(\sqrt{E_{\rm rem}}+\delta_t)$.
+When $M(c_*)>0$, multiplying its square root by
+$\sqrt{2E_{\rm rem}}$ gives
+$\Gamma\sqrt{E_{\rm rem}}+O(E_{\rm rem}+\delta_t)$.
+When $M(c_*)=0$ all slope endpoints equal $c_*$; their centered
+linear term vanishes exactly and the same bound follows directly.
+Adding back the capacity mass proves (JS.74).
+
+For attainment the zero-subgradient condition for $M$ permits, at
+each corner, a distribution $\theta_{a,i}$ on its farthest endpoints
+$s_{a,i}$, with at most two entries, such that
+
+$$
+\tfrac14\sum_{a,i}\theta_{a,i}(s_{a,i}-c_*)=0,\qquad
+\tfrac14\sum_{a,i}\theta_{a,i}(s_{a,i}-c_*)^2=M(c_*).
+\tag{JS.77}
+$$
+
+Omit zero $\theta$'s. Set
+$v_{a,i}=\sqrt{2/M(c_*)}(s_{a,i}-c_*)$ and initially
+$u_{a,i}=\varepsilon v_{a,i}$. Their uniform-corner mean velocity
+is zero and mean squared velocity is two. A farthest upper endpoint
+has nonnegative centered velocity; a farthest lower endpoint has
+nonpositive centered velocity. Thus the selected endpoint is the
+actual directional slope of the absolute value at a zero corner,
+not a fictitious branch. The linear gain is $\Gamma\varepsilon$.
+
+For exact repair allow four total corner weights $w_a$, distributing
+each as $w_a\theta_{a,i}$, and one common shift $c$ in
+$u_{a,i}=\varepsilon v_{a,i}+c$. At $\varepsilon=c=0$, $w_a=1/4$,
+the derivative of the moment map
+$(\int1,\int z,\int w,\int zw,\int z^2)$ has rank five.
+The four weight columns are the Hadamard columns in the first four
+coordinates; the common shift changes the last coordinate by two
+and the first four by zero. The ellipse identity supplies the sixth
+moment. A fixed right inverse and the implicit-function theorem
+therefore repair every sufficiently small admissible target Gram.
+Weights stay positive. The zero mean velocity makes the common
+shift $O(\varepsilon^2+\delta_t)$; weight changes are
+$O(\varepsilon+\delta_t)$. Expanding $u^2/2$ and (JS.76) gives
+exactly (JS.75). These charts are uniform for a bounded family of
+$O(\delta_t)$ Gram consumptions. There are at most two atoms per
+corner, hence eight pure-live labels. With $\Gamma=0$ the same
+rank-five map at zero motion gives the stated $O(\delta_t^2)$
+energy; no normalization by $\Gamma$ is used. $\square$
+

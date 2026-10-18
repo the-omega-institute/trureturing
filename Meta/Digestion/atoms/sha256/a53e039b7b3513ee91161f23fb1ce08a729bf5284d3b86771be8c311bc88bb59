@@ -1,0 +1,15 @@
+**Definition 5.4 (one acquired-information recovery strategy).**
+At a returned record $a$, let $\mathcal K(a)$ be the set of original
+source/current-state pairs $(x,z)$ compatible with that actual acquired
+information and the preceding legal operations. Compatibility retains
+both the original source identity and the current state; it is not the
+Cartesian product of separately possible coordinates.
+A recovery strategy is one common measurable policy that chooses
+operations from its acquired information, retained working state and
+fresh source-independent randomness. It must operate legally and meet
+its stated success condition for every $(x,z)\in\mathcal K(a)$,
+sourcewise almost surely. The policy cannot be separately selected
+using an unobserved pair $(x,z)$. All observations, state changes,
+recovery failures, elapsed transitions and acquisition charges belong
+to its execution.
+

@@ -1,0 +1,80 @@
+**Definition 2.1 (The fixed QJM encoder and its decoder variation).** Set
+$\alpha_k=2\pi k/3$, $\beta_k=2\pi k/5$, and use the fourteen flags
+$F=\{(\mathrm A,k,l):0\le k,l<3\}\sqcup\{(\mathrm B,k):0\le k<5\}$.
+Retain the exact QJM data
+
+$$
+\begin{aligned}
+b_{\mathrm A,k,l}
+&=\frac{9w_+(\alpha_k)+\sqrt{119}\,w_-(\alpha_l)}{\sqrt{200}},
+&c_{\mathrm A,k,l}&=\frac{400}{1071},\\
+a_{\mathrm A,k,l}
+&=\frac{1521w_+(\alpha_k)+166\sqrt{119}\,w_-(\alpha_l)}{\sqrt{5592605}},\\
+b_{\mathrm B,k}
+&=\frac{\sqrt{119}\,d+\sqrt{76}\,w_+(\beta_k)}{\sqrt{195}},
+&c_{\mathrm B,k}&=\frac{39}{119},\\
+a_{\mathrm B,k}
+&=\frac{71\sqrt{119}\,d+94\sqrt{76}\,w_+(\beta_k)}{\sqrt{1271415}}.
+\end{aligned}
+\tag{2.1}
+$$
+
+The circle coefficients are fixed exact algebraic roots-of-unity
+values. For $0\le\delta\le1$, put
+
+$$
+\begin{gathered}
+\sigma_{\mathrm A,k,l,\delta}=a_{\mathrm A,k,l}a_{\mathrm A,k,l}^T,\\
+\sigma_{\mathrm B,k,\delta}
+=(1-\delta)a_{\mathrm B,k}a_{\mathrm B,k}^T
++\delta w_+(\beta_k)w_+(\beta_k)^T,\\
+S_\delta(X)=\sum_fc_f\sigma_{f,\delta}\operatorname{tr}(b_fb_f^TX),
+\qquad T_\delta(X)=DS_\delta(D^\dagger XD)D^\dagger.
+\end{gathered}
+\tag{2.2}
+$$
+
+Write $S_Q=S_0$. Its preparation/output row and measurement/input
+column populations, in sector order $(0,+,-)$, are the supplied matrix
+
+$$
+\Lambda_Q=\begin{pmatrix}
+599879/1271415&383116/1271415&0\\
+671536/1271415&1280547842618/1422104377215&4626882/5592605\\
+0&4464072/5592605&6558328/5592605
+\end{pmatrix}.
+\tag{2.3}
+$$
+
+Define
+
+$$
+\begin{gathered}
+g=\frac{599879}{1271415},\qquad n=\frac{1+1/r}{2},\qquad
+\kappa=\frac{57gn}{238}=\frac{95779(17+r)}{28818740},\\
+\Lambda_\delta=\Lambda_Q+
+\delta g\begin{pmatrix}-1&-76/119&0\\1&76/119&0\\0&0&0\end{pmatrix}.
+\end{gathered}
+\tag{2.4}
+$$
+
+For every real symmetric $E$, put $t_i=\operatorname{tr}(R_iE)$.
+The effect map for the same varied channel is
+
+$$
+\begin{aligned}
+\mathcal A_\delta(E)={}&(\Lambda_\delta)_{00}t_0R_0
++\sum_{j=+,-}\frac{(\Lambda_\delta)_{jj}}8(t_jR_j+2R_jER_j)\\
+&+\sum_{i\ne j}\frac{(\Lambda_\delta)_{ij}}{d_id_j}\,t_iR_j\\
+&+(1-\delta)\frac{507224}{1271415}(R_0ER_++R_+ER_0)
++\frac{2272374}{5592605}(R_+ER_-+R_-ER_+).
+\end{aligned}
+\tag{2.5}
+$$
+
+Its extension to all complex matrices first takes $(E+E^T)/2$.
+The adjoint orientation is $\mathcal A_\delta=S_\delta^\dagger$;
+the sector-transfer sum contains $t_iR_j$, not $t_jR_i$.
+Thus (1.6), (2.4)–(2.5) specify every singleton and pair residual
+of one common channel.
+

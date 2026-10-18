@@ -1,0 +1,50 @@
+**定理 62.2（不改变原停止合同的续读谱）。** 对任意 $S\subseteq E_b$，令 $k=|K|$，并记 $J_{n,S}=\operatorname{paid}(h_{n,S})$。在原空缓存、原 Boolean $\operatorname{Pos}$ 停止、完整四值首次出现缓存和全历史粗动作因子化的合同下：任何对整个 $W_n$ 正确且实际产生 $h_{n,S}$ 的观察者，其在 $T_n$ 上的有限终止续行都至少取得 $k$ 个新的不同地址；存在来源无关的有限观察者恰取得 $k$ 个新地址后停止为 $1$。因此 $0,1,\ldots,F_{n-3}$ 都是这些前缀的准确最小续读费用，最大值无统一有限上界。
+
+证明下界。若某个 $p\in K$ 的续行没有命中 $pD_{YZ}^{\rm coarse}$，则 $T_n$ 与真实比较来源 $Z_p\in W_n$ 在全部已请求地址上粗回复相同。原 `Legal` 的缓存真值与精确命中律使重复请求也给相同粗回复。它们从共同空初态产生同一粗前缀，全历史因子化逐步迫使后续动作相同；有限停止位因而相同。但 $T_n$ 为正成员、$Z_p$ 为非成员，矛盾。故每个 $p$ 的续行必须命中该支持。$pD_{YZ}^{\rm coarse}$ 与 $J_{n,S}$ 不交，不同 $p$ 的支持又在互不相交的锥内，故至少 $k$ 个新增不同地址。原始 $pLL$ 在两个缓存中的值不同不影响此动作重放。没有要求观察者采用某个指定地址，任意合法查询都包含在完整支持论证中。
+
+证明达到及完整名义构造。以下构造也用于部分细化。先固定任意 $R,V\subseteq K$，允许重叠；把 $C_{n,S}$ 的地址按 $h_{n,S}$ 的次序列成 $A$，随后按固定次序列出 $pL$（$p\in R$）及 $pLLR$（$p\in V$），最后对 $p\in K\setminus(R\cup V)$ 列出 $pL$。合并成无重复快速列表 $F$，并给出预期粗值 $z(q)=\kappa r(q,T_n)$。前三段记为 $A_{R,V}$。$R=V=\varnothing$ 时快速补读恰为所有 $pL$；也可取 $R=\varnothing,V=K$ 以所有 $pLLR$ 达到同一下界。
+
+取 $N=F_{n+1}$，以57.2的有限窗 $\mathsf B_N=\{q:|q|\le N-1\}$ 为共同安装参数，固定一个包含全部地址的次序。所有快速地址都是真实 $T_n$ 的节点，故在该窗中；节点深度界与完整前沿恢复沿用57.2。置 $L=|\mathsf B_N|$，完整有限名义载体为
+
+$$
+E_N=\{[(q_1,y_1),\ldots,(q_j,y_j)]:0\le j\le L,\ q_i\in\mathsf B_N,
+\ q_i\text{ 两两不同},\ y_i\in\mathrm{Raw}\},\qquad
+\mathrm{Raw}=\{\alpha,\beta,\mathsf{br},\mathsf{abs}\}.
+\tag{JM.192}
+$$
+
+每种地址次序上的每个四值词都在载体中，不施加来源可实现性条件。初态为 $e_0=[]$，解码器为 $\operatorname{decoder}(c)=c$。地址支持 $\operatorname{dom}(c)$ 只取缓存自身的地址，游标由“固定列表中第一处未缓存地址”确定，不等同于某阶段的缓存长度。
+
+令 $\operatorname{Fast}(c)$ 表示 $F\subseteq\operatorname{dom}(c)$ 且每个 $q\in F$ 的存值粗投影为 $z(q)$。若完整窗的粗叶地址形成一个至多 $N$ 叶满二叉前沿，则 $\operatorname{Tree}(c)$ 为该前沿唯一重建的带标签树；否则解析失败。这个解析只用叶标签，忽略缓存中的分支／缺席区别。所有名义行的动作精确定义为
+
+$$
+\operatorname{action}(c)=
+\begin{cases}
+\operatorname{Query}(\text{$F$ 中第一处未缓存地址}),&F\nsubseteq\operatorname{dom}(c),\\
+\operatorname{Stop}_1,&\operatorname{Fast}(c),\\
+\operatorname{Query}(\text{$\mathsf B_N$ 中第一处未缓存地址}),&\mathsf B_N\nsubseteq\operatorname{dom}(c),\\
+\operatorname{Stop}_{\operatorname{Pos}(\operatorname{Tree}(c))},&\operatorname{Tree}(c)\text{ 解析成功},\\
+\operatorname{Stop}_0,&\text{其余情形}.
+\end{cases}
+\tag{JM.193}
+$$
+
+各行按所列先后判断。查询行动必选缓存外地址 $q$，对每个原始回复 $y$ 定义 $\operatorname{transition}(c,y)=c\mathbin{+\!+}[(q,y)]$；停止行动则定义 $\operatorname{transition}(c,y)=c$。新行仍属于 $E_N$。任一行均有地址无重复解码；每次查询新增一个地址，所以任何四值词从任意名义行最多再经过 $L$ 个查询就停止，其后的所有响应都吸收。没有丢弃不可实现词、重新初始化后备缓存或按外部报告标签插入地址。
+
+在每个实际来源上，对查询次数归纳：共同初态为空且真实；查询必为新地址，实际回复是原读数，转移恰为原 `cacheUpdate`，缓存始终真实。这给全部实际前缀的 `Legal`，包括快速阶段进入后备后的每条旧记录。可重复查询的原操作合同保持；这个达到者自身选择不重复请求。
+
+全历史符号论证如下。对任意 $c,d\in E_N$，若逐项粗缓存相等，则它们的地址支持、第一处未缓存地址、快速条件及粗叶解析完全相同，故动作相同。若 $\kappa y=\kappa y'$，同一查询地址追加后的两个粗缓存仍相等；若已停止，两边保持原行。因此粗缓存相等是全部名义行上的吸收响应双步不变量。由共同空初态归纳，任意两个等粗响应词产生相同动作，词无需来源可实现或缓存一致。原 `historyState` 只折叠报告的回复，忽略报告的地址标签；故任意外部地址、重复标签、虚构回复及停止后追加报告都满足原 $\kappa_{\rm hist}$ 因子化。此处只供应该具体观察者的上述不变量；等粗响应关系推出全历史因子化的通用桥复用 `ActualObserverPairReach.pairActionInvariant_iff_allHistoryFactorization`，不将快速／后备的拼接仅由 `pureObserver` 的定理代替。
+
+实际快速停止时，62.1在整个 $W_n$ 上强制来源为 $T_n$。其余实际终端取得完整窗，该来源的全部叶都在窗内，粗前沿解析准确恢复原树；原36.2–36.3的有限唯一逆解析决定其 $\operatorname{Pos}$。于是 Boolean 停止对整个 $W_n$ 正确。在 $T_n$ 上快速列表全部匹配；$R=V=\varnothing$ 时其首段恰产生 $h_{n,S}$，后段恰新增 $k$ 个不同地址并停止为 $1$。
+
+三个证据消费者单独定义。置 $\operatorname{Rec}(c)=T_n$ 当 $\operatorname{Fast}(c)$ 成立；否则在完整窗且解析成功时取 $\operatorname{Tree}(c)$；其余名义输入取固定默认树 $\alpha$。令
+
+$$
+\Delta^{\rm id}_{n,S,R,V}(b,c)=\operatorname{Rec}(c),\qquad
+\Delta^\nu_{n,S,R,V}(b,c)=\nu(\operatorname{Rec}(c)),\qquad
+\Delta^Q_{n,S,R,V}(b,c)=Q(\operatorname{Rec}(c)).
+\tag{JM.194}
+$$
+
+实际终端两支都准确，故这些是来源无关的终端证据消费者。它们只读终端保留记录，没有从 Boolean $b$ 推出树、整数或二元组，也没有向来源询问祖先或补写推断回复。消费者的计算、程序、输出和物理资源不由取得费用免除。$\square$
+

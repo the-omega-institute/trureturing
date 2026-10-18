@@ -1,0 +1,54 @@
+**Proposition 28.1 (An explicit mixed-memory qubit instrument for the original SNS).**
+For matrix units $E_{ij}=|i\rangle\langle j|$ on
+two dimensions, set
+
+$$
+\begin{aligned}
+\mathcal F_0(\rho)&=\tfrac12
+\left(E_{00}\rho E_{00}+E_{10}\rho E_{01}
++E_{11}\rho E_{11}\right),\\
+\mathcal F_1(\rho)&=\tfrac12 E_{01}\rho E_{10}.
+\end{aligned}
+\tag{28.1}
+$$
+
+These are completely positive branches with a
+trace-preserving sum. Starting at $I/2$, their
+visible output is exactly the fixed stationary SNS
+law (22.1).
+
+Proof. The zero branch has Kraus operators
+$E_{00}/\sqrt2,E_{10}/\sqrt2,E_{11}/\sqrt2$;
+the one branch has $E_{01}/\sqrt2$. Their adjoint
+products sum to I. On a diagonal density with
+row weights $p=(p_0,p_1)$, direct multiplication gives
+
+$$
+\mathcal F_0(\operatorname{diag}p)
+=\operatorname{diag}(p_0/2,(p_0+p_1)/2),\qquad
+\mathcal F_1(\operatorname{diag}p)
+=\operatorname{diag}(p_1/2,0).
+\tag{28.2}
+$$
+
+These are exactly $pM_0$ and $pM_1$ from (22.1).
+Induction on complete words proves equality of every
+cylinder probability. The total branch sends any
+density to $I/2$, so this initialization is stationary.
+After a one the memory is $E_{00}$, whereas a
+following zero sends it to $I/2$, a mixed state.
+$\square$
+
+This standard classical-to-quantum Kraus embedding
+is a dimension-two generator of the law, even though
+the prescribed positive coherent output has unbounded
+exact rank. It supplies neither that coherent state
+nor a pure trajectory conditioned only on the visible
+labels. Elliott arXiv:2105.06285v2 §III explicitly
+explains the discarded auxiliary register needed to
+suppress interference in nonpredictive generators;
+its §V treats SNS. That paper's compressed encoding
+of its hidden states is different from the orthogonal
+embedding (28.1), and its entropic comparison is not
+a consequence of this embedding.
+

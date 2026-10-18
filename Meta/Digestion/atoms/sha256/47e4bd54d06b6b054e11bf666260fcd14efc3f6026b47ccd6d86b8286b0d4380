@@ -1,0 +1,22 @@
+### 59.4 Exact projection and diamond upper bound
+
+Suppose c>β and α≥β. Put k=c−β>0 and a=β+k/3=(2β+c)/3. Complete positivity gives c≤sqrt(αβ)≤α, so β<a≤α≤1. Choose the exact feasible logical channel E' with parameters (α,a,a), implemented physically by
+
+    a I + (1−α) Cflip + (α−a) R0.
+
+These three weights are nonnegative and sum to one. Thus this is an actual common physical channel, not independently selected state optimizers. The logical output phase can again be restored at the end.
+
+For Δ=J∘(E−E'), the only nonzero matrix-unit differences are
+
+    Δ(11)=(k/3)(|00><00|−|11><11|),
+    Δ(01)=(2k/3)|00><11|, Δ(10)=Δ(01)*,
+
+while Δ(00)=0. To verify its full diamond norm, let an arbitrary normalized pure input with any reference be |0>u+|1>v with ||u||²=1−q and ||v||²=q. Write d=k/3 and e=2k/3. The output difference is the positive rank-one operator d|00><00|⊗|v><v| plus a block on the orthogonal vectors |00>u,|11>v with normalized matrix [[0,e sqrt(q(1−q))],[e sqrt(q(1−q)),−dq]]. Therefore its trace norm is at most
+
+    dq+sqrt(d²q²+4e²q(1−q))
+      =(k/3)[q+sqrt(16q−15q²)]≤8k/9.
+
+The last inequality follows by squaring sqrt(16q−15q²)≤8/3−q; the difference of the squares is 16(q−2/3)². At q=2/3 with u⊥v, the positive rank-one term is orthogonal to the block and equality holds. This is the same Ω as in the witness proof.
+
+Mixed density inputs follow by convexity. Hermitian operator inputs follow by Jordan decomposition; arbitrary operator inputs follow by adjoining a reference qubit and applying the Hermitian bound to (1/2)[[0,Z],[Z*,0]], whose input and image trace norms equal those of Z and its image. Thus the bound covers the diamond norm, not only unreferenced states. This proves the upper bound and exact attainment. If c≤β, the exact implementation already gives error zero. Local phase unitaries and simultaneous flips give all parameters in the theorem.
+

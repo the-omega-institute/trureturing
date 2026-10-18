@@ -1,0 +1,20 @@
+**Definition 1.2 (task, before representations).** Fix an actual prefix
+$h\in\mathcal R_H$, with absolute ordinal $n=|h|$. The paid historical
+consumer task is to acquire an authorized finite object naming this very
+prefix, and later execute an admitted finite computation returning
+
+$$
+\operatorname{HistoricalImage}(v_0,\xi,n,h,X(h)).
+\tag{RCA.1}
+$$
+
+Here $X(h)$ is the complete original joint endpoint: raw source and
+scratch bits, installed and dynamic code, every constructed and retired
+cell, PC, heads, latches, counters and their versions, request work,
+pending events, partial producer records, sender/mailbox/receiver bytes,
+origins, descriptors, seals, permissions and meter. There need not be a
+decoded current tree during source overwrite. A represented old permission
+is output data. It grants no present source, archive, latch or destination
+authority. The actual call has a different, later complete successor,
+including all its work, receipts and permission changes.
+

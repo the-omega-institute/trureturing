@@ -1,0 +1,28 @@
+**定义 47.1（完整模型与同一整个增益）。** 本节至第 51 节不附加式 (1.3) 的旧父读数矩形；使用定义 9.1 的失败递归及定义 1.1 的严格完整世界 $W=(P,g,d)$：$P=\left(\begin{smallmatrix}r&b\\c&1-r\end{smallmatrix}\right)$，$0<r<1$，$b,c>0$，$bc=r(1-r)$；$g$ 是一个非零实多项式，次数至多三，$d\in\mathbb R$。令 $J=\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$、$M=\left(\begin{smallmatrix}0&1\\1&1\end{smallmatrix}\right)$，$A_0=I$、$A_k=E_kA_{k-1}$，原读数为 $y_k=d+g(k)\operatorname{tr}(A_kP)$。初读计入，动作后立即读，时钟为 $0,\ldots,7$。下述各分支均用原世界的同一个 $g,d$，无重置、克隆、空闲、跳时钟或新端口。
+
+八个槽按 $M1,M2,M3,M4,J1,J2,J3,J4$ 排列。它们只有一个共同 $Z$，坐标为
+
+$$
+v=(r_{M1},b_{M1},D_{M1},\ldots,r_{M4},b_{M4},D_{M4},r_{J1},b_{J1},D_{J1},\ldots,r_{J4},b_{J4},D_{J4},Z)\in\mathbb R^{25}. \tag{47.1}
+$$
+
+在每槽置 $c=r(1-r)/b$、$j=b+c$、$t=1+b$、$n=r+j$、$u=1+2b$、$d=100D$，并定义
+
+$$
+q=\left(-D,\frac{6/25-D}{j},\frac{12/25-D}{t},\frac{Z-D}{n}\right)^{\mathsf T},\qquad g(s)=100\sum_{h=0}^3q_h\prod_{\substack{0\le k\le3\\k\ne h}}\frac{s-k}{h-k},\qquad
+\begin{pmatrix}h_4\\h_5\\h_6\\h_7\end{pmatrix}=\begin{pmatrix}-1&4&-6&4\\-4&15&-20&10\\-10&36&-45&20\\-20&70&-84&35\end{pmatrix}q,\quad h_k=g(k)/100. \tag{47.2}
+$$
+
+这些是 [FIB_SAMPLED_ROOT_COLLAPSE_AND_SAME_PARENT_FAILURE_CORE.md](FIB_SAMPLED_ROOT_COLLAPSE_AND_SAME_PARENT_FAILURE_CORE.md) 定义 14.1 的源图和四节点插值，在此允许 $r_{M1}$ 变化并同时加入第五 $J$ 槽；不以增益样本、判别式或三次系数作分母。原动作前缀 $J,M,J,M$ 的迹依次为 $j,t,n,u$，初迹为 $1$，所以前四读为 $0,24,48,100Z$，归一第四响应为 $Y=D+uh_4$。第五动作 $F$ 的归一响应为 $p=D+s_Fh_5$，其中 $s_M=n+u$、$s_J=n+r$。
+
+在第五 $F$ 后作第六 $E$、最终 $G$，记归一响应 $V_E=D+\tau_6h_6$、$A_{EG}=D+\tau_{7G}h_7$；实际左乘给出全部互择迹：
+
+| $F$ | $E$ | $\tau_6$ | $\tau_{7J}$ | $\tau_{7M}$ |
+| --- | --- | --- | --- | --- |
+| $M$ | $M$ | $n+2u$ | $(2n+t)+2r$ | $2n+3u$ |
+| $M$ | $J$ | $(n+r)+t$ | $n+u$ | $((n+4t)-2)-r$ |
+| $J$ | $M$ | $1+3b$ | $n+2r$ | $((n+r)+1)+3b$ |
+| $J$ | $J$ | $u$ | $n+r$ | $n+u$ |
+
+例如第五 $J$ 的矩阵是 $\left(\begin{smallmatrix}2&1\\1&0\end{smallmatrix}\right)$，再作 $M$ 得 $\left(\begin{smallmatrix}1&0\\3&1\end{smallmatrix}\right)$，其后 $J,M$ 分别给 $\left(\begin{smallmatrix}3&1\\1&0\end{smallmatrix}\right)$、$\left(\begin{smallmatrix}3&1\\4&1\end{smallmatrix}\right)$；第五 $J$ 后再作 $J$ 则回到 $A_4$。因此表中的 $J$ 行也确实属于同一原模型，而非另拟合的末端数据。
+

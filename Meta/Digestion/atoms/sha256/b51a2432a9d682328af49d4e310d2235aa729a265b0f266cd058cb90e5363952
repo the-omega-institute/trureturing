@@ -1,0 +1,39 @@
+**Lemma 3.1 (rank locus and fixed range compression).** For $z=(u,v,w)\in
+\mathbb C^3$ put $K(z)=uD+vT+wS$. Then
+
+$$
+K(z)=\begin{pmatrix}h_0u&av&cw\\bv&h_1u&0\\dw&0&h_2u\end{pmatrix},\qquad
+\det K(z)=h_0h_1h_2\,u(u^2-\alpha v^2-\beta w^2).
+\tag{CA.14}
+$$
+
+Every nonzero singular direction has rank exactly two. Its locus is the
+whole plane $u=0$ together with the whole quadratic locus
+$z^TB_0z=0$, where $B_0=\operatorname{diag}(1,-\alpha,-\beta)$.
+
+Proof. Expanding the first row gives
+$h_0h_1h_2u^3-abh_2uv^2-cdh_1uw^2$. For $u\ne0$, the minor in
+rows/columns $1,2$ is $h_1h_2u^2\ne0$. For $u=0,z\ne0$, column $0$
+is nonzero in coordinates $1,2$, and a nonzero column $1$ or $2$ lies in
+coordinate $0$. They are independent and the other columns are parallel.
+This gives rank two and excludes nonzero rank-one matrices in this span.
+The equations use complex squares, not squared moduli.
+
+For an actual encoder fix two independent columns: columns $1,2$ if
+$u\ne0$; columns $0,1$ if $u=0,v\ne0$; columns $0,2$ otherwise. Denote
+them $b_1,b_2$ and set
+
+$$
+q_1=b_1/\|b_1\|,\qquad
+q_2=\frac{b_2-q_1(q_1^\dagger b_2)}
+ {\|b_2-q_1(q_1^\dagger b_2)\|},\qquad U_z=(q_1,q_2).
+\tag{CA.15}
+$$
+
+The independence just proved makes both denominators positive.
+$U_z^\dagger U_z=I_2$ and $U_zU_z^\dagger K(z)=K(z)$. Thus the
+encoder matrix $U_z^\dagger K(z)$ into dimension two and full TP live
+decoder by $EU_z$ have composite $EK(z)$. The choices depend on fixed
+coefficients, never on the input. Zero matrices are omitted. Joint
+normalization, supplied in §6, makes these branches TNI. $\square$
+

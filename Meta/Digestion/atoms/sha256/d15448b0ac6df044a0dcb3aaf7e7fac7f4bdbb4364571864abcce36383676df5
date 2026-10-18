@@ -1,0 +1,14 @@
+### 54.1 Theorem: a single full-support source certifies the whole correlated input algebra
+
+If a finite LOSR map Lambda sends rho to an operator supported in M_m, then every positive-weight product branch sends every operator supported in M_n to an operator supported in M_m. For each branch there are a function f:{1,...,n}->{1,...,m} and two positive semidefinite matrices G_A,G_B with diagonal entries 1, and with (G_A)_{ij}=(G_B)_{ij}=0 whenever i != j and f(i)=f(j), such that its restriction is
+
+    |ii><jj| -> (G_A)_{ij}(G_B)_{ij} |f(i)f(i)><f(j)f(j)|.
+
+Conversely, every such triple (f,G_A,G_B) is the restriction of a product CPTP map. Consequently the complete set of exactly reachable MC targets is the convex hull of these explicitly parameterized images of rho. The statement includes arbitrary reference systems: the restrictions are equal as linear maps, so their tensor products with an identity map are equal.
+
+Proof. Put Q_m=I-P_m. Each branch output is positive, and the sum has zero Q_m trace, so each positive-weight branch has zero Q_m trace. Since rho >= lambda P_n and positive maps preserve order, the same holds for its image of P_n, hence for each |ii><ii| separately. Its image is the product state alpha_i tensor beta_i. A product state supported in M_m must equal |kk><kk| for one k: its support is supp(alpha_i) tensor supp(beta_i), and the only nonzero product vectors in M_m are multiples of |kk>. Thus alpha_i=beta_i=|f(i)><f(i)| for a common f.
+
+Take local Stinespring isometries. Purity of each system marginal forces V_A|i>=|f(i)> tensor |a_i>, and V_B|i>=|f(i)> tensor |b_i>, with unit environment vectors. Isometry gives <a_j|a_i>=<b_j|b_i>=0 for distinct i,j in the same fiber of f. Define (G_A)_{ij}=<a_j|a_i> and similarly G_B. These matrices are PSD (the transpose/conjugate of the usual Gram convention is also PSD). Partial tracing gives the formula on every matrix unit. Conversely realize any such matrices by unit vectors with these overlaps. The fiber-zero conditions make both V maps isometries, so tracing their environments gives the required local CPTP maps. Environments of dimension at most n suffice. This proves both directions.
+
+The hypothesis is positivity on M_n, not full rank on the whole n^2-dimensional bipartite space. It is essential to the single-state-to-channel inference. For example, with H the qubit Hadamard unitary, H tensor H maps the Bell vector to itself but maps |00> outside M_2; a pure Bell input therefore cannot certify preservation of all M_2.
+

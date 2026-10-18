@@ -1,0 +1,173 @@
+**Theorem 278.2 (Strict necessity for every full feasible conic allocation).**
+For every real profile $b$, every $e\ge0$, and every complete
+$\lambda\ge0$ of any finite mass satisfying all rows (273.3),
+
+$$
+\delta_b=(c_m-2)e-E_b\ge\epsilon_m e,
+\qquad
+\sum_{j=3}^L(b_j-e)\le(c_m+1-\epsilon_m)e.
+\tag{278.2}
+$$
+
+In particular $H_N\subset\{E_b\le(c_m-2-\epsilon_m)e\}$.
+At positive caps the old boundary $\delta_b=0$ and the strip
+$0\le\delta_b<\epsilon_m e$ have no full $N$ allocation.
+The hypothesis retains the entire finite feasibility cone, without
+monotonicity, hard-hull membership or a chosen output pattern.
+
+**Proof.** Use all potentials and slacks of Section 275, including
+the consumed identity (275.3). Let
+$\mathfrak h_D=g_D+x_D+[D(+)\in\{1,2\}]$.
+It is nonnegative, and every positive value is at least $a_m$.
+To verify the gap, expand $x_D$ with the same unary and pair
+moments. The late-pair coefficients are $1/2,(c-3)/2$, mixed-pair
+coefficients are $1,(c-2)/2$, and no-late fibre coefficients are
+$c/2$. The positive early-label indicator has coefficient one.
+The grouped nonnegative terms of (275.6)–(275.8) have no negative
+remainder. Since $10/3\le c<4$, every nonzero coefficient is at
+least $(c-3)/2$.
+
+Setting all those nonnegative terms to zero gives the entire
+zero-$\mathfrak h$ catalog below. The pair labels are in
+$00,01,10,11$ order; all listed choices are independent except
+where stated.
+
+| Schedule | Exactly the zero-charge outputs |
+| --- | --- |
+| empty | $0$ |
+| singleton early $i$ | zero reply in $\{0,i\}$, one reply $0$ |
+| singleton late | both replies $0$ |
+| $(1,2)$ | $u$ arbitrary, $v\in\{0,1\}$, $s\in\{0,2\}$, $t\in\{0\}\cup J$ |
+| $(1,j)$, $j\in J$ | $u,v\in\{0,1\}$, $s\in\{0,2,j\}$, $t=0$ |
+| $(2,j)$, $j\in J$ | $u,v\in\{0,2\}$, $s\in\{0,1,j\}$, $t=0$ |
+| $(i,j)$, $3\le i<j$ | $u=t=0$, $v\in\{0,i\}$, $s\in\{0,j\}$ |
+
+This includes arbitrary head-pair $00$ outputs and permitted
+unqueried early guesses. For no-late tables, $t_D=0$ and
+$g_D=a_D$, so the early-fibre late outputs, opposite-head outputs
+and positive early outputs vanish exactly as in the list.
+For a mixed pair, zeroing (275.7) excludes late $u,v,t$ and permits
+late $s$ only at $j$; zeroing $x_D$ excludes the opposite head
+in $u,v$, its own head in $s$, and early $t$.
+The last line follows by zeroing (275.8) with $c-3>0$.
+Thus the list and gap hold for every label and schedule.
+
+For the estimate, remove positive-charge columns. Their mass $\tau$
+satisfies
+
+$$
+a_m\tau\le G+X+\eta\le\delta_b.
+\tag{278.3}
+$$
+
+For each late $i$ let $u^i=1^{i-1}0^{L-i+1}$.
+In a zero-charge column, the difference
+$[D(v^i)=i]-[D(u^i)=i]$ is one exactly for late pairs $(i,j)$,
+$j>i$, with $01$ output $i$, and zero otherwise.
+Indeed a mixed column can emit a late label only at its queried
+late zero, with both words agreeing there; a head-pair late
+exhaustion also contributes equally at both words. In a late pair
+the last line of the list makes the only loss the change from
+$01=i$ to $00=0$ at its first address. All other late correct
+labels have equal indicators. This verifies the difference on the
+whole catalog, rather than just on sole-zero representatives.
+
+Let $\sigma_i$ be the mass of these exceptional zero-charge pairs.
+The removed positive-charge columns contribute at worst $-\tau$
+to the same difference. The full correct row at $u^i$ implies
+$\mu_{v^i}(i)-\mu_{u^i}(i)\le s_i$. Therefore
+$\sigma_i\le s_i+\tau$.
+Remove these exceptional columns as well. They are disjoint by
+their first address, so with $\sigma=\sum_i\sigma_i$ and total
+deleted mass $d=\tau+\sigma$,
+
+$$
+\sigma\le\sum_js_j+(m-1)\tau,\qquad
+d\le\delta_b+m\tau\le B_m\delta_b.
+\tag{278.4}
+$$
+
+The retained suballocation is a part of the same original law.
+It is not asserted to be feasible, normalized or an acquisition
+meeting the original cap.
+
+In this retained suballocation, let $A_j$ be the mass of mixed
+$(1,j)$ tables with $10$ output $j$, and $B_j$ the corresponding
+$(2,j)$ mass. Let $D_{ij}$ be the mass of late $(i,j)$ tables
+with $10$ output $j$. For a suffix zero set $Z\subset J$, the
+late-output masses on the early $01$ and $10$ fibres are exactly
+
+$$
+\begin{aligned}
+f_1(Z)&=\sum_jB_j[j\in Z]
+           +\sum_{i<j}D_{ij}[i\notin Z,j\in Z],\\
+f_2(Z)&=\sum_jA_j[j\in Z]
+           +\sum_{i<j}D_{ij}[i\notin Z,j\in Z].
+\end{aligned}
+\tag{278.5}
+$$
+
+The other retained columns contribute no late label on these
+fibres. All coefficients are nonnegative, and the same $D_{ij}$
+appears in both functions. The full original independent pair
+rows give
+$0\le f_h(Z)\le\mu_{\text{early }h,Z}(J)\le e$ for every $Z$.
+If $\ell_h(Z)$ is deleted late mass, $0\le\ell_h(Z)\le d$, then
+
+$$
+e-f_h(Z)=r_h(Z)+\chi_h(Z)+\ell_h(Z),\qquad
+\tfrac12\int((e-f_1)+(e-f_2))\,d\nu
+\le R_{\rm pair}+X+cd\le(1+cB_m)\delta_b.
+\tag{278.6}
+$$
+
+Here $\chi_1=\mu_{01Z}(2)$ and $\chi_2=\mu_{10Z}(1)$,
+the actual opposite-head errors. The equality uses full equal-mass
+rows; it does not endow the retained part with their feasibility.
+
+It remains to lower-bound the deficit of these ordered cuts.
+Consider $r$ ordered vertices and
+
+$$
+f(Z)=\sum_ja_j[j\in Z]+\sum_{i<j}d_{ij}[i\notin Z,j\in Z],
+\qquad a_j,d_{ij}\ge0,\qquad f(Z)\le e\text{ for all }Z.
+\tag{278.7}
+$$
+
+Suppose $1\le s\le r-2$ and $e-f(Z)\le\zeta$ on every
+$s$-subset. For an $s$-subset $S$ not containing sink $r$,
+adding that sink increases $f$ by
+$a_r+\sum_{i<r,i\notin S}d_{ir}$.
+This is nonnegative and at most $\zeta$, since
+$f(S)\ge e-\zeta$ and $f(S\cup\{r\})\le e$.
+For each $i<r$ an $s$-subset can avoid both $i,r$, exactly
+because $s\le r-2$. Hence $a_r\le\zeta$ and every
+$d_{ir}\le\zeta$. For each $(s-1)$-subset $T$ of the first
+$r-1$ vertices, adding $r$ changes $f$ by at most $r\zeta$.
+Since $f(T\cup\{r\})\ge e-\zeta$,
+$e-f(T)\le(r+1)\zeta$.
+
+Restriction to the first $r-1$ vertices leaves another function
+of form (278.7), bounded by $e$ on every subset.
+Begin with $r=m,s=k$ and
+$\zeta=\max_{|Z|=k}(e-f(Z))$. The condition $s\le r-2$
+holds and is preserved after each removal. After $k$ removals
+the layer is the empty set, of value zero. Multiplying the factors
+$r+1$ yields
+
+$$
+e\le C_m\max_{|Z|=k}(e-f(Z)),\qquad
+\int(e-f)\,d\nu\ge w_m\max_{|Z|=k}(e-f(Z))\ge\gamma_me.
+\tag{278.8}
+$$
+
+The integrated inequality follows because all deficits are
+nonnegative and each $k$-subset is an atom of mass $w_m$.
+Apply it separately to the two actual functions in (278.5).
+Their average integral is at least $\gamma_me$ and by (278.6)
+at most $(1+cB_m)\delta_b$. This proves (278.2).
+Every deletion, row comparison and cut belongs to the same full
+allocation; no mass division, separately optimal charge or removal
+of a negative demand is used. All inequalities are closed,
+including $e=0$. $\square$
+

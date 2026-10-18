@@ -1,0 +1,31 @@
+**Definition 3.1 (anchors, cutoff and observable charts).** A retained leaf anchor is a concrete exterior leaf, a recorded $\alpha$ or $\beta$ reply, or a recorded absent reply. An attained absent word is nonempty and witnesses a leaf at some strict prefix. If there is an anchor, every kept $W_\eta$ contains a concrete leaf.
+
+Let $H_\eta$ be the pair-height of $W_\eta$, counting residual variables as leaves. For a kept cell containing a literal leaf choose
+
+$$
+B_\eta=2H_\eta+1,\qquad A_\eta=B_\eta+2H_\eta=4H_\eta+1.
+\tag{LRD.7}
+$$
+
+The pairing law gives $\nu(\langle s,t\rangle)\le\nu(s)+2$ and $\nu(\langle s,t\rangle)\le\nu(t)+2$. Following the concrete leaf, whose intrinsic depth is zero or one, bounds every whole-cell root by $B_\eta$. This cutoff is deliberately sufficient rather than sharp.
+
+An observable chart $\theta$ assigns each residual either $j\in\{0,\ldots,A_\eta\}$, meaning exactly $T_j$, or $\star$, meaning the complement of this finite atomic list. Substitute the fixed $T_j$ into $W_\eta$ and every side of $\Delta_\eta$, expanding them literally; call the resulting terms $W_{\eta,\theta}$ and $\Delta_{\eta,\theta}$. Discard a chart if a negative has identical syntactic sides. In a chart with no $\star$, the whole source is ground. Otherwise let $G_{\eta,\theta}$ be the finite nonempty list of maximal ground subterms of $W_{\eta,\theta}$ and put
+
+$$
+c_{\eta,\theta}=\min_{g\in G_{\eta,\theta}}\nu(g).
+\tag{LRD.8}
+$$
+
+The list is nonempty because an original concrete leaf remains. Every remaining residual occurs in the whole-source term. Define
+
+$$
+V_{\eta,\theta}=
+\begin{cases}
+\{\nu(W_{\eta,\theta})\},&\text{no }\star,\\
+\{0,1,\ldots,c_{\eta,\theta}\},&\text{some }\star.
+\end{cases}
+\tag{LRD.9}
+$$
+
+The finite chart is internal mathematics, not an extra observation alphabet or an assumed read oracle.
+

@@ -1,0 +1,53 @@
+**Theorem 16.4 (all-word reduction with its exact source correspondence).**
+The optimum (AAR.87) equals the minimum worst Read count for determining
+$B_K$ using only actual menu-prefix queries $Rq$, $q\in K$, on the same
+full family. For every all-word encoder $\mathsf A$ there is such a
+boundary-acquiring encoder $\mathsf A^\circ$ satisfying
+
+$$
+ T_{\mathsf A^\circ}(t)\le T_{\mathsf A}(\widehat t),\qquad
+ \max_{t\in\mathcal F_D}T_{\mathsf A^\circ}(t)
+       \le\max_{t\in\mathcal F_D}T_{\mathsf A}(t).
+\tag{AAR.91}
+$$
+
+This is a projected-source comparison of worst budgets, rather than
+$T_{\mathsf A^\circ}(t)\le T_{\mathsf A}(t)$ on the identical source.
+
+Proof. For empty $P$, return the empty vector with zero Reads. Otherwise
+simulate $\mathsf A$ on $\widehat t$, keeping the actual register $t$
+unchanged. A simulated query $Rq$ with $q\in K$ is supplied by the
+actual Read of $Rq$ on $t$. A first-exit query $Rad$ is supplied by
+at most one actual Read of $Ra$, mapped to alpha on branch and to
+absent on all other replies. Fixed outer replies and strict extensions
+of an exit require no source call. Replies already acquired on this
+stationary source may be reused by this new strategy. Each Read that
+is actually submitted still counts; no original repeated or absent
+call is retrospectively free.
+
+The classification in Theorem 16.3 makes the simulated transcript
+truthful on the one actual source $\widehat t\in\mathcal F_D$.
+Induction through the deterministic control therefore simulates its
+finite terminating execution, including any finite local work. At
+termination, Theorem 16.2 makes that transcript determine
+$B_K(\widehat t)$. This determination is effective: a simulated labelled
+Read at a vertex of $K$ used its actual reply; an immediate-exit alpha
+certifies its parent branch by the actual prefix reply. The fixed or
+absent cases supply no invented presence. Scan those witnesses to
+recover the boundary. Equation (AAR.89) makes it $B_K(t)$, and at
+most one actual call was used per simulated call. This proves (AAR.91).
+
+Conversely, a boundary strategy queries the identical original source,
+and its acquired table supplies (AAR.86) through Theorems 12.3 and
+12.6. The two inequalities of optimal worst counts follow. Every
+arbitrary adaptive finite-word competitor is included in the forward
+simulation; no shape promise was imposed on its actual input.
+
+The reply correspondence is concretely different from preserving the
+original transcript. With $P=\{R\}$, $D=1$ and
+$t=\langle\alpha,\langle\beta,\alpha\rangle\rangle$, Read$(RL)$ is
+beta on $t$ and alpha on $\widehat t$. Proposition 14.2 already gives
+a stronger singleton obstruction to universal identical-source
+pointwise prefix domination. The present joint theorem makes only the
+comparison (AAR.91). $\square$
+

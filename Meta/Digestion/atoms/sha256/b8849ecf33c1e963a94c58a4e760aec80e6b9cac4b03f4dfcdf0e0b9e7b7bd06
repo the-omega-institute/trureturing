@@ -1,0 +1,15 @@
+**Definition 1.2 (Both actual endpoints).** The target is the unchanged $H_j$, written $h_{j,\varphi,S_{q_{j,\varphi}}}$. Its complete table is
+
+$$
+\begin{array}{c|c|c|c|c}
+j&\phi&q_{j,\phi}&h_{j,\phi,s}&B_{j,\phi}=2q_{j,\phi}+\phi\\ \hline
+0&0&0&a_s&0\\
+0&1&0&b_s&1\\
+1&0&1&b_s&2\\
+1&1&0&a_s&1
+\end{array}
+\tag{1.2}
+$$
+
+Thus $q_{j,0}=j$, $q_{j,1}=0$, and every base $B_{j,\phi}$ is $j$ or $j+1$. At $j=0,\phi=1$, for example, coordinate zero is the separator following active coordinate $-1$, with hidden state $b_{S_0}$. This checks the negative-coordinate seam without moving the endpoint. The table is Original (9.4). At fixed $j$, the endpoint class $a$ or $b$ determines the phase as a mathematical event. A protocol does not observe that class for free.
+

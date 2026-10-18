@@ -1,0 +1,22 @@
+**定义 1.2（一个实际平稳律；[平稳卷][S] §2）。** 令
+
+$$
+X=\{x\in\{0,1\}^{\mathbb Z}:x_jx_{j+1}=0\ (j\in\mathbb Z)\},\quad
+(Tx)_j=x_{j+1},\quad X_j(x)=x_j.
+$$
+
+$[w]_a$ 指坐标 $a,\ldots,a+|w|-1$ 等于 $w$ 的柱集，$[w]=[w]_1$。$P$ 恒为 $X$ 上一个归一化 Borel 概率律；平稳指 $T_*P=P$。$P_n$ 是它在 $1,\ldots,n$ 上的实际边缘。置
+
+$$
+\mathcal E_i=\sigma(X_j:j\ne i),\quad F_i=\{X_{i-1}=X_{i+1}=0\},\quad
+\mathcal F_r=\sigma(X_{-r},\ldots,X_{-1},X_1,\ldots,X_r),
+$$
+
+$$
+q=\mathbb E_P[X_0\mid\mathcal E_0],\quad q_r=\mathbb E_P[X_0\mid\mathcal F_r],\quad
+D_r(P)=\mathbb E_P[(X_0-q_r)^2],\quad I=[1/4,1/2].
+\tag{1.2}
+$$
+
+条件期望取值在 $[0,1]$，均只按所属律的几乎处处等价类解释。合法性给出 $q=0$ 于 $F_0^c$。有限零总质量纤维的后验可任取，其加权项为零。
+

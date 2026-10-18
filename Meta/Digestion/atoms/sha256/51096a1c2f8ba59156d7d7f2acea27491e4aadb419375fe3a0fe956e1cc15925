@@ -1,0 +1,17 @@
+**Definition 1.2 (Original output metric).** With the five ordered edges
+$((0,1),(0,2),(0,3),(1,13),(3,13))$, let $D$ be the preparation-dependent
+real map from two complex coordinates to the ten original outputs. On the
+source,
+
+$$
+y=D(A(k)e^{i\alpha},B(k)e^{i\beta}),\quad
+A(k)=2\sqrt{k(H-k)},\quad B(k)=2\sqrt{Zk},
+$$
+
+and
+
+$$
+D^{\mathsf T}D=4I_2\oplus I_2,\qquad
+\|D(z,w)\|_2^2=4|z|^2+|w|^2.
+$$
+

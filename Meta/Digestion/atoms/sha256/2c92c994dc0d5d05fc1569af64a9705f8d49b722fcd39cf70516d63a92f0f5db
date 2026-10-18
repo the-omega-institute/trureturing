@@ -1,0 +1,35 @@
+**Proposition 4.3 (Actual summable tail and persistent hidden information).** With $\bar\rho=\sqrt{15}/4<1$,
+
+$$
+e_L(r),e_R(r)\le\tfrac52\bar\rho^{\lfloor r/2\rfloor},\qquad
+\tau_P(R)\le\frac{10}{1-\bar\rho}\bar\rho^{\lfloor R/2\rfloor}.
+\tag{4.3}
+$$
+
+Nevertheless, using natural-log entropy and $W=X_{-r:-1}$,
+
+$$
+I_{J_\theta}(H_{-r};H_0\mid W)=\ln2+H_{J_\theta}(Q_0\mid W)\ge\ln2
+\quad(r\ge0).
+\tag{4.4}
+$$
+
+Proof. Length-two distributions, in order $00,01,10,11$, are
+
+$$
+P_{F_z}=\bigl((1-p_z)^2,(1-p_z)p_z,p_z,0\bigr),\qquad
+P_{T_z}=(1-p_z,p_z,0,0).
+$$
+
+Free/free pairs differ by at least $1/4$ on $10$, tail/tail pairs on $01$, and free/tail pairs on $10$. Thus their total variation is at least $1/4$. For normalized distributions $u,v$ with affinity $h=\sum_w\sqrt{u_wv_w}$, Cauchy–Schwarz gives
+
+$$
+\operatorname{TV}(u,v)
+=\tfrac12\sum_w|\sqrt{u_w}-\sqrt{v_w}|(\sqrt{u_w}+\sqrt{v_w})
+\le\sqrt{1-h^2}.
+$$
+
+All affinities are at most $\bar\rho$. Apply Theorem 3.3 with $\ell=2$, $K=6$ and $D\le5/2$ to obtain (4.3).
+
+Unifilarity makes $H_0$ a function of $(H_{-r},W)$. The observation-preserving symmetry $s\mapsto s+3$ preserves this stationary joint law and exchanges the two lifts of each $Q_0$. Conditional on $(Q_0,W)$, the lifts are equiprobable. The entropy chain rule therefore gives (4.4). Its series diverges, although the actual defect series is finite. $\square$
+

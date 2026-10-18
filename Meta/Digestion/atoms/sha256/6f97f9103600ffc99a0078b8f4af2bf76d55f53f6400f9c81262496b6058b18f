@@ -1,0 +1,33 @@
+**Definition 1.3 (One common direct dyadic table).** A table is chosen
+before observation using the known $(q,r,c,\alpha)$ and a finite budget.
+It has the same initialization and the same two input-conditioned rows
+under both labels. It may retune with these parameters, without continuity
+and without a common table across different $q$. For an integer $B\ge1$,
+every installed probability is an integer multiple of $2^{-B}$, including
+zero and one. Each nonterminal configuration reads exactly the next
+actual bit and applies its installed stochastic row directly. Fresh
+transition randomness is independent of the source and preceding fresh
+randomness. Entry into $d_i$ internally emits label $i$ and stops.
+
+Every mutable retained distinction counts in the complete persistent
+configuration set: initialization, both labels, registers, control phases,
+work buffers, retained seeds and random consequences. The observation is
+one uninterrupted consecutive history (1.3). There is no additional
+source-age, elapsed-time, read-count, horizon, program-counter, gap-length,
+archive, random-tape or true-label input; no reset, skipped bit or free
+complete-gap observation. A row formula specifies immutable entries and
+provides no runtime arithmetic workspace. This restricts the probability
+alphabet of [C, Definition 1.3] while keeping its complete-state and
+actual-read contract.
+
+If the consumed prefix is $X_0,\ldots,X_{T-1}$, its paid length is $T$.
+Both error bounds, both almost-sure stops and both finite paid means
+always refer to this one selected table. In particular, compliance means
+
+$$
+\mathsf P_0(D=1)\le\alpha,\quad
+\mathsf P_1(D=0)\le\alpha,\quad
+\mathsf P_i(T<\infty)=1,\quad \mathbb E_iT<\infty\quad(i=0,1).
+\tag{1.4}
+$$
+

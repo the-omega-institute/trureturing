@@ -1,0 +1,18 @@
+**Corollary 310.4 (Actual two-tail lower bound at a saturated head).**
+Take an entire sequence (309.1) with $\tau>0$,
+$a_2=1-11\tau$, $(a_3,\ldots,a_7)=(13,10,9,8,6)\tau$
+and $1\ge a_1\ge a_2$, with only sequence order imposed on its
+later tail. Every original competitor in either class has
+
+$$
+e_a(A)\ge5\tau+\frac{a_8+a_9-10\tau}{12}.
+\tag{310.5}
+$$
+
+**Proof.** At $j_a=a+2$, the first five weighted late terms sum
+to $211\tau$. Thus (310.3) says
+$48e_a(A)\ge200\tau+4(a_8+a_9)$, which rearranges to (310.5).
+This bound does not assume $a_8,a_9$ inactive. The six-late bound
+(305.6) can be used simultaneously; neither lower bound supplies
+attainment or a classification at a larger cap. $\square$
+

@@ -1,0 +1,16 @@
+**定义 27.1（不同抽样合同的歧义量）。** 有限 $|X|\geq2$ 时，身份目标的有序异源对率为
+
+$$
+\varepsilon(q)=\frac{|\mathcal E(q;\operatorname{id})|}{|X|(|X|-1)}.
+$$
+
+分母及有理数约定直接采用 [ExactRate 的 `escapeDenominator_eq` 与 `Catalog.escapeRate`](../../../D5/S3/ConceptDynamics/InformationEscape/ExactRate.lean)。另指定同一来源概率律，目标和观察有限时，置 $p_b(z)=\Pr(F=z\mid q=b)$，只对正质量 $b$ 定义后验，并令
+
+$$
+\Gamma(F\mid q)=\sum_{b:\Pr(q=b)>0}\Pr(q=b)\left(1-\sum_zp_b(z)^2\right),
+\qquad
+R_{\rm Bayes}=\sum_b\Pr(q=b)\bigl(1-\max_zp_b(z)\bigr).
+$$
+
+后式是允许任意确定分类器、零一损失下的 Bayes 最小错误率。$\Gamma$ 是先抽一条纤维，再在其中条件独立抽两个目标的不同概率；它不是全局异源对均匀抽样。
+

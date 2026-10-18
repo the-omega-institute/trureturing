@@ -1,0 +1,11 @@
+**Corollary 65.2 (positive-tail consumers with a uniform margin).** For every $k=3,\ldots,9$, every ordered positive tail with total mass $1/20$ at $s=7/10,t=1/4$ is excluded for all $0<\beta\leq1/2$, with
+
+$$
+4v_a-J_c(X)\geq\frac1{10}.
+\tag{S.108}
+$$
+
+Within the space of ordered positive trace-one spectra in each rank, the region $s>2t$, $s+t<49/50$ is a relative open neighborhood of each of these centers and is excluded by Theorem 65.1.
+
+Proof. These leading eigenvalues have $s>2t$ and $s+t=19/20<49/50$. Every positive tail of total $1/20$ has each entry at most $1/20<t$. Such tails exist in every stated rank, for example by equal distribution among $k-2$ entries. The first term of (S.107) is exactly $(10/3)(49/50-19/20)=1/10$, while its second term is positive for each allowed beta. This proves the uniform margin independently of how that mass is distributed. The neighborhood assertion follows from the strict spectral inequalities and continuity. In particular the rank-three center $(7/10,1/4,1/20)$ of Proposition 63.1 is covered. The necessary scalar conditions in (S.87) alone remain insufficient; the additional spectral certificate (S.103) supplies its exclusion, while Theorem 64.2 closes the entire half-beta residual by overlap. $\square$
+

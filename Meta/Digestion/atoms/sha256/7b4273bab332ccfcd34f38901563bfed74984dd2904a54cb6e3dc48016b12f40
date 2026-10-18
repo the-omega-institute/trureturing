@@ -1,0 +1,9 @@
+**Theorem 68.3 (literal three-leaf boundary).** At $n=3$, $W_3=\{B,D\}$, $J_3=\{L\}$, and
+no source realizes the absent mask.
+
+Proof. A full ordered binary tree with three leaves has a root split of one plus two
+leaves or two plus one leaves. Its fixed word $bab$ uniquely labels each split, giving
+exactly $D$ or $B$. Their replies at $L$ are respectively $\beta$ and $\mathsf{br}$,
+with coarse values $\mathsf{some\ false}$ and $\mathsf{none}$. Neither is absent. This
+boundary uses the original [JM52.1][JM] trees and readout. $\square$
+

@@ -1,0 +1,22 @@
+**Definition 6.2 (Preparation and resource boundaries).** The constructions
+bound all complex inputs and all actual finite adaptive histories under
+Assumption 1.1. Their attaining tests use wait zero, a complete rank-one
+read and Stop. They require a fixed mathematical scalar port, finite
+hidden flags and the displayed exact algebraic coefficients; every
+decoder is TP on its whole block. Flags are consumed, and no source,
+reference, reset, copy or future-visible mixture record is added.
+
+Exact coefficients, finite flag counts and quantum dimension do not
+bound coefficient synthesis, finite-precision robustness, source
+acquisition, clock precision, storage duration or physical transport.
+Those resources require additional contracts and proofs. No physical
+realization follows from the finite moment identity.
+
+The exact $q=2,3,4$ optima and their credited bounds are unchanged.
+Native all-size cofinality and memory-rate questions, preparation from
+the native $\alpha/\beta$ relations, and mutual recovery among relations,
+space, time, boundary and memory remain separate open mathematical
+obligations. Native composition maps alone do not supply the
+source/action/observation/resource correspondence to the independent
+quantum preparation (1.1).
+

@@ -1,0 +1,13 @@
+**Definition 392.1 (Class-constant averaging and finite hard cost).** For a finite $L\ge3$, put $\Omega_n=\{w\in\{0,1\}^L:n(w)=n\}$ and choose arbitrary probability weights $\pi_n$ on each $\Omega_n$. For a vector law $p$ define
+
+$$
+v_n=\sum_{w\in\Omega_n}\pi_n(w)p_w,\qquad
+v_{L+1}=p_{1^L},\qquad
+(\Pi p)_w=v_{n(w)},\quad (\Pi p)_{1^L}=v_{L+1}.
+\tag{392.1}
+$$
+
+The weights for a class are the same for every output word in that class. This operator does not include arbitrary row-dependent stochastic maps that retain within-class variation. It is an auxiliary average of word laws, with no law on actual sources or free acquisition operation supplied.
+
+For a probability-vector kernel $q$ on the full cube, let $D_{\mathrm{hard}}(q)$ be its minimum exact classical hard query cost. A procedure has one source-independent seed fixing a deterministic decision tree, uses only replies at coordinates in $[L]$, and outputs a label in $J_L$; the cost is the maximum number of actual requests on a supported tree path. Repeated and ignored requests count. Adaptive trees are allowed in this definition, so its lower bounds also apply to preselected or increasing first-zero-stop procedures at the same hard cost. The input domain is the entire Boolean cube.
+

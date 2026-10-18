@@ -1,0 +1,4 @@
+**Theorem 17.4 (one actual original experiment separates unequal
+weights).** For fixed $P$ and $L\ge3$, and $x,y\in\mathcal X_L$ of different
+weights, the one-node experiment Advance at $h_x,h_y$ is lawful at
+both, executes the prescribed original EX13, and has different

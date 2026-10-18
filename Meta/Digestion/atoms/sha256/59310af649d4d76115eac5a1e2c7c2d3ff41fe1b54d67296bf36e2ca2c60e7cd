@@ -1,0 +1,46 @@
+**Theorem 75.4 (the chamber-covering assertion and its fixed-positive-radius strengthening).** Under75.1–75.3, choose any fixed $\kappa>0$ and set
+
+$$
+R_\varepsilon=\kappa r_\varepsilon.
+\tag{75.13}
+$$
+
+For every fixed compact $K\subset\mathbb C\setminus\mathbb R$, define
+
+$$
+\begin{aligned}
+K_{\varepsilon,C}(z)&=L_\varepsilon(C-z)^{-1}L_\varepsilon^*,\\
+D_{\varepsilon,C}^0(z)
+ &=\big\|\iota_\varepsilon(H_{\varepsilon,R,C}^{\rm D}-z)^{-1}
+                   \iota_\varepsilon^*-K_{\varepsilon,C}(z)\big\|
+                                     _{\mathcal B(\mathcal P_\varepsilon)},\\
+D_{\varepsilon,C}^{\rm a}(z)
+ &=\big\|(H_{\varepsilon,R,C}^{\rm D}-z)^{-1}
+                   -T_\varepsilon(C-z)^{-1}T_\varepsilon^*\big\|
+                                  _{\mathcal B(\mathcal P_{\varepsilon,R})}.
+\end{aligned}
+\tag{75.14}
+$$
+
+Then
+
+$$
+\max_{C\in\{C_0,C_{\rm c},C_{\rm k}\}}\ \sup_{z\in K}
+D_{\varepsilon,C}^0(z)\longrightarrow0,\qquad
+\max_{C\in\{C_0,C_{\rm c},C_{\rm k}\}}\ \sup_{z\in K}
+D_{\varepsilon,C}^{\rm a}(z)\longrightarrow0.
+\tag{75.15}
+$$
+
+At $z=i$ these are literally both hard-carrier comparisons(74.8), for the full unchanged Definition64.5 target. The first physical term is a zero-extended resolvent, not the resolvent of a densely defined full-product operator. For every tolerance $\eta>0$, one $\varepsilon_0$ works for all three prescriptions, all $z\in K$ and every forcing vector of norm at most one on the corresponding actual carrier.
+
+In particular the original chamber-covering hypothesis suffices. Indeed72.4–72.6 give constants $0<\ell_p\le M_p<\infty$, independent of small $\varepsilon$, such that
+
+$$
+Z_p^\varepsilon=b_p^\varepsilon+r_\varepsilon K_p(\varepsilon^{1/s}),
+\qquad B_{\ell_p}(0)\subset K_p(\varepsilon^{1/s})\subset B_{M_p}(0).
+\tag{75.16}
+$$
+
+Thus $B_D=\max_p2M_p$ bounds every chamber diameter divided by $r_\varepsilon$. Any fixed $\kappa>B_D$ excludes each entire $Z_p^\varepsilon\times Z_p^\varepsilon$. The theorem also holds for every fixed $0<\kappa\le B_D$ on these same uniformly nondegenerate chambers. This does not assert uniformity as $\kappa\downarrow0$ or for growing sources, shrinking $\delta$, increasing dimension or changing reference geometry. The proof is75.5–75.10.
+

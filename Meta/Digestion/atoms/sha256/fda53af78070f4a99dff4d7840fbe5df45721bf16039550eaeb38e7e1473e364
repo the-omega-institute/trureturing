@@ -1,0 +1,24 @@
+**Proposition 4.6 (semantic projection and its limits).** Projection of
+actual completed source events retains their actual typed responses. On
+capacity-safe TagRead/accepted-Rho runs it agrees with the adapter's supplied
+Native macro correspondence. Internal source and record work stutters under
+that projection but remains present in AIF.5 replay and in the actual clock.
+Rejected Rho is not an unconditional Native update, and a graft does not
+preserve a pure rho-orbit equation.
+
+Proof. At each response commitment the adapter's conformance theorem gives
+the original operation on that same installed source and its complete
+response. The supplied Native realization applies exactly to its restricted
+menu and capacity condition. Every other primitive adds no completed source
+event, hence projects to stuttering in this particular semantic word. Its
+receipt still increments $n$. Reject retains the tree while incrementing
+the call/event counts; a genuine accepted graft changes the tree without
+incrementing the accepted-Rho epoch. These cases prove both the positive
+projection and its stated exclusions. ∎
+
+Replay removes deterministic workspace from a sufficient *logical payload*.
+It does not remove its original work or storage, reconstruct an authentic
+row by minting a fresh origin, equate macro and micro clocks, or identify the
+key's global minimum task quotient. Theorem 4.4 is one sufficient memory
+decoder, not four natural view constructions.
+

@@ -1,0 +1,37 @@
+**Proposition 13.2 (the original $r=1$ and $r=2$ leaves).** Under all
+the conditions of Definition 8.1, an $r=1$ leaf has exactly one
+declared state and cap at least one. An $r=2$ leaf has exactly two
+declared states and cap at least one. Conversely any singleton,
+respectively any pair of distinct states of the same actual $S_d$,
+with a rational probability vanishing off that set and rational
+$C\ge1$, has lawful full data for the corresponding leaf.
+
+Proof. For $r=1$, every boundary reply is constant on the whole
+declared $P$. Lemma 13.1 gives $|P|\le1$; Definition 8.1 forces
+$|P|\ge r=1$. Its supported probability has $L_1(\mu)=1$, so
+$C\ge1$. Conversely on a singleton supply the full native tables
+and, for each target, its attained constant value. The one-reply
+bound holds, the separation requirement for two-element subsets is
+vacuous, the singleton target witnesses are valid, and the cap
+comparison is precisely $C\ge1$.
+
+For $r=2$, the reply bound holds on every declared state of $P$.
+Theorem 12.3 shows that every target has at most two values on all
+of $P$. If $P$ contained three states, no target could take more
+than two values on that triple, contradicting Definition 8.1's
+separation condition. Thus $|P|\le2$; the original requirement
+$r\le|P|$ forces $|P|=2$. The two largest declared weights have
+sum $L_2(\mu)=1$, even when one is zero, giving $C\ge1$.
+
+Conversely let $P=\{x,y\}$ with $x\ne y$. Every literal has at
+most two replies on this set. Lemma 13.1 supplies an actual
+$a\in W_d$ with $r_x(a)\ne r_y(a)$. For each target supply the
+decoder taking these two replies to $\Gamma_q(x),\Gamma_q(y)$,
+respectively, with unused replies mapped to $\Gamma_q(x)$; a
+constant may be used when the factors coincide. These data witness
+every target on the sole two-element subset. The three-element
+separation requirement is vacuous, the supported law has $L_2=1$,
+and the full native tables with $C\ge1$ meet every original
+condition. A zero weight does not remove a declared state from any
+structural test in either direction. $\square$
+

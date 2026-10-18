@@ -1,0 +1,27 @@
+## 1. Scope and mathematical status
+
+This volume proves three statements on the original repeated-partner
+one-image fiber. Every prescribed binary code served by an arbitrary-literal
+stationary Moore reader with at most nine installed states and at most two calls is
+served, with the identical pointwise code, by a representative-root reader
+with nine installed states and at most four calls. Independently of that
+premise, a terminating representative-root reader within nine states exists
+exactly when the code is constant on at least one whole positive fiber.
+When all four positive fibers attain both bits, the unrestricted terminating
+root minimum is exactly ten states, with four calls sufficient.
+
+The proofs are ordinary paper mathematics. This reference input carries no
+Lean kernel certification or executable mathematical verification. Mathematical
+authorship is by the sole Codex CLI author; the canonical suppliers identified
+below retain ownership of their reused results. The additional deductions are
+`repo-derived`, without a claim of worldwide originality.
+
+The owning native volume is [Native cut-birth provenance and literal past-row
+recovery][NBP], abbreviated NBP. The bounded-call comparison is [Prescribed
+binary codes: a nine-state escape from root-only two-call reading][NRE],
+abbreviated NRE. The acquisition comparison is [Native prescribed-code
+acquisition on the original one-image fiber][PCA], abbreviated PCA. Numbered
+citations below specify exactly which results are reused. Neither a root
+profile nor an output label replaces the original source domain or the
+complete predecessor row.
+

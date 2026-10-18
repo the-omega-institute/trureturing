@@ -1,0 +1,36 @@
+**Corollary 12.5 (The same TP and signed-event slice of a fixed face).**
+Fix actual normalized event multipliers and all three TP multipliers
+as in Definition 5.1. Suppose their induced form satisfies Theorem
+3.2 and $\mathscr F\not\equiv0$, and put $z=\beta-\tau^Ty$.
+Insert the applicable full-face description of Theorem 12.4 and impose
+
+$$
+\begin{gathered}
+M^T\tau=\tau,\qquad z\ge0,\\
+zI_5-H_J(x)\succeq0,\qquad zI_5+H_J(x)\succeq0
+\quad(J\in\mathcal J_{15}).
+\end{gathered}
+\tag{12.14}
+$$
+
+For this fixed multiplier tuple, feasibility is equivalent to existence
+of a legal finite scalar port on its full selected zero face with
+these same TP and all-event inequalities. Whenever feasible,
+$\varepsilon_1=z$, and reconstruction supplies a legal port attaining
+that original value. The corresponding complementary signed-event
+pairings may be included as linear equations, and already follow
+from (5.4).
+
+Proof. A feasible lift reconstructs the same $x\in\mathcal K$,
+not a replacement having only its measurement populations. TP and
+Theorem 2.3 give its legal fixed port. Equations (1.11) and (12.14)
+give its full original error at most $z$, while Theorem 5.2 gives
+an unrestricted complex lower $z$. Equality and complementary event
+support follow from the nonnegative slack identity (5.4). Conversely,
+a port in this specified selected face has the tuple of Theorem
+12.4, and the assumed constraints are retained by its lift. No such
+normalized matching tuple or feasible slice at its value is asserted
+here. The new ingredient is the exact finite description of the
+whole fixed face; the conditional matching implication itself is
+Theorem 5.2. $\square$
+

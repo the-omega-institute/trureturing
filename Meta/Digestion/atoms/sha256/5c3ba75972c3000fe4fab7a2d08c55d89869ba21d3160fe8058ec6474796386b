@@ -1,0 +1,36 @@
+**Theorem 17.2 (zero-risk normal form and finite versus arbitrary support).** Use the endpoint-positive events of §12,
+
+$$
+E_p=\{w_{0,1},w_{1,1},w_{2,1}\},\qquad
+E_\beta=\{\beta,\alpha w_{0,1}\},
+$$
+
+and their midpoint constants
+
+$$
+C_p=11758471/22781250,\qquad C_\beta=5261/6750.
+\tag{17.8}
+$$
+
+A feasible pair has $\Phi_\mu=0$ if and only if its marginals satisfy all three conditions:
+
+1. $\sigma_s$ is concentrated on $\mathcal K_s\cap\mathcal B_s$ in each phase.
+2. $\int q(E_p)\,d\sigma_p=C_p$ and $\int w(E_\beta)\,d\sigma_\beta=C_\beta$.
+3. For every actually supported interior depth $k\ge3$, its two configuration losses are at most $\rho_p,\rho_\beta$, respectively.
+
+Consequently a finite common endpoint observer in the original class exists if and only if a zero-risk feasible pair exists with **both** marginals finitely supported. The original unrestricted infimum is zero if and only if **some** zero-risk feasible pair exists, with arbitrary marginal support. A strictly positive unrestricted gap is equivalent to absence of every such zero-risk pair. An unattained zero infimum requires both existence of a zero-risk pair and exclusion of every pair with both marginals finitely supported.
+
+Proof. Suppose $\Phi_\mu=0$. Both endpoint configuration losses in either phase are at most $\rho_s$. Integrate (17.6). Its nonnegative outside-box term must have expectation zero, so $a(D)+b(D)=0$ almost surely, proving complete box membership. In this box the positive endpoint-1 difference event gives
+
+$$
+\operatorname{TV}(D,P_{s,r_1})=P_{s,r_1}(E_s)-D(E_s),\qquad
+\operatorname{TV}(D,P_{s,r_2})=D(E_s)-P_{s,r_2}(E_s).
+\tag{17.9}
+$$
+
+Indeed $D$ lies coordinatewise between the two endpoints, and the sign of their difference is fixed on each coordinate. The endpoint-positive events are exactly those listed above; §12 gives their probabilities and their difference $2\rho_s$. The two averaged inequalities in (17.9) force the midpoint identity. Every supported interior inequality is also part of $\Phi_\mu=0$. Conversely box membership and the midpoint identity give both endpoint losses exactly $\rho_s$. Together with every supported interior inequality, continuity extends the bounds to $R_\mu$ and gives $\Phi_\mu\le0$. Lemma 16.2 gives equality. No finite diagnostic interior set can replace condition 3 for an unspecified countable support.
+
+If both marginals have finite support, both edge measures are concentrated on their finite Cartesian product. The singleton-cell exact realization at the end of Theorem 16.3 gives a finite regular stationary table with those exact complete laws and configuration losses. Equation (2.3) turns them into the same all-positive-history risks. The separate phase minima make both endpoint bounds equalities. Conversely a finite regular stationary endpoint table gives a zero-risk finite-support pair by (16.16). Corollary 2.3 supplies the exact endpoint equivalence with the original arbitrary finite class; this assertion is stronger than, and separately included alongside, its numerical infimum sandwich. Thus finite attainment has the stated finite-marginal-support characterization.
+
+By Lemma 16.2, $V_\mu\ge0$ is attained. Hence $V_\mu=0$ exactly when some zero-risk pair exists. By (16.9) this is equivalent to $J(\mathfrak M_\mu)=0$, and absence of every zero-risk pair is equivalent to $V_\mu>0$ and to a positive original gap. Conditional on a zero-risk pair, Theorem 16.3 supplies actual finite tables of excess at most $a_p(t)\to0$; that is the required finite approximation, rather than installation of the compact minimizer. It does not make any one table exact. Finally an infinite-support zero pair does not exclude a different finite-support zero pair. Zero value and absence of all finite-support zero pairs are both needed to conclude nonattainment. ∎
+

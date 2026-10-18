@@ -1,0 +1,36 @@
+### 220.8 The unrestricted comparison remains open
+
+The positive obligation remains: for every $L\ge3$ and every actual
+full $y\ge0$ with $\Delta_O(y)\le1$, produce one unrestricted full
+$V\ge0$ and $\theta\in[0,1]$ satisfying (220.1).
+There is no universal eligibility cover, cone-placement theorem,
+affordable landing mask or qualifying actual block decomposition here.
+Exact-$Q$, baseline, unary, terminal, suffix and constructor preservation
+are not restrictions on the original obligation.
+
+A negative alternative still requires the same actual $(b,e)\in H_N$,
+the same full feasible $\lambda\ge0$, $G_N\lambda\ge h(b,e)$,
+$M=\sum\lambda\ge1$, and an actual unit-$O$ score $y$ with
+$F_{Q(y)}(b,e)>M$. It must then supply the original full-carrier,
+arbitrary-address, common-seed, hard-two-actual-request, all-source,
+all-Borel, actual-tail and closed-cap transport with a uniform lower
+certificate against every original stopped competitor. A failed reset,
+fixed constructor, local constant replacement, exact-law requirement,
+hull-only point or final-total-only tail test does not meet it.
+
+Consequently the original implication for every positive nonincreasing
+vanishing amplitude sequence and every positive closed cap,
+
+$$
+ \mathcal F_N(a,\varepsilon)\ne\varnothing
+ \quad\Longrightarrow\quad
+ \mathcal F_N(a,\varepsilon)\cap\mathscr C_{L_a}\ne\varnothing,
+$$
+
+remains open. The four relations retain all independent event rows,
+actual constructions, zero and weak-equality endpoints, and their
+stated resource correspondence. They are ordinary mathematical proofs;
+no Lean/kernel validation, ingestion, coverage, freeze, physical sampling
+cost or universal affordability follows from them or from a finite
+rational check.
+

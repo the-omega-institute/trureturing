@@ -1,0 +1,21 @@
+**Definition 8.2 (literature and mathematical suppliers).** The local response, compactness, strict-complementarity and quadratic-transfer deductions are \`repo-derived\` from the displayed hypotheses. The following primary sources are cited only for the standard tools they supply.
+
+| Source | Precise use and excluded transfer |
+| --- | --- |
+| S. Banach, “Sur les opérations dans les ensembles abstraits et leur application aux équations intégrales”, *Fundamenta Mathematicae* 3 (1922), 133–181 | Contraction mapping in the inherited box argument; it supplies no source-root or physical-optimum claim. |
+| S. Bernstein, “Démonstration du théorème de Weierstrass fondée sur le calcul des probabilités”, *Communications de la Société Mathématique de Kharkov* 13 (1912), 1–2 | Positivity of the Bernstein basis used by [OE, Proposition 6.2]; it supplies no new positivity certificate here. |
+| H. W. Kuhn and A. W. Tucker, “Nonlinear programming”, *Proceedings of the Second Berkeley Symposium on Mathematical Statistics and Probability* (1951), 481–492 | KKT multiplier and second-order reasoning in §5; the constraint qualification and signs are checked from the inherited event geometry. |
+| W. F. Stinespring, “Positive functions on $C^*$-algebras”, *Proceedings of the American Mathematical Society* 6 (1955), 211–216, DOI:10.1090/S0002-9939-1955-0069403-4 | Finite-dimensional CP/TP completion language used by [OE, §9]; no physical/native realization is inferred. |
+| K. Kraus, “General state changes in quantum theory”, *Annals of Physics* 64 (1971), 311–335, DOI:10.1016/0003-4916(71)90108-4 | Kraus-index and effect bookkeeping in the common constructor; hidden Kraus indices are explicitly excluded from actual-label counting. |
+| [CG], [JR], [FA], [RC], and [OE] | \`repo-derived\` supplier documents for the original source interfaces, event certificate, same-law reduction, capacity, response geometry and common constructor. Their exact scopes are those cited in Assumption 1.2. |
+
+The standard references do not certify the numerical event or any original-AURIC bridge. No worldwide priority or novelty claim is made.
+
+**Open question 8.3 (outside this source).** Extending the positive quadratic loss to every weak feasible strength, proving any universal minimum total alphabet, or closing the unchanged all-budget/all-contrast programme requires new source certificates and new global comparisons. These are not consequences of the local event argument.
+
+[OE]: FIB_NATIVE_COMPLETE_CONTINUATION_LOCAL_OUTPUT_EXTINCTION.md
+[CG]: FIB_NATIVE_COMPLETE_CONTINUATION_DISTINGUISHABILITY_GAP.md
+[JR]: FIB_NATIVE_COMPLETE_CONTINUATION_JOINT_RECORD_PAYLOAD.md
+[FA]: FIB_NATIVE_COMPLETE_CONTINUATION_FINITE_ACTIVITY_FRONTIER.md
+[RC]: FIB_NATIVE_COMPLETE_CONTINUATION_RESIDUAL_CONTACT_CURVE.md
+

@@ -1,0 +1,36 @@
+**Proposition 7.3 (slope on a given regular matched branch).** Suppose
+at fixed $s$ a finite optimal pure/saturated family and an attained
+matching whole-circle certificate are differentiable in $t$ on an
+open parameter interval. Require positive used weights, fixed sheet
+indices, fixed report and maximizing-height signs in legal local
+charts, and the exact differentiated moment/contact equations.
+Use a fixed active-contrast branch $k=\tau$, or a fixed
+$\lambda=0$ branch. At a zero-height or report-sign change the signed
+differentiation must be justified separately. Then
+
+$$
+\partial_t(2\mathcal T_A(s)-H_0)=\mathscr D/t>0,\qquad
+\partial_A\mathcal T_A(s)=\frac{1+t}{2t}\mathscr D>0.
+\tag{AC.39}
+$$
+
+Proof. Differentiate the finite signed Lagrangian with live and
+physical failure constraints. Its moment derivatives eliminate
+multiplier changes; contact values and angular derivatives eliminate
+weight and angle changes; the active equation or $\lambda=0$
+eliminates the contrast term. The remaining explicit $t$ derivative is
+
+$$
+\sum_{\rm sat}p_jc(h_j)
+ [\epsilon_jf(h_j)-\widehat n_j^TZ\widehat n_j]
+ =\frac1t\sum_{\rm sat}p_ja_j=\mathscr D/t,
+\tag{AC.40}
+$$
+
+using AC.33 and $a=0$ on pure rows. Apply the HALF factor and
+$dt/dA=1+t$. $\square$
+
+This proposition does not supply such a branch, a boundary derivative,
+or everywhere differentiability, and does not interchange differentiation
+with an endpoint or joint limit.
+

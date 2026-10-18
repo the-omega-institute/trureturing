@@ -1,0 +1,5 @@
+source_id = "fib-quadratic-positive-terminal-forms-and-collision-reductions"
+path = "docs/develop/theory/FIB_QUADRATIC_POSITIVE_TERMINAL_FORMS_AND_COLLISION_REDUCTIONS.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

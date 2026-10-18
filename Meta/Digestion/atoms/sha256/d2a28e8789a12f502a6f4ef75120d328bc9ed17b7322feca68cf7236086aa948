@@ -1,0 +1,27 @@
+### 473.2 完整商族把普通 Mertens 界转成调和界
+
+记 M(N)=Σ_{1≤n≤N}μ(n)，H=H₁。已有本地严格编译的普通 Mertens 供应为
+\[
+ \exists C>0\quad\forall N\ge1,\qquad
+ |M(N)|\le\frac{CN}{(1+\log N)^4}.
+\]
+它来自实际截断 Perron、零点自由区域与完整矩形轮廓，不以 RH 为前提。
+此供应尚未作为本节组合在仓库内交付；供应自身的严格编译不代替组合的验收。
+
+Gaussian 库的有限双曲线证明保留全部 M(⌊DQ/q⌋)（1≤q≤Q）与有符号取整余项，给出
+\[
+ \bigl[\forall n\ge D,\ |M(n)|\le\delta n\bigr]
+ \Longrightarrow |H(D)|\le\frac2Q+\delta(2+\log Q)
+ \quad(D,Q\ge1,\ \delta\ge0).
+\]
+此处每个商截断都满足 ⌊DQ/q⌋≥D；只控制 M(D) 一个值不足以代替前提。
+取 Q=D、L=1+log D、δ=C/L⁴，则纸面上得到
+\[
+ |H(D)|\le\frac2D+\frac{C(L+1)}{L^4}
+           \le\frac2D+\frac{2C}{L^3}.
+\]
+由 L³/D→0，存在 D₀，使全部 D≥D₀ 满足
+|H(D)|≤(2C+1)/L³。因此完整普通 Mertens 供应足以支付 p>1 的调和衰减；
+无需额外假设 H 的无穷极限等于零。
+本节的有限双曲线转移及最终组合仍待真实编译。
+

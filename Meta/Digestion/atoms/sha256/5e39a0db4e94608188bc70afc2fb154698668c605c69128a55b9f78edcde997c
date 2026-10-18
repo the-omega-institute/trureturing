@@ -1,0 +1,48 @@
+**Theorem 3.1 (explicit column with its exact distributional source).** For every fixed $R>r_C$, put
+
+$$
+k=k_R=\sqrt{t/a}=\frac{\sqrt R}{\chi_c\sqrt a}>\varrho,
+\qquad \eta=\eta_R=\frac{\varrho}k=\sqrt{r_C/R}\in(0,1).
+$$
+
+The column of Definition 1.2 is
+
+$$
+\boxed{\displaystyle
+\zeta_R(\mathbf z)=\frac{Q}{4\pi aJd(\mathbf z)}P_{\eta_R}(2k_Rd(\mathbf z))
+ =\frac{Q\Gamma(1-\eta_R)}{4\pi aJd(\mathbf z)}
+ W_{\eta_R}(2k_Rd(\mathbf z)).}
+$$
+
+It is positive, lies in $L^2$, and has singular coefficient $Q/(4\pi aJ)$ in the radial coordinate $d$. The decaying radial solution away from zero is unique up to multiplication; the all-space distributional source fixes that multiplication.
+
+Proof. Set $\mathbf z=M^{1/2}y$, $r=|y|$. Then $d(\mathbf z)=r$, $d\mathbf z=Jdy$ and $H_0=-a\Delta_y$. For a radial function $f(r)=u(r)/r$, its equation away from zero becomes
+
+$$
+u''(r)=\left(k^2-\frac b r\right)u(r),\qquad b=\beta_C/a=2\varrho.
+$$
+
+The substitution $x=2kr$ gives $u_{xx}+(-1/4+\eta/x)u=0$. Lemma 2.2 therefore supplies the decaying positive solution $u(r)=P_\eta(2kr)$. It has exponential decay times $r^\eta$.
+
+For completeness, reduction of order gives a second independent solution
+
+$$
+u_2(r)=u(r)\int_{r_0}^r u(v)^{-2}dv.
+$$
+
+Direct differentiation verifies its equation and its nonzero constant Wronskian with $u$. Since $u(r)\sim C r^\eta e^{-kr}$ with $C>0$, differentiation of $r^{-2\eta}e^{2kr}/(2kC^2)$, or a comparison of its derivative with $u^{-2}$, gives
+
+$$
+\int_{r_0}^r u(v)^{-2}dv\sim\frac{r^{-2\eta}e^{2kr}}{2kC^2}.
+$$
+
+Thus $u_2(r)\sim r^{-\eta}e^{kr}/(2kC)$ grows exponentially. Every other solution is a linear combination of these two by the initial-value uniqueness theorem on $(0,\infty)$, proving uniqueness of the decaying radial solution.
+
+Lemma 2.3 gives $u(r)=1+O(r(1+|\log r|))$, and more precisely $ru'(r)-u(r)\to-1$. Hence $u(r)/r$ is square integrable near zero in three dimensions; exponential decay proves square integrability at infinity. The potential times this function is locally integrable, since its strongest singularity is $r^{-2}$. To check the source, pair with a compact smooth test in $y$, exclude the ball $r\le\epsilon$ and integrate the Laplacian by parts twice. The term with the normal derivative of the test tends to zero, being $O(\epsilon)$. The flux term tends to $4\pi a$ times the test value at zero, because $r^2(u/r)'=ru'-u\to-1$. The excluded potential and zeroth-order terms tend to zero by local integrability. The coefficient $Q/(4\pi aJ)$ and volume factor $J$ therefore give exactly $Q$ times the test value at zero in the original $\mathbf z$ variable. Thus
+
+$$
+(H_C+R/\chi_c^2)\zeta_R=Q\delta_0
+$$
+
+on all of $\mathbb R^3$, with no additional distribution at zero. Source Proposition 17.2 identifies this $L^2$ solution with its original Friedrichs column. In particular radial uniqueness alone has not been used to assert nonradial distributional uniqueness. No freely chosen origin boundary condition or point interaction is present. $\square$
+

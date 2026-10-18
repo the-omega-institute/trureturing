@@ -1,0 +1,46 @@
+**Lemma 10.2 (common prefixes and uncovered residual cones).** Fix a
+nonempty chart satisfying residual invariance and fixed target
+geometry. For any two $\mathbf x,\mathbf y\in V_i$ and supplied $h$,
+the original trees $W_i[\rho^n\mathbf x]$ and
+$W_i[\rho^n\mathbf y]$ have the same prefix through $h$ for sufficiently
+large $n$, with an effective bound.
+
+For a residual occurrence at position $p$ that has no prefix in $Q$,
+let $Q_p=\{r:pr\in Q\}$. Exactly one of the following geometric
+situations holds:
+
+1. Some such $Q_p$ is incomplete. Then every invariant orbit of a
+   chart valuation has infinitely many complete target rows and gives
+   finite row-disagreeing pairs with arbitrarily long common prefixes.
+2. Every such $Q_p$ is complete. Then the entire concrete target
+   exterior is constant on this chart.
+
+Proof. Before a path enters a residual occurrence it traverses the
+same fixed constructor term on both sides. A fixed concrete leaf
+gives the same reply, including absence below it. After entering a
+residual it sees corresponding $\rho^n$ images. Lemma 9.2, for example
+with $n\ge2(h+1)$, makes their remaining prefixes common. This proves
+the first statement, without advancing the fixed exterior.
+
+In situation 1 choose a suffix $r$ incomparable with every member of
+$Q_p$. The original cone $pr$ has no target-cut ancestor or descendant.
+Advance the residual coordinates until $r$ is reached in the coordinate
+at $p$. Its further whole subtrees there are successive $\rho$ images,
+hence distinct by Lemma 9.2. They remain concrete outside every target
+hole. Arbitrarily late consecutive chart iterates therefore have
+different rows and the same prefix through any requested $h$.
+Residual invariance keeps both valuations in $V_i$.
+
+In situation 2 consider each residual occurrence not already swallowed
+by a target hole. The cut $Q_p$ is finite complete. Every member of
+$Q_p$ is eventually reached along every residual orbit, by Lemma 9.2.
+Fixed geometry therefore says that all are already reached for *every*
+valuation in $V_i$. All their strict ancestors inside this residual
+are branches, so its portion of the exterior is exactly that fixed
+complete trie with holes. The other exterior pieces are fixed
+constructors and concrete leaves of $W_i$. Substituting these fixed
+pieces gives one entire exterior, independent of the valuation.
+Repeated occurrences of a coordinate introduce no extra freedom.
+These two cases exhaust the finitely many residual occurrences.
+With no residual coordinates only the second case remains. $\square$
+

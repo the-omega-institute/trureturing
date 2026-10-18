@@ -1,0 +1,41 @@
+**Theorem 6.3 (exact attained weighted optimum).** Under Assumption
+1.1, for every prescribed $K$ and every
+$\lambda\in\mathbb Q_{\ge0}^3$, one can decide whether
+$\mathcal C_K$ is empty. If it is nonempty, the finite rational
+value $W^*_{\lambda,K}$ is effectively computable and is attained
+by an extracted literal table with at most $K$ complete states.
+An original source attaining that table's worst weighted sum
+is also extractible. If the class is empty, the result is
+$\infty$ and there is no attainer, including when all weights
+are zero.
+
+Proof. Use NPS Theorem 4.2 for emptiness and, in the nonempty
+case, a literal table $C_0$. For zero weights the objective is
+zero on every source of every table; $C_0$ attains the optimum,
+and any original source, obtained from (NRF.7), witnesses it.
+
+Otherwise take $d,w$ as in Theorem 6.2. Compute the exact
+integer
+$B_0=\max_{u\in D}w\cdot c_{C_0}(u)$
+by Proposition 4.2. Test the finite range of integer thresholds
+$B=0,\ldots,B_0$ by applying Theorem 6.2 with original weights
+$\lambda$ and rational threshold $z=B/d$, and select the least true
+one $B_*$. There is a true one since $C_0$ witnesses $B_0$.
+Extract a literal table for that threshold.
+
+Its integer worst weighted sum cannot be less than $B_*$:
+if $B_*>0$, that would make threshold $B_*-1$ true; if
+$B_*=0$, nonnegativity already gives equality. Hence its
+value is exactly $B_*/d$. Any table with a strictly smaller
+value would likewise have an integer weighted maximum less
+than $B_*$ and contradict the same exact negative test.
+This proves optimality over every table in $\mathcal C_K$,
+not only over a preselected finite installation family.
+Proposition 4.2 supplies a source realizing the whole sum.
+
+The coordinate Pareto tables of Theorem 5.3 are not used as
+weighted comparators. Each threshold in (NRF.29) is checked on
+one actual path of one original source, and (NRF.19) takes
+the maximum only after forming that sum. No tuple of unrelated
+coordinate maximizers enters this proof. $\square$
+

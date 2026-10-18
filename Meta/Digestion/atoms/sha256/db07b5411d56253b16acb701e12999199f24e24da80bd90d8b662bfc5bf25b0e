@@ -1,0 +1,62 @@
+**Definition 6.1 (all-history masses and the existing SI11 condition).**
+For each cell $p=(h,z)$, let $\mathscr H_p$ be all distinct actual live
+prefixes with those counts, including their ending state; completing inputs
+with the same prefix count only once. For $H$ define its exposed one and
+zero sets $A_H,B_H$, and let
+
+$$
+\omega(H)=\binom{h+z}{h}^{-1},\qquad
+\lambda(q)=\sum_{H\text{ live, ending at }q}\omega(H).
+\tag{TS.24}
+$$
+
+A state is both-conflict when every two distinct such prefixes satisfy
+
+$$
+A_H\cap B_{H'}\ne\varnothing,\qquad
+A_{H'}\cap B_H\ne\varnothing.
+\tag{TS.25}
+$$
+
+The quantifier includes different prefixes in the same cell; choosing one
+history per cell is not this condition. The existing class $\mathfrak C$
+of [SI, Definition 11.6][SI] requires (TS.25) at every state in every pool
+of $\mathcal L_*$, with no requirement on the safe pools or cut states.
+
+The exact bridge [SI, Lemma 11.3 and Corollary 11.5][SI] is
+
+$$
+\sum_{q\in Q_I}\lambda(q)=|V_I|,\qquad
+E_I-D_I=\sum_{q\in Q_I}(1-\lambda(q)).
+\tag{TS.26}
+$$
+
+Indeed a reply word with $h$ ones and $z$ zeros has live counts at every
+prefix, so freshness and fixed successors give exactly one actual prefix.
+Conversely every such prefix has that word. There are
+$\binom{h+z}{h}$ of them and their mass is one. Pool localization then
+gives (TS.26).
+
+The capacity bound $\lambda(q)\le1$ under (TS.25) is the classical
+nonuniform Bollobás set-pairs inequality, used in [SI, Theorem 11.4][SI].
+Here its elementary permutation proof also makes the precise hypothesis
+visible. The set pairs have disjoint diagonals. They are distinct:
+compatible old assignments at the same state would make one actual input
+follow both prefixes, either identically or with a repeated state, contrary
+to actual termination. In a uniform random ordering of their finite union,
+the event that all of $A_H$ precedes all of $B_H$ has probability
+$\binom{|A_H|+|B_H|}{|A_H|}^{-1}$. Two events cannot coexist under
+both conflicts: an element of $A_H\cap B_{H'}$ would precede one of
+$A_{H'}\cap B_H$ in the first event and follow it in the second.
+Thus the events are disjoint and their probabilities sum to at most one.
+A pair with an empty side forces a singleton family under (TS.25);
+its weight is at most one directly. This is the mature set-pairs
+inequality, not a new capacity theorem or a source probability law.
+
+It follows that SI11 already proves $E_I-D_I\ge0$ at arbitrary span
+whenever all states of that pool satisfy (TS.25). Determinism alone gives
+at least one directed conflict between distinct prefixes; it does not give
+both. At fixed cell and host, equal-hit support uniqueness fixes one support,
+and distinct equal-sized one sets give both conflicts. The additional
+SI11 hypothesis concerns cross-cell histories as well.
+

@@ -1,0 +1,44 @@
+**Definition 13.1 (class readability, runs and native saturation).**
+Specialize Assumption 9.1 to $k=2$, retaining its entire acquisition,
+causal export, discard, same-original pure-$\rho$ continuation and
+stationary literal-Read contract. In particular the original family is
+$X_{a,b}=\langle T_a,T_{q+b}\rangle$, $0\le a,b<q$, and an encoder
+exports exactly $q$ attained labels from the genuinely acquired original
+empty-cut row before either future choice. Its public table is common
+to all originals. Every other source-bearing field is discarded.
+
+A nonempty subset $C\subseteq[0,q-1]^2$ is *two-readable under
+$\lambda$* if it can serve as one entire code class: both cut-specific
+controllers recover the lag on every nonempty complete fiber of
+Theorem 5.2 with at most two chronological actual Reads. This definition
+does not require that the complement admits the other $q-1$ classes.
+On right visibility the candidates, hidden ages and targets are
+$b\le z-\lambda$, $z+a-b$ and $b$; on left visibility they are
+$a\le z-\lambda$, $q+z-a+b$ and $a$. The whole rows, reached holes
+and singleton partitions are precisely (NARC.5.3)--(NARC.5.6).
+Each candidate has its own fixed-original history and indicated lag.
+At a later transcript the support contains every candidate giving all
+its actual replies. It is never replaced by a selected path of histories.
+
+Whenever $d=a-b$ is injective, list $C=(p_0,\ldots,p_{m-1})$ in
+strictly increasing $d$. Write $p_i=(a_i,b_i)$ and set
+
+$$
+\begin{aligned}
+I_a&=\{i\in\{1,\ldots,m-1\}:a_i\ne a_{i-1}\},\\
+I_b&=\{i\in\{1,\ldots,m-1\}:b_i\ne b_{i-1}\},\\
+r_a&=1+|I_a|,\qquad r_b=1+|I_b|,\qquad
+\sigma=|I_a\cap I_b|,\qquad \delta(C)=19-m.
+\end{aligned}
+\tag{NARC.13.1}
+$$
+
+Thus $r_a,r_b$ count maximal constant-coordinate runs, including
+separated runs that revisit a value. They are not counts of different
+targets. An $A$ edge changes only $a$, a $B$ edge changes only $b$,
+and a $D$ edge changes both. Increasing $d$ makes every pure $A$
+edge an increase of $a$ and every pure $B$ edge a decrease of $b$.
+Their lengths are the corresponding positive integer increments.
+A class of size nineteen is called *saturated*. This term refers to
+the native two-read bound, not to a chain-partition $k$-norm.
+

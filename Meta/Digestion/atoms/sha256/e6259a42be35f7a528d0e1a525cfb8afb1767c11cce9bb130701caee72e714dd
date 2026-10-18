@@ -1,0 +1,32 @@
+### 10.1 Parameter and observation correspondence
+
+Our $k$ is the $\kappa$ of [O], and our $H$ is its $L=r/2$.
+After removing the fixed preparation rotations, its coherences are
+
+$$
+z=C_{01}=\frac{A(k)}2e^{i\alpha},\qquad
+w=C_{02}=\frac{B(k)}2e^{i\beta}.
+$$
+
+The other bottom edges are the copy and conjugates specified by $D_0$.
+Restoring the factor two and the preparation rotations gives exactly
+our ten-vector $D(A(k)U(\alpha),B(k)U(\beta))$. In particular the
+error is not the unweighted Euclidean norm on $(z,w)$: Lemma 1.5
+keeps the original fourfold first-pair weight and reference-pair weight.
+
+The quotient $(k,e^{i\alpha})$ is already the exact future behavior
+for the four bottom edges plus refusal/lawfulness in [O, Theorem 10.6].
+Its two-real-coordinate annular realization here reads those same
+bottom edges exactly while predicting zero for the original reference
+edge. The full ten-output task still includes that edge in every error
+supremum. Reusing the base quotient is therefore an approximation of
+the full task with its exact error proved, not a deletion of the
+reference observable from the task.
+
+The three-dimensional intrinsic ray source, its static four-coordinate
+affine readout, and its finite exact nonlinear full-current update
+model are prior facts in [F] and [O]. None of those coordinate counts
+proves the two-coordinate minimum here. The lower argument is the
+affine-line finite-cycle proof of §6; the upper argument is the actual
+annulus and its fixed readout of §5.
+

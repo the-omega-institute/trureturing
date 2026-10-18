@@ -1,0 +1,21 @@
+**定义 122.2（附加的平稳随机动力学）。** 明确增加 $p,q,r>0$、$p+q+r<1$ 的 Markov 合同。方形正向取 $0\to1\to2\to3\to0$，对应概率 $p$，反向概率 $q$，支路两向概率 $r$。行表示出发状态，令
+
+$$
+P=\begin{pmatrix}
+1-p-q-r&p&0&q&r\\
+q&1-p-q&p&0&0\\
+0&q&1-p-q&p&0\\
+p&0&q&1-p-q&0\\
+r&0&0&0&1-r
+\end{pmatrix},\qquad \pi_i=\frac15.
+$$
+
+启动分布固定为 $\pi$。路径倒序是 $(x_0,\ldots,x_N)\mapsto(x_N,\ldots,x_0)$；不将树替换、物理反转或位打印方向认作该操作。沿用[《有限奇偶马尔可夫核的隐藏时间箭头与信息阈值》，版本cd077854c1e3df8b987f1ab9d6abee7554434e85，定义1.2](https://github.com/the-omega-institute/trureturing/blob/cd077854c1e3df8b987f1ab9d6abee7554434e85/docs/develop/theory/PARITY_HIDDEN_ARROW.md)的平稳路径相对熵原理，定义
+
+$$
+\sigma(P)=\sum_{i,j}\pi_iP_{ij}
+\log\frac{\pi_iP_{ij}}{\pi_jP_{ji}}.
+$$
+
+共同为零的有向项贡献零；本模型其余转移均有正反两向支持。
+

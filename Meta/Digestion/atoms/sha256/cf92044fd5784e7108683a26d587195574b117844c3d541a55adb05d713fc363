@@ -1,0 +1,51 @@
+**Theorem 5.2 (optimized pressure incidence approximation).** Put
+
+$$
+b_{d,L}=\inf_{\mu\in\Delta(S_d)\cap\mathbb Q^{S_d}}\beta_{d,L}(\mu),
+\qquad \tau_{d,L}=-\log_2 b_{d,L},
+\qquad \Lambda_L^{\rm pres}=\sup_{d\ge1}2^{-d}\tau_{d,L}.
+\tag{SIR.28}
+$$
+
+The infimum is the same over all real probabilities, without an
+attainment assertion. These quantities satisfy
+
+$$
+\begin{aligned}
+|S_d|^{-1}&\le b_{d,L}\le b_d
+                  \le4^{m_d/(L+1)}b_{d,L},\\
+0&\le\tau_{d,L}-\sigma_d\le\frac{2m_d}{L+1},\\
+\lambda&\le\Lambda_L^{\rm pres}\le\lambda+\frac2{L+1},
+\qquad\Lambda_L^{\rm pres}\downarrow\lambda.
+\end{aligned}
+\tag{SIR.29}
+$$
+
+Proof. No-seed singleton networks show
+$\beta_{d,L}(\mu)\ge\max_x\mu(x)\ge1/|S_d|$.
+All ambient probability masses are at most one. For the rational
+infimum, take infima of (SIR.20) and use NPC Theorems 5.3 and
+6.2, which identify the rational unrestricted infimum with $b_d$.
+This gives the first line of (SIR.29). Negative logarithms reverse
+the inequalities as displayed and give the second line.
+
+For completeness, the rational restriction does not create a
+different auxiliary infimum. Given a real probability $\mu$ and
+$\epsilon>0$, approximate it by a rational probability $\nu$ on
+the same support, so closely that
+$\nu(x)\le(1+\epsilon)\mu(x)$ for every $x$. This is possible
+in the relative interior of that finite support's simplex, including
+a singleton support. Pointwise domination of every length-$n$
+mass gives
+$\beta_{d,L}(\nu)\le(1+\epsilon)\beta_{d,L}(\mu)$.
+Take infima and let $\epsilon\downarrow0$. No continuity or
+minimizer of the auxiliary pressure has been presumed.
+
+Divide the second line by $2^d$ and take depth suprema, exactly
+as in (SIR.27). Increasing $L$ increases the pressure class and
+its optimized infimum, so the auxiliary endpoints decrease. The
+vanishing uniform error proves the limit. Neither this proof nor
+Theorem 5.1 requires an identification of the two auxiliary
+hierarchies or makes either hierarchy a computable numerical
+bound. $\square$
+

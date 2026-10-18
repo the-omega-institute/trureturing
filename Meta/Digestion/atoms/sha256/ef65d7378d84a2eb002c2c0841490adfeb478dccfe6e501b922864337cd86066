@@ -1,0 +1,65 @@
+**Definition 10.1 (Finite affine factor, without a readout).**
+Fix
+$0<Z<1$, $r=1-Z$, $H=r/2$ and $0<a<b<H$, and set
+$I=[a,b]$, $\ell=b-a$ and $\mathbb T=\mathbb R/(2\pi\mathbb Z)$.
+Keep one arbitrary fixed preparation with height $k_0\in(0,H)$
+and phases $\theta^{\rm in}$. The source is
+$\mathcal M_I=I\times\mathbb T^2$ of actual current rays, in
+coordinates $(k,u,v)$. Its commands, for every signed real $s,t$, are
+
+$$
+P_s(k,u,v)=(k+s,u,v),\qquad
+D_s=\{(k,u,v)\in\mathcal M_I:k+s\in I\},
+$$
+
+$$
+Q_t(k,u,v)=
+ \left(k,u+\left(\frac12-\frac kr\right)t,v-\frac kr t\right),
+\qquad \operatorname{dom}Q_t=\mathcal M_I.
+$$
+
+A finite affine factor consists of an arbitrary function
+$E:\mathcal M_I\to\mathbb R^n$, $0\le n<\infty$, and fixed
+affine maps, one for each command,
+
+$$
+\mathcal A_s(z)=L_s z+p_s,\qquad
+\mathcal B_t(z)=M_t z+q_t,
+$$
+
+satisfying
+
+$$
+E(P_sx)=\mathcal A_sE(x)\quad(x\in D_s),\qquad
+E(Q_tx)=\mathcal B_tE(x)\quad(x\in\mathcal M_I).
+$$
+
+The coefficients may depend on the command and the fixed task parameters,
+but not on the current state or its producing history. Both offsets are
+arbitrary. No decoder, injectivity, continuity, measurability, boundedness,
+computability, parameter regularity, ambient invertibility or ambient
+representation law is assumed. The case $n=0$ permits the constant
+factor into a singleton.
+
+The identities apply on the entire lawful source domains and therefore
+after every finite valid word, from every exactly encoded initial ray.
+For $|s|=\ell$ the probability domain is one endpoint slice; for
+$|s|>\ell$ it is empty. No condition is imposed on an off-domain ray
+or an arbitrary off-image feature vector. No requirement that guards be
+recoverable from an arbitrary factor is added. The explicit factors
+constructed below do retain height and hence have saturated guards.
+
+The common-turn maps used in the conclusions are
+
+$$
+C_c(k,u,v)=(k,u+c,v+c),\qquad c\in\mathbb T.
+$$
+
+They are defined on actual rays. They will be obtained from lawful
+rectangles, not postulated as extra independently available controls.
+A stronger version of the factor contract also asks for one affine
+update for every prescribed simultaneous native path on its entire
+all-times guard. All the universal identifications below hold for that
+version as well, and all the separating witnesses supplied below satisfy
+it directly.
+

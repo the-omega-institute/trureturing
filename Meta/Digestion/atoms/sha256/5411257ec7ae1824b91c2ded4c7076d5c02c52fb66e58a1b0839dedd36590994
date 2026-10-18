@@ -1,0 +1,51 @@
+**Definition 69.1 (the fixed commission and the full reserve).** Use the actual
+source, particle measure, collision domain, harmonic calibration and shared field
+of Definitions64.5,67.1–67.3 and68.1 in the
+[first continuation](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION.md).
+Fix commissioned $a,g>0$, $\Omega\ge1$, $\nu=0$ and $0<\delta\le1$ for the
+entire commission, and fix either complete prescription
+$\diamond\in\{\mathrm c,\mathrm k\}$ separately. These commissioned parameters
+are distinct from the original actor's parameters. Every intrinsic cable length
+and conductance is one. The parameter $\delta$ is the storage density in
+(64.6), not a cable length, tube radius or mesh spacing.
+
+For an authentic nonempty installed source $D$, write
+
+$$
+\begin{aligned}
+X_D&=\mathcal K_D\otimes\mathcal F_H\otimes\mathcal A,\\
+\mathcal E_D
+ &=\operatorname{Dom}(A_D^{1/2}\otimes I)
+   \cap\operatorname{Dom}(I\otimes\mathsf n^{1/2}),\\
+P_D&=(W_DW_D^*)\otimes I,\qquad Q_D=I-P_D,\\
+\mathfrak f_D[z]&=\Omega\|(I\otimes h_D^{1/2}\otimes I)z\|^2.
+\end{aligned}
+\tag{69.1}
+$$
+
+The auxiliary Hilbert space $\mathcal A$ is any nonzero supplied space. The form
+$q_D$ is exactly (67.5) at zero charge, hence on this intersection
+
+$$
+q_D[z]=\|(A_D^{1/2}\otimes I)z\|^2
+-g\left\langle z,\left(\sum_{p\in D}\phi(p)m_p\otimes I\right)z\right\rangle
++\mathfrak f_D[z].
+\tag{69.2}
+$$
+
+In particular the reference has its actual field form. Both complete Green
+prescriptions retain their own actual $h_D$ and every bank mode and spectator;
+zero charge makes the pair, linear and compensation coefficients zero. It does
+not replace either prescription or remove its field.
+
+The particle part of $\mathcal E_D$ is the full Hilbert-valued domain of
+Definition64.5: one-particle atoms and intervals, two-particle distinct atomic
+pairs, both orders of mixed atom/cable slices, distinct-cable rectangles and both
+triangles of every same-cable square. Exchange symmetry, slice/cell boundary
+matching, port endpoints, grounded endpoints and both collision traces are part
+of this domain, including shared-port collisions. No cell-corner value of a
+general $H^1$ function is stipulated. The singleton's continuum two-particle
+space is included. All tensor norms retain unknown field/auxiliary correlations;
+no uniform number-moment cutoff is imposed beyond membership in
+$\mathcal E_D$.
+

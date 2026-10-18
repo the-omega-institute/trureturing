@@ -1,0 +1,112 @@
+**Theorem 35.4 (Synchronized descent at a single common root).**
+A global interior exponent is basic if and only if at least one of its
+cycle restrictions is exactly one of (35.7). Equivalently, all global
+basic exponents are the compatible tuples of local interior exponents
+of common degree $2j+1$ and root occupancy $j$, with at least one entry
+$\nu_j$, for exactly one $j\in\{1,\ldots,k-1\}$.
+Their monomials are exactly the minimal monomial generators of
+$\omega_{R_{k,b}}$.
+
+Proof. The needed local classification is the supplied result of
+Theorem 31.3 and §31.2. Its primary source for $k\ge3$ is Miyazaki,
+*Non-Gorenstein locus and almost Gorenstein property of the Ehrhart ring
+of the stable set polytope of a cycle graph*, [§4][MI35]. His length is
+$2\ell+1\ge7$; substitute $\ell=k$, his vertex function $\eta(v_i)=c_i$
+and $\eta(-\infty)=m$. His $\eta_j$ is (35.7). Lemma 4.1 identifies
+the translate by $\nu_1$; Lemmas 4.2–4.3 identify the maximum-set face
+algebra; Lemma 4.4 supplies its free canonical layers. The argument
+immediately before Theorem 4.5 establishes that $\eta_1,\ldots,
+\eta_{\ell-1}$ are the minimal canonical generators. His map has target
+$\omega_{R_k}(3)$, so its cokernel is $\mathcal C_k(3)$ in the notation
+of Definition 31.2. Theorem 4.5 itself concerns the Ulrich and
+almost-Gorenstein conclusions; those conclusions are not substituted
+for the preceding generator classification.
+
+Here are the exact local consequences, including their proof in the
+coordinates needed for descent. For a local interior $p=(m,c)$ write
+$\delta=km-\sum_i c_i$. If $\delta\ge k-1$, then $p-\nu_1$ has
+nonnegative coordinates, edge sums at most $m-3$, nonnegative deficit
+and degree $m-3\ge0$. Thus it is a local semigroup point. Otherwise
+$1\le\delta\le k-2$ and put $j=k-\delta$. For each $i$, deleting
+vertex $i$ leaves $k$ disjoint edges covering the other $2k$ vertices;
+the strict edge bounds give
+
+$$
+km-\delta=\sum_r c_r\le c_i+k(m-1),\qquad c_i\ge k-\delta=j.
+\tag{35.8}
+$$
+
+An edge then implies $m\ge2j+1$. Subtracting $\nu_j$ leaves
+nonnegative coordinates and degree, edge bounds in degree $m-2j-1$
+and deficit zero. Hence every local interior is $\nu_j+s$ with
+$s\in\mathcal S_k$. Conversely these sums are interior, since
+$\nu_j$ has coordinate $j$, edge slack one and deficit $k-j\ge1$.
+When $k=2$, only the first case occurs: every interior is
+$\nu_1+\mathcal S_2$. This directly proves the five-cycle assertion,
+without extending Miyazaki's length-at-least-seven hypothesis.
+
+For local minimality, suppose $\nu_j-s$ is interior, where
+$s=(q,d)\in\mathcal S_k$. Each edge slack of $\nu_j$ is one,
+so the nonnegative edge slacks of $s$ must all be zero. Then
+$d_i+d_{i+1}=q$ for every edge. Oddness forces $d_i=q/2$ for all
+$i$, and the cycle inequality gives $(2k+1)q/2\le kq$. Thus
+$q=0$ and $d=0$. This proves that precisely the $\nu_j$ are local
+basic exponents. All other interior exponents have a representation
+$\nu_j+s$ with $s\ne0$, so $q=\deg s>0$.
+
+It is not enough to subtract any local independent set separately.
+For such a nonbasic local exponent, retain its common boundary $(m,t)$
+and write
+
+$$
+p=\nu_j+s,\qquad q=m-2j-1>0,\qquad u=t-j.
+\tag{35.9}
+$$
+
+The single-cycle integer decomposition realizes $s$ by $q$ rows,
+exactly $u$ containing the root. Choose a row according to the rule
+
+$$
+\varepsilon(m,t)=
+\begin{cases}
+0,&2t<m,\\
+1,&2t\ge m.
+\end{cases}
+\tag{35.10}
+$$
+
+This choice is always available. If $2t<m$, then $2u<q+1$.
+Since $u,q$ are integers and $q>0$, this implies $u<q$, so there
+is a root-zero row. If $2t\ge m$, then $2u\ge q+1>0$, so
+$u>0$ and there is a root-one row. At equality $2t=m$, the
+formula gives $2u=q+1$; in particular $q$ is odd and $u\ge1$,
+so the root-one choice remains valid. Removing the chosen row
+$I$ leaves a semigroup point $s-(1,\mathbf1_I)$. Consequently
+$p-(1,\mathbf1_I)=\nu_j+(s-(1,\mathbf1_I))$ is still interior.
+The rule depends only on $(m,t)$, even when different cycles use
+different $j$ in (35.9).
+
+Now suppose all local restrictions of a global interior $p$ are
+nonbasic. Apply (35.10) to every cycle and take the union of the
+chosen rows. They have the same root bit and no cross edges, so the
+union is a legal global independent set $I$. The global remainder
+$p-(1,\mathbf1_I)$ restricts to interior vectors on every cycle
+and is therefore interior by (35.4). Thus $p$ is not basic.
+
+Conversely suppose $p_a=\nu_j$ for some $a$. Any nonzero global
+$s\in\mathcal S_{k,b}$ has positive degree: degree zero forces
+all coordinates to vanish. Its restriction $s_a$ has that same
+positive degree and is nonzero. If $p-s$ were interior, then
+$\nu_j-s_a$ would be local interior, contradicting local minimality.
+Thus $p$ is basic. The boundary of $\nu_j$ forces $m=2j+1,t=j$,
+and two different $j$ cannot occur at that same boundary.
+
+Repeated descent lowers the integer degree and stops at a basic
+interior exponent. It therefore generates the whole interior ideal
+from precisely the asserted monomials. A basic monomial cannot be a
+positive-degree multiple of any other interior monomial. Distinct
+exponents are linearly independent, so the basic classes form a basis
+of $\omega_{R_{k,b}}/R_{k,b,+}\omega_{R_{k,b}}$. This proves both
+minimality and completeness for arbitrary polynomial generators as
+well. $\square$
+

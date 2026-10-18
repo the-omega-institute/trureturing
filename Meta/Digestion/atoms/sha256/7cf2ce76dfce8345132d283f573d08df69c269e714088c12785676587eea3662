@@ -1,0 +1,15 @@
+**Proposition 8.4 (semantic reconstruction is not provenance).**
+Theorems 5.1, 5.3 and 6.2 do not authenticate an actual past history,
+identify a physical register, or supply a native producer at their
+arithmetic decision cost. A unique relative update count does not
+determine a physical elapsed duration.
+
+Proof. Their mathematical inputs are unchanged if a finite record
+tuple is copied or proposed without any acquisition. The output is
+therefore unchanged, whereas the claimed acquisition or register
+identity can differ. Those are not predicates of the semantic
+input. Durations between updates are likewise absent from (NCE.1)--(NCE.2).
+Once Assumption 8.3 is supplied, the actual history belongs to
+$\mathscr H_I$ and a constant target on that fiber is recoverable;
+membership cannot establish the assumption itself. $\square$
+

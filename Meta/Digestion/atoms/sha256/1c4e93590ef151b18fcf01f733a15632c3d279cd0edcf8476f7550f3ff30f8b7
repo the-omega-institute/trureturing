@@ -1,0 +1,12 @@
+**Example 11.6 (one finite query does not settle all depths).**
+The all-tree fiber, given by the root old row and empty histories,
+is inhabited. For $Q=\{\varepsilon\}$ every determining-prefix
+test succeeds and zero actions suffice. For $Q=\varnothing$,
+every fixed $h$ test fails: $T_m,T_{m+1}$ with $m$ sufficiently
+large have equal prefixes and different whole sources.
+For $Q=\{L,R\}$ the pair (NSF.28) similarly refutes every depth.
+The forward-closure theorem settles these particular unbounded
+questions. Theorem 6.1 alone only returns a correct answer to each
+individual finite test; its termination proof supplies no universal
+depth bound on a different arbitrary signed fiber.
+

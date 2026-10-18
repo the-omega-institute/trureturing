@@ -1,0 +1,5 @@
+source_id = "fib-critical-renewal-information-compression"
+path = "docs/develop/theory/FIB_CRITICAL_RENEWAL_INFORMATION_COMPRESSION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

@@ -1,0 +1,2 @@
+**定义 2.2（七标签线语言）。** 令 $U(j)=1^j0$。原始线帧为三位 tag、$U(d)$、恰好 $d$ 位 payload。七个 tag 为 ReadE `000`、Rho `001`、TagRead `010`、Left `011`、Right `100`、Reserve `101`、Raise `110`。前两者 payload 空；TagRead 是任意有限地址；Left/Right 是完整上下文的既有唯一前缀码；维护帧为 $tag\,U(J+1)U(J)$，$J\ge0$。值小于、等于当前界或不能接受的源修改仍是规范输入，执行原有拒绝或相应分支。令 $\mathsf C_7$ 为这些完整帧，$\mathsf P_7$ 为其前缀集。当前帧已消费 $p$ 时，源 IN 的合法任务输入恰为 $\{b:pb\in\mathsf P_7\}$。这不安装物理过滤器。
+

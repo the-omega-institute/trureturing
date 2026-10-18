@@ -1,0 +1,97 @@
+**定理 24.1（同书签有限历史不存在统一逆模）。** 现在只安装一个先验 $\mu(k)=2^{-k}$，$k\ge1$。在第三标记刚锁存、第四段尚无 Read、共同种子 $R=1$、共同前三标记 $100$ 的实际历史中，存在两列正质量有限历史 $h_n,h'_n$，使
+
+$$
+\begin{aligned}
+\operatorname{TV}(\nu_{h_n},\nu_{h'_n})&\longrightarrow1,\\
+0<\operatorname{TV}(D_{h_n},D_{h'_n})
+&=\operatorname{TV}(\mathscr L_{h_n},\mathscr L_{h'_n})\longrightarrow0.
+\end{aligned}
+$$
+
+这些历史的原 $C_0,B_1,Q^+=(ac,bc),Z=1$ 及相位 $p_4$ 相同。于是不存在 $\omega(t)\to0$（$t\downarrow0$）在全部这些实际历史对上满足
+
+$$
+\operatorname{TV}(\nu_h,\nu_{h'})
+\le\omega\bigl(\operatorname{TV}(D_h,D_{h'})\bigr),
+$$
+
+把输入改成完整合法续接 TV 也不存在这样的统一逆模。它与定理22.1在同一先验上的精确单射同时成立。
+
+证明。先构造实际历史，再估计其律。对每个 $n\ge1$，置 $u_n=F_{n+1},v_n=F_{n+2}$，对有限整数 $t\ge0$ 取
+
+$$
+g_{n,t}=(\alpha\alpha)^{t u_n}(\beta\beta)^{t v_n}\beta\alpha
+\mid\beta\beta\alpha\alpha.
+$$
+
+所有相等对都是原提种器实际取得并付费拒绝的对；之后取得种子1，载荷只完成前三标记100。故这是同一书签的正质量有限历史，没有重置、拷贝、补充探针或重新抽取来源。其取得计数和已付费数为
+
+$$
+(A,B)=(3+2tu_n,3+2tv_n),\qquad A+B=6+2tF_{n+3}.
+$$
+
+其后验比例为
+
+$$
+\nu_{n,t}(k)\ \propto\ 2^{-k}\xi_k^3\,L_n(r_k)^{2t},
+\qquad L_n(r)=r^{u_n}(1-r)^{v_n}.
+$$
+
+$\log L_n$ 的导数是 $(u_n-(u_n+v_n)r)/(r(1-r))$，所以 $L_n$ 在整个参数区间唯一最大于 $r_n=u_n/(u_n+v_n)$。
+
+必须控制全部可数深度而非有限截断。复用 §15 的 $T(r)=(1-r)/(2-r)$ 递推；在 $[1/3,2/5]$ 上，$|T'|\le25/64<1$。因此 $r_n\to\rho=(3-\sqrt5)/2$，各 $r_n$ 是不同于无理数 $\rho$ 的有理数。$T$ 交换 $\rho$ 两侧，且 $T^2(r)-r=(r^2-3r+1)/(3-r)$ 在下侧为正、上侧为负；所以奇数子列严格递增、偶数子列严格递减，分居 $\rho$ 两侧。故每个 $r_n$ 是支持闭包中的孤立点。$L_n$ 在最大点两侧严格单调，其余实际点的最大似然比恰为有限有理数
+
+$$
+\gamma_n=
+\begin{cases}
+L_n(r_{n+2})/L_n(r_n),&n=1,2,\\
+\max\{L_n(r_{n-2}),L_n(r_{n+2})\}/L_n(r_n),&n\ge3,
+\end{cases}
+\qquad 0<\gamma_n<1.
+$$
+
+理由是同一奇偶子列中相邻的 $n-2,n+2$ 是最大点两侧最近的实际点；另一奇偶子列和累积点都在 $r_{n+2}$ 更远一侧，不可能增大 $L_n$。没有遗漏可数尾部。
+
+利用 $2/9\le\xi_k\le6/25$，所有非目标深度的后验赔率和满足
+
+$$
+\begin{aligned}
+\frac{1-\nu_{n,t}(n)}{\nu_{n,t}(n)}
+&=\sum_{k\ne n}2^{n-k}
+ \left(\frac{\xi_k}{\xi_n}\right)^3
+ \left(\frac{L_n(r_k)}{L_n(r_n)}\right)^{2t}\\
+&\le 2^n(27/25)^3\gamma_n^{2t}.
+\end{aligned}
+$$
+
+此界来自同一 $2^{-k}$ 可数和的总质量，覆盖每个深度。令 $\epsilon_n=2^{-n}$，选择满足 $2^n(27/25)^3\gamma_n^{2t_n}\le\epsilon_n$ 的有限整数 $t_n$，并取 $h_n=g_{n,t_n}$、$h'_n=g_{n+1,t_{n+1}}$。$\gamma_n$ 是精确正有理数且小于1，逐次有理乘法即可找到这样的有限 $t_n$；该搜索及历史取得成本未被当作免费。
+
+于是 $\operatorname{TV}(\nu_{h_n},\delta_n)\le\epsilon_n$，$\operatorname{TV}(\nu_{h'_n},\delta_{n+1})\le\epsilon_{n+1}$，三角不等式给
+
+$$
+\operatorname{TV}(\nu_{h_n},\nu_{h'_n})
+\ge1-\epsilon_n-\epsilon_{n+1}\longrightarrow1.
+$$
+
+这里的点质量只用于估计已构造的可达后验，不作为实际历史或新先验替身。
+
+令 $\kappa_r$ 是从相位 $p$ 按原控制至 Stop 交付的完整词律，其两类质量为 $r[r(1-r)]^j$、$(1-r)^2[r(1-r)]^j$。在整个参数区间，逐项求导并作非负求和，得
+
+$$
+\begin{aligned}
+\sum_w|\partial_r\kappa_r(w)|
+&\le\frac{3-2r}{1-r(1-r)}
+ +\frac{[r+(1-r)^2](1-2r)}{[1-r(1-r)]^2}\\
+&=\frac{4(1-r)}{1-r(1-r)}\le4.
+\end{aligned}
+$$
+
+几何级数及其导数在该紧区间一致可和，因此积分和求和合法，给 $\operatorname{TV}(\kappa_r,\kappa_s)\le2|r-s|$。这是足够的前向界，没有声称最佳常数，也没有引入实际可执行的额外随机耦合。后验混合的 TV 收缩给
+
+$$
+\operatorname{TV}(\mathscr L_{h_n},\mathscr L_{h'_n})
+\le\epsilon_n+\epsilon_{n+1}+2|r_n-r_{n+1}|\longrightarrow0.
+$$
+
+共同相位下定理21.2的停止词—长度双射使此 TV 与长度律 TV 相等。定理22.1适用于全支持先验，且两个后验对全部深度的质量不能相等：否则计数相等，而这会要求 $t_n(u_n,v_n)=t_{n+1}(u_{n+1},v_{n+1})$，与不同的 $r_n,r_{n+1}$ 矛盾。因此两个长度律的 TV 严格正。将这些正数代入任何趋零的 $\omega$ 都与趋一的后验 TV 冲突。证毕。
+

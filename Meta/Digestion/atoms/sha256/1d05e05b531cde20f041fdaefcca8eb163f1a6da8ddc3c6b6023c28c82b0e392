@@ -1,0 +1,32 @@
+### 110.1. Original hypotheses and the matrix symmetry
+
+Let $\Omega$ be the original eight-coordinate set, partitioned into the four two-element fibres $\Omega_f$. Keep the original local CPTP maps $A,B:\mathbb C^8\to\mathbb C^4$, the fixed correlated input and output encodings, and the target of §107.1. For Stinespring isometries $V_A,V_B$, define the correct-output records and their forward Grams by
+
+$$
+\begin{aligned}
+a_j&=(\langle f|\otimes I)V_A|j\rangle,&
+G_{jk}&=\langle a_j,a_k\rangle,\\
+b_j&=(\langle f|\otimes I)V_B|j\rangle,&
+H_{jk}&=\langle b_j,b_k\rangle,
+\qquad j\in\Omega_f.
+\end{aligned}\tag{110.1}
+$$
+
+Inner products are conjugate-linear in the first argument. These Grams satisfy $0\preceq G_{ff},H_{ff}\preceq I_2$ even with original output leakage. Write
+
+$$
+\delta(A,B)=\|(A\otimes B)\circ J_{\rm in}
+                   -J_{\rm out}\circ\mathcal F\|_\diamond
+\tag{110.2}
+$$
+
+for the unhalved diamond error, with arbitrary reference systems. For any complex matrix $M$ indexed by $\Omega$, define its fibre-preserving permutation symmetry group by
+
+$$
+\operatorname{Aut}_{\rm fib}(M)
+ =\{\pi\in\operatorname{Sym}(\Omega):
+       \pi\text{ preserves the fibre partition},\quad
+       M_{\pi(j),\pi(k)}=M_{jk}\text{ for all }j,k\}.
+\tag{110.3}
+$$
+

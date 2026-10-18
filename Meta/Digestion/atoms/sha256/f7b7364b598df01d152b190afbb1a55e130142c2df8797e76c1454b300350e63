@@ -1,0 +1,54 @@
+**Theorem 5.8 (Exact affine probability continuation with approximate
+outputs).** For the choice in Corollary 5.7, the encoder $E_m$, the fixed
+linear decoder $L_m$ and every affine map $U_s$ satisfy the following
+joint contract on the original current-ray source $\mathcal M_{ab}$:
+
+1. The output error is at most $\epsilon$ uniformly in the original
+   ten-coordinate Euclidean norm.
+2. Every straight probability leg wholly contained in the closed band has
+   an exact state-independent affine encoded update, on exactly the guard
+   of Proposition 5.5.
+3. From exact initialization, every finite valid sequence remains exactly
+   encoded at every stage and throughout every leg, with the same error
+   bound independent of sequence length.
+
+**Proof.** The first two statements are Theorem 5.6, Corollary 5.7 and
+Proposition 5.5. For the third, let
+$x_0=(k^{(0)},\alpha,\beta)$ be any actual current ray in the band and
+initialize $z^{(0)}=E_m(x_0)$ exactly. Let $s_1,\ldots,s_N$ be any
+finite sequence such that
+
+$$
+k^{(i)}=k^{(i-1)}+s_i\in[a,b]\qquad(1\le i\le N).
+$$
+
+With $k^{(0)}\in[a,b]$, convexity makes these conditions equivalent to
+lawfulness of all the complete straight segments within the band. Define
+$z^{(i)}=U_{s_i}z^{(i-1)}$. Induction using the exact update identity gives
+
+$$
+z^{(i)}=E_m(k^{(i)},\alpha,\beta)
+\qquad(0\le i\le N).
+$$
+
+The uniform current-output estimate therefore yields
+
+$$
+\|L_m z^{(i)}-y(k^{(i)},\alpha,\beta)\|_2\le\epsilon
+\qquad(0\le i\le N).
+$$
+
+During the $i$th leg apply the same identity with displacement $ts_i$,
+$0\le t\le1$, from $z^{(i-1)}$. It gives the exact encoded intermediate
+ray and the same output bound. No bound on $N$, total variation or the
+signs of the displacements is required. Because the identities hold
+pointwise for every lawful $s$, they also apply to state-selected sequences
+once their actual successive guards hold.
+
+Only the output function is approximated. The latent state never acquires
+approximation error in this theorem, and an approximate output is never
+substituted for an encoded state. Thus the bound is applied afresh at each
+exactly encoded current ray and does not accumulate with the number of
+steps. This argument assumes exact initialization and exact real arithmetic.
+$\square$
+

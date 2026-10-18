@@ -1,0 +1,15 @@
+**推论 44.2（正方形全面积及中间增长尺度）。** 对每个整数 $n\ge1,0\le K\le n^2$，$k=\min(K,n^2-K)\ge1$ 时，绝对常数统一给
+
+$$
+C(n,n,K)=\Theta\bigl(k^2\min(n,k)^2\bigr)
+=\begin{cases}
+\Theta(k^4),&1\le k\le n,\\
+\Theta(n^2k^2),&n\le k\le n^2/2.
+\end{cases}
+\tag{JM.120}
+$$
+
+对固定 $0<\gamma<2$、$k=\lfloor n^\gamma\rfloor$，取 $K=k$ 或 $K=n^2-k$，充分大 $n$ 时有 $C=\Theta(n^{4\gamma})$（$\gamma\le1$）或 $C=\Theta(n^{2+2\gamma})$（$\gamma\ge1$）。特别是 $k=\lfloor n^{3/2}\rfloor$ 给 $\Theta(n^5)$。固定 $0<\theta\le1/2$、$k=\lfloor\theta n^2\rfloor$ 则给 $\Theta(n^6)$。这些是容量的阶，不是全部孔洞、重数或最佳常数的分类。
+
+证明。在定理44.1取 $R_0=1,u=v=n$，分别化简 $\min(n,k)$ 即得（JM.120），公共端点 $k=n$ 两式相合。$0<\gamma<2$ 时 $k\to\infty$ 且充分大时 $k\le n^2/2$，取整只改变有界因子；固定 $\theta$ 同理。$k=0$ 的容量仍为一。$\square$
+

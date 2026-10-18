@@ -1,0 +1,49 @@
+**Definition 2.1 (Original protocol and closed controller).** Fix any
+probability space $(\mathsf U,\mathcal U,\nu)$ independent of the whole
+$J_p$ source, keeping its law unchanged. In the original protocol class
+of [Original, Definition 9.1][O], a measurable next-event rule uses only
+fixed public data, $u\in\mathsf U$, and the finite ordered acquired
+address/reply record. It requests an integer address, returns a state,
+or continues internally forever without another call or return. Finite
+events may follow internal waits determined by the same data. All random
+public data and internal randomness are included in $u$. Each requested
+address replies with the actual $X_t$ of (1.1). Every call is charged,
+including repeats, ignored replies, separator zeros, negative addresses
+and disconnected or arbitrarily distant addresses. Internal nonreturn
+after finitely many calls, infinite-read paths, early returns,
+wrong-phase outputs and measurable null-set completions are allowed.
+Waiting provides no extra source information. There is no hidden-state,
+half-line or tail read, source-dependent seed or timing, reset, law switch,
+endpoint movement or erased-coordinate substitution.
+
+The installed subclass considered here is exactly [Two Read,
+Definition 8.1][E2]. A table has a nonempty finite set $K$ and maps
+
+$$
+\begin{aligned}
+\lambda &:K\longrightarrow
+\{\operatorname{Read}(t):t\in\mathbb Z\}
+\sqcup\{\operatorname{Halt}(h):h\in\mathcal A\},\\
+\delta &:K_{\rm R}\times\{0,1\}\longrightarrow K,
+&c_{\rm init}&:\mathsf U\longrightarrow K,
+\end{aligned}
+\tag{2.1}
+$$
+
+where $K_{\rm R},K_{\rm H}$ are its read and halt rows and
+$c_{\rm init}$ is measurable for discrete $K$. Initialization sets the
+current row to $c_{\rm init}(u)$. A read row makes its one fixed literal
+call and changes the current row to $\delta(r,X_t)$. A halt row returns
+its fixed four-state label. Instructions have finite duration and there
+are no silent instructions. A nonreturning installed execution therefore
+makes infinitely many charged reads.
+
+After initialization the current row contains all runtime memory. The
+reply is consumed by its immediate update. There is no separate program
+position, clock, counter, phase bit, archive, stack, saved reply, output
+latch, computed address, later seed access or online randomizer. The
+public fixed $p,j$ may determine the static table. All installed rows
+count in $|K|$, including duplicates, unused rows and rows on null paths.
+Cycles are allowed. These tables are a subclass of the original protocols;
+they do not represent every protocol with internal continuation.
+

@@ -1,0 +1,25 @@
+### 推论 53.7（FIB 三角网络的量子 Fisher 上界）
+
+若每条边源都位于 FIB 对角 seam：
+
+\[
+\omega_e(\kappa_e)
+=
+\iota_\Sigma(p_{\kappa_e}),
+\]
+
+则定理 40.2 和定理 53.6 给出
+
+\[
+\boxed{
+F_Q\left(\rho_{\boldsymbol\kappa};
+\dot{\boldsymbol\kappa}\right)
+\le
+\sum_{e\in E}
+\dot\kappa_e^{\,2}
+\mathcal I_e(\kappa_e).
+}
+\]
+
+输出态可以因为局部节点信道而变成非对角态，右侧仍然只由三个独立 FIB 源的 seam Fisher 信息决定。这是当前三角网络中最严格的信息预算：节点局部相互作用可以重新组织信息，也可以将其编码为非交换相干，但不能从独立源中凭空产生新的 SLD Fisher 信息。
+

@@ -1,0 +1,9 @@
+**Theorem.** This triangulation has a nondegenerate hyper-ideal length vector
+with zero cone curvature at every edge, hence a hyperbolic realization with
+totally geodesic boundary. Its edge degrees are
+`[8,8,8,8,8,8,10,38]`.
+
+No unrestricted minimum-eight or minimum-six CFMP claim is made. The proof is
+an actual shared-edge co-volume minimum on a heterogeneous global box; no
+zero-curvature solution is assumed in advance.
+

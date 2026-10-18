@@ -1,0 +1,10 @@
+-L_s^+L_s'L_s^+.
+\]
+又有
+\[
+L_s'
+=
+\sum_ec_e'(s)q_eq_e^{\mathsf T},
+\]
+代入 \(R_s=(\delta_a-\delta_b)^{\mathsf T}L_s^+(\delta_a-\delta_b)\) 即得。证毕。
+

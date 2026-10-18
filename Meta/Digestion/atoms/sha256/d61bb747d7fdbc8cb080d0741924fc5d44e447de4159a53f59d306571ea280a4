@@ -1,0 +1,65 @@
+**Theorem 24.7 (complete reference principal enclosure).** There are finite fixed-data constants $C,A_0$ and $s_0>0$ such that
+
+$$
+\|(L_s-C_*)p\|_2+\|u_s-p\|_2\le Cs,\qquad
+|\ell_s-C_*|\le Cs^5,\qquad
+k_{\rm ref}(s^6)\le C_*+A_0s^5
+\quad(0<s<s_0).
+\tag{24.39}
+$$
+
+Here $k_{\rm ref}$ is the original full positive compact Birman–Schwinger norm of J Definition 53.1, with its infinite-time field and return.
+
+Proof. The first assertion is Lemma 24.4. In addition to (24.24) define
+
+$$
+E_{4,s}=(N_s-N_0)g_4,\qquad E_s^{\rm row}=\sum_{i=0}^4s^iE_{i,s}.
+\tag{24.40}
+$$
+
+The owning full-row results J Theorems 33.2, 39.1 and 46.1, and $N_s\to N_0$ in norm, give $\|E_s^{\rm row}\|_2=o(s^4)$. This little-o is used only for replacement of the moving test. The charge equations cancel every coefficient through degree four. J (48.1) gives $\rho=-C_4/(a\gamma^2\mu)=0$, so the exact finite-vector identity is
+
+$$
+(I-\gamma N_s)G_s=-\gamma E_s^{\rm row}.
+\tag{24.41}
+$$
+
+Pairing with $u_s$, using $`N_s^*=L_s`$, gives the exact scalar
+
+$$
+\ell_s-C_*=
+\frac{\langle E_s^{\rm row},u_s\rangle}{\langle G_s,u_s\rangle},
+\qquad\langle G_s,u_s\rangle=1+O(s).
+\tag{24.42}
+$$
+
+The denominator uses $\langle g_0,p\rangle=1$, the fixed $L^2$ charges and Lemma 24.4. The final charge needs only its owned $L^2$ norm:
+
+$$
+|\langle p,(N_s-N_0)g_4\rangle|
+=|\langle(L_s-K_{\rm rec})p,g_4\rangle|
+\le Cs\|g_4\|_2.
+\tag{24.43}
+$$
+
+Its exterior factor is $s^4$. All other fixed-test terms are supplied by Lemma 24.6, hence $|\langle p,E_s^{\rm row}\rangle|\le Cs^5$. Moreover
+
+$$
+|\langle u_s-p,E_s^{\rm row}\rangle|
+\le\|u_s-p\|_2\|E_s^{\rm row}\|_2=o(s^5).
+\tag{24.44}
+$$
+
+All vectors in this scalar calculation are real; conjugating the order of these pairings has no effect. Equations (24.42)–(24.44) prove $|\ell_s-C_*|\le Cs^5$. No weight or threshold return $G_0g_4$ has been introduced.
+
+J Theorem 55.1 applies at its stated probe $h=s^6$ and gives
+
+$$
+k_{\rm ref}(s^6)=\ell_s+\mathscr A W_{1,\rm ref}(o)s^5+o(s^5),
+\qquad A_p=\int Vp,\qquad
+\mathscr A=(C_*+j_0A_p^2)/\mu>0.
+\tag{24.45}
+$$
+
+The fixed-cutoff value $W_{1,\rm ref}(o)$ is finite. Choosing $A_0=C+|\mathscr A W_{1,\rm ref}(o)|+1$ and reducing $s_0$ proves the last inequality. J's quotient-to-norm argument at $s^6$ includes the complete long field, return, damping and cross terms. Thus this is a principal upper enclosure, rather than a trial Rayleigh lower bound. $\square$
+

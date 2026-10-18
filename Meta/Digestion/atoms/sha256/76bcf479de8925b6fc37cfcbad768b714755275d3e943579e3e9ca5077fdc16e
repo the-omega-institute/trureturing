@@ -1,0 +1,33 @@
+**定义 1.2（JMMJ 父历史与 JMMJM 实际子历史）。** For arbitrary
+$D_0,Y,z\in\mathbb R$ and $\lambda\ne0$, put
+
+$$
+\begin{aligned}
+H_J^-&=(D_0,J,D_0+24\lambda,M,D_0+48\lambda,
+                         M,D_0+312\lambda/5),\\
+H_J(Y)&=(H_J^-,J,Y),\\
+H_{JM}(Y,z)&=(H_J(Y),M,z).
+\end{aligned}                                                   \tag{1.4}
+$$
+
+These are precisely the histories in
+[V, Definition 5.1](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_V.md)
+and [VII, Definition 1.2](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_VII.md).
+They contain respectively four, five and six readings. Their action
+words are chronological; matrix multiplication follows (1.1).
+Write $\mathcal F(H)$ for all complete targets realizing every action
+and every reading of the literal history $H$. The symbol $D_0$
+denotes the initial observed value, not an unrestricted target's drift.
+
+The affine normalization
+
+$$
+f=g/\lambda,\qquad d=(\delta-D_0)/\lambda,\qquad
+y_i=(z_i-D_0)/\lambda                                         \tag{1.5}
+$$
+
+is a bijection on complete targets and histories for either sign of
+$\lambda$. In particular, $y_4=(Y-D_0)/\lambda$ and
+$y_5=(z-D_0)/\lambda$, and the six normalized readings are
+$0,24,48,312/5,y_4,y_5$. Sources and clocks are unchanged.
+

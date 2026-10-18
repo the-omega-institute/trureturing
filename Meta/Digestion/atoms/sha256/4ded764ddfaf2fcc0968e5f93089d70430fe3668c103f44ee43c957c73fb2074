@@ -1,0 +1,24 @@
+**Proposition 5.5 (pairwise available resets need not give a recovery strategy).**
+There are two compatible hidden sources for which each individually
+has a successful legal reset, but no acquired-information strategy
+succeeds almost surely at both. The best worst-source success
+probability is $1/2$.
+
+**Proof.** Let the original source be $x\in\{0,1\}$. Both sources
+have the same acquired record and the same observed spent state.
+The only actions are the two reset buttons $a_0,a_1$; both are legal
+and each costs one transition. At source $x$, pressing $a_x$ returns
+the ready state with success. Pressing the other button halts with a
+finite failure and grants no further action. Before pressing a button
+there is no observation that depends on $x$. Both buttons preserve the
+original source, including on failure.
+
+Let $p_i$ be the source-independent probability that a proposed
+strategy's first button is $a_i$; a strategy that never presses either
+button contributes to neither success event. Thus $p_0+p_1\le1$,
+and the two sourcewise success probabilities are $p_0,p_1$.
+Their minimum is at most $1/2$, attained by a fair one-button choice.
+Each hidden source has its own successful button, but the quantifiers
+$\forall x\,\exists a_x$ cannot be replaced by one strategy based on
+the common record. $\square$
+

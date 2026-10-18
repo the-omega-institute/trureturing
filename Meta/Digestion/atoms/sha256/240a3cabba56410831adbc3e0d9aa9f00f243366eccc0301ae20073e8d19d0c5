@@ -1,0 +1,23 @@
+**定理 40.2（Exact complete-controller minima）。** Under Definition 40.1, separately for either original alphabet,
+
+$$
+\boxed{M_3(f_{\rm ph})=18=11+7,\qquad
+M_3(f_{\rm vp})=26=12+14.}
+\tag{40.8}
+$$
+
+Every successful complete controller at worst fee at most three needs at least eleven, respectively twelve, running states and seven, respectively fourteen, persistent literal Halt states. Both bounds are simultaneously attained. Bottom reuses a live output label.
+
+Proof. Put $j=-\theta_{\rm INITIAL}\pmod7$, represented in $0,\ldots,6$. After $h$ blocks current phase is $-j+4h$; $h$ is only a proof index. Reuse the literal charge law (24.7)–(24.8), for any nonrejecting $B=abcd$:
+
+$$
+\begin{aligned}
+(R_0(B),\ldots,R_6(B))&=(a,a\oplus b,b\oplus c,c\oplus d,d,0,0),\\
+y_{h+1}\oplus y_h&=R_{j-4h}(B),\qquad
+\bigoplus_{i=0}^{6}R_i(B)=0.
+\end{aligned}
+\tag{40.9}
+$$
+
+Here $d$ is the fourth bit. The controller receives absolute endpoint values, not increments or phase indices.
+

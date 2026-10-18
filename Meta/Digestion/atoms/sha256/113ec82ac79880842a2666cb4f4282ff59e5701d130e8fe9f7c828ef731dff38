@@ -1,0 +1,17 @@
+**Proposition 3.2 (the height bound is necessary; leafwise arithmetic
+is retained).** The formula that tests whether the left child of $X$
+has the primitive rank of the right child plus one separates
+$U^+_{1,k}$ from $U^-_{1,k}$ for every $k$. Conversely the inner formula
+$[z=k]^I_{\operatorname{sh}(X)}(X)$, for any fixed numeral $k$,
+inspects primitive ranks
+at every leaf of $U^\pm_{h,k}$, however large $h$ is, and its cardinality
+is $2^{h-1}$ for both orientations.
+
+Proof. At height one the two children are primitive, so the lifted
+successor predicate at shape $c$ is false for $(k,k+1)$ and true for
+$(k+1,k)$. At height $h$ each orientation has exactly one rank-$k$
+leaf in each of its $2^{h-1}$ bottom cherries. The two satisfying
+leafsets are different but are carried to one another by (TPO.8).
+Thus the invariance theorem is neither a statement about all heights
+nor a claim that inner formulas inspect only a bounded prefix. $\square$
+

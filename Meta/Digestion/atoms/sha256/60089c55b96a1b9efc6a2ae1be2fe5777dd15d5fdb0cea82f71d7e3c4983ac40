@@ -1,0 +1,27 @@
+**定义 221.7（端点类）。** 取实际分解 $\lambda=\kappa+\eta$，块质量记为 $s=S$，令
+
+$$
+\delta_i=\max\{0,b_i-e-\min_{\Omega_i}\rho_w(i)\}\ (i\in A),\qquad
+\delta_i=0\ (i\notin A).
+$$
+
+端点替换块由空表 $E_0$、单点门 $O(i;i,0)$，以及双表 $O(i,j;a,b,0)$ 组成，其中 $i<j$，$a\in\{0,i\}$、$b\in\{0,j\}$，正输出只在 $A$。耗尽输出必须为零是本构造的限制；它不是原始 $O$ 类的限制。
+
+取有向边 $x_{ij}\ge0$，$i<j$，若 $j\notin A$ 则边为零。定义
+
+$$
+\begin{aligned}
+I_i&=\sum_{h<i}x_{hi},\quad r_i=\delta_i-I_i,\quad O_i=\sum_{j>i}x_{ij},\\
+m(x)&=\sum_i\max(r_i,O_i)=\sum_i\delta_i-\sum_i\min(r_i,O_i),\\
+Z(w)&=\{i:w_i=0\},\quad
+\Psi_x(Z)=\sum_{i\in Z}\delta_i-\sum_{i<j,\ i,j\in Z}x_{ij}.
+\end{aligned}
+$$
+
+此处 $r_i$ 是图剩余度，与锚事件向量 $r$ 有别。在 $w\in\Omega_n$ 设
+
+$$
+c_w=\min\{\rho_w(0)+s-1+b_n+e,
+\ \rho_w(0)+\rho_w(n)+s-1+e+\delta_n\}.
+$$
+

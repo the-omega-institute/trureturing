@@ -1,0 +1,21 @@
+**Assumption 1.1 (source and target family).** The source is the once-sampled
+depth source of [PAIR, §§2, 11]. Its parameters are $(m,d,\ell,n)=(2,1,2,4)$.
+One positive integer $K$ is drawn from one fixed finite or countable
+probability prior $\mu$ before the first paid Read. Conditional on this same
+$K$, seed and payload letters are independent, with alpha probability
+$r_K=F_{K+1}/F_{K+3}$, where $F_0=0,F_1=1$. Assume
+$\mu(1),\mu(2)>0$. Write
+
+$$
+a=r_1=\frac13,\qquad b=r_2=\frac25,\qquad \lambda=\frac4{15}.
+\tag{1.1}
+$$
+
+Every supported depth remains a target. Both accepted seeds, all paid
+equal-pair rejections and partial parses, all finite returns, the original
+records and permissions, third write before latch, fourth completion and
+its matching Stop are retained. The renderer $I_c$ at a fixed current-record
+fibre inserts the original operation blocks and retains all future letters.
+It is injective, preserves complete-law TV, and commutes with deletion of
+the next operation and its block [PAIR, §2; PAID, Lemma 2.1.1].
+

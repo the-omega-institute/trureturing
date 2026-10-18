@@ -1,0 +1,19 @@
+## 接口 A：局部金字塔
+
+正式证明：
+
+$$
+\mathcal P=
+\{X,Y,Z\ge0,\;X+Z\le1,\;Y+Z\le1\}.
+$$
+
+并导出：
+
+$$
+\kappa_-=
+\max(0,X+Y+Z-1),
+\qquad
+\kappa_+=
+\min(X,Y).
+$$
+

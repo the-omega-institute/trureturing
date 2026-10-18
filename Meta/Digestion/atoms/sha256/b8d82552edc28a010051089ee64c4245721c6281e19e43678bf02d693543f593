@@ -1,0 +1,11 @@
+**Convention 7.2 (What the finite certificates establish).** The shifted
+determinants, integer singleton data, rational minor certificates and
+root signs are exact finite arithmetic in $\mathbb Q(\sqrt{17})$.
+Their role is to certify the two displayed mathematical constructions;
+no numerical mesh, finite time window, relaxed feasible point or ensemble
+average is an optimum certificate. The all-complex and all-finite-history
+consequences follow from the ordinary operational proofs, not from
+sampling. These checks and source correspondences do not replace
+independent mathematical review, required repository checks or Lean
+kernel verification.
+

@@ -1,0 +1,4 @@
+## 1. Activity-matched phase information and the legal quantum parent
+
+The fixed-target designs of Parent/Readout Chapter 9 and the following minimax designs use the same recorded-site experiment. A target may remain estimable when some phase directions are unobserved; the minimum Fisher/QFI ratio instead ranges over every nonconstant real phase direction. Thus zero-weight target optima do not contradict the positive weights required below.
+

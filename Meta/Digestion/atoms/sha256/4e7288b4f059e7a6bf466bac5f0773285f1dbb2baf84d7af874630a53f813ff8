@@ -1,0 +1,25 @@
+### 110.2. The two-group and its four-fibre action
+
+**Proof of Theorem 110.1.** Let $M$ be a complex matrix invariant under a transitive fibre-preserving permutation group $\mathcal A$. Since $\Omega$ is finite, $\mathcal A$ is finite. Choose a Sylow two-subgroup $P\leq\mathcal A$. If $|\mathcal A|=2^v m$ with $m$ odd, the point stabilizer has order $2^{v-3}m$. Thus, for every $x\in\Omega$,
+
+$$
+|P\cap\mathcal A_x|\leq 2^{v-3},\qquad
+|P\cdot x|=\frac{|P|}{|P\cap\mathcal A_x|}\geq8.
+\tag{110.5}
+$$
+
+The orbit has exactly eight elements, so $P$ is transitive. This uses the standard Sylow and orbit-stabilizer theorems, without imposing a condition on which Sylow subgroup is chosen.
+
+Label a coordinate by $(f,b)\in\{0,1,2,3\}\times\mathbb F_2$. Every fibre-preserving permutation has the form
+
+$$
+(f,b)\longmapsto(\pi(f),b+k_f).
+\tag{110.6}
+$$
+
+Let $F$ be the image of $P$ on the four fibres and $K$ the kernel. Then $F$ is a transitive two-subgroup of $S_4$, while $K$ is a linear subspace of $\mathbb F_2^4$, acting by within-fibre flips. Conjugation induces the ordinary permutation of the four flip coordinates. The order of $F$ is four or eight. At order four its action is regular and its group is $C_4$ or $C_2^2$. At order eight it is a Sylow two-subgroup of $S_4$, hence conjugate to the square-dihedral group. In particular, $F$ contains a regular subgroup $F_0$ of order four; unless $F=C_2^2$, it contains a four-cycle.
+
+Suppose $K\ne0$. For each fibre let $\ell_f:K\to\mathbb F_2$ be its coordinate functional. Every $\ell_f$ is nonzero: otherwise transitivity of $F$ would make all of them zero and force $K=0$. Equality of two such functionals defines an $F$-invariant equivalence relation on the four fibres. All its classes have the same size, so the number of distinct functionals is one, two or four. The functionals span the dual space $`K^*`$ because the coordinate inclusion of $K$ in $\mathbb F_2^4$ is injective.
+
+Write $c=(1,1,1,1)$ for the global flip. It is central in the entire fibre-preserving permutation group.
+

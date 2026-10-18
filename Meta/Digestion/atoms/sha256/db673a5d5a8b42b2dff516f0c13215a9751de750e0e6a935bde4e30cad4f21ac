@@ -1,0 +1,4 @@
+**Proposition 1.3 (One common stationary realization; Universal, Proposition 4.2).** Equation (1.4) defines a normalized two-sided stationary joint law, whose visible marginal $P_\theta$ is supported on $\mathsf X$.
+
+**Proof.** Summing the last bit and state uses $A\mathbf1=\mathbf1$, while summing the first uses $\lambda A=\lambda$. These give right and left consistency of the finite interval distributions, and their total mass is $\lambda A^{b-a+1}\mathbf1=1$. Probability extension on the finite-alphabet product space gives the joint law. Translation leaves the displayed probabilities unchanged. Summing the hidden states gives the visible formula. At each position the probability of $11$ is $\lambda M_1^2\mathbf1=0$; the union over all positions is null. Every concatenation $uv$ consequently uses the one ordered product $\lambda M_uM_v\mathbf1$, including its seam. Coordinates throughout count original emitted bits. $\square$
+

@@ -1,0 +1,31 @@
+**Definition 3.1 (the full two-sheet roof).** For $\eta\in\{0,1\}$ define
+
+$$
+\begin{aligned}
+\Gamma_\eta(\phi)&=(1,u,v,u^2,uv,\eta\operatorname{cap},\eta\operatorname{cap}u^2,\eta\operatorname{cap}uv),\\
+H_\eta(\phi)&=\ell(h)+\eta\,1000\operatorname{cap}(h)f(h),\\
+B&=(1,0,0,\alpha,0,\mu/1000,\alpha V_0/1000,0).
+\end{aligned}
+$$
+
+A common law has nonnegative masses $p_i$, $\sum_i p_i\Gamma_{\eta_i}(\phi_i)=B$. Its contrast coordinate is $k=\sum_i p_i|u_i|$, $\tau=k/\sqrt\alpha$, $s=s_0\tau$. A dual vector $Y\in\mathbb R^8$ is feasible at $\lambda$ when
+
+$$
+Y\cdot\Gamma_\eta(\phi)\ge |H_\eta(\phi)|+\lambda|u(\phi)|
+\quad(\eta=0,1,\ 0\le\phi\le2\pi).
+$$
+
+The indexed contacts $(\eta_i,\epsilon_i,\sigma_i,b_i)$ are
+
+| $i$ | $\eta_i$ | $\epsilon_i$ | $\sigma_i$ | base angle $b_i$ |
+| --- | --- | --- | --- | --- |
+| $0$ | $0$ | $+1$ | $+1$ | $0$ |
+| $1$ | $0$ | $+1$ | $-1$ | $\pi$ |
+| $2$ | $0$ | $-1$ | $-1$ | $\pi$ |
+| $3$ | $1$ | $+1$ | $+1$ | $0$ |
+| $4$ | $1$ | $-1$ | $+1$ | $3\pi/2$ |
+| $5$ | $0$ | $+1$ | $+1$ | $0$ |
+| $6$ | $1$ | $-1$ | $-1$ | $\pi$ |
+
+Here $\epsilon$ is the signed height and $\sigma$ the signed report. Write $\phi_i=b_i+2\arctan x_i$. Six-contact systems occupy $i=0,\ldots,5$; seven-contact systems additionally occupy $i=6$.
+

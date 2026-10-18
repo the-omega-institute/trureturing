@@ -1,0 +1,54 @@
+**Application 26.1 (Theorem 4.2: finite feedback rigidity).** On all finite trees,
+
+$$
+\rho(x)=\langle x,z\rangle
+\quad\Longleftrightarrow\quad
+\exists j\ge0\ (x,z)=(T_{j+1},T_j).
+\tag{CS.26.4}
+$$
+
+The index is unique, and every displayed solution has $x\ne z$.
+
+Parameter substitution. If $\rho(x)=\langle x,z\rangle$, then $L$ is
+reached in $\rho(x)$ and $x=(\rho(x))|_L$. Apply Theorem 4.2 to the
+finite tree $x$ with $(n,m,p)=(0,1,L)$. It gives $x=T_k$ for $k\ge1$.
+Equation (ARH.4.2) gives
+$\rho(x)=T_{k+1}=\langle T_k,T_{k-1}\rangle$; ordered-pair cancellation
+therefore gives $z=T_{k-1}$. Set $j=k-1$. Conversely (ARH.4.2) supplies
+the displayed equation for every $j\ge0$. The index injectivity already
+supplied in Definition 4.1 gives uniqueness and $x\ne z$.
+
+Both endpoints in (CS.26.1) are reached for every source with that old row:
+the first is $\rho(x)$ and the second is $\langle x,z\rangle$.
+Consequently this application gives the two directions of (CS.26.3) before
+literal intersection. In the converse direction all three original old
+holes are reached, the first two values coincide, and the third differs;
+thus the *complete* old partition is exactly $\pi$. Also
+
+$$
+\rho^a(u_j)=u_{j+a}\qquad(a,j\ge0).
+\tag{CS.26.5}
+$$
+
+For the remaining reuse, let $\sigma$ exchange just the two root branches
+of a pair, and let $\sigma(\varepsilon)=\varepsilon$,
+$\sigma(Ls)=Rs$, $\sigma(Rs)=Ls$ on addresses. Then
+$u_j=\sigma(T_{j+3})$ and
+$\rho^a u_j=\sigma(T_{j+a+3})$. Nonroot reached subtrees and literal
+replies correspond at the exchanged addresses; both root replies are
+$\mathsf{Pair}$. A cut $Q$ corresponds to $\sigma(Q)$. To recover its
+entire original row, exchange the root branches of the concrete exterior,
+relabel every reached hole in the lexicographic order for $Q$, and carry
+the complete partition along that same bijection. For the root cut use
+the single-hole row. Empty cuts retain the entire exchanged tree.
+This is a mathematical coordinate correspondence, not a physical
+root-exchange operation. It preserves completeness of a cut, all literal
+occurrences and their epochs, and the whole exterior. The orbit-index,
+row and service calculations in the proofs of Theorems 5.2 and 6.1 apply
+under this correspondence and the exact fiber from Application 26.1.
+This reuse adds no acquired root-certificate record: the sole retained
+relation remains literally (CS.26.1).
+
+Neither $\rho$ nor its feedback equation is treated as a free constructor
+or subjected to a free-term occurs check.
+

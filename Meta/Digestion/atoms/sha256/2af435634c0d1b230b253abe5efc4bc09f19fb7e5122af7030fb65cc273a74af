@@ -1,0 +1,224 @@
+**Theorem 5.1 (complete original Boolean consumer).** For every $g\ge8$,
+Definition 4.2 is a complete correct terminating graph satisfying every
+condition of Definition 3.1. Put
+
+$$
+N_L=\binom{2g}{g-1},\qquad N_H=\binom{2g}{2},\qquad T_g=N_L+N_H.
+$$
+
+Its exact running-state count and total Boolean installed count are
+
+$$
+M_g=2^n-1-T_g(2^{p+2}-1)+2^p+5,
+\qquad M_g+2.
+\tag{IC.26}
+$$
+
+Every input satisfies both $t\le n$ and $J\le W$. The two maxima
+are attained together on one input. Moreover
+
+$$
+M_g>G=(p+1)(p+4)=(2g+1)(2g+4).
+\tag{IC.27}
+$$
+
+There is no state-saving or fixed-selector minimum claim.
+
+Proof, closed parent table and actual input partition. The weights
+$g-2,g-1$ belong to $\mathcal E_g$, whereas $p-2,p-1$ do not.
+Thus all four rows of redirected prefixes have their stipulated actual
+modes. Their first-coordinate values separate $L$ from $H$; within
+each collection the full reply words are distinct. Their counts lie in
+the live rectangle, so all earlier prefixes are live as well.
+
+Before any redirection, the parent queries each coordinate exactly once
+in its chosen permutation. A parent reply word therefore has one
+exposed assignment and all its complete extensions follow that word.
+Every retained $q_w$ is reachable: follow its word from the start and
+complete its still-free coordinates arbitrarily. It has no earlier
+redirected prefix. At that state the history is live exactly when
+$\operatorname{wt}(w)\le p$ and
+$|w|-\operatorname{wt}(w)\le p+3$; otherwise it is certified.
+Its installed behavior is defined in both cases.
+
+No edge in (IC.24) enters a deleted state. A retained word shorter than
+$d_0-1$ has retained children. At length $d_0-1$, precisely the
+$\mathcal C_g$ children are redirected. A retained longer word cannot
+acquire a new length-$d_0$ prefix by adding one letter. Hence every
+other internal child in (IC.24) exists. There is no scan or exit edge
+back to a parent state.
+
+It follows that the inputs reaching $R_\varepsilon$ are exactly all
+completions of the displayed $L$ and $H$ prefixes. Their unexposed
+coordinates are respectively $\mathsf U\cup\mathsf Y$ and
+$\mathsf U\cup\mathsf X$, without restrictions. All other inputs
+stay in the retained parent tree, make exactly $n$ queries, pay exactly
+$W$, and receive the threshold of their actual full assignment from the
+last line of (IC.24). Parent visits after certification are included.
+
+Proof, all scan arrivals. Every $R_v$, $|v|=t<p$, is reached by
+each $L$ or $H$ prefix completed with the first $t$ values of
+$\mathsf U$ equal to $v$. These are all its arrivals, since its only
+entrance from the parent is $R_\varepsilon$ and scan edges increase
+word length. Write $j=\operatorname{wt}(v)$. The exposed counts are
+
+$$
+L:\ (g+j,g+2+t-j),\qquad
+H:\ (p+j,2+t-j).
+\tag{IC.28}
+$$
+
+Consequently an $L$ arrival is live exactly when
+$j\le g$ and $t-j\le g+1$, and an $H$ arrival is live exactly
+when $j=0$. Every other scan arrival is certified; it nevertheless
+executes the full remaining scan and pays for every visit. This also
+shows reachability of every scan state, including states with only
+certified arrivals. No source-type mark is present in the current state.
+
+At scan entry the true residual thresholds are
+
+$$
+L:\ \mathbf1_{\{|\theta_{\mathsf U}|+
+                         |\theta_{\mathsf Y}|\ge g+1\}},
+\qquad
+H:\ \mathbf1_{\{|\theta_{\mathsf U}|+
+                         |\theta_{\mathsf X}|\ge1\}}.
+\tag{IC.29}
+$$
+
+After the entire scan, write $j=|\theta_{\mathsf U}|$. A live
+$L$ arrival can only have $j=g-1$ or $g$; a live $H$ arrival
+can only have $j=0$. The following cases cover every completion.
+
+If $j=0$, an $L$ input is already certified zero because
+$|\theta_{\mathsf Y}|\le2<g+1$. At $A_1$ it reads its old
+$x_1=1$, then at $J$ its old coordinate $1=0$, and outputs zero.
+An $H$ input needs OR on fresh $\mathsf X$. At $A_1$, a zero
+reply goes to $A_2$ and returns $x_2$; a one reply goes to $J$
+and returns its old coordinate $1=1$. Thus the same fixed table
+computes its OR.
+
+If $1\le j\le g-2$, every $L$ input is certified zero, since
+$j+2\le g$, and every $H$ input is certified one. State $J$
+reads their old coordinate $1$, respectively zero and one, and gives
+exactly these answers.
+
+If $j=g-1$, an $L$ input requires AND on fresh $\mathsf Y$.
+At $B_1$, a zero $y_1$ reply goes to $J$ and returns zero; a one
+reply goes to $B_2$ and returns $y_2$. Every $H$ input is already
+certified one. Its old $\mathsf Y$ is either $01$ or $11$:
+the former goes through $J$ and returns one, and the latter through
+$B_2$, whose old $y_2=1$ also returns one.
+
+If $j=g$, an $L$ input requires OR on fresh $\mathsf Y$.
+State $C_1$ returns one when $y_1=1$, and otherwise $B_2$ returns
+$y_2$. An $H$ input is already certified one; its old $y_2=1$
+ensures the same table returns one, whether its old $y_1$ is zero
+or one. If $j\ge g+1$, both residuals are already one and the
+last scan edge directly outputs one.
+
+For completeness, the following table lists all exit arrivals. The
+conditions on $j$ refer to the completed scan. Liveness means just
+before the indicated exit query.
+
+| Exit | All $L$ arrivals | All $H$ arrivals |
+| --- | --- | --- |
+| $A_1$ | $j=0$, certified zero, old $x_1=1$ | $j=0$, live, $\mathsf X$ fresh |
+| $A_2$ | None | $j=0,x_1=0$, live, $x_2$ fresh |
+| $B_1$ | $j=g-1$, live, $\mathsf Y$ fresh | $j=g-1$, certified one, old $\mathsf Y\in\{01,11\}$ |
+| $C_1$ | $j=g$, live, $\mathsf Y$ fresh | $j=g$, certified one, old $\mathsf Y\in\{01,11\}$ |
+| $B_2$ | $j=g-1,y_1=1$ or $j=g,y_1=0$, live, $y_2$ fresh | $j=g-1,y_1=1$ or $j=g,y_1=0$, certified one, old $y_2=1$ |
+| $J$ | $j=0$ after $A_1$, or $1\le j\le g-2$, or $j=g-1,y_1=0$; all certified zero | $j=0,x_1=1$, or $1\le j\le g-2$, or $j=g-1,y_1=0$; all certified one |
+
+Every listed exit is reachable, and there are no other incoming edges.
+The table shows why $J$ is never live, while several other exits have
+both live and certified arrivals. They are still single installed states.
+It also proves the actual-live order condition: $L$ histories continue
+along $\mathsf U$ and, if still live, $\mathsf Y$; $H$ histories
+continue along $\mathsf U$ and, if still live, $\mathsf X$. Every
+query deviating from the prescribed permutation is a paid old-coordinate
+query on a certified history. Retained parent live histories already
+follow their fixed permutation. All runs terminate, since parent and
+scan word lengths increase and exits reach a terminal within two queries.
+
+Proof, exact installed count. The two $L$ rows contain
+
+$$
+\binom{p-1}{g-1}+\binom{p-1}{g-2}=\binom p{g-1}=N_L
+$$
+
+prefixes. The two $H$ rows contain
+
+$$
+\binom{p-1}{p-2}+\binom{p-1}{p-3}
+=\binom p{p-2}=\binom p2=N_H.
+$$
+
+These elementary Pascal identities count literal prefixes once, rather
+than their completing inputs. Start with the complete binary parent
+tree of $2^n-1$ running states. Each of the $T_g$ distinct
+depth-$d_0$ prefixes removes its entire disjoint running subtree of
+
+$$
+2^{n-d_0}-1=2^{p+2}-1
+$$
+
+states. Exactly $2^p-1$ scan states and six exits are added. This
+proves (IC.26), with both terminals counted separately and no discount
+for certified-only or unused states.
+
+All $2^p-1$ parent states of depth less than $p$ are retained. To
+check (IC.27) uniformly, the binomial expansion gives
+$2^{2g}-1\ge\binom{2g}{3}$, and
+
+$$
+\begin{aligned}
+\binom{2g}{3}-(2g+1)(2g+4)
+ &=\frac{4g^3-18g^2-28g-12}{3}\\
+ &\ge\frac{14g^2-28g-12}{3}>0
+ \qquad(g\ge8).
+\end{aligned}
+$$
+
+Thus even this untouched prefix part already exceeds $G$.
+
+Proof, both complete-run budgets. A redirected run pays $d_0=p+2$
+parent queries, then all $p$ scan queries, then at most two exit
+queries. Thus its total is at most $2p+4=n$. Its letter charge
+before the exits is exactly $W-C_{\mathsf Y}=W-13$ on $L$,
+and exactly $W-C_{\mathsf X}=W-17$ on $H$. These quantities
+include every scan query after certification. The complete bounds are
+
+| Completed scan weight | Exit query bound | Full $L$ letter charge | Full $H$ letter charge |
+| --- | --- | --- | --- |
+| $j=0$ | $2$ | $W-13+c_4+c_1=W$ | $\le W-17+\max(c_4+c_5,c_4+c_1)=W$ |
+| $1\le j\le g-2$ | $1$ | $W-13+5=W-8$ | $W-17+5=W-12$ |
+| $j=g-1$ | $2$ | $\le W-13+\max(c_2+c_1,c_2+c_3)=W$ | $\le W-17+\max(c_2+c_1,c_2+c_3)=W-4$ |
+| $j=g$ | $2$ | $\le W-13+c_2+c_3=W$ | $\le W-17+c_2+c_3=W-4$ |
+| $j\ge g+1$ | $0$ | $W-13$ | $W-17$ |
+
+Here $c_4+c_1=8+5=13=C_{\mathsf Y}$,
+$c_2+c_1=6+5=11$, $c_2+c_3=13$, and $c_4+c_5=17$.
+The old-bit rechecks at $J$, $A_1$, $B_1$, $B_2$ and $C_1$
+have all been charged in their actual paths. Together with the unchanged
+parent runs, these rows exhaust every input of this one graph.
+
+Take any $H$ prefix and complete it with
+$\mathsf U=0^p$, $\mathsf X=00$. The actual path is
+$\mathsf I,\mathsf Y,\mathsf U,\mathsf X$, ending through
+$A_1,A_2$. It queries all $n$ different coordinates once, pays $W$,
+and stays live until its last query. Its final exposed count before that
+query is $(p,p+3)=(k-1,n-k)$. Thus the same input attains both
+maxima; they have not been taken from separate optimizers.
+
+Finally $\mathcal A=\{0,\ldots,p\}\setminus\mathcal E_g$ has
+minimum $1$ and maximum $p-1$. Among its omitted interior weights,
+the only possible consecutive pair is $g-2,g-1$; the even omitted
+weights below it are separated by odd retained weights, and $g-3$
+is retained. There is no run of three omitted interior weights.
+Consecutive cheap weights therefore differ by at most $3=b+1$.
+All conditions of Definition 3.1 hold. Along the initial alternating
+even and odd weights, the number of changes of mode grows without bound
+with $g$. The actual graph still uses only the two permutations (IC.14).
+$\square$
+

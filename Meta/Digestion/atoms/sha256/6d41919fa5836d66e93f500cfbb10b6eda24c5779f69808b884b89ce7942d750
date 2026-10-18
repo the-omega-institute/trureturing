@@ -1,0 +1,105 @@
+**Definition 211.1 (Full scores and the single comparison budget).**
+Use the original source, tape carrier and acquisition contract of 210.1.
+All results below are ordinary mathematics about finite proof weights.
+For an integer $L\ge3$, write $\Omega_n$ for all Boolean words whose
+first zero is $n$, and $w(Z)$ for the word with zero set exactly $Z$.
+A full score $V$ consists of independent nonnegative $A_w,C_w,P_w$
+for every $w\ne1^L$, and $T\ge0$ at $1^L$. Its reward at output
+$\ell\in\{0,\ldots,L\}$ is exactly (210.1). In particular $P_w$
+is the independent pair-event weight, not a sum of singleton weights.
+Unspecified coefficients in a construction are zero; coincident rows add.
+Write $x_+=\max(x,0)$, and take empty maxima of nonnegative quantities
+and empty sums to be zero.
+
+For a schedule $s$, let $B_C^s(V)$ be the sum of its cell reward
+maxima over all output labels, and let $B_C(V)=\max_s B_C^s(V)$,
+where $C=N,O$. The schedules include empty and singleton schedules.
+For distinct $i<j$, the $N$ cells are $00,01,10,11$, while the $O$
+cells are $0,10,11$. A tuple $(i,j;\ell_{00},\ell_{01},\ell_{10},\ell_{11})$
+denotes a full $N$ table; a three-label tuple denotes a stopped table.
+Use the anchor $R=(1,2;1,2,0)$, with $N$ completion $(1,1,2,0)$,
+and the inherited coordinates
+
+$$
+\begin{aligned}
+W_V&=\sum_{n(w)\ge3}A_w+\sum_{n(w)\le2}C_w+\sum_wP_w+T,\\
+\Delta_C(V)&=B_C(V)-W_V,\qquad
+Q(V)=(\beta,K),\\
+\beta_n&=\sum_{\Omega_n}(C_w-A_w),\qquad
+K=\sum_w(A_w+C_w+P_w)+T.
+\end{aligned}
+\tag{211.1}
+$$
+
+The anchor makes both excesses nonnegative. Static repetitions and
+reversals introduce no new information partition; each actual request
+still counts. Every short $N$ output function refines into a distinct-pair
+$N$ table when $L\ge3$. Every $O$ output function belongs to $N$ by
+completion. These facts, together with explicit stopped attainers below,
+control short $O$ schedules. A singleton at the last address is never
+presumed to embed in a nonexistent later stopped pair.
+
+For the input family only, impose $A=0$ and
+$\operatorname{supp}P\subseteq\Omega_1\cup\Omega_2$, allowing early
+prefix $00$ and every correct suffix. Put
+
+$$
+\begin{aligned}
+\gamma_j&=\sum_{\Omega_j}C_w,&c_1&=\gamma_1,&c_2&=\gamma_2,&E&=c_1+c_2,\\
+\mu&=\max_{j\ge3}\gamma_j,&S&=\sum_wP_w,&t&=T,&W&=E+S+t.
+\end{aligned}
+\tag{211.2}
+$$
+
+On the full late cube $\{0,1\}^{\{3,\ldots,L\}}$ define actual measures
+$\nu_{ab}(x)=P_{abx}$ for $ab=00,01,10$, and
+$\nu=\nu_{00}+\nu_{01}+\nu_{10}$, of mass $S$. Let
+$Z_j=\{x:x_j=0\}$, $m_j=\nu(Z_j)$,
+$D_{ij}=\nu(Z_j\setminus Z_i)$ for $i<j$, and $p_{00}=|\nu_{00}|$.
+These definitions precede every use of a stock or marginal below.
+
+Keep $H_L,F_q,\sigma_H$ and $E_N$ exactly as in (210.3)–(210.4).
+More explicitly, $H_L$ is the set of $(b_1,\ldots,b_L;e)$ with
+$1\ge b_1\ge\cdots\ge b_L\ge e\ge0$, $b_2=b_3$,
+$(L+1)e\le\sum_{j=3}^Lb_j$, and
+$b_1+\sum_{j=3}^Lb_j-(L+1)e\le1$.
+With $\alpha=(1,1,0,\ldots,0)$ and signed $q=(\beta,K)$,
+$F_q(b,e)=\sum_j\beta_j(b_j-\alpha_j)-Ke$ and
+$\sigma_H(q)=\max_{H_L}F_q$.
+The full event-demand vector $d(b,e)$ has entries
+$1-b_n-e,b_n-e,1-e$ at every $w\in\Omega_n$ and $1-e$ at $1^L$.
+Let $z_D$ be the complete event-indicator vector of table $D$,
+$r=z_R=d(\alpha,0)$, $h=d-r$ and $G_C=(z_D-r)_D$. Then
+
+$$
+\rho_C(b)=\min\left\{\sum_D\lambda_D:
+ \lambda\ge0,\ G_C\lambda\ge h(b)\right\},\qquad
+H_N=\{b\in H_L:\rho_N(b)<\infty\},
+\tag{211.3}
+$$
+
+with value $\infty$ for an empty feasible set. Here $b$ abbreviates
+$(b_1,\ldots,b_L;e)$ when used as an argument. A certificate for $q$
+uses one score and one charge:
+
+$$
+V\ge0,\quad\theta\in[0,1],\qquad
+\Delta_N(V)+\theta\le1,\qquad
+\sigma_H(q-Q(V))\le\theta.
+\tag{211.4}
+$$
+
+$E_N$ is the set of signed quotients $q$ admitting such a certificate.
+For the same full-row feasible $\lambda$ of mass $M$, it gives
+$F_q(b)\le M\Delta_N(V)+\theta\le M(1-\theta)+\theta
+\le\max(1,M)$. This is the existing 199.3–199.4 certificate interface,
+not a new alternative or an unproved bridge. All negative singleton
+demands, zero-weight rows, multiple-zero words and earlier unqueried
+labels remain. In particular $(3,4;1,0,0,0)$ correctly outputs 1
+on $0100$; replacing that label by zero loses the correct event.
+The surviving-label premise of 197.3 remains necessary for its stated
+restricted-catalog implication. Nonzero zero-cost scores remain allowed
+at $\theta=1$ by 199.5–199.6.
+
+### 211.1 A single safe switch and its attained fixed-data interval
+

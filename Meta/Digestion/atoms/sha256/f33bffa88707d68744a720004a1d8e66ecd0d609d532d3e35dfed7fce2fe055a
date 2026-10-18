@@ -1,0 +1,45 @@
+**Theorem 3.1 (worst calls for the retained left reference).** For the
+fixed encoder $E=a_0$ of Assumption 1.1, the exact worst fresh-call price
+over all promised inputs and permitted depth-one cuts is
+
+$$
+\begin{cases}
+K_+(q)=\min\{k\ge0:q\le3\cdot2^k-2\},&\lambda_0=1,\\
+K_0(q)=\min\{k\ge0:q\le A_k\},&\lambda_0=0,
+\end{cases}
+\qquad A_0=1,\quad A_k=3\cdot2^k-3\ (k\ge1).
+\tag{NARC.3.1}
+$$
+
+Both prices are zero for $q=1$. At $H=3,q=4$ they are respectively one
+and two, with a jointly optimal whole-word peak two on the attaining
+inputs below. For $q\ge2$, the required conditional peak is unbounded
+over legal lag inputs despite the uniform finite call bound.
+
+**Proof.** Theorem 1.2 gives at most $q$ consecutive hidden ages.
+Positive lags force a positive lower endpoint. In the nonnegative
+contract, a positive interval is no harder in calls than a zero-origin
+interval of the same size, since $A_k\le C_k$ at every budget. AOF
+Theorem 8.3 and Theorem 2.1 give the asserted upper bounds. They are
+attained with $a_0=0,z=H+1$ for positive lags, yielding $I_0=[1,q]$,
+and $a_0=0,z=H$ for nonnegative lags, yielding $I_0=[0,H]$.
+Theorem 1.2 realizes every candidate as a complete-input alternative,
+so the interval lower bounds apply. Cuts displaying the left slot add
+no larger price. At $H=0$ every interval is a singleton.
+
+For $H=3$, the nonnegative attaining input is
+$Y_3=(\langle\square_L,T_7\rangle,\{\{L\}\})$, with originals
+$X_{0,3-\ell}$ for $\ell=0,1,2,3$. Read physical $L$: alpha and beta
+identify lags zero and one; on branch read physical $LR$, whose replies
+alpha and beta identify two and three. The zero-origin obstruction
+precludes one call. The positive attaining input is
+$Y_4=(\langle\square_L,T_8\rangle,\{\{L\}\})$, with originals
+$X_{0,4-\ell}$ for $\ell=1,2,3,4$. One physical $LR$ returns absent,
+alpha, beta and branch respectively. Both have the peak two of
+(NARC.2.1); the source-relative suffix in this latter example is $R$.
+
+For unbounded peaks, keep $a_0=0$ and let $z\ge H+\lambda_0$ increase.
+Then $I_0=[z-H,z]$ has size $q\ge2$ and its exact peak in (NARC.2.1)
+diverges. Each such row is a finite promised acquired input. This is an
+address-length statement, not a physical-time or workspace law. $\square$
+

@@ -1,0 +1,31 @@
+**Theorem 8.4 (exact original catalogue law on one positive interval).** For each unsigned height $y\in\{5,16,27\}$, let $\lambda_y,\mu_y,v_y$ be the unique branch (RG.20), (RG.24)–(RG.26) for $C^{(y)}$. Let $s_y$ be its saturated cap (RG.34), and put
+
+$$
+s_{\rm original}=\min\{\sqrt\ell/2,s_5,s_{16},s_{27}\}>0.
+\tag{RG.78}
+$$
+
+For every original $y,e,n$ and every $0\le s\le s_{\rm original}$, both acquired and supported live high minima are
+
+$$
+\mathsf E_s(\rho_{y,e,n})=k\lambda_y-\mu_y.
+\tag{RG.79}
+$$
+
+Each selected minimum has its own common unknown-input instrument with at most fourteen actual branches and all properties in Theorem 6.2. All the constants in (RG.78)–(RG.79) are algebraic under the supplied algebraic premises.
+
+Proof. Lemmas 8.1–8.3 establish the real PD domain and saturated branch for all twelve actual states. Since $C_g$ is real orthogonal and commutes with $B$, the eigenvalues, $\lambda_y$ and $\mu_y$ are unchanged under signs, and its positive-$D$ kernel is $v_{y,e,n}=C_gv_y$.
+
+To verify a common cap rather than assume it, substitute the signs into (RG.33). With $U=U_{e,n}$ this gives
+
+$$
+J_{C_gv}=en\,C_gJ_vC_g,\qquad
+\tau_{C_gv}=en\,\tau_v,\qquad
+W_{C_gv}=en\,UW_vU^\dagger.
+\tag{RG.80}
+$$
+
+The first identity follows entry by entry: $v_T$ gains $en$, $v_S$ gains $e$, and $R_v$ is unchanged. The second follows because coefficient diagonals are unchanged by $C_g$ congruence. For the third use $\Theta(C_gZC_g)=U\Theta(Z)U^\dagger$ and $UX_{01}U^\dagger=enX_{01}$. Likewise $Q_{C_gv}=C_gQ_vC_g$. Thus $|\tau|$, $\|J+\tau Q_c\|$ and the normalized failure-block norm are invariant; $M_2$ commutes with the signed specimen block. The same cap works at all four signs of one height.
+
+Each $s_y$ is strictly positive by Lemma 5.2, so their finite minimum with $\sqrt\ell/2$ is positive and strictly below $\sqrt\ell$. Theorem 6.3 proves (RG.79) for every stated strength, including the closed cap endpoints. Algebraicity follows from Section 6 and the exact source definition. The cap is sufficient; its maximality has not been proved. Equality of the four separately optimized values at one height does not combine their designs into a simultaneous four-input or twelve-input minimizer. $\square$
+

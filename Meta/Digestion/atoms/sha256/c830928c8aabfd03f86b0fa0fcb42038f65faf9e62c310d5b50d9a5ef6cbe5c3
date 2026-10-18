@@ -1,0 +1,23 @@
+**开放问题 7.1 (general nonterminal contact synthesis).** For arbitrary
+complete acquired $I$ and arbitrary finite attained full $B$, construct
+a terminating, sound and complete exclusion-or-finite-realization
+choice when exact mixed covers retain residual-versus-constructor or
+atomic-versus-constructor overlaps. Multiple image restrictions,
+nonfunctional feedback, unknown finite barriers and shared rank/residual
+occurrences must be retained on the entire source strata. The terminal
+recognizer supplies no reduction of these cases. Failure to recognize
+an input is unresolved; neither novelty nor undecidability follows from
+an unsuccessful search. This finite recognized-class result leaves the
+broader space/time/boundary/memory research goal active.
+
+[ARH]: RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RELATION_HISTORY.md
+[ABC]: RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_BLOCK_CONJUGACY.md
+[NSF]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SIGNED_FEASIBILITY.md
+[NIC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_IMAGE_COVER_AND_PREFIX_COST.md
+[URR]: RECURSIVE_RELATIONAL_OBSERVATION_UNIFORM_RESIDUAL_REALIZATION.md
+[SLP]: RECURSIVE_RELATIONAL_OBSERVATION_SIGNED_LOCAL_PREFIX_LIFTING.md
+[FJC]: RECURSIVE_RELATIONAL_OBSERVATION_FUNCTIONAL_JOINT_CONTACT.md
+[NPL]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PROJECTION_LIMITEDNESS.md
+[SJM]: RECURSIVE_RELATIONAL_OBSERVATION_SIGNED_JOINT_MEMORY.md
+[PA]: https://arxiv.org/html/2405.01183v1
+

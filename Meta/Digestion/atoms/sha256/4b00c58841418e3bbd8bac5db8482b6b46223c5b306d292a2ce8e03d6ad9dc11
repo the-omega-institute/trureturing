@@ -1,0 +1,43 @@
+**Theorem 7.1 (fixed-input primal, full transpose and strong dual).** Fix the actual encoder Kraus list $K_\alpha:\mathbb C^3\to\mathbb C^5$ and an arbitrary complex input density $\rho$. With output-first vectorization put
+
+$$
+\operatorname{vec}(M)=\sum_{b,i}M_{bi}|b\rangle_5\otimes|i\rangle_3,
+\quad d_\alpha=\operatorname{vec}(K_\alpha\rho),\quad
+D_\rho=[d_1\ \cdots\ d_r],\quad M_\rho=D_\rho D_\rho^\dagger.
+\tag{R.29}
+$$
+
+For a recovery with Kraus matrices $L_j:\mathbb C^5\to\mathbb C^3$, let $(\ell_j)_{bi}=(L_j)_{ib}$, let $J_R=\sum_j\ell_j\ell_j^\dagger$ be its input-first Choi matrix in $M_5\otimes M_3$, and put $X=J_R^T$, the full transpose. Then
+
+$$
+F_e(\rho,RN)=\sum_{\alpha,j}|\operatorname{Tr}(\rho L_jK_\alpha)|^2
+=\operatorname{Tr}(XM_\rho),\quad
+X\succeq0,\quad\operatorname{Tr}_{3}X=I_5.
+\tag{R.30}
+$$
+
+Here $F_e$ is squared entanglement fidelity with the pure identity target. The exact fixed-input optimum is
+
+$$
+\begin{aligned}
+p(\rho)&=\max_{X\succeq0,\ \operatorname{Tr}_3X=I_5}\operatorname{Tr}(XM_\rho)\\
+&=\min_{Y=Y^\dagger,\ Y\otimes I_3\succeq D_\rho D_\rho^\dagger}\operatorname{Tr}Y.
+\end{aligned}
+\tag{R.31}
+$$
+
+Both optima are attained for every $\rho$, including singular inputs.
+
+**Proof.** The recovery Choi PSD and marginal conditions are exactly the CPTP conditions: a Gram decomposition reshapes into all recovery Kraus lists, and partial tracing is their TP sum. Full transpose preserves PSD and takes the partial trace to its transpose, still $I_5$. Thus it is a bijection on the complete recovery feasible set. Partial transpose would not preserve positivity and is not used.
+
+The index contraction is
+
+$$
+\ell_j^Td_\alpha=\sum_{b,i}(L_j)_{ib}(K_\alpha\rho)_{bi}
+=\operatorname{Tr}(\rho L_jK_\alpha).
+$$
+
+For a purification of $\rho$, its overlap with $(L_jK_\alpha\otimes I)$ applied to itself is this trace. Summing the squared overlaps of all composite Kraus matrices gives the first equality in (R.30). Also $X=\sum_j\bar\ell_j\ell_j^T$, giving the second. There is no transpose missing from $K_\alpha\rho$. The different $q^T$ rule in (R.27) concerns a reference density, not this actual input variable.
+
+For Hermitian $Y\in M_5$, the Lagrangian is $\operatorname{Tr}Y+\operatorname{Tr}[X(M_\rho-Y\otimes I_3)]$. Its supremum over $X\succeq0$ is finite exactly when $Y\otimes I_3\succeq M_\rho$, yielding the dual in (R.31). The primal set is nonempty and compact, with $\operatorname{Tr}X=5$, and $X_0=I_5\otimes I_3/3$ is strictly feasible. A dual point $Y=tI_5$ is strictly feasible for $t>\|M_\rho\|$. Slater strong duality therefore gives equality and attainment even for singular $\rho$. Alternatively dual feasible $Y$ is PSD, and a bounded-trace sublevel set is compact. This invokes the finite-dimensional Hermitian SDP theorem with both strict feasible points explicitly supplied. $\square$
+

@@ -1,0 +1,5 @@
+source_id = "fib-native-guarded-global-attainment-near-transition"
+path = "docs/develop/theory/FIB_NATIVE_GUARDED_GLOBAL_ATTAINMENT_NEAR_TRANSITION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

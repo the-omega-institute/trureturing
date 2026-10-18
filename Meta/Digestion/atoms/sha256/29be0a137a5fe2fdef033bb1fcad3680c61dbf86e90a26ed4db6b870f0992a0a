@@ -1,0 +1,29 @@
+**Convention 9.1 (equality-aware template sums).** For a fixed template,
+its mass is
+
+$$
+\sum_{x\in S^n}\left(\prod_i\mu(x_i)\right)
+                 \prod_{F\in\Theta}\mathbf1_F(x).
+\tag{NPC.36}
+$$
+
+The standard finite-alphabet equality-node normalization of
+[Al-Bashabsheh–Mao, §§3.2–3.3 and 4.2][AM] applies to this symbolic
+sum: keep one representative for each original variable, replace its
+constraint incidences by copies, impose equality of every copy to that
+representative, and put $\mu$ only on the representative. Each original
+assignment has exactly one equality-consistent lift and conversely,
+with the same product weight, so the sum is exactly unchanged.
+This is the cited equality-node identity as an intermediate
+representation of (NPC.36), not a new native decomposition theorem.
+Dropping equality changes the feasible assignments; attaching the
+weight to every copy changes it to a power of that weight.
+
+Copies in this sum are symbolic variables, not physical sources or
+additional readable ports. A source-bearing experiment still names one
+original block and one literal. The normalization yields no bound on
+width, no universally cheap reblocking, and no all-size cap verifier.
+NDR's Theorem 7.2 and Proposition 9.1 retain respectively their fixed-cut
+repair obstruction and their particular family's faithful finer cut;
+neither substitutes for a universal change-of-coordinates theorem.
+

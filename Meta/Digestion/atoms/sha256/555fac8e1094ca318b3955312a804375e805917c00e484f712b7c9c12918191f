@@ -1,0 +1,20 @@
+**Convention 2.3 (unchanged continuation permissions).** The public command
+is the relative ramp
+$k(t)=x_{\rm old}+dt$, $\chi(6+t)=\chi(6)$, $0\leq t\leq1$. Its legal
+height domain is
+$(0,c-d)=(0,58/256)$, containing all three catalogue heights, and its terminal
+heights are $11/256,22/256,33/256$. More generally the source's relative
+increments $A,C$ start at zero and have height domain
+$(\ell_b-\min A,u_b-\max A)$ when $J_b=(\ell_b,u_b)$. The request here is
+promised legal on the catalogue. Naming a partial command supplies no sensor
+for an unknown domain violation. A known denial or mismatch keeps its visible
+unexecuted rejection and controller update. Zero duration permits only the
+matching zero-displacement identity, not an instantaneous nonzero path.
+
+The six legs and ramp use finite duration and finite winding, not a wall
+limit. On this experiment every population is at least $5/256$, height speed
+is at most $27/256$, phase speed at most $8\pi$ and phase variation at most
+$16\pi$, as already recorded in CG2. Original synthesis, calibrated execution
+and these permission conventions are credited source premises; no extra
+actuator is inferred from the geometric paths.
+

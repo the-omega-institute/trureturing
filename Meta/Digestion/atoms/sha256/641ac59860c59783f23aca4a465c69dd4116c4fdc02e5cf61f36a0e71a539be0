@@ -1,0 +1,31 @@
+**定理 53.6（完整 $V_5$ 及真闭合 $c$）。** 对 $i=5,\ldots,h-1$，每个其它完整 $V_4$ 块恰删一条真 $b$，给出包含全部块顶点的 $R_i\to L_i$ 补路径，边数 $N_4-1$。与 $J$ 的真实 $c$ 组成完整链
+
+$$
+L_4\xrightarrow cR_5\longrightarrow L_5\xrightarrow c\cdots
+\longrightarrow L_{h-1}\xrightarrow cR_0.
+$$
+
+结合 $\beta_5$ 与其它四条真 $c$，完整端点轨迹为
+
+$$
+\begin{split}
+R_0&\xrightarrow{\beta_5}R_2\xrightarrow cL_1
+\xrightarrow{\beta_5}R_3\xrightarrow cL_2
+\xrightarrow{\beta_5}R_1\xrightarrow cL_0\\
+&\xrightarrow{\beta_5}R_4\xrightarrow cL_3
+\xrightarrow{\beta_5}L_4\xrightarrow{\text{外部完整链}}R_0.
+\end{split}
+$$
+
+十个特殊端口及其它完整块补路径各用一次，全部真实删边分解已经穷尽，展开后为覆盖全部 $2nK_5$ 顶点的一个简单圈，无隐藏圈。最后字母为真实
+
+$$
+L_{h-1}\xrightarrow cR_0=(q,p,x,y,B,z).
+$$
+
+圈字由所列短字、$Q$、被完整删圈确定的 $P/S/V_4$ 实际子字及其它 $V_4$ 单切口补字，按轨迹方向倒序时逆转字母顺序，完全由原生构造确定；保留字面末 $c$。总边数为
+
+$$
+(N_4-5)+(n-6)(N_4-1)+(n-1)=(n-5)N_4=2nK_5.
+$$
+

@@ -1,0 +1,59 @@
+**Convention 1.5 (cited normalization, acquisition and rate theorems).**
+[FMR, Lemma 2.2 and Theorems 2.3–2.5][FMR] preserve the full task by
+canonical completion: keep all constructors through depth $d-1$, and
+replace a branch at the cutoff by $C_0$. On $S_d$, a length-$d$ word
+returns alpha exactly when its length-$(d-1)$ parent is branch and absent
+otherwise; longer words are absent. Every arbitrary finite block probe is
+therefore a function of one boundary reply in its original queried block,
+or is constant. Zero-Read branches remain allowed. This is a proved
+whole-encoder normalization; it is not a claim that arbitrary child
+projections of an unchanged fiber are admissible.
+
+A finite admissible cover is attained by paid acquisition and a
+first-containing-member name. At actual prefix-free block occurrences
+$Ra_i$, with $|a_i|\le H$, [FMR, Lemma 6.2][FMR] gives sufficient bounds
+
+$$
+T\le n(2^d-1),\quad Q_{\rm addr}\le H+d,\quad
+A_{\rm letters}\le n\bigl((H+1)(2^d-1)+(d-2)2^d+2\bigr).
+\tag{NDR.7}
+$$
+
+The calls are the original-root literals $Ra_iw$, $w\in W_d$.
+Installed colors are not supplied as source-dependent advice: the tuple
+selecting the name is acquired by these calls. Public cover generation,
+membership computation and isolation remain separate resources.
+
+[FMR, Theorems 3.2–3.3 and 6.3–6.4][FMR] supply
+
+$$
+\begin{aligned}
+M_1(D+1)&\le M_1(D)^2+1,\\
+\lambda&=\lim_{D\to\infty}2^{-D}\log_2M_1(D),\\
+\sigma_d&=\lim_{n\to\infty}n^{-1}\log_2K_d(n)
+          =\inf_{n\ge1}n^{-1}\log_2K_d(n),\\
+\lambda&=\sup_{d\ge1}2^{-d}\sigma_d,
+\qquad 0\le\lambda-2^{-d}\sigma_d\le2^{-d}\phi,
+\end{aligned}
+\tag{NDR.8}
+$$
+
+where $U_0=1,U_{h+1}=1+U_h^2$ and
+$\phi=\lim_h2^{-h}\log_2U_h$. Native gluing translates constituent
+calls to actual root literals. Its upper construction covers every
+variable shape; it does not impose independent child codes on competitors.
+
+[NCM, Theorem 4.1][NCM] already supplies
+$\sigma_2=\log_2(25/17)$ with a depth-two finite-length error.
+[NCE, Theorems 6.1–6.2 and Corollary 6.3][NCE] already supply the
+all-cyclic mass certificate, for $D\ge3$,
+
+$$
+M_1(D)\ge\left\lceil(33/13)^{2^{D-3}}\right\rceil,
+\qquad \frac18\log_2(33/13)\le\lambda<0.216605159.
+\tag{NDR.9}
+$$
+
+The bounds (NDR.9) leave effective lower convergence to the original rate
+unresolved.
+

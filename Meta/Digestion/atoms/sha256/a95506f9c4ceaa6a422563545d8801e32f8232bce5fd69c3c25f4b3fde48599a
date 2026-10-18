@@ -1,0 +1,60 @@
+### 66.3 Repeated-ratio rigidity for every original solution
+
+Write \((u_0,u_1,u_2)=(a,b,c)\), and define
+
+\[
+ B_j=\frac4{(1+iu_j)(1-iu_{j+1})},\quad
+ k_j=\rho_ju_ju_{j+1},\quad f_j=e_jB_j.
+\]
+
+The two correlation equations reduce to
+
+\[
+ f_0+f_1+f_2=0,\qquad k_0f_0+k_1f_1+k_2f_2=0.
+\tag{66.5}
+\]
+
+The \(k_j\) are pairwise distinct: equality of two would equate a
+nonreal cube root of unity with a nonzero real ratio. Consequently
+this system has rank two, its kernel is spanned by
+
+\[
+ K=(k_1-k_2,k_2-k_0,k_0-k_1),
+\]
+
+and every coordinate of \(K\) is nonzero. Write \(f=\lambda K\).
+The unit-modulus conditions on \(e_j\), together with
+\(\operatorname{Re}(\rho_j\bar\rho_k)=-1/2\) for \(j\ne k\), give
+
+\[
+ \frac{c^2(a^2+b^2+ab)}{1+c^2}
+ =\frac{a^2(b^2+c^2+bc)}{1+a^2}
+ =\frac{b^2(c^2+a^2+ca)}{1+b^2}.
+\tag{66.6}
+\]
+
+All cancelled denominators and common factors are positive.
+Suppose \(a,b,c\) were pairwise distinct. The first equality factors
+as \((a-c)T(a,b,c)=0\), where
+
+\[
+ T(a,b,c)=a^3c^2+a^2bc^2+a^2c^3-ab^2-abc-b^2c.
+\]
+
+Hence \(T(a,b,c)=T(b,c,a)=T(c,a,b)=0\). Put
+\(S=a+b+c\), \(P=ab+bc+ca\), and \(H(t)=St^2(S-t)+P\).
+The exact identities
+
+\[
+ T(a,b,c)-T(b,c,a)=(c-b)H(a),\qquad
+ H(a)-H(b)=SP(a-b)
+\tag{66.7}
+\]
+
+and their cyclic versions give \(H(a)=H(b)=H(c)=0\) and \(SP=0\).
+If \(S=0\), then \(P=0\), so
+\(a^2+b^2+c^2=S^2-2P=0\), a contradiction. If \(S\ne0\), then
+\(P=0\), and \(H(a)=Sa^2(b+c)=0\). Since \(a\ne0\), the three
+cyclic equations force \(b+c=c+a=a+b=0\), again a contradiction.
+Thus every original common-flat ray has two equal channel ratios.
+

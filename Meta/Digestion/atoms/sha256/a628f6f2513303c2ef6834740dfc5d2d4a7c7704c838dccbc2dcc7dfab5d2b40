@@ -1,0 +1,32 @@
+**Theorem 3.4 (literal append path and frame).** Under Assumptions
+2.3 and 2.5, from every eligible $h$ the relation in §4 has the unique
+path, up to consistent fresh-name renaming,
+
+$$
+C_0(h)\longrightarrow C_1(h)\longrightarrow\cdots
+                  \longrightarrow C_{24}(h).
+$$
+
+Every cut is a connected reciprocal rooted child tree. Exactly one
+vertex is born at each edge. All exterior incidences, all old material,
+the original source binding, original source head, native control,
+tokens and original meter remain unchanged. At the last cut the data
+effect is precisely UAS Definition 2.2(3) for $c_R$.
+
+Proof. At stage $j$, Lemma 3.3 supplies the existing parent and vacant
+destination. Definition 2.4 attaches a fresh terminal there. It cannot
+create a cycle or a second parent; it makes exactly the two reciprocal
+endpoints agree and initializes the other slots empty. Hence it gives
+exactly $P_{j+1}$. Induction gives every stated cut and preserves the
+frame, since no other old endpoint is designated.
+
+The guard's original finite fields, old marked R cell, original head
+links and original meter do not change. Its tests therefore continue
+to hold under the stated current authority. At each stage the distinct
+cardinality $j+1$ and exact pattern select one prefix-table entry;
+Lemma 3.3 supplies one next side and parent. There is no alternative
+birth in the defined relation. At stage 24 no birth entry is present.
+The final left subtree has the 15 scaffold/socket vertices and eight
+bit terminals of $C_U(c_R)$, and the right child is one terminal.
+This is exactly $\langle C_U(c_R),z'\rangle$ at the retained $z$. ∎
+

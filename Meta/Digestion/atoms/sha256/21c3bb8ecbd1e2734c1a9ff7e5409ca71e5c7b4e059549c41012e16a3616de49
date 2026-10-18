@@ -1,0 +1,14 @@
+**定义 1.1（产生器、行质量与全部柱集）。** 设 $\Sigma$ 是非空有限字母表，隐状态集为 $[d]=\{1,\ldots,d\}$，$d\geq1$。对每个 $y\in\Sigma$ 给定实矩阵 $B_y\geq0$，并要求
+
+$$
+B=\sum_{y\in\Sigma}B_y,\qquad B\mathbf1=\mathbf1.
+$$
+
+所有行均按行向量理解。非负子分布 $r$ 满足 $|r|:=r\mathbf1\leq1$。对有限词 $w=y_1\cdots y_n$，令 $B_w=B_{y_1}\cdots B_{y_n}$；空词 $\varepsilon$ 满足 $B_\varepsilon=I$。行 $r$ 诱导未来输出有限测度 $\mu_r$，其柱集质量为
+
+$$
+\mu_r([w])=rB_w\mathbf1=|rB_w|.
+$$
+
+一致性来自 $\sum_y rB_wB_y\mathbf1=rB_w\mathbf1$；空柱集的质量是 $|r|$。记 $u\equiv v$ 表示所有有限词，包括空词，都满足 $uB_w\mathbf1=vB_w\mathbf1$。这等价于 $\mu_u=\mu_v$，尤其蕴含 $|u|=|v|$。全部行不等式均逐坐标解释。
+

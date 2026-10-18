@@ -1,0 +1,26 @@
+### 98.3. Primary pairing and existence of the normalized certificate
+
+Use Shukla–Stoll, The Cassels-Tate pairing on 2-Selmer groups of elliptic curves, arXiv:2302.01640v1, section 3.2 equations (3.9)–(3.10), Theorem 5.6 and the introduction on printed page 2. The tangent Hilbert product computes the alternating Cassels pairing with multiplicative convention (-1)^(2 times the additive value). The rational Kummer image lies in its radical, without Sha finiteness. The short-model translation x=X-10D/3, with roots -10D/3,-25D/3,35D/3, preserves all Kummer coordinates and root differences. This source normalization is the one used in sections 96–97. Primary URL: https://arxiv.org/pdf/2302.01640 .
+
+Put l=rs and K=5qrs. The triple of lambda is (l,1,l), with conics
+
+ H1: z2^2-l z3^2=20qrs t^2,
+ H2: z1^2-z3^2=15q t^2,
+ H3: z2^2-l z1^2=K t^2.
+
+Local solubility of the Selmer covering implies local solubility of every conic. The Hasse principle for conics gives a rational point on H3. Its t coordinate is nonzero because l is squarefree and nonsquare, so alpha^2-l beta^2=K has a rational point.
+
+At q, l is a square unit by the directed characters. There is a local point beta=1, alpha=sqrt(l(1+5q)), since l is a square and 1+5q is a square unit in Q_q. Both coordinates are q-units. A smooth rational conic with a rational point is parametrized by rational lines, and Q is dense in Q_q. Thus a rational affine point can be chosen sufficiently close to this local point to have alpha,beta both q-integral and beta a q-unit. Clearing denominators and dividing their gcd gives primitive integers a,b,c with c>0 and q not dividing bc. This proves the claimed certificate existence; no independent assumption on a norm solution is required.
+
+Tangency points on H3 and H1 are (c,b,a) and (c,2a,2b). On H2 use (1,(15q+1)/2,(1-15q)/2). Put
+
+ A0=(15q+1)/2, B0=(1-15q)/2,
+ L2=A0 z1-B0 z3-15q t,
+ L3=a z2-l b z1-Kc t.
+
+The triple of mu is (1,qr,qr), so
+
+ <lambda,mu>=product_p (L2(P_p)L3(P_p),qr)_p,
+
+including the real place. Rational scaling of a tangent has global Hilbert product one, and scaling a local projective point changes L2 L3 by a square. We use primitive tangents and avoid zero evaluations.
+

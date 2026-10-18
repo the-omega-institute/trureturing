@@ -1,0 +1,30 @@
+**Definition 1.4 (Total budget and the preserved statistics).** Let $N$
+count all actual reads, and let $\tau$ be the return time, with
+$\tau=\infty$ on every nonreturn. These are different quantities. A
+pathwise hard total budget $k\in\mathbb N_0$ means $N\le k$ on every
+execution, including nonreturns and exceptional source/seed paths. It
+does not merely bound costs on returning executions. Set
+
+$$
+D=\mathbf1_{\{\tau<\infty\}},\qquad
+O=\begin{cases}A&D=1,\\\bot&D=0,\end{cases}
+\qquad Z=(H_j,O,D,N),\qquad \bot\notin\mathcal A.
+\tag{1.4}
+$$
+
+Under the cap, $Z$ has the finite alphabet
+
+$$
+\mathcal Z_k=\{(h,o,d,n):h\in\mathcal A,\
+o\in\mathcal A\cup\{\bot\},\
+d=\mathbf1_{\{o\ne\bot\}},\ 0\le n\le k\}.
+\tag{1.5}
+$$
+
+Preservation means equality of the joint laws of $(u,Z)$ under
+$J_p\otimes\nu$. It retains correlations with every measurable seed
+event. A nonreturn with count $n$ remains internal nonreturn after $n$
+paid calls. Neither numerical return times nor literal address names are
+coordinates of the preserved law. Equality of laws does not mean equality
+on each original source sample.
+

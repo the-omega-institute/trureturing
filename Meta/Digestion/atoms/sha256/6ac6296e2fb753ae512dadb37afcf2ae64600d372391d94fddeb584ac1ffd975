@@ -1,0 +1,56 @@
+**Theorem 3.2 (three native blocks with NAND projection).** At depth
+two write $A=\alpha$, $B=\beta$, $C_0=\langle A,A\rangle$.
+A selector $c\in\{0,1,2\}$ is the actual root reply at an owner block,
+represented respectively by $u_c=A,B,C_0$. Let $x,y\in\{A,B\}$
+be actual root replies at two further owner blocks. Put
+
+$$
+(f(0),f(1),f(2))=(A,A,B),\qquad
+(g(0),g(1),g(2))=(A,B,A).
+\tag{OCB.17}
+$$
+
+Prescribe all factors of block zero from $u_c$. In block one prescribe
+$\Gamma_\varepsilon(x),\Gamma_L(f(c)),\Gamma_R(x)$, and in block
+two prescribe $\Gamma_\varepsilon(y),\Gamma_L(g(c)),\Gamma_R(y)$.
+These are legal RRN data, with complete native solution set
+
+$$
+\{(A,A,A),(B,A,B),(C_0,B,A)\}\subseteq S_2^3.
+\tag{OCB.18}
+$$
+
+Eliminating $c$ gives exactly the Boolean NAND support
+$\{(A,A),(A,B),(B,A)\}$. If its three owner-block weights are
+$a,b,c_0>0$ and the two visible block weights are one, its exact
+eliminated potential, in the order $A,B$, is
+
+$$
+\begin{pmatrix}a&b\\c_0&0\end{pmatrix}.
+\tag{OCB.19}
+$$
+
+No rectangular-only exact step of Definition 3.1 represents this result.
+
+Proof. Selector and leaf domains are enforced by their actual root
+owner equations and the RRN off-domain guards. All prescribed factors
+lie in the required attained $G_q$. A leaf $A$ has $L$ factor $(3,0)$,
+a leaf $B$ has $L$ factor $(2,0)$; their $R$ factors are $(4,1)$ and
+$(3,1)$. The leaf guards make blocks one and two actual leaves. Their
+$L$ equations impose exactly $x=f(c)$ and $y=g(c)$. All their other
+factors then agree, and block zero is uniquely $A,B,C_0$ as specified.
+This proves (OCB.18) and one lift per visible pair. Each primitive
+relation $f(c)=x$ or $g(c)=y$ is rectangular.
+
+The projection has three corners of a square and lacks $(B,B)$, so
+is not rectangular. Summing the selector weight once gives (OCB.19).
+The support of a product of nonnegative factors is the intersection
+of their supports. Intersections of rectangular binary relations,
+their transposes, and unary restrictions on two variables are
+rectangular. They cannot give this support. In particular rectangular
+completion would change the unit mass from three to four. General
+binary elimination can simply retain (OCB.19), with no contradiction.
+This is the distinction between rectangular primitives and the
+primitive-positive closure required in [Dyer–Richerby, §§3–4][DR].
+$\square$
+

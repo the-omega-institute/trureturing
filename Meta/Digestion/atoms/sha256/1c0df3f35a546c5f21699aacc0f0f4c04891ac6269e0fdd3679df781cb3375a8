@@ -1,0 +1,55 @@
+**Proposition 17.2.** The four complete endpoint losses of (17.4) equal their
+respective radii, as do the level-four endpoint losses. Uniformly for
+every $r\in[3/8,5/13]$,
+$$
+\operatorname{TV}(Q,P_{p,r})<\frac3{100},\qquad
+\operatorname{TV}(W,P_{\beta,r})<\frac1{50}.                 \tag{17.7}
+$$
+In particular all six selected projected losses are nonpositive, with
+strict nonendpoint slack greater than
+$$
+\sigma_p:=\rho_p-\frac3{100}=\frac{866183}{45562500},\qquad
+\sigma_\beta:=\rho_\beta-\frac1{50}=\frac{52}{3375}.          \tag{17.8}
+$$
+The statement retains every actually supported nonendpoint, without
+assuming $\mu(3)>0$.
+
+**Proof.** Inside the complete endpoint boxes, the endpoint TV identities
+are the signed event differences of [CLIP, Theorem 6.2; PAIRED, (11.30)].
+Equation (17.5) makes all four distances equal their radii. Grouping at level
+four loses no endpoint TV because every grouped tail atom has the same
+endpoint sign and both positive-difference events are retained.
+
+For a direct complete-tail proof of (17.7), put $l=3/8$, $h=5/13$,
+$F_p=\{w_{n,i}:n<4\}$, and $F_\beta=\{\beta\}\cup\alpha F_p$.
+Every native coordinate in these finite sets is monotone on $[l,h]$.
+The derivative signs, after positive factors are removed, are
+$(n+1)-(2n+1)r$ and $n-(2n+2)r$ at p, and
+$(n+2)-(2n+2)r$ and $(n+1)-(2n+3)r$ at suspension.
+For $n<4$ none changes sign in the interval's interior. The standalone
+beta decreases. The native tails
+$H_p(r)=t_r^4$, $H_\beta(r)=rt_r^4$ increase there. Therefore, for
+$D_p=Q,D_\beta=W$, the complete TV is bounded by
+$$
+B_s=\frac12\sum_{\omega\in F_s}
+ \max\{|D_s(\omega)-P_{s,l}(\omega)|,
+        |D_s(\omega)-P_{s,h}(\omega)|\}
+ +\frac12\{D_s(T_s(4))+H_s(h)\}.                            \tag{17.9}
+$$
+The last summand bounds the entire infinite complement, not just its
+partition mass difference. Exact substitution gives
+$$
+B_p=\frac{1226181607265976508493031867683}
+ {41458271175237999801139200000000}<\frac3{100},
+$$
+$$
+B_\beta=\frac{56912033286509571087020539}
+ {2921887678112582400000000000}<\frac1{50}.
+$$
+Projection contracts TV configurationwise, proving (17.8) and the projected
+claims. $\square$
+
+Let $b_E=Q(\beta E)-UW(E)$ and
+$a_F=W(\alpha F)-vQ(F)$, with the original positive denominators
+$U\ge3/5$, $v\ge1/3$ retained in the normalized residuals.
+

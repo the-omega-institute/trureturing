@@ -1,0 +1,30 @@
+**Definition 9.1 (deterministic sample-only prediction).** Fix
+
+$$
+Z=1/2,\qquad c=1/4,\qquad a=1/8,\qquad\eta=1/16,\qquad
+T>0,\quad L>0,\quad W>0.
+\tag{SC.25}
+$$
+
+Let $\mathcal K$ be the original controls with constant real phase,
+$k(0)=k(T)=a$, $\eta\leq k\leq c-\eta$, $|k'|\leq L$ a.e. and
+$\operatorname{TV}(k')\leq W$ in Definition 2.1's sense. Both original
+regularity alternatives are allowed. An estimator gets exact endpoint
+heights, these common upper promises and at most $N$ adaptive interior
+height queries. A query at an exact chosen time returns a value with
+bounded adversarial error $\delta\geq0$. Its only source dependence is the
+whole query transcript and matched metadata. Unlimited computation and
+exact-real storage are allowed. It outputs one complete instrument on the
+same exact-time, five-mode space. Numerical minimax loss requires an output
+on every transcript; an abstention is an incomplete acquisition, not uniform
+successful prediction.
+
+Write $R_N(\delta)$ for the infimum over deterministic estimators of their
+worst $d_{\rm op}$ error over $\mathcal K$ and all permitted errors. This
+queries the waveform source, not the quantum specimen. There is no
+uncounted programme log, generator state, quantum read, emitted stop record,
+derivative sample, exact resource total, probability-law oracle, source
+dependent seed or extra port. Retrospective query access is allowed, making
+the lower stronger than for a causal logger. This is not a minimax claim
+about every observer or about independent random noise.
+

@@ -1,0 +1,28 @@
+**Corollary 9.3 (A rational sufficient certificate).** Put
+
+$$
+r_{ij}=\frac{\omega_i\omega_j(1-q_iq_j)}{\omega_i+\omega_j},
+\tag{9.6}
+$$
+
+with value zero when both weights vanish. Then $r_{ij}\le d_{ij}$.
+Consequently $\kappa_T\le\sum_{ij\in\mathcal M}r_{ij}$ is sufficient
+for the same two-edge comparison. It is entirely rational when the
+activities and weights are rational.
+
+Proof. The smaller root $d=d_{ij}$ satisfies
+$d(\omega_i+\omega_j-d)=\omega_i\omega_j(1-q_iq_j)$ and
+$0\le d\le\min(\omega_i,\omega_j)$. If the weight sum is positive,
+division by $\omega_i+\omega_j-d\le\omega_i+\omega_j$ proves (9.6).
+Zero weights give the stated zero cases. $\square$
+
+Every deleted partition function is evaluated by multiplying the
+partition functions of its undeleted intervals. Within an interval,
+
+$$
+Z_{[a,b]}=Z_{[a,b-1]}+\lambda_bZ_{[a,b-2]},
+\qquad Z_\varnothing=1,
+\qquad Z_{[a,a]}=1+\lambda_a.
+\tag{9.7}
+$$
+

@@ -1,0 +1,89 @@
+## 5. The first unpaid identity and the failed iteration
+
+At a fixed good $C,y$, abbreviate $p_w=p_C(w;y)$, $d_w=d_C(w;y)$ and
+
+$$
+m=\sum_wp_wd_w,\qquad \sigma^2=\sum_wp_w(d_w-m)^2.
+$$
+
+Differentiation of the finite normalized sum (3.1) gives
+
+$$
+\left.\frac{d\pi_C^t(w;y)}{dt}\right|_{t=0}=p_w(d_w-m),\qquad
+\left.\frac{d^2\pi_C^t(w;y)}{dt^2}\right|_{t=0}
+=p_w\bigl((d_w-m)^2-\sigma^2\bigr).
+\tag{5.1}
+$$
+
+Indeed $Z(0)=1$, $Z'(0)=m$, $Z''(0)=\sum_wp_wd_w^2$;
+the quotient rule yields (5.1). These are finite-fiber derivatives,
+not derivatives of measures or of an infinite total loss.
+Because $p\in V_C$, the supplied balance (2.5) is exactly
+$(\pi_C^t)'|_0\in V_C$. Assuming that balance, pairing the second
+derivative with any $f\in\mathcal K_C(P)$ cancels both the constant
+and linear terms and leaves
+
+$$
+f\mathbin{\cdot}(\pi_C^t)''|_0
+=R_{C,f}(y),\qquad
+R_{C,f}(y):=\sum_{w:\,wy\in\mathsf X}
+p_C(w;y)f(w)\Delta_P(wy,0^Ly)^2.
+\tag{5.2}
+$$
+
+This is the exact first unpaid preservation equation: $R_{C,f}=0$ for
+every intrinsic $f$, almost everywhere, is required at order two.
+It is not supplied by (2.5). Under (2.5), changing the reference by a
+constant $b$ changes (5.2) by
+$-2b\sum_wp_wf(w)d_w+b^2\sum_wp_wf(w)=0$.
+Thus this unpaid equation is also reference independent under the
+already stated first-order premise.
+
+The precise all-order condition at the fiber is
+
+$$
+\sum_wp_wf(w)d_w^k=0
+\quad\text{for every }f\in\mathcal K_C(P),\quad k=0,1,2,\ldots.
+\tag{5.3}
+$$
+
+For $k=0$ the factor is the constant polynomial one.
+If (3.4) holds there, pair $f$ with the unnormalized exponential curve
+and differentiate to obtain (5.3). Conversely (5.3), together with
+the convergent exponential series in this finite set of coordinates,
+makes $\sum_wp_wf(w)e^{td_w}=0$ for every real $t$ and every $f$.
+Division by $Z_C(t;y)>0$ yields membership in $V_C$ for every real $t$.
+Equivalently, if there are $s$ distinct compatible scores, grouping
+them and applying Vandermonde uses the moments $0\le k<s$.
+Finite bases and countably many intervals and orders permit simultaneous
+conull sets. This finite-fiber equivalence does not infer those moments
+from finite hidden rank.
+
+The tempting iteration would fix $y$ and replace $f$ by
+$g_y(w)=f(w)d_C(w;y)$. Equation (2.5) says only
+$\sum_wp_C(w;y)g_y(w)=0$ at that matching exterior.
+To apply (2.5) again one needs the fixed vector $g_y$ to belong to
+the original $\mathcal K_C(P)$, which requires, after translation,
+
+$$
+\lambda M_u\left(\sum_wf(w)d_C(w;y)M_w\right)M_v\mathbf1=0
+\quad\text{for every finite binary context }u,v.
+\tag{5.4}
+$$
+
+By (1.5) it suffices to check its original collar, but those are still
+cross-context equations. A single matching conditional integral is
+not (5.4); the coefficients also depend on the chosen exterior.
+The localized theorem allows a fixed intrinsic $f$ times an exterior
+function, and does not remove this missing membership requirement.
+
+Each $R_{C,f}(y)$ is a finite measurable number on a good fiber.
+The first-order $L^1$ estimate (2.3), by itself, is not a bound for
+the square. The present argument uses no exterior integral estimate
+for $R_{C,f}$ and exchanges no second derivative with an exterior
+expectation. It makes no claim that square integrability is impossible
+to derive from the supplier's additional bounds.
+Even a nonzero $R_{C,f}$ would demonstrate departure of this
+tilt from $V_C$, not a nonzero original response or a finite strict
+certificate. Paying order two alone would still leave higher orders.
+

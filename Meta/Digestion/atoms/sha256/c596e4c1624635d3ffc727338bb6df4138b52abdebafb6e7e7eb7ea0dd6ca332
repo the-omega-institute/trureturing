@@ -1,0 +1,16 @@
+**定理 47.2（否定的对偶与混合纤维）。** 有
+
+$$
+q_\exists(\Omega\setminus A)=Y\setminus q_\forall(A),\qquad
+q_\forall(\Omega\setminus A)=Y\setminus q_\exists(A),
+$$
+
+以及
+
+$$
+\partial_qA=q_\exists(A)\setminus q_\forall(A)
+=q_\exists(A)\cap q_\exists(\Omega\setminus A).
+$$
+
+证明（47.2）。一个非空纤维有未选点，当且仅当它不全在 $A$；全为未选点，当且仅当它没有选点。这逐纤维给两式。非空性还给 $q_\forall(A)\subseteq q_\exists(A)$；取差并用第一式即得混合纤维的两种表达。空载体上两边都为空，同样成立。$\square$
+

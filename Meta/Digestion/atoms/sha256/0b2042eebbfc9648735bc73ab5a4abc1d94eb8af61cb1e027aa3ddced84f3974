@@ -1,0 +1,28 @@
+## 317. The whole six-edge source pair is unique
+
+Name a second edge of value greater than m as U. Since C,D<m-2,
+U lies outside M,C,D,Z. The source's other axis must be the sixth
+label V: it is distinct from M,C,D by the frame hypothesis and cannot
+be U or Z, which exceed the maximal selected value. Thus v<=m and
+sigma=(M,C,D,V,C,D).
+
+If v<=m-2, Section 310 shows that every other flat would select the
+largest of {C,D,V}, with the remaining two as its transverse pair.
+Its other selected axis cannot be M (the source uses its only pi
+slot), U,Z (unselected), either transverse label, or the already used
+largest low label. Four-distinctness and the six actual labels exhaust
+all possibilities, so no second flat exists.
+
+If v>m-2, every flat has transverse pair {C,D}, since M,V,Z,U have
+no flat transverse occurrence. Its distinct selected axes can only
+be M and V: U,Z are unselected, and C,D belong to its pair. Both M
+and V pi slots are already used by sigma. Again no second flat exists.
+
+Finally any owner with pair {C,D} has two distinct axes from
+{M,V,Z,U}. Since z,u>m>=v, their shifted product is at least
+(m-1)*(v-1)>=(c+d)^2. Such an owner would be flat and hence is sigma.
+The one-flat and one-CD-owner conclusions are global actual-owner
+statements. They do not eliminate the remaining changed-pair source
+faces or prove six-reservoir realization. QED.
+
+

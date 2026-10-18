@@ -1,0 +1,37 @@
+### 31.7. 常数无限纤维的完整合法实例
+
+任取 $a_0\in\mathbb R,k\ne0$，对所有满足 $0<k/\lambda<1$ 的 $\lambda$ 置
+
+$$
+p=\frac k\lambda,\qquad
+P_\lambda=\begin{pmatrix}p&p\\1-p&1-p\end{pmatrix},\qquad
+g_\lambda(t)=\lambda,\qquad d_\lambda=a_0-\lambda.
+\tag{31.23}
+$$
+
+所有源元正、迹一、行列式零、秩恰一，增益非零。若 $k>0$，参数域是 $\lambda>k$；若 $k<0$，参数域是 $\lambda<k$。例如 $\lambda=2k,3k$ 对两种符号都合法。不同 $\lambda$ 给不同完整目标。沿同一个实际动作词，完整迹列是
+
+$$
+(\tau_0,\ldots,\tau_7)
+=(1,1,1+p,1+p,1+2p,1+2p,1+2p,2+3p).
+\tag{31.24}
+$$
+
+八个物理方程逐项为
+
+$$
+\begin{aligned}
+y_0&=(a_0-\lambda)+\lambda=a_0,\\
+y_1&=(a_0-\lambda)+\lambda=a_0,\\
+y_2&=(a_0-\lambda)+\lambda(1+p)=a_0+k,\\
+y_3&=(a_0-\lambda)+\lambda(1+p)=a_0+k,\\
+y_4&=(a_0-\lambda)+\lambda(1+2p)=a_0+2k,\\
+y_5&=(a_0-\lambda)+\lambda(1+2p)=a_0+2k,\\
+y_6&=(a_0-\lambda)+\lambda(1+2p)=a_0+2k,\\
+y_7&=(a_0-\lambda)+\lambda(2+3p)=a_0+\lambda+3k.
+\end{aligned}
+\tag{31.25}
+$$
+
+归一记录为 $(0,0,k,k,2k,2k,2k,\lambda+3k)$。这里 $E=kt/2,O=k(t-1)/2$，所以 $A=D=0,U=V=k,W=0$。整个常数逆证明式 (31.23) 恰穷尽五动作前缀纤维；式 (31.21) 不添限制，所以也穷尽时钟六的整个纤维。非恒定仿射竞争者被同一观察 $A=0$ 排除。实际第八个 $M$ 用系数一恢复 $\lambda$，分开整个连续族。这证明此固定词的该前缀确需最后一读，不证明所有策略的八读全局最少，也不是原根 $L_7$ 障碍。
+

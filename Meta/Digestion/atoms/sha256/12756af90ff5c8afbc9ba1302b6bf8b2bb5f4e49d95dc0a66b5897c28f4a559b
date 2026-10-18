@@ -1,0 +1,31 @@
+## 405. At least two cheap axial-P owners
+
+The source tau has three P slots, is not a five-slot owner, is not a
+cheap axial-P owner, and has P expense greater than pi. Every owner
+with at least four P slots has P expense greater than 4*pi/3 by rows
+seven through nine. Hence there can be at most two such owners:
+three of them together with tau would already spend more than 5*pi.
+In particular,
+
+    f<=2.                                             (405.1)
+
+There are at least six genuine original owners. Indeed the six actual
+edge angle sums total 12*pi, the unique flat sigma contributes 2*pi,
+and every genuine paired tetrahedron has total six-slot angle strictly
+less than 2*pi. Therefore the genuine count g satisfies
+
+    10*pi < 2*pi*g, so g>=6.                           (405.2)
+
+Suppose a<=1. Equations (404.4) and (405.1) force a=1 and f=2. By (405.2), besides
+these three owners and tau, there are at least two further genuine
+owners. Each is neither cheap axial-P nor five-slot. The role table
+shows that every such genuine owner spends strictly more than
+2*pi/3 on P. Counting only the two five-slot owners, tau, and these
+two further owners gives
+
+    total genuine P expense
+      >2*(4*pi/3)+pi+2*(2*pi/3)=5*pi,
+
+contradicting (404.2). Thus a>=2. Equation (404.4) also directly gives a>=3
+when f=0.
+

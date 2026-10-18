@@ -1,0 +1,14 @@
+### 定理 57.4（地址尺度与事件尺度不可对应）
+
+端点事件距离与地址尺度的比值为 \(3^{4m-2h-4}\)。故不存在统一常数 \(c,C\) 与正的层内重标定 \(a_h,b_h\)，使
+\[
+c\,a_hd_h^A\le b_hd_h^E\le C\,a_hd_h^A
+\]
+对全部 \(h\) 和全部源对成立。故一维事件编码不等于三维地址几何的 faithful representation。
+
+#### 证明边界
+
+若统一双 Lipschitz 常数存在，端点距离比值必须在 \(h\) 上有界，但 \(m=2^h\) 时上式无界。证毕。
+
+这些命题只证明给定 finite source family 上 \(q\) 是高度非注入的 readout，且 hidden fiber 随 \(h\) 指数增长。它们不推出物理空间维数下界，也不否定另一个与物理度量相容的三维表示。若要把 \(q\) 或 \(Z^E\) 解释成场的几何坐标，仍必须另给 metric、measure、operator domain、clock 和 source-to-geometry correspondence。来源：[FIB ATOM RECURSIVE HOLOGRAPHIC BOUNDARY GEOMETRY CONTINUATION III §90](https://github.com/the-omega-institute/trureturing/blob/dev/docs/develop/theory/FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III.md)，dev commits 205ab4d1ce/3779de5fbb，merge #15838。
+

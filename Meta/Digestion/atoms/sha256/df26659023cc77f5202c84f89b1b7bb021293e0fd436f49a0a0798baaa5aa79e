@@ -1,0 +1,49 @@
+**Definition 2.1 (Finite extension relaxations).** Let $n\ge1$ be an
+integer and $P_n$ the orthogonal projector onto
+$\operatorname{Sym}^n(O)$, where $O=\mathbb C^5$. A normalized
+output Bose extension of $\chi(x)$ is an operator $\Omega$ on
+$I\otimes O^{\otimes n}$ satisfying
+
+$$
+\begin{gathered}
+\Omega\succeq0,\quad \operatorname{tr}\Omega=1,\quad
+(I_I\otimes P_n)\Omega(I_I\otimes P_n)=\Omega,\\
+\operatorname{Tr}_{O_2\cdots O_n}\Omega
+=\operatorname{flip}(\chi(x)).
+\end{gathered}
+\tag{2.1}
+$$
+
+The flip in (2.1) only changes output-first Choi order to input-first
+extension order. Define $\mathcal R_n$ to consist of $\chi(x)\in
+\mathcal W$ satisfying the full marginal (1.9) and admitting such an
+extension. Define $\mathcal R_n^{\rm P}$ by also imposing
+
+$$
+\Omega^{\Gamma_{O_{n-\lfloor n/2\rfloor+1}\cdots O_n}}
+\succeq0.
+\tag{2.2}
+$$
+
+Thus the split is $IO^{\lceil n/2\rceil}\mid
+O^{\lfloor n/2\rfloor}$, exactly as in NOP. The partial transpose
+is applied to the embedded extension. Positivity of the two-body
+partial transpose alone is not (2.2). Bose support is stronger than
+permutation invariance of a mixed operator; (2.1) requires the support
+itself to lie in the symmetric subspace.
+
+Let $L_n$ and $L_n^{\rm P}$ be the minima of $f(x)$ on these two
+sets. Equivalently minimize $z\ge0$ subject to (1.9), (2.1), the
+appropriate condition (2.2), and all thirty LMIs
+
+$$
+zI_5-\mathcal H_J(x)\succeq0,\qquad
+zI_5+\mathcal H_J(x)\succeq0
+\quad(J\in\mathcal J_{15}).
+\tag{2.3}
+$$
+
+The same $x$ and marginal occur in every inequality. The extension
+indices are mathematical certificate variables, not additional source
+copies or future actions.
+

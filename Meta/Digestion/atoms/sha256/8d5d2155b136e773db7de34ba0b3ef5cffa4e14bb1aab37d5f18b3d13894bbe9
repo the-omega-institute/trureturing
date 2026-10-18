@@ -1,0 +1,53 @@
+**定理 7.4（finite all-valid-name initialization）。** After Lemma 7.2 returns $h$, compute $P,S$ as in Definition 3.1 and request once
+
+$$
+b_f=\max(b_c,\ h+P+80,\ 4K+96).
+$$
+
+This yields, by finite rational and integer operations alone, either a valid tiny/zero mode or a valid deficit word. Closing the archive afterward gives Theorem 5.1's complete autonomous service, pointwise on every neutral-free plateau history.
+
+**证明。** At final $e=2^{-b_f}$, form the two clipped losses $l_1,l_2$ and the seed candidates
+
+$$
+d_3'=g(l_1,l_2),\qquad d_4'=g(l_2,d_3').
+$$
+
+On the unit square the derivative bounds for $g$ give
+$|d_3'-\delta_3|\le6e$ and $|d_4'-\delta_4|\le9e$.
+Since both true seeds are at least $\sigma/2$, their relative error is at most $18e/\sigma$. The inequality
+$e\le\sigma2^{-P-80}$ makes this much smaller than $2^{-P}$. Round the positive candidates downward with $P$ significant fractional bits as in Proposition 3.2. Combining their input and rounding errors gives relative error less than $\alpha=2^{1-P}$. They remain ordered and at least $2^{-h-2}$, and meet the finite mantissa/exponent range tests.
+
+Before normalizing directions, form outward rational intervals
+
+$$
+I_i=\left[\max(0,\|y_i\|^2-3e),\ \min(1,\|y_i\|^2+3e)\right].
+$$
+
+Their product interval $I_1I_2=[a,b]$ contains $q_3^2$ and has width at most $12e$. Select zero if
+$b\le(\epsilon/4)^2$; otherwise select the positive branch if
+$a\ge(\epsilon/8)^2$. At the given final precision at least one guard holds: if both failed, the interval width would exceed
+$3\epsilon^2/64$, contrary to $12e<3\epsilon^2/64$. Boundary equalities are accepted. A zero decision gives
+$q_j\le q_3\le\epsilon/4$ for every $j\ge3$. A positive decision gives
+$q_3\ge\epsilon/8$, and therefore $q_1,q_2\ge\epsilon/8$. None of these tests is a real zero or sign oracle.
+
+Use the directions of $Z,y_1,y_2$ in the positive branch. They are nonzero, since their errors are much smaller than $\epsilon/8$. For nonzero $u$ and an approximation $v$,
+
+$$
+\left\|\frac v{\|v\|}-\frac u{\|u\|}\right\|
+\le\frac{2\|v-u\|}{\|u\|}.
+$$
+
+Thus Lemma 7.3 bounds their true-direction errors by
+$144\sqrt e/\epsilon$. To implement normalization finitely, write the relevant rational vector as a nonzero integer vector $n$ times one positive common factor, put $Q=\sum n_i^2$, and for each coordinate find the largest integer $z_i\in[0,2^{S+5}]$ with
+
+$$
+z_i^2Q\le n_i^2\,2^{2S+10}.
+$$
+
+Attach the sign of $n_i$ and round the represented coordinate
+$z_i2^{-(S+5)}$ to the nearest $S$ grid. The initial coordinate error is less than $2^{-(S+5)}$ and this final rounding contributes at most $2^{-S-1}$. The total vector error from finite normalization is less than $2\,2^{-S}$. Since $b_f\ge4K+96$,
+$144\sqrt e/\epsilon\le144\epsilon2^{-48}<2^{-S}$.
+The combined direction error is therefore less than $4\,2^{-S}$, and the finite integer coordinate range holds.
+
+Dot products, clips, cross products, seed products, signs of rational numerators, range tests and the displayed integer-square searches have finite executions. The source truth and archive promise are hypotheses; syntax and interval arithmetic alone do not certify them. The theorem is pointwise total because $D>0$ in the stated domain, not because a finite name prefix decides neutrality.
+

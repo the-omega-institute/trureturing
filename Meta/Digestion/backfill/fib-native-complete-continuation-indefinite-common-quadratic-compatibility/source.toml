@@ -1,0 +1,5 @@
+source_id = "fib-native-complete-continuation-indefinite-common-quadratic-compatibility"
+path = "docs/develop/theory/FIB_NATIVE_COMPLETE_CONTINUATION_INDEFINITE_COMMON_QUADRATIC_COMPATIBILITY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

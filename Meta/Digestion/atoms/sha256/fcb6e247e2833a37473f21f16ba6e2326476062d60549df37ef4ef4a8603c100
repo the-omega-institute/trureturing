@@ -1,0 +1,39 @@
+**Lemma 57.9 (a two-unit weighted obstruction with literal witnesses).** For mixed composition $ab>0$, $n\ge3$, or homogeneous composition $ab=0$, $n\ge4$, every finite positive-identification tree has worst non-alpha weight at least two. Consequently
+
+$$
+D_h\ge A+2
+\tag{57.18}
+$$
+
+at every feasible depth in these ranges.
+
+Proof. First consider six three-leaf macro trees with two occurrences of block $Z$ and one of block $W$, where $Z$ is either $X_d$ or $X_{d+1}$ and $W$ is the other. At either root child their actual subtree multiset is
+
+$$
+\{Z,Z,W,(Z,Z),(Z,W),(W,Z)\}.
+\tag{57.19}
+$$
+
+For any nonempty raw address $u=cv$, if $r_Z(v)\ne\alpha$, its two copies in (57.19) already give a non-alpha reply bucket of size at least two. If $r_Z(v)=\alpha$, then $v$ is nonempty, and deleting its first letter leaves a non-alpha address of $Z$ by (57.5). Among the three pairs in (57.19), two have $Z$ on the side selected by that first letter. They therefore give that same non-alpha reply, again in a bucket of size at least two. The root itself gives six common branch replies. Thus every address has some non-alpha reply realized by at least two different candidates.
+
+For the five homogeneous four-leaf shapes define
+
+$$
+\begin{aligned}
+S_1&=(((Z,Z),Z),Z),&S_2&=((Z,(Z,Z)),Z),\\
+S_3&=((Z,Z),(Z,Z)),&S_4&=(Z,((Z,Z),Z)),\\
+S_5&=(Z,(Z,(Z,Z))).&&
+\end{aligned}
+\tag{57.20}
+$$
+
+At either root child the subtree multiset is
+$\{Z,Z,(Z,Z),((Z,Z),Z),(Z,(Z,Z))\}$.
+The two copies of $Z$ give the same argument when $r_Z(v)\ne\alpha$. When it is alpha, the pair $(Z,Z)$ and one of the two triples have $Z$ on the side selected by the first letter of $v$; both reply at the shortened non-alpha address. The root is again a repeated branch reply. This verifies the same obstruction for all raw addresses, rather than only at macro leaves or a selected positive-height enumeration.
+
+An identification tree with worst weight at most one cannot operate on either core family. Queries which return alpha on every candidate do not shrink that family. At the first other query there is a non-alpha bucket containing at least two candidates. Its query has spent their only non-alpha allowance. From that node all their subsequent replies would have to be alpha, so the deterministic all-alpha continuation could not separate those two distinct candidates into correct leaves. This is a decision-tree contradiction, not a vote about a proposed strategy.
+
+For any larger mixed composition choose two leaves of a majority colour and one of the other colour, and put the six alternatives into one fixed ordered context. Fill all remaining leaves with the remaining prescribed labels. For a larger homogeneous composition similarly put the five four-leaf shapes into a fixed context. Inside the hole the same raw-address obstruction holds. Outside it all candidates have the same reply: a common alpha gives no separation, and any common non-alpha also has a bucket of size at least two. The embedded candidates have the required exact common composition. Thus the lower bound transfers without changing their actual readout port.
+
+Finally a policy costing at most $A+1$ in these ranges would be below $B$ by (57.8). Theorem57.7 would yield an identification tree of weight at most one, contradicting the cores. Since the primary cost is integral, (57.18) follows. In particular static existence of an $A$-set is not a universal $A$ acquisition algorithm. □
+

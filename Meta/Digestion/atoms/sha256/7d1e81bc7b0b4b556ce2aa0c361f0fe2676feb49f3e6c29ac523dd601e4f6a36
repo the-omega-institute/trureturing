@@ -1,0 +1,71 @@
+**Lemma 3.2 (kernel condition with arbitrary inaccessible multiplicity).**
+In either regime one actual low live-bearing label has a two-dimensional
+fibre and one coefficient ray TA.11. Every supported later-failure
+effect at that label annihilates
+
+$$
+k_K=\left(1,-\frac{b_Kc_1}{h_1c_0},
+                 -\frac{d_Kc_2}{h_2c_0}\right)^T,
+\qquad\ker K(c)=\mathbb Ck_K.
+\tag{TA.18}
+$$
+
+Consequently a positive multiple of $B_\epsilon$ can be attached only if
+$b_\epsilon k_K=0$. For nonzero coordinates $c_1,c_2$ this is
+
+$$
+\frac{c_2}{c_1}=t_\epsilon,
+\qquad
+t_\epsilon=-\frac{b_Kh_2(b_\epsilon)_1}
+                   {d_Kh_1(b_\epsilon)_2}.
+\tag{TA.19}
+$$
+
+Neither coordinate may vanish alone in this equation. The kernel
+condition is also sufficient for adjoining that spectral failure to a
+given single-ray live map by one full TP decoder, as constructed in §8.
+
+Proof. The matrix of $K(c)$ is
+
+$$
+\begin{pmatrix}
+c_0h_0&c_1a_K&c_2c_K\\
+c_1b_K&c_0h_1&0\\c_2d_K&0&c_0h_2
+\end{pmatrix}.
+\tag{TA.20}
+$$
+
+Its determinant is $h_0h_1h_2c_0(c_0^2-\theta c_1^2-\omega c_2^2)=0$,
+whereas its lower-right minor is $c_0^2h_1h_2\ne0$. Its rank is two.
+For completeness, the common-decoder proof underlying RH Lemma 8.2
+also applies to the strong real-null products. Write supported encoder
+matrices $C_j:\mathbb C^3\to\mathbb C^d$ and compressed live-decoder
+matrices $R_i:\mathbb C^d\to\mathbb C^3$. A nonzero product has rank
+two, excluding $d=1$. For $d=2$, choose a nonzero $R_{i_0}C_{j_0}$.
+Then $R_{i_0}$ is injective and $C_{j_0}$ is onto. Every nonzero
+$C_j$ gives a rank-two $R_{i_0}C_j$ with the same image. The left
+null line of TA.20 is
+
+$$
+\left(1,-\frac{a_Kc_1}{h_1c_0},
+          -\frac{c_Kc_2}{h_2c_0}\right)^T.
+\tag{TA.21}
+$$
+
+All its fixed amplitudes are nonzero, so the image fixes the coefficient
+ray. Injectivity therefore makes all nonzero $C_j$ proportional to
+$C_{j_0}$. For any nonzero $R_i$, surjectivity makes $R_iC_{j_0}$
+nonzero. Its right kernel is $\ker C_{j_0}$; TA.18 fixes the same
+coefficient ray. This proves one ray for the whole actual branch,
+without assuming a single encoder Kraus matrix or an isometric decoder.
+
+Every encoder matrix kills $k_K$. Every later effect obtained using
+that same decoder is a sum $\sum_jC_j^\dagger D_fC_j$, where $D_f$
+is the decoder's total failure effect, so it kills $k_K$ too. TA.19
+is its explicit scalar equation. Both row components in TA.15 are
+nonzero, so if either $c_1$ or $c_2$ vanishes, the equation forces
+both to vanish, which contradicts TA.11. The argument applies to a
+coarse CP branch with unacquired integral multiplicity through its
+finite-dimensional Kraus representation, and almost everywhere in the
+admitted measurable class. $\square$
+

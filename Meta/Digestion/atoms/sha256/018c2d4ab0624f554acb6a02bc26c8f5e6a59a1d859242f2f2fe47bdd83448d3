@@ -1,0 +1,55 @@
+**Proposition 7.3 (credited actual core reduction).** Let three pairwise
+distinct fixed worlds on the full ancestor all satisfy $f_h(7)=0$.
+Their triple has $L_2$ exactly when, for each sixth action $E$,
+some pair has equal drift and equal $v_E$. If the triple has $L_2$
+and no proper pair has $L_2$, all three drifts are one common $d$ and
+
+$$
+\begin{gathered}
+d\notin\{0,24,48,c_0,y,\zeta\},\qquad
+f_h(i)\ne0\quad(0\le i\le6),\\
+\operatorname{sgn}f_1(6)=\operatorname{sgn}f_2(6)
+ =\operatorname{sgn}f_3(6)\ne0,\\
+v_J(W_1)=v_J(W_2)\ne v_J(W_3),\qquad
+v_M(W_1)=v_M(W_3)\ne v_M(W_2)
+\end{gathered}
+\tag{7.12}
+$$
+
+after relabeling. Sources are pairwise distinct, as are the one-dimensional
+polynomial subspaces containing the gains.
+
+**Proof.** In an actual sixth child every seventh response is its
+world's drift, irrespective of the last action. The child has $L_1$
+exactly when it contains an equal-drift pair. This proves the stated
+equivalence with every response quantifier. If the drifts are not
+all equal, there is at most one equal-drift pair; it must collide
+under both sixth actions, so it itself has $L_2$. Minimality therefore
+forces common drift.
+
+If that drift equals any ancestor reading, positivity forces every
+gain to vanish there. For clocks $0,1,2,3$, Lemma 7.2's fixed-$M$
+inverse contradicts $L_2$. For clock $4$ or $5$, its at-most-two
+world bound contradicts the three distinct worlds. Conversely any
+ancestor zero forces drift equal to its reading. This proves the
+exceptional exclusions and nonvanishing through clock five.
+
+For either action $\operatorname{sgn}(v_E-d)=\operatorname{sgn}f(6)$.
+If the three signs do not all agree, either there is no colliding
+pair or the only possible pair for either action is the one repeated
+sign pair. In the latter case $L_2$ forces that proper pair to collide
+under both actions, a contradiction. If all signs are zero every
+proper pair has $L_2$. Thus their common sign is nonzero. If one
+sixth action were constant on all three worlds, a collision pair for
+the other action would again give a proper $L_2$ pair. Each action
+therefore has exactly one pair and one singleton, and the pairs must
+differ. Their intersecting endpoint gives precisely (7.12).
+
+If two gains were proportional, their common nonzero constant term
+$-d$ forces equality. The first two positive trace equations then
+fix $j,\ell$, and the nonzero fourth sample fixes $r$, so the worlds
+would coincide. If two sources agreed, the first four readings with
+common drift would fix the gain by interpolation, again giving the
+same world. This proves only the stated restricted pairwise diversity.
+∎
+

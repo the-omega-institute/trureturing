@@ -1,0 +1,17 @@
+**引理 4.1（统一中心及线段包围）。** 固定 $0<\delta\le1/8$。对全部 $y\in\mathbb R^3$，置
+
+$$
+k(y)=1+|y|^2-\delta^2>0,\qquad C_\delta(y)=\frac{y}{k(y)}.
+$$
+
+则 $|C_\delta(y)|\le f_\delta$。若 $|x|\le1,|y-x|\le\delta$，则全部 $t\in[0,1]$ 有 $|tx-C_\delta(y)|\le f_\delta$。
+
+证明。写 $r=|y|$，平方 $(r-\sqrt{1-\delta^2})^2\ge0$ 给 $k(y)\ge2r\sqrt{1-\delta^2}$，包括 $r=0$。若 $r\ge\delta$，则 $k\ge1$，兼容性给 $2y\cdot x\ge|x|^2+r^2-\delta^2$，从而
+
+$$
+|x-C_\delta(y)|^2-|C_\delta(y)|^2
+\le\frac{k-1}{k}(|x|^2-1)\le0.
+$$
+
+平方距离在 $t\in[0,1]$ 上凸，两个端点已受界，故全线段受界。若 $r<\delta$，则 $|x|<2\delta$、$|C_\delta(y)|\le\delta/(1-\delta^2)\le2\delta$，全线段距离至多 $4\delta\le1/2\le f_\delta$。证明没有使用方向、符号或像成员判断。
+

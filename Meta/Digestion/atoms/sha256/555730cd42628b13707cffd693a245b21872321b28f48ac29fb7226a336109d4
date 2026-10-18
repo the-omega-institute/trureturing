@@ -1,0 +1,25 @@
+**Definition 92.1 (terminal-scale endpoint mode).** Fix $\eta=2^{-10}$ and output precision ten as constants of this mode. Select $h\geq0$, $\sigma=2^{-h}$ with $\sigma\leq D\leq4\sigma$. A source-aware selection can take the largest dyadic at most $\min(D,1)$. Round each true loss to the nearest $\eta\sigma$ grid, half ties toward positive infinity, and clip to $[0,1]$. Store its nonnegative integer significand $a_1,a_2$. Store on the $\eta$ grid the nine coordinates, in phase order $3,4,5$ and coordinate order $1,2,3$, of
+
+$$
+A_3=x_3,\qquad A_4=Vx_1,\qquad A_5=UVx_2.
+$$
+
+Each true anchor has norm at most one. The semantic contract allows loss errors at most $\eta\sigma$ and anchor-vector errors less than $2\eta$; source-aware coordinate rounding gives the tighter error less than $\eta$. The acquired selection in §94 satisfies the broader contract.
+
+The fixed eight-bit mode is $01101110$. Follow it by two unsigned thirteen-bit big-endian significands and nine twelve-bit big-endian offsets $n+1025$ for coordinate integers $-1025\leq n\leq1025$. These fields, including the mode, occupy exactly $142$ bits. The final field is the nonempty canonical binary expansion of $h+1$, including its leading one, through the existing complete-word end boundary. Thus, with $b=\lfloor\log_2(h+1)\rfloor+1$, the exact numerical length is $142+b$.
+
+The parser consumes the entire finite word. It rejects a wrong mode, nonbinary symbols, incomplete fixed fields, an empty or leading-zero terminal scale, significands outside $[0,4097]$, offsets outside $[0,2050]$, reconstructed losses outside $[0,1]$, or $a_1+a_2\notin[512,8192]$. The loss-above-one test is $a_i\leq2^{h+10}$; bit-length comparison can avoid expanding a larger integer than needed for that test. Installation still pays all scale expansion.
+
+The start of the scale field is fixed at bit $143$; its end is the supplied word end. No separately supplied length or control field occurs. A further binary suffix becomes scale digits; deleting some terminal digits may produce a different valid scale. This format promises parsing, not corruption detection from every suffix alteration. Incomplete fixed fields and an absent scale are rejected. Nonbinary trailers are invalid. The stronger prefix format below instead fixes the scale boundary internally and rejects all trailing data.
+
+Every semantically selected word passes the tests. Each loss is at most $D\leq4\sigma$; the source-aware rounding and the acquired bounds in §94 give $a_i\leq4097$. The total true loss in grid units is between $1024$ and $4096$; two loss errors of at most one unit give the looser tested interval. True coordinates have magnitude at most one, and the raw acquired coordinate error is less than $\eta$ before half-grid rounding, giving $|n|\leq1025$. Clipping losses uses a grid containing both zero and one. These structural tests establish finite ranges, not source truth or provenance.
+
+The reused $D\geq c_0/N$ and $\sigma\geq D/4$ give
+
+$$
+h\leq\log_2(4N/c_0),\qquad
+142+b\leq\log_2\log_2N+O_{L,d_0}(1).
+$$
+
+Every source-dependent numerical bit is present; $E=1/2$, $\eta$ and the output precision are fixed mode constants. The represented $h$ is a finite integer, not an exact-real exponent. The fixed number of possibilities for the other fields and $O(\log N)$ possible scales also give an $O(\log N)$ upper on covering cardinality. Together with Corollary 90.3 and the evaluator in §93 this proves Theorem 89.2.
+

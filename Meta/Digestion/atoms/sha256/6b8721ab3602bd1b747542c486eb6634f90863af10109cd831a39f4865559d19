@@ -1,0 +1,90 @@
+**Theorem 5.2 (Exact signature radius and a lawful witness).** For every
+$k\ge1$ and either $j\in\{0,1\}$,
+
+$$
+\rho_{k,j}^{\mathrm{sig}}=2^{k+1}-1=2M+1,
+\qquad M=2^k-1.
+\tag{5.1}
+$$
+
+The lower-bound witness is a lawful deterministic protocol making
+exactly $k$ paid calls on every branch. Its joint-law-only objective
+nevertheless has a radius-zero realization.
+
+Proof. Theorem 4.1 gives the upper bound for every tree. For the lower
+bound, take the complete binary read tree of depth $k$, with its $M$
+read nodes enumerated $v_0,\ldots,v_{M-1}$ in any fixed order. Set
+
+$$
+\phi_*=1-j,\qquad q=q_{j,\phi_*}=j,
+\qquad 2q+\phi_*=j+1,
+\tag{5.2}
+$$
+
+and give node $v_i$ the actual integer address
+
+$$
+t_i=2(q+1+i)+\phi_*,\qquad 0\le i<M.
+\tag{5.3}
+$$
+
+In phase $\phi_*$, the whole-tree queried edges form one path on the
+vertices $q+1,\ldots,q+M+1$, and the distinguished target $q$ is isolated.
+Every node is a separator in the other phase. Label every leaf by the
+finite return state $a_0$. This is a lawful fixed tree on actual integer
+addresses, ignoring the seed and making exactly $k$ paid calls on every
+formal branch. A one at a separator can occur on a formal branch only;
+the rule is still defined there.
+
+Consider any assignment preserving its entire signature. Parities are
+fixed, so write $b_i$ for the active edge left endpoint of $v_i$ in
+phase $\phi_*$. For each $0\le i<M-1$, the original signature identifies
+the plus slot of $v_i$ with the minus slot of $v_{i+1}$. Preservation
+therefore forces
+
+$$
+b_i+1=b_{i+1}.
+\tag{5.4}
+$$
+
+The occupied vertices are consequently the complete consecutive interval
+$[b_0,b_0+M]\cap\mathbb Z$. The distinguished target was separate from
+every one of these slots, so $q$ cannot belong to that interval. Hence
+
+$$
+b_0\ge q+1\qquad\text{or}\qquad b_0+M\le q-1.
+\tag{5.5}
+$$
+
+In the first case the last node address is at least
+
+$$
+2(b_0+M-1)+\phi_*\ge2(q+M)+\phi_*=j+2M+1.
+\tag{5.6}
+$$
+
+In the second case the first node address is at most
+
+$$
+2b_0+\phi_*\le2(q-M-1)+\phi_*=j-2M-1.
+\tag{5.7}
+$$
+
+Thus some address has distance at least $2M+1$ from the unchanged $j$.
+When $M=1$, there is no equation (5.4) to impose, but the single edge's
+two vertices still form the stated interval and (5.5)--(5.7) still apply.
+The oriented slots force (5.4); reflecting an edge by interchanging its
+slots does not preserve the required signature. Translating the target
+with the path is also forbidden. Formula (5.2) checks both endpoints:
+$j=0$ uses phase $1$ and target spin $S_0$, while $j=1$ uses phase $0$
+and target spin $S_1$. This proves the lower bound and hence (5.1).
+
+Finally this witness always has $O=a_0$, $D=1$, and $N=k$. Its joint
+law of $(u,H_j,O,D,N)$ can instead be realized by reading the actual
+address $j$ exactly $k$ times, paying for every occurrence, ignoring all
+replies, and returning $a_0$. This replacement uses radius zero, keeps
+the original $J_p$ and actual $H_j$, and leaves those three statistics
+constant with their same values, jointly with every unchanged independent
+seed. It need not have the witness signature. The example establishes
+no positive lower bound for the joint-law-only objective. $\square$
+

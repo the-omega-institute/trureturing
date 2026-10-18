@@ -1,0 +1,26 @@
+**Definition 13.1 (original material and completed event coordinate).** Keep
+Assumption 1.2's one $G_{\mathrm{gc}}$, original initialization, code,
+current owners, parked client, verifier and INITIAL consumer. For any
+actual cut $x$, let
+
+$$
+A_{55}(x)=\sum_{i=0}^{55}\#\operatorname{Cells}_i(x).
+$$
+
+Here a cell is identified by its actual port and creation-chain position.
+Count blank cells, separators, status cells, fixed boundary cells, old
+counter versions and all retired material. Ports56–63 and annex64–73
+are excluded from this particular count; their actual material and costs
+are still retained by the full state. Thus $A_{55}$ is a function of
+original tape material already in $O^+$, not an added readout or an actor
+permission. Let $n(x)$ remain the actual native receipt tally.
+
+At completed counter boundaries write $\mu(x)$ for CAP's current
+committed unified-event count $m$. Use its actual selected old/new phase
+rule and complete counter/index state, not a descriptor ordinal, a
+historical counter chosen as current, or the native receipt tally.
+Acknowledged outer Ready boundaries and completed original-service
+boundaries have this interpretation; a frozen journal helper keeps its
+already selected count. The allocation argument below does not require
+decoding $\mu$ at intermediate cuts.
+

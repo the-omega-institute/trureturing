@@ -1,0 +1,61 @@
+### 81.3. Plane chart: finite quadratic seeds
+
+Rotate about \(e\) so that \(\boldsymbol K=(-b,k,0)\), where
+\(k=\sqrt{3-b^2}>0\). In the plane chart write
+\[
+ v=(x,ky,0),\quad F=a+(0,0,kt_p),\quad
+ x^2+k^2y^2=a^2+k^2t_p^2=1.
+\]
+The excluded axis is exactly \(y=0\). Set \(p=x/y\), so
+\(y^2=1/(p^2+k^2)\), without choosing the sign of \(y\).
+The vector from (74.10) satisfies
+\[
+ N(v)=ky^3N_0,\qquad N_0=(3kp,k^2-2p^2,0),\qquad
+ N_0\cdot v=k/y.
+\]
+The Cayley coordinates
+\[
+ a=\frac{1-k^2r^2}{1+k^2r^2},\qquad
+ t_p=\frac{2r}{1+k^2r^2},\qquad r\in\mathbb R               \tag{81.6}
+\]
+omit only \(F=-1\), already excluded. All their denominators are positive.
+Define
+\[
+ Q_0=\frac{1+3F^*+\boldsymbol K(F^*-1)}4,\qquad
+ G_0=\frac{3+F^*+\boldsymbol K(F^*-1)}4,\qquad
+ d_0=\boldsymbol K+2\rho e.
+\]
+Three necessary original equations are \(E_0=E_1=E_2=0\), where
+\[
+\begin{aligned}
+ E_0&=N_0\cdot Q_0^*eQ_0,\\
+ E_1&=N_0\cdot(Fd_0F^*-3d_0)+6k[(-b+2\rho)p+k^2],\\
+ E_2&=N_0\cdot G_0^*d_0G_0.
+\end{aligned}                                                    \tag{81.7}
+\]
+The fourth equation is automatic on this chart. Put \(B=b^2+3\) and
+\(W_r=(b^2-3)r^2-1\). The three quadratic polynomials
+\(P_i=M_{i0}+M_{i1}p+M_{i2}p^2\) below satisfy the exact identities
+\[
+ E_0=\frac{kP_0}{2W_r^2},\qquad
+ E_1=\frac{4kP_1}{BW_r^2},\qquad
+ E_2=\frac{kP_2}{BW_r^2}.                                \tag{81.8}
+\]
+In all polynomial blocks, `*` denotes multiplication and `^` a
+nonnegative integer power. The entries of \(M\) are:
+
+```text
+M00 = r*(b^2 - 3)*(b^5*r^3 - 2*b^4*r^2 - 6*b^3*r^3 + b^3*r + 6*b^2*r^2 + 9*b*r^3 - 3*b*r - 6)
+M01 = 3*(b^6*r^4 - 2*b^5*r^3 - 7*b^4*r^4 + b^4*r^2 + 12*b^3*r^3 + 15*b^2*r^4 + 2*b^2*r^2 - 18*b*r^3 - 9*r^4 - 15*r^2 + 2)
+M02 = 2*r*(b^5*r^3 - 2*b^4*r^2 - 6*b^3*r^3 + b^3*r + 6*b^2*r^2 + 9*b*r^3 - 3*b*r - 6)
+M10 = -(b^2 - 3)*(b^6*r^4 - b^5*r^3 - 3*b^4*r^4 + 6*b^3*r^3 - b^3*r - 9*b^2*r^4 + b^2 - 9*b*r^3 + 3*b*r + 27*r^4 + 3)
+M11 = 3*r*(b^2 - 3)*(b^4*r^2 - 2*b^3*r + b^2 + 6*b*r - 9*r^2 + 3)
+M12 = b^6*r^4 + 2*b^5*r^3 - 3*b^4*r^4 - 6*b^4*r^2 - 12*b^3*r^3 + 2*b^3*r - 9*b^2*r^4 + b^2 + 18*b*r^3 - 6*b*r + 27*r^4 + 54*r^2 + 3
+M20 = (b^2 - 3)*(2*b^6*r^4 - 5*b^5*r^3 - 15*b^4*r^4 + 3*b^4*r^2 + 30*b^3*r^3 + b^3*r + 36*b^2*r^4 - 9*b^2*r^2 - b^2 - 45*b*r^3 - 3*b*r - 27*r^4 - 3)
+M21 = 3*(b^2 - 3)*(b^2*r^2 - 2*b*r - 3*r^2 + 1)*(2*b^3*r^2 - b^2*r - 6*b*r^2 - b + 3*r)
+M22 = 2*(2*b^6*r^4 - 5*b^5*r^3 - 15*b^4*r^4 + 3*b^4*r^2 + 30*b^3*r^3 + b^3*r + 36*b^2*r^4 - 9*b^2*r^2 - b^2 - 45*b*r^3 - 3*b*r - 27*r^4 - 3)
+```
+
+Thus the following elimination starts from completely specified original
+necessary equations, clearing only nonzero quantities.
+

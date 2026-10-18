@@ -1,0 +1,27 @@
+**Lemma 7.1 (shared-variable entropy count).** Let $F$ be a finite set
+of variables, and let $(F_C)_C$ be subsets in which every variable occurs
+exactly twice. For any nonempty finite relation $Y$ on those variables,
+if $|\pi_{F_C}Y|\le4^{|F_C|}$ for every $C$, then $|Y|\le4^{|F|}$.
+No independence is assumed.
+
+**Proof.** Put the uniform law on $Y$ and order the variables of $F$.
+The chain rule and conditioning monotonicity give
+
+$$
+\begin{aligned}
+\sum_C H(Y_{F_C})
+&=\sum_C\sum_{e\in F_C}
+  H(Y_e\mid Y_{F_C\cap\{\text{variables before }e\}})\\
+&\ge\sum_C\sum_{e\in F_C}
+  H(Y_e\mid Y_{\{\text{variables before }e\}})
+=2H(Y_F).
+\end{aligned}
+$$
+
+On the other hand $H(Y_{F_C})\le\log_2|\pi_{F_C}Y|
+\le |F_C|\log_2 4$. Sum and use $\sum_C|F_C|=2|F|$.
+Uniformity gives $\log_2|Y|\le |F|\log_2 4$. This is the finite
+twice-covered instance of Shearer's entropy inequality, attributed to
+Chung–Graham–Frankl–Shearer [CGFS]; the proof here states all the needed
+finite hypotheses. Empty coordinate lists cause no difficulty. $\square$
+

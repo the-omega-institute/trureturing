@@ -1,0 +1,27 @@
+**Definition 1.4 (Band, cocycle and strong zero).** The band property is
+
+$$
+\mathsf B(P):\qquad q_i=0\text{ on }F_i^c,\qquad
+\tfrac14\le q_i\le\tfrac12\text{ on }F_i,
+\quad P\text{-almost surely for every }i\in\mathbb Z.
+\tag{1.7}
+$$
+
+For a nonempty finite integer interval $C=[a,b]$, write $L=b-a+1$,
+
+$$
+\mathcal H_C=\sigma(X_j:j\notin C),\quad Y=X_{C^c},\quad
+\mu_C=\operatorname{law}_P(Y),\quad p_C(w;y)=P(X_C=w\mid Y=y),\quad
+Z_Cx=0^Lx_{C^c}.
+\tag{1.8}
+$$
+
+A word $w\in B_L$ is compatible with $y$ exactly when $y_{a-1}w_1=w_Ly_{b+1}=0$. Denote its completion by $wy$. On a suitable conull domain the actual loss cocycle is
+
+$$
+\Delta_P(x,z)=\sum_{i\in\mathbb Z}(\ell_i(x)-\ell_i(z)),
+\tag{1.9}
+$$
+
+for legal configurations differing at finitely many sites. Write $\mathsf Z_\Delta(P)$ if there is one shift-invariant Borel $P$-conull set $\Omega_0$, saturated under every legal finite modification, on which every such series converges absolutely and equals zero. Saturation means that whenever $x\in\Omega_0$ and $z\in\mathsf X$ differs from $x$ finitely, then $z\in\Omega_0$.
+

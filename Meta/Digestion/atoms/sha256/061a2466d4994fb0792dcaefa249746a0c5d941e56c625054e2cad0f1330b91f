@@ -1,0 +1,2 @@
+**约定 1.4（完整缓存的零来源读取供应）。** [ActualTreeReadoutAcquisition](../../../D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean) 的 `source_foundation` 已给完整实际带标签叶报告的树刚性；[Joint Moment Fibers](RECURSIVE_RELATIONAL_OBSERVATION_JOINT_MOMENT_FIBERS.md) 定理28.3给完整前沿的恢复对应。若这些报告仍可访问，恢复字面树之后，约定1.3的全部任务都只需本地计算。其额外来源调用数为零。本卷的正再访问下界只在下一章的明确保留切口后适用。
+

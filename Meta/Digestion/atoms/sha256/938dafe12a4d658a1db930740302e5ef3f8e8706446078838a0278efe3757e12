@@ -1,0 +1,21 @@
+**Definition 1.1 (Complete open-path objective).** For $n\ge1$, let
+
+$$
+B_n=\{w\in\{0,1\}^n:w_iw_{i+1}=0\ (1\le i<n)\},\qquad
+\mathsf X=\{x\in\{0,1\}^{\mathbb Z}:x_ix_{i+1}=0\ (i\in\mathbb Z)\}.
+$$
+
+The graph $\Gamma_n$ has every vertex of $B_n$ and every legal Hamming-one edge. Endpoint insertions use $w_0=w_{n+1}=0$; the endpoints are not joined. On the entire probability simplex define
+
+$$
+\begin{aligned}
+h(s,t)&=\begin{cases}st/(s+t),&s+t>0,\\0,&s=t=0,\end{cases}\\
+\Phi_n(\mu)&=\sum_{\{u,v\}\in E(\Gamma_n)}h(\mu_u,\mu_v),\qquad
+\kappa_n=\max_{\mu\in\mathcal P(B_n)}\Phi_n(\mu),\qquad
+c_\star=\lim_{n\to\infty}\kappa_n/n.
+\end{aligned}
+\tag{1.1}
+$$
+
+Zero masses retain their vertices and edges. The all-zero word, endpoint ones when legal, forced singleton fibers and all internal seams belong to this same objective.
+

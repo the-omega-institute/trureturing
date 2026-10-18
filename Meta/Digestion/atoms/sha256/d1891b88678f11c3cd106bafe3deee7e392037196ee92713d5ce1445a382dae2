@@ -1,0 +1,29 @@
+**Definition 5.1 (the consecutive bill).** Evaluate GCA Definitions 8.1–8.2's native vector recurrence on each actual branch. Let $V(P)$ include all work from the irreducible entrance through the common reached $P$. Let $V(H_i)$ include its actual gate, mode, frame, Boundary, cover, reference callbacks, binding, Issue, Call, three publications, mandatory printing, checks, ACKs, mailbox/invocation return, M append and Ready. Let $V(A_i(0^r);\mathrm{return})$ include the complete baseline source cycle, its gate01, all setup/service/dependency work, return normalization, CaptureCAP and Ready. Let $V(\mathrm{setup}_{j,r})$ include the current gate01 and source setup up to, but not including, its first payload RD. Then
+
+$$
+\begin{aligned}
+V(x_{j,w})={}&V(P)
++\sum_{i<j}\bigl(V(H_i)+V(A_i(0^r);\mathrm{return})\bigr)\\
+&+V(H_j)+V(\mathrm{setup}_{j,r})
++V(\mathrm{payloadCut}_{r,w}).
+\end{aligned}
+$$
+
+Every term is evaluated at the full actual successor of the preceding term on that branch. The sum does not combine independently optimized executions. At the payload entry all ordinary destination cells have already been allocated. Its cut has $r+1$ RD, $r+1$ IN, $r$ WR and $2r$ MR rows, so
+
+$$
+\begin{aligned}
+\Delta T&=5r+2,&\Delta F&=10r+4,\\
+\Delta S&=8(5r+2),&\Delta b_{\rm ctl}&=\Delta A=0.
+\end{aligned}
+$$
+
+The storage increment here is exactly the new receipts; prior preallocation and all retained material remain in earlier terms. Each $H_j$ uses ten external IN bits, since its payload length is two. Its designated outer replay loops use $b_j+2a$ Step calls, with every Step expanded and charged as in GCA §8. The copy/print expression $\sum_{i=C,P,I}(17L_i+7)$ is only that flight's three-publication subtotal, with its actual differing lengths. It is not the flight's whole bill. The source frame itself has $2r+6$ IN bits, in addition to its two gate bits. All whole-prefix equations remain
+
+$$
+T(n)=n,\qquad F(n)=2n,\qquad
+S(n)=S_{\rm irr}+b_{\rm ctl}(n)+8A(n)+8n.
+$$
+
+These are the inherited native tariff on the same execution. No structural-patch tariff is assumed or substituted.
+

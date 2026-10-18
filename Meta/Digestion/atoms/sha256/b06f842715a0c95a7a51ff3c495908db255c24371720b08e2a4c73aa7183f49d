@@ -1,0 +1,22 @@
+**Definition 3.1 (all accessible assistance).** The initial source-bearing
+assistance available to the processor, apart from the specimen, is one
+normalized pure state $r_j$ conditional on height $x_j$. Its calibrated pair
+is public, independent of $\beta$ and the whole signed $m$, with phases chosen
+so that $\langle r_1,r_2\rangle=\mu\in[0,1]$. Inner products are conjugate
+linear in the first entry. All other accessible inputs are jointly common
+and independent of $j,\beta,m$, and can be absorbed into common blanks.
+
+This includes source-sensitive installed descriptions, controller inputs,
+selectors and update data, clocks, calibration tokens, permissions, readable
+archives, receiver shares and any later-returned environment. Equal separate
+marginals do not establish this joint premise. A source label accessible only
+to the producer is not a free observer input. Public catalogue and calibration
+data reveal the pair, not its actual index.
+
+An old archive/reference $R$ may remain correlated with the actual history,
+but is acted on by identity and cannot supply programming or selection input.
+For fixed actual history the pure programme factors from every other system.
+The upper constructions below apply also to arbitrary input states
+$\rho_{VR}\otimes|r_j\rangle\langle r_j|$ with arbitrary unchanged quantum
+references. They do not authorize reading a previously inaccessible archive.
+

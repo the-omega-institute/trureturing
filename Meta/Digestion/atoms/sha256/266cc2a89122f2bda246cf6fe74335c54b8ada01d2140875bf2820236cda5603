@@ -1,0 +1,359 @@
+## 63. 准确有限核验与复现
+
+以下完整代码保存为与 `reference.py` 同目录的 `verify.py`，运行 `python3 verify.py`。它枚举1–5叶的550棵实际有序树和6个固定制备，检查字面节点求值、原替换／解释运输、多项式核与实际投影不等式；另核验零、极小、报告符号零／错误符号、不在实际像中的非正交报告、长请求、舍入边界、范数包络、逐实例和名字接口，以及达到阈值的支撑覆盖和字面树。四个准确有理平方根尖锐对分别由两个真实树及同次固定准备实现；它们不来自任意环境三元组。
+
+```python
+import json
+from fractions import Fraction as Q
+from pathlib import Path
+import reference as R
+
+def cx(x,y):
+    return tuple(x[i]*y[k]-x[k]*y[i] for i,k in ((1,2),(2,0),(0,1)))
+def dp(x,y): return sum(a*b for a,b in zip(x,y))
+def ev(t,p):
+    if t == 'a': return p[0]
+    if t == 'b': return p[1]
+    return cx(ev(t[0],p),ev(t[1],p))
+def sub(t):
+    if t == 'a': return 'b'
+    if t == 'b': return ('b','a')
+    return (sub(t[0]),sub(t[1]))
+def F(p): return p[1],cx(p[1],p[0])
+def read3(t,p):
+    a=[]
+    for _ in range(3):
+        a.append(ev(t,p));p=F(p)
+    return a
+def nums(y,b):
+    out=[]
+    for v in y:
+        for x in v:
+            z=Q(x)*(1 << b)
+            assert z.denominator==1
+            out.append(z.numerator)
+    return out
+def value(x): return tuple(Q(a,1 << b) for a,b in x)
+def err2(x,y): return dp(tuple(a-b for a,b in zip(x,y)),tuple(a-b for a,b in zip(x,y)))
+trees={1:['a','b']}
+for n in range(2,6):
+    trees[n]=[(s,t) for k in range(1,n) for s in trees[k] for t in trees[n-k]]
+preps=[((Q(1),0,0),(0,Q(1),0)),((Q(1,2),0,0),(0,Q(3,4),0)),
+       ((Q(1),Q(1),0),(Q(1),0,Q(1))),((Q(2),0,0),(Q(3),0,0)),
+       ((0,0,0),(0,Q(1),0)),((Q(1),Q(1),0),(0,0,0))]
+total=0
+for group in trees.values():
+    for t in group:
+        for p in preps:
+            y=read3(t,p); n=nums(y,32)
+            pp=p
+            for j in range(12):
+                x=ev(t,pp)
+                if j>=3:
+                    assert value(R.kernel(n,32,j))==x
+                    assert R.rational_kernel(y,j)==x
+                if j<=3 and len(group)<100:
+                    tt=t
+                    for _ in range(j): tt=sub(tt)
+                    assert ev(tt,p)==x
+                pp=F(pp)
+            w=cx(y[2],y[1])
+            assert abs(dp(y[0],w))>=dp(y[2],y[2])
+            assert dp(y[2],y[2])<=dp(y[0],y[0])*dp(y[1],y[1])
+            total+=1
+
+# Exact integer square-root enclosure, output boundaries and ties.
+for n in range(1001):
+    t=R.isqrt(n);assert t*t<=n<(t+1)*(t+1)
+for n in range(-100,101):
+    for b in range(7):
+        for p in range(7):
+            k=R.round_num((n,b),p)
+            assert abs(Q(k,1 << p)-Q(n,1 << b))<=Q(1,1 << (p+1))
+for p in range(12,17):
+    v=tuple((k,12) for k in (3,4,5))
+    lo,hi=R.norm_interval(v,p)
+    sq=R.dot(v,v)
+    assert Q(lo[0],1 << lo[1])**2<=Q(sq[0],1 << sq[1])<Q(hi[0],1 << hi[1])**2
+
+# Stable uniform-cutoff arithmetic, and every finite head phase.
+cfg=R.setup_stable(Q(1),Q(3,4),Q(1,8))
+p=((Q(1,2),0,0),(0,Q(1,2),0));y=read3('a',p);n=nums(y,cfg['b'])
+pp=p
+for j in range(cfg['J']+8):
+    x=ev('a',pp)
+    if j>=3:
+        word,pout=R.stable_query(n,cfg['b'],cfg,iter(bin(j)[2:]))
+        assert err2(tuple(Q(k,1 << pout) for k in word),x)<=Q(1,8)**2
+    pp=F(pp)
+assert cfg['R']**cfg['T']<=Q(1,16)
+assert R.fib(cfg['J'])>=cfg['T']
+assert R.parse(iter('1'+'0'*100000),cfg['J'])[0]==cfg['J']
+assert R.parse(iter('1'+'0'*100000),3)[1]==pow(2,100000,3)
+for bad in ['', '0','01','10','1x','0011']:
+    try: R.parse(iter(bad),cfg['J'])
+    except ValueError: pass
+    else: raise AssertionError(bad)
+
+# Tiny actual wrong-sign and off-image report corners.
+p=((Q(1,1 << 30),0,0),(0,Q(1,1 << 30),0));y=read3('a',p)
+y[0]=tuple(-a for a in y[0]);b=100;n=nums(y,b)
+z=value(R.anchors(n,b)[2]);x3=ev('a',F(F(F(p))))
+assert dp(z,x3)<0
+e=Q(1,1 << 29)
+assert err2(z,x3)<=81*e
+
+# Plateau polynomial/weighted words on all tested admissible sources.
+plateau_checks=0
+for t in trees[5]+trees[1]:
+    p=((Q(1,2),0,0),(0,Q(3,4),0));y=read3(t,p);n=nums(y,32)
+    pc=R.setup_plateau(n,32,Q(1,8));wc=R.setup_weighted(n,32,40,40)
+    pp=p
+    q3=ev(t,F(F(F(p))))
+    for j in range(18):
+        x=ev(t,pp)
+        if j>=3:
+            for c in (pc,wc):
+                word,pout=R.plateau_query(c,iter(bin(j)[2:]))
+                assert err2(tuple(Q(k,1 << pout) for k in word),x)<=Q(5,8)**2
+        pp=F(pp)
+    plateau_checks+=1
+
+# Exact indexing check of the canonical PC2 phase and rotations.
+qrot=((Q(3,5),Q(4,5),0),(Q(-4,5),Q(3,5),0))
+assert ev('a',F(F(F(qrot))))==qrot[0]
+assert ev('a',F(F(qrot)))==(0,0,-1)
+assert ev('a',F(F(F(F(qrot)))))==qrot[1]
+
+# Conditional budgets, certificates and finite guard rounding.
+assert R.verify_conditioned_certificate(2,1,Q(1,4))
+assert not R.verify_conditioned_certificate(2,1,Q(1,2))
+assert R.verify_zero_certificate(2,2,1)
+assert not R.verify_zero_certificate(2,2,Q(3,2))
+assert R.zero_query(iter('11'))==((0,0,0),0)
+assert R.parse_unbounded(iter('1011'))==11
+for b0 in range(6):
+    for raw in range(-200,201):
+        nout=R.finite_guard_round(raw,b0)
+        assert abs(Q(nout,1 << b0)-Q(raw,1 << (b0+4)))<=Q(1,1 << (b0+1))
+icfg=R.setup_instance(Q(1,4),Q(1,8))
+p=((Q(1,2),0,0),(0,Q(1,2),0));y=read3('a',p)
+ns=nums(y,icfg['b']);pp=p
+for j in range(icfg['J']+5):
+    x=ev('a',pp)
+    if j>=3:
+        word,pout=R.stable_query(ns,icfg['b'],icfg,iter(bin(j)[2:]))
+        assert err2(tuple(Q(k,1 << pout) for k in word),x)<=Q(1,8)**2
+    pp=F(pp)
+def finite_name(b0):
+    return [R.round_num((int(c*16),4),b0) for v in y for c in v]
+for j in range(3,8):
+    word,pout=R.named_query(finite_name,iter(bin(j)[2:]),Q(1,8))
+    pp=p
+    for _ in range(j):pp=F(pp)
+    assert err2(tuple(Q(k,1 << pout) for k in word),ev('a',pp))<=Q(1,8)**2
+for cc in (None,Q(1,4)):
+    wc=R.setup_weighted_budget(nums(y,8),8,Q(1,8),cc)
+    assert wc['e_star']>0 and wc['norm_p']>=8
+# Strict interior of actual nearest-dyadic cells, unaffected by any tie rule.
+for b0 in range(8):
+    h=Q(1,1 << b0);t0=h/32
+    c=(1-t0*t0)/(1+t0*t0);s=2*t0/(1+t0*t0);lam=1-h/64
+    pp=((lam*c,lam*s,0),(-lam*s,lam*c,0))
+    yy=read3('a',pp)
+    U=((1,0,0),(0,1,0),(0,0,-1))
+    for v,w0 in zip(yy,U):
+        for a,z0 in zip(v,w0):
+            assert abs(a-z0)<h/4
+            rounded=Q(a)/h+Q(1,2)
+            assert rounded.numerator//rounded.denominator==z0*(1 << b0)
+
+# Attained threshold certificate, covering every potentially improving composition.
+assert 559**2<5*250**2 and 2**103411>6**40000
+best=Q(2);mins=[];supported=0
+for m in range(1,81):
+    for n0 in range(1,81-m):
+        if m%2==0 and n0%2==0:continue
+        supported+=1
+        if m>n0:
+            assert Q(m+n0)-Q(n0*n0,m)>m
+            continue
+        q0=Q(6)**m/Q(3)**n0;q1=Q(2)**n0/Q(3)**m
+        h=max(q0,q1,q0*q1)
+        if h<best:best=h;mins=[(m,n0)]
+        elif h==best:mins.append((m,n0))
+assert supported==2380 and best==Q(32,27) and mins==[(3,5)]
+t=('b','a')
+for a in ['a','a','b','b','b','b']:t=(a,t)
+p=((Q(6),0,0),(0,Q(1,3),0));pp=p;actual=[]
+for _ in range(4):actual.append(ev(t,pp));pp=F(pp)
+assert actual==[(0,0,Q(8,9)),(Q(-32,27),0,0),(0,Q(-256,243),0),(0,0,Q(8192,6561))]
+evidence={'exact_tree_preparation_histories':total,'trees':sum(map(len,trees.values())),
+          'preparations':len(preps),'future_kernel_indices':[3,11],
+          'plateau_histories':plateau_checks,'plateau_indices':[3,17],
+          'stable_cfg':{k:str(v) for k,v in cfg.items()},'long_query_bits':100001,
+          'sqrt_integer_cases':1001,'rounding_cases':201*49,
+          'threshold_supported':supported,'threshold':str(best),'threshold_minimizers':mins,
+          'pc2_index_check':{'alpha_unit_x3':[1,0,0],
+                              'correct_phase':'j congruent to 0 modulo 3'},
+          'additional_contract_checks':{'guard_rounding_cases':2406,
+              'certificate_checks':4,'instance_queries':'head and five tail samples',
+              'cauchy_name_extension_queries':5,'strict_actual_dyadic_cells':8},
+          'status':'finite falsifiers passed; universal claims depend on ordinary proofs'}
+# Jointly actual rational sharp pairs, plus reported zero/sign/off-image corners.
+sharp_pairs = []
+for M in (4,8,16,32):
+    s0, r0, N0 = Q(1,M*M), Q(M,2), Q(M**5,2)
+    C0 = s0*(N0*N0-1)/(2*N0)
+    co, si = (C0*C0-s0*s0)/(C0*C0+s0*s0), 2*C0*s0/(C0*C0+s0*s0)
+    a0,b0 = (C0/r0,s0/r0,Q(0)), (r0,Q(0),Q(0))
+    b1 = (r0*co,r0*si,Q(0))
+    V1 = (r0*s0*si,-r0*s0*co,Q(0))
+    a1 = tuple(C0/(r0*r0)*c+v/(r0*r0) for c,v in zip(b1,V1))
+    t0,t1 = ('a',('a','b')), (('a','b'),'a')
+    yy0,yy1 = read3(t0,(a0,b0)),read3(t1,(a1,b1))
+    assert yy0[:2] == yy1[:2]
+    assert dp(a0,a0)==dp(a1,a1) and dp(b0,b0)==dp(b1,b1)
+    assert dp(a0,b0)==dp(a1,b1)
+    assert dp(yy0[0],yy0[0]) <= 1
+    assert dp(yy0[1],yy0[1])==Q(1,16)
+    assert dp(yy0[2],yy0[2]) < Q(1,4)
+    q2 = r0*s0**3
+    eps = 4*q2*N0/(N0*N0+1)
+    assert err2(yy0[2],yy1[2])==eps**2
+    xx0=ev(t0,F(F(F((a0,b0)))))
+    xx1=ev(t1,F(F(F((a1,b1)))))
+    target = 2*Q(1,4)*q2*(N0*N0-1)/(N0*N0+1)
+    assert err2(xx0,xx1)==target**2
+    sharp_pairs.append({'M':M,'record_distance':str(eps),
+                        'future_distance':str(target),
+                        'future_squared_over_record':str(target**2/eps)})
+
+adversarial_cases = []
+p0=((Q(1,2),0,0),(0,Q(3,4),0))
+y_true=read3('a',p0)
+e0=Q(1,1<<24)
+signs=((1,-1,1),(-1,1,1),(1,1,-1))
+y_bad=[tuple(c+sgn*e0/4 for c,sgn in zip(v,z0))
+       for v,z0 in zip(y_true,signs)]
+assert dp(y_bad[1],y_bad[2]) != 0  # off actual nonzero orthogonal tail image
+adversarial_cases.append(('nonorthogonal-off-image','a',p0,y_bad,e0))
+p_tiny=((Q(1,1<<30),0,0),(0,Q(1,1<<30),0))
+y_tiny=read3('a',p_tiny)
+adversarial_cases.append(('tiny-wrong-sign','a',p_tiny,
+                          [tuple(-v for v in y_tiny[0]),y_tiny[1],y_tiny[2]],Q(1,1<<29)))
+adversarial_cases.append(('tiny-reported-sign-zero','a',p_tiny,
+                          [(0,0,0),y_tiny[1],y_tiny[2]],Q(1,1<<30)))
+p_zero=((Q(1,2),0,0),(0,Q(1,2),0))
+y_zero=[tuple(sgn*e0/4 for sgn in z0) for z0 in signs]
+adversarial_cases.append(('zero-source-off-image',('a','a'),p_zero,y_zero,e0))
+for label,t0,p0,y_report,e0 in adversarial_cases:
+    true=read3(t0,p0)
+    assert all(err2(v,w0)<=e0**2 for v,w0 in zip(true,y_report))
+    nn=nums(y_report,100)
+    z=value(R.anchors(nn,100)[2])
+    x3=ev(t0,F(F(F(p0))))
+    assert err2(z,x3)<=17**2*e0
+    assert e0<=cfg['e_star']
+    pp=p0
+    for j in range(cfg['J']+5):
+        x=ev(t0,pp)
+        if j>=3:
+            word,pout=R.stable_query(nn,100,cfg,iter(bin(j)[2:]))
+            assert err2(tuple(Q(k,1<<pout) for k in word),x)<=Q(1,8)**2
+        pp=F(pp)
+evidence['joint_actual_sqrt_pairs']=sharp_pairs
+evidence['adversarial_report_cases']=[case[0] for case in adversarial_cases]
+evidence['executed_scope']='literal all-tree samples, exact rational arithmetic, contracts and boundary witnesses only'
+Path('evidence.json').write_text(json.dumps(evidence,ensure_ascii=False,indent=2))
+print(json.dumps(evidence,ensure_ascii=False))
+```
+
+命令 `python3 verify.py` 的退出码为0，准确结果如下。该数据只核验所列有限实例、索引、程序分支及有证明覆盖的阈值算术；不替代第50–61节的全称普通证明，不认证现实传感／动作精度，也不产生 Lean 状态。
+
+```json
+{
+  "exact_tree_preparation_histories": 3300,
+  "trees": 550,
+  "preparations": 6,
+  "future_kernel_indices": [
+    3,
+    11
+  ],
+  "plateau_histories": 450,
+  "plateau_indices": [
+    3,
+    17
+  ],
+  "stable_cfg": {
+    "J": "8",
+    "T": "21",
+    "p": "4",
+    "b": "22",
+    "e_star": "1/1364224",
+    "K": "73",
+    "R": "7/8"
+  },
+  "long_query_bits": 100001,
+  "sqrt_integer_cases": 1001,
+  "rounding_cases": 9849,
+  "threshold_supported": 2380,
+  "threshold": "32/27",
+  "threshold_minimizers": [
+    [
+      3,
+      5
+    ]
+  ],
+  "pc2_index_check": {
+    "alpha_unit_x3": [
+      1,
+      0,
+      0
+    ],
+    "correct_phase": "j congruent to 0 modulo 3"
+  },
+  "additional_contract_checks": {
+    "guard_rounding_cases": 2406,
+    "certificate_checks": 4,
+    "instance_queries": "head and five tail samples",
+    "cauchy_name_extension_queries": 5,
+    "strict_actual_dyadic_cells": 8
+  },
+  "status": "finite falsifiers passed; universal claims depend on ordinary proofs",
+  "joint_actual_sqrt_pairs": [
+    {
+      "M": 4,
+      "record_distance": "1/262145",
+      "future_distance": "262143/1073745920",
+      "future_squared_over_record": "68718952449/4398063288320"
+    },
+    {
+      "M": 8,
+      "record_distance": "1/268435457",
+      "future_distance": "268435455/35184372219904",
+      "future_squared_over_record": "72057593501057025/4611686035607257088"
+    },
+    {
+      "M": 16,
+      "record_distance": "1/274877906945",
+      "future_distance": "274877906943/1152921504611041280",
+      "future_squared_over_record": "75557863725364567605249/4835703278476108884869120"
+    },
+    {
+      "M": 32,
+      "record_distance": "1/281474976710657",
+      "future_distance": "281474976710655/37778931862957295927296",
+      "future_squared_over_record": "79228162514263774643590529025/5070602400912935620385322303488"
+    }
+  ],
+  "adversarial_report_cases": [
+    "nonorthogonal-off-image",
+    "tiny-wrong-sign",
+    "tiny-reported-sign-zero",
+    "zero-source-off-image"
+  ],
+  "executed_scope": "literal all-tree samples, exact rational arithmetic, contracts and boundary witnesses only"
+}
+```
+

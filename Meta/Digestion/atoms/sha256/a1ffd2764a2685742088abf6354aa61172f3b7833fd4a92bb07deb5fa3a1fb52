@@ -1,0 +1,17 @@
+**Primitive 层。** 原生给定的有限对象为
+\[
+\Sigma=\{0,2,3,5,25\},\qquad
+\mathcal A_0=\mathbb R^\Sigma,\qquad
+\Delta_0=\Delta(\Sigma),
+\]
+五态函数 \(x,y,z\)，可见投影
+\[
+P_0:\Delta_0\to\mathbb R^3,\qquad
+P_0(p)=(X,Y,Z),
+\]
+seam 向量
+\[
+d=(1,-1,0,-1,1),
+\]
+以及每个有限 Fibonacci 支持图的顶点集 \(V_j\)、边集 \(E_j\)、质量边界映射 \(B_j:\mathbb R^{E_j}\to\mathbb R^{V_j}\) 和边读出映射 \(A_j:\mathbb R^{E_j}\to\mathbb R^{m_j}\)。在 \(j=0\) 的五态图上，已有 \(Bf\) 和 \(Af\) 正是这些映射的实例。
+

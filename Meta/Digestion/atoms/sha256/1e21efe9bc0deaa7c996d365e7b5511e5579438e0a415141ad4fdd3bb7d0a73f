@@ -1,0 +1,41 @@
+**推论 6.2（实际与参考首钟的固定余量等价）。** 置
+\[
+ J_{\rm act,prime}(X)=\sum_qh_q\mathcal W_X(\tau_q)-\mathcal D_X,
+ \qquad J_{\rm ref,prime}(X)=J_{\rm prime}(X).
+\]
+于是对同一完整原见证，
+\[
+ J_{\rm act,prime}\le J_{\rm ref,prime}
+ \le J_{\rm act,prime}+E(\ell_X)M_X.
+\tag{EL.13}
+\]
+在同一完整原族及相同量词下，（EL.9）等价于
+\[
+ \exists\kappa<\sqrt2/4\quad\forall T<\infty\quad
+ \exists\text{合格原见证 }X\text{ 且 }\ell_X\ge T:
+ \quad J_{\rm act,prime}(X)\ge-\kappa M_X.
+\tag{EL.14}
+\]
+\(T\) 可包含任意给定的有限共同起点，包括 \(\ell\ge243\)；
+这种扩大不改变原族或所选集合。
+
+**证明。** 精确等式 \(J_{\rm act,prime}=J_{\rm ref,prime}+P_1\)
+与（EL.10）给出（EL.13）。实际到参考用其左侧不等式，
+保留同一 \(\kappa\) 和见证。参考到实际先固定（EL.9）的系数
+\(\kappa<\sqrt2/4\)，再选
+\(\kappa<\kappa'<\sqrt2/4\)。对每个给定 \(T\)，仅将其扩大至
+一个同时满足原共同前提、\(\ell\ge243\) 和
+\(E(\ell)<\kappa'-\kappa\) 的有限起点；（EL.9）在该起点给出的
+同一完整见证满足 \(J_{\rm act,prime}\ge-\kappa'M_X\)。
+这保持一个固定系数以及全部共尾量词。\(\square\)
+
+若再讨论假设 1.3 与定理 5.2，原先输入比较的全部来源常数始终固定，
+共同起点仍可依赖那些常数；新 \(E(\ell)\) 本身是上述显式一致界。
+（EL.10）–（EL.14）不证明任一有利下界或共尾见证存在性，
+也不证明 RH 或不受限 Robin。尚欠的仍是（EL.9）的完整固定余量
+下界义务；首钟误差的 \(o(M_X)\) 输运没有支付任何固定有利系数。
+
+本节新推理仅置于拥有理论。误差供应归于既有 Nicolas MS2，
+来源合法插入归于本理论 §4 的原整数比较；不重复 Library 的
+A1–A19 接口。已有对应来源的有界检索未找到显式相同的完整族
+来源相对符号结论；这不构成文献或全仓库的新颖性主张。

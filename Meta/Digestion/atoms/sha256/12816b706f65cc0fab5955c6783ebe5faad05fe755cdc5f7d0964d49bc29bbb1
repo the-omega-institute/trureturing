@@ -1,0 +1,80 @@
+**Lemma 14.2 (every heavy support missing a parent leaf).** Use
+$X\boxdot Y=\{\langle x,y\rangle:x\in X,y\in Y\}$. For
+$U,V\subseteq S_1$, $|U|=|V|=2$, and $g\in\mathcal G$, put
+
+$$
+Q=\{\langle u,v\rangle:u\in U,v\in V\},\quad
+T_Q=\{A,B\}\cup Q,\quad B_Q=\{B\}\cup Q,\quad
+H_B=\{B\}\cup\mathcal G,\quad U_g=\{A,B,g\}.
+\tag{NCE.90}
+$$
+
+Every range-feasible $P$ with $w_{\rm a}(P)>C_{\rm a}$ and
+$P\cap\{A,B\}\ne\{A,B\}$ is in exactly one of the following
+five classes:
+
+| Class | Actual support $P$ | Number of supports | Mass |
+| --- | --- | ---: | ---: |
+| I | $H_B\boxdot T_Q$ | $9$ | $9156228$ |
+| II | $T_Q\boxdot H_B$ | $9$ | $9162164$ |
+| III | $\{A\}\cup(B_Q\boxdot U_g)$ | $81$ | $9125064$ |
+| IV | $\{A\}\cup(U_g\boxdot B_Q)$ | $81$ | $9128032$ |
+| V | $\{B\}\cup(T_Q\boxdot U_g)$ | $81$ | $9132696$ |
+
+This classification starts with arbitrary correlated supports.
+
+Proof. If $T$ is empty, the mass is at most
+$w_{\rm a}(A)+w_{\rm a}(B)<C_{\rm a}$, so assume $T$ is
+nonempty. Choose a dominating pair $u,v$ from the applicable
+table. If its entry is at most $C_{\rm a}$, (NCE.89) already
+excludes heaviness. Thus the entry is one of the five listed
+heavy entries, and is at most $C_{\rm a}+m_{\rm a}$.
+
+Enlarge the actual sets $X,Y$ to sets $X',Y'\subseteq S_2$
+with counts exactly $u,v$. Such extensions exist: the two leaf
+counts are zero or one, and at most nine distinct members of
+$\mathcal G$ are requested. If either count domination is
+strict, $X'\times Y'$ contains at least one pair outside
+$X\times Y$, since both original projections are nonempty.
+If $T$ is a proper subset of $X\times Y$, it already omits
+a pair. Each omitted actual branch state has weight at least
+$m_{\rm a}$. In either event,
+
+$$
+w_{\rm a}(P)\le
+\text{its dominating entry}-m_{\rm a}\le C_{\rm a}.
+\tag{NCE.91}
+$$
+
+Consequently heaviness forces both exact count vectors and
+$T=X\times Y$.
+
+The five heavy entries have, in order, count pairs
+
+$$
+\begin{array}{c|c|c|c}
+ &P\cap\{A,B\}&n(X)&n(Y)\\\hline
+\mathrm I&\varnothing&(0,1,9)&(1,1,4)\\
+\mathrm {II}&\varnothing&(1,1,4)&(0,1,9)\\
+\mathrm {III}&\{A\}&(0,1,4)&(1,1,1)\\
+\mathrm {IV}&\{A\}&(1,1,1)&(0,1,4)\\
+\mathrm V&\{B\}&(1,1,4)&(1,1,1).
+\end{array}
+\tag{NCE.92}
+$$
+
+A four-branch projection in rows I, II or V has both leaves
+and side ranges at most four. By (NCE.55), its branch part
+has at most two child symbols on each side. A four-branch
+projection in rows III or IV has one leaf and side ranges
+at most three, with the same consequence. Four distinct pairs
+on at most two symbols per side force exactly two symbols on
+each side and all four pairs. Thus each such part is an
+actual $Q$ of (NCE.90). A one-branch projection is exactly
+$U_g$, and a nine-branch projection with only $B$ is $H_B$.
+These observations prove the five forms without assuming a
+product at the start. There are $\binom32^2=9$ choices of
+$Q$ and nine of $g$. Their full rectangles and parent-leaf
+sets determine those choices uniquely, giving the counts.
+$\square$
+

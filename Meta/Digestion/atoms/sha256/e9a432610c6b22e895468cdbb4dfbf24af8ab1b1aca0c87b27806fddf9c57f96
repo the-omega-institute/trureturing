@@ -1,0 +1,97 @@
+**Lemma 13.2a (full-prefix representation and paid entry).** Let the
+installation prefix on owned port 37, with no later staging blocks, be
+
+$$
+L\;\mathsf F\;w_0\mathsf F\;\cdots\;w_{s-1}\mathsf F\;R,
+\qquad w_i\in\{0,1\}^{*}.
+$$
+
+Each field is its actual sealed binary block, with its already constructed
+descriptor; $s$ and the lengths are mathematical parameters of this
+statement, not native loop bounds. The initial bank and owned compiler
+workspace satisfy Proposition 11.4's boundary relation, constructed by its
+native empty-bank prelude; the list and accumulator registers are distinct.
+From any actual port-37 entry head,
+ManifestPrefix terminates with manifest exactly the encoded ordered list
+$[w_0,\ldots,w_{s-1}]$ and head 37 at the existing R. It neither emits the
+initial sentinel nor removes legitimate empty fields. This includes $s=0$
+as an import relation; Initialize still requires the declared manifest
+arity and syntax. The bank, scratch, descriptor, latch, token and meter
+successors are the actual compiler/row successors, not their entry values.
+
+At BeginField after $j$ fields, the representation invariant is:
+
+1. $f$ encodes exactly $[w_0,\ldots,w_{j-1}]$; the complete active bank
+   and its descriptor satisfy Proposition 11.4.
+2. Head 37 is at the first symbol of $w_j$, at its following F when
+   $w_j=\epsilon$, or at R exactly when $j=s$. Its binary contents,
+   delimiters, seals and descriptor words/origins remain unchanged;
+   actual head marks follow the displayed moves.
+3. The actual reader has $O$'s port-37 read authority. Word helpers touch
+   only banks 32–33, scratch 34–35 and descriptors 36. They preserve head
+   37 and all saved original public heads on 0–31. They do not borrow a
+   producer token or treat a represented permission as a live one.
+
+At FieldRead within field $j$, after $q$ consumed bits, replace item 2 by
+head 37 at that field's next bit or terminal F and add
+$t=\operatorname{rev}(w_j[0:q])$, with $f$ unchanged. These assertions
+hold at the named native labels and at the corresponding completed word
+boundaries; interior helper cuts have Proposition 11.4's partial-bank
+representation rather than an assumed atomic assignment.
+
+Proof. The two moves following Home cross the existing L-to-sentinel and
+sentinel-to-first-field edges, both within the constructed interval. The
+encoded empty list gives the invariant at $j=0$, including $s=0$.
+BeginField's R branch appends no item. Otherwise clearing $t$ leaves the
+source head unchanged, and FieldRead establishes $q=0$ by its own RD.
+At a bit, the paid tests select precisely that literal bit. The compiled
+cons uses the old $t$, so the subsequent MR establishes the invariant
+with $q+1$. Its source is not an input latch left live across a helper.
+At F, Reverse yields exactly $w_j$, including $\epsilon$ when $q=0$.
+AppendItem adds precisely one framed list item, then MR establishes the
+next BeginField invariant. Consecutive Fs therefore encode distinct empty
+fields; they are not skipped as padding. Since the list/source is finite
+and unchanged, this process reaches R after exactly $s$ field completions.
+The final copy gives the stated manifest and leaves head 37 at R.
+
+The source fields' actual zero-based data offsets are
+$b_i=1+\sum_{l<i}(|w_l|+1)$: data offset zero is the initial F, not field
+zero. Base measured each $b_i$ before its construction. Import creates
+no new port-37 block and changes none of those descriptors or their
+creation ordinals. Its new bank descriptors are additional records on 36;
+they do not renumber the old records. For Definition 14.2's manifest, in
+particular, the captured field's first descriptor remains ordinal zero
+and its base remains one. Descriptor scans still change port 36's actual
+head marks; unchanged descriptor fields do not mean an unchanged complete
+descriptor tape. The original saved-head table stays a field value; it is
+not used as a free cursor placement. The actual saves/restores of
+Definition 14.2 and the
+compiler's disjoint port use preserve the original source-ready heads.
+Every import row has its receipt; every helper's complete successor is
+Proposition 11.4's. No claim restores its scratch, latch or meter history
+to the entry state. All reads have the actual port token throughout. ∎
+
+For exact local accounting let $h$ be head 37's actual entry distance
+from L, and let $z,o$ be the total numbers of zero and one bits in the
+fields. The native scan rows, excluding compiled word work, number
+
+$$
+C_{\rm scan}=2h+4+3s+3z+4o.
+$$
+
+Its opcode coordinates are
+$n_{\rm RD}=h+2+2s+z+o$, $n_{\rm ML}=h$,
+$n_{\rm MR}=2+s+z+o$, and $n_{\rm CTL}=z+2o$; the other scan coordinates
+are zero. They exclude every word helper's own RD/move/CTL/EX/WR work.
+Home contributes $2h+1$, the two entrance moves contribute two,
+BeginField contributes $s+1$ R tests, and field delimiters contribute
+$s$ reads and $s$ moves. Each zero contributes RD, one testing CTL and
+MR; each one contributes RD, two testing CTLs and MR. Add, at their
+actual intervening complete successors, the two list-initialization
+assignments, $s$ accumulator clears, $z+o$ literal cons assignments,
+$s$ Reverse and AppendItem expansions, and the final manifest-copy
+assignment. Each has Definition 11.5's complete recurrence, including
+all positioning, bank versions and descriptors. Thus the displayed scan
+subtotal is not the full import price. This is one fixed finite native
+graph, without a new primitive or a data-dependent native-state index.
+

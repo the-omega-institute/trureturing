@@ -1,0 +1,11 @@
+**Convention 6.4 (interpretation boundary).** A spatial view may encode
+coordinate overlap and adjacency; a temporal view may encode ordered
+continuations and declared clock labels; a boundary view encodes the stable
+quotient; a memory view is its task-accessible realization. Theorem 6.3
+requires each chosen view to retain the same task distinctions. Merely
+naming a graph spatial or a sequence temporal does not satisfy its kernel
+or operation hypotheses. Set-theoretic inverse maps imply neither algorithms,
+resource bounds, acquired access to an unknown source nor a physical
+spacetime construction. The actual image, ThreadComplete and the specified
+operation permissions remain separate conditions.
+

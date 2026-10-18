@@ -1,0 +1,14 @@
+**Definition 4.2 (raw terminal transcript for a scalar task).** A
+procedure here starts with the same source-independent state on
+every $t\in\mathcal F_D$, performs deterministic actual literal
+Reads, terminates on every source, and returns a function of its
+acquired information and public inputs. Its complete raw transcript
+is the ordered list of all actual word/reply pairs, including repeats
+and constant calls. It contains no physical timing or external event
+fields. No archive is supplied to the procedure merely by defining
+this mathematical transcript.
+
+For the scalar response task, two sources are equivalent exactly when
+their requested virtual replies agree. For the raw-history task,
+equivalence is equality of these complete ordered transcripts.
+

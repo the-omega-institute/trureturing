@@ -1,0 +1,28 @@
+**Definition 5.1 (analytical parameters and accounting model).** For the
+invocation source $u$ and total interference bound $B$, set
+
+$$
+V_B=\rho^B u,\quad
+N_B=|\operatorname{Pos}(V_B)|,\quad
+H_B=\max_{p\in\operatorname{Pos}(V_B)}|p|,\quad
+A_B=\sum_{p\in\operatorname{Pos}(V_B)}|p|,\quad
+M=|P|,\quad L=\sum_{p\in P}(|p|+1).
+\tag{CNA.5}
+$$
+
+The algorithms receive none of $u,V_B,B,N_B,H_B,A_B$.
+For completed attempt $j$, let $N_j$ be its actual number of traversal
+Reads, $A_j$ their literal-length sum, and $d_j=|q_j|$ its guard depth.
+These definitions include failed attempts, whose reconstructed tree
+need not be an actual source version.
+
+Count raw Reads and submitted address letters separately.
+For local work use finite records with explicit address strings,
+node records, indices, stack and output buffers in a random-access model.
+A character operation or bounded-index cell operation costs one logical
+unit; its bit width is billed below. A cut trie is constructed in $O(L)$
+units. Retain an explicit equality matrix on reached holes, including
+every false entry. Exact comparisons walk acquired finite tree records;
+allocation identity is not tree equality. This representation asserts
+no space, query or work optimality.
+

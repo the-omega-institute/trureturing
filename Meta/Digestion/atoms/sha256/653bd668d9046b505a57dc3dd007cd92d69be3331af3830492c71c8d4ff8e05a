@@ -1,0 +1,20 @@
+**Proposition 12.1 (Minimum number of cross-cut pair factors for maximal rank).**
+Let $m=\min\{k,n-k\}$. Restrict operations to occupation
+pair phases, allowing arbitrary cut-local diagonal phases.
+At least $m-1$ nontrivial cross-cut pair factors are needed
+to attain the maximal rank $F_{m+2}$. The mirror matching
+of Definition 9.1 attains this bound.
+
+Proof. On the smaller side, every nonboundary site must
+occur in a nontrivial cross-cut pair. If a site is missing,
+its singleton row and the vacuum row have exactly the same
+allowed right support and cross-cut phase function. The
+positive product amplitudes and any cut-local diagonal
+phase change them only by a nonzero row scalar, so they
+are proportional. They are distinct actual rows of the
+$F_{m+2}$-dimensional smaller-side space; hence full row
+rank is impossible. There are $m-1$ nonboundary sites,
+and a cross-cut pair meets only one of them. This proves
+the lower bound. Theorem 9.2 supplies attainment with
+$m-1$ nontrivial mirror factors. $\square$
+

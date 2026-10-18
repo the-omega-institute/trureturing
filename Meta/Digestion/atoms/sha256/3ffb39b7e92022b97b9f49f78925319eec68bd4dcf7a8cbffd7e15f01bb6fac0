@@ -1,0 +1,60 @@
+### 2.1 Three source histories at every valid base
+
+Let $b$ be `ValidBase` and let $k$ be strict interior.  Put
+
+$$
+h^{(0)}=(0,0,0,0,0),\qquad
+h^{(1)}=\frac{\pi}{2}(1,1,0,1,1).
+\tag{OC.3}
+$$
+
+The third lift is selected by the two symmetry walls.  With
+$A=X+Y-r$, use the following table.
+
+| base condition | $h^{(2)}$ | $C_x$ | $q$ |
+| --- | --- | --- | --- |
+| $A\ne0$, either sign | $(\pi,0,0,0,-\pi)$ | $2X+2Y-r-4x$ | $i$ |
+| $A=0$ and $X\ne Y$ | $(0,\pi,0,-\pi,0)$ | $4x-r$ | $i$ |
+| $A=0$ and $X=Y=r/2$ | $(\pi,0,0,0,\pi)$ | $r-4x$ | $i$ |
+
+Each displayed vector satisfies $h_2=0$, the equality $h_0=h_4$ when
+$A=0$, and the equality $h_1=h_3$ when $X=Y$.  The first two table rows
+have real relation phase $0$; the double-wall row has relation phase $2\pi$.
+These checks establish the wall hypotheses as well as the charge condition.
+
+Here is the precise use of the credited synthesis.  Let $U_b$ impose zero
+middle coordinate and these two conditional wall equalities, and put
+$V_b=U_b\cap\ker(d^{\mathsf T})$.  Choose the source's fixed distinct
+interior menu consisting of $k$ and $g-1\le3$ auxiliary heights, where
+$g=4-\mathbf1_{A=0}-\mathbf1_{X=Y}$.  Its weight differences form a basis
+of $V_b$.  For a displayed lift of charge $2\pi m$, synthesize
+$h-2\pi m w_b(k)\in V_b$ by those rectangles and prepend a unit-time
+fixed-height leg of phase increment $2\pi m$.  This takes at most
+$1+4(g-1)\le13$ unit legs.  Idle legs can pad all three histories to duration
+$13$, so duration need not reveal the selected history.  Every coefficient
+is a finite signed real, and the finite height menu has a positive support
+margin.  There is no uniform numerical margin over all valid bases.
+Every $m\in\mathbb Z$, including negative $m$, remains in the source domain;
+the certificate selects three members of that domain.
+
+For any two strict-interior heights $k,l$, append to each of these histories
+the same horizontal original control
+
+$$
+k(t)=k+(l-k)t,\qquad \chi(t)=\chi(0),\qquad 0\le t\le1.
+\tag{OC.4}
+$$
+
+The common public input is the relative command
+$((l-k)t,0)$.  The constant $\chi(0)$ in each actual tail is its own prior
+endpoint lift; the actuator is not given that unknown number.  Translating
+the tail is a source composition identity, not a measurement of the past.
+
+The path stays in the convex interval between $k$ and $l$, has zero phase
+variation, and has zero transported phase increment.  The credited
+`concatenate_original` theorem says more than endpoint equality: it keeps
+the old prefix pointwise, identifies the shifted tail, adds the real phase
+increments, and adds each continuous integral.  Thus a contradiction at the
+cut $t=1$ is a contradiction about one actual chronological continuation,
+not about replacing the history by its endpoint holonomy.
+

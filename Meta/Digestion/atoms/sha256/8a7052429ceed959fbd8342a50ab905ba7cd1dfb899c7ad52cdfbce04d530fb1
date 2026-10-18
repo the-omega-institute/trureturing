@@ -1,0 +1,54 @@
+**Lemma 3.2 (one reply parameter per cyclic component).** Each weak
+component of this finite arrow graph has exactly one constant sink
+or exactly one directed cycle. A constant-sink component has one
+skeleton solution. For a cyclic component choose its cycle ordering
+$v_0,\ldots,v_{\ell-1}$ with
+$p(v_j)=v_{j+1\bmod\ell}$, let $c=v_0$, and define
+
+$$
+F=f_{v_0}\circ f_{v_1}\circ\cdots\circ f_{v_{\ell-1}},
+\qquad T=\{a\in\mathcal A:F(a)=a\}.
+\tag{RRN.10}
+$$
+
+There are uniquely determined tables $a_v:T\to\mathcal A$ on all
+ports of that component, with
+
+$$
+a_c(a)=a,\qquad a_v(a)=f_v(a_{p(v)}(a)).
+\tag{RRN.11}
+$$
+
+Their tuples are precisely the component's skeleton solutions.
+Writing
+
+$$
+b_v(a)=\delta_v(a_{p(v)}(a))
+\tag{RRN.12}
+$$
+
+gives $h(b_v(a))=a_v(a)$, in particular $h(b_c(a))=a$.
+
+Proof. Following outgoing arrows from any vertex reaches a sink or
+repeats a vertex and enters a directed cycle. Vertices joined by an
+arrow have the same terminal sink or cycle. This terminal object is
+therefore constant on a weak component; two different terminal objects
+cannot occur in one component. A sink must be a constant port, since
+all other ports have exactly one outgoing arrow.
+
+At a constant sink first set its reply to $h(\zeta_v)$ and propagate
+backwards along incoming trees by (RRN.9). Every vertex has a unique
+forward path to the sink, so this assigns every reply uniquely and
+satisfies all equations.
+
+On a cycle, prescribe $y_c=a$. Set
+$y_{v_{\ell-1}}=f_{v_{\ell-1}}(a)$, then
+$y_{v_{\ell-2}}=f_{v_{\ell-2}}(y_{v_{\ell-1}})$, continuing
+back to $v_1$. The remaining equation at $c$ is exactly $F(a)=a$.
+This also covers a self-loop, where $F=f_c$. Once the cycle replies
+are set, propagate backwards along its incoming trees. This proves
+existence, uniqueness and the characterization by $T$. Equations
+(RRN.11) and $f_v=h\circ\delta_v$ give the last assertion.
+No actual realization of these skeleton values has been asserted.
+$\square$
+

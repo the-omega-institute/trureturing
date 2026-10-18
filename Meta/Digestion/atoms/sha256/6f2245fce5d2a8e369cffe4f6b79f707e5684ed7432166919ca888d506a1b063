@@ -1,0 +1,82 @@
+**Definition 2.1 (actual witnesses and live histories).** Use precisely
+the simultaneous actual cube $u_\theta\in Z_{b_3}$ of [PCA, Lemma
+24.1][PCA], $\theta\in\{0,1\}^n$. It has the complete target $R_0$
+and prescribed bit $\mathbf1_{\{|\theta|\ge k\}}$. Its whole repeated
+value $x_a=B_\theta$ is a beta/pair comb with the selected beta at $w_i$
+replaced by $\langle\beta,\beta\rangle$ exactly for $\theta_i=1$.
+The other branch values are fixed, pairwise different and avoid every
+$B_\theta$; $x_{b_3}=\beta$. The image inverse of Definition 1.1 gives
+actual finite origins with every original disequality.
+
+Every actual finite word on this cube is constant or reads exactly one
+bit, the latter occurring precisely in the disjoint sets
+
+$$
+E_i=\{p w_i z:p\in\{LLL,LRL\},\
+                     z\in\{\varepsilon,L,R\}\}.       \tag{PE.2}
+$$
+
+At an occurrence root the bit replies are beta/branch, and at a selected
+child they are absent/beta, in bit order zero/one. Every word in $E_i$
+has length at least $c_i$, with equality only at the two occurrence
+roots. This is an all-address classification: proper prefixes are
+unchanged branches, below the selected children both continuations are
+absent, and the other occurrence cones are fixed. In particular no other
+address combines bits. The occurrence identity [NBP, (NBP.9.7)][NBP]
+
+$$
+r_{\rho u}(p v)=r_{x_d}(v)\quad(p\in P,\ d=[p])       \tag{PE.3}
+$$
+
+holds for every finite suffix, including traversal past leaves. Repeated
+values do not identify their occurrences.
+
+A history includes every invocation already made and ends before its
+next invocation. Let $S$ be its exposed coordinate set and $h$ its
+number of exposed ones. It is live precisely when
+
+$$
+1\le k-h\le n-|S|.                                  \tag{PE.4}
+$$
+
+Every bit completion of such a history is an actual cube source
+following that history. Sets, counts and completions are proof notation,
+not accessible running coordinates. A selected state below means an
+installed running state with word in some $E_i$.
+
+Under (PE.1), [PCA, Theorem 34.3][PCA] gives the following supplied
+saturation facts. Every live prefix has negative and positive saturated
+completions of weights $k-1,k$. Each has exactly $n$ selected calls, once
+per coordinate at a shortest occurrence root, and exactly one further
+call, at $RLR$, before the last selected call. Both budgets in (PE.1)
+are equalities, so that last selected call is followed directly by its
+entry latch. At any live prefix a selected invocation is fresh and at
+one of these roots; the only possible nonselected invocation is $RLR$,
+and there is at most one in a live portion. This concerns individual
+source paths; their union is not assumed acyclic.
+
+For two live histories at one running state, with supports $S,T$, hit
+counts $h,g$, and
+
+$$
+X=S\setminus T,\quad Y=T\setminus S,\quad
+I=S\cap T,\quad U=[n]\setminus(S\cup T),
+\qquad a=|X|,\quad b=|Y|,\quad u=|U|,
+$$
+
+[PCA, Theorem 35.1][PCA] supplies
+
+$$
+[0,u]\cap[k-h-b,k-h-1]\cap[k-g-a,k-g-1]
+                    \cap\mathbb Z=\varnothing.       \tag{PE.5}
+$$
+
+It also excludes equal supports with unequal hit counts. Its argument
+uses freshness while both histories remain live; it does not assign a
+unique residual to every installed state. PCA Proposition 36.1 already
+gives a balanced seven-coordinate, four-hit live merger, with
+$H=47+r$ against the grid $20+r$. PCA Lemmas 38.3–38.4 give the nested
+exclusion and reciprocal single-private-coordinate charge only in their
+five-coordinate scope. The next two sections extend the consumed
+exclusions and charges without assuming extreme residuals.
+

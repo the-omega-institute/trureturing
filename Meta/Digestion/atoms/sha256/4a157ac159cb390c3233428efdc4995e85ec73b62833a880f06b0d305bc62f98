@@ -1,0 +1,12 @@
+**Definition 9.1 (which labels are counted).** Count actual acquired
+outcomes whose jointly counted whole fibre has dimension at most two
+and whose supported decoded live CP map is nonzero. Ignore null and
+supported-live-zero outcomes. The count is neither a total alphabet,
+a real-atom count, a grouped rank nor an inaccessible representation
+multiplicity. In the stipulated integral class a finite count means
+that the accessible live-bearing subinstrument is concentrated on that
+many actual record values of nonzero integrated CP mass, modulo null
+outcomes. A positive nonatomic accessible live-bearing component has
+infinitely many labels. An unacquired integral index is encoder Kraus
+multiplicity of a coarse actual label, with ONE common decoder.
+

@@ -1,0 +1,61 @@
+**Assumption 1.1 (source, acquired label and universal recovery).**
+Use [Native alpha recut memory continuation, Assumptions 5.1 and 9.1,
+Definition 13.1][NARC], with public $q\in\{18,19\}$ and
+$\lambda\in\{0,1\}$. The original sources are all
+
+$$
+X_{a,b}=\langle T_a,T_{q+b}\rangle,
+\qquad (a,b)\in\Omega_q:=\{0,\ldots,q-1\}^2,
+\qquad T_n=\rho^n\alpha.
+\tag{NAGC.1.1}
+$$
+
+The source algebra, homomorphic substitution, literal constructor port
+and complete cut row are [NAR, Definitions 1.1--1.2][NAR]. In particular
+$\rho\alpha=\beta$, $\rho\beta=\langle\beta,\alpha\rangle$,
+and $T_{n+2}=\langle T_{n+1},T_n\rangle$. Original offsets remain
+$0,q$. The encoder computes one deterministic label $e(a,b)$ from
+the genuinely acquired original empty-cut row, before the future cut
+and lag are chosen. Exactly $q$ labels are attained. The original
+row, parsed coordinates and every other source-bearing field are
+discarded; a surviving source-dependent selection counts as part of
+the label. The public encoder table is common to all sources.
+
+The same original continues by its own $\ell$ substitutions, with
+$\ell\ge\lambda$. The later entire row is genuinely acquired at
+the selected cut $\varnothing$, $\{L\}$ or $\{R\}$, and the
+current tree remains stationary during all subsequent Reads. One
+deterministic service must return that original's $\ell$ for every
+original, every permitted cut and every permitted lag, using at most
+two chronological native Reads. Each request is a fully materialized
+finite original-root word; repeated requests and the empty word are
+paid again. Local computation may depend on the acquired entry and
+earlier actual replies and must terminate on every promised input.
+No fixed finite controller, address cap or workspace cap is assumed.
+
+The original semantic correspondence is [NAR, Assumptions 11.1,
+13.1 and 16.1, Reuse 16.2][NAR]. The acquired-literal clock computes
+$a,b$ before discard and the visible normalized clock $z$ afterwards;
+it supplies no hidden age. For an entire class $C$, [NARC, Theorem
+5.2][NARC] gives exactly
+
+$$
+\begin{array}{c|c|c|c}
+\text{visible slot}&\text{complete origin fiber}&\text{hidden age}
+ &\text{required lag}\\ \hline
+R&\{(a,b)\in C:b\le z-\lambda\}&z+a-b&z-b\\
+L&\{(a,b)\in C:a\le z-\lambda\}&q+z-a+b&z-a.
+\end{array}
+\tag{NAGC.1.2}
+$$
+
+Equality of entries includes the full literal exterior, reached hole
+and complete singleton partition. Every index in these sets denotes
+its own fixed-original history. The native $E/P/S$ law, including
+the absence of $P_1$, is [AOF, Definition 8.2][AOF] and [NARC,
+Definition 5.3][NARC]. Root and visible-slot replies are constant on
+each complete entry; hidden-slot replies obey that law. Subsequent
+supports retain all original indices compatible with the actual
+transcript. Acquisition, discard and same-original continuation are
+premises, not conclusions authenticated by the returned integer.
+

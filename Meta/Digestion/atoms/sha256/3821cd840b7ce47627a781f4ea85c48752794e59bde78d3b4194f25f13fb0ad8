@@ -1,0 +1,149 @@
+**Theorem 2.1 (Moment reduction with finite label cost).** A fixed $\theta\in\Theta_N$ admits an equality-preserving reduction of its moment question to finitely many positive-weight primitive stationary marked block components. The precise accounting is as follows.
+
+For any finite stationary finite-alphabet mixture $P=\sum_cw_cP_c$, $w_c>0$, $\sum_cw_c=1$, let $C$ be its actual mixture label and
+
+$$
+b_n=H(C\mid X_0,\ldots,X_{n-1}),\qquad
+b_\infty=H(C\mid\sigma(X_j:j\ge0)).
+$$
+
+Then, with permanent label ambiguity explicitly removed,
+
+$$
+\begin{aligned}
+R_n^P&=\sum_cw_cR_n^{P_c}+b_n-b_\infty,\\
+T_P&=\sum_cw_cT_{P_c}+\sum_{n\ge0}(b_n-b_\infty).
+\end{aligned}
+\tag{2.1}
+$$
+
+These are equalities in $[0,\infty]$, even when some component moments diverge. If the $P_c$ are the visible laws of finitely many stationary irreducible finite marked chains, there are deterministic law-dependent constants $A_{\mathrm{lab}}<\infty$ and $0<\rho<1$ such that
+
+$$
+0\le b_n-b_\infty\le A_{\mathrm{lab}}(n+1)\rho^n.
+\tag{2.2}
+$$
+
+Identical visible laws are grouped only for label learning; periodic hidden classes remain admissible.
+
+For any integer $D\ge1$, set $Y_t=(X_{Dt},\ldots,X_{Dt+D-1})$. Its exact block entropy gaps obey
+
+$$
+a_k^Y=\sum_{j=Dk}^{Dk+D-1}a_j^X,\qquad
+T_Y\le T_X\le D T_Y.
+\tag{2.3}
+$$
+
+Choose $D$ divisible by the periods of all positive-mass closed hidden classes. There is then a stationary block mixture $Y\sim\sum_cw_cQ_c$, where each $Q_c$ has a finite marked presentation whose hidden transition matrix is primitive. Consequently
+
+$$
+T_X<\infty\quad\Longleftrightarrow\quad
+T_{Q_c}<\infty\ \text{for every }c\text{ with }w_c>0.
+\tag{2.4}
+$$
+
+The reduction includes every member of the original domain; it assumes neither positivity of all marked entries nor initial aperiodicity or unifilarity.
+
+Proof. The entropy chain rule [CT] gives
+
+$$
+H_n(P)=\sum_cw_cH_n(P_c)+H(C)-b_n.
+$$
+
+The last two terms have bounded difference. Dividing by $n$ proves $h(P)=\sum_cw_ch(P_c)$. Taking consecutive differences yields
+
+$$
+a_k^P=\sum_cw_ca_k^{P_c}+b_k-b_{k+1}.
+\tag{2.5}
+$$
+
+Every summand is nonnegative. Conditional entropy of a finite label converges along increasing fields, so $b_n\downarrow b_\infty$ and
+
+$$
+b_n-b_\infty=\sum_{k\ge n}(b_k-b_{k+1}).
+$$
+
+Nonnegative summation first gives the $R_n$ identity and then (2.1). In particular, no unproved boundary condition $n(b_n-b_\infty)\to0$ is used. Summing from any $K\ge0$ also gives
+
+$$
+\eta_P^{\mathrm{ent}}(K)=\sum_cw_c\eta_{P_c}^{\mathrm{ent}}(K)
++\sum_{n\ge K}(b_n-b_\infty).
+\tag{2.6}
+$$
+
+To prove (2.2), let $G=g(C)$ identify exactly equal visible component laws. A stationary irreducible finite hidden path law is shift-ergodic even when periodic; its visible factor is ergodic. Distinct stationary ergodic visible laws have different cylinder probabilities and are distinguished almost surely by future word frequencies. Thus $G$ is measurable on the whole future. Within a group, the observation law is independent of $C$, conditional on $G$. Hence
+
+$$
+b_n=H(G\mid X_0,\ldots,X_{n-1})+H(C\mid G),\qquad
+b_\infty=H(C\mid G).
+\tag{2.7}
+$$
+
+This identifies the permanent ambiguity, including duplicate presentations, without demanding that $C$ itself become observable.
+
+With one visible group, (2.7) makes the residual identically zero. Otherwise, for each pair of distinct groups choose one word with different probabilities. The resulting finite collection $\mathcal W$ gives distinct vectors $v_g=(P_g([w]))_{w\in\mathcal W}$. Their minimum pairwise sup-norm distance $\Delta$ is positive. A nearest-vector estimate $\widehat G_n$ based on empirical word frequencies is correct whenever every coordinate differs from its true value by less than $\Delta/3$.
+
+Here is a deterministic probability bound for those deviations that does not require mixing. In one component, the supported marked-edge chain $(H_t,X_t,H_{t+1})$ is finite irreducible. Its supported length-$L$ window chain $Z_t$ is also finite irreducible: connect the last hidden endpoint of one supported window to the first endpoint of another, then append the target window. For a word $w$ of length $L$, its indicator is a bounded state function $f_w(Z_t)$ of this chain. Let $K_w$ and $\pi_w$ denote its transition and stationary row.
+
+The finite-chain Poisson equation has a bounded real solution
+
+$$
+(I-K_w)g=f_w-\pi_w f_w.
+$$
+
+Indeed, eigenvalue $1$ is simple for a finite irreducible transition matrix; its range condition is precisely zero stationary mean. Other unit-circle eigenvalues do not obstruct this equation. With $m$ observed windows, the standard Poisson–martingale decomposition gives
+
+$$
+\sum_{t=0}^{m-1}(f_w(Z_t)-\pi_w f_w)
+=g(Z_0)-g(Z_m)+\sum_{t=0}^{m-1}(g(Z_{t+1})-K_wg(Z_t)).
+\tag{2.8}
+$$
+
+The last sum is a martingale with increments bounded by $2\|g\|_\infty$. If $G_w=\|g\|_\infty>0$ and $m\delta\ge4G_w$, Azuma's inequality [AZ] yields
+
+$$
+\Pr\left(\left|m^{-1}\sum_{t=0}^{m-1}f_w(Z_t)-\pi_wf_w\right|\ge\delta\right)
+\le2\exp\left(-\frac{m\delta^2}{32G_w^2}\right).
+\tag{2.9}
+$$
+
+The endpoint term has absolute value at most $2G_w$, which explains the threshold. If $g$ is constant, the centered indicator is zero and there is no deviation. Put $m=n-L+1$ and $\delta=\Delta/3$. A finite union over words and components, absorbing the finitely many short prefixes, gives $\Pr(\widehat G_n\ne G)\le A_0\rho^n$ for some deterministic $A_0<\infty$, $\rho<1$.
+
+For $s=|G|\ge2$, Fano's inequality [CT] bounds
+
+$$
+H(G\mid X_0,\ldots,X_{n-1})
+\le H_{\mathrm{bin}}(p_n)+p_n\ln(s-1),\qquad p_n=\Pr(\widehat G_n\ne G).
+$$
+
+For sufficiently large $n$, use $H_{\mathrm{bin}}(u)\le u\ln(1/u)+u$ and monotonicity of $u\ln(1/u)$ on $0\le u\le e^{-1}$. The exponential probability bound therefore gives (2.2), after increasing $A_{\mathrm{lab}}$ for the remaining $n$. This proof applies to exact real parameters and periodic chains. The related exponential discrimination result [KS, Proposition 1 and Theorem 4.7] requires singular whole-output laws; different stationary ergodic groups meet that condition. Unequal overlapping initial-state laws within one component need not meet it.
+
+For blocking, stationarity gives $H_n(Y)=H_{Dn}(X)$ and $h(Y)=Dh(X)$. Consecutive differences give the first identity in (2.3). For $Dk\le j<D(k+1)$,
+
+$$
+k+1\le j+1\le D(k+1),
+$$
+
+so nonnegative summation gives both moment comparisons, also for infinite moments.
+
+A finite stationary hidden chain has mass only on closed irreducible classes. Omitting zero-mass states in this analysis changes no cylinder of the actual law. A class of period $d$ splits into cyclic phases. For $d\mid D$, the restriction of $A^D$ to any one phase $S_c$ is irreducible and aperiodic, hence primitive: some power has every entry positive. This does not assert positivity of the individual marked matrices.
+
+The corresponding weight and stationary row are
+
+$$
+w_c=\sum_{i\in S_c}\lambda_i>0,\qquad
+\lambda_c(i)=\lambda_i/w_c\quad(i\in S_c).
+$$
+
+For a bit word $w$ of length $D$, its block-marked matrix is
+
+$$
+L_{c,w}=(M_w)_{S_c\times S_c},\qquad
+\sum_{w\in\{0,1\}^D}L_{c,w}=(A^D)_{S_c\times S_c}.
+\tag{2.10}
+$$
+
+These follow from finite Markov phase structure and distributivity. They specify the actual joint conditional on class and phase at $H_0$, observed at times $Dt$. Each $\lambda_c$ is stationary for its restricted $A^D$. The $Q_c$ are stationary under the block shift; a phase-conditioned law is not asserted stationary under a one-bit shift.
+
+All block-internal and block-to-block no11 constraints are inherited from (1.2). Illegal or null words have zero mass. Block endpoints do not create new open-path endpoints. Applying (2.1)–(2.2) to these finite primitive block components, and then (2.3), proves (2.4). Reducibility and period costs therefore cannot independently cause a divergent fixed-law moment: such divergence must occur in a positive-weight primitive component obtained in (2.10). $\square$
+

@@ -1,0 +1,25 @@
+**Proposition 19.2 (finite event solves, including the small six response).** The §24 witnesses and the exact event rectangle give the following outward bounds:
+
+| System | $\|I-R_b\mathbf J_b\|_\infty$ upper | $\|R_b\|_\infty$ upper | Euclidean inverse upper | $\|v_b-v_b^0\|_\infty$ upper |
+| --- | --- | --- | --- | --- |
+| $F_6$ | $2.17417396081\cdot10^{-12}$ | $180427.008196$ | $3788967.17213$ | $1.4\cdot10^{-17}$ |
+| $F_7$ | $3.05254308934\cdot10^{-11}$ | $20074.3549344$ | $441635.808571$ | $2.01\cdot10^{-15}$ |
+
+In particular
+
+$$
+\begin{gathered}
+2.83264015392\cdot10^{-11}\le a\le2.83266211059\cdot10^{-11},\\
+6.84687781515\cdot10^{-8}\le b\le6.84688086610\cdot10^{-8},\qquad 0<a<b.
+\end{gathered}
+$$
+
+For the finer finite radius arithmetic, valid enclosing numerator pairs over the common denominator $2^{300}$ are
+
+| Response | Lower numerator | Upper numerator |
+| --- | --- | --- |
+| $a$ | $57701899015645180801507086161464628207517552637740592529000272967303177339112552$ | $57702346280673657739636734338700593324400679155032278880682627172333162791904725$ |
+| $b$ | $139473364350334886308524521683639965870471236860830251914350418378478490115253344307$ | $139473426499093092021104729933967577407226047730929850475068499216778116583941517911$ |
+
+Proof. Apply Proposition 17.2 separately to the two matrices specified in Definition 19.1. Direct row sums of the rational witnesses and interval matrix products give the table; the response residual divided by $1-q_R$ is at most $1.391471993503\cdot10^{-17}$ on six and $2.008571892572\cdot10^{-15}$ on seven. Multiplication by the complete $D_Xk_b$, enclosing each solution coordinate by $v_b^0$ plus its error interval, gives intervals contained in the displayed dyadic bounds for $a,b$. Positive cross multiplication proves $0<a<b$. This also permits the weaker supplied coordinate errors $1.81773432464\cdot10^{-17}$ and $2.22563824343\cdot10^{-15}$, but the tighter residual estimates just stated suffice for these particular rational trial vectors. At the event the independent response identity of Theorem 2.3 still reads $b-a=-p_4'd_6'>0$, with $d_6'=\dot P_4/d_4$; a cleared derivative is not used without $d_4$. $\square$
+

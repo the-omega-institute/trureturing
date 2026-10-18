@@ -1,0 +1,6 @@
+**Theorem 7.1 (known shape and retained equality change the benchmark).** The independent-hole ratio in Theorem 4.1 cannot be transported unchanged to either of the following information contracts.
+
+First, if the exact shape of every $U_i$ is supplied and only its leaf labels remain unknown, exact reconstruction uses $M$ label requests. Second, for $C=\langle\square_1,\square_2\rangle$, if the retained partition supplies $U_1=U_2$, reconstruction uses $2m(U_1)-1$ calls by traversing just one occurrence and filling both holes, although the independent-completion denominator would be $M=2m(U_1)$.
+
+**Proof.** In the first contract, the leaf-address set is already known. Read those addresses once and insert their labels into the supplied shapes. Leaf flips are still legal in this changed family, so $M$ is its exact label-evidence price; discovery of the shape has been separately supplied. In the second contract, the actual equality relation makes the one acquired value sufficient for both occurrences. The supplied traversal gives $2m(U_1)-1$ calls and disjoint-occurrence leaf flips are no longer legal counterexamples in the equality fiber. Hence (NDR.4) with $M=2m(U_1)$ is not that fiber's certificate benchmark. These contracts fail precisely the independent completion or initial-information hypotheses. $\square$
+

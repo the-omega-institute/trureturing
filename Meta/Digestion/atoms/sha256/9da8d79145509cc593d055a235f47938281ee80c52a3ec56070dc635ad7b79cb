@@ -1,0 +1,13 @@
+**约定 47.2（本组命题的供应与数学证据）。** 定理43.2的新增步骤是准确残余面积的可变厚度框架及两个共同矩的网格分离；定理44.1消费这个稀疏分支并复用完整内部定理，定理45.1消费同一个分离族给显式逆，定理46.2消费锐阶容量给条件输出区别数。它们是 `repo-derived` 的普通数学综合，不主张全球原创、最佳常数或新增 Lean 认证。
+
+| 供应 | 直接使用的结果及保留条件 |
+| --- | --- |
+| 本卷固定修订 `ad41469a6773c13a22854c604d16eb71abacf198` 的命题3.1、3.4、9.2–9.4 | 实际词／分拆逆、原面积公式、反序保矩、尺寸裁剪、同一分拆的奇偶和范围；核心使用直接面积 $t$，外框使用缺口 $k$ |
+| 同修订的第5–6章及定理10.1 | 完整 $q^6$ 多尺度核心、固定后缀和内部容量；小 $k$ 分支的四次方界。这里不另认领正词对、数字注入或内部定理 |
+| 同修订的定理13.3、14.3及第28–29、34、37章 | 宽四对数障碍、有限计数／因子化、真实原始／粗取得、完整成本边界及当前源入口盲性 |
+| 固定修订 `68c31298fd46f33a83095127d316c0c74bc4c6c6` 的 `D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean` | `readout/acquisitionStep/frontier/acquisitionTrace/restore/acquisition_foundation` 的真实节点取得；粗口的存在不变量按本卷29.1使用。读取既有代码不等于新编译 |
+| Richomme，*On some 2-binomial coefficients of binary words: geometrical interpretation, partitions of integers, and fair words*，[arXiv:2510.07159v1](https://arxiv.org/abs/2510.07159v1)，§4.2引理4.12–4.13、推论4.14 | `literature-attested` 的有界分拆／词对应与稳定性；不将分拆数误认作平方双矩输出数 |
+| Nilforoushan–Parvaresh，[arXiv:2609.23106v1](https://arxiv.org/abs/2609.23106v1)，命题7.11、定理7.12 | `literature-attested` 的既有耦合扫区及总三阶 deck 指数；其所供参数扫区不替代任意准确 $(u,v,K)$ 下的框架证明 |
+
+有限单射计数、分拆共轭及任务纤维因子化保持经典归属，不另单列为新的一般定理。本组参数覆盖、构造和逆均以上述普通证明承担，不从有限算术实例或文献检索范围推出世界范围优先性。
+

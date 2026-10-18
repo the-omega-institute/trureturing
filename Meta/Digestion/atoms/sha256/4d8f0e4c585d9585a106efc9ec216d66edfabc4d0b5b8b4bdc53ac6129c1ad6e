@@ -1,0 +1,42 @@
+**Lemma 8.1 (All-scale contrast).** There exist a real $\ell_0\ge1$, a source-only $s_U>0$, and positive finite comparison constants, all fixed before choosing a scale, such that for every $0<s<s_U$ and every real $\ell_0\le\lambda\le1/s$, put
+
+$$
+v=1/\lambda,\qquad z=e^{-v},\qquad
+p_i=\frac{Z_i(e^{-(s+v)})}{Z_i(e^{-s})},\qquad \Delta=p_1-p_0.
+\tag{8.1}
+$$
+
+Then uniformly on that entire interval,
+
+$$
+p_0\asymp(s\lambda)^a,\qquad
+p_1\asymp p_0,\qquad
+0<p_0<p_1\le\tfrac12,\qquad
+\frac{\Delta}{p_0}\asymp\lambda^{-r}.
+\tag{8.2}
+$$
+
+Here $u\asymp v$ means two positive inequalities with the stated uniform source-only constants. An actual-bit survival flag produces potential iid Bernoulli marks of means $p_i$, independently of the stationary first wait.
+
+Proof. Start a flag at one after a paid tick. At each ensuing read zero, an alive flag survives with fresh probability $z$ and otherwise becomes zero. A failed flag stays zero while every remaining bit is read. At the closing paid tick, flag one has conditional probability $z^k$ if the gap has $K=k$ zeros. Averaging its law gives $\mathbb E_i z^K=p_i$. Reset the flag to one at each nonterminal closing tick. Disjoint iid gap and fresh-coin blocks define a potential iid mark sequence independent of $\tau$; the actual use is its stopped prefix. A mark is not independent of its own length.
+
+Put $t=s+v$. The scale range gives $s\le v$ and $v\le t\le2v$, with $t\ge2s$. Choose $\ell_0$ large enough that all $t\le2/\ell_0$ lie in the source-only interval of (2.8) and have small uniform power-sum relative errors. Then
+
+$$
+p_0=\frac{R_d(t)}{R_d(s)}\asymp(s/t)^a\asymp(s\lambda)^a,
+\qquad
+\frac{\Delta}{p_0}=\frac{c[g(t)-g(s)]}{1+cg(s)}.
+\tag{8.3}
+$$
+
+Integrating (2.8) between $s$ and $t$ bounds $g(t)-g(s)$ above and below by positive constant multiples of $t^r-s^r$. Since $r\ge1$ and $s\le v$,
+
+$$
+v^r\le(s+v)^r-s^r\le(2v)^r.
+\tag{8.4}
+$$
+
+This proves the uniform contrast and its strict positivity. The denominator in (8.3) stays bounded above and below, and the same formula bounds $p_1/p_0$.
+
+For the upper margin $p_1\le1/2$, the leading ratio $(s/t)^a$ is at most $2^{-a}\le1/4$, since $a\ge2$. Decrease the source interval so the two $R_d$ relative errors and the factor $(1+cg(t))/(1+cg(s))$ multiply to a number strictly less than two. This makes the desired bound uniform, even at $\lambda=1/s$. Finally choose $s_U\le1/\ell_0$ so the scale interval is nonempty. No threshold has depended on $\lambda$, a budget or an observer. The flag uses no length counter or accessible coin tape. $\square$
+

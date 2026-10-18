@@ -1,0 +1,17 @@
+**Proposition 7.3 (an auxiliary repair is not an acquisition theorem).**
+The hypotheses of Theorem 3.1 do not determine the acquired history row
+of an unspecified original observer, a procedure for obtaining $G_A,G_B$
+from that observer, or a statistical guarantee for estimates of (2.3).
+
+**Proof.** Theorem 6.1 provides the same small-defect type of analytical
+input with an unchanged original kernel whose later rows and stationary
+row differ by a fixed amount; hence no inference identifying these rows
+can hold under these hypotheses. More basically, Definitions 2.1–2.2
+specify measures and no observation experiment, sample law, estimator or
+confidence event. Any such conclusion requires an additional map from
+an actual experiment to the supplied measures and its own accuracy and
+cost hypotheses. Exact state identification, optimal readout error and
+the existence of a represented generated law have different mathematical
+premises [WHITEBOX, §§14–18, 51, 74–77; SLH, §§50–58].
+$\square$
+

@@ -1,0 +1,49 @@
+**Proposition 80.1 (source, Jacobian and limiting scales).** The joint
+conclusions retain exactly the Coulomb tensor, source coefficient
+and original-coordinate transport of §§70--74. In particular, with
+$J_\kappa=\operatorname{diag}(1,1,\kappa)$ and $D=\kappa x$,
+for every positive cutoff in either regime,
+
+$$
+\psi^{\rm orig}(k,J_\kappa q)=|\kappa|^{-1/2}\psi(k,q),\qquad
+W_\tau^{\rm orig}(k,J_\kappa q)=|\kappa|^{-1}W_\tau(k,q),
+\qquad g_{\rm orig}=|\kappa|g.
+\tag{80.1}
+$$
+
+The tensor in original coordinates is
+$J_\kappa M J_\kappa^{\mathsf T}$ with its signed cross terms.
+The conclusions concern a fixed nonzero $\kappa$, the all-real
+threshold cover and positive cutoffs. They assert neither an
+unregularized semibounded realization nor an exact microscopic
+limiting problem, and do not transfer to a wrapped threshold cover
+or the actual zero leaf. They do not select physical space or
+physical $SO(3)$.
+
+Proof. The absolute Jacobian is $|\kappa|$, so the unitary
+wavefunction factor differs from the unit raw-source kernel factor
+exactly as in Proposition 74.1. None of the cutoff estimates changes
+this Jacobian or the clock. The macroscopic coefficient remains
+$\phi(k_0)\int\phi^3/(4\pi\sqrt{\det M})$: (77.5)--(77.8)
+compare directly with the same raw point-source problem at cutoff
+one, not a stationary-height source. Formula (75.4) preserves its
+distinct raw and $\phi$-weighted charges at every time.
+
+The native joint estimates (76.7), (77.7) and (78.8)--(79.1) are
+repo-derived consequences of the specified suppliers. The sharp
+all-height short-time input is G §32, the large-time and threshold
+inputs are L Lemma 41.2 and §§42--48, and the fixed-reference
+variational and profile inputs are §§71--73. G Theorem 3.1 supplies
+the privileged concentration mechanism; (78.8) verifies that its
+time window survives the present positive cutoff. The cited
+Colin de Verdière--Hillairet--Trélat theorems supply local
+positive-time kernel convergence and localization only. The
+weighted Schur test and Cauchy--Schwarz are classical intermediate
+steps, rather than new standalone results or a global Green
+asymptotic. These correspondences make no literature-wide novelty
+assertion. The exclusions concerning large-time divergence on
+wrapped covers and the actual zero leaf are those of Proposition
+74.1 and L §§44--45. The different small-time and large-time
+scales proved here therefore preserve all those boundaries.
+$\square$
+

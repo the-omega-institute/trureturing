@@ -1,0 +1,36 @@
+**定义 8.2（保留单位域与全部三层、交层）。** 令 $\mathcal X$ 为全部合法来源元组的空间。记
+
+$$
+\begin{aligned}
+\mathcal X_1&=\{\mathbf P\in\mathcal X:
+\sigma(P_{j_0})=\sigma(P_{j_1})=1\},\\
+\mathcal X_{\ne1}&=\{\mathbf P\in\mathcal X:
+\sigma(P_{j_0})=\sigma(P_{j_1})\ne1\},\\
+\mathcal T_E&=\{\mathbf P\in\mathcal X_{\ne1}:\operatorname{rank}[B;E_J]=r\},\\
+\mathcal T_6&=\{\mathbf P\in\mathcal X_{\ne1}:\operatorname{rank}[B;F_6]=r\},\\
+\mathcal T_7&=\{\mathbf P\in\mathcal X_{\ne1}:\operatorname{rank}[B;F_7]=r\}.
+\end{aligned}
+\tag{8.2}
+$$
+
+于是完整必要限制为
+
+$$
+\mathfrak S_7\subseteq
+\mathcal X_1\ \cup\ \mathcal T_E\ \cup\ \mathcal T_6\ \cup\ \mathcal T_7.
+\tag{8.3}
+$$
+
+不等 $J^7$ 签名已由定理 3.5 排除，单位域仍须完整保留。三非单位层中，$J^7$ 的增益像分别落在
+
+$$
+\begin{aligned}
+\mathcal H_E&=\{h\in\mathbb R^4:8h_1+40h_2+176h_3=0\},\\
+\mathcal H_6&=\{h\in\mathbb R^4:h_0+6h_1+36h_2+216h_3=0\},\\
+\mathcal H_7&=\{h\in\mathbb R^4:h_0+7h_1+49h_2+343h_3=0\}.
+\end{aligned}
+\tag{8.4}
+$$
+
+这里的三分是三层并集，并非互斥分解。所有两两交层 $\mathcal T_E\cap\mathcal T_6$、$\mathcal T_E\cap\mathcal T_7$、$\mathcal T_6\cap\mathcal T_7$ 以及三重交层均保留，既不宣称可行也不宣称为空。每一层及每个交层仍须施加 (1.2) 和全部 (2.10)，没有删除任何 $G_q$ 或任何适用的完整 $D_w$。任一实际同时合法向量仍须有定理 3.5 的共同非零非常数 $J^7$ 部分。
+

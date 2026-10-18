@@ -1,0 +1,17 @@
+**定义 42.1（One common incidence matrix）。** For an eligible cut $a=2q+r$, a depth $q+1\le d\le p$ has a certificate when a matrix $x_t(i)$, $0\le t<d$, $0\le i<p$, satisfies all the following conditions. Rows $t<q$ are $I_t$. The parent row at $q$ is supported on $\{q,q+1\}\pmod p$ and is the actual row of
+
+$$
+B_q\in\{00,01\}\quad(r=0),\qquad B_q=10\quad(r=1).
+\tag{42.1}
+$$
+
+Every later row is arbitrary on $\{t,t+1\}\pmod p$ and zero elsewhere. The whole columns separate different low labels:
+
+$$
+\Lambda_i\ne\Lambda_j\quad\Longrightarrow\quad
+ (x_0(i),\ldots,x_{d-1}(i))\ne(x_0(j),\ldots,x_{d-1}(j)).
+\tag{42.2}
+$$
+
+Equal labels may have different columns. Let $\mathcal Z$ be the set of admitted depths, over all common eligible cuts and their matrices. The matrix is on the whole actual phase set and has one literal word at each chronological index. It is not a family of separately optimized sibling streams. Its depth is an admitted horizon; a source already stopped need not issue every written word.
+

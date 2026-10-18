@@ -1,0 +1,45 @@
+**Definition 9.12 (An integer alternating coordinate).** Let
+$\varnothing\ne T\subseteq\{1,\ldots,n\}$ be an independent set
+of the path, and let $k=|T|\ge1$. Identify legal words with their
+occupied sets. Define
+
+$$
+d_T(I)=
+\begin{cases}
+(-1)^{k-|I|},&I\subseteq T,\\
+0,&I\not\subseteq T,
+\end{cases}
+\qquad
+\Phi_T=\sum_{I\subseteq T}(-1)^{k-|I|}\theta_I,
+\tag{9.37}
+$$
+
+$$
+I_T=\sum_{I\subseteq T}\frac1{p_I},\qquad
+P_T=\sum_{I\subseteq T}p_I.
+\tag{9.38}
+$$
+
+The binomial sum gives $\sum_I d_T(I)=(1-1)^k=0$.
+Thus $p+\epsilon d_T$ is normalized and remains strictly positive
+for sufficiently small $|\epsilon|$; its scalar probability
+Fisher coefficient at $\epsilon=0$ is $I_T$.
+
+The alternating vector is exactly the column for the moment
+$\mu_T$ in the inverse transform of HiddenRelations C-28.5.1:
+its coefficient at $p_I$ is $(-1)^{|T|-|I|}$ when $I\subseteq T$.
+The supplier's position count $N$ maps to this chapter's word
+length $n$, not its sample count $N$. For a proper subset
+$A\subsetneq T$,
+
+$$
+\sum_I d_T(I)1_{\{A\subseteq I\}}
+=\sum_{A\subseteq I\subseteq T}(-1)^{k-|I|}
+=(1-1)^{k-|A|}=0.
+\tag{9.39}
+$$
+
+If $A$ contains a position outside $T$, the sum is also zero.
+This consumes the existing lower-moment-preserving probability
+direction; the new task here is to read its phase coordinate.
+

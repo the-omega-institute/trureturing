@@ -1,0 +1,23 @@
+### 98.1. Exact criterion and hypotheses
+
+**Theorem 98.1.**
+
+Let j,C be positive integers, N=3^j>=81, and B_N=L_N^2+3=qrs C^2, where q,r,s are distinct primes and qrs is the full positive squarefree kernel. Assume
+
+ q=r=s=19 modulo 24,
+ (r/q)=(s/q)=(s/r)=+1.
+
+Actual original support also gives (5/q)=(5/r)=(5/s)=1 and all three primes greater than 5. Reciprocity gives (q/r)=(q/s)=(r/s)=-1.
+
+There exist primitive integers a,b,c with c>0, gcd(a,b,c)=1, q not dividing bc, and
+
+ a^2-rs b^2=5qrs c^2.
+
+For every such certificate, r does not divide bc either, and the sign
+
+ Xi=(b/q)(b/r)=(b/(qr))
+
+is independent of the allowed certificate choice. If Xi=-1, the curve E_D:Y^2=X(X+5D)(X-15D), D=qrs, has rational rank exactly one. Consequently there is no admissible repetition B_(Nk)=D c'^2 with k>1 odd, 3 not dividing k and c' a positive integer.
+
+This criterion treats distinct extra left and right kernel directions. It does not require any of the cut primes to be 1 modulo 4. It makes no converse assertion for Xi=+1, no claim that a numerical original block realizes the negative sign, and no universal WSS conclusion.
+

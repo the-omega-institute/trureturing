@@ -1,0 +1,8 @@
+**定义 173.1（同步来源及 Fibonacci 数）。** 令 $r_n=\rho^n(r)$、$s_n=\rho^n(s)$，$n\ge0$，两条来源使用同一个替换步数。记 $\Delta m_n=m(r_n)-m(s_n)$，并令
+
+$$
+F_0=0,\qquad F_1=1,\qquad F_{n+2}=F_{n+1}+F_n.
+$$
+
+这是数列下标记号，与 $F_m$ 和 $F_{\mathrm{fib}}$ 分开。
+

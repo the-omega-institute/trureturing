@@ -1,0 +1,28 @@
+**Lemma 19.2 (the whole spatial exterior, including far phase at bounded height).** In the $b$ closure of the exterior smooth core supported in $\{\mathfrak d>R\}$,
+
+$$
+h_0[u]\ge(1-\omega_R)b[u],\qquad
+|e(u)|\le\sqrt{a_R}\sqrt{h_0[u]}.
+\tag{19.4}
+$$
+
+Moreover $\omega_R=O(R^{-3})$, $a_R=O(R^{-3})$, so (19.3) is defined for all sufficiently large $R$.
+
+Proof. The full-space estimates give $|\mathbf g|\le C(1+\mathfrak d)^{-5}$ and $|k|\le C(1+\mathfrak d)^{-15/2}$. In particular $V_1p$ has power $-15/2$, while the retained $VF_*p$ has power $-9$. Hölder and the stated Sobolev inequality give
+
+$$
+\gamma\int V|u|^2\le\omega_Rb[u],\qquad
+|e(u)|\le(\|\mathbf g\mathbf1_{\mathfrak d>R}\|_2+
+ S_H\|k\mathbf1_{\mathfrak d>R}\|_{14/9})\sqrt{b[u]}.
+$$
+
+This proves (19.4) on the core. Sobolev convergence implies local $L^2$ convergence; it preserves the exterior support and all displayed pairings in the completion. The volume law gives
+
+$$
+\|\mathbf g\mathbf1_{\mathfrak d>R}\|_2=O(R^{-3/2}),\qquad
+\|k\mathbf1_{\mathfrak d>R}\|_{14/9}=O(R^{-3}),\qquad
+\|V\mathbf1_{\mathfrak d>R}\|_{7/2}=O(R^{-3}).
+$$
+
+These are spatial-exterior estimates, rather than height-exterior estimates. $\square$
+

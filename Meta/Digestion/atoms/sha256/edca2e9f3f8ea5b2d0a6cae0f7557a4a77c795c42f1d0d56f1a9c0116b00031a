@@ -1,0 +1,43 @@
+### 75.3 A literal rational certificate
+
+The following Hermitian matrix Z=(R+iS)/10000 is a certificate for the entire channel difference:
+
+    R=[[3324,−180,664,−877,806,322,871,−719],
+       [−180,2843,304,753,−57,1073,−136,816],
+       [664,304,2460,−144,782,225,1320,358],
+       [−877,753,−144,3598,−803,662,−60,609],
+       [806,−57,782,−803,3616,−45,494,−930],
+       [322,1073,225,662,−45,2854,222,991],
+       [871,−136,1320,−60,494,222,3274,−147],
+       [−719,816,358,609,−930,991,−147,3374]],
+
+    S=[[0,157,205,530,671,−353,−293,596],
+       [−157,0,−234,1036,508,100,67,−433],
+       [−205,234,0,4,104,534,−176,−377],
+       [−530,−1036,−4,0,−266,137,430,322],
+       [−671,−508,−104,266,0,95,809,191],
+       [353,−100,−534,−137,−95,0,−233,649],
+       [293,−67,176,−430,−809,233,0,230],
+       [−596,433,377,−322,−191,−649,−230,0]].
+
+All entries of D and Z are Gaussian rational numbers. Direct exact elimination gives
+
+    Z−D>0,  Z+D>0,
+    (3/8)I₂−Z_ff>0  for f=1,2,3,4.                    (1)
+
+For an explicit reproducible positivity check, use the ordinary Hermitian LDL* elimination without pivoting. If M=L diag(p_1,...,p_n)L*, with unit diagonal in L, its recursion is
+
+    p_j=M_jj−Σ_(h<j)|L_jh|²p_h,
+    L_ij=(M_ij−Σ_(h<j)L_ih p_h overline(L_jh))/p_j.
+
+The following integers are strict lower bounds for 10⁶ times the successive exact rational pivots:
+
+    Z−D: 332399,282582,5553,16199,4216,2071,1765,1489;
+    Z+D: 332399,282582,167838,100819,22930,37115,2394,3241;
+    (3/8)I₂−Z_11: 42599,77307;
+    (3/8)I₂−Z_22: 128999,13590;
+    (3/8)I₂−Z_33: 13399,81352;
+    (3/8)I₂−Z_44: 47599,21945.
+
+Every listed bound is positive, so the recursion proves (1) using rational arithmetic. The matrices above, rather than rounded eigenvalues or a numerical optimizer, determine the certificate.
+

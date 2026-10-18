@@ -1,0 +1,101 @@
+**Proposition 15.3 (one positive-coordinate nonmonotone class with
+literal service under both conventions).** For every $q\ge12$,
+start at $p_0=(1,8)$ and apply the seventeen increments
+
+$$
+AA\,D\,BB\,AAA\,BBB\,AAA\,BBB,
+\qquad A=(1,0),\quad B=(0,-1),\quad D=(2,1).
+\tag{NARC.15.6}
+$$
+
+The eighteen vertices form a class two-readable at every legal lag
+under each $\lambda\in\{0,1\}$. It is contained in no monotone
+saturated path, even in a larger square. This supplies a class,
+not a complete $q$-label encoder.
+
+**Proof, vertices and entire entry.** Its vertices are
+
+$$
+\begin{aligned}
+&(1,8),(2,8),(3,8),(5,9),(5,8),(5,7),\\
+&(6,7),(7,7),(8,7),(8,6),(8,5),(8,4),\\
+&(9,4),(10,4),(11,4),(11,3),(11,2),(11,1).
+\end{aligned}
+\tag{NARC.15.7}
+$$
+
+All coordinates lie in $[1,11]$ and $d(p_i)=i-7$, $0\le i\le17$.
+The $a$ change positions are $1,2,3;6,7,8;12,13,14$; the $b$
+positions are $3,4,5;9,10,11;15,16,17$. Thus $r_a=r_b=10$
+and $\sigma=1$, with all middle edges unit. The two points
+$(3,8),(5,9)$ are incomparable in the order with $a$ increasing
+and $b$ decreasing. A monotone path cannot contain both, proving
+the asserted failure of the monotone-deletion restriction.
+
+If this is an encoder's entire preimage, initialize candidates to
+the complete $F_R(C,z,\lambda)$ or $F_L(C,z,\lambda)$ of Theorem
+5.2. Initially and after a reply, halt whenever the visible-origin
+target is constant. Otherwise use the following schedule, with
+$h=q+z$ for left visibility. Each second request is selected only
+after the indicated actual first reply.
+
+| Visible region | First experiment | Second after ambiguous $\bot$ | Second after ambiguous $\mathsf b$ |
+| --- | --- | --- | --- |
+| right | $P_{z+2}$ | $P_{z-4}$ | $P_{z+8}$ |
+| left | $P_h$ | $P_{h-6}$ | $P_{h+5}$ |
+
+Its complete whole-class target certificates are as follows. The
+four-entry tuples use actual reply order
+$(\bot,\alpha,\beta,\mathsf b)$, and conditional cells are intersected
+with the first reply's support.
+
+| Visible region | First $\alpha$ target | First $\beta$ target | Lower second targets | Upper second targets |
+| --- | --- | --- | --- | --- |
+| right, target $b$ | $6$ | $5$ | $(8,9,8,7)$ | $(4,3,2,1)$ |
+| left, target $a$ | $7$ | $6$ | $(11,10,9,8)$ | $(5,3,2,1)$ |
+
+For the right table, $n=z+i-7$, so the first threshold $z+2$
+singles out $i=9,10$. Its lower tail is $i\le8$, and threshold
+$z-4$ singles out $i=3,4$: indices $0,1,2$ have $b=8$,
+$i=3$ has $b=9$, $i=4$ has $b=8$, and indices $5$--$8$
+have $b=7$. Its upper tail is $i\ge11$, and $z+8$ singles
+out $i=15,16$: indices $11$--$14$ have $b=4$, then targets
+are $3,2,1$. For the left table, $n=h+7-i$. First $P_h$
+singles out $i=7,6$. Its lower tail is $i\ge8$, and $h-6$
+singles out $i=13,12$: indices $14$--$17$ have $a=11$,
+followed in increasing age by $a=10,9$ and the $a=8$ group.
+Its upper tail is $i\le5$, and $h+5$ singles out $i=2,1$:
+indices $3$--$5$ have $a=5$, followed by targets $3,2,1$.
+These calculations prove every table entry symbolically. Restriction
+to the full compatible fiber only deletes indices from the certified
+cells; it cannot introduce a second target into a cell.
+
+**Proof, actual legality and all lags.** A nonempty right fiber has
+$z\ge1+\lambda$, since the minimum $b$ is one. Its first and
+upper thresholds are therefore at least three. The lower second
+threshold is submitted only on an ambiguous first-absence cell.
+All points of that cell with $b<8$ have the common target seven.
+Ambiguity therefore requires a surviving point with $b\ge8$.
+Its complete-fiber membership gives $z\ge8+\lambda$, so the
+needed lower threshold satisfies $z-4\ge4+\lambda$.
+On the left, a nonempty fiber has $z\ge1+\lambda$ and $q\ge12$,
+so $h-6\ge7+\lambda$; every left threshold is legal as well.
+Thus neither $P_1$ nor a virtual or negative test is ever submitted,
+under either lag convention.
+
+For each requested $t=2m$, materialize $w_t=R^m$, and for
+$t=2m+1$, materialize $w_t=LR^m$, with $m\ge1$. Submit
+the entire word $Lw_t$ on right visibility or $Rw_t$ on left
+visibility to the actual stationary original root. These are the
+literal requests of Definition 5.3, each costing one chronological
+Read. Retain exactly the public candidates giving its actual reply.
+The actual original belongs to the initial complete fiber and survives
+every truthful reply. Each terminal cell has the displayed constant
+origin $v$, so its output $z-v$ is that original's own legal lag.
+The inequalities and reply identities hold for every integer $z$,
+not just a finite lag window. All choices use only the attained label,
+later acquired row, public class table, selected region and actual
+earlier replies. Nothing consults the discarded original row or a
+hidden-age port. No covering claim about the complement is made.
+$\square$
+

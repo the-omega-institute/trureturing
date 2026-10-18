@@ -1,0 +1,25 @@
+**Theorem 11.8 (analytic minimizers and finite attainability).** For any compatible pair with both phase marginals finitely supported, there is a finite regular stationary table whose own laws are precisely those marginal atoms and whose configuration losses against every target are exactly $\mathcal L_p,\mathcal L_\beta$. Consequently:
+
+1. The regular value $j_c$ is attained by an abstract finite stationary table if and only if some minimizing compatible pair has finitely supported phase marginals.
+2. A finite abstract common conf/conf attainer exists in the original class $\mathfrak M_\mu$ if and only if a zero-level compatible pair has finitely supported phase marginals.
+
+Finite support of both marginals is equivalent here to finite support of both flow measures.
+
+**Proof.** Write
+
+$$
+\nu_p=\sum_i\pi_i\delta_{Q_i},\qquad
+\nu_\beta=\sum_j\tau_j\delta_{W_j},\qquad \pi_i,\tau_j>0,
+$$
+
+with distinct atoms at each phase. Both flow measures are supported on the respective finite products, because their marginals assign mass one to those products. Define $B_{ij}=\Gamma_B(\{(Q_i,W_j)\})/\pi_i$ and $A_{ji}=\Gamma_A(\{(W_j,Q_i)\})/\tau_j$, and take emissions $u_i=Q_i(\alpha)$, $v_j=1-W_j(\beta)$. The margin equalities give both flow identities. The Borel indicator tests following Definition 11.2 isolate each input atom and give
+
+$$
+\mathcal R_B(Q_i)=\sum_jB_{ij}W_j,\qquad
+\mathcal R_A(W_j)=\sum_iA_{ji}Q_i.
+$$
+
+Together with (11.4), these are exactly (11.19) for $Q_i,W_j$. The unique normalized solution established there shows that the descriptors are the table's own complete generated laws. Thus all losses agree exactly, rather than merely being compared to fitted centroid laws.
+
+For assertion 1, this construction supplies the forward finite realization, and (11.24) embeds every finite minimizing table as a finitely supported minimizing pair. For assertion 2, a finite zero-level pair supplies an original product attainer by Section 11.4 and the separate lower minima. Conversely a finite abstract original attainer gives a finite regular stationary attainer by [CLIP, Theorem 4.2; PAID, Corollary 2.3], and (11.24) gives its finite zero-level pair. No equivalence of positive original and regular minimizers is inferred from the comparison factor. $\square$
+

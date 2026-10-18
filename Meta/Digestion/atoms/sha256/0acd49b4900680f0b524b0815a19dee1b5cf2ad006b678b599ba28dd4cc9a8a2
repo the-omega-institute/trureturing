@@ -1,0 +1,26 @@
+## 184. Exact statement
+
+Retain the actual finite face pairing, complete circular edge links,
+minimum actual degree six, fixed vertex-induced paired frames, common
+positive generalized lengths and original 2*pi edge equations. Assume
+exactly five reservoir labels and a nonempty flat set. Choose the global
+maximal pi-selected reservoir M and its genuine escape
+
+ tau=(Z,M,C,D,M,C),  H={M,C,D,Z,U}.
+
+Use cosh-length values m,c,d,z,u. The escape theorem of Sections 130--136 gives
+
+ m>=1+c+d, z>=1+m+c, p_M=1, p_Z=0,
+
+and tau is a genuine witness for each of M,C,D,Z. The upper-gap theorem of Section 182
+gives u>T(m,z)>m-2, without assuming U witnessed or pi-selected.
+
+**Proposition 184.1.** U has a genuine occurrence. Thus all five H labels have
+genuine occurrences, every flat tetrahedron selects its axial pair,
+and each actual U occurrence is either genuine or an axial pi occurrence.
+In particular p_U is either zero or one; its complete genuine angle
+sum is respectively 2*pi or pi. Every actual Z occurrence is genuine.
+
+This is a necessary structural conclusion under the assumed flat set;
+it does not exclude all five-reservoir flat configurations.
+

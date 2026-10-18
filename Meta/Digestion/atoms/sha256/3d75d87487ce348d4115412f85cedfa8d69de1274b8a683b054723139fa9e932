@@ -1,0 +1,15 @@
+**Corollary 16.2 (relation to the earlier results).** The exact-value
+and identified-simulator questions in Open problems 7.3 and 11.2 have
+the answer (CG.154) in the enlarged comparison class (CG.20). Theorem
+8.4's attainment result, Theorem 9.3's strict inequality
+$L_{\rm full}<E_*$, the scalar-live construction of §10 and the
+fixed-filter construction of §12 remain valid with their stated scope.
+No uniqueness of a minimizing channel follows.
+
+Proof. Theorems 14.1 and 15.2 directly fulfill the simultaneous
+feasibility and matching-lower requirements of Proposition 11.1.
+All quantities and classes in the earlier results are unchanged.
+Uniqueness in Proposition 13.2 concerns only a zero in a specified
+parameter box; it is not a classification of optimal channels or
+other algebraic zeros. $\square$
+

@@ -1,0 +1,40 @@
+## 139. All four reservoirs are witnessed, and Z has no flat occurrences
+
+The genuine block tau contains every H label, so all four have genuine
+witnesses. A flat block cannot select a transverse pair: its two pi
+occurrences would exhaust the selected H label's full angle budget and
+contradict its positive genuine angle. Thus every flat block selects its
+axial pair.
+
+Z cannot occur axially in a flat block, since it has no flat pi occurrence.
+It cannot occur transversely either. Indeed, suppose the pair is {Z,A}.
+Every H-valued selected axis has value at most m<z, and every S-valued
+selected axis has value less than 1+z+x_A. If both axes are in H, their
+shifted product is less than (z-1)^2; if exactly one is in S, it is less
+than (z-1)(z+x_A); and if both are in S it is less than (z+x_A)^2. Each
+case contradicts axial flatness for the pair {Z,A}. Consequently every
+occurrence in the complete Z star is genuine.
+
+Similarly M has no flat transverse occurrence: both selected H axes have
+value at most m, and the special-edge bound gives the same shifted-product
+contradiction with pair {M,A}. Every flat axial M occurrence has angle pi.
+Therefore M has exactly one flat occurrence in total, and the sum of all
+its genuine angles is exactly pi.
+
+The initial inequalities are strict. Let O be the opposite axis of M in
+sigma. If O is in H it is selected, so O cannot be Z. It cannot be M
+because that would give M two flat pi occurrences. Thus O is C or D,
+whose value is strictly less than 1+c+d. If O is in S the special-edge
+bound also gives x_O<1+c+d. Axial flatness now implies
+
+    m > 1+c+d.                                   (137.4)
+
+The escape cosine numerator at z0=1+m+c equals
+[c+m(1+m+c)]*(1+c+d-m), which is strictly negative by (137.4).
+Since the actual escape M angle is at most pi/2 and this numerator strictly
+increases with z, it follows that
+
+    z > 1+m+c.                                   (137.5)
+
+In particular z>m>c,d and m>c.
+

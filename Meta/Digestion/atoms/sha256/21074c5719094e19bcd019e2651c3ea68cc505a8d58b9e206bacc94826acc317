@@ -1,0 +1,41 @@
+**Definition 2.1 (fixed calibrated support).** In the original live space
+$\mathcal H=\mathbb C^5$, put
+
+$$
+U_+=\frac{e^{-i\theta_0}e_0+e^{-i\theta_4}e_4}{\sqrt2},
+\qquad
+U_-=\frac{e^{-i\theta_1}e_1+e^{-i\theta_3}e_3}{\sqrt2},
+\qquad
+V=\operatorname{span}_{\mathbb C}\{U_+,U_-,e_2\}.
+\tag{QC.4}
+$$
+
+These three vectors are orthonormal. Let $f$ be the original orthogonal
+absorbing state. The actual stopped-state algebra is
+$\mathcal L(V)\oplus\mathbb C|f\rangle\langle f|$ when live/stopped
+status is classical. A four-dimensional Hilbert embedding is
+$V\oplus\mathbb Cf\subset\mathbb C^6$; its extra coherent matrix entries
+need not be physically populated.
+
+Let $g_+,g_-,g_2,g_f$ be an orthonormal basis of $\mathbb C^4$ and define
+the fixed isometry
+
+$$
+Wg_+=U_+,\qquad Wg_-=U_-,\qquad Wg_2=e_2,\qquad Wg_f=f.
+\tag{QC.5}
+$$
+
+It depends on the calibrated preparation phases, not on $\beta$, $m$,
+an unknown waveform or a learned probability law. Set $P=WW^\dagger$ and
+define whole-domain channels
+
+$$
+\begin{aligned}
+\mathcal E(\rho)
+ &=W^\dagger\rho W+
+       \operatorname{tr}((I_6-P)\rho)|g_f\rangle\langle g_f|,\\
+\mathcal D(\sigma)&=W\sigma W^\dagger.
+\end{aligned}
+\tag{QC.6}
+$$
+

@@ -1,0 +1,11 @@
+**Proposition 66.8 (A positive cap need not have an integrable upper envelope).** Even for the full-source family $\mu_y=\tau=\lambda$ on $I$, with the always-unknown consumer and identity rank, every positive cap $\eta$ has an initial fiber (66.15) whose canonical densities have a nonintegrable pointwise supremum. Thus integrability of the supremum of all initial cap-fiber densities is not a necessary condition for lawful cap feasibility, and is not a consequence of Definition 66.1.
+
+**Proof.** Choose $0<d\le\eta$ with $d<1$. For every integer $n\ge2$, the increasing normalized density
+
+$$
+ g_n(u)=1-d+dn\mathbf1_{[1-1/n,1)}(u)
+\tag{66.20}
+$$
+
+has $\operatorname{TV}(g_n\lambda,\lambda)=d(1-1/n)\le\eta$. Since all original targets are $\lambda$, every $g_n$ belongs to every initial fiber. For $u$ sufficiently close to one choose $n=\lfloor(1-u)^{-1}\rfloor\ge2$. Then $u\ge1-1/n$ and $n\ge[2(1-u)]^{-1}$, so $\sup_n g_n(u)\ge d/[2(1-u)]$. The pointwise supremum of all the fiber densities is measurable because it is nondecreasing, and its integral is infinite. Nevertheless the constant law $\lambda$ is an exact zero-query preparation of this full-source input. The integrable envelopes of Theorem 66.3 are simultaneous lower bounds in sourcewise shrinking cylinders, bounded by the density at that source; they do not assert this stronger upper domination. $\square$
+

@@ -1,0 +1,18 @@
+**Definition 2.2 (one common symbolic graph).** Before selecting literals,
+fix a labeled graph $G$ on $E=\{0,\ldots,s-1\}$, its initial state,
+instruction partition and successors. Choose one descriptor type for
+each read state, and let $\boldsymbol\delta=(\delta_e)_{e\in E_R}$ contain
+their numeric parameters. Set $r=|E_R|$. All choices in this definition
+are common design data. For a valid tuple, an admitted $u$ and an epoch
+$j$, define
+
+$$
+V_u(j)=(r_{U^ju}(p(\delta_e)))_{e\in E_R}\in\mathcal C^{E_R}.
+\tag{UDB.7}
+$$
+
+This vector lists the replies to all installed addresses, including
+states not visited on the run. It is a mathematical response field;
+forming it in the proof does not execute $r$ extra reads or grant the
+controller a simultaneous-response port.
+

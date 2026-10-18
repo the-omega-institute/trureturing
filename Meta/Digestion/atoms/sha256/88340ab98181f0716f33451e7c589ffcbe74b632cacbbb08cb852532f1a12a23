@@ -1,0 +1,43 @@
+**Theorem 4.2 (exact actual tuples, counts and incidence).** For every
+$m\ge2,d\ge2$, $\mathcal T_{m,d}$ has exactly $11m$ original
+blocks and $5m$ seeds, all owned at actual roots. Its seed-block
+incidence graph is connected and every seed has incidence at most four.
+Its full actual solution set has exactly $2^m+1$ points:
+
+1. Phase one: every $x_i=1$ and every $a_i=b_i=0$; the native lift
+   is unique.
+2. Phase zero: every $x_i=0$ and, independently as a description of
+   the set, each $(a_i,b_i)$ is $(1,0)$ or $(0,1)$; each assignment
+   has its unique native lift.
+
+All declared values of every seed occur in actual solutions. Each
+original whole-block weight occurs once in its exact weighted sum.
+
+Proof. Subtracting the two clause equations gives $x_i=x_{i+1}$.
+The cycle makes all $x_i$ equal. A value one forces both auxiliaries
+zero. A value zero permits exactly the two stated choices at each
+edge; there is no further clause condition. This gives the Boolean
+classification and count.
+
+A Boolean owner is its seed's actual leaf. In a connector the root is
+that same leaf and the two possible left factors are distinct:
+$\Gamma_L(A)=(3,0)$ and $\Gamma_L(B)=(2,0)$. Thus (OCC.15)
+is compatible exactly when that variable is true at the selected clause
+position. If compatible, the connector is that variable leaf. The
+selector is the unique actual $u_c$. Hence a native solution gives one
+satisfying assignment, and any satisfying assignment fills all blocks
+uniquely. Additional factors at $d>2$ are already those of these same
+leaves or selectors, so neither remove nor add solutions. This proves
+both native directions, not just a count of Boolean candidates.
+
+There are $3m$ variable owners, $2m$ selector owners and $6m$
+connectors, totaling $11m$ blocks and $5m$ seeds. Each variable
+occurs in its owner and its two clause connectors, giving incidence
+three. Each selector occurs in its owner and its three connectors,
+giving incidence four. The paths through selectors and occurrence
+connectors connect $x_i$ to $a_i,b_i$ and $x_{i+1}$; they connect
+the whole cycle, and every other vertex is attached. Every Boolean
+seed attains both values. Every selector attains position zero in phase
+one and positions one and two in phase zero. The unique actual lift and
+(OCC.8) count every original weight once. $\square$
+

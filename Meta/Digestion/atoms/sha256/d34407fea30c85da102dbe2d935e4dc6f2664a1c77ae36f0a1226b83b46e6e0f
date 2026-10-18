@@ -1,0 +1,81 @@
+### 86.3 全复矩阵、参考与五个 Borel 分量
+
+对每个 $X\in M_5$，忘记 acquisition labels 后，
+
+$$
+\Phi^L(X)
+=
+E\left[
+\Lambda_*(E^\dagger XE)
++J_0W_\perp^\dagger XW_\perp J_0^\dagger
+\right]E^\dagger,
+\tag{RC.162}
+$$
+
+$$
+\Phi_\ell^f(X)(B)
+=
+w_\ell\left(\int_Bg(u)\,du\right)
+\operatorname{tr}(EME^\dagger X)P_f,
+$$
+
+$$
+\ell\in\{0,1,2,3,13\},\qquad
+w=(0,\tfrac14,\tfrac12,\tfrac14,0).
+\tag{RC.163}
+$$
+
+对任意 passive reference，失败分量为
+
+$$
+w_\ell\left(\int_Bg(u)\,du\right)
+P_f\otimes
+\operatorname{Tr}_5[(EME^\dagger\otimes I_R)X].
+\tag{RC.164}
+$$
+
+live 部分逐个 Kraus 张量 $I_R$。所以这里保留的是条件 reference partial trace。标签 $0,13$  的 CP measures 分别为零，其余三个标签保持分开。在 supported 代数上，修复后的 $\sum p_jh_jh_j^T=I_3$ 给出低 live coefficient Gram $\operatorname{diag}(\delta,1,1)$；加 high 的 $\operatorname{diag}(1-\delta,0,0)$ 后得到 $\Lambda_*=\operatorname{Ad}_D+\operatorname{Ad}_T+\operatorname{Ad}_S$。总 encoder effect 明确为
+
+$$
+E\!\left[\sum_j(K_j^\dagger K_j+N_j)+(1-\delta)D^\dagger D\right]E^\dagger
++W_\perp W_\perp^\dagger=I_5.
+$$
+
+所以每个 acquisition 分支 CP/TNI，各完整 decoder 均 TP，所有声明的 Borel 分量同时成立。对十二个原输入，输出正是给定原模拟器，故
+
+$$
+e_5=e_{27}=E_*,
+\qquad
+e_{16}<71/484<37/250<E_*.
+\tag{RC.165}
+$$
+
+令 $\mathsf B_y=|b_y\rangle\langle b_y|$ 为 CG15 的原 ideal live operator，$T_y=\Lambda_*(a_ya_y^T)$，$q_y=\operatorname{tr}(Ma_ya_y^T)$。原 ideal failure density 仍为 $f_y(u)=6y/(y+6u)^2$，区别于所选 approximate density $g(u)$；无接受概率除法。对应 HALF 误差的完整形式是
+
+$$
+e_y=\tfrac12\left[\|T_y-\mathsf B_y\|_1+
+\int_0^1|q_yg(u)-f_y(u)|\,du\right].
+$$
+
+四种 $e,n$ 由同一符号协变输出给出相同的 $e_y$；上述 strict middle bound 只属于这个共同达到族，不扩展为每个 optimizer 的相同中间误差。
+
+给每个 supported 低标签报告 $\operatorname{sgn}z_j$；若 $z_j=0$ 则任选固定报告。附着失败 effect 杀死坐标零，不改变 $01$ 项。实际报告满足
+
+$$
+\mathsf V=s_0\sum_jp_j|z_j|\ge s,
+$$
+
+其中 $A_y=\langle a_y,D^\dagger Da_y\rangle=h_0^2y/128+h_1^2(64-y)/128+h_2^2/2$，是源的 $D$ effect 读数。唯一维数至少三的获取 fibre 是上面的五维 high，它对任意五模输入的 effect 为
+
+$$
+(1-\delta)ED^\dagger DE^\dagger+(I_5-EE^\dagger).
+$$
+
+补空间输入的全部概率也计为 high。对十二个原 supported 历史，补空间项为零，high acquisition 在每个原历史上的概率是
+
+$$
+(1-\delta)A_y,
+$$
+
+其最坏历史仍为 $27$，在整个弱区间给出同一 sharp cost $\mathsf C(s)=(1-\delta)A_{27}$。这同一族同时承担 Gram 修复、谱失败、对比度、完整输出、参考和时钟要求。没有使用第二份 specimen、历史先验、postselection、重试或未计入的可访问 quantum share。
+

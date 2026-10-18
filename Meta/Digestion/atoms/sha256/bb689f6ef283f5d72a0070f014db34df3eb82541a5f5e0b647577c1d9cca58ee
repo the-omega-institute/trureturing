@@ -1,0 +1,20 @@
+**At least two singular fibres.** Choose two singular fibres f,g whose complement C, consisting of the other two fibres, has rank U_C=2. Such a choice always exists. With exactly two or three singular fibres, the complement of any chosen two contains an invertible fibre. If all four are singular, rank U=2 gives two independent fibre column lines; choose those as C and the other two as f,g.
+
+Let n_f,n_g be local kernel vectors on f,g. For arbitrary p∈C² on f and r∈C² on g, choose v,w∈ker U with
+
+\[
+ v_f=0,\quad v_g=r,\quad U_Cv_C=-U_gr,\qquad
+ w_g=0,\quad w_f=p,\quad U_Cw_C=-U_fp.                    \tag{27}
+\]
+
+These equations are solvable because U_C is surjective. The two stars S_f(z,v), S_g(y,w) overlap only on the cross block fg. Their zero polarization is
+
+\[
+ -2\operatorname{Re}\left[
+ z\overline y\sum_{i\in f,\,j\in g}
+       c_{ij}(n_f)_i p_i\overline{r_j}\,\overline{(n_g)_j}
+                         \right]=0.                       \tag{28}
+\]
+
+Arbitrary complex phase of z makes the inner sum zero. Taking p and r to be individual coordinate vectors gives c_ij(n_f)_i overline((n_g)_j)=0 for every entry of that cross block. Both local kernel vectors have no zero coordinate, so every such c_ij is zero, contradicting (22). This excludes two, three, and four singular fibres, including all complex-phase and coincident-line possibilities.
+

@@ -1,0 +1,67 @@
+**Proposition 7.3 (Retained $217$ law and original counterexample).**
+The credited law $K$ remains a common original law with exact error
+$5\tau+\max\{22u/217,v\}$. For every $0<\tau\le1/24$ and
+$0<u\le\tau$, its permitted $v=0$ member with every allowed
+continuation still refutes the universal complementary original lower
+plane $5\tau+22u/181$. The sharper reduced evaluation in 4.5 does
+not invalidate that law or its error computation.
+
+Proof. The following local specification retains the relevant scope.
+Define $Q_8$ from the genuine $Q$ of 5.1 by fixing input nine to
+zero and sending label nine to zero. This defines a new finite law;
+it supplies no free observation of an actual reply. Its former
+count-$17$ $(8,9)$ branch becomes constant zero and its $(6,8)$
+exhaustion vector becomes $53e_0$. Put $s=u/217$,
+
+$$
+\begin{aligned}
+L&=(1-24\tau)R+24(\tau-128s)P^0+3072sQ_8,\\
+K&=L+36s\{O(6,7;0,7,8)-O(6,7;0,7,0)\}.
+\end{aligned}
+$$
+
+The transfer uses existing $P^0$ stock, whose remainder is
+$\tau-164s\ge53\tau/217>0$. It preserves normalization and changes
+the whole cube by $36s\,w_6w_7(e_8-e_0)$.
+On the full activation set $w_6=w_7=1$, the $P^0$ outside counts
+in the first two classes are at most four: for
+$(w_3,w_4)=00,01,10,11$, $B_0+H_0$ is
+$4,4-w_5,4-w_5,3-2w_5$. Class three gives
+$4-w_4-w_4w_5$, class four $4-w_5$, class five three; classes
+six and seven cannot activate. Active core outside mass is therefore
+at most $4(\tau-128s)+662s+36s=4\tau+186s$.
+Its slack below $h=5\tau+22s$ is at least $\tau-164s>0$.
+On the inactive set, the bound is $5(\tau-128s)+662s=h$.
+
+Core correct masses are
+$(1-13\tau-327s,1-16\tau-22s,8\tau-22s,5\tau-22s,
+4\tau-22s,3\tau-22s,\tau-22s)$, and $c_8=195s$.
+Correct deficits equal $h$ except class one's $2\tau+327s\le h$.
+All correct masses are at most targets, so their base deficits are
+bounded by the independently checked outside deficits.
+Class-eight outside mass is $5\tau-71s$; its transfer stays inside
+$\{0,8\}$. The positive $Q_8$ nonbase count is $626$, so $K$'s
+positive nonbase mass is $5(\tau-128s)+626s+36s=h$.
+These checks include every multiple-zero suffix. The exact later-tail
+identity and actual witnesses give the stated original error, with
+lawful execution as in 6.2.
+
+At $v=0$ the strict improvement over the old plane is
+$792u/(181\cdot217)>0$. For general allowed $v$, this same law
+improves it exactly when $v<22u/181$. The plane still correctly
+evaluates its own old law in 5.3, without full-class necessity.
+The folded $128$ lower $5\tau+11u/117$ remains valid; the $253$
+lower exceeds it by $25u/(253\cdot117)>0$ for $u>0$.
+
+For an actual comparison, at $\tau=u=1/24$, $v=0$, take
+$a_n=(5/24)2^{-(n-9)}$ for $n\ge9$, retaining actual $a_9=5/24$.
+The old $K$ error is $369/1736$ and the exact value from 4.5 is
+$1289/6072$, with positive difference $179/658812$.
+The legal source $(r,g)=(19,419)$ has $F_{19}=4181$,
+$419\le g\le836$, and $N=1751840$. This integer is even and has
+digit sum $26$, so its first absence is two. The new law's
+correct-two mass is $2000/6072$ against target
+$13/24=3289/6072$, giving exact deficit $1289/6072$.
+Its all-word upper proves TV equality there. No source information
+is granted to the acquisition by using this proof witness. $\square$
+

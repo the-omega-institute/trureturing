@@ -1,0 +1,11 @@
+**Boundary 5.3 (Zero-mass ghost products).** Unqualified absence of every nonzero matrix word in every untrimmed presentation is false. Pad (4.1) by one unused all-ones state:
+
+$$
+\lambda'=(\lambda,0),\qquad M'_0=M_0\oplus[0],\qquad
+M'_1=M_1\oplus[1].
+$$
+
+These parameters are in $\Theta_{13}$ and preserve every visible cylinder, but $M'_{11}=0_{12\times12}\oplus[1]$ is a nonzero singleton positive rectangle. The illegal word $11$ has zero actual mass. Theorem 5.1 excludes supported words and positive-weight components; it retains this permitted zero-mass boundary.
+
+The witness is strict scope evidence. Its $d(P)=0<c_\star$ already cheaply excludes attainment, and all full losses $(X_i-q_i)^2$ vanish. Thus every complete response $S_P(f)$ is zero; this witness supplies neither a productive null direction nor an additional attaining-law exclusion.
+

@@ -1,0 +1,39 @@
+## 327. Original realization, actual tails and matching lower bound
+
+**Proof of Theorem 324.1.** The original objects are explicitly those
+in 315.1: $X=\{(r,g):r\text{ prime},\ \lceil F_r/10\rceil
+\le g\le\lfloor F_r/5\rfloor\}$,
+$N=1+F_rg$, $q_i=[p_i\mid N]$ and the finite first absence
+$n(x)$. The carrier remains
+$\Theta=\bigsqcup B_j\sqcup\bigsqcup P_j$, with interval
+blocks and their full Borel sigma algebra; the actual distinct marks
+are $\theta_j=(B_1,1/(j+2))$. The same consumer returns unknown
+on $B_j$ and proposes $j$ on $P_j$. Its original nonatomic
+targets $(1-h_0)\nu_x+h_0\pi_{\Omega(x)}$, with the density and
+parameters of 315.1, remain unchanged. There is no probability law
+on the source, supplied value of $N$, source label, first absence
+or extra observation. The error in (324.3) is only against the
+separately selected marked targets (315.2).
+
+Every word used in 326 is an actual finite reply pattern. To recall
+the elementary justification in 315.3, the invertible Fibonacci
+matrix $Q$ modulo each prime $p$ has scalar $k$th power precisely
+when $p\mid F_k$. Its class in the finite projective linear group
+has an order $z(p)\ge3$, giving $p\mid F_k$ iff $z(p)\mid k$.
+For finitely specified primes of product $D$, choose a prime $r$
+larger than all these ranks with $F_r\ge10(D+2)$. No rank
+divides $r$, so $F_r$ is invertible modulo $D$. CRT prescribes
+$g=-F_r^{-1}$ at a desired one and $g=0$ at a desired zero.
+The actual integer window for $g$ has length at least $D$ and
+contains this residue. This realizes every multiple-zero word and
+positive prefix. Applying it to the first $n$ bits with only the
+last bit zero realizes each later actual first absence as well.
+Finite prime support makes first absence finite for every source;
+the finite positive word is not an infinite all-positive source.
+
+Partition one source-independent uniform $U\in[0,1)$ into the
+schedule intervals of 325, omitting zero weights. Within a mixed
+interval use its same rescaled coordinate for all the quantiles in
+(325.4). Before replies, this fixes the branch, the whole increasing
+schedule and every counterfactual terminal label. Execute only the
+selected schedule on the same actual source, stop at its first

@@ -1,0 +1,48 @@
+## 1. Model, clock, and existing results
+
+Fix a known integer $d\ge0$ and matrices
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+U=JM=\begin{pmatrix}1&1\\0&1\end{pmatrix}.
+$$
+
+A predetermined $n$-read history has $A_0=I$ and $A_{i+1}=W_iA_i$, where each $W_i$ is a finite word in $M,J$, possibly empty. Matrix products act on the left. A chronological atom list $(E_1,\ldots,E_h)$ has multiplier $E_h\cdots E_1$; thus the chronological pair $(M,J)$ implements $U$. Every recorded scalar read advances the consecutive index $i=0,\ldots,n-1$, including a read after an empty word. Unread atomic operations do not advance this index.
+
+The original source is $R=c\ell$, with a strictly positive column $c$ and one strictly positive row $\ell$ fixed throughout its run. There are fixed parameters $\alpha>0$, $\beta\in\mathbb R$, and one entire real polynomial $D$ of degree at most $d$. Write
+
+$$
+S=\alpha R,\qquad \kappa=\beta/\alpha,\qquad
+\mathcal R_+=\left\{
+\begin{pmatrix}p&q\\r&s\end{pmatrix}:p,q,r,s>0,\ ps=qr
+\right\}.
+$$
+
+The observations and complete effective target are
+
+$$
+z_i=(1+\kappa i)\operatorname{tr}(A_iS)+D(i),
+\qquad (S,\kappa,D)\in\mathcal R_+\times\mathbb R\times\mathcal P_d,
+$$
+
+where $\mathcal P_d$ includes the zero polynomial. The slope may have either sign, and gain zeros are allowed. Each run has one source, one fixed row, and one polynomial used at all its recorded positions. Only the column is acted on; there are no resets, copies, inverse acquisitions, instrument changes, or combinations of unexecuted histories.
+
+We use the actual-source and representation interfaces of [Affine-gain erasure, positive secants, and drift-kernel collisions](FIB_AFFINE_GAIN_ERASURE_SPAN_AND_POSITIVE_GAIN_COLLISIONS.md), Proposition 1.1. In particular, an effective source has the positive realization
+
+$$
+\alpha=1,\quad R=S,\quad\beta=\kappa,\quad
+c=(p,r)^{\mathsf T},\quad\ell=(1,q/p).
+$$
+
+For a fixed effective target its original relation/gain representations are exactly $R=S/t$, $\alpha=t>0$, $\beta=\kappa t$, with $D$ fixed. The positive factorization of a fixed relation has the separate internal freedom $c\mapsto\lambda c$, $\ell\mapsto\ell/\lambda$, $\lambda>0$. These representation freedoms do not identify distinct effective triples.
+
+Let $C_{\mathrm{fix}}(d)$ be the smallest uniform exact-read bound over all the permitted predetermined histories. Theorem 5.1 of [Shared affine gain and zero-crossing recovery](FIB_SHARED_AFFINE_GAIN_ZERO_CROSSING_RECOVERY.md) supplies the all-fixed-history lower bound $d+5$. Its Theorem 2.1 supplies the upper bound $\max(d+6,7)$ for arbitrary real affine slopes. The constant-drift six-read recovery result in [Affine six-read recovery and unknown-slope collisions](FIB_AFFINE_SIX_READ_RECOVERY_AND_UNKNOWN_SLOPE_COLLISIONS.md) improves the constant-drift upper endpoint to six. Thus the credited current intervals are
+
+$$
+5\le C_{\mathrm{fix}}(0)\le6,\qquad
+ d+5\le C_{\mathrm{fix}}(d)\le d+6\quad(d\ge1).
+$$
+
+These numerical bounds, their recovery proofs, and the positive-scale fibre are existing results. The results below give further obstructions at the lower endpoint.
+

@@ -1,0 +1,25 @@
+**Example 15.1 (actual preparations and calibration).** Fix
+
+$$
+Z=r=1/2,\quad c=1/4,\quad a_0=1/8,\quad q=x=1/16,\quad y=3/16.
+\tag{RA.24}
+$$
+
+For every real $\beta$ and signed integer $m$, use (RA.15) with
+$B=8\beta-4\pi m$ and arrive at either $x$ or $y$. The six-unit
+preparations share a strict probability margin $1/16$. Their common
+first five legs survive with probability
+$(2/3)(1/2)=1/3$: the down-leg factor is
+$(c-a_0)/(c-q)=2/3$, the up-leg factor is $q/a_0=1/2$, and the phase
+legs have factor one. The final arrival has factor $2/3$ in either case,
+namely $(c-a_0)/(c-x)$ or $a_0/y$. Both actual live probabilities are
+therefore $2/9$. All prior failures keep their actual first time/mode and
+absorbing $f$; these are not repeat-until-success preparations.
+
+The port cost is $a_*=4\pi$. The two output probes are
+$(|0\rangle+i|1\rangle)/\sqrt2$ and
+$(|0\rangle-i|1\rangle)/\sqrt2$. At spectral rate $v$, the ideal
+interrogation lasts $4\pi/v$. During it the native source holds its actual
+height and real phase. The old source prefix remains literally unchanged;
+the clock advances and records this hold, action and observed bit.
+

@@ -1,0 +1,19 @@
+**Corollary 11.2 (all four probabilities are known exactly).** Under
+Definition 10.3, $P$ is uniform on $R_m$. Its raw component masses,
+total mass and component probabilities are
+
+$$
+Z_h=2^{n-1}8^{-n}=2^{-2n-1},\qquad
+Z=4Z_h=2^{1-2n},\qquad P(R_h)=\frac14.
+\tag{OCC.36}
+$$
+
+Proof. Every row in the positive support has the same product weight
+$8^{-n}$. Apply Theorem 11.1 and sum the four equal masses.
+$\square$
+
+Knowing the full conditionals and these normalizers already determines
+the mathematical law, by the credited Lemma 3.2. There is no further
+law-uniqueness claim. It does not reveal which of the four components
+contains an unknown stationary actual source.
+

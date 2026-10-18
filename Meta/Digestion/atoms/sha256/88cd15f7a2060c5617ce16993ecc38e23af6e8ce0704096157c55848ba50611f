@@ -1,0 +1,4 @@
+## 5. Minimum Hamiltonian locality and a robust fidelity certificate
+
+A k-local Hamiltonian here is a static Hermitian operator on exactly these four qubits, expressible as a sum of operators supported on at most k qubits. Ancillas, time-dependent gate synthesis and dissipative preparation are outside this definition.
+

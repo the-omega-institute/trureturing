@@ -1,0 +1,34 @@
+**Theorem 4.3 (paid content replay from the same actual source).** For
+every fixed public $D\ge2$ and deterministic effective preparer $A$
+of Assumption 1.3, there is a history-recovery extension using at most
+
+$$
+2^D\text{ new calls},\qquad
+(D+1)2^D\text{ submitted letters},\qquad
+D+1\text{ peak submitted length}.
+\tag{NPH.13}
+$$
+
+It reconstructs the address/reply sequence content (NPH.3). The
+statement does not grant authentic past-event receipts, recover
+external timing or bound storage, output size or local simulation
+work.
+
+Proof. Ignore the compressed export and run the credited procedure
+$\operatorname{Acquire}(R,D)$ of [PPF, Lemma 4.1][PPF] on the
+same original $t$. Its actually acquired replies determine the whole
+relative depth-$D$ table of $v$. Since $h(v)\le D$, every reached
+node at depth $D$ is a leaf; recursive parsing of that table
+reconstructs all of $v$, hence the original $t$. The supplier's
+call, letter and peak bounds are exactly (NPH.13).
+
+Now simulate the specified public preparation program from its common
+initial state, supplying $r_t(w)$ from the reconstructed tree to
+each of its simulated requests. Induction on the original execution
+shows identical submitted words, replies, internal state and stop.
+The simulation terminates because $A$ terminates on that source,
+and emits exactly $\tau_A(t)$. These local simulated requests are
+not additional source calls. The actual new acquisition requests
+remain new events and are charged; they do not become earlier
+events. $\square$
+

@@ -1,0 +1,32 @@
+**Definition 1.2 (original partial actions and tasks).** Write
+$N(W,a)$ for the actual partial original transition from physical
+record $W$. A primitive action $a$ is Supply$(b)$ at its prescribed IN,
+or Advance at its prescribed enabled non-IN row. A failed physical
+guard gives no executed row, no input consumption and no receipt. Both
+bits at a physically enabled raw IN execute their real successors.
+Canonical extendibility restricts the original task's Supply domain;
+it does not install an input filter. These distinctions are [AIF]
+Definitions 2.2–2.6 and [ARC] Definitions 5.3 and 6.1.
+
+Let $Q$ retain exactly [ARC] Definition 11.1's original continuation and
+audit experiments, complete original joint successors and original
+terminal output. Its empty response adds no history or full-state
+terminal readout. The additional history-service task $Q_G$ and a task
+observing fine stages are different maps. None is substituted for $Q$.
+
+For a finite original history $h$, its length $|h|$ is its number of
+original receipts. Write $I(h)$ and $O(h)$ for its chronological input
+and released-output words. An input letter retains its actual site
+kind
+
+$$
+\tau=(\text{active version},\text{PC},\text{inlined call kind},
+       \text{declared ingress}),
+$$
+
+and its actual bit. A letter's occurrence is additionally bound to its
+position in $h$. The position is a proof index, not an installed
+timestamp. Two equal strings at different calls, two INs using latch 5,
+and a computed command with the same bytes are not the same input
+occurrence. Computed Append/copy/RD work has no IN letter.
+

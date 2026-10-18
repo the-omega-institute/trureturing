@@ -1,0 +1,42 @@
+**Definition 1.4 (three domains and two tasks).** Let $\mathcal R$ consist
+of every finite physical history of this apparatus from its irreducible
+entrance for which the actual native partial transition is defined. It
+includes original boot/private preparation/acquisition, invalid preparation,
+both raw input values, incomplete installation, wrong bootstrap supply,
+actual post-DONE raw-table continuations, malformed-frame exits, invalid
+source overwrite bytes, partial banks/descriptors/copies, loans, all code
+versions, growth, receipts, both meter heads and final halt. A disabled
+attempt contributes no event. An enabled wrong IN contributes its actual
+latch/control/receipt event; it is not converted to disabledness.
+
+Let $a$ be the actual completed stationary seed-acquisition cut. Let
+$\mathcal C$ be the subdomain at or after $a$ with canonical original
+preparation/public bindings and the prescribed $E(L)$, captured
+$101U(\delta)\Delta(G)$ and $E(G)$ supply. After activation allow every
+prefix of the actual 00/01/1 gate language, canonical seven-tag source
+frames after 01, and finite well-typed history frames after 1, including
+their actual range/occurrence rejections. Include all interior rows of
+installation, parsing, service, bank rebuild, copies, callbacks and loans.
+Allow 00 and its entire original stopping suffix, including its terminal
+successor. These are actual-image conditions, not predictions of arrival
+of the next input. Finite halted histories and finite histories stopped
+in a busy phase are both included where stated.
+
+For the concrete original stopping continuation use ARC Definition 9.1:
+$H_0=h=K=1$, actual $u=\beta$, prior $\{\alpha,\beta\}$, and the
+truthful initialized original Stop client with proposal $(0,B,1)$.
+The structural theorem also applies to ARC Definition 9.4's generic fixed
+instance. The acquired-history theorem applies to a generic instance only
+when its canonical remaining original input is fixed or computed as in
+ARC Definition 6.1; any extra admitted external site must retain its own
+consumed reservoir. There is no assertion of unconditional generic Stop
+success.
+
+Let $Q$ mean ARC Definition 11.1's original AIF Definition 2.6 partial
+continuation/audit response map. It preserves original legal domains,
+labels, released outputs, complete original joint successors and terminal
+output, with no full-state empty terminal readout. $Q_G$ additionally
+admits new history entries and their typed outputs. Neither equality
+$Q=Q_G$ nor an identification of every added-phase Advance/Supply with an
+original experiment is part of this definition.
+

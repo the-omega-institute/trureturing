@@ -1,0 +1,23 @@
+**Proposition 85.3 (refinement of the existing encoder versus redesign).**
+On a supported-nonzero low label, a CP refinement of the same encoder,
+$\mathcal E=\sum_i\mathcal E_i$, with the same decoder has
+$\mathcal E_i=q_i\mathcal E$ on the supported qutrit,
+$q_i\ge0$, $\sum q_i=1$. These are input-independent generated
+splits. They preserve its maximum label activity, capacity and acquired
+height TV. Redesigning an intermediate failure ratio into separate
+pure-live and saturated labels, as in FA.20, can instead increase TV;
+its increase is precisely the sign-separation gain FA.78.
+
+**Proof.** The supported encoder's Choi matrix has rank one by Theorem
+69.1. Every positive summand has the same one-dimensional support and
+is therefore proportional. Each split multiplies both height laws and
+every output component by the same $q_i$; summing their absolute
+differences gives the old one. The decoder and whole fibre are unchanged,
+so activity and capacity are unchanged. The endpoint redesign generally
+changes these Choi matrices: it retains the total live and failure
+moments but attaches their different ratios to distinct generated labels.
+Triangle equality is strict exactly in FA.78's opposite-sign case.
+None of these assertions constrains arbitrary supported-zero
+complementary action or turns a hidden Kraus index into a control.
+$\square$
+

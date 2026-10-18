@@ -1,0 +1,9 @@
+**Definition 4.1 (regular periodic class).** $\mathfrak E_\mu$ is the union of all finite periodic tables of Definition 2.1 with every $u_i,v_i\in[1/3,2/5]$, installed with the original source and controls. Let $\mathfrak M_\mu$ be the full class of Definition 1.3, and put
+
+$$
+J(\mathfrak A)=\inf_{M\in\mathfrak A}
+\max\{R_{\rm conf}(\mathcal H_p;M)-\rho_p,
+R_{\rm conf}(\mathcal H_\beta;M)-\rho_\beta\}.
+\tag{4.1}
+$$
+

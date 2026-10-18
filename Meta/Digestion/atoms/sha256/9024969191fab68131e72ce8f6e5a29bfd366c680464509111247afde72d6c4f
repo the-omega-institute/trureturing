@@ -1,0 +1,59 @@
+**Theorem 13.1 (same local laws in every sector).** For every $m\ge3$
+and $h\in\mathbb F_2^2$, put $P_h=P(\,\cdot\mid R_h)$.
+At each original block, the full four-seed star under $P_h$ is uniform
+on its eight even-parity assignments, exactly as under $P$. With the
+same original owner grouping and all original weights retained,
+
+$$
+\begin{aligned}
+\mathcal L(P_h)&=\mathcal L(P)=\frac{5n}{3},\\
+H(P)&=n+1,&H(P_h)&=n-1,\\
+\Delta(P)&=\frac{2n}{3}-1,&
+\Delta(P_h)&=\frac{2n}{3}+1,\\
+\mathbb E_h\Delta(P_h)&=\Delta(P)+2.
+\end{aligned}
+\tag{OCC.38}
+$$
+
+The expectation uses the actual sector probabilities $1/4$.
+The unconditioned value is the credited hard-parity case of
+[GDB, Theorem 14.2][TorusGDB]; the conditional value concerns the
+Gibbs law of each retained sector under the same product weights.
+
+Proof. At a fixed vertex, its four adjacent face boundaries project
+onto the four adjacent-pair flips of its four incident edges. These
+span the complete three-dimensional even-parity subspace on the star:
+they are the edge-incidence columns of a connected four-cycle, of
+rank three. Every face boundary belongs to $B=\ker\chi$ within
+$R_m$, by Theorem 11.1. The star projection of $B$ is therefore
+the entire even-parity subspace; it cannot be larger because the
+vertex equation imposes even parity.
+
+Each $R_h$ is an affine translate of $B$ by an element of $R_m$.
+Its star projection is the same full even subspace. A linear map on
+a finite affine space has equally sized nonempty fibers, and $P_h$
+is uniform on $R_h$. Its star law is thus uniform on those eight
+rows. Mixing the four sectors gives exactly the same law under $P$.
+This also proves directly that every individual edge is fair in
+every sector.
+
+The owned tuple is the east/north pair. The incoming groups are the
+distinct west and south bits. A uniform even four-bit star has
+
+$$
+H(O_v)=2,\qquad H(O_v\mid B_{v,j})=2\ (j=1,2),\qquad
+H(O_v\mid B_{v,1},B_{v,2})=1.
+\tag{OCC.39}
+$$
+
+Its proper three-bit marginals are uniform; when both incoming bits
+are fixed, its outgoing parity is fixed with two equiprobable outgoing
+pairs. The $k=2$ coefficients of (OCC.10) are
+$1/3,1/6,1/6,1/3$. The local contribution is
+$2/3+2/6+2/6+1/3=5/3$. This proves both values of $\mathcal L$.
+The cardinalities in Theorem 11.1 give the two global entropies, and
+subtracting proves every defect identity in (OCC.38). Conditioning
+restricts the original product weight to $R_h$; it substitutes no
+separately chosen completion law or independent seed values.
+$\square$
+

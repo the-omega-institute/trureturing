@@ -1,0 +1,149 @@
+**Lemma 2.1 (prefix-preserving simultaneous disequality).** Fix $\mathbf n$
+and finite $f$. Let $I=\bar F$. Assume the residual conjunction in (SLP.2)
+has one finite witness. Let $(\eta_i)_{i\in I}$ be any tuple of infinite
+completion trees. For every prescribed finite prefix of every $\eta_i$ there
+is a tuple of finite trees $(z_i)_{i\in I}$ with those prefixes such that
+
+$$
+\bigwedge_j A_j(\mathbf n,f,\mathbf z)\ne B_j(\mathbf n,f,\mathbf z).
+\tag{SLP.3}
+$$
+
+If $I=\varnothing$, the assertion means that the already fixed tuple $f$
+itself is the witness. If $s=0$, any finite extensions of the prescribed
+prefixes are witnesses.
+
+**Proof.** Fix $\mathbf n,f$ throughout. Their atoms and decorated finite
+coordinates are now finite grounds. The remaining syntax is exactly a
+finite ground, a decorated original residual $\rho^a z_i$, or a native pair.
+
+Represent the prescribed inclusive prefix of $\eta_i$ by a finite native
+context $C_i(w_{i,1},\ldots,w_{i,q_i})$. Retain every observed branch and
+leaf. At a branch at the last observed depth, replace each unobserved child
+by a separate hole. Earlier leaves retain their entire absent descendant
+region. This construction also applies after refining any finite set of
+prescribed replies to one depth. Because $\eta_i$ has an infinite branch,
+$q_i\ge1$. Each hole occurs once in $C_i$. Holes of different original
+names are independent. Every finite filling of these holes has precisely
+the prescribed prefix, and every finite tree with that prefix is such a
+filling. Repeated occurrences of $z_i$ always use this same context and
+the same hole tuple; they do not receive independent copies.
+
+Use the native mass and clock from [URR, Definition 2.1][URR]. In particular
+$\gamma(\rho^a t)=\gamma(t)$, and a native pair having a positive-mass
+child has mass $1+\gamma(u)+\gamma(v)$. The exceptional atomic-code
+collapse occurs only when both children have mass zero. The finite comb
+called $C_r$ in [URR, Definition 2.2][URR] realizes every integer mass $r\ge1$.
+For the following identity argument fill each hole with an arbitrary
+positive-mass tree, of mass $M_{i,r}$.
+
+There is a fixed nonnegative integer $c_i$ such that
+
+$$
+\gamma(C_i(\mathbf w_i))
+ =c_i+\sum_{r=1}^{q_i}M_{i,r}.
+\tag{SLP.9}
+$$
+
+Here $c_i$ counts each pair having a hole descendant as one, plus the
+actual native masses of the maximal hole-free subtrees. Induction on the
+context proves (SLP.9): a hole has positive mass; any ancestor of a hole
+has a positive-mass child, so uses the additive pair formula; every
+hole-free subtree has its fixed actual mass. Thus finite constructor
+contributions and unequal frontier multiplicities are retained exactly.
+Decoration of the entire context does not change this mass.
+
+For a residual template $E$, let $o_i(E)$ count its occurrences of the
+original name $z_i$, including repetitions and ignoring decorations.
+Define $b(E)$ recursively. If $E$ is residual-free, put $b(E)=\gamma(E)$
+after evaluating its fixed grounds. Put $b(\rho^a z_i)=0$. At a pair
+containing a residual put $b(\langle E_1,E_2\rangle)=1+b(E_1)+b(E_2)$.
+The same positive-child induction gives the exact formula
+
+$$
+\gamma(E(\mathbf C(\mathbf w)))
+ =b(E)+\sum_{i\in I}o_i(E)
+       \left(c_i+\sum_{r=1}^{q_i}M_{i,r}\right).
+\tag{SLP.10}
+$$
+
+In particular $b(E)\ge1$ when the root is a pair containing a residual.
+No common mass or variable clock for the filled original residuals is
+assumed. The quantities $M_{i,r}$ vary independently over all positive
+integers, by filling with the finite combs just cited.
+
+We now prove the needed reflection, for any two templates $A,B$:
+
+$$
+\begin{aligned}
+&\forall\mathbf w\in\prod_{i\in I}\mathcal T^{q_i},\quad
+ A(\mathbf n,f,\mathbf C(\mathbf w))
+   =B(\mathbf n,f,\mathbf C(\mathbf w))\\
+&\hspace{12mm}\Longrightarrow
+ \forall\mathbf z\in\mathcal T^I,\quad
+ A(\mathbf n,f,\mathbf z)=B(\mathbf n,f,\mathbf z).
+\end{aligned}
+\tag{SLP.11}
+$$
+
+Induct on the sum of the two syntax sizes. If both sides are residual-free,
+their equality is independent of the residuals. If exactly one is
+residual-free, (SLP.10) contradicts universal equality: the coefficient of
+a hole belonging to an occurring original name is positive on one side
+and zero on the other. To see coefficient equality without an asymptotic
+argument, set all masses to one, then increase that single hole mass by
+one and subtract the two equalities.
+
+Suppose both sides contain residuals. If their roots are decorated
+original variables with different names, that same coefficient comparison
+contradicts equality, since each name has at least one independent hole.
+For the same name, equality at any finite filling and
+$\kappa(\rho^a t)=\kappa(t)+a$ force the two decorations to agree. The
+original templates then agree under every assignment. This use of the
+clock does not require that a prefix allow variation of $\kappa(t)$.
+
+Consider a decorated original variable $\rho^a z_i$ against a compound
+$E$ whose root is a pair. If $E$ is residual-free, the preceding case
+applies. Otherwise equality for every positive-mass filling forces
+$o_i(E)=1$ and $o_j(E)=0$ for all $j\ne i$, by comparing a hole
+coefficient for each name. Substituting these counts in (SLP.10), equality
+of masses requires
+
+$$
+c_i+\sum_r M_{i,r}
+ =b(E)+c_i+\sum_r M_{i,r},
+$$
+
+which contradicts $b(E)\ge1$. This includes compounds containing a
+shared occurrence of that same residual and any fixed prefix contributions.
+The reversed compound/variable case is identical. Finally, if both roots
+are pairs, injectivity of actual native pairing makes their corresponding
+children equal for every hole filling. Induction applies to each child
+comparison and reconstructs the global equality. These cases exhaust the
+declared syntax and prove (SLP.11). A global identity also plainly holds
+on the cylinder. Native code nodes have only supplied the mass invariant;
+they have not been treated as free native constructors.
+
+It remains to produce one tuple for all negatives, rather than separate
+witnesses. Substitute the contexts $C_i$ into the entire finite list.
+Distribute every fixed power of $\rho$ through their finite pairs and
+evaluate it on their finite grounds. The resulting list is in URR's mixed
+grammar on the independent hole variables, with no scalar variables.
+The assumed original conjunction witness implies that no original listed
+equality is a global identity. By (SLP.11), none of its substituted
+equalities is an identity on the hole product either. Apply [URR,
+Theorem 3.1 and Corollary 3.2][URR] to this entire substituted list. Its
+single explicitly constructed finite tuple of hole values therefore
+breaks every equality together. Fill each $C_i$ with that tuple. The
+result is one actual finite original residual tuple satisfying (SLP.3),
+with all prescribed replies and all shared repetitions retained. This is
+a terminating construction from the fixed input, grounds and prefixes.
+For $I=\varnothing$ use the assumed fixed witness, and for $s=0$ fill
+arbitrarily. $\square$
+
+The lemma also records the barrier condition. A finite residual coordinate
+cannot be perturbed past a leaf; it is therefore fixed in $f$ and its
+feasibility is tested by $S_f$. An infinite coordinate has a live frontier,
+so no such finite barrier exists. No retained signed predicate or finite
+partition is inferred for an infinite limit tree.
+

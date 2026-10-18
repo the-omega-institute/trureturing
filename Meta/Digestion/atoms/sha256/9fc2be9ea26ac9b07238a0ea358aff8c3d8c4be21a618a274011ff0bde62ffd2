@@ -1,0 +1,50 @@
+**Definition 4.1 (literal trees and canonical alphabet).** Trees have
+the ordered grammar
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\qquad h(\alpha)=h(\beta)=0,\qquad
+h(\langle x,y\rangle)=1+\max\{h(x),h(y)\}.
+\tag{CIT.15}
+$$
+
+An experiment is any finite word $w\in\{L,R\}^{<\infty}$,
+including $\varepsilon$. The original-root reply $r_u(w)$ is
+$\alpha$ or $\beta$ at that leaf, $\mathsf{branch}$ at a pair,
+and $\mathsf{absent}$ after a path passes beyond a leaf. Define the
+canonical alphabets exactly as in NCM:
+
+$$
+S_1=\{\alpha,\beta,\langle\alpha,\alpha\rangle\},\qquad
+S_{d+1}=\{\alpha,\beta\}\ \sqcup
+\{\langle x,y\rangle:x,y\in S_d\},\qquad
+W_d=\{q:|q|\le d-1\}.
+\tag{CIT.16}
+$$
+
+The depth-three targets are the seven distinct words
+$W_3=\{\varepsilon,L,R,LL,LR,RL,RR\}$. Put
+
+$$
+\begin{aligned}
+A&=\alpha,& B&=\beta,& C_0&=\langle A,A\rangle,&
+J_0&=\langle B,A\rangle,& Q_0&=\langle C_0,A\rangle,\\
+u_0&=\langle A,A\rangle,&
+u_1&=\langle B,A\rangle,&
+u_2&=\langle C_0,C_0\rangle,&
+u_3&=\langle J_0,J_0\rangle,&
+u_4&=\langle A,Q_0\rangle,\\
+P&=\{u_0,u_1,u_2,u_3,u_4\},&&
+F=\{u_0,u_1,u_2,u_3\}.
+\end{aligned}
+\tag{CIT.17}
+$$
+
+This is the literal alphabet of NCM (NCM.25), with different names
+for the auxiliary trees to avoid confusion with mass constants.
+The five trees are distinct, each belongs to $S_3$, and
+$P\subsetneq S_3$: the leaf $\alpha$ is in $S_3$ and outside $P$.
+Membership follows directly from (CIT.16): $C_0\in S_1$,
+$J_0,Q_0\in S_2$, and every child used to construct a $u_s$
+belongs to $S_2$.
+

@@ -1,0 +1,23 @@
+**Theorem 3.3 (independent target-selection information).** Fix one actual
+later prefix and $m$ distinct eligible earlier ordinals in it. Conditional
+on identical backing, a deterministic exact consumer selecting every one
+of them needs at least $m$ distinguishable acquired selector states. A
+fixed-width binary selection channel therefore needs at least
+$\lceil\log_2m\rceil$ bits.
+
+Proof. Prefixes with different ordinals have different lengths and old
+receipt counts. If two target choices give the same complete acquired
+selector, authority and backing, deterministic execution gives the same
+answer for both, which cannot be both required prefixes. Hence the
+selector relation is injective on the $m$ choices. There are only $2^b$
+binary strings of width $b$. Timing, navigation operations, object identity
+or permissions must be included in the selector state if they communicate
+the choice. A finite enumeration and its index attain the cardinality
+bound as an abstract selection alphabet, without asserting any physical
+storage or acquisition optimum. ∎
+
+In particular, a later directory containing both the after-IN and
+after-WR prefixes does not infer which one a silent external observer
+intended. This is a choice obstruction in one history, distinct from AIF's
+unfinished-request counting fibers.
+

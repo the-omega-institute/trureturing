@@ -1,0 +1,30 @@
+**Theorem 50.6 (optimal value and real-atom classification).** The exact
+weak-plateau value is
+
+$$
+\boxed{J_s=\operatorname{tr}G-2\mu_*,\qquad
+\mathcal T(s)=T_{\rm flat}-\mu_*,\qquad0\leq s\leq\bar s.}
+\tag{JR.113}
+$$
+
+**Proof.** In particular the equality includes $s=0$ and $s=2s_0/3$. Equality in
+(JR.105) forces the aggregate negative part to be $`P_*`$, and the aggregate
+positive part to be $`I-P_*`$. The real $Q$-null cone inside $`v_*^\perp`$
+has exactly the two lines spanned by $`u_*`$ and $`w_*`$: a two-dimensional
+totally null plane would make the nonzero traceless compression vanish.
+The rank-by-rank real null decomposition therefore classifies every
+nonzero optimal real atom, up to proportional splitting, a sign phase,
+and the report assignment, as one of $`v_*,u_*,w_*`$. The aggregate
+weights in this frame are fixed by (JR.111). This classification concerns
+the finite real SDP and its aggregate supports only; it asserts no
+uniqueness of a whole channel, a time law, a native implementation, or
+an inaccessible instrument refinement.
+
+No value above (JR.113) is possible for $s>\bar s$. Compactness of the
+feasible set and the equality classification give
+
+$$
+J_s<\operatorname{tr}G-2\mu_*,\qquad \bar s<s\leq s_0.
+\tag{JR.114}
+$$
+

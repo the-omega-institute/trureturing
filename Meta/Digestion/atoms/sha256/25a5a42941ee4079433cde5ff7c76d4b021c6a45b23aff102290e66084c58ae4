@@ -1,0 +1,33 @@
+**Definition 7.2 (The missing event–atom–TP normalization).** The
+witnesses above are globally complex-product-positive separating
+functionals. A necessary minimax lower additionally needs the
+normalization and common-marginal relation of
+[QJM, Convention 6.3](RECURSIVE_RELATIONAL_OBSERVATION_QUANTUM_JOINT_MARGINAL_AND_ATTAINING_PORT.md)
+and QAP Theorem 5.2: positive event multipliers $A_J^\pm$ with
+$\sum_J\operatorname{tr}(A_J^++A_J^-)=1$, all three TP
+multipliers, and a globally positive atom form for those same data.
+A matching value also needs complementary signed event eigenspaces
+and positive-weight atom kernels for one legal feasible port.
+No representation of $W'_\xi$ or $W_H$ by such normalized
+event/TP data is supplied here. Their negative Choi pairings do
+not by themselves give a numerical lower for $\varepsilon_1$.
+
+Necessary kernel contact does not imply that positive primal mass
+can be assigned to the contacted atoms. The common weights must
+also satisfy all three TP equations and all fifteen event LMIs.
+Theorem 3.1 gives one exact additional compatibility check when
+its face/rank/pair hypotheses hold; it neither forces those
+hypotheses nor classifies unrestricted optimizer support. In
+particular QAP's full-sector atom requirement for its separate
+boundary-cone example and
+[QSD's necessary splitting-event activity](RECURSIVE_RELATIONAL_OBSERVATION_QUANTUM_SPLITTING_EVENTS_AND_DECODER_DESCENT.md)
+are not replaced by this face criterion.
+
+The failure proved here is the specific shortcut from a full-TP
+PPT point to an exact scalar realization. It does not invalidate
+[QME's conditional marginal-preserving noisy repair](RECURSIVE_RELATIONAL_OBSERVATION_QUANTUM_MARGINAL_PRESERVING_EXTENSION_REPAIR.md).
+No Bose or half-PPT extension level is asserted for the examples.
+Nor does it contradict QRC's no-worse real replacement, which may
+change the channel. The unchanged real-Choi obstruction and the
+other covariance limitations of QPC §9 retain their stated domains.
+

@@ -1,0 +1,77 @@
+**Theorem 20.1 (global actual fibres for every datum and final word).** Fix any prefix in $\mathscr G$, any legal final word, and any proposed $z\in\mathbb R^5$. Represent $\mathsf T_t$ as a $4\times4$ matrix in source-entry order $(p,q,r,s)$, and define
+$$
+\Pi(t)=\det\mathsf T_t,\qquad
+m_y(t)=\operatorname{adj}(\mathsf T_t)y,
+\qquad
+\mathcal M_y(t)=\operatorname{reshape}_{2\times2}m_y(t),
+\qquad Q_y(t)=\det\mathcal M_y(t).
+\tag{20.1}
+$$
+Here the reshape puts the four coordinates into $(p,q,r,s)$ order. The polynomial $\Pi$ is nonzero of degree at most four, each entry of $\mathcal M_y$ has degree at most three, and $Q_y$ is either the zero polynomial or has degree at most six.
+
+The entire actual fibre of $z$ consists exactly of the following candidates, with one entire drift attached to each source.
+
+1. **Regular slopes.** For every real $t$ with $\Pi(t)\ne0$, retain
+   $$
+   S(t)=\mathcal M_y(t)/\Pi(t),\qquad k=t,
+   \qquad D_t(\tau)=z_0-\operatorname{tr}S(t)\quad(\tau\in\mathbb R)
+   \tag{20.2}
+   $$
+   if and only if $Q_y(t)=0$ and all four entries of $S(t)$ are strictly positive. If $Q_y$ is nonzero, only its distinct real roots can pass. If $Q_y\equiv0$, the same strict inequalities are applied at every real slope outside the roots of $\Pi$.
+2. **Singular slopes.** For each distinct real root $t$ of $\Pi$, discard it if $\mathsf T_tX=y$ is inconsistent. Otherwise choose a particular full matrix $X_t$ and a nonzero generator $K_t$ of $\ker\mathsf T_t$. Form
+   $$
+   q_t(u)=\det X_t+u\mathfrak b(X_t,K_t)+u^2\det K_t.
+   \tag{20.3}
+   $$
+   Retain exactly the matrices $S=X_t+uK_t$ satisfying $q_t(u)=0$ and all four strict entry inequalities, with
+   $$
+   k=t,\qquad D(\tau)=z_0-\operatorname{tr}(X_t+uK_t)
+   \quad(\tau\in\mathbb R).
+   \tag{20.4}
+   $$
+   A nonzero $q_t$ contributes at most its two distinct real roots, including the linear and constant cases. If $q_t\equiv0$, all real $u$ are considered subject to strict positivity.
+
+This is a necessary-and-sufficient actual image criterion: the datum is in the image precisely when at least one candidate survives. It applies to every real slope, including all gain erasures and negative gains.
+
+**Proof of polynomial claims and regular candidates.** Each entry of $\mathsf T_t$ has degree at most one, so determinant expansion gives $\deg\Pi\le4$. Lemma 19.2 gives $\Pi(-1/4)\ne0$, so this polynomial is not identically zero and has at most four distinct real roots. Each adjugate entry is a signed determinant of a $3\times3$ submatrix and has degree at most three. Multiplication by the fixed vector $y$ preserves that bound. Expanding the two-by-two determinant gives the stated degree bound for nonzero $Q_y$, without excluding the identically-zero case.
+
+For $\Pi(t)\ne0$, the cofactor identity
+$$
+\mathsf T_t\operatorname{adj}(\mathsf T_t)=\Pi(t)I
+$$
+gives the unique auxiliary solution $S=\mathcal M_y(t)/\Pi(t)$ of $\mathsf T_tS=y$. Its determinant is
+$$
+\det S=Q_y(t)/\Pi(t)^2.
+$$
+Consequently determinant zero and strict entry positivity are exactly the regular retention conditions. This division is by a known nonsingular pencil determinant at the candidate slope, not by a sampled gain.
+
+**Proof of all singular branches and strict positivity handling.** At every root $t$ of $\Pi$, Lemma 19.2 gives rank three. If the system is consistent, its entire auxiliary solution set is exactly the affine line $X_t+\mathbb RK_t$; if inconsistent, it supplies no source. Formula (19.6) makes its determinant exactly (20.3). A nonzero polynomial of degree at most two has at most two distinct real roots, with a nonzero constant having none. Repeated roots are included only once. If all three coefficients vanish, the determinant is zero for every $u$, rather than just at selected roots.
+
+The positivity set on this line is exactly
+$$
+I_t=\bigcap_{a,b\in\{1,2\}}
+\{u\in\mathbb R:(X_t)_{ab}+u(K_t)_{ab}>0\}.
+\tag{20.5}
+$$
+Each factor is an open half-line, all of $\mathbb R$, or empty, according to its coefficients. The intersection is an open interval, possibly unbounded, all of $\mathbb R$, or empty. No zero entry at a boundary is retained. In the nonzero-polynomial branch retain exactly its real roots in $I_t$; in the identically-zero branch retain all of $I_t$. Changing $X_t$ to another particular solution or rescaling $K_t$ only reparametrizes this same affine line and does not change the retained sources. Thus all singular cases, including zero determinant polynomials and empty positive intersections, are covered without division by a gain or by $\Pi(t)$.
+
+**Proof of both directions and all five original equations.** An actual target producing $z$ satisfies $\mathsf T_kS=y$ by (19.4). If $\Pi(k)\ne0$, uniqueness of the auxiliary solution puts it in (20.2), where determinant zero is exactly $Q_y(k)=0$. If $\Pi(k)=0$, consistency and rank three put it on exactly the line above, and determinant zero is exactly $q_k(u)=0$. Positivity passes in either case, and the initial reading fixes its whole drift as displayed. No actual target is omitted.
+
+Conversely, every retained candidate is a strictly positive determinant-zero matrix, hence rank one, and satisfies $\mathsf T_kS=y$. Set $\delta=z_0-\operatorname{tr}S$, a single constant for the whole run. Its original equations are explicitly
+$$
+\begin{aligned}
+\operatorname{tr}S+\delta&=z_0,\\
+(1+k)\operatorname{tr}(A_1S)+\delta
+&=(\mathsf T_kS)_1+z_0=z_1,\\
+(1+2k)\operatorname{tr}(A_2S)+\delta
+&=(\mathsf T_kS)_2+z_0=z_2,\\
+(1+3k)\operatorname{tr}(A_3S)+\delta
+&=(\mathsf T_kS)_3+z_0=z_3,\\
+(1+4k)\operatorname{tr}(A_4S)+\delta
+&=(\mathsf T_kS)_4+z_0=z_4.
+\end{aligned}
+\tag{20.6}
+$$
+If $1+jk=0$, the quotient equation is $y_j=-\operatorname{tr}S$, so (20.6) enforces $z_j=\delta$ at that erased reading. Such an equation has been checked, not discarded. Negative gains need no separate normalization. Realization (19.2) supplies one common actual source, one fixed positive row, and positive columns through every unread atom of the same prescribed history. This proves sufficiency and necessity on the actual model. ∎
+
+<a id="global-finite-or-arc-dichotomy"></a>

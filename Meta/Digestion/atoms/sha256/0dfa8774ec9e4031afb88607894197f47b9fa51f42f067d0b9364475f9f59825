@@ -1,0 +1,24 @@
+**定理 12.7（可返回原网络中的非单位同源阻断）。** 取整个 $\mathbb Z/6\mathbb Z$，顶点 $s,x,y$，端口 $d_s=1,d_x=2,d_y=3$，全部原具名边为
+
+$$
+\begin{array}{c|c}
+\text{具名边}&\text{实际仿射规则}\ \hline
+e_x:s\to x&t\mapsto t+1\\
+e_y:s\to y&t\mapsto t+2\\
+r_x:x\to s&t\mapsto3t+1\\
+r_y:y\to s&t\mapsto2t+1\\
+z:s\to s&t\mapsto5
+\end{array}
+\tag{12.15}
+$$
+
+每条边在其全部相位上合法；$D_s=6,D_x=2,D_y=3$，且根全路径模数一层就稳定，但两 Read 合同中都不存在单历史确定性取得原 $t\bmod6$ 的协议。
+
+证明。根两条出边分别贡献2、3，所以 $D_s=6$。从 $x$ 返回的乘子3使原 $D_s$ 贡献 $6/\gcd(6,3)=2$，从 $y$ 返回的乘子2使其贡献 $6/\gcd(6,2)=3$；零自环贡献1。因此向量 $(6,2,3)$ 满足式（11.8），并含空路径及两条根出边的全部贡献，给所述模数及根一层稳定。
+
+根的全部 Read 恒定。若第一次出边为 $e_x$，两份实际初相位 $t=0,2$ 在 $x$ 的读均为1；重复读仍相同，提前停止不能分开它们。若继续走唯一返回边 $r_x$，当前相位变成 $3t+4\pmod6$，两份来源在同一个当前顶点 $s$ 都成为4。此前实际记录相同，此后任何原边与 Read 都在相同相位上作用，无法补回不同原目标。若第一次为 $e_y$，用 $t=0,3$：在 $y$ 的读均为2，返回后相位为 $2t+5\pmod6$，两份都成为5。若第一次为零自环 $z$，用 $t=0,1$：同一根记录后都成为5。没有任何出边的停止同样不能识别全部六相位。控制只依已获记录，故每一对保持相同选择及停止记录，证明任意确定性自适应协议均失败。
+
+相应有限阻断集可直接取只含初始空完成掩码的可达规划状态：根 Read 不加入素数，$e_x$ 对未取得素数3不满足（12.6），$e_y$ 对素数2不满足，$z$ 对两者均失败。$\mathsf M$ 的初始 $F_s$ 亦为空。这是具有实际返回边和非单位乘子的同源阻断，区别于11.2既有不可返回的模6分叉。两例均不否定全路径行为模数；它们否定由全路径停止层数推断单历史取得。$\square$
+
+数学引文与适用界。预定输入与按已获响应选下一输入的区别，使用 Markus Theo Frohme, *Active Automata Learning with Adaptive Distinguishing Sequences*, [arXiv:1902.01139v1](https://arxiv.org/abs/1902.01139v1), §2.4、§6.1 的通常鉴别实验定义；相关原研究为 David Lee and Mihalis Yannakakis, *Testing finite-state machines: state identification and verification*, [DOI 10.1109/12.272431](https://doi.org/10.1109/12.272431)。一般有限状态机并不具有（12.1）的与响应值无关的全来源陪集纤维，因此一般自适应鉴别理论不能替代定理12.2的原来源证明；这里不主张通用鉴别原理或全球新颖性。Observer [第86节](OBSERVER_RELATIVE_SPACETIME_CAUSAL_COMPATIBILITY_RECOVERY.md#86-条件寄存器-h_pi-的精确求值与收费实现) 的有限域种子、条件码和接收者，KBonacci [第15–18节](KBONACCI_INITIAL_TARGET_COST_THEORY.md#15-protected-spectra-with-several-initial-tail-bands) 的原尾带、字面流及收费日历，以及 Joint Relations Clocks [第26节](RECURSIVE_RELATIONAL_OBSERVATION_JOINT_RELATIONS_CLOCKS.md#26-单向循环钟的有限时域游程几何与倒计时记忆) 的 $G^r\times H$ 来源、单向平移、全快照与带标签关系，都具有不同来源和操作／读合同，不能替换这里的实际模相位旅行。定理12.2–12.7只承担全相位、无守卫、同源仿射原边与声明 Read 时序下的精确取得、解码、事件数及规划关系；完整运行／输出记忆、算术位复杂度和货币／物理成本没有由规划状态数决定。
+

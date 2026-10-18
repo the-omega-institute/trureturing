@@ -1,0 +1,96 @@
+**定理 234.1（Exact quotient and complete zero-cost supports）。**
+For every $L\ge m\ge4$,
+
+$$
+\begin{aligned}
+Q(Y_m^L)=Q(Z_m^L)&=q_m^L
+ =(0,b_m,d_m-1,\underbrace{d_m,\ldots,d_m}_{4,\ldots,m},
+                  0,\ldots,0;(m+1)d_m-1),\\
+W(Y_m^L)=W(Z_m^L)&=3d_m,\\
+B_O(Y_m^L)=B_N(Z_m^L)=B_O(Z_m^L)&=3d_m.
+\end{aligned}
+\tag{234.1}
+$$
+
+In particular $\Delta_O(Y_m^L)=\Delta_N(Z_m^L)
+=\Delta_O(Z_m^L)=0$. For the input score at $m=5$,
+$\Delta_N(Y_5^L)\ge2$; for every $m\ge6$,
+$\Delta_N(Y_m^L)\ge m-2$.
+
+证明。 First take $L=m$ and write $d=d_m$. In $Z_m$, for a pair
+$i<j<m$, the label-zero maxima in the first two cells are their
+$\mu_m$ masses. By 233.3 these dominate every numerical label:
+labels $n\le i$ are bounded by the same masses, and labels $n>i$
+give zero there. Their sum is $\mu_m(w_i=0)=d$. The $10$ maximum
+is at most $\max(m-2,d)=d$, by the same lemma. The $11$ baseline
+is $1+T=d$, and dominates every numerical reward, again by 233.3.
+Thus every such complete $N$ pair support is at most $3d$.
+
+If $j=m$, all nonterminal scored atoms have terminal bit zero.
+The $01$ cell is empty and the $11$ cell contains only $T=d-1$.
+The other two maxima have sum at most
+
+$$
+\mu_m(w_i=0)+\max\{\mu_m(w_i=1),d\}.
+$$
+
+For $i\le m-2$, the whole support is at most
+$d+\max(m-1,d)+d-1\le3d$, using $m-1\le d+1$.
+For $i=m-1$, it is at most
+$d+1+\max(m-2,d)+d-1=3d$.
+Empty and singleton information coarsen some distinct $N$ pair,
+so their maxima are also at most $3d$. Reversal and repetition
+introduce no larger information support.
+
+For $Y_m$, every numerical label has total $C_n+P_n=d$,
+including label one, whose total comes entirely from $P$.
+For an increasing pair $i<j<m$, its chain correct classes
+$n\le i$, $i<n\le j$ and $n>j$ lie respectively in the stopped
+cells $0,10,11$. The first baseline is $d$ and dominates every
+numerical reward; the middle baseline is $m-2\le d$ and every
+numerical reward is at most $d$; the last baseline is $1+T=d$
+and dominates every numerical reward. Its support is at most
+$3d$. At $j=m$, only $T$ is in the last cell, and the first and
+middle maxima have exactly the same upper bounds just used for
+the terminal $Z_m$ pair, since every numerical total is $d$.
+
+The complete short stopped schedules require no refinement
+assumption. For the empty schedule the zero baseline is
+$s+t=2d+m-2\le3d$, and each numerical total is $d$.
+For a singleton $i<m$, its zero-cell maximum is
+$\mu_m(w_i=0)$, which is either $d$ or $d+1$ and dominates
+each numerical total. Its one-cell maximum is at most
+$\max\{\mu_m(w_i=1)+t,d\}$. If $i\le m-2$, their sum is
+$d+\max(d+m-2,d)=2d+m-2\le3d$; if $i=m-1$, it is at most
+$d+1+\max(d+m-3,d)\le3d$, using $m-2\le d$ and $d\ge1$.
+For singleton $m$, the sum is $\max(s,d)+t=s+t\le3d$.
+Thus the whole stopped catalog is bounded, including singleton
+$m$, which need not refine an increasing two-address stop.
+
+The anchor reward of both scores is
+$s+b+t=(d+m-1)+(d-m+2)+(d-1)=3d$.
+It attains every asserted global support, since it is in both
+catalogs and $O\subseteq N$. The correct totals give
+$\beta=\gamma$, and direct summation gives
+$K=s+\sum_n\gamma_n+t=(m+1)d-1$.
+
+For the diagnostic $N$ pair $34$ in $Y_m$ at $m\ge5$, the four
+exact cell maxima are $(d,u,d,d)$, where $u=2$ for $m=5$
+and $u=m-2$ for $m\ge6$. In $00$, correct label three has
+$C_3=d-1$ and the first-zero-three union atom contributes one.
+In $01$ there is no chain correct atom and its union baseline
+is $u$: the removed singleton is in this cell precisely when
+$m=5$. In $10$ the chain correct label four attains $d$.
+In $11$ the zero baseline $T+\mu_m(11)=d$ attains $d$.
+Every numerical total is at most $d$, so these are indeed the
+cell maxima. Their sum is $3d+u$.
+
+For every $L>m$, all added coordinates equal one on the full
+score support, and added labels have zero reward. Any table
+using an added coordinate reduces there to legal low singleton,
+empty or pair information, preserving stopped order when relevant.
+Every low table embeds. Thus all supports, quotients, anchors and
+the lower diagnostic persist simultaneously for every $L\ge m$.
+This is a dual support argument; it removes none of the ambient
+event rows and restricts no original competitor. $\square$
+

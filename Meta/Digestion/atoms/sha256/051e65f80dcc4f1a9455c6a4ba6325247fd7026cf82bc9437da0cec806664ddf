@@ -1,0 +1,150 @@
+**Theorem 6.2 (universal full-record critical limit).** Let $s_n<s_0$,
+$q_n=1-s_n/s_0\downarrow0$, and suppose the original classes are
+feasible at finite $A_n$, with
+
+$$
+q_n(e^{A_n}-1)\longrightarrow C_{\rm end}.
+\tag{WE.45}
+$$
+
+Every sequence of instruments in these classes, retaining their full
+actually generated acquisition labels, has height-record TV tending to
+$T_0-\gamma_f$. Consequently
+
+$$
+\boxed{\lim_n\mathcal T_{A_n}(s_n)=T_0-\gamma_f,\qquad
+\lim_{s\uparrow s_0}\mathcal T_{A_{\min}(s)}(s)=T_0-\gamma_f.}
+\tag{WE.46}
+$$
+
+The twelve-label recovery in Theorem 4.1 has the same limit. A
+coarsened record has only the corresponding upper limit bound.
+
+Proof. On the full compact ellipse
+$\mathcal E=\{(z,w):\alpha z^2+\beta w^2=1\}$, use Lemma 2.1 on
+each actual low label to define
+
+$$
+P_n=\sum_j\pi_j\delta_{(z_j,w_j)},\qquad
+\nu_n=\sum_j\pi_j\upsilon_j\delta_{(z_j,w_j)}.
+\tag{WE.47}
+$$
+
+Their radial pushforwards are those in Theorem 3.2. Every subsequential
+limit of $P_n$ is supported on $|z|=1$ by (WE.26), hence on
+$|w|=1$ by the ellipse equation. The exact moments
+$\int z=\int w=\int zw=0$, $\int1=1$ then force all four corner
+weights to be $1/4$ by the four-sign Fourier equations. Thus
+
+$$
+P_n\Rightarrow\frac14\sum_{\sigma,\eta=\pm1}\delta_{(\sigma,\eta)}.
+\tag{WE.48}
+$$
+
+The measures $\nu_n$ have fixed mass $\mu$ on the same compact ellipse.
+By (WE.27), every limit is supported on the four points
+
+$$
+z=\sigma\sqrt r,\qquad w=\eta\sqrt{W/\mu}.
+\tag{WE.49}
+$$
+
+No claim about their individual sign weights is needed. At these points
+
+$$
+n=(0,\eta\sqrt{m_1/\mu},-\sigma\sqrt{m_2/\mu})^T,
+\qquad h=-\frac{d_f+2\sigma\eta z_f}{\mu}<0.
+\tag{WE.50}
+$$
+
+Here strict negativity follows directly from the supplied bounds
+$m_1>496/1000$, $m_2<345/1000$ (FA74). Indeed
+
+$$
+\frac{d_f}{2|z_f|}=\frac{\sqrt{59}+\sqrt{37}}{16}\sqrt{\frac{m_1}{m_2}}
+>\frac{27}{32}\sqrt{\frac{496}{345}}>1,
+\tag{WE.51}
+$$
+
+using $\sqrt{59}>15/2$, $\sqrt{37}>6$, and
+$729\cdot496=361584>353280=1024\cdot345$. This uses no new
+numerical enclosure. Since $\sum N_j=M$,
+$\int h\,d\nu_n=\operatorname{tr}(M\Delta)=-d_f$ exactly. By compactness,
+continuity and negative limit support,
+
+$$
+\int|h|\,d\nu_n\longrightarrow d_f,\qquad
+\int|f|\,dP_n\longrightarrow\frac14\sum_{\sigma,\eta}|f(\sigma,\eta)|.
+\tag{WE.52}
+$$
+
+The first conclusion can equivalently be seen by writing
+$\int|h|=-\int h+2\int h_+$; all limiting measures give $h_+$
+integral zero. This controls every subsequence without assuming
+convergence of the sign weights.
+
+It remains to check the actual grouping loss. FA69's double rigidity,
+used on the existing labels, and full decoder TP give each low
+acquisition effect exactly $K_j^\dagger K_j+N_j$. Its actual signed
+height difference is therefore
+$\pi_j[f(z_j,w_j)+\upsilon_jh(z_j,w_j)]$. Each high label has only
+$D$ products, no supported failure, and nonnegative height difference;
+their sum is $H_\Delta$. Supported-zero labels contribute nothing.
+Consequently the TV of the full actual acquisition label, without any
+hidden refinement, is exactly
+
+$$
+T_n=\frac12\left[H_\Delta+
+\int|f+\upsilon h|\,dP_n\right].
+\tag{WE.53}
+$$
+
+This integral notation retains each label's own multiplier even if
+several labels have the same ellipse point. It may equivalently be
+an integral on the full label space. Its separated comparison has
+nonnegative triangle loss bounded by
+
+$$
+0\le\int|f|\,dP_n+\int|h|\,d\nu_n
+-\int|f+\upsilon h|\,dP_n
+\le2\int\min\{|f|,\upsilon|h|\}\,dP_n.
+\tag{WE.54}
+$$
+
+Choose a fixed open radial neighborhood $O$ of $r$ whose closure misses
+$1$. The right side is at most
+
+$$
+2\left[\|f\|_\infty P_n\{z^2\in O\}
++\|h\|_\infty\nu_n\{z^2\notin O\}\right]\longrightarrow0.
+\tag{WE.55}
+$$
+
+The first term vanishes by corner concentration (or (WE.26)); the
+second by (WE.27). Both functions are bounded on the compact ellipse.
+Thus this argument controls all actual-label live/failure grouping
+losses even when multipliers diverge. It does not combine independently
+optimized records, and it does not make an analytic Kraus index
+observable.
+
+Combining (WE.52)–(WE.55) proves
+
+$$
+T_n\longrightarrow\frac12\left[H_\Delta+
+\frac14\sum_{\sigma,\eta}|f(\sigma,\eta)|+d_f\right]=T_0-\gamma_f.
+\tag{WE.56}
+$$
+
+All concentrations and grouping estimates applied to arbitrary
+instruments in the stated classes, hence prove the universal
+quantifier. FA72 already supplies finite TV attainment whenever the
+class is nonempty. Applying the conclusion to maximizing instruments
+proves the first limit of (WE.46). Alternatively use full-label
+instruments within $1/n$ of the supremum; retaining the whole label
+can only increase TV. A contradiction subsequence gives the same
+limit. FA73 supplies attained thresholds and (WE.31) proves their
+critical scaling, yielding the second limit. The explicit recovery
+also has that scaling and the entire common instrument of Section 5,
+so attains the same limiting value. Classical postprocessing contracts
+TV; equality is not asserted for coarsened records. $\square$
+

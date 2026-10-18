@@ -1,0 +1,14 @@
+**定义 33.2.2（叉模型）。** 模型 $M_{\mathrm{fork}}$ 为
+
+$$
+Y\sim\operatorname{Bernoulli}(1/2),
+\qquad
+X=Y\oplus N_x,
+\qquad
+Z=Y\oplus N_z.
+$$
+
+它的结构路径为 $X\leftarrow Y\to Z$。
+
+<a id="claim-33-2-3"></a>
+

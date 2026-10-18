@@ -1,0 +1,49 @@
+**Lemma 95.2.** For each common witness, P_B is supported on S, with (P_B)_ii=α|a_i|². The matrix
+
+\[
+ R=\alpha^{-1}\operatorname{diag}(1/a_S)(P_B)_{SS}
+                         \operatorname{diag}(1/\overline{a_S})
+                                                                    \tag{6}
+\]
+
+is PSD with diagonal one, and satisfies
+
+\[
+ G_S=H_S\odot\overline R,\qquad
+ R\operatorname{diag}(\overline{a_S})H_S=0.                    \tag{7}
+\]
+
+If n=|S|, h=rank H_S, and r=rank R, then
+
+\[
+ \operatorname{rank}G_S=n-1,\qquad h+r\le n,\qquad
+ n-1\le hr,\qquad r\le8-\operatorname{rank}H.                 \tag{8}
+\]
+
+**Proof.** If i∉S, (5) makes every cross-fibre entry in row i of P_B zero. Since H_ff=I₂, the diagonal equation (P_BH)_ii=0 then gives (P_B)_ii=0. A PSD matrix with a zero diagonal entry has a zero corresponding row and column. Thus P_B is supported on S. For any i, the same complementary equation yields
+
+\[
+ \begin{aligned}
+ (P_B)_{ii}
+  &=-\alpha a_i\sum_{j\text{ outside }i\text{'s fibre}}
+                            \overline{a_j}\,\overline{G_{ij}}\\
+  &=-\alpha a_i\overline{\sum_{j\text{ outside }i\text{'s fibre}}
+                                                  G_{ij}a_j}
+   =\alpha|a_i|^2.
+ \end{aligned}                                                     \tag{9}
+\]
+
+The last equality uses Ga=0 and G_ff=I₂. Formula (6) is an invertible diagonal congruence of (P_B)_SS divided by α>0, so R is PSD with unit diagonal. Equation (5) gives R_ij=overline(G_ij)/overline(H_ij) on cross-fibre entries. The first identity in (7) also holds on diagonal entries and on the zero distinct within-fibre entries, regardless of the corresponding entries of R. The second follows from P_BH=0 and support of P_B.
+
+Every kernel vector of the principal PSD matrix G_S extends by zero to a vector in ker G. Since that full kernel is span(a), dim ker G_S=1. The second identity in (7) gives h+r≤n. Gram factorizations of H_S and overline R realize their Hadamard product by tensor products of records of dimensions h and r, so its rank is at most hr. Finally rank R=rank P_B and P_BH=0 give the last inequality in (8). ∎
+
+The quotient need not be rank one. Its cross-fibre entries are determined by the quotient formula; that formula does not specify its within-fibre entries, which are not needed for the cross-fibre quadratic coefficients below. In particular, when S contains all eight coordinates and rank H=6, one has r≤2. If r=1, its unit diagonal makes R=uu* with |u_i|=1, and (7) makes G a diagonal-unitary conjugate of H, contradicting their different ranks. Hence
+
+\[
+ \operatorname{rank}R=2,\qquad
+ P_B=\alpha\operatorname{diag}(a)R\operatorname{diag}(\overline a),
+ \qquad \operatorname{range}(P_B)=\ker H.                    \tag{10}
+\]
+
+These assertions alone are necessary conditions. The proof must still retain both the full opposite kernel and the exact product variation.
+

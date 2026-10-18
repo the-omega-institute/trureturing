@@ -1,0 +1,27 @@
+### 81.4. Direct application to the original physical channel
+
+Choose Stinespring isometries V_A,V_B of the original local maps, with B environment dimension d. For each f let A_f and H_f be their correct-output blocks:
+
+    A_f e_i=(<f|_out tensor I_EA)V_A|f,i>,
+    H_f e_i=(<f|_out tensor I_EB)V_B|f,i>.
+
+Projection of an isometry is a contraction, so A_f^*A_f<=I_2 and H_f^*H_f<=I_2. Their records determine exactly the K of section 81.3. The original B isometry is square when d=2, but that additional block-unitary compatibility is not needed: (8) holds for all independent contraction blocks.
+
+Use the normalized maximally entangled logical/reference input
+
+    |Omega>=(1/sqrt(2k))sum_(f,i) |f,i>_R tensor |f,i>_logical.
+
+Let sigma be the original product-channel output after the input MC encoding, and let tau be the target output. Let W send |f,i> to |f,i>_R tensor |ff>_out and set P_good=WW^*. Directly from the Stinespring inner products,
+
+    P_good sigma P_good = W K^T W^*/(2k),
+    tau = W T W^*/(2k).
+
+The transpose is because K is the forward Gram; T is real symmetric. Pinching into the good subspace and its orthogonal complement is trace-norm contractive on Hermitian operators. The target vanishes on the complementary subspace, and the corresponding actual block is positive. Since sigma has trace one,
+
+    ||sigma-tau||_1
+       >= ||K-T||_1/(2k) + 1-TrK/(2k)
+        = Tr(T-K)_+/k
+       >= max{0,(k-d^2+1)/k}.                         (10)
+
+All off-diagonal coherences between these two support sectors were handled by a valid CPTP pinching lower bound; none is assumed absent. The retained matrix K includes every within-fibre and cross-fibre coherence in the good sector. The diamond norm is at least the error on this one normalized reference input, so (10) proves (1) for the original maps, including arbitrary leakage and every reference permitted in the definition.
+

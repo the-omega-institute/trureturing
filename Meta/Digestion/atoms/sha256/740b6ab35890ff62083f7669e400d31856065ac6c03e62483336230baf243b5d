@@ -1,0 +1,22 @@
+**Proposition 10.2 (placement and output-type limits).** The proved
+construction supplies zero additional native tape roles within the expressly
+unused-verifier fixed-H entrance. It establishes neither minimum roles nor
+minimum total price, and its result is a sealed description of old storage,
+not new physical old storage or a live old handle.
+
+Proof. Every helper uses the role table of Definition 2.2 and finite banks;
+publication uses the original 40/48 channel. Extra registers enlarge bank
+fields and finite code, not the port namespace. A C-side converter instead
+needs its own writable scratch/code/entry/return, while a separate annex
+needs its extra roles, initialized boundaries and enlarged replay bridge.
+Neither interface is supplied by the present role count. No lower bound
+over placements was proved. Compact tree words could change PVC.14–15,
+but would require their own body/consumer/cost interface.
+
+All converter graph operations are list operations on descriptions.
+Actually materializing old geometry would require actual vertices, seven
+initialized slots per vertex, reciprocal wires, owner/handle guards,
+partial construction phases and a priced return. The existing endpoint
+already has its current actual incidence storage; its old description
+does not allocate another old carrier or transfer historical rights. ∎
+

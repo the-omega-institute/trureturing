@@ -1,0 +1,15 @@
+**数据 86.7（Own finite mathematical corroboration and its bounds）。** Direct finite checks of the fixed tables, coordinate omissions, full charge parity, literal inverses, endpoint codes and strict seam sums give:
+
+| $d$ | Actual phase count | Joined classes | Minimum consecutive GLOBAL common-charge count | Maximum GLOBAL seam sum | Minimum consecutive adaptive positive-trace common-charge count | Maximum adaptive positive-trace seam sum |
+| --- | --- | --- | --- | --- | --- | --- |
+| $3$ | $65$ | $63$ | $16$ | $6$ | $15$ | $4$ |
+| $4$ | $257$ | $255$ | $64$ | $6$ | $63$ | $2$ |
+| $5$ | $1025$ | $1023$ | $256$ | $6$ | $254$ | $2$ |
+| $6$ | $4097$ | $4095$ | $1024$ | $6$ | $1022$ | $1$ |
+
+The GLOBAL checks use the finite choice in Lemma 86.3 with constrained phases in increasing order, the least unused allowed binary vector at each such phase, and ordered completion on the remaining phases. Their root/first-suffix common-charge counts are $31,127,511,2047$, respectively. Each table has exactly the two new doubled phase sets in (86.6), unchanged component counts $9,17,33,65$, and compulsory-root total joined-label appearances $65,257,1025,4097$. The adaptive checks select valid distinct component representatives of the credited lists; their full rows, inverses and seam sums refer to those selected words. All $131584=2(2^8+2^{16})$ component Hall subfamilies at $d=3,4$ satisfy the list cardinality inequalities, including empty subfamilies. No exhaustive subfamily claim is made at larger $d$.
+
+At $d=3$, integer-recurrence execution jointly realizes all $2\cdot65\cdot64=8320$ successful INITIAL records with legal complete source histories of lengths between $62$ and $4092$. The integer weights used extend through index $4525$. Every displayed controller decodes its source's own endpoint archive to the new INITIAL label. GLOBAL has $8060$ low records paying seven blocks and $260$ high records paying the whole root, for $56680$ issued blocks and $3514160$ emitted bits across these separate source executions. Adaptive has $7688$ positive records paying four blocks, $372$ zero records paying three, and the same $260$ high records paying one, for $32128$ blocks and $1991936$ bits. Initial bottom is separately realized by $1^{124}$ and stops freely.
+
+These finite bounds concern the chosen protocols and stated parameter ranges. They do not enumerate all width-$62$ actions or prove an unbounded optimum by computation. The all-action lower bounds and the uniform $d\ge3$ physical attainment are the ordinary arguments above. No check program or dataset is part of the chapter.
+

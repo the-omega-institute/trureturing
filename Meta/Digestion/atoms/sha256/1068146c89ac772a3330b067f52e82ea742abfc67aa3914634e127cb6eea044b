@@ -1,0 +1,45 @@
+## 3. All three terminal roots: the exact actual-child reduction
+
+**Theorem 3.1.** Let $K=\{W_1,W_2,W_3\}$ consist of three pairwise
+distinct fixed legal worlds on (1.2), with $f_i(7)=0$ for every $i$.
+Allow arbitrary drifts $d_i$. Then
+
+$$
+L_2(K,H)\quad\Longleftrightarrow\quad
+\bigwedge_{E\in\{J,M\}}\exists i<j:
+       d_i=d_j\ \land\ v_E(W_i)=v_E(W_j).
+\tag{3.1}
+$$
+
+The pair may depend on $E$. If the drifts are not all equal, this
+reduces to $L_2$ of the unique equal-drift proper pair, when such a
+pair exists. If all three drifts differ, $L_2(K,H)$ is false.
+
+**Proof.** Fix $E$ and any real raw sixth response $w$. Its actual
+child is
+
+$$
+K_{E,w}=\{W_i\in K:D_0+\lambda v_E(W_i)=w\}.
+\tag{3.2}
+$$
+
+For each last action $F$, the raw response of $W_i$ at clock seven
+is $D_0+\lambda d_i$, because its seventh gain vanishes. Thus an
+$L_1$ child must contain an equal-drift pair: applying its defining
+condition to either last action requires a terminal response class
+of size at least two. Conversely, an equal-drift pair in the child
+supplies, under each last action, the raw response
+$D_0+\lambda d_i$ retaining that same pair and satisfying $L_0$.
+This includes empty, singleton and shared-three sixth children.
+
+Existence of an $L_1$ child for a fixed $E$ is therefore exactly
+existence of an equal-drift pair with equal $v_E$. Conjoining for
+the two first actions proves (3.1), with all response quantifiers.
+If the drifts are not all equal, there is at most one equal-drift
+pair. It must collide under both sixth actions. All its terminal
+responses are the common drift, so the pair itself has $L_2$ by
+(1.9). Conversely such a proper pair supplies actual losing children
+in the triple. With three distinct drifts no equal-drift pair exists.
+All pairs here belong to the same fixed triple on the same history;
+no separately realizable pairs are combined. ∎
+

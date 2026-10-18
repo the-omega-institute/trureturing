@@ -1,0 +1,37 @@
+**Definition 13.7 (credited suppliers and transfer scope).** The uniform
+setter is repo-derived component mathematics. The strict relocation and
+exchange lower-bound arguments are credited prior component results;
+the equal-length unchanged-write detour supplies the set-to-value case.
+The prefix argument is the standard ingredient already used by Theorem
+4.4, applied to actual unary intermediate trees. No textual-search absence
+or encoding change establishes originality.
+
+The following committed declarations and their owning Scribes at
+Blueprint followed by the same module path with suffix .scribe.cs retain
+their own hypotheses.
+
+| Supplier | Scope and unsupported transfer |
+| --- | --- |
+| D5/S3/Arith/FibonacciAtomic/Observer/NativeSerialMachine.lean: nativeStep, replay_deterministic, reached_prefix_replay, actual_register_execution; NativeFullSourceProducer.lean: native_source_producer and private traverse, production_reads, stationary | Genuine source evolution, chronological replay and no-update acquisition remain suppliers. Control/workspace is unrestricted; private subtree/location invariant parameters are not input ports. No finite local controller, authorized operand or fine receipt implementation follows. |
+| D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeConstructorArrays.lean: Allowed, Canonical, legal_realization, scalarEquiv, productEquiv and private absence/legality/uniqueness/inverse helpers | The root, cutoff and parent/child reply conditions of legal source arrays do not describe unary maintenance trees or arbitrary busy raw bytes. |
+| D5/S3/Arith/FibonacciAtomic/Observer/NativeSerialEffective.lean: OriginalCodeRealization, original_code_service_simulation, private code-prefix/run and erasure helpers | The supplied code needs its genuine-state realization equation. Evaluator-step erasure preserves stated external observations, not fine clocks, receipts, owner access or prices. |
+| D5/S3/ObserverMemory/RefinementClosure/TypedFiniteViewKernel.lean: response, typed_finite_view_kernel; PredictiveMemoryMinimalQuotient.lean: predictive_memory_minimal_quotient | Labels, steps and readouts are independent task data; readout and update factorization are separate hypotheses. These theorems do not construct the missing task or the inclusions in SSA.20. |
+| Pinned mathlib db584cd6d46c92f209a44c0f1c829460d327499d: Computability/StateTransition.lean, Respects, tr_reaches, tr_eval; Data/Tree/Basic.lean, BinaryTree.numLeaves_eq_numNodes_succ | Refinement needs a related start and positive matching fragments. BinaryTree counts nil leaves, so node-plus-one is not the actual-terminal count for this unary occurrence carrier. |
+
+SSA Theorems 6.2/7.3/8.3 retain their original atomic-patch premise.
+PR57/AIF retain their input, authority, receipt, copy and all-cut contracts.
+NCR Theorems 5.3/6.3 remain restricted to the actually acquired,
+fixed-controller atomic-Native-source domain. These are suppliers within
+their proved scopes, not a finer full-runtime theorem.
+
+The following primary ingredients are literature-attested; the excluded
+operational and resource transfers remain obligations.
+
+| Primary source | Applicable ingredient and limit |
+| --- | --- |
+| Sleator and Tarjan, *A Data Structure for Dynamic Trees*, JCSS 26, 1983, §2, pp. 363–364, [primary paper](https://www.cs.cmu.edu/~sleator/papers/dynamic-trees.pdf) | Link/cut take actual vertex arguments and permit disconnected forests. Their pointer-model bounds neither implement the fixed-root reciprocal atom nor acquire its operands. |
+| Driscoll, Sarnak, Sleator and Tarjan, *Making Data Structures Persistent*, JCSS 38, 1989, §§1, 2.2, [primary paper](https://www.cs.cmu.edu/~sleator/papers/making-data-structures-persistent.pdf) | Named access pointers, accessed-node sets, explicit initialization and version stamps are real model structures. Persistence/single-field updates supply no original owner service, reciprocal atom or same-run bill. |
+| Lynch and Vaandrager, *Forward and Backward Simulations, Part I*, Information and Computation 121, 1995, §3.2, Lemma 3.8/Theorem 3.10, [author manuscript](https://groups.csail.mit.edu/tds/papers/Lynch/IC95.pdf) | Related initialized starts and matching finite fragments yield trace inclusion, not inverse fine cuts, individual exact kernels or equal clocks/prices. |
+| Arrighi, Costes, Dowek and Maignan, *Space-time deterministic graph rewriting*, arXiv:2404.05838v2, local-operator/valid-sequence definitions and Remark 7, [primary text](https://arxiv.org/html/2404.05838v2) | Local replacement requires agreement on its common frontier and its own consistency/locality conditions. The neighborhood replacement is still atomic; exterior agreement is not terminal-boundary reconstruction or a serial source/owner/receipt implementation. |
+| Bennett, *Logical Reversibility of Computation*, IBM JRD 17, 1973, history/copy/reverse construction, [primary text](https://www.cs.princeton.edu/courses/archive/fall06/cos576/papers/bennett73.html) | Retained history uses actual additional tape and operations. It gives no free phase material, acquired historical service, physical reversibility or transferred total-cost bound. |
+

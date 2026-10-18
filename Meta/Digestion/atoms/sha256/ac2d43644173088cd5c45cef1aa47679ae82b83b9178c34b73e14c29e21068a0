@@ -1,0 +1,24 @@
+### 100.2. The two dual costs
+
+Define the Hermitian involution and its projections
+\[
+Q=K^{-1/2}DK^{-1/2},\quad Q^2=I,\quad P_\pm=(I\pm Q)/2. \tag{4}
+\]
+Both eigenspaces have dimension two. Write \(\eta=\ell K^{-1/2}\).
+The full PSD matrices \(Z_\pm=N\pm L\) have
+\[
+(Z_\pm)_S=tK^{1/2}(I\pm Q)K^{1/2},\qquad
+(Z_\pm)_{oS}=\ell(J\pm I)=\eta(Q\pm I)K^{1/2}. \tag{5}
+\]
+After congruence by \(K^{-1/2}\) on the supported coordinates, their principal
+blocks are \(2tP_\pm\), with rows \(\pm2\eta P_\pm\). The range conditions hold
+and their exact generalized Schur costs are
+\[
+c_\pm=(2/t)\|\eta P_\pm\|^2. \tag{6}
+\]
+Both outside diagonals are \(N_{oo}\), since \(L_{oo}=0\). Therefore
+\[
+\|\eta P_+\|^2\le t^2/2,\qquad \|\eta P_-\|^2\le t^2/2. \tag{7}
+\]
+Their average recovers §99's inverse-metric bound. Keeping both can strengthen it.
+

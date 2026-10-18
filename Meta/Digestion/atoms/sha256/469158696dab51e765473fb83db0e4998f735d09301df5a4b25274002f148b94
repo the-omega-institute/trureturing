@@ -1,0 +1,91 @@
+**Theorem 6.1 (radical frame on a closed interval).** Put
+
+$$
+\gamma=1-2\beta>0,\qquad d=1+\alpha=2-\beta,\qquad e=1+\beta,
+\qquad \tau_3=\frac{2\sqrt\alpha}{d}.
+\tag{RH.45}
+$$
+
+Then $\bar\tau<\tau_3<1$. For $\bar\tau\leq\tau\leq\tau_3$ define
+
+$$
+\begin{gathered}
+\rho=\sqrt{\beta^2+e\gamma\tau^2},\qquad
+A=\frac{\beta+\rho}{2e},\qquad B=\frac{\rho-\beta}{2\gamma},
+\qquad Z=1-A-B,\\
+U=(\sqrt A,\sqrt B,-\sqrt Z)^T,\qquad n_0=\sqrt{A+B},\\
+p=\frac{(\sqrt B,-\sqrt A,0)^T}{n_0},\qquad
+q=\frac{(\sqrt{AZ},\sqrt{BZ},A+B)^T}{n_0},\\
+\alpha_0=\frac{B-\alpha A}{A+B},\qquad
+\beta_0=\frac{d\sqrt{ABZ}}{A+B},\qquad
+k=-\frac{\alpha_0}{\beta_0+\sqrt{\alpha_0^2+\beta_0^2}},\\
+F=\frac{p+kq}{\sqrt{1+k^2}},\qquad
+W=\frac{-kp+q}{\sqrt{1+k^2}}.
+\end{gathered}
+\tag{RH.46}
+$$
+
+The scalars $A,B,Z$ here are squared frame coordinates, not input
+matrices or resource functions. These formulas give a continuous
+orthonormal $Q$-null frame $(U,F,W)$ on the entire closed interval,
+smooth near $\bar\tau$. It starts with $U=u$, $F=v$, and $W$ on
+the $w$ line. At $\tau_3$ it equals
+
+$$
+U=\frac{(\sqrt\alpha,1,0)^T}{\sqrt d},\qquad
+F=\frac{(1,-\sqrt\alpha,-\sqrt d)^T}{\sqrt{2d}},\qquad
+W=\frac{(1,-\sqrt\alpha,\sqrt d)^T}{\sqrt{2d}}.
+\tag{RH.47}
+$$
+
+Proof. A unit $Q$-null vector with squared coordinates $(A,B,Z)$
+satisfies
+
+$$
+A=\alpha B+\beta Z,\quad A+B+Z=1,\qquad
+A=\frac{\alpha-\gamma Z}{d},\quad
+B=\frac{1-eZ}{d},\quad0\leq Z\leq1/e.
+\tag{RH.48}
+$$
+
+On this range the numerator of the derivative of
+$AB=(\alpha-\gamma Z)(1-eZ)/d^2$ is
+$-(\alpha e+\gamma)+2\gamma eZ\leq\gamma-\alpha e
+=-\beta(2-\beta)<0$. Thus its maximum is $\alpha/d^2$, only at
+$Z=0$. For the initial $u$, $Z/A=z_*^2>0$, so
+$\bar\tau=2\sqrt{AB}<\tau_3$. Also
+$d^2-4\alpha=\beta^2>0$ gives $\tau_3<1$.
+
+Solving $eA-\gamma B=\beta$ and $AB=\tau^2/4$ with positive
+$A,B$ gives precisely RH.46. Its initial solution is the squared
+coordinates of $u$ with the indicated signs. As $\tau$ increases,
+$\rho,A,B$ increase and $Z$ decreases continuously to zero, with
+endpoint $(A,B,Z)=(\alpha/d,1/d,0)$. Therefore $A,B>0$, $Z\geq0$
+and $n_0>0$ on the closed interval. All square roots are defined;
+only $\sqrt Z$ reaches zero, at the final endpoint.
+
+Direct dot products give $p^Tp=q^Tq=1$, $p^Tq=p^TU=q^TU=0$.
+Their $Q$ compression has diagonal $\alpha_0,-\alpha_0$ and
+cross entry $\beta_0$. Initially $B/A=b_*^2>(49/50)^2>\alpha$,
+so $\alpha_0>0$. The numerator $B-\alpha A$ increases with $\rho$
+since $e-\alpha\gamma=2\beta(2-\beta)>0$. Thus $\alpha_0>0$
+everywhere on the closed interval, while $\beta_0\geq0$.
+Consequently the denominator defining $k$ is positive and
+$-1\leq k<0$, with $k=-1$ exactly at the final endpoint.
+The algebraic identity
+$\alpha_0(1-k^2)+2\beta_0k=0$ proves $F^TQF=W^TQW=0$.
+Their orthonormality follows from the displayed rotation of $(p,q)$.
+This proves all radical and frame denominator claims, without claiming
+smoothness at the final square-root boundary.
+
+To identify the initial negative line, $Z=A z_*^2<1/100$ there and
+$B/A=b_*^2>\alpha>87/100$, so $B>AZ$. The formulas and
+$-1\leq k<0$ give $F_0>0$, $F_1<0$, $F_2<0$ initially.
+The only real null lines in $u^\perp$ are the $v,w$ lines. The line
+$v$ has first coordinate positive and third negative; for
+$w=v\times u$, its first and third coordinates are proportional to
+$t_*b_*-z_*>0$ and $q(t_*)b_*+1>0$. Thus $F$ initially belongs to
+$v$, not $w$, and its unit normalization and first sign give $F=v$.
+The other line is $w$ up to its irrelevant vector sign. Substitution
+of $Z=0$, $k=-1$ gives RH.47. $\square$
+

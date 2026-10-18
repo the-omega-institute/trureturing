@@ -1,0 +1,19 @@
+### Proposition 2.1. Legal full-flip pulses are phase-decorated permutations
+
+Use the Chapter 8 space K_n=span{|s>:s in B_n}, where B_n consists of length-n bit strings with no consecutive ones. Let tau_i flip bit i exactly when both existing neighbors are zero, and otherwise fix the word. Then tau_i is an involution of B_n. The actual pulse R_i(beta,pi/2) from that chapter obeys
+
+$$R_i(\beta,\pi/2)|s\rangle=
+\begin{cases}
+-i e^{i\beta}|\tau_i(s)\rangle,&s_i=0\text{ and enabled},\\
+-i e^{-i\beta}|\tau_i(s)\rangle,&s_i=1\text{ and enabled},\\
+|s\rangle,&\text{blocked}.
+\end{cases} \tag{2.1}$$
+
+A finite ordered word of these pulses therefore has the form
+
+$$U|s\rangle=e^{i\gamma_s}|\tau(s)\rangle,\qquad \tau\in\operatorname{Sym}(B_n). \tag{2.2}$$
+
+Proof. Enabled insertion and deletion preserve legality and reverse each other without changing the neighbors. Formula (2.1) is the supplier's explicit two-state exponential at angle pi/2. Multiplying its monomial matrices composes the permutations and adds the phases along the actual traversed path. QED.
+
+The pair (tau,gamma) is the required coherent transition description. For two gates U_1,U_2, the composite phase is gamma_1(s)+gamma_2(tau_1(s)). Retaining only the transition table tau loses this information. General pulse angles yield superpositions of words and need not admit (2.2); the results specific to monomial gates below do not apply to those angles automatically.
+

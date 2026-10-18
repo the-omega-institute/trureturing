@@ -1,0 +1,72 @@
+**Definition 206.2 (Complete scores, catalogs and fixed data).**
+Fix an integer $L\ge3$, independently of the actual active length until
+an original-source application is made. Put
+
+$$
+\Omega=\{0,1\}^L\setminus\{1^L\},\qquad
+n(w)=\min\{j:w_j=0\},\qquad \Omega_j=\{w:n(w)=j\}.
+$$
+
+A full score $V$ has separate nonnegative coefficients $A_w,C_w,P_w$
+for every $w\in\Omega$, and $T\ge0$ at $1^L$. Label
+$\ell\in\{0,\ldots,L\}$ earns
+
+$$
+g_V(w,\ell)=
+\begin{cases}
+ A_w\mathbf1_{\ell=0}+C_w\mathbf1_{\ell=n(w)}
+       +P_w\mathbf1_{\ell\in\{0,n(w)\}},&w\ne1^L,\\
+ T\mathbf1_{\ell=0},&w=1^L.
+\end{cases}
+\tag{206.4}
+$$
+
+For a fixed schedule, sum $g_V(w,\ell)$ over each of its cells, maximize
+over all labels separately in each cell, then sum these maxima.
+$B_N(V)$ is the largest such sum over the empty schedule, every single
+address, and every distinct pair $i<j$ with four cells $00,01,10,11$.
+$B_O(V)$ uses empty and single schedules and the increasing pairs with
+stopped cells $0,10,11$. The notation $(i,j;\ell_0,\ell_{10},\ell_{11})$
+specifies the three labels of an $O$ table.
+
+The anchor is $R=(1,2;1,2,0)$, represented in $N$ by label $1$ on both
+first-zero cells. Its reward and the complete excess are
+
+$$
+W_V=\sum_{n(w)\ge3}A_w+\sum_{n(w)\le2}C_w+\sum_wP_w+T,
+\qquad \Delta_C(V)=B_C(V)-W_V\ge0\quad(C=N,O).
+\tag{206.5}
+$$
+
+These are the objects of 199.1–199.2, with quotient
+
+$$
+Q(V)=(\beta,K),\qquad
+\beta_j=\sum_{w\in\Omega_j}(C_w-A_w),\qquad
+K=\sum_w(A_w+C_w+P_w)+T.
+\tag{206.6}
+$$
+
+Except in the moment result, an input $y$ has $A=0$, arbitrary correct
+rows, and pair rows supported in $\Omega_1\cup\Omega_2$. Set
+
+$$
+\gamma_j=\sum_{w\in\Omega_j}C_w,\quad
+E=\gamma_1+\gamma_2,\quad G=\sum_{j=3}^L\gamma_j,\quad
+\mu=\max_{j\ge3}\gamma_j,\quad S=\sum_wP_w,\quad t=T,
+\quad W=E+S+t,
+\tag{206.7}
+$$
+
+so $Q(y)=(\gamma,G+W)$; write $\delta=\Delta_O(y)$.
+All these totals are nonnegative. Fixing them does not fix the
+placement of correct rows or the early allocation of pair rows.
+
+An empty or singleton $N$ output function is a function of a distinct
+pair, with extra replies ignored. Reversing a static pair only permutes
+its cells; repeating an address supplies singleton information.
+Consequently a bound on all distinct $N$ pairs bounds the complete
+catalog. This information representation does not exempt ignored or
+repeated actual requests from the original count. Every $O$ output
+function is an $N$ function, so $B_O\le B_N$.
+

@@ -1,0 +1,41 @@
+**引理 3.3（实际初读的正投影）。** 在非零尾分支，令 $w=x_2\times x_1$、$u=x_3/|x_3|$。则
+
+$$
+P=x_0\cdot u
+=\left(\frac{AB}{\Delta}\right)^i\frac{q_2}{q_1}
+\ge\frac{q_2}{q_1}>0.
+$$
+
+在全部源上，包括零和依赖分支，有
+
+$$
+x_3=\operatorname{sgn}(x_0\cdot w)w,\qquad
+|x_0\cdot w|\ge q_2^2,\qquad q_2\le q_0q_1,
+\qquad \operatorname{sgn}(0)=0.
+$$
+
+证明。暂在非零分支给 $A,B,C,\Delta$ 双次数 $(2,0),(0,2),(1,1),(2,2)$，给 $a,b,K,U,V$ 双次数 $(1,0),(0,1),(1,1),(2,1),(1,2)$。表逐项保持孩子次数之和。若初值描述子为 $\sigma A^iB^h\Delta^kZ$，则
+
+$$
+m=2i+2k+m_Z,\qquad n=2h+2k+n_Z.
+$$
+
+对应正向 $g_{\nu+2}$ 的五个符号投影为
+
+$$
+\begin{array}{c|ccccc}
+Z&a&b&K&-U&V\\\hline
+Z\cdot g_{\nu+2}&s/r&r&s&s^2/r&rs.
+\end{array}
+$$
+
+其中两个非平凡项来自 $a\cdot V=\Delta$、$(-U)\cdot b=\Delta$，其余为正范数。各项恰是 $(s/r)^{m_Z}r^{n_Z}$。用 $B=r^2,\Delta=s^2,A=(s^2/r^2)(AB/\Delta)$，相乘后给
+
+$$
+\sigma x_0\cdot g_{\nu+2}
+=\left(\frac{AB}{\Delta}\right)^i(s/r)^mr^n
+=\left(\frac{AB}{\Delta}\right)^i\frac{q_2}{q_1}.
+$$
+
+$w=q_1q_2g_{\nu+2}$，实际递推给 $x_3=\sigma w$，上述正投影使报告无噪时的三重积符号为 $\sigma$，且 $u=\sigma g_{\nu+2}$。因为 $AB\ge\Delta$，得到 $P\ge q_2/q_1$。乘 $q_1q_2$ 给三重积界；$P\le q_0$ 给幅度界。在零分支 $w=x_3=0,q_2=0$，所有不含除法的式子照样成立。将符号式应用于每个实际替换后的树，三次准确读恢复每个有限未来时刻；在实际像外任意定义，证明全部主域及 $\mathcal U$ 的 $R_0=0$。
+

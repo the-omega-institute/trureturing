@@ -1,0 +1,79 @@
+**Theorem 4.1 (All parameters, all allowed competitors, simultaneous attainment).** For every finite integer $m\ge0$ and every $t,\eta\in[0,1]$, the task of Definition 1.3 has
+
+$$
+\boxed{e_m(t,\eta)=[c-D_m(t,\eta)]_+.}
+\tag{4.1}
+$$
+
+One label-independent whole-algebra complex CPTP processor attains this value for all four labels simultaneously, with every finite untouched complex reference included.
+
+Proof. Abbreviate $D=D_m$, $Z=Z_m$, $T=T_m$ and set
+
+$$
+r=\begin{cases}0,&D=0,\\ \min\{1,c/D\},&D>0,\end{cases}
+\qquad Q=\max\{s,r\},\qquad q_{\emptyset}=\frac{s-QT}{Z}.
+\tag{4.2}
+$$
+
+These are known functions of $m,t,\eta$, independent of the unknown label. By Proposition 2.3, if $D>0$ then $rT\le cT/D\le s$; if $D=0$ then $rT=0$. Also $sT\le s$, hence $QT=\max(sT,rT)\le s$. Thus $q_{\emptyset}\ge0$. Since $Q\ge s$,
+
+$$
+s-QT\le s(1-T)=sZ,
+$$
+
+so $q_{\emptyset}\le s\le1$. Also $0\le Q\le1$, and $Z>0$ ensures that (4.2) never divides by zero.
+
+On each word define
+
+$$
+q_a(z)=\begin{cases}Q,&H_a(z)=1,\\q_{\emptyset},&H_a(z)=0,\end{cases}
+\qquad
+q_b(z)=\begin{cases}Q,&H_b(z)=1,\\q_{\emptyset},&H_b(z)=0,\end{cases}
+\tag{4.3}
+$$
+
+and $d_0=d_4=q_a(z)$, $d_1=d_3=q_b(z)$, $d_2=s$. Use the response
+
+$$
+S_z=\mathsf S(q_a(z),q_b(z),s;rh_a(z),rh_b(z)).
+\tag{4.4}
+$$
+
+If $H_a=0$, then $h_a=0$; otherwise $|rh_a|\le r\le Q=q_a$. The identical argument gives $|rh_b|\le q_b$. These inequalities hold simultaneously when both pairs are present. Proposition 3.1 therefore proves complete positivity and trace preservation of every response, including on arbitrary complex inputs. Moreover, the common marginal absence probabilities give under each label
+
+$$
+\mathbb E_X q_a=\mathbb E_X q_b=QT+q_{\emptyset}Z=s,
+\qquad \mathbb E_X d_j=s\quad(0\le j\le4).
+\tag{4.5}
+$$
+
+Let $\Pi_z$ be the product of the original six-outcome program projections. Define
+
+$$
+\mathcal P_m(\Omega)=\sum_z S_z\left(
+ \operatorname{tr}_{P_m}[(I_5\otimes\Pi_z)\Omega(I_5\otimes\Pi_z)]\right).
+\tag{4.6}
+$$
+
+Projection, partial trace and each response are CP. Since every response is TP and $\sum_z\Pi_z=I_{P_m}$, the trace of the sum is $\operatorname{tr}\Omega$. Thus (4.6) is a single CPTP map on the entire joint algebra, including correlated data/program inputs and arbitrary unpromised programs. It defines a lawful response even on words of zero probability under a promised label; all outcomes are retained.
+
+For the promised initially independent program, $N_X(Y)=\sum_zp_X^{\otimes m}(z)S_z(Y)$. On $E_{kk}$, (4.5) gives
+
+$$
+N_X(E_{kk})=sE_{kk}+\frac{1-s}{4}\sum_{j\ne k}E_{jj}
+ =(1-\eta)E_{kk}+\eta I_5/5.
+\tag{4.7}
+$$
+
+The sign identities (2.3) give the mean pair coherences. Every other off-diagonal matrix unit maps to zero. Consequently the exact channel identities on all $M_5(\mathbb C)$ are
+
+$$
+N_{\sigma X_a}=T_\eta(\sigma rD,0),\qquad
+N_{\sigma X_b}=T_\eta(0,\sigma rD).
+\tag{4.8}
+$$
+
+They preserve the full target diagonal, including every wrong-output population. Equality of these linear maps remains equality after tensoring any finite reference. Since $rD=\min(c,D)$, with the same identity at $D=0$, Proposition 3.2 gives exact unhalved diamond error $c-rD=[c-D]_+$ for each label. Proposition 3.3 supplies the matching lower bound over every allowed CPTP competitor. This proves (4.1), not merely optimality within a response ansatz.
+
+At $m=0$, $D=T=r=0$, $Z=1$ and $Q=q_{\emptyset}=s$; (4.6) is the common channel $T_\eta(0,0)$ with error $c$. If $c=0$, all source laws and targets coincide, $D=r=0$ and again $Q=q_{\emptyset}=s$, so the common target is exact. For $m\ge1$, $c>0$ implies $D\ge2c/5>0$. At $\eta=0$, $s=1$ and $Q=q_{\emptyset}=1$; (4.4) reduces to the existing zero-noise sign response. Zero source probabilities, $q_{\emptyset}=0$, $Q=1$ and singular Choi blocks were all included in the inequalities and the Choi proof. No inverse program state or limiting construction has been used. QED.
+

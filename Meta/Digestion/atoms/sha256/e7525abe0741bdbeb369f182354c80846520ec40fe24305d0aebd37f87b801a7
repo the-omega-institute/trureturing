@@ -1,0 +1,46 @@
+**定理 22.10.2（停止粗历史恒等式）。** 在类型 $0$ 的概率下，$L_{t\wedge T}$ 是非负鞅，且
+
+$$
+\mathbb E_0[L_T]=1.
+$$
+
+对任意有限公共输出 $Z=g(H_T)$ 及 $\Pr_0(Z=z)>0$ 的输出格，有
+
+$$
+\boxed{
+\frac{\Pr_1(Z=z)}{\Pr_0(Z=z)}
+=
+\mathbb E_0[L_T\mid Z=z].
+}
+$$
+
+**证明。** 对每个完整停止历史 $h$，控制器因子在两种类型下相消，故 $\Pr_1(h)=\Pr_0(h)L_T(h)$。在 $g(h)=z$ 的历史上求和，再除以 $\Pr_0(Z=z)$，得到条件期望；对所有 $z$ 求和得到鞅期望为一。证毕。
+
+**结论。** 粗历史继承的是似然比的条件平均，而不是对数似然的条件平均。若在每个活动轮有可预测界
+
+$$
+a_t\le\log r_t\le b_t,
+$$
+
+并令 $A_T=\sum_{t\le T}a_t$、$B_T=\sum_{t\le T}b_t$，则
+
+$$
+\boxed{
+\mathbb E_0[e^{A_T}\mid Z=z]
+\le
+\frac{\Pr_1(Z=z)}{\Pr_0(Z=z)}
+\le
+\mathbb E_0[e^{B_T}\mid Z=z].
+}
+$$
+
+因此粗历史的投影扩张由条件指数矩控制；一般不能以 $\mathbb E_0[B_T]$ 代替 $\log\mathbb E_0[e^{B_T}]$。Jensen 不等式给出
+
+$$
+\log\mathbb E_0[e^{B_T}\mid Z=z]
+\ge
+\mathbb E_0[B_T\mid Z=z].
+$$
+
+<a id="section-22-11"></a>
+

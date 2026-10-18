@@ -1,0 +1,21 @@
+**定理 26.3（刷新答案的准确源特定像）。** 对 $h\in H$ 和 $x\in\{0,1\}^{U}$ 定义
+
+$$
+z_h(x)=
+\begin{cases}
+x_h,&h\in U,\\
+1,&h\in J\cap L_R\text{ 且其已读标签为 }\beta,\\
+0,&\text{其余情形}.
+\end{cases}
+$$
+
+令 $\Phi_R(x)\in\mathcal A^s$ 在非缺席旧坐标使用 (SLH.25.4) 的前两项；在 $p_i=hd$、$a_i=\mathsf{absent}$ 处，$z_h=1$ 时填 $b_d$，否则填缺席。则
+
+$$
+\boxed{\quad \{T_e(v):v\in\mathcal V_e\}=\Phi_R(\{0,1\}^{U}),
+\qquad |\{T_e(v):v\in\mathcal V_e\}|=2^{K(R)}.\quad}
+\tag{SLH.26.4}
+$$
+
+证明。任意 $v\in\mathcal V_e$ 取 $x_h=\mathbf1_{\{r_v(h)=\beta\}}$；引理26.2的固定父结论与出生式给 $T_e(v)=\Phi_R(x)$。反向每个 $x$ 由同一骨架的 $v_x$ 实现，所以整个像没有遗漏联合约束。每个 $h\in U\subseteq H$ 至少有一个菜单孩子 $hd$ 旧读为缺席，它的新值为缺席或 $b_d$，准确显示 $x_h$；故 $\Phi_R$ 单射。$\square$
+

@@ -1,0 +1,40 @@
+**Definition 1.1 (Fixed double-wall source and original controls).** Fix
+$0<Z<1$, put $r=1-Z$ and $H=r/2$, and impose the two native walls
+$X=Y=H$. In mode order $(0,1,2,3,13)$ the probability law and its tangent are
+
+$$
+p(k)=(k,H-k,Z,H-k,k),\qquad 0<k<H,
+\qquad d=(1,-1,0,-1,1)^{\mathsf T}.
+$$
+
+Fix an arbitrary initial height $k_0\in(0,H)$ and arbitrary fixed preparation
+phases $\theta^{\rm in}$. All producing histories start from this same
+preparation. Write $h=\theta-\theta^{\rm in}$ for the real phase
+increment. The pure amplitudes and declared transport are
+
+$$
+\psi_s=\sqrt{p_s}\,e^{-i\theta_s},\qquad
+\dot p=d\dot k,\qquad
+\dot\theta_s=w_s(k)\dot\chi,
+\qquad
+w_s(k)=\frac{d_s}{p_s(k)I(k)},
+$$
+
+$$
+I(k)=\frac1{p_0(k)}+\frac1{p_1(k)}
+     +\frac1{p_3(k)}+\frac1{p_{13}(k)}.
+$$
+
+An admissible history is a piecewise $C^1$ or absolutely continuous control
+path $(k,\chi)$ on a finite compact time interval, with $k(t)\in(0,H)$
+throughout and finite phase variation. The real initial relation lift is
+chosen consistently with $d^{\mathsf T}\theta^{\rm in}$. We query its
+current ray without requiring a closing loop or integer winding at query
+time. Write $\mathbb T=\mathbb R/(2\pi\mathbb Z)$.
+
+The correspondence to the parent fiber is $\kappa=k$,
+$r-X-Y=0$, $\kappa_-=0$, $\kappa_+=H$, and
+$p_0=p_{13}=k$, $p_1=p_3=H-k$. In particular $2H+Z=1$, so normalization
+and the five probabilities are unchanged. Probability displacement here is
+vertical motion at fixed means, not Fisher-horizontal transport across means.
+

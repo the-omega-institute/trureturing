@@ -1,0 +1,25 @@
+### 478.1. 两个矩来自同一个有限变换
+
+沿用第 477 节的实际有限量，令 $N\ge1$，
+
+$$
+\begin{aligned}
+M_N&=\sum_{m=1}^N\mu(m),&
+H_N&=\sum_{m=1}^N\frac{\mu(m)}m,&
+L_N&=\sum_{m=1}^N\frac{\mu(m)\log m}m,\\
+h_N&=H_N-\frac{M_N}{N+1},&
+\ell_N&=L_N-\frac{M_N\log(N+1)}{N+1}.
+\end{aligned}
+$$
+
+在正尺度上取同一锚定有符号测度
+
+$$
+\nu_N=\sum_{m=1}^N\mu(m)\delta_{1/m}-M_N\delta_{1/(N+1)},
+\qquad
+\Phi_N(s)=\int a^s\,d\nu_N(a).
+$$
+
+这里 $a^s=\exp(s\log a)$，故有限和 $\Phi_N$ 对复变量 $s$ 是整函数。
+实数限制与通常实幂一致。
+

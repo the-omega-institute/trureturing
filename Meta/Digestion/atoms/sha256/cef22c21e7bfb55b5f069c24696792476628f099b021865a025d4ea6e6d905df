@@ -1,0 +1,9 @@
+**Definition 5.2 (complete summary of a subtree).** If an explicit subtree has index set $J$, for every $r\in\mathcal A^J$ and type $s\in\{\mathsf A,\mathsf H,\mathsf I,\mathsf O\}$ let
+
+$$
+f(s,r)=\bigl[\{y\in s:\text{the replies at all indexed relative words equal }r\}\bigr]_6.
+\tag{BPS.14}
+$$
+
+The summary includes its identified index set. At $\#$ this set is empty and the summary is $(1,1,6,6)$ for the empty vector. When $m=0$, the whole arrangement is $\#$ with these unrestricted root capacities. An absent child in the trie means unobserved finite subtrees are unrestricted; it does not mean an absent child in an actual branch tree.
+

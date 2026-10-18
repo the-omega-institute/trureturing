@@ -1,0 +1,35 @@
+**Definition 68.1 (original trees, addresses and masks).** Let $\mathcal T$ be all
+nonempty finite ordered full binary trees with leaves $\alpha,\beta$. The substitution
+and Fibonacci trees are
+
+$$
+\rho(\alpha)=\beta,\qquad \rho(\beta)=(\beta,\alpha),\qquad
+\rho(s,t)=(\rho s,\rho t),\qquad T_n=\rho^n(\alpha).
+$$
+
+The leaf word $w$ reads leaves from left to right, writing $a$ for $\alpha$ and $b$ for
+$\beta$. The address set $\mathcal A$ consists of finite words in $L,R$, including the root $\varepsilon$; $U|_q$
+is its subtree when present. The native readout $r(q,U)$ is $\alpha$ or $\beta$ at the
+corresponding leaf, $\mathsf{br}$ at a branch, and $\mathsf{abs}$ when the address is
+absent. Every address is queryable, including descendants of absent nodes. Put
+
+$$
+\begin{gathered}
+B=T_3=((\beta,\alpha),\beta),\qquad D=(\beta,(\alpha,\beta)),\\
+P_n=\{p:T_n|_p=B\},\qquad J_n=\{pL:p\in P_n\},\qquad
+W_n=\{U\in\mathcal T:w(U)=w(T_n)\},\\
+\kappa(\mathsf{br})=\kappa(\mathsf{abs})=\mathsf{none},\qquad
+\kappa(\alpha)=\mathsf{some\ true},\quad
+\kappa(\beta)=\mathsf{some\ false}.
+\end{gathered}
+$$
+
+Take $F(0)=0,F(1)=1,F(t+2)=F(t+1)+F(t)$. Write $q_1,\ldots,q_j$ for the original
+shortlex list of $J_n$, ordered by length and then lexicographically with $L<R$, and
+write $q_i=p_iL$. A literal mask is $\chi:P_n\to\{\mathsf{br},\mathsf{abs}\}$. Its
+realization means one immutable $U\in W_n$ satisfies $r(pL,U)=\chi(p)$ at every
+coordinate; a $\beta$ reply does not realize $\mathsf{abs}$. The tree, position and prefix objects are those of
+[JM52.1, JM52.2 and JM66.1, (JM.214)–(JM.215)][JM]. The sources are comparison inputs;
+the observer has only its native query and halt actions. Planar ordered-tree background:
+Loday, *Realization of the Stasheff polytope*, §§1, 2.8 ([original][Loday]).
+

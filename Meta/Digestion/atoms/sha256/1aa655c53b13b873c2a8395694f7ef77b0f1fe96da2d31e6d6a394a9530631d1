@@ -1,0 +1,10 @@
+**假设 33.1（同一副本的 GHZ 承诺与读出）。** 取 $n\ge2$，准备标签 $\sigma\in\{+1,-1\}$，输入承诺为
+
+$$
+|G_\sigma\rangle=\frac{|0\rangle^{\otimes n}+\sigma|1\rangle^{\otimes n}}{\sqrt2}.
+$$
+
+每方在同一准备副本上测量 Pauli $X$，得到 $a_i\in\{+1,-1\}$；允许保存和通信的是带配对标识的经典结果，而非未知输入态的任意副本。GHZ 的局部边缘不可定相位采用 Walck–Lyons, [Only n-Qubit Greenberger-Horne-Zeilinger States are Undetermined by their Reduced Density Matrices](https://arxiv.org/abs/0707.4428) 中的标准例子；GHZ 份额与结果比较采用 Hillery–Bužek–Berthiaume, [Quantum Secret Sharing，第 II 节](https://arxiv.org/pdf/quant-ph/9806063) 的中间结构。
+
+仓内 [LocalMarginalCorrelationBlindSpot 的 local_marginal_correlation_blind_spot](../../../D5/S3/Quantum/Entanglement/LocalMarginalCorrelationBlindSpot.lean) 给双体 Hermitian 张量空间的局部无迹扇区与关联扇区分解：局部维数 $(d_A^2-1)+(d_B^2-1)$，关联维数 $(d_A^2-1)(d_B^2-1)$，并有 Bell 密度与经典相关密度局部边缘相同而联合密度不同的固定实例；其假设为 $d_A,d_B\ge1$ 且 $d_Ad_B>1$。该双体接口不等同于下面的任意多方承诺计算。
+

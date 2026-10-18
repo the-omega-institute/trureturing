@@ -1,0 +1,44 @@
+**Theorem 67.1 (repo-derived punctured central classification).**
+There exists \(\varepsilon>0\) such that, for every
+\(0<|b|<\varepsilon\), any complete common-flat input basis is
+\(C(b)/\sqrt6\), up to column phases and permutation.
+
+**Proof.** Dephase the first coordinate of each unnormalized unit-entry
+column to one. An ordered complete basis is then a point of the
+compact torus \((S^1)^{30}\), subject to
+
+\[
+ |(M(b)z_k)_r|^2=6,\qquad z_j^*z_k=6\delta_{jk}.
+\tag{67.1}
+\]
+
+These equations are continuous in \(b\) and the phase coordinates.
+If the theorem were false, there would be a sequence
+\(0<|b_n|<1/n\) and noncanonical complete common-flat bases \(Z_n\).
+After passage to a subsequence in the compact torus, \(Z_n\to Z_*\).
+The limit satisfies (67.1) at zero. Its six column rays remain
+mutually orthogonal and distinct; no zero-coordinate or colliding-ray
+limit can occur.
+
+If one column of \(Z_*\) is canonical, Corollary 60.4 makes the
+entire limiting basis canonical. Apply a fixed permutation of its
+columns to match the ordering of \(C(0)\). The dephasing already
+removes all column-phase ambiguity. The sequence then eventually
+lies in the joint canonical-basis neighborhood of Theorem 62.1.
+That theorem forces \(Z_n\) to equal the moving canonical basis,
+contradicting its choice. This step uses the complete 30-phase basis
+germ, not a restriction fixing any individual ray.
+
+If no column of \(Z_*\) is canonical, Theorem 66.1 places all six
+among the 36 noncanonical rays of §65. Choose any three columns.
+They converge to three distinct centers of the fixed disjoint ray
+neighborhoods in Theorem 65.1. For sufficiently large \(n\), the
+three corresponding columns of \(Z_n\) lie in those neighborhoods
+and \(b_n\) lies in their common punctured interval. This is a
+common-flat orthogonal triple forbidden by Theorem 65.1.
+
+The two cases exhaust the exact central census. Both contradict the
+assumed sequence, proving the theorem. The canonical basis exists
+throughout the open branch, so the conclusion is uniqueness rather
+than an empty-locus assertion. \(\square\)
+

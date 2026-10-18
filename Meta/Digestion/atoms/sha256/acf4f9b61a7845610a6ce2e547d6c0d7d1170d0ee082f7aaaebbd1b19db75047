@@ -1,0 +1,45 @@
+**Definition 22.1 (twelve complete words and four literal instructions).**
+The common initial word is `00000`. Install exactly the following four
+running rows. The successor columns are in the order
+$\bot,\alpha,\beta,\mathsf b$ of Assumption 17.1.
+
+| Running word | Complete original-root literal | Length | $\bot$ successor | $\alpha$ successor | $\beta$ successor | $\mathsf b$ successor |
+| --- | --- | --- | --- | --- | --- | --- |
+| `00000` | `LRRRRRRRRRRRRRR` | $15$ | `00001` | `00010` | `01000` | `10000` |
+| `00001` | `LRRRRRRRR` | $9$ | `01001` | `10001` | `10001` | `00101` |
+| `00101` | `LRRRRRRRRR` | $10$ | `00101` | `00100` | `00101` | `10101` |
+| `10000` | `LRRRRRRRRRRRRRRR` | $16$ | `10000` | `10010` | `10001` | `10100` |
+
+Install exactly these eight halting rows, with no Read or response
+transition at a halt:
+
+| Halting word | Installed complete numeric lag | Exact hidden-age support |
+| --- | --- | --- |
+| `00010` | $13$ | $\{28\}$ |
+| `00100` | $17$ | $\{18\}$ |
+| `01000` | $14$ | $\{29\}$ |
+| `01001` | $2$ | $\{2,3,4,5,6,7\}$ |
+| `10001` | $16$ | $\{16,17,31\}$ |
+| `10010` | $15$ | $\{30\}$ |
+| `10100` | $17$ | $\{32\}$ |
+| `10101` | $12$ | $\{27\}$ |
+
+Thus the installed set is
+
+$$
+\begin{aligned}
+K=\{&00000,00001,00010,00100,00101,01000,01001,\\
+    &10000,10001,10010,10100,10101\}.
+\end{aligned}
+\tag{NARC.22.1}
+$$
+
+The entries in (NARC.22.1) denote binary words, including leading
+zeros. The remaining ambient legal word `01010` has no installed row.
+The repeated output seventeen is a complete constant at two distinct
+halt words; the single word `10001` contains the complete output
+sixteen. No halt performs subtraction, source selection or decoding.
+The four running literals are fully materialized; $P_{28},P_{16},
+P_{18},P_{30}$ are their hidden-relative functions in proof notation,
+not runtime address generators.
+

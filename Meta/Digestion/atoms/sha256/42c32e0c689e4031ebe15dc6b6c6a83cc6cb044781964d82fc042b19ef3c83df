@@ -1,0 +1,19 @@
+## 191. Strict source inequalities and the width window
+
+Let k=c+d. In the M/U source case, axial flatness says
+
+ (m-1)(u-1)>=k^2.
+
+Since u-1<k, this implies m-1>k, hence m>1+c+d.
+Also u>m-2 and u<1+c+d imply m<3+c+d. Combining with the exact upper-gap
+inequality proves every displayed bound in the proposition.
+
+For an arbitrary source opposite axis O, O cannot be M because p_M=1,
+and cannot be Z because p_Z=0. If O is special, its fixed pair {C,D}
+gives o<1+c+d. If O is H, it is C,D or U; the first two are smaller
+than 1+c+d, and the U case was just proved. Thus always o<1+c+d.
+The same axial-flat product gives m>1+c+d. At z0=1+m+c the original
+escape numerator is then strictly negative, and its chosen transverse
+M angle is nonobtuse. Strict increase in z implies z>1+m+c.
+
+

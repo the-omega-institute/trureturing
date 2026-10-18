@@ -1,0 +1,70 @@
+**Lemma 15.3 (current original admission at every later source
+entry).** Every actually reached source-body entry in
+$\mathcal R_P$ has SOURCECALL Lemma 2.3's unchanged-original-row
+correspondence through the row before the changed final idle CTL.
+At a cut $h\in\Gamma_P$ whose next row is IN, put $p(h)$ for this
+call's actually consumed source word. The lawful source supplies are
+exactly
+
+$$
+\{\operatorname{Supply}(b):p(h)b\in\mathsf P_7\}.
+$$
+
+At a prescribed non-IN cut of $\Gamma_P$ its current original
+Advance is enabled. Each executed such original primitive is exactly
+one actual native row, with its actual legality, label, released
+output, complete original joint successor and receipt. Its successor
+is in $\mathcal R_P$, even when it lands immediately before the
+excluded changed idle CTL.
+
+Proof. At $P$, ARC Definition 5.1's outer relation gives the producer
+its twelve workspace tokens and source/directory/journal/counter
+resources, heads13/17 at R, source-service token at the dispatcher,
+completed row/dependency ACKs, and the parked original24–27 client.
+The actual choice receiver uses its own current resources and
+completes its physical choice block, seal, descriptor and import.
+Its 01 edge then enters the original header Base/setup. In particular
+this is not a new semantic source-service entry at an arbitrary
+interior cut: CAP Definition 4.6 still acquires and parses the complete
+source frame before taking the source-availability token into the
+selected service.
+
+ARC Definition 4.1 inlines that complete body, changes only the last
+idle CTL successor, and preserves its external latch5 INs. ARC
+Proposition 5.5 preserves bank parity by finite control product;
+there is no compiler assignment inside $F^A$. Static renumbering
+therefore preserves each original row's operands, actual current
+owner/token/phase guard, core and ordered finite effects, response
+and next original position up to the excluded last row. CAP
+Definitions 4.6–4.7 and Lemma 6.7 supply all seven source/maintenance
+branches, value refusals, descriptors, records, both delivery stages,
+checks, ACKs and explicit token returns. At a partial handover the
+next row has that handover's actual guard; the proof never grants a
+helper all tokens before the transfer finishes. At ingress the
+canonical-prefix rule is exactly SOURCECALL Definition 2.2, not a
+new physical filter. A proper extendible prefix at an IN has at least
+one extending bit.
+
+If this call actually completes, its genuine row ACK and source TOK
+precede the changed idle CTL. The latter's installed edge enters
+InnerReturn. The paid normalization and closed28/29 CaptureCAP of
+Lemma 15.2 restore ARC Definition 5.1's relation with the genuinely
+updated source/counters/journals, longer $M$ and retained parked
+client. They do not restore an old source snapshot. ARC Proposition
+5.5 and CAP Lemma 6.7 prove precisely these resource and continuation
+joins. Induction on the number of completed returns establishes the
+same current relation at every next dispatch. No return premise is
+used for an unfinished current call.
+
+This establishes the row correspondence separately at each actual
+entry, without making that entry a decoder input. A lawful Supply
+extends the current canonical prefix; Advance consumes no input.
+Their one-row successors consequently remain in $\mathcal R_P$.
+The allowed source-token return can land at the pre-row of the changed
+idle CTL. That landing is decodable but admits no next original
+primitive by this lemma. Neither the changed CTL nor any added
+return/capture row is inserted into the original one-step response.
+Selection of $K$ from the complete original successor is the existing
+AIF Definitions 2.5–2.6/SOURCECALL Definition 1.4 selection, not an
+assumption that every annex coordinate is in that successor. ∎
+

@@ -1,0 +1,36 @@
+### 命题 459.1（有限 Mertens 偏差的显式包络）
+
+令
+
+$$
+\delta_+(P;x_0,\ell)=
+\frac{\mathcal D'_\ell(x_0)}{(\log P)^\ell},
+\qquad
+\delta_-(P;x_0,\ell)=
+\frac{\mathcal D_\ell(x_0)}{(\log P)^\ell}.
+$$
+
+则由（459.1）直接得到
+
+$$
+\boxed{
+\log(1-\delta_-)
+\le \mathfrak m(P)
+\le \log(1+\delta_+)
+}
+\tag{459.2}
+$$
+
+其中左侧要求 $0<\delta_-<1$。特别地，
+
+$$
+0\le \mathfrak m(P)\le\log(1+\delta_+)
+$$
+
+只有在额外知道 $\mathcal M(P)\ge e^\gamma\log P$ 时才成立；一般不能把
+有限 Mertens 偏差预先当成非负量。
+
+**证明。** 将（459.1）除以 $e^\gamma\log P$，再使用对数函数在正数上的
+严格单调性即可。上界中的 $1+\delta_+$ 始终为正；下界需要
+$1-\delta_->0$。$\square$
+

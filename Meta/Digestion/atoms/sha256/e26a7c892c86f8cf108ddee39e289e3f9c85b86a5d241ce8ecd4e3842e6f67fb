@@ -1,0 +1,126 @@
+## 1. Complete worlds on one literal ancestor
+
+A complete world is $W=(P,g,\delta)$, where $P$ is a strictly
+entrywise positive real $2\times2$ matrix of rank one and trace one,
+$0\ne g\in\mathbb R[T]$ has degree at most three, and $\delta\in\mathbb R$.
+The source may be nonsymmetric. All gain signs, degree drops, real
+root patterns and repeated roots are initially allowed. Put
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+A_0=I,\quad A_i=E_iA_{i-1},\quad E_i\in\{M,J\}.
+$$
+
+The reading at original clock $i$ is
+$g(i)\operatorname{tr}(A_iP)+\delta$. The initial reading counts.
+Every atom is immediately read on one unresettable, uncopyable
+trajectory. A chronological word $EF$ means first $E$ and its reading,
+then $F$ and its reading, with cumulative matrix $FEA$. No clock is
+renumbered and no intermediate reading is omitted. A deterministic
+policy may depend on the entire actual history.
+
+For arbitrary $D_0,Y,z\in\mathbb R$ and $\lambda\ne0$, fix the one
+literal history
+
+$$
+H=(D_0,J,D_0+24\lambda,M,D_0+48\lambda,
+                 M,D_0+312\lambda/5,J,Y,M,z).                    \tag{1.1}
+$$
+
+All worlds considered together must satisfy all six readings of this
+same $JMMJM$ ancestor. In particular, $D_0$ is a history parameter,
+not a drift promise. Normalize by
+
+$$
+f=g/\lambda,\qquad d=(\delta-D_0)/\lambda,\qquad
+\widehat Y=(Y-D_0)/\lambda,\qquad \widehat z=(z-D_0)/\lambda.
+                                                                    \tag{1.2}
+$$
+
+The ancestor matrices and readings are
+
+$$
+\begin{gathered}
+(A_0,A_1,A_2,A_3,A_4,A_5)=(I,J,L,J+L,C,Q),\\
+L=MJ=\begin{pmatrix}1&0\\1&1\end{pmatrix},\quad
+C=J(J+L)=\begin{pmatrix}2&1\\1&1\end{pmatrix},\quad
+Q=MC=\begin{pmatrix}1&1\\3&2\end{pmatrix},\\
+(c_0,c_1,c_2,c_3,c_4,c_5)=(0,24,48,312/5,\widehat Y,\widehat z).
+\end{gathered}                                                       \tag{1.3}
+$$
+
+Membership in the actual fiber $\mathcal F(H)$ means
+
+$$
+f(i)\operatorname{tr}(A_iP)+d=c_i\qquad(0\le i\le5).           \tag{1.4}
+$$
+
+Every trace factor is strictly positive: every $A_i$ is nonzero and
+entrywise nonnegative, and $P$ is strictly entrywise positive.
+The invertible affine change of every response
+$w\mapsto(w-D_0)/\lambda$ preserves response equalities, actual
+children and complete-world distinction for both signs of $\lambda$.
+It also preserves each predicate in the recursion below, by induction
+using the bijection of real response values for each action.
+The original target is recovered by
+
+$$
+g=\lambda f,\qquad \delta=D_0+\lambda d,                     \tag{1.5}
+$$
+
+with the same $P$.
+
+For a known candidate set $K\subseteq\mathcal F(H')$ at a literal
+history $H'$, define
+
+$$
+\begin{aligned}
+L_0(K,H')&\Longleftrightarrow |K|\ge2,\\
+L_{r+1}(K,H')&\Longleftrightarrow |K|\ge2\ \land\
+\bigwedge_{E\in\{M,J\}}\exists w\in\mathbb R:
+ L_r(K\cap\mathcal F(H',E,w),(H',E,w)).
+\end{aligned}                                                       \tag{1.6}
+$$
+
+A child retains the same fixed worlds and their entire common
+ancestor. Counterfactual response functions are used in proofs;
+they are not extra observations. In normalized coordinates write
+
+$$
+v_E(W)=d+f(6)\operatorname{tr}(EQP),\qquad
+r_{EF}(W)=d+f(7)\operatorname{tr}(FEQP),\quad E,F\in\{J,M\}.    \tag{1.7}
+$$
+
+Their raw values are $D_0+\lambda v_E$ and
+$D_0+\lambda r_{EF}$, respectively.
+
+Write the source as
+
+$$
+P=\begin{pmatrix}r&u\\v&1-r\end{pmatrix}.
+$$
+
+Its legality is equivalent to
+
+$$
+0<r<1,\quad u>0,\quad v>0,\quad uv=r(1-r)\le1/4.             \tag{1.8}
+$$
+
+Indeed zero determinant and nonzero trace give rank one. Direct trace
+multiplication gives, without assuming $u=v$,
+
+$$
+\begin{aligned}
+j&=\operatorname{tr}(JP)=u+v,&
+\ell&=\operatorname{tr}(LP)=1+u,\\
+\operatorname{tr}((J+L)P)&=j+\ell,&
+\operatorname{tr}(CP)&=1+r+u+v,\\
+\operatorname{tr}(QP)&=2-r+3u+v.&
+\end{aligned}                                                       \tag{1.9}
+$$
+
+The model, normalization, recursion and literal ancestor are those of
+[FIB self-calibrating relation mathematics VII, Definitions 1.1–1.3](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_VII.md).
+The source coordinates retain the full positive nonsymmetric class.
+

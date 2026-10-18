@@ -1,0 +1,54 @@
+**Proposition 360.3 (Exhaustive one-partition lower bound).** Every seven-address complete stopped allocation using one fixed partition and satisfying all rows at (360.1) has $e\ge137/512$.
+
+*Proof.* Moving vertex $1$ into $R$ and vertex $7$ into $D$ cannot remove an allowed increasing edge. It suffices to consider the following 32 larger catalogs:
+
+$$
+R_m=\{1\}\cup\{i+2:0\le i<5,\ \operatorname{bit}_i(m)=1\},
+\qquad D_m=[7]\setminus R_m,\qquad 0\le m<32.
+\tag{360.4}
+$$
+
+Each catalog contains the empty schedule, every singleton and every increasing pair $i\in R_m,j\in D_m$. In the table, a token $P:w:t$ assigns weight $t$ to the independent union row of the seven-bit word $w$; $C:w:t$ assigns it to the correct row; $T:1111111:t$ assigns it to the positive row. All other weights are zero. These zeros do not delete any feasibility demand.
+
+The arithmetic in the table is specified entirely by (360.2). More explicitly, in each stopped cell the reward at zero is the sum of its $P$ and $T$ weights, and at label $z>0$ it is the sum of its $C$ and $P$ weights whose first zero is $z$. Take the maximum of these eight integers. For pair $(i,j)$ the three word conditions are $w_i=0$, $w_i=1,w_j=0$, and $w_i=w_j=1$; a singleton has conditions $w_i=0,1$, and the empty schedule contains all words. This supplies every cell used in the finite sums, without an optimization over unidentified kernels.
+
+| Mask | $B=C_0$ | $K$ | $\beta\cdot b/K$ | Nonzero score tokens |
+| ---: | ---: | ---: | ---: | --- |
+| 0 | 2 | 7 | $137/448$ | `P:1000000:1 C:1100000:1 C:1110000:1 C:1111000:1 C:1111100:1 C:1111110:1 T:1111111:1` |
+| 1 | 2 | 6 | $103/384$ | `P:1100000:1 C:1110000:1 C:1111000:1 C:1111100:1 C:1111110:1 T:1111111:1` |
+| 2 | 2 | 6 | $103/384$ | `P:1010000:1 C:1110000:1 C:1111000:1 C:1111100:1 C:1111110:1 T:1111111:1` |
+| 3 | 12 | 33 | $105/352$ | `P:0001000:6 C:1000101:2 C:1001000:1 C:1010010:1 C:1011011:1 C:1011110:1 C:1100010:3 C:1101101:3 P:1110000:3 C:1111000:3 C:1111100:3 C:1111110:3 T:1111111:3` |
+| 4 | 2 | 6 | $9/32$ | `P:1001000:1 C:1101001:1 C:1111000:1 C:1111100:1 C:1111110:1 T:1111111:1` |
+| 5 | 4 | 10 | $173/640$ | `P:0000000:2 C:1010100:1 C:1011011:1 C:1110000:1 C:1110111:1 P:1111000:1 C:1111100:1 C:1111110:1 T:1111111:1` |
+| 6 | 4 | 10 | $173/640$ | `P:0000000:2 C:1100000:1 C:1100111:1 C:1110000:1 C:1110111:1 P:1111000:1 C:1111100:1 C:1111110:1 T:1111111:1` |
+| 7 | 4 | 12 | $241/768$ | `P:0000000:2 C:1000000:1 C:1000111:1 C:1100101:1 C:1101010:1 C:1110000:1 C:1110111:1 P:1111000:1 C:1111100:1 C:1111110:1 T:1111111:1` |
+| 8 | 4 | 11 | $101/352$ | `P:1000001:1 P:1000010:1 C:1100000:2 C:1110000:2 C:1111000:2 P:1111100:1 C:1111110:1 T:1111111:1` |
+| 9 | 3 | 8 | $137/512$ | `P:0100100:1 P:1000000:1 C:1100000:1 C:1110000:1 C:1111000:1 C:1111100:1 C:1111110:1 T:1111111:1` |
+| 10 | 3 | 8 | $137/512$ | `P:0010100:1 P:1000000:1 C:1100000:1 C:1110000:1 C:1111000:1 C:1111100:1 C:1111110:1 T:1111111:1` |
+| 11 | 4 | 11 | $53/176$ | `P:0000000:2 C:1001000:1 C:1001011:1 C:1101000:1 C:1101011:1 C:1111001:1 C:1111010:1 P:1111100:1 C:1111110:1 T:1111111:1` |
+| 12 | 4 | 11 | $101/352$ | `P:1000001:2 C:1100000:1 C:1100011:1 C:1110000:1 C:1110001:1 C:1111000:1 C:1111011:1 P:1111100:1 C:1111110:1 T:1111111:1` |
+| 13 | 4 | 11 | $101/352$ | `P:0000010:2 C:1010000:1 C:1010011:1 C:1110001:1 C:1110010:1 C:1111000:1 C:1111011:1 P:1111100:1 C:1111110:1 T:1111111:1` |
+| 14 | 4 | 11 | $101/352$ | `P:0000000:2 C:1100000:1 C:1100111:1 C:1110000:1 C:1110011:1 C:1111000:1 C:1111011:1 P:1111100:1 C:1111110:1 T:1111111:1` |
+| 15 | 4 | 13 | $135/416$ | `P:0000000:2 C:1000000:1 C:1000011:1 C:1100000:1 C:1100011:1 C:1110001:1 C:1110110:1 C:1111000:1 C:1111011:1 P:1111100:1 C:1111110:1 T:1111111:1` |
+| 16 | 2 | 6 | $115/384$ | `P:1000000:1 C:1100100:1 C:1110000:1 C:1111000:1 C:1111100:1 T:1111111:1` |
+| 17 | 3 | 8 | $137/512$ | `P:0000000:1 C:1000001:1 P:1100010:1 C:1110000:1 C:1111000:1 C:1111100:1 C:1111110:1 T:1111111:1` |
+| 18 | 3 | 8 | $137/512$ | `P:0010010:1 P:1000000:1 C:1100000:1 C:1110000:1 C:1111000:1 C:1111100:1 C:1111110:1 T:1111111:1` |
+| 19 | 4 | 11 | $105/352$ | `P:0000000:2 C:1000100:1 C:1001001:1 C:1100001:1 C:1101100:1 P:1110010:1 C:1111000:1 C:1111100:1 C:1111110:1 T:1111111:1` |
+| 20 | 2 | 5 | $11/40$ | `P:1000001:1 C:1100010:1 C:1110000:1 C:1111100:1 P:1111110:1` |
+| 21 | 2 | 5 | $11/40$ | `P:0000000:1 C:1011100:1 C:1110100:1 C:1111100:1 P:1111110:1` |
+| 22 | 2 | 5 | $11/40$ | `P:0000000:1 C:1100101:1 C:1110101:1 C:1111101:1 T:1111111:1` |
+| 23 | 2 | 6 | $61/192$ | `P:0000000:1 C:1011101:1 C:1100101:1 C:1110101:1 C:1111101:1 T:1111111:1` |
+| 24 | 2 | 6 | $115/384$ | `P:1000000:1 C:1100000:1 C:1110000:1 C:1111000:1 C:1111101:1 T:1111111:1` |
+| 25 | 2 | 5 | $43/160$ | `P:0000000:1 C:1011000:1 C:1111000:1 C:1111100:1 P:1111110:1` |
+| 26 | 2 | 5 | $43/160$ | `P:0000000:1 C:1101000:1 C:1111000:1 C:1111100:1 P:1111110:1` |
+| 27 | 2 | 6 | $5/16$ | `P:0000000:1 C:1011000:1 C:1101000:1 C:1111000:1 C:1111100:1 P:1111110:1` |
+| 28 | 2 | 6 | $115/384$ | `P:1000001:1 C:1100000:1 C:1110000:1 C:1111000:1 C:1111100:1 P:1111110:1` |
+| 29 | 2 | 6 | $115/384$ | `P:0000000:1 C:1010001:1 C:1110001:1 C:1111001:1 C:1111101:1 T:1111111:1` |
+| 30 | 2 | 6 | $115/384$ | `P:0000000:1 C:1100000:1 C:1110000:1 C:1111000:1 C:1111100:1 P:1111110:1` |
+| 31 | 2 | 7 | $149/448$ | `P:0000000:1 C:1000001:1 C:1100001:1 C:1110001:1 C:1111001:1 C:1111101:1 T:1111111:1` |
+
+For completeness, the maximal support among empty schedules is $C_0$ in every row; the maximal support among all seven singletons is also $C_0$, and among all allowed pairs is also $C_0$. These three equalities result by the eight-integer cell formula above. Thus the displayed $B$ bounds every schedule, not a selected list of deterministic laws. Each $K$ is positive, and every displayed fraction is at least $137/512$; equality occurs at masks $9,10,17,18$. Lemma 360.2 now gives $e\ge\beta\cdot b/K\ge137/512$ for whichever one of the 32 catalogs contains the allocation. This is a finite disjunction over every partition, not a convex combination of partition-specific bounds.
+
+For instance mask $9$ has roots $\{1,2,5\}$. Its eight unit rows give $C_0=B=3$, $K=8$, and $\beta=(0,0,1,1,1,1,1)$, so its bound is
+$(34+29+27+25+22)/(64\cdot8)=137/512$. The other rows are needed to cover the other partitions. $\square$
+

@@ -1,0 +1,53 @@
+**Open problem 7.3 (unchanged original quantifiers).** The exact
+requirements reduction leaves arbitrary joint sizes, correlations,
+cycles, off-target donors, shared owners, guards, compatibility zeros
+and full once-owned nonnegative joint weights. It does not produce
+a total computable verifier $V(d,\mu,C,\pi)$, for rational
+$\mu\in\Delta(S_d)$, rational $C>0$ and finite strings $\pi$,
+whose acceptance implies
+
+$$
+\forall n\ge1\ \forall\Theta,\qquad
+\sum_{x\in C_\Theta}\prod_i\mu(x_i)\le C^n,                    \tag{SCE.21}
+$$
+
+with accepted endpoints $-\log_2C$ cofinal at every unchanged
+$\sigma_d$: for every $d\ge1$ and rational $\epsilon>0$, some
+accepted pair would satisfy $-\log_2C>\sigma_d-\epsilon$.
+Nor does it give a uniform effective vanishing length
+error sufficient for terminating two-sided approximation of the original
+$\lambda$. These remain [NPC, Definition 8.1][NPC] and
+[GDB, Definition 11.1][GDB]'s obligations. Theorem 3.2 is an exact
+presentation equivalence, so any such verifier must still control all
+the original competitors. The unary minimum is not a universal
+encoding minimum, and pooling is a different task.
+
+The general-depth equality
+$a_d=\min_\mu\Omega_d(\mu)=b_d=\min_\mu\beta_d(\mu)$ remains
+unproved; finite-envelope optimization and rationalization are credited
+NWO results. [COK, §§18–25][COK] fixes the matching-population maximum
+and its error floor, and its reciprocal-unit losses retain their
+one-incoming-owner conditions. [OCC, §§10–17][OCC] prices a separate
+actual component descriptor and retains extensive conditional loss;
+its augmented task is not $M_1$. [GDB, §§20–25][GDB] concerns its two
+specified forest mechanisms and a restricted syndrome bypass. None
+of those scopes is enlarged by the selector reduction.
+
+Credit [NCE, §§13–19][NCE] for the specified positive asymmetric law
+with exact pressure $3038031/7792603$, the all-original-competitor
+lower bound, and $M_1(6)\ge1874$. Together with the credited D3
+upper, the retained interval is
+
+$$
+\frac18\log_2\frac{7792603}{3038031}\le\lambda<\frac3{16},
+\qquad M_1(3)=4.                                             \tag{SCE.22}
+$$
+
+There is no new rate endpoint here. Sharp $\lambda$, general exact
+$M_1(D)$, effective all-size certification and the broader
+minimal-relations/internal-observer and space/time/boundary/memory
+mutual-recovery programme remain unresolved. The operational recovery
+proved or reused here is the requested temporal factor and every
+authentic-count readout. It recovers neither arbitrary hidden history,
+unknown age, physical spacetime, nor the access services themselves.
+

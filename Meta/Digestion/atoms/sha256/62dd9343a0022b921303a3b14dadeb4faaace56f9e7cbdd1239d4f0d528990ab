@@ -1,0 +1,46 @@
+## 6. Service boundary and attribution
+
+The source contract is the paid source-total acquisition just described,
+the complete accessible-state cut, an authentic common epoch, original-root
+arbitrary-word `Read`, same-register forward `ApplyRho`, and variable
+absorbing `Halt`. The construction supplies no rank, chart, equality, reset,
+clone, reroot, identity port, or source-size cutoff. It proves no new cost
+optimum: coordinate-worst costs remain distinct from same-run weighted costs,
+zero weights remain allowed, and no acquisition, memory, ML-efficiency or
+physical-time gain is claimed.
+
+The new deduction is the prefix-substitution identity reflection
+(SLP.11), proved using the exact independent-frontier mass coefficients.
+The simultaneous cylinder witness then directly consumes URR's existing
+separator. The closure equivalence consumes this new reflection and the
+whole feasible support. The five-hole application combines it with SPC's
+supplied fixed point to preserve arbitrary finite negative protected
+histories at one common original-source contact. The fixed-point theorem,
+unrestricted separator, scalar support algorithm and finite feasibility
+algorithms themselves are credited results.
+
+| Source | Exact reused interface and boundary |
+| --- | --- |
+| [URR, Definitions 2.1–2.2, Theorem 3.1, Corollary 3.2 and §7][URR] | Native mass, clock and injectivity; one actual simultaneous finite separator; Presburger scalar support with finite grounds. The unrestricted reflection is applied to free frontier variables after substitution. It does not itself reflect identities back through prescribed original prefixes. |
+| [NSF, §§4–6][NSF] | Terminating finite signed feasibility, finite original witnesses and each supplied-depth test. These do not decide the all-depth alternative. |
+| [NIC, Theorem 4.3 and §§5.1–5.5][NIC] | Exact complete signed image covers, actual finite pair predicate and the unrestricted stopping obligation. No assertion that every cover piece has unrestricted Cartesian residuals is imported. |
+| [ARH, Definitions 1.1–1.2, Assumption 1.3 and §§2–3][ARH] | Entire old row and repeated classes, both guarded signs, authentic epoch, paid source-total acquisition, complete cut and original-prefix/service correspondence. The consumer retains the whole protected fiber. |
+| [SPC, Theorem 4.2 and its proof][SPC] | The unique interpreted fixed point for the proper context and positive shift, with computable stabilized prefixes. This supplies $K$; arbitrary additional negative histories are preserved here by Lemma 2.1, not by asserting SPC's seed invariant for them. |
+| [NLC, Lemma 3.1][NLC] | The accepted atomic minimum-depth and prefix-growth supplier used by SPC. No additional atomic-depth theorem or free native rank constructor is introduced. |
+| [Comon–Lescanne, §3.2 Lemma 1, Appendix B.3 and §6.2][CL] | Simultaneous discrimination for the stated infinite free-signature carriers; the one-variable finite-solution argument does not transfer to interpreted native $\rho$. |
+
+H. Comon and P. Lescanne, *Equational Problems and Disunification*,
+Journal of Symbolic Computation 7 (1989), 371–425,
+DOI 10.1016/S0747-7171(89)80017-3, is the primary mature comparison.
+Lemma 1 and Appendix B.3 use finite, in the relevant induction at-most-one,
+one-variable solution sets in the free-term setting. Section 6.2 states
+that the preceding results do not hold for general nontrivial equational
+theories. The native infinite atomic solution family of [URR,
+Proposition 7.1][URR] is a concrete reason to retain that boundary. Here
+(SLP.9)–(SLP.11) supply the native prefix argument instead. This comparison
+is not a literature-wide priority or originality claim.
+
+The statements and constructions are ordinary mathematics. No kernel
+verification, implemented solver, undecidability result or actual ML
+benefit is claimed.
+

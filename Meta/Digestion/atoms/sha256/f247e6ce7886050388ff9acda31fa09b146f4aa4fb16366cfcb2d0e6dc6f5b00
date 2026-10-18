@@ -1,0 +1,15 @@
+**Proposition 5.5 (reconstruction is a further paid consumer).** Theorem
+5.3 does not make its later literal row or reconstructed source free.
+For $X=U_{v_0}$ and $Y=\rho^nX$, writing all intermediate trees requires
+their actual total literal size $\sum_{i=0}^n|\operatorname{Pos}(\rho^iX)|$
+if all are retained. A streaming consumer may retain only the current
+tree and its requested output, but pays for every emitted cell.
+
+Proof. The rows are literal data by definition. The inverse parser and
+forward substitution visit finite descriptions; simple sequence scans
+and copying yield finite local work and storage bounded by a polynomial
+in $n+1$, $|\operatorname{Pos}(Y)|$ and the input sizes. Retaining all
+listed trees includes each cell of each description. No part of the
+acquisition or scalar decoder establishes compression of these objects.
+$\square$
+

@@ -1,0 +1,153 @@
+**theorem 6.1 (Real local relative-sign processing of actual hits).**
+Given three accepted pair states $\tau_v^{\otimes3}$ from (4.1), the
+following complete real local instrument produces, on retained pair 1,
+the unnormalized state $\omega(a,b,v_P)$ of (4.3), where
+
+$$
+\begin{aligned}
+a&=4w^3+12wn^2,&b&=12w^2n+4n^3,\\
+v_P&=6v(w^2+n^2)-2v^3,&2a+2b&=q^3.
+\end{aligned}
+\tag{6.1}
+$$
+
+It uses only local real gates, complete local measurements and
+classical messages. It retains a quantum pair carrying the unknown
+conjugate sign.
+
+Proof. Write $X_2,Z_2,R_2$ for the real matrices in Definition 4.1.
+Retain pair 1. For each auxiliary pair $j=2,3$, Alice applies $X_2$
+to her retained bit controlled by her auxiliary bit, while Bob applies
+$R_2^T$ to his retained bit controlled by his auxiliary bit. They then
+measure both auxiliary bits in the real $X_2$ basis and communicate
+their outcomes. Let $t_j$ be the product of these two measured signs.
+After both auxiliary pairs, Alice applies $Z_2$ to her retained bit
+exactly when $t_2=t_3=-1$, and otherwise does nothing.
+
+We verify this actual gate schedule using complex vectors only as
+proof indices. Define
+
+$$
+|\psi_{e,\epsilon}\rangle=
+ (|0,e\rangle-i\epsilon|1,1\mathbin\oplus e\rangle)/\sqrt2,
+\qquad e\in\{0,1\},\quad\epsilon\in\{1,-1\},\quad
+\lambda=\epsilon(-1)^e.
+\tag{6.2}
+$$
+
+The spectral weights of $\tau_v$ are $w+\epsilon v$ at $e=0$ and
+$n$ at $e=1$. No preparation or measurement of these vectors is used,
+and neither $e$ nor $\lambda$ is a supplied record.
+
+Consider retained indices $(e_1,\epsilon_1)$ and auxiliary indices
+$(e_2,\epsilon_2)$. Write Alice's original bits as $x_1,x_2$; Bob's
+are $x_1\mathbin\oplus e_1,x_2\mathbin\oplus e_2$. Since
+$R_2^T|b\rangle=(-1)^b|b\mathbin\oplus1\rangle$, the retained bits
+after the gates are
+
+$$
+y=x_1\mathbin\oplus x_2,\qquad
+y\mathbin\oplus e_1\mathbin\oplus e_2,
+$$
+
+and the input amplitude
+$(-i\epsilon_1)^{x_1}(-i\epsilon_2)^{x_2}/2$ is multiplied by
+$(-1)^{(x_1\mathbin\oplus e_1)(x_2\mathbin\oplus e_2)}$.
+For $x_2=0$ this becomes, up to the common factor
+$(-1)^{e_1e_2}/2$, the retained amplitude
+$[-i\epsilon_1(-1)^{e_2}]^y$. For $x_2=1$, the ratio to the
+$x_2=0$ amplitude at the same $y$ is
+$\epsilon_1\epsilon_2(-1)^{e_1+e_2}$, independent of $y$.
+These two expressions verify all four amplitudes and give, up to a
+global phase, the factorization
+
+$$
+|\psi_{e_1\oplus e_2,\,\epsilon_1(-1)^{e_2}}\rangle_1
+\ \otimes\
+\frac{|0,e_2\rangle+t_2|1,1\oplus e_2\rangle}{\sqrt2},
+\qquad t_2=\lambda_1\lambda_2.
+\tag{6.3}
+$$
+
+The auxiliary factor is an $X_2\otimes X_2$ eigenvector with eigenvalue
+$t_2$, so the product of its measured signs is precisely $t_2$.
+Both compatible individual outcomes are retained; the other outcomes
+are still part of the complete projective measurement. The retained
+$\lambda$ remains $\lambda_1$. Repeating with pair 3 gives
+$t_3=\lambda_1\lambda_3$ and again preserves that retained value.
+Applying $Z_2$ reverses its sign. The specified final correction thus
+sets the retained $\lambda$ to
+
+$$
+m=\operatorname{maj}(\lambda_1,\lambda_2,\lambda_3)
+ =\frac{\lambda_1+\lambda_2+\lambda_3
+                  -\lambda_1\lambda_2\lambda_3}{2},
+\tag{6.4}
+$$
+
+with retained parity $E=e_1\oplus e_2\oplus e_3$. The global conjugate
+sign stays in this quantum pair; only relative signs have been read.
+
+We next evaluate the unnormalized actual mixture. The one-copy total,
+parity, sign and parity-times-sign moments are, respectively,
+
+$$
+\sum p=2h,\quad
+\sum p(-1)^e=2(w-n),\quad
+\sum p\lambda=2v,\quad
+\sum p(-1)^e\lambda=2v.
+\tag{6.5}
+$$
+
+Independence and (6.4) therefore give
+
+$$
+\begin{aligned}
+\sum p_1p_2p_3 m&=12vh^2-4v^3,\\
+\sum p_1p_2p_3(-1)^E m&=12v(w-n)^2-4v^3.
+\end{aligned}
+\tag{6.6}
+$$
+
+On even parity the retained $\epsilon=m$, while on odd parity it is
+$-m$. The difference of the two eigenweights is twice the corresponding
+imaginary coherence. Taking the sum and difference in (6.6) yields
+
+$$
+v_P=6v(w^2+n^2)-2v^3,\qquad v_Q=-12vwn.
+\tag{6.7}
+$$
+
+The total even and odd masses are obtained by adding and subtracting
+the cube of the parity moment from the cube of the total mass.
+Dividing each by two for its two equal coordinate populations gives
+
+$$
+a=\frac{(2h)^3+[2(w-n)]^3}{4}=4w^3+12wn^2,
+\quad
+b=\frac{(2h)^3-[2(w-n)]^3}{4}=12w^2n+4n^3.
+$$
+
+Before a final randomization, the retained state has diagonals
+$(a,b,b,a)$, even coherence $v_P$ and odd coherence
+$iv_Q(|01\rangle\langle10|-|10\rangle\langle01|)$.
+
+Use a shared fair real classical coin to select this schedule or its
+mirror with the parties interchanged, including the party applying the
+final $Z_2$. The actual input $\tau_v^{\otimes3}$ is invariant under
+mathematical interchange of Alice and Bob. Hence the mirror's output
+is the mathematical swap of the displayed output. This fixes its
+diagonals and even coherence and reverses its odd coherence. Averaging
+the two schedules cancels $v_Q$ exactly and gives (6.1).
+This mirror is a second specified local schedule; it transfers no
+quantum register and performs no physical swap across the cut.
+
+Each controlled gate is real orthogonal on its full local two-bit
+support. Each local $X_2$ measurement includes both projectors. The
+conditional $Z_2$ and the mirror coin are real. All measured records
+have their actions specified and are then discarded. These operations
+form a complete instrument on arbitrary complex inputs; the iid
+spectral calculation only evaluates it on the actual promised batch.
+The output remains distributed, ready for the Bell instrument (4.2).
+QED.
+

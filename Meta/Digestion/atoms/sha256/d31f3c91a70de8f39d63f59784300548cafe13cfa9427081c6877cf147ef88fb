@@ -1,0 +1,79 @@
+**Theorem 59.2 (one vector for every complex direction).** For every normalized triple in (S.55), there is one unit vector $\eta$ supported on $\mathbb C^3\otimes K_2$, where $K_2$ is a two-dimensional span of selected leading eigenvectors of $\omega$, and one complex $2\times2$ matrix $L$, such that, simultaneously for every complex unit $\psi=(\psi_0,\psi_1)$,
+
+$$
+\begin{gathered}
+\eta=(\ell_0,\ell_1,b_{\rm vec}),\qquad
+L=[\ell_0,\ell_1],\qquad G=LL^\dagger,\qquad
+\operatorname{Tr}G+\|b_{\rm vec}\|^2=1,\\
+z=L\psi,\qquad \kappa=\|z\|^2\leq1,\qquad q=z^\dagger\Omega_2z,\\
+0\preceq M_\psi\preceq B_\psi:=A_\psi\oplus\omega_{\rm tail},\qquad
+A_\psi=\Omega_2-\sqrt{\Omega_2}zz^\dagger\sqrt{\Omega_2}\succeq0,\\
+H_a(M_\psi)\leq H_a(B_\psi),\qquad
+q_2\geq b_{\rm vec}^\dagger\Omega_2b_{\rm vec}
+\geq t(1-\operatorname{Tr}G).
+\end{gathered}
+\tag{S.68}
+$$
+
+Here $\ell_0,\ell_1,b_{\rm vec}$ are expressed in $K_2$. The exact reduced test uses
+
+$$
+\begin{aligned}
+\operatorname{Tr}A_\psi&=s+t-q,&\det A_\psi&=st(1-\kappa),\\
+\mu_\psi&=\frac{s+t-q+\sqrt{(s+t-q)^2-4st(1-\kappa)}}2,\\
+b_\psi:=\operatorname{Tr}B_\psi&=1-q,&
+\ell_\psi:=\lambda_{\max}(B_\psi)&=\max\{\mu_\psi,\lambda_3\}.
+\end{aligned}
+\tag{S.69}
+$$
+
+Thus (S.57), evaluated at $(b_\psi,\ell_\psi)$, gives $H_a(B_\psi)$ exactly, and feasibility requires $H_a(B_\psi)>v_a$ for every complex unit $\psi$, as well as $t(1-\operatorname{Tr}G)<d_a$. The same $\eta$ and $L$ serve the entire sphere and every permitted $\beta$ at the specified center and projection. Singular $L$, $A_\psi$ and $M_\psi$ are included.
+
+Proof. Stack the three $Z_i$ of (S.55) into $Z$. Its columns are orthonormal, so
+
+$$
+E_Z=ZZ^\dagger=\overline D,
+\qquad E_Z^\dagger=E_Z^2=E_Z,\qquad \operatorname{rank}E_Z=n.
+$$
+
+This is the conjugated defect projection, rather than $D$ with its conjugation suppressed. For subspaces $A,B$ of a space of dimension $3k$, the identity $\dim(A+B)=\dim A+\dim B-\dim(A\cap B)\leq3k$ gives, in this instance,
+
+$$
+\dim\bigl(\operatorname{ran}E_Z\cap(\mathbb C^3\otimes K_2)\bigr)
+\geq(3k-5)+6-3k=1.
+\tag{S.70}
+$$
+
+Choose one unit $\eta$ in that intersection. Its three blocks give $L,G,b_{\rm vec}$ in (S.68). Since $E_Z\eta=\eta$, the restriction of $E_Z$ to $\eta^\perp$ is a projection, and hence $E_Z\succeq\eta\eta^\dagger$.
+
+For the same complex $\psi$ as in (S.56), set $C_\psi=(\psi_0,\psi_1,0)\otimes I_k$. This is the transpose row $\psi^T$ on the phase plane, not the adjoint row $\psi^\dagger$. It satisfies $C_\psi C_\psi^\dagger=I_k$, $C_\psi Z=Z_\psi$ and $C_\psi\eta=L\psi$, with the latter embedded in $K_2$. Positive compression therefore gives
+
+$$
+0\preceq zz^\dagger\preceq C_\psi E_ZC_\psi^\dagger
+=Z_\psi Z_\psi^\dagger\preceq I_k.
+\tag{S.71}
+$$
+
+Congruence by $\sqrt\omega$ proves $0\preceq M_\psi\preceq B_\psi$. Also $\kappa\leq\|L\|_{\rm op}^2\leq\operatorname{Tr}G\leq1$, so $A_\psi=\sqrt{\Omega_2}(I_2-zz^\dagger)\sqrt{\Omega_2}\succeq0$, including $\kappa=1$. Compressing $E_Z\succeq\eta\eta^\dagger$ to the third block and taking its $\omega$-weighted trace proves the two lower bounds for $q_2$ in (S.68).
+
+For any fixed feasible $Q$ in (S.58), positive order of $M\preceq B$ gives positive order of $\sqrt Q M\sqrt Q\preceq\sqrt Q B\sqrt Q$. Ordered eigenvalues, and their scalar square roots, increase under this order. Consequently
+
+$$
+f(Q,M)=\operatorname{Tr}\sqrt{\sqrt Q M\sqrt Q}
+\leq\operatorname{Tr}\sqrt{\sqrt Q B\sqrt Q}=f(Q,B).
+$$
+
+Taking the maximum over the same feasible set proves the $H_a$ comparison. This uses no inverse of $Q$ or $M$, and does not assert that the maximizing $Q$ in different directions comes from one channel.
+
+Finally, writing $z=(z_1,z_2)^T$ gives
+
+$$
+A_\psi=\begin{pmatrix}
+s(1-|z_1|^2)&-\sqrt{st}z_1\bar z_2\\
+-\sqrt{st}\bar z_1z_2&t(1-|z_2|^2)
+\end{pmatrix},\qquad
+\det A_\psi=st\bigl[(1-|z_1|^2)(1-|z_2|^2)-|z_1|^2|z_2|^2\bigr].
+$$
+
+This proves the trace and determinant in (S.69); the quadratic eigenvalue formula and the direct sum give the rest. The discriminant is nonnegative because $A_\psi$ is Hermitian. This reduces the test through the tail mass and its largest eigenvalue, while discarding the other defect directions. $\square$
+

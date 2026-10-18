@@ -1,0 +1,6 @@
+## 5. From gate error to a time-uniform false-positive bound
+
+For round n, condition on the full retained past F_(n-1). The current state is selected before the independent uniform setting J_n in {1,2}. Under the null, its conditional bottom state is separable whenever its bottom probability is nonzero, exactly as in C-121.1. Let the actual three-outcome distribution at setting j differ from the ideal one in total variation by at most epsilon_(n,j), uniformly over the current state. The two error bounds are known from the past or a prespecified calibration contract. Put bar epsilon_n=(epsilon_(n,1)+epsilon_(n,2))/2.
+
+Use the inherited score V_n=1,-3,0 on +,-,0. No failed or outside-bottom round is discarded. For leakage outside the ideal carrier, an implementation may use a flagged zero-score outcome, but its probability must be included in the stated total-variation comparison.
+

@@ -1,0 +1,22 @@
+### 64.3 Scope and the unresolved reported count
+
+The exact Fourier bridge (61.14)–(61.15) identifies this ray problem
+with the ordinary common-unbiased columns for \((I,F(1/6,0))\).
+It is a unitary ray bijection, so the change of input/output convention
+does not alter finite cardinalities.
+
+[Brierley–Weigert, *Constructing Mutually Unbiased Bases in Dimension Six*,
+§4.2 and Table 2](https://arxiv.org/html/0901.4051v2#S4.SS2)
+report \(N_v=48\) for their sampled Fourier matrices, including this
+parameter; their Eq. (6) already fixes the overall phase. Their §3.4
+also discusses upper bounds obtained through numerical approximation.
+The congruence (64.7) rules out 48 as an exact finite distinct-ray census
+for the actual equations here. Its relation to the reported count and
+the scope of that approximation argument remains unresolved. No phase
+or multiplicity reinterpretation, source erratum, complete census, or
+42-ray completeness is established by this section.
+
+Only the transposition-fixed locus is classified exhaustively. The
+remaining free-orbit count, finiteness of the full locus, and arbitrary
+noncanonical orthogonal triples remain separate questions.
+

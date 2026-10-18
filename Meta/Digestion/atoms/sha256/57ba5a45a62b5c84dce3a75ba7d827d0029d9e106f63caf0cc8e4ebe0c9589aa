@@ -1,0 +1,34 @@
+**Lemma 6.2 (native meaning and effective attainment of $K_d(n)$).**
+$K_d(n)$ is the minimum complete attained code alphabet for the
+joint block task, and $K_d(1)=m_d$. The same statement holds if
+arbitrary finite words within a block are allowed.
+
+Proof. On a fixed complete code fiber and target, the sole chosen
+experiment is fixed. Equality of its replies must imply equality
+of the required factor, exactly (FMR.36). Conversely a cover can
+be disjointed by first membership; install one witness experiment
+and its reply decoder for every cover member and target. This is
+the same native table argument as Theorem 2.5, now retaining all
+coordinates of each joint fiber. Lemma 2.2 eliminates arbitrary
+long block words through at most one boundary experiment in that
+same block. It does not move a query into the target block.
+
+For actual attainment, acquire every block's canonical boundary by
+actual words $Ra_iw$, $w\in W_d$, compute the tuple and export its
+one joint cover index. All source dependence is paid and isolated
+as in Assumption 1.3. If every $|a_i|\le H$, this takes at most
+
+$$
+\begin{aligned}
+T&\le n(2^d-1),\qquad Q\le H+d,\\
+A&\le n\bigl((H+1)(2^d-1)+(d-2)2^d+2\bigr).
+\end{aligned}
+\tag{FMR.37}
+$$
+
+Indeed, the prefix contributes at most $H+1$ letters per call,
+and the suffix lengths sum to
+$\sum_{j=0}^{d-1}j2^j=(d-2)2^d+2$. The same literal lengths
+bound the late Read. For one block Theorems 2.3 and 2.5 identify
+the optimum with $m_d$. $\square$
+

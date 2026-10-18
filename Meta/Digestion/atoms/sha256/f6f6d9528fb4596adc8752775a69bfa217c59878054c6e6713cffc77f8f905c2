@@ -1,0 +1,20 @@
+**Corollary 67.3 (Sufficient test at the unchanged sharp TV value).** One always has
+
+$$
+R_\mu\le1-\kappa.
+\tag{67.11}
+$$
+
+If $R_\mu<1$ and $\kappa\ge1-R_\mu$, a lawful preparation attains the original $R_\mu$. In this sufficient-test case $\kappa=1-R_\mu$. At $R_\mu=0$ the test is the reused exact-acquisition condition $\kappa=1$; at $R_\mu=1$ attainment is already Theorem 50.2 and the coefficient-zero condition supplies no additional information.
+
+**Proof.** If $0<c<1$ and $c\lambda_y\le\mu_y$, the finite measure $\mu_y-c\lambda_y$ is nonnegative and has mass $1-c$. Thus
+
+$$
+\xi_y=\frac{\mu_y-c\lambda_y}{1-c}\in\mathcal P(\Theta,\mathcal F),\qquad
+\operatorname{TV}(\lambda_y,\mu_y)
+=(1-c)\operatorname{TV}(\lambda_y,\xi_y)\le1-c.
+\tag{67.12}
+$$
+
+At $c=1$ domination of two probabilities forces equality. If $\kappa>0$, use Theorem 67.2 at $c=\kappa$ to prove (67.11); if $\kappa=0$, it is just the bound $R_\mu\le1$. For $R_\mu<1$ take the positive coefficient $c=1-R_\mu$. The prepared cap in (67.12) is at most $R_\mu$, and the independent original lower bound $I(\mu)=R_\mu$ forces its uniform error to equal $R_\mu$. Combining (67.11) with the test gives the stated equality of scalars. No infimum over sources is interchanged with a branch limit. $\square$
+

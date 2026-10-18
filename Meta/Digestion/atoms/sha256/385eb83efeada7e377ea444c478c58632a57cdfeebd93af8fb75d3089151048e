@@ -1,0 +1,39 @@
+**开放问题 6.2 (terminating signed joint synthesis).** For an arbitrary
+attained input (SJM.6), first use NPL Theorem 5.3 to decide its entire full-row
+image. An infinite answer excludes all finite complete fields by Corollary 2.4;
+a consistency query may also return empty, which has no attained entry.
+For every nonempty finite answer, the unsolved optimization task is to terminate with the exact $M$, a finite depth
+$h_*$ with $m_{h_*}=M$, and a justified all-depth lower bound excluding every
+smaller field, together with the source-total effective rank encoder and lawful
+current-register consumer of Theorem 2.2. The installed data must depend only
+on declared common input, and the actual encoder must be evaluated on the
+acquired source before the complete cut. Existence of $h_*$ is not its uniform
+synthesis, and no supplied-budget decision replaces this task.
+
+A sufficient unresolved route is a complete fixed-set chooser: for each
+nonempty $B\subseteq A$, return either a finite $H_B$ with $\neg J_B(H_B)$,
+or valid all-depth persistence evidence with an effective procedure returning,
+for every $h$, actual finite sources in the respective $D_r$ that agree through
+$h$. Every returned source must preserve the entire old row, every literal,
+each reached signed relation and off-task constraint, and its exact full target
+row, on that source's same original root and legal acquisition. A limit satisfying
+some positive equations, without these finite realizations, is insufficient.
+Once persistence is proved, NSF's positive finite queries can produce each
+requested witness; the missing step is the terminating, sound and complete
+choice of that branch for arbitrary signed input. No particular finite form of
+persistence certificate is assumed complete.
+
+For one fixed $B$, the exclusion branch only excludes that set. For every
+$k$-set it certifies $M<k$ by taking their finite maximum. Deciding all sets
+would yield the optimizer as proved in Theorem 3.2, while pairwise exclusion
+alone addresses the special value $M=1$. Neither exclusion of a single set nor
+a finite plateau certifies optimality. The native $D_3$ illustrates the distinction:
+its four-set is excluded at depth three, but its persistent triple supplies the
+separate lower bound $M=3$. These finite tests and examples do not solve the
+general synthesis or prove that it is undecidable.
+
+**产地。** This is one theory-only continuation of the signed full-recut
+memory question. Its positive claims are the ordinary proofs and explicit finite
+native witnesses above; the broader objective and its unresolved all-input
+quantifiers remain open.
+

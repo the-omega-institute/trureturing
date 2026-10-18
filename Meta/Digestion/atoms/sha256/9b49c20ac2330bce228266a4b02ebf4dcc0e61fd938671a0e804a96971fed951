@@ -1,0 +1,29 @@
+**Definition 3.1 (partial native children and exact navigation).** Adjoin
+an absence symbol $\bot\notin\mathcal N$. Define $d_L,d_R$ by
+
+$$
+\begin{array}{c|cc}
+X&d_L(X)&d_R(X)\\\hline
+\bot&\bot&\bot\\
+[0]\text{ or }[1]&\bot&\bot\\
+[j]\ (j\ge2)&[j-1]&[j-2]\\
+F(Y,Z)&Y&Z.
+\end{array}
+\tag{ABC.3.1}
+$$
+
+Set $\nu_\varepsilon(X)=X$ and $\nu_{pe}(X)=d_e(\nu_p(X))$ for
+$e\in\{L,R\}$. Define the root-reply map $\lambda$ by
+
+$$
+\lambda(\bot)=\mathsf{absent},\quad
+\lambda([0])=\alpha,\quad\lambda([1])=\beta,\quad
+\lambda([j])=\mathsf{branch}\ (j\ge2),\quad
+\lambda(F(Y,Z))=\mathsf{branch}.
+\tag{ABC.3.2}
+$$
+
+Every successful child in (ABC.3.1) is normal. In particular navigation
+inside $[j]$ uses its native expanded children, not children in the
+ambient code syntax.
+

@@ -1,0 +1,63 @@
+**Proposition 28.2 (complete local test from the synchronous supplier).**
+For fixed $a,b\in\{0,1\}$ and the positions of Lemma 28.1, there is a
+terminating exact decision of finite-prefix determination, on
+$\mathcal C(t)$, of the bit
+
+$$
+e(y)=[\rho^a(y|_s)=\rho^b(y|_r)].
+\tag{ARH.28.2}
+$$
+
+A positive answer supplies an integer $h$ such that
+$y\equiv_h y'$ implies $e(y)=e(y')$ throughout the cylinder. A negative
+answer supplies, for every requested $j$, finite $y,y'\in\mathcal C(t)$
+with $y\equiv_j y'$ and opposite values of $e$.
+
+Proof. This is an application of Lemma 21.1 and Theorem 13.1 to the
+following exact four-coordinate relation, not a new automata closure:
+
+$$
+\begin{aligned}
+\mathcal B_{s,r}=\{(z,w,z',w'):\;&
+ z,z'\in\mathcal C(t_s),\quad w,w'\in\mathcal C(t_r),\\
+&[\rho^a z=\rho^b w]\mathbin{\mathsf{xor}}
+ [\rho^a z'=\rho^b w']\}.
+\end{aligned}
+\tag{ARH.28.3}
+$$
+
+A cylinder is specified by finitely many coordinate-prefix replies.
+The two equality atoms are exactly fixed-power aligned atoms of
+(CE.20.3). Thus Lemma 21.1 constructs a finite bottom-up automaton on
+valid padded convolutions of four nonempty finite trees for precisely
+(ARH.28.3). Complement and xor are relative to valid finite coordinates.
+There is no shifted-constructor graph inside this automaton.
+
+Use Theorem 13.1 with $k=2$, pairing the first two coordinates with the
+last two. It computes its productive diagonal-prefix fixed set. If the
+accepting intersection is empty, it supplies a finite $j_0$ for which
+no member of (ARH.28.3) has both paired agreements $\equiv_{j_0}$.
+Set
+
+$$
+h=\max(|s|,|r|)+j_0.
+\tag{ARH.28.4}
+$$
+
+Agreement $y\equiv_h y'$ restricts to those two agreements, so their
+equality statuses coincide. This proves the positive claim.
+
+If the accepting intersection is nonempty, the same supplier constructs,
+for each $j$, a member of (ARH.28.3) with the two paired agreements
+$\equiv_j$. All four coordinates are finite productive witnesses.
+Complete them by Lemma 28.1, using the same other fillings. The resulting
+$y,y'$ have the required agreement and opposite statuses. Conversely,
+any two cylinder trees with opposite statuses project to (ARH.28.3).
+The product correspondence proves that no spurious local negative
+witness was introduced by this projection.
+
+The state set is finite and the supplied decreasing sequence stabilizes;
+each requested witness is a finite productive completion. Hence this
+test stops in both cases. Neither testing a fixed depth nor admitting an
+infinite solution has replaced the negative stopping argument. $\square$
+

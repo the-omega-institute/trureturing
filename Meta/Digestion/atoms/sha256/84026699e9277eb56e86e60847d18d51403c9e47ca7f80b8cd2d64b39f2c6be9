@@ -1,0 +1,39 @@
+### 107.1. The actual nontrivial class and marked ideal relation
+
+**Theorem 107.1.**
+
+Let j>=1, N=3^j, B=B_N=L_N^2+3, B'=B_(3N)=G(B), G(z)=z^3-3z^2+3. Retain the full decompositions
+
+ B=D C^2,  B'=D' C'^2,  M=D D',  t=C C',
+
+where D,D' are the complete positive squarefree kernels, and C,C'>0 are arbitrary. In particular, shared primes of D and C or of D' and C' are allowed. The actual original orders rho(q)=tau_q=6N and order 3N for the squared golden unit at q|B, and the corresponding 18N and 9N at q|B', are retained. No arbitrary support family is substituted for these blocks.
+
+Theorem 106.1 proves that D,D'>1 are coprime, M>1 is squarefree and M=1 modulo 120. Put K=Q(sqrt M), whose field discriminant is M. Its primes 2 and 3 both split. On
+
+ E^*_M: y^2=X^3+M(3X+3M)^2,
+
+let P be the point corresponding to the companion point P_N, namely
+
+ X=3M(1-B)/B,  y=3M^2 t/B^2.
+
+Let phi:E^*_M -> Ehat_M be the rational three-isogeny of section 106.5, and phihat its dual. Define r=t sqrt M, q=B(2B-3), and
+
+ beta=3(r+q)/B^2 in K*.
+
+Then:
+
+(a) The three-descent class of P is [beta] in K*/K*3. It has order exactly 3. In particular P is not in phihat(Ehat_M(Q)), and P is not in 3E^*_M(Q).
+
+(b) At the two primes above 2, the valuations of beta are exactly 1 and 2. Mark p_2 as the prime for which r=1 modulo 4 in the corresponding Q_2 embedding; its valuation is 1.
+
+(c) At the two primes above 3, the valuations are exactly 1 and 3j+5. Mark p_3 as the prime for which r=-1 modulo 3; its valuation is 1.
+
+(d) At every other finite prime of K the valuation of beta is a multiple of 3. Therefore, for some fractional ideal a of K,
+
+ (beta)=p_2 bar(p_2)^2 p_3 bar(p_3)^2 a^3,
+ [p_2][p_3]=[a]^3 in Cl(K).
+
+In particular, for arbitrary choices of primes l_2|2 and l_3|3, their classes in Cl(K)/Cl(K)^3 are equal up to sign. Equivalently, their classes are either both zero or both nonzero and span the same one-dimensional F_3 subspace. The exact marked relation retains t=C C': its two choices cannot be suppressed when one wants the sign.
+
+(e) In every everywhere-unramified cyclic cubic extension H/K, the marked Frobenius elements satisfy Frob_(p_2) Frob_(p_3)=1. In particular 2 splits completely over K in H if and only if 3 does. Here this wording concerns either prime above the indicated rational prime; the two conjugate prime classes are inverse, so the splitting condition is independent of the choice.
+

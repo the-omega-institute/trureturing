@@ -1,0 +1,15 @@
+**Definition 169.1 (Common-budget separator data).** Choose a direction
+$b\in H_L$ with $e_b>0$ and $b_L>e_b$. Supply complete $N$ conic
+coefficients $\lambda\ge0$ with $A_N\lambda\ge h(b)$, write
+$s=\sum_D\lambda_D$ and $M=\max\{1,s\}$, and supply a row vector
+$y\ge0$ satisfying
+
+$$
+y\cdot h(b)>M\Delta_O(y).
+\tag{169.1}
+$$
+
+Here $B_O$ and $\Delta_O$ are computed on the entire catalog by (164.5),
+with every schedule, every terminal label and every row. These are
+conditional certificate requirements; no instance is presumed.
+

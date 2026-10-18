@@ -1,0 +1,47 @@
+**Lemma 1.2 (Native phase equations and ray representatives).** After a
+common constant gauge change, put
+$\eta_s=\theta_s^{\rm in}-\theta_2^{\rm in}$. Every admissible phase
+increment has the form
+
+$$
+h_0=h_{13}=u,\qquad h_1=h_3=v,\qquad h_2=0.
+$$
+
+The current representative is
+
+$$
+\psi(k,u,v)=\bigl(
+\sqrt{k}e^{-i(\eta_0+u)},
+\sqrt{H-k}e^{-i(\eta_1+v)},
+\sqrt Z,
+\sqrt{H-k}e^{-i(\eta_3+v)},
+\sqrt{k}e^{-i(\eta_{13}+u)}
+\bigr).
+$$
+
+For real lifts along a history, and hence also as equations for circle
+increments, set $\alpha=u-v$ and $\beta=u$. Then
+
+$$
+\begin{aligned}
+I(k)&=\frac2k+\frac2{H-k}=\frac r{k(H-k)},\\
+w_+(k)&=\frac12-\frac{k}{r},\qquad
+w_-(k)=-\frac{k}{r},\qquad w_2(k)=0,\\
+du&=\left(\frac12-\frac{k}{r}\right)d\chi,
+\qquad dv=-\frac{k}{r}d\chi,\\
+d\alpha&=\frac12d\chi,
+\qquad d\beta=\left(\frac12-\frac{k}{r}\right)d\chi.
+\end{aligned}
+$$
+
+**Proof.** Substitution of the five probabilities into $I$ and $w$ gives
+the displayed formulas. The equal components of $w$ give equal increments
+within the two groups, starting at zero increments. They do not impose any
+equalities between the arbitrary preparation phases. The middle component
+remains zero. Subtraction of the two group equations gives the equations for
+$\alpha,\beta$. The inverse change of circle coordinates is
+$u=\beta$, $v=\beta-\alpha$; both directions use integer coefficients and
+are well defined on $\mathbb T^2$. The real relation increment is
+$d^{\mathsf T}h=2(u-v)=2\alpha=\chi-\chi(0)$ for the actual lifts.
+$\square$
+

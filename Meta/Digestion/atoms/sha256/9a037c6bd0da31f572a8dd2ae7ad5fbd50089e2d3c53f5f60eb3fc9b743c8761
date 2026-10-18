@@ -1,0 +1,67 @@
+**Theorem 207.11 (Consistent proper marginals and PSD do not suffice).**
+For even $h=2q\ge4$ and $s>0$, prescribe
+
+$$
+S_0=\frac{4hs}{h+1},\qquad m_i=2s,\qquad q_{ij}=s.
+\tag{207.27}
+$$
+
+All pair tables are nonnegative, the augmented degree-two moment matrix
+is positive semidefinite, and there are mutually consistent genuine
+laws on every proper subset. Nevertheless no measure on all $h$ bits
+has these moments.
+
+**Proof.** In indicator order $00,01,10,11$, each pair table is
+$(S_0-3s,s,s,s)$, nonnegative for $h\ge4$. The augmented matrix has
+upper-left entry $S_0$, cross vector $2s\mathbf1$ and lower block
+$s(I+J)$, where $J=\mathbf1\mathbf1^\mathsf T$. Its Schur complement is
+
+$$
+s(I+J)-\frac{4s^2}{S_0}J=s(I-J/h)\succeq0.
+\tag{207.28}
+$$
+
+On $h-1$ bits choose a subset uniformly conditional on its cardinality
+$K$, where
+
+$$
+\begin{array}{c|ccc}
+K&q-1&q&q+1\\\hline
+\mathsf P(K)&1/8+1/(4h)&3/4&1/8-1/(4h).
+\end{array}
+\tag{207.29}
+$$
+
+These nonnegative probabilities sum to one. Direct summation yields
+
+$$
+\mathsf EK=q-\frac1{2h},\qquad
+\mathsf E[K(K-1)]=\frac{(h-1)(h-2)(h+1)}{4h}.
+\tag{207.30}
+$$
+
+Dividing by $h-1$ and $(h-1)(h-2)$ gives one- and two-bit means
+$(h+1)/(2h)$ and $(h+1)/(4h)$. Scaling by $S_0$ yields $2s,s$.
+Give each proper subset the corresponding marginal of this exchangeable
+$(h-1)$-bit law. Exchangeability makes the assignment independent of
+its embedding, and further projections agree on every intersection.
+Thus entire proper-subset laws, not just their pair moments, agree.
+
+A full measure would instead have, for $K=\sum_{i=1}^hZ_i$ under
+$\nu/S_0$,
+
+$$
+\mathsf EK=\frac{h+1}{2}=q+\frac12,\qquad
+\mathsf EK^2=\frac{(h+1)^2}{4}.
+\tag{207.31}
+$$
+
+Variance zero would make the integer $K$ equal to a half-integer almost
+surely, a contradiction. Equivalently (207.26) with every $a_i=1,r=q$
+has value $-S_0/4<0$. Adjoining a forced-zero terminal and splitting
+early lifts cannot supply a missing full pair measure. This example
+refutes the local/PSD gluing implication; it is not an actual input
+score, a certificate nonmember or an acquisition counterexample.
+At $s=0$ the zero measure is realizable and the obstruction vanishes.
+$\square$
+

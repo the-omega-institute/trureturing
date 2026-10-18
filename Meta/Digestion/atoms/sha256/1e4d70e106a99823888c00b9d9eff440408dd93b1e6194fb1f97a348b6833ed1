@@ -1,0 +1,65 @@
+**Lemma 22.2 (Actual word probabilities and the reset interface).**
+Write $M_1=\beta\alpha$ with
+$\beta=(0,1/2)^{\mathsf T}$ and $\alpha=(1,0)$.
+The zero-run transition powers and gap probabilities are
+
+$$
+M_0^k=2^{-k}\begin{pmatrix}1&k\\0&1\end{pmatrix},\qquad
+\gamma_k=\alpha M_0^k\beta=\frac{k}{2^{k+1}},
+\quad k\ge0.
+\tag{22.2}
+$$
+
+In particular $\gamma_0=0$, all $\gamma_k$ for $k\ge1$
+are positive and their sum is one. A one-emission resets
+the hidden state to $\alpha$, so these are the independent
+successive interevent zero-count probabilities. Moreover
+$P(0^n)=(n+2)/2^{n+1}\to0$; stationarity then excludes
+an infinite zero tail on either side. This is a proper
+stationary renewal law, with no adjacent ones.
+
+For any legal length-n word with at least one one, let
+A and B be the zero counts before its first and after
+its last one, and let $g_1,\ldots,g_{k-1}$ be the zero
+counts between its k ones. Then
+
+$$
+P(w)=\frac{(A+1)(B+1)\prod_{h=1}^{k-1}g_h}{2^{n+1}},
+\qquad
+P(0^n)=\frac{n+2}{2^{n+1}}.
+\tag{22.3}
+$$
+
+Thus every legal word has strictly positive probability.
+For complete half-words
+$u_i=0^{A_i}1\,0^{r_i}$ and
+$v_j=0^{s_j}1\,0^{B_j}$ of fixed respective lengths,
+the same original word probability factorizes as
+
+$$
+P(u_iv_j)=
+(\lambda M_0^{A_i}\beta)\,
+\gamma_{r_i+s_j}\,
+(\alpha M_0^{B_j}\mathbf1).
+\tag{22.4}
+$$
+
+Proof. Induction on k gives the power formula. After an
+emitted one, the rank-one factor $\beta\alpha$ leaves
+the normalized row $\alpha$. Repeated substitution gives
+the renewal gaps and, using
+
+$$
+\lambda M_0^A\beta=\frac{A+1}{2^{A+2}},\qquad
+\alpha M_0^B\mathbf1=\frac{B+1}{2^B},
+\tag{22.5}
+$$
+
+the exact formula (22.3). Its exponents add to n+1,
+including all one-emissions. Normalization and both
+cylinder consistencies already follow from the stochastic
+matrix and its stationary row. Twice substituting
+$M_1=\beta\alpha$ in the complete ordered word product
+gives (22.4), without aggregating words or changing the
+probability law. $\square$
+

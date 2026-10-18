@@ -1,0 +1,148 @@
+**定理 6.1（整个正区间上的合法响应严格递减）。** 固定任意 $48<d<C$，令
+
+$$
+\Omega_d=\{t>1:H(t)>0\}.
+\tag{6.1}
+$$
+
+此集合为非空区间，式 (2.11) 的同一函数在其上满足
+
+$$
+\Phi_d'(t)<-\frac{41}{7}<0.
+\tag{6.2}
+$$
+
+因而任意 $x<y$ 属于此区间时，
+
+$$
+\Phi_d(y)-\Phi_d(x)<-\frac{41}{7}(y-x)<0.
+\tag{6.3}
+$$
+
+本标量定理不附加秩方程、源条件、第五值限制、第六增益条件或其他增益承诺。
+
+证明。置 $\varepsilon=d-48=-E>0$，故 $A>0,B>0$，并沿引理 3.2 使用同一个 $L$。除第 3 节恒等式外，所需字面关系为
+
+$$
+\begin{gathered}
+(X-C)-2=\frac{154}{655}>0,\qquad
+L(56)=5X-296=\frac{488}{131}>0,\\
+L=5B-2\varepsilon,\qquad d+7L=48A,\qquad
+h_1=7L-70\varepsilon-5d,\\
+H=10dt^2+h_1t+42\varepsilon,\qquad
+Q=-6dt^2+q_1t-14\varepsilon.
+\end{gathered}
+\tag{6.4}
+$$
+
+先证明区间连通，避免跨极点比较。对所有 $t\ge1$，
+
+$$
+\begin{aligned}
+H'(t)&=20dt+h_1\ge4032+35X-104d\\
+&>4032+35X-104C=3360-56C=56(60-C)>0.
+\end{aligned}
+\tag{6.5}
+$$
+
+首项 $10d>0$ 使 $H(t)\to+\infty$。若 $H(1)\ge0$，$\Omega_d=(1,\infty)$；若 $H(1)<0$，严格增加性和介值定理给唯一零点 $h>1$，且 $\Omega_d=(h,\infty)$。$H(1)=0$ 的零点只是被排除的端点。所以任意两个域内点之间 $H$ 始终正，不经过极点。
+
+在此域定义 $T(t)=(Lt+\varepsilon)/H(t)$。式 (3.4) 给 $Q+(3/5)H=(56/5)(Lt+\varepsilon)$，而 $\Phi_d=Q/(28t)+(5A/2)(Q/H)$，故精确分解为
+
+$$
+\begin{aligned}
+\Phi_d(t)&=-\frac{3d}{14}t+\frac{q_1}{28}-\frac{3A}{2}
+-\frac{\varepsilon}{2t}+28AT(t),\\
+\Phi_d'(t)&=-\frac{3d}{14}+\frac{\varepsilon}{2t^2}+28AT'(t).
+\end{aligned}
+\tag{6.6}
+$$
+
+由于 $t>1,\varepsilon>0,d<C<60$，基项满足
+
+$$
+-\frac{3d}{14}+\frac{\varepsilon}{2t^2}
+<-\frac{3d}{14}+\frac{\varepsilon}{2}
+=\frac{2d-168}{7}<-\frac{48}{7}.
+\tag{6.7}
+$$
+
+剩下只需控制同一 $T$ 的贡献。其导数分子为
+
+$$
+\begin{aligned}
+S(t)&=LH-(Lt+\varepsilon)H'
+=-10dLt^2-20d\varepsilon t+\varepsilon(42L-h_1),\\
+S(1)&=L(25d-1680)+5\varepsilon(11d-672),\\
+S(t)-S(1)&=-10dL(t^2-1)-20d\varepsilon(t-1),\qquad
+T'=S/H^2.
+\end{aligned}
+\tag{6.8}
+$$
+
+第一种情形 $L\ge0$。因 $d<60$，$25d-1680<0$ 且 $11d-672<0$，故 $S(1)<0$，包括 $L=0$。对 $t>1$，式 (6.8) 的最后差严格负：第一项非正，第二项严格负。因此整个 $\Omega_d$ 上 $T'<0$，由 $A>0$ 得 $\Phi_d'<-48/7<-41/7$。$S(1)$ 是多项式评价，不是在可能的极点一处评价 $T$。
+
+第二种情形 $L<0$。先定义正数 $k=-L>0$。由 $L(d)=L(56)-7(d-56)$ 及 $L(56)>0$ 得到 $d>56,\varepsilon>8$。再由 $d-7k=48A>0$ 得
+
+$$
+0<k<d/7<60/7<10,\qquad B>X-C>2.
+\tag{6.9}
+$$
+
+此时才定义 $\tau=\varepsilon/k=E/L$。其域与符号由
+
+$$
+\varepsilon-k=48+5X-6d>48+5X-6C
+=\frac{6(C-56)}7>0
+$$
+
+给出 $\tau>1$。利用 $2\varepsilon-k=5B$，直接多项式代入给
+
+$$
+H_\tau:=H(\tau)
+=\frac{5\varepsilon(d-7k)(2\varepsilon-k)}{k^2}
+=\frac{1200\varepsilon BA}{k^2}>0.
+\tag{6.10}
+$$
+
+这也正是式 (3.6)。已先证明 $k>0$，又由式 (6.5) 及 $\tau>1$ 得 $H'(\tau)>0$；所以 $\tau\in\Omega_d$，后续 $H_\tau$ 的除法均合法。
+
+当 $t\in\Omega_d,t\le\tau$ 时，$N=Lt+\varepsilon=k(\tau-t)\ge0$，因此
+
+$$
+T'=\frac{-kH-NH'}{H^2}<0.
+$$
+
+此式包括 $t=\tau$，其中 $N=0$；式 (6.7) 仍给所需结论。
+
+当 $t>\tau$ 时，置 $y=t-\tau>0$。精确的二次 Taylor 恒等式与商导数为
+
+$$
+\begin{aligned}
+H(t)&=H_\tau+H'(\tau)y+10dy^2,\qquad T(t)=-\frac{ky}{H(t)},\\
+T'(t)&=\frac{k(10dy^2-H_\tau)}{H(t)^2}.
+\end{aligned}
+\tag{6.11}
+$$
+
+若分子非正，$T'\le0$，基项估计已经足够。若分子正，定义 $z=10dy^2/H_\tau>1$。因 $H'(\tau)y>0$，
+
+$$
+T'(t)<\frac{k}{H_\tau}\frac{z-1}{(z+1)^2}
+\le\frac{k}{8H_\tau}.
+\tag{6.12}
+$$
+
+最后一步是精确不等式 $8(z-1)\le(z+1)^2$，等价于 $(z-3)^2\ge0$。即使 $z=3$，前一分母不等式仍严格。于是唯一可能正的导数贡献满足
+
+$$
+28AT'(t)<\frac{7Ak}{2H_\tau}
+=\frac{7k^3}{2400\varepsilon B}
+<\frac{7000}{38400}<1,
+\tag{6.13}
+$$
+
+其中所用 $k<10,\varepsilon>8,B>2$ 都已在式 (6.9) 前后证明。与式 (6.7) 合并得 $\Phi_d'<-48/7+1=-41/7$。
+
+$L\ge0,L<0$，及第二种情形的 $t\le\tau,t>\tau$ 和两个导数分子符号，穷尽整个域。故式 (6.2) 处处成立。对区间内任意 $x<y$，函数在 $[x,y]$ 连续且内部可微，中值定理给式 (6.3)。全程未用 $R=0$ 或额外源、增益承诺。∎
+

@@ -1,0 +1,18 @@
+**Theorem 5.2 (internal, real and transported frames).** The complete coordinate actions relevant to (R.22) are
+
+$$
+\begin{array}{ll}
+W\mapsto WU,\quad T\mapsto U^\dagger T,\quad v\mapsto v,
+& U\in U(2)\quad\text{(same blocks)},\\
+W\mapsto OW,\quad T\mapsto TO^T,\quad v\mapsto Ov,
+& O\in O(r,\mathbb R)\quad\text{(real environment coordinates)}.
+\end{array}
+\tag{R.24}
+$$
+
+The second transforms $J_p$ by $I_3\otimes O$. An arbitrary complex environment unitary requires transport of the real antiunitary as well.
+
+**Proof.** In the first action $WW^\dagger$, $WT$, $T^\dagger T$ and $T^T\bar T$ are unchanged, so it is an internal representation freedom, not an actual environment operation. It includes the Takagi choice with its necessary $T$ cotransformation. After fixing a diagonal Takagi form the remaining freedoms are precisely those $U$ preserving that form under congruence, together with any relabeling of the $c_j$. On a repeated positive-$c$ subspace its stabilizer is real orthogonal; on a zero-$c$ subspace the whole corresponding unitary group remains. Thus zero and repeated values do not select unique vectors.
+
+The real action gives $\tau\mapsto O\tau O^T$, $C\mapsto OCO^T$, $\sigma\mapsto O\sigma O^T$ and the same for $S$, by direct multiplication. If instead an arbitrary complex environment unitary $Q$ is used, the original real conjugation becomes $\mathfrak k'=Q\mathfrak kQ^\dagger$, where $\mathfrak kx=\bar x$. Both $\Gamma(\chi_+)$ and $\Gamma(\chi_-)$ transform by $Q$, but their new relation is conjugation by $\mathfrak k'$, not generally entrywise conjugation. In particular $Q\bar\tau Q^\dagger$ need not equal $\overline{Q\tau Q^\dagger}$. The simple barred-block form is justified only with its stated real structure. $\square$
+

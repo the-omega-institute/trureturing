@@ -1,0 +1,14 @@
+**Definition 3.2 (unnormalized floor).** Put instead
+
+$$
+\Phi_i^{\mathrm{fl},\varepsilon_i}(s)=\Phi_i^w(s)+\varepsilon_i,\qquad
+Z^{\mathrm{fl},\boldsymbol\varepsilon}_{\mathcal N}
+=\sum_s\prod_i\Phi_i^{\mathrm{fl},\varepsilon_i}(s).
+\tag{SCP.10}
+$$
+
+The floor is per block, not per seed. A shared seed is never copied.
+Both (SCP.9) and (SCP.10) are analytical partition carriers; their
+positive or ghost assignments are not newly legal source states and do
+not define attained code fibers.
+

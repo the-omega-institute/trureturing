@@ -1,0 +1,29 @@
+**引理 73.5（Every seam of that same suffix is safe）。** The suffix (73.11) succeeds on all candidates of Definition 73.1 and emits exactly $d$ paid complete blocks when the final-endpoint decoder is used. No clearing, waiting or repair block is omitted from its fee.
+
+**证明。** For the list choice (73.6), its first literal bit is
+
+$$
+x_{1,0}=q_1(m)=c_1(\lambda(m))=0.
+\tag{73.12}
+$$
+
+This clears the actual inherited tail one. For $r\ge2$, the supplied endpoint equations and the common boundary vertex $s_r$ give
+
+$$
+x_{r-1,m-1}=c_{r-1}(\lambda(s_r)),\qquad
+x_{r,0}=c_r(\lambda(s_r)),\qquad
+x_{r-1,m-1}x_{r,0}=0.
+\tag{73.13}
+$$
+
+There is a zero among the two bits directly adjacent to each such block boundary. No run of ones can cross that boundary. Each individual word has length $m<k$, so it cannot contain $1^k$ internally. These facts prove safety of the entire emitted concatenation, even if one later word happens to be all ones. The final endpoint needs no extra cleanup.
+
+In alternative (73.8) the first word again starts zero, because its leading phase is $m$ with label $L_B$ and first coordinate zero. The first window ends at $m-2$ with label $L_D$, so its last bit is one. Its preceding charge, at $m-3$ with label $L_C$, is also one; the endpoint inverse therefore makes its penultimate bit zero. Its actual terminal tail is exactly one. The second window starts at $m-2$ and its first three charges, at $m-2,m-1,m$, are $1,0,1$. Formula (73.11) gives the literal prefix $110$, hence leading run exactly two. This single seam has length
+
+$$
+1+2=3<m+1=k
+\tag{73.14}
+$$
+
+for every $m\ge3$. Both blocks are internally safe, and there are no other suffix seams. This proves the same attainment in this alternative, including $m=3$. The relaxed code condition does not hide a paid repair: the short safe run is already inside the two displayed words. ∎
+

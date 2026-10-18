@@ -1,0 +1,60 @@
+## 6. Common safe kernel, scales, and the mirrored construction
+
+For any six-read history define $\mathcal L(X)_i=\operatorname{tr}(A_iX)$, $(\mathcal I v)_i=iv_i$, and
+
+$$
+(\Lambda v)_j=v_j-2v_{j+1}+v_{j+2}\quad(j=0,1,2,3),
+\qquad \mathcal T_k=\Lambda(\operatorname{Id}+k\mathcal I)\mathcal L.
+\tag{6.1}
+$$
+
+The rows of $\Lambda$ are independent: in a nonzero combination, the largest row index has a last nonzero coordinate absent from all earlier rows. They kill affine evaluation vectors. Their kernel has dimension two, so it is exactly evaluation of affine polynomials at $0,\ldots,5$; that evaluation space has dimension two because its values at $0,1$ determine the polynomial.
+
+All endpoints in (2.1) have lower-right entry one. Thus $E_{22}$, the matrix with only its lower-right entry equal to one, obeys
+
+$$
+\operatorname{tr}(A_iE_{22})=\operatorname{tr}E_{22}=1,\qquad
+\mathcal T_kE_{22}=0.
+$$
+
+It is safe in the cone
+
+$$
+\mathcal K_{\mathrm{safe}}=
+\left\{\begin{pmatrix}a&b\\c&e\end{pmatrix}:
+ a,e\ge0,\ b,c\le0\right\}.
+$$
+
+To establish the exact kernel, allow any full real matrix $X=(\begin{smallmatrix}p&q\\r&s\end{smallmatrix})$ and an affine compensating drift, at a prescribed real $k$. Equations (3.1)–(3.6) still hold without positivity or rank one. If the six observations vanish, (3.5) gives
+$\zeta=\eta=u=W=Y=Z=0$. Rank two in (5.2) then gives $t=v=0$, and (3.2) gives $p=q=r=0$. The remaining $s$ is free, and the drift is $-s(1+k\tau)$. Conversely that matrix and drift cancel every reading. The exact affine quotient in (6.1) therefore gives
+
+$$
+\ker\mathcal T_k=\mathbb RE_{22},\qquad
+\operatorname{rank}\mathcal T_k=3\qquad(k\in\mathbb R).
+\tag{6.2}
+$$
+
+This places the construction in the diagonal common-safe-kernel stratum. There are two initial lower-shear reads $I,L$, two $Q$ reads, and final parameters $3,4$. Neither $M$ nor $JMJ$ is recorded. The legality, rank, and global inverse above are established directly, without needing that normal form as a recovery sufficiency theorem.
+
+For compatible data the entire original relation/gain fibre is exactly
+
+$$
+R=S/b,\qquad \alpha=b>0,\qquad \beta=bk,\qquad D\text{ fixed}.
+\tag{6.3}
+$$
+
+The equations $S=\alpha R$, $k=\beta/\alpha$ force this form. Conversely substitution gives $(b+bki)\operatorname{tr}(A_iS/b)=(1+ki)\operatorname{tr}(A_iS)$ for every recorded or future index. Global recovery leaves no further effective-target ambiguity. A fixed relation's positive factorizations have exactly the internal freedom $c'=\mu c$, $\ell'=\ell/\mu$, $\mu>0$: equality of first columns forces this positive scalar, and equality of second columns forces the remaining row component. This internal scale leaves $R$ itself unchanged.
+
+There is also a recovering mirror history obtained by replacing each $A_i$ and multiplier $W_i$ by $JA_iJ$ and $JW_iJ$. The latter is again a finite $M/J$ word, including the empty word. Its six matrices are
+
+$$
+I,\quad U,\quad
+\begin{pmatrix}1&3\\1&4\end{pmatrix},\quad
+\begin{pmatrix}1&3\\1&4\end{pmatrix},\quad
+\begin{pmatrix}1&4\\3&11\end{pmatrix},\quad
+\begin{pmatrix}1&4\\4&15\end{pmatrix}.
+$$
+
+For a source $S'$ on this mirror, $S=JS'J$ gives
+$\operatorname{tr}((JA_iJ)S')=\operatorname{tr}(A_iS)$. Apply the inverse already proved and conjugate the recovered source back, leaving $k,D$ unchanged. Positive factors transform as $Jc$ and $\ell J$ and remain fixed during their run. The common safe kernel becomes $E_{11}$. This is a correspondence of legal histories and actual sources. It requires no added conjugation acquisition. The fifteen-atom count belongs to (2.2); it is not an asserted optimal atom count.
+

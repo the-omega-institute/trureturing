@@ -1,0 +1,79 @@
+**Theorem 2.1.** No legal world satisfying even the first four equations
+of (1.6) has
+
+$$
+f(T)=\gamma(T-a)(T-b)(T-7),\quad \gamma\ne0,
+\qquad (a,b)\in[3,4]\times[4,5]\ \text{or}\ [4,5]\times[5,6].
+\tag{2.1}
+$$
+
+The assertion includes all edges, corners and permitted coincidences
+$a=b=4$ or $a=b=5$. There is no restriction on $y,\zeta$.
+
+**Proof, elimination without a clock-three division.** Put
+
+$$
+\begin{gathered}
+s=a+b,\quad p=ab,\quad U=p-s+1=(a-1)(b-1),\\
+V=p-2s+4=(a-2)(b-2),\quad W=p-3s+9=(a-3)(b-3).
+\end{gathered}
+\tag{2.2}
+$$
+
+Here $p,U,V>0$, $U-2>0$, while $W$ may be zero. The samples at
+zero through three are $-7p\gamma,-6U\gamma,-5V\gamma,-4W\gamma$.
+Thus $d=7p\gamma$ and, dividing only by $\gamma\ne0$,
+
+$$
+6Uj=7p-24/\gamma,\quad
+5V\ell=7p-48/\gamma,\quad
+4W(j+\ell)=7p-c_0/\gamma.
+\tag{2.3}
+$$
+
+Eliminating $1/\gamma$ gives
+
+$$
+5V\ell=12Uj-7p,\qquad
+20W(j+\ell)=78Uj-56p.
+\tag{2.4}
+$$
+
+Define
+
+$$
+\begin{aligned}
+D&=78UV-20WV-48WU\\
+ &=10p^2+58ps-350p-108s^2+708s-840,\\
+L_0&=19p-39s+99,\qquad K_0=9p-29s+109.
+\end{aligned}
+\tag{2.5}
+$$
+
+Multiplying the second equation in (2.4) by $5V$ and substituting
+the first yields $5Dj=140p(2V-W)$. Since $2V-W=p-s-1$,
+
+$$
+Dj=28p(p-s-1),\qquad
+D\ell=\frac{14}{5}pL_0,\qquad
+D(\ell-j)=\frac{14}{5}pK_0.
+\tag{2.6}
+$$
+
+For completeness the second identity follows from
+$5V D\ell=12U\cdot28p(p-s-1)-7pD$ and
+$336U(p-s-1)-7D=14VL_0$; the last follows from
+$L_0-10(p-s-1)=K_0$. As $j>0$ and $p-s-1=U-2>0$,
+the first identity proves $D>0$, including exclusion of $D=0$.
+Consequently
+
+$$
+j=\frac{28p(p-s-1)}D,\quad
+\ell=\frac{14pL_0}{5D},\quad
+u=\ell-1,\quad v=1-\frac{14pK_0}{5D}.
+\tag{2.7}
+$$
+
+The following four complete polynomial certificates contradict
+$uv\le1/4$.
+

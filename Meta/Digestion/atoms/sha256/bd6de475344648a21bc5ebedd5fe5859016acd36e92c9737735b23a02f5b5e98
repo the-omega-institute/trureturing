@@ -1,0 +1,23 @@
+**Convention 7.1 (Finite arithmetic and source correspondence).** The
+finite certificates use exact rational pairs for $\mathbb Q(\sqrt{17})$,
+with no time mesh or numerical optimization in their proof. Bounded
+in-memory rational arithmetic verifies the spectral projections from
+the original $K$, the four vector normalizations, the joint population
+and plane coefficients, all three TP equations, all 45 singleton
+coefficients in (5.1), all 145 minor bounds with the exact minima
+(5.5)–(5.6), and both root signs (5.9). The determinant formulas agree
+with independent Laplace expansion for these blocks. At the QWS
+parameters the same adjoint calculation reproduces all 45 published
+singleton coefficients, checking the supplier correspondence rather
+than assuming it from a reported check.
+
+For the necessary direction, the retained weighted moment is recovered
+from the exact sector lengths in (1.6). The three shifted trace-block
+leading minors, the three shifted cross-block determinants, and the
+two antisymmetric eigenvalue bounds of QWS Lemma 2.3 are positive
+by the rational enclosure (5.2). The witness kernel and complex PSD
+pairings are justified by that source's tensor-block decomposition.
+Lemma 2.2 then uses an exact operator identity and the full marginal;
+it is not an inference from finite samples. These are ordinary finite
+arithmetic checks and proofs, without Lean writing or compilation.
+

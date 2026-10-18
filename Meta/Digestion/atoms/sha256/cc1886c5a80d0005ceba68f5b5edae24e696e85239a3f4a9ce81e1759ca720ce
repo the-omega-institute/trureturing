@@ -1,0 +1,18 @@
+**定义 50.6（在完整旧续接域上的实例）。** 沿用第 48、49 节 $n\ge10$、$d=n-2$、完整耗尽状态 $\mathcal S_{\mathrm f},\mathcal D_{\mathrm f}$ 及
+
+$$
+D_G=[p,q,z_1,\ldots,z_{d-2},z_d,z_{d-1}].
+$$
+
+独立指定
+
+$$
+\begin{aligned}
+G_j&=(z_j,[p,q,z_1,\ldots,z_{j-1},z_{j+1},\ldots,z_{d-2},z_d,z_{d-1}]),&&1\le j\le d-4,\\
+\mathcal S^{(t)}&=\mathcal S_{\mathrm f}\cup\{G_1,\ldots,G_t\},&
+\mathcal D^{(t)}&=N(\mathcal S^{(t)}).
+\end{aligned}
+$$
+
+$G_1$ 即第 49 节的新供应。
+

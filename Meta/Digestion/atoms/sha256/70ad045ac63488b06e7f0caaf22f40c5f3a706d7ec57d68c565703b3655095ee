@@ -1,0 +1,65 @@
+### 105.3. Certificate-free quartic values on the common-cut space
+
+**Theorem 105.2.** For v in U0, put W(0)=1 and, otherwise,
+
+ W(v)=product_(p|d_v) (-5e_v/p)_4.                   (105.3)
+
+Every rational quartic symbol in (105.3) is defined. The exact multiplicative pairing is
+
+ <lambda_v,mu_v>=W(v).                              (105.4)
+
+Consequently q(v)=[W(v)] is a quadratic form on U0. In any basis of a subspace U of U0, if H_U is the mixed matrix <lambda_(v_i),mu_(v_j)> in additive bits, then
+
+ q(x)=x^T H_U x.
+
+This statement does not require nullity two, maximal nullity, or pairwise residue positivity.
+
+**Proof of (105.4), including the local extension.** For v nonzero, write d=d_v,e=e_v. All p|d are 1 modulo 4 and, by actual support, 1 modulo 12. The condition t^T v=0 makes d=1 modulo 8. Also d=1 modulo 3 and (d/5)=1. The cut gives (e/p)=1 at each p|d, so -5e is a nonzero square modulo such p and (105.3) is defined. Since d omits every prime 3 modulo 4 and D=3 modulo 4, d and e are both greater than one.
+
+The covering triple of lambda_v is (d,1,d). Write its conics as
+
+ H1: z2^2-d z3^2=20D t0^2,
+ H2: z1^2-z3^2=15e t0^2,
+ H3: z2^2-d z1^2=5D t0^2.
+
+Here t0 is a projective coordinate, distinct from the vector t. The class is in Selmer, so each conic is everywhere locally soluble. The conic Hasse principle supplies rational alpha,beta with alpha^2-d beta^2=5D. A projective rational point on H3 has t0 nonzero since d is nonsquare. As e=3 modulo 8, -5e=1 modulo 8. There is a 2-adic norm point alpha=0, beta=sqrt(-5e). Rational parametrization and weak approximation give a rational norm point sufficiently close that alpha,beta are 2-adically integral. Clear denominators to obtain primitive integers a,b,c with c>0 odd and
+
+ a^2-d b^2=5D c^2,  alpha=a/c, beta=b/c.
+
+Set A0=(15e+1)/2, B0=(1-15e)/2, and use primitive rational tangents
+
+ L2=A0 z1-B0 z3-15e t0,
+ L3=a z2-d b z1-5D c t0.
+
+Use the primary Cassels tangent formula of Shukla–Stoll, *The Cassels–Tate pairing on 2-Selmer groups of elliptic curves*, arXiv:2302.01640v1, section 3.2 equations (3.9)–(3.10) and Theorem 5.6, with the rational-image radical inclusion stated in its introduction: https://arxiv.org/pdf/2302.01640 . The second triple (1,d,d) gives
+
+ <lambda_v,mu_v>=product_l (L2(P_l)L3(P_l),d)_l.      (105.5)
+
+Here ( , )_l denotes the Hilbert symbol at the place l. The normalization is that of sections 96–104: the translation X -> X-10D/3 preserves Kummer coordinates and root differences, and the sign is (-1)^(2 times the additive Cassels pairing). A rational tangent scaling has global product one by Hilbert reciprocity. A local projective scaling changes the product of two tangents by a square.
+
+At infinity, 2, 3 and 5, d is a local square for the separate reasons just stated. At each prime of e, it is a square by (105.1). All these factors are one, regardless of tangent denominators.
+
+At an odd ell not dividing 30D, choose a primitive integral local covering point. Its projection to either conic is primitive, because otherwise another covering equation forces the fourth coordinate also to vanish modulo ell. The tangency points (1,A0,B0) on H2 and (c,b,a) on H3 are primitive over Z_ell, and the conics are smooth with unit diagonal coefficients. A primitive tangent to a smooth conic evaluates to even valuation at any integral section, if nonzero. To verify this, take unimodular coordinates carrying the tangency section to (1,0,0); the conic becomes uXZ+vY^2+wYZ+hZ^2=0 with u,v units and tangent Z=0. Away from the reduced tangency point Z is a unit. Near it, X is a unit, Y,Z are divisible by ell, and Z(uX+wY+hZ)=-vY^2 proves even valuation. Tangent zeros can be avoided on a smooth locally soluble covering, since they are finite and local neighborhoods contain infinitely many points. Hence both tangent valuations are even and the factor against the unit d is one. This includes every prime dividing c; global affine integrality is not assumed.
+
+Fix p|d. Primitiveness forces p not dividing c: otherwise the equation first forces p|a and then p|b modulo p^2. With c a unit, opposite valuation parities force b a unit and a divisible by p. Thus beta^2=-5e modulo p. Choose
+
+ t0=1, z1=-beta, z2=alpha,
+ z3^2=beta^2-15e, z3=-2beta modulo p.
+
+Hensel's lemma applies because p>3 and beta is a unit. At this point L3=2d b^2/c exactly and
+
+ L2=beta(3beta+1)^2/2 modulo p.
+
+If 3beta+1 vanishes, choose the opposite Hensel root; then L2=-3beta(beta-1)^2/2 modulo p is a unit. Since p=1 modulo 12, (-1/p)=(-3/p)=1. The possibly negative (2/p) must be retained. The odd-prime Hilbert formula gives
+
+ (L3,d)_p=(2/p)(c/p),
+ (L2,d)_p=(beta/p)(2/p).
+
+For the first formula, (d,d)_p=(d,-1)_p=1, so the unit d/p has not been silently discarded. Their product is (b/p), hence
+
+ (L2L3,d)_p=(-5e/p)_4(c/p).
+
+Multiplying all local factors proves (105.5) equals (c/d)W(v). Only the product (c/d), not each individual (c/p), is now simplified. Since d=1 modulo 4 and c is positive odd and coprime to d, reciprocity gives (c/d)=(d/c). For each odd ell|c, primitiveness and a^2-d b^2=5D c^2 imply that a,b are units modulo ell and a^2=d b^2 modulo ell; therefore (d/ell)=1. This also holds at ell=5, either by the same equation or by actual 5-splitting. Thus (d/c)=1 including all valuation multiplicities. This proves (105.4). Its proof used no dimension assumption. Bilinearity of the two maps (105.2) now proves the quadratic-form assertion. ∎
+
+The polarization can be evaluated without introducing undefined individual quartic symbols: for v,w in U0 it is [W(v+w)W(v)W(w)]. If some mutual prime symbols are negative, one must keep these composite cut products. Splitting them into (q_i/q_j)_4 is not allowed unless the separate arguments are quadratic residues.
+

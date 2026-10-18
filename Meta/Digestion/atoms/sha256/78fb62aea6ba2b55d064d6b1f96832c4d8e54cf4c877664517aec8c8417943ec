@@ -1,0 +1,72 @@
+**Theorem 5.3 (complete effective coordinate Pareto basis).** There
+is a terminating procedure returning
+
+$$
+\mathcal B_K=\operatorname{Min}(\mathcal F_K),\qquad
+\mathcal F_K=\uparrow\mathcal B_K,
+\tag{NRF.24}
+$$
+
+where $\mathcal B_K$ is finite and may be empty. For every
+$v\in\mathcal B_K$ it returns a literal table $C_v\in\mathcal C_K$
+with $b(C_v)=v$, and an original-source witness for each coordinate
+maximum. Moreover, for every extended budget,
+
+$$
+\operatorname{Feas}_K(B)
+\ \Longleftrightarrow\
+\exists v\in\mathcal B_K\quad v\le B,
+\qquad B\in\overline{\mathbb N}^{\,3}.
+\tag{NRF.25}
+$$
+
+Proof. Start with $A=\varnothing$. Apply Proposition 5.2. On a
+false answer return $A$. On a true answer extract its table and
+compute $x=b(C)$ by Proposition 4.2.
+
+Search the finite integer box $[0,x]$ using Theorem 4.1 and
+choose a feasible $y\le x$ minimizing $y_q+y_a+y_\ell$. There
+is at least one, namely $x$. This $y$ is a global minimal member
+of $\mathcal F_K$: any strictly smaller feasible vector would
+also belong to $[0,x]$ and have strictly smaller sum. Extract a
+table for $y$. Its exact vector is at most $y$, is itself feasible
+and hence equals $y$ by minimality. Retain that table and the
+coordinate witnesses of Proposition 4.2, append $y$ to $A$, and
+repeat the completeness test.
+
+Every appended $y$ is outside the old $\uparrow A$: otherwise an
+old $v\le y\le x$ would contradict the choice of $x$. All retained
+vectors are globally minimal, so no later vector can strictly
+dominate or be dominated by a different earlier one.
+
+For termination, use the elementary finite-dimensional
+well-quasi-order argument behind Dickson's lemma. Every infinite
+sequence of naturals has an infinite nondecreasing subsequence:
+if some value occurs infinitely often, use it; otherwise each
+finite initial interval occurs only finitely often, so successively
+select increasing values at increasing indices. Apply this
+subsequence argument first to the first coordinate, then to the
+second, then to the third. Any infinite sequence in $\mathbb N^3$
+has two terms in their original order with the earlier term at
+most the later one coordinatewise. The sequence appended above
+cannot have such a pair. Hence only finitely many iterations occur.
+Each iteration and its extraction terminate, so the entire
+procedure terminates.
+
+At its terminal false answer Proposition 5.2 proves completeness,
+and every retained vector is globally minimal. Conversely a
+minimal feasible vector lies above some retained vector by
+completeness and therefore equals it. This proves (NRF.24).
+This procedure does not stop merely because the retained list is
+an antichain or because no new vector has yet been enumerated:
+its stopping signal is the exact negative decision (NRF.22).
+The well-quasi-order argument proves that this signal must
+eventually occur.
+
+Finally every successful table has a finite exact vector. A
+witness for an extended budget therefore has some finite vector
+$x\le B$, and (NRF.24) supplies $v\in\mathcal B_K$ with
+$v\le x\le B$. The converse follows from the retained attaining
+table for $v$. This proves (NRF.25), including the case of an
+empty feasible class. $\square$
+

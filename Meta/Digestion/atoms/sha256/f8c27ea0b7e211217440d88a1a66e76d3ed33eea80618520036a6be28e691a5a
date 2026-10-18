@@ -1,0 +1,44 @@
+**Definition 6.2 (selection given a represented history).** The following
+algorithm implements the table, including partial records. All operations
+are on acquired/derived representations, not live source or meter reads.
+
+First traverse actual seed/local CAP origins, initial field order and
+ingress creation chains by their distinct grammars. Resolve a referenced
+span by Nth on the port, unary base cancellation and TakeItems; retain its raw
+tracks, markers and actual complete origin. Follow a descriptor predecessor
+only to a strictly earlier creation reference and deduplicate references
+by Find. Enumerate finite selected slots by their catalog identities.
+For complete input blocks use their actual descriptor length/status; for
+the live incomplete block use its real PC/head/base/counter frontier as
+in Definition 6.3. These basic scans do not need cover/package contents.
+
+For construction roles fold the already derived finite native history in
+row order. Maintain finite-word lists of open/closed typed spans and their
+actual port positions. The static role directory consists of ARC's native
+capture/initial-field, ingress, cover-record, package-record, sender-export,
+mailbox/receiver-allocation, payload-copy, descriptor, seal, completion and
+fault call sites, followed by the five new stage call sites. It is the
+call-path/row numbering of Definition 2.3, obtained by the same syntactic
+expansion as the captured code. The fixed distinguished-entry directory
+uses that order; it is code metadata, not an unrecorded runtime choice.
+
+On entering a listed construction span record its current actual destination
+and Base-derived start. Whenever its Append/Zero EX changes an old R into
+the next backing cell, add that **old R identity immediately**, even before
+WR. Record subsequent writes, F/seal/descriptor and origin-copy relations
+at their actual rows. The fresh trailing R is boundary context, not a
+consumed input. During payload copies mark the actual initialized destination
+span, preserving its local identity and the copied origin. At a completion
+record close only that declared span. Snapshot the selected relations at
+the stopping cut; an unfinished record remains its constructed prefix.
+
+The 71 cover/package/sender/completion roles and 73 receiver roles enter
+family 5; unrelated bank registers, scratch and failed-fault records do
+not become callable objects. Stage publications use the same sender/
+receiver roles, so their actual backing is included when selected. Family
+1 stops at the declared immutable initial-prefix endpoint, or at its actual
+partial frontier if earlier. The role directory comes from finite code
+and literal call paths, not interpretation of an unsealed payload as a
+valid object. Project the marked endpoint cells/slots/relations, sort and
+serialize by Definition 6.1. No full history is emitted as a memory field.
+

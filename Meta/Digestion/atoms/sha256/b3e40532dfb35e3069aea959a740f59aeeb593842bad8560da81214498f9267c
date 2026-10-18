@@ -1,0 +1,14 @@
+**Theorem 9.2 (twelve-coordinate Pareto optimality).** The vector with
+four entries $g_y(s)$ at each original height is Pareto optimal among
+all allowed designs for every $s\in[0,1]$: no design weakly reduces
+all twelve coordinates and strictly reduces at least one.
+
+Proof. A strictly reduced coordinate belongs to one fixed height.
+If all four coordinates there are at most $g_y(s)$, and at least one
+is smaller, their mean is below $g_y(s)$, contradicting (IR.55).
+This compares the original twelve resource coordinates without choosing
+a scalar objective or a distribution on histories. In the interior,
+(IR.55) supplies no two-history beta-pair inequality and no individual
+coherent-input lower bound $g_y(s)$. The next section explicitly
+improves each selected individual coordinate. $\square$
+

@@ -1,0 +1,92 @@
+**Proposition 8.1 (credited full-family construction and exact alphabet).**
+For a graph above, let $H_0=\lceil\log_2n\rceil$,
+$K_0=2^{H_0}$ and $D=H_0+3$. The construction of [GDB, Theorem
+17.1 and Convention 17.3][GDB] gives a lawful complete code for
+every $t\in\mathcal F_D$ with exactly
+
+$$
+|S_D|-2^{2n}+1
+\tag{WBF.33}
+$$
+
+attained names. Its one merged canonical fiber consists of all graph
+tuples of Convention 1.5 in the first $n$ positions of a public
+perfect height-$H_0$ right-subtree scaffold, with alpha padding in
+the remaining $K_0-n$ positions. Every other canonical state is
+assigned its own singleton name. The full fibers on original sources
+are the inverse images under $\pi_D$, retaining every variable shape.
+
+On every original source, before the later target is known,
+preparation has the exact Read and literal charges
+
+$$
+T_{\rm prep}=2^D-1,\qquad
+Q_{\rm prep}=D,\qquad
+A_{\rm prep}=(D-1)2^D+1,
+\tag{WBF.34}
+$$
+
+where $Q_{\rm prep}$ is the maximum submitted address length and
+$A_{\rm prep}$ the total submitted letters. Every later request
+uses at most one fresh original-root Read of the same stationary source,
+with the address selected before its reply and any authentic count.
+
+Proof and resource correspondence. The graph's $2^{2n}$ actual
+tuples embed injectively into the ordered scaffold in $S_D$; each
+perfect graph block belongs to $S_3$. The construction is the
+credited GDB realization, with the following explicit mapping of
+resources. A deterministic source-blind preparer scans all literal
+words $Rq$, $q\in W_D$, in fixed public order, including absent
+replies. Those paid replies determine $\pi_D(v)$. A finite public
+membership table selects its merged or singleton name. Canonical
+trees and this finite table are effectively enumerable; there is no
+efficient-generation assertion. Every canonical state is itself an
+actual right subtree of a source in $\mathcal F_D$. Thus all names
+are attained, and merging exactly $2^{2n}$ distinct states gives
+(WBF.33), with no preassigned unacquired colors.
+
+There are $\sum_{j=0}^{D-1}2^j=2^D-1$ scan words, of lengths
+$j+1$. Their total length is
+$\sum_{j=0}^{D-1}(j+1)2^j=(D-1)2^D+1$, proving (WBF.34).
+The scan includes words of length $D$, giving its stated maximum.
+Export only a fixed-width representation of the complete name.
+Use the separately paid handoff and isolation in Definition 1.2
+to remove every other acquired distinction, including membership
+work, selectors, buffers, lengths, allocation, control, timing and
+transcripts. The complete attained alphabet is therefore the one
+in (WBF.33), rather than a count that ignores a surviving cut
+descriptor or hidden seed vector.
+
+At a singleton name, every requested factor is fixed, giving zero
+Reads. At the merged name, a target strictly above the scaffold
+frontier is branch. Within a graph block its root and two children
+are branch. A terminal target for edge $a$ reads the actual tail
+owner at the single original-root word
+
+$$
+R a_{\operatorname{tail}(a)}q_{\operatorname{owner}(a)},
+\qquad |a_{\operatorname{tail}(a)}|=H_0,
+\qquad |q_{\operatorname{owner}(a)}|=2.
+\tag{WBF.35}
+$$
+
+This address has length $D$ and is determined by the complete name,
+public graph tables, $D$ and the target, before its reply and every
+supplied count. Alpha or beta determines exactly the requested
+terminal factor. Padding has fixed alpha factors, including absent
+suffixes. Every allowed request has right-subtree suffix length at
+most $D-1=H_0+2$, so these cases exhaust all requests. A terminal
+and its owner are occurrences of the same actual edge bit; there
+is only one late Read, not an independent endpoint observation.
+
+All prefixes used to identify actual scaffold blocks are present.
+Pair homomorphism therefore transports their predicted replies to
+the corresponding original-root literals. The exact presence premise
+of `NativeDepthPatterns.original_present_transport` is met only at
+these present occurrences; subtree notation grants no subtree input.
+Canonicalization preserves the queried replies and full requested
+factors on every inverse-image source, not merely on the perfect
+representatives. Equation (WBF.3) then answers every subsequently
+supplied authentic $k\ge0$ without more Reads. The target and count
+were not supplied to preparation. $\square$
+

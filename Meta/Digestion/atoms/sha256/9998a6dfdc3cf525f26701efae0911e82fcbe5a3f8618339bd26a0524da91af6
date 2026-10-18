@@ -1,0 +1,24 @@
+**定义 1.1（字面来源与替换）。** 来源是一棵未知的非空、有限、完整有序二叉树 $U$：每个节点或者是标为 $\alpha$ 或 $\beta$ 的叶，或者有按左、右排列的两个非空子树。括号、左右次序与每个不同出现均保留。替换为
+
+$$
+\rho\alpha=\beta,\qquad
+\rho\beta=(\beta,\alpha),\qquad
+\rho(S,T)=(\rho S,\rho T),\qquad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix}.
+\tag{1.1}
+$$
+
+组成 $c(U)$ 是两色叶的数目。公开参数满足
+
+$$
+d=3k,\quad k\ge1,\quad a,b>0,\quad n=a+b\ge4,
+\qquad
+(A,B)=M^d(a,b)
+=\bigl(F_{d-1}a+F_db,F_da+F_{d+1}b\bigr),
+\tag{1.2}
+$$
+
+其中 $F_0=0,F_1=1,F_{t+2}=F_{t+1}+F_t$。令 $N=A+B$，$\mathcal T_C$ 是组成恰为 $C=(A,B)$ 的全部完整有序树，$\mathcal P=\mathcal T_C\cap\operatorname{im}\rho^d$。目标是在整个 $\mathcal T_C$ 上判定是否属于 $\operatorname{im}\rho^d$。负源没有正源高度承诺。
+
+此处直接采用[原定义 57.1](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION.md#57-uniform-paid-acquisition-of-actual-image-certificates-at-exact-composition)的来源与组成；混色及 $n\ge4$ 是本卷的附加范围条件。
+

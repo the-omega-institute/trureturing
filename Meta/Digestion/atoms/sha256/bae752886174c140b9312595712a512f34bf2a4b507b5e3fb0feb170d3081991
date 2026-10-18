@@ -1,0 +1,11 @@
+**Definition 9.1 (falsifiers for the finite models).** The local finite
+models are rejected by any of the following: a future reservoir suffix
+changes a selected earlier reader state; a stop immediately after IN
+loses or prematurely writes its bit; length zero performs a payload IN;
+the relative ordinal zero or first cut is shifted; an out-of-cover target
+is accepted because its request itself advances time; a later cover
+changes an existing package's frozen target; a receiver is readable
+before its seal; or omitting service choices still suffices for the full
+extended state. These are tests of the stated local claims, not substitutes
+for their quantified proofs.
+

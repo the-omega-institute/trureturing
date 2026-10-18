@@ -1,0 +1,59 @@
+**Proposition 360.4 (Matching whole allocation).** The bound $137/512$ is attained by a complete stopped allocation with roots $\{1,2,5\}$ and all other addresses leaves.
+
+*Proof.* In the following table all masses and cell vectors are integer numerators over $512$. A pair's columns are its first-zero, middle and exhaustion cells; a singleton's first two columns are its replies zero and one. Each cell sums to its own schedule mass.
+
+| Schedule | Mass | First cell | Second cell | Third cell |
+| --- | ---: | --- | --- | --- |
+| empty | 168 | $168e_0$ | — | — |
+| $(1)$ | 72 | $72e_1$ | $72e_0$ | — |
+| $(1,3)$ | 135 | $135e_1$ | $135e_3$ | $58e_0+77e_5$ |
+| $(2,4)$ | 95 | $95e_2$ | $95e_4$ | $35e_0+21e_6+39e_7$ |
+| $(2,6)$ | 40 | $40e_2$ | $40e_6$ | $40e_0$ |
+| $(5,6)$ | 2 | $2e_5$ | $2e_6$ | $2e_0$ |
+
+The masses sum to $512$. The complete law is explicitly
+
+$$
+\begin{aligned}
+512p_0&=168+72w_1+58w_1w_3+35w_2w_4+40w_2w_6+2w_5w_6,\\
+512p_1&=207(1-w_1),&512p_2&=135(1-w_2),\\
+512p_3&=135w_1(1-w_3),&512p_4&=95w_2(1-w_4),\\
+512p_5&=77w_1w_3+2(1-w_5),\\
+512p_6&=21w_2w_4+40w_2(1-w_6)+2w_5(1-w_6),\\
+512p_7&=39w_2w_4.
+\end{aligned}
+\tag{360.5}
+$$
+
+These nonnegative expressions sum to $512$ at every word. At first zero $n=1,\ldots,7$, the correct numerators are respectively
+
+$$
+(207,135,135,95,79,63,39)=512b-137.
+\tag{360.6}
+$$
+
+Substituting the fixed prefix into $512(1-p_0-p_n)$ gives the complete suffix formulas
+
+$$
+\begin{array}{c|l}
+n&512(1-p_0-p_n)\\ \hline
+1&137-35w_2w_4-40w_2w_6-2w_5w_6\\
+2&137-58w_3-2w_5w_6\\
+3&137-35w_4-40w_6-2w_5w_6\\
+4&119-40w_6-2w_5w_6\\
+5&100-40w_6\\
+6&116\\
+7&98
+\end{array}
+\tag{360.7}
+$$
+
+Every subtracted term is nonnegative; each constant is attained by a suffix. Thus every independent union deficit is at most $137/512$. The correct deficit is exactly $137/512$, and the base deficit is the wrong mass minus $137/512$, hence is nonpositive. This proves each row at every multiple-zero word as well. At $1^7$ the law is
+
+$$
+p_{1^7}=(375e_0+77e_5+21e_6+39e_7)/512,
+\tag{360.8}
+$$
+
+whose positive-base deficit is exactly $137/512$. $\square$
+

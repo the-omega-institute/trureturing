@@ -1,0 +1,13 @@
+**Definition 162.1 (Full deterministic event images).** For a finite
+length $L$, form all events as in Section 155 with six replaced by $L$.
+For every complete deterministic table $D$ in the full class $C$, let
+$z_D$ be its event-incidence vector: its row is one precisely when the
+output at that row's word belongs to its event. Put
+$B_C(y)=\max_Dy\cdot z_D$. Let $R_L$ be the fixed $(1,2)$ stopped rule
+with outputs $1,2,0$, and put
+
+$$
+K_{R,L}=\{y\ge0:B_N(y)=y\cdot z_R\}.
+\tag{162.1}
+$$
+

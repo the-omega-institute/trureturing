@@ -1,0 +1,21 @@
+**Proposition 2.2 (zero-length and halting boundaries).** Theorem
+2.1 includes zero-length reads, late entry, early halt and cycles.
+Its halting premise cannot be removed, even when $L=0$.
+
+Proof. In Theorem 2.1, $L=0$ permits actual root reads; the
+argument does not require positive address cost per raw call.
+Entry with $N\ge2L+2$
+has $b=0$, so the whole run is in the tail and uses at most $s$
+actions. An initial halt has zero actions. An early halt before
+$J$ uses only the first count. A read-only repeated configuration
+cannot escape to a later epoch, since it executes no update.
+An update-containing cycle in the tail cannot escape through a
+later change of one of its read replies, since those replies are
+already permanently branch. Before the tail, both kinds of cycles
+are covered by the actual epoch-state argument.
+
+The halting premise is essential. A one-state table reading the
+root and sending every reply back to itself has total length zero
+on every finite prefix and never halts. Hence a length cap alone,
+without totality, is not a termination certificate. $\square$
+

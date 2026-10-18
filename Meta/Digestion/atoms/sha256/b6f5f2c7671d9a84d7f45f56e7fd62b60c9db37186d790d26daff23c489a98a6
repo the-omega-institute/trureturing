@@ -1,0 +1,18 @@
+**Corollary 90.2 (the remaining prime indices at N=81).** If $k>1$ is odd, $3\nmid k$, and $B_{81k}$ has the same full squarefree kernel as $B_{81}$, then $k=r$ is prime and
+
+$$r>\frac{7177905237579946589743592924684179}{2}.$$
+
+Thus every prime relative index at most $3588952618789973294871796462342089$ is excluded.
+
+**Proof.** Section 89 certifies the squarefree factorization
+
+$$D=B_{81}=AQ,\qquad A=59779,\qquad Q=120074026624398979403194983601.$$
+
+Exact modular exponentiation gives
+
+$$Q\equiv300\pmod A,\qquad 300^{29889}\equiv59778\equiv-1\pmod A.$$
+
+Euler's criterion proves $(Q/A)=-1$. Theorem 78.1 therefore applies to this actual two-prime block with $C=1$ and gives rational rank one. Theorem 89.2 makes $k$ prime, and Theorem 90.1 gives the strict lower bound. ∎
+
+The general theorem requires actual squarefreeness of $B_N$ and rank one; both are verified in the $N=81$ application. The argument uses the real position of the original generator and does not require an odd-valuation primitive divisor. Larger prime relative indices remain open, and no universal WSS exclusion is asserted.
+

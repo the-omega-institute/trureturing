@@ -1,0 +1,48 @@
+**Definition 11.1 (original branch boxes and derivative norms).** Let
+$F_b(X,\lambda)=0$, $b=6,7$, be exactly OE Definition 4.2 in its stated variable and equation order. $F_7$ has dimension $n_7=22$ and signed $p_4$. $F_6$ has dimension $n_6=21$, omits $p_4$ before any inverse, and retains $P_4'(x_4)=0$ but does not impose $P_4(x_4)=0$. Its last coordinate is the unused $x_4$. Both have all value rows before all derivative rows. The branch centers are the exact event-center embeddings of OE Definition 13.1, with radii $10^{-8}$ on every half-angle coordinate and weight and $10^{-4}$ on $Y$. The fixed multiplier interval is
+$$
+I=[190.449003333,190.449005333].
+$$
+Denote these full rectangular branch boxes by $\mathcal B_b$. The event root is the common exact embedding supplied by OE §§4–5; these boxes and $I$ are not adjustable localization neighborhoods.
+
+Let $r_b$ be the corresponding radius vector, $D_{r_b}=\operatorname{diag}(r_b)$ and
+$\|v\|_{r_b}=\|D_{r_b}^{-1}v\|_\infty$. Let $R_{{\rm pre},b}$ be the exact rational OE Appendix 14 preconditioner and choose its supplied uniform defect bound
+$$
+q_b\ge\sup_{\mathcal B_b\times I}
+\|D_{r_b}^{-1}(I-R_{{\rm pre},b}F_{b,X})D_{r_b}\|_\infty,
+\qquad q_b<1.
+$$
+The supplier bounds $q_6<0.000172$ and $q_7<0.010$ permit rational such choices below one. Choose finite rational bounds on these full boxes:
+$$
+\begin{gathered}
+N_b\ge\|F_{b,X}^{-1}\|_2,\quad P_b\ge\|F_{b,\lambda}\|_2,\quad
+Q_b\ge\|F_{b,XX}\|,\quad R_b\ge\|F_{b,X\lambda}\|,\\
+K_{1b}\ge\|D_Xk_b\|_2,\qquad K_{2b}\ge\|D_X^2k_b\|.
+\end{gathered}
+$$
+Here the index sets are $I_6=O$ and $I_7=\{0,\ldots,6\}$, and
+$k_b(X)=\sum_{i\in I_b}p_i\sigma_i u_i$ uses the fixed report signs on the supplied contact boxes, and the derivatives include every variable dependence of the cleared systems. A sufficient Euclidean inverse bound is
+$$
+N_b\ge
+\sqrt{n_b}\frac{\max_jr_{b,j}}{\min_jr_{b,j}}
+       \frac{\|R_{{\rm pre},b}\|_2}{1-q_b}.
+$$
+Indeed $F_X^{-1}=(R_{\rm pre}F_X)^{-1}R_{\rm pre}$, the geometric-series inverse has scaled infinity norm at most $(1-q_b)^{-1}$, and conversion to Euclidean norm costs at most
+$\sqrt{n_b}\max r_b/\min r_b$. A scaled defect bound by itself is not an unscaled contraction bound.
+
+At the event let $v_b$ be the exact solution of
+$F_{b,X}v_b=-F_{b,\lambda}$ in its original coordinates, and set
+$$
+a=D_Xk_6\,v_6=k_{6,\lambda}(\lambda_e)>0,\qquad
+b=D_Xk_7\,v_7=k_{7,\lambda}(\lambda_e)>a .
+$$
+These are response derivatives, not $a_{\rm src},b_{\rm src}$. Their strict order is reused from Theorem 2.3:
+$b-a=-p_4'd_6'$, with the normalized unused-gap derivative
+$d_6'=\dot P_4/d_4$ at the event, where
+$$
+\dot P_4=\left.\frac d{d\lambda}
+ P_4(x_4^{(6)}(\lambda);Y_6(\lambda),\lambda)\right|_{\lambda_e}
+ =\Gamma_{{\rm num},4}\cdot Y_6'-W_{{\rm num},4}.
+$$
+The last equality uses the unused stationarity equation; $\dot P_4$ is a total multiplier derivative, whereas $P_4'(x_4)=0$ in the six system is an $x$ derivative. The supplier's cleared derivative is not substituted for $d_6'$ without its denominator. Enclosing these exact event linear solves, especially the small positive $a$, is a separate finite evaluation obligation.
+

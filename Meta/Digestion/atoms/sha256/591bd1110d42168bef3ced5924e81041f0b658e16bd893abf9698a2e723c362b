@@ -1,0 +1,20 @@
+### 13.5 电磁/规范接口与限制
+
+若把第四个方向理解为电磁或 gauge structure，最自然的接口是：
+
+- \(H_\alpha,H_\beta\) 提供宏观层运动的水平连接；
+- Fibonacci scalar phase 提供离散 holonomy-like phase；
+- prime seam 提供离散 arithmetic chart transition；
+- boundary/readout map 提供端口和观测接口。
+
+这还没有产生 Maxwell 方程、U(1) curvature 或真实电磁场。要完成电磁连接，需要在层状态上定义 gauge group action、link variable、field strength 和 gauge-invariant cost，并证明其与 kernel refinement 及 radial transport 的兼容性。
+
+上述四类接口的条件分别为：
+
+| 方向 | 模型对象 | 所需桥梁与适用边界 |
+|---|---|---|
+| 动力学 | QCA/SL\(_2\) reversible transfer、候选 Hamiltonian flow | 与各 seam 的共同状态映射仍待构造 |
+| 量子力学 | \(\rho\)、unitary、pinching、CPTP/GKSL | 指定载体、读出和通道；金字塔是 classical readout sector |
+| 热力学 | \(D_{\mathrm h}\)、Onsager mobility、free-energy decrease | 内部 κ-flow；Gibbs 识别要求匹配参考；环境热须另供协议 |
+| 电磁/规范 | horizontal connection、phase、boundary port | 仍是待构造的 field extension |
+

@@ -1,0 +1,54 @@
+**Proposition 15.1 (one-call factor-output controller with its entry
+consumer).** Fix $D\ge2$ and the binary slice. Consider the following
+explicit auxiliary architecture. The pretarget source-dependent code
+is constant. After $p$ arrives, it selects an entry in $Q\sqcup H$.
+Thereafter $p$ is not an input: each running state in $Q$ fixes one
+actual original-root word and, after its reply, a successor; each halt
+in $H$ outputs a fixed temporal factor. Every required execution
+terminates with at most one Read and serves all subsequent authentic
+counts. The exact minimum installed size and exact minimum post-target
+entry range are simultaneously
+
+$$
+K=|Q|+|H|=N+3,\qquad r_{\rm entry}=N+1,
+\tag{RRN.61}
+$$
+
+while the complete attained pretarget alphabet is one.
+
+Proof. A leaf request $a_i$ has two possible factors, $(2,1)$ and
+$(1,0)$, so it cannot enter a halt. A single query at any word other
+than $a_i$ is constant or reads another independent slot, by Lemma
+10.2. Two inputs agreeing on that reply and differing at slot $i$
+then require different outputs. Thus the running entry for $a_i$
+must query $a_i$, forcing $N$ distinct running entries. At least
+three halts are required for the two leaf factors and the branch
+factor $(0,0)$. The latter is needed because $D\ge2$ supplies the
+internal target $R$. Its entry cannot equal a leaf entry: with no
+subsequent $p$ input, that entry already produces a leaf factor on
+each attained reply, whereas $R$ must always produce branch.
+Therefore at least $N+1$ entries and $N+3$ total states are needed.
+
+Attain both by installing one running state at every $a_i$, two
+leaf-factor halts and one branch-factor halt. Leaf replies lead to
+their corresponding halts; complete unused reply edges with existing
+halts. Every internal target enters the branch halt directly.
+Preparation makes no Read and exports one fixed name. The installed
+address tables and the public entry distinction carry no acquired
+source dependence. All actual queries have length $D$.
+
+The direct consumer is the initial-state resource of
+[NativeLiteralMoore.NativeLiteralFeasible][MooreMenu]. In that
+predicate the acquired code is itself a map from supplied
+$\operatorname{ImageValues}(C)$ into $Q\sqcup H$, and its attained
+range is bounded by $r$. If an adapter absorbs the original public
+request into such an entry and thereafter removes $p$, the range
+required by this auxiliary architecture is $N+1$, not the pretarget
+source-code cardinality one. Equating those two resources would
+misprice this concrete service. Conversely keeping $p$ as an external
+input or paying its entry range is not excluded. Proposition 12.2
+with $s=2,b=N$ realizes this constant-name slice reader inside an
+actual paid full-family code, so the distinction also applies on that
+attained original name. This is a consumer of the separate entry
+accounting, not a new predecessor-row synthesis theorem. $\square$
+

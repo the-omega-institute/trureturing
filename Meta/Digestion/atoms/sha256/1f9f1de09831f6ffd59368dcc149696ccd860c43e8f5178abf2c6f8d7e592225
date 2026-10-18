@@ -1,0 +1,56 @@
+**Lemma 4.2 (phase integrals and projection slope).** Define
+
+$$
+C_{\mathcal G}=\int\mathcal G(1,\mathbf z)^2d\mathbf z,\quad
+D_{\mathcal G}=\int|Y\mathcal G(1,\mathbf z)|^2d\mathbf z,\quad
+E_{\mathcal G}=\int|X\mathcal G(1,\mathbf z)|^2d\mathbf z,\quad
+t_\infty=D_{\mathcal G}/(2C_{\mathcal G}).
+\tag{4.6}
+$$
+
+All are finite and
+
+$$
+C_{\mathcal G},D_{\mathcal G}>0,\quad
+E_{\mathcal G}+D_{\mathcal G}=10C_{\mathcal G},\quad
+E_{\mathcal G}>4C_{\mathcal G},\quad 0<t_\infty<3.
+\tag{4.7}
+$$
+
+On both height tails,
+
+$$
+\begin{aligned}
+\rho(r)&\sim c_\infty^2C_{\mathcal G}|r|^{-4},&
+m_Y(r)&\sim c_\infty^2D_{\mathcal G}|r|^{-6},\\
+\int|Xp(r,\mathbf z)|^2d\mathbf z&\sim c_\infty^2E_{\mathcal G}|r|^{-6},&
+J(r)&\sim\tfrac12c_\infty^2D_{\mathcal G}|r|^{-4},\\
+q_*(r)&\to t_\infty,&F_*(r)/r&\to t_\infty.
+\end{aligned}
+\tag{4.8}
+$$
+
+In particular $q_*$ is bounded on the whole line and $|F_*(r)|\le C|r|$.
+
+Proof. At height one $d(0,(1,\mathbf z))$ is comparable to $1+\max(|y|,|z|^{1/2},|w|^{1/3})$. The phase dilation $(y,z,w)\mapsto(Ry,R^2z,R^3w)$ has Jacobian $R^6$. The squared bounds in (4.2) have degrees $-10$ and $-12$ and are integrable on this phase space of homogeneous dimension six. They therefore majorize the entire phase slices, including their complements of compact sets. Dominated convergence yields the positive-height limits of $r^4\rho$, $r^6m_Y$ and $r^6\int|Xp|^2$. It also gives the mixed limit
+
+$$
+r^5\int p(r,\mathbf z)Xp(r,\mathbf z)d\mathbf z
+ \longrightarrow c_\infty^2\int\mathcal G(1,\mathbf z)X\mathcal G(1,\mathbf z)d\mathbf z.
+\tag{4.9}
+$$
+
+The mixed integrand has an integrable degree $-11$ majorant. Parity supplies the negative tails, with the sign change in the mixed integral.
+
+Homogeneity gives $\int\mathcal G(r,\mathbf z)^2=C_{\mathcal G}r^{-4}$ and the corresponding derivative slices $E_{\mathcal G}r^{-6},D_{\mathcal G}r^{-6}$ for $r>0$. Second horizontal derivatives of $\mathcal G$ are smooth off zero and homogeneous of degree $-7$. On a compact positive height interval these yield integrable phase majorants for $(X\mathcal G)^2$ and $\mathcal G X^2\mathcal G$. Hence the squared mode slice can be differentiated twice under the phase integral. Harmonicity and phase integration by parts give
+
+$$
+20C_{\mathcal G}r^{-6}
+ =2\int|X\mathcal G|^2+2\int|Y\mathcal G|^2.
+\tag{4.10}
+$$
+
+For that integration by parts, insert phase cutoffs $\zeta(y/L,z/L^2,w/L^3)$. Their $Y$ derivatives are $O(L^{-1})$ on bounded height intervals. The phase $L^2$ bounds and Cauchy–Schwarz make the boundary term vanish. The same slice differentiation gives $\int\mathcal G X\mathcal G=-2C_{\mathcal G}r^{-5}$. Thus at height one Cauchy–Schwarz gives $E_{\mathcal G}\ge4C_{\mathcal G}$. Equality would imply $X\mathcal G(1,\mathbf z)=-2\mathcal G(1,\mathbf z)$, first almost everywhere and then everywhere by continuity. Homogeneity extends it to $X\mathcal G=-2\mathcal G/r$ on $r>0$. At each fixed phase, $\mathcal G=r^{-2}a(\mathbf z)$ would then contradict the bound $\mathcal G\le Cr^{-5}$ at infinity and positivity. The inequality is strict. If $D_{\mathcal G}=0$, continuity and homogeneity give $Y\mathcal G=0$ on $r>0$. Harmonicity makes $\mathcal G$ affine in height at each fixed phase; decay at infinity contradicts positivity again. This proves (4.7).
+
+The full-height $V_1$ bound gives $|v_1(r)|\le C(1+|r|)^{-4}\rho(r)=O(|r|^{-8})$. Integrating $2r m_Y+\gamma v_1$ on the positive tail yields the asserted $J$ asymptotic: the slice error is uniformly $o(r^{-6})$ beyond a sufficiently large height, so its integrated error is $o(r^{-4})$, while the $v_1$ contribution is $O(r^{-7})$. Evenness gives the other tail. Division by positive $\rho$ gives $q_*\to t_\infty$; its primitive has $F_*/r\to t_\infty$. Continuity on compact intervals and the two tail limits make $q_*$ globally bounded. These are the E slice and slope results with their majorants checked; no local limit has been integrated over uncontrolled phases. $\square$
+

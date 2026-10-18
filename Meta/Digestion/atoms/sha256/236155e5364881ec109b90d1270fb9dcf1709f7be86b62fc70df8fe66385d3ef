@@ -1,0 +1,109 @@
+**Theorem 6.1 (explicit universal lower certificate).** At $s_*<s<1$
+write $u=u_s(d_s)$ and form
+
+$$
+\begin{gathered}
+U=(u+d_s)/2,\quad V=(u-d_s)/(2\alpha),\quad P=1-U,\quad Q=1-V,\\
+R=\frac{\sqrt{\beta^2-d_s^2}}{2\sqrt\alpha},\quad
+v=\frac{\sqrt{u^2-\beta^2}}{2\sqrt\alpha},\quad t=s-v,\\
+\cos\theta=d_s/\beta,\quad \sin\theta=2\sqrt\alpha R/\beta,\quad
+0<\theta<\pi/2.
+\end{gathered}
+\tag{AS.42}
+$$
+
+Use $X,Y$ from (AS.26), and $B=B_{\theta,DT}$. Define
+
+$$
+\begin{gathered}
+f_u=a_0-su/v=\frac{e_s(d_s)}{\sqrt{u^2-\beta^2}}>0,\qquad
+\mu=\frac{\alpha A+B}{f_u}>0,\qquad \nu=\mu t/v,\\
+\lambda=\frac{\beta}{2\alpha}
+ \left(\frac{\gamma}{R}-\frac{\mu s}{v}\right),\qquad
+k_\theta=(1-\alpha)\cos\theta-\beta .
+\end{gathered}
+\tag{AS.43}
+$$
+
+Then $\lambda,\mu,\nu,k_\theta,t$ are strictly positive and finite.
+For every normalized necessary outer competitor $X',Y'=Z_s-X'$,
+
+$$
+\boxed{\operatorname{tr}(C_{DT}X')-W
+=\lambda[\beta-\operatorname{tr}(BY')]
+ +\mu\operatorname{tr}(\operatorname{adj}(X)X')
+ +\nu\operatorname{tr}(\operatorname{adj}(Y)Y')\geq0.}
+\tag{AS.44}
+$$
+
+Together with Proposition 4.2 and Lemma 4.3 this is a lower bound for
+every original finite complex competitor, allowing arbitrary failure
+splitting and high acquisition later failing.
+
+Proof. Put $w_u=\sqrt{u^2-\beta^2}$. The larger-root formula gives
+$w_u=(b_0c_s+a_0e_s)/\Delta$ and
+$a_0w_u-b_0u=e_s$, proving the formula for $f_u$.
+Entrywise, the root equation implies
+
+$$
+C_{DT}-\lambda B=\mu\operatorname{adj}(X)-\nu\operatorname{adj}(Y).
+\tag{AS.45}
+$$
+
+Here are all four independent entry checks. The real off-diagonal is
+$-\mu t+\nu v=0$. The imaginary off-diagonal is
+$(\mu+\nu)R=\mu sR/v=\gamma-\lambda\sqrt\alpha\sin\theta$.
+The $\alpha$-weighted diagonal equation is
+$\alpha A+B=\mu[a_0-su/v]$. The other diagonal equation is
+
+$$
+\mu(1-\alpha)+\alpha A-B=\gamma d_s/R.
+\tag{AS.46}
+$$
+
+Indeed multiply (AS.18) by $2\alpha$ and use
+$u_s'=(1-\alpha)w_u/e_s=(1-\alpha)/f_u$.
+These equations verify the whole matrix identity, without a scalar-only
+stationarity assumption.
+
+Since $\operatorname{tr}(BY)=\beta$,
+$\operatorname{tr}(BX)=k_\theta$,
+$\operatorname{tr}(\operatorname{adj}(X)X)=0$ and
+$\operatorname{tr}(\operatorname{adj}(Y)X)=\det Z_s=j$, tracing
+(AS.45) against $X$ gives
+
+$$
+W+\nu j=\lambda k_\theta.
+\tag{AS.47}
+$$
+
+Initially $\nu\geq0$ by (AS.30). If $k_\theta<0$, scaling $X$ to
+$(1-\varepsilon)X$ keeps both PSD conditions, and the active disk's
+directional derivative is
+
+$$
+\frac{d_s((1-\alpha)-d_s)-4\alpha R^2}{\beta}
+=k_\theta<0.
+\tag{AS.48}
+$$
+
+For small $\varepsilon$ this is a feasible cost decrease, a contradiction.
+Thus $k_\theta\geq0$. All quantities in (AS.47) are finite and $W>0$,
+so $k_\theta\ne0$ and $\lambda>0$.
+
+For $X',Y'$, the true full-cone tilt yields
+$\operatorname{tr}(BY')\leq\beta$. Both adjugates in (AS.44) are
+PSD, since $X,Y$ are rank-one PSD. Subtract (AS.47) from the trace
+of (AS.45) against $X'$ and use
+$\operatorname{tr}(\operatorname{adj}(Y)Z_s)=j$ to obtain exactly
+(AS.44). The tilt has positive cosine, so it remains valid on the
+whole complex singular plane, also when the competitor has $d'\leq0$.
+
+Finally, if $t=0$, then $\nu=0$. The matrix
+$C_{DT}-\lambda B=\mu\operatorname{adj}(X)$ is PSD and the same
+tilt at strength zero has constant $\lambda k_\theta=W$:
+$\operatorname{tr}(BZ_\sigma)=(1-\alpha)\cos\theta$ is independent
+of $\sigma$. It would imply $F=V(0)\geq W=V(s)>F$.
+Thus $t>0$ and $\nu>0$. This proves every certificate sign.
+$\square$
+

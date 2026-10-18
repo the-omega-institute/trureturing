@@ -1,0 +1,26 @@
+**Definition 58.1 (what the scalar obstruction leaves unspecified).** The Ky Fan extremum (S.22) uses genuine rank-five projections and is exact. The passage from actual common objects to (S.14) instead relaxes joint information at several places: actual directional $Q_\psi$ are bounded only by $Q\preceq aI$ and $\operatorname{Tr}Q\leq1$; one weight replaces nonlinear fidelity; all directional inequalities are reduced to two basis tests and then their trace; and the resulting traces are optimized without complete common directional and block relations. The scalar obstruction does not identify a unique one of these losses as its sole cause.
+
+Conversely the first equation of (S.55) reconstructs an isometry $W$ by conjugating and stacking the $Z_i$, and hence a genuine defect projection $WW^\dagger$ with a rank-five complement. This reconstructs the projection geometry, not an actual encoder or the contraction overlaps in (S.5). A relaxed solution of (S.59) would still need a common actual $V$, a common $U$ with $U^\dagger U\preceq I_5$ and $PU=U$, and the same center $\omega$ whose actual contracted marginals and overlaps meet the required inequalities. Separate saturation of (S.58) in each direction does not supply these data.
+
+In particular the complementary channel must satisfy the complete phase-Choi conditions (R.3)–(R.5) of the first volume. In the original real environment frame these require
+
+$$
+J_p=\begin{pmatrix}
+\tau&0&C\\0&\bar\tau&\bar C\\C^\dagger&C^T&\sigma
+\end{pmatrix},\qquad
+\tau\succeq0,\quad\operatorname{spec}_{>0}\tau=(a,\beta),\quad
+\sigma=\bar\sigma=\sigma^T,\quad
+\operatorname{Tr}\tau=\operatorname{Tr}\sigma=1,\quad\operatorname{Tr}C=0,
+\tag{S.64}
+$$
+
+$$
+\operatorname{ran}C\subseteq\operatorname{ran}\tau,\qquad
+S_{\rm res}=\sigma-C^\dagger\tau^+C-
+\overline{C^\dagger\tau^+C}\succeq0,\qquad
+\operatorname{rank}S_{\rm res}\leq1.
+\tag{S.65}
+$$
+
+The inverse $\tau^+$ acts only on its actual support. In diagonal-center coordinates all these blocks and real structures must be transported together. Conditions (S.64)–(S.65) are not consequences of (S.59); they retain the original range, reality, rank and third-column requirements.
+

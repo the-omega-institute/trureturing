@@ -1,0 +1,15 @@
+**定义 74.1（A complete target, including every original tail）。** Let $d\ge2$, $n=2^d$, and choose any odd $m\ge n-1$. Put $k=m+1$, $T=m+2$. Take any table $\lambda:\{0,\ldots,m\}\to Y$ with exactly $n$ distinct labels, allowing arbitrary repetitions and ordering. Enlarge the label set with distinct fresh $R,C\notin\lambda[\{0,\ldots,m\}]$. On both free-value fibres define the entire INITIAL record target
+
+$$
+f^\lambda(v,-j,s)=
+\begin{cases}
+R,&s=m,\\
+\lambda(j),&0\le s<m,\quad 0\le j\le m,\\
+C,&0\le s<m,\quad j=m+1,
+\end{cases}
+\qquad f^\lambda(\bot)=L_\bot,
+\tag{74.1}
+$$
+
+where $L_\bot$ is arbitrary and independent. Its history target is explicitly $F^\lambda(w)=f^\lambda(q(w))$. This specifies the INITIAL-history factorization; it does not infer it from source legality. Here $q(w)$ is the original endpoint record of the source history before any controller action, including $q(w)=\bot$ for rejected histories.
+

@@ -1,0 +1,30 @@
+### 命题 54.6（曲率不排除塌缩）
+
+取固定两点集 \(X_j=\{0,1\}\)，令
+
+\[
+m_j(0)=m_j(1)=\frac12,\qquad c^{(j)}_{01}=c^{(j)}_{10}=\frac12,
+\]
+
+但令 \(d_j(0,1)=j^{-1}\)。直接计算得
+
+\[
+\Gamma_2(f)=2\Gamma(f),
+\]
+
+所以每一层满足 \(CD_G(2,\infty)\)，且 Dirichlet 形式、谱隙和半群完全不变。然而
+
+\[
+(X_j,d_j,m_j)\to(\{\ast\},0,\delta_\ast)
+\]
+
+在 measured Gromov-Hausdorff 意义下塌缩到一点。因此
+
+\[
+CD_G(K,\infty)+\text{统一谱隙}
+\not\Rightarrow
+\text{非塌缩极限}.
+\]
+
+排除该反例需要 (54.3) 或等价的统一体积和直径下界。
+

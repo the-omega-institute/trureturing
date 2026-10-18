@@ -1,0 +1,64 @@
+## 8. Mathematical correspondence and the retained-resource boundary
+
+**Mathematical citation 8.1 (supplies and the precise new deduction).**
+The carriers, homomorphic continuation and complete-row interpretation
+are [NAR, Definitions 1.1--1.2][NAR]. Its Reuse 16.2 supplies the
+acquired original coordinates, normalized visible clocks and complete
+later-row equality; Theorems 16.3--16.4 supply the common-translation
+obstruction and exact minimum alphabet $q$. [AOF, Definition 8.2][AOF]
+supplies the all-word $E/P/S$ law with its proper-prefix guard,
+unavailable $P_1$ and literal representatives. These supplies and
+the fixed-reference results of §§1--3 are available at immutable
+[revision 1f90f2ec304615c711e1ab2cdef401881881fcc9](https://github.com/the-omega-institute/trureturing/tree/1f90f2ec304615c711e1ab2cdef401881881fcc9).
+Theorem 3.1's retained-left call prices and Theorem 3.2's retained-right
+$q=4$ improvement remain statements about those specified encoders.
+The installed-table restrictions and conditional state prices of §4
+are separate from Assumption 5.1's finite local computation.
+
+The native source correspondences are `Source` and `substitution` in
+[GenealogicalFiberTransport](../../../D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.lean),
+`Address`, `Reply` and `readout` in
+[ActualTreeReadoutAcquisition](../../../D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean),
+`rightClock`, `rights`, `right_clock_iterate` and `right_clock_readout`
+in [DelayedOriginalReadout](../../../D5/S3/Arith/FibonacciAtomic/Observer/DelayedOriginalReadout.lean),
+and `literalRecord`, `actualPartition` and `canonicalRow_record_iff`
+in [ActualCutPartitionDecoder](../../../D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionDecoder.lean).
+The orbit recurrence used here is also the local recurrence in
+[ActualFibonacciSupportChain](../../../D5/S3/Arith/FibonacciAtomic/Observer/ActualFibonacciSupportChain.lean).
+These are semantic suppliers. The distinct-address payment convention
+in ActualTreeReadoutAcquisition is not the chronological call objective
+of Assumption 5.1, and a supplied epoch in `original_decoder_service`
+does not supply this unknown-lag output.
+
+The bounded primary correspondence for zero-error target separation is
+Charpenay, Le Treust and Roumy,
+[*Optimal Zero-Error Coding for Computing under Pairwise Shared Side
+Information*, arXiv:2211.03649v2, Definition III.1 and Theorem III.4's
+proof outline](https://arxiv.org/html/2211.03649v2). Adjacency there
+requires two inputs with different function targets at a common
+compatible side-information value. This is the role of different
+required lags at the same code and entire later row in Theorem 5.2.
+Their Definition II.1 concerns prefix-free encodings, expected length
+per i.i.d. block and support-restricted zero-error decoding; Theorem
+III.4 gives an asymptotic chromatic-entropy rate. No source distribution,
+entropy formula or pairwise-shared single-letter hypothesis is
+transferred to this attained-alphabet, worst-call problem.
+
+For the importance of the permitted reply geometry, compare Nowak,
+[*The Geometry of Generalized Binary Search*, arXiv:0910.4397v5,
+§§I--II and V.A](https://arxiv.org/html/0910.4397v5). Its hypotheses
+are a finite family of binary-valued functions on an allowed query
+space. Theorem 1's bound depends on neighborliness and coherence;
+§V.A contrasts point tests with the stronger dyadic-subinterval tests.
+That correspondence preserves the distinction between an allowed
+native word and an arbitrary partition. It grants no four-way age
+oracle or numerical bound used here.
+
+These separation and restricted-query methods are literature-attested
+ingredients. The complete arbitrary-code two-slot fibers, seven-point
+class bound with gapped equality geometry, seven-square obstruction
+and attained relational encoder with its all-lag literal reply decoder
+are `repo-derived` ordinary deductions under Assumption 5.1. The
+compared sources do not supply this exact joint one-read boundary.
+This correspondence is bounded and makes no worldwide priority claim.
+

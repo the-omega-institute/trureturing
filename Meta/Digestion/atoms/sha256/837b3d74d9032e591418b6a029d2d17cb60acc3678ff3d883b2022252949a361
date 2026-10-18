@@ -1,0 +1,55 @@
+**Lemma 5.3 (credited span-four sharing classification).** Suppose
+$I=(a,a+4)$ and put $d=a+1$. Define the following formal cells:
+
+$$
+\begin{aligned}
+\alpha&=d-L+1,&\gamma&=K-1,\\
+A&=(\alpha,L-1),&C&=(\alpha+1,L-2),\\
+Y&=(K-2,d-K+2),&Z&=(K-1,d-K+1),\\
+U&=(\alpha+1,L-1),&V'&=(K-1,d-K+2).
+\end{aligned}
+\tag{5.7}
+$$
+
+The first four have depth $d$ and the last two depth $d+1$.
+Every state shared by distinct cells of $V_I$ hosts exactly two cells,
+and its pair is among
+
+$$
+AZ,\quad CZ,\quad AY,\quad UV',\quad AV',\quad ZU.
+\tag{5.8}
+$$
+
+Omit invalid cells, coincident endpoints and pairs failing Lemma 2.3's
+two-gap rule. The depth $d+2$ is exclusive. Every $CZ$ host has its
+actual zero successor at a shared $UV'$ host; every $AY$ host has its
+actual one successor at a shared $UV'$ host. No successor injectivity
+is asserted.
+
+Proof. This is [SI, Lemma 10.3][SI]. The final internal depth $d+2$
+is exclusive by Lemma 5.2. At depth $d+1$, two hosted cells cannot
+have a common live reply: it would share their fixed successor at depth
+$d+2$. Their nonempty live-reply sets must be opposite singletons,
+forcing $UV'$. A pair across depths $d,d+1$ likewise cannot have a
+common live reply, since its successor would share with the exclusive
+last layer. Opposite singletons force $AV'$ or $ZU$.
+At depth $d$, opposite singleton live replies give $AZ$. A common zero
+reply instead gives $UV'$ children, whose parents are $C,Z$; a common
+one gives parents $A,Y$. The same actual forks give the asserted
+successors. Each of these earlier depths has a live reply; the possible
+corner with none lies only on the last layer.
+
+To exclude three incidences, put $H=\gamma-\alpha=n-1-d\ge2$.
+If $H=2$, the two-gap rule removes all displayed pairs except $AZ$,
+including the case $C=Y$. If $H\ge3$, the six formal cells are
+distinct; among the first-depth cells the allowed pairs form the path
+$C-Z-A-Y$, with no triple of mutually allowable pairs. There are at
+most two second-depth cells, $U,V'$, with opposite singleton replies.
+An earlier cell sharing with both would need a nonempty reply set disjoint
+from both singletons, which is impossible. Two earlier cells sharing
+with one later cell would both need the same opposite singleton; at
+one depth only one cell has that singleton live-reply set. The earlier
+cells would coincide. Last-layer exclusivity excludes all remaining
+triples. Removing invalid cells or forbidden pairs cannot introduce a
+triple. $\square$
+

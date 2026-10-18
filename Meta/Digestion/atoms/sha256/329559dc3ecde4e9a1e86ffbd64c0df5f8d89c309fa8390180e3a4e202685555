@@ -1,0 +1,26 @@
+**Convention 2.2 (Choi order).** For
+$S(X)=D^\dagger T(DXD^\dagger)D$, use the normalized output-first Choi state
+
+$$
+\chi=(S\otimes{\rm id})(|\Omega\rangle\langle\Omega|),\qquad
+|\Omega\rangle=\frac1{\sqrt5}\sum_s e_s\otimes e_s.
+\tag{2.7}
+$$
+
+The partial transpose $\Gamma$ acts on the input factor. TP gives
+$\operatorname{Tr}_{\rm out}\chi=I/5$, and
+
+$$
+\operatorname{tr}(Q S(\rho))
+=5\operatorname{tr}\bigl(\chi(Q\otimes\rho^T)\bigr).
+\tag{2.8}
+$$
+
+Every original scalar port has separable $\chi$, even when its scalar
+decoders prepare mixed states. Indeed its encoder consists of positive
+functionals $\operatorname{tr}(M_fX)$ with $\sum_fM_f=I$, and its decoder
+prepares a density $\sigma_f$, so
+$\chi=\frac15\sum_f\sigma_f\otimes M_f^T$.
+Consequently $\chi\geq0$ and $\chi^\Gamma\geq0$ for every complex competitor.
+No converse from PPT to separability is used.
+

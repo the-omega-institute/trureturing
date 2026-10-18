@@ -1,0 +1,34 @@
+**Definition 5.1 (group faces and skeleton intervals).** For a selection
+$Q\subseteq\mathscr G$ write $I_Q=\bigcup_{G\in Q}G$ and
+
+$$
+\mathcal P_Q=\{w\in\mathcal P:w_i=0\ (i\notin I_Q)\}.
+\tag{FC.14}
+$$
+
+It is allowed to be empty. If nonempty, let
+$I(Q)=[\min_{\mathcal P_Q}\kappa^Tw,
+\max_{\mathcal P_Q}\kappa^Tw]$. An empty face contributes the
+empty set. For a nonempty face $F$ of $\mathcal P$, define its
+support as the positive-coordinate support of any relative-interior
+point, and let $\gamma(F)$ count the groups meeting that support.
+Equivalently that support is the union of all positive supports on
+$F$. Let $\mathcal V$ and $\mathcal E$ be its vertices and
+one-dimensional faces, respectively. For $v\in\mathcal V$ put
+$I(v)=\{\kappa^Tv\}$. If an edge $e=[v_0,v_1]$ has endpoints
+$v_0,v_1$, put
+$I(e)=[\min(\kappa^Tv_0,\kappa^Tv_1),
+\max(\kappa^Tv_0,\kappa^Tv_1)]$. Constant-$K$ edges contribute
+singletons. For an integer $m\ge0$ define
+
+$$
+U_m=\bigcup_{\substack{v\in\mathcal V\\\gamma(v)\le m}}I(v)
+\ \cup\!
+\bigcup_{\substack{e\in\mathcal E\\\gamma(e)\le m}}I(e).
+\tag{FC.15}
+$$
+
+A singleton polytope has one vertex and no edges. The support of an
+edge means its relative-interior support, not a potentially smaller
+support at one endpoint.
+

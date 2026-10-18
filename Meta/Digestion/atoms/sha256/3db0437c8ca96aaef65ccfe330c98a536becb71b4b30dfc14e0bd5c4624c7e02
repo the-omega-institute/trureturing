@@ -1,0 +1,27 @@
+**Definition 9.1 (Boundary-aligned mirror matching).** Put
+$m=\min\{k,n-k\}\ge1$. For $2\le h\le m$ let
+
+$$
+i_h=k+1-h,\qquad j_h=k+h,
+\qquad
+\chi_z(S)=\prod_{h=2}^m z_h^{s_{i_h}s_{j_h}},
+\quad |z_h|=1.
+\tag{9.1}
+$$
+
+The pairs have disjoint endpoints. The omitted $h=1$
+pair is the forbidden adjacent boundary pair. All other
+gates are diagonal and preserve the entire legal support.
+
+Index the $m$ near-cut positions on each side in opposite
+boundary-aligned orders, so index $m$ is each cut-boundary
+position. Internally legal near-cut patterns correspond
+to independent sets of the same path $P_m$. Let
+$\mathcal I_m$ be that family. For $i<m$ set
+$c_i=z_{m+1-i}-1$, and set $c_m=-1$. Define
+
+$$
+A=\{m\}\cup\{i<m:c_i\ne0\}.
+\tag{9.2}
+$$
+

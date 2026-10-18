@@ -1,0 +1,14 @@
+### 99.6. The mu-mu entry
+
+This entry is not assumed to vanish. Use the two primitive certificates for J3,J2, respectively (u,v,w) and (U,V,W). The relevant tangents are
+
+ T3=u z1-p v z2+5D w t,
+ T2=U z1-p V z3-15D W t.
+
+Against mu_q the second triple is (1,q,q), giving the product of (T2 T3,q). At q set t=1,z1=-u/w,z2=v/w. Choose a Hensel root z3 of z3^2=(v/w)^2-20e. Both choices reduce to plus or minus v/w. Since u^2=pv^2 and U^2=pV^2 modulo q, all these residues are units, and exactly one choice satisfies pV z3=uU/w modulo q. With this choice,
+
+ T2=-2uU/w modulo q,
+ T3=-2p v^2/w modulo q.
+
+These are units; the two equations J2,J3 and hence J1 hold. Their product has character (4p uU v^2/w^2/q)=(uU/q), using (p/q)=1. All other places were accounted for in section 99.3. Thus <mu_p,mu_q>=Z, with no unjustified vanishing of the second-coordinate block.
+

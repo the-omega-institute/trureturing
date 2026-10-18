@@ -1,0 +1,26 @@
+**Definition 2.2 (Paid source-blind observer).** At selected known common $q$, one
+finite transition table and one deterministic initialization must serve either source. Every
+persistent configuration, every simultaneously retained coordinate, the category and
+the evidence coordinate, and both internally emitted labels are counted. Fresh
+transition coins are independent of the source and of earlier fresh coins. Immutable
+exact real transition probabilities and their design computation are allowed but
+unpriced.
+
+At runtime the table sees only the next bit of one uninterrupted consecutive history. It
+has no external clock, age, read counter, gap counter, cost input, retained seed or random
+tape, archive, auxiliary program state, skipped bit, free gap, source reset, extra source,
+hidden source label, parameter query, probability response, or stopping-time decoder.
+The table reads every bit of every gap it begins, including a saturated zero suffix, and
+stops on the actual closing bit that makes its decision. If the read prefix is
+$X_0,\ldots,X_{T-1}$, the paid cost is $T$.
+
+The six obligations at the selected $s$ are
+
+$$
+\begin{gathered}
+\mathsf P_0(D=1)\le\alpha,\qquad \mathsf P_1(D=0)\le\alpha,\\
+\mathsf P_0(T<\infty)=\mathsf P_1(T<\infty)=1,\qquad
+\mathbb E_0T<\infty,\quad \mathbb E_1T<\infty.
+\end{gathered}
+$$
+

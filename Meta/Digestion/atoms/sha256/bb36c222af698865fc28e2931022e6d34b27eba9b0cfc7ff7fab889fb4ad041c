@@ -1,0 +1,50 @@
+**命题 478.4（有限二次作用的平滑消去）。**
+若 $h_N\to0$ 且 $\ell_N\to-1$，则对每个固定 $f\in V$，
+
+$$
+T_{\nu_N}T_{\nu_N}f(t)\longrightarrow0.
+$$
+
+证明。有限二次作用的矩阵为 $h_N^2I-2h_N\ell_NJ$，其两个系数均趋于零。
+例如
+
+$$
+T_{\nu_N}^2S(t)=h_N^2S(t)-2h_N\ell_Nt.
+$$
+
+这个有限结论只涉及固定平滑空间 $V$。
+若改看未锚定 Möbius 算子在绝对收敛半平面的 $r$ 次 Dirichlet 卷积，
+其乘子是 $Z(s)^r=\zeta(s)^{-r}$。
+它在 $s=1$ 有 $r$ 阶零，因而 $r\ge2$ 时在 $1$ 的值和一阶导数都消去。
+与此同时，若实际 zeta 在 $\rho\ne1$ 有 $q$ 阶零，写成
+$\zeta(s)=(s-\rho)^q u(s)$ 且 $u(\rho)\ne0$，则
+
+$$
+Z(s)^r=(s-\rho)^{-rq}u(s)^{-r}
+$$
+
+在 $\rho$ 有 $rq$ 阶极点。
+所以改善极点 $1$ 所对应的平滑主项消去，并不自动改善其它零点附近的解析控制。
+有限锚定算子的临界尺度界仍须保留其实际积分核、截断和所有端点。
+
+素数原子也记录了同一递归：令 $\mu^{\star r}$ 是 $r$ 次 Dirichlet 卷积，则
+
+$$
+\sum_{k\ge0}\mu^{\star r}(p^k)z^k=(1-z)^r,\qquad
+\mu^{\star r}(p^k)=
+\begin{cases}(-1)^k\binom rk,&0\le k\le r,\\0,&k>r.\end{cases}
+$$
+
+证明。素数幂上的原 Möbius 系数为 $(1,-1,0,\ldots)$，
+有限卷积就是相应多项式相乘，最后使用二项式定理。
+这是卷积次数产生的二项式递归；它没有给出 Fibonacci 权重、五分类或 $5040$
+与 zeta 零点之间的新恒等式。
+
+本节使用通常的 Mellin 变换、有限乘法卷积与 Jordan 函数演算。
+Möbius Dirichlet 级数与卷积乘积的标准供应分别是 Mathlib 的
+`ArithmeticFunction.LSeries_zeta_mul_Lseries_moebius`、
+`ArithmeticFunction.LSeries_zeta_eq_riemannZeta` 和 `LSeries_convolution'`；
+实际留数由 `riemannZeta_residue_one` 表达。
+全物理积分与整数 Robin margin 的有限素数幂连接，以及完整有限首部的单向符号，
+仍是后续需要支付的数学结论。
+

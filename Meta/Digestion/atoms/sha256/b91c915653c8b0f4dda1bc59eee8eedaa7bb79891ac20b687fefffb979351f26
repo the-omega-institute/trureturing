@@ -1,0 +1,21 @@
+# Fibonacci native two-query eight-coordinate obstruction
+
+A complete normalized eight-coordinate $N$ law satisfying all event
+rows at $b_i,e\in[0,1]$ can be extended by an ignored ninth input
+whose auxiliary amplitude equals the cap. The same law then satisfies
+every nine-coordinate row. Applying the existing $Y_{128}$ theorem
+gives the eight-coordinate inequality
+
+$$
+2b_2+11b_3+13b_4+13b_5+12b_6+11b_7+11b_8\le2+117e,
+$$
+
+or equivalently $g\le2s$ for the residuals defined below. On the
+positive-width family of Theorem 5.1 this yields
+$e_a(A)\ge r_0+4\delta/117$ for every original $\mathcal N_2$
+and $\mathcal O_2$ competitor, with every positive ordered vanishing
+continuation satisfying $a_9\le a_8$. The ninth input in the finite
+proof does not replace the original ninth amplitude. The supporting
+score is credited to XVIII318.1–318.2; the contribution here is its
+complete extension, prefix transport and application.
+

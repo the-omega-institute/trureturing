@@ -1,0 +1,11 @@
+**命题 40.3（Conditional static names and the missing operational correspondence）。** Suppose state names are freely chosen fixed-length binary words avoiding $11$, each with a preceding zero seam. Abstract names do not restrict actions. The elementary Fibonacci count is $F_{\ell+2}$ at length $\ell$, with $F_1=F_2=1$: partition by final zero or final $01$ to obtain the recurrence, starting with counts one at length zero and two at length one. Hence (40.8) gives conditional static naming requirements
+
+$$
+F_7=13<18\le F_8=21\quad\Longrightarrow\quad\ell_{\rm ph}=6,
+\qquad
+F_8=21<26\le F_9=34\quad\Longrightarrow\quad\ell_{\rm vp}=7.
+\tag{40.13}
+$$
+
+Unrestricted binary names require five bits for either count. These capacities neither recode original action $1111$ nor impose a no-$11$ action alphabet, and assign no installation, update, readout, gate, time, energy or physical-memory costs. The missing operational FIB/KB correspondence must relate actual sources, observations, literal actions, updates, stopping and immutable INITIAL targets, preserving every original legal word, absorbing failure and every emitted fee. Accessible state-name storage and maintained access costs also need that correspondence. Static naming does not supply it. Other parameters, INITIAL targets and native fee transport retain their separate mathematical obligations.
+

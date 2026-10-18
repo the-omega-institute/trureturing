@@ -1,0 +1,16 @@
+**Definition 3.1 (asymmetric and equal-hole families).** Put
+$T_n=\rho^n\alpha$. Let $t_h$ be the perfect height-$h$ binary tree
+whose leaves are alpha, $h\ge1$, and put
+
+$$
+u_h=\langle\alpha,t_h\rangle,\qquad
+\bar u_h=\langle t_h,\alpha\rangle,\qquad
+U_a=\langle T_a,T_a\rangle.
+\tag{CAB.8}
+$$
+
+Use the cut $P=\{L,R\}$. Both hidden holes are reached and address-marked.
+The complete row of every iterate of $u_h$ has their disequality bit;
+that of every $U_a$ has their equality bit. There is no literal hidden
+subtree in either row. Each row has ten cells in Definition 1.4.
+

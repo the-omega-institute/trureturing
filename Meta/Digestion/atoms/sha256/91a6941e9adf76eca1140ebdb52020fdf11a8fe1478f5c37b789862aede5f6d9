@@ -1,0 +1,124 @@
+**Theorem 86.1 (Unequal two-amplitude classification and lawful attainers).**
+Suppose
+
+$$
+a_3\le\varepsilon<a_2\le a_1\le1.
+\tag{86.1}
+$$
+
+Thus $L=2$, with the positive monotone vanishing tail retained. Then
+
+$$
+\kappa_\varepsilon=
+\begin{cases}
+0,&a_1+a_2\le3\varepsilon,\\
+1,&a_1+a_2>3\varepsilon\text{ and }a_2\le3\varepsilon,\\
+2,&a_2>3\varepsilon.
+\end{cases}
+\tag{86.2}
+$$
+
+Every case has an everywhere-finite common-seed attainer on the original
+tapes. The supplied maximum-address optimum (78.1) specializes to
+
+$$
+h_\varepsilon=
+\begin{cases}
+0,&a_1+a_2\le3\varepsilon,\\
+1,&a_1+a_2>3\varepsilon\text{ and }a_2\le2\varepsilon,\\
+2,&a_2>2\varepsilon.
+\end{cases}
+\tag{86.3}
+$$
+
+In particular $2\varepsilon<a_2\le3\varepsilon$ gives
+$\kappa_\varepsilon=1<h_\varepsilon=2$.
+
+**Proof.** A zero-request acquisition produces one common output law at
+all sources. The existing full-carrier center criterion, Theorem 77.2
+with $m=0$, makes it feasible exactly when
+
+$$
+S_0(\varepsilon)=(a_1-\varepsilon)+(a_2-\varepsilon)
+\le\varepsilon,
+\tag{86.4}
+$$
+
+which is the first condition in (86.2). In that case an explicit immediate
+sampler uses masses $a_1-\varepsilon$ and $a_2-\varepsilon$ on
+$\theta_1$ and $\theta_2$, and the remaining mass on $\theta_0$.
+Its coefficients are nonnegative, since their marked sum is at most
+$\varepsilon<1$; Theorem 77.2 supplies its cap for every original source.
+
+Theorem 85.1 at $n=2,k=1$ makes
+$a_2-\varepsilon\le2\varepsilon$ necessary for hard one-request
+feasibility, because $a_2>\varepsilon$. Thus $a_2\le3\varepsilon$
+is necessary, with no address or output-support restriction on the
+competitor. The finite obstruction can also be read directly from
+Theorem 84.3. Give unit multipliers to the rows $p_{10}(2)\ge
+ a_2-\varepsilon$, $p_{00}(\{0,1\})\ge1-\varepsilon$, and
+$p_{11}(0)\ge1-\varepsilon$, and zero to every other row. Their right
+sides sum to $a_2+2-3\varepsilon$. A depth-one tree has weighted value
+at most two: a query to coordinate $1$ gives the same output at $10$ and
+$11$, so their first and third row indicators cannot both be one;
+a query to coordinate $2$ gives the same output at $00$ and $10$, so
+their first and second indicators cannot both be one. Constant trees
+satisfy the same bound, and constant output zero attains two. Thus
+$V_1(\varnothing)=2$, with strict obstruction exactly when
+$a_2>3\varepsilon$.
+
+For sufficiency at this threshold, use one source-independent categorical
+seed to mix the following four deterministic trees. A pair of entries
+in the output column gives the zero-answer output followed by the
+one-answer output.
+
+| Tree | Requested index | Output labels | Weight |
+| --- | --- | --- | --- |
+| $T_1$ | $1$ | $(1,2)$ | $a_2/3$ |
+| $T_2$ | $1$ | $(1,0)$ | $a_1-2a_2/3$ |
+| $T_3$ | $2$ | $(2,0)$ | $a_2/3$ |
+| $T_0$ | none | $0$ | $1-a_1$ |
+
+All weights are nonnegative and sum to one, using $a_1\ge a_2$.
+Each queried branch hands off after one actual request; the constant
+branch hands off immediately. With columns ordered as
+$(\theta_0,\theta_1,\theta_2)$, the resulting complete law table is
+
+$$
+\begin{array}{c|ccc}
+b&p_b(0)&p_b(1)&p_b(2)\\\hline
+00&1-a_1&a_1-a_2/3&a_2/3\\
+01&1-a_1+a_2/3&a_1-a_2/3&0\\
+10&1-2a_2/3&0&2a_2/3\\
+11&1-a_2/3&0&a_2/3
+\end{array}
+\tag{86.5}
+$$
+
+At $00$, the mass $a_2/3$ missing from the correct mark $\theta_1$
+is placed at $\theta_2$, while the base mass is exact. The TV error is
+$a_2/3$. At $01$ the same deficit is instead placed at the base, again
+with error $a_2/3$. At $10$, the correct mark $\theta_2$ has mass
+$2a_2/3$ against target mass $a_2$, so the error is $a_2/3$.
+For every actual source with low word $11$, its first absence exceeds
+$2$ and its output law has error
+$\max\{a_2/3,a_{n(x)}\}$ by (83.9). This is at most $\varepsilon$
+when $a_2\le3\varepsilon$ and $a_3\le\varepsilon$. Thus the same
+common scheme meets the original cap on every source.
+
+Finally two requests suffice at all parameters in (86.1): query $p_1$,
+and on a positive answer query $p_2$; at the first zero sample the exact
+$\lambda_n$, and on two positives emit $\theta_0$. Use another
+coordinate of the same source-independent seed for the two-point sample.
+The tail error is at most $a_3\le\varepsilon$, and every branch hands
+off. Combining this upper bound, the one-request obstruction, and the
+reused zero-request criterion proves all cases of (86.2).
+
+For (86.3), directly apply the existing address criterion (78.1) to
+$S_0(\varepsilon)=a_1+a_2-2\varepsilon$,
+$S_1(\varepsilon)=a_2-\varepsilon$, and $S_2(\varepsilon)=0$.
+If $a_2>2\varepsilon$, monotonicity also gives
+$a_1+a_2\ge2a_2>3\varepsilon$, so the listed cases are exhaustive.
+In the stated strict separation interval the same observation excludes
+the zero-request case of (86.2). $\square$
+

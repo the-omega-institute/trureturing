@@ -1,0 +1,19 @@
+**Proposition 7.4 (joint negative memory can obstruct every source).**
+Take three root-cut rows and the links $H_0=H_1$, $H_1=H_2$,
+$H_0\ne H_2$. Every proper subset of these three links has a
+chronological finite common-source realization, but the whole input
+has none.
+
+Proof. The whole conjunction violates equality transitivity. For
+the three two-link subsets use respectively epoch tuples $(0,0,0)$,
+$(0,0,1)$ and $(0,1,1)$ on source $\alpha$, assigning the tuple
+with a tie to the equality edge that remains. More explicitly,
+the two positive links use $(0,0,0)$; the first positive and the
+negative use $(0,0,1)$; the second positive and the negative use
+$(0,1,1)$. Their positive and negative root comparisons are correct
+because $T_0\ne T_1$. Smaller subsets follow. These are separate
+witnesses for separate subproblems; they cannot be glued into a
+witness of all three. The stronger row-only finite-occurrence
+obstructions of [NUE, Propositions 5.1--5.2][NUE] are also retained.
+$\square$
+

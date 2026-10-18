@@ -1,0 +1,17 @@
+**定义 56.3（The one genuine pre-zero phase pair）。** The positive successful child of the original root $11$ has phase support $\{0,2\}$, paid depth one, current value $v\oplus1$, and INITIAL tails $0\le s<h$, where $h=k-2$. Use the following four possible numbers, only when their accompanying conditions hold:
+
+$$
+\begin{array}{c|l}
+\text{number}&\text{condition}\\ \hline
+0&F_v\text{ constant on }\{0,2\}\times[0,h)\\
+p&F_v(j,\cdot)\text{ constant on }[0,h)\text{ for }j=0,2\\
+1&F_v\text{ constant on }\{0,2\}\times\{h-1\},\quad
+ F_v(j,\cdot)\text{ constant on }[0,h-1)\text{ for }j=0,2\\
+1+\max\{\eta_v(0,2),\eta_v(2,2)\}&h>2,\quad
+ F_v\text{ constant on }\{0,2\}\times[h-2,h).
+\end{array}
+\tag{56.4}
+$$
+
+Let $\chi_v$ be their minimum, with $+\infty$ when there is no finite entry. The $q=2$ tail prices in the last row are used only when $h>2$, so $h_2=k-4>0$. There is no nonexistent height-zero singleton call at $k=4$.
+

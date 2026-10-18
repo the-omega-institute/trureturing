@@ -1,0 +1,24 @@
+**Definition 8.1 (one-execution accounting).** On an actually implemented
+run, partition primitive occurrences into original boot/acquisition,
+original finite completion, added installation/admission, selector ingress
+and retention, authentic backing access, boundary-stopped replay and
+tallies, selection/validation, prefix replay, payload framing/allocation,
+transport, invocation/output and return. Each occurrence has one purpose
+and its original opcode. An allocation inside an interpreter body belongs
+to exactly one such class; counting its cell as storage is a different
+coordinate. Current time and fee are the sum and twice the sum of these
+actual primitive counts.
+
+Known exact components are the native counts of §5 and the two-stage
+copy body of Proposition 6.3. A real bound-driven replay outer loop alone
+has $2k+1$ RD/move occurrences: test each leading one of $U(k)$, perform
+its body, move its bound head, and execute the final zero test. It must
+add the actual simulated-row body, initialization and output work. It
+does not make $k$ simulated primitives into $k$ physical primitives.
+
+A tally constructed as one Append(1) per simulated primitive and a final
+Append(0) has $3(k+1)$ append-body occurrences. A separate tally copy at
+the acquisition boundary, its descriptor, head restoration and seals
+have their own costs. The tally's physical receipts are later physical
+work, not extra represented original primitives.
+

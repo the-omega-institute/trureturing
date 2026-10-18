@@ -1,0 +1,40 @@
+**Theorem 7.2 (an acquired atomic fiber with an infinite boundary).**
+Take the old root row, branch literals at $\varepsilon,L,R$, and
+the two guarded records
+
+$$
+(1,LL,0,L,=),\qquad (1,RL,0,R,=).
+\tag{AAB.22}
+$$
+
+At $Q=\{L,R\}$ the unequal full row has the exact source fiber
+
+$$
+X=\{\langle T_n,T_m\rangle:n,m\ge2,\ n\ne m\}.
+\tag{AAB.23}
+$$
+
+It has infinitely many accumulation points and is ineligible as an
+anchor in Definition 2.3, although all sources have atomic outputs.
+
+Proof. At a branch-rooted child $t$, the record compares
+$(\rho t)|_L$ to $t$. Reuse [ARH, §§4–6][ARH]'s reached branch
+certificate classification: this holds exactly for $t=T_j$, $j\ge2$.
+Both children and their recorded descendants are reached. The literal
+root and both independent child records therefore give exactly
+$\langle T_n,T_m\rangle$ with $n,m\ge2$. Its unequal partition adds
+precisely $n\ne m$ by atomic injectivity. This proves both source
+directions for the entire acquired unequal row, with its fixed exterior
+and reached set. ARH Proposition 2.1 supplies the common paid producer
+under its handoff premise at $N\ge1$.
+
+For each fixed $c\ge2$, taking $m=c$ and $n\to\infty$, omitting $n=c$,
+gives the accumulation point $\langle\Omega,T_c\rangle$. These points
+are pairwise distinct. Equivalently $E_{\{1\}}$ contains all $c\ge2$,
+so the decidable class test rejects this chosen anchor. The equal row
+of the same input does have a finite basis; rejection of the unequal
+anchor asserts neither that another anchor fails nor that joint
+stopping is impossible. It demonstrates that finite-basis eligibility
+is a substantive additional boundary, not automatic atomicity.
+$\square$
+

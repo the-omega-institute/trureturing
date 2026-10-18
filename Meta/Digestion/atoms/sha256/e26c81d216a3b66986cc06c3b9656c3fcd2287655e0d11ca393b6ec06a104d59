@@ -1,0 +1,19 @@
+**Theorem 8.1 (all-drift AC injection).** For every fixed arbitrary
+$y,\zeta,d\in\mathbb R$, the map $W\mapsto(A(W),C(W))$ is injective
+on the entire positive class $\mathcal K_{\mathbf c,d}$.
+
+**Proof.** Proposition 6.1 exhausts distinct $AC$ pairs.
+In I, Theorem 3.1 and the actual fourth equation force $y>d$,
+contrary to $y<d$. Proposition 7.2 excludes II.
+All endpoints and sample-zero breakpoints were excluded within the
+distinct-pair proof in Section 6. Thus no distinct pair exists. ∎
+
+Together with Proposition 5.1, all three pair maps involving $A$
+are globally injective in this fixed-word, fixed-first-four family.
+This conclusion is global across $y,\zeta,d$ for (1.2), not across
+other words or arbitrary first-four readings.
+
+A terminal column on three distinct worlds is called proper when
+it is nonconstant but noninjective; it then has exactly one colliding
+unordered pair. A constant column uses all three pairs.
+

@@ -1,0 +1,25 @@
+**Definition 67.1 (Original-target common-mass coefficient).** Enumerate every actual label as $x_1,x_2,\ldots$, use the positive tape mixture $\sigma=\sum_i2^{-i}\mu_{x_i}$, and choose measurable nonnegative densities $f_y=d\mu_y/d\sigma$. For every occupied prime-prefix cylinder $C$, including the root $X$, put
+
+$$
+b_C(\theta)=\inf_{y\in C}f_y(\theta),\qquad
+\ell_C=b_C\sigma,\qquad a_C=\ell_C(\Theta).
+\tag{67.2}
+$$
+
+Here $b_C$ is a density, not the prescribed error profile. Countability of $X$ makes the infimum measurable. The finite-measure Radon--Nikodym argument of Theorem 46.4 makes $\ell_C$ the greatest finite positive measure dominated by every original $\mu_y$ in $C$; its definition as a measure is independent of the mixture enumeration and density versions. If $C'\subseteq C$ then $\ell_{C'}\ge\ell_C$. Define
+
+$$
+A(x)=\sup_{m\ge0}a_{C_m(x)},\qquad
+\kappa=\inf_{x\in X}A(x)\in[0,1].
+\tag{67.3}
+$$
+
+A coefficient $c\in[0,1]$ is lawfully proportionally feasible if one lawful preparation, with probability output laws $\lambda_y$ on the entire original $\mathcal F$, satisfies
+
+$$
+c\lambda_y\le\mu_y\qquad(y\in X).
+\tag{67.4}
+$$
+
+Every label occurs in (67.2) and (67.4), including labels with equal signatures and different original laws. The mixture is a measure on tapes, not a distribution or sampling rule on sources.
+

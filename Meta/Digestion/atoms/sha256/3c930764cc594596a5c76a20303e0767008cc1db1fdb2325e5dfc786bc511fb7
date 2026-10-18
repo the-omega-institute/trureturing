@@ -1,0 +1,17 @@
+**既有结果 2.2（操作能否在表示上良定）。** 对任意 $q:X\to B$ 和 $F:X\to X$，`DeterministicInterfaceEquivalence.deterministic_interface_sixfold_equivalence` 在实际表示像上给出
+
+$$
+\exists!\,\bar F:\operatorname{im}q\to\operatorname{im}q,
+\qquad q\circ F=\bar F\circ q
+$$
+
+与下面的条件等价：
+
+$$
+q(x)=q(y)\Longrightarrow q(Fx)=q(Fy).
+$$
+
+这里的 $q$ 在交换式中按实际像取值。条件不要求有限状态；唯一性也不扩展到未被任何状态实现的形式名称。若某操作不满足这一条件，原来合并的状态会对同一操作产生不同表示，因而不能由该表示单独决定下一步。
+
+目标恢复与操作良定是不同义务。允许的操作改变时，同一判据的适用范围必须随之核对，不能仅扩充词汇标签。
+

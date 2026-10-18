@@ -1,0 +1,119 @@
+### 74.2. A quaternionic reduction retaining individual flatness
+
+Use the quaternion realization
+\[
+ (\Re z,\Im z,\Re t,\Im t)
+ \longleftrightarrow
+ \begin{pmatrix}z&t\\-\bar t&\bar z\end{pmatrix}.
+\]
+Quaternion conjugation is denoted by \(*\). Pure quaternions are vectors in
+\(\mathbb R^3\), with \(uv=-u\cdot v+u\times v\); put \(e=(1,0,0)\).
+The channel pair \((x_j,y_j)\) is the first column of the quaternion
+\(W_j=T(x_j,-\bar y_j)\). Its squared norm is
+\(|x_j|^2+|y_j|^2\), and the \(e\)-component of \(W_jeW_j^*\)
+is \(|x_j|^2-|y_j|^2\).
+
+In interleaved channel order, \(iH_0\) is a quaternionic unitary matrix
+with off-diagonal entry \(A=A_0/\sqrt6\) and diagonal entry \(D=D_0/\sqrt6\),
+where
+\[
+ A_0=(0,1,0,1),\qquad
+ D_0=\left(-\frac{h+b}{2},\frac{bh-1}{2},
+              -\frac{h-b}{2},\frac{-bh-1}{2}\right).
+\]
+Put \(B=D-A\). Direct multiplication, using
+\((1+b^2)h^2=3-b^2\), gives
+\[
+ |A|^2=|D|^2=\frac13,\quad |B|^2=1,\quad
+ D_0^*A_0=-1+\boldsymbol K,\qquad
+ \boldsymbol K=(-b,bh,-h),\quad|\boldsymbol K|^2=3.           \tag{74.3}
+\]
+These identities also verify unitarity of (74.1).
+
+The four normalized columns associated with
+\(w,Rw,\Theta w,R\Theta w\) are mutually orthogonal: \(R\) is real
+symmetric, commutes with \(\Theta\), and \(\Theta^2=-I\).
+They form a quaternionic two-plane containing the \(R\)-odd line.
+Its complementary quaternionic line is \(R\)-even. Its complex
+projector has diagonal \(1/3\), since the four flat columns contribute
+\(2/3\). Thus its unit vector has the unique right normalization
+\[
+ C_{\mathcal Q}=\frac{(1,1,\mathcal Q)}{\sqrt3},
+ \qquad |\mathcal Q|=1.
+\]
+An orthonormal quaternionic basis of its complement is
+\[
+ E_{\mathcal Q}=\frac{(1,1,-2\mathcal Q)}{\sqrt6},\qquad
+ O_0=\frac{(1,-1,0)}{\sqrt2}.
+\]
+Output flatness of the four columns gives the same complementary
+projector diagonal. Since the first two output coefficients agree,
+unitarity shows this is equivalent to
+\[
+ |2A+D\mathcal Q|^2=1,
+ \qquad\langle-1+\boldsymbol K,\mathcal Q\rangle=-1.        \tag{74.4}
+\]
+The bracket is the Euclidean quaternion inner product.
+Set
+\[
+ L=A+D-2A\mathcal Q,\quad T_0=D\mathcal Q-A,\quad F=L^*B.
+\]
+Then \(|L|=|T_0|=1\), and the images of the displayed basis are
+\((L,L,-2T_0)/\sqrt6\) and \((B,-B,0)/\sqrt2\). Moreover,
+\[
+ F=1+\frac{(1-\mathcal Q^*)(-3-\boldsymbol K)}3,
+ \qquad \mathcal Q=\frac{(3+\boldsymbol K)(3F^*-\boldsymbol K)}{12}.
+                                                                    \tag{74.5}
+\]
+The complement conditions are exactly
+\[
+ |F|=1,\qquad \Im(F)\cdot\boldsymbol K=0.                   \tag{74.6}
+\]
+For example,
+\[
+ |\mathcal Q|^2-1=\tfrac34(|F|^2-1)
+                   +\tfrac12\Im(F)\cdot\boldsymbol K,
+\]
+\[
+ |F|^2-1=\tfrac43(|\mathcal Q|^2-1)
+          +\tfrac23(\langle-1+\boldsymbol K,\mathcal Q\rangle+1).
+\]
+No parameter-dependent denominator is used here.
+
+Reflection orthogonality and equal input channel-pair norms give
+\[
+ W_0=\frac{(1+\sqrt3 V)\eta}{\sqrt2},\quad
+ W_1=\frac{(1-\sqrt3 V)\eta}{\sqrt2},\quad
+ W_2=-\sqrt2\mathcal Q\eta,                                \tag{74.7}
+\]
+where \(\eta\) is unit, \(V\) is pure unit, \(v=\Im V\), and
+\(n=\eta e\eta^*\) is unit. The output pair norms equal two precisely
+when \(\Im(F)\cdot v=0\). The six individual input/output imbalances
+are exactly
+\[
+ n\cdot(e\times v)=0,\quad
+ n\cdot(3(e\cdot v)v-e)=0,\quad
+ n\cdot\mathcal Q^*e\mathcal Q=0,                           \tag{74.8}
+\]
+\[
+ n\cdot(\mathbf h\times v-h_0v)=0,\quad
+ n\cdot(e_L-3e_B+6(e_B\cdot v)v)=0,\quad
+ n\cdot T_0^*eT_0=0,                                     \tag{74.9}
+\]
+where \(e_B=B^*eB\), \(e_L=L^*eL\), and
+\(B^*eL=h_0+\mathbf h\). These follow by expanding (74.7) and
+its output, obtained by replacing \(1,V,\mathcal Q\) with
+\(L,BV,T_0\). Conversely, choose any lift \(\eta e\eta^*=n\)
+and use (74.7). The pair norms and (74.8)–(74.9) give all twelve
+original unit moduli and reflection orthogonality. The lifts differ
+only by a right unit complex scalar, which is the common projective
+phase. Thus the projector condition has not replaced individual flatness.
+
+Writing \(c=e\cdot v\), when \(|c|<1\) the first two input equations give
+\[
+ N(v)=(1-3c^2)v+2ce,\qquad
+ n=\frac{\pm N(v)}{\sqrt{(1-c^2)(1+3c^2)}}.                \tag{74.10}
+\]
+At \(v=\pm e\), instead they give \(n\cdot e=0\). This exceptional
+circle will be handled without (74.10).
+

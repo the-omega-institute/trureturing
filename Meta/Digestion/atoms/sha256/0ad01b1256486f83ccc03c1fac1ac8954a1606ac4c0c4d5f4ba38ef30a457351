@@ -1,0 +1,51 @@
+**Theorem 8.1 (Attaining native annulus).** Assume $0<Z<2/3$ and set
+
+$$
+T=T_\tau,\qquad \lambda=\lambda_T<0,\qquad \gamma=\lambda/H.
+$$
+
+Use the two-coordinate encoder and one fixed linear original decoder
+
+$$
+E_*(k,\alpha,\beta)=\rho(k)U(\alpha),\qquad
+\rho(k)=2H\sqrt T\,e^{\gamma k},\qquad
+\mathcal D_*(z)=D(z,0).
+$$
+
+Its image is exactly the open annulus
+
+$$
+\mathscr A_*=
+\{z\in\mathbb R^2:2H\sqrt{T-\tau}<\|z\|<2H\sqrt T\}.
+$$
+
+Its affine hull is $\mathbb R^2$, and its fibers are precisely the
+$\beta$ circles at fixed $(k,\alpha)$. It attains uniform error
+$4H\sqrt T$; every phase pair at the actual interior height
+$k=Hx_\tau$ realizes that error.
+
+**Proof of Theorem 8.1.** The exponent is finite and negative because
+$T>\tau>0$. The positive radius is strictly decreasing, with limits
+$2H\sqrt T$ at $k=0$ and
+$2H\sqrt T\,e^\lambda=2H\sqrt{T-\tau}$ at $k=H$.
+It maps $(0,H)$ bijectively onto the open radius interval. Full
+phase reachability proves the image assertion. A positive-radius
+circle spans the whole affine plane, so the actual affine hull is
+two-dimensional. The radius recovers $k$ and the unit vector recovers
+the circle class $\alpha$; $\beta$ is ignored, proving the fibers.
+
+With $x=k/H$, Lemma 1.5 gives squared error
+
+$$
+\|\mathcal D_*E_*(k,\alpha,\beta)-y(k,\alpha,\beta)\|_2^2
+=4(\rho(k)-A(k))^2+4Zk
+=16H^2\bigl((f_T(x)-s(x))^2+\tau x\bigr).
+$$
+
+The corridor bounds it by $16H^2T$. At $x=x_\tau$ the contact
+identity gives $f_T=s-v_T$, so the bracket equals
+$v_T(x_\tau)^2+\tau x_\tau=T$. This is an actual interior source
+height, and the expression is independent of both phases. The
+model therefore attains the infimum, and its error supremum is
+also attained by lawful states. $\square$
+

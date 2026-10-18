@@ -1,0 +1,22 @@
+### 66.3 Saturation forces common spans and averaged unbiasedness
+
+Fix f≠g and a row i. Equation (2) and Cauchy–Schwarz imply the chain
+
+    1=Σ_j |Σ_t w_t R_t[i,j]T_t[i,j]|
+      ≤Σ_t w_t Σ_j|R_t[i,j]T_t[i,j]|
+      ≤Σ_t w_t ||R_t[i,:]||₂ ||T_t[i,:]||₂
+      ≤Σ_t w_t=1.
+
+All inequalities are equalities. Positivity of every w_t implies that each branch row has both norms one and equal entrywise magnitudes: |R_t[i,j]|=|T_t[i,j]|. Equality in each triangle inequality, together with the strictly positive target value 1/d, forces every nonzero product R_t[i,j]T_t[i,j] to have phase zero. Hence
+
+    R_t[i,j]T_t[i,j]=|R_t[i,j]|²,
+    Σ_t w_t |R_(t,fg)[i,j]|²=1/d.                       (3)
+
+This includes zero entries without assigning their phase.
+
+A square contraction R_t with every row norm one has R_t R_t*≤I and trace d, hence R_t R_t*=I. It is unitary. A unitary cross-Gram matrix between two orthonormal d-frames forces their spans to coincide: every vector of the first frame has projection norm one onto the span of the second. For each branch t, compare every fibre with fibre 1. All e frames therefore span the same d-dimensional environment space; the same is true independently of the h frames. Identify the former space with C^d. Then (3) is exactly averaged unbiasedness of k orthonormal bases in C^d, with the same weights for every pair.
+
+Conversely, suppose such bases e_(t,f,i) and weights satisfy (3). Choose h_(t,f,i)=conjugate(e_(t,f,i)) in a fixed coordinate system. The two local isometries displayed above then have cross-coefficient |<e_(t,g,j),e_(t,f,i)>|². Their mixture implements (2). Within a fibre both records are orthonormal, so the remaining matrix units also agree. Thus these weighted basis families characterize exact finite implementation with r branches. This converse uses one globally consistent conjugate family, with no entry-dependent choice of channel.
+
+For r=1, condition (3) is precisely the definition of k mutually unbiased bases. This proves the first resource statement in both directions.
+

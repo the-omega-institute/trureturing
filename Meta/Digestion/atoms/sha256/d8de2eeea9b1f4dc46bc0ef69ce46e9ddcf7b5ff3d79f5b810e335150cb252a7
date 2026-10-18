@@ -1,0 +1,14 @@
+**Theorem 7.1 (a fixed suffix and the arrow current are insufficient).** For any $L\ge1$, no predictor determined only by the last $L$ visible symbols can meet the uniform all-future requirement with $\epsilon<1/2$. The fixed-path arrow statistic $W$ of Auric §123.2, even paired with the current visible type, is also insufficient for exact future prediction. These obstructions include $p=q$ and $r=s$.
+
+**Proof (7.1).** The histories $1B^L$ and $0B^L$ have probabilities $pa^{L-1}/5$ and $rb^{L-1}/5$. Their suffixes of length $L$ are the same, but their current posteriors are $e_2,e_4$. Their distance is one by Theorem 3.1, so a common suffix decoder has worst error at least $1/2$. Every finite such history is legal, even at very small probabilities.
+
+For $W$, take the acquired histories $B1B$ and $B0B$. They have unique hidden paths $(2,1,2)$ and $(4,0,4)$, with probabilities $qp/5$ and $r^2/5$. Both have current type $B$ and $W=0$: the first has cancelling reverse/forward square steps and the second uses only the leaf branch. Their future laws are again $F_2,F_4$. Thus even when $W$ is known on these records it is not predictive.
+
+Auric Theorem 123.2 is reused at exactly its fixed-model, fixed-path-length direction-discrimination scope,
+
+$$
+\log(\mathbb P_N(\gamma)/\mathbb Q_N(\gamma))=W(\gamma)\log(p/q).
+$$
+
+It does not make $W$ a supplied four-symbol register. Its range is unbounded: traversing the positive-probability forward square repeatedly gives arbitrarily large $W$. When $p=q$ the likelihood ratio is identically one; the preceding predictive witnesses still differ. The separate equality governing exact finite-start memory is $r=p+q$. $\square$
+

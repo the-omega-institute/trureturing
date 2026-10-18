@@ -1,0 +1,5 @@
+source_id = "kbonacci-self-calibrating-source-correlated-laws"
+path = "docs/develop/theory/KBONACCI_SELF_CALIBRATING_SOURCE_CORRELATED_LAWS.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

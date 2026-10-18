@@ -1,0 +1,53 @@
+**Lemma 1.1 (Phase equations).** Write $h=\theta-\theta^{\rm in}$.
+Every history has increments
+
+$$
+h=(u,v,0,v,u),
+$$
+
+and, with $\alpha=u-v$ and $\beta=u$,
+
+$$
+\begin{aligned}
+I(k)&=\frac2k+\frac2{H-k}=\frac r{k(H-k)},\\
+w_+(k)&=\frac12-\frac kr,\qquad
+w_-(k)=-\frac kr,\qquad w_2(k)=0,\\
+du&=\left(\frac12-\frac kr\right)d\chi,
+&dv&=-\frac kr\,d\chi,\\
+d\alpha&=\frac12d\chi,
+&d\beta&=\left(\frac12-\frac kr\right)d\chi.
+\end{aligned}
+$$
+
+**Proof.** The reciprocal sum gives the displayed $I$. Dividing the
+positive and negative entries of $d$ by their corresponding $p_sI$
+gives $w_+=(H-k)/r=1/2-k/r$ and $w_-=-k/r$. Equal transport
+coefficients give equal increments in modes $0,13$ and in modes $1,3$,
+starting from zero increments. The middle increment stays zero. This
+asserts equality of increments only, with no restriction on preparation
+phases. Subtraction gives $d(u-v)=d\chi/2$.
+The inverse coordinate change $u=\beta$, $v=\beta-\alpha$ has integer
+coefficients, as does the forward change, so both descend to inverse
+maps of $\mathbb T^2$. Along real lifts,
+$d^{\mathsf T}h=2(u-v)=\chi-\chi(0)$. $\square$
+
+Put $\eta_s=\theta_s^{\rm in}-\theta_2^{\rm in}$. A constant common
+gauge gives the representative
+
+$$
+\psi(k,u,v)=\left(
+\sqrt{k}e^{-i(\eta_0+u)},\
+\sqrt{H-k}e^{-i(\eta_1+v)},\
+\sqrt Z,\
+\sqrt{H-k}e^{-i(\eta_3+v)},\
+\sqrt{k}e^{-i(\eta_{13}+u)}
+\right).
+$$
+
+Its middle coordinate is fixed and positive. Equality of two such rays
+therefore forces equality of the representatives. Their moduli determine
+$k$, and the positive group amplitudes then determine $u$ and $v$
+separately modulo $2\pi$. Conversely these data determine the ray.
+There is no extra parity identification or quotient by a common bottom
+phase: the positive middle amplitude remains present.
+

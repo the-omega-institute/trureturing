@@ -1,0 +1,38 @@
+**Proposition 12.1 (what supplies the new conclusion).** The additional
+source-specific bridge is the conjunction of the **exact full native
+support** (8.1), an actually receiving representation with the
+every-cut invariant (9.1), and a **whole physical operand** (8.4)
+with only $H$ writable materialization cells. The inventory and total
+rules make this bridge compatible with complete-state counting and
+one-bit raw receipt. Removing any of these premises removes the
+claimed proof of (10.4): a small dictionary alone says nothing about
+operand production; completed-cut recovery alone says nothing about
+pending arrivals; and a small online working tape alone says nothing
+about an omitted output tape.
+
+The exact existing-work correspondence is as follows.
+
+| Source | Role and boundary in §§8–11 |
+| --- | --- |
+| SLHC Constructions 11.5–11.6 and Theorem 12.2 at [5798b485][SLHC12] | Complete native supplier on all unknown shapes, including its invalid-code defaults, bank routing, VALUE/GUARD syntax, cell-search rows, exact genuine Updates and native cost bounds. Lemma 8.2 derives the exact menu from these full rules; the supplier's looser menu bound alone would not give it. |
+| SLHC Theorem 12.3 and this volume §§2, 5.3, 6.2 | Same-run long literals, autonomous complete-width lower order, unchanged source-growth/service coordinates and history/unbounded-entry obstructions. These results are reused, not newly proved here. |
+| EA Proposition 8.1 at [3605ccfd][PH81]; this volume §§4.1–4.2, 4.4–4.7 | Paid finite graph fetch, bit loops, explicit heads, saved-old/pending graph transfers, graph writer and expanded immutable storage. The inventory, receiver routines, readonly tail, online allocation and event constants here are separately specified; the old flat-buffer allocation is not imported. |
+| Transport PR57.D7/L4/T3 at [3605ccfd][PR57] | Owned copy induction and causal simulation proof. Its full growing archives and two complete-buffer protocol are different allocations. The letter mailbox has its own stated four-event handshake and prefix invariant; no $8d+4$ price is transferred to it. |
+| `DelayedOriginalReadout.originalQueries`, `right_clock_iterate`, `right_clock_readout`, `original_decoder_correct`; private `original_query_bounds`, `clock_step` | Existing precise suffix syntax, current clock, image-licensed decoding and query-length facts. Private status does not make them new gaps in this prose application. |
+| `NativeSerialMachine.nativeStep`, `Run`, `replay_deterministic`, `operational_replay`; `NativeSerialEffective.original_code_service_simulation` | Same-source chronological vocabulary and erasure preserving addresses/replies/Updates/Halt. The effective theorem's arbitrary numeric workspace and certified epoch/history interface do not supply the present finite-width result. |
+| `NativeSerialDepth.descriptor`, private `descriptor_eq`, `bounded_read_support` | Proof-only descriptor and support constraints, not an autonomous receiver or materialization service. |
+| Pinned Mathlib `Computability/TuringMachine/StackTuringMachine.lean`, `TM2.Cfg`, `stepAux`, `step`, revision `db584cd6d46c92f209a44c0f1c829460d327499d` | Generic configurations include the label, internal value and all stacks. This supplies a machine vocabulary, not a finite receiver allocation or a whole-materialized-literal theorem. No upstream simulation theorem is used as a substitute for the receiver proof. |
+| Cabello–Eppstein–Klavžar, Proposition 3.1 [CEK] | The explicit zero-interleaving map; no isometric embedding or optimal coding constant is required. |
+| Bille, Ettienne, Gagie, Gørtz and Prezza, *Decompressing Lempel–Ziv Compressed Text*, §1 and Theorems 1–2 [LZSPACE] | Their problem explicitly outputs a stream without storing it, and counts working space on top of input and output. Its small working-space decompression results therefore do not establish this whole-operand contract. No LZ theorem is needed to build the fixed right tail. |
+| Turing §§1–2 [TURING] | Complete configuration and automatic progress; an immutable tape with an omitted moving head is not an autonomous small-state machine. |
+
+These are ordinary mathematical derivations in the stated model, with
+no new Lean certification or worldwide originality claim. The new
+materialization argument uses readonly **letters** already paid in
+physical storage, not a readonly state name masquerading as a payload.
+The universal memory statement concerns the online mutable coordinate;
+physical source Read/Update internals and their separate costs in
+(5.5)–(5.6) remain premises. Since $U=0$ here, the source stays at its
+actual entry tree throughout; the address routines do not construct
+or copy that tree.
+

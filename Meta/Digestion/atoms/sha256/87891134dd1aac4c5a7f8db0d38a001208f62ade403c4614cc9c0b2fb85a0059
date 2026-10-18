@@ -1,0 +1,58 @@
+**推论 C-126.4（同一估计器的两个充分样本界）。** 在假设 C-126.1 的见证来源
+$\rho=\rho_\psi$ 上，每设置取
+
+$$
+n\ge\left\lceil131072\log(20/\delta)\right\rceil
+\tag{C126.7}
+$$
+
+即可保证 $\Pr_{\rho_\psi}(\widehat R_{\rm low}>2)\ge1-\delta$。
+利用同一见证的第二矩，可将充分条件改进为
+
+$$
+n\ge\left\lceil18432\log(20/\delta)\right\rceil.
+\tag{C126.8}
+$$
+
+这两个界使用同一截断估计器与误报规则；较小常数不是样本最优性结论。
+
+证明。在 (C126.6) 的同一事件上，
+$0\le p_j-\ell_j\le2\varepsilon$ 且 $u_j\le p_j+2\varepsilon$。
+$x^3$ 在 $[0,1]$ 上的 Lipschitz 常数为三，故
+
+$$
+L_3\ge\frac{145}{1024}-6\varepsilon,\qquad U_1\le\frac14+2\varepsilon.
+\tag{C126.9}
+$$
+
+若 $\varepsilon\le1/512$，分子下界为正，并有
+
+$$
+\widehat R_{\rm low}\ge
+\frac{133/1024}{(65/256)^2}=\frac{8512}{4225}>2.
+\tag{C126.10}
+$$
+
+由 $512^2/2=131072$，(C126.7) 足以保证此 $\varepsilon$ 条件。
+更精细地，逐节点有
+
+$$
+p_j^3-\ell_j^3
+=(p_j-\ell_j)(p_j^2+p_j\ell_j+\ell_j^2)
+\le6\varepsilon p_j^2.
+\tag{C126.11}
+$$
+
+用 C-125.1 的第二矩公式和 (C123.14)，得到
+$L_3\ge145/1024-(33/32)\varepsilon$。
+因此 $\varepsilon\le1/192$ 时
+
+$$
+\widehat R_{\rm low}\ge
+\frac{279/2048}{(25/96)^2}=\frac{2511}{1250}>2.
+\tag{C126.12}
+$$
+
+$192^2/2=18432$，所以向上取整的 (C126.8) 给该条件。
+两次推导均在同一概率至少 $1-\delta$ 的事件上成立。证毕。
+

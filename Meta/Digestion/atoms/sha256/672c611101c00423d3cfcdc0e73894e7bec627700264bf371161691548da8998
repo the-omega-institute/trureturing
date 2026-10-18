@@ -1,0 +1,6 @@
+# 递归关系观察：算术编码与有效分辨率·仿射单历史取得续卷
+
+**约定（跨卷编号与数学来源）。** 本卷第12节沿用[前卷第11节](RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_RESOLUTION.md#11-非可逆模相位运输的最小分辨率与精确记忆)的有限仿射网络及记号。下文的11.x条目与公式均指前卷，12.x条目与公式均指本卷。
+
+[定义11.1](RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_RESOLUTION.md#111-实际来源边操作和指定读出)供应完整相位来源、端口与原具名仿射操作；[定理11.2及式（11.4）–（11.6）](RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_RESOLUTION.md#112-最小未来边界的全路径公式)供应全路径行为模数、同源差分核及不可返回的模6分叉；[定理11.3、命题11.4及式（11.7）–（11.8）](RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_RESOLUTION.md#113-素数损失简单路径与有限停止)供应素数损失、删圈停止界与链上尖锐性；[定理11.5、命题11.6及式（11.9）–（11.12）](RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_RESOLUTION.md#114-恢复所需的最小附加记忆)供应边界恢复的实际像、纤维及辅助数字；[定理11.7及式（11.13）–（11.15）](RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_RESOLUTION.md#115-完整边词的记忆饱和与时间记录)供应已知完整边词的恢复记忆。第12节的取得始终以本节实际 Read 合同为条件，不把这些供应式中的全路径模数或辅助数字当作已获读数。
+

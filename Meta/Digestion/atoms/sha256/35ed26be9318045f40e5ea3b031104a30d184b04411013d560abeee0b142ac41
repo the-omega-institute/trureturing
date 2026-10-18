@@ -1,0 +1,37 @@
+**Corollary 177.3 (Exactly 25 modes at the five-prefix score).** For
+$L\ge6$, put $\Phi=\Psi_5$. Its complete stopped score-four tables
+are exactly
+
+$$
+(i,j;0,r,\ell),\qquad 2\le i<j\le5,\quad i<r\le j,\quad
+\ell=0\text{ or }j<\ell\le6.
+\tag{177.6}
+$$
+
+There are 25, and their mass in any finite stopped cap attainer is
+at least $\max\{0,a_3+a_4+a_5-6\varepsilon\}$.
+Every $T_L$ cap attainer must have $a_3+a_4+a_5\le6\varepsilon$.
+For the sharp-core extension of Proposition 175.1 this demanded mass is
+
+$$
+f_5=\frac r{10}-B,\qquad B=\sum_{i=6}^Lg_i.
+\tag{177.7}
+$$
+
+When $B<r/10$, the full $O_2$ construction exists at the cap while
+the restricted $T_L$ method does not. The geometric family of
+Proposition 175.2 has this strict method obstruction at every finite
+$L\ge6$.
+
+**Proof.** Apply Theorem 177.2 at the proper prefix $k=5$.
+The count is also explicitly
+$\sum_{j=3}^5\sum_{i=2}^{j-1}(j-i)(7-j)=4+9+12=25$.
+If a $T_L$ mixture were cap-feasible, (177.4) and its support three
+would give $f_5\le0$. The full excess identity gives
+$f_L=D_3-3\varepsilon=r/10$, while
+$f_L-f_5=\sum_{i=6}^L(a_i-\varepsilon)=B$.
+This proves (177.7); the geometric inequality is (175.4).
+The complete $N$ and $O$ supports for this score are both four, so
+this obstruction is a failure of a restricted method, with no full
+$N/O$ support gap or extended-cap optimality conclusion. $\square$
+

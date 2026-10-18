@@ -1,0 +1,27 @@
+**Definition 2.3 (Phase and metric normalization).** On the declared complex
+pure-state extension use
+
+$$
+\psi_s=\sqrt{p_s}\,e^{-i\theta_s},\qquad
+\chi=d^{\mathsf T}\theta\pmod{2\pi}.
+$$
+
+Pure rays identify common phase. Along a path, $\theta$ and $\chi$ can be taken
+as continuous real lifts, and a winding refers to these lifts. Consume SP
+§§35.3–35.7 with precisely its negative exponential and normalization:
+
+$$
+\omega=\sum_s d\theta_s\wedge dp_s,
+$$
+
+$$
+g_{FS}=\frac12\sum_s\frac{dp_s^2}{p_s}
+ +2\left[\sum_s p_s\,d\theta_s^2-
+             \left(\sum_s p_s\,d\theta_s\right)^2\right].
+$$
+
+Against HR's positive exponential the sign map is
+$\theta^{\rm HR}=-\theta$, $\Phi^{\rm HR}=-\chi$, and
+$g_{FS}=2g_{FS}^{\rm HR}$. A projective line has symplectic area $2\pi$ in
+this convention. Probability information alone does not specify this extension.
+

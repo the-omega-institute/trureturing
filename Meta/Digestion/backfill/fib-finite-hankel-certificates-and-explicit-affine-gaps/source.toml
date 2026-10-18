@@ -1,0 +1,5 @@
+source_id = "fib-finite-hankel-certificates-and-explicit-affine-gaps"
+path = "docs/develop/theory/FIB_FINITE_HANKEL_CERTIFICATES_AND_EXPLICIT_AFFINE_GAPS.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

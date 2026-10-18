@@ -1,0 +1,64 @@
+**Proposition 302.1 (An excluded tested cap, without an asserted attainer).**
+Let
+
+$$
+(a_1,\ldots,a_7)=(117,117,117,90,81,72,54)/200,
+\qquad e=9/40,
+\tag{302.1}
+$$
+
+and append any positive nonincreasing vanishing tail with $a_8\le e$.
+At this profile $E=27/100$, $a_1+E=171/200$, $R=0$ and
+$b_J=r^\star e$. The $Y_2$ and $C$ readings are respectively
+$2/25$ and $8/25$. Every original $N$, hence every original $O$, has
+error at least $227/1000>225/1000=e$. No law attaining $227/1000$
+is asserted.
+
+**Proof.** The weighted sum in $Y_2$, including $a_2$, is $224\tau$
+with $\tau=9/200$. Thus its uniform original necessary inequality is
+$40e_a(A)\ge224\tau-1$, giving $e_a(A)\ge227/1000$.
+At the tested cap $e=5\tau$, $F_2=24\tau-1=2/25$, and (299.2)
+gives $F_C=8/25$.
+
+For comparison, the older named prefix and full cuts have these exact
+left-minus-right readings:
+
+| Family | $m=4$ | $m=5$ | $m=6$ | $m=7$ |
+| --- | --- | --- | --- | --- |
+| 117.2 | $-119/200$ | $-14/25$ | $-69/200$ | $-31/100$ |
+| 235.3 | $-27/50$ | $-37/50$ | $-41/100$ | $-63/200$ |
+
+The 113.2 residual reading is $-29/200$; the readings of 240.1 and
+241.1 are $-11/100$ and $-9/100$. For
+[256.3](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XV.md),
+the reading is
+$2a_2+4a_3+4a_4+5(a_5+a_6+a_7+a_8)-2-43e\le-13/200$.
+
+The 113 reading follows from
+$a_1+\sum_{j=3}^7(a_j-e)-3e-1=-29/200$; later inactive terms
+vanish. For 117 prefixes $m\ge7$, replace every later amplitude by
+$e$ to maximize its positive-coefficient reading. The result is
+$(141-29m)/200<0$. For 235 prefixes, with $d_m=m(m-3)/2$, the
+same padding gives
+
+$$
+[-29d_m+83(m-2)-72]/200.
+$$
+
+At $m=7$ this is $-63/200$; its successive difference is
+$[83-29(m-1)]/200<0$. Actual later amplitudes only decrease both
+readings. Monotonicity likewise bounds ordered gap placements of these
+nonnegative old coefficients by their consecutive placements.
+
+For all weighted five-late inequalities of 282.1, write their bound as
+$\sum\gamma_ab_{j_a}\le(G+(21/5)\mu)e$, where
+$G=\sum\gamma_a$, $0\le\gamma_a\le\mu$. On the consecutive
+core, $r^\star_a>1$ and $\sum_a(r^\star_a-1)=21/5$, so
+$\sum\gamma_a(r^\star_a-1)\le(21/5)\mu$. Ordered gap placements
+cannot increase the left side; later coordinates at or below $e$ do
+not add positive residual. The selected core ratio generators and their
+294.1 cone consequences also pass, with equality at their least $K$.
+These computations compare only the named older families; they do not
+assert passage of every historical theorem or existence of a full
+feasible allocation. $\square$
+

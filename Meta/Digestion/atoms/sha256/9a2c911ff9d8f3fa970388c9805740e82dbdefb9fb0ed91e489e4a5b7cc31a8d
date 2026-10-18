@@ -1,0 +1,31 @@
+## 2. 观察者合同、两个风险及缺陷
+
+允许一个固定非空有限 COMPLETE 配置集、来源独立初始化和固定时间齐次来源独立字母随机更新。实际原控制、记录、权限、程序、参数与数值表示、工作区、输出控制及全部持久随机性均计费。运行时只读实际配置；没有免费时钟、档案、建议、持久随机带、连续隐藏寄存器、相关来源种子、精确后验或配置分布向量服务。
+
+给实际历史 $h$ 后的配置分布 $\rho_h$、每配置完整解码律 $D_z$，定义
+
+$$
+Q_h=\sum_z\rho_h(z)D_z,\qquad
+e_{\rm law}(h)=\operatorname{TV}(Q_h,T_h^\mu),
+\qquad e_{\rm conf}(h)=\sum_z\rho_h(z)\operatorname{TV}(D_z,T_h^\mu),
+$$
+$$
+R_j(\mathcal H)=\sup_{h\in\mathcal H}e_j(h),\qquad j\in\{\mathrm{law},\mathrm{conf}\}.
+\tag{2.1}
+$$
+
+$Q_h,\rho_h$ 是分析坐标，不是机器输入。凸性给 $e_{\rm law}\le e_{\rm conf}$；对真实随机历史另作平均不等于这些量。
+
+每配置同更新生成要求：用该配置的合成字母概率选取预测字母，再用实际保持所用的同一字母随机更新，产生的合法完整转录律就是 $D_z$。预测合成不是新实际 Read，不改变 $r_K$。
+
+沿用 [PRICE] 的缺陷。合法实际下一操作 $x$ 的预测柱概率为 $q_h(x)$；若它正，条件化并删去该操作及其原事件块，得到 $\operatorname{res}_xQ_h$，置
+
+$$
+\delta(h,x)=\operatorname{TV}(\operatorname{res}_xQ_h,Q_{hx}).
+\tag{2.2}
+$$
+
+若 $q_h(x)=0$，约定缺陷0，不选择虚构条件律；实际后继仍有定义，其历史风险仍在域内。$\Delta_4$ 是 $\mathcal H_p\cup\mathcal H_\beta$ 上合法下一 Read 的最坏缺陷；$\Delta_{\rm all}$ 还包括从第一笔 Read 前至 deliveredStop 的全部正有限实际历史及原合法操作。pending 的唯一 Stop 后继缺陷0，delivered 无下一操作，空上确界取0。
+
+零缺陷精确恢复的只是所有正预测概率续接上的边缘条件等式，不恢复预测支持覆盖或来源正确性。每配置生成与这项边缘条件等式是两项不同义务。
+

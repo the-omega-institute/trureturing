@@ -1,0 +1,14 @@
+**Definition 27.1 (The compared generating models).**
+A classical model is a finite, time-homogeneous,
+nonnegative edge-emission HMM with a stationary initial
+row and stochastic total transition. A quantum model
+is a finite-dimensional memory with a stationary density
+operator and time-homogeneous completely positive
+visible branch maps whose sum preserves trace. Finite
+word probabilities are obtained by composing the branch
+maps and taking the trace. External correlated memory
+or a time-dependent control schedule is not part of
+either comparison class. Quantum dimension counts the
+memory Hilbert dimension; classical dimension counts
+hidden states.
+

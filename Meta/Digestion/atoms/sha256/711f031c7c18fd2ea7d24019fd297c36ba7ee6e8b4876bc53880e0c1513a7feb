@@ -1,0 +1,50 @@
+## 401. Original degrees and the precise residual families
+
+Work in the full six-actual-edge source setting of the published
+continuation, with exactly six distinct actual labels
+
+    P={M,Z,U}, Q={V,C,D}.
+
+There are finitely many original tetrahedra, each with a fixed
+vertex-induced paired frame (R,A,B,O,A,B), in edge order
+(12,13,14,34,24,23), and four distinct actual labels. The unique flat
+owner is sigma=(M,C,D,V,C,D); every other owner is genuine. The named
+genuine source is tau=(Z,M,C,D,M,C). Every actual edge has a connected
+original normal-circle quotient, original degree at least six, and
+total angle 2*pi. Loops, self-gluings between distinct face occurrences,
+repeated owners' role vectors, and equal numerical coshes at distinct
+labels remain permitted.
+
+The source scalar hypotheses are
+
+    c,d,v>1, m>1+c+d, v<=m-2,
+    z>1+m+c, u>m,
+    (m-1)*(v-1)>=(c+d)^2,
+    u<z+m+1, z<u+m+1.
+
+The last two gaps must either be hypotheses or follow from the
+published complete-star maximum-gap theorem with its own hypotheses.
+This proof does not infer them from the preceding scalar inequalities.
+The full original degree/circle setting above is retained because the
+older two-high-axis expense theorems, including the M/U V/C branch,
+have those dependencies. The mixed-four-slot scalar theorem in
+Sections 395-399 itself
+uses no gap or degree hypothesis.
+
+Call an owner cheap axial-P if its fixed frame, up to independently
+interchanging axes and transverse labels, is one of
+
+    A(P0)=(P0,V,C,D,V,C),
+    B(P0)=(P0,V,D,C,V,D),       P0 in {M,Z,U}.
+
+The word "cheap" names this residual role family. It does not assert
+that every such owner actually spends less than pi. Let a be the number
+of its genuine original owners, and f the number of genuine owners
+having five original P slots. Then
+
+    a+f>=3, f<=2, and a>=2.
+
+In particular, if f=0 then a>=3. These are owner counts, not counts of
+distinct role vectors, labels, face receivers, or normal-link vertices.
+No full flat-exclusion conclusion is claimed.
+

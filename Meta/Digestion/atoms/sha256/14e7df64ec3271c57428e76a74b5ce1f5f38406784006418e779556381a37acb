@@ -1,0 +1,27 @@
+**Proposition 6.3 (All finite-policy weight vectors).** A finite
+measurable $K$ partition of the specified seed space has precisely
+the possible vectors
+
+$$
+(\nu(G_k))_{k\in K}
+=\sum_n\lambda_n e_{k_n}+d(t_k)_{k\in K},\qquad
+k_n\in K,\quad t_k\ge0,\quad\sum_{k\in K}t_k=1,
+\tag{6.2}
+$$
+
+where $e_k$ is the $k$th unit vector. Every vector in (6.2) is
+realized by a partition in the original $\mathcal U$.
+
+Proof. The intersections of a finite partition with an atom have
+measures either zero or the whole atom weight. Exactly one label
+has the latter measure. Denote it by $k_n$. The remaining partition
+weights come from $\mathsf U_0$ and sum to $d$, giving (6.2).
+If $d=0$, the choice of $t$ is immaterial.
+
+Conversely assign each whole $A_n$ to its specified label $k_n$,
+and use Lemma 6.2 to partition $\mathsf U_0$ into masses $dt_k$.
+The union of the atoms assigned to one label is a countable
+measurable union. Adding its remainder piece yields the desired
+partition. This proves both directions, including nonpoint atoms
+and noncomplete spaces. $\square$
+

@@ -1,0 +1,37 @@
+**Definition 24.1 (one common horizontal request).** Fix the double-wall
+source of §4, one positive preparation and its common calibrated directions
+where supplied. Write $V=\operatorname{span}\{|+\rangle,|-\rangle,|2\rangle\}$,
+$0<Z<1$ and $c=(1-Z)/2$. The tested specimen vectors are precisely
+
+$$
+\psi_{x,\beta,m}=\sqrt Z|2\rangle+e^{-i\beta}
+ \left(\sqrt{2x}|+\rangle+(-1)^m\sqrt{2(c-x)}|-\rangle\right),
+\qquad \beta\in\mathbb R,\quad m\in\mathbb Z.
+\tag{OC.72}
+$$
+
+Choose $M\geq1$, distinct $x_1,\ldots,x_M$, and common parameters
+$d,L$ such that $d>0$, $0<L<\infty$ and $0<x_j<c-d$ for every $j$.
+The sole requested continuation is the relative control $(dt/L,0)$ on
+$[0,L]$. Its domain is $(0,c-d)$; at height $x_j$ its actual coordinate
+is $k_j(t)=x_j+dt/L$, and its old real phase lift is unchanged. Put
+
+$$
+\begin{aligned}
+s_j&=\frac{x_j}{x_j+d},& a_j&=\sqrt{s_j},\\
+b_j&=\sqrt{\frac{x_j(c-x_j-d)}{(x_j+d)(c-x_j)}},&
+D_j&=\operatorname{diag}_{(+,-,2)}
+ \left(\frac1{a_j},\sqrt{\frac{c-x_j-d}{c-x_j}},1\right),\\
+K_j&=a_jD_j=\operatorname{diag}_{(+,-,2)}(1,b_j,a_j).
+\end{aligned}
+\tag{OC.73}
+$$
+
+Thus $D_j\psi_{x_j,\beta,m}=\psi_{x_j+d,\beta,m}$, both vectors
+are normalized, and $\|D_j\|^2=1/s_j$. Proposition 17.2 supplies the
+complete canonical instrument for this request. In particular its success
+probability on every vector (OC.72) at height $x_j$ is $s_j$.
+The lower bounds below test only this actual orbit, rather than requiring
+arbitrary $M_3$ test preparations, recovery of the input, or a total
+legality guard.
+

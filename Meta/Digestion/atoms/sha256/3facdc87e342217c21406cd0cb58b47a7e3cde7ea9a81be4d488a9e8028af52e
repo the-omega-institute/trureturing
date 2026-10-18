@@ -1,0 +1,34 @@
+**定义 4.1（Two-threshold arbitrary table）。** Require
+
+$$
+m\ge3,\qquad 2\le r<m,\qquad T=m+r,\qquad k=m+r-1,
+\qquad g=\gcd(m,r),\qquad P=g\mathbb Z/T\mathbb Z,
+$$
+$$
+0\le a\le r-2,\qquad \lambda:P\to Y,\qquad C=\lambda(0),\quad D=\lambda(m).
+\tag{4.1}
+$$
+
+Take $R_1\notin\lambda[P]$ and, if $a>0$, $R_2\notin\lambda[P]\cup\{R_1\}$. Define on both free-value fibres
+
+$$
+f_{\rm two}(v,-j,s)=
+\begin{cases}
+R_1,&s\ge r-1,\\
+R_2,&r-1-a\le s<r-1\quad(a>0),\\
+\lambda(j),&s<r-1-a,
+\end{cases}
+\qquad f_{\rm two}(\bot)=L_\bot.
+\tag{4.2}
+$$
+
+The middle band is empty at $a=0$; the low band always contains tail zero. $L_\bot$ is arbitrary. The table and band are evaluated once on the INITIAL record. Put
+
+$$
+H=\{0,m\},\qquad Z=P\setminus H,\qquad
+F=P\cap\{m-r+1,\ldots,m-1\}.
+\tag{4.3}
+$$
+
+Endpoint labels may equal each other or any other low-phase label. Every specified source has the single-history witness (1.3).
+

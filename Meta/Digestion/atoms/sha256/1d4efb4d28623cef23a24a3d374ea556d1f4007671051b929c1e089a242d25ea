@@ -1,0 +1,41 @@
+**Proposition 7.3 (a sufficient paid consumer, without an optimum).** Given
+a sufficient inclusive $H$ from Corollary 7.2 and authentic $N$, the existing
+static original-prefix decoder recovers the target with at most
+
+$$
+K_H=2(2^{H+1}-1)\text{ new raw reads},\qquad
+\max |p|\le H+\lceil N/2\rceil,\qquad
+\sum |p|\le K_H(H+\lceil N/2\rceil),
+\tag{PAC.24}
+$$
+
+and zero post-entry updates. The read and word bounds are sufficient; no
+global minimum, local-time, memory, preparation, installation or retention
+bound is asserted.
+
+Proof. For every original address of length at most $H$, use the actual
+current-register decoder of [ARH, §2][ARH] and
+[DelayedOriginalReadout, `original_decoder_correct` and
+`original_decoder_service`][DOR]. Each original reply needs at most two
+chronological paid calls of the displayed maximum length, including absence;
+there are $2^{H+1}-1$ original words. Every repeated actual call is counted.
+Enumerate finite candidate originals and test the whole acquired predicate
+and recovered prefix until one passes. The actual source is a candidate,
+so this local computation terminates sourcewise; its complete row agrees
+with the real source by the determining-prefix property. Output that row
+and halt. No candidate is claimed to be the real original.
+
+Before service entry, ARH's public producer traverses each finite acquired
+subtree at its actual epoch, pays for all its calls, compares the resulting
+finite descriptions, makes the actual forward updates and applies the
+stipulated complete state cut. Every finite source satisfying §6's records
+produces the same retained state by ARH's two-way correspondence, although
+its acquisition lengths may differ. Those sourcewise finite costs are not
+refunded by compact signed records. A full original traversal at fixed $N$
+also terminates on every finite source but need not have a uniform read
+bound. Local search, address generation, working memory, output,
+authentication, preparation, installation and complete-successor retention
+remain separate charges. No cost comparison uses a sum of coordinate
+suprema as a same-run weighted value, and zero weights remain allowed.
+$\square$
+

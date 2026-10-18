@@ -1,0 +1,4 @@
+# 六维第四个无偏基问题：理论续卷 II
+
+本卷承接[前卷](MUB_SIX_FOURTH_BASIS_THEORY.md)与[理论续卷 §§52–61](MUB_SIX_FOURTH_BASIS_THEORY_CONTINUATION.md)，沿用相同的实际输入基约定与实参数支。第 62 节证明移动 canonical 基在中心参数处的局部唯一性；第 63 节确定前续卷所列六条中心非 canonical 射线的局部正交图。两节均允许任意邻近实际候选，不假设循环或反射协变性。
+

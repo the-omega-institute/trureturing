@@ -1,0 +1,50 @@
+**Definition 3.2 (supported low law and physical capacity).** For a weak
+supported-nonzero actual low label write
+$$
+\begin{gathered}
+h=(1,z,w),\qquad \alpha z^2+\beta w^2=1,\qquad
+K_h=s_0D+zT+wS,\qquad K_j=\sqrt{p_j}K_{h_j},\\
+n_h=(0,dw/h_2,-bz/h_1)^T,\qquad
+\ell(h)=h^TGh,\qquad f(h)=n_h^T\Delta n_h,\\
+\mathfrak c(h)=
+\frac{h_1^2h_2^2\delta+a^2h_2^2z^2+c^2h_1^2w^2}
+ {h_0^2\delta+b^2z^2+d^2w^2}>0,\qquad t=e^A-1.
+\end{gathered}
+\tag{GC.8}
+$$
+The source amplitude $c$ and the capacity $\mathfrak c$ are distinct.
+The complete joint law is
+$$
+\begin{gathered}
+\sum_jp_jh_jh_j^T=I_3,\qquad
+N_j^{\,f}=p_jb_jn_{h_j}n_{h_j}^T,\qquad
+\sum_jN_j^{\,f}=M,\\
+0\le b_j\le t\mathfrak c(h_j),\qquad
+\sum_jp_j|z_j|\ge\tau:=s/s_0,\\
+2T_{\rm actual}=H_0+\sum_jp_j|\ell(h_j)+b_jf(h_j)|.
+\end{gathered}
+\tag{GC.9}
+$$
+The $p_j$ are coefficient weights with sum one, **not** acquisition
+probabilities. The actual acquisition effect on the supported input is
+$K_j^\dagger K_j+N_j^{\,f}$.
+
+The necessity of (GC.9) follows from JR's unaveraged equality face and
+FA's actual-label double rigidity, not from a restriction of competitors
+to real matrices. It applies to each existing supported-nonzero actual
+low label without turning a hidden Kraus index into a readable label.
+Proportional subdivisions may be merged. Distinct supported live rays
+cannot be hidden in one actual low label.
+
+Supported-zero full encoders are also admissible. Their full effects
+may be nonzero although their compression by $E$ vanishes. They count
+when actually generated, but have zero probability on the twelve
+supported histories. For weak **minimum** counts, (GC.9) and the
+coherent completion in §10 give
+$$
+\min(\text{total optimal actual labels})
+ =1+\min(\text{supported low optimal actual labels}).
+\tag{GC.10}
+$$
+This is an equality of minima, not a count identity for every instrument.
+

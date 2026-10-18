@@ -1,0 +1,14 @@
+**Proposition 161.2 (Continuity and target boundaries).** Theorem 161.1
+is a pointwise comparison on the entire original domain. Its proof does
+not assert continuous gluing between the Section 160 section on $P$ and
+the residual formula of Theorem 113.3. Its atomic output rules have TV
+distance one from each unchanged nonatomic $\mu_\xi$ and do not certify
+acquisition accuracy against those targets.
+
+**Proof.** The two branches supply existence at the same cap. No equality
+of their allocations on their common boundary was required or proved,
+so continuity of a glued allocation does not follow. All emitted tapes
+are in a finite set of marks in $B_1$; this set has full mass for the
+output law and zero mass for a nonatomic target. It therefore gives TV
+one, and the unchanged consumer is unknown on those marks. $\square$
+

@@ -1,0 +1,21 @@
+**Proposition 33.3 (Terminal degree table in the first three lengths).**
+In the order $j=1,\ldots,k-1$, the complete terminal data are
+
+| $n$ | $D_n$ | $F_{n-1}^{\mathrm{Fib}}$ | $\dim R_k$ | $p_n$ | Last ordinary degrees | Last occupancy degrees | Last rank |
+| ---: | ---: | ---: | ---: | ---: | --- | --- | ---: |
+| 7 | 29 | 8 | 8 | 21 | $26,24$ | $7\mathbf1,6\mathbf1$ | 2 |
+| 9 | 76 | 21 | 10 | 66 | $73,71,69$ | $20\mathbf1,19\mathbf1,18\mathbf1$ | 3 |
+| 11 | 199 | 55 | 12 | 187 | $196,194,192,190$ | $54\mathbf1,53\mathbf1,52\mathbf1,51\mathbf1$ | 4 |
+
+Proof. The Fibonacci values required are
+$F_6^{\mathrm{Fib}}=8$, $F_8^{\mathrm{Fib}}=21$,
+$F_{10}^{\mathrm{Fib}}=55$, and $F_{12}^{\mathrm{Fib}}=144$.
+Thus $D_7=8+21=29$, $D_9=21+55=76$, and
+$D_{11}=55+144=199$. Subtract $n+1$ for the projective dimensions;
+subtract the canonical ordinary degrees $3,5,\ldots,2k-1$ for
+the last ordinary degrees, and subtract $j$ from the fixed-position
+count for each occupancy coordinate. These operations give every
+entry of the table by (33.2). The seven-position row is exactly
+(29.6). The indices $21,66,187$ are homological lengths, with no
+interpretation as temporal operations. $\square$
+

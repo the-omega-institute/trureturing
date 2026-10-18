@@ -1,0 +1,41 @@
+**Definition 76.1 (one supported center and one conjugated defect).** Retain the capped root-fidelity maximum $H_a$ of (S.57)–(S.58), the common-projection system (S.59), and the spectral consumer (S.90)–(S.91). Set
+
+$$
+h=\frac1{\sqrt2},\qquad u=\sqrt a=\sqrt{1-\beta},\qquad
+T=\frac{1+u}{2},\qquad d=\frac{1-u}{2},\qquad v=\sqrt T,
+\qquad \beta=4dT,
+\qquad 0<\beta\leq\frac12.
+\tag{S.156}
+$$
+
+Thus $h\leq u<1$. Let $k\geq2$ be any fixed finite integer, and work on the exact center support:
+
+$$
+\begin{gathered}
+\omega=\operatorname{diag}(s,t,\lambda_3,\ldots,\lambda_k)>0,
+\quad s\geq t\geq\lambda_3\geq\cdots\geq\lambda_k>0,
+\quad\operatorname{Tr}\omega=1,\\
+Z=\begin{pmatrix}Z_0\\Z_1\\Z_2\end{pmatrix},\qquad
+Z_i:\mathbb C^{3k-5}\to\mathbb C^k,\qquad
+Z^\dagger Z=I_{3k-5},\\
+E=ZZ^\dagger,\qquad \widehat P=I-E,\qquad
+\operatorname{rank}E=3k-5,\qquad\operatorname{rank}\widehat P=5.
+\tag{S.157}
+\end{gathered}
+$$
+
+For $k=2$ there is no tail. In an actual application $E=\overline D$ is the conjugated defect of (S.55)–(S.60), not the unconjugated $D$. For each complex unit $\psi=(\psi_0,\psi_1)$ define
+
+$$
+\begin{gathered}
+Z_\psi=\psi_0Z_0+\psi_1Z_1,\qquad
+M_\psi=\omega-\sqrt\omega Z_\psi Z_\psi^\dagger\sqrt\omega,
+\qquad q_i=\operatorname{Tr}(\omega Z_iZ_i^\dagger),\\
+H_a(M_\psi)>v\quad\text{for every complex unit }\psi,
+\qquad q_2<d.
+\tag{S.158}
+\end{gathered}
+$$
+
+The last line is the hypothetical strict system to be excluded. The center, $E$, and its three blocks precede the entire sphere of tests. All statements below concern this one implementation of the projection geometry. The symbol $\varepsilon=T-s$ used below is a leading-eigenvalue deficit, distinct from the tail mass $1-s-t$ and from earlier family perturbation parameters.
+

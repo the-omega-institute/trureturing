@@ -1,0 +1,8 @@
+### 84.3. A robust distance-to-factorization certificate
+
+Let g be the diagonal of an actual correct-output Gram G. Define
+
+    D_core(G)=min ||G-Q entrywise-multiplied by M||_1,
+
+where the minimum runs over Q>=0 with rank Q=2 and Q_ff=I_2, and M>=0 with diag M=g. This set is nonempty: any common-qubit frame Gram Q and M=diag(g) are feasible. It is compact: both PSD factors have fixed bounded diagonals, and the rank-at-most-two condition is closed; Q_ff=I_2 forces rank exactly two. Thus the minimum is attained. A specific feasible pair Q,M is already a valid certificate; optimizing over Q is not asserted to be a convex problem.
+

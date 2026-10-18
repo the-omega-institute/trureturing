@@ -1,0 +1,35 @@
+**Assumption 1.2 (paid preparation and complete late-target export).**
+Preparation is one deterministic effective procedure, initialized
+source-blind from public $D$ and common installed tables. It does not receive
+the later target. It terminates on every $t\in\mathcal F_D$, acquiring
+source dependence only through charged literal Reads of that stationary
+source. It exports a finite code $E(t)$. Its complete attained alphabet
+includes every accessible surviving source distinction: selectors, control,
+operands, buffers, lengths, allocation, handles, counters and accessible
+timing distinctions. Every other surviving accessible field is a function
+of this code and public data. A separately paid handoff and isolation
+service makes preparation transcripts and all other acquired material
+inaccessible and supplies lawful reader entry.
+
+Only after export is a public source-independent request
+$p\in\mathcal P_D$ supplied. A common deterministic effective reader uses
+$E(t),D,p$ and the installed tables. It either makes zero Reads, or makes
+one fresh Read of the same stationary $t$, at any finite original-root word
+chosen from those inputs. It produces a final predictor $Z$. For every
+authentic subsequently supplied integer $k\ge0$, with no further Reads,
+
+$$
+\operatorname{Dec}(Z,D,p,k)=r_{\rho^kt}(p)
+\quad(t\in\mathcal F_D,\ p\in\mathcal P_D,\ k\ge0).
+\tag{NCE.4}
+$$
+
+Neither a supplied $k$ nor a source-dependent request may guide the query.
+Define $M_1(D)$ to be the minimum complete attained cardinality
+$|E[\mathcal F_D]|$ over these preparations and readers. Only this
+cardinality is optimized. Preparation Reads, work and control, temporary
+storage, installed tables, post-request workspace, final predictor size,
+submitted address length and letters, authentication, entry, isolation,
+source continuity and physical time remain separate resources. The paid
+services are hypotheses, not physical operations inferred from a proof.
+

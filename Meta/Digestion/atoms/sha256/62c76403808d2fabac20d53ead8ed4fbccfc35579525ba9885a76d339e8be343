@@ -1,0 +1,53 @@
+**定理 34.2（两个末动作都不能修复的完整二次纤维）。** 对任意 a0、任意非零 kappa 及两个不同实数 u,v>14，令
+
+$$
+\alpha=\frac{\sqrt{17}-1}{4},\quad
+H(t)=\kappa(t-7)(t+u)(t+v),\quad d=a_0+7\kappa uv.
+\tag{34.2}
+$$
+
+对 a∈{u,v} 取另一个参数 a_other，置
+
+$$
+b_a=2/a,\quad r_a=\alpha b_a,\quad c_a=\alpha(1-r_a),\quad
+P_a=\begin{pmatrix}r_a&b_a\\c_a&1-r_a\end{pmatrix},\quad
+g_a(t)=\kappa a(t-7)(t+a_{\rm other}).
+\tag{34.3}
+$$
+
+沿本节 JMJMJM 的共同七读记录，在整个次数至多二的声明类中，完整纤维恰为这两个世界。实际末 J 与实际末 M 的完整响应切片都仍恰是这对。
+
+**quantifiers and fixed worlds.**
+
+Fix EVERY real initial reading a0, EVERY real kappa!=0, and EVERY two distinct real u,v>14. Let alpha=(sqrt(17)-1)/4, H(t)=kappa\*(t-7)\*(t+u)\*(t+v), and d=a0+7\*kappa\*u\*v. For a=u or v let a_other be the other parameter and define b_a=2/a, r_a=alpha\*b_a, c_a=alpha(1-r_a), P_a=[[r_a,b_a],[c_a,1-r_a]], and g_a(t)=kappa\*a\*(t-7)\*(t+a_other). Fix W_a=(P_a,g_a,d) and K={W_u,W_v} before any action or response choice.
+
+**strict legality and exact degree.**
+
+Since 1/2<alpha<1 and a>14>2alpha>0, b_a>0 and 0<r_a=2alpha/a<1. Also c_a=alpha(1-r_a)>0. The equality b_a\*c_a=alpha\*b_a\*(1-r_a)=r_a(1-r_a) proves determinant zero. Trace one makes the source nonzero, hence rank exactly one. All four source entries are strictly positive. Each whole gain has leading coefficient kappa\*a!=0, so is exact quadratic. Its values at 0 and 7 are -7\*kappa\*u\*v and zero; the chosen d therefore gives initial reading a0. At every acquired clock 0,...,6 the factors i-7 and i+a_other are both nonzero, so these particular gains have no early sampled zero. Either sign of kappa is covered.
+
+**different targets and independent gains.**
+
+u!=v implies 2/u!=2/v and therefore different sources and different complete targets. If the two whole gains were proportional, cancel the common nonzero polynomial t-7. The residual affine factors kappa\*u\*(t+v) and kappa\*v\*(t+u) have the same nonzero constant kappa\*u\*v, forcing proportionality factor one. Their slopes then force u=v, a contradiction. They are linearly independent, and their span is (t-7)\*span{1,t}. This is quadratic competition with distinct sources, not a known-direction reduction.
+
+**whole prefix identities.**
+
+For either source e_a(t)=1+t/a. The source chart at alpha gives o_a=alpha\*e_a, since j_a=alpha+r_a/2. Multiplying the SAME g_a by e_a gives kappa\*(t+a)\*(t-7)\*(t+a_other)=H. Thus e_a\*g_a=H and o_a\*g_a=alpha\*H identically. The actual even and odd traces match these e_a and o_a at their acquired clocks. All seven ancestors are therefore simultaneously realized by the same fixed pair, source and drift.
+
+**all eight response equations.**
+
+clock: 0 ; actual response: d+g_a(0)=a0+7\*kappa\*u\*v-7\*kappa\*u\*v=a0
+
+clock: 1 ; action: J ; actual response: d+j_a\*g_a(1)=d+alpha\*kappa\*(1-7)\*(1+u)\*(1+v)=d+alpha\*H(1)
+
+clock: 2 ; action: M ; actual response: d+(1+b_a)\*g_a(2)=d+kappa\*(2-7)\*(2+u)\*(2+v)=d+H(2)
+
+clock: 3 ; action: J ; actual response: d+(j_a+r_a)\*g_a(3)=d+alpha\*kappa\*(3-7)\*(3+u)\*(3+v)=d+alpha\*H(3)
+
+clock: 4 ; action: M ; actual response: d+(1+2b_a)\*g_a(4)=d+kappa\*(4-7)\*(4+u)\*(4+v)=d+H(4)
+
+clock: 5 ; action: J ; actual response: d+(j_a+2r_a)\*g_a(5)=d+alpha\*kappa\*(5-7)\*(5+u)\*(5+v)=d+alpha\*H(5)
+
+clock: 6 ; action: M ; actual response: d+(1+3b_a)\*g_a(6)=d+kappa\*(6-7)\*(6+u)\*(6+v)=d+H(6)
+
+clock: 7 ; action: choose J OR choose M from the same Q6 ; actual response: For J the trace is j_a+3r_a=alpha\*(1+7/a)>0; for M it is 1+2r_a+4b_a+c_a=1+alpha+(6+5alpha)/a>0. In either case g_a(7)=0, so the single acquired eighth response is d. These are alternative final equations, not two observations.
+

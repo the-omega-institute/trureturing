@@ -1,0 +1,34 @@
+**Mathematical citation 11.11 (suppliers, literature and scope).** The
+native additions here are the exact right-cylinder sampling criterion,
+its left-child beta-versus-absence obstruction, the finite native
+collision contexts and the attained laminar-cylinder ray count. Their
+proofs are ordinary `repo-derived` mathematics. The following suppliers
+fix their parameter meanings and their nontransfer boundaries.
+
+| Supplier | Correspondence and limit |
+| --- | --- |
+| [NAR], §§11–12, especially (NAR.11.3), (NAR.11.6) and Proposition 12.8 | $h_u(qR^\infty)=J^c_q(u)$ with the actual blocking-leaf convention; canonical density interpretation and unit advancement are reused. Finite sampling geometry and (AAR.45) are the additional recovery interface. |
+| §§2–3, 6, 9–10 of this volume | Local leaf calibration, $m$ advancement, native operand costs, complete retained-state accounting and arbitrary-encoding distinctions. The count supplied to Theorem 11.4 differs from §10's unknown-lag input; Corollary 11.6 is not §10's all-encoder frontier. |
+| [READ], `readout`, `source_foundation` | The actual four replies use alpha = `true`, beta = `false`, left address bit = `false`, right = `true`. The general leaf-determination and off-leaf facts do not prove the new beta-to-branch profile collision; (AAR.49) checks that collision directly. |
+| [DOR], `rightClock`, `right_clock_iterate`, `right_clock_readout` | The right-spine phase and the intervals for actual right-spine replies supply (AAR.54). An arbitrary ray in $[pR]$ need not be the right spine at $p$, and an absent left child has the extra case proved in Lemma 11.3. The epoch-supplied original-read service is a different consumer. |
+| [NDP], `original_present_transport`, `original_prefix_locality` | Same-source evolution at a reached leaf and finite-depth response dependence. Originally absent positions are handled by (AAR.46), not by assuming they have a transported subtree. |
+| [ACPD], `cutExterior`, `actualPartition`, `literalRecord`, `canonicalRow_record_iff` | The counterexample compares entire literal exteriors and the hidden equality partition. Selected constructor replies do not provide that partition. |
+| [Native Cross-Epoch Relations, §6](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CROSS_EPOCH_RELATIONS.md#6-exactly-which-relative-times-the-input-determines) | Its consistent complete-record support tests and common-source constraints concern richer input. An acquired count used here is not inferred from an unacquired cross-row equality or from graph connectivity. |
+| [Boundary Geometry Continuation IV, §113](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_IV.md#113-the-original-tree-boundary-kernel-acquired-scale-and-initial-cut-rows) | Full canonical measure plus scale is already injective. (AAR.44) samples its logarithmic scaled density; the finite samples do not supply its full value, scale or acquisition for free. |
+
+The elementary same-input/different-output argument is a zero-error
+separation principle. Related primary literature is
+[Charpenay, Le Treust and Roumy, *Optimal Zero-Error Coding for Computing
+under Pairwise Shared Side Information*, arXiv:2211.03649v2,
+Definitions II.1 and IV.5, Theorem IV.8](https://arxiv.org/html/2211.03649v2).
+Their characteristic graph joins sources separated by a compatible
+query, and their full-support result groups vectors of task responses.
+Those are useful correspondences to a declared recovery target. Their
+rate theorem uses i.i.d. blocks, a distribution and expected prefix-code
+length; none is a hypothesis here. No asymptotic coding theorem supplies
+the geometric cylinders, the actual sources (AAR.49), or a sharp
+arbitrary-encoder bit price for this task. The finite-cylinder count
+uses the elementary laminar prefix structure, with its proof above.
+Neither it nor the reuse of boundary coordinates claims worldwide
+originality, new Lean verification or a physical spacetime law.
+

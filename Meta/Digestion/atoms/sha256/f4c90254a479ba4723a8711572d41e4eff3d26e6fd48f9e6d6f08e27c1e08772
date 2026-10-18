@@ -1,0 +1,33 @@
+### 命题 463.1（FIB 同余与超丰数整除的相容性条件）
+
+固定 $0<c<1$。若 $r>5$ 为素数，且
+
+$$
+N_{r,g}=1+F_rg
+$$
+
+是大于 $\max\{5040,N_0(c)\}$ 的最小 Robin 反例，则
+
+$$
+\boxed{
+\gcd(F_r,L_c(N_{r,g}))=1,\qquad
+P^-(F_r)>\lfloor c\log N_{r,g}\rfloor,
+}
+\tag{463.1}
+$$
+
+其中 $P^-(m)$ 表示 $m>1$ 的最小素因子。
+
+**证明。** 最小 Robin 反例是超丰数，这是 Robin 候选缩减所使用的已知结构
+输入。由上述 Segovia 引理，$L_c(N_{r,g})\mid N_{r,g}$。另一方面
+
+$$
+N_{r,g}\equiv1\pmod {F_r},
+$$
+
+所以 $\gcd(N_{r,g},F_r)=1$。任何同时整除 $F_r$ 与 $L_c(N_{r,g})$ 的素数
+都会整除 $N_{r,g}$，矛盾，得到第一个结论。若素数 $p\mid F_r$ 且
+$p\le\lfloor c\log N_{r,g}\rfloor$，则 $p\mid L_c(N_{r,g})$，又得到同一
+矛盾。因此所有 $F_r$ 的素因子都大于该整数，得到第二个结论。证毕。
+$\square$
+

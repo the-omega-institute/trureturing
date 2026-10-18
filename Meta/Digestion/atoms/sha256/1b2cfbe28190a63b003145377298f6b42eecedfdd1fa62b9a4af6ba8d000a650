@@ -1,0 +1,41 @@
+**Proposition 3.1 (a connected two-sheet lift increases native mass).** For
+$F_-$, a triangle has raw mass
+
+$$
+4^3+(-2)^3=56.
+$$
+
+Its connected two-sheet crossed lift is a six-cycle and has raw mass
+
+$$
+4^6+(-2)^6=4160>56^2=3136,
+\qquad \frac{4160}{56^2}=\frac{65}{49}.
+\tag{GCB.6}
+$$
+
+**Proof.** The cycle formula (GCB.5) gives both traces. The crossed matching
+is a connected two-sheet lift of the triangle and preserves the same native
+terminal donor/decoder equations. $\square$
+
+Pad the base by one fixed $u_{00}$ block and the lift by its two fixed copies.
+The base and lift then have four and eight blocks, respectively, while their
+raw masses remain $56$ and $4160$. After normalization the ratio is still
+$65/49$. Taking $r$ disjoint padded gadgets multiplies the ratio to
+$(65/49)^r$. Therefore the proposed unrestricted comparison
+
+$$
+Z(\text{a }k\text{-cover})\le Z(\text{base})^k
+\tag{GCB.7}
+$$
+
+is false even for positive rational native weights, and no correction with
+logarithm $o(n)$ can repair this rule on the displayed family. The obstruction
+also occurs at dyadic lengths: take $r=2^j$, with base length $4r$ and
+lift length $8r$. It is scoped to the rule itself; Ruozzi's graph-cover inequality has a
+log-supermodularity hypothesis that the anti matrix does not satisfy.
+
+A consistent relabelling of the three triangle bits cannot remove the example:
+each anti edge would require opposite flip choices, whose xor around the
+triangle is impossible. This is a native cycle obstruction, not a claim that
+all reblocking or all global certificates fail.
+

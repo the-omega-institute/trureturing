@@ -1,0 +1,17 @@
+**Proposition 8.4 (endpoint boundary for the refinement).** Theorem
+8.2 recovers the validation row. It does not in general recover the
+same row at Return, nor the invocation row.
+
+Proof. In Proposition 8.3 the capture
+$v=\langle\beta,\alpha\rangle$ has finer row
+$\langle\beta,\square_R\rangle$. One further update gives
+$\rho v=\langle\langle\beta,\alpha\rangle,\beta\rangle$,
+whose row at $R$ is
+$\langle\langle\beta,\alpha\rangle,\square_R\rangle$.
+Theorem 3.2 permits both $j=0$ and $j=1$ with the same $b,u,n$.
+The originals $\beta$ at $n=1$ and
+$\langle\beta,\alpha\rangle$ at $n=0$ also give the same
+selected root boundary, but the former has $R$ blocked at invocation
+and the latter has it present. Thus neither endpoint identification
+follows from the validation decoder. $\square$
+

@@ -1,0 +1,5 @@
+# Native free diffusion descent and hidden-circle rigidity
+
+> The statements below are ordinary mathematical proofs in the `generic-v1`
+> theorem/proof format. They are not Lean-kernel-certified declarations.
+

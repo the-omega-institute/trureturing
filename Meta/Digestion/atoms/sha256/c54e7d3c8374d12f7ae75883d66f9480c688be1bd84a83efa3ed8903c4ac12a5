@@ -1,0 +1,7 @@
+# Recursive relational observation: original-control reanchoring boundaries
+
+> **Machine contract.** This is a `generic-v1` reference volume. Its locators
+> are determined from its own bytes. Merged text and append anchors are
+> preserved; corrections and extensions belong after the terminal append
+> anchor. Mathematical exposition supplies reference input, not machine state.
+

@@ -1,0 +1,50 @@
+## 280. A common receiver without M forces an isolated M interval
+
+Suppose eta contains no M. Then xi contains M by Section 277. Again
+its incoming {U,Z,C} face has three distinct labels. The incident axis
+of eta is U, Z, or C.
+
+If this axis is U and eta's other axis is not U, eta has pair {Z,C}
+and a unique U slot. Its two U faces are exactly the two incoming faces;
+together with rho's unique U interval they close a two-slot circle.
+Thus this role could survive only if both eta axes are U. In that case
+all four eta faces have labels {U,Z,C} and are marked. This statement
+allows the two incoming faces to come from different repeated axes.
+
+If the incident axis is Z and the other axis is not Z, eta has pair
+{U,C} and a unique Z slot. The same original Z-circle argument as in
+Section 279 closes tau's one, rho's two and eta's one Z slots, impossible.
+Thus this role could survive only if both eta axes are Z. All four eta
+faces are again {U,Z,C} and marked, with all incoming choices allowed.
+
+If the incident axis is C, eta has transverse pair {U,Z}. Every one of
+its faces is marked, regardless of its other axis. These three cases
+exhaust the paired roles, so every remaining eta face is marked.
+
+Eta's two unused faces contain no M and therefore cannot meet tau's
+free {M,C,D} faces. All rho faces are occupied. If the eta faces pair
+to each other, every U-incident face of rho and eta is paired within
+those two owners: rho's other two faces are {M,Z,C}, with no U.
+Their U normal intervals form a nonempty closed subset of at most
+rho's one plus eta's three, namely four original slots. This violates
+minimum degree six, including all repeated-U possibilities. Therefore
+both remaining eta faces must pair to xi.
+
+Each such incoming xi face contains no M and contains two distinct
+high labels U,Z. Since xi contains M, M must be its unique opposite
+axis, by the same face-occurrence argument as in Section 279. Its two
+remaining face occurrences are precisely those incident to this M axis.
+Xi's transverse pair contains at least one of U,Z, since it is a pair
+of distinct labels from an incoming face containing both. Thus the two
+M-incident xi faces are marked. They cannot pair to tau's unmarked
+remaining faces, and rho and eta have no free faces. They must pair
+to each other, closing xi's unique M interval and forcing degree(M)=1.
+This final contradiction excludes the common receiver without M.
+
+Both common-receiver alternatives are impossible. Therefore rho's two
+unused faces split, one to eta and one to xi. No connectivity of a
+marked-face graph, closure of the external low-only region, or extra
+geometric inequality was assumed. The only circle closures used above
+are explicitly closed subsets of the original connected edge links.
+The actual split-return configurations remain open.
+

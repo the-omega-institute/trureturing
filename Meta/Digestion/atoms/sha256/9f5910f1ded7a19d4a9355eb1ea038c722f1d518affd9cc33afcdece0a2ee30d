@@ -1,0 +1,19 @@
+**定义 5.2.3（切口摘要与充分性）。** 一个有限或可数摘要是映射
+
+$$
+M:\mathcal U\to\mathcal M.
+$$
+
+称 $M$ 对未来族 $\mathcal V$ 充分，若存在函数 $\overline K$ 使
+
+$$
+\boxed{
+K(v\mid u)=\overline K(v\mid M(u))
+\qquad\forall u\in\mathcal U,\ v\in\mathcal V
+}
+$$
+
+（只对正概率的过去使用条件式）。这表示未来响应可以从摘要恢复，而不是声称摘要恢复了完整过去档案。
+
+<a id="section-5-3"></a>
+

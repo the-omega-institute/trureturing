@@ -1,0 +1,34 @@
+**定义 1.1（来源与参数）。** 对正整数 \(n>e\) 置
+\(F(n)=\log(\sigma(n)/n)-f(\log n)\)，其中
+\[
+ f(x)=\log\log x,\qquad \lambda(x)=f'(x)=\frac1{x\log x},
+ \qquad w(x)=-\lambda'(x)=\frac{1+\log x}{x^2\log^2x}\quad(x>1).
+\tag{EL.0.1}
+\]
+固定原来的来源族：对每个使用的素数标签 \(p\)，假设
+\(F\) 在正整数类 \(5040p\mid n\) 上取得最大值，并令
+\(N_p\) 是该类中取得最大值的最小整数。
+这些整数不随以下实数插值而重新选取。
+
+一个原边由 \(N_p=pU\)、\(N_r=rU\)、
+\(A=\log(pU)<C=\log(rU)\) 给出，其中 \(5040\mid U\)。
+边的严格核心条件是，在整个闭区间 \([A,C]\) 上，
+\[
+ U=\mathcal N(t),\qquad
+ \mathcal N(t)=\prod_{q\ \mathrm{prime}}
+ q^{\#\{k\ge1:r_{q,k}>\lambda(t)\}},\qquad
+ r_{q,k}=\frac{\log(1+1/(q+\cdots+q^k))}{\log q}.
+\tag{EL.0.2}
+\]
+相等价格的层不属于严格核心。
+
+对原见证 \(X\)，取其原来指定的全部边，令 \(S_X\) 为它们的
+完整区间并集；不通过删边或缩短区间改变这个集合。
+假设 \(S_X\subset[\ell,\mathcal R]\)、\(3\le\ell\le\mathcal R\)、
+\(M_X=|S_X|>0\)，且每个边的标签满足 \(p,r>2\mathcal R\)。
+允许不同边有不同核心。下文的原族均保留这些条件。
+这些来源和层的记号延续
+[原卷 §§85、87、98](FIBONACCI_ATOMIC_RELATION_GENERATION.md) 的实际有限层约定；
+原族的完整选择及比较前提见
+[既有来源几何与核](../../../Library/ArithSums/nicolas2025comparison.md#integrated-weights-of-the-original-selected-family)。
+

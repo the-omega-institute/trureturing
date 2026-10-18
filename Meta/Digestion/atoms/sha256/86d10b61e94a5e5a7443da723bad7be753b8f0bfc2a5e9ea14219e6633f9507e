@@ -1,0 +1,32 @@
+**Corollary 345.2 (Original full-tail interpretation).** Fix any entire
+positive nonincreasing vanishing $a$ and any positive closed cap
+$e$ with $a_7>e\ge a_8$. If $(a_1,\ldots,a_7,e)\in H_7$,
+original $\mathcal N_2$ feasibility, original $\mathcal O_2$
+feasibility, and all $471$ inequalities (344.4) are equivalent.
+
+Proof. The strict active length is exactly seven. Apply the
+class-preserving feasibility correspondence
+[110.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION.md#110-exact-closed-cap-transport-on-the-original-countable-source)
+and Theorem 345.1. Its necessity uses the countable original source
+for a common conull seed event, finite actual pattern witnesses,
+truncation of the entire preselected schedule, sourcewise finite
+handoff cutoffs and compactness of the finite catalog simplex.
+Consequently it allows arbitrary original addresses, repeated calls
+and full-carrier outputs, and transports feasibility at the exact
+closed cap. It does not preserve an arbitrary original competitor's
+individual laws or coupling.
+For sufficiency execute the constructed low-prime rule on the actual
+source, handing its actual mark to the unchanged consumer.
+At $n\le7$ its entire low word obeys all three rows.
+At $n>7$ the law is the finite positive-word law, with no label $n$;
+its exact original TV error is
+$\max\{1-p_{1^7}(0),a_n\}\le e$.
+This includes $a_8=e$ and all later ties and tails; no summability
+hypothesis is used. $\square$
+
+For $M>1$, the affine normalization of 341.3 sends an equality
+$b_2=b_3$ to $b'_2-b'_3=1-1/M$.
+It leaves this slice, so (345.1) does not classify the all-mass
+problem. Nor does the auxiliary finite $e=0$ boundary assert an
+original positive-tail theorem at zero cap.
+

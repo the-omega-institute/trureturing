@@ -1,0 +1,40 @@
+**Definition 3.2 (the entire counted runtime).**
+A stationary Moore reader consists of a finite disjoint installed set
+$\mathcal K=Q\sqcup H$ and common fixed tables
+
+$$
+\begin{aligned}
+\operatorname{addr}&:Q\longrightarrow\{L,R\}^{*},\\
+\operatorname{next}&:Q\times
+ \{\alpha,\beta,\mathsf{branch},\mathsf{absent}\}
+                  \longrightarrow\mathcal K,\\
+\operatorname{out}&:H\longrightarrow\{\text{complete rows at }P\},\\
+\iota&:\sigma[\mathcal U_*]\longrightarrow\mathcal K.
+\end{aligned}
+\tag{NRN.11}
+$$
+
+The entry on $u$ is exactly $\iota(\sigma(u))$. Entry recoverability means
+that $\iota$ is injective on the attained code range. At a Read state one
+actual invocation at its fixed literal is made and its reply chooses the
+fixed successor. At a Halt the fixed entire row is returned without a call.
+All four successor constants are installed at every Read, including
+unattained replies. Every installed Read and Halt counts, including unused
+states and different Halts with identical outputs. Every running visit
+costs one invocation.
+
+After entry, the current member of $\mathcal K$ is the entire mutable
+accessible source-dependent memory. There is no surviving code copy,
+reply register, address register, computed address, independent program
+counter, phase, clock, counter, history, archive, table selector or output
+decoder. There is no free state transition. Shared states, early Halts,
+repeated literals and cycles in unions of different-source paths are
+permitted, subject to actual termination on each source.
+
+An arbitrary-literal reader may install any finite native word. A
+representative-root reader may install only the six representatives in
+Definition 2.2. Both use the same state and entry contract and exactly the
+same $\sigma(u)$. State cardinality and calls do not price table bytes,
+address construction, storage or transmission, whole-output representation,
+transition work, producer workspace, service time or physical resources.
+

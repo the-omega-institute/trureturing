@@ -1,0 +1,44 @@
+**定理 7.1（A reused query row with exact memory and unequal block prices）。** Set $m=3$, $k=4$, so $T=5$, $g=1$, $h=1$, $J=\{1,2,4\}$, $H=\{2\}$ and $O=\varnothing$. Use distinct lower labels $0,1$, fresh distinct $R,C$, and arbitrary $L_\bot$. Let
+
+$$
+\lambda_0=\mathbf1_{\{1\}},\qquad
+\lambda_1=\mathbf1_{\{4\}}\quad\text{on }J.
+\tag{7.1}
+$$
+
+With the entire full target (3.2), including all high tails and endpoint phases,
+
+$$
+K_{\min}^{\rm ad}(2;f)=K_{\min}^{\rm GLOBAL}(3;f)=N+4,
+\qquad C_{\rm ad}(f)=2<3=C_{\rm pre}(f).
+\tag{7.2}
+$$
+
+In particular the complete count is eight if bottom uses an existing label, and nine if its label is fresh.
+
+Proof. The adaptive count is Theorem 5.2. Install the following four GLOBAL word rows and the $N$ Halt rows, initialize $c(v)=a_v$, $c(\bot)=H_{L_\bot}$, and complete Halt rows as in §5:
+
+| Row | Word | Endpoint $0$ | Endpoint $1$ | Bottom |
+| --- | --- | --- | --- | --- |
+| $a_0$ | $111$ | $d_0$ | $H_C$ | $H_R$ |
+| $a_1$ | $111$ | $H_C$ | $d_1$ | $H_R$ |
+| $d_0$ | $010$ | $d_1$ | $d_1$ | $H_R$ |
+| $d_1$ | $010$ | $H_1$ | $H_0$ | $H_R$ |
+
+Every emitted sequence is a prefix of $111\mid010\mid010$. On $J$, the same word $010$ has charge $q_1=\mathbf1_{\{4\}}$ at index one and charge $q_2=\mathbf1_{\{2\}}$ at index two. Its full ambient supports are respectively $\{4,0\}$ and $\{2,3\}$. It begins and ends zero, so it is safe both after the root's tail three and after a previous $010$.
+
+Use the full root supports (5.5), and
+
+$$
+\begin{aligned}
+\Gamma_{d_0}&=\{(\lambda_0(j),(0,-j+3,3)):j\in J\},\\
+\Gamma_{d_1}&=\{(\lambda_1(j),(1,-j+3,3)):j\in J\}\\
+&\qquad\cup\{(\lambda_0(j),(q_1(j),-j+6,0)):j\in J\}.
+\end{aligned}
+\tag{7.3}
+$$
+
+Phases are modulo five. The first part of $\Gamma_{d_1}$ arrives after one block on initial value one; its next scalar is $1\oplus q_1(j)$, zero exactly when $\lambda_1(j)=1$. The second part arrives after two blocks on initial value zero; its next scalar is $q_1(j)\oplus q_2(j)$, zero exactly when $\lambda_0(j)=1$. Thus the very same word and raw endpoint updates work on the entire union support. No free stage bit chooses between the two occurrences.
+
+Ranks $3$ at roots, $2$ at $d_0$, $1$ at $d_1$, and $0$ at exact Halt images (5.6) strictly descend; some paths skip a rank. All $41$ actual INITIAL records, namely $40$ successful value/phase/tail tuples and bottom, are covered by the source supplier. Lemma 5.3 matches this four-word-row attainment, giving the exact GLOBAL count. The prices are Theorem 3.2. A block premium therefore need not produce a complete-memory premium. The installed dictionary here has two distinct three-bit words; its six expanded dictionary bits and nine-bit stream prefix are separate from the four word states, actual output states and physical execution fee. ∎
+

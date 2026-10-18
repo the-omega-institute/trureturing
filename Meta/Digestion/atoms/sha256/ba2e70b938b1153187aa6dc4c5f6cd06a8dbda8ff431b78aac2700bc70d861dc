@@ -1,0 +1,19 @@
+**定义 35.1（两基底重叠图）。** 在 $\mathbb C^d$、$d\geq2$ 上取两个正交归一基底 $\mathcal E=(e_i)$、$\mathcal V=(v_j)$，令
+
+$$
+P_i=e_ie_i^\dagger,\quad Q_j=v_jv_j^\dagger,\quad
+B_{ij}=|\langle e_i,v_j\rangle|^2,\quad
+J=\frac1d\mathbf1\mathbf1^{\mathsf T},\quad
+\kappa=\|B-J\|_{2\to2},\quad\gamma=1-\kappa.
+$$
+
+$B$ 双随机，未假定对称。定义 Hilbert–Schmidt 正交投影及联合偏离算子
+
+$$
+\mathcal P(X)=\sum_i\operatorname{tr}(P_iX)P_i,\quad
+\mathcal Q(X)=\sum_j\operatorname{tr}(Q_jX)Q_j,\quad
+\mathcal L=2\operatorname{Id}-\mathcal P-\mathcal Q.
+$$
+
+重叠图只描述两个测试基底之间的关系，不把量子演化替换成经典概率转移。
+

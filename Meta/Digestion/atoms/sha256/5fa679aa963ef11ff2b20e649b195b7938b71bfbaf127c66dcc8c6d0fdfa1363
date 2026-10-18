@@ -1,0 +1,16 @@
+**定义 2.1（Endpoint threshold target）。** For any $k\ge2$ and $1\le m<k$, put $b=k-m>0$. Choose labels $D,E,R,A,L_\bot$ subject solely to $D\ne E$. On both free-value fibres set
+
+$$
+f_{\rm end}(v,-j,s)=
+\begin{cases}
+R,&s\ge b,\\
+D,&s<b,\ j=0,\\
+E,&s<b,\ j=m,\\
+A,&s<b,\ j\in P\setminus\{0,m\},
+\end{cases}
+\qquad f_{\rm end}(\bot)=L_\bot.
+\tag{2.1}
+$$
+
+The two endpoint phases are actual and distinct. The outside support can be empty. Every other label coincidence, including a high label equal to an endpoint label, is permitted.
+

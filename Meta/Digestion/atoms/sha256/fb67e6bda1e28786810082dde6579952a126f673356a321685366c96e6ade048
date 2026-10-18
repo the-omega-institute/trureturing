@@ -1,0 +1,9 @@
+**定理 82.2（单次真正出现的角和见证）。** 若真正四面体的目标边角为 $0<\theta\le\pi/4$、目标余弦长度 $x\ge B\ge3$，它的两个端点角和 $s_1,s_2$ 至少一个严格大于 $\Phi_B(\theta)$。
+
+**证明。** 沿用第 76 节的 $u=a+b,v=c+d$。若 $s_i\le\Phi_B(\theta)$，则
+
+$$\cos\theta+\cos u\ge\cos\theta+
+\cos(\Phi_B(\theta)-\theta)=\sin\theta/q_B,$$
+
+另一端相同。代入 (76.1) 得 $x<1+2q_B^2=B$，矛盾。这里两个端点属于同一个真正出现，使用同一个 $\theta$，没有跨四面体拼接独立见证。
+

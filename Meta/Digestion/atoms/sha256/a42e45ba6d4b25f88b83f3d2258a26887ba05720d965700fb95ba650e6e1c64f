@@ -1,0 +1,23 @@
+##### 定理 1.4.7： 目标证书与分辨率谱的对应
+
+对目标 $C$，有
+
+$$
+r\in\mathsf{Cert}(C)
+\iff
+\forall M,N,\ C(M)\ne C(N)\Longrightarrow
+\exists r'\le r\text{ 使 }r'\in\mathsf{Res}(M,N)\text{ 或 }r\in\mathsf{Res}^{\uparrow}(M,N),
+$$
+
+其中 $\mathsf{Res}^{\uparrow}(M,N)$ 表示包含某个最小分辨率证书的上闭集。
+
+**证明。**
+
+若 $r$ 是目标证书，任何目标不同的实现对不能在 $\mathcal Q_r$ 下等价，因此 $r$ 上方必有一个区分它们的最小资源。
+
+反过来，若每一目标不同的实现对都在 $r$ 的查询响应中被切开，则 $M\equiv_{\mathcal Q_r}N$ 必推出 $C(M)=C(N)$，由定理 1.2.3 得 $r\in\mathsf{Cert}(C)$。证毕。
+
+---
+
+<a id="section-1-5"></a>
+

@@ -1,0 +1,84 @@
+**Theorem 10.1 (Uniform finite-alphabet bound).** Fix the same $r,c$ as above. There
+are a source-only $s_2>0$ and $C<\infty$, fixed before the alphabet and the kernel, such
+that for every $0<s<s_2$, every finite alphabet $\{1,\ldots,B\}$ with $B\ge1$, and
+every common stochastic kernel $w_z(k)$ satisfying
+
+$$
+0\le w_z(k)\le1,\qquad \sum_{z=1}^B w_z(k)=1\quad(k\ge1),
+$$
+
+the output laws
+
+$$
+ a_i(z)=\sum_{k\ge1}f_i(k)w_z(k),
+ \qquad
+ u_Z=1-\sum_{z=1}^B\sqrt{a_0(z)a_1(z)}
+$$
+
+satisfy
+
+$$
+0\le u_Z\le C B_+s^{2r}\le C Bs^{2r},
+\qquad B_+=\#\{z:a_0(z)>0\}.
+$$
+The positive supports of $a_0$ and $a_1$ agree.
+
+**Proof.** Keep the exact likelihood ratio from Lemma 3.1 and write
+$h(k)=k^{-r}$ and $g=\mathbb E_0h$. For $0<t<1$, the event $h(K)>t$ is
+$K<t^{-1/r}$. Since $Z_0\ge z_-s^{-2r}$ and
+$\sum_{k\le x}k^{2r-1}\le x^{2r}$,
+
+$$
+\mathsf P_0(h>t)\le z_-^{-1}s^{2r}t^{-2}.
+$$
+
+For $t\ge1$ the event is empty, so with $C_{\rm tail}=z_-^{-1}$,
+
+$$
+\mathsf P_0(h>t)\le\min\{1,C_{\rm tail}s^{2r}t^{-2}\}\quad(t>0).
+$$
+
+Let $0\le w\le1$, $m=\mathbb E_0w$, and $a=s^r$. If $m=0$, positivity of every
+$f_0(k)$ forces $w(k)=0$ for all $k$. Suppose $m>0$ and set $\lambda=a/\sqrt m$.
+For $Y=(h-g)_+$, if $\lambda\ge1$ then
+$\mathbb E_0[Yw]\le m\le a\sqrt m$. If $\lambda<1$, the layer-cake identity and
+$w\le1$ give
+
+$$
+\begin{aligned}
+\mathbb E_0[Yw]
+&=\int_0^1\mathbb E_0[w\mathbf1_{\{Y>t\}}]dt\\
+&\le\lambda m+\int_\lambda^1\mathsf P_0(h>t)dt\\
+&\le\lambda m+C_{\rm tail}a^2\int_\lambda^1t^{-2}dt
+\le(1+C_{\rm tail})a\sqrt m.
+\end{aligned}
+$$
+
+The negative part obeys $(g-h)_+\le g$, hence
+$\mathbb E_0[(g-h)_+w]\le gm\le Ga\sqrt m$. With
+$K=1+C_{\rm tail}+G$,
+
+$$
+\left|\mathbb E_0[(h-g)w]\right|\le K s^r\sqrt{\mathbb E_0w}.
+$$
+
+For a cell put $m_z=a_0(z)$ and
+$\Delta_z=a_1(z)-a_0(z)$. The exact ratio gives
+
+$$
+\Delta_z=\frac{c}{1+cg}\mathbb E_0[(h-g)w_z],
+$$
+
+so $|\Delta_z|\le cKs^r\sqrt{m_z}$. If $m_z=0$ then $w_z$ is identically zero
+on the positive support and $a_1(z)=0$ as well. Finally,
+
+$$
+ u_Z=\frac12\sum_z(\sqrt{a_1(z)}-\sqrt{a_0(z)})^2.
+$$
+
+For an active cell, rationalization and
+$(\sqrt{a_1}+\sqrt{a_0})^2\ge a_0$ give a contribution at most
+$\Delta_z^2/(2m_z)\le c^2K^2s^{2r}/2$. Summing over the $B_+$ active cells proves the
+claim, including arbitrary fractional leakage, empty cells, growing $B$, and the exact
+normalizer drift. $\square$
+

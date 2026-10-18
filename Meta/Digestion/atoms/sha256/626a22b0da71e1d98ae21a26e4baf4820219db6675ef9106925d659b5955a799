@@ -1,0 +1,37 @@
+**定义 29.1（证据输入与局部原子求值）。** 从实际保留的版本证据取得有限列表
+
+$$
+H=((n_i,p_i,c_i))_{i=1}^a,\qquad n_i\in\mathbb N,\quad p_i\in\mathcal P,\quad c_i\in\mathcal A.
+$$
+
+在实际历史中，$n_i$ 是读前已经执行的替换数；重复和命中可保留，语义约束不按重复次数加权。定义
+
+$$
+\mathcal V(H)=\{u\in\mathcal T:\forall i, r_{\rho^{n_i}u}(p_i)=c_i\},\qquad
+P(H)=\{\varepsilon\}\cup\bigcup_i\operatorname{Pref}(p_i),\qquad D=|P(H)|.
+\tag{SLH.29.1}
+$$
+
+计算证书也允许输入矛盾的有限列表，并准确输出空语言。语义约束本身不认证事件已经发生。若 $H$ 从 §3.1 的固定记录 $w$ 提取，还须原安装、输入、初始化和 $\operatorname{Ctl}_\Pi(w)$；此检查失败时实际记录来源族为空，检查成功时该族就是 $\mathcal V(H)$。下面的局部工作界只计算字面语义过滤，不计算任意选择器的运行或事件认证。
+
+复用运输与记忆卷命题24.1的叶扇区公式。写 $\lambda_0=\alpha,\lambda_1=\beta$、$T_j=\rho^j\alpha$，并令 $w(s)=\#_L(s)+2\#_R(s)$。定义一个全定义、无源查询的有限整数函数
+
+$$
+\theta(n,b,s)=
+\begin{cases}
+\mathsf{absent},&s\ne\varepsilon, n+b<w(s^-)+2,\\
+\alpha,&\text{其余情形且 }n+b-w(s)=0,\\
+\beta,&\text{其余情形且 }n+b-w(s)=1,\\
+\mathsf{branch},&\text{其余情形且 }n+b-w(s)\ge2.
+\end{cases}
+\tag{SLH.29.2}
+$$
+
+这里 $b\in\{0,1\}$；空字的权重为零。存在守卫为真时余量非负，故各项穷尽。该既有公式给
+
+$$
+\theta(n,b,s)=r_{\rho^n\lambda_b}(s)=r_{T_{n+b}}(s).
+$$
+
+不能仅检查余量非负：$n=2,b=0,s=LL$ 的余量是零，实际回复仍是缺席。下文每次原子求值都保留 (SLH.29.2) 的守卫。
+

@@ -1,0 +1,119 @@
+**Theorem 97.1 (all eight inequalities and all zeros).** At the selected
+root the four distinct capacity/height gap polynomials are nonnegative on
+the whole circle, and their zero sets consist exactly of the five stated
+contacts. With report multiplier zero they give all eight report/height
+inequalities.
+
+**Proof.** At the selected solution the four gap polynomials factor exactly as follows:
+
+| eta,epsilon | angular chart | repeated factors removed | remaining degree |
+|---|---|---|---|
+| 0,+ | base 0 | (x-x0)^2 (x+1/x1)^2 | 0 |
+| 0,- | base pi | (x-x2)^2 | 2 |
+| 1,+ | base 0 | (x-x3)^2 | 6 |
+| 1,- | base 3pi/2 | (x-x4)^2 | 6 |
+
+These are exact factors because the value and derivative equations in (FA.123) vanish at the exact selected solution. The two pure-positive contacts are distinct; chart changes transform the local root x1 to -1/x1. Synthetic division with the boxes of §95 encloses all coefficients of the exact quotients. Remainders need not be numerically assumed zero: their exact zero follows from (FA.123). No interval residual is silently rounded to zero.
+
+Every remaining quotient q(x)=sum a_k x^k has even degree n and is strictly positive for every real x, including the homogeneous point at infinity. For each sign sigma=+1,-1 the following rational witnesses prove positivity on [0,1] of
+
+$$
+(1-y)^nq(\sigma y/(1-y))
+=\sum_{k=0}^n a_k\sigma^k y^k(1-y)^{n-k}.
+$$
+
+Its initial Bernstein controls are $a_k\sigma^k/\binom nk$. Exact dyadic de Casteljau subdivisions yield strictly positive lower controls on a covering partition. Bernstein basis functions are nonnegative and sum to one, so positivity follows on each entire closed interval. The leading coefficient, also strictly positive, checks y=1/infinity. This proves the circle inequalities, not sampled signs or merely positive curvature at the selected contacts. Consequently the only whole-circle zeros are exactly the two pure-positive, one pure-negative, one saturated-positive and one saturated-negative contacts listed. The report-sign copies give all eight original inequalities: the report multiplier $\lambda=0$ makes the two report signs identical, so their duplicate rows are not counted as independent Jacobian equations. All height and orientation cases, axes and each chart's infinity are included.
+
+For clarity, the original matrix multipliers matching the eight-coordinate dual are the report multiplier $\lambda=0$ and
+
+$$
+Y=\begin{pmatrix}
+d_0&\sqrt\alpha d_1/2&\sqrt\beta d_2/2\\
+\sqrt\alpha d_1/2&\alpha d_3&\sqrt{\alpha\beta}d_4/2\\
+\sqrt\beta d_2/2&\sqrt{\alpha\beta}d_4/2&0
+\end{pmatrix},
+$$
+
+$$
+Z_f=\frac1t\begin{pmatrix}
+\beta d_5h_2^2/d_{\rm src}^2&
+-\sqrt{\alpha\beta}d_7h_1h_2/(2bd_{\rm src})\\
+-\sqrt{\alpha\beta}d_7h_1h_2/(2bd_{\rm src})&
+\alpha(d_5+d_6)h_1^2/b^2
+\end{pmatrix}. \tag{FA.125}
+$$
+
+The factor $1/t$ is part of the physical dual. The fixed gauge is $Y_{22}=0$ in zero-based $h$ coordinates. Direct substitution gives, on the entire ellipse,
+
+$$
+h^TYh\ge|\ell(h)|,\quad
+h^TYh+tc(h)\widehat n_h^TZ_f\widehat n_h
+\ge|\ell(h)+tc(h)f(h)|.
+\tag{FA.126}
+$$
+
+This uses physical n_h. Failure whitening is M2^(-1/2)nn^TM2^(-1/2); the physical spectral effect, when needed, is M2^(1/2)ee^TM2^(1/2), never ee^T itself. No spectral source equality is substituted for the finite contact certificate.
+
+The remaining coefficient intervals below are in ascending powers of the
+local chart variable. Each displayed endpoint is rounded outwards from the
+$2^{-220}$ calculation of the polynomial coefficients and synthetic divisions.
+For division of $\sum_{k=0}^n a_kx^k$ by $x-\xi$, the coefficient recurrence
+is $b_{n-1}=a_n$, $b_{k-1}=a_k+\xi b_k$ in descending $k$. Use it twice
+per removed root. The exact remainder is zero by the equations, independently
+of its interval enclosure. On the positive pure sheet the second root in the
+base-zero chart is $-1/x_1$; it is separated from $x_0$ and finite throughout
+the box. All other removed roots use their own chart coordinates.
+
+| Sheet, sign | $k$ | Seed quotient coefficient | Strip quotient coefficient |
+| --- | --- | --- | --- |
+| $(0, 1)$ | 0 | $[0.00297015401014,0.00297015401015]$ | $[0.00296843127843,0.00297187674185]$ |
+| $(0, -1)$ | 0 | $[0.12560327735391,0.12560327735392]$ | $[0.1255991906209,0.12560736406896]$ |
+| $(0, -1)$ | 1 | $[-0.04144793101512,-0.04144793101511]$ | $[-0.04144920610409,-0.04144665588641]$ |
+| $(0, -1)$ | 2 | $[0.01933831323362,0.01933831323363]$ | $[0.01933659050192,0.01934003596534]$ |
+| $(1, 1)$ | 0 | $[1.4964217976616,1.49642179766161]$ | $[1.49623139748703,1.49661219790962]$ |
+| $(1, 1)$ | 1 | $[0.45325689126271,0.45325689126272]$ | $[0.45319604085388,0.45331774183573]$ |
+| $(1, 1)$ | 2 | $[1.42988962848658,1.42988962848659]$ | $[1.42969879526944,1.43008046177866]$ |
+| $(1, 1)$ | 3 | $[0.4135255617023,0.41352556170231]$ | $[0.41346324114809,0.41358788242282]$ |
+| $(1, 1)$ | 4 | $[1.52858664735452,1.52858664735453]$ | $[1.52839059013532,1.5287827046349]$ |
+| $(1, 1)$ | 5 | $[0.45133016947045,0.45133016947046]$ | $[0.45126146716503,0.45139887181646]$ |
+| $(1, 1)$ | 6 | $[0.03427654488529,0.0342765448853]$ | $[0.03422592173848,0.03432716803211]$ |
+| $(1, -1)$ | 0 | $[0.11207633916492,0.11207633916493]$ | $[0.11173034301084,0.11242233568834]$ |
+| $(1, -1)$ | 1 | $[0.06948343855543,0.06948343855544]$ | $[0.0691160560784,0.06985082180826]$ |
+| $(1, -1)$ | 2 | $[0.4182865421397,0.41828654213971]$ | $[0.41772175572569,0.41885132887932]$ |
+| $(1, -1)$ | 3 | $[0.19322286797197,0.19322286797198]$ | $[0.19301795860816,0.19342777762964]$ |
+| $(1, -1)$ | 4 | $[0.13209435653274,0.13209435653275]$ | $[0.13187133828485,0.13231737485947]$ |
+| $(1, -1)$ | 5 | $[0.06065944909555,0.06065944909556]$ | $[0.06060365159343,0.06071524663854]$ |
+| $(1, -1)$ | 6 | $[0.0108334810251,0.01083348102511]$ | $[0.01080022191544,0.01086674013477]$ |
+
+For the transformed polynomial on each half-line use the Bernstein controls
+just specified and restrict them to the following closed dyadic intervals.
+The restriction is ordinary de Casteljau subdivision: at parameter $v$ replace
+adjacent controls by $(1-v)b_k+vb_{k+1}$ until one remains; the two boundary
+chains give the left and right restricted controls. An interval $[a,b]$ is
+obtained by first keeping the right part at $a$, then the left part at
+$(b-a)/(1-a)$, with the evident conventions at 0 and 1. Each rational lower
+bound in the next table bounds every restricted control using the coarsened
+coefficient intervals above, so it is itself a sufficient whole-domain
+witness. The signs here select the positive or negative real half-line and
+are distinct from the height sign.
+
+| Sheet, height sign | Half-line sign | Closed partition | Seed lower control $>$ | Strip lower control $>$ |
+| --- | --- | --- | --- | --- |
+| $(0, 1)$ | $1$ | $[0,1]$ | 0.00297015401 | 0.002968431278 |
+| $(0, 1)$ | $-1$ | $[0,1]$ | 0.00297015401 | 0.002968431278 |
+| $(0, -1)$ | $1$ | $[0,1/2], [1/2,3/4], [3/4,1]$ | 0.009322743548 | 0.009321292113 |
+| $(0, -1)$ | $-1$ | $[0,1]$ | 0.019338313233 | 0.019336590501 |
+| $(1, 1)$ | $1$ | $[0,1]$ | 0.020676278085 | 0.020673162057 |
+| $(1, 1)$ | $-1$ | $[0,1/2], [1/2,3/4], [3/4,13/16], [13/16,27/32], [27/32,7/8], [7/8,1]$ | 0.000088860347 | 0.000060458205 |
+| $(1, -1)$ | $1$ | $[0,1]$ | 0.008806290435 | 0.008791422552 |
+| $(1, -1)$ | $-1$ | $[0,1/2], [1/2,3/4], [3/4,1]$ | 0.000442309136 | 0.000425306464 |
+
+Both partitions start at 0, end at 1 and have identical adjacent endpoints.
+Every quotient has even degree and strictly positive leading coefficient,
+which also checks the homogeneous point at infinity. Bernstein basis functions
+are nonnegative and sum to one, proving positivity over each entire interval.
+Thus the removed exact double roots exhaust the circle zeros, including all
+axes and chart infinities. The original denominators are positive, and the
+squared factors introduce no sign change. This proves the asserted global
+gaps and (FA.126). $\square$
+

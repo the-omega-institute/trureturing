@@ -1,0 +1,105 @@
+**Theorem 55.5 (full spectral boundary and negative-sector continuation for the same domains).** On every actual $D_j(t)$, all energies, multiplicities and states are represented by energy-dependent finite elimination with the inherited diagonal of (55.4), together with internal spectral data and full-state normalization. Exceptional internal energies and root-invisible states are retained. On the common infinite realization the same block account is valid off internal spectra and, below $\epsilon_*$, at isolated internal exceptions with their kernel data. In every compact spectral window below $\epsilon_*$ whose endpoints lie in resolvent gaps of $\mathsf H$, the finite eigenvalues, total multiplicities and full normalized eigenspaces converge to those of the common operator. In particular this applies to the entire negative sector with a cutoff at zero if $0\notin\sigma(\mathsf H)$, and always to negative windows with endpoints in gaps. There is no global compact-resolvent or all-energy finite spectral preservation claim.
+
+Proof. Reuse the classical finite block elimination in §52.4, including (52.17), (52.18), (52.18a) and (52.18b), after verifying the operator's source and boundary data. For each actual subtree at $p\in D$, take the principal submatrix of $\mathsf H_D$, retaining its global diagonal, not its free-standing closed-tree diagonal. Write $D_p(z)$ for its characteristic determinant, $P_p(z)$ for the root-deleted determinant, and
+
+$$
+\delta_p(z)=a\deg_{\mathcal P}(p)-g2^{-|p|}-z.
+\tag{55.15}
+$$
+
+A current leaf has $D_p=\delta_p$, $P_p=1$. An actual branch satisfies the polynomial identities
+
+$$
+P_p=D_{pL}D_{pR},\qquad
+D_p=\delta_pD_{pL}D_{pR}
+-a^2P_{pL}D_{pR}-a^2D_{pL}P_{pR}.
+\tag{55.16}
+$$
+
+The two entries $-a$ are exactly the two inherited child seams. At a nonroot subtree root, its parent contribution is already present in diagonal $3a$; at a current leaf its two missing children are also present. The potential depends on *global* depth, so reindexing a subtree must retain its depth offset and may not restart the field at one. Expansion of the specified parent matrix gives (55.16) by the same elimination as §52.4; the result is a polynomial at every $z$, including internal exceptional energies. It verifies this source application, without claiming new determinant or Schur theory.
+
+For an arbitrary retained boundary $B\subset D$ and interior $I$, put $K(z)=\mathsf H_{II}-zI$. Where $K(z)$ is invertible,
+
+$$
+S_B(z)=\mathsf H_{BB}-zI-\mathsf H_{BI}K(z)^{-1}\mathsf H_{IB},
+\qquad
+\psi=(b,-K(z)^{-1}\mathsf H_{IB}b).
+\tag{55.17}
+$$
+
+Full eigenvectors are exactly those with $S_B(z)b=0$, and at real such energies
+$\|\psi\|^2=-b^*S_B'(z)b$. The determinant and inertia include the internal block, as in (52.17); a stationary interior value is a fixed-boundary minimum only if that interior block is positive. Negative spectral shifts are not assigned static Schur positivity. Even where $G_o=P_o/D_o$ exists, it is only the root resolvent, not a complete spectral record.
+
+At a real internal exception retain the original equations, equivalently the precise kernel construction of (52.18a): with $\Pi$ the kernel projection and $K^+$ its inverse on the orthogonal complement, require $\Pi\mathsf H_{IB}b=0$, write $h=-K^+\mathsf H_{IB}b+u$, $u\in\ker K$, and impose
+$(\mathsf H_{BB}-zI-\mathsf H_{BI}K^+\mathsf H_{IB})b+\mathsf H_{BI}u=0$.
+The full norm is $\|b\|^2+\|K^+\mathsf H_{IB}b\|^2+\|u\|^2$. Its solution-space dimension is the complete multiplicity; (52.18b) retains the coupled-kernel inertia. In particular $b=0$ and $u\in\ker K\cap\ker\mathsf H_{BI}$ gives a root-invisible sector. Cancellation of a common factor in $P_o/D_o$ does not discard that sector from $D_o$ or from the state space. Thus the retained data are the determinant, energy-dependent boundary operator, coupled internal kernels and normalizations, rather than a scalar response alone.
+
+The infinite counterpart partitions the *same* $\ell^2(\mathcal P)$ into a finite boundary and its complement. Its bounded self-adjoint internal operator has essential lower edge $\epsilon_*$, because the cut changes only finitely many seams and $M_\phi$ is compact. At nonreal $z$, or real $z$ outside its spectrum, (55.17) uses a bounded resolvent and reconstructs a full $\ell^2$ state. At an isolated internal energy below $\epsilon_*$, the kernel is finite dimensional and $K^+$ is bounded; the same compatibility, norm and multiplicity construction applies. At a real energy in the essential spectrum no bounded pseudoinverse or square-summable continuation is assumed.
+
+There is also an explicit full-state decomposition showing how much a root port omits. Let $u_n$ be the unit vector constant on level $n$, with value $2^{-n/2}$. For each vertex $v$ of depth $d$ and each $n\ge0$, let $w_{v,n}$ have value $+2^{-(n+1)/2}$ on the level-$n$ descendants of $vL$, the negative of that value on those of $vR$, and zero elsewhere. These form mutually orthogonal channel bases. On level $k$ the radial vector and the contrasts of ancestors of depth $d<k$ supply
+$1+\sum_{d<k}2^d=2^k$ orthogonal vectors, proving completeness level by level. Parent cancellation at $v$ makes each contrast channel invariant; adjacent normalized levels have coupling $-a\sqrt2$. Hence
+
+$$
+\mathsf H\simeq J_o\ \oplus\ \bigoplus_{d\ge0}J_d^{\oplus2^d},
+\tag{55.18}
+$$
+
+where $J_o$ on $\ell^2(\mathbb N_0)$ has diagonal $2a-g$ at $n=0$ and $3a-g2^{-n}$ at $n\ge1$, while $J_d$ has diagonal $3a-g2^{-(d+1+n)}$ at every $n\ge0$. All have neighbouring coupling $-a\sqrt2$. Every $J_d$ channel is root invisible; it is an actual amplitude sector, not an executed tree symmetry or a radial approximation. A channel eigenvector is reconstructed by these normalized basis vectors, so its sequence norm is exactly its full counting-measure norm. Each half-line eigenvalue is simple by the endpoint recurrence; its full multiplicity includes the $2^d$ identical channels and any coincidences across channels. At large $d$, $J_d\ge\epsilon_*-g2^{-d-1}>0$, so only finitely many depths contribute negative modes. The constant-diagonal half-line sine transform has band $a[3-2\sqrt2,3+2\sqrt2]$; the channel potentials and the radial endpoint change are compact perturbations. This confirms the essential band and the threshold used above while retaining all hidden channels. It does not identify a finite irregular $D_j$ with a collection of independently substituted complete balls.
+
+Let $U$ be the unitary map from channel coefficients to the displayed occurrence basis, and write $f=U(c,(v_{p})_{p\in\mathcal P})$, where $v_p$ is the contrast channel anchored at $p$. Orthogonality and completeness give the full amplitude and energy-dependent spectral account
+
+$$
+\begin{aligned}
+\|f\|_2^2&=\|c\|_2^2+\sum_{p\in\mathcal P}\|v_p\|_2^2,\\
+E_{\mathsf H}(\Omega)&=U\left(E_{J_o}(\Omega)\oplus
+ \bigoplus_{p\in\mathcal P}E_{J_{|p|}}(\Omega)\right)U^*,
+\qquad \Omega\subset\mathbb R\text{ Borel}.
+\end{aligned}
+\tag{55.18a}
+$$
+
+The functional calculus of the same direct sum proves this identity, including continuous spectral subspaces. Each channel resolvent is the corresponding Jacobi resolvent at nonreal energies, so this record retains all spectral measures as well as point multiplicities. The root vector lies only in $J_o$; its scalar response gives no spectral measure for the contrast summands. A generalized state at a continuous-spectrum energy is not thereby a normalized $\ell^2$ eigenstate.
+
+The same complete channel decomposition also supplies an explicit positive-coupling escape exclusion. For a channel sequence $v$, the kinetic excess above $\epsilon_*$ is
+$q_o(v)=a(\sqrt2-1)|v_0|^2+a\sqrt2\sum_{n\ge0}|v_{n+1}-v_n|^2$ in the root channel, and
+$q_d(v)=a\sqrt2(|v_0|^2+\sum_{n\ge0}|v_{n+1}-v_n|^2)$ in a contrast channel. Telescoping $v_n=v_0+\sum_{k<n}(v_{k+1}-v_k)$ and weighted Cauchy–Schwarz give
+$|v_n|^2\le[(a(\sqrt2-1))^{-1}+n/(a\sqrt2)]q_o(v)$ and
+$|v_n|^2\le(n+1)q_d(v)/(a\sqrt2)$.
+Using $\sum_{n\ge0}2^{-n}=\sum_{n\ge0}n2^{-n}=2$ yields
+
+$$
+\begin{aligned}
+\sum_{n\ge0}2^{-n}|v_n|^2&\le\frac{2+3\sqrt2}{a}q_o(v),\\
+\sum_{n\ge0}2^{-(d+1+n)}|v_n|^2&\le\frac{\sqrt2\,2^{-d}}a q_d(v),\\
+\langle f,M_\phi f\rangle&\le\frac{2+3\sqrt2}{a}
+ \bigl(aQ(f)-\epsilon_*\|f\|^2\bigr),\\
+0<g\le\frac{a}{2+3\sqrt2}&\quad\Longrightarrow\quad
+\mathsf H\ge\epsilon_*I,\qquad m=\epsilon_*.
+\end{aligned}
+\tag{55.18b}
+$$
+
+These form identities hold first for finite sequences and then by density; the potential is diagonal within every channel. The lower inequality and the earlier escape trials give the last equality. Those trials remain weakly null normalized near-minimizers because their potential expectation tends to zero, so all-near-minimizer strong compactness fails in this positive range. This is a sufficient no-binding range, not a sharp threshold, and does not alter the negative-binding range $g>3a/4$.
+
+For the actual finite limit, first use the classical min-max principle in the primary scope of Teschl Theorem4.10. Finite compressions have no lower variational eigenvalues than $\mathsf H$. Truncating the span of any finite collection of common subthreshold eigenvectors to $D_j(t)$ preserves its dimension and approximates all its Rayleigh values uniformly on its unit sphere. This supplies the reverse limiting inequalities for each subthreshold eigenvalue, with multiplicity. Finite-rank approximation to $M_\phi$ and $aL\ge\epsilon_*I$ show that below any $c<\epsilon_*$ there are only finitely many independent spectral directions: beyond a sufficiently deep finite ball, $g\phi<\epsilon_*-c$. Min-max therefore also excludes extra finite eigenvalues in gaps or extra multiplicities below that cutoff. Endpoints at eigenvalues require a separate inclusion convention and are not covered by the gap statement.
+
+Full-state compactness in such windows requires more than this eigenvalue argument. For real $z\le c<\epsilon_*$ put
+
+$$
+R_D(z)=I_D(aL_D-zI)^{-1}I_D^*,
+\qquad R(z)=(aL-zI)^{-1},
+\qquad \|R_D(z)\|,\|R(z)\|\le(\epsilon_*-c)^{-1}.
+\tag{55.19}
+$$
+
+The same uniformly coercive Galerkin argument as in (55.12) proves strong convergence $R_D(z)\to R(z)$, uniformly for $z$ in a compact interval and on compact sets of right-hand sides. A finite normalized eigenvector, zero extended as $f_D$, satisfies exactly
+
+$$
+f_D=gR_D(z)M_\phi f_D.
+\tag{55.20}
+$$
+
+The family of right-hand sides is strongly precompact because $M_\phi$ is compact. The uniform inverse bound and convergence then force strong precompactness of *all* these eigenvectors in the specified window, with unit limiting norm and the correct full eigen-equation. This proof retains every angular mode and does not replace strong compactness by local operator convergence. Combining it with the multiplicity count, any sequence of finite orthonormal bases has subsequences converging to common orthonormal bases. Their zero-extended finite spectral projections converge in operator norm to the common finite-rank window projection. Degenerate eigenspaces are preserved as spaces; independently chosen vectors inside them need not converge without a subsequence or basis choice.
+
+The proofs use only containment of sufficiently deep finite balls inside each actual domain. They also hold for varying original sources with accepted indices tending to infinity by (55.2), or for any supplied family whose minimum contained-ball radius tends to infinity. They do not identify those sources' INITIAL syntax. The killed-field alternative of (55.12) has a vanishing norm perturbation, so the same gap-window conclusions hold there, with its finite eigenvectors and values explicitly understood as belonging to that alternative. Outside the stated windows, local operator or scalar-resolvent convergence alone is not a preservation theorem. □
+

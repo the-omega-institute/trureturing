@@ -1,0 +1,17 @@
+令 \(G=(V,E)\) 为有限连通图，为每条边选定方向并令 \(q_e\in\mathbb R^V\) 为其关联向量。给定边容量 \(c_e>0\)，定义加权拉普拉斯
+\[
+L_c
+=
+\sum_{e\in E}c_e q_eq_e^{\mathsf T}.
+\]
+它满足
+\[
+L_c\mathbf1=0,
+\qquad
+L_c=L_c^{\mathsf T},
+\qquad
+L_c\succeq0,
+\qquad
+\ker L_c=\mathbb R\mathbf1.
+\]
+

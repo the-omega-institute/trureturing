@@ -1,0 +1,89 @@
+## 6. A concrete consumer with no atomic-output anchor
+
+Take $k=1,m=2$ and the seven-role context
+
+$$
+W(a,x,v,y,t,z,w)=
+\langle a,\langle x,\langle v,\langle y,\langle t,\langle z,w\rangle\rangle\rangle\rangle\rangle.
+\tag{FNS.28}
+$$
+
+Its role addresses in order are $L,RL,RRL,RRRL,RRRRL,RRRRRL,RRRRRR$.
+Put
+
+$$
+F_n(t)=\langle\alpha,\langle T_n,\rho t\rangle\rangle,
+\qquad
+G(y)=\langle\beta,\rho y\rangle,
+\tag{FNS.29}
+$$
+
+and
+
+$$
+U(n,x,v,y,t)=W(T_{n+2},x,v,y,t,F_n(t),G(y)).
+\tag{FNS.30}
+$$
+
+Here $P=\{\varepsilon\}$ has its complete singleton root row, while
+$Q$ is exactly the seven displayed role addresses with exterior $W$. Retain
+all displayed branch and ground literals, the atomic record (FNS.18), and the links for the displayed $F_n$ and $G$
+tokens, with both endpoint guards and their actual epochs. This is a paid
+installation input, not a semantic declaration supplied for free.
+
+For the displayed instance, with $p_a,p_t,p_z,p_y,p_w$ the role
+representatives, the epoch-zero links and grounds are explicitly
+
+$$
+\begin{gathered}
+r_{p_z}(L)=\alpha,\qquad r_{p_w}(L)=\beta,\\
+(0,p_zRL,\ 0,p_aR,\ =),\qquad
+(0,p_zRR,\ 1,p_t,\ =),\qquad
+(0,p_wR,\ 1,p_y,\ =).
+\end{gathered}
+\tag{FNS.30a}
+$$
+
+For this displayed input the complete record list consists of these literals,
+the branches of $W$ and the payload pairs, (FNS.18), and (FNS.30a), with
+both reach guards and all repetitions. There are no additional off-task
+records in this instance. The authentic final epoch satisfies $N\ge1$. If
+further records are supplied, Lemma 4.2 retains all of them; the explicit seeds
+below are not witnesses for an unchecked extension of this input.
+
+Let $r_0$ have complete partition
+
+$$
+\pi_0=\{\{1\},\{2,4\},\{3,5\},\{6\},\{7\}\},
+\tag{FNS.31}
+$$
+
+and $r_1$ have
+
+$$
+\pi_1=\{\{1\},\{2,6\},\{3,7\},\{4\},\{5\}\}.
+\tag{FNS.32}
+$$
+
+Their exact strata are
+
+$$
+\begin{aligned}
+\Theta_0(n,y,t)&=U(n,y,t,y,t),\\
+\Theta_1(n,y,t)&=U(n,F_n(t),G(y),y,t),
+\end{aligned}
+\tag{FNS.33}
+$$
+
+with all cross-class target inequalities retained. The old root predicate
+is automatic on every nonempty finite filling of $W$; it places no equality
+on its different role slots. Thus (FNS.33) has both directions by Theorem
+4.4 for this entire input. The common completed output equations are
+
+$$
+Y=F_c(T),\qquad T=G(Y),
+\tag{FNS.34}
+$$
+
+after fixing the finite atomic coordinate $c$.
+

@@ -1,0 +1,37 @@
+## 416. Upper bounds on the genuine-owner count
+
+Tau spends more than pi on P and is outside k. Each of the k heavy
+owners spends more than 4*pi/3. Each of the other n-k-1 noncheap
+owners spends more than 2*pi/3. Therefore n>=k+1 and
+
+    5*pi-X > pi+k*(4*pi/3)+(n-k-1)*(2*pi/3)
+            = (pi/3)*(2*n+2*k+1).                 (416.1)
+
+In particular n+k<7, or
+
+    n+k<=6.                                       (416.2)
+
+Combining (416.1) with the unconditional compensation and (414.1),
+
+    2*pi*a < 4*X+Y
+      < (pi/3)*(71-8*n-8*k).
+
+The even integer 6*a+8*n+8*k is strictly below 71. Thus
+
+    3*a+4*n+4*k<=35.                              (416.3)
+
+If f=1, (414.3) gives a<=5. If f=2, then k=2 and n>=3, so (416.3)
+also gives a<=5. Together with the earlier lower bound,
+
+    2<=a<=5.                                      (416.4)
+
+Since g=a+n, (416.3) reads 3*g+n+4*k<=35. If k=1, n>=2 gives
+3*g<=29 and hence g<=9. If k=2, n>=3 gives 3*g<=24 and hence g<=8.
+Thus
+
+    6<=g<=9; when k=2, g<=8.                      (416.5)
+
+Including the unique flat sigma, the total original-owner count is
+between seven and ten. These are necessary counts under the full
+source hypotheses, not realized triangulations.
+

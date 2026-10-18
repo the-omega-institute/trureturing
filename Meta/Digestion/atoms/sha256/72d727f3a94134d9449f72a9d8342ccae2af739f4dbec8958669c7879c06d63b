@@ -1,0 +1,100 @@
+**Proposition 10.1 (endpoint facts used in these bounds).** At $\tau=1$
+the normalized primal has a finite attainer with
+$J(1)=\operatorname{tr}G-2b_{\rm end}$ and actual original value
+$T_{\rm end}$. Its dual infimum equals that value of $J$, but no
+finite dual minimizer exists. Interior dual minima are finite and
+attained. These are the inherited JR51 endpoint facts, checked here
+only to justify their use in the residual bounds.
+
+Proof. The four endpoint vectors of Proposition 6.2 have projectors
+summing to $I$ and are $Q$-null. With report $r=\sigma$ their contrast
+is one. Conversely, decompose any endpoint feasible slots into real
+null atoms $f$. The bound
+
+$$
+\sum r f_0f_1\leq\frac12\sum(f_0^2+f_1^2)=1
+\tag{RH.90}
+$$
+
+must be equality. Every nonzero atom has $f_1=rf_0$, and nullity with
+$\beta>0$ gives $f_2^2=f_0^2$. Thus the four endpoint rays are
+exhaustive. Their total Gram forces mass $1/4$ on each unscaled
+$(1,\sigma,t)$ ray: the total mass and three zero signed cross
+moments determine the four weights. Under RH.17 the $G$ values of
+$(+,+),(+,-),(-,+)$ are positive and $(-,-)$ equals
+$b_{\rm end}<0$. Assigning $\epsilon$ to those signs maximizes the
+objective, proving the formula. Section 5 supplies its finite actual
+full-output realization; this is not merely a PSD endpoint witness.
+
+For any feasible dual tuple the constraints and weak bound are
+
+$$
+Y-\epsilon G-\lambda rC+\nu_{r,\epsilon}Q\succeq0,
+\quad\lambda\geq0,
+\qquad J(\tau)\leq\operatorname{tr}Y-\lambda\tau.
+\tag{RH.91}
+$$
+
+For $\tau<1$, let $X^{(0)}_{r,\epsilon}=I/4$ and let $X^{(1)}$
+be an endpoint tuple. Mix them with any $\eta\in(\tau,1)$.
+Every slot is positive definite, its null trace is zero, and the
+contrast is $\eta>\tau$. Finite-dimensional Slater duality therefore
+applies to this original inequality, giving equal values and a finite
+dual minimizer. On the residual interval a minimizer must have
+$\lambda>0$, since $\lambda=0$ bounds the unconstrained spectral
+optimum $J_{\rm bar}$, which is strictly larger there. Complementarity
+then forces $t(X)=\tau$ at every residual optimum; this is a consequence,
+not a prescribed extra constraint in RH.11.
+
+Compactness and nested feasible sets give $J(\tau)\to J(1)$ as
+$\tau\uparrow1$: any limiting subsequence of maximizers is endpoint
+feasible, and the endpoint tuple is feasible for every preceding
+parameter. An interior optimal dual tuple remains endpoint-dual
+feasible, since its matrix constraints contain no $\tau$, with
+objective $J(\tau)-\lambda(1-\tau)\leq J(\tau)$.
+Endpoint weak duality sandwiches the infimum between $J(1)$ and these
+converging upper values, proving equality of the endpoint infimum.
+
+Suppose a finite endpoint dual minimizer existed. Complementarity with
+the two independent positive atoms $d_{+,t}$ forces
+$S_{+,+}=a_0kk^T$, where $k=(1,-1,0)^T$, $a_0\geq0$.
+With $\nu_0=\nu_{+,+}$, this gives
+$Y=G+\lambda C-\nu_0Q+a_0kk^T$.
+The positive atom $(1,-1,1)$ in $S_{-,+}$ gives
+
+$$
+(\nu_{-,+}-\nu_0)Q(1,-1,1)^T+(2a_0-\lambda)k=0.
+\tag{RH.92}
+$$
+
+Its third coordinate and $\beta>0$ give $\nu_{-,+}=\nu_0$,
+and then $2a_0=\lambda$. The negative atom $(1,-1,-1)$ in
+$S_{-,-}$ cancels these $\lambda$ terms. Its first coordinate gives
+$\nu_{-,-}-\nu_0=2(x+y-g_0)$, and the remaining coordinates require
+
+$$
+R_1=x-g_1-z+\alpha(x+y-g_0)=0,
+\qquad R_2=y-z-g_2+\beta(x+y-g_0)=0.
+\tag{RH.93}
+$$
+
+Already the coarse rational bounds RH.17 imply
+$x+y-g_0>0.00330$, and
+
+$$
+\begin{aligned}
+R_1&>0.00237-0.00293+0.00010+0.87(0.00330)
+       =0.002411>0,\\
+R_2&>0.00220+0.00010-0.00168+0.12(0.00330)
+       =0.001016>0.
+\end{aligned}
+\tag{RH.94}
+$$
+
+Thus both necessary zero residues are impossible. This proves
+nonattainment without relying on a prior verdict or extrapolating
+interior Slater attainment. The finite certificates of Section 4 are
+not endpoint minimizers. These endpoint-duality arguments alone give no
+multiplier-divergence rate. The endpoint laws below are credited to JR55. No native
+impossibility follows. $\square$
+

@@ -1,0 +1,44 @@
+**Proposition 6.3 (lawful additional negative records).** Retain any
+finite additional list of negative records whose endpoints have proved
+uniform reach on the whole family $D_0$ and whose entire actual-epoch
+values have proved rank-free expressions in $y,z,w$. Let their whole
+translated conjunction be $\Delta(y,z,w)$. The new entire fiber is
+
+$$
+D^- =\{U(y,z,w):z\ne w,\ \Delta(y,z,w)\}.
+\tag{FJC.24}
+$$
+
+Its two selected strata have the same source expressions as (FJC.22),
+with entire chart conjunctions
+
+$$
+z\ne w\ \land\ \Delta(F(z,w),z,w),\qquad
+\Delta(y,G(y),H(y)),
+\tag{FJC.25}
+$$
+
+respectively. They are attained precisely when their conjunctions are
+feasible. If both are feasible, the selected pair still has all-depth
+joint contact, with effective finite realizers satisfying every added
+negative. If either fails, that row is not an attained label of $D^-$.
+
+**Proof.** A structural endpoint stops within the explicit source
+skeleton, ground expansion or at a parameter token; it does not navigate
+an unspecified parameter. Its original reach is forced by that skeleton,
+and its epoch-$e$ subtree is the actual $\rho^e$-transform of the
+corresponding expression. Distributing the fixed power gives (FJC.6).
+More general endpoints require the stated separate reach and expression
+proofs. Under these premises each signed record is precisely its whole
+negative expression, so (FJC.24) has both original-source directions.
+Intersecting the exact strata (FJC.22) with the entire new conjunction
+gives (FJC.25) in both directions. The common-output equations remain
+(FJC.23); its canonical coordinates are infinite. Thus its canonical
+tests are exactly feasibility of (FJC.25), decided by URR or NSF.
+Theorem 4.2 provides one joint negative filling for each source at every
+requested depth. Positives, new literals, nonuniform reach, or navigation
+inside an unrestricted residual do not follow from this proposition;
+they require new exact chart certificates. The paid common producer
+acquires the additional whole descriptions and signs before the same
+complete cut, as in Proposition 6.1. $\square$
+

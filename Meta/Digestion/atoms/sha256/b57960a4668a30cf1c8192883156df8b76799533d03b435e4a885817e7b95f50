@@ -1,0 +1,40 @@
+### 84.3. A robust distance-to-factorization certificate
+
+Let g be the diagonal of an actual correct-output Gram G. Define
+
+    D_core(G)=min ||G-Q entrywise-multiplied by M||_1,
+
+where the minimum runs over Q>=0 with rank Q=2 and Q_ff=I_2, and M>=0 with diag M=g. This set is nonempty: any common-qubit frame Gram Q and M=diag(g) are feasible. It is compact: both PSD factors have fixed bounded diagonals, and the rank-at-most-two condition is closed; Q_ff=I_2 forces rank exactly two. Thus the minimum is attained. A specific feasible pair Q,M is already a valid certificate; optimizing over Q is not asserted to be a convex problem.
+
+**Robust factorization theorem.** For every original physical product,
+
+    delta >= max{0, (k-3)/k-D_core(G)/(2k)},
+    delta >= max{0, (k-3)/k-D_core(H)/(2k)}.          (8)
+
+Proof. Fix any feasible Q,M, and write
+
+    G_0=Q entrywise-multiplied by M,
+    E=G-G_0,
+    K_0=G_0 entrywise-multiplied by H,
+    Delta=E entrywise-multiplied by H.
+
+Then K=K_0+Delta. Equation (4) remains valid for M because its diagonal is g<=1, so the same algebraic contraction lemma gives Tr(T-K_0)_+>=k-3. Matching the diagonals makes E, and hence Delta, have zero diagonal and zero trace.
+
+Schur multiplication by H is trace-norm contractive on Hermitian matrices because H>=0 and its diagonal entries are at most one. Indeed for the positive/negative decomposition E=E_+-E_-, both H entrywise-multiplied by E_+ and H entrywise-multiplied by E_- are positive, and their traces are at most Tr E_+ and Tr E_-, respectively. The triangle inequality gives
+
+    ||Delta||_1<=||E||_1,
+    Tr Delta_+=||Delta||_1/2.                        (9)
+
+Apply the variational principle to an optimal projection for (T-K_0)_+:
+
+    Tr(T-K)_+ >= Tr(T-K_0)_+-Tr Delta_+
+               >= k-3-||E||_1/2.                   (10)
+
+Using the original pinching (7) and minimizing ||E||_1 proves (8). No physical approximation channel with Gram G_0 is required.
+
+At k=4, an error delta<=1/4-eta with eta>0 requires
+
+    D_core(G)>=8eta,  D_core(H)>=8eta.               (11)
+
+Thus a sub-quarter product must leave this factorization class on both sides by a definite, representation-independent Gram distance. The maximum with zero in (8) is essential when the displayed certificate becomes vacuous. The exact case D_core=0 is the qubit-core transfer theorem.
+

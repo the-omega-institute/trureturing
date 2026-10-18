@@ -1,0 +1,90 @@
+**Lemma 74.5 (one physical port witness and its allowed restriction).**
+Fix any actual port $p$ and put
+
+$$
+ k=d_p,\quad N=1+\frac{13}{35}\delta k,\quad
+ A_p=(2M+1)N^2+\frac{24}{5}akN,\quad
+ c_\varepsilon=\sqrt\delta\,\varepsilon^{-(s-1)/2}.
+\tag{74.16}
+$$
+
+Use the function $f$ of the proof of Theorem73.3: its atomic value at
+$p$ is one, all other atomic values are zero, and on every incident
+cable, in distance $t$ from $p$, it is
+$b(t)=1-3t^2+2t^3$; it vanishes on other cables. Set
+$F_\varepsilon=J_\varepsilon f$ and
+$G_\varepsilon(x,y)=F_\varepsilon(x)F_\varepsilon(y)$. Then
+
+$$
+\begin{aligned}
+ 0\le F_\varepsilon\le c_\varepsilon,&\qquad
+ \|F_\varepsilon\|_2^2=N,\qquad
+ \beta\|\nabla F_\varepsilon\|_2^2=\frac65ak,\\
+ \|G_\varepsilon\|_2^2=N^2,&\qquad
+ q_{0,\varepsilon}[G_\varepsilon]=\frac{12}{5}akN.
+\end{aligned}
+\tag{74.17}
+$$
+
+Let $Z_p$ be the actual source chamber, so
+$|Z_p|=\varepsilon^{s-1}/\delta=c_\varepsilon^{-2}$, and let
+
+$$
+ z_\varepsilon=J_{\varepsilon,2}e_{pp}
+       =c_\varepsilon^2\mathbf1_{Z_p\times Z_p},\qquad
+ \|z_\varepsilon\|=1,
+ \qquad K_{\varepsilon,C}z_\varepsilon=0.
+\tag{74.18}
+$$
+
+For any $0\le\chi\le1$ equal to one for $|x-y|\ge2r$, the product
+$U=G_\varepsilon\chi(x-y)$ satisfies
+
+$$
+ \langle z_\varepsilon,U\rangle
+ \ge\left[1-\frac{2^s\omega_s\delta r^s}
+                         {\varepsilon^{s-1}}\right]_+,
+ \qquad \|U\|^2\le N^2,
+\tag{74.19}
+$$
+
+provided it is the nonnegative product under consideration. Here
+$\omega_s=|B_1\subset\mathbb R^s|$ and $[t]_+=\max\{t,0\}$.
+If $\chi=0$ on $B_r$ and the product is in
+$\mathcal Q_{\rm mix,\varepsilon}$, its allowed restriction lies in
+$\mathcal Q_{\varepsilon,r}^{\rm D}$. Put
+$z_{\varepsilon,r}=\iota_r^*z_\varepsilon$. Then
+
+$$
+ \|z_{\varepsilon,r}\|\le1,\qquad
+ (\iota_r^*K_{\varepsilon,C}\iota_r)z_{\varepsilon,r}=0,\qquad
+ \langle z_{\varepsilon,r},\iota_r^*U\rangle
+                       =\langle z_\varepsilon,U\rangle.
+\tag{74.20}
+$$
+
+**Proof.** Direct gluing gives $F_\varepsilon\in H^1(\Omega)$:
+its constant chamber and longitudinal cylinder traces match, and it
+vanishes on all ground half-chambers and grounded cuts. The integrals
+$\int_0^1 b^2=13/35$ and $\int_0^1|b'|^2=6/5$, with the actual
+cross-sectional measure $\varepsilon^{s-1}$, prove (74.17).
+The tensor product is symmetric and has both grounded traces zero.
+No operator-domain regularity of the physical lift is needed.
+Equation (73.6) gives (74.18), since $E^*e_{pp}=0$.
+On $Z_p\times Z_p$ the product $G_\varepsilon$ equals
+$c_\varepsilon^2$. For each $x\in Z_p$, at most
+$\omega_s(2r)^s$ of the $y$-volume can lose any overlap. Thus the
+loss is at most
+$c_\varepsilon^4|Z_p|\omega_s(2r)^s
+=2^s\omega_s\delta r^s/\varepsilon^{s-1}$. The integrand is
+nonnegative, proving (74.19).
+
+For the hard carrier the asserted membership is exactly the definition
+(74.7). Moreover $\iota_rz_{\varepsilon,r}$ is still supported
+entirely in $Z_p\times Z_p$. By (73.6) its $J_{\varepsilon,2}^*$
+image is a scalar multiple of $e_{pp}$, even though the restriction is
+not constant on that chamber product. Consequently
+$K_{\varepsilon,C}\iota_rz_{\varepsilon,r}=0$.
+This proves (74.20) for the actual compressed comparator, without an
+isometry claim for the restricted lift. $\square$
+

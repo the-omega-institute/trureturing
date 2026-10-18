@@ -1,0 +1,366 @@
+**Proposition 14.3 (a complete unbounded overloaded cyclic family).**
+For every pair of integers $v\ge3$, $g\ge2v$, set
+
+$$
+\begin{gathered}
+n=3g+3,\quad k=g+1,\quad p=2g,\quad b=2,\\
+a=g-2v+3\ge3,\qquad \ell=2v-4\ge2,\qquad a+\ell=g-1,\\
+s_1=1,\qquad s_i=2v+i-2\quad(2\le i\le n),\\
+\mathsf X_0=(2,3),\qquad \mathsf X_1=(2v,2v+1),\qquad
+\mathsf X_j=(2j,2j+1)\quad(2\le j<v),\\
+\mathsf I=(1,2v+2,2v+3,\ldots,2v+2g),\\
+\mathsf U=(2v+2g+1,\ldots,3g+3)=(u_1,\ldots,u_a),
+\qquad \mathsf V=\varnothing.
+\end{gathered}
+\tag{SI.123}
+$$
+
+These are the original strictly increasing positive integer positions.
+Write
+
+$$
+\begin{gathered}
+\mathsf X=\mathsf X_0=(x_1,x_2),\qquad
+\mathsf Y=\mathsf X_1=(y_1,y_2),\\
+\mathsf T=(\mathsf X_2,\ldots,\mathsf X_{v-1})
+                         =(t_1,\ldots,t_\ell),\\
+(\tau_0,\ldots,\tau_{v-1})=(0,2,3,\ldots,v-1,1),\qquad
+f(\eta)=\tau_{\min(\operatorname{wt}(\eta),v-1)}.
+\end{gathered}
+\tag{SI.124}
+$$
+
+There is a complete graph of Definition 14.1 with this $f$,
+all $v$ cyclic modes actually used live, and exact installed counts
+
+$$
+\begin{gathered}
+N_g=\binom{2g-1}{g-1},\qquad F_g=1+N_g,\\
+M_{v,g}=2^n-1-F_g(2^{g+1}-1)+2g+2>G=(g+1)(2g+3)
+\end{gathered}
+\tag{SI.125}
+$$
+
+for running states, plus two Boolean terminals. It is correct and
+terminating on every input, with the simultaneous maxima $n,W$.
+Its common-support depths are exactly $0,\ldots,2g$, followed by
+the formal endpoint $n$. In the consecutive late gap $(2g,n)$ of
+unbounded span $g+3$, one state $R$ has
+
+$$
+\lambda(R)=1+\frac{N_g}{\binom{2g+2}{g}}
+          =1+\frac{g+2}{4(2g+1)}>\frac98.
+\tag{SI.126}
+$$
+
+The graph is outside $\mathfrak C$ of Definition 11.6, outside
+$\mathfrak C_5$ and $\mathfrak A_5$ of TS Definition 6.3, and outside
+every representation in Definition 13.1, regardless of reblocking.
+Both its mode count and terminal gap span are unbounded across the
+family. This is an above-grid inclusion family, with no state-saving
+assertion.
+
+Proof, parameters and transversal. The blocks use precisely
+$2,\ldots,2v+1$, and $\mathsf I,\mathsf U$ supply the other
+coordinates, so the lists partition $[n]$ with the displayed lengths.
+Their whole costs obey
+
+$$
+\begin{gathered}
+C_{\mathsf X_0}=4v+9,\qquad
+C_{\mathsf X_j}=4v+4j+5\quad(2\le j<v),\qquad
+C_{\mathsf X_1}=8v+5,\\
+C_{\mathsf X_0}<C_{\mathsf X_2}<\cdots
+             <C_{\mathsf X_{v-1}}<C_{\mathsf X_1}.
+\end{gathered}
+\tag{SI.127}
+$$
+
+At every weight $h\in\{0,\ldots,p\}$ choose any $\mathsf I$
+assignment of weight $h$ and use
+$\gamma(h)=\tau_{\min(h,v-1)}$. This satisfies (SI.116).
+At depth $p$, each weight $0,\ldots,v-1$ is live:
+its hits are at most $v-1<k$ and its zeros at most
+$2g\le n-k$. Thus all $v$ modes have actual live prefix witnesses.
+The following complete table establishes the required live-order
+property on every other history too.
+
+Proof, the complete parent and the exact redirections. Begin with
+distinct running states $q_w$ for every binary word $w$ with
+$\operatorname{len}(w)<n$, and common distinct terminals
+$\mathsf0,\mathsf1$. The sole start is $q_\varepsilon$.
+If $d_w=\operatorname{len}(w)<p$, label $q_w$ by the
+$(d_w+1)$st coordinate of $\mathsf I$. If $p\le d_w<n$,
+let $\eta(w)$ be the assignment whose replies in the fixed
+$\mathsf I$ order are the first $p$ letters of $w$, and label
+$q_w$ by $\pi_{f(\eta(w))}(d_w+1)$. For each reply
+$\epsilon\in\{0,1\}$ define its parent successor by
+
+$$
+\delta_{\mathrm{parent}}(q_w,\epsilon)=
+\begin{cases}
+q_{w\epsilon},&\operatorname{len}(w)+1<n,\\
+\mathsf1,&\operatorname{len}(w)+1=n
+                 \ \text{and }\operatorname{wt}(w)+\epsilon\ge k,\\
+\mathsf0,&\operatorname{len}(w)+1=n
+                 \ \text{and }\operatorname{wt}(w)+\epsilon<k.
+\end{cases}
+\tag{SI.128}
+$$
+
+In particular the terminal threshold uses weight, whereas tree depth
+uses length. All labels and successors are fixed in their separate
+installed vertices; $w$, $f$ and (SI.128) are table definitions,
+not runtime word storage or computations.
+
+Put $d_*=p+2=2g+2$. Delete exactly the full running subtrees
+following these literal prefixes of length $d_*$:
+
+$$
+\mathcal A:\quad \mathsf I=0^p,\quad\mathsf X=00;
+\qquad
+\mathcal D_\eta:\quad
+\operatorname{wt}(\eta)=g,\quad \eta(1)=1,\quad
+\mathsf I=\eta,\quad \mathsf Y=00.
+\tag{SI.129}
+$$
+
+Here $\eta(1)$ is the bit at original coordinate $1\in\mathsf I$.
+The first prefix has mode zero. Each second prefix has mode one,
+since $g\ge2v$ gives $f(\eta)=\tau_{v-1}=1$.
+There are exactly $N_g$ choices of $\eta$, choosing its other
+$g-1$ ones among the remaining $2g-1$ prefix coordinates. The
+deleted subtrees are pairwise disjoint. Redirect each of their
+incoming edges to one new state $R$, and retain every other
+parent vertex and edge. These redirections retain every compatible
+complete input, not just selected representatives.
+
+Install exactly the following new running states, all distinct from
+each other, all retained $q_w$ and both terminals.
+
+| State | Fixed coordinate | Zero successor | One successor |
+| --- | --- | --- | --- |
+| $R$ | $u_1$ | $Z_2$ | $O_2$ |
+| $Z_j$, $2\le j<a$ | $u_j$ | $Z_{j+1}$ | $J$ |
+| $Z_a$ | $u_a$ | $P_1$ | $J$ |
+| $O_j$, $2\le j<a$ | $u_j$ | $J$ | $O_{j+1}$ |
+| $O_a$ | $u_a$ | $J$ | $B_1$ |
+| $P_j$, $1\le j<\ell$ | $t_j$ | $P_{j+1}$ | $J$ |
+| $P_\ell$ | $t_\ell$ | $A_1$ | $J$ |
+| $A_1$ | $x_1$ | $A_2$ | $\mathsf1$ |
+| $A_2$ | $x_2$ | $\mathsf0$ | $\mathsf1$ |
+| $B_1$ | $y_1$ | $J$ | $B_2$ |
+| $B_2$ | $y_2$ | $\mathsf0$ | $K_1$ |
+| $K_j$, $1\le j<\ell$ | $t_j$ | $\mathsf0$ | $K_{j+1}$ |
+| $K_\ell$ | $t_\ell$ | $\mathsf0$ | $\mathsf1$ |
+| $J$ | $1$ | $\mathsf0$ | $\mathsf1$ |
+
+Together with the retained parent this specifies the sole start,
+both original terminals, every installed state, its fixed coordinate
+and both successors. There is no edge to a deleted state, no other
+incoming edge to the suffix, and no suffix edge returning to the
+parent. The two $\mathsf T$ chains occupy different cyclic positions;
+they are distinct counted chains, not a free call to a residual solver.
+
+Proof, every actual arrival and correctness. Exactly the cylinders
+(SI.129), with all their unrestricted unread completions, enter $R$.
+On $\mathcal A$ the remaining predicate is
+$\operatorname{AND}(\mathsf U,\mathsf Y,\mathsf T)$, because there
+are no old ones and exactly $g+1=k$ unread coordinates. On each
+$\mathcal D_\eta$ it is
+$\operatorname{OR}(\mathsf U,\mathsf T,\mathsf X)$, because there
+are already $g=k-1$ ones. Original coordinate $1$ is zero on
+$\mathcal A$ and one on every $\mathcal D_\eta$.
+
+The $R,Z,O$ scan exits at the first mixture of zero and one in
+$\mathsf U$ through $J$. Both residuals are then certified, with
+answers zero and one respectively, so the paid old-coordinate query
+at $J$ returns the required answers. If $\mathsf U$ is all zero,
+the $P$ chain reads $\mathsf T$. Its first one likewise certifies
+the opposite answers and enters $J$. If $\mathsf T$ is also all
+zero, $A_1,A_2$ compute the remaining $\mathsf X$ OR on each
+$\mathcal D_\eta$; on $\mathcal A$ they requery its old $00$
+and return its already certified zero.
+
+If $\mathsf U$ is all one, $B_1$ reads $y_1$. Reply zero enters
+$J$, returning zero on $\mathcal A$ and one on each
+$\mathcal D_\eta$. Every $\mathcal D_\eta$ has old $y_1=0$,
+so its actual fixed-input run must take this edge. Consequently
+only $\mathcal A$ can reach $B_2$, whose zero edge returns zero
+directly, and whose one edge enters the $K$ chain computing the
+remaining $\mathsf T$ AND. This uses the actual old assignment,
+not a deletion of compatible arrivals or an origin-dependent successor.
+These cases cover every ordinary, live and certified suffix arrival.
+Every other input follows a retained full parent route and receives
+its threshold by (SI.128). The finite tree, scans and exit chains
+terminate on all inputs.
+
+The live suffix order on $\mathcal A$ is exactly
+$\mathsf U,\mathsf Y,\mathsf T$: it stays live only along their
+all-one prefixes. On each $\mathcal D_\eta$ it is exactly
+$\mathsf U,\mathsf T,\mathsf X$: it stays live only along their
+all-zero prefixes. These are the respective suffixes of $\pi_0$
+and $\pi_1$. Every retained route follows its prescribed cyclic
+permutation. Thus the entire installed graph satisfies Definition
+14.1. All old-coordinate repeats are certified on that history;
+a receiver such as $A_1$ or $B_1$ can still be live on another
+history. All visits to $J$ are certified, with the opposite outputs
+determined by the two actual origins. No single residual is assigned
+to such a shared state.
+
+Proof, both caps on each same input. A redirected prefix pays
+$d_*=2g+2$ queries. Its suffix uses at most $a+\ell+2=g+1$:
+a mixed $\mathsf U$ prefix uses at most $a$ scan queries and
+$J$; the all-zero branch uses at most $a+\ell$ scan queries and
+two exit queries; the all-one branch uses $a$ scan queries and
+either $B_1,J$ or $B_1,B_2$ followed by at most $\ell$ queries.
+Hence every redirected input has at most $n$ queries. Every
+retained route reads all $n$ coordinates once, including any visits
+after certification. For letters, use the same original costs throughout:
+
+$$
+\begin{gathered}
+W=C_{\mathsf I}+C_{\mathsf X}+C_{\mathsf Y}
+                  +C_{\mathsf U}+C_{\mathsf T},\\
+c_1=5,\quad C_{\mathsf X}=4v+9,\quad C_{\mathsf Y}=8v+5,\quad
+c_{y_1}=4v+2,\quad c_{y_2}=4v+3,\\
+c_{y_1}+5=C_{\mathsf X}-2.
+\end{gathered}
+\tag{SI.130}
+$$
+
+The exhaustive complete-run charges are as follows. A displayed upper
+bound includes an exit that can stop earlier; every actual query,
+including every repeated old bit, is charged.
+
+| Actual suffix case and origin | Complete charge or upper bound |
+| --- | --- |
+| First $\mathsf U$ mixture at $u_j$, either origin | $C_{\mathsf I}+C_{\mathsf E}+C_{\mathsf U^{\le j}}+5$, where $\mathsf E=\mathsf X$ on $\mathcal A$ and $\mathsf E=\mathsf Y$ on $\mathcal D_\eta$ |
+| $\mathsf U=0^a$, first $\mathsf T$ one at $t_j$, either origin | $C_{\mathsf I}+C_{\mathsf E}+C_{\mathsf U}+C_{\mathsf T^{\le j}}+5$ |
+| $\mathsf U=0^a,\mathsf T=0^\ell$, $\mathcal A$ | $W+C_{\mathsf X}-C_{\mathsf Y}<W$ |
+| $\mathsf U=0^a,\mathsf T=0^\ell$, $\mathcal D_\eta$ | $W$ as an upper bound |
+| $\mathsf U=1^a$, $\mathcal D_\eta$ | $C_{\mathsf I}+C_{\mathsf Y}+C_{\mathsf U}+c_{y_1}+5=W-C_{\mathsf T}-2$ |
+| $\mathsf U=1^a,y_1=0$, $\mathcal A$ | $W+5-c_{y_2}-C_{\mathsf T}<W$ |
+| $\mathsf U=1^a,y_1=1,y_2=0$, $\mathcal A$ | $W-C_{\mathsf T}$ |
+| $\mathsf U=1^a,\mathsf Y=11$, $\mathcal A$ | $W$ as an upper bound |
+
+In the first two rows the entire other private block is omitted,
+and both $C_{\mathsf X},C_{\mathsf Y}$ exceed five. Any unread
+$\mathsf U$ or $\mathsf T$ tail supplies further slack, proving
+both bounds at most $W$. The third row includes both repeated
+$\mathsf X$ queries. The fifth includes the repeated $y_1$ and
+coordinate $1$, using precisely (SI.130). In the last row the
+remaining $\mathsf T$ queries are fresh and may stop at a zero.
+All retained complete paths have charge exactly $W$. Thus both
+bounds hold together on every complete input of this one table.
+
+Take $\mathcal A$ with $\mathsf U=1^a$, $\mathsf Y=11$ and
+$\mathsf T=1^\ell$. It reads every coordinate once and attains
+$n,W$ together. Before its last query it has exactly
+$g=k-1$ ones and $2g+2=n-k$ zeros, and every earlier prefix is
+live. In particular this attainment is an actual input, not a
+combination of separately optimized resources.
+
+Proof, all installed states. Reuse the complete-tree count template
+of Proposition 13.3, now on the explicitly different table above.
+The parent has $2^n-1$ running states. Each of the $F_g$ deleted
+subtrees has $2^{n-d_*}-1=2^{g+1}-1$ running states. The new
+$\mathsf U$ scan has $2a-1$ states, the two distinct $\mathsf T$
+chains have $2\ell$, and $A_1,A_2,B_1,B_2,J$ give five more.
+Their total is
+
+$$
+(2a-1)+2\ell+5=2g+2.
+\tag{SI.131}
+$$
+
+This proves the exact $M_{v,g}$ in (SI.125), and the Boolean
+installed total is $M_{v,g}+2$ with its two terminals. Every retained,
+added, certified-only or unused installed running state counts.
+Indeed every retained vertex still has a completing input reaching it,
+and every new state is reached by one of the listed suffix cases;
+no other running states are installed. The untouched prefix tree
+through depths less than $p$ already contains $2^{2g}-1>G$
+running states, by the supplied inequality in Proposition 13.3 for
+these same $g\ge6$. Thus $M_{v,g}>G$. Equal count formulas do
+not identify the star and cyclic tables or prove a saving in either.
+
+Proof, exact overload and the consecutive gap. There is one
+$\mathcal A$ history and exactly $N_g$ distinct $\mathcal D_\eta$
+histories at $R$, with counts $(0,2g+2)$ and $(g,g+2)$.
+All are live and no other prefix reaches $R$. Their all-history
+weights from Definition 11.2 give (SI.126), using the same binomial
+identity as (SI.111). The low history has empty one set and zero
+set $\mathsf I\cup\mathsf X$. Each high history has one set
+$\eta^{-1}(1)\subseteq\mathsf I$, of size $g$, and zero set
+$(\mathsf I\setminus\eta^{-1}(1))\cup\mathsf Y$. Thus each
+low/high pair has exactly one directed conflict, not both. These
+are all actual histories, not favorable representatives in place
+of the full mass.
+
+Through depth $p$ every live support is the corresponding common
+$\mathsf I$ prefix. At every depth $p<d<n$, compare the
+cap-attaining $\mathcal A$ input with any $\mathcal D_\eta$ input
+having $\mathsf U=0^a,\mathsf T=0^\ell,\mathsf X=00$.
+The second has $g$ old ones and remains live until its last
+query, $x_2$, just as the first remains live until its last query.
+At depth $p+1$ their supports differ by $x_1,y_1$.
+At every depth from $p+2$ through $n-1$, the first has exposed
+$x_2$, whereas the second has not. The supports therefore differ
+at every unfinished post-prefix depth. There are no further
+common-support depths before the formal endpoint $n$.
+
+The terminal gap is $(p,n)=(2g,n)$, with span $g+3>5$ and
+right endpoint $n>e_*=\max(k,n-k+1)=2g+3$.
+The state $R$, at depth $p+2$, lies in this remaining late-long
+pool. Its low/high one-way pairs violate (SI.68), so the graph is
+outside $\mathfrak C$. Its violating pool is not the terminal
+span-five exception of TS Definition 6.3, excluding $\mathfrak C_5$
+and hence $\mathfrak A_5$. The strict short-block results remain
+valid suppliers; they do not cover this long pool.
+
+Proof, exclusion from every SI13 reblocking. Every cyclic mode is
+realized by a complete run live before all of its $n$ queries.
+Mode zero has the attaining $\mathcal A$ run above. For
+$j=1,\ldots,v-1$, choose an $\mathsf I$ assignment of weight $j$,
+so its mode is $\tau_j$. It enters no deleted subtree, since
+$0<j<g$. Among its next $g+2$ query positions choose exactly
+$g-j$ ones, and give its last coordinate value zero. There is
+room for those ones, and just before that last query the total
+counts are $g,2g+2$. All earlier counts are bounded by this live
+pair, so this is an actual complete parent route live at every
+query, with full order $\pi_{\tau_j}$. Thus all $v$ permutations
+in (SI.115) occur as full actual live query orders.
+
+Fix any coordinate $x_{\ell,t}$ in a rotating block. Across those
+$v$ runs it occupies all $v$ different block slots. Its positions
+are $p+t$ in slot zero and $p+|\mathsf U|+rb+t$ in slots
+$1\le r<v$, all distinct. Thus each rotating coordinate has at
+least three actual live positions, independently of how a different
+representation might name or partition coordinates.
+
+In any representation satisfying Definition 13.1, a coordinate in
+its $\mathsf I,\mathsf U,\mathsf V$ lists has one possible live
+position. A coordinate in a noncentral block $\mathsf X_j$,
+$j>0$, has at most two: its early position in mode $j$ and its
+one fixed late position in all other modes. Consequently all the
+rotating coordinates of the present graph would have to belong
+to that representation's single central ordered block
+$\mathsf X_0$. In particular $x_1$ and $y_1$ would lie in that
+same ordered block. But $\pi_0$ reads $x_1$ before $y_1$,
+whereas $\pi_1$ reads $y_1$ before $x_1$. An ordered block
+has one fixed internal order in every star mode, so cannot realize
+both actual live orders. This contradiction excludes every SI13
+representation, allowing different prefix, blocks, block length,
+common lists, mode count and selector. It also excludes SI12,
+which is a special case of SI13; alternatively the $v\ge3$
+distinct live next labels at depth $p$ already exclude SI12.
+
+Taking $v$ unbounded with $g\ge2v$ makes both the number of
+actually used modes and the terminal span unbounded, while retaining
+the uniform strict overload (SI.126). This proves additional members
+outside the union of the stated prior sufficient classes. It does
+not assert that the cyclic class contains the whole star class,
+nor that each fixed original parameter instance has such a member.
+$\square$
+

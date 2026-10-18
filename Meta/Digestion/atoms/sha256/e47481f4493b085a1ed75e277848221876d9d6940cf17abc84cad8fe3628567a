@@ -1,0 +1,16 @@
+**Definition 1.4 (joint finite prefix).** Let $B$ be any supplied finite
+set of distinct attained full row labels, $|B|\ge2$. Set
+
+$$
+J_B(h)\quad\Longleftrightarrow\quad
+\exists (u_r)_{r\in B}\in\prod_{r\in B}D_r\quad
+\forall r,s\in B\quad u_r\equiv_h u_s.
+\tag{FJC.5}
+$$
+
+Each witness is an actual finite native source satisfying the entire
+input. The witnesses can change with $h$. They are alternative originals
+for the common producer contract, not one source carrying incompatible
+labels. Pairwise witnesses chosen separately need not form this tuple.
+Rows outside $B$ remain in $D$.
+

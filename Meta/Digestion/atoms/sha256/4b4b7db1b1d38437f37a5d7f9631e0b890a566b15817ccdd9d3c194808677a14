@@ -1,0 +1,47 @@
+**Proposition 9.1 (No change of threshold for prescribed paths).**
+Both constructions above admit an exact fixed affine map for each
+prescribed path on (9.1). Their error estimates persist at all
+intermediate times and at all prefixes of every finite lawful
+concatenation of such paths. Consequently the full classification
+in Theorem 2.2 is unchanged by requiring all these paths as well as
+$P_s,Q_t$.
+
+**Proof.** For the polynomial model use
+
+$$
+K'=K+\Delta_k,\qquad
+f_j'=R_{L/2}\sum_{h=0}^j\binom jh\Delta_k^{j-h}f_h
+\quad(0\le j\le m).
+\tag{9.5}
+$$
+
+All its coefficients depend on the prescribed relative path and fixed
+model, not on the initial ray. Substitution of (7.6) and the finite
+binomial theorem gives
+$f_j'=(k+\Delta_k)^jU(\alpha+L/2)$, exactly the encoding of (9.3).
+The true mixed term $C$ is retained in (9.3); it disappears from (9.5)
+only because this encoder forgets $\beta$. For the height-only model
+the affine map is simply $K'=K+\Delta_k$.
+
+For either actual image, impose
+
+$$
+0<K+\rho(\tau)<H\quad(0\le\tau\le T).
+$$
+
+It is precisely (9.1), computed from a stored coordinate, and is
+constant on every encoder fiber. On that guard the endpoint identities
+prove preservation of the actual image. Replacing the upper integration
+limit $T$ by any intermediate time supplies its relative displacement,
+phase integral and mixed integral. The same calculation proves exact
+encoding at that time. Applying the uniform current-state readout bound
+then proves its error assertion. Induction over any finite concatenation
+proves all finite prefixes, and (9.4) confirms consistency with the
+actual native composition.
+
+The larger contract contains the $P_s,Q_t$ requirements used in the
+lower and nonattainment proofs, so those conclusions still apply.
+The same upper witnesses now satisfy the larger contract as well.
+Both inclusions are therefore proved; the classification is identical.
+$\square$
+

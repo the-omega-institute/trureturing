@@ -1,0 +1,37 @@
+**Definition 1.2 (literal prescribed entries).** Fix distinct positive
+positions $A=\{s_1<\cdots<s_n\}$, and put
+
+$$
+w_i=L^{s_i}R,\qquad a_i=LLLw_i,\qquad c_i=s_i+4,
+\qquad C_B=\sum_{i\in B}c_i,\qquad W=C_{[n]}.
+$$
+
+For every branch image $B$, without any shape promise, define
+
+$$
+\theta_i(B)=\mathbf1_{\{r_B(w_i)=\mathsf{branch}\}},\qquad
+f_{A,k}(B)=\mathbf1_{\{\sum_i\theta_i(B)\ge k\}}.
+$$
+
+Alpha, beta and absent each contribute zero. Preserve exactly the code
+of [PCA, Definitions 4.2 and 23.1][PCA]:
+
+$$
+\sigma_{A,k}(u)=
+\begin{cases}
+0,&u\in\Pi_1\cup\Pi_2,\\
+1,&u\in\Pi_3\cup\Pi_4,\\
+f_{A,k}(x_a),&u\in Z_{b_3},\\
+0,&u\text{ belongs to any other zero profile}.
+\end{cases}
+$$
+
+The reader is the fixed $K=8$ reader of PCA Supplier application 4.3,
+using [NBP, Theorem 15.5][NBP] with $z=0$, positive codes $(0,0,1,1)$,
+$S_{15}=\{1,2\}$ and distinguished test $3$. Its three running states,
+five whole-row halts, all four successors and two recoverable complete
+entries $e_0,e_1$ are fixed. The reader makes at most two fresh calls and
+six fresh letters. Preparation must produce literally
+$\widehat e_{\sigma_{A,k}(u)}$; handoff enters that original complete
+state. No different encoder, recoloring, entry map or decoder is allowed.
+

@@ -1,0 +1,26 @@
+**Theorem 7.2 (component intervals and a sufficient coverage condition).**
+For the complete contact polytope,
+$U_m=\bigcup_{C\text{ component of }\mathcal H_m}J(C)$.
+In particular, deleting from the edge graph only the edges with
+nine occupied groups leaves $\mathcal H_8$. If one remaining
+component contains vertices attaining both $r_-$ and $r_+$,
+then $U_8=[r_-,r_+]$. The existence of such a component is a
+sufficient condition, not a necessary condition imposed by the
+count criterion. The exact coverage condition is coverage by the
+union of the component intervals, which may overlap even for
+disconnected components.
+
+Proof. A connected finite graph with its geometric edges has
+connected continuous image under $K$; the image is exactly the
+interval between the minimum and maximum vertex values. This
+also holds for an isolated vertex. Taking the union and using
+(FC.15) proves the first assertion. The vertex and edge bounds in
+Theorem 6.1 show that all vertices are retained for $m=8$ and the
+only removed edges have nine groups. A component containing both
+global extrema has the entire required interval as its image.
+Conversely interval coverage only asks that the union of the
+$J(C)$ cover that interval; it does not ask those components to
+be connected to one another. In particular the criterion includes
+coverage assembled from overlapping component images and the
+constant-$K$ case. $\square$
+

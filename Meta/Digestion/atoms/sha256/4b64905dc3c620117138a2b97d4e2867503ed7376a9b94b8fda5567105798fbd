@@ -1,0 +1,52 @@
+**Theorem 6.3 (label-complement frontier and no-supplement acquisition).**
+For every fixed $D,c$ and integer $q\ge0$, the least conditional attained
+refinement alphabet permitting full literal completion of (CCF.19) with
+at most $q$ fresh adaptive arbitrary-word Reads is
+
+$$
+C(r,q)=2^{\max\{r-q,0\}}.
+\tag{CCF.20}
+$$
+
+With no additional source information beyond acquired $c$, every correct
+completion execution Reads every $u\in U_c$. The exact simultaneous
+minimum resource vector is
+
+$$
+(\mathsf{Reads},\mathsf{letters},\mathsf{peak})
+=\begin{cases}
+(r,(D+1)r,D+1),&r>0,\\
+(0,0,0),&r=0.
+\end{cases}
+\tag{CCF.21}
+$$
+
+Acquiring and retaining all hidden labels requires exactly $2^r=4^{b_c}$
+supplementary names conditional on $c$ when no fresh Reads remain.
+
+Proof. For any fixed refinement, Theorem 6.2 makes every fresh query
+constant or binary. A depth-$q$ tree has at most $2^q$ terminal
+transcripts. A correct literal completion separates all $2^r$ actual
+sources, so $m2^q\ge2^r$, together with $m\ge1$. Retaining the
+first $\max\{r-q,0\}$ labels in the public order and Reading the
+rest attains (CCF.20), with actual paid preparation of every retained
+label. Every binary tuple occurs, so all those names are attained.
+
+For the pointwise no-supplement statement, fix any actual execution and
+suppose it omits $u\in U_c$. Flip just $\theta(u)$. The acquired $c$
+is unchanged and every other literal reply is unchanged. Deterministic
+replay gives the same queries, control, termination and output on the
+flipped source. The output cannot answer $u$ correctly on both, a
+contradiction. Each required $u$ has length exactly $D+1$; a longer
+word in its cone is absent and cannot replace that Read. Thus all three
+lower charges in (CCF.21) hold on every execution when $r>0$.
+Reading each $u$ once attains them. At $r=0$ the boundary already
+specifies the full source, and no call is needed. Finally put $q=0$
+in (CCF.20). $\square$
+
+This pinpoints the original labels excluded by CBN's prediction
+representation. It neither improves PPF's acquired prediction theorem
+nor turns $r$ additional completion Reads into the original single late
+Read. The refined memory is conditional on $c$; a total complete name
+must also retain or otherwise account for its acquired boundary.
+

@@ -1,0 +1,56 @@
+## 四、第三定理：局部时间场是一个核族，而不是全局时间坐标
+
+定义局部等待核：
+
+```math
+K_s\in\operatorname{Prob}(\mathbb R_{\ge0}),
+\qquad
+s\in\Sigma.
+```
+
+含义是：
+
+```math
+T\mid s\sim K_s,
+```
+
+其中 $T$ 是当前局部事件到下一局部事件的等待量。
+
+不需要引入一个贯穿全宇宙的 $t$。局部时钟场是：
+
+```math
+\mathsf K=\{K_s\}_{s\in\Sigma}.
+```
+
+对于状态分布 $p$，混合等待律为：
+
+```math
+C_K(p)=\sum_{s\in\Sigma}p_sK_s.
+```
+
+定义局部时钟的四角响应：
+
+```math
+\operatorname{Curv}_K
+=
+K_{s_0}
+-K_{s_1}
+-K_{s_3}
++K_{s_{13}}.
+```
+
+若使用输出标签：
+
+```math
+\operatorname{Curv}_K
+=
+K_{\mathrm{null}}
+-K_{[2]}
+-K_{[5]}
++K_{[2,5]}.
+```
+
+这里的 $\operatorname{Curv}_K$ 只是一个离散混合差，不是物理时空曲率。
+
+---
+

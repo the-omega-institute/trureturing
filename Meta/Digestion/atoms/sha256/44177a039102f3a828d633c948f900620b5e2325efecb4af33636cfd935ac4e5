@@ -1,0 +1,56 @@
+**Lemma 2.3 (fixed prefixes and shared physical words).** The relations
+$p=h z$, for a fixed literal $h\in\Sigma^*$, are word-regular in
+$(p,z)$. So are $p=h$, and membership in a fixed finite union of
+prefix cones. Finite intersections, unions, complements and
+existential removal of word tracks preserve effective word-regularity
+in the padded presentation.
+
+Consequently, for finitely many WS2S formulas
+$\varphi_j(\mathbf z_j)$ with only their indicated position variables
+free, and finitely many constraints
+$p_v=h_{jv}z_{jv}$ or fixed-word/cone conditions on $p_v$, it is
+decidable whether one tuple $(p_v)_v$ satisfies all the formulas
+and word constraints simultaneously. A positive answer supplies
+one finite common tuple.
+
+Proof. For $p=h z$, first check the initial $|h|$ symbols of $p$.
+While doing so store the symbols arriving on the $z$ track in a
+queue. Thereafter compare each $p$ symbol with the appropriately
+delayed $z$ symbol. The queue has a fixed maximum length depending
+only on $|h|$. Store end flags, require padding in the correct
+order, and require that all queued nonpadding symbols have been
+matched when $p$ ends. This finite-state test says exactly that
+the whole word $p$ is the literal prefix $h$ followed by $z$.
+For $h=\varepsilon$ it is the ordinary track equality test.
+Fixed words and prefix cones have immediate finite-state tests.
+
+Products, disjoint union and determinization give the stated Boolean
+operations, relative to valid padded encodings. For existential
+projection, guess the removed tracks column by column. They can
+extend beyond the retained words: retain padding on all ended visible
+tracks while the guesses finish. Formally the column projection is
+a finite alphabet homomorphism and its image is regular; arbitrary
+additional all-padding suffixes are allowed in Definition 2.1.
+Any extra all-padding columns can also be removed down to the first
+complete end column by a finite-state end closure: after all visible
+tracks have ended, mark as accepting exactly the states from which
+an accepting state is reachable using only all-padding columns.
+This is reachability in a finite subgraph. Allow arbitrary additional
+all-padding columns and intersect with the valid padded-encoding
+domain. This saturates the image over all encodings of the same
+visible tuple and implements existential word quantification without
+a length bound.
+
+Apply Lemma 2.2 to each formula, lift its automaton to the combined
+word tracks, and intersect with all the fixed-prefix tests.
+Product-automaton emptiness is a finite calculation. Its finite
+accepted tuple proves sufficiency; any satisfying tuple has padded
+encodings of a common length and gives a product run, proving
+necessity. $\square$
+
+No assertion that fixed left-prefix insertion is WS2S-definable on
+two arbitrary tree positions is used. Nor is there an assertion
+that every word-regular relation is WS2S-definable. Lemmas 2.2–2.3
+give the needed direction and composition with a second, explicitly
+proved, word interface.
+

@@ -1,0 +1,55 @@
+**Theorem 26.1 (mass forcing without dual or optimality).** Under
+Assumption 23.1, every feasible common law satisfies
+
+$$
+\pi\{(u,v,\xi):\Psi(u,v)>0,\ \xi>0\}>\frac4{5t}.
+\tag{FC.101}
+$$
+
+This is a lower bound on original coefficient weight. It is not an
+acquisition, failure, survival or conditional probability of the
+physical experiment.
+
+Proof. Write $b_x=t\mathfrak c(u,v)\xi$. The last three original
+moment equations, together with the circle identity, give
+
+$$
+\int b_x\,d\pi=\mu,\quad
+\int b_xu^2\,d\pi=m_u,\quad
+\int b_xuv\,d\pi=0,\quad
+\int b_xv^2\,d\pi=\mu-m_u=m_v.
+\tag{FC.102}
+$$
+
+These are the same-law identities of (FC.58), now used without any
+dual premise. Expanding the single quadratic (FC.83) yields
+
+$$
+\int b_x\Psi\,d\pi=m_v-\frac25m_u
+=m_u\left(\mathcal R-\frac25\right)>\frac35.
+\tag{FC.103}
+$$
+
+On the circle, $|uv|\le1/2$, so
+
+$$
+\Psi\le v^2+\frac{39}{10}|uv|\le\frac{59}{20}<3.
+\tag{FC.104}
+$$
+
+Since $b_x\ge0$, contributions from $\Psi\le0$ are nonpositive;
+since $b_x<t/4$ when it is nonzero, and is zero at $\xi=0$,
+
+$$
+\frac35<\int b_x\Psi\,d\pi
+\le\int_{\{\Psi>0\}}b_x\Psi\,d\pi
+\le\frac{3t}{4}\,\pi\{\Psi>0,\xi>0\}.
+\tag{FC.105}
+$$
+
+Division by the positive $3t/4$ proves the strict inequality.
+No reweighting, separately chosen failure marginal, change of label,
+or omission of the $uv$ moment enters this argument. All integrands
+are bounded for fixed finite $t$, so it applies directly to finite,
+convergent countable and the stipulated integral laws. $\square$
+

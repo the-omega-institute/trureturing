@@ -1,0 +1,21 @@
+**Definition 264.1 (Two event probes on a common allocation).**
+For $L\ge3$, let $u=0^L$ and $v=10^{L-1}$.
+The score $A^{\rm b}$ has just $A_v=1$.
+The score $\chi$ has $P_u=P_v=1$,
+$C_w=2^{-(L-n)}$ for $w\in\Omega_n$, $n\ge3$, and $T=1$;
+all its other coordinates vanish. Define
+
+$$
+E_b=\sum_{n=3}^Lb_n-(L+1)e,\qquad
+B_b=1-b_2-e,\qquad D_b=2-\sum_{n=1}^Lb_n+(L+1)e.
+\tag{264.1}
+$$
+
+For a complete feasible allocation in either class, of arbitrary
+finite mass $M$, let $\tau_\lambda$ be its mass on all noncanonical
+tables, including constants and singletons. As in Section 252,
+canonical pairs are $N(i,j;i,i,j,r)$ with $r=0$ or $r>j$.
+They are already stopped. Write $S_\chi,S_{A^{\rm b}},S_\zeta$
+for the actual event slacks of this same allocation and
+$J_\lambda=D_b-S_\zeta$ for its fair deficit.
+

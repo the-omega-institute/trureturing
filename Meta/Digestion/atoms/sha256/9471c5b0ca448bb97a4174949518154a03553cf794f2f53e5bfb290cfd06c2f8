@@ -1,0 +1,18 @@
+**Corollary 19.2 (special parameter and endpoint scope).** The admissible choice
+
+$$
+t^2=\frac{a\beta}{2(2-\beta)}
+\quad\Longrightarrow\quad
+\min_{u,\varphi}\mu_{N_{\beta,t}}(u,\varphi)
+=\sqrt{\frac{2a}{2-\beta}}.
+\tag{R.88}
+$$
+
+At $\beta=1/2$ this is $\sqrt{2/3}>1/\sqrt2$.
+
+**Proof.** At this parameter $s_t^2=1-\beta/2$, so $A_t=\sqrt{a(2-\beta)/2}$ and $B_t=\beta\sqrt{a/[2(2-\beta)]}$. Their sum gives (R.88), and $0<t^2<a\beta$ since $2(2-\beta)>1$.
+
+For fixed positive beta the construction also extends to $t=0$ and $t=\sqrt{a\beta}$. The same pinching and attaining direction give the minimum $A_t+B_t$ at both endpoints. At $t=0$, $s_t=1$ and (R.75) is exactly the existing upper family (P.11); its individual optimum $U(\beta)$ is already proved in (P.12)–(P.16). At $t=\sqrt{a\beta}$, $s_t=a$ and $A_t+B_t=\sqrt a(a+\beta)=\sqrt a$. Neither endpoint is a strict restricted-method counterexample. At $\beta=1/2$ every interior $t$ still gives the strict inequality (R.81).
+
+At $\beta=0$ the stipulated positive-$t$ interval is empty. The formulas dividing by beta in the tilted and kernel calculations below are not used there. Trace-norm contraction gives $\mu_N(u,\varphi)\leq1=\sqrt a$ for every actual channel and each such input; the isometric instance of (P.11) attains the zero class optimum. These zero-beta statements use the existing endpoint result, without extending the positive-beta inverse or kernel-rank calculations across its rank change. $\square$
+

@@ -1,0 +1,28 @@
+### 3.4. Heat-bath interpretation and support boundaries
+
+For $D_\psi=\operatorname{diag}(\psi)$, the matrices
+
+$$
+P_i=D_\psi^{-1}(I-K_i)D_\psi,\qquad
+P_\omega=\sum_i\omega_iP_i
+=D_\psi^{-1}(I-H_\omega)D_\psi
+\tag{3.29}
+$$
+
+are the legal single-site heat-bath kernels and their random-scan
+mixture. On an endpoint pair the conditional probabilities are
+$(1,a)/(1+a)$; on the center pair they are $(1,b)/(1+b)$.
+The spectrum of $I-H_\omega$ is nonnegative because it is a
+convex combination of orthogonal projections. Thus
+
+$$
+\operatorname{SLEM}(P_\omega)=1-\gamma(\omega).
+\tag{3.30}
+$$
+
+Theorem 3.2 also solves fastest mixing within this fixed affine
+family of site kernels. The general spectral optimization and
+prescribed-equilibrium framework belongs to [Boyd, Diaconis and
+Xiao, §§2, 6][BDX3]. Allowing independently chosen graph-edge
+probabilities would be a different feasible family.
+

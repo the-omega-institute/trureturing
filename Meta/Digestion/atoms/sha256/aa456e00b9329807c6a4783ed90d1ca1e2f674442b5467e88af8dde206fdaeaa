@@ -1,0 +1,32 @@
+**Corollary 216.13 (Necessary original amplitude inequalities).**
+For an original hard-two N or O rule feasible at a positive cap
+$\varepsilon$, Theorem 216.6 gives, when its strict active horizon
+$L_a\ge m$,
+
+$$
+g a_3+h a_m\le d+(g+h+B)\varepsilon.
+\tag{216.29}
+$$
+
+Under Theorem 216.9's capacity hypotheses, at any active horizon,
+
+$$
+g a_n+h a_m-\sum_{n<i<m}s_i a_i
+ \le d+(g+h+S+B)\varepsilon.
+\tag{216.30}
+$$
+
+**Proof.** Apply 110.2 to obtain one normalized finite configuration
+at the same cap, and pair all its rows with the displayed full score.
+Its demand minus W is exactly the left side minus K$\varepsilon$,
+and its reward minus W is at most the score's complete support cost d.
+For (216.29), pad the constructor to $L_a$ by constant-one suffixes.
+For (216.30), if $L_a<m$ use the existing 215.7 extension: keep the
+configuration's outputs and extend to a horizon at least m.
+On new first-zero classes $a_i\le\varepsilon$, correct probability
+is zero and base probability is at least $1-\varepsilon$.
+Consequently base, correct, pair and positive rows all remain valid,
+including their negative singleton demands; (216.26) keeps the actual
+tail. If $L_a\ge m$, pad the score instead. This proves the necessary
+relations without an optimality or sufficiency assertion. $\square$
+

@@ -1,0 +1,38 @@
+**Open problem 13.1 (avoid or pay the joint sector loss).** A proposed
+same-template completion must control the joint conditional partition
+ratio, not just the number of boundary values, small defect density,
+local compatibility or tree incidence. In this explicit family its
+exact extra cost is
+
+$$
+-\log_2P_N^0(s_N=h)=\log_2(1+R^N),
+\tag{SCP.41}
+$$
+
+which is extensive in the number of original blocks. A global cap
+may avoid this relative comparison, sum all boundary sectors, or
+use a different full joint relation. Such a method still needs a
+sound effective all-size bound retaining actual shared owners,
+guards, support zeros and every whole-block potential once, together
+with optimizer-cofinality for the unchanged $\sigma_d$ or a
+uniform effective native length error. Neither obligation is
+constructed or disproved here.
+
+The original sharp $\lambda$, general exact $M_1(D)$, terminating
+two-sided approximation and full minimal-relations/internal-observer/
+mutual-recovery programme remain open. No numerical frontier update
+is asserted. Under the paid services the operational recovery proved
+here is only the requested full temporal factor from the complete
+name, public request and at most one actual reply, followed by every
+authentic-count readout. It does not recover an arbitrary whole
+source, an unknown age, hidden history or physical space and time.
+
+[SCP-COK]: https://github.com/the-omega-institute/trureturing/blob/91170b89dfe9dd7eadc64d14d86d2157ed14abdf/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CONDITIONAL_OWNER_KERNELS.md
+[SCP-GDB]: https://github.com/the-omega-institute/trureturing/blob/91170b89dfe9dd7eadc64d14d86d2157ed14abdf/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_GLOBAL_DEPENDENCE_BOUNDARIES.md
+[SCP-NCM]: https://github.com/the-omega-institute/trureturing/blob/91170b89dfe9dd7eadc64d14d86d2157ed14abdf/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CORRELATED_MEMORY_LOWER.md
+[SCP-Depth]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeDepthPatterns.lean
+[SCP-FCS]: https://github.com/the-omega-institute/trureturing/blob/91170b89dfe9dd7eadc64d14d86d2157ed14abdf/docs/develop/theory/FIB_NATIVE_FINITE_READER_CODE_SYNTHESIS.md
+[SCP-Vontobel]: https://arxiv.org/html/1012.0065v2
+[SCP-Ruozzi]: https://arxiv.org/html/1202.6035
+[SCP-PCSP]: https://arxiv.org/html/2602.10368v1
+

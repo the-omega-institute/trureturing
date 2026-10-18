@@ -1,0 +1,12 @@
+**Theorem 4.2 (Alternating sign of the truncation error).** Let $\Lambda$ be a completely positive map on $M_{2^n}(\mathbb C)$ and $k\ge0$. Then
+
+$$
+(-1)^k\big(F_k(\Lambda)-F(\Lambda)\big)=\sum_{w=k+1}^{n}3^{-w}\binom{w-1}{k}Q_w\ \ge\ 0,
+$$
+
+with equality if and only if $Q_w=0$ for every $w\ge k+1$, that is, if and only if $q_\beta=0$ whenever $\lvert\beta\rvert>k$. Consequently $F_k\le F$ for odd $k$ and $F\le F_k$ for even $k$; in particular $F_j\le F\le F_i$ for all odd $j$ and even $i$.
+
+**Proof.** Theorem 4.1 and Convention 2.1 give the identity, the terms with $w\le k$ vanishing because $\binom{w-1}{k}=0$. Complete positivity gives $q_\beta\ge0$, hence $Q_w\ge0$, and every coefficient $3^{-w}\binom{w-1}{k}$ with $w\ge k+1$ is strictly positive. $\square$
+
+Stance: suspected-novel for $k\ge1$; the inequality for $k=0$ is the upper bound $F\le F_0$ of cited fact (c), literature-attested.
+

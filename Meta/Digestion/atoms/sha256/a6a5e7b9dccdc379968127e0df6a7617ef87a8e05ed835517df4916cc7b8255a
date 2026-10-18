@@ -1,0 +1,54 @@
+**Definition 33.1 (one joint target and the finite issuer class).** Keep
+all the native data of Definitions 2.1–2.2 and 11.1–11.2: fixed
+$0<Z<1$, $r=1-Z$, $H=r/2$, $0<l<k<u<H$, $T>0$, arbitrary fixed
+preparation phases, probabilities $(k,H-k,Z,H-k,k)$, negative amplitude
+convention, both $2\pi$ periods, the original fields $P,Q$, the extrema
+guard, and the four unhalved original-clock costs (11.4). On one Wiener
+space let $W^1,W^2,C$ be independent covariance-$2$ Brownian motions,
+starting at zero. Fix arbitrary $\lambda\in\mathbb R$ and
+$\nu\in\mathbb R\setminus\{0\}$. Define jointly
+
+$$
+\begin{aligned}
+K_t&=J^{\lambda,\nu}_t
+ =\int_0^tW^1_s\,dW^2_s+\lambda t+\nu C_t,\\
+\tau&=\inf\{t\ge0:k+W^1_t\notin(l,u)\},\qquad S=\tau\wedge T,\\
+\bar z_t&=(W^1_{t\wedge S},W^2_{t\wedge S},K_{t\wedge S}),\\
+\bar q_t&=\left(k+W^1_{t\wedge S},
+ [\alpha_0+W^2_{t\wedge S}/2],
+ [\beta_0+c_0W^2_{t\wedge S}-K_{t\wedge S}/r]\right),
+ \qquad c_0=\tfrac12-k/r.
+\end{aligned}
+\tag{33.1}
+$$
+
+All target coordinates are held at the same $S$. Its death mark is
+$\zeta=\tau$ if $\tau\le T$ and $\infty$ otherwise. The Brownian
+coordinates and the coefficient $\nu$ are additional analytic premises.
+They are not native controls or consequences of the finite source.
+
+Let $\mathcal F$ be the usual joint Brownian filtration, optionally
+enlarged initially by a seed independent of the entire triple. The ideal
+supplied observation is the usual augmentation of the stopped past of
+$(W^1,W^2,C,K)$ at $\tau$, together with that seed. Use Definition
+20.2's finite numerical-command class with this observation: each entire
+numerical AC profile is chosen at a stopping-time issuance, later
+stopping-time interruptions replace only its unexecuted continuation,
+joins are continuous, and the actual issuance count through own death or
+$T$ is almost surely finite. No fixed dwell, speed or deterministic count
+bound is imposed. The own exit, held controls $(a,b)$, chronological
+integral $J=\int a\,db$, native path $\bar q^{\rm N}$ and censored
+mark $\zeta^{\rm N}$ have exactly Definition 20.3's meanings. In
+particular own death is actual height exit, not target death or a command
+interruption. The required tube is the complete metric of (13.1):
+
+$$
+D_{\max}(\bar q^{\rm N},\bar q)\le\eta\quad\hbox{almost surely}
+\tag{33.2}
+$$
+
+for each deterministic $\eta>0$, on this same joint source. There is no
+survival conditioning, target resampling, clock change or measure change.
+The observation premise supplies ideal real histories; it makes no
+acquisition or finite-bit assertion.
+

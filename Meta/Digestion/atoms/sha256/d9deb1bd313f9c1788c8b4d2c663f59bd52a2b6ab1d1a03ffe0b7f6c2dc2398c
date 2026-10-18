@@ -1,0 +1,28 @@
+**Proposition 10.1 (canonical strict identity without absolute sign).** Define
+
+$$
+\begin{aligned}
+W&=j_0V,&W_j&=j_0V_j,&W_{\rm t}&=j_0V_{\rm t},&\overline C&=j_0C_*,\\
+G_{108}&=1-A-(\chi/a)(C_2+2B_1),&
+G_{\rm resp}&=(K_{\rm base}-D_{\rm resp})/a,\\
+\overline D&=1+(\chi/a)T>1,&\delta_{\rm aff}&=\Delta_{\rm aff}/a>0.
+\end{aligned}
+\tag{10.1}
+$$
+
+The fields $W,W_j,W_{\rm t}$, $\overline C$, $p$, $\Psi$, $t_0$ and $\delta_{\rm aff}$ are canonical, and
+
+$$
+\begin{gathered}
+\frac{C_{108}}a=\nu^2G_{108}-\lambda\overline D,\qquad
+\frac{C_{\rm resp}}a=\nu^2G_{\rm resp}-\lambda\overline D,\\
+G_{\rm resp}=G_{108}-(t_0-1)^2-\delta_{\rm aff}
+ <G_{108}-(t_0-1)^2\le G_{108},\\
+\frac{\min_tC_{\rm aff}(t)}a
+ =\nu^2\{G_{108}-(t_0-1)^2\}-\lambda\overline D.
+\end{gathered}
+\tag{10.2}
+$$
+
+Proof. Removing $1/j_0$ from the fixed canonical heat integrals gives the displayed $W$ fields. The threshold quotient gives $\chi/a=j_0/\overline C$, so the normalized equation for $p$ has no original parameter. The response form and functional are both $a$ times canonical objects; hence their Riesz vector is canonical and $\Delta_{\rm aff}/a$ is canonical. This is R Proposition 12.1's normalization, with the strictly positive margin supplied by Theorem 7.1. Dividing (7.2) by $a\nu^2$ gives (10.2). $\square$
+

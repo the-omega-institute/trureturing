@@ -1,0 +1,34 @@
+**Definition 239.1 (A common layer and its two representatives).**
+Let integers $m\ge6$, $3\le\rho\le m-3$, $L\ge m$ be fixed.
+Take unit counting mass $\mu$ on the length-$m$ words $(x,0)$,
+$x\in\{0,1\}^{m-1}$, $1\le|x|\le\rho$, excluding the singleton
+whose sole one is at position $m-1$. Use binomial coefficients zero
+outside their usual range, and empty sums zero. Put
+
+$$
+\begin{aligned}
+d&=\sum_{a=1}^{\rho}\binom{m-2}{a}-1,&
+u&=\sum_{a=0}^{\rho-1}\binom{m-3}{a},&
+v&=\sum_{a=0}^{\rho-2}\binom{m-3}{a},\\
+s&=d+u+v,&T&=d-v,&p_n&=\mu(\Omega_n),&\gamma_n&=d-p_n.
+\end{aligned}
+\tag{239.1}
+$$
+
+Explicitly $p_1=d$, $p_2=u$, $p_m=0$, and
+
+$$
+p_n=\sum_{a=0}^{\rho-n+1}\binom{m-1-n}{a}\quad(2\le n\le m-1).
+\tag{239.2}
+$$
+
+Both scores below have $A=0$, $P=\mu$, terminal $T$ and correct
+class totals $\gamma_n$. In $Y$, place $C_n=\gamma_n$ at the chain
+word $1^{n-1}0^{m-n+1}$. For $Z$, set
+$E_n=\{w:n(w)<n,w_n=0\}$, $c_n=\mu(E_n)$.
+When $\gamma_n>0$, push $(\gamma_n/c_n)\mu|_{E_n}$ forward by
+resetting all positions before $n$ to one. This defines its entire
+$C_n$ measure together with all other classes, from the same $\mu$.
+If $\gamma_n=0$, use zero without division.
+Pad all scored words by ones to length $L$ and put terminal mass at $1^L$.
+

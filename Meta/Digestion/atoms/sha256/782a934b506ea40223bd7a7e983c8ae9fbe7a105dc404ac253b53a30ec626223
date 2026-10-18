@@ -1,0 +1,29 @@
+### 96.6. Combined removal of the newly resolved primary factors
+
+Write \(Q_{16}\) for the polynomial of §95.1. The irreducible parameter
+polynomials \(Q_{10},Q_{14},Q_{16}\) have distinct degrees 10, 14 and 16.
+They are pairwise coprime, and are coprime to the three irreducible
+polynomials of degrees 32, 196 and 96 in §94.5. Therefore the eight
+parameters resolved in §§95–96 are mutually distinct and disjoint from
+the twelve parameters resolved in §§92–94.
+
+Let \(H_{\mathrm{reduced}}\) be the exact nonzero polynomial (94.3), and
+let \(v_{10},v_{14},v_{16}\) be the maximal nonnegative exponents such that
+the corresponding powers divide it. Define
+\[
+ H_{\mathrm{next}}=
+ \frac{H_{\mathrm{reduced}}}
+ {Q_{10}^{v_{10}}Q_{14}^{v_{14}}Q_{16}^{v_{16}}}.          \tag{96.11}
+\]
+The exponents are defined by exact polynomial divisibility; no expansion
+or numerical approximation of the large guard is needed. This polynomial
+is nonzero and is coprime to each of the three displayed factors.
+
+For every real \(0<|b|<1\) with \(H_{\mathrm{next}}(b)\ne0\), there is no
+noncanonical common-flat orthogonal triple. The only complete common-flat
+input basis is canonical up to phases and permutations, and the fixed
+pair \((I_6,H_0(b))\) cannot belong to a quartet. Away from the three new
+factors this follows from §94.5; at their roots it follows from Theorems
+95.1 and 96.1. In particular all twenty explicitly certified parameters
+from §§92–96 are included. Every zero of the remaining guard is retained;
+these arguments do not establish that the displayed factors exhaust it.

@@ -1,0 +1,76 @@
+**Proposition 48.1 (what the quantitative laws measure).** The
+rank-three resolved Brownian covariance is compatible with a
+rank-one instantaneous phase covariance and a rank-two full
+instantaneous covariance. Bounded height contributes no extra
+diffusive coordinate. These conclusions do not infer exact
+controllability or a same-clock smooth elliptic observation of
+dimension at least three.
+
+Proof. From (41.1), or its Q version, the instantaneous covariance
+is $2\operatorname{diag}(\varepsilon^2,c_\kappa c_\kappa^{\mathsf T})dt$.
+The nonzero height direction and the nonzero phase vector give
+full rank two, with phase rank one. Temporal occupation of different
+height levels gives the positive averaged tensor (41.4), rather
+than three independent native phase drivers. Deterministically,
+$\sup_{s\le b}|K_{Ts}-K_0|/\sqrt T\le L/\sqrt T$ under both
+surviving conventions. The zero leaf has only its two moving
+phases. For a smooth observation into $d$ dimensions, the pushed
+second-order symbol is a sum of two outer products of the pushed
+native fields and has rank at most two. Lower-order drift does
+not alter this bound. It cannot be positive definite when $d\ge3$.
+These are local symbol and averaged covariance statements; neither
+is a proof of exact controllability. $\square$
+
+The new quantitative assertions are `repo-derived` in the ordinary
+proof sense: Lemma 43.1 and Corollary 43.2, the coupling of §45,
+the signed estimate and joint expansion of §46, and the quantitative
+transfers of §47. DEV already supplies the height kernel/mixing,
+exact Doob and conditional Gaussian identities, uniform coefficient
+and tensor facts, qualitative joint path limit, and exact coordinate
+and zero-leaf identifications. Bounded martingale exponential
+estimates, Gaussian bridge couplings, matrix square roots, density
+Taylor expansion and common-part transport are mature methods;
+their required forms have been proved here. No global priority or
+new general probability method is asserted.
+
+DEV's cited ground-state, martingale-limit and abelian-cover
+literature retains only the conditional scope stated in DEV.
+In particular a classical elliptic abelian-cover theorem does not
+directly cover this rank-two operator. No external literature search
+or independent verification of G/C/N/F or those citations is claimed.
+The mathematical deliverable is the displayed ordinary deductions
+from the explicitly retained premises, not empirical evidence,
+formal-kernel evidence or an endorsement of upstream ontology.
+
+The two rates are upper bounds. The dyadic sum of Gaussian maximum
+errors in (45.9) explains the present logarithmic loss; it does not
+prove that loss necessary. Matching lower bounds, optimal logarithms,
+a log-free path rate, and a faster endpoint rate remain outside the
+proved conclusions. Weighted endpoint variation controls entire
+measures, including their first moments; it supplies no pointwise
+kernel or local-density rate. The path estimate is in uniform
+continuous-path transport, not path total variation. A fixed limiting
+parameter requires the separate modulus of Corollary 47.2.
+
+All estimates concern a full winding record on the all-real cover.
+A wrapped endpoint has multiple winding lifts. A continuous wrapped
+path with a specified initial lift has a unique mathematical lift,
+which is a different observation convention and supplies no device
+for acquiring that path. DEV's wrapped compact laws, including the
+actual wrapped zero leaf, retain their separate scope; no new
+quantitative wrapped mixing rate is claimed. The bounded interval,
+original clock, noise intensity, allowed parameter rectangle and
+exact conditioning horizons remain fixed. Constants above do not
+provide free winding observation, survival conditioning, preparation,
+simulation or service resources.
+
+Effective phase rank, topological dimension, local homogeneous heat
+dimension and native current-ray dimension are distinct quantities.
+Whitening a limiting tensor gives mathematical coordinates, not
+physical rotation invariance. No physical spatial dimension,
+selection principle, elliptic physical factor, efficiency, Green-tail,
+Coulomb or binding conclusion follows here. No empirical machine
+learning claim is implied. The original cemetery law, compensated
+finite measure, stipulated stopped phases, Q law and exact terminal
+survivor law have the separate conclusions proved above.
+

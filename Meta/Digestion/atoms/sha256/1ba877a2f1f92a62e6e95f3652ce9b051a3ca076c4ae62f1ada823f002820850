@@ -1,0 +1,107 @@
+**Theorem 74.1 (finite eight-low-label witness).** Define
+
+$$
+\begin{gathered}
+\rho_z=V/c_z,\quad \rho_w=W/c_w,\quad
+ a_0=\alpha\rho_z+\beta\rho_w,\\
+J_\square=\frac14\sum_{\sigma,\upsilon=\pm1}
+ |\ell(1,\sigma,\upsilon)|,\qquad
+J_{\rm ax}=\alpha b_z+\beta a_w,\qquad \gamma=9/10000,\\
+D_* =a_0g_0+\rho_zg_1+\rho_wg_2
+ +2x_G(a_0+\rho_z)+2y_G(a_0+\rho_w)
+ +2|z_G|(\rho_z+\rho_w),\\
+K_*=D_*+\beta\rho_w(2b_w-a_w)_+,\\
+t_* =\max\left\{2\rho_w,
+ \frac{a_0+\rho_z}{1-\sqrt\alpha},\frac{2K_*}{\gamma}\right\}.
+\end{gathered}
+\tag{RC.90}
+$$
+
+For every $t\ge t_*$ put saturated mass $\alpha\rho_z/(2t)$
+at each $z$ axis point, and $\beta\rho_w/(2t)$ at each $w$ axis
+point. Set
+
+$$
+\begin{gathered}
+m=1-a_0/t,\quad d_z=1-\rho_z/t,\quad d_w=1-\rho_w/t,\\
+h_{\sigma\upsilon}=(1,\sigma\sqrt{d_z/m},\upsilon\sqrt{d_w/m}),
+\qquad p_{\sigma\upsilon}=m/4,\quad b_{\sigma\upsilon}=0.
+\end{gathered}
+\tag{RC.91}
+$$
+
+These eight positive supported-nonzero low atoms satisfy (RC.66) with
+normalized contrast at least $\sqrt\alpha$. For every $0\le s\le\sqrt\theta$, the
+single original instrument of §75 built from them has low height
+strictly more than $\gamma/2$ above the layer value (RC.84), and
+hence TV improvement strictly more than $\gamma/4$.
+
+**Proof.** The saturated axes supply exactly $M_2$ and live Gram
+$\operatorname{diag}(a_0/t,\rho_z/t,\rho_w/t)$. Since
+$\alpha d_z+\beta d_w=m$, the four pure points in (RC.91) lie on
+$\mathscr C$ and complete the live Gram. We have
+$0<\rho_z<\rho_w$, $a_0<\rho_w$, and $t\ge2\rho_w$, so all
+residual diagonal entries, masses and square roots are strictly positive.
+Their contrast is
+
+$$
+\sqrt\alpha\,\rho_z/t+
+\sqrt{(1-a_0/t)(1-\rho_z/t)}\ge\sqrt\alpha,
+\tag{RC.92}
+$$
+
+using $\sqrt{(1-x)(1-y)}\ge1-x-y$ for $0\le x,y\le1$ and
+the second threshold in (RC.90).
+
+For the height gap, replacing just the $(-,-)$ corner by its negative
+inside the absolute-value sum gives
+
+$$
+\begin{aligned}
+J_\square-J_{\rm ax}\ge{}&
+(\alpha-\tfrac12)g_0+\tfrac12g_1-\tfrac12g_2
++x_G(1-2\sqrt\alpha)+y_G-z_G>\gamma.
+\end{aligned}
+\tag{RC.93}
+$$
+
+This lower bound does not require guessing the corner's sign. For an
+explicit rational comparison, use
+$\alpha>7/8$, $\sqrt\alpha<1$, and the coarse bounds
+$10^6(g_0,g_1,g_2,x_G,y_G,z_G)$ in
+$(1269,1270)\times(2922,2923)\times(1677,1678)
+\times(2370,2371)\times(2208,2209)\times(-102,-101)$.
+The lower bound is at least
+$[(3/8)1269+1461-839-2371+2208+101]10^{-6}
+=0.001035875>\gamma$. These bounds follow from the complete
+nine-coordinate box, not a rounded source-center identity.
+
+Compare the residual pure height with $J_\square$ term by term.
+After multiplication by $m$, its constant and diagonal coefficients
+change by $a_0g_0/t$, $\rho_zg_1/t$, $\rho_wg_2/t$.
+The linear coefficients contain $\sqrt{md_z}$ and $\sqrt{md_w}$,
+and the cross coefficient contains $\sqrt{d_zd_w}$. The same elementary
+square-root inequality bounds their changes by
+$(a_0+\rho_z)/t$, $(a_0+\rho_w)/t$, and
+$(\rho_z+\rho_w)/t$. The absolute value is 1-Lipschitz; averaging
+gives residual pure height at least $J_\square-D_*/t$.
+The saturated axes contribute
+$\alpha\rho_z b_z/t+d_f-\beta\rho_wa_w/t$.
+For $t\ge2\rho_w$ we have $q_{\rm ax}\le\beta/2$. Subtract
+(RC.84)'s low height and discard the positive $z$ contribution to get
+
+$$
+\text{low height gain}\ge
+J_\square-J_{\rm ax}-K_*/t>\gamma/2.
+\tag{RC.94}
+$$
+
+The last threshold in (RC.90) proves the claim, and §75 realizes all
+constraints together. $\square$
+
+This is an explicit improvement witness, with no assertion of global
+optimality or minimum labels. Its positive residual Gram has rank three;
+it is not a rank-at-most-two fixed-allocation formula. The proof of
+Theorem 73.1 covers all budgets in the layer, independently of this
+large-budget construction.
+

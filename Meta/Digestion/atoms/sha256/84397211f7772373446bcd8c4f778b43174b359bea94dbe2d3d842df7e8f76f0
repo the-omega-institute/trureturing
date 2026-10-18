@@ -1,0 +1,56 @@
+### 定义 54.2（统一 metric-measure 紧性和局部化证书）
+
+称一族 \((X_j,d_j,m_j)\) 满足 \(\operatorname{MMC}(D,C_D,c_-,c_+,Q)\)，如果
+
+\[
+\operatorname{diam}(X_j,d_j)\le D,
+\]
+
+令
+\[
+\rho_j=\min\{d_j(x,y):x\ne y\},
+\]
+并且只在有效离散尺度 \(\rho_j\le r\le D\) 上要求
+\[
+c_-r^Q
+\le m_j(B_{d_j}(x,r))
+\le c_+r^Q,
+\tag{54.1}
+\]
+其中 \(\rho_j\) 是该层的最小非零网格尺度。不能把 (54.1) 要求到 \(r<\rho_j\)，因为有限原子球的质量不会随 \(r\downarrow0\) 消失。若 \(\rho_j\) 不适合统一控制，则改用统一 covering-number 界。
+
+\[
+m_j(B_{d_j}(x,2r))
+\le C_Dm_j(B_{d_j}(x,r)).
+\tag{54.2}
+\]
+
+若只要求子列紧性，可以把 (54.1) 的下界换成统一 covering-number 界。若要排除塌缩，至少需要某个固定 \(r_0>0\) 满足
+
+\[
+\inf_j\inf_{x\in X_j}m_j(B_{d_j}(x,r_0))>0,
+\qquad
+\inf_j\operatorname{diam}(X_j,d_j)>0.
+\tag{54.3}
+\]
+
+定义跳跃半径
+
+\[
+\ell_j
+:=
+\sup\{d_j(x,y):c^{(j)}_{xy}>0\}.
+\tag{54.4}
+\]
+
+称 \(\ell_j\to0\) 为 vanishing-jump 条件。它把有限图形式的非局部边耦合限制到局部极限。若另有统一 \(L^2\)-Poincaré 条件
+
+\[
+\int_B|f-f_B|^2\,dm_j
+\le
+C_Pr^2\mathcal E_j(f;\lambda B),
+\tag{54.5}
+\]
+
+则得到统一的局部紧性控制。
+

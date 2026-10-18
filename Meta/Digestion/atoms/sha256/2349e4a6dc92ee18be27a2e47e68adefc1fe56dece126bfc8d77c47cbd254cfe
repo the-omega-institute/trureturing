@@ -1,0 +1,45 @@
+**Theorem 8.4 (No finite lossless affine realization of $Q_{4\pi}$).**
+Definition 8.1 has no solution in any finite real dimension.
+Consequently its full native operation-menu version has no
+solution either.
+
+**Proof.** Suppose $E$ is injective and $F$ satisfies the
+full-domain one-step identity. Since $T$ is globally lawful,
+induction gives
+
+$$
+E(T^jx)=F^j(E(x))\quad(j=0,1,2,\ldots)
+$$
+
+for every current ray $x$. Put
+
+$$
+\mathcal M_{\rm rat}=
+ \{(k,\alpha,\beta)\in\mathcal M_{ab}:k/H\in\mathbb Q\},
+\qquad S=E(\mathcal M_{\rm rat}).
+$$
+
+This set is nonempty. For $x\in\mathcal M_{\rm rat}$, a finite
+native period $q$ implies
+$F^q(E(x))=E(T^qx)=E(x)$. Thus every point of $S$ is periodic.
+Lemma 8.3 supplies one $N\ge1$ fixing all of $S$.
+Choose an interior height of prime period $p>N$ by Lemma 8.2
+and a ray $x$ there. Then
+
+$$
+E(T^Nx)=F^N(E(x))=E(x).
+$$
+
+Injectivity forces $T^Nx=x$, contradicting least period $p>N$.
+Only finite histories have been used: a finite preparation of
+$x$ and finitely many repetitions of the real command $4\pi$.
+No probability-update matrix or decoder appears in the proof.
+
+Indeed the proof would already work if $E$ merely distinguished
+different points within each of these prime-period cycles.
+For a noninjective equivariant encoder, the same argument
+forces some distinct points on an appropriate such cycle to
+have equal encodings. It does not force an entire $\beta$
+circle to collapse, nor classify all possible encoder fibers.
+$\square$
+

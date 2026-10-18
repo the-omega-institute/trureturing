@@ -1,0 +1,80 @@
+#### Separator and homogeneous truncation
+
+Set \(z=1+b^2\), \(\sigma=12(1+s^2+t^2)\), and
+\[
+\theta_F=\sigma vz/2,\quad\theta_Q=\sigma z/2,\quad
+Q_A=A_G-\theta_cA_H,\quad Q_B=B_G-\theta_cB_H,
+\]
+\[
+c_q=\frac{625}{16\cdot1990656},\qquad
+c_i=\frac{625}{8\cdot6718464}.
+\]
+Define rational polynomials
+\[
+\begin{aligned}
+\mathcal A_c&=zc_qQ_A+c_i^2\{zA_I^2+(3-b^2)B_I^2\},\\
+\mathcal B_c&=zc_qQ_B+2c_i^2zA_IB_I,\\
+\mathcal S_c&=\mathcal A_c+h\mathcal B_c.
+\end{aligned}                                               \tag{57.11}
+\]
+The seed equation gives the exact identity
+\[
+\mathcal S_c=z\{c_q(Q_A+hQ_B)+c_i^2(A_I+hB_I)^2\}.            \tag{57.12}
+\]
+Hence a common zero of the necessary rows makes \(\mathcal S_c=0\).
+The reciprocal factor \(\theta_Q\) has no factor \(v\): it comes from
+properly homogenizing \(G-(\tau/2)H\), where \(H\) has degree one.
+
+Substitute \(b=1-e,s=x-1/5,t=y-2/5\), and write
+\[
+\mathcal P_c=\mathcal A_c+(1+e)\mathcal B_c
+ =\sum p_{ijkm}e^ix^jy^kv^m,\qquad
+\mathcal B_c=\sum q_{ijkm}e^ix^jy^kv^m.
+\]
+Let \(\mathcal P_c^{[d]}\) denote its part homogeneous of degree \(d\)
+in \((e,x,y)\), and define
+\[
+C_{c,d}=\sum_{i+j+k=d,m}|p_{ijkm}|,\qquad
+D_{c,d}=\sum_{i+j+k=d,m}|q_{ijkm}|.
+\]
+These rational polynomials and sums are fully specified by (57.11) and
+(56.4), with no additional coefficient choices. Exact expansion gives
+\[
+C_{c,0}=C_{c,1}=0,\quad C_{c,9}\le1310000,
+\quad C_{c,d}\le2^{23}\ (10\le d\le42),                   \tag{57.13}
+\]
+\[
+(D_{c,0},\ldots,D_{c,5})
+\le(29,300,1680,7034,25000,74000),\qquad
+D_{c,d}\le2^{23}\ (6\le d\le41).                          \tag{57.14}
+\]
+The two inequalities hold componentwise in both charts, and all higher
+degrees vanish. Each is a finite rational coefficient computation:
+expand (57.11), collect exponents, sum absolute values, and compare after
+multiplication by positive common denominators.
+
+The exact seed identity
+\[
+\bigl((1+e)^2-h^2\bigr)(1+b^2)=e^4
+\]
+implies
+\[
+0\le1+e-h=\frac{e^4}{(1+b^2)(1+e+h)}\le e^4/2.             \tag{57.15}
+\]
+For transverse norm \(N=e^2+x^2+y^2\), every degree \(d\ge2\)
+monomial is bounded by \(\rho^{d-2}N\) on (57.10). Therefore
+\[
+\left|\mathcal S_c-\sum_{d=2}^8\mathcal P_c^{[d]}\right|
+\le E N,                                                   \tag{57.16}
+\]
+where a single rational upper bound for both charts is
+\[
+\begin{aligned}
+E={}&1310000\rho^7+\frac{2^{23}\rho^8}{1-\rho}\\
+&+\frac{\rho^2}{2}
+ \left(29+300\rho+1680\rho^2+7034\rho^3+25000\rho^4
+       +74000\rho^5+\frac{2^{23}\rho^6}{1-\rho}\right)\\
+={}&\frac{19851003}{167772160}<\frac18.
+\end{aligned}                                               \tag{57.17}
+\]
+

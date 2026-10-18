@@ -1,0 +1,38 @@
+**Lemma 5.1 (The only leaf with confidence above $a$).** In a two-call
+tree every positive leaf has maximal confidence $M/W\le a$ except
+possibly a leaf consisting, in one certified phase, of a zero edge
+touching the target and a vertex-disjoint one edge. Such a leaf has
+
+$$
+W=\eta c,\qquad M=a^2\eta,\qquad
+M-aW=\delta\eta^2=:D>0.
+\tag{5.1}
+$$
+
+There is at most one such exceptional leaf in a tree. Every $00$
+leaf and every zero-read return has confidence strictly below $a$.
+
+Proof. The tables in Lemmas 3.3–3.5 exhaust the geometries before
+dominated cases are omitted. For same-parity $00$ leaves,
+$M=a/2$ and $W=z,u,v>1/2$, so $M/W<a$. For opposite-parity
+$00$, $M\le a^2/2$ and $W=c$, and
+$a^2/(2c)<a$ because $2c>1>a$. The zero-read maximum is $a/2<a$.
+
+The one-containing leaves have confidence $1/2$ or $a$ except
+the pair $(\eta c,a^2\eta)$ in (3.5) or the first row of (3.6).
+These two descriptions are exactly the stated zero-edge/one-edge
+event in its two acquisition orders. Its excess is
+
+$$
+\eta(a^2-ac)=a\eta(a-c)
+=ab\eta\delta=\delta\eta^2>0,
+\tag{5.2}
+$$
+
+using (3.7). At a type-$I$ root it can occur only on first zero,
+then a disjoint one edge. At a type-$D$ root it can occur only
+on first one, then a disjoint touching zero edge. The other
+first-reply branch cannot have an exception of its own for
+that root type. Opposite parity cannot supply two active edges
+in a single phase. Thus there is at most one. $\square$
+

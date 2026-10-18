@@ -1,0 +1,108 @@
+**Lemma 8.4 (one dependent path and its centered complete-word expansion).** Start $Y_{-1}$ with row $\tau$, and use alternately $A,B,A,B,\ldots$ to obtain
+
+$$
+Y_{-1},X_0,Y_0,X_1,Y_1,X_2,Y_2,\ldots.
+$$
+
+All $X_i$ have marginal $\pi$, and all $Y_i$ have marginal $\tau$, by (8.3). Put
+
+$$
+\begin{gathered}
+L=\frac35,\quad H=\frac23,\quad
+U_i=1-u(X_i)\in[L,H],\quad V_i=v(Y_i),\\
+s=\mathbb E V_i\in[a,b],\quad\zeta_i=V_i-s,\quad
+m=\mathbb E U_0,\quad
+M_j=\mathbb E\prod_{i=0}^{j-1}U_i\ (j\ge1).
+\end{gathered}
+\tag{8.10}
+$$
+
+Here $V_{-1}=v(Y_{-1})$ and $\zeta_{-1}=V_{-1}-s$ have the same conventions. For $j=0,1,2,3$ exact generation on this common path gives
+
+$$
+\begin{aligned}
+\overline Q(w_{j,1})
+ &=\mathbb E\left[
+ \left(\prod_{i=0}^{j}U_i\right)
+ \left(\prod_{i=0}^{j-1}V_i\right)(1-V_j)\right],\\
+\overline W(E_\beta)
+ &=1-s+\mathbb E[V_{-1}U_0(1-V_0)].
+\end{aligned}
+\tag{8.11}
+$$
+
+The empty product for $j=0$ is one. In particular these identities do not require independent path coordinates.
+
+Proof. Each p beta contributes $U_i$ and kernel $B$, each suspended alpha contributes $V_i$ and kernel $A$, and the final suspended beta contributes $1-V_j$. Summing the finite path weights proves the first identity for the entire complete word $(\beta\alpha)^j\beta\beta$. Starting at suspension, $E_\beta$ is the disjoint union of immediate beta and alpha-beta-beta. Its latter path has factors $V_{-1}U_0(1-V_0)$ and acquired kernels $A,B$. This proves the second identity. The continuation path after a stopping word is only an analysis extension of its finite acquired-kernel path measure. It asserts no additional actual operation after completion. ∎
+
+The following error estimates are embedded uses of bounded-range covariance and Cauchy–Schwarz. If a real random variable lies in an interval of width $d$, its variance is at most $d^2/4$: its second moment about the interval midpoint is at most $d^2/4$, and the mean minimizes that centered second moment. Thus $\mathbb E\zeta_i=0$, $\mathbb E\zeta_i^2\le t^2/4$ and $|\zeta_i|\le t$. If $Z$ is any product of $n$ of the $U$ coordinates, then $Z\in[L^n,H^n]$ and
+
+$$
+|\mathbb E[Z\zeta_i]|
+=|\operatorname{Cov}(Z,V_i)|
+\le\frac{H^n-L^n}{4}t.
+\tag{8.12}
+$$
+
+For any $k\ge2$, bounding $k-2$ factors by $t$ and applying Cauchy–Schwarz to two remaining factors gives
+
+$$
+\mathbb E|\zeta_{i_1}\cdots\zeta_{i_k}|\le\frac{t^k}{4},
+\qquad
+\left|\mathbb E[Z\zeta_{i_1}\cdots\zeta_{i_k}]\right|
+\le\frac{H^n}{4}t^k.
+\tag{8.13}
+$$
+
+Dependence, repeated labels and periodic paths are allowed in these estimates.
+
+Expand every $V_i=s+\zeta_i$ in (8.11). The sums of absolute coefficients at each positive degree in the centered variables, before multiplication by $Z$, have the following bounds on $s\in[1/3,2/5]$:
+
+$$
+\begin{array}{c|cccc}
+\text{factor}&\text{degree 1}&\text{degree 2}&\text{degree 3}&\text{degree 4}\\ \hline
+V_{-1}(1-V_0)&1&1&0&0\\
+1-V_0&1&0&0&0\\
+V_0(1-V_1)&1&1&0&0\\
+V_0V_1(1-V_2)&16/25&7/5&1&0\\
+V_0V_1V_2(1-V_3)&44/125&6/5&9/5&1
+\end{array}
+\tag{8.14}
+$$
+
+For completeness, for the factor with $j$ initial $V$ entries, the degree-$k$ coefficient sum for $1\le k\le j$ is
+
+$$
+\binom jk s^{j-k}(1-s)+\binom j{k-1}s^{j-k+1},
+$$
+
+and the degree-$j+1$ sum is one. For $j=2$ these sums are $2s-s^2,1+s,1$; for $j=3$ they are $3s^2-2s^3,3s,1+2s,1$. Their maxima on the stated interval give (8.14). The first row follows directly from the coefficients $1-s,-s,-1$.
+
+Combining (8.12)–(8.14) gives errors $\eta_\beta,\eta_0,\ldots,\eta_3$ with
+
+$$
+\begin{aligned}
+\overline W(E_\beta)&=1-s+s(1-s)m+\eta_\beta,
+ &|\eta_\beta|&\le b(t),\\
+\overline Q(w_{j,1})&=(1-s)s^jM_{j+1}+\eta_j,
+ &|\eta_j|&\le k_j(t),
+\end{aligned}
+\tag{8.15}
+$$
+
+where every coefficient is explicit:
+
+$$
+\begin{aligned}
+b(t)&=\frac{t}{60}+\frac{t^2}{6},\\
+k_0(t)&=\frac{t}{60},\\
+k_1(t)&=\frac{19t}{900}+\frac{t^2}{9},\\
+k_2(t)&=\frac{1084t}{84375}+\frac{14t^2}{135}+\frac{2t^3}{27},\\
+k_3(t)&=\frac{37829t}{6328125}+\frac{8t^2}{135}
+ +\frac{4t^3}{45}+\frac{4t^4}{81}.
+\end{aligned}
+\tag{8.16}
+$$
+
+For example, the linear coefficient of $k_j$ is $(H^{j+1}-L^{j+1})/4$ times the degree-one entry in (8.14); all higher coefficients are $H^{j+1}/4$ times their entries. The first row uses $n=1$, giving $(H-L)t/4+Ht^2/4=b(t)$. This accounts for every term without replacing a dependent expectation by a product of expectations.
+

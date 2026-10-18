@@ -1,0 +1,16 @@
+## Relation to the CFMP conjecture
+
+Costantino--Frigerio--Martelli--Petronio, Conjecture 0.8
+(arXiv:math/0402339; Conjecture 1.8 in the published version), asks for a geometric realization of an ideal
+triangulation of a compact 3-manifold whose edge valences are at least six by
+hyperbolic truncated (partially truncated) tetrahedra. The theorem above is a strict hyper-ideal subcase:
+it does not claim the full minimum-six conjecture, arbitrary degree-eight
+packets, or the partially truncated boundary cases. Zhao's 2026 theorem for
+minimum valence nine does not cover the degree-eight edges here. A realization
+of a different subdivision would not alone prove that this prescribed
+triangulation is geometric. No novelty claim is made for the compact-box
+co-volume argument or the underlying analytic comparison. Relative to the
+repository baseline, Section 16 has four low edges per tetrahedron, while
+Section 26.3 has high-edge thresholds 16 and 17; neither directly covers
+the three-edge packets with degree-12 high edges considered here.
+

@@ -1,0 +1,27 @@
+### 80.1. Statement and exact four-fibre consequence
+
+Let k >= 2. For every f=1,...,k, let (a_f0,a_f1) be an orthonormal pair in an arbitrary common finite-dimensional complex Hilbert space A, and let (b_f0,b_f1) be an orthonormal basis of a common two-dimensional Hilbert space B. Define
+
+    x_fi = a_fi tensor b_fi,
+    K_(fi,gj) = <x_fi,x_gj>.
+
+Let T have diagonal 2-by-2 blocks I_2 and every off-diagonal block J_2/2. There is an explicit product-dependent orthogonal projection P such that
+
+    Tr P(K-T) <= -r,
+    ||K-T||_1 >= 2r,
+    r = k - dim_R span{N_1,...,N_k} >= k-3,             (1)
+
+where N_f are the traceless Hermitian qubit involutions defined below. In particular, for k=4,
+
+    ||K-T||_1 >= 2.                                    (2)
+
+This holds with arbitrary complex, nonconjugate A records and no bound on their dimension. The only resource restriction is that the B records all lie in one common two-dimensional space. The parties can be interchanged.
+
+For the calibrated physical product channels determined by these records, the unhalved arbitrary-reference diamond error satisfies
+
+    delta >= r/k >= (k-3)/k  (k>=4).                    (3)
+
+At k=4 the minimum over this entire calibrated class is exactly 1/4: the tetrahedral-marker construction of section 79 attains 1/4 with local environment dimensions (4,2). Thus (2) supplies a matching lower bound for every calibrated (arbitrary,2) product, not only conjugate-paired or fibre-independent marker competitors. It does not determine the unrestricted two-sided environment optimum.
+
+A physical scope extension is valid: the party with Kraus rank two must be exactly fibre-calibrated, but the other party may initially have arbitrary output leakage. Calibrating only the other party does not increase the error and leaves the rank-two party unchanged. Section 80.5 gives this comparison. No claim is made here for an arbitrary uncalibrated rank-two party.
+

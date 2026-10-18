@@ -1,0 +1,38 @@
+**Theorem 13.2 (whole-group weighted type identity).** With these
+definitions, exactly
+
+$$
+\mathbb E_\sigma Z_p(\mathcal N^\sigma;\boldsymbol w)
+=\frac{\prod_i\operatorname{Mult}(m,p_i)}
+       {\prod_{e\in E}\operatorname{Mult}(m,\pi_e)}
+ \prod_i\prod_{a\in\operatorname{supp}p_i}
+       w_i(x_i(a))^{mp_i(a)}.
+\tag{COK.65}
+$$
+
+Each denominator is the multinomial of one whole group law, not
+the product of its individual seed multinomials. Arbitrary zeros
+outside $R_i^+$ and arbitrary correlations within $w_i$ are allowed.
+
+Proof. There are $\operatorname{Mult}(m,p_i)$ labeled local lists
+of type $p_i$. Fix all the lists. For $e=(j,i)$, their edge counts
+match. The number of permutations matching every whole value $b$
+is $\prod_b(m\pi_e(b))!$, out of $m!$. The matching probability
+is therefore $1/\operatorname{Mult}(m,\pi_e)$. For these fixed
+lists, different edges choose their permutations independently,
+so these probabilities multiply. This independence is only between
+public edge permutations conditional on fixed lists; no source,
+seed, incoming group, or solution coordinates are assumed independent.
+
+If all edges match, assign each copied owner its value from its own
+local list. Incoming values agree by construction and every local
+configuration is actual. Conversely an actual seed assignment
+determines all local lists. Two edge-consistent list collections
+cannot produce the same actual tuple, because the tuple's actual
+owner replies recover every copied seed and hence every incoming
+entry. This proves a bijection, with no hidden multiplicity from
+noninjective nonowner tables. Each such list collection has the
+fixed weight on the right of (COK.65). Summing over the lists proves
+the identity. Every copied joint potential occurs exactly once.
+$\square$
+

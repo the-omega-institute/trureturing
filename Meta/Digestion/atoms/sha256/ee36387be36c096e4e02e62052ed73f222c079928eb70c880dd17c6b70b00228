@@ -1,0 +1,36 @@
+**Definition 1.4 (complete competitors and their original pressure).**
+For $d,n\ge1$, let $V=[n]\times W_d$, $m_d=2^d-1$ and
+$G_q=\Gamma_q[S_d]$. A complete native template chooses at every
+$v=(i,q)\in V$ a full-factor constant in $G_q$, or an equation
+
+$$
+\Gamma_q(x_i)=\delta_v(r_{x_j}(a)),\qquad
+(j,a)\in V,\quad \delta_v:\mathcal A\longrightarrow G_q.
+\tag{SIR.6}
+$$
+
+Its simultaneous solution set is $C_\Theta\subseteq S_d^n$.
+Self donors, off-target queries, cycles and all correlations are
+allowed. A nonempty relation is admissible when such witnesses
+hold on it for every target. [NDR, Theorem 2.2][NDR] embeds every
+admissible relation in a complete solution set on the same coordinates.
+It preserves integral and fractional cover optima and nonnegative mass
+maxima. Denote those cover optima by $K_d(n),Z_d(n)$.
+
+For arbitrary nonnegative whole-block weights $w_i:S_d\to[0,\infty)$
+write
+
+$$
+\begin{aligned}
+A_n^{(d)}(w_1,\ldots,w_n)
+ &=\max_\Theta\sum_{x\in C_\Theta}\prod_{i=1}^n w_i(x_i),\\
+\beta_d(w)&=\sup_{n\ge1}
+ A_n^{(d)}(w,\ldots,w)^{1/n}.
+\end{aligned}
+\tag{SIR.7}
+$$
+
+The analytical product across original blocks imposes no independence
+on a competing relation. Each $w_i$ is an arbitrary joint function
+of its whole actual block, including all its constructor coordinates.
+

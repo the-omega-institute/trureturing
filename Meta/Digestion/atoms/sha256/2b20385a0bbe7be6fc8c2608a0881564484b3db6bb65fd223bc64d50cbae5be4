@@ -1,0 +1,31 @@
+**Definition 1.2 (Actual endpoints and increasing roles).** Put
+
+$$
+h_i(w)=\operatorname{highIndicator}(w_i),\quad
+\ell_i(w)=\operatorname{lowIndicator}(w_i),\quad
+t_i(w)=h_i(w)\ell_i(w),
+$$
+
+and write
+
+$$
+H_i=\mathbb E_\mu h_i=\mu_i(101)+\mu_i(001),\quad
+L_i=\mathbb E_\mu\ell_i=\mu_i(101)+\mu_i(100),\quad
+T_i=\mathbb E_\mu t_i=\mu_i(101).
+$$
+
+Thus the actual same-window joint mass is $T_i$. Define $\widehat h_i=h_i-H_i$, $\widehat\ell_i=\ell_i-L_i$, and $\widehat t_i=t_i-T_i$. The role set is the original
+
+$$
+\Theta_n=\operatorname{Roles}(n)=\{(p,q,r)\in I^3:p<q<r\}.
+$$
+
+For $\tau=(p,q,r)$ let $C_\tau(w)=\operatorname{classValue}(\tau,w)$: its value is 1 if $h_p\ell_q=1$, otherwise 2 if $h_q\ell_r=1$, otherwise 0. In particular,
+
+$$
+C_{pqr}=h_p\ell_q+2(1-h_p\ell_q)h_q\ell_r
+=h_p\ell_q+2h_q\ell_r-2h_pt_q\ell_r.                 \tag{1}
+$$
+
+The alphabet, means, and (1) are the native identities supplied by [HeterogeneousTeacherSeparation][HTS], respectively `high_indicator_mean`, `low_indicator_mean`, `joint_endpoint_mean`, and `class_value_formula`; the carrier and role order are those of [LegalPriorityTeacher][LPT]. They are also the objects of [FIB ATOM Machine Learning Whitebox][WB], §58.1.
+

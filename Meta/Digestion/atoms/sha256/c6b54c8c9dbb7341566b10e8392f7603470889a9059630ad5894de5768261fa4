@@ -1,0 +1,37 @@
+## 127. Independent sources and single-copy certification
+
+**Correspondence C-125.4 (Certification does not manufacture the program).**
+The four-corner source result `AURIC_FIB_ATOM_FOUR_CORNER_COHERENCE_AND_SINGLE_COPY_CERTIFICATION.md`,
+§§116 and 120–122 of the pinned source snapshot, uses the same five-mode
+carrier and a different source family. In C-116.1,
+$\rho_\pm$ and $\bar\rho$ are five-mode states; in C-116.2 the exchangeable
+source $\Gamma_N=\tfrac12\rho_+^{\otimes N}+\tfrac12\rho_-^{\otimes N}$ is fully
+separable across copies and has the same one-copy marginal and all bottom
+indicator product probabilities as $\bar\rho^{\otimes N}$, while the actual
+two-copy projection distinguishes them. Equal marginals and indicator laws
+therefore do not certify iid copies or erase source correlations. This family
+uses separability on the bottom $\mathbb C_A^2\mid\mathbb C_B^2$ cut, while
+multi-copy separability uses $\mathcal H_5^{(1)}\mid\cdots\mid\mathcal H_5^{(N)}$;
+neither cut is the two five-dimensional halves of the C-121 program carrier.
+C-120.1's fixed-diagonal coherent family has the linear readouts
+$a(\sigma_\gamma)=\gamma$, $b(\sigma_\gamma)=1$ and concurrence $\gamma$; it is
+a certification family, not the U4 program family $\rho_{t,\eta}(X)$ on
+$(\mathbb C^5\otimes\mathbb C^5)^{\otimes m}$.
+
+C-121.1 makes the operational distinction explicit: one actual five-mode source
+copy is consumed in each round, the setting is independent of the current
+source conditional on the observed history, and iid is not assumed. Its actual
+effects are $E_{j,+}=(P_{\mathrm b}+K_j)/2$,
+$E_{j,-}=(P_{\mathrm b}-K_j)/2$ and
+$E_{j,0}=I_5-P_{\mathrm b}$, with a fresh setting $J_n\in\{1,2\}$ chosen
+independently conditional on that history. The
+nonnegative-supermartingale result C-121.3 then gives the anytime bound only
+under its history-conditional separability contract and its actual PVM. C-122.1
+and C-122.2 add a different supplier assumption—iid copies of the specified
+coherent family with a calibrated phase—and derive an expected stopping-cost
+bound. “Single-copy” means one consumed source per round; it does not mean that
+one observed sample certifies an entire experiment. These results provide
+certification and source-model diagnostics when their contracts are met. They
+do not produce the U4 tensor copies, the joint 25-dimensional measurement, or
+the channel controls required by C-121–C-124.
+

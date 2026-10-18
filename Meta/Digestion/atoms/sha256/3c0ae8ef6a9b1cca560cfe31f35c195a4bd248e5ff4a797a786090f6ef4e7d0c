@@ -1,0 +1,15 @@
+**Lemma 2.1 (Inherited tree and source-section interface).** A lawful total-cap-$k$ rule has a measurable representation $u\mapsto T(u)$ by a countable discrete space $\mathcal T_k$ of finite ordered binary read trees of height at most $k$. Read nodes have integer addresses. Terminals have labels in $\mathcal A\cup\{\bot\}$ and retain their exact paid depths. The representation preserves $Z$ and the actual read sequence, while capping every formal binary branch. A consistent terminal path with replies $x_i$ and successive addresses $t_i$ has source section exactly $\{X_{t_i}=x_i:1\le i\le n\}$.
+
+Proof. Replace numerical finite internal waits by fixed finite waits, retaining finite events and indefinite internal continuation as different event types. At a formal record of length $k$, replace a further read request by internal nonreturn without that call, keeping a return or an existing nonreturn. No actual capped execution reaches a suppressed read request. A finite number of finite waits remains finite; thus return, output, count and the read sequence are unchanged.
+
+At fixed $u$, unfold the resulting semantic choices. A read has two ordered children, one for each binary reply; a finite return or internal nonreturn is a terminal. There is no read at depth $k$, and at most $2^k-1$ read nodes if $k\ge1$. A repeated address is still a distinct paid node. A terminal's depth is its actual $N$, also when its label is $\bot$.
+
+There are finitely many bounded-height shapes and terminal-label patterns, and a finite integer tuple for each shape, so $\mathcal T_k$ is countable. At any potential node the preceding record $r(u)$ has countable range. For a measurable action condition $F(u,r)$, evaluation at that record is measurable because its event is
+
+$$
+\bigcup_r\bigl(\{u:r(u)=r\}\cap\{u:F(u,r)\}\bigr).
+\tag{2.1}
+$$
+
+Induction through the finitely many potential positions proves measurability of $T(u)$; absent positions may receive dummy labels. Finally, at fixed seed, the replies on a consistent path determine all its choices and finite versus indefinite events. Internal waiting adds no source condition, giving the cylinder assertion. For permitted completion versions choose measurable versions together over the countably many records; the resulting null changes leave the integrated laws unchanged. This is the semantic interface of Original Theorems 12.2–12.3, also used by Stopping and Two-read. It does not decide internal divergence of arbitrary code. $\square$
+

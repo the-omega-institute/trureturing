@@ -1,0 +1,35 @@
+**Definition 2.3 (the fixed complete forgotten channel).** For every
+complex $A\in M_5$, write $A_V=E^\dagger AE$ and define
+
+$$
+\begin{aligned}
+\widehat\Phi_*^L(A)&=
+ E(DA_VD^\dagger+TA_VT^\dagger+SA_VS^\dagger)E^\dagger,\\
+\widehat\Phi_{*,\ell}^f(A)(dt)&=
+ g(t)\left[w_\ell\operatorname{tr}(MA_V)
+ +\mathbf1_{\ell=2}\operatorname{tr}(Q_5A)\right]dt\,P_f.
+\end{aligned}
+\tag{IR.10}
+$$
+
+Every extra-sector map is zero. Its original completion kills all
+$V$–$V^\perp$ cross operators and has no live complement output.
+Kraus conjugations and positive trace functionals prove CP on the full
+complex algebra, also at every passive reference amplification.
+The identities $\sum_\ell w_\ell=1$, $\int_0^1g=1$ and (IR.9)
+prove TP. On a joint input a trace branch retains its conditional
+reference operator, rather than replacing it by an unconditional state.
+
+CG identifies, conditionally on its certificate,
+
+$$
+\mathcal E(\widehat\Phi_*)=\mathcal E_*=F^{\rm src}(\mathbf x_*),
+\qquad
+0.14817810291080132013<\mathcal E_*<0.14817810291080132014.
+\tag{IR.11}
+$$
+
+No uniqueness of the entire optimizing channel is inferred. The resource
+problem here fixes (IR.10) itself. Equal canonical errors alone do not
+permit substituting another optimizer.
+

@@ -1,0 +1,24 @@
+**Theorem 76.1 (Atomic resource witnesses have original-target TV one).**
+For the selected families (72.6), (73.4) and the reused family (70.9), with
+their tape points in $B_1$ as above, every actual source satisfies
+
+$$
+\operatorname{TV}(\lambda_x,\mu_x)=1,
+\tag{76.1}
+$$
+
+where $\mu_x$ is the unchanged nonatomic original target of Theorem 67.5.
+Consequently none of these resource witnesses is a cap-$\eta$ preparation
+for those original targets at any $\eta<1$.
+
+**Proof.** Let $H\subset B_1$ be the union of the countably many marked points
+and the two-point supports used in (72.6) and (70.9). This is a countable
+Borel set. Each selected law in question is a finite point mixture supported
+on $H$, so $\lambda_x(H)=1$. Every original target $\mu_x$ of (67.18) is
+nonatomic, hence assigns mass zero to each singleton and therefore to $H$.
+The event $H$ gives TV at least one, and TV between probabilities is at most
+one on the event-supremum normalization. This proves equality. The original
+consumer still returns unknown on all these selected tapes, whereas the
+original target problem retains its specified positive-proposal row.
+$\square$
+

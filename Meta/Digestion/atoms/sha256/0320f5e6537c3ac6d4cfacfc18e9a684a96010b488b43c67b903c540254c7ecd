@@ -1,0 +1,29 @@
+## 441. A high axis and two high transverse labels
+
+Suppose a genuine frame (r,p,q,o,p,q) has r,p,q>=s>2. The other
+axis o is arbitrary above one. Let theta=theta_r and S=beta_p+beta_q.
+Put
+
+    K=(sqrt(p^2-1)+sqrt(q^2-1))/(p+q),
+    lambda=K*sqrt((r-1)/(r+1)), t=cot(theta/2)>0.
+
+The exact response is S=2*atan(lambda*t). Moreover
+
+    K>=sqrt(1-1/s^2),
+    lambda>=(s-1)/s>1/2.                         (441.1)
+
+We claim S>atan(t). If S>=pi/2 this is immediate. Otherwise S is
+in (0,pi/2), its tangent denominator is positive, and
+
+    tan(S)=2*lambda*t/(1-lambda^2*t^2)>t.
+
+Indeed 2*lambda>1 and the denominator is positive and at most one.
+Strict monotonicity of tangent on (0,pi/2) proves the claim. Since
+theta+2*atan(t)=pi, it follows that
+
+    theta_r+2*beta_p+2*beta_q>pi.                  (441.2)
+
+These are five original high slots. The sixth slot is nonnegative
+and may itself be high. This lemma therefore covers both a three-high
+frame with its low label axial and a frame with all four labels high.
+

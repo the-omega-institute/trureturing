@@ -1,0 +1,27 @@
+### 58.3 One common physical attainer and its full diamond norm
+
+Put k=sqrt(t)-t>=0, a=t+k/3=(2t+sqrt(t))/3. Since 0<=t<=sqrt(t)<=1, a lies in [0,1]. The two-branch physical channel above has encoded action
+
+    F_a(Z)=a VZV*+(1-a)Tr(Z)|00><00|.
+
+Its difference from the target has population mismatch d=a-t=k/3 and coherence mismatch e=sqrt(t)-a=2k/3. In the code basis, Delta=T_t-F_a acts by
+
+    Delta(|0><0|)=0,
+    Delta(|1><1|)=d(|00><00|-|11><11|),
+    Delta(|0><1|)=e|00><11|,
+    Delta(|1><0|)=e|11><00|.
+
+Let an arbitrary normalized pure input with any reference be |0>u+|1>v, where ||u||²=1-q, ||v||²=q and 0<=q<=1. Its output difference is the sum of the positive rank-one term d|00><00| tensor |v><v| and an operator supported on the orthogonal vectors |00>u, |11>v. The latter has matrix
+
+    [[0,e sqrt(q(1-q))],[e sqrt(q(1-q)),-dq]]
+
+in their normalized basis, with the zero-vector endpoints interpreted by continuity. Its trace norm is sqrt(d²q²+4e²q(1-q)). The triangle inequality therefore gives
+
+    ||(Delta tensor id)(|Psi><Psi|)||_1
+      <=dq+sqrt(d²q²+4e²q(1-q))
+      =(k/3)[q+sqrt(16q-15q²)] <= 8k/9.
+
+The final inequality follows by squaring the nonnegative right side of sqrt(16q-15q²)<=8/3-q: the difference of the two squares is 16(q-2/3)². Equality occurs at q=2/3, with u and v orthogonal. In that case the positive rank-one term is orthogonal to the two-dimensional block, so the triangle inequality is also equality. This is exactly the reference input Omega used above.
+
+Mixed density inputs follow by convexity. To cover arbitrary trace-class operator inputs in the diamond norm, first use the Jordan decomposition for Hermitian inputs. For a general operator Z, add a reference qubit and use the Hermitian block operator (1/2)[[0,Z],[Z*,0]], whose trace norm is ||Z||_1 and whose image has trace norm ||(Delta tensor id)(Z)||_1. Since Delta preserves Hermiticity, the density-input bound thus applies to all operators and arbitrary finite references. This proves the exact diamond norm and attainment.
+

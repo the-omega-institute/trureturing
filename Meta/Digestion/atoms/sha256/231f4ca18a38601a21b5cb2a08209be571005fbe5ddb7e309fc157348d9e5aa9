@@ -1,0 +1,24 @@
+**Definition 2.3 (the fixed whole-complex channel).** On any complex
+$A\in M_5(\mathbb C)$, with $A_V=E^\dagger AE$, set
+
+$$
+\begin{aligned}
+\widehat\Phi_*^L(A)
+ &=E(DA_VD^\dagger+TA_VT^\dagger+SA_VS^\dagger)E^\dagger,\\
+\widehat\Phi_{*,\ell}^f(A)(dt)
+ &=g(t)\left[w_\ell\operatorname{tr}(MA_V)
+ +\mathbf1_{\ell=2}\operatorname{tr}(QA)\right]dt\,P_f.
+\end{aligned}
+\tag{RE.10}
+$$
+
+Every additional output-sector map is zero. Both compressing to $V$
+and the $Q$ trace kill all $V$–$V^\perp$ cross operators. The five-mode
+completion, including this cross-support action, is part of the fixed
+channel. Since $g\geq0$, $\int_0^1g=1$ and $\sum_\ell w_\ell=1$,
+Kraus conjugations and positive trace functionals together with (RE.9)
+prove CP and total TP for (RE.10), at every reference amplification.
+The conditional reference operators of the trace branches must be kept;
+they are not replaced by unconditional reference marginals. Fixed common
+metadata are carried identically in every output sector.
+

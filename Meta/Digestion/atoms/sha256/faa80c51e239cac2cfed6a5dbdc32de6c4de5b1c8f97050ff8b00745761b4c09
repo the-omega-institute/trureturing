@@ -1,0 +1,40 @@
+**Convention 4.2 (the finite contraction).** The common CPTP output operation
+$\mathcal C$ of CG17 retains the supported live compression, sends the trace
+of the entire canonical failure register to a scalar failure flag, and sends
+all remaining mass to an other flag. Live-complement cross terms are
+discarded by that operation. It counts every mode, exact time, stopped
+support and singular measure in the failure flag, and every abort, rejection
+and live-complement mass in other. It is a necessary test of (ZG.12).
+
+Using the unnormalized output-input convention
+$J_\Lambda=\sum_{i,j}\Lambda(|i\rangle\langle j|)\otimes|i\rangle\langle j|$,
+ALL finite candidates of CG.155 are triples with
+
+$$
+\begin{aligned}
+&J_\Lambda,G_f,G_o\succeq0,
+\qquad \operatorname{Tr}_{\rm out}J_\Lambda+G_f^T+G_o^T=I_3,\\
+&\Theta(A)=(\Lambda(A),\operatorname{tr}(G_fA),\operatorname{tr}(G_oA)),\\
+&E_c(\Theta)=\max_{y,U}\frac12\left(
+ \|UB_yU^\dagger-\Lambda(U\rho_yU^\dagger)\|_1
+ +\left|1-s_y-\operatorname{tr}(G_fU\rho_yU^\dagger)\right|
+ +\operatorname{tr}(G_oU\rho_yU^\dagger)\right).
+\end{aligned}
+\tag{ZG.15}
+$$
+
+The budget is a whole-complex-algebra CP/TP condition. In particular,
+$\operatorname{Tr}_{\rm out}J_\Lambda=G_L^T$; transposes cannot be dropped
+for arbitrary complex effects. For an original channel, contractivity gives
+
+$$
+E(\Phi)\geq E_c(\mathcal C\Phi),
+\tag{ZG.16}
+$$
+
+and the contraction leaves its supported live map unchanged. A lower bound
+proved for ALL zero-transfer triples therefore transfers in the displayed
+direction. No arbitrary finite optimizer is presumed to lift to an optimal
+full exact-time channel. The full proof in §8 also works directly without
+performing this contraction.
+

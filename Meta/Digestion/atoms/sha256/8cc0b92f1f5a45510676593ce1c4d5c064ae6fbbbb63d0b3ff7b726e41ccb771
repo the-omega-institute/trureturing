@@ -1,0 +1,11 @@
+## 10. A decidable synchronous family of complete acquired inputs
+
+This extension decides the entire-row question of Definition 9.1 on a
+recognizable family of coupled histories. It keeps the original source,
+original cuts, full old row, endpoint guards and paid contract of §1.
+Sections 2–3 supply the original-prefix/service bridge and the guarded
+source representation. Sections 4–8 keep their own orbit and representation
+results; none is a new conclusion of this extension. The new decision
+uses a relation of **complete-row disagreement** on exact feasible tuples.
+It does not use finite source samples or assume independent coordinates.
+

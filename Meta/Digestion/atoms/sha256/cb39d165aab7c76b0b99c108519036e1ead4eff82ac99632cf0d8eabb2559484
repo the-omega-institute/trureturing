@@ -1,0 +1,36 @@
+**Assumption 1.1 (causal reference, whole rows and stationary access).**
+Use the native source and complete-row semantics of [NAR, Definitions
+1.1--1.2][NAR], and the acquire, export and discard conditions of [NAR,
+Assumptions 11.1 and 13.1][NAR]. Specialize [NAR, Definition 11.4][NAR] to $P=\varnothing$, $D=1$, public
+$H\ge0$, $q=H+1$, and the actual independent-age sources
+
+$$
+X_{a_0,a_1}=\langle T_{a_0},T_{q+a_1}\rangle,
+\qquad (a_0,a_1)\in\{0,\ldots,H\}^2,
+\qquad T_n=\rho^n\alpha.
+\tag{NARC.1.1}
+$$
+
+The original offsets are zero and $q$; they are not renumbered after a cut.
+The initial complete $P$ row is genuinely acquired. From its literal
+left subtree the encoder computes and retains exactly $E=a_0$, before
+the future cut and lag are known, and discards the old row. Every other
+source-bearing datum is inaccessible after that discard. The supplied
+right clock $c(T_n)=n$ in [NAR, (NAR.10.11) and (NAR.13.9)][NAR] computes this code
+from acquired data; it is not an additional source port.
+
+Fix publicly $\lambda_0\in\{0,1\}$, requiring $\ell\ge\lambda_0$;
+these are respectively nonnegative and strictly positive lags. The later
+complete row is genuinely acquired from this same fixed source after
+its own $\ell$ homomorphic substitutions. Permitted future cuts are
+$\varnothing,\{L\},\{R\}$, precisely the noncovering depth-one cuts.
+After this capture, a deterministic decoder may query any finite literal
+word on the stationary current tree. The new port has no updates,
+subtree, age, origin or epoch oracle. Every submitted word costs one
+chronological call, even the empty word. The peak is the maximum length
+of a submitted whole-tree word, with value zero if none is submitted.
+Correctness is required on every compatible history, with no source
+distribution. Acquisition, parsing, local work, address construction,
+retained representation, workspace and physical time are separate
+quantities.
+

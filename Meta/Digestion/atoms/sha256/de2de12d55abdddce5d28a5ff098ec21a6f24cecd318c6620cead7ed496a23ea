@@ -1,0 +1,91 @@
+**Theorem 6.1 (deciding saturation of the joint bound).** At fixed
+$d\ge1$ and fixed nonzero nonnegative rational $w$, whether
+$\Omega_d(w)=J_d(w)$ is decidable by a finite real-algebraic
+feasibility problem. If equality fails, then $\Omega_d(w)<J_d(w)$,
+and there is an effective search terminating with a rational
+$C$ and rational conditional certificate such that
+
+$$
+\Omega_d(w)<C<J_d(w).
+\tag{COK.38}
+$$
+
+This decides equality of two finite relaxations, not equality of
+native pressure with either one.
+
+Proof. Enumerate all nonempty range-feasible $P\subseteq F$.
+Each $\kappa_w(P)^2$ is rational. Their finite maximum is
+$J_d(w)^2>0$, so equality of a given squared norm to the maximum
+is exactly testable. Enumerate each decoration $\eta$ and each $P$
+attaining this squared maximum.
+
+For each pair introduce variables $p_s$, $s\in R_\eta(w)$, with
+$p_s\ge0$ and $\sum_sp_s=1$. All marginal probabilities below are
+linear expressions in these variables. Impose
+
+$$
+p_X(x)=
+\begin{cases}
+w(x)b_{Y_P(x)}(P)/J_d(w)^2,&x\in P,\\
+0,&x\notin P.
+\end{cases}
+\tag{COK.39}
+$$
+
+The positive right sides make $P$ exactly the support of $X$.
+For the functional requirement $O\to X$ impose
+
+$$
+p_s p_t=0
+\quad\text{whenever }O(s)=O(t)\text{ and }x(s)\ne x(t).
+\tag{COK.40}
+$$
+
+Determine each hard target on this $P$ and its assigned incoming
+group as in Theorem 5.3. If a supposed hard target were constant
+or owned, this pair has no feasible law and is discarded. For
+every $A,o,b,y$, impose
+
+$$
+p(O=o,B_A=b,Y_A=y)\,p(Y_A=y)
+=p(O=o,Y_A=y)\,p(B_A=b,Y_A=y).
+\tag{COK.41}
+$$
+
+These are precisely the finite conditional-independence equations;
+at a zero context they give $0=0$ without division. Finally impose,
+for every tuple of group-vector values,
+
+$$
+p(Y_1=y_1,\ldots,Y_k=y_k)=\prod_{g=1}^kp(Y_g=y_g).
+\tag{COK.42}
+$$
+
+For zero groups this reads $1=1$, and for one it is a tautology.
+All these are polynomial equations and inequalities with rational
+coefficients in finitely many real variables.
+
+Corollary 5.4 proves that a feasible pair is exactly a saturating
+local law. Conversely, if $\Omega=J$, the finite maximum over
+decorations and each compact simplex maximum are attained. A
+maximizer therefore supplies one of the enumerated $P$ and solves
+the displayed system. Existence is thus a finite disjunction of
+existential formulas over real closed fields. Effective quantifier
+elimination, as in [Basu, Theorem 2.1 and §2.1.1][Basu], decides it.
+
+If every system is infeasible, attainment and (COK.30) imply a strict
+gap. Theorem 4.2 computes shrinking enclosures for $\Omega$, and
+$J$ is the square root of an explicit positive rational. Eventually
+these enclosures separate. Choose a rational $C$ strictly between
+them and enumerate rational positive normalized kernel arrays,
+testing (COK.26). Corollary 4.4 ensures that this search terminates.
+No complexity bound or execution of quantifier elimination is
+asserted. $\square$
+
+Even saturation of the finite relaxation need not be realized by
+one common network law. Failure of saturation gives a strict
+all-size improvement at that particular weight; it does not show
+that minimizing weights change the optimized native rate. The
+global defect (COK.22) and joint completion of the local laws
+remain separate questions.
+

@@ -1,0 +1,23 @@
+**Definition 1.4 (separation domain and unequal-holding coordinates).** Use the published constant
+
+$$
+\kappa=\min\left\{c,p,q,a,\frac{cs}{s+r},\frac{ap}{s},\frac{aq}{s},\frac1{25}\right\}>0.
+$$
+
+Unless a theorem says otherwise, assume $0<2\epsilon<\kappa$. For $a\ne b$ let
+
+$$
+u=\min(a,b),\quad v=\max(a,b),\quad\theta=u/v,\quad
+\lambda=\log(v/u)>0,\quad
+\delta_k=\frac{\theta^k}{1+\theta^k}.
+$$
+
+The dominant mode $d$ has hold $v$, and the other mode $f$ has hold $u$: $(d,f)=(2,4)$ if $a>b$, and $(d,f)=(4,2)$ if $b>a$. The symbol $d$ as a mode index is distinguished by its arguments from the profile metric $d(F,G)$. Put $G_x=(1-x)F_d+xF_f$, and define
+
+$$
+N_j=\min\{k\ge0:\delta_k\le j\epsilon\}\quad(j=1,2),\qquad
+J=\min\{k\ge0:\delta_k<2\epsilon\}.
+$$
+
+The $N_j$ comparisons are non-strict, and $J$ is strict. Thus $J=N_2$ off a tie and $J=N_2+1$ when $\delta_{N_2}=2\epsilon$. All are finite positive integers and $N_2\le J\le N_1$. No unequal-holding cutoff is used at $a=b$.
+

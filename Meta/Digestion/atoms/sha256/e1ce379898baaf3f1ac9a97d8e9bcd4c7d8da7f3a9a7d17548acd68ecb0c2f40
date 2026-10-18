@@ -1,0 +1,32 @@
+**Assumption 1.1 (Preparation and actual histories).** Use the independent
+quantum preparation hypothesis of
+[QMB, Assumption 1.1](RECURSIVE_RELATIONAL_OBSERVATION_MEASUREMENT_RELATIVE_QUANTUM_BOUNDARY.md).
+The Hilbert space is $\mathbb C^5$ with ordered orthonormal basis
+$\mathsf S=(N,2,3,5,25)$, every complex density matrix is an allowed
+input, and
+
+$$
+K=\begin{pmatrix}
+0&1&1&1&0\\
+1&0&0&0&1\\
+1&0&0&0&0\\
+1&0&0&0&1\\
+0&1&0&1&0
+\end{pmatrix},\qquad U(t)=e^{-itK},\quad t\ge0.
+\tag{1.1}
+$$
+
+An actual future protocol uses only nonnegative waits, the complete
+five-outcome rank-one Lüders instrument
+$X\mapsto(\Pi_sX\Pi_s)_{s\in\mathsf S}$, with
+$\Pi_s=e_se_s^\dagger$, and Stop. All finite adaptive depths are
+included. Histories retain outcomes, controls and stops. Initial
+controls and permitted random controls are source-independent, and
+both comparisons use the same policy. Grouping complete-read outcomes
+is classical postprocessing, not a coarse-block Lüders instrument.
+There are no independent mode phases, arbitrary future unitaries,
+source copies, resets, probability oracles, readable hidden Kraus
+records or external quantum side information. This source is not a
+preparation derived from the native $\alpha/\beta$ relations or from
+a different tensor-cut model; $N$ labels a unit vector.
+

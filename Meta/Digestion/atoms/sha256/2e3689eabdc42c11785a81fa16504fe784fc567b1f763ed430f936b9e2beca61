@@ -1,0 +1,19 @@
+## 6. Exact normalized category contrast
+
+For $1\le j<J$, the category masses satisfy
+
+$$
+ a_0(j)=\frac{U_{2r-1}(s,j)}{Z_0(s)},
+ \qquad
+ a_1(j)=\frac{U_{2r-1}(s,j)+cU_{r-1}(s,j)}{Z_1(s)}.
+$$
+
+Therefore
+
+$$
+\frac{a_1(j)}{a_0(j)}=\frac{1+cb_j(s)}{1+cg(s)},
+\qquad
+v_j:=\frac{a_1(j)}{a_0(j)}-1
+ =\frac{c(b_j-g)}{1+cg}.
+$$
+

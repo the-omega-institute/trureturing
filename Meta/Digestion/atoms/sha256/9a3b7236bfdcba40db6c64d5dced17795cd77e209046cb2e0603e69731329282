@@ -1,0 +1,54 @@
+**Corollary 13.3 (Nonfactorized populations at the actual frontier).**
+If an original legal scalar port satisfies $e(T)\le e_{\rm mix}$,
+then
+
+$$
+\mathfrak R_{\rm pop}(L)>\frac1{4500},\qquad
+\operatorname{rank}L\ge2.
+\tag{13.11}
+$$
+
+For a selected channel $S_x$ of (1.8),
+
+$$
+L_{ij}=\frac{\sqrt{n_in_j}}5M_{ij}=\Lambda_{ij}/5.
+\tag{13.12}
+$$
+
+The legitimate realification, stationary averaging and reflection
+replacement preserve this exact table. Thus every selected optimizer
+has $\operatorname{rank}M\ge2$ and satisfies (13.11).
+
+Proof. QSD Theorem 5.2 gives $e_{\rm mix}<U=524176/10^6$.
+The exact positive gap is
+
+$$
+B_{\rm pop}-U=\frac{1646547927}{58567531250},\qquad
+\left[\frac8{15}(B_{\rm pop}-U)\right]^2-\frac1{4500}
+=\frac{2003899022125500931}{771785036261938476562500}>0.
+\tag{13.13}
+$$
+
+Equation (13.4) proves (13.11) strictly. A nonnegative probability
+table with the positive fixed column sums $q$ has rank one exactly
+when it is $pq^T$: proportional nonzero columns must normalize to
+the same probability column, which is its row marginal $p$.
+Also $\mathfrak R_{\rm pop}(L)=0$ exactly when every square-root
+difference vanishes, equivalently $L=pq^T$. This proves the rank
+assertion.
+
+For (13.12), apply (1.8) to $R_j=\sqrt{n_j}H_j$ and take
+the trace against $R_i$. For realification
+$\mathfrak r(T)=\mathcal R\circ T\circ\mathcal R$ of QRC,
+$\mathcal R(R_j)=R_j$ and
+$\operatorname{tr}(R_i\mathcal R(X))=\operatorname{tr}(R_iX)$.
+Thus each $L_{ij}$ is unchanged, although the whole channel can
+change. Every walk-torus and specified reflection matrix commutes
+with every $R_i$. Trace cyclicity therefore preserves each entry
+under channel conjugation and hence under averaging. This verifies
+table preservation for the actual no-worse reductions, without a
+new symmetry hypothesis. Since the diagonal coordinate scalings in
+(13.12) are invertible, $\operatorname{rank}L=\operatorname{rank}M$.
+Existence of an original and a selected optimizer is supplied by
+QMB/QRC; their errors are at most the credited upper. $\square$
+

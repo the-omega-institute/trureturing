@@ -1,0 +1,84 @@
+**Definition 14.1 (application and resource correspondence).** The
+application is an obstruction to a SPECIFIED universal source-preserving
+Schur-replacement route. Its original input support is the calibrated
+$V=\iota\mathbb C^3$ of (JG.4); its four calibration states at one
+height are exactly the four phase/parity choices in (JG.5), with
+$x=y/256$, $e=(-1)^{\beta/\pi}$, $n=e(-1)^m$ and $en=(-1)^m$.
+Proposition 12.1 supplies identity on that support only if the proposed
+repair actually fixes those densities. The original simulator in (JG.7)
+must instead produce different live successors $UB_yU^*$ and full
+failure laws. Source fixing is therefore an EXTRA condition on a repair,
+not a consequence of being an admissible simulator.
+
+The correspondences and their limits are as follows.
+
+| Quantity or premise | Exact role and retained boundary |
+| --- | --- |
+| $\operatorname{Dep}_d$, $K$, $\Delta$ | Auxiliary CPTP slot channels for the erasure and uniform tests; none replaces the twelve original source histories or their target instrument. |
+| $m_c$, $r$ | Joint coherent dimension of the systems bypassing the slot. The slot itself still carries a $d$-dimensional system. Even at $r=1$, $V_f$ retains a $d$-dimensional code in slot times bypass; this is not a dimension-one acquisition of the original specimen. |
+| $p_c$, $h_r$, $q$ | Actual input-independent probabilities forced by identity fixing in (JG.54). They are not source priors, reach probabilities, success-conditioned masses, or the original history-dependent acquisition costs. |
+| (JG.23) and the joint-record frontier | The original actual acquisition retains its ENTIRE joint payload in each fibre. The sharp designated binary-record/acquisition results in [Joint Record Payload][JRP], §§29–40, and the earlier bounds in CG21–28 remain credited results; (JG.72) is a different slot-resource frontier. |
+| $\delta$ and $\epsilon_r$ | Unhalved diamond distances to the whole TP Schur class, valid on the full complex algebra with passive references. They are not numerical lower bounds on (JG.7) and do not determine its optimum or optimal resource cost. |
+| $\mathcal S(\operatorname{id})$ calibration | Exact four-density fixing forces identity only on the embedded qutrit. The sharp $K$ bound also needs $\mathcal S(\Delta)=\Delta$, supplied here by fixing ALL Schur channels. |
+| $\Theta$, full TP recovery and capacity | Existing ingredients reused with the displayed parameter substitutions. A private source declaration is evidence of the existing mathematical construction, not a newly compiled cross-module application. |
+
+The original objective stays the maximum over all twelve histories of
+HALF the FULL cq trace norm (JG.7): coherent live output, all five
+separate ideal label laws $w_\ell f_y(t)dt$ at exact elapsed time
+$t\in[0,1]$, and every singular, abort, rejection, wrong-support and
+zero-ideal sector. There is no survival division, acceptance
+normalization, time binning, marginal substitution or conversion of an
+unhalved auxiliary norm to that error. The original processor remains
+one history-independent CPTP map on all complex inputs with the common
+calibrated five-mode extension and metadata of Definition 1.4. No
+readable history, source or reach prior, helper, copy, retry, callback,
+reset, hidden environment/control input or permitted quantum bypass is
+inferred from this auxiliary construction. The inherited $E_\star$,
+optimizer conclusions and original resource frontiers are not improved
+by (JG.60) or (JG.72).
+
+**Open problem 14.2 (a faithful reduction and actual operation bridge).**
+To use a Schur replacement as a reduction of (JG.7), one must supply
+a transformation of the FULL original instrument that preserves all
+twelve target comparisons, contracts the original full-cq errors, and
+does not increase jointly counted ACTUAL acquisition cost. No such
+transformation follows from (JG.51)–(JG.79). Theorems 9.2 and 10.1
+instead exclude or quantify the specified universal replacement under
+their explicit identity, dephasing and memory hypotheses. A specialized
+non-source-preserving route is not excluded by the four-state argument.
+
+Any physical use of (JG.63) must additionally supply its acquisition,
+actual classical flags, calibrated coherent retention and controlled
+full TP decoding under the original permissions. In
+`OriginalControlComposition.OriginalControl`, nonnegative finite
+duration, continuity, strict domain, bounded phase variation and the
+absolute-continuity or finite-piecewise-$C^1$ alternative are geometric
+path conditions. They construct no actuator for these maps.
+[Probability/Phase Transport][PPT], Definition 10.1, has the actual
+fields $P=\partial_\kappa$ and
+$Q=\sum_aw_a(\kappa)\partial_{h_a}$; on the double wall its Theorem 8.7
+gives $[P,Q]=-(\partial_u+\partial_v)/r_b\ne0$, where $r_b=1-Z$.
+Probability-changing, noncommuting controls prevent treating the
+conditional diagonal/Schur closure as an exhaustive original menu.
+These path facts alone supply neither the proposed bypass nor a global
+native impossibility theorem.
+
+The same aligned original clock must accommodate acquisition and
+decoding with no added execution time, no later positive-carrier action
+after the first absorbing failure, and terminal live output at time $1$.
+Old stopped archives, source/preparation/epoch identity, permissions and
+controller updates remain part of the complete branches. A sampled
+timestamp or internal failure-destined flag is not a physical first
+absorbing event. The mathematical slot frontier supplies no native
+realization, original optimizer/resource improvement, or completion of
+the continuing original programme.
+
+[FMHC]: ../../../D5/S3/Quantum/Measurements/FiniteMemoryHistoryCapacity.lean
+[SCMD]: ../../../D5/S3/QuantumChannels/SchurChannelMixedUnitaryDistance.lean
+[PCR]: ../../../D5/S3/Quantum/Reduction/ProbeComponentRigidity.lean
+[MK]: https://arxiv.org/pdf/1805.04491v1
+[DS]: https://arxiv.org/pdf/2107.06585v2
+[RBL]: https://arxiv.org/pdf/1710.04710v2
+[JRP]: FIB_NATIVE_COMPLETE_CONTINUATION_JOINT_RECORD_PAYLOAD.md
+[PPT]: AURIC_FIB_ATOM_PROBABILITY_PHASE_TRANSPORT_AND_HOLONOMY.md
+

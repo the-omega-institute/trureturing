@@ -1,0 +1,29 @@
+**Definition 10.6 (Added Dirichlet diffusion).** In any one fixed mean regime
+choose $I=(l,u)\Subset J_b$ and $\Omega=I\times\mathbb T^g$. Take the
+smooth density and positive covariance of Definition 10.1 on a neighbourhood
+of $\overline\Omega$. With $X_1=P$, $X_2=Q$, set
+
+$$
+d\mu=\rho\,d\kappa\,dh,\qquad
+\mathsf T_A[f]=\int_\Omega\sum_{i,j=1}^2a^{ij}
+ (X_jf)\overline{X_if}\,d\mu,
+\qquad X_i^*=-X_i-\operatorname{div}_\mu X_i.
+\tag{10.17}
+$$
+
+Close this form from $C_c^\infty(\Omega)$ and take its nonnegative
+Friedrichs operator and heat semigroup
+
+$$
+\mathcal L_{A,\Omega}=\left(\sum_{i,j}X_i^*(a^{ij}X_j)\right)_{F,\Omega},
+\qquad H_t^\Omega=e^{-t\mathcal L_{A,\Omega}}.
+\tag{10.18}
+$$
+
+The boundary convention is Dirichlet killing at $\kappa=l,u$ and periodic
+phases. Both height boundary components are noncharacteristic because
+$P\kappa=1$. The single analytic clock $t$ assigns instantaneous control
+covariance $2A\,dt$, so the principal part of $-\mathcal L_{A,\Omega}$ is
+$\sum a^{ij}X_iX_j$. Density, covariance, clock and killing are additional
+structure; Definition 3.1 itself supplies no diffusion.
+

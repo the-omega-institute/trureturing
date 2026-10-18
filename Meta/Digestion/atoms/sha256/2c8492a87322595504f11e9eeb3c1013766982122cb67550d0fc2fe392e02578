@@ -1,0 +1,23 @@
+### 10.1 The selected PAIR certificate class
+
+The appended PAIR result is read at the current immutable source revision `a58c24900650d4a0b6022c5e2cf76f5f6f2f8271`, in [PAIR15, Sections 15.1–15.6]. Its standing source is the same $m=2,d=1,\ell=2,n=4$ stopped experiment used in Definitions 2.1–2.4: one positive integer $K$ is sampled once, all paid seed rejections and finite returns remain in the record, the third write precedes its latch, fourth completion reaches the matching Stop, and the complete carriers retain the infinite noncompletion outcome. Actual and synthetic updates use the same source-independent acquired kernels. No posterior, clock, reset, completion-conditioned source, or extra runtime port is introduced.
+
+PAIR15 studies a declared level-five certificate class. The complete coordinate boxes retain the level-five tail cell, all nonnegativity and normalization constraints, endpoint emission intervals, and the original tail bounds. Its loss coordinates are the complete-word/tail partition losses at levels $L\le5$, with the infinite outcome included in the tail cell. The selected dual allows arbitrary whole-input multipliers of the two scalar event residuals, degree-at-most-two marginal potentials in the displayed event coordinates, and finite nonnegative combinations of supported complete configuration losses. The normalized-residual-square extension uses squares of the normalized residual-event values. These are restricted certificate classes; they do not represent all degree-at-most-two functions of the complete word/tail vector.
+
+Write
+
+$$
+E_p=\{w_{0,1},w_{1,1},w_{2,1}\},\qquad
+E_\beta=\{\beta,\alpha w_{0,1}\},
+$$
+
+and, for complete laws $Q,W$,
+
+$$
+ f(Q)=Q(E_p),\quad h(W)=W(E_\beta),\quad
+ b_0(Q)=\frac{Q(w_{0,1})+Q(w_{1,1})}{U(Q)},\quad
+ a_0(W)=\frac{\sum_{n=0}^2W(\alpha w_{n,1})}{v(W)}.
+$$
+
+The class tests the two residual differences $b_0(Q)-h(W)$ and $a_0(W)-f(Q)$, while its loss terms are the supported complete target losses. The full Chapter 11 residual equations remain coordinatewise equations on the complete carriers.
+

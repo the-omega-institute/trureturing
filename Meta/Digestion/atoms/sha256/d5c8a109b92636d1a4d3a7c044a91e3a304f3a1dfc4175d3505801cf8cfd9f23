@@ -1,0 +1,42 @@
+**Theorem 58.2 (forced transfer, exact native frontier defect and full modal update).** Let
+
+$$
+\mathcal B(s)=\{p\in D:s|_p=\beta\},\qquad
+D'=D\sqcup\{pL,pR:p\in\mathcal B(s)\}.
+\tag{58.1}
+$$
+
+The domain identity is TM22.2's actual-source identity. The transfer required by Definition58.1 is necessarily zero extension $J:\ell^2(D)\to\ell^2(D')$, even if no linearity of the proposed transfer was assumed. With $P_{\mathcal B}$ the projection onto the old beta-leaf coordinates, the generator defect is exactly
+
+$$
+\begin{aligned}
+\Delta_s&=\mathsf H_{D'}J-J\mathsf H_D,\\
+\Delta_sf&=-a\sum_{p\in\mathcal B(s)}f(p)(e_{pL}+e_{pR}),\\
+\Delta_s^*\Delta_s&=2a^2P_{\mathcal B},\qquad
+\|\Delta_sf\|^2=2a^2\sum_{p\in\mathcal B(s)}|f(p)|^2.
+\end{aligned}
+\tag{58.2}
+$$
+
+Thus every nonzero singular value is $a\sqrt2$, with complex multiplicity $|\mathcal B(s)|$. At the switch the two new amplitudes at each $p$ are zero, and their initial derivatives are both $iaf(p)$. Their exact prediction consumes the actual beta-leaf positions and the old amplitudes at those positions, rather than just a leaf count, kinetic spectrum or root amplitude.
+
+For a complete orthonormal finite eigenbasis $\psi_\mu$ of $\mathsf H_D$, with energies $\lambda_\mu$, and a complete orthonormal basis $\chi_\nu$ of $\mathsf H_{D'}$, with energies $\lambda'_\nu$, set
+
+$$
+\begin{aligned}
+\Gamma_{\nu\mu}&=\langle\chi_\nu,J\psi_\mu\rangle,\qquad
+\Gamma^*\Gamma=I,\\
+c'_\nu&=\sum_\mu\Gamma_{\nu\mu}e^{-i\theta\lambda_\mu}c_\mu,\\
+(\lambda'_\nu-\lambda_\mu)\Gamma_{\nu\mu}
+&=-a\sum_{p\in\mathcal B(s)}\psi_\mu(p)
+ \bigl(\overline{\chi_\nu(pL)}+\overline{\chi_\nu(pR)}\bigr).
+\end{aligned}
+\tag{58.3}
+$$
+
+Here $\theta$ is the supplied old-domain evolution interval and $c_\mu$ are the actual retained old modal coefficients, including phases. This gives the complete next state, including all new exceptional and root-invisible directions. No finite mode is discarded by a cancellation in a scalar resolvent. On the common realization the full state is the channel vector $U(c,(v_p))$ and the complete spectral projection-valued account (55.18a), retaining channel sequences and their relative phases, not an assumed complete basis of square-summable eigenvectors in the essential band. Only the positive fidelity theorem restricts that complete state to a subescape subspace. Degenerate bases may be changed unitarily; the corresponding coefficient change leaves the actual state and this update invariant.
+
+Proof. If $F(f)|_D=f$ and $\|F(f)\|=\|f\|$, orthogonality of old and new coordinates gives $\|F(f)|_{D'\setminus D}\|^2=0$. Hence $F(f)=Jf$ for every $f$. On old coordinates the principal block of $\mathsf H_{D'}$ is exactly $\mathsf H_D$: labels do not alter its diagonal, all old seams persist, and global depths and missing-child terms are inherited. On a new child of an old beta leaf the only nonzero old input is the seam $-af(p)$. TM22.2 makes these new child pairs disjoint, proving (58.2). Multiplying by $-i$ gives the new-child derivative. Taking inner products of the defect equation with every $\chi_\nu$ proves the last line of (58.3); completeness and $J^*J=I$ give $\Gamma^*\Gamma=I$. Expansion of the old evolution and then of $Jf$ gives the coefficient update. Full finite spectral bases exist by self-adjointness; §55.5 supplies their boundary reconstruction, internal-kernel compatibility and full normalization, including exceptional energies. □
+
+The rank $|\mathcal B(s)|$ of the newly born derivative map is a classical linear-rank consequence of (58.2). It counts independent complex amplitude coordinates in this particular task. It is not a finite-bit memory bound, a physical storage formula or an acquisition price. For a tolerance $\eta\ge0$, the exact one-step condition is $\sum_{p\in\mathcal B(s)}|f(p)|^2\le\eta^2/(2a^2)$. Zero instantaneous frontier mass does not imply permanent fidelity: later old-domain evolution can reach the frontier. Complete future prediction uses the retained full state and the time-ordered generators, as in (58.3).
+

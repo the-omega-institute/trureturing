@@ -1,0 +1,64 @@
+**定义 203.1（输入、容量与证书的读法）。** 固定 $L\ge3$，沿用 202.1 的
+$\Omega_j$、$w(Z)$、完整目录 $\mathcal D_N,\mathcal D_O$、锚
+$\mathbf r$、$H=H_L$、$Q$、$F_q$、$\sigma_H$、$P_H$ 和 $E_N$。
+这里 $w(Z)$ 的零集恰为 $Z$，首零类 $\Omega_j$ 包括其后一切多零模式。
+本节的输入总是
+
+$$
+y\ge0,\qquad A=0,\qquad
+\operatorname{supp}P\subseteq\Omega_1\cup\Omega_2,
+\qquad C_w\ge0\text{ 任意},\qquad T=t\ge0.
+\tag{203.1}
+$$
+
+记
+
+$$
+\begin{aligned}
+\gamma_j&=\sum_{w\in\Omega_j}C_w,&E&=\gamma_1+\gamma_2,&
+G&=\sum_{j=3}^L\gamma_j,&\mu&=\max_{j\ge3}\gamma_j,\\
+S&=\sum_wP_w,&B&=S+t,&W&=E+B=y\cdot\mathbf r,&
+\delta&=\Delta_O(y).
+\end{aligned}
+\tag{203.2}
+$$
+
+于是 $K_y=G+W$。$\delta$ 是评分相对于锚的超额，不是原始 TV 帽
+$\varepsilon$。以下所有有限测度、阈值和条件系数都是确定的对偶行权重。
+它们不是获取概率、来源分布或额外随机种子。
+
+为使完整支持的计算明确，对一个零字 $w\in\Omega_n$，输出标签 $\ell$
+所得的行奖励为
+
+$$
+A_w\mathbf1_{\ell=0}+C_w\mathbf1_{\ell=n}
+       +P_w\mathbf1_{\ell\in\{0,n\}},
+\tag{203.3}
+$$
+
+全正字仅在 $\ell=0$ 时奖励 $T$。固定日程的支持等于各终端胞内这些奖励
+对全部 $\ell\in\{0,\ldots,L\}$ 的最大值之和。$N$ 双询胞为
+$00,01,10,11$；$O$ 把前两个并成停止胞 $0$，另有 $10,11$。
+空日程、单询、未查询标签和早于所询地址的标签均参与最大化。
+
+本节使用已有定理 199.3—199.6 的证书解释，不重新证明其替代或闭包定理。
+具体地，给出一份 $V\ge0$ 和一个 $\theta\in[0,1]$，使
+
+$$
+\Delta_N(V)\le1-\theta,\qquad
+\sigma_H\bigl(Q(y)-Q(V)\bigr)\le\theta,
+\tag{203.4}
+$$
+
+便证明 $Q(y)\in E_N$。对同一份满足全部事件行的配置
+$\lambda\ge0$、$G_N\lambda\ge h(b)$，若 $M=\sum_D\lambda_D$，则
+
+$$
+F_{Q(y)}(b)\le V\cdot h(b)+\theta
+ \le M\Delta_N(V)+\theta\le\max\{1,M\}.
+\tag{203.5}
+$$
+
+特别地，$Q(y)-Q(V)\in P_H$ 且 $\Delta_N(V)\le\delta\le1$ 时可取
+$\theta=0$。$\theta=1$ 仍允许非零的零超额 $V$。
+

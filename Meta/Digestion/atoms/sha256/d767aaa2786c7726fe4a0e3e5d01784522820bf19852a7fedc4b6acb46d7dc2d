@@ -1,0 +1,20 @@
+### Theorem 2.2. Classical orbit length and quantum return phase
+
+Let s_k=tau^k(s_0) be a cycle of length r, and put
+
+$$\Gamma_k=\sum_{h=0}^{k-1}\gamma_{s_h},\qquad
+\Phi_C=\Gamma_r\pmod{2\pi}.$$
+
+On the cycle span U^r=e^{i Phi_C}I. Its r eigenphases are
+
+$$\theta_j=\frac{\Phi_C+2\pi j}{r}\pmod{2\pi},\qquad j=0,\ldots,r-1, \tag{2.3}$$
+
+with an orthonormal eigenbasis
+
+$$|\chi_j\rangle=\frac1{\sqrt r}\sum_{k=0}^{r-1}
+ e^{i\Gamma_k-ik\theta_j}|s_k\rangle.$$
+
+Proof. Substitute (2.2), shift the index and use r theta_j=Phi_C modulo 2pi for the wraparound term. Orthogonality is finite Fourier orthogonality. Changing |s> to e^{i b_s}|s> changes gamma_s to gamma_s+b_s-b_{tau(s)}, whose sum on a cycle is unchanged. All phases can be removed by such a diagonal basis change exactly when every cycle has Phi_C=0 modulo 2pi: choose b successively along each cycle; the last edge is consistent exactly under that condition. QED.
+
+These cycle phases belong to gate amplitudes, not to the pure-state edge-phase gradients of the supplier's Proposition 8.9. The latter telescope around their graph cycle. A gate cycle can have a nontrivial return phase even though its classical permutation returns.
+

@@ -1,0 +1,55 @@
+**Theorem 12.2 (at most five complete pure contacts).** Under
+Assumption 10.1, the entire pure-sheet inventory has at most five
+distinct directed points.
+
+Proof. By Theorem 11.1, a pure contact of nonpositive height must
+have $u<0$. Theorem 12.1 therefore puts the complete pure inventory
+in the union of just three tests:
+$F_{0,+,+}$, $F_{0,-,+}$ and $F_{0,-,-}$. Zero-height contacts
+may occur in two descriptions, which only lowers the union count.
+Each test has at most two distinct zeros. Six distinct contacts
+would force all three tests to have two distinct zeros.
+
+Apply Theorem 12.1 to the first two tests. Write their squares as
+$(a_\epsilon\cdot x+C_\epsilon)^2$ with
+$a_\epsilon\in\mathbb R^2$. Two zeros confined to one open
+$u$-hemisphere imply $C_\epsilon\ne0$, $a_\epsilon\ne0$,
+and $|C_\epsilon|<\|a_\epsilon\|$: a zero constant gives
+antipodal zeros, and equality gives at most one circle zero.
+Their common even part has the uniquely represented symmetric matrix
+
+$$
+H=a_\epsilon a_\epsilon^T+C_\epsilon^2I_2.
+\tag{FC.38}
+$$
+
+Equality of the quadratic functions on the unit circle implies
+matrix equality, so $H$ is the same for both signs. Its eigenvalues
+are $C_\epsilon^2$ and $C_\epsilon^2+\|a_\epsilon\|^2$.
+The top eigenline is unique; thus the magnitudes and eigenline of
+the two nonzero odd vectors $2C_\epsilon a_\epsilon$ agree.
+Those vectors are either equal or opposite. Their difference is
+$-2\lambda(1,0)^T$, so they must be opposite and parallel to the
+$u$ axis. With $A,B>0$ the squares are consequently
+
+$$
+F_{0,\epsilon,+}=(Au-\epsilon B)^2,\qquad
+2AB=\lambda,\qquad P_y-\ell=A^2u^2+B^2.
+\tag{FC.39}
+$$
+
+The remaining test is
+$F_{0,-,-}=A^2u^2+B^2+2\ell+\lambda u$.
+Its even matrix is
+$H_-=\operatorname{diag}(A^2,0)+B^2I_2+2E_\ell$, whose
+off-diagonal entry is $2E_{\ell,12}<0$. Its odd vector is
+$(2l_u+\lambda,2l_v)^T$, with both coordinates strictly positive.
+If this test also had two zeros, its square representation and
+(FC.38) would make that odd vector parallel to its top eigenvector.
+For a real symmetric matrix with strictly negative off-diagonal,
+its largest eigenvalue is strictly greater than either diagonal
+entry, and its eigenvector coordinates have opposite signs:
+$(\lambda_{\max}-(H_-)_{11})z_1=(H_-)_{12}z_2$. A vector with two
+strictly positive coordinates cannot be parallel to it. This
+contradiction excludes six contacts. $\square$
+

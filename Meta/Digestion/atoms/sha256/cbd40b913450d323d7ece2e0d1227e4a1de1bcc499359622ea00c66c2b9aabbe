@@ -1,0 +1,53 @@
+#### 定理三：二阶隐藏响应定理
+
+令：
+
+```math
+N=\ker P=\operatorname{span}\{d\},
+```
+
+其中：
+
+```math
+d=(1,-1,0,-1,1)
+```
+
+是当前三均值读数的隐藏方向。
+
+设 $R$ 是一个未来读出。对两个动作 $a,b$，定义：
+
+```math
+\Sigma_{a,b}
+=
+R(S_{a,b}d),
+```
+
+```math
+\mathcal H_{a,b}
+=
+R(H_{a,b}d).
+```
+
+则对于两个同一 $(X,Y,Z)$ 但参数不同的状态律：
+
+```math
+p_{\kappa'}-p_\kappa
+=
+(\kappa'-\kappa)d,
+```
+
+有：
+
+```math
+\boxed{
+R(D_aD_b p_{\kappa'})
+-
+R(D_aD_b p_\kappa)
+=
+(\kappa'-\kappa)
+\left(
+\Sigma_{a,b}+\mathcal H_{a,b}
+\right).
+}
+```
+

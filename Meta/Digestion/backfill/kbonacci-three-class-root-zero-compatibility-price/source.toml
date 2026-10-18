@@ -1,0 +1,5 @@
+source_id = "kbonacci-three-class-root-zero-compatibility-price"
+path = "docs/develop/theory/KBONACCI_THREE_CLASS_ROOT_ZERO_COMPATIBILITY_PRICE.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

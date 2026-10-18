@@ -1,0 +1,53 @@
+**Proposition 5.1 (established TT specialization).** Let
+$K=\{W_1,W_2,W_3\}\subseteq\mathcal C_d(H)$ consist of three
+distinct worlds, and let
+
+$$
+\Delta(R)=(R_1-R_2)(R_1-R_3)(R_2-R_3)
+\tag{5.2}
+$$
+
+for a scalar terminal column. Then
+
+$$
+L_2(K,H)\quad\Longleftrightarrow\quad
+\Delta(A)=\Delta(B)=\Delta(C)=\Delta(D)=0.
+\tag{5.3}
+$$
+
+The collision pair may differ in each of the four columns.
+
+**Proof.** For either sixth action $E$ and every real raw response $w$,
+the actual child is exactly
+
+$$
+K\cap\mathcal F(H,E,w)=
+\begin{cases}
+K,&w=\delta=D_0+\lambda d,\\
+\varnothing,&w\ne\delta.
+\end{cases}
+\tag{5.4}
+$$
+
+This follows from $f_i(6)=0$, independently of the selected action.
+Thus the sole child that can witness $L_1$ for either sixth action
+is the entire same $K$ at raw response $\delta$.
+For a last action $F$ and every real raw response $v$, its child is
+
+$$
+\{W_i\in K:D_0+\lambda r_{EF}(W_i)=v\}.
+\tag{5.5}
+$$
+
+It has at least two members for some $v$ if and only if the scalar
+$r_{EF}$ has a collision on $K$, equivalently its product (5.2)
+vanishes. For sixth $J$ the two columns are $A,B$; for sixth $M$
+they are $C,D$, with the literal chronological words in (3.2).
+Unfolding the two action conjuncts of (5.1) proves necessity.
+For sufficiency choose $w=\delta$ for each sixth action and, for
+each last action separately, choose a colliding pair in its column
+and its common raw value in (5.5). These four pairs need not agree.
+They witness exactly $L_0$ for each last action, hence $L_1$ in
+both actual sixth children and $L_2$ on $K$. The real-response
+bijection (1.4) proves the statement also for $\lambda<0$. ∎
+

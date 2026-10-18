@@ -1,0 +1,12 @@
+**Definition 7.1 (Product-certified comparison target).** For
+the normalized positive path $W=1$, let $r_-(v,T)$ denote
+the same-law vacancy/central-occupation pencil minimum of
+[Phase/Joint, Theorem 15.2][PJ]. A sufficient relation for
+the unrestricted two-edge comparison is
+
+$$
+\min_{v,\ \varnothing\ne T\subseteq N(v)}r_-(v,T)
+\le B_{\rm prod}.
+\tag{7.1}
+$$
+

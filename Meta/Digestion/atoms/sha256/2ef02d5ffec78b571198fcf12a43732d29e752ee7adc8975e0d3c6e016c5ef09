@@ -1,0 +1,43 @@
+**Lemma 50.3 (stationary isolation).** Put $K=dh-ep$ and define
+
+$$
+\begin{aligned}
+\mathscr E(t):={q(t)D_t^2\over2}\psi'(t)
+={}&q(t)[Kt+z(d-et^2)]\\
+&+xt[2-2\chi-\chi^2+\chi et^2]\\
+&-y[(1-\chi)d+(4\chi-\chi^2-1)t^2].
+\end{aligned}
+\tag{JR.96}
+$$
+
+**Proof.** Directed rational interval evaluation of (JR.96) on the full
+box $\mathcal B_{\rm CG}$, with outward square-root bounds, gives
+
+$$
+-\frac{1100}{10^7}<\mathscr E(17/20)<-\frac{1099}{10^7},\qquad
+\frac{1857}{10^7}<\mathscr E(9/10)<\frac{1858}{10^7},
+\tag{JR.97}
+$$
+
+and, after differentiating the displayed expression and subdividing only
+by rational endpoints,
+
+$$
+\mathscr E'(t)>\frac1{200}\qquad(17/20\leq t\leq9/10).
+\tag{JR.98}
+$$
+
+Therefore there is a unique $`t_*\in(17/20,9/10)`$ with
+$`\mathscr E(t_*)=0`$. Evaluating (JR.96) on $\mathcal B_{\rm CG}$ at
+the two rational endpoints below gives respectively a strictly negative and a strictly positive value,
+yielding the isolating interval
+
+$$
+\frac{4890850417337583}{5629499534213120}<t_*<
+\frac{19563401669350333}{22517998136852480}.
+\tag{JR.99}
+$$
+
+The decimal $`t_*=0.8687895589321185\ldots`$ is only an illustration of
+this exact isolation.
+

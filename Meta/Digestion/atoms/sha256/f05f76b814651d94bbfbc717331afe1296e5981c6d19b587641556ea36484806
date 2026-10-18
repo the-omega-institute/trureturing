@@ -1,0 +1,63 @@
+**定义 2.1（依赖量及其域）。** 固定正则 $d,m$，写
+
+$$
+\begin{gathered}
+E=48-d,\quad B=X-d,\quad A=C-d,\quad V=24-d,\quad w=m-d,\\
+t=1+b>1,\quad u=2t-1>1,\quad D=tu,\quad j=b+e,\quad n=a+j.
+\end{gathered}
+\tag{2.1}
+$$
+
+此处标量 $A,B$ 与多项式 $D$ 不表示累积矩阵或第 10 节的原根矩阵。由继承的迹公式
+
+$$
+\operatorname{tr}\left(\begin{pmatrix}p&q\\r&s\end{pmatrix}P\right)
+=s+(p-s)a+rb+qe
+\tag{2.2}
+$$
+
+原时钟零至五的取得迹依次为 $1,j,t,n,u,n+u$，两个第六迹为 $n+2u$ 与 $2n+t-j$，每个迹严格正。全部已取得方程是
+
+$$
+g(0)=-d,\quad g(1)j=V,\quad g(2)t=E,\quad
+g(3)n=A,\quad g(4)u=B,\quad g(5)(n+u)=w.
+\tag{2.3}
+$$
+
+每个第七续行迹也正；$g(7)=0$ 使所有第七续行读共同 $d$，不表示取得了全部续行。
+
+沿四次卷定义 2.1，所有候选使用同一个完整插值多项式
+
+$$
+g_t(Y)=\frac d{56}(Y-2)(Y-4)(Y-7)
++\frac{E}{20t}Y(Y-4)(Y-7)
+-\frac{B}{24u}Y(Y-2)(Y-7).
+\tag{2.4}
+$$
+
+定义
+
+$$
+\begin{aligned}
+I(t)&=126Eu-35Bt-45dD,\\
+H(t)&=42Eu+35Bt+5dD,\\
+Q(t)=Q_5(t)&=-14Eu+35Bt-3dD,\\
+K_6(t)&=-21Eu+35Bt-5dD,\\
+Z(t)&=H(t)+70At,\qquad F_{d,w}(t)=Q(t)Z(t)-28wtH(t),\\
+L_s(t)&=AI(t)-2VH(t),\qquad E_s(t)=140VD-(t-1)I(t),\\
+j(t)&=\frac{140VD}{I(t)},\qquad n(t)=\frac{70AD}{H(t)},\\
+a(t)&=n(t)-j(t)=\frac{70DL_s(t)}{H(t)I(t)},\quad b(t)=t-1,\quad e(t)=\frac{E_s(t)}{I(t)},\\
+R(t)&=(t-1)E_s(t)H(t)^2I(t)-70DL_s(t)\bigl(H(t)I(t)-70DL_s(t)\bigr).
+\end{aligned}
+\tag{2.5}
+$$
+
+具名多项式 $L_s(t)$ 与失败谓词 $L_s(K,H)$ 不同。所有量由同一个 $d,m,t$ 决定，不是独立拟合变量。完整样本接口为
+
+$$
+\bigl(g_t(i)\bigr)_{i=0}^7
+=\left(-d,\frac{I}{140D},\frac Et,\frac H{70D},\frac Bu,
+\frac Q{28D},\frac{K_6}{35D},0\right).
+\tag{2.6}
+$$
+

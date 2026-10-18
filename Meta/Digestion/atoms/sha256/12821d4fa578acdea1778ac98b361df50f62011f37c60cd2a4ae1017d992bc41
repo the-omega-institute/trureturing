@@ -1,0 +1,37 @@
+**Theorem 6.1 (first possible total state budget).** Under Assumption
+3.1 and the fixed-code contract of Definition 3.2, nine is the first
+total installed-state budget at which a lawful prescribed binary code
+on this entire $\mathcal U_*$ can admit an arbitrary-literal two-call
+reader while admitting no same-code representative-root-only two-call
+reader. For the particular code (NRE.12), the exact minimum installed
+state count among arbitrary-literal readers using at most two calls is
+nine. The root-only two-call problem for this code is impossible at
+every finite installed-state budget.
+
+**Proof.** Directly reuse *Native cut-birth provenance and literal
+past-row recovery*, Theorem 15.4, “root normalization with the original
+arbitrary code.” Under that volume's Definition 15.1, every successful
+at-most-eight-state, at-most-two-call controller on this same entire
+actual fiber, with any prescribed lawful binary computation on the
+acquired current data, has a representative-root controller on the
+same installed states. The theorem retains its initial map, original
+pointwise code, fixed whole halt outputs, state paths and actual call
+counts on every original source. It allows internally structure-dependent
+codes and all finite native literals, with the acquisition, actual export,
+complete cut, recoverable lawful entry and stationary service assumptions
+retained here. Smaller successful budgets are included in its at-most-eight
+quantifier. No encoder or initialization normalization is substituted for
+that fixed-code theorem.
+
+It follows that no budget at most eight has the asserted existence
+separation. Theorem 4.1 supplies such a separation's upper side at nine,
+and Theorem 5.1 supplies its same-code root-only impossibility. This
+proves the first possible budget. If an arbitrary-literal reader for
+(NRE.12) used at most eight states and two calls, the directly cited
+Theorem 15.4 would give a same-code root reader with two calls,
+contradicting Theorem 5.1. Hence its arbitrary-literal minimum is at
+least nine; Theorem 4.1 attains nine. The final assertion is exactly
+Theorem 5.1. This uses the existing eight-state theorem as a supplier,
+without giving it a new proof or counting its normalization as new
+mathematical content. $\square$
+

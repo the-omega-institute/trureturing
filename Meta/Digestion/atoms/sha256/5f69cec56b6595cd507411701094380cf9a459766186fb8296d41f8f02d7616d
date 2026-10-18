@@ -1,0 +1,152 @@
+**Theorem 4.1.** Each of the maps
+
+$$
+W\longmapsto(A,B,C),\quad(A,B,D),\quad(A,C,D),\quad(B,C,D)
+\tag{4.1}
+$$
+
+is injective on the entire $\mathcal C_d(H)$, without a cardinality
+bound. Consequently two distinct members can collide in at most two
+terminal coordinates. No common source, gain shape, source sum or
+terminal amplitude is assumed.
+
+**Proof, nonzero trace denominators and all linear certificates.**
+For two worlds set $X_i=f_i(7)QP_i$, $S_i=Q^{-1}X_i$ and
+$h_i=f_i/f_i(7)$. Then
+
+$$
+\deg h_i\le3,\quad h_i(6)=0,\quad h_i(7)=1,
+\qquad \sigma_{i,k}=\operatorname{tr}(A_kS_i)\ne0.
+\tag{4.2}
+$$
+
+The last assertion holds since $\sigma_{i,k}$ is $f_i(7)$ times a
+strictly positive trace. The actual equation at every ancestor clock is
+
+$$
+h_i(k)\sigma_{i,k}=c_k-d\qquad(0\le k\le5).
+\tag{4.3}
+$$
+
+Thus equal $\sigma$ at a clock force equal $h$ values there by a
+nonzero common denominator, even when that gain sample vanishes.
+
+Write $\Delta X=X_2-X_1$ and $\Delta S=S_2-S_1$.
+Solving each set of three linear terminal equalities in (3.2) gives
+the following complete table, where the scalar $\alpha$ may differ
+between rows:
+
+$$
+\begin{array}{c|c|c|c}
+\text{equal coordinates}&\Delta X/\alpha&\Delta S/\alpha&
+(\Delta\sigma_0,\ldots,\Delta\sigma_5)/\alpha\\ \hline
+A,B,C&\begin{pmatrix}1&0\\0&-1\end{pmatrix}&
+\begin{pmatrix}-2&-1\\3&1\end{pmatrix}&(-1,2,-2,0,-1,0)\\[2mm]
+A,B,D&\begin{pmatrix}1&0\\1&-1\end{pmatrix}&
+\begin{pmatrix}-1&-1\\2&1\end{pmatrix}&(0,1,-1,0,0,0)\\[2mm]
+A,C,D&\begin{pmatrix}1&1\\0&-1\end{pmatrix}&
+\begin{pmatrix}-2&-3\\3&4\end{pmatrix}&(2,0,-1,-1,0,0)\\[2mm]
+B,C,D&\begin{pmatrix}0&-1\\-1&1\end{pmatrix}&
+\begin{pmatrix}-1&3\\1&-4\end{pmatrix}&(-5,4,-2,2,-2,1).
+\end{array}
+\tag{4.4}
+$$
+
+The quotient notation means the stated scalar-multiple identity,
+including $\alpha=0$, without dividing by an unproved scalar.
+For an arbitrary $Z=(z_{ij})$, the six trace forms used to verify
+every row are
+
+$$
+\begin{aligned}
+\operatorname{tr}(IZ)&=z_{11}+z_{22},\\
+\operatorname{tr}(JZ)&=z_{12}+z_{21},\\
+\operatorname{tr}(LZ)&=z_{11}+z_{22}+z_{12},\\
+\operatorname{tr}((J+L)Z)&=z_{11}+z_{22}+2z_{12}+z_{21},\\
+\operatorname{tr}(CZ)&=2z_{11}+z_{21}+z_{12}+z_{22},\\
+\operatorname{tr}(QZ)&=z_{11}+z_{21}+3z_{12}+2z_{22}.
+\end{aligned}
+\tag{4.5}
+$$
+
+The middle column of (4.4) is multiplication by the explicit
+$Q^{-1}$, and (4.5) gives every one of its six trace entries.
+For example, the fourth row follows directly by writing
+$\Delta e=\alpha$: the equations for $B,C$ give
+$\Delta b=\Delta c=-\Delta a-\alpha$, and the equation for $D$
+then forces $\Delta a=0$. This yields all four entries shown.
+The other rows follow from $\Delta(A-d)=\Delta a+\Delta e=0$
+and the respective additional equalities.
+
+If $\Delta X=0$, then $S_1=S_2$. Taking traces recovers the same
+nonzero $f_i(7)$, hence $P_1=P_2$. The common $d$ and the first four
+positive trace factors in (1.7) force equal gain samples at $0,1,2,3$,
+and thus the entire gain is equal. Normalization recovers equal
+complete worlds. In the remaining cases it suffices to exclude
+$\alpha\ne0$.
+
+**Proof for $A,B,C$.** The first row gives equal $\sigma$ at clocks
+three and five. Therefore $h_2-h_1$ has the four distinct zeros
+$3,5,6,7$. Its degree is at most three, so $h_1=h_2=h$.
+Subtract (4.3) at clocks zero and one. The corresponding trace
+differences are $-\alpha$ and $2\alpha$, forcing $h(0)=h(1)=0$.
+The actual readings would give simultaneously $d=0$ and $d=24$,
+a contradiction.
+
+**Proof for $A,B,D$.** Equal trace factors at clocks $0,3,4,5$
+give zeros of $h_2-h_1$ at those four distinct clocks; its values
+also agree at six and seven. Hence $h_1=h_2=h$.
+The nonzero trace differences at one and two force
+$h(1)=h(2)=0$, giving $d=24$ and $d=48$ simultaneously.
+
+**Proof for $A,C,D$.** Equal trace factors at clocks $1,4,5$,
+together with the common sixth root and seventh normalization,
+give zeros $1,4,5,6,7$ of $h_2-h_1$, so it vanishes.
+Trace differences at zero and two then force $h(0)=h(2)=0$,
+giving $d=0$ and $d=48$ simultaneously. These three arguments
+use actual ancestor clocks; the late readings and their equations
+have not been replaced by freely chosen samples.
+
+**Proof for $B,C,D$.** The trace coefficient in any terminal reading
+is positive. Equality of one such reading with common $d$ implies
+that $f_1(7)$ and $f_2(7)$ have the same sign. Multiply both $X_i$
+by this common sign; they become strictly positive rank-one matrices,
+and the three linear equalities, after subtracting $d$, persist.
+Write the first sign-adjusted matrix as
+
+$$
+X_1=\begin{pmatrix}a&b\\c&e\end{pmatrix},\qquad
+a,b,c,e>0,\quad ae=bc.
+$$
+
+The fourth row of (4.4) says that the second has the form
+
+$$
+X_2=\begin{pmatrix}a&b-\varepsilon\\c-\varepsilon&e+\varepsilon\end{pmatrix}.
+\tag{4.6}
+$$
+
+Its rank-one determinant condition is exactly
+
+$$
+0=a(e+\varepsilon)-(b-\varepsilon)(c-\varepsilon)
+=\varepsilon(a+b+c-\varepsilon).
+\tag{4.7}
+$$
+
+Either $\varepsilon=0$, giving the same matrix and complete world,
+or $\varepsilon=a+b+c$. The second root makes the upper-right
+entry $b-\varepsilon=-a-c<0$, contradicting positivity.
+Both roots are accounted for; $a+b+c>0$ excludes their coincidence.
+This case needs no further root inference.
+
+All four coordinate triples have now been treated. Polynomial root
+counting covers every lower degree and multiplicity; the only gain
+division was by the promised $f_i(7)\ne0$. This proves injectivity
+on the whole class, and hence the pair collision bound. ∎
+
+Three-coordinate injectivity is a statement about mathematical response
+vectors. Three terminal coordinates are not jointly acquired on one
+trajectory. In particular this theorem alone does not choose an
+injective single terminal coordinate for every three-world subset.
+

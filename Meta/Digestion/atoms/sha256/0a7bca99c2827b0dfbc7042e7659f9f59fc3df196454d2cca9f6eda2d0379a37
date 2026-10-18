@@ -1,0 +1,13 @@
+**Definition 2.1 (the installed block).** Use TM57's token encoding
+`PAD=00`, `alpha=01`, `beta=10`, `PAIR=11`. A valid block consists of preorder
+tokens of one tree, followed by PAD to exactly $N$ tokens, hence $2N$ bits.
+Before closure PAD is forbidden; after closure every token is PAD. The complete
+packet is installed by the original private bit ingress and fixed validation.
+No second tree is installed for the literal service. The initial source identity
+names this actual preparation occurrence, independently of its value.
+
+PR57.T1 gives a bijection between valid packets and $\mathcal T_H$. Its parser
+transduction is PAIR to `[false]`, alpha to `[true,true]`, beta to `[true,false]`;
+the resulting active word is the code of the same `FreeMagma Bool` source.
+In particular the two-bit token alphabet is not that parser's bit code.
+

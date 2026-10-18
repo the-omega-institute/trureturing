@@ -1,0 +1,42 @@
+### 85.3. Repeated singleton positions and the full conclusion
+
+If two members \(w,w'\) of an aligned orthogonal triple have the
+same singleton position, Theorem 84.1 identifies \(w'\) with
+\(\Theta w\) projectively. If the third has that position too,
+the same theorem identifies it with \(w'\), impossible for an
+orthogonal triple. Suppose its position is different and write its
+spinors as \(T,e\), while \(w\) has spinors \(S,d\).
+The spinor antiunitary
+\[
+ \mathcal J(s_0,s_1)=(-\bar s_1,\bar s_0)
+\]
+acts synchronously on both mode spinors of \(\Theta w\). An
+irrelevant dephasing multiplies them by the same unit scalar.
+Orthogonality against both \(w\) and \(\Theta w\), using (85.8),
+gives
+\[
+ \langle S,T\rangle=\langle d,e\rangle,\qquad
+ \langle\mathcal JS,T\rangle=\langle\mathcal Jd,e\rangle. \tag{85.10}
+\]
+For any spinors \(x,y\), expansion in their two components gives
+\[
+ |\langle x,y\rangle|^2+|\langle\mathcal Jx,y\rangle|^2
+                          =\|x\|^2\|y\|^2.             \tag{85.11}
+\]
+Apply this to (85.10). It forces
+\[
+ \|S\|^2\|T\|^2=\|d\|^2\|e\|^2,
+\]
+contrary to the two strict inequalities (85.7). Constants admit any
+singleton label because \(d=0\); choose arbitrary labels and the
+same exhaustive dichotomy applies. This proves Theorem 85.1, including
+all aligned poles and both parameter signs.
+
+The theorem crosses different \(S_3/\Theta\) symmetry unions and
+holds on the full punctured domain; no local parameter radius is involved.
+Together with the complete chart coverage of §75, it shows that any
+noncanonical orthogonal triple on this domain must contain a ray with
+three distinct entries in at least one channel. It does not exclude
+those remaining triples or imply whole-branch basis uniqueness or a
+whole-branch no-quartet theorem.
+

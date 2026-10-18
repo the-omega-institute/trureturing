@@ -1,0 +1,19 @@
+**Definition 3.3 (four observations of a target cut).** For $h\in\Omega_2$,
+define independently
+
+$$
+\begin{aligned}
+S(h)&=\operatorname{Pos}(U_2(Y(h))),\\
+B(h)&=\operatorname{Leaves}(U_2(Y(h))),\\
+T(h)&=\text{the ordered actual }\Pi_2\text{ patch occurrences from the foundation},\\
+M(h)&=\text{the selected retained backing/frontier/rights of Definition 4.1}.
+\end{aligned}
+\tag{PVC.4}
+$$
+
+$S$ is support of actual storage, $B$ its terminal antichain, $T$ the actual
+operation order, and $M$ existing retained relations. Access links are
+determined by mark tracks, not additional arbitrary addresses. None is
+defined as a copy of a replay key, an intersection of kernels, the private
+source shape alone or a decorated event tree.
+

@@ -1,0 +1,131 @@
+**Definition 4.4 (the local routines and actual receiver).** RESET
+clears all $3P$ array cells by complete scans, resets $d,b,a$ and copy
+positions, clears response flags, and sets sender ownership. It makes
+no source call. Each PUT scans to the sender end using its charged
+head, writes the one label bit ($0=L,1=R$), and increments $d$ by a
+bit loop. NOP performs only its charged control transition. The fixed
+$P$ graph positions are traversed even for short literals.
+
+COPY seals the sender and performs PR57.D7's two owned loops. First,
+for each of the $d$ sender bits, it executes the four core occurrences
+read sender, write mailbox, move sender one cell, move mailbox one
+cell. It then seals the mailbox and hands over the token. Its length
+$b=d$ is copied bitwise into the counted mailbox descriptor. Next,
+for each of the $b$ mailbox bits, it executes read mailbox, write
+receiver, move mailbox one cell, move receiver one cell. Each write
+increments the receiver's **own** occupied length $a$ by a paid bit
+loop. It then seals the receiver and acknowledges the handoff. Homes,
+seeks, length-copying, increments, permission control and loop tests
+are additional paid operations. Full arrays were allocated and zeroed;
+no allocation is hidden in a write. The core copy count is exactly
+$8d+4$, also for $d=0$.
+
+The receiver phase specifies the following cut convention for these
+same loops. At the common initial cut and on entry to each next macro
+frame it is $\mathsf{pre}$; the final local node transfer sets this
+phase together with entry to that frame. RESET and all sender/mailbox
+preparation keep it $\mathsf{pre}$, including partial clearing of an old
+payload or length. After the mailbox is sealed, its length copied and
+both copy heads homed, $a=q=0$ and the receiver loop enters
+$\mathsf{ready}$. The receiver head $q$ is the destination-cell index,
+including the one-past-end position $b$; the separate work head in slot 8
+performs all scans of the length bits. Within this loop:
+
+- In $\mathsf{ready}$, $a=q$. If $q<b$, the mailbox head is also $q$.
+  The read of that mailbox cell and all preparation for its write leave
+  $q,a,D,\phi$ fixed, while retaining its bit in the transfer field.
+- The receiver write stores that bit in $D_q$ and changes $\phi$ to
+  $\mathsf{written}$ in the same paid local occurrence. This write is
+  the letter arrival, even if it writes zero into a zero cell. The
+  receiver head stays at $q$ throughout the following length increment,
+  its carry/bit-index work, all routine returns and the mailbox move.
+- Increment $a$ from its old value $q$ by a least-significant-bit-first
+  carry scan. Clear successive one bits, then set the first zero bit
+  and clear the carry. Individual data-bit writes, work-head moves,
+  branches and returns remain paid steps. The routine must return with
+  $a=q+1$ before the mailbox moves one cell. The receiver's subsequent
+  one-cell move changes its head to $q+1$ and $\phi$ back to
+  $\mathsf{ready}$ together in that paid move. No other instruction
+  changes $q$ while the phase is $\mathsf{ready}$ or $\mathsf{written}$.
+- At $q=a=b$, the loop test permits the existing receiver seal occurrence,
+  which changes $\phi$ to $\mathsf{sealed}$. Acknowledgement, receiver
+  homing, operand checks, source receipt and local response continuation
+  keep this phase and $D,a$ fixed until entry to the next frame. An
+  empty payload goes directly from $\mathsf{ready}$ to this seal.
+
+Thus the phase changes use the already charged control transitions of
+the copy body, seal and node transfer. They add no core occurrence, array,
+slot or Boolean field. The detailed carry routine is part of the fixed
+program charged in $I_0$. All intermediate instructions preserve the
+phase, except the four specified transitions into $\mathsf{pre}$,
+$\mathsf{ready}$, $\mathsf{written}$ and $\mathsf{sealed}$. No transient
+PC, copied loop index or partially copied continuation is used as a
+substitute for these retained phase bits.
+
+For a complete counted configuration $c$, define the receiver projection
+
+$$
+\begin{aligned}
+k(c)&=\begin{cases}
+0&\phi=\mathsf{pre},\\
+q&\phi=\mathsf{ready},\quad 0\le q\le P,\\
+q+1&\phi=\mathsf{written},\quad 0\le q<P,\\
+a&\phi=\mathsf{sealed},\quad 0\le a\le P,\\
+0&\text{otherwise},
+\end{cases}\\
+\operatorname{received}(c)&=D[0:k(c)].
+\end{aligned}
+\tag{4.4a}
+$$
+
+The empty default makes this a function on every installed valuation;
+its arrival interpretation is asserted only on lawful executions. It
+uses receiver cells, its counted head, phase and length, never sender
+cells or the native row. It is a mathematical projection at a cut, not
+an additional readable source port or a free runtime decoding operation.
+
+Before ISSUE-READ the interpreter homes the receiver head, finishes
+all length and ownership checks by paid scans, sets the armed state,
+and has zero response flags. The committed original operand is exactly
+
+$$
+\operatorname{payload}(D,a)=D_0D_1\cdots D_{a-1},
+\qquad 0\le a\le P,
+\tag{4.4}
+$$
+
+with the $0/1$ to $L/R$ interpretation above. These are the accumulated
+receiver cells. The original table and graph row are not consulted to
+replace them at commitment. Reading the flat literal at this boundary
+is the original whole-materialized-literal service; its physical
+consumption and source traversal costs are still separate. A whole-word
+lookup is not being supplied as a free **local** operation.
+
+At actual Read-response receipt only the corresponding one of
+$f_\alpha,f_\beta,f_{\mathsf{branch}},f_{\mathsf{absent}}$ is set.
+At Update-acknowledgement receipt only $f_\star$ is set. All other
+bits, including the instruction counter, stay unchanged. The raw reply
+has no other persistent copy. The ISSUE instruction with zero flags
+makes its source call; the same instruction with one flag set continues
+locally to the response tests. This removes any need for a simultaneous
+unreported phase write. LINK retains the old graph node/selected link
+while copying its fixed successor index to the pending-node slot,
+clears the reply flag locally, and completes the paid node transfer.
+The continuation slot distinguishes the old-node, pending-node and
+next-block stages. No new source call is enabled during this transfer.
+
+Every row fetch moves the ROM head to the row's first bit and copies
+its fixed fields sequentially. Offset multiplication, if used, is
+bounded repeated addition; an alternative is counting row boundaries
+in a full scan from the header. The latter fixes a row-fetch routine
+with no arithmetic oracle. For every graph-node transfer, first copy
+the old node to slot 3, keep it fixed while slot 2 receives the next
+node and slot 1 is rewritten, and use the counted continuation stage
+to select which copy is authoritative. This applies to ordinary graph
+edges as well as LINK edges; a partially copied node is never decoded
+as the current macro row. Incrementing a field counter scans its
+bits with a carry, and loop tests scan the compared fields. Homes
+walk one cell at a time. Thus the listed routines specify finite
+sequential operations rather than access to a computed address for
+free.
+

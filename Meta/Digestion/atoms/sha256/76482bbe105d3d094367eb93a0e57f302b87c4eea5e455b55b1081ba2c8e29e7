@@ -1,0 +1,16 @@
+**Proposition 6.5 (what existing effective simulation does not close).**
+The inspected NativeSerialEffective supplier does not by itself discharge
+Definition 6.4's primitive realization or price.
+
+Proof. Its `OriginalCodeRealization` assumes a supplied finite code and
+its genuine-state realization equation. Its evaluator issues abstract
+Native local steps for bounded evaluator attempts and proves preservation
+of the external source trace after erasing those evaluator steps. The
+Scribe explicitly asserts neither a uniform runtime bound nor a PR57
+opcode cost. A flat PR57 interpreter would additionally need the actual
+representation of its evaluator work and each finite-code/tape access.
+These data are not an output of the cited theorem. Thus that theorem's
+conclusion is insufficient for (RCA.7) with primitive-level cost and
+ownership correspondence. This is a scope implication, not a proof that
+no such finite graph exists. ∎
+

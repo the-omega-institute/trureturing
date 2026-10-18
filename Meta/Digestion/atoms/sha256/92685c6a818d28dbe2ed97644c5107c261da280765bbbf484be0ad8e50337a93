@@ -1,0 +1,97 @@
+**Theorem 339.1 (A sharp common optimum at positive width).**
+Let
+
+$$
+\begin{gathered}
+0<\tau\le1/24,\qquad0<\kappa\le\tau/253,\qquad E=5\tau+24\kappa,\\
+a_2=1-11\tau,\qquad(a_3,a_4,a_5,a_6,a_7)=(13,10,9,8,6)\tau,\\
+a_8=5\tau+253\kappa,\qquad
+\boxed{\ a_2\le a_1\le1-7\tau-29\kappa\ }.
+\end{gathered}
+\tag{339.1}
+$$
+
+Append any entire positive nonincreasing vanishing tail with
+$a_9\le E$. For these profiles,
+
+$$
+\min_{A\in\mathcal N_2}e_a(A)
+ =\min_{A\in\mathcal O_2}e_a(A)=E.
+\tag{339.2}
+$$
+
+Both minima are attained by the one law in 337.1–337.4 and its
+same-seed counted $N$ completion. Every positive closed cap is
+feasible in either class exactly when it is at least $E$. The active
+length at $E$ is eight, and every actual first absence above eight
+has error exactly $E$. The entire displayed head interval is
+included, including both boundaries; it is a sufficient attainment
+range, without an assertion of maximality.
+
+**Proof.** The assumptions make a valid ordered profile:
+$a_2-a_3=1-24\tau\ge0$, $a_7-a_8=\tau-253\kappa\ge0$,
+and $a_8-E=229\kappa>0$. Also $E<1$ and $Q>0$ in (337.2),
+so its whole head interval is nonempty and lies below one.
+
+Adding the anchor stock $1-24\tau$ to the first two coordinates
+of (338.1) and then the head transfer $d$ to the first gives,
+on every first-zero fibre,
+
+$$
+p_w(n)=a_n-E,\qquad n=1,\ldots,8.
+\tag{339.3}
+$$
+
+Let $D_n(w)$ be the final mass outside $\{0,n\}$. Lemma 338.1
+gives $D_n(w)\le E$. Normalization and (339.3) now prove all
+three independent deficits separately:
+
+$$
+\begin{aligned}
+a_n-p_w(n)&=E,\\
+1-a_n-p_w(0)&=D_n(w)-E\le0,\\
+1-p_w(0)-p_w(n)&=D_n(w)\le E.
+\end{aligned}
+\tag{339.4}
+$$
+
+Thus every first-zero word has TV error exactly $E$. At the
+positive word the same complete law is
+
+$$
+p_+=(1-E)e_0+(2\tau-20\kappa)e_3+(\tau-35\kappa)e_4
+                    +(2\tau-50\kappa)e_5+129\kappa e_8.
+\tag{339.5}
+$$
+
+Its positive-base row is exact. All calculations use the same
+nineteen-schedule core, anchor and transfer; no alternative head-fill
+law or $P^0$ variant is substituted.
+
+For the original execution, choose the whole table by one uniform
+source-independent seed as in (337.4). Query its increasing pair
+until the first queried zero or exhaustion, then hand off its actual
+mark in $\Theta$ to the unchanged consumer. Every execution is
+finite, measurable, zero-advice, and uses at most two actual calls.
+The $N$ completion acquires both preselected replies on that same
+source and seed and reconstructs the stopped output, counting the
+ignored reply. On actual $n(x)\le8$, (339.4) applies to its complete
+low word. On $n(x)>8$, (339.5) has no label $n(x)$, and (331.3)
+gives exact full-carrier error $\max\{E,a_{n(x)}\}=E$.
+This retains every later amplitude, including $a_9=E$ and all
+positive vanishing tails, without a summability premise.
+
+Finally substitution of (339.1) into the consecutive instance of
+(336.2) gives
+
+$$
+3a_2+27a_3+24a_4+27a_5+25a_6+24a_7+24a_8-3
+                    =1265\tau+6072\kappa=253E.
+\tag{339.6}
+$$
+
+Hence every original competitor has error at least $E$, without
+requiring its addresses, output carrier, law or active horizon to
+match the attainer. Both exact minima and the closed-cap equivalence
+follow. $a_8>E\ge a_9$ proves active length eight. $\square$
+

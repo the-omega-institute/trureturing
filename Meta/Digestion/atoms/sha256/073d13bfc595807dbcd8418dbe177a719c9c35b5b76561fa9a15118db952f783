@@ -1,0 +1,78 @@
+## 8. No ancestor zero and the inclusion-minimal simultaneous core
+
+**Theorem 8.1.** Suppose three pairwise distinct fixed legal worlds
+on (1.2) have one common drift $d$, all have root seven, and their
+triple has $L_2$. Then
+
+$$
+d\notin\{0,24,48,312/5,y,\zeta\},\qquad
+f_h(i)\ne0\quad(h=1,2,3;\ 0\le i\le5).
+\tag{8.1}
+$$
+
+If in addition no proper pair of this triple has $L_2$, then their
+sixth gain samples have one common nonzero sign and, after
+relabeling, their exact sixth collision pattern is
+
+$$
+v_J(W_1)=v_J(W_2)\ne v_J(W_3),\qquad
+v_M(W_1)=v_M(W_3)\ne v_M(W_2).
+\tag{8.2}
+$$
+
+Every inclusion-minimal all-root-seven $L_2$ triple, even with
+initially arbitrary drifts, therefore has a common drift and all
+these restrictions. In this restricted core its sources are pairwise
+distinct and its gains belong to pairwise distinct one-dimensional
+polynomial subspaces.
+
+**Proof, ancestor-zero exclusion.** If any one gain vanishes at an
+ancestor clock $i$, its reading is $c_i=d$. The other two worlds
+have the same drift and that same reading. Since their trace
+factors are positive, both their gains also vanish there. For
+$i\in\{0,1,2,3\}$, Theorem 4.1 gives a fixed sixth $M$ action
+injective on the entire common-drift root-seven class, contradicting
+$L_2$. For $i=4$ or $5$, all three worlds would belong to
+$\mathcal Z_{i7}$, contradicting Theorem 5.1. Conversely if $d$
+equaled any of the six readings, positivity in (1.6) would force a
+gain zero there. This proves (8.1) without inclusion-minimality.
+
+**Proof, signs and different pairs.** For both sixth actions,
+
+$$
+\operatorname{sgn}(v_E(W)-d)=\operatorname{sgn}f_W(6)
+\tag{8.3}
+$$
+
+because the sixth trace is positive. Different sign classes cannot
+collide. If all three signs differ, neither action has any collision,
+contrary to Theorem 3.1. If exactly two signs agree, the only possible
+collision pair for either action is that fixed same-sign pair.
+Theorem 3.1 requires collisions under both actions, so this proper
+pair has $L_2$, a contradiction. If all signs are zero, every
+proper pair has both sixth values and all terminal values equal to
+$d$ and is $L_2$. Thus all three signs must be the same nonzero
+sign. This proves nonvanishing at clock six as well.
+
+Both actions have a collision by Theorem 3.1. If one action is
+shared by all three worlds, a colliding pair for the other action
+collides for both and is a proper $L_2$ pair. Otherwise each action
+has precisely one pair and a singleton. The two pairs cannot be the
+same, for the same reason. Two different pairs on three worlds
+intersect in one world, giving exactly (8.2). Theorem 3.1 also shows
+that an initially variable-drift triple with no proper $L_2$ pair
+must first have one common drift. All these are actual pairs in one
+simultaneous triple, not separate constructions.
+
+**Proof, the restricted pairwise diversity.** By (8.1), $d\ne0$
+and $f(1),f(2),f(4)$ are nonzero. If two gains are proportional,
+their common constant value $-d$ forces the proportionality factor
+to be one. Equal gains and the first two nontrivial readings fix
+equal $j,\ell$, hence $u,v$; the nonzero fourth sample fixes $r$.
+The worlds would coincide. If two sources were equal, their common
+drift and first four positive trace factors would fix equal gain
+samples at zero through three and hence the same entire gain.
+Again they would coincide. Thus both distinctions are pairwise
+within this common-drift core. This does not extend pairwise
+diversity to unrestricted triples. ∎
+

@@ -1,0 +1,20 @@
+**Lemma 6.1 (Uniform actual posterior restriction).** For $0<s\le10^{-6}$ and every finite radius $j\ge5$,
+
+$$
+|q_{j,i}(P_s)-g_i|\le\delta_s:=20000s\quad P_s\text{-almost surely},\qquad
+|q_i(P_s)-g_i|\le\delta_s\quad P_s\text{-almost surely}.
+\tag{6.2}
+$$
+
+Proof. For $T=B,R$ and nonzero nonnegative column $z$, $(Tz)_1/(Tz)_2\in[2/5,6/5]$. Indeed this ratio lies between the two column row-ratios, which for $B$ are $(a-ps)/(b(1-s)),p/b$, and for $R$ are $p/(2q),p(1-s)/(q(1-2s))$. All lie in that interval. The normalized row estimates in Proposition 4.2 put rows after $B,R$ within $4s$ in $L^1$ of the respective coordinate rows.
+
+On a free-center finite exterior let $x,y$ be its distance-two bits. Factoring $x0$ and $0y$ gives center-zero and center-one masses $l_xB^2z_y$ and $l_xRz_y$. The row $l_x$ ends in $B$ if $x=0$, in $R$ if $x=1$. For $y=0$, $z_y=B\beta$; for $y=1$, retain the forced following zero and obtain $z_y=R\beta$. At radius five the remaining right stretch already contains a completed atom, so $\beta_1/\beta_2\in[2/5,6/5]$. Normalize $l_x$ to sum one.
+
+Scale $z_y$ by $\beta_1$ for $y=0$ and by $\beta_2$ for $y=1$. For $y=0$ its errors from $(7/10,2/3)^{\mathsf T}$ are $-100s+ps(\beta_2/\beta_1-1)$ and $bs(\beta_2/\beta_1-1)$. For $y=1$ its errors from $(3/10,1/3)^{\mathsf T}$ are $100s+ps(\beta_1/\beta_2-1)$ and $2qs(\beta_1/\beta_2-1)$. The ratio bounds give coordinatewise relative errors at most $500s$, hence absolute errors at most $500s$.
+
+Also $\|B^2-B(0)^2\|_\infty\le204s$. All scaled columns and transfer row-sum norms are at most one. The row, matrix and column changes bound the one-mass error by $(4+102+500)s=606s$ and the zero-mass error by $(4+204+500)s=708s$. In context order $00,01,10,11$, the reference totals are $543/1000,247/1000,247/450,113/450$, all greater than $1/5$. Subtracting at most $1314s$ leaves actual totals above $1/10$. For two masses $v,u$, the quotient identity bounds posterior error by the larger mass error divided by the actual total, hence by $7080s<20000s$. The reference quotients are exactly (6.1).
+
+Every bound holds for arbitrary nonnegative farther factors on positive atoms. Forced fibers have both posteriors zero; zero-total atoms need no quotient. Increasing-field projection under $P_s$ itself gives the full-posterior bound. A countable intersection supplies simultaneous versions at all sites and finite radii. $\square$
+
+At the exact candidate, $A_0>1/3$, $D_0<9/20$ and $\delta_t<1/1000$ put every actual free full posterior inside $[1/4,1/2]$. Every finite posterior containing the neighbors is its conditional average on that free atom. Thus the infinite and finite defects of [Universal, Theorem 2.2][U] vanish here; the band is only a necessary condition for attainment.
+

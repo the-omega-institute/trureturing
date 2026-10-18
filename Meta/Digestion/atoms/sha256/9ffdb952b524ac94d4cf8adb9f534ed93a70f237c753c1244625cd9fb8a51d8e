@@ -1,0 +1,28 @@
+**定理 82.1（接触前系数与一致余项）。** 在约定 78.1 的原始类和全部继承前提下，对全部 $0\le\tau\le\tau_{\rm c}$，
+
+$$
+\boxed{
+K(s_0\tau)=
+\frac12\sum_{\epsilon=\pm1}
+\nu_\epsilon
+\left[a_\epsilon(r(\tau))-2|b_\epsilon(r(\tau))|\right].
+}
+\tag{RC.135}
+$$
+
+此外存在源决定的有限 $B,C>0$，使得
+
+$$
+\boxed{
+\left|
+\mathcal T(s)-\mathcal T_A(s)-\frac{K(s)}{b_A}
+\right|
+\le\frac{C}{b_A^2},
+\qquad
+0\le s\le s_{\rm c},\quad b_A\ge B.
+}
+\tag{RC.136}
+$$
+
+式 (RC.135) 的输入全部由 (RC.107)–(RC.122)、(RC.130)–(RC.134) 确定。它不含自由的静态对偶、测度优化或未评价的 tangent minimization。
+

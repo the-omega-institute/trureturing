@@ -1,0 +1,18 @@
+**Assumption 1.3 (paid complete handoff and lawful entry).** Preparation
+starts from the same source-independent state for every $t$, with only
+public $D$ and common installed code and tables. Its only source
+dependence comes from actual charged literal Reads. It terminates on
+every source and exports a finite effective code $E(t)$ before any
+target is supplied. A separately supplied paid handoff isolates all
+other accessible preparation state and lawfully enters the later
+reader. Every surviving source distinction belongs to the code: this
+includes selectors, operands, buffers, transcripts, control, lengths,
+allocation, handles, counters and accessible timing distinctions.
+Any remaining field must be a fixed function of $E(t)$ and public data.
+Prior transcripts and previously acquired descriptions are inaccessible.
+
+Isolation, source continuity, authentication, export and new reader entry
+are services assumed and separately paid for. They are not inferred
+physical actions, erasure operations, or actions of an already stopped
+producer. Inaccessible material need not be physically erased.
+

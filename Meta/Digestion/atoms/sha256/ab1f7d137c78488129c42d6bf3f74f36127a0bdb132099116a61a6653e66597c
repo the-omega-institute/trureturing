@@ -1,0 +1,41 @@
+**Definition 2.3 (field partition and ownership).** Write $Y(h)$ for the
+complete raw physical record of $P$: its 64 finite eight-track tape words,
+all actually constructed finite control bits, including inactive versions,
+actual PC/mode/cursor, latches and tokens, and fixed port origins.
+Unbounded counts, names, code used by the simulator and word registers
+are ordinary tape material. In particular, a later simulator's encoded
+old state is its paid bank workspace, not another live source.
+
+Use the actual finite bit locations of the prescribed primitive mechanism
+and of the once-constructed $D_0,L,D_1$ versions. First order existing
+primitive-mechanism locations by their declared field/bit order; then order
+new locations by original boot, $L$ boot, $D_1$ boot and any later native
+initialization construction, each in its prescribed installation order.
+A location reused by two descriptions is listed once, by physical identity;
+retained distinct version locations are distinct. This yields a finite
+ordered set $C$ of size $q\ge1$. It can be enumerated from the fixed
+literal mechanism and three finite expansions, without $H,u$ or a request.
+The bootstrap's mode/PC/cursor range is finite because these prescribed
+slot sequences are finite; it is encoded by the actual mechanism's bits,
+not by a new unbounded register. No bit is added merely to record this
+enumeration. Thus $Y$ has exactly the following disjoint field partition.
+
+| Physical field | Sole storage component |
+| --- | --- |
+| The eight tracks of every constructed cell, including heads and seals | Its tape cell on its actual port and append chain |
+| Primitive PC, mode, finite cursor, latches, tokens and finite native version material | Its single location in $C$, absent until its actual constructor if not initially present |
+| Dynamic code, serialized descriptions, word-program registers, counters, manifest, banks, descriptors and package/output data | Their existing ordinary cells, with no additional finite-register copy |
+| Semantic event lists, provenance, busy interpretations and logical source values | Interpretations of the preceding material and actual history; no extra runtime store |
+
+The producer retains source/private authority on 16–23. Original actor
+archives on 24–31 remain distinct. Eight actual TOKs transfer unused
+verifier lanes 32–39 to $O$: banks A/B, Base scratch, length scratch,
+descriptors, manifest/staging, frame stream, service archive. Asset owners
+authorize and pay actual copies and public-head saves/restores; $O$ receives
+no producer token. The client is the predeclared $C=A$, with receiver 40
+and the separately installed invocation token. Mailbox 48 has its actual
+setup, handoff and returned availability tokens. Original public heads
+0–31 are preserved by the declared paid save/restore protocol. Ownership
+and availability are the native token/field relations, not unencoded
+mutable vertex labels. A historical permission bit remains data.
+

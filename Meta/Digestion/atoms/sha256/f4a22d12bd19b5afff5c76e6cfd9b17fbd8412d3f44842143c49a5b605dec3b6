@@ -1,0 +1,21 @@
+**Definition 1.1 (Original stationary integer-clock source).** Fix any single
+
+$$
+0<p<1,\qquad p\ne\tfrac12,\qquad j\in\{0,1\},
+\qquad \pi_0=1-p,\quad\pi_1=p.
+$$
+
+Let $\varphi$ be uniform on $\{0,1\}$, independently of iid Bernoulli$(p)$ spins $(S_\ell)_{\ell\in\mathbb Z}$. With $\mathcal A=\{a_0,a_1,b_0,b_1\}$, the original joint law $J_p$ is
+
+$$
+\begin{aligned}
+H_{2\ell+\varphi}&=a_{S_\ell},&
+H_{2\ell+\varphi+1}&=b_{S_{\ell+1}},\\
+X_{2\ell+\varphi}&=S_\ell\mathbin\oplus S_{\ell+1},&
+X_{2\ell+\varphi+1}&=0.
+\end{aligned}
+\tag{1.1}
+$$
+
+This is Original Proposition 2.1 and (2.2), on its actual emitted-bit clock. An active transition goes from $a_s$ to $b_t$ with probability $\pi_t$, emitting $s\oplus t$; a separator transition copies $b_t$ to $a_t$ and emits zero. The state masses are $\pi_s/2$ for both $a_s$ and $b_s$: the incoming mass at $b_t$ is $\sum_s(\pi_s/2)\pi_t=\pi_t/2$, and copying gives the same mass at $a_t$. Independence of the next spin gives these ordered transition factors on every finite interval, including those beginning in either state class. Uniform phase and reindexing of the iid spins preserve the law under an integer shift. In particular $X_tX_{t+1}=0$ at every integer $t$. No separator is removed from the source.
+

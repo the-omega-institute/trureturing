@@ -1,0 +1,39 @@
+**Corollary 340.1 (repo-derived).** Consider a finite paired quotient
+with six actual global labels M,V,C,D,Z,U, shared original positive
+lengths, four distinct labels in each displayed paired frame, and
+nonnegative original angles and angle sum 2*pi at every global edge.
+Suppose it has a flat source sigma=(M,C,D,V,C,D) with angle pi at each of its M,V axes and
+zero at its C,D transverse slots. Assume the numerical premises
+(333.1), and suppose three distinct genuine owners have the exact
+roles (333.2). Then
+
+    theta_Z(eta)+theta_U(eta)>pi.               (340.1)
+
+**Proof.** The source already spends pi at M and pi at V. Nonnegativity
+of all other original angles makes the genuine M,V capacities at most
+pi each, while the genuine D capacity is at most 2*pi. Thus the actual
+tau M slots and the four actual V slots of rho and eta obey (333.4).
+If (340.1) failed, strict genuineness and Theorem 333.2 would give
+(333.6). Its nine charged slots are precisely
+
+    tau: one D-axis slot;
+    rho: two V-transverse slots and two D-transverse slots;
+    eta: two V-transverse slots and two D-transverse slots.
+
+They are distinct original occurrences in three distinct owners, so
+their total is at most pi+2*pi, contrary to (333.6). An equality of
+lengths or role vectors at different owners does not identify their
+slots. If W=M, rho's additional M-axis angle only tightens the M budget;
+eta itself has no M slot. Additional genuine owners cannot reduce any
+of these charges. This proves (340.1). QED.
+
+The hypotheses of Corollary 340.1 explicitly include an opposite-
+companion receiver (W,V,D,C,V,D). They do not assert that such a receiver
+must exist in every source-face configuration. A receiver with transverse
+companion C, namely (W,V,C,D,V,C), is a different hypothesis and is outside
+the corollary. Theorem 332.1 separately controls transverse pair V,C when
+one axis has the stated source-companion order; it does not provide the
+missing receiver in Corollary 340.1. Other source inventories, the
+remaining M/U-axis patterns, and the full six-edge and general CFMP
+geometric-realization questions are not settled by these implications.
+

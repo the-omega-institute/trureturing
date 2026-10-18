@@ -1,0 +1,5 @@
+source_id = "fib-native-fixed-pole-strict-ground-energy-gap"
+path = "docs/develop/theory/FIB_NATIVE_FIXED_POLE_STRICT_GROUND_ENERGY_GAP.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

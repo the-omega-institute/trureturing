@@ -1,0 +1,5 @@
+source_id = "auric-fib-atom-local-clock-kernel-and-output-resolved-seam-visibility"
+path = "docs/develop/theory/AURIC_FIB_ATOM_LOCAL_CLOCK_KERNEL_AND_OUTPUT_RESOLVED_SEAM_VISIBILITY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

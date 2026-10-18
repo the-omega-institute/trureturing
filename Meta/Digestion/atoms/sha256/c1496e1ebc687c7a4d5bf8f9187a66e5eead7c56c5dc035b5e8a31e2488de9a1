@@ -1,0 +1,28 @@
+**Definition 3.1 (all accessible history assistance).** For each actual
+history supply the joint pure input
+
+$$
+\psi_{k,\beta,m}\otimes\eta_\epsilon,
+\qquad \epsilon=(-1)^m,
+\qquad \|\eta_\pm\|=1,
+\qquad \langle\eta_+,\eta_-\rangle=\mu\in[0,1].
+\tag{PR.8}
+$$
+
+The finite-dimensional calibrated pair $\eta_\pm$ is independent of
+$\beta$ and of the winding within each parity. A fixed ket gauge makes its
+overlap real and nonnegative. The pair represents **all** accessible
+history-bearing assistance jointly: no other accessible correlated archive,
+controller port, copy, timing channel, receiver entanglement or bypass is
+allowed. Knowing $\mu$ alone does not specify the calibrated pair or the
+joint operation. The occupied helper span has dimension at most two.
+
+Other actual fields may remain as spectators, acted on by identity: source,
+preparation and epoch identity, archives, clock and reference, calibration,
+permissions, controller, selectors and update inputs. Their actual joint
+correlations are retained. A spectator is unavailable as assistance to this
+gate. If a guard, selector or gate reads an additional history-bearing field,
+it must be included in the joint assistance and the premise (PR.8) checked
+again. Computing $\mu$ from a marginal while using another correlated port
+does not satisfy this contract.
+

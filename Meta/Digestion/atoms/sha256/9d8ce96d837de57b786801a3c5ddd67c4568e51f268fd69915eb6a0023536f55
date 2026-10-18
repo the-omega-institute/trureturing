@@ -1,0 +1,13 @@
+**Assumption 1.2 (the canonical acquired row).** Fix a common finite prefix-free cut $P$ and the whole-source producer of [SLH, Definitions 59.1–59.3 and Theorem 59.4][SLH]. It starts from common source-independent installed data, actually traverses one source, computes its complete concrete exterior $C$, and computes the entire equality partition $\pi$ of the reached cut subtrees. Its row is $R=(C,\pi)$. Unreached cut addresses remain blocked by concrete strict-prefix leaves of $C$. The cut and all common task data are declared; they cannot themselves select a source.
+
+At the complete row handoff every accessible source-bearing field factors through $R$, and $R$ is recoverable from the accessible boundary. Handles, program selection, schedules, lengths, outputs, control positions, caches, permissions, timing distinctions and archives convey no additional source information. This is a condition on accessible information; it does not require physical destruction of inaccessible material. The earlier acquisition transcript is not available for free.
+
+Write $B$ for the finite set of old equality classes. Every class has at least one reached occurrence; choose its representative address $p_b$ by a common order. The supplied exact row fiber is
+
+$$
+U_R=\{C[(z_{[i]})_i]:z_b\in\mathcal T,\ z_b\ne z_c\ (b\ne c)\}.
+\tag{LRD.2}
+$$
+
+The filling is a bijection from these jointly legal class tuples to sources of this same producer. Equal occurrences share one $z_b$; every different-class disequality is retained, including classes outside a later queried cone. Zero classes give the single empty tuple and the concrete source $C$. An arbitrary source-selective procedure returning a tuple called $(C,\pi)$ is outside this assumption.
+

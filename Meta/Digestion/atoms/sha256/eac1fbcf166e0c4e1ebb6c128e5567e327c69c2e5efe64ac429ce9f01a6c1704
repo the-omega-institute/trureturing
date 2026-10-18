@@ -1,0 +1,43 @@
+### 91.2. Proof with the original leakage retained
+
+The correct-output column map from either input fibre is a contraction, since it is a coordinate projection of the original Stinespring isometry restricted to that fibre. Thus G_ff,H_ff≤I₂. Positivity of Schur multiplication by H_ff gives
+
+\[
+ 0\le K_{ff}\le I_2\odot H_{ff}
+                 =\operatorname{diag}(H_{ff})\le I_2,
+ \qquad L_{ff}\ge0.                                    \tag{9}
+\]
+
+These are properties of the actual channels, not a sufficient physical completion criterion for independently specified blocks.
+
+Fix ρ∈𝒟 and set Q=√ρ. Use the normalized logical/reference state
+
+\[
+ |\Psi_\rho\rangle=\sum_{x,r}Q_{xr}|r\rangle_R\otimes|x\rangle,
+ \qquad x=(f,i),\quad r=(g,j).
+                                                               \tag{10}
+\]
+
+Its squared norm is Trρ=1. Since Q is fibre-block diagonal, every nonzero term has f=g. Project the reference and original physical output onto
+
+\[
+ P=\operatorname{span}\{|f,j\rangle_R\otimes|ff\rangle_{\rm out}:
+                              1\le f\le4,\ j\in\{0,1\}\}.
+                                                               \tag{11}
+\]
+
+In this orthonormal support, direct contraction of (10) gives target matrix (QTQ)ᵀ and actual compressed matrix (QKQ)ᵀ. The formulas hold for complex Q and K. The target lies entirely in P and has trace TrρT=1. The reference-fibre tag prevents wrong-output records from a different input fibre from entering this compression.
+
+Pinch the difference into P and its orthogonal complement. The complementary actual block is positive with trace 1−TrρK. Transposition preserves trace norm, and pinching is trace-norm contractive on Hermitian matrices. Consequently
+
+\[
+ \begin{split}
+ \delta(A,B)
+   &\ge\|QLQ\|_1+1-\operatorname{Tr}(\rho K)\\
+   &=\|QLQ\|_1+\operatorname{Tr}(QLQ)
+     =2\operatorname{Tr}(QLQ)_+.
+ \end{split}                                             \tag{12}
+\]
+
+Maximizing proves (5). In particular the complementary population has not been discarded, and no calibration or trace-zero assumption was used.
+

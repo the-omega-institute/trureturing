@@ -1,0 +1,28 @@
+**Lemma 3.2 (complete remaining equation forms).** Comparing the
+decorated sides of every positive equation produces only
+
+$$
+r=r'+d,\qquad r=d,\qquad U=V+d,
+\tag{NSF.9}
+$$
+
+with fixed integer offsets, together with scalar nonnegativity.
+In the last equation $U,V$ have the same residual shape $w_j$ and
+$+d$ denotes pointwise rank addition. An equation involving a fixed
+rank is interpreted with its actual natural value. Collapse equations
+supply their stated scalar offsets. No equation connects a residual
+block to an explicit scalar, or blocks of different $w_j$ sorts.
+
+Proof. Shape unification has made the two sides of every required code
+equality syntactically the same shape term. For a shift equality,
+traverse those identical terms; each corresponding $c$ compares two
+scalar ranks and each corresponding $w_j$ compares two whole rank
+functions on that same shape. For $Z=F(X,Y)$, compare $S_Z$ with
+$f(S_X,S_Y)$, which are also syntactically identical, and do the same
+traversal with offset zero. Positive equalities are identical traversals.
+A primitive definition has shape $c$. There is consequently no
+comparison of a $c$ with a residual variable or of different residual
+variables. Cancellation of offsets merely writes these constraints in
+(NSF.9). Every original positive equation is recovered by reassembling
+its compared leaves. $\square$
+

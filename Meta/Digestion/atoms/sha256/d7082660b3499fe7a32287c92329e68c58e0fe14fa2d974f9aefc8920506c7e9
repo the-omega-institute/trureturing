@@ -1,0 +1,30 @@
+## 1. Result and its precise scope
+
+A finite same-update predictor can change its complete forecast on an acquired return without changing its next-alpha probability on the suspended-alpha update. The two properties are distinct. On the unchanged stopped Fibonacci source, nearly optimal common configuration risk requires both. The complete-return requirement is supplied by [MOTION]. This article proves the second requirement, through a source-specific endpoint calibration inequality on the same two acquired flows.
+
+Let
+
+$$
+\eta=\frac{14219478376}{318644812890625}>0,
+\qquad \kappa=\eta^2/64.
+\tag{1.1}
+$$
+
+For an allowed finite observer $M$, write
+
+$$
+e(M)=\max_{s\in\{p,\beta\}}
+\{R_{\mathrm{conf},s}(M)-\rho_s\}.
+$$
+
+At a positive suspended acquired history $h$, let $\rho_h(y)$ be its configuration row, $A_h(y,x)$ its actual alpha-update kernel, $v_y$ its current next-alpha probability, and $u_x$ the successor p configuration's next-alpha probability. Define
+
+$$
+\mathcal A_h(M)=\sum_{y,x}\rho_h(y)A_h(y,x)|v_y-u_x|,
+\qquad
+\mathcal A(M)=\sup_{h\in\mathcal H_\beta}\mathcal A_h(M).
+\tag{1.2}
+$$
+
+The probability row is an analysis object. Runtime receives no row, posterior or new observation.
+

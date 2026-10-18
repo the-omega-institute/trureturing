@@ -1,0 +1,41 @@
+**Theorem 25.3 (Exact first separating horizon for $K=\{1,2,4\}$).** Let $H=4$, $K=\{1,2,4\}$ and fix any positive $p_1,p_2,p_4$ summing to one. The least coherent horizon at which $T_n$ separates all affine phase orbits is exactly six. Every $T_n$ for $0\le n\le5$ is independent of all phases. At horizon six,
+
+$$
+\boxed{
+\langle010100|T_6(\theta)|001001\rangle
+=c_1^2c_4\overline{c_2}^{\,3}
+=p_1p_2^{3/2}\sqrt{p_4}\,
+e^{i(2\theta_1-3\theta_2+\theta_4)}.}
+\tag{25.29}
+$$
+
+The two quadratures of this coherence give a six-outcome terminal POVM separating the affine, channel and labeled-instrument orbits in this family. With the heralding construction, each trial uses at most eleven instrument applications, six of them coherent.
+
+Proof. Solving the two integer equations gives
+
+$$
+L_K=\mathbb Z(2,-3,1).
+\tag{25.30}
+$$
+
+In particular this vector is a primitive generator, so its circle-valued character is complete by (25.21). For these parameters,
+
+$$
+x=c_4e_0+c_2e_2+c_1e_3,\qquad S^2x=c_4e_2+c_2e_4.
+\tag{25.31}
+$$
+
+The words $010100=(01)(01)00$ and $001001=(001)(001)$ both have length six and count two. By (25.14) their memory amplitudes are $c_1^2S^2x$ and $c_2^2x$. Their only common nonzero memory coordinate is $e_2$, yielding (25.29). Its coefficient is nonzero for every allowed fixed $p$.
+
+For the lower bound, take any equal-count pair of length-$n$ words with $n\le5$ and nonzero history amplitudes. Their common count is $m$, and every completed block has length at least two, so $m\le2$. In every summand of their entry (25.15), the exponent is
+
+$$
+z=a+\mathbf e_k-b-\mathbf e_l\in L_K,
+\qquad \sum_jz_j^+\le m+1\le3.
+\tag{25.32}
+$$
+
+Every nonzero multiple of $(2,-3,1)$ has positive degree at least three. Thus $z\ne0$ would force $m=2$ and $z=\pm(2,-3,1)$. Reverse the words if necessary. Both nonnegative vectors $a+\mathbf e_k$ and $b+\mathbf e_l$ have total degree three. Since $z^+$ and $z^-$ also have degree three, there is no common part to cancel: they must equal $z^+$ and $z^-$ respectively. The negative side is three copies of label $2$, so $l=2$ and $b$ consists of two completed gaps of length two. That word already contains $(001)(001)$ in completed blocks and therefore has length at least six, a contradiction.
+
+Every summand in every equal-count entry for $n\le5$ consequently has exponent zero and is independent of $\theta$. Invalid histories and unequal-count entries are zero independently of $\theta$. This proves phase independence of the whole density at every shorter horizon. Use (25.24)–(25.26) with $u=010100$, $v=001001$, $M=1$, $N=6$ and positive coefficient $p_1p_2^{3/2}\sqrt{p_4}$. The two probability differences recover the real and imaginary parts of (25.29), hence the complete character of (25.30). This proves sufficiency at six. For comparison, the complete-tick construction (25.6) has $m=3,s=6$, hence length nine; its version with a common $0^4$ tail has length thirteen. The improvement to six uses unequal terminal tails and their actual common memory coordinate. $\square$
+

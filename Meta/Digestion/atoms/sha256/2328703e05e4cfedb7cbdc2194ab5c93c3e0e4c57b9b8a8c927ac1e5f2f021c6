@@ -1,0 +1,8 @@
+**Definition 8.2 (negative certificates).** Negative verification uses
+the same exhaustive regenerated inventory, whole outputs, replies and
+entry paths. One negative type identifies an actual retained cell with
+$G_\eta=\varnothing$ and supplies its ground image filling. The other
+has (A) true but no passing ordered pair in (B), as checked over the
+entire finite inventory using its exact multiplicities. Both require
+recomputation rather than trusting flags or a list of sampled sources.
+

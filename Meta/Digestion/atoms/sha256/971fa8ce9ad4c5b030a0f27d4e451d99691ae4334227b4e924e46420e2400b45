@@ -1,0 +1,50 @@
+**命题 468.3（实际单素数与有限素数集合的逆预算）。** $T_p$ 的幂零阶准确为 $K_p(N)$，并且
+
+$$
+\boxed{\|U_p^{-1}\|_\infty
+=\sum_{j=0}^{K_p(N)-1}p^{-j}
+=\frac{1-p^{-K_p(N)}}{1-p^{-1}}
+<\frac p{p-1}.}
+\tag{FG.8}
+$$
+
+若 $S$ 为有限素数集合，则对全部 $f\in V_N$ 和 $0\le k\le N$，
+
+$$
+\left(\prod_{p\in S}U_p^{-1}\right)f(k)
+=\sum_{\substack{1\le d\le k\\\text{every prime divisor of }d\text{ lies in }S}}
+  \frac1d f(\lfloor k/d\rfloor).
+\tag{FG.9}
+$$
+
+相应完整范数准确为
+
+$$
+\boxed{\left\|\prod_{p\in S}U_p^{-1}\right\|_\infty
+=\sum_{\substack{1\le d\le N\\\operatorname{supp}(d)\subseteq S}}\frac1d
+\le\prod_{p\in S}\frac p{p-1}.}
+\tag{FG.10}
+$$
+
+其中 $\operatorname{supp}(d)$ 表示 $d$ 的素因子集合，故 $d=1$ 在每个 $S$ 的和中出现一次。
+
+**证明。** 令 $K=K_p(N)$。由 $p^K>N$，已有 $T_p^K=0$；由最小性，$p^{K-1}\le N$。取 $f=u_N$，在 $k=p^{K-1}$ 处得到 $T_p^{K-1}f(k)=1$，所以此幂不为零，幂零阶恰为 $K$。
+
+FG.3 中各系数 $p^{-j}$ 非负，所以逆算子的范数不超过全部有限几何权之和。在 $k=N$ 处取 $f=u_N$，其范数为一，且对每个 $j<K$，$\lfloor N/p^j\rfloor\ge1$，因而达到全部权和。这证明 FG.8 的准确等号，有限几何求和给其闭式与严格上界。
+
+对有限 $S$，每个逆算子都是有限幂和。唯一素分解把各 $p$ 的幂次元组组合成唯一整数 $d$，权恰为 $1/d$。若 $d\le k\le N$，每个幂次自动小于 $K_p(N)$；其余元组的整数商为零，相应项为 $f(0)=0$。这给出 FG.9，没有漏掉任何可行 $d$，也没有重计系数。
+
+FG.9 的权全部非负，故算子范数不超过 $d\le N$ 的完整权和。在 $k=N$ 处取 $f=u_N$，每个允许的 $d$ 都给 $f(\lfloor N/d\rfloor)=1$，所以此上界准确达到。与各素数的完整几何和比较便得到 FG.10。证毕。
+
+固定有限小素数集合 $S$ 的去除因而有固定预算；若 $S=P_N$ 随截止增长，则每个 $d\le N$ 的素因子都在 $S$ 中，准确逆算子范数变为普通调和和 $\sum_{d\le N}1/d$，随 $N$ 增长。
+
+FG.6 结合 FG.9 还给同一实际前缀的完整卷积：
+
+$$
+\boxed{\sum_{1\le d\le k}\frac1d H(\lfloor k/d\rfloor)=1
+\quad(1\le k\le N).}
+\tag{FG.11}
+$$
+
+**证明。** 用 $S=P_N$ 的实际逆算子积作用于 FG.6，右边恢复 $u_N$，左边由 FG.9 展开。对 $d\le k\le N$，素因子条件自动成立，且 $u_N(k)=1$，就是 FG.11。对任意整数 $k\ge1$，取 $N=k$，即得该卷积身份在所有正截止上的陈述。证毕。
+

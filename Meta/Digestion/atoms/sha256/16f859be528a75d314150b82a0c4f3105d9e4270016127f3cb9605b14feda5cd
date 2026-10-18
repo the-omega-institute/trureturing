@@ -1,0 +1,62 @@
+**Theorem 49.2 (full principal uplift and enclosure).** For each separately fixed finite $M\ge M_{0,d}$,
+
+$$
+\begin{gathered}
+\mathcal Q_s-\mathcal B_s(h)=O_{d,M}(s^8),\\
+0<\frac{B_{\log}}{\mu C_*}
+\le\liminf_{s\downarrow0}
+ \frac{k_d(Ms^8)-\mathcal B_s(Ms^8)}{s^8\log(1/(Ms^6))}\\
+\le\limsup_{s\downarrow0}
+ \frac{k_d(Ms^8)-\mathcal B_s(Ms^8)}{s^8\log(1/(Ms^6))}<\infty.
+\end{gathered}
+\tag{49.2}
+$$
+
+In particular this difference is positive and of order $s^8\log(1/(Ms^6))$. Also, with exactly $\mathscr A$ from (32.6),
+
+$$
+\begin{aligned}
+k_d(Ms^8)&=\ell_s+\mathscr A W_{1,d}(o)s^5+O_{d,M}(s^6),\\
+s^{-5}\{k_d(Ms^8)-\ell_s-\mathscr A W_{1,d}(o)s^5\}&\longrightarrow0.
+\end{aligned}
+\tag{49.3}
+$$
+
+Proof. Subtract (49.1) from (35.13) exactly:
+
+$$
+\mathcal Q_s-\mathcal B_s(h)
+ =\frac{-2\operatorname{Re}\langle y_s,Dx_s\rangle
+       +2\operatorname{Re}\langle x_s,L^hy_s\rangle
+       +\langle y_s,Ry_s\rangle}{n_s}.
+\tag{49.4}
+$$
+
+The last two terms have orders $s^8,s^{10}$ by (46.3), and the remaining term has magnitude at most $Cs^5hs^{-1/2}=CMs^{25/2}$ by (35.11) and $\|y_s\|_2\le Cs^5$. This proves the first line of (49.2).
+
+Write $v_s=\|(\mathscr K_s(h)-\mathcal Q_s)z_s\|_2^2$ and $k=k_d(h)$. Spectral positivity of the full selfadjoint compact operator gives $t^2\le kt$ for every point of its spectrum, hence
+
+$$
+v_s\le\mathcal Q_s(k-\mathcal Q_s).
+\tag{49.5}
+$$
+
+The fixed compact spectral separation of Theorem 35.1 gives $k_2\le C_*-3\zeta$ and $\mathcal Q_s\to C_*$; its upper variance inequality (35.19) is
+
+$$
+0\le k-\mathcal Q_s\le v_s/(\mathcal Q_s-k_2).
+\tag{49.6}
+$$
+
+Since $v_s\to0$, this also proves $k\to C_*$ at each fixed $M$, without asserting norm convergence of the reconstruction at fixed $M$. Divide (49.5)–(49.6) by $s^8\log(1/b)$ and use (48.1). The lower limit is at least $B_{\log}/(\mu C_*)$, and the upper limit is finite since $\mathcal Q_s-k_2$ stays positive. Equation (49.4) has zero normalized limit, proving the full enclosure. The two spectral inequalities do not identify an exact uplift coefficient.
+
+For (49.3), reuse the endpoint and input estimates (43.3), which require no vanishing coefficient, and the $O(s)$ early-vector estimate in the proof of (35.5). In particular $m_s=\mu+O(s)$, $\delta_s=W_1(o)s^5+O(s^6)$, and $\ell_s=C_*+O(s)$; the last follows also from (24.13) and its isolated Riesz projection. At $b=Ms^6$,
+
+$$
+\langle x_s,L^hx_s\rangle
+ =j_0A_p^2W_1(o)s^5+O_d(s^6)+O_{d,M}(s^8).
+\tag{49.7}
+$$
+
+The damping scalar is $O(h)=O_M(s^8)$. The cross and self scalars have the improved orders (46.3), and (49.6) bounds the quotient-to-principal difference by $O_{d,M}(s^8\log(1/b))=o_{d,M}(s^6)$. Inserting these facts in (35.13) gives (49.3), because $(C_*+j_0A_p^2)/\mu=\mathscr A$. Every finite $M$ was fixed before its $s$ limit; no hidden uniform limit in $M$ is used. $\square$
+

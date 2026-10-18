@@ -1,0 +1,25 @@
+**Definition 5.1 (finite boundary scalars).** For $i=F,R$ and
+$\sigma,\upsilon\in\{\pm1\}$ put
+$$
+\begin{gathered}
+h_{i,\sigma,\upsilon}=(1,\sigma\sqrt{u_i},\upsilon\sqrt{v_i}),\\
+L_{F,\sigma,\upsilon}
+ =|\ell(h_{F,\sigma,\upsilon})+t\mathfrak c_f f(h_{F,\sigma,\upsilon})|,
+\qquad L_{R,\sigma,\upsilon}=|\ell(h_{R,\sigma,\upsilon})|,\\
+M_i=\tfrac14\sum_{\sigma,\upsilon}L_{i,\sigma,\upsilon},\quad
+Z_i=\tfrac14\sum_{\sigma,\upsilon}\sigma L_{i,\sigma,\upsilon},\quad
+Y_i=\tfrac14\sum_{\sigma,\upsilon}\upsilon L_{i,\sigma,\upsilon},\\
+k_z=\frac{q\sqrt{u_F}}{(1-q)\sqrt{u_R}},\qquad
+B_z=q\left(Z_F-\sqrt{u_F/u_R}\,Z_R\right).
+\end{gathered}
+\tag{GC.17}
+$$
+For $t>t_0$ also set
+$$
+k_w=\frac{q\sqrt{v_F}}{(1-q)\sqrt{v_R}},\qquad
+B_w=q\left(Y_F-\sqrt{v_F/v_R}\,Y_R\right),\qquad
+t_b=t_0+\nu.
+\tag{GC.18}
+$$
+No formula involving $1/\sqrt{v_R}$ is used at the floor.
+

@@ -1,0 +1,44 @@
+**Definition 2.1 (Weighted actual tests and tensor notation).** Use mode
+weights
+
+$$
+a=(9/4,3/4,5/4,3/4,0),\qquad
+w=a/5=(9/20,3/20,1/4,3/20,0).
+\tag{2.1}
+$$
+
+For any CPTP $\widehat T$, put
+$f_s(t)=\operatorname{tr}(Q_s(t)\widehat T(Q_s(t)))$ and
+$g(t)=\sum_sw_sf_s(t)$.
+Use output-first normalized Choi matrices
+
+$$
+\Omega=5^{-1/2}\sum_se_s\otimes e_s,\qquad
+\chi_T=(\widehat T\otimes\mathrm{id})(\Omega\Omega^\dagger),
+\qquad \operatorname{Tr}_{\rm out}\chi_T=I_5/5.
+\tag{2.2}
+$$
+
+Let $\Gamma$ transpose the input tensor factor. Let $\mathsf F$ be swap,
+$\eta_j=\operatorname{vec}(R_j)=\sum_{a,b}(R_j)_{ab}e_a\otimes e_b$,
+and define
+
+$$
+\begin{gathered}
+I_j=R_j\otimes R_j,\quad F_j=I_j\mathsf F,\quad
+E_j=\eta_j\eta_j^\dagger,\\
+I_{jk}=R_j\otimes R_k+R_k\otimes R_j,\quad F_{jk}=I_{jk}\mathsf F,\quad
+E_{jk}=\eta_j\eta_k^\dagger+\eta_k\eta_j^\dagger\quad(j<k).
+\end{gathered}
+\tag{2.3}
+$$
+
+Order the sector labels as $(0,+,-)$. Choi matrices are mathematical
+representations of the system channel; (2.2) introduces no reference
+performance test. The rank-one Kraus, measure-and-prepare and complex
+separable-Choi equivalences are
+[Horodecki–Shor–Ruskai, *Entanglement Breaking Channels*, Theorem 4(A–D)](https://arxiv.org/html/quant-ph/0302031)
+and QMB Theorem 5.1. In particular a legal scalar port has
+$\chi_T\ge0$, $\chi_T^\Gamma\ge0$ and the displayed TP marginal.
+The marginal is an additional constraint, not a consequence of separability.
+

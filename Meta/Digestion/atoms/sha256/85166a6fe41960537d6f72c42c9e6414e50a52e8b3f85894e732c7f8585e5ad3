@@ -1,0 +1,58 @@
+**Theorem 8.3 (Linear discrepancy against one global candidate).** For every $n\ge1$,
+
+$$
+\left\lfloor\frac{n-1}{7}\right\rfloor\beta\delta_*
+\le\mathscr R_{2,n}(\mu_n)\le n.
+\tag{8.9}
+$$
+
+These global minima are finite and attained. In particular
+
+$$
+\liminf_{n\to\infty}\frac{\mathscr R_{2,n}(\mu_n)}n
+\ge\frac{\beta\delta_*}{7}
+\ge\frac{\beta\,6^{-24}\Delta_6^2}{336}>0.
+\tag{8.10}
+$$
+
+Proof. Put $J_n=\lfloor(n-1)/7\rfloor$ and choose the disjoint intervals
+
+$$
+C_j=[2+7j,7+7j],\qquad0\le j<J_n.
+\tag{8.11}
+$$
+
+Their adjacent exterior sites $1+7j$ and $8+7j$ lie in $[1,n]$; the last right anchor is $7J_n+1\le n$. Let
+$H_j=\{X_{1+7j}=X_{8+7j}=1\}$.
+Proposition 7.1 gives $\mu_n(H_j)=\beta$ exactly. On each supported entire complement $\eta$ in $H_j$, the reference conditional
+
+$$
+\nu_j^\eta=\mu_n(X_{C_j}=\cdot\mid X_{[1,n]\setminus C_j}=\eta)
+\tag{8.12}
+$$
+
+equals $r_*$. This is a full-complement identity, not an identification with a stand-alone block marginal.
+
+Fix an arbitrary single global $r\in\mathscr F_{2,n}^{0,0}$ before doing any minimization. Both $\mu_n$ and $r$ are positive on all of $B_n$, so exactly the extendible complements have positive mass under each. For such $\eta$ let $r_j^\eta$ be the conditional under this same $r$. If its actual adjacent bits are $\xi_j,\zeta_j$, the insertion inequalities persist on $K_6^{\xi_j,\zeta_j}$. At an internal cut of $C_j$, fixing the entire outside prefix selects rows of the corresponding global cut, and fixing the entire outside suffix selects columns. Dividing by the positive $r$ complement mass gives the conditional cut matrix. Restriction and positive scaling preserve nonnegative rank at most two. Thus
+$r_j^\eta\in\mathscr F_{2,6}^{\xi_j,\zeta_j}$.
+
+For a site in $C_j$, conditioning inside the block after observing $\eta$ means conditioning on all other $n-1$ bits. Disintegrating the site discrepancies therefore gives exactly
+
+$$
+\begin{aligned}
+\sum_{i\in C_j}\mathbb E_{\mu_n}(p_{n,i}-r_i)^2
+&=\mathbb E_{\mu_n}\mathcal D_{K_6^{\xi_j,\zeta_j}}
+(\nu_j^\eta\Vert r_j^\eta)\\
+&\ge\mathbb E_{\mu_n}\delta_{2,6}^{\xi_j,\zeta_j}(\nu_j^\eta)
+\ge\beta\delta_*.
+\end{aligned}
+\tag{8.13}
+$$
+
+The last inequality retains $H_j$, where both boundary bits are one and the reference conditional is exactly $r_*$; all other contributions are nonnegative. Each expectation and event weight is under the single reference marginal $\mu_n$. All comparison conditionals in the first line are slices of the same fixed $r$.
+
+Disjointness of the $C_j$ counts each scored site at most once. Endpoints and separator sites are still present in (2.2); their nonnegative discrepancies are simply unused in this lower bound. Sum (8.13) to get
+$\mathcal D_{B_n}(\mu_n\Vert r)\ge J_n\beta\delta_*$ for every global candidate, and only now minimize over $r$. Lemma 8.1 and (2.7) ensure a nonempty compact family and attainment, and its exhibited competitor has discrepancy at most $n$. For $n<8$ there are no blocks and the lower bound is just nonnegativity; it does not claim that the actual minimum vanishes.
+
+Finally $J_n/n\to1/7$ gives (8.10). Adjacent blocks share an anchor and their events can be dependent. The paid expected event count is exactly $J_n\beta$ by linearity of expectation. No independence, empirical-frequency theorem or simultaneous choice of independently minimized kernels is used. This is the conditional-slicing consumer from [Guarded, Theorem 7.1] and [Global-local, Premise 1.4], applied to the one stationary comparison law. $\square$
+

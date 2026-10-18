@@ -1,0 +1,47 @@
+**Theorem 5.3 (closed joining prices and the fixed-$z$ correction).**
+For the full box with exactly the old relative profile $v$ retained,
+joining distinct components $C,F$ requires exactly
+
+$$
+J_v(C,F)=L_C+L_F+1=2H-w_C-w_F+1
+\tag{SCC.25}
+$$
+
+labels on that fiber. Its maximum over old profiles is $2H+1$.
+On the fixed-$z$ fiber $A_c$, with exactly $v$ additionally retained,
+the count remains (SCC.25) if neither component contains zero.
+If $C=C_0$, it becomes
+
+$$
+J_{c,v}(C_0,F)=L_F+1=H-w_F+1;
+\tag{SCC.26}
+$$
+
+if $F=C_0$, exchange $C,F$. The maximum in either pinned joining
+case is $H+1$.
+
+Proof. In the full independent residual box, every integer in
+$[-L_C,L_F]$ is a value of $u_F-u_C$: use $(u_C,u_F)=(0,d)$
+for $d\ge0$ and $(-d,0)$ for $d\le0$. No other value is possible.
+This proves (SCC.25), and profiles zero on both components attain
+its maximum.
+
+If neither joined component contains zero, pinning $u_{C_0}$ leaves
+their two intervals independent. If $C=C_0$, write the fixed value
+as $h=c-v_0$. The new differences are exactly
+$\{-h,1-h,\ldots,L_F-h\}$, of size $L_F+1$. Setting $v=0$
+on both joined components is feasible for every $c\in[0,H]$ and
+attains $H+1$. The reversed case has the negated interval and the
+same size. $\square$
+
+An arbitrary old code may already encode all or part of the bridge
+translation. Then (SCC.23), rather than the product-box formula,
+is the answer, possibly one. Even when its size is known, the
+missing difference cannot be synthesized from the old profile:
+if (SCC.23) exceeds one, Theorem 2.2 supplies actual indistinguishable
+histories for any code that still merges two of its values.
+A later paid common-version acquisition of both references can
+supply the offset by AAR 6.3, but it changes the port and cost
+contract. Alternatively the larger switch graph must be supported
+by the early export.
+

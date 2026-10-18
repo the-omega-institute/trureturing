@@ -1,0 +1,21 @@
+**Corollary 2.7 (cancellation shortcut).** Let $F_z(v)$ denote the fresh
+suffix-cost component of the declared response from residual state $z$.
+Let $\sigma_{x,p}$ and $\oplus_{x,p}$ be the separately declared transport
+and combination map from that fresh suffix response into the aggregate type
+at the cut $x$.  Suppose the aggregate and fresh costs satisfy the typed
+cocycle
+
+$$
+A_x(pv)=A_x(p)\mathbin{\oplus_{x,p}}
+\sigma_{x,p}\!\left(F_{T_px}(v)\right),
+$$
+
+and, on attainable states, left cancellation (or injectivity of
+$r\mapsto a\oplus_{x,p}\sigma_{x,p}(r)$) holds for the common prefix value
+$a=A_x(p)=A_y(p)$.  In addition, the combination and transport maps are
+contract-global, or factor through $K_0$ (so $K_0$-related $x,y$ have the same
+$\sigma_{x,p}$ and $\oplus_{x,p}$).  Then $K_0$ is already forward
+invariant, so $K_0=K$.
+This is sufficient, not necessary: a particular noncancellative system may
+still satisfy $K_0=K$ for other reasons.
+

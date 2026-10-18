@@ -1,0 +1,47 @@
+**Theorem 4.4 (workspace bound without a snapshot).** In the storage model of
+Definition 2.1, RA has peak auxiliary mutable storage, excluding candidate
+and dedicated operand payloads but including all their heads and control,
+
+$$
+W_{\rm aux}=O\bigl(H+1+\log_2(F+K+H+2)\bigr)
+           =O\bigl(H+1+\log_2(K+2)\bigr)\quad\hbox{bits}.
+\tag{CWS.7}
+$$
+
+The same bound includes all failed attempts. The dedicated operand payload
+has at most $4(H+1)$ bits. Total observer-plus-port storage is at most
+
+$$
+I_{\rm code}+4K+4F+O(H+1+\log_2(K+2))
+\quad\hbox{bits},
+\tag{CWS.8}
+$$
+
+including the candidate. The actual retained output is $4s$ bits, not the
+worst-case bound $4F$. On Return the row-only handoff has no source-dependent
+auxiliary state beyond that row.
+
+Proof. Only a constant number of path words is live, each of length at most
+$H$: long absent words on the cut tape are compared in place and never copied.
+The explicit comparisons materialize their whole operands; those are billed
+separately. All scalar registers index the input, paths or candidate, or count
+at most $M$ holes/pairs. Their values are bounded by a polynomial in
+$F+K+H+2$, and a fixed number of binary registers therefore uses logarithmic
+width. There is no recursion stack or per-node pointer collection. Tapes grow
+by the stated single-cell operations and failed regions are cleared and
+retracted, so live peaks do not accumulate with the number of attempts.
+
+Since a binary tree of height $H$ has $N\le2^{H+1}-1$ and $M\le K$,
+$\log(F+K+H+2)=O(H+1+\log(K+2))$. Adding the disjoint payload accounts
+proves (CWS.8). Multiplication by the constant four converts sequence cells
+to bits; registers were already in bits. No mixed cell/bit sum is used.
+
+For row-only handoff, reset every guard, cursor, reply latch, index and
+control register to a source-independent state; clear and retract all
+nonoutput regions, including failure residue and operand capacity. Use a
+fixed output region identity and a canonical extent depending only on its
+row bytes. Do not expose earlier allocation extents, pointer identities,
+freelists or elapsed-work counters. This finite cleanup is paid computation.
+If a host instead preserves those fields, its handoff is richer and the
+last assertion does not apply. $\square$
+

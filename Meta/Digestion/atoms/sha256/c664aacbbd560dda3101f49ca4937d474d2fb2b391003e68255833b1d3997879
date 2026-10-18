@@ -1,0 +1,25 @@
+## 3. 条件零响应定理
+
+对有限区间 $C=[1,L]$、$L\ge1$，取任意 $f:B_L\to\mathbb R$，置 $f_C=f(X_1,\ldots,X_L)$、$F=\max_{w\in B_L}|f(w)|$、$\mathcal H_C=\sigma(X_j:j\notin C)$。一般定理的方向假设是同一个达到律 $P$ 下的
+
+$$
+\mathbb E_P[f_C\mid\mathcal H_C]=0.
+\tag{3.1}
+$$
+
+矩阵充分条件另有明确对应：对任意 $\theta\in\Theta_N$，在实际律 $P=P_\theta$ 下，若
+
+$$
+\sum_{w\in B_L}f(w)M_w=0,
+\tag{3.2}
+$$
+
+则（3.1）成立，不需先假设达到。确实，对任意有限外部柱集 $H$，未指定位的发射相加为 $A$，同一 $J_\theta$ 的联合概率给
+
+$$
+\mathbb E_{P_\theta}[\mathbf1_Hf_C]
+=\lambda U\Big(\sum_{w\in B_L}f(w)M_w\Big)V\mathbf1=0.
+$$
+
+$U,V$ 是对应外部指定及缺失坐标的有限矩阵乘积；有限并用线性性处理。包括没有左右外部指定的空乘积。有限柱生成 $\mathcal H_C$，有界单调类扩张给（3.1）。矩阵式只对其所表示的 $P_\theta$ 作此推论；应用下面定理还须 $d(P_\theta)=c_\star$。
+

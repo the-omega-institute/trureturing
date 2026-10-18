@@ -1,0 +1,12 @@
+### 94.1. Original problem and precise scope
+
+Retain the original local CPTP maps A,B:C⁸→C⁴, four fibres of two coordinates, correlated input encoding |f,i〉↦|f,i〉|f,i〉, output encoding |f〉↦|ff〉, and arbitrary-reference unhalved diamond error. On the calibrated domain, the local Grams satisfy G,H≥0 and G_ff=H_ff=I₂. With T_ff=I₂ and T_fg=J₂/2 for f≠g, section 91 gives the exact objective
+
+\[
+ F(G,H)=\max_{(\rho,W)\in\mathcal C}
+       2\operatorname{Tr}[(T-G\odot H)W],\qquad
+ \mathcal C=\left\{(\rho,W):\rho=\bigoplus_f\rho_f\ge0,
+                 \ \operatorname{Tr}\rho=1,\ 0\le W\le\rho\right\}.
+                                                                    \tag{1}
+\]
+

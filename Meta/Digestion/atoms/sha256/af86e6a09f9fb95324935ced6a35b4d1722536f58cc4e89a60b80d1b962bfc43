@@ -1,0 +1,22 @@
+**Scope and reuse status.** This is ordinary application exposition of
+the existing `repo-derived` results, not an additional mathematical
+increment. Theorem 4.2 supplies the feedback classification; (ARH.4.2)–
+(ARH.4.3) supply transport, index injectivity and guarded addresses;
+Theorems 5.2 and 6.1 supply the orbit/history and complete-row machinery.
+The explicit root-exchange correspondence, finite interval intersection
+and prefix embedding only specialize those results. Definitions 1.1–1.2,
+Assumption 1.3, Proposition 2.1 and (ARH.2.3) retain their full source,
+acquisition and service conditions. No new lemma, invariant, complexity
+bound or non-bind-only theorem is asserted here. No general cyclic
+normalizer or automaton closure under constructor offsets is used.
+
+Arbitrary additional $H_{\rm rel}$, arbitrary guarded coupled cyclic
+interpreted equations, and unsupported target comparisons in the earlier
+recognizers remain outside this result. In particular the unrestricted
+decision of Definition 9.1 and §25 remains open. The present negative
+quantifiers concern the specified retained tail and specified whole-row
+task only. They prove neither general impossibility nor undecidability.
+General mixed-history minimum prices, joint resource optima and the
+stochastic targets listed in §25 are unchanged. No new formal or kernel
+result, implementation, independent approval or publication is claimed.
+

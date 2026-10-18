@@ -1,0 +1,8 @@
+**Definition 5.2 (unary comparison).** Given sealed $U(x),U(y)$ with heads
+at their first symbols, use the following finite control. Read the current
+left symbol; read the current right symbol in a distinct latch. If both
+are one, move both heads right and return to the first read. Otherwise
+exit as equal for $(0,0)$, smaller for $(0,1)$ and larger for $(1,0)$.
+The newly read bit tests are native successor choices. No value is read
+through a mathematical index.
+

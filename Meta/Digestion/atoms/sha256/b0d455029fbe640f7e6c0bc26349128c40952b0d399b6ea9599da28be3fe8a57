@@ -1,0 +1,17 @@
+**Proposition 5.2 (what target revelation order changes).** If the
+target $p$ is known before preparation, its sufficient predictive
+alphabet has at most $2|p|+1$ values and is acquirable in exactly
+$\lceil\log_2(|p|+1)\rceil$ worst-case native Reads on this family,
+with no later Read. By contrast, the late-target contract requires
+the growing retained-bit bound (LTR.17). If the whole public menu
+is predicted with zero later Reads, its exact alphabet and acquisition
+price are already fixed-menu suppliers.
+
+Proof. Directly reuse AAR Theorem 13.8 for singleton acquisition,
+Definition 13.2 and Proposition 13.3 for its at-most-$2|p|+1$
+descriptor alphabet, and Theorem 12.6 for the minimum predictive
+alphabet. Theorem 16.8 prices acquisition for a known joint menu.
+For zero later Reads take $P=\mathcal P_D$ in AAR §§12 and 16;
+no new endpoint theorem is needed. The late-request bound follows
+from Theorem 5.1 on a single preparation independent of $p$. $\square$
+

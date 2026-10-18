@@ -1,0 +1,30 @@
+**定理 32.5.1（无单调性的两项抵消）。** 保持定义 32.1.1 的工具独立性、非退化工具边缘、一致性与排除限制，只撤去单调性时，
+
+$$
+\boxed{
+\Delta_A=\pi_C-\pi_D,
+\qquad
+\Delta_Y=\pi_C\tau_C-\pi_D\tau_D.
+}
+$$
+
+若分母非零，Wald 比值为
+
+$$
+\boxed{
+\frac{\Delta_Y}{\Delta_A}
+=
+\frac{\pi_C\tau_C-\pi_D\tau_D}{\pi_C-\pi_D},
+}
+$$
+
+一般不等于 complier 层的局部效应。
+
+**证明。**
+
+never 与 always 在两种工具值下的处理不变，因此对两项差异均贡献零。complier 的处理差为 $+1$，defier 的处理差为 $-1$；结果差分别是 $Y_1-Y_0$ 与其带负号的贡献。按主层求和即得两式。证毕。
+
+单调性正是把 defier 质量置零的结构门；没有这道门，Wald 比值的量词必须保留为两类主层的加权比，而不能简称为 LATE。
+
+<a id="section-32-6"></a>
+

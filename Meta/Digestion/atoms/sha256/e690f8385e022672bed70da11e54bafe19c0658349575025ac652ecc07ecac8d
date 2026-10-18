@@ -1,0 +1,28 @@
+**Definition 68.1 (the reused base and the allowed perturbations).** Use the original-real class of Definition 52.1 and the unhalved full-reference norm of (S.3). Fix $a=\beta=1/2$ and a real output orthonormal frame $(b_1,g_1,b_2,g_2,h)$. The following base encoder is exactly Definition 48.1, (R.244), of the [first volume](AURIC_OMEGA_FULL_INPUT_RECOVERY_CERTIFICATES.md#48-an-explicit-half-beta-encoder-with-two-complementary-certificates), under $(b_1,g_1,b_2,g_2,h)=(e_0,e_1,e_2,e_3,e_4)$ and $K_1^0=K_0$, $K_2^0=K_1$ there:
+
+$$
+\begin{aligned}
+t_1&=\frac{b_1+g_2+2h}{2\sqrt2},&
+t_2&=\frac{g_1-b_2}{2\sqrt2},\\
+K_1^0&=[b_1/\sqrt2,g_1/\sqrt2,t_1],&
+K_2^0&=[b_2/\sqrt2,g_2/\sqrt2,t_2],\\
+N_0(X)&=\sum_{\alpha=1}^2K_\alpha^0X(K_\alpha^0)^\dagger.
+\end{aligned}
+\tag{S.112}
+$$
+
+Let $Q\in M_5(\mathbb R)$ be any real symmetric density, including singular densities. Choose its real spectral factorization $Q=\sum_{\ell=1}^s q_\ell q_\ell^T$ with linearly independent $q_\ell$ and $s=\operatorname{rank}Q\in\{1,2,3,4,5\}$. Set
+
+$$
+\begin{gathered}
+0<\epsilon\leq\frac1{128},\qquad d_\epsilon=\sqrt{1-\epsilon},\\
+K_1^{\epsilon,Q}=[b_1/\sqrt2,g_1/\sqrt2,d_\epsilon t_1],\qquad
+K_2^{\epsilon,Q}=[b_2/\sqrt2,g_2/\sqrt2,d_\epsilon t_2],\\
+K_{2+\ell}^{\epsilon,Q}=[0,0,\sqrt\epsilon q_\ell],\qquad
+N_{\epsilon,Q}(X)=\sum_{\alpha=1}^{2+s}K_\alpha^{\epsilon,Q}X(K_\alpha^{\epsilon,Q})^\dagger.
+\end{gathered}
+\tag{S.113}
+$$
+
+The symbol $d_\epsilon$ is unrelated to the threshold defect $d=1-T$ of (S.3). The parameter $\epsilon$ here is a channel perturbation, not the center tail mass of Section 59. The base $\epsilon=0$ is used only for comparison and is outside the asserted rank-three-through-seven family.
+

@@ -1,0 +1,12 @@
+**Lemma 3.2 (the entire singular locus).** Direct expansion gives
+
+$$
+K(z)=\begin{pmatrix}h_0u&av&cw\\bv&h_1u&0\\dw&0&h_2u\end{pmatrix},\qquad
+\det K(z)=h_0h_1h_2u(u^2-\alpha v^2-\beta w^2).
+\tag{RG.17}
+$$
+
+Every nonzero singular $K(z)$ has rank two. The singular directions are the full complex plane $u=0$ together with the full complex quadratic locus $z^TBz=0$. Every such direction satisfies $z^\dagger Bz\le0$.
+
+Proof. Expanding the determinant gives $h_0h_1h_2u^3-abh_2uv^2-cdh_1uw^2$. If $u\ne0$, the minor in rows and columns $1,2$ equals $h_1h_2u^2\ne0$. If $u=0,z\ne0$, column $0$ is nonzero in coordinates $1,2$, while at least one of columns $1,2$ is nonzero in coordinate $0$. These columns are independent, and the determinant vanishes. On the plane, $z^\dagger Bz=-\alpha|v|^2-\beta|w|^2\le0$. On the quadratic, $|u|^2=|\alpha v^2+\beta w^2|\le\alpha|v|^2+\beta|w|^2$. Both components are retained. $\square$
+

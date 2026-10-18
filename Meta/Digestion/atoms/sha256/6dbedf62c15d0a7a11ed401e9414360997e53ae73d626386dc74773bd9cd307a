@@ -1,0 +1,113 @@
+**Theorem 183.2 (Exact conditioned all-word criterion at one budget).**
+Fix $M\ge1$ and the geometry in Definition 183.1. The following
+are equivalent for one allocation on $E_L$ satisfying (183.3):
+
+1. $\lambda\ge0$, $\tau\le M$, and the event vector of (183.1)
+   dominates $d(b)$ on every word.
+2. The same $\lambda$, $Q$ and mass satisfy $\tau\le M$, all the
+   systems (183.6), and the additional inequalities
+
+$$
+\gamma_n\ge b_n-e\quad(1\le n\le L),\qquad
+f_{1^L}(0)\ge1-e.
+\tag{183.7}
+$$
+
+The base and pair compensation variables are not identified.
+There are literally
+
+$$
+2\sum_{n=1}^L2^{|C\cap\{n+1,\ldots,L\}|}
+\le2L\,2^{|C|}
+\tag{183.8}
+$$
+
+energy systems, including empty suffixes, in addition to the $L$
+correct-minimum rows, the all-positive row, graph constraints,
+endpoint masses and their one budget. For fixed $C,\chi,M$, this
+is a finite system linear in $\lambda$ and the separate auxiliary
+variables, with $O(2^{|C|}L^3)$ compensation coordinates.
+
+**Proof.** The endpoint polynomial argument of Theorem 178.2 and
+Proposition 179.2 supplies (183.2). Nonnegative $E_L$ masses have
+nonnegative quadratic base coefficients. The possibly negative
+coefficient of $R$ affects only $u_1u_2$, which becomes zero or a
+constant after any first zero, never a suffix-suffix term. A correct
+middle label $n$ in a zero-first endpoint contributes $1-v_j$ when
+its second query $j>n$; every other correct contribution is constant
+on the first-zero class. Thus $\kappa\ge0$ also for the affine
+vector, and its correct minimum is $\gamma_n$. This shortcut belongs
+to the declared $E_L$ class and its proved signs.
+
+Adding the base and correct expressions yields exactly the second
+energy in (183.4), with the same $Q$. Conditioning its fixed bits,
+or those of the base energy, gives (183.5). The remaining positive
+edge graph is bipartite by (183.3). It remains to establish the
+compensation equivalence inside each of these acquisition rows.
+
+For a finite bipartite remaining graph and its energy
+$E(v)=K+\sum_i c_iv_i+\sum_{i<j}Q_{ij}v_iv_j$, relax to
+
+$$
+m_{\rm rel}=\min_{0\le x_i\le1}
+\left[K+\sum_i c_ix_i
+          +\sum_{i<j}Q_{ij}\max(0,x_i+x_j-1)\right].
+\tag{183.9}
+$$
+
+Introducing $y_{ij}\ge0$, $y_{ij}\ge x_i+x_j-1$ makes this a
+feasible finite-value LP. Finite LP strong duality, with the supplier
+in Definition 182.2, gives
+
+$$
+m_{\rm rel}
+=K+\max_{0\le t_{ij}\le Q_{ij}}
+ \left[-\sum_{i<j}t_{ij}
+       +\sum_i\min\left(0,c_i+\sum_jt_{ij}\right)\right].
+\tag{183.10}
+$$
+
+Indeed $t_{ij}$ multiplies $x_i+x_j-1-y_{ij}$; minimizing over
+$y_{ij}\ge0$ forces $t_{ij}\le Q_{ij}$, and minimizing over each
+$x_i\in[0,1]$ gives the displayed unary minimum. The maximum is
+attained on the compact $t$ box. Put
+$\ell_i=\max(0,-c_i-\sum_jt_{ij})$. Then (183.6) is equivalent
+to this dual lower bound being at least $d$. Conversely any feasible
+$t,\ell$ proves that lower bound directly, since for Boolean $v$,
+
+$$
+Q_{ij}v_iv_j\ge t_{ij}(v_i+v_j-1),\qquad
+E(v)\ge K-\sum_{i<j}t_{ij}-\sum_i\ell_i.
+\tag{183.11}
+$$
+
+The bipartite relaxation is exact here. For any fractional $x$,
+use an auxiliary uniform threshold $T$ to form
+$V_i=\mathbf1_{T<x_i}$ on one color and
+$V_j=\mathbf1_{T>1-x_j}$ on the other. Every unary expectation
+is $x_i$, and on every remaining edge simultaneously,
+
+$$
+\mathbb E[V_iV_j]=\max(0,x_i+x_j-1).
+$$
+
+Hence each relaxed objective is an average of Boolean objectives.
+Its minimum is at least the Boolean minimum; the reverse inequality
+holds because Boolean points are allowed in (183.9). This is the
+integrality property corresponding to bipartite complementation of
+the regularity ingredient. The auxiliary threshold proves an identity
+of minima, not an acquisition sampler or an extra execution seed.
+
+Apply (183.10)--(183.11) separately to the two energies for every
+fixed-bit assignment. They enumerate all suffix words exactly,
+including words with arbitrarily many later zeros. Add (183.7) for
+the correct and all-positive rows. This proves both directions.
+Empty vertex sets have zero sums, isolated vertices retain their
+unary bounds, zero $Q$ gives zero $t$, and all inequalities include
+equality. None requires positive weights or a limiting argument.
+Counting one base and one pair system per assignment gives (183.8);
+at most $O(L^2)$ auxiliary coordinates in each gives the stated count.
+This count concerns descriptions of the finite system, not the
+runtime, request count or arithmetic precision of an acquisition.
+$\square$
+

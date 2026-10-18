@@ -1,0 +1,6 @@
+**Proposition 8.3 (The two-state endpoint class).** For every $q\in(0,1)$ and $0<\alpha<1/2$, $\mathfrak A_2(q,\alpha)=\varnothing$.
+
+Proof. Both internally emitted labels are counted. With two configurations they exhaust the budget, so no active configuration remains in the supplied same-budget normal form. The output is a source-independent initial label. If its probability of being one is $p$, the two risks require $p\le\alpha$ and $1-p\le\alpha$, implying $1\le2\alpha$, a contradiction. This is the already supplied lower-source Proposition 11.1 and uniform-source Proposition 8.3. $\square$
+
+At $M=2$, (8.3) gives $n_M=0$, $L_M=X_M=1$ and $\chi_{M,L_M}=0$. The universal lower statement is then over an empty class; it does not assert a two-state classifier. No minimum nonempty budget or classification of intermediate budgets follows. The supplied fixed finite upper observer in fixed-observer-source Section 26 remains a separate sufficient construction.
+

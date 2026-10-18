@@ -1,0 +1,210 @@
+**Definition 211.14 (Scope of the ordinary results and their source interface).**
+The four groups above concern, respectively, a safe one-pair operation
+with a fixed-data interval, necessary actual-input packing and conditional
+funding, a fixed-single-measure menu, and a full-output positive linear
+selector obstruction. Their proofs are repository-derived ordinary
+mathematics. The statements of 209 and 210 are also ordinary theory;
+none is being used as Lean or kernel evidence.
+
+The reused mathematical suppliers have specific roles. The threshold
+words and their complete non-$11$ bound are 203.2–203.3; 204.9 already
+owns failure of an unchanged threshold transfer. The moment applications
+206.5–206.6 and the matching relation 209.12–209.15 already own the
+general unary/pair distinction and unary-preserving relocation.
+The actual marginal, directed and triple guards and the zero-credit
+packing/minimum mechanism are 208.2–208.5. Fair and biased upper
+constructions are 203.6 and 207.5–207.6, with parameter maps given
+above. Fixed-carrier minima 209.3/209.5 have a different competitor
+class from 211.6. The menu upper witness uses the existing subset
+and threshold construction; the added relation is simultaneous coverage
+by one fixed entry per requested placement. The zero rays are 198.7
+and 204.4, and 205.5 already supplies a four-table all-row technique.
+Here the selector statements impose one balanced stock across different
+inputs and permit arbitrary full output scores. Their sharp $1/4$
+conclusion is counted once, with both tradeoffs retained.
+
+The complete four-late inequality, cylinder-mass minimum, finite-slot
+selectors, protected heavy/light minimum and five-coordinate threshold
+in 210 remain their own results. No consequence of those statements,
+no generic convex alternative, and no previously covered profile is
+presented as newly uncovered here. In particular the menu does not
+relax its strict $s>4d$ premise using a five-slot construction, and a
+selector or threshold method failure does not exclude the old convex,
+signed or nonzero zero-cost certificate closure. The scope of the
+source and novelty comparison is these cited owner bodies and the
+following primary passages, without a worldwide originality or priority
+claim.
+
+Gordon–Kuperberg–Patashnik–Spencer's covering definition, elementary
+count and finite-geometry constructions supply the classical context
+for (211.28), not a new design theorem. Robert Šámal,
+[*Cubical coloring — fractional covering by cuts and semidefinite
+programming*, equations (2)–(3), Lemma 2.1 and Corollary 2.2](https://arxiv.org/pdf/0911.2589v3),
+gives fractional-cut optimization and the common-measure double count.
+The directed guards and retained-head terms here come from actual
+complete tables; undirected cut counting does not assert their
+sufficiency. The finite alternative and zero-cost meanings remain
+199.3–199.6, using the expository finite Farkas framework in Volker
+Kaibel, [*Basic Polyhedral Theory*, Theorem 1(ii)](https://arxiv.org/pdf/1001.2161v1).
+That framework proves the owned equivalence, not the unresolved inclusion.
+
+Kaniewski, Lee and de Wolf,
+[*Query complexity in expectation*, Definition 8 and Theorem 9](https://arxiv.org/pdf/1411.7280v1),
+characterize scalar nonnegative expected output with the maximum path
+length among supported deterministic trees. Their normalization of
+coefficients followed by output rescaling supplies neither normalized
+probability-vector rows nor increasing first-zero stopping.
+Blackwell, [*Comparison of Experiments*, summary and §5, Theorem 6](https://digitalassets.lib.berkeley.edu/math/ucb/text/math_s2_article-08.pdf),
+uses common stochastic-kernel conditions; the converse stated as proved
+in that paper's summary is restricted to dichotomies. No hard-two
+conversion follows from the general comparison analogy.
+Leskelä, [*Stochastic relations of random variables and processes*,
+Theorem 2.5 and Remark 2.7](https://arxiv.org/pdf/0806.3562v1),
+requires the full set of closed-relation coupling inequalities (finite
+sets in the countable case). Separately feasible local capacities do
+not supply those joint hypotheses. None of these passages is a missing
+source/acquisition bridge for the scores in this section.
+
+Explicitly the actual source remains
+
+$$
+X=\{(r,g):r\text{ prime},\ g\in\mathbb Z,
+ \lceil F_r/10\rceil\le g\le\lfloor F_r/5\rfloor\},\qquad
+N(r,g)=1+F_rg,\qquad q_i(x)=\mathbf1_{p_i\mid N(x)},
+\tag{211.44}
+$$
+
+where $F_0=0,F_1=1,F_{r+2}=F_{r+1}+F_r$ and $p_i$ are the
+increasing primes. Every finite pattern on arbitrary finite prime
+addresses, including every multiple-zero word, has actual witnesses
+by Boundaries 35.2. No probability law on the source labels is added.
+The full carrier is $\bigsqcup_{j\ge1}B_j\sqcup\bigsqcup_{j\ge1}P_j$,
+with each block a copy of $(0,1)$ and the disjoint-union Borel sigma
+algebra. The unchanged consumer immediately returns unknown on $B_j$
+and proposes $j$ on $P_j$; the original nonatomic targets are those
+retained in Acquisition Resources 73.1. They are not replaced by the
+separately selected marked laws
+
+$$
+\lambda_x^a=(1-a_{n(x)})\delta_{\theta_0}
+                    +a_{n(x)}\delta_{\theta_{n(x)}},\qquad
+\theta_j=(B_1,1/(j+2)),\quad n(x)=\min\{i:q_i(x)=0\},
+\tag{211.45}
+$$
+
+for every $1\ge a_1\ge a_2\ge\cdots>0$ with $a_j\to0$.
+There is zero advice, one source-independent common seed and actual
+sourcewise almost-sure finite handoff. The rule and the consumer run
+on the same actual source and original tape. Competitors retain
+arbitrary query addresses and the full output carrier; TV means
+$\sup_{E\in\mathcal F}|\nu(E)-\lambda(E)|$, uniformly over all
+actual sources and all Borel events.
+The resource is at most two actual requests, including ignored and
+repeated requests. $N_2$ preselects its sequence and obtains its replies;
+$O_2$ preselects a strictly increasing sequence and stops at the first
+queried zero or exhaustion. A queried zero need not be the actual
+first absence, and an output need not name a queried address.
+No mean count, address, runtime, depth or source distribution replaces
+this hard request bound.
+
+Only a normalized all-row finite probability configuration can use
+109.1 and 110.2. In the notation of 108.2, for a degree-at-most-two
+probability-vector kernel
+$p_w=c+\sum_i\ell_iw_i+\sum_{i<j}Q_{ij}^{\rm ker}w_iw_j$, set
+$V_i^{\rm ker}=\sum_{j>i}(-Q_{ij}^{\rm ker})_+$ and
+$H^{\rm ker}=\sum_i(V_i^{\rm ker}-\ell_i)_+$, coordinatewise.
+The criterion is $c\ge H^{\rm ker}$; its scalar mass condition is
+implied by normalization as in 108.4. These kernel coefficients are
+unrelated to the proof-credit parameters or score quotient $Q$.
+Theorem 110.2 supplies both directions of original closed-cap feasibility
+transport, retaining arbitrary addresses and full-carrier competitors.
+Its necessity uses the countable common probability-one seed event,
+finite actual witnesses, sourcewise finite handoff and the compact
+finite-catalog limit. Its sufficiency partitions one source-independent
+uniform seed to choose the entire table and schedule before replies.
+Different configurations may use different partitions of that same seed,
+with a common refinement; pointwise equality of their outputs is not
+required. Every execution of such a finite construction hands off after
+at most two actual requests. None of $\nu,Y_u,V,Z$ above is promoted
+from proof weights to such a probability configuration.
+
+For a positive cap $0<\varepsilon\le1$, set
+$L_a=\max(\{j:a_j>\varepsilon\}\cup\{0\})$.
+The actual tail identity from 110.2 remains
+
+$$
+\operatorname{TV}\left(\sum_{j=0}^{L_a}p_{1^{L_a}}(j)\delta_{\theta_j},
+ (1-a_n)\delta_{\theta_0}+a_n\delta_{\theta_n}\right)
+ =\max\{1-p_{1^{L_a}}(0),a_n\}\quad(n>L_a).
+\tag{211.46}
+$$
+
+It retains $a_n=\varepsilon$ at the closed cap. Auxiliary hull
+endpoints with $e=0$ and zero score coordinates never replace positive
+original tails. Small active lengths and cap one remain within the
+existing transport; for caps greater than one immediate base output
+suffices. No amplitude restriction or new amplitude classification is
+implied by a menu, selector or packing theorem alone.
+
+At an actual active length $L=L_a\ge6$, the fixed-data family also
+has the following necessary amplitude inequality, as an application of
+110.2. If either original class has a closed-cap attainer, then for
+every choice of the parameters of 211.3,
+
+$$
+(s+d)(a_a+a_z)+d(a_b+a_c)
+ +\sum_{\substack{j\ge3\\j\notin\{a,b,c,z\}}}h_j a_j
+ \le d+\left(6s+4d+\sum_jh_j\right)\varepsilon.
+$$
+
+Indeed transport supplies one normalized complete finite probability
+configuration. Pairing all its correct, pair-event and positive-word
+inequalities with the nonnegative score $Y_d$ gives expected reward
+at least $W+\sum_j\gamma_ja_j-K\varepsilon$; its expected reward
+is at most the complete support $W+d$ in either catalog. Substituting
+(211.9) gives the displayed inequality, with equality allowed throughout.
+Negative correct singleton demands require no truncation in this pairing.
+This is an inherited necessary inequality, not a sufficient feasibility
+test, an acquisition constructor or a new amplitude classification.
+
+The universal target remains for every finite length $L$ in the
+original comparison, and in the coordinates above for every $L\ge3$
+and every $b\in H_N$,
+
+$$
+\rho_O(b)\le\max\{1,\rho_N(b)\},
+\quad\text{equivalently}\quad
+Q(y)\in E_N\ \text{for every full actual }y\ge0
+                      \text{ with }\Delta_O(y)\le1.
+\tag{211.47}
+$$
+
+This equivalence is already proved in 199.3–199.4. The remaining task
+is its universal inclusion, not another proof of that equivalence.
+In original-source terms it is the unresolved implication
+$\mathcal F_N(a,\varepsilon)\ne\varnothing\Rightarrow
+\mathcal F_N(a,\varepsilon)\cap\mathscr C_{L_a}\ne\varnothing$
+for every selected amplitude sequence and every positive closed cap,
+where $\mathcal F_N$ is the all-word finite cap slice of 110.1 and
+$\mathscr C_{L_a}$ is the normalized stopped region of 109.1.
+Arbitrary early credit, early-$00$ stock, unordered or growing late
+profiles and low terminal stock outside the stated conditions remain.
+
+A genuine refutation requires the same actual $y,b,\lambda$ with
+
+$$
+b\in H_N,\qquad y\ge0,\quad\Delta_O(y)\le1,\qquad
+\lambda\ge0,\quad G_N\lambda\ge h(b),\quad
+M=\sum_D\lambda_D\ge1,\quad F_{Q(y)}(b)>M,
+\tag{211.48}
+$$
+
+and the owned original-source transport to an actual common-seed
+$N_2$ attainer and a uniform lower certificate against every original
+$O_2$ competitor. Hull-only points, weakened necessary-condition
+relaxations, separately funded measures and restricted-method failures
+supply none of this compatible witness. The exact-law obstruction
+112.2 still allows a different stopped law at the same cap.
+No universal comparison, original separator, new quotient-region
+coverage or kernel verification is asserted here.
+

@@ -1,0 +1,17 @@
+**Definition 12.3 (the finite paid word task).** On the finite family
+$\Omega_b$, the response to $a_dw\in B_b$ is the original reply of
+class $d$ at $w$ in the profile. The response to $\varepsilon$ is the
+root reply of the current tree: it is fixed by the exterior unless
+there is a root hole, in which case it is that class's root reply.
+Coincident spellings denote the same actual word and the same reply.
+Let $s_\eta$ be the complete original entry determined by (PCA.22).
+
+The finite task on a prescribed installed alphabet is to assign each
+running state one word of $B_b$ and four successors, keeping the
+common start and literal latches, such that for every $\eta\in\Omega_b$
+the induced path terminates at $\widehat{s_\eta}$. Charge every
+running visit one call and charge the sum of the actual absolute word
+lengths. Charge every installed state once, including unused ones.
+There is no operation reading $\eta$, $s_\eta$ or the response row
+as a tuple. At runtime only the table's one paid native word is read.
+

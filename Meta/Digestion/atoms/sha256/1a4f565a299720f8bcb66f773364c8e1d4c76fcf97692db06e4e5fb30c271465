@@ -1,0 +1,12 @@
+**Convention 11.1 (scope and fixed suppliers).** Sections 11–17 give
+ordinary mathematical cover-completion and counting results for the
+unchanged task of Definition 1.2. The native representation, canonical
+scan, and constant-composition capacity are the credited
+[RRN][RRNbase], [FMR][FMRbase], and [NPC][NPCbase] results at public
+revision `91170b89dfe9dd7eadc64d14d86d2157ed14abdf`. The abstract
+rational-lift and averaged-cover principles are mature results of
+[Vontobel][VontobelCOK], with the exact correspondence specified in
+§17. Completion below changes the finite network by taking a cover.
+It does not assert completion on its original base, an upper bound
+on individual covers, or an optimizer-cofinal native cap.
+

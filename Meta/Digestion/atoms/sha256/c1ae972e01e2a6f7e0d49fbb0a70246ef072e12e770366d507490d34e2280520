@@ -1,0 +1,4 @@
+**命题 78.17（Actual budgets versus maximum expected cost）。** In the additional random model, $n-2$ remains the sharp selector lower bound for the almost-sure pathwise worst restore count over originals and for a uniform actual or essential-supremum restore budget. It is not a lower bound on $\max_a\mathbb E[r_P(a)]$.
+
+Proof. On every common good seed, 78.8 gives $\max_a r_P(a)\ge n-2$, and also $\max_a c_P(a)\ge L(n-1)$. The finite union of events $\{r_P(a)\ge n-2\}$ has probability one. At least one such event has positive probability, so at least one original has essential-supremum restore count at least $n-2$. The deterministic permutation policies attain the actual bounds. With its explicit lottery resource, the three-original mixture in 78.16 has $\max_a\mathbb E[r_P(a)]=2/3<1=n-2$. Taking a maximum after expectation changes the quantity. The deterministic spectrum in 78.12 is not a spectrum of this different expected-budget problem. $\square$
+
