@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Quantum/Matrix/LinGProperty/ArithmeticBound
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Quantum/Schatten/SingularValueOrder, D5/S3/Quantum/Foundation/FiniteTraceDistance, D5/S3/Quantum/Matrix/LinGProperty/ScalarPerturbation, D5/S3/Quantum/Matrix/LinGProperty/PhaseRotation]
+   anchors: []
    utility: none
    digest: Trace-corrected Gram comparison for positive block matrices. -/
 

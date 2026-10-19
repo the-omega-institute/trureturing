@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Quantum/Matrix/LinGProperty/SpectralConclusion
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Quantum/Matrix/LinGProperty/ScalarPerturbation, D5/S3/Quantum/Matrix/LinGProperty/GeometricMeanBound, D5/S3/Quantum/Matrix/LinGProperty/Normalization, D5/S3/Quantum/Matrix/LinGProperty/TraceDistanceBound]
+   anchors: []
    utility: none
    digest: Combining trace-overlap bounds with the quantitative geometric mean estimate. -/
 

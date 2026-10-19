@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Quantum/Matrix/LinGProperty/PhaseRotation
    mirror-E: none(waiver:external-open-problem-resolution)
-   anchors: [D5/S3/Quantum/Schatten/SingularValueOrder]
+   anchors: []
    utility: none
    digest: Phase normalization preserves positive block matrices and sorted singular values. -/
 

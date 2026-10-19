@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Quantum/Matrix/LinGProperty/Normalization
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Quantum/Matrix/CartesianVariance]
+   anchors: []
    utility: none
    digest: Trace normalization and zero-block reduction for the trace augmentation map. -/
 

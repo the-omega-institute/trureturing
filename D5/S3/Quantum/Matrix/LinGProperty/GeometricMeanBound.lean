@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Quantum/Matrix/LinGProperty/GeometricMeanBound
    mirror-E: none(waiver:external-open-problem-resolution)
-   anchors: [D5/S3/Quantum/Matrix/AlternativeMeanLinearization, D5/S3/Quantum/Matrix/CayleyResolvent]
+   anchors: []
    utility: none
    digest: Quantitative harmonic lower bounds for the positive matrix geometric mean. -/
 

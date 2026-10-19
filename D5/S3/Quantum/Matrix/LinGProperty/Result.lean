@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Quantum/Matrix/LinGProperty/Result
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Quantum/Matrix/LinGProperty/ArithmeticBound, D5/S3/Quantum/Matrix/LinGProperty/SpectralConclusion]
+   anchors: []
    utility: none
    digest: The geometric-mean singular-value comparison for trace augmentation. -/
 

@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Quantum/Matrix/LinGProperty/ScalarPerturbation
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Quantum/Schatten/SingularValueOrder]
+   anchors: []
    utility: none
    digest: Scalar perturbation bounds for every sorted singular value. -/
 
