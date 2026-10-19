@@ -7930,3 +7930,136 @@ $$
 At fixed $P,n_P$ this converges to $f_P$ in $X$: use $(1-e^{-hx})/h\le x$, its derivative $e^{-hx}\le1$, and polynomial times $e^{-Px}$ domination. It is a real sum of at most $n_P+1$ exponentials with distinct poles $P+jh$. Choose $h>0$ small enough to preserve the strict negative allowance and satisfy $n_Ph<P(e^{2w}-1)$. With $P=e^{2A}$ set $a_j=\tfrac12\log(P+jh)$ and multiply each exponential coefficient by $e^{-9a_j/2}$ to obtain the physical mass $\mu_j$. Every site is in $[A,A+w)$, the count is at most $PM+1\le\lceil Ce^{2A}\rceil$, and W230--W233 give W229. Zero coefficients are removed. Strict negativity excludes the zero measure. The common start and $C$ are independent of $w$; coefficients and gaps are not controlled.
 
 This application excludes the folded first-mode model as a positive proxy on all samples in any sufficient cofinal schedule $e^{2A}g(A)$ with $g(A)\to\infty$: its negative sources already occur at a fixed constant multiple of $e^{2A}$. It neither supplies a negative sample of the complete actual kernel nor proves that a better joint complete-source estimate is impossible. Higher theta modes and the actual model difference cannot simply be dropped on this family. The known negative Gamma baseline, scalar approximation and model operators are reused; the finite physical source/count/window bridge is the additional application. No sharp constant, numerical witness, stable coefficient bound, Lean/kernel or CI/merge certification, exhaustive bibliography or literature priority is supplied. RH and the original strict all-integer Robin bound remain unproved.
+
+
+## A polynomial tail budget pays the complete reflection on a cofinal sample schedule
+
+Use the original Gaussian normalization of W127 on the whole physical half-line $a\ge A$. Put $E=e^{-2A}$, $\tau(t)=1+Et/\pi$ and retain its source feature $F_\sigma(t)=\int(p+1)e^{-pt}d\sigma(p)/\sqrt2$, $p=e^{2(a-A)}\ge1$. Define
+$$
+Q_{6,A}(\sigma)=\int_0^\infty\tau(t)^6|F_\sigma(t)|^2dt,\qquad
+T_{6,A}(\sigma)=\int_{\pi/E}^\infty\tau(t)^6|F_\sigma(t)|^2dt.
+$$
+There are fixed $C,A_*>0$ such that, for every $A\ge A_*$ and every compact finite complex source on this half-line,
+$$
+\begin{aligned}
+|Q_{R_A^{g,\rm act}-R_A^{g,1}}(\sigma)|
+&\le\frac CA\sqrt{Q_{6,A}(\sigma)T_{6,A}(\sigma)},\\
+|Q_{R_A^{g,\rm act}}(\sigma)|&\le\frac CA Q_{6,A}(\sigma).
+\end{aligned}
+\tag{W237}
+$$
+The first reflected kernel is complete; the second in its difference is the entire folded first-mode model, both in the same original Gaussian normalization. There is no sign, support-count, width or gap restriction in W237. On finite samples it will pay the complete actual reflected debit at a sufficient cofinal count. It supplies no sign for the complete actual direct component, RH or strict Robin for every integer $n>5040$.
+
+Reuse the exact finite modal pairing W221--W222, its complete-source limiting justification, the two model operators W176--W177, the physical model bound W232, and the existing fixed-order time moments W181--W182. The new estimate retains the joint physical time threshold of the paired correction and uses polynomial weighted source norms. It does not replace the old sector Cauchy norm, reprove a Carleman or Hardy theorem, or extend the first-mode positive-proxy route excluded by W229. This is a paper application without Lean certification or a literature-priority claim.
+
+### Use the physical Gaussian source before estimating any modal tail
+
+Write $P=e^{2A}$, $d\mu(a)=w_A^g(a)d\sigma(p)$ with $w_A^g=\cosh(a-A)D_A^g(a-A)$, and introduce the physical feature
+$$
+\mathscr F(x)=\int e^{9a/2}e^{-e^{2a}x}d\mu(a),\qquad
+I\mathscr F(x)=\int_x^\infty\mathscr F(y)dy,\qquad
+B\mathscr F=\mathscr F-\frac3{2x}I\mathscr F.
+$$
+For $b\ge\pi$ let $N_b(\mathscr F)=\|x^3\mathscr F\|_{L^2(b,\infty)}$. The owned right-integral and dilation calculation gives
+$$
+N_b(B\mathscr F)\le\frac85N_b(\mathscr F),\qquad
+N_\pi\bigl(\ell^4\mathscr F(\ell^2\cdot)\bigr)
+=\ell^{-3}N_{\pi\ell^2}(\mathscr F).
+\tag{W238}
+$$
+For the first inequality, $I\mathscr F(x)/x=\int_1^\infty\mathscr F(vx)dv$, and Minkowski costs $\int_1^\infty v^{-7/2}dv=2/5$ in this norm. It preserves the tail domain because $vx\ge b$ when $x\ge b$. In particular, with
+$\mathscr T_L\mathscr F=\sum_{\ell\le L}\ell^4\mathscr F(\ell^2\cdot)$,
+$$
+N_\pi(\mathscr T_L\mathscr F)\le C N_\pi(\mathscr F),\qquad
+N_\pi(\mathscr T_L\mathscr F-\mathscr F)\le C N_{4\pi}(\mathscr F),
+$$
+and the feature series converges in $N_\pi$ as $L\to\infty$.
+
+The physical bound W232 and its underlying two bounded Hermitian model operators give a continuous sesquilinear form satisfying
+$|\mathscr R_\phi(U,V)|\le C N_\pi(U)N_\pi(V)$.
+Here $\phi=\Phi_1$, and only the absolute norm of its second channel is used. The right integrals in W232 are bounded by the same norm: for example, the ordinary right Hardy inequality $\|IU\|_2\le2\|xU\|_2$ applies after extension by zero below $\pi$. Thus
+$$
+\left|\mathscr R_\phi(\mathscr T_L\mathscr F,\mathscr T_L\mathscr F)
+-\mathscr R_\phi(\mathscr F,\mathscr F)\right|
+\le C N_\pi(\mathscr F)N_{4\pi}(\mathscr F).
+\tag{W239}
+$$
+This uses finite physical push-forwards first, followed by their feature-norm limit; no finite total variation is asserted for an infinite unnormalized physical sum.
+
+### The paired finite interval forces at least one feature into the tail
+
+For $s\ge1$ the exact first-mode feature is
+$$
+G_s=\int\phi(a+\log s)d\mu(a)
+=4\pi^2s^{9/2}(B\mathscr F)(\pi s^2).
+$$
+In W222 the original physical feature of the $\ell$-th shifted source is $\ell^4\mathscr F(\ell^2x)$. Consequently its folded-model term is the one in W239. For $\ell<k$, put $q=\ell k$ and $H_{\ell k}=\tfrac12\log(k/\ell)$. The exact remaining pair correction is
+$$
+8\pi^4H_{\ell k}q^4\int_\ell^k
+\overline{(B\mathscr F)(\pi s^2)}
+(B\mathscr F)(\pi(q/s)^2)\frac{ds}s.
+\tag{W240}
+$$
+Let $x=\pi s^2$, $y=\pi(q/s)^2$ and $U(x)=x^3B\mathscr F(x)$. Then $xy=\pi^2q^2$, so the integrand's two cubic weights remove $\pi^6q^6$. Split the interval at $s=\sqrt q$. The involution $s\mapsto q/s$ preserves $ds/s$ and exchanges the two halves. On one half $x\ge\pi q\ge2\pi$; Cauchy and $ds/s=dx/(2x)$ therefore give
+$$
+\int_\ell^k|U(x)U(y)|\frac{ds}s
+\le C N_{\pi q}(B\mathscr F)N_\pi(B\mathscr F).
+$$
+All arguments are at least $\pi$, so its constant is absolute. By W238 the absolute value of W240 is at most
+$C H_{\ell k}q^{-2}N_\pi(\mathscr F)N_{\pi q}(\mathscr F)$.
+The double sum converges, since
+$\sum_{\ell<k}\log(k/\ell)/(\ell k)^2<\infty$.
+Thus the complete paired correction is bounded by
+$C N_\pi(\mathscr F)N_{2\pi}(\mathscr F)$.
+
+Use W222 at finite $L$. The just proved norm convergence and absolute double sum pay its right side. The owned complete Gaussian-moment domination passes its left side to the actual reflection, including the small-argument exterior where a raw first-mode substitution would be invalid. It follows that
+$$
+\begin{aligned}
+|Q_{R_\Phi-R_\phi^{\rm fold}}(\mu)|
+&\le C N_\pi(\mathscr F)N_{2\pi}(\mathscr F),\\
+|Q_{R_\Phi}(\mu)|&\le C N_\pi(\mathscr F)^2.
+\end{aligned}
+\tag{W241}
+$$
+This keeps the pair before absolute values. It does not use first-mode evenness or a separator estimate for the old sector norm.
+
+### Return exactly to the original Gaussian metric
+
+Let $\phi_g(a)=4\pi^2e^{9a/2-\pi e^{2a}}$ and $C_A^2=4\pi P/A$. W127 and W232 give exactly
+$w_A^g(a)\phi_g(a)=C_A(p+1)/\sqrt2$.
+At $x=\pi+t/P$ this yields
+$$
+F_\sigma(t)=\frac{4\pi^2}{C_A}\mathscr F(\pi+t/P),\qquad
+N_\pi(\mathscr F)^2=\frac{\pi^3}{4A}Q_{6,A}(\sigma),\qquad
+N_{2\pi}(\mathscr F)^2=\frac{\pi^3}{4A}T_{6,A}(\sigma).
+\tag{W242}
+$$
+No inverse multiplier or small-$EN$ norm-return condition is required: the Gaussian site amplitude cancels exactly in this formula. Substitution in W241 proves W237 for the same original source. Compact finite measures have finite displayed moments; their atom count may be unbounded or absent.
+
+### Consume the whole reflected debit beyond the fixed-fraction count
+
+Now let $\sigma$ have $N\ge1$ distinct active sites, after merging equal sites, with arbitrary complex coefficients. Reuse W182's fixed time moments for $j\le3$, with no small-$EN$ restriction. Expanding $\tau^3$ gives
+$$
+Q_{6,A}(\sigma)\le C(1+EN)^6Q_H(\sigma),\qquad
+|Q_{R_A^{g,\rm act}}(\sigma)|
+\le\frac CA(1+EN)^6Q_H(\sigma).
+\tag{W243}
+$$
+This holds at one common high start for every finite $N$, with no support endpoint or gap condition. In particular, for
+$$
+n_A=\left\lceil e^{2A}A^{1/12}\right\rceil,\qquad
+1\le N\le n_A,
+\qquad
+|Q_{R_A^{g,\rm act}}(\sigma)|\le C A^{-1/2}Q_H(\sigma).
+\tag{W244}
+$$
+The ratio $n_Ae^{-2A}$ tends to infinity, as required by the sufficient cofinal count W156. W244 pays only the complete reflected component on that all-sample schedule. Its sign and the sign of the full odd kernel are not assumed.
+
+Retain the complete actual direct form $Q_{\mathcal D_A^g}$ on exactly the same source, with all its modal amplitude and arithmetic logarithmic contributions. The actual full odd form satisfies
+$$
+Q_{\mathcal K_A^g}(\sigma)
+\ge Q_{\mathcal D_A^g}(\sigma)
+-\frac CA(1+EN)^6Q_H(\sigma),
+\tag{W245}
+$$
+and the reflected debit is $C A^{-1/2}Q_H$ under W244. A sufficient direct lower margin, or another joint payment giving positivity of this complete form, is still missing. The old exponential $Q_+$ comparison W226 and small-complexity positive result W228 remain valid in their own scopes; W237--W245 add a polynomial/tail payment on a larger finite-sample range and do not enlarge W228's positive range. No actual negative complete-theta witness, common-start all-order positivity, sufficient cofinal positivity, numerical constants/start, Lean/kernel or CI/merge certification, exhaustive bibliography or literature priority is supplied. RH and the original strict Robin inequality for every integer $n>5040$ remain unproved.
