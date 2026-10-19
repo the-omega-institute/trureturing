@@ -8,6 +8,7 @@
 
 import D5.S3.Quantum.Information.SeparableStateLocalUnitaryStabilizerObstruction
 import D5.S3.Quantum.Matrix.RecordCapacity
+import D5.S3.Quantum.Decoherence.FiniteShiftedRecordChannel
 import D5.S3.QuantumBounds.MerminMeasurementDependence.Model
 import D5.S3.Weil.BurnolGram.QuantitativeMultiOrbitWeilNegativeCertificate
 
@@ -282,20 +283,18 @@ private theorem frame_row_complete (n : ℕ) (hn : 0 < n) (i : FrameIndex n) :
 
 private theorem frame_complete (n : ℕ) (hn : 0 < n) :
     (∑ j, (Matrix.diagonal (frameNat n · j))ᴴ * Matrix.diagonal (frameNat n · j)) = 1 := by
-  let D := Matrix.diagonalRingHom (Fin (Fintype.card (FrameIndex n))) ℂ
-  calc
-    _ = ∑ j, D (star (frameNat n · j) * (frameNat n · j)) := by
-      simp only [D, Matrix.diagonalRingHom_apply, Matrix.diagonal_conjTranspose,
-        Matrix.diagonal_mul_diagonal]
-      rfl
-    _ = D (∑ j, star (frameNat n · j) * (frameNat n · j)) := (map_sum D _ _).symm
-    _ = D 1 := by
-      congr 1
-      funext i
-      simpa only [Finset.sum_apply, Pi.mul_apply, Pi.star_apply, Pi.one_apply,
-        frameNat, Matrix.submatrix_apply, id_eq] using
-        frame_row_complete n hn ((Fintype.equivFin (FrameIndex n)).symm i)
-    _ = 1 := map_one D
+  apply D5.S3.Quantum.Decoherence.FiniteShiftedRecordChannel.diagonal_kraus_complete
+    (record := frameNat n)
+  intro i
+  let i' := (Fintype.equivFin (FrameIndex n)).symm i
+  have h := frame_row_complete n hn i'
+  have h' : (∑ a, (Complex.normSq (frame n i' a) : ℂ)) = 1 := by
+    simpa only [Complex.star_def, ← Complex.normSq_eq_conj_mul_self] using h
+  have h'' : (∑ a, Complex.normSq (frame n i' a)) = (1 : ℝ) := by
+    exact_mod_cast h'
+  have h''' : (∑ a, Complex.normSq (frameNat n i a)) = (1 : ℝ) := by
+    simpa only [frameNat, Matrix.submatrix_apply, id_eq, i'] using h''
+  simpa only [Complex.normSq_eq_norm_sq] using h'''
 
 private def frameChannel (n : ℕ) (hn : 0 < n) :
     QuantumChannel (Fin (Fintype.card (FrameIndex n))) (Fin (Fintype.card (FrameIndex n))) :=
