@@ -3743,3 +3743,754 @@ No parity assertion, corresponding statement for Do, or additional
 closed parameter fibre is asserted. The explicit finite union of closed fibres
 remains the 26 signed points of §111; all earlier interval and
 neighborhood results retain their own scope.
+
+
+## 116. An intrinsic aligned-mean quintic and exclusion of opposite generic means
+
+### 116.1. Statement and original charts
+
+Use the actual family, original ray classes and finite set \(Z_{26}\) of
+§111. All bars in this section are complex conjugates at real physical
+coordinates. Put \(B=b^2\), \(R=3-B\). For the aligned chart (90.11),
+write \(H=\kappa g\), and define its scaled channel mean
+\[
+ G_a=H\frac{r+2}{z+2}.
+ \tag{116.1}
+\]
+Both factors in the fraction are nonzero because \(|z|=|r|=1\), and
+\(|H|^2=R>0\). In particular \(G_a\ne0\).
+
+**Proposition 116.1 (repo-derived).** At every real
+\(0<|b|<1\) outside \(Z_{26}\), no original strict generic mean \(G\)
+equals \(G_a\) or \(-R/\bar G_a\) for an original noncanonical aligned
+ray. More precisely, whenever \(\operatorname{Re}G_a\ne0\), the two
+means cannot have both the same projective coordinate and radial trace
+\[
+ K(G)=\frac{\operatorname{Im}G}{b\operatorname{Re}G},\qquad
+ t(G)=\frac{|G|^2-R}{\operatorname{Re}G}.
+ \tag{116.2}
+\]
+Consequently, for every such physical generic–aligned pair,
+\[
+ M=z+2+\frac HR(r+2)\bar G\ne0.
+ \tag{116.3}
+\]
+The assertion retains both aligned radial signs, every repeated-pair
+position, constant-channel subcases, all generic root orders and the
+optional channel presentations supplied by §105.2.
+
+The proof below uses only the original equations and finite polynomial
+identities. It does not assume that two different projective classes
+cannot be orthogonal. Thus it excludes one source subcase without
+asserting nonvanishing of the full mixed overlap norm or closing an
+additional parameter fibre.
+
+By §105.2, outside \(Z_{24}\subset Z_{26}\) every generic ray has its
+regular selected-channel presentation
+\[
+ G=X(1+ibK),\quad X\in\mathbb R\setminus\{0\},\quad
+ F_0(B,K)=0,\quad t=N_s/D_s,\quad D_s=\partial_KF_0\ne0,
+ \tag{116.4}
+\]
+with precisely the normalization (100.1). The original strict conditions
+\(0<q<1\), \(\delta<0\), and all source reconstruction conditions
+are retained. No channel-collision determinant is substituted for the
+strict cubic discriminant.
+
+For aligned rays use (90.1)–(90.11):
+\(K_a=d^2+4\theta=s^2>0\), \(H=s(a+ic)\), and the original
+Cramer values \(a=A_a,c=C_a\). The physical factors
+\(b,K_a,F_a=d^2+(\theta+1)^2\) are nonzero; (90.2) excludes
+\(J_a=bd-\theta+3=0\) by consistency, without a parameter guard.
+The complete aligned clearance in §105.2 supplies \(Q_5=0\),
+\(\theta=U/V\) and \(V\ne0\) outside the already closed coordinate
+exceptions. It retains constant channels and accounts for every actual
+Cayley pole. No new zero of an original denominator is discarded here.
+
+### 116.2. Mean and radial-trace identities, including the added zero chart
+
+Set
+\[
+ A=3-\theta,\quad L=\theta^2+10\theta+9+3d^2,\quad
+ M_r=aL+2cAd,\quad M_i=cL-2aAd,
+\]
+\[
+ u=(s+d)/2,\quad v=(s-d)/2,\quad
+ D_0=A^2+(2s-d)^2.
+\]
+The Cayley formulas and \(s^2=d^2+4\theta\) give
+\[
+ \frac{r+2}{z+2}=\frac{L-2iAd}{D_0},\qquad
+ D_0=(1+v^2)(9+u^2)>0,
+ \tag{116.5}
+\]
+\[
+ \operatorname{Re}G_a=\frac{sM_r}{D_0},\quad
+ \operatorname{Im}G_a=\frac{sM_i}{D_0},\quad
+ |G_a|^2=R\frac{D_0+8sd}{D_0}.
+ \tag{116.6}
+\]
+For the last equality, the numerator difference is exactly
+\((1+u^2)(9+v^2)-(1+v^2)(9+u^2)=8sd\).
+Thus, on \(M_r\ne0\),
+\[
+ K(G_a)=\frac{M_i}{bM_r},\qquad t(G_a)=\frac{8Rd}{M_r}.
+ \tag{116.7}
+\]
+These expressions do not depend on the sign of \(s\). Direct substitution
+of \(-Rx/(x^2+y^2),-Ry/(x^2+y^2)\) for \(x,y\) also shows that
+both invariants (116.2) are unchanged by \(G\mapsto-R/\bar G\).
+
+If \(M_r=0\), then (116.6) and \(G_a\ne0\) make \(G_a\) and
+its opposite radial mean nonzero purely imaginary numbers. Neither can
+equal (116.4), whose real part is \(X\ne0\). This treats the entire
+added zero chart before forming (116.7). It uses the complete public
+regular generic coverage, rather than asserting a separate exclusion of
+unexamined vertical source strata. No division by \(d\) is used.
+
+### 116.3. Two integral intrinsic identities
+
+For a polynomial in \(b,d\) even after \(d=bx\), write
+\(\mathcal E(P)(B,x)=P(b,bx)\), with \(b^2\) replaced by \(B\).
+The following expressions are polynomials, by the original Cramer
+cancellations:
+\[
+ D=\mathcal E(bK_aJ_aM_r),\quad
+ N=\mathcal E(K_aJ_aM_i),\quad
+ T_n=8(3-B)Bx(Bx^2+4\theta)(Bx-\theta+3).
+ \tag{116.8}
+\]
+Here \(\theta\) is left unchanged by \(\mathcal E\). All three have
+\(\theta\)-degree at most four. On the original chart,
+\(K(G_a)=N/D\) and \(t(G_a)=T_n/D\). Since \(bK_aJ_a\ne0\),
+the condition \(D=0\) is exactly the zero chart already treated.
+
+Define
+\[
+ U_0=\mathcal E(U/b^3),\quad V_0=\mathcal E(V/b^3),\quad
+ Q=\mathcal E(Q_5/b^3)\in\mathbb Z[B,x],
+\]
+using exactly the determinant definitions (90.8) and quintic (90.4).
+The apparent powers of \(b\) divide after the indicated substitution.
+For \(P=N,D,T_n\), put
+\[
+ P_h=V_0^4P(B,x,U_0/V_0).
+ \tag{116.9}
+\]
+These are homogeneous polynomial evaluations; no inverse of \(V_0\)
+is taken in defining them.
+
+Define the integral polynomials
+\(A_5(B,K)=\sum_{j=0}^5 a_j(B)K^j\) and
+\(T_5(B,K)=\sum_{j=0}^4 t_j(B)K^j\) by the following coefficients.
+The lists are in descending \(K\)-order; all displayed expressions are
+polynomials in \(B\).
+
+```text
+a5 = B*(8676*B^11 + 323800*B^10 - 887699*B^9 - 5915187*B^8 + 13176396*B^7 + 29363364*B^6 - 33350778*B^5 - 69007626*B^4 - 2210328*B^3 - 13043268*B^2 - 282123*B - 177147)
+a4 = 3*B*(2610*B^11 + 98339*B^10 - 413189*B^9 - 1183490*B^8 + 6015720*B^7 + 2674674*B^6 - 28927854*B^5 + 7116984*B^4 + 43563582*B^3 + 4067091*B^2 + 1506843*B - 196830)
+a3 = 3*(720*B^12 + 32069*B^11 - 43013*B^10 - 860971*B^9 + 1283359*B^8 + 8595786*B^7 - 21221658*B^6 + 4667058*B^5 + 8065494*B^4 + 5718033*B^3 - 3552417*B^2 + 2053593*B + 177147)
+a2 = 2*(3447*B^11 + 71072*B^10 - 712118*B^9 + 1536525*B^8 + 4523058*B^7 - 18749556*B^6 - 7637976*B^5 + 50503662*B^4 + 45296415*B^3 - 18187092*B^2 - 8358714*B - 1594323)
+a1 = (B - 3)*(432*B^10 + 29559*B^9 - 138518*B^8 - 608172*B^7 + 1105344*B^6 + 14872410*B^5 - 22588956*B^4 - 19783116*B^3 - 13973472*B^2 - 4573017*B - 2716254)
+a0 = (B - 3)*(720*B^9 + 39683*B^8 - 289700*B^7 + 216672*B^6 + 273420*B^5 + 4483566*B^4 - 4788396*B^3 - 441288*B^2 + 3467124*B + 1830519)
+
+t4 = -6*B*(B - 3)*(2610*B^11 + 83963*B^10 - 384033*B^9 - 1777698*B^8 + 6962964*B^7 + 8952246*B^6 - 26754570*B^5 - 19004868*B^4 + 17236962*B^3 - 6089337*B^2 + 229635*B - 118098)
+t3 = -6*B*(B - 3)*(1440*B^11 + 48793*B^10 - 170566*B^9 - 1220795*B^8 + 4702664*B^7 + 7946706*B^6 - 45791316*B^5 + 24873426*B^4 + 55049544*B^3 + 2369493*B^2 - 190998*B + 59049)
+t2 = -12*B*(B - 3)*(927*B^10 + 22937*B^9 - 407286*B^8 + 1151072*B^7 + 4388766*B^6 - 17176086*B^5 - 1301292*B^4 + 21454632*B^3 + 19477179*B^2 - 4201227*B - 144342)
+t1 = -2*(B - 3)*(1728*B^11 + 56217*B^10 - 645986*B^9 - 259527*B^8 + 8571960*B^7 + 17163522*B^6 - 129667068*B^5 + 120842442*B^4 + 100187928*B^3 + 2902149*B^2 - 9146034*B + 1240029)
+t0 = -2*(B - 3)*(3168*B^10 + 111223*B^9 - 980977*B^8 + 1417368*B^7 + 3135888*B^6 - 2266866*B^5 - 24552234*B^4 + 47915712*B^3 + 43349256*B^2 + 4918563*B - 1240029)
+```
+
+For a designated \(K\)-degree \(m\), let
+\(P^{[m]}(N_h,D_h)=D_h^mP(B,N_h/D_h)\). Define
+\[
+ F_A=A_5^{[5]}(N_h,D_h),\qquad
+ F_T=D_hT_5^{[4]}(N_h,D_h)-T_{n,h}(\partial_KA_5)^{[4]}(N_h,D_h).
+ \tag{116.10}
+\]
+The exact integral identities are
+\[
+ F_A=Q R_A,\qquad F_T=Q R_T,
+ \quad R_A,R_T\in\mathbb Z[B,x].
+ \tag{116.11}
+\]
+Here is a finite integer specification of the divisions, including a
+coefficient bound that distinguishes them from interpolation. For a
+polynomial \(P\), write \(\|P\|_1\) for the sum of absolute values
+of its coefficients. Put \(w=2^{1032}\), and evaluate
+\((B,x)=(w^{281},w)\). The two integer divisions by
+\(Q(w^{281},w)\) have zero remainder. Expand the signed integer
+quotients in balanced base \(w\), with digits in
+\([-w/2,w/2)\), and replace digit position \(281j+k\),
+\(0\le k<281\), by the monomial \(B^jx^k\). This defines
+\(R_A,R_T\) with the following finite data:
+
+```text
+                 raw degree bounds (B,x)   quotient degrees (B,x)   terms
+F_A                       (367,280)                 (357,270)       67011
+F_T                       (368,280)                 (358,270)       67177
+
+||F_A||_1 < 2^963;   ||R_A||_1 < 2^914;
+||F_T||_1 < 2^966;   ||R_T||_1 < 2^919;
+||Q||_1 = 27949666;  deg_x Q = 5.
+```
+
+Every integer and bound here is fixed by (90.1), (90.3), (90.8), and
+(116.8)–(116.10). The raw bounds can also be obtained without expanding
+the products, by the triangle inequality and
+\(\|PQ\|_1\le\|P\|_1\|Q\|_1\). The decoded quotients can be
+re-encoded to the two integer quotients. In each case the difference
+\(F-QR\) has \(x\)-degree below 281 and coefficient norm below
+\(2^{967}<w/2\). Therefore its monomials do not collide under
+\(B\mapsto w^{281},x\mapsto w\). If the resulting integer polynomial
+in \(w\) had a highest nonzero coefficient, that integer coefficient's
+leading power would dominate the sum of all lower powers, whose
+coefficients have magnitude below \(w/2\). Its zero evaluation is
+impossible. Thus both differences vanish identically, proving (116.11)
+in characteristic zero.
+
+On the physical shape chart \(Q=0\), \(V_0D\ne0\), division only
+by the indicated mean and shape denominators gives
+\[
+ A_5(B,K(G_a))=0,\qquad
+ (\partial_KA_5)(B,K(G_a))\,t(G_a)=T_5(B,K(G_a)).
+ \tag{116.12}
+\]
+There is no division by \(\partial_KA_5\) or by the leading
+coefficient of \(A_5\). Both their zero specializations are retained.
+In particular the second equation is valid through projected collisions.
+
+### 116.4. Exact elimination and a degree-preserving coprimality certificate
+
+Use the literal \(F_0,N_s,D_s\) of (100.1), and put
+\[
+ C_5=N_s\partial_KA_5-T_5D_s.
+ \tag{116.13}
+\]
+Their degrees \((\deg_K,\deg_B)\) are
+\((10,18)\), \((5,12)\), \((13,31)\) for
+\(F_0,A_5,C_5\), respectively. The ordered resultant has the exact
+factorization
+\[
+ \operatorname{Res}_K(F_0,A_5)
+ =1024B^5(B-3)^2(B+1)^4(B+3)^{19}W(B)R_{160}(B).
+ \tag{116.14}
+\]
+The polynomial \(W\) is exactly (106.8). Equation (116.14) specifies
+\(R_{160}\) by exact division in \(\mathbb Z[B]\); it is primitive
+of degree 160. The left side has degree 200. No irreducibility of
+\(R_{160}\) is asserted or needed. Both the factorization and quotient
+are reconstructed from the fixed-degree Sylvester determinant with
+\(K\)-degrees 10 and 5.
+
+Put
+\[
+ R_2=\operatorname{Res}_K(C_5,A_5)\in\mathbb Z[B],
+ \tag{116.15}
+\]
+using \(K\)-degrees 13 and 5, in that order. Its Sylvester rows are
+\(K^4C_5,\ldots,C_5,K^{12}A_5,\ldots,A_5\) in descending
+columns \(K^{17},\ldots,1\). Modulo 137 these two degrees are
+unchanged, so the same Sylvester determinant reduces to
+\(\overline{R_2}\). It has \(B\)-degree 298. The reduction
+\(\overline{R_{160}}\) has degree 160 and leading coefficient 136.
+The following coefficient lists define two polynomials \(U_{137}\),
+\(V_{137}\) in \(\mathbb F_{137}[B]\). Lists run from constant
+coefficient upward, with line breaks carrying no additional meaning.
+
+```text
+U137 = [
+  68,20,133,27,107,22,3,17,57,43,10,101,84,59,107,21,78,60,
+  130,111,102,57,118,93,25,74,108,27,111,28,136,52,28,89,104,23,
+  33,48,80,65,132,8,122,131,8,4,64,26,36,131,49,120,78,43,
+  52,118,87,71,94,4,85,74,37,38,80,54,120,38,40,64,40,64,
+  0,88,66,43,73,127,16,106,59,102,70,33,95,83,11,38,96,90,
+  88,2,26,22,102,120,78,129,4,15,37,60,96,45,72,92,103,7,
+  7,83,57,79,11,132,24,5,1,78,22,53,83,39,70,20,84,109,
+  100,100,13,1,68,52,33,133,37,69,78,100,51,59,126,76,113,96,
+  77,8,28,123,127,64,133,105,90,134,105,44,49,9,34,55,27,12,
+  101,69,23,116,89,12,81,92,84,2,35,7,135,88,98,32,15,36,
+  84,16,66,125,59,80,88,103,31,16,68,63,41,69,2,114,123,99,
+  63,83,114,26,71,132,86,66,87,55,54,105,87,101,6,57,68,93,
+  10,2,19,58,98,66,14,105,6,69,122,49,110,51,5,72,105,105,
+  126,70,16,115,113,135,20,7,16,126,75,115,29,93,114,120,111,48,
+  99,128,132,86,2,73,87,39,110,31,9,56,41,111,133,25,36,51,
+  92,121,7,136,29,131,110,69,133,79,65,132,1,36,118,46,9,104,
+  98,104,47,59,14,10,131,27,91,32
+]
+V137 = [
+  135,4,13,46,18,56,65,42,100,67,95,128,5,76,60,99,5,81,
+  57,5,31,2,73,118,45,37,88,120,57,86,125,46,5,69,16,125,
+  126,63,76,75,68,83,127,79,112,23,114,6,5,30,55,19,87,69,
+  46,80,95,40,68,42,95,36,19,112,106,10,52,87,78,66,112,24,
+  107,83,115,47,4,70,24,122,40,70,135,63,44,133,35,52,75,111,
+  8,45,69,104,59,60,77,37,47,60,22,25,92,37,45,112,40,53,
+  28,64,58,39,41,29,7,16,20,4,4,22,28,23,6,20,11,120,
+  58,133,34,42,125,40,126,24,77,51,59,93,19,62,45,34,128,63,
+  105,48,69,41,79,61,37,88,15,8,16,79,107,25,56,118
+]
+```
+
+They have degrees 297 and 159, and direct polynomial multiplication gives
+\[
+ U_{137}\overline{R_{160}}+V_{137}\overline{R_2}=1.
+ \tag{116.16}
+\]
+All coefficients in this identity are determined by (100.1), the printed
+\(A_5,T_5\), and (116.13)–(116.15); no modular fit or inferred
+characteristic-zero degree is used.
+
+It follows that \(R_{160}\) and \(R_2\) are coprime over
+\(\mathbb Q[B]\). Indeed, a nonconstant common factor could be chosen
+primitive and integral by Gauss's lemma. Its leading coefficient would
+divide that of \(R_{160}\), hence would be a 137-adic unit. Its
+reduction would retain positive degree and divide both reductions,
+contradicting (116.16). This argument does not require knowing
+\(\deg_B R_2\) in characteristic zero or preserving its leading
+coefficient. It uses the proved degree preservation of \(R_{160}\)
+and the exact reduction of the declared Sylvester determinant.
+
+### 116.5. Physical consumer and precise consequence
+
+Suppose the generic and aligned invariants (116.2) agreed, with
+\(\operatorname{Re}G_a\ne0\). Equations (116.4), (116.12) imply
+\[
+ F_0(B,K)=A_5(B,K)=C_5(B,K)=0.
+ \tag{116.17}
+\]
+A common finite \(K\)-root forces both resultants (116.14)–(116.15)
+to vanish, even at a specialized leading-coefficient drop. For
+\(0<B<1\), the factors \(B,B-3,B+1,B+3\) are nonzero. Coprimality
+then forces \(W(B)=0\). This belongs to the already closed
+\(Z_{26}\), contrary to the hypothesis. The added
+\(\operatorname{Re}G_a=0\) chart was handled in §116.2. Equality of
+\(G\) with either radial mean is therefore impossible.
+
+Finally
+\[
+ M=(z+2)\left(1+\frac{G_a\bar G}{R}\right).
+ \tag{116.18}
+\]
+Since \(z+2\ne0\), its vanishing is exactly
+\(G=-R/\bar G_a\), proving (116.3). This proof of \(M\ne0\)
+makes no division by a mixed-overlap coefficient. Thus, in any
+rank-one mixed chart with the nonzero scale
+\(\mu=(H/R)(r-1)/\bar\beta\),
+\(\beta=R+(3+ib)\bar G\), and \(J=M/\mu\),
+the entire \(J=0\) source branch is excluded. Zeros of \(\mu\) do
+not evade (116.3); they simply do not belong to that normalized chart.
+
+The argument selects a genuine physical source subcase, beyond the
+multiplicity-only limitation of §115. It leaves other mixed-source
+subcases and the two residual overlap-zero problems open. The explicit
+finite union of closed fibres remains the 26 signed points of §111;
+no additional point closure or global dimension-six conclusion is drawn.
+
+
+## 117. The second intrinsic mean and exclusion of singular rank-one compatibility
+
+### 117.1. Original overlap coefficients and statement
+
+Retain the family, source classes and strict physical hypotheses of
+§116. In particular \(B=b^2\), \(R=3-B>0\), and the generic mean
+has the complete regular presentation (116.4) outside \(Z_{24}\).
+Use the original generic reconstruction (87.2), writing its complex
+coordinate as \(U_g\) to distinguish it from the aligned shape numerator:
+\[
+ \alpha=3-ib-\bar G,\quad \beta=R+(3+ib)\bar G,\quad
+ C=\frac{U_g-R\alpha/2}{\beta},\quad
+ D=\frac{-\bar U_g-R\bar\alpha/2}{\beta}.
+ \tag{117.1}
+\]
+Here \(D,\beta,\bar\beta\) are retained units by §§103,105.2.
+For a chosen generic normalized channel root \(Z\), the mixed overlap
+with the aligned ray, after removal of its nonzero normalization, is
+\[
+ f_o(Z)=a_o\bar Z+b_oZ+c_o,
+\]
+\[
+ \begin{split}
+ a_o&=(z-1)+\frac HR(r-1)\bar C,\\
+ b_o&=\frac HR(r-1)\bar D,\\
+ c_o&=3+\frac HR\bigl((r+2)\bar G-(r-1)(\bar C+\bar D)\bigr).
+ \end{split}
+ \tag{117.2}
+\]
+These are the literal channel sums in (90.14): the selected upper and
+scaled lower coordinates are \(\sqrt q Z\) and
+\(\sqrt q(G+C(Z-1)+D(\bar Z-1))\). The exceptional aligned
+position can be any of the three positions; selecting that coordinate
+and retaining all generic root orders gives the same formula.
+In particular \(a_o+b_o+c_o=M\), with \(M\) as in (116.3).
+
+Define the mixed-overlap quantities
+\[
+ \Delta_o=|b_o|^2-|a_o|^2,\qquad
+ N_o=a_o\bar c_o-\bar b_o c_o.
+ \tag{117.3}
+\]
+They are not the generic channel-collision determinant or the strict
+cubic discriminant. No condition on either of those is replaced here.
+On the chart
+\[
+ \mu=\frac{H(r-1)}{R\bar\beta}\ne0,
+ \quad \Sigma=\frac{z-1}{\mu}-R\bar\alpha,
+ \quad J=\frac M\mu,\quad h=J+\bar J,
+ \tag{117.4}
+\]
+the following assertions hold.
+
+**Proposition 117.1 (repo-derived).** For real \(0<|b|<1\) outside
+\(Z_{24}\), no original strict generic ray and noncanonical aligned ray
+in this chart satisfy \(\Sigma=0\). Consequently, outside \(Z_{26}\),
+every actual generic–aligned orthogonal pair with \(\Delta_o=0\) has
+\(a_ob_o\mu h\ne0\). In particular both singular compatible branches
+\(h=0,J=0\) and \(h=0,\Sigma=0\) are absent.
+
+The first assertion is a source intersection exclusion and does not
+require an overlap zero. The second uses §116. The remaining
+\(h\ne0\) rank-one compatibility branch is not excluded by this
+proposition. It adds no parameter fibre to the explicit finite union
+of 26 signed closed points in §111.
+
+### 117.2. Complete finite mean chart for \(\Sigma=0\)
+
+Put \(k=z-1\), \(l=H(r-1)\). On (117.4), \(l\ne0\), and
+\(\Sigma=0\) is exactly
+\[
+ k\bigl(R+(3-ib)G\bigr)=l(3+ib-G).
+\]
+Thus define
+\[
+ D_\Sigma=(3-ib)k+l,\quad N_\Sigma=(3+ib)l-Rk,
+ \qquad D_\Sigma G=N_\Sigma.
+ \tag{117.5}
+\]
+The linear map \((k,l)\mapsto(D_\Sigma,N_\Sigma)\) has determinant
+\(9+B+R=12\). If \(D_\Sigma=0\), (117.5) also gives
+\(N_\Sigma=0\), forcing \(k=l=0\), a contradiction. Hence the
+complete solution on this chart is the finite mean
+\[
+ G_\Sigma=N_\Sigma/D_\Sigma,
+ \qquad \bar\beta=12l/D_\Sigma,\qquad
+ \mu=D_\Sigma/(12R).
+ \tag{117.6}
+\]
+No denominator-zero solution of (117.5) has been discarded.
+
+Use the original aligned coordinates \(u=(s+d)/2\), \(v=(s-d)/2\),
+\(s^2=K_a=d^2+4\theta>0\), \(H=s(a+ic)\). Set
+\[
+ D_c=(3-ib)(u-i\theta)+H(v-i\theta),\quad
+ N_c=(3+ib)H(v-i\theta)-R(u-i\theta).
+\]
+The pairs \((D_\Sigma,N_\Sigma)\) and \((D_c,N_c)\) differ by
+the same nonzero factor \(2i/((1-iu)(1-iv))\); therefore \(D_c\ne0\).
+Define
+\[
+ \begin{split}
+ q_r={}&3\bigl[2\theta((\theta+1+bd)a+(d-b(\theta+1))c)-Rd\bigr],\\
+ q_i={}&2\theta\bigl[(3b(\theta+1)+(B-6)d)a
+ +(3bd-(B-6)(\theta+1))c\bigr]-bRd,\\
+ q_t={}&-2R\bigl[2\theta((3(\theta+1)+bd)a
+ +(3d-b(\theta+1))c)+(B+3)d\bigr].
+ \end{split}
+ \tag{117.7}
+\]
+Direct expansion using both \(s^2=K_a\) and \(K_a(a^2+c^2)=R\)
+gives
+\[
+ \operatorname{Re}(N_c\bar D_c)=sq_r,\quad
+ \operatorname{Im}(N_c\bar D_c)=sq_i,\quad
+ |N_c|^2-R|D_c|^2=sq_t.
+ \tag{117.8}
+\]
+For completeness, after reduction by \(s^2-K_a\), the three left sides
+minus their asserted right sides are respectively \(K_a(a^2+c^2)-R\)
+times
+\[
+ -\tfrac32(-2\theta^2-2\theta-d^2+ds),\quad
+ -\tfrac b2(-2\theta^2-2\theta-d^2+ds),\quad
+ -(B+3)(-2\theta^2-2\theta-d^2+ds).
+\]
+Thus both signs of \(s\), including the terms odd in \(s\), are retained.
+When \(q_r\ne0\), the invariants (116.2) become
+\[
+ K(G_\Sigma)=q_i/(bq_r),\qquad t(G_\Sigma)=q_t/q_r.
+ \tag{117.9}
+\]
+When \(q_r=0\), (117.8) instead gives
+\(\operatorname{Re}G_\Sigma=0\), including the possible zero mean.
+It cannot equal the regular generic mean with real part \(X\ne0\).
+This treats the entire added zero chart before any division by \(q_r\).
+No division by \(d\) is used.
+
+The remaining source units \(b,K_a,J_a,F_a,V\) and original Cayley
+coverage are exactly those discussed in §116.1. The actual Cayley poles
+already belong to the closed coordinate exceptions in \(Z_{24}\).
+The subcase \(r=1\) is outside (117.4); its role in the physical
+rank-one conclusion is treated explicitly in §117.5.
+
+### 117.3. Integral intrinsic mean and trace identities
+
+With the Cramer values \(a=A_a,c=C_a\), define the integral polynomials
+\[
+ \mathscr D=\mathcal E(bK_aJ_aq_r),\quad
+ \mathscr N=\mathcal E(K_aJ_aq_i),\quad
+ \mathscr T=\mathcal E(bK_aJ_aq_t),
+ \tag{117.10}
+\]
+using exactly the even substitution of §116.3. Their degrees in
+\((B,x,\theta)\) are at most \((4,4,4),(4,4,4),(5,4,4)\),
+respectively; they have 24, 24 and 31 terms. On \(q_r\ne0\),
+\(K(G_\Sigma)=\mathscr N/\mathscr D\) and
+\(t(G_\Sigma)=\mathscr T/\mathscr D\). The multiplier
+\(bK_aJ_a\ne0\), so no further zero chart is introduced.
+
+Keep \(Q,U_0,V_0\) exactly as in §116.3 and set
+\(P_h=V_0^4P(B,x,U_0/V_0)\) for
+\(P=\mathscr N,\mathscr D,\mathscr T\), as homogeneous polynomial
+evaluations. Define \(A_\Sigma=\sum_{j=0}^5 a_jK^j\) and
+\(T_\Sigma=\sum_{j=0}^4 t_jK^j\) by the following coefficients,
+again in descending \(K\)-order.
+
+```text
+a5 = B*(981*B^8 - 9988*B^7 + 33252*B^6 - 35100*B^5 + 18414*B^4 + 46980*B^3 - 90396*B^2 - 2916*B - 2187)
+a4 = -B*(B - 3)*(879*B^7 - 14147*B^6 + 55671*B^5 - 52659*B^4 + 27621*B^3 + 54351*B^2 - 17739*B - 729)
+a3 = 210*B^9 - 7555*B^8 + 77064*B^7 - 307344*B^6 + 545940*B^5 - 359478*B^4 - 73224*B^3 + 169128*B^2 + 30618*B + 6561
+a2 = -(B - 3)*(40*B^8 - 1249*B^7 + 17177*B^6 - 80553*B^5 + 167913*B^4 - 119259*B^3 - 38637*B^2 + 17253*B - 3645)
+a1 = -2*(B - 3)*(75*B^7 - 1201*B^6 + 6771*B^5 - 23769*B^4 + 45873*B^3 - 36531*B^2 - 5103*B + 3645)
+a0 = -4*(B - 3)^2*(2*B^6 + 53*B^5 - 115*B^4 + 390*B^3 - 900*B^2 + 2349*B - 243)
+
+t4 = 2*B*(B - 3)*(B + 3)*(879*B^8 - 9704*B^7 + 46936*B^6 - 102312*B^5 + 74574*B^4 - 49464*B^3 + 69984*B^2 + 5832*B + 2187)
+t3 = -8*B*(B - 3)*(B + 3)*(105*B^8 - 2138*B^7 + 15946*B^6 - 58902*B^5 + 95592*B^4 - 38934*B^3 + 17982*B^2 - 17658*B - 729)
+t2 = 6*(B - 3)^2*(B + 3)*(40*B^8 - 759*B^7 + 6041*B^6 - 23855*B^5 + 49705*B^4 - 7773*B^3 + 7587*B^2 + 1539*B + 243)
+t1 = 16*B*(B - 3)*(B + 3)*(45*B^7 - 664*B^6 + 3287*B^5 - 10350*B^4 + 24651*B^3 - 34236*B^2 + 13041*B - 2430)
+t0 = 4*(B - 3)^2*(B + 3)*(20*B^7 + 211*B^6 - 1076*B^5 + 1511*B^4 + 132*B^3 + 10593*B^2 - 11556*B + 1701)
+```
+
+For designated \(K\)-degree \(m\), the notation
+\(P^{[m]}(\mathscr N_h,\mathscr D_h)\) means
+\(\mathscr D_h^mP(B,\mathscr N_h/\mathscr D_h)\). Put
+\[
+ F_A=A_\Sigma^{[5]}(\mathscr N_h,\mathscr D_h),
+\]
+\[
+ F_T=\mathscr D_hT_\Sigma^{[4]}(\mathscr N_h,\mathscr D_h)
+ -(B+1)\mathscr T_h(\partial_KA_\Sigma)^{[4]}
+       (\mathscr N_h,\mathscr D_h).
+ \tag{117.11}
+\]
+The exact integral identities are
+\[
+ F_A=Q R_A,\qquad F_T=Q R_T,\qquad R_A,R_T\in\mathbb Z[B,x].
+ \tag{117.12}
+\]
+Here is a finite specification and coefficient certificate in the same
+form as (116.11). Set \(w=2^{1020}\) and evaluate at
+\((B,x)=(w^{281},w)\). Both integer divisions by \(Q(w^{281},w)\)
+have zero remainder. Decode the two signed integer quotients in
+balanced base \(w\), replacing digit position \(281j+k\),
+\(0\le k<281\), by \(B^jx^k\). They give the respective \(R_A,R_T\)
+with the following data:
+
+```text
+                 raw degree bounds (B,x)   quotient degrees (B,x)   terms
+F_A                       (369,280)                 (359,270)       66337
+F_T                       (371,280)                 (361,270)       66875
+
+||F_A||_1 < 2^949;   ||R_A||_1 < 2^900;
+||F_T||_1 < 2^954;   ||R_T||_1 < 2^904;
+||Q||_1 = 27949666;  deg_x Q = 5.
+```
+
+All inputs are specified by the original determinants (90.8), (117.7),
+(117.10) and the printed coefficients. The raw coefficient bounds
+follow by the triangle inequality and multiplicativity bound for
+\(\|\cdot\|_1\). The decoded coefficients re-encode to the integer
+quotients. Both differences \(F-QR\) have \(x\)-degree below 281
+and coefficient norm below \(2^{955}<w/2\). The no-collision and
+leading-digit domination argument of §116.3 therefore proves the
+identities (117.12) in characteristic zero. It requires no interpolation
+or specialization assumption.
+
+On \(Q=0\), with the retained \(V_0\mathscr D\ne0\), these yield
+\[
+ A_\Sigma(B,K(G_\Sigma))=0,\qquad
+ (B+1)(\partial_KA_\Sigma)(B,K(G_\Sigma))\,t(G_\Sigma)
+   =T_\Sigma(B,K(G_\Sigma)).
+ \tag{117.13}
+\]
+The factor \(B+1\) is part of the trace identity and is retained.
+There is no division by the quintic derivative or its leading
+coefficient, so both their zero specializations remain covered.
+
+### 117.4. Exact generic intersection exclusion
+
+With the literal generic \(F_0,N_s,D_s=\partial_KF_0\) of (100.1), put
+\[
+ C_\Sigma=(B+1)N_s\partial_KA_\Sigma-T_\Sigma D_s.
+ \tag{117.14}
+\]
+The degrees \((\deg_K,\deg_B)\) of \(F_0,A_\Sigma,C_\Sigma\)
+are \((10,18),(5,9),(13,29)\). The ordered Sylvester determinant
+has the exact factorization
+\[
+ \operatorname{Res}_K(F_0,A_\Sigma)
+ =2048B^5(B-3)^2(B+1)^2(B-1)^5(B+3)^{25}R_{135}(B).
+ \tag{117.15}
+\]
+This specifies \(R_{135}\) by exact division in \(\mathbb Z[B]\).
+It is primitive of degree 135; the full determinant has degree 174.
+No irreducibility of this quotient is assumed.
+
+Define in the explicit order
+\[
+ R_{\Sigma,2}=\operatorname{Res}_K(C_\Sigma,A_\Sigma).
+ \tag{117.16}
+\]
+Its \(18\times18\) Sylvester rows are
+\(K^4C_\Sigma,\ldots,C_\Sigma,K^{12}A_\Sigma,\ldots,A_\Sigma\)
+in descending columns \(K^{17},\ldots,1\). Modulo 137 the input
+\(K\)-degrees 13 and 5 survive, and the determinant reduces exactly
+to \(\overline{R_{\Sigma,2}}\), of \(B\)-degree 255.
+The reduction \(\overline{R_{135}}\) has degree 135 and leading
+coefficient 4. The following lists, from constant coefficient upward,
+define \(U_\Sigma,V_\Sigma\in\mathbb F_{137}[B]\).
+
+```text
+USigma = [
+  7,129,128,62,110,125,69,28,57,99,29,25,55,35,46,84,58,5,
+  115,40,50,81,29,34,58,111,103,1,96,28,134,110,135,4,84,124,
+  26,123,119,109,113,97,100,106,15,103,11,55,115,86,94,76,124,21,
+  126,115,132,92,67,80,126,29,126,95,10,136,38,78,130,134,128,120,
+  69,107,37,98,72,7,131,24,135,58,16,39,60,80,12,54,42,62,
+  17,55,58,118,29,105,105,67,119,129,34,35,13,54,66,101,111,13,
+  114,104,4,50,79,123,64,62,90,67,77,59,32,62,40,103,30,48,
+  59,128,106,9,115,0,6,86,91,12,106,18,129,81,43,106,115,22,
+  90,95,67,109,5,65,107,105,45,23,101,76,95,49,17,80,22,73,
+  128,17,19,40,54,115,122,57,15,104,23,2,85,113,21,97,6,37,
+  116,99,117,125,119,121,52,47,98,116,58,54,59,90,11,97,8,16,
+  21,59,102,107,116,52,31,112,30,31,80,69,136,101,51,102,107,117,
+  124,85,36,26,55,13,94,4,14,81,79,49,22,60,91,34,121,42,
+  9,90,12,117,108,86,129,114,128,69,136,47,126,83,101,14,4,28,
+  83,27,118
+]
+VSigma = [
+  47,59,34,58,94,133,31,52,105,51,5,26,84,84,21,11,31,40,
+  31,56,49,4,85,59,135,103,81,46,4,83,45,82,108,33,20,113,
+  79,23,47,64,57,103,86,125,130,128,9,19,19,38,0,77,105,91,
+  24,96,128,31,77,136,66,46,98,107,98,110,78,75,76,17,93,56,
+  25,80,17,16,118,0,59,33,42,5,17,104,5,34,49,109,15,38,
+  132,8,61,40,106,2,85,127,111,94,77,5,115,10,73,50,112,55,
+  30,8,121,62,107,22,136,120,131,64,114,19,48,13,75,74,35,127,
+  39,35,122,101,7,122,129,101,130
+]
+```
+
+Their degrees are 254 and 134. Direct polynomial multiplication gives
+\[
+ U_\Sigma\overline{R_{135}}+
+ V_\Sigma\overline{R_{\Sigma,2}}=1.
+ \tag{117.17}
+\]
+All terms are fixed by (100.1), the printed \(A_\Sigma,T_\Sigma\)
+and the declared Sylvester determinants. In particular this is not
+a fit to modular samples.
+
+The same degree-preserving Gauss argument as in §116.4 proves
+\(\gcd_{\mathbb Q[B]}(R_{135},R_{\Sigma,2})=1\).
+Any primitive integral common factor would have leading coefficient
+prime to 137, since it divides the leading coefficient of \(R_{135}\).
+It would retain positive degree on reduction and contradict (117.17).
+No characteristic-zero degree assertion for \(R_{\Sigma,2}\) is needed.
+
+Suppose now that \(\Sigma=0\) for an actual source pair outside
+\(Z_{24}\). The zero-real-part case has already been excluded in
+§117.2. The remaining mean satisfies both (116.4) and (117.13), so
+\[
+ F_0(B,K)=A_\Sigma(B,K)=C_\Sigma(B,K)=0.
+ \tag{117.18}
+\]
+A common finite \(K\)-root makes both declared Sylvester determinants
+vanish, including specializations where a leading coefficient drops.
+Every scalar factor in (117.15) is nonzero for \(0<B<1\); thus
+\(R_{135}(B)=R_{\Sigma,2}(B)=0\), contradicting coprimality.
+This proves the first assertion of Proposition 117.1 with all its
+source denominator cases retained.
+
+### 117.5. Original compatibility and complete singular-branch consumer
+
+The identity
+\[
+ a_o\overline{f_o(Z)}-\bar b_o f_o(Z)=-\Delta_o Z+N_o
+ \tag{117.19}
+\]
+shows that any physical overlap zero with \(\Delta_o=0\) must satisfy
+\(N_o=0\). If \(a_o=b_o=0\), an overlap zero also forces \(c_o=0\),
+and then \(M=0\), contrary to §116 outside \(Z_{26}\).
+Otherwise \(\Delta_o=0\) forces both \(a_o,b_o\) nonzero.
+The expression for \(b_o\), with \(H,D\) nonzero, implies
+\(r-1\ne0\); the retained \(\bar\beta\ne0\) then makes \(\mu\ne0\).
+This explicitly handles the zero-scale and \(r=1\) cases before
+entering the normalized chart.
+
+On that chart put
+\[
+ \xi=\bar U_g+\frac{z-1}{\mu}-\frac R2\bar\alpha.
+\]
+Substitution of (117.1) into (117.2) gives, without a sign assumption,
+\[
+ \frac{a_o}{\mu}=\xi,\quad
+ \frac{b_o}{\mu}=\bar\Sigma-\bar\xi,\quad
+ \frac{c_o}{\mu}=J-\xi-\bar\Sigma+\bar\xi.
+ \tag{117.20}
+\]
+Consequently
+\[
+ \frac{\Delta_o}{|\mu|^2}
+   =|\Sigma|^2-\Sigma\bar\xi-\bar\Sigma\xi,\qquad
+ \frac{N_o}{|\mu|^2}
+   =\frac{\Delta_o}{|\mu|^2}+h\xi-\Sigma J.
+ \tag{117.21}
+\]
+At \(h=0\), the necessary equations \(\Delta_o=N_o=0\)
+therefore give \(\Sigma J=0\). Section 116 gives \(M\ne0\),
+hence \(J\ne0\), outside \(Z_{26}\). The first part of this
+proposition gives \(\Sigma\ne0\), already outside \(Z_{24}\).
+Both factors being nonzero is a contradiction. This proves \(h\ne0\)
+and completes the stated physical rank-one consequence.
+
+There is also an exact reason not to replace this source intersection
+argument by an assumed strict sign of \(h\). On the hypothetical
+\(\Sigma=0\) aligned mean, substitution of (117.6), the unit phases
+and \(|H|^2=R\) gives
+\[
+ h=\frac{144R\,P_0}
+ {(1+u^2)(1+v^2)|D_\Sigma|^2},
+ \tag{117.22}
+\]
+where \(P_0\) is the original aligned equation (90.1).
+One direct verification is to set
+\[
+ E=R(z+2)\bar D_\Sigma+H(r+2)\bar N_\Sigma,
+\]
+\[
+ S=\operatorname{Re}z+\operatorname{Re}r-2+
+ b(\operatorname{Im}z-\operatorname{Im}r)
+ +\operatorname{Re}\bigl(\bar H(\bar r-z)\bigr).
+\]
+The unit identities give \(E+\bar E=6RS\), the Cayley substitution
+gives \(S=2P_0/((1+u^2)(1+v^2))\), and (117.6) gives
+\(h=12(E+\bar E)/|D_\Sigma|^2\). Thus \(h=0\) follows from the
+aligned source equation on this branch; it is the simultaneous
+generic source conditions that exclude it.
+
+The proof retains \(d=0\), the newly added \(q_r=0\) and
+\(D_\Sigma=0\) cases, derivative and leading-coefficient zeros,
+both radial signs and every source presentation supplied by §105.2.
+It imposes no new assumption on the strict cubic discriminant.
+It removes both singular compatibility branches while leaving the
+regular \(h\ne0\) rank-one problem, the other mixed overlaps and the
+ordinary cross-union overlap problem open. There is no new point
+closure, whole-family closure or global dimension-six conclusion here.

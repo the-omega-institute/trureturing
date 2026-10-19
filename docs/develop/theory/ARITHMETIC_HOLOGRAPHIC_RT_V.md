@@ -1247,3 +1247,237 @@ Combining (125.21)–(125.22) proves $`2u+2v-uv\le8\delta`$. Because $`2-v>0`$, 
 Thus the actual intermediate-tail sector $`1/2\le\tau_H<2-\sqrt2`$ is incompatible with a common stress having $`r\ge5/2`$ at a subquarter full-domain calibrated minimum. The bound couples the two actual Grams and the same actual stress; it does not substitute the opposite tail for the first tail in (125.8). The separated remaining region is still open.
 
 Calibration is used in both the weighted-frame trace identity and the complementary-support cap. The class satisfying the combined stress and tail restrictions remains open, and no feasible minimum in it is asserted. No rank or local-minimum transfer is claimed for arbitrary leaking optimizers, and the unrestricted quarter-optimum problem remains open.
+
+## 追加锚（本行以下为增补区）
+
+## 126. Reciprocal cuts constrain the actual error inertia near the rank-two boundary
+
+### 126.1. The original common normer and the excluded sector
+
+Retain the original four two-coordinate fibres, calibrated channels, fixed correlated encodings, and unhalved arbitrary-reference error $`\delta`$ of (120.1)–(120.4). The physical product output is the full sixteen-dimensional space. Suppose $`(G,H)`$ is a local minimum on the full calibrated domain, including rank-changing competitors, with $`\operatorname{rank}G=7`$, $`\ker G=\mathbb C a`$ and every $`a_i\ne0`$, $`\operatorname{rank}H=4`$, and $`0<\delta<1/4`$. Put $`L=T-G\odot H`$. The exact original norm is
+
+$$
+\delta=\max\{2\operatorname{Tr}(LW):
+ \rho=\bigoplus_f\rho_f\succeq0,\quad
+ \operatorname{Tr}\rho=1,\quad0\preceq W\preceq\rho\},
+\qquad T_{ff}=I_2,\quad T_{fg}=J_2/2\ (f\ne g).
+\tag{126.1}
+$$
+
+This is the calibrated full-norm formula of [RT III Theorem 91.1](ARITHMETIC_HOLOGRAPHIC_RT_III.md#911-original-channels-forward-grams-and-the-adaptive-theorem). Choose any canonical common norming pair from [RT III §95.2](ARITHMETIC_HOLOGRAPHIC_RT_III.md#952-one-rank-seven-side-gives-a-supported-psd-quotient), namely one satisfying the simultaneous first-order conditions for both actual Grams. Its same positive scale and opposite stress obey
+
+$$
+\begin{aligned}
+G&=H\odot\bar R,\qquad R\succeq0,\quad R_{ii}=1,\\
+P&=\alpha\operatorname{diag}(a)R\operatorname{diag}(a)^*,
+       \quad PH=0,\quad\alpha>0,\\
+W_{ij}&=-\frac{\alpha a_i\overline{a_j}}{2\overline{H_{ij}}}
+                 \qquad(f(i)\ne f(j)).
+\end{aligned}
+\tag{126.2}
+$$
+
+All denominators are nonzero. For a union $`A`$ of two complete original fibres, define the four-by-four reciprocal cut and the opposite spectral tail by
+
+$$
+Q_A=\bigl(1/\overline{H_{ij}}\bigr)_{i\in A,j\in A^c},
+\qquad v=8-\kappa_2(H)=\lambda_3(H)+\lambda_4(H).
+\tag{126.3}
+$$
+
+Write $`n_+(L),n_-(L),n_0(L)`$ for the strictly positive, strictly negative and zero eigenvalue counts.
+
+**Theorem 126.1 (actual reciprocal cuts and inertia).** Under these hypotheses, if $`v\le1/64`$, then every two-plus-two fibre cut satisfies
+
+$$
+\begin{aligned}
+\sigma_{\min}(Q_A)&>\frac{93337}{1998848}>0,\\
+\operatorname{rank}W&\ge4,\qquad
+\operatorname{rank}(\rho-W)\ge4,\\
+n_+(L)&\le4,\qquad n_-(L)\le4.
+\end{aligned}
+\tag{126.4}
+$$
+
+The normer conclusions hold for every canonical common pair. If $`L`$ is nonsingular, its inertia is therefore exactly $`(4,4)`$. Thus the nonsingular $`(2,6)`$, $`(3,5)`$ and $`(5,3)`$ branches, and every singular branch with either strict index at least five, are excluded in the actual tail sector $`1/325<v\le1/64`$. The lower endpoint comes from §124; the scalar interval does not assert existence of a physical pair or minimum.
+
+### 126.2. Local polar comparison in the original coordinates
+
+**Proof.** For cross-fibre coordinates, the logical matrix unit $`|i\rangle\langle j|`$ has trace norm one. The corresponding correct entry of the full physical product output is $`\overline{G_{ij}H_{ij}}`$, against target entry $`1/2`$. Bounding that entry by the output trace norm gives the original unhalved test of [RT IV (116.6)–(116.8)](ARITHMETIC_HOLOGRAPHIC_RT_IV.md#1161-the-original-channel-principal-quotient):
+
+$$
+\delta\ge\left|\tfrac12-G_{ij}H_{ij}\right|,
+\qquad
+|H_{ij}|^2\ge|G_{ij}H_{ij}|\ge\tfrac12-\delta>\tfrac14.
+\tag{126.5}
+$$
+
+Here $`|R_{ij}|\le1`$ in the actual quotient was used; no output compression replaces the norm.
+
+Use the unchanged-record top-two environment chart of (121.11)–(121.12) and (123.13):
+
+$$
+V_f=\begin{bmatrix}C_f\\D_f\end{bmatrix},\qquad
+C_f=U_fA_f,\quad A_f=(I_2-D_f^*D_f)^{1/2},\quad U_f\in U(2),
+\qquad t_f=\|D_f\|_F^2,\quad\sum_ft_f=v.
+\tag{126.6}
+$$
+
+Since $`v<1`$, the polar factors exist. Define only an auxiliary qubit Gram $`H^{(0)}_{fg}=U_f^*U_g`$. No original stress, null vector or normer is transported to it. The actual cross block is $`H_{fg}=A_fU_f^*U_gA_g+D_f^*D_g`$. Rationalizing the square root and using $`\|A_g\|\le1`$ gives
+
+$$
+\begin{aligned}
+\|H_{fg}-H^{(0)}_{fg}\|_{\mathrm{op}}
+&\le\frac{t_f+t_g}{1+\sqrt{1-v}}+\sqrt{t_ft_g}\\
+&\le\frac{v}{1+\sqrt{1-v}}+\frac v2
+ \le\frac{v}{2-v}+\frac v2\\
+&\le\frac1{127}+\frac1{128}
+ =\frac{255}{16256}<\frac1{63}.
+\end{aligned}
+\tag{126.7}
+$$
+
+The last line uses the inclusive endpoint $`v\le1/64`$; the preceding inequality uses $`\sqrt{1-v}\ge1-v`$. Every cross-fibre entry therefore satisfies
+
+$$
+|H^{(0)}_{ij}|>\frac12-\frac1{63}
+ =\frac{61}{126}>\frac{15}{32}.
+\tag{126.8}
+$$
+
+### 126.3. Uniform Cauchy conditioning and the actual cuts
+
+Consider the four columns $`u_1,\ldots,u_4`$ of two orthonormal qubit bases and the four columns $`z_1,\ldots,z_4`$ of another two. Suppose every overlap between distinct bases in this collection has magnitude at least $`\ell`$, with $`0<\ell\le1/2`$. Write $`B_{ij}=\langle u_i,z_j\rangle`$, $`Q_{ij}=1/B_{ij}`$, and $`[p,q]=\det[p\ q]`$. The Cauchy determinant and its cofactor formula give
+
+$$
+\left|(Q^{-1})_{ji}\right|
+ =\frac{\displaystyle\prod_{k=1}^4|B_{kj}|
+                     \prod_{l=1}^4|B_{il}|}
+ {|B_{ij}|\displaystyle\prod_{k\ne i}|[u_i,u_k]|
+                      \prod_{l\ne j}|[z_j,z_l]|}.
+\tag{126.9}
+$$
+
+For completeness, the standard Cauchy double-alternant identity is recorded in Krattenthaler, [*Advanced Determinant Calculus*, §2.1, equation (2.7), page 6](https://www.mat.univie.ac.at/~slc/wpapers/s42kratt.pdf). Choose a common qubit coordinate chart avoiding the finitely many zero components. Row and column scalings turn the overlaps into $`x_i+y_j`$, so that identity yields the homogeneous formula
+
+$$
+|\det Q|
+ =\frac{\displaystyle\prod_{i<k}|[u_i,u_k]|
+                         \prod_{j<l}|[z_j,z_l]|}
+        {\displaystyle\prod_{i,j}|B_{ij}|}.
+\tag{126.10}
+$$
+
+There are no repeated rays on either side: coincidence across two bases would make the overlap with an orthogonal partner zero. All separation factors in (126.10) are therefore nonzero. Applying the same determinant identity to a three-by-three minor and dividing by (126.10) proves (126.9). Continuity gives the homogeneous identity when an initially chosen chart has zero components. Thus no real gauge or nonzero-coordinate restriction is imposed.
+
+For a fixed unit vector, its two overlaps with an orthonormal basis have squared magnitudes summing to one, and their product is at most $`1/2`$. Each four-overlap product in the numerator of (126.9) is therefore at most $`1/4`$. On either side, the separation from the same-basis partner is one; the other two separations have squared magnitudes summing to one and are each at least $`\ell`$. Their product is at least $`\ell\sqrt{1-\ell^2}`$. Consequently
+
+$$
+\max_{i,j}|(Q^{-1})_{ji}|
+ \le\frac1{16\ell^3(1-\ell^2)},\qquad
+\|Q^{-1}\|_{\mathrm{op}}
+ \le\frac1{4\ell^3(1-\ell^2)},\qquad
+\sigma_{\min}(Q)\ge4\ell^3(1-\ell^2).
+\tag{126.11}
+$$
+
+Entrywise conjugation preserves singular values, so this also applies to reciprocal conjugates. Fix any original two-plus-two fibre cut and form its reciprocal-conjugate seed matrix $`Q_A^{(0)}`$ from $`H^{(0)}`$. Equations (126.8) and (126.11), with $`\ell=15/32`$, imply
+
+$$
+\sigma_{\min}(Q_A^{(0)})
+ \ge4(15/32)^3\bigl(1-(15/32)^2\bigr)
+ >3(15/32)^3=\frac{10125}{32768}.
+\tag{126.12}
+$$
+
+Meanwhile each actual reciprocal entry obeys
+
+$$
+\left|\frac1{\overline{H_{ij}}}
+       -\frac1{\overline{H^{(0)}_{ij}}}\right|
+ =\frac{|H_{ij}-H^{(0)}_{ij}|}{|H_{ij}|\,|H^{(0)}_{ij}|}
+ <\frac{1/63}{(1/2)(61/126)}=\frac4{61},
+\qquad \|Q_A-Q_A^{(0)}\|_{\mathrm{op}}<\frac{16}{61}.
+\tag{126.13}
+$$
+
+The last inequality bounds the operator norm by the Frobenius norm of the four-by-four matrix. Testing every unit vector now gives
+
+$$
+\sigma_{\min}(Q_A)
+ \ge\sigma_{\min}(Q_A^{(0)})-\|Q_A-Q_A^{(0)}\|_{\mathrm{op}}
+ >\frac{10125}{32768}-\frac{16}{61}
+ =\frac{93337}{1998848}>0.
+\tag{126.14}
+$$
+
+This proves invertibility for all three unordered fibre cuts. The rational tail endpoint is a conservative choice; no optimal conditioning threshold is asserted.
+
+### 126.4. The same full common normer, including singular error matrices
+
+Because $`\rho`$ is block diagonal in the original fibres, (126.2) gives
+
+$$
+W_{A,A^c}
+ =-\frac\alpha2\operatorname{diag}(a_A)
+                    Q_A\operatorname{diag}(\overline{a_{A^c}}),
+\qquad (\rho-W)_{A,A^c}=-W_{A,A^c}.
+\tag{126.15}
+$$
+
+The diagonal factors are invertible. Each displayed cross block therefore has rank four, so both full normer halves have rank at least four. This also forces the same density to be positive definite. Indeed if $`x\in\ker W_{A,A}`$, positivity of $`W`$ makes it annihilate the extension of $`x`$ by zero. Its $`A^c`$ component is $`W_{A^c,A}x`$, whose invertibility gives $`x=0`$. Thus $`W_{A,A}\succ0`$, and similarly on $`A^c`$. Since $`\rho_A\succeq W_{A,A}`$, $`\rho_{A^c}\succeq W_{A^c,A^c}`$, and $`\rho_{A,A^c}=0`$, one has $`\rho\succ0`$.
+
+The original common pair maximizes (126.1) at its own density. Put $`M=\rho^{1/2}L\rho^{1/2}`$. The fixed-density spectral maximization in [RT III §91.4](ARITHMETIC_HOLOGRAPHIC_RT_III.md#914-primal-dual-and-exact-certificates) gives
+
+$$
+W=\rho^{1/2}\bigl(\Pi_+(M)+E_0\bigr)\rho^{1/2},
+\qquad 0\preceq E_0\preceq\Pi_0(M).
+\tag{126.16}
+$$
+
+To retain the singular case explicitly, maximizing $`\operatorname{Tr}(ME)`$ over $`0\preceq E\preceq I`$ forces $`E`$ to be one on positive eigenvectors and zero on negative eigenvectors. Positivity of $`E`$ and $`I-E`$ kills the corresponding off-diagonal entries. Only the contraction on the zero eigenspace remains. Hence
+
+$$
+\begin{aligned}
+4&\le\operatorname{rank}W
+ =n_+(M)+\operatorname{rank}E_0\le8-n_-(M),\\
+4&\le\operatorname{rank}(\rho-W)
+ =n_-(M)+\operatorname{rank}(\Pi_0(M)-E_0)\le8-n_+(M).
+\end{aligned}
+\tag{126.17}
+$$
+
+Congruence by the positive-definite $`\rho^{1/2}`$ preserves inertia, proving (126.4). If $`L`$ is nonsingular its two strict indices sum to eight, forcing $`(4,4)`$. If it is singular, the same actual zero-space completion must additionally satisfy
+
+$$
+\operatorname{rank}E_0\ge\max\{0,4-n_+(L)\},\qquad
+\operatorname{rank}(\Pi_0(M)-E_0)\ge\max\{0,4-n_-(L)\}.
+\tag{126.18}
+$$
+
+No new completion or independently chosen density has been substituted. This proves the theorem. ∎
+
+### 126.5. A high-effective-rank consumer for the same actual stress
+
+**Corollary 126.2.** Under the hypotheses of Theorem 126.1, put $`r=\operatorname{Tr}P/\|P\|_{\mathrm{op}}`$ for the actual stress in (126.2). If $`r\ge697/254`$, then $`v<1/64`$ and all conclusions of that theorem hold.
+
+**Proof.** The coupled actual-tail estimate (125.17) gives
+
+$$
+r<2+\frac32\frac{1-v}{2-v},\qquad r<\frac{11}{4},\qquad
+v<\frac{11-4r}{7-2r}.
+\tag{126.19}
+$$
+
+The last expression follows by rearranging the first inequality; $`7-2r>0`$. It decreases with $`r`$ in this interval, and therefore
+
+$$
+r\ge\frac{697}{254}
+\quad\Longrightarrow\quad
+v<\frac{11-4(697/254)}{7-2(697/254)}=\frac1{64}.
+\tag{126.20}
+$$
+
+The stress, its scale, and its associated common normer have remained the same throughout. ∎
+
+The new restriction consumes the uniform reciprocal conditioning in the actual full norming problem. It leaves the balanced nonsingular branch, singular branches compatible with (126.17)–(126.18), and the larger-tail region unresolved. The auxiliary rank-two seed is not asserted to inherit any original stress, normer or local-minimum property. No feasibility of the residual class, sufficiency for local minimality, rank-preserving transfer from arbitrary leaking optimizers, or unrestricted quarter-optimum conclusion follows.

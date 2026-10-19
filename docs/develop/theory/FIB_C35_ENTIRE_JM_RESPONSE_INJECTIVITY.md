@@ -3222,3 +3222,695 @@ Li–Lee–Bresler，《[A Unified Framework for Identifiability Analysis in Bil
 所以较大支持的同父第五 J $L_2$、父上的完整 $L_3$、更早互择祖先与原根 $L_7$ 均未决定；无限制自适应八读恢复或不可能性、八读与九读比较及完整原域的九读充分性也未决定。原策略始终可为任意确定性历史依赖函数，不附连续、可测、可计算或有限描述条件。条带结果不向 $g(7)\ne0$、$d<0$ 或 $d>21C/11$ 外推，也不向其他实际终端词外推；固定整个增益界不向比例增益类外推。这些未解范围与定义 1.3 的原完成判据一致。
 
 ## 追加锚（本行以下为增补区）
+
+## 15. Exact-gain fifth-J supports and the three-to-four transition
+
+**Definition 15.1 (A width-dependent exact parent).** In the original domain of Definition 1.1, fix $\beta>0$ and put
+
+$$
+\begin{gathered}
+h(s)=\frac85(s-1)(s-3)(s-5),\qquad
+P_\beta(r)=\begin{pmatrix}r&\beta\\r(1-r)/\beta&1-r\end{pmatrix},\\
+W_\beta(r)=(P_\beta(r),h,24),\qquad
+K_\beta=\{W_\beta(r):0<r<1\},\\
+C_\beta=24+\frac{24}{5}(1+\beta),\qquad
+Y_\beta=24-\frac{24}{5}(1+2\beta),\\
+H_{4,\beta}=(0,J,24,M,C_\beta,J,24,M,Y_\beta),\qquad
+H_{5,\beta}^F=(H_{4,\beta},F,24)\quad(F=J,M).
+\end{gathered}
+\tag{15.1}
+$$
+
+For $S\subseteq(0,1)$ write $K_\beta(S)=\{W_\beta(r):r\in S\}$. Equality $g=h$ below means equality of entire polynomials, including scale. It does not mean a gain direction. The coordinates and the gain at $\beta=4$ occur in the root volume, §23, equations (23.4)–(23.6), (23.15)–(23.18). Here each width has its own exact parent; the support question concerns this family of parents.
+
+**Theorem 15.2 (Entire exact-gain slice and sharp support sizes).** The entire slice of $\mathcal F(H_{4,\beta})$ with $g=h$ is $K_\beta$. Both fifth actions have response $24$ throughout this slice; every other fifth-response slice with $g=h$ is empty. For every finite or infinite $S\subseteq(0,1)$,
+
+$$
+\begin{aligned}
+L_2(K_\beta(S),H_{5,\beta}^J)\quad\Longleftrightarrow\quad
+\bigwedge_{m=1}^3\ \exists r,t\in S:
+\ r\ne t,\quad r+t=1+m\beta.
+\end{aligned}
+\tag{15.2}
+$$
+
+Consequently $L_2(K_\beta,H_{5,\beta}^J)$ holds exactly when $0<\beta<1/3$. The minimum size of a finite $L_2$ support **inside $K_\beta$** is three for $0<\beta<1/4$ and four for $1/4\le\beta<1/3$. Every three-world support has the parameter set
+
+$$
+\left\{\frac12,\frac12+\beta,\frac12+2\beta\right\}.
+\tag{15.3}
+$$
+
+For $\beta\ge1/3$, no subset of $K_\beta$, of any cardinality, has this $L_2$ property.
+
+Proof. All entries of $P_\beta(r)$ are positive, its trace is one and its determinant is zero. Its nonzero trace makes its rank exactly one. Different $r$ give different sources and complete worlds. The single entire gain has samples
+
+$$
+(h(0),\ldots,h(7))=
+\left(-24,0,\frac{24}{5},0,-\frac{24}{5},0,24,\frac{384}{5}\right).
+\tag{15.4}
+$$
+
+The prefix traces in (10.3) are $1,j,1+\beta,j+r,1+2\beta$. Thus these worlds realize exactly $H_{4,\beta}$ and both fifth responses are $24$. Conversely, $g=h$ and the initial response force $d=24$. Clock two then gives
+$C_\beta=24+(24/5)(1+b)$, so $b=\beta$. Strict source legality forces $0<r<1$ and $c=r(1-r)/\beta$. This proves the entire-slice identity without a hidden source restriction.
+
+Set
+
+$$
+q_m(r)=\beta+\frac{r(1-r)}\beta+mr,\qquad V_k=1+k\beta.
+\tag{15.5}
+$$
+
+By the actual left products (10.4), $k=2$ denotes sixth $J$, and $k=3$ denotes sixth $M$. The acquired response and the two alternative terminal responses on the same fixed world are
+
+$$
+v_k=24+24V_k,\qquad
+f_{kJ}(r)=24+\frac{384}{5}q_k(r),\qquad
+f_{kM}(r)=24+\frac{384}{5}\bigl(V_k+q_{k-1}(r)\bigr).
+\tag{15.6}
+$$
+
+Each acquired sixth slice retains all of $K_\beta(S)$. For distinct $r,t$ the exact difference is
+
+$$
+q_m(r)-q_m(t)=\frac{(r-t)(1+m\beta-r-t)}\beta.
+\tag{15.7}
+$$
+
+Call the equation $r+t=1+m\beta$ color $m$. Sixth $J$ requires colors $2,1$ for its final $J,M$ leaves; sixth $M$ requires colors $3,2$. An $L_2$ support must therefore contain a distinct pair of each of colors $1,2,3$. Conversely these pairs supply both $L_0$ leaves inside the single acquired $v_k$ child for each $k$. Each sixth child contains a distinct pair and has both terminal clauses, hence $L_1$; the common fifth node contains them and has $L_2$. All non-singleton guards hold. The color-two pair may serve both sixth blocks. No alternative response has been acquired on an already chosen trajectory. This proves (15.2), including empty and singleton failures.
+
+Color three requires $r+t=1+3\beta<2$, which is impossible for $\beta\ge1/3$. At equality the forbidden boundary $r=t=1$ cannot be made legal. For $0<\beta<1/4$, the three points (15.3) are legal and their three pairs have colors $1,2,3$. A single pair cannot have two colors because $\beta>0$, so two worlds never suffice. If three ordered points $x<y<z$ work, their three strictly ordered sums must satisfy
+
+$$
+x+y=1+\beta,\qquad x+z=1+2\beta,\qquad y+z=1+3\beta.
+\tag{15.8}
+$$
+
+Solving gives (15.3). Its largest point is strictly below one exactly for $\beta<1/4$; at $\beta=1/4$ it is not legal.
+
+For $0<\beta<1/3$ another support is given by the set of the four values
+
+$$
+a=\frac{1+5\beta}{4},\quad
+b_*=\frac{3-\beta}{4},\quad
+c_*=\frac{1+9\beta}{4},\quad
+e=\frac{3+3\beta}{4}.
+\tag{15.9}
+$$
+
+These are source parameters $r$, not matrix entries. All lie in $(0,1)$, and
+$a+b_*=1+\beta$, $a+e=1+2\beta$, $c_*+e=1+3\beta$. Each selected pair is distinct: $b_*-a=e-c_*=(1-3\beta)/2>0$ and $e-a=(1-\beta)/2>0$. Thus they give at most four worlds. In $1/4\le\beta<1/3$ all four are distinct, since $c_*-a=e-b_*=\beta$ and $c_*-b_*=(5\beta-1)/2>0$. The impossibility of three proves the four-world minimum. At $\beta=1/4$ this set is $\{9/16,11/16,13/16,15/16\}$. Below that range, the possible coincidence $b_*=c_*$ at $\beta=1/5$ simply gives three worlds. ∎
+
+**Theorem 15.3 (An exact rational actual $L_2$).** Take $\beta=1/8$ and the three complete worlds with the common $g=h,d=24$ and sources
+
+$$
+P_0=\begin{pmatrix}1/2&1/8\\2&1/2\end{pmatrix},\quad
+P_1=\begin{pmatrix}5/8&1/8\\15/8&3/8\end{pmatrix},\quad
+P_2=\begin{pmatrix}3/4&1/8\\3/2&1/4\end{pmatrix}.
+\tag{15.10}
+$$
+
+Their common fifth-J history is
+$H_{5,1/8}^J=(0,J,24,M,147/5,J,24,M,18,J,24)$.
+Writing $K=\{W_0,W_1,W_2\}$, one has $L_2(K,H_{5,1/8}^J)$.
+
+Proof. Each displayed source is strictly positive, trace one and determinant zero. Use the one polynomial
+$h(s)=-24+(184/5)s-(72/5)s^2+(8/5)s^3$ throughout. The following are exact response functions of these predetermined worlds. The fifth-M continuations are included to distinguish the two actual fifth choices.
+
+| Time word | $y(W_0)$ | $y(W_1)$ | $y(W_2)$ |
+| --- | --- | --- | --- |
+| empty, clock $0$ | $0$ | $0$ | $0$ |
+| $J$ | $24$ | $24$ | $24$ |
+| $JM$ | $147/5$ | $147/5$ | $147/5$ |
+| $JMJ$ | $24$ | $24$ | $24$ |
+| $JMJM$ | $18$ | $18$ | $18$ |
+| $JMJMJ$ | $24$ | $24$ | $24$ |
+| $JMJMJJ$ | $54$ | $54$ | $54$ |
+| $JMJMJM$ | $57$ | $57$ | $57$ |
+| $JMJMJJJ$ | $264$ | $1368/5$ | $264$ |
+| $JMJMJJM$ | $1608/5$ | $1608/5$ | $1512/5$ |
+| $JMJMJMJ$ | $1512/5$ | $1608/5$ | $1608/5$ |
+| $JMJMJMM$ | $1848/5$ | $1896/5$ | $1848/5$ |
+| $JMJMM$ | $24$ | $24$ | $24$ |
+| $JMJMMJ$ | $126$ | $129$ | $126$ |
+| $JMJMMM$ | $147$ | $147$ | $141$ |
+| $JMJMMJJ$ | $1608/5$ | $1608/5$ | $1512/5$ |
+| $JMJMMJM$ | $1896/5$ | $1848/5$ | $1704/5$ |
+| $JMJMMMJ$ | $2952/5$ | $3048/5$ | $2952/5$ |
+| $JMJMMMM$ | $3576/5$ | $3576/5$ | $3384/5$ |
+
+The fifth-J rows follow from (10.4), equivalently (15.6); the fifth-M rows follow from the literal products in Table 6.1. At the acquired sixth-J response $54$, final $J$ uses $(W_0,W_2)$ at $264$ and final $M$ uses $(W_0,W_1)$ at $1608/5$. At the acquired sixth-M response $57$, final $J$ uses $(W_1,W_2)$ at $1608/5$ and final $M$ uses $(W_0,W_2)$ at $1848/5$. Both sixth slices retain all three worlds. Each terminal leaf retains its displayed distinct pair, so every $L_0$, $L_1$ and $L_2$ guard holds. The initial read is counted and the terminal clock remains seven. ∎
+
+**Theorem 15.4 (Failure of the entire exact-gain M arm).** For every $\beta>0$ and every $S\subseteq(0,1)$,
+
+$$
+\neg L_2(K_\beta(S),H_{5,\beta}^M),\qquad
+\neg L_3(K_\beta,H_{4,\beta}).
+\tag{15.11}
+$$
+
+These statements concern the exact-$h$ slice. They impose no nonexistence conclusion on the unrestricted M arm or unrestricted parent.
+
+Proof. After fifth $M$, sixth $J$ has matrix $\left(\begin{smallmatrix}3&1\\2&1\end{smallmatrix}\right)$ and trace $1+\beta+q_2(r)$; the following final $J$ has matrix $\left(\begin{smallmatrix}2&1\\3&1\end{smallmatrix}\right)$ and trace $1+2\beta+q_1(r)$. If their actual responses are $u,f$, then
+
+$$
+u=24+24(1+\beta+q_2(r)),\quad
+f=24+\frac{384}{5}(1+2\beta+q_1(r)),\quad
+r=\beta+\frac{u-24}{24}-\frac5{384}(f-24).
+\tag{15.12}
+$$
+
+Here $q_2-q_1=r$. Thus the joint map is injective on the entire $K_\beta$. Once $u$ has been acquired, every final-J leaf is empty or a singleton, even after restricting to a subset. No sixth-J child has $L_1$, and the corresponding conjunct of fifth-M $L_2$ fails. Other fifth responses give empty slices by Theorem 15.2. Hence no M choice can supply the M conjunct of parent $L_3$ in $K_\beta$. ∎
+
+## 16. A zero-safe atlas of complete seven-read children
+
+**Definition 16.1 (Even-node coordinates).** In this section $A,C,z,Y,p,v$ are arbitrary real numbers. The notation
+
+$$
+H_4^A=(0,J,A,M,C,J,z,M,Y),\quad H_{5J}^A=(H_4^A,J,p),\quad
+H_6^E=(H_{5J}^A,E,v)
+\tag{16.1}
+$$
+
+extends the same literal histories to arbitrary $A$, without changing the positive-$A$ assumptions of §§10–14. There are seven readings at clocks $0,\ldots,6$. Fix $E\in\{J,M\}$ and $b>0$, and write
+
+$$
+\begin{gathered}
+T=1+b,\quad U=1+2b,\quad
+k=\begin{cases}2&E=J,\\3&E=M,\end{cases}\quad V=1+kb,\quad K=16TUV>0,\\
+B_0=-dTUV,\quad B_2=(C-d)UV,\quad
+B_4=(Y-d)TV,\quad B_6=(v-d)TU,\\
+\begin{pmatrix}G_1\\G_3\\G_5\\G_7\end{pmatrix}
+=\begin{pmatrix}
+5&15&-5&1\\-1&9&9&-1\\1&-5&15&5\\-5&21&-35&35
+\end{pmatrix}
+\begin{pmatrix}B_0\\B_2\\B_4\\B_6\end{pmatrix},\\
+H_E(b,d)=(A-d)G_3G_5-2(z-d)G_1G_5+(p-d)G_1G_3.
+\end{gathered}
+\tag{16.2}
+$$
+
+Here $K$ is an interpolation denominator, not a world set. The $G_i$ are affine polynomials in $d$ for each fixed $b$ and observations. For $i\in\{0,2,4,6\}$ let
+$\ell_i^{\rm ev}(s)=\prod_{a\in\{0,2,4,6\}\setminus\{i\}}(s-a)/(i-a)$.
+Define
+
+$$
+g_{b,d}(s)=-d\ell_0^{\rm ev}(s)
++\frac{C-d}{T}\ell_2^{\rm ev}(s)
++\frac{Y-d}{U}\ell_4^{\rm ev}(s)
++\frac{v-d}{V}\ell_6^{\rm ev}(s).
+\tag{16.3}
+$$
+
+**Theorem 16.2 (Complete-world bijection and genuine drift cubics).** For each fixed $E,b$ and all the observations in Definition 16.1, retain exactly the real triples $(d,j,r)$ satisfying
+
+$$
+\begin{gathered}
+H_E(b,d)=0,\qquad 0<r<1,\qquad j>b,\qquad
+b(j-b)=r(1-r),\qquad g_{b,d}\ne0,\\
+G_1j=K(A-d),\qquad G_3(j+r)=K(z-d),\qquad
+G_5(j+2r)=K(p-d).
+\end{gathered}
+\tag{16.4}
+$$
+
+The map
+
+$$
+(d,j,r)\longmapsto
+\left(\begin{pmatrix}r&b\\j-b&1-r\end{pmatrix},g_{b,d},d\right)
+\tag{16.5}
+$$
+
+is a bijection onto all complete worlds at that $b$ in $\mathcal F(H_6^E)$. Its union over **all** $b>0$ is the entire child. The nonzero-polynomial filter is automatic if $A=24$ or if $z\ne A$; it remains part of the statement for arbitrary $A$.
+
+The polynomial $H_E(b,d)$ is exactly cubic in $d$, for every choice of the real observations. Its leading coefficient is
+
+$$
+\begin{aligned}
+L_J(b)&=16b(1+2b)^2(4b^3+16b^2+5b+8)>0,\\
+L_M(b)&=192b^4(3b^2+12b+4)>0.
+\end{aligned}
+\tag{16.6}
+$$
+
+Proof. The actual even traces at clocks $0,2,4,6$ are $1,T,U,V$, and the odd traces at $1,3,5$ are $j,j+r,j+2r$. Four distinct even nodes determine every degree-at-most-three polynomial, including all degree drops. They force (16.3). Evaluating their Lagrange basis at $1,3,5,7$ gives exactly the matrix in (16.2), divided by $16$, and therefore $g(i)=G_i/K$.
+
+With
+
+$$
+R_1=G_1j-K(A-d),\quad
+R_3=G_3(j+r)-K(z-d),\quad
+R_5=G_5(j+2r)-K(p-d),
+$$
+
+the polynomial identity
+
+$$
+R_1G_3G_5-2R_3G_1G_5+R_5G_1G_3=-KH_E
+\tag{16.7}
+$$
+
+follows from $j-2(j+r)+(j+2r)=0$. It uses no division by an odd sample. Let $\alpha_i=[d]G_i$. Direct substitution of the four $B_i$ gives
+
+$$
+\begin{array}{c|cc}
+&E=J&E=M\\ \hline
+\alpha_1&-(2b+1)(10b^2+41b+16)&-2(5b+2)(3b^2+12b+4)\\
+\alpha_3&(2b+1)(2b^2-23b-16)&2(3b+2)(b^2-12b-4)\\
+\alpha_5&-(2b+1)(2b^2+13b+16)&-2(b+2)(3b^2+12b+4)\\
+\alpha_7&(2b+1)^2(5b-16)&2(b-2)(15b^2+12b+4).
+\end{array}
+\tag{16.8}
+$$
+
+The coefficient of $d^3$ in $H_E$ is
+
+$$
+-\alpha_3\alpha_5+2\alpha_1\alpha_5-\alpha_1\alpha_3=L_E(b).
+\tag{16.9}
+$$
+
+Expansion and factorization give (16.6); every factor is positive for every $b>0$, with no upper bound on $b$.
+
+Every original world yields (16.4) by its seven rows, (16.7), and source legality. Conversely, a retained triple has $c=j-b>0$, trace-one source, zero determinant, and strictly positive entries, hence rank exactly one. Equation (16.3) gives its four even rows, and (16.4) gives all three odd rows. The entire interpolant is nonzero and has degree at most three. This is exactly one original world, and its $b,d,j,r$ recover the tuple uniquely. If $g=0$, all observed responses equal $d$; the initial response makes $d=0$. Thus $A=24$ or $z\ne A$ excludes it, whereas arbitrary-$A$ reconstruction must keep the filter.
+
+When $G_1=G_3=G_5=0$, the odd equations require exactly $A=z=p=d$. If the other filters hold, every $0<r<1$ with $j=b+r(1-r)/b$ remains admissible. In particular this stratum is retained at $A=24$ when its even data give a nonzero interpolant. If only some $G_i$ vanish, each corresponding response must equal $d$; there is no artificial source equation from that row. No gain sign, repeated root, sampled zero, nonsampled root, degree drop, zero drift, or zero of an earlier local inverse denominator $D$ has been discarded. All divisions in the atlas use only $T,U,V$ and fixed node differences. ∎
+
+**Theorem 16.3 (At most three complete worlds per fixed $b$).** Suppose $z\ne A$. For each $E$, each fixed set of observations, and each fixed $b>0$, the child in Theorem 16.2 contains at most three distinct complete worlds. This is a bound at one $b$, with source multiplicity included; it is not a global bound on the union over $b$.
+
+Proof. The genuine cubic $H_E$ has total real-root multiplicity at most three. At a retained drift root, $G_1,G_3$ cannot both vanish, because their rows would give $d=A=z$. If at least two of $G_1,G_3,G_5$ are nonzero, the corresponding two independent affine traces $j+mr$, with $m=0,1,2$, fix at most one $(j,r)$. The even data have already fixed the entire gain. This drift therefore gives at most one complete world.
+
+If only $G_1$ is nonzero, $d=z=p$ and $j=K(A-d)/G_1$ are fixed; sources solve
+
+$$
+r^2-r+b(j-b)=0.
+\tag{16.10}
+$$
+
+There are at most two distinct legal roots. At this $d_0=z=p$, both $G_3,G_5$ vanish. Writing $x=d-d_0$, each term of $H_E$ contains $x^2$: respectively $G_3G_5$, $(z-d)G_5$, and $(p-d)G_3$ supply the factors. Hence $d_0$ is a drift root of multiplicity at least two.
+
+If only $G_3$ is nonzero, then $d=A=p$, and $n=j+r=K(z-d)/G_3$ is fixed. The source equation is
+
+$$
+r^2-(1+b)r+b(n-b)=0.
+\tag{16.11}
+$$
+
+Again there are at most two legal roots. At $d_0=A=p$, $G_1,G_5$ vanish, and the three terms of $H_E$ contain respectively $(A-d)G_5$, $G_1G_5$, and $(p-d)G_1$, hence each has two factors $x$. A $G_5$-only or all-zero case is impossible under $z\ne A$.
+
+Thus at every retained drift root the number of complete worlds is at most its root multiplicity. Summing gives three. Repeated quadratic roots count once; repeated drift roots, sampled gain zeros and degree drops have been included. Counting only distinct drift roots would not prove this complete-world bound. ∎
+
+**Theorem 16.4 (Necessary filters and a boundary infinite fiber).** The cubic equation alone does not certify a world. Also the restriction $z\ne A$ in Theorem 16.3 cannot simply be removed.
+
+Proof. For either $E$, take $b=1$, $A=24$, $C=z=Y=p=v=0$ and $d=0$. All $B_i,G_i$ and $H_E$ vanish, but the first odd equation reads $0=24K$, which is impossible.
+
+For the second assertion take $b=1$, $A=z=p=24$, $C=168/5$, $Y=48/5$ and $v=96$ for $E=J$ or $v=120$ for $E=M$. For every $0<r<1$ use $P_1(r)$, $g=h$, $d=24$ from Definition 15.1. Equation (15.4) has all three early odd samples zero. Its even rows give exactly these $C,Y,v$. The gain is nonzero and all sources are legal and distinct. Thus this is an infinite complete-world child at fixed $b$ when $z=A$. ∎
+
+**Theorem 16.5 (Same-source injectivity and the guarded common-child interface).** In each actual child $\mathcal F(H_6^E)$, including $z=A$ and arbitrary $A$, equal source matrices imply equal complete worlds. For its atlas world the two terminal response functions are
+
+$$
+f_{EJ}=d+\frac{G_7}{K}(j+kr),\qquad
+f_{EM}=d+\frac{G_7}{K}\bigl(V+j+(k-1)r\bigr).
+\tag{16.12}
+$$
+
+Fix one fourth parent, one fifth-J response $p$, and a prescribed finite or infinite $\mathcal K\subseteq\mathcal F(H_4^A)$. Let $\mathcal A_E(p,v)$ denote the atlas union over all $b>0$ at that literal child, restricted to $\mathcal K$. Then
+
+$$
+\begin{aligned}
+&L_2\bigl(\mathcal K\cap\mathcal F(H_{5J}^A),H_{5J}^A\bigr)\\
+&\quad\Longleftrightarrow\quad
+\bigwedge_{E\in\{J,M\}}\exists v_E\in\mathbb R\
+\bigwedge_{G\in\{J,M\}}\exists W_{EG0},W_{EG1}\in\mathcal A_E(p,v_E):\\
+&\hspace{40mm}(r_{EG0}-r_{EG1})^2+(b_{EG0}-b_{EG1})^2>0,\\
+&\hspace{40mm}f_{EG}(W_{EG0})=f_{EG}(W_{EG1}).
+\end{aligned}
+\tag{16.13}
+$$
+
+At a parent whose fifth-M arm already has an actual $L_2$ response, existence of a $p$ satisfying (16.13) for the full parent fiber is equivalent to $L_3$ there. In particular this conditional equivalence applies separately to $H_4^{[3]}$ and $H_4^{[4]}$.
+
+Proof. Suppose two worlds in one child have the same $P$, hence the same $b,j,r$. If their drifts coincide, their four even gain samples coincide, so their entire polynomials coincide. Otherwise subtract their three odd equations and divide by their nonzero drift difference. Since the $G_i$ are affine in $d$, this gives
+
+$$
+\alpha_1j=-K,\qquad \alpha_3(j+r)=-K,\qquad
+\alpha_5(j+2r)=-K.
+\tag{16.14}
+$$
+
+Multiply these equations respectively by $\alpha_3\alpha_5$, $-2\alpha_1\alpha_5$, $\alpha_1\alpha_3$ and add. The left side is zero; the right side is $KL_E(b)>0$ by (16.6), (16.9), a contradiction. No $\alpha_i$ or gain sample was divided out. Hence complete-world distinction in this child is equivalent to source distinction, which is exactly the strict squared-coordinate condition in (16.13). This equivalence is justified for these actual children, rather than substituted for the complete-world guard at arbitrary histories.
+
+Formula (16.12) follows from (10.4) and $g(7)=G_7/K$. If $G_7=0$, both terminal functions correctly equal $d$. They are alternatives on the same fixed world.
+
+For necessity in (16.13), the recursive definition first selects $v_E$ under the already fixed $p$, then selects a terminal response for each $G$, and only in that actual $L_0$ leaf selects two distinct complete worlds. The atlas contains exactly those worlds. Same-source injectivity supplies the strict source condition.
+
+For sufficiency fix all selected complete worlds first and take their finite union. For each $E,G$ its pair lies in a single terminal leaf. Both pairs for that $E$ share the acquired $v_E$, so they provide the two terminal clauses and the non-singleton guard of $L_1$. The two sixth children share $p$ and give $L_2$ with its guard. Every used ancestor contains a distinct descendant pair. Containment in a larger compatible set preserves $L_s$ by induction on its defining recursion, so extra worlds and infinite $\mathcal K$ cause no problem.
+
+Finally, a realized M arm and the J system at the **same** fourth parent supply the two fifth clauses of $L_3$; the converse follows from the same recursion. Fifth responses for different actions may differ. Different terminal slots may use different $b,g,d$, but every slot is one complete fixed triple satisfying all its acquired and alternative rows. Refitting a world's gain or drift between rows is not allowed. At the two inherited parents $z\ne24$, so Theorem 16.3 also applies at each fixed $b$. Neither the cubic nor the interface proves existence of any missing pair. ∎
+
+## 17. Whole proportional-gain containment of an actual sixth-J child
+
+**Definition 17.1 (An entire gain direction).** For a nonzero real polynomial $h$ of degree at most three, its direction is
+$[h]=\{\lambda h:\lambda\in\mathbb R\setminus\{0\}\}$.
+Fix a literal $H_{5J}^A$ as in (16.1), and put
+
+$$
+\mathcal S_h=\{(P,g,d)\in\mathcal F(H_{5J}^A):g\in[h]\},\qquad
+u_J(W)=d+g(6)(1+2b).
+\tag{17.1}
+$$
+
+For $\mathcal K\subseteq\mathcal S_h$ let $\mathcal K_u=\{W\in\mathcal K:u_J(W)=u\}$. Both signs of the nonzero proportionality factor are initially allowed. The symbol $[g]$ is an external mathematical label, not an acquired observation. Set
+
+$$
+F_0=14C+35Y-48z,\qquad F_1=35Y-42C+16A.
+\tag{17.2}
+$$
+
+The second residual agrees with (10.16); neither residual is the source-chart denominator $D$.
+
+**Theorem 17.2 (All-support containment collapse).** Assume
+
+$$
+AzCY\ne0,\qquad z\ne A,\qquad C\ne Y.
+\tag{17.3}
+$$
+
+For every direction $h$, every finite or infinite $\mathcal K\subseteq\mathcal S_h$ and every $u$, if the actual sixth-J child $\mathcal K_u$ has $L_1$, then
+
+$$
+\mathcal S_h=\mathcal K=\mathcal K_u=\{W_-,W_+\},
+\tag{17.4}
+$$
+
+where the two worlds have the same entire gain and drift and are of one of the following forms:
+
+$$
+\begin{array}{c|c|c}
+&\text{root family }157&\text{root family }357\\ \hline
+g(s)&\dfrac A{35}(s-1)(s-5)(s-7)&
+\dfrac z{105}(s-3)(s-5)(s-7)\\
+d,\ p&A,\ A&z,\ z\\
+C&A(10+3b)/7&z(6-b)/7\\
+Y&A(44+18b)/35&z(36+2b)/35\\
+\text{fixed odd trace}&n=j+r=35(z-A)/(16A)&j=35(z-A)/(16z)\\
+\text{source equation}&r^2-(1+b)r+b(n-b)=0&r^2-r+b(j-b)=0\\
+\text{forced residual}&F_1=0&F_0=0.
+\end{array}
+\tag{17.5}
+$$
+
+In each column the two roots must be distinct and satisfy every strict source condition and every prefix row. The resulting pair itself has $L_2$ at the fifth-J history. In particular, if additionally $F_0F_1\ne0$, no direction-contained actual sixth-J child has $L_1$, and no direction-contained fifth-J support has $L_2$.
+
+Proof. First consider the regular odd branch $h(1)h(3)\ne0$. Write $h_i=h(i)$ and $g=h/t$, $t\ne0$. The initial, first and third rows force
+
+$$
+d(t)=-h_0/t,\qquad
+j(t)=\frac{h_0+At}{h_1},\qquad
+r(t)=\frac{h_0+zt}{h_3}-j(t).
+\tag{17.6}
+$$
+
+At least one of $h_2,h_4$ is nonzero, for otherwise $C=Y=d$. If $h_2\ne0$ use
+$b(t)=(h_0+Ct)/h_2-1$; otherwise use
+$b(t)=((h_0+Yt)/h_4-1)/2$. Put $c(t)=j(t)-b(t)$. Retain exactly the nonzero real $t$ with
+
+$$
+\begin{gathered}
+0<r(t)<1,\quad b(t),c(t)>0,\quad
+r(t)(1-r(t))=b(t)c(t),\\
+h_2(1+b(t))-h_0=Ct,\qquad
+h_4(1+2b(t))-h_0=Yt,\\
+h_5(j(t)+2r(t))-h_0=pt.
+\end{gathered}
+\tag{17.7}
+$$
+
+One even row was used to define $b$; both are still displayed as filters. These equations give a bijection between retained $t$ and $\mathcal S_h$. Thus they are a converse reconstruction, not just necessary projected equations. The source is affine, $P(t)=P_0+tV_0$, and any fixed continuation matrix $Q$ at clock $a$ has response
+
+$$
+h_a\operatorname{tr}(QV_0)
++\frac{h_a\operatorname{tr}(QP_0)-h_0}{t}.
+\tag{17.8}
+$$
+
+On an arbitrary subset of nonzero real $t$ this function is constant if its reciprocal coefficient is zero, and otherwise injective. If $\mathcal K_u$ had $L_1$, each terminal action would have a collision between distinct $t$. The two collisions may use different pairs, but (17.8) forces each of the two terminal functions to be constant on the entire class. Choosing any distinct pair in $\mathcal K_u$ would then give scale-changing proportional worlds sharing the acquired $u$ and both terminal responses.
+
+Such a pair is impossible, as follows. Suppose $g_2=\mu g_1$, $\mu\ne0,1$, and write $g=g_1$. Initial response gives $d_2=\mu d_1$ and $d_1=-g(0)$. Put $D_*=P_1-\mu P_2$. Every shared row says
+
+$$
+g(a)\operatorname{tr}(Q_aD_*)=g(0)(1-\mu).
+\tag{17.9}
+$$
+
+If $g(0)=0$, both drifts are zero. Since $C,Y\ne0$, the clock-two and clock-four samples are nonzero. Their equations give
+$(1-\mu)+(D_*)_{12}=0$ and $(1-\mu)+2(D_*)_{12}=0$, a contradiction. Thus $g(0)\ne0$. Define $Z=D_* /(1-\mu)$ and $q=g/g(0)$. Then $\operatorname{tr}Z=1$ and
+$q(a)\operatorname{tr}(Q_aZ)=1$ at every used row, so every divided $q(a)$ is nonzero.
+
+Repeated matrices $Q_4=Q_{6J}$ and $Q_{5J}=Q_{7JJ}$ force $q(4)=q(6)$ and $q(5)=q(7)$. The two constraints on a cubic with $q(0)=1$ give
+
+$$
+q(s)=1+a\left(s^3-\frac{33}{2}s^2+89s\right).
+\tag{17.10}
+$$
+
+Its samples at $1,\ldots,7$ are
+
+$$
+\left(1+\frac{147a}{2},1+120a,1+\frac{291a}{2},
+1+156a,1+\frac{315a}{2},1+156a,1+\frac{315a}{2}\right).
+\tag{17.11}
+$$
+
+Writing $B=Z_{12},R=Z_{11}$, the even equations yield
+$1+B=1/q(2)$ and $1+2B=1/q(4)$. Equality of both terminal traces gives $R=1+2B$, whereas the early odd rows give $R=1/q(3)-1/q(1)$. Therefore both polynomials
+
+$$
+\begin{aligned}
+\mathcal G(a)&=2q(4)-q(2)-q(2)q(4)
+=-12a(7+1560a),\\
+\mathcal H(a)&=q(4)(q(1)-q(3))-q(1)q(3)
+=-1-291a-\frac{87705}{4}a^2
+\end{aligned}
+\tag{17.12}
+$$
+
+must vanish. The exhaustive roots of $\mathcal G$ are $0,-7/1560$. Their $\mathcal H$ values are respectively $-1,-29357/216320$, both nonzero. At the second candidate the samples $q(1),q(2),q(3),q(4)$ are $697/1040,6/13,361/1040,3/10$. Thus no zero sample was hidden in taking reciprocals. The auxiliary $Z$ was only a trace-one real matrix, never assumed to be a positive source. This excludes the regular odd branch for $L_1$, for every support cardinality.
+
+It remains to consider $h_1h_3=0$. Both cannot vanish since $z\ne A$. If $h_1=0$, the first row fixes $d=A\ne0$; if $h_3=0$, the third fixes $d=z\ne0$. Hence $h_0\ne0$ and the scale of $g=\lambda h$ is fixed by $d=-\lambda h_0$. All worlds of $\mathcal S_h$ now have the same whole $g,d$. An active even sample fixes $b$ because $C\ne Y$. The remaining nonzero early odd sample fixes $n=j+r$ in the first case and $j$ in the second. The corresponding monic source quadratics are precisely those in (17.5). There are at most two complete worlds in the entire $\mathcal S_h$. The $L_1$ guard supplies two, so the nested sets in (17.4) must all equal that pair.
+
+The two roots have different $r$. With fixed $n$, the fifth-J trace is $n+r$; with fixed $j$, it is $j+2r$. In either case the shared fifth response forces $g(5)=0$, and the final-J collision forces $g(7)=0$. Together with $g(1)=0$ or $g(3)=0$ these are three distinct roots. The initial value fixes exactly the corresponding polynomial in (17.5), with nonzero scale. Substitution in the two even rows gives its $C,Y$ and its vanishing residual. These are the $157$ and $357$ formulas of Definition 10.2; their strict two-root filters remain necessary. The argument here permits all signs consistent with (17.3), rather than invoking the positive-$A,C$ classification outside its domain.
+
+For the resulting pair, both actual sixth traces $1+2b$ and $1+3b$ are common. After each acquired sixth response both terminal actions read the common $d$, since $g(7)=0$. Each terminal leaf contains the pair, each sixth child has $L_1$ with its guard, and their common fifth node has $L_2$ with its guard. If $F_0F_1\ne0$, neither column of (17.5) is possible; the sixth-J conjunct of any direction-contained fifth-J $L_2$ is therefore impossible. ∎
+
+## 18. Gain direction together with the actual JJ responses
+
+**Theorem 18.1 (Direction-tagged actual JJ injectivity).** Suppose
+
+$$
+A>0,\qquad C>Y>0,\qquad z\ne A,\qquad F_1\ne0.
+\tag{18.1}
+$$
+
+For every real $p$, the map on the entire compatible fifth-J fiber
+
+$$
+W\longmapsto\bigl([g_W],u_J(W),a_{JJ}(W)\bigr),\qquad
+a_{JJ}(W)=d+g(7)(j+2r),
+\tag{18.2}
+$$
+
+is injective. In particular any distinct pair with the same acquired sixth-J response and the same final-J response has nonproportional entire gains. This is a statement about a tagged map: $[g_W]$ is not supplied by the experiment.
+
+Proof. Suppose two worlds share the history, the direction and $u_J$. Write $g_2=\mu g_1$, $\mu\ne0$. Initial response gives $d_2=\mu d_1$. First suppose $\mu\ne1$. With $T_i=1+b_i>1$, subtraction of the two clock-two rows and the two clock-four rows gives
+
+$$
+\mu g_1(2)(T_2-T_1)=C(1-\mu),\qquad
+2\mu g_1(4)(T_2-T_1)=Y(1-\mu).
+\tag{18.3}
+$$
+
+Their nonzero right sides justify the divisions below. These identities yield $2C g_i(4)=Y g_i(2)$. Substitution into each world's even rows gives
+
+$$
+d_i\bigl[2(C-Y)T_i+Y\bigr]=CY.
+\tag{18.4}
+$$
+
+The bracket exceeds $C>0$, hence $0<d_i<Y$. In particular $\mu>0$, the two drifts are distinct, and $\varphi=g_i/d_i$ is the same entire polynomial for both worlds. Put
+
+$$
+q=Y/C\in(0,1),\qquad \alpha=\frac{2(1-q)}q,\qquad \eta=1-q.
+$$
+
+The even rows give $\varphi(0)=-1$, $\varphi(2)=\alpha$, $\varphi(4)=\eta$. Since
+$T_i=(C/d_i-1)/\alpha$, the acquired sixth-J response is
+
+$$
+u_J=\frac{2C\varphi(6)}\alpha
++d_i\left[1-\varphi(6)\left(1+\frac2\alpha\right)\right].
+\tag{18.5}
+$$
+
+Its equality for distinct $d_i$ forces $\varphi(6)=\eta$ and $u_J=Y$. Interpolation at the even nodes, with the same weights as (16.2), now fixes all samples:
+
+$$
+\begin{array}{c|c}
+i&\varphi(i)\\ \hline
+0&-1\\
+1&(4q^2-39q+30)/(16q)\\
+2&2(1-q)/q\\
+3&(18-9q-8q^2)/(16q)\\
+4&1-q\\
+5&(-20q^2+29q-10)/(16q)\\
+6&1-q\\
+7&(42-37q)/(16q).
+\end{array}
+\tag{18.6}
+$$
+
+In particular
+
+$$
+\varphi(7)-\varphi(5)=\frac{(2-q)(13-10q)}{8q}>0.
+\tag{18.7}
+$$
+
+If $\varphi(5)=0$, the common fifth response would equal both distinct drifts, which is impossible. The actual fifth-J and final-J matrices are equal, so
+
+$$
+a_{JJ}(W_i)=\frac{\varphi(7)}{\varphi(5)}p
++\left(1-\frac{\varphi(7)}{\varphi(5)}\right)d_i.
+\tag{18.8}
+$$
+
+The coefficient of $d_i$ is nonzero by (18.7). Thus scale-changing proportional worlds have different actual final-J responses.
+
+Now suppose $\mu=1$. The entire gain and drift are common. At least one of $g(2),g(4)$ is nonzero since $C\ne Y$, so $b$ is fixed. If at least two of $g(1),g(3),g(5)$ are nonzero, their independent traces $j,j+r,j+2r$ fix $j,r$, giving the same world. Otherwise exactly one of these samples is nonzero, because $z\ne A$ excludes $g(1)=g(3)=0$.
+
+If only $g(1)$ is active, common $j,b$ and different sources have different $r$. A final-J collision forces $g(7)=0$. Hence
+$g(s)=a(s-3)(s-5)(s-7)$, $d=105a$,
+$C=a(90-15b)$ and $Y=a(108+6b)$. The condition $Y>0$ forces $a>0$, so $Y-C=a(18+21b)>0$, contradicting $C>Y$.
+If only $g(3)$ is active, the same argument gives
+$g(s)=a(s-1)(s-5)(s-7)$ and $d=A=35a$.
+Its even rows give $F_1=0$ by (17.5), again a contradiction. These cases exhaust equal gains. Thus equal values of all three coordinates in (18.2) force the same complete world. ∎
+
+**Theorem 18.2 (Necessary scale-changing relation and a direction-child bound).** Under $C>Y>0$, any scale-changing proportional pair sharing $H_{5J}^A$ and its acquired sixth-J response must satisfy
+
+$$
+\mathcal P(Y/C)=0,\qquad
+\mathcal P(q)=18q^3-62q^2+75q-30.
+\tag{18.9}
+$$
+
+It has $0<d_i<Y$, $u_J=Y$, the normalized samples (18.6), and different final-J responses. This is a necessary relation, not a source-existence certificate.
+
+If also $z\ne A$ and $0<Y/C\le4/5$, every one-direction actual sixth-J child contains at most two complete worlds, for every $p,u$. No global bound on the unrestricted child is asserted.
+
+Proof. The scale-changing branch of Theorem 18.1 used only $C>Y>0$ and the shared rows, so it gives (18.4)–(18.8). All of $\varphi(1),\varphi(3),\varphi(5)$ must be nonzero: otherwise the corresponding common odd response would equal two distinct drifts. The trace identity gives, for each drift,
+
+$$
+\frac{p-d_i}{\varphi(5)}
+=2\frac{z-d_i}{\varphi(3)}-\frac{A-d_i}{\varphi(1)}.
+\tag{18.10}
+$$
+
+Subtract for the two distinct drifts and multiply only nonzero samples. The result is
+
+$$
+\varphi(5)(2\varphi(1)-\varphi(3))-\varphi(1)\varphi(3)
+=\frac{(2-q)\mathcal P(q)}{16q^2}=0,
+\tag{18.11}
+$$
+
+which proves (18.9). For $q=4/5-t$, $t\ge0$, exact expansion gives
+
+$$
+\mathcal P(4/5-t)
+=-\frac{58}{125}-\frac{259}{25}t-\frac{94}{5}t^2-18t^3<0.
+\tag{18.12}
+$$
+
+Thus a one-direction child in the stated ratio range has no two different gain scales. All of its gains and drifts are common, and an active even row fixes $b$. The condition $z\ne A$ guarantees at least one active odd sample. Two active odd samples fix the source; if just one trace $j+mr=\ell$ is fixed, the sources satisfy
+
+$$
+r^2-(1+mb)r+b(\ell-b)=0.
+\tag{18.13}
+$$
+
+This monic quadratic gives at most two complete worlds. Strict legality, all remaining rows and repeated roots are still filtered. Neither (18.9) nor the source quadratic alone supplies two legal worlds. ∎
+
+**Theorem 18.3 (The final-J coordinate cannot be omitted).** There are different legal complete worlds satisfying the strict parent conditions (18.1), with the same entire gain, the same fifth-J history and the same acquired sixth-J response.
+
+Proof. Set
+
+$$
+b=\frac14,\quad d=24,\quad
+g(s)=\frac65(s-1)(s-4)(s-5),\qquad
+P_0=\begin{pmatrix}1/3&1/4\\8/9&2/3\end{pmatrix},\quad
+P_1=\begin{pmatrix}11/12&1/4\\11/36&1/12\end{pmatrix}.
+\tag{18.14}
+$$
+
+Both sources are strictly positive, trace one and determinant zero. Along the literal word $JMJMJJJ$ their response rows are
+
+$$
+\begin{aligned}
+W_0:&\quad(0,24,33,466/15,24,24,42,102),\\
+W_1:&\quad(0,24,33,466/15,24,24,42,636/5).
+\end{aligned}
+\tag{18.15}
+$$
+
+Direct evaluation of this one $g$ and the actual traces gives each entry; in particular the legal sampled zero $g(4)=0$ is retained. Here $A=24$, $C=33>Y=24>0$, $z=466/15\ne A$, $F_1=-162$, and $Y/C=8/11$. The direction and $u_J=42$ coincide, while the final-J responses differ. Thus this pair does not contradict Theorem 18.1, and it disproves dropping its final-J coordinate. ∎
+
+## 19. Separate exact-parent consequences and the remaining common-parent system
+
+**Theorem 19.1 (Direction constraints at the two attained M parents).** At each exact parent $H_4^{[3]}$ of (7.10) and $H_4^{[4]}$ of (8.6), and every real fifth-J response $p$, any actual sixth-J child with $L_1$ contains at least two nonproportional entire gains. Thus its gain span over $\mathbb R$ has dimension at least two. No finite or infinite support contained in one gain direction can supply the fifth-J $L_2$ at either parent.
+
+At $H_4^{[4]}$, every distinct final-J collision pair in any actual sixth-J child itself has nonproportional entire gains. Also each one-direction sixth-J child there contains at most two complete worlds. The individual-pair conclusion is asserted at the positive-$Y$ parent only. At negative-$Y$ $H_4^{[3]}$ the conclusion is the whole-child diversity constraint, which does not identify the directions of every possible final-J pair.
+
+Proof. The parent values are the exact algebraic quantities defined by their respective roots in (7.7)–(7.10) and (8.1)–(8.6). Their defining roots are not replaced by independently chosen points in response intervals. The enclosures in §§7–8 give the following closed bounds. In each row the denominator $D$ applies to all interval endpoints, and $A=24$.
+
+| Exact parent | $D$ | $C$ numerator interval | $z$ numerator interval | $Y$ numerator interval | $F_0$ numerator interval | $F_1$ numerator interval |
+| --- | --- | --- | --- | --- | --- | --- |
+| $H_4^{[3]}$ | $10^6$ | $[69388395,69388396]$ | $[13172131,13172132]$ | $[-14554448,-14554447]$ | $[-170230486,-170230389]$ | $[-3039718312,-3039718235]$ |
+| $H_4^{[4]}$ | $10^8$ | $[3467682605,3467682606]$ | $[3364873983,3364873984]$ | $[2428092588,2428092589]$ | $[-27983154182,-27983154085]$ | $[-22259428872,-22259428795]$ |
+
+For example the lower and upper $F_0$ numerators are
+$14C_{\rm lo}+35Y_{\rm lo}-48z_{\rm hi}$ and
+$14C_{\rm hi}+35Y_{\rm hi}-48z_{\rm lo}$; those for $F_1$ are
+$35Y_{\rm lo}-42C_{\rm hi}+384D$ and
+$35Y_{\rm hi}-42C_{\rm lo}+384D$.
+These give the displayed exact integer bounds. All four residual upper endpoints are negative.
+
+Each parent satisfies $AzCY\ne0$, $z\ne A$, $C\ne Y$, and $F_0F_1\ne0$. Theorem 17.2 applies separately at each one. If an $L_1$ child's gains spanned one dimension, choosing any of its nonzero gains as $h$ would put the whole child inside $\mathcal S_h$, contradicting that theorem. The sixth-J conjunct is required in every fifth-J $L_2$.
+
+At $H_4^{[4]}$ the enclosures also give $C>Y>0$, $F_1<0$, and $Y/C<4/5$. For the last inequality, already the coarser bounds in (12.1) give $5\cdot2429=12145<13868=4\cdot3467$. Theorem 18.1 gives the individual final-J-pair statement and Theorem 18.2 gives the one-direction child bound. The strict hypotheses persist on the same local continuous realization family of Theorem 8.4 after shrinking its parameter neighborhood. This uses continuity of that family; it does not assert a full-rank parent-response map or M-arm existence on a Cartesian response box. ∎
+
+**Definition 19.2 (The unresolved common-parent system).** For each one of the exact parents $H_4^{[3]}$, $H_4^{[4]}$, retain its inherited actual fifth-M $L_2$ from Theorem 7.3 or 8.3. The missing J arm is the existence of **one** $p_J$ for which (16.13), using all strict filters (16.4), is feasible. It requires one acquired $v_J$ and one acquired $v_M$ under that same $p_J$, and two terminal collision pairs inside each corresponding child. Different pairs may overlap or be disjoint, but their acquired sixth response must agree within each child. Every used world remains a fixed complete triple, including its one entire gain and one drift.
+
+This feasibility problem remains open. The atlas is a bijective interface to its worlds, not a feasibility proof; a real root of one drift cubic is not enough. Its at-most-three bound applies separately at each fixed $b$ and puts no finite bound on the available $b$ values or on global child cardinality. The direction constraints in Theorem 19.1 are necessary conditions, not mixed-gain witnesses. The positive-$Y$ leaf statement does not extend here to the negative-$Y$ parent.
+
+The exact parents of §15 have $z=24$, whereas $H_4^{[3]}$ has $13<z<14$ and $H_4^{[4]}$ has $33.64<z<33.65$. Thus none of these parents coincide. The new $K_\beta$ J supports cannot be joined to either inherited M support to obtain $L_3$. At $H_{4,\beta}$, an unrestricted M arm would require worlds outside the entire $g=h$ slice by Theorems 15.2 and 15.4. Conversely an unrestricted fiber at this parent has not been classified by its exact-$h$ subfamily. The support minima and the cutoff in Theorem 15.2 are only relative to $K_\beta$.
+
+The unresolved statements include the unrestricted same-parent fifth-J $L_2$ and parent $L_3$, the separate fixed-C35 response domain left open in §9, the alternative fourth actions and earlier ancestors, the original guarded root $L_7$, arbitrary deterministic adaptive eight-read recovery or impossibility, the comparison with nine total readings, and full-original-domain nine-read sufficiency. The strategies retain the quantifiers of Definition 1.3, with no continuity, measurability, computability or finite-description restriction. A local arm or a tagged injectivity theorem does not settle these root or strategy questions.
+
+**Definition 19.3 (Mathematical sources and applicability).** The status of the model-specific statements in §§15–19 is ordinary, repository-derived mathematics. Their proofs use the original complete-world domain and literal products of §§1 and 10. Standard interpolation, polynomial root multiplicity, monic quadratic bounds and affine reciprocal functions are intermediate tools, not separate new general results. These statements assert no Lean/kernel formalization.
+
+The repository correspondences are as follows; each citation is used only within its own hypotheses.
+
+| Source | Mathematical overlap and distinction |
+| --- | --- |
+| Root volume, [§23](FIB_SAMPLED_ROOT_COLLAPSE_AND_SAME_PARENT_FAILURE_CORE.md#23-全实根三根五类的实际-jj-逆与任意支持失败分类), especially (23.4)–(23.6), (23.15)–(23.18) | The actual fifth-J coordinates, the gain $h$ and its continuous $\beta=4$, $C=48$ family are inherited. The variable-width consequences in §15 are the $1/3$ cutoff, the $1/4$ support transition, the rational J realization and the entire exact-gain M obstruction. |
+| [Terminal-zero-plane volume](FIB_TERMINAL_ZERO_PLANE_INVERSE_AND_J_PAIR_CHAMBER.md), Theorems 9.3, 10.2, 11.2 | Fixed-source uniqueness, an entire fifth-fiber inverse and guarded terminal-slot extraction already exist. Section 16 gives even-node drift cubics with positive leading coefficients and a multiplicity bound on complete worlds at fixed $b$; the same-source calculation is supplied within that interface. No chamber-specific theorem is applied to a parent outside its chamber. |
+| [Promised-fiber volume](FIB_JMJM_PROMISED_FIBERS_AND_JOINT_EXCEPTION_GEOMETRY.md), Theorem 4.1 and §6 | Affine reconstruction in a gain direction, quadratic source bounds and sampled-zero mechanisms are existing tools in the $C=48$, $24<z<48$ sector. That sector does not supply the present separate-parent constraints at the prescribed fifth-J and sixth-J history. |
+| Root volume, Theorem 27.1 and Corollary 27.2 | A known direction admits a direction-dependent seven-action recovery word and hence an original-root diversity obstruction. Here the direction constraints concern the already prescribed prefix $JMJMJ$ and its actual sixth-J child; a free choice of an earlier word cannot substitute for that child. |
+| This volume, §§10–14 | Exact two-world fifth-J classification, root-seven strip fibers and equality-of-whole-gain bounds are inherited. Section 17 treats arbitrary support in a proportional class, including scale-changing gains; §18 supplies the stronger individual JJ-pair constraint under its additional positive-$Y$ hypotheses. |
+
+The external identifiability framework of Li–Lee–Bresler, *[A Unified Framework for Identifiability Analysis in Bilinear Inverse Problems](https://arxiv.org/html/1501.06120)*, Definition 2.7 and Theorem 2.8, distinguishes factor equivalence classes from ordinary identifiability. It does not turn $[g]$ into acquired data or prove the fixed real positive-source J/M/cubic/drift statements above. Ling–Strohmer, *[Self-Calibration and Bilinear Inverse Problems via Linear Least Squares](https://arxiv.org/html/1611.04196)*, model setup and §2.2, uses invertible calibration and repeated-design or snapshot assumptions. Those assumptions do not remove sampled gain zeros from this single nonresetting trajectory. Ordinary four-node interpolation may be read in Berrut–Trefethen, *[Barycentric Lagrange Interpolation](https://doi.org/10.1137/S0036144502417715)*, §2; its use here is the explicit fixed-node matrix in (16.2), with all world filters kept.
+
+These are applicability comparisons with the named results, not an exhaustive literature or repository classification, a priority claim, or a new general inverse-problem method. The exact-gain family is a conditional subfamily of the original domain; the unrestricted atlas retains arbitrary gain signs, zeros and repeated roots, all lower degrees, zero drift, unbounded positive off-diagonals and the $D=0$ strata. Any extra nonzero condition used in §§17–18 is either a displayed theorem hypothesis or a consequence proved from the shared original rows. No gain, drift, clock or source is changed between a world's acquired and alternative responses.
+
+## 追加锚（本行以下为增补区）
