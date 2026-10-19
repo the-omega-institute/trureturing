@@ -23,6 +23,8 @@ internal sealed class WitnessKernelTraceCriteriaRefutationDocument : IScribeDocu
                 "trTwo is the existing partialTraceRight: sum over the repeated second index while retaining the first factor."),
             Definition("trOne", "Trace over the first factor", PartialTraceFormula(true),
                 "trOne is the existing partialTraceLeft: sum over the repeated first index while retaining the second factor."),
+            Definition("schmidtRank", "Schmidt rank", SchmidtFormula(),
+                "Remark 3(i) defines Schmidt rank as the rank of the vector's coefficient matrix."),
             Definition("kernelCriterion", "The kernel criterion", KernelFormula(),
                 "Theorem 2 uses a full Schmidt-rank vector in one of the two partial-trace-shifted kernels. Both alternatives, with their dimension inequalities, are retained."),
             Definition("maximallyEntangled", "Maximally entangled states", MaximalFormula(),
@@ -105,6 +107,10 @@ internal sealed class WitnessKernelTraceCriteriaRefutationDocument : IScribeDocu
             Equal(At(Call(left ? "trOne" : "trTwo", V("W")), V(first), V(second)),
                 SumOver(sum, Fin(tracedDimension), At(V("W"), Entry(first), Entry(second)))))));
     }
+    private static Formula SchmidtFormula() => Dim(All("v", Vec(Index()),
+        Equal(Call("schmidtRank", V("v")), Call("rank", Call("of",
+            Parenthesized(Lam("i", Fin(V("m")), Lam("j", Fin(V("n")),
+                At(V("v"), Call("pair", V("i"), V("j")))))))))));
     private static Formula KernelFormula()
     {
         Formula Side(bool second)
@@ -115,9 +121,7 @@ internal sealed class WitnessKernelTraceCriteriaRefutationDocument : IScribeDocu
             var size = V(second ? "m" : "n"); var other = V(second ? "n" : "m");
             return And(Le(size, other), Ex("v", Vec(Index()),
                 And(Equal(Call("mulVec", Parenthesized(Add(V("W"), shift)), V("v")), D(0)),
-                    Equal(new Formula.Apply(Seq(Operatorname, Grp(V("D5")), Dot, Operatorname, Grp(V("S3")), Dot,
-                        Operatorname, Grp(V("Quantum")), Dot, Operatorname, Grp(V("Entanglement")), Dot,
-                        Operatorname, Grp(V("GHZ")), Dot, Operatorname, Grp(V("OddGhzTenSettingWitness")), Dot, Operatorname, Grp(V("schmidtRank"))), [V("v")]), size))));
+                    Equal(Call("schmidtRank", V("v")), size))));
         }
         return WithMatrix(IffTo(Call("kernelCriterion", V("W")), Or(Side(true), Side(false))));
     }

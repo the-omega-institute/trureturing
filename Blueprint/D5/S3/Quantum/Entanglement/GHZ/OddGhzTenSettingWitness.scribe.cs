@@ -14,7 +14,7 @@ internal sealed class OddGhzTenSettingWitnessDocument : IScribeDocumentDefinitio
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The ten-setting GHZ witness bounds fidelity and genuine multipartite Schmidt dimension in every odd local dimension.",
         H("The ten-setting GHZ witness in odd dimensions"), Blocks(
-            Paragraph(Text("Fin d indexes coordinates from zero. Three-party coordinates use Fin d × (Fin d × Fin d). The symbols alpha, beta, psi, rho and sigma denote the corresponding Lean type and vector variables. Complex.ofReal and Nat.cast display scalar embeddings; all divisions in Complex or Real are field divisions, while Nat.mod and Nat.sub retain natural remainder and truncated subtraction. Pi.single is the coordinate delta vector. Matrix.vecMulVec, Matrix.kroneckerMap, Matrix.mulVec, dotProduct and star have their usual Lean meanings. The density states are D5.S3.Quantum.Foundation.FiniteStateChannel.DensityState; CStarMatrix.ofMatrix.symm reads their underlying matrices. Nine labelled settings are summed with multiplicity, including when d = 1.")),
+            Paragraph(Text("Fin d indexes coordinates from zero. Three-party coordinates use Fin d × (Fin d × Fin d). The symbols psi, rho and sigma denote the corresponding Lean vector and state variables. Complex.ofReal and Nat.cast display scalar embeddings; all divisions in Complex or Real are field divisions, while Nat.mod and Nat.sub retain natural remainder and truncated subtraction. Pi.single is the coordinate delta vector. Matrix.vecMulVec, Matrix.kroneckerMap, Matrix.mulVec, dotProduct and star have their usual Lean meanings. The density states are D5.S3.Quantum.Foundation.FiniteStateChannel.DensityState; CStarMatrix.ofMatrix.symm reads their underlying matrices. Nine labelled settings are summed with multiplicity, including when d = 1.")),
             Describe.Lean(DescribeId.Create("ctw-ensemble"),
                 DeclarationHandle.Create(Prefix + "Ensemble"), H("Ensemble"),
                 StatementSource.FromAuthor(Disp(EnsembleFormula())),
@@ -30,8 +30,10 @@ internal sealed class OddGhzTenSettingWitnessDocument : IScribeDocumentDefinitio
                 StatementSource.FromAuthor(Disp(SpectralFormula())),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/QuantumStates/braunstein2006laplaciandensity")),
                 Blocks(Paragraph(Text("Every positive semidefinite complex matrix on Fin p × Fin q with trace one has an Ensemble. Eigenvalues give the weights and an orthonormal eigenbasis gives the unit vectors."))), DescribeRole.Theorem),
-            Node("schmidtRank", "Pure-state Schmidt rank", SchmidtFormula(),
-                "Printed page 3: “The Schmidt rank is the rank of the reduced density matrix, which is necessarily equal to one for a product state but larger for pure entangled states (it generalizes to the Schmidt number for mixed states [33]).” The coefficient-matrix rank expresses this pure-state rank.", Lit()),
+            Paragraph(Text("Pure-state Schmidt rank uses the existing coefficient-matrix definition "),
+                Ref("D5/S3/Quantum/Entanglement/WitnessKernelTraceCriteriaRefutation.schmidtRank"),
+                Text(" on Fin m × Fin n. Printed page 3 identifies pure-state Schmidt rank with the rank of the reduced density matrix. For the three-party cuts, finProdFinEquiv flattens the other two indices to Fin (d * d); Matrix.rank_submatrix proves that this preserves coefficient-matrix rank.")),
+            new DocumentBlock.DisplayFormula(Disp(SchmidtFormula())),
             Node("omega", "The exponential phase", OmegaFormula(),
                 "Supplementary V, printed page 22, uses the phase ω = exp(2πi/d).", Lit()),
             Node("basisVec", "Quadratic-phase basis vectors", BasisFormula(),
@@ -49,7 +51,7 @@ internal sealed class OddGhzTenSettingWitnessDocument : IScribeDocumentDefinitio
             Node("ghzFidelity", "GHZ fidelity", FidelityFormula(),
                 "The GHZ fidelity is the real part of the matrix expectation in the normalized three-party GHZ vector.", Lit()),
             Node("cutRank", "Schmidt rank across each cut", CutFormula(),
-                "The three cuts separate party zero, one or two from the other two parties; each coefficient array retains the other two indices in their original order.", Lit()),
+                "The three cuts separate party zero, one or two from the other two parties. The other two indices are flattened by finProdFinEquiv to use the frozen Schmidt-rank owner. Rank invariance under this bijection gives the displayed coefficient-matrix formula in the original index order.", Lit()),
             Node("SchmidtNumberLE", "Bounded Schmidt number", SchmidtNumberFormula(),
                 "A finite convex decomposition into unit vectors whose Schmidt ranks across the chosen cut are at most r defines Schmidt number at most r.", Lit()),
             Node("GMEDecomposable", "Mixtures over the three cuts", GmeFormula(),
@@ -151,11 +153,10 @@ internal sealed class OddGhzTenSettingWitnessDocument : IScribeDocumentDefinitio
     private static Formula DotProduct(Formula a, Formula b) => Call("dotProduct", a, b);
     private static Formula Ket(Formula i) => C("Pi", "single", i, D(1));
 
-    private static Formula SchmidtFormula() => All("alpha", V("Type"), All("beta", V("Type"),
-        Seq(OpenBracket, Call("Fintype", V("beta")), CloseBracket, Sp,
-            All("v", Vec(Pair(V("alpha"), V("beta"))), Eqn(Call("schmidtRank", V("v")),
-                C("Matrix", "rank", C("Matrix", "of", LambdaOf("i", V("alpha"),
-                    LambdaOf("j", V("beta"), At(V("v"), Parenthesized(Seq(V("i"), Comma, V("j")))))))))))));
+    private static Formula SchmidtFormula() => All("m", V("Nat"), All("n", V("Nat"),
+        All("v", Vec(Pair(Fin(V("m")), Fin(V("n")))), Eqn(Call("schmidtRank", V("v")),
+            C("Matrix", "rank", C("Matrix", "of", LambdaOf("i", Fin(V("m")),
+                LambdaOf("j", Fin(V("n")), At(V("v"), Parenthesized(Seq(V("i"), Comma, V("j"))))))))))));
     private static Formula OmegaFormula() => Dim(Eqn(Call("omega", V("d")),
         C("Complex", "exp", new Formula.Fraction(
             Multiply(Multiply(D(2), Coeff(Q("Real", "pi"))), Q("Complex", "I")), ComplexD()))));
@@ -205,9 +206,10 @@ internal sealed class OddGhzTenSettingWitnessDocument : IScribeDocumentDefinitio
             C("Matrix", "mulVec", Raw(V("rho")), Call("ghz", V("d")))))));
     private static Formula CutFormula()
     {
-        var p = V("p"); var x = Fst(p); var y = Fst(Snd(p)); var z = Snd(Snd(p));
-        Formula Rank(Formula a, Formula b, Formula c) => Call("schmidtRank",
-            LambdaOf("p", Index(), At(V("psi"), Tuple(a, b, c))));
+        var x = V("i"); var y = Fst(V("j")); var z = Snd(V("j"));
+        Formula Rank(Formula a, Formula b, Formula c) => C("Matrix", "rank", C("Matrix", "of",
+            LambdaOf("i", Fin(V("d")), LambdaOf("j", Pair(Fin(V("d")), Fin(V("d"))),
+                At(V("psi"), Tuple(a, b, c))))));
         return Dim(All("k", Fin(D(3)), All("psi", Vec(Index()), Eqn(Call("cutRank", V("k"), V("psi")),
             Seq(V("if"), Sp, Eqn(C("Fin", "val", V("k")), D(0)), Sp, V("then"), Sp, Rank(x, y, z),
                 Sp, V("else"), Sp, V("if"), Sp, Eqn(C("Fin", "val", V("k")), D(1)), Sp, V("then"),

@@ -54,9 +54,21 @@ $$\forall m \in Nat,\; \forall n \in Nat,\; \forall W \in \operatorname{Matrix}\
 
 trOne is the existing partialTraceLeft: sum over the repeated first index while retaining the second factor.
 
-**Definition 1.5 (The kernel criterion).**
+**Definition 1.5 (Schmidt rank).**
 
-$$\forall m \in Nat,\; \forall n \in Nat,\; \forall W \in \operatorname{Matrix}\left(\operatorname{Prod}\left(\operatorname{Fin}\left(m\right), \operatorname{Fin}\left(n\right)\right), \operatorname{Prod}\left(\operatorname{Fin}\left(m\right), \operatorname{Fin}\left(n\right)\right), Complex\right),\; (\operatorname{kernelCriterion}\left(W\right)) \Leftrightarrow (((m \le n) \land (\exists v \in \operatorname{Prod}\left(\operatorname{Fin}\left(m\right), \operatorname{Fin}\left(n\right)\right) \to Complex,\; (\operatorname{mulVec}\left((W + \operatorname{kronecker}\left(\operatorname{trTwo}\left(W\right), 1\right)), v\right) = 0) \land (\operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Entanglement}.\operatorname{GHZ}.\operatorname{OddGhzTenSettingWitness}.\operatorname{schmidtRank}\left(v\right) = m))) \lor ((n \le m) \land (\exists v \in \operatorname{Prod}\left(\operatorname{Fin}\left(m\right), \operatorname{Fin}\left(n\right)\right) \to Complex,\; (\operatorname{mulVec}\left((W + \operatorname{kronecker}\left(1, \operatorname{trOne}\left(W\right)\right)), v\right) = 0) \land (\operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Entanglement}.\operatorname{GHZ}.\operatorname{OddGhzTenSettingWitness}.\operatorname{schmidtRank}\left(v\right) = n))))$$
+$$\forall m \in Nat,\; \forall n \in Nat,\; \forall v \in \operatorname{Prod}\left(\operatorname{Fin}\left(m\right), \operatorname{Fin}\left(n\right)\right) \to Complex,\; \operatorname{schmidtRank}\left(v\right) = \operatorname{rank}\left(\operatorname{of}\left((\lambda i:\operatorname{Fin}\left(m\right), \lambda j:\operatorname{Fin}\left(n\right), v\left(\operatorname{pair}\left(i, j\right)\right))\right)\right)$$
+
+*Formalization.* `D5/S3/Quantum/Entanglement/WitnessKernelTraceCriteriaRefutation.schmidtRank` (`✓ std3`).
+
+*Citation.* Frederik vom Ende and Simon Cichy (2025). *Simple Sufficient Criteria for Optimality of Entanglement Witnesses*. URL: <https://arxiv.org/abs/2505.15615v2>.
+
+*Commentary.*
+
+Remark 3(i) defines Schmidt rank as the rank of the vector's coefficient matrix.
+
+**Definition 1.6 (The kernel criterion).**
+
+$$\forall m \in Nat,\; \forall n \in Nat,\; \forall W \in \operatorname{Matrix}\left(\operatorname{Prod}\left(\operatorname{Fin}\left(m\right), \operatorname{Fin}\left(n\right)\right), \operatorname{Prod}\left(\operatorname{Fin}\left(m\right), \operatorname{Fin}\left(n\right)\right), Complex\right),\; (\operatorname{kernelCriterion}\left(W\right)) \Leftrightarrow (((m \le n) \land (\exists v \in \operatorname{Prod}\left(\operatorname{Fin}\left(m\right), \operatorname{Fin}\left(n\right)\right) \to Complex,\; (\operatorname{mulVec}\left((W + \operatorname{kronecker}\left(\operatorname{trTwo}\left(W\right), 1\right)), v\right) = 0) \land (\operatorname{schmidtRank}\left(v\right) = m))) \lor ((n \le m) \land (\exists v \in \operatorname{Prod}\left(\operatorname{Fin}\left(m\right), \operatorname{Fin}\left(n\right)\right) \to Complex,\; (\operatorname{mulVec}\left((W + \operatorname{kronecker}\left(1, \operatorname{trOne}\left(W\right)\right)), v\right) = 0) \land (\operatorname{schmidtRank}\left(v\right) = n))))$$
 
 *Formalization.* `D5/S3/Quantum/Entanglement/WitnessKernelTraceCriteriaRefutation.kernelCriterion` (`✓ std3`).
 
@@ -66,7 +78,7 @@ $$\forall m \in Nat,\; \forall n \in Nat,\; \forall W \in \operatorname{Matrix}\
 
 Theorem 2 uses a full Schmidt-rank vector in one of the two partial-trace-shifted kernels. Both alternatives, with their dimension inequalities, are retained.
 
-**Definition 1.6 (Maximally entangled states).**
+**Definition 1.7 (Maximally entangled states).**
 
 $$\forall m \in Nat,\; \forall n \in Nat,\; \forall Omega \in \operatorname{Prod}\left(\operatorname{Fin}\left(m\right), \operatorname{Fin}\left(n\right)\right) \to Complex,\; (\operatorname{maximallyEntangled}\left(Omega\right)) \Leftrightarrow (\exists u \in \operatorname{Fin}\left(\operatorname{min}\left(m, n\right)\right) \to \left(\operatorname{Fin}\left(m\right) \to Complex\right),\; \exists w \in \operatorname{Fin}\left(\operatorname{min}\left(m, n\right)\right) \to \left(\operatorname{Fin}\left(n\right) \to Complex\right),\; (\operatorname{Orthonormal}\left(Complex, (\lambda j:\operatorname{Fin}\left(\operatorname{min}\left(m, n\right)\right), \operatorname{toLp}\left(2, u\left(j\right)\right))\right)) \land ((\operatorname{Orthonormal}\left(Complex, (\lambda j:\operatorname{Fin}\left(\operatorname{min}\left(m, n\right)\right), \operatorname{toLp}\left(2, w\left(j\right)\right))\right)) \land (Omega = \sum_{{j:\operatorname{Fin}\left(\operatorname{min}\left(m, n\right)\right)}}(\operatorname{smul}\left(\operatorname{ofReal}\left(\operatorname{natCastReal}\left(\operatorname{min}\left(m, n\right)\right)^{-\frac{1}{2}}\right), (\lambda p:\operatorname{Prod}\left(\operatorname{Fin}\left(m\right), \operatorname{Fin}\left(n\right)\right), u\left(j\right)\left(\operatorname{fst}\left(p\right)\right) \cdot w\left(j\right)\left(\operatorname{snd}\left(p\right)\right))\right)))))$$
 
@@ -78,7 +90,7 @@ $$\forall m \in Nat,\; \forall n \in Nat,\; \forall Omega \in \operatorname{Prod
 
 Corollary 2 uses min(m,n) orthonormal vectors in each factor with every Schmidt coefficient equal to min(m,n) raised to negative one half. The orthonormality predicates use the standard complex Euclidean inner product.
 
-**Definition 1.7 (The trace criterion).**
+**Definition 1.8 (The trace criterion).**
 
 $$\forall m \in Nat,\; \forall n \in Nat,\; \forall W \in \operatorname{Matrix}\left(\operatorname{Prod}\left(\operatorname{Fin}\left(m\right), \operatorname{Fin}\left(n\right)\right), \operatorname{Prod}\left(\operatorname{Fin}\left(m\right), \operatorname{Fin}\left(n\right)\right), Complex\right),\; (\operatorname{traceCriterion}\left(W\right)) \Leftrightarrow (\exists Omega \in \operatorname{Prod}\left(\operatorname{Fin}\left(m\right), \operatorname{Fin}\left(n\right)\right) \to Complex,\; (\operatorname{maximallyEntangled}\left(Omega\right)) \land (\operatorname{dotProduct}\left(\operatorname{star}\left(Omega\right), \operatorname{mulVec}\left(W, Omega\right)\right) = -\frac{\operatorname{trace}\left(W\right)}{\operatorname{natCastComplex}\left(\operatorname{min}\left(m, n\right)\right)}))$$
 
@@ -90,7 +102,7 @@ $$\forall m \in Nat,\; \forall n \in Nat,\; \forall W \in \operatorname{Matrix}\
 
 The trace criterion is equality in equation (11) for at least one maximally entangled state. The equality is an equality of complex numbers.
 
-**Definition 1.8 (The equivalence question).**
+**Definition 1.9 (The equivalence question).**
 
 $$(claim) \Leftrightarrow (\forall m \in Nat,\; \forall n \in Nat,\; \forall W \in \operatorname{Matrix}\left(\operatorname{Prod}\left(\operatorname{Fin}\left(m\right), \operatorname{Fin}\left(n\right)\right), \operatorname{Prod}\left(\operatorname{Fin}\left(m\right), \operatorname{Fin}\left(n\right)\right), Complex\right),\; (\operatorname{IsWitness}\left(W\right)) \Rightarrow ((\operatorname{kernelCriterion}\left(W\right)) \Leftrightarrow (\operatorname{traceCriterion}\left(W\right))))$$
 
@@ -102,7 +114,7 @@ $$(claim) \Leftrightarrow (\forall m \in Nat,\; \forall n \in Nat,\; \forall W \
 
 Section IV asks whether the trace-based criterion of Corollary 2 is equivalent to the kernel criterion of Theorem 2. The statement quantifies over all finite dimensions and every witness.
 
-**Theorem 1.9 (The equivalence is false).**
+**Theorem 1.10 (The equivalence is false).**
 
 $$\neg claim$$
 
@@ -126,8 +138,8 @@ In the ordered basis (00,01,10,11), take W with rows (0,0,0,-2), (0,1,0,0), (0,0
 - Truth anchor: `D5/S3/Quantum/Entanglement/WitnessKernelTraceCriteriaRefutation.kernelCriterion`
 - Truth anchor: `D5/S3/Quantum/Entanglement/WitnessKernelTraceCriteriaRefutation.maximallyEntangled`
 - Truth anchor: `D5/S3/Quantum/Entanglement/WitnessKernelTraceCriteriaRefutation.result`
+- Truth anchor: `D5/S3/Quantum/Entanglement/WitnessKernelTraceCriteriaRefutation.schmidtRank`
 - Truth anchor: `D5/S3/Quantum/Entanglement/WitnessKernelTraceCriteriaRefutation.trOne`
 - Truth anchor: `D5/S3/Quantum/Entanglement/WitnessKernelTraceCriteriaRefutation.trTwo`
 - Truth anchor: `D5/S3/Quantum/Entanglement/WitnessKernelTraceCriteriaRefutation.traceCriterion`
-- Dependency: [D5/S3/Quantum/Entanglement/GHZ/OddGhzTenSettingWitness](GHZ/OddGhzTenSettingWitness.md)
 - Dependency: [D5/S3/Quantum/Information/PartialTraceMutualInformation](../Information/PartialTraceMutualInformation.md)

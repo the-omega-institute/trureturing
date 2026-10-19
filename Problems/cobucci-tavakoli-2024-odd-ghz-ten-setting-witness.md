@@ -44,15 +44,15 @@ $$
 | Nine triples (V1) | `tuples` | A list retains all nine labelled multiplicities |
 | Witness (V2) | `omega`, `basisVec`, `proj`, `witness`, `witnessValue` | The literal preregistered expressions |
 | GHZ vector, Eq. (5) and fidelity | `ghz`, `ghzFidelity` | The normalized three-party vector and real expectation |
-| Schmidt rank and Schmidt number | `schmidtRank`, `cutRank`, `SchmidtNumberLE` | Coefficient-matrix rank and finite convex decompositions across each cut |
+| Schmidt rank and Schmidt number | `WitnessKernelTraceCriteriaRefutation.schmidtRank`, `cutRank`, `SchmidtNumberLE` | Frozen coefficient-matrix rank owner and finite convex decompositions across each cut |
 | Definition 1, Eq. (2) | `GMEDecomposable`, `gmeDim` | Mixtures across all three cuts; the natural infimum is attained |
 | (V5) | `witness_quadratic_bound`, `witness_density_bound` | Quadratic-form and density-state comparisons |
 | (V4) and (V3) | `result : claim` | Both inequalities for every density state |
 
-All names in the table belong to
+Except for the imported Schmidt-rank owner, names in the table belong to
 `D5.S3.Quantum.Entanglement.GHZ.OddGhzTenSettingWitness`.
 The state carrier is the canonical `FiniteStateChannel.DensityState`.
-The public definitions have the fourteen literal bodies fixed by
+The witness expressions follow the formulas fixed by
 [preregistration #16991](https://github.com/the-omega-institute/trureturing/issues/16991).
 
 ## Motivation
@@ -106,6 +106,12 @@ one Proved resolution claim. The axiom closure of every public declaration
 is contained in $\{\mathrm{propext},\mathrm{Classical.choice},\mathrm{Quot.sound}\}$.
 The module uses `utility: none` and
 `admission_basis: open-problem-resolution (#16991; Proved)`.
+Schmidt rank is imported from the frozen
+`D5.S3.Quantum.Entanglement.WitnessKernelTraceCriteriaRefutation` owner,
+whose definition is `(Matrix.of fun i j => v (i, j)).rank` on `Fin m × Fin n`.
+Each cut flattens the other two indices with `finProdFinEquiv`;
+`Matrix.rank_submatrix` preserves the original coefficient-matrix rank.
+The module has `generality: I`, following this import.
 The proof-shape classification is `bind-only`; the named external settlement
 supplies the admission basis. Every supporting helper has a mathematical
 consumer.

@@ -1,5 +1,5 @@
 /- GID: D5/S3/Quantum/Entanglement/GHZ/OddGhzTenSettingWitness
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Quantum/Entanglement/GHZ/OddGhzTenSettingWitness
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
@@ -25,17 +25,20 @@ R: D5/S3/Quantum/PureState/PureStateHandshake.rankOneDensity
    statement_id: sha256:e18ab4fd557d4917e344a15c06172fc321b99eb187307a88fe4c7fa4f8a28bf3
 J: D5/S3/Quantum/Information/PartialTraceMutualInformation.density_posSemidef
    statement_id: sha256:b799be7b0c6e16bb8e03b4bcf99946d7abbc95ac0078be4a08391bec19c88bdc
+K: D5/S3/Quantum/Entanglement/WitnessKernelTraceCriteriaRefutation.schmidtRank
 The public omega, basisVec, proj and witness definitions use the literal
 preregistered expressions. Proofs use ZMod.stdAddChar and Matrix.vecMulVec.
 Nine labels retain multiplicity at d = 1.
 The spectral Ensemble is transported from Fin (Fintype.card iota) × Fin 1
 to the arbitrary finite index type. The public SeparableStateLocalUnitaryStabilizerObstruction.quadratic_projector
 supplies the real-part specialization of the complex projector identity.
-The I owners import Ensemble and schmidtRank from this module.
+The I owners import Ensemble from this module. Schmidt rank uses the frozen
+owner K after flattening the two-party index with finProdFinEquiv; matrix
+rank is invariant under this reindexing. Generality I follows this import.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/17622
 weight_le_one_of_total: proof_shape: bind-only; deps: none; consumer: spectral_ensemble_nonempty, FormationBounds.Selective.conditionalEnsemble, BraunsteinGhoshSeveriniStarRefutation.Star.starEnsemble.
 spectral_ensemble_nonempty: proof_shape: bind-only; deps: R; consumer: density_ensemble, BraunsteinGhoshSeveriniStarRefutation.graph_ensemble_nonempty.
-All theorems have escape_witness: none. Dependencies use H/J/P/Q/R/S/T above.
+All theorems have escape_witness: none. Dependencies use H/J/K/P/Q/R/S/T above.
 omega_pow_character: proof_shape: bind-only; deps: none; consumer: basisVec_character.
 character_orthogonality: proof_shape: bind-only; deps: none; consumer: constrained_character_sum.
 tuples_sum_zero: proof_shape: bind-only; deps: none; consumer: tuples_cast_sum_zero.
@@ -51,23 +54,24 @@ settingOp_shift_entry: proof_shape: bind-only; deps: none; consumer: witness_ent
 diagonalOp_entry: proof_shape: bind-only; deps: none; consumer: witness_entry.
 tuples_grid_sum: proof_shape: bind-only; deps: none; consumer: witness_entry.
 witness_entry: proof_shape: bind-only; deps: none; consumer: witness_block_entry.
-cutRank_le_d: proof_shape: bind-only; deps: none; consumer: schmidtNumberLE_d.
+cutRank_le_d: proof_shape: bind-only; deps: K; consumer: schmidtNumberLE_d.
+cutRank_eq: proof_shape: bind-only; deps: K; consumer: cutRank_le_d,cut_diagonal_bound.
 density_ensemble: proof_shape: bind-only; deps: J,R,S; consumer: schmidtNumberLE_d,witness_density_bound.
-schmidtNumberLE_d: proof_shape: bind-only; deps: J,R,S; consumer: gmeDecomposable_d.
-gmeDecomposable_d: proof_shape: bind-only; deps: J,R,S; consumer: gmeDim_mem.
-gmeDim_mem: proof_shape: bind-only; deps: J,R,S; consumer: gmeDim_ghz_fidelity_bound.
+schmidtNumberLE_d: proof_shape: bind-only; deps: J,K,R,S; consumer: gmeDecomposable_d.
+gmeDecomposable_d: proof_shape: bind-only; deps: J,K,R,S; consumer: gmeDim_mem.
+gmeDim_mem: proof_shape: bind-only; deps: J,K,R,S; consumer: gmeDim_ghz_fidelity_bound.
 diagonal_trace_rank_bound: proof_shape: bind-only; deps: T; consumer: cut_diagonal_bound.
 ghz_overlap: proof_shape: bind-only; deps: none; consumer: ghz_overlap_normSq.
 quadratic_energy: proof_shape: bind-only; deps: H; consumer: unit_energy,blockOp_quadratic.
 ghz_overlap_normSq: proof_shape: bind-only; deps: none; consumer: pure_ghz_fidelity_bound,witness_quadratic_bound.
 unit_energy: proof_shape: bind-only; deps: H; consumer: cut_diagonal_bound,witness_density_bound.
-cut_diagonal_bound: proof_shape: bind-only; deps: H,T; consumer: pure_ghz_fidelity_bound.
-pure_ghz_fidelity_bound: proof_shape: bind-only; deps: H,T; consumer: schmidt_ghz_fidelity_bound.
+cut_diagonal_bound: proof_shape: bind-only; deps: H,K,T; consumer: pure_ghz_fidelity_bound.
+pure_ghz_fidelity_bound: proof_shape: bind-only; deps: H,K,T; consumer: schmidt_ghz_fidelity_bound.
 quadratic_rankone: proof_shape: bind-only; deps: Q,R; consumer: schmidt_ghz_fidelity_bound,blockOp_quadratic,witness_density_bound.
 quadratic_sum: proof_shape: bind-only; deps: none; consumer: schmidt_ghz_fidelity_bound,gme_ghz_fidelity_bound,quadratic_smul,witness_density_bound.
-schmidt_ghz_fidelity_bound: proof_shape: bind-only; deps: H,Q,R,S,T; consumer: gme_ghz_fidelity_bound.
-gme_ghz_fidelity_bound: proof_shape: bind-only; deps: H,Q,R,S,T; consumer: gmeDim_ghz_fidelity_bound.
-gmeDim_ghz_fidelity_bound: proof_shape: bind-only; deps: H,J,Q,R,S,T; consumer: result.
+schmidt_ghz_fidelity_bound: proof_shape: bind-only; deps: H,K,Q,R,S,T; consumer: gme_ghz_fidelity_bound.
+gme_ghz_fidelity_bound: proof_shape: bind-only; deps: H,K,Q,R,S,T; consumer: gmeDim_ghz_fidelity_bound.
+gmeDim_ghz_fidelity_bound: proof_shape: bind-only; deps: H,J,K,Q,R,S,T; consumer: result.
 signed_injective: proof_shape: bind-only; deps: none; consumer: count_le_three.
 two_cancel: proof_shape: bind-only; deps: none; consumer: count_le_three.
 count_le_three: proof_shape: bind-only; deps: none; consumer: grid_dft_bound.
@@ -92,24 +96,23 @@ diagonal_block_sum: proof_shape: bind-only; deps: none; consumer: witness_quadra
 witness_quadratic_bound: proof_shape: bind-only; deps: H,P,Q,R; consumer: witness_density_bound.
 witness_density_bound: proof_shape: bind-only; deps: H,J,P,Q,R,S; consumer: fidelity_lower_bound,result.
 fidelity_lower_bound: proof_shape: bind-only; deps: H,J,P,Q,R,S; consumer: result.
-result: proof_shape: bind-only; deps: H,J,P,Q,R,S,T; consumer: settling result.
+result: proof_shape: bind-only; deps: H,J,K,P,Q,R,S,T; consumer: settling result.
 -/
 import D5.S3.Quantum.QuantumChannels.TomiyamaDiagonalKPositivity
 import D5.S3.Fourier.FullBispectrumStability
 import D5.S3.Weil.ZetaLinear.Sylvester
 import D5.S3.Quantum.PureState.PureStateHandshake
 import D5.S3.Quantum.Information.SeparableStateLocalUnitaryStabilizerObstruction
+import D5.S3.Quantum.Entanglement.WitnessKernelTraceCriteriaRefutation
 open Matrix
 open D5.S3.Quantum.PureState.PureStateHandshake (rankOneDensity)
+open D5.S3.Quantum.Entanglement.WitnessKernelTraceCriteriaRefutation (schmidtRank)
 open scoped Kronecker
 open D5.S3.Quantum.Foundation.FiniteStateChannel
 set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false
 noncomputable section
 namespace D5.S3.Quantum.Entanglement.GHZ.OddGhzTenSettingWitness
-/-- Schmidt rank of a bipartite vector: the rank of its coefficient matrix. -/
-def schmidtRank {α β : Type*} [Fintype β] (v : α × β → ℂ) : ℕ :=
-  (Matrix.of fun i j => v (i, j)).rank
 /-- `ω = exp(2πi/d)`. -/
 def omega (d : ℕ) : ℂ := Complex.exp (2 * Real.pi * Complex.I / d)
 /-- The basis vector `|e_l^{(j)}⟩ = d^{-1/2} Σ_m ω^{m(l+jm)} |m⟩`. -/
@@ -145,10 +148,29 @@ def ghzFidelity (d : ℕ) (ρ : DensityState (Fin d × Fin d × Fin d)) : ℝ :=
 
 /-- Schmidt rank across the bipartition that separates party `k` from the other two. -/
 def cutRank {d : ℕ} (k : Fin 3) (ψ : Fin d × Fin d × Fin d → ℂ) : ℕ :=
-  match k with
-  | ⟨0, _⟩ => schmidtRank (fun p : Fin d × (Fin d × Fin d) => ψ (p.1, p.2.1, p.2.2))
-  | ⟨1, _⟩ => schmidtRank (fun p : Fin d × (Fin d × Fin d) => ψ (p.2.1, p.1, p.2.2))
-  | ⟨_, _⟩ => schmidtRank (fun p : Fin d × (Fin d × Fin d) => ψ (p.2.1, p.2.2, p.1))
+  schmidtRank (fun p : Fin d × Fin (d * d) =>
+    let q := finProdFinEquiv.symm p.2
+    match k with
+    | ⟨0, _⟩ => ψ (p.1, q.1, q.2)
+    | ⟨1, _⟩ => ψ (q.1, p.1, q.2)
+    | ⟨_, _⟩ => ψ (q.1, q.2, p.1))
+
+private theorem cutRank_eq {d : ℕ} (k : Fin 3) (ψ : Fin d × Fin d × Fin d → ℂ) :
+    cutRank k ψ = (Matrix.of fun i (j : Fin d × Fin d) =>
+      match k with
+      | ⟨0, _⟩ => ψ (i, j.1, j.2)
+      | ⟨1, _⟩ => ψ (j.1, i, j.2)
+      | ⟨_, _⟩ => ψ (j.1, j.2, i)).rank := by
+  fin_cases k <;> dsimp only [cutRank, schmidtRank]
+  · exact Matrix.rank_submatrix
+      (fun (i : Fin d) (j : Fin d × Fin d) => ψ (i, j.1, j.2))
+      (Equiv.refl (Fin d)) finProdFinEquiv.symm
+  · exact Matrix.rank_submatrix
+      (fun (i : Fin d) (j : Fin d × Fin d) => ψ (j.1, i, j.2))
+      (Equiv.refl (Fin d)) finProdFinEquiv.symm
+  · exact Matrix.rank_submatrix
+      (fun (i : Fin d) (j : Fin d × Fin d) => ψ (j.1, j.2, i))
+      (Equiv.refl (Fin d)) finProdFinEquiv.symm
 
 /-- `σ` has Schmidt number at most `r` across bipartition `k`. -/
 def SchmidtNumberLE {d : ℕ} (k : Fin 3) (r : ℕ)
@@ -443,8 +465,8 @@ set_option linter.unusedTactic false
 
 private theorem cutRank_le_d {d : ℕ} (k : Fin 3) (ψ : Fin d × Fin d × Fin d → ℂ) :
     cutRank k ψ ≤ d := by
-  fin_cases k <;> dsimp only [cutRank, schmidtRank] <;>
-    exact (Matrix.rank_le_card_height _).trans (by simp)
+  rw [cutRank_eq]
+  exact (Matrix.rank_le_card_height _).trans (by simp)
 
 structure Ensemble {p q : ℕ} (ρ : (Matrix (Fin p × Fin q) (Fin p × Fin q) ℂ)) where
   N : ℕ
@@ -607,6 +629,7 @@ private theorem unit_energy {ι : Type*} [Fintype ι] (ψ : ι → ℂ)
 private theorem cut_diagonal_bound {d : ℕ} (k : Fin 3)
     (ψ : Fin d × Fin d × Fin d → ℂ) (hu : star ψ ⬝ᵥ ψ = 1) :
     Complex.normSq (∑ i, ψ (i,i,i)) ≤ cutRank k ψ := by
+  rw [cutRank_eq]
   have he := unit_energy ψ hu
   rw [Fintype.sum_prod_type] at he
   simp only [Fintype.sum_prod_type] at he
