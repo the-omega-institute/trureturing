@@ -22,7 +22,7 @@ open Matrix Filter Topology
 open scoped MatrixOrder ComplexOrder
 namespace D5.S3.Quantum.Matrix.GanKimConjectureRefutation
 open WassersteinMean AlternativeMeanLinearization
-open SpectralGeometricLogEuclideanRefutation (mpow LE)
+open SpectralGeometricLogEuclideanRefutation (mpow LE mpow_one mpow_two)
 open D5.S3.Quantum.Hiai.PsiMeanTraceConcavity (geometricMean)
 
 /-- Conjecture 5.7: decreasing weak-log-majorization convergence as p decreases to zero. -/
@@ -146,11 +146,7 @@ private lemma mean_pos {n : ℕ} {X Y : Matrix (Fin n) (Fin n) ℂ}
 
 private lemma endpoint_powers {X : Mat} (hX : X.IsHermitian) :
     mpow X 1 = X ∧ mpow X 2 = X ^ 2 := by
-  constructor
-  · simp only [mpow, Real.rpow_one]
-    exact cfc_id' ℝ X hX
-  · simp only [mpow, Real.rpow_two]
-    exact cfc_pow_id X 2 hX
+  exact ⟨mpow_one hX, (mpow_two hX).trans (pow_two X).symm⟩
 
 private lemma family_values {t : ℝ} (ht : 0 < t) (ht1 : t < 1) :
     powerMean A B t (1 / 2) = wassersteinMean P Q t ^ 2 ∧

@@ -146,10 +146,10 @@ private lemma cfc_diag [Nonempty n] (f : ℝ → ℝ) (d : n → ℝ) :
   funext i
   simpa using (cfc_algebraMap (A := ℂ) (d i) f)
 
-private lemma mpow_one {X : Matrix n n ℂ} (hX : X.IsHermitian) : mpow X 1 = X := by
+lemma mpow_one {X : Matrix n n ℂ} (hX : X.IsHermitian) : mpow X 1 = X := by
   simpa [mpow, Real.rpow_one] using cfc_id' ℝ X hX.isSelfAdjoint
 
-private lemma mpow_two {X : Matrix n n ℂ} (hX : X.IsHermitian) : mpow X 2 = X * X := by
+lemma mpow_two {X : Matrix n n ℂ} (hX : X.IsHermitian) : mpow X 2 = X * X := by
   simp only [mpow, Real.rpow_two]
   rw [cfc_pow_id X 2 hX.isSelfAdjoint, pow_two]
 
