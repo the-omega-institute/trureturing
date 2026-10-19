@@ -16,7 +16,8 @@ run_meta do
   IO.setNumHeartbeats before
   unless outcome == .incomplete .heartbeat do
     throwError "leaf heartbeat was converted into normal exhaustion: {reprStr outcome}"
-  unless rows.any (fun row => row.outcome == .incomplete .heartbeat) do
+  unless rows.any (fun row => row.strategy.startsWith "leaf[0]/" &&
+      row.outcome == .incomplete .heartbeat) do
     throwError "leaf heartbeat observation missing"
   let (outcome, _) ← search env [] (mkConst ``False) #[] #[(0, ← `(tactic| fail))]
   IO.setNumHeartbeats before

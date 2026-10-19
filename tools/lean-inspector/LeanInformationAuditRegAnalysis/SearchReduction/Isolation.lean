@@ -53,7 +53,11 @@ partial def copyStructure (source : Environment) (target : Name) (targetType : E
   if n == target then throwError "search.target_leak: {n}"
   if visiting.contains n then return
   let info ← checkedSource source n
-  if ← withEnv source (certifiedRestatement targetType info.type index) then
+  -- Recover only vocabulary needed by the statement. Certificate elaboration
+  -- stays in B's environment, including its registered tactic implementations.
+  -- The detached source environment supplies no extension state or proofs.
+  for dep in info.type.getUsedConstants do copyVocabulary source dep
+  if ← certifiedRestatement targetType info.type index then
     throwError "search.target_restatement: {n}"
   if (← getEnv).contains n then return
   for dep in info.getUsedConstantsAsSet do
