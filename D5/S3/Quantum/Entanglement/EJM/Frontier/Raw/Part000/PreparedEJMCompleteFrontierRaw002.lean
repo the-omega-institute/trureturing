@@ -9,14 +9,14 @@
 /- Generated prepared source. Not compiled or kernel accepted.
 All original coordinates, four values, F1/F2, 32 blocks and scale are retained. -/
 import D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteFrontierTypes
-import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part000.PreparedEJMCompleteFrontierRaw002Shard00
-import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part000.PreparedEJMCompleteFrontierRaw002Shard01
-import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part000.PreparedEJMCompleteFrontierRaw002Shard02
-import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part000.PreparedEJMCompleteFrontierRaw002Shard03
-import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part000.PreparedEJMCompleteFrontierRaw002Shard04
-import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part000.PreparedEJMCompleteFrontierRaw002Shard05
-import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part000.PreparedEJMCompleteFrontierRaw002Shard06
-import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part000.PreparedEJMCompleteFrontierRaw002Shard07
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part000.Raw002Shards.PreparedEJMCompleteFrontierRaw002Shard00
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part000.Raw002Shards.PreparedEJMCompleteFrontierRaw002Shard01
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part000.Raw002Shards.PreparedEJMCompleteFrontierRaw002Shard02
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part000.Raw002Shards.PreparedEJMCompleteFrontierRaw002Shard03
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part000.Raw002Shards.PreparedEJMCompleteFrontierRaw002Shard04
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part000.Raw002Shards.PreparedEJMCompleteFrontierRaw002Shard05
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part000.Raw002Shards.PreparedEJMCompleteFrontierRaw002Shard06
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part000.Raw002Shards.PreparedEJMCompleteFrontierRaw002Shard07
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option maxHeartbeats 100000000
