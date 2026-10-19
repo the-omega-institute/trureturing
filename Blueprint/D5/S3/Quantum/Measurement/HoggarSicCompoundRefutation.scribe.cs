@@ -8,7 +8,7 @@ internal sealed class HoggarSicCompoundRefutationDocument : IScribeDocumentDefin
 {
     private const string Prefix = "D5/S3/Quantum/Measurement/HoggarSicCompoundRefutation.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/QuantumChannels/tavakolibengtssongisinrenes2020siccompounds");
+        LibraryNoteRef.Create("D5/L/QuantumContext/tavakolibengtssongisinrenes2020siccompounds");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Eight orthonormal fiducials generate a SIC-compound in complex dimension eight under the three-qubit Pauli action.",
