@@ -7588,3 +7588,84 @@ In physical coordinates this applies to a real compact finite measure $\mu$ on $
 For a complex measure, impose this real separator condition separately on its real and imaginary parts, allowing different anchors and global signs and degrees at most the cap. Both actual and Hardy kernels are real symmetric, so their Hermitian quadratic forms are the sums of the two real forms. W214 applies to each; a nonzero complex measure has at least one strictly positive component. This does not define an order on complex coefficients or assert unrestricted complex continuum positivity.
 
 W204 bounded the number of support points. W214 instead permits arbitrarily many atoms and continuum measures at the stated sign degree, on compact supports of arbitrary width and density. W77's width-free start $\exp(Cm^4\log(m+1))$ is not repeated; the new growing-degree schedule is $\lfloor ce^{2A}\rfloor$ at one common start in the same physical separator class and original Gaussian metric. The sufficient cofinal arbitrary-sign complexity $e^{2A}g(A)$ with $g(A)\to\infty$, common-start all-order positivity, RH and the original strict all-integer Robin bound remain unproved. No numerical constant/start, experiment, Lean/CI/merge certification or literature priority is supplied.
+
+## Remote sign separators have a smaller cost in the complete direct theta source
+
+The complete actual direct component admits a pole-sensitive extension of W193 and W211. There are fixed $c>0,A_*>0$ such that its original Gaussian Hardy margin $1/(8A)$ holds for compact finite real signed measures on $[A,\infty)$ with a real-root separator satisfying
+$$
+\epsilon_0\prod_{k=1}^m(a-t_k)\,d\mu(a)\ge0,
+\qquad t_k\ge A,\quad\epsilon_0\in\{-1,1\},\qquad
+\Xi_A=1+\sum_{k=1}^m e^{-2(t_k-A)}\le ce^{2A},
+\quad A\ge A_*.
+\tag{W215}
+$$
+The number $m$ is finite but has no separate bound. Repeated roots and root atoms are allowed. A complex measure requires this condition separately on its real and imaginary parts, with possibly different roots and global signs. Every measure has compact support; its upper endpoint, density and atom count are unrestricted. This concerns the complete actual direct kernel $K_0(a,b)$ from W185. It does not assert positivity of the full odd difference $L_0$ on this larger class. Full RH and strict Robin for every integer $n>5040$ remain unproved.
+
+Reuse the classical model-space conjugation and Hardy normalization cited at W181, the same-source decomposition W205--W206, and the complete direct feature W184--W191. The orthogonal decomposition and interior-line contraction are classical. The additional content is the position-sensitive cost in that complete-source application, including its arithmetic log-mode charge and exact Gaussian return. There is no separate generic theorem or literature-priority claim.
+
+### Retain the anchor positions in the shifted-line product
+
+Use $p=e^{2(a-A)}\ge1$, $r_k=e^{2(t_k-A)}\ge1$, $E=e^{-2A}$, and the same $a(p)=(p+1)/\sqrt2$, $F_\sigma$, $f_\sigma$ and $Q_H(\sigma)$ as W205. After the harmless global sign, let
+$$
+b(s)=\prod_{k=1}^m\frac{s-r_k}{s+r_k},\qquad
+\tau=b(p)\sigma\ge0,\qquad
+f_\sigma=h+bf_\tau,\quad h\in K_b.
+$$
+The orthogonal norm identity W206 remains exact, including root atoms and repeated anchors. Put $S=\sum_k r_k^{-1}$ and $\Xi=1+S$. For $r\ge1$,
+$$
+\log\frac{r+1/2}{r-1/2}\le\frac{\log3}{r}.
+$$
+Indeed the convergent expansion is $2\sum_{j\ge0}(2r)^{-(2j+1)}/(2j+1)$, and multiplication by $r$ leaves a decreasing function of $r\ge1$, with value $\log3$ at one. Consequently
+$$
+|b(1/2+iy)|\ge3^{-S},\qquad
+|b(-1/2+iy)|\le3^S.
+$$
+Apply the owned conjugation to $h$, retaining these exact anchor factors before the Hardy interior-line contraction. If $H=\operatorname{Lap}^{-1}h$, it gives $\|e^{t/2}H\|_2\le3^S\|H\|_2$. Positivity gives $\|e^{t/2}F_\tau\|_2\le\sqrt2\|F_\tau\|_2$, as in W207. The triangle inequality and orthogonal identity therefore yield
+$$
+\|e^{t/2}F_\sigma\|_2\le\sqrt3\,3^S\|F_\sigma\|_2,
+\qquad
+\|F_\sigma(\cdot+s)\|_2
+\le\min(1,\sqrt3\,3^Se^{-s/2})\|F_\sigma\|_2.
+\tag{W216}
+$$
+All constants depend on $S$, rather than on the dimension $m$ of the auxiliary model space. For $m=0$, $h=0$, $S=0$, and the same bound holds.
+
+### Pay the complete feature and its arithmetic charge in the same weighted complexity
+
+The W182/W208 tail integration and fractional-integral argument now split at $C\Xi$. For every integer $j\ge1$ they give
+$$
+\|t^jF_\sigma\|_2\le[C(\Xi+j)]^j\|\sigma\|_H,
+\qquad
+\|p^{-j}\sigma\|_H
+\le\left[\frac{C(\Xi+j)}j\right]^j\|\sigma\|_H
+\le(C\Xi)^j\|\sigma\|_H.
+\tag{W217}
+$$
+Every nonnegative multiplier retains the same roots and the same $S$. Thus, for sufficiently small $E\Xi$, the geometric-series argument W183 gives $\|B_E\sigma\|_H\le C\|\sigma\|_H$ and $\|M_E\sigma\|_H\le C\Xi\|\sigma\|_H$.
+
+Keep the complete actual $F^\Theta$, increasing weight $W$, and both corrections in W190 unchanged. W216 replaces $3^N$ in W186--W189 by $\sqrt3\,3^S$. The modal tail and its log-mode charge are bounded by $C3^Se^{-\kappa/E}\sqrt{Q_H(\sigma)}$. Choosing a fixed sufficiently small cap $E\Xi\le c_0$ pays this tail at one common high start, and
+$$
+\mathscr S=\|F^\Theta\|_W^2\ge Q_H(\sigma)/4.
+$$
+The complete shifted feature obeys $\|F^\Theta(\cdot+s)\|_W\le C3^S(1+s)^2e^{-s/4}\sqrt{\mathscr S}$, as well as the unchanged shift contraction. In the exact W190 pairing, split its scalar logarithm integral at $J=\lceil C_0\Xi\rceil$. The tail is paid by W216, the interval $[1,J]$ costs $\log\Xi+C$, and W217 pays the amplitude correction. The arithmetic term $-\sum_{\ell\ge1}(\log\ell)F_\ell$ is retained and paid by the same modal tail. Hence
+$$
+Q_{\mathcal D_A^1}(\sigma)\ge
+\left[1-\frac{\log\Xi}{2A}-\frac{C_{\rm dir}}A\right]\mathscr S,
+\qquad E\Xi\le c_0.
+\tag{W218}
+$$
+No estimate of the unbounded position multiplier $u\sigma$ is substituted for the joint W190 identity. Compact finite support justifies its integrals exactly as at W211, without using total variation in any final norm bound.
+
+Choose fixed $c>0$ small enough for these modal and multiplier conditions and for $-\tfrac12\log c-C_{\rm dir}\ge8$. Under $\Xi\le c/E$, W218 gives $Q_{\mathcal D_A^1}(\sigma)\ge2Q_H(\sigma)/A$. The exact original Gaussian return is $\sigma_1=(1-c_*E/p)\sigma_g$. This positive multiplier preserves the same weighted separator, and W217 gives $\|\sigma_1-\sigma_g\|_H\le CE\Xi\|\sigma_g\|_H$. Shrink $c$ once more to make this at most half the original norm. With slack,
+$$
+Q_{\mathcal D_A^g}(\sigma_g)\ge\frac1{8A}Q_H(\sigma_g)>0,
+\quad A\ge A_*,\quad\Xi\le ce^{2A},\quad\sigma_g\ne0.
+\tag{W219}
+$$
+The physical transport is the same positive $d\sigma_g=d\mu/(\cosh uD_A^g(u))$ as W214. Since $p=e^{2u}$ is increasing and $b(p)=\prod_k\tanh(a-t_k)$, the separator signs are exactly those in W215. Real symmetric kernels split the complex Hermitian form into its real and imaginary measures, so W219 holds under their separate W215 conditions. The zero measure contributes zero; strictness for a nonzero compact measure uses the owned moment uniqueness.
+
+### The larger direct class is not a change of the lower support endpoint
+
+At a fixed admitted $A$ with $ce^{2A}>2$, retain a positive atom at $a=A$. For arbitrarily large even $m$, choose $R$ so large that $m/R\le ce^{2A}-1$, take $m$ distinct separator roots in $[R,2R]$, and place alternating-sign atoms in the $m+1$ complementary intervals of that block. Their signs can be chosen so that $\prod_k(p-r_k)\,d\sigma\ge0$, including the retained atom at $p=1$. Then $\Xi\le1+m/R\le ce^{2A}$. There are $m$ actual sign changes, so no smaller-degree polynomial separates these alternating atoms. The lower support endpoint is still $A$, and $m$ has no bound as $R$ grows. Thus neither the old global $m\le ce^{2A}$ contract nor moving the entire support to a higher start supplies this fixed-$A$ direct conclusion. This is an admissible family construction, not an executed numerical experiment.
+
+For the complete actual odd kernel, the W212 reflected-source estimate still contains $b_0^{-2m}$. W215 controls $\sum_k r_k^{-1}$ and does not control that factor. No reciprocal-root replacement for the actual reflected error is established here. The new complete-direct estimate, the old full odd-kernel estimate W214, and their different source classes must remain distinct. There is no full odd-kernel positivity claim on W215, unrestricted sign or unbounded-support theorem, sufficient cofinal positivity, numerical constant/start, Lean certification or literature-priority claim. Full RH and the original strict all-integer Robin bound remain unproved.
